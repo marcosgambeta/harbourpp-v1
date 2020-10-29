@@ -1,0 +1,85 @@
+ChangeLog.txt ident
+
+# Default
+*         text=auto
+
+# These files are text and should be normalized (convert CRLF => LF)
+*.1       text
+*.api     text
+*.bas     text
+*.c       text
+*.cfg     text
+*.ch      text
+*.cpp     text
+*.css     text
+*.def     text
+*.diff    text
+*.h       text
+*.hb      text
+*.hbc     text
+*.hbm     text
+*.hbp     text
+*.hbx     text
+*.html    text
+*.in      text
+*.ini     text
+*.js      text
+*.log     text
+*.m       text
+*.md      text
+*.mft     text
+*.mk      text
+*.nsi     text
+*.patch   text
+*.pem     text
+*.po      text
+*.prg     text
+*.rb      text
+*.rc      text
+*.sfc     text
+*.spec    text
+*.sx      text
+*.txt     text
+*.ucf     text
+*.vbs     text
+*.xml     text
+*.xsl     text
+*.y       text
+*.yml     text
+*.yyc     text
+*.yyh     text
+
+# Text files with fixed EOL requirements
+*.bat     text eol=crlf
+*.sh      text eol=lf
+
+# Binary files
+*.a       binary
+*.afm     binary
+*.bmp     binary
+*.dat     binary
+*.dbf     binary
+*.exe     binary
+*.frm     binary
+*.gif     binary
+*.icns    binary
+*.ico     binary
+*.jpg     binary
+*.lbl     binary
+*.lib     binary
+*.mdb     binary
+*.ng      binary
+*.odt     binary
+*.pdf     binary
+*.pfb     binary
+*.png     binary
+*.sqlite3 binary
+*.tif     binary
+
+# TOTEST:
+#*.c       text diff=cpp
+#*.h       text diff=cpp
+#*.htm     text diff=html
+#*.html    text diff=html
+#*.m       text diff=objc
+#*.rb      text diff=ruby
