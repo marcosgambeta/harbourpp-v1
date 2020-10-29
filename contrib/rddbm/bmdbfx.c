@@ -92,7 +92,7 @@ HB_FUNC( BM_DBSEEKWILD )
          }
 
          memset( &OrderInfo, 0, sizeof( OrderInfo ) );
-         OrderInfo.itmResult = hb_itemNew( NULL );
+         OrderInfo.itmResult = hb_itemNew( nullptr );
 
          errCode = SELF_ORDINFO( pArea, DBOI_NUMBER, &OrderInfo );
          if( errCode == HB_SUCCESS )
@@ -322,7 +322,7 @@ HB_FUNC( BM_DBGETFILTERARRAY )
 
          if( SELF_RECNO( pArea, &ulRecNo ) == HB_SUCCESS )
          {
-            PHB_ITEM pItem = hb_itemNew( NULL );
+            PHB_ITEM pItem = hb_itemNew( nullptr );
             HB_ULONG ul;
 
             for( ul = 0; ul < ulItems; ul++ )

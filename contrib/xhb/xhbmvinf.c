@@ -56,7 +56,7 @@ HB_FUNC( __MVSYMBOLINFO )
    if( pArray )
    {
       HB_SIZE nLen = hb_arrayLen( pArray ), n;
-      PHB_ITEM pValue = hb_itemNew( NULL );
+      PHB_ITEM pValue = hb_itemNew( nullptr );
 
       for( n = 1; n <= nLen; ++n )
       {

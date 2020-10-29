@@ -279,7 +279,7 @@ static PHB_ITEM hb_breakBlock( void )
                              HB_P_FUNCTIONSHORT, 1,
                              HB_P_ENDBLOCK };
 
-      s_breakBlock = hb_itemNew( NULL );
+      s_breakBlock = hb_itemNew( nullptr );
       s_breakBlock->item.asBlock.value =
          hb_codeblockNew( s_pCode,  /* pcode buffer         */
                           0,        /* number of referenced local variables */
@@ -4769,7 +4769,7 @@ static void hb_vmEnumStart( int nVars, int nDescend )
       if( HB_IS_OBJECT( pBase ) && hb_objHasOperator( pBase, HB_OO_OP_ENUMSTART ) )
       {
          pEnum->item.asEnum.offset = 0;
-         pEnum->item.asEnum.valuePtr = hb_itemNew( NULL );
+         pEnum->item.asEnum.valuePtr = hb_itemNew( nullptr );
          HB_VM_PUSHNIL();
          hb_vmPushLogical( nDescend == 0 );
          hb_objOperatorCall( HB_OO_OP_ENUMSTART, hb_stackItemFromTop( -2 ),
@@ -9150,7 +9150,7 @@ HB_BOOL hb_vmTryEval( PHB_ITEM * pResult, PHB_ITEM pItem, HB_ULONG ulPCount, ...
          if( hb_xvmSeqEndTest() )
          {
             hb_xvmSeqRecover();
-            *pResult = hb_itemNew( NULL );
+            *pResult = hb_itemNew( nullptr );
             hb_itemMove( *pResult, hb_stackItemFromTop( -1 ) );
             hb_stackDec();
             hb_stackSetActionRequest( 0 );

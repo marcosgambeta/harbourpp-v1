@@ -472,7 +472,7 @@ static void mxml_node_unlink( PHB_ITEM pNode )
 {
    PHB_ITEM pPrev, pNext, pParent, pNil;
 
-   pNil = hb_itemNew( NULL );
+   pNil = hb_itemNew( nullptr );
 
    hb_objSendMsg( pNode, "OPREV", 0 );
    pPrev = hb_itemNew( hb_param( -1, HB_IT_ANY ) );
@@ -953,8 +953,8 @@ static MXML_STATUS mxml_node_read_attributes( MXML_REFIL * ref,
    PHB_ITEM        hbValue;
    MXML_STATUS     ret;
 
-   hbName     = hb_itemNew( NULL );
-   hbValue    = hb_itemNew( NULL );
+   hbName     = hb_itemNew( nullptr );
+   hbValue    = hb_itemNew( nullptr );
    attributes = hb_hashNew( NULL );
 
    hbAttr.pName  = hbName;
@@ -1633,8 +1633,8 @@ static MXML_STATUS mxml_node_write( MXML_OUTPUT * out, PHB_ITEM pNode, int style
    PHB_ITEM pChild, pItem;
    int      depth = 0;
 
-   pChild = hb_itemNew( NULL );
-   pItem  = hb_itemNew( NULL );
+   pChild = hb_itemNew( nullptr );
+   pItem  = hb_itemNew( nullptr );
 
    if( style & MXML_STYLE_NONEWLINE )
       style &= ~MXML_STYLE_INDENT;

@@ -1070,7 +1070,7 @@ PHB_THREADSTATE hb_threadStateNew( void )
    PHB_ITEM pThItm;
    PHB_THREADSTATE pThread;
 
-   pThItm = hb_itemNew( NULL );
+   pThItm = hb_itemNew( nullptr );
    pThread = ( PHB_THREADSTATE )
                   hb_gcAllocRaw( sizeof( HB_THREADSTATE ), &s_gcThreadFuncs );
    memset( pThread, 0, sizeof( HB_THREADSTATE ) );
@@ -1838,7 +1838,7 @@ PHB_ITEM hb_threadMutexCreate( void )
    PHB_MUTEX pMutex;
    PHB_ITEM pItem;
 
-   pItem = hb_itemNew( NULL );
+   pItem = hb_itemNew( nullptr );
    pMutex = ( PHB_MUTEX ) hb_gcAllocRaw( sizeof( HB_MUTEX ), &s_gcMutexFuncs );
    memset( pMutex, 0, sizeof( HB_MUTEX ) );
    pItem = hb_itemPutPtrRawGC( pItem, pMutex );
@@ -2342,7 +2342,7 @@ PHB_ITEM hb_threadMutexSubscribe( PHB_ITEM pItem, HB_BOOL fClear )
             hb_arraySize( pMutex->events, 0 );
          else
          {
-            pResult = hb_itemNew( NULL );
+            pResult = hb_itemNew( nullptr );
             hb_arrayGet( pMutex->events, 1, pResult );
             hb_arrayDel( pMutex->events, 1 );
             hb_arraySize( pMutex->events, hb_arrayLen( pMutex->events ) - 1 );
@@ -2459,7 +2459,7 @@ PHB_ITEM hb_threadMutexTimedSubscribe( PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_B
             hb_arraySize( pMutex->events, 0 );
          else
          {
-            pResult = hb_itemNew( NULL );
+            pResult = hb_itemNew( nullptr );
             hb_arrayGet( pMutex->events, 1, pResult );
             hb_arrayDel( pMutex->events, 1 );
             hb_arraySize( pMutex->events, hb_arrayLen( pMutex->events ) - 1 );

@@ -160,7 +160,7 @@ PHB_ITEM hb_memvarDetachLocal( PHB_ITEM pLocal )
                                              pLocal->item.asEnum.basePtr;
                if( HB_IS_ARRAY( pBase ) )
                {
-                  PHB_ITEM pItem = hb_itemNew( NULL );
+                  PHB_ITEM pItem = hb_itemNew( nullptr );
                   hb_arrayGetItemRef( pBase, pLocal->item.asEnum.offset, pItem );
                   pLocal->item.asEnum.valuePtr = pItem;
                   pLocal = pItem;

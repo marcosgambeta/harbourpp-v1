@@ -4503,7 +4503,7 @@ static HB_ERRCODE adsOrderInfo( ADSAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO
             AdsGetKeyType( hIndex, &u16 );
 
             if( ! pOrderInfo->itmResult )
-               pOrderInfo->itmResult = hb_itemNew( NULL );
+               pOrderInfo->itmResult = hb_itemNew( nullptr );
             adsGetKeyItem( pArea, pOrderInfo->itmResult, u16,
                            ( char * ) aucBuffer, u16len );
          }

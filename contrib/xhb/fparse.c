@@ -77,7 +77,7 @@ static void hb_ParseLine( PHB_ITEM pReturn, const char * szText, int iDelimiter,
 
       if( nLen > 0 )
       {
-         PHB_ITEM pTemp      = hb_itemNew( NULL );
+         PHB_ITEM pTemp      = hb_itemNew( nullptr );
          HB_ISIZ  i          = 0;
          int      word_count = 0;
          /* booked enough memory */
@@ -359,7 +359,7 @@ HB_FUNC( FPARSE )
 
    /* the main array */
    pArray = hb_itemArrayNew( 0 );
-   pItem  = hb_itemNew( NULL );
+   pItem  = hb_itemNew( nullptr );
 
    /* book memory for line to read */
    string = ( char * ) hb_xgrab( MAX_READ + 1 );
@@ -436,7 +436,7 @@ HB_FUNC( FPARSEEX )
 
    /* the main array */
    pArray    = hb_itemArrayNew( 0 );
-   pSubArray = hb_itemNew( NULL );
+   pSubArray = hb_itemNew( nullptr );
 
    /* book memory for line to read */
    string = ( char * ) hb_xgrab( MAX_READ + 1 );

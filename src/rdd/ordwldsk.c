@@ -71,7 +71,7 @@ HB_FUNC( ORDWILDSEEK )
          HB_ERRCODE errCode = HB_SUCCESS;
 
          memset( &OrderInfo, 0, sizeof( OrderInfo ) );
-         OrderInfo.itmResult = hb_itemNew( NULL );
+         OrderInfo.itmResult = hb_itemNew( nullptr );
 
          if( ! fCont )
          {

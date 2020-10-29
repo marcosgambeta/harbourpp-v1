@@ -136,7 +136,7 @@ PHB_ITEM hb_fsDirectory( const char * pszDirSpec, const char * pszAttributes, HB
 
    if( ( ffind = hb_fsFindFirst( pszDirSpec, ulMask ) ) != NULL )
    {
-      PHB_ITEM pSubarray = hb_itemNew( NULL );
+      PHB_ITEM pSubarray = hb_itemNew( nullptr );
 
       do
       {

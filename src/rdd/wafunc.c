@@ -871,7 +871,7 @@ LPDBTRANSINFO hb_dbTransInfoGet( PHB_ITEM pItem )
 /* update counters for autoinc and rowver fields */
 HB_ERRCODE hb_dbTransCounters( LPDBTRANSINFO lpdbTransInfo )
 {
-   PHB_ITEM pItem = hb_itemNew( NULL );
+   PHB_ITEM pItem = hb_itemNew( nullptr );
    HB_USHORT uiCount;
 
    for( uiCount = 0; uiCount < lpdbTransInfo->uiItemCount; ++uiCount )
@@ -939,7 +939,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest,
 
    if( ! lpaDest )
    {
-      *pStruct = hb_itemNew( NULL );
+      *pStruct = hb_itemNew( nullptr );
       hb_arrayNew( *pStruct, 0 );
    }
 
@@ -947,7 +947,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest,
    {
       if( lpaDest )
       {
-         PHB_ITEM pItem = hb_itemNew( NULL );
+         PHB_ITEM pItem = hb_itemNew( nullptr );
          uiSize = 0;
          for( uiCount = 1; uiCount <= uiSizeSrc; ++uiCount )
          {
@@ -1027,8 +1027,8 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest,
 
    if( fAll && lpaDest )
    {
-      PHB_ITEM pSrcItm = hb_itemNew( NULL ),
-               pDstItm = hb_itemNew( NULL );
+      PHB_ITEM pSrcItm = hb_itemNew( nullptr ),
+               pDstItm = hb_itemNew( nullptr );
       /*
        * if fAll is HB_TRUE here then it means that all fields are included
        * and they are on the same positions in both tables, so now check

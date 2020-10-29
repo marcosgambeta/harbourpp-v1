@@ -87,7 +87,7 @@ HB_FUNC( SX_ISFLOCKED )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_itemNew( NULL );
+      PHB_ITEM pItem = hb_itemNew( nullptr );
       SELF_INFO( pArea, DBI_ISFLOCK, pItem );
       fLocked = hb_itemGetL( pItem );
       hb_itemRelease( pItem );
@@ -103,7 +103,7 @@ HB_FUNC( SX_ISREADONLY )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_itemNew( NULL );
+      PHB_ITEM pItem = hb_itemNew( nullptr );
       SELF_INFO( pArea, DBI_ISREADONLY, pItem );
       fReadOnly = hb_itemGetL( pItem );
       hb_itemRelease( pItem );
@@ -119,7 +119,7 @@ HB_FUNC( SX_ISSHARED )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_itemNew( NULL );
+      PHB_ITEM pItem = hb_itemNew( nullptr );
       SELF_INFO( pArea, DBI_SHARED, pItem );
       fShared = hb_itemGetL( pItem );
       hb_itemRelease( pItem );
@@ -135,7 +135,7 @@ HB_FUNC( SX_IDTYPE )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_itemNew( NULL );
+      PHB_ITEM pItem = hb_itemNew( nullptr );
       if( SELF_RECINFO( pArea, NULL, DBRI_ENCRYPTED, pItem ) == HB_SUCCESS )
          iType = hb_itemGetL( pItem ) ? 2 : 1;
       hb_itemRelease( pItem );
@@ -151,7 +151,7 @@ HB_FUNC( SX_TABLETYPE )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_itemNew( NULL );
+      PHB_ITEM pItem = hb_itemNew( nullptr );
       if( SELF_INFO( pArea, DBI_ISENCRYPTED, pItem ) == HB_SUCCESS )
          iType = hb_itemGetL( pItem ) ? 2 : 1;
       hb_itemRelease( pItem );
@@ -166,7 +166,7 @@ HB_FUNC( SX_TABLENAME )
 
    if( pArea )
    {
-      PHB_ITEM pList = hb_itemNew( NULL );
+      PHB_ITEM pList = hb_itemNew( nullptr );
       SELF_INFO( pArea, DBI_FULLPATH, pList );
       hb_itemReturnRelease( pList );
    }
@@ -206,7 +206,7 @@ HB_FUNC( SX_ROLLBACK )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_itemNew( NULL );
+      PHB_ITEM pItem = hb_itemNew( nullptr );
       fResult = SELF_INFO( pArea, DBI_ROLLBACK, pItem ) == HB_SUCCESS;
       if( fResult && fRollChild )
          hb_sxRollBackChild( pArea, pItem );
@@ -330,7 +330,7 @@ HB_FUNC( SX_SETPASS )
             switch( hb_parni( 1 ) )
             {
                case 1:  /* return current password key in raw form */
-                  pItem = hb_itemNew( NULL );
+                  pItem = hb_itemNew( nullptr );
                   if( SELF_INFO( pArea, DBI_PASSWORD, pItem ) == HB_SUCCESS )
                      hb_itemReturn( pItem );
                   hb_itemRelease( pItem );
@@ -457,7 +457,7 @@ HB_FUNC( _SXOPENINIT )
    if( pArea )
    {
       LPDBOPENINFO pInfo = NULL;
-      PHB_ITEM pItem = hb_itemNew( NULL );
+      PHB_ITEM pItem = hb_itemNew( nullptr );
 
       if( SELF_INFO( pArea, DBI_OPENINFO, pItem ) )
          pInfo = ( LPDBOPENINFO ) hb_itemGetPtr( pItem );

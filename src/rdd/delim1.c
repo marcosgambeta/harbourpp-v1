@@ -1406,7 +1406,7 @@ static HB_ERRCODE hb_delimCreate( DELIMAREAP pArea, LPDBOPENINFO pCreateInfo )
    pFileName = hb_fsFNameSplit( pCreateInfo->abName );
    if( hb_setGetDefExtension() && ! pFileName->szExtension )
    {
-      PHB_ITEM pItem = hb_itemNew( NULL );
+      PHB_ITEM pItem = hb_itemNew( nullptr );
       if( SELF_INFO( &pArea->area, DBI_TABLEEXT, pItem ) == HB_SUCCESS )
       {
          pFileName->szExtension = hb_itemGetCPtr( pItem );
@@ -1455,7 +1455,7 @@ static HB_ERRCODE hb_delimCreate( DELIMAREAP pArea, LPDBOPENINFO pCreateInfo )
    errCode = SUPER_CREATE( &pArea->area, pCreateInfo );
    if( errCode == HB_SUCCESS )
    {
-      PHB_ITEM pItem = hb_itemNew( NULL );
+      PHB_ITEM pItem = hb_itemNew( nullptr );
 
       hb_delimInitArea( pArea, szFileName );
 
@@ -1512,7 +1512,7 @@ static HB_ERRCODE hb_delimOpen( DELIMAREAP pArea, LPDBOPENINFO pOpenInfo )
    /* Add default file name extension if necessary */
    if( hb_setGetDefExtension() && ! pFileName->szExtension )
    {
-      PHB_ITEM pFileExt = hb_itemNew( NULL );
+      PHB_ITEM pFileExt = hb_itemNew( nullptr );
       if( SELF_INFO( &pArea->area, DBI_TABLEEXT, pFileExt ) == HB_SUCCESS )
       {
          pFileName->szExtension = hb_itemGetCPtr( pFileExt );

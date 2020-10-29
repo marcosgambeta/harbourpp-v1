@@ -385,7 +385,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
                break;
 
             default:
-               pItem  = hb_itemNew( NULL );
+               pItem  = hb_itemNew( nullptr );
                bError = HB_TRUE;
                break;
          }

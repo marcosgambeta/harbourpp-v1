@@ -806,7 +806,7 @@ static HB_ERRCODE hb_usrInit( LPRDDNODE pRDD )
    pNode->pSuperTable = &pRDD->pSuperTable;
    pNode->pMethods = ( PHB_ITEM ) pRDD->pTable.whoCares;
    pRDD->pTable.whoCares = pRDD->pSuperTable.whoCares;
-   pNode->pItem = hb_itemNew( NULL );
+   pNode->pItem = hb_itemNew( nullptr );
 
    if( ISSUPER_INIT( pRDD ) )
       errCode = SUPER_INIT( pRDD );
@@ -912,7 +912,7 @@ static HB_ERRCODE hb_usrNewArea( AREAP pArea )
 
    if( errCode == HB_SUCCESS )
    {
-      SELF_USRDATA( pArea )->pItem = hb_itemNew( NULL );
+      SELF_USRDATA( pArea )->pItem = hb_itemNew( nullptr );
       hb_usrEvalAreaFunc( SELF_USRNODE( pArea )->pMethods, UR_NEW, pArea );
    }
 
@@ -2991,7 +2991,7 @@ HB_FUNC( USRRDD_AREARESULT )
    if( pArea && pArea->rddID < s_uiUsrNodes && SELF_USRNODE( pArea ) )
    {
       if( ! pArea->valResult )
-         pArea->valResult = hb_itemNew( NULL );
+         pArea->valResult = hb_itemNew( nullptr );
 
       hb_itemReturn( pArea->valResult );
       if( hb_pcount() >= 2 )

@@ -1272,8 +1272,8 @@ static HB_SIZE hb_deserializeHash( PHB_ITEM pItem,
    if( nLen )
    {
 #if 0
-      PHB_ITEM pKey = hb_itemNew( NULL );
-      PHB_ITEM pVal = hb_itemNew( NULL );
+      PHB_ITEM pKey = hb_itemNew( nullptr );
+      PHB_ITEM pVal = hb_itemNew( nullptr );
 
       hb_hashPreallocate( pItem, nLen );
       while( nLen-- )
@@ -1572,7 +1572,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem,
 
       case HB_SERIAL_HASHDEFVAL:
       {
-         PHB_ITEM pDefVal = hb_itemNew( NULL );
+         PHB_ITEM pDefVal = hb_itemNew( nullptr );
          nOffset = hb_deserializeItem( pDefVal, cdpIn, cdpOut, pBuffer,
                                        nOffset, pRefList );
          nOffset = hb_deserializeItem( pItem, cdpIn, cdpOut, pBuffer,
@@ -1847,7 +1847,7 @@ PHB_ITEM hb_itemDeserializeCP( const char ** pBufferPtr, HB_SIZE * pnSize,
    hb_itemSerialRefListInit( &refList );
    if( ! pnSize || hb_deserializeTest( ( const HB_UCHAR ** ) pBufferPtr, pnSize, 0, &refList ) )
    {
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
       hb_deserializeItem( pItem, cdpIn, cdpOut, pBuffer, 0, &refList );
    }
    hb_itemSerialRefListFree( &refList );

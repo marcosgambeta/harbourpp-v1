@@ -873,7 +873,7 @@ HB_FUNC( WIN_OLESERVERINIT )
                      if( HB_IS_HASH( s_pAction ) )
                         s_fHashClone = HB_TRUE;
                      else
-                        s_pMsgHash = hb_hashNew( hb_itemNew( NULL ) );
+                        s_pMsgHash = hb_hashNew( hb_itemNew( nullptr ) );
                   }
                }
                else if( ! HB_ISNIL( 4 ) )

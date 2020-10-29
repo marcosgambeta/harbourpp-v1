@@ -399,7 +399,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
 
          default:  /* other fields as binary string */
             pVar->sqldata      = ( char * ) hb_xgrab( sizeof( char ) * pVar->sqllen );
-            pItem  = hb_itemNew( NULL );
+            pItem  = hb_itemNew( nullptr );
             bError = HB_TRUE;
             break;
       }

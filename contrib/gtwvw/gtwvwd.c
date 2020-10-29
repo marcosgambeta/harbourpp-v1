@@ -1648,7 +1648,7 @@ static BOOL hb_gt_wvw_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          else
          {
             if( pInfo->pResult == NULL )
-               pInfo->pResult = hb_itemNew( NULL );
+               pInfo->pResult = hb_itemNew( nullptr );
 #if defined( UNICODE )
             hb_gt_winapi_getClipboard( CF_UNICODETEXT, pInfo->pResult );
 #else
@@ -1669,7 +1669,7 @@ static BOOL hb_gt_wvw_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          int iX, iY;
 
          if( ! pInfo->pResult )
-            pInfo->pResult = hb_itemNew( NULL );
+            pInfo->pResult = hb_itemNew( nullptr );
          hb_arrayNew( pInfo->pResult, 2 );
          hb_itemPutNI( hb_arrayGetItemPtr( pInfo->pResult, 2 ), pWindowData->PTEXTSIZE.y * pWindowData->ROWS );
          hb_itemPutNI( hb_arrayGetItemPtr( pInfo->pResult, 1 ), pWindowData->PTEXTSIZE.x * pWindowData->COLS );
@@ -1703,7 +1703,7 @@ static BOOL hb_gt_wvw_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          {
             int i;
             if( ! pInfo->pResult )
-               pInfo->pResult = hb_itemNew( NULL );
+               pInfo->pResult = hb_itemNew( nullptr );
             hb_arrayNew( pInfo->pResult, 16 );
             for( i = 1; i <= 16; i++ )
                hb_itemPutNL( hb_arrayGetItemPtr( pInfo->pResult, i ), _COLORS[ i - 1 ] );
@@ -9364,18 +9364,18 @@ static void RunControlBlock( UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, UIN
       pcd->bBusy = TRUE;
       pcd->uiBusy++;
 
-      phiWinNum = hb_itemNew( NULL );
+      phiWinNum = hb_itemNew( nullptr );
       hb_itemPutNI( phiWinNum, ( int ) usWinNum );
 
-      phiXBid = hb_itemNew( NULL );
+      phiXBid = hb_itemNew( nullptr );
       hb_itemPutNI( phiXBid, ( int ) pcd->uiCtrlid );
 
       if( pcd->byCtrlClass == WVW_CONTROL_SCROLLBAR )
       {
-         phiXBmsg = hb_itemNew( NULL );
+         phiXBmsg = hb_itemNew( nullptr );
          hb_itemPutNI( phiXBmsg, ( int ) LOWORD( wParam ) );
 
-         phiXBpos = hb_itemNew( NULL );
+         phiXBpos = hb_itemNew( nullptr );
          hb_itemPutNI( phiXBpos, ( int ) HIWORD( wParam ) );
 
          pReturn = hb_itemDo( pcd->phiCodeBlock, 4, phiWinNum, phiXBid, phiXBmsg, phiXBpos );
@@ -9433,10 +9433,10 @@ static void RunControlBlock( UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, UIN
 #endif
 
                /* now execute the codeblock */
-               phiEvent = hb_itemNew( NULL );
+               phiEvent = hb_itemNew( nullptr );
                hb_itemPutNI( phiEvent, iEventType );
 
-               phiIndex = hb_itemNew( NULL );
+               phiIndex = hb_itemNew( nullptr );
                hb_itemPutNI( phiIndex, ( int ) iCurSel );
 
                pReturn = hb_itemDo( pcd->phiCodeBlock, 4, phiWinNum, phiXBid, phiEvent, phiIndex );
@@ -9457,7 +9457,7 @@ static void RunControlBlock( UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, UIN
             case EN_CHANGE:
 
                /* now execute the codeblock */
-               phiEvent = hb_itemNew( NULL );
+               phiEvent = hb_itemNew( nullptr );
 
                hb_itemPutNI( phiEvent, ( int ) iEventType );
 
@@ -10350,7 +10350,7 @@ LRESULT CALLBACK hb_gt_wvwEBProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
    if( iKey != 0 )
    {
       PHB_ITEM pCodeblock;
-      PHB_ITEM hiKey = hb_itemNew( NULL );
+      PHB_ITEM hiKey = hb_itemNew( nullptr );
       PHB_ITEM pReturn;
       BOOL     bCodeExec = FALSE;
 

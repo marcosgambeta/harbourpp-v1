@@ -1866,7 +1866,7 @@ static void PutParams( DISPPARAMS * dispparam, HB_UINT uiOffset, HB_USHORT uiCla
       if( HB_ISBYREF( uiParam ) )
       {
          if( ! pItem )
-            pItem = hb_itemNew( NULL );
+            pItem = hb_itemNew( nullptr );
          hb_oleVariantToItemEx( pItem, &dispparam->rgvarg[ uiArg ], uiClass );
          hb_itemParamStoreForward( uiParam, pItem );
          VariantClear( pRefs );

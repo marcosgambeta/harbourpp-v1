@@ -1349,7 +1349,7 @@ static PHB_ITEM hb_dbgEvalMakeBlock( HB_WATCHPOINT * watch )
    hb_strncpy( szBlock, "{|__dbg|", buffsize );
    hb_strncat( szBlock, watch->szExpr, buffsize );
    hb_strncat( szBlock, "}", buffsize );
-   pBlock = hb_itemNew( NULL );
+   pBlock = hb_itemNew( nullptr );
 
    if( ! hb_dbgEvalMacro( szBlock, pBlock ) )
    {
@@ -1803,7 +1803,7 @@ static PHB_ITEM hb_dbgVarGet( HB_VARINFO * scope )
             PHB_ITEM pItem = hb_memvarGetValueBySym( pDyn );
             if( ! pItem )
             {
-               pItem = hb_itemNew( NULL );
+               pItem = hb_itemNew( nullptr );
                if( hb_rddFieldGet( pItem, hb_dynsymSymbol( pDyn ) ) == HB_SUCCESS )
                {
                   scope->cType = 'F';

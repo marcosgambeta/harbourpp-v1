@@ -618,7 +618,7 @@ static void hb_hrbDo( PHRB_BODY pHrbBody, int iPCount, PHB_ITEM * pParams )
 
       hb_vmProc( ( HB_USHORT ) iPCount );
 
-      pRetVal = hb_itemNew( NULL );
+      pRetVal = hb_itemNew( nullptr );
       hb_itemMove( pRetVal, hb_stackReturnItem() );
    }
 
@@ -846,7 +846,7 @@ HB_FUNC( HB_HRBGETFUNLIST )
       PHB_SYMB pSym;
       HB_ULONG nPos;
       PHB_ITEM paList = hb_itemArrayNew( 0 );
-      PHB_ITEM pFuncName = hb_itemNew( NULL );
+      PHB_ITEM pFuncName = hb_itemNew( nullptr );
       int iType = hb_parni( 2 );
 
       for( nPos = 0, pSym = pHrbBody->pSymRead; nPos < pHrbBody->ulSymbols; ++pSym, ++nPos )

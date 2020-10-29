@@ -4051,7 +4051,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          else
          {
             if( pInfo->pResult == NULL )
-               pInfo->pResult = hb_itemNew( NULL );
+               pInfo->pResult = hb_itemNew( nullptr );
 #if defined( UNICODE )
             hb_gt_winapi_getClipboard( CF_UNICODETEXT, pInfo->pResult );
 #else
@@ -4072,7 +4072,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_SCREENSIZE:
          if( ! pInfo->pResult )
-            pInfo->pResult = hb_itemNew( NULL );
+            pInfo->pResult = hb_itemNew( nullptr );
 
          hb_arrayNew( pInfo->pResult, 2 );
          hb_arraySetNI( pInfo->pResult, 2, pWVT->PTEXTSIZE.y * pWVT->ROWS );
@@ -4278,7 +4278,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          {
             int i;
             if( ! pInfo->pResult )
-               pInfo->pResult = hb_itemNew( NULL );
+               pInfo->pResult = hb_itemNew( nullptr );
             hb_arrayNew( pInfo->pResult, 16 );
             for( i = 0; i < 16; i++ )
                hb_arraySetNL( pInfo->pResult, i + 1, pWVT->COLORS[ i ] );
@@ -4334,7 +4334,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          }
 
          if( ! pInfo->pResult )
-            pInfo->pResult = hb_itemNew( NULL );
+            pInfo->pResult = hb_itemNew( nullptr );
          hb_arrayNew( pInfo->pResult, 2 );
 
          hb_arraySetNI( pInfo->pResult, 1, x );

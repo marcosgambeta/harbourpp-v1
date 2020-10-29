@@ -565,7 +565,7 @@ PHB_ITEM hb_hashNew( PHB_ITEM pItem )
    HB_TRACE( HB_TR_DEBUG, ( "hb_hashNew(%p)", ( void * ) pItem ) );
 
    if( pItem == NULL )
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
    else if( HB_IS_COMPLEX( pItem ) )
       hb_itemClear( pItem );
 
@@ -1006,7 +1006,7 @@ PHB_ITEM hb_hashClone( PHB_ITEM pHash )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_hashClone(%p)", ( void * ) pHash ) );
 
-   return hb_hashCloneTo( hb_itemNew( NULL ), pHash );
+   return hb_hashCloneTo( hb_itemNew( nullptr ), pHash );
 }
 
 void hb_hashJoin( PHB_ITEM pDest, PHB_ITEM pSource, int iType )

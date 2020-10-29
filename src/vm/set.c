@@ -1017,7 +1017,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          else if( pResult )
             hb_itemClear( pResult );
          else
-            pResult = hb_itemNew( NULL );
+            pResult = hb_itemNew( nullptr );
          if( pArg1 != NULL )
          {
             if( HB_IS_NIL( pArg1 ) )
@@ -1038,7 +1038,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          else if( pResult )
             hb_itemClear( pResult );
          else
-            pResult = hb_itemNew( NULL );
+            pResult = hb_itemNew( nullptr );
          if( pArg1 != NULL )
          {
             if( HB_IS_NIL( pArg1 ) )

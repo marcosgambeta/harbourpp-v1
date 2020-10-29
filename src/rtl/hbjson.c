@@ -582,7 +582,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
       szSource = _skipws( szSource + 1 );
       if( *szSource != ']' )
       {
-         PHB_ITEM pItem = hb_itemNew( NULL );
+         PHB_ITEM pItem = hb_itemNew( nullptr );
 
          for( ;; )
          {
@@ -618,8 +618,8 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
       szSource = _skipws( szSource + 1 );
       if( *szSource != '}' )
       {
-         PHB_ITEM pItemKey = hb_itemNew( NULL );
-         PHB_ITEM pItemValue = hb_itemNew( NULL );
+         PHB_ITEM pItemKey = hb_itemNew( nullptr );
+         PHB_ITEM pItemValue = hb_itemNew( nullptr );
 
          for( ;; )
          {
@@ -698,7 +698,7 @@ char * hb_jsonEncode( PHB_ITEM pValue, HB_SIZE * pnLen, int iIndent )
 
 HB_SIZE hb_jsonDecodeCP( const char * szSource, PHB_ITEM pValue, PHB_CODEPAGE cdp )
 {
-   PHB_ITEM pItem = pValue ? pValue : hb_itemNew( NULL );
+   PHB_ITEM pItem = pValue ? pValue : hb_itemNew( nullptr );
    const char * sz;
 
    sz = szSource ? _hb_jsonDecode( _skipws( szSource ), pItem, cdp ) : NULL;
@@ -743,7 +743,7 @@ HB_FUNC( HB_JSONENCODE )
 
 HB_FUNC( HB_JSONDECODE )
 {
-   PHB_ITEM pItem = hb_itemNew( NULL );
+   PHB_ITEM pItem = hb_itemNew( nullptr );
    HB_SIZE nSize = hb_jsonDecodeCP( hb_parc( 1 ), pItem, _hb_jsonCdpPar( 3 ) );
 
    if( HB_ISBYREF( 2 ) )

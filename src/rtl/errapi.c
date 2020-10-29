@@ -442,7 +442,7 @@ PHB_ITEM hb_errorBlock( void )
    PHB_ERRDATA pErrData = ( PHB_ERRDATA ) hb_stackGetTSD( &s_errData );
 
    if( ! pErrData->errorBlock )
-      pErrData->errorBlock = hb_itemNew( NULL );
+      pErrData->errorBlock = hb_itemNew( nullptr );
 
    return pErrData->errorBlock;
 }
@@ -480,7 +480,7 @@ void hb_errInit( void )
    hb_dynsymNew( &s_symErrorNew );
 
    /* Create error class and base object */
-   s_pError = hb_itemNew( NULL );
+   s_pError = hb_itemNew( nullptr );
    hb_clsAssociate( hb_errClassCreate() );
    hb_itemMove( s_pError, hb_stackReturnItem() );
 }
@@ -658,7 +658,7 @@ PHB_ITEM hb_errLaunchSubst( PHB_ITEM pError )
       }
    }
    else
-      pResult = hb_itemNew( NULL );
+      pResult = hb_itemNew( nullptr );
 
    return pResult;
 }

@@ -1997,7 +1997,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             int i;
 
             if( ! pInfo->pResult )
-               pInfo->pResult = hb_itemNew( NULL );
+               pInfo->pResult = hb_itemNew( nullptr );
 
             hb_gt_win_SetPalette( HB_FALSE, colors );
 
@@ -2083,7 +2083,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          else
          {
             if( pInfo->pResult == NULL )
-               pInfo->pResult = hb_itemNew( NULL );
+               pInfo->pResult = hb_itemNew( nullptr );
 #if defined( UNICODE )
             hb_gt_winapi_getClipboard( CF_UNICODETEXT, pInfo->pResult );
 #else

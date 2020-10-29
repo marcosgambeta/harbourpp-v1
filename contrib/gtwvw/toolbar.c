@@ -334,7 +334,7 @@ HB_FUNC( WVW_TBGETBUTTONRECT )
    RECT       rc;
    RECT       rcRect = { 0 };
 
-   PHB_ITEM aXY = hb_itemNew( NULL );
+   PHB_ITEM aXY = hb_itemNew( nullptr );
    PHB_ITEM temp;
 
    hWndTB = pWindowData->hToolBar;
@@ -344,7 +344,7 @@ HB_FUNC( WVW_TBGETBUTTONRECT )
       return;
    }
 
-   temp = hb_itemNew( NULL );
+   temp = hb_itemNew( nullptr );
 
    hb_arrayNew( aXY, 4 );
 

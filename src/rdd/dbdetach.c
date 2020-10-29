@@ -99,7 +99,7 @@ HB_FUNC( HB_DBREQUEST )
    {
       const char * szAlias = hb_parc( 1 );
       HB_BOOL fNewArea = hb_parl( 2 );
-      PHB_ITEM pCargo = HB_ISBYREF( 3 ) ? hb_itemNew( NULL ) : NULL;
+      PHB_ITEM pCargo = HB_ISBYREF( 3 ) ? hb_itemNew( nullptr ) : NULL;
       HB_ULONG ulMilliSec = HB_THREAD_INFINITE_WAIT;
       AREAP pArea;
 

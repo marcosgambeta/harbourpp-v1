@@ -65,7 +65,7 @@ static PHB_ITEM hb_itemPutCRaw( PHB_ITEM pItem, const char * szText, HB_SIZE nLe
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    if( nLen == 0 )
    {
@@ -92,7 +92,7 @@ static PHB_ITEM hb_itemPutCRawStatic( PHB_ITEM pItem, const char * szText, HB_SI
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    pItem->type = HB_IT_STRING;
    pItem->item.asString.allocated = 0;
@@ -962,7 +962,7 @@ static PHB_ITEM StructureToArray( HB_BYTE * Buffer, HB_SIZE nBufferLen, PHB_ITEM
    HB_UINT       uiOffset, uiMemberSize;
    HB_BYTE       cShift;
 #if 0
-   PHB_ITEM pRet = hb_itemNew( NULL );
+   PHB_ITEM pRet = hb_itemNew( nullptr );
 #endif
    PHB_BASEARRAY pBaseVar;
 

@@ -140,7 +140,7 @@ static HB_BOOL _hb_sxGetKey( PHB_ITEM pKeyItem, char * pKeyVal )
 
       if( pArea )
       {
-         pItem = hb_itemNew( NULL );
+         pItem = hb_itemNew( nullptr );
          if( SELF_INFO( pArea, DBI_PASSWORD, pItem ) == HB_SUCCESS )
             pKeyItem = pItem;
       }

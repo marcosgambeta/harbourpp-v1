@@ -60,7 +60,7 @@ HB_FUNC( DBFSIZE )
 
    if( ( pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer() ) != NULL )
    {
-      PHB_ITEM pSize = hb_itemNew( NULL );
+      PHB_ITEM pSize = hb_itemNew( nullptr );
 
       if( SELF_INFO( pArea, DBI_GETHEADERSIZE, pSize ) == HB_SUCCESS )
       {

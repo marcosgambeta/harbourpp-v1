@@ -256,7 +256,7 @@ static HB_ULONG hb_db2Sql( AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
       szInsert = hb_xstrcpy( NULL, "INSERT INTO ", szTable, " VALUES ( ", NULL );
 
    pFileBuf = hb_createFBuffer( pFile, HB_FILE_BUF_SIZE );
-   pTmp = hb_itemNew( NULL );
+   pTmp = hb_itemNew( nullptr );
 
    while( llNext-- > 0 )
    {

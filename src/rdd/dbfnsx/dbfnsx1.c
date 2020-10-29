@@ -759,13 +759,13 @@ static PHB_ITEM hb_nsxKeyGetItem( PHB_ITEM pItem, LPKEYINFO pKey,
             if( pItem )
                hb_itemClear( pItem );
             else
-               pItem = hb_itemNew( NULL );
+               pItem = hb_itemNew( nullptr );
       }
    }
    else if( pItem )
       hb_itemClear( pItem );
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    return pItem;
 }
@@ -781,7 +781,7 @@ static LPKEYINFO hb_nsxEvalKey( LPKEYINFO pKey, LPTAGINFO pTag )
 
    if( pTag->nField )
    {
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
       SELF_GETVALUE( &pArea->dbfarea.area, pTag->nField, pItem );
       pKey = hb_nsxKeyPutItem( pKey, pItem, pArea->dbfarea.ulRecNo, pTag, HB_FALSE, NULL );
       hb_itemRelease( pItem );
@@ -1020,7 +1020,7 @@ static void hb_nsxTagSetScope( LPTAGINFO pTag, HB_USHORT nScope, PHB_ITEM pItem 
                pTag, HB_TRUE, &pScope->scopeKeyLen );
 
       if( pScope->scopeItem == NULL )
-         pScope->scopeItem = hb_itemNew( NULL );
+         pScope->scopeItem = hb_itemNew( nullptr );
       hb_itemCopy( pScope->scopeItem, pItem );
 
       pTag->keyCount = 0;
@@ -4985,7 +4985,7 @@ static HB_ULONG hb_nsxOrdScopeEval( LPTAGINFO pTag,
                                     PHB_ITEM pItemLo, PHB_ITEM pItemHi )
 {
    HB_ULONG ulCount = 0, ulLen = ( HB_ULONG ) pTag->KeyLength;
-   PHB_ITEM pItemTop = hb_itemNew( NULL ), pItemBottom = hb_itemNew( NULL );
+   PHB_ITEM pItemTop = hb_itemNew( nullptr ), pItemBottom = hb_itemNew( nullptr );
    HB_BOOL fDescend = pTag->fUsrDescend;
 
    if( fDescend )
@@ -5864,7 +5864,7 @@ static HB_ERRCODE hb_nsxTagCreate( LPTAGINFO pTag, HB_BOOL fReindex )
 
       pForItem = pTag->pForItem;
       if( pTag->nField )
-         pItem = hb_itemNew( NULL );
+         pItem = hb_itemNew( nullptr );
 
       if( ! pArea->dbfarea.area.lpdbOrdCondInfo || pArea->dbfarea.area.lpdbOrdCondInfo->fAll )
       {
@@ -6616,7 +6616,7 @@ static HB_ERRCODE hb_nsxOpen( NSXAREAP pArea, LPDBOPENINFO pOpenInfo )
 
    if( ! pArea->dbfarea.bLockType )
    {
-      PHB_ITEM pItem = hb_itemNew( NULL );
+      PHB_ITEM pItem = hb_itemNew( nullptr );
       errCode = SELF_INFO( &pArea->dbfarea.area, DBI_LOCKSCHEME, pItem );
       if( errCode != HB_SUCCESS )
       {

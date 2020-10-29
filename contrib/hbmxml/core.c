@@ -1831,7 +1831,7 @@ HB_FUNC( HB_MXMLGETATTRSARRAY )
    if( node && mxmlGetType( node ) == MXML_ELEMENT )
    {
       PHB_ITEM      pAttrs = hb_itemArrayNew( 0 );
-      PHB_ITEM      pAttr  = hb_itemNew( NULL );
+      PHB_ITEM      pAttr  = hb_itemNew( nullptr );
       int           i;
       mxml_attr_t * attr;
 
@@ -1860,7 +1860,7 @@ HB_FUNC( HB_MXMLGETATTRS )
 
    if( node && mxmlGetType( node ) == MXML_ELEMENT )
    {
-      PHB_ITEM      pAttrs = hb_hashNew( hb_itemNew( NULL ) );
+      PHB_ITEM      pAttrs = hb_hashNew( hb_itemNew( nullptr ) );
       PHB_ITEM      pKey   = NULL;
       PHB_ITEM      pValue = NULL;
       int           i;

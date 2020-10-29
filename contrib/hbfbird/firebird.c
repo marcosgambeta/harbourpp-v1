@@ -377,7 +377,7 @@ HB_FUNC( FBQUERY )
 
       num_cols = sqlda->sqld;
       aNew     = hb_itemArrayNew( num_cols );
-      aTemp    = hb_itemNew( NULL );
+      aTemp    = hb_itemNew( nullptr );
 
       for( i = 0, var = sqlda->sqlvar; i < sqlda->sqld; i++, var++ )
       {

@@ -1481,7 +1481,7 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          pItem = hb_vmEvalBlockOrMacro( pTag->pKeyItem );
          hb_cdpSelect( pCodepage );
          if( ! pOrderInfo->itmResult )
-            pOrderInfo->itmResult = hb_itemNew( NULL );
+            pOrderInfo->itmResult = hb_itemNew( nullptr );
          hb_itemMove( pOrderInfo->itmResult, pItem );
          break;
       }

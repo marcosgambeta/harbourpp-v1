@@ -59,7 +59,7 @@ HB_BOOL hbamf_is_cls_externalizable( HB_USHORT uiClass )
 
    if( uiClass && pSymbol )
    {
-      PHB_ITEM pRetCopy = hb_itemNew( NULL );
+      PHB_ITEM pRetCopy = hb_itemNew( nullptr );
 
       hb_itemMove( pRetCopy, hb_stackReturnItem() );
 

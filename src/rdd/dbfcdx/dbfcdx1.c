@@ -598,13 +598,13 @@ static PHB_ITEM hb_cdxKeyGetItem( LPCDXKEY pKey, PHB_ITEM pItem, LPCDXTAG pTag )
             if( pItem )
                hb_itemClear( pItem );
             else
-               pItem = hb_itemNew( NULL );
+               pItem = hb_itemNew( nullptr );
       }
    }
    else if( pItem )
       hb_itemClear( pItem );
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    return pItem;
 }
@@ -814,7 +814,7 @@ static void hb_cdxTagSetScope( LPCDXTAG pTag, HB_USHORT nScope, PHB_ITEM pItem )
       }
 
       if( *pScope == NULL )
-         *pScope = hb_itemNew( NULL );
+         *pScope = hb_itemNew( nullptr );
       hb_itemCopy( *pScope, pItem );
       *pScopeKey = hb_cdxKeyPutItem( *pScopeKey, pScopeVal, ulRec, pTag, CDX_CMP_PREFIX );
       pTag->curKeyState &= ~( CDX_CURKEY_RAWCNT | CDX_CURKEY_LOGCNT );
@@ -7174,7 +7174,7 @@ static HB_ERRCODE hb_cdxOpen( CDXAREAP pArea, LPDBOPENINFO pOpenInfo )
 
    if( ! pArea->dbfarea.bLockType )
    {
-      PHB_ITEM pItem = hb_itemNew( NULL );
+      PHB_ITEM pItem = hb_itemNew( nullptr );
       if( SELF_INFO( &pArea->dbfarea.area, DBI_LOCKSCHEME, pItem ) != HB_SUCCESS )
       {
          hb_itemRelease( pItem );
@@ -9599,7 +9599,7 @@ static void hb_cdxTagDoIndex( LPCDXTAG pTag, HB_BOOL fReindex )
 
       pForItem = pTag->pForItem;
       if( pTag->nField )
-         pItem = hb_itemNew( NULL );
+         pItem = hb_itemNew( nullptr );
 
       if( ! pArea->dbfarea.area.lpdbOrdCondInfo || pArea->dbfarea.area.lpdbOrdCondInfo->fAll )
          pArea->uiTag = 0;

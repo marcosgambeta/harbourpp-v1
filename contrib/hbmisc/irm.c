@@ -234,7 +234,7 @@ PHB_IRMMAP hb_irmExecute( PHB_ITEM pItem )
 
             dboi.itmOrder    = hb_arrayGetItemPtr( pItem, 2 );
             dboi.atomBagName = hb_arrayGetItemPtr( pItem, 3 );
-            dboi.itmResult   = hb_itemNew( NULL );
+            dboi.itmResult   = hb_itemNew( nullptr );
             dboi.itmNewVal   = hb_itemArrayNew( DBRMI_SIZE );
             hb_arraySetPtr( dboi.itmNewVal, DBRMI_FUNCTION, ( void * ) hb_irmMapMarkCallback );
             hb_arraySetPtr( dboi.itmNewVal, DBRMI_PARAM, ( void * ) pMap );

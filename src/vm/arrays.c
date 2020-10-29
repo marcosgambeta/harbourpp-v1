@@ -315,7 +315,7 @@ PHB_ITEM hb_arrayFromId( PHB_ITEM pItem, void * pArrayId )
 
    hb_arrayPushBase( ( PHB_BASEARRAY ) pArrayId );
    if( pItem == NULL )
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
    hb_itemMove( pItem, hb_stackItemFromTop( -1 ) );
    hb_stackPop();
 
@@ -1603,13 +1603,13 @@ PHB_ITEM hb_arrayClone( PHB_ITEM pArray )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_arrayClone(%p)", ( void * ) pArray ) );
 
-   return hb_arrayCloneTo( hb_itemNew( NULL ), pArray );
+   return hb_arrayCloneTo( hb_itemNew( nullptr ), pArray );
 }
 
 PHB_ITEM hb_arrayFromStack( HB_USHORT uiLen )
 {
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pArray = hb_itemNew( NULL );
+   PHB_ITEM pArray = hb_itemNew( nullptr );
    HB_USHORT uiPos;
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_arrayFromStack(%hu)", uiLen ) );
@@ -1652,7 +1652,7 @@ PHB_ITEM hb_arrayBaseParams( void )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_arrayBaseParams()" ) );
 
-   pArray = hb_itemNew( NULL );
+   pArray = hb_itemNew( nullptr );
    uiPCount = hb_stackBaseItem()->item.asSymbol.paramcnt;
 
    hb_arrayNew( pArray, uiPCount );
@@ -1671,7 +1671,7 @@ PHB_ITEM hb_arraySelfParams( void )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_arraySelfParams()" ) );
 
-   pArray = hb_itemNew( NULL );
+   pArray = hb_itemNew( nullptr );
    uiPCount = hb_stackBaseItem()->item.asSymbol.paramcnt;
 
    hb_arrayNew( pArray, uiPCount + 1 );

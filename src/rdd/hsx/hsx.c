@@ -1655,7 +1655,7 @@ static int hb_hsxFilter( int iHandle, const char * pSeek, HB_SIZE nSeek,
       iResult = hb_hsxSeekSet( iHandle, pSeek, nSeek );
 
    fValid = HB_TRUE;
-   pItem = hb_itemNew( NULL );
+   pItem = hb_itemNew( nullptr );
    while( iResult == HSX_SUCCESS && errCode != HB_FAILURE )
    {
       iResult = hb_hsxNext( iHandle, &ulRec );
@@ -1889,7 +1889,7 @@ HB_FUNC( HS_FILTER )
    }
    if( iHandle >= 0 && nLen > 0 && szText )
    {
-      PHB_ITEM pItem = hb_itemNew( NULL );
+      PHB_ITEM pItem = hb_itemNew( nullptr );
       AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
 
       if( ! pArea )

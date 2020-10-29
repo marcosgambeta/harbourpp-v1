@@ -1277,9 +1277,9 @@ HB_FUNC( WVG_SENDCBMESSAGE )
       case CB_GETCOMBOBOXINFO:
       {
          COMBOBOXINFO cbi;
-         PHB_ITEM     pCbi = hb_itemNew( NULL );
-         PHB_ITEM     pRc1 = hb_itemNew( NULL );
-         PHB_ITEM     pRc2 = hb_itemNew( NULL );
+         PHB_ITEM     pCbi = hb_itemNew( nullptr );
+         PHB_ITEM     pRc1 = hb_itemNew( nullptr );
+         PHB_ITEM     pRc2 = hb_itemNew( nullptr );
 
          memset( &cbi, 0, sizeof( COMBOBOXINFO ) );
          cbi.cbSize = sizeof( COMBOBOXINFO );
@@ -1328,7 +1328,7 @@ HB_FUNC( WVG_SENDCBMESSAGE )
       case CB_GETDROPPEDCONTROLRECT:
       {
          RECT     rc;
-         PHB_ITEM pRect = hb_itemNew( NULL );
+         PHB_ITEM pRect = hb_itemNew( nullptr );
 
          SendMessage( hCB, CB_GETDROPPEDCONTROLRECT, 0, ( LPARAM ) &rc );
 
@@ -1350,7 +1350,7 @@ HB_FUNC( WVG_SENDCBMESSAGE )
       case CB_GETEDITSEL:
       {
          DWORD    range = ( DWORD ) SendMessage( hCB, CB_GETEDITSEL, ( WPARAM ) NULL, ( LPARAM ) NULL );
-         PHB_ITEM pRng  = hb_itemNew( NULL );
+         PHB_ITEM pRng  = hb_itemNew( nullptr );
 
          hb_arrayNew( pRng, 2 );
          hb_arraySetNI( pRng, 1, LOWORD( range ) );

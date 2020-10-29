@@ -324,7 +324,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
    SELF_SETFIELDEXTENT( &pArea->area, uiFields );
 
    pItemEof = hb_itemArrayNew( uiFields );
-   pItem    = hb_itemNew( NULL );
+   pItem    = hb_itemNew( nullptr );
 
 #if 0
    HB_TRACE( HB_TR_ALWAYS, ( "fieldcount=%d", iNameLen ) );

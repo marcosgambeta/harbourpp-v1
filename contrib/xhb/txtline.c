@@ -241,7 +241,7 @@ HB_FUNC( HB_READLINE )
    {
       if( ! hb_setGetCPtr( HB_SET_EOL ) )
       {
-         PHB_ITEM pEOL = hb_itemNew( NULL );
+         PHB_ITEM pEOL = hb_itemNew( nullptr );
          hb_itemPutC( pEOL, hb_conNewLine() );
          hb_setSetItem( HB_SET_EOL, pEOL );
          hb_itemRelease( pEOL );
@@ -253,7 +253,7 @@ HB_FUNC( HB_READLINE )
    else
       pTerm1 = hb_param( 2, HB_IT_ANY );
 
-   pOpt = hb_itemNew( NULL );
+   pOpt = hb_itemNew( nullptr );
 
    if( HB_IS_ARRAY( pTerm1 ) )
    {

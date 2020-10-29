@@ -3676,7 +3676,7 @@ static PHB_ITEM hb_clsInst( HB_USHORT uiClass )
 
       if( pClass->uiMutexOffset )
          ++uiDatas;
-      pSelf = hb_itemNew( NULL );
+      pSelf = hb_itemNew( nullptr );
       hb_arrayNew( pSelf, uiDatas );
       pSelf->item.asArray.value->uiClass = uiClass;
 
@@ -4215,7 +4215,7 @@ HB_FUNC( __CLASSNAME )
 HB_FUNC( __CLASSSEL )
 {
    HB_USHORT uiClass = ( HB_USHORT ) hb_parni( 1 );
-   PHB_ITEM pReturn = hb_itemNew( NULL );
+   PHB_ITEM pReturn = hb_itemNew( nullptr );
 
    if( uiClass && uiClass <= s_uiClasses )
    {
@@ -5316,7 +5316,7 @@ HB_FUNC( __OBJRESTOREIVARS )
 HB_FUNC( __CLSGETPROPERTIES )
 {
    HB_USHORT uiClass = ( HB_USHORT ) hb_parni( 1 );
-   PHB_ITEM pReturn = hb_itemNew( NULL );
+   PHB_ITEM pReturn = hb_itemNew( nullptr );
 
    if( uiClass && uiClass <= s_uiClasses )
    {
@@ -5581,7 +5581,7 @@ void hb_clsAssociate( HB_USHORT usClassH )
 HB_FUNC( __CLSVERIFY )
 {
    HB_USHORT uiClass = ( HB_USHORT ) hb_parni( 1 );
-   PHB_ITEM pReturn = hb_itemNew( NULL );
+   PHB_ITEM pReturn = hb_itemNew( nullptr );
 
    if( uiClass && uiClass <= s_uiClasses )
    {

@@ -178,7 +178,7 @@ PHB_ITEM hb_itemArrayNew( HB_SIZE nLen )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemArrayNew(%" HB_PFS "u)", nLen ) );
 
-   pItem = hb_itemNew( NULL );
+   pItem = hb_itemNew( nullptr );
 
    hb_arrayNew( pItem, nLen );
 
@@ -191,7 +191,7 @@ PHB_ITEM hb_itemArrayGet( PHB_ITEM pArray, HB_SIZE nIndex )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemArrayGet(%p, %" HB_PFS "u)", ( void * ) pArray, nIndex ) );
 
-   pItem = hb_itemNew( NULL );
+   pItem = hb_itemNew( nullptr );
 
    if( pArray )
       hb_arrayGet( pArray, nIndex, pItem );
@@ -216,7 +216,7 @@ PHB_ITEM hb_itemPutNil( PHB_ITEM pItem )
    if( pItem )
       hb_itemSetNil( pItem );
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    return pItem;
 }
@@ -245,7 +245,7 @@ PHB_ITEM hb_itemPutC( PHB_ITEM pItem, const char * szText )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    pItem->type = HB_IT_STRING;
    pItem->item.asString.value     = ( char * ) HB_UNCONST( szText );
@@ -280,7 +280,7 @@ PHB_ITEM hb_itemPutCL( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    /* NOTE: CA-Cl*pper seems to be buggy here, it will return nLen bytes of
             trash if the szText buffer is NULL, at least with hb_retclen().
@@ -306,7 +306,7 @@ PHB_ITEM hb_itemPutCConst( PHB_ITEM pItem, const char * szText )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    nLen = szText ? strlen( szText ) : 0;
 
@@ -329,7 +329,7 @@ PHB_ITEM hb_itemPutCLConst( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    pItem->type = HB_IT_STRING;
    pItem->item.asString.length = nLen;
@@ -357,7 +357,7 @@ PHB_ITEM hb_itemPutCPtr( PHB_ITEM pItem, char * szText )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    nLen = szText ? strlen( szText ) : 0;
 
@@ -389,7 +389,7 @@ PHB_ITEM hb_itemPutCLPtr( PHB_ITEM pItem, char * szText, HB_SIZE nLen )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    pItem->type = HB_IT_STRING;
    pItem->item.asString.length = nLen;
@@ -838,7 +838,7 @@ PHB_ITEM hb_itemPutDS( PHB_ITEM pItem, const char * szDate )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    pItem->type = HB_IT_DATE;
    pItem->item.asDateTime.julian = hb_dateEncStr( szDate );
@@ -857,7 +857,7 @@ PHB_ITEM hb_itemPutD( PHB_ITEM pItem, int iYear, int iMonth, int iDay )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    pItem->type = HB_IT_DATE;
    pItem->item.asDateTime.julian = hb_dateEncode( iYear, iMonth, iDay );
@@ -876,7 +876,7 @@ PHB_ITEM hb_itemPutDL( PHB_ITEM pItem, long lJulian )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    pItem->type = HB_IT_DATE;
    pItem->item.asDateTime.julian = lJulian;
@@ -895,7 +895,7 @@ PHB_ITEM hb_itemPutTS( PHB_ITEM pItem, const char * szDateTime )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    pItem->type = HB_IT_TIMESTAMP;
    hb_timeStampStrRawGet( szDateTime, &pItem->item.asDateTime.julian,
@@ -916,7 +916,7 @@ PHB_ITEM hb_itemPutTD( PHB_ITEM pItem, double dTimeStamp )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    hb_timeStampUnpackDT( dTimeStamp, &lJulian, &lMilliSec );
    pItem->type = HB_IT_TIMESTAMP;
@@ -936,7 +936,7 @@ PHB_ITEM hb_itemPutTDT( PHB_ITEM pItem, long lJulian, long lMilliSec )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    pItem->type = HB_IT_TIMESTAMP;
    pItem->item.asDateTime.julian = lJulian;
@@ -955,7 +955,7 @@ PHB_ITEM hb_itemPutL( PHB_ITEM pItem, HB_BOOL bValue )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    pItem->type = HB_IT_LOGICAL;
    pItem->item.asLogical.value = bValue;
@@ -975,7 +975,7 @@ PHB_ITEM hb_itemPutND( PHB_ITEM pItem, double dNumber )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    pItem->type = HB_IT_DOUBLE;
    pItem->item.asDouble.length = HB_DBL_LENGTH( dNumber );
@@ -995,7 +995,7 @@ PHB_ITEM hb_itemPutNI( PHB_ITEM pItem, int iNumber )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    pItem->type = HB_IT_INTEGER;
    pItem->item.asInteger.value = iNumber;
@@ -1014,7 +1014,7 @@ PHB_ITEM hb_itemPutNL( PHB_ITEM pItem, long lNumber )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    HB_ITEM_PUT_LONGRAW( pItem, lNumber );
 
@@ -1031,7 +1031,7 @@ PHB_ITEM hb_itemPutNS( PHB_ITEM pItem, HB_ISIZ nNumber )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
 #if HB_SIZE_MAX <= HB_VMUINT_MAX
    pItem->type = HB_IT_INTEGER;
@@ -1068,7 +1068,7 @@ PHB_ITEM hb_itemPutNLL( PHB_ITEM pItem, HB_LONGLONG llNumber )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
 #if HB_VMLONG_MAX >= LONGLONG_MAX
    pItem->type = HB_IT_LONG;
@@ -1094,7 +1094,7 @@ PHB_ITEM hb_itemPutNInt( PHB_ITEM pItem, HB_MAXINT nNumber )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    if( HB_LIM_INT( nNumber ) )
    {
@@ -1167,7 +1167,7 @@ PHB_ITEM hb_itemPutNDLen( PHB_ITEM pItem, double dNumber, int iWidth, int iDec )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    if( iWidth <= 0 || iWidth >= HB_DEFAULT_WIDTH )
       iWidth = HB_DBL_LENGTH( dNumber );
@@ -1196,7 +1196,7 @@ PHB_ITEM hb_itemPutNDDec( PHB_ITEM pItem, double dNumber, int iDec )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    pItem->type = HB_IT_DOUBLE;
    pItem->item.asDouble.length = HB_DBL_LENGTH( dNumber );
@@ -1251,7 +1251,7 @@ PHB_ITEM hb_itemPutNILen( PHB_ITEM pItem, int iNumber, int iWidth )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    if( iWidth <= 0 || iWidth >= HB_DEFAULT_WIDTH )
       iWidth = HB_INT_LENGTH( iNumber );
@@ -1273,7 +1273,7 @@ PHB_ITEM hb_itemPutNLLen( PHB_ITEM pItem, long lNumber, int iWidth )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
 #if HB_VMINT_MAX == LONG_MAX
    if( iWidth <= 0 || iWidth >= HB_DEFAULT_WIDTH )
@@ -1305,7 +1305,7 @@ PHB_ITEM hb_itemPutNLLLen( PHB_ITEM pItem, HB_LONGLONG llNumber, int iWidth )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
 #if HB_VMLONG_MAX >= LONGLONG_MAX
    if( iWidth <= 0 || iWidth >= HB_DEFAULT_WIDTH )
@@ -1363,7 +1363,7 @@ PHB_ITEM hb_itemPutPtr( PHB_ITEM pItem, void * pValue )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    pItem->type = HB_IT_POINTER;
    pItem->item.asPointer.value = pValue;
@@ -1383,7 +1383,7 @@ PHB_ITEM hb_itemPutPtrGC( PHB_ITEM pItem, void * pValue )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    pItem->type = HB_IT_POINTER;
    pItem->item.asPointer.value = pValue;
@@ -1405,7 +1405,7 @@ PHB_ITEM hb_itemPutPtrRawGC( PHB_ITEM pItem, void * pValue )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    pItem->type = HB_IT_POINTER;
    pItem->item.asPointer.value = pValue;
@@ -1425,7 +1425,7 @@ PHB_ITEM hb_itemPutSymbol( PHB_ITEM pItem, PHB_SYMB pSym )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    pItem->type = HB_IT_SYMBOL;
    pItem->item.asSymbol.value        = pSym;
@@ -1953,7 +1953,7 @@ PHB_ITEM hb_itemUnRefOnce( PHB_ITEM pItem )
             }
 
             /* put it here to avoid recursive RT error generation */
-            pItem->item.asEnum.valuePtr = hb_itemNew( NULL );
+            pItem->item.asEnum.valuePtr = hb_itemNew( nullptr );
 
             if( hb_vmRequestQuery() == 0 )
             {
@@ -2207,7 +2207,7 @@ PHB_ITEM hb_itemClone( PHB_ITEM pItem )
    if( HB_IS_ARRAY( pItem ) )
    {
       if( HB_IS_OBJECT( pItem ) )
-         return hb_objCloneTo( hb_itemNew( NULL ), pItem );
+         return hb_objCloneTo( hb_itemNew( nullptr ), pItem );
       else
          return hb_arrayClone( pItem );
    }

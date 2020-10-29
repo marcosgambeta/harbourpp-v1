@@ -134,7 +134,7 @@ HB_FUNC( FSIZE )
 
       if( uiIndex > 0 )
       {
-         PHB_ITEM pItem = hb_itemNew( NULL );
+         PHB_ITEM pItem = hb_itemNew( nullptr );
 
          if( SELF_FIELDINFO( pArea, uiIndex, DBS_LEN, pItem ) == HB_SUCCESS )
          {
@@ -172,7 +172,7 @@ HB_FUNC( __FOX_SEEK )
             DBORDERINFO pInfo;
             memset( &pInfo, 0, sizeof( pInfo ) );
             pInfo.itmOrder = pTag;
-            pInfo.itmResult = hb_itemNew( NULL );
+            pInfo.itmResult = hb_itemNew( nullptr );
             errCode = SELF_ORDLSTFOCUS( pArea, &pInfo );
             hb_itemRelease( pInfo.itmResult );
          }

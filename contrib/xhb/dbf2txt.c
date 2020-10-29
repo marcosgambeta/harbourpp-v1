@@ -187,7 +187,7 @@ HB_FUNC( DBF2TEXT )
    if( cdp && cdp == hb_vmCDP() )
       cdp = NULL;
 
-   pTmp = hb_itemNew( NULL );
+   pTmp = hb_itemNew( nullptr );
 
    if( ! cDelim )
       cDelim = "\"";

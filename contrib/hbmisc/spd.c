@@ -460,7 +460,7 @@ HB_FUNC( SQL_SPRINTF )
                   ulMaxBuf += f + DK_INCBUF;
                   cBuffer   = ( char * ) hb_xrealloc( cBuffer, ulMaxBuf );
                }
-               pItmCpy = hb_itemNew( NULL );
+               pItmCpy = hb_itemNew( nullptr );
 #ifdef HB_IT_NULL
                if( IsType == 2 && ! HB_IS_NULL( pItmPar ) )
                   hb_itemPutCL( pItmCpy, "DEFAULT", 7 );
@@ -480,7 +480,7 @@ HB_FUNC( SQL_SPRINTF )
             {
                if( IsType )
                {
-                  hb_itemCopy( pItmCpy = hb_itemNew( NULL ), pItmPar );
+                  hb_itemCopy( pItmCpy = hb_itemNew( nullptr ), pItmPar );
                   pItmPar = pItmCpy;
                   if( IsType == 2 && hb_itemGetCLen( pItmPar ) == 0 )   /* 0 length string print DEFAULT for T converter */
                      hb_itemPutCL( pItmPar, "DEFAULT", 7 );
@@ -543,7 +543,7 @@ HB_FUNC( SQL_SPRINTF )
                   ulMaxBuf += f + DK_INCBUF;
                   cBuffer   = ( char * ) hb_xrealloc( cBuffer, ulMaxBuf );
                }
-               pItmCpy = hb_itemNew( NULL );
+               pItmCpy = hb_itemNew( nullptr );
                hb_itemPutC( pItmCpy, cDTFrm );
                if( IsType )
                {
@@ -573,7 +573,7 @@ HB_FUNC( SQL_SPRINTF )
                }
                if( iCOut == 's' )
                {
-                  hb_itemCopy( pItmCpy = hb_itemNew( NULL ), pItmPar );
+                  hb_itemCopy( pItmCpy = hb_itemNew( nullptr ), pItmPar );
                   pItmPar = pItmCpy;
                   hb_itemPutC( pItmPar,
                                hb_itemGetL( pItmPar ) ? ( s ? cIntMod : "TRUE" ) :
@@ -608,7 +608,7 @@ HB_FUNC( SQL_SPRINTF )
                      ulMaxBuf += f + DK_INCBUF;
                      cBuffer   = ( char * ) hb_xrealloc( cBuffer, ulMaxBuf );
                   }
-                  pItmCpy = hb_itemNew( NULL );
+                  pItmCpy = hb_itemNew( nullptr );
                   hb_itemPutCL( pItmCpy, cTrimStr, f );
                   s = SCItm( cBuffer, ulMaxBuf, cParFrm, iCOut, IsIndW, iIndWidth, IsIndP, iIndPrec,
                              pItmCpy );

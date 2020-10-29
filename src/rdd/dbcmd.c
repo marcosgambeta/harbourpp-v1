@@ -645,7 +645,7 @@ HB_FUNC( __DBPACK )
          if( pArea->valResult )
             hb_itemClear( pArea->valResult );
          else
-            pArea->valResult = hb_itemNew( NULL );
+            pArea->valResult = hb_itemNew( nullptr );
       }
       SELF_PACK( pArea );
       if( pBlock )
@@ -864,7 +864,7 @@ HB_FUNC( DBSTRUCT )
 HB_FUNC( DBTABLEEXT )
 {
    AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
-   PHB_ITEM pItem = hb_itemNew( NULL );
+   PHB_ITEM pItem = hb_itemNew( nullptr );
    HB_ERRCODE errCode = HB_FAILURE;
 
    if( ! pArea )
@@ -958,7 +958,7 @@ HB_FUNC( FCOUNT )
 
 HB_FUNC( FIELDGET )
 {
-   PHB_ITEM pItem = hb_itemNew( NULL );
+   PHB_ITEM pItem = hb_itemNew( nullptr );
    AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
    HB_USHORT uiField = ( HB_FIELDNO ) hb_parni( 1 );
 
@@ -1059,7 +1059,7 @@ HB_FUNC( HEADER )
       hb_retni( 0 );
    else
    {
-      PHB_ITEM pItem = hb_itemNew( NULL );
+      PHB_ITEM pItem = hb_itemNew( nullptr );
       SELF_INFO( pArea, DBI_GETHEADERSIZE, pItem );
       hb_itemReturnRelease( pItem );
    }
@@ -1116,7 +1116,7 @@ HB_FUNC( LUPDATE )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_itemNew( NULL );
+      PHB_ITEM pItem = hb_itemNew( nullptr );
 
       SELF_INFO( pArea, DBI_LASTUPDATE, pItem );
       hb_itemReturnRelease( pItem );
@@ -1435,7 +1435,7 @@ HB_FUNC( ORDLISTADD )
          return;
       }
 
-      pOrderInfo.itmResult = hb_itemNew( NULL );
+      pOrderInfo.itmResult = hb_itemNew( nullptr );
 
       errCode = SELF_ORDLSTADD( pArea, &pOrderInfo );
 
@@ -1613,7 +1613,7 @@ HB_FUNC( RECSIZE )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_itemNew( NULL );
+      PHB_ITEM pItem = hb_itemNew( nullptr );
       SELF_INFO( pArea, DBI_GETRECSIZE, pItem );
       hb_itemReturnRelease( pItem );
    }
@@ -1702,7 +1702,7 @@ HB_FUNC( ORDSCOPE )
       int iScope = hb_parni( 1 );
 
       memset( &pInfo, 0, sizeof( pInfo ) );
-      pInfo.itmResult = hb_itemNew( NULL );
+      pInfo.itmResult = hb_itemNew( nullptr );
       if( iScope == 2 )
       {
          if( hb_pcount() > 1 && ! HB_ISNIL( 2 ) )
@@ -2209,7 +2209,7 @@ HB_FUNC( HB_FIELDLEN )
 
       if( uiIndex > 0 )
       {
-         PHB_ITEM pItem = hb_itemNew( NULL );
+         PHB_ITEM pItem = hb_itemNew( nullptr );
 
          if( SELF_FIELDINFO( pArea, uiIndex, DBS_LEN, pItem ) == HB_SUCCESS )
          {
@@ -2239,7 +2239,7 @@ HB_FUNC( HB_FIELDDEC )
 
       if( uiIndex > 0 )
       {
-         PHB_ITEM pItem = hb_itemNew( NULL );
+         PHB_ITEM pItem = hb_itemNew( nullptr );
 
          if( SELF_FIELDINFO( pArea, uiIndex, DBS_DEC, pItem ) == HB_SUCCESS )
          {
@@ -2269,7 +2269,7 @@ HB_FUNC( HB_FIELDTYPE )
 
       if( uiIndex > 0 )
       {
-         PHB_ITEM pItem = hb_itemNew( NULL );
+         PHB_ITEM pItem = hb_itemNew( nullptr );
 
          if( SELF_FIELDINFO( pArea, uiIndex, DBS_TYPE, pItem ) == HB_SUCCESS )
          {

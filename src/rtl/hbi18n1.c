@@ -317,9 +317,9 @@ static PHB_I18N_TRANS hb_i18n_new( void )
 
    pI18N = ( PHB_I18N_TRANS ) hb_xgrabz( sizeof( HB_I18N_TRANS ) );
    hb_atomic_set( &pI18N->iUsers, 1 );
-   pI18N->table = hb_hashNew( hb_itemNew( NULL ) );
-   pI18N->context_table = hb_hashNew( hb_itemNew( NULL ) );
-   pI18N->default_context = hb_hashNew( hb_itemNew( NULL ) );
+   pI18N->table = hb_hashNew( hb_itemNew( nullptr ) );
+   pI18N->context_table = hb_hashNew( hb_itemNew( nullptr ) );
+   pI18N->default_context = hb_hashNew( hb_itemNew( nullptr ) );
    pKey = hb_itemPutCConst( NULL, "CONTEXT" );
    hb_hashAdd( pI18N->table, pKey, pI18N->context_table );
    pKey = hb_itemPutC( pKey, NULL );
@@ -541,7 +541,7 @@ static PHB_I18N_TRANS hb_i18n_param( int * piParam, HB_BOOL fActive )
 static PHB_ITEM hb_i18n_newitem( PHB_I18N_TRANS pI18N )
 {
    PHB_I18N_TRANS * pI18NHolder;
-   PHB_ITEM pItem = hb_itemNew( NULL );
+   PHB_ITEM pItem = hb_itemNew( nullptr );
 
    if( ! pI18N )
       pI18N = hb_i18n_new();
@@ -772,7 +772,7 @@ static void hb_i18n_addtext( PHB_I18N_TRANS pI18N, PHB_ITEM pMsgID,
 
    if( ! pTable )
    {
-      pTable = hb_hashNew( hb_itemNew( NULL ) );
+      pTable = hb_hashNew( hb_itemNew( nullptr ) );
       hb_hashAdd( pTable, pMsgID, pTrans );
       hb_hashAdd( pI18N->context_table, pContext, pTable );
       hb_itemRelease( pTable );
@@ -992,7 +992,7 @@ HB_FUNC( HB_I18N_PLURALFORM )
    pI18N = hb_i18n_param( &iParam, HB_TRUE );
    if( pI18N )
    {
-      PHB_ITEM pOldForm = hb_itemNew( NULL );
+      PHB_ITEM pOldForm = hb_itemNew( nullptr );
       PHB_ITEM pForm = hb_param( iParam, HB_IT_STRING | HB_IT_EVALITEM );
       HB_BOOL fBase = hb_parl( iParam + 1 );
 

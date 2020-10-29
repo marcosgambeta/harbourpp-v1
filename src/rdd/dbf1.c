@@ -298,7 +298,7 @@ void hb_dbfTransCheckCounters( LPDBTRANSINFO lpdbTransInfo )
          if( hb_dbfIsAutoIncField( pField ) != HB_AUTOINC_NONE )
          {
             if( pItem == NULL )
-               pItem = hb_itemNew( NULL );
+               pItem = hb_itemNew( nullptr );
             if( SELF_FIELDINFO( lpdbTransInfo->lpaSource,
                                 lpdbTransInfo->lpTransItems[ uiCount ].uiSource,
                                 DBS_COUNTER, pItem ) != HB_SUCCESS )
@@ -3530,7 +3530,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
    else
       pArea->area.cdPage = hb_vmCDP();
 
-   pItem = hb_itemNew( NULL );
+   pItem = hb_itemNew( nullptr );
    if( SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_PENDINGPASSWORD,
                      pCreateInfo->ulConnection, pItem ) == HB_SUCCESS )
    {
@@ -4111,7 +4111,7 @@ static HB_ERRCODE hb_dbfNewArea( DBFAREAP pArea )
    pArea->uiSetHeader = DB_SETHEADER_APPENDSYNC;
 
    {
-      PHB_ITEM pItem = hb_itemNew( NULL );
+      PHB_ITEM pItem = hb_itemNew( nullptr );
       if( SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_TABLETYPE, 0, pItem ) == HB_SUCCESS )
          pArea->bTableType = ( HB_BYTE ) hb_itemGetNI( pItem );
       hb_itemClear( pItem );
@@ -4143,7 +4143,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
 
    pArea->lpdbOpenInfo = pOpenInfo;
 
-   pItem = hb_itemNew( NULL );
+   pItem = hb_itemNew( nullptr );
 
    if( SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_PENDINGTRIGGER,
                      pOpenInfo->ulConnection, pItem ) == HB_SUCCESS )
@@ -4681,7 +4681,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
       return errCode;
    }
 
-   pItem = hb_itemNew( NULL );
+   pItem = hb_itemNew( nullptr );
    if( SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_PENDINGPASSWORD,
                      pOpenInfo->ulConnection, pItem ) == HB_SUCCESS )
    {
@@ -4810,7 +4810,7 @@ static HB_ERRCODE hb_dbfPack( DBFAREAP pArea )
        ( hb_arrayGetType( pArea->area.valResult, 1 ) & HB_IT_BLOCK ) != 0 &&
        ( hb_arrayGetType( pArea->area.valResult, 2 ) & HB_IT_NUMERIC ) != 0 )
    {
-      pBlock = hb_itemNew( NULL );
+      pBlock = hb_itemNew( nullptr );
       hb_arrayGet( pArea->area.valResult, 1, pBlock );
       if( hb_arrayGetND( pArea->area.valResult, 2 ) >= 1 )
          ulUserEvery = hb_arrayGetNL( pArea->area.valResult, 2 );

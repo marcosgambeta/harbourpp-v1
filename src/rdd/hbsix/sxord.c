@@ -181,7 +181,7 @@ HB_FUNC( SX_FREEZE )
       {
          HB_BOOL fResult = HB_FALSE;
          Info.itmNewVal = hb_itemPutL( NULL, HB_TRUE );
-         Info.itmResult = hb_itemNew( NULL );
+         Info.itmResult = hb_itemNew( nullptr );
          if( SELF_ORDINFO( pArea, DBOI_CUSTOM, &Info ) == HB_SUCCESS )
             fResult = HB_IS_LOGICAL( Info.itmResult ) &&
                       hb_itemGetL( Info.itmResult );
@@ -204,7 +204,7 @@ HB_FUNC( SX_WARM )
       {
          HB_BOOL fResult = HB_FALSE;
          Info.itmNewVal = hb_itemPutL( NULL, HB_FALSE );
-         Info.itmResult = hb_itemNew( NULL );
+         Info.itmResult = hb_itemNew( nullptr );
          if( SELF_ORDINFO( pArea, DBOI_CHGONLY, &Info ) == HB_SUCCESS )
             fResult = HB_IS_LOGICAL( Info.itmResult ) &&
                       ! hb_itemGetL( Info.itmResult );
@@ -227,7 +227,7 @@ HB_FUNC( SX_CHILL )
       {
          HB_BOOL fResult = HB_FALSE;
          Info.itmNewVal = hb_itemPutL( NULL, HB_TRUE );
-         Info.itmResult = hb_itemNew( NULL );
+         Info.itmResult = hb_itemNew( nullptr );
          if( SELF_ORDINFO( pArea, DBOI_CHGONLY, &Info ) == HB_SUCCESS )
             fResult = HB_IS_LOGICAL( Info.itmResult ) &&
                       hb_itemGetL( Info.itmResult );
@@ -292,7 +292,7 @@ HB_FUNC( SX_CLRSCOPE )
       if( hb_sxOrdParam( &Info ) )
       {
          int iScope = hb_parnidef( 1, 2 );
-         Info.itmResult = hb_itemNew( NULL );
+         Info.itmResult = hb_itemNew( nullptr );
          if( iScope )
             SELF_ORDINFO( pArea, DBOI_SCOPEBOTTOMCLEAR, &Info );
          if( iScope == 0 || iScope == 2 )
@@ -313,7 +313,7 @@ HB_FUNC( SX_SETSCOPE )
       if( hb_sxOrdParam( &Info ) )
       {
          int iScope = hb_parni( 1 );
-         Info.itmResult = hb_itemNew( NULL );
+         Info.itmResult = hb_itemNew( nullptr );
          if( ! HB_ISNIL( 2 ) )
             Info.itmNewVal = hb_param( 2, HB_IT_ANY );
          SELF_ORDINFO( pArea, ( HB_USHORT ) ( iScope ? DBOI_SCOPEBOTTOM : DBOI_SCOPETOP ), &Info );
@@ -331,7 +331,7 @@ HB_FUNC( SX_ISREINDEX )
    {
       DBORDERINFO Info;
       memset( &Info, 0, sizeof( Info ) );
-      Info.itmResult = hb_itemNew( NULL );
+      Info.itmResult = hb_itemNew( nullptr );
       SELF_ORDINFO( pArea, DBOI_ISREINDEX, &Info );
       fReindex = hb_itemGetL( Info.itmResult );
       hb_itemRelease( Info.itmResult );
@@ -349,7 +349,7 @@ HB_FUNC( SX_STEP )
    {
       DBORDERINFO Info;
       memset( &Info, 0, sizeof( Info ) );
-      Info.itmResult = hb_itemNew( NULL );
+      Info.itmResult = hb_itemNew( nullptr );
       SELF_ORDINFO( pArea, DBOI_EVALSTEP, &Info );
       lStep = hb_itemGetNL( Info.itmResult );
       hb_itemRelease( Info.itmResult );
@@ -367,7 +367,7 @@ HB_FUNC( SX_KEYSINCLUDED )
    {
       DBORDERINFO Info;
       memset( &Info, 0, sizeof( Info ) );
-      Info.itmResult = hb_itemNew( NULL );
+      Info.itmResult = hb_itemNew( nullptr );
       SELF_ORDINFO( pArea, DBOI_KEYSINCLUDED, &Info );
       ulKeys = hb_itemGetNL( Info.itmResult );
       hb_itemRelease( Info.itmResult );
@@ -384,7 +384,7 @@ HB_FUNC( SX_I_INDEXNAME )
    {
       DBORDERINFO Info;
       memset( &Info, 0, sizeof( Info ) );
-      Info.itmResult = hb_itemNew( NULL );
+      Info.itmResult = hb_itemNew( nullptr );
       SELF_ORDINFO( pArea, DBOI_I_BAGNAME, &Info );
       hb_itemReturnRelease( Info.itmResult );
       return;
@@ -401,7 +401,7 @@ HB_FUNC( SX_I_TAGNAME )
    {
       DBORDERINFO Info;
       memset( &Info, 0, sizeof( Info ) );
-      Info.itmResult = hb_itemNew( NULL );
+      Info.itmResult = hb_itemNew( nullptr );
       SELF_ORDINFO( pArea, DBOI_I_TAGNAME, &Info );
       hb_itemReturnRelease( Info.itmResult );
       return;
@@ -419,7 +419,7 @@ HB_FUNC( SX_INDEXCOUNT )
    {
       DBORDERINFO Info;
       memset( &Info, 0, sizeof( Info ) );
-      Info.itmResult = hb_itemNew( NULL );
+      Info.itmResult = hb_itemNew( nullptr );
       SELF_ORDINFO( pArea, DBOI_BAGCOUNT, &Info );
       iCount = hb_itemGetNI( Info.itmResult );
       hb_itemRelease( Info.itmResult );
@@ -437,7 +437,7 @@ HB_FUNC( SX_INDEXNAME )
       DBORDERINFO Info;
       if( hb_sxOrdParam( &Info ) )
       {
-         Info.itmResult = hb_itemNew( NULL );
+         Info.itmResult = hb_itemNew( nullptr );
          SELF_ORDINFO( pArea, DBOI_FULLPATH, &Info );
          hb_itemReturnRelease( Info.itmResult );
       }
@@ -461,7 +461,7 @@ HB_FUNC( SX_INDEXTYPE )
             Info.atomBagName = Info.itmOrder;
             Info.itmOrder = NULL;
          }
-         Info.itmResult = hb_itemNew( NULL );
+         Info.itmResult = hb_itemNew( nullptr );
          if( SELF_ORDINFO( pArea, DBOI_INDEXTYPE, &Info ) == HB_SUCCESS )
             iType = hb_itemGetNI( Info.itmResult );
          hb_itemRelease( Info.itmResult );
@@ -479,7 +479,7 @@ HB_FUNC( SX_DESCEND )
       DBORDERINFO Info;
       if( hb_sxOrdParam( &Info ) )
       {
-         Info.itmResult = hb_itemNew( NULL );
+         Info.itmResult = hb_itemNew( nullptr );
          if( SELF_ORDINFO( pArea, DBOI_ISDESC, &Info ) == HB_SUCCESS )
          {
             Info.itmNewVal = hb_itemPutL( NULL, ! hb_itemGetL( Info.itmResult ) );
@@ -540,7 +540,7 @@ HB_FUNC( SX_KEYDATA )
       DBORDERINFO Info;
       if( hb_sxOrdParam( &Info ) )
       {
-         Info.itmResult = hb_itemNew( NULL );
+         Info.itmResult = hb_itemNew( nullptr );
          SELF_ORDINFO( pArea, DBOI_KEYVAL, &Info );
          hb_itemReturnRelease( Info.itmResult );
       }
@@ -573,7 +573,7 @@ HB_FUNC( SX_KEYCOUNT )
       DBORDERINFO Info;
       if( hb_sxOrdParam( &Info ) )
       {
-         Info.itmResult = hb_itemNew( NULL );
+         Info.itmResult = hb_itemNew( nullptr );
          SELF_ORDINFO( pArea, DBOI_KEYCOUNT, &Info );
          ulKeys = hb_itemGetNL( Info.itmResult );
          hb_itemRelease( Info.itmResult );
@@ -593,7 +593,7 @@ HB_FUNC( SX_KEYNO )
       DBORDERINFO Info;
       if( hb_sxOrdParam( &Info ) )
       {
-         Info.itmResult = hb_itemNew( NULL );
+         Info.itmResult = hb_itemNew( nullptr );
          SELF_ORDINFO( pArea, DBOI_POSITION, &Info );
          ulKeyNo = hb_itemGetNL( Info.itmResult );
          hb_itemRelease( Info.itmResult );
@@ -614,7 +614,7 @@ HB_FUNC( SX_KEYGOTO )
       if( hb_sxOrdParam( &Info ) )
       {
          Info.itmNewVal = hb_param( 3, HB_IT_NUMERIC );
-         Info.itmResult = hb_itemNew( NULL );
+         Info.itmResult = hb_itemNew( nullptr );
          SELF_ORDINFO( pArea, DBOI_POSITION, &Info );
          fResult = hb_itemGetL( Info.itmResult );
          hb_itemRelease( Info.itmResult );
@@ -633,7 +633,7 @@ HB_FUNC( SX_SKIPUNIQUE )
       DBORDERINFO Info;
       memset( &Info, 0, sizeof( Info ) );
       Info.itmNewVal = hb_param( 1, HB_IT_ANY );
-      Info.itmResult = hb_itemNew( NULL );
+      Info.itmResult = hb_itemNew( nullptr );
       SELF_ORDINFO( pArea, DBOI_SKIPUNIQUE, &Info );
       hb_itemRelease( Info.itmResult );
    }
@@ -687,7 +687,7 @@ HB_FUNC( SX_WILDSEEK )
 
       DBORDERINFO Info;
       memset( &Info, 0, sizeof( Info ) );
-      Info.itmResult = hb_itemNew( NULL );
+      Info.itmResult = hb_itemNew( nullptr );
 
       if( szPattern && szPattern[ 0 ] )
       {
@@ -775,7 +775,7 @@ HB_FUNC( SX_ISMYROX )
       DBORDERINFO Info;
       if( hb_sxOrdParam( &Info ) )
       {
-         Info.itmResult = hb_itemNew( NULL );
+         Info.itmResult = hb_itemNew( nullptr );
          if( SELF_ORDINFO( pArea, DBOI_READLOCK, &Info ) == HB_SUCCESS )
             fLocked = hb_itemGetL( Info.itmResult );
          hb_itemRelease( Info.itmResult );
@@ -794,7 +794,7 @@ HB_FUNC( SX_ISROXLOCK )
       DBORDERINFO Info;
       if( hb_sxOrdParam( &Info ) )
       {
-         Info.itmResult = hb_itemNew( NULL );
+         Info.itmResult = hb_itemNew( nullptr );
          if( SELF_ORDINFO( pArea, DBOI_READLOCK, &Info ) == HB_SUCCESS )
             fLocked = hb_itemGetL( Info.itmResult );
          if( ! fLocked )
@@ -825,7 +825,7 @@ HB_FUNC( SX_SORTOPTION )
       DBORDERINFO Info;
       if( hb_sxOrdParam( &Info ) )
       {
-         Info.itmResult = hb_itemNew( NULL );
+         Info.itmResult = hb_itemNew( nullptr );
          Info.itmNewVal = hb_param( 1, HB_IT_LOGICAL );
          if( SELF_ORDINFO( pArea, DBOI_USECURRENT, &Info ) == HB_SUCCESS )
             fUseCurrent = hb_itemGetL( Info.itmResult );

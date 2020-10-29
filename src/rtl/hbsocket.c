@@ -3895,7 +3895,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
                continue;
 
             if( pItem == NULL )
-               pItem = hb_itemNew( NULL );
+               pItem = hb_itemNew( nullptr );
 
             hb_arrayNew( pItem, HB_SOCKET_IFINFO_LEN );
 
@@ -4036,7 +4036,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
             if( flags & IFF_UP )
             {
                if( pItem == NULL )
-                  pItem = hb_itemNew( NULL );
+                  pItem = hb_itemNew( nullptr );
                hb_arrayNew( pItem, HB_SOCKET_IFINFO_LEN );
 
                hb_arraySetNI( pItem, HB_SOCKET_IFINFO_FAMILY,

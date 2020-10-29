@@ -311,7 +311,7 @@ HB_FUNC( HB_SETKEYSAVE )
       ;
 
    pKeys = hb_itemArrayNew( nItemCount );
-   pKeyElements = hb_itemNew( NULL );
+   pKeyElements = hb_itemNew( nullptr );
 
    for( nItem = 1, sk_list_tmp = sk_data->sk_list;
         nItem <= nItemCount;

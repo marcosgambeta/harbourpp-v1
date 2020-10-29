@@ -294,7 +294,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
       PGresult *      pgResult;
       HB_BOOL         bFail    = HB_FALSE;
 
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
       context = ( pgCopyContext * ) hb_xgrab( sizeof( pgCopyContext ) );
       memset( context, 0, sizeof( pgCopyContext ) );

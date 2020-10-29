@@ -715,7 +715,7 @@ static void s_signalHandlersInit()
    s_serviceSetHBSig();
 #endif
 
-   sp_hooks = hb_itemNew( NULL );
+   sp_hooks = hb_itemNew( nullptr );
    hb_arrayNew( sp_hooks, 0 );
    hb_vmAtQuit( hb_service_exit, NULL );
 }

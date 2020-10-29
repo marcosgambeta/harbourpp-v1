@@ -184,7 +184,7 @@ HB_FUNC( ORDKEYVAL )
    {
       DBORDERINFO pOrderInfo;
       memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
-      pOrderInfo.itmResult = hb_itemNew( NULL );
+      pOrderInfo.itmResult = hb_itemNew( nullptr );
       SELF_ORDINFO( pArea, DBOI_KEYVAL, &pOrderInfo );
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
@@ -331,7 +331,7 @@ HB_FUNC( DBORDERINFO )
          pOrderInfo.itmOrder = hb_param( 3, HB_IT_STRING | HB_IT_NUMERIC );
 
          pOrderInfo.itmNewVal  = hb_param( 4, HB_IT_ANY );
-         pOrderInfo.itmResult  = hb_itemNew( NULL );
+         pOrderInfo.itmResult  = hb_itemNew( nullptr );
          pOrderInfo.itmCobExpr = NULL;
          pOrderInfo.fAllTags   = HB_FALSE;
          SELF_ORDINFO( pArea, ( HB_USHORT ) hb_itemGetNI( pType ), &pOrderInfo );

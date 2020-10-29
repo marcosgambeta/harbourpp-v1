@@ -550,13 +550,13 @@ static PHB_ITEM hb_ntxKeyGetItem( PHB_ITEM pItem, LPKEYINFO pKey,
             if( pItem )
                hb_itemClear( pItem );
             else
-               pItem = hb_itemNew( NULL );
+               pItem = hb_itemNew( nullptr );
       }
    }
    else if( pItem )
       hb_itemClear( pItem );
    else
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
    return pItem;
 }
@@ -614,7 +614,7 @@ static HB_BYTE hb_ntxGetKeyType( LPTAGINFO pTag )
 
    if( pTag->nField )
    {
-      PHB_ITEM pItem = hb_itemNew( NULL );
+      PHB_ITEM pItem = hb_itemNew( nullptr );
       SELF_GETVALUE( &pTag->pIndex->pArea->dbfarea.area, pTag->nField, pItem );
       bType = hb_ntxItemType( pItem );
       hb_itemRelease( pItem );
@@ -647,7 +647,7 @@ static LPKEYINFO hb_ntxEvalKey( LPKEYINFO pKey, LPTAGINFO pTag )
 
    if( pTag->nField )
    {
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
       SELF_GETVALUE( &pArea->dbfarea.area, pTag->nField, pItem );
       pKey = hb_ntxKeyPutItem( pKey, pItem, pArea->dbfarea.ulRecNo, pTag, HB_FALSE, NULL );
       hb_itemRelease( pItem );
@@ -828,7 +828,7 @@ static void hb_ntxTagSetScope( LPTAGINFO pTag, HB_USHORT nScope, PHB_ITEM pItem 
                pTag, HB_TRUE, &pScope->scopeKeyLen );
 
       if( pScope->scopeItem == NULL )
-         pScope->scopeItem = hb_itemNew( NULL );
+         pScope->scopeItem = hb_itemNew( nullptr );
       hb_itemCopy( pScope->scopeItem, pItem );
 
       pTag->keyCount = 0;
@@ -4620,7 +4620,7 @@ static HB_ULONG hb_ntxOrdScopeEval( LPTAGINFO pTag,
                                     PHB_ITEM pItemLo, PHB_ITEM pItemHi )
 {
    HB_ULONG ulCount = 0, ulLen = ( HB_ULONG ) pTag->KeyLength;
-   PHB_ITEM pItemTop = hb_itemNew( NULL ), pItemBottom = hb_itemNew( NULL );
+   PHB_ITEM pItemTop = hb_itemNew( nullptr ), pItemBottom = hb_itemNew( nullptr );
 
    hb_ntxTagGetScope( pTag, 0, pItemTop );
    hb_ntxTagGetScope( pTag, 1, pItemBottom );
@@ -5376,7 +5376,7 @@ static HB_ERRCODE hb_ntxTagCreate( LPTAGINFO pTag, HB_BOOL fReindex )
 
       pForItem = pTag->pForItem;
       if( pTag->nField )
-         pItem = hb_itemNew( NULL );
+         pItem = hb_itemNew( nullptr );
 
       if( ! pArea->dbfarea.area.lpdbOrdCondInfo || pArea->dbfarea.area.lpdbOrdCondInfo->fAll )
       {

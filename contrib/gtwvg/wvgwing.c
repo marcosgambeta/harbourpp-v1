@@ -550,7 +550,7 @@ HB_FUNC( WVG_STATUSBARREFRESH )
 HB_FUNC( WVG_GETNMHDRINFO )
 {
    LPNMHDR  lpnmh     = ( LPNMHDR ) wvg_parlparam( 1 );
-   PHB_ITEM pEvParams = hb_itemNew( NULL );
+   PHB_ITEM pEvParams = hb_itemNew( nullptr );
 
    hb_arrayNew( pEvParams, 3 );
 
@@ -568,7 +568,7 @@ HB_FUNC( WVG_GETNMMOUSEINFO )
 {
    LPNMMOUSE nmm       = ( LPNMMOUSE ) wvg_parlparam( 1 );
    NMHDR     nmh       = nmm->hdr;
-   PHB_ITEM  pEvParams = hb_itemNew( NULL );
+   PHB_ITEM  pEvParams = hb_itemNew( nullptr );
 
    hb_arrayNew( pEvParams, 4 );
 
@@ -588,7 +588,7 @@ HB_FUNC( WVG_GETNMTREEVIEWINFO )
    LPNMTREEVIEW pnmtv = ( LPNMTREEVIEW ) wvg_parlparam( 1 );
    NMHDR        nmh   = pnmtv->hdr;
 
-   PHB_ITEM pEvParams = hb_itemNew( NULL );
+   PHB_ITEM pEvParams = hb_itemNew( nullptr );
 
    hb_arrayNew( pEvParams, 4 );
 
@@ -717,7 +717,7 @@ HB_FUNC( WVG_TREEVIEW_SHOWEXPANDED )
 
 PHB_ITEM wvg_logfontTOarray( LPLOGFONT lf, HB_BOOL bEmpty )
 {
-   PHB_ITEM aFont = hb_itemNew( NULL );
+   PHB_ITEM aFont = hb_itemNew( nullptr );
 
    hb_arrayNew( aFont, 15 );
 
@@ -874,7 +874,7 @@ HB_FUNC( WVG_CHOOSEFONT )
    if( ChooseFont( &cf ) )
    {
       PHB_ITEM aFont = wvg_logfontTOarray( &lf, HB_FALSE );
-      PHB_ITEM aInfo = hb_itemNew( NULL );
+      PHB_ITEM aInfo = hb_itemNew( nullptr );
 
       hb_arrayNew( aInfo, 4 );
       hb_arraySetNI( aInfo, 1, cf.iPointSize );

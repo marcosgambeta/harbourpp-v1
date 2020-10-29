@@ -951,7 +951,7 @@ static HB_ERRCODE hb_waNewArea( AREAP pArea )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_waNewArea(%p)", ( void * ) pArea ) );
 
-   pArea->valResult = hb_itemNew( NULL );
+   pArea->valResult = hb_itemNew( nullptr );
    pArea->lpdbRelations = NULL;
    pArea->uiParents = 0;
    pArea->uiMaxFieldNameLength = HB_SYMBOL_NAME_LEN;
@@ -1334,7 +1334,7 @@ static HB_ERRCODE hb_waTransRec( AREAP pArea, LPDBTRANSINFO pTransInfo )
       if( errCode != HB_SUCCESS )
          return errCode;
 
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
       pTransItem = pTransInfo->lpTransItems;
       for( uiCount = pTransInfo->uiItemCount; uiCount; --uiCount )
       {
@@ -1377,7 +1377,7 @@ static HB_ERRCODE hb_waChildEnd( AREAP pArea, LPDBRELINFO pRelInfo )
       DBORDERINFO pInfo;
       pInfo.itmOrder = NULL;
       pInfo.atomBagName = NULL;
-      pInfo.itmResult = hb_itemNew( NULL );
+      pInfo.itmResult = hb_itemNew( nullptr );
       pInfo.itmNewVal = NULL;
       SELF_ORDINFO( pArea, DBOI_SCOPETOPCLEAR, &pInfo );
       SELF_ORDINFO( pArea, DBOI_SCOPEBOTTOMCLEAR, &pInfo );
@@ -1829,7 +1829,7 @@ static HB_ERRCODE hb_waEvalBlock( AREAP pArea, PHB_ITEM pBlock )
       return HB_FAILURE;
 
    if( ! pArea->valResult )
-      pArea->valResult = hb_itemNew( NULL );
+      pArea->valResult = hb_itemNew( nullptr );
    hb_itemMove( pArea->valResult, pItem );
 
    hb_rddSelectWorkAreaNumber( iCurrArea );

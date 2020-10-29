@@ -502,7 +502,7 @@ static HB_ERRCODE sqlbaseGoHot( SQLBASEAREAP pArea )
    HB_USHORT us;
 
    pArray = hb_itemArrayNew( pArea->area.uiFieldCount );
-   pItem = hb_itemNew( NULL );
+   pItem = hb_itemNew( nullptr );
    for( us = 1; us <= pArea->area.uiFieldCount; us++ )
    {
       if( SELF_GETVALUE( &pArea->area, us, pItem ) == HB_SUCCESS )
@@ -747,7 +747,7 @@ static HB_ERRCODE sqlbaseCreate( SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo )
             break;
 
          default:
-            pItem  = hb_itemNew( NULL );
+            pItem  = hb_itemNew( nullptr );
             bError = HB_TRUE;
             break;
       }
@@ -917,7 +917,7 @@ static HB_ERRCODE sqlbaseInit( LPRDDNODE pRDD )
 {
    HB_SYMBOL_UNUSED( pRDD );
 
-   s_pItemNewID = hb_itemNew( NULL );
+   s_pItemNewID = hb_itemNew( nullptr );
    return HB_SUCCESS;
 }
 

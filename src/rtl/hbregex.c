@@ -299,7 +299,7 @@ static HB_BOOL hb_regex( int iRequest )
          case 3: /* SPLIT */
             iMaxMatch = hb_parni( 5 );
             pRetArray = hb_itemArrayNew( 0 );
-            pMatch = hb_itemNew( NULL );
+            pMatch = hb_itemNew( nullptr );
             iMatches = 0;
             do
             {
@@ -415,7 +415,7 @@ static HB_BOOL hb_regex( int iRequest )
                   i = iGetMatch - 1;
                   iSO = HB_REGMATCH_SO( aMatches, i );
                   iEO = HB_REGMATCH_EO( aMatches, i );
-                  pMatch = hb_itemNew( NULL );
+                  pMatch = hb_itemNew( nullptr );
                   if( ! fOnlyMatch )
                   {
                      hb_arrayNew( pMatch, 3 );

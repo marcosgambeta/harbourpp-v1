@@ -262,7 +262,7 @@ static int amf3_add_index( amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem 
 
    if( context->use_refs )
    {
-      PHB_ITEM pKey = hb_itemNew( NULL );
+      PHB_ITEM pKey = hb_itemNew( nullptr );
 
       _ref_realItemPtr( pKey, pItem );
       if( ! HB_IS_POINTER( pKey ) && ! HB_IS_DATETIME( pKey ) )
@@ -318,7 +318,7 @@ static int amf3_get_index( amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem 
 {
    if( context->use_refs )
    {
-      PHB_ITEM pKey = hb_itemNew( NULL );
+      PHB_ITEM pKey = hb_itemNew( nullptr );
       HB_SIZE nPos;
       PHB_ITEM pVal;
 
@@ -741,7 +741,7 @@ static PHB_ITEM class_def_from_class( /* amfContext * context, */ PHB_ITEM pItem
    pClass = hb_hashNew( NULL );
 
    pKey   = hb_itemPutC( NULL, "CLASS_DEF" );
-   pValue = hb_itemNew( NULL );
+   pValue = hb_itemNew( nullptr );
    if( ! hb_hashAdd( pClass, pKey, pValue ) )
    {
       hb_itemRelease( pKey );
@@ -767,7 +767,7 @@ static PHB_ITEM class_def_from_class( /* amfContext * context, */ PHB_ITEM pItem
    if( hbamf_is_cls_externalizable( uiClass ) )
    {
       pKey   = hb_itemPutC( NULL, "EXTERNALIZABLE_CLASS_DEF" );
-      pValue = hb_itemNew( NULL );
+      pValue = hb_itemNew( nullptr );
       if( ! hb_hashAdd( pClass, pKey, pValue ) )
       {
          hb_itemRelease( pKey );
@@ -803,7 +803,7 @@ static HB_BOOL amf3_encode_object( amfContext * context, PHB_ITEM pItem )
    /* serialize emulated ActionScript dynamic object */
    if( strcmp( hb_clsName( hb_objGetClass( pItem ) ), "AMF_OBJ" ) == 0 )
    {
-      PHB_ITEM pAnonHash = hb_itemNew( NULL );
+      PHB_ITEM pAnonHash = hb_itemNew( nullptr );
 
       if( amf3_serialize_class_def( context, NULL ) == 0 )
       {
@@ -830,7 +830,7 @@ static HB_BOOL amf3_encode_object( amfContext * context, PHB_ITEM pItem )
    if( hb_hashGetCItemPos( pClass, "EXTERNALIZABLE_CLASS_DEF" ) != 0 )
    {
       PHB_ITEM pStr;
-      PHB_ITEM pRetCopy = hb_itemNew( NULL );
+      PHB_ITEM pRetCopy = hb_itemNew( nullptr );
       PHB_ITEM pObject;
 
       if( pItem == hb_stackReturnItem() )
@@ -933,7 +933,7 @@ static HB_BOOL amf3_serialize_object( amfContext * context, PHB_ITEM pItem )
 
    if( strcmp( hb_clsName( hb_objGetClass( pItem ) ), "AMF_RAW" ) == 0 )
    {
-      PHB_ITEM pStr = hb_itemNew( NULL );
+      PHB_ITEM pStr = hb_itemNew( nullptr );
       hb_arrayGet( pItem, 1, pStr );
       context->position--;
       result = amf3_encode_byte_array( context, pStr ) != 0;
@@ -959,7 +959,7 @@ static HB_BOOL amf3_serialize_object( amfContext * context, PHB_ITEM pItem )
 
 static void amf3_conversion_out( amfContext * context, PHB_ITEM pItem )
 {
-   PHB_ITEM pRetCopy      = hb_itemNew( NULL );
+   PHB_ITEM pRetCopy      = hb_itemNew( nullptr );
    PHB_ITEM pOuterContext = hb_itemPutPtr( NULL, context );
    PHB_SYMB pSym = hb_itemGetSymbol( context->conv_function );
 
@@ -1190,7 +1190,7 @@ HB_FUNC( AMF3_FROMWA )
             return;
       }
 
-      pItem = hb_itemNew( NULL );
+      pItem = hb_itemNew( nullptr );
 
       context = context_setup( NULL, HB_FALSE, str_rtrim, outer_context );
 
@@ -1272,14 +1272,14 @@ HB_FUNC( AMF3_FROMWA )
 
       if( ! bAsArray )
       {
-         pFieldNames = hb_itemNew( NULL );
+         pFieldNames = hb_itemNew( nullptr );
          if( bNoFieldPassed )
          {
             hb_arrayNew( pFieldNames, uiFields );
             for( uiIter = 1; uiIter <= uiFields; uiIter++ )
             {
                char * szName = ( char * ) hb_xgrab( pArea->uiMaxFieldNameLength + 1 );
-               pField      = hb_itemNew( NULL );
+               pField      = hb_itemNew( nullptr );
                szName[ 0 ] = '\0';
                SELF_FIELDNAME( pArea, uiIter, szName );
                hb_itemPutCPtr( pField, szName );
@@ -1293,7 +1293,7 @@ HB_FUNC( AMF3_FROMWA )
             for( uiIter = 1; uiIter <= uiFieldCopy; uiIter++ )
             {
                char * szName = ( char * ) hb_xgrab( pArea->uiMaxFieldNameLength + 1 );
-               pField      = hb_itemNew( NULL );
+               pField      = hb_itemNew( nullptr );
                szName[ 0 ] = '\0';
                SELF_FIELDNAME( pArea, ( HB_USHORT ) hb_itemGetNI( hb_arrayGetItemPtr( pFields, uiIter ) ), szName );
                hb_itemPutCPtr( pField, szName );
@@ -1341,7 +1341,7 @@ HB_FUNC( AMF3_FROMWA )
             }
             else
             {
-               PHB_ITEM pValue = hb_itemNew( NULL );
+               PHB_ITEM pValue = hb_itemNew( nullptr );
 
                writeByte( context, OBJECT_TYPE );
 #if 0
