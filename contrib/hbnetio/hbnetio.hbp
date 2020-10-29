@@ -1,0 +1,13 @@
+-hblib
+-inc
+
+-o${hb_name}
+
+-w3 -es2
+
+${hb_name}.hbx
+
+netiosrv.c
+netiocli.c
+
+netiomt.prg
