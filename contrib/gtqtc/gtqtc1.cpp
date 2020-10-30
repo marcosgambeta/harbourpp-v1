@@ -1387,7 +1387,7 @@ static PHB_GTQTC hb_gt_qtc_new( PHB_GT pGT )
    pQTC->fRepaint      = HB_TRUE;
 
    {
-      PHB_ITEM pItem = hb_itemPutCPtr( NULL, hb_cmdargBaseProgName() );
+      PHB_ITEM pItem = hb_itemPutCPtr( nullptr, hb_cmdargBaseProgName() );
       pQTC->wndTitle = new QString();
       hb_gt_qtc_itemGetQString( pItem, pQTC->wndTitle );
       hb_itemRelease( pItem );
