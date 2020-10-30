@@ -320,7 +320,7 @@ static PHB_I18N_TRANS hb_i18n_new( void )
    pI18N->table = hb_hashNew( hb_itemNew( nullptr ) );
    pI18N->context_table = hb_hashNew( hb_itemNew( nullptr ) );
    pI18N->default_context = hb_hashNew( hb_itemNew( nullptr ) );
-   pKey = hb_itemPutCConst( NULL, "CONTEXT" );
+   pKey = hb_itemPutCConst( nullptr, "CONTEXT" );
    hb_hashAdd( pI18N->table, pKey, pI18N->context_table );
    pKey = hb_itemPutC( pKey, nullptr );
    hb_hashAdd( pI18N->context_table, pKey, pI18N->default_context );
@@ -381,7 +381,7 @@ static PHB_I18N_TRANS hb_i18n_initialize( PHB_ITEM pTable )
    {
       PHB_ITEM pKey, pContext, pDefContext = NULL;
 
-      pKey = hb_itemPutCConst( NULL, "CONTEXT" );
+      pKey = hb_itemPutCConst( nullptr, "CONTEXT" );
       pContext = hb_hashGetItemPtr( pTable, pKey, 0 );
       if( pContext )
       {
@@ -455,7 +455,7 @@ static PHB_ITEM hb_i18n_serialize( PHB_I18N_TRANS pI18N )
       HB_PUT_LE_UINT32( &pI18Nbuffer[ HB_I18N_SIZE_OFFSET ], nSize );
       HB_PUT_LE_UINT32( &pI18Nbuffer[ HB_I18N_CRC_OFFSET ], ulCRC );
 
-      pKey = hb_itemPutCConst( NULL, "DESCRIPTION" );
+      pKey = hb_itemPutCConst( nullptr, "DESCRIPTION" );
       pValue = hb_hashGetItemPtr( pI18N->table, pKey, 0 );
       if( pValue )
          hb_strncpy( &pI18Nbuffer[ HB_I18N_TXT_OFFSET ],
@@ -740,7 +740,7 @@ static const char * hb_i18n_description( PHB_I18N_TRANS pI18N, PHB_ITEM pItem )
 {
    if( pI18N )
    {
-      PHB_ITEM pKey = hb_itemPutCConst( NULL, "DESCRIPTION" ), pValue;
+      PHB_ITEM pKey = hb_itemPutCConst( nullptr, "DESCRIPTION" ), pValue;
 
       pValue = hb_hashGetItemPtr( pI18N->table, pKey, 0 );
       if( pItem )
