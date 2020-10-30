@@ -454,7 +454,7 @@ PHB_ITEM hb_itemPutStrLen( PHB_ITEM pItem, void * cdp, const char * pStr, HB_SIZ
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutStrLen(%p,%p,%p,%" HB_PFS "u)", ( void * ) pItem, cdp, ( const void * ) pStr, nLen ) );
 
    if( nLen == 0 )
-      return hb_itemPutC( pItem, NULL );
+      return hb_itemPutC( pItem, nullptr );
 
    pszText = hb_cdpnDup( pStr, &nLen, ( PHB_CODEPAGE ) cdp, hb_vmCDP() );
 
@@ -470,7 +470,7 @@ PHB_ITEM hb_itemPutStrLenUTF8( PHB_ITEM pItem, const char * pStr, HB_SIZE nLen )
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutStrLenUTF8(%p,%p,%" HB_PFS "u)", ( void * ) pItem, ( const void * ) pStr, nLen ) );
 
    if( nLen == 0 )
-      return hb_itemPutC( pItem, NULL );
+      return hb_itemPutC( pItem, nullptr );
 
    cdp = hb_vmCDP();
    nDest = hb_cdpUTF8AsStrLen( cdp, pStr, nLen, 0 );
@@ -489,7 +489,7 @@ PHB_ITEM hb_itemPutStrLenU16( PHB_ITEM pItem, int iEndian, const HB_WCHAR * pStr
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutStrLenU16(%p,%d,%p,%" HB_PFS "u)", ( void * ) pItem, iEndian, ( const void * ) pStr, nLen ) );
 
    if( nLen == 0 )
-      return hb_itemPutC( pItem, NULL );
+      return hb_itemPutC( pItem, nullptr );
 
    cdp = hb_vmCDP();
    nDest = hb_cdpU16AsStrLen( cdp, pStr, nLen, 0 );
@@ -508,7 +508,7 @@ PHB_ITEM hb_itemPutStr( PHB_ITEM pItem, void * cdp, const char * pStr )
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutStr(%p,%p,%p)", ( void * ) pItem, cdp, ( const void * ) pStr ) );
 
    if( pStr == NULL )
-      return hb_itemPutC( pItem, NULL );
+      return hb_itemPutC( pItem, nullptr );
 
    nLen = strlen( pStr );
    pszText = hb_cdpnDup( pStr, &nLen, ( PHB_CODEPAGE ) cdp, hb_vmCDP() );
@@ -525,7 +525,7 @@ PHB_ITEM hb_itemPutStrUTF8( PHB_ITEM pItem, const char * pStr )
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutStrUTF8(%p,%p)", ( void * ) pItem, ( const void * ) pStr ) );
 
    if( pStr == NULL )
-      return hb_itemPutC( pItem, NULL );
+      return hb_itemPutC( pItem, nullptr );
 
    cdp = hb_vmCDP();
    nLen = strlen( pStr );
@@ -545,7 +545,7 @@ PHB_ITEM hb_itemPutStrU16( PHB_ITEM pItem, int iEndian, const HB_WCHAR * pStr )
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutStrU16(%p,%d,%p)", ( void * ) pItem, iEndian, ( const void * ) pStr ) );
 
    if( pStr == NULL )
-      return hb_itemPutC( pItem, NULL );
+      return hb_itemPutC( pItem, nullptr );
 
    cdp = hb_vmCDP();
    nLen = hb_wstrlen( pStr );

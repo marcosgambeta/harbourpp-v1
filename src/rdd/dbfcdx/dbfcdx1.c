@@ -5000,7 +5000,7 @@ static void hb_cdxCreateFName( CDXAREAP pArea, const char * szBagName,
    {
       DBORDERINFO pExtInfo;
       memset( &pExtInfo, 0, sizeof( pExtInfo ) );
-      pExt = pExtInfo.itmResult = hb_itemPutC( NULL, NULL );
+      pExt = pExtInfo.itmResult = hb_itemPutC( nullptr, nullptr );
       if( SELF_ORDINFO( &pArea->dbfarea.area, DBOI_BAGEXT, &pExtInfo ) == HB_SUCCESS &&
           hb_itemGetCLen( pExt ) > 0 )
       {
@@ -5025,7 +5025,7 @@ static void hb_cdxCreateFName( CDXAREAP pArea, const char * szBagName,
          {
             DBORDERINFO pExtInfo;
             memset( &pExtInfo, 0, sizeof( pExtInfo ) );
-            pExt = pExtInfo.itmResult = hb_itemPutC( NULL, NULL );
+            pExt = pExtInfo.itmResult = hb_itemPutC( nullptr, nullptr );
             if( SELF_ORDINFO( &pArea->dbfarea.area, DBOI_BAGEXT, &pExtInfo ) == HB_SUCCESS )
             {
                *fProd = hb_stricmp( pFileName->szExtension,
@@ -5065,7 +5065,7 @@ static void hb_cdxOrdListClear( CDXAREAP pArea, HB_BOOL fAll, LPCDXINDEX pKeepIn
             PHB_ITEM pExt;
 
             memset( &pExtInfo, 0, sizeof( pExtInfo ) );
-            pExt = pExtInfo.itmResult = hb_itemPutC( NULL, NULL );
+            pExt = pExtInfo.itmResult = hb_itemPutC( nullptr, nullptr );
             if( SELF_ORDINFO( &pArea->dbfarea.area, DBOI_BAGEXT, &pExtInfo ) == HB_SUCCESS )
             {
                fAll = hb_stricmp( pFileNameCdx->szExtension,
@@ -7212,7 +7212,7 @@ static HB_ERRCODE hb_cdxOpen( CDXAREAP pArea, LPDBOPENINFO pOpenInfo )
          DBORDERINFO pOrderInfo;
 
          pOrderInfo.itmResult = hb_itemPutNI( NULL, 0 );
-         pOrderInfo.atomBagName = hb_itemPutC( NULL, szFileName );
+         pOrderInfo.atomBagName = hb_itemPutC( nullptr, szFileName );
          pOrderInfo.itmNewVal = NULL;
          pOrderInfo.itmOrder  = NULL;
          errCode = SELF_ORDLSTADD( &pArea->dbfarea.area, &pOrderInfo );
@@ -8041,12 +8041,12 @@ static HB_ERRCODE hb_cdxOrderInfo( CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
 
       case DBOI_I_TAGNAME:
          pInfo->itmResult = hb_itemPutC( pInfo->itmResult,
-                      pArea->pSort ? pArea->pSort->pTag->szName : NULL );
+                      pArea->pSort ? pArea->pSort->pTag->szName : nullptr );
          return HB_SUCCESS;
 
       case DBOI_I_BAGNAME:
          pInfo->itmResult = hb_itemPutC( pInfo->itmResult,
-                pArea->pSort ? pArea->pSort->pTag->pIndex->szFileName : NULL );
+                pArea->pSort ? pArea->pSort->pTag->pIndex->szFileName : nullptr );
          return HB_SUCCESS;
 
       case DBOI_ISREINDEX:
@@ -8184,7 +8184,7 @@ static HB_ERRCODE hb_cdxOrderInfo( CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
    switch( uiIndex )
    {
       case DBOI_CONDITION:
-         pInfo->itmResult = hb_itemPutC( pInfo->itmResult, pTag ? pTag->ForExpr : NULL );
+         pInfo->itmResult = hb_itemPutC( pInfo->itmResult, pTag ? pTag->ForExpr : nullptr );
          if( pTag && pInfo->itmNewVal && HB_IS_STRING( pInfo->itmNewVal ) )
          {
             if( pTag->ForExpr != NULL )
@@ -8223,7 +8223,7 @@ static HB_ERRCODE hb_cdxOrderInfo( CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
          break;
 
       case DBOI_EXPRESSION:
-         pInfo->itmResult = hb_itemPutC( pInfo->itmResult, pTag ? pTag->KeyExpr : NULL );
+         pInfo->itmResult = hb_itemPutC( pInfo->itmResult, pTag ? pTag->KeyExpr : nullptr );
          break;
 
       case DBOI_POSITION:
@@ -8340,7 +8340,7 @@ static HB_ERRCODE hb_cdxOrderInfo( CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
          break;
 
       case DBOI_NAME:
-         pInfo->itmResult = hb_itemPutC( pInfo->itmResult, pTag ? pTag->szName : NULL );
+         pInfo->itmResult = hb_itemPutC( pInfo->itmResult, pTag ? pTag->szName : nullptr );
          break;
 
       case DBOI_NUMBER:
@@ -8355,11 +8355,11 @@ static HB_ERRCODE hb_cdxOrderInfo( CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
             hb_xfree( pFileName );
          }
          else
-            pInfo->itmResult = hb_itemPutC( pInfo->itmResult, NULL );
+            pInfo->itmResult = hb_itemPutC( pInfo->itmResult, nullptr );
          break;
 
       case DBOI_FULLPATH:
-         pInfo->itmResult = hb_itemPutC( pInfo->itmResult, pTag ? pTag->pIndex->szFileName : NULL );
+         pInfo->itmResult = hb_itemPutC( pInfo->itmResult, pTag ? pTag->pIndex->szFileName : nullptr );
          break;
 
       case DBOI_FILEHANDLE:
@@ -8399,7 +8399,7 @@ static HB_ERRCODE hb_cdxOrderInfo( CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
             pInfo->itmResult = hb_itemPutC( pInfo->itmResult, szType );
          }
          else
-            pInfo->itmResult = hb_itemPutC( pInfo->itmResult, NULL );
+            pInfo->itmResult = hb_itemPutC( pInfo->itmResult, nullptr );
          break;
 
       case DBOI_KEYSIZE:

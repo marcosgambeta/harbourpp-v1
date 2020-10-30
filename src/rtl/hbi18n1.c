@@ -264,8 +264,8 @@ static long hb_i18n_pluralindex( int iForm, PHB_ITEM pNum )
 
 static void hb_i18n_setitem( PHB_ITEM pHash, const char * szKey, const char * szValue )
 {
-   PHB_ITEM pKey = hb_itemPutC( NULL, szKey );
-   PHB_ITEM pValue = hb_itemPutC( NULL, szValue );
+   PHB_ITEM pKey = hb_itemPutC( nullptr, szKey );
+   PHB_ITEM pValue = hb_itemPutC( nullptr, szValue );
 
    hb_hashAdd( pHash, pKey, pValue );
    hb_itemRelease( pKey );
@@ -322,7 +322,7 @@ static PHB_I18N_TRANS hb_i18n_new( void )
    pI18N->default_context = hb_hashNew( hb_itemNew( nullptr ) );
    pKey = hb_itemPutCConst( NULL, "CONTEXT" );
    hb_hashAdd( pI18N->table, pKey, pI18N->context_table );
-   pKey = hb_itemPutC( pKey, NULL );
+   pKey = hb_itemPutC( pKey, nullptr );
    hb_hashAdd( pI18N->context_table, pKey, pI18N->default_context );
    hb_itemRelease( pKey );
 
@@ -385,7 +385,7 @@ static PHB_I18N_TRANS hb_i18n_initialize( PHB_ITEM pTable )
       pContext = hb_hashGetItemPtr( pTable, pKey, 0 );
       if( pContext )
       {
-         pKey = hb_itemPutC( pKey, NULL );
+         pKey = hb_itemPutC( pKey, nullptr );
          pDefContext = hb_hashGetItemPtr( pContext, pKey, 0 );
       }
 

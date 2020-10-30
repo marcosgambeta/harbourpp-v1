@@ -3796,7 +3796,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_FONTSEL:
-         pInfo->pResult = hb_itemPutC( pInfo->pResult, NULL );
+         pInfo->pResult = hb_itemPutC( pInfo->pResult, nullptr );
          break;
 
       case HB_GTI_SCREENHEIGHT:

@@ -74,7 +74,7 @@ HB_FUNC( FILTER )
 
    if( pArea )
    {
-      PHB_ITEM pFilter = hb_itemPutC( NULL, NULL );
+      PHB_ITEM pFilter = hb_itemPutC( nullptr, nullptr );
       SELF_FILTERTEXT( pArea, pFilter );
       hb_itemReturnRelease( pFilter );
    }
@@ -93,7 +93,7 @@ HB_FUNC( NDX )
       pOrderInfo.itmOrder = hb_param( 1, HB_IT_NUMERIC );
       if( hb_itemGetNI( pOrderInfo.itmOrder ) == 0 )
          pOrderInfo.itmOrder = NULL;
-      pOrderInfo.itmResult   = hb_itemPutC( NULL, NULL );
+      pOrderInfo.itmResult   = hb_itemPutC( nullptr, nullptr );
       SELF_ORDINFO( pArea, DBOI_NAME, &pOrderInfo );
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
@@ -107,7 +107,7 @@ HB_FUNC( RELATION )
 
    if( pArea )
    {
-      PHB_ITEM pRelExpr = hb_itemPutC( NULL, NULL );
+      PHB_ITEM pRelExpr = hb_itemPutC( nullptr, nullptr );
       HB_USHORT uiRelNo = ( HB_USHORT ) hb_parni( 1 );
       SELF_RELTEXT( pArea, uiRelNo ? uiRelNo : 1, pRelExpr );
       hb_itemReturnRelease( pRelExpr );

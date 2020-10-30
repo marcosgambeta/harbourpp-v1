@@ -300,7 +300,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
       return HB_FAILURE;
    }
 
-   pItem = hb_itemPutC( NULL, pArea->szQuery );
+   pItem = hb_itemPutC( nullptr, pArea->szQuery );
 
    if( ! OCI_ExecuteStmt( st, M_HB_ITEMGETSTR( pItem, &hQuery, NULL ) ) )
    {
@@ -431,7 +431,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
             case HB_FT_MEMO:
             case HB_FT_VARLENGTH:
             case HB_FT_BLOB:
-               hb_itemPutC( pItem, NULL );
+               hb_itemPutC( pItem, nullptr );
                break;
 
             case HB_FT_INTEGER:

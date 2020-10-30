@@ -260,7 +260,7 @@ static HB_BOOL amf3_deserialize_string( amfContext * context, PHB_ITEM pItem )
    /* Check for null string */
    if( header == EMPTY_STRING_TYPE )
    {
-      hb_itemPutC( pItem, NULL );
+      hb_itemPutC( pItem, nullptr );
       return HB_TRUE;
    }
 
@@ -593,7 +593,7 @@ static PHB_ITEM class_def_from_classname( /* amfContext * context, */ PHB_ITEM p
 
    pClass = hb_hashNew( NULL );
 
-   pKey   = hb_itemPutC( NULL, "CLASS_DEF" );
+   pKey   = hb_itemPutC( nullptr, "CLASS_DEF" );
    pValue = hb_itemNew( nullptr );
    if( ! hb_hashAdd( pClass, pKey, pValue ) )
    {
@@ -605,8 +605,8 @@ static PHB_ITEM class_def_from_classname( /* amfContext * context, */ PHB_ITEM p
    hb_itemRelease( pKey );
    hb_itemRelease( pValue );
 
-   pKey   = hb_itemPutC( NULL, "alias" );
-   pValue = hb_itemPutC( NULL, hb_clsName( uiClass ) );
+   pKey   = hb_itemPutC( nullptr, "alias" );
+   pValue = hb_itemPutC( nullptr, hb_clsName( uiClass ) );
    if( ! hb_hashAdd( pClass, pKey, pValue ) )
    {
       hb_itemRelease( pKey );
@@ -619,7 +619,7 @@ static PHB_ITEM class_def_from_classname( /* amfContext * context, */ PHB_ITEM p
 
    if( hbamf_is_cls_externalizable( uiClass ) )
    {
-      pKey   = hb_itemPutC( NULL, "EXTERNALIZABLE_CLASS_DEF" );
+      pKey   = hb_itemPutC( nullptr, "EXTERNALIZABLE_CLASS_DEF" );
       pValue = hb_itemNew( nullptr );
       if( ! hb_hashAdd( pClass, pKey, pValue ) )
       {
@@ -678,7 +678,7 @@ static HB_BOOL amf3_decode_class_def( amfContext * context, PHB_ITEM pClass, int
 
    if( pMappedClassDef )
    {
-      pKey = hb_itemPutC( NULL, "class_def" );  /* hb_itemNew( NULL ); */
+      pKey = hb_itemPutC( nullptr, "class_def" );  /* hb_itemNew( NULL ); */
 
       if( ! hb_hashAdd( pClass, pKey, pMappedClassDef ) )
       {
@@ -688,7 +688,7 @@ static HB_BOOL amf3_decode_class_def( amfContext * context, PHB_ITEM pClass, int
       }
       hb_itemRelease( pKey );
 
-      pKey = hb_itemPutC( NULL, "EXTERNALIZABLE_CLASS_DEF" );
+      pKey = hb_itemPutC( nullptr, "EXTERNALIZABLE_CLASS_DEF" );
       if( hb_hashScan( pMappedClassDef, pKey, NULL ) )
       {
          /* There is nothing else we need to do
@@ -716,7 +716,7 @@ static HB_BOOL amf3_decode_class_def( amfContext * context, PHB_ITEM pClass, int
 
 
    /* Set dynamic flag */
-   pKey   = hb_itemPutC( NULL, "dynamic" );
+   pKey   = hb_itemPutC( nullptr, "dynamic" );
    pValue = hb_itemPutL( NULL, ( header & DYNAMIC ) == DYNAMIC );
    if( ! hb_hashAdd( pClass, pKey, pValue ) )
    {
@@ -754,7 +754,7 @@ static HB_BOOL amf3_decode_class_def( amfContext * context, PHB_ITEM pClass, int
    }
 
    /* Set decoded attrs onto ClassDef */
-   pKey = hb_itemPutC( NULL, "static_attrs" );
+   pKey = hb_itemPutC( nullptr, "static_attrs" );
    if( ! hb_hashAdd( pClass, pKey, pAttrs ) )
    {
       hb_itemRelease( pKey );
@@ -1011,7 +1011,7 @@ static HB_BOOL amf3_deserialize_obj( amfContext * context, PHB_ITEM pItem, HB_BO
       pValue = hb_itemPutNI( NULL, OBJAMF_VER );
       hb_arraySet( pItem, OBJAMF_VAR_VER, pValue );
       hb_itemRelease( pValue );
-      pValue = hb_itemPutC( NULL, "ANONYMOUS" );
+      pValue = hb_itemPutC( nullptr, "ANONYMOUS" );
       hb_arraySet( pItem, OBJAMF_VAR_NAME, pValue );
       hb_itemRelease( pValue );
       pValue = hb_hashNew( NULL );

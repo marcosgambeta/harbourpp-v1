@@ -1852,7 +1852,7 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_BOXCP:
          pInfo->pResult = hb_itemPutC( pInfo->pResult,
-                                       pGT->cdpBox ? pGT->cdpBox->id : NULL );
+                                       pGT->cdpBox ? pGT->cdpBox->id : nullptr );
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_STRING )
          {
             if( hb_itemGetCLen( pInfo->pNewVal ) > 0 )
@@ -1954,7 +1954,7 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             if( hb_gt_getClipboard( &pszClipData, &nLen ) )
                pInfo->pResult = hb_itemPutCLPtr( pInfo->pResult, pszClipData, nLen );
             else
-               pInfo->pResult = hb_itemPutC( pInfo->pResult, NULL );
+               pInfo->pResult = hb_itemPutC( pInfo->pResult, nullptr );
          }
          break;
 

@@ -796,7 +796,7 @@ static HB_ERRCODE hb_waInfo( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
       case DBI_GETDELIMITER:
       case DBI_SETDELIMITER:
       case DBI_SEPARATOR:
-         hb_itemPutC( pItem, NULL );
+         hb_itemPutC( pItem, nullptr );
          return HB_FAILURE;
 
       case DBI_GETHEADERSIZE:
@@ -838,7 +838,7 @@ static HB_ERRCODE hb_waInfo( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
          if( pArea->dbfi.abFilterText )
             hb_itemCopy( pItem, pArea->dbfi.abFilterText );
          else
-            hb_itemPutC( pItem, NULL );
+            hb_itemPutC( pItem, nullptr );
          break;
 
       case DBI_FOUND:
@@ -899,7 +899,7 @@ static HB_ERRCODE hb_waInfo( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
          break;
       }
       case DBI_CODEPAGE:
-         hb_itemPutC( pItem, pArea->cdPage ? pArea->cdPage->id : NULL );
+         hb_itemPutC( pItem, pArea->cdPage ? pArea->cdPage->id : nullptr );
          break;
 
       case DBI_RM_SUPPORTED:
@@ -907,11 +907,11 @@ static HB_ERRCODE hb_waInfo( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
          break;
 
       case DBI_DB_VERSION:
-         hb_itemPutC( pItem, NULL );
+         hb_itemPutC( pItem, nullptr );
          break;
 
       case DBI_RDD_VERSION:
-         hb_itemPutC( pItem, NULL );
+         hb_itemPutC( pItem, nullptr );
          break;
 
       default:
@@ -1940,7 +1940,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
       case RDDI_SEPARATOR:
       case RDDI_TRIGGER:
       case RDDI_PENDINGTRIGGER:
-         hb_itemPutC( pItem, NULL );
+         hb_itemPutC( pItem, nullptr );
          /* fallthrough */ /* return HB_FAILURE */
 
       default:

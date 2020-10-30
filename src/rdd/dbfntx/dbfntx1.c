@@ -3578,7 +3578,7 @@ static void hb_ntxCreateFName( NTXAREAP pArea, const char * szBagName, HB_BOOL *
    {
       DBORDERINFO pExtInfo;
       memset( &pExtInfo, 0, sizeof( pExtInfo ) );
-      pExt = pExtInfo.itmResult = hb_itemPutC( NULL, NULL );
+      pExt = pExtInfo.itmResult = hb_itemPutC( nullptr, nullptr );
       if( SELF_ORDINFO( &pArea->dbfarea.area, DBOI_BAGEXT, &pExtInfo ) == HB_SUCCESS &&
           hb_itemGetCLen( pExt ) > 0 )
       {
@@ -3603,7 +3603,7 @@ static void hb_ntxCreateFName( NTXAREAP pArea, const char * szBagName, HB_BOOL *
          {
             DBORDERINFO pExtInfo;
             memset( &pExtInfo, 0, sizeof( pExtInfo ) );
-            pExt = pExtInfo.itmResult = hb_itemPutC( NULL, NULL );
+            pExt = pExtInfo.itmResult = hb_itemPutC( nullptr, nullptr );
             if( SELF_ORDINFO( &pArea->dbfarea.area, DBOI_BAGEXT, &pExtInfo ) == HB_SUCCESS )
             {
                *fProd = hb_stricmp( pFileName->szExtension,
@@ -6192,7 +6192,7 @@ static HB_ERRCODE hb_ntxOpen( NTXAREAP pArea, LPDBOPENINFO pOpenInfo )
          DBORDERINFO pOrderInfo;
 
          pOrderInfo.itmResult = hb_itemPutNI( NULL, 0 );
-         pOrderInfo.atomBagName = hb_itemPutC( NULL, szFileName );
+         pOrderInfo.atomBagName = hb_itemPutC( nullptr, szFileName );
          pOrderInfo.itmNewVal = NULL;
          pOrderInfo.itmOrder  = NULL;
          errCode = SELF_ORDLSTADD( &pArea->dbfarea.area, &pOrderInfo );
@@ -6793,11 +6793,11 @@ static HB_ERRCODE hb_ntxOrderInfo( NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
          return HB_SUCCESS;
       case DBOI_I_TAGNAME:
          pInfo->itmResult = hb_itemPutC( pInfo->itmResult,
-                      pArea->pSort ? pArea->pSort->pTag->TagName : NULL );
+                      pArea->pSort ? pArea->pSort->pTag->TagName : nullptr );
          return HB_SUCCESS;
       case DBOI_I_BAGNAME:
          pInfo->itmResult = hb_itemPutC( pInfo->itmResult, pArea->pSort ?
-                      pArea->pSort->pTag->pIndex->IndexName : NULL );
+                      pArea->pSort->pTag->pIndex->IndexName : nullptr );
          return HB_SUCCESS;
       case DBOI_ISREINDEX:
          pInfo->itmResult = hb_itemPutL( pInfo->itmResult,
@@ -6908,7 +6908,7 @@ static HB_ERRCODE hb_ntxOrderInfo( NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
       switch( uiIndex )
       {
          case DBOI_CONDITION:
-            pInfo->itmResult = hb_itemPutC( pInfo->itmResult, pTag->ForExpr ? pTag->ForExpr : NULL );
+            pInfo->itmResult = hb_itemPutC( pInfo->itmResult, pTag->ForExpr ? pTag->ForExpr : nullptr );
             if( hb_itemType( pInfo->itmNewVal ) & HB_IT_STRING )
             {
                const char * szForExpr = hb_itemGetCPtr( pInfo->itmNewVal );
@@ -7425,7 +7425,7 @@ static HB_ERRCODE hb_ntxOrderInfo( NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
          case DBOI_FULLPATH:
          case DBOI_NAME:
          case DBOI_KEYTYPE:
-            hb_itemPutC( pInfo->itmResult, NULL );
+            hb_itemPutC( pInfo->itmResult, nullptr );
             break;
          default:
             hb_itemClear( pInfo->itmResult );
@@ -7599,7 +7599,7 @@ static HB_ERRCODE hb_ntxOrderListFocus( NTXAREAP pArea, LPDBORDERINFO pOrderInfo
    HB_TRACE( HB_TR_DEBUG, ( "hb_ntxOrderListFocus(%p, %p)", ( void * ) pArea, ( void * ) pOrderInfo ) );
 
    pOrderInfo->itmResult = hb_itemPutC( pOrderInfo->itmResult,
-                             pArea->lpCurTag ? pArea->lpCurTag->TagName : NULL );
+                             pArea->lpCurTag ? pArea->lpCurTag->TagName : nullptr );
 
    if( pOrderInfo->itmOrder )
    {

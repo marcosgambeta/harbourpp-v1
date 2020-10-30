@@ -587,7 +587,7 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
             }
 
             case HB_FT_MEMO:
-               hb_itemPutC( pItem, NULL );
+               hb_itemPutC( pItem, nullptr );
                break;
 
             case HB_FT_INTEGER:

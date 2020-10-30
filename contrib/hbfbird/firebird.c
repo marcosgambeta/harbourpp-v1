@@ -725,7 +725,7 @@ HB_FUNC( FBGETBLOB )
 
             hb_snprintf( p, sizeof( p ), "%*.*s", blob_seg_len, blob_seg_len, blob_segment );
 
-            temp = hb_itemPutC( NULL, p );
+            temp = hb_itemPutC( nullptr, p );
             hb_arrayAdd( aNew, temp );
             hb_itemRelease( temp );
 

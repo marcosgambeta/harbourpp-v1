@@ -740,7 +740,7 @@ static PHB_ITEM class_def_from_class( /* amfContext * context, */ PHB_ITEM pItem
 
    pClass = hb_hashNew( NULL );
 
-   pKey   = hb_itemPutC( NULL, "CLASS_DEF" );
+   pKey   = hb_itemPutC( nullptr, "CLASS_DEF" );
    pValue = hb_itemNew( nullptr );
    if( ! hb_hashAdd( pClass, pKey, pValue ) )
    {
@@ -752,8 +752,8 @@ static PHB_ITEM class_def_from_class( /* amfContext * context, */ PHB_ITEM pItem
    hb_itemRelease( pKey );
    hb_itemRelease( pValue );
 
-   pKey   = hb_itemPutC( NULL, "alias" );
-   pValue = hb_itemPutC( NULL, hb_clsName( uiClass ) );
+   pKey   = hb_itemPutC( nullptr, "alias" );
+   pValue = hb_itemPutC( nullptr, hb_clsName( uiClass ) );
    if( ! hb_hashAdd( pClass, pKey, pValue ) )
    {
       hb_itemRelease( pKey );
@@ -766,7 +766,7 @@ static PHB_ITEM class_def_from_class( /* amfContext * context, */ PHB_ITEM pItem
 
    if( hbamf_is_cls_externalizable( uiClass ) )
    {
-      pKey   = hb_itemPutC( NULL, "EXTERNALIZABLE_CLASS_DEF" );
+      pKey   = hb_itemPutC( nullptr, "EXTERNALIZABLE_CLASS_DEF" );
       pValue = hb_itemNew( nullptr );
       if( ! hb_hashAdd( pClass, pKey, pValue ) )
       {

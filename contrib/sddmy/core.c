@@ -360,7 +360,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
             }
 
             case HB_FT_MEMO:
-               pItem = hb_itemPutC( NULL, NULL );
+               pItem = hb_itemPutC( nullptr, nullptr );
                break;
 
             case HB_FT_INTEGER:

@@ -685,7 +685,7 @@ HB_FUNC( HB_MLEVAL )
       if( fSoftCR || fEOL )
       {
          ++nLines;
-         pLineItem = hb_itemPutC( pLineItem, NULL );
+         pLineItem = hb_itemPutC( pLineItem, nullptr );
          pSoftItem = hb_itemPutL( pSoftItem, HB_FALSE );
          hb_vmEvalBlockV( pBlock, 2, pLineItem, pSoftItem );
       }

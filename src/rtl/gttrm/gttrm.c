@@ -3955,7 +3955,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 #ifndef HB_GT_UNICODE_BUF
       case HB_GTI_BOXCP:
          pInfo->pResult = hb_itemPutC( pInfo->pResult,
-                                       pTerm->cdpBox ? pTerm->cdpBox->id : NULL );
+                                       pTerm->cdpBox ? pTerm->cdpBox->id : nullptr );
          szVal = hb_itemGetCPtr( pInfo->pNewVal );
          if( szVal && *szVal )
          {

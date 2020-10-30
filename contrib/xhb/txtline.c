@@ -247,7 +247,7 @@ HB_FUNC( HB_READLINE )
          hb_itemRelease( pEOL );
       }
 
-      pTerm1       = hb_itemPutC( NULL, hb_setGetCPtr( HB_SET_EOL ) );
+      pTerm1       = hb_itemPutC( nullptr, hb_setGetCPtr( HB_SET_EOL ) );
       bAlloc_Term1 = HB_TRUE;
    }
    else

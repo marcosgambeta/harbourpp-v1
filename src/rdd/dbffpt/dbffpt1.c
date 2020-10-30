@@ -2525,7 +2525,7 @@ static HB_ERRCODE hb_fptReadBlobBlock( FPTAREAP pArea, PHB_ITEM pItem,
                                   pFile, ulSize );
 
    if( ulSize == 0 )
-      hb_itemPutC( pItem, NULL );
+      hb_itemPutC( pItem, nullptr );
    else
    {
       HB_BYTE * bBuffer = ( HB_BYTE * ) hb_xalloc( ulSize + 1 );
@@ -2846,7 +2846,7 @@ static HB_ERRCODE hb_fptGetMemo( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
    }
    else
    {
-      hb_itemPutC( pItem, NULL );
+      hb_itemPutC( pItem, nullptr );
       hb_itemSetCMemo( pItem );
    }
    return errCode;

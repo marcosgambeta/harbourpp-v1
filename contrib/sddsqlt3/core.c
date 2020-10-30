@@ -372,7 +372,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
    pArea->pSDDData = memset( hb_xgrab( sizeof( SDDDATA ) ), 0, sizeof( SDDDATA ) );
    pSDDData        = ( SDDDATA * ) pArea->pSDDData;
 
-   pItem    = hb_itemPutC( NULL, pArea->szQuery );
+   pItem    = hb_itemPutC( nullptr, pArea->szQuery );
    pszQuery = S_HB_ITEMGETSTR( pItem, &hQuery, &nQueryLen );
 
 #if SQLITE_VERSION_NUMBER >= 3020000
@@ -466,7 +466,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
          }
          case HB_FT_BLOB:
             dbFieldInfo.uiLen = 4;
-            hb_itemPutC( pItem, NULL );
+            hb_itemPutC( pItem, nullptr );
             break;
 
          case HB_FT_INTEGER:

@@ -2463,13 +2463,13 @@ static HB_ERRCODE adsGetValue( ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem
          u32RetVal = AdsGetMemoDataType( pArea->hTable, ADSFIELD( uiIndex ), &u16Type );
          if( u32RetVal != AE_SUCCESS )
          {
-            hb_itemPutC( pItem, NULL );
+            hb_itemPutC( pItem, nullptr );
          }
          else if( u16Type == ADS_BINARY || u16Type == ADS_IMAGE )
          {
             u32RetVal = AdsGetBinaryLength( pArea->hTable, ADSFIELD( uiIndex ), &u32Length );
             if( u32RetVal != AE_SUCCESS || u32Length == 0 )
-               hb_itemPutC( pItem, NULL );
+               hb_itemPutC( pItem, nullptr );
             else
             {
                pucBuf = ( UNSIGNED8 * ) hb_xgrab( ++u32Length ); /* ++ to make room for NULL */
@@ -2477,7 +2477,7 @@ static HB_ERRCODE adsGetValue( ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem
                if( u32RetVal != AE_SUCCESS )
                {
                   hb_xfree( pucBuf );
-                  hb_itemPutC( pItem, NULL );
+                  hb_itemPutC( pItem, nullptr );
                }
                else
                   hb_itemPutCLPtr( pItem, ( char * ) pucBuf, u32Length );
@@ -2487,14 +2487,14 @@ static HB_ERRCODE adsGetValue( ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem
          {
             u32RetVal = AdsGetMemoLength( pArea->hTable, ADSFIELD( uiIndex ), &u32Length );
             if( u32RetVal != AE_SUCCESS || u32Length == 0 )
-               hb_itemPutC( pItem, NULL );
+               hb_itemPutC( pItem, nullptr );
 #if ADS_LIB_VERSION >= 1000
             else if( ( pField->uiFlags & HB_FF_UNICODE ) != 0 )
             {
                HB_WCHAR * pwBuffer = ( HB_WCHAR * ) hb_xgrab( ++u32Length * sizeof( HB_WCHAR ) );
                u32RetVal = AdsGetStringW( pArea->hTable, ADSFIELD( uiIndex ), ( WCHAR * ) pwBuffer, &u32Length, ADS_NONE );
                if( u32RetVal != AE_SUCCESS )
-                  hb_itemPutC( pItem, NULL );
+                  hb_itemPutC( pItem, nullptr );
                else
                   hb_itemPutStrLenU16( pItem, HB_CDP_ENDIAN_LITTLE, pwBuffer, u32Length );
                hb_xfree( pwBuffer );
@@ -2505,7 +2505,7 @@ static HB_ERRCODE adsGetValue( ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem
                pucBuf = ( UNSIGNED8 * ) hb_xgrab( ++u32Length );  /* ++ to make room for NULL */
                u32RetVal = AdsGetString( pArea->hTable, ADSFIELD( uiIndex ), pucBuf, &u32Length, ADS_NONE );
                if( u32RetVal != AE_SUCCESS )
-                  hb_itemPutC( pItem, NULL );
+                  hb_itemPutC( pItem, nullptr );
                else
                {
 #ifdef ADS_USE_OEM_TRANSLATION
@@ -4410,7 +4410,7 @@ static HB_ERRCODE adsOrderInfo( ADSAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO
             pOrderInfo->itmResult = hb_itemPutCL( pOrderInfo->itmResult,
                                                   ( const char * ) aucBuffer, u16len );
          else
-            pOrderInfo->itmResult = hb_itemPutC( pOrderInfo->itmResult, NULL );
+            pOrderInfo->itmResult = hb_itemPutC( pOrderInfo->itmResult, nullptr );
          break;
 
       case DBOI_EXPRESSION:
@@ -4418,7 +4418,7 @@ static HB_ERRCODE adsOrderInfo( ADSAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO
             pOrderInfo->itmResult = hb_itemPutCL( pOrderInfo->itmResult,
                                                   ( const char * ) aucBuffer, u16len );
          else
-            pOrderInfo->itmResult = hb_itemPutC( pOrderInfo->itmResult, NULL );
+            pOrderInfo->itmResult = hb_itemPutC( pOrderInfo->itmResult, nullptr );
          break;
 
       case DBOI_ISCOND:
@@ -5171,7 +5171,7 @@ static HB_ERRCODE adsDrop( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemIn
    if( ! pFileName->szExtension )
    {
       /* Add default extension if missing */
-      pFileExt = hb_itemPutC( NULL, NULL );
+      pFileExt = hb_itemPutC( nullptr, nullptr );
       if( SELF_RDDINFO( pRDD, fTable ? RDDI_TABLEEXT : RDDI_ORDBAGEXT, ulConnect, pFileExt ) == HB_SUCCESS )
          pFileName->szExtension = hb_itemGetCPtr( pFileExt );
    }
@@ -5192,7 +5192,7 @@ static HB_ERRCODE adsDrop( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemIn
           * the path set by hb_spFile()
           */
          pFileName = hb_fsFNameSplit( szFileName );
-         pFileExt = hb_itemPutC( pFileExt, NULL );
+         pFileExt = hb_itemPutC( pFileExt, nullptr );
          if( SELF_RDDINFO( pRDD, RDDI_MEMOEXT, ulConnect, pFileExt ) == HB_SUCCESS )
          {
             szExt = hb_itemGetCPtr( pFileExt );
@@ -5207,7 +5207,7 @@ static HB_ERRCODE adsDrop( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemIn
           * and try to delete production index also if it exists
           * in the same directory as table file
           */
-         pFileExt = hb_itemPutC( pFileExt, NULL );
+         pFileExt = hb_itemPutC( pFileExt, nullptr );
          if( SELF_RDDINFO( pRDD, RDDI_ORDSTRUCTEXT, ulConnect, pFileExt ) == HB_SUCCESS )
          {
             szExt = hb_itemGetCPtr( pFileExt );
@@ -5256,7 +5256,7 @@ static HB_ERRCODE adsExists( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItem
 
    if( ! pFileName->szExtension )
    {
-      pFileExt = hb_itemPutC( NULL, NULL );
+      pFileExt = hb_itemPutC( nullptr, nullptr );
       if( SELF_RDDINFO( pRDD, fTable ? RDDI_TABLEEXT : RDDI_ORDBAGEXT, ulConnect, pFileExt ) == HB_SUCCESS )
          pFileName->szExtension = hb_itemGetCPtr( pFileExt );
    }

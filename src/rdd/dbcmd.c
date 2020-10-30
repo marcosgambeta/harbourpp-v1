@@ -789,7 +789,7 @@ HB_FUNC( DBSETFILTER )
          if( pText )
             pFilterInfo.abFilterText = pText;
          else
-            pFilterInfo.abFilterText = hb_itemPutC( NULL, NULL );
+            pFilterInfo.abFilterText = hb_itemPutC( nullptr, nullptr );
          pFilterInfo.fFilter = HB_TRUE;
          pFilterInfo.lpvCargo = NULL;
          pFilterInfo.fOptimized = HB_FALSE;
@@ -822,7 +822,7 @@ HB_FUNC( DBFILTER )
 
    if( pArea )
    {
-      PHB_ITEM pFilter = hb_itemPutC( NULL, NULL );
+      PHB_ITEM pFilter = hb_itemPutC( nullptr, nullptr );
       SELF_FILTERTEXT( pArea, pFilter );
       hb_itemReturnRelease( pFilter );
    }
@@ -886,7 +886,7 @@ HB_FUNC( DBTABLEEXT )
       errCode = SELF_INFO( pArea, DBI_TABLEEXT, pItem );
 
    if( errCode != HB_SUCCESS )
-      hb_itemPutC( pItem, NULL );
+      hb_itemPutC( pItem, nullptr );
    hb_itemReturnRelease( pItem );
 }
 
@@ -1139,7 +1139,7 @@ HB_FUNC( ORDBAGEXT )
    AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
 
    memset( &pInfo, 0, sizeof( pInfo ) );
-   pInfo.itmResult = hb_itemPutC( NULL, NULL );
+   pInfo.itmResult = hb_itemPutC( nullptr, nullptr );
    if( ! pArea )
    {
       LPRDDNODE pRddNode;
@@ -1187,7 +1187,7 @@ HB_FUNC( ORDBAGNAME )
             return;
          }
       }
-      pOrderInfo.itmResult = hb_itemPutC( NULL, NULL );
+      pOrderInfo.itmResult = hb_itemPutC( nullptr, nullptr );
       SELF_ORDINFO( pArea, DBOI_BAGNAME, &pOrderInfo );
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
@@ -1369,7 +1369,7 @@ HB_FUNC( ORDFOR )
       }
       pOrderInfo.atomBagName = hb_param( 2, HB_IT_STRING );
       pOrderInfo.itmNewVal = hb_param( 3, HB_IT_STRING );
-      pOrderInfo.itmResult = hb_itemPutC( NULL, NULL );
+      pOrderInfo.itmResult = hb_itemPutC( nullptr, nullptr );
       pOrderInfo.itmCobExpr = NULL;
       pOrderInfo.fAllTags = HB_FALSE;
       SELF_ORDINFO( pArea, DBOI_CONDITION, &pOrderInfo );
@@ -1404,7 +1404,7 @@ HB_FUNC( ORDKEY )
          }
       }
       pOrderInfo.atomBagName = hb_param( 2, HB_IT_STRING );
-      pOrderInfo.itmResult = hb_itemPutC( NULL, NULL );
+      pOrderInfo.itmResult = hb_itemPutC( nullptr, nullptr );
       SELF_ORDINFO( pArea, DBOI_EXPRESSION, &pOrderInfo );
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
@@ -1496,7 +1496,7 @@ HB_FUNC( ORDNAME )
       }
 
       pOrderInfo.atomBagName = hb_param( 2, HB_IT_STRING );
-      pOrderInfo.itmResult   = hb_itemPutC( NULL, NULL );
+      pOrderInfo.itmResult   = hb_itemPutC( nullptr, nullptr );
       SELF_ORDINFO( pArea, DBOI_NAME, &pOrderInfo );
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
@@ -1538,7 +1538,7 @@ HB_FUNC( ORDSETFOCUS )
       memset( &pInfo, 0, sizeof( pInfo ) );
       pInfo.itmOrder = hb_param( 1, HB_IT_STRING | HB_IT_NUMERIC );
       pInfo.atomBagName = hb_param( 2, HB_IT_STRING );
-      pInfo.itmResult = hb_itemPutC( NULL, NULL );
+      pInfo.itmResult = hb_itemPutC( nullptr, nullptr );
       SELF_ORDLSTFOCUS( pArea, &pInfo );
       hb_itemReturnRelease( pInfo.itmResult );
    }
@@ -1737,7 +1737,7 @@ HB_FUNC( DBRELATION )  /* (<nRelation>) --> cLinkExp */
 
    if( pArea )
    {
-      PHB_ITEM pRelExpr = hb_itemPutC( NULL, NULL );
+      PHB_ITEM pRelExpr = hb_itemPutC( nullptr, nullptr );
       HB_USHORT uiRelNo = ( HB_USHORT ) hb_parni( 1 );
       SELF_RELTEXT( pArea, uiRelNo ? uiRelNo : 1, pRelExpr );
       hb_itemReturnRelease( pRelExpr );

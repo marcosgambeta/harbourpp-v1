@@ -5433,7 +5433,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          pInfo->pResult = wnd->szTitle ?
                            hb_itemPutStrLenUTF8( pInfo->pResult, wnd->szTitle,
                                                  strlen( wnd->szTitle ) ) :
-                           hb_itemPutC( pInfo->pResult, NULL );
+                           hb_itemPutC( pInfo->pResult, nullptr );
          if( pInfo->pNewVal && HB_IS_STRING( pInfo->pNewVal ) )
          {
             void * hString;

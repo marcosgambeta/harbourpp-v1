@@ -1561,11 +1561,11 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          break;
 
       case DBOI_BAGNAME:
-         pOrderInfo->itmResult = hb_itemPutC( pOrderInfo->itmResult, NULL );
+         pOrderInfo->itmResult = hb_itemPutC( pOrderInfo->itmResult, nullptr );
          break;
 
       case DBOI_FULLPATH:
-         pOrderInfo->itmResult = hb_itemPutC( pOrderInfo->itmResult, NULL );
+         pOrderInfo->itmResult = hb_itemPutC( pOrderInfo->itmResult, nullptr );
          break;
 
       case DBOI_BAGEXT:

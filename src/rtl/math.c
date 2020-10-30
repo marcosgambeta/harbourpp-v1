@@ -482,8 +482,8 @@ static int hb_matherrblock( HB_MATH_EXCEPTION * pexc )
       PHB_ITEM pType, pFuncname, pError, pArg1, pArg2, pRetval, pHandled;
 
       pType = hb_itemPutNI( NULL, pexc->type );
-      pFuncname = hb_itemPutC( NULL, pexc->funcname );
-      pError = hb_itemPutC( NULL, pexc->error );
+      pFuncname = hb_itemPutC( nullptr, pexc->funcname );
+      pError = hb_itemPutC( nullptr, pexc->error );
       pArg1 = hb_itemPutND( NULL, pexc->arg1 );
       pArg2 = hb_itemPutND( NULL, pexc->arg2 );
       pRetval = hb_itemPutNDLen( NULL, pexc->retval, pexc->retvalwidth, pexc->retvaldec );

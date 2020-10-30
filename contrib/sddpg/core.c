@@ -406,7 +406,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
                break;
             }
             case HB_FT_MEMO:
-               hb_itemPutC( pItem, NULL );
+               hb_itemPutC( pItem, nullptr );
                hb_itemSetCMemo( pItem );
                break;
 

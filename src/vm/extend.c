@@ -1394,7 +1394,7 @@ void hb_retc_null( void )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_retc_null()" ) );
 
-   hb_itemPutC( hb_stackReturnItem(), NULL );
+   hb_itemPutC( hb_stackReturnItem(), nullptr );
 }
 
 #undef hb_retc_buffer

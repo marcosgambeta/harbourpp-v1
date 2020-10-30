@@ -3832,7 +3832,7 @@ static HB_ERRCODE hb_dbfInfo( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
             PHB_DYNS pTriggerSym = pArea->pTriggerSym;
             if( HB_IS_STRING( pItem ) )
                hb_dbfTriggerSet( pArea, pItem );
-            hb_itemPutC( pItem, pTriggerSym ? hb_dynsymName( pTriggerSym ) : NULL );
+            hb_itemPutC( pItem, pTriggerSym ? hb_dynsymName( pTriggerSym ) : nullptr );
          }
          break;
 

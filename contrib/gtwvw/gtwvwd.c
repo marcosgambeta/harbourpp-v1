@@ -6215,7 +6215,7 @@ static PHB_ITEM hb_gt_wvw_GetWindowTitle( UINT usWinNum, PHB_ITEM pItem )
    if( iResult > 0 )
       return HB_ITEMPUTSTR( pItem, buffer );
    else
-      return hb_itemPutC( pItem, NULL );
+      return hb_itemPutC( pItem, nullptr );
 }
 
 

@@ -77,7 +77,7 @@ static HB_BOOL hb_sxSemName( char * szFileName )
          pOrderInfo.itmOrder = hb_param( 1, HB_IT_NUMERIC );
          if( pOrderInfo.itmOrder && hb_itemGetNI( pOrderInfo.itmOrder ) == 0 )
             pOrderInfo.itmOrder = NULL;
-         pOrderInfo.itmResult = hb_itemPutC( NULL, NULL );
+         pOrderInfo.itmResult = hb_itemPutC( nullptr, nullptr );
          SELF_ORDINFO( pArea, DBOI_NAME, &pOrderInfo );
          szName = hb_itemGetCPtr( pOrderInfo.itmResult );
          if( szName && szName[ 0 ] )

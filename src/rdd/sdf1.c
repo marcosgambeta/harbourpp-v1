@@ -484,7 +484,7 @@ static HB_ERRCODE hb_sdfGetValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
       }
 
       case HB_FT_MEMO:
-         hb_itemPutC( pItem, NULL );
+         hb_itemPutC( pItem, nullptr );
          break;
 
       case HB_FT_NONE:

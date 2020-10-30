@@ -223,7 +223,7 @@ static void hb_ParseLine( PHB_ITEM pReturn, const char * szText, int iDelimiter,
          if( szText[ nLen - 1 ] == iDelimiter )
          {
             word_count++;
-            hb_arrayAddForward( pReturn, hb_itemPutC( pTemp, NULL ) );
+            hb_arrayAddForward( pReturn, hb_itemPutC( pTemp, nullptr ) );
          }
 
          /* store number of words */
