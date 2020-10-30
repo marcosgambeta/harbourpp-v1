@@ -4809,7 +4809,7 @@ static void hb_vmEnumStart( int nVars, int nDescend )
                                        pBase->item.asString.length;
          if( pBase->item.asString.length )
             pEnum->item.asEnum.valuePtr =
-                        hb_itemPutCL( NULL, pBase->item.asString.value +
+                        hb_itemPutCL( nullptr, pBase->item.asString.value +
                                             pEnum->item.asEnum.offset - 1, 1 );
          else
             fStart = HB_FALSE;

@@ -2340,7 +2340,7 @@ static HB_ERRCODE hb_fptReadFlexItem( FPTAREAP pArea, HB_BYTE ** pbMemoBuf, HB_B
             errCode = EDBF_CORRUPT;
          break;
       case FPTIT_FLEXAR_NUL:
-         hb_itemPutCL( pItem, NULL, 0 );
+         hb_itemPutCL( pItem, nullptr, 0 );
          break;
 
       case FPTIT_FLEXAR_STR:

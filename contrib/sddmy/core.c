@@ -354,7 +354,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
                memset( pStr, ' ', dbFieldInfo.uiLen );
                pStr[ dbFieldInfo.uiLen ] = '\0';
 
-               pItem = hb_itemPutCL( NULL, pStr, dbFieldInfo.uiLen );
+               pItem = hb_itemPutCL( nullptr, pStr, dbFieldInfo.uiLen );
                hb_xfree( pStr );
                break;
             }

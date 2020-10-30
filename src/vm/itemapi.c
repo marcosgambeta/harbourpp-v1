@@ -1946,7 +1946,7 @@ PHB_ITEM hb_itemUnRefOnce( PHB_ITEM pItem )
                if( pItem->item.asEnum.offset > 0 &&
                    ( HB_SIZE ) pItem->item.asEnum.offset <= pBase->item.asString.length )
                {
-                  pItem->item.asEnum.valuePtr = hb_itemPutCL( NULL,
+                  pItem->item.asEnum.valuePtr = hb_itemPutCL( nullptr,
                      pBase->item.asString.value + pItem->item.asEnum.offset - 1, 1 );
                   return pItem->item.asEnum.valuePtr;
                }
@@ -3032,7 +3032,7 @@ PHB_ITEM hb_itemValToStr( PHB_ITEM pItem )
    if( bFreeReq )
       pResult = hb_itemPutCLPtr( NULL, buffer, nLen );
    else
-      pResult = hb_itemPutCL( NULL, buffer, nLen );
+      pResult = hb_itemPutCL( nullptr, buffer, nLen );
 
    return pResult;
 }

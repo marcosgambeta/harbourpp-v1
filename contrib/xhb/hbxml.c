@@ -936,7 +936,7 @@ static MXML_STATUS mxml_node_read_name( MXML_REFIL * ref, PHB_ITEM pNode, PHB_IT
    if( iAllocated > iPos + 1 )
       buf = ( char * ) MXML_REALLOCATOR( buf, iPos + 1 );
 
-   pItem = hb_itemPutCL( NULL, buf, iPos );
+   pItem = hb_itemPutCL( nullptr, buf, iPos );
    hb_objSendMsg( pNode, "_CNAME", 1, pItem );
    hb_itemRelease( pItem );
    MXML_DELETOR( buf );

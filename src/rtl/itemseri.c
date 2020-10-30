@@ -1430,7 +1430,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem,
          break;
 
       case HB_SERIAL_STRNUL:
-         hb_itemPutCL( pItem, NULL, 0 );
+         hb_itemPutCL( pItem, nullptr, 0 );
          break;
       case HB_SERIAL_STRING8:
          nSize = nLen = pBuffer[ nOffset++ ];

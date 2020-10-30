@@ -707,7 +707,7 @@ static HB_ERRCODE sqlbaseCreate( SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo )
             memset( pStr, ' ', pField->uiLen );
             pStr[ pField->uiLen ] = '\0';
 
-            pItem = hb_itemPutCL( NULL, pStr, pField->uiLen );
+            pItem = hb_itemPutCL( nullptr, pStr, pField->uiLen );
             hb_xfree( pStr );
             break;
          }

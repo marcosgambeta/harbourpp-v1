@@ -2315,7 +2315,7 @@ HB_FUNC( ADSDIRECTORY )
    {
       while( ulRetVal == AE_SUCCESS )
       {
-         PHB_ITEM pitmFileName = hb_itemPutCL( NULL, ( const char * ) ucFileName, usFileNameLen );
+         PHB_ITEM pitmFileName = hb_itemPutCL( nullptr, ( const char * ) ucFileName, usFileNameLen );
          hb_arrayAddForward( pitmDir, pitmFileName );
 
          usFileNameLen = sizeof( ucFileName );
