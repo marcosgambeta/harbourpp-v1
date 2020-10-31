@@ -4385,7 +4385,7 @@ static HB_ERRCODE hb_fptPutValueFile( FPTAREAP pArea, HB_USHORT uiIndex, const c
          hb_fileClose( pFile );
          if( errCode == HB_SUCCESS )
          {
-            PHB_ITEM pItem = hb_itemPutCLPtr( NULL, ( char * ) pAlloc, ulSize );
+            PHB_ITEM pItem = hb_itemPutCLPtr( nullptr, ( char * ) pAlloc, ulSize );
             errCode = hb_fptPutVarField( pArea, uiIndex, pItem );
             hb_itemRelease( pItem );
          }

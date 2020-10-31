@@ -3030,7 +3030,7 @@ PHB_ITEM hb_itemValToStr( PHB_ITEM pItem )
 
    buffer = hb_itemString( pItem, &nLen, &bFreeReq );
    if( bFreeReq )
-      pResult = hb_itemPutCLPtr( NULL, buffer, nLen );
+      pResult = hb_itemPutCLPtr( nullptr, buffer, nLen );
    else
       pResult = hb_itemPutCL( nullptr, buffer, nLen );
 

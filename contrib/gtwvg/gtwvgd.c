@@ -1317,7 +1317,7 @@ static void hb_gt_wvt_MouseEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
 #else
                if( j > 0 )
                {
-                  PHB_ITEM pItem = hb_itemPutCLPtr( NULL, sBuffer, j );
+                  PHB_ITEM pItem = hb_itemPutCLPtr( nullptr, sBuffer, j );
                   hb_gt_winapi_setClipboard( pWVT->CodePage == OEM_CHARSET ?
                                              CF_OEMTEXT : CF_TEXT, pItem );
                   hb_itemRelease( pItem );

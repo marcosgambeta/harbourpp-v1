@@ -290,7 +290,7 @@ static PHB_ITEM hb_i18n_pluralexp_compile( PHB_ITEM pExp )
       memcpy( &szMacro[ 4 ], hb_itemGetCPtr( pExp ), nLen );
       szMacro[ 4 + nLen ] = '}';
       szMacro[ 5 + nLen ] = '\0';
-      pMacro = hb_itemPutCLPtr( NULL, szMacro, nLen );
+      pMacro = hb_itemPutCLPtr( nullptr, szMacro, nLen );
       szType = hb_macroGetType( pMacro );
       if( *szType == 'B' )
       {
