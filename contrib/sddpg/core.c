@@ -427,7 +427,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
                break;
 
             case HB_FT_DATE:
-               hb_itemPutDS( pItem, NULL );
+               hb_itemPutDS( pItem, nullptr );
                break;
 
             default:

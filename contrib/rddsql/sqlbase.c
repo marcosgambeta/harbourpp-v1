@@ -739,7 +739,7 @@ static HB_ERRCODE sqlbaseCreate( SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo )
             break;
 
          case HB_FT_DATE:
-            pItem = hb_itemPutDS( NULL, NULL );
+            pItem = hb_itemPutDS( nullptr, nullptr );
             break;
 
          case HB_FT_LOGICAL:

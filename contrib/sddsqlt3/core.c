@@ -486,7 +486,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
 #ifdef HB_SQLT3_MAP_DECLARED_EMULATED
          case HB_FT_DATE:
             dbFieldInfo.uiLen = 8;
-            hb_itemPutDS( pItem, NULL );
+            hb_itemPutDS( pItem, nullptr );
             break;
 
          case HB_FT_TIMESTAMP:
@@ -614,10 +614,10 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                   szDate[ 6 ] = pValue[ 8 ];
                   szDate[ 7 ] = pValue[ 9 ];
                   szDate[ 8 ] = '\0';
-                  pItem = hb_itemPutDS( NULL, szDate );
+                  pItem = hb_itemPutDS( nullptr, szDate );
                }
                else if( sqlite3_column_bytes( st, ui ) == 8 )
-                  pItem = hb_itemPutDS( NULL, ( const char * ) sqlite3_column_text( st, ui ) );
+                  pItem = hb_itemPutDS( nullptr, ( const char * ) sqlite3_column_text( st, ui ) );
 
                break;
 
