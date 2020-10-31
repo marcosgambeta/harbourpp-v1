@@ -366,7 +366,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
                dbFieldInfo.uiType = HB_FT_INTEGER;
                dbFieldInfo.uiLen  = 4;
 
-               pItem = hb_itemPutNLLen( NULL, 0, 11 );
+               pItem = hb_itemPutNLLen( nullptr, 0, 11 );
             }
             pVar->sqldata = ( char * ) hb_xgrab( sizeof( long ) );
             break;
