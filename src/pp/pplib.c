@@ -165,7 +165,7 @@ HB_FUNC( __PP_INIT )
       pStatePtr = ( PHB_PP_STATE * ) hb_gcAllocate( sizeof( PHB_PP_STATE ),
                                                     &s_gcPPFuncs );
       *pStatePtr = pState;
-      ppItem = hb_itemPutPtrGC( NULL, ( void * ) pStatePtr );
+      ppItem = hb_itemPutPtrGC( nullptr, ( void * ) pStatePtr );
 
       hb_pp_init( pState, HB_TRUE, HB_FALSE, 0, NULL, NULL, NULL,
                   hb_pp_ErrorMessage, hb_pp_Disp, NULL, NULL,

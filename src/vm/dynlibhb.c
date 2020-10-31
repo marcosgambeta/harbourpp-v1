@@ -164,7 +164,7 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
    {
       void ** pLibPtr = ( void ** ) hb_gcAllocate( sizeof( void * ), &s_gcDynlibFuncs );
       *pLibPtr = hDynLib;
-      return hb_itemPutPtrGC( NULL, pLibPtr );
+      return hb_itemPutPtrGC( nullptr, pLibPtr );
    }
 
    return NULL;

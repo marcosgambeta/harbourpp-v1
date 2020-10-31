@@ -139,7 +139,7 @@ static PHB_ITEM hb_gdImageItemNew( gdImagePtr im )
 
    *ptr = im;
 
-   return hb_itemPutPtrGC( NULL, ( void * ) ptr );
+   return hb_itemPutPtrGC( nullptr, ( void * ) ptr );
 }
 #endif
 
@@ -205,7 +205,7 @@ static PHB_ITEM hb_gdFontItemNew( gdFontPtr font )
 
    *ptr = font;
 
-   return hb_itemPutPtrGC( NULL, ( void * ) ptr );
+   return hb_itemPutPtrGC( nullptr, ( void * ) ptr );
 }
 #endif
 
