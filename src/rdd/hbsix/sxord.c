@@ -180,7 +180,7 @@ HB_FUNC( SX_FREEZE )
       if( hb_sxOrdParam( &Info ) )
       {
          HB_BOOL fResult = HB_FALSE;
-         Info.itmNewVal = hb_itemPutL( NULL, HB_TRUE );
+         Info.itmNewVal = hb_itemPutL( nullptr, HB_TRUE );
          Info.itmResult = hb_itemNew( nullptr );
          if( SELF_ORDINFO( pArea, DBOI_CUSTOM, &Info ) == HB_SUCCESS )
             fResult = HB_IS_LOGICAL( Info.itmResult ) &&
@@ -203,7 +203,7 @@ HB_FUNC( SX_WARM )
       if( hb_sxOrdParam( &Info ) )
       {
          HB_BOOL fResult = HB_FALSE;
-         Info.itmNewVal = hb_itemPutL( NULL, HB_FALSE );
+         Info.itmNewVal = hb_itemPutL( nullptr, HB_FALSE );
          Info.itmResult = hb_itemNew( nullptr );
          if( SELF_ORDINFO( pArea, DBOI_CHGONLY, &Info ) == HB_SUCCESS )
             fResult = HB_IS_LOGICAL( Info.itmResult ) &&
@@ -226,7 +226,7 @@ HB_FUNC( SX_CHILL )
       if( hb_sxOrdParam( &Info ) )
       {
          HB_BOOL fResult = HB_FALSE;
-         Info.itmNewVal = hb_itemPutL( NULL, HB_TRUE );
+         Info.itmNewVal = hb_itemPutL( nullptr, HB_TRUE );
          Info.itmResult = hb_itemNew( nullptr );
          if( SELF_ORDINFO( pArea, DBOI_CHGONLY, &Info ) == HB_SUCCESS )
             fResult = HB_IS_LOGICAL( Info.itmResult ) &&
@@ -482,7 +482,7 @@ HB_FUNC( SX_DESCEND )
          Info.itmResult = hb_itemNew( nullptr );
          if( SELF_ORDINFO( pArea, DBOI_ISDESC, &Info ) == HB_SUCCESS )
          {
-            Info.itmNewVal = hb_itemPutL( NULL, ! hb_itemGetL( Info.itmResult ) );
+            Info.itmNewVal = hb_itemPutL( nullptr, ! hb_itemGetL( Info.itmResult ) );
             SELF_ORDINFO( pArea, DBOI_ISDESC, &Info );
             hb_itemRelease( Info.itmNewVal );
          }
@@ -501,7 +501,7 @@ HB_FUNC( SX_KEYADD )
       DBORDERINFO Info;
       if( hb_sxOrdParam( &Info ) )
       {
-         Info.itmResult = hb_itemPutL( NULL, HB_FALSE );
+         Info.itmResult = hb_itemPutL( nullptr, HB_FALSE );
          Info.itmNewVal = hb_param( 3, HB_IT_ANY );
          SELF_ORDINFO( pArea, DBOI_KEYADD, &Info );
          fResult = hb_itemGetL( Info.itmResult );
@@ -521,7 +521,7 @@ HB_FUNC( SX_KEYDROP )
       DBORDERINFO Info;
       if( hb_sxOrdParam( &Info ) )
       {
-         Info.itmResult = hb_itemPutL( NULL, HB_FALSE );
+         Info.itmResult = hb_itemPutL( nullptr, HB_FALSE );
          Info.itmNewVal = hb_param( 3, HB_IT_ANY );
          SELF_ORDINFO( pArea, DBOI_KEYDELETE, &Info );
          fResult = hb_itemGetL( Info.itmResult );
@@ -667,7 +667,7 @@ HB_FUNC( SX_TAGUNIQUE )
       DBORDERINFO Info;
       if( hb_sxOrdParam( &Info ) )
       {
-         Info.itmResult = hb_itemPutL( NULL, HB_FALSE );
+         Info.itmResult = hb_itemPutL( nullptr, HB_FALSE );
          SELF_ORDINFO( pArea, DBOI_UNIQUE, &Info );
          hb_itemReturnRelease( Info.itmResult );
       }
@@ -736,8 +736,8 @@ HB_FUNC( SX_ROXLOCK )
       DBORDERINFO Info;
       if( hb_sxOrdParam( &Info ) )
       {
-         Info.itmNewVal = hb_itemPutL( NULL, HB_TRUE );
-         Info.itmResult = hb_itemPutL( NULL, HB_FALSE );
+         Info.itmNewVal = hb_itemPutL( nullptr, HB_TRUE );
+         Info.itmResult = hb_itemPutL( nullptr, HB_FALSE );
          if( SELF_ORDINFO( pArea, DBOI_READLOCK, &Info ) == HB_SUCCESS )
             fLocked = hb_itemGetL( Info.itmResult );
          hb_itemRelease( Info.itmNewVal );
@@ -756,8 +756,8 @@ HB_FUNC( SX_ROXUNLOCK )
       DBORDERINFO Info;
       if( hb_sxOrdParam( &Info ) )
       {
-         Info.itmNewVal = hb_itemPutL( NULL, HB_FALSE );
-         Info.itmResult = hb_itemPutL( NULL, HB_FALSE );
+         Info.itmNewVal = hb_itemPutL( nullptr, HB_FALSE );
+         Info.itmResult = hb_itemPutL( nullptr, HB_FALSE );
          SELF_ORDINFO( pArea, DBOI_READLOCK, &Info );
          hb_itemRelease( Info.itmNewVal );
          hb_itemRelease( Info.itmResult );
@@ -799,7 +799,7 @@ HB_FUNC( SX_ISROXLOCK )
             fLocked = hb_itemGetL( Info.itmResult );
          if( ! fLocked )
          {
-            Info.itmNewVal = hb_itemPutL( NULL, HB_TRUE );
+            Info.itmNewVal = hb_itemPutL( nullptr, HB_TRUE );
             if( SELF_ORDINFO( pArea, DBOI_READLOCK, &Info ) == HB_SUCCESS )
                fLocked = hb_itemGetL( Info.itmResult );
             if( fLocked )

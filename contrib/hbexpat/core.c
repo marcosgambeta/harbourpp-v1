@@ -332,7 +332,7 @@ static void XMLCALL hb_expat_SkippedEntityHandler( void * userdata,
       {
          PHB_ITEM pUserData = hb_itemNew( hb_expat->pVar[ _VAR_xUserData ] );
          PHB_ITEM pPar1     = hb_itemPutStrUTF8( NULL, entityName );
-         PHB_ITEM pPar2     = hb_itemPutL( NULL, is_parameter_entity );
+         PHB_ITEM pPar2     = hb_itemPutL( nullptr, is_parameter_entity );
 
          hb_evalBlock( hb_expat->pVar[ _VAR_bSkippedEntityHandler ], pUserData, pPar1, pPar2, NULL );
 
@@ -462,7 +462,7 @@ static void XMLCALL hb_expat_StartDoctypeDeclHandler( void * userdata,
          PHB_ITEM pPar1     = hb_itemPutStrUTF8( NULL, doctypeName );
          PHB_ITEM pPar2     = sysid ? hb_itemPutStrUTF8( NULL, sysid ) : hb_itemNew( nullptr );
          PHB_ITEM pPar3     = pubid ? hb_itemPutStrUTF8( NULL, pubid ) : hb_itemNew( nullptr );
-         PHB_ITEM pPar4     = hb_itemPutL( NULL, has_internal_subset );
+         PHB_ITEM pPar4     = hb_itemPutL( nullptr, has_internal_subset );
 
          hb_evalBlock( hb_expat->pVar[ _VAR_bStartDoctypeDeclHandler ], pUserData, pPar1, pPar2, pPar3, pPar4, NULL );
 
@@ -500,7 +500,7 @@ static void XMLCALL hb_expat_AttlistDeclHandler( void * userdata,
          PHB_ITEM pPar2     = hb_itemPutStrUTF8( NULL, attname );
          PHB_ITEM pPar3     = hb_itemPutStrUTF8( NULL, att_type );
          PHB_ITEM pPar4     = dflt ? hb_itemPutStrUTF8( NULL, dflt ) : hb_itemNew( nullptr );
-         PHB_ITEM pPar5     = hb_itemPutL( NULL, isrequired );
+         PHB_ITEM pPar5     = hb_itemPutL( nullptr, isrequired );
 
          hb_evalBlock( hb_expat->pVar[ _VAR_bAttlistDeclHandler ], pUserData, pPar1, pPar2, pPar3, pPar4, pPar5, NULL );
 
@@ -534,7 +534,7 @@ static void XMLCALL hb_expat_EntityDeclHandler( void * userdata,
       {
          PHB_ITEM pUserData = hb_itemNew( hb_expat->pVar[ _VAR_xUserData ] );
          PHB_ITEM pPar1     = hb_itemPutStrUTF8( NULL, entityName );
-         PHB_ITEM pPar2     = hb_itemPutL( NULL, is_parameter_entity );
+         PHB_ITEM pPar2     = hb_itemPutL( nullptr, is_parameter_entity );
          PHB_ITEM pPar3     = value ? hb_itemPutStrLenUTF8( NULL, value, value_length ) : hb_itemNew( nullptr );
          PHB_ITEM pPar4     = base ? hb_itemPutStrUTF8( NULL, base ) : hb_itemNew( nullptr );
          PHB_ITEM pPar5     = systemId ? hb_itemPutStrUTF8( NULL, systemId ) : hb_itemNew( nullptr );

@@ -717,7 +717,7 @@ static HB_BOOL amf3_decode_class_def( amfContext * context, PHB_ITEM pClass, int
 
    /* Set dynamic flag */
    pKey   = hb_itemPutC( nullptr, "dynamic" );
-   pValue = hb_itemPutL( NULL, ( header & DYNAMIC ) == DYNAMIC );
+   pValue = hb_itemPutL( nullptr, ( header & DYNAMIC ) == DYNAMIC );
    if( ! hb_hashAdd( pClass, pKey, pValue ) )
    {
       hb_itemRelease( pKey );

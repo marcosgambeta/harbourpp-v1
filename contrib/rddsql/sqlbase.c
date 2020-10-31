@@ -743,7 +743,7 @@ static HB_ERRCODE sqlbaseCreate( SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo )
             break;
 
          case HB_FT_LOGICAL:
-            pItem = hb_itemPutL( NULL, HB_FALSE );
+            pItem = hb_itemPutL( nullptr, HB_FALSE );
             break;
 
          default:

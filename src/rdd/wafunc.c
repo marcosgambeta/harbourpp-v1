@@ -767,7 +767,7 @@ HB_ERRCODE hb_rddCreateTableTemp( const char * szDriver,
    pInfo.ulConnection = ulConnection;
    pInfo.lpdbHeader = NULL;
 
-   pItem = hb_itemPutL( NULL, HB_TRUE );
+   pItem = hb_itemPutL( nullptr, HB_TRUE );
    errCode = SELF_INFO( pArea, DBI_ISTEMPORARY, pItem );
    hb_itemRelease( pItem );
 

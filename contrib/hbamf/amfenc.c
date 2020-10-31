@@ -1223,7 +1223,7 @@ HB_FUNC( AMF3_FROMWA )
          {
             memset( &pInfo, 0, sizeof( pInfo ) );
             pInfo.itmNewVal = hb_itemPutNL( NULL, uiRecNo );
-            pInfo.itmResult = hb_itemPutL( NULL, HB_FALSE );
+            pInfo.itmResult = hb_itemPutL( nullptr, HB_FALSE );
             SELF_ORDINFO( pArea, DBOI_POSITION, &pInfo );
             hb_itemRelease( pInfo.itmNewVal );
             hb_itemRelease( pInfo.itmResult );
