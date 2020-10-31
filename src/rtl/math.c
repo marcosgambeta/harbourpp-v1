@@ -111,8 +111,8 @@ static int hb_matherr( HB_MATH_EXCEPTION * pexc )
       /* NOTE: Unfortunately, we cannot decide whether one or two parameters
                have been used when the math function has been called, so we
                always take two */
-      pArg1 = hb_itemPutND( NULL, pexc->arg1 );
-      pArg2 = hb_itemPutND( NULL, pexc->arg2 );
+      pArg1 = hb_itemPutND( nullptr, pexc->arg1 );
+      pArg2 = hb_itemPutND( nullptr, pexc->arg2 );
       hb_errPutArgs( pError, 2, pArg1, pArg2 );
       hb_itemRelease( pArg1 );
       hb_itemRelease( pArg2 );
@@ -484,8 +484,8 @@ static int hb_matherrblock( HB_MATH_EXCEPTION * pexc )
       pType = hb_itemPutNI( NULL, pexc->type );
       pFuncname = hb_itemPutC( nullptr, pexc->funcname );
       pError = hb_itemPutC( nullptr, pexc->error );
-      pArg1 = hb_itemPutND( NULL, pexc->arg1 );
-      pArg2 = hb_itemPutND( NULL, pexc->arg2 );
+      pArg1 = hb_itemPutND( nullptr, pexc->arg1 );
+      pArg2 = hb_itemPutND( nullptr, pexc->arg2 );
       pRetval = hb_itemPutNDLen( NULL, pexc->retval, pexc->retvalwidth, pexc->retvaldec );
       pHandled = hb_itemPutL( nullptr, pexc->handled );
 

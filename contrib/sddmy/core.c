@@ -372,7 +372,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
                break;
 
             case HB_FT_DOUBLE:
-               pItem = hb_itemPutND( NULL, 0.0 );
+               pItem = hb_itemPutND( nullptr, 0.0 );
                break;
 
             case HB_FT_DATE:

@@ -27,7 +27,7 @@ HB_FUNC( FT_DESCEND )
    PHB_ITEM iR = NULL;
 
    if( ( uiType & HB_IT_NUMERIC ) && ( uiType & HB_IT_DOUBLE ) )
-      iR = hb_itemPutND( 0, 0 - hb_itemGetND( iP ) );
+      iR = hb_itemPutND( nullptr, 0 - hb_itemGetND( iP ) );
 
    else if( uiType & HB_IT_NUMERIC )
       iR = hb_itemPutNL( 0, 0 - hb_itemGetNL( iP ) );
@@ -36,7 +36,7 @@ HB_FUNC( FT_DESCEND )
       iR = hb_itemPutNL( 0, 0x4FD4C0L - hb_itemGetNL( iP ) );
 
    else if( uiType & HB_IT_TIMESTAMP )
-      iR = hb_itemPutND( 0, 0x4FD4C0L - hb_itemGetTD( iP ) );
+      iR = hb_itemPutND( nullptr, 0x4FD4C0L - hb_itemGetTD( iP ) );
 
    else if( uiType & HB_IT_LOGICAL )
       iR = hb_itemPutL( 0, ( hb_itemGetL( iP ) > 0 ) ? 0 : 1 );

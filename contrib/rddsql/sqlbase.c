@@ -718,24 +718,24 @@ static HB_ERRCODE sqlbaseCreate( SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo )
 
          case HB_FT_INTEGER:
             if( pField->uiDec )
-               pItem = hb_itemPutND( NULL, 0.0 );
+               pItem = hb_itemPutND( nullptr, 0.0 );
             else
                pItem = hb_itemPutNI( NULL, 0 );
             break;
 
          case HB_FT_LONG:
             if( pField->uiDec )
-               pItem = hb_itemPutND( NULL, 0.0 );
+               pItem = hb_itemPutND( nullptr, 0.0 );
             else
                pItem = hb_itemPutNL( NULL, 0 );
             break;
 
          case HB_FT_FLOAT:
-            pItem = hb_itemPutND( NULL, 0.0 );
+            pItem = hb_itemPutND( nullptr, 0.0 );
             break;
 
          case HB_FT_DOUBLE:
-            pItem = hb_itemPutND( NULL, 0.0 );
+            pItem = hb_itemPutND( nullptr, 0.0 );
             break;
 
          case HB_FT_DATE:
