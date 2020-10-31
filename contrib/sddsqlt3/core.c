@@ -595,7 +595,7 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                break;
 #endif
             case HB_FT_LONG:
-               pItem = hb_itemPutNDDec( NULL, sqlite3_column_double( st, ui ), pField->uiDec );
+               pItem = hb_itemPutNDDec( nullptr, sqlite3_column_double( st, ui ), pField->uiDec );
                break;
 
 #ifdef HB_SQLT3_MAP_DECLARED_EMULATED
