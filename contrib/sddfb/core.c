@@ -340,7 +340,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
                dbFieldInfo.uiLen  = 7;
                dbFieldInfo.uiDec  = -pVar->sqlscale;
 
-               pItem = hb_itemPutNDLen( NULL, 0.0, 6 - dbFieldInfo.uiDec, ( int ) dbFieldInfo.uiDec );
+               pItem = hb_itemPutNDLen( nullptr, 0.0, 6 - dbFieldInfo.uiDec, ( int ) dbFieldInfo.uiDec );
             }
             else
             {
@@ -359,7 +359,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
                dbFieldInfo.uiLen  = 12;
                dbFieldInfo.uiDec  = -pVar->sqlscale;
 
-               pItem = hb_itemPutNDLen( NULL, 0.0, 11 - dbFieldInfo.uiDec, ( int ) dbFieldInfo.uiDec );
+               pItem = hb_itemPutNDLen( nullptr, 0.0, 11 - dbFieldInfo.uiDec, ( int ) dbFieldInfo.uiDec );
             }
             else
             {
@@ -377,7 +377,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
             dbFieldInfo.uiDec  = -pVar->sqlscale;
             pVar->sqldata      = ( char * ) hb_xgrab( sizeof( float ) );
 
-            pItem = hb_itemPutNDLen( NULL, 0.0, 20 - dbFieldInfo.uiDec, dbFieldInfo.uiDec );
+            pItem = hb_itemPutNDLen( nullptr, 0.0, 20 - dbFieldInfo.uiDec, dbFieldInfo.uiDec );
             break;
 
          case SQL_DOUBLE:
@@ -386,7 +386,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
             dbFieldInfo.uiDec  = -pVar->sqlscale;
             pVar->sqldata      = ( char * ) hb_xgrab( sizeof( double ) );
 
-            pItem = hb_itemPutNDLen( NULL, 0.0, 20 - dbFieldInfo.uiDec, dbFieldInfo.uiDec );
+            pItem = hb_itemPutNDLen( nullptr, 0.0, 20 - dbFieldInfo.uiDec, dbFieldInfo.uiDec );
             break;
 
          case SQL_TIMESTAMP:

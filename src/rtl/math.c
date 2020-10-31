@@ -486,7 +486,7 @@ static int hb_matherrblock( HB_MATH_EXCEPTION * pexc )
       pError = hb_itemPutC( nullptr, pexc->error );
       pArg1 = hb_itemPutND( nullptr, pexc->arg1 );
       pArg2 = hb_itemPutND( nullptr, pexc->arg2 );
-      pRetval = hb_itemPutNDLen( NULL, pexc->retval, pexc->retvalwidth, pexc->retvaldec );
+      pRetval = hb_itemPutNDLen( nullptr, pexc->retval, pexc->retvalwidth, pexc->retvaldec );
       pHandled = hb_itemPutL( nullptr, pexc->handled );
 
       pArray = hb_itemArrayNew( 2 );
