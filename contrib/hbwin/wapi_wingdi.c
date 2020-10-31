@@ -62,7 +62,7 @@
 static void s_hb_hashSetCItemNL( PHB_ITEM pHash, const char * pszKey, long v )
 {
    PHB_ITEM pKey = hb_itemPutC( nullptr, pszKey );
-   PHB_ITEM pValue = hb_itemPutNL( NULL, v );
+   PHB_ITEM pValue = hb_itemPutNL( nullptr, v );
 
    hb_hashAdd( pHash, pKey, pValue );
 

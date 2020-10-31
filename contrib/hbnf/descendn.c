@@ -30,10 +30,10 @@ HB_FUNC( FT_DESCEND )
       iR = hb_itemPutND( nullptr, 0 - hb_itemGetND( iP ) );
 
    else if( uiType & HB_IT_NUMERIC )
-      iR = hb_itemPutNL( 0, 0 - hb_itemGetNL( iP ) );
+      iR = hb_itemPutNL( nullptr, 0 - hb_itemGetNL( iP ) );
 
    else if( uiType & HB_IT_DATE )
-      iR = hb_itemPutNL( 0, 0x4FD4C0L - hb_itemGetNL( iP ) );
+      iR = hb_itemPutNL( nullptr, 0x4FD4C0L - hb_itemGetNL( iP ) );
 
    else if( uiType & HB_IT_TIMESTAMP )
       iR = hb_itemPutND( nullptr, 0x4FD4C0L - hb_itemGetTD( iP ) );

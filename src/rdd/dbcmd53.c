@@ -67,7 +67,7 @@ HB_FUNC( ORDKEYCOUNT )
       pOrderInfo.atomBagName = hb_param( 2, HB_IT_STRING );
       /* Either or both may be NIL */
 
-      pOrderInfo.itmResult = hb_itemPutNL( NULL, 0 );
+      pOrderInfo.itmResult = hb_itemPutNL( nullptr, 0 );
       SELF_ORDINFO( pArea, DBOI_KEYCOUNT, &pOrderInfo );
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
@@ -88,7 +88,7 @@ HB_FUNC( ORDKEYNO )
       pOrderInfo.atomBagName = hb_param( 2, HB_IT_STRING );
       /* Either or both may be NIL */
       pOrderInfo.itmNewVal = NULL;
-      pOrderInfo.itmResult = hb_itemPutNL( NULL, 0 );
+      pOrderInfo.itmResult = hb_itemPutNL( nullptr, 0 );
       SELF_ORDINFO( pArea, DBOI_POSITION, &pOrderInfo );
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
@@ -204,7 +204,7 @@ HB_FUNC( ORDKEYADD )
       pOrderInfo.atomBagName = hb_param( 2, HB_IT_STRING );
       /* Either or both may be NIL */
       pOrderInfo.itmNewVal = hb_param( 3, HB_IT_ANY );
-      pOrderInfo.itmResult = hb_itemPutNL( NULL, 0 );
+      pOrderInfo.itmResult = hb_itemPutNL( nullptr, 0 );
       SELF_ORDINFO( pArea, DBOI_KEYADD, &pOrderInfo );
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
@@ -224,7 +224,7 @@ HB_FUNC( ORDKEYDEL )
       pOrderInfo.atomBagName = hb_param( 2, HB_IT_STRING );
       /* Either or both may be NIL */
       pOrderInfo.itmNewVal = hb_param( 3, HB_IT_ANY );
-      pOrderInfo.itmResult = hb_itemPutNL( NULL, 0 );
+      pOrderInfo.itmResult = hb_itemPutNL( nullptr, 0 );
       SELF_ORDINFO( pArea, DBOI_KEYDELETE, &pOrderInfo );
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }

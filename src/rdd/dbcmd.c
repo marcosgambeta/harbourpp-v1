@@ -1598,7 +1598,7 @@ HB_FUNC_TRANSLATE( RECCOUNT, LASTREC )
 HB_FUNC( RECNO )
 {
    AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
-   PHB_ITEM pRecNo = hb_itemPutNL( NULL, 0 );
+   PHB_ITEM pRecNo = hb_itemPutNL( nullptr, 0 );
 
    if( pArea )
    {

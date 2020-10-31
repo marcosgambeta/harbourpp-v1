@@ -368,7 +368,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
                break;
 
             case HB_FT_LONG:
-               pItem = hb_itemPutNL( NULL, 0 );
+               pItem = hb_itemPutNL( nullptr, 0 );
                break;
 
             case HB_FT_DOUBLE:
