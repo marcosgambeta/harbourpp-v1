@@ -960,7 +960,7 @@ static HB_BOOL amf3_serialize_object( amfContext * context, PHB_ITEM pItem )
 static void amf3_conversion_out( amfContext * context, PHB_ITEM pItem )
 {
    PHB_ITEM pRetCopy      = hb_itemNew( nullptr );
-   PHB_ITEM pOuterContext = hb_itemPutPtr( NULL, context );
+   PHB_ITEM pOuterContext = hb_itemPutPtr( nullptr, context );
    PHB_SYMB pSym = hb_itemGetSymbol( context->conv_function );
 
    if( pItem == hb_stackReturnItem() )
