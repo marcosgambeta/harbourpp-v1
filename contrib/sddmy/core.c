@@ -381,7 +381,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
 
             case HB_FT_TIMESTAMP:
             case HB_FT_TIME:
-               pItem = hb_itemPutTDT( NULL, 0, 0 );
+               pItem = hb_itemPutTDT( nullptr, 0, 0 );
                break;
 
             default:

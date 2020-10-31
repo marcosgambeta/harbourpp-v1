@@ -394,7 +394,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
             dbFieldInfo.uiLen  = 8;
             pVar->sqldata      = ( char * ) hb_xgrab( sizeof( ISC_TIMESTAMP ) );
 
-            pItem = hb_itemPutTDT( NULL, 0, 0 );
+            pItem = hb_itemPutTDT( nullptr, 0, 0 );
             break;
 
          default:  /* other fields as binary string */

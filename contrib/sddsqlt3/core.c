@@ -628,7 +628,7 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                   const char * pValue = ( const char * ) sqlite3_column_text( st, ui );
 
                   hb_timeStampStrGetDT( pValue, &lDate, &lTime );
-                  pItem = hb_itemPutTDT( NULL, lDate, lTime );
+                  pItem = hb_itemPutTDT( nullptr, lDate, lTime );
                   break;
                }
 #endif
