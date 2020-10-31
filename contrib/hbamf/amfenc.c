@@ -281,7 +281,7 @@ static int amf3_add_index( amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem 
       else
          result = ( int ) ( hb_hashLen( pHash ) );
 
-      pVal = hb_itemPutNS( NULL, result );
+      pVal = hb_itemPutNS( nullptr, result );
 
       if( ! hb_hashAdd( pHash, pKey, pVal ) )
       {
@@ -303,7 +303,7 @@ static int amf3_add_index( amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem 
          if( ! context->use_refs )
             result = ( int ) context->strstr_count;
 
-         pVal = hb_itemPutNS( NULL, result ); /* put the AMF reference id as value */
+         pVal = hb_itemPutNS( nullptr, result ); /* put the AMF reference id as value */
          hb_hashAdd( context->strstr_ref, pItem, pVal );
          hb_itemRelease( pVal );
       }
