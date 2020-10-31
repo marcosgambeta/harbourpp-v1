@@ -58,7 +58,7 @@ HB_FUNC( INDEXCOUNT )
    {
       DBORDERINFO pOrderInfo;
       memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
-      pOrderInfo.itmResult = hb_itemPutNI( NULL, 0 );
+      pOrderInfo.itmResult = hb_itemPutNI( nullptr, 0 );
       SELF_ORDINFO( pArea, DBOI_ORDERCOUNT, &pOrderInfo );
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
@@ -77,7 +77,7 @@ HB_FUNC( INDEXNAMES )
       int         iSize, i;
 
       memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
-      pOrderInfo.itmResult = hb_itemPutNI( NULL, 0 );
+      pOrderInfo.itmResult = hb_itemPutNI( nullptr, 0 );
       SELF_ORDINFO( pArea, DBOI_ORDERCOUNT, &pOrderInfo );
       iSize = hb_itemGetNI( pOrderInfo.itmResult );
 

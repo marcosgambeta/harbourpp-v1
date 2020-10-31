@@ -720,7 +720,7 @@ static HB_ERRCODE sqlbaseCreate( SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo )
             if( pField->uiDec )
                pItem = hb_itemPutND( nullptr, 0.0 );
             else
-               pItem = hb_itemPutNI( NULL, 0 );
+               pItem = hb_itemPutNI( nullptr, 0 );
             break;
 
          case HB_FT_LONG:

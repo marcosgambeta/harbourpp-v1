@@ -1167,7 +1167,7 @@ HB_FUNC( AMF3_FROMWA )
    if( pArea )
    {
       memset( &pInfo, 0, sizeof( pInfo ) );
-      pInfo.itmResult = hb_itemPutNI( NULL, 0 );
+      pInfo.itmResult = hb_itemPutNI( nullptr, 0 );
       SELF_ORDINFO( pArea, DBOI_NUMBER, &pInfo );
       iOrd = hb_itemGetNI( pInfo.itmResult );
       if( iOrd > 0 )
@@ -1253,7 +1253,7 @@ HB_FUNC( AMF3_FROMWA )
 
                if( iPos )
                {
-                  PHB_ITEM pFieldNum = hb_itemPutNI( NULL, iPos );
+                  PHB_ITEM pFieldNum = hb_itemPutNI( nullptr, iPos );
                   hb_itemArrayPut( pFields, uiIter, pFieldNum );
                   hb_itemRelease( pFieldNum );
                   continue;

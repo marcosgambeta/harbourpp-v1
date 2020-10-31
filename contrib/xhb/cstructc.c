@@ -204,7 +204,7 @@ static HB_UINT SizeOfCStructure( PHB_ITEM aDef, HB_UINT uiAlign )
             }
             else if( ( pBaseDef->pItems + nIndex )->item.asInteger.value >= CTYPE_STRUCTURE )
             {
-               PHB_ITEM pID        = hb_itemPutNI( NULL, ( pBaseDef->pItems + nIndex )->item.asInteger.value );
+               PHB_ITEM pID        = hb_itemPutNI( nullptr, ( pBaseDef->pItems + nIndex )->item.asInteger.value );
                PHB_ITEM pStructure = hb_itemDoC( "HB_CSTRUCTUREFROMID", 1, pID );
 
                hb_itemRelease( pID );
@@ -449,7 +449,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
             }
             else if( ( pBaseDef->pItems + nIndex )->item.asInteger.value >= CTYPE_STRUCTURE )
             {
-               PHB_ITEM pID        = hb_itemPutNI( NULL, ( pBaseDef->pItems + nIndex )->item.asInteger.value );
+               PHB_ITEM pID        = hb_itemPutNI( nullptr, ( pBaseDef->pItems + nIndex )->item.asInteger.value );
                PHB_ITEM pStructure = hb_itemDoC( "HB_CSTRUCTUREFROMID", 1, pID );
 
                hb_itemRelease( pID );
@@ -1047,7 +1047,7 @@ static PHB_ITEM StructureToArray( HB_BYTE * Buffer, HB_SIZE nBufferLen, PHB_ITEM
             }
             else if( ( pBaseDef->pItems + nIndex )->item.asInteger.value > CTYPE_STRUCTURE )
             {
-               PHB_ITEM pID        = hb_itemPutNI( NULL, ( pBaseDef->pItems + nIndex )->item.asInteger.value );
+               PHB_ITEM pID        = hb_itemPutNI( nullptr, ( pBaseDef->pItems + nIndex )->item.asInteger.value );
                PHB_ITEM pStructure = hb_itemDoC( "HB_CSTRUCTUREFROMID", 1, pID );
 
                hb_itemRelease( pID );
@@ -1208,7 +1208,7 @@ static PHB_ITEM StructureToArray( HB_BYTE * Buffer, HB_SIZE nBufferLen, PHB_ITEM
          default:
          {
             HB_UINT  uiNestedSize /*, uiNestedAlign */;
-            PHB_ITEM pID        = hb_itemPutNI( NULL, ( pBaseDef->pItems + nIndex )->item.asInteger.value );
+            PHB_ITEM pID        = hb_itemPutNI( nullptr, ( pBaseDef->pItems + nIndex )->item.asInteger.value );
             PHB_ITEM pStructure = hb_itemDoC( "HB_CSTRUCTUREFROMID", 1, pID );
 
             hb_itemRelease( pID );

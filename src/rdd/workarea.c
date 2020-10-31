@@ -1512,7 +1512,7 @@ static HB_ERRCODE hb_waRelEval( AREAP pArea, LPDBRELINFO pRelInfo )
             pResult = pRelInfo->lpaParent->valResult;
             pRelInfo->lpaParent->valResult = NULL;
             memset( &pInfo, 0, sizeof( pInfo ) );
-            pInfo.itmResult = hb_itemPutNI( NULL, 0 );
+            pInfo.itmResult = hb_itemPutNI( nullptr, 0 );
             errCode = SELF_ORDINFO( pArea, DBOI_NUMBER, &pInfo );
 
             if( errCode == HB_SUCCESS )

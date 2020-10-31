@@ -3830,9 +3830,9 @@ static HB_ERRCODE adsOpen( ADSAREAP pArea, LPDBOPENINFO pOpenInfo )
    if( hb_setGetNI( HB_SET_AUTORDER ) )
    {
       DBORDERINFO pOrderInfo;
-      pOrderInfo.itmResult = hb_itemPutNI( NULL, 0 );
+      pOrderInfo.itmResult = hb_itemPutNI( nullptr, 0 );
       pOrderInfo.itmNewVal = NULL;
-      pOrderInfo.itmOrder  = hb_itemPutNI( NULL, hb_setGetNI( HB_SET_AUTORDER ) );
+      pOrderInfo.itmOrder  = hb_itemPutNI( nullptr, hb_setGetNI( HB_SET_AUTORDER ) );
       pOrderInfo.atomBagName = NULL;
       SELF_ORDLSTFOCUS( &pArea->area, &pOrderInfo );
       hb_itemRelease( pOrderInfo.itmOrder );

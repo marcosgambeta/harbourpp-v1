@@ -122,7 +122,7 @@ HB_FUNC( ORDKEYRELPOS )
       DBORDERINFO pOrderInfo;
       memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
       pOrderInfo.itmNewVal = hb_param( 1, HB_IT_NUMERIC );
-      pOrderInfo.itmResult = hb_itemPutNI( NULL, 0 );
+      pOrderInfo.itmResult = hb_itemPutNI( nullptr, 0 );
       SELF_ORDINFO( pArea, DBOI_RELKEYPOS, &pOrderInfo );
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }

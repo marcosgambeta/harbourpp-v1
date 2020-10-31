@@ -114,7 +114,7 @@ HB_FUNC( SX_TAGORDER )
 
       if( hb_sxOrdParam( &Info ) )
       {
-         Info.itmResult = hb_itemPutNI( NULL, 0 );
+         Info.itmResult = hb_itemPutNI( nullptr, 0 );
          SELF_ORDINFO( pArea, DBOI_NUMBER, &Info );
          iOrder = hb_itemGetNI( Info.itmResult );
          hb_itemRelease( Info.itmResult );
@@ -139,13 +139,13 @@ HB_FUNC( SX_TAGNO )
 
       if( hb_sxOrdParam( &Info ) )
       {
-         Info.itmResult = hb_itemPutNI( NULL, 0 );
+         Info.itmResult = hb_itemPutNI( nullptr, 0 );
          if( SELF_ORDINFO( pArea, DBOI_NUMBER, &Info ) == HB_SUCCESS )
          {
             int iOrder = hb_itemGetNI( Info.itmResult );
             if( iOrder )
             {
-               Info.itmOrder = hb_itemPutNI( NULL, iOrder );
+               Info.itmOrder = hb_itemPutNI( nullptr, iOrder );
                Info.atomBagName = NULL;
                hb_itemClear( Info.itmResult );
                if( SELF_ORDINFO( pArea, DBOI_FULLPATH, &Info ) == HB_SUCCESS &&
@@ -257,7 +257,7 @@ HB_FUNC( SX_THERMOMETER )
       if( hb_sxOrdParam( &Info ) )
       {
          int i;
-         Info.itmResult = hb_itemPutNI( NULL, 0 );
+         Info.itmResult = hb_itemPutNI( nullptr, 0 );
          SELF_ORDINFO( pArea, DBOI_NUMBER, &Info );
          i = hb_itemGetNI( Info.itmResult );
          if( i )

@@ -432,7 +432,7 @@ static void XMLCALL hb_expat_XmlDeclHandler( void * userdata,
          PHB_ITEM pUserData = hb_itemNew( hb_expat->pVar[ _VAR_xUserData ] );
          PHB_ITEM pPar1     = version ? hb_itemPutStrUTF8( NULL, version ) : hb_itemNew( nullptr );
          PHB_ITEM pPar2     = encoding ? hb_itemPutStrUTF8( NULL, encoding ) : hb_itemNew( nullptr );
-         PHB_ITEM pPar3     = hb_itemPutNI( NULL, standalone );
+         PHB_ITEM pPar3     = hb_itemPutNI( nullptr, standalone );
 
          hb_evalBlock( hb_expat->pVar[ _VAR_bXmlDeclHandler ], pUserData, pPar1, pPar2, pPar3, NULL );
 
