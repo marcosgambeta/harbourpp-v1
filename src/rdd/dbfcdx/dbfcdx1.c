@@ -679,7 +679,7 @@ static HB_BOOL hb_cdxEvalSeekCond( LPCDXTAG pTag, PHB_ITEM pCondItem )
    PHB_ITEM pKeyVal, pKeyRec;
 
    pKeyVal = hb_cdxKeyGetItem( pTag->CurKey, NULL, pTag );
-   pKeyRec = hb_itemPutNInt( NULL, pTag->CurKey->rec );
+   pKeyRec = hb_itemPutNInt( nullptr, pTag->CurKey->rec );
 
    fRet = hb_itemGetL( hb_vmEvalBlockV( pCondItem, 2, pKeyVal, pKeyRec ) );
 

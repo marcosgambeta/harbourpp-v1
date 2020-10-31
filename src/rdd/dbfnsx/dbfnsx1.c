@@ -841,7 +841,7 @@ static HB_BOOL hb_nsxEvalSeekCond( LPTAGINFO pTag, PHB_ITEM pCondItem )
    PHB_ITEM pKeyVal, pKeyRec;
 
    pKeyVal = hb_nsxKeyGetItem( NULL, pTag->CurKeyInfo, pTag, HB_TRUE );
-   pKeyRec = hb_itemPutNInt( NULL, pTag->CurKeyInfo->rec );
+   pKeyRec = hb_itemPutNInt( nullptr, pTag->CurKeyInfo->rec );
 
    fRet = hb_itemGetL( hb_vmEvalBlockV( pCondItem, 2, pKeyVal, pKeyRec ) );
 

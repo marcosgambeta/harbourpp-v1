@@ -591,7 +591,7 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
 
             case HB_FT_INTEGER:
 #if HB_VMLONG_MAX > INT32_MAX && ! defined( HB_LONG_LONG_OFF )
-               pItem = hb_itemPutNInt( NULL, sqlite3_column_int64( st, ui ) );
+               pItem = hb_itemPutNInt( nullptr, sqlite3_column_int64( st, ui ) );
                break;
 #endif
             case HB_FT_LONG:

@@ -452,7 +452,7 @@ HB_FUNC( TRANSFORM )
          {
             /* Always convert absolute val */
             if( HB_IS_NUMINT( pValue ) ) /* workaround for 64-bit integer conversion */
-               pNumber = hb_itemPutNInt( NULL, -hb_itemGetNInt( pValue ) );
+               pNumber = hb_itemPutNInt( nullptr, -hb_itemGetNInt( pValue ) );
             else
                pNumber = hb_itemPutND( nullptr, -dValue );
             pValue = pNumber;

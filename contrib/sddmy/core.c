@@ -210,7 +210,7 @@ static HB_ERRCODE mysqlExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
          ulAffectedRows = ( HB_ULONG ) mysql_affected_rows( pMySql );
          if( mysql_insert_id( pMySql ) != 0 )
          {
-            pNewID = hb_itemPutNInt( NULL, mysql_insert_id( pMySql ) );
+            pNewID = hb_itemPutNInt( nullptr, mysql_insert_id( pMySql ) );
          }
          hb_rddsqlSetError( 0, NULL, hb_itemGetCPtr( pItem ), pNewID, ulAffectedRows );
          if( pNewID )
