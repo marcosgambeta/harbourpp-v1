@@ -81,7 +81,7 @@ HB_FUNC( CHR )
 #endif
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1104, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1104, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* converts a character value to an ASCII code */
@@ -101,5 +101,5 @@ HB_FUNC( ASC )
       hb_retni( iChar );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1107, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1107, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

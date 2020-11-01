@@ -267,7 +267,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
          }
          else
          {
-            if( hb_errRT_BASE_Ext1( EG_OPEN, 2018, NULL, NULL, 0, ( EF_CANDEFAULT | EF_CANRETRY ), HB_ERR_ARGS_BASEPARAMS ) == E_RETRY )
+            if( hb_errRT_BASE_Ext1( EG_OPEN, 2018, nullptr, nullptr, 0, ( EF_CANDEFAULT | EF_CANRETRY ), HB_ERR_ARGS_BASEPARAMS ) == E_RETRY )
                continue;
          }
          break;
@@ -279,7 +279,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
          /* Query level 1 info from filesystem */
          while( ( rc = DosQueryFSInfo( uiDrive, 1, &fsa, sizeof( fsa ) ) ) != NO_ERROR )
          {
-            if( hb_errRT_BASE_Ext1( EG_OPEN, 2018, NULL, NULL, 0, ( EF_CANDEFAULT | EF_CANRETRY ), HB_ERR_ARGS_BASEPARAMS ) != E_RETRY )
+            if( hb_errRT_BASE_Ext1( EG_OPEN, 2018, nullptr, nullptr, 0, ( EF_CANDEFAULT | EF_CANRETRY ), HB_ERR_ARGS_BASEPARAMS ) != E_RETRY )
                break;
          }
 

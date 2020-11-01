@@ -83,11 +83,11 @@ HB_FUNC( REPLICATE )
             hb_retclen_buffer( szResult, nSize );
          }
          else
-            hb_errRT_BASE_SubstR( EG_STROVERFLOW, 1234, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+            hb_errRT_BASE_SubstR( EG_STROVERFLOW, 1234, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       }
       else
          hb_retc_null();
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1106, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1106, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

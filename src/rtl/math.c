@@ -656,7 +656,7 @@ HB_FUNC( EXP )
          hb_retnd( dResult );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1096, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1096, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( LOG )
@@ -699,7 +699,7 @@ HB_FUNC( LOG )
       }
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1095, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1095, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SQRT )
@@ -730,5 +730,5 @@ HB_FUNC( SQRT )
       }
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1097, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1097, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

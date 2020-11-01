@@ -83,7 +83,7 @@ HB_FUNC( CMONTH )
       hb_retc_const( hb_dateCMonth( iMonth ) );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1116, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1116, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( CDOW )
@@ -105,7 +105,7 @@ HB_FUNC( CDOW )
          hb_retc_null();
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1117, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1117, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_CDAY )
@@ -115,5 +115,5 @@ HB_FUNC( HB_CDAY )
    if( pDay )
       hb_retc_const( hb_dateCDOW( hb_itemGetNI( pDay ) ) );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1117, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1117, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

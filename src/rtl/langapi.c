@@ -387,7 +387,7 @@ const char * hb_langSelectID( const char * pszID )
    if( lang )
       hb_langSelect( lang );
    else
-      hb_errRT_BASE( EG_ARG, 1303, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 1303, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 
    return pszIDOld;
 }

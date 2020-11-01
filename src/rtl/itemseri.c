@@ -1608,7 +1608,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem,
                if( hb_vmRequestQuery() == 0 )
                {
                   hb_itemPutCLPtr( pItem, szVal, nLen );
-                  hb_errRT_BASE_Ext1( EG_ARG, 3016, NULL, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, 1, pItem );
+                  hb_errRT_BASE_Ext1( EG_ARG, 3016, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, 1, pItem );
                   szVal = NULL;
                }
                /* fallthrough */

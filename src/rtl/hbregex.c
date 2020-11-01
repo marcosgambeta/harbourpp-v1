@@ -160,7 +160,7 @@ HB_FUNC( HB_REGEXCOMP )
    HB_SIZE nLen = hb_parclen( 1 );
 
    if( nLen == 0 )
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    else
    {
       int iFlags = HBREG_EXTENDED;
@@ -237,7 +237,7 @@ HB_FUNC( HB_ATX )
       }
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3013, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3013, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 static HB_BOOL hb_regex( int iRequest )
@@ -253,7 +253,7 @@ static HB_BOOL hb_regex( int iRequest )
    pString = hb_param( 2, HB_IT_STRING );
    if( ! pString )
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3014, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3014, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return HB_FALSE;
    }
    pRegEx = hb_regexGet( hb_param( 1, HB_IT_ANY ),

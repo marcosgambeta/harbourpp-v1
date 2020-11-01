@@ -76,7 +76,7 @@ PHB_FILE hb_fileParam( int iParam )
    if( fileHolder && * fileHolder )
       return * fileHolder;
 
-   hb_errRT_BASE_SubstR( EG_ARG, 2021, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE_SubstR( EG_ARG, 2021, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    return NULL;
 }
 
@@ -117,7 +117,7 @@ static PHB_FILE * hb_fileParamPtr( int iParam )
    if( fileHolder && * fileHolder )
       return fileHolder;
 
-   hb_errRT_BASE_SubstR( EG_ARG, 2021, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE_SubstR( EG_ARG, 2021, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    return NULL;
 }
 
@@ -487,7 +487,7 @@ HB_FUNC( HB_VFOPEN )
    else
    {
       hb_fsSetFError( 0 );
-      hb_errRT_BASE( EG_ARG, 2021, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2021, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
 }
 
@@ -851,7 +851,7 @@ HB_FUNC( HB_VFCONFIG )
          hb_itemReturnRelease( pValue );
       }
       else
-         hb_errRT_BASE_SubstR( EG_ARG, 2021, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE_SubstR( EG_ARG, 2021, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
 }
 
@@ -890,5 +890,5 @@ HB_FUNC( HB_VFLOAD )
          hb_retclen_buffer( pBuffer, nSize );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 2021, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 2021, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

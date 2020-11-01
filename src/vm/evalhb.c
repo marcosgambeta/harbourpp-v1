@@ -72,5 +72,5 @@ HB_FUNC( EVAL )
       hb_vmSend( ( HB_USHORT ) ( iPCount - 1 ) );
    }
    else
-      hb_errRT_BASE_SubstR( EG_NOMETHOD, 1004, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_NOMETHOD, 1004, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

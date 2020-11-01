@@ -83,7 +83,7 @@ HB_FUNC( __RUN )
       {
          /* an error should be generated here !! Something like */
          #if 0
-         hb_errRT_BASE_Ext1( EG_GTRESUME, 6002, NULL, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT );
+         hb_errRT_BASE_Ext1( EG_GTRESUME, 6002, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT );
          #endif
       }
    }

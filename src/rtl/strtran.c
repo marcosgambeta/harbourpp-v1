@@ -182,9 +182,9 @@ HB_FUNC( STRTRAN )
    {
       /* NOTE: Undocumented but existing Clipper Run-time error [vszakats] */
 #ifdef HB_CLP_STRICT
-      hb_errRT_BASE_SubstR( EG_ARG, 1126, NULL, HB_ERR_FUNCNAME, 0 );
+      hb_errRT_BASE_SubstR( EG_ARG, 1126, nullptr, HB_ERR_FUNCNAME, 0 );
 #else
-      hb_errRT_BASE_SubstR( EG_ARG, 1126, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1126, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #endif
    }
 }

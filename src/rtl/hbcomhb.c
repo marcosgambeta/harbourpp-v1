@@ -241,7 +241,7 @@ HB_FUNC( HB_COMRECV )
       hb_retnl( hb_comRecv( hb_parni( 1 ), pBuffer, ( long ) nLen, hb_parnint( 4 ) ) );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_COMSEND )

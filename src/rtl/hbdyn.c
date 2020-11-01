@@ -988,7 +988,7 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
             hb_xfree( pArg );
       }
       else
-         hb_errRT_BASE( EG_LIMIT, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE( EG_LIMIT, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
 #elif defined( HB_ARCH_32BIT )
    {
@@ -1149,7 +1149,7 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
             hb_xfree( pArg );
       }
       else
-         hb_errRT_BASE( EG_LIMIT, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE( EG_LIMIT, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
 #else
    HB_SYMBOL_UNUSED( iFuncFlags );

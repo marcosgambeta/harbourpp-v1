@@ -554,7 +554,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          if( pArg1 != NULL )
          {
             if( set_number( pArg1, pSet->HB_SET_AUTORDER ) < 0 )
-               hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+               hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
             else
                pSet->HB_SET_AUTORDER = set_number( pArg1, pSet->HB_SET_AUTORDER );
          }
@@ -564,7 +564,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          if( pArg1 != NULL )
          {
             if( set_number( pArg1, pSet->HB_SET_AUTOSHARE ) < 0 )
-               hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+               hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
             else
                pSet->HB_SET_AUTOSHARE = set_number( pArg1, pSet->HB_SET_AUTOSHARE );
          }
@@ -634,7 +634,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          if( pArg1 != NULL )
          {
             if( set_number( pArg1, pSet->HB_SET_DECIMALS ) < 0 )
-               hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+               hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
             else
                pSet->HB_SET_DECIMALS = set_number( pArg1, pSet->HB_SET_DECIMALS );
          }
@@ -679,7 +679,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          if( pArg1 != NULL )
          {
             if( set_number( pArg1, pSet->HB_SET_EPOCH ) < 0 )
-               hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+               hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
             else
                pSet->HB_SET_EPOCH = set_number( pArg1, pSet->HB_SET_EPOCH );
          }
@@ -694,7 +694,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          if( pArg1 != NULL )
          {
             if( set_number( pArg1, pSet->HB_SET_EVENTMASK ) < 0 )
-               hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+               hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
             else
                pSet->HB_SET_EVENTMASK = set_number( pArg1, pSet->HB_SET_EVENTMASK );
          }
@@ -745,7 +745,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          if( pArg1 != NULL )
          {
             if( set_number( pArg1, pSet->HB_SET_MARGIN ) < 0 )
-               hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+               hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
             else
                pSet->HB_SET_MARGIN = set_number( pArg1, pSet->HB_SET_MARGIN );
          }
@@ -755,7 +755,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          if( pArg1 != NULL )
          {
             if( set_number( pArg1, pSet->HB_SET_MBLOCKSIZE ) < 0 )
-               hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+               hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
             else
                pSet->HB_SET_MBLOCKSIZE = set_number( pArg1, pSet->HB_SET_MBLOCKSIZE );
          }
@@ -770,7 +770,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          if( pArg1 != NULL )
          {
             if( set_number( pArg1, pSet->HB_SET_MESSAGE ) < 0 )
-               hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+               hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
             else
                pSet->HB_SET_MESSAGE = set_number( pArg1, pSet->HB_SET_MESSAGE );
          }
@@ -878,7 +878,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
             if( HB_IS_STRING( pArg1 ) )
                hb_langSelectID( hb_itemGetCPtr( pArg1 ) );
             else
-               hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+               hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
          }
          break;
       case HB_SET_CODEPAGE:
@@ -888,7 +888,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
             if( HB_IS_STRING( pArg1 ) )
                hb_cdpSelectID( hb_itemGetCPtr( pArg1 ) );
             else
-               hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+               hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
          }
          break;
       case HB_SET_IDLEREPEAT:
@@ -909,7 +909,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
                else if( ! hb_stricmp( hb_itemGetCPtr( pArg1 ), "MIXED" ) )
                   pSet->HB_SET_FILECASE = HB_SET_CASE_MIXED;
                else
-                  hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+                  hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
             }
             else if( HB_IS_NUMERIC( pArg1 ) )
             {
@@ -919,10 +919,10 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
                    iValue == HB_SET_CASE_MIXED )
                   pSet->HB_SET_FILECASE = iValue;
                else
-                  hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+                  hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
             }
             else
-               hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+               hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
          }
          break;
       case HB_SET_DIRCASE:
@@ -938,7 +938,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
                else if( ! hb_stricmp( hb_itemGetCPtr( pArg1 ), "MIXED" ) )
                   pSet->HB_SET_DIRCASE = HB_SET_CASE_MIXED;
                else
-                  hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+                  hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
             }
             else if( HB_IS_NUMERIC( pArg1 ) )
             {
@@ -948,10 +948,10 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
                    iValue == HB_SET_CASE_MIXED )
                   pSet->HB_SET_DIRCASE = iValue;
                else
-                  hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+                  hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
             }
             else
-               hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+               hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
          }
          break;
       case HB_SET_DIRSEPARATOR:
@@ -969,7 +969,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          if( pArg1 != NULL )
          {
             if( set_number( pArg1, pSet->HB_SET_DBFLOCKSCHEME ) < 0 )
-               hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+               hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
             else
                pSet->HB_SET_DBFLOCKSCHEME = set_number( pArg1, pSet->HB_SET_DBFLOCKSCHEME );
          }
@@ -1029,7 +1029,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
                   pSet->hb_set_oscp = ( void * ) cdp;
             }
             else
-               hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+               hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
          }
          break;
       case HB_SET_DBCODEPAGE:
@@ -1050,7 +1050,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
                   pSet->hb_set_dbcp = ( void * ) cdp;
             }
             else
-               hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+               hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
          }
          break;
 
@@ -2090,7 +2090,7 @@ HB_BOOL hb_setGetL( HB_set_enum set_specifier )
 #endif
    }
 
-   hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, 0 );
+   hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, 0 );
    return HB_FALSE;
 }
 
@@ -2196,7 +2196,7 @@ const char * hb_setGetCPtr( HB_set_enum set_specifier )
 #endif
    }
 
-   hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, 0 );
+   hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, 0 );
    return NULL;
 }
 
@@ -2299,7 +2299,7 @@ int     hb_setGetNI( HB_set_enum set_specifier )
 #endif
    }
 
-   hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, 0 );
+   hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, 0 );
    return 0;
 }
 

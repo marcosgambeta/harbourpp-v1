@@ -298,7 +298,7 @@ void hb_gcRefFree( void * pBlock )
                {
                   pAlloc->used = s_uUsedFlag;
                   if( hb_vmRequestQuery() == 0 )
-                     hb_errRT_BASE( EG_DESTRUCTOR, 1301, NULL, "Reference to freed block", 0 );
+                     hb_errRT_BASE( EG_DESTRUCTOR, 1301, nullptr, "Reference to freed block", 0 );
                }
             }
             else
@@ -703,7 +703,7 @@ void hb_gcCollectAll( HB_BOOL fForce )
                HB_GC_AUTO_INC();
                HB_GC_UNLOCK();
                if( hb_vmRequestQuery() == 0 )
-                  hb_errRT_BASE( EG_DESTRUCTOR, 1302, NULL, "Reference to freed block", 0 );
+                  hb_errRT_BASE( EG_DESTRUCTOR, 1302, nullptr, "Reference to freed block", 0 );
             }
             else
                HB_GARBAGE_FREE( pDelete );

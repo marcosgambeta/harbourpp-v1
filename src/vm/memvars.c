@@ -635,7 +635,7 @@ void hb_memvarCreateFromItem( PHB_ITEM pMemvar, int iScope, PHB_ITEM pValue )
    if( pDynVar )
       hb_memvarCreateFromDynSymbol( pDynVar, iScope, pValue );
    else
-      hb_errRT_BASE( EG_ARG, 3008, NULL, "&", HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3008, nullptr, "&", HB_ERR_ARGS_BASEPARAMS );
 }
 
 static void hb_memvarCreateFromDynSymbol( PHB_DYNS pDynVar, int iScope, PHB_ITEM pValue )
@@ -723,7 +723,7 @@ static void hb_memvarRelease( PHB_ITEM pMemvar )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 3008, NULL, "RELEASE", HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3008, nullptr, "RELEASE", HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1289,7 +1289,7 @@ HB_FUNC( __MVGET )
        * (it must be a string)
        * This is not a critical error - we can continue normal processing
        */
-      hb_errRT_BASE_SubstR( EG_ARG, 3009, NULL, NULL, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3009, nullptr, nullptr, HB_ERR_ARGS_BASEPARAMS );
    }
 }
 
@@ -1311,7 +1311,7 @@ HB_FUNC( __MVGETDEF )
          hb_itemReturn( hb_param( 2, HB_IT_ANY ) );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3009, NULL, NULL, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3009, nullptr, nullptr, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( __MVPUT )
@@ -1347,7 +1347,7 @@ HB_FUNC( __MVPUT )
        * (it must be a string)
        * This is not a critical error - we can continue normal processing
        */
-      PHB_ITEM pRetValue = hb_errRT_BASE_Subst( EG_ARG, 3010, NULL, NULL, HB_ERR_ARGS_BASEPARAMS );
+      PHB_ITEM pRetValue = hb_errRT_BASE_Subst( EG_ARG, 3010, nullptr, nullptr, HB_ERR_ARGS_BASEPARAMS );
 
       if( pRetValue )
          hb_itemRelease( pRetValue );
@@ -1527,7 +1527,7 @@ HB_FUNC( __MVSAVE )
    }
    else
       /* NOTE: Undocumented error message in CA-Cl*pper 5.2e and 5.3b. [ckedem] */
-      hb_errRT_BASE( EG_ARG, 2008, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2008, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* NOTE: There's an extension in Harbour, which makes it possible to only
@@ -1706,7 +1706,7 @@ HB_FUNC( __MVRESTORE )
    }
    else
       /* NOTE: Undocumented error message in CA-Cl*pper 5.2e and 5.3b. [ckedem] */
-      hb_errRT_BASE( EG_ARG, 2007, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2007, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /*

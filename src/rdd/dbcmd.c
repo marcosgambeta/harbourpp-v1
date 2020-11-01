@@ -1806,7 +1806,7 @@ HB_FUNC( DBSETRELATION )
 
       if( ! pChildArea )
       {
-         hb_errRT_BASE( EG_NOALIAS, EDBCMD_NOALIAS, NULL, NULL, 0 );
+         hb_errRT_BASE( EG_NOALIAS, EDBCMD_NOALIAS, nullptr, nullptr, 0 );
          return;
       }
 

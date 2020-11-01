@@ -936,7 +936,7 @@ HB_FUNC( HB_I18N_GETTEXT )
    if( pMsgID && HB_IS_STRING( pMsgID ) )
       hb_itemReturn( pMsgID );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_I18N_NGETTEXT )
@@ -953,7 +953,7 @@ HB_FUNC( HB_I18N_NGETTEXT )
    if( pMsgID && HB_IS_STRING( pMsgID ) )
       hb_itemReturn( pMsgID );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC_TRANSLATE( HB_I18N_GETTEXT_STRICT, HB_I18N_GETTEXT )
@@ -980,7 +980,7 @@ HB_FUNC( HB_I18N_CODEPAGE )
                                     hb_parl( iParam + 1 ),
                                     hb_parl( iParam + 2 ) ) );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 
 }
 
@@ -1003,7 +1003,7 @@ HB_FUNC( HB_I18N_PLURALFORM )
          hb_i18n_setpluralform( pI18N, pForm, fBase );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_I18N_DESCRIPTION )
@@ -1021,7 +1021,7 @@ HB_FUNC( HB_I18N_DESCRIPTION )
          hb_i18n_description( pI18N, pNewDescript );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_I18N_ADDTEXT )
@@ -1065,7 +1065,7 @@ HB_FUNC( HB_I18N_ADDTEXT )
       }
    }
 
-   hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_I18N_SET )
@@ -1082,7 +1082,7 @@ HB_FUNC( HB_I18N_SET )
             hb_vmSetI18N( hb_i18n_alloc( pI18N ) );
          else
          {
-            hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+            hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
             return;
          }
       }

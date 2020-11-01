@@ -169,7 +169,7 @@ HB_FUNC( HB_LPPCREATE )
    pItem = hb_param( 1, HB_IT_POINTER );
    if( ! pItem || ( sd = hb_socketItemGet( pItem ) ) == HB_NO_SOCKET )
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
    }
 
@@ -188,7 +188,7 @@ HB_FUNC( HB_LPPDESTROY )
    pGC = ( PHB_LPP_GC ) hb_parptrGC( &s_gcPSocketFuncs, 1 );
    if( ! pGC || ! pGC->pSocket )
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
    }
    hb_lppDestroy( pGC->pSocket );
@@ -205,7 +205,7 @@ HB_FUNC( HB_LPPERROR )
    pGC = ( PHB_LPP_GC ) hb_parptrGC( &s_gcPSocketFuncs, 1 );
    if( ! pGC || ! pGC->pSocket )
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
    }
    hb_retni( hb_lppError( pGC->pSocket ) );
@@ -219,7 +219,7 @@ HB_FUNC( HB_LPPSETLIMIT )
    pGC = ( PHB_LPP_GC ) hb_parptrGC( &s_gcPSocketFuncs, 1 );
    if( ! pGC || ! pGC->pSocket )
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
    }
    hb_lppSetLimit( pGC->pSocket, hb_parns( 2 ) );
@@ -234,7 +234,7 @@ HB_FUNC( HB_LPPSEND )
    pGC = ( PHB_LPP_GC ) hb_parptrGC( &s_gcPSocketFuncs, 1 );
    if( ! pGC || ! pGC->pSocket || hb_socketItemGet( pGC->pItemSocket ) == HB_NO_SOCKET )
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
    }
 
@@ -254,7 +254,7 @@ HB_FUNC( HB_LPPRECV )
    pGC = ( PHB_LPP_GC ) hb_parptrGC( &s_gcPSocketFuncs, 1 );
    if( ! pGC || ! pGC->pSocket || hb_socketItemGet( pGC->pItemSocket ) == HB_NO_SOCKET )
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
    }
 
@@ -276,7 +276,7 @@ HB_FUNC( HB_LPPSENDLEN )
    pGC = ( PHB_LPP_GC ) hb_parptrGC( &s_gcPSocketFuncs, 1 );
    if( ! pGC || ! pGC->pSocket )
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
    }
    hb_retns( hb_lppSendLen( pGC->pSocket ) );
@@ -291,7 +291,7 @@ HB_FUNC( HB_LPPRECVLEN )
    pGC = ( PHB_LPP_GC ) hb_parptrGC( &s_gcPSocketFuncs, 1 );
    if( ! pGC || ! pGC->pSocket )
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
    }
    hb_retns( hb_lppRecvLen( pGC->pSocket ) );

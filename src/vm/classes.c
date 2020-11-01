@@ -2501,7 +2501,7 @@ PHB_ITEM hb_objSendMessage( PHB_ITEM pObject, PHB_DYNS pMsgSym, HB_ULONG ulArg, 
       hb_vmSend( ( HB_USHORT ) ulArg );
    }
    else
-      hb_errRT_BASE( EG_ARG, 3000, NULL, "__objSendMessage()", 0 );
+      hb_errRT_BASE( EG_ARG, 3000, nullptr, "__objSendMessage()", 0 );
 
    {
       HB_STACK_TLS_PRELOAD
@@ -2698,7 +2698,7 @@ void hb_dbg_objSendMessage( int iProcLevel, PHB_ITEM pObject, PHB_ITEM pMessage,
       hb_vmSend( uiParams );
    }
    else
-      hb_errRT_BASE( EG_ARG, 3000, NULL, "hb_dbg_objSendMessage()", 2, pObject, pMsgSym );
+      hb_errRT_BASE( EG_ARG, 3000, nullptr, "hb_dbg_objSendMessage()", 2, pObject, pMsgSym );
 }
 
 static HB_USHORT hb_clsUpdateScope( HB_USHORT uiScope, HB_BOOL fAssign )
@@ -3037,7 +3037,7 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage,
 
       if( ! fOK )
       {
-         hb_errRT_BASE( EG_ARG, 3000, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE( EG_ARG, 3000, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
          return HB_FALSE;
       }
 
@@ -3613,7 +3613,7 @@ HB_FUNC( __CLSNEW )
       hb_retni( uiClass );
    }
    else
-      hb_errRT_BASE( EG_ARG, 3000, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3000, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* __clsAddFriend( <hClass>, <sFuncSym> )
@@ -3837,7 +3837,7 @@ HB_FUNC( __CLSMODMSG )
                      pMethod->uiData = 0;
                   }
                   else
-                     hb_errRT_BASE( EG_ARG, 3000, NULL, HB_ERR_FUNCNAME, 0 );
+                     hb_errRT_BASE( EG_ARG, 3000, nullptr, HB_ERR_FUNCNAME, 0 );
                }
             }
          }
@@ -3879,7 +3879,7 @@ HB_FUNC( __OBJHASMSG )
       hb_retl( hb_objHasMessage( hb_param( 1, HB_IT_ANY ), pMessage ) );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1099, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* __objHasMsgAssigned( <oObj>, <cMsgName> | <sMsgName> ) --> <lExists>
@@ -3898,7 +3898,7 @@ HB_FUNC( __OBJHASMSGASSIGNED )
       hb_retl( pExecSym && pExecSym != &s___msgVirtual );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1099, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* __objSendMsg( <oObj>, <cMsgName> | <sMsgName>, <xArg,..> ) --> <xRet>
@@ -3924,7 +3924,7 @@ HB_FUNC( __OBJSENDMSG )
       hb_vmSend( ( HB_USHORT ) ( uiPCount - 2 ) );             /* Execute message */
    }
    else
-      hb_errRT_BASE( EG_ARG, 3000, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3000, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* __objClone( <oSource> ) --> <oNew>
@@ -3939,7 +3939,7 @@ HB_FUNC( __OBJCLONE )
    if( pObject )
       hb_arrayCloneTo( hb_stackReturnItem(), pObject );
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, 0 );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, 0 );
 }
 
 /* __clsInstSuper( <cClassName> | <sClassFunc> ) --> <hClass>
@@ -4686,9 +4686,9 @@ HB_FUNC_STATIC( msgNoMethod )
 
 #if 1  /* Clipper compatible error message */
    if( pSym->szName[ 0 ] == '_' )
-      hb_errRT_BASE_SubstR( EG_NOVARMETHOD, 1005, NULL, pSym->szName + 1, HB_ERR_ARGS_SELFPARAMS );
+      hb_errRT_BASE_SubstR( EG_NOVARMETHOD, 1005, nullptr, pSym->szName + 1, HB_ERR_ARGS_SELFPARAMS );
    else
-      hb_errRT_BASE_SubstR( EG_NOMETHOD, 1004, NULL, pSym->szName, HB_ERR_ARGS_SELFPARAMS );
+      hb_errRT_BASE_SubstR( EG_NOMETHOD, 1004, nullptr, pSym->szName, HB_ERR_ARGS_SELFPARAMS );
 #else
    char szDesc[ 40 + HB_SYMBOL_NAME_LEN ];
 
@@ -5423,7 +5423,7 @@ HB_FUNC( __CLSMSGTYPE )
       hb_retni( pMethod ? hb_methodType( pMethod ) : -1 );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1099, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* extend the size of classes buffer to given value to avoid later

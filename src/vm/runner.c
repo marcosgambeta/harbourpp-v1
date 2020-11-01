@@ -323,7 +323,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
 
       if( iVersion == 0 )
       {
-         hb_errRT_BASE( EG_CORRUPTION, 9995, NULL, HB_ERR_FUNCNAME, 0 );
+         hb_errRT_BASE( EG_CORRUPTION, 9995, nullptr, HB_ERR_FUNCNAME, 0 );
          return NULL;
       }
 
@@ -340,7 +340,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
             pHrbBody->ulSymbols == 0 )
       {
          hb_hrbUnLoad( pHrbBody );
-         hb_errRT_BASE( EG_CORRUPTION, 9996, NULL, HB_ERR_FUNCNAME, 0 );
+         hb_errRT_BASE( EG_CORRUPTION, 9996, nullptr, HB_ERR_FUNCNAME, 0 );
          return NULL;
       }
 
@@ -360,7 +360,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
          if( nBodyOffset >= nBodySize )
          {
             hb_hrbUnLoad( pHrbBody );
-            hb_errRT_BASE( EG_CORRUPTION, 9997, NULL, HB_ERR_FUNCNAME, 0 );
+            hb_errRT_BASE( EG_CORRUPTION, 9997, nullptr, HB_ERR_FUNCNAME, 0 );
             return NULL;
          }
       }
@@ -395,7 +395,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
       {
          hb_xfree( pSymRead );
          hb_hrbUnLoad( pHrbBody );
-         hb_errRT_BASE( EG_CORRUPTION, 9997, NULL, HB_ERR_FUNCNAME, 0 );
+         hb_errRT_BASE( EG_CORRUPTION, 9997, nullptr, HB_ERR_FUNCNAME, 0 );
          return NULL;
       }
 
@@ -437,7 +437,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
          {
             hb_xfree( pSymRead );
             hb_hrbUnLoad( pHrbBody );
-            hb_errRT_BASE( EG_CORRUPTION, 9998, NULL, HB_ERR_FUNCNAME, 0 );
+            hb_errRT_BASE( EG_CORRUPTION, 9998, nullptr, HB_ERR_FUNCNAME, 0 );
             return NULL;
          }
       }
@@ -593,7 +593,7 @@ static PHRB_BODY hb_hrbLoadFromFile( const char * szHrb, HB_USHORT usMode )
          hb_xfree( pBuffer );
       }
       else
-         hb_errRT_BASE( EG_CORRUPTION, 9998, NULL, HB_ERR_FUNCNAME, 0 );
+         hb_errRT_BASE( EG_CORRUPTION, 9998, nullptr, HB_ERR_FUNCNAME, 0 );
    }
 
    return pHrbBody;
@@ -715,7 +715,7 @@ HB_FUNC( HB_HRBRUN )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 6103, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 6103, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* hb_hrbLoad( [ <nOptions>, ] <cHrb> [, <xparams,...> ] ) */
@@ -765,7 +765,7 @@ HB_FUNC( HB_HRBLOAD )
       hb_hrbReturn( pHrbBody );
    }
    else
-      hb_errRT_BASE( EG_ARG, 9998, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 9998, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_HRBDO )
@@ -791,7 +791,7 @@ HB_FUNC( HB_HRBDO )
          hb_xfree( pParams );
    }
    else
-      hb_errRT_BASE( EG_ARG, 6104, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 6104, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_HRBUNLOAD )
@@ -809,7 +809,7 @@ HB_FUNC( HB_HRBUNLOAD )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 6105, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 6105, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_HRBGETFUNSYM )
@@ -834,7 +834,7 @@ HB_FUNC( HB_HRBGETFUNSYM )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 6106, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 6106, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_HRBGETFUNLIST )
@@ -872,7 +872,7 @@ HB_FUNC( HB_HRBGETFUNLIST )
       hb_itemReturnRelease( paList );
    }
    else
-      hb_errRT_BASE( EG_ARG, 6107, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 6107, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_HRBSIGNATURE )

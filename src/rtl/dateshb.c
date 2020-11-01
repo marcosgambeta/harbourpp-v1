@@ -58,7 +58,7 @@ HB_FUNC( CTOD )
    if( HB_ISCHAR( 1 ) )
       hb_retdl( hb_dateUnformat( hb_parc( 1 ), hb_setGetDateFormat() ) );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1119, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1119, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_CTOD )
@@ -72,7 +72,7 @@ HB_FUNC( HB_CTOD )
       hb_retdl( hb_dateUnformat( hb_parc( 1 ), szFormat ) );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1119, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1119, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( DTOC )
@@ -85,7 +85,7 @@ HB_FUNC( DTOC )
       hb_retc( hb_dateFormat( hb_pardsbuff( szDate, 1 ), szFormatted, hb_setGetDateFormat() ) );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1118, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1118, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_DTOC )
@@ -101,7 +101,7 @@ HB_FUNC( HB_DTOC )
       hb_retc( hb_dateFormat( hb_pardsbuff( szDate, 1 ), szFormatted, szFormat ) );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1118, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1118, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( DTOS )
@@ -113,7 +113,7 @@ HB_FUNC( DTOS )
       hb_retc( hb_pardsbuff( szDate, 1 ) );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1120, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1120, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* NOTE: Harbour extension, exactly the same as SToD(). */
@@ -138,7 +138,7 @@ HB_FUNC( YEAR )
       hb_retnilen( iYear, 5 );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1112, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1112, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( MONTH )
@@ -154,7 +154,7 @@ HB_FUNC( MONTH )
       hb_retnilen( iMonth, 3 );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1113, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1113, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( DAY )
@@ -170,7 +170,7 @@ HB_FUNC( DAY )
       hb_retnilen( iDay, 3 );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1114, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1114, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( DOW )
@@ -180,7 +180,7 @@ HB_FUNC( DOW )
    if( pDate )
       hb_retnilen( hb_dateJulianDOW( hb_itemGetDL( pDate ) ), 3 );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1115, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1115, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( TIME )
@@ -244,7 +244,7 @@ HB_FUNC( HB_DTOT )
       hb_rettdt( lDate, lTime );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_TTOD )
@@ -269,7 +269,7 @@ HB_FUNC( HB_TTOD )
       }
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_TTON )
@@ -279,7 +279,7 @@ HB_FUNC( HB_TTON )
    if( pTime )
       hb_retnd( hb_itemGetTD( pTime ) );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_NTOT )
@@ -289,7 +289,7 @@ HB_FUNC( HB_NTOT )
    if( pNum )
       hb_rettd( hb_itemGetND( pNum ) );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_NTOMSEC )
@@ -299,7 +299,7 @@ HB_FUNC( HB_NTOMSEC )
    if( pNum )
       hb_retnint( ( HB_MAXINT ) ( hb_itemGetND( pNum ) * HB_MILLISECS_PER_DAY ) );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_NTOSEC )
@@ -309,7 +309,7 @@ HB_FUNC( HB_NTOSEC )
    if( pNum )
       hb_retnd( hb_itemGetND( pNum ) * HB_SECONDS_PER_DAY );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_NTOMIN )
@@ -319,7 +319,7 @@ HB_FUNC( HB_NTOMIN )
    if( pNum )
       hb_retnd( hb_itemGetND( pNum ) * HB_MINUTES_PER_DAY );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_NTOHOUR )
@@ -329,7 +329,7 @@ HB_FUNC( HB_NTOHOUR )
    if( pNum )
       hb_retnd( hb_itemGetND( pNum ) * 24 );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_TTOSEC )
@@ -339,7 +339,7 @@ HB_FUNC( HB_TTOSEC )
    if( hb_partdt( &lDate, &lTime, 1 ) )
       hb_retnd( ( double ) lDate * HB_SECONDS_PER_DAY + ( double ) lTime / 1000 );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_SECTOT )
@@ -349,7 +349,7 @@ HB_FUNC( HB_SECTOT )
    if( pNum )
       hb_rettd( hb_itemGetND( pNum ) / HB_SECONDS_PER_DAY );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_MSECTOT )
@@ -359,7 +359,7 @@ HB_FUNC( HB_MSECTOT )
    if( pNum )
       hb_rettd( hb_itemGetND( pNum ) / HB_MILLISECS_PER_DAY );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_TTOMSEC )
@@ -369,7 +369,7 @@ HB_FUNC( HB_TTOMSEC )
    if( hb_partdt( &lDate, &lTime, 1 ) )
       hb_retnd( ( double ) lDate * HB_MILLISECS_PER_DAY + lTime );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_TTOMIN )
@@ -379,7 +379,7 @@ HB_FUNC( HB_TTOMIN )
    if( hb_partdt( &lDate, &lTime, 1 ) )
       hb_retnd( ( double ) lDate * HB_MINUTES_PER_DAY + ( double ) lTime / ( 60 * 1000 ) );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_TTOHOUR )
@@ -389,7 +389,7 @@ HB_FUNC( HB_TTOHOUR )
    if( hb_partdt( &lDate, &lTime, 1 ) )
       hb_retnd( ( double ) lDate * 24 + ( double ) lTime / ( 60 * 60 * 1000 ) );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_TTOC )
@@ -411,7 +411,7 @@ HB_FUNC( HB_TTOC )
                                    lDate, lTime ) );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_CTOT )
@@ -433,7 +433,7 @@ HB_FUNC( HB_CTOT )
       hb_rettdt( lDate, lTime );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_TTOS )
@@ -447,7 +447,7 @@ HB_FUNC( HB_TTOS )
       hb_retc( hb_timeStampStrRawPut( szBuffer, lDate, lTime ) );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_STOT )
@@ -477,7 +477,7 @@ HB_FUNC( HB_HOUR )
       hb_retnilen( iHour, 3 );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_MINUTE )
@@ -492,7 +492,7 @@ HB_FUNC( HB_MINUTE )
       hb_retnilen( iMinutes, 3 );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_SEC )
@@ -507,7 +507,7 @@ HB_FUNC( HB_SEC )
       hb_retndlen( ( double ) ( iSeconds * 1000 + iMSec ) / 1000, 3, 3 );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_TSTOSTR )
@@ -549,7 +549,7 @@ HB_FUNC( HB_TSTOSTR )
          hb_retclen( szBuffer, 23 );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_STRTOTS )
@@ -564,7 +564,7 @@ HB_FUNC( HB_STRTOTS )
       hb_rettdt( lDate, lTime );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* get week number and other parts ISO 8601 week date:
@@ -583,7 +583,7 @@ HB_FUNC( HB_WEEK )
       hb_retni( iWeek );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_UTCOFFSET )
@@ -604,5 +604,5 @@ HB_FUNC( HB_TSTOUTC )
    if( HB_ISTIMESTAMP( 1 ) )
       hb_rettd( hb_timeLocalToUTC( hb_partd( 1 ) ) );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

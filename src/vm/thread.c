@@ -1034,7 +1034,7 @@ HB_CARGO_FUNC( hb_threadStartVM )
          pThread->pMemvars = NULL;
       }
 
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, 0 );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 0 );
    }
 }
 
@@ -1144,7 +1144,7 @@ static PHB_THREADSTATE hb_thParam( int iParam, int iPos )
    if( pThread )
       return pThread;
 
-   hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    return NULL;
 }
 
@@ -1276,9 +1276,9 @@ HB_FUNC( HB_THREADSTART )
    else
    {
       if( szFuncName )
-         hb_errRT_BASE_SubstR( EG_NOFUNC, 1001, NULL, szFuncName, 0 );
+         hb_errRT_BASE_SubstR( EG_NOFUNC, 1001, nullptr, szFuncName, 0 );
       else
-         hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
 }
 
@@ -1634,7 +1634,7 @@ HB_FUNC( HB_THREADONCE )
       hb_retl( fFirstCall );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* hb_threadOnceInit( @<item>, <value> ) --> <lInitialized>
@@ -1673,7 +1673,7 @@ HB_FUNC( HB_THREADONCEINIT )
       hb_retl( fInitialized );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* II. MUTEXES */
@@ -1829,7 +1829,7 @@ static PHB_ITEM hb_mutexParam( int iParam )
    if( hb_itemGetPtrGC( pItem, &s_gcMutexFuncs ) )
       return pItem;
 
-   hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    return NULL;
 }
 
@@ -2721,7 +2721,7 @@ HB_FUNC( HB_MUTEXEVAL )
          }
       }
       else
-         hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
 }
 

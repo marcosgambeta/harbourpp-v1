@@ -492,7 +492,7 @@ HB_FUNC( HB_EXECFROMARRAY )
          hb_vmProc( ( HB_USHORT ) iPCount );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1099, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_BOOL hb_execFromArray( PHB_ITEM pParam )
@@ -559,7 +559,7 @@ HB_BOOL hb_execFromArray( PHB_ITEM pParam )
       }
    }
 
-   hb_errRT_BASE_SubstR( EG_ARG, 1099, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 
    return HB_FALSE;
 }
@@ -578,5 +578,5 @@ HB_FUNC( HB_EXECMSG )
       hb_vmProc( ( HB_USHORT ) ( iParams - 2 ) );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1099, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

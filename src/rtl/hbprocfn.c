@@ -90,7 +90,7 @@ HB_FUNC( HB_PROCESSOPEN )
       hb_retnint( ( HB_NHANDLE ) hProcess );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 4001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_PROCESSVALUE )
@@ -104,7 +104,7 @@ HB_FUNC( HB_PROCESSVALUE )
       hb_retni( iResult );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 4001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_PROCESSCLOSE )
@@ -118,7 +118,7 @@ HB_FUNC( HB_PROCESSCLOSE )
       hb_retl( fResult );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 4001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* hb_processRun( <cCommand>, [ <cStdIn> ], [ @<cStdOut> ], [ @<cStdErr> ], ;
@@ -171,5 +171,5 @@ HB_FUNC( HB_PROCESSRUN )
       hb_retni( iResult );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 4001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

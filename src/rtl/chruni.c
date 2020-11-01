@@ -66,7 +66,7 @@ HB_FUNC( HB_UCHAR )
       hb_retclen( szChar, nLen );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1111, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* hb_BChar( <nCode> ) --> <cText>
@@ -81,7 +81,7 @@ HB_FUNC( HB_BCHAR )
       hb_retclen( &c, 1 );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1111, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* hb_UCode( <cText> ) --> <nCode>
@@ -95,7 +95,7 @@ HB_FUNC( HB_UCODE )
       hb_retni( hb_cdpTextGetU16( hb_vmCDP(), hb_itemGetCPtr( pText ),
                                               hb_itemGetCLen( pText ) ) );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1111, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* hb_BCode( <cText> ) --> <nCode>
@@ -108,7 +108,7 @@ HB_FUNC( HB_BCODE )
    if( szText )
       hb_retni( ( HB_UCHAR ) szText[ 0 ] );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1111, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* hb_ULen( <cText> ) --> <nChars>
@@ -122,7 +122,7 @@ HB_FUNC( HB_ULEN )
       hb_retns( hb_cdpTextLen( hb_vmCDP(), hb_itemGetCPtr( pText ),
                                            hb_itemGetCLen( pText ) ) );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1111, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* hb_BLen( <cText> ) --> <nBytes>
@@ -135,7 +135,7 @@ HB_FUNC( HB_BLEN )
    if( pText )
       hb_retns( hb_itemGetCLen( pText ) );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1111, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* hb_UPeek( <cText>, <n> ) --> <nCode>
@@ -164,7 +164,7 @@ HB_FUNC( HB_UPEEK )
       hb_retni( wc );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1111, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* hb_BPeek( <cText>, <n> ) --> <nCode>
@@ -182,7 +182,7 @@ HB_FUNC( HB_BPEEK )
                 ( HB_UCHAR ) hb_itemGetCPtr( pText )[ nPos - 1 ] : 0 );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1111, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* hb_UPoke( [@]<cText>, <n>, <nVal> ) --> <cText>
@@ -234,7 +234,7 @@ HB_FUNC( HB_UPOKE )
       hb_itemReturn( pText );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1111, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* hb_BPoke( [@]<cText>, <n>, <nVal> ) --> <cText>
@@ -257,7 +257,7 @@ HB_FUNC( HB_BPOKE )
       hb_itemReturn( pText );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1111, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* hb_USubStr( <cString>, <nStart>, <nCount> ) --> <cSubstring>
@@ -305,7 +305,7 @@ HB_FUNC( HB_USUBSTR )
          hb_retc_null();
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1110, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1110, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* hb_BSubStr( <cString>, <nStart>, <nCount> ) --> <cSubstring>
@@ -351,7 +351,7 @@ HB_FUNC( HB_BSUBSTR )
          hb_retc_null();
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1110, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1110, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* hb_ULeft( <cString>, <nCount> ) --> <cSubstring>
@@ -377,7 +377,7 @@ HB_FUNC( HB_ULEFT )
       }
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1124, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1124, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* hb_BLeft( <cString>, <nCount> ) --> <cSubstring>
@@ -401,7 +401,7 @@ HB_FUNC( HB_BLEFT )
       }
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1124, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1124, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* hb_URight( <cString>, <nCount> ) --> <cSubstring>
@@ -505,7 +505,7 @@ HB_FUNC( HB_UAT )
       hb_retns( nPos );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1108, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1108, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* hb_BAt( <cSubString>, <cString>, [<nFrom>], [<nTo>] ) --> <nAt>
@@ -559,7 +559,7 @@ HB_FUNC( HB_BAT )
       hb_retns( nPos );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1108, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1108, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* hb_BRAt( <cSubString>, <cString>, [<nFrom>], [<nTo>] ) --> <nAt>

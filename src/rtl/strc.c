@@ -70,7 +70,7 @@ HB_FUNC( HB_STRDECODESCAPE )
          hb_itemReturn( pText );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1099, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* hb_StrCDecode( <cStr> [, @<lCont> ] ) --> <cResult> | NIL
@@ -154,5 +154,5 @@ HB_FUNC( HB_STRCDECODE )
          hb_itemReturn( pText );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1099, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

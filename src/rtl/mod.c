@@ -79,7 +79,7 @@ HB_FUNC( MOD )
       }
       else
       {
-         PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ZERODIV, 1341, NULL, "%", HB_ERR_ARGS_BASEPARAMS );
+         PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ZERODIV, 1341, nullptr, "%", HB_ERR_ARGS_BASEPARAMS );
 
          /* In CA-Cl*pper Mod() function ignores substitution result
           * and return original numeric item keeping its internal
@@ -100,7 +100,7 @@ HB_FUNC( MOD )
       }
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1085, NULL, "%", 2, hb_param( 1, HB_IT_ANY ), hb_param( 2, HB_IT_ANY ) );
+      hb_errRT_BASE_SubstR( EG_ARG, 1085, nullptr, "%", 2, hb_param( 1, HB_IT_ANY ), hb_param( 2, HB_IT_ANY ) );
 }
 
 /*

@@ -67,7 +67,7 @@ HB_FUNC( FOPEN )
    {
       hb_fsSetFError( 0 );
       /* NOTE: Undocumented but existing Clipper Run-time error */
-      hb_errRT_BASE( EG_ARG, 2021, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2021, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
 }
 
@@ -326,7 +326,7 @@ HB_FUNC( HB_CURDRIVE )
       {
          while( hb_fsChDrv( iDrive ) != 0 )
          {
-            HB_USHORT uiAction = hb_errRT_BASE_Ext1( EG_OPEN, 6001, NULL,
+            HB_USHORT uiAction = hb_errRT_BASE_Ext1( EG_OPEN, 6001, nullptr,
                                                      HB_ERR_FUNCNAME, 0, EF_CANDEFAULT | EF_CANRETRY,
                                                      HB_ERR_ARGS_BASEPARAMS );
             if( uiAction != E_RETRY )
@@ -554,7 +554,7 @@ HB_FUNC( HB_PREAD )
       hb_fsSetFError( uiError );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 4001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* hb_PWrite( <nPipeHandle>, <cBuffer>, [<nBytes>], [<nTimeOut>] )
@@ -582,7 +582,7 @@ HB_FUNC( HB_PWRITE )
          hb_retns( nLen );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 4001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_OSERROR )

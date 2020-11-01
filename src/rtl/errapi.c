@@ -111,7 +111,7 @@ static HB_BOOL hb_errGetNumCode( int * piValue, const char * szOperation )
       *piValue = hb_itemGetNI( pItem );
    else
    {
-      pItem = hb_errRT_BASE_Subst( EG_ARG, 0, NULL, szOperation,
+      pItem = hb_errRT_BASE_Subst( EG_ARG, 0, nullptr, szOperation,
                                    HB_ERR_ARGS_BASEPARAMS );
       if( ! pItem )
       {

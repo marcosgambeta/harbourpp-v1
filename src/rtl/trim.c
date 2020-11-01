@@ -102,7 +102,7 @@ HB_FUNC( LTRIM )
          hb_retclen( szText, nLen );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1101, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1101, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* trims trailing spaces from a string */
@@ -128,7 +128,7 @@ HB_FUNC( RTRIM )
    }
    else
       /* NOTE: "TRIM" is correct here [vszakats] */
-      hb_errRT_BASE_SubstR( EG_ARG, 1100, NULL, "TRIM", HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1100, nullptr, "TRIM", HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* synonymn for RTRIM */
@@ -160,9 +160,9 @@ HB_FUNC( ALLTRIM )
 #ifdef HB_COMPAT_C53
       /* NOTE: This runtime error appeared in CA-Cl*pper 5.3 [vszakats] */
 #ifdef HB_CLP_STRICT
-      hb_errRT_BASE_SubstR( EG_ARG, 2022, NULL, HB_ERR_FUNCNAME, 0 );
+      hb_errRT_BASE_SubstR( EG_ARG, 2022, nullptr, HB_ERR_FUNCNAME, 0 );
 #else
-      hb_errRT_BASE_SubstR( EG_ARG, 2022, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 2022, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #endif
 #else
       hb_retc_null();

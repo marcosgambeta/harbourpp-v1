@@ -120,7 +120,7 @@ static void hb_inetLinuxSigusrHandle( int sig )
 
 static void hb_inetErrRT( void )
 {
-   hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 static HB_BOOL hb_inetIsOpen( PHB_SOCKET_STRUCT socket )

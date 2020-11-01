@@ -106,7 +106,7 @@ HB_FUNC( MAX )
          return;
       }
    }
-   hb_errRT_BASE_SubstR( EG_ARG, 1093, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE_SubstR( EG_ARG, 1093, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* returns the minimum of two date or numerics */
@@ -168,5 +168,5 @@ HB_FUNC( MIN )
       }
    }
 
-   hb_errRT_BASE_SubstR( EG_ARG, 1092, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE_SubstR( EG_ARG, 1092, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

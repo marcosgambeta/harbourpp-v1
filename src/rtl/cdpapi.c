@@ -3237,7 +3237,7 @@ PHB_CODEPAGE hb_cdpFindExt( const char * id )
       if( cdp )
          return cdp;
 
-      hb_errRT_BASE( EG_ARG, 1302, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 1302, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
    return NULL;
 }

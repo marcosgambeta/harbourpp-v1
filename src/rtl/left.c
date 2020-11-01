@@ -77,7 +77,7 @@ HB_FUNC( LEFT )
       }
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1124, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1124, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_LEFTEQ )
@@ -89,7 +89,7 @@ HB_FUNC( HB_LEFTEQ )
       hb_retl( hb_cdpcmp( hb_itemGetCPtr( pItem1 ), hb_itemGetCLen( pItem1 ),
                           hb_itemGetCPtr( pItem2 ), hb_itemGetCLen( pItem2 ), hb_vmCDP(), HB_FALSE ) == 0 );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1071, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1071, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_LEFTEQI )
@@ -101,5 +101,5 @@ HB_FUNC( HB_LEFTEQI )
       hb_retl( hb_cdpicmp( hb_itemGetCPtr( pItem1 ), hb_itemGetCLen( pItem1 ),
                            hb_itemGetCPtr( pItem2 ), hb_itemGetCLen( pItem2 ), hb_vmCDP(), HB_FALSE ) == 0 );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1071, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1071, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

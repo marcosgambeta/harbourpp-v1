@@ -305,7 +305,7 @@ static HB_BOOL s_socketaddrParam( int iParam, void ** pAddr, unsigned int * puiL
    if( pItem && hb_socketAddrFromItem( pAddr, puiLen, pItem ) )
       return HB_TRUE;
 
-   hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    return HB_FALSE;
 }
 
@@ -316,7 +316,7 @@ static HB_SOCKET s_socketSelectCallback( PHB_ITEM pItem )
    if( socket != HB_NO_SOCKET )
       return socket;
 
-   hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    return HB_NO_SOCKET;
 }
 
@@ -376,7 +376,7 @@ HB_SOCKET hb_socketParam( int iParam )
    if( pSockPtr && *pSockPtr )
       return ( *pSockPtr )->sd;
 
-   hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    return HB_NO_SOCKET;
 }
 
@@ -416,7 +416,7 @@ PHB_SOCKEX hb_sockexParam( int iParam )
    if( pSockPtr && *pSockPtr )
       return *pSockPtr;
 
-   hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    return NULL;
 }
 
@@ -1127,7 +1127,7 @@ HB_FUNC( HB_SOCKETRECV )
                                   hb_parni( 4 ), hb_parnintdef( 5, -1 ) ) );
       }
       else
-         hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
 }
 
@@ -1173,7 +1173,7 @@ HB_FUNC( HB_SOCKETRECVFROM )
             hb_xfree( addr );
          return;
       }
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
 }
 
@@ -1374,7 +1374,7 @@ HB_FUNC( HB_SOCKETGETHOSTS )
          hb_reta( 0 );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 #if 0
@@ -1395,7 +1395,7 @@ HB_FUNC( HB_SOCKETGETALIASES )
          hb_reta( 0 );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 #endif
 
@@ -1423,7 +1423,7 @@ HB_FUNC( HB_SOCKETSETFILTER )
    if( hb_sockexItemSetFilter( pItem, hb_parc( 2 ), hb_param( 3, HB_IT_ANY ) ) )
       hb_itemReturn( pItem );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_SOCKETGETFILTER )
@@ -1456,7 +1456,7 @@ HB_FUNC( HB_SOCKETREAD )
                                   hb_parnintdef( 4, -1 ) ) );
       }
       else
-         hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
 }
 

@@ -146,9 +146,9 @@ PHB_REGEX hb_regexGet( PHB_ITEM pRegExItm, int iFlags )
    }
 
    if( fArgError )
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, 1, pRegExItm );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, pRegExItm );
    else if( ! pRegEx ) /* hb_regexCompile() failed */
-      hb_errRT_BASE_SubstR( EG_ARG, 3015, NULL, HB_ERR_FUNCNAME, 1, pRegExItm );
+      hb_errRT_BASE_SubstR( EG_ARG, 3015, nullptr, HB_ERR_FUNCNAME, 1, pRegExItm );
 
    return pRegEx;
 }

@@ -256,7 +256,7 @@ HB_FUNC( DISKSPACE )
 #endif
 
    if( bError )
-      hb_errRT_BASE_Ext1( EG_OPEN, 2018, NULL, NULL, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_Ext1( EG_OPEN, 2018, nullptr, nullptr, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
 
    hb_retnlen( dSpace, -1, 0 );
 }

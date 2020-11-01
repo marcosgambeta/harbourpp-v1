@@ -113,7 +113,7 @@ HB_FUNC( HB_BASE64ENCODE )
          hb_retclen_buffer( t, p - t );
       }
       else
-         hb_errRT_BASE( EG_STROVERFLOW, 9999, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE( EG_STROVERFLOW, 9999, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
    else
       hb_retc_null();

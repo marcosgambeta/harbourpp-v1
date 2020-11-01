@@ -72,7 +72,7 @@ HB_FUNC( DO )
 
          if( ! pDynSym )
          {
-            hb_errRT_BASE( EG_NOFUNC, 1001, NULL, hb_itemGetCPtr( pItem ), HB_ERR_ARGS_BASEPARAMS );
+            hb_errRT_BASE( EG_NOFUNC, 1001, nullptr, hb_itemGetCPtr( pItem ), HB_ERR_ARGS_BASEPARAMS );
             return;
          }
          hb_vmPushDynSym( pDynSym );
@@ -106,5 +106,5 @@ HB_FUNC( DO )
          hb_vmProc( ( HB_USHORT ) ( uiPCount - 1 ) );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
