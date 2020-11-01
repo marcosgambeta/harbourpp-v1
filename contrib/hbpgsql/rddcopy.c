@@ -266,7 +266,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
    if( pConn == NULL )
       hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    else if( pArea == NULL )
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
    else
    {
       static const char * sc_szQuote = "\"";

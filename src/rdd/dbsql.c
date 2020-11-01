@@ -372,7 +372,7 @@ HB_FUNC( __DBSQL )
       PHB_FILE pFile;
 
       if( ! szFileName )
-         hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, NULL, HB_ERR_FUNCNAME );
+         hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
       else if( fExport )   /* COPY TO SQL */
       {
          PHB_ITEM pError = NULL;
@@ -453,5 +453,5 @@ HB_FUNC( __DBSQL )
       }
    }
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
 }

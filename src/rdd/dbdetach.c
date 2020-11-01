@@ -79,14 +79,14 @@ HB_FUNC( HB_DBDETACH )
    }
    else
    {
-      hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
       return;
    }
 
    if( pArea )
       hb_retl( hb_rddDetachArea( pArea, pCargo ) == HB_SUCCESS );
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
 }
 
 /*
@@ -124,5 +124,5 @@ HB_FUNC( HB_DBREQUEST )
       hb_retl( pArea != NULL );
    }
    else
-      hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
 }

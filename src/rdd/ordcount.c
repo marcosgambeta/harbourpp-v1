@@ -69,7 +69,7 @@ HB_FUNC( ORDCOUNT )
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
 }
 
 #endif

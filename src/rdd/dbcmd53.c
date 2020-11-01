@@ -72,7 +72,7 @@ HB_FUNC( ORDKEYCOUNT )
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
 
 }
 
@@ -93,7 +93,7 @@ HB_FUNC( ORDKEYNO )
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
 }
 
 HB_FUNC( ORDKEYGOTO )
@@ -110,7 +110,7 @@ HB_FUNC( ORDKEYGOTO )
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
 }
 
 HB_FUNC( ORDKEYRELPOS )
@@ -127,7 +127,7 @@ HB_FUNC( ORDKEYRELPOS )
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
 }
 
 HB_FUNC( ORDFINDREC )
@@ -145,7 +145,7 @@ HB_FUNC( ORDFINDREC )
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
 }
 
 HB_FUNC( ORDSKIPRAW )
@@ -155,7 +155,7 @@ HB_FUNC( ORDSKIPRAW )
    if( pArea )
       SELF_SKIPRAW( pArea, hb_parnldef( 1, 1 ) );
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
 }
 
 
@@ -173,7 +173,7 @@ HB_FUNC( ORDSKIPUNIQUE )
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
 }
 
 HB_FUNC( ORDKEYVAL )
@@ -189,7 +189,7 @@ HB_FUNC( ORDKEYVAL )
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
 }
 
 HB_FUNC( ORDKEYADD )
@@ -209,7 +209,7 @@ HB_FUNC( ORDKEYADD )
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
 }
 
 HB_FUNC( ORDKEYDEL )
@@ -229,7 +229,7 @@ HB_FUNC( ORDKEYDEL )
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
 }
 
 HB_FUNC( ORDDESCEND )
@@ -249,7 +249,7 @@ HB_FUNC( ORDDESCEND )
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
 }
 
 HB_FUNC( ORDISUNIQUE )
@@ -269,7 +269,7 @@ HB_FUNC( ORDISUNIQUE )
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
 }
 
 HB_FUNC( ORDCUSTOM )
@@ -289,7 +289,7 @@ HB_FUNC( ORDCUSTOM )
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
 }
 
 HB_FUNC( DBINFO )
@@ -309,10 +309,10 @@ HB_FUNC( DBINFO )
          hb_itemReturnRelease( pInfo );
       }
       else
-         hb_errRT_DBCMD( EG_ARG, EDBCMD_DBINFOBADPARAMETER, NULL, HB_ERR_FUNCNAME );
+         hb_errRT_DBCMD( EG_ARG, EDBCMD_DBINFOBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
    }
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
 }
 
 HB_FUNC( DBORDERINFO )
@@ -338,10 +338,10 @@ HB_FUNC( DBORDERINFO )
          hb_itemReturnRelease( pOrderInfo.itmResult );
       }
       else
-         hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, NULL, HB_ERR_FUNCNAME );
+         hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
    }
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
 }
 
 HB_FUNC( DBFIELDINFO )
@@ -364,10 +364,10 @@ HB_FUNC( DBFIELDINFO )
          hb_itemReturnRelease( pInfo );
       }
       else
-         hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, NULL, HB_ERR_FUNCNAME );
+         hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
    }
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
 }
 
 HB_FUNC( DBRECORDINFO )
@@ -388,10 +388,10 @@ HB_FUNC( DBRECORDINFO )
          hb_itemReturnRelease( pInfo );
       }
       else
-         hb_errRT_DBCMD( EG_ARG, EDBCMD_INFOBADPARAMETER, NULL, HB_ERR_FUNCNAME );
+         hb_errRT_DBCMD( EG_ARG, EDBCMD_INFOBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
    }
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
 }
 
 /*
@@ -421,10 +421,10 @@ HB_FUNC( DBFILEGET )
                                      ( HB_USHORT ) hb_itemGetNI( pMode ) ) == HB_SUCCESS );
       }
       else
-         hb_errRT_DBCMD( EG_ARG, EDBCMD_DBFILEGETBADPARAMETER, NULL, HB_ERR_FUNCNAME );
+         hb_errRT_DBCMD( EG_ARG, EDBCMD_DBFILEGETBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
    }
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
 }
 
 /*
@@ -451,10 +451,10 @@ HB_FUNC( DBFILEPUT )
                                      ( HB_USHORT ) hb_parni( 3 ) ) == HB_SUCCESS );
       }
       else
-         hb_errRT_DBCMD( EG_ARG, EDBCMD_DBFILEPUTBADPARAMETER, NULL, HB_ERR_FUNCNAME );
+         hb_errRT_DBCMD( EG_ARG, EDBCMD_DBFILEPUTBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
    }
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
 }
 
 #endif

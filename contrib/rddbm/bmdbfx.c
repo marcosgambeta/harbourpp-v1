@@ -170,10 +170,10 @@ HB_FUNC( BM_DBSEEKWILD )
             hb_retl( fFound );
       }
       else
-         hb_errRT_DBCMD( EG_ARG, EDBCMD_SEEK_BADPARAMETER, NULL, HB_ERR_FUNCNAME );
+         hb_errRT_DBCMD( EG_ARG, EDBCMD_SEEK_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
    }
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
 }
 
 HB_FUNC( BM_TURBO )
@@ -272,10 +272,10 @@ static AREAP hb_bmGetCurrentWorkArea( void )
    AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
 
    if( ! pArea )
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
    else if( hb_bmGetRdd( pArea->rddID ) == NULL )
    {
-      hb_errRT_DBCMD( EG_UNSUPPORTED, EDBF_UNSUPPORTED, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_UNSUPPORTED, EDBF_UNSUPPORTED, nullptr, HB_ERR_FUNCNAME );
       pArea = NULL;
    }
 
@@ -287,7 +287,7 @@ static PHB_ITEM hb_bmGetArrayParam( int iParam )
    PHB_ITEM pArray = hb_param( iParam, HB_IT_ARRAY );
 
    if( ! pArray )
-      hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
 
    return pArray;
 }

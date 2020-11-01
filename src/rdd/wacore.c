@@ -642,7 +642,7 @@ AREAP hb_rddRequestArea( const char * szAlias, PHB_ITEM pCargo,
    }
    else if( hb_rddSelectFirstAvailable() != HB_SUCCESS )
    {
-      hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
       return NULL;
    }
 
@@ -653,13 +653,13 @@ AREAP hb_rddRequestArea( const char * szAlias, PHB_ITEM pCargo,
       /* verify if the alias name is valid symbol */
       if( hb_rddVerifyAliasName( szAlias ) != HB_SUCCESS )
       {
-         hb_errRT_DBCMD_Ext( EG_BADALIAS, EDBCMD_BADALIAS, NULL, szAlias, EF_CANDEFAULT );
+         hb_errRT_DBCMD_Ext( EG_BADALIAS, EDBCMD_BADALIAS, nullptr, szAlias, EF_CANDEFAULT );
          return NULL;
       }
       /* verify if the alias is already in use */
       if( hb_dynsymAreaHandle( pSymAlias ) != 0 )
       {
-         hb_errRT_DBCMD_Ext( EG_DUPALIAS, EDBCMD_DUPALIAS, NULL, szAlias, EF_CANDEFAULT );
+         hb_errRT_DBCMD_Ext( EG_DUPALIAS, EDBCMD_DUPALIAS, nullptr, szAlias, EF_CANDEFAULT );
          return NULL;
       }
    }

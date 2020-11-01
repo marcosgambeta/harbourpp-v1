@@ -166,10 +166,10 @@ void * hb_rddAllocWorkAreaAlias( const char * szAlias, int iArea )
 
    /* Verify if the alias name is valid symbol */
    if( hb_rddVerifyAliasName( szAlias ) != HB_SUCCESS )
-      hb_errRT_DBCMD_Ext( EG_BADALIAS, EDBCMD_BADALIAS, NULL, szAlias, EF_CANDEFAULT );
+      hb_errRT_DBCMD_Ext( EG_BADALIAS, EDBCMD_BADALIAS, nullptr, szAlias, EF_CANDEFAULT );
    /* Verify if the alias is already in use */
    else if( hb_rddGetAliasNumber( szAlias, &iDummyArea ) == HB_SUCCESS )
-      hb_errRT_DBCMD_Ext( EG_DUPALIAS, EDBCMD_DUPALIAS, NULL, szAlias, EF_CANDEFAULT );
+      hb_errRT_DBCMD_Ext( EG_DUPALIAS, EDBCMD_DUPALIAS, nullptr, szAlias, EF_CANDEFAULT );
    else
    {
       PHB_DYNS pSymAlias = hb_dynsymGet( szAlias );
@@ -179,7 +179,7 @@ void * hb_rddAllocWorkAreaAlias( const char * szAlias, int iArea )
          hb_dynsymSetAreaHandle( pSymAlias, iArea );
          return pSymAlias;
       }
-      hb_errRT_DBCMD_Ext( EG_DUPALIAS, EDBCMD_DUPALIAS, NULL, szAlias, EF_CANDEFAULT );
+      hb_errRT_DBCMD_Ext( EG_DUPALIAS, EDBCMD_DUPALIAS, nullptr, szAlias, EF_CANDEFAULT );
    }
 
    return NULL;
@@ -597,7 +597,7 @@ HB_ERRCODE hb_rddOpenTable( const char * szFileName, const char * szDriver,
    }
    else if( hb_rddSelectFirstAvailable() != HB_SUCCESS )
    {
-      hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
       return HB_FAILURE;
    }
 
@@ -615,7 +615,7 @@ HB_ERRCODE hb_rddOpenTable( const char * szFileName, const char * szDriver,
    /* First try to create new area node and validate RDD name */
    if( ! szDriver || ! hb_rddInsertAreaNode( szDriver ) )
    {
-      hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
       return HB_FAILURE;
    }
 
@@ -625,7 +625,7 @@ HB_ERRCODE hb_rddOpenTable( const char * szFileName, const char * szDriver,
    if( ! szFileName )
    {
       hb_rddReleaseCurrentArea();
-      hb_errRT_DBCMD( EG_ARG, EDBCMD_USE_BADPARAMETER, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_ARG, EDBCMD_USE_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
       return HB_FAILURE;
    }
 
@@ -670,7 +670,7 @@ HB_ERRCODE hb_rddCreateTable( const char * szFileName, const char * szDriver,
 
    if( ! szFileName )
    {
-      hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
       return HB_FAILURE;
    }
 
@@ -687,7 +687,7 @@ HB_ERRCODE hb_rddCreateTable( const char * szFileName, const char * szDriver,
    if( ! szDriver || ! hb_rddInsertAreaNode( szDriver ) )
    {
       hb_rddSelectWorkAreaNumber( uiPrevArea );
-      hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
       return HB_FAILURE;
    }
    pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
@@ -752,7 +752,7 @@ HB_ERRCODE hb_rddCreateTableTemp( const char * szDriver,
    if( ! hb_rddInsertAreaNode( szDriver ) )
    {
       hb_rddSelectWorkAreaNumber( uiPrevArea );
-      hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
       return HB_FAILURE;
    }
    pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
@@ -1136,7 +1136,7 @@ HB_ERRCODE hb_rddTransRecords( AREAP pArea,
 
       if( ! pRddNode )
       {
-         hb_errRT_DBCMD( EG_ARG, EDBCMD_USE_BADPARAMETER, NULL, HB_ERR_FUNCNAME );
+         hb_errRT_DBCMD( EG_ARG, EDBCMD_USE_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
          return HB_FAILURE;
       }
 

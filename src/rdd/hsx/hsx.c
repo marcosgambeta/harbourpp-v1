@@ -1567,7 +1567,7 @@ static int hb_hsxIndex( const char * szFile, PHB_ITEM pExpr, int iKeySize,
 
    if( ! pArea )
    {
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, "HS_INDEX" );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, "HS_INDEX" );
       return HSX_NOTABLE;
    }
 
@@ -1629,7 +1629,7 @@ static int hb_hsxFilter( int iHandle, const char * pSeek, HB_SIZE nSeek,
 
    if( ! pArea )
    {
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, "HS_FILTER" );
+      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, "HS_FILTER" );
       return HSX_NOTABLE;
    }
 
@@ -1894,7 +1894,7 @@ HB_FUNC( HS_FILTER )
 
       if( ! pArea )
       {
-         hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, "HS_FILTER" );
+         hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, "HS_FILTER" );
          iResult = HSX_NOTABLE;
       }
       /* create empty workarea RM filter */

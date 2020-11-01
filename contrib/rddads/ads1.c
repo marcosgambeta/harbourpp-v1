@@ -1991,7 +1991,7 @@ static HB_ERRCODE adsCreateFields( ADSAREAP pArea, PHB_ITEM pStruct )
 
       if( errCode != HB_SUCCESS )
       {
-         hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, NULL, HB_ERR_FUNCNAME );
+         hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
          return errCode;
       }
    }
@@ -5803,7 +5803,7 @@ HB_FUNC( ADSGETRELKEYPOS )
    if( pArea )
       hb_retnd( adsGetRelPos( pArea, pArea->hOrdCurrent ) );
    else
-      hb_errRT_DBCMD( EG_NOTABLE, 2001, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, 2001, nullptr, HB_ERR_FUNCNAME );
 }
 
 HB_FUNC( ADSSETRELKEYPOS )
@@ -5813,7 +5813,7 @@ HB_FUNC( ADSSETRELKEYPOS )
    if( pArea )
       adsSetRelPos( pArea, pArea->hOrdCurrent, hb_parnd( 1 ) );
    else
-      hb_errRT_DBCMD( EG_NOTABLE, 2001, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, 2001, nullptr, HB_ERR_FUNCNAME );
 }
 
 HB_FUNC( ADSCUSTOMIZEAOF )
@@ -5869,5 +5869,5 @@ HB_FUNC( ADSCUSTOMIZEAOF )
       hb_retnl( u32RetVal );
    }
    else
-      hb_errRT_DBCMD( EG_NOTABLE, 2001, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD( EG_NOTABLE, 2001, nullptr, HB_ERR_FUNCNAME );
 }
