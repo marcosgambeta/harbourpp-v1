@@ -81,7 +81,7 @@ HB_FUNC( EVP_PKEY_FREE )
    if( key )
       EVP_PKEY_free( key );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( EVP_BYTESTOKEY )
@@ -107,5 +107,5 @@ HB_FUNC( EVP_BYTESTOKEY )
       hb_storc( ( char * ) iv, 7 );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

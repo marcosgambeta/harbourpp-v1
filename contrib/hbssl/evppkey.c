@@ -112,7 +112,7 @@ HB_FUNC( EVP_PKEY_SIZE )
          hb_retni( EVP_PKEY_size( pkey ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( EVP_PKEY_BITS )
@@ -125,7 +125,7 @@ HB_FUNC( EVP_PKEY_BITS )
          hb_retni( EVP_PKEY_bits( pkey ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( EVP_PKEY_ASSIGN )
@@ -139,7 +139,7 @@ HB_FUNC( EVP_PKEY_ASSIGN )
          hb_retni( EVP_PKEY_assign( pkey, hb_parni( 2 ), hb_openssl_strdup( hb_parcx( 3 ) ) ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( EVP_PKEY_ASSIGN_RSA )
@@ -154,9 +154,9 @@ HB_FUNC( EVP_PKEY_ASSIGN_RSA )
          hb_retni( EVP_PKEY_assign_RSA( pkey, key ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else
-   hb_errRT_BASE( EG_NOFUNC, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE( EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #endif
 }
 
@@ -172,9 +172,9 @@ HB_FUNC( EVP_PKEY_ASSIGN_DSA )
          hb_retni( EVP_PKEY_assign_DSA( pkey, key ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else
-   hb_errRT_BASE( EG_NOFUNC, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE( EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #endif
 }
 
@@ -190,9 +190,9 @@ HB_FUNC( EVP_PKEY_ASSIGN_DH )
          hb_retni( EVP_PKEY_assign_DH( pkey, key ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else
-   hb_errRT_BASE( EG_NOFUNC, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE( EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #endif
 }
 

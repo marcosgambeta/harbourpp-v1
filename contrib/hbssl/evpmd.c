@@ -210,7 +210,7 @@ HB_FUNC( EVP_GET_DIGESTBYNAME )
    if( HB_ISCHAR( 1 ) )
       hb_retni( hb_EVP_MD_ptr_to_id( EVP_get_digestbyname( hb_parc( 1 ) ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( EVP_GET_DIGESTBYNID )
@@ -218,7 +218,7 @@ HB_FUNC( EVP_GET_DIGESTBYNID )
    if( HB_ISNUM( 1 ) )
       hb_retni( hb_EVP_MD_ptr_to_id( EVP_get_digestbynid( hb_parni( 1 ) ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( EVP_MD_TYPE )
@@ -299,7 +299,7 @@ HB_FUNC( EVP_MD_CTX_RESET )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC_TRANSLATE( EVP_MD_CTX_INIT, EVP_MD_CTX_RESET )
@@ -315,7 +315,7 @@ HB_FUNC( EVP_MD_CTX_MD )
          hb_retni( hb_EVP_MD_ptr_to_id( EVP_MD_CTX_md( ctx ) ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( EVP_MD_CTX_COPY )
@@ -329,7 +329,7 @@ HB_FUNC( EVP_MD_CTX_COPY )
          hb_retni( EVP_MD_CTX_copy( ctx_out, ctx_in ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( EVP_MD_CTX_COPY_EX )
@@ -349,7 +349,7 @@ HB_FUNC( EVP_MD_CTX_COPY_EX )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( EVP_DIGESTINIT )
@@ -371,7 +371,7 @@ HB_FUNC( EVP_DIGESTINIT )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( EVP_DIGESTINIT_EX )
@@ -392,7 +392,7 @@ HB_FUNC( EVP_DIGESTINIT_EX )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( EVP_DIGESTUPDATE )
@@ -412,7 +412,7 @@ HB_FUNC( EVP_DIGESTUPDATE )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( EVP_DIGESTFINAL )
@@ -446,7 +446,7 @@ HB_FUNC( EVP_DIGESTFINAL )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( EVP_DIGESTFINAL_EX )
@@ -477,7 +477,7 @@ HB_FUNC( EVP_DIGESTFINAL_EX )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( EVP_SIGNINIT )
@@ -492,7 +492,7 @@ HB_FUNC( EVP_SIGNINIT )
          EVP_SignInit( ctx, md );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( EVP_SIGNINIT_EX )
@@ -513,7 +513,7 @@ HB_FUNC( EVP_SIGNINIT_EX )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( EVP_SIGNUPDATE )
@@ -533,7 +533,7 @@ HB_FUNC( EVP_SIGNUPDATE )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( EVP_SIGNFINAL )
@@ -562,7 +562,7 @@ HB_FUNC( EVP_SIGNFINAL )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( EVP_VERIFYINIT )
@@ -584,7 +584,7 @@ HB_FUNC( EVP_VERIFYINIT )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( EVP_VERIFYINIT_EX )
@@ -605,7 +605,7 @@ HB_FUNC( EVP_VERIFYINIT_EX )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( EVP_VERIFYUPDATE )
@@ -625,7 +625,7 @@ HB_FUNC( EVP_VERIFYUPDATE )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( EVP_VERIFYFINAL )
@@ -638,5 +638,5 @@ HB_FUNC( EVP_VERIFYFINAL )
          hb_retni( EVP_VerifyFinal( ctx, ( HB_SSL_CONST unsigned char * ) hb_parcx( 2 ), ( unsigned int ) hb_parclen( 2 ), hb_EVP_PKEY_par( 3 ) ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

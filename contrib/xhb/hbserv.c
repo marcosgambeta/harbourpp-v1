@@ -738,7 +738,7 @@ HB_FUNC( HB_STARTSERVICE )
    if( iCount > 2 || ( sp_hooks == NULL && iCount > 1 ) )
    {
       /* TODO: Right error code here */
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, "Service must be started before starting threads", NULL, 0 );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, "Service must be started before starting threads", nullptr, 0 );
       return;
    }
    #endif
@@ -847,7 +847,7 @@ HB_FUNC( HB_PUSHSIGNALHANDLER )
        ( ! HB_IS_POINTER( pFunc ) && ! HB_IS_STRING( pFunc ) && ! HB_IS_BLOCK( pFunc ) )
        )
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, "Wrong parameter count/type", NULL,
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, "Wrong parameter count/type", nullptr,
                             2, hb_param( 1, HB_IT_ANY ), hb_param( 2, HB_IT_ANY ) );
       return;
    }

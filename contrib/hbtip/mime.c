@@ -706,7 +706,7 @@ HB_FUNC( TIP_MIMETYPE )
          hb_retc_const( "unknown" );  /* FIXME: change to "application/unknown" */
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( TIP_FILENAMEMIMETYPE )
@@ -727,7 +727,7 @@ HB_FUNC( TIP_FILENAMEMIMETYPE )
          hb_retc_const( "unknown" );  /* FIXME: change to "application/unknown" */
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( TIP_FILEMIMETYPE )
@@ -777,5 +777,5 @@ HB_FUNC( TIP_FILEMIMETYPE )
          hb_retc_const( "unknown" );  /* FIXME: change to "application/unknown" */
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

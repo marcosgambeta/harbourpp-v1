@@ -199,7 +199,7 @@ HB_FUNC( SQL_SPRINTF )
 
    if( ! pItmFrm || ( cItmFrm = hb_itemGetCPtr( pItmFrm ) ) == NULL )
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, 1, hb_paramError( 1 ) );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError( 1 ) );
    }
    else if( ( ulItmFrm = ( HB_UINT ) hb_itemGetCLen( pItmFrm ) ) == 0 )
    {
@@ -662,9 +662,9 @@ HB_FUNC( SQL_SPRINTF )
          hb_xfree( cRes );
 
          if( iErrorPar > 1 )
-            hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, 2, hb_paramError( 1 ), hb_paramError( iErrorPar ) );
+            hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 2, hb_paramError( 1 ), hb_paramError( iErrorPar ) );
          else
-            hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, 1, hb_paramError( 1 ) );
+            hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError( 1 ) );
       }
       else
          hb_retclen_buffer( cRes, ulResPos );

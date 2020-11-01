@@ -131,6 +131,6 @@ HB_FUNC( HB_ZEBRA_DRAW )
       if( pDrawBlock )
          hb_retni( hb_zebra_draw_codeblock( pZebra, pDrawBlock, hb_parnd( 3 ), hb_parnd( 4 ), hb_parnd( 5 ), hb_parnd( 6 ), hb_parni( 7 ) ) );
       else
-         hb_errRT_BASE( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
 }

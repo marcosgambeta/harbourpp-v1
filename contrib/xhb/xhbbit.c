@@ -183,7 +183,7 @@ static void s_xhb_bitOper( int iOper )
       }
    }
 
-   hb_errRT_BASE_SubstR( EG_ARG, 1088, NULL,
+   hb_errRT_BASE_SubstR( EG_ARG, 1088, nullptr,
                          iOper == XHB_AND ? "&" : ( iOper == XHB_OR ? "|" : "^^" ),
                          2, pItem1, pItem2 );
 }

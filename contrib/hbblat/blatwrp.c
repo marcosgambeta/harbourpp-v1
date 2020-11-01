@@ -59,5 +59,5 @@ HB_FUNC( HB_BLATSEND )
    if( HB_ISCHAR( 1 ) )
       hb_retni( cSend( hb_parc( 1 ) ) );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

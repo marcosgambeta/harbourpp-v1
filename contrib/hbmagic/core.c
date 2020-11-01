@@ -87,7 +87,7 @@ HB_FUNC( MAGIC_ERROR )
    if( m )
       hb_retc( magic_error( m ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( MAGIC_ERRNO )
@@ -97,7 +97,7 @@ HB_FUNC( MAGIC_ERRNO )
    if( m )
       hb_retni( magic_errno( m ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( MAGIC_FILE )
@@ -107,7 +107,7 @@ HB_FUNC( MAGIC_FILE )
    if( m )
       hb_retc( magic_file( m, hb_parc( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( MAGIC_BUFFER )
@@ -117,7 +117,7 @@ HB_FUNC( MAGIC_BUFFER )
    if( m )
       hb_retc( magic_buffer( m, hb_parc( 2 ), hb_parclen( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( MAGIC_SETFLAGS )
@@ -127,7 +127,7 @@ HB_FUNC( MAGIC_SETFLAGS )
    if( m )
       hb_retni( magic_setflags( m, hb_parni( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( MAGIC_CHECK )
@@ -137,7 +137,7 @@ HB_FUNC( MAGIC_CHECK )
    if( m )
       hb_retni( magic_check( m, hb_parc( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( MAGIC_COMPILE )
@@ -147,7 +147,7 @@ HB_FUNC( MAGIC_COMPILE )
    if( m )
       hb_retni( magic_compile( m, hb_parc( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( MAGIC_LOAD )
@@ -157,5 +157,5 @@ HB_FUNC( MAGIC_LOAD )
    if( m )
       hb_retni( magic_load( m, hb_parc( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

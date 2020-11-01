@@ -311,7 +311,7 @@ HB_FUNC( ED_ADDTEXT )
    if( pEd )
       AddText( pEd, hb_parcx( 2 ) );
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Moves text from one location into another */
@@ -491,7 +491,7 @@ HB_FUNC( ED_INSTEXT )
       hb_xfree( adres );
    }
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Selects the editor as active - all next ED_*() calls will be send
@@ -659,7 +659,7 @@ HB_FUNC( ED_CONFIG )
       pEd->dir = _STABILIZE_DOWN;
    }
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Returns current text buffer */
@@ -695,7 +695,7 @@ HB_FUNC( ED_GETTEXT )
       hb_retc_buffer( buffer );
    }
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Returns given line of text and positions caret at the beginning of next line */
@@ -738,7 +738,7 @@ HB_FUNC( ED_GETLINE )
       pEd->next_line = Next( pEd, tmp );
    }
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Returns current line pointed by caret position and advances it to the beginning of next line */
@@ -763,7 +763,7 @@ HB_FUNC( ED_GETNEXT )
          hb_ret();
    }
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Resets text buffer */
@@ -787,7 +787,7 @@ HB_FUNC( ED_SETTEXT )
       AddText( pEd, hb_parcx( 2 ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Reads a text from the file */
@@ -830,7 +830,7 @@ HB_FUNC( ED_READTEXT )
       hb_retl( lSuccess );
    }
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Stabilize the editor
@@ -986,7 +986,7 @@ HB_FUNC( ED_STABILIZE )
       hb_retni( nRow );
    }
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Removes trailing spaces from the end of line */
@@ -1077,7 +1077,7 @@ HB_FUNC( ED_DOWN )
       hb_retl( pEd->fStable );
    }
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Moves the cursor to the previous line of text */
@@ -1146,7 +1146,7 @@ HB_FUNC( ED_UP )
       hb_retl( pEd->fStable );
    }
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Moves the cursor to the next page of text */
@@ -1218,7 +1218,7 @@ HB_FUNC( ED_PGDOWN )
       pEd->current_stabil = 0;
    }
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Moves the cursor to the previous page of text */
@@ -1283,7 +1283,7 @@ HB_FUNC( ED_PGUP )
       pEd->current_stabil = bt;
    }
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Move the cursor to the beginning of the text */
@@ -1318,7 +1318,7 @@ HB_FUNC( ED_TOP )
       pEd->first_col = pEd->cursor_col = 0;
    }
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Move the cursor to the last line of text */
@@ -1363,7 +1363,7 @@ HB_FUNC( ED_BOTTOM )
       pEd->stabil         = pEd->bottom - pEd->top + 1;
    }
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Go to the specified line number */
@@ -1412,7 +1412,7 @@ HB_FUNC( ED_GOTO )
    if( pEd )
       GoTo( pEd, hb_parns( 1 ) );
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Move the cursor to the previous character */
@@ -1444,7 +1444,7 @@ HB_FUNC( ED_LEFT )
    if( pEd )
       Left( pEd );
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Move the cursor to the next character */
@@ -1478,7 +1478,7 @@ HB_FUNC( ED_RIGHT )
    if( pEd )
       Right( pEd );
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Move the cursor to the beginning of line */
@@ -1510,7 +1510,7 @@ HB_FUNC( ED_HOME )
    if( pEd )
       Home( pEd );
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Move the cursor to the end of line */
@@ -1555,7 +1555,7 @@ HB_FUNC( ED_END )
    if( pEd )
       End( pEd );
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Format the current paragraph */
@@ -1725,7 +1725,7 @@ HB_FUNC( ED_DELCHAR )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Delete a character on the left side of the cursor */
@@ -1862,7 +1862,7 @@ HB_FUNC( ED_BSPACE )
    if( pEd )
       BackSpace( pEd, hb_parl( 2 ) /* fInsert */ );
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Move to the beginning of next non-empty line */
@@ -1942,7 +1942,7 @@ HB_FUNC( ED_NWORD )
    if( pEd )
       NextWord( pEd );
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Move the cursor to the previous word */
@@ -2025,7 +2025,7 @@ HB_FUNC( ED_PWORD )
    if( pEd )
       PreviousWord( pEd );
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 /* Format given line - returns it the line has changed */
 
@@ -2253,7 +2253,7 @@ HB_FUNC( ED_PUTCHAR )
                hb_parl( 3 ),              /* current INSERT state */
                ( char ) hb_parni( 2 ) );  /* character to paste */
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 #if 0
@@ -2282,7 +2282,7 @@ HB_FUNC( ED_TAB )
    if( pEd )
       Tab( pEd, hb_parl( 2 ) /* fInsert */ );
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 #endif
 
@@ -2343,7 +2343,7 @@ HB_FUNC( ED_DELLINE )
    if( pEd )
       DelLine( pEd );
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Delete the word on the right side of the cursor */
@@ -2409,7 +2409,7 @@ HB_FUNC( ED_DELWORD )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Insert the CRLF characters */
@@ -2512,7 +2512,7 @@ HB_FUNC( ED_RETURN )
    if( pEd )
       Return( pEd, hb_parl( 2 ) /* fInsert */ );
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Returns the current cursor row inside the editor's window */
@@ -2523,7 +2523,7 @@ HB_FUNC( ED_WINROW )
    if( pEd )
       hb_retni( pEd->cursor_row );
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Returns the line number where the cursor is positioned */
@@ -2534,7 +2534,7 @@ HB_FUNC( ED_ROW )
    if( pEd )
       hb_retns( pEd->active );
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Return the current cursor column inside the editor's window */
@@ -2545,7 +2545,7 @@ HB_FUNC( ED_WINCOL )
    if( pEd )
       hb_retns( pEd->cursor_col );
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Returns the current cursor position inside the line */
@@ -2556,7 +2556,7 @@ HB_FUNC( ED_COL )
    if( pEd )
       hb_retns( pEd->cursor_col + pEd->first_col + 1 );
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Returns the total number of lines */
@@ -2567,7 +2567,7 @@ HB_FUNC( ED_MAXLINE )
    if( pEd )
       hb_retns( pEd->line_number );
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Counts the total number of lines in passed editor */
@@ -2578,7 +2578,7 @@ HB_FUNC( ED_LCOUNT )
    if( pEd )
       hb_retns( pEd->line_number );
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Returns if the editor is correctly displayed */
@@ -2589,7 +2589,7 @@ HB_FUNC( ED_STABLE )
    if( pEd )
       hb_retl( pEd->fStable );
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Returns the number of bytes stored in the text buffer */
@@ -2600,5 +2600,5 @@ HB_FUNC( ED_LENGTH )
    if( pEd )
       hb_retns( pEd->text_length );
    else
-      hb_errRT_BASE( EG_ARG, 3001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

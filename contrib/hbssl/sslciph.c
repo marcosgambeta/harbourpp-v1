@@ -57,7 +57,7 @@ HB_FUNC( SSL_CIPHER_DESCRIPTION )
       hb_retc( hb_parptr( 1 ) ? SSL_CIPHER_description( ( SSL_CIPHER * ) hb_parptr( 1 ), buffer, sizeof( buffer ) ) : NULL );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_CIPHER_GET_BITS )
@@ -71,7 +71,7 @@ HB_FUNC( SSL_CIPHER_GET_BITS )
       hb_storni( alg_bits, 2 );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_CIPHER_GET_NAME )
@@ -79,7 +79,7 @@ HB_FUNC( SSL_CIPHER_GET_NAME )
    if( HB_ISPOINTER( 1 ) )
       hb_retc( hb_parptr( 1 ) ? SSL_CIPHER_get_name( ( SSL_CIPHER * ) hb_parptr( 1 ) ) : NULL );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_CIPHER_GET_VERSION )
@@ -87,5 +87,5 @@ HB_FUNC( SSL_CIPHER_GET_VERSION )
    if( HB_ISPOINTER( 1 ) )
       hb_retc( hb_parptr( 1 ) ? SSL_CIPHER_get_version( ( SSL_CIPHER * ) hb_parptr( 1 ) ) : NULL );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

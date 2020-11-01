@@ -600,7 +600,7 @@ static void s_sslSocketNew( HB_BOOL fServer )
       else if( HB_ISHASH( 2 ) )
          pSock = hb_sockexNew( sd, s_sockFilter.pszName, hb_param( 2, HB_IT_ANY ) );
       else
-         hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 
       if( pSock )
       {

@@ -264,7 +264,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
    PGconn * pConn = hb_PGconn_par( 1 );
 
    if( pConn == NULL )
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    else if( pArea == NULL )
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME );
    else

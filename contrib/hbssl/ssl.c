@@ -272,7 +272,7 @@ HB_FUNC( SSL_NEW )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_DUP )
@@ -293,7 +293,7 @@ HB_FUNC( SSL_DUP )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_ACCEPT )
@@ -306,7 +306,7 @@ HB_FUNC( SSL_ACCEPT )
          hb_retni( SSL_accept( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_CLEAR )
@@ -319,7 +319,7 @@ HB_FUNC( SSL_CLEAR )
          SSL_clear( ssl );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
@@ -335,7 +335,7 @@ HB_FUNC( SSL_STATE )
          hb_retni( SSL_state( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 #endif
 
@@ -349,7 +349,7 @@ HB_FUNC( SSL_PENDING )
          hb_retni( SSL_pending( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_SET_BIO )
@@ -365,7 +365,7 @@ HB_FUNC( SSL_SET_BIO )
          SSL_set_bio( ssl, rbio, wbio );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_RBIO )
@@ -378,7 +378,7 @@ HB_FUNC( SSL_GET_RBIO )
          hb_retptr( SSL_get_rbio( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_WBIO )
@@ -391,7 +391,7 @@ HB_FUNC( SSL_GET_WBIO )
          hb_retptr( SSL_get_wbio( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_CONNECT )
@@ -404,7 +404,7 @@ HB_FUNC( SSL_CONNECT )
          hb_retni( SSL_connect( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_SHUTDOWN )
@@ -417,7 +417,7 @@ HB_FUNC( SSL_SHUTDOWN )
          hb_retni( SSL_shutdown( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_VERSION )
@@ -430,7 +430,7 @@ HB_FUNC( SSL_VERSION )
          hb_retni( SSL_version( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_VERSION )
@@ -443,7 +443,7 @@ HB_FUNC( SSL_GET_VERSION )
          hb_retc( SSL_get_version( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_CIPHER )
@@ -456,7 +456,7 @@ HB_FUNC( SSL_GET_CIPHER )
          hb_retc( SSL_get_cipher( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_DO_HANDSHAKE )
@@ -469,7 +469,7 @@ HB_FUNC( SSL_DO_HANDSHAKE )
          hb_retni( SSL_do_handshake( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_RENEGOTIATE )
@@ -482,7 +482,7 @@ HB_FUNC( SSL_RENEGOTIATE )
          hb_retni( SSL_renegotiate( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_TOTAL_RENEGOTIATIONS )
@@ -495,7 +495,7 @@ HB_FUNC( SSL_TOTAL_RENEGOTIATIONS )
          hb_retnl( SSL_total_renegotiations( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_SET_FD )
@@ -510,7 +510,7 @@ HB_FUNC( SSL_SET_FD )
          hb_retni( SSL_set_fd( ssl, iSD ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_SET_RFD )
@@ -525,7 +525,7 @@ HB_FUNC( SSL_SET_RFD )
          hb_retni( SSL_set_rfd( ssl, iSD ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_SET_WFD )
@@ -540,7 +540,7 @@ HB_FUNC( SSL_SET_WFD )
          hb_retni( SSL_set_wfd( ssl, iSD ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_WANT )
@@ -553,7 +553,7 @@ HB_FUNC( SSL_WANT )
          hb_retni( SSL_want( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_WANT_NOTHING )
@@ -566,7 +566,7 @@ HB_FUNC( SSL_WANT_NOTHING )
          hb_retni( SSL_want_nothing( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_WANT_X509_LOOKUP )
@@ -579,7 +579,7 @@ HB_FUNC( SSL_WANT_X509_LOOKUP )
          hb_retni( SSL_want_x509_lookup( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_WANT_READ )
@@ -592,7 +592,7 @@ HB_FUNC( SSL_WANT_READ )
          hb_retni( SSL_want_read( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_READ )
@@ -626,7 +626,7 @@ HB_FUNC( SSL_READ )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_PEEK )
@@ -660,7 +660,7 @@ HB_FUNC( SSL_PEEK )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_WANT_WRITE )
@@ -673,7 +673,7 @@ HB_FUNC( SSL_WANT_WRITE )
          hb_retni( SSL_want_write( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_WRITE )
@@ -698,7 +698,7 @@ HB_FUNC( SSL_WRITE )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_SET_SSL_METHOD )
@@ -715,7 +715,7 @@ HB_FUNC( SSL_SET_SSL_METHOD )
 #endif
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_SSL_METHOD )
@@ -759,7 +759,7 @@ HB_FUNC( SSL_GET_SSL_METHOD )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_CURRENT_CIPHER )
@@ -772,7 +772,7 @@ HB_FUNC( SSL_GET_CURRENT_CIPHER )
          hb_retptr( HB_UNCONST( SSL_get_current_cipher( ssl ) ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_CIPHER_BITS )
@@ -791,7 +791,7 @@ HB_FUNC( SSL_GET_CIPHER_BITS )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_CIPHER_LIST )
@@ -804,7 +804,7 @@ HB_FUNC( SSL_GET_CIPHER_LIST )
          hb_retc( SSL_get_cipher_list( ssl, hb_parni( 2 ) ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_SET_CIPHER_LIST )
@@ -817,7 +817,7 @@ HB_FUNC( SSL_SET_CIPHER_LIST )
          hb_retni( SSL_set_cipher_list( ssl, hb_parcx( 2 ) ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_CIPHER_NAME )
@@ -830,7 +830,7 @@ HB_FUNC( SSL_GET_CIPHER_NAME )
          hb_retc( SSL_get_cipher_name( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_CIPHER_VERSION )
@@ -843,7 +843,7 @@ HB_FUNC( SSL_GET_CIPHER_VERSION )
          hb_retc( SSL_get_cipher_version( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_COPY_SESSION_ID )
@@ -857,7 +857,7 @@ HB_FUNC( SSL_COPY_SESSION_ID )
          SSL_copy_session_id( ssl1, ssl2 );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_SHARED_CIPHERS )
@@ -876,7 +876,7 @@ HB_FUNC( SSL_GET_SHARED_CIPHERS )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_SET_TLSEXT_HOST_NAME )
@@ -891,7 +891,7 @@ HB_FUNC( SSL_SET_TLSEXT_HOST_NAME )
 #endif
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_ALERT_DESC_STRING )
@@ -924,7 +924,7 @@ HB_FUNC( SSL_RSTATE_STRING )
          hb_retc( SSL_rstate_string( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_RSTATE_STRING_LONG )
@@ -937,7 +937,7 @@ HB_FUNC( SSL_RSTATE_STRING_LONG )
          hb_retc( SSL_rstate_string( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_STATE_STRING )
@@ -950,7 +950,7 @@ HB_FUNC( SSL_STATE_STRING )
          hb_retc( SSL_rstate_string( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_STATE_STRING_LONG )
@@ -963,7 +963,7 @@ HB_FUNC( SSL_STATE_STRING_LONG )
          hb_retc( SSL_rstate_string( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 #if 0
@@ -978,7 +978,7 @@ HB_FUNC( SSL_GET_PSK_IDENTITY_HINT )
          hb_retc( SSL_get_psk_identity_hint( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_PSK_IDENTITY )
@@ -991,7 +991,7 @@ HB_FUNC( SSL_GET_PSK_IDENTITY )
          hb_retc( SSL_get_psk_identity( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 #endif
@@ -1006,7 +1006,7 @@ HB_FUNC( SSL_CHECK_PRIVATE_KEY )
          hb_retni( SSL_check_private_key( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_ERROR )
@@ -1019,7 +1019,7 @@ HB_FUNC( SSL_GET_ERROR )
          hb_retni( SSL_get_error( ssl, hb_parni( 2 ) ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_FD )
@@ -1032,7 +1032,7 @@ HB_FUNC( SSL_GET_FD )
          hb_retni( SSL_get_fd( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_RFD )
@@ -1045,7 +1045,7 @@ HB_FUNC( SSL_GET_RFD )
          hb_retni( SSL_get_rfd( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_WFD )
@@ -1058,7 +1058,7 @@ HB_FUNC( SSL_GET_WFD )
          hb_retni( SSL_get_wfd( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_QUIET_SHUTDOWN )
@@ -1071,7 +1071,7 @@ HB_FUNC( SSL_GET_QUIET_SHUTDOWN )
          hb_retni( SSL_get_quiet_shutdown( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_SHUTDOWN )
@@ -1084,7 +1084,7 @@ HB_FUNC( SSL_GET_SHUTDOWN )
          hb_retni( SSL_get_shutdown( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_READ_AHEAD )
@@ -1101,7 +1101,7 @@ HB_FUNC( SSL_GET_READ_AHEAD )
 #endif
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_STATE )
@@ -1114,7 +1114,7 @@ HB_FUNC( SSL_GET_STATE )
          hb_retni( SSL_get_state( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_VERIFY_MODE )
@@ -1127,7 +1127,7 @@ HB_FUNC( SSL_GET_VERIFY_MODE )
          hb_retni( SSL_get_verify_mode( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_IN_ACCEPT_INIT )
@@ -1140,7 +1140,7 @@ HB_FUNC( SSL_IN_ACCEPT_INIT )
          hb_retni( SSL_in_accept_init( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_IN_BEFORE )
@@ -1153,7 +1153,7 @@ HB_FUNC( SSL_IN_BEFORE )
          hb_retni( SSL_in_before( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_IN_CONNECT_INIT )
@@ -1166,7 +1166,7 @@ HB_FUNC( SSL_IN_CONNECT_INIT )
          hb_retni( SSL_in_connect_init( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_IN_INIT )
@@ -1179,7 +1179,7 @@ HB_FUNC( SSL_IN_INIT )
          hb_retni( SSL_in_init( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_IS_INIT_FINISHED )
@@ -1192,7 +1192,7 @@ HB_FUNC( SSL_IS_INIT_FINISHED )
          hb_retni( SSL_is_init_finished( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_NUM_RENEGOTIATIONS )
@@ -1205,7 +1205,7 @@ HB_FUNC( SSL_NUM_RENEGOTIATIONS )
          hb_retnl( SSL_num_renegotiations( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_CLEAR_NUM_RENEGOTIATIONS )
@@ -1218,7 +1218,7 @@ HB_FUNC( SSL_CLEAR_NUM_RENEGOTIATIONS )
          hb_retnl( SSL_clear_num_renegotiations( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_DEFAULT_TIMEOUT )
@@ -1231,7 +1231,7 @@ HB_FUNC( SSL_GET_DEFAULT_TIMEOUT )
          hb_retnl( SSL_get_default_timeout( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_VERIFY_RESULT )
@@ -1244,7 +1244,7 @@ HB_FUNC( SSL_GET_VERIFY_RESULT )
          hb_retnl( SSL_get_verify_result( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_SESSION_REUSED )
@@ -1257,7 +1257,7 @@ HB_FUNC( SSL_SESSION_REUSED )
          hb_retnl( SSL_session_reused( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_SET_ACCEPT_STATE )
@@ -1270,7 +1270,7 @@ HB_FUNC( SSL_SET_ACCEPT_STATE )
          SSL_set_accept_state( ssl );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_SET_CONNECT_STATE )
@@ -1283,7 +1283,7 @@ HB_FUNC( SSL_SET_CONNECT_STATE )
          SSL_set_connect_state( ssl );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_OPTIONS )
@@ -1296,7 +1296,7 @@ HB_FUNC( SSL_GET_OPTIONS )
          hb_retnl( SSL_get_options( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_SET_OPTIONS )
@@ -1309,7 +1309,7 @@ HB_FUNC( SSL_SET_OPTIONS )
          SSL_set_options( ssl, ( unsigned long ) hb_parnl( 2 ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_SET_VERIFY )
@@ -1322,7 +1322,7 @@ HB_FUNC( SSL_SET_VERIFY )
          SSL_set_verify( ssl, hb_parni( 2 ), NULL );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_SET_QUIET_SHUTDOWN )
@@ -1335,7 +1335,7 @@ HB_FUNC( SSL_SET_QUIET_SHUTDOWN )
          SSL_set_quiet_shutdown( ssl, hb_parni( 2 ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_SET_READ_AHEAD )
@@ -1348,7 +1348,7 @@ HB_FUNC( SSL_SET_READ_AHEAD )
          SSL_set_read_ahead( ssl, hb_parni( 2 ) /* yes */ );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_SET_SHUTDOWN )
@@ -1361,7 +1361,7 @@ HB_FUNC( SSL_SET_SHUTDOWN )
          SSL_set_shutdown( ssl, hb_parni( 2 ) /* mode */ );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_SET_VERIFY_RESULT )
@@ -1374,7 +1374,7 @@ HB_FUNC( SSL_SET_VERIFY_RESULT )
          SSL_set_verify_result( ssl, hb_parnl( 2 ) /* arg */ );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_SET_MODE )
@@ -1387,7 +1387,7 @@ HB_FUNC( SSL_SET_MODE )
          SSL_set_mode( ssl, hb_parnl( 2 ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_MODE )
@@ -1400,7 +1400,7 @@ HB_FUNC( SSL_GET_MODE )
          hb_retnl( SSL_get_mode( ssl ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_SET_MTU )
@@ -1415,7 +1415,7 @@ HB_FUNC( SSL_SET_MTU )
 #endif
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_CERTIFICATE )
@@ -1428,7 +1428,7 @@ HB_FUNC( SSL_GET_CERTIFICATE )
          hb_X509_ret( SSL_get_certificate( ssl ), HB_FALSE );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_PEER_CERTIFICATE )
@@ -1441,7 +1441,7 @@ HB_FUNC( SSL_GET_PEER_CERTIFICATE )
          hb_X509_ret( SSL_get_peer_certificate( ssl ), HB_TRUE );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_USE_CERTIFICATE )
@@ -1455,7 +1455,7 @@ HB_FUNC( SSL_USE_CERTIFICATE )
          hb_retni( SSL_use_certificate( ssl, x509 ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_ADD_CLIENT_CA )
@@ -1469,7 +1469,7 @@ HB_FUNC( SSL_ADD_CLIENT_CA )
          hb_retni( SSL_add_client_CA( ssl, x509 ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_USE_CERTIFICATE_FILE )
@@ -1482,7 +1482,7 @@ HB_FUNC( SSL_USE_CERTIFICATE_FILE )
          hb_retni( SSL_use_certificate_file( ssl, hb_parc( 2 ), hb_parni( 3 ) ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_USE_PRIVATEKEY_FILE )
@@ -1495,7 +1495,7 @@ HB_FUNC( SSL_USE_PRIVATEKEY_FILE )
          hb_retni( SSL_use_PrivateKey_file( ssl, hb_parc( 2 ), hb_parni( 3 ) ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_USE_RSAPRIVATEKEY_FILE )
@@ -1508,7 +1508,7 @@ HB_FUNC( SSL_USE_RSAPRIVATEKEY_FILE )
          hb_retni( SSL_use_RSAPrivateKey_file( ssl, hb_parc( 2 ), hb_parni( 3 ) ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_CIPHERS )
@@ -1537,7 +1537,7 @@ HB_FUNC( SSL_GET_CIPHERS )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_GET_CLIENT_CA_LIST )
@@ -1566,7 +1566,7 @@ HB_FUNC( SSL_GET_CLIENT_CA_LIST )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_LOAD_CLIENT_CA_FILE )
@@ -1590,7 +1590,7 @@ HB_FUNC( SSL_LOAD_CLIENT_CA_FILE )
          hb_reta( 0 );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_USE_RSAPRIVATEKEY_ASN1 )
@@ -1611,7 +1611,7 @@ HB_FUNC( SSL_USE_RSAPRIVATEKEY_ASN1 )
 #endif
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_USE_PRIVATEKEY_ASN1 )
@@ -1624,7 +1624,7 @@ HB_FUNC( SSL_USE_PRIVATEKEY_ASN1 )
          hb_retni( SSL_use_PrivateKey_ASN1( hb_parni( 1 ), ssl, ( HB_SSL_CONST unsigned char * ) hb_parc( 3 ), ( int ) hb_parclen( 3 ) ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_USE_CERTIFICATE_ASN1 )
@@ -1637,7 +1637,7 @@ HB_FUNC( SSL_USE_CERTIFICATE_ASN1 )
          hb_retni( SSL_use_certificate_ASN1( ssl, ( HB_SSL_CONST unsigned char * ) hb_parc( 2 ), ( int ) hb_parclen( 2 ) ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SSL_USE_PRIVATEKEY )
@@ -1653,7 +1653,7 @@ HB_FUNC( SSL_USE_PRIVATEKEY )
          hb_retni( SSL_use_PrivateKey( ssl, hb_EVP_PKEY_par( 2 ) ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Callback */
@@ -1709,7 +1709,7 @@ HB_FUNC( SSL_SET_MSG_CALLBACK )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 #if 0

@@ -213,7 +213,7 @@ HB_FUNC( BIO_NEW )
    if( hb_BIO_METHOD_is( 1 ) )
       hb_BIO_ret( BIO_new( hb_BIO_METHOD_par( 1 ) ), NULL );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_SET )
@@ -228,7 +228,7 @@ HB_FUNC( BIO_SET )
       hb_retni( 0 );
 #endif
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_CLEAR_FLAGS )
@@ -238,7 +238,7 @@ HB_FUNC( BIO_CLEAR_FLAGS )
    if( bio )
       BIO_clear_flags( bio, hb_parni( 2 ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_SET_FLAGS )
@@ -248,7 +248,7 @@ HB_FUNC( BIO_SET_FLAGS )
    if( bio )
       BIO_set_flags( bio, hb_parni( 2 ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_GET_FLAGS )
@@ -258,7 +258,7 @@ HB_FUNC( BIO_GET_FLAGS )
    if( bio )
       hb_retni( BIO_get_flags( bio ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_TEST_FLAGS )
@@ -272,7 +272,7 @@ HB_FUNC( BIO_TEST_FLAGS )
       hb_retni( 0 );
 #endif
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_SET_FD )
@@ -282,7 +282,7 @@ HB_FUNC( BIO_SET_FD )
    if( bio )
       hb_retni( BIO_set_fd( bio, hb_parnl( 2 ), hb_parnidef( 3, BIO_NOCLOSE ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_GET_FD )
@@ -292,7 +292,7 @@ HB_FUNC( BIO_GET_FD )
    if( bio )
       hb_retnl( BIO_get_fd( bio, NULL ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_GET_RETRY_REASON )
@@ -302,7 +302,7 @@ HB_FUNC( BIO_GET_RETRY_REASON )
    if( bio )
       hb_retni( BIO_get_retry_reason( bio ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_SET_RETRY_SPECIAL )
@@ -312,7 +312,7 @@ HB_FUNC( BIO_SET_RETRY_SPECIAL )
    if( bio )
       BIO_set_retry_special( bio );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_SET_RETRY_READ )
@@ -322,7 +322,7 @@ HB_FUNC( BIO_SET_RETRY_READ )
    if( bio )
       BIO_set_retry_read( bio );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_SET_RETRY_WRITE )
@@ -332,7 +332,7 @@ HB_FUNC( BIO_SET_RETRY_WRITE )
    if( bio )
       BIO_set_retry_write( bio );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_SHOULD_READ )
@@ -342,7 +342,7 @@ HB_FUNC( BIO_SHOULD_READ )
    if( bio )
       hb_retni( BIO_should_read( bio ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_SHOULD_WRITE )
@@ -352,7 +352,7 @@ HB_FUNC( BIO_SHOULD_WRITE )
    if( bio )
       hb_retni( BIO_should_write( bio ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_SHOULD_IO_SPECIAL )
@@ -362,7 +362,7 @@ HB_FUNC( BIO_SHOULD_IO_SPECIAL )
    if( bio )
       hb_retni( BIO_should_io_special( bio ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_RETRY_TYPE )
@@ -372,7 +372,7 @@ HB_FUNC( BIO_RETRY_TYPE )
    if( bio )
       hb_retni( BIO_retry_type( bio ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_SHOULD_RETRY )
@@ -382,7 +382,7 @@ HB_FUNC( BIO_SHOULD_RETRY )
    if( bio )
       hb_retni( BIO_should_retry( bio ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_CTRL_PENDING )
@@ -392,7 +392,7 @@ HB_FUNC( BIO_CTRL_PENDING )
    if( bio )
       hb_retnint( BIO_ctrl_pending( bio ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_CTRL_WPENDING )
@@ -402,7 +402,7 @@ HB_FUNC( BIO_CTRL_WPENDING )
    if( bio )
       hb_retnint( BIO_ctrl_wpending( bio ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_FLUSH )
@@ -412,7 +412,7 @@ HB_FUNC( BIO_FLUSH )
    if( bio )
       hb_retni( BIO_flush( bio ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_SEEK )
@@ -422,7 +422,7 @@ HB_FUNC( BIO_SEEK )
    if( bio )
       hb_retnl( BIO_seek( bio, hb_parnl( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_TELL )
@@ -432,7 +432,7 @@ HB_FUNC( BIO_TELL )
    if( bio )
       hb_retnl( BIO_tell( bio ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_RESET )
@@ -442,7 +442,7 @@ HB_FUNC( BIO_RESET )
    if( bio )
       hb_retni( BIO_reset( bio ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_EOF )
@@ -452,7 +452,7 @@ HB_FUNC( BIO_EOF )
    if( bio )
       hb_retni( BIO_eof( bio ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_SET_CLOSE )
@@ -462,7 +462,7 @@ HB_FUNC( BIO_SET_CLOSE )
    if( bio )
       hb_retni( BIO_set_close( bio, hb_parnidef( 2, BIO_NOCLOSE ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_GET_CLOSE )
@@ -472,7 +472,7 @@ HB_FUNC( BIO_GET_CLOSE )
    if( bio )
       hb_retni( BIO_get_close( bio ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_NEW_SOCKET )
@@ -480,7 +480,7 @@ HB_FUNC( BIO_NEW_SOCKET )
    if( HB_ISNUM( 1 ) )
       hb_BIO_ret( BIO_new_socket( hb_parni( 1 ), hb_parnidef( 2, BIO_NOCLOSE ) ), NULL );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_NEW_DGRAM )
@@ -489,9 +489,9 @@ HB_FUNC( BIO_NEW_DGRAM )
    if( HB_ISNUM( 1 ) )
       hb_BIO_ret( BIO_new_dgram( hb_parni( 1 ), hb_parnidef( 2, BIO_NOCLOSE ) ), NULL );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else
-   hb_errRT_BASE( EG_NOFUNC, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE( EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #endif
 }
 
@@ -500,7 +500,7 @@ HB_FUNC( BIO_NEW_FD )
    if( HB_ISNUM( 1 ) )
       hb_BIO_ret( BIO_new_fd( hb_parnl( 1 ), hb_parnidef( 2, BIO_NOCLOSE ) ), NULL );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_NEW_FILE )
@@ -508,7 +508,7 @@ HB_FUNC( BIO_NEW_FILE )
    if( HB_ISCHAR( 1 ) )
       hb_BIO_ret( BIO_new_file( hb_parc( 1 ), hb_parcx( 2 ) ), NULL );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_NEW_MEM_BUF )
@@ -524,7 +524,7 @@ HB_FUNC( BIO_NEW_MEM_BUF )
       hb_BIO_ret( BIO_new_mem_buf( HB_UNCONST( pszBuffer ), ( int ) nLen ), hStrRef );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_READ )
@@ -551,7 +551,7 @@ HB_FUNC( BIO_READ )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_GETS )
@@ -578,7 +578,7 @@ HB_FUNC( BIO_GETS )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_WRITE )
@@ -599,7 +599,7 @@ HB_FUNC( BIO_WRITE )
       hb_retni( BIO_write( bio, hb_parcx( 2 ), size ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_PUTS )
@@ -609,7 +609,7 @@ HB_FUNC( BIO_PUTS )
    if( bio )
       hb_retni( BIO_puts( bio, hb_parcx( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_FREE )
@@ -623,7 +623,7 @@ HB_FUNC( BIO_FREE )
       hb_retni( bio ? BIO_free( bio ) : 0 );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC_TRANSLATE( BIO_VFREE, BIO_FREE )
@@ -642,7 +642,7 @@ HB_FUNC( BIO_NEW_CONNECT )
       hb_BIO_ret( BIO_new_connect( ( char * ) HB_UNCONST( hb_parc( 1 ) ) ), NULL );
 #endif
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_NEW_ACCEPT )
@@ -656,7 +656,7 @@ HB_FUNC( BIO_NEW_ACCEPT )
       hb_BIO_ret( BIO_new_accept( ( char * ) HB_UNCONST( hb_parc( 1 ) ) ), NULL );
 #endif
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_SET_CONN_HOSTNAME )
@@ -666,7 +666,7 @@ HB_FUNC( BIO_SET_CONN_HOSTNAME )
    if( bio && HB_ISCHAR( 2 ) )
       hb_retnl( BIO_set_conn_hostname( bio, HB_UNCONST( hb_parc( 2 ) ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_SET_CONN_PORT )
@@ -676,7 +676,7 @@ HB_FUNC( BIO_SET_CONN_PORT )
    if( bio && HB_ISCHAR( 2 ) )
       hb_retnl( BIO_set_conn_port( bio, HB_UNCONST( hb_parc( 2 ) ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_SET_CONN_INT_PORT )
@@ -689,7 +689,7 @@ HB_FUNC( BIO_SET_CONN_INT_PORT )
       hb_retnl( BIO_set_conn_port( bio, &port ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_SET_CONN_IP )
@@ -705,11 +705,11 @@ HB_FUNC( BIO_SET_CONN_IP )
       if( hb_parclen( 2 ) == 4 )
          hb_retnl( BIO_set_conn_ip( bio, HB_UNCONST( hb_parc( 2 ) ) ) );
       else
-         hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #endif
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_GET_CONN_HOSTNAME )
@@ -719,7 +719,7 @@ HB_FUNC( BIO_GET_CONN_HOSTNAME )
    if( bio )
       hb_retc( BIO_get_conn_hostname( bio ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_GET_CONN_PORT )
@@ -729,7 +729,7 @@ HB_FUNC( BIO_GET_CONN_PORT )
    if( bio )
       hb_retc( BIO_get_conn_port( bio ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_GET_CONN_IP )
@@ -748,7 +748,7 @@ HB_FUNC( BIO_GET_CONN_IP )
 #endif
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_GET_CONN_INT_PORT )
@@ -770,9 +770,9 @@ HB_FUNC( BIO_GET_CONN_INT_PORT )
 #endif
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else
-   hb_errRT_BASE( EG_UNSUPPORTED, 2001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE( EG_UNSUPPORTED, 2001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #endif
 }
 
@@ -783,7 +783,7 @@ HB_FUNC( BIO_SET_NBIO )
    if( bio )
       hb_retnl( BIO_set_nbio( bio, hb_parni( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( BIO_DO_CONNECT )
@@ -793,7 +793,7 @@ HB_FUNC( BIO_DO_CONNECT )
    if( bio )
       hb_retni( BIO_do_connect( bio ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( ERR_LOAD_BIO_STRINGS )

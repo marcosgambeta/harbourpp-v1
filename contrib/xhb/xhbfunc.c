@@ -72,7 +72,7 @@ HB_FUNC( HB_POINTER2STRING )
    else if( HB_IS_LONG( pPointer ) && pLen )
       hb_retclen_const( ( char * ) hb_itemGetNL( pPointer ), hb_itemGetNS( pLen ) );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1099, NULL, HB_ERR_FUNCNAME, 2, hb_paramError( 1 ), hb_paramError( 2 ) );
+      hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, 2, hb_paramError( 1 ), hb_paramError( 2 ) );
 }
 
 HB_FUNC( HB_STRING2POINTER )
@@ -82,7 +82,7 @@ HB_FUNC( HB_STRING2POINTER )
    if( pString )
       hb_retptr( ( void * ) hb_itemGetCPtr( pString ) );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1099, NULL, HB_ERR_FUNCNAME, 1, hb_paramError( 1 ) );
+      hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError( 1 ) );
 }
 
 #endif
@@ -267,7 +267,7 @@ HB_FUNC( HB_EXEC )
          hb_vmDo( ( HB_USHORT ) iParams );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1099, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC_EXTERN( HB_USERNAME );

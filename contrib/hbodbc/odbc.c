@@ -411,7 +411,7 @@ HB_FUNC( SQLALLOCCONNECT )  /* hEnv, @hDbc --> nRetCode */
       hb_SQLHDBC_stor( hb_param( 1, HB_IT_ANY ), hDbc, 2 );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SQLDRIVERCONNECT )  /* hDbc, @cConnectString --> nRetCode */
@@ -445,7 +445,7 @@ HB_FUNC( SQLDRIVERCONNECT )  /* hDbc, @cConnectString --> nRetCode */
       hb_retni( ret );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SQLCONNECT )  /* hDbc, cDSN, cUseName, cPassword --> nRetCode */
@@ -481,7 +481,7 @@ HB_FUNC( SQLCONNECT )  /* hDbc, cDSN, cUseName, cPassword --> nRetCode */
       hb_retni( ret );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SQLDISCONNECT )  /* hDbc --> nRetCode */
@@ -498,7 +498,7 @@ HB_FUNC( SQLDISCONNECT )  /* hDbc --> nRetCode */
       hb_retni( result );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 #if defined( HB_LEGACY_LEVEL4 )
@@ -534,7 +534,7 @@ HB_FUNC( SQLALLOCSTMT )  /* hDbc, @hStmt --> nRetCode */
       hb_SQLHSTMT_stor( hb_param( 1, HB_IT_ANY ), hStmt, 2 );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SQLEXECDIRECT )  /* hStmt, cStatement --> nRetCode */
@@ -553,7 +553,7 @@ HB_FUNC( SQLEXECDIRECT )  /* hStmt, cStatement --> nRetCode */
       hb_strfree( hStatement );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SQLFETCH )  /* hStmt --> nRetCode */
@@ -563,7 +563,7 @@ HB_FUNC( SQLFETCH )  /* hStmt --> nRetCode */
    if( hStmt )
       hb_retni( SQLFetch( hStmt ) );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SQLFETCHSCROLL )
@@ -581,7 +581,7 @@ HB_FUNC( SQLFETCHSCROLL )
 #endif
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode */
@@ -772,7 +772,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
       hb_retni( res );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SQLNUMRESULTCOLS )  /* hStmt, @nColCount --> nRetCode */
@@ -788,7 +788,7 @@ HB_FUNC( SQLNUMRESULTCOLS )  /* hStmt, @nColCount --> nRetCode */
       hb_stornl( ( long ) iCols, 2 );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SQLDESCRIBECOL )  /* hStmt, nCol, @cName, nLen, @nBufferLen, @nDataType, @nColSize, @nDec, @nNull --> nRetCode */
@@ -831,7 +831,7 @@ HB_FUNC( SQLDESCRIBECOL )  /* hStmt, nCol, @cName, nLen, @nBufferLen, @nDataType
       hb_xfree( buffer );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SQLCOLATTRIBUTE )  /* hStmt, nCol, nField, @cName, nLen, @nBufferLen, @nAttribute --> nRetCode */
@@ -881,7 +881,7 @@ HB_FUNC( SQLCOLATTRIBUTE )  /* hStmt, nCol, nField, @cName, nLen, @nBufferLen, @
       hb_xfree( buffer );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SQLERROR )  /* hEnv, hDbc, hStmt, @cErrorClass, @nType, @cErrorMsg */
@@ -915,7 +915,7 @@ HB_FUNC( SQLERROR )  /* hEnv, hDbc, hStmt, @cErrorClass, @nType, @cErrorMsg */
       O_HB_STORSTRLEN( ( O_HB_CHAR * ) szErrorMsg, iLen, 6 );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SQLGETDIAGREC )  /* nHandleType, hHandle, nRecNumber, @cSQLState, @nError, @cErrorMsg */
@@ -964,7 +964,7 @@ HB_FUNC( SQLGETDIAGREC )  /* nHandleType, hHandle, nRecNumber, @cSQLState, @nErr
       O_HB_STORSTRLEN( ( O_HB_CHAR * ) szErrorMsg, iLen, 6 );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else
    hb_retni( SQL_ERROR );
    hb_storc( NULL, 4 );
@@ -986,7 +986,7 @@ HB_FUNC( SQLROWCOUNT )
       hb_stornint( iRowCountPtr, 2 );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SQLGETINFO )  /* hDbc, nType, @cResult */
@@ -1009,7 +1009,7 @@ HB_FUNC( SQLGETINFO )  /* hDbc, nType, @cResult */
       hb_storclen( buffer, iLen, 3 );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SQLSETCONNECTATTR )  /* hDbc, nOption, uOption */
@@ -1033,7 +1033,7 @@ HB_FUNC( SQLSETCONNECTATTR )  /* hDbc, nOption, uOption */
 #endif
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SQLSETSTMTATTR )  /* hStmt, nOption, uOption --> nRetCode */
@@ -1057,7 +1057,7 @@ HB_FUNC( SQLSETSTMTATTR )  /* hStmt, nOption, uOption --> nRetCode */
 #endif
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SQLGETCONNECTATTR )  /* hDbc, nOption, @cOption */
@@ -1086,7 +1086,7 @@ HB_FUNC( SQLGETCONNECTATTR )  /* hDbc, nOption, @cOption */
 #endif
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SQLGETSTMTATTR )  /* hStmt, nOption, @cOption */
@@ -1115,7 +1115,7 @@ HB_FUNC( SQLGETSTMTATTR )  /* hStmt, nOption, @cOption */
 #endif
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SQLCOMMIT )  /* hEnv, hDbc */
@@ -1126,7 +1126,7 @@ HB_FUNC( SQLCOMMIT )  /* hEnv, hDbc */
    if( hEnv && hDbc )
       hb_retni( SQLTransact( hEnv, hDbc, SQL_COMMIT ) );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SQLROLLBACK )  /* hEnv, hDbc */
@@ -1137,7 +1137,7 @@ HB_FUNC( SQLROLLBACK )  /* hEnv, hDbc */
    if( hEnv && hDbc )
       hb_retni( SQLTransact( hEnv, hDbc, SQL_ROLLBACK ) );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SQLPREPARE )  /* hStmt, cStatement --> nRetCode */
@@ -1155,7 +1155,7 @@ HB_FUNC( SQLPREPARE )  /* hStmt, cStatement --> nRetCode */
       hb_strfree( hStatement );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SQLEXECUTE )  /* hStmt --> nRetCode */
@@ -1165,7 +1165,7 @@ HB_FUNC( SQLEXECUTE )  /* hStmt --> nRetCode */
    if( hStmt )
       hb_retni( SQLExecute( hStmt ) );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( SQLMORERESULTS )  /* hEnv, hDbc */
@@ -1175,7 +1175,7 @@ HB_FUNC( SQLMORERESULTS )  /* hEnv, hDbc */
    if( hStmt )
       hb_retni( SQLMoreResults( hStmt ) );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( HB_ODBCSTOD )

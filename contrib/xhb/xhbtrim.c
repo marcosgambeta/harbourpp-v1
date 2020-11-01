@@ -71,7 +71,7 @@ HB_FUNC( XHB_RTRIM )
    }
    else
       /* NOTE: "TRIM" is correct here [vszakats] */
-      hb_errRT_BASE_SubstR( EG_ARG, 1100, NULL, "TRIM", HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1100, nullptr, "TRIM", HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* synonym for xhb_RTrim() */
@@ -103,9 +103,9 @@ HB_FUNC( XHB_ALLTRIM )
 #ifdef HB_COMPAT_C53
       /* NOTE: This runtime error appeared in CA-Cl*pper 5.3 [vszakats] */
 #ifdef HB_CLP_STRICT
-      hb_errRT_BASE_SubstR( EG_ARG, 2022, NULL, "ALLTRIM", 0 );
+      hb_errRT_BASE_SubstR( EG_ARG, 2022, nullptr, "ALLTRIM", 0 );
 #else
-      hb_errRT_BASE_SubstR( EG_ARG, 2022, NULL, "ALLTRIM", HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 2022, nullptr, "ALLTRIM", HB_ERR_ARGS_BASEPARAMS );
 #endif
 #else
       hb_retc_null();

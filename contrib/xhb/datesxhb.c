@@ -110,5 +110,5 @@ HB_FUNC( TTOD )
    if( HB_ISDATE( 1 ) )
       hb_retdl( hb_pardl( 1 ) );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1120, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 1120, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

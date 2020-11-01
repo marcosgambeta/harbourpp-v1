@@ -631,7 +631,7 @@ HB_FUNC( CURL_EASY_DUPLICATE )
    if( PHB_CURL_is( 1 ) )
       PHB_CURL_ret( PHB_CURL_par( 1 ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( CURL_EASY_CLEANUP )
@@ -648,7 +648,7 @@ HB_FUNC( CURL_EASY_CLEANUP )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( CURL_EASY_RESET )
@@ -661,7 +661,7 @@ HB_FUNC( CURL_EASY_RESET )
          PHB_CURL_free( hb_curl, HB_FALSE );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( CURL_EASY_PAUSE )
@@ -677,7 +677,7 @@ HB_FUNC( CURL_EASY_PAUSE )
 #endif
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( CURL_EASY_PERFORM )
@@ -689,7 +689,7 @@ HB_FUNC( CURL_EASY_PERFORM )
       hb_retnl( hb_curl ? ( long ) curl_easy_perform( hb_curl->curl ) : HB_CURLE_ERROR );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* NOTE: curl_easy_send( curl, cBuffer, @nSentBytes ) -> nResult */
@@ -713,7 +713,7 @@ HB_FUNC( CURL_EASY_SEND )
       hb_retnl( ( long ) res );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* NOTE: curl_easy_recv( curl, @cBuffer ) -> nResult */
@@ -744,7 +744,7 @@ HB_FUNC( CURL_EASY_RECV )
       hb_retnl( ( long ) res );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( CURL_EASY_SETOPT )
@@ -1758,7 +1758,7 @@ HB_FUNC( CURL_EASY_SETOPT )
       hb_retnl( ( long ) res );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Harbour extension. */
@@ -1774,7 +1774,7 @@ HB_FUNC( CURL_EASY_DL_BUFF_GET )
          hb_retc_null();
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 #define HB_CURL_INFO_TYPE_INVALID  0
@@ -2070,7 +2070,7 @@ HB_FUNC( CURL_EASY_GETINFO )
       hb_stornl( ( long ) res, 3 );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( CURL_EASY_ESCAPE )
@@ -2091,7 +2091,7 @@ HB_FUNC( CURL_EASY_ESCAPE )
       hb_retc_null();
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( CURL_EASY_UNESCAPE )
@@ -2113,7 +2113,7 @@ HB_FUNC( CURL_EASY_UNESCAPE )
       hb_retc_null();
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Harbour interface (session independent) */
@@ -2192,7 +2192,7 @@ HB_FUNC( CURL_EASY_STRERROR )
       hb_retc_null();
 #endif
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* NOTE: This returns the number of seconds since January 1st 1970 in the UTC time zone. */
@@ -2201,7 +2201,7 @@ HB_FUNC( CURL_GETDATE )
    if( HB_ISCHAR( 1 ) )
       hb_retnint( ( HB_MAXINT ) curl_getdate( hb_parc( 1 ), NULL ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* Harbour interface (session independent) */
@@ -2216,7 +2216,7 @@ HB_FUNC( CURL_ESCAPE )
       curl_free( buffer );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* NOTE: Obsolete, superceded by curl_easy_unescape() */
@@ -2229,5 +2229,5 @@ HB_FUNC( CURL_UNESCAPE )
       curl_free( buffer );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

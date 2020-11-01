@@ -236,7 +236,7 @@ HB_FUNC( PQCONNECTDB )
    if( HB_ISCHAR( 1 ) )
       hb_PGconn_ret( PQconnectdb( hb_parc( 1 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* NOTE: Deprecated */
@@ -258,7 +258,7 @@ HB_FUNC( PQRESET )
    if( conn )
       PQreset( conn );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQPROTOCOLVERSION )
@@ -268,7 +268,7 @@ HB_FUNC( PQPROTOCOLVERSION )
    if( conn )
       hb_retni( PQprotocolVersion( conn ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQCLIENTENCODING )
@@ -278,7 +278,7 @@ HB_FUNC( PQCLIENTENCODING )
    if( conn )
       hb_retni( PQclientEncoding( conn ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQSETCLIENTENCODING )
@@ -288,7 +288,7 @@ HB_FUNC( PQSETCLIENTENCODING )
    if( conn )
       hb_retni( PQsetClientEncoding( conn, hb_parcx( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQDB )
@@ -298,7 +298,7 @@ HB_FUNC( PQDB )
    if( conn )
       hb_retc( PQdb( conn ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQUSER )
@@ -308,7 +308,7 @@ HB_FUNC( PQUSER )
    if( conn )
       hb_retc( PQuser( conn ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQPASS )
@@ -318,7 +318,7 @@ HB_FUNC( PQPASS )
    if( conn )
       hb_retc( PQpass( conn ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQHOST )
@@ -328,7 +328,7 @@ HB_FUNC( PQHOST )
    if( conn )
       hb_retc( PQhost( conn ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQPORT )
@@ -338,7 +338,7 @@ HB_FUNC( PQPORT )
    if( conn )
       hb_retc( PQport( conn ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQTTY )
@@ -348,7 +348,7 @@ HB_FUNC( PQTTY )
    if( conn )
       hb_retc( PQtty( conn ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQOPTIONS )
@@ -358,7 +358,7 @@ HB_FUNC( PQOPTIONS )
    if( conn )
       hb_retc( PQoptions( conn ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQTRANSACTIONSTATUS )
@@ -368,7 +368,7 @@ HB_FUNC( PQTRANSACTIONSTATUS )
    if( conn )
       hb_retni( PQtransactionStatus( conn ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQERRORMESSAGE )
@@ -378,7 +378,7 @@ HB_FUNC( PQERRORMESSAGE )
    if( conn )
       hb_retc( PQerrorMessage( conn ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQSTATUS )
@@ -388,7 +388,7 @@ HB_FUNC( PQSTATUS )
    if( conn )
       hb_retni( PQstatus( conn ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /*
@@ -402,7 +402,7 @@ HB_FUNC( PQEXEC )
    if( conn )
       hb_PGresult_ret( PQexec( conn, hb_parcx( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQEXECPARAMS )
@@ -425,7 +425,7 @@ HB_FUNC( PQEXECPARAMS )
       hb_xfree( ( void * ) paramvalues );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQFCOUNT )  /* not a direct wrapper */
@@ -442,7 +442,7 @@ HB_FUNC( PQFCOUNT )  /* not a direct wrapper */
       hb_retni( nFields );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQLASTREC )  /* not a direct wrapper */
@@ -459,7 +459,7 @@ HB_FUNC( PQLASTREC )  /* not a direct wrapper */
       hb_retni( nRows );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQGETVALUE )
@@ -482,7 +482,7 @@ HB_FUNC( PQGETVALUE )
          hb_ret();
    }
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQGETLENGTH )
@@ -504,7 +504,7 @@ HB_FUNC( PQGETLENGTH )
       hb_retni( result );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* PQmetadata() positions for array returned */
@@ -637,7 +637,7 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
          hb_reta( 0 );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQRESULT2ARRAY )  /* not a direct wrapper */
@@ -667,7 +667,7 @@ HB_FUNC( PQRESULT2ARRAY )  /* not a direct wrapper */
          hb_reta( 0 );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQRESULTERRORMESSAGE )
@@ -677,7 +677,7 @@ HB_FUNC( PQRESULTERRORMESSAGE )
    if( res )
       hb_retc( PQresultErrorMessage( res ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQRESULTSTATUS )
@@ -687,7 +687,7 @@ HB_FUNC( PQRESULTSTATUS )
    if( res )
       hb_retni( PQresultStatus( res ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQCMDSTATUS )
@@ -697,7 +697,7 @@ HB_FUNC( PQCMDSTATUS )
    if( res )
       hb_retc( PQcmdStatus( res ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQCMDTUPLES )
@@ -707,7 +707,7 @@ HB_FUNC( PQCMDTUPLES )
    if( res )
       hb_retc( PQcmdTuples( res ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQESCAPESTRING )
@@ -732,7 +732,7 @@ HB_FUNC( PQESCAPEBYTEA ) /* deprecated */
       PQfreemem( to );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQUNESCAPEBYTEA )
@@ -745,7 +745,7 @@ HB_FUNC( PQUNESCAPEBYTEA )
       PQfreemem( from );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQOIDVALUE )
@@ -755,7 +755,7 @@ HB_FUNC( PQOIDVALUE )
    if( res )
       hb_retnl( ( Oid ) PQoidValue( res ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQOIDSTATUS )
@@ -765,7 +765,7 @@ HB_FUNC( PQOIDSTATUS )
    if( res )
       hb_retc( PQoidStatus( res ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQBINARYTUPLES )
@@ -775,7 +775,7 @@ HB_FUNC( PQBINARYTUPLES )
    if( res )
       hb_retl( PQbinaryTuples( res ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQFTABLE )
@@ -785,7 +785,7 @@ HB_FUNC( PQFTABLE )
    if( res )
       hb_retnl( ( Oid ) PQftable( res, hb_parni( 2 ) - 1 ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQFTYPE )
@@ -795,7 +795,7 @@ HB_FUNC( PQFTYPE )
    if( res )
       hb_retnl( ( Oid ) PQftype( res, hb_parni( 2 ) - 1 ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQFNAME )
@@ -805,7 +805,7 @@ HB_FUNC( PQFNAME )
    if( res )
       hb_retc( PQfname( res, hb_parni( 2 ) - 1 ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQFMOD )
@@ -815,7 +815,7 @@ HB_FUNC( PQFMOD )
    if( res )
       hb_retni( PQfmod( res, hb_parni( 2 ) - 1 ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQFSIZE )
@@ -825,7 +825,7 @@ HB_FUNC( PQFSIZE )
    if( res )
       hb_retni( PQfsize( res, hb_parni( 2 ) - 1 ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQGETISNULL )
@@ -835,7 +835,7 @@ HB_FUNC( PQGETISNULL )
    if( res )
       hb_retl( PQgetisnull( res, hb_parni( 2 ) - 1, hb_parni( 3 ) - 1 ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQFNUMBER )
@@ -845,7 +845,7 @@ HB_FUNC( PQFNUMBER )
    if( res )
       hb_retni( PQfnumber( res, hb_parcx( 2 ) ) + 1 );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQNTUPLES )
@@ -855,7 +855,7 @@ HB_FUNC( PQNTUPLES )
    if( res )
       hb_retnl( PQntuples( res ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQNFIELDS )
@@ -865,7 +865,7 @@ HB_FUNC( PQNFIELDS )
    if( res )
       hb_retnl( PQnfields( res ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /*
@@ -879,7 +879,7 @@ HB_FUNC( PQSENDQUERY )
    if( conn )
       hb_retl( PQsendQuery( conn, hb_parcx( 2 ) ) ? HB_TRUE : HB_FALSE );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQGETRESULT )
@@ -889,7 +889,7 @@ HB_FUNC( PQGETRESULT )
    if( conn )
       hb_PGresult_ret( PQgetResult( conn ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQCONSUMEINPUT )
@@ -899,7 +899,7 @@ HB_FUNC( PQCONSUMEINPUT )
    if( conn )
       hb_retl( PQconsumeInput( conn ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQISBUSY )
@@ -909,7 +909,7 @@ HB_FUNC( PQISBUSY )
    if( conn )
       hb_retl( PQisBusy( conn ) ? HB_TRUE : HB_FALSE );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQREQUESTCANCEL ) /* deprecated */
@@ -919,7 +919,7 @@ HB_FUNC( PQREQUESTCANCEL ) /* deprecated */
    if( conn )
       hb_retl( PQrequestCancel( conn ) ? HB_TRUE : HB_FALSE );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQFLUSH )
@@ -929,7 +929,7 @@ HB_FUNC( PQFLUSH )
    if( conn )
       hb_retni( PQflush( conn ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQSETNONBLOCKING )
@@ -939,7 +939,7 @@ HB_FUNC( PQSETNONBLOCKING )
    if( conn )
       hb_retl( PQsetnonblocking( conn, hb_parl( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQISNONBLOCKING )
@@ -949,7 +949,7 @@ HB_FUNC( PQISNONBLOCKING )
    if( conn )
       hb_retl( PQisnonblocking( conn ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /*
@@ -974,7 +974,7 @@ HB_FUNC( PQTRACE )
    if( conn && trfile )
       PQtrace( conn, trfile );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #endif
 }
 
@@ -985,7 +985,7 @@ HB_FUNC( PQUNTRACE )
    if( conn )
       PQuntrace( conn );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* PQERRORS_TERSE   0
@@ -999,7 +999,7 @@ HB_FUNC( PQSETERRORVERBOSITY )
    if( conn )
       hb_retni( ( PGVerbosity ) PQsetErrorVerbosity( conn, ( PGVerbosity ) hb_parni( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /*
@@ -1013,7 +1013,7 @@ HB_FUNC( LO_IMPORT )
    if( conn )
       hb_retni( lo_import( conn, hb_parcx( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( LO_EXPORT )
@@ -1023,7 +1023,7 @@ HB_FUNC( LO_EXPORT )
    if( conn )
       hb_retl( lo_export( conn, ( Oid ) hb_parnl( 2 ), hb_parcx( 3 ) ) == 1 );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( LO_UNLINK )
@@ -1033,7 +1033,7 @@ HB_FUNC( LO_UNLINK )
    if( conn )
       hb_retl( lo_unlink( conn, ( Oid ) hb_parnl( 2 ) ) == 1 );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQSERVERVERSION )
@@ -1044,7 +1044,7 @@ HB_FUNC( PQSERVERVERSION )
    if( conn )
       hb_retni( PQserverVersion( conn ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else
    hb_retni( 0 );
 #endif
@@ -1058,7 +1058,7 @@ HB_FUNC( PQGETCANCEL )
    if( conn )
       hb_PGcancel_ret( PQgetCancel( conn ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else
    hb_retptr( NULL );
 #endif
@@ -1080,7 +1080,7 @@ HB_FUNC( PQCANCEL )
       hb_storc( errbuf, 2 );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else
    hb_retl( HB_FALSE );
    hb_storc( NULL, 2 );
@@ -1102,7 +1102,7 @@ HB_FUNC( PQESCAPEBYTEACONN )
       PQfreemem( to );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else
    hb_retc_null();
 #endif
@@ -1115,7 +1115,7 @@ HB_FUNC( PQPREPARE )
    if( conn )
       hb_PGresult_ret( PQprepare( conn, hb_parcx( 2 ), hb_parcx( 3 ), hb_parni( 4 ), NULL ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQEXECPREPARED )
@@ -1138,7 +1138,7 @@ HB_FUNC( PQEXECPREPARED )
       hb_xfree( ( void * ) paramvalues );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( PQPUTCOPYDATA )
@@ -1149,7 +1149,7 @@ HB_FUNC( PQPUTCOPYDATA )
    if( conn )
       hb_retni( PQputCopyData( conn, hb_parcx( 2 ), ( int ) hb_parclen( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else
    hb_retc_null();
 #endif
@@ -1163,7 +1163,7 @@ HB_FUNC( PQPUTCOPYEND )
    if( conn )
       hb_retni( PQputCopyEnd( conn, NULL ) );
    else
-      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else
    hb_retc_null();
 #endif

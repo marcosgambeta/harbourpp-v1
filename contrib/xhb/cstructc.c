@@ -131,7 +131,7 @@ static HB_UINT SizeOfCStructure( PHB_ITEM aDef, HB_UINT uiAlign )
    {
       if( ( pBaseDef->pItems + nIndex )->type != HB_IT_INTEGER )
       {
-         hb_errRT_BASE( EG_ARG, 2023, NULL, "SizeOfCStructure", 1, hb_paramError( 1 ) );
+         hb_errRT_BASE( EG_ARG, 2023, nullptr, "SizeOfCStructure", 1, hb_paramError( 1 ) );
          return 0;
       }
 
@@ -218,13 +218,13 @@ static HB_UINT SizeOfCStructure( PHB_ITEM aDef, HB_UINT uiAlign )
                else
                {
                   hb_itemRelease( pStructure );
-                  hb_errRT_BASE( EG_ARG, 2023, NULL, "SizeOfCStructure", 1, hb_paramError( 1 ) );
+                  hb_errRT_BASE( EG_ARG, 2023, nullptr, "SizeOfCStructure", 1, hb_paramError( 1 ) );
                   return 0;
                }
             }
             else
             {
-               hb_errRT_BASE( EG_ARG, 2023, NULL, "SizeOfCStructure", 1, hb_paramError( 1 ) );
+               hb_errRT_BASE( EG_ARG, 2023, nullptr, "SizeOfCStructure", 1, hb_paramError( 1 ) );
                return 0;
             }
       }
@@ -271,7 +271,7 @@ HB_FUNC( HB_SIZEOFCSTRUCTURE )
       hb_retni( SizeOfCStructure( aDef, uiAlign ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2023, NULL, "SizeOfCStructure", 2, hb_paramError( 1 ), hb_paramError( 2 ) );
+      hb_errRT_BASE( EG_ARG, 2023, nullptr, "SizeOfCStructure", 2, hb_paramError( 1 ), hb_paramError( 2 ) );
 }
 
 static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign, HB_UINT * puiSize )
@@ -304,7 +304,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
          case CTYPE_UNSIGNED_CHAR: /* unsigned char */
             if( ( pBaseVar->pItems + nIndex )->type && ! HB_IS_NUMERIC( pBaseVar->pItems + nIndex  ) )
             {
-               hb_errRT_BASE( EG_ARG, 2023, NULL, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
+               hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
                return NULL;
             }
 
@@ -318,7 +318,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
                 ( pBaseVar->pItems + nIndex )->type != HB_IT_POINTER &&
                 ( pBaseVar->pItems + nIndex )->type != HB_IT_LONG )
             {
-               hb_errRT_BASE( EG_ARG, 2023, NULL, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
+               hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
                return NULL;
             }
 
@@ -337,7 +337,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
                 ( pBaseVar->pItems + nIndex )->type != HB_IT_POINTER &&
                 ( pBaseVar->pItems + nIndex )->type != HB_IT_LONG )
             {
-               hb_errRT_BASE( EG_ARG, 2023, NULL, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
+               hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
                return NULL;
             }
 
@@ -356,7 +356,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
                 ( pBaseVar->pItems + nIndex )->type != HB_IT_POINTER &&
                 ( pBaseVar->pItems + nIndex )->type != HB_IT_LONG )
             {
-               hb_errRT_BASE( EG_ARG, 2023, NULL, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
+               hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
                return NULL;
             }
 
@@ -375,7 +375,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
                 ( pBaseVar->pItems + nIndex )->type != HB_IT_POINTER &&
                 ( pBaseVar->pItems + nIndex )->type != HB_IT_LONG )
             {
-               hb_errRT_BASE( EG_ARG, 2023, NULL, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
+               hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
                return NULL;
             }
 
@@ -385,7 +385,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
          case CTYPE_FLOAT:  /* float */
             if( ( pBaseVar->pItems + nIndex )->type && ( pBaseVar->pItems + nIndex )->type != HB_IT_DOUBLE )
             {
-               hb_errRT_BASE( EG_ARG, 2023, NULL, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
+               hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
                return NULL;
             }
 
@@ -398,7 +398,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
                 ( pBaseVar->pItems + nIndex )->type != HB_IT_POINTER &&
                 ( pBaseVar->pItems + nIndex )->type != HB_IT_LONG )
             {
-               hb_errRT_BASE( EG_ARG, 2023, NULL, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
+               hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
                return NULL;
             }
 
@@ -409,7 +409,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
             if( ( pBaseVar->pItems + nIndex )->type &&
                 ( pBaseVar->pItems + nIndex )->type != HB_IT_DOUBLE )
             {
-               hb_errRT_BASE( EG_ARG, 2023, NULL, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
+               hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
                return NULL;
             }
 
@@ -422,7 +422,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
                 ( pBaseVar->pItems + nIndex )->type != HB_IT_POINTER &&
                 ( pBaseVar->pItems + nIndex )->type != HB_IT_LONG )
             {
-               hb_errRT_BASE( EG_ARG, 2023, NULL, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
+               hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
                return NULL;
             }
 
@@ -435,7 +435,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
                 ( pBaseVar->pItems + nIndex )->type != HB_IT_LONG &&
                 ( pBaseVar->pItems + nIndex )->type != HB_IT_STRING )
             {
-               hb_errRT_BASE( EG_ARG, 2023, NULL, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
+               hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
                return NULL;
             }
 
@@ -463,13 +463,13 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
                else
                {
                   hb_itemRelease( pStructure );
-                  hb_errRT_BASE( EG_ARG, 2023, NULL, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
+                  hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
                   return NULL;
                }
             }
             else
             {
-               hb_errRT_BASE( EG_ARG, 2023, NULL, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
+               hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
                return NULL;
             }
       }
@@ -564,7 +564,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
                *( ( short * ) ( Buffer + uiOffset ) ) = 0;
             else
             {
-               hb_errRT_BASE( EG_ARG, 2023, NULL, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
+               hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
                return NULL;
             }
             break;
@@ -580,7 +580,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
                *( ( unsigned short * ) ( Buffer + uiOffset ) ) = 0;
             else
             {
-               hb_errRT_BASE( EG_ARG, 2023, NULL, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
+               hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
                return NULL;
             }
             break;
@@ -640,7 +640,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
                *( ( int * ) ( Buffer + uiOffset ) ) = 0;
             else
             {
-               hb_errRT_BASE( EG_ARG, 2023, NULL, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
+               hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
                return NULL;
             }
             break;
@@ -656,7 +656,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
                *( ( unsigned int * ) ( Buffer + uiOffset ) ) = 0;
             else
             {
-               hb_errRT_BASE( EG_ARG, 2023, NULL, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
+               hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
                return NULL;
             }
 
@@ -717,7 +717,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
                *( ( long * ) ( Buffer + uiOffset ) ) = 0;
             else
             {
-               hb_errRT_BASE( EG_ARG, 2023, NULL, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
+               hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
                return NULL;
             }
             break;
@@ -733,7 +733,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
                *( ( unsigned long * ) ( Buffer + uiOffset ) ) = 0;
             else
             {
-               hb_errRT_BASE( EG_ARG, 2023, NULL, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
+               hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
                return NULL;
             }
             break;
@@ -913,10 +913,10 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
                      memcpy( ( void * ) ( Buffer + uiOffset ), ( void * ) pInternalBuffer->item.asString.value, uiMemberSize );
                }
                else
-                  hb_errRT_BASE( EG_ARG, 2023, NULL, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
+                  hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
             }
             else
-               hb_errRT_BASE( EG_ARG, 2023, NULL, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
+               hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
       }
 
       #if 0
@@ -951,7 +951,7 @@ HB_FUNC( HB_ARRAYTOSTRUCTURE )
       hb_retclen_buffer( ( char * ) Buffer, uiSize );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2023, NULL, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
+      hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
 }
 
 static PHB_ITEM StructureToArray( HB_BYTE * Buffer, HB_SIZE nBufferLen, PHB_ITEM aDef, HB_UINT uiAlign, HB_BOOL bAdoptNested, PHB_ITEM pRet )
@@ -1061,13 +1061,13 @@ static PHB_ITEM StructureToArray( HB_BYTE * Buffer, HB_SIZE nBufferLen, PHB_ITEM
                else
                {
                   hb_itemRelease( pStructure );
-                  hb_errRT_BASE( EG_ARG, 2023, NULL, "StructureToArray", 1, hb_paramError( 1 ) );
+                  hb_errRT_BASE( EG_ARG, 2023, nullptr, "StructureToArray", 1, hb_paramError( 1 ) );
                   return pRet;
                }
             }
             else
             {
-               hb_errRT_BASE( EG_ARG, 2023, NULL, "StructureToArray", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
+               hb_errRT_BASE( EG_ARG, 2023, nullptr, "StructureToArray", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
                return pRet;
             }
       }
@@ -1216,7 +1216,7 @@ static PHB_ITEM StructureToArray( HB_BYTE * Buffer, HB_SIZE nBufferLen, PHB_ITEM
             if( ! HB_IS_OBJECT( pStructure ) )
             {
                hb_itemRelease( pStructure );
-               hb_errRT_BASE( EG_ARG, 2023, NULL, "StructureToArray", 2, hb_paramError( 1 ), hb_paramError( 2 ) );
+               hb_errRT_BASE( EG_ARG, 2023, nullptr, "StructureToArray", 2, hb_paramError( 1 ), hb_paramError( 2 ) );
                return pRet;
             }
 
@@ -1319,7 +1319,7 @@ HB_FUNC( HB_STRUCTURETOARRAY )
       hb_itemReturnForward( StructureToArray( Buffer, Structure->item.asString.length, aDef, uiAlign, bAdopt, pRet ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2023, NULL, "StructureToArray", 2, hb_paramError( 1 ), hb_paramError( 2 ) );
+      hb_errRT_BASE( EG_ARG, 2023, nullptr, "StructureToArray", 2, hb_paramError( 1 ), hb_paramError( 2 ) );
 }
 
 HB_FUNC( HB_POINTER2STRING )
@@ -1334,7 +1334,7 @@ HB_FUNC( HB_POINTER2STRING )
    else if( HB_IS_LONG( pPointer ) && pLen )
       hb_retclen( ( char * ) ( HB_PTRUINT ) hb_itemGetNL( pPointer ), hb_itemGetNS( pLen ) );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1099, NULL, HB_ERR_FUNCNAME, 2, hb_paramError( 1 ), hb_paramError( 2 ) );
+      hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, 2, hb_paramError( 1 ), hb_paramError( 2 ) );
 }
 
 HB_FUNC( HB_STRING2POINTER )
@@ -1344,7 +1344,7 @@ HB_FUNC( HB_STRING2POINTER )
    if( pszString )
       hb_retptr( HB_UNCONST( pszString ) );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1099, NULL, HB_ERR_FUNCNAME, 1, hb_paramError( 1 ) );
+      hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError( 1 ) );
 }
 
 HB_FUNC( __CSTR_COPYTO )
@@ -1367,7 +1367,7 @@ HB_FUNC( __CSTR_COPYTO )
       pPointer = hb_itemGetPtr( pTarget );
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1099, NULL, "C Structure:CopyTo()", 1, hb_paramError( 1 ) );
+      hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, "C Structure:CopyTo()", 1, hb_paramError( 1 ) );
       return;
    }
 

@@ -74,7 +74,7 @@ int hb_posix_get_errno( void )
 
 void hb_posix_param_error( void )
 {
-   hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 void hb_posix_result( int iResult )

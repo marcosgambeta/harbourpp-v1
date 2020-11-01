@@ -88,7 +88,7 @@ cairo_pattern_t * hb_cairo_pattern_param( int iParam )
    if( ppPattern && *ppPattern )
       return *ppPattern;
 
-   hb_errRT_BASE( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    return NULL;
 }
 
@@ -107,7 +107,7 @@ HB_FUNC( CAIRO_PATTERN_DESTROY )
       *ppPattern = NULL;
    }
    else
-      hb_errRT_BASE( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( CAIRO_PATTERN_ADD_COLOR_STOP_RGB )

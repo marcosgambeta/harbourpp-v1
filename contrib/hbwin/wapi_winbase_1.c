@@ -113,7 +113,7 @@ HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTS )
       hb_xfree( handles );
    }
    else
-      hb_errRT_BASE( EG_ARG, 1001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 1001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTSEX )
@@ -139,7 +139,7 @@ HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTSEX )
       hb_xfree( handles );
    }
    else
-      hb_errRT_BASE( EG_ARG, 1001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 1001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else
    /* WinCE (WinMobile6) does not support
     * WaitFor{Single,Multiple}Object[Ex]() though it supports:

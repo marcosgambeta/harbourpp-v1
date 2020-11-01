@@ -335,7 +335,7 @@ HB_FUNC( __WAPI_DEVMODE_SET )
       if( hb_hashGetCItemPtr( pStru, "dmDuplex"        ) ) pDevMode->dmFields |= DM_DUPLEX;
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #endif
 }
 
@@ -358,7 +358,7 @@ HB_FUNC( __WAPI_DEVMODE_GET )
       s_hb_hashSetCItemNL( pStru, "dmDuplex"       , pDevMode->dmDuplex        );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #endif
 }
 
@@ -387,7 +387,7 @@ HB_FUNC( WAPI_RESETDC )
    if( hDC )
       hb_retl( ResetDC( hDC, pDEVMODE ) == hDC );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else
    hb_retl( HB_FALSE );
 #endif
@@ -402,7 +402,7 @@ HB_FUNC( WAPI_STARTDOC )
    if( hDC && hbwapi_par_DOCINFO( &di, 2, HB_FALSE, &hDOCINFO ) )
       hb_retni( StartDoc( hDC, &di ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 
    hbwapi_strfree_DOCINFO( hDOCINFO );
 }
@@ -414,7 +414,7 @@ HB_FUNC( WAPI_ENDDOC )
    if( hDC )
       hb_retni( EndDoc( hDC ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_ABORTDOC )
@@ -424,7 +424,7 @@ HB_FUNC( WAPI_ABORTDOC )
    if( hDC )
       hb_retni( AbortDoc( hDC ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_STARTPAGE )
@@ -434,7 +434,7 @@ HB_FUNC( WAPI_STARTPAGE )
    if( hDC )
       hb_retni( StartPage( hDC ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_ENDPAGE )
@@ -444,7 +444,7 @@ HB_FUNC( WAPI_ENDPAGE )
    if( hDC )
       hb_retni( EndPage( hDC ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_SETBKMODE )
@@ -454,7 +454,7 @@ HB_FUNC( WAPI_SETBKMODE )
    if( hDC )
       hb_retni( SetBkMode( hDC, hb_parni( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_GETBKMODE )
@@ -464,7 +464,7 @@ HB_FUNC( WAPI_GETBKMODE )
    if( hDC )
       hb_retni( GetBkMode( hDC ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_GETDEVICECAPS )
@@ -474,7 +474,7 @@ HB_FUNC( WAPI_GETDEVICECAPS )
    if( hDC )
       hb_retni( GetDeviceCaps( hDC, hb_parni( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_SETMAPMODE )
@@ -485,7 +485,7 @@ HB_FUNC( WAPI_SETMAPMODE )
    if( hDC )
       hb_retni( SetMapMode( hDC, hb_parni( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else
    hb_retni( 0 );
 #endif
@@ -499,7 +499,7 @@ HB_FUNC( WAPI_GETMAPMODE )
    if( hDC )
       hb_retni( GetMapMode( hDC ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else
    hb_retni( 0 );
 #endif
@@ -512,7 +512,7 @@ HB_FUNC( WAPI_SETTEXTALIGN )
    if( hDC )
       hb_retni( ( int ) SetTextAlign( hDC, ( UINT ) hb_parni( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_GETTEXTALIGN )
@@ -522,7 +522,7 @@ HB_FUNC( WAPI_GETTEXTALIGN )
    if( hDC )
       hb_retni( ( int ) GetTextAlign( hDC ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_TEXTOUT )
@@ -556,7 +556,7 @@ HB_FUNC( WAPI_TEXTOUT )
       hb_strfree( hData );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 
    hb_retnl( HB_FALSE );
 }
@@ -610,7 +610,7 @@ HB_FUNC( WAPI_EXTTEXTOUT )
       hb_strfree( hData );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_SETTEXTCOLOR )
@@ -620,7 +620,7 @@ HB_FUNC( WAPI_SETTEXTCOLOR )
    if( hDC )
       hb_retnl( ( long ) SetTextColor( hDC, ( COLORREF ) hb_parnl( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_GETTEXTCOLOR )
@@ -630,7 +630,7 @@ HB_FUNC( WAPI_GETTEXTCOLOR )
    if( hDC )
       hb_retnl( ( long ) GetTextColor( hDC ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_GETTEXTFACE )
@@ -646,7 +646,7 @@ HB_FUNC( WAPI_GETTEXTFACE )
       HB_RETSTR( tszFontName );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_SETBKCOLOR )
@@ -656,7 +656,7 @@ HB_FUNC( WAPI_SETBKCOLOR )
    if( hDC )
       hb_retnl( ( long ) SetBkColor( hDC, ( COLORREF ) hb_parnl( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_GETBKCOLOR )
@@ -666,7 +666,7 @@ HB_FUNC( WAPI_GETBKCOLOR )
    if( hDC )
       hb_retnl( ( long ) GetBkColor( hDC ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_CREATEPEN )
@@ -729,7 +729,7 @@ HB_FUNC( WAPI_CREATEFONTINDIRECT )
    if( hbwapi_par_LOGFONT( &p, 1, HB_TRUE ) )
       hbwapi_ret_HFONT( CreateFontIndirect( &p ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_SELECTOBJECT )
@@ -754,7 +754,7 @@ HB_FUNC( WAPI_SELECTOBJECT )
          hb_retl( SelectObject( hDC, h ) != NULL );  /* NOTE: We don't return a raw pointer. */
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_MOVETOEX )
@@ -775,7 +775,7 @@ HB_FUNC( WAPI_MOVETOEX )
          hb_retl( MoveToEx( hDC, hb_parni( 2 ) /* X */, hb_parni( 3 ) /* Y */, NULL ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_LINETO )
@@ -785,7 +785,7 @@ HB_FUNC( WAPI_LINETO )
    if( hDC )
       hb_retl( LineTo( hDC, hb_parni( 2 ) /* XEnd */, hb_parni( 3 ) /* YEnd */ ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_FILLRECT )
@@ -797,7 +797,7 @@ HB_FUNC( WAPI_FILLRECT )
    if( hDC && hbwapi_par_RECT( &rect, 2, HB_TRUE ) && hBrush )
       hb_retni( FillRect( hDC, &rect, hBrush ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_ROUNDRECT )
@@ -813,7 +813,7 @@ HB_FUNC( WAPI_ROUNDRECT )
                           hb_parni( 6 ) /* iWidth */,
                           hb_parni( 7 ) /* iHeight */ ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_RECTANGLE )
@@ -827,7 +827,7 @@ HB_FUNC( WAPI_RECTANGLE )
                           hb_parni( 4 ) /* x2 */,
                           hb_parni( 5 ) /* y2 */ ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_ARC )
@@ -845,7 +845,7 @@ HB_FUNC( WAPI_ARC )
                     hb_parni( 8 ) /* nXEndArc */,
                     hb_parni( 9 ) /* nYEndArc */ ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_ELLIPSE )
@@ -859,5 +859,5 @@ HB_FUNC( WAPI_ELLIPSE )
                         hb_parni( 4 ) /* nRightRect */,
                         hb_parni( 5 ) /* nBottomRect */ ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

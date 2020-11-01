@@ -2214,7 +2214,7 @@ HB_FUNC( HBXML_DATAREAD )
    if( pDoc == NULL || pParam == NULL ||
        ( ! HB_IS_STRING( pParam ) && ! HB_IS_NUMERIC( pParam ) ) )
    {
-      hb_errRT_BASE( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
    }
 
@@ -2246,7 +2246,7 @@ HB_FUNC( HB_XMLERRORDESC )
    if( pNum )
       hb_retc( mxml_error_desc( ( MXML_ERROR_CODE ) hb_itemGetNI( pNum ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* hbxml_node_to_string( xmlDocument [, nStyle] ) --> cXml | NIL
@@ -2262,7 +2262,7 @@ HB_FUNC( HBXML_NODE_TO_STRING )
 
    if( pNode == NULL )
    {
-      hb_errRT_BASE( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
    }
 
@@ -2294,7 +2294,7 @@ HB_FUNC( HBXML_NODE_WRITE )
 
    if( pNode == NULL || pHandle == NULL )
    {
-      hb_errRT_BASE( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
    }
 

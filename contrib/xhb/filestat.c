@@ -90,7 +90,7 @@ HB_FUNC( FILESTATS )
    /* Parameter checking */
    if( hb_parclen( 1 ) == 0 )
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, 1,
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1,
                             hb_paramError( 1 ) );
       return;
    }

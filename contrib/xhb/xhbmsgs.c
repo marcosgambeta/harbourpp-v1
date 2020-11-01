@@ -84,9 +84,9 @@ HB_FUNC( XHB_HASHERROR )
    }
 
    if( szMessage[ 0 ] == '_' )
-      hb_errRT_BASE_SubstR( EG_NOVARMETHOD, 1005, NULL, szMessage + 1, HB_ERR_ARGS_SELFPARAMS );
+      hb_errRT_BASE_SubstR( EG_NOVARMETHOD, 1005, nullptr, szMessage + 1, HB_ERR_ARGS_SELFPARAMS );
    else
-      hb_errRT_BASE_SubstR( EG_NOMETHOD, 1004, NULL, szMessage, HB_ERR_ARGS_SELFPARAMS );
+      hb_errRT_BASE_SubstR( EG_NOMETHOD, 1004, nullptr, szMessage, HB_ERR_ARGS_SELFPARAMS );
 }
 
 HB_FUNC( XHB_INCLUDE )
@@ -104,7 +104,7 @@ HB_FUNC( XHB_INCLUDE )
    }
    else
    {
-      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1109, NULL, "$", 2, pKey, pSelf );
+      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1109, nullptr, "$", 2, pKey, pSelf );
       if( pResult )
          hb_itemReturnRelease( pResult );
    }
@@ -133,7 +133,7 @@ HB_FUNC( XHB_EEQUAL )
    }
    else
    {
-      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1070, NULL, "==", 2, pSelf, pValue );
+      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1070, nullptr, "==", 2, pSelf, pValue );
       if( pResult )
          hb_itemReturnRelease( pResult );
    }
@@ -162,7 +162,7 @@ HB_FUNC( XHB_EQUAL )
    }
    else
    {
-      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1071, NULL, "=", 2, pSelf, pValue );
+      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1071, nullptr, "=", 2, pSelf, pValue );
       if( pResult )
          hb_itemReturnRelease( pResult );
    }
@@ -191,7 +191,7 @@ HB_FUNC( XHB_NOTEQUAL )
    }
    else
    {
-      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1072, NULL, "<>", 2, pSelf, pValue );
+      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1072, nullptr, "<>", 2, pSelf, pValue );
       if( pResult )
          hb_itemReturnRelease( pResult );
    }
@@ -216,7 +216,7 @@ HB_FUNC( XHB_LESS )
    }
    else
    {
-      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1073, NULL, "<", 2, pSelf, pValue );
+      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1073, nullptr, "<", 2, pSelf, pValue );
       if( pResult )
          hb_itemReturnRelease( pResult );
    }
@@ -241,7 +241,7 @@ HB_FUNC( XHB_LESSEQ )
    }
    else
    {
-      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1074, NULL, "<=", 2, pSelf, pValue );
+      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1074, nullptr, "<=", 2, pSelf, pValue );
       if( pResult )
          hb_itemReturnRelease( pResult );
    }
@@ -266,7 +266,7 @@ HB_FUNC( XHB_GREATER )
    }
    else
    {
-      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1075, NULL, ">", 2, pSelf, pValue );
+      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1075, nullptr, ">", 2, pSelf, pValue );
       if( pResult )
          hb_itemReturnRelease( pResult );
    }
@@ -291,7 +291,7 @@ HB_FUNC( XHB_GREATEREQ )
    }
    else
    {
-      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1076, NULL, ">=", 2, pSelf, pValue );
+      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1076, nullptr, ">=", 2, pSelf, pValue );
       if( pResult )
          hb_itemReturnRelease( pResult );
    }
@@ -321,7 +321,7 @@ HB_FUNC( XHB_INDEX )
             if( XHB_IS_VALID_INDEX( nIndex, nLen ) )
                hb_itemMoveRef( hb_arrayGetItemPtr( pSelf, nIndex ), pValue );
             else
-               hb_errRT_BASE( EG_BOUND, 1133, NULL, hb_langDGetErrorDesc( EG_ARRASSIGN ), 1, pIndex );
+               hb_errRT_BASE( EG_BOUND, 1133, nullptr, hb_langDGetErrorDesc( EG_ARRASSIGN ), 1, pIndex );
          }
          else if( HB_IS_STRING( pSelf ) )
          {
@@ -341,13 +341,13 @@ HB_FUNC( XHB_INDEX )
                }
             }
             else
-               hb_errRT_BASE( EG_BOUND, 1133, NULL, hb_langDGetErrorDesc( EG_ARRASSIGN ), 1, pIndex );
+               hb_errRT_BASE( EG_BOUND, 1133, nullptr, hb_langDGetErrorDesc( EG_ARRASSIGN ), 1, pIndex );
          }
          else
-            hb_errRT_BASE( EG_ARG, 1069, NULL, hb_langDGetErrorDesc( EG_ARRASSIGN ), 1, pIndex );
+            hb_errRT_BASE( EG_ARG, 1069, nullptr, hb_langDGetErrorDesc( EG_ARRASSIGN ), 1, pIndex );
       }
       else
-         hb_errRT_BASE( EG_ARG, 1069, NULL, hb_langDGetErrorDesc( EG_ARRASSIGN ), 1, pIndex );
+         hb_errRT_BASE( EG_ARG, 1069, nullptr, hb_langDGetErrorDesc( EG_ARRASSIGN ), 1, pIndex );
 
       hb_itemReturn( pSelf );
    }
@@ -362,7 +362,7 @@ HB_FUNC( XHB_INDEX )
             if( XHB_IS_VALID_INDEX( nIndex, nLen ) )
                hb_itemReturn( hb_arrayGetItemPtr( pSelf, nIndex ) );
             else
-               hb_errRT_BASE( EG_BOUND, 1132, NULL, hb_langDGetErrorDesc( EG_ARRACCESS ), 2, pSelf, pIndex );
+               hb_errRT_BASE( EG_BOUND, 1132, nullptr, hb_langDGetErrorDesc( EG_ARRACCESS ), 2, pSelf, pIndex );
          }
          else if( HB_IS_STRING( pSelf ) )
          {
@@ -370,14 +370,14 @@ HB_FUNC( XHB_INDEX )
             if( XHB_IS_VALID_INDEX( nIndex, nLen ) )
                hb_retclen( hb_itemGetCPtr( pSelf ) + nIndex - 1, 1 );
             else
-               hb_errRT_BASE( EG_BOUND, 1132, NULL, hb_langDGetErrorDesc( EG_ARRACCESS ), 2, pSelf, pIndex );
+               hb_errRT_BASE( EG_BOUND, 1132, nullptr, hb_langDGetErrorDesc( EG_ARRACCESS ), 2, pSelf, pIndex );
          }
          else
-            hb_errRT_BASE( EG_ARG, 1068, NULL, hb_langDGetErrorDesc( EG_ARRACCESS ), 2, pSelf, pIndex );
+            hb_errRT_BASE( EG_ARG, 1068, nullptr, hb_langDGetErrorDesc( EG_ARRACCESS ), 2, pSelf, pIndex );
       }
       else
       {
-         PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1068, NULL, hb_langDGetErrorDesc( EG_ARRACCESS ), 2, pSelf, pIndex );
+         PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1068, nullptr, hb_langDGetErrorDesc( EG_ARRACCESS ), 2, pSelf, pIndex );
          if( pResult )
             hb_itemReturnRelease( pResult );
       }
@@ -411,7 +411,7 @@ HB_FUNC( XHB_PLUS )
    }
    else
    {
-      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1081, NULL, "+", 2, pSelf, pValue );
+      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1081, nullptr, "+", 2, pSelf, pValue );
       if( pResult )
          hb_itemReturnRelease( pResult );
    }
@@ -444,7 +444,7 @@ HB_FUNC( XHB_MINUS )
    }
    else
    {
-      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1082, NULL, "-", 2, pSelf, pValue );
+      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1082, nullptr, "-", 2, pSelf, pValue );
       if( pResult )
          hb_itemReturnRelease( pResult );
    }
@@ -463,7 +463,7 @@ HB_FUNC( XHB_INC )
    }
    else
    {
-      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1086, NULL, "++", 1, pSelf );
+      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1086, nullptr, "++", 1, pSelf );
       if( pResult )
          hb_itemReturnRelease( pResult );
    }
@@ -482,7 +482,7 @@ HB_FUNC( XHB_DEC )
    }
    else
    {
-      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1087, NULL, "--", 1, pSelf );
+      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1087, nullptr, "--", 1, pSelf );
       if( pResult )
          hb_itemReturnRelease( pResult );
    }
@@ -517,7 +517,7 @@ HB_FUNC( XHB_MULT )
    }
    else
    {
-      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1083, NULL, "*", 2, pSelf, pValue );
+      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1083, nullptr, "*", 2, pSelf, pValue );
       if( pResult )
          hb_itemReturnRelease( pResult );
    }
@@ -533,7 +533,7 @@ HB_FUNC( XHB_DIV )
       HB_UCHAR uc = ( HB_UCHAR ) hb_itemGetCPtr( pValue )[ 0 ];
       if( uc == 0 )
       {
-         PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ZERODIV, 1340, NULL, "/", 2, pSelf, pValue );
+         PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ZERODIV, 1340, nullptr, "/", 2, pSelf, pValue );
          if( pResult )
             hb_itemReturnRelease( pResult );
       }
@@ -549,7 +549,7 @@ HB_FUNC( XHB_DIV )
 
       if( dDivisor == 0 )
       {
-         PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ZERODIV, 1340, NULL, "/", 2, pSelf, pValue );
+         PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ZERODIV, 1340, nullptr, "/", 2, pSelf, pValue );
          if( pResult )
             hb_itemReturnRelease( pResult );
       }
@@ -558,7 +558,7 @@ HB_FUNC( XHB_DIV )
    }
    else
    {
-      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1084, NULL, "/", 2, pSelf, pValue );
+      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1084, nullptr, "/", 2, pSelf, pValue );
       if( pResult )
          hb_itemReturnRelease( pResult );
    }
@@ -574,7 +574,7 @@ HB_FUNC( XHB_MOD )
       HB_UCHAR uc = ( HB_UCHAR ) hb_itemGetCPtr( pValue )[ 0 ];
       if( uc == 0 )
       {
-         PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ZERODIV, 1341, NULL, "%", 2, pSelf, pValue );
+         PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ZERODIV, 1341, nullptr, "%", 2, pSelf, pValue );
          if( pResult )
             hb_itemReturnRelease( pResult );
       }
@@ -590,7 +590,7 @@ HB_FUNC( XHB_MOD )
 
       if( dDivisor == 0 )
       {
-         PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ZERODIV, 1341, NULL, "%", 2, pSelf, pValue );
+         PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ZERODIV, 1341, nullptr, "%", 2, pSelf, pValue );
          if( pResult )
             hb_itemReturnRelease( pResult );
       }
@@ -599,7 +599,7 @@ HB_FUNC( XHB_MOD )
    }
    else
    {
-      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1085, NULL, "%", 2, pSelf, pValue );
+      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1085, nullptr, "%", 2, pSelf, pValue );
       if( pResult )
          hb_itemReturnRelease( pResult );
    }
@@ -630,7 +630,7 @@ HB_FUNC( XHB_POW )
    }
    else
    {
-      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1088, NULL, "^", 2, pSelf, pValue );
+      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1088, nullptr, "^", 2, pSelf, pValue );
       if( pResult )
          hb_itemReturnRelease( pResult );
    }

@@ -310,7 +310,7 @@ static PHB_CONSRV s_consrvParam( int iParam )
    if( conn_ptr && *conn_ptr )
       return *conn_ptr;
 
-   hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    return NULL;
 }
 
@@ -437,7 +437,7 @@ static PHB_LISTENSD s_listenParam( int iParam, HB_BOOL fError )
       return *lsd_ptr;
 
    if( fError )
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    return NULL;
 }
 

@@ -82,7 +82,7 @@ HB_FUNC( ASPLICE )
       {
          if( ! ( nStart == nLen + 1 && hb_pcount() > 3 && nRemove == 0 ) )
          {
-            hb_errRT_BASE( EG_ARG, 1003, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+            hb_errRT_BASE( EG_ARG, 1003, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
             return;
          }
       }
@@ -172,7 +172,7 @@ HB_FUNC( AMERGE )
          nStart = hb_parns( 3 ) - 1;
          if( nStart > nLen )
          {
-            hb_errRT_BASE( EG_ARG, 1003, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+            hb_errRT_BASE( EG_ARG, 1003, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
             return;
          }
 
@@ -191,7 +191,7 @@ HB_FUNC( AMERGE )
       hb_itemCopy( hb_stackReturnItem(), pArray1 );
    }
    else
-      hb_errRT_BASE( EG_ARG, 1003, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 1003, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( XHB_ADEL )

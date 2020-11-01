@@ -187,7 +187,7 @@ HB_FUNC( TIP_HTMLSPECIALCHARS )
          hb_retc_null();
    }
    else
-      hb_errRT_BASE( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( TIP_CRLF )
@@ -272,5 +272,5 @@ HB_FUNC( TIP_JSONSPECIALCHARS )
          hb_retc_null();
    }
    else
-      hb_errRT_BASE( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

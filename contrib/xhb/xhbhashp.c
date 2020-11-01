@@ -58,7 +58,7 @@ HB_FUNC( HSETPARTITION )
    HB_UINT  uiLevel = pLevel ? hb_itemGetNI( pLevel ) : 1;
 
    if( ! pHash )
-      hb_errRT_BASE( EG_ARG, 2017, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    else if( hb_hashLen( pHash ) > 0 )
       hb_errRT_BASE( EG_ARG, 2017, "Cannot change partitioning in a non-empty hash", HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    else if( ( hb_hashGetFlags( pHash ) & HB_HASH_KEEPORDER ) != 0 )
@@ -72,5 +72,5 @@ HB_FUNC( HGETPARTITION )
    if( hb_param( 1, HB_IT_HASH ) )
       hb_retl( HB_FALSE );
    else
-      hb_errRT_BASE( EG_ARG, 2017, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

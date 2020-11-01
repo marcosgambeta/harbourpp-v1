@@ -117,7 +117,7 @@ HB_FUNC( X509_GET_SUBJECT_NAME )
          hb_retptr( X509_get_subject_name( x509 ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( X509_GET_ISSUER_NAME )
@@ -130,7 +130,7 @@ HB_FUNC( X509_GET_ISSUER_NAME )
          hb_retptr( X509_get_issuer_name( x509 ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( X509_NAME_ONELINE )
@@ -145,7 +145,7 @@ HB_FUNC( X509_NAME_ONELINE )
       hb_retc( buffer );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #endif
 }
 
@@ -159,5 +159,5 @@ HB_FUNC( X509_GET_PUBKEY )
          hb_retptr( X509_get_pubkey( x509 ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
