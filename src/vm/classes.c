@@ -5557,7 +5557,7 @@ void hb_clsAdd( HB_USHORT usClassH, const char * szMethodName, PHB_FUNC pFuncPtr
     */
    pExecSym = hb_symbolNew( "" );
    pExecSym->value.pFunPtr = pFuncPtr;
-   pFuncItem = hb_itemPutSymbol( NULL, pExecSym );
+   pFuncItem = hb_itemPutSymbol( nullptr, pExecSym );
 
    hb_clsAddMsg( usClassH, szMethodName, HB_OO_MSG_METHOD, 0, pFuncItem, NULL );
 
