@@ -339,7 +339,7 @@ static int s_errorHandler( Display * dpy, XErrorEvent * e )
    if( ! s_fIgnoreErrors )
    {
       s_fNoXServer = HB_TRUE;
-      hb_errInternal( 10001, errorText, NULL, NULL );
+      hb_errInternal( 10001, errorText, nullptr, nullptr );
    }
 
    fprintf( stderr, "%s\n", errorText );
@@ -4605,7 +4605,7 @@ static HB_BOOL hb_gt_xwc_ConnectX( PXWND_DEF wnd, HB_BOOL fExit )
          hb_errRT_TERM( EG_CREATE, 10001, NULL, "Could not connect to X server", 0, 0 );
          */
          s_fNoXServer = HB_TRUE;
-         hb_errInternal( 10001, "Could not connect to X server.", NULL, NULL );
+         hb_errInternal( 10001, "Could not connect to X server.", nullptr, nullptr );
       }
       return HB_FALSE;
    }
@@ -4784,7 +4784,7 @@ static void hb_gt_xwc_CreateWindow( PXWND_DEF wnd )
             return;
             */
             s_fNoXServer = HB_TRUE;
-            hb_errInternal( 10001, "Cannot load 'fixed' font", NULL, NULL );
+            hb_errInternal( 10001, "Cannot load 'fixed' font", nullptr, nullptr );
          }
       }
    }
@@ -4944,7 +4944,7 @@ static void hb_gt_xwc_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    if( hb_vmIsMt() )
    {
       if( ! XInitThreads() )
-         hb_errInternal( 10002, "XInitThreads() failed !!!", NULL, NULL );
+         hb_errInternal( 10002, "XInitThreads() failed !!!", nullptr, nullptr );
    }
 #endif
 

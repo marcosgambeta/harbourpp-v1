@@ -563,7 +563,7 @@ void hb_stackPop( void )
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackPop()" ) );
 
    if( --hb_stack.pPos <= hb_stack.pBase )
-      hb_errInternal( HB_EI_STACKUFLOW, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_STACKUFLOW, nullptr, nullptr, nullptr );
 
    if( HB_IS_COMPLEX( *hb_stack.pPos ) )
       hb_itemClear( *hb_stack.pPos );
@@ -580,7 +580,7 @@ void hb_stackPopReturn( void )
       hb_itemClear( &hb_stack.Return );
 
    if( --hb_stack.pPos <= hb_stack.pBase )
-      hb_errInternal( HB_EI_STACKUFLOW, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_STACKUFLOW, nullptr, nullptr, nullptr );
 
    hb_itemRawMove( &hb_stack.Return, *hb_stack.pPos );
 }
@@ -593,7 +593,7 @@ void hb_stackDec( void )
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackDec()" ) );
 
    if( --hb_stack.pPos <= hb_stack.pBase )
-      hb_errInternal( HB_EI_STACKUFLOW, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_STACKUFLOW, nullptr, nullptr, nullptr );
 }
 
 #undef hb_stackDecrease
@@ -604,7 +604,7 @@ void hb_stackDecrease( HB_SIZE nItems )
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackDecrease()" ) );
 
    if( ( hb_stack.pPos -= nItems ) <= hb_stack.pBase )
-      hb_errInternal( HB_EI_STACKUFLOW, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_STACKUFLOW, nullptr, nullptr, nullptr );
 }
 
 #undef hb_stackPush
@@ -802,7 +802,7 @@ PHB_ITEM hb_stackNewFrame( PHB_STACK_STATE pFrame, HB_USHORT uiParams )
 #if defined( HB_VM_DEBUG )
       hb_stackDispLocal();
 #endif
-      hb_errInternal( HB_EI_VMNOTSYMBOL, NULL, "hb_vmDo()", NULL );
+      hb_errInternal( HB_EI_VMNOTSYMBOL, nullptr, "hb_vmDo()", nullptr );
    }
 
    pFrame->nBaseItem = hb_stack.pBase - hb_stack.pItems;
@@ -827,7 +827,7 @@ void hb_stackOldFrame( PHB_STACK_STATE pFrame )
 {
    HB_STACK_TLS_PRELOAD
    if( hb_stack.pPos <= hb_stack.pBase )
-      hb_errInternal( HB_EI_STACKUFLOW, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_STACKUFLOW, nullptr, nullptr, nullptr );
 
    do
    {
@@ -847,7 +847,7 @@ PHB_ITEM hb_stackItem( HB_ISIZ nItemPos )
 {
    HB_STACK_TLS_PRELOAD
    if( nItemPos < 0 )
-      hb_errInternal( HB_EI_STACKUFLOW, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_STACKUFLOW, nullptr, nullptr, nullptr );
 
    return *( hb_stack.pItems + nItemPos );
 }
@@ -857,7 +857,7 @@ PHB_ITEM hb_stackItemFromTop( int iFromTop )
 {
    HB_STACK_TLS_PRELOAD
    if( iFromTop >= 0 )
-      hb_errInternal( HB_EI_STACKUFLOW, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_STACKUFLOW, nullptr, nullptr, nullptr );
 
    return *( hb_stack.pPos + iFromTop );
 }
@@ -867,7 +867,7 @@ PHB_ITEM hb_stackItemFromBase( int iFromBase )
 {
    HB_STACK_TLS_PRELOAD
    if( iFromBase < 0 )
-      hb_errInternal( HB_EI_STACKUFLOW, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_STACKUFLOW, nullptr, nullptr, nullptr );
 
    return *( hb_stack.pBase + iFromBase + 1 );
 }

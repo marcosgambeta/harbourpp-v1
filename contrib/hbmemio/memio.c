@@ -217,7 +217,7 @@ static PHB_MEMFS_INODE memfsInodeAlloc( const char * szName )
 
    if( memfsInodeFind( szName, &ulInode ) )
    {
-      hb_errInternal( 9999, "memfsInodeAlloc: Inode already exists", NULL, NULL );
+      hb_errInternal( 9999, "memfsInodeAlloc: Inode already exists", nullptr, nullptr );
       return NULL;
    }
 
@@ -256,7 +256,7 @@ static PHB_MEMFS_FILE memfsHandleToFile( HB_FHANDLE hFile )
    if( hFile == FS_ERROR || ( HB_ULONG ) hFile == 0 || ( HB_ULONG ) hFile > s_fs.ulFileAlloc || s_fs.pFiles[ ( HB_ULONG ) hFile - 1 ] == NULL )
    {
 #if 0
-      hb_errInternal( 9999, "memfsHandleToFile: Invalid file handle", NULL, NULL );
+      hb_errInternal( 9999, "memfsHandleToFile: Invalid file handle", nullptr, nullptr );
 #endif
       return NULL;
    }

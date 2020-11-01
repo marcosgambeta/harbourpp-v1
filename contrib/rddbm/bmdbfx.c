@@ -778,7 +778,7 @@ static void hb_bmRddInit( void * cargo )
    }
 
    if( fError )
-      hb_errInternal( HB_EI_RDDINVALID, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
 }
 
 HB_FUNC( _BMDBF ) { ; }

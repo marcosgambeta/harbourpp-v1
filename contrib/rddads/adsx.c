@@ -1833,7 +1833,7 @@ static void hb_adsxRddInit( void * cargo )
 #endif
           hb_rddRegister( "ADSADTX", RDT_FULL ) > 1 )
       {
-         hb_errInternal( HB_EI_RDDINVALID, NULL, NULL, NULL );
+         hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
          /* not executed, only to force linking ADS RDD */
          HB_FUNC_EXEC( ADSCDX );
       }

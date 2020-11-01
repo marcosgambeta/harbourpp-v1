@@ -111,7 +111,7 @@ static void hb_gt_wvt_RegisterClass( HINSTANCE hInstance )
 
    if( ! RegisterClass( &wndclass ) &&
        GetLastError() != ERROR_CLASS_ALREADY_EXISTS )
-      hb_errInternal( 10001, "Failed to register WGU window class", NULL, NULL );
+      hb_errInternal( 10001, "Failed to register WGU window class", nullptr, nullptr );
 }
 
 static PHB_GTWVT hb_gt_wvt_Find( HWND hWnd )
@@ -1153,7 +1153,7 @@ static HB_BOOL hb_gt_wvt_CreateConsoleWindow( PHB_GTWVT pWVT )
 
       pWVT->hWnd = hb_gt_wvt_CreateWindow( pWVT );
       if( ! pWVT->hWnd )
-         hb_errInternal( 10001, "Failed to create WVT window", NULL, NULL );
+         hb_errInternal( 10001, "Failed to create WVT window", nullptr, nullptr );
 
       GetClientRect( pWVT->hWnd, &rc );
       pWVT->width = rc.right - rc.left;
@@ -1188,7 +1188,7 @@ static void hb_gt_wvt_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
    pWVT = hb_gt_wvt_New( pGT, ( HINSTANCE ) hInstance, iCmdShow );
    if( ! pWVT )
-      hb_errInternal( 10001, "Maximum number of WGU windows reached, cannot create another one", NULL, NULL );
+      hb_errInternal( 10001, "Maximum number of WGU windows reached, cannot create another one", nullptr, nullptr );
 
    HB_GTLOCAL( pGT ) = ( void * ) pWVT;
 

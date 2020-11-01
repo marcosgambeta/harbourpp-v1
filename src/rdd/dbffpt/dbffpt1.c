@@ -5452,7 +5452,7 @@ static void hb_dbffptRddInit( void * cargo )
        hb_rddRegister( "DBFFPT",  RDT_FULL ) > 1 ||
        hb_rddRegister( "DBFBLOB", RDT_FULL ) > 1 )
    {
-      hb_errInternal( HB_EI_RDDINVALID, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
    }
 }
 

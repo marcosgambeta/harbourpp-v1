@@ -425,17 +425,17 @@ extern void        hb_stackUpdateAllocator( void *, PHB_ALLOCUPDT_FUNC, int );
 
 #define hb_stackDecrease( n )       do { \
                                        if( ( hb_stack.pPos -= (n) ) <= hb_stack.pBase ) \
-                                          hb_errInternal( HB_EI_STACKUFLOW, NULL, NULL, NULL ); \
+                                          hb_errInternal( HB_EI_STACKUFLOW, nullptr, nullptr, nullptr ); \
                                     } while( 0 )
 
 #define hb_stackDec( )              do { \
                                        if( --hb_stack.pPos <= hb_stack.pBase ) \
-                                          hb_errInternal( HB_EI_STACKUFLOW, NULL, NULL, NULL ); \
+                                          hb_errInternal( HB_EI_STACKUFLOW, nullptr, nullptr, nullptr ); \
                                     } while( 0 )
 
 #define hb_stackPop( )              do { \
                                        if( --hb_stack.pPos <= hb_stack.pBase ) \
-                                          hb_errInternal( HB_EI_STACKUFLOW, NULL, NULL, NULL ); \
+                                          hb_errInternal( HB_EI_STACKUFLOW, nullptr, nullptr, nullptr ); \
                                        if( HB_IS_COMPLEX( * hb_stack.pPos ) ) \
                                           hb_itemClear( * hb_stack.pPos ); \
                                     } while( 0 )
@@ -444,7 +444,7 @@ extern void        hb_stackUpdateAllocator( void *, PHB_ALLOCUPDT_FUNC, int );
                                        if( HB_IS_COMPLEX( &hb_stack.Return ) ) \
                                           hb_itemClear( &hb_stack.Return ); \
                                        if( --hb_stack.pPos <= hb_stack.pBase ) \
-                                          hb_errInternal( HB_EI_STACKUFLOW, NULL, NULL, NULL ); \
+                                          hb_errInternal( HB_EI_STACKUFLOW, nullptr, nullptr, nullptr ); \
                                        hb_itemRawMove( &hb_stack.Return, * hb_stack.pPos ); \
                                     } while( 0 )
 

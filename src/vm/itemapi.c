@@ -340,7 +340,7 @@ PHB_ITEM hb_itemPutCLConst( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
    else if( szText[ nLen ] == '\0' )
       pItem->item.asString.value = ( char * ) HB_UNCONST( szText );
    else
-      hb_errInternal( 6003, "Internal error: hb_itemPutCLConst() missing termination character", NULL, NULL );
+      hb_errInternal( 6003, "Internal error: hb_itemPutCLConst() missing termination character", nullptr, nullptr );
 
    return pItem;
 }
@@ -1665,7 +1665,7 @@ void hb_itemCopy( PHB_ITEM pDest, PHB_ITEM pSource )
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemCopy(%p, %p)", ( void * ) pDest, ( void * ) pSource ) );
 
    if( pDest == pSource )
-      hb_errInternal( HB_EI_ITEMBADCOPY, NULL, "hb_itemCopy()", NULL );
+      hb_errInternal( HB_EI_ITEMBADCOPY, nullptr, "hb_itemCopy()", nullptr );
 
    if( HB_IS_COMPLEX( pDest ) )
       hb_itemClear( pDest );
@@ -1777,7 +1777,7 @@ void hb_itemMove( PHB_ITEM pDest, PHB_ITEM pSource )
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemMove(%p, %p)", ( void * ) pDest, ( void * ) pSource ) );
 
    if( pDest == pSource )
-      hb_errInternal( HB_EI_ITEMBADCOPY, NULL, "hb_itemMove()", NULL );
+      hb_errInternal( HB_EI_ITEMBADCOPY, nullptr, "hb_itemMove()", nullptr );
 
    if( HB_IS_COMPLEX( pDest ) )
       hb_itemClear( pDest );

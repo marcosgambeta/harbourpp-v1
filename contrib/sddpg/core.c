@@ -116,7 +116,7 @@ static void hb_pgsqldd_init( void * cargo )
    HB_SYMBOL_UNUSED( cargo );
 
    if( ! hb_sddRegister( &s_pgsqldd ) )
-      hb_errInternal( HB_EI_RDDINVALID, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
 }
 
 HB_FUNC( HB_SDDPG_REGISTER )

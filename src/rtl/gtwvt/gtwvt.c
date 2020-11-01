@@ -165,7 +165,7 @@ static void hb_gt_wvt_RegisterClass( HINSTANCE hInstance )
    if( ! RegisterClass( &wndclass ) )
    {
       if( GetLastError() != ERROR_CLASS_ALREADY_EXISTS )
-         hb_errInternal( 10001, "Failed to register WVT window class", NULL, NULL );
+         hb_errInternal( 10001, "Failed to register WVT window class", nullptr, nullptr );
    }
 }
 
@@ -3248,7 +3248,7 @@ static HB_BOOL hb_gt_wvt_CreateConsoleWindow( PHB_GTWVT pWVT )
          }
       }
       else
-         hb_errInternal( 10001, "Failed to create WVT window", NULL, NULL );
+         hb_errInternal( 10001, "Failed to create WVT window", nullptr, nullptr );
    }
 
    return HB_TRUE;
@@ -3397,7 +3397,7 @@ static void hb_gt_wvt_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
       #endif
    }
    else
-      hb_errInternal( 10001, "Maximum number of WVT windows reached, cannot create another one", NULL, NULL );
+      hb_errInternal( 10001, "Maximum number of WVT windows reached, cannot create another one", nullptr, nullptr );
 }
 
 /* ********************************************************************** */

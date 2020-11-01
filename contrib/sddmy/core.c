@@ -105,7 +105,7 @@ static void hb_mysqldd_init( void * cargo )
    if( ! hb_sddRegister( &s_mysqldd ) ||
        ( sizeof( MYSQL_ROW_OFFSET ) != sizeof( void * ) ) )
    {
-      hb_errInternal( HB_EI_RDDINVALID, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
    }
 }
 

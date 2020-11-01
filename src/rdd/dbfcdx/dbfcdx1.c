@@ -184,7 +184,7 @@ static HB_SHORT cdxTmpStackSize = 0;
  */
 static void hb_cdxErrInternal( const char * szMsg )
 {
-   hb_errInternal( 9201, szMsg ? szMsg : "hb_cdxErrInternal: data integrity error.", NULL, NULL );
+   hb_errInternal( 9201, szMsg ? szMsg : "hb_cdxErrInternal: data integrity error.", nullptr, nullptr );
 }
 
 /*
@@ -945,7 +945,7 @@ static void hb_cdxIndexLockFlush( LPCDXINDEX pIndex )
    if( ! hb_dbfLockIdxWrite( &pIndex->pArea->dbfarea, pIndex->pFile,
                              &pIndex->lockData ) )
    {
-      hb_errInternal( 9109, "hb_cdxIndexLockFlush: flush lock failed.", NULL, NULL );
+      hb_errInternal( 9109, "hb_cdxIndexLockFlush: flush lock failed.", nullptr, nullptr );
    }
 }
 
@@ -958,10 +958,10 @@ static HB_ULONG hb_cdxIndexGetAvailPage( LPCDXINDEX pIndex, HB_BOOL fHeader )
    HB_ULONG ulPage;
 
    if( pIndex->fReadonly )
-      hb_errInternal( 9101, "hb_cdxIndexGetAvailPage on readonly database.", NULL, NULL );
+      hb_errInternal( 9101, "hb_cdxIndexGetAvailPage on readonly database.", nullptr, nullptr );
 
    if( pIndex->fShared && ! pIndex->lockWrite )
-      hb_errInternal( 9102, "hb_cdxIndexGetAvailPage on not locked index file.", NULL, NULL );
+      hb_errInternal( 9102, "hb_cdxIndexGetAvailPage on not locked index file.", nullptr, nullptr );
 
    if( pIndex->freePage != 0 && pIndex->freePage != CDX_DUMMYNODE && ! fHeader )
    {
@@ -977,7 +977,7 @@ static HB_ULONG hb_cdxIndexGetAvailPage( LPCDXINDEX pIndex, HB_BOOL fHeader )
       {
          HB_BYTE byBuf[ 4 ];
          if( hb_fileReadAt( pFile, byBuf, 4, hb_cdxFilePageOffset( pIndex, ulPage ) ) != 4 )
-            hb_errInternal( EDBF_READ, "hb_cdxIndexGetAvailPage: Read index page failed.", NULL, NULL );
+            hb_errInternal( EDBF_READ, "hb_cdxIndexGetAvailPage: Read index page failed.", nullptr, nullptr );
 #ifdef HB_CDX_DBGUPDT
          cdxReadNO++;
 #endif
@@ -1011,7 +1011,7 @@ static HB_ULONG hb_cdxIndexGetAvailPage( LPCDXINDEX pIndex, HB_BOOL fHeader )
          hb_cdxIndexLockFlush( pIndex );
          if( hb_fileWriteAt( pFile, byPageBuf, nSize,
                              hb_cdxFilePageOffset( pIndex, ulPage ) ) != nSize )
-            hb_errInternal( EDBF_WRITE, "Write in index page failed.", NULL, NULL );
+            hb_errInternal( EDBF_WRITE, "Write in index page failed.", nullptr, nullptr );
 #ifdef HB_CDX_DBGUPDT
          cdxWriteNO++;
 #endif
@@ -1033,9 +1033,9 @@ static void hb_cdxIndexPutAvailPage( LPCDXINDEX pIndex, HB_ULONG ulPage, HB_BOOL
       LPCDXLIST pLst;
 
       if( pIndex->fReadonly )
-         hb_errInternal( 9101, "hb_cdxIndexPutAvailPage on readonly database.", NULL, NULL );
+         hb_errInternal( 9101, "hb_cdxIndexPutAvailPage on readonly database.", nullptr, nullptr );
       if( pIndex->fShared && ! pIndex->lockWrite )
-         hb_errInternal( 9102, "hb_cdxIndexPutAvailPage on not locked index file.", NULL, NULL );
+         hb_errInternal( 9102, "hb_cdxIndexPutAvailPage on not locked index file.", nullptr, nullptr );
 
       do
       {
@@ -1061,9 +1061,9 @@ static void hb_cdxIndexFlushAvailPage( LPCDXINDEX pIndex )
    HB_ULONG ulPage;
 
    if( pIndex->fReadonly )
-      hb_errInternal( 9101, "hb_cdxIndexFlushAvailPage on readonly database.", NULL, NULL );
+      hb_errInternal( 9101, "hb_cdxIndexFlushAvailPage on readonly database.", nullptr, nullptr );
    if( pIndex->fShared && ! pIndex->lockWrite )
-      hb_errInternal( 9102, "hb_cdxIndexFlushAvailPage on not locked index file.", NULL, NULL );
+      hb_errInternal( 9102, "hb_cdxIndexFlushAvailPage on not locked index file.", nullptr, nullptr );
    hb_cdxIndexLockFlush( pIndex );
 
    ulPage = pIndex->freePage;
@@ -1077,7 +1077,7 @@ static void hb_cdxIndexFlushAvailPage( LPCDXINDEX pIndex )
          if( hb_fileWriteAt( pIndex->pFile, byPageBuf, pIndex->uiPageLen,
                              hb_cdxFilePageOffset( pIndex, ulPage ) ) !=
              ( HB_SIZE ) pIndex->uiPageLen )
-            hb_errInternal( EDBF_WRITE, "Write in index page failed.", NULL, NULL );
+            hb_errInternal( EDBF_WRITE, "Write in index page failed.", nullptr, nullptr );
 #ifdef HB_CDX_DBGUPDT
          cdxWriteNO++;
 #endif
@@ -1113,14 +1113,14 @@ static void hb_cdxIndexPageWrite( LPCDXINDEX pIndex, HB_ULONG ulPage,
                                   const HB_BYTE * pBuffer, HB_SIZE nSize )
 {
    if( pIndex->fReadonly )
-      hb_errInternal( 9101, "hb_cdxIndexPageWrite on readonly database.", NULL, NULL );
+      hb_errInternal( 9101, "hb_cdxIndexPageWrite on readonly database.", nullptr, nullptr );
    if( pIndex->fShared && ! pIndex->lockWrite )
-      hb_errInternal( 9102, "hb_cdxIndexPageWrite on not locked index file.", NULL, NULL );
+      hb_errInternal( 9102, "hb_cdxIndexPageWrite on not locked index file.", nullptr, nullptr );
    hb_cdxIndexLockFlush( pIndex );
 
    if( hb_fileWriteAt( pIndex->pFile, pBuffer, nSize,
                        hb_cdxFilePageOffset( pIndex, ulPage ) ) != nSize )
-      hb_errInternal( EDBF_WRITE, "Write in index page failed.", NULL, NULL );
+      hb_errInternal( EDBF_WRITE, "Write in index page failed.", nullptr, nullptr );
    pIndex->fChanged = HB_TRUE;
 #ifdef HB_CDX_DBGUPDT
    cdxWriteNO++;
@@ -1134,11 +1134,11 @@ static void hb_cdxIndexPageRead( LPCDXINDEX pIndex, HB_ULONG ulPage,
                                  HB_BYTE * pBuffer, HB_SIZE nSize )
 {
    if( pIndex->fShared && ! ( pIndex->lockRead || pIndex->lockWrite ) )
-      hb_errInternal( 9103, "hb_cdxIndexPageRead on not locked index file.", NULL, NULL );
+      hb_errInternal( 9103, "hb_cdxIndexPageRead on not locked index file.", nullptr, nullptr );
 
    if( hb_fileReadAt( pIndex->pFile, pBuffer, nSize,
                       hb_cdxFilePageOffset( pIndex, ulPage ) ) != nSize )
-      hb_errInternal( EDBF_READ, "hb_cdxIndexPageRead: Read index page failed.", NULL, NULL );
+      hb_errInternal( EDBF_READ, "hb_cdxIndexPageRead: Read index page failed.", nullptr, nullptr );
 #ifdef HB_CDX_DBGUPDT
    cdxReadNO++;
 #endif
@@ -1157,7 +1157,7 @@ static void hb_cdxIndexCheckVersion( LPCDXINDEX pIndex )
       if( pIndex->lockWrite > 0 && hb_fileSize( pIndex->pFile ) == 0 )
          memset( byBuf, 0, 8 );
       else
-         hb_errInternal( 2155, "hb_cdxIndexCheckVersion: Read error on index heading page.", NULL, NULL );
+         hb_errInternal( 2155, "hb_cdxIndexCheckVersion: Read error on index heading page.", nullptr, nullptr );
    }
 #ifdef HB_CDX_DBGUPDT
    cdxReadNO++;
@@ -1194,10 +1194,10 @@ static HB_BOOL hb_cdxIndexLockRead( LPCDXINDEX pIndex )
    }
 #ifdef HB_CDX_DBGCODE
    if( pIndex->lockRead != 0 )
-      hb_errInternal( 9105, "hb_cdxIndexLockRead: bad count of locks.", NULL, NULL );
+      hb_errInternal( 9105, "hb_cdxIndexLockRead: bad count of locks.", nullptr, nullptr );
 
    if( pIndex->WrLck || pIndex->RdLck )
-      hb_errInternal( 9107, "hb_cdxIndexLockRead: lock failure (*)", NULL, NULL );
+      hb_errInternal( 9107, "hb_cdxIndexLockRead: lock failure (*)", nullptr, nullptr );
    pIndex->RdLck = HB_TRUE;
 #endif
 
@@ -1223,16 +1223,16 @@ static HB_BOOL hb_cdxIndexLockWrite( LPCDXINDEX pIndex )
    HB_BOOL ret;
 
    if( pIndex->fReadonly )
-      hb_errInternal( 9101, "hb_cdxIndexLockWrite: readonly index.", NULL, NULL );
+      hb_errInternal( 9101, "hb_cdxIndexLockWrite: readonly index.", nullptr, nullptr );
    if( pIndex->lockRead )
-      hb_errInternal( 9105, "hb_cdxIndexLockWrite: writeLock after readLock.", NULL, NULL );
+      hb_errInternal( 9105, "hb_cdxIndexLockWrite: writeLock after readLock.", nullptr, nullptr );
    if( pIndex->lockWrite > 0 )
    {
       pIndex->lockWrite++;
       return HB_TRUE;
    }
    if( pIndex->lockWrite != 0 )
-      hb_errInternal( 9105, "hb_cdxIndexLockWrite: bad count of locks.", NULL, NULL );
+      hb_errInternal( 9105, "hb_cdxIndexLockWrite: bad count of locks.", nullptr, nullptr );
 
    if( ! pIndex->pArea->dbfarea.fShared || ! pIndex->fShared )
       ret = HB_TRUE;
@@ -1240,7 +1240,7 @@ static HB_BOOL hb_cdxIndexLockWrite( LPCDXINDEX pIndex )
    {
 #ifdef HB_CDX_DBGCODE
       if( pIndex->WrLck || pIndex->RdLck )
-         hb_errInternal( 9107, "hb_cdxIndexLockWrite: lock failure (*)", NULL, NULL );
+         hb_errInternal( 9107, "hb_cdxIndexLockWrite: lock failure (*)", nullptr, nullptr );
       pIndex->WrLck = HB_TRUE;
 #endif
       ret = hb_dbfLockIdxFile( &pIndex->pArea->dbfarea, pIndex->pFile,
@@ -1267,7 +1267,7 @@ static HB_BOOL hb_cdxIndexUnLockRead( LPCDXINDEX pIndex )
    pIndex->lockRead--;
    if( pIndex->lockRead < 0 )
    {
-      hb_errInternal( 9106, "hb_cdxIndexUnLockRead: bad count of locks.", NULL, NULL );
+      hb_errInternal( 9106, "hb_cdxIndexUnLockRead: bad count of locks.", nullptr, nullptr );
    }
    if( pIndex->lockRead || pIndex->lockWrite )
    {
@@ -1284,13 +1284,13 @@ static HB_BOOL hb_cdxIndexUnLockRead( LPCDXINDEX pIndex )
    {
 #ifdef HB_CDX_DBGCODE
       if( pIndex->WrLck || ! pIndex->RdLck )
-         hb_errInternal( 9108, "hb_cdxIndexUnLockRead: unlock error (*)", NULL, NULL );
+         hb_errInternal( 9108, "hb_cdxIndexUnLockRead: unlock error (*)", nullptr, nullptr );
       pIndex->RdLck = HB_FALSE;
 #endif
       if( ! hb_dbfLockIdxFile( &pIndex->pArea->dbfarea, pIndex->pFile, FL_UNLOCK,
                                HB_TRUE, &pIndex->lockData ) )
       {
-         hb_errInternal( 9108, "hb_cdxIndexUnLockRead: unlock error.", NULL, NULL );
+         hb_errInternal( 9108, "hb_cdxIndexUnLockRead: unlock error.", nullptr, nullptr );
       }
    }
    return HB_TRUE;
@@ -1309,11 +1309,11 @@ static HB_BOOL hb_cdxIndexUnLockWrite( LPCDXINDEX pIndex )
 
    if( pIndex->lockWrite < 1 )
    {
-      hb_errInternal( 9106, "hb_cdxIndexUnLockWrite: bad count of locks.", NULL, NULL );
+      hb_errInternal( 9106, "hb_cdxIndexUnLockWrite: bad count of locks.", nullptr, nullptr );
    }
    if( pIndex->lockRead )
    {
-      hb_errInternal( 9105, "hb_cdxIndexUnLockWrite: writeUnLock before readUnLock.", NULL, NULL );
+      hb_errInternal( 9105, "hb_cdxIndexUnLockWrite: writeUnLock before readUnLock.", nullptr, nullptr );
    }
 
    hb_cdxIndexFlushBuffers( pIndex );
@@ -1330,7 +1330,7 @@ static HB_BOOL hb_cdxIndexUnLockWrite( LPCDXINDEX pIndex )
          HB_PUT_BE_UINT32( &byBuf[ 4 ], pIndex->ulVersion );
          if( hb_fileWriteAt( pIndex->pFile, byBuf, 8, 0x04 ) != 8 )
          {
-            hb_errInternal( EDBF_WRITE, "Write in index page failed (ver)", NULL, NULL );
+            hb_errInternal( EDBF_WRITE, "Write in index page failed (ver)", nullptr, nullptr );
          }
          pIndex->fFlush = HB_TRUE;
          pIndex->fChanged = HB_FALSE;
@@ -1338,13 +1338,13 @@ static HB_BOOL hb_cdxIndexUnLockWrite( LPCDXINDEX pIndex )
       hb_fileFlush( pIndex->pFile, HB_TRUE );
 #ifdef HB_CDX_DBGCODE
       if( ! pIndex->WrLck || pIndex->RdLck )
-         hb_errInternal( 9108, "hb_cdxIndexUnLockWrite: unlock error (*)", NULL, NULL );
+         hb_errInternal( 9108, "hb_cdxIndexUnLockWrite: unlock error (*)", nullptr, nullptr );
       pIndex->WrLck = HB_FALSE;
 #endif
       if( ! hb_dbfLockIdxFile( &pIndex->pArea->dbfarea, pIndex->pFile, FL_UNLOCK,
                                HB_TRUE, &pIndex->lockData ) )
       {
-         hb_errInternal( 9108, "hb_cdxIndexUnLockWrite: unlock error.", NULL, NULL );
+         hb_errInternal( 9108, "hb_cdxIndexUnLockWrite: unlock error.", nullptr, nullptr );
       }
    }
    else
@@ -1355,7 +1355,7 @@ static HB_BOOL hb_cdxIndexUnLockWrite( LPCDXINDEX pIndex )
          HB_PUT_LE_UINT32( &byBuf[ 0 ], pIndex->freePage );
          if( hb_fileWriteAt( pIndex->pFile, byBuf, 4, 0x04 ) != 4 )
          {
-            hb_errInternal( EDBF_WRITE, "Write in index page failed (ver.ex)", NULL, NULL );
+            hb_errInternal( EDBF_WRITE, "Write in index page failed (ver.ex)", nullptr, nullptr );
          }
          pIndex->ulVersion = pIndex->freePage;
          pIndex->fFlush = HB_TRUE;
@@ -4910,11 +4910,11 @@ static void hb_cdxIndexFree( LPCDXINDEX pIndex )
 #ifdef HB_CDX_DBGCODE
    if( pIndex->fShared && ( pIndex->lockWrite || pIndex->lockRead ) &&
        hb_vmRequestQuery() == 0 )
-      hb_errInternal( 9104, "hb_cdxIndexFree: index file still locked.", NULL, NULL );
+      hb_errInternal( 9104, "hb_cdxIndexFree: index file still locked.", nullptr, nullptr );
 
    if( ( pIndex->WrLck || pIndex->RdLck ) &&
        hb_vmRequestQuery() == 0 )
-      hb_errInternal( 9104, "hb_cdxIndexFree: index file still locked (*)", NULL, NULL );
+      hb_errInternal( 9104, "hb_cdxIndexFree: index file still locked (*)", nullptr, nullptr );
 #endif
 
    if( pIndex->szFileName != NULL )
@@ -7985,7 +7985,7 @@ static HB_ERRCODE hb_cdxOrderDestroy( CDXAREAP pArea, LPDBORDERINFO pOrderInfo )
          else
          {
             /* TODO: allow this operation for shared mode? */
-            hb_errInternal( 1023, "hb_cdxOrderDestroy: exclusive required.", NULL, NULL );
+            hb_errInternal( 1023, "hb_cdxOrderDestroy: exclusive required.", nullptr, nullptr );
          }
       }
    }
@@ -9119,14 +9119,14 @@ static void hb_cdxSortWritePage( LPCDXSORTINFO pSort )
       char szName[ HB_PATH_MAX ];
       pSort->pTempFile = hb_fileCreateTemp( NULL, NULL, FC_NORMAL, szName );
       if( pSort->pTempFile == NULL )
-         hb_errInternal( 9301, "hb_cdxSortWritePage: Could not create temporary file.", NULL, NULL );
+         hb_errInternal( 9301, "hb_cdxSortWritePage: Could not create temporary file.", nullptr, nullptr );
       pSort->szTempFileName = hb_strdup( szName );
    }
    pSort->pSwapPage[ pSort->ulCurPage ].ulKeys = pSort->ulKeys;
    pSort->pSwapPage[ pSort->ulCurPage ].nOffset = hb_fileSize( pSort->pTempFile );
    if( hb_fileWriteAt( pSort->pTempFile, pSort->pStartKey,
                        nSize, pSort->pSwapPage[ pSort->ulCurPage ].nOffset ) != nSize )
-      hb_errInternal( 9302, "hb_cdxSortWritePage: Write error in temporary file.", NULL, NULL );
+      hb_errInternal( 9302, "hb_cdxSortWritePage: Write error in temporary file.", nullptr, nullptr );
    pSort->ulKeys = 0;
    pSort->ulCurPage++;
 }
@@ -9143,7 +9143,7 @@ static void hb_cdxSortGetPageKey( LPCDXSORTINFO pSort, HB_ULONG ulPage,
 
       if( hb_fileReadAt( pSort->pTempFile, pSort->pSwapPage[ ulPage ].pKeyPool,
                          nSize, pSort->pSwapPage[ ulPage ].nOffset ) != nSize )
-         hb_errInternal( 9303, "hb_cdxSortGetPageKey: Read error from temporary file.", NULL, NULL );
+         hb_errInternal( 9303, "hb_cdxSortGetPageKey: Read error from temporary file.", nullptr, nullptr );
       pSort->pSwapPage[ ulPage ].nOffset += nSize;
       pSort->pSwapPage[ ulPage ].ulKeyBuf = ulKeys;
       pSort->pSwapPage[ ulPage ].ulCurKey = 0;
@@ -9479,7 +9479,7 @@ static void hb_cdxSortOut( LPCDXSORTINFO pSort )
    for( ulKey = 0; ulKey < pSort->ulTotKeys; ulKey++ )
    {
       if( ! hb_cdxSortKeyGet( pSort, &pKeyVal, &ulRec ) )
-         hb_errInternal( 9304, "hb_cdxSortOut: memory structure corrupted.", NULL, NULL );
+         hb_errInternal( 9304, "hb_cdxSortOut: memory structure corrupted.", nullptr, nullptr );
 
       if( fUnique )
       {
@@ -9496,7 +9496,7 @@ static void hb_cdxSortOut( LPCDXSORTINFO pSort )
          {
             printf( "\r\nulKey=%ld, pKeyVal=[%s][%ld], pKeyLast=[%s][%ld]\r\n",
                     ulKey, pKeyVal, ulRec, pSort->pLastKey, pSort->ulLastRec ); fflush( stdout );
-            hb_errInternal( 9305, "hb_cdxSortOut: sorting fails.", NULL, NULL );
+            hb_errInternal( 9305, "hb_cdxSortOut: sorting fails.", nullptr, nullptr );
          }
       }
 #endif
@@ -9507,7 +9507,7 @@ static void hb_cdxSortOut( LPCDXSORTINFO pSort )
 
 #ifdef HB_CDX_DBGCODE
    if( hb_cdxSortKeyGet( pSort, &pKeyVal, &ulRec ) )
-      hb_errInternal( 9306, "hb_cdxSortOut: memory structure corrupted(2).", NULL, NULL );
+      hb_errInternal( 9306, "hb_cdxSortOut: memory structure corrupted(2).", nullptr, nullptr );
 #endif
 
    if( pSort->NodeList[ 0 ] == NULL )
@@ -10051,7 +10051,7 @@ static void hb_cdxRddInit( void * cargo )
          return;
    }
 
-   hb_errInternal( HB_EI_RDDINVALID, NULL, NULL, NULL );
+   hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
 }
 
 #if defined( HB_SIXCDX )

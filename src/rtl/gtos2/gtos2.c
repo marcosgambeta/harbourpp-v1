@@ -583,7 +583,7 @@ static PVOID hb_gt_os2_allocMem( int iSize )
 
    rc = DosAllocMem( &pMem, iSize, PAG_COMMIT | PAG_READ | PAG_WRITE | OBJ_TILE );
    if( rc != NO_ERROR )
-      hb_errInternal( HB_EI_XGRABALLOC, "hb_gt_os2_allocMem() memory allocation failure.", NULL, NULL );
+      hb_errInternal( HB_EI_XGRABALLOC, "hb_gt_os2_allocMem() memory allocation failure.", nullptr, nullptr );
 
    return pMem;
 }

@@ -1587,7 +1587,7 @@ HB_FUNC( RDDREGISTER )
        */
       if( hb_rddRegister( szDriver, ( HB_USHORT ) hb_parni( 2 ) ) > 1 )
       {
-         hb_errInternal( HB_EI_RDDINVALID, NULL, NULL, NULL );
+         hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
       }
    }
 }

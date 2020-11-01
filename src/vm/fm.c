@@ -595,7 +595,7 @@ void * hb_xalloc( HB_SIZE nSize )         /* allocates fixed memory, returns NUL
    HB_TRACE_FM( HB_TR_DEBUG, ( "hb_xalloc(%" HB_PFS "u)", nSize ) );
 
    if( nSize == 0 )
-      hb_errInternal( HB_EI_XALLOCNULLSIZE, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_XALLOCNULLSIZE, nullptr, nullptr, nullptr );
 
 #ifdef HB_FM_NEED_INIT
    if( ! s_fInitedFM )
@@ -686,7 +686,7 @@ void * hb_xgrab( HB_SIZE nSize )         /* allocates fixed memory, exits on fai
    HB_TRACE_FM( HB_TR_DEBUG, ( "hb_xgrab(%" HB_PFS "u)", nSize ) );
 
    if( nSize == 0 )
-      hb_errInternal( HB_EI_XGRABNULLSIZE, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_XGRABNULLSIZE, nullptr, nullptr, nullptr );
 
 #ifdef HB_FM_NEED_INIT
    if( ! s_fInitedFM )
@@ -696,7 +696,7 @@ void * hb_xgrab( HB_SIZE nSize )         /* allocates fixed memory, exits on fai
    pMem = ( PHB_MEMINFO ) malloc( HB_ALLOC_SIZE( nSize ) );
 
    if( ! pMem )
-      hb_errInternal( HB_EI_XGRABALLOC, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_XGRABALLOC, nullptr, nullptr, nullptr );
 
 #ifdef HB_FM_STATISTICS
 
@@ -754,7 +754,7 @@ void * hb_xgrab( HB_SIZE nSize )         /* allocates fixed memory, exits on fai
       if( s_nMemoryLimConsumed > 0 && s_nMemoryConsumed > s_nMemoryLimConsumed )
       {
          s_nMemoryLimConsumed = 0;
-         hb_errInternal( HB_EI_XGRABALLOC, NULL, NULL, NULL );
+         hb_errInternal( HB_EI_XGRABALLOC, nullptr, nullptr, nullptr );
       }
 
 #ifdef HB_PARANOID_MEM_CHECK
@@ -776,17 +776,17 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
 #if 0
    /* disabled to make hb_xrealloc() ANSI-C realloc() compatible */
    if( ! pMem )
-      hb_errInternal( HB_EI_XREALLOCNULL, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_XREALLOCNULL, nullptr, nullptr, nullptr );
 
    if( nSize == 0 )
-      hb_errInternal( HB_EI_XREALLOCNULLSIZE, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_XREALLOCNULLSIZE, nullptr, nullptr, nullptr );
 #endif
 
 #ifdef HB_FM_STATISTICS
    if( pMem == NULL )
    {
       if( nSize == 0 )
-         hb_errInternal( HB_EI_XREALLOCNULLSIZE, NULL, NULL, NULL );
+         hb_errInternal( HB_EI_XREALLOCNULLSIZE, nullptr, nullptr, nullptr );
       return hb_xgrab( nSize );
    }
    else if( nSize == 0 )
@@ -802,12 +802,12 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
       pMemBlock = HB_FM_PTR( pMem );
 
       if( pMemBlock->u32Signature != HB_MEMINFO_SIGNATURE )
-         hb_errInternal( HB_EI_XREALLOCINV, NULL, NULL, NULL );
+         hb_errInternal( HB_EI_XREALLOCINV, nullptr, nullptr, nullptr );
 
       nMemSize = pMemBlock->nSize;
 
       if( HB_FM_GETSIG( pMem, nMemSize ) != HB_MEMINFO_SIGNATURE )
-         hb_errInternal( HB_EI_XMEMOVERFLOW, NULL, NULL, NULL );
+         hb_errInternal( HB_EI_XMEMOVERFLOW, nullptr, nullptr, nullptr );
 
       pMemBlock->u32Signature = 0;
       HB_FM_CLRSIG( HB_MEM_PTR( pMemBlock ), nMemSize );
@@ -853,7 +853,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
       if( s_nMemoryLimConsumed > 0 && s_nMemoryConsumed > s_nMemoryLimConsumed )
       {
          s_nMemoryLimConsumed = 0;
-         hb_errInternal( HB_EI_XREALLOC, NULL, NULL, NULL );
+         hb_errInternal( HB_EI_XREALLOC, nullptr, nullptr, nullptr );
       }
 
 #if defined( HB_PARANOID_MEM_CHECK ) || defined( HB_FM_FORCE_REALLOC )
@@ -869,14 +869,14 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
       pMem = realloc( HB_FM_PTR( pMem ), HB_ALLOC_SIZE( nSize ) );
 
    if( ! pMem )
-      hb_errInternal( HB_EI_XREALLOC, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_XREALLOC, nullptr, nullptr, nullptr );
 
 #else
 
    if( pMem == NULL )
    {
       if( nSize == 0 )
-         hb_errInternal( HB_EI_XREALLOCNULLSIZE, NULL, NULL, NULL );
+         hb_errInternal( HB_EI_XREALLOCNULLSIZE, nullptr, nullptr, nullptr );
       pMem = malloc( HB_ALLOC_SIZE( nSize ) );
       if( pMem )
          HB_ATOM_SET( HB_COUNTER_PTR( HB_MEM_PTR( pMem ) ), 1 );
@@ -905,7 +905,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
    }
 
    if( ! pMem )
-      hb_errInternal( HB_EI_XREALLOC, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_XREALLOC, nullptr, nullptr, nullptr );
 
 #endif
 
@@ -925,10 +925,10 @@ void hb_xfree( void * pMem )            /* frees fixed memory */
       if( s_fStatistic )
       {
          if( pMemBlock->u32Signature != HB_MEMINFO_SIGNATURE )
-            hb_errInternal( HB_EI_XFREEINV, NULL, NULL, NULL );
+            hb_errInternal( HB_EI_XFREEINV, nullptr, nullptr, nullptr );
 
          if( HB_FM_GETSIG( pMem, pMemBlock->nSize ) != HB_MEMINFO_SIGNATURE )
-            hb_errInternal( HB_EI_XMEMOVERFLOW, NULL, NULL, NULL );
+            hb_errInternal( HB_EI_XMEMOVERFLOW, nullptr, nullptr, nullptr );
 
          HB_FM_LOCK();
 
@@ -963,7 +963,7 @@ void hb_xfree( void * pMem )            /* frees fixed memory */
 #endif
    }
    else
-      hb_errInternal( HB_EI_XFREENULL, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_XFREENULL, nullptr, nullptr, nullptr );
 }
 
 /* increment reference counter */
@@ -987,7 +987,7 @@ void hb_xRefFree( void * pMem )
 #ifdef HB_FM_STATISTICS
 
    if( s_fStatistic && HB_FM_PTR( pMem )->u32Signature != HB_MEMINFO_SIGNATURE )
-      hb_errInternal( HB_EI_XFREEINV, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_XFREEINV, nullptr, nullptr, nullptr );
 
    if( HB_ATOM_DEC( HB_COUNTER_PTR( pMem ) ) == 0 )
       hb_xfree( pMem );
@@ -1055,7 +1055,7 @@ void * hb_xRefResize( void * pMem, HB_SIZE nSave, HB_SIZE nSize, HB_SIZE * pnAll
          return HB_MEM_PTR( pMem );
    }
 
-   hb_errInternal( HB_EI_XREALLOC, NULL, NULL, NULL );
+   hb_errInternal( HB_EI_XREALLOC, nullptr, nullptr, nullptr );
    return NULL;
 #endif
 }

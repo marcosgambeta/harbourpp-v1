@@ -144,7 +144,7 @@ static void hb_odbcdd_init( void * cargo )
    HB_SYMBOL_UNUSED( cargo );
 
    if( ! hb_sddRegister( &s_odbcdd ) )
-      hb_errInternal( HB_EI_RDDINVALID, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
 }
 
 HB_FUNC( HB_SDDODBC_REGISTER )

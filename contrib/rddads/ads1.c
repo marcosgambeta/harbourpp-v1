@@ -5747,7 +5747,7 @@ static void hb_adsRddInit( void * cargo )
        hb_rddRegister( "ADSCDX", RDT_FULL ) > 1 ||
        hb_rddRegister( "ADSNTX", RDT_FULL ) > 1 )
    {
-      hb_errInternal( HB_EI_RDDINVALID, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
    }
 }
 

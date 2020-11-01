@@ -1064,7 +1064,7 @@ HB_FUNC( WVG_REGISTERCLASS_BYNAME )
 
    if( ! RegisterClass( &wndclass ) )
       if( GetLastError() != 1410 )
-         hb_errInternal( 10001, "Failed to register DA window class", NULL, NULL );
+         hb_errInternal( 10001, "Failed to register DA window class", nullptr, nullptr );
 
    hb_strfree( hClass );
 }

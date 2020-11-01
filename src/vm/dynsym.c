@@ -104,7 +104,7 @@ static PHB_DYNS hb_dynsymInsert( PHB_SYMB pSymbol, HB_SYMCNT uiPos )
    if( ++s_uiDynSymbols == 0 )
    {
       --s_uiDynSymbols;
-      hb_errInternal( 6004, "Internal error: size of dynamic symbol table exceed", NULL, NULL );
+      hb_errInternal( 6004, "Internal error: size of dynamic symbol table exceed", nullptr, nullptr );
    }
    else if( s_uiDynSymbols == 1 )
    {

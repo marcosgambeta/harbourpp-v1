@@ -120,7 +120,7 @@ static HB_BOOL hb_errGetNumCode( int * piValue, const char * szOperation )
       }
 
       if( ! HB_IS_NUMERIC( pItem ) )
-         hb_errInternal( HB_EI_ERRRECFAILURE, NULL, NULL, NULL );
+         hb_errInternal( HB_EI_ERRRECFAILURE, nullptr, nullptr, nullptr );
 
       *piValue = hb_itemGetNI( pItem );
       hb_itemRelease( pItem );
@@ -422,7 +422,7 @@ HB_FUNC( ERRORNEW )
 
 HB_FUNC( __ERRINHANDLER )
 {
-   hb_errInternal( HB_EI_ERRRECFAILURE, NULL, NULL, NULL );
+   hb_errInternal( HB_EI_ERRRECFAILURE, nullptr, nullptr, nullptr );
 }
 
 HB_FUNC( ERRORBLOCK )
@@ -498,7 +498,7 @@ PHB_ITEM hb_errNew( void )
    HB_TRACE( HB_TR_DEBUG, ( "hb_errNew()" ) );
 
    if( ! s_pError || ! HB_IS_OBJECT( s_pError ) )
-      hb_errInternal( HB_EI_ERRRECFAILURE, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_ERRRECFAILURE, nullptr, nullptr, nullptr );
 
    return hb_arrayClone( s_pError );
 }
@@ -517,11 +517,11 @@ HB_USHORT hb_errLaunch( PHB_ITEM pError )
 
       /* Check if we have a valid error handler */
       if( ! pErrData->errorBlock || ! HB_IS_EVALITEM( pErrData->errorBlock ) )
-         hb_errInternal( HB_EI_ERRNOBLOCK, NULL, NULL, NULL );
+         hb_errInternal( HB_EI_ERRNOBLOCK, nullptr, nullptr, nullptr );
 
       /* Check if the error launcher was called too many times recursively */
       if( pErrData->iLaunchCount == HB_ERROR_LAUNCH_MAX )
-         hb_errInternal( HB_EI_ERRTOOMANY, NULL, NULL, NULL );
+         hb_errInternal( HB_EI_ERRTOOMANY, nullptr, nullptr, nullptr );
 
       /* Launch the error handler: "lResult := Eval( ErrorBlock(), oError )" */
       pErrData->iLaunchCount++;
@@ -575,11 +575,11 @@ HB_USHORT hb_errLaunch( PHB_ITEM pError )
          hb_itemRelease( pResult );
 
          if( bFailure )
-            hb_errInternal( HB_EI_ERRRECFAILURE, NULL, NULL, NULL );
+            hb_errInternal( HB_EI_ERRRECFAILURE, nullptr, nullptr, nullptr );
 
       }
       else
-         hb_errInternal( HB_EI_ERRRECFAILURE, NULL, NULL, NULL );
+         hb_errInternal( HB_EI_ERRRECFAILURE, nullptr, nullptr, nullptr );
    }
    else
       uiAction = E_RETRY;  /* Clipper does this, undocumented */
@@ -611,11 +611,11 @@ PHB_ITEM hb_errLaunchSubst( PHB_ITEM pError )
 
       /* Check if we have a valid error handler */
       if( ! pErrData->errorBlock || ! HB_IS_EVALITEM( pErrData->errorBlock ) )
-         hb_errInternal( HB_EI_ERRNOBLOCK, NULL, NULL, NULL );
+         hb_errInternal( HB_EI_ERRNOBLOCK, nullptr, nullptr, nullptr );
 
       /* Check if the error launcher was called too many times recursively */
       if( pErrData->iLaunchCount == HB_ERROR_LAUNCH_MAX )
-         hb_errInternal( HB_EI_ERRTOOMANY, NULL, NULL, NULL );
+         hb_errInternal( HB_EI_ERRTOOMANY, nullptr, nullptr, nullptr );
 
       /* Launch the error handler: "xResult := Eval( ErrorBlock(), oError )" */
       pErrData->iLaunchCount++;
@@ -654,7 +654,7 @@ PHB_ITEM hb_errLaunchSubst( PHB_ITEM pError )
          /* If the canSubstitute flag has not been set,
             consider it as a failure. */
          if( ! ( uiFlags & EF_CANSUBSTITUTE ) )
-            hb_errInternal( HB_EI_ERRRECFAILURE, NULL, NULL, NULL );
+            hb_errInternal( HB_EI_ERRRECFAILURE, nullptr, nullptr, nullptr );
       }
    }
    else

@@ -102,7 +102,7 @@ static void hb_sqlt3dd_init( void * cargo )
 #endif
 
    if( ! hb_sddRegister( &s_sqlt3dd ) )
-      hb_errInternal( HB_EI_RDDINVALID, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
 }
 
 static void hb_sqlt3dd_exit( void * cargo )

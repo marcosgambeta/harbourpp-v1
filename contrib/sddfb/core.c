@@ -97,7 +97,7 @@ static void hb_firebirddd_init( void * cargo )
    HB_SYMBOL_UNUSED( cargo );
 
    if( ! hb_sddRegister( &s_firebirddd ) || ( sizeof( isc_db_handle ) != sizeof( void * ) ) )
-      hb_errInternal( HB_EI_RDDINVALID, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
 }
 
 HB_FUNC( HB_SDDFB_REGISTER )

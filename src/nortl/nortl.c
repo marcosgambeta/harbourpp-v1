@@ -97,7 +97,7 @@ void * hb_xgrab( HB_SIZE nSize )        /* allocates fixed memory, exits on fail
    void * pMem;
 
    if( nSize == 0 )
-      hb_errInternal( HB_EI_XGRABNULLSIZE, "hb_xgrab requested to allocate zero bytes", NULL, NULL );
+      hb_errInternal( HB_EI_XGRABNULLSIZE, "hb_xgrab requested to allocate zero bytes", nullptr, nullptr );
 
 #ifdef HB_FM_STATISTICS
    pMem = malloc( nSize + HB_MEMINFO_SIZE + sizeof( HB_U32 ) );
@@ -125,7 +125,7 @@ void * hb_xgrab( HB_SIZE nSize )        /* allocates fixed memory, exits on fail
    pMem = malloc( nSize );
    if( ! pMem )
 #endif
-      hb_errInternal( HB_EI_XGRABALLOC, "hb_xgrab can't allocate memory", NULL, NULL );
+      hb_errInternal( HB_EI_XGRABALLOC, "hb_xgrab can't allocate memory", nullptr, nullptr );
 
    return pMem;
 }
@@ -150,10 +150,10 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
    nMemSize = pMemBlock->nSize;
 
    if( pMemBlock->Signature != HB_MEMINFO_SIGNATURE )
-      hb_errInternal( HB_EI_XREALLOCINV, "hb_xrealloc called with an invalid pointer", NULL, NULL );
+      hb_errInternal( HB_EI_XREALLOCINV, "hb_xrealloc called with an invalid pointer", nullptr, nullptr );
 
    if( HB_GET_LE_UINT32( ( ( HB_BYTE * ) pMem ) + nMemSize ) != HB_MEMINFO_SIGNATURE )
-      hb_errInternal( HB_EI_XMEMOVERFLOW, "Memory buffer overflow", NULL, NULL );
+      hb_errInternal( HB_EI_XMEMOVERFLOW, "Memory buffer overflow", nullptr, nullptr );
 
    HB_PUT_LE_UINT32( ( ( HB_BYTE * ) pMem ) + nMemSize, 0 );
 
@@ -181,7 +181,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
 #endif
 
    if( ! pResult && nSize )
-      hb_errInternal( HB_EI_XREALLOC, "hb_xrealloc can't reallocate memory", NULL, NULL );
+      hb_errInternal( HB_EI_XREALLOC, "hb_xrealloc can't reallocate memory", nullptr, nullptr );
 
    return pResult;
 }
@@ -194,10 +194,10 @@ void hb_xfree( void * pMem )            /* frees fixed memory */
       PHB_MEMINFO pMemBlock = ( PHB_MEMINFO ) ( ( HB_BYTE * ) pMem - HB_MEMINFO_SIZE );
 
       if( pMemBlock->Signature != HB_MEMINFO_SIGNATURE )
-         hb_errInternal( HB_EI_XFREEINV, "hb_xfree called with an invalid pointer", NULL, NULL );
+         hb_errInternal( HB_EI_XFREEINV, "hb_xfree called with an invalid pointer", nullptr, nullptr );
 
       if( HB_GET_LE_UINT32( ( ( HB_BYTE * ) pMem ) + pMemBlock->nSize ) != HB_MEMINFO_SIGNATURE )
-         hb_errInternal( HB_EI_XMEMOVERFLOW, "Memory buffer overflow", NULL, NULL );
+         hb_errInternal( HB_EI_XMEMOVERFLOW, "Memory buffer overflow", nullptr, nullptr );
 
       s_nMemoryConsumed -= pMemBlock->nSize;
       s_nMemoryBlocks--;
@@ -216,7 +216,7 @@ void hb_xfree( void * pMem )            /* frees fixed memory */
       free( pMem );
    }
    else
-      hb_errInternal( HB_EI_XFREENULL, "hb_xfree called with a NULL pointer", NULL, NULL );
+      hb_errInternal( HB_EI_XFREENULL, "hb_xfree called with a NULL pointer", nullptr, nullptr );
 }
 
 HB_SIZE hb_xquery( int iMode )

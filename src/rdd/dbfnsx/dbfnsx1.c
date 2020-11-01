@@ -1101,15 +1101,15 @@ static void hb_nsxTagCheckBuffers( LPTAGINFO pTag )
    HB_ULONG i;
 
    if( ( pTag->HdrChanged || pTag->pIndex->Changed ) && ! pTag->pIndex->lockWrite )
-      hb_errInternal( 9999, "hb_nsxTagCheckBuffers: tag modified in unlocked index", NULL, NULL );
+      hb_errInternal( 9999, "hb_nsxTagCheckBuffers: tag modified in unlocked index", nullptr, nullptr );
 
    for( i = 0; i < pTag->pIndex->ulPages; i++ )
    {
       pPage = pTag->pIndex->pages[ i ];
       if( pPage->Changed && ! pTag->pIndex->lockWrite )
-         hb_errInternal( 9999, "hb_nsxTagCheckBuffers: page modified in unlocked index", NULL, NULL );
+         hb_errInternal( 9999, "hb_nsxTagCheckBuffers: page modified in unlocked index", nullptr, nullptr );
       if( pPage->iUsed )
-         hb_errInternal( 9999, "hb_nsxTagCheckBuffers: page still allocated", NULL, NULL );
+         hb_errInternal( 9999, "hb_nsxTagCheckBuffers: page still allocated", nullptr, nullptr );
    }
 }
 
@@ -1154,7 +1154,7 @@ static void hb_nsxPageCheckKeys( LPPAGEINFO pPage, LPTAGINFO pTag, int iPos, int
             printf( "\r\nuiKeys=%d(%d/%d), (%d)[%.*s]<%ld>>(%d)[%.*s]<%ld>", pPage->uiKeys, iPos, iType,
                     u - 1, pTag->KeyLength, pKeyPrev, ulPrevRec, u, pTag->KeyLength, pKeyVal, ulRecNo );
             fflush( stdout );
-            hb_errInternal( 9999, "hb_nsxPageCheckKeys: keys sorted wrong.", NULL, NULL );
+            hb_errInternal( 9999, "hb_nsxPageCheckKeys: keys sorted wrong.", nullptr, nullptr );
          }
       }
       else
@@ -1173,7 +1173,7 @@ static void hb_nsxPageCheckKeys( LPPAGEINFO pPage, LPTAGINFO pTag, int iPos, int
                     u - 1, pTag->KeyLength, hb_nsxGetKeyVal( pPage, pTag->KeyLength, u - 1 ),
                     u, pTag->KeyLength, hb_nsxGetKeyVal( pPage, pTag->KeyLength, u ) );
             fflush( stdout );
-            hb_errInternal( 9999, "hb_nsxPageCheckKeys: keys sorted wrong.", NULL, NULL );
+            hb_errInternal( 9999, "hb_nsxPageCheckKeys: keys sorted wrong.", nullptr, nullptr );
          }
       }
    }
@@ -1181,7 +1181,7 @@ static void hb_nsxPageCheckKeys( LPPAGEINFO pPage, LPTAGINFO pTag, int iPos, int
    {
       printf( "\r\npPage->uiOffset=%d, uiOffset=%d\r\n", pPage->uiOffset, uiOffset );
       fflush( stdout );
-      hb_errInternal( 9999, "hb_nsxPageCheckKeys: wrong free offset in leaf page.", NULL, NULL );
+      hb_errInternal( 9999, "hb_nsxPageCheckKeys: wrong free offset in leaf page.", nullptr, nullptr );
    }
 }
 #endif
@@ -1192,7 +1192,7 @@ static void hb_nsxPageCheckKeys( LPPAGEINFO pPage, LPTAGINFO pTag, int iPos, int
 static HB_BOOL hb_nsxBlockRead( LPNSXINDEX pIndex, HB_ULONG ulBlock, void * buffer, int iSize )
 {
    if( ! pIndex->lockRead && ! pIndex->lockWrite )
-      hb_errInternal( 9103, "hb_nsxBlockRead on not locked index file.", NULL, NULL );
+      hb_errInternal( 9103, "hb_nsxBlockRead on not locked index file.", nullptr, nullptr );
 
    if( hb_fileReadAt( pIndex->pFile, buffer, iSize,
                       hb_nsxFileOffset( pIndex, ulBlock ) ) != ( HB_SIZE ) iSize )
@@ -1210,7 +1210,7 @@ static HB_BOOL hb_nsxBlockRead( LPNSXINDEX pIndex, HB_ULONG ulBlock, void * buff
 static HB_BOOL hb_nsxBlockWrite( LPNSXINDEX pIndex, HB_ULONG ulBlock, const void * buffer, int iSize )
 {
    if( ! pIndex->lockWrite )
-      hb_errInternal( 9102, "hb_nsxBlockWrite on not locked index file.", NULL, NULL );
+      hb_errInternal( 9102, "hb_nsxBlockWrite on not locked index file.", nullptr, nullptr );
 
    if( hb_fileWriteAt( pIndex->pFile, buffer, iSize,
                        hb_nsxFileOffset( pIndex, ulBlock ) ) != ( HB_SIZE ) iSize )
@@ -1349,7 +1349,7 @@ static void hb_nsxFreePageBuffer( LPNSXINDEX pIndex )
 static void hb_nsxIndexTrunc( LPNSXINDEX pIndex )
 {
    if( ! pIndex->lockWrite )
-      hb_errInternal( 9102, "hb_nsxIndexTrunc on not locked index file.", NULL, NULL );
+      hb_errInternal( 9102, "hb_nsxIndexTrunc on not locked index file.", nullptr, nullptr );
 
    hb_nsxFreePageBuffer( pIndex );
    pIndex->Update = pIndex->Changed = pIndex->fFlush = HB_TRUE;
@@ -1392,9 +1392,9 @@ static LPPAGEINFO hb_nsxPageGetBuffer( LPTAGINFO pTag, HB_ULONG ulPage )
       LPPAGEINFO pPage = pIndex->pFirst;
 
       if( pPage->iUsed )
-         hb_errInternal( 9999, "hb_nsxPageGetBuffer: page used.", NULL, NULL );
+         hb_errInternal( 9999, "hb_nsxPageGetBuffer: page used.", nullptr, nullptr );
       if( pPage->Changed )
-         hb_errInternal( 9999, "hb_nsxPageGetBuffer: page changed.", NULL, NULL );
+         hb_errInternal( 9999, "hb_nsxPageGetBuffer: page changed.", nullptr, nullptr );
 
       pIndex->pFirst = pPage->pNext;
       if( pIndex->pFirst )
@@ -1488,7 +1488,7 @@ static void hb_nsxPageRelease( LPTAGINFO pTag, LPPAGEINFO pPage )
       }
    }
    else if( pPage->iUsed < 0 )
-      hb_errInternal( 9999, "hb_nsxPageRelease: unused page freed.", NULL, NULL );
+      hb_errInternal( 9999, "hb_nsxPageRelease: unused page freed.", nullptr, nullptr );
 
 #ifdef HB_NSX_DEBUG_EXT
    if( hb_nsxPageType( pPage ) != 'f' )
@@ -2150,7 +2150,7 @@ static void hb_nsxIndexFlush( LPNSXINDEX pIndex )
          hb_nsxPageRelease( pIndex->lpTags[ 0 ], pPage );
       }
       else
-         hb_errInternal( 9999, "hb_nsxIndexFlush: unchaged page in the list.", NULL, NULL );
+         hb_errInternal( 9999, "hb_nsxIndexFlush: unchaged page in the list.", nullptr, nullptr );
    }
 
    for( i = 0; i < pIndex->iTags; i++ )
@@ -2207,10 +2207,10 @@ static HB_BOOL hb_nsxIndexLockWrite( LPNSXINDEX pIndex, HB_BOOL fCheck )
    HB_BOOL fOK;
 
    if( pIndex->fReadonly )
-      hb_errInternal( 9101, "hb_nsxIndexLockWrite: readonly index.", NULL, NULL );
+      hb_errInternal( 9101, "hb_nsxIndexLockWrite: readonly index.", nullptr, nullptr );
 
    if( pIndex->lockRead )
-      hb_errInternal( 9105, "hb_nsxIndexLockWrite: writeLock after readLock.", NULL, NULL );
+      hb_errInternal( 9105, "hb_nsxIndexLockWrite: writeLock after readLock.", nullptr, nullptr );
 
    if( pIndex->lockWrite > 0 || ! pIndex->fShared )
    {
@@ -2258,7 +2258,7 @@ static HB_BOOL hb_nsxIndexUnLockRead( LPNSXINDEX pIndex )
 
    pIndex->lockRead--;
    if( pIndex->lockRead < 0 )
-      hb_errInternal( 9106, "hb_nsxIndexUnLockRead: bad count of locks.", NULL, NULL );
+      hb_errInternal( 9106, "hb_nsxIndexUnLockRead: bad count of locks.", nullptr, nullptr );
 
    if( pIndex->lockRead || pIndex->lockWrite || ! pIndex->fShared ||
        HB_DIRTYREAD( &pIndex->pArea->dbfarea ) )
@@ -2272,7 +2272,7 @@ static HB_BOOL hb_nsxIndexUnLockRead( LPNSXINDEX pIndex )
                                FL_UNLOCK, HB_FALSE, &pIndex->lockData );
    }
    if( ! fOK )
-      hb_errInternal( 9108, "hb_nsxIndexUnLockRead: unlock error.", NULL, NULL );
+      hb_errInternal( 9108, "hb_nsxIndexUnLockRead: unlock error.", nullptr, nullptr );
 
    return fOK;
 }
@@ -2291,9 +2291,9 @@ static HB_BOOL hb_nsxIndexUnLockWrite( LPNSXINDEX pIndex )
 #endif
 
    if( pIndex->lockWrite <= 0 )
-      hb_errInternal( 9106, "hb_nsxIndexUnLockWrite: bad count of locks.", NULL, NULL );
+      hb_errInternal( 9106, "hb_nsxIndexUnLockWrite: bad count of locks.", nullptr, nullptr );
    if( pIndex->lockRead )
-      hb_errInternal( 9105, "hb_nsxIndexUnLockWrite: writeUnLock before readUnLock.", NULL, NULL );
+      hb_errInternal( 9105, "hb_nsxIndexUnLockWrite: writeUnLock before readUnLock.", nullptr, nullptr );
 
    hb_nsxIndexFlush( pIndex );
    pIndex->lockWrite--;
@@ -2310,7 +2310,7 @@ static HB_BOOL hb_nsxIndexUnLockWrite( LPNSXINDEX pIndex )
                                FL_UNLOCK, HB_FALSE, &pIndex->lockData );
    }
    if( ! fOK )
-      hb_errInternal( 9108, "hb_nsxIndexUnLockWrite: unlock error.", NULL, NULL );
+      hb_errInternal( 9108, "hb_nsxIndexUnLockWrite: unlock error.", nullptr, nullptr );
 
    return fOK;
 }
@@ -3097,9 +3097,9 @@ static HB_BOOL hb_nsxTagInsertKey( LPTAGINFO pTag, LPPAGEINFO pPage,
       if( uiOffset == 0 )
       {
          if( pNewKey )
-            hb_errInternal( 9999, "hb_nsxTagInsertKey: multiple leaf page split", NULL, NULL );
+            hb_errInternal( 9999, "hb_nsxTagInsertKey: multiple leaf page split", nullptr, nullptr );
          else if( uiHalfOffset == 0 )
-            hb_errInternal( 9999, "hb_nsxTagInsertKey: split offset not set", NULL, NULL );
+            hb_errInternal( 9999, "hb_nsxTagInsertKey: split offset not set", nullptr, nullptr );
 
          pPage->uiOffset = uiHalfOffset;
          uiKey = pPage->uiKeys = uiHalfKeys;
@@ -5612,7 +5612,7 @@ static void hb_nsxSortOut( LPNSXSORTINFO pSort )
       {
          if( hb_vmRequestQuery() != 0 )
             return;
-         hb_errInternal( 9999, "hb_nsxSortOut: memory structure corrupted.", NULL, NULL );
+         hb_errInternal( 9999, "hb_nsxSortOut: memory structure corrupted.", nullptr, nullptr );
       }
       if( fUnique )
       {
@@ -5633,7 +5633,7 @@ static void hb_nsxSortOut( LPNSXSORTINFO pSort )
                     ulKey, pKeyVal, ulRec, pSort->pLastKey, pSort->ulLastRec ); fflush( stdout );
             if( hb_vmRequestQuery() != 0 )
                return;
-            hb_errInternal( 9999, "hb_nsxSortOut: sorting fails.", NULL, NULL );
+            hb_errInternal( 9999, "hb_nsxSortOut: sorting fails.", nullptr, nullptr );
          }
       }
 #endif
@@ -5653,7 +5653,7 @@ static void hb_nsxSortOut( LPNSXSORTINFO pSort )
       {
          if( hb_vmRequestQuery() != 0 )
             return;
-         hb_errInternal( 9999, "hb_nsxSortOut: memory structure corrupted(2).", NULL, NULL );
+         hb_errInternal( 9999, "hb_nsxSortOut: memory structure corrupted(2).", nullptr, nullptr );
       }
    }
 #endif
@@ -6403,7 +6403,7 @@ static HB_ERRCODE hb_nsxGoCold( NSXAREAP pArea )
          if( fAppend && pArea->dbfarea.fShared )
          {
             if( pArea->fIdxAppend )
-               hb_errInternal( 9999, "hb_nsxGoCold: multiple appending without GOCOLD.", NULL, NULL );
+               hb_errInternal( 9999, "hb_nsxGoCold: multiple appending without GOCOLD.", nullptr, nullptr );
             pArea->fIdxAppend = HB_TRUE;
          }
          else
@@ -8261,7 +8261,7 @@ static void hb_dbfnsxRddInit( void * cargo )
          return;
    }
 
-   hb_errInternal( HB_EI_RDDINVALID, NULL, NULL, NULL );
+   hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
 }
 
 HB_INIT_SYMBOLS_BEGIN( dbfnsx1__InitSymbols )

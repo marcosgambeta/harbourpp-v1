@@ -1386,7 +1386,7 @@ static void hb_sdfRddInit( void * cargo )
    HB_SYMBOL_UNUSED( cargo );
 
    if( hb_rddRegister( "SDF", RDT_TRANSFER ) > 1 )
-      hb_errInternal( HB_EI_RDDINVALID, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
 }
 
 HB_INIT_SYMBOLS_BEGIN( sdf1__InitSymbols )

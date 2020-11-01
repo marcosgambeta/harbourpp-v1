@@ -257,7 +257,7 @@ void hb_gcFree( void * pBlock )
    }
    else
    {
-      hb_errInternal( HB_EI_XFREENULL, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_XFREENULL, nullptr, nullptr, nullptr );
    }
 }
 
@@ -319,7 +319,7 @@ void hb_gcRefFree( void * pBlock )
    }
    else
    {
-      hb_errInternal( HB_EI_XFREENULL, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_XFREENULL, nullptr, nullptr, nullptr );
    }
 }
 

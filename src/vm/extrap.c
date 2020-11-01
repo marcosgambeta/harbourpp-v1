@@ -468,7 +468,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
       }
    }
 
-   hb_errInternalRaw( 6005, "Exception error:%s", errmsg, NULL );
+   hb_errInternalRaw( 6005, "Exception error:%s", errmsg, nullptr );
 
    return hb_cmdargCheck( "BATCH" ) ? EXCEPTION_EXECUTE_HANDLER : EXCEPTION_CONTINUE_SEARCH;
 }
@@ -579,7 +579,7 @@ void hb_vmSetExceptionHandler( void )
       s_regRec.ExceptionHandler = ( ERR ) hb_os2ExceptionHandler;
       rc = DosSetExceptionHandler( &s_regRec );
       if( rc != NO_ERROR )
-         hb_errInternal( HB_EI_ERRUNRECOV, "Could not setup exception handler (DosSetExceptionHandler())", NULL, NULL );
+         hb_errInternal( HB_EI_ERRUNRECOV, "Could not setup exception handler (DosSetExceptionHandler())", nullptr, nullptr );
    }
 #elif defined( HB_SIGNAL_EXCEPTION_HANDLER )
    {

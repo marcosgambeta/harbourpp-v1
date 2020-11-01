@@ -678,7 +678,7 @@ static void hb_gt_sln_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    {
       /* something went wrong - restore default settings */
       SLang_reset_tty();
-      hb_errInternal( 9997, "Internal error: screen driver initialization failure", NULL, NULL );
+      hb_errInternal( 9997, "Internal error: screen driver initialization failure", nullptr, nullptr );
    }
 
    s_fActive = HB_TRUE;

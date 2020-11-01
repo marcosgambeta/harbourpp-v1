@@ -380,7 +380,7 @@ void hb_memvarSetValue( PHB_SYMB pMemvarSymb, PHB_ITEM pItem )
       }
    }
    else
-      hb_errInternal( HB_EI_MVBADSYMBOL, NULL, pMemvarSymb->szName, NULL );
+      hb_errInternal( HB_EI_MVBADSYMBOL, nullptr, pMemvarSymb->szName, nullptr );
 }
 
 HB_ERRCODE hb_memvarGet( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
@@ -411,7 +411,7 @@ HB_ERRCODE hb_memvarGet( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
       }
    }
    else
-      hb_errInternal( HB_EI_MVBADSYMBOL, NULL, pMemvarSymb->szName, NULL );
+      hb_errInternal( HB_EI_MVBADSYMBOL, nullptr, pMemvarSymb->szName, nullptr );
 
    return errCode;
 }
@@ -500,7 +500,7 @@ void hb_memvarGetRefer( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
       }
    }
    else
-      hb_errInternal( HB_EI_MVBADSYMBOL, NULL, pMemvarSymb->szName, NULL );
+      hb_errInternal( HB_EI_MVBADSYMBOL, nullptr, pMemvarSymb->szName, nullptr );
 }
 
 PHB_ITEM hb_memvarGetItem( PHB_SYMB pMemvarSymb )

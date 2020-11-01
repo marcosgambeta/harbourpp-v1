@@ -1627,7 +1627,7 @@ static void hb_gt_qtc_createConsoleWindow( PHB_GTQTC pQTC )
 {
    pQTC->qWnd = new QTCWindow( pQTC );
    if( ! pQTC->qWnd )
-      hb_errInternal( 10002, "Failed to create QTC window", NULL, NULL );
+      hb_errInternal( 10002, "Failed to create QTC window", nullptr, nullptr );
 
    hb_gt_qtc_initWindow( pQTC, HB_FALSE );
 
@@ -1665,7 +1665,7 @@ static void hb_gt_qtc_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
          s_qtapp = new QApplication( s_argc, s_argv );
          if( ! s_qtapp )
-            hb_errInternal( 10001, "QT initialization error.", NULL, NULL );
+            hb_errInternal( 10001, "QT initialization error.", nullptr, nullptr );
 
          hb_vmAtQuit( hb_gt_qtc_appFree, NULL );
          hb_cmdargInit( s_argc, s_argv );
@@ -3708,7 +3708,7 @@ static void hb_gt_qtc_InitMT( void )
    if( hb_vmIsMt() )
    {
       if( ! XInitThreads() )
-         hb_errInternal( 10002, "XInitThreads() failed !!!", NULL, NULL );
+         hb_errInternal( 10002, "XInitThreads() failed !!!", nullptr, nullptr );
    }
 }
 

@@ -127,9 +127,9 @@ static void hb_ocidd_init( void * cargo )
    HB_SYMBOL_UNUSED( cargo );
 
    if( ! OCI_Initialize( NULL, NULL, OCI_ENV_DEFAULT | OCI_ENV_CONTEXT | OCI_ENV_THREADED ) )
-      hb_errInternal( 8000, NULL, NULL, NULL );
+      hb_errInternal( 8000, nullptr, nullptr, nullptr );
    else if( ! hb_sddRegister( &s_ocidd ) )
-      hb_errInternal( HB_EI_RDDINVALID, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
 }
 
 static void hb_ocidd_exit( void * cargo )

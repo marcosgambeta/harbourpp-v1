@@ -422,7 +422,7 @@ static HB_BOOL hb_clsDictRealloc( PCLASS pClass )
    {
       nNewHashKey <<= 1;
       if( nNewHashKey > HASH_KEYMAX )
-         hb_errInternal( 6002, "Could not realloc class message in __clsDictRealloc()", NULL, NULL );
+         hb_errInternal( 6002, "Could not realloc class message in __clsDictRealloc()", nullptr, nullptr );
 
 #ifdef HB_MSG_POOL
       puiMsgIdx = ( HB_SYMCNT * ) hb_xgrabz( ( nNewHashKey << BUCKETBITS ) * sizeof( HB_SYMCNT ) );
@@ -613,7 +613,7 @@ static PMETHOD hb_clsAllocMsg( PCLASS pClass, PHB_DYNS pMsg )
    }
    while( hb_clsDictRealloc( pClass ) );
 
-   hb_errInternal( 6001, "Could not allocate new message", NULL, NULL );
+   hb_errInternal( 6001, "Could not allocate new message", nullptr, nullptr );
 
    return NULL;
 }
@@ -3220,7 +3220,7 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage,
 
          default:
 
-            hb_errInternal( HB_EI_CLSINVMETHOD, NULL, "__clsAddMsg()", NULL );
+            hb_errInternal( HB_EI_CLSINVMETHOD, nullptr, "__clsAddMsg()", nullptr );
       }
 
       pClass->nOpFlags |= nOpFlags;
@@ -3495,7 +3495,7 @@ static HB_USHORT hb_clsNew( const char * szClassName, HB_USHORT uiDatas,
                             pFuncSym == &s___msgGetClsData )
                         {
                            if( pMethod->uiData > nLenClsDatas )
-                              hb_errInternal( HB_EI_CLSINVMETHOD, NULL, "__clsNew()", NULL );
+                              hb_errInternal( HB_EI_CLSINVMETHOD, nullptr, "__clsNew()", nullptr );
 
                            if( puiClassData[ pMethod->uiData - 1 ] == 0 )
                            {
@@ -5118,7 +5118,7 @@ static PHB_ITEM hb_objGetIVars( PHB_ITEM pObject,
             nIndex = ( uiClass == pClass->uiClass ?
                      ( HB_SIZE ) pMethod->uiOffset : nOffset ) + pMethod->uiData;
             if( nIndex == 0 || nIndex > nLen )
-               hb_errInternal( HB_EI_CLSINVMETHOD, NULL, "__objGetIVars()", NULL );
+               hb_errInternal( HB_EI_CLSINVMETHOD, nullptr, "__objGetIVars()", nullptr );
 
             pInfo = &pIndex[ nIndex - 1 ];
             if( pInfo->uiStatus < uiStatus )

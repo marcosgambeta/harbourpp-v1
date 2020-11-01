@@ -3774,7 +3774,7 @@ PHB_GT hb_gtLoad( const char * szGtName, PHB_GT pGT, PHB_GT_FUNCS pSuperTable )
       if( iPos == -1 )
       {
          if( pGT || pSuperTable )
-            hb_errInternal( 9996, "Harbour terminal (GT) initialization failure", NULL, NULL );
+            hb_errInternal( 9996, "Harbour terminal (GT) initialization failure", nullptr, nullptr );
 
          pGT = ( PHB_GT_BASE ) hb_xgrabz( sizeof( HB_GT_BASE ) );
          pGT->pFuncTable = ( PHB_GT_FUNCS ) hb_xgrab( sizeof( HB_GT_FUNCS ) );
@@ -3962,7 +3962,7 @@ void hb_gtStartupInit( void )
          return;
    }
 
-   hb_errInternal( 9998, "Harbour terminal (GT) initialization failure", NULL, NULL );
+   hb_errInternal( 9998, "Harbour terminal (GT) initialization failure", nullptr, nullptr );
 
    /* not executed, only to force linking hb_GTSYS() */
    HB_FUNC_EXEC( HB_GTSYS );
