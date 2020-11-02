@@ -26,8 +26,8 @@ GLOBAL_MK_ := yes
 
 -include $(TOP)$(ROOT)user.mk
 
-HB_VER_MAJOR     := 3
-HB_VER_MINOR     := 2
+HB_VER_MAJOR     := 1
+HB_VER_MINOR     := 0
 HB_VER_RELEASE   := 0
 # Status (dev, alpha1, alpha2, beta1, beta2, rc1, rc2, empty for final)
 HB_VER_STATUS    := dev
