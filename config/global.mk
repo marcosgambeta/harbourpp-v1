@@ -80,28 +80,31 @@ find_in_path_raw = $(strip $(subst $(substpat), ,$(firstword $(subst |, ,$(subst
 find_in_path_par = $(strip $(subst $(substpat), ,$(firstword $(subst |, ,$(subst $(subst x, ,x),$(substpat),$(filter-out |,$(foreach dir, $(subst $(PTHSEP), ,$(subst $(subst x, ,x),$(substpat),$(2))),|$(wildcard $(subst //,/,$(subst $(substpat),\ ,$(subst \,/,$(dir)))/$(1))$(HB_HOST_BIN_EXT)))))))))
 find_in_path_prw = $(strip $(subst $(substpat), ,$(firstword $(subst |, ,$(subst $(subst x, ,x),$(substpat),$(filter-out |,$(foreach dir, $(subst $(PTHSEP), ,$(subst $(subst x, ,x),$(substpat),$(2))),|$(wildcard $(subst //,/,$(subst $(substpat),\ ,$(subst \,/,$(dir)))/$(1))))))))))
 
+# HB_BUILD_MODE is allways cpp
+HB_BUILD_MODE := cpp
+
 # Some presets based on HB_BUILD_NAME
 ifneq ($(HB_BUILD_NAME),)
    export HB_BUILD_NAME := $(subst /,,$(subst \,/,$(HB_BUILD_NAME)))
    ifeq ($(HB_BUILD_NAME),.r)
       HB_BUILD_DEBUG := no
       HB_BUILD_OPTIM := yes
-      HB_BUILD_MODE ?= c
+#      HB_BUILD_MODE ?= c
    else
    ifeq ($(HB_BUILD_NAME),.rp)
       HB_BUILD_DEBUG := no
       HB_BUILD_OPTIM := yes
-      HB_BUILD_MODE ?= cpp
+#      HB_BUILD_MODE ?= cpp
    else
    ifeq ($(HB_BUILD_NAME),.d)
       HB_BUILD_DEBUG := yes
       HB_BUILD_OPTIM := no
-      HB_BUILD_MODE ?= c
+#      HB_BUILD_MODE ?= c
    else
    ifeq ($(HB_BUILD_NAME),.dp)
       HB_BUILD_DEBUG := yes
       HB_BUILD_OPTIM := no
-      HB_BUILD_MODE ?= cpp
+#      HB_BUILD_MODE ?= cpp
    endif
    endif
    endif
