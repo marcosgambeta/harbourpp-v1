@@ -22,7 +22,7 @@ statbar.c
 toolbar.c
 
 # NOTE: Due to large quantity of unprecise code, it doesn't build in C++ mode.
--cpp=no
+#-cpp=no
 
 -hbx=${hb_name}.hbx
 ${hb_name}.hbx
