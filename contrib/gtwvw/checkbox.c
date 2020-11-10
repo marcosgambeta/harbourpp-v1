@@ -95,8 +95,8 @@ HB_FUNC( WVW_CXCREATE )
           usLeft        = ( BYTE ) hb_parni( 3 ),
           usBottom      = ( BYTE ) hb_parni( 4 ),
           usRight       = ( BYTE ) hb_parni( 5 );
-   LPCTSTR lpszCaption  = HB_ISCHAR( 6 ) ? hb_parcx( 6 ) : NULL;
-   char *  szBitmap     = HB_ISCHAR( 7 ) ? ( char * ) hb_parcx( 7 ) : NULL;
+   LPCTSTR lpszCaption  = HB_ISCHAR( 6 ) ? hb_parcx( 6 ) : nullptr;
+   char *  szBitmap     = HB_ISCHAR( 7 ) ? ( char * ) hb_parcx( 7 ) : nullptr;
    UINT    uiBitmap     = HB_ISNUM( 7 ) ? ( UINT ) hb_parni( 7 ) : 0;
    double  dStretch     = ! HB_ISNIL( 10 ) ? hb_parnd( 10 ) : 1;
    BOOL    bMap3Dcolors = HB_ISLOG( 11 ) ? ( BOOL ) hb_parl( 11 ) : FALSE;
@@ -129,7 +129,7 @@ HB_FUNC( WVW_CXDESTROY )
    WIN_DATA *     pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
    UINT           uiCXid      = ( UINT ) ( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
    CONTROL_DATA * pcd         = pWindowData->pcdCtrlList;
-   CONTROL_DATA * pcdPrev     = NULL;
+   CONTROL_DATA * pcdPrev     = nullptr;
 
    while( pcd )
    {
@@ -139,12 +139,12 @@ HB_FUNC( WVW_CXDESTROY )
       pcd     = pcd->pNext;
    }
 
-   if( pcd == NULL )
+   if( pcd == nullptr )
       return;
 
    DestroyWindow( pcd->hWndCtrl );
 
-   if( pcdPrev == NULL )
+   if( pcdPrev == nullptr )
       pWindowData->pcdCtrlList = pcd->pNext;
    else
       pcdPrev->pNext = pcd->pNext;
@@ -167,7 +167,7 @@ HB_FUNC( WVW_CXSETFOCUS )
    HWND hWndCX = FindControlHandle( usWinNum, WVW_CONTROL_CHECKBOX, uiCtrlId, &bStyle );
 
    if( hWndCX )
-      hb_retl( SetFocus( hWndCX ) != NULL );
+      hb_retl( SetFocus( hWndCX ) != nullptr );
    else
       hb_retl( FALSE );
 }
@@ -212,7 +212,7 @@ HB_FUNC( WVW_CXSETCODEBLOCK )
    PHB_ITEM       phiCodeBlock = hb_param( 3, HB_IT_BLOCK );
    BOOL           bOldSetting  = pData->s_bRecurseCBlock;
 
-   if( ! phiCodeBlock || pcd == NULL || pcd->bBusy )
+   if( ! phiCodeBlock || pcd == nullptr || pcd->bBusy )
    {
       hb_retl( FALSE );
       return;
@@ -394,7 +394,7 @@ HB_FUNC( WVW_CXSTATUSFONT )
 
 HB_FUNC( WVW_PGCREATE )
 {
-   HANDLE     hInstance   = NULL;
+   HANDLE     hInstance   = nullptr;
    UINT       usWinNum    = WVW_WHICH_WINDOW;
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
    HWND       hWndParent  = pWindowData->hWnd;
@@ -443,12 +443,12 @@ HB_FUNC( WVW_PGCREATE )
    if( bSmooth )
       iStyle = iStyle | PBS_SMOOTH;
 
-   hb_winmainArgGet( &hInstance, NULL, NULL );
+   hb_winmainArgGet( &hInstance, nullptr, nullptr );
 
    hWndPG = CreateWindowEx(
       0L,
       PROGRESS_CLASS,
-      ( LPSTR ) NULL,
+      ( LPSTR ) nullptr,
       WS_CHILD | WS_VISIBLE | ( DWORD ) iStyle,
       iLeft,
       iTop,
@@ -457,7 +457,7 @@ HB_FUNC( WVW_PGCREATE )
       hWndParent,
       ( HMENU ) uiPGid,
       ( HINSTANCE ) hInstance,
-      ( LPVOID ) NULL
+      ( LPVOID ) nullptr
       );
 
    if( hWndPG )
@@ -477,7 +477,7 @@ HB_FUNC( WVW_PGCREATE )
       rOffXB.top    = iOffTop;     rOffXB.left = iOffLeft;
       rOffXB.bottom = iOffBottom; rOffXB.right = iOffRight;
 
-      AddControlHandle( usWinNum, WVW_CONTROL_PROGRESSBAR, hWndPG, uiPGid, ( PHB_ITEM ) NULL, rXB, rOffXB, ( byte ) iStyle );
+      AddControlHandle( usWinNum, WVW_CONTROL_PROGRESSBAR, hWndPG, uiPGid, ( PHB_ITEM ) nullptr, rXB, rOffXB, ( byte ) iStyle );
 
       hb_retnl( ( LONG ) uiPGid );
    }
@@ -495,7 +495,7 @@ HB_FUNC( WVW_PGDESTROY )
    WIN_DATA *     pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
    UINT           uiPGid      = ( UINT ) ( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
    CONTROL_DATA * pcd         = pWindowData->pcdCtrlList;
-   CONTROL_DATA * pcdPrev     = NULL;
+   CONTROL_DATA * pcdPrev     = nullptr;
 
    while( pcd )
    {
@@ -505,12 +505,12 @@ HB_FUNC( WVW_PGDESTROY )
       pcdPrev = pcd;
       pcd     = pcd->pNext;
    }
-   if( pcd == NULL )
+   if( pcd == nullptr )
       return;
 
    DestroyWindow( pcd->hWndCtrl );
 
-   if( pcdPrev == NULL )
+   if( pcdPrev == nullptr )
       pWindowData->pcdCtrlList = pcd->pNext;
    else
       pcdPrev->pNext = pcd->pNext;
@@ -541,7 +541,7 @@ HB_FUNC( WVW_PGSETRANGE )
    int  iMin   = ( int ) ( HB_ISNIL( 3 ) ? 0 : hb_parni( 3 ) );
    int  iMax   = ( int ) ( HB_ISNIL( 4 ) ? 0 : hb_parni( 4 ) );
 
-   if( uiPGid == 0 || hWndPG == NULL || ( iMin > iMax ) )
+   if( uiPGid == 0 || hWndPG == nullptr || ( iMin > iMax ) )
    {
       hb_retl( FALSE );
       return;
@@ -568,7 +568,7 @@ HB_FUNC( WVW_PGSETPOS )
    int     iPos   = ( int ) ( HB_ISNIL( 3 ) ? 0 : hb_parni( 3 ) );
    PBRANGE pbrange;
 
-   if( uiPGid == 0 || hWndPG == NULL )
+   if( uiPGid == 0 || hWndPG == nullptr )
    {
       hb_retl( FALSE );
       return;
@@ -599,7 +599,7 @@ HB_FUNC( WVW_PGGETPOS )
    byte bStyle;
    HWND hWndPG = FindControlHandle( usWinNum, WVW_CONTROL_PROGRESSBAR, uiPGid, &bStyle );
 
-   if( uiPGid == 0 || hWndPG == NULL )
+   if( uiPGid == 0 || hWndPG == nullptr )
    {
       hb_retni( 0 );
       return;

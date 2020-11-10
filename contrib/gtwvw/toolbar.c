@@ -74,7 +74,7 @@ HB_FUNC( WVW_TBCREATE )
 
    InitCommonControls();
 
-   if( pWindowData->hToolBar != NULL )
+   if( pWindowData->hToolBar != nullptr )
    {
       hb_retnl( 0 );
       return;
@@ -117,7 +117,7 @@ HB_FUNC( WVW_TBCREATE )
                              0,
                              hb_getWvwData()->hInstance,
                              0,
-                             NULL,
+                             nullptr,
                              0,
                              0,
                              0,
@@ -125,9 +125,9 @@ HB_FUNC( WVW_TBCREATE )
                              iImageHeight,
                              sizeof( TBBUTTON ) );
 
-   if( hWndTB == NULL )
+   if( hWndTB == nullptr )
    {
-      MessageBox( NULL, TEXT( "Failed CreateToolbarEx..." ),
+      MessageBox( nullptr, TEXT( "Failed CreateToolbarEx..." ),
                   hb_gt_wvw_GetAppName(), MB_ICONERROR );
       hb_retnl( 0 );
    }
@@ -203,7 +203,7 @@ HB_FUNC( WVW_TBADDBUTTON )
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
    int        iCommand    = HB_ISNIL( 2 ) ? 0 : hb_parni( 2 );
 
-   char * szBitmap = HB_ISCHAR( 3 ) ? ( char * ) hb_parcx( 3 ) : NULL;
+   char * szBitmap = HB_ISCHAR( 3 ) ? ( char * ) hb_parcx( 3 ) : nullptr;
    UINT   uiBitmap = HB_ISNUM( 3 ) ? ( UINT ) hb_parni( 3 ) : 0;
 
    char * szLabel      = HB_ISNIL( 4 ) ? ( char * ) "" : ( char * ) hb_parcx( 4 );
@@ -214,7 +214,7 @@ HB_FUNC( WVW_TBADDBUTTON )
    USHORT usOldHeight;
 
    hWndTB = pWindowData->hToolBar;
-   if( hWndTB == NULL )
+   if( hWndTB == nullptr )
    {
       hb_retl( FALSE );
       return;
@@ -222,7 +222,7 @@ HB_FUNC( WVW_TBADDBUTTON )
 
    if( iCommand >= WVW_ID_BASE_PUSHBUTTON )
    {
-      MessageBox( NULL, TEXT( "Toolbar button Command Id too high. Potential conflict with pushbutton" ),
+      MessageBox( nullptr, TEXT( "Toolbar button Command Id too high. Potential conflict with pushbutton" ),
                   hb_gt_wvw_GetAppName(), MB_ICONERROR );
       hb_retl( FALSE );
       return;
@@ -230,7 +230,7 @@ HB_FUNC( WVW_TBADDBUTTON )
 
    if( strlen( szLabel ) > WVW_TB_LABELMAXLENGTH )
    {
-      MessageBox( NULL, TEXT( "Cannot addbutton, Label too long..." ),
+      MessageBox( nullptr, TEXT( "Cannot addbutton, Label too long..." ),
                   hb_gt_wvw_GetAppName(), MB_ICONERROR );
       hb_retl( FALSE );
       return;
@@ -244,7 +244,7 @@ HB_FUNC( WVW_TBADDBUTTON )
       {
          if( ! AddTBButton( hWndTB, szBitmap, uiBitmap, szLabel, iCommand, 1, bMap3Dcolors, pWindowData, bDropdown ) )
          {
-            MessageBox( NULL, TEXT( "Failed addbutton..." ),
+            MessageBox( nullptr, TEXT( "Failed addbutton..." ),
                         hb_gt_wvw_GetAppName(), MB_ICONERROR );
             hb_retl( FALSE );
             return;
@@ -252,7 +252,7 @@ HB_FUNC( WVW_TBADDBUTTON )
       }
       else
       {
-         MessageBox( NULL, TEXT( "Failed addbutton..." ),
+         MessageBox( nullptr, TEXT( "Failed addbutton..." ),
                      hb_gt_wvw_GetAppName(), MB_ICONERROR );
          hb_retl( FALSE );
          return;
@@ -277,7 +277,7 @@ HB_FUNC( WVW_TBBUTTONCOUNT )
    HWND       hWndTB;
 
    hWndTB = pWindowData->hToolBar;
-   if( hWndTB == NULL )
+   if( hWndTB == nullptr )
    {
       hb_retni( 0 );
       return;
@@ -300,7 +300,7 @@ HB_FUNC( WVW_TBDELBUTTON )
    USHORT     usOldHeight;
 
    hWndTB = pWindowData->hToolBar;
-   if( hWndTB == NULL || iButton < 0 )
+   if( hWndTB == nullptr || iButton < 0 )
    {
       hb_retl( FALSE );
       return;
@@ -338,7 +338,7 @@ HB_FUNC( WVW_TBGETBUTTONRECT )
    PHB_ITEM temp;
 
    hWndTB = pWindowData->hToolBar;
-   if( hWndTB == NULL || iButton < 0 || ! SendMessage( hWndTB, TB_GETRECT, ( WPARAM ) iButton, ( LPARAM ) &rc ) )
+   if( hWndTB == nullptr || iButton < 0 || ! SendMessage( hWndTB, TB_GETRECT, ( WPARAM ) iButton, ( LPARAM ) &rc ) )
    {
       hb_itemReturnRelease( aXY );
       return;
@@ -378,7 +378,7 @@ HB_FUNC( WVW_TBENABLEBUTTON )
    USHORT     usOldHeight;
 
    hWndTB = pWindowData->hToolBar;
-   if( hWndTB == NULL || iButton < 0 )
+   if( hWndTB == nullptr || iButton < 0 )
    {
       hb_retl( FALSE );
       return;
@@ -415,10 +415,10 @@ HB_FUNC( WVW_TBDESTROY )
    UINT       usWinNum    = WVW_WHICH_WINDOW;
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
 
-   if( ! ( pWindowData->hToolBar == NULL ) )
+   if( ! ( pWindowData->hToolBar == nullptr ) )
    {
       DestroyWindow( pWindowData->hToolBar );
-      pWindowData->hToolBar   = NULL;
+      pWindowData->hToolBar   = nullptr;
       pWindowData->usTBHeight = 0;
 
       hb_gt_wvwResetWindow( usWinNum );
@@ -477,7 +477,7 @@ HB_FUNC( WVW_SETTOOLTIPACTIVE )
    if( ! HB_ISNIL( 2 ) )
    {
 
-      if( hb_parl( 2 ) && ( pWindowData->hWndTT == NULL ) )
+      if( hb_parl( 2 ) && ( pWindowData->hWndTT == nullptr ) )
          hb_gt_wvwCreateToolTipWindow( pWindowData );
 
       pWindowData->bToolTipActive = hb_parl( 2 );

@@ -64,7 +64,7 @@ HB_FUNC( WVW_SBCREATE )
    WVW_DATA * pData = hb_getWvwData();
    int        ptArray[ WVW_MAX_STATUS_PARTS ];
 
-   if( ! ( pWindowData->hStatusBar == NULL ) )
+   if( ! ( pWindowData->hStatusBar == nullptr ) )
    {
       hb_retnl( 0 );
       return;
@@ -72,14 +72,14 @@ HB_FUNC( WVW_SBCREATE )
 
    hWndParent = pWindowData->hWnd;
    hWndSB     = CreateStatusWindow( WS_CHILD | WS_VISIBLE | WS_BORDER | SBT_TOOLTIPS,
-                                    NULL,
+                                    nullptr,
                                     hWndParent,
                                     WVW_ID_BASE_STATUSBAR + usWinNum );
    if( hWndSB )
    {
 
       RECT rSB = { 0 };
-      if( pWindowData->hSBfont == NULL )
+      if( pWindowData->hSBfont == nullptr )
          pWindowData->hSBfont = CreateFontIndirect( &pData->s_lfSB );
       if( GetClientRect( hWndSB, &rSB ) )
          pWindowData->usSBHeight = ( USHORT ) rSB.bottom;
@@ -105,15 +105,15 @@ HB_FUNC( WVW_SBDESTROY )
    UINT       usWinNum    = WVW_WHICH_WINDOW;
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
 
-   if( ! ( pWindowData->hStatusBar == NULL ) )
+   if( ! ( pWindowData->hStatusBar == nullptr ) )
    {
       if( pWindowData->hSBfont )
       {
          DeleteObject( ( HFONT ) pWindowData->hSBfont );
-         pWindowData->hSBfont = NULL;
+         pWindowData->hSBfont = nullptr;
       }
       DestroyWindow( pWindowData->hStatusBar );
-      pWindowData->hStatusBar = NULL;
+      pWindowData->hStatusBar = nullptr;
       pWindowData->bSBPaint   = FALSE;
       pWindowData->usSBHeight = 0;
 
@@ -148,7 +148,7 @@ HB_FUNC( WVW_SBADDPART )
    USHORT     usWidth;
 
    hWndSB = pWindowData->hStatusBar;
-   if( hWndSB == NULL )
+   if( hWndSB == nullptr )
    {
       hb_retnl( 0 );
       return;
@@ -196,10 +196,10 @@ HB_FUNC( WVW_SBADDPART )
 
       hIcon = ( HICON ) LoadImage( 0, hb_parcx( 6 ), IMAGE_ICON, cx, cy, LR_LOADFROMFILE | LR_LOADMAP3DCOLORS | LR_LOADTRANSPARENT | LR_DEFAULTSIZE );
 
-      if( hIcon == NULL )
-         hIcon = ( HICON ) LoadImage( GetModuleHandle( NULL ), hb_parcx( 6 ), IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR | LR_DEFAULTSIZE );
+      if( hIcon == nullptr )
+         hIcon = ( HICON ) LoadImage( GetModuleHandle( nullptr ), hb_parcx( 6 ), IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR | LR_DEFAULTSIZE );
 
-      if( ! ( hIcon == NULL ) )
+      if( ! ( hIcon == nullptr ) )
          SendMessage( hWndSB, SB_SETICON, ( WPARAM ) numOfParts - 1, ( LPARAM ) hIcon );
    }
 
@@ -228,7 +228,7 @@ HB_FUNC( WVW_SBREFRESH )
    RECT       rSB = { 0 };
 
    hWndSB = pWindowData->hStatusBar;
-   if( hWndSB == NULL )
+   if( hWndSB == nullptr )
    {
       hb_retnl( 0 );
       return;
@@ -484,7 +484,7 @@ HB_FUNC( WVW_XBCREATE )
    hWndXB = CreateWindowEx(
       0L,                                       /* no extended styles */
       "SCROLLBAR",                              /* scroll bar control class */
-      ( LPSTR ) NULL,                           /* text for window title bar */
+      ( LPSTR ) nullptr,                        /* text for window title bar */
       WS_CHILD | WS_VISIBLE | ( DWORD ) iStyle, /* scroll bar styles */
       iLeft,                                    /* horizontal position */
       iTop,                                     /* vertical position */
@@ -493,7 +493,7 @@ HB_FUNC( WVW_XBCREATE )
       hWndParent,                               /* handle to main window */
       ( HMENU ) uiXBid,                         /* id for this scroll bar control */
       hb_getWvwData()->hInstance,               /* instance owning this window */
-      ( LPVOID ) NULL                           /* pointer not needed */
+      ( LPVOID ) nullptr                        /* pointer not needed */
       );
 
    if( hWndXB )
@@ -533,7 +533,7 @@ HB_FUNC( WVW_XBDESTROY )
    WIN_DATA *     pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
    UINT           uiXBid      = ( UINT ) ( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
    CONTROL_DATA * pcd         = pWindowData->pcdCtrlList;
-   CONTROL_DATA * pcdPrev     = NULL;
+   CONTROL_DATA * pcdPrev     = nullptr;
 
    while( pcd )
    {
@@ -543,12 +543,12 @@ HB_FUNC( WVW_XBDESTROY )
       pcdPrev = pcd;
       pcd     = pcd->pNext;
    }
-   if( pcd == NULL )
+   if( pcd == nullptr )
       return;
 
    DestroyWindow( pcd->hWndCtrl );
 
-   if( pcdPrev == NULL )
+   if( pcdPrev == nullptr )
       pWindowData->pcdCtrlList = pcd->pNext;
    else
       pcdPrev->pNext = pcd->pNext;
@@ -582,7 +582,7 @@ HB_FUNC( WVW_XBUPDATE )
    int        iRetval;
    UINT       fMask = SIF_DISABLENOSCROLL;
 
-   if( uiXBid == 0 || hWndXB == NULL || iPage < 0 )
+   if( uiXBid == 0 || hWndXB == nullptr || iPage < 0 )
    {
       hb_retni( -1 );
       return;
@@ -623,7 +623,7 @@ HB_FUNC( WVW_XBINFO )
    byte bStyle;
    HWND hWndXB = FindControlHandle( usWinNum, WVW_CONTROL_SCROLLBAR, uiXBid, &bStyle );
 
-   if( uiXBid == 0 || hWndXB == NULL )
+   if( uiXBid == 0 || hWndXB == nullptr )
    {
 
       aInfo = hb_itemArrayNew( 0 );
@@ -669,9 +669,9 @@ HB_FUNC( WVW_XBENABLE )
    UINT uiXBid  = ( UINT ) ( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
    UINT uiFlags = ( UINT ) ( HB_ISNIL( 3 ) ? 0  : hb_parni( 3 ) );
    byte bStyle;
-   HWND hWndXB = uiXBid == 0 ? NULL : FindControlHandle( usWinNum, WVW_CONTROL_SCROLLBAR, uiXBid, &bStyle );
+   HWND hWndXB = uiXBid == 0 ? nullptr : FindControlHandle( usWinNum, WVW_CONTROL_SCROLLBAR, uiXBid, &bStyle );
 
-   if( uiXBid == 0 || hWndXB == NULL || uiFlags > ESB_DISABLE_BOTH )
+   if( uiXBid == 0 || hWndXB == nullptr || uiFlags > ESB_DISABLE_BOTH )
    {
       hb_retl( FALSE );
       return;
@@ -693,9 +693,9 @@ HB_FUNC( WVW_XBSHOW )
    UINT uiXBid   = ( UINT ) ( HB_ISNIL( 2 ) ? 0 : hb_parni( 2 ) );
    BOOL bShow    = ( BOOL ) ( HB_ISLOG( 3 ) ? hb_parl( 3 ) : TRUE );
    byte bStyle;
-   HWND hWndXB = uiXBid == 0 ? NULL : FindControlHandle( usWinNum, WVW_CONTROL_SCROLLBAR, uiXBid, &bStyle );
+   HWND hWndXB = uiXBid == 0 ? nullptr : FindControlHandle( usWinNum, WVW_CONTROL_SCROLLBAR, uiXBid, &bStyle );
 
-   if( uiXBid == 0 || hWndXB == NULL )
+   if( uiXBid == 0 || hWndXB == nullptr )
    {
       hb_retl( FALSE );
       return;

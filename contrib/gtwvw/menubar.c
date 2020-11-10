@@ -92,7 +92,7 @@ HB_FUNC( WVW_APPENDMENU )
    if( ! ( hb_parni( 2 ) & ( MF_SEPARATOR | MF_POPUP ) ) &&
        ( hb_parni( 3 ) >= WVW_ID_BASE_PUSHBUTTON ) )
    {
-      MessageBox( NULL, TEXT( "Menu Command Id too high. Potential conflict with pushbutton" ),
+      MessageBox( nullptr, TEXT( "Menu Command Id too high. Potential conflict with pushbutton" ),
                   hb_gt_wvw_GetAppName(), MB_ICONERROR );
       hb_retl( FALSE );
       return;
@@ -177,8 +177,8 @@ WVW_MENUITEM_SETBITMAPS(
 #endif
 HB_FUNC( WVW_MENUITEM_SETBITMAPS )
 {
-   HBITMAP hBitmapUnchecked = NULL;
-   HBITMAP hBitmapChecked   = NULL;
+   HBITMAP hBitmapUnchecked = nullptr;
+   HBITMAP hBitmapChecked   = nullptr;
    char    szResname[ _MAX_PATH + 1 ];
    int     iWidth, iHeight;
 
@@ -279,7 +279,7 @@ HB_FUNC( WVW_TRACKPOPUPMENU )
                              xy.y,
                              0,
                              pWindowData->hWnd,
-                             NULL ) );
+                             nullptr ) );
 }
 
 HB_FUNC( WIN_SETMENU )

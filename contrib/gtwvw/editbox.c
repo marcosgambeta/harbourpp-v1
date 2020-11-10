@@ -93,7 +93,7 @@
 
 HB_FUNC( WVW_EBCREATE )
 {
-   HANDLE     hInstance   = NULL;
+   HANDLE     hInstance   = nullptr;
    UINT       usWinNum    = WVW_WHICH_WINDOW;
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
    HWND       hWndParent  = pWindowData->hWnd;
@@ -118,10 +118,10 @@ HB_FUNC( WVW_EBCREATE )
    DWORD      dwStyle;
    WVW_DATA * pData = hb_getWvwData();
 
-   if( pWindowData->hEBfont == NULL )
+   if( pWindowData->hEBfont == nullptr )
    {
       pWindowData->hEBfont = CreateFontIndirect( &pData->s_lfEB );
-      if( pWindowData->hEBfont == NULL )
+      if( pWindowData->hEBfont == nullptr )
       {
          hb_retnl( 0 );
          return;
@@ -165,12 +165,12 @@ HB_FUNC( WVW_EBCREATE )
       dwStyle |= ES_OEMCONVERT;
 
 
-   hb_winmainArgGet( &hInstance, NULL, NULL );
+   hb_winmainArgGet( &hInstance, nullptr, nullptr );
 
    hWndEB = CreateWindowEx(
       0L,
       "EDIT",
-      ( LPSTR ) NULL,
+      ( LPSTR ) nullptr,
       WS_CHILD | WS_VISIBLE | ( DWORD ) dwStyle,
       iLeft,
       iTop,
@@ -179,7 +179,7 @@ HB_FUNC( WVW_EBCREATE )
       hWndParent,
       ( HMENU ) uiEBid,
       ( HINSTANCE ) hInstance,
-      ( LPVOID ) NULL
+      ( LPVOID ) nullptr
       );
 
    if( hWndEB )
@@ -244,7 +244,7 @@ HB_FUNC( WVW_EBDESTROY )
    WIN_DATA *     pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
    UINT           uiEBid      = ( UINT ) ( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
    CONTROL_DATA * pcd         = pWindowData->pcdCtrlList;
-   CONTROL_DATA * pcdPrev     = ( CONTROL_DATA * ) NULL;
+   CONTROL_DATA * pcdPrev     = ( CONTROL_DATA * ) nullptr;
 
    while( pcd )
    {
@@ -254,12 +254,12 @@ HB_FUNC( WVW_EBDESTROY )
       pcdPrev = pcd;
       pcd     = pcd->pNext;
    }
-   if( pcd == NULL )
+   if( pcd == nullptr )
       return;
 
    DestroyWindow( pcd->hWndCtrl );
 
-   if( pcdPrev == NULL )
+   if( pcdPrev == nullptr )
       pWindowData->pcdCtrlList = pcd->pNext;
    else
       pcdPrev->pNext = pcd->pNext;
@@ -282,7 +282,7 @@ HB_FUNC( WVW_EBSETFOCUS )
    HWND hWndEB = FindControlHandle( usWinNum, WVW_CONTROL_EDITBOX, uiCtrlId, &bStyle );
 
    if( hWndEB )
-      hb_retl( SetFocus( hWndEB ) != NULL );
+      hb_retl( SetFocus( hWndEB ) != nullptr );
    else
       hb_retl( FALSE );
 }
@@ -373,7 +373,7 @@ HB_FUNC( WVW_EBSETCODEBLOCK )
    PHB_ITEM       phiCodeBlock = hb_param( 3, HB_IT_BLOCK );
    BOOL bOldSetting            = pData->s_bRecurseCBlock;
 
-   if( ! phiCodeBlock || pcd == NULL || pcd->bBusy )
+   if( ! phiCodeBlock || pcd == nullptr || pcd->bBusy )
    {
       hb_retl( FALSE );
       return;
@@ -467,7 +467,7 @@ HB_FUNC( WVW_EBISMULTILINE )
    CONTROL_DATA * pcd = GetControlData( usWinNum, WVW_CONTROL_EDITBOX, NULL, uiEBid );
    BOOL bMultiline;
 
-   if( pcd == NULL )
+   if( pcd == nullptr )
    {
       hb_retl( FALSE );
       return;
@@ -500,7 +500,7 @@ HB_FUNC( WVW_EBGETTEXT )
    LPTSTR     lpszTextANSI;
    BOOL       bToOEM = ( pWindowData->CodePage == OEM_CHARSET );
 
-   if( pcd == NULL )
+   if( pcd == nullptr )
    {
       hb_retl( FALSE );
       return;
@@ -554,7 +554,7 @@ HB_FUNC( WVW_EBSETTEXT )
    LPTSTR lpszText = ( LPTSTR ) hb_parcx( 3 );
    BOOL   bFromOEM = ( pWindowData->CodePage == OEM_CHARSET );
 
-   if( pcd == NULL )
+   if( pcd == nullptr )
    {
       hb_retl( FALSE );
       return;
@@ -595,7 +595,7 @@ HB_FUNC( WVW_EBGETSEL )
    CONTROL_DATA * pcd = GetControlData( usWinNum, WVW_CONTROL_EDITBOX, NULL, uiEBid );
    DWORD          dwStart, dwEnd;
 
-   if( pcd == NULL )
+   if( pcd == nullptr )
    {
       hb_retl( FALSE );
       return;
@@ -631,7 +631,7 @@ HB_FUNC( WVW_EBSETSEL )
    DWORD          dwStart = ( DWORD ) ( HB_ISNUM( 3 ) ? hb_parnl( 3 ) : 0 );
    DWORD          dwEnd   = ( DWORD ) ( HB_ISNUM( 4 ) ? hb_parnl( 4 ) : 0 );
 
-   if( pcd == NULL )
+   if( pcd == nullptr )
    {
       hb_retl( FALSE );
       return;
@@ -648,7 +648,7 @@ HB_FUNC( WVW_EBSETSEL )
 
 HB_FUNC( WVW_STCREATE )
 {
-   HANDLE     hInstance   = NULL;
+   HANDLE     hInstance   = nullptr;
    UINT       usWinNum    = WVW_WHICH_WINDOW;
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
    WVW_DATA * pData       = hb_getWvwData();
@@ -677,7 +677,7 @@ HB_FUNC( WVW_STCREATE )
 
    int   iStyle = ( bBorder ? WS_BORDER : 0 );
    int   iBox   = HB_ISNUM( 10 ) ? hb_parni( 10 ) : 0;
-   HFONT hFont  = NULL;
+   HFONT hFont  = nullptr;
 
    if( iBox > 0 )
       iStyle |= iBox;
@@ -686,10 +686,10 @@ HB_FUNC( WVW_STCREATE )
    if( HB_ISNUM( 8 ) )
       hFont = ( HFONT ) HB_PARHANDLE( 8 );
    else
-   if( pWindowData->hSTfont == NULL )
+   if( pWindowData->hSTfont == nullptr )
    {
       pWindowData->hSTfont = CreateFontIndirect( &pData->s_lfST );
-      if( pWindowData->hSTfont == NULL )
+      if( pWindowData->hSTfont == nullptr )
       {
          hb_retnl( 0 );
          return;
@@ -723,12 +723,12 @@ HB_FUNC( WVW_STCREATE )
    else
       uiCBid++;
 
-   hb_winmainArgGet( &hInstance, NULL, NULL );
+   hb_winmainArgGet( &hInstance, nullptr, nullptr );
 
    hWndCB = CreateWindowEx(
       ulExStyle,
       "STATIC",
-      ( LPSTR ) NULL,
+      ( LPSTR ) nullptr,
       WS_CHILD | WS_VISIBLE | ( DWORD ) iStyle,
       iLeft,
       iTop,
@@ -737,7 +737,7 @@ HB_FUNC( WVW_STCREATE )
       hWndParent,
       ( HMENU ) uiCBid,
       ( HINSTANCE ) hInstance,
-      ( LPVOID ) NULL
+      ( LPVOID ) nullptr
       );
 
    if( hWndCB )

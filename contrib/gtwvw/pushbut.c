@@ -98,8 +98,8 @@ HB_FUNC( WVW_PBCREATE )
           usLeft        = ( USHORT ) hb_parni( 3 ),
           usBottom      = ( USHORT ) hb_parni( 4 ),
           usRight       = ( USHORT ) hb_parni( 5 );
-   LPCTSTR lpszCaption  = HB_ISCHAR( 6 ) ? hb_parcx( 6 ) : NULL;
-   char *  szBitmap     = HB_ISCHAR( 7 ) ? ( char * ) hb_parcx( 7 ) : NULL;
+   LPCTSTR lpszCaption  = HB_ISCHAR( 6 ) ? hb_parcx( 6 ) : nullptr;
+   char *  szBitmap     = HB_ISCHAR( 7 ) ? ( char * ) hb_parcx( 7 ) : nullptr;
    UINT    uiBitmap     = HB_ISNUM( 7 ) ? ( UINT ) hb_parni( 7 ) : 0;
    double  dStretch     = ! HB_ISNIL( 10 ) ? hb_parnd( 10 ) : 1;
    BOOL    bMap3Dcolors = HB_ISLOG( 11 ) ? ( BOOL ) hb_parl( 11 ) : FALSE;
@@ -132,7 +132,7 @@ HB_FUNC( WVW_PBDESTROY )
    WIN_DATA *     pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
    UINT           uiPBid      = ( UINT ) ( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
    CONTROL_DATA * pcd         = pWindowData->pcdCtrlList;
-   CONTROL_DATA * pcdPrev     = NULL;
+   CONTROL_DATA * pcdPrev     = nullptr;
 
    while( pcd )
    {
@@ -142,12 +142,12 @@ HB_FUNC( WVW_PBDESTROY )
       pcd     = pcd->pNext;
    }
 
-   if( pcd == NULL )
+   if( pcd == nullptr )
       return;
 
    DestroyWindow( pcd->hWndCtrl );
 
-   if( pcdPrev == NULL )
+   if( pcdPrev == nullptr )
       pWindowData->pcdCtrlList = pcd->pNext;
    else
       pcdPrev->pNext = pcd->pNext;
@@ -228,20 +228,20 @@ HB_FUNC( WVW_PBSETCODEBLOCK )
    PHB_ITEM       phiCodeBlock = hb_param( 3, HB_IT_BLOCK );
    BOOL           bOldSetting  = pData->s_bRecurseCBlock;
 
-   if( ! phiCodeBlock || pcd == NULL || pcd->bBusy )
+   if( ! phiCodeBlock || pcd == nullptr || pcd->bBusy )
    {
 
 #if 0
       if( ! HB_ISBLOCK( 3 ) )
-         MessageBox( NULL, TEXT( "Codeblock Expected" ),
+         MessageBox( nullptr, TEXT( "Codeblock Expected" ),
                      pData->szAppName, MB_ICONERROR );
 
-      if( pcd == NULL )
-         MessageBox( NULL, TEXT( "Control Data not Found" ),
+      if( pcd == nullptr )
+         MessageBox( nullptr, TEXT( "Control Data not Found" ),
                      pData->szAppName, MB_ICONERROR );
 
       if( pcd->bBusy )
-         MessageBox( NULL, TEXT( "Codeblock is busy" ),
+         MessageBox( nullptr, TEXT( "Codeblock is busy" ),
                      pData->szAppName, MB_ICONERROR );
 #endif
 
@@ -432,10 +432,10 @@ HB_FUNC( WVW_CBCREATE )
    BYTE bKbdType = HB_ISNUM( 9 ) ? ( BYTE ) hb_parni( 9 ) : ( BYTE ) WVW_CB_KBD_STANDARD;
 
 
-   if( pWindowData->hCBfont == NULL )
+   if( pWindowData->hCBfont == nullptr )
    {
       pWindowData->hCBfont = CreateFontIndirect( &pData->s_lfCB );
-      if( pWindowData->hCBfont == NULL )
+      if( pWindowData->hCBfont == nullptr )
       {
          hb_retnl( 0 );
          return;
@@ -474,7 +474,7 @@ HB_FUNC( WVW_CBCREATE )
    hWndCB = CreateWindowEx(
       0L,
       "COMBOBOX",
-      ( LPSTR ) NULL,
+      ( LPSTR ) nullptr,
       WS_CHILD | WS_VISIBLE | ( DWORD ) iStyle,
       iLeft,
       iTop,
@@ -483,7 +483,7 @@ HB_FUNC( WVW_CBCREATE )
       hWndParent,
       ( HMENU ) uiCBid,
       hb_getWvwData()->hInstance,
-      ( LPVOID ) NULL
+      ( LPVOID ) nullptr
       );
 
    if( hWndCB )
@@ -586,7 +586,7 @@ HB_FUNC( WVW_CBDESTROY )
    WIN_DATA *     pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
    UINT           uiCBid      = ( UINT ) ( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
    CONTROL_DATA * pcd         = pWindowData->pcdCtrlList;
-   CONTROL_DATA * pcdPrev     = ( CONTROL_DATA * ) NULL;
+   CONTROL_DATA * pcdPrev     = ( CONTROL_DATA * ) nullptr;
 
    while( pcd )
    {
@@ -596,12 +596,12 @@ HB_FUNC( WVW_CBDESTROY )
       pcdPrev = pcd;
       pcd     = pcd->pNext;
    }
-   if( pcd == NULL )
+   if( pcd == nullptr )
       return;
 
    DestroyWindow( pcd->hWndCtrl );
 
-   if( pcdPrev == NULL )
+   if( pcdPrev == nullptr )
       pWindowData->pcdCtrlList = pcd->pNext;
    else
       pcdPrev->pNext = pcd->pNext;
@@ -683,7 +683,7 @@ HB_FUNC( WVW_CBSETCODEBLOCK )
    WVW_DATA *     pData        = hb_getWvwData();
    BOOL bOldSetting = pData->s_bRecurseCBlock;
 
-   if( ! phiCodeBlock || pcd == NULL || pcd->bBusy )
+   if( ! phiCodeBlock || pcd == nullptr || pcd->bBusy )
    {
       hb_retl( FALSE );
       return;
@@ -785,7 +785,7 @@ HB_FUNC( WVW_CBSETINDEX )
    CONTROL_DATA * pcd = GetControlData( usWinNum, WVW_CONTROL_COMBOBOX, NULL, uiCBid );
    BOOL retval;
 
-   if( pcd == NULL || iIndex < 0 )
+   if( pcd == nullptr || iIndex < 0 )
    {
       hb_retl( FALSE );
       return;
@@ -818,7 +818,7 @@ HB_FUNC( WVW_CBGETINDEX )
    CONTROL_DATA * pcd = GetControlData( usWinNum, WVW_CONTROL_COMBOBOX, NULL, uiCBid );
    int retval;
 
-   if( pcd == NULL )
+   if( pcd == nullptr )
    {
       hb_retni( CB_ERR );
       return;
@@ -847,7 +847,7 @@ HB_FUNC( WVW_CBFINDSTRING )
    CONTROL_DATA * pcd = GetControlData( usWinNum, WVW_CONTROL_COMBOBOX, NULL, uiCBid );
    int retval;
 
-   if( pcd == NULL )
+   if( pcd == nullptr )
    {
       hb_retni( CB_ERR );
       return;
@@ -873,9 +873,9 @@ HB_FUNC( WVW_CBGETCURTEXT )
    UINT uiCBid        = hb_parni( 2 );
    CONTROL_DATA * pcd = GetControlData( usWinNum, WVW_CONTROL_COMBOBOX, NULL, uiCBid );
    int    iCurSel, iTextLen;
-   LPTSTR lptstr = NULL;
+   LPTSTR lptstr = nullptr;
 
-   if( pcd == NULL )
+   if( pcd == nullptr )
    {
       hb_retclen( lptstr, 0 );
       return;
@@ -922,7 +922,7 @@ HB_FUNC( WVW_CBISDROPPED )
    CONTROL_DATA * pcd = GetControlData( usWinNum, WVW_CONTROL_COMBOBOX, NULL, uiCBid );
    BOOL bDropped;
 
-   if( pcd == NULL )
+   if( pcd == nullptr )
    {
       hb_retl( FALSE );
       return;
