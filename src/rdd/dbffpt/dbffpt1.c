@@ -5464,7 +5464,7 @@ HB_INIT_SYMBOLS_BEGIN( dbffpt1__InitSymbols )
 HB_INIT_SYMBOLS_END( dbffpt1__InitSymbols )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_dbffpt_rdd_init_ )
-   hb_vmAtInit( hb_dbffptRddInit, NULL );
+   hb_vmAtInit( hb_dbffptRddInit, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_dbffpt_rdd_init_ )
 
 #if defined( HB_PRAGMA_STARTUP )

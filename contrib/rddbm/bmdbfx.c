@@ -793,7 +793,7 @@ HB_INIT_SYMBOLS_BEGIN( _hb_bm_InitSymbols_ )
 HB_INIT_SYMBOLS_END( _hb_bm_InitSymbols_ )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_bm_rdd_init_ )
-   hb_vmAtInit( hb_bmRddInit, NULL );
+   hb_vmAtInit( hb_bmRddInit, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_bm_rdd_init_ )
 
 #if defined( HB_PRAGMA_STARTUP )

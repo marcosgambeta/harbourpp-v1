@@ -2872,7 +2872,7 @@ HB_FUNC( __OLEVARIANTNIL2NULL )
 }
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_olecore_init_ )
-   hb_vmAtInit( hb_olecore_init, NULL );
+   hb_vmAtInit( hb_olecore_init, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_olecore_init_ )
 
 #if defined( HB_PRAGMA_STARTUP )

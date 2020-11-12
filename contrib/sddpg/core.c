@@ -134,7 +134,7 @@ HB_INIT_SYMBOLS_BEGIN( sddpostgre__InitSymbols )
 HB_INIT_SYMBOLS_END( sddpostgre__InitSymbols )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_sddpostgre_init_ )
-hb_vmAtInit( hb_pgsqldd_init, NULL );
+hb_vmAtInit( hb_pgsqldd_init, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_sddpostgre_init_ )
 
 #if defined( HB_PRAGMA_STARTUP )

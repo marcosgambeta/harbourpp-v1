@@ -8270,7 +8270,7 @@ HB_INIT_SYMBOLS_BEGIN( dbfnsx1__InitSymbols )
 HB_INIT_SYMBOLS_END( dbfnsx1__InitSymbols )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_dbfnsx_rdd_init_ )
-   hb_vmAtInit( hb_dbfnsxRddInit, NULL );
+   hb_vmAtInit( hb_dbfnsxRddInit, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_dbfnsx_rdd_init_ )
 
 #if defined( HB_PRAGMA_STARTUP )

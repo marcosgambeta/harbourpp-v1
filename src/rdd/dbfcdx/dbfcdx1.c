@@ -10064,7 +10064,7 @@ HB_INIT_SYMBOLS_BEGIN( _hb_sixcdx1_InitSymbols_ )
 HB_INIT_SYMBOLS_END( _hb_sixcdx1_InitSymbols_ )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_sixcdx_rdd_init_ )
-   hb_vmAtInit( hb_cdxRddInit, NULL );
+   hb_vmAtInit( hb_cdxRddInit, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_sixcdx_rdd_init_ )
 
 #if defined( HB_PRAGMA_STARTUP )
@@ -10086,7 +10086,7 @@ HB_INIT_SYMBOLS_BEGIN( _hb_dbfcdx1_InitSymbols_ )
 HB_INIT_SYMBOLS_END( _hb_dbfcdx1_InitSymbols_ )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_dbfcdx_rdd_init_ )
-   hb_vmAtInit( hb_cdxRddInit, NULL );
+   hb_vmAtInit( hb_cdxRddInit, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_dbfcdx_rdd_init_ )
 
 #if defined( HB_PRAGMA_STARTUP )

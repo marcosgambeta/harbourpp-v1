@@ -81,7 +81,7 @@ static void hb_mlzo_init( void * cargo )
 }
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_mlzo_init_ )
-hb_vmAtInit( hb_mlzo_init, NULL );
+hb_vmAtInit( hb_mlzo_init, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_mlzo_init_ )
 
 #if defined( HB_PRAGMA_STARTUP )

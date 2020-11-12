@@ -162,7 +162,7 @@ static void memfsInit( void )
    s_fs.pFiles = ( PHB_MEMFS_FILE * ) hb_xgrab( sizeof( PHB_MEMFS_FILE ) * s_fs.ulFileAlloc );
    memset( s_fs.pFiles, 0, sizeof( PHB_MEMFS_FILE ) * s_fs.ulFileAlloc );
    s_fs.ulFileLast = 0;
-   hb_vmAtQuit( memfsExit, NULL );
+   hb_vmAtQuit( memfsExit, nullptr );
 }
 
 

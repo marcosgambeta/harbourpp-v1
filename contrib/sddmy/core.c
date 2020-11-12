@@ -124,7 +124,7 @@ HB_INIT_SYMBOLS_BEGIN( mysqldd__InitSymbols )
 HB_INIT_SYMBOLS_END( mysqldd__InitSymbols )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_mysqldd_init_ )
-hb_vmAtInit( hb_mysqldd_init, NULL );
+hb_vmAtInit( hb_mysqldd_init, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_mysqldd_init_ )
 
 #if defined( HB_PRAGMA_STARTUP )

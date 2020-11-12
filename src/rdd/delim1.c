@@ -1812,7 +1812,7 @@ HB_INIT_SYMBOLS_BEGIN( delim1__InitSymbols )
 HB_INIT_SYMBOLS_END( delim1__InitSymbols )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_delim_rdd_init_ )
-   hb_vmAtInit( hb_delimRddInit, NULL );
+   hb_vmAtInit( hb_delimRddInit, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_delim_rdd_init_ )
 
 #if defined( HB_PRAGMA_STARTUP )

@@ -1856,7 +1856,7 @@ HB_INIT_SYMBOLS_BEGIN( adsx1__InitSymbols )
 HB_INIT_SYMBOLS_END( adsx1__InitSymbols )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_adsx_rdd_init_ )
-   hb_vmAtInit( hb_adsxRddInit, NULL );
+   hb_vmAtInit( hb_adsxRddInit, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_adsx_rdd_init_ )
 
 #if defined( HB_PRAGMA_STARTUP )

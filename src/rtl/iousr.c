@@ -138,7 +138,7 @@ static PHB_IOUSR s_iousrAddNew( const char * pszPrefix )
    if( iCount < 0 )
    {
       if( s_iCount == 0 )
-         hb_vmAtQuit( s_iousrFreeAll, NULL );
+         hb_vmAtQuit( s_iousrFreeAll, nullptr );
       pIO = ( PHB_IOUSR ) hb_xgrabz( sizeof( HB_IOUSR ) );
       pIO->prefix = hb_strdup( pszPrefix );
       pIO->prefix_len = ( int ) strlen( pszPrefix );

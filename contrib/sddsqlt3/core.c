@@ -129,8 +129,8 @@ HB_INIT_SYMBOLS_BEGIN( sqlt3dd__InitSymbols )
 HB_INIT_SYMBOLS_END( sqlt3dd__InitSymbols )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_sqlt3dd_init_ )
-hb_vmAtInit( hb_sqlt3dd_init, NULL );
-hb_vmAtExit( hb_sqlt3dd_exit, NULL );
+hb_vmAtInit( hb_sqlt3dd_init, nullptr );
+hb_vmAtExit( hb_sqlt3dd_exit, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_sqlt3dd_init_ )
 
 #if defined( HB_PRAGMA_STARTUP )

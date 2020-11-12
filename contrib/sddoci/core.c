@@ -154,8 +154,8 @@ HB_INIT_SYMBOLS_BEGIN( ocidd__InitSymbols )
 HB_INIT_SYMBOLS_END( ocidd__InitSymbols )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_ocidd_init_ )
-hb_vmAtInit( hb_ocidd_init, NULL );
-hb_vmAtExit( hb_ocidd_exit, NULL );
+hb_vmAtInit( hb_ocidd_init, nullptr );
+hb_vmAtExit( hb_ocidd_exit, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_ocidd_init_ )
 
 #if defined( HB_PRAGMA_STARTUP )

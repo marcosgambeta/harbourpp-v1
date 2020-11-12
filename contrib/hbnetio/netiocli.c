@@ -1050,7 +1050,7 @@ static void s_netio_init( void * cargo )
    {
       hb_socketInit();
       hb_fileRegisterFull( s_fileMethods() );
-      hb_vmAtQuit( s_netio_exit, NULL );
+      hb_vmAtQuit( s_netio_exit, nullptr );
       s_fInit = HB_FALSE;
    }
 }
@@ -2695,7 +2695,7 @@ static const HB_FILE_FUNCS * s_fileMethods( void )
 #if defined( HB_NETIO_STARTUP_INIT )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_file_netio_init_ )
-   hb_vmAtInit( s_netio_init, NULL );
+   hb_vmAtInit( s_netio_init, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_file_netio_init_ )
 
 #if defined( HB_PRAGMA_STARTUP )

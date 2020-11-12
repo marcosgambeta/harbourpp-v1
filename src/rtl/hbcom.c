@@ -4502,14 +4502,14 @@ static void hb_com_init( void* cargo )
          s_comList[ iPort ].status = HB_COM_ENABLED;
       }
 
-      hb_vmAtQuit( hb_com_exit, NULL );
+      hb_vmAtQuit( hb_com_exit, nullptr );
 
       s_iComInit = 1;
    }
 }
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_com_init_ )
-   hb_vmAtInit( hb_com_init, NULL );
+   hb_vmAtInit( hb_com_init, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_com_init_ )
 
 #if defined( HB_PRAGMA_STARTUP )

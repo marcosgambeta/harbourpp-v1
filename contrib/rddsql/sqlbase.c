@@ -1268,7 +1268,7 @@ HB_INIT_SYMBOLS_BEGIN( sqlbase__InitSymbols )
 HB_INIT_SYMBOLS_END( sqlbase__InitSymbols )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_sqlbase_init_ )
-hb_vmAtInit( hb_sqlbaseInit, NULL );
+hb_vmAtInit( hb_sqlbaseInit, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_sqlbase_init_ )
 
 #if defined( HB_PRAGMA_STARTUP )

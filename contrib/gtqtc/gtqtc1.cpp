@@ -1667,7 +1667,7 @@ static void hb_gt_qtc_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
          if( ! s_qtapp )
             hb_errInternal( 10001, "QT initialization error.", nullptr, nullptr );
 
-         hb_vmAtQuit( hb_gt_qtc_appFree, NULL );
+         hb_vmAtQuit( hb_gt_qtc_appFree, nullptr );
          hb_cmdargInit( s_argc, s_argv );
       }
    }

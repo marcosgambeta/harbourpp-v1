@@ -1395,7 +1395,7 @@ HB_INIT_SYMBOLS_BEGIN( sdf1__InitSymbols )
 HB_INIT_SYMBOLS_END( sdf1__InitSymbols )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_sdf_rdd_init_ )
-   hb_vmAtInit( hb_sdfRddInit, NULL );
+   hb_vmAtInit( hb_sdfRddInit, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_sdf_rdd_init_ )
 
 #if defined( HB_PRAGMA_STARTUP )

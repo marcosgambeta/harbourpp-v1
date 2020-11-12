@@ -339,7 +339,7 @@ static void s_socket_init( void )
    {
       hb_sockexRegister( NULL );
       hb_socketInit();
-      hb_vmAtQuit( s_socket_exit, NULL );
+      hb_vmAtQuit( s_socket_exit, nullptr );
       s_fInit = HB_TRUE;
    }
 }

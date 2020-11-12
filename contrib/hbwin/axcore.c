@@ -113,7 +113,7 @@ HB_BOOL hb_oleAxInit( void )
       if( pAtlAxWinInit )
          ( *pAtlAxWinInit )();
 
-      hb_vmAtQuit( hb_oleAxExit, NULL );
+      hb_vmAtQuit( hb_oleAxExit, nullptr );
    }
    return HB_TRUE;
 }

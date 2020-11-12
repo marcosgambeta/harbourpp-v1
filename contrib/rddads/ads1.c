@@ -5772,7 +5772,7 @@ HB_INIT_SYMBOLS_BEGIN( ads1__InitSymbols )
 HB_INIT_SYMBOLS_END( ads1__InitSymbols )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_ads_rdd_init_ )
-   hb_vmAtInit( hb_adsRddInit, NULL );
+   hb_vmAtInit( hb_adsRddInit, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_ads_rdd_init_ )
 
 #if defined( HB_PRAGMA_STARTUP )

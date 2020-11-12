@@ -162,7 +162,7 @@ HB_INIT_SYMBOLS_BEGIN( odbcdd__InitSymbols )
 HB_INIT_SYMBOLS_END( odbcdd__InitSymbols )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_odbcdd_init_ )
-hb_vmAtInit( hb_odbcdd_init, NULL );
+hb_vmAtInit( hb_odbcdd_init, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_odbcdd_init_ )
 
 #if defined( HB_PRAGMA_STARTUP )
