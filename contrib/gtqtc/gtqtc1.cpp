@@ -74,7 +74,7 @@ static  HB_GT_FUNCS           SuperTable;
 #  define HB_QTC_UNLOCK()     do {} while( 0 )
 #endif
 
-static QApplication * s_qtapp = NULL;
+static QApplication * s_qtapp = nullptr;
 
 /* --- */
 
@@ -84,7 +84,7 @@ static void hb_gt_qtc_appFree( void * cargo )
 
    s_qtapp->quit();
    delete s_qtapp;
-   s_qtapp = NULL;
+   s_qtapp = nullptr;
 }
 
 static void hb_gt_qtc_itemGetQString( PHB_ITEM pItem, QString * pqStr )
