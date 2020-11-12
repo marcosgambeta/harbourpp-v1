@@ -189,7 +189,7 @@ static QBitmap * hb_gt_qtc_defineBoxButtonR( int cellx, int celly )
 
 static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
 {
-   QBitmap * qBitMap = NULL;
+   QBitmap * qBitMap = nullptr;
    int cellx = pQTC->cellX;
    int celly = pQTC->cellY;
    int i, y, x, yy, xx;
@@ -1208,7 +1208,7 @@ static QBitmap * hb_gt_qtc_getBoxChar( PHB_GTQTC pQTC, HB_USHORT * puc16 )
    int iPos, iTrans;
 
    if( ( pQTC->fontAttribute & HB_GTI_FONTA_DRAWBOX ) == 0 )
-      return NULL;
+      return nullptr;
 
    if( uc16 >= HB_BOXCH_RC_0 && uc16 <= HB_BOXCH_RC_ACC )
    {
@@ -1251,7 +1251,7 @@ static QBitmap * hb_gt_qtc_getBoxChar( PHB_GTQTC pQTC, HB_USHORT * puc16 )
             *puc16 = '\'';
             break;
       }
-      return NULL;
+      return nullptr;
    }
 
    if     ( uc16 == HB_BOXCH_ARROW_R )
@@ -1269,7 +1269,7 @@ static QBitmap * hb_gt_qtc_getBoxChar( PHB_GTQTC pQTC, HB_USHORT * puc16 )
       iPos = HB_BOXCH_CHR_BASE + ( HB_BOXCH_BOX_MAX - HB_BOXCH_BOX_MIN + 1 ) +
              ( uc16 - HB_BOXCH_RC_MIN );
    else
-      return NULL;
+      return nullptr;
 
    iTrans = pQTC->boxIndex[ iPos ];
    if( iTrans == HB_BOXCH_TRANS_MAX )
@@ -1893,7 +1893,7 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_ONLINE:
-         pInfo->pResult = hb_itemPutL( pInfo->pResult, pQTC->qWnd != NULL );
+         pInfo->pResult = hb_itemPutL( pInfo->pResult, pQTC->qWnd != nullptr );
          break;
 
       case HB_GTI_FONTSIZE:
@@ -2318,7 +2318,7 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                int iHeight = hb_arrayGetNI( pInfo->pNewVal, 3 );
                int iDepth  = hb_arrayGetNI( pInfo->pNewVal, 4 );
                int iPitch  = 0;
-               const uchar * data = NULL;
+               const uchar * data = nullptr;
                QImage::Format format;
 
                switch( iDepth )
@@ -2345,7 +2345,7 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                   if( nSize > 0 )
                   {
                      int iPad = 32;
-                     while( data == NULL && iPad >= 8 )
+                     while( data == nullptr && iPad >= 8 )
                      {
                         iPitch = ( iWidth * iDepth + iPad - 1 ) / iPad;
                         if( nSize == static_cast< HB_SIZE >( iHeight * iPitch ) )
@@ -2357,7 +2357,7 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                   else
                      data = reinterpret_cast< const uchar * >( hb_arrayGetPtr( pInfo->pNewVal, 1 ) );
                }
-               if( data != NULL )
+               if( data != nullptr )
                {
                   if( iPitch == 0 )
                      qImg = QImage( data, iWidth, iHeight, QImage::Format_RGB32 );
@@ -2577,8 +2577,8 @@ QTConsole::QTConsole( PHB_GTQTC pStructQTC, QWidget *parnt ) : QWidget( parnt )
 
    resizeMode = false;
    selectMode = false;
-   image = NULL;
-   timer = NULL;
+   image = nullptr;
+   timer = nullptr;
 
    setAttribute( Qt::WA_StaticContents );
    setAttribute( Qt::WA_OpaquePaintEvent );
