@@ -16,5 +16,5 @@
 
 ${hb_name}.hbx
 
-blatwrp.c
+blatwrp.cpp
 blatcls.prg
