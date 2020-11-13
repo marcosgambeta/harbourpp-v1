@@ -13,14 +13,14 @@ hbwin.hbc
 # Optimize build time and make sure we build even with this option
 -cflag=-DWIN32_LEAN_AND_MEAN
 
-gtwvgd.c
-gtwgud.c
+gtwvgd.cpp
+gtwgud.cpp
 
-wvgcore.c
-wvgcuig.c
-wvgutils.c
-wvgwin.c
-wvgwing.c
+wvgcore.cpp
+wvgcuig.cpp
+wvgutils.cpp
+wvgwin.cpp
+wvgwing.cpp
 
 ${hb_name}.hbx
 
