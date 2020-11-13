@@ -1180,7 +1180,7 @@ static void hb_gt_wvt_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvt_Init(%p,%p,%p,%p)", ( void * ) pGT, ( void * ) ( HB_PTRUINT ) hFilenoStdin, ( void * ) ( HB_PTRUINT ) hFilenoStdout, ( void * ) ( HB_PTRUINT ) hFilenoStderr ) );
 
-   if( ! hb_winmainArgGet( &hInstance, NULL, &iCmdShow ) )
+   if( ! hb_winmainArgGet( &hInstance, nullptr, &iCmdShow ) )
    {
       hInstance = GetModuleHandle( NULL );
       iCmdShow = 1;

@@ -129,7 +129,7 @@ IPicture * hb_wvt_gtLoadPictureFromResource( LPCTSTR resource, LPCTSTR section )
    LPVOID iPicture = NULL;
    HANDLE hInstance;
 
-   if( hb_winmainArgGet( &hInstance, NULL, NULL ) )
+   if( hb_winmainArgGet( &hInstance, nullptr, nullptr ) )
       res = FindResource( ( HINSTANCE ) hInstance, resource, section );
 
    if( res )

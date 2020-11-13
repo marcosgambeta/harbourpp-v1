@@ -120,7 +120,7 @@ static HINSTANCE wvg_hInstance( void )
 {
    HANDLE hInstance;
 
-   hb_winmainArgGet( &hInstance, NULL, NULL );
+   hb_winmainArgGet( &hInstance, nullptr, nullptr );
 
    return ( HINSTANCE ) hInstance;
 }

@@ -59,7 +59,7 @@ HB_FUNC( WIN_LOADRESOURCE )
    /* Set default return value */
    hb_retc_null();
 
-   if( hb_winmainArgGet( &hInstance, NULL, NULL ) )
+   if( hb_winmainArgGet( &hInstance, nullptr, nullptr ) )
    {
       void * hName;
       void * hType;
@@ -153,7 +153,7 @@ HB_FUNC( WIN_HINSTANCE )
 {
    HANDLE hInstance;
 
-   hb_winmainArgGet( &hInstance, NULL, NULL );
+   hb_winmainArgGet( &hInstance, nullptr, nullptr );
 
    hb_retptr( hInstance );
 }
@@ -162,7 +162,7 @@ HB_FUNC( WIN_HPREVINSTANCE )
 {
    HANDLE hPrevInstance;
 
-   hb_winmainArgGet( NULL, &hPrevInstance, NULL );
+   hb_winmainArgGet( nullptr, &hPrevInstance, nullptr );
 
    hb_retptr( hPrevInstance );
 }
@@ -171,7 +171,7 @@ HB_FUNC( WIN_NCMDSHOW )
 {
    int nCmdShow;
 
-   hb_winmainArgGet( NULL, NULL, &nCmdShow );
+   hb_winmainArgGet( nullptr, nullptr, &nCmdShow );
 
    hb_retni( nCmdShow );
 }
