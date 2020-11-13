@@ -231,14 +231,14 @@ HB_FUNC( HB_ARRAYID )  /* for debugging: returns the array's "address" so dual r
 {
    PHB_ITEM pArray = hb_param( 1, HB_IT_ARRAY );
 
-   hb_retptr( pArray ? hb_arrayId( pArray ) : NULL );
+   hb_retptr( pArray ? hb_arrayId( pArray ) : nullptr );
 }
 
 HB_FUNC( HB_HASHID )  /* for debugging: returns the array's "address" so dual references to same array can be seen */
 {
    PHB_ITEM pHash = hb_param( 1, HB_IT_HASH );
 
-   hb_retptr( pHash ? hb_hashId( pHash ) : NULL );
+   hb_retptr( pHash ? hb_hashId( pHash ) : nullptr );
 }
 
 HB_FUNC( __SENDRAWMSG )

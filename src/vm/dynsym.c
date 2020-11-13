@@ -749,7 +749,7 @@ HB_FUNC( __DYNSN2PTR )
    HB_STACK_TLS_PRELOAD
    const char * szName = hb_parc( 1 );
 
-   hb_retptr( szName ? hb_dynsymGet( szName ) : NULL );
+   hb_retptr( szName ? hb_dynsymGet( szName ) : nullptr );
 }
 
 HB_FUNC( __DYNSN2SYM )
