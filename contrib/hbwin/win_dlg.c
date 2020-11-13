@@ -97,7 +97,7 @@ HB_FUNC( WIN_PRINTDLGDC )
 #endif
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 static LPTSTR s_dialogPairs( int iParam, DWORD * pdwIndex )

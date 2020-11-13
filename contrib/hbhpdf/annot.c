@@ -101,7 +101,7 @@ HB_FUNC( HPDF_PAGE_CREATEFREETEXTANNOT )
 
    hb_retptr( HPDF_Page_CreateFreeTextAnnot( ( HPDF_Page ) hb_parptr( 1 ), rc, hb_parc( 3 ), ( HPDF_Encoder ) hb_parptr( 4 ) ) );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 
@@ -115,7 +115,7 @@ HB_FUNC( HPDF_PAGE_CREATELINEANNOT )
 #if HB_HPDF_VERS( 2, 2, 0 )
    hb_retptr( HPDF_Page_CreateLineAnnot( ( HPDF_Page ) hb_parptr( 1 ), hb_parc( 2 ), ( HPDF_Encoder ) hb_parptr( 3 ) ) );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 /*
@@ -138,7 +138,7 @@ HB_FUNC( HPDF_PAGE_CREATETEXTMARKUPANNOT )
 
    hb_retptr( HPDF_Page_CreateTextMarkupAnnot( ( HPDF_Page ) hb_parptr( 1 ), rc, hb_parc( 3 ), ( HPDF_Encoder ) hb_parptr( 4 ), ( HPDF_AnnotType ) hb_parni( 5 ) ) );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 /* HPDF_EXPORT(HPDF_Annotation)
@@ -159,7 +159,7 @@ HB_FUNC( HPDF_PAGE_CREATEHIGHLIGHTANNOT )
 
    hb_retptr( HPDF_Page_CreateHighlightAnnot( ( HPDF_Page ) hb_parptr( 1 ), rc, hb_parc( 3 ), ( HPDF_Encoder ) hb_parptr( 4 ) ) );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 
@@ -181,7 +181,7 @@ HB_FUNC( HPDF_PAGE_CREATEUNDERLINEANNOT )
 
    hb_retptr( HPDF_Page_CreateUnderlineAnnot( ( HPDF_Page ) hb_parptr( 1 ), rc, hb_parc( 3 ), ( HPDF_Encoder ) hb_parptr( 4 ) ) );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 
@@ -203,7 +203,7 @@ HB_FUNC( HPDF_PAGE_CREATESQUIGGLYANNOT )
 
    hb_retptr( HPDF_Page_CreateSquigglyAnnot( ( HPDF_Page ) hb_parptr( 1 ), rc, hb_parc( 3 ), ( HPDF_Encoder ) hb_parptr( 4 ) ) );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 
@@ -225,7 +225,7 @@ HB_FUNC( HPDF_PAGE_CREATESTRIKEOUTANNOT )
 
    hb_retptr( HPDF_Page_CreateStrikeOutAnnot( ( HPDF_Page ) hb_parptr( 1 ), rc, hb_parc( 3 ), ( HPDF_Encoder ) hb_parptr( 4 ) ) );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 
@@ -246,7 +246,7 @@ HB_FUNC( HPDF_PAGE_CREATEPOPUPANNOT )
 
    hb_retptr( HPDF_Page_CreatePopupAnnot( ( HPDF_Page ) hb_parptr( 1 ), rc, ( HPDF_Annotation ) hb_parptr( 3 ) ) );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 
@@ -269,7 +269,7 @@ HB_FUNC( HPDF_PAGE_CREATESTAMPANNOT )
 
    hb_retptr( HPDF_Page_CreateStampAnnot( ( HPDF_Page ) hb_parptr( 1 ), rc, ( HPDF_StampAnnotName ) hb_parni( 3 ), hb_parc( 4 ), ( HPDF_Encoder ) hb_parptr( 5 ) ) );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 
@@ -291,7 +291,7 @@ HB_FUNC( HPDF_PAGE_CREATESQUAREANNOT )
 
    hb_retptr( HPDF_Page_CreateSquareAnnot( ( HPDF_Page ) hb_parptr( 1 ), rc, hb_parc( 3 ), ( HPDF_Encoder ) hb_parptr( 4 ) ) );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 
@@ -313,7 +313,7 @@ HB_FUNC( HPDF_PAGE_CREATECIRCLEANNOT )
 
    hb_retptr( HPDF_Page_CreateCircleAnnot( ( HPDF_Page ) hb_parptr( 1 ), rc, hb_parc( 3 ), ( HPDF_Encoder ) hb_parptr( 4 ) ) );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 

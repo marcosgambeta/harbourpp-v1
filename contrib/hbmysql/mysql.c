@@ -97,7 +97,7 @@ static void hb_MYSQL_ret( MYSQL * p )
       hb_retptrGC( ph );
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 static MYSQL * hb_MYSQL_par( int iParam )
@@ -140,7 +140,7 @@ static void hb_MYSQL_RES_ret( MYSQL_RES * p )
       hb_retptrGC( ph );
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 static MYSQL_RES * hb_MYSQL_RES_par( int iParam )
@@ -173,11 +173,11 @@ HB_FUNC( MYSQL_REAL_CONNECT ) /* MYSQL * mysql_real_connect( MYSQL *, char * hos
       else
       {
          mysql_close( mysql );
-         hb_retptr( NULL );
+         hb_retptr( nullptr );
       }
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 #else
    hb_MYSQL_ret( mysql_real_connect( NULL, szHost, szUser, szPass, 0, NULL, 0 ) );
 #endif

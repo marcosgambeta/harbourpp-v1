@@ -139,12 +139,12 @@ static void hb_PEM_read_bio( PEM_READ_BIO * func, HB_PEM_TYPES type )
                hb_EVP_PKEY_ret( ( EVP_PKEY * ) result );
                break;
             case hb_PEM_ANY:
-               hb_retptr( NULL );
+               hb_retptr( nullptr );
                break;
          }
       }
       else
-         hb_retptr( NULL );
+         hb_retptr( nullptr );
 
       if( ! hb_BIO_is( 1 ) )
          BIO_free( bio );

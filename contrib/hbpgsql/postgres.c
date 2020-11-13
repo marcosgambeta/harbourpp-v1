@@ -83,7 +83,7 @@ void hb_PGconn_ret( PGconn * p )
       hb_retptrGC( ph );
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 PGconn * hb_PGconn_par( int iParam )
@@ -125,7 +125,7 @@ void hb_PGresult_ret( PGresult * p )
       hb_retptrGC( ph );
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 PGresult * hb_PGresult_par( int iParam )
@@ -169,7 +169,7 @@ static void hb_PGcancel_ret( PGcancel * p )
       hb_retptrGC( ph );
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 static PGcancel * hb_PGcancel_par( int iParam )
@@ -215,7 +215,7 @@ static void hb_FILE_ret( FILE * p )
       hb_retptrGC( ph );
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 static FILE * hb_FILE_par( int iParam )
@@ -961,7 +961,7 @@ HB_FUNC( PQTRACECREATE )  /* not a direct wrapper */
 #ifdef NODLL
    hb_FILE_ret( fopen( hb_parcx( 1 ), "w+b" ) );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 
@@ -1060,7 +1060,7 @@ HB_FUNC( PQGETCANCEL )
    else
       hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 

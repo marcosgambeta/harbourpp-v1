@@ -78,7 +78,7 @@ HB_FUNC( WIN_CREATEDC )
       hb_strfree( hDevice );
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 HB_FUNC( WIN_STARTDOC )
@@ -342,7 +342,7 @@ HB_FUNC( WIN_CREATEFONT )
          SelectObject( hDC, hFont );
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 HB_FUNC( WIN_GETPRINTERFONTNAME )
@@ -628,7 +628,7 @@ HB_FUNC( WIN_SETPEN )
          SelectObject( hDC, hPen );
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 HB_FUNC( WIN_FILLRECT )

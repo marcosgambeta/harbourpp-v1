@@ -952,7 +952,7 @@ HB_FUNC( HB_SOCKETOPEN )
    if( ( socket = hb_socketOpen( iDomain, iType, iProtocol ) ) != HB_NO_SOCKET )
       hb_socketItemPut( hb_stackReturnItem(), socket );
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 HB_FUNC( HB_SOCKETCLOSE )
@@ -1011,7 +1011,7 @@ HB_FUNC( HB_SOCKETACCEPT )
          hb_sockexSetShutDown( hb_sockexItemGet( hb_socketItemPut( hb_stackReturnItem(),
                                                             socketaccept ) ), HB_TRUE );
       else
-         hb_retptr( NULL );
+         hb_retptr( nullptr );
 
 
       if( HB_ISBYREF( 2 ) )

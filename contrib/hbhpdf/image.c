@@ -92,7 +92,7 @@ HB_FUNC( HPDF_LOADPNGIMAGEFROMMEM )
                                           ( HPDF_UINT ) hb_parclen( 2 ) ) );
 #else
    hb_storc( NULL, 2 );
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 /* HPDF_EXPORT(HPDF_Image)
@@ -108,7 +108,7 @@ HB_FUNC( HPDF_LOADJPEGIMAGEFROMMEM )
                                           ( HPDF_UINT ) hb_parclen( 2 ) ) );
 #else
    hb_storc( NULL, 2 );
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 

@@ -52,7 +52,7 @@ HB_FUNC( CAIRO_PS_SURFACE_CREATE )
 #ifdef CAIRO_HAS_PS_SURFACE
    hb_cairo_surface_ret( cairo_ps_surface_create( hb_parc( 1 ), hb_parnd( 2 ), hb_parnd( 3 ) ) );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 

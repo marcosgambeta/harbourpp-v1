@@ -73,7 +73,7 @@ static void hbwapi_mutex_ret( HANDLE hMutex )
       hb_retptrGC( ph );
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 static HANDLE hbwapi_mutex_par( int iParam )
@@ -108,7 +108,7 @@ HB_FUNC( WAPI_OPENMUTEX )
    hb_strfree( hName );
 #else
    /* WinCE (WinMobile6) does not support OpenMutex() */
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 

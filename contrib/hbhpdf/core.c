@@ -1446,7 +1446,7 @@ HB_FUNC( HPDF_PAGE_CREATE3DVIEW )
 #if HB_HPDF_VERS( 2, 2, 0 )
    hb_retptr( ( HPDF_Dict ) HPDF_Page_Create3DView( ( HPDF_Page ) hb_parptr( 1 ), ( HPDF_U3D ) hb_parptr( 2 ), ( HPDF_Annotation ) hb_parptr( 3 ), hb_parc( 4 ) ) );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 
@@ -1456,7 +1456,7 @@ HB_FUNC( HPDF_ATTACHFILE )
 #if HB_HPDF_VERS( 2, 2, 0 )
    hb_retptr( ( HPDF_EmbeddedFile ) HPDF_AttachFile( hb_HPDF_Doc_par( 1 ), hb_parc( 2 ) ) );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 
@@ -1466,7 +1466,7 @@ HB_FUNC( HPDF_ICC_LOADICCFROMMEM )
 #if HB_HPDF_VERS( 2, 2, 0 )
    hb_retptr( ( HPDF_OutputIntent ) HPDF_ICC_LoadIccFromMem( hb_HPDF_Doc_par( 1 ), ( HPDF_MMgr ) hb_parptr( 2 ), ( HPDF_Stream ) hb_parptr( 3 ), ( HPDF_Xref ) hb_parptr( 4 ), hb_parni( 5 ) ) );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 
@@ -1476,7 +1476,7 @@ HB_FUNC( HPDF_LOADICCPROFILEFROMFILE )
 #if HB_HPDF_VERS( 2, 2, 0 )
    hb_retptr( ( HPDF_OutputIntent ) HPDF_LoadIccProfileFromFile( hb_HPDF_Doc_par( 1 ), hb_parc( 2 ), hb_parni( 3 ) ) );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 

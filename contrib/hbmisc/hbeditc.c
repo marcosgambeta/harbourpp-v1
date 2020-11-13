@@ -106,7 +106,7 @@ static void PHB_EDITOR_ret( PHB_EDITOR p )
       hb_retptrGC( ph );
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 static PHB_EDITOR PHB_EDITOR_par( int iParam )

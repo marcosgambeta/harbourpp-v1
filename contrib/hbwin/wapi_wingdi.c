@@ -280,7 +280,7 @@ HB_FUNC( __WAPI_DEVMODE_NEW )
    void * hDeviceName;
    LPCTSTR lpDeviceName = HB_PARSTR( 1, &hDeviceName, NULL );
 
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 
    if( OpenPrinter( ( LPTSTR ) lpDeviceName, &hPrinter, NULL ) )
    {
@@ -301,7 +301,7 @@ HB_FUNC( __WAPI_DEVMODE_NEW )
 
    hb_strfree( hDeviceName );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 
@@ -692,7 +692,7 @@ HB_FUNC( WAPI_CREATEHATCHBRUSH )
    hbwapi_ret_HBRUSH( CreateHatchBrush( hb_parni( 1 ) /* fnStyle */,
                                         ( COLORREF ) hb_parnl( 2 ) /* crColor */ ) );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 
@@ -718,7 +718,7 @@ HB_FUNC( WAPI_CREATEFONT )
 
    hb_strfree( hFontFace );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 

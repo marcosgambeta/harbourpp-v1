@@ -51,7 +51,7 @@ HB_FUNC( CAIRO_IMAGE_SURFACE_CREATE_FROM_PNG )
 #ifdef CAIRO_HAS_PNG_FUNCTIONS
    hb_cairo_surface_ret( cairo_image_surface_create_from_png( hb_parc( 1 ) ) );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 

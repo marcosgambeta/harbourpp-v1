@@ -78,7 +78,7 @@ void hbwapi_ret_HDC( HDC p )
       hb_retptrGC( ph );
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 HDC hbwapi_par_HDC( int iParam )
@@ -120,7 +120,7 @@ void hbwapi_ret_HPEN( HPEN p )
       hb_retptrGC( ph );
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 HPEN hbwapi_par_HPEN( int iParam )
@@ -162,7 +162,7 @@ void hbwapi_ret_HBRUSH( HBRUSH p )
       hb_retptrGC( ph );
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 HBRUSH hbwapi_par_HBRUSH( int iParam )
@@ -204,7 +204,7 @@ void hbwapi_ret_HFONT( HFONT p )
       hb_retptrGC( ph );
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 HFONT hbwapi_par_HFONT( int iParam )
@@ -246,7 +246,7 @@ void hbwapi_ret_PDEVMODE( PDEVMODE p )
       hb_retptrGC( ph );
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 PDEVMODE hbwapi_par_PDEVMODE( int iParam )

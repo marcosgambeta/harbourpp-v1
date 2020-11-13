@@ -724,14 +724,14 @@ HB_FUNC( SQLITE3_OPEN )
       {
          sqlite3_close( db );
 
-         hb_retptr( NULL );
+         hb_retptr( nullptr );
       }
    }
    else
    {
       HB_TRACE( HB_TR_DEBUG, ( "sqlite3_open(): Database does not exist %s", pszdbName ) );
 
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
    }
 
    if( pszFree )
@@ -757,13 +757,13 @@ HB_FUNC( SQLITE3_OPEN_V2 )
    {
       sqlite3_close( db );
 
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
    }
 
    if( pszFree )
       hb_xfree( pszFree );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 
@@ -832,7 +832,7 @@ HB_FUNC( SQLITE3_PREPARE )
       else
       {
          sqlite3_finalize( pStmt );
-         hb_retptr( NULL );
+         hb_retptr( nullptr );
       }
 
       hb_strfree( hSQLText );
@@ -1623,14 +1623,14 @@ HB_FUNC( SQLITE3_BLOB_OPEN )
              &ppBlob ) == SQLITE_OK )
          hb_retptr( ppBlob );
       else
-         hb_retptr( NULL );
+         hb_retptr( nullptr );
 
       hb_strfree( hDbName );
       hb_strfree( hTableName );
       hb_strfree( hColumnName );
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 /**
@@ -2049,12 +2049,12 @@ HB_FUNC( SQLITE3_BACKUP_INIT )
       if( pBackup )
          hb_retptr( pBackup );  /* FIXME: Create GC collected pointer */
       else
-         hb_retptr( NULL );
+         hb_retptr( nullptr );
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 

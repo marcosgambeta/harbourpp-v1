@@ -100,7 +100,7 @@ static void hb_FB_db_handle_ret( isc_db_handle p )
       hb_retptrGC( ph );
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 static isc_db_handle hb_FB_db_handle_par( int iParam )
