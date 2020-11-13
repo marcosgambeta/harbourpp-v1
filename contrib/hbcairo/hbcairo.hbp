@@ -18,15 +18,15 @@
 
 ${hb_name}.hbx
 
-context.c
-core.c
-image.c
-paths.c
-pattern.c
-pdf.c
-png.c
-ps.c
-surface.c
-text.c
-transfor.c
-util.c
+context.cpp
+core.cpp
+image.cpp
+paths.cpp
+pattern.cpp
+pdf.cpp
+png.cpp
+ps.cpp
+surface.cpp
+text.cpp
+transfor.cpp
+util.cpp
