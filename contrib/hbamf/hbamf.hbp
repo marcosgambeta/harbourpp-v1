@@ -7,9 +7,9 @@
 
 ${hb_name}.hbx
 
-amfenc.c
-amfdec.c
-amfstdio.c
-hbcls.c
+amfenc.cpp
+amfdec.cpp
+amfstdio.cpp
+hbcls.cpp
 
 hbamfobj.prg
