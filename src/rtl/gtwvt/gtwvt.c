@@ -3377,7 +3377,7 @@ static void hb_gt_wvt_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
    if( ! hb_winmainArgGet( &hInstance, nullptr, &iCmdShow ) )
    {
-      hInstance = ( HINSTANCE ) GetModuleHandle( NULL );
+      hInstance = ( HINSTANCE ) GetModuleHandle( nullptr );
       iCmdShow = 1;
    }
 

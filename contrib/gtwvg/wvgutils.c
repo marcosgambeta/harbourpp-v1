@@ -1207,7 +1207,7 @@ HB_FUNC( WVT_DLGSETICON )
       void * cIcon;
       hIcon = ( HICON ) LoadImage( ( HINSTANCE ) NULL, HB_PARSTR( 2, &cIcon, NULL ), IMAGE_ICON, 0, 0, LR_LOADFROMFILE );
       if( ! hIcon )
-         hIcon = ( HICON ) LoadImage( GetModuleHandle( NULL ), HB_PARSTR( 2, &cIcon, NULL ), IMAGE_ICON, 0, 0, 0 );
+         hIcon = ( HICON ) LoadImage( GetModuleHandle( nullptr ), HB_PARSTR( 2, &cIcon, NULL ), IMAGE_ICON, 0, 0, 0 );
       hb_strfree( cIcon );
    }
 

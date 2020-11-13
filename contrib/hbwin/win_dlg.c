@@ -235,7 +235,7 @@ static void s_GetFileName( HB_BOOL fSave )
    ofn.lStructSize = sizeof( ofn );
 #endif
    ofn.hwndOwner = GetActiveWindow();
-   ofn.hInstance = GetModuleHandle( NULL );
+   ofn.hInstance = GetModuleHandle( nullptr );
 
    ofn.nFilterIndex     = hbwapi_par_DWORD( 6 );
    ofn.lpstrFilter      = lpstrFilter = s_dialogPairs( 5, &ofn.nFilterIndex );

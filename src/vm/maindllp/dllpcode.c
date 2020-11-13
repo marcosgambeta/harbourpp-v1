@@ -126,7 +126,7 @@ PHB_FUNC hb_dllGetProcAddress( const char * szProcName )
       if( s_hModule == NULL )
          s_hModule = GetModuleHandle( HB_DLL_NAME2 );
       if( s_hModule == NULL )
-         s_hModule = GetModuleHandle( NULL );
+         s_hModule = GetModuleHandle( nullptr );
 
       if( s_hModule != NULL )
       {
