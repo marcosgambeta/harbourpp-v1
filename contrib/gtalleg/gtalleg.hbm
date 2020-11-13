@@ -22,5 +22,5 @@
 
 ${hb_name}.hbx
 
-gtallegd.c
-ssf.c
+gtallegd.cpp
+ssf.cpp
