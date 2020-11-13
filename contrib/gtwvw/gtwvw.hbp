@@ -9,17 +9,17 @@
 
 "-stop={!allwin}Skipped: '${hb_name}' only supported on win platform."
 
-gtwvwd.c
+gtwvwd.cpp
 
-wvwdraw.c
-wvwutils.c
+wvwdraw.cpp
+wvwutils.cpp
 
-checkbox.c
-editbox.c
-menubar.c
-pushbut.c
-statbar.c
-toolbar.c
+checkbox.cpp
+editbox.cpp
+menubar.cpp
+pushbut.cpp
+statbar.cpp
+toolbar.cpp
 
 # NOTE: Due to large quantity of unprecise code, it doesn't build in C++ mode.
 #-cpp=no
