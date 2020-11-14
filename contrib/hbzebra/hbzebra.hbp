@@ -8,18 +8,18 @@
 ${hb_name}.hbx
 
 # Core
-core.c
-coredraw.c
+core.cpp
+coredraw.cpp
 
 # Barcodes
-codabar.c
-code11.c
-code128.c
-code39.c
-code93.c
-eanupc.c
-itf.c
-msi.c
-pdf417.c
-datamtrx.c
-qrcode.c
+codabar.cpp
+code11.cpp
+code128.cpp
+code39.cpp
+code93.cpp
+eanupc.cpp
+itf.cpp
+msi.cpp
+pdf417.cpp
+datamtrx.cpp
+qrcode.cpp
