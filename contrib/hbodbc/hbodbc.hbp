@@ -18,7 +18,7 @@
 
 ${hb_name}.hbx
 
-odbc.c
+odbc.cpp
 
 todbc.prg
 browse.prg
