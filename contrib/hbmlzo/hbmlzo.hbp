@@ -14,6 +14,6 @@
 
 ${hb_name}.hbx
 
-core.c
+core.cpp
 
 3rd/minilzo/minilzo.hbc{HBMK_HAS_MINILZO_LOCAL}
