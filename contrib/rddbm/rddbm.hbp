@@ -7,7 +7,7 @@
 
 ${hb_name}.hbx
 
-bmdbfx.c
+bmdbfx.cpp
 bmdbfcdx.prg
 bmdbfnsx.prg
 bmdbfntx.prg
