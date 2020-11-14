@@ -24,7 +24,7 @@
 
 ${hb_name}.hbx
 
-ads1.c
-adsfunc.c
-adsmgmnt.c
-adsx.c
+ads1.cpp
+adsfunc.cpp
+adsmgmnt.cpp
+adsx.cpp
