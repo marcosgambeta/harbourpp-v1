@@ -11,6 +11,6 @@ dll.prg
 misc.prg
 occurs.prg
 
-dbfunc.c
-miscfunc.c
-relfunc.c
+dbfunc.cpp
+miscfunc.cpp
+relfunc.cpp
