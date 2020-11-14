@@ -17,19 +17,19 @@
 
 ${hb_name}.hbx
 
-core.c
-annot.c
-enccns.c
-enccnt.c
-encjp.c
-enckr.c
-font.c
-fontcns.c
-fontcnt.c
-fontjp.c
-fontkr.c
-image.c
-pdfa.c
+core.cpp
+annot.cpp
+enccns.cpp
+enccnt.cpp
+encjp.cpp
+enckr.cpp
+font.cpp
+fontcns.cpp
+fontcnt.cpp
+fontjp.cpp
+fontkr.cpp
+image.cpp
+pdfa.cpp
 
 errstr.prg
 misc.prg
