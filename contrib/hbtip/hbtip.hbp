@@ -8,9 +8,9 @@
 
 ${hb_name}.hbx
 
-encurlc.c
-mime.c
-misc.c
+encurlc.cpp
+mime.cpp
+misc.cpp
 
 base64u.prg
 cgi.prg
