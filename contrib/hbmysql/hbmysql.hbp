@@ -16,7 +16,7 @@
 
 ${hb_name}.hbx
 
-mysql.c
+mysql.cpp
 
 tmysql.prg
 tsqlbrw.prg
