@@ -7,16 +7,16 @@
 
 ${hb_name}.hbx
 
-binnumx.c
-dbcmdx.c
-dbdetacx.c
-dllx.c
-idlex.c
-mousex.c
-oemansix.c
-philesx.c
-wafuncx.c
-xppopc.c
+binnumx.cpp
+dbcmdx.cpp
+dbdetacx.cpp
+dllx.cpp
+idlex.cpp
+mousex.cpp
+oemansix.cpp
+philesx.cpp
+wafuncx.cpp
+xppopc.cpp
 
 browdbx.prg
 dbfuncsx.prg
