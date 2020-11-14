@@ -11,10 +11,10 @@
 
 ${hb_name}.hbx
 
-chdir.c
-chroot.c
-daemon.c
-posix.c
-posixerr.c
-sleep.c
-uidgid.c
+chdir.cpp
+chroot.cpp
+daemon.cpp
+posix.cpp
+posixerr.cpp
+sleep.cpp
+uidgid.cpp
