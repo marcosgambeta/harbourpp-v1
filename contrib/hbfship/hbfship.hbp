@@ -11,11 +11,11 @@ fldarr.prg
 isdb.prg
 stroccur.prg
 
-dbsetloc.c
-exec.c
-index.c
-isbegseq.c
-isfunc.c
-secondfs.c
-strpeek.c
-users.c
+dbsetloc.cpp
+exec.cpp
+index.cpp
+isbegseq.cpp
+isfunc.cpp
+secondfs.cpp
+strpeek.cpp
+users.cpp
