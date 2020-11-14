@@ -7,7 +7,7 @@
 
 ${hb_name}.hbx
 
-netiosrv.c
-netiocli.c
+netiosrv.cpp
+netiocli.cpp
 
 netiomt.prg
