@@ -7,15 +7,15 @@
 
 ${hb_name}.hbx
 
-bbabble.c
-dates.c
-ffind.c
-hb_f.c
-hbeditc.c
-irm.c
-spd.c
-strfmt.c
-stringsx.c
+bbabble.cpp
+dates.cpp
+ffind.cpp
+hb_f.cpp
+hbeditc.cpp
+irm.cpp
+spd.cpp
+strfmt.cpp
+stringsx.cpp
 
 calldll.prg
 fcomma.prg
