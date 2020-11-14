@@ -16,8 +16,8 @@
 
 ${hb_name}.hbx
 
-core.c
-internal.c
+core.cpp
+internal.cpp
 unitable.prg
 
 3rd/expat/expat.hbc{HBMK_HAS_EXPAT_LOCAL}
