@@ -40,20 +40,20 @@ hbssl.hbx
 
 ssl_hbcon.prg
 
-ssl_hb.c
-ssl_inet.c
-ssl_sock.c
-bio.c
-err.c
-evp.c
-evpciph.c
-evpenc.c
-evpmd.c
-evppkey.c
-pem.c
-rand.c
-ssl.c
-sslciph.c
-sslctx.c
-sslsess.c
-x509.c
+ssl_hb.cpp
+ssl_inet.cpp
+ssl_sock.cpp
+bio.cpp
+err.cpp
+evp.cpp
+evpciph.cpp
+evpenc.cpp
+evpmd.cpp
+evppkey.cpp
+pem.cpp
+rand.cpp
+ssl.cpp
+sslciph.cpp
+sslctx.cpp
+sslsess.cpp
+x509.cpp
