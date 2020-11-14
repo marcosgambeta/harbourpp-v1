@@ -19,7 +19,7 @@ hbct.hbc
 
 ${hb_name}.hbx
 
-gdwrp.c
+gdwrp.cpp
 
 gd.prg
 gdbar.prg
