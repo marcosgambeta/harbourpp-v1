@@ -13,5 +13,5 @@
 
 ${hb_name}.hbx
 
-core.c
+core.cpp
 hbmagis.prg
