@@ -47,7 +47,7 @@
 #include "hbapi.h"
 #include "hbapicdp.h"
 
-#include "cp950.c"
+#include "cp950.cpp"
 
 static HB_CDP_GET_FUNC( CP950_get )
 {

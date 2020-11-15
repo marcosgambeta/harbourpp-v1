@@ -47,7 +47,7 @@
 #include "hbapi.h"
 #include "hbapicdp.h"
 
-#include "big5.c"
+#include "big5.cpp"
 
 static HB_CDP_GET_FUNC( BIG5_get )
 {

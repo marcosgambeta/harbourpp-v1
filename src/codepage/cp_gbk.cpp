@@ -48,7 +48,7 @@
 #include "hbapi.h"
 #include "hbapicdp.h"
 
-#include "gbk.c"
+#include "gbk.cpp"
 
 static HB_CDP_GET_FUNC( GBK_get )
 {

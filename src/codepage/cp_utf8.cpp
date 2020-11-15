@@ -49,10 +49,10 @@
 #include "hbapi.h"
 #include "hbapicdp.h"
 
-#include "uc16def.c"
+#include "uc16def.cpp"
 
 #ifdef HB_UTF8EX_SORT
-#  include "utf8sort.c"
+#  include "utf8sort.cpp"
 #endif
 
 static HB_CDP_GET_FUNC( UTF8_get )
