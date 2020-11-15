@@ -1,26 +1,26 @@
 ROOT := ../../
 
-C_SOURCES := \
-   expropt1.c \
-   expropt2.c \
-   funcid.c \
-   hbarch.c \
-   hbdate.c \
-   hbffind.c \
-   hbfopen.c \
-   hbfsapi.c \
-   hbgete.c \
-   hbhash.c \
-   hbmem.c \
-   hbprintf.c \
-   hbstr.c \
-   hbstrbm.c \
-   hbtrace.c \
-   hbver.c \
-   hbverdsp.c \
-   hbwin.c \
-   hbwince.c \
-   strwild.c \
+CPP_SOURCES := \
+   expropt1.cpp \
+   expropt2.cpp \
+   funcid.cpp \
+   hbarch.cpp \
+   hbdate.cpp \
+   hbffind.cpp \
+   hbfopen.cpp \
+   hbfsapi.cpp \
+   hbgete.cpp \
+   hbhash.cpp \
+   hbmem.cpp \
+   hbprintf.cpp \
+   hbstr.cpp \
+   hbstrbm.cpp \
+   hbtrace.cpp \
+   hbver.cpp \
+   hbverdsp.cpp \
+   hbwin.cpp \
+   hbwince.cpp \
+   strwild.cpp \
 
 LIBNAME := hbcommon
 
