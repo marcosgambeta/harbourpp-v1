@@ -1,7 +1,7 @@
 ROOT := ../../../
 
-C_SOURCES := \
-   nulsys.c \
+CPP_SOURCES := \
+   nulsys.cpp \
 
 LIBNAME := hbnulrdd
 

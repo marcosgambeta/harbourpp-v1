@@ -8,27 +8,27 @@ ifneq ($(HB_PLATFORM),wce)
    endif
 endif
 
-C_SOURCES := \
-   dbcmd.c \
-   dbcmd53.c \
-   dbcmdhb.c \
-   dbdetach.c \
-   dbdrop.c \
-   dbexists.c \
-   dbf1.c \
-   dbnubs.c \
-   dbrename.c \
-   dbsql.c \
-   delim1.c \
-   fieldhb.c \
-   ordcount.c \
-   ordwldsk.c \
-   workarea.c \
-   wacore.c \
-   wafunc.c \
-   rddinfo.c \
-   rddshort.c \
-   sdf1.c \
+CPP_SOURCES := \
+   dbcmd.cpp \
+   dbcmd53.cpp \
+   dbcmdhb.cpp \
+   dbdetach.cpp \
+   dbdrop.cpp \
+   dbexists.cpp \
+   dbf1.cpp \
+   dbnubs.cpp \
+   dbrename.cpp \
+   dbsql.cpp \
+   delim1.cpp \
+   fieldhb.cpp \
+   ordcount.cpp \
+   ordwldsk.cpp \
+   workarea.cpp \
+   wacore.cpp \
+   wafunc.cpp \
+   rddinfo.cpp \
+   rddshort.cpp \
+   sdf1.cpp \
 
 PRG_SOURCES := \
    dbdelim.prg \

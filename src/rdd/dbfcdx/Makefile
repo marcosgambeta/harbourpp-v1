@@ -1,8 +1,8 @@
 ROOT := ../../../
 
-C_SOURCES := \
-   dbfcdx1.c \
-   sixcdx1.c \
+CPP_SOURCES := \
+   dbfcdx1.cpp \
+   sixcdx1.cpp \
 
 LIBNAME := rddcdx
 

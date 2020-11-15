@@ -1,7 +1,7 @@
 ROOT := ../../../
 
-C_SOURCES := \
-   dbffpt1.c \
+CPP_SOURCES := \
+   dbffpt1.cpp \
 
 LIBNAME := rddfpt
 

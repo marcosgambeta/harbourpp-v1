@@ -1,7 +1,7 @@
 ROOT := ../../../
 
-C_SOURCES := \
-   dbfntx1.c \
+CPP_SOURCES := \
+   dbfntx1.cpp \
 
 LIBNAME := rddntx
 

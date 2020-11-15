@@ -1,8 +1,8 @@
 ROOT := ../../../
 
-C_SOURCES := \
-   hsx.c \
-   cftsfunc.c \
+CPP_SOURCES := \
+   hsx.cpp \
+   cftsfunc.cpp \
 
 LIBNAME := hbhsx
 

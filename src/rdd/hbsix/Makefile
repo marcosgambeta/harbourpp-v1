@@ -1,15 +1,15 @@
 ROOT := ../../../
 
-C_SOURCES := \
-   sxcompr.c \
-   sxcrypt.c \
-   sxdate.c \
-   sxsem.c \
-   sxfname.c \
-   sxtable.c \
-   sxord.c \
-   sxutil.c \
-   sxredir.c \
+CPP_SOURCES := \
+   sxcompr.cpp \
+   sxcrypt.cpp \
+   sxdate.cpp \
+   sxsem.cpp \
+   sxfname.cpp \
+   sxtable.cpp \
+   sxord.cpp \
+   sxutil.cpp \
+   sxredir.cpp \
 
 PRG_SOURCES := \
    sxcompat.prg \

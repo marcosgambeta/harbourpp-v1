@@ -1,7 +1,7 @@
 ROOT := ../../../
 
-C_SOURCES := \
-   usrrdd.c \
+CPP_SOURCES := \
+   usrrdd.cpp \
 
 LIBNAME := hbusrrdd
 
