@@ -2759,5 +2759,5 @@ HB_FUNC( HB_MT ) { ; }
 #endif
 
 #if defined( HB_TASK_THREAD ) && defined( HB_MT_VM )
-#  include "task.c"
+#  include "task.cpp"
 #endif

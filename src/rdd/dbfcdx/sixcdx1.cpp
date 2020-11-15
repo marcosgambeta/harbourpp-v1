@@ -46,4 +46,4 @@
 
 #define HB_SIXCDX
 
-#include "dbfcdx1.c"
+#include "dbfcdx1.cpp"

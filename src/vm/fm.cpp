@@ -204,7 +204,7 @@
 #        define EINVAL  22
 #     endif
 #  endif
-#  include "dlmalloc.c"
+#  include "dlmalloc.cpp"
 #  if defined( __BORLANDC__ )
 #     pragma warn +aus
 #     pragma warn +ccc

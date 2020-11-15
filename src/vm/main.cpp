@@ -50,11 +50,11 @@
 #include "hbsetup.h"
 
 #if defined( HB_DYNLIB ) && defined( __WATCOMC__ ) && defined( HB_OS_DOS )
-   #include "maindllh.c"
+   #include "maindllh.cpp"
 #elif defined( HB_MAIN_STD )
-   #include "mainstd.c"
+   #include "mainstd.cpp"
 #elif defined( HB_MAIN_WIN )
-   #include "mainwin.c"
+   #include "mainwin.cpp"
 #else
-   #include "mainstd.c" /* Use the standard ANSI C entry point if not specified */
+   #include "mainstd.cpp" /* Use the standard ANSI C entry point if not specified */
 #endif

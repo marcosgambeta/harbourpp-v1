@@ -55,7 +55,7 @@ int hb_verRevision( void )
    return 0;
 }
 
-#include "ppcore.c"
+#include "ppcore.cpp"
 
 /*
  * functions to create .c files with rules defined in given PP context
@@ -860,5 +860,5 @@ int main( int argc, char * argv[] )
 }
 
 #if defined( HB_OS_WIN_CE ) && ! defined( __CEGCC__ )
-#  include "hbwmain.c"
+#  include "hbwmain.cpp"
 #endif

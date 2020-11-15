@@ -52,7 +52,7 @@
 #if defined( HB_OS_WIN )
 
 #define HB_VM_STARTUP
-#include "hbwmain.c"
+#include "hbwmain.cpp"
 
 #if ! defined( HB_DYNLIB ) && ( defined( __DMC__ ) || defined( __WATCOMC__ ) || defined( __MINGW32__ ) )
 HB_EXTERN_BEGIN

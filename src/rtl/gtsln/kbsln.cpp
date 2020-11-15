@@ -125,7 +125,7 @@ HB_BOOL hb_sln_UnderXterm        = HB_FALSE;
 static int hb_sln_try_get_Kbd_State( void );
 
 /* key translations tables - notice problems with compilation after changes */
-#include "keytrans.c"
+#include "keytrans.cpp"
 
 /* *********************************************************************** */
 
