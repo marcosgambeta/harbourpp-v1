@@ -1,7 +1,7 @@
 ROOT := ../../../
 
-C_SOURCES := \
-   gtpca.c \
+CPP_SOURCES := \
+   gtpca.cpp \
 
 LIBNAME := gtpca
 

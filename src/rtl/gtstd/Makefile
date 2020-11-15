@@ -1,7 +1,7 @@
 ROOT := ../../../
 
-C_SOURCES := \
-   gtstd.c \
+CPP_SOURCES := \
+   gtstd.cpp \
 
 LIBNAME := gtstd
 

@@ -1,7 +1,7 @@
 ROOT := ../../../
 
-C_SOURCES := \
-   gtcgi.c \
+CPP_SOURCES := \
+   gtcgi.cpp \
 
 LIBNAME := gtcgi
 

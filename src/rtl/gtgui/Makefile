@@ -4,8 +4,8 @@ include $(TOP)$(ROOT)config/global.mk
 
 LIBNAME := gtgui
 
-C_SOURCES := \
-   gtgui.c \
+CPP_SOURCES := \
+   gtgui.cpp \
 
 ifneq ($(filter $(HB_PLATFORM),win wce),)
    include $(TOP)$(ROOT)config/lib.mk

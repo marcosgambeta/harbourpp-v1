@@ -4,8 +4,8 @@ include $(TOP)$(ROOT)config/global.mk
 
 LIBNAME := gtcrs
 
-C_SOURCES := \
-   gtcrs.c \
+CPP_SOURCES := \
+   gtcrs.cpp \
 
 ifneq ($(HB_HAS_CURSES),)
 

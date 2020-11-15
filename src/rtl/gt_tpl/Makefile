@@ -1,7 +1,7 @@
 ROOT := ../../../
 
-C_SOURCES := \
-   gt_tpl.c \
+CPP_SOURCES := \
+   gt_tpl.cpp \
 
 LIBNAME := gt_tpl
 

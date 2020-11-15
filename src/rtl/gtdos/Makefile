@@ -4,8 +4,8 @@ include $(TOP)$(ROOT)config/global.mk
 
 LIBNAME := gtdos
 
-C_SOURCES := \
-   gtdos.c \
+CPP_SOURCES := \
+   gtdos.cpp \
 
 ifeq ($(HB_PLATFORM),dos)
    include $(TOP)$(ROOT)config/lib.mk

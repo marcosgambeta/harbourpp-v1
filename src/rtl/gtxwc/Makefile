@@ -4,8 +4,8 @@ include $(TOP)$(ROOT)config/global.mk
 
 LIBNAME := gtxwc
 
-C_SOURCES := \
-   gtxwc.c \
+CPP_SOURCES := \
+   gtxwc.cpp \
 
 ifneq ($(HB_HAS_X11),)
 

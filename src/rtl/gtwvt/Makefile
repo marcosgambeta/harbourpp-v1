@@ -4,8 +4,8 @@ include $(TOP)$(ROOT)config/global.mk
 
 LIBNAME := gtwvt
 
-C_SOURCES := \
-   gtwvt.c \
+CPP_SOURCES := \
+   gtwvt.cpp \
 
 ifneq ($(filter $(HB_PLATFORM),win wce),)
    include $(TOP)$(ROOT)config/lib.mk

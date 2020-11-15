@@ -4,8 +4,8 @@ include $(TOP)$(ROOT)config/global.mk
 
 LIBNAME := gtwin
 
-C_SOURCES := \
-   gtwin.c \
+CPP_SOURCES := \
+   gtwin.cpp \
 
 ifeq ($(HB_PLATFORM),win)
    include $(TOP)$(ROOT)config/lib.mk

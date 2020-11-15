@@ -4,8 +4,8 @@ include $(TOP)$(ROOT)config/global.mk
 
 LIBNAME := gtos2
 
-C_SOURCES := \
-   gtos2.c \
+CPP_SOURCES := \
+   gtos2.cpp \
 
 ifeq ($(HB_PLATFORM),os2)
    include $(TOP)$(ROOT)config/lib.mk

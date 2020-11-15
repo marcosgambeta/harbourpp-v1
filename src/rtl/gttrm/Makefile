@@ -4,8 +4,8 @@ include $(TOP)$(ROOT)config/global.mk
 
 LIBNAME := gttrm
 
-C_SOURCES := \
-   gttrm.c \
+CPP_SOURCES := \
+   gttrm.cpp \
 
 HB_SUPPORTED := yes
 ifeq ($(HB_PLATFORM),win)

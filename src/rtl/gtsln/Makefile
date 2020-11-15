@@ -4,10 +4,10 @@ include $(TOP)$(ROOT)config/global.mk
 
 LIBNAME := gtsln
 
-C_SOURCES := \
-   gtsln.c \
-   kbsln.c \
-   mousesln.c \
+CPP_SOURCES := \
+   gtsln.cpp \
+   kbsln.cpp \
+   mousesln.cpp \
 
 # TODO: Add these to lib path list
 # LDFLAGS := -L/usr/local/lib $(LDFLAGS)
