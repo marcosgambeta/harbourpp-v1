@@ -1,7 +1,7 @@
 ROOT := ../../
 
-C_SOURCES := \
-   nortl.c \
+CPP_SOURCES := \
+   nortl.cpp \
 
 LIBNAME := hbnortl
 
