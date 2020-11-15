@@ -1,7 +1,7 @@
 ROOT := ../../
 
-C_SOURCES := \
-   dbgentry.c \
+CPP_SOURCES := \
+   dbgentry.cpp \
 
 PRG_SOURCES := \
    dbgmenu.prg \
