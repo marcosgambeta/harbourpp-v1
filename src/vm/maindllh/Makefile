@@ -2,10 +2,10 @@ ROOT := ../../../
 
 include $(TOP)$(ROOT)config/global.mk
 
-vpath %.c ../
+vpath %.cpp ../
 
-C_SOURCES := \
-   maindllh.c \
+CPP_SOURCES := \
+   maindllh.cpp \
 
 LIBNAME := hbmaindllh
 

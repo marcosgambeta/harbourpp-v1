@@ -1,9 +1,9 @@
-vpath %.c ../
+vpath %.cpp ../
 
 ROOT := ../../../
 
-C_SOURCES := \
-   mainstd.c \
+CPP_SOURCES := \
+   mainstd.cpp \
 
 LIBNAME := hbmainstd
 

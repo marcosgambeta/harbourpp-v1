@@ -1,9 +1,9 @@
-vpath %.c ../
+vpath %.cpp ../
 
 ROOT := ../../../
 
-C_SOURCES := \
-   mainwin.c \
+CPP_SOURCES := \
+   mainwin.cpp \
 
 LIBNAME := hbmainwin
 

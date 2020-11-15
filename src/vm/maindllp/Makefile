@@ -2,9 +2,9 @@ ROOT := ../../../
 
 include $(TOP)$(ROOT)config/global.mk
 
-C_SOURCES := \
-   dllpcode.c \
-   dllext.c   \
+CPP_SOURCES := \
+   dllpcode.cpp \
+   dllext.cpp   \
 
 LIBNAME := hbmaindllp
 
