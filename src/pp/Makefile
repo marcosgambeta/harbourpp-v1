@@ -1,10 +1,10 @@
 ROOT := ../../
 
-C_SOURCES := \
-   pptable.c \
-   ppcore.c \
-   pplib.c \
-   pplib2.c \
+CPP_SOURCES := \
+   pptable.cpp \
+   ppcore.cpp \
+   pplib.cpp \
+   pplib2.cpp \
 
 LIBNAME := hbpp
 
@@ -23,8 +23,8 @@ BIN_FILE := $(BIN_DIR)/hbpp$(BIN_EXT)
 
 vpath hbpp$(BIN_EXT) $(BIN_DIR)
 
-pptable.c : hbpp$(BIN_EXT)
-	$(HB_HOST_BIN_DIR)/hbpp$(HB_HOST_BIN_EXT) $(TOP)$(ROOT)include/hbstdgen.ch -opptable.c -q -c$(TOP)$(ROOT) -v$(HB_VERHEADER)
+pptable.cpp : hbpp$(BIN_EXT)
+	$(HB_HOST_BIN_DIR)/hbpp$(HB_HOST_BIN_EXT) $(TOP)$(ROOT)include/hbstdgen.ch -opptable.cpp -q -c$(TOP)$(ROOT) -v$(HB_VERHEADER)
 	-@$(RM) hbpp$(OBJ_EXT) $(if $(OBJ_DYN_SUFFIX),hbpp$(OBJ_DYN_SUFFIX)$(OBJ_EXT),)
 
 ifneq ($(HB_BUILD_PARTS),lib)
