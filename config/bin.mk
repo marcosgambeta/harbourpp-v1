@@ -132,7 +132,7 @@ BIN_NAME :=
 
 ifneq ($(C_MAIN),)
    ifeq ($(BIN_NAME),)
-      BIN_NAME := $(C_MAIN:.c=$(BIN_EXT))
+      BIN_NAME := $(C_MAIN:.cpp=$(BIN_EXT))
    endif
 endif
 
