@@ -1,8 +1,8 @@
 ROOT := ../../
 
-C_SOURCES := \
+CPP_SOURCES := \
 
-C_MAIN := harbour.c
+C_MAIN := harbour.cpp
 
 ifneq ($(filter $(HB_PLATFORM),win wce),)
 RC_SOURCES := harbour.rc
