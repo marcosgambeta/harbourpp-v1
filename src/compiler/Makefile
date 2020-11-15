@@ -2,7 +2,7 @@ ROOT := ../../
 
 #YACC_FLAGS := -p hb_comp
 YACC_SOURCE := harbour.y
-YACC_DEPEND := complex.c
+YACC_DEPEND := complex.cpp
 YACC_HEADERS := \
    hbcomp.h \
    hbcompdf.h \
@@ -12,30 +12,30 @@ YACC_HEADERS := \
    hberrors.h \
    hbpp.h \
 
-C_SOURCES := \
-   cmdcheck.c \
-   compi18n.c \
-   complex.c \
-   expropta.c \
-   exproptb.c \
-   genc.c \
-   gencc.c \
-   genhrb.c \
-   hbcmplib.c \
-   hbcomp.c \
-   hbdbginf.c \
-   hbdead.c \
-   hbfix.c \
-   hbfunchk.c \
-   hbgenerr.c \
-   hbident.c \
-   hblbl.c \
-   hbmain.c \
-   hbopt.c \
-   hbpcode.c \
-   hbstripl.c \
-   hbusage.c \
-   ppcomp.c \
+CPP_SOURCES := \
+   cmdcheck.cpp \
+   compi18n.cpp \
+   complex.cpp \
+   expropta.cpp \
+   exproptb.cpp \
+   genc.cpp \
+   gencc.cpp \
+   genhrb.cpp \
+   hbcmplib.cpp \
+   hbcomp.cpp \
+   hbdbginf.cpp \
+   hbdead.cpp \
+   hbfix.cpp \
+   hbfunchk.cpp \
+   hbgenerr.cpp \
+   hbident.cpp \
+   hblbl.cpp \
+   hbmain.cpp \
+   hbopt.cpp \
+   hbpcode.cpp \
+   hbstripl.cpp \
+   hbusage.cpp \
+   ppcomp.cpp \
 
 LIBNAME := hbcplr
 
