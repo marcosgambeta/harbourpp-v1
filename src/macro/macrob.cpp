@@ -8,4 +8,4 @@
 #include "hbmacro.h"
 #include "hbcomp.h"
 
-#include "hbexprb.c"
+#include "hbexprb.cpp"
