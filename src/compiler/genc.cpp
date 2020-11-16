@@ -170,7 +170,7 @@ void hb_compGenCCode( HB_COMP_DECL, PHB_FNAME pFileName )       /* generates the
 
    hb_fsFNameMerge( szFileName, pFileName );
    if( ! pFileName->szExtension )
-      pFileName->szExtension = ".c";
+      pFileName->szExtension = ".cpp";
    hb_fsFNameMerge( szFileName, pFileName );
 
    yyc = hb_fopen( szFileName, "w" );

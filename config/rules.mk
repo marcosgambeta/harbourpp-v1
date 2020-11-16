@@ -81,7 +81,7 @@ ifeq ($(LD_RULE),)
 endif
 
 # Eliminate these rules.
-%.c : %.y
+%.cpp : %.y
 
 # Rule to generate an object file from a C source file in the parent.
 %$(OBJ_EXT) : $(GRANDP)%.c
@@ -143,5 +143,5 @@ else
 endif
 
 # Rule to generate a C file from a PRG file.
-%.c : $(GRANDP)%.prg
+%.cpp : $(GRANDP)%.prg
 	$(HB_RULE)
