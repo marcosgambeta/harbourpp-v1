@@ -6804,10 +6804,12 @@ STATIC FUNCTION __hbmk( aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExit
          FOR EACH tmp3 IN { _CCOMP_PASS_C, _CCOMP_PASS_CPP }
 
             IF tmp3 == _CCOMP_PASS_C
-               l_aCGEN_TO_DO := ArrayJoin( ListDirExt( l_aPRG_TO_DO, hbmk[ _HBMK_cWorkDir ], ".c", .T. ), l_aC_TO_DO )
+               //l_aCGEN_TO_DO := ArrayJoin( ListDirExt( l_aPRG_TO_DO, hbmk[ _HBMK_cWorkDir ], ".c", .T. ), l_aC_TO_DO )
+               l_aCGEN_TO_DO := l_aC_TO_DO
                cBin_CompCGEN := cBin_CompC
             ELSE
-               l_aCGEN_TO_DO := AClone( l_aCPP_TO_DO )
+               //l_aCGEN_TO_DO := AClone( l_aCPP_TO_DO )
+               l_aCGEN_TO_DO := ArrayJoin( ListDirExt( l_aPRG_TO_DO, hbmk[ _HBMK_cWorkDir ], ".cpp", .T. ), l_aCPP_TO_DO )
                cBin_CompCGEN := cBin_CompCPP
             ENDIF
 
