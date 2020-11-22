@@ -73,7 +73,7 @@ HB_FUNC( __RUN )
 #else
       char * pszFree = NULL;
 
-      if( system( hb_osEncodeCP( pszCommand, &pszFree, NULL ) ) != 0 ) {}
+      if( system( hb_osEncodeCP( pszCommand, &pszFree, nullptr ) ) != 0 ) {}
 
       if( pszFree )
          hb_xfree( pszFree );

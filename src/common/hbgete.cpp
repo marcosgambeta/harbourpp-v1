@@ -91,7 +91,7 @@ char * hb_getenv( const char * szName )
       PSZ EnvValue = ( PSZ ) "";
       char * pszNameFree = NULL;
 
-      szName = hb_osEncodeCP( szName, &pszNameFree, NULL );
+      szName = hb_osEncodeCP( szName, &pszNameFree, nullptr );
       if( DosScanEnv( ( PCSZ ) szName, &EnvValue ) == NO_ERROR )
          pszBuffer = hb_osStrDecode( ( char * ) EnvValue );
       if( pszNameFree )
@@ -101,7 +101,7 @@ char * hb_getenv( const char * szName )
    {
       char * pszTemp, * pszNameFree = NULL;
 
-      szName = hb_osEncodeCP( szName, &pszNameFree, NULL );
+      szName = hb_osEncodeCP( szName, &pszNameFree, nullptr );
       pszTemp = getenv( szName );
       if( pszNameFree )
          hb_xfree( pszNameFree );
@@ -146,7 +146,7 @@ HB_BOOL hb_getenv_buffer( const char * szName, char * szBuffer, int nSize )
       PSZ EnvValue = ( PSZ ) "";
       char * pszNameFree = NULL;
 
-      szName = hb_osEncodeCP( szName, &pszNameFree, NULL );
+      szName = hb_osEncodeCP( szName, &pszNameFree, nullptr );
       fRetVal = DosScanEnv( ( PCSZ ) szName, &EnvValue ) == NO_ERROR;
       if( pszNameFree )
          hb_xfree( pszNameFree );
@@ -158,7 +158,7 @@ HB_BOOL hb_getenv_buffer( const char * szName, char * szBuffer, int nSize )
    {
       char * pszTemp, * pszNameFree = NULL;
 
-      szName = hb_osEncodeCP( szName, &pszNameFree, NULL );
+      szName = hb_osEncodeCP( szName, &pszNameFree, nullptr );
       pszTemp = getenv( szName );
       if( pszNameFree )
          hb_xfree( pszNameFree );
@@ -210,10 +210,10 @@ HB_BOOL hb_setenv( const char * szName, const char * szValue )
       HB_BOOL fResult;
       char * pszNameFree = NULL, * pszValueFree = NULL;
 
-      szName = hb_osEncodeCP( szName, &pszNameFree, NULL );
+      szName = hb_osEncodeCP( szName, &pszNameFree, nullptr );
       if( szValue )
       {
-         szValue = hb_osEncodeCP( szValue, &pszValueFree, NULL );
+         szValue = hb_osEncodeCP( szValue, &pszValueFree, nullptr );
          fResult = setenv( szName, szValue, 1 ) == 0;
          if( pszValueFree )
             hb_xfree( pszValueFree );

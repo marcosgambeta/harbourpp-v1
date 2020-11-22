@@ -134,7 +134,7 @@ static char * hb_buildArgsOS2( const char *pszFileName, APIRET * ret )
    while( HB_ISSPACE( *pszFileName ) )
       ++pszFileName;
 
-   pszFileName = hb_osEncodeCP( pszFileName, &pszFree, NULL );
+   pszFileName = hb_osEncodeCP( pszFileName, &pszFree, nullptr );
 
    while( ( c = *pszFileName ) != '\0' )
    {
@@ -248,7 +248,7 @@ static char ** hb_buildArgs( const char *pszFileName )
    while( HB_ISSPACE( *pszFileName ) )
       ++pszFileName;
 
-   pszFileName = hb_osEncodeCP( pszFileName, &pszFree, NULL );
+   pszFileName = hb_osEncodeCP( pszFileName, &pszFree, nullptr );
    dst = pszFree ? pszFree : hb_strdup( pszFileName );
 
    src = dst;

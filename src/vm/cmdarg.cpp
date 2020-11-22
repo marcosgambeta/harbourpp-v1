@@ -788,7 +788,7 @@ HB_FUNC( HB_CMDLINE )
          HB_RETSTR( lpBuffer );
          hb_xfree( lpBuffer );
 #else
-         hb_retc_buffer( ( char * ) hb_osDecodeCP( lpBuffer, NULL, NULL ) );
+         hb_retc_buffer( ( char * ) hb_osDecodeCP( lpBuffer, nullptr, nullptr ) );
 #endif
       }
       else
@@ -810,7 +810,7 @@ HB_FUNC( HB_CMDLINE )
          *--ptr = '\0';
 
          /* Convert from OS codepage */
-         hb_retc_buffer( ( char * ) HB_UNCONST( hb_osDecodeCP( pszBuffer, NULL, NULL ) ) );
+         hb_retc_buffer( ( char * ) HB_UNCONST( hb_osDecodeCP( pszBuffer, nullptr, nullptr ) ) );
       }
    }
    else
