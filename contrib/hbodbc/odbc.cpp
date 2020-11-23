@@ -649,7 +649,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
          case SQL_VARBINARY:
          case SQL_LONGVARBINARY:
          {
-            char * val = NULL;
+            char * val = nullptr;
             char buffer[ 1 ];
 
             if( SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, SQL_C_BINARY, buffer, 0, &nLen ) ) )

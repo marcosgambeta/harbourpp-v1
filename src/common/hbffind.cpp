@@ -615,7 +615,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
       {
          TCHAR lpVolName[ HB_PATH_MAX ];
          LPTSTR lpFileMask = NULL;
-         char * mask = NULL;
+         char * mask = nullptr;
 
          info->fLabelDone = HB_TRUE;
 
@@ -888,7 +888,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
 #if ! defined( HB_OS_WIN )
       /* Convert from OS codepage */
       {
-         char * pszFree = NULL;
+         char * pszFree = nullptr;
          HB_SIZE nSize = sizeof( ffind->szName );
          const char * pszResult = hb_osDecodeCP( ffind->szName, &pszFree, &nSize );
 

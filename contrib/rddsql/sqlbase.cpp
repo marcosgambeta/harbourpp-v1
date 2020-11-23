@@ -63,10 +63,10 @@ static SQLDDCONNECTION ** s_pConnection = NULL;
 static HB_ULONG s_ulConnectionCount     = 0;
 static HB_ULONG s_ulConnectionCurrent   = 0;
 
-static char *     s_szError = NULL;
+static char *     s_szError = nullptr;
 static HB_ERRCODE s_errCode = 0;
 
-static char *        s_szQuery        = NULL;
+static char *        s_szQuery        = nullptr;
 static PHB_ITEM      s_pItemNewID     = NULL;
 static unsigned long s_ulAffectedRows = 0;
 

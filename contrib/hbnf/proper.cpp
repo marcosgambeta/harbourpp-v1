@@ -58,7 +58,7 @@ HB_FUNC( FT_PROPER )
 {
    HB_ISIZ      iLen = hb_parclen( 1 );
    const char * cStr = hb_parc( 1 );
-   char *       cDst = NULL;
+   char *       cDst = nullptr;
    HB_ISIZ      i;
    HB_BOOL      fCap = HB_TRUE;
 

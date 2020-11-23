@@ -62,7 +62,7 @@ HB_FUNC( ATADJUST )
       char cAtLike = ct_getatlikechar();
       HB_SIZE sIgnore, sMatchStrLen = 0;
       HB_SIZE nCounter;
-      const char * pc = NULL;
+      const char * pc = nullptr;
 
       char cFillChar;
       const char * pcCheckFill;

@@ -85,7 +85,7 @@ static const char * hb_compChkAddDefine( HB_COMP_DECL, const char * szSwitch,
    if( szSwPtr > szSwitch && *szSwitch != '=' )
    {
       char * szDefine = hb_strndup( szSwitch, szSwPtr - szSwitch );
-      char * szValue = NULL;
+      char * szValue = nullptr;
       PHB_PPDEFINE * pDefinePtr;
 
       if( nValue )

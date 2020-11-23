@@ -190,8 +190,8 @@ HB_FUNC( VOLUME )
 #if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
    if( ! ct_getsafety() )
    {
-      const char * pszRoot = NULL;
-      const char * pszVolName = NULL;
+      const char * pszRoot = nullptr;
+      const char * pszVolName = nullptr;
       char szRootBuf[ 4 ], szVolNameBuf[ 12 ];
       LPCTSTR lpRoot, lpVolName;
       LPTSTR lpRootFree = NULL, lpVolNameFree = NULL;

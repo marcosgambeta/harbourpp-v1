@@ -245,7 +245,7 @@ static HB_ULONG hb_db2Sql( AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
    PHB_ITEM pTmp;
    HB_BOOL fWriteSep = HB_FALSE;
    const char * szNewLine = hb_conNewLine();
-   char * szInsert = NULL;
+   char * szInsert = nullptr;
    HB_BOOL fEof = HB_TRUE;
    HB_BOOL fNoFieldPassed = ( pFields == NULL || hb_arrayLen( pFields ) == 0 );
 

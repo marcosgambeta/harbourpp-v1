@@ -334,7 +334,7 @@ static HB_ERRCODE sqlite3Execute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem 
    int        iRow, iCol;
    void *     hStatement;
    char **    pResult   = NULL;
-   char *     pszErrMsg = NULL;
+   char *     pszErrMsg = nullptr;
 
    if( sqlite3_get_table( pDb, S_HB_ITEMGETSTR( pItem, &hStatement, NULL ), &pResult, &iRow, &iCol, &pszErrMsg ) != SQLITE_OK )
    {

@@ -3341,7 +3341,7 @@ static HB_ERRCODE hb_fptGetVarField( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
          if( uiType <= HB_VF_CHAR ) /* 64000 max string size */
          {
             const char * pString;
-            char * pAlloc = NULL, * pPtr;
+            char * pAlloc = nullptr, * pPtr;
             HB_ULONG ulLen = uiType;
 
             if( uiType <= pField->uiLen - 2 )

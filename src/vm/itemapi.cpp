@@ -2786,7 +2786,7 @@ HB_BOOL hb_itemStrBuf( char * szResult, PHB_ITEM pNumber, int iSize, int iDec )
  */
 char * hb_itemStr( PHB_ITEM pNumber, PHB_ITEM pWidth, PHB_ITEM pDec )
 {
-   char * szResult = NULL;
+   char * szResult = nullptr;
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemStr(%p, %p, %p)", ( void * ) pNumber, ( void * ) pWidth, ( void * ) pDec ) );
 

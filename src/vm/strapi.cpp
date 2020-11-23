@@ -274,7 +274,7 @@ const char * hb_itemGetStr( PHB_ITEM pItem, void * cdp, void ** phString, HB_SIZ
    if( pItem && HB_IS_STRING( pItem ) )
    {
       const char * pString;
-      char * pFree = NULL;
+      char * pFree = nullptr;
       HB_SIZE nSize = 0;
 
       pString = hb_cdpnDup3( pItem->item.asString.value,

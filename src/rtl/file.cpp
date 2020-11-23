@@ -65,7 +65,7 @@ HB_BOOL hb_fsFile( const char * pszFileName )
 HB_BOOL hb_fsIsDirectory( const char * pszFileName )
 {
    HB_BOOL bResult = HB_FALSE;
-   char * pszFree = NULL;
+   char * pszFree = nullptr;
    int iLen;
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsIsDirectory(%s)", pszFileName ) );

@@ -71,7 +71,7 @@ HB_FUNC( __RUN )
       ( void ) HB_WINAPI_SYSTEM( lpCommand );
       hb_xfree( lpCommand );
 #else
-      char * pszFree = NULL;
+      char * pszFree = nullptr;
 
       if( system( hb_osEncodeCP( pszCommand, &pszFree, nullptr ) ) != 0 ) {}
 

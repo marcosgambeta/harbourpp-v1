@@ -116,7 +116,7 @@ static void do_token1( int iSwitch )
       HB_SIZE nTokenCounter;
       HB_SIZE nSkip;
       const char * pcSubStr;
-      char * pcRet = NULL;
+      char * pcRet = nullptr;
       HB_SIZE sSubStrLen;
       HB_SIZE sRetStrLen = 0;
       HB_SIZE nToken = 0;

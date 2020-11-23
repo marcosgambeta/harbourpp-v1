@@ -1926,7 +1926,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
       case RDDI_MEMOEXT:
       {
          const char * szExt = hb_setGetMFileExt();
-         char * szResult = szExt ? hb_strdup( szExt ) : NULL;
+         char * szResult = szExt ? hb_strdup( szExt ) : nullptr;
          if( hb_itemType( pItem ) & HB_IT_STRING )
             hb_setSetItem( HB_SET_MFILEEXT, pItem );
          hb_itemPutCPtr( pItem, szResult );

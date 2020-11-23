@@ -2675,7 +2675,7 @@ static void hb_gt_xwc_UpdateWindowCords( PXWND_DEF wnd, int * pX, int * pY )
       Atom actual_type_return = 0;
       int actual_format_return = 0;
       unsigned long nitems_return = 0, bytes_after_return = 0;
-      unsigned char * prop_return = NULL;
+      unsigned char * prop_return = nullptr;
 
       if( XGetWindowProperty( wnd->dpy, wnd->window, s_atomFrameExtends,
                               0, 4, False, s_atomCardinal, &actual_type_return,
@@ -5786,7 +5786,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                int iHeight = hb_arrayGetNI( pInfo->pNewVal, 3 );
                int iDepth  = hb_arrayGetNI( pInfo->pNewVal, 4 );
                int iPad    = 32;
-               const char * pFreeImage = NULL;
+               const char * pFreeImage = nullptr;
 
                HB_XWC_XLIB_LOCK( wnd->dpy );
                if( iDepth == 0 )

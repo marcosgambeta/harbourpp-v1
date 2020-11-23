@@ -1215,7 +1215,7 @@ static PHB_ITEM hb_dbgEvalMakeBlock( HB_WATCHPOINT * watch )
    int i = 0;
    PHB_ITEM pBlock;
    HB_BOOL bAfterId = HB_FALSE;
-   char * szBlock, * szOrig = NULL;
+   char * szBlock, * szOrig = nullptr;
    HB_ISIZ buffsize;
 
    watch->nVars = 0;

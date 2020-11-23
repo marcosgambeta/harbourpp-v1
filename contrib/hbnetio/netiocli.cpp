@@ -766,7 +766,7 @@ static const char * s_fileDecode( const char * pszFileName,
        * or:
        *          "//example.org:2941/path/to/file"
        */
-      const char * psz, * pth = NULL;
+      const char * psz, * pth = nullptr;
 
       if( ( pszFileName[ 0 ] == '/' || pszFileName[ 0 ] == '\\' ) &&
           pszFileName[ 0 ] == pszFileName[ 1 ] )
@@ -864,7 +864,7 @@ static PHB_CONCLI s_fileConnCheck( PHB_CONCLI conn, const char ** pFileName,
    if( hb_strnicmp( pszFileName, NETIO_FILE_PREFIX, NETIO_FILE_PREFIX_LEN ) == 0 )
    {
       char server[ NETIO_SERVERNAME_MAX ];
-      const char * pszServer = NULL;
+      const char * pszServer = nullptr;
       int iPort = 0;
 
       if( ! fDefault )
@@ -1258,7 +1258,7 @@ HB_FUNC( NETIO_SETPATH )
       if( s_fileConLock( conn ) )
       {
          const char * pszNewPath = hb_parc( 2 );
-         char * pszSetPath = NULL, * pszOldPath = NULL;
+         char * pszSetPath = nullptr, * pszOldPath = nullptr;
 
          if( pszNewPath && *pszNewPath )
             pszSetPath = hb_strdup( pszNewPath );
@@ -1293,7 +1293,7 @@ HB_FUNC( NETIO_SETPATH )
 static const char * s_netio_params( int iParam, int iMsg, const char * pszName, HB_U32 * pSize, char ** pFree )
 {
    int iPCount = iMsg == NETIO_PROCIS ? 0 : hb_pcount();
-   char * data = NULL;
+   char * data = nullptr;
    HB_SIZE size, itmSize;
 
    size = strlen( pszName ) + 1;
@@ -2140,7 +2140,7 @@ static HB_BOOL s_fileLinkSym( PHB_FILE_FUNCS pFuncs, const char * pszTarget, con
 
 static char * s_fileLinkRead( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
 {
-   char * pszResult = NULL;
+   char * pszResult = nullptr;
    PHB_CONCLI conn;
 
    HB_SYMBOL_UNUSED( pFuncs );
@@ -2582,7 +2582,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
    {
       HB_BYTE msgbuf[ NETIO_MSGLEN ];
       HB_SIZE itmSize = 0;
-      char * itmData = NULL;
+      char * itmData = nullptr;
 
       if( pValue )
          itmData = hb_itemSerialize( pValue, HB_SERIALIZE_NUMSIZE, &itmSize );

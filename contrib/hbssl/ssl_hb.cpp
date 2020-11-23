@@ -63,7 +63,7 @@ HB_FUNC( HB_SSL_READ_ALL )
 
          int    iPos       = 0;
          int    iAllocated = 0;
-         char * retval     = NULL;
+         char * retval     = nullptr;
 
          for( ;; )
          {
@@ -133,7 +133,7 @@ HB_FUNC( HB_SSL_READ_LINE )
 
          int    iPos       = 0;
          int    iAllocated = 0;
-         char * retval     = NULL;
+         char * retval     = nullptr;
 
          for( ;; )
          {

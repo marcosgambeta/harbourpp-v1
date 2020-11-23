@@ -600,7 +600,7 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
 #if defined( HB_OS_WIN )
 HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
 {
-   char * pszBuffer = NULL;
+   char * pszBuffer = nullptr;
    HB_WCHAR * lpwFileName;
 
    if( s_fFnTrim || s_cDirSep != HB_OS_PATH_DELIM_CHR ||

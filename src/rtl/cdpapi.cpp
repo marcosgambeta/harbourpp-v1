@@ -1244,7 +1244,7 @@ char * hb_cdpUTF8StringSubstr( const char * pSrc, HB_SIZE nLen,
    HB_SIZE nDst = 0;
    HB_WCHAR wc;
    int n;
-   char * pDst = NULL;
+   char * pDst = nullptr;
 
    if( nCount && nLen )
    {
@@ -2231,7 +2231,7 @@ const char * hb_cdpnDup3( const char * pSrc, HB_SIZE nSrc,
        ( cdpIn->uniTable != cdpOut->uniTable ||
          HB_CDP_ISCUSTOM( cdpIn ) || HB_CDP_ISCUSTOM( cdpOut ) ) )
    {
-      char * pPrev = NULL;
+      char * pPrev = nullptr;
       HB_SIZE nDst = hb_cdpTransLen( pSrc, nSrc, 0, cdpIn, cdpOut );
 
       if( pDst == NULL )

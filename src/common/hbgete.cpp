@@ -70,7 +70,7 @@
 
 char * hb_getenv( const char * szName )
 {
-   char * pszBuffer = NULL;
+   char * pszBuffer = nullptr;
 
 #if defined( HB_OS_WIN )
    {
@@ -89,7 +89,7 @@ char * hb_getenv( const char * szName )
 #elif defined( HB_OS_OS2 )
    {
       PSZ EnvValue = ( PSZ ) "";
-      char * pszNameFree = NULL;
+      char * pszNameFree = nullptr;
 
       szName = hb_osEncodeCP( szName, &pszNameFree, nullptr );
       if( DosScanEnv( ( PCSZ ) szName, &EnvValue ) == NO_ERROR )
@@ -99,7 +99,7 @@ char * hb_getenv( const char * szName )
    }
 #else
    {
-      char * pszTemp, * pszNameFree = NULL;
+      char * pszTemp, * pszNameFree = nullptr;
 
       szName = hb_osEncodeCP( szName, &pszNameFree, nullptr );
       pszTemp = getenv( szName );
@@ -144,7 +144,7 @@ HB_BOOL hb_getenv_buffer( const char * szName, char * szBuffer, int nSize )
 #elif defined( HB_OS_OS2 )
    {
       PSZ EnvValue = ( PSZ ) "";
-      char * pszNameFree = NULL;
+      char * pszNameFree = nullptr;
 
       szName = hb_osEncodeCP( szName, &pszNameFree, nullptr );
       fRetVal = DosScanEnv( ( PCSZ ) szName, &EnvValue ) == NO_ERROR;
@@ -156,7 +156,7 @@ HB_BOOL hb_getenv_buffer( const char * szName, char * szBuffer, int nSize )
    }
 #else
    {
-      char * pszTemp, * pszNameFree = NULL;
+      char * pszTemp, * pszNameFree = nullptr;
 
       szName = hb_osEncodeCP( szName, &pszNameFree, nullptr );
       pszTemp = getenv( szName );
@@ -208,7 +208,7 @@ HB_BOOL hb_setenv( const char * szName, const char * szValue )
    defined( HB_OS_ANDROID )
    {
       HB_BOOL fResult;
-      char * pszNameFree = NULL, * pszValueFree = NULL;
+      char * pszNameFree = nullptr, * pszValueFree = nullptr;
 
       szName = hb_osEncodeCP( szName, &pszNameFree, nullptr );
       if( szValue )

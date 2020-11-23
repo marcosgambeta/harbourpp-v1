@@ -98,7 +98,7 @@ FILE * hb_fopen( const char * path, const char * mode )
    if( lpFreeM )
       hb_xfree( lpFreeM );
 #else
-   char * pszFree = NULL;
+   char * pszFree = nullptr;
 
    path = hb_fsNameConv( path, &pszFree );
 

@@ -1174,7 +1174,7 @@ static void disp_cursor( InOutBase * ioBase )
    if( ioBase->cursor != ioBase->lcursor )
    {
       int lcurs = -1;
-      char * cv = NULL;
+      char * cv = nullptr;
 
       switch( ioBase->cursor )
       {

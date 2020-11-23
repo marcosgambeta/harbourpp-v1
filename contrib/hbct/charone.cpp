@@ -141,7 +141,7 @@ static void do_charone( int iSwitch )
                   }
                   else if( pcDeleteSet != NULL )
                   {
-                     const char * pc = NULL;
+                     const char * pc = nullptr;
                      const char * pStart = pcDeleteSet;
                      HB_SIZE sLen = sDeleteSetLen;
 

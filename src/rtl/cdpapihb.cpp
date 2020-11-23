@@ -236,7 +236,7 @@ HB_FUNC( HB_UTF8ASC )
 HB_FUNC( HB_STRTOUTF8 )
 {
    HB_SIZE nLen = hb_parclen( 1 ), nDest = 0;
-   char * szDest = NULL;
+   char * szDest = nullptr;
 
    if( nLen )
    {
@@ -272,7 +272,7 @@ HB_FUNC( HB_UTF8TOSTR )
    if( szString )
    {
       HB_SIZE nLen = hb_parclen( 1 ), nDest = 0;
-      char * szDest = NULL;
+      char * szDest = nullptr;
 
       if( nLen )
       {
@@ -360,7 +360,7 @@ HB_FUNC( HB_UTF8SUBSTR )
 
    if( szString && ( iPCount < 2 || ( HB_ISNUM( 2 ) && ( iPCount < 3 || HB_ISNUM( 3 ) ) ) ) )
    {
-      char * szDest = NULL;
+      char * szDest = nullptr;
       HB_SIZE nLen = hb_parclen( 1 ), nDest = 0;
       HB_ISIZ nFrom = hb_parns( 2 );
       HB_ISIZ nCount = iPCount < 3 ? ( HB_ISIZ ) nLen : hb_parns( 3 );
@@ -394,7 +394,7 @@ HB_FUNC( HB_UTF8LEFT )
    {
       HB_ISIZ nLenReq = hb_parns( 2 );
       HB_SIZE nDest = 0;
-      char * szDest = NULL;
+      char * szDest = nullptr;
 
       if( nLenReq > 0 )
          szDest = hb_cdpUTF8StringSubstr( szString, hb_parclen( 1 ),
@@ -417,7 +417,7 @@ HB_FUNC( HB_UTF8RIGHT )
    {
       HB_ISIZ nLenReq = hb_parns( 2 ), nFrom;
       HB_SIZE nLen = hb_parclen( 1 ), nDest = 0;
-      char * szDest = NULL;
+      char * szDest = nullptr;
 
       if( nLen && nLenReq > 0 )
       {

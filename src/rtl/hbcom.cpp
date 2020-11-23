@@ -401,7 +401,7 @@ int hb_comFindPort( const char * pszDevName, HB_BOOL fCreate )
 const char * hb_comGetDevice( int iPort, char * buffer, int size )
 {
    PHB_COM pCom = hb_comGetPort( iPort, HB_COM_ANY );
-   const char * pszName = NULL;
+   const char * pszName = nullptr;
 
    if( pCom )
    {

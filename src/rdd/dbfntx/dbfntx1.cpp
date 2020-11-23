@@ -4257,7 +4257,7 @@ static HB_BOOL hb_ntxOrdSkipWild( LPTAGINFO pTag, HB_BOOL fForward, PHB_ITEM pWi
 {
    NTXAREAP pArea = pTag->pIndex->pArea;
    const char * szPattern;
-   char * szFree = NULL;
+   char * szFree = nullptr;
    HB_BOOL fFound = HB_FALSE;
    int iFixed = 0;
 
@@ -6265,7 +6265,7 @@ static HB_ERRCODE hb_ntxOrderCreate( NTXAREAP pArea, LPDBORDERCREATEINFO pOrderI
    PHB_ITEM pResult, pKeyExp, pForExp = NULL;
    int iLen, iDec, iTag, i;
    char szFileName[ HB_PATH_MAX ], szTagName[ NTX_MAX_TAGNAME + 1 ];
-   const char * szKey, * szFor = NULL;
+   const char * szKey, * szFor = nullptr;
    LPNTXINDEX pIndex, * pIndexPtr;
    LPTAGINFO pTag = NULL;
    LPDBFDATA pData;

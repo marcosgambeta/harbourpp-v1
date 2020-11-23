@@ -59,7 +59,7 @@ HB_FUNC( FT_GETE )
 #if ( defined( HB_OS_UNIX ) && ! defined( HB_OS_IOS ) ) || \
     defined( HB_OS_DOS ) || defined( HB_OS_OS2 )
    {
-      char * buffer = NULL;
+      char * buffer = nullptr;
       int    x;
       int    buffsize = 0;
       int    rettype  = HB_ISARRAY( 1 ) ? ARRAYTYPE :

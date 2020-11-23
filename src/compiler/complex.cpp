@@ -1419,7 +1419,7 @@ void hb_compParserRun( HB_COMP_DECL )
             iToken = hb_comp_yylex( &yylval, HB_COMP_PARAM );
             if( iToken == LITERAL )
             {
-               const char * szFile, * szExt = NULL;
+               const char * szFile, * szExt = nullptr;
 
                if( yylval.valChar.dealloc )
                   szFile = hb_compIdentifierNew( HB_COMP_PARAM, yylval.valChar.string, HB_IDENT_FREE );

@@ -662,7 +662,7 @@ static const char * hb_i18n_setcodepage( PHB_I18N_TRANS pI18N,
                                          const char * szCdpID,
                                          HB_BOOL fBase, HB_BOOL fTranslate )
 {
-   const char * szOldCdpID = NULL;
+   const char * szOldCdpID = nullptr;
 
    if( pI18N )
    {

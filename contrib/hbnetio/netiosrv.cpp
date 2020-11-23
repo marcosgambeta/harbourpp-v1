@@ -854,8 +854,8 @@ HB_FUNC( NETIO_SERVER )
                      else
                      {
                         HB_SIZE itmSize = 0;
-                        char * itmData = NULL;
-                        const char * pszAttr = size2 ? ( const char * ) msg : NULL;
+                        char * itmData = nullptr;
+                        const char * pszAttr = size2 ? ( const char * ) msg : nullptr;
                         PHB_ITEM pResult = hb_fileDirectory( pszDirSpec, pszAttr );
 
                         errFsCode = hb_fsError();
@@ -957,7 +957,7 @@ HB_FUNC( NETIO_SERVER )
                   else
                   {
                      const char * szFile = s_consrvFilePath( ( char * ) msg, conn, uiMsg == NETIO_LINKSYM );
-                     char * szOldName = szFile ? hb_strdup( szFile ) : NULL;
+                     char * szOldName = szFile ? hb_strdup( szFile ) : nullptr;
 
                      msg[ size2 ] = '\0';
                      if( ! s_srvRecvAll( conn, msg, size2 ) )
@@ -1146,7 +1146,7 @@ HB_FUNC( NETIO_SERVER )
                         }
                         if( errCode == 0 )
                         {
-                           char * itmData = NULL;
+                           char * itmData = nullptr;
                            HB_SIZE itmSize = 0;
 
                            iResult = hb_fileConfigure( pFile, iIndex, pValue ) ? 1 : 0;

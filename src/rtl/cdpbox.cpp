@@ -58,7 +58,7 @@ HB_FUNC( HB_UTF8TOSTRBOX )
    if( szString )
    {
       HB_SIZE nLen = hb_parclen( 1 ), nDest = 0;
-      char * szDest = NULL;
+      char * szDest = nullptr;
 
       if( nLen )
       {

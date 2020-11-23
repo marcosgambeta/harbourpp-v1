@@ -120,7 +120,7 @@ HB_FUNC( WVG_SENDMESSAGE )
 HB_FUNC( WVG_SENDDLGITEMMESSAGE )
 {
    PHB_ITEM pText = hb_param( 5, HB_IT_STRING );
-   char *   cText = NULL;
+   char *   cText = nullptr;
    HB_ISIZ  iLen  = 0;
 
    if( pText )

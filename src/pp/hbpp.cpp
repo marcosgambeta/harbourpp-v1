@@ -439,7 +439,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
                                  int iQuiet, int * piRevID,
                                  char ** pszChangeLogID, char ** pszLastEntry )
 {
-   char * pszFree = NULL;
+   char * pszFree = nullptr;
    int iResult = 0;
    FILE * file_in;
 
@@ -675,12 +675,12 @@ static void hb_pp_usage( char * szName )
 
 int main( int argc, char * argv[] )
 {
-   char * szFile = NULL, * szRuleFile = NULL, * szVerFile = NULL;
-   char * szStdCh = NULL, * szLogFile = NULL, * szInclude;
+   char * szFile = nullptr, * szRuleFile = nullptr, * szVerFile = nullptr;
+   char * szStdCh = nullptr, * szLogFile = nullptr, * szInclude;
    HB_BOOL fWrite = HB_FALSE, fChgLog = HB_FALSE;
-   char * szChangeLogID = NULL, * szLastEntry = NULL;
+   char * szChangeLogID = nullptr, * szLastEntry = nullptr;
    int iRevID = 0, iResult = 0, iQuiet = 0, i;
-   char * szPPRuleFuncName = NULL;
+   char * szPPRuleFuncName = nullptr;
    PHB_PP_STATE pState;
 
    pState = hb_pp_new();

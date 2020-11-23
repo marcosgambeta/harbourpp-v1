@@ -69,8 +69,8 @@ static void hb_regfree( PHB_REGEX pRegEx )
 static int hb_regcomp( PHB_REGEX pRegEx, const char * szRegEx )
 {
 #if defined( HB_HAS_PCRE )
-   const unsigned char * pCharTable = NULL;
-   const char * szError = NULL;
+   const unsigned char * pCharTable = nullptr;
+   const char * szError = nullptr;
    int iErrOffset = 0;
    int iCFlags = ( ( pRegEx->iFlags & HBREG_ICASE   ) ? PCRE_CASELESS  : 0 ) |
                  ( ( pRegEx->iFlags & HBREG_NEWLINE ) ? PCRE_MULTILINE : 0 ) |
@@ -120,7 +120,7 @@ static int hb_regexec( PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen,
    }
    return iResult;
 #elif defined( HB_POSIX_REGEX )
-   char * szBuffer = NULL;
+   char * szBuffer = nullptr;
    int iResult, i;
 
    if( szString[ nLen ] != 0 )

@@ -6700,7 +6700,7 @@ static HB_ERRCODE hb_nsxOrderCreate( NSXAREAP pArea, LPDBORDERCREATEINFO pOrderI
    PHB_ITEM pResult, pKeyExp, pForExp = NULL;
    int iLen, iTag;
    char szFileName[ HB_PATH_MAX ], szTagName[ NSX_TAGNAME + 1 ];
-   const char * szKey, * szFor = NULL;
+   const char * szKey, * szFor = nullptr;
    LPNSXINDEX pIndex, * pIndexPtr;
    LPTAGINFO pTag = NULL;
    HB_ERRCODE errCode;

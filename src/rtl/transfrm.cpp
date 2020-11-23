@@ -741,7 +741,7 @@ HB_FUNC( TRANSFORM )
 
       else if( HB_IS_TIMESTAMP( pValue ) )
       {
-         const char * szDateFormat = NULL, * szTimeFormat = NULL;
+         const char * szDateFormat = nullptr, * szTimeFormat = nullptr;
          char szNewFormat[ 11 ];
          long lDate, lTime;
          HB_SIZE nFor;

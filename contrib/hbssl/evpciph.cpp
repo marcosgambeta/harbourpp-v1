@@ -1036,7 +1036,7 @@ HB_FUNC( EVP_SEALINIT )
             unsigned char ** ek = ( unsigned char ** ) hb_xgrab( sizeof( unsigned char * ) * npubk );
             int * ekl = ( int * ) hb_xgrab( sizeof( int ) * npubk );
             int   ivl = EVP_CIPHER_iv_length( cipher );
-            unsigned char * iv = ivl > 0 ? ( unsigned char * ) hb_xgrab( ivl + 1 ) : NULL;
+            unsigned char * iv = ivl > 0 ? ( unsigned char * ) hb_xgrab( ivl + 1 ) : nullptr;
 
             EVP_PKEY ** pubk = ( EVP_PKEY ** ) hb_xgrab( sizeof( EVP_PKEY * ) * npubk + 1 );
             PHB_ITEM    pPKEY;

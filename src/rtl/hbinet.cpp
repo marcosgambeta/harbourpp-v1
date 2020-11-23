@@ -1237,7 +1237,7 @@ HB_FUNC( HB_INETACCEPT )
 static void hb_inetConnectInternal( HB_BOOL fResolve )
 {
    const char * szHost = hb_parc( 1 );
-   char * szAddr = NULL;
+   char * szAddr = nullptr;
    PHB_SOCKET_STRUCT socket = HB_PARSOCKET( 3 );
    int iPort = hb_parni( 2 );
 
@@ -1434,7 +1434,7 @@ HB_FUNC( HB_INETDGRAMRECV )
    PHB_ITEM pBuffer = hb_param( 2, HB_IT_STRING );
    int iTimeElapsed = 0;
    int iLen = 0, iMax;
-   char * buffer = NULL;
+   char * buffer = nullptr;
    HB_SIZE nLen;
    HB_BOOL fRepeat;
 

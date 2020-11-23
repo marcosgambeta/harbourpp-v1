@@ -1901,7 +1901,7 @@ static void hb_gt_trm_BsdSetCursorStyle( PHB_GTTRM pTerm, int iStyle )
 
    if( pTerm->iCursorStyle != iStyle )
    {
-      const char * escseq = NULL;
+      const char * escseq = nullptr;
 
       switch( iStyle )
       {

@@ -361,7 +361,7 @@ HB_FUNC( HB_ZUNCOMPRESS )
       if( nLen )
       {
          HB_SIZE nDstLen;
-         char * pDest = NULL;
+         char * pDest = nullptr;
          int iResult = Z_OK;
 
          if( pBuffer )

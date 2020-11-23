@@ -289,7 +289,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
       HB_USHORT       uiIter;
       pgCopyContext * context;
       char *          szInit;
-      char *          szFields = NULL;
+      char *          szFields = nullptr;
       char *          szTmp;
       PGresult *      pgResult;
       HB_BOOL         bFail    = HB_FALSE;

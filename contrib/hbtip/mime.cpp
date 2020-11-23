@@ -736,8 +736,8 @@ HB_FUNC( TIP_FILEMIMETYPE )
 
    if( pFile )
    {
-      const char * ext_type   = NULL;
-      const char * magic_type = NULL;
+      const char * ext_type   = nullptr;
+      const char * magic_type = nullptr;
 
       if( HB_IS_STRING( pFile ) )
       {

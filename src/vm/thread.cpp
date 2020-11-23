@@ -1180,7 +1180,7 @@ PHB_ITEM hb_threadStart( HB_ULONG ulAttr, PHB_CARGO_FUNC pFunc, void * cargo )
 HB_FUNC( HB_THREADSTART )
 {
    HB_ULONG ulAttr = 0, ulStart = 1;
-   const char * szFuncName = NULL;
+   const char * szFuncName = nullptr;
    PHB_SYMB pSymbol = NULL;
    PHB_ITEM pStart;
 

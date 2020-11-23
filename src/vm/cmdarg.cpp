@@ -489,7 +489,7 @@ HB_BOOL hb_cmdargIsInternal( const char * szArg, int * piLen )
 
 static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
 {
-   char * pszRetVal = NULL;
+   char * pszRetVal = nullptr;
    char * pszEnvVar;
    int i;
    int iPrefixLen;
@@ -643,7 +643,7 @@ char * hb_cmdargProgName( void )
 
 char * hb_cmdargBaseProgName( void )
 {
-   char * pszProgName, * pszBaseProgName = NULL;
+   char * pszProgName, * pszBaseProgName = nullptr;
 
    pszProgName = hb_cmdargProgName();
    if( pszProgName )

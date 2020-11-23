@@ -780,7 +780,7 @@ HB_FUNC( SQLITE3_EXEC )
    if( pHbSqlite3 && pHbSqlite3->db )
    {
       void * hSQLText;
-      char * pszErrMsg = NULL;
+      char * pszErrMsg = nullptr;
       int    rc;
 
       if( HB_ISEVALITEM( 3 ) )
@@ -1357,7 +1357,7 @@ HB_FUNC( SQLITE3_LOAD_EXTENSION )
 
    if( pHbSqlite3 && pHbSqlite3->db )
    {
-      char * zErrMsg = NULL;
+      char * zErrMsg = nullptr;
 
       hb_retni( sqlite3_load_extension( pHbSqlite3->db, hb_parcx( 2 ), hb_parc( 3 ), &zErrMsg ) );
 
@@ -1434,7 +1434,7 @@ HB_FUNC( SQLITE3_GET_TABLE )
       void *   hSQLText;
       PHB_ITEM pResultList = hb_itemArrayNew( 0 );
       int      iRow, iCol;
-      char *   pszErrMsg = NULL;
+      char *   pszErrMsg = nullptr;
       char **  pResult;
 
       if( sqlite3_get_table( pHbSqlite3->db,

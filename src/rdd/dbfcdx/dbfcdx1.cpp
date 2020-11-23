@@ -460,7 +460,7 @@ static LPCDXKEY hb_cdxKeyPutItem( LPCDXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRec,
       case 'C':
       {
          HB_SIZE nDestLen = pTag->uiLen;
-         char * pFree = NULL, * pDest;
+         char * pFree = nullptr, * pDest;
          const char * pText;
          PHB_CODEPAGE cdpVM = hb_vmCDP();
 
@@ -5544,7 +5544,7 @@ static HB_BOOL hb_cdxDBOISkipWild( CDXAREAP pArea, LPCDXTAG pTag, HB_BOOL fForwa
 {
    HB_BOOL fFound = HB_FALSE, fFirst = HB_TRUE;
    const char * szPattern;
-   char * szFree = NULL;
+   char * szFree = nullptr;
    int iFixed = 0, iStop;
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxDBOISkipWild(%p, %p, %i, %p)", ( void * ) pArea, ( void * ) pTag, fForward, ( void * ) pWildItm ) );
@@ -5693,7 +5693,7 @@ static HB_BOOL hb_cdxRegexMatch( CDXAREAP pArea, PHB_REGEX pRegEx, LPCDXKEY pKey
 {
    const char * szKey = ( const char * ) pKey->val;
    HB_SIZE nLen = pKey->len;
-   char * pszBuff = NULL;
+   char * pszBuff = nullptr;
    HB_BOOL fResult;
 
    if( pArea->dbfarea.area.cdPage != hb_vmCDP() )
@@ -7555,7 +7555,7 @@ static HB_ERRCODE hb_cdxOrderCreate( CDXAREAP pArea, LPDBORDERCREATEINFO pOrderI
    PHB_ITEM pKeyExp, pForExp = NULL, pResult;
    char szCpndTagName[ CDX_MAXTAGNAMELEN + 1 ], szTagName[ CDX_MAXTAGNAMELEN + 1 ];
    char szFileName[ HB_PATH_MAX ];
-   const char * szFor = NULL;
+   const char * szFor = nullptr;
    LPCDXINDEX pIndex;
    LPCDXTAG pTag;
    HB_USHORT uiLen;

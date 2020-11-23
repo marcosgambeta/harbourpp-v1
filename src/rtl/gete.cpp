@@ -67,7 +67,7 @@ HB_FUNC( GETENV )
 #else
       const char * pszName = hb_itemGetCPtr( pName );
 #endif
-      char * pszValue = NULL;
+      char * pszValue = nullptr;
 
       if( pszName[ 0 ] != '\0' )
          pszValue = hb_getenv( pszName );
@@ -107,7 +107,7 @@ HB_FUNC( HB_GETENV )
 #else
       const char * pszName = hb_itemGetCPtr( pName );
 #endif
-      char * pszValue = NULL;
+      char * pszValue = nullptr;
 
       if( pszName[ 0 ] != '\0' )
          pszValue = hb_getenv( pszName );

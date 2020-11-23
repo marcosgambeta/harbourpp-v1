@@ -1934,7 +1934,7 @@ static PHB_PP_FILE hb_pp_FileNew( PHB_PP_STATE pState, const char * szFileName,
                                   PHB_PP_OPEN_FUNC pOpenFunc, HB_BOOL fBinary )
 {
    char szFileNameBuf[ HB_PATH_MAX ];
-   const char * pLineBuf = NULL;
+   const char * pLineBuf = nullptr;
    HB_SIZE nLineBufLen = 0;
    HB_BOOL fFree = HB_FALSE;
    PHB_PP_FILE pFile;
@@ -1969,7 +1969,7 @@ static PHB_PP_FILE hb_pp_FileNew( PHB_PP_STATE pState, const char * szFileName,
             if( ! file_in && ( ! pFileName->szPath || ( ! pFileName->szDrive &&
                 ! strchr( HB_OS_PATH_DELIM_CHR_LIST, ( HB_UCHAR ) pFileName->szPath[ 0 ] ) ) ) )
             {
-               char * szFirstFName = NULL;
+               char * szFirstFName = nullptr;
                pFile = pState->pFile;
                while( pFile )
                {
@@ -4359,7 +4359,7 @@ static PHB_PP_TOKEN *  hb_pp_patternStuff( PHB_PP_STATE pState,
          if( hb_pp_tokenValueCmp( pResultPattern, "__FILE__", HB_PP_CMP_CASE ) )
          {
             const char * szFileName = pState->pFile ?
-                                      pState->pFile->szFileName : NULL;
+                                      pState->pFile->szFileName : nullptr;
             if( ! szFileName )
                szFileName = "";
             *pResultPtr = hb_pp_tokenNew( szFileName, strlen( szFileName ), 0,
@@ -4476,7 +4476,7 @@ static void hb_pp_processCondDefined( PHB_PP_STATE pState, PHB_PP_TOKEN pToken )
           pNext->pNext && HB_PP_TOKEN_TYPE( pNext->pNext->type ) == HB_PP_TOKEN_KEYWORD &&
           pNext->pNext->pNext && HB_PP_TOKEN_TYPE( pNext->pNext->pNext->type ) == HB_PP_TOKEN_RIGHT_PB )
       {
-         const char * szValue = NULL;
+         const char * szValue = nullptr;
          char buffer[ 32 ];
 
          if( pToken->value[ 0 ] == '_' )

@@ -227,7 +227,7 @@ HB_BOOL hb_fsLinkSym( const char * pszTarget, const char * pszNewFile )
 /* NOTE: Caller must free the pointer, if not NULL */
 char * hb_fsLinkRead( const char * pszFile )
 {
-   char * pszLink = NULL;
+   char * pszLink = nullptr;
 
    if( pszFile )
    {
@@ -387,7 +387,7 @@ HB_FUNC( HB_FLINKSYM )
 HB_FUNC( HB_FLINKREAD )
 {
    HB_ERRCODE uiError = 2;
-   char * pszResult = NULL;
+   char * pszResult = nullptr;
    const char * pszFile = hb_parc( 1 );
 
    if( pszFile )

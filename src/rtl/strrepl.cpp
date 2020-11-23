@@ -66,12 +66,12 @@ HB_FUNC( HB_STRREPLACE )
       {
          PHB_ITEM pDst = hb_param( 3, HB_IT_STRING | HB_IT_ARRAY );
          const char * pszDst = pDst && HB_IS_STRING( pDst ) ?
-                               hb_itemGetCPtr( pDst ) : NULL;
+                               hb_itemGetCPtr( pDst ) : nullptr;
          const char * pszSrc = HB_IS_STRING( pSrc ) ?
-                               hb_itemGetCPtr( pSrc ) : NULL;
+                               hb_itemGetCPtr( pSrc ) : nullptr;
          const char * pszText = hb_itemGetCPtr( pText );
          const char * ptr;
-         char * pszResult = NULL;
+         char * pszResult = nullptr;
          HB_SIZE * ptrOpt = NULL;
          HB_BOOL fNext = HB_FALSE;
          HB_SIZE nDst, nSize, nPos, nAt, nSkip, nTmp;

@@ -75,7 +75,7 @@ HB_FUNC( ENVPARAM )
 #if ( defined( HB_OS_UNIX ) && ! defined( HB_OS_IOS ) ) || \
     defined( HB_OS_DOS ) || defined( HB_OS_OS2 )
    char * const * pEnviron = environ, * const * pEnv;
-   char * pResult = NULL, * pDst;
+   char * pResult = nullptr, * pDst;
 
    if( pEnviron )
    {

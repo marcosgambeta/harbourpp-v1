@@ -127,7 +127,7 @@ HB_FUNC( PRINTSEND )
 
    char szChr[ 2 ] = { ' ', '\0' };
    char szPort[ 5 ] = { 'l', 'p', 't', '1', '\0' };
-   const char * szStr = NULL;
+   const char * szStr = nullptr;
    HB_SIZE nLen = 0, nRet = 0;
 
    if( HB_ISNUM( 1 ) )

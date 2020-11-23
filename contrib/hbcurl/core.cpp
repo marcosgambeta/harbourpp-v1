@@ -1796,8 +1796,8 @@ HB_FUNC( CURL_EASY_GETINFO )
 
       int type = HB_CURL_INFO_TYPE_INVALID;
 
-      char * ret_string = NULL;
-      char * ret_ptr    = NULL;
+      char * ret_string = nullptr;
+      char * ret_ptr    = nullptr;
       long   ret_long   = 0;
       struct curl_slist * ret_slist = NULL;
       double ret_double = 0.0;

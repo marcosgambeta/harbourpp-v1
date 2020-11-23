@@ -310,7 +310,7 @@ static HB_SIZE hb_mlGetLine( PHB_MLC_INFO pMLC )
 HB_FUNC( MEMOLINE )
 {
    HB_ISIZ nLine = hb_parnsdef( 3, 1 );
-   char * szLine = NULL;
+   char * szLine = nullptr;
    HB_SIZE nLen = 0;
 
    if( nLine >= 1 )

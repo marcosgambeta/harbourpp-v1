@@ -827,7 +827,7 @@ void hb_tblStructure( AREAP pArea, PHB_ITEM pStruct, HB_USHORT uiSize )
 
 static const char * hb_dbTransFieldPos( PHB_ITEM pFields, HB_USHORT uiField )
 {
-   const char * szField = NULL;
+   const char * szField = nullptr;
    PHB_ITEM pItem;
 
    pItem = hb_arrayGetItemPtr( pFields, uiField );

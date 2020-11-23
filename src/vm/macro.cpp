@@ -714,7 +714,7 @@ char * hb_macroExpandString( const char * szString, HB_SIZE nLength, HB_BOOL * p
 
 char * hb_macroTextSymbol( const char * szString, HB_SIZE nLength, HB_BOOL * pfNewString )
 {
-   char * szResult = NULL;
+   char * szResult = nullptr;
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroTextSymbol(%s,%" HB_PFS "u,%p)", szString, nLength, ( void * ) pfNewString ) );
 

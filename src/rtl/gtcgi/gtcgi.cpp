@@ -259,7 +259,7 @@ static void hb_gt_cgi_conOut( PHB_GT pGT, const char * szText, HB_SIZE nLength,
    if( cdpTerm && cdpHost && cdpTerm != cdpHost )
    {
       HB_SIZE nLen = nLength, nBufSize = 0;
-      char * pBuf = NULL;
+      char * pBuf = nullptr;
       const char * buffer = hb_cdpnDup3( szText, nLen,
                                          NULL, &nLen,
                                          &pBuf, &nBufSize,

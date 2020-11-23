@@ -2574,7 +2574,7 @@ static PHB_DYNS hb_objGetMsgSym( PHB_ITEM pMessage )
 
    if( pMessage )
    {
-      const char * szMsg = NULL;
+      const char * szMsg = nullptr;
 
       if( HB_IS_STRING( pMessage ) )
          szMsg = pMessage->item.asString.value;
@@ -5616,7 +5616,7 @@ HB_FUNC( __CLSVERIFY )
 const char * hb_clsRealMethodName( void )
 {
    HB_ISIZ nOffset = hb_stackBaseProcOffset( 1 );
-   const char * szName = NULL;
+   const char * szName = nullptr;
 
    if( nOffset > 0 )
    {

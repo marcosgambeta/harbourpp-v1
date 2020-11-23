@@ -371,7 +371,7 @@ HB_MEMFS_EXPORT HB_BOOL hb_memfsRename( const char * szName, const char * szNewN
 HB_MEMFS_EXPORT PHB_ITEM hb_memfsDirectory( const char * pszDirSpec, const char * pszAttr )
 {
    PHB_MEMFS_DIRENTRY pDirEn = NULL;
-   char *   pszFree = NULL;
+   char *   pszFree = nullptr;
    PHB_ITEM pDirArray;
    HB_SIZE  nLen;
    HB_ULONG ulCount, ul;

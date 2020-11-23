@@ -69,7 +69,7 @@ static void do_atnum( int iSwitch )
       HB_SIZE sIgnore = hb_parnsdef( 4, 0 ); /* eventually ignore some characters */
       HB_SIZE sMatchStrLen = 0;
       HB_SIZE nCounter;
-      const char * pc = NULL;
+      const char * pc = nullptr;
 
       if( sIgnore >= sStrLen )
       {

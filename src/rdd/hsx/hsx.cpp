@@ -1395,7 +1395,7 @@ static int hb_hsxCreate( const char * szFile, int iBufSize, int iKeySize,
                          HB_BOOL fIgnoreCase, int iFilter, PHB_ITEM pExpr )
 {
    char szFileName[ HB_PATH_MAX ];
-   const char * szExpr = NULL;
+   const char * szExpr = nullptr;
    PHB_ITEM pKeyExpr = NULL;
    HB_ULONG ulBufSize;
    HB_USHORT uiRecordSize;
@@ -1846,7 +1846,7 @@ HB_FUNC( HS_SET )
 HB_FUNC( HS_FILTER )
 {
    const char * szText = hb_parc( 2 );
-   char * pBuff = NULL;
+   char * pBuff = nullptr;
    HB_SIZE nLen = hb_parclen( 2 );
    HB_ULONG ulRecords = 0;
    int iHandle = -1, iResult = HSX_BADPARMS;
@@ -1975,7 +1975,7 @@ HB_FUNC( HS_VERIFY )
    {
       int iHandle = hb_parni( 1 );
       PHB_ITEM pExpr = hb_param( 2, HB_IT_BLOCK );
-      const char * szText = NULL;
+      const char * szText = nullptr;
       HB_SIZE nLen = 0;
       LPHSXINFO pHSX;
 
@@ -2006,7 +2006,7 @@ HB_FUNC( HS_VERIFY )
    else
    {
       PHB_ITEM pExpr = hb_param( 1, HB_IT_BLOCK );
-      const char * szSub = hb_parc( 2 ), * szText = NULL;
+      const char * szSub = hb_parc( 2 ), * szText = nullptr;
       HB_SIZE nSub = hb_parclen( 2 ), nLen = 0;
       HB_BOOL fIgnoreCase = hb_parl( 3 );
 

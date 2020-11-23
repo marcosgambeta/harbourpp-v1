@@ -584,7 +584,7 @@ HB_BOOL hb_fsNameExists( const char * pszFileName )
 #elif defined( HB_OS_OS2 )
       fExist = hb_fsOS2QueryPathInfo( pszFileName, NULL, NULL, NULL, NULL );
 #else
-      char * pszFree = NULL;
+      char * pszFree = nullptr;
 
       pszFileName = hb_fsNameConv( pszFileName, &pszFree );
 
@@ -642,7 +642,7 @@ HB_BOOL hb_fsFileExists( const char * pszFileName )
       fExist = hb_fsOS2QueryPathInfo( pszFileName, NULL, &nAttr, NULL, NULL ) &&
                ( nAttr & HB_FA_DIRECTORY ) == 0;
 #else
-      char * pszFree = NULL;
+      char * pszFree = nullptr;
 
       pszFileName = hb_fsNameConv( pszFileName, &pszFree );
 
@@ -703,7 +703,7 @@ HB_BOOL hb_fsDirExists( const char * pszDirName )
       fExist = hb_fsOS2QueryPathInfo( pszDirName, NULL, &nAttr, NULL, NULL ) &&
                ( nAttr & HB_FA_DIRECTORY ) != 0;
 #else
-      char * pszFree = NULL;
+      char * pszFree = nullptr;
 
       pszDirName = hb_fsNameConv( pszDirName, &pszFree );
 

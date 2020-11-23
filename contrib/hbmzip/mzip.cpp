@@ -237,7 +237,7 @@ HB_FUNC( HB_ZIPOPEN )
 
    if( szFileName )
    {
-      const char * pszGlobalComment = NULL;
+      const char * pszGlobalComment = nullptr;
       char *       pszFree;
       zipFile      hZip = zipOpen2( hb_fsNameConv( szFileName, &pszFree ), hb_parnidef( 2, APPEND_STATUS_CREATE ),
                                     &pszGlobalComment, NULL );
@@ -1516,8 +1516,8 @@ static int hb_zipDeleteFile( const char * szZipFile, const char * szFileMask )
    unz_global_info ugi;
    unz_file_info   ufi;
    zip_fileinfo    zfi;
-   char *          pszGlobalComment = NULL;
-   char *          pszFileComment   = NULL;
+   char *          pszGlobalComment = nullptr;
+   char *          pszFileComment   = nullptr;
    void *          pExtraField      = NULL;
    void *          pLocalExtraField = NULL;
    int    iFilesLeft = 0;

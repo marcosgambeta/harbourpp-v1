@@ -127,7 +127,7 @@ static char * hb_buildArgsOS2( const char *pszFileName, APIRET * ret )
 {
    PHB_FNAME pFilepath;
    char szFileBuf[ HB_PATH_MAX ];
-   char * pArgs = NULL, * pszFree = NULL, cQuote = 0, c;
+   char * pArgs = nullptr, * pszFree = nullptr, cQuote = 0, c;
    HB_SIZE nLen = 0, nLen2;
    void * pMem;
 

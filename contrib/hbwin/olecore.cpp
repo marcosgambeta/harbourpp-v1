@@ -2264,8 +2264,8 @@ HB_FUNC( WIN_OLEAUTO___ONERROR )
          hb_oleSetError( lOleError );
          if( lOleError != S_OK )
          {
-            char * szDescription = NULL;
-            char * szSource = NULL;
+            char * szDescription = nullptr;
+            char * szSource = nullptr;
 
             if( lOleError == DISP_E_EXCEPTION )
                hb_oleExcepDescription( &excep, &szDescription, &szSource );
@@ -2327,8 +2327,8 @@ HB_FUNC( WIN_OLEAUTO___ONERROR )
       hb_oleSetError( lOleError );
       if( lOleError != S_OK )
       {
-         char * szDescription = NULL;
-         char * szSource = NULL;
+         char * szDescription = nullptr;
+         char * szSource = nullptr;
 
          if( lOleError == DISP_E_EXCEPTION )
             hb_oleExcepDescription( &excep, &szDescription, &szSource );
@@ -2425,8 +2425,8 @@ HB_FUNC( WIN_OLEAUTO___OPINDEX )
    if( lOleError != S_OK )
    {
       /* Try to detect if object is a collection */
-      char * szDescription = NULL;
-      char * szSource = NULL;
+      char * szDescription = nullptr;
+      char * szSource = nullptr;
       HRESULT lOleErrorEnum;
 
       if( lOleError == DISP_E_EXCEPTION )
@@ -2540,8 +2540,8 @@ static void hb_oleInvokeCall( WORD wFlags )
          hb_oleSetError( lOleError );
          if( lOleError != S_OK )
          {
-            char * szExcepDescription = NULL;
-            char * szExcepSource = NULL;
+            char * szExcepDescription = nullptr;
+            char * szExcepSource = nullptr;
 
             if( lOleError == DISP_E_EXCEPTION )
                hb_oleExcepDescription( &excep, &szExcepDescription, &szExcepSource );

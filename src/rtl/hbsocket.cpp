@@ -2088,7 +2088,7 @@ HB_BOOL hb_socketInet6Addr( void ** pSockAddr, unsigned * puiLen,
 /* caller must free the buffer if not NULL */
 char * hb_socketAddrGetName( const void * pSockAddr, unsigned len )
 {
-   char * szName = NULL;
+   char * szName = nullptr;
 
    switch( hb_socketGetAddrFamily( pSockAddr, len ) )
    {
@@ -3391,7 +3391,7 @@ HB_BOOL hb_socketResolveInetAddr( void ** pSockAddr, unsigned * puiLen, const ch
 
 char * hb_socketResolveAddr( const char * szAddr, int af )
 {
-   char * szResult = NULL;
+   char * szResult = nullptr;
    HB_BOOL fTrans = HB_FALSE;
    int iError = 0;
 
@@ -3637,7 +3637,7 @@ PHB_ITEM hb_socketGetAliases( const char * szAddr, int af )
 
 char * hb_socketGetHostName( const void * pSockAddr, unsigned len )
 {
-   char * szResult = NULL;
+   char * szResult = nullptr;
    int af = hb_socketGetAddrFamily( pSockAddr, len );
 
    if( af != -1 )
@@ -3754,7 +3754,7 @@ static HB_SIZE hb_socketArrayFindInetAddr( const char * szAddr,
 static char * hb_getMAC( const char * pszIfName )
 {
    struct ifaddrs * ifap = NULL;
-   char * pszMAC = NULL;
+   char * pszMAC = nullptr;
 
    if( getifaddrs( &ifap ) == 0 && ifap )
    {
@@ -3805,7 +3805,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
       struct ifconf ifc;
       struct ifreq * pifr;
       char * buf, * ptr;
-      const char * pLastName = NULL;
+      const char * pLastName = nullptr;
       int len = 0, size, iLastName = 0, iLastFamily = 0, flags, family;
 
 #  if defined( HB_OS_DOS )

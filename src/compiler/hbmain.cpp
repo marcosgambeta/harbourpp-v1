@@ -4457,7 +4457,7 @@ static int hb_compCompile( HB_COMP_DECL, const char * szPrg, const char * szBuff
       if( HB_COMP_PARAM->iSyntaxCheckOnly == 0 &&
           fGenCode && HB_COMP_PARAM->iErrorCount == 0 )
       {
-         const char * szFirstFunction = NULL;
+         const char * szFirstFunction = nullptr;
          int iFunctionCount = 0;
          PHB_HFUNC pFunc;
 

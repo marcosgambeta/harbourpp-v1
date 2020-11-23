@@ -4226,7 +4226,7 @@ HB_ERRCODE hb_fsCurDirBuff( int iDrive, char * pszBuffer, HB_SIZE nSize )
 #if ! defined( HB_OS_WIN )
       /* Convert from OS codepage */
       {
-         char * pszFree = NULL;
+         char * pszFree = nullptr;
          const char * pszResult;
 
          nLen = nSize;
@@ -4321,7 +4321,7 @@ HB_BOOL hb_fsGetCWD( char * pszBuffer, HB_SIZE nSize )
 #if ! defined( HB_OS_WIN )
       /* Convert from OS codepage */
       {
-         char * pszFree = NULL;
+         char * pszFree = nullptr;
          const char * pszResult;
 
          nLen = nSize;
@@ -4682,7 +4682,7 @@ HB_FHANDLE hb_fsExtOpen( const char * pszFileName, const char * pDefExt,
    HB_FHANDLE hFile;
    HB_USHORT uiFlags;
    const char * szPath;
-   char * szFree = NULL;
+   char * szFree = nullptr;
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsExtOpen(%s, %s, %u, %p, %p)", pszFileName, pDefExt, nExFlags, ( const void * ) pPaths, ( void * ) pError ) );
 
@@ -4885,7 +4885,7 @@ const char * hb_fsNameConv( const char * pszFileName, char ** pszFree )
    {
       PHB_FNAME pFileName;
       HB_SIZE nLen;
-      char * pszPath = NULL, * pszName = NULL, * pszExt = NULL;
+      char * pszPath = nullptr, * pszName = nullptr, * pszExt = nullptr;
 
       if( pszFree )
       {
@@ -4979,7 +4979,7 @@ const char * hb_fsNameConv( const char * pszFileName, char ** pszFree )
 #if defined( HB_OS_WIN )
 HB_WCHAR * hb_fsNameConvU16( const char * pszFileName )
 {
-   char * pszBuffer = NULL;
+   char * pszBuffer = nullptr;
    HB_WCHAR * lpwFileName;
    HB_SIZE nLen;
    PHB_CODEPAGE cdp;
@@ -5024,7 +5024,7 @@ HB_WCHAR * hb_fsNameConvU16( const char * pszFileName )
        iFileCase != HB_SET_CASE_MIXED ||
        iDirCase != HB_SET_CASE_MIXED )
    {
-      char * pszPath = NULL, * pszName = NULL, * pszExt = NULL;
+      char * pszPath = nullptr, * pszName = nullptr, * pszExt = nullptr;
       PHB_FNAME pFileName;
 
       pszFileName = pszBuffer = hb_strncpy( ( char * ) hb_xgrab( HB_PATH_MAX ),

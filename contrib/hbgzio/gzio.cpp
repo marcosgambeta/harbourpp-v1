@@ -324,7 +324,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName,
                             const char * pPaths, PHB_ITEM pError )
 {
    int iLevel = Z_DEFAULT_COMPRESSION;
-   char * pszNameBuf = NULL;
+   char * pszNameBuf = nullptr;
    const char * pszName = s_gzio_name( pszFileName, &iLevel );
    int iPref = ( int ) ( pszName - pszFileName );
    PHB_FILE pFile;
@@ -618,7 +618,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
 
       case HB_VF_IONAME:
       {
-         const char * pszNext = NULL;
+         const char * pszNext = nullptr;
 
          if( _PHB_FILE->pFuncs->Configure( _PHB_FILE, iIndex, pValue ) )
          {

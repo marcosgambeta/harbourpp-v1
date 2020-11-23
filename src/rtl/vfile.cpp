@@ -420,7 +420,7 @@ HB_FUNC( HB_VFLINKSYM )
 HB_FUNC( HB_VFLINKREAD )
 {
    const char * pszFile = hb_parc( 1 );
-   char * pszResult = NULL;
+   char * pszResult = nullptr;
    HB_ERRCODE uiError = 2;
 
    if( pszFile )

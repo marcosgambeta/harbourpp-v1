@@ -401,7 +401,7 @@ static int hb_gt_chrmapread( const char * pszFile, const char * pszTerm, int * n
 
 int hb_gt_chrmapinit( int * piTransTbl, const char * pszTerm, HB_BOOL fSetACSC )
 {
-   char * pszFree = NULL;
+   char * pszFree = nullptr;
    int nRet = -1;
 
    chrmap_init( piTransTbl );

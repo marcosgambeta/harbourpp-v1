@@ -215,7 +215,7 @@ HB_FUNC( DISKSPACE )
 #elif defined( HB_OS_UNIX )
    {
       const char * szName = hb_parc( 1 );
-      char * pszFree = NULL;
+      char * pszFree = nullptr;
 
       if( ! szName )
          szName = "/";
