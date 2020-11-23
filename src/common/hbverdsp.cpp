@@ -49,7 +49,7 @@
 
 void hb_verBuildInfo( void )
 {
-   hb_conOutErr( "Harbour Build Info", 0 );
+   hb_conOutErr( "Harbour++ Build Info", 0 );
    hb_conOutErr( hb_conNewLine(), 0 );
    hb_conOutErr( "---------------------------", 0 );
    hb_conOutErr( hb_conNewLine(), 0 );

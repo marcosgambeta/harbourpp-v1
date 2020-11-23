@@ -182,7 +182,7 @@ EXTERNAL hbmk_KEYW
 #endif
 
 #define _SELF_NAME_             "hbmk2"
-#define _SELF_NAME_LONG_        "Harbour Make"
+#define _SELF_NAME_LONG_        "Harbour++ Make"
 
 #define I_( x )                 hb_UTF8ToStr( hb_i18n_gettext( x /*, _SELF_NAME_ */ ) )
 #define H_( x )                 I_( x )
@@ -15692,7 +15692,7 @@ STATIC PROCEDURE ShowHeader( hbmk )
 
    IF hbmk[ _HBMK_lShellMode ]
       cText := ;
-         "Harbour Shell / Script Runner " + HBRawVersion() + e"\n" + ;
+         "Harbour++ Shell / Script Runner " + HBRawVersion() + e"\n" + ;
          "Copyright (c) 2007-" + ;
             cToYear + ", " + ;
             "Viktor Szakats" + e"\n" + ;

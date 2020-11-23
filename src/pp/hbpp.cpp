@@ -789,7 +789,7 @@ int main( int argc, char * argv[] )
 
    if( iQuiet < 2 )
    {
-      printf( "Harbour Preprocessor %d.%d.%d%s\n",
+      printf( "Harbour++ Preprocessor %d.%d.%d%s\n",
               HB_VER_MAJOR, HB_VER_MINOR, HB_VER_RELEASE, HB_VER_STATUS );
       printf( "Copyright (c) 1999-present, %s\n", _DEFAULT_ORIGIN_URL );
    }

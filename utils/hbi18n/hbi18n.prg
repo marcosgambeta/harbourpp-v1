@@ -166,7 +166,7 @@ STATIC FUNCTION HBRawVersion()
 STATIC PROCEDURE Logo()
 
    OutStd( ;
-      "Harbour i18n .pot/.hbl file manager " + HBRawVersion() + hb_eol() + ;
+      "Harbour++ i18n .pot/.hbl file manager " + HBRawVersion() + hb_eol() + ;
       "Copyright (c) 2009-" + ;
          "2020" + ", " + ;
          "Przemyslaw Czerpak" + hb_eol() + ;
