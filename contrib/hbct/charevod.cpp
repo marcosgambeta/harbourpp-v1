@@ -100,7 +100,7 @@ static void do_charevod( int iSwitch )
    }
    else
    {
-      PHB_ITEM pSubst = NULL;
+      PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )

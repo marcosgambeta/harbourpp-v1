@@ -87,7 +87,7 @@ static void s_serviceSetHBSig( void );
 static void s_serviceSetDflSig( void );
 static void s_signalHandlersInit( void );
 
-static PHB_ITEM sp_hooks       = NULL;
+static PHB_ITEM sp_hooks       = nullptr;
 static HB_BOOL  bSignalEnabled = HB_TRUE;
 static int      sb_isService   = 0;
 

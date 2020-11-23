@@ -287,7 +287,7 @@ void hb_dbfTransCheckCounters( LPDBTRANSINFO lpdbTransInfo )
       fCopyCtr = HB_FALSE;
    else
    {
-      PHB_ITEM pItem = NULL;
+      PHB_ITEM pItem = nullptr;
 
       /* check if counters can be copied for all fields */
       for( uiCount = 0; uiCount < lpdbTransInfo->uiItemCount; ++uiCount )
@@ -3114,7 +3114,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
    DBFFIELD * pThisField;
    HB_BYTE * pBuffer;
    PHB_FNAME pFileName;
-   PHB_ITEM pItem = NULL, pError;
+   PHB_ITEM pItem = nullptr, pError;
    char szFileName[ HB_PATH_MAX ];
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_dbfCreate(%p, %p)", ( void * ) pArea, ( void * ) pCreateInfo ) );
@@ -6365,7 +6365,7 @@ static HB_ERRCODE hb_dbfDrop( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIte
 {
    char szFileName[ HB_PATH_MAX ];
    const char * szFile, * szExt;
-   PHB_ITEM pFileExt = NULL;
+   PHB_ITEM pFileExt = nullptr;
    PHB_FNAME pFileName;
    HB_BOOL fTable = HB_FALSE, fResult = HB_FALSE;
 
@@ -6447,7 +6447,7 @@ static HB_ERRCODE hb_dbfExists( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pI
 {
    char szFileName[ HB_PATH_MAX ];
    const char * szFile;
-   PHB_ITEM pFileExt = NULL;
+   PHB_ITEM pFileExt = nullptr;
    PHB_FNAME pFileName;
    HB_BOOL fTable = HB_FALSE;
 
@@ -6483,7 +6483,7 @@ static HB_ERRCODE hb_dbfRename( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pI
 {
    char szFileName[ HB_PATH_MAX ];
    const char * szFile, * szExt;
-   PHB_ITEM pFileExt = NULL;
+   PHB_ITEM pFileExt = nullptr;
    PHB_FNAME pFileName;
    HB_BOOL fTable = HB_FALSE, fResult = HB_FALSE;
 

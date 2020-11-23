@@ -275,7 +275,7 @@ static void hb_i18n_setitem( PHB_ITEM pHash, const char * szKey, const char * sz
 static PHB_ITEM hb_i18n_pluralexp_compile( PHB_ITEM pExp )
 {
    HB_SIZE nLen = hb_itemGetCLen( pExp );
-   PHB_ITEM pBlock = NULL;
+   PHB_ITEM pBlock = nullptr;
 
    if( nLen > 0 )
    {
@@ -379,7 +379,7 @@ static PHB_I18N_TRANS hb_i18n_initialize( PHB_ITEM pTable )
 
    if( HB_IS_HASH( pTable ) )
    {
-      PHB_ITEM pKey, pContext, pDefContext = NULL;
+      PHB_ITEM pKey, pContext, pDefContext = nullptr;
 
       pKey = hb_itemPutCConst( nullptr, "CONTEXT" );
       pContext = hb_hashGetItemPtr( pTable, pKey, 0 );
@@ -840,7 +840,7 @@ PHB_ITEM hb_i18n_ngettext( PHB_ITEM pNum, PHB_ITEM pMsgID, PHB_ITEM pContext )
    PHB_I18N_TRANS pI18N = hb_i18n_table();
    PHB_CODEPAGE cdpage = NULL;
    PHB_ITEM pMsgDst = pMsgID;
-   PHB_ITEM pBlock = NULL;
+   PHB_ITEM pBlock = nullptr;
    int iPluralForm = 0;
 
    if( pI18N )

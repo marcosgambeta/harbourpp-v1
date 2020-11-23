@@ -242,7 +242,7 @@ static void hb_getCommand( const char * pszFileName,
 static char ** hb_buildArgs( const char *pszFileName )
 {
    const char * src;
-   char ** argv, * dst, cQuote = 0, * pszFree = NULL;
+   char ** argv, * dst, cQuote = 0, * pszFree = nullptr;
    int argc = 0;
 
    while( HB_ISSPACE( *pszFileName ) )

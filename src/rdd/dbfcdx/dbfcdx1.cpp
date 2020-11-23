@@ -4983,7 +4983,7 @@ static void hb_cdxCreateFName( CDXAREAP pArea, const char * szBagName,
                                char * szFileName, char * szBaseName )
 {
    PHB_FNAME pFileName;
-   PHB_ITEM pExt = NULL;
+   PHB_ITEM pExt = nullptr;
    HB_BOOL fName = szBagName && *szBagName;
 
    pFileName = hb_fsFNameSplit( fName ? szBagName : pArea->dbfarea.szDataFileName );
@@ -7312,7 +7312,7 @@ static HB_ERRCODE hb_cdxOrderListAdd( CDXAREAP pArea, LPDBORDERINFO pOrderInfo )
    char szFileName[ HB_PATH_MAX ];
    LPCDXINDEX pIndex, * pIndexPtr;
    HB_BOOL fProd, bRetry;
-   PHB_ITEM pError = NULL;
+   PHB_ITEM pError = nullptr;
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxOrderListAdd(%p, %p)", ( void * ) pArea, ( void * ) pOrderInfo ) );
 
@@ -7552,7 +7552,7 @@ static HB_ERRCODE hb_cdxOrderCreate( CDXAREAP pArea, LPDBORDERCREATEINFO pOrderI
    HB_ULONG ulRecNo;
    HB_BOOL fNewFile, fOpenedIndex, fProd, fAscend = HB_TRUE, fNoCase = HB_FALSE,
         fCustom = HB_FALSE, fTemporary = HB_FALSE, fExclusive = HB_FALSE;
-   PHB_ITEM pKeyExp, pForExp = NULL, pResult;
+   PHB_ITEM pKeyExp, pForExp = nullptr, pResult;
    char szCpndTagName[ CDX_MAXTAGNAMELEN + 1 ], szTagName[ CDX_MAXTAGNAMELEN + 1 ];
    char szFileName[ HB_PATH_MAX ];
    const char * szFor = nullptr;
@@ -7771,7 +7771,7 @@ static HB_ERRCODE hb_cdxOrderCreate( CDXAREAP pArea, LPDBORDERCREATEINFO pOrderI
       char szTempFile[ HB_PATH_MAX ];
       PHB_FILE pFile;
       HB_BOOL bRetry, fShared = pArea->dbfarea.fShared && ! fTemporary && ! fExclusive;
-      PHB_ITEM pError = NULL;
+      PHB_ITEM pError = nullptr;
 
       do
       {
@@ -9547,7 +9547,7 @@ static void hb_cdxTagDoIndex( LPCDXTAG pTag, HB_BOOL fReindex )
 {
    LPCDXAREA pArea = pTag->pIndex->pArea;
    LPCDXSORTINFO pSort;
-   PHB_ITEM pWhileItem = NULL, pEvalItem = NULL;
+   PHB_ITEM pWhileItem = nullptr, pEvalItem = nullptr;
    HB_ULONG ulRecCount, ulRecNo = pArea->dbfarea.ulRecNo;
    HB_LONG lStep = 0;
    PHB_CODEPAGE cdpTmp = hb_cdpSelect( pArea->dbfarea.area.cdPage );
@@ -9595,7 +9595,7 @@ static void hb_cdxTagDoIndex( LPCDXTAG pTag, HB_BOOL fReindex )
       HB_BOOL fDirectRead, fUseFilter = HB_FALSE;
       HB_BYTE * pSaveRecBuff = pArea->dbfarea.pRecord, cTemp[ 8 ];
       int iRecBuff = 0, iRecBufSize, iRec;
-      PHB_ITEM pForItem, pItem = NULL;
+      PHB_ITEM pForItem, pItem = nullptr;
 
       pForItem = pTag->pForItem;
       if( pTag->nField )

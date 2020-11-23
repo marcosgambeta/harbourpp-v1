@@ -76,7 +76,7 @@ HB_FUNC( FLOOR )
    }
    else
    {
-      PHB_ITEM pSubst = NULL;
+      PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
@@ -112,7 +112,7 @@ HB_FUNC( CEILING )
    }
    else
    {
-      PHB_ITEM pSubst = NULL;
+      PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
@@ -145,7 +145,7 @@ HB_FUNC( SIGN )
    }
    else
    {
-      PHB_ITEM pSubst = NULL;
+      PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
@@ -194,7 +194,7 @@ HB_FUNC( LOG10 )
    }
    else
    {
-      PHB_ITEM pSubst = NULL;
+      PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
@@ -229,7 +229,7 @@ HB_FUNC( FACT )
    }
    else
    {
-      PHB_ITEM pSubst = NULL;
+      PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )

@@ -825,7 +825,7 @@ HB_FUNC( WVT_CREATEDIALOGDYNAMIC )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
    PHB_ITEM pFirst = hb_param( 3, HB_IT_ANY );
-   PHB_ITEM pFunc  = NULL;
+   PHB_ITEM pFunc  = nullptr;
    PHB_DYNS pExecSym;
    HWND     hDlg  = 0;
    int      iType = 0;
@@ -940,7 +940,7 @@ HB_FUNC( WVT_CREATEDIALOGMODAL )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
    PHB_ITEM   pFirst = hb_param( 3, HB_IT_ANY );
-   PHB_ITEM   pFunc  = NULL;
+   PHB_ITEM   pFunc  = nullptr;
    PHB_DYNS   pExecSym;
    int        iIndex;
    int        iResource = hb_parni( 4 );

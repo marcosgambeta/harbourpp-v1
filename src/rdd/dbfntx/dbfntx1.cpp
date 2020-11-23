@@ -1554,7 +1554,7 @@ static LPTAGINFO hb_ntxTagLoad( LPNTXINDEX pIndex, HB_ULONG ulBlock,
 {
    LPNTXHEADER lpNTX = ( LPNTXHEADER ) buffer;
    LPTAGINFO pTag;
-   PHB_ITEM pKeyExp, pForExp = NULL;
+   PHB_ITEM pKeyExp, pForExp = nullptr;
    HB_USHORT usType;
    HB_BOOL fName;
 
@@ -3561,7 +3561,7 @@ static void hb_ntxCreateFName( NTXAREAP pArea, const char * szBagName, HB_BOOL *
                                char * szFileName, char * szTagName )
 {
    PHB_FNAME pFileName;
-   PHB_ITEM pExt = NULL;
+   PHB_ITEM pExt = nullptr;
    HB_BOOL fName = szBagName && *szBagName;
 
    pFileName = hb_fsFNameSplit( fName ? szBagName : pArea->dbfarea.szDataFileName );
@@ -5323,7 +5323,7 @@ static void hb_ntxSortOut( LPNTXSORTINFO pSort )
 static HB_ERRCODE hb_ntxTagCreate( LPTAGINFO pTag, HB_BOOL fReindex )
 {
    LPNTXAREA pArea = pTag->pIndex->pArea;
-   PHB_ITEM pWhileItem = NULL, pEvalItem = NULL;
+   PHB_ITEM pWhileItem = nullptr, pEvalItem = nullptr;
    HB_ULONG ulRecCount, ulRecNo = pArea->dbfarea.ulRecNo;
    LPNTXSORTINFO pSort;
    HB_LONG lStep = 0;
@@ -5372,7 +5372,7 @@ static HB_ERRCODE hb_ntxTagCreate( LPTAGINFO pTag, HB_BOOL fReindex )
       char szBuffer[ NTX_MAX_KEY ];
       int iRecBuff = 0, iRecBufSize, iRec;
       PHB_CODEPAGE cdpTmp = hb_cdpSelect( pArea->dbfarea.area.cdPage );
-      PHB_ITEM pForItem, pItem = NULL;
+      PHB_ITEM pForItem, pItem = nullptr;
 
       pForItem = pTag->pForItem;
       if( pTag->nField )
@@ -6262,7 +6262,7 @@ static HB_ERRCODE hb_ntxZap( NTXAREAP pArea )
 
 static HB_ERRCODE hb_ntxOrderCreate( NTXAREAP pArea, LPDBORDERCREATEINFO pOrderInfo )
 {
-   PHB_ITEM pResult, pKeyExp, pForExp = NULL;
+   PHB_ITEM pResult, pKeyExp, pForExp = nullptr;
    int iLen, iDec, iTag, i;
    char szFileName[ HB_PATH_MAX ], szTagName[ NTX_MAX_TAGNAME + 1 ];
    const char * szKey, * szFor = nullptr;
@@ -6478,7 +6478,7 @@ static HB_ERRCODE hb_ntxOrderCreate( NTXAREAP pArea, LPDBORDERCREATEINFO pOrderI
    {
       PHB_FILE pFile;
       HB_BOOL bRetry, fOld, fShared = pArea->dbfarea.fShared && ! fTemporary && ! fExclusive;
-      PHB_ITEM pError = NULL;
+      PHB_ITEM pError = nullptr;
       char szSpFile[ HB_PATH_MAX ];
 
       fOld = fCompound;
@@ -6916,7 +6916,7 @@ static HB_ERRCODE hb_ntxOrderInfo( NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
                    strncmp( pTag->ForExpr, szForExpr, NTX_MAX_EXP ) != 0 :
                    *szForExpr )
                {
-                  PHB_ITEM pForItem = NULL;
+                  PHB_ITEM pForItem = nullptr;
                   HB_BOOL fOK = *szForExpr == 0;
                   if( ! fOK )
                   {
@@ -7463,7 +7463,7 @@ static HB_ERRCODE hb_ntxOrderListAdd( NTXAREAP pArea, LPDBORDERINFO pOrderInfo )
 
    if( ! pIndex )
    {
-      PHB_ITEM pError = NULL;
+      PHB_ITEM pError = nullptr;
       LPNTXINDEX * pIndexPtr;
       HB_BOOL fRetry, fReadonly, fShared;
 

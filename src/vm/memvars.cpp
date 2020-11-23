@@ -924,7 +924,7 @@ static HB_DYNS_FUNC( hb_memvarFindPublicByPos )
  */
 static PHB_ITEM hb_memvarDebugVariable( int iScope, int iPos, const char ** pszName )
 {
-   PHB_ITEM pValue = NULL;
+   PHB_ITEM pValue = nullptr;
 
    *pszName = NULL;
 
@@ -987,7 +987,7 @@ PHB_ITEM hb_memvarSaveInArray( int iScope, HB_BOOL fCopy )
    struct mv_memvarArray_info MVInfo;
    PHB_ITEM pArray;
 
-   pArray = NULL;
+   pArray = nullptr;
 
    iScope &= HB_MV_PUBLIC | HB_MV_PRIVATE;
    if( iScope == ( HB_MV_PUBLIC | HB_MV_PRIVATE ) )
@@ -1475,7 +1475,7 @@ HB_FUNC( __MVSAVE )
    if( hb_pcount() == 3 && HB_ISCHAR( 1 ) && HB_ISCHAR( 2 ) && HB_ISLOG( 3 ) )
    {
       const char * pszFileName = hb_parc( 1 );
-      PHB_ITEM pError = NULL;
+      PHB_ITEM pError = nullptr;
       PHB_FILE fhnd;
 
       /* Create .mem file */
@@ -1546,7 +1546,7 @@ HB_FUNC( __MVRESTORE )
    {
       HB_STACK_TLS_PRELOAD
       const char * pszFileName = hb_parc( 1 );
-      PHB_ITEM pError = NULL;
+      PHB_ITEM pError = nullptr;
       PHB_FILE fhnd;
 
       HB_BOOL bAdditive = hb_parl( 2 );
@@ -1577,7 +1577,7 @@ HB_FUNC( __MVRESTORE )
          HB_BOOL bIncludeMask;
          HB_BYTE buffer[ HB_MEM_REC_LEN ];
          const char * pszMask;
-         PHB_ITEM pItem = NULL;
+         PHB_ITEM pItem = nullptr;
 
 #ifdef HB_CLP_STRICT
          pszMask = "*";

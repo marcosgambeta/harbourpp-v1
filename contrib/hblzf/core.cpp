@@ -102,7 +102,7 @@ HB_FUNC( HB_LZF_COMPRESS )
 
       if( in_len )
       {
-         PHB_ITEM     pBuffer = HB_ISBYREF( 2 ) ? hb_param( 2, HB_IT_STRING ) : NULL;
+         PHB_ITEM     pBuffer = HB_ISBYREF( 2 ) ? hb_param( 2, HB_IT_STRING ) : nullptr;
          const char * in_data = hb_itemGetCPtr( pArg );
          char *       out_data;
          HB_SIZE      out_len;
@@ -110,7 +110,7 @@ HB_FUNC( HB_LZF_COMPRESS )
          if( pBuffer )
          {
             if( ! hb_itemGetWriteCL( pBuffer, &out_data, &out_len ) )
-               out_data = NULL;
+               out_data = nullptr;
          }
          else
          {
@@ -166,7 +166,7 @@ HB_FUNC( HB_LZF_DECOMPRESS )
 
       if( in_len )
       {
-         PHB_ITEM     pBuffer = HB_ISBYREF( 2 ) ? hb_param( 2, HB_IT_STRING ) : NULL;
+         PHB_ITEM     pBuffer = HB_ISBYREF( 2 ) ? hb_param( 2, HB_IT_STRING ) : nullptr;
          const char * in_data = hb_itemGetCPtr( pArg );
          char *       buffer;
          HB_SIZE      buffer_size;
@@ -174,7 +174,7 @@ HB_FUNC( HB_LZF_DECOMPRESS )
          if( pBuffer )
          {
             if( ! hb_itemGetWriteCL( pBuffer, &buffer, &buffer_size ) )
-               buffer = NULL;
+               buffer = nullptr;
          }
          else
          {

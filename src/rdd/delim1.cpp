@@ -1383,7 +1383,7 @@ static HB_ERRCODE hb_delimClose( DELIMAREAP pArea )
  */
 static HB_ERRCODE hb_delimCreate( DELIMAREAP pArea, LPDBOPENINFO pCreateInfo )
 {
-   PHB_ITEM pError = NULL;
+   PHB_ITEM pError = nullptr;
    HB_ERRCODE errCode;
    HB_BOOL fRetry;
    PHB_FNAME pFileName;
@@ -1483,7 +1483,7 @@ static HB_ERRCODE hb_delimCreate( DELIMAREAP pArea, LPDBOPENINFO pCreateInfo )
  */
 static HB_ERRCODE hb_delimOpen( DELIMAREAP pArea, LPDBOPENINFO pOpenInfo )
 {
-   PHB_ITEM pError = NULL;
+   PHB_ITEM pError = nullptr;
    PHB_FNAME pFileName;
    HB_ERRCODE errCode;
    HB_USHORT uiFlags;

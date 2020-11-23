@@ -752,7 +752,7 @@ static PMIXTAG hb_mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_I
    LPDBORDERCONDINFO pOrdCondInfo = pArea->sqlarea.area.lpdbOrdCondInfo;
    HB_ULONG          ulStartRec, ulNextCount = 0;
    HB_LONG  lStep = 0;
-   PHB_ITEM pItem, pEvalItem = NULL;
+   PHB_ITEM pItem, pEvalItem = nullptr;
 
    pTag = ( PMIXTAG ) hb_xgrabz( sizeof( MIXTAG ) );
 
@@ -1546,7 +1546,7 @@ static HB_ERRCODE sqlmixOrderListFocus( SQLMIXAREAP pArea, LPDBORDERINFO pOrderI
 static HB_ERRCODE sqlmixOrderCreate( SQLMIXAREAP pArea, LPDBORDERCREATEINFO pOrderInfo )
 {
    PMIXTAG   pTagNew, pTag;
-   PHB_ITEM  pKeyItem, pForItem = NULL, pWhileItem = NULL, pResult;
+   PHB_ITEM  pKeyItem, pForItem = nullptr, pWhileItem = nullptr, pResult;
    HB_ULONG  ulRecNo;
    HB_USHORT uiLen;
    HB_BYTE   bType;

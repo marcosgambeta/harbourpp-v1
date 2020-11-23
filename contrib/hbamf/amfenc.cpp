@@ -638,7 +638,7 @@ static int amf3_encode_class_def( amfContext * context, PHB_ITEM pClass )
    PHB_ITEM class_alias;
    PHB_ITEM static_attrs;
 #if 0
-   PHB_ITEM attr_len = NULL;
+   PHB_ITEM attr_len = nullptr;
 #endif
 
    if( ! pClass )
@@ -1161,7 +1161,7 @@ HB_FUNC( AMF3_FROMWA )
    HB_BOOL      bPredictLen = ( ! pWhile && ! pFor );
 
    HB_BOOL  bAsArray    = ! nPkg;
-   PHB_ITEM pFieldNames = NULL;          /* again GCC knows better */
+   PHB_ITEM pFieldNames = nullptr;          /* again GCC knows better */
    PHB_ITEM pField;
 
    if( pArea )

@@ -59,7 +59,7 @@ static PHB_ITEM hbamf_cls_externalizable_instance( PHB_ITEM pClassFuncStr )
          if( ! HB_IS_OBJECT( pNewItem ) )
          {
             hb_itemRelease( pNewItem );
-            pNewItem = NULL;
+            pNewItem = nullptr;
          }
       }
 
@@ -643,7 +643,7 @@ static PHB_ITEM class_def_from_classname( /* amfContext * context, */ PHB_ITEM p
 static HB_BOOL amf3_decode_class_def( amfContext * context, PHB_ITEM pClass, int header )
 {
    PHB_ITEM pStrAlias       = hb_itemNew( nullptr );
-   PHB_ITEM pMappedClassDef = NULL;
+   PHB_ITEM pMappedClassDef = nullptr;
    PHB_ITEM pKey;
    PHB_ITEM pValue;
    PHB_ITEM pAttrs;

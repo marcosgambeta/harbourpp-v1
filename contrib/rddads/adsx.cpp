@@ -397,7 +397,7 @@ static PMIXTAG mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_ITEM
    ADSHANDLE           hOrder;
    HB_ULONG            ulRec, ulStartRec, ulNextCount = 0;
    HB_LONG             lStep = 0;
-   PHB_ITEM            pItem, pEvalItem = NULL;
+   PHB_ITEM            pItem, pEvalItem = nullptr;
 
 
    pTag = ( PMIXTAG ) hb_xgrabz( sizeof( MIXTAG ) );
@@ -1075,7 +1075,7 @@ static HB_ERRCODE adsxOrderListFocus( ADSXAREAP pArea, LPDBORDERINFO pOrderInfo 
 static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderInfo )
 {
    PMIXTAG    pTagNew, pTag;
-   PHB_ITEM   pKeyItem, pForItem = NULL, pWhileItem = NULL, pResult;
+   PHB_ITEM   pKeyItem, pForItem = nullptr, pWhileItem = nullptr, pResult;
    HB_ULONG   ulRecNo;
    HB_USHORT  uiLen;
    HB_BYTE    bType;

@@ -1678,7 +1678,7 @@ void hb_gt_wvt_PaintGObjects( PHB_GTWVT pWVT, RECT * uRect )
                if( pArray )
                {
                   hb_itemRelease( pArray );
-                  pArray = NULL;
+                  pArray = nullptr;
                }
                #endif
                hb_vmRequestRestore();

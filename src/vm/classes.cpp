@@ -369,7 +369,7 @@ static PCLASS *  s_pClasses  = NULL;
 static HB_USHORT s_uiClsSize = 0;
 static HB_USHORT s_uiClasses = 0;
 
-static PHB_ITEM s_pClassMtx = NULL;
+static PHB_ITEM s_pClassMtx = nullptr;
 
 /* --- */
 
@@ -3667,7 +3667,7 @@ HB_FUNC( __CLSDELMSG )
  */
 static PHB_ITEM hb_clsInst( HB_USHORT uiClass )
 {
-   PHB_ITEM pSelf = NULL;
+   PHB_ITEM pSelf = nullptr;
 
    if( uiClass && uiClass <= s_uiClasses )
    {
@@ -4297,7 +4297,7 @@ HB_FUNC( __CLSSYNCWAIT )
 {
 #if defined( HB_MT_VM )
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pMutex = NULL;
+   PHB_ITEM pMutex = nullptr;
    HB_ULONG ulMilliSec = HB_THREAD_INFINITE_WAIT;
    HB_ISIZ nOffset = hb_stackBaseProcOffset( 2 );
 
@@ -4632,7 +4632,7 @@ HB_FUNC_STATIC( msgSync )
    {
       PHB_ITEM pObject = hb_stackSelfItem();
       HB_USHORT uiClass = hb_objGetClass( pObject );
-      PHB_ITEM pMutex = NULL;
+      PHB_ITEM pMutex = nullptr;
 
       if( uiClass && uiClass <= s_uiClasses )
          pMutex = hb_arrayGetItemPtr( pObject, s_pClasses[ uiClass ]->uiMutexOffset );
@@ -5255,7 +5255,7 @@ HB_FUNC( __OBJSETIVARS )
 
    if( pObject && pArray )
    {
-      PHB_ITEM pNewObj = NULL;
+      PHB_ITEM pNewObj = nullptr;
 
       if( HB_IS_NUMERIC( pObject ) )
          pObject = pNewObj = hb_clsInst( ( HB_USHORT ) hb_itemGetNI( pObject ) );
@@ -5285,7 +5285,7 @@ HB_FUNC( __OBJRESTOREIVARS )
 
    if( pClass && pArray && pArray->item.asArray.value->uiClass == 0 )
    {
-      PHB_ITEM pObject = NULL;
+      PHB_ITEM pObject = nullptr;
 
 
       if( HB_IS_NUMERIC( pClass ) )

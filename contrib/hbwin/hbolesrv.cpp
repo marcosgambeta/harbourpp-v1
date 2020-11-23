@@ -76,8 +76,8 @@ static TCHAR s_lpClsName[ MAX_CLSNAME_SIZE ] = TEXT( "" );
 
 static HB_BOOL  s_fServerReady = HB_FALSE;
 static HB_BOOL  s_fHashClone   = HB_FALSE;
-static PHB_ITEM s_pAction      = NULL;
-static PHB_ITEM s_pMsgHash     = NULL;
+static PHB_ITEM s_pAction      = nullptr;
+static PHB_ITEM s_pMsgHash     = nullptr;
 
 static HINSTANCE s_hInstDll;
 
@@ -611,7 +611,7 @@ static HRESULT STDMETHODCALLTYPE classCreateInstance( IClassFactory * lpThis,
       hr = CLASS_E_NOAGGREGATION;
    else
    {
-      PHB_ITEM pAction = NULL;
+      PHB_ITEM pAction = nullptr;
       HB_BOOL fGuids = HB_FALSE;
 
       if( s_pAction )

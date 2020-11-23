@@ -54,7 +54,7 @@ HB_FUNC( HB_NTOS )
 
    if( pNumber )
    {
-      char * szResult = hb_itemStr( pNumber, NULL, NULL );
+      char * szResult = hb_itemStr( pNumber, nullptr, nullptr );
 
       if( szResult )
       {

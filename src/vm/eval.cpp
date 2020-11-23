@@ -97,7 +97,7 @@ HB_BOOL hb_evalPutParam( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
 
 PHB_ITEM hb_evalLaunch( PHB_EVALINFO pEvalInfo )
 {
-   PHB_ITEM pResult = NULL;
+   PHB_ITEM pResult = nullptr;
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_evalLaunch(%p)", ( void * ) pEvalInfo ) );
 
@@ -186,7 +186,7 @@ HB_BOOL hb_evalRelease( PHB_EVALINFO pEvalInfo )
 
 PHB_ITEM hb_itemDo( PHB_ITEM pItem, HB_ULONG ulPCount, ... )
 {
-   PHB_ITEM pResult = NULL;
+   PHB_ITEM pResult = nullptr;
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemDo(%p, %lu, ...)", ( void * ) pItem, ulPCount ) );
 
@@ -256,7 +256,7 @@ PHB_ITEM hb_itemDo( PHB_ITEM pItem, HB_ULONG ulPCount, ... )
 
 PHB_ITEM hb_itemDoC( const char * szFunc, HB_ULONG ulPCount, ... )
 {
-   PHB_ITEM pResult = NULL;
+   PHB_ITEM pResult = nullptr;
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemDoC(%s, %lu, ...)", szFunc, ulPCount ) );
 
@@ -400,9 +400,9 @@ HB_FUNC( HB_FORNEXT ) /* nStart, nEnd | bEnd, bCode, nStep */
 HB_FUNC( HB_EXECFROMARRAY )
 {
    PHB_SYMB pExecSym = NULL;
-   PHB_ITEM pFunc = NULL;
-   PHB_ITEM pSelf = NULL;
-   PHB_ITEM pArray = NULL;
+   PHB_ITEM pFunc = nullptr;
+   PHB_ITEM pSelf = nullptr;
+   PHB_ITEM pArray = nullptr;
    PHB_ITEM pItem;
    HB_ULONG ulParamOffset = 0;
    int iPCount = hb_pcount();
@@ -497,8 +497,8 @@ HB_FUNC( HB_EXECFROMARRAY )
 
 HB_BOOL hb_execFromArray( PHB_ITEM pParam )
 {
-   PHB_ITEM pArray = NULL;
-   PHB_ITEM pSelf = NULL;
+   PHB_ITEM pArray = nullptr;
+   PHB_ITEM pSelf = nullptr;
    HB_ULONG ulParamOffset = 0;
 
    if( pParam && HB_IS_ARRAY( pParam ) && ! HB_IS_OBJECT( pParam ) )

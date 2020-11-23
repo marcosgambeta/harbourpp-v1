@@ -559,7 +559,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
 static PHRB_BODY hb_hrbLoadFromFile( const char * szHrb, HB_USHORT usMode )
 {
    PHRB_BODY pHrbBody = NULL;
-   PHB_ITEM pError = NULL;
+   PHB_ITEM pError = nullptr;
    PHB_FILE pFile;
 
    /* Open as binary */
@@ -601,7 +601,7 @@ static PHRB_BODY hb_hrbLoadFromFile( const char * szHrb, HB_USHORT usMode )
 
 static void hb_hrbDo( PHRB_BODY pHrbBody, int iPCount, PHB_ITEM * pParams )
 {
-   PHB_ITEM pRetVal = NULL;
+   PHB_ITEM pRetVal = nullptr;
 
    hb_hrbInit( pHrbBody, iPCount, pParams );
 

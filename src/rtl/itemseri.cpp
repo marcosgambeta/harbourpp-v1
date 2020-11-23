@@ -1841,7 +1841,7 @@ PHB_ITEM hb_itemDeserializeCP( const char ** pBufferPtr, HB_SIZE * pnSize,
                                PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut )
 {
    const HB_UCHAR * pBuffer = ( const HB_UCHAR * ) *pBufferPtr;
-   PHB_ITEM pItem = NULL;
+   PHB_ITEM pItem = nullptr;
    HB_REF_LIST refList;
 
    hb_itemSerialRefListInit( &refList );

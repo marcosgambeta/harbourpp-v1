@@ -125,7 +125,7 @@
 #else
    static volatile HB_BOOL s_fThreadInit = HB_FALSE;
 
-   static PHB_ITEM s_pOnceMutex = NULL;
+   static PHB_ITEM s_pOnceMutex = nullptr;
 
    static int s_waiting_for_threads = 0;
 
@@ -2331,7 +2331,7 @@ void hb_threadMutexNotify( PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting 
 PHB_ITEM hb_threadMutexSubscribe( PHB_ITEM pItem, HB_BOOL fClear )
 {
    PHB_MUTEX pMutex = hb_mutexPtr( pItem );
-   PHB_ITEM pResult = NULL;
+   PHB_ITEM pResult = nullptr;
 
    if( pMutex )
    {
@@ -2446,7 +2446,7 @@ PHB_ITEM hb_threadMutexSubscribe( PHB_ITEM pItem, HB_BOOL fClear )
 PHB_ITEM hb_threadMutexTimedSubscribe( PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_BOOL fClear )
 {
    PHB_MUTEX pMutex = hb_mutexPtr( pItem );
-   PHB_ITEM pResult = NULL;
+   PHB_ITEM pResult = nullptr;
 
    if( pMutex )
    {

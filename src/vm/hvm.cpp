@@ -242,7 +242,7 @@ static const char * s_vm_pszLinkedMain = NULL; /* name of startup function set b
 
 HB_SYMB hb_symEval = { "EVAL",  { HB_FS_PUBLIC }, { hb_vmDoBlock }, NULL }; /* symbol to evaluate codeblocks */
 static HB_SYMB  s_symBreak = { "BREAK", { HB_FS_PUBLIC }, { HB_FUNCNAME( BREAK ) }, NULL }; /* symbol to generate break */
-static PHB_ITEM s_breakBlock = NULL;
+static PHB_ITEM s_breakBlock = nullptr;
 
 static HB_BOOL  s_fHVMActive = HB_FALSE;  /* is HVM ready for PCODE executing */
 static HB_BOOL  s_fDoExitProc = HB_TRUE;  /* execute EXIT procedures */
@@ -7710,7 +7710,7 @@ static HB_SIZE hb_vmStaticsCount( void )
 
 static PHB_ITEM hb_vmStaticsArray( void )
 {
-   PHB_ITEM pArray = NULL;
+   PHB_ITEM pArray = nullptr;
 
    if( hb_vmLockModuleSymbols() )
    {
@@ -8152,7 +8152,7 @@ PHB_SYMBOLS hb_vmRegisterSymbols( PHB_SYMB pModuleSymbols, HB_USHORT uiSymbols,
 static void hb_vmVerifySymbols( PHB_ITEM pArray )
 {
    PHB_SYMBOLS pLastSymbols = s_pSymbols;
-   PHB_ITEM pItem = NULL;
+   PHB_ITEM pItem = nullptr;
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmVerifySymbols(%p)", ( void * ) pArray ) );
 

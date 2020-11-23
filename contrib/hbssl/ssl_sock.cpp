@@ -355,7 +355,7 @@ static SSL * s_SSL_itemGet( PHB_ITEM pItem, PHB_ITEM * pSSL, HB_BOOL * pfFree )
 
    if( pItem )
    {
-      PHB_ITEM pRelease = NULL;
+      PHB_ITEM pRelease = nullptr;
 
       if( HB_IS_EVALITEM( pItem ) )
          pItem = pRelease = hb_itemDo( pItem, 0 );
@@ -391,7 +391,7 @@ static PHB_SOCKEX s_sockexNew( HB_SOCKET sd, PHB_ITEM pParams )
    PHB_SOCKEX pSock;
    HB_BOOL fServer = HB_FALSE, fFree = HB_FALSE;
    HB_MAXINT timeout = -1;
-   PHB_ITEM pSSL = NULL;
+   PHB_ITEM pSSL = nullptr;
    SSL * ssl = NULL;
 
    if( pParams && HB_IS_HASH( pParams ) )

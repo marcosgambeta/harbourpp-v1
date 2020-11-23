@@ -253,7 +253,7 @@ static void do_atnum( int iSwitch )
          case DO_ATNUM_BEFORATNUM:
          {
             /* AFTERATNUM */
-            PHB_ITEM pSubst = NULL;
+            PHB_ITEM pSubst = nullptr;
             int iArgErrorMode = ct_getargerrormode();
 
             if( iArgErrorMode != CT_ARGERR_IGNORE )
@@ -272,7 +272,7 @@ static void do_atnum( int iSwitch )
          case DO_ATNUM_ATNUM:
          {
             /* ATNUM */
-            PHB_ITEM pSubst = NULL;
+            PHB_ITEM pSubst = nullptr;
             int iArgErrorMode = ct_getargerrormode();
 
             if( iArgErrorMode != CT_ARGERR_IGNORE )

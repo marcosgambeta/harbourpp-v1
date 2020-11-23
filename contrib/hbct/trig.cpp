@@ -91,7 +91,7 @@ HB_FUNC( SIN )
    }
    else
    {
-      PHB_ITEM pSubst = NULL;
+      PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
@@ -127,7 +127,7 @@ HB_FUNC( COS )
    }
    else
    {
-      PHB_ITEM pSubst = NULL;
+      PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
@@ -163,7 +163,7 @@ HB_FUNC( TAN )
    }
    else
    {
-      PHB_ITEM pSubst = NULL;
+      PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
@@ -195,7 +195,7 @@ HB_FUNC( COT )
    }
    else
    {
-      PHB_ITEM pSubst = NULL;
+      PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
@@ -231,7 +231,7 @@ HB_FUNC( ASIN )
    }
    else
    {
-      PHB_ITEM pSubst = NULL;
+      PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
@@ -267,7 +267,7 @@ HB_FUNC( ACOS )
    }
    else
    {
-      PHB_ITEM pSubst = NULL;
+      PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
@@ -311,7 +311,7 @@ HB_FUNC( ATAN )
    }
    else
    {
-      PHB_ITEM pSubst = NULL;
+      PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
@@ -361,7 +361,7 @@ HB_FUNC( ATN2 )
    }
    else
    {
-      PHB_ITEM pSubst = NULL;
+      PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
@@ -404,7 +404,7 @@ HB_FUNC( SINH )
    }
    else
    {
-      PHB_ITEM pSubst = NULL;
+      PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
@@ -442,7 +442,7 @@ HB_FUNC( COSH )
    }
    else
    {
-      PHB_ITEM pSubst = NULL;
+      PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
@@ -485,7 +485,7 @@ HB_FUNC( TANH )
    }
    else
    {
-      PHB_ITEM pSubst = NULL;
+      PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
@@ -511,7 +511,7 @@ HB_FUNC( RTOD )
    }
    else
    {
-      PHB_ITEM pSubst = NULL;
+      PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
@@ -537,7 +537,7 @@ HB_FUNC( DTOR )
    }
    else
    {
-      PHB_ITEM pSubst = NULL;
+      PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )

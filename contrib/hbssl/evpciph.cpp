@@ -1020,7 +1020,7 @@ HB_FUNC( EVP_SEALINIT )
       if( ctx )
       {
          int        npubk  = 0;
-         PHB_ITEM   pArray = NULL;
+         PHB_ITEM   pArray = nullptr;
          EVP_PKEY * pkey1  = NULL;
 
          if( HB_ISARRAY( 5 ) )

@@ -595,7 +595,7 @@ HB_FUNC( SQL_SPRINTF )
             }
             else if( iCOut == 's' )
             {
-               char * cStr = hb_itemStr( pItmPar, NULL, NULL );
+               char * cStr = hb_itemStr( pItmPar, nullptr, nullptr );
 
                if( cStr )
                {

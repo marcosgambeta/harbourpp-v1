@@ -636,7 +636,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
          {
             pszNext = hb_itemGetCPtr( pValue );
             if( *pszNext == '\0' )
-               pszNext = NULL;
+               pszNext = nullptr;
          }
          hb_itemPutCPtr( pValue, hb_xstrcpy( NULL, "BZ:", pszNext, NULL ) );
          return HB_TRUE;

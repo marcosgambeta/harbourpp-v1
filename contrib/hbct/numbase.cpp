@@ -117,7 +117,7 @@ HB_FUNC( CTON )
 
 HB_FUNC( NTOC )
 {
-   char szBuffer[ 256 ], * pszResult = NULL;
+   char szBuffer[ 256 ], * pszResult = nullptr;
    HB_MAXINT nValue = 0;
    int iBase = hb_parnidef( 2, 10 ), iLen = hb_parni( 3 );
 

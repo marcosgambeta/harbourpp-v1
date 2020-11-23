@@ -1682,7 +1682,7 @@ HB_BOOL hb_oleDispInvoke( PHB_SYMB pSym, PHB_ITEM pObject, PHB_ITEM pParam,
    if( ! pSym && HB_IS_SYMBOL( pObject ) )
    {
       pSym = hb_itemGetSymbol( pObject );
-      pObject = NULL;
+      pObject = nullptr;
    }
 
    if( ( pSym || pObject ) &&
@@ -1853,7 +1853,7 @@ static HRESULT GetNamedParams( IDispatch * pDisp, OLECHAR * szMethodName, PHB_IT
 static void PutParams( DISPPARAMS * dispparam, HB_UINT uiOffset, HB_USHORT uiClass )
 {
    VARIANTARG * pRefs = &dispparam->rgvarg[ dispparam->cArgs ];
-   PHB_ITEM pItem = NULL;
+   PHB_ITEM pItem = nullptr;
    UINT uiArg;
 
    if( dispparam->cNamedArgs > 0 )

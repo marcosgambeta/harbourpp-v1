@@ -1798,7 +1798,7 @@ static LPTAGINFO hb_nsxTagLoad( LPNSXINDEX pIndex, HB_ULONG ulBlock,
                                 const char * szTagName, LPNSXTAGHEADER lpNSX )
 {
    LPTAGINFO pTag;
-   PHB_ITEM pKeyExp, pForExp = NULL;
+   PHB_ITEM pKeyExp, pForExp = nullptr;
    HB_USHORT uiUnique, uiDescend, uiKeySize;
    HB_UCHAR ucType, ucTrail;
 
@@ -3816,7 +3816,7 @@ static void hb_nsxCreateFName( NSXAREAP pArea, const char * szBagName, HB_BOOL *
                                char * szFileName, char * szTagName )
 {
    PHB_FNAME pFileName;
-   PHB_ITEM pExt = NULL;
+   PHB_ITEM pExt = nullptr;
    HB_BOOL fName = szBagName && *szBagName;
 
    pFileName = hb_fsFNameSplit( fName ? szBagName : pArea->dbfarea.szDataFileName );
@@ -4622,7 +4622,7 @@ static HB_BOOL hb_nsxOrdSkipWild( LPTAGINFO pTag, HB_BOOL fForward, PHB_ITEM pWi
 {
    NSXAREAP pArea = pTag->pIndex->pArea;
    const char *szPattern;
-   char *szFree = NULL;
+   char *szFree = nullptr;
    HB_BOOL fFound = HB_FALSE;
    int iFixed = 0;
 
@@ -5797,7 +5797,7 @@ static void hb_nsxSortOut( LPNSXSORTINFO pSort )
 static HB_ERRCODE hb_nsxTagCreate( LPTAGINFO pTag, HB_BOOL fReindex )
 {
    LPNSXAREA pArea = pTag->pIndex->pArea;
-   PHB_ITEM pWhileItem = NULL, pEvalItem = NULL;
+   PHB_ITEM pWhileItem = nullptr, pEvalItem = nullptr;
    HB_ULONG ulRecCount, ulRecNo = pArea->dbfarea.ulRecNo;
    LPNSXSORTINFO pSort;
    HB_LONG lStep = 0;
@@ -5859,7 +5859,7 @@ static HB_ERRCODE hb_nsxTagCreate( LPTAGINFO pTag, HB_BOOL fReindex )
       int iRecBuff = 0, iRecBufSize, iRec;
       double d;
       PHB_CODEPAGE cdpTmp = hb_cdpSelect( pArea->dbfarea.area.cdPage );
-      PHB_ITEM pItem = NULL;
+      PHB_ITEM pItem = nullptr;
       PHB_ITEM pForItem;
 
       pForItem = pTag->pForItem;
@@ -6697,7 +6697,7 @@ static HB_ERRCODE hb_nsxZap( NSXAREAP pArea )
 
 static HB_ERRCODE hb_nsxOrderCreate( NSXAREAP pArea, LPDBORDERCREATEINFO pOrderInfo )
 {
-   PHB_ITEM pResult, pKeyExp, pForExp = NULL;
+   PHB_ITEM pResult, pKeyExp, pForExp = nullptr;
    int iLen, iTag;
    char szFileName[ HB_PATH_MAX ], szTagName[ NSX_TAGNAME + 1 ];
    const char * szKey, * szFor = nullptr;
@@ -6881,7 +6881,7 @@ static HB_ERRCODE hb_nsxOrderCreate( NSXAREAP pArea, LPDBORDERCREATEINFO pOrderI
    {
       PHB_FILE pFile;
       HB_BOOL bRetry, fShared = pArea->dbfarea.fShared && ! fTemporary && ! fExclusive;
-      PHB_ITEM pError = NULL;
+      PHB_ITEM pError = nullptr;
       char szSpFile[ HB_PATH_MAX ];
 
       do
@@ -7298,7 +7298,7 @@ static HB_ERRCODE hb_nsxOrderInfo( NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
                    strncmp( pTag->ForExpr, szForExpr, NSX_MAXEXPLEN ) != 0 :
                    *szForExpr )
                {
-                  PHB_ITEM pForItem = NULL;
+                  PHB_ITEM pForItem = nullptr;
                   HB_BOOL fOK = *szForExpr == 0;
                   if( ! fOK )
                   {
@@ -7842,7 +7842,7 @@ static HB_ERRCODE hb_nsxOrderListAdd( NSXAREAP pArea, LPDBORDERINFO pOrderInfo )
 
    if( ! pIndex )
    {
-      PHB_ITEM pError = NULL;
+      PHB_ITEM pError = nullptr;
       LPNSXINDEX * pIndexPtr;
       HB_BOOL fRetry, fReadonly, fShared;
 

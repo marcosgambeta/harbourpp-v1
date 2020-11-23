@@ -1039,7 +1039,7 @@ static HB_ERRCODE hb_sdfClose( SDFAREAP pArea )
  */
 static HB_ERRCODE hb_sdfCreate( SDFAREAP pArea, LPDBOPENINFO pCreateInfo )
 {
-   PHB_ITEM pError = NULL;
+   PHB_ITEM pError = nullptr;
    HB_ERRCODE errCode;
    HB_BOOL fRetry;
    PHB_FNAME pFileName;
@@ -1129,7 +1129,7 @@ static HB_ERRCODE hb_sdfCreate( SDFAREAP pArea, LPDBOPENINFO pCreateInfo )
  */
 static HB_ERRCODE hb_sdfOpen( SDFAREAP pArea, LPDBOPENINFO pOpenInfo )
 {
-   PHB_ITEM pError = NULL;
+   PHB_ITEM pError = nullptr;
    PHB_FNAME pFileName;
    HB_ERRCODE errCode;
    HB_USHORT uiFlags;

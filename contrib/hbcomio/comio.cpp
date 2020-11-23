@@ -251,7 +251,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
                             const char * pszDefExt, HB_FATTR nExFlags,
                             const char * pPaths, PHB_ITEM pError )
 {
-   PHB_FILE pFile = NULL;
+   PHB_FILE pFile = nullptr;
    HB_ERRCODE errcode = 0;
    int iPort, iBaud, iParity, iSize, iStop, iFlow;
    HB_BOOL fRead, fWrite;

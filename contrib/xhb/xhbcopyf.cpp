@@ -61,7 +61,7 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest, PHB_IT
 {
    HB_BOOL bRetVal = HB_FALSE;
    PHB_FILE pSource;
-   PHB_ITEM pError = NULL;
+   PHB_ITEM pError = nullptr;
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_copyfile(%s, %s, %p)", pszSource, pszDest, ( void * ) pBlock ) );
 
@@ -113,7 +113,7 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest, PHB_IT
 
       if( pDest != NULL )
       {
-         PHB_ITEM pCount = NULL;
+         PHB_ITEM pCount = nullptr;
          HB_UCHAR * buffer;
          HB_SIZE nRead;
 

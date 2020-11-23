@@ -107,7 +107,7 @@ HB_FUNC( CHARRELA )
    }
    else
    {
-      PHB_ITEM pSubst = NULL;
+      PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
@@ -224,7 +224,7 @@ HB_FUNC( CHARRELREP )
    }
    else
    {
-      PHB_ITEM pSubst = NULL;
+      PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )

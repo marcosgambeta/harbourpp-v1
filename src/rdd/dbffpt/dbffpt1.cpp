@@ -3945,7 +3945,7 @@ static HB_ERRCODE hb_fptCreateMemFile( FPTAREAP pArea, LPDBOPENINFO pCreateInfo 
    {
       char szFileName[ HB_PATH_MAX ];
       PHB_FNAME pFileName;
-      PHB_ITEM pError = NULL, pItem = NULL;
+      PHB_ITEM pError = nullptr, pItem = nullptr;
       HB_BOOL bRetry;
 
       if( ! pArea->bMemoType )

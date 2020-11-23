@@ -188,7 +188,7 @@ static HB_ERRCODE mysqlExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
    MYSQL *     pMySql = ( ( SDDCONN * ) pConnection->pSDDConn )->pMySql;
    MYSQL_RES * pResult;
    HB_ULONG    ulAffectedRows;
-   PHB_ITEM    pNewID = NULL;
+   PHB_ITEM    pNewID = nullptr;
 
    if( mysql_real_query( pMySql, hb_itemGetCPtr( pItem ), ( unsigned long ) hb_itemGetCLen( pItem ) ) )
    {

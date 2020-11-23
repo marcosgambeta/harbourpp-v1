@@ -185,7 +185,7 @@ HB_FUNC( TABEXPAND )
    }
    else
    {
-      PHB_ITEM pSubst = NULL;
+      PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
@@ -370,7 +370,7 @@ HB_FUNC( TABPACK )
    }
    else
    {
-      PHB_ITEM pSubst = NULL;
+      PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )

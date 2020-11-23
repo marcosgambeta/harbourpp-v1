@@ -2592,7 +2592,7 @@ static void hb_gt_xwc_MotifWmHints( PXWND_DEF wnd )
    Atom actual_type_return = 0;
    int actual_format_return = 0;
    unsigned long nitems_return = 0, bytes_after_return = 0;
-   unsigned char * prop_return = NULL;
+   unsigned char * prop_return = nullptr;
    unsigned long functions, decorations;
    int result;
 

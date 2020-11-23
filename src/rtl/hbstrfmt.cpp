@@ -227,7 +227,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
          case 'x':
          case 'X':
          {
-            char  * pStr = NULL;
+            char  * pStr = nullptr;
             const char * pStr2;
             int   iSize, iExtra;
 
@@ -338,7 +338,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
 
          case 'f':
          {
-            char  * pStr = NULL;
+            char  * pStr = nullptr;
             const char * pStr2;
             int   iSize, iExtra, iD;
 

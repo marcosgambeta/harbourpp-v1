@@ -1396,7 +1396,7 @@ static int hb_hsxCreate( const char * szFile, int iBufSize, int iKeySize,
 {
    char szFileName[ HB_PATH_MAX ];
    const char * szExpr = nullptr;
-   PHB_ITEM pKeyExpr = NULL;
+   PHB_ITEM pKeyExpr = nullptr;
    HB_ULONG ulBufSize;
    HB_USHORT uiRecordSize;
    LPHSXINFO pHSX;

@@ -268,7 +268,7 @@ PHB_ITEM hb_backgroundDelFunc( HB_ULONG ulID )
 {
    int iTask;
    PHB_BACKGROUNDTASK pBkgTask;
-   PHB_ITEM pItem   = NULL;
+   PHB_ITEM pItem   = nullptr;
    HB_BOOL  bOldSet = s_bEnabled;
 
    s_bEnabled = HB_FALSE;
@@ -415,7 +415,7 @@ HB_FUNC( HB_BACKGROUNDADD )
 /* Delete a task with given handle and return a codeblock with this task */
 HB_FUNC( HB_BACKGROUNDDEL )
 {
-   PHB_ITEM pItem = NULL;
+   PHB_ITEM pItem = nullptr;
 
    if( s_pBackgroundTasks && HB_ISNUM( 1 ) )
    {

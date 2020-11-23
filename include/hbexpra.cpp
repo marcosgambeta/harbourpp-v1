@@ -378,12 +378,12 @@ PHB_EXPR hb_compExprNewFunCall( PHB_EXPR pName, PHB_EXPR pParms, HB_COMP_DECL )
                     ( pArg->value.asAlias.pAlias->ExprType == HB_ET_MACRO ||
                       pArg->value.asAlias.pVar->ExprType == HB_ET_MACRO ) ) )
          {
-            const char * szText = NULL;
+            const char * szText = nullptr;
 
             if( pArg->ExprType == HB_ET_ALIASVAR )
             {
-               const char * szAlias = NULL, * szAliasPref = "",
-                          * szVar = NULL, * szVarPref = "";
+               const char * szAlias = nullptr, * szAliasPref = "",
+                          * szVar = nullptr, * szVarPref = "";
 
                if( pArg->value.asAlias.pAlias->ExprType == HB_ET_ALIAS )
                   szAlias = pArg->value.asAlias.pAlias->value.asSymbol.name;

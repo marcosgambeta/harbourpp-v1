@@ -76,7 +76,7 @@ HB_FUNC( BM_DBSEEKWILD )
          HB_BOOL fSoft, fBack, fCont, fAll, fFound;
          DBORDERINFO OrderInfo;
          HB_ERRCODE errCode;
-         PHB_ITEM pArray = NULL;
+         PHB_ITEM pArray = nullptr;
          int iOrder = 0;
 
          fSoft  = hb_parldef( 2, hb_setGetSoftSeek() );

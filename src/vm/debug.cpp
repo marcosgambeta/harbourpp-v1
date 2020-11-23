@@ -268,7 +268,7 @@ HB_FUNC( __DBGVMPARLLIST )
 
 PHB_ITEM hb_dbg_vmVarLGet( int iLevel, int iLocal )
 {
-   PHB_ITEM pLocal = NULL;
+   PHB_ITEM pLocal = nullptr;
    HB_ISIZ nBaseOffset;
 
    nBaseOffset = hb_stackBaseOffset();

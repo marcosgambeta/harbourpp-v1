@@ -54,7 +54,7 @@ HB_FUNC( LENNUM )
 
    if( pNumber )
    {
-      char * pszString = hb_itemStr( pNumber, NULL, NULL );
+      char * pszString = hb_itemStr( pNumber, nullptr, nullptr );
 
       if( pszString )
       {

@@ -3570,7 +3570,7 @@ static HB_ERRCODE adsOpen( ADSAREAP pArea, LPDBOPENINFO pOpenInfo )
    }
    else /* if( hb_strnicmp( szFile, "TABLE:", 6 ) == 0 ) */
    {
-      PHB_ITEM pError = NULL;
+      PHB_ITEM pError = nullptr;
       HB_BOOL fRetry;
 
       if( szFile && ( hb_strnicmp( szFile, "TABLE:", 6 ) == 0 ) )
@@ -4457,7 +4457,7 @@ static HB_ERRCODE adsOrderInfo( ADSAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO
 
       case DBOI_KEYTYPE:
       {
-         const char * szType = NULL;
+         const char * szType = nullptr;
          if( hIndex )
          {
             AdsGetKeyType( hIndex, &u16 );
@@ -5150,7 +5150,7 @@ static HB_ERRCODE adsDrop( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemIn
    char szFileName[ HB_PATH_MAX ];
    const char * szFile;
    const char * szExt;
-   PHB_ITEM pFileExt = NULL;
+   PHB_ITEM pFileExt = nullptr;
    PHB_FNAME pFileName;
    HB_BOOL fTable = HB_FALSE, fResult = HB_FALSE;
 
@@ -5237,7 +5237,7 @@ static HB_ERRCODE adsExists( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItem
 {
    char szFileName[ HB_PATH_MAX ];
    const char * szFile;
-   PHB_ITEM pFileExt = NULL;
+   PHB_ITEM pFileExt = nullptr;
    PHB_FNAME pFileName;
    HB_BOOL fTable = HB_FALSE;
 

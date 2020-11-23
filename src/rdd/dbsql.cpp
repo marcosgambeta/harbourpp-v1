@@ -375,7 +375,7 @@ HB_FUNC( __DBSQL )
          hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
       else if( fExport )   /* COPY TO SQL */
       {
-         PHB_ITEM pError = NULL;
+         PHB_ITEM pError = nullptr;
          HB_BOOL fRetry;
 
          /* Try to create Dat file */

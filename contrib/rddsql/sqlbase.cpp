@@ -67,7 +67,7 @@ static char *     s_szError = nullptr;
 static HB_ERRCODE s_errCode = 0;
 
 static char *        s_szQuery        = nullptr;
-static PHB_ITEM      s_pItemNewID     = NULL;
+static PHB_ITEM      s_pItemNewID     = nullptr;
 static unsigned long s_ulAffectedRows = 0;
 
 static RDDFUNCS sqlbaseSuper;

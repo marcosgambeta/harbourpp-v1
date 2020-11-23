@@ -262,7 +262,7 @@ static void open_handle( PHB_SET_STRUCT pSet, const char * file_name,
                          HB_BOOL fAppend, HB_set_enum set_specifier )
 {
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pError = NULL;
+   PHB_ITEM pError = nullptr;
    PHB_FILE handle, * handle_ptr;
    HB_ERRCODE uiError;
    const char * szDevice = nullptr, * def_ext;

@@ -2238,7 +2238,7 @@ HB_BOOL hb_socketAddrFromItem( void ** pSockAddr, unsigned * puiLen, PHB_ITEM pA
 
 PHB_ITEM hb_socketAddrToItem( const void * pSockAddr, unsigned len )
 {
-   PHB_ITEM pAddrItm = NULL;
+   PHB_ITEM pAddrItm = nullptr;
 
    switch( hb_socketGetAddrFamily( pSockAddr, len ) )
    {
@@ -3493,7 +3493,7 @@ char * hb_socketResolveAddr( const char * szAddr, int af )
 
 PHB_ITEM hb_socketGetHosts( const char * szAddr, int af )
 {
-   PHB_ITEM pItem = NULL;
+   PHB_ITEM pItem = nullptr;
 
 #if defined( HB_HAS_ADDRINFO )
    struct addrinfo hints, * res = NULL, * ai;
@@ -3786,8 +3786,8 @@ static char * hb_getMAC( const char * pszIfName )
 
 PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
 {
-   PHB_ITEM pArray = NULL;
-   PHB_ITEM pItem = NULL;
+   PHB_ITEM pArray = nullptr;
+   PHB_ITEM pItem = nullptr;
    int iError = 0;
 
 /*

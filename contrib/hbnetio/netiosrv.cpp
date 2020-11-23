@@ -1800,7 +1800,7 @@ HB_FUNC( NETIO_SRVSTATUS )
          {
             void * addr;
             unsigned int len;
-            PHB_ITEM pItem = NULL;
+            PHB_ITEM pItem = nullptr;
 
             if( hb_socketGetPeerName( hb_sockexGetHandle( conn->sock ), &addr, &len ) == 0 )
             {

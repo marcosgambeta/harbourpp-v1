@@ -394,7 +394,7 @@ HB_FUNC( TRANSFORM )
          int      iDec;                               /* Number of decimals       */
          int      iCount;
          HB_SIZE  i;
-         PHB_ITEM pNumber = NULL;
+         PHB_ITEM pNumber = nullptr;
 
          double dValue = hb_itemGetND( pValue );
 

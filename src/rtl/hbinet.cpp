@@ -320,7 +320,7 @@ HB_FUNC( HB_INETCLEANUP )
 
 HB_FUNC( HB_INETCREATE )
 {
-   PHB_ITEM pSocket = NULL;
+   PHB_ITEM pSocket = nullptr;
    PHB_SOCKET_STRUCT socket;
 
    HB_SOCKET_INIT( socket, pSocket );
@@ -1159,7 +1159,7 @@ static int s_inetBind( PHB_SOCKET_STRUCT socket, const void * pSockAddr, unsigne
 HB_FUNC( HB_INETSERVER )
 {
    PHB_SOCKET_STRUCT socket = HB_PARSOCKET( 2 );
-   PHB_ITEM pSocket = NULL;
+   PHB_ITEM pSocket = nullptr;
 
    if( ! HB_ISNUM( 1 ) || ( socket == NULL && ! HB_ISNIL( 2 ) ) )
    {
@@ -1217,7 +1217,7 @@ HB_FUNC( HB_INETACCEPT )
          else
          {
             PHB_SOCKET_STRUCT new_socket;
-            PHB_ITEM pSocket = NULL;
+            PHB_ITEM pSocket = nullptr;
             HB_SOCKET_INIT( new_socket, pSocket );
             new_socket->remote = sa;
             new_socket->remotelen = len;
@@ -1245,7 +1245,7 @@ static void hb_inetConnectInternal( HB_BOOL fResolve )
       hb_inetErrRT();
    else
    {
-      PHB_ITEM pSocket = NULL;
+      PHB_ITEM pSocket = nullptr;
 
       if( ! socket )
          HB_SOCKET_INIT( socket, pSocket );
@@ -1309,7 +1309,7 @@ HB_FUNC( HB_INETCONNECTIP )
 HB_FUNC( HB_INETDGRAMBIND )
 {
    PHB_SOCKET_STRUCT socket;
-   PHB_ITEM pSocket = NULL;
+   PHB_ITEM pSocket = nullptr;
    int iPort = hb_parni( 1 );
    const char * szAddress;
 
@@ -1357,7 +1357,7 @@ HB_FUNC( HB_INETDGRAMBIND )
 HB_FUNC( HB_INETDGRAM )
 {
    PHB_SOCKET_STRUCT socket;
-   PHB_ITEM pSocket = NULL;
+   PHB_ITEM pSocket = nullptr;
 
    HB_SOCKET_INIT( socket, pSocket );
 

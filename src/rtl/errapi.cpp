@@ -81,7 +81,7 @@
 HB_FUNC_EXTERN( ERRORNEW );
 
 
-static PHB_ITEM s_pError = NULL;
+static PHB_ITEM s_pError = nullptr;
 
 static HB_SYMB s_symErrorNew = { "ERRORNEW", { HB_FS_PUBLIC | HB_FS_LOCAL }, { HB_FUNCNAME( ERRORNEW ) }, NULL };
 

@@ -1495,8 +1495,8 @@ HB_FUNC( SQLITE3_TABLE_COLUMN_METADATA )
 
    if( pHbSqlite3 && pHbSqlite3->db )
    {
-      char const * pzDataType  = NULL;
-      char const * pzCollSeq   = NULL;
+      char const * pzDataType  = nullptr;
+      char const * pzCollSeq   = nullptr;
       int          iNotNull    = 0;
       int          iPrimaryKey = 0;
       int          iAutoinc    = 0;

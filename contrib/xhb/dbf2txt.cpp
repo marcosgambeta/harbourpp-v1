@@ -125,7 +125,7 @@ static HB_BOOL hb_ExportVar( HB_FHANDLE handle, PHB_ITEM pValue, const char * cD
       case HB_IT_LONG:
       case HB_IT_DOUBLE:
       {
-         char * szResult = hb_itemStr( pValue, NULL, NULL );
+         char * szResult = hb_itemStr( pValue, nullptr, nullptr );
 
          if( szResult )
          {

@@ -55,19 +55,19 @@ HB_FUNC( STRZERO )
    if( iParams >= 1 && iParams <= 3 )
    {
       PHB_ITEM pNumber = hb_param( 1, HB_IT_NUMERIC );
-      PHB_ITEM pWidth  = NULL;
-      PHB_ITEM pDec    = NULL;
+      PHB_ITEM pWidth  = nullptr;
+      PHB_ITEM pDec    = nullptr;
 
       if( iParams >= 2 )
       {
          pWidth = hb_param( 2, HB_IT_NUMERIC );
-         if( pWidth == NULL )
-            pNumber = NULL;
+         if( pWidth == nullptr )
+            pNumber = nullptr;
          else if( iParams >= 3 )
          {
             pDec = hb_param( 3, HB_IT_NUMERIC );
-            if( pDec == NULL )
-               pNumber = NULL;
+            if( pDec == nullptr )
+               pNumber = nullptr;
          }
       }
 

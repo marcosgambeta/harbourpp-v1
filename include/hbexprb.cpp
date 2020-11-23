@@ -1926,8 +1926,8 @@ static HB_EXPR_FUNC( hb_compExprUseFunCall )
                   {
                      PHB_EXPR     pCount = NULL, pBadParam = NULL, pArg;
                      int          iWarning = 0;
-                     const char * szExpect = NULL;
-                     const char * szContext = NULL;
+                     const char * szExpect = nullptr;
+                     const char * szContext = nullptr;
                      HB_BOOL      fStrict, fNoop, fPlural;
 
                      pArg = usCount ? pParms->value.asList.pExprList : NULL;

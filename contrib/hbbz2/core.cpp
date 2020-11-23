@@ -267,7 +267,7 @@ HB_FUNC( HB_BZ2_COMPRESS )
 
       if( nLen )
       {
-         PHB_ITEM pBuffer = HB_ISBYREF( 2 ) ? hb_param( 2, HB_IT_STRING ) : NULL;
+         PHB_ITEM pBuffer = HB_ISBYREF( 2 ) ? hb_param( 2, HB_IT_STRING ) : nullptr;
          HB_SIZE  nDstLen;
          char *   pDest;
          int      iResult;
@@ -275,7 +275,7 @@ HB_FUNC( HB_BZ2_COMPRESS )
          if( pBuffer )
          {
             if( ! hb_itemGetWriteCL( pBuffer, &pDest, &nDstLen ) )
-               pDest = NULL;
+               pDest = nullptr;
          }
          else
          {
@@ -317,7 +317,7 @@ HB_FUNC( HB_BZ2_COMPRESS )
       --> <cUnCompressedData> or NIL on Error */
 HB_FUNC( HB_BZ2_UNCOMPRESS )
 {
-   PHB_ITEM     pBuffer = HB_ISBYREF( 2 ) ? hb_param( 2, HB_IT_STRING ) : NULL;
+   PHB_ITEM     pBuffer = HB_ISBYREF( 2 ) ? hb_param( 2, HB_IT_STRING ) : nullptr;
    const char * szData  = hb_parc( 1 );
 
    if( szData )
@@ -327,7 +327,7 @@ HB_FUNC( HB_BZ2_UNCOMPRESS )
       if( nLen )
       {
          HB_SIZE nDstLen;
-         char *  pDest   = NULL;
+         char *  pDest   = nullptr;
          int     iResult = BZ_OK;
 
          if( pBuffer )

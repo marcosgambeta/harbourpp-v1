@@ -60,7 +60,7 @@
 HB_FUNC( DO )
 {
    HB_USHORT uiPCount = ( HB_USHORT ) hb_pcount();
-   PHB_ITEM pSelf = NULL;
+   PHB_ITEM pSelf = nullptr;
 
    if( uiPCount > 0 )
    {

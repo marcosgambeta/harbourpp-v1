@@ -71,12 +71,12 @@ HB_USHORT ct_error( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errS
    /* Build the array from the passed arguments. */
    if( ulArgCount == 0 )
    {
-      pArray = NULL;
+      pArray = nullptr;
    }
    else if( ulArgCount == HB_ERR_ARGS_BASEPARAMS )
    {
       if( hb_pcount() == 0 )
-         pArray = NULL;
+         pArray = nullptr;
       else
          pArray = hb_arrayBaseParams();
    }
@@ -138,12 +138,12 @@ PHB_ITEM ct_error_subst( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE
    /* Build the array from the passed arguments. */
    if( ulArgCount == 0 )
    {
-      pArray = NULL;
+      pArray = nullptr;
    }
    else if( ulArgCount == HB_ERR_ARGS_BASEPARAMS )
    {
       if( hb_pcount() == 0 )
-         pArray = NULL;
+         pArray = nullptr;
       else
          pArray = hb_arrayBaseParams();
    }

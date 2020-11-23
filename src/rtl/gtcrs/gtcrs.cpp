@@ -1818,7 +1818,7 @@ static InOutBase * create_ioBase( char * term, int infd, int outfd, int errfd,
    InOutBase * ioBase;
    int bg, fg;
    unsigned int i;
-   char buf[ 256 ], * ptr, * crsterm = NULL;
+   char buf[ 256 ], * ptr, * crsterm = nullptr;
 
    ioBase = ( InOutBase * ) hb_xgrabz( sizeof( InOutBase ) );
 

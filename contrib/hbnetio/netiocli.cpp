@@ -1362,7 +1362,7 @@ static HB_BOOL s_netio_procexec( int iMsg, int iType )
 
                if( nResult > 0 )
                {
-                  PHB_ITEM pItem = NULL;
+                  PHB_ITEM pItem = nullptr;
                   HB_SIZE nRecv;
 
                   if( nResult > size && buffer )
@@ -1724,7 +1724,7 @@ static double s_fileDirSpace( PHB_FILE_FUNCS pFuncs, const char * pszDirName, HB
 
 static PHB_ITEM s_fileDirectory( PHB_FILE_FUNCS pFuncs, const char * pszDirSpec, const char * pszAttr )
 {
-   PHB_ITEM pDirArray = NULL;
+   PHB_ITEM pDirArray = nullptr;
    PHB_CONCLI conn;
 
    HB_SYMBOL_UNUSED( pFuncs );

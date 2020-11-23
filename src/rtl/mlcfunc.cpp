@@ -565,7 +565,7 @@ HB_FUNC( HB_MLEVAL )
       HB_SIZE nPos = hb_parns( 6 ) - 1;
       HB_BOOL fWordWrap = hb_parldef( 5, HB_TRUE );
       PHB_CODEPAGE cdp = hb_vmCDP();
-      PHB_ITEM pLineItem = NULL, pSoftItem = NULL;
+      PHB_ITEM pLineItem = nullptr, pSoftItem = nullptr;
       HB_BOOL fSoftCR, fEOL;
       char * pszLine;
 

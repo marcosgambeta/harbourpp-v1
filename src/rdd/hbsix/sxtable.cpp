@@ -220,7 +220,7 @@ HB_FUNC( SX_RLOCK )
 {
    AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
    HB_BOOL fResult = HB_FALSE;
-   PHB_ITEM pResult = NULL;
+   PHB_ITEM pResult = nullptr;
 
    if( pArea )
    {

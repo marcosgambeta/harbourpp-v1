@@ -2899,11 +2899,11 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
          {
             /* If fixed mode is enabled, use the default number of decimal places. */
             hb_itemPutNI( hb_stackAllocItem(), hb_stackSetStruct()->HB_SET_DECIMALS );
-            buffer = hb_itemStr( pItem, NULL, hb_stackItemFromTop( -1 ) );
+            buffer = hb_itemStr( pItem, nullptr, hb_stackItemFromTop( -1 ) );
             hb_stackPop();
          }
          else
-            buffer = hb_itemStr( pItem, NULL, NULL );
+            buffer = hb_itemStr( pItem, nullptr, nullptr );
          if( buffer )
          {
             *nLen     = strlen( buffer );

@@ -363,7 +363,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
    HB_SIZE        nQueryLen;
    void *         hQuery;
    HB_USHORT      uiFields, uiIndex;
-   PHB_ITEM       pItemEof, pItem, pName = NULL;
+   PHB_ITEM       pItemEof, pItem, pName = nullptr;
    HB_ERRCODE     errCode;
    char *         szError;
    HB_BOOL        bError;
@@ -560,7 +560,7 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
 
       for( ui = 0; ui < pArea->area.uiFieldCount; ++ui )
       {
-         PHB_ITEM pItem  = NULL;
+         PHB_ITEM pItem  = nullptr;
          LPFIELD  pField = pArea->area.lpFields + ui;
          HB_USHORT uiType = pField->uiType;
 

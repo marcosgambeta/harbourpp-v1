@@ -102,7 +102,7 @@ static int s_iCursorStyle;
 static int s_pClr[ 16 ];
 
 /* screen buffer bitmap */
-static AL_BITMAP * s_bmp = NULL;
+static AL_BITMAP * s_bmp = nullptr;
 
 
 /*
@@ -335,7 +335,7 @@ static HB_BOOL hb_gt_alleg_InitializeScreen( PHB_GT pGT, int iRows, int iCols, H
    if( lPrev )
    {
       al_destroy_bitmap( s_bmp );
-      s_bmp = NULL;
+      s_bmp = nullptr;
    }
 
    if( s_iGFXWidth != 0 && s_iGFXHeight != 0 )
@@ -566,7 +566,7 @@ static void hb_gt_alleg_Exit( PHB_GT pGT )
    if( s_bmp )
    {
       al_destroy_bitmap( s_bmp );
-      s_bmp = NULL;
+      s_bmp = nullptr;
    }
 }
 

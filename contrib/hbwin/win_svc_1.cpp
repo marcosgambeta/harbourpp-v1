@@ -57,8 +57,8 @@
 
 static SERVICE_STATUS        s_ServiceStatus;
 static SERVICE_STATUS_HANDLE s_hStatus;
-static PHB_ITEM              s_pHarbourEntryFunc = NULL;
-static PHB_ITEM              s_pHarbourControlFunc = NULL;
+static PHB_ITEM              s_pHarbourEntryFunc = nullptr;
+static PHB_ITEM              s_pHarbourControlFunc = nullptr;
 static TCHAR                 s_lpServiceName[ 256 ];
 
 /* Control handler function */

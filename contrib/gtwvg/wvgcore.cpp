@@ -296,7 +296,7 @@ BOOL CALLBACK hb_wvt_gtDlgProcMLess( HWND hDlg, UINT message, WPARAM wParam, LPA
 
    int      iIndex, iType;
    long int lReturn = 0;
-   PHB_ITEM pFunc   = NULL;
+   PHB_ITEM pFunc   = nullptr;
 
    iType = 0;
 
@@ -397,7 +397,7 @@ BOOL CALLBACK hb_wvt_gtDlgProcModal( HWND hDlg, UINT message, WPARAM wParam, LPA
 
    int      iIndex, iType;
    long int lReturn = 0;
-   PHB_ITEM pFunc   = NULL;
+   PHB_ITEM pFunc   = nullptr;
    int      iFirst  = ( int ) lParam;
 
    if( iFirst > 0 && iFirst <= WVT_DLGMD_MAX )

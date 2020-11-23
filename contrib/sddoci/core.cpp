@@ -524,7 +524,7 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
 
    while( ulRecNo > pArea->ulRecCount && ! pArea->fFetched )
    {
-      PHB_ITEM  pItem = NULL;
+      PHB_ITEM  pItem = nullptr;
       PHB_ITEM  pArray;
       HB_USHORT ui;
 

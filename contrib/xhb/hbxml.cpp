@@ -1541,7 +1541,7 @@ static MXML_STATUS mxml_node_read( MXML_REFIL * ref, PHB_ITEM pNode, PHB_ITEM do
 
    if( iStatus == -1 )  /* ARE WE DONE ? */
    {
-      PHB_ITEM child_node, data_node = NULL;
+      PHB_ITEM child_node, data_node = nullptr;
 
       /* Time to close current node. We must verify:
          1) If the closing tag is coherent with the opened tag name.
