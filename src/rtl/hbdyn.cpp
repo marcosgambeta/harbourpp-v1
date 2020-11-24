@@ -855,7 +855,7 @@ static PHB_ITEM hb_u32ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
 
 
 #if defined( HB_OS_WIN ) || defined( HB_OS_OS2 )
-   #define HB_CDECL  _cdecl
+   #define HB_CDECL  __cdecl
 #else
    #define HB_CDECL
 #endif
@@ -869,10 +869,10 @@ HB_DYN_CTYPE_DECL( float,  HB_CDECL, FX86_CFL );
 
 #if defined( HB_OS_WIN )
 
-HB_DYN_CTYPE_DECL( HB_U32, _stdcall, FX86_S32 );
-HB_DYN_CTYPE_DECL( HB_U64, _stdcall, FX86_S64 );
-HB_DYN_CTYPE_DECL( double, _stdcall, FX86_SDB );
-HB_DYN_CTYPE_DECL( float,  _stdcall, FX86_SFL );
+HB_DYN_CTYPE_DECL( HB_U32, __stdcall, FX86_S32 );
+HB_DYN_CTYPE_DECL( HB_U64, __stdcall, FX86_S64 );
+HB_DYN_CTYPE_DECL( double, __stdcall, FX86_SDB );
+HB_DYN_CTYPE_DECL( float,  __stdcall, FX86_SFL );
 
 #endif
 
