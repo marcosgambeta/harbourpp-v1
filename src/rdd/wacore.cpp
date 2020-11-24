@@ -629,7 +629,7 @@ HB_ERRCODE hb_rddDetachArea( AREAP pArea, PHB_ITEM pCargo )
 AREAP hb_rddRequestArea( const char * szAlias, PHB_ITEM pCargo,
                          HB_BOOL fNewArea, HB_ULONG ulMilliSec )
 {
-   PHB_DYNS pSymAlias = NULL;
+   PHB_DYNS pSymAlias = nullptr;
    AREAP pArea = NULL;
 
    if( pCargo )

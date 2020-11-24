@@ -1661,7 +1661,7 @@ static HB_USHORT hb_clsSenderMethodClass( void )
 
 static PHB_SYMB hb_clsSenderSymbol( void )
 {
-   PHB_SYMB pSym = NULL;
+   PHB_SYMB pSym = nullptr;
    HB_ISIZ nOffset = hb_clsSenderOffset();
 
    if( nOffset > 0 )
@@ -2570,7 +2570,7 @@ PHB_ITEM hb_objGetVarPtr( PHB_ITEM pObject, PHB_DYNS pVarMsg )
 
 static PHB_DYNS hb_objGetMsgSym( PHB_ITEM pMessage )
 {
-   PHB_DYNS pDynSym = NULL;
+   PHB_DYNS pDynSym = nullptr;
 
    if( pMessage )
    {
@@ -2884,7 +2884,7 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage,
       PHB_DYNS  pMessage;
       PMETHOD   pNewMeth;
       HB_USHORT uiOperator, uiSprClass = 0, uiIndex = 0, uiPrevCls, uiPrevMth;
-      PHB_SYMB  pOpSym, pFuncSym = NULL;
+      PHB_SYMB  pOpSym, pFuncSym = nullptr;
       HB_BOOL   fOK;
       HB_U32    nOpFlags = 0;
 
@@ -3951,7 +3951,7 @@ HB_FUNC( __CLSINSTSUPER )
    HB_STACK_TLS_PRELOAD
    PHB_ITEM pItem = hb_param( 1, HB_IT_STRING | HB_IT_SYMBOL );
    HB_USHORT uiClassH = 0, uiClass;
-   PHB_SYMB pClassFuncSym = NULL;
+   PHB_SYMB pClassFuncSym = nullptr;
    char szDesc[ 128 ];
 
    if( pItem )
@@ -4569,7 +4569,7 @@ HB_FUNC_STATIC( msgPerform )
    if( pItem )
    {
       HB_USHORT uiPCount = hb_pcount(), uiParam;
-      PHB_SYMB pSym = NULL;
+      PHB_SYMB pSym = nullptr;
 
       if( HB_IS_SYMBOL( pItem ) )
          pSym = pItem->item.asSymbol.value;

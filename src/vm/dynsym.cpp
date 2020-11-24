@@ -506,7 +506,7 @@ void hb_dynsymSetAreaHandle( PHB_DYNS pDynSym, int iArea )
 
 static PHB_DYNS hb_dynsymGetByIndex( HB_LONG lIndex )
 {
-   PHB_DYNS pDynSym = NULL;
+   PHB_DYNS pDynSym = nullptr;
 
    HB_DYNSYM_LOCK();
 
@@ -570,7 +570,7 @@ PHB_DYNS hb_dynsymFromNum( HB_SYMCNT uiSymNum )
 
 void hb_dynsymEval( PHB_DYNS_FUNC pFunction, void * Cargo )
 {
-   PHB_DYNS pDynSym = NULL;
+   PHB_DYNS pDynSym = nullptr;
    HB_SYMCNT uiPos = 0;
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymEval(%p, %p)", ( void * ) pFunction, Cargo ) );

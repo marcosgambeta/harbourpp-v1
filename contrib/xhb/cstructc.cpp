@@ -1349,12 +1349,12 @@ HB_FUNC( HB_STRING2POINTER )
 
 HB_FUNC( __CSTR_COPYTO )
 {
-   static PHB_DYNS s_pVALUE = NULL;
+   static PHB_DYNS s_pVALUE = nullptr;
    PHB_ITEM        pTarget  = hb_param( 1, HB_IT_ANY );
    PHB_ITEM        pStructure;
    void *          pPointer;
 
-   if( s_pVALUE == NULL )
+   if( s_pVALUE == nullptr )
       s_pVALUE = hb_dynsymGetCase( "VALUE" );
 
    if( HB_IS_LONG( pTarget ) )

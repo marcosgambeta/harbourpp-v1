@@ -201,7 +201,7 @@ static void    hb_vmDebuggerExit( HB_BOOL fRemove );      /* shuts down the debu
 static void    hb_vmDebuggerShowLine( HB_USHORT uiLine ); /* makes the debugger shows a specific source code line */
 static void    hb_vmDebuggerEndProc( void );     /* notifies the debugger for an endproc */
 
-static PHB_DYNS s_pDynsDbgEntry = NULL;   /* Cached __DBGENTRY symbol */
+static PHB_DYNS s_pDynsDbgEntry = nullptr;   /* Cached __DBGENTRY symbol */
 static HB_DBGENTRY_FUNC s_pFunDbgEntry;   /* C level debugger entry */
 #endif
 
@@ -247,9 +247,9 @@ static PHB_ITEM s_breakBlock = nullptr;
 static HB_BOOL  s_fHVMActive = HB_FALSE;  /* is HVM ready for PCODE executing */
 static HB_BOOL  s_fDoExitProc = HB_TRUE;  /* execute EXIT procedures */
 static int      s_nErrorLevel = 0;     /* application exit status */
-static PHB_SYMB s_pSymStart = NULL;    /* start symbol of the application. MAIN() is not required */
+static PHB_SYMB s_pSymStart = nullptr;    /* start symbol of the application. MAIN() is not required */
 
-static PHB_SYMBOLS s_pSymbols = NULL;  /* to hold a linked list of all different modules symbol tables */
+static PHB_SYMBOLS s_pSymbols = nullptr;  /* to hold a linked list of all different modules symbol tables */
 static HB_ULONG    s_ulFreeSymbols = 0;/* number of free module symbols */
 static void *      s_hDynLibID = NULL; /* unique identifier to mark symbol tables loaded from dynamic libraries */
 static HB_BOOL     s_fCloneSym = HB_FALSE;/* clone registered symbol tables */
@@ -7601,7 +7601,7 @@ HB_BOOL hb_vmFindModuleSymbols( PHB_SYMB pSym, PHB_SYMB * pSymbols,
 
 PHB_SYMB hb_vmFindFuncSym( const char * szFuncName, void * hDynLib )
 {
-   static PHB_SYMB pFuncSym = NULL;
+   static PHB_SYMB pFuncSym = nullptr;
 
    if( szFuncName )
    {
@@ -9096,7 +9096,7 @@ HB_BOOL hb_vmTryEval( PHB_ITEM * pResult, PHB_ITEM pItem, HB_ULONG ulPCount, ...
    *pResult = NULL;
    if( s_fHVMActive )
    {
-      PHB_SYMB pSymbol = NULL;
+      PHB_SYMB pSymbol = nullptr;
 
       if( HB_IS_STRING( pItem ) )
       {

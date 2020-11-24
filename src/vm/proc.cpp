@@ -88,7 +88,7 @@ HB_FUNC( PROCLINE )
 HB_FUNC( PROCFILE )
 {
 #ifndef HB_CLP_STRICT
-   PHB_SYMB pSym = NULL;
+   PHB_SYMB pSym = nullptr;
 
    if( HB_ISSYMBOL( 1 ) )
    {

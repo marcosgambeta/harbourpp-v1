@@ -1443,8 +1443,8 @@ HB_FUNC( NETIO_SERVER )
                         errCode = NETIO_ERR_WRONG_PARAM;
                      else
                      {
-                        PHB_DYNS pDynSym = NULL;
-                        PHB_ITEM pItem = NULL;
+                        PHB_DYNS pDynSym = nullptr;
+                        PHB_ITEM pItem = nullptr;
 
                         if( conn->rpcFilter )
                         {
@@ -1640,12 +1640,12 @@ HB_FUNC( NETIO_SERVER )
  */
 HB_FUNC( NETIO_SERVEDCONNECTION )
 {
-   static PHB_DYNS s_pDyns_netio_server = NULL;
+   static PHB_DYNS s_pDyns_netio_server = nullptr;
 
-   if( s_pDyns_netio_server == NULL )
+   if( s_pDyns_netio_server == nullptr )
       s_pDyns_netio_server = hb_dynsymGetCase( "NETIO_SERVER" );
 
-   if( s_pDyns_netio_server != NULL )
+   if( s_pDyns_netio_server != nullptr )
    {
       HB_ISIZ nOffset = hb_stackBaseSymbolOffset( hb_dynsymSymbol( s_pDyns_netio_server ) );
 

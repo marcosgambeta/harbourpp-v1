@@ -56,7 +56,7 @@
 
 #if 0
 
-static PHB_SYMB s_xHbFunc = NULL;
+static PHB_SYMB s_xHbFunc = nullptr;
 
 LONG WINAPI PRGUnhandledExceptionFilter( EXCEPTION_POINTERS * ExceptionInfo )
 {

@@ -533,7 +533,7 @@ void hb_memvarNewParameter( PHB_SYMB pSymbol, PHB_ITEM pValue )
 
 static PHB_DYNS hb_memvarFindSymbol( const char * szArg, HB_SIZE nLen )
 {
-   PHB_DYNS pDynSym = NULL;
+   PHB_DYNS pDynSym = nullptr;
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarFindSymbol(%p,%" HB_PFS "u)", ( const void * ) szArg, nLen ) );
 
@@ -618,7 +618,7 @@ char * hb_memvarGetStrValuePtr( char * szVarName, HB_SIZE * pnLen )
  */
 void hb_memvarCreateFromItem( PHB_ITEM pMemvar, int iScope, PHB_ITEM pValue )
 {
-   PHB_DYNS pDynVar = NULL;
+   PHB_DYNS pDynVar = nullptr;
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarCreateFromItem(%p, %d, %p)", ( void * ) pMemvar, iScope, ( void * ) pValue ) );
 

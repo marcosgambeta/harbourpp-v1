@@ -61,9 +61,9 @@ HB_FUNC( HB_QSELF )
 
       if( nOffset > 0 && HB_IS_BLOCK( pSelf ) )
       {
-         static PHB_SYMB s_pSymEval = NULL;
+         static PHB_SYMB s_pSymEval = nullptr;
 
-         if( s_pSymEval == NULL )
+         if( s_pSymEval == nullptr )
          {
             hb_vmPushEvalSym();
             s_pSymEval = hb_itemGetSymbol( hb_stackItemFromTop( -1 ) );

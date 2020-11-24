@@ -104,7 +104,7 @@ PHB_ITEM hb_evalLaunch( PHB_EVALINFO pEvalInfo )
    if( pEvalInfo )
    {
       PHB_ITEM pItem = pEvalInfo->pItems[ 0 ];
-      PHB_SYMB pSymbol = NULL;
+      PHB_SYMB pSymbol = nullptr;
 
       if( HB_IS_STRING( pItem ) )
       {
@@ -192,7 +192,7 @@ PHB_ITEM hb_itemDo( PHB_ITEM pItem, HB_ULONG ulPCount, ... )
 
    if( pItem )
    {
-      PHB_SYMB pSymbol = NULL;
+      PHB_SYMB pSymbol = nullptr;
 
       if( HB_IS_STRING( pItem ) )
       {
@@ -399,7 +399,7 @@ HB_FUNC( HB_FORNEXT ) /* nStart, nEnd | bEnd, bCode, nStep */
  */
 HB_FUNC( HB_EXECFROMARRAY )
 {
-   PHB_SYMB pExecSym = NULL;
+   PHB_SYMB pExecSym = nullptr;
    PHB_ITEM pFunc = nullptr;
    PHB_ITEM pSelf = nullptr;
    PHB_ITEM pArray = nullptr;
@@ -517,7 +517,7 @@ HB_BOOL hb_execFromArray( PHB_ITEM pParam )
 
    if( pParam )
    {
-      PHB_SYMB pExecSym = NULL;
+      PHB_SYMB pExecSym = nullptr;
 
       if( HB_IS_SYMBOL( pParam ) )
          pExecSym = hb_itemGetSymbol( pParam );

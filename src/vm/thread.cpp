@@ -1181,7 +1181,7 @@ HB_FUNC( HB_THREADSTART )
 {
    HB_ULONG ulAttr = 0, ulStart = 1;
    const char * szFuncName = nullptr;
-   PHB_SYMB pSymbol = NULL;
+   PHB_SYMB pSymbol = nullptr;
    PHB_ITEM pStart;
 
    pStart = hb_param( ulStart, HB_IT_ANY );
