@@ -59,7 +59,20 @@ ifeq ($(CPP_RULE),)
    ifeq ($(CXX),)
       CXX := $(CC)
    endif
-   CPP_RULE = $(CXX) $(CC_FLAGS) $(HB_USER_CFLAGS) $(CC_OUT)$(<F:.cpp=$(OBJ_EXT)) $(CC_IN) $<
+   CPP_RULE = $(CXX) $(subst $(CC_DIRSEPFROM),$(CC_DIRSEPTO),$(CC_FLAGS) $(HB_USER_CFLAGS) $(CC_OUT)$(<F:.cpp=$(OBJ_EXT)) $(HB_CFLAGS_STA) $(CC_IN) $<)
+   ifneq ($(HB_BUILD_DYN),no)
+      ifneq ($(HB_DYN_COPT),)
+         ifneq ($(LIBNAME),)
+            ifneq ($(filter $(LIBNAME),$(HB_DYN_LIBS)),)
+               define cpp_comp_all
+                  $(CC) $(subst $(CC_DIRSEPFROM),$(CC_DIRSEPTO),$(CC_FLAGS) $(HB_USER_CFLAGS) $(CC_OUT)$(<F:.cpp=$(OBJ_EXT)) $(HB_CFLAGS_STA) $(CC_IN) $<)
+                  $(CC) $(subst $(CC_DIRSEPFROM),$(CC_DIRSEPTO),$(CC_FLAGS) $(HB_USER_CFLAGS) $(CC_OUT)$(<F:.cpp=$(OBJ_DYN_SUFFIX)$(OBJ_EXT)) $(HB_DYN_COPT) $(HB_CFLAGS_DYN) $(CC_IN) $<)
+               endef
+               CPP_RULE = $(cpp_comp_all)
+            endif
+         endif
+      endif
+   endif
 endif
 
 # The rule to compile an Objective C source file.
