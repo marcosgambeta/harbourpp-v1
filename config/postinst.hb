@@ -621,7 +621,7 @@ STATIC FUNCTION __hb_extern_get_list( cInputName )
    DO CASE
    CASE "|" + GetEnv( "HB_COMPILER" ) + "|" $ "|gcc|mingw|mingw64|djgpp|"
       cCommand := "nm -g" + iif( GetEnv( "HB_PLATFORM" ) == "darwin", "", " --defined-only -C" ) + " {I}"
-   CASE "|" + GetEnv( "HB_COMPILER" ) + "|" $ "|msvc|msvc64|pocc|pocc64|"
+   CASE "|" + GetEnv( "HB_COMPILER" ) + "|" $ "|msvc|msvc64|"
       IF "|" + GetEnv( "HB_COMPILER" ) + "|" $ "|msvc|msvc64|"
          cCommand := "dumpbin -symbols {I}"
       ELSE
