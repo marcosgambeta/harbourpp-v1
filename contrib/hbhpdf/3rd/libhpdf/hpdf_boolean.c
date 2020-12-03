@@ -15,8 +15,8 @@
  *
  */
 
-#include "hpdfutil.h"
-#include "hpdfobje.h"
+#include "hpdf_utils.h"
+#include "hpdf_objects.h"
 
 HPDF_Boolean
 HPDF_Boolean_New  (HPDF_MMgr  mmgr,

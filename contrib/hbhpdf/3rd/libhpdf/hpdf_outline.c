@@ -15,9 +15,9 @@
  *
  */
 
-#include "hpdfconf.h"
-#include "hpdfutil.h"
-#include "hpdfdest.h"
+#include "hpdf_conf.h"
+#include "hpdf_utils.h"
+#include "hpdf_destination.h"
 #include "hpdf.h"
 
 #define HPDF_OUTLINE_CLOSED     0

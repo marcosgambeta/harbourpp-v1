@@ -15,10 +15,10 @@
  *
  */
 
-#include "hpdfconf.h"
-#include "hpdfutil.h"
-#include "hpdfinfo.h"
-#include "hpdf3dme.h"
+#include "hpdf_conf.h"
+#include "hpdf_utils.h"
+#include "hpdf_info.h"
+#include "hpdf_3dmeasure.h"
 #include "hpdf.h"
 
 /*----------------------------------------------------------------------------*/

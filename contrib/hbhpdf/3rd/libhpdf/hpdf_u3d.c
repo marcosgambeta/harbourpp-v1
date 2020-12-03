@@ -14,8 +14,8 @@
  * It is provided "as is" without express or implied warranty.
  *
  */
-#include "hpdfconf.h"
-#include "hpdfutil.h"
+#include "hpdf_conf.h"
+#include "hpdf_utils.h"
 #include "hpdf.h"
 
 #include <string.h>

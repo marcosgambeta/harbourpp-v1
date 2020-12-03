@@ -36,10 +36,10 @@
  *
  *---------------------------------------------------------------------------*/
 
-#include "hpdfconf.h"
-#include "hpdfcons.h"
-#include "hpdfutil.h"
-#include "hpdfencr.h"
+#include "hpdf_conf.h"
+#include "hpdf_consts.h"
+#include "hpdf_utils.h"
+#include "hpdf_encrypt.h"
 
 static const HPDF_BYTE HPDF_PADDING_STRING[] = {
     0x28, 0xBF, 0x4E, 0x5E, 0x4E, 0x75, 0x8A, 0x41,

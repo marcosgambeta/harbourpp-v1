@@ -15,8 +15,8 @@
  *
  */
 
-#include "hpdfconf.h"
-#include "hpdfutil.h"
+#include "hpdf_conf.h"
+#include "hpdf_utils.h"
 #include "hpdf.h"
 
 const char * const HPDF_DESTINATION_TYPE_NAMES[] = {

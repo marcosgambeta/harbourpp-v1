@@ -20,7 +20,7 @@
 #endif
 
 #include <time.h>
-#include "hpdfutil.h"
+#include "hpdf_utils.h"
 #include "hpdf.h"
 #include <string.h>
 

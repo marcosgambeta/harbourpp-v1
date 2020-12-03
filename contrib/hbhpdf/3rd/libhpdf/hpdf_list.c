@@ -15,10 +15,10 @@
  *
  */
 
-#include "hpdfconf.h"
-#include "hpdfutil.h"
-#include "hpdfcons.h"
-#include "hpdflist.h"
+#include "hpdf_conf.h"
+#include "hpdf_utils.h"
+#include "hpdf_consts.h"
+#include "hpdf_list.h"
 
 static HPDF_STATUS
 Resize  (HPDF_List  list,

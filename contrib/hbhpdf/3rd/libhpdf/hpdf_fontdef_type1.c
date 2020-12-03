@@ -15,9 +15,9 @@
  *
  */
 
-#include "hpdfconf.h"
-#include "hpdfutil.h"
-#include "hpdffond.h"
+#include "hpdf_conf.h"
+#include "hpdf_utils.h"
+#include "hpdf_fontdef.h"
 
 static void
 FreeWidth  (HPDF_FontDef  fontdef);

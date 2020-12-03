@@ -15,9 +15,9 @@
  *
  */
 
-#include "hpdfconf.h"
-#include "hpdfutil.h"
-#include "hpdffond.h"
+#include "hpdf_conf.h"
+#include "hpdf_utils.h"
+#include "hpdf_fontdef.h"
 
 void
 HPDF_FontDef_Cleanup (HPDF_FontDef  fontdef)

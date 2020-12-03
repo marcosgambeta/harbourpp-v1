@@ -25,10 +25,10 @@
 #define HPDF_UNUSED(a) ((void)(a))
 #endif
 
-#include "hpdfconf.h"
-#include "hpdfcons.h"
-#include "hpdfutil.h"
-#include "hpdfstre.h"
+#include "hpdf_conf.h"
+#include "hpdf_consts.h"
+#include "hpdf_utils.h"
+#include "hpdf_streams.h"
 
 #ifndef LIBHPDF_HAVE_NOZLIB
 #include <zlib.h>

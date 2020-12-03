@@ -16,11 +16,11 @@
  */
 
 #include <time.h>
-#include "hpdfconf.h"
-#include "hpdfutil.h"
-#include "hpdfobje.h"
-#include "hpdfency.h"
-#include "hpdfinfo.h"
+#include "hpdf_conf.h"
+#include "hpdf_utils.h"
+#include "hpdf_objects.h"
+#include "hpdf_encryptdict.h"
+#include "hpdf_info.h"
 #ifndef HPDF_UNUSED
 #define HPDF_UNUSED(a) ((void)(a))
 #endif

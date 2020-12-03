@@ -16,10 +16,10 @@
  */
 
 
-#include "hpdfconf.h"
-#include "hpdfutil.h"
+#include "hpdf_conf.h"
+#include "hpdf_utils.h"
 #include "hpdf.h"
-#include "hpdfimag.h"
+#include "hpdf_image.h"
 
 
 static HPDF_Image

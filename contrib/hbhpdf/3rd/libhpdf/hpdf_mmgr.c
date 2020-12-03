@@ -15,10 +15,10 @@
  *
  */
 
-#include "hpdfconf.h"
-#include "hpdfcons.h"
-#include "hpdfmmgr.h"
-#include "hpdfutil.h"
+#include "hpdf_conf.h"
+#include "hpdf_consts.h"
+#include "hpdf_mmgr.h"
+#include "hpdf_utils.h"
 
 #ifndef HPDF_STDCALL
 #ifdef HPDF_DLL_MAKE

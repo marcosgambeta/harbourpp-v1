@@ -15,9 +15,9 @@
  *
  */
 
-#include "hpdfconf.h"
-#include "hpdfutil.h"
-#include "hpdffont.h"
+#include "hpdf_conf.h"
+#include "hpdf_utils.h"
+#include "hpdf_font.h"
 
 static HPDF_STATUS
 Type1Font_OnWrite  (HPDF_Dict    obj,

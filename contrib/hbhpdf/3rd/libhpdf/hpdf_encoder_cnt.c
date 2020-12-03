@@ -15,9 +15,9 @@
  *
  */
 
-#include "hpdfconf.h"
-#include "hpdfutil.h"
-#include "hpdfenco.h"
+#include "hpdf_conf.h"
+#include "hpdf_utils.h"
+#include "hpdf_encoder.h"
 #include "hpdf.h"
 
 static const HPDF_UnicodeMap_Rec CP950_UNICODE_ARRAY[] = {

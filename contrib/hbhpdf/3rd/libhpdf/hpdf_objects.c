@@ -15,9 +15,9 @@
  *
  */
 
-#include "hpdfconf.h"
-#include "hpdfutil.h"
-#include "hpdfobje.h"
+#include "hpdf_conf.h"
+#include "hpdf_utils.h"
+#include "hpdf_objects.h"
 
 void
 HPDF_Obj_Free  (HPDF_MMgr    mmgr,

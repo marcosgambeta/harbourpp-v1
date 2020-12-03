@@ -15,8 +15,8 @@
  *
  */
 
-#include "hpdfconf.h"
-#include "hpdfutil.h"
+#include "hpdf_conf.h"
+#include "hpdf_utils.h"
 #include "hpdf.h"
 
 static const char *COL_CMYK = "DeviceCMYK";

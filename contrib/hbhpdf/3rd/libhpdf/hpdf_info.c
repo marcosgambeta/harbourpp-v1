@@ -15,9 +15,9 @@
  *
  */
 
-#include "hpdfconf.h"
-#include "hpdfutil.h"
-#include "hpdfinfo.h"
+#include "hpdf_conf.h"
+#include "hpdf_utils.h"
+#include "hpdf_info.h"
 
 static const char * const HPDF_INFO_ATTR_NAMES[] = {
     "CreationDate",

@@ -15,9 +15,9 @@
  *
  */
 
-#include "hpdfconf.h"
-#include "hpdfutil.h"
-#include "hpdfimag.h"
+#include "hpdf_conf.h"
+#include "hpdf_utils.h"
+#include "hpdf_image.h"
 
 #ifndef LIBHPDF_HAVE_NOPNGLIB
 #include <png.h>

@@ -16,9 +16,9 @@
  */
 
 #include <string.h>
-#include "hpdfconf.h"
-#include "hpdfutil.h"
-#include "hpdfobje.h"
+#include "hpdf_conf.h"
+#include "hpdf_utils.h"
+#include "hpdf_objects.h"
 
 static const HPDF_BYTE UNICODE_HEADER[] = {
     0xFE, 0xFF

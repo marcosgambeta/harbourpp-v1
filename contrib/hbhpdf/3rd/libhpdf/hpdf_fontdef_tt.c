@@ -16,9 +16,9 @@
  * 2006.08.24 fixed for composite glyph description.
  */
 
-#include "hpdfconf.h"
-#include "hpdfutil.h"
-#include "hpdffond.h"
+#include "hpdf_conf.h"
+#include "hpdf_utils.h"
+#include "hpdf_fontdef.h"
 
 
 #define HPDF_TTF_MAX_MEM_SIZ    10000

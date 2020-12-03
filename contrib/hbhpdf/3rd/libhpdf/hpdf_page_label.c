@@ -15,9 +15,9 @@
  *
  */
 
-#include "hpdfconf.h"
-#include "hpdfutil.h"
-#include "hpdfpage.h"
+#include "hpdf_conf.h"
+#include "hpdf_utils.h"
+#include "hpdf_page_label.h"
 
 HPDF_Dict
 HPDF_PageLabel_New  (HPDF_Doc             pdf,

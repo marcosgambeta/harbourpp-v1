@@ -17,9 +17,9 @@
  *
  */
 
-#include "hpdfconf.h"
-#include "hpdfutil.h"
-#include "hpdfenco.h"
+#include "hpdf_conf.h"
+#include "hpdf_utils.h"
+#include "hpdf_encoder.h"
 #include "hpdf.h"
 
 typedef struct _UTF8_EncoderAttr_Rec  *UTF8_EncoderAttr;

@@ -15,10 +15,10 @@
  *
  */
 
-#include "hpdfconf.h"
-#include "hpdfutil.h"
-#include "hpdfcata.h"
-#include "hpdfpags.h"
+#include "hpdf_conf.h"
+#include "hpdf_utils.h"
+#include "hpdf_catalog.h"
+#include "hpdf_pages.h"
 
 static const char * const HPDF_PAGE_LAYOUT_NAMES[] = {
                         "SinglePage",

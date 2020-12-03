@@ -15,9 +15,9 @@
  *
  */
 
-#include "hpdfconf.h"
-#include "hpdfutil.h"
-#include "hpdfpags.h"
+#include "hpdf_conf.h"
+#include "hpdf_utils.h"
+#include "hpdf_pages.h"
 #include "hpdf.h"
 
 static const HPDF_Point INIT_POS = {0, 0};
@@ -1155,7 +1155,7 @@ HPDF_Page_SetFontAndSize  (HPDF_Page  page,
         return HPDF_RaiseError (page->error, HPDF_PAGE_INVALID_FONT, 0);
 
     if (size <= 0 || size > HPDF_MAX_FONTSIZE)
-        return HPDF_RaiseError (page->error, HPDF_PAGE_INVALID_FONT_SIZE, (HPDF_STATUS)size);
+        return HPDF_RaiseError (page->error, HPDF_PAGE_INVALID_FONT_SIZE, size);
 
     if (page->mmgr != font->mmgr)
         return HPDF_RaiseError (page->error, HPDF_PAGE_INVALID_FONT, 0);

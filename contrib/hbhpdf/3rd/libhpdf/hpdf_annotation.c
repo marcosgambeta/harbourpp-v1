@@ -15,10 +15,10 @@
  *
  */
 
-#include "hpdfconf.h"
-#include "hpdfutil.h"
-#include "hpdfinfo.h"
-#include "hpdfanno.h"
+#include "hpdf_conf.h"
+#include "hpdf_utils.h"
+#include "hpdf_info.h"
+#include "hpdf_annotation.h"
 #include "hpdf.h"
 
 static const char * const HPDF_ANNOT_TYPE_NAMES[] = {
