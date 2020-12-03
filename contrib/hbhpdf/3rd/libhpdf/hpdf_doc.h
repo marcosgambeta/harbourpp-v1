@@ -21,11 +21,11 @@
 
 #define HPDF_SIG_BYTES 0x41504446L
 
-#include "hpdfcata.h"
-#include "hpdfimag.h"
-#include "hpdfpags.h"
-#include "hpdfoutl.h"
-#include "hpdfextg.h"
+#include "hpdf_catalog.h"
+#include "hpdf_image.h"
+#include "hpdf_pages.h"
+#include "hpdf_outline.h"
+#include "hpdf_ext_gstate.h"
 
 #ifdef __cplusplus
 extern "C" {

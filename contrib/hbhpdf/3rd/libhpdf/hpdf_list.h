@@ -18,8 +18,8 @@
 #ifndef _HPDF_LIST_H
 #define _HPDF_LIST_H
 
-#include "hpdferro.h"
-#include "hpdfmmgr.h"
+#include "hpdf_error.h"
+#include "hpdf_mmgr.h"
 
 #ifdef __cplusplus
 extern "C" {

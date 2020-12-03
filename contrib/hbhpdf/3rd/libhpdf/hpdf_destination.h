@@ -18,7 +18,7 @@
 #ifndef _HPDF_DESTINATION_H
 #define _HPDF_DESTINATION_H
 
-#include "hpdfobje.h"
+#include "hpdf_objects.h"
 
 #ifdef __cplusplus
 extern "C" {

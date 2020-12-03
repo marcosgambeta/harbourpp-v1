@@ -18,7 +18,7 @@
 #ifndef _HPDF_CATALOG_H
 #define _HPDF_CATALOG_H
 
-#include "hpdfobje.h"
+#include "hpdf_objects.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -18,8 +18,8 @@
 #ifndef _HPDF_PDFA_H
 #define _HPDF_PDFA_H
 
-#include "hpdfdoc.h"
-#include "hpdfobje.h"
+#include "hpdf_doc.h"
+#include "hpdf_objects.h"
 
 
 

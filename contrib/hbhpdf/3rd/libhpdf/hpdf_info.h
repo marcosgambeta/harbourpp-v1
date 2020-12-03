@@ -19,7 +19,7 @@
 #ifndef _HPDF_INFO_H
 #define _HPDF_INFO_H
 
-#include "hpdfobje.h"
+#include "hpdf_objects.h"
 
 #ifdef __cplusplus
 extern "C" {

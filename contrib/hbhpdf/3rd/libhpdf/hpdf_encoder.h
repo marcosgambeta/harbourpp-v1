@@ -18,8 +18,8 @@
 #ifndef _HPDF_ENCODER_H
 #define _HPDF_ENCODER_H
 
-#include "hpdfcons.h"
-#include "hpdfstre.h"
+#include "hpdf_consts.h"
+#include "hpdf_streams.h"
 
 #ifdef __cplusplus
 extern "C" {

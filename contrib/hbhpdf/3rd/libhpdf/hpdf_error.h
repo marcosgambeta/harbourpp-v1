@@ -18,7 +18,7 @@
 #ifndef _HPDF_ERROR_H
 #define _HPDF_ERROR_H
 
-#include "hpdftype.h"
+#include "hpdf_types.h"
 
 #ifdef __cplusplus
 extern "C" {

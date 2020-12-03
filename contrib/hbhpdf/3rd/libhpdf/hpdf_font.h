@@ -18,7 +18,7 @@
 #ifndef _HPDF_FONT_H
 #define _HPDF_FONT_H
 
-#include "hpdffond.h"
+#include "hpdf_fontdef.h"
 
 #ifdef __cplusplus
 extern "C" {

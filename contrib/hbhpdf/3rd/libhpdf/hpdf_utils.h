@@ -18,8 +18,8 @@
 #ifndef _HPDF_UTILS_H
 #define _HPDF_UTILS_H
 
-#include "hpdfcfg.h"
-#include "hpdftype.h"
+#include "hpdf_config.h"
+#include "hpdf_types.h"
 
 #ifdef __cplusplus
 extern "C" {
