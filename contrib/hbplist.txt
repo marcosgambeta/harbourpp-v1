@@ -27,6 +27,7 @@ hbhpdf/hbhpdf.hbp                # uses: libhpdf (locally hosted)
 hbhttpd/hbhttpd.hbp
 hblzf/hblzf.hbp                  # uses: liblzf (locally hosted)
 hbmagic/hbmagic.hbp
+hbmariadb/hbmariadb.hbp
 hbmemio/hbmemio.hbp
 hbmisc/hbmisc.hbp
 hbmlzo/hbmlzo.hbp                # uses: libmlzo (locally hosted)
