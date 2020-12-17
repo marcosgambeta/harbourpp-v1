@@ -70,10 +70,14 @@
 #include <QtGui/QMainWindow>
 #include <QtGui/QDesktopWidget>
 #include <QtGui/QWidget>
-#else
+#elif QT_VERSION <= 0x051600
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QDesktopWidget>
+#include <QtWidgets/QWidget>
+#else
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
 #include <QtWidgets/QWidget>
 #endif
 

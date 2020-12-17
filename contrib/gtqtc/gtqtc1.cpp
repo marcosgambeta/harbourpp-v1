@@ -1612,7 +1612,11 @@ static void hb_gt_qtc_initWindow( PHB_GTQTC pQTC, HB_BOOL fCenter )
    pQTC->qWnd->qConsole->resetWindowSize();
    if( fCenter || pQTC->iNewPosX < 0 || pQTC->iNewPosY < 0 )
    {
+#if QT_VERSION >= 0x060000
+      QRect rc( QGuiApplication::primaryScreen()->availableGeometry() );
+#else
       QRect rc( QApplication::desktop()->availableGeometry() );
+#endif
       pQTC->iNewPosX = rc.left() + ( ( rc.width() - pQTC->qWnd->width() ) >> 1 );
       pQTC->iNewPosY = rc.top() + ( ( rc.height() - pQTC->qWnd->height() ) >> 1 );
    }
@@ -1858,7 +1862,11 @@ static HB_BOOL hb_gt_qtc_mouse_ButtonState( PHB_GT pGT, int iButton )
       case 1:
          return ( QApplication::mouseButtons() & Qt::RightButton ) != 0;
       case 2:
+#if QT_VERSION >= 0x060000
+         return ( QApplication::mouseButtons() & Qt::MiddleButton ) != 0;
+#else
          return ( QApplication::mouseButtons() & Qt::MidButton ) != 0;
+#endif
    }
    return HB_FALSE;
 }
@@ -1968,23 +1976,43 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_DESKTOPWIDTH:
+#if QT_VERSION >= 0x060000
+         pInfo->pResult = hb_itemPutNI( pInfo->pResult,
+                                        QGuiApplication::primaryScreen()->geometry().width() );
+#else
          pInfo->pResult = hb_itemPutNI( pInfo->pResult,
                                         QApplication::desktop()->screenGeometry().width() );
+#endif
          break;
 
       case HB_GTI_DESKTOPHEIGHT:
+#if QT_VERSION >= 0x060000
+         pInfo->pResult = hb_itemPutNI( pInfo->pResult,
+                                        QGuiApplication::primaryScreen()->geometry().height() );
+#else
          pInfo->pResult = hb_itemPutNI( pInfo->pResult,
                                         QApplication::desktop()->screenGeometry().height() );
+#endif
          break;
 
       case HB_GTI_DESKTOPCOLS:
+#if QT_VERSION >= 0x060000
+         pInfo->pResult = hb_itemPutNI( pInfo->pResult,
+                                        QGuiApplication::primaryScreen()->geometry().width() / pQTC->cellX );
+#else
          pInfo->pResult = hb_itemPutNI( pInfo->pResult,
                                         QApplication::desktop()->screenGeometry().width() / pQTC->cellX );
+#endif
          break;
 
       case HB_GTI_DESKTOPROWS:
+#if QT_VERSION >= 0x060000
+         pInfo->pResult = hb_itemPutNI( pInfo->pResult,
+                                        QGuiApplication::primaryScreen()->geometry().height() / pQTC->cellY );
+#else
          pInfo->pResult = hb_itemPutNI( pInfo->pResult,
                                         QApplication::desktop()->screenGeometry().height() / pQTC->cellY );
+#endif
          break;
 
       case HB_GTI_WINTITLE:
@@ -3056,6 +3084,45 @@ void QTConsole::mouseMoveEvent( QMouseEvent * evt )
       hb_gt_qtc_setMouseKey( pQTC, evt->x(), evt->y(), 0, evt->modifiers() );
 }
 
+#if QT_VERSION >= 0x060000
+void QTConsole::wheelEvent( QWheelEvent * evt )
+{
+   int iKey;
+   Qt::Orientation orientation;
+
+   if( evt->angleDelta().x() != 0 )
+   {
+     orientation = Qt::Horizontal;
+   }
+   else if( evt->angleDelta().y() != 0 )
+   {
+     orientation = Qt::Vertical;
+   }
+
+   switch( orientation )
+   {
+      case Qt::Vertical:
+         if( evt->angleDelta().y() < 0 )
+            iKey = K_MWBACKWARD;
+         else
+            iKey = K_MWFORWARD;
+         break;
+
+      case Qt::Horizontal:
+         if( evt->angleDelta().x() < 0 )
+            iKey = K_MWLEFT;
+         else
+            iKey = K_MWRIGHT;
+         break;
+
+      default:
+         QWidget::wheelEvent( evt );
+         return;
+   }
+
+   hb_gt_qtc_setMouseKey( pQTC, evt->position().x(), evt->position().y(), iKey, evt->modifiers() );
+}
+#else
 void QTConsole::wheelEvent( QWheelEvent * evt )
 {
    int iKey;
@@ -3083,6 +3150,7 @@ void QTConsole::wheelEvent( QWheelEvent * evt )
 
    hb_gt_qtc_setMouseKey( pQTC, evt->x(), evt->y(), iKey, evt->modifiers() );
 }
+#endif
 
 void QTConsole::mouseDoubleClickEvent( QMouseEvent * evt )
 {
@@ -3104,7 +3172,11 @@ void QTConsole::mouseDoubleClickEvent( QMouseEvent * evt )
          iKey = K_RDBLCLK;
          break;
 
+#if QT_VERSION >= 0x060000
+      case Qt::MiddleButton:
+#else
       case Qt::MidButton:
+#endif
          iKey = K_MDBLCLK;
          break;
 
@@ -3137,7 +3209,11 @@ void QTConsole::mousePressEvent( QMouseEvent * evt )
          iKey = K_RBUTTONDOWN;
          break;
 
+#if QT_VERSION >= 0x060000
+      case Qt::MiddleButton:
+#else
       case Qt::MidButton:
+#endif
          iKey = K_MBUTTONDOWN;
          break;
 
@@ -3168,7 +3244,11 @@ void QTConsole::mouseReleaseEvent( QMouseEvent * evt )
          iKey = K_RBUTTONUP;
          break;
 
+#if QT_VERSION >= 0x060000
+      case Qt::MiddleButton:
+#else
       case Qt::MidButton:
+#endif
          iKey = K_MBUTTONUP;
          break;
 
@@ -3671,8 +3751,11 @@ void QTCWindow::setResizing( void )
 {
    if( qConsole->pQTC->fResizable )
    {
+#if QT_VERSION >= 0x060000
+      setMaximumSize( QGuiApplication::primaryScreen()->geometry().size() );
+#else
       setMaximumSize( QApplication::desktop()->screenGeometry().size() );
-
+#endif
       if( qConsole->pQTC->iResizeMode == HB_GTI_RESIZEMODE_ROWS )
       {
          setMinimumSize( qConsole->pQTC->cellX << 1, qConsole->pQTC->cellY << 1 );
