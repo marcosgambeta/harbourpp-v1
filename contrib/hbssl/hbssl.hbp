@@ -9,6 +9,8 @@
 -depimplibs=openssl:../bin/libssl-1_1.dll
 -depimplibs=openssl:../bin/libcrypto-1_1-x64.dll
 -depimplibs=openssl:../bin/libssl-1_1-x64.dll
+-depimplibs=openssl:../libcrypto-1_1.dll
+-depimplibs=openssl:../libssl-1_1.dll
 
 hbssl.hbm
 

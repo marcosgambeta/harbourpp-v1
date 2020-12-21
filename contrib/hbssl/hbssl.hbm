@@ -34,7 +34,9 @@
 -cflag={allgcc&darwin}-Wno-deprecated
 
 # For _fileno() in openssl/applink.c
--c=gnu90
+#-c=gnu90
+
+{allmingw}-cflag=-fpermissive
 
 hbssl.hbx
 
