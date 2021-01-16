@@ -261,7 +261,7 @@ static PHB_REF_ITEM hb_itemSerialValueFind( PHB_REF_LIST pRefList, void * value,
 
    * pnPos = nMiddle;
 
-   return NULL;
+   return nullptr;
 }
 
 static PHB_REF_ITEM hb_itemSerialOffsetFind( PHB_REF_LIST pRefList, HB_SIZE nOffset,
@@ -293,7 +293,7 @@ static PHB_REF_ITEM hb_itemSerialOffsetFind( PHB_REF_LIST pRefList, HB_SIZE nOff
 
    * pnPos = nMiddle;
 
-   return NULL;
+   return nullptr;
 }
 
 static PHB_REF_ITEM hb_itemSerialRefNew( PHB_REF_LIST pRefList, HB_SIZE nPos )

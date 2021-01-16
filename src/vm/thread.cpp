@@ -327,7 +327,7 @@ static PHB_WAIT_LIST _hb_thread_wait_list( void )
    if( pThread )
       return &pThread->pWaitList;
    else
-      return NULL;
+      return nullptr;
 }
 
 static void _hb_thread_wait_add( HB_COND_T * cond, PHB_WAIT_LIST pWaiting )
@@ -1145,7 +1145,7 @@ static PHB_THREADSTATE hb_thParam( int iParam, int iPos )
       return pThread;
 
    hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   return NULL;
+   return nullptr;
 }
 
 PHB_ITEM hb_threadStart( HB_ULONG ulAttr, PHB_CARGO_FUNC pFunc, void * cargo )
@@ -1154,7 +1154,7 @@ PHB_ITEM hb_threadStart( HB_ULONG ulAttr, PHB_CARGO_FUNC pFunc, void * cargo )
    HB_SYMBOL_UNUSED( ulAttr );
    HB_SYMBOL_UNUSED( pFunc );
    HB_SYMBOL_UNUSED( cargo );
-   return NULL;
+   return nullptr;
 #else
    PHB_THREADSTATE pThread;
    PHB_ITEM pReturn;
@@ -1830,7 +1830,7 @@ static PHB_ITEM hb_mutexParam( int iParam )
       return pItem;
 
    hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   return NULL;
+   return nullptr;
 }
 
 PHB_ITEM hb_threadMutexCreate( void )

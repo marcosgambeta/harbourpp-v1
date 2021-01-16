@@ -564,7 +564,7 @@ static PMETHOD hb_clsFindMsg( PCLASS pClass, PHB_DYNS pMsg )
 
 #endif
 
-   return NULL;
+   return nullptr;
 }
 
 static PMETHOD hb_clsAllocMsg( PCLASS pClass, PHB_DYNS pMsg )
@@ -615,7 +615,7 @@ static PMETHOD hb_clsAllocMsg( PCLASS pClass, PHB_DYNS pMsg )
 
    hb_errInternal( 6001, "Could not allocate new message", nullptr, nullptr );
 
-   return NULL;
+   return nullptr;
 }
 
 static HB_BOOL hb_clsCanClearMethod( PMETHOD pMethod, HB_BOOL fError )
@@ -1454,7 +1454,7 @@ const char * hb_clsName( HB_USHORT uiClass )
    if( uiClass && uiClass <= s_uiClasses )
       return s_pClasses[ uiClass ]->szName;
    else
-      return NULL;
+      return nullptr;
 }
 
 const char * hb_clsFuncName( HB_USHORT uiClass )
@@ -1464,7 +1464,7 @@ const char * hb_clsFuncName( HB_USHORT uiClass )
              s_pClasses[ uiClass ]->pClassFuncSym->szName :
              "";
    else
-      return NULL;
+      return nullptr;
 }
 
 PHB_SYMB hb_clsFuncSym( HB_USHORT uiClass )
@@ -1472,7 +1472,7 @@ PHB_SYMB hb_clsFuncSym( HB_USHORT uiClass )
    if( uiClass && uiClass <= s_uiClasses )
       return s_pClasses[ uiClass ]->pClassFuncSym;
    else
-      return NULL;
+      return nullptr;
 }
 
 const char * hb_clsMethodName( HB_USHORT uiClass, HB_USHORT uiMethod )
@@ -1484,7 +1484,7 @@ const char * hb_clsMethodName( HB_USHORT uiClass, HB_USHORT uiMethod )
       if( pMethod->pMessage )
          return pMethod->pMessage->pSymbol->szName;
    }
-   return NULL;
+   return nullptr;
 }
 
 static HB_SIZE hb_clsGetVarIndexEx( HB_USHORT uiClass, PHB_DYNS pVarSym,
@@ -1776,7 +1776,7 @@ static PHB_SYMB hb_clsScalarMethod( PCLASS pClass, PHB_DYNS pMsg,
    else if( pMethod )
       return pMethod->pFuncSym;
 
-   return NULL;
+   return nullptr;
 }
 
 static void hb_clsMakeSuperObject( PHB_ITEM pDest, PHB_ITEM pObject,
@@ -2205,7 +2205,7 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage,
       /* remove this line if you want default HVM error message */
       return &s___msgNoMethod;
    }
-   return NULL;
+   return nullptr;
 }
 
 HB_BOOL hb_objGetVarRef( PHB_ITEM pObject, PHB_SYMB pMessage,
@@ -2555,7 +2555,7 @@ PHB_ITEM hb_objGetVarPtr( PHB_ITEM pObject, PHB_DYNS pVarMsg )
             {
                pObject = hb_arrayGetItemPtr( pObject, 1 );
                if( ! pObject )
-                  return NULL;
+                  return nullptr;
                if( uiClass != pObject->item.asArray.value->uiClass )
                   nIndex = pMethod->uiData +
                            hb_clsParentInstanceOffset( s_pClasses[ pObject->item.asArray.value->uiClass ],
@@ -2565,7 +2565,7 @@ PHB_ITEM hb_objGetVarPtr( PHB_ITEM pObject, PHB_DYNS pVarMsg )
          }
       }
    }
-   return NULL;
+   return nullptr;
 }
 
 static PHB_DYNS hb_objGetMsgSym( PHB_ITEM pMessage )
@@ -2607,7 +2607,7 @@ static PHB_SYMB hb_objGetFuncSym( PHB_ITEM pItem )
       }
    }
 
-   return NULL;
+   return nullptr;
 }
 
 /* clone object if user defined clone method or copy it */
@@ -5061,7 +5061,7 @@ static PHB_ITEM hb_objGetIVars( PHB_ITEM pObject,
    HB_USHORT uiClass, uiSuperClasses;
 
    if( ! pObject || ! HB_IS_OBJECT( pObject ) )
-      return NULL;
+      return nullptr;
 
    uiClass = pObject->item.asArray.value->uiClass;
    pClass = s_pClasses[ uiClass ];

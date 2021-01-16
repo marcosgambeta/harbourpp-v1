@@ -422,7 +422,7 @@ const char * hb_parvc( int iParam, ... )
       return s_parvc( iParam, nArrayIndex );
    }
 
-   return NULL;
+   return nullptr;
 }
 
 HB_SIZE hb_parvclen( int iParam, ... )

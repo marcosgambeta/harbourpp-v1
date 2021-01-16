@@ -1125,7 +1125,7 @@ static LPPAGEINFO hb_ntxPageFind( LPTAGINFO pTag, HB_ULONG ulPage )
       if( *pPagePtr && ( *pPagePtr )->Page == ulPage )
          return *pPagePtr;
    }
-   return NULL;
+   return nullptr;
 }
 
 /*
@@ -1269,7 +1269,7 @@ static LPPAGEINFO hb_ntxPageLoad( LPTAGINFO pTag, HB_ULONG ulPage )
       {
          hb_ntxErrorRT( pTag->pIndex->pArea, EG_CORRUPTION, EDBF_CORRUPT,
                         pTag->pIndex->IndexName, 0, 0, NULL );
-         return NULL;
+         return nullptr;
       }
    }
    pPage = hb_ntxPageFind( pTag, ulPage );
@@ -1299,7 +1299,7 @@ static LPPAGEINFO hb_ntxPageLoad( LPTAGINFO pTag, HB_ULONG ulPage )
                              hb_ntxPageBuffer( pPage ), NTXBLOCKSIZE ) )
       {
          hb_ntxPageRelease( pTag, pPage );
-         return NULL;
+         return nullptr;
       }
       pPage->uiKeys = hb_ntxGetKeyCount( pPage );
    }
@@ -1358,7 +1358,7 @@ static LPPAGEINFO hb_ntxPageNew( LPTAGINFO pTag, HB_BOOL fNull )
        */
       pPage = hb_ntxPageLoad( pTag, pTag->pIndex->NextAvail );
       if( ! pPage )
-         return NULL;
+         return nullptr;
       /*
          Unfortunately Clipper does not left unused index pages clean and
          the key counter can be set to non zero value so to make possible
@@ -1370,7 +1370,7 @@ static LPPAGEINFO hb_ntxPageNew( LPTAGINFO pTag, HB_BOOL fNull )
       {
          hb_ntxErrorRT( pTag->pIndex->pArea, EG_CORRUPTION, EDBF_CORRUPT,
                         pTag->pIndex->IndexName, 0, 0, NULL );
-         return NULL;
+         return nullptr;
       }
 #endif
       pTag->pIndex->NextAvail = hb_ntxGetKeyPage( pPage, 0 );
@@ -1564,10 +1564,10 @@ static LPTAGINFO hb_ntxTagLoad( LPNTXINDEX pIndex, HB_ULONG ulBlock,
        ( ( usType & NTX_FLAG_DEFALUT ) != NTX_FLAG_DEFALUT &&
          usType != NTX_FLAG_OLDDEFALUT ) ||
        lpNTX->key_expr[ 0 ] < 0x20 )
-      return NULL;
+      return nullptr;
 
    if( SELF_COMPILE( &pIndex->pArea->dbfarea.area, ( const char * ) lpNTX->key_expr ) == HB_FAILURE )
-      return NULL;
+      return nullptr;
    pKeyExp = pIndex->pArea->dbfarea.area.valResult;
    pIndex->pArea->dbfarea.area.valResult = NULL;
 
@@ -1576,7 +1576,7 @@ static LPTAGINFO hb_ntxTagLoad( LPNTXINDEX pIndex, HB_ULONG ulBlock,
       if( SELF_COMPILE( &pIndex->pArea->dbfarea.area, ( const char * ) lpNTX->for_expr ) == HB_FAILURE )
       {
          hb_vmDestroyBlockOrMacro( pKeyExp );
-         return NULL;
+         return nullptr;
       }
       pForExp = pIndex->pArea->dbfarea.area.valResult;
       pIndex->pArea->dbfarea.area.valResult = NULL;
@@ -2304,7 +2304,7 @@ static LPPAGEINFO hb_ntxPageTopMove( LPTAGINFO pTag, HB_ULONG ulPage )
          hb_ntxPageRelease( pTag, pPage );
       pPage = hb_ntxPageLoad( pTag, ulPage );
       if( ! pPage )
-         return NULL;
+         return nullptr;
 #ifdef HB_NTX_DEBUG_EXT
       if( pPage->uiKeys == 0 && pTag->stackLevel > 0 )
          hb_errInternal( 9201, "hb_ntxPageTopMove: index corrupted.", nullptr, nullptr );
@@ -2330,7 +2330,7 @@ static LPPAGEINFO hb_ntxPageBottomMove( LPTAGINFO pTag, HB_ULONG ulPage )
          hb_ntxPageRelease( pTag, pPage );
       pPage = hb_ntxPageLoad( pTag, ulPage );
       if( ! pPage )
-         return NULL;
+         return nullptr;
 #ifdef HB_NTX_DEBUG_EXT
       if( pPage->uiKeys == 0 && pTag->stackLevel > 0 )
          hb_errInternal( 9201, "hb_ntxPageBottomMove: index corrupted.", nullptr, nullptr );
@@ -2723,7 +2723,7 @@ static LPKEYINFO hb_ntxPageSplit( LPTAGINFO pTag, LPPAGEINFO pPage,
    HB_ULONG ulPage;
 
    if( ! pNewPage )
-      return NULL;
+      return nullptr;
    pKeyNew = hb_ntxKeyNew( NULL, pTag->KeyLength );
 
    uiHalf = uiKeys >> 1;
@@ -3754,7 +3754,7 @@ static LPTAGINFO hb_ntxFindTag( NTXAREAP pArea, PHB_ITEM pTagItem,
       }
    }
 
-   return NULL;
+   return nullptr;
 }
 
 /*

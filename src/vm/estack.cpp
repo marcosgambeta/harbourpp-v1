@@ -546,7 +546,7 @@ void * hb_stackId( void )
       return ( void * ) &hb_stack;
    }
    else
-      return NULL;
+      return nullptr;
 #else
    {
       HB_STACK_TLS_PRELOAD
@@ -989,7 +989,7 @@ void * hb_stackAllocator( void )
 
       return hb_stack.allocator;
    }
-   return NULL;
+   return nullptr;
 }
 #endif
 
@@ -1036,7 +1036,7 @@ void * hb_stackGetGT( void )
       return hb_stack.hGT;
    }
    else
-      return NULL;
+      return nullptr;
 #else
    HB_STACK_TLS_PRELOAD
    return hb_stack.hGT;

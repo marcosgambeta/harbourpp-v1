@@ -158,7 +158,7 @@ static PHB_DYNS hb_dynsymPos( const char * szName, HB_SYMCNT * puiPos )
 
    *puiPos = uiMiddle;
 
-   return NULL;
+   return nullptr;
 }
 
 /* Create new symbol.
@@ -215,7 +215,7 @@ PHB_DYNS hb_dynsymFind( const char * szName )
 
    HB_DYNSYM_UNLOCK();
 
-   return NULL;
+   return nullptr;
 }
 
 /* Create new symbol */

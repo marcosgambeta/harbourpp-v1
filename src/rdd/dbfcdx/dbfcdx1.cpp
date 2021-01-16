@@ -5251,7 +5251,7 @@ static LPCDXTAG hb_cdxGetActiveTag( CDXAREAP pArea )
    LPCDXTAG pTag;
 
    if( ! pArea->uiTag )
-      return NULL;
+      return nullptr;
    pTag = hb_cdxGetTagByNumber( pArea, pArea->uiTag );
    if( ! pTag )
       pArea->uiTag = 0;

@@ -993,7 +993,7 @@ PHB_ITEM hb_vmThreadStart( HB_ULONG ulAttr, PHB_CARGO_FUNC pFunc, void * cargo )
    HB_SYMBOL_UNUSED( ulAttr );
    HB_SYMBOL_UNUSED( pFunc );
    HB_SYMBOL_UNUSED( cargo );
-   return NULL;
+   return nullptr;
 #endif /* HB_MT_VM */
 }
 
@@ -4664,7 +4664,7 @@ static PHB_ITEM hb_vmEnumRefWrite( PHB_ITEM pRefer, PHB_ITEM pSource )
 {
    HB_SYMBOL_UNUSED( pRefer );
    HB_SYMBOL_UNUSED( pSource );
-   return NULL;
+   return nullptr;
 }
 
 static void hb_vmEnumRefCopy( PHB_ITEM pDest )
@@ -5019,7 +5019,7 @@ static PHB_ITEM hb_vmSwitchGet( void )
       PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 3104, nullptr, "SWITCH", 1, pSwitch );
 
       if( ! pResult )
-         return NULL;
+         return nullptr;
 
       hb_itemMove( pSwitch, pResult );
       hb_itemRelease( pResult );
@@ -7565,7 +7565,7 @@ const char * hb_vmFindModuleSymbolName( PHB_SYMB pSym )
          pLastSymbols = pLastSymbols->pNext;
       }
    }
-   return NULL;
+   return nullptr;
 }
 
 HB_BOOL hb_vmFindModuleSymbols( PHB_SYMB pSym, PHB_SYMB * pSymbols,
@@ -7784,7 +7784,7 @@ static PHB_SYMBOLS hb_vmFindFreeModule( PHB_SYMB pSymbols, HB_USHORT uiSymbols,
       }
    }
 
-   return NULL;
+   return nullptr;
 }
 
 void hb_vmFreeSymbols( PHB_SYMBOLS pSymbols )
@@ -8547,7 +8547,7 @@ static PHB_ITEM hb_vmMsgRefWrite( PHB_ITEM pRefer, PHB_ITEM pSource )
       pMsgRef->value.type |= HB_IT_DEFAULT;
       hb_stackPopReturn();
    }
-   return NULL;
+   return nullptr;
    #if 0
    return &pMsgIdxRef->value;
    #endif
@@ -8703,7 +8703,7 @@ static PHB_ITEM hb_vmMsgIdxRefWrite( PHB_ITEM pRefer, PHB_ITEM pSource )
       pMsgIdxRef->value.type |= HB_IT_DEFAULT;
    }
 
-   return NULL;
+   return nullptr;
    #if 0
    return &pMsgIdxRef->value;
    #endif
@@ -12088,7 +12088,7 @@ PHB_ITEM hb_dbg_vmVarSGet( PHB_ITEM pStaticsBase, int nOffset )
    if( pStaticsBase )
       return hb_arrayGetItemPtr( pStaticsBase, nOffset );
    else
-      return NULL;
+      return nullptr;
 }
 
 HB_ULONG hb_dbg_ProcLevel( void )
@@ -12201,7 +12201,7 @@ PHB_ITEM hb_dbg_vmVarGGet( int nGlobal, int nOffset )
 #else
    HB_SYMBOL_UNUSED( nGlobal );
    HB_SYMBOL_UNUSED( nOffset );
-   return NULL;
+   return nullptr;
 #endif
 }
 

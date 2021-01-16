@@ -430,7 +430,7 @@ char * hb_itemGetC( PHB_ITEM pItem )
       return szResult;
    }
    else
-      return NULL;
+      return nullptr;
 }
 
 /* NOTE: Caller should not modify the buffer returned by this function.
@@ -510,7 +510,7 @@ const char * hb_itemGetCRef( PHB_ITEM pItem, void ** phRef, HB_SIZE * pnLen )
    if( pnLen )
       * pnLen = 0;
 
-   return NULL;
+   return nullptr;
 }
 
 void hb_itemFreeCRef( void * hRef )
@@ -764,7 +764,7 @@ void * hb_itemGetPtr( PHB_ITEM pItem )
    if( pItem && HB_IS_POINTER( pItem ) )
       return pItem->item.asPointer.value;
    else
-      return NULL;
+      return nullptr;
 }
 
 void * hb_itemGetPtrGC( PHB_ITEM pItem, const HB_GC_FUNCS * pFuncs )
@@ -776,7 +776,7 @@ void * hb_itemGetPtrGC( PHB_ITEM pItem, const HB_GC_FUNCS * pFuncs )
        hb_gcFuncs( pItem->item.asPointer.value ) == pFuncs )
       return pItem->item.asPointer.value;
    else
-      return NULL;
+      return nullptr;
 }
 
 PHB_SYMB hb_itemGetSymbol( PHB_ITEM pItem )
@@ -786,7 +786,7 @@ PHB_SYMB hb_itemGetSymbol( PHB_ITEM pItem )
    if( pItem && HB_IS_SYMBOL( pItem ) )
       return pItem->item.asSymbol.value;
    else
-      return NULL;
+      return nullptr;
 }
 
 PHB_ITEM hb_itemReturn( PHB_ITEM pItem )
@@ -3016,7 +3016,7 @@ char * hb_itemPadConv( PHB_ITEM pItem, HB_SIZE * pnSize, HB_BOOL * bFreeReq )
             break;
       }
    }
-   return NULL;
+   return nullptr;
 }
 
 PHB_ITEM hb_itemValToStr( PHB_ITEM pItem )

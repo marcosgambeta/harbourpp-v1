@@ -469,7 +469,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
                      else
                      {
                         hb_xfree( szDest );
-                        return NULL;
+                        return nullptr;
                      }
                   }
                   szHead += hb_cdpU16ToStr( cdp ? cdp : hb_vmCDP(), HB_CDP_ENDIAN_NATIVE,
@@ -478,7 +478,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
                }
                default:
                   hb_xfree( szDest );
-                  return NULL;
+                  return nullptr;
             }
             szSource++;
          }
@@ -487,7 +487,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
          else
          {
             hb_xfree( szDest );
-            return NULL;
+            return nullptr;
          }
       }
       if( cdp && hb_vmCDP() != cdp )
@@ -590,7 +590,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
             if( ! szSource )
             {
                hb_itemRelease( pItem );
-               return NULL;
+               return nullptr;
             }
             hb_arrayAddForward( pValue, pItem );
 
@@ -605,7 +605,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
             else
             {
                hb_itemRelease( pItem );
-               return NULL;
+               return nullptr;
             }
          }
          hb_itemRelease( pItem );
@@ -631,7 +631,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
             {
                hb_itemRelease( pItemKey );
                hb_itemRelease( pItemValue );
-               return NULL;
+               return nullptr;
             }
 
             hb_hashAdd( pValue, pItemKey, pItemValue );
@@ -647,7 +647,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
             {
                hb_itemRelease( pItemKey );
                hb_itemRelease( pItemValue );
-               return NULL;
+               return nullptr;
             }
          }
          hb_itemRelease( pItemKey );
@@ -655,7 +655,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
       }
       return szSource + 1;
    }
-   return NULL;
+   return nullptr;
 }
 
 /* C level API functions */
@@ -725,7 +725,7 @@ static PHB_CODEPAGE _hb_jsonCdpPar( int iParam )
       if( szCdp )
          return hb_cdpFindExt( szCdp );
    }
-   return NULL;
+   return nullptr;
 }
 
 HB_FUNC( HB_JSONENCODE )

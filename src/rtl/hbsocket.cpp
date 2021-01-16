@@ -479,7 +479,7 @@ char * hb_socketAddrGetName( const void * pSockAddr, unsigned len )
    HB_SYMBOL_UNUSED( pSockAddr );
    HB_SYMBOL_UNUSED( len );
    hb_socketSetError( HB_SOCKET_ERR_AFNOSUPPORT );
-   return NULL;
+   return nullptr;
 }
 
 int hb_socketAddrGetPort( const void * pSockAddr, unsigned len )
@@ -504,7 +504,7 @@ PHB_ITEM hb_socketAddrToItem( const void * pSockAddr, unsigned len )
    HB_SYMBOL_UNUSED( pSockAddr );
    HB_SYMBOL_UNUSED( len );
    hb_socketSetError( HB_SOCKET_ERR_AFNOSUPPORT );
-   return NULL;
+   return nullptr;
 }
 
 int hb_socketGetSockName( HB_SOCKET sd, void ** pSockAddr, unsigned * puiLen )
@@ -780,7 +780,7 @@ char * hb_socketResolveAddr( const char * szAddr, int af )
    HB_SYMBOL_UNUSED( szAddr );
    HB_SYMBOL_UNUSED( af );
    hb_socketSetError( HB_SOCKET_ERR_AFNOSUPPORT );
-   return NULL;
+   return nullptr;
 }
 
 PHB_ITEM hb_socketGetHosts( const char * szAddr, int af )
@@ -788,7 +788,7 @@ PHB_ITEM hb_socketGetHosts( const char * szAddr, int af )
    HB_SYMBOL_UNUSED( szAddr );
    HB_SYMBOL_UNUSED( af );
    hb_socketSetError( HB_SOCKET_ERR_AFNOSUPPORT );
-   return NULL;
+   return nullptr;
 }
 
 PHB_ITEM hb_socketGetAliases( const char * szAddr, int af )
@@ -796,7 +796,7 @@ PHB_ITEM hb_socketGetAliases( const char * szAddr, int af )
    HB_SYMBOL_UNUSED( szAddr );
    HB_SYMBOL_UNUSED( af );
    hb_socketSetError( HB_SOCKET_ERR_AFNOSUPPORT );
-   return NULL;
+   return nullptr;
 }
 
 char * hb_socketGetHostName( const void * pSockAddr, unsigned len )
@@ -804,7 +804,7 @@ char * hb_socketGetHostName( const void * pSockAddr, unsigned len )
    HB_SYMBOL_UNUSED( pSockAddr );
    HB_SYMBOL_UNUSED( len );
    hb_socketSetError( HB_SOCKET_ERR_AFNOSUPPORT );
-   return NULL;
+   return nullptr;
 }
 
 PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
@@ -812,7 +812,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
    HB_SYMBOL_UNUSED( af );
    HB_SYMBOL_UNUSED( fNoAliases );
    hb_socketSetError( HB_SOCKET_ERR_AFNOSUPPORT );
-   return NULL;
+   return nullptr;
 }
 
 #else
@@ -3396,7 +3396,7 @@ char * hb_socketResolveAddr( const char * szAddr, int af )
    int iError = 0;
 
    if( ! szAddr || ! *szAddr )
-      return NULL;
+      return nullptr;
 
    if( af == HB_SOCKET_AF_INET )
    {
@@ -3632,7 +3632,7 @@ PHB_ITEM hb_socketGetAliases( const char * szAddr, int af )
    HB_SYMBOL_UNUSED( szAddr );
    HB_SYMBOL_UNUSED( af );
    hb_socketSetError( HB_SOCKET_ERR_AFNOSUPPORT );
-   return NULL;
+   return nullptr;
 }
 
 char * hb_socketGetHostName( const void * pSockAddr, unsigned len )

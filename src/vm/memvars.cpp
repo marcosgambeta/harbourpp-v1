@@ -519,7 +519,7 @@ PHB_ITEM hb_memvarGetItem( PHB_SYMB pMemvarSymb )
             return pMemvar;
       }
    }
-   return NULL;
+   return nullptr;
 }
 
 /*

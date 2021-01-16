@@ -197,7 +197,7 @@ HANDLE WINAPI GetStdHandle( DWORD nStdHandle )
 {
    HB_SYMBOL_UNUSED( nStdHandle );
 
-   return NULL;
+   return nullptr;
 }
 
 DWORD WINAPI GetFileType( HANDLE handle )

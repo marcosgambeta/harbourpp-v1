@@ -200,7 +200,7 @@ HB_WCHAR * hb_wstrunshare( void ** phStr, const HB_WCHAR * pStr, HB_SIZE nLen )
    HB_TRACE( HB_TR_DEBUG, ( "hb_wstrunshare(%p,%p,%" HB_PFS "u)", ( void * ) phStr, ( const void * ) pStr, nLen ) );
 
    if( pStr == NULL || phStr == NULL || *phStr == NULL )
-      return NULL;
+      return nullptr;
 
    if( nLen > 0 &&
        ( *phStr == ( const void * ) s_szConstStr || hb_xRefCount( *phStr ) > 1 ) )
@@ -224,7 +224,7 @@ char * hb_strunshare( void ** phStr, const char * pStr, HB_SIZE nLen )
    HB_TRACE( HB_TR_DEBUG, ( "hb_strunshare(%p,%p,%" HB_PFS "u)", ( void * ) phStr, ( const void * ) pStr, nLen ) );
 
    if( pStr == NULL || phStr == NULL || *phStr == NULL )
-      return NULL;
+      return nullptr;
 
    if( nLen > 0 &&
        ( *phStr == ( const void * ) s_szConstStr || hb_xRefCount( *phStr ) > 1 ) )
@@ -297,7 +297,7 @@ const char * hb_itemGetStr( PHB_ITEM pItem, void * cdp, void ** phString, HB_SIZ
       *pnLen = 0;
    *phString = NULL;
 
-   return NULL;
+   return nullptr;
 }
 
 const char * hb_itemGetStrUTF8( PHB_ITEM pItem, void ** phString, HB_SIZE * pnLen )
@@ -337,7 +337,7 @@ const char * hb_itemGetStrUTF8( PHB_ITEM pItem, void ** phString, HB_SIZE * pnLe
       *pnLen = 0;
    *phString = NULL;
 
-   return NULL;
+   return nullptr;
 }
 
 const HB_WCHAR * hb_itemGetStrU16( PHB_ITEM pItem, int iEndian,
@@ -373,7 +373,7 @@ const HB_WCHAR * hb_itemGetStrU16( PHB_ITEM pItem, int iEndian,
       *pnLen = 0;
    *phString = NULL;
 
-   return NULL;
+   return nullptr;
 }
 
 
@@ -571,7 +571,7 @@ const char * hb_arrayGetStr( PHB_ITEM pArray, HB_SIZE nIndex, void * cdp,
       *pnLen = 0;
    *phString = NULL;
 
-   return NULL;
+   return nullptr;
 }
 
 const char * hb_arrayGetStrUTF8( PHB_ITEM pArray, HB_SIZE nIndex,
@@ -586,7 +586,7 @@ const char * hb_arrayGetStrUTF8( PHB_ITEM pArray, HB_SIZE nIndex,
       *pnLen = 0;
    *phString = NULL;
 
-   return NULL;
+   return nullptr;
 }
 
 const HB_WCHAR * hb_arrayGetStrU16( PHB_ITEM pArray, HB_SIZE nIndex, int iEndian,
@@ -601,7 +601,7 @@ const HB_WCHAR * hb_arrayGetStrU16( PHB_ITEM pArray, HB_SIZE nIndex, int iEndian
       *pnLen = 0;
    *phString = NULL;
 
-   return NULL;
+   return nullptr;
 }
 
 
@@ -713,7 +713,7 @@ const char * hb_parstr( int iParam, void * cdp, void ** phString, HB_SIZE * pnLe
       *pnLen = 0;
    *phString = NULL;
 
-   return NULL;
+   return nullptr;
 }
 
 const char * hb_parstr_utf8( int iParam, void ** phString, HB_SIZE * pnLen )
@@ -736,7 +736,7 @@ const char * hb_parstr_utf8( int iParam, void ** phString, HB_SIZE * pnLen )
       *pnLen = 0;
    *phString = NULL;
 
-   return NULL;
+   return nullptr;
 }
 
 const HB_WCHAR * hb_parstr_u16( int iParam, int iEndian,
@@ -760,7 +760,7 @@ const HB_WCHAR * hb_parstr_u16( int iParam, int iEndian,
       *pnLen = 0;
    *phString = NULL;
 
-   return NULL;
+   return nullptr;
 }
 
 
@@ -788,7 +788,7 @@ const char * hb_parastr( int iParam, HB_SIZE nIndex,
       *pnLen = 0;
    *phString = NULL;
 
-   return NULL;
+   return nullptr;
 }
 
 const char * hb_parastr_utf8( int iParam, HB_SIZE nIndex,
@@ -815,7 +815,7 @@ const char * hb_parastr_utf8( int iParam, HB_SIZE nIndex,
       *pnLen = 0;
    *phString = NULL;
 
-   return NULL;
+   return nullptr;
 }
 
 const HB_WCHAR * hb_parastr_u16( int iParam, HB_SIZE nIndex, int iEndian,
@@ -842,7 +842,7 @@ const HB_WCHAR * hb_parastr_u16( int iParam, HB_SIZE nIndex, int iEndian,
       *pnLen = 0;
    *phString = NULL;
 
-   return NULL;
+   return nullptr;
 }
 
 

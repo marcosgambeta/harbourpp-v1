@@ -112,7 +112,7 @@ void * hb_rddNewAreaNode( LPRDDNODE pRddNode, HB_USHORT uiRddID )
       pArea->rddID = uiRddID;
 
       if( SELF_STRUCTSIZE( pArea, &uiSize ) != HB_SUCCESS )
-         return NULL;
+         return nullptr;
 
       /* Need more space? */
       if( uiSize > sizeof( AREA ) )   /* Size of Area changed */
@@ -135,7 +135,7 @@ void * hb_rddNewAreaNode( LPRDDNODE pRddNode, HB_USHORT uiRddID )
    if( SELF_NEW( pArea ) != HB_SUCCESS )
    {
       SELF_RELEASE( pArea );
-      return NULL;
+      return nullptr;
    }
 
    return ( void * ) pArea;
@@ -182,7 +182,7 @@ void * hb_rddAllocWorkAreaAlias( const char * szAlias, int iArea )
       hb_errRT_DBCMD_Ext( EG_DUPALIAS, EDBCMD_DUPALIAS, nullptr, szAlias, EF_CANDEFAULT );
    }
 
-   return NULL;
+   return nullptr;
 }
 
 /*

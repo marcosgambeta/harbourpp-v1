@@ -297,7 +297,7 @@ void * hb_arrayId( PHB_ITEM pArray )
    if( pArray && HB_IS_ARRAY( pArray ) )
       return ( void * ) pArray->item.asArray.value;
    else
-      return NULL;
+      return nullptr;
 }
 
 /* retrieves numer of references to the array */
@@ -505,7 +505,7 @@ PHB_ITEM hb_arrayGetItemPtr( PHB_ITEM pArray, HB_SIZE nIndex )
    if( HB_IS_ARRAY( pArray ) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
       return pArray->item.asArray.value->pItems + nIndex - 1;
    else
-      return NULL;
+      return nullptr;
 }
 
 char * hb_arrayGetDS( PHB_ITEM pArray, HB_SIZE nIndex, char * szDate )
@@ -644,7 +644,7 @@ char * hb_arrayGetC( PHB_ITEM pArray, HB_SIZE nIndex )
    if( HB_IS_ARRAY( pArray ) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
       return hb_itemGetC( pArray->item.asArray.value->pItems + nIndex - 1 );
    else
-      return NULL;
+      return nullptr;
 }
 
 const char * hb_arrayGetCPtr( PHB_ITEM pArray, HB_SIZE nIndex )
@@ -674,7 +674,7 @@ void * hb_arrayGetPtr( PHB_ITEM pArray, HB_SIZE nIndex )
    if( HB_IS_ARRAY( pArray ) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
       return hb_itemGetPtr( pArray->item.asArray.value->pItems + nIndex - 1 );
    else
-      return NULL;
+      return nullptr;
 }
 
 void * hb_arrayGetPtrGC( PHB_ITEM pArray, HB_SIZE nIndex, const HB_GC_FUNCS * pFuncs )
@@ -684,7 +684,7 @@ void * hb_arrayGetPtrGC( PHB_ITEM pArray, HB_SIZE nIndex, const HB_GC_FUNCS * pF
    if( HB_IS_ARRAY( pArray ) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
       return hb_itemGetPtrGC( pArray->item.asArray.value->pItems + nIndex - 1, pFuncs );
    else
-      return NULL;
+      return nullptr;
 }
 
 PHB_SYMB hb_arrayGetSymbol( PHB_ITEM pArray, HB_SIZE nIndex )
@@ -694,7 +694,7 @@ PHB_SYMB hb_arrayGetSymbol( PHB_ITEM pArray, HB_SIZE nIndex )
    if( HB_IS_ARRAY( pArray ) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
       return hb_itemGetSymbol( pArray->item.asArray.value->pItems + nIndex - 1 );
    else
-      return NULL;
+      return nullptr;
 }
 
 

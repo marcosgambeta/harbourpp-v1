@@ -291,7 +291,7 @@ void * hb_codeblockId( PHB_ITEM pItem )
    if( HB_IS_BLOCK( pItem ) )
       return ( void * ) pItem->item.asBlock.value;
    else
-      return NULL;
+      return nullptr;
 }
 
 /* retrieves numer of references to the codeblock */

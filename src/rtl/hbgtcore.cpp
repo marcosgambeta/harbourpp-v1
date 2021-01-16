@@ -73,7 +73,7 @@ PHB_GT hb_gt_Base( void )
    if( pGT && HB_GTSELF_LOCK( pGT ) )
       return pGT;
    else
-      return NULL;
+      return nullptr;
 }
 
 void hb_gt_BaseFree( PHB_GT pGT )
@@ -479,7 +479,7 @@ static const char * hb_gt_def_ColorDecode( const char * szColorString, int * piC
    }
 
    *piColor = iCount == 0 ? -1 : nColor;
-   return NULL;
+   return nullptr;
 }
 
 static int hb_gt_def_ColorNum( PHB_GT pGT, const char * szColorString )
@@ -3727,7 +3727,7 @@ static const char * hb_gt_FindDefault( void )
    if( hb_dynsymFind( "HB_GT_NUL_DEFAULT" ) )
       return "NUL";
    else
-      return NULL;
+      return nullptr;
 }
 
 static int hb_gt_FindEntry( const char * pszID )
@@ -3808,7 +3808,7 @@ PHB_GT hb_gtLoad( const char * szGtName, PHB_GT pGT, PHB_GT_FUNCS pSuperTable )
          }
       }
    }
-   return NULL;
+   return nullptr;
 }
 
 void hb_gtIsGtRef( void * hGT )
@@ -4003,7 +4003,7 @@ static void * hb_gtParam( int iParam )
       return *gtHolder;
 
    hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   return NULL;
+   return nullptr;
 }
 
 PHB_GT hb_gt_ItemBase( PHB_ITEM pItemGT )
@@ -4016,7 +4016,7 @@ PHB_GT hb_gt_ItemBase( PHB_ITEM pItemGT )
       if( HB_GTSELF_LOCK( pGT ) )
          return pGT;
    }
-   return NULL;
+   return nullptr;
 }
 
 HB_FUNC( HB_GTRELOAD )

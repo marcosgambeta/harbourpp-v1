@@ -190,7 +190,7 @@ static PHB_COM hb_comGetPort( int iPort, int iStatus )
       else
          hb_comSetComError( pCom, HB_COM_ERR_CLOSED );
    }
-   return NULL;
+   return nullptr;
 }
 
 static const char * hb_comGetNameRaw( PHB_COM pCom, char * buffer, int size )

@@ -827,7 +827,7 @@ char * hb_dblToStr( char * szBuf, HB_SIZE nSize, double dNumber, int iMaxDec )
 
    iLen = ( int ) ( nSize - 1 );
    if( iLen <= 0 )
-      return NULL;
+      return nullptr;
 #ifdef HB_NUM_PRECISION
    iPrec = HB_NUM_PRECISION;
 #else
@@ -845,7 +845,7 @@ char * hb_dblToStr( char * szBuf, HB_SIZE nSize, double dNumber, int iMaxDec )
             szBuf[ 1 ] = '\0';
             return szBuf;
          }
-         return NULL;
+         return nullptr;
       }
       *szBuf++ = '-';
    }
@@ -856,7 +856,7 @@ char * hb_dblToStr( char * szBuf, HB_SIZE nSize, double dNumber, int iMaxDec )
    do
    {
       if( iPos == 0 )
-         return NULL;
+         return nullptr;
       dDig = modf( dInt / doBase + 0.01, &dInt ) * doBase;
       szBuf[ --iPos ] = '0' + ( char ) ( dDig + 0.01 );
    }
@@ -880,7 +880,7 @@ char * hb_dblToStr( char * szBuf, HB_SIZE nSize, double dNumber, int iMaxDec )
                if( --iPrec < 0 )
                {
                   if( iPos == iLen )
-                     return NULL;
+                     return nullptr;
                   memmove( szBuf + 1, szBuf, iPos );
                   *szBuf = '1';
                   ++iPos;

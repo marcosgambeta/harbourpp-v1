@@ -387,7 +387,7 @@ static PHB_ITEM hb_hashValuePtr( PHB_BASEHASH pBaseHash, PHB_ITEM pKey, HB_BOOL 
    if( ! hb_hashFind( pBaseHash, pKey, &nPos ) )
    {
       if( ! fAdd )
-         return NULL;
+         return nullptr;
 
       if( pBaseHash->nSize == pBaseHash->nLen )
          hb_hashResize( pBaseHash, pBaseHash->nSize + HB_HASH_ITEM_ALLOC );
@@ -642,7 +642,7 @@ PHB_ITEM hb_hashGetItemPtr( PHB_ITEM pHash, PHB_ITEM pKey, int iFlags )
          return HB_IS_BYREF( pDest ) ? hb_itemUnRef( pDest ) : pDest;
    }
 
-   return NULL;
+   return nullptr;
 }
 
 PHB_ITEM hb_hashGetCItemPtr( PHB_ITEM pHash, const char * pszKey )
@@ -662,7 +662,7 @@ PHB_ITEM hb_hashGetCItemPtr( PHB_ITEM pHash, const char * pszKey )
          return HB_IS_BYREF( pDest ) ? hb_itemUnRef( pDest ) : pDest;
    }
 
-   return NULL;
+   return nullptr;
 }
 
 HB_SIZE hb_hashGetCItemPos( PHB_ITEM pHash, const char * pszKey )
@@ -706,7 +706,7 @@ PHB_ITEM hb_hashGetItemRefPtr( PHB_ITEM pHash, PHB_ITEM pKey )
       }
    }
 
-   return NULL;
+   return nullptr;
 }
 
 HB_BOOL hb_hashScan( PHB_ITEM pHash, PHB_ITEM pKey, HB_SIZE * pnPos )
@@ -906,7 +906,7 @@ PHB_ITEM hb_hashGetKeyAt( PHB_ITEM pHash, HB_SIZE nPos )
    if( HB_IS_HASH( pHash ) && nPos > 0 && nPos <= pHash->item.asHash.value->nLen )
       return &pHash->item.asHash.value->pPairs[ nPos - 1 ].key;
    else
-      return NULL;
+      return nullptr;
 }
 
 PHB_ITEM hb_hashGetValueAt( PHB_ITEM pHash, HB_SIZE nPos )
@@ -919,7 +919,7 @@ PHB_ITEM hb_hashGetValueAt( PHB_ITEM pHash, HB_SIZE nPos )
       return HB_IS_BYREF( pValue ) ? hb_itemUnRef( pValue ) : pValue;
    }
    else
-      return NULL;
+      return nullptr;
 }
 
 HB_BOOL hb_hashDelAt( PHB_ITEM pHash, HB_SIZE nPos )
@@ -943,7 +943,7 @@ void * hb_hashId( PHB_ITEM pHash )
    if( HB_IS_HASH( pHash ) )
       return ( void * ) pHash->item.asHash.value;
    else
-      return NULL;
+      return nullptr;
 }
 
 /* retrieves numer of references to the hash */
@@ -1109,7 +1109,7 @@ PHB_ITEM hb_hashGetKeys( PHB_ITEM pHash )
       return pKeys;
    }
 
-   return NULL;
+   return nullptr;
 }
 
 PHB_ITEM hb_hashGetValues( PHB_ITEM pHash )
@@ -1131,7 +1131,7 @@ PHB_ITEM hb_hashGetValues( PHB_ITEM pHash )
       return pValues;
    }
 
-   return NULL;
+   return nullptr;
 }
 
 void hb_hashSetDefault( PHB_ITEM pHash, PHB_ITEM pValue )
@@ -1162,7 +1162,7 @@ PHB_ITEM hb_hashGetDefault( PHB_ITEM pHash )
    if( HB_IS_HASH( pHash ) )
       return pHash->item.asHash.value->pDefault;
    else
-      return NULL;
+      return nullptr;
 }
 
 void hb_hashSetFlags( PHB_ITEM pHash, int iFlags )

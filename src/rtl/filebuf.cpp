@@ -146,7 +146,7 @@ static PHB_FILE hb_fileFind( HB_ULONG device, HB_ULONG inode )
       }
       while( s_openFiles != pFile );
    }
-   return NULL;
+   return nullptr;
 }
 
 static PHB_FILE hb_fileNew( HB_FHANDLE hFile, HB_BOOL fShared, int iMode,

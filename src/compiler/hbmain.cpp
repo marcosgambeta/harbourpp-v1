@@ -313,7 +313,7 @@ static PHB_HSYMBOL hb_compSymbolFind( HB_COMP_DECL, const char * szSymbolName, H
    if( pwPos )
       *pwPos = 0;
 
-   return NULL;
+   return nullptr;
 }
 
 /* returns a symbol name based on its index on the symbol table
@@ -329,7 +329,7 @@ const char * hb_compSymbolName( HB_COMP_DECL, HB_USHORT uiSymbol )
          return pSym->szName;
       pSym = pSym->pNext;
    }
-   return NULL;
+   return nullptr;
 }
 
 static void hb_compCheckDuplVars( HB_COMP_DECL, PHB_HVAR pVar, const char * szVarName )
@@ -642,7 +642,7 @@ static PHB_HVAR hb_compVariableGet( PHB_HVAR pVars, const char * szVarName, int 
       pVars = pVars->pNext;
       ++iVar;
    }
-   return NULL;
+   return nullptr;
 }
 
 /* returns variable pointer if defined or NULL */
@@ -1051,7 +1051,7 @@ PHB_HCLASS hb_compClassFind( HB_COMP_DECL, const char * szClassName )
    PHB_HCLASS pClass = HB_COMP_PARAM->pFirstClass;
 
    if( HB_COMP_PARAM->iWarnings < 3 )
-      return NULL;
+      return nullptr;
 
    while( pClass )
    {
@@ -1059,7 +1059,7 @@ PHB_HCLASS hb_compClassFind( HB_COMP_DECL, const char * szClassName )
          return pClass;
       pClass = pClass->pNext;
    }
-   return NULL;
+   return nullptr;
 }
 
 PHB_HCLASS hb_compClassAdd( HB_COMP_DECL, const char * szClassName, const char * szClassFunc )
@@ -1072,7 +1072,7 @@ PHB_HCLASS hb_compClassAdd( HB_COMP_DECL, const char * szClassName, const char *
    #endif
 
    if( HB_COMP_PARAM->iWarnings < 3 )
-      return NULL;
+      return nullptr;
 
    if( ( pClass = hb_compClassFind( HB_COMP_PARAM, szClassName ) ) != NULL )
    {
@@ -1115,7 +1115,7 @@ PHB_HDECLARED hb_compMethodFind( PHB_HCLASS pClass, const char * szMethodName )
       }
    }
 
-   return NULL;
+   return nullptr;
 }
 
 PHB_HDECLARED hb_compMethodAdd( HB_COMP_DECL, PHB_HCLASS pClass, const char * szMethodName )
@@ -1127,7 +1127,7 @@ PHB_HDECLARED hb_compMethodAdd( HB_COMP_DECL, PHB_HCLASS pClass, const char * sz
    #endif
 
    if( HB_COMP_PARAM->iWarnings < 3 )
-      return NULL;
+      return nullptr;
 
    if( ( pMethod = hb_compMethodFind( pClass, szMethodName ) ) != NULL )
    {
@@ -1180,7 +1180,7 @@ static PHB_HDECLARED hb_compDeclaredFind( HB_COMP_DECL, const char * szDeclaredN
          return pSym;
       pSym = pSym->pNext;
    }
-   return NULL;
+   return nullptr;
 }
 
 PHB_HDECLARED hb_compDeclaredAdd( HB_COMP_DECL, const char * szDeclaredName )
@@ -1188,7 +1188,7 @@ PHB_HDECLARED hb_compDeclaredAdd( HB_COMP_DECL, const char * szDeclaredName )
    PHB_HDECLARED pDeclared;
 
    if( HB_COMP_PARAM->iWarnings < 3 )
-      return NULL;
+      return nullptr;
 
    #if 0
    printf( "\nDeclaring Function: %s\n", szDeclaredName, NULL );

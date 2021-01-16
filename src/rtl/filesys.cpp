@@ -393,7 +393,7 @@ static HANDLE DosToWinHandle( HB_FHANDLE fHandle )
    switch( fHandle )
    {
       case ( HB_FHANDLE ) FS_ERROR:
-         return NULL;
+         return nullptr;
       case ( HB_FHANDLE ) HB_STDIN_HANDLE:
          return GetStdHandle( STD_INPUT_HANDLE );
       case ( HB_FHANDLE ) HB_STDOUT_HANDLE:

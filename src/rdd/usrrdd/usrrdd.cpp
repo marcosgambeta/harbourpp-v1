@@ -155,7 +155,7 @@ static AREAP hb_usrGetAreaPointer( int iArea )
    if( iArea != 0 )
       return ( AREAP ) hb_rddGetWorkAreaPointer( iArea );
    else
-      return NULL;
+      return nullptr;
 }
 
 
@@ -171,7 +171,7 @@ static PHB_ITEM hb_usrArrayGet( PHB_ITEM pArray, HB_SIZE nPos, HB_TYPE uiType )
    if( pItem && ( hb_itemType( pItem ) & uiType ) != 0 )
       return pItem;
    else
-      return NULL;
+      return nullptr;
 }
 
 static const char * hb_usrArrayGetCPtr( PHB_ITEM pArray, HB_SIZE nPos )
@@ -181,7 +181,7 @@ static const char * hb_usrArrayGetCPtr( PHB_ITEM pArray, HB_SIZE nPos )
    if( pItem && HB_IS_STRING( pItem ) )
       return hb_itemGetCPtr( pItem );
    else
-      return NULL;
+      return nullptr;
 }
 
 static PHB_ITEM hb_usrFieldInfoToItem( LPDBFIELDINFO pFieldInfo )
@@ -3128,7 +3128,7 @@ static AREAP hb_usrGetAreaParam( int iParams )
 
    hb_retni( HB_FAILURE );
 
-   return NULL;
+   return nullptr;
 }
 
 static LPRDDNODE hb_usrGetNodeParam( int iParams )
@@ -3153,7 +3153,7 @@ static LPRDDNODE hb_usrGetNodeParam( int iParams )
 
    hb_retni( HB_FAILURE );
 
-   return NULL;
+   return nullptr;
 }
 
 

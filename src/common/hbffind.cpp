@@ -939,7 +939,7 @@ PHB_FFIND hb_fsFindFirst( const char * pszFileMask, HB_FATTR attrmask )
 
    hb_fsFindClose( ffind );
 
-   return NULL;
+   return nullptr;
 }
 
 /* Finds next matching file, and applies a filter which makes

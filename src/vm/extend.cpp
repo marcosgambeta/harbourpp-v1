@@ -77,7 +77,7 @@ PHB_ITEM hb_param( int iParam, long lMask )
          return pItem;
    }
 
-   return NULL;
+   return nullptr;
 }
 
 PHB_ITEM hb_paramError( int iParam )
@@ -222,7 +222,7 @@ const char * hb_parc( int iParam )
          return pItem->item.asString.value;
    }
 
-   return NULL;
+   return nullptr;
 }
 
 const char * hb_parcx( int iParam )
@@ -706,7 +706,7 @@ void * hb_parptr( int iParam )
          return pItem->item.asPointer.value;
    }
 
-   return NULL;
+   return nullptr;
 }
 
 void * hb_parptrGC( const HB_GC_FUNCS * pFuncs, int iParam )
@@ -727,7 +727,7 @@ void * hb_parptrGC( const HB_GC_FUNCS * pFuncs, int iParam )
          return pItem->item.asPointer.value;
    }
 
-   return NULL;
+   return nullptr;
 }
 
 /* NOTE: Caller should not modify the buffer returned by this function.
@@ -762,7 +762,7 @@ const char * hb_parvc( int iParam, ... )
       }
    }
 
-   return NULL;
+   return nullptr;
 }
 
 const char * hb_parvcx( int iParam, ... )
@@ -1315,7 +1315,7 @@ void * hb_parvptr( int iParam, ... )
       }
    }
 
-   return NULL;
+   return nullptr;
 }
 
 void * hb_parvptrGC( const HB_GC_FUNCS * pFuncs, int iParam, ... )
@@ -1354,7 +1354,7 @@ void * hb_parvptrGC( const HB_GC_FUNCS * pFuncs, int iParam, ... )
       }
    }
 
-   return NULL;
+   return nullptr;
 }
 
 #undef hb_ret

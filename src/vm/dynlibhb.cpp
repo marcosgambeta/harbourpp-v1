@@ -167,7 +167,7 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
       return hb_itemPutPtrGC( nullptr, pLibPtr );
    }
 
-   return NULL;
+   return nullptr;
 }
 
 HB_BOOL hb_libFree( PHB_ITEM pDynLib )
@@ -232,7 +232,7 @@ void * hb_libSymAddr( PHB_ITEM pDynLib, const char * pszSymbol )
       HB_SYMBOL_UNUSED( pszSymbol );
 #endif
    }
-   return NULL;
+   return nullptr;
 }
 
 HB_FUNC( HB_LIBLOAD )

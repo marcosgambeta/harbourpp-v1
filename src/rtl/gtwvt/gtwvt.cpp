@@ -299,7 +299,7 @@ static PHB_GTWVT hb_gt_wvt_New( PHB_GT pGT, HINSTANCE hInstance, int iCmdShow )
    if( ! hb_gt_wvt_Alloc( pWVT ) )
    {
       hb_xfree( pWVT );
-      return NULL;
+      return nullptr;
    }
 
    pWVT->hInstance         = hInstance;
@@ -1414,7 +1414,7 @@ static HBITMAP hb_gt_wvt_GetBoxChar( PHB_GTWVT pWVT, HB_USHORT * puc16 )
    int iPos, iTrans;
 
    if( ( pWVT->fontAttribute & HB_GTI_FONTA_DRAWBOX ) == 0 )
-      return NULL;
+      return nullptr;
 
    if( uc16 >= HB_BOXCH_RC_0 && uc16 <= HB_BOXCH_RC_ACC )
    {
@@ -1457,7 +1457,7 @@ static HBITMAP hb_gt_wvt_GetBoxChar( PHB_GTWVT pWVT, HB_USHORT * puc16 )
             *puc16 = '\'';
             break;
       }
-      return NULL;
+      return nullptr;
    }
 
    if     ( uc16 == HB_BOXCH_ARROW_R )
@@ -1475,7 +1475,7 @@ static HBITMAP hb_gt_wvt_GetBoxChar( PHB_GTWVT pWVT, HB_USHORT * puc16 )
       iPos = HB_BOXCH_CHR_BASE + ( HB_BOXCH_BOX_MAX - HB_BOXCH_BOX_MIN + 1 ) +
              ( uc16 - HB_BOXCH_RC_MIN );
    else
-      return NULL;
+      return nullptr;
 
    iTrans = pWVT->boxIndex[ iPos ];
    if( iTrans == HB_BOXCH_TRANS_MAX )

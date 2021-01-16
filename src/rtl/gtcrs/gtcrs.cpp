@@ -1912,7 +1912,7 @@ static InOutBase * create_ioBase( char * term, int infd, int outfd, int errfd,
    if( ioBase->basescr == NULL )
    {
       destroy_ioBase( ioBase );
-      return NULL;
+      return nullptr;
    }
 
    ioBase->hb_stdscr = stdscr;
@@ -2120,10 +2120,10 @@ static InOutBase * create_newXterm( void )
    char ptyname[ 64 ], buf[ 64 ], * ptr;
 
    if( ! getenv( "DISPLAY" ) )
-      return NULL;
+      return nullptr;
 
    if( openpty( &masterfd, &slavefd, ptyname, NULL, NULL ) == -1 )
-      return NULL;
+      return nullptr;
 
    tcsetpgrp( masterfd, getpgrp() );
 
@@ -2131,7 +2131,7 @@ static InOutBase * create_newXterm( void )
    {
       close( masterfd );
       close( slavefd );
-      return NULL;
+      return nullptr;
    }
 
    if( termpid == 0 )
@@ -2170,7 +2170,7 @@ static InOutBase * create_newXterm( void )
    return create_ioBase( "xterm", slavefd, slavefd, slavefd, termpid );
 #endif
 #endif
-   return NULL;
+   return nullptr;
 }
 
 static int set_active_ioBase( int iNO_ioBase )

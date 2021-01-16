@@ -76,7 +76,7 @@ void * hb_xvlock( HB_VMHANDLE h )
 {
    /* TODO */
    HB_SYMBOL_UNUSED( h );
-   return NULL;
+   return nullptr;
 }
 
 void hb_xvunlock( HB_VMHANDLE h )
@@ -91,7 +91,7 @@ void * hb_xvwire( HB_VMHANDLE h )
 {
    /* TODO */
    HB_SYMBOL_UNUSED( h );
-   return NULL;
+   return nullptr;
 }
 
 void hb_xvunwire( HB_VMHANDLE h )
@@ -160,7 +160,7 @@ void * hb_xvheaplock( HB_VMHANDLE h, HB_SIZE nOffset )
    /* TODO */
    HB_SYMBOL_UNUSED( h );
    HB_SYMBOL_UNUSED( nOffset );
-   return NULL;
+   return nullptr;
 }
 
 void hb_xvheapunlock( HB_VMHANDLE h, HB_SIZE nOffset )

@@ -139,7 +139,7 @@ static const char * hb_memoDefaultFileExt( int iType, HB_USHORT uiRdd )
       case DB_MEMO_SMT:
          return SMT_MEMOEXT;
    }
-   return NULL;
+   return nullptr;
 }
 
 static int hb_memoDefaultType( LPRDDNODE pRDD, HB_ULONG ulConnect )

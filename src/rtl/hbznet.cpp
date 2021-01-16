@@ -139,7 +139,7 @@ PHB_ZNETSTREAM hb_znetOpen( int level, int strategy )
    }
 
    hb_znetClose( pStream );
-   return NULL;
+   return nullptr;
 }
 
 /* set encryption key

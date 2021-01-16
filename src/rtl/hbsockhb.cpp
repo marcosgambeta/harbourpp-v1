@@ -417,7 +417,7 @@ PHB_SOCKEX hb_sockexParam( int iParam )
       return *pSockPtr;
 
    hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   return NULL;
+   return nullptr;
 }
 
 PHB_SOCKEX hb_sockexItemGet( PHB_ITEM pItem )

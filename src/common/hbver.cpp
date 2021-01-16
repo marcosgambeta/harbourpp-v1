@@ -271,7 +271,7 @@ const char * hb_verPlatformMacro( void )
 #elif defined( HB_OS_CYGWIN )
    return "CYGWIN";
 #else
-   return NULL;
+   return nullptr;
 #endif
 }
 

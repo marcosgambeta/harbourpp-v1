@@ -286,7 +286,7 @@ static const HB_PP_OPERATOR * hb_pp_operatorFind( PHB_PP_STATE pState,
    }
    while( --i > 0 );
 
-   return NULL;
+   return nullptr;
 }
 
 #define HB_MEMBUF_DEFAULT_SIZE      256
@@ -2036,7 +2036,7 @@ static PHB_PP_FILE hb_pp_FileNew( PHB_PP_STATE pState, const char * szFileName,
       }
 
       if( iAction != HB_PP_OPEN_OK )
-         return NULL;
+         return nullptr;
 
       if( pState->pIncFunc )
          ( pState->pIncFunc )( pState->cargo, szFileName );
@@ -5917,7 +5917,7 @@ char * hb_pp_fileName( PHB_PP_STATE pState )
    if( pState->pFile )
       return pState->pFile->szFileName;
    else
-      return NULL;
+      return nullptr;
 }
 
 /*
@@ -6103,7 +6103,7 @@ char * hb_pp_nextLine( PHB_PP_STATE pState, HB_SIZE * pnLen )
 
    if( pnLen )
       *pnLen = 0;
-   return NULL;
+   return nullptr;
 }
 
 /*

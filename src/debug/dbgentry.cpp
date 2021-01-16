@@ -285,7 +285,7 @@ static const char * hb_dbgSetName( HB_set_enum setId )
          break;
    }
 
-   return NULL;
+   return nullptr;
 }
 
 static PHB_ITEM hb_dbgSetArray( void )
@@ -1162,7 +1162,7 @@ static PHB_ITEM hb_dbgEvalMacro( const char * szExpr, PHB_ITEM pItem )
    type = hb_macroGetType( pStr );
    hb_itemRelease( pStr );
    if( ! strcmp( type, "U" ) || ! strcmp( type, "UE" ) )
-      return NULL;
+      return nullptr;
 
    hb_vmPushString( szExpr, strlen( szExpr ) );
    hb_macroGetValue( hb_stackItemFromTop( -1 ), 0, HB_SM_RT_MACRO );
@@ -1523,7 +1523,7 @@ PHB_ITEM hb_dbgGetWatchValue( void * handle, int nWatch )
    if( nWatch >= 0 && nWatch < info->nWatchPoints )
       return hb_dbgEval( info, &info->aWatch[ nWatch ], NULL );
    else
-      return NULL;
+      return nullptr;
 }
 
 
@@ -1818,7 +1818,7 @@ static PHB_ITEM hb_dbgVarGet( HB_VARINFO * scope )
          }
       }
    }
-   return NULL;
+   return nullptr;
 }
 
 

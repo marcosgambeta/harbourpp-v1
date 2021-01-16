@@ -381,7 +381,7 @@ const char * hb_rddDefaultDrv( const char * szDriver )
       hb_strncpyUpper( szNewDriver, szDriver, sizeof( szNewDriver ) - 1 );
       pRddNode = hb_rddFindNode( szNewDriver, NULL );
       if( ! pRddNode )
-         return NULL;
+         return nullptr;
 
       pRddInfo->szDefaultRDD = pRddNode->szName;
    }
@@ -466,7 +466,7 @@ void * hb_rddGetWorkAreaPointer( int iArea )
    else if( iArea >= 1 && ( HB_UINT ) iArea < ( HB_UINT ) pRddInfo->uiWaNumMax )
       return pRddInfo->waList[ pRddInfo->waNums[ iArea ] ];
    else
-      return NULL;
+      return nullptr;
 }
 
 /*
@@ -643,7 +643,7 @@ AREAP hb_rddRequestArea( const char * szAlias, PHB_ITEM pCargo,
    else if( hb_rddSelectFirstAvailable() != HB_SUCCESS )
    {
       hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
-      return NULL;
+      return nullptr;
    }
 
    if( szAlias )
@@ -654,13 +654,13 @@ AREAP hb_rddRequestArea( const char * szAlias, PHB_ITEM pCargo,
       if( hb_rddVerifyAliasName( szAlias ) != HB_SUCCESS )
       {
          hb_errRT_DBCMD_Ext( EG_BADALIAS, EDBCMD_BADALIAS, nullptr, szAlias, EF_CANDEFAULT );
-         return NULL;
+         return nullptr;
       }
       /* verify if the alias is already in use */
       if( hb_dynsymAreaHandle( pSymAlias ) != 0 )
       {
          hb_errRT_DBCMD_Ext( EG_DUPALIAS, EDBCMD_DUPALIAS, nullptr, szAlias, EF_CANDEFAULT );
-         return NULL;
+         return nullptr;
       }
    }
 

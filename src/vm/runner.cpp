@@ -140,7 +140,7 @@ static char * hb_hrbReadId( const char * szBody, HB_SIZE nBodySize, HB_SIZE * pn
    do
    {
       if( *pnBodyOffset > nBodySize )
-         return NULL;
+         return nullptr;
    }
    while( szBody[ ( *pnBodyOffset )++ ] );
 
@@ -324,7 +324,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
       if( iVersion == 0 )
       {
          hb_errRT_BASE( EG_CORRUPTION, 9995, nullptr, HB_ERR_FUNCNAME, 0 );
-         return NULL;
+         return nullptr;
       }
 
       pHrbBody = ( PHRB_BODY ) hb_xgrab( sizeof( HRB_BODY ) );
@@ -341,7 +341,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
       {
          hb_hrbUnLoad( pHrbBody );
          hb_errRT_BASE( EG_CORRUPTION, 9996, nullptr, HB_ERR_FUNCNAME, 0 );
-         return NULL;
+         return nullptr;
       }
 
       /* calculate the size of dynamic symbol table */
@@ -361,7 +361,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
          {
             hb_hrbUnLoad( pHrbBody );
             hb_errRT_BASE( EG_CORRUPTION, 9997, nullptr, HB_ERR_FUNCNAME, 0 );
-            return NULL;
+            return nullptr;
          }
       }
 
@@ -396,7 +396,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
          hb_xfree( pSymRead );
          hb_hrbUnLoad( pHrbBody );
          hb_errRT_BASE( EG_CORRUPTION, 9997, nullptr, HB_ERR_FUNCNAME, 0 );
-         return NULL;
+         return nullptr;
       }
 
       pHrbBody->pSymRead = pSymRead;
@@ -438,7 +438,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
             hb_xfree( pSymRead );
             hb_hrbUnLoad( pHrbBody );
             hb_errRT_BASE( EG_CORRUPTION, 9998, nullptr, HB_ERR_FUNCNAME, 0 );
-            return NULL;
+            return nullptr;
          }
       }
 
@@ -493,7 +493,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
                   hb_xfree( pSymRead );
                   hb_hrbUnLoad( pHrbBody );
                   hb_errRT_BASE( EG_ARG, 6101, "Unknown or unregistered symbol", szName, 0 );
-                  return NULL;
+                  return nullptr;
                }
             }
          }

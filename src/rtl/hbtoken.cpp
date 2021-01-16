@@ -159,7 +159,7 @@ static const char * hb_tokenGet( const char * szLine, HB_SIZE nLen,
       return szLine + nStart;
    }
    *pnLen = 0;
-   return NULL;
+   return nullptr;
 }
 
 static PHB_ITEM hb_tokenArray( const char * szLine, HB_SIZE nLen,

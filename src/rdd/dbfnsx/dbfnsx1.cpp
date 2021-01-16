@@ -1372,7 +1372,7 @@ static LPPAGEINFO hb_nsxPageFind( LPTAGINFO pTag, HB_ULONG ulPage )
       if( *pPagePtr && ( *pPagePtr )->Page == ulPage )
          return *pPagePtr;
    }
-   return NULL;
+   return nullptr;
 }
 
 /*
@@ -1506,7 +1506,7 @@ static LPPAGEINFO hb_nsxPageLoad( LPTAGINFO pTag, HB_ULONG ulPage )
    if( ! ulPage )
    {
       hb_nsxCorruptError( pTag->pIndex );
-      return NULL;
+      return nullptr;
    }
 
    pPage = hb_nsxPageFind( pTag, ulPage );
@@ -1536,7 +1536,7 @@ static LPPAGEINFO hb_nsxPageLoad( LPTAGINFO pTag, HB_ULONG ulPage )
                              hb_nsxPageBuffer( pPage ), NSX_PAGELEN ) )
       {
          hb_nsxPageRelease( pTag, pPage );
-         return NULL;
+         return nullptr;
       }
       if( hb_nsxPageType( pPage ) != 'f' )
       {
@@ -1549,7 +1549,7 @@ static LPPAGEINFO hb_nsxPageLoad( LPTAGINFO pTag, HB_ULONG ulPage )
          {
             hb_nsxPageRelease( pTag, pPage );
             hb_nsxCorruptError( pTag->pIndex );
-            return NULL;
+            return nullptr;
          }
 #ifdef HB_NSX_DEBUG_EXT
          hb_nsxPageCheckKeys( pPage, pTag, 0, 21 );
@@ -1627,7 +1627,7 @@ static LPPAGEINFO hb_nsxPageNew( LPTAGINFO pTag, HB_BOOL fNull )
    {
       pPage = hb_nsxPageLoad( pTag, pTag->pIndex->NextAvail );
       if( ! pPage )
-         return NULL;
+         return nullptr;
       else
       {
 #ifdef HB_NSX_EXTERNAL_PAGEBUFFER
@@ -1810,10 +1810,10 @@ static LPTAGINFO hb_nsxTagLoad( LPNSXINDEX pIndex, HB_ULONG ulBlock,
    if( lpNSX->Signature[ 0 ] != NSX_SIGNATURE ||
        uiUnique > 1 || uiDescend > 1 || ucType == 'U' ||
        uiKeySize == 0 || uiKeySize > NSX_MAXKEYLEN || lpNSX->KeyExpr[ 0 ] < 0x20 )
-      return NULL;
+      return nullptr;
 
    if( SELF_COMPILE( &pIndex->pArea->dbfarea.area, ( const char * ) lpNSX->KeyExpr ) == HB_FAILURE )
-      return NULL;
+      return nullptr;
    pKeyExp = pIndex->pArea->dbfarea.area.valResult;
    pIndex->pArea->dbfarea.area.valResult = NULL;
 
@@ -1822,7 +1822,7 @@ static LPTAGINFO hb_nsxTagLoad( LPNSXINDEX pIndex, HB_ULONG ulBlock,
       if( SELF_COMPILE( &pIndex->pArea->dbfarea.area, ( const char * ) lpNSX->ForExpr ) == HB_FAILURE )
       {
          hb_vmDestroyBlockOrMacro( pKeyExp );
-         return NULL;
+         return nullptr;
       }
       pForExp = pIndex->pArea->dbfarea.area.valResult;
       pIndex->pArea->dbfarea.area.valResult = NULL;
@@ -2512,7 +2512,7 @@ static LPPAGEINFO hb_nsxPageTopMove( LPTAGINFO pTag, HB_ULONG ulPage )
    {
       pPage = hb_nsxPageLoad( pTag, ulPage );
       if( ! pPage )
-         return NULL;
+         return nullptr;
       hb_nsxTagSetPageStack( pTag, pPage, 0 );
       if( hb_nsxIsLeaf( pPage ) )
       {
@@ -2520,7 +2520,7 @@ static LPPAGEINFO hb_nsxPageTopMove( LPTAGINFO pTag, HB_ULONG ulPage )
          {
             hb_nsxPageRelease( pTag, pPage );
             hb_nsxCorruptError( pTag->pIndex );
-            return NULL;
+            return nullptr;
          }
          break;
       }
@@ -2542,7 +2542,7 @@ static LPPAGEINFO hb_nsxPageBottomMove( LPTAGINFO pTag, HB_ULONG ulPage )
    {
       pPage = hb_nsxPageLoad( pTag, ulPage );
       if( ! pPage )
-         return NULL;
+         return nullptr;
       if( hb_nsxIsLeaf( pPage ) )
       {
          hb_nsxTagSetPageStack( pTag, pPage, ( pPage->uiKeys > 0 ? pPage->uiKeys - 1 : 0 ) );
@@ -2550,7 +2550,7 @@ static LPPAGEINFO hb_nsxPageBottomMove( LPTAGINFO pTag, HB_ULONG ulPage )
          {
             hb_nsxPageRelease( pTag, pPage );
             hb_nsxCorruptError( pTag->pIndex );
-            return NULL;
+            return nullptr;
          }
          break;
       }
@@ -2944,7 +2944,7 @@ static LPKEYINFO hb_nsxPageSplit( LPTAGINFO pTag, LPPAGEINFO pPage,
    if( ! pNewPage )
    {
       hb_nsxKeyFree( pKey );
-      return NULL;
+      return nullptr;
    }
    hb_nsxSetKeyRecSize( pNewPage, 4 );
 
@@ -4009,7 +4009,7 @@ static LPTAGINFO hb_nsxFindTag( NSXAREAP pArea, PHB_ITEM pTagItem,
       }
    }
 
-   return NULL;
+   return nullptr;
 }
 
 /*

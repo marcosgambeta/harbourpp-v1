@@ -663,7 +663,7 @@ void * hb_xalloc( HB_SIZE nSize )         /* allocates fixed memory, returns NUL
       if( s_nMemoryLimConsumed > 0 && s_nMemoryConsumed > s_nMemoryLimConsumed )
       {
          free( pMem );
-         return NULL;
+         return nullptr;
       }
 
 #ifdef HB_PARANOID_MEM_CHECK
@@ -792,7 +792,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
    else if( nSize == 0 )
    {
       hb_xfree( pMem );
-      return NULL;
+      return nullptr;
    }
    else if( s_fStatistic )
    {
@@ -884,7 +884,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
    else if( nSize == 0 )
    {
       free( HB_FM_PTR( pMem ) );
-      return NULL;
+      return nullptr;
    }
    else
    {
@@ -1056,7 +1056,7 @@ void * hb_xRefResize( void * pMem, HB_SIZE nSave, HB_SIZE nSize, HB_SIZE * pnAll
    }
 
    hb_errInternal( HB_EI_XREALLOC, nullptr, nullptr, nullptr );
-   return NULL;
+   return nullptr;
 #endif
 }
 
@@ -1099,7 +1099,7 @@ const char * hb_xinfo( void * pMem, HB_USHORT * puiLine )
    if( puiLine )
       * puiLine = 0;
 
-   return NULL;
+   return nullptr;
 #endif
 }
 

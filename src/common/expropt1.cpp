@@ -214,7 +214,7 @@ const char * hb_compExprAsString( PHB_EXPR pExpr )
 {
    if( pExpr->ExprType == HB_ET_STRING )
       return pExpr->value.asString.string;
-   return NULL;
+   return nullptr;
 }
 
 HB_SIZE hb_compExprAsStringLen( PHB_EXPR pExpr )
@@ -280,7 +280,7 @@ const char * hb_compExprAsSymbol( PHB_EXPR pExpr )
          if( pExpr->value.asFunCall.pFunName->ExprType == HB_ET_FUNNAME )
             return pExpr->value.asFunCall.pFunName->value.asSymbol.name;
    }
-   return NULL;
+   return nullptr;
 }
 
 /* ************************************************************************* */

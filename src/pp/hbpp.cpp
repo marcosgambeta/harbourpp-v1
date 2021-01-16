@@ -432,7 +432,7 @@ static char * hb_fsFileFind( const char * pszFileMask )
       hb_xfree( pFileName );
       return hb_strdup( pszFileName );
    }
-   return NULL;
+   return nullptr;
 }
 
 static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,

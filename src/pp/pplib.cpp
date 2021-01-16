@@ -142,7 +142,7 @@ PHB_PP_STATE hb_pp_Param( int iParam )
    if( pStatePtr )
       return *pStatePtr;
    else
-      return NULL;
+      return nullptr;
 }
 
 /*

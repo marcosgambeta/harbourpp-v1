@@ -255,7 +255,7 @@ static const char * is_devicename( const char * szFileName )
       }
 #endif
    }
-   return NULL;
+   return nullptr;
 }
 
 static void open_handle( PHB_SET_STRUCT pSet, const char * file_name,
@@ -2197,7 +2197,7 @@ const char * hb_setGetCPtr( HB_set_enum set_specifier )
    }
 
    hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, 0 );
-   return NULL;
+   return nullptr;
 }
 
 int     hb_setGetNI( HB_set_enum set_specifier )
@@ -2996,16 +2996,16 @@ PHB_FILE hb_setGetPrinterHandle( int iType )
    {
       case HB_SET_PRN_DEV:
          if( ! pSet->hb_set_prndevice )
-            return NULL;
+            return nullptr;
          break;
       case HB_SET_PRN_CON:
          if( ! pSet->HB_SET_PRINTER )
-            return NULL;
+            return nullptr;
          break;
       case HB_SET_PRN_ANY:
          break;
       default:
-         return NULL;
+         return nullptr;
    }
 
    if( pSet->hb_set_printhan == NULL && pSet->HB_SET_PRINTFILE )

@@ -146,7 +146,7 @@ static PHB_ITEM s_fileDirectory( PHB_FILE_FUNCS pFuncs, const char * pszDirSpec,
 
    hb_fsSetError( HB_FILE_ERR_UNSUPPORTED );
 
-   return NULL;
+   return nullptr;
 }
 
 static HB_BOOL s_fileTimeGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, long * plJulian, long * plMillisec )
@@ -224,7 +224,7 @@ static char * s_fileLinkRead( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
 
    hb_fsSetError( HB_FILE_ERR_UNSUPPORTED );
 
-   return NULL;
+   return nullptr;
 }
 
 static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
@@ -241,7 +241,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
 
    hb_fsSetError( HB_FILE_ERR_UNSUPPORTED );
 
-   return NULL;
+   return nullptr;
 }
 
 static void s_fileClose( PHB_FILE pFile )

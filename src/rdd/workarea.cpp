@@ -2298,7 +2298,7 @@ LPRDDNODE hb_rddFindNode( const char * szDriver, HB_USHORT * uiIndex )
    }
    if( uiIndex )
       *uiIndex = 0;
-   return NULL;
+   return nullptr;
 }
 
 /*
@@ -2331,7 +2331,7 @@ static LPRDDNODE hb_rddDummyFileAccept( LPRDDNODE pRddNode, const char * szFileN
    HB_SYMBOL_UNUSED( pRddNode );
    HB_SYMBOL_UNUSED( szFileName );
 
-   return NULL;
+   return nullptr;
 }
 /*
  * Add new RDD file/table name redirector

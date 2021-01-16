@@ -54,7 +54,7 @@ static const HB_BLOWFISH * hb_bf_keyparam( void )
    if( hb_parclen( 1 ) == sizeof( HB_BLOWFISH ) )
       return ( const HB_BLOWFISH * ) hb_parc( 1 );
    else
-      return NULL;
+      return nullptr;
 }
 
 /* hb_blowfishKey( <cPasswd> ) --> <cBfKey>

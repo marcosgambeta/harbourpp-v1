@@ -141,7 +141,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
    {
       if( pMem )
          hb_xfree( pMem );
-      return NULL;
+      return nullptr;
    }
    else if( ! pMem )
       return hb_xgrab( nSize );
@@ -371,7 +371,7 @@ int hb_charLower( int iChar )
 
 PHB_CODEPAGE hb_vmCDP( void )
 {
-   return NULL;
+   return nullptr;
 }
 
 HB_SIZE hb_cdpTextPos( PHB_CODEPAGE cdp, const char * pText, HB_SIZE nSize, HB_SIZE nIndex )

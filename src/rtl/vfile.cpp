@@ -77,21 +77,21 @@ PHB_FILE hb_fileParam( int iParam )
       return * fileHolder;
 
    hb_errRT_BASE_SubstR( EG_ARG, 2021, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   return NULL;
+   return nullptr;
 }
 
 PHB_FILE hb_fileParamGet( int iParam )
 {
    PHB_FILE * fileHolder = ( PHB_FILE * ) hb_parptrGC( &s_gcFileFuncs, iParam );
 
-   return fileHolder ? *fileHolder : NULL;
+   return fileHolder ? *fileHolder : nullptr;
 }
 
 PHB_FILE hb_fileItemGet( PHB_ITEM pItem )
 {
    PHB_FILE * fileHolder = ( PHB_FILE * ) hb_itemGetPtrGC( pItem, &s_gcFileFuncs );
 
-   return fileHolder ? *fileHolder : NULL;
+   return fileHolder ? *fileHolder : nullptr;
 }
 
 PHB_ITEM hb_fileItemPut( PHB_ITEM pItem, PHB_FILE pFile )
@@ -118,7 +118,7 @@ static PHB_FILE * hb_fileParamPtr( int iParam )
       return fileHolder;
 
    hb_errRT_BASE_SubstR( EG_ARG, 2021, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   return NULL;
+   return nullptr;
 }
 
 static void hb_fileReturn( PHB_FILE pFile )

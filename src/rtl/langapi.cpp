@@ -402,7 +402,7 @@ const char * hb_langGetItem( const char * pszID, int iIndex )
    if( lang && iIndex >= 0 && iIndex < HB_LANG_ITEM_MAX_ )
       return lang->pItemList[ iIndex ];
    else
-      return NULL;
+      return nullptr;
 }
 
 const char * hb_langID( void )
@@ -453,7 +453,7 @@ const char * hb_langDGetItem( int iIndex )
    if( lang && iIndex >= 0 && iIndex < HB_LANG_ITEM_MAX_ )
       return lang->pItemList[ iIndex ];
    else
-      return NULL;
+      return nullptr;
 }
 
 /* Harbour interface */

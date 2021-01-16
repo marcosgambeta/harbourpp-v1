@@ -193,7 +193,7 @@ static const char * hb_i18n_pluralformid( int iForm )
       if( s_plural_forms[ i ].iForm == iForm )
          return s_plural_forms[ i ].szLangID;
    }
-   return NULL;
+   return nullptr;
 }
 
 /* NOTE: Source:
@@ -464,7 +464,7 @@ static PHB_ITEM hb_i18n_serialize( PHB_I18N_TRANS pI18N )
       return hb_itemPutCLPtr( pKey, pI18Nbuffer, nSize + HB_I18N_HEADER_SIZE );
    }
 
-   return NULL;
+   return nullptr;
 }
 
 static HB_BOOL hb_i18n_headercheck( const char * pBuffer, HB_SIZE nLen )
@@ -761,7 +761,7 @@ static const char * hb_i18n_description( PHB_I18N_TRANS pI18N, PHB_ITEM pItem )
       return hb_itemGetCPtr( pValue );
    }
 
-   return NULL;
+   return nullptr;
 }
 
 static void hb_i18n_addtext( PHB_I18N_TRANS pI18N, PHB_ITEM pMsgID,

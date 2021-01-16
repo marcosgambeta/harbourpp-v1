@@ -2790,7 +2790,7 @@ static PHB_CODEPAGE hb_buildCodePage( const char * id, const char * info,
    {
 #ifdef __HB_IGNORE_CP_ERRORS
       fprintf( stderr, "Harbour CP (%s) initialization failure (1)\n", id ); fflush( stderr );
-      return NULL;
+      return nullptr;
 #else
       hb_errInternal( 9994, "Harbour CP (%s) initialization failure", id, nullptr );
 #endif
@@ -3008,7 +3008,7 @@ static PHB_CODEPAGE hb_buildCodePage( const char * id, const char * info,
 #ifdef __HB_IGNORE_CP_ERRORS
             fprintf( stderr, "Harbour CP (%s) initialization failure (2)\n", id ); fflush( stderr );
             hb_xfree( buffer );
-            return NULL;
+            return nullptr;
 #else
             hb_errInternal( 9994, "Harbour CP (%s) initialization failure", id, nullptr );
 #endif
@@ -3239,7 +3239,7 @@ PHB_CODEPAGE hb_cdpFindExt( const char * id )
 
       hb_errRT_BASE( EG_ARG, 1302, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
-   return NULL;
+   return nullptr;
 }
 
 HB_BOOL hb_cdpIsUTF8( PHB_CODEPAGE cdp )
