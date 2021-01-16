@@ -70,7 +70,7 @@ cairo_pattern_t * hb_cairoPatternItemGet( PHB_ITEM pItem )
 {
    cairo_pattern_t ** ppPattern = ( cairo_pattern_t ** ) hb_itemGetPtrGC( pItem, &s_gcPatternFuncs );
 
-   return ppPattern ? *ppPattern : NULL;
+   return ppPattern ? *ppPattern : nullptr;
 }
 
 PHB_ITEM hb_cairoPatternItemPut( PHB_ITEM pItem, cairo_pattern_t * pPattern )
@@ -89,7 +89,7 @@ cairo_pattern_t * hb_cairo_pattern_param( int iParam )
       return *ppPattern;
 
    hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   return NULL;
+   return nullptr;
 }
 
 void hb_cairo_pattern_ret( cairo_pattern_t * pPattern )

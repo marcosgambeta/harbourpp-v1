@@ -133,7 +133,7 @@ typedef struct _HB_EXPAT
 
 static void * XMLCALL hb_expat_xgrab( size_t size )
 {
-   return size > 0 ? hb_xgrab( size ) : NULL;
+   return size > 0 ? hb_xgrab( size ) : nullptr;
 }
 
 static void XMLCALL hb_expat_xfree( void * p )
@@ -144,7 +144,7 @@ static void XMLCALL hb_expat_xfree( void * p )
 
 static void * XMLCALL hb_expat_xrealloc( void * p, size_t size )
 {
-   return size > 0 ? ( p ? hb_xrealloc( p, size ) : hb_xgrab( size ) ) : NULL;
+   return size > 0 ? ( p ? hb_xrealloc( p, size ) : hb_xgrab( size ) ) : nullptr;
 }
 
 /* --- Callbacks --- */
@@ -711,7 +711,7 @@ static PHB_EXPAT PHB_EXPAT_par( int iParam )
 {
    void ** ph = ( void ** ) hb_parptrGC( &s_gcEXPATFuncs, iParam );
 
-   return ph ? ( PHB_EXPAT ) *ph : NULL;
+   return ph ? ( PHB_EXPAT ) *ph : nullptr;
 }
 
 static void hb_expat_setvar( PHB_EXPAT hb_expat, int iHandler, PHB_ITEM pBlock )
@@ -828,8 +828,8 @@ HB_FUNC( XML_SETELEMENTHANDLER )
       hb_expat_setvar( hb_expat, _VAR_bEndElementHandler, hb_param( 3, HB_IT_EVALITEM ) );
 
       XML_SetElementHandler( hb_expat->parser,
-                             hb_expat->pVar[ _VAR_bStartElementHandler ] ? hb_expat_StartElementHandler : NULL,
-                             hb_expat->pVar[ _VAR_bEndElementHandler ] ? hb_expat_EndElementHandler : NULL );
+                             hb_expat->pVar[ _VAR_bStartElementHandler ] ? hb_expat_StartElementHandler : nullptr,
+                             hb_expat->pVar[ _VAR_bEndElementHandler ] ? hb_expat_EndElementHandler : nullptr );
 
       hb_ret();
    }
@@ -847,8 +847,8 @@ HB_FUNC( XML_SETCDATASECTIONHANDLER )
       hb_expat_setvar( hb_expat, _VAR_bEndCdataSectionHandler, hb_param( 3, HB_IT_EVALITEM ) );
 
       XML_SetCdataSectionHandler( hb_expat->parser,
-                                  hb_expat->pVar[ _VAR_bStartCdataSectionHandler ] ? hb_expat_StartCdataSectionHandler : NULL,
-                                  hb_expat->pVar[ _VAR_bEndCdataSectionHandler ] ? hb_expat_EndCdataSectionHandler : NULL );
+                                  hb_expat->pVar[ _VAR_bStartCdataSectionHandler ] ? hb_expat_StartCdataSectionHandler : nullptr,
+                                  hb_expat->pVar[ _VAR_bEndCdataSectionHandler ] ? hb_expat_EndCdataSectionHandler : nullptr );
 
       hb_ret();
    }
@@ -866,8 +866,8 @@ HB_FUNC( XML_SETNAMESPACEDECLHANDLER )
       hb_expat_setvar( hb_expat, _VAR_bEndNamespaceDeclHandler, hb_param( 3, HB_IT_EVALITEM ) );
 
       XML_SetNamespaceDeclHandler( hb_expat->parser,
-                                   hb_expat->pVar[ _VAR_bStartNamespaceDeclHandler ] ? hb_expat_StartNamespaceDeclHandler : NULL,
-                                   hb_expat->pVar[ _VAR_bEndNamespaceDeclHandler ] ? hb_expat_EndNamespaceDeclHandler : NULL );
+                                   hb_expat->pVar[ _VAR_bStartNamespaceDeclHandler ] ? hb_expat_StartNamespaceDeclHandler : nullptr,
+                                   hb_expat->pVar[ _VAR_bEndNamespaceDeclHandler ] ? hb_expat_EndNamespaceDeclHandler : nullptr );
 
       hb_ret();
    }
@@ -885,7 +885,7 @@ HB_FUNC( XML_SETUNKNOWNENCODINGHANDLER )
       hb_expat_setvar( hb_expat, _VAR_xEncodingHandlerData, hb_param( 3, HB_IT_ANY ) );
 
       XML_SetUnknownEncodingHandler( hb_expat->parser,
-                                     hb_expat->pVar[ _VAR_bUnknownEncodingHandler ] ? hb_expat_UnknownEncodingHandler : NULL,
+                                     hb_expat->pVar[ _VAR_bUnknownEncodingHandler ] ? hb_expat_UnknownEncodingHandler : nullptr,
                                      hb_expat );
 
       hb_ret();

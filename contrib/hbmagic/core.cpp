@@ -69,7 +69,7 @@ static magic_t magic_par( int iParam )
 {
    void ** ph = ( void ** ) hb_parptrGC( &s_gcmagic_gcfuncs, iParam );
 
-   return ph ? ( magic_t ) *ph : NULL;
+   return ph ? ( magic_t ) *ph : nullptr;
 }
 
 HB_FUNC( MAGIC_OPEN )

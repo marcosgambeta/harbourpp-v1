@@ -148,7 +148,7 @@ HB_FUNC( FILESEEK )
 {
    PHB_FFIND ffind = _hb_fileStart( HB_TRUE, HB_FALSE );
 
-   hb_retc( ffind ? ffind->szName : NULL );
+   hb_retc( ffind ? ffind->szName : nullptr );
 }
 
 HB_FUNC( FILEATTR )
@@ -176,7 +176,7 @@ HB_FUNC( FILETIME )
 {
    PHB_FFIND ffind = _hb_fileStart( HB_FALSE, HB_FALSE );
 
-   hb_retc( ffind ? ffind->szTime : NULL );
+   hb_retc( ffind ? ffind->szTime : nullptr );
 }
 
 HB_FUNC( SETFATTR )

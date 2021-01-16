@@ -220,7 +220,7 @@ static PHB_FILE s_srvFileFree( PHB_CONSRV conn, int iFile )
       }
    }
 
-   return NULL;
+   return nullptr;
 }
 
 static PHB_FILE s_srvFileGet( PHB_CONSRV conn, int iFile )
@@ -228,7 +228,7 @@ static PHB_FILE s_srvFileGet( PHB_CONSRV conn, int iFile )
    if( iFile < NETIO_FILES_MAX && conn->filesCount > 0 )
       return conn->fileTable[ iFile ];
    else
-      return NULL;
+      return nullptr;
 }
 
 static void s_consrv_disconnect( PHB_CONSRV conn )
@@ -311,7 +311,7 @@ static PHB_CONSRV s_consrvParam( int iParam )
       return *conn_ptr;
 
    hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   return NULL;
+   return nullptr;
 }
 
 static void s_consrvRet( PHB_CONSRV conn )
@@ -438,7 +438,7 @@ static PHB_LISTENSD s_listenParam( int iParam, HB_BOOL fError )
 
    if( fError )
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   return NULL;
+   return nullptr;
 }
 
 static void s_listenRet( HB_SOCKET sd, const char * szRootPath, HB_BOOL rpc )
@@ -844,7 +844,7 @@ HB_FUNC( NETIO_SERVER )
                      const char * pszName = s_consrvFilePath( ( char * ) msg, conn, HB_FALSE );
                      char * pszDirSpec;
 
-                     pszDirSpec = pszName ? hb_strdup( pszName ) : NULL;
+                     pszDirSpec = pszName ? hb_strdup( pszName ) : nullptr;
 
                      msg[ size2 ] = '\0';
                      if( size2 && ! s_srvRecvAll( conn, msg, size2 ) )
@@ -1061,13 +1061,13 @@ HB_FUNC( NETIO_SERVER )
                {
                   nFlags = HB_GET_LE_UINT32( &msgbuf[ 6 ] );
                   szExt = msgbuf[ 10 ] ? hb_strndup( ( const char * ) &msgbuf[ 10 ],
-                                                     NETIO_MSGLEN - 10 ) : NULL;
+                                                     NETIO_MSGLEN - 10 ) : nullptr;
                }
                else
                {
                   nFlags = HB_GET_LE_UINT16( &msgbuf[ 6 ] );
                   szExt = msgbuf[ 8 ] ? hb_strndup( ( const char * ) &msgbuf[ 8 ],
-                                                    NETIO_MSGLEN - 8 ) : NULL;
+                                                    NETIO_MSGLEN - 8 ) : nullptr;
                }
                if( size <= 0 )
                   errCode = NETIO_ERR_WRONG_PARAM;

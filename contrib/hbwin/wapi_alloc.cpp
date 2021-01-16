@@ -127,7 +127,7 @@ HPEN hbwapi_par_HPEN( int iParam )
 {
    void ** ph = ( void ** ) hb_parptrGC( &s_gc_HPEN_funcs, iParam );
 
-   return ph ? ( HPEN ) *ph : NULL;
+   return ph ? ( HPEN ) *ph : nullptr;
 }
 
 static HB_GARBAGE_FUNC( s_gc_HBRUSH_release )
@@ -169,7 +169,7 @@ HBRUSH hbwapi_par_HBRUSH( int iParam )
 {
    void ** ph = ( void ** ) hb_parptrGC( &s_gc_HBRUSH_funcs, iParam );
 
-   return ph ? ( HBRUSH ) *ph : NULL;
+   return ph ? ( HBRUSH ) *ph : nullptr;
 }
 
 static HB_GARBAGE_FUNC( s_gc_HFONT_release )
@@ -211,7 +211,7 @@ HFONT hbwapi_par_HFONT( int iParam )
 {
    void ** ph = ( void ** ) hb_parptrGC( &s_gc_HFONT_funcs, iParam );
 
-   return ph ? ( HFONT ) *ph : NULL;
+   return ph ? ( HFONT ) *ph : nullptr;
 }
 
 static HB_GARBAGE_FUNC( s_gc_PDEVMODE_release )
@@ -253,5 +253,5 @@ PDEVMODE hbwapi_par_PDEVMODE( int iParam )
 {
    void ** ph = ( void ** ) hb_parptrGC( &s_gc_PDEVMODE_funcs, iParam );
 
-   return ph ? ( PDEVMODE ) *ph : NULL;
+   return ph ? ( PDEVMODE ) *ph : nullptr;
 }

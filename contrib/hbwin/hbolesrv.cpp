@@ -95,7 +95,7 @@ static PHB_DYNS hb_dispIdToDynsym( DISPID dispid )
    if( ( LONG ) dispid > 0 )
       return hb_dynsymFromNum( ( HB_SYMCNT ) dispid );
    else
-      return NULL;
+      return nullptr;
 }
 
 static void hb_errRT_OLESRV( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, HB_ERRCODE errOsCode,

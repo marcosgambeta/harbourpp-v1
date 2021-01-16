@@ -91,7 +91,7 @@ static EVP_CIPHER_CTX * hb_EVP_CIPHER_CTX_par( int iParam )
 {
    void ** ph = ( void ** ) hb_parptrGC( &s_gcEVP_CIPHER_CTX_funcs, iParam );
 
-   return ph ? ( EVP_CIPHER_CTX * ) *ph : NULL;
+   return ph ? ( EVP_CIPHER_CTX * ) *ph : nullptr;
 }
 
 HB_BOOL hb_EVP_CIPHER_is( int iParam )
@@ -1164,7 +1164,7 @@ HB_FUNC( EVP_OPENINIT )
                                  ( HB_SSL_CONST EVP_CIPHER * ) cipher,
                                  ( HB_SSL_CONST unsigned char * ) hb_parcx( 3 ),
                                  ( int ) hb_parclen( 3 ),
-                                 ( HB_ISCHAR( 4 ) && ( int ) hb_parclen( 4 ) == EVP_CIPHER_iv_length( cipher ) ) ? ( HB_SSL_CONST unsigned char * ) hb_parc( 4 ) : NULL,
+                                 ( HB_ISCHAR( 4 ) && ( int ) hb_parclen( 4 ) == EVP_CIPHER_iv_length( cipher ) ) ? ( HB_SSL_CONST unsigned char * ) hb_parc( 4 ) : nullptr,
                                  priv ) );
    }
    else

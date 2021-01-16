@@ -1215,7 +1215,7 @@ static PHB_GTCTW hb_ctw_base( void )
       hb_gt_BaseFree( pGT );
    }
 
-   return NULL;
+   return nullptr;
 }
 
 static void hb_ctw_gt_Exit( PHB_GT pGT )

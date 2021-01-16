@@ -84,7 +84,7 @@ static void * s_filebz2Alloc( void * cargo, int nmemb, int size )
 {
    HB_SYMBOL_UNUSED( cargo );
 
-   return ( nmemb > 0 && size > 0 ) ? hb_xalloc( ( HB_SIZE ) nmemb * size ) : NULL;
+   return ( nmemb > 0 && size > 0 ) ? hb_xalloc( ( HB_SIZE ) nmemb * size ) : nullptr;
 }
 
 static void s_filebz2Free( void * cargo, void * ptr )

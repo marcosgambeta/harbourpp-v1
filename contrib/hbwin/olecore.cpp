@@ -330,7 +330,7 @@ IDispatch * hb_oleParam( int iParam )
       return pOle->pDisp;
 
    hb_errRT_OLE( EG_ARG, 1001, 0, NULL, HB_ERR_FUNCNAME, NULL );
-   return NULL;
+   return nullptr;
 }
 
 
@@ -338,7 +338,7 @@ IDispatch * hb_oleItemGet( PHB_ITEM pItem )
 {
    HB_OLE * pOle = ( HB_OLE * ) hb_itemGetPtrGC( pItem, &s_gcOleFuncs );
 
-   return pOle ? pOle->pDisp : NULL;
+   return pOle ? pOle->pDisp : nullptr;
 }
 
 
@@ -358,7 +358,7 @@ PHB_ITEM hb_oleItemGetCallBack( PHB_ITEM pItem )
 {
    HB_OLE * pOle = ( HB_OLE * ) hb_itemGetPtrGC( pItem, &s_gcOleFuncs );
 
-   return pOle && pOle->pCallBack ? *pOle->pCallBack : NULL;
+   return pOle && pOle->pCallBack ? *pOle->pCallBack : nullptr;
 }
 
 
@@ -404,7 +404,7 @@ static IEnumVARIANT * hb_oleenumParam( int iParam )
       return *ppEnum;
 
    hb_errRT_OLE( EG_ARG, 1002, 0, NULL, HB_ERR_FUNCNAME, NULL );
-   return NULL;
+   return nullptr;
 }
 
 
@@ -779,7 +779,7 @@ static SAFEARRAY * hb_oleSafeArrayFromItem( PHB_ITEM pItem, VARTYPE vt,
          else if( HB_IS_ARRAY( pItem ) )
             plSize[ 0 ] = ( UINT ) hb_arrayLen( pItem );
          else if( ! HB_IS_NIL( pItem ) )
-            return NULL;
+            return nullptr;
       }
       iDims = 1;
    }
@@ -2485,7 +2485,7 @@ static void hb_oleInvokeCall( WORD wFlags )
    if( HB_IS_NIL( pObject ) )
       pObject = hb_param( ++uiOffset, HB_IT_ANY );
 
-   pDisp = pObject ? hb_oleItemGetDispatch( pObject ) : NULL;
+   pDisp = pObject ? hb_oleItemGetDispatch( pObject ) : nullptr;
    if( pDisp )
    {
       DISPID     dispid;

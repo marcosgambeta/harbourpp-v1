@@ -76,7 +76,7 @@ static TOKEN_ENVIRONMENT sTokEnvNew( void )
          hb_xalloc( sizeof( TOKEN_POSITION ) * ( 2 + TOKEN_ENVIRONMENT_STEP ) + 1 );
 
    if( env == NULL )
-      return NULL;
+      return nullptr;
 
    /* use the first element to store current length and use of token env */
    env[ 0 ].sStartPos = 0;                    /* 0-based index to next free, unused element */
@@ -128,7 +128,7 @@ static HB_SIZE sTokEnvGetSize( TOKEN_ENVIRONMENT env )
 static TOKEN_POSITION * sTokEnvGetPos( TOKEN_ENVIRONMENT env )
 {
    if( env[ 1 ].sStartPos >= env[ 0 ].sStartPos )
-      return NULL;
+      return nullptr;
 
    return env + 2 + ( env[ 1 ].sStartPos ); /* "+2" because of extra elements */
 }
@@ -137,7 +137,7 @@ static TOKEN_POSITION * sTokEnvGetPos( TOKEN_ENVIRONMENT env )
 static TOKEN_POSITION * sTokEnvGetPosIndex( TOKEN_ENVIRONMENT env, HB_SIZE nIndex )
 {
    if( nIndex >= env[ 0 ].sStartPos )
-      return NULL;
+      return nullptr;
 
    return env + 2 + nIndex; /* "+2" because of extra elements */
 }
@@ -251,7 +251,7 @@ static TOKEN_ENVIRONMENT sTokGet( int iParam, HB_BOOL fReadOnly )
                return fReadOnly ? env : ( TOKEN_ENVIRONMENT ) hb_xmemdup( env, nLen + 1 );
          }
       }
-      return NULL;
+      return nullptr;
    }
    else
       return * ( TOKEN_ENVIRONMENT * ) hb_stackGetTSD( &s_token );

@@ -110,7 +110,7 @@ HB_FUNC( WAPI_FORMATMESSAGE )
       else
          lpBuffer[ nSize - 1 ] = '\0';
 
-      HB_STORSTR( dwRetVal ? lpBuffer : NULL, 5 );
+      HB_STORSTR( dwRetVal ? lpBuffer : nullptr, 5 );
 
       if( lpAllocBuff )
          LocalFree( lpAllocBuff );

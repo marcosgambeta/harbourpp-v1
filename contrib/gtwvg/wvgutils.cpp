@@ -866,7 +866,7 @@ HB_FUNC( WVT_CREATEDIALOGDYNAMIC )
          void * hTemplate;
          hDlg = CreateDialogIndirect( ( HINSTANCE ) wvg_hInstance(),
                                       ( LPDLGTEMPLATE ) HB_PARSTR( 1, &hTemplate, NULL ),
-                                      hb_parl( 2 ) ? _s->hWnd : NULL,
+                                      hb_parl( 2 ) ? _s->hWnd : nullptr,
                                       ( DLGPROC ) ( HB_PTRUINT ) hb_parnint( 3 ) );
          hb_strfree( hTemplate );
       }
@@ -879,7 +879,7 @@ HB_FUNC( WVT_CREATEDIALOGDYNAMIC )
                void * hTemplate;
                hDlg = CreateDialog( ( HINSTANCE ) wvg_hInstance(),
                                     HB_PARSTR( 1, &hTemplate, NULL ),
-                                    hb_parl( 2 ) ? _s->hWnd : NULL,
+                                    hb_parl( 2 ) ? _s->hWnd : nullptr,
                                     ( DLGPROC ) hb_wvt_gtDlgProcMLess );
                hb_strfree( hTemplate );
             }
@@ -888,7 +888,7 @@ HB_FUNC( WVT_CREATEDIALOGDYNAMIC )
             case 1:
                hDlg = CreateDialog( ( HINSTANCE ) wvg_hInstance(),
                                     MAKEINTRESOURCE( ( WORD ) hb_parni( 1 ) ),
-                                    hb_parl( 2 ) ? _s->hWnd : NULL,
+                                    hb_parl( 2 ) ? _s->hWnd : nullptr,
                                     ( DLGPROC ) hb_wvt_gtDlgProcMLess );
                break;
 
@@ -896,7 +896,7 @@ HB_FUNC( WVT_CREATEDIALOGDYNAMIC )
                /* argument 1 is already unicode compliant, so no conversion */
                hDlg = CreateDialogIndirect( ( HINSTANCE ) wvg_hInstance(),
                                             ( LPDLGTEMPLATE ) hb_parc( 1 ),
-                                            hb_parl( 2 ) ? _s->hWnd : NULL,
+                                            hb_parl( 2 ) ? _s->hWnd : nullptr,
                                             ( DLGPROC ) hb_wvt_gtDlgProcMLess );
                break;
          }

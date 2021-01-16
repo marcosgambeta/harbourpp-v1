@@ -113,7 +113,7 @@ static PHB_EDITOR PHB_EDITOR_par( int iParam )
 {
    void ** ph = ( void ** ) hb_parptrGC( &s_gcPHB_EDITOR_funcs, iParam );
 
-   return ph ? ( PHB_EDITOR ) *ph : NULL;
+   return ph ? ( PHB_EDITOR ) *ph : nullptr;
 }
 
 /* Find the beginning of previous line starting from given offset */

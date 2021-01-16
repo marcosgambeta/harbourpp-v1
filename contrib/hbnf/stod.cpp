@@ -23,5 +23,5 @@
 
 HB_FUNC( FT_STOD )
 {
-   hb_retds( hb_parclen( 1 ) >= 8 ? hb_parc( 1 ) : NULL );
+   hb_retds( hb_parclen( 1 ) >= 8 ? hb_parc( 1 ) : nullptr );
 }

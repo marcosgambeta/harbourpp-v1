@@ -71,7 +71,7 @@ static PHB_FFIND PHB_FFIND_par( int iParam )
 {
    void ** ph = ( void ** ) hb_parptrGC( &s_gcPHB_FFIND_funcs, iParam );
 
-   return ph ? ( PHB_FFIND ) *ph : NULL;
+   return ph ? ( PHB_FFIND ) *ph : nullptr;
 }
 
 HB_FUNC( FILEFINDFIRST )
@@ -105,7 +105,7 @@ HB_FUNC( FILEFINDNAME )
 {
    PHB_FFIND ffind = PHB_FFIND_par( 1 );
 
-   hb_retc( ffind ? ffind->szName : NULL );
+   hb_retc( ffind ? ffind->szName : nullptr );
 }
 
 HB_FUNC( FILEFINDATTR )
@@ -126,12 +126,12 @@ HB_FUNC( FILEFINDDATE )
 {
    PHB_FFIND ffind = PHB_FFIND_par( 1 );
 
-   hb_retds( ffind ? ffind->szDate : NULL );
+   hb_retds( ffind ? ffind->szDate : nullptr );
 }
 
 HB_FUNC( FILEFINDTIME )
 {
    PHB_FFIND ffind = PHB_FFIND_par( 1 );
 
-   hb_retc( ffind ? ffind->szTime : NULL );
+   hb_retc( ffind ? ffind->szTime : nullptr );
 }

@@ -309,7 +309,7 @@ static PHB_FILE hb_fileProcessOpen( const char * pszCommand, HB_FATTR nMode,
    HB_FHANDLE * phStdIn = NULL, * phStdOut = NULL;
 
    if( pszCommand == NULL || *pszCommand == '\0' )
-      return NULL;
+      return nullptr;
 
    switch( nMode )
    {
@@ -324,18 +324,18 @@ static PHB_FILE hb_fileProcessOpen( const char * pszCommand, HB_FATTR nMode,
          phStdIn = &hPipeWR;
          break;
       default:
-         return NULL;
+         return nullptr;
    }
 
    hProcess = hb_fsProcessOpen( pszCommand, phStdIn, phStdOut, NULL,
                                 fDetach, NULL );
-   return hProcess != FS_ERROR ? s_fileNew( hProcess, hPipeRD, hPipeWR, timeout ) : NULL;
+   return hProcess != FS_ERROR ? s_fileNew( hProcess, hPipeRD, hPipeWR, timeout ) : nullptr;
 }
 
 static PHB_FILE hb_fileFromPipeHandle( HB_FHANDLE hProcess, HB_FHANDLE hPipeRD, HB_FHANDLE hPipeWR, HB_MAXINT timeout )
 {
    return hPipeRD != FS_ERROR || hPipeWR != FS_ERROR ?
-          s_fileNew( hProcess, hPipeRD, hPipeWR, timeout ) : NULL;
+          s_fileNew( hProcess, hPipeRD, hPipeWR, timeout ) : nullptr;
 }
 
 /* hb_vfFromPipes( [<hReads>], [<hWrite>], [<hProcess>], [<nTimeout>] )

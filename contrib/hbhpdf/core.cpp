@@ -69,7 +69,7 @@ HPDF_Doc hb_HPDF_Doc_par( int iParam )
 {
    void ** ph = ( void ** ) hb_parptrGC( &s_gcHPDF_DocFuncs, iParam );
 
-   return ph ? ( HPDF_Doc ) * ph : NULL;
+   return ph ? ( HPDF_Doc ) * ph : nullptr;
 }
 
 /* Most of the functions return hStatus == HPDF_OK or ERROR Code */

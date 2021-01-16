@@ -104,7 +104,7 @@ static MYSQL * hb_MYSQL_par( int iParam )
 {
    void ** ph = ( void ** ) hb_parptrGC( &s_gcMYSQLFuncs, iParam );
 
-   return ph ? ( MYSQL * ) *ph : NULL;
+   return ph ? ( MYSQL * ) *ph : nullptr;
 }
 
 
@@ -147,7 +147,7 @@ static MYSQL_RES * hb_MYSQL_RES_par( int iParam )
 {
    void ** ph = ( void ** ) hb_parptrGC( &s_gcMYSQL_RESFuncs, iParam );
 
-   return ph ? ( MYSQL_RES * ) *ph : NULL;
+   return ph ? ( MYSQL_RES * ) *ph : nullptr;
 }
 
 

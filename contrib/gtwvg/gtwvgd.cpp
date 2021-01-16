@@ -341,7 +341,7 @@ static PHB_GTWVT hb_gt_wvt_New( PHB_GT pGT, HINSTANCE hInstance, int iCmdShow )
    if( ! hb_gt_wvt_Alloc( pWVT ) )
    {
       hb_xfree( pWVT );
-      return NULL;
+      return nullptr;
    }
 
    pWVT->hInstance         = ( HINSTANCE ) hInstance;
@@ -3318,7 +3318,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
       case HB_GTI_ICONFILE:
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_STRING )
          {
-            HICON hIconToFree = pWVT->bIconToFree ? pWVT->hIcon : NULL;
+            HICON hIconToFree = pWVT->bIconToFree ? pWVT->hIcon : nullptr;
             void * hImageName;
 
             pWVT->bIconToFree = HB_TRUE;
@@ -3341,7 +3341,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
       case HB_GTI_ICONRES:
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_STRING )
          {
-            HICON hIconToFree = pWVT->bIconToFree ? pWVT->hIcon : NULL;
+            HICON hIconToFree = pWVT->bIconToFree ? pWVT->hIcon : nullptr;
             void * hIconName;
 
             pWVT->bIconToFree = HB_FALSE;
@@ -3359,7 +3359,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          }
          else if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
          {
-            HICON hIconToFree = pWVT->bIconToFree ? pWVT->hIcon : NULL;
+            HICON hIconToFree = pWVT->bIconToFree ? pWVT->hIcon : nullptr;
 
             pWVT->bIconToFree = HB_FALSE;
             pWVT->hIcon = LoadIcon( pWVT->hInstance,
@@ -3530,7 +3530,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
             if( hb_itemGetCLen( pInfo->pNewVal ) )
             {
-               HMENU hSysMenu = pWVT->hWnd ? GetSystemMenu( pWVT->hWnd, FALSE ) : NULL;
+               HMENU hSysMenu = pWVT->hWnd ? GetSystemMenu( pWVT->hWnd, FALSE ) : nullptr;
                if( hSysMenu || ! pWVT->hWnd )
                {
                   hb_strfree( pWVT->hSelectCopy );

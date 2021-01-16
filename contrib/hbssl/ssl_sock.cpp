@@ -284,7 +284,7 @@ PHB_SSLSTREAM hb_ssl_socketNew( HB_SOCKET sd, SSL * ssl, HB_BOOL fServer,
    pStream = ( HB_SSLSTREAM * ) hb_xgrabz( sizeof( HB_SSLSTREAM ) );
 
    pStream->ssl = ssl;
-   pStream->pSSL = pSSL ? hb_itemNew( pSSL ) : NULL;
+   pStream->pSSL = pSSL ? hb_itemNew( pSSL ) : nullptr;
    pStream->blocking = timeout < 0;
    if( hb_socketSetBlockingIO( sd, pStream->blocking ) < 0 )
       pStream->blocking = ! pStream->blocking;

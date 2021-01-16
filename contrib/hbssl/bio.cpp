@@ -102,7 +102,7 @@ BIO * hb_BIO_par( int iParam )
 {
    HB_BIO ** ptr = ( HB_BIO ** ) hb_parptrGC( &s_gcBIOFuncs, iParam );
 
-   return ptr ? ( *ptr )->bio : NULL;
+   return ptr ? ( *ptr )->bio : nullptr;
 }
 
 HB_BOOL hb_BIO_is( int iParam )

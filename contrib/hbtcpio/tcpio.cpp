@@ -374,7 +374,7 @@ static PHB_FILE s_fileNew( PHB_SOCKEX sock, HB_MAXINT timeout )
 
 static PHB_FILE hb_fileFromSocket( PHB_SOCKEX sock, HB_MAXINT timeout )
 {
-   return sock && hb_sockexGetHandle( sock ) != HB_NO_SOCKET ? s_fileNew( sock, timeout ) : NULL;
+   return sock && hb_sockexGetHandle( sock ) != HB_NO_SOCKET ? s_fileNew( sock, timeout ) : nullptr;
 }
 
 HB_FUNC( HB_VFFROMSOCKET )

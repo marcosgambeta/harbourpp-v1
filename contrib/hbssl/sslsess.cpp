@@ -76,7 +76,7 @@ SSL_SESSION * hb_SSL_SESSION_par( int iParam )
 {
    void ** ph = ( void ** ) hb_parptrGC( &s_gcSSL_SESSION_funcs, iParam );
 
-   return ph ? ( SSL_SESSION * ) *ph : NULL;
+   return ph ? ( SSL_SESSION * ) *ph : nullptr;
 }
 
 HB_FUNC( SSL_SESSION_NEW )

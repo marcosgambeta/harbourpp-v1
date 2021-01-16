@@ -111,7 +111,7 @@ static gdImagePtr hb_parGdImage( int iParam )
 {
    gdImagePtr * ptr = ( gdImagePtr * ) hb_parptrGC( &s_gcGDimageFuncs, iParam );
 
-   return ptr ? *ptr : NULL;
+   return ptr ? *ptr : nullptr;
 }
 
 static void * hb_isGdImage( int iParam )
@@ -177,7 +177,7 @@ static gdFontPtr hb_parGdFont( int iParam )
 {
    gdFontPtr * ptr = ( gdFontPtr * ) hb_parptrGC( &s_gcGDfontFuncs, iParam );
 
-   return ptr ? *ptr : NULL;
+   return ptr ? *ptr : nullptr;
 }
 
 static void * hb_isGdFont( int iParam )

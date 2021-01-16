@@ -343,7 +343,7 @@ static PMIXKEY mixFindKeyLen( PMIXTAG pTag, PMIXKEY pKey, HB_USHORT uiLen, HB_UL
    {
       if( ulKeyPos )
          *ulKeyPos = 0;
-      return NULL;
+      return nullptr;
    }
 
    l = 0;
@@ -588,7 +588,7 @@ static PMIXUPDATE mixUpdateCreate( ADSXAREAP pArea )
 
    pTag = pArea->pTagList;
    if( ! pArea->adsarea.fPositioned || ! pTag )
-      return NULL;
+      return nullptr;
 
    iTag = 0;
    while( pTag )
@@ -1136,8 +1136,8 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
          ( UNSIGNED8 * ) HB_UNCONST( pOrderInfo->abBagName ),
          ( UNSIGNED8 * ) HB_UNCONST( pOrderInfo->atomBagName ),
          szKeyExpr[ 0 ] ? szKeyExpr : ( UNSIGNED8 * ) "1",
-         bForADS ? ( UNSIGNED8 * ) pArea->adsarea.area.lpdbOrdCondInfo->abFor : NULL,
-         bWhileADS ? ( UNSIGNED8 * ) pArea->adsarea.area.lpdbOrdCondInfo->abWhile : NULL,
+         bForADS ? ( UNSIGNED8 * ) pArea->adsarea.area.lpdbOrdCondInfo->abFor : nullptr,
+         bWhileADS ? ( UNSIGNED8 * ) pArea->adsarea.area.lpdbOrdCondInfo->abWhile : nullptr,
          ADS_COMPOUND, ADS_DEFAULT, &hIndex );
 #else
       u32RetVal = AdsCreateIndex(
@@ -1145,8 +1145,8 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
          ( UNSIGNED8 * ) HB_UNCONST( pOrderInfo->abBagName ),
          ( UNSIGNED8 * ) HB_UNCONST( pOrderInfo->atomBagName ),
          szKeyExpr[ 0 ] ? szKeyExpr : ( UNSIGNED8 * ) "1",
-         bForADS ? ( UNSIGNED8 * ) pArea->adsarea.area.lpdbOrdCondInfo->abFor : NULL,
-         bWhileADS ? ( UNSIGNED8 * ) pArea->adsarea.area.lpdbOrdCondInfo->abWhile : NULL,
+         bForADS ? ( UNSIGNED8 * ) pArea->adsarea.area.lpdbOrdCondInfo->abFor : nullptr,
+         bWhileADS ? ( UNSIGNED8 * ) pArea->adsarea.area.lpdbOrdCondInfo->abWhile : nullptr,
          ADS_COMPOUND, &hIndex );
 #endif
 

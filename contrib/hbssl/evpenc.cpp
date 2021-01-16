@@ -85,7 +85,7 @@ static EVP_ENCODE_CTX * hb_EVP_ENCODE_CTX_par( int iParam )
 {
    void ** ph = ( void ** ) hb_parptrGC( &s_gcEVP_ENCODE_CTX_funcs, iParam );
 
-   return ph ? ( EVP_ENCODE_CTX * ) *ph : NULL;
+   return ph ? ( EVP_ENCODE_CTX * ) *ph : nullptr;
 }
 
 HB_FUNC( EVP_ENCODE_CTX_NEW )

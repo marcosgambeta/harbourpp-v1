@@ -207,8 +207,8 @@ HB_FUNC( VOLUME )
          hb_xfree( fname );
       }
 
-      lpRoot = pszRoot ? HB_FSNAMECONV( pszRoot, &lpRootFree ) : NULL;
-      lpVolName = pszVolName ? HB_FSNAMECONV( pszVolName, &lpVolNameFree ) : NULL;
+      lpRoot = pszRoot ? HB_FSNAMECONV( pszRoot, &lpRootFree ) : nullptr;
+      lpVolName = pszVolName ? HB_FSNAMECONV( pszVolName, &lpVolNameFree ) : nullptr;
       hb_vmUnlock();
       bReturn = SetVolumeLabel( lpRoot, lpVolName ) != 0;
       hb_vmLock();
@@ -241,7 +241,7 @@ HB_FUNC( VOLSERIAL )
    HB_SIZE nLen;
    LPCTSTR lpRootPath = HB_PARSTR( 1, &hDrive, &nLen );
 
-   if( GetVolumeInformation( nLen > 0 ? lpRootPath : NULL, /* RootPathName */
+   if( GetVolumeInformation( nLen > 0 ? lpRootPath : nullptr, /* RootPathName */
                              NULL,      /* VolumeName */
                              0,         /* VolumeNameSize */
                              &dwSerial, /* VolumeSerialNumber */

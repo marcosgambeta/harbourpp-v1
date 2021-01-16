@@ -180,7 +180,7 @@ static const char * hb_curl_StrHashNew( PHB_CURL hb_curl, const char * szValue )
       return szHash;
    }
    else
-      return NULL;
+      return nullptr;
 }
 
 #  define hb_curl_StrHash( c, s )  hb_curl_StrHashNew( ( c ), ( s ) )
@@ -196,7 +196,7 @@ static const char * hb_curl_StrHashNew( PHB_CURL hb_curl, const char * szValue )
 
 static void * hb_curl_xgrab( size_t size )
 {
-   return size > 0 ? hb_xgrab( size ) : NULL;
+   return size > 0 ? hb_xgrab( size ) : nullptr;
 }
 
 static void hb_curl_xfree( void * p )
@@ -207,7 +207,7 @@ static void hb_curl_xfree( void * p )
 
 static void * hb_curl_xrealloc( void * p, size_t size )
 {
-   return size > 0 ? ( p ? hb_xrealloc( p, size ) : hb_xgrab( size ) ) : NULL;
+   return size > 0 ? ( p ? hb_xrealloc( p, size ) : hb_xgrab( size ) ) : nullptr;
 }
 
 static char * hb_curl_strdup( const char * s )
@@ -561,7 +561,7 @@ static PHB_CURL PHB_CURL_create( CURL * from )
       return hb_curl;
    }
    else
-      return NULL;
+      return nullptr;
 }
 
 static HB_GARBAGE_FUNC( PHB_CURL_release )
@@ -615,7 +615,7 @@ static PHB_CURL PHB_CURL_par( int iParam )
 {
    void ** ph = ( void ** ) hb_parptrGC( &s_gcCURLFuncs, iParam );
 
-   return ph ? ( PHB_CURL ) *ph : NULL;
+   return ph ? ( PHB_CURL ) *ph : nullptr;
 }
 
 /* Harbour interface */
@@ -2140,14 +2140,14 @@ HB_FUNC( CURL_VERSION_INFO )
       hb_arraySetNI( pArray, 6, data->ssl_version_num );              /* not used anymore, always 0 */
       hb_arraySetC(  pArray, 7, data->libz_version );                 /* human readable string */
 #if defined( CURLVERSION_SECOND )
-      hb_arraySetC(  pArray, 9, data->age >= CURLVERSION_SECOND ? data->ares : NULL );
+      hb_arraySetC(  pArray, 9, data->age >= CURLVERSION_SECOND ? data->ares : nullptr );
       hb_arraySetNI( pArray, 10, data->age >= CURLVERSION_SECOND ? data->ares_num : 0 );
 #else
       hb_arraySetC(  pArray, 9, NULL );
       hb_arraySetNI( pArray, 10, 0 );
 #endif
 #if defined( CURLVERSION_THIRD )
-      hb_arraySetC(  pArray, 11, data->age >= CURLVERSION_THIRD ? data->libidn : NULL );
+      hb_arraySetC(  pArray, 11, data->age >= CURLVERSION_THIRD ? data->libidn : nullptr );
 #else
       hb_arraySetC(  pArray, 11, NULL );
 #endif
@@ -2158,7 +2158,7 @@ HB_FUNC( CURL_VERSION_INFO )
 #endif
 /* Just a guess. It's not documented in which libcurl version this member got added. */
 #if defined( CURLVERSION_FOURTH ) && LIBCURL_VERSION_NUM >= 0x071001
-      hb_arraySetC(  pArray, 13, data->age >= CURLVERSION_FOURTH ? data->libssh_version : NULL ); /* human readable string */
+      hb_arraySetC(  pArray, 13, data->age >= CURLVERSION_FOURTH ? data->libssh_version : nullptr ); /* human readable string */
 #else
       hb_arraySetC(  pArray, 13, NULL );
 #endif

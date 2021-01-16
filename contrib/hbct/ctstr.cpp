@@ -94,11 +94,11 @@ const char * ct_at_exact_forward( const char * pcString, HB_SIZE sStrLen,
                             pcString, sStrLen, pcMatch, sMatchLen, ( void * ) psMatchStrLen ) );
 
    if( sMatchLen == 0 || sStrLen < sMatchLen )
-      return NULL;
+      return nullptr;
 
    sPos = hb_strAt( pcMatch, sMatchLen, pcString, sStrLen );
    if( sPos == 0 )
-      return NULL;
+      return nullptr;
    else
    {
       if( psMatchStrLen != NULL )
@@ -118,7 +118,7 @@ const char * ct_at_exact_backward( const char * pcString, HB_SIZE sStrLen,
                             pcString, sStrLen, pcMatch, sMatchLen, ( void * ) psMatchStrLen ) );
 
    if( sMatchLen == 0 || sStrLen < sMatchLen )
-      return NULL;
+      return nullptr;
 
    for( pcRet = pcString + sStrLen - sMatchLen; pcRet >= pcString; pcRet-- )
    {
@@ -136,7 +136,7 @@ const char * ct_at_exact_backward( const char * pcString, HB_SIZE sStrLen,
       }
    }
 
-   return NULL;
+   return nullptr;
 }
 
 /* search for substring using wildcard */
@@ -151,7 +151,7 @@ const char * ct_at_wildcard_forward( const char * pcString, HB_SIZE sStrLen,
                             pcString, sStrLen, pcMatch, sMatchLen, cWildCard, ( void * ) psMatchStrLen ) );
 
    if( sMatchLen == 0 || sStrLen < sMatchLen )
-      return NULL;
+      return nullptr;
 
    pcStop = pcString + sStrLen - sMatchLen;
    for( pcRet = pcString; pcRet < pcStop; pcRet++ )
@@ -171,7 +171,7 @@ const char * ct_at_wildcard_forward( const char * pcString, HB_SIZE sStrLen,
       }
    }
 
-   return NULL;
+   return nullptr;
 }
 
 /* search for substring using wildcard in backward direction */
@@ -186,7 +186,7 @@ const char * ct_at_wildcard_backward( const char * pcString, HB_SIZE sStrLen,
                             pcString, sStrLen, pcMatch, sMatchLen, cWildCard, ( void * ) psMatchStrLen ) );
 
    if( sMatchLen == 0 || sStrLen < sMatchLen )
-      return NULL;
+      return nullptr;
 
    for( pcRet = pcString + sStrLen - sMatchLen; pcRet >= pcString; pcRet-- )
    {
@@ -206,7 +206,7 @@ const char * ct_at_wildcard_backward( const char * pcString, HB_SIZE sStrLen,
       }
    }
 
-   return NULL;
+   return nullptr;
 }
 
 /* search for character from a set */
@@ -221,7 +221,7 @@ const char * ct_at_charset_forward( const char * pcString, HB_SIZE sStrLen,
    *( psMatchedCharPos ) = sCharSetLen;
 
    if( sCharSetLen == 0 || sStrLen == 0 )
-      return NULL;
+      return nullptr;
 
    pcStop1 = pcString + sStrLen;
    pcStop2 = pcCharSet + sCharSetLen;
@@ -238,7 +238,7 @@ const char * ct_at_charset_forward( const char * pcString, HB_SIZE sStrLen,
       }
    }
 
-   return NULL;
+   return nullptr;
 }
 
 /* search for character from a set in backward direction */
@@ -253,7 +253,7 @@ const char * ct_at_charset_backward( const char * pcString, HB_SIZE sStrLen,
    *( psMatchedCharPos ) = sCharSetLen;
 
    if( sCharSetLen == 0 || sStrLen == 0 )
-      return NULL;
+      return nullptr;
 
    pcStop = pcCharSet + sCharSetLen;
    for( pcRet = pcString + sStrLen - 1; pcRet >= pcString; pcRet-- )
@@ -269,7 +269,7 @@ const char * ct_at_charset_backward( const char * pcString, HB_SIZE sStrLen,
       }
    }
 
-   return NULL;
+   return nullptr;
 }
 
 /* CSetRef() stuff */

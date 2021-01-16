@@ -4284,7 +4284,7 @@ static HB_ERRCODE adsOrderCreate( ADSAREAP pArea, LPDBORDERCREATEINFO pOrderInfo
                                  ( UNSIGNED8 * ) HB_UNCONST( pOrderInfo->atomBagName ),
                                  ( UNSIGNED8 * ) HB_UNCONST( hb_itemGetCPtr( pExprItem ) ),
                                  pArea->area.lpdbOrdCondInfo ?
-                                    ( UNSIGNED8 * ) pArea->area.lpdbOrdCondInfo->abFor : NULL,
+                                    ( UNSIGNED8 * ) pArea->area.lpdbOrdCondInfo->abFor : nullptr,
                                  pucWhile, u32Options,
                                  adsGetFileType( pArea->area.rddID ) == ADS_ADT ? adsIndexPageSize( ADS_ADT ) : ADS_DEFAULT,
                                  &hIndex );
@@ -4294,7 +4294,7 @@ static HB_ERRCODE adsOrderCreate( ADSAREAP pArea, LPDBORDERCREATEINFO pOrderInfo
                                ( UNSIGNED8 * ) HB_UNCONST( pOrderInfo->atomBagName ),
                                ( UNSIGNED8 * ) HB_UNCONST( hb_itemGetCPtr( pExprItem ) ),
                                pArea->area.lpdbOrdCondInfo ?
-                                 ( UNSIGNED8 * ) pArea->area.lpdbOrdCondInfo->abFor : NULL,
+                                 ( UNSIGNED8 * ) pArea->area.lpdbOrdCondInfo->abFor : nullptr,
                                pucWhile, u32Options,
                                &hIndex );
 #endif
@@ -5793,7 +5793,7 @@ ADSAREAP hb_adsGetWorkAreaPointer( void )
       if( adsGetRddType( pArea->area.rddID ) >= 0 )
          return pArea;
    }
-   return NULL;
+   return nullptr;
 }
 
 HB_FUNC( ADSGETRELKEYPOS )

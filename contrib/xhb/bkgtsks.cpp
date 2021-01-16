@@ -324,7 +324,7 @@ PHB_BACKGROUNDTASK hb_backgroundFind( HB_ULONG ulID )
 
       ++iTask;
    }
-   return NULL;
+   return nullptr;
 }
 
 /* Set task as active */

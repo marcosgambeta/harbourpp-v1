@@ -187,7 +187,7 @@ PHB_ZEBRA hb_zebraItemGet( PHB_ITEM pItem )
 {
    PHB_ZEBRA * ppZebra = ( PHB_ZEBRA * ) hb_itemGetPtrGC( pItem, &s_gcZebraFuncs );
 
-   return ppZebra ? *ppZebra : NULL;
+   return ppZebra ? *ppZebra : nullptr;
 }
 
 
@@ -217,7 +217,7 @@ PHB_ZEBRA hb_zebra_param( int iParam )
       return *ppZebra;
 
    hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   return NULL;
+   return nullptr;
 }
 
 

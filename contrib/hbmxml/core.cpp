@@ -177,7 +177,7 @@ static mxml_node_t * mxml_node_param( int iParam )
    HBMXML_NODE * pHbnode = ( HBMXML_NODE * ) hb_parptrGC( &s_gc_mxml_nodeFuncs,
                                                           iParam );
 
-   return ( pHbnode && pHbnode->node ) ? pHbnode->node : NULL;
+   return ( pHbnode && pHbnode->node ) ? pHbnode->node : nullptr;
 }
 
 static HBMXML_NODE * mxml_node_new( mxml_node_t * node, int iNew )
@@ -227,7 +227,7 @@ static mxml_index_t * mxml_index_param( int iParam )
    mxml_index_t ** ppMxml_index = ( mxml_index_t ** ) hb_parptrGC( &s_gc_mxml_indexFuncs,
                                                                    iParam );
 
-   return ( ppMxml_index && *ppMxml_index ) ? *ppMxml_index : NULL;
+   return ( ppMxml_index && *ppMxml_index ) ? *ppMxml_index : nullptr;
 }
 
 static mxml_index_t ** mxml_index_new( mxml_index_t * index )
@@ -1126,7 +1126,7 @@ HB_FUNC( MXMLSAXLOADFILE )
    mxml_node_t *  node;
    mxml_load_cb_t cb     = MXML_NO_CALLBACK;
    mxml_sax_cb_t  cb_sax = MXML_NO_CALLBACK;
-   PHB_ITEM       pData  = ( hb_pcount() > 4 ) ? hb_param( 5, HB_IT_ANY ) : NULL;
+   PHB_ITEM       pData  = ( hb_pcount() > 4 ) ? hb_param( 5, HB_IT_ANY ) : nullptr;
    HB_CBS_VAR *   pCbs   = ( HB_CBS_VAR * ) hb_stackGetTSD( &s_cbs_var );
    FILE *         file;
 
@@ -1195,7 +1195,7 @@ HB_FUNC( MXMLSAXLOADSTRING )
    mxml_node_t *  node;
    mxml_load_cb_t cb     = MXML_NO_CALLBACK;
    mxml_sax_cb_t  cb_sax = MXML_NO_CALLBACK;
-   PHB_ITEM       pData  = ( hb_pcount() > 4 ) ? hb_param( 5, HB_IT_ANY ) : NULL;
+   PHB_ITEM       pData  = ( hb_pcount() > 4 ) ? hb_param( 5, HB_IT_ANY ) : nullptr;
    HB_CBS_VAR *   pCbs   = ( HB_CBS_VAR * ) hb_stackGetTSD( &s_cbs_var );
    const char *   s;
 
@@ -1284,7 +1284,7 @@ static const char * save_cb( mxml_node_t * node, int where )
          return pszResult;
       }
    }
-   return NULL;
+   return nullptr;
 }
 
 /* char * mxmlSaveAllocString( mxml_node_t *node, mxml_save_cb_t cb ) */
@@ -1759,14 +1759,14 @@ static char * custom_save_cb( mxml_node_t * node )
          hb_vmSend( 1 );
 
          pszText   = hb_parstr_utf8( -1, &hText, NULL );
-         pszResult = pszText ? strdup( pszText ) : NULL;
+         pszResult = pszText ? strdup( pszText ) : nullptr;
          hb_strfree( hText );
 
          hb_vmRequestRestore();
          return pszResult;
       }
    }
-   return NULL;
+   return nullptr;
 }
 
 /* void mxmlSetCustomHandlers( mxml_custom_load_cb_t load, mxml_custom_save_cb_t save ) */

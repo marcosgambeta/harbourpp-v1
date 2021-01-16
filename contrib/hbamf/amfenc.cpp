@@ -730,7 +730,7 @@ static PHB_ITEM class_def_from_class( /* amfContext * context, */ PHB_ITEM pItem
    /* get Harbour's class id/handle */
    uiClass = hb_objGetClass( pItem );
    if( ! uiClass )
-      return NULL;
+      return nullptr;
 
    /* we left this (python-originated) indirect method of storing
       class "properties" in a hash, this it may be easier in the
@@ -747,7 +747,7 @@ static PHB_ITEM class_def_from_class( /* amfContext * context, */ PHB_ITEM pItem
       hb_itemRelease( pKey );
       hb_itemRelease( pValue );
       hb_itemRelease( pClass );
-      return NULL;
+      return nullptr;
    }
    hb_itemRelease( pKey );
    hb_itemRelease( pValue );
@@ -759,7 +759,7 @@ static PHB_ITEM class_def_from_class( /* amfContext * context, */ PHB_ITEM pItem
       hb_itemRelease( pKey );
       hb_itemRelease( pValue );
       hb_itemRelease( pClass );
-      return NULL;
+      return nullptr;
    }
    hb_itemRelease( pKey );
    hb_itemRelease( pValue );
@@ -773,7 +773,7 @@ static PHB_ITEM class_def_from_class( /* amfContext * context, */ PHB_ITEM pItem
          hb_itemRelease( pKey );
          hb_itemRelease( pValue );
          hb_itemRelease( pClass );
-         return NULL;
+         return nullptr;
       }
       hb_itemRelease( pKey );
       hb_itemRelease( pValue );
@@ -788,7 +788,7 @@ static PHB_ITEM class_def_from_class( /* amfContext * context, */ PHB_ITEM pItem
       hb_itemRelease( pKey );
       hb_itemRelease( pValue );
       hb_itemRelease( pClass );
-      return NULL;
+      return nullptr;
    }
 #endif
 

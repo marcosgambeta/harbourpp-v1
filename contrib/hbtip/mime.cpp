@@ -567,7 +567,7 @@ static const char * s_findExtMimeType( const char * szFileExt )
    }
    while( uiFirst < uiLast );
 
-   return NULL;
+   return nullptr;
 }
 
 static const char * s_findMimeStringInTree( const char * cData, HB_SIZE nLen, int iElem )
@@ -618,7 +618,7 @@ static const char * s_findMimeStringInTree( const char * cData, HB_SIZE nLen, in
    if( elem->alternate != 0 )
       return s_findMimeStringInTree( cData, nLen, iElem + elem->alternate );
 
-   return NULL;  /* give up */
+   return nullptr;  /* give up */
 }
 
 static const char * s_findStringMimeType( const char * cData, HB_SIZE nLen )
@@ -671,7 +671,7 @@ static const char * s_findStringMimeType( const char * cData, HB_SIZE nLen )
          }
       }
    }
-   return NULL;
+   return nullptr;
 }
 
 static const char * s_findFileMimeType( PHB_FILE fileIn )
@@ -687,7 +687,7 @@ static const char * s_findFileMimeType( PHB_FILE fileIn )
       return s_findStringMimeType( buf, nLen );
    }
 
-   return NULL;
+   return nullptr;
 }
 
 HB_FUNC( TIP_MIMETYPE )
@@ -716,7 +716,7 @@ HB_FUNC( TIP_FILENAMEMIMETYPE )
    if( fname )
    {
       PHB_FNAME pFileName = hb_fsFNameSplit( fname );
-      const char * ext_type = pFileName->szExtension ? s_findExtMimeType( pFileName->szExtension ) : NULL;
+      const char * ext_type = pFileName->szExtension ? s_findExtMimeType( pFileName->szExtension ) : nullptr;
       hb_xfree( pFileName );
 
       if( ext_type )
@@ -746,7 +746,7 @@ HB_FUNC( TIP_FILEMIMETYPE )
          PHB_FNAME pFileName = hb_fsFNameSplit( fname );
          PHB_FILE fileIn;
 
-         ext_type = pFileName->szExtension ? s_findExtMimeType( pFileName->szExtension ) : NULL;
+         ext_type = pFileName->szExtension ? s_findExtMimeType( pFileName->szExtension ) : nullptr;
          hb_xfree( pFileName );
 
          if( ( fileIn = hb_fileExtOpen( fname, NULL,

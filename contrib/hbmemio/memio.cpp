@@ -218,7 +218,7 @@ static PHB_MEMFS_INODE memfsInodeAlloc( const char * szName )
    if( memfsInodeFind( szName, &ulInode ) )
    {
       hb_errInternal( 9999, "memfsInodeAlloc: Inode already exists", nullptr, nullptr );
-      return NULL;
+      return nullptr;
    }
 
    if( ulInode < s_fs.ulInodeCount )
@@ -258,7 +258,7 @@ static PHB_MEMFS_FILE memfsHandleToFile( HB_FHANDLE hFile )
 #if 0
       hb_errInternal( 9999, "memfsHandleToFile: Invalid file handle", nullptr, nullptr );
 #endif
-      return NULL;
+      return nullptr;
    }
    else
       return s_fs.pFiles[ ( HB_ULONG ) hFile - 1 ];
@@ -950,7 +950,7 @@ static char * s_fileLinkRead( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
 {
    HB_SYMBOL_UNUSED( pFuncs );
    HB_SYMBOL_UNUSED( pszFileName );
-   return NULL;
+   return nullptr;
 }
 
 
@@ -1004,7 +1004,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * szName,
          hb_errPutOsCode( pError, hb_memfsError() );
          hb_errPutGenCode( pError, ( HB_ERRCODE ) ( ( nExFlags & FXO_TRUNCATE ) ? EG_CREATE : EG_OPEN ) );
       }
-      return NULL;
+      return nullptr;
    }
 }
 

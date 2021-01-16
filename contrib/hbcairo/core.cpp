@@ -70,7 +70,7 @@ cairo_t * hb_cairoItemGet( PHB_ITEM pItem )
 {
    cairo_t ** ppCairo = ( cairo_t ** ) hb_itemGetPtrGC( pItem, &s_gcCairoFuncs );
 
-   return ppCairo ? *ppCairo : NULL;
+   return ppCairo ? *ppCairo : nullptr;
 }
 
 PHB_ITEM hb_cairoItemPut( PHB_ITEM pItem, cairo_t * pCairo )
@@ -89,7 +89,7 @@ cairo_t * hb_cairo_param( int iParam )
       return *ppCairo;
 
    hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   return NULL;
+   return nullptr;
 }
 
 void hb_cairo_ret( cairo_t * pCairo )
@@ -132,7 +132,7 @@ cairo_surface_t * hb_cairoSurfaceItemGet( PHB_ITEM pItem )
 {
    cairo_surface_t ** ppSurface = ( cairo_surface_t ** ) hb_itemGetPtrGC( pItem, &s_gcSurfaceFuncs );
 
-   return ppSurface ? *ppSurface : NULL;
+   return ppSurface ? *ppSurface : nullptr;
 }
 
 PHB_ITEM hb_cairoSurfaceItemPut( PHB_ITEM pItem, cairo_surface_t * pSurface )
@@ -159,7 +159,7 @@ cairo_surface_t * hb_cairo_surface_param( int iParam )
       return *ppSurface;
 
    hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   return NULL;
+   return nullptr;
 }
 
 void hb_cairo_surface_ret( cairo_surface_t * pSurface )
@@ -202,7 +202,7 @@ cairo_path_t * hb_cairoPathItemGet( PHB_ITEM pItem )
 {
    cairo_path_t ** ppPath = ( cairo_path_t ** ) hb_itemGetPtrGC( pItem, &s_gcPathFuncs );
 
-   return ppPath ? *ppPath : NULL;
+   return ppPath ? *ppPath : nullptr;
 }
 
 PHB_ITEM hb_cairoPathItemPut( PHB_ITEM pItem, cairo_path_t * pPath )
@@ -221,7 +221,7 @@ cairo_path_t * hb_cairo_path_param( int iParam )
       return *ppPath;
 
    hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   return NULL;
+   return nullptr;
 }
 
 void hb_cairo_path_ret( cairo_path_t * pPath )

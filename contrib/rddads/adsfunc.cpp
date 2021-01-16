@@ -229,7 +229,7 @@ static void hb_ads_setCallBack( PHB_ITEM pCallBack )
    if( pAdsData->pCallBack )
       hb_itemRelease( pAdsData->pCallBack );
 
-   pAdsData->pCallBack = pCallBack ? hb_itemNew( pCallBack ) : NULL;
+   pAdsData->pCallBack = pCallBack ? hb_itemNew( pCallBack ) : nullptr;
 }
 #endif /* ! ADS_LINUX */
 
@@ -271,7 +271,7 @@ HB_FUNC( ADSSETDATEFORMAT )
 
    AdsGetDateFormat( pucFormat, &usLen );
 
-   hb_retc( usLen > 0 ? ( char * ) pucFormat : NULL );
+   hb_retc( usLen > 0 ? ( char * ) pucFormat : nullptr );
 
    if( HB_ISCHAR( 1 ) )
       AdsSetDateFormat( ( UNSIGNED8 * ) HB_UNCONST( hb_parc( 1 ) ) );
@@ -967,12 +967,12 @@ HB_FUNC( ADSGETAOFNOOPT )
          hb_retc( AdsGetAOFOptLevel( pArea->hTable,
                                      &pusOptLevel,
                                      pucNonOpt2,
-                                     &usLen ) == AE_SUCCESS ? ( char * ) pucNonOpt2 : NULL );
+                                     &usLen ) == AE_SUCCESS ? ( char * ) pucNonOpt2 : nullptr );
 
          hb_xfree( pucNonOpt2 );
       }
       else
-         hb_retc( ulRetVal == AE_SUCCESS ? ( char * ) pucNonOpt : NULL );
+         hb_retc( ulRetVal == AE_SUCCESS ? ( char * ) pucNonOpt : nullptr );
    }
    else
       hb_errRT_DBCMD( EG_NOTABLE, 2001, nullptr, HB_ERR_FUNCNAME );
@@ -2088,7 +2088,7 @@ HB_FUNC( ADSDDSETDATABASEPROPERTY )
       case ADS_DD_ENCRYPT_TABLE_PASSWORD:
          ulRetVal = AdsDDSetDatabaseProperty( hConnect,
                                               ulProperty,
-                                              HB_IS_STRING( pParam ) ? HB_UNCONST( hb_itemGetCPtr( pParam ) ) : NULL,
+                                              HB_IS_STRING( pParam ) ? HB_UNCONST( hb_itemGetCPtr( pParam ) ) : nullptr,
                                               ( UNSIGNED16 ) hb_itemGetCLen( pParam ) + 1 );
          break;
       /* String properties (NULL not accepted) */
@@ -2177,7 +2177,7 @@ HB_FUNC( ADSDDGETUSERPROPERTY )
                                                   pvProperty,
                                                   &usPropertyLen );
 
-      hb_storc( ulRetVal == AE_SUCCESS ? ( char * ) pvProperty : NULL, 3 );
+      hb_storc( ulRetVal == AE_SUCCESS ? ( char * ) pvProperty : nullptr, 3 );
 
       hb_retl( ulRetVal == AE_SUCCESS );
    }
@@ -2223,7 +2223,7 @@ HB_FUNC( ADSTESTLOGIN )
                                          pucUserName,
                                          ( UNSIGNED16 ) hb_parni( 6 ) /* usPropertyID */,
                                          pvProperty,
-                                         &usPropertyLen ) == AE_SUCCESS ? ( char * ) pvProperty : NULL, 7 );
+                                         &usPropertyLen ) == AE_SUCCESS ? ( char * ) pvProperty : nullptr, 7 );
       }
 
       AdsDisconnect( adsTestHandle );

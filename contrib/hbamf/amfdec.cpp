@@ -66,7 +66,7 @@ static PHB_ITEM hbamf_cls_externalizable_instance( PHB_ITEM pClassFuncStr )
       return pNewItem;
    }
 
-   return NULL;
+   return nullptr;
 }
 
 static const char * readByte( amfContext * context )
@@ -75,7 +75,7 @@ static const char * readByte( amfContext * context )
    const char * byte_ref;
 
    if( new_position < 0 || new_position > context->length )
-      return NULL;
+      return nullptr;
 
    byte_ref = context->cBuf + context->position;
    context->position = new_position;
@@ -88,7 +88,7 @@ static const char * readBytes( amfContext * context, HB_ISIZ len )
    const char * result;
 
    if( new_position < 0 || new_position > context->length )
-      return NULL;
+      return nullptr;
 
    result = context->cBuf + context->position;
    context->position = new_position;
@@ -218,7 +218,7 @@ static PHB_ITEM amf3_decode_reference( PHB_ITEM pHash, int val )
       return pRefItem;
    }
 
-   return NULL;
+   return nullptr;
 }
 
 static void amf3_add_reference( PHB_ITEM pHash, PHB_ITEM pItem )
@@ -589,7 +589,7 @@ static PHB_ITEM class_def_from_classname( /* amfContext * context, */ PHB_ITEM p
    uiClass = hb_objGetClass( pItem );
    #endif
    if( ! uiClass )
-      return NULL;
+      return nullptr;
 
    pClass = hb_hashNew( NULL );
 
@@ -600,7 +600,7 @@ static PHB_ITEM class_def_from_classname( /* amfContext * context, */ PHB_ITEM p
       hb_itemRelease( pKey );
       hb_itemRelease( pValue );
       hb_itemRelease( pClass );
-      return NULL;
+      return nullptr;
    }
    hb_itemRelease( pKey );
    hb_itemRelease( pValue );
@@ -612,7 +612,7 @@ static PHB_ITEM class_def_from_classname( /* amfContext * context, */ PHB_ITEM p
       hb_itemRelease( pKey );
       hb_itemRelease( pValue );
       hb_itemRelease( pClass );
-      return NULL;
+      return nullptr;
    }
    hb_itemRelease( pKey );
    hb_itemRelease( pValue );
@@ -626,7 +626,7 @@ static PHB_ITEM class_def_from_classname( /* amfContext * context, */ PHB_ITEM p
          hb_itemRelease( pKey );
          hb_itemRelease( pValue );
          hb_itemRelease( pClass );
-         return NULL;
+         return nullptr;
       }
       hb_itemRelease( pKey );
       hb_itemRelease( pValue );

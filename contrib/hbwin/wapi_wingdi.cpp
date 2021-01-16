@@ -93,7 +93,7 @@ POINT * hbwapi_par_POINT( POINT * p, int iParam, HB_BOOL bMandatory )
    else if( bMandatory )
       return p;
 
-   return NULL;
+   return nullptr;
 }
 
 void hbwapi_stor_POINT( POINT * p, int iParam )
@@ -139,7 +139,7 @@ RECT * hbwapi_par_RECT( RECT * p, int iParam, HB_BOOL bMandatory )
    else if( bMandatory )
       return p;
 
-   return NULL;
+   return nullptr;
 }
 
 void hbwapi_stor_RECT( RECT * p, int iParam )
@@ -231,7 +231,7 @@ LOGFONT * hbwapi_par_LOGFONT( LOGFONT * p, int iParam, HB_BOOL bMandatory )
    else if( bMandatory )
       return p;
 
-   return NULL;
+   return nullptr;
 }
 
 DOCINFO * hbwapi_par_DOCINFO( DOCINFO * p, int iParam, HB_BOOL bMandatory, void *** ph )
@@ -260,7 +260,7 @@ DOCINFO * hbwapi_par_DOCINFO( DOCINFO * p, int iParam, HB_BOOL bMandatory, void 
    hb_xfree( h );
    *ph = NULL;
 
-   return NULL;
+   return nullptr;
 }
 
 void hbwapi_strfree_DOCINFO( void ** h )

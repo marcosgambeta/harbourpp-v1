@@ -468,7 +468,7 @@ HB_FUNC( ADSMGGETOPENTABLES ) /* nMaxNumberOfFilesToReturn, cUserName, nConnecti
    ADS_MGMT_TABLE_INFO * astOpenTableInfo = ( ADS_MGMT_TABLE_INFO * ) hb_xgrab( sizeof( ADS_MGMT_TABLE_INFO ) * usArrayLen );
 
    if( AdsMgGetOpenTables( s_hMgmtHandle,
-                           ( UNSIGNED8 * ) ( hb_parclen( 2 ) > 0 ? HB_UNCONST( hb_parc( 2 ) ) : NULL ) /* pucUserName */,
+                           ( UNSIGNED8 * ) ( hb_parclen( 2 ) > 0 ? HB_UNCONST( hb_parc( 2 ) ) : nullptr ) /* pucUserName */,
                            ( UNSIGNED16 ) hb_parni( 3 ) /* usConnNumber */, /* = HB_ADS_PARCONNECTION( 3 ) only valid for NetWare so don't default to current, only take a passed value */
                            astOpenTableInfo,
                            &usArrayLen,
@@ -500,7 +500,7 @@ HB_FUNC( ADSMGGETOPENTABLES2 ) /* nMaxNumberOfFilesToReturn, cUserName, nConnect
    ADS_MGMT_TABLE_INFO * astOpenTableInfo = ( ADS_MGMT_TABLE_INFO * ) hb_xgrab( sizeof( ADS_MGMT_TABLE_INFO ) * usArrayLen );
 
    if( AdsMgGetOpenTables( s_hMgmtHandle,
-                           ( UNSIGNED8 * ) ( hb_parclen( 2 ) > 0 ? HB_UNCONST( hb_parc( 2 ) ) : NULL ) /* pucUserName */,
+                           ( UNSIGNED8 * ) ( hb_parclen( 2 ) > 0 ? HB_UNCONST( hb_parc( 2 ) ) : nullptr ) /* pucUserName */,
                            ( UNSIGNED16 ) hb_parni( 3 ) /* usConnNumber */, /* = HB_ADS_PARCONNECTION( 3 ) only valid for NetWare so don't default to current, only take a passed value */
                            astOpenTableInfo,
                            &usArrayLen,
@@ -538,8 +538,8 @@ HB_FUNC( ADSMGGETOPENINDEXES ) /* nMaxNumberOfFilesToReturn, cTableName, cUserNa
    ADS_MGMT_INDEX_INFO * astOpenIndexInfo = ( ADS_MGMT_INDEX_INFO * ) hb_xgrab( sizeof( ADS_MGMT_INDEX_INFO ) * usArrayLen );
 
    if( AdsMgGetOpenIndexes( s_hMgmtHandle,
-                            ( UNSIGNED8 * ) ( hb_parclen( 2 ) > 0 ? HB_UNCONST( hb_parc( 2 ) ) : NULL ) /* pucTableName */, /* fully qualified path to that table */
-                            ( UNSIGNED8 * ) ( hb_parclen( 3 ) > 0 ? HB_UNCONST( hb_parc( 3 ) ) : NULL ) /* pucUserName */,
+                            ( UNSIGNED8 * ) ( hb_parclen( 2 ) > 0 ? HB_UNCONST( hb_parc( 2 ) ) : nullptr ) /* pucTableName */, /* fully qualified path to that table */
+                            ( UNSIGNED8 * ) ( hb_parclen( 3 ) > 0 ? HB_UNCONST( hb_parc( 3 ) ) : nullptr ) /* pucUserName */,
                             ( UNSIGNED16 ) hb_parni( 4 ) /* usConnNumber */, /* = HB_ADS_PARCONNECTION( 4 ) only valid for NetWare so don't default to current, only take a passed value */
                             astOpenIndexInfo,
                             &usArrayLen,
@@ -571,8 +571,8 @@ HB_FUNC( ADSMGGETLOCKS )
    ADS_MGMT_RECORD_INFO * astRecordInfo = ( ADS_MGMT_RECORD_INFO * ) hb_xgrab( sizeof( ADS_MGMT_RECORD_INFO ) * usArrayLen );
 
    if( AdsMgGetLocks( s_hMgmtHandle,
-                      ( UNSIGNED8 * ) ( hb_parclen( 2 ) > 0 ? HB_UNCONST( hb_parc( 2 ) ) : NULL ) /* pucTableName */, /* fully qualified path to that table */
-                      ( UNSIGNED8 * ) ( hb_parclen( 3 ) > 0 ? HB_UNCONST( hb_parc( 3 ) ) : NULL ) /* pucUserName */,
+                      ( UNSIGNED8 * ) ( hb_parclen( 2 ) > 0 ? HB_UNCONST( hb_parc( 2 ) ) : nullptr ) /* pucTableName */, /* fully qualified path to that table */
+                      ( UNSIGNED8 * ) ( hb_parclen( 3 ) > 0 ? HB_UNCONST( hb_parc( 3 ) ) : nullptr ) /* pucUserName */,
                       ( UNSIGNED16 ) hb_parni( 4 ) /* usConnNumber */, /* = HB_ADS_PARCONNECTION( 4 ) only valid for NetWare so don't default to current, only take a passed value */
                       astRecordInfo,
                       &usArrayLen,

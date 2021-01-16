@@ -245,14 +245,14 @@ SSL * hb_SSL_par( int iParam )
 {
    PHB_SSL hb_ssl = ( PHB_SSL ) hb_parptrGC( &s_gcSSL_funcs, iParam );
 
-   return hb_ssl ? hb_ssl->ssl : NULL;
+   return hb_ssl ? hb_ssl->ssl : nullptr;
 }
 
 SSL * hb_SSL_itemGet( PHB_ITEM pItem )
 {
    PHB_SSL hb_ssl = ( PHB_SSL ) hb_itemGetPtrGC( pItem, &s_gcSSL_funcs );
 
-   return hb_ssl ? hb_ssl->ssl : NULL;
+   return hb_ssl ? hb_ssl->ssl : nullptr;
 }
 
 HB_FUNC( SSL_NEW )

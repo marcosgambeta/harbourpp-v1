@@ -80,7 +80,7 @@ static HANDLE hbwapi_mutex_par( int iParam )
 {
    void ** ph = ( void ** ) hb_parptrGC( &s_gc_hbwapi_mutex_funcs, iParam );
 
-   return ph ? ( HANDLE ) *ph : NULL;
+   return ph ? ( HANDLE ) *ph : nullptr;
 }
 
 /* HANDLE WINAPI CreateMutex( LPSECURITY_ATTRIBUTES lpMutexAttributes, BOOL bInitialOwner, LPCTSTR lpName ) */

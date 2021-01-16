@@ -1818,13 +1818,13 @@ static MXML_OUTPUT * mxml_output_new( MXML_OUTPUT_FUNC func, int node_count )
    MXML_OUTPUT * ret = ( MXML_OUTPUT * ) MXML_ALLOCATOR( sizeof( MXML_OUTPUT ) );
 
    if( ret == NULL )
-      return NULL;
+      return nullptr;
 
    if( mxml_output_setup( ret, func, node_count ) == MXML_STATUS_OK )
       return ret;
 
    MXML_DELETOR( ret );
-   return NULL;
+   return nullptr;
 }
 #endif
 
@@ -1957,13 +1957,13 @@ static MXML_REFIL * mxml_refil_new( MXML_REFIL_FUNC func, char * buf, HB_ISIZ bu
    MXML_REFIL * ret = ( MXML_REFIL * ) MXML_ALLOCATOR( sizeof( MXML_REFIL ) );
 
    if( ret == NULL )
-      return NULL;
+      return nullptr;
 
    if( mxml_refil_setup( ret, func, buf, buflen, bufsize ) == MXML_STATUS_OK )
       return ret;
 
    MXML_DELETOR( ret );
-   return NULL;
+   return nullptr;
 }
 #endif
 
@@ -2080,13 +2080,13 @@ static MXML_SGS * mxml_sgs_new()
    MXML_SGS * ret = ( MXML_SGS * ) MXML_ALLOCATOR( sizeof( MXML_SGS ) );
 
    if( ret == NULL )
-      return NULL;
+      return nullptr;
 
    ret->buffer = ( char * ) MXML_ALLOCATOR( MXML_ALLOC_BLOCK );
    if( ret->buffer == NULL )
    {
       MXML_DELETOR( ret );
-      return NULL;
+      return nullptr;
    }
 
    ret->allocated = MXML_ALLOC_BLOCK;
@@ -2188,7 +2188,7 @@ static const char * mxml_error_desc( MXML_ERROR_CODE code )
    int iCode = ( ( int ) code ) - 1;
 
    if( iCode < 0 || iCode > ( signed ) ( sizeof( edesc ) / sizeof( char * ) ) )
-      return NULL;
+      return nullptr;
 
    return edesc[ iCode ];
 }

@@ -90,7 +90,7 @@ PGconn * hb_PGconn_par( int iParam )
 {
    void ** ph = ( void ** ) hb_parptrGC( &s_gcPGconnFuncs, iParam );
 
-   return ph ? ( PGconn * ) *ph : NULL;
+   return ph ? ( PGconn * ) *ph : nullptr;
 }
 
 static HB_GARBAGE_FUNC( PGresult_release )
@@ -132,7 +132,7 @@ PGresult * hb_PGresult_par( int iParam )
 {
    void ** ph = ( void ** ) hb_parptrGC( &s_gcPGresultFuncs, iParam );
 
-   return ph ? ( PGresult * ) *ph : NULL;
+   return ph ? ( PGresult * ) *ph : nullptr;
 }
 
 #if PG_VERSION_NUM >= 80000
@@ -176,7 +176,7 @@ static PGcancel * hb_PGcancel_par( int iParam )
 {
    void ** ph = ( void ** ) hb_parptrGC( &s_gcPGcancelFuncs, iParam );
 
-   return ph ? ( PGcancel * ) *ph : NULL;
+   return ph ? ( PGcancel * ) *ph : nullptr;
 }
 
 #endif
@@ -222,7 +222,7 @@ static FILE * hb_FILE_par( int iParam )
 {
    void ** ph = ( void ** ) hb_parptrGC( &s_gcFILEFuncs, iParam );
 
-   return ph ? ( FILE * ) *ph : NULL;
+   return ph ? ( FILE * ) *ph : nullptr;
 }
 
 #endif

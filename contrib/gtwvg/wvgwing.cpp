@@ -146,7 +146,7 @@ static BITMAPINFO * PackedDibLoad( LPCTSTR szFileName )
                        OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL );
 
    if( hFile == INVALID_HANDLE_VALUE )
-      return NULL;
+      return nullptr;
 
    bSuccess = ReadFile( hFile, &bmfh, sizeof( BITMAPFILEHEADER ), &dwBytesRead, NULL );
 
@@ -154,7 +154,7 @@ static BITMAPINFO * PackedDibLoad( LPCTSTR szFileName )
        || ( bmfh.bfType != *( WORD * ) "BM" ) )
    {
       CloseHandle( hFile );
-      return NULL;
+      return nullptr;
    }
 
    dwPackedDibSize = bmfh.bfSize - sizeof( BITMAPFILEHEADER );
@@ -167,7 +167,7 @@ static BITMAPINFO * PackedDibLoad( LPCTSTR szFileName )
    if( ! bSuccess || ( dwBytesRead != dwPackedDibSize ) )
    {
       hb_xfree( pbmi );
-      return NULL;
+      return nullptr;
    }
 
    return pbmi;
@@ -295,12 +295,12 @@ static HBITMAP hPrepareBitmap( LPCTSTR szBitmap, UINT uiBitmap,
                                                pPackedDib,
                                                DIB_RGB_COLORS );
                      if( hBitmap == NULL )
-                        return NULL;
+                        return nullptr;
 
                      iWidth  = PackedDibGetWidth( pPackedDib );
                      iHeight = PackedDibGetHeight( pPackedDib );
 #else
-                     return NULL;
+                     return nullptr;
 #endif
                   }
                   else
@@ -312,7 +312,7 @@ static HBITMAP hPrepareBitmap( LPCTSTR szBitmap, UINT uiBitmap,
                                                       iExpHeight,
                                                       LR_LOADFROMFILE | LR_LOADMAP3DCOLORS );
                      if( hBitmap == NULL )
-                        return NULL;
+                        return nullptr;
 
                      iWidth  = iExpWidth;
                      iHeight = iExpHeight;
@@ -383,7 +383,7 @@ static HBITMAP hPrepareBitmap( LPCTSTR szBitmap, UINT uiBitmap,
             uiOptions );
 
          if( hBitmap == NULL )
-            return NULL;
+            return nullptr;
       }
       break;
       case 2: /* loading from resourceid */
@@ -401,7 +401,7 @@ static HBITMAP hPrepareBitmap( LPCTSTR szBitmap, UINT uiBitmap,
             iExpHeight,
             uiOptions );
          if( hBitmap == NULL )
-            return NULL;
+            return nullptr;
 
       }     /* loading from resources */
       break;
@@ -655,7 +655,7 @@ HB_FUNC( WVG_TREEVIEW_ADDITEM )
                                              TVIS_OVERLAYMASK | TVIS_STATEIMAGEMASK | TVIS_USERMASK;
 
    HB_WIN_V_UNION( tvis, item.state ) = 0;        /* TVI_BOLD */
-   tvis.hParent = HB_ISNUM( 2 ) ? ( HTREEITEM ) wvg_parhandle( 2 ) : NULL;
+   tvis.hParent = HB_ISNUM( 2 ) ? ( HTREEITEM ) wvg_parhandle( 2 ) : nullptr;
    HB_WIN_V_UNION( tvis, item.pszText ) = ( LPTSTR ) HB_PARSTRDEF( 3, &hText, NULL );
 
    hb_retnint( ( HB_PTRUINT ) TreeView_InsertItem( wvg_parhwnd( 1 ), &tvis ) );

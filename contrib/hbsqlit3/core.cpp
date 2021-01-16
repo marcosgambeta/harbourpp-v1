@@ -232,7 +232,7 @@ static void * hb_sqlite3_itemGet( PHB_ITEM pItem, int iType, HB_BOOL fError )
    if( fError )
       hb_errRT_BASE_SubstR( EG_ARG, iError, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 
-   return NULL;
+   return nullptr;
 }
 
 static void hb_sqlite3_ret( void * pMemAddr, int iType )
@@ -1795,8 +1795,8 @@ HB_FUNC( SQLITE3_PROFILE )
 //    HB_SQLITE3 * pHbSqlite3 = ( HB_SQLITE3 * ) hb_sqlite3_param( 1, HB_SQLITE3_DB, HB_TRUE );
 //
 //    if( pHbSqlite3 && pHbSqlite3->db )
-//       sqlite3_profile( pHbSqlite3->db, hb_parl( 2 ) ? SQL3ProfileLog : NULL,
-//                        HB_ISCHAR( 3 ) ? HB_UNCONST( hb_parcx( 3 ) ) : NULL );
+//       sqlite3_profile( pHbSqlite3->db, hb_parl( 2 ) ? SQL3ProfileLog : nullptr,
+//                        HB_ISCHAR( 3 ) ? HB_UNCONST( hb_parcx( 3 ) ) : nullptr );
 //    else
 //       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
@@ -1806,8 +1806,8 @@ HB_FUNC( SQLITE3_TRACE )
 //    HB_SQLITE3 * pHbSqlite3 = ( HB_SQLITE3 * ) hb_sqlite3_param( 1, HB_SQLITE3_DB, HB_TRUE );
 //
 //    if( pHbSqlite3 && pHbSqlite3->db )
-//       sqlite3_trace( pHbSqlite3->db, hb_parl( 2 ) ? SQL3TraceLog : NULL,
-//                      HB_ISCHAR( 3 ) ? HB_UNCONST( hb_parcx( 3 ) ) : NULL );
+//       sqlite3_trace( pHbSqlite3->db, hb_parl( 2 ) ? SQL3TraceLog : nullptr,
+//                      HB_ISCHAR( 3 ) ? HB_UNCONST( hb_parcx( 3 ) ) : nullptr );
 //    else
 //       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

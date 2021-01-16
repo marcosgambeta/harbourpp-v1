@@ -187,7 +187,7 @@ static SQLHENV hb_SQLHENV_par( int iParam )
 {
    PHB_SQLHENV pHEnv = ( PHB_SQLHENV ) hb_parptrGC( &s_gcSQLHENVFuncs, iParam );
 
-   return pHEnv ? pHEnv->hEnv : NULL;
+   return pHEnv ? pHEnv->hEnv : nullptr;
 }
 
 /* GC - SQLHDBC */
@@ -282,7 +282,7 @@ static SQLHDBC hb_SQLHDBC_par( int iParam )
 {
    PHB_SQLHDBC pHDbc = hb_SQLHDBC_get( hb_param( iParam, HB_IT_POINTER ) );
 
-   return pHDbc ? pHDbc->hDbc : NULL;
+   return pHDbc ? pHDbc->hDbc : nullptr;
 }
 
 /* GC - SQLHSTMT */
@@ -372,7 +372,7 @@ static SQLHSTMT hb_SQLHSTMT_par( int iParam )
 
    return ( pHStmt && pHStmt->hStmt &&
             hb_SQLHDBC_check(  pHStmt->pHDbcItm, pHStmt->conn_counter ) ) ?
-          pHStmt->hStmt : NULL;
+          pHStmt->hStmt : nullptr;
 }
 
 HB_FUNC( SQLALLOCENV )  /* @hEnv --> nRetCode */

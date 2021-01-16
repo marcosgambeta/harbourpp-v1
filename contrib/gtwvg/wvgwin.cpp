@@ -571,7 +571,7 @@ HB_FUNC( WVG_CHOOSECOLOR )
       crCustClr[ i ] = ( HB_ISARRAY( 2 ) ? ( COLORREF ) hb_parvnl( 2, i + 1 ) : GetSysColor( COLOR_BTNFACE ) );
 
    cc.lStructSize  = sizeof( CHOOSECOLOR );
-   cc.hwndOwner    = HB_ISNUM( 4 ) ? ( HWND ) ( HB_PTRUINT ) hb_parnint( 4 ) : NULL;
+   cc.hwndOwner    = HB_ISNUM( 4 ) ? ( HWND ) ( HB_PTRUINT ) hb_parnint( 4 ) : nullptr;
    cc.rgbResult    = ( COLORREF ) hb_parnl( 1 );
    cc.lpCustColors = crCustClr;
    cc.Flags        = ( WORD ) hb_parnldef( 3, CC_ANYCOLOR | CC_RGBINIT | CC_FULLOPEN );
@@ -780,7 +780,7 @@ HB_FUNC( WVG_CREATEWINDOWEX )
                           hb_parni( 5 ), hb_parni( 6 ),
                           hb_parni( 7 ), hb_parni( 8 ),
                           ( HWND ) ( HB_PTRUINT ) hb_parnint( 9 ),
-                          HB_ISNUM( 10 ) ? ( HMENU ) ( HB_PTRUINT ) hb_parnint( 10 ) : NULL,
+                          HB_ISNUM( 10 ) ? ( HMENU ) ( HB_PTRUINT ) hb_parnint( 10 ) : nullptr,
                           HB_ISNUM( 11 ) ? ( HINSTANCE ) ( HB_PTRUINT ) hb_parnint( 11 ) : ( HINSTANCE ) wvg_hInstance(),
                           NULL );
    hb_strfree( hClassName );

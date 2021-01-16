@@ -146,14 +146,14 @@ static FIBITMAP * hb_FIBITMAP_par( int iParam )
 {
    HB_FIBITMAP ** ptr = ( HB_FIBITMAP ** ) hb_parptrGC( &s_gcFIBITMAPFuncs, iParam );
 
-   return ptr ? ( *ptr )->dib : NULL;
+   return ptr ? ( *ptr )->dib : nullptr;
 }
 
 static void * hb_FIBITMAP_is( int iParam )
 {
    HB_FIBITMAP ** ptr = ( HB_FIBITMAP ** ) hb_parptrGC( &s_gcFIBITMAPFuncs, iParam );
 
-   return ptr ? ( *ptr )->dib : NULL;
+   return ptr ? ( *ptr )->dib : nullptr;
 }
 
 static void hb_FIBITMAP_ret( FIBITMAP * dib, HB_BOOL fFree )
@@ -190,7 +190,7 @@ static FIMULTIBITMAP * hb_FIMULTIBITMAP_par( int iParam )
 {
    FIMULTIBITMAP ** ptr = ( FIMULTIBITMAP ** ) hb_parptrGC( &s_gcFIMULTIBITMAPFuncs, iParam );
 
-   return ptr ? *ptr : NULL;
+   return ptr ? *ptr : nullptr;
 }
 
 static void * hb_FIMULTIBITMAP_is( int iParam )

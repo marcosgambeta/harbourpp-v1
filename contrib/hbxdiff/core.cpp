@@ -145,7 +145,7 @@ static void * hb_mmf_itemGet( PHB_ITEM pItem, int iType, HB_BOOL fError )
    if( fError )
       hb_errRT_BASE_SubstR( EG_ARG, iError, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 
-   return NULL;
+   return nullptr;
 }
 
 static void hb_mmf_ret( void * pMemAddr, int iType )
@@ -225,7 +225,7 @@ HB_FUNC( XDL_READ_MMFILE )
 
    if( phb_mmf && phb_mmf->mmf )
    {
-      PHB_ITEM pData = HB_ISBYREF( 2 ) ? hb_param( 2, HB_IT_STRING ) : NULL;
+      PHB_ITEM pData = HB_ISBYREF( 2 ) ? hb_param( 2, HB_IT_STRING ) : nullptr;
       char *   data;
       HB_SIZE  size;
 

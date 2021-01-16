@@ -227,7 +227,7 @@ static const RDDFUNCS * hb_bmGetRdd( HB_USHORT uiRddId )
       if( hb_rddIsDerivedFrom( uiRddId, s_uiRdds[ i ] ) )
          return &( hb_rddGetNode( s_uiRdds[ i ] )->pSuperTable );
    }
-   return NULL;
+   return nullptr;
 }
 
 static void hb_bmResetFilterOpt( AREAP pArea )

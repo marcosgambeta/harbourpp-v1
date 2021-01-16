@@ -94,7 +94,7 @@ X509 * hb_X509_par( int iParam )
 {
    PHB_X509 ph = ( PHB_X509 ) hb_parptrGC( &s_gcX509_funcs, iParam );
 
-   return ph ? ph->pX509 : NULL;
+   return ph ? ph->pX509 : nullptr;
 }
 
 void hb_X509_ret( X509 * x509, HB_BOOL fRelease )

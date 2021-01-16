@@ -80,7 +80,7 @@ EVP_PKEY * hb_EVP_PKEY_par( int iParam )
 {
    void ** ph = ( void ** ) hb_parptrGC( &s_gcEVP_PKEY_funcs, iParam );
 
-   return ph ? ( EVP_PKEY * ) *ph : NULL;
+   return ph ? ( EVP_PKEY * ) *ph : nullptr;
 }
 
 void hb_EVP_PKEY_ret( EVP_PKEY * pkey )

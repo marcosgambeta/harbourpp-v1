@@ -251,11 +251,11 @@ static PHB_SRVDATA s_fileFindSrvData( PHB_CONCLI conn, int iStreamID, int iType 
    while( pSrvData )
    {
       if( pSrvData->id == iStreamID )
-         return ( iType == 0 || pSrvData->type == iType ) ? pSrvData : NULL;
+         return ( iType == 0 || pSrvData->type == iType ) ? pSrvData : nullptr;
       pSrvData = pSrvData->next;
    }
 
-   return NULL;
+   return nullptr;
 }
 
 static int s_fileNewSrvData( PHB_CONCLI conn, int iType )
@@ -916,7 +916,7 @@ static PHB_CONCLI s_fileConnCheck( PHB_CONCLI conn, const char ** pFileName,
          return conn;
    }
 
-   return NULL;
+   return nullptr;
 }
 
 static PHB_CONCLI s_fileConnect( const char ** pFileName,
@@ -952,7 +952,7 @@ static PHB_CONCLI s_fileConnect( const char ** pFileName,
 
       pszIpAddres = hb_socketResolveAddr( pszServer, HB_SOCKET_AF_INET );
       if( pszIpAddres == NULL )
-         return NULL;
+         return nullptr;
 
       conn = s_fileConFind( pszIpAddres, iPort );
       if( conn == NULL )
@@ -1175,7 +1175,7 @@ static PHB_CONCLI s_connParam( int iParam )
          return conn;
       }
    }
-   return NULL;
+   return nullptr;
 }
 
 /* netio_GetConnection( [<cServer>], [<nPort>], [<nTimeOut>], ;

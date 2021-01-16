@@ -157,7 +157,7 @@ static PHB_IRMMAP hb_irmMapParam( int iParam )
       return *ppMap;
 
    hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   return NULL;
+   return nullptr;
 }
 
 
@@ -273,7 +273,7 @@ PHB_IRMMAP hb_irmExecute( PHB_ITEM pItem )
    else
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 
-   return NULL;
+   return nullptr;
 }
 
 

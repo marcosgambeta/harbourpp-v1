@@ -698,7 +698,7 @@ static HB_ERRCODE odbcGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
    /* No pArea->pSDDData for DBCreate() area...
     * though pArea->fFetched == HB_TRUE for them
     */
-   hStmt = pArea->pSDDData ? ( ( SDDDATA * ) pArea->pSDDData )->hStmt : NULL;
+   hStmt = pArea->pSDDData ? ( ( SDDDATA * ) pArea->pSDDData )->hStmt : nullptr;
 
    while( ulRecNo > pArea->ulRecCount && ! pArea->fFetched )
    {

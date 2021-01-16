@@ -63,7 +63,7 @@ static PHB_ITEM hb_vmWithObjectItem( HB_ISIZ nLevel )
       nOffset = *pnOffset;
    }
 
-   return ( nOffset && ! nLevel ) ? hb_stackItem( nOffset ) : NULL;
+   return ( nOffset && ! nLevel ) ? hb_stackItem( nOffset ) : nullptr;
 }
 
 static HB_ISIZ hb_vmWithObjectCount( void )

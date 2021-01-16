@@ -96,7 +96,7 @@ static EVP_MD_CTX * hb_EVP_MD_CTX_par( int iParam )
 {
    void ** ph = ( void ** ) hb_parptrGC( &s_gcEVP_MD_CTX_funcs, iParam );
 
-   return ph ? ( EVP_MD_CTX * ) *ph : NULL;
+   return ph ? ( EVP_MD_CTX * ) *ph : nullptr;
 }
 
 HB_BOOL hb_EVP_MD_is( int iParam )

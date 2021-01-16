@@ -145,7 +145,7 @@ static zipFile hb_zipfileParam( int iParam )
       return *phZip;
 
    hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   return NULL;
+   return nullptr;
 }
 
 
@@ -175,7 +175,7 @@ static unzFile hb_unzipfileParam( int iParam )
       return *phUnzip;
 
    hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   return NULL;
+   return nullptr;
 }
 
 static PHB_FILE hb_fileHandleParam( int iParam, HB_BOOL * pfFree )
@@ -199,7 +199,7 @@ static PHB_FILE hb_fileHandleParam( int iParam, HB_BOOL * pfFree )
       return pFile;
 
    hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   return NULL;
+   return nullptr;
 }
 
 static HB_FATTR hb_translateExtAttr( const char * szFileName, HB_FATTR ulExtAttr )
