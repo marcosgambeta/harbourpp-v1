@@ -946,7 +946,7 @@ STATIC FUNCTION hbmk_new( lShellMode )
    hbmk[ _HBMK_cPLAT ] := ""
    hbmk[ _HBMK_cCOMP ] := ""
 
-   hbmk[ _HBMK_lCPP ] := NIL
+   hbmk[ _HBMK_lCPP ] := .T.
    hbmk[ _HBMK_lGUI ] := .F.
    hbmk[ _HBMK_lMT ] := .F.
    hbmk[ _HBMK_lPIC ] := .F.
@@ -2779,7 +2779,7 @@ STATIC FUNCTION __hbmk( aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExit
       CASE hb_LeftEq( cParamL, "-cpp=" )
 
          DO CASE
-         CASE SubStr( cParamL, 5 + 1 ) == "def"   ; hbmk[ _HBMK_lCPP ] := NIL
+         CASE SubStr( cParamL, 5 + 1 ) == "def"   ; hbmk[ _HBMK_lCPP ] := .T.
          CASE SubStr( cParamL, 5 + 1 ) == "yes"   ; hbmk[ _HBMK_lCPP ] := .T.
          CASE SubStr( cParamL, 5 + 1 ) == "no"    ; hbmk[ _HBMK_lCPP ] := .F.
          CASE SubStr( cParamL, 5 + 1 ) == "iso98" ; hbmk[ _HBMK_cCPP ] := "iso98"
