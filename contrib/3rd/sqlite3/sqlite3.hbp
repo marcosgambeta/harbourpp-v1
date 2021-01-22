@@ -45,10 +45,10 @@
 sqlite3.c
 
 # ORIGIN http://www.sqlite.org/
-# VER    3.8.2
-# URL    http://sqlite.org/2013/sqlite-amalgamation-3080200.zip
-# DIFF   sqlite3.diff
+# VER    3.34.1
+# URL    https://www.sqlite.org/2021/sqlite-amalgamation-3340100.zip
+# DIFF   sqlite3.diff ( ignored - using original source code )
 #
 # MAP    sqlite3.c
 # MAP    sqlite3.h
-# MAP    sqlite3ext.h  sqlite3x.h
+# MAP    sqlite3ext.h
