@@ -133,22 +133,22 @@ HB_FUNC( WVT_CHOOSEFONT )
    if( HB_ISCHAR( 1 ) )
    {
       void * hText;
-      HB_STRNCPY( lf.lfFaceName, HB_PARSTR( 1, &hText, NULL ), HB_SIZEOFARRAY( lf.lfFaceName ) - 1 );
+      HB_STRNCPY( lf.lfFaceName, HB_PARSTR( 1, &hText, nullptr ), HB_SIZEOFARRAY( lf.lfFaceName ) - 1 );
       hb_strfree( hText );
    }
 
    cf.lStructSize    = sizeof( CHOOSEFONT );
    cf.hwndOwner      = _s->hWnd;
-   cf.hDC            = ( HDC ) NULL;
+   cf.hDC            = ( HDC ) nullptr;
    cf.lpLogFont      = &lf;
    cf.iPointSize     = 0;
    cf.Flags          = CF_SCREENFONTS | CF_EFFECTS | CF_SHOWHELP | CF_INITTOLOGFONTSTRUCT;
    cf.rgbColors      = RGB( 0, 0, 0 );
    cf.lCustData      = 0L;
-   cf.lpfnHook       = ( LPCFHOOKPROC ) NULL;
-   cf.lpTemplateName = ( LPTSTR ) NULL;
-   cf.hInstance      = ( HINSTANCE ) NULL;
-   cf.lpszStyle      = ( LPTSTR ) NULL;
+   cf.lpfnHook       = ( LPCFHOOKPROC ) nullptr;
+   cf.lpTemplateName = ( LPTSTR ) nullptr;
+   cf.hInstance      = ( HINSTANCE ) nullptr;
+   cf.lpszStyle      = ( LPTSTR ) nullptr;
    cf.nFontType      = SCREEN_FONTTYPE;
    cf.nSizeMin       = 0;
    cf.nSizeMax       = 0;
@@ -177,7 +177,7 @@ HB_FUNC( WVT_CHOOSEFONT )
       PHB_ITEM ary = hb_itemNew( nullptr );
       hb_arrayNew( ary, 9 );
 
-      HB_ARRAYSETSTR( ary, 1, NULL );
+      HB_ARRAYSETSTR( ary, 1, nullptr );
       hb_arraySetNI( ary, 2, 0 );
       hb_arraySetNI( ary, 3, 0 );
       hb_arraySetNI( ary, 4, 0 );
@@ -194,7 +194,7 @@ HB_FUNC( WVT_CHOOSEFONT )
       PHB_ITEM ary = hb_itemNew( nullptr );
       hb_arrayNew( ary, 9 );
 
-      HB_ARRAYSETSTR( ary, 1, NULL );
+      HB_ARRAYSETSTR( ary, 1, nullptr );
       hb_arraySetNI( ary, 2, 0 );
       hb_arraySetNI( ary, 3, 0 );
       hb_arraySetNI( ary, 4, 0 );
@@ -245,7 +245,7 @@ HB_FUNC( WVT_MESSAGEBOX )
    void * hTitle;
    void * hMsg;
 
-   hb_retni( MessageBox( _s->hWnd, HB_PARSTR( 1, &hTitle, NULL ), HB_PARSTR( 2, &hMsg, NULL ), hb_parnidef( 3, MB_OK ) ) );
+   hb_retni( MessageBox( _s->hWnd, HB_PARSTR( 1, &hTitle, nullptr ), HB_PARSTR( 2, &hMsg, nullptr ), hb_parnidef( 3, MB_OK ) ) );
    hb_strfree( hTitle );
    hb_strfree( hMsg );
 }
@@ -297,7 +297,7 @@ HB_FUNC( WVT_SETTOOLTIP )
       iBottom = xy.y - 1;
       iRight  = xy.x - 1;
 
-      ti.lpszText    = ( LPTSTR ) HB_PARSTR( 5, &hText, NULL );
+      ti.lpszText    = ( LPTSTR ) HB_PARSTR( 5, &hText, nullptr );
       ti.rect.left   = iLeft;
       ti.rect.top    = iTop;
       ti.rect.right  = iRight;
@@ -322,7 +322,7 @@ HB_FUNC( WVT_SETTOOLTIPTEXT )
    if( SendMessage( _s->hWndTT, TTM_GETTOOLINFO, 0, ( LPARAM ) &ti ) )
    {
       void * hText;
-      ti.lpszText = ( LPTSTR ) HB_PARSTR( 1, &hText, NULL );
+      ti.lpszText = ( LPTSTR ) HB_PARSTR( 1, &hText, nullptr );
       SendMessage( _s->hWndTT, TTM_UPDATETIPTEXT, 0, ( LPARAM ) &ti );
       hb_strfree( hText );
    }
@@ -409,7 +409,7 @@ HB_FUNC( WVT_SETTOOLTIPTITLE )
       if( iIcon > 3 )
          iIcon = 0;
 
-      SendMessage( _s->hWndTT, TTM_SETTITLE, ( WPARAM ) iIcon, ( LPARAM ) HB_PARSTR( 2, &hText, NULL ) );
+      SendMessage( _s->hWndTT, TTM_SETTITLE, ( WPARAM ) iIcon, ( LPARAM ) HB_PARSTR( 2, &hText, nullptr ) );
       hb_strfree( hText );
    }
 #endif
@@ -500,71 +500,71 @@ HB_FUNC( WVT_SETPOINTER )
    switch( iCursor )
    {
       case 1:
-         hCursor = LoadCursor( NULL, IDC_ARROW );
+         hCursor = LoadCursor( nullptr, IDC_ARROW );
          break;
 
       case 2:
-         hCursor = LoadCursor( NULL, IDC_IBEAM );
+         hCursor = LoadCursor( nullptr, IDC_IBEAM );
          break;
 
       case 3:
-         hCursor = LoadCursor( NULL, IDC_WAIT  );
+         hCursor = LoadCursor( nullptr, IDC_WAIT  );
          break;
 
       case 4:
-         hCursor = LoadCursor( NULL, IDC_CROSS );
+         hCursor = LoadCursor( nullptr, IDC_CROSS );
          break;
 
       case 5:
-         hCursor = LoadCursor( NULL, IDC_UPARROW );
+         hCursor = LoadCursor( nullptr, IDC_UPARROW );
          break;
 
       case 6:
-         hCursor = LoadCursor( NULL, IDC_SIZE );
+         hCursor = LoadCursor( nullptr, IDC_SIZE );
          break;
 
       case 7:
-         hCursor = LoadCursor( NULL, IDC_ICON );
+         hCursor = LoadCursor( nullptr, IDC_ICON );
          break;
 
       case 8:
-         hCursor = LoadCursor( NULL, IDC_SIZENWSE );
+         hCursor = LoadCursor( nullptr, IDC_SIZENWSE );
          break;
 
       case 9:
-         hCursor = LoadCursor( NULL, IDC_SIZENESW );
+         hCursor = LoadCursor( nullptr, IDC_SIZENESW );
          break;
 
       case 10:
-         hCursor = LoadCursor( NULL, IDC_SIZEWE );
+         hCursor = LoadCursor( nullptr, IDC_SIZEWE );
          break;
 
       case 11:
-         hCursor = LoadCursor( NULL, IDC_SIZENS );
+         hCursor = LoadCursor( nullptr, IDC_SIZENS );
          break;
 
       case 12:
-         hCursor = LoadCursor( NULL, IDC_SIZEALL );
+         hCursor = LoadCursor( nullptr, IDC_SIZEALL );
          break;
 
       case 13:
-         hCursor = LoadCursor( NULL, IDC_NO );
+         hCursor = LoadCursor( nullptr, IDC_NO );
          break;
 
       case 14:
-         hCursor = LoadCursor( NULL, IDC_HAND );
+         hCursor = LoadCursor( nullptr, IDC_HAND );
          break;
 
       case 15:
-         hCursor = LoadCursor( NULL, IDC_APPSTARTING );
+         hCursor = LoadCursor( nullptr, IDC_APPSTARTING );
          break;
 
       case 16:
-         hCursor = LoadCursor( NULL, IDC_HELP );
+         hCursor = LoadCursor( nullptr, IDC_HELP );
          break;
 
       default:
-         hCursor = LoadCursor( NULL, IDC_ARROW );
+         hCursor = LoadCursor( nullptr, IDC_ARROW );
          break;
    }
 
@@ -647,7 +647,7 @@ HB_FUNC( WVT_SETMENU )
       wi.left = rc.left + ( ( rc.right - rc.left - width ) / 2 );
       wi.top  = rc.top + ( ( rc.bottom - rc.top - height ) / 2 );
    }
-   SetWindowPos( _s->hWnd, NULL, wi.left, wi.top, width, height, SWP_NOZORDER );
+   SetWindowPos( _s->hWnd, nullptr, wi.left, wi.top, width, height, SWP_NOZORDER );
 }
 
 HB_FUNC( WVT_SETPOPUPMENU )
@@ -806,7 +806,7 @@ HB_FUNC( WVT_TRACKPOPUPMENU )
                              xy.y,
                              0,
                              _s->hWnd,
-                             NULL ) );
+                             nullptr ) );
 }
 
 HB_FUNC( WVT_GETMENU )
@@ -835,7 +835,7 @@ HB_FUNC( WVT_CREATEDIALOGDYNAMIC )
    /* check if we still have room for a new dialog */
    for( iIndex = 0; iIndex < WVT_DLGML_MAX; iIndex++ )
    {
-      if( _s->hDlgModeless[ iIndex ] == NULL )
+      if( _s->hDlgModeless[ iIndex ] == nullptr )
          break;
    }
 
@@ -865,7 +865,7 @@ HB_FUNC( WVT_CREATEDIALOGDYNAMIC )
       {
          void * hTemplate;
          hDlg = CreateDialogIndirect( ( HINSTANCE ) wvg_hInstance(),
-                                      ( LPDLGTEMPLATE ) HB_PARSTR( 1, &hTemplate, NULL ),
+                                      ( LPDLGTEMPLATE ) HB_PARSTR( 1, &hTemplate, nullptr ),
                                       hb_parl( 2 ) ? _s->hWnd : nullptr,
                                       ( DLGPROC ) ( HB_PTRUINT ) hb_parnint( 3 ) );
          hb_strfree( hTemplate );
@@ -878,7 +878,7 @@ HB_FUNC( WVT_CREATEDIALOGDYNAMIC )
             {
                void * hTemplate;
                hDlg = CreateDialog( ( HINSTANCE ) wvg_hInstance(),
-                                    HB_PARSTR( 1, &hTemplate, NULL ),
+                                    HB_PARSTR( 1, &hTemplate, nullptr ),
                                     hb_parl( 2 ) ? _s->hWnd : nullptr,
                                     ( DLGPROC ) hb_wvt_gtDlgProcMLess );
                hb_strfree( hTemplate );
@@ -917,7 +917,7 @@ HB_FUNC( WVT_CREATEDIALOGDYNAMIC )
          }
          else
          {
-            _s->pFunc[ iIndex ] = NULL;
+            _s->pFunc[ iIndex ] = nullptr;
             _s->iType[ iIndex ] = 0;
          }
          SendMessage( hDlg, WM_INITDIALOG, 0, 0 );
@@ -928,7 +928,7 @@ HB_FUNC( WVT_CREATEDIALOGDYNAMIC )
          if( iType == 2 && pFunc )
             hb_itemRelease( pFunc );
 
-         _s->hDlgModeless[ iIndex ] = NULL;
+         _s->hDlgModeless[ iIndex ] = nullptr;
       }
    }
 
@@ -950,7 +950,7 @@ HB_FUNC( WVT_CREATEDIALOGMODAL )
    /* check if we still have room for a new dialog */
    for( iIndex = 0; iIndex < WVT_DLGMD_MAX; iIndex++ )
    {
-      if( _s->hDlgModal[ iIndex ] == NULL )
+      if( _s->hDlgModal[ iIndex ] == nullptr )
          break;
    }
 
@@ -988,7 +988,7 @@ HB_FUNC( WVT_CREATEDIALOGMODAL )
       {
          void * hTemplate;
          iResult = DialogBoxParam( ( HINSTANCE ) wvg_hInstance(),
-                                   HB_PARSTR( 1, &hTemplate, NULL ),
+                                   HB_PARSTR( 1, &hTemplate, nullptr ),
                                    hParent,
                                    ( DLGPROC ) hb_wvt_gtDlgProcModal,
                                    ( LPARAM ) ( DWORD ) iIndex + 1 );
@@ -1161,7 +1161,7 @@ HB_FUNC( WVT_LBADDSTRING )
 {
    void * hText;
 
-   SendMessage( GetDlgItem( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parni( 2 ) ), LB_ADDSTRING, 0, ( LPARAM ) HB_PARSTR( 3, &hText, NULL ) );
+   SendMessage( GetDlgItem( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parni( 2 ) ), LB_ADDSTRING, 0, ( LPARAM ) HB_PARSTR( 3, &hText, nullptr ) );
    hb_strfree( hText );
 }
 
@@ -1184,7 +1184,7 @@ HB_FUNC( WVT_CBADDSTRING )
 {
    void * hText;
 
-   SendMessage( GetDlgItem( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parni( 2 ) ), CB_ADDSTRING, 0, ( LPARAM ) HB_PARSTR( 3, &hText, NULL ) );
+   SendMessage( GetDlgItem( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parni( 2 ) ), CB_ADDSTRING, 0, ( LPARAM ) HB_PARSTR( 3, &hText, nullptr ) );
    hb_strfree( hText );
 }
 
@@ -1205,9 +1205,9 @@ HB_FUNC( WVT_DLGSETICON )
    else
    {
       void * cIcon;
-      hIcon = ( HICON ) LoadImage( ( HINSTANCE ) NULL, HB_PARSTR( 2, &cIcon, NULL ), IMAGE_ICON, 0, 0, LR_LOADFROMFILE );
+      hIcon = ( HICON ) LoadImage( ( HINSTANCE ) nullptr, HB_PARSTR( 2, &cIcon, nullptr ), IMAGE_ICON, 0, 0, LR_LOADFROMFILE );
       if( ! hIcon )
-         hIcon = ( HICON ) LoadImage( GetModuleHandle( nullptr ), HB_PARSTR( 2, &cIcon, NULL ), IMAGE_ICON, 0, 0, 0 );
+         hIcon = ( HICON ) LoadImage( GetModuleHandle( nullptr ), HB_PARSTR( 2, &cIcon, nullptr ), IMAGE_ICON, 0, 0, 0 );
       hb_strfree( cIcon );
    }
 

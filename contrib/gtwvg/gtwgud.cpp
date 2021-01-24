@@ -99,13 +99,13 @@ static void hb_gt_wvt_RegisterClass( HINSTANCE hInstance )
    wndclass.style         = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
    wndclass.lpfnWndProc   = hb_gt_wvt_WndProc;
    wndclass.hInstance     = hInstance;
-   wndclass.hCursor       = LoadCursor( NULL, IDC_ARROW );
+   wndclass.hCursor       = LoadCursor( nullptr, IDC_ARROW );
 #if 0
    wndclass.cbClsExtra    = 0;
    wndclass.cbWndExtra    = 0;
-   wndclass.hIcon         = NULL;
-   wndclass.hbrBackground = NULL;  /* ( HBRUSH ) ( COLOR_BTNFACE + 1 ); */
-   wndclass.lpszMenuName  = NULL;
+   wndclass.hIcon         = nullptr;
+   wndclass.hbrBackground = nullptr;  /* ( HBRUSH ) ( COLOR_BTNFACE + 1 ); */
+   wndclass.lpszMenuName  = nullptr;
 #endif
    wndclass.lpszClassName = s_szClassName;
 
@@ -117,7 +117,7 @@ static void hb_gt_wvt_RegisterClass( HINSTANCE hInstance )
 static PHB_GTWVT hb_gt_wvt_Find( HWND hWnd )
 {
    int iCount = s_wvtCount, iPos = 0;
-   PHB_GTWVT pWVT = NULL;
+   PHB_GTWVT pWVT = nullptr;
 
    HB_WVT_LOCK();
 
@@ -151,7 +151,7 @@ static HB_BOOL hb_gt_wvt_Alloc( PHB_GTWVT pWVT )
       int iPos = 0;
       do
       {
-         if( s_wvtWindows[ iPos ] == NULL )
+         if( s_wvtWindows[ iPos ] == nullptr )
          {
             s_wvtWindows[ iPos ] = pWVT;
             pWVT->iHandle = iPos;
@@ -174,7 +174,7 @@ static void hb_gt_wvt_Free( PHB_GTWVT pWVT )
 {
    HB_WVT_LOCK();
 
-   s_wvtWindows[ pWVT->iHandle ] = NULL;
+   s_wvtWindows[ pWVT->iHandle ] = nullptr;
 
    if( --s_wvtCount == 0 )
    {
@@ -233,7 +233,7 @@ static PHB_GTWVT hb_gt_wvt_New( PHB_GT pGT, HINSTANCE hInstance, int iCmdShow )
    pWVT->MousePos.x        = 0;
    pWVT->MousePos.y        = 0;
    pWVT->MouseMove         = HB_TRUE;
-   pWVT->hWnd              = NULL;
+   pWVT->hWnd              = nullptr;
    pWVT->keyPointerIn      = 0;
    pWVT->keyPointerOut     = 0;
    pWVT->keyLast           = 0;
@@ -250,7 +250,7 @@ static PHB_GTWVT hb_gt_wvt_New( PHB_GT pGT, HINSTANCE hInstance, int iCmdShow )
 
    {
       PHB_ITEM pItem = hb_itemPutCPtr( nullptr, hb_cmdargBaseProgName() );
-      pWVT->lpWindowTitle = HB_ITEMGETSTR( pItem, &pWVT->hWindowTitle, NULL );
+      pWVT->lpWindowTitle = HB_ITEMGETSTR( pItem, &pWVT->hWindowTitle, nullptr );
       hb_itemRelease( pItem );
    }
 
@@ -261,7 +261,7 @@ static PHB_GTWVT hb_gt_wvt_New( PHB_GT pGT, HINSTANCE hInstance, int iCmdShow )
    pWVT->pPP->y            = 0;
    pWVT->pPP->width        = 600;
    pWVT->pPP->height       = 400;
-   pWVT->pPP->pParentGT    = NULL;
+   pWVT->pPP->pParentGT    = nullptr;
    pWVT->pPP->bVisible     = HB_FALSE;
    pWVT->pPP->bConfigured  = HB_FALSE;
    pWVT->pPP->bRowCols     = HB_FALSE;
@@ -939,7 +939,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc( HWND hWnd, UINT message, WPARAM wPara
                tnid.hWnd             = hWnd;
                tnid.uID              = HB_ID_NOTIFYICON;
                tnid.uCallbackMessage = HB_MSG_NOTIFYICON;
-               tnid.hIcon            = NULL;
+               tnid.hIcon            = nullptr;
                Shell_NotifyIcon( NIM_DELETE, &tnid );
                ShowWindow( hWnd, SW_RESTORE );
             }
@@ -1082,7 +1082,7 @@ static WPARAM hb_gt_wvt_ProcessMessages( PHB_GTWVT pWVT )
    MSG msg;
 
    HB_SYMBOL_UNUSED( pWVT );
-   while( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) )
+   while( PeekMessage( &msg, nullptr, 0, 0, PM_REMOVE ) )
    {
       TranslateMessage( &msg );
       DispatchMessage( &msg );
@@ -1095,7 +1095,7 @@ static HWND hb_gt_wvt_CreateWindow( PHB_GTWVT pWVT )
 {
    HWND hWnd, hWndParent;
 
-   hWndParent = NULL;
+   hWndParent = nullptr;
 
    if( pWVT->pPP->bConfigured )
    {
@@ -1135,9 +1135,9 @@ static HWND hb_gt_wvt_CreateWindow( PHB_GTWVT pWVT )
       pWVT->pPP->width,     /* width          */
       pWVT->pPP->height,    /* height         */
       hWndParent,           /* window parent  */
-      NULL,                 /* menu           */
+      nullptr,              /* menu           */
       pWVT->hInstance,      /* instance       */
-      NULL );               /* lpParam        */
+      nullptr );            /* lpParam        */
 
    ShowWindow( pWVT->hWnd, pWVT->pPP->bVisible ? SW_SHOWNORMAL : SW_HIDE );
    UpdateWindow( pWVT->hWnd );
@@ -1410,7 +1410,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_STRING )
          {
             hb_strfree( pWVT->hWindowTitle );
-            pWVT->lpWindowTitle = HB_ITEMGETSTR( pInfo->pNewVal, &pWVT->hWindowTitle, NULL );
+            pWVT->lpWindowTitle = HB_ITEMGETSTR( pInfo->pNewVal, &pWVT->hWindowTitle, nullptr );
             if( pWVT->hWnd )
                SetWindowText( pWVT->hWnd, pWVT->lpWindowTitle );
          }
@@ -1428,8 +1428,8 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             void * hImageName;
 
             pWVT->bIconToFree = HB_TRUE;
-            pWVT->hIcon = ( HICON ) LoadImage( ( HINSTANCE ) NULL,
-                                               HB_ITEMGETSTR( pInfo->pNewVal, &hImageName, NULL ),
+            pWVT->hIcon = ( HICON ) LoadImage( ( HINSTANCE ) nullptr,
+                                               HB_ITEMGETSTR( pInfo->pNewVal, &hImageName, nullptr ),
                                                IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_DEFAULTSIZE );
             hb_strfree( hImageName );
             if( pWVT->hWnd )
@@ -1452,7 +1452,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
             pWVT->bIconToFree = HB_FALSE;
             pWVT->hIcon = LoadIcon( pWVT->hInstance,
-                                    HB_ITEMGETSTR( pInfo->pNewVal, &hIconName, NULL ) );
+                                    HB_ITEMGETSTR( pInfo->pNewVal, &hIconName, nullptr ) );
             hb_strfree( hIconName );
             if( pWVT->hWnd )
             {
@@ -1512,7 +1512,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 #endif
          else
          {
-            if( pInfo->pResult == NULL )
+            if( pInfo->pResult == nullptr )
                pInfo->pResult = hb_itemNew( nullptr );
 #if defined( UNICODE )
             hb_gt_winapi_getClipboard( CF_UNICODETEXT, pInfo->pResult );
@@ -1579,7 +1579,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 #if defined( HB_OS_WIN_CE ) && ! defined( __MINGW32CE__ )
    #define SWP_DEFERERASE  0
 #endif
-                  SetWindowPos( pWVT->hWnd, NULL, 0, 0, 0, 0,
+                  SetWindowPos( pWVT->hWnd, nullptr, 0, 0, 0, 0,
                                 SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_DEFERERASE );
                   ShowWindow( pWVT->hWnd, SW_HIDE );
                   ShowWindow( pWVT->hWnd, SW_SHOWNORMAL );
@@ -1659,7 +1659,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                   x = i1;
                   y = i2;
                }
-               hb_retl( SetWindowPos( pWVT->hWnd, NULL,
+               hb_retl( SetWindowPos( pWVT->hWnd, nullptr,
                                       x,
                                       y,
                                       rect.right - rect.left,
@@ -1732,7 +1732,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
             case HB_GTS_SETTIMER:
                if( ( hb_itemType( pInfo->pNewVal2 ) & HB_IT_ARRAY ) && pWVT->hWnd )
-                  SetTimer( pWVT->hWnd, hb_arrayGetNI( pInfo->pNewVal2, 1 ), hb_arrayGetNI( pInfo->pNewVal2, 2 ), NULL );
+                  SetTimer( pWVT->hWnd, hb_arrayGetNI( pInfo->pNewVal2, 1 ), hb_arrayGetNI( pInfo->pNewVal2, 2 ), nullptr );
                break;
 
             case HB_GTS_KILLTIMER:
@@ -1748,7 +1748,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                {
                   RECT rect = { 0, 0, 0, 0 };
                   GetWindowRect( pWVT->hWnd, &rect );
-                  hb_retl( SetWindowPos( pWVT->hWnd, NULL,
+                  hb_retl( SetWindowPos( pWVT->hWnd, nullptr,
                                          hb_arrayGetNI( pInfo->pNewVal2, 1 ),
                                          hb_arrayGetNI( pInfo->pNewVal2, 2 ),
                                          rect.right - rect.left,
@@ -1788,14 +1788,14 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
                   if( iIconType == 0 )
                   {
-                     hIcon = ( HICON ) LoadImage( ( HINSTANCE ) NULL,
-                                             HB_ARRAYGETSTR( pInfo->pNewVal2, 3, &hIconName, NULL ),
+                     hIcon = ( HICON ) LoadImage( ( HINSTANCE ) nullptr,
+                                             HB_ARRAYGETSTR( pInfo->pNewVal2, 3, &hIconName, nullptr ),
                                                      IMAGE_ICON, 0, 0, LR_LOADFROMFILE );
                      hb_strfree( hIconName );
                   }
                   else if( iIconType == 1 )
                   {
-                     hIcon = LoadIcon( pWVT->hInstance, HB_ARRAYGETSTR( pInfo->pNewVal2, 3, &hIconName, NULL ) );
+                     hIcon = LoadIcon( pWVT->hInstance, HB_ARRAYGETSTR( pInfo->pNewVal2, 3, &hIconName, nullptr ) );
                      hb_strfree( hIconName );
                   }
                   else if( iIconType == 2 )
@@ -1811,7 +1811,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                   tnid.uCallbackMessage = HB_MSG_NOTIFYICON;
                   tnid.hIcon            = hIcon;
 
-                  HB_STRNCPY( tnid.szTip, HB_ARRAYGETSTR( pInfo->pNewVal2, 4, &hIconName, NULL ), HB_SIZEOFARRAY( tnid.szTip ) - 1 );
+                  HB_STRNCPY( tnid.szTip, HB_ARRAYGETSTR( pInfo->pNewVal2, 4, &hIconName, nullptr ), HB_SIZEOFARRAY( tnid.szTip ) - 1 );
                   hb_strfree( hIconName );
 
                   Shell_NotifyIcon( mode, &tnid );

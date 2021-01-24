@@ -288,8 +288,8 @@ typedef struct
    BYTE     chrTransTbl[ 256 ];
 #endif
 
-   HICON    hIcon;                          /* Title Bar and Task List icon. Can be NULL. */
-   HB_BOOL  bIconToFree;                    /* Do we need to free this icon when it's not NULL? */
+   HICON    hIcon;                          /* Title Bar and Task List icon. Can be nullptr. */
+   HB_BOOL  bIconToFree;                    /* Do we need to free this icon when it's not nullptr? */
 
    void *   hWindowTitle;
    LPCTSTR  lpWindowTitle;
