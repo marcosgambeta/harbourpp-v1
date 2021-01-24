@@ -69,14 +69,14 @@ static HB_GARBAGE_FUNC( MYSQL_release )
 {
    void ** ph = ( void ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
       mysql_close( ( MYSQL * ) *ph );
 
-      /* set pointer to NULL to avoid multiple freeing */
-      *ph = NULL;
+      /* set pointer to nullptr to avoid multiple freeing */
+      *ph = nullptr;
    }
 }
 
@@ -112,14 +112,14 @@ static HB_GARBAGE_FUNC( MYSQL_RES_release )
 {
    void ** ph = ( void ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
       mysql_free_result( ( MYSQL_RES * ) *ph );
 
-      /* set pointer to NULL to avoid multiple freeing */
-      *ph = NULL;
+      /* set pointer to nullptr to avoid multiple freeing */
+      *ph = nullptr;
    }
 }
 
@@ -164,11 +164,11 @@ HB_FUNC( MYSQL_REAL_CONNECT ) /* MYSQL * mysql_real_connect( MYSQL *, char * hos
    unsigned int port  = ( unsigned int ) hb_parnidef( 4, MYSQL_PORT );
    unsigned int flags = ( unsigned int ) hb_parnidef( 5, 0 );
 
-   if( ( mysql = mysql_init( ( MYSQL * ) NULL ) ) != NULL )
+   if( ( mysql = mysql_init( ( MYSQL * ) nullptr ) ) != nullptr )
    {
       /* from 3.22.x of MySQL there is a new parameter in mysql_real_connect() call, that is char * db
          which is not used here */
-      if( mysql_real_connect( mysql, szHost, szUser, szPass, 0, port, NULL, flags ) )
+      if( mysql_real_connect( mysql, szHost, szUser, szPass, 0, port, nullptr, flags ) )
          hb_MYSQL_ret( mysql );
       else
       {
@@ -179,7 +179,7 @@ HB_FUNC( MYSQL_REAL_CONNECT ) /* MYSQL * mysql_real_connect( MYSQL *, char * hos
    else
       hb_retptr( nullptr );
 #else
-   hb_MYSQL_ret( mysql_real_connect( NULL, szHost, szUser, szPass, 0, NULL, 0 ) );
+   hb_MYSQL_ret( mysql_real_connect( nullptr, szHost, szUser, szPass, 0, nullptr, 0 ) );
 #endif
 }
 
@@ -391,7 +391,7 @@ HB_FUNC( MYSQL_LIST_FIELDS ) /* MYSQL_RES * mysql_list_fields( MYSQL *, char * )
    MYSQL * mysql = hb_MYSQL_par( 1 );
 
    if( mysql )
-      hb_MYSQL_RES_ret( mysql_list_fields( mysql, hb_parc( 2 ), NULL ) );
+      hb_MYSQL_RES_ret( mysql_list_fields( mysql, hb_parc( 2 ), nullptr ) );
    else
       hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
@@ -422,7 +422,7 @@ HB_FUNC( MYSQL_LIST_DBS ) /* MYSQL_RES * mysql_list_dbs( MYSQL *, char * wild );
 
    if( mysql )
    {
-      MYSQL_RES * mresult = mysql_list_dbs( mysql, NULL );
+      MYSQL_RES * mresult = mysql_list_dbs( mysql, nullptr );
       HB_SIZE     nr      = ( HB_SIZE ) mysql_num_rows( mresult );
       PHB_ITEM    aDBs    = hb_itemArrayNew( nr );
       HB_SIZE     i;
