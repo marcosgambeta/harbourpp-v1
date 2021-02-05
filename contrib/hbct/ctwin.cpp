@@ -237,7 +237,7 @@ static void hb_ctw_WindowMap( PHB_GTCTW pCTW, int iWindow, HB_BOOL fExpose )
 {
    PHB_CT_WND pWnd;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_ctw_WindowMap(%p,%d,%d)", ( void * ) pCTW, iWindow, ( int ) fExpose ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_ctw_WindowMap(%p,%d,%d)", ( void * ) pCTW, iWindow, static_cast< int >( fExpose ) ) );
 
    pWnd = pCTW->windows[ iWindow ];
 
@@ -274,7 +274,7 @@ static void hb_ctw_WindowMap( PHB_GTCTW pCTW, int iWindow, HB_BOOL fExpose )
 
 static void hb_ctw_RemapAllWindows( PHB_GTCTW pCTW, int iFrom, HB_BOOL fExpose )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_ctw_RemapAllWindows(%p,%d,%d)", ( void * ) pCTW, iFrom, ( int ) fExpose ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_ctw_RemapAllWindows(%p,%d,%d)", ( void * ) pCTW, iFrom, static_cast< int >( fExpose ) ) );
 
    if( pCTW->iMaxWindow )
    {
@@ -651,7 +651,7 @@ static int hb_ctw_CreateWindow( PHB_GTCTW pCTW, int iTop, int iLeft, int iBottom
    int iRow, iCol, iHeight, iWidth, iTmp;
    long lIndex;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_ctw_CreateWindow(%p,%d,%d,%d,%d,%d,%d,%d)", ( void * ) pCTW, iTop, iLeft, iBottom, iRight, ( int ) fClear, iColor, ( int ) fVisible ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_ctw_CreateWindow(%p,%d,%d,%d,%d,%d,%d,%d)", ( void * ) pCTW, iTop, iLeft, iBottom, iRight, static_cast< int >( fClear ), iColor, static_cast< int >( fVisible ) ) );
 
    if( pCTW->iOpenWindows == pCTW->iMaxWindow )
    {
@@ -865,7 +865,7 @@ static int hb_ctw_CloseAllWindows( PHB_GTCTW pCTW )
 
 static int hb_ctw_CenterWindow( PHB_GTCTW pCTW, int iWindow, HB_BOOL fCenter )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_ctw_CenterWindow(%p,%d,%d)", ( void * ) pCTW, iWindow, ( int ) fCenter ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_ctw_CenterWindow(%p,%d,%d)", ( void * ) pCTW, iWindow, static_cast< int >( fCenter ) ) );
 
    if( iWindow > 0 && iWindow <= pCTW->iOpenWindows )
    {
@@ -1014,7 +1014,7 @@ static int hb_ctw_SetWindowClip( PHB_GTCTW pCTW, int iWindow, int iTop, int iLef
 
 static int hb_ctw_GetWindowCords( PHB_GTCTW pCTW, int iWindow, HB_BOOL fCenter, int * piTop, int * piLeft, int * piBottom, int * piRight )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_ctw_GetWindowCords(%p,%d,%d,%p,%p,%p,%p)", ( void * ) pCTW, iWindow, ( int ) fCenter, ( void * ) piTop, ( void * ) piLeft, ( void * ) piBottom, ( void * ) piRight ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_ctw_GetWindowCords(%p,%d,%d,%p,%p,%p,%p)", ( void * ) pCTW, iWindow, static_cast< int >( fCenter ), ( void * ) piTop, ( void * ) piLeft, ( void * ) piBottom, ( void * ) piRight ) );
 
    if( iWindow > 0 && iWindow <= pCTW->iOpenWindows )
    {
@@ -1056,7 +1056,7 @@ static int hb_ctw_GetWindowCords( PHB_GTCTW pCTW, int iWindow, HB_BOOL fCenter, 
 
 static int hb_ctw_GetFormatCords( PHB_GTCTW pCTW, int iWindow, HB_BOOL fRelative, int * piTop, int * piLeft, int * piBottom, int * piRight )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_ctw_GetFormatCords(%p,%d,%d,%p,%p,%p,%p)", ( void * ) pCTW, iWindow, ( int ) fRelative, ( void * ) piTop, ( void * ) piLeft, ( void * ) piBottom, ( void * ) piRight ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_ctw_GetFormatCords(%p,%d,%d,%p,%p,%p,%p)", ( void * ) pCTW, iWindow, static_cast< int >( fRelative ), ( void * ) piTop, ( void * ) piLeft, ( void * ) piBottom, ( void * ) piRight ) );
 
    if( iWindow > 0 && iWindow <= pCTW->iOpenWindows )
    {
@@ -1934,7 +1934,7 @@ static HB_BOOL hb_ctw_gt_PutChar( PHB_GT pGT, int iRow, int iCol,
    PHB_GTCTW pCTW;
    int iWindow, iCurrWindow;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_ctw_gt_PutChar(%p,%d,%d,%d,%d,%d)", ( void * ) pGT, iRow, iCol, iColor, ( int ) bAttr, ( int ) usChar ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_ctw_gt_PutChar(%p,%d,%d,%d,%d,%d)", ( void * ) pGT, iRow, iCol, iColor, static_cast< int >( bAttr ), static_cast< int >( usChar ) ) );
 
    pCTW = HB_GTCTW_GET( pGT );
    iWindow = iCurrWindow = HB_CTW_GETCURRENT( pCTW );
@@ -2115,7 +2115,7 @@ static int hb_ctw_gt_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions,
    HB_TRACE( HB_TR_DEBUG, ( "hb_ctw_gt_Alert(%p,%p,%p,%d,%d,%f)", ( void * ) pGT, ( void * ) pMessage, ( void * ) pOptions, iClrNorm, iClrHigh, dDelay ) );
 
    if( pMessage && HB_IS_STRING( pMessage ) &&
-       pOptions && ( iOptions = ( int ) hb_arrayLen( pOptions ) ) > 0 )
+       pOptions && ( iOptions = static_cast< int >( hb_arrayLen( pOptions ) ) ) > 0 )
    {
       int iRows, iCols;
       HB_BOOL fScreen;
@@ -2240,7 +2240,7 @@ static int hb_ctw_gt_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions,
                szOptW = hb_arrayGetStrU16( pOptions, i, HB_CDP_ENDIAN_NATIVE, &hOpt, &nLen );
                HB_GTSELF_PUTTEXTW( pGT, iLines + 1, iMnuCol, iClr, szOptW, nLen );
                hb_strfree( hOpt );
-               iMnuCol += ( int ) nLen + 3;
+               iMnuCol += static_cast< int >( nLen ) + 3;
             }
             while( HB_GTSELF_DISPCOUNT( pGT ) )
                HB_GTSELF_DISPEND( pGT );
@@ -2278,12 +2278,12 @@ static int hb_ctw_gt_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions,
                   for( i = 1; i <= iOptions; ++i )
                   {
                      nLen = hb_itemCopyStrU16( hb_arrayGetItemPtr( pOptions, i ), HB_CDP_ENDIAN_NATIVE, NULL, 0 );
-                     if( iMCol >= iMnuCol && iMCol < iMnuCol + ( int ) nLen )
+                     if( iMCol >= iMnuCol && iMCol < iMnuCol + static_cast< int >( nLen ) )
                      {
                         iRet = i;
                         break;
                      }
-                     iMnuCol += ( int ) nLen + 3;
+                     iMnuCol += static_cast< int >( nLen ) + 3;
                   }
                }
             }

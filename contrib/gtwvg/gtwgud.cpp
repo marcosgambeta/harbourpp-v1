@@ -661,7 +661,7 @@ static HB_BOOL hb_gt_wvt_KeyEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, 
       {
          HB_BOOL bCtrl = GetKeyState( VK_CONTROL ) & 0x8000;
          int iScanCode = HIWORD( lParam ) & 0xFF;
-         int c = ( int ) wParam;
+         int c = static_cast< int >( wParam );
 
          if( ! pWVT->IgnoreWM_SYSCHAR )
          {
@@ -828,7 +828,7 @@ static HB_BOOL hb_gt_wvt_KeyEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, 
                   c = K_ALT_M;
                   break;
                default:
-                  c = ( int ) wParam;
+                  c = static_cast< int >( wParam );
                   break;
             }
             hb_gt_wvt_AddCharToInputQueue( pWVT, c );
@@ -927,7 +927,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc( HWND hWnd, UINT message, WPARAM wPara
          case WM_TIMER:
          {
             PHB_ITEM pEvParams = hb_itemNew( nullptr );
-            hb_itemPutNI( pEvParams, ( int ) wParam  );
+            hb_itemPutNI( pEvParams, static_cast< int >( wParam ) );
             hb_gt_wvt_FireEvent( pWVT, HB_GTE_TIMER, pEvParams );
             return 0;
          }
@@ -945,10 +945,10 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc( HWND hWnd, UINT message, WPARAM wPara
             }
             return 0;
          case WM_ENTERMENULOOP:
-            hb_gt_wvt_FireMenuEvent( pWVT, 1, ( int ) wParam );
+            hb_gt_wvt_FireMenuEvent( pWVT, 1, static_cast< int >( wParam ) );
             return 0;
          case WM_EXITMENULOOP:
-            hb_gt_wvt_FireMenuEvent( pWVT, 2, ( int ) wParam );
+            hb_gt_wvt_FireMenuEvent( pWVT, 2, static_cast< int >( wParam ) );
             return 0;
 #if ! defined( HB_OS_WIN_CE )
          case WM_MOUSEHOVER:
@@ -979,11 +979,11 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc( HWND hWnd, UINT message, WPARAM wPara
          }
 #endif
          case WM_COMMAND:
-            if( ( int ) lParam == 0 )
+            if( static_cast< int >( lParam ) == 0 )
             {
                /* Menu command */
                if( HIWORD( wParam ) == 0 )
-                  hb_gt_wvt_FireMenuEvent( pWVT, 0, ( int ) LOWORD( wParam ) );
+                  hb_gt_wvt_FireMenuEvent( pWVT, 0, static_cast< int >( LOWORD( wParam ) ) );
             }
             else
             {
@@ -1007,7 +1007,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc( HWND hWnd, UINT message, WPARAM wPara
 
             hb_arrayNew( pEvParams, 2 );
 
-            hb_arraySetNI( pEvParams, 1, ( int ) wParam );
+            hb_arraySetNI( pEvParams, 1, static_cast< int >( wParam ) );
             hb_arraySetNInt( pEvParams, 2, ( HB_PTRUINT ) lParam );
 
             hb_gt_wvt_FireEvent( pWVT, HB_GTE_NOTIFY, pEvParams );

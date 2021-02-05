@@ -115,9 +115,9 @@ HB_FUNC( EXPONENT )
 
    if( xConvert.value != 0 )
    {
-      iExponent = ( int ) ( xConvert.string[ 7 ] & 0x07F );
+      iExponent = static_cast< int >( xConvert.string[ 7 ] & 0x07F );
       iExponent = iExponent << 4;
-      iExponent += ( int ) ( ( xConvert.string[ 6 ] & 0xF0 ) >> 4 );
+      iExponent += static_cast< int >( ( xConvert.string[ 6 ] & 0xF0 ) >> 4 );
       iExponent -= 1023;
    }
 

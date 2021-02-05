@@ -223,7 +223,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
    if( isc_start_transaction( status, &hTrans, 1, phDb, 0, NULL ) )
    {
 #if 0
-      HB_TRACE( HB_TR_ALWAYS, ( "hTrans=%d status=%ld %ld %ld %ld", ( int ) hTrans, ( long ) status[ 0 ], ( long ) status[ 1 ], ( long ) status[ 2 ], ( long ) status[ 3 ] ) );
+      HB_TRACE( HB_TR_ALWAYS, ( "hTrans=%d status=%ld %ld %ld %ld", static_cast< int >( hTrans ), ( long ) status[ 0 ], ( long ) status[ 1 ], ( long ) status[ 2 ], ( long ) status[ 3 ] ) );
 #endif
       hb_errRT_FirebirdDD( EG_OPEN, ESQLDD_START, "Start transaction failed", NULL, ( HB_ERRCODE ) isc_sqlcode( status ) );
       return HB_FAILURE;
@@ -340,7 +340,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
                dbFieldInfo.uiLen  = 7;
                dbFieldInfo.uiDec  = -pVar->sqlscale;
 
-               pItem = hb_itemPutNDLen( nullptr, 0.0, 6 - dbFieldInfo.uiDec, ( int ) dbFieldInfo.uiDec );
+               pItem = hb_itemPutNDLen( nullptr, 0.0, 6 - dbFieldInfo.uiDec, static_cast< int >( dbFieldInfo.uiDec ) );
             }
             else
             {
@@ -359,7 +359,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
                dbFieldInfo.uiLen  = 12;
                dbFieldInfo.uiDec  = -pVar->sqlscale;
 
-               pItem = hb_itemPutNDLen( nullptr, 0.0, 11 - dbFieldInfo.uiDec, ( int ) dbFieldInfo.uiDec );
+               pItem = hb_itemPutNDLen( nullptr, 0.0, 11 - dbFieldInfo.uiDec, static_cast< int >( dbFieldInfo.uiDec ) );
             }
             else
             {
@@ -505,16 +505,16 @@ static HB_ERRCODE fbGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                   if( pField->uiDec == 0 )
                      pItem = hb_itemPutNILen( pItem, *( short * ) pVar->sqldata, 6 );
                   else
-                     pItem = hb_itemPutNDLen( pItem, hb_numDecConv( *( short * ) pVar->sqldata, ( int ) pField->uiDec ),
-                                              6 - pField->uiDec, ( int ) pField->uiDec );
+                     pItem = hb_itemPutNDLen( pItem, hb_numDecConv( *( short * ) pVar->sqldata, static_cast< int >( pField->uiDec ) ),
+                                              6 - pField->uiDec, static_cast< int >( pField->uiDec ) );
                   break;
 
                case SQL_LONG:
                   if( pField->uiDec == 0 )
                      pItem = hb_itemPutNLLen( pItem, *( short * ) pVar->sqldata, 11 );
                   else
-                     pItem = hb_itemPutNDLen( pItem, hb_numDecConv( *( long * ) pVar->sqldata, ( int ) pField->uiDec ),
-                                              11 - pField->uiDec, ( int ) pField->uiDec );
+                     pItem = hb_itemPutNDLen( pItem, hb_numDecConv( *( long * ) pVar->sqldata, static_cast< int >( pField->uiDec ) ),
+                                              11 - pField->uiDec, static_cast< int >( pField->uiDec ) );
                   break;
 
                case SQL_FLOAT:

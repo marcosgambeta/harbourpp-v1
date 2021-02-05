@@ -98,7 +98,7 @@ HB_FUNC( EVP_BYTESTOKEY )
                                 ( HB_SSL_CONST EVP_MD * ) md,
                                 ( HB_SSL_CONST unsigned char * ) hb_parc( 3 ) /* salt */,
                                 ( HB_SSL_CONST unsigned char * ) hb_parcx( 4 ) /* data */,
-                                ( int ) hb_parclen( 4 ),
+                                static_cast< int >( hb_parclen( 4 ) ),
                                 hb_parni( 5 ) /* count */,
                                 key,
                                 iv ) );

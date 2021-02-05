@@ -463,10 +463,10 @@ HB_FUNC( WVG_STATUSBARCREATEPANEL )
          int  n;
          int  width;
 
-         iParts = ( int ) SendMessage( hWndSB, SB_GETPARTS, ( WPARAM ) WIN_STATUSBAR_MAX_PARTS, ( LPARAM ) ( LPINT ) ptArray );
+         iParts = static_cast< int >( SendMessage( hWndSB, SB_GETPARTS, ( WPARAM ) WIN_STATUSBAR_MAX_PARTS, ( LPARAM ) ( LPINT ) ptArray ) );
 
          GetClientRect( hWndSB, &rc );
-         width = ( int ) ( rc.right / ( iParts + 1 ) );
+         width = static_cast< int >( rc.right / ( iParts + 1 ) );
          for( n = 0; n < iParts; n++ )
             ptArray[ n ] = ( width * ( n + 1 ) );
 
@@ -512,7 +512,7 @@ HB_FUNC( WVG_STATUSBARSETTEXT )
 
       iPart -= 1;           /* Zero based */
 
-      iFlags = ( int ) HIWORD( SendMessage( hWndSB, SB_GETTEXT, ( WPARAM ) iPart, ( LPARAM ) szText ) );
+      iFlags = static_cast< int >( HIWORD( SendMessage( hWndSB, SB_GETTEXT, ( WPARAM ) iPart, ( LPARAM ) szText ) ) );
 
       SendMessage( hWndSB, SB_SETTEXT, ( WPARAM ) iPart | iFlags, ( LPARAM ) HB_PARSTR( 3, &hCaption, nullptr ) );
 
@@ -1003,7 +1003,7 @@ HB_FUNC( WVG_ADDTOOLBARBUTTON )
 
          /* set string */
          void * hCaption;
-         iNewString = ( int ) SendMessage( hWndTB, TB_ADDSTRING, ( WPARAM ) 0, ( LPARAM ) HB_PARSTR( 3, &hCaption, nullptr ) );
+         iNewString = static_cast< int >( SendMessage( hWndTB, TB_ADDSTRING, ( WPARAM ) 0, ( LPARAM ) HB_PARSTR( 3, &hCaption, nullptr ) ) );
          hb_strfree( hCaption );
 
          if( hb_parl( 6 ) )

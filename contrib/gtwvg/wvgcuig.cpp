@@ -1485,15 +1485,15 @@ static void hb_wvg_RenderPicture( PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int
          
          if( lHeight > lWidth )
          {
-            iWd = ( int ) ( ( double )  ht * lWidth / lHeight );
+            iWd = static_cast< int >( ( double )  ht * lWidth / lHeight );
             iWd = HB_MIN( iWd, wd );
-            iHt = ( int ) ( ( double ) iWd * lHeight / lWidth );
+            iHt = static_cast< int >( ( double ) iWd * lHeight / lWidth );
          }
          else
          {
-            iHt = ( int ) ( ( double )  wd * lHeight / lWidth );
+            iHt = static_cast< int >( ( double )  wd * lHeight / lWidth );
             iHt = HB_MIN( iHt, ht );
-            iWd = ( int ) ( ( double ) iHt * lWidth / lHeight );
+            iWd = static_cast< int >( ( double ) iHt * lWidth / lHeight );
          }
          x  += abs( ( iWd - wd ) / 2 );
          y  += abs( ( iHt - ht ) / 2 );
@@ -1556,8 +1556,8 @@ static void hb_wvg_GridVert( PHB_GTWVT pWVT, PHB_ITEM pArray, RECT * uRect )
 
    if( iTabs > 0 )
    {
-      int iTop    = hb_arrayGetNI( pArray, 1 ) * ( int ) pWVT->PTEXTSIZE.y;
-      int iBottom = ( ( hb_arrayGetNI( pArray, 2 ) + 1 ) * ( int ) pWVT->PTEXTSIZE.y ) - 1;
+      int iTop    = hb_arrayGetNI( pArray, 1 ) * static_cast< int >( pWVT->PTEXTSIZE.y );
+      int iBottom = ( ( hb_arrayGetNI( pArray, 2 ) + 1 ) * static_cast< int >( pWVT->PTEXTSIZE.y ) ) - 1;
 
       if( ( iTop >= uRect->top && iTop <= uRect->bottom ) ||
           ( iBottom >= uRect->top && iBottom <= uRect->bottom ) )

@@ -70,7 +70,7 @@ HB_FUNC( HB_GS )
       void *  minst;
       int     pos;
       int     code, code1;
-      int     gsargc = ( int ) hb_arrayLen( pParam ) + 1;
+      int     gsargc = static_cast< int >( hb_arrayLen( pParam ) ) + 1;
       char ** gsargv = ( char ** ) hb_xgrab( gsargc * sizeof( const char * ) );
 
       gsargv[ 0 ] = ( char * ) "hbgs"; /* actual value doesn't matter */

@@ -200,7 +200,7 @@ static HB_BOOL amf3_write_int( amfContext * context, PHB_ITEM pItem )
    {
       if( ! writeByte( context, INT_TYPE ) )
          return HB_FALSE;
-      return amf3_encode_int( context, ( int ) n );
+      return amf3_encode_int( context, static_cast< int >( n ) );
    }
    else
    {
@@ -272,14 +272,14 @@ static int amf3_add_index( amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem 
       }
 
       if( pHash == context->str_ref )
-         result = ( int ) ( hb_hashLen( pHash ) + context->strstr_count );
+         result = static_cast< int >( hb_hashLen( pHash ) + context->strstr_count );
          /* ->strstr_count > 0 only when some inner context inside
           * user-defined conversion function uses only strstr mode
           * like amf3_FromWA() function f.e. */
       else if( pHash == context->obj_ref )
-         result = ( int ) ( hb_hashLen( pHash ) + context->objnref_count );
+         result = static_cast< int >( hb_hashLen( pHash ) + context->objnref_count );
       else
-         result = ( int ) ( hb_hashLen( pHash ) );
+         result = static_cast< int >( hb_hashLen( pHash ) );
 
       pVal = hb_itemPutNS( nullptr, result );
 
@@ -301,7 +301,7 @@ static int amf3_add_index( amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem 
       if( str_len > 3 && str_len < 32 ) /* do this only for mid-sized strings */
       {
          if( ! context->use_refs )
-            result = ( int ) context->strstr_count;
+            result = static_cast< int >( context->strstr_count );
 
          pVal = hb_itemPutNS( nullptr, result ); /* put the AMF reference id as value */
          hb_hashAdd( context->strstr_ref, pItem, pVal );
@@ -334,12 +334,12 @@ static int amf3_get_index( amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem 
          pVal = hb_hashGetItemPtr( pHash, pKey, 0 );
          hb_itemRelease( pKey );
          if( pVal )
-            return ( int ) hb_itemGetNS( pVal );
+            return static_cast< int >( hb_itemGetNS( pVal ) );
       }
       else if( hb_hashScan( pHash, pKey, &nPos ) )
       {
          hb_itemRelease( pKey );
-         return ( int ) ( nPos - 1 );
+         return static_cast< int >( nPos - 1 );
       }
       else
          hb_itemRelease( pKey );
@@ -352,7 +352,7 @@ static int amf3_get_index( amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem 
       {
          PHB_ITEM pStrIdx = hb_hashGetItemPtr( context->strstr_ref, pItem, 0 );
          if( pStrIdx )
-            return ( int ) hb_itemGetNS( pStrIdx );
+            return static_cast< int >( hb_itemGetNS( pStrIdx ) );
       }
    }
 
@@ -439,7 +439,7 @@ static HB_BOOL amf3_encode_hash( amfContext * context, PHB_ITEM pItem )
       }
    }
 
-   if( ! amf3_encode_int( context, ( int ) ( ( nIntKeys << 1 ) | REFERENCE_BIT ) ) )
+   if( ! amf3_encode_int( context, static_cast< int >( ( nIntKeys << 1 ) | REFERENCE_BIT ) ) )
       return HB_FALSE;
 
    for( i = 1; i <= len; i++ )
@@ -594,7 +594,7 @@ static HB_BOOL amf3_encode_array( amfContext * context, PHB_ITEM pItem )
    if( ! writeByte( context, NULL_TYPE ) )
       return HB_FALSE;
 
-   for( i = 1; i <= ( int ) item_len; i++ )
+   for( i = 1; i <= static_cast< int >( item_len ); i++ )
    {
       PHB_ITEM pArrayItem;
       int result;
@@ -682,7 +682,7 @@ static int amf3_encode_class_def( amfContext * context, PHB_ITEM pClass )
    if( static_attr_len == -1 || static_attr_len > ( MAX_INT >> 4 ) )
       return 0;
 
-   header |= ( ( int ) static_attr_len ) << 4;
+   header |= ( static_cast< int >( static_attr_len ) ) << 4;
    if( ! amf3_encode_int( context, header ) )
       return 0;
 
@@ -1345,7 +1345,7 @@ HB_FUNC( AMF3_FROMWA )
 
                writeByte( context, OBJECT_TYPE );
 #if 0
-               amf3_encode_int( context, ( ( int ) 1 ) << 1 | REFERENCE_BIT );
+               amf3_encode_int( context, ( static_cast< int >( 1 ) ) << 1 | REFERENCE_BIT );
 #endif
                writeByte( context, DYNAMIC );
                writeByte( context, EMPTY_STRING_TYPE );

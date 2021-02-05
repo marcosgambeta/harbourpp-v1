@@ -607,7 +607,7 @@ HB_FUNC( WAPI_TABCTRL_SETMINTABWIDTH )
    #if 0
    hbwapi_ret_NI( TabCtrl_SetMinTabWidth( hbwapi_par_raw_HWND( 1 ), hbwapi_par_INT( 2 ) ) );
    #endif
-   hbwapi_ret_NI( ( int ) SendMessage( hbwapi_par_raw_HWND( 1 ), TCM_SETMINTABWIDTH, ( WPARAM ) 0, ( LPARAM ) hbwapi_par_INT( 2 ) ) );
+   hbwapi_ret_NI( static_cast< int >( SendMessage( hbwapi_par_raw_HWND( 1 ), TCM_SETMINTABWIDTH, ( WPARAM ) 0, ( LPARAM ) hbwapi_par_INT( 2 ) ) ) );
 }
 
 /* TabCtrl_DeselectAll(hwnd, fExcludeFocus) */

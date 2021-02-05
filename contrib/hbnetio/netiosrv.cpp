@@ -338,7 +338,7 @@ static PHB_CONSRV s_consrvNew( PHB_SOCKEX sock, const char * szRootPath, HB_BOOL
    if( szRootPath )
    {
       hb_strncpy( conn->rootPath, szRootPath, sizeof( conn->rootPath ) - 1 );
-      conn->rootPathLen = ( int ) strlen( conn->rootPath );
+      conn->rootPathLen = static_cast< int >( strlen( conn->rootPath ) );
    }
 
    return conn;
@@ -456,12 +456,12 @@ static void s_listenRet( HB_SOCKET sd, const char * szRootPath, HB_BOOL rpc )
          hb_strncpy( lsd->rootPath, szRootPath, sizeof( lsd->rootPath ) - 1 );
       else
          hb_fsBaseDirBuff( lsd->rootPath );
-      iLen = ( int ) strlen( lsd->rootPath );
+      iLen = static_cast< int >( strlen( lsd->rootPath ) );
       if( iLen > 0 )
       {
          if( ! s_isDirSep( lsd->rootPath[ iLen - 1 ] ) )
          {
-            if( iLen == ( int ) sizeof( lsd->rootPath ) - 1 )
+            if( iLen == static_cast< int >( sizeof( lsd->rootPath ) ) - 1 )
                --iLen;
             lsd->rootPath[ iLen ] = HB_OS_PATH_DELIM_CHR;
          }
@@ -612,7 +612,7 @@ HB_FUNC( NETIO_ACCEPT )
    {
       HB_MAXINT timeout = hb_parnintdef( 2, -1 );
       HB_SOCKET connsd;
-      int iLevel, iStrategy, keylen = ( int ) hb_parclen( 3 );
+      int iLevel, iStrategy, keylen = static_cast< int >( hb_parclen( 3 ) );
 
       if( keylen > NETIO_PASSWD_MAX )
          keylen = NETIO_PASSWD_MAX;
@@ -659,7 +659,7 @@ HB_FUNC( NETIO_COMPRESS )
 
    if( conn && conn->sock && ! conn->stop )
    {
-      int iLevel, iStrategy, keylen = ( int ) hb_parclen( 2 );
+      int iLevel, iStrategy, keylen = static_cast< int >( hb_parclen( 2 ) );
       PHB_SOCKEX sock;
 
       if( keylen > NETIO_PASSWD_MAX )

@@ -521,7 +521,7 @@ HB_FUNC( BIO_NEW_MEM_BUF )
       HB_SIZE nLen;
       const char * pszBuffer = hb_itemGetCRef( pBuffer, &hStrRef, &nLen );
 
-      hb_BIO_ret( BIO_new_mem_buf( HB_UNCONST( pszBuffer ), ( int ) nLen ), hStrRef );
+      hb_BIO_ret( BIO_new_mem_buf( HB_UNCONST( pszBuffer ), static_cast< int >( nLen ) ), hStrRef );
    }
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -533,7 +533,7 @@ HB_FUNC( BIO_READ )
 
    if( bio )
    {
-      int size = HB_ISNUM( 3 ) ? hb_parni( 3 ) : ( int ) hb_parclen( 2 );
+      int size = HB_ISNUM( 3 ) ? hb_parni( 3 ) : static_cast< int >( hb_parclen( 2 ) );
 
       if( size > 0 )
       {
@@ -560,7 +560,7 @@ HB_FUNC( BIO_GETS )
 
    if( bio )
    {
-      int size = HB_ISNUM( 3 ) ? hb_parni( 3 ) : ( int ) hb_parclen( 2 );
+      int size = HB_ISNUM( 3 ) ? hb_parni( 3 ) : static_cast< int >( hb_parclen( 2 ) );
 
       if( size > 0 )
       {
@@ -587,7 +587,7 @@ HB_FUNC( BIO_WRITE )
 
    if( bio )
    {
-      int size = ( int ) hb_parclen( 2 );
+      int size = static_cast< int >( hb_parclen( 2 ) );
 
       if( HB_ISNUM( 3 ) )
       {

@@ -553,7 +553,7 @@ static PHB_CONCLI s_fileConNew( HB_SOCKET sd, const char * pszServer,
    PHB_CONCLI conn;
    int iLen;
 
-   iLen = ( int ) strlen( pszServer );
+   iLen = static_cast< int >( strlen( pszServer ) );
    conn = ( PHB_CONCLI ) hb_xgrab( sizeof( HB_CONCLI ) + iLen );
    hb_atomic_set( &conn->used, 1 );
    hb_atomic_set( &conn->usrcount, 0 );
@@ -702,7 +702,7 @@ static PHB_CONCLI s_fileNameConFind( const char ** pFileName, HB_BOOL fLock )
       {
          if( conn->path )
          {
-            int iLen = ( int ) strlen( conn->path );
+            int iLen = static_cast< int >( strlen( conn->path ) );
 #ifdef HB_OS_UNIX
             if( strncmp( *pFileName, conn->path, iLen ) == 0 )
 #else
@@ -788,7 +788,7 @@ static const char * s_fileDecode( const char * pszFileName,
 
       if( psz )
       {
-         int iLen = ( int ) ( psz - pszFileName );
+         int iLen = static_cast< int >( psz - pszFileName );
 
          if( pth || iLen == 0 || iLen > 1 )
          {
@@ -825,7 +825,7 @@ static const char * s_fileDecode( const char * pszFileName,
                      if( ! iOverflow && llPort > 0 && llPort < 0x10000 )
                      {
                         pszFileName += iLen;
-                        *piPort = ( int ) llPort;
+                        *piPort = static_cast< int >( llPort );
                      }
                   }
                   if( c == ':' )
@@ -903,7 +903,7 @@ static PHB_CONCLI s_fileConnCheck( PHB_CONCLI conn, const char ** pFileName,
       HB_NETIO_LOCK();
       if( conn->path )
       {
-         int iLen = ( int ) strlen( conn->path );
+         int iLen = static_cast< int >( strlen( conn->path ) );
 #ifdef HB_OS_UNIX
          if( strncmp( *pFileName, conn->path, iLen ) == 0 )
 #else
@@ -1069,7 +1069,7 @@ HB_FUNC( NETIO_DECODE )
    iPort = hb_parni( 3 );
    iTimeOut = hb_parni( 4 );
    pszPasswd = hb_parc( 5 );
-   iPassLen = ( int ) hb_parclen( 5 );
+   iPassLen = static_cast< int >( hb_parclen( 5 ) );
    iLevel = hb_parnidef( 6, HB_ZLIB_COMPRESSION_DISABLE );
    iStrategy = hb_parnidef( 7, HB_ZLIB_STRATEGY_DEFAULT );
 
@@ -1113,7 +1113,7 @@ HB_FUNC( NETIO_CONNECT )
               * pszPasswd = hb_parc( 4 );
    int iPort = hb_parni( 2 ),
        iTimeOut = hb_parni( 3 ),
-       iPassLen = ( int ) hb_parclen( 4 ),
+       iPassLen = static_cast< int >( hb_parclen( 4 ) ),
        iLevel = hb_parnidef( 5, HB_ZLIB_COMPRESSION_DISABLE ),
        iStrategy = hb_parnidef( 6, HB_ZLIB_STRATEGY_DEFAULT );
    PHB_CONCLI conn;
@@ -1188,7 +1188,7 @@ HB_FUNC( NETIO_GETCONNECTION )
               * pszPasswd = hb_parc( 4 );
    int iPort = hb_parni( 2 ),
        iTimeOut = hb_parni( 3 ),
-       iPassLen = ( int ) hb_parclen( 4 ),
+       iPassLen = static_cast< int >( hb_parclen( 4 ) ),
        iLevel = hb_parnidef( 5, HB_ZLIB_COMPRESSION_DISABLE ),
        iStrategy = hb_parnidef( 6, HB_ZLIB_STRATEGY_DEFAULT );
    PHB_CONCLI conn;

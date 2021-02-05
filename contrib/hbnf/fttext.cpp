@@ -373,7 +373,7 @@ static long _ft_skip( long iRecs )
 
                /* set pointer within buffer */
 
-               iBytesRemaining = ( int ) ( ft_text->offset[ ft_text->area ] - fpOffset );
+               iBytesRemaining = static_cast< int >( ft_text->offset[ ft_text->area ] - fpOffset );
 
                cPtr = cBuff + iBytesRemaining;
 

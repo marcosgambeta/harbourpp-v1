@@ -101,7 +101,7 @@ HB_FUNC( WIN_SENDDLGITEMMESSAGE )
       cText = nullptr;
 
    hb_retnl( ( LONG ) SendDlgItemMessage( ( HWND ) HB_PARHANDLE( 1 ),
-                                          ( int ) hb_parni( 2 ),
+                                          static_cast< int >( hb_parni( 2 ) ),
                                           ( UINT ) hb_parni( 3 ),
                                           ( HB_ISNIL( 4 ) ? 0 : ( WPARAM ) hb_parnl( 4 ) ),
                                           ( cText ? ( LPARAM ) cText : ( LPARAM ) hb_parnl( 5 ) )
@@ -146,7 +146,7 @@ HB_FUNC( WIN_SETBKCOLOR )
 
 HB_FUNC( WVW_SETBKMODE )
 {
-   hb_retni( ( int ) SetBkMode( ( HDC ) HB_PARHANDLE( 1 ), hb_parni( 2 ) ) );
+   hb_retni( static_cast< int >( SetBkMode( ( HDC ) HB_PARHANDLE( 1 ), hb_parni( 2 ) ) ) );
 }
 
 
@@ -1171,18 +1171,18 @@ HB_FUNC( TOOLBARADDBUTTONS )
       if( bSystem )
          if( ulID > 0 && ulID < 31 )
          {
-            tb[ ulCount ].iBitmap = ulID > 0 ? ( int ) ulID : -1;
+            tb[ ulCount ].iBitmap = ulID > 0 ? static_cast< int >( ulID ) : -1;
          }
          else
          {
-            tb[ ulCount ].iBitmap = ulID > 0 ? ( int ) ulCount : -1;
+            tb[ ulCount ].iBitmap = ulID > 0 ? static_cast< int >( ulCount ) : -1;
          }
 #endif
       tb[ ulCount ].idCommand = hb_arrayGetNI( pTemp, 2 );
       tb[ ulCount ].fsState   = ( BYTE ) hb_arrayGetNI( pTemp, 3 );
       tb[ ulCount ].fsStyle   = ( BYTE ) hb_arrayGetNI( pTemp, 4 );
       tb[ ulCount ].dwData    = hb_arrayGetNI( pTemp, 5 );
-      tb[ ulCount ].iString   = hb_arrayGetCLen( pTemp, 6 ) > 0 ? ( int ) hb_arrayGetCPtr( pTemp, 6 ) : 0;
+      tb[ ulCount ].iString   = hb_arrayGetCLen( pTemp, 6 ) > 0 ? static_cast< int >( hb_arrayGetCPtr( pTemp, 6 ) ) : 0;
 
    }
 
@@ -1238,7 +1238,7 @@ HB_FUNC( SETBITMAPRESOURCEID )
 
    }
    else /* system bitmap */
-      iNewBitmap = ( int ) uiBitmap + iOffset;
+      iNewBitmap = static_cast< int >( uiBitmap ) + iOffset;
    hb_retni( iNewBitmap );
 
 }
@@ -2254,7 +2254,7 @@ HB_FUNC( WVW_CREATEDIALOGMODAL )
    if( iIndex >= WVW_DLGMD_MAX )
    {
       /* no more room */
-      hb_retni( ( int ) NULL );
+      hb_retni( static_cast< int >( NULL ) );
       return;
    }
 
@@ -2522,10 +2522,10 @@ HB_FUNC( WVW_GETKEYSTATE )
 
 HB_FUNC( WVW_LOWORD )
 {
-   hb_retni( ( int ) ( hb_parnl( 1 ) & 0xFFFF ) );
+   hb_retni( static_cast< int >( hb_parnl( 1 ) & 0xFFFF ) );
 }
 
 HB_FUNC( WVW_HIWORD )
 {
-   hb_retni( ( int ) ( ( hb_parnl( 1 ) >> 16 ) & 0xFFFF ) );
+   hb_retni( static_cast< int >( ( hb_parnl( 1 ) >> 16 ) & 0xFFFF ) );
 }

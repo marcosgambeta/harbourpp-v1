@@ -76,8 +76,8 @@ static BOOL CALLBACK wapi_DialogFuncProc( HWND hDlg, UINT message, WPARAM wParam
 
       if( message == WM_COMMAND )
       {
-         hb_vmPushInteger( ( int ) HIWORD( wParam ) );
-         hb_vmPushInteger( ( int ) LOWORD( wParam ) );
+         hb_vmPushInteger( static_cast< int >( HIWORD( wParam ) ) );
+         hb_vmPushInteger( static_cast< int >( LOWORD( wParam ) ) );
          hb_vmDo( 6 );
       }
       else
@@ -128,7 +128,7 @@ HB_FUNC( WAPI_SETDLGITEMTEXT )
 HB_FUNC( WAPI_GETDLGITEMTEXT )
 {
    HWND    nItem    = GetDlgItem( hbwapi_par_raw_HWND( 1 ), hbwapi_par_INT( 2 ) );
-   int     nSize    = ( int ) SendMessage( nItem, WM_GETTEXTLENGTH, 0, 0 );
+   int     nSize    = static_cast< int >( SendMessage( nItem, WM_GETTEXTLENGTH, 0, 0 ) );
    TCHAR * lpResult = ( TCHAR * ) hb_xgrab( ( nSize + 1 ) * sizeof( TCHAR ) );
 
    UINT nResult = GetDlgItemText( hbwapi_par_raw_HWND( 1 ),

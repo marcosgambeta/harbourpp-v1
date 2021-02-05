@@ -489,7 +489,7 @@ static void func( sqlite3_context * ctx, int argc, sqlite3_value ** argv )
             HB_SIZE      nText;
             const char * pszText = hb_itemGetStrUTF8( pResult, &hText, &nText );
 
-            sqlite3_result_text( ctx, pszText, ( int ) nText, SQLITE_TRANSIENT );
+            sqlite3_result_text( ctx, pszText, static_cast< int >( nText ), SQLITE_TRANSIENT );
 
             hb_strfree( hText );
             break;
@@ -827,7 +827,7 @@ HB_FUNC( SQLITE3_PREPARE )
       psqlite3_stmt pStmt;
       const char *  pszTail;
 
-      if( sqlite3_prepare_v2( pHbSqlite3->db, pszSQLText, ( int ) nSQLText, &pStmt, &pszTail ) == SQLITE_OK )
+      if( sqlite3_prepare_v2( pHbSqlite3->db, pszSQLText, static_cast< int >( nSQLText ), &pStmt, &pszTail ) == SQLITE_OK )
          hb_retptr( pStmt );
       else
       {
@@ -896,7 +896,7 @@ HB_FUNC( SQLITE3_STMT_STATUS )
    psqlite3_stmt pStmt = ( psqlite3_stmt ) hb_parptr( 1 );
 
    if( pStmt )
-      hb_retni( sqlite3_stmt_status( pStmt, hb_parni( 2 ), ( int ) hb_parl( 3 ) ) );
+      hb_retni( sqlite3_stmt_status( pStmt, hb_parni( 2 ), static_cast< int >( hb_parl( 3 ) ) ) );
    else
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else
@@ -1038,7 +1038,7 @@ HB_FUNC( SQLITE3_BIND_BLOB )
    psqlite3_stmt pStmt = ( psqlite3_stmt ) hb_parptr( 1 );
 
    if( pStmt )
-      hb_retni( sqlite3_bind_blob( pStmt, hb_parni( 2 ), hb_parcx( 3 ), ( int ) hb_parcsiz( 3 ) - 1,
+      hb_retni( sqlite3_bind_blob( pStmt, hb_parni( 2 ), hb_parcx( 3 ), static_cast< int >( hb_parcsiz( 3 ) ) - 1,
                                    SQLITE_TRANSIENT ) );
    else
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -1096,7 +1096,7 @@ HB_FUNC( SQLITE3_BIND_TEXT )
 
       const char * pszSQLText = hb_parstr_utf8( 3, &hSQLText, &nSQLText );
 
-      hb_retni( sqlite3_bind_text( pStmt, hb_parni( 2 ), pszSQLText, ( int ) nSQLText,
+      hb_retni( sqlite3_bind_text( pStmt, hb_parni( 2 ), pszSQLText, static_cast< int >( nSQLText ),
                                    SQLITE_TRANSIENT ) );
 
       hb_strfree( hSQLText );
@@ -1719,7 +1719,7 @@ HB_FUNC( SQLITE3_BLOB_WRITE )
       int iLen = hb_parni( 3 );
 
       if( iLen == 0 )
-         iLen = ( int ) hb_parcsiz( 2 ) - 1;
+         iLen = static_cast< int >( hb_parcsiz( 2 ) ) - 1;
 
       hb_retni( sqlite3_blob_write( pBlob, hb_parcx( 2 ), iLen, hb_parni( 4 ) ) );
    }
@@ -2139,7 +2139,7 @@ HB_FUNC( SQLITE3_MEMORY_HIGHWATER )
 {
 /* FIXME: verify the exact SQLITE3 version */
 #if SQLITE_VERSION_NUMBER > 3004001
-   hb_retnint( sqlite3_memory_highwater( ( int ) hb_parl( 1 ) ) );
+   hb_retnint( sqlite3_memory_highwater( static_cast< int >( hb_parl( 1 ) ) ) );
 #else
    hb_retnint( -1 );
 #endif
@@ -2174,7 +2174,7 @@ HB_FUNC( SQLITE3_STATUS )
    {
       int iCurrent, iHighwater;
 
-      hb_retni( sqlite3_status( hb_parni( 1 ), &iCurrent, &iHighwater, ( int ) hb_parl( 4 ) ) );
+      hb_retni( sqlite3_status( hb_parni( 1 ), &iCurrent, &iHighwater, static_cast< int >( hb_parl( 4 ) ) ) );
 
       hb_storni( iCurrent, 2 );
       hb_storni( iHighwater, 3 );
@@ -2203,7 +2203,7 @@ HB_FUNC( SQLITE3_DB_STATUS )
       int iCurrent, iHighwater;
 
       hb_retni( sqlite3_db_status( pHbSqlite3->db, hb_parni( 2 ), &iCurrent, &iHighwater,
-                                   ( int ) hb_parl( 5 ) ) );
+                                   static_cast< int >( hb_parl( 5 ) ) ) );
 
       hb_storni( iCurrent, 3 );
       hb_storni( iHighwater, 4 );

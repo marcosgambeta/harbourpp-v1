@@ -72,11 +72,11 @@ HB_FUNC( CTOBIT )
             {
                if( pszPattern[ i ] == c )
                {
-                  iResult |= 1 << ( ( int ) nPattern - i - 1 );
+                  iResult |= 1 << ( static_cast< int >( nPattern ) - i - 1 );
                   break;
                }
             }
-            while( ++i < ( int ) nPattern );
+            while( ++i < static_cast< int >( nPattern ) );
          }
       }
       else

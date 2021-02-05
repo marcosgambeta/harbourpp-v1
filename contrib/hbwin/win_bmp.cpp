@@ -135,7 +135,7 @@ static int hbwin_bitmapIsSupported( HDC hDC, int iType, const void * pImgBuf, HB
          iRes = ExtEscape( hDC, QUERYESCSUPPORT, sizeof( iRes ), ( LPCSTR ) &iRes, 0, 0 );
          if( iRes > 0 )
          {
-            if( ExtEscape( hDC, iType, ( int ) nSize, ( LPCSTR ) pImgBuf, sizeof( iRes ), ( LPSTR ) &iRes ) > 0 )
+            if( ExtEscape( hDC, iType, static_cast< int >( nSize ), ( LPCSTR ) pImgBuf, sizeof( iRes ), ( LPSTR ) &iRes ) > 0 )
             {
                if( iRes == 1 )
                   return 0;
@@ -218,7 +218,7 @@ HB_FUNC( WIN_DRAWBITMAP )
 #endif
          hb_retl( StretchDIBits( hDC, hb_parni( 3 ), hb_parni( 4 ), hb_parni( 5 ), hb_parni( 6 ),
                                  0, 0, iWidth, iHeight, pBits, pbmi,
-                                 DIB_RGB_COLORS, SRCCOPY ) != ( int ) GDI_ERROR );
+                                 DIB_RGB_COLORS, SRCCOPY ) != static_cast< int >( GDI_ERROR ) );
       }
       else
          hb_retl( HB_FALSE );

@@ -207,7 +207,7 @@ HB_FUNC( CURDIRX )
 
    if( pDrv && hb_parclen( 1 ) > 0 )
    {
-      iDrv = ( int ) ( HB_TOUPPER( *hb_itemGetCPtr( pDrv ) ) - 'A' );
+      iDrv = static_cast< int >( HB_TOUPPER( *hb_itemGetCPtr( pDrv ) ) - 'A' );
       if( iDrv != iCurDrv )
          hb_fsChDrv( iDrv );
    }

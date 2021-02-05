@@ -349,7 +349,7 @@ HB_FUNC( WVT_SETTOOLTIPWIDTH )
 #if ! defined( HB_OS_WIN_CE )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   int iTipWidth = ( int ) SendMessage( _s->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0 );
+   int iTipWidth = static_cast< int >( SendMessage( _s->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0 ) );
 
    if( HB_ISNUM( 1 ) )
       SendMessage( _s->hWndTT, TTM_SETMAXTIPWIDTH, 0, ( LPARAM ) ( HB_PTRUINT ) hb_parnint( 1 ) );
@@ -422,7 +422,7 @@ HB_FUNC( WVT_GETTOOLTIPWIDTH )
 #if ! defined( HB_OS_WIN_CE )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   hb_retni( ( int ) SendMessage( _s->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0 ) );
+   hb_retni( static_cast< int >( SendMessage( _s->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0 ) ) );
 #else
    hb_retni( 0 );
 #endif
@@ -636,11 +636,11 @@ HB_FUNC( WVT_SETMENU )
    GetWindowRect( _s->hWnd, &wi );
    GetClientRect( _s->hWnd, &ci );
 
-   height = ( int ) ( _s->PTEXTSIZE.y * _s->ROWS );
-   width  = ( int ) ( _s->PTEXTSIZE.x * _s->COLS );
+   height = static_cast< int >( _s->PTEXTSIZE.y * _s->ROWS );
+   width  = static_cast< int >( _s->PTEXTSIZE.x * _s->COLS );
 
-   width  += ( int ) ( wi.right - wi.left - ci.right );
-   height += ( int ) ( wi.bottom - wi.top - ci.bottom );
+   width  += static_cast< int >( wi.right - wi.left - ci.right );
+   height += static_cast< int >( wi.bottom - wi.top - ci.bottom );
 
    if( _s->CentreWindow && SystemParametersInfo( SPI_GETWORKAREA, 0, &rc, 0 ) )
    {

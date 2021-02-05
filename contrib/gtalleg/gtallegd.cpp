@@ -327,7 +327,7 @@ static HB_BOOL hb_gt_alleg_InitializeScreen( PHB_GT pGT, int iRows, int iCols, H
    short     ixFP  = 0, iyFP = 0;
    HB_BOOL   lMode = HB_FALSE, lPrev = s_fInit;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_InitializeScreen(%p,%d,%d,%d)", pGT, iRows, iCols, ( int ) lClearInit ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_InitializeScreen(%p,%d,%d,%d)", pGT, iRows, iCols, static_cast< int >( lClearInit ) ) );
 
    if( s_fGtError )
       return HB_FALSE;
@@ -340,8 +340,8 @@ static HB_BOOL hb_gt_alleg_InitializeScreen( PHB_GT pGT, int iRows, int iCols, H
 
    if( s_iGFXWidth != 0 && s_iGFXHeight != 0 )
    {
-      iWidth  = ( int ) s_iGFXWidth;
-      iHeight = ( int ) s_iGFXHeight;
+      iWidth  = static_cast< int >( s_iGFXWidth );
+      iHeight = static_cast< int >( s_iGFXHeight );
    }
    else
    {
@@ -1052,7 +1052,7 @@ static void hb_gt_alleg_gfx_Text( PHB_GT pGT, int iTop, int iLeft, const char * 
    if( iSize )
       ssfSetFontSize( &s_ssfDefaultFont, ( unsigned short ) iSize );
 
-   iRight  = iLeft + ( int ) strlen( cBuf ) * ( s_ssfDefaultFont.fsize / 2 ) - 1;
+   iRight  = iLeft + static_cast< int >( strlen( cBuf ) ) * ( s_ssfDefaultFont.fsize / 2 ) - 1;
    iBottom = iTop + s_ssfDefaultFont.fsize - 1;
 
    al_acquire_bitmap( s_bmp );

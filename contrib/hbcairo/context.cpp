@@ -212,7 +212,7 @@ HB_FUNC( CAIRO_SET_DASH )
 
       if( ( pItem = hb_param( 2, HB_IT_ARRAY ) ) != NULL )
       {
-         int      i, iCount = ( int ) hb_arrayLen( pItem );
+         int      i, iCount = static_cast< int >( hb_arrayLen( pItem ) );
          double * pDashes = NULL;
 
          if( iCount )

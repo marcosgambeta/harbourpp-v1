@@ -276,9 +276,9 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
       DBFIELDINFO dbFieldInfo;
 
       memset( &dbFieldInfo, 0, sizeof( dbFieldInfo ) );
-      dbFieldInfo.atomName = PQfname( pResult, ( int ) uiCount );
+      dbFieldInfo.atomName = PQfname( pResult, static_cast< int >( uiCount ) );
 
-      switch( PQftype( pResult, ( int ) uiCount ) )
+      switch( PQftype( pResult, static_cast< int >( uiCount ) ) )
       {
          case BPCHAROID:
          case VARCHAROID:
@@ -386,7 +386,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
             break;
       }
 #if 0
-      HB_TRACE( HB_TR_ALWAYS, ( "field:%s type=%d size=%d format=%d mod=%d err=%d", dbFieldInfo.atomName, PQftype( pResult, ( int ) uiCount ), PQfsize( pResult, uiCount ), PQfformat( pResult, uiCount ), PQfmod( pResult, uiCount ), bError ) );
+      HB_TRACE( HB_TR_ALWAYS, ( "field:%s type=%d size=%d format=%d mod=%d err=%d", dbFieldInfo.atomName, PQftype( pResult, static_cast< int >( uiCount ) ), PQfsize( pResult, uiCount ), PQfformat( pResult, uiCount ), PQfmod( pResult, uiCount ), bError ) );
 #endif
 
       if( ! bError )
@@ -514,7 +514,7 @@ static HB_ERRCODE pgsqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
    nLen   = ( HB_SIZE ) PQgetlength( pSDDData->pResult, pArea->ulRecNo - 1, uiIndex );
 
 #if 0
-   HB_TRACE( HB_TR_ALWAYS, ( "fieldget recno=%d index=%d value=%s len=%d", dbFieldInfo.atomName, PQftype( pResult, ( int ) uiCount ), pArea->ulRecNo, uiIndex, pValue, nLen ) );
+   HB_TRACE( HB_TR_ALWAYS, ( "fieldget recno=%d index=%d value=%s len=%d", dbFieldInfo.atomName, PQftype( pResult, static_cast< int >( uiCount ) ), pArea->ulRecNo, uiIndex, pValue, nLen ) );
 #endif
 
    switch( pField->uiType )
@@ -533,14 +533,14 @@ static HB_ERRCODE pgsqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
       case HB_FT_DOUBLE:
          if( pField->uiDec )
             hb_itemPutNDLen( pItem, atof( pValue ),
-                             ( int ) pField->uiLen - ( ( int ) pField->uiDec + 1 ),
-                             ( int ) pField->uiDec );
+                             static_cast< int >( pField->uiLen ) - ( static_cast< int >( pField->uiDec ) + 1 ),
+                             static_cast< int >( pField->uiDec ) );
          else
          if( pField->uiLen > 9 )
             hb_itemPutNDLen( pItem, atof( pValue ),
-                             ( int ) pField->uiLen, ( int ) pField->uiDec );
+                             static_cast< int >( pField->uiLen ), static_cast< int >( pField->uiDec ) );
          else
-            hb_itemPutNLLen( pItem, atol( pValue ), ( int ) pField->uiLen );
+            hb_itemPutNLLen( pItem, atol( pValue ), static_cast< int >( pField->uiLen ) );
          break;
 
       case HB_FT_LOGICAL:

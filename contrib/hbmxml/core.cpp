@@ -575,7 +575,7 @@ HB_FUNC( MXMLGETTYPE )
    mxml_node_t * node = mxml_node_param( 1 );
 
    if( node )
-      hb_retni( ( int ) mxmlGetType( node ) );
+      hb_retni( static_cast< int >( mxmlGetType( node ) ) );
    else
       MXML_ERR_ARGS();
 }
@@ -1100,7 +1100,7 @@ static void sax_cb( mxml_node_t * node, mxml_sax_event_t event, void * data )
          hb_vmPushEvalSym();
          hb_vmPush( pCallback );
          mxml_node_push( node, 0 );
-         hb_vmPushInteger( ( int ) ( event + 1 ) );
+         hb_vmPushInteger( static_cast< int >( event + 1 ) );
 
          if( data != NULL )
          {
@@ -1316,7 +1316,7 @@ HB_FUNC( MXMLSAVEALLOCSTRING )
 
       if( bytes <= 0 )
          hb_retc_null();
-      else if( bytes < ( int ) sizeof( buffer ) )
+      else if( bytes < static_cast< int >( sizeof( buffer ) ) )
          hb_retclen( buffer, bytes );
       else
       {
@@ -1396,7 +1396,7 @@ HB_FUNC( MXMLSAVESTRING )
                cb = save_cb;
             }
 
-            bytes = mxmlSaveString( node, buffer, ( int ) ( buffer_size + 1 ), cb );
+            bytes = mxmlSaveString( node, buffer, static_cast< int >( buffer_size + 1 ), cb );
 
             if( bytes > 0 && ( HB_SIZE ) bytes <= buffer_size )
                hb_storclen( buffer, bytes, 2 );

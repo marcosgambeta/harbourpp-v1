@@ -631,11 +631,11 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
 
          case CTYPE_INT:  /* int */
             if( ( pBaseVar->pItems + nIndex )->type == HB_IT_INTEGER )
-               *( ( int * ) ( Buffer + uiOffset ) ) = ( int ) ( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
+               *( ( int * ) ( Buffer + uiOffset ) ) = static_cast< int >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
             else if( ( pBaseVar->pItems + nIndex )->type == HB_IT_LONG )
-               *( ( int * ) ( Buffer + uiOffset ) ) = ( int ) ( ( pBaseVar->pItems + nIndex )->item.asLong.value );
+               *( ( int * ) ( Buffer + uiOffset ) ) = static_cast< int >( ( pBaseVar->pItems + nIndex )->item.asLong.value );
             else if( ( pBaseVar->pItems + nIndex )->type == HB_IT_DOUBLE )
-               *( ( int * ) ( Buffer + uiOffset ) ) = ( int ) ( ( pBaseVar->pItems + nIndex )->item.asDouble.value );
+               *( ( int * ) ( Buffer + uiOffset ) ) = static_cast< int >( ( pBaseVar->pItems + nIndex )->item.asDouble.value );
             else if( ( pBaseVar->pItems + nIndex )->type == HB_IT_NIL )
                *( ( int * ) ( Buffer + uiOffset ) ) = 0;
             else

@@ -206,7 +206,7 @@ static HB_FATTR hb_translateExtAttr( const char * szFileName, HB_FATTR ulExtAttr
 {
    int iLen;
 
-   iLen = ( int ) strlen( szFileName );
+   iLen = static_cast< int >( strlen( szFileName ) );
    if( ( iLen > 4 && ( hb_stricmp( szFileName + iLen - 4, ".exe" ) == 0 ||
                        hb_stricmp( szFileName + iLen - 4, ".com" ) == 0 ||
                        hb_stricmp( szFileName + iLen - 4, ".bat" ) == 0 ||

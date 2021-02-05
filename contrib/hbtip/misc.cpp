@@ -86,8 +86,8 @@ HB_FUNC( TIP_TIMESTAMP )
                 s_days[ hb_dateDOW( iYear, iMonth, iDay ) - 1 ],
                 iDay, s_months[ iMonth - 1 ], iYear,
                 iHour, iMinute, iSecond,
-                ( int ) ( lOffset / 3600 ),
-                ( int ) ( ( lOffset % 3600 ) / 60 ) );
+                static_cast< int >( lOffset / 3600 ),
+                static_cast< int >( ( lOffset % 3600 ) / 60 ) );
 
    hb_retc( szRet );
 }

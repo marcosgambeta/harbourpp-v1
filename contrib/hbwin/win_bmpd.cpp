@@ -73,13 +73,13 @@ static int hb_jpeg_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int *
    HB_BYTE bpc = 0;
 
    if( piHeight )
-      *piHeight = ( int ) height;
+      *piHeight = static_cast< int >( height );
    if( piWidth )
-      *piWidth = ( int ) width;
+      *piWidth = static_cast< int >( width );
    if( piColorSpace )
-      *piColorSpace = ( int ) colorspace;
+      *piColorSpace = static_cast< int >( colorspace );
    if( piBPC )
-      *piBPC = ( int ) bpc;
+      *piBPC = static_cast< int >( bpc );
 
    if( nPos >= nBufferSize )
       return _JPEG_RET_OVERRUN;
@@ -142,11 +142,11 @@ static int hb_jpeg_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int *
    }
 
    if( piHeight )
-      *piHeight = ( int ) height;
+      *piHeight = static_cast< int >( height );
    if( piWidth )
-      *piWidth = ( int ) width;
+      *piWidth = static_cast< int >( width );
    if( piBPC )
-      *piBPC = ( int ) bpc;
+      *piBPC = static_cast< int >( bpc );
    if( piColorSpace )
    {
       switch( colorspace )
@@ -248,9 +248,9 @@ static int hb_png_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int * 
       png_get_IHDR( png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, NULL, NULL, NULL );
 
       if( piHeight )
-         *piHeight = ( int ) height;
+         *piHeight = static_cast< int >( height );
       if( piWidth )
-         *piWidth = ( int ) width;
+         *piWidth = static_cast< int >( width );
       if( piBPC )
          *piBPC = bit_depth;
       if( piColorSpace )

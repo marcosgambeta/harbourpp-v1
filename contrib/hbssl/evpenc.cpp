@@ -138,13 +138,13 @@ HB_FUNC( EVP_ENCODEUPDATE )
                            buffer,
                            &size,
                            ( HB_SSL_CONST unsigned char * ) hb_parcx( 3 ),
-                           ( int ) hb_parclen( 3 ) );
+                           static_cast< int >( hb_parclen( 3 ) ) );
 #else
          EVP_EncodeUpdate( ctx,
                            buffer,
                            &size,
                            ( HB_SSL_CONST unsigned char * ) hb_parcx( 3 ),
-                           ( int ) hb_parclen( 3 ) );
+                           static_cast< int >( hb_parclen( 3 ) ) );
          result = 1;  /* Success */
 #endif
          hb_retni( result );
@@ -222,7 +222,7 @@ HB_FUNC( EVP_DECODEUPDATE )
                            buffer,
                            &size,
                            ( HB_SSL_CONST unsigned char * ) hb_parcx( 3 ),
-                           ( int ) hb_parclen( 3 ) );
+                           static_cast< int >( hb_parclen( 3 ) ) );
 
          if( size > 0 )
          {

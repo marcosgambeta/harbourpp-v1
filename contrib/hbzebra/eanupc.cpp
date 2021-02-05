@@ -124,7 +124,7 @@ static char _upce_checksum( const char * szCode )
 PHB_ZEBRA hb_zebra_create_ean13( const char * szCode, HB_SIZE nLen, int iFlags )
 {
    PHB_ZEBRA pZebra;
-   int       i, iLen = ( int ) nLen;
+   int       i, iLen = static_cast< int >( nLen );
 
    HB_SYMBOL_UNUSED( iFlags );
 
@@ -192,7 +192,7 @@ PHB_ZEBRA hb_zebra_create_ean13( const char * szCode, HB_SIZE nLen, int iFlags )
 PHB_ZEBRA hb_zebra_create_ean8( const char * szCode, HB_SIZE nLen, int iFlags )
 {
    PHB_ZEBRA  pZebra;
-   int        i, iLen = ( int ) nLen;
+   int        i, iLen = static_cast< int >( nLen );
 
    HB_SYMBOL_UNUSED( iFlags );
 
@@ -254,7 +254,7 @@ PHB_ZEBRA hb_zebra_create_ean8( const char * szCode, HB_SIZE nLen, int iFlags )
 PHB_ZEBRA hb_zebra_create_upca( const char * szCode, HB_SIZE nLen, int iFlags )
 {
    PHB_ZEBRA  pZebra;
-   int        i, iLen = ( int ) nLen;
+   int        i, iLen = static_cast< int >( nLen );
 
    HB_SYMBOL_UNUSED( iFlags );
 
@@ -315,7 +315,7 @@ PHB_ZEBRA hb_zebra_create_upca( const char * szCode, HB_SIZE nLen, int iFlags )
 PHB_ZEBRA hb_zebra_create_upce( const char * szCode, HB_SIZE nLen, int iFlags )
 {
    PHB_ZEBRA  pZebra;
-   int        i, iLen = ( int ) nLen;
+   int        i, iLen = static_cast< int >( nLen );
    char       sumcode;
 
    HB_SYMBOL_UNUSED( iFlags );

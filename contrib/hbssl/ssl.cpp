@@ -614,10 +614,10 @@ HB_FUNC( SSL_READ )
             if( HB_ISNUM( 3 ) )
             {
                nRead = hb_parni( 3 );
-               if( nRead >= 0 && nRead < ( int ) nLen )
+               if( nRead >= 0 && nRead < static_cast< int >( nLen ) )
                   nLen = nRead;
             }
-            nRead = nLen >= INT_MAX ? INT_MAX : ( int ) nLen;
+            nRead = nLen >= INT_MAX ? INT_MAX : static_cast< int >( nLen );
 
             nRead = SSL_read( ssl, pBuffer, nRead );
          }
@@ -648,10 +648,10 @@ HB_FUNC( SSL_PEEK )
             if( HB_ISNUM( 3 ) )
             {
                nRead = hb_parni( 3 );
-               if( nRead >= 0 && nRead < ( int ) nLen )
+               if( nRead >= 0 && nRead < static_cast< int >( nLen ) )
                   nLen = nRead;
             }
-            nRead = nLen >= INT_MAX ? INT_MAX : ( int ) nLen;
+            nRead = nLen >= INT_MAX ? INT_MAX : static_cast< int >( nLen );
 
             nRead = SSL_peek( ssl, pBuffer, nRead );
          }
@@ -694,7 +694,7 @@ HB_FUNC( SSL_WRITE )
                nLen = nWrite;
          }
 
-         hb_retni( SSL_write( ssl, hb_itemGetCPtr( pBuffer ), ( int ) nLen ) );
+         hb_retni( SSL_write( ssl, hb_itemGetCPtr( pBuffer ), static_cast< int >( nLen ) ) );
       }
    }
    else
@@ -1602,12 +1602,12 @@ HB_FUNC( SSL_USE_RSAPRIVATEKEY_ASN1 )
       if( ssl )
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L && \
     ! defined( LIBRESSL_VERSION_NUMBER )
-         hb_retni( SSL_use_RSAPrivateKey_ASN1( ssl, ( const unsigned char * ) hb_parc( 2 ), ( int ) hb_parclen( 2 ) ) );
+         hb_retni( SSL_use_RSAPrivateKey_ASN1( ssl, ( const unsigned char * ) hb_parc( 2 ), static_cast< int >( hb_parclen( 2 ) ) ) );
 #else
          /* 'const' not used in 2nd param because ssh.h misses it, too.
              Bug reported: #1988 [Fixed in 1.1.0 after submitting patch]
              [vszakats] */
-         hb_retni( SSL_use_RSAPrivateKey_ASN1( ssl, ( unsigned char * ) HB_UNCONST( hb_parc( 2 ) ), ( int ) hb_parclen( 2 ) ) );
+         hb_retni( SSL_use_RSAPrivateKey_ASN1( ssl, ( unsigned char * ) HB_UNCONST( hb_parc( 2 ) ), static_cast< int >( hb_parclen( 2 ) ) ) );
 #endif
    }
    else
@@ -1621,7 +1621,7 @@ HB_FUNC( SSL_USE_PRIVATEKEY_ASN1 )
       SSL * ssl = hb_SSL_par( 2 );
 
       if( ssl )
-         hb_retni( SSL_use_PrivateKey_ASN1( hb_parni( 1 ), ssl, ( HB_SSL_CONST unsigned char * ) hb_parc( 3 ), ( int ) hb_parclen( 3 ) ) );
+         hb_retni( SSL_use_PrivateKey_ASN1( hb_parni( 1 ), ssl, ( HB_SSL_CONST unsigned char * ) hb_parc( 3 ), static_cast< int >( hb_parclen( 3 ) ) ) );
    }
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -1634,7 +1634,7 @@ HB_FUNC( SSL_USE_CERTIFICATE_ASN1 )
       SSL * ssl = hb_SSL_par( 1 );
 
       if( ssl )
-         hb_retni( SSL_use_certificate_ASN1( ssl, ( HB_SSL_CONST unsigned char * ) hb_parc( 2 ), ( int ) hb_parclen( 2 ) ) );
+         hb_retni( SSL_use_certificate_ASN1( ssl, ( HB_SSL_CONST unsigned char * ) hb_parc( 2 ), static_cast< int >( hb_parclen( 2 ) ) ) );
    }
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );

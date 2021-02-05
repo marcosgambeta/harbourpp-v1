@@ -64,11 +64,11 @@ HB_FUNC( RESTCURSOR )
 {
    long lCursor = hb_parnl( 1 );
 
-   hb_gtSetPos( ( int ) ( ( lCursor >> 8 ) & 0xFF ), ( int ) ( lCursor & 0xFF ) );
+   hb_gtSetPos( static_cast< int >( ( lCursor >> 8 ) & 0xFF ), static_cast< int >( lCursor & 0xFF ) );
 #ifdef HB_CLP_STRICT
-   hb_gtSetCursor( ( int ) ( ( lCursor >> 16 ) & 0x01 ) );
+   hb_gtSetCursor( static_cast< int >( ( lCursor >> 16 ) & 0x01 ) );
 #else
-   hb_gtSetCursor( ( int ) ( ( lCursor >> 16 ) & 0xFF ) );
+   hb_gtSetCursor( static_cast< int >( ( lCursor >> 16 ) & 0xFF ) );
 #endif
 
    hb_retc_null();

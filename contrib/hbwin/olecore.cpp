@@ -288,7 +288,7 @@ static void hb_oleExcepDescription( EXCEPINFO * pExcep, char ** pszDescription, 
    if( pExcep->bstrSource )
    {
       int iLen, iStrLen;
-      iStrLen = ( int ) SysStringLen( pExcep->bstrSource );
+      iStrLen = static_cast< int >( SysStringLen( pExcep->bstrSource ) );
       iLen = WideCharToMultiByte( CP_ACP, 0, pExcep->bstrSource, iStrLen, NULL, 0, NULL, NULL );
       * pszSource = ( char * ) hb_xgrab( ( iLen + 1 ) * sizeof( char ) );
       WideCharToMultiByte( CP_ACP, 0, pExcep->bstrSource, iStrLen, * pszSource, iLen + 1, NULL, NULL );
@@ -302,7 +302,7 @@ static void hb_oleExcepDescription( EXCEPINFO * pExcep, char ** pszDescription, 
    if( pExcep->bstrDescription )
    {
       int iLen, iStrLen;
-      iStrLen = ( int ) SysStringLen( pExcep->bstrDescription );
+      iStrLen = static_cast< int >( SysStringLen( pExcep->bstrDescription ) );
       iLen = WideCharToMultiByte( CP_ACP, 0, pExcep->bstrDescription, iStrLen, NULL, 0, NULL, NULL );
       * pszDescription = ( char * ) hb_xgrab( ( iLen + 14 + 1 ) * sizeof( char ) );
       WideCharToMultiByte( CP_ACP, 0, pExcep->bstrDescription, iStrLen, * pszDescription, iLen + 1, NULL, NULL );
@@ -784,7 +784,7 @@ static SAFEARRAY * hb_oleSafeArrayFromItem( PHB_ITEM pItem, VARTYPE vt,
       iDims = 1;
    }
 
-   sabound = iDims > ( int ) HB_SIZEOFARRAY( boundbuf ) ? ( SAFEARRAYBOUND * )
+   sabound = iDims > static_cast< int >( HB_SIZEOFARRAY( boundbuf ) ) ? ( SAFEARRAYBOUND * )
              hb_xgrab( sizeof( SAFEARRAYBOUND ) * iDims ) : boundbuf;
    /* use the same buffer for dimensions and indexes */
    plIndex = &sabound[ 0 ].lLbound;
@@ -1463,7 +1463,7 @@ void hb_oleVariantToItemEx( PHB_ITEM pItem, VARIANT * pVariant, HB_USHORT uiClas
                                      V_ARRAY( pVariant );
             if( pSafeArray )
             {
-               int iDims = ( int ) SafeArrayGetDim( pSafeArray );
+               int iDims = static_cast< int >( SafeArrayGetDim( pSafeArray ) );
 
                if( iDims >= 1 )
                {
@@ -1693,7 +1693,7 @@ HB_BOOL hb_oleDispInvoke( PHB_SYMB pSym, PHB_ITEM pObject, PHB_ITEM pParam,
 
       iParams = iCount = pParams->cArgs;
 
-      for( i = iRefs = 0; i < iCount && iRefs < ( int ) HB_SIZEOFARRAY( refArray ); i++ )
+      for( i = iRefs = 0; i < iCount && iRefs < static_cast< int >( HB_SIZEOFARRAY( refArray ) ); i++ )
       {
          if( V_VT( &pParams->rgvarg[ i ] ) & VT_BYREF )
             refArray[ iRefs++ ].item = hb_stackAllocItem();
@@ -1792,7 +1792,7 @@ static void GetParams( DISPPARAMS * dispparam, HB_UINT uiOffset, HB_BOOL fUseRef
       for( uiArg = 0; uiArg < uiArgCount; uiArg++ )
       {
          VARIANT * pVariant = &pArgs[ uiArg + uiNamedArgs ];
-         int iParam = ( int ) ( uiOffset + uiArgCount - uiArg );
+         int iParam = static_cast< int >( uiOffset + uiArgCount - uiArg );
 
          VariantInit( pVariant );
          if( fUseRef && HB_ISBYREF( iParam ) )
@@ -2233,7 +2233,7 @@ HB_FUNC( WIN_OLEAUTO___ONERROR )
    iPCount = hb_pcount();
 
    szMethod = hb_itemGetSymbol( hb_stackBaseItem() )->szName;
-   AnsiToWideBuffer( szMethod, szMethodWide, ( int ) HB_SIZEOFARRAY( szMethodWide ) );
+   AnsiToWideBuffer( szMethod, szMethodWide, static_cast< int >( HB_SIZEOFARRAY( szMethodWide ) ) );
 
    /* Try property put */
 
@@ -2822,7 +2822,7 @@ HB_FUNC( __OLEVARIANTNEW )
                   iPCount = 0;
                iDims = iPCount;
 
-               plSize = iDims < ( int ) HB_SIZEOFARRAY( plBuf ) ? plBuf :
+               plSize = iDims < static_cast< int >( HB_SIZEOFARRAY( plBuf ) ) ? plBuf :
                         ( long * ) hb_xgrab( sizeof( long ) * iDims );
 
                while( iPCount > 0 && HB_ISNIL( iPCount + 2 ) )

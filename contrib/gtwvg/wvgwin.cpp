@@ -131,7 +131,7 @@ HB_FUNC( WVG_SENDDLGITEMMESSAGE )
    }
 
    hb_retnl( ( long ) SendDlgItemMessage( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ),
-                                          ( int ) hb_parni( 2 ),
+                                          static_cast< int >( hb_parni( 2 ) ),
                                           ( UINT ) hb_parni( 3 ),
                                           ( WPARAM ) hb_parnint( 4 ),
                                           ( cText ? ( LPARAM ) cText : ( LPARAM ) hb_parnint( 5 ) )
@@ -174,7 +174,7 @@ HB_FUNC( WVG_SETBKCOLOR )
 
 HB_FUNC( WVG_SETBKMODE )
 {
-   hb_retni( ( int ) SetBkMode( ( HDC ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parni( 2 ) ) );
+   hb_retni( static_cast< int >( SetBkMode( ( HDC ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parni( 2 ) ) ) );
 }
 
 HB_FUNC( WVG_GETSTOCKOBJECT )
@@ -217,7 +217,7 @@ HB_FUNC( WVG_SETDLGITEMTEXT )
 
 HB_FUNC( WVG_GETDLGITEMTEXT )
 {
-   int    iLen  = ( int ) SendMessage( GetDlgItem( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parni( 2 ) ), WM_GETTEXTLENGTH, 0, 0 ) + 1;
+   int    iLen  = static_cast< int >( SendMessage( GetDlgItem( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parni( 2 ) ), WM_GETTEXTLENGTH, 0, 0 ) ) + 1;
    LPTSTR cText = ( LPTSTR ) hb_xgrab( iLen * sizeof( TCHAR ) );
    UINT   iResult;
 
@@ -567,7 +567,7 @@ HB_FUNC( WVG_CHOOSECOLOR )
    COLORREF    crCustClr[ 16 ];
    int         i;
 
-   for( i = 0; i < ( int ) HB_SIZEOFARRAY( crCustClr ); i++ )
+   for( i = 0; i < static_cast< int >( HB_SIZEOFARRAY( crCustClr ) ); i++ )
       crCustClr[ i ] = ( HB_ISARRAY( 2 ) ? ( COLORREF ) hb_parvnl( 2, i + 1 ) : GetSysColor( COLOR_BTNFACE ) );
 
    cc.lStructSize  = sizeof( CHOOSECOLOR );
@@ -1065,7 +1065,7 @@ HB_FUNC( WVG_SENDTOOLBARMESSAGE )
 #else
          tbab.nID = ( UINT ) hbwapi_par_raw_HBITMAP( 3 );
 #endif
-         hbwapi_ret_NI( ( int ) SendMessage( hTB, TB_ADDBITMAP, ( WPARAM ) 1, ( LPARAM ) &tbab ) );
+         hbwapi_ret_NI( static_cast< int >( SendMessage( hTB, TB_ADDBITMAP, ( WPARAM ) 1, ( LPARAM ) &tbab ) ) );
          break;
       }
       case TB_ADDBUTTONS:
@@ -1087,7 +1087,7 @@ HB_FUNC( WVG_SENDTOOLBARMESSAGE )
          int    iString;
          void * hCaption;
 
-         iString = ( int ) SendMessage( hTB, TB_ADDSTRING, ( WPARAM ) nullptr, ( LPARAM ) HB_PARSTR( 3, &hCaption, nullptr ) );
+         iString = static_cast< int >( SendMessage( hTB, TB_ADDSTRING, ( WPARAM ) nullptr, ( LPARAM ) HB_PARSTR( 3, &hCaption, nullptr ) ) );
          hb_strfree( hCaption );
 
          hbwapi_ret_NI( iString );

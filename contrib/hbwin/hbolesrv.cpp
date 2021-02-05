@@ -170,7 +170,7 @@ static HB_BOOL s_getKeyValue( LPCTSTR lpKey, LPTSTR lpBuffer, int iLen )
          else
          {
             LPCTSTR lpVal = c == TEXT( '$' ) ? s_lpClsName : s_lpClsId;
-            iCount = ( int ) HB_STRNLEN( lpVal, iSize );
+            iCount = static_cast< int >( HB_STRNLEN( lpVal, iSize ) );
             memcpy( lpPtr, lpVal, iCount * sizeof( TCHAR ) );
             lpKey++;
             lpPtr += iCount;
@@ -285,7 +285,7 @@ static HRESULT STDMETHODCALLTYPE GetIDsOfNames( IDispatch * lpThis, REFIID riid,
       UINT ui;
 
       if( s_WideToAnsiBuffer( rgszNames[ 0 ], szName,
-                              ( int ) sizeof( szName ) ) != 0 )
+                              static_cast< int >( sizeof( szName ) ) ) != 0 )
       {
          PHB_ITEM pAction;
 
@@ -695,7 +695,7 @@ STDAPI DllUnregisterServer( void )
    TCHAR lpKeyName[ MAX_REGSTR_SIZE ];
    int i;
 
-   for( i = ( int ) HB_SIZEOFARRAY( s_regTable ) - 1; i >= 0; --i )
+   for( i = static_cast< int >( HB_SIZEOFARRAY( s_regTable ) ) - 1; i >= 0; --i )
    {
       if( s_getKeyValue( s_regTable[ i ][ 0 ], lpKeyName, MAX_REGSTR_SIZE ) )
          RegDeleteKey( HKEY_CLASSES_ROOT, lpKeyName );
@@ -721,7 +721,7 @@ STDAPI DllRegisterServer( void )
    HKEY hKey;
    int i;
 
-   for( i = 0; i < ( int ) HB_SIZEOFARRAY( s_regTable ); ++i )
+   for( i = 0; i < static_cast< int >( HB_SIZEOFARRAY( s_regTable ) ); ++i )
    {
       long err;
 

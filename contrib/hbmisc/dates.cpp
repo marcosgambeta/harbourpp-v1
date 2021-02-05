@@ -90,7 +90,7 @@ static int hb_woy( long lDate, HB_BOOL fISO )
 {
    int iYear, iMonth, iDay;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_woy(%ld, %d)", lDate, ( int ) fISO ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_woy(%ld, %d)", lDate, static_cast< int >( fISO ) ) );
 
    hb_dateDecode( lDate, &iYear, &iMonth, &iDay );
 

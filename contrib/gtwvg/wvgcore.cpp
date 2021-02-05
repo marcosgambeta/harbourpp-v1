@@ -211,15 +211,15 @@ HB_BOOL hb_wvt_gtRenderPicture( int x, int y, int wd, int ht, IPicture * iPictur
 
          if( lHeight > lWidth )
          {
-            iWd = ( int ) ( ( double )  ht * lWidth / lHeight );
+            iWd = static_cast< int >( ( double )  ht * lWidth / lHeight );
             iWd = HB_MIN( iWd, wd );
-            iHt = ( int ) ( ( double ) iWd * lHeight / lWidth );
+            iHt = static_cast< int >( ( double ) iWd * lHeight / lWidth );
          }
          else
          {
-            iHt = ( int ) ( ( double )  wd * lHeight / lWidth );
+            iHt = static_cast< int >( ( double )  wd * lHeight / lWidth );
             iHt = HB_MIN( iHt, ht );
-            iWd = ( int ) ( ( double ) iHt * lWidth / lHeight );
+            iWd = static_cast< int >( ( double ) iHt * lWidth / lHeight );
          }
          x  += abs( ( iWd - wd ) / 2 );
          y  += abs( ( iHt - ht ) / 2 );
@@ -398,7 +398,7 @@ BOOL CALLBACK hb_wvt_gtDlgProcModal( HWND hDlg, UINT message, WPARAM wParam, LPA
    int      iIndex, iType;
    long int lReturn = 0;
    PHB_ITEM pFunc   = nullptr;
-   int      iFirst  = ( int ) lParam;
+   int      iFirst  = static_cast< int >( lParam );
 
    if( iFirst > 0 && iFirst <= WVT_DLGMD_MAX )
    {
@@ -545,15 +545,15 @@ HB_BOOL hb_wvt_DrawImage( HDC hdc, int x, int y, int wd, int ht, LPCTSTR lpImage
                      
                      if( lHeight > lWidth )
                      {
-                        iWd = ( int ) ( ( double )  ht * lWidth / lHeight );
+                        iWd = static_cast< int >( ( double )  ht * lWidth / lHeight );
                         iWd = HB_MIN( iWd, wd );
-                        iHt = ( int ) ( ( double ) iWd * lHeight / lWidth );
+                        iHt = static_cast< int >( ( double ) iWd * lHeight / lWidth );
                      }
                      else
                      {
-                        iHt = ( int ) ( ( double )  wd * lHeight / lWidth );
+                        iHt = static_cast< int >( ( double )  wd * lHeight / lWidth );
                         iHt = HB_MIN( iHt, ht );
-                        iWd = ( int ) ( ( double ) iHt * lWidth / lHeight );
+                        iWd = static_cast< int >( ( double ) iHt * lWidth / lHeight );
                      }
                      x  += abs( ( iWd - wd ) / 2 );
                      y  += abs( ( iHt - ht ) / 2 );

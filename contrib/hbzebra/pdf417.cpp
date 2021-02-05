@@ -751,7 +751,7 @@ static int _pdf417_encode_byte( const char * szCode, int iLen, int * pCW, int iP
          pCW[ iPos + 2 ] = ill % 900;
          ill /= 900;
          pCW[ iPos + 1 ] = ill % 900;
-         pCW[ iPos     ] = ( int ) ( ill / 900 );
+         pCW[ iPos     ] = static_cast< int >( ill / 900 );
          iPos += 5;
       }
       else
@@ -1262,7 +1262,7 @@ PHB_ZEBRA hb_zebra_create_pdf417( const char * szCode, HB_SIZE nLen, int iFlags,
 {
    PHB_ZEBRA  pZebra;
    int *      pCW;
-   int        i, j, iLevel, iRowCount, iDataCount, iCount, iLen = ( int ) nLen;
+   int        i, j, iLevel, iRowCount, iDataCount, iCount, iLen = static_cast< int >( nLen );
 
    pZebra = hb_zebra_create();
    pZebra->iType = HB_ZEBRA_TYPE_PDF417;

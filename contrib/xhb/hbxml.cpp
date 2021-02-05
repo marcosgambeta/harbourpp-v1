@@ -2185,7 +2185,7 @@ static const char * edesc[] =
 
 static const char * mxml_error_desc( MXML_ERROR_CODE code )
 {
-   int iCode = ( ( int ) code ) - 1;
+   int iCode = ( static_cast< int >( code ) ) - 1;
 
    if( iCode < 0 || iCode > ( signed ) ( sizeof( edesc ) / sizeof( char * ) ) )
       return nullptr;

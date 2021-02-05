@@ -79,7 +79,7 @@ static int _codabar_charno( char ch )
 
       const char * ptr = strchr( s_symbols, ch );
       if( ptr && *ptr )
-         return ( int ) ( ptr - s_symbols + 10 );
+         return static_cast< int >( ptr - s_symbols + 10 );
    }
    return -1;
 }
@@ -146,7 +146,7 @@ PHB_ZEBRA hb_zebra_create_codabar( const char * szCode, HB_SIZE nLen, int iFlags
 
    pZebra->pBits = hb_bitbuffer_create();
 
-   if( iLen == 0 || _codabar_charno( ( int ) szCode[ 0 ] ) < 16 )
+   if( iLen == 0 || _codabar_charno( static_cast< int >( szCode[ 0 ] ) ) < 16 )
       _codabar_add( pZebra->pBits, s_code[ _codabar_charno( 'A' ) ], iFlags, HB_FALSE );  /* Default start A */
 
    for( i = 0; i < iLen; i++ )

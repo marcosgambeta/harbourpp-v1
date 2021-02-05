@@ -484,11 +484,11 @@ static int _qr_fixed( int iVersion, int iRow, int iCol )
       const unsigned char * pj = s_align[ iVersion - 1 ];
       for( ; *pj; pj++ )
       {
-         if( iRow - 2 <= ( int ) *pi && ( int ) *pi <= iRow + 2 &&
-             iCol - 2 <= ( int ) *pj && ( int ) *pj <= iCol + 2 )
+         if( iRow - 2 <= static_cast< int >( *pi ) && static_cast< int >( *pi ) <= iRow + 2 &&
+             iCol - 2 <= static_cast< int >( *pj ) && static_cast< int >( *pj ) <= iCol + 2 )
          {
-            if( ( *pi == 6 && ( int ) *pj > iLength - 10 ) ||
-                ( ( int ) *pi > iLength - 10 && *pj == 6 ) )
+            if( ( *pi == 6 && static_cast< int >( *pj ) > iLength - 10 ) ||
+                ( static_cast< int >( *pi ) > iLength - 10 && *pj == 6 ) )
                break;
 
             return 1;
@@ -567,7 +567,7 @@ static PHB_BITBUFFER _qr_interlace( PHB_BITBUFFER pData, unsigned char * pECC, i
       HB_TRACE( HB_TR_ALWAYS, ( "ERROR!!! uiDst:%d  pVersion->uiTotal:%d", uiDst, pVersion->uiTotal ) );
 
    for( uiPos = 0; uiPos < pVersion->uiTotal; uiPos++ )
-      HB_TRACE( HB_TR_ALWAYS, ( "interlaced:%3d %02X", ( int ) s_rev[ ( unsigned char ) pRetBuf[ uiPos ] ], ( int ) s_rev[ ( unsigned char ) pRetBuf[ uiPos ] ] ) );
+      HB_TRACE( HB_TR_ALWAYS, ( "interlaced:%3d %02X", static_cast< int >( s_rev[ ( unsigned char ) pRetBuf[ uiPos ] ] ), static_cast< int >( s_rev[ ( unsigned char ) pRetBuf[ uiPos ] ] ) ) );
 #endif
    return pRet;
 }
@@ -656,7 +656,7 @@ static int _qr_dataencode( const char * szCode, HB_SIZE nSize, PHB_BITBUFFER pDa
    iVersion = 0; /* to pacify warning */
    for( i = 1; i <= 40; i++ )
    {
-      iDataLen = ( int ) ( s_version[ i - 1 ].uiTotal - s_version[ i - 1 ].level[ iLevel ].uiECC );
+      iDataLen = static_cast< int >( s_version[ i - 1 ].uiTotal - s_version[ i - 1 ].level[ iLevel ].uiECC );
       if( iDataLen * 8 >= iLen + _qr_cci_len( i, iMode ) )
       {
          iVersion = i;
@@ -672,7 +672,7 @@ static int _qr_dataencode( const char * szCode, HB_SIZE nSize, PHB_BITBUFFER pDa
 
    /* Encode */
    hb_bitbuffer_cat_int_rev( pData, iMode, 4 );
-   hb_bitbuffer_cat_int_rev( pData, ( int ) nSize, _qr_cci_len( iVersion, iMode ) );
+   hb_bitbuffer_cat_int_rev( pData, static_cast< int >( nSize ), _qr_cci_len( iVersion, iMode ) );
    if( iMode == 1 )
    {
       for( n = 0; n + 2 < nSize; n += 3 )
@@ -705,7 +705,7 @@ static int _qr_dataencode( const char * szCode, HB_SIZE nSize, PHB_BITBUFFER pDa
    }
 
    /* Terminator */
-   if( iDataLen * 8 >= ( int ) hb_bitbuffer_len( pData ) + 4 )
+   if( iDataLen * 8 >= static_cast< int >( hb_bitbuffer_len( pData ) ) + 4 )
       hb_bitbuffer_cat_int_rev( pData, 0, 4 );
 
    /* Padding */

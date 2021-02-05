@@ -899,7 +899,7 @@ HB_FUNC( XML_PARSE )
    PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
 
    if( hb_expat )
-      hb_retni( XML_Parse( hb_expat->parser, hb_parcx( 2 ), ( int ) hb_parclen( 2 ), ( int ) hb_parl( 3 ) ) );
+      hb_retni( XML_Parse( hb_expat->parser, hb_parcx( 2 ), static_cast< int >( hb_parclen( 2 ) ), static_cast< int >( hb_parl( 3 ) ) ) );
    else
       hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
@@ -909,7 +909,7 @@ HB_FUNC( XML_GETERRORCODE )
    PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
 
    if( hb_expat )
-      hb_retni( ( int ) XML_GetErrorCode( hb_expat->parser ) );
+      hb_retni( static_cast< int >( XML_GetErrorCode( hb_expat->parser ) ) );
    else
       hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
@@ -967,7 +967,7 @@ HB_FUNC( XML_SETBASE )
    {
       void * hBase;
 
-      hb_retni( ( int ) XML_SetBase( hb_expat->parser, hb_parstr_utf8( 1, &hBase, NULL ) ) );
+      hb_retni( static_cast< int >( XML_SetBase( hb_expat->parser, hb_parstr_utf8( 1, &hBase, NULL ) ) ) );
 
       hb_strfree( hBase );
    }
@@ -1013,8 +1013,8 @@ HB_FUNC( XML_SETENCODING )
    {
       void * hEncoding;
 
-      hb_retni( ( int ) XML_SetEncoding( hb_expat->parser,
-                                         hb_parstr_utf8( 1, &hEncoding, NULL ) ) );
+      hb_retni( static_cast< int >( XML_SetEncoding( hb_expat->parser,
+                                         hb_parstr_utf8( 1, &hEncoding, NULL ) ) ) );
 
       hb_strfree( hEncoding );
    }
@@ -1037,7 +1037,7 @@ HB_FUNC( XML_USEFOREIGNDTD )
    PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
 
    if( hb_expat )
-      hb_retni( ( int ) XML_UseForeignDTD( hb_expat->parser, ( XML_Bool ) hb_parl( 2 ) ) );
+      hb_retni( static_cast< int >( XML_UseForeignDTD( hb_expat->parser, ( XML_Bool ) hb_parl( 2 ) ) ) );
    else
       hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
@@ -1077,7 +1077,7 @@ HB_FUNC( XML_STOPPARSER )
    if( hb_expat )
    {
 #if HB_EXPAT_VERS( 1, 95, 8 )
-      hb_retni( ( int ) XML_StopParser( hb_expat->parser, ( XML_Bool ) hb_parl( 2 ) ) );
+      hb_retni( static_cast< int >( XML_StopParser( hb_expat->parser, ( XML_Bool ) hb_parl( 2 ) ) ) );
 #else
       hb_retni( HB_XML_ERROR_NOT_IMPLEMENTED_ );
 #endif
@@ -1093,7 +1093,7 @@ HB_FUNC( XML_RESUMEPARSER )
    if( hb_expat )
    {
 #if HB_EXPAT_VERS( 1, 95, 8 )
-      hb_retni( ( int ) XML_ResumeParser( hb_expat->parser ) );
+      hb_retni( static_cast< int >( XML_ResumeParser( hb_expat->parser ) ) );
 #else
       hb_retni( HB_XML_ERROR_NOT_IMPLEMENTED_ );
 #endif
@@ -1113,7 +1113,7 @@ HB_FUNC( XML_GETPARSINGSTATUS )
 
       XML_GetParsingStatus( hb_expat->parser, &status );
 
-      hb_storni( ( int ) status.parsing, 2 );
+      hb_storni( static_cast< int >( status.parsing ), 2 );
       hb_storl( ( HB_BOOL ) status.finalBuffer, 3 );
 #else
       hb_storni( -1, 2 );

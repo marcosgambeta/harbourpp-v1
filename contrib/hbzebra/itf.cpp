@@ -61,7 +61,7 @@ static char _itf_checksum( const char * szCode )
 PHB_ZEBRA hb_zebra_create_itf( const char * szCode, HB_SIZE nLen, int iFlags )
 {
    PHB_ZEBRA  pZebra;
-   int        i, iN, iW, iLen = ( int ) nLen;
+   int        i, iN, iW, iLen = static_cast< int >( nLen );
    char       csum;
 
    pZebra = hb_zebra_create();

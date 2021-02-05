@@ -412,7 +412,7 @@ HB_FUNC( PQEXECPARAMS )
 
    if( conn && aParam )
    {
-      int n = ( int ) hb_arrayLen( aParam );
+      int n = static_cast< int >( hb_arrayLen( aParam ) );
       int i;
 
       const char ** paramvalues = ( const char ** ) hb_xgrab( sizeof( char * ) * n );
@@ -540,7 +540,7 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
             {
                case BITOID:
                   if( typemod >= 0 )
-                     length = ( int ) typemod;
+                     length = static_cast< int >( typemod );
                   hb_strncpy( buf, "bit", sizeof( buf ) - 1 );
                   break;
 
@@ -551,7 +551,7 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
 
                case BPCHAROID:
                   if( typemod >= 0 )
-                     length = ( int ) ( typemod - VARHDRSZ );
+                     length = static_cast< int >( typemod - VARHDRSZ );
                   hb_strncpy( buf, "character", sizeof( buf ) - 1 );
                   break;
 
@@ -598,13 +598,13 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
 
                case VARBITOID:
                   if( typemod >= 0 )
-                     length = ( int ) typemod;
+                     length = static_cast< int >( typemod );
                   hb_strncpy( buf, "bit varying", sizeof( buf ) - 1 );
                   break;
 
                case VARCHAROID:
                   if( typemod >= 0 )
-                     length = ( int ) ( typemod - VARHDRSZ );
+                     length = static_cast< int >( typemod - VARHDRSZ );
                   hb_strncpy( buf, "character varying", sizeof( buf ) - 1 );
                   break;
 
@@ -1133,7 +1133,7 @@ HB_FUNC( PQEXECPREPARED )
       for( i = 0; i < n; ++i )
          paramvalues[ i ] = hb_arrayGetCPtr( aParam, i + 1 );
 
-      hb_PGresult_ret( PQexecPrepared( conn, hb_parcx( 2 ), ( int ) n, ( const char * const * ) paramvalues, NULL, NULL, 1 ) );
+      hb_PGresult_ret( PQexecPrepared( conn, hb_parcx( 2 ), static_cast< int >( n ), ( const char * const * ) paramvalues, NULL, NULL, 1 ) );
 
       hb_xfree( ( void * ) paramvalues );
    }
@@ -1147,7 +1147,7 @@ HB_FUNC( PQPUTCOPYDATA )
    PGconn * conn = hb_PGconn_par( 1 );
 
    if( conn )
-      hb_retni( PQputCopyData( conn, hb_parcx( 2 ), ( int ) hb_parclen( 2 ) ) );
+      hb_retni( PQputCopyData( conn, hb_parcx( 2 ), static_cast< int >( hb_parclen( 2 ) ) ) );
    else
       hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else

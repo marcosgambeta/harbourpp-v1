@@ -538,10 +538,10 @@ static HB_ERRCODE mysqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
 
          if( pField->uiDec )
             hb_itemPutNDLen( pItem, atof( szBuffer ),
-                             ( int ) pField->uiLen - ( ( int ) pField->uiDec + 1 ),
-                             ( int ) pField->uiDec );
+                             static_cast< int >( pField->uiLen ) - ( static_cast< int >( pField->uiDec ) + 1 ),
+                             static_cast< int >( pField->uiDec ) );
          else
-            hb_itemPutNLLen( pItem, atol( szBuffer ), ( int ) pField->uiLen );
+            hb_itemPutNLLen( pItem, atol( szBuffer ), static_cast< int >( pField->uiLen ) );
          break;
 
       case HB_FT_DATE:

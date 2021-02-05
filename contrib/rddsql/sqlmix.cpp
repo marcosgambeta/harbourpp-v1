@@ -240,7 +240,7 @@ static int hb_mixKeyCompare( PMIXTAG pTag, PMIXKEY pKey1, PMIXKEY pKey2, unsigne
    int          i;
 
    if( ! pKey1->notnul || ! pKey2->notnul )
-      return ( int ) pKey1->notnul - ( int ) pKey2->notnul;
+      return static_cast< int >( pKey1->notnul ) - static_cast< int )( pKey2->notnul );
 
    i      = 0;
    uiSize = pTag->uiKeyLen > uiLen ? uiLen : pTag->uiKeyLen;

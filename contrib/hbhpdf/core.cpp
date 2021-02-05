@@ -220,7 +220,7 @@ HB_FUNC( HPDF_SETPAGELAYOUT )
 /* HPDF_GetPageLayout( hDoc ) --> nLayout */
 HB_FUNC( HPDF_GETPAGELAYOUT )
 {
-   hb_retni( ( int ) HPDF_GetPageLayout( hb_HPDF_Doc_par( 1 ) ) );
+   hb_retni( static_cast< int >( HPDF_GetPageLayout( hb_HPDF_Doc_par( 1 ) ) ) );
 }
 
 /* HPDF_SetPageMode( hDoc, nPageMode ) --> hStatus
@@ -239,7 +239,7 @@ HB_FUNC( HPDF_SETPAGEMODE )
 /* HPDF_GetPageMode( hDoc ) --> nPageMode */
 HB_FUNC( HPDF_GETPAGEMODE )
 {
-   hb_retni( ( int ) HPDF_GetPageMode( hb_HPDF_Doc_par( 1 ) ) );
+   hb_retni( static_cast< int >( HPDF_GetPageMode( hb_HPDF_Doc_par( 1 ) ) ) );
 }
 
 /* HPDF_SetOpenAction( hDoc, hDestn ) --> hStatus */
@@ -738,13 +738,13 @@ HB_FUNC( HPDF_PAGE_GETGRAYSTROKE )
 /* HPDF_Page_GetStrokingColorSpace( hPage ) --> nStrokingSpace */
 HB_FUNC( HPDF_PAGE_GETSTROKINGCOLORSPACE )
 {
-   hb_retni( ( int ) HPDF_Page_GetStrokingColorSpace( ( HPDF_Page ) hb_parptr( 1 ) ) );
+   hb_retni( static_cast< int >( HPDF_Page_GetStrokingColorSpace( ( HPDF_Page ) hb_parptr( 1 ) ) ) );
 }
 
 /* HPDF_Page_GetFillingColorSpace( hPage ) --> nFillingColorSpace */
 HB_FUNC( HPDF_PAGE_GETFILLINGCOLORSPACE )
 {
-   hb_retni( ( int ) HPDF_Page_GetFillingColorSpace( ( HPDF_Page ) hb_parptr( 1 ) ) );
+   hb_retni( static_cast< int >( HPDF_Page_GetFillingColorSpace( ( HPDF_Page ) hb_parptr( 1 ) ) ) );
 }
 
 /* HPDF_Page_GetTextMatrix( hPage ) --> aMatrix[] */
@@ -768,7 +768,7 @@ HB_FUNC( HPDF_PAGE_GETTEXTMATRIX )
 /* HPDF_Page_GetGStateDepth( hPage ) --> nGStateDepth */
 HB_FUNC( HPDF_PAGE_GETGSTATEDEPTH )
 {
-   hb_retni( ( int ) HPDF_Page_GetGStateDepth( ( HPDF_Page ) hb_parptr( 1 ) ) );
+   hb_retni( static_cast< int >( HPDF_Page_GetGStateDepth( ( HPDF_Page ) hb_parptr( 1 ) ) ) );
 }
 
 /* HPDF_Page_SetSlideShow( hPage, nType, nDurationPerFrame, nTranstnTime = 1 Second ) --> hStatus
@@ -1200,13 +1200,13 @@ HB_FUNC( HPDF_FONT_GETBBOX )
 /* HPDF_Font_GetAscent( hFont ) --> nAscent */
 HB_FUNC( HPDF_FONT_GETASCENT )
 {
-   hb_retni( ( int ) HPDF_Font_GetAscent( ( HPDF_Font ) hb_parptr( 1 ) ) );
+   hb_retni( static_cast< int >( HPDF_Font_GetAscent( ( HPDF_Font ) hb_parptr( 1 ) ) ) );
 }
 
 /* HPDF_Font_GetDescent( hFont ) --> nDescent */
 HB_FUNC( HPDF_FONT_GETDESCENT )
 {
-   hb_retni( ( int ) HPDF_Font_GetDescent( ( HPDF_Font ) hb_parptr( 1 ) ) );
+   hb_retni( static_cast< int >( HPDF_Font_GetDescent( ( HPDF_Font ) hb_parptr( 1 ) ) ) );
 }
 
 /* HPDF_Font_GetXHeight( hFont ) --> nXHeight */
@@ -1262,7 +1262,7 @@ HB_FUNC( HPDF_FONT_MEASURETEXT )
  */
 HB_FUNC( HPDF_ENCODER_GETTYPE )
 {
-   hb_retni( ( int ) HPDF_Encoder_GetType( ( HPDF_Encoder ) hb_parptr( 1 ) ) );
+   hb_retni( static_cast< int >( HPDF_Encoder_GetType( ( HPDF_Encoder ) hb_parptr( 1 ) ) ) );
 }
 
 /* HPDF_Encoder_GetByteType( hEncoder, cText, nIndex ) --> nByteType
@@ -1274,13 +1274,13 @@ HB_FUNC( HPDF_ENCODER_GETTYPE )
  */
 HB_FUNC( HPDF_ENCODER_GETBYTETYPE )
 {
-   hb_retni( ( int ) HPDF_Encoder_GetByteType( ( HPDF_Encoder ) hb_parptr( 1 ), hb_parc( 2 ), hb_parni( 3 ) ) );
+   hb_retni( static_cast< int >( HPDF_Encoder_GetByteType( ( HPDF_Encoder ) hb_parptr( 1 ), hb_parc( 2 ), hb_parni( 3 ) ) ) );
 }
 
 /* HPDF_Encoder_GetUnicode( hEncoder, nCode ) --> nUnicode */
 HB_FUNC( HPDF_ENCODER_GETUNICODE )
 {
-   hb_retni( ( int ) HPDF_Encoder_GetUnicode( ( HPDF_Encoder ) hb_parptr( 1 ), ( HPDF_UINT16 ) hb_parni( 2 ) ) );
+   hb_retni( static_cast< int >( HPDF_Encoder_GetUnicode( ( HPDF_Encoder ) hb_parptr( 1 ), ( HPDF_UINT16 ) hb_parni( 2 ) ) ) );
 }
 
 /* HPDF_Encoder_GetWritingMode( hEncoder ) --> nWriteMode
@@ -1290,7 +1290,7 @@ HB_FUNC( HPDF_ENCODER_GETUNICODE )
  */
 HB_FUNC( HPDF_ENCODER_GETWRITINGMODE )
 {
-   hb_retni( ( int ) HPDF_Encoder_GetWritingMode( ( HPDF_Encoder ) hb_parptr( 1 ) ) );
+   hb_retni( static_cast< int >( HPDF_Encoder_GetWritingMode( ( HPDF_Encoder ) hb_parptr( 1 ) ) ) );
 }
 
 /* --- OUTLINE --- */

@@ -520,7 +520,7 @@ static void hb_gt_wvw_Exit( PHB_GT pGT )
 
    /* destroy all objects from all windows */
 
-   for( j = ( int ) ( s_pWvwData->s_usNumWindows - 1 ); j >= 0; j-- )
+   for( j = static_cast< int >( s_pWvwData->s_usNumWindows - 1 ); j >= 0; j-- )
    {
       pWindowData = ( WIN_DATA * ) s_pWvwData->s_pWindows[ j ];
 
@@ -1003,7 +1003,7 @@ static void hb_gt_wvw_WriteAt( PHB_GT pGT, int iRow, int iCol, const char * pTex
    HB_GTSELF_PUTTEXT( pGT, iRow, iCol, ( BYTE ) HB_GTSELF_GETCOLOR( pGT ), pText, ulLength );
 
    /* Finally, save the new cursor position, even if off-screen */
-   HB_GTSELF_SETPOS( pGT, iRow, iCol + ( int ) ulLength );
+   HB_GTSELF_SETPOS( pGT, iRow, iCol + static_cast< int >( ulLength ) );
 }
 
 
@@ -1017,7 +1017,7 @@ static BOOL hb_gt_wvw_GetBlink( PHB_GT pGT )
 
 static void hb_gt_wvw_SetBlink( PHB_GT pGT, BOOL bBlink )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_SetBlink( %d )", ( int ) bBlink ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_SetBlink( %d )", static_cast< int >( bBlink ) ) );
    HB_SYMBOL_UNUSED( pGT );
    HB_SYMBOL_UNUSED( bBlink );
 }
@@ -1206,7 +1206,7 @@ static int hb_gt_wvw_ReadKey( PHB_GT pGT, int eventmask )
    int  c = 0;
    BOOL bKey;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_ReadKey( %d )", ( int ) eventmask ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_ReadKey( %d )", static_cast< int >( eventmask ) ) );
 
    HB_SYMBOL_UNUSED( pGT );
    HB_SYMBOL_UNUSED( eventmask );
@@ -1760,7 +1760,7 @@ static int hb_gt_wvw_gfxPrimitive( PHB_GT pGT, int iType, int iTop, int iLeft, i
          return 1;
       case HB_GFX_MAKECOLOR:
          ReleaseDC( pWindowData->hWnd, hdc );
-         return ( int ) ( iTop << 16 | iLeft << 8 | iBottom );
+         return static_cast< int >( iTop << 16 | iLeft << 8 | iBottom );
       case HB_GFX_PUTPIXEL:
          color = RGB( iBottom >> 16, ( iBottom & 0xFF00 ) >> 8, iBottom & 0xFF );
          SetGFXContext();
@@ -1883,7 +1883,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcMLess( HWND hDlg, UINT message, WPARAM wParam, LPA
    PHB_ITEM pFunc   = nullptr;
 
 
-   iType = ( int ) NULL;
+   iType = static_cast< int >( NULL );
 
    for( iIndex = 0; iIndex < WVW_DLGML_MAX; iIndex++ )
       if( ( s_pWvwData->s_sApp->hDlgModeless[ iIndex ] != nullptr ) && ( s_pWvwData->s_sApp->hDlgModeless[ iIndex ] == hDlg ) )
@@ -1999,7 +1999,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcMLess( HWND hDlg, UINT message, WPARAM wParam, LPA
          s_pWvwData->s_sApp->hDlgModeless[ iIndex ] = nullptr;
 
          s_pWvwData->s_sApp->pFunc[ iIndex ] = nullptr;
-         s_pWvwData->s_sApp->iType[ iIndex ] = ( int ) NULL;
+         s_pWvwData->s_sApp->iType[ iIndex ] = static_cast< int >( NULL );
          bReturn = FALSE;
          break;
    }
@@ -2014,7 +2014,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcModal( HWND hDlg, UINT message, WPARAM wParam, LPA
    long int bReturn = FALSE;
    PHB_ITEM pFunc   = nullptr;
 
-   int iFirst = ( int ) lParam;
+   int iFirst = static_cast< int >( lParam );
 
    if( iFirst > 0 && iFirst <= WVW_DLGMD_MAX )
    {
@@ -2023,7 +2023,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcModal( HWND hDlg, UINT message, WPARAM wParam, LPA
       return bReturn;
    }
 
-   iType = ( int ) NULL;
+   iType = static_cast< int >( NULL );
 
    for( iIndex = 0; iIndex < WVW_DLGMD_MAX; iIndex++ )
       if( ( s_pWvwData->s_sApp->hDlgModal[ iIndex ] != nullptr ) && ( s_pWvwData->s_sApp->hDlgModal[ iIndex ] == hDlg ) )
@@ -2134,7 +2134,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcModal( HWND hDlg, UINT message, WPARAM wParam, LPA
 
          s_pWvwData->s_sApp->hDlgModal[ iIndex ]  = nullptr;
          s_pWvwData->s_sApp->pFuncModal[ iIndex ] = nullptr;
-         s_pWvwData->s_sApp->iTypeModal[ iIndex ] = ( int ) NULL;
+         s_pWvwData->s_sApp->iTypeModal[ iIndex ] = static_cast< int >( NULL );
          bReturn = FALSE;
          break;
    }
@@ -2520,7 +2520,7 @@ static void xUserPaintNow( UINT usWinNum )
       {
          hb_vmPushDynSym( s_pWvwData->s_sApp->pSymWVW_PAINT );
          hb_vmPushNil();
-         hb_vmPushInteger( ( int ) ( usWinNum ) );
+         hb_vmPushInteger( static_cast< int >( usWinNum ) );
 
          /* follow WVT convention to not passing coordinates anymore
             hb_vmPushInteger( ( int ) (rpaint.top)  );
@@ -2560,7 +2560,7 @@ static void xUserTimerNow( UINT usWinNum, HWND hWnd, UINT message, WPARAM wParam
       {
          hb_vmPushDynSym( s_pWvwData->s_sApp->pSymWVW_TIMER );
          hb_vmPushNil();
-         hb_vmPushInteger( ( int ) ( usWinNum ) );
+         hb_vmPushInteger( static_cast< int >( usWinNum ) );
          hb_vmPushNumInt( ( HB_MAXINT ) ( HB_PTRUINT ) hWnd    );
          hb_vmPushNumInt( message );
          hb_vmPushNumInt( wParam  );
@@ -2604,14 +2604,14 @@ static LRESULT CALLBACK hb_gt_wvwWndProc( HWND hWnd, UINT message, WPARAM wParam
       {
 
          BOOL bTopMost = ( s_pWvwData->s_usNumWindows == usWinNum + 1 );
-         int  iEvent   = ( int ) HIWORD( wParam );
-         int  iId      = ( int ) LOWORD( wParam );
+         int  iEvent   = static_cast< int >( HIWORD( wParam ) );
+         int  iId      = static_cast< int >( LOWORD( wParam ) );
 
          if( iId < WVW_ID_BASE_PUSHBUTTON )
          {
 
             if( bTopMost || s_pWvwData->s_bAllowNonTop )
-               hb_gt_wvwHandleMenuSelection( ( int ) LOWORD( wParam ) );
+               hb_gt_wvwHandleMenuSelection( static_cast< int >( LOWORD( wParam ) ) );
             else
                hb_gt_wvwInputNotAllowed( usWinNum, message, wParam, lParam );
          }
@@ -2629,7 +2629,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc( HWND hWnd, UINT message, WPARAM wParam
                if( uiPBid == 0 )
                {
 
-                  hb_gt_wvwHandleMenuSelection( ( int ) LOWORD( wParam ) );
+                  hb_gt_wvwHandleMenuSelection( static_cast< int >( LOWORD( wParam ) ) );
 
                   return 0;
                }
@@ -2677,12 +2677,12 @@ static LRESULT CALLBACK hb_gt_wvwWndProc( HWND hWnd, UINT message, WPARAM wParam
                      if( uiCBid == 0 )
                      {
 
-                        hb_gt_wvwHandleMenuSelection( ( int ) LOWORD( wParam ) );
+                        hb_gt_wvwHandleMenuSelection( static_cast< int >( LOWORD( wParam ) ) );
 
                         return 0;
                      }
 
-                     RunControlBlock( usWinNum, WVW_CONTROL_COMBOBOX, hWndCtrl, message, wParam, lParam, ( int ) iEvent );
+                     RunControlBlock( usWinNum, WVW_CONTROL_COMBOBOX, hWndCtrl, message, wParam, lParam, static_cast< int >( iEvent ) );
 
                      return 0;
                   }
@@ -2731,12 +2731,12 @@ static LRESULT CALLBACK hb_gt_wvwWndProc( HWND hWnd, UINT message, WPARAM wParam
                      if( uiEBid == 0 )
                      {
 
-                        hb_gt_wvwHandleMenuSelection( ( int ) LOWORD( wParam ) );
+                        hb_gt_wvwHandleMenuSelection( static_cast< int >( LOWORD( wParam ) ) );
 
                         return 0;
                      }
 
-                     RunControlBlock( usWinNum, WVW_CONTROL_EDITBOX, hWndCtrl, message, wParam, lParam, ( int ) iEvent );
+                     RunControlBlock( usWinNum, WVW_CONTROL_EDITBOX, hWndCtrl, message, wParam, lParam, static_cast< int >( iEvent ) );
 
                      return 0;
                   }
@@ -2761,7 +2761,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc( HWND hWnd, UINT message, WPARAM wParam
 
                hb_vmPushDynSym( s_pWvwData->s_sApp->pSymWVW_MENUSELECT );
                hb_vmPushNil();
-               hb_vmPushInteger( ( int ) ( usWinNum ) );
+               hb_vmPushInteger( static_cast< int >( usWinNum ) );
                hb_vmPushNumInt( ( HB_MAXINT ) ( HB_PTRUINT ) hWnd    );
                hb_vmPushNumInt( message );
                hb_vmPushNumInt( wParam  );
@@ -3068,7 +3068,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc( HWND hWnd, UINT message, WPARAM wParam
 
                   hb_vmPushDynSym( s_pWvwData->s_sApp->pSymWVW_SETFOCUS );
                   hb_vmPushNil();
-                  hb_vmPushInteger( ( int ) ( usWinNum ) );
+                  hb_vmPushInteger( static_cast< int >( usWinNum ) );
                   hb_vmPushNumInt( ( HB_MAXINT ) ( HB_PTRUINT ) hWnd    );
                   hb_vmDo( 2 );
                   hb_vmRequestRestore();
@@ -3096,7 +3096,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc( HWND hWnd, UINT message, WPARAM wParam
             {
                hb_vmPushDynSym( s_pWvwData->s_sApp->pSymWVW_KILLFOCUS );
                hb_vmPushNil();
-               hb_vmPushInteger( ( int ) ( usWinNum ) );
+               hb_vmPushInteger( static_cast< int >( usWinNum ) );
                hb_vmPushNumInt( ( HB_MAXINT ) ( HB_PTRUINT ) hWnd );
                hb_vmDo( 2 );
                hb_vmRequestRestore();
@@ -3253,7 +3253,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc( HWND hWnd, UINT message, WPARAM wParam
       {
          BOOL bCtrl     = GetKeyState( VK_CONTROL ) & 0x8000;
          int  iScanCode = HIWORD( lParam ) & 0xFF;
-         int  c         = ( int ) wParam;
+         int  c         = static_cast< int >( wParam );
          HWND hMouseCapturer;
 
          hMouseCapturer = GetCapture();
@@ -3436,7 +3436,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc( HWND hWnd, UINT message, WPARAM wParam
                   c = K_ALT_M;
                   break;
                default:
-                  c = ( int ) wParam;
+                  c = static_cast< int >( wParam );
                   break;
             }
             hb_gt_wvwAddCharToInputQueue( c );
@@ -3562,7 +3562,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc( HWND hWnd, UINT message, WPARAM wParam
                {
                   hb_vmPushDynSym( s_pWvwData->s_sApp->pSymWVW_SIZE );
                   hb_vmPushNil();
-                  hb_vmPushInteger( ( int ) ( usWinNum ) );
+                  hb_vmPushInteger( static_cast< int >( usWinNum ) );
                   hb_vmPushNumInt( ( HB_MAXINT ) ( HB_PTRUINT ) hWnd    );
                   hb_vmPushNumInt( message );
                   hb_vmPushNumInt( wParam  );
@@ -3583,7 +3583,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc( HWND hWnd, UINT message, WPARAM wParam
                {
                   hb_vmPushDynSym( s_pWvwData->s_sApp->pSymWVW_MOVE );
                   hb_vmPushNil();
-                  hb_vmPushInteger( ( int ) ( usWinNum ) );
+                  hb_vmPushInteger( static_cast< int >( usWinNum ) );
                   hb_vmPushNumInt( wParam  );
                   hb_vmPushNumInt( lParam  );
                   hb_vmDo( 3 );
@@ -3625,7 +3625,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc( HWND hWnd, UINT message, WPARAM wParam
                case SC_CLOSE:
                case SC_NEXTWINDOW:
                case SC_RESTORE:
-                  hb_gt_wvwHandleMenuSelection( ( int ) LOWORD( wParam ) );
+                  hb_gt_wvwHandleMenuSelection( static_cast< int >( LOWORD( wParam ) ) );
             }
          }
 
@@ -4349,7 +4349,7 @@ static void hb_gtInitStatics( UINT usWinNum, LPCTSTR lpszWinName, USHORT usRow1,
 
    if( usWinNum == 0 )
    {
-      pWindowData->byWinId = ( int ) usWinNum;
+      pWindowData->byWinId = static_cast< int >( usWinNum );
       strcpy( pWindowData->szWinName, lpszWinName );
 
       pWindowData->usRowOfs    = usRow1;
@@ -4524,14 +4524,14 @@ static void hb_gtInitStatics( UINT usWinNum, LPCTSTR lpszWinName, USHORT usRow1,
          s_pWvwData->s_sApp->hDlgModeless[ iIndex ] = nullptr;
 
          s_pWvwData->s_sApp->pFunc[ iIndex ] = nullptr;
-         s_pWvwData->s_sApp->iType[ iIndex ] = ( int ) NULL;
+         s_pWvwData->s_sApp->iType[ iIndex ] = static_cast< int >( NULL );
       }
 
       for( iIndex = 0; iIndex < WVW_DLGMD_MAX; iIndex++ )
       {
          s_pWvwData->s_sApp->hDlgModal[ iIndex ]  = nullptr;
          s_pWvwData->s_sApp->pFuncModal[ iIndex ] = nullptr;
-         s_pWvwData->s_sApp->iTypeModal[ iIndex ] = ( int ) NULL;
+         s_pWvwData->s_sApp->iTypeModal[ iIndex ] = static_cast< int >( NULL );
       }
 
       s_pWvwData->s_sApp->pbhBitmapList  = nullptr;
@@ -4860,7 +4860,7 @@ static void hb_gt_wvwMouseEvent( WIN_DATA * pWindowData, HWND hWnd, UINT message
 
          hb_vmPushDynSym( s_pWvwData->s_sApp->pSymWVW_MOUSE );
          hb_vmPushNil();
-         hb_vmPushInteger( ( int ) ( pWindowData->byWinId ) );
+         hb_vmPushInteger( static_cast< int >( pWindowData->byWinId ) );
          hb_vmPushLong( ( SHORT ) keyCode );
          hb_vmPushLong( ( SHORT ) colrow.y );
          hb_vmPushLong( ( SHORT ) colrow.x );
@@ -4986,7 +4986,7 @@ static void hb_gt_wvwTBMouseEvent( WIN_DATA * pWindowData, HWND hWnd, UINT messa
       {
          hb_vmPushDynSym( s_pWvwData->s_sApp->pSymWVW_TBMOUSE );
          hb_vmPushNil();
-         hb_vmPushInteger( ( int ) ( pWindowData->byWinId ) );
+         hb_vmPushInteger( static_cast< int >( pWindowData->byWinId ) );
          hb_vmPushLong( ( SHORT ) keyCode );
          hb_vmPushLong( ( SHORT ) colrow.y );
          hb_vmPushLong( ( SHORT ) colrow.x );
@@ -5337,7 +5337,7 @@ static void hb_gt_wvwInputNotAllowed( UINT usWinNum, UINT message, WPARAM wParam
 
          hb_vmPushDynSym( s_pWvwData->s_sApp->pSymWVW_INPUTFOCUS );
          hb_vmPushNil();
-         hb_vmPushInteger( ( int ) ( usWinNum ) );
+         hb_vmPushInteger( static_cast< int >( usWinNum ) );
          hb_vmPushNumInt( ( HB_MAXINT ) ( HB_PTRUINT ) s_pWvwData->s_pWindows[ usWinNum ]->hWnd    );
          hb_vmPushNumInt( message );
          hb_vmPushNumInt( wParam  );
@@ -6683,9 +6683,9 @@ BOOL hb_gt_wvwRenderPicture( UINT usWinNum, int x1, int y1, int wd, int ht, IPic
       iPicture->lpVtbl->get_Height( iPicture, &lHeight );
 
       if( dc == 0 )
-         dc = ( int ) ( ( float ) dr * lWidth / lHeight );
+         dc = static_cast< int >( ( float ) dr * lWidth / lHeight );
       if( dr == 0 )
-         dr = ( int ) ( ( float ) dc * lHeight / lWidth );
+         dr = static_cast< int >( ( float ) dc * lHeight / lWidth );
       if( tor == 0 )
          tor = dr;
       if( toc == 0 )
@@ -7032,7 +7032,7 @@ HB_FUNC( WVW_NOPENWINDOW )
    UINT       usWinNum;
 
    DWORD     dwStyle    = ( HB_ISNIL( 6 ) ? ( ( DWORD ) ( WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_CLIPCHILDREN ) ) : ( ( DWORD ) hb_parnl( 6 ) ) );
-   INT       iParentWin = ( HB_ISNIL( 7 ) ? ( s_pWvwData->s_bMainCoordMode ? s_pWvwData->s_usNumWindows - 1 : s_pWvwData->s_usCurWindow ) : ( ( INT ) hb_parni( 7 ) ) );
+   INT       iParentWin = ( HB_ISNIL( 7 ) ? ( s_pWvwData->s_bMainCoordMode ? s_pWvwData->s_usNumWindows - 1 : s_pWvwData->s_usCurWindow ) : ( static_cast< INT >( hb_parni( 7 ) ) ) );
    PHB_FNAME pFileName;
 
    if( s_pWvwData->s_usNumWindows == 0 )
@@ -7049,7 +7049,7 @@ HB_FUNC( WVW_NOPENWINDOW )
       return;
    }
 
-   if( iParentWin > ( INT ) s_pWvwData->s_usNumWindows - 1 )
+   if( iParentWin > static_cast< INT >( s_pWvwData->s_usNumWindows ) - 1 )
    {
       MessageBox( nullptr, TEXT( "Invalid Parent Window" ),
                   TEXT( "Error" ), MB_ICONERROR );
@@ -7211,7 +7211,7 @@ HB_FUNC( WVW_LCLOSEWINDOW )
  */
 HB_FUNC( WVW_NNUMWINDOWS )
 {
-   hb_retni( ( int ) s_pWvwData->s_usNumWindows );
+   hb_retni( static_cast< int >( s_pWvwData->s_usNumWindows ) );
 }
 
 /*wvw_XReposWindow(lAnchored)
@@ -7258,12 +7258,12 @@ HB_FUNC( WVW_NSETCURWINDOW )
    INT sWinNum;
 
    if( HB_ISNIL( 1 ) )
-      hb_retni( ( int ) ( s_pWvwData->s_usCurWindow ) );
+      hb_retni( static_cast< int >( s_pWvwData->s_usCurWindow ) );
    else
    {
       sWinNum = hb_parni( 1 );
-      if( sWinNum >= 0 && sWinNum < ( INT ) s_pWvwData->s_usNumWindows )
-         hb_retni( ( int ) ( hb_gt_wvwSetCurWindow( sWinNum ) ) );
+      if( sWinNum >= 0 && sWinNum < static_cast< INT >( s_pWvwData->s_usNumWindows ) )
+         hb_retni( static_cast< int >( hb_gt_wvwSetCurWindow( sWinNum ) ) );
       else
          hb_errRT_TERM( EG_BOUND, 10001, "Window Number out of range", "WVW_nSetCurWindow()", 0, 0 );
 
@@ -7278,7 +7278,7 @@ HB_FUNC( WVW_NROWOFS )
 {
    UINT usWinNum = WVW_WHICH_WINDOW;
 
-   hb_retni( ( int ) hb_gt_wvwRowOfs( usWinNum ) );
+   hb_retni( static_cast< int >( hb_gt_wvwRowOfs( usWinNum ) ) );
 }
 
 /*wvw_nColOfs( [nWinNum] )
@@ -7289,7 +7289,7 @@ HB_FUNC( WVW_NCOLOFS )
 {
    UINT usWinNum = WVW_WHICH_WINDOW;
 
-   hb_retni( ( int ) hb_gt_wvwColOfs( usWinNum ) );
+   hb_retni( static_cast< int >( hb_gt_wvwColOfs( usWinNum ) ) );
 }
 
 /*
@@ -8057,7 +8057,7 @@ HB_FUNC( WVW_PASTEFROMCLIPBOARD )
          /*TraceLog( NULL, "Clipboard size %u\n", GlobalSize(hglb) ); */
 
          for( ul = 0; ul < GlobalSize( hglb ); ul++ )
-            hb_gt_wvwAddCharToInputQueue( ( int ) lptstr[ ul ] );
+            hb_gt_wvwAddCharToInputQueue( static_cast< int >( lptstr[ ul ] ) );
          /*TraceLog( NULL, "Value %i\n", ( int ) lptstr[ ul ] );   */
          GlobalUnlock( hglb );
       }
@@ -9033,7 +9033,7 @@ BOOL AddTBButton( HWND hWndToolbar, char * szBitmap, UINT uiBitmap, char * pszLa
 
    }
    else /* system bitmap */
-      iNewBitmap = ( int ) uiBitmap + iOffset;
+      iNewBitmap = static_cast< int >( uiBitmap ) + iOffset;
 
    szBuffer[ 0 ] = ( char ) 0;
    strcat( szBuffer, pszLabel );
@@ -9365,18 +9365,18 @@ static void RunControlBlock( UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, UIN
       pcd->uiBusy++;
 
       phiWinNum = hb_itemNew( nullptr );
-      hb_itemPutNI( phiWinNum, ( int ) usWinNum );
+      hb_itemPutNI( phiWinNum, static_cast< int >( usWinNum ) );
 
       phiXBid = hb_itemNew( nullptr );
-      hb_itemPutNI( phiXBid, ( int ) pcd->uiCtrlid );
+      hb_itemPutNI( phiXBid, static_cast< int >( pcd->uiCtrlid ) );
 
       if( pcd->byCtrlClass == WVW_CONTROL_SCROLLBAR )
       {
          phiXBmsg = hb_itemNew( nullptr );
-         hb_itemPutNI( phiXBmsg, ( int ) LOWORD( wParam ) );
+         hb_itemPutNI( phiXBmsg, static_cast< int >( LOWORD( wParam ) ) );
 
          phiXBpos = hb_itemNew( nullptr );
-         hb_itemPutNI( phiXBpos, ( int ) HIWORD( wParam ) );
+         hb_itemPutNI( phiXBpos, static_cast< int >( HIWORD( wParam ) ) );
 
          pReturn = hb_itemDo( pcd->phiCodeBlock, 4, phiWinNum, phiXBid, phiXBmsg, phiXBpos );
          hb_itemRelease( pReturn );
@@ -9437,7 +9437,7 @@ static void RunControlBlock( UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, UIN
                hb_itemPutNI( phiEvent, iEventType );
 
                phiIndex = hb_itemNew( nullptr );
-               hb_itemPutNI( phiIndex, ( int ) iCurSel );
+               hb_itemPutNI( phiIndex, static_cast< int >( iCurSel ) );
 
                pReturn = hb_itemDo( pcd->phiCodeBlock, 4, phiWinNum, phiXBid, phiEvent, phiIndex );
                hb_itemRelease( pReturn );
@@ -9459,7 +9459,7 @@ static void RunControlBlock( UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, UIN
                /* now execute the codeblock */
                phiEvent = hb_itemNew( nullptr );
 
-               hb_itemPutNI( phiEvent, ( int ) iEventType );
+               hb_itemPutNI( phiEvent, static_cast< int >( iEventType ) );
 
                pReturn = hb_itemDo( pcd->phiCodeBlock, 3, phiWinNum, phiXBid, phiEvent );
                hb_itemRelease( pReturn );
@@ -9689,7 +9689,7 @@ LRESULT CALLBACK hb_gt_wvwBtnProc( HWND hWnd, UINT message, WPARAM wParam, LPARA
          BOOL bCtrl  = GetKeyState( VK_CONTROL ) & 0x8000;
          BOOL bShift = GetKeyState( VK_SHIFT ) & 0x8000;
 
-         int c = ( int ) wParam;
+         int c = static_cast< int >( wParam );
 
          if( ! bAlt && ! bCtrl && ! bShift && wParam == VK_SPACE )
             break;
@@ -9819,7 +9819,7 @@ UINT ButtonCreate( UINT usWinNum, USHORT usTop, USHORT usLeft, USHORT usBottom, 
          iExpWidth  = iRight - iLeft + 1;
          iExpHeight = iBottom - iTop + 1;
          hBitmap    = hPrepareBitmap( szBitmap, uiBitmap,
-                                      ( int ) dStretch * iExpWidth, ( int ) dStretch * iExpHeight,
+                                      static_cast< int >( dStretch ) * iExpWidth, static_cast< int >( dStretch ) * iExpHeight,
                                       bMap3Dcolors,
                                       hWndButton );
 
@@ -9909,7 +9909,7 @@ LRESULT CALLBACK hb_gt_wvwCBProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
          BOOL bAlt   = GetKeyState( VK_MENU ) & 0x8000;
          BOOL bCtrl  = GetKeyState( VK_CONTROL ) & 0x8000;
          BOOL bShift = GetKeyState( VK_SHIFT ) & 0x8000;
-         int  c      = ( int ) wParam;
+         int  c      = static_cast< int >( wParam );
          BOOL bDropped;
 
          if( ! hb_gt_wvwBufferedKey( ( LONG ) wParam ) )
@@ -10132,7 +10132,7 @@ LRESULT CALLBACK hb_gt_wvwEBProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
       case WM_SYSKEYDOWN:
       {
          BOOL bAlt = GetKeyState( VK_MENU ) & 0x8000;
-         int  c    = ( int ) wParam;
+         int  c    = static_cast< int >( wParam );
          switch( c )
          {
             case VK_F1:
@@ -10186,7 +10186,7 @@ LRESULT CALLBACK hb_gt_wvwEBProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
       {
          BOOL bCtrl     = GetKeyState( VK_CONTROL ) & 0x8000;
          int  iScanCode = HIWORD( lParam ) & 0xFF;
-         int  c         = ( int ) wParam;
+         int  c         = static_cast< int >( wParam );
          if( bCtrl && iScanCode == 28 )
             iKey = K_CTRL_RETURN;
          else if( bCtrl && ( c >= 1 && c <= 26 ) )
@@ -10338,7 +10338,7 @@ LRESULT CALLBACK hb_gt_wvwEBProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
                c = K_ALT_M;
                break;
             default:
-               c = ( int ) wParam;
+               c = static_cast< int >( wParam );
                break;
          }
          iKey = c;
@@ -10379,7 +10379,7 @@ LRESULT CALLBACK hb_gt_wvwEBProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
          BOOL bAlt   = GetKeyState( VK_MENU ) & 0x8000;
          BOOL bCtrl  = GetKeyState( VK_CONTROL ) & 0x8000;
          BOOL bShift = GetKeyState( VK_SHIFT ) & 0x8000;
-         int  c      = ( int ) wParam;
+         int  c      = static_cast< int >( wParam );
          BOOL bMultiline;
 
          if( ! hb_gt_wvwBufferedKey( ( LONG ) wParam ) )
@@ -10473,7 +10473,7 @@ LRESULT CALLBACK hb_gt_wvwEBProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
       case WM_CHAR:
       {
          BOOL bCtrl = GetKeyState( VK_CONTROL ) & 0x8000;
-         int  c     = ( int ) wParam;
+         int  c     = static_cast< int >( wParam );
          switch( c )
          {
             case VK_TAB:

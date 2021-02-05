@@ -110,7 +110,7 @@ static int _code93_charno( char ch )
    {
       const char * ptr = strchr( s_symbols, ch );
       if( ptr && *ptr )
-         return ( int ) ( ptr - s_symbols + 36 );
+         return static_cast< int >( ptr - s_symbols + 36 );
    }
    return -1;
 }
@@ -118,7 +118,7 @@ static int _code93_charno( char ch )
 PHB_ZEBRA hb_zebra_create_code93( const char * szCode, HB_SIZE nLen, int iFlags )
 {
    PHB_ZEBRA  pZebra;
-   int        k, i, j, iLen = ( int ) nLen;
+   int        k, i, j, iLen = static_cast< int >( nLen );
    int        csum, ksum;
 
    HB_SYMBOL_UNUSED( iFlags );

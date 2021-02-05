@@ -226,7 +226,7 @@ static void * LoadImageFromFile( const char * szFile, int * sz )
    if( ( fhandle = hb_fsOpen( szFile, FO_READ ) ) != FS_ERROR )
    {
       /* get lenght */
-      *sz = ( int ) hb_fsSeek( fhandle, 0, FS_END );
+      *sz = static_cast< int >( hb_fsSeek( fhandle, 0, FS_END ) );
       /* rewind */
       hb_fsSeek( fhandle, 0, FS_SET );
 
@@ -654,7 +654,7 @@ HB_FUNC( GDIMAGEPOLYGON ) /* original: void gdImagePolygon(gdImagePtr im, gdPoin
       gdImagePtr im = hb_parGdImage( 1 );
 
       PHB_ITEM pPoints     = hb_param( 2, HB_IT_ARRAY );
-      int      pointsTotal = ( int ) hb_arrayLen( pPoints );
+      int      pointsTotal = static_cast< int >( hb_arrayLen( pPoints ) );
       int      color       = hb_parni( 3 );
 
       /* Max Points of polygon */
@@ -695,7 +695,7 @@ HB_FUNC( GDIMAGEOPENPOLYGON ) /* original: void gdImageOpenPolygon(gdImagePtr im
       gdImagePtr im = hb_parGdImage( 1 );
 
       PHB_ITEM pPoints     = hb_param( 2, HB_IT_ARRAY );
-      int      pointsTotal = ( int ) hb_arrayLen( pPoints );
+      int      pointsTotal = static_cast< int >( hb_arrayLen( pPoints ) );
       int      color       = hb_parni( 3 );
 
       /* Max Points of polygon */
@@ -759,7 +759,7 @@ HB_FUNC( GDIMAGEFILLEDPOLYGON ) /* original: void gdImageFilledPolygon(gdImagePt
       gdImagePtr im = hb_parGdImage( 1 );
 
       PHB_ITEM pPoints     = hb_param( 2, HB_IT_ARRAY );
-      int      pointsTotal = ( int ) hb_arrayLen( pPoints );
+      int      pointsTotal = static_cast< int >( hb_arrayLen( pPoints ) );
       int      color       = hb_parni( 3 );
 
       /* Max Points of polygon */
@@ -1028,7 +1028,7 @@ HB_FUNC( GDIMAGESETSTYLE ) /* original: void gdImageSetStyle(gdImagePtr im, int 
       gdImagePtr im = hb_parGdImage( 1 );
 
       PHB_ITEM pStyles     = hb_param( 2, HB_IT_ARRAY );
-      int      styleLength = ( int ) hb_arrayLen( pStyles );
+      int      styleLength = static_cast< int >( hb_arrayLen( pStyles ) );
 
       /* Max numbery of Styles */
       int * styles = ( int * ) hb_xgrab( sizeof( int ) * styleLength );

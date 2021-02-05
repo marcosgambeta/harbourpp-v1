@@ -194,7 +194,7 @@ static int _code128_charno( char ch, int iCodeSet )
 PHB_ZEBRA hb_zebra_create_code128( const char * szCode, HB_SIZE nLen, int iFlags )
 {
    PHB_ZEBRA  pZebra;
-   int        i, j, k, csum, iCodeSet, iCodeLen, iLen = ( int ) nLen;
+   int        i, j, k, csum, iCodeSet, iCodeLen, iLen = static_cast< int >( nLen );
    int *      pCode;
 
    HB_SYMBOL_UNUSED( iFlags );

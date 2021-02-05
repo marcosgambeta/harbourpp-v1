@@ -713,7 +713,7 @@ HB_FUNC( SSL_CTX_USE_RSAPRIVATEKEY_ASN1 )
       SSL_CTX * ctx = hb_SSL_CTX_par( 1 );
 
       if( ctx )
-         hb_retni( SSL_CTX_use_RSAPrivateKey_ASN1( ctx, ( HB_SSL_CONST unsigned char * ) hb_parc( 2 ), ( int ) hb_parclen( 2 ) ) );
+         hb_retni( SSL_CTX_use_RSAPrivateKey_ASN1( ctx, ( HB_SSL_CONST unsigned char * ) hb_parc( 2 ), static_cast< int >( hb_parclen( 2 ) ) ) );
    }
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -726,7 +726,7 @@ HB_FUNC( SSL_CTX_USE_PRIVATEKEY_ASN1 )
       SSL_CTX * ctx = hb_SSL_CTX_par( 2 );
 
       if( ctx )
-         hb_retni( SSL_CTX_use_PrivateKey_ASN1( hb_parni( 1 ), ctx, ( HB_SSL_CONST unsigned char * ) hb_parc( 3 ), ( int ) hb_parclen( 3 ) ) );
+         hb_retni( SSL_CTX_use_PrivateKey_ASN1( hb_parni( 1 ), ctx, ( HB_SSL_CONST unsigned char * ) hb_parc( 3 ), static_cast< int >( hb_parclen( 3 ) ) ) );
    }
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -739,7 +739,7 @@ HB_FUNC( SSL_CTX_USE_CERTIFICATE_ASN1 )
       SSL_CTX * ctx = hb_SSL_CTX_par( 1 );
 
       if( ctx )
-         hb_retni( SSL_CTX_use_certificate_ASN1( ctx, ( int ) hb_parclen( 2 ), ( HB_SSL_CONST unsigned char * ) hb_parc( 2 ) ) );
+         hb_retni( SSL_CTX_use_certificate_ASN1( ctx, static_cast< int >( hb_parclen( 2 ) ), ( HB_SSL_CONST unsigned char * ) hb_parc( 2 ) ) );
    }
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );

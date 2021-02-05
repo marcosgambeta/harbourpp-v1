@@ -172,7 +172,7 @@ HB_FUNC( WIN_OSVERSIONINFO )
       { 5, 1 },
       { 5, 0 } };
 
-   for( pos = 0; pos < ( int ) HB_SIZEOFARRAY( s_vers ); ++pos )
+   for( pos = 0; pos < static_cast< int >( HB_SIZEOFARRAY( s_vers ) ); ++pos )
    {
       if( hb_iswinver( s_vers[ pos ].iMajor, s_vers[ pos ].iMinor, 0, ( pos == 0 ) ) )
       {

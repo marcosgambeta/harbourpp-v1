@@ -376,9 +376,9 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
    pszQuery = S_HB_ITEMGETSTR( pItem, &hQuery, &nQueryLen );
 
 #if SQLITE_VERSION_NUMBER >= 3020000
-   result = sqlite3_prepare_v3( pDb, pszQuery, ( int ) nQueryLen, 0, &st, NULL );
+   result = sqlite3_prepare_v3( pDb, pszQuery, static_cast< int >( nQueryLen ), 0, &st, NULL );
 #else
-   result = sqlite3_prepare_v2( pDb, pszQuery, ( int ) nQueryLen, &st, NULL );
+   result = sqlite3_prepare_v2( pDb, pszQuery, static_cast< int >( nQueryLen ), &st, NULL );
 #endif
 
    if( result != SQLITE_OK )

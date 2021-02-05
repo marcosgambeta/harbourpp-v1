@@ -271,7 +271,7 @@ static void hb_gt_wvt_Free( PHB_GTWVT pWVT )
    pWVT->pSymWVT_MOUSE     = nullptr;
    pWVT->pSymWVT_TIMER     = nullptr;
    pWVT->pSymWVT_KEY       = nullptr;
-   for( iIndex = 0; iIndex < ( int ) HB_SIZEOFARRAY( pWVT->pFunc ); iIndex++ )
+   for( iIndex = 0; iIndex < static_cast< int >( HB_SIZEOFARRAY( pWVT->pFunc ) ); iIndex++ )
    {
       if( pWVT->pFunc[ iIndex ] != nullptr && pWVT->iType[ iIndex ] == 2 )
       {
@@ -903,8 +903,8 @@ static HB_BOOL hb_gt_wvt_FitSize( PHB_GTWVT pWVT )
             for( n = 0; n < pWVT->COLS; n++ )
                pWVT->FixedSize[ n ] = pWVT->PTEXTSIZE.x;
 
-            width  = ( ( int ) ( pWVT->PTEXTSIZE.x * pWVT->COLS ) ) + borderWidth;
-            height = ( ( int ) ( pWVT->PTEXTSIZE.y * pWVT->ROWS ) ) + borderHeight;
+            width  = ( static_cast< int >( pWVT->PTEXTSIZE.x * pWVT->COLS ) ) + borderWidth;
+            height = ( static_cast< int >( pWVT->PTEXTSIZE.y * pWVT->ROWS ) ) + borderHeight;
 
             if( pWVT->bMaximized )
             {
@@ -928,8 +928,8 @@ static HB_BOOL hb_gt_wvt_FitSize( PHB_GTWVT pWVT )
          }
          else
          {
-            width  = ( ( int ) ( pWVT->PTEXTSIZE.x * pWVT->COLS ) ) + borderWidth;
-            height = ( ( int ) ( pWVT->PTEXTSIZE.y * pWVT->ROWS ) ) + borderHeight;
+            width  = ( static_cast< int >( pWVT->PTEXTSIZE.x * pWVT->COLS ) ) + borderWidth;
+            height = ( static_cast< int >( pWVT->PTEXTSIZE.y * pWVT->ROWS ) ) + borderHeight;
 
             if( ! pWVT->bFullScreen )
                SetWindowPos( pWVT->hWnd, nullptr, 0, 0, width, height, SWP_NOZORDER | SWP_NOMOVE );
@@ -1067,11 +1067,11 @@ static void hb_gt_wvt_ResetWindowSize( PHB_GTWVT pWVT )
    GetWindowRect( pWVT->hWnd, &wi );
    GetClientRect( pWVT->hWnd, &ci );
 
-   height = ( int ) ( pWVT->PTEXTSIZE.y * pWVT->ROWS );
-   width  = ( int ) ( pWVT->PTEXTSIZE.x * pWVT->COLS );
+   height = static_cast< int >( pWVT->PTEXTSIZE.y * pWVT->ROWS );
+   width  = static_cast< int >( pWVT->PTEXTSIZE.x * pWVT->COLS );
 
-   width  += ( int ) ( wi.right - wi.left - ci.right );
-   height += ( int ) ( wi.bottom - wi.top - ci.bottom );
+   width  += static_cast< int >( wi.right - wi.left - ci.right );
+   height += static_cast< int >( wi.bottom - wi.top - ci.bottom );
 
    /* Center the window within the CLIENT area on the screen
       but only if pWVT->CentreWindow == HB_TRUE */
@@ -1090,11 +1090,11 @@ static void hb_gt_wvt_ResetWindowSize( PHB_GTWVT pWVT )
       GetWindowRect( pWVT->hWnd, &wi );
       GetClientRect( pWVT->hWnd, &ci );
 
-      height = ( int ) ( pWVT->PTEXTSIZE.y * pWVT->ROWS );
-      width  = ( int ) ( pWVT->PTEXTSIZE.x * pWVT->COLS );
+      height = static_cast< int >( pWVT->PTEXTSIZE.y * pWVT->ROWS );
+      width  = static_cast< int >( pWVT->PTEXTSIZE.x * pWVT->COLS );
 
-      width  += ( int ) ( wi.right - wi.left - ci.right );
-      height += ( int ) ( wi.bottom - wi.top - ci.bottom );
+      width  += static_cast< int >( wi.right - wi.left - ci.right );
+      height += static_cast< int >( wi.bottom - wi.top - ci.bottom );
 
       /* Center the window within the CLIENT area on the screen
          but only if pWVT->CentreWindow == HB_TRUE */
@@ -1594,7 +1594,7 @@ static HB_BOOL hb_gt_wvt_KeyEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, 
       {
          HB_BOOL bCtrl = GetKeyState( VK_CONTROL ) & 0x8000;
          int iScanCode = HIWORD( lParam ) & 0xFF;
-         int c = ( int ) wParam;
+         int c = static_cast< int >( wParam );
 
          if( ! pWVT->IgnoreWM_SYSCHAR )
          {
@@ -1768,7 +1768,7 @@ static HB_BOOL hb_gt_wvt_KeyEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, 
                   c = K_ALT_PERIOD;
                   break;
                default:
-                  c = ( int ) wParam;
+                  c = static_cast< int >( wParam );
                   break;
             }
             hb_gt_wvt_AddCharToInputQueue( pWVT, c );
@@ -2240,8 +2240,8 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc( HWND hWnd, UINT message, WPARAM wPara
             if( ( HIWORD( wParam ) == 0 && ! IsWindow( ( HWND ) lParam ) ) )
             {
                if( pWVT->pPP->iWndType == HB_WNDTYPE_CRT )
-                  hb_wvt_gtHandleMenuSelection( pWVT, ( int ) LOWORD( wParam ) );
-               hb_gt_wvt_FireMenuEvent( pWVT, 0, ( int ) LOWORD( wParam ) );
+                  hb_wvt_gtHandleMenuSelection( pWVT, static_cast< int >( LOWORD( wParam ) ) );
+               hb_gt_wvt_FireMenuEvent( pWVT, 0, static_cast< int >( LOWORD( wParam ) ) );
             }
             else
             {
@@ -2260,10 +2260,10 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc( HWND hWnd, UINT message, WPARAM wPara
             }
             return 0;
          case WM_ENTERMENULOOP:
-            hb_gt_wvt_FireMenuEvent( pWVT, 1, ( int ) wParam );
+            hb_gt_wvt_FireMenuEvent( pWVT, 1, static_cast< int >( wParam ) );
             return 0;
          case WM_EXITMENULOOP:
-            hb_gt_wvt_FireMenuEvent( pWVT, 2, ( int ) wParam );
+            hb_gt_wvt_FireMenuEvent( pWVT, 2, static_cast< int >( wParam ) );
             return 0;
 #if ! defined( HB_OS_WIN_CE )
          case WM_MOUSEHOVER:
@@ -2299,7 +2299,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc( HWND hWnd, UINT message, WPARAM wPara
 
             hb_arrayNew( pEvParams, 2 );
 
-            hb_arraySetNI( pEvParams, 1, ( int ) wParam );
+            hb_arraySetNI( pEvParams, 1, static_cast< int >( wParam ) );
             hb_arraySetNInt( pEvParams, 2, ( HB_PTRUINT ) lParam );
 
             hb_gt_wvt_FireEvent( pWVT, HB_GTE_NOTIFY, pEvParams );
@@ -2351,7 +2351,7 @@ static HB_BOOL hb_gt_wvt_IsDialogMessage( PHB_GTWVT pWVT, LPMSG lpMsg )     /* P
 {
    int iIndex;
 
-   for( iIndex = 0; iIndex < ( int ) HB_SIZEOFARRAY( pWVT->hDlgModeless ); iIndex++ )
+   for( iIndex = 0; iIndex < static_cast< int >( HB_SIZEOFARRAY( pWVT->hDlgModeless ) ); iIndex++ )
    {
       if( pWVT->hDlgModeless[ iIndex ] != 0 )
       {
@@ -2389,8 +2389,8 @@ static HB_BOOL hb_gt_wvt_ValidWindowSize( HWND hWnd, int rows, int cols, HFONT h
 
    SystemParametersInfo( SPI_GETWORKAREA, 0, &rcWorkArea, 0 );
 
-   maxWidth  = ( int ) ( rcWorkArea.right - rcWorkArea.left );
-   maxHeight = ( int ) ( rcWorkArea.bottom - rcWorkArea.top );
+   maxWidth  = static_cast< int >( rcWorkArea.right - rcWorkArea.left );
+   maxHeight = static_cast< int >( rcWorkArea.bottom - rcWorkArea.top );
 
    hdc       = GetDC( hWnd );
    hOldFont  = ( HFONT ) SelectObject( hdc, hFont );
@@ -2398,8 +2398,8 @@ static HB_BOOL hb_gt_wvt_ValidWindowSize( HWND hWnd, int rows, int cols, HFONT h
    SelectObject( hdc, hOldFont );  /* Put old font back */
    ReleaseDC( hWnd, hdc );
 
-   width     = ( int ) ( ( iWidth < 0 ? -iWidth : tm.tmAveCharWidth ) * cols );  /* Total pixel width this setting would take */
-   height    = ( int ) ( tm.tmHeight * rows );  /* Total pixel height this setting would take */
+   width     = static_cast< int >( ( iWidth < 0 ? -iWidth : tm.tmAveCharWidth ) * cols );  /* Total pixel width this setting would take */
+   height    = static_cast< int >( tm.tmHeight * rows );  /* Total pixel height this setting would take */
 
    return ( width <= maxWidth ) && ( height <= maxHeight );
 }

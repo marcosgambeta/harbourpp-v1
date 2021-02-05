@@ -108,7 +108,7 @@ static int _code39_charno( char ch )
    {
       const char * ptr = strchr( s_symbols, ch );
       if( ptr && *ptr )
-         return ( int ) ( ptr - s_symbols + 36 );
+         return static_cast< int >( ptr - s_symbols + 36 );
    }
    return -1;
 }
@@ -158,7 +158,7 @@ static void _code39_add( PHB_BITBUFFER pBits, char code, int iFlags, HB_BOOL fLa
 PHB_ZEBRA hb_zebra_create_code39( const char * szCode, HB_SIZE nLen, int iFlags )
 {
    PHB_ZEBRA  pZebra;
-   int        i, iLen = ( int ) nLen;
+   int        i, iLen = static_cast< int >( nLen );
    int        csum;
 
    pZebra = hb_zebra_create();

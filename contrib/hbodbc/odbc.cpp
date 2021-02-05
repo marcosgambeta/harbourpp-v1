@@ -822,11 +822,11 @@ HB_FUNC( SQLDESCRIBECOL )  /* hStmt, nCol, @cName, nLen, @nBufferLen, @nDataType
                                 ( SQLSMALLINT * ) &iNullable ) );
 
       O_HB_STORSTRLEN( ( O_HB_CHAR * ) buffer, ( HB_SIZE ) iBufLen, 3 );
-      hb_storni( ( int ) iBufLen, 5 );
-      hb_storni( ( int ) iDataType, 6 );
+      hb_storni( static_cast< int >( iBufLen ), 5 );
+      hb_storni( static_cast< int >( iDataType ), 6 );
       hb_stornint( nColSize, 7 );
-      hb_storni( ( int ) iDecimals, 8 );
-      hb_storni( ( int ) iNullable, 9 );
+      hb_storni( static_cast< int >( iDecimals ), 8 );
+      hb_storni( static_cast< int >( iNullable ), 9 );
 
       hb_xfree( buffer );
    }
@@ -875,7 +875,7 @@ HB_FUNC( SQLCOLATTRIBUTE )  /* hStmt, nCol, nField, @cName, nLen, @nBufferLen, @
 #endif
 
       hb_storclen( buffer, ( HB_SIZE ) iBufLen, 4 );
-      hb_storni( ( int ) iBufLen, 6 );
+      hb_storni( static_cast< int >( iBufLen ), 6 );
       hb_stornint( nNumPtr, 7 );
 
       hb_xfree( buffer );

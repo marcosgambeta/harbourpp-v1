@@ -137,8 +137,8 @@ HB_FUNC( WAPI_CREATEWINDOWEX )
       HB_PARSTRDEF( 2, &hClassName, NULL ),
       HB_PARSTRDEF( 3, &hWindowName, NULL ),
       HB_ISNUM( 4 ) ? hbwapi_par_DWORD( 4 ) : WS_OVERLAPPEDWINDOW, /* dwStyle */
-      HB_ISNUM( 5 ) ? hbwapi_par_INT( 5 ) : ( int ) CW_USEDEFAULT, /* x */
-      HB_ISNUM( 6 ) ? hbwapi_par_INT( 6 ) : ( int ) CW_USEDEFAULT, /* y */
+      HB_ISNUM( 5 ) ? hbwapi_par_INT( 5 ) : static_cast< int >( CW_USEDEFAULT ), /* x */
+      HB_ISNUM( 6 ) ? hbwapi_par_INT( 6 ) : static_cast< int >( CW_USEDEFAULT ), /* y */
       hbwapi_par_INT( 7 ),                                         /* nWidth */
       hbwapi_par_INT( 8 ),                                         /* nHeight */
       hbwapi_par_raw_HWND( 9 ),                                    /* hWndParent, default to HWND_DESKTOP */
@@ -191,7 +191,7 @@ HB_FUNC( WAPI_DRAWTEXT )
 
       hbwapi_ret_NI( DrawText( hDC,
                                lpText,
-                               ( int ) nTextLen,
+                               static_cast< int >( nTextLen ),
                                &rect,
                                hbwapi_par_UINT( 4 ) ) );
 
@@ -786,7 +786,7 @@ HB_FUNC( WAPI_CREATEACCELERATORTABLE )
 {
    HACCEL hAccel = NULL;
    PHB_ITEM pArray = hb_param( 1, HB_IT_ARRAY );
-   int iEntries = pArray ? ( int ) hb_arrayLen( pArray ) : 0;
+   int iEntries = pArray ? static_cast< int >( hb_arrayLen( pArray ) ) : 0;
 
    if( iEntries > 0 )
    {

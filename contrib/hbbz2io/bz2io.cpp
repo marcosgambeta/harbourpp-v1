@@ -190,7 +190,7 @@ static HB_BOOL s_fileExists( PHB_FILE_FUNCS pFuncs, const char * pszFileName, ch
    if( pRetPath )
    {
       char * pszNameBuf = ( char * ) hb_xgrab( HB_PATH_MAX );
-      int iPref = ( int ) ( pszName - pszFileName );
+      int iPref = static_cast< int >( pszName - pszFileName );
 
       fResult = hb_fileExists( pszName, pszNameBuf );
       if( pRetPath != pszFileName )
@@ -327,7 +327,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName,
    int iBlockSize = HB_BZ2_BLOCKSIZE;
    char * pszNameBuf = nullptr;
    const char * pszName = s_bz2io_name( pszFileName, &iBlockSize );
-   int iPref = ( int ) ( pszName - pszFileName );
+   int iPref = static_cast< int >( pszName - pszFileName );
    PHB_FILE pFile;
 
    HB_SYMBOL_UNUSED( pFuncs );

@@ -52,7 +52,7 @@ static char _msi_checksum( const char * szCode )
    int i, j = 1, sum = 0;
 
    /* Luhn algorithm */
-   for( i = ( int ) strlen( szCode ) - 1; i >= 0; i-- )
+   for( i = static_cast< int >( strlen( szCode ) ) - 1; i >= 0; i-- )
    {
       int k = ( szCode[ i ] - '0' ) * ( j ? 2 : 1 );
       if( k > 9 )
@@ -67,7 +67,7 @@ static char _msi_checksum( const char * szCode )
 PHB_ZEBRA hb_zebra_create_msi( const char * szCode, HB_SIZE nLen, int iFlags )
 {
    PHB_ZEBRA  pZebra;
-   int        i, j, iN, iW, iLen = ( int ) nLen;
+   int        i, j, iN, iW, iLen = static_cast< int >( nLen );
 
    pZebra = hb_zebra_create();
    pZebra->iType = HB_ZEBRA_TYPE_MSI;

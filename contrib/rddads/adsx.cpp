@@ -1583,7 +1583,7 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
             pTag = pTag->pNext;
             usOrder++;
          }
-         pOrderInfo->itmResult = hb_itemPutNI( pOrderInfo->itmResult, ( int ) usOrder );
+         pOrderInfo->itmResult = hb_itemPutNI( pOrderInfo->itmResult, static_cast< int >( usOrder ) );
          break;
       }
 
@@ -1600,7 +1600,7 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
             pTag2 = pTag2->pNext;
             usOrder++;
          }
-         pOrderInfo->itmResult = hb_itemPutNI( pOrderInfo->itmResult, ( int ) usOrder );
+         pOrderInfo->itmResult = hb_itemPutNI( pOrderInfo->itmResult, static_cast< int >( usOrder ) );
          break;
       }
 

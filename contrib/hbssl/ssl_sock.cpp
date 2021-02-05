@@ -127,12 +127,12 @@ long hb_ssl_socketRead( PHB_SSLSTREAM pStream, HB_SOCKET sd,
       {
          iToRead = timeout < 0 ? 1 : hb_socketSelectRead( sd, timeout );
          if( iToRead > 0 )
-            iToRead = ( int ) len;
+            iToRead = static_cast< int >( len );
          else if( iToRead == 0 )
             hb_socketSetError( HB_SOCKET_ERR_TIMEOUT );
       }
       else if( iToRead > len )
-         iToRead = ( int ) len;
+         iToRead = static_cast< int >( len );
    }
 
    while( iToRead > 0 )
@@ -142,7 +142,7 @@ long hb_ssl_socketRead( PHB_SSLSTREAM pStream, HB_SOCKET sd,
          hb_socketSetError( 0 );
       else
       {
-         int iError = SSL_get_error( pStream->ssl, ( int ) lRead );
+         int iError = SSL_get_error( pStream->ssl, static_cast< int >( lRead ) );
          switch( iError )
          {
             case SSL_ERROR_ZERO_RETURN:
@@ -211,7 +211,7 @@ long hb_ssl_socketWrite( PHB_SSLSTREAM pStream, HB_SOCKET sd,
 
    while( len > 0 )
    {
-      lWr = SSL_write( pStream->ssl, buffer, ( int ) len );
+      lWr = SSL_write( pStream->ssl, buffer, static_cast< int >( len ) );
 
       if( plast )
          *plast = lWr;
@@ -225,7 +225,7 @@ long hb_ssl_socketWrite( PHB_SSLSTREAM pStream, HB_SOCKET sd,
       }
       else
       {
-         int iError = SSL_get_error( pStream->ssl, ( int ) lWr );
+         int iError = SSL_get_error( pStream->ssl, static_cast< int >( lWr ) );
          switch( iError )
          {
             case SSL_ERROR_WANT_READ:
@@ -522,7 +522,7 @@ static int s_sockexCanRead( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout
          pSock->inbuffer = len;
          len = 1;
       }
-      return ( int ) len;
+      return static_cast< int >( len );
    }
    return fBuffer ? 0 : hb_socketSelectRead( pSock->sd, timeout );
 }

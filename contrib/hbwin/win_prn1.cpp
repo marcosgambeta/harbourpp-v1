@@ -176,7 +176,7 @@ HB_FUNC( WIN_TEXTOUT )
 
          if( iWidth < 0 && nLen < 1024 )
          {
-            int n = ( int ) nLen, aFixed[ 1024 ];
+            int n = static_cast< int >( nLen ), aFixed[ 1024 ];
 
             iWidth = -iWidth;
 
@@ -188,7 +188,7 @@ HB_FUNC( WIN_TEXTOUT )
          }
          else if( ExtTextOut( hDC, iRow, iCol, 0, NULL, lpData, ( UINT ) nLen, NULL ) )
          {
-            GetTextExtentPoint32( hDC, lpData, ( int ) nLen, &sSize ); /* Get the length of the text in device size */
+            GetTextExtentPoint32( hDC, lpData, static_cast< int >( nLen ), &sSize ); /* Get the length of the text in device size */
             lResult = ( long ) sSize.cx; /* return the width so we can update the current pen position (::PosY) */
          }
       }
@@ -219,7 +219,7 @@ HB_FUNC( WIN_GETTEXTSIZE )
       {
          SIZE sSize;
 
-         GetTextExtentPoint32( hDC, lpData, ( int ) nLen, &sSize );  /* Get the length of the text in device size */
+         GetTextExtentPoint32( hDC, lpData, static_cast< int >( nLen ), &sSize );  /* Get the length of the text in device size */
 
          if( hb_parldef( 4, HB_TRUE ) )
             lResult = ( long ) sSize.cx;  /* return the width */

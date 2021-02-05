@@ -419,7 +419,7 @@ static HB_BOOL amf3_deserialize_array( amfContext * context, PHB_ITEM pItem, HB_
       return HB_TRUE;
    }
 
-   array_len = ( int ) ( header >> 1 );
+   array_len = static_cast< int >( header >> 1 );
    /* Original Python comment was:
       Cannot use array_len to create a list of known
       length, see ticket #46
@@ -728,7 +728,7 @@ static HB_BOOL amf3_decode_class_def( amfContext * context, PHB_ITEM pClass, int
    hb_itemRelease( pValue );
 
    /* Decode static attr names */
-   static_attr_len = ( int ) ( header >> 4 );
+   static_attr_len = static_cast< int >( header >> 4 );
    pAttrs = hb_itemNew( nullptr );
    hb_arrayNew( pAttrs, static_attr_len );
 

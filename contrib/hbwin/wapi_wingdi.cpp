@@ -510,7 +510,7 @@ HB_FUNC( WAPI_SETTEXTALIGN )
    HDC hDC = hbwapi_par_HDC( 1 );
 
    if( hDC )
-      hb_retni( ( int ) SetTextAlign( hDC, ( UINT ) hb_parni( 2 ) ) );
+      hb_retni( static_cast< int >( SetTextAlign( hDC, ( UINT ) hb_parni( 2 ) ) ) );
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
@@ -520,7 +520,7 @@ HB_FUNC( WAPI_GETTEXTALIGN )
    HDC hDC = hbwapi_par_HDC( 1 );
 
    if( hDC )
-      hb_retni( ( int ) GetTextAlign( hDC ) );
+      hb_retni( static_cast< int >( GetTextAlign( hDC ) ) );
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
@@ -540,7 +540,7 @@ HB_FUNC( WAPI_TEXTOUT )
                         hb_parni( 2 ) /* iRow */,
                         hb_parni( 3 ) /* iCol */,
                         lpData,
-                        ( int ) nDataLen ) );
+                        static_cast< int >( nDataLen ) ) );
 #else
       /* Emulating TextOut() using ExtTextOut(). [vszakats] */
       hb_retl( ExtTextOut( hDC,
@@ -586,7 +586,7 @@ HB_FUNC( WAPI_EXTTEXTOUT )
          {
             /* Pad width array with last known value if passed array was smaller than length of the string. */
             if( tmp < nFontWidthsLen )
-               iWidth = ( INT ) hb_arrayGetNI( pFontWidths, tmp + 1 );
+               iWidth = static_cast< INT >( hb_arrayGetNI( pFontWidths, tmp + 1 ) );
 
             lpFontWidths[ tmp ] = iWidth;
          }

@@ -940,7 +940,7 @@ HB_FUNC( ED_STABILIZE )
                if( pEd->escape && ( EscPtr = strchr( adres, pEd->escape ) ) != 0 )
                {
                   i     = EscPtr - adres;
-                  nLeft = ( int ) ( pEd->left + i );
+                  nLeft = static_cast< int >( pEd->left + i );
 
                   if( i )
                      hb_gtWriteAt( nTop, pEd->left, adres, ( width < i ) ? width : i );
@@ -959,7 +959,7 @@ HB_FUNC( ED_STABILIZE )
 
             /* fill the rest of the row with spaces */
             if( ( nLen - nEscLen ) < width )
-               hb_gtRepChar( nTop, ( int ) ( pEd->left + nLen - nEscLen ), ' ', width - nLen + nEscLen );
+               hb_gtRepChar( nTop, static_cast< int >( pEd->left + nLen - nEscLen ), ' ', width - nLen + nEscLen );
          }
          else
          {

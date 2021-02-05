@@ -74,17 +74,17 @@ char * hb_adsOemToAnsi( const char * pszSrc, HB_SIZE nLen )
    if( hb_ads_bOEM )
    {
 #if defined( HB_OS_WIN )
-      int nWideLen = MultiByteToWideChar( CP_OEMCP, MB_PRECOMPOSED, pszSrc, ( int ) nLen, NULL, 0 );
+      int nWideLen = MultiByteToWideChar( CP_OEMCP, MB_PRECOMPOSED, pszSrc, static_cast< int >( nLen ), NULL, 0 );
       LPWSTR pszWide = ( LPWSTR ) hb_xgrab( ( nWideLen + 1 ) * sizeof( wchar_t ) );
 
       char * pszDst;
 
-      MultiByteToWideChar( CP_OEMCP, MB_PRECOMPOSED, pszSrc, ( int ) nLen, pszWide, nWideLen );
+      MultiByteToWideChar( CP_OEMCP, MB_PRECOMPOSED, pszSrc, static_cast< int >( nLen ), pszWide, nWideLen );
 
       nLen = WideCharToMultiByte( CP_ACP, 0, pszWide, nWideLen, NULL, 0, NULL, NULL );
       pszDst = ( char * ) hb_xgrab( nLen + 1 );
 
-      WideCharToMultiByte( CP_ACP, 0, pszWide, nWideLen, pszDst, ( int ) nLen, NULL, NULL );
+      WideCharToMultiByte( CP_ACP, 0, pszWide, nWideLen, pszDst, static_cast< int >( nLen ), NULL, NULL );
 
       hb_xfree( pszWide );
 
@@ -102,17 +102,17 @@ char * hb_adsAnsiToOem( const char * pszSrc, HB_SIZE nLen )
    if( hb_ads_bOEM )
    {
 #if defined( HB_OS_WIN )
-      int nWideLen = MultiByteToWideChar( CP_ACP, MB_PRECOMPOSED, pszSrc, ( int ) nLen, NULL, 0 );
+      int nWideLen = MultiByteToWideChar( CP_ACP, MB_PRECOMPOSED, pszSrc, static_cast< int >( nLen ), NULL, 0 );
       LPWSTR pszWide = ( LPWSTR ) hb_xgrab( ( nWideLen + 1 ) * sizeof( wchar_t ) );
 
       char * pszDst;
 
-      MultiByteToWideChar( CP_ACP, MB_PRECOMPOSED, pszSrc, ( int ) nLen, pszWide, nWideLen );
+      MultiByteToWideChar( CP_ACP, MB_PRECOMPOSED, pszSrc, static_cast< int >( nLen ), pszWide, nWideLen );
 
       nLen = WideCharToMultiByte( CP_OEMCP, 0, pszWide, nWideLen, NULL, 0, NULL, NULL );
       pszDst = ( char * ) hb_xgrab( nLen + 1 );
 
-      WideCharToMultiByte( CP_OEMCP, 0, pszWide, nWideLen, pszDst, ( int ) nLen, NULL, NULL );
+      WideCharToMultiByte( CP_OEMCP, 0, pszWide, nWideLen, pszDst, static_cast< int >( nLen ), NULL, NULL );
 
       hb_xfree( pszWide );
 
@@ -1744,7 +1744,7 @@ HB_FUNC( ADSVERSION )
          szVersion[ 0 ] = '\0';
    }
 
-   iPos = ( int ) strlen( szVersion );
+   iPos = static_cast< int >( strlen( szVersion ) );
    while( --iPos >= 0 && szVersion[ iPos ] == ' ' )  /* remove trailing spaces */
       szVersion[ iPos ] = '\0';
 
