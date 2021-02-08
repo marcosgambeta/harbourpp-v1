@@ -59,7 +59,7 @@ static HB_CDP_GET_FUNC( BIG5_get )
       if( uc >= ( HB_BIG5_FIRST >> 8 ) && uc <= ( HB_BIG5_LAST >> 8 ) &&
           *pnIndex < nLen )
       {
-         *wc = s_big5_to_ucs16( ( ( int ) uc << 8 ) | ( HB_UCHAR ) pSrc[ *pnIndex ] );
+         *wc = s_big5_to_ucs16( ( static_cast< int >( uc ) << 8 ) | ( HB_UCHAR ) pSrc[ *pnIndex ] );
          if( *wc )
          {
             ( *pnIndex )++;

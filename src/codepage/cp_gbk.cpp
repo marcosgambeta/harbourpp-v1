@@ -60,7 +60,7 @@ static HB_CDP_GET_FUNC( GBK_get )
       if( uc >= ( HB_GBK_FIRST >> 8 ) && uc <= ( HB_GBK_LAST >> 8 ) &&
           *pnIndex < nLen )
       {
-         *wc = s_gbk_to_ucs16( ( ( int ) uc << 8 ) | ( HB_UCHAR ) pSrc[ *pnIndex ] );
+         *wc = s_gbk_to_ucs16( ( static_cast< int >( uc ) << 8 ) | ( HB_UCHAR ) pSrc[ *pnIndex ] );
          if( *wc )
          {
             ( *pnIndex )++;

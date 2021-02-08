@@ -59,7 +59,7 @@ static HB_CDP_GET_FUNC( CP950_get )
       if( uc >= ( HB_CP950_FIRST >> 8 ) && uc <= ( HB_CP950_LAST >> 8 ) &&
           *pnIndex < nLen )
       {
-         *wc = s_cp950_to_ucs16( ( ( int ) uc << 8 ) | ( HB_UCHAR ) pSrc[ *pnIndex ] );
+         *wc = s_cp950_to_ucs16( ( static_cast< int >( uc ) << 8 ) | ( HB_UCHAR ) pSrc[ *pnIndex ] );
          if( *wc )
          {
             ( *pnIndex )++;
