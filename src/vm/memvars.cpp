@@ -737,7 +737,7 @@ static void hb_memvarReleaseWithMask( const char * szMask, HB_BOOL bInclude )
    HB_STACK_TLS_PRELOAD
    HB_SIZE nBase, nCount;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_memvarReleaseWithMask(%s, %d)", szMask, ( int ) bInclude ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_memvarReleaseWithMask(%s, %d)", szMask, static_cast< int >( bInclude ) ) );
 
    nCount = hb_stackGetPrivateStack()->count;
    nBase = hb_stackBaseItem()->item.asSymbol.stackstate->nPrivateBase;
@@ -822,7 +822,7 @@ void hb_memvarsClear( HB_BOOL fAll )
    HB_STACK_TLS_PRELOAD
    PHB_DYNS pGetList;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_memvarsClear(%d)", ( int ) fAll ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_memvarsClear(%d)", static_cast< int >( fAll ) ) );
 
    pGetList = fAll ? NULL : hb_dynsymFind( "GETLIST" );
 

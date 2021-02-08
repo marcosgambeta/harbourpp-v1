@@ -1511,7 +1511,7 @@ HB_FUNC( HB_THREADWAIT )
    if( HB_ISARRAY( 1 ) )
    {
       PHB_ITEM pArray = hb_param( 1, HB_IT_ARRAY );
-      int iLen = ( int ) hb_arrayLen( pArray ), i;
+      int iLen = static_cast< int >( hb_arrayLen( pArray ) ), i;
 
       for( i = iThreads = 0; i < iLen; ++i )
       {
@@ -2298,7 +2298,7 @@ void hb_threadMutexNotify( PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting 
          }
          else if( pMutex->waiters )
          {
-            int iLen = ( int ) hb_arrayLen( pMutex->events );
+            int iLen = static_cast< int >( hb_arrayLen( pMutex->events ) );
             int iCount = pMutex->waiters - iLen;
 
             if( iCount > 0 )

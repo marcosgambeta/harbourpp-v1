@@ -487,7 +487,7 @@ int  hb_parni( int iParam )
       if( HB_IS_INTEGER( pItem ) )
          return pItem->item.asInteger.value;
       else if( HB_IS_LONG( pItem ) )
-         return ( int ) pItem->item.asLong.value;
+         return static_cast< int >( pItem->item.asLong.value );
       else if( HB_IS_DOUBLE( pItem ) )
          return HB_CAST_INT( pItem->item.asDouble.value );
    }
@@ -511,7 +511,7 @@ int  hb_parnidef( int iParam, int iDefValue )
       if( HB_IS_INTEGER( pItem ) )
          return pItem->item.asInteger.value;
       else if( HB_IS_LONG( pItem ) )
-         return ( int ) pItem->item.asLong.value;
+         return static_cast< int >( pItem->item.asLong.value );
       else if( HB_IS_DOUBLE( pItem ) )
          return HB_CAST_INT( pItem->item.asDouble.value );
    }
@@ -1123,7 +1123,7 @@ int  hb_parvni( int iParam, ... )
       if( HB_IS_INTEGER( pItem ) )
          return pItem->item.asInteger.value;
       else if( HB_IS_LONG( pItem ) )
-         return ( int ) pItem->item.asLong.value;
+         return static_cast< int >( pItem->item.asLong.value );
       else if( HB_IS_DOUBLE( pItem ) )
          return HB_CAST_INT( pItem->item.asDouble.value );
       else if( HB_IS_ARRAY( pItem ) )
@@ -1422,7 +1422,7 @@ void hb_retclen( const char * szText, HB_SIZE nLen )
 {
    HB_STACK_TLS_PRELOAD
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_retclen(%.*s, %" HB_PFS "u)", ( int ) nLen, szText, nLen ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_retclen(%.*s, %" HB_PFS "u)", static_cast< int >( nLen ), szText, nLen ) );
 
    hb_itemPutCL( hb_stackReturnItem(), szText, nLen );
 }
@@ -1432,7 +1432,7 @@ void hb_retclen_buffer( char * szText, HB_SIZE nLen )
 {
    HB_STACK_TLS_PRELOAD
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_retclen_buffer(%.*s, %" HB_PFS "u)", ( int ) nLen, szText, nLen ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_retclen_buffer(%.*s, %" HB_PFS "u)", static_cast< int >( nLen ), szText, nLen ) );
 
    hb_itemPutCLPtr( hb_stackReturnItem(), szText, nLen );
 }
@@ -1442,7 +1442,7 @@ void hb_retclen_const( const char * szText, HB_SIZE nLen )
 {
    HB_STACK_TLS_PRELOAD
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_retclen_const(%.*s, %" HB_PFS "u)", ( int ) nLen, szText, nLen ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_retclen_const(%.*s, %" HB_PFS "u)", static_cast< int >( nLen ), szText, nLen ) );
 
    hb_itemPutCLConst( hb_stackReturnItem(), szText, nLen );
 }
@@ -1707,7 +1707,7 @@ int hb_storclen( const char * szText, HB_SIZE nLen, int iParam )
 {
    HB_STACK_TLS_PRELOAD
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_storclen(%.*s, %" HB_PFS "u, %d)", ( int ) nLen, szText, nLen, iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_storclen(%.*s, %" HB_PFS "u, %d)", static_cast< int >( nLen ), szText, nLen, iParam ) );
 
    if( iParam == -1 )
    {
@@ -1732,7 +1732,7 @@ int hb_storclen_buffer( char * szText, HB_SIZE nLen, int iParam )
 {
    HB_STACK_TLS_PRELOAD
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_storclen_buffer(%.*s, %" HB_PFS "u, %d)", ( int ) nLen, szText, nLen, iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_storclen_buffer(%.*s, %" HB_PFS "u, %d)", static_cast< int >( nLen ), szText, nLen, iParam ) );
 
    if( iParam == -1 )
    {
@@ -2123,7 +2123,7 @@ int hb_storvclen( const char * szText, HB_SIZE nLen, int iParam, ... )
 {
    HB_STACK_TLS_PRELOAD
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_storvclen(%.*s, %" HB_PFS "u, %d, ...)", ( int ) nLen, szText, nLen, iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_storvclen(%.*s, %" HB_PFS "u, %d, ...)", static_cast< int >( nLen ), szText, nLen, iParam ) );
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
@@ -2156,7 +2156,7 @@ int hb_storvclen_buffer( char * szText, HB_SIZE nLen, int iParam, ... )
 {
    HB_STACK_TLS_PRELOAD
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_storvclen_buffer(%.*s, %" HB_PFS "u, %d, ...)", ( int ) nLen, szText, nLen, iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_storvclen_buffer(%.*s, %" HB_PFS "u, %d, ...)", static_cast< int >( nLen ), szText, nLen, iParam ) );
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
@@ -2625,5 +2625,5 @@ int  hb_pcount( void )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_pcount()" ) );
 
-   return ( int ) ( hb_stackBaseItem() )->item.asSymbol.paramcnt;
+   return static_cast< int >( ( hb_stackBaseItem() )->item.asSymbol.paramcnt );
 }

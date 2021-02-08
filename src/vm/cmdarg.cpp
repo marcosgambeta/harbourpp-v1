@@ -494,7 +494,7 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
    int i;
    int iPrefixLen;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargGet(%s, %d)", pszName, ( int ) bRetValue ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargGet(%s, %d)", pszName, static_cast< int >( bRetValue ) ) );
 
    /* Check the command-line first */
 
@@ -550,7 +550,7 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
                chars at all, Harbour is more strict/standard in this respect,
                it requires the switches to be separated. */
 
-      i = ( int ) strlen( pszName );
+      i = static_cast< int >( strlen( pszName ) );
       while( *pszNext )
       {
          static const char * s_szSeparator = " ;,\t";

@@ -87,7 +87,7 @@ PHB_ITEM hb_itemParamPtr( HB_USHORT uiParam, long lMask )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemParamPtr(%hu, %ld)", uiParam, lMask ) );
 
-   return hb_param( ( int ) uiParam, lMask );
+   return hb_param( static_cast< int >( uiParam ), lMask );
 }
 
 HB_BOOL hb_itemParamStore( HB_USHORT uiParam, PHB_ITEM pItem )
@@ -260,7 +260,7 @@ PHB_ITEM hb_itemPutCL( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
    HB_SIZE nAlloc;
    char * szValue;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutCL(%p, %.*s, %" HB_PFS "u)", ( void * ) pItem, ( int ) nLen, szText, nLen ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutCL(%p, %.*s, %" HB_PFS "u)", ( void * ) pItem, static_cast< int >( nLen ), szText, nLen ) );
 
    if( nLen <= 1 )
    {
@@ -321,7 +321,7 @@ PHB_ITEM hb_itemPutCConst( PHB_ITEM pItem, const char * szText )
 
 PHB_ITEM hb_itemPutCLConst( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutCLConst(%p, %.*s, %" HB_PFS "u)", ( void * ) pItem, ( int ) nLen, szText, nLen ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutCLConst(%p, %.*s, %" HB_PFS "u)", ( void * ) pItem, static_cast< int >( nLen ), szText, nLen ) );
 
    if( pItem )
    {
@@ -381,7 +381,7 @@ PHB_ITEM hb_itemPutCPtr( PHB_ITEM pItem, char * szText )
 
 PHB_ITEM hb_itemPutCLPtr( PHB_ITEM pItem, char * szText, HB_SIZE nLen )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutCLPtr(%p, %.*s, %" HB_PFS "u)", ( void * ) pItem, ( int ) nLen, szText, nLen ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutCLPtr(%p, %.*s, %" HB_PFS "u)", ( void * ) pItem, static_cast< int >( nLen ), szText, nLen ) );
 
    if( pItem )
    {
@@ -670,7 +670,7 @@ int hb_itemGetNI( PHB_ITEM pItem )
          return pItem->item.asInteger.value;
 
       else if( HB_IS_LONG( pItem ) )
-         return ( int ) pItem->item.asLong.value;
+         return static_cast< int >( pItem->item.asLong.value );
 
       else if( HB_IS_DOUBLE( pItem ) )
          return HB_CAST_INT( pItem->item.asDouble.value );
@@ -947,7 +947,7 @@ PHB_ITEM hb_itemPutTDT( PHB_ITEM pItem, long lJulian, long lMilliSec )
 
 PHB_ITEM hb_itemPutL( PHB_ITEM pItem, HB_BOOL bValue )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutL(%p, %d)", ( void * ) pItem, ( int ) bValue ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutL(%p, %d)", ( void * ) pItem, static_cast< int >( bValue ) ) );
 
    if( pItem )
    {
@@ -1042,7 +1042,7 @@ PHB_ITEM hb_itemPutNS( PHB_ITEM pItem, HB_ISIZ nNumber )
    if( HB_LIM_INT( nNumber ) )
    {
       pItem->type = HB_IT_INTEGER;
-      pItem->item.asInteger.value = ( int ) nNumber;
+      pItem->item.asInteger.value = static_cast< int >( nNumber );
       /* EXP limit used intentionally */
       pItem->item.asInteger.length = HB_INT_EXPLENGTH( nNumber );
    }
@@ -1099,7 +1099,7 @@ PHB_ITEM hb_itemPutNInt( PHB_ITEM pItem, HB_MAXINT nNumber )
    if( HB_LIM_INT( nNumber ) )
    {
       pItem->type = HB_IT_INTEGER;
-      pItem->item.asInteger.value = ( int ) nNumber;
+      pItem->item.asInteger.value = static_cast< int >( nNumber );
       /* EXP limit used intentionally */
       pItem->item.asInteger.length = HB_INT_EXPLENGTH( nNumber );
    }
@@ -1119,7 +1119,7 @@ PHB_ITEM hb_itemPutNIntLen( PHB_ITEM pItem, HB_MAXINT nNumber, int iWidth )
 
    if( HB_LIM_INT( nNumber ) )
    {
-      return hb_itemPutNILen( pItem, ( int ) nNumber, iWidth );
+      return hb_itemPutNILen( pItem, static_cast< int >( nNumber ), iWidth );
    }
    else
    {
@@ -1280,7 +1280,7 @@ PHB_ITEM hb_itemPutNLLen( PHB_ITEM pItem, long lNumber, int iWidth )
       iWidth = HB_INT_LENGTH( lNumber );
 
    pItem->type = HB_IT_INTEGER;
-   pItem->item.asInteger.value = ( int ) lNumber;
+   pItem->item.asInteger.value = static_cast< int >( lNumber );
    pItem->item.asInteger.length = ( HB_USHORT ) iWidth;
 #else
    if( iWidth <= 0 || iWidth >= HB_DEFAULT_WIDTH )
@@ -1337,7 +1337,7 @@ PHB_ITEM hb_itemPutNumType( PHB_ITEM pItem, double dNumber, int iDec, int iType1
    }
    else if( HB_DBL_LIM_INT( dNumber ) )
    {
-      return hb_itemPutNI( pItem, ( int ) dNumber );
+      return hb_itemPutNI( pItem, static_cast< int >( dNumber ) );
    }
    else if( HB_DBL_LIM_LONG( dNumber ) )
    {
@@ -1444,17 +1444,17 @@ void hb_itemGetNLen( PHB_ITEM pItem, int * piWidth, int * piDecimal )
    {
       if( HB_IS_DOUBLE( pItem ) )
       {
-         if( piWidth ) *piWidth = ( int ) pItem->item.asDouble.length;
-         if( piDecimal ) *piDecimal = ( int ) pItem->item.asDouble.decimal;
+         if( piWidth ) *piWidth = static_cast< int >( pItem->item.asDouble.length );
+         if( piDecimal ) *piDecimal = static_cast< int >( pItem->item.asDouble.decimal );
       }
       else if( HB_IS_INTEGER( pItem ) )
       {
-         if( piWidth ) *piWidth = ( int ) pItem->item.asInteger.length;
+         if( piWidth ) *piWidth = static_cast< int >( pItem->item.asInteger.length );
          if( piDecimal ) *piDecimal = 0;
       }
       else if( HB_IS_LONG( pItem ) )
       {
-         if( piWidth ) *piWidth = ( int ) pItem->item.asLong.length;
+         if( piWidth ) *piWidth = static_cast< int >( pItem->item.asLong.length );
          if( piDecimal ) *piDecimal = 0;
       }
       else
@@ -2023,7 +2023,7 @@ PHB_ITEM hb_itemUnRefOnce( PHB_ITEM pItem )
          {
             /* local variable referenced in a codeblock */
             pItem = hb_codeblockGetRef( pItem->item.asRefer.BasePtr.block,
-                                        ( int ) pItem->item.asRefer.value );
+                                        static_cast< int >( pItem->item.asRefer.value ) );
          }
       }
    }
@@ -2419,7 +2419,7 @@ int hb_itemStrCmp( PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact )
    HB_SIZE nMinLen;
    int iRet = 0; /* Current status */
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_itemStrCmp(%p, %p, %d)", ( void * ) pFirst, ( void * ) pSecond, ( int ) bForceExact ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_itemStrCmp(%p, %p, %d)", ( void * ) pFirst, ( void * ) pSecond, static_cast< int >( bForceExact ) ) );
 
    szFirst = pFirst->item.asString.value;
    szSecond = pSecond->item.asString.value;
@@ -2502,7 +2502,7 @@ int hb_itemStrICmp( PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact )
    HB_SIZE nMinLen;
    int iRet = 0; /* Current status */
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_itemStrICmp(%p, %p, %d)", ( void * ) pFirst, ( void * ) pSecond, ( int ) bForceExact ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_itemStrICmp(%p, %p, %d)", ( void * ) pFirst, ( void * ) pSecond, static_cast< int >( bForceExact ) ) );
 
    szFirst = pFirst->item.asString.value;
    szSecond = pSecond->item.asString.value;
@@ -2666,7 +2666,7 @@ HB_BOOL hb_itemStrBuf( char * szResult, PHB_ITEM pNumber, int iSize, int iDec )
                iZer = iSize - iFirst - iPrec - ( iDec > 0 ? 1 : 0 );
 
             dFract = modf( dFract * doBase, &dDig );
-            iLast = ( int ) ( dDig + 0.01 );
+            iLast = static_cast< int >( dDig + 0.01 );
 
             /* hack for x.xxxx4999999999, f.e. 8.995 ~FL 8.994999999999999218.. */
             if( iLast == 4 && iZer < 0 )

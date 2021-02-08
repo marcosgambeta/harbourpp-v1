@@ -156,7 +156,7 @@ static void close_handle( PHB_SET_STRUCT pSet, HB_set_enum set_specifier )
 {
    PHB_FILE * handle_ptr;
 
-   HB_TRACE( HB_TR_DEBUG, ( "close_handle(%p, %d)", ( void * ) pSet, ( int ) set_specifier ) );
+   HB_TRACE( HB_TR_DEBUG, ( "close_handle(%p, %d)", ( void * ) pSet, static_cast< int >( set_specifier ) ) );
 
    switch( set_specifier )
    {
@@ -220,7 +220,7 @@ static const char * is_devicename( const char * szFileName )
                return szFileName;
          }
       }
-      iLen = ( int ) strlen( szFileName + iSkip );
+      iLen = static_cast< int >( strlen( szFileName + iSkip ) );
       if( iLen >= 3 && iLen <= 4 )
       {
          int iFrom, iTo;
@@ -270,7 +270,7 @@ static void open_handle( PHB_SET_STRUCT pSet, const char * file_name,
    char ** set_value;
    HB_BOOL fPipe = HB_FALSE, fStripEof;
 
-   HB_TRACE( HB_TR_DEBUG, ( "open_handle(%p, %s, %d, %d)", ( void * ) pSet, file_name, ( int ) fAppend, ( int ) set_specifier ) );
+   HB_TRACE( HB_TR_DEBUG, ( "open_handle(%p, %s, %d, %d)", ( void * ) pSet, file_name, static_cast< int >( fAppend ), static_cast< int >( set_specifier ) ) );
 
    switch( set_specifier )
    {
@@ -433,7 +433,7 @@ HB_BOOL hb_setSetCentury( HB_BOOL new_century_setting )
       /* Convert to upper case and determine where year is */
       y_start = y_stop = -1;
       szDateFormat = pSet->HB_SET_DATEFORMAT;
-      size = ( int ) strlen( szDateFormat );
+      size = static_cast< int >( strlen( szDateFormat ) );
       for( count = 0; count < size; count++ )
       {
          int digit = HB_TOUPPER( ( HB_UCHAR ) szDateFormat[ count ] );
@@ -473,7 +473,7 @@ HB_BOOL hb_setSetCentury( HB_BOOL new_century_setting )
          hb_strncat( szNewFormat, "YY", size );
          if( new_century_setting )
             hb_strncat( szNewFormat, "YY", size );
-         format_len = ( int ) strlen( szDateFormat );
+         format_len = static_cast< int >( strlen( szDateFormat ) );
          if( y_stop < format_len )
             hb_strncat( szNewFormat, szDateFormat + y_stop, size );
          /* DATE FORMAT is under direct control of SET, so notify when it

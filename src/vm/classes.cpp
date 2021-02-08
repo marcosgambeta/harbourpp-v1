@@ -1170,7 +1170,7 @@ void hb_clsDoInit( void )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsDoInit()" ) );
 
-   for( i = 0; i < ( int ) HB_SIZEOFARRAY( s_puiHandles ); ++i )
+   for( i = 0; i < static_cast< int >( HB_SIZEOFARRAY( s_puiHandles ) ); ++i )
    {
       PHB_DYNS pFuncSym = hb_dynsymFindName( s_pszFuncNames[i] );
       if( pFuncSym && hb_dynsymIsFunction( pFuncSym ) )
@@ -3324,7 +3324,7 @@ HB_FUNC( __CLSADDMSG )
       {
          PHB_ITEM pType = hb_param( 7, HB_IT_ANY );
          char szAssign[ HB_SYMBOL_NAME_LEN + 1 ];
-         int iLen = ( int ) hb_parclen( 2 );
+         int iLen = static_cast< int >( hb_parclen( 2 ) );
          if( iLen >= HB_SYMBOL_NAME_LEN )
             iLen = HB_SYMBOL_NAME_LEN - 1;
          szAssign[ 0 ] = '_';
@@ -4108,7 +4108,7 @@ HB_FUNC( __CLSASSOCTYPE )
 HB_FUNC( __CLSCNTCLASSES )
 {
    HB_STACK_TLS_PRELOAD
-   hb_retni( ( int ) s_uiClasses );
+   hb_retni( static_cast< int >( s_uiClasses ) );
 }
 
 /* __cls_CntClsData( <hClass> ) --> <nCount>

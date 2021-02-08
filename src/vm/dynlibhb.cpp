@@ -106,7 +106,7 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
 
    if( hb_itemGetCLen( pLibName ) > 0 )
    {
-      int argc = pArgs ? ( int ) hb_arrayLen( pArgs ) : 0, i;
+      int argc = pArgs ? static_cast< int >( hb_arrayLen( pArgs ) ) : 0, i;
       const char ** argv = NULL;
 
       if( argc > 0 )

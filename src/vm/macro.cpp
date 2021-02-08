@@ -1490,7 +1490,7 @@ void hb_macroGenMessageData( const char * szMsg, HB_BOOL bIsObject, HB_COMP_DECL
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroGenMessageData(%s)", szMsg ) );
 
-   iLen = ( int ) strlen( szMsg );
+   iLen = static_cast< int >( strlen( szMsg ) );
    if( iLen > HB_SYMBOL_NAME_LEN - 1 )
       iLen = HB_SYMBOL_NAME_LEN - 1;
    szResult[ 0 ] = '_';
@@ -1537,7 +1537,7 @@ void hb_macroGenPopAliasedVar( const char * szVarName,
    {
       if( szAlias )
       {
-         int iLen = ( int ) strlen( szAlias );
+         int iLen = static_cast< int >( strlen( szAlias ) );
 
          if( szAlias[ 0 ] == 'M' && ( iLen == 1 ||
              ( iLen >= 4 && iLen <= 6 && strncmp( szAlias, "MEMVAR", iLen ) == 0 ) ) )
@@ -1634,7 +1634,7 @@ void hb_macroGenPushAliasedVar( const char * szVarName,
           * FIELD->var
           * MEMVAR->var
           */
-         int iLen = ( int ) strlen( szAlias );
+         int iLen = static_cast< int >( strlen( szAlias ) );
 
          if( szAlias[ 0 ] == 'M' && ( iLen == 1 ||
              ( iLen >= 4 && iLen <= 6 && strncmp( szAlias, "MEMVAR", iLen ) == 0 ) ) )
