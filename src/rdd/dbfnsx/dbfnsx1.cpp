@@ -401,7 +401,7 @@ static HB_USHORT hb_nsxLeafPutKey( LPTAGINFO pTag, LPPAGEINFO pPage, HB_USHORT u
 
    pDst = ptr + 2;
    iMax = NSX_PAGELEN - uiOffset - ucSize + 1;
-   if( iMax > ( int ) ucLen )
+   if( iMax > static_cast< int >( ucLen ) )
       iMax = ucLen;
    if( iMax > 0 )
    {
@@ -1941,13 +1941,13 @@ static HB_ERRCODE hb_nsxTagHeaderSave( LPTAGINFO pTag )
       Header.Unique[ 0 ]  = pTag->UniqueKey ? 1 : 0;
       Header.Descend[ 0 ] = pTag->AscendKey ? 0 : 1;
 
-      iLen = ( int ) strlen( pTag->KeyExpr );
+      iLen = static_cast< int >( strlen( pTag->KeyExpr ) );
       if( iLen > NSX_MAXEXPLEN )
          iLen = NSX_MAXEXPLEN;
       memcpy( Header.KeyExpr, pTag->KeyExpr, iLen );
       if( pTag->ForExpr )
       {
-         iLen = ( int ) strlen( pTag->ForExpr );
+         iLen = static_cast< int >( strlen( pTag->ForExpr ) );
          if( iLen > NSX_MAXEXPLEN )
             iLen = NSX_MAXEXPLEN;
          memcpy( Header.ForExpr, pTag->ForExpr, iLen );
@@ -3664,7 +3664,7 @@ static void hb_nsxTagGoToRelKeyPos( LPTAGINFO pTag, double dPos )
       {
          if( ! hb_nsxIsLeaf( pPage ) )
             ++iKeys;
-         iKey = ( int ) ( dPos * iKeys );
+         iKey = static_cast< int >( dPos * iKeys );
          if( iKey >= iKeys )
             iKey = iKeys - 1;
          dPos = dPos * iKeys - iKey;
@@ -5952,7 +5952,7 @@ static HB_ERRCODE hb_nsxTagCreate( LPTAGINFO pTag, HB_BOOL fReindex )
                else
                   iRec = ulRecCount - ulRecNo + 1;
                if( ulNextCount > 0 && ulNextCount < ( HB_ULONG ) iRec )
-                  iRec = ( int ) ulNextCount;
+                  iRec = static_cast< int >( ulNextCount );
                nSize = ( HB_SIZE ) iRec * pArea->dbfarea.uiRecordLen;
                if( hb_fileReadAt( pArea->dbfarea.pDataFile, pSort->pBuffIO, nSize,
                                   ( HB_FOFFSET ) pArea->dbfarea.uiHeaderLen +

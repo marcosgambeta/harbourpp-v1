@@ -3331,7 +3331,7 @@ static HB_ERRCODE hb_fptGetVarField( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
       else if( pField->uiLen == 4 || uiType == HB_VF_INT )
          hb_itemPutNIntLen( pItem, ( HB_MAXINT ) HB_GET_LE_INT32( pFieldBuf ), 10 );
       else if( pField->uiLen == 2 )
-         hb_itemPutNIntLen( pItem, ( int ) HB_GET_LE_INT16( pFieldBuf ), 10 );
+         hb_itemPutNIntLen( pItem, static_cast< int >( HB_GET_LE_INT16( pFieldBuf ) ), 10 );
       else if( pField->uiLen == 1 )
          hb_itemPutNILen( pItem, ( signed char ) pFieldBuf[ 0 ], 4 );
       else if( pField->uiLen >= 6 )
@@ -4539,7 +4539,7 @@ static HB_ERRCODE hb_fptDoPackRec( FPTAREAP pArea )
                   size = 11;
                break;
             default:
-               if( ulType <= HB_VF_CHAR && ( pField->uiLen - 2 ) < ( int ) ulType )
+               if( ulType <= HB_VF_CHAR && ( pField->uiLen - 2 ) < static_cast< int >( ulType ) )
                   size = ulType - ( pField->uiLen - 6 );
                break;
          }

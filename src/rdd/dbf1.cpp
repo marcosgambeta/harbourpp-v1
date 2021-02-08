@@ -501,7 +501,7 @@ static void hb_dbfSetBlankRecord( DBFAREAP pArea, int iType )
             {
                if( pField->uiDec )
                   nValue = ( HB_MAXINT ) hb_numDecConv( ( double ) nValue,
-                                                        -( int ) pField->uiDec );
+                                                        -static_cast< int >( pField->uiDec ) );
                if( uiLen == 1 )
                   *pPtr = ( signed char ) nValue;
                else if( uiLen == 2 )
@@ -935,7 +935,7 @@ static HB_ERRCODE hb_dbfLockRecord( DBFAREAP pArea, HB_ULONG ulRecNo, HB_USHORT 
                                     HB_BOOL bExclusive )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_dbfLockRecord(%p, %lu, %p, %i)", ( void * ) pArea, ulRecNo,
-                            ( void * ) pResult, ( int ) bExclusive ) );
+                            ( void * ) pResult, static_cast< int >( bExclusive ) ) );
 
    if( pArea->lpdbPendingRel )
    {
@@ -1913,7 +1913,7 @@ static HB_ERRCODE hb_dbfAppend( DBFAREAP pArea, HB_BOOL bUnLockAll )
 {
    HB_USHORT fLocked;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_dbfAppend(%p, %d)", ( void * ) pArea, ( int ) bUnLockAll ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_dbfAppend(%p, %d)", ( void * ) pArea, static_cast< int >( bUnLockAll ) ) );
 
    if( SELF_GOCOLD( &pArea->area ) == HB_FAILURE )
       return HB_FAILURE;
@@ -2268,8 +2268,8 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
                   fError = HB_TRUE;
                   break;
             }
-            hb_itemPutNDLen( pItem, hb_numDecConv( dVal, ( int ) pField->uiDec ),
-                             iLen, ( int ) pField->uiDec );
+            hb_itemPutNDLen( pItem, hb_numDecConv( dVal, static_cast< int >( pField->uiDec ) ),
+                             iLen, static_cast< int >( pField->uiDec ) );
          }
          else
          {
@@ -2279,7 +2279,7 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
                   hb_itemPutNILen( pItem, ( HB_SCHAR ) pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ], 4 );
                   break;
                case 2:
-                  hb_itemPutNILen( pItem, ( int ) HB_GET_LE_INT16( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ), 6 );
+                  hb_itemPutNILen( pItem, static_cast< int >( HB_GET_LE_INT16( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ) ), 6 );
                   break;
                case 3:
                   hb_itemPutNIntLen( pItem, ( HB_MAXINT ) HB_GET_LE_INT24( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ), 10 );
@@ -2305,7 +2305,7 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
       case HB_FT_CURDOUBLE:
          hb_itemPutNDLen( pItem, HB_GET_LE_DOUBLE( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ),
                           20 - ( pField->uiDec > 0 ? ( pField->uiDec + 1 ) : 0 ),
-                          ( int ) pField->uiDec );
+                          static_cast< int >( pField->uiDec ) );
          break;
 
       case HB_FT_LONG:
@@ -2329,12 +2329,12 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
 
          if( pField->uiDec )
             hb_itemPutNDLen( pItem, fDbl ? dVal : ( double ) lVal,
-                             ( int ) ( pField->uiLen - pField->uiDec - 1 ),
-                             ( int ) pField->uiDec );
+                             static_cast< int >( pField->uiLen - pField->uiDec - 1 ),
+                             static_cast< int >( pField->uiDec ) );
          else if( fDbl )
-            hb_itemPutNDLen( pItem, dVal, ( int ) pField->uiLen, 0 );
+            hb_itemPutNDLen( pItem, dVal, static_cast< int >( pField->uiLen ), 0 );
          else
-            hb_itemPutNIntLen( pItem, lVal, ( int ) pField->uiLen );
+            hb_itemPutNIntLen( pItem, lVal, static_cast< int >( pField->uiLen ) );
          break;
       }
       case HB_FT_FLOAT:
@@ -2356,8 +2356,8 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             dVal = hb_numExpConv( dVal, -iExp );
          }
          hb_itemPutNDLen( pItem, dVal,
-                          ( int ) ( pField->uiLen - pField->uiDec - 1 ),
-                          ( int ) pField->uiDec );
+                          static_cast< int >( pField->uiLen - pField->uiDec - 1 ),
+                          static_cast< int >( pField->uiDec ) );
          break;
 
       case HB_FT_ANY:
@@ -2753,11 +2753,11 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             {
                double dVal;
 #if 0    /* this version rounds double values to nearest integer */
-               dVal = hb_numDecConv( hb_itemGetND( pItem ), -( int ) pField->uiDec );
+               dVal = hb_numDecConv( hb_itemGetND( pItem ), -static_cast< int >( pField->uiDec ) );
 #else    /* this one truncates double value to integer dropping fractional part */
                dVal = hb_itemGetND( pItem );
                if( pField->uiDec )
-                  dVal = hb_numDecConv( dVal, -( int ) pField->uiDec );
+                  dVal = hb_numDecConv( dVal, -static_cast< int >( pField->uiDec ) );
 #endif
                lVal = ( HB_MAXINT ) dVal;
                if( ! HB_DBL_LIM_INT64( dVal ) )

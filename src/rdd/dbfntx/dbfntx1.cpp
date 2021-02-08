@@ -1644,7 +1644,7 @@ static void hb_ntxIndexTagAdd( LPNTXINDEX pIndex, LPTAGINFO pTag )
    {
       ++iTags;
       HB_PUT_LE_UINT16( lpCTX->ntags, iTags );
-      iLen = ( int ) strlen( pTag->TagName );
+      iLen = static_cast< int >( strlen( pTag->TagName ) );
       if( iLen > NTX_MAX_TAGNAME )
          iLen = NTX_MAX_TAGNAME;
       memcpy( pTagItem->tag_name, pTag->TagName, iLen );
@@ -1757,20 +1757,20 @@ static HB_ERRCODE hb_ntxTagHeaderSave( LPTAGINFO pTag )
       Header.unique[ 0 ]  = pTag->UniqueKey ? 1 : 0;
       Header.descend[ 0 ] = pTag->AscendKey ? 0 : 1;
       Header.custom[ 0 ]  = pTag->Custom    ? 1 : 0;
-      iLen = ( int ) strlen( pTag->KeyExpr );
+      iLen = static_cast< int >( strlen( pTag->KeyExpr ) );
       if( iLen > NTX_MAX_EXP )
          iLen = NTX_MAX_EXP;
       memcpy( Header.key_expr, pTag->KeyExpr, iLen );
       if( pTag->ForExpr )
       {
-         iLen = ( int ) strlen( pTag->ForExpr );
+         iLen = static_cast< int >( strlen( pTag->ForExpr ) );
          if( iLen > NTX_MAX_EXP )
             iLen = NTX_MAX_EXP;
          memcpy( Header.for_expr, pTag->ForExpr, iLen );
       }
       if( pTag->fTagName )
       {
-         iLen = ( int ) strlen( pTag->TagName );
+         iLen = static_cast< int >( strlen( pTag->TagName ) );
          if( iLen > NTX_MAX_TAGNAME )
             iLen = NTX_MAX_TAGNAME;
          memcpy( Header.tag_name, pTag->TagName, iLen );
@@ -2536,7 +2536,7 @@ static int hb_ntxPageKeyFind( LPTAGINFO pTag, LPPAGEINFO pPage,
          iEnd = i - 1;
       }
    }
-   return iLast >= 0 ? iLast : ( int ) pPage->uiKeys;
+   return iLast >= 0 ? iLast : static_cast< int >( pPage->uiKeys );
 }
 
 /*
@@ -3416,7 +3416,7 @@ static void hb_ntxTagGoToRelKeyPos( LPTAGINFO pTag, double dPos )
          iKeys = pPage->uiKeys;
          if( hb_ntxGetKeyPage( pPage, pPage->uiKeys ) )
             ++iKeys;
-         iKey = ( int ) ( dPos * iKeys );
+         iKey = static_cast< int >( dPos * iKeys );
          if( iKey >= iKeys )
             iKey = iKeys - 1;
          dPos = dPos * iKeys - iKey;
@@ -5464,7 +5464,7 @@ static HB_ERRCODE hb_ntxTagCreate( LPTAGINFO pTag, HB_BOOL fReindex )
                else
                   iRec = ulRecCount - ulRecNo + 1;
                if( ulNextCount > 0 && ulNextCount < ( HB_ULONG ) iRec )
-                  iRec = ( int ) ulNextCount;
+                  iRec = static_cast< int >( ulNextCount );
                nSize = ( HB_SIZE ) iRec * pArea->dbfarea.uiRecordLen;
                if( hb_fileReadAt( pArea->dbfarea.pDataFile, pSort->pBuffIO, nSize,
                                   ( HB_FOFFSET ) pArea->dbfarea.uiHeaderLen +

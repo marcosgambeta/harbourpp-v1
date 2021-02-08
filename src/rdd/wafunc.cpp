@@ -246,7 +246,7 @@ HB_USHORT hb_rddFieldExpIndex( AREAP pArea, const char * szField )
 
       n = 0;
       if( SELF_ALIAS( pArea, szAlias ) == HB_SUCCESS )
-         l = ( int ) strlen( szAlias );
+         l = static_cast< int >( strlen( szAlias ) );
       else
          l = 0;
 
@@ -330,7 +330,7 @@ HB_ERRCODE hb_rddGetAliasNumber( const char * szAlias, int * iArea )
    {
       PHB_DYNS pSymAlias = hb_dynsymFindName( szAlias );
 
-      *iArea = pSymAlias ? ( int ) hb_dynsymAreaHandle( pSymAlias ) : 0;
+      *iArea = pSymAlias ? static_cast< int >( hb_dynsymAreaHandle( pSymAlias ) ) : 0;
       if( *iArea == 0 )
          return HB_FAILURE;
    }
@@ -350,7 +350,7 @@ HB_ERRCODE hb_rddSelectWorkAreaSymbol( PHB_SYMB pSymAlias )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddSelectWorkAreaSymbol(%p)", ( void * ) pSymAlias ) );
 
-   iArea = ( int ) hb_dynsymAreaHandle( pSymAlias->pDynSym );
+   iArea = static_cast< int >( hb_dynsymAreaHandle( pSymAlias->pDynSym ) );
    if( iArea )
    {
       hb_rddSelectWorkAreaNumber( iArea );
@@ -390,7 +390,7 @@ HB_ERRCODE hb_rddSelectWorkAreaSymbol( PHB_SYMB pSymAlias )
    {
       if( hb_errLaunch( pError ) != E_RETRY )
          break;
-      iArea = ( int ) hb_dynsymAreaHandle( pSymAlias->pDynSym );
+      iArea = static_cast< int >( hb_dynsymAreaHandle( pSymAlias->pDynSym ) );
       if( iArea )
       {
          hb_rddSelectWorkAreaNumber( iArea );

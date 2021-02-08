@@ -620,7 +620,7 @@ static HB_ERRCODE hb_delimRecId( DELIMAREAP pArea, PHB_ITEM pRecNo )
  */
 static HB_ERRCODE hb_delimAppend( DELIMAREAP pArea, HB_BOOL fUnLockAll )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimAppend(%p,%d)", ( void * ) pArea, ( int ) fUnLockAll ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_delimAppend(%p,%d)", ( void * ) pArea, static_cast< int >( fUnLockAll ) ) );
 
    HB_SYMBOL_UNUSED( fUnLockAll );
 
@@ -746,12 +746,12 @@ static HB_ERRCODE hb_delimGetValue( DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITE
 
          if( pField->uiDec )
             hb_itemPutNDLen( pItem, fDbl ? dVal : ( double ) lVal,
-                             ( int ) ( pField->uiLen - pField->uiDec - 1 ),
-                             ( int ) pField->uiDec );
+                             static_cast< int >( pField->uiLen - pField->uiDec - 1 ),
+                             static_cast< int >( pField->uiDec ) );
          else if( fDbl )
-            hb_itemPutNDLen( pItem, dVal, ( int ) pField->uiLen, 0 );
+            hb_itemPutNDLen( pItem, dVal, static_cast< int >( pField->uiLen ), 0 );
          else
-            hb_itemPutNIntLen( pItem, lVal, ( int ) pField->uiLen );
+            hb_itemPutNIntLen( pItem, lVal, static_cast< int >( pField->uiLen ) );
          break;
       }
 
