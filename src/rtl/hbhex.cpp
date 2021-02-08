@@ -112,7 +112,7 @@ HB_FUNC( HB_NUMTOHEX )
    ret[ iLen ] = '\0';
    do
    {
-      int iDigit = ( int ) ( nNum & 0x0F );
+      int iDigit = static_cast< int >( nNum & 0x0F );
       ret[ --iLen ] = ( char ) ( iDigit + ( iDigit < 10 ? '0' : 'A' - 10 ) );
       nNum >>= 4;
    }

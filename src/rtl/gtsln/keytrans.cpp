@@ -388,13 +388,13 @@ static void hb_sln_SortKeyTranslationTable( void )
 {
    int i;
 
-   for( i = 0; i < ( ( int ) KeyTranslationTableSize - 1 ); i++ )
+   for( i = 0; i < ( static_cast< int >( KeyTranslationTableSize ) - 1 ); i++ )
    {
       int j, min, KeyTmp[ 2 ];
 
       min = i;
 
-      for( j = i + 1; j < ( int ) KeyTranslationTableSize; j++ )
+      for( j = i + 1; j < static_cast< int >( KeyTranslationTableSize ); j++ )
       {
          if( KeyTranslationTable[ j ][ 0 ] < KeyTranslationTable[ min ][ 0 ] )
             min = j;
@@ -463,7 +463,7 @@ int hb_sln_SetKeyInKeyTranslationTable( int SlangKey, int ClipKey )
    if( ( SlangKey >= KeyTranslationTable[ 0 ][ 0 ] ) &&
        ( SlangKey <= KeyTranslationTable[ KeyTranslationTableSize - 1 ][ 0 ] ) )
    {
-      for( i = 0; i < ( int ) KeyTranslationTableSize; i++ )
+      for( i = 0; i < static_cast< int >( KeyTranslationTableSize ); i++ )
       {
          if( SlangKey == KeyTranslationTable[ i ][ 0 ] )
             KeyTranslationTable[ i ][ 1 ] = ClipKey;

@@ -245,15 +245,15 @@ static int hb_gt_dos_GetScreenMode( void )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_GetScreenMode()" ) );
 
-   return ( int ) HB_PEEK_BYTE( 0x0040, 0x0049 );
+   return static_cast< int >( HB_PEEK_BYTE( 0x0040, 0x0049 ) );
 }
 
 static void hb_gt_dos_GetScreenSize( int * piRows, int * piCols )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_GetScreenSize(%p, %p)", ( void * ) piRows, ( void * ) piCols ) );
 
-   *piRows = ( int ) HB_PEEK_BYTE( 0x0040, 0x0084 ) + 1;
-   *piCols = ( int ) HB_PEEK_BYTE( 0x0040, 0x004A );
+   *piRows = static_cast< int >( HB_PEEK_BYTE( 0x0040, 0x0084 ) ) + 1;
+   *piCols = static_cast< int >( HB_PEEK_BYTE( 0x0040, 0x004A ) );
 }
 
 #if ! defined( __DJGPP__ )
@@ -372,7 +372,7 @@ static void hb_gt_dos_SetCursorSize( unsigned char start, unsigned char end )
 {
    union REGS regs;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_SetCursorSize(%d, %d)", ( int ) start, ( int ) end ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_SetCursorSize(%d, %d)", static_cast< int >( start ), static_cast< int >( end ) ) );
 
    regs.h.ah = 0x01;
    regs.h.ch = start;
@@ -956,7 +956,7 @@ static void hb_gt_dos_SetBlink( PHB_GT pGT, HB_BOOL fBlink )
 {
    union REGS regs;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_SetBlink(%p,%d)", ( void * ) pGT, ( int ) fBlink ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_SetBlink(%p,%d)", ( void * ) pGT, static_cast< int >( fBlink ) ) );
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -978,7 +978,7 @@ static void hb_gt_dos_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 #if defined( __BORLANDC__ ) || defined( __WATCOMC__ )
    sound( ( unsigned ) dFrequency );
 #elif defined( __DJGPP__ )
-   sound( ( int ) dFrequency );
+   sound( static_cast< int >( dFrequency ) );
 #else
    HB_SYMBOL_UNUSED( dFrequency );
 #endif

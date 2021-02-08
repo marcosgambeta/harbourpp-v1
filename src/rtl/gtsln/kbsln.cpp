@@ -254,7 +254,7 @@ int hb_sln_Init_Terminal( int phase )
       /* get Dead key definition */
       p = ( unsigned const char * ) getenv( s_DeadKeyEnvName );
       if( p && *p )
-         s_iDeadKey = ( int ) *p;
+         s_iDeadKey = static_cast< int >( *p );
 
       /* number of keys dealing with a Dead key */
       hb_sln_convKDeadKeys[ 0 ] = 0;
@@ -308,7 +308,7 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
    HB_BOOL fInput;
    int iKey;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_ReadKey(%p,%d)", ( void * ) pGT, ( int ) iEventMask ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_ReadKey(%p,%d)", ( void * ) pGT, static_cast< int >( iEventMask ) ) );
 
    /* user AbortKey break */
    if( SLKeyBoard_Quit == 1 )
@@ -363,7 +363,7 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
    }
 
    /* user AbortKey break */
-   if( ( int ) ch == s_hb_sln_Abort_key )
+   if( static_cast< int >( ch ) == s_hb_sln_Abort_key )
       return HB_BREAK_FLAG;
 
    SLang_ungetkey( ch );
@@ -379,18 +379,18 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
    if( InDeadState )
    {
       InDeadState = HB_FALSE;
-      if( ( int ) ch == s_iDeadKey ) /* double press Dead key */
+      if( static_cast< int >( ch ) == s_iDeadKey ) /* double press Dead key */
          return ch;
       if( ch < 256 )  /* is this needed ??? */
       {
          int i;
-         for( i = 0; i < ( int ) hb_sln_convKDeadKeys[ 0 ]; i++ )
-            if( ( int ) hb_sln_convKDeadKeys[ 2 * i + 1 ] == ( int ) ch )
-               return ( int ) hb_sln_convKDeadKeys[ 2 * i + 2 ];
+         for( i = 0; i < static_cast< int >( hb_sln_convKDeadKeys[ 0 ] ); i++ )
+            if( static_cast< int >( hb_sln_convKDeadKeys[ 2 * i + 1 ] ) == static_cast< int >( ch ) )
+               return static_cast< int >( hb_sln_convKDeadKeys[ 2 * i + 2 ] );
       }
       return 0;
    }
-   else if( ( int ) ch == s_iDeadKey )
+   else if( static_cast< int >( ch ) == s_iDeadKey )
    {
       /* entering Dead key state */
       InDeadState = HB_TRUE;
@@ -463,7 +463,7 @@ static int hb_sln_try_get_Kbd_State( void )
    if( ioctl( 0, TIOCLINUX, &modifiers ) < 0 )
       return 0;
 
-   return ( int ) modifiers;
+   return static_cast< int >( modifiers );
 
 #elif defined( M_UNIX )
 

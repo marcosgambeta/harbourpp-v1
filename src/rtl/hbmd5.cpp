@@ -312,12 +312,12 @@ void hb_hmac_md5( const void * key, HB_SIZE nKeyLen,
    else
       hb_md5( key, nKeyLen, init_block );
 
-   for( i = 0; i < ( int ) sizeof( init_block ); ++i )
+   for( i = 0; i < static_cast< int >( sizeof( init_block ) ); ++i )
       init_block[ i ] ^= IPAD;
 
    hb_md5_count( message, nMsgLen, digest, init_block );
 
-   for( i = 0; i < ( int ) sizeof( init_block ); ++i )
+   for( i = 0; i < static_cast< int >( sizeof( init_block ) ); ++i )
       init_block[ i ] ^= IPAD ^ OPAD;
 
    hb_md5_count( digest, 16, digest, init_block );

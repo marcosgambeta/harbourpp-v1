@@ -62,7 +62,7 @@ char * hb_dateFormat( const char * szDate, char * szFormattedDate, const char * 
    /*
     * Determine the maximum size of the formatted date string
     */
-   size = ( int ) strlen( szDateFormat );
+   size = static_cast< int >( strlen( szDateFormat ) );
    if( size > 10 )
       size = 10;
 
@@ -254,7 +254,7 @@ static int hb_dateUnformatRaw( const char * szDate, const char * szDateFormat, l
 
       if( ! szDateFormat )
          szDateFormat = hb_setGetDateFormat();
-      size = ( int ) strlen( szDateFormat );
+      size = static_cast< int >( strlen( szDateFormat ) );
 
       for( count = used = 0; count < size && used < 3; count++ )
       {
@@ -304,7 +304,7 @@ static int hb_dateUnformatRaw( const char * szDate, const char * szDateFormat, l
       /* If there are non-digits at the start of the date field,
          they are not to be treated as date field separators */
       non_digit = 1;
-      size = ( int ) strlen( szDate );
+      size = static_cast< int >( strlen( szDate ) );
       for( count = used = 0; count < size; count++ )
       {
          digit = szDate[ count ];
@@ -379,7 +379,7 @@ char * hb_timeFormat( char * szBuffer, const char * szTimeFormat, long lMilliSec
    hb_timeDecode( lMilliSec, &iHour, &iMinutes, &iSeconds, &iMSec );
    szTimeBuffer = szBuffer;
 
-   size = ( int ) hb_strnlen( szTimeFormat, 16 );
+   size = static_cast< int >( hb_strnlen( szTimeFormat, 16 ) );
    iPM = i12 = 0;
    for( i = 0; i < size; ++i )
    {
@@ -524,7 +524,7 @@ long hb_timeUnformat( const char * szTime, const char * szTimeFormat )
    if( ! szTimeFormat )
       szTimeFormat = hb_setGetTimeFormat();
 
-   size = ( int ) hb_strnlen( szTime, hb_strnlen( szTimeFormat, 16 ) );
+   size = static_cast< int >( hb_strnlen( szTime, hb_strnlen( szTimeFormat, 16 ) ) );
    iHour = iMinutes = iSeconds = iMSec = iPM = -1;
    prec = 0;
    for( i = count = 0; i < size && szTime[ count ]; ++i )

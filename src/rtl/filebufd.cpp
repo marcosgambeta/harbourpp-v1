@@ -458,7 +458,7 @@ HB_BOOL hb_fileRegisterPart( HB_FILE_FUNCS * pFuncs )
    pDummyFunc = &s_fileFuncs.Accept;
    pFunction = &pFuncs->Accept;
 
-   for( iCount = 0; iCount < ( int ) HB_FILE_FUNC_COUNT;
+   for( iCount = 0; iCount < static_cast< int >( HB_FILE_FUNC_COUNT );
         iCount++, pDummyFunc++, pFunction++ )
    {
       if( * pFunction == NULL )

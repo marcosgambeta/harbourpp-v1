@@ -712,7 +712,7 @@ static void s_inetRecvInternal( int iMode )
       HB_SIZE nLen;
 
       if( hb_itemGetWriteCL( pBuffer, &buffer, &nLen ) )
-         iLen = ( int ) nLen;
+         iLen = static_cast< int >( nLen );
       else
       {
          iLen = 0;
@@ -893,7 +893,7 @@ static void s_inetRecvPattern( const char * const * patterns, int * patternsizes
 
 HB_FUNC( HB_INETRECVLINE )
 {
-   int iEolLen = ( int ) strlen( s_inetCRLF );
+   int iEolLen = static_cast< int >( strlen( s_inetCRLF ) );
 
    s_inetRecvPattern( &s_inetCRLF, &iEolLen, 1, 2 );
 }
@@ -912,11 +912,11 @@ HB_FUNC( HB_INETRECVENDBLOCK )
 
    if( pProto && HB_IS_ARRAY( pProto ) )
    {
-      int iPatternsMax = ( int ) hb_arrayLen( pProto ), i;
+      int iPatternsMax = static_cast< int >( hb_arrayLen( pProto ) ), i;
 
       for( i = 1; i <= iPatternsMax; i++ )
       {
-         iLen = ( int ) hb_arrayGetCLen( pProto, i );
+         iLen = static_cast< int >( hb_arrayGetCLen( pProto, i ) );
          if( iLen > 0 )
             ++iPatternsCount;
       }
@@ -930,7 +930,7 @@ HB_FUNC( HB_INETRECVENDBLOCK )
          iPatternsCount = 0;
          for( i = 1; i <= iPatternsMax; i++ )
          {
-            iLen = ( int ) hb_arrayGetCLen( pProto, i );
+            iLen = static_cast< int >( hb_arrayGetCLen( pProto, i ) );
             if( iLen > 0 )
             {
                patterns[ iPatternsCount ]     = hb_arrayGetCPtr( pProto, i );
@@ -943,7 +943,7 @@ HB_FUNC( HB_INETRECVENDBLOCK )
 
    if( iPatternsCount == 0 )
    {
-      iLen = ( int ) hb_itemGetCLen( pProto );
+      iLen = static_cast< int >( hb_itemGetCLen( pProto ) );
       if( iLen > 0 )
       {
          patterns[ 0 ]     = hb_itemGetCPtr( pProto );
@@ -952,7 +952,7 @@ HB_FUNC( HB_INETRECVENDBLOCK )
       else
       {
          patterns[ 0 ]     = s_inetCRLF;
-         patternsizes[ 0 ] = ( int ) strlen( s_inetCRLF );
+         patternsizes[ 0 ] = static_cast< int >( strlen( s_inetCRLF ) );
       }
       iPatternsCount = 1;
    }
@@ -990,7 +990,7 @@ HB_FUNC( HB_INETDATAREADY )
          {
             char buffer[ 1 ];
 
-            iVal = ( int ) s_inetRecv( socket, buffer, 1, HB_TRUE, timeout );
+            iVal = static_cast< int >( s_inetRecv( socket, buffer, 1, HB_TRUE, timeout ) );
             if( iVal == 1 )
             {
                socket->posbuffer--;
@@ -1023,7 +1023,7 @@ static void s_inetSendInternal( HB_BOOL lAll )
    else
    {
       buffer = hb_itemGetCPtr( pBuffer );
-      iSend = ( int ) hb_itemGetCLen( pBuffer );
+      iSend = static_cast< int >( hb_itemGetCLen( pBuffer ) );
       if( HB_ISNUM( 3 ) )
       {
          iLen = hb_parni( 3 );
@@ -1044,7 +1044,7 @@ static void s_inetSendInternal( HB_BOOL lAll )
             if( lLastSnd <= 0 && iLen > 0 )
             {
                iSent += iLen;
-               iLen = ( int ) lLastSnd;
+               iLen = static_cast< int >( lLastSnd );
             }
          }
          else
@@ -1406,7 +1406,7 @@ HB_FUNC( HB_INETDGRAMSEND )
       else
       {
          szBuffer = hb_itemGetCPtr( pBuffer );
-         iLen = ( int ) hb_itemGetCLen( pBuffer );
+         iLen = static_cast< int >( hb_itemGetCLen( pBuffer ) );
          if( HB_ISNUM( 5 ) )
          {
             int iMaxLen = hb_parni( 5 );
@@ -1449,7 +1449,7 @@ HB_FUNC( HB_INETDGRAMRECV )
    {
       socket->iCount = 0;
       if( hb_itemGetWriteCL( pBuffer, &buffer, &nLen ) )
-         iLen = ( int ) nLen;
+         iLen = static_cast< int >( nLen );
       if( HB_ISNUM( 3 ) )
       {
          iMax = hb_parni( 3 );

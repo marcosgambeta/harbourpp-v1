@@ -1582,8 +1582,8 @@ static void gt_tone( InOutBase * ioBase, double dFrequency, double dDuration )
    {
       char escseq[ 64 ];
       hb_snprintf( escseq, sizeof( escseq ), "\033[10;%d]\033[11;%d]%s",
-                   ( int ) dFrequency,
-                   ( int ) ( dDuration * 1000.0 / 18.2 ), ioBase->beep );
+                   static_cast< int >( dFrequency ),
+                   static_cast< int >( dDuration * 1000.0 / 18.2 ), ioBase->beep );
       write_ttyseq( ioBase, escseq );
    }
    else
@@ -1781,7 +1781,7 @@ static void setDispTrans( InOutBase * ioBase, PHB_CODEPAGE cdpHost, PHB_CODEPAGE
       ioBase->std_chmap[ i ] |= ch;
       ioBase->box_chmap[ i ] |= ch;
 
-      if( i != ( int ) ( ch & A_CHARTEXT ) &&
+      if( i != static_cast< int >( ch & A_CHARTEXT ) &&
           ( ioBase->std_chmap[ i ] & A_ALTCHARSET ) == 0 )
       {
          if( ioBase->out_transtbl == NULL )
@@ -1801,7 +1801,7 @@ static void setDispTrans( InOutBase * ioBase, PHB_CODEPAGE cdpHost, PHB_CODEPAGE
             ioBase->std_chmap[ i ] = uc | A_NORMAL;
             if( transBox )
                ioBase->box_chmap[ i ] = uc | A_NORMAL;
-            if( i != ( int ) uc )
+            if( i != static_cast< int >( uc ) )
             {
                if( ioBase->out_transtbl == NULL )
                   ioBase->out_transtbl = ( unsigned char * ) hb_xgrabz( 256 );
@@ -2299,7 +2299,7 @@ int HB_GT_FUNC( gt_CloseTerm( int iHandle ) )
 
 int HB_GT_FUNC( gt_WaitKey( double dTimeOut ) )
 {
-   return wait_key( s_ioBase, ( int ) ( dTimeOut >= 0 ? dTimeOut * 1000.0 : -1 ) );
+   return wait_key( s_ioBase, static_cast< int >( dTimeOut >= 0 ? dTimeOut * 1000.0 : -1 ) );
 }
 
 int HB_GT_FUNC( gt_AddKeyMap( int iKey, char * szSequence ) )
@@ -2429,7 +2429,7 @@ static HB_BOOL hb_gt_crs_SetMode( PHB_GT pGT, int iRows, int iCols )
 
 static void hb_gt_crs_SetBlink( PHB_GT pGT, HB_BOOL fBlink )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_SetBlink(%p, %d)", ( void * ) pGT, ( int ) fBlink ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_SetBlink(%p, %d)", ( void * ) pGT, static_cast< int >( fBlink ) ) );
 
    if( fBlink )
       s_ioBase->attr_mask |= A_BLINK;
@@ -2704,7 +2704,7 @@ static int hb_gt_crs_ReadKey( PHB_GT pGT, int iEventMask )
 
 static HB_BOOL hb_gt_crs_SetDispCP( PHB_GT pGT, const char * pszTermCDP, const char * pszHostCDP, HB_BOOL fBox )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_SetDispCP(%p,%s,%s,%d)", ( void * ) pGT, pszTermCDP, pszHostCDP, ( int ) fBox ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_SetDispCP(%p,%s,%s,%d)", ( void * ) pGT, pszTermCDP, pszHostCDP, static_cast< int >( fBox ) ) );
 
    if( HB_GTSUPER_SETDISPCP( pGT, pszTermCDP, pszHostCDP, fBox ) )
    {

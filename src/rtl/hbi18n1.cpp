@@ -168,14 +168,14 @@ static int hb_i18n_pluralformfind( const char * szLang )
 {
    int i;
 
-   for( i = 0; i < ( int ) HB_PLURAL_FOMRS_COUNT; ++i )
+   for( i = 0; i < static_cast< int >( HB_PLURAL_FOMRS_COUNT ); ++i )
    {
       if( hb_stricmp( szLang, s_plural_forms[ i ].szLangID ) == 0 )
          return s_plural_forms[ i ].iForm;
    }
    if( strlen( szLang ) > 2 )
    {
-      for( i = 0; i < ( int ) HB_PLURAL_FOMRS_COUNT; ++i )
+      for( i = 0; i < static_cast< int >( HB_PLURAL_FOMRS_COUNT ); ++i )
       {
          if( hb_strnicmp( szLang, s_plural_forms[ i ].szLangID, 2 ) == 0 )
             return s_plural_forms[ i ].iForm;
@@ -188,7 +188,7 @@ static const char * hb_i18n_pluralformid( int iForm )
 {
    int i;
 
-   for( i = 0; i < ( int ) HB_PLURAL_FOMRS_COUNT; ++i )
+   for( i = 0; i < static_cast< int >( HB_PLURAL_FOMRS_COUNT ); ++i )
    {
       if( s_plural_forms[ i ].iForm == iForm )
          return s_plural_forms[ i ].szLangID;

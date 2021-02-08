@@ -550,7 +550,7 @@ static int hb_comCanRead( PHB_COM pCom, HB_MAXINT timeout )
 
    do
    {
-      int tout = timeout < 0 || timeout > 1000 ? 1000 : ( int ) timeout;
+      int tout = timeout < 0 || timeout > 1000 ? 1000 : static_cast< int >( timeout );
       iResult = poll( &fds, 1, tout );
       hb_comSetOsError( pCom, iResult == -1 );
       if( iResult > 0 && ( fds.revents & POLLIN ) == 0 )
@@ -597,7 +597,7 @@ static int hb_comCanRead( PHB_COM pCom, HB_MAXINT timeout )
 
       FD_ZERO( &rfds );
       FD_SET( pCom->fd, &rfds );
-      iResult = select( ( int ) ( pCom->fd + 1 ), &rfds, NULL, NULL, &tv );
+      iResult = select( static_cast< int >( pCom->fd + 1 ), &rfds, NULL, NULL, &tv );
       hb_comSetOsError( pCom, iResult == -1 );
       if( iResult > 0 && ! FD_ISSET( pCom->fd, &rfds ) )
          iResult = 0;
@@ -631,7 +631,7 @@ static int hb_comCanWrite( PHB_COM pCom, HB_MAXINT timeout )
 
    do
    {
-      int tout = timeout < 0 || timeout > 1000 ? 1000 : ( int ) timeout;
+      int tout = timeout < 0 || timeout > 1000 ? 1000 : static_cast< int >( timeout );
       iResult = poll( &fds, 1, tout );
       hb_comSetOsError( pCom, iResult == -1 );
       if( iResult > 0 && ( fds.revents & POLLOUT ) == 0 )
@@ -678,7 +678,7 @@ static int hb_comCanWrite( PHB_COM pCom, HB_MAXINT timeout )
 
       FD_ZERO( &wfds );
       FD_SET( pCom->fd, &wfds );
-      iResult = select( ( int ) ( pCom->fd + 1 ), NULL, &wfds, NULL, &tv );
+      iResult = select( static_cast< int >( pCom->fd + 1 ), NULL, &wfds, NULL, &tv );
       hb_comSetOsError( pCom, iResult == -1 );
       if( iResult > 0 && ! FD_ISSET( pCom->fd, &wfds ) )
          iResult = 0;

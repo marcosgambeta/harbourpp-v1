@@ -231,7 +231,7 @@
    #define HB_FS_GETDRIVE(n)  do { \
                                     ULONG ulDrive, ulLogical; \
                                     DosQueryCurrentDisk( &ulDrive, &ulLogical ); \
-                                    ( n ) = ( int ) ulDrive - 1; \
+                                    ( n ) = static_cast< int >( ulDrive ) - 1; \
                               } while( 0 )
    #define HB_FS_SETDRIVE(n)  do { DosSetDefaultDisk( ( n ) + 1 ); } while( 0 )
 
@@ -720,7 +720,7 @@ static int hb_fsCanAccess( HB_FHANDLE hFile, HB_MAXINT nTimeOut, HB_BOOL fRead )
    for( ;; )
    {
       HB_BOOL fLast = nTimeOut >= 0 && nTimeOut <= 1000;
-      int tout = fLast ? ( int ) nTimeOut : 1000;
+      int tout = fLast ? static_cast< int >( nTimeOut ) : 1000;
 
       iResult = poll( &fds, 1, tout );
       hb_fsSetIOError( iResult >= 0, 0 );
@@ -856,7 +856,7 @@ int hb_fsPoll( PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut )
       pfds = ( struct pollfd * ) pPollSet;
    else
    {
-      if( iCount <= ( int ) HB_SIZEOFARRAY( fds ) )
+      if( iCount <= static_cast< int >( HB_SIZEOFARRAY( fds ) ) )
          pfds = fds;
       else
          pfds = ( struct pollfd * ) ( pFree = hb_xgrab( sizeof( struct pollfd ) * iCount ) );
@@ -878,7 +878,7 @@ int hb_fsPoll( PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut )
    for( ;; )
    {
       HB_BOOL fLast = nTimeOut >= 0 && nTimeOut <= 1000;
-      int tout = fLast ? ( int ) nTimeOut : 1000;
+      int tout = fLast ? static_cast< int >( nTimeOut ) : 1000;
 
       iResult = poll( pfds, iCount, tout );
       hb_fsSetIOError( iResult >= 0, 0 );
@@ -1853,17 +1853,17 @@ int hb_fsSetDevMode( HB_FHANDLE hFileHandle, int iDevMode )
    switch( iDevMode )
    {
       case FD_TEST:
-         iRet = setmode( ( int ) hFileHandle, O_BINARY );
+         iRet = setmode( static_cast< int >( hFileHandle ), O_BINARY );
          if( iRet != -1 && iRet != O_BINARY )
-            setmode( ( int ) hFileHandle, iRet );
+            setmode( static_cast< int >( hFileHandle ), iRet );
          break;
 
       case FD_BINARY:
-         iRet = setmode( ( int ) hFileHandle, O_BINARY );
+         iRet = setmode( static_cast< int >( hFileHandle ), O_BINARY );
          break;
 
       case FD_TEXT:
-         iRet = setmode( ( int ) hFileHandle, O_TEXT );
+         iRet = setmode( static_cast< int >( hFileHandle ), O_TEXT );
          break;
    }
 
@@ -3520,7 +3520,7 @@ int hb_fsLockTest( HB_FHANDLE hFileHandle, HB_FOFFSET nStart,
       lock_info.l_whence = SEEK_SET;
       lock_info.l_pid    = 0;
       iResult = fcntl( hFileHandle, F_GETLK64, &lock_info ) != -1 ?
-                ( int ) lock_info.l_pid : -1;
+                static_cast< int >( lock_info.l_pid ) : -1;
 #  else
       struct flock lock_info;
 
@@ -3530,7 +3530,7 @@ int hb_fsLockTest( HB_FHANDLE hFileHandle, HB_FOFFSET nStart,
       lock_info.l_whence = SEEK_SET;
       lock_info.l_pid    = 0;
       iResult = fcntl( hFileHandle, F_GETLK, &lock_info ) != -1 ?
-                ( int ) lock_info.l_pid : -1;
+                static_cast< int >( lock_info.l_pid ) : -1;
 #  endif
 }
 #else

@@ -1638,7 +1638,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem,
          switch( pBuffer[ nOffset++ ] )
          {
             case 'I':
-               hb_itemPutNI( pItem, ( int ) HB_GET_BE_UINT64( &pBuffer[ nOffset ] ) );
+               hb_itemPutNI( pItem, static_cast< int >( HB_GET_BE_UINT64( &pBuffer[ nOffset ] ) ) );
                break;
             case 'L':
                hb_itemPutNL( pItem, ( long ) HB_GET_BE_UINT64( &pBuffer[ nOffset ] ) );

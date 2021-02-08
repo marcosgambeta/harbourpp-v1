@@ -992,7 +992,7 @@ int hb_fsProcessValue( HB_FHANDLE hProcess, HB_BOOL fWait )
       if( dwResult == WAIT_OBJECT_0 )
       {
          fError = ! GetExitCodeProcess( hProc, &dwResult );
-         iRetStatus = ! fError ? ( int ) dwResult : -2;
+         iRetStatus = ! fError ? static_cast< int >( dwResult ) : -2;
       }
       hb_fsSetIOError( ! fError, 0 );
       if( ! fError )
@@ -1354,7 +1354,7 @@ int hb_fsProcessRun( const char * pszFileName,
          if( dwResult == WAIT_OBJECT_0 )
          {
             if( GetExitCodeProcess( ( HANDLE ) hb_fsGetOsHandle( hProcess ), &dwResult ) )
-               iResult = ( int ) dwResult;
+               iResult = static_cast< int >( dwResult );
             else
                iResult = -2;
             fFinished = HB_TRUE;

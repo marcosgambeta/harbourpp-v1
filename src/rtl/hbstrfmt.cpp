@@ -85,7 +85,7 @@ static void hb_itemHexStr( PHB_ITEM pItem, char * pStr, HB_BOOL fUpper )
    pStr[ iLen ] = '\0';
    do
    {
-      int iDigit = ( int ) ( nValue & 0x0F );
+      int iDigit = static_cast< int >( nValue & 0x0F );
       pStr[ --iLen ] = ( char ) ( iDigit + ( iDigit < 10 ? '0' :
                                              ( fUpper ? 'A' : 'a' ) - 10 ) );
       nValue >>= 4;
@@ -243,7 +243,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
 
                while( *pStr2 == ' ' )
                   pStr2++;
-               iSize = ( int ) strlen( pStr2 );
+               iSize = static_cast< int >( strlen( pStr2 ) );
                if( *pStr2 == '-' )
                {
                   fSign = 1;
@@ -370,7 +370,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
                }
                while( *pStr2 == ' ' )
                   pStr2++;
-               iSize = ( int ) strlen( pStr2 );
+               iSize = static_cast< int >( strlen( pStr2 ) );
             }
             else
             {
@@ -465,7 +465,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
 
             if( iWidth > 1 )
             {
-               for( i = ( int ) nSize; i < iWidth; i++ )
+               for( i = static_cast< int >( nSize ); i < iWidth; i++ )
                   bufadd( &buffer, " ", 1 );
             }
 

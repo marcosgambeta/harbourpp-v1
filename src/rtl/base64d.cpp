@@ -62,7 +62,7 @@ static signed char base64_decode_value( int value_in )
    };
 
    value_in -= 43;
-   if( value_in < 0 || value_in >= ( int ) HB_SIZEOFARRAY( s_decoding ) )
+   if( value_in < 0 || value_in >= static_cast< int >( HB_SIZEOFARRAY( s_decoding ) ) )
       return -1;
 
    return s_decoding[ value_in ];

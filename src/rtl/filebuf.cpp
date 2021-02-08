@@ -484,7 +484,7 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
    HB_SYMBOL_UNUSED( pFuncs );
 
    fShared = ( nExFlags & ( FO_DENYREAD | FO_DENYWRITE | FO_EXCLUSIVE ) ) == 0;
-   iMode = ( int ) ( nExFlags & ( FO_READ | FO_WRITE | FO_READWRITE ) );
+   iMode = static_cast< int >( nExFlags & ( FO_READ | FO_WRITE | FO_READWRITE ) );
    pszFile = hb_fsExtName( pszFileName, pDefExt, nExFlags, pPaths );
 
    hb_vmUnlock();

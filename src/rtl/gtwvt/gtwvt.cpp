@@ -176,7 +176,7 @@ static PHB_GTWVT hb_gt_wvt_Find( HWND hWnd )
 
    HB_WVT_LOCK();
 
-   while( iCount && iPos < ( int ) HB_SIZEOFARRAY( s_wvtWindows ) )
+   while( iCount && iPos < static_cast< int >( HB_SIZEOFARRAY( s_wvtWindows ) ) )
    {
       if( s_wvtWindows[ iPos ] )
       {
@@ -201,7 +201,7 @@ static HB_BOOL hb_gt_wvt_Alloc( PHB_GTWVT pWVT )
 
    HB_WVT_LOCK();
 
-   if( s_wvtCount < ( int ) HB_SIZEOFARRAY( s_wvtWindows ) )
+   if( s_wvtCount < static_cast< int >( HB_SIZEOFARRAY( s_wvtWindows ) ) )
    {
       int iPos = 0;
       do
@@ -217,7 +217,7 @@ static HB_BOOL hb_gt_wvt_Alloc( PHB_GTWVT pWVT )
          }
          ++iPos;
       }
-      while( iPos < ( int ) HB_SIZEOFARRAY( s_wvtWindows ) );
+      while( iPos < static_cast< int >( HB_SIZEOFARRAY( s_wvtWindows ) ) );
    }
 
    HB_WVT_UNLOCK();
@@ -1641,7 +1641,7 @@ static void hb_gt_wvt_AddCharToInputQueue( PHB_GTWVT pWVT, int iKey )
     * in the buffer - it's Clipper behavior, [druzus]
     */
    pWVT->Keys[ pWVT->keyLastPos = iPos ] = iKey;
-   if( ++iPos >= ( int ) HB_SIZEOFARRAY( pWVT->Keys ) )
+   if( ++iPos >= static_cast< int >( HB_SIZEOFARRAY( pWVT->Keys ) ) )
       iPos = 0;
    if( iPos != pWVT->keyPointerOut )
       pWVT->keyPointerIn = iPos;
@@ -1652,7 +1652,7 @@ static HB_BOOL hb_gt_wvt_GetCharFromInputQueue( PHB_GTWVT pWVT, int * iKey )
    if( pWVT->keyPointerOut != pWVT->keyPointerIn )
    {
       *iKey = pWVT->Keys[ pWVT->keyPointerOut ];
-      if( ++pWVT->keyPointerOut >= ( int ) HB_SIZEOFARRAY( pWVT->Keys ) )
+      if( ++pWVT->keyPointerOut >= static_cast< int >( HB_SIZEOFARRAY( pWVT->Keys ) ) )
          pWVT->keyPointerOut = 0;
 
       return HB_TRUE;
@@ -1817,8 +1817,8 @@ static void hb_gt_wvt_FitSize( PHB_GTWVT pWVT )
                for( n = 0; n < pWVT->COLS; n++ )
                   pWVT->FixedSize[ n ] = pWVT->PTEXTSIZE.x;
 
-               width  = ( ( int ) ( pWVT->PTEXTSIZE.x * pWVT->COLS ) ) + borderWidth;
-               height = ( ( int ) ( pWVT->PTEXTSIZE.y * pWVT->ROWS ) ) + borderHeight;
+               width  = ( static_cast< int >( pWVT->PTEXTSIZE.x * pWVT->COLS ) ) + borderWidth;
+               height = ( static_cast< int >( pWVT->PTEXTSIZE.y * pWVT->ROWS ) ) + borderHeight;
 
                if( pWVT->bMaximized )
                {
@@ -1875,8 +1875,8 @@ static void hb_gt_wvt_FitSize( PHB_GTWVT pWVT )
 
                if( fontWidth < 4 || fontHeight < 8 )
                {
-                  width  = ( ( int ) ( pWVT->PTEXTSIZE.x * pWVT->COLS ) ) + borderWidth;
-                  height = ( ( int ) ( pWVT->PTEXTSIZE.y * pWVT->ROWS ) ) + borderHeight;
+                  width  = ( static_cast< int >( pWVT->PTEXTSIZE.x * pWVT->COLS ) ) + borderWidth;
+                  height = ( static_cast< int >( pWVT->PTEXTSIZE.y * pWVT->ROWS ) ) + borderHeight;
                   SetWindowPos( pWVT->hWnd, NULL, left, top, width, height, SWP_NOZORDER );
                   break;
                }
@@ -1966,11 +1966,11 @@ static void hb_gt_wvt_ResetWindowSize( PHB_GTWVT pWVT, HFONT hFont )
    GetWindowRect( pWVT->hWnd, &wi );
    GetClientRect( pWVT->hWnd, &ci );
 
-   height = ( int ) ( pWVT->PTEXTSIZE.y * pWVT->ROWS );
-   width  = ( int ) ( pWVT->PTEXTSIZE.x * pWVT->COLS );
+   height = static_cast< int >( pWVT->PTEXTSIZE.y * pWVT->ROWS );
+   width  = static_cast< int >( pWVT->PTEXTSIZE.x * pWVT->COLS );
 
-   width  += ( int ) ( wi.right - wi.left - ci.right );
-   height += ( int ) ( wi.bottom - wi.top - ci.bottom );
+   width  += static_cast< int >( wi.right - wi.left - ci.right );
+   height += static_cast< int >( wi.bottom - wi.top - ci.bottom );
 
    /* Center the window within the CLIENT area on the screen
       but only if pWVT->CentreWindow == HB_TRUE */
@@ -2552,7 +2552,7 @@ static HB_BOOL hb_gt_wvt_KeyEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, 
                if( iFlags & HB_KF_CTRL )
                {
                   pWVT->IgnoreWM_SYSCHAR = HB_TRUE;
-                  iKey = ( int ) wParam - VK_NUMPAD0 + '0';
+                  iKey = static_cast< int >( wParam ) - VK_NUMPAD0 + '0';
                }
                else if( iFlags == HB_KF_ALT || iFlags == HB_KF_ALTGR )
                   iFlags = 0; /* for ALT + <ASCII_VALUE_FROM_KEYPAD> */
@@ -2626,7 +2626,7 @@ static HB_BOOL hb_gt_wvt_KeyEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, 
          iFlags = hb_gt_wvt_UpdateKeyFlags( iFlags );
          if( ! pWVT->IgnoreWM_SYSCHAR )
          {
-            iKey = ( int ) wParam;
+            iKey = static_cast< int >( wParam );
 
             if( ( iFlags & HB_KF_CTRL ) != 0 && iKey >= 0 && iKey < 32 )
             {

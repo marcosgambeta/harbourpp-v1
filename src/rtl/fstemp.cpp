@@ -158,7 +158,7 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
       if( pszDir && pszDir[ 0 ] != '\0' )
       {
          hb_strncpy( pszName, pszDir, HB_PATH_MAX - 1 );
-         iLen = ( int ) strlen( pszName );
+         iLen = static_cast< int >( strlen( pszName ) );
          if( pszName[ iLen - 1 ] != HB_OS_PATH_DELIM_CHR &&
              iLen < HB_PATH_MAX - 1 )
          {
@@ -172,9 +172,9 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
       if( pszPrefix )
          hb_strncat( pszName, pszPrefix, HB_PATH_MAX - 1 );
 
-      iLen = ( int ) strlen( pszName );
+      iLen = static_cast< int >( strlen( pszName ) );
       if( iLen > ( HB_PATH_MAX - 1 ) - 6 -
-                 ( pszExt ? ( int ) strlen( pszExt ) : 0 ) )
+                 ( pszExt ? static_cast< int >( strlen( pszExt ) ) : 0 ) )
       {
          fd = FS_ERROR;
          break;
@@ -197,9 +197,9 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
          {
             hb_strncat( pszName, pszExt, HB_PATH_MAX - 1 );
 #if defined( HB_USE_LARGEFILE64 )
-            fd = ( HB_FHANDLE ) mkstemps64( pszName, ( int ) strlen( pszExt ) );
+            fd = ( HB_FHANDLE ) mkstemps64( pszName, static_cast< int >( strlen( pszExt ) ) );
 #else
-            fd = ( HB_FHANDLE ) mkstemps( pszName, ( int ) strlen( pszExt ) );
+            fd = ( HB_FHANDLE ) mkstemps( pszName, static_cast< int >( strlen( pszExt ) ) );
 #endif
          }
          else
@@ -222,7 +222,7 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
          {
             int n;
             d = d * 36;
-            n = ( int ) d;
+            n = static_cast< int >( d );
             d = modf( d, &x );
             pszName[ iLen++ ] = ( char ) ( n + ( n > 9 ? 'a' - 10 : '0' ) );
          }
@@ -431,7 +431,7 @@ HB_ERRCODE hb_fsTempDir( char * pszTempDir )
 
    if( nResult == 0 && pszTempDir[ 0 ] != '\0' )
    {
-      int len = ( int ) strlen( pszTempDir );
+      int len = static_cast< int >( strlen( pszTempDir ) );
       if( pszTempDir[ len - 1 ] != HB_OS_PATH_DELIM_CHR &&
           len < HB_PATH_MAX - 1 )
       {

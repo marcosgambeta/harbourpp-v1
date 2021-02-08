@@ -2719,14 +2719,14 @@ static void hb_gt_xwc_ProcessKey( PXWND_DEF wnd, XKeyEvent * evt )
 #  ifdef X_HAVE_UTF8_STRING
    if( wnd->ic )
    {
-      i = Xutf8LookupString( wnd->ic, evt, buf, ( int ) sizeof( buf ), &outISO, &status_return );
+      i = Xutf8LookupString( wnd->ic, evt, buf, static_cast< int >( sizeof( buf ) ), &outISO, &status_return );
       buf[ HB_MAX( i, 0 ) ] = '\0';
       printf( "UTF-8: KeySym=%lx, keySymISO=%lx, keystr[%d]='%s'\n", out, outISO, i, buf ); fflush( stdout );
    }
    else
 #  endif
    {
-      i = XLookupString( evt, buf, ( int ) sizeof( buf ), &outISO, NULL );
+      i = XLookupString( evt, buf, static_cast< int >( sizeof( buf ) ), &outISO, NULL );
       buf[ HB_MAX( i, 0 ) ] = '\0';
       printf( "KeySym=%lx, keySymISO=%lx, keystr[%d]='%s'\n", out, outISO, i, buf ); fflush( stdout );
    }
@@ -2932,11 +2932,11 @@ static void hb_gt_xwc_ProcessKey( PXWND_DEF wnd, XKeyEvent * evt )
       we not check all modifiers in all possible keyboards */
 #ifdef X_HAVE_UTF8_STRING
    if( wnd->ic )
-      i = Xutf8LookupString( wnd->ic, evt, buf, ( int ) sizeof( buf ), &outISO, &status_return );
+      i = Xutf8LookupString( wnd->ic, evt, buf, static_cast< int >( sizeof( buf ) ), &outISO, &status_return );
    else
 #endif
    {
-      i = XLookupString( evt, buf, ( int ) sizeof( buf ), &outISO, NULL );
+      i = XLookupString( evt, buf, static_cast< int >( sizeof( buf ) ), &outISO, NULL );
 #ifndef HB_XWC_USE_LOCALE
       if( i <= 0 )
       {
@@ -3608,11 +3608,11 @@ static HB_BOOL hb_gt_xwc_AllocColor( PXWND_DEF wnd, XColor * pColor )
                 * as the objective function, this accounts for differences
                 * in the color sensitivity of the eye.
                 */
-               dDiff = 0.30 * ( ( ( int ) pColor->red   ) - ( int ) colorTable[ i ].red );
+               dDiff = 0.30 * ( ( static_cast< int >( pColor->red )   ) - static_cast< int >( colorTable[ i ].red ) );
                dDistance = dDiff * dDiff;
-               dDiff = 0.61 * ( ( ( int ) pColor->green ) - ( int ) colorTable[ i ].green );
+               dDiff = 0.61 * ( ( static_cast< int >( pColor->green ) ) - static_cast< int >( colorTable[ i ].green ) );
                dDistance += dDiff * dDiff;
-               dDiff = 0.11 * ( ( ( int ) pColor->blue  ) - ( int ) colorTable[ i ].blue );
+               dDiff = 0.11 * ( ( static_cast< int >( pColor->blue )  ) - static_cast< int >( colorTable[ i ].blue ) );
                dDistance += dDiff * dDiff;
                if( dDistance < dClosestColorDist )
                {
@@ -4313,7 +4313,7 @@ static void hb_gt_xwc_ProcessMessages( PXWND_DEF wnd, HB_BOOL fSync )
       if( fSync )
          XSync( wnd->dpy, False );
 
-      for( i = 0; i < ( int ) HB_SIZEOFARRAY( event_types ); ++i )
+      for( i = 0; i < static_cast< int >( HB_SIZEOFARRAY( event_types ) ); ++i )
       {
          if( event_types[ i ] == 0 ?
              XCheckWindowEvent( wnd->dpy, wnd->window, XWC_STD_MASK, &evt ) :
@@ -4516,7 +4516,7 @@ static HB_BOOL hb_gt_xwc_isUTF8( void )
 
    if( szLang )
    {
-      int i = ( int ) strlen( szLang );
+      int i = static_cast< int >( strlen( szLang ) );
 
       if( i > 5 )
       {
@@ -5131,8 +5131,8 @@ static void hb_gt_xwc_Tone( PHB_GT pGT, double dFrequency, double dDuration )
    {
       XKeyboardControl XkbCtrl;
 
-      XkbCtrl.bell_pitch    = ( int ) dFrequency;
-      XkbCtrl.bell_duration = ( int ) ( dDuration * 1000 );
+      XkbCtrl.bell_pitch    = static_cast< int >( dFrequency );
+      XkbCtrl.bell_duration = static_cast< int >( dDuration * 1000 );
 
       HB_XWC_XLIB_LOCK( wnd->dpy );
       XChangeKeyboardControl( wnd->dpy, KBBellPitch | KBBellDuration, &XkbCtrl );

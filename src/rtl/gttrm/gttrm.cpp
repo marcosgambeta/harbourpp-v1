@@ -1464,7 +1464,7 @@ static void hb_gt_trm_LinuxTone( PHB_GTTRM pTerm, double dFrequency, double dDur
       pTerm->iACSC = 0;
    }
    hb_snprintf( escseq, sizeof( escseq ), "\033[10;%d]\033[11;%d]\007",
-                ( int ) dFrequency, ( int ) ( dDuration * 1000.0 / 18.2 ) );
+                static_cast< int >( dFrequency ), static_cast< int >( dDuration * 1000.0 / 18.2 ) );
    hb_gt_trm_termOut( pTerm, escseq, strlen( escseq ) );
    hb_gt_trm_termFlush( pTerm );
 
@@ -1936,7 +1936,7 @@ static void hb_gt_trm_BsdTone( PHB_GTTRM pTerm, double dFrequency, double dDurat
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_trm_BsdTone(%p,%lf,%lf)", ( void * ) pTerm, dFrequency, dDuration ) );
 
    hb_snprintf( escseq, sizeof( escseq ), "\033[=%d;%dB\007",
-                ( int ) dFrequency, ( int ) ( dDuration * 10.0 / 18.2 ) );
+                static_cast< int >( dFrequency ), static_cast< int >( dDuration * 10.0 / 18.2 ) );
    hb_gt_trm_termOut( pTerm, escseq, strlen( escseq ) );
    hb_gt_trm_termFlush( pTerm );
 
@@ -3742,7 +3742,7 @@ static void hb_gt_trm_SetBlink( PHB_GT pGT, HB_BOOL fBlink )
 {
    PHB_GTTRM pTerm;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_trm_SetBlink(%p,%d)", ( void * ) pGT, ( int ) fBlink ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_trm_SetBlink(%p,%d)", ( void * ) pGT, static_cast< int >( fBlink ) ) );
 
    pTerm = HB_GTTRM_GET( pGT );
 
@@ -3773,7 +3773,7 @@ static void hb_gt_trm_SetBlink( PHB_GT pGT, HB_BOOL fBlink )
 
 static HB_BOOL hb_gt_trm_SetDispCP( PHB_GT pGT, const char * pszTermCDP, const char * pszHostCDP, HB_BOOL fBox )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_trm_SetDispCP(%p,%s,%s,%d)", ( void * ) pGT, pszTermCDP, pszHostCDP, ( int ) fBox ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_trm_SetDispCP(%p,%s,%s,%d)", ( void * ) pGT, pszTermCDP, pszHostCDP, static_cast< int >( fBox ) ) );
 
    if( HB_GTSUPER_SETDISPCP( pGT, pszTermCDP, pszHostCDP, fBox ) )
    {

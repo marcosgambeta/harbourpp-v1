@@ -554,7 +554,7 @@ HB_ERRCODE hb_gtSetSnowFlag( HB_BOOL fNoSnow )
 {
    PHB_GT pGT;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gtSetSnowFlag(%d)", ( int ) fNoSnow ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gtSetSnowFlag(%d)", static_cast< int >( fNoSnow ) ) );
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -740,7 +740,7 @@ HB_ERRCODE hb_gtSetBlink( HB_BOOL fBlink )
 {
    PHB_GT pGT;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gtSetBlink(%d)", ( int ) fBlink ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gtSetBlink(%d)", static_cast< int >( fBlink ) ) );
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -1266,7 +1266,7 @@ HB_ERRCODE hb_gtPutScrChar( int iRow, int iCol, int iColor, HB_BYTE bAttr, HB_US
    HB_ERRCODE errCode = HB_FAILURE;
    PHB_GT pGT;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gtPutScrChar(%d, %d, %d, %d, %hu)", iRow, iCol, iColor, ( int ) bAttr, usChar ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gtPutScrChar(%d, %d, %d, %d, %hu)", iRow, iCol, iColor, static_cast< int >( bAttr ), usChar ) );
 
    pGT = hb_gt_Base();
    if( pGT )

@@ -715,7 +715,7 @@ int hb_sockexSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD,
          hb_arraySize( pArrayWR, nWrite );
       if( fSetEX && pArrayEX )
          hb_arraySize( pArrayEX, 0 );
-      iResult = ( int ) ( nRead + nWrite );
+      iResult = static_cast< int >( nRead + nWrite );
    }
    else
    {
@@ -799,21 +799,21 @@ void hb_socekxParamsGetStd( PHB_ITEM pParams,
           HB_IS_STRING( pItem ) )
       {
          *pKeydata = hb_itemGetCPtr( pItem );
-         *pKeylen  = ( int ) hb_itemGetCLen( pItem );
+         *pKeylen  = static_cast< int >( hb_itemGetCLen( pItem ) );
       }
       else if( pKeydata && pKeylen &&
                ( pItem = hb_hashGetCItemPtr( pParams, "pass" ) ) != NULL &&
                HB_IS_STRING( pItem ) )
       {
          *pKeydata = hb_itemGetCPtr( pItem );
-         *pKeylen  = ( int ) hb_itemGetCLen( pItem );
+         *pKeylen  = static_cast< int >( hb_itemGetCLen( pItem ) );
       }
       if( pIV && pIVlen &&
           ( pItem = hb_hashGetCItemPtr( pParams, "iv" ) ) != NULL &&
           HB_IS_STRING( pItem ) )
       {
          *pIV    = hb_itemGetCPtr( pItem );
-         *pIVlen = ( int ) hb_itemGetCLen( pItem );
+         *pIVlen = static_cast< int >( hb_itemGetCLen( pItem ) );
       }
       if( pLevel &&
           ( pItem = hb_hashGetCItemPtr( pParams, "zlib" ) ) != NULL &&

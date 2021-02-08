@@ -3029,9 +3029,9 @@ static PHB_CODEPAGE hb_buildCodePage( const char * id, const char * info,
       {
          if( sort[ i ] == 0 )
          {
-            if( i < ( int ) ucUp2 )
+            if( i < static_cast< int >( ucUp2 ) )
                ++iUp;
-            else if( i < ( int ) ucLo2 )
+            else if( i < static_cast< int >( ucLo2 ) )
                ++iLo;
          }
       }
@@ -3039,9 +3039,9 @@ static PHB_CODEPAGE hb_buildCodePage( const char * id, const char * info,
       {
          if( sort[ i ] == 0 )
          {
-            if( i < ( int ) ucUp2 )
+            if( i < static_cast< int >( ucUp2 ) )
                iAdd = ++iSort1;
-            else if( i < ( int ) ucLo2 )
+            else if( i < static_cast< int >( ucLo2 ) )
                iAdd = ++iSort2 + iSortUp + iUp;
             else
                iAdd = ++iSort3 + iUp + iSortLo + iLo;

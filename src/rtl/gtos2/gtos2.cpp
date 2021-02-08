@@ -279,8 +279,8 @@ static void hb_gt_os2_mouse_GetPos( PHB_GT pGT, int * row, int * col )
    {
       PTRLOC pos;
       MouGetPtrPos( &pos, s_uMouHandle );
-      *row = ( int ) pos.row;
-      *col = ( int ) pos.col;
+      *row = static_cast< int >( pos.row );
+      *col = static_cast< int >( pos.col );
    }
 }
 
@@ -420,7 +420,7 @@ static int hb_gt_os2_mouse_CountButton( PHB_GT pGT )
    if( s_uMouHandle )
       MouGetNumButtons( &usButtons, s_uMouHandle );
 
-   return ( int ) usButtons;
+   return static_cast< int >( usButtons );
 }
 
 static void hb_gt_os2_GetCursorPosition( int * piRow, int * piCol )
@@ -451,7 +451,7 @@ static void hb_gt_os2_SetCursorSize( char start, char end, int visible )
 {
    VIOCURSORINFO vi;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_os2_SetCursorSize(%d, %d, %d)", ( int ) start, ( int ) end, visible ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_os2_SetCursorSize(%d, %d, %d)", static_cast< int >( start ), static_cast< int >( end ), visible ) );
 
    vi.yStart = start;
    vi.cEnd = end;
@@ -699,11 +699,11 @@ static int hb_gt_os2_ReadKey( PHB_GT pGT, int iEventMask )
       /* extended key codes have 00h or E0h as chChar */
       if( ( s_key->fbStatus & KBDTRF_EXTENDED_CODE ) &&
           ( s_key->chChar == 0x00 || s_key->chChar == 0xE0 ) )
-         iKey = hb_gt_dos_keyCodeTranslate( ( int ) s_key->chScan + 256,
+         iKey = hb_gt_dos_keyCodeTranslate( static_cast< int >( s_key->chScan ) + 256,
                                             iFlags, HB_GTSELF_CPIN( pGT ) );
       else if( s_key->fbStatus & KBDTRF_FINAL_CHAR_IN )
       {
-         iKey = ( int ) s_key->chChar;
+         iKey = static_cast< int >( s_key->chChar );
          if( ( iFlags & HB_KF_CTRL ) != 0 && ( iKey >= 0 && iKey < 32 ) )
          {
             iKey += 'A' - 1;
@@ -767,7 +767,7 @@ static void hb_gt_os2_SetBlink( PHB_GT pGT, HB_BOOL fBlink )
 {
    VIOINTENSITY vi;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_os2_SetBlink(%p,%d)", ( void * ) pGT, ( int ) fBlink ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_os2_SetBlink(%p,%d)", ( void * ) pGT, static_cast< int >( fBlink ) ) );
 
    HB_SYMBOL_UNUSED( pGT );
 

@@ -250,7 +250,7 @@ void hb_conOutAlt( const char * szStr, HB_SIZE nLen )
    {
       /* Print to printer if SET PRINTER ON and valid printer file */
       hb_fileWrite( pFile, szStr, nLen, -1 );
-      hb_prnPos()->col += ( int ) nLen;
+      hb_prnPos()->col += static_cast< int >( nLen );
    }
 }
 
@@ -265,7 +265,7 @@ static void hb_conOutDev( const char * szStr, HB_SIZE nLen )
    {
       /* Display to printer if SET DEVICE TO PRINTER and valid printer file */
       hb_fileWrite( pFile, szStr, nLen, -1 );
-      hb_prnPos()->col += ( int ) nLen;
+      hb_prnPos()->col += static_cast< int >( nLen );
    }
    else
       /* Otherwise, display to console */
@@ -362,7 +362,7 @@ HB_FUNC( QOUT )
       {
          char buf[ 256 ];
 
-         if( pPrnPos->col > ( int ) sizeof( buf ) )
+         if( pPrnPos->col > static_cast< int >( sizeof( buf ) ) )
          {
             char * pBuf = ( char * ) hb_xgrab( pPrnPos->col );
             memset( pBuf, ' ', pPrnPos->col );
@@ -397,12 +397,12 @@ HB_FUNC( __EJECT ) /* Ejects the current page from the printer */
 
 HB_FUNC( PROW ) /* Returns the current printer row position */
 {
-   hb_retni( ( int ) hb_prnPos()->row );
+   hb_retni( static_cast< int >( hb_prnPos()->row ) );
 }
 
 HB_FUNC( PCOL ) /* Returns the current printer row position */
 {
-   hb_retni( ( int ) hb_prnPos()->col );
+   hb_retni( static_cast< int >( hb_prnPos()->col ) );
 }
 
 static void hb_conDevPos( int iRow, int iCol )
@@ -441,7 +441,7 @@ static void hb_conDevPos( int iRow, int iCol )
 
             while( pPrnPos->row < iPRow )
             {
-               if( iPtr + s_iCrLfLen > ( int ) sizeof( buf ) )
+               if( iPtr + s_iCrLfLen > static_cast< int >( sizeof( buf ) ) )
                {
                   hb_fileWrite( pFile, buf, ( HB_USHORT ) iPtr, -1 );
                   iPtr = 0;
@@ -460,7 +460,7 @@ static void hb_conDevPos( int iRow, int iCol )
 
          while( pPrnPos->col < iPCol )
          {
-            if( iPtr == ( int ) sizeof( buf ) )
+            if( iPtr == static_cast< int >( sizeof( buf ) ) )
             {
                hb_fileWrite( pFile, buf, ( HB_USHORT ) iPtr, -1 );
                iPtr = 0;

@@ -363,10 +363,10 @@ static int hb_gt_std_ReadKey( PHB_GT pGT, int iEventMask )
          ch = hb_gt_dos_keyCodeTranslate( ch, 0, HB_GTSELF_CPIN( pGT ) );
       }
    }
-   else if( ! _eof( ( int ) pGTSTD->hStdin ) )
+   else if( ! _eof( static_cast< int >( pGTSTD->hStdin ) ) )
    {
       HB_BYTE bChar;
-      if( _read( ( int ) pGTSTD->hStdin, &bChar, 1 ) == 1 )
+      if( _read( static_cast< int >( pGTSTD->hStdin ), &bChar, 1 ) == 1 )
          ch = bChar;
    }
 #elif defined( HB_OS_WIN )

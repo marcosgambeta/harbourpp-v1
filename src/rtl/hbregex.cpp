@@ -108,7 +108,7 @@ static int hb_regexec( PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen,
    int iResult, i;
 
    iResult = pcre_exec( pRegEx->re_pcre, NULL /* pcre_extra */,
-                        szString, ( int ) nLen, 0 /* startoffset */,
+                        szString, static_cast< int >( nLen ), 0 /* startoffset */,
                         pRegEx->iEFlags, aMatches, HB_REGMATCH_SIZE( iMatches ) );
    if( iResult == 0 )
    {

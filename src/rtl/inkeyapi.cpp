@@ -212,7 +212,7 @@ int hb_inkey( HB_BOOL fWait, double dSeconds, int iEventMask )
    int iKey = 0;
    PHB_GT pGT;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_inkey(%d, %f, %d)", ( int ) fWait, dSeconds, iEventMask ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_inkey(%d, %f, %d)", static_cast< int >( fWait ), dSeconds, iEventMask ) );
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -411,7 +411,7 @@ HB_SIZE hb_inkeyKeyString( int iKey, char * buffer, HB_SIZE nSize )
 
          iKey = HB_INKEY_VALUE( iKey );
 
-         if( iKey > 0 && iKey <= ( int ) HB_SIZEOFARRAY( s_transKeyFun ) )
+         if( iKey > 0 && iKey <= static_cast< int >( HB_SIZEOFARRAY( s_transKeyFun ) ) )
             iKey = s_inkeyTransChar( iKey, iFlags, &s_transKeyFun[ iKey - 1 ] );
          else if( iKey >= 32 && iKey <= 127 )
             iKey = s_inkeyTransChar( iKey, iFlags, &s_transKeyStd[ iKey - 32 ] );
@@ -440,7 +440,7 @@ int hb_inkeyKeyStd( int iKey )
       {
          iKey = HB_INKEY_VALUE( iKey );
 
-         if( iKey > 0 && iKey <= ( int ) HB_SIZEOFARRAY( s_transKeyFun ) )
+         if( iKey > 0 && iKey <= static_cast< int >( HB_SIZEOFARRAY( s_transKeyFun ) ) )
             iKey = s_inkeyTransChar( iKey, iFlags, &s_transKeyFun[ iKey - 1 ] );
          else if( iKey >= 32 && iKey <= 127 )
             iKey = s_inkeyTransChar( iKey, iFlags, &s_transKeyStd[ iKey - 32 ] );
@@ -506,7 +506,7 @@ int hb_inkeyKeyExt( int iKey )
    if( HB_INKEY_ISKEY( iKey ) )
    {
       iValue = HB_INKEY_VALUE( iKey );
-      if( iValue < 1 || iValue > ( int ) HB_SIZEOFARRAY( s_transKeyFun ) )
+      if( iValue < 1 || iValue > static_cast< int >( HB_SIZEOFARRAY( s_transKeyFun ) ) )
          iValue = 0;
    }
 

@@ -300,7 +300,7 @@ static PHB_ITEM hb_u64ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
          break;
 
       case HB_DYN_CTYPE_INT:
-         hb_itemPutNI( pItem, ( int ) value.t.n64 );
+         hb_itemPutNI( pItem, static_cast< int >( value.t.n64 ) );
          break;
 
       case HB_DYN_CTYPE_INT_UNSIGNED:
@@ -678,7 +678,7 @@ static PHB_ITEM hb_u32ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
          break;
 
       case HB_DYN_CTYPE_INT:
-         hb_itemPutNI( pItem, ( int ) value.t.n32 );
+         hb_itemPutNI( pItem, static_cast< int >( value.t.n32 ) );
          break;
 
       case HB_DYN_CTYPE_INT_UNSIGNED:
