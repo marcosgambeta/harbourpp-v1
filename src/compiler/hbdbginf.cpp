@@ -100,7 +100,7 @@ PHB_DEBUGINFO hb_compGetDebugInfo( HB_COMP_DECL )
                   int i;
 
                   ptr = strrchr( pszModuleName, ':' );
-                  i = ptr ? ( int ) ( ptr - pszModuleName ) : ( int ) strlen( pszModuleName );
+                  i = ptr ? static_cast< int >( ptr - pszModuleName ) : static_cast< int >( strlen( pszModuleName ) );
 
                   pInfo = pLineInfo;
                   while( pInfo != NULL )

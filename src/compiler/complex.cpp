@@ -442,7 +442,7 @@ static int hb_comp_dayTimeDecode( PHB_COMP_LEX pLex, PHB_PP_TOKEN pToken,
 
       if( pTime )
       {
-         lDate = hb_dateEncode( ( int ) lYear, ( int ) lMonth, ( int ) lDay );
+         lDate = hb_dateEncode( static_cast< int >( lYear ), static_cast< int >( lMonth ), static_cast< int >( lDay ) );
          if( lDate != 0 || ( lYear == 0 && lMonth == 0 && lDay == 0 ) )
          {
             iType = NUM_DATE;
@@ -531,7 +531,7 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
             pLex->iClose = -1;
             return ';';
          }
-         return ( pLex->iClose & 1 ) ? ';' : ( int ) ENDERR;
+         return ( pLex->iClose & 1 ) ? ';' : static_cast< int >( ENDERR );
       }
    }
 

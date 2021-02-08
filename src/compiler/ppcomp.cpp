@@ -118,8 +118,8 @@ static HB_BOOL hb_pp_CompilerSwitch( void * cargo, const char * szSwitch,
 
    iValue = *piValue;
 
-   i = ( int ) strlen( szSwitch );
-   if( i > 1 && ( ( int ) ( szSwitch[ i - 1 ] - '0' ) ) == iValue )
+   i = static_cast< int >( strlen( szSwitch ) );
+   if( i > 1 && ( static_cast< int >( szSwitch[ i - 1 ] - '0' ) ) == iValue )
       --i;
 
    if( i == 1 )
@@ -381,7 +381,7 @@ static void hb_pp_fileIncluded( void * cargo, const char * szFileName )
       pIncFilePtr = &( *pIncFilePtr )->pNext;
    }
 
-   iLen = ( int ) strlen( szFileName );
+   iLen = static_cast< int >( strlen( szFileName ) );
    pIncFile = ( PHB_INCLST ) hb_xgrab( sizeof( HB_INCLST ) + iLen );
    pIncFile->pNext = NULL;
    memcpy( pIncFile->szFileName, szFileName, iLen + 1 );

@@ -117,7 +117,7 @@ static void hb_compGenCStrData( FILE * yyc, const HB_BYTE * pText, HB_SIZE nLen,
       {
          if( ( nPos & 0x0F ) == 0 )
             fprintf( yyc, "\n\t\t" );
-         fprintf( yyc, "%d,", ( int ) pText[ nPos ] );
+         fprintf( yyc, "%d,", static_cast< int >( pText[ nPos ] ) );
       }
       fprintf( yyc, "0 };\n\t\thb_xvmPushString" );
       if( iMethod < 0 )

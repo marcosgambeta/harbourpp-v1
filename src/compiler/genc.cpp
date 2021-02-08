@@ -74,7 +74,7 @@ static void hb_compDumpFindCFunc( HB_COMP_DECL )
 
                         while( HB_ISNEXTIDCHAR( *pszCCode ) )
                            ++pszCCode;
-                        len = ( int ) ( pszCCode - pszName );
+                        len = static_cast< int >( pszCCode - pszName );
                         while( HB_ISSPACE( *pszCCode ) )
                            ++pszCCode;
                         if( *pszCCode == ')' )
@@ -267,7 +267,7 @@ void hb_compGenCCode( HB_COMP_DECL, PHB_FNAME pFileName )       /* generates the
       hb_strncpyUpper( szFileName, pFileName->szName, sizeof( szFileName ) - 1 );
       /* replace non ID characters in name of local symbol table by '_' */
       {
-         int iLen = ( int ) strlen( szFileName ), i;
+         int iLen = static_cast< int >( strlen( szFileName ) ), i;
 
          for( i = 0; i < iLen; i++ )
          {
@@ -1541,7 +1541,7 @@ static HB_GENC_FUNC( hb_p_pushdouble )
 
    fprintf( cargo->yyc, "\tHB_P_PUSHDOUBLE," );
    ++nPCodePos;
-   for( i = 0; i < ( int ) ( sizeof( double ) + sizeof( HB_BYTE ) + sizeof( HB_BYTE ) ); ++i )
+   for( i = 0; i < static_cast< int >( sizeof( double ) + sizeof( HB_BYTE ) + sizeof( HB_BYTE ) ); ++i )
    {
       fprintf( cargo->yyc, " %u,", ( HB_UCHAR ) pFunc->pCode[ nPCodePos + i ] );
    }
@@ -1597,7 +1597,7 @@ static HB_GENC_FUNC( hb_p_pushlocal )
             pFunc->pCode[ nPCodePos + 2 ] );
    if( cargo->bVerbose )
    {
-      int iVar = ( int ) HB_PCODE_MKSHORT( &pFunc->pCode[ nPCodePos + 1 ] );
+      int iVar = static_cast< int >( HB_PCODE_MKSHORT( &pFunc->pCode[ nPCodePos + 1 ] ) );
       hb_compGenCLocalName( pFunc, iVar, nPCodePos, cargo );
    }
    fprintf( cargo->yyc, "\n" );
@@ -1624,7 +1624,7 @@ static HB_GENC_FUNC( hb_p_pushlocalref )
             pFunc->pCode[ nPCodePos + 2 ] );
    if( cargo->bVerbose )
    {
-      int iVar = ( int ) HB_PCODE_MKSHORT( &pFunc->pCode[ nPCodePos + 1 ] );
+      int iVar = static_cast< int >( HB_PCODE_MKSHORT( &pFunc->pCode[ nPCodePos + 1 ] ) );
       hb_compGenCLocalName( pFunc, iVar, nPCodePos, cargo );
    }
    fprintf( cargo->yyc, "\n" );
@@ -2760,7 +2760,7 @@ static void hb_compGenCCompact( PHB_HFUNC pFunc, FILE * yyc )
       }
 
       /* Displaying as decimal is more compact than hex */
-      fprintf( yyc, "%d", ( int ) pFunc->pCode[ nPCodePos++ ] );
+      fprintf( yyc, "%d", static_cast< int >( pFunc->pCode[ nPCodePos++ ] ) );
    }
 
    if( nChar != 0 )
