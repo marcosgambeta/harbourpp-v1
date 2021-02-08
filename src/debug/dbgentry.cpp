@@ -750,7 +750,7 @@ static void hb_dbgAddModule( const char * szName )
 
    szName = hb_dbgStripModuleName( szName );
    szFuncName = strrchr( szName, ':' );
-   iLen = szFuncName ? ( int ) ( szFuncName - szName ) : ( int ) strlen( szName );
+   iLen = szFuncName ? static_cast< int >( szFuncName - szName ) : static_cast< int >( strlen( szName ) );
    szModuleName = hb_strndup( szName, iLen );
 
    HB_DBGCOMMON_LOCK();
