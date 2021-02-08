@@ -81,7 +81,7 @@ void * hb_xmemcpy( void * pDestArg, const void * pSourceArg, HB_SIZE nLen )
       }
       else
       {
-         iCopySize = ( int ) nRemaining;
+         iCopySize = static_cast< int >( nRemaining );
          nRemaining = 0;
       }
       memcpy( pDest, pSource, iCopySize );
@@ -115,7 +115,7 @@ void * hb_xmemset( void * pDestArg, int iFill, HB_SIZE nLen )
       }
       else
       {
-         iSetSize = ( int ) nRemaining;
+         iSetSize = static_cast< int >( nRemaining );
          nRemaining = 0;
       }
       memset( pDest, iFill, iSetSize );

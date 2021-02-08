@@ -125,8 +125,8 @@ double hb_get_ieee754( const HB_BYTE * ptr )
 
    l1 = HB_GET_LE_UINT32( ptr );
    l2 = HB_GET_LE_UINT32( ptr + 4 );
-   iSig = ( int ) ( l2 >> ( HB_MANTISSA_BITS + HB_EXPONENT_BITS - 32 ) ) & 1;
-   iExp = ( int ) ( ( l2 >> ( HB_MANTISSA_BITS - 32 ) ) & HB_EXPONENT_MASK );
+   iSig = static_cast< int >( l2 >> ( HB_MANTISSA_BITS + HB_EXPONENT_BITS - 32 ) ) & 1;
+   iExp = static_cast< int >( ( l2 >> ( HB_MANTISSA_BITS - 32 ) ) & HB_EXPONENT_MASK );
    l2 &= ( ( HB_U32 ) 1 << ( HB_MANTISSA_BITS - 32 ) ) - 1;
 
    if( ( l1 | l2 | iExp ) != 0 )
@@ -140,8 +140,8 @@ double hb_get_ieee754( const HB_BYTE * ptr )
    HB_TRACE( HB_TR_DEBUG, ( "hb_get_ieee754(%p)", ( const void * ) ptr ) );
 
    ll = HB_GET_LE_UINT64( ptr );
-   iSig = ( int ) ( ll >> ( HB_MANTISSA_BITS + HB_EXPONENT_BITS ) ) & 1;
-   iExp = ( int ) ( ( ll >> HB_MANTISSA_BITS ) & HB_EXPONENT_MASK );
+   iSig = static_cast< int >( ll >> ( HB_MANTISSA_BITS + HB_EXPONENT_BITS ) ) & 1;
+   iExp = static_cast< int >( ( ll >> HB_MANTISSA_BITS ) & HB_EXPONENT_MASK );
    ll &= HB_MANTISSA_MASK;
    if( ( ll | iExp ) != 0 )
       ll |= ( HB_U64 ) 1 << HB_MANTISSA_BITS;

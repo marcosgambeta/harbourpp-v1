@@ -725,9 +725,9 @@ static size_t put_str( char *buffer, size_t bufsize, size_t size,
    if( ! str )
       str = "(null)";
    if( precision < 0 )
-      precision = ( int ) strlen( str );
+      precision = static_cast< int >( strlen( str ) );
    else if( precision > 0 )
-      precision = ( int ) _hb_strnlen( str, precision );
+      precision = static_cast< int >( _hb_strnlen( str, precision ) );
 
    width -= precision;
    if( ( flags & _F_LEFTADJUSTED ) == 0 )
@@ -1355,7 +1355,7 @@ int hb_vsnprintf( char * buffer, size_t bufsize, const char * format, va_list ap
                       * corruption by programmers typo in pattern so if it's
                       * not strictly necessary it's good to disable it.
                       */
-                     *( va_arg_n( args, _x_intptr, param ) ) = ( int ) size;
+                     *( va_arg_n( args, _x_intptr, param ) ) = static_cast< int >( size );
                      continue;
                   case '%':   /* store % consuming arguments % */
                      break;
@@ -1395,7 +1395,7 @@ int hb_vsnprintf( char * buffer, size_t bufsize, const char * format, va_list ap
    if( bufsize )
       buffer[ bufsize - 1 ] = 0;
 
-   return ( int ) ( size - 1 );
+   return static_cast< int >( size - 1 );
 }
 
 #else /* defined( HB_USE_CRTL_SNPRINTF ) */
