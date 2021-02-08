@@ -79,7 +79,7 @@ static void hb_pp_writeToken( FILE * fout, PHB_PP_TOKEN pToken,
    {
       int iOptional = hb_pp_writeTokenCount( pToken->pMTokens ), i;
 
-      i = ( int ) strlen( szName );
+      i = static_cast< int >( strlen( szName ) );
       if( pToken->pNext )
          fprintf( fout, "   { %s +%2d", szName, iToken + iOptional + 1 );
       else
@@ -89,11 +89,11 @@ static void hb_pp_writeToken( FILE * fout, PHB_PP_TOKEN pToken,
       else
          fprintf( fout, ", NULL%*s", i, "" );
 
-      i = 16 - ( int ) strlen( pToken->value );
+      i = 16 - static_cast< int >( strlen( pToken->value ) );
       fprintf( fout, ", \"%s\", %*s %2d,%2d, 0x%04x, %u }%s\n",
                pToken->value,
                i < 0 ? 0 : i, "",
-               ( int ) pToken->len, ( int ) pToken->spaces,
+               static_cast< int >( pToken->len ), static_cast< int >( pToken->spaces ),
                pToken->type | HB_PP_TOKEN_STATIC | HB_PP_TOKEN_PREDEFINED,
                pToken->index,
                fLast && ! pToken->pNext && iOptional == 0 ? "" : "," );
@@ -556,7 +556,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
                 szLine[ 10 ] == ' ' && szLine[ 13 ] == ':' )
             {
                hb_strncpy( szLog, szLine, sizeof( szLog ) - 1 );
-               iLen = ( int ) strlen( szLog );
+               iLen = static_cast< int >( strlen( szLog ) );
                while( iLen-- && HB_ISSPACE( szLog[ iLen ] ) )
                   szLog[ iLen ] = '\0';
             }
@@ -578,14 +578,14 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
 
          *szLine = '"';
          hb_strncpy( szLine + 1, szLog, sizeof( szLine ) - 3 );
-         iLen = ( int ) strlen( szLine );
+         iLen = static_cast< int >( strlen( szLine ) );
          szLine[ iLen ] = '"';
          szLine[ ++iLen ] = '\0';
          hb_pp_addDefine( pState, "HB_VER_LENTRY", szLine );
          *pszLastEntry = hb_strdup( szLog );
 
          hb_strncpy( szLine + 1, szId, sizeof( szLine ) - 3 );
-         iLen = ( int ) strlen( szLine );
+         iLen = static_cast< int >( strlen( szLine ) );
          szLine[ iLen ] = '"';
          szLine[ ++iLen ] = '\0';
          hb_pp_addDefine( pState, "HB_VER_CHLID", szLine );
@@ -602,10 +602,10 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
                 HB_ISDIGIT( szLog[ 21 ] ) && HB_ISDIGIT( szLog[ 22 ] ) &&
                 HB_ISDIGIT( szLog[ 23 ] ) && HB_ISDIGIT( szLog[ 24 ] ) )
             {
-               iUTC = ( ( int ) ( szLog[ 21 ] - '0' ) * 10 +
-                        ( int ) ( szLog[ 22 ] - '0' ) ) * 60 +
-                        ( int ) ( szLog[ 23 ] - '0' ) * 10 +
-                        ( int ) ( szLog[ 24 ] - '0' );
+               iUTC = ( static_cast< int >( szLog[ 21 ] - '0' ) * 10 +
+                        static_cast< int >( szLog[ 22 ] - '0' ) ) * 60 +
+                        static_cast< int >( szLog[ 23 ] - '0' ) * 10 +
+                        static_cast< int >( szLog[ 24 ] - '0' );
             }
             szLog[ 16 ] = '\0';
             if( iUTC != 0 && hb_timeStampStrGetDT( szLog, &lJulian, &lMilliSec ) )
@@ -638,7 +638,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
          else
             szRevID[ 0 ] = '\0';
 
-         *piRevID = ( int ) hb_strValInt( szRevID, &iLen );
+         *piRevID = static_cast< int >( hb_strValInt( szRevID, &iLen ) );
 
          hb_pp_addDefine( pState, "HB_VER_REVID", szRevID );
 #ifdef HB_LEGACY_LEVEL4

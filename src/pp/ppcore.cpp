@@ -2664,7 +2664,7 @@ static void hb_pp_pragmaNew( PHB_PP_STATE pState, PHB_PP_TOKEN pToken )
       {
          pValue = hb_pp_pragmaGetLogical( pToken->pNext, &fValue );
          if( pValue )
-            fError = hb_pp_setCompilerSwitch( pState, "a", ( int ) fValue );
+            fError = hb_pp_setCompilerSwitch( pState, "a", static_cast< int >( fValue ) );
          else
             fError = HB_TRUE;
       }
@@ -2672,7 +2672,7 @@ static void hb_pp_pragmaNew( PHB_PP_STATE pState, PHB_PP_TOKEN pToken )
       {
          pValue = hb_pp_pragmaGetLogical( pToken->pNext, &fValue );
          if( pValue )
-            fError = hb_pp_setCompilerSwitch( pState, "b", ( int ) fValue );
+            fError = hb_pp_setCompilerSwitch( pState, "b", static_cast< int >( fValue ) );
          else
             fError = HB_TRUE;
       }
@@ -2680,7 +2680,7 @@ static void hb_pp_pragmaNew( PHB_PP_STATE pState, PHB_PP_TOKEN pToken )
       {
          pValue = hb_pp_pragmaGetLogical( pToken->pNext, &fValue );
          if( pValue )
-            fError = hb_pp_setCompilerSwitch( pState, "v", ( int ) fValue );
+            fError = hb_pp_setCompilerSwitch( pState, "v", static_cast< int >( fValue ) );
          else
             fError = HB_TRUE;
       }
@@ -5693,7 +5693,7 @@ void hb_pp_initDynDefines( PHB_PP_STATE pState, HB_BOOL fArchDefs )
       hb_pp_addDefine( pState, szDefine, NULL );
 #endif
 
-      hb_snprintf( szResult, sizeof( szResult ), "%d", ( int ) sizeof( void * ) );
+      hb_snprintf( szResult, sizeof( szResult ), "%d", static_cast< int >( sizeof( void * ) ) );
 #if defined( HB_ARCH_16BIT )
       hb_pp_addDefine( pState, "__ARCH16BIT__", szResult );
 #elif defined( HB_ARCH_32BIT )
@@ -5736,7 +5736,7 @@ void hb_pp_initDynDefines( PHB_PP_STATE pState, HB_BOOL fArchDefs )
    szResult[ 1 ] = '"';
    hb_timeStampGet( &lDate, &lTime );
    hb_timeStampStr( szResult + 2, lDate, lTime );
-   i = ( int ) strlen( szResult );
+   i = static_cast< int >( strlen( szResult ) );
    szResult[ i++ ] = '"';
    szResult[ i ] = '\0';
    hb_pp_addDefine( pState, "__TIMESTAMP__", szResult );
