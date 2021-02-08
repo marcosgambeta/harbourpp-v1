@@ -254,7 +254,7 @@ static char * hb_memToStr( char * szBuffer, void * pMem, HB_SIZE nSize )
    if( nSize > HB_MEMSTR_BLOCK_MAX )
       iSize = HB_MEMSTR_BLOCK_MAX;
    else
-      iSize = ( int ) nSize;
+      iSize = static_cast< int >( nSize );
 
    iPrintable = 0;
    for( i = 0; i < iSize; ++i )
@@ -351,7 +351,7 @@ void hb_conOutErr( const char * pStr, HB_SIZE nLen )
    if( nLen == 0 )
       nLen = strlen( pStr );
 
-   fprintf( stderr, "%.*s", ( int ) nLen, pStr );
+   fprintf( stderr, "%.*s", static_cast< int >( nLen ), pStr );
 }
 
 const char * hb_conNewLine( void )
