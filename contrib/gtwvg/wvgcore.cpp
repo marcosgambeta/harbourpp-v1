@@ -211,15 +211,15 @@ HB_BOOL hb_wvt_gtRenderPicture( int x, int y, int wd, int ht, IPicture * iPictur
 
          if( lHeight > lWidth )
          {
-            iWd = static_cast< int >( ( double )  ht * lWidth / lHeight );
+            iWd = static_cast< int >( static_cast< double >( ht ) * lWidth / lHeight );
             iWd = HB_MIN( iWd, wd );
-            iHt = static_cast< int >( ( double ) iWd * lHeight / lWidth );
+            iHt = static_cast< int >( static_cast< double >( iWd ) * lHeight / lWidth );
          }
          else
          {
-            iHt = static_cast< int >( ( double )  wd * lHeight / lWidth );
+            iHt = static_cast< int >( static_cast< double >( wd ) * lHeight / lWidth );
             iHt = HB_MIN( iHt, ht );
-            iWd = static_cast< int >( ( double ) iHt * lWidth / lHeight );
+            iWd = static_cast< int >( static_cast< double >( iHt ) * lWidth / lHeight );
          }
          x  += abs( ( iWd - wd ) / 2 );
          y  += abs( ( iHt - ht ) / 2 );
@@ -545,15 +545,15 @@ HB_BOOL hb_wvt_DrawImage( HDC hdc, int x, int y, int wd, int ht, LPCTSTR lpImage
                      
                      if( lHeight > lWidth )
                      {
-                        iWd = static_cast< int >( ( double )  ht * lWidth / lHeight );
+                        iWd = static_cast< int >( static_cast< double >( ht ) * lWidth / lHeight );
                         iWd = HB_MIN( iWd, wd );
-                        iHt = static_cast< int >( ( double ) iWd * lHeight / lWidth );
+                        iHt = static_cast< int >( static_cast< double >( iWd ) * lHeight / lWidth );
                      }
                      else
                      {
-                        iHt = static_cast< int >( ( double )  wd * lHeight / lWidth );
+                        iHt = static_cast< int >( static_cast< double >( wd ) * lHeight / lWidth );
                         iHt = HB_MIN( iHt, ht );
-                        iWd = static_cast< int >( ( double ) iHt * lWidth / lHeight );
+                        iWd = static_cast< int >( static_cast< double >( iHt ) * lWidth / lHeight );
                      }
                      x  += abs( ( iWd - wd ) / 2 );
                      y  += abs( ( iHt - ht ) / 2 );

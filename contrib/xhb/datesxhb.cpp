@@ -102,7 +102,7 @@ HB_FUNC( HMS2D )
    int    iMin  = hb_parni( 2 );
    double dSec  = hb_parnd( 3 );
 
-   hb_retnd( hb_timeEncode( iHour, iMin, static_cast< int >( dSec ), static_cast< int >( ( ( double ) ( dSec - ( double ) ( static_cast< int >( dSec ) ) ) ) * 1000 ) ) );
+   hb_retnd( hb_timeEncode( iHour, iMin, static_cast< int >( dSec ), static_cast< int >( ( static_cast< double >( dSec - static_cast< double >( static_cast< int >( dSec ) ) ) ) * 1000 ) ) );
 }
 
 HB_FUNC( TTOD )

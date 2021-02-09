@@ -51,5 +51,5 @@
          differently. [vszakats] */
 HB_FUNC( SLEEP )
 {
-   hb_idleSleep( ( ( double ) hb_parnl( 1 ) ) / 100 );
+   hb_idleSleep( ( static_cast< double >( hb_parnl( 1 ) ) ) / 100 );
 }

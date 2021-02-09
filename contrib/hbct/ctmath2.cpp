@@ -221,7 +221,7 @@ HB_FUNC( FACT )
          int i;
 
          for( i = 1; i <= iInput; i++ )
-            dResult *= ( double ) i;
+            dResult *= static_cast< double >( i );
          hb_retnd( dResult );
       }
       else

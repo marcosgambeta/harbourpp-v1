@@ -975,7 +975,7 @@ static void hb_oleItemToVariantRef( VARIANT * pVariant, PHB_ITEM pItem,
          else
          {
             V_VT( pVariant ) = VT_DATE;
-            V_R8( pVariant ) = ( double ) ( lDate - HB_OLE_DATE_BASE );
+            V_R8( pVariant ) = static_cast< double >( lDate - HB_OLE_DATE_BASE );
             if( pVarRef )
             {
                V_VT( pVarRef ) = VT_DATE | VT_BYREF;
@@ -1382,11 +1382,11 @@ void hb_oleVariantToItemEx( PHB_ITEM pItem, VARIANT * pVariant, HB_USHORT uiClas
          break;
 
       case VT_R4:
-         hb_itemPutND( pItem, ( double ) V_R4( pVariant ) );
+         hb_itemPutND( pItem, static_cast< double >( V_R4( pVariant ) ) );
          break;
 
       case VT_R4 | VT_BYREF:
-         hb_itemPutND( pItem, ( double ) *V_R4REF( pVariant ) );
+         hb_itemPutND( pItem, static_cast< double >( *V_R4REF( pVariant ) ) );
          break;
 
       case VT_R8:

@@ -1485,15 +1485,15 @@ static void hb_wvg_RenderPicture( PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int
          
          if( lHeight > lWidth )
          {
-            iWd = static_cast< int >( ( double )  ht * lWidth / lHeight );
+            iWd = static_cast< int >( static_cast< double >( ht ) * lWidth / lHeight );
             iWd = HB_MIN( iWd, wd );
-            iHt = static_cast< int >( ( double ) iWd * lHeight / lWidth );
+            iHt = static_cast< int >( static_cast< double >( iWd ) * lHeight / lWidth );
          }
          else
          {
-            iHt = static_cast< int >( ( double )  wd * lHeight / lWidth );
+            iHt = static_cast< int >( static_cast< double >( wd ) * lHeight / lWidth );
             iHt = HB_MIN( iHt, ht );
-            iWd = static_cast< int >( ( double ) iHt * lWidth / lHeight );
+            iWd = static_cast< int >( static_cast< double >( iHt ) * lWidth / lHeight );
          }
          x  += abs( ( iWd - wd ) / 2 );
          y  += abs( ( iHt - ht ) / 2 );

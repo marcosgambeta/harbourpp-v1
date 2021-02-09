@@ -246,5 +246,5 @@ HB_FUNC( WIN_QPCOUNTER2SEC )
       }
       s_dFrequence = ( HB_MAXDBL ) HBWAPI_GET_LARGEUINT( frequency );
    }
-   hb_retnd( ( double ) ( ( HB_MAXDBL ) hb_parnint( 1 ) / ( HB_MAXDBL ) s_dFrequence ) );
+   hb_retnd( static_cast< double >( ( HB_MAXDBL ) hb_parnint( 1 ) / ( HB_MAXDBL ) s_dFrequence ) );
 }

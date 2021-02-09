@@ -199,7 +199,7 @@ static PMIXKEY mixKeyNew( PHB_ITEM pItem, HB_ULONG ulRecNo, HB_BYTE bType, HB_US
          break;
 
       case 'D':
-         dbl = ( double ) hb_itemGetDL( pItem );
+         dbl = static_cast< double >( hb_itemGetDL( pItem ) );
          HB_DBL2ORD( &dbl, buf );
          memcpy( pKey->val, buf, 8 );
          break;
@@ -1527,7 +1527,7 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          {
             HB_ULONG ulPos;
 
-            ulPos = ( HB_ULONG ) ( hb_itemGetND( pOrderInfo->itmNewVal ) * ( double ) pTag->ulRecCount );
+            ulPos = ( HB_ULONG ) ( hb_itemGetND( pOrderInfo->itmNewVal ) * static_cast< double >( pTag->ulRecCount ) );
 
             if( ulPos > 0 && ulPos <= pTag->ulRecCount )
                SELF_GOTO( &pArea->adsarea.area, pTag->pKeys[ ulPos - 1 ]->rec );
@@ -1552,7 +1552,7 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
             mixKeyFree( pKey );
 
             pOrderInfo->itmResult = hb_itemPutND( pOrderInfo->itmResult,
-                                                  ( double ) ulKeyPos / ( double ) pTag->ulRecCount );
+                                                  static_cast< double >( ulKeyPos ) / static_cast< double >( pTag->ulRecCount ) );
          }
          break;
 

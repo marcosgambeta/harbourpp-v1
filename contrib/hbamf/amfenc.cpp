@@ -206,7 +206,7 @@ static HB_BOOL amf3_write_int( amfContext * context, PHB_ITEM pItem )
    {
       if( ! writeByte( context, DOUBLE_TYPE ) )
          return HB_FALSE;
-      return amfX_encode_double( context, ( double ) n );
+      return amfX_encode_double( context, static_cast< double >( n ) );
    }
 }
 
@@ -215,7 +215,7 @@ static HB_BOOL amf3_encode_float( amfContext * context, PHB_ITEM pItem )
 {
    float n = ( float ) hb_itemGetND( pItem );
 
-   return amfX_encode_double( context, ( double ) n );
+   return amfX_encode_double( context, static_cast< double >( n ) );
 }
 #endif
 

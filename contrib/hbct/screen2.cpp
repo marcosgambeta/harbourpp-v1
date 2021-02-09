@@ -91,7 +91,7 @@ HB_FUNC( SAYDOWN )
             if( lDelay )
             {
                hb_gtEndWrite();
-               hb_idleSleep( ( double ) lDelay / 1000 );
+               hb_idleSleep( static_cast< double >( lDelay ) / 1000 );
                hb_gtBeginWrite();
             }
          }
@@ -147,7 +147,7 @@ HB_FUNC( SAYSPREAD )
             if( lDelay )
             {
                hb_gtEndWrite();
-               hb_idleSleep( ( double ) lDelay / 1000 );
+               hb_idleSleep( static_cast< double >( lDelay ) / 1000 );
                hb_gtBeginWrite();
             }
          }
@@ -223,7 +223,7 @@ HB_FUNC( SAYMOVEIN )
             if( lDelay )
             {
                hb_gtEndWrite();
-               hb_idleSleep( ( double ) lDelay / 1000 );
+               hb_idleSleep( static_cast< double >( lDelay ) / 1000 );
                hb_gtBeginWrite();
             }
          }
@@ -285,7 +285,7 @@ HB_FUNC( CLEARSLOW )  /* TODO: Unicode support */
          if( lDelay )
          {
             hb_gtEndWrite();
-            hb_idleSleep( ( double ) lDelay / 1000 );
+            hb_idleSleep( static_cast< double >( lDelay ) / 1000 );
             hb_gtBeginWrite();
          }
 

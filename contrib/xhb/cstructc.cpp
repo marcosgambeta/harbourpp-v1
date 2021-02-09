@@ -1189,7 +1189,7 @@ static PHB_ITEM StructureToArray( HB_BYTE * Buffer, HB_SIZE nBufferLen, PHB_ITEM
             break;
 
          case CTYPE_FLOAT:  /* float */
-            hb_itemPutND( pBaseVar->pItems + nIndex, ( double ) *( ( float * ) ( Buffer + uiOffset ) ) );
+            hb_itemPutND( pBaseVar->pItems + nIndex, static_cast< double >( *( ( float * ) ( Buffer + uiOffset ) ) ) );
             break;
 
          case CTYPE_FLOAT_PTR:  /* float * */

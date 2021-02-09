@@ -106,7 +106,7 @@ HB_FUNC( CTON )
             hb_retnint( ( HB_U32 ) nValue );
       }
       else if( ( HB_MAXINT ) nValue < 0 )
-         hb_retnd( ( double ) nValue );
+         hb_retnd( static_cast< double >( nValue ) );
       else
          hb_retnint( nValue );
 #endif

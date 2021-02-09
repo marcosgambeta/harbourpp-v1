@@ -119,13 +119,13 @@ HB_FUNC( XHB_EEQUAL )
    {
       HB_UCHAR uc     = ( HB_UCHAR ) hb_itemGetCPtr( pValue )[ 0 ];
       double   dValue = hb_itemGetND( pSelf );
-      hb_retl( dValue == ( double ) uc );
+      hb_retl( dValue == static_cast< double >( uc ) );
    }
    else if( hb_itemGetCLen( pSelf ) == 1 && pValue && HB_IS_NUMERIC( pValue ) )
    {
       HB_UCHAR uc     = ( HB_UCHAR ) hb_itemGetCPtr( pSelf )[ 0 ];
       double   dValue = hb_itemGetND( pValue );
-      hb_retl( ( double ) uc == dValue );
+      hb_retl( static_cast< double >( uc ) == dValue );
    }
    else if( HB_IS_BLOCK( pSelf ) && HB_IS_BLOCK( pValue ) )
    {
@@ -148,13 +148,13 @@ HB_FUNC( XHB_EQUAL )
    {
       HB_UCHAR uc     = ( HB_UCHAR ) hb_itemGetCPtr( pValue )[ 0 ];
       double   dValue = hb_itemGetND( pSelf );
-      hb_retl( dValue == ( double ) uc );
+      hb_retl( dValue == static_cast< double >( uc ) );
    }
    else if( hb_itemGetCLen( pSelf ) == 1 && pValue && HB_IS_NUMERIC( pValue ) )
    {
       HB_UCHAR uc     = ( HB_UCHAR ) hb_itemGetCPtr( pSelf )[ 0 ];
       double   dValue = hb_itemGetND( pValue );
-      hb_retl( ( double ) uc == dValue );
+      hb_retl( static_cast< double >( uc ) == dValue );
    }
    else if( HB_IS_HASH( pSelf ) && HB_IS_HASH( pValue ) )
    {
@@ -177,13 +177,13 @@ HB_FUNC( XHB_NOTEQUAL )
    {
       HB_UCHAR uc     = ( HB_UCHAR ) hb_itemGetCPtr( pValue )[ 0 ];
       double   dValue = hb_itemGetND( pSelf );
-      hb_retl( dValue != ( double ) uc );
+      hb_retl( dValue != static_cast< double >( uc ) );
    }
    else if( hb_itemGetCLen( pSelf ) == 1 && pValue && HB_IS_NUMERIC( pValue ) )
    {
       HB_UCHAR uc     = ( HB_UCHAR ) hb_itemGetCPtr( pSelf )[ 0 ];
       double   dValue = hb_itemGetND( pValue );
-      hb_retl( ( double ) uc != dValue );
+      hb_retl( static_cast< double >( uc ) != dValue );
    }
    else if( HB_IS_HASH( pSelf ) && HB_IS_HASH( pValue ) )
    {
@@ -206,13 +206,13 @@ HB_FUNC( XHB_LESS )
    {
       HB_UCHAR uc     = ( HB_UCHAR ) hb_itemGetCPtr( pValue )[ 0 ];
       double   dValue = hb_itemGetND( pSelf );
-      hb_retl( dValue < ( double ) uc );
+      hb_retl( dValue < static_cast< double >( uc ) );
    }
    else if( hb_itemGetCLen( pSelf ) == 1 && pValue && HB_IS_NUMERIC( pValue ) )
    {
       HB_UCHAR uc     = ( HB_UCHAR ) hb_itemGetCPtr( pSelf )[ 0 ];
       double   dValue = hb_itemGetND( pValue );
-      hb_retl( ( double ) uc < dValue );
+      hb_retl( static_cast< double >( uc ) < dValue );
    }
    else
    {
@@ -231,13 +231,13 @@ HB_FUNC( XHB_LESSEQ )
    {
       HB_UCHAR uc     = ( HB_UCHAR ) hb_itemGetCPtr( pValue )[ 0 ];
       double   dValue = hb_itemGetND( pSelf );
-      hb_retl( dValue <= ( double ) uc );
+      hb_retl( dValue <= static_cast< double >( uc ) );
    }
    else if( hb_itemGetCLen( pSelf ) == 1 && pValue && HB_IS_NUMERIC( pValue ) )
    {
       HB_UCHAR uc     = ( HB_UCHAR ) hb_itemGetCPtr( pSelf )[ 0 ];
       double   dValue = hb_itemGetND( pValue );
-      hb_retl( ( double ) uc <= dValue );
+      hb_retl( static_cast< double >( uc ) <= dValue );
    }
    else
    {
@@ -256,13 +256,13 @@ HB_FUNC( XHB_GREATER )
    {
       HB_UCHAR uc     = ( HB_UCHAR ) hb_itemGetCPtr( pValue )[ 0 ];
       double   dValue = hb_itemGetND( pSelf );
-      hb_retl( dValue > ( double ) uc );
+      hb_retl( dValue > static_cast< double >( uc ) );
    }
    else if( hb_itemGetCLen( pSelf ) == 1 && pValue && HB_IS_NUMERIC( pValue ) )
    {
       HB_UCHAR uc     = ( HB_UCHAR ) hb_itemGetCPtr( pSelf )[ 0 ];
       double   dValue = hb_itemGetND( pValue );
-      hb_retl( ( double ) uc > dValue );
+      hb_retl( static_cast< double >( uc ) > dValue );
    }
    else
    {
@@ -281,13 +281,13 @@ HB_FUNC( XHB_GREATEREQ )
    {
       HB_UCHAR uc     = ( HB_UCHAR ) hb_itemGetCPtr( pValue )[ 0 ];
       double   dValue = hb_itemGetND( pSelf );
-      hb_retl( dValue >= ( double ) uc );
+      hb_retl( dValue >= static_cast< double >( uc ) );
    }
    else if( hb_itemGetCLen( pSelf ) == 1 && pValue && HB_IS_NUMERIC( pValue ) )
    {
       HB_UCHAR uc     = ( HB_UCHAR ) hb_itemGetCPtr( pSelf )[ 0 ];
       double   dValue = hb_itemGetND( pValue );
-      hb_retl( ( double ) uc >= dValue );
+      hb_retl( static_cast< double >( uc ) >= dValue );
    }
    else
    {
@@ -506,7 +506,7 @@ HB_FUNC( XHB_MULT )
       HB_UCHAR uc = ( HB_UCHAR ) hb_itemGetCPtr( pSelf )[ 0 ];
       int      iDec;
       double   dValue = hb_itemGetNDDec( pValue, &iDec );
-      hb_retndlen( ( double ) uc * dValue, 0, iDec );
+      hb_retndlen( static_cast< double >( uc ) * dValue, 0, iDec );
    }
    else if( HB_IS_STRING( pSelf ) && hb_itemGetCLen( pSelf ) == 1 &&
             hb_itemGetCLen( pValue ) == 1 )
@@ -545,7 +545,7 @@ HB_FUNC( XHB_DIV )
    {
       HB_UCHAR uc       = ( HB_UCHAR ) hb_itemGetCPtr( pSelf )[ 0 ];
       double   dDivisor = HB_IS_NUMERIC( pValue ) ? hb_itemGetND( pValue ) :
-                          ( double ) ( ( HB_UCHAR ) hb_itemGetCPtr( pValue )[ 0 ] );
+                          static_cast< double >( ( HB_UCHAR ) hb_itemGetCPtr( pValue )[ 0 ] );
 
       if( dDivisor == 0 )
       {
@@ -554,7 +554,7 @@ HB_FUNC( XHB_DIV )
             hb_itemReturnRelease( pResult );
       }
       else
-         hb_retnd( ( double ) uc / dDivisor );
+         hb_retnd( static_cast< double >( uc ) / dDivisor );
    }
    else
    {
@@ -579,14 +579,14 @@ HB_FUNC( XHB_MOD )
             hb_itemReturnRelease( pResult );
       }
       else
-         hb_retnd( fmod( hb_itemGetND( pSelf ), ( double ) uc ) );
+         hb_retnd( fmod( hb_itemGetND( pSelf ), static_cast< double >( uc ) ) );
    }
    else if( HB_IS_STRING( pSelf ) && hb_itemGetCLen( pSelf ) == 1 && pValue &&
             ( HB_IS_NUMERIC( pValue ) || hb_itemGetCLen( pValue ) == 1 ) )
    {
       HB_UCHAR uc       = ( HB_UCHAR ) hb_itemGetCPtr( pSelf )[ 0 ];
       double   dDivisor = HB_IS_NUMERIC( pValue ) ? hb_itemGetND( pValue ) :
-                          ( double ) ( ( HB_UCHAR ) hb_itemGetCPtr( pValue )[ 0 ] );
+                          static_cast< double >( ( HB_UCHAR ) hb_itemGetCPtr( pValue )[ 0 ] );
 
       if( dDivisor == 0 )
       {
@@ -595,7 +595,7 @@ HB_FUNC( XHB_MOD )
             hb_itemReturnRelease( pResult );
       }
       else
-         hb_retnd( fmod( ( double ) uc, dDivisor ) );
+         hb_retnd( fmod( static_cast< double >( uc ), dDivisor ) );
    }
    else
    {
@@ -613,20 +613,20 @@ HB_FUNC( XHB_POW )
    if( HB_IS_NUMERIC( pSelf ) && hb_itemGetCLen( pValue ) == 1 )
    {
       HB_UCHAR uc = ( HB_UCHAR ) hb_itemGetCPtr( pValue )[ 0 ];
-      hb_retnd( pow( hb_itemGetND( pSelf ), ( double ) uc ) );
+      hb_retnd( pow( hb_itemGetND( pSelf ), static_cast< double >( uc ) ) );
    }
    else if( HB_IS_STRING( pSelf ) && hb_itemGetCLen( pSelf ) == 1 &&
             pValue && HB_IS_NUMERIC( pValue ) )
    {
       HB_UCHAR uc = ( HB_UCHAR ) hb_itemGetCPtr( pSelf )[ 0 ];
-      hb_retnd( pow( ( double ) uc, hb_itemGetND( pValue ) ) );
+      hb_retnd( pow( static_cast< double >( uc ), hb_itemGetND( pValue ) ) );
    }
    else if( HB_IS_STRING( pSelf ) && hb_itemGetCLen( pSelf ) == 1 &&
             hb_itemGetCLen( pValue ) == 1 )
    {
       HB_UCHAR uc1 = ( HB_UCHAR ) hb_itemGetCPtr( pSelf )[ 0 ],
                uc2 = ( HB_UCHAR ) hb_itemGetCPtr( pValue )[ 0 ];
-      hb_retnd( pow( ( double ) uc1, ( double ) uc2 ) );
+      hb_retnd( pow( static_cast< double >( uc1 ), static_cast< double >( uc2 ) ) );
    }
    else
    {

@@ -162,7 +162,7 @@ static PMIXKEY hb_mixKeyPutItem( PMIXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRecNo,
          break;
 
       case 'D':
-         dbl = ( double ) hb_itemGetDL( pItem );
+         dbl = static_cast< double >( hb_itemGetDL( pItem ) );
          HB_DBL2ORD( &dbl, buf );
          memcpy( pKey->val, buf, 8 );
          break;
