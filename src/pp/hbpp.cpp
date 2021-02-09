@@ -611,7 +611,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
             if( iUTC != 0 && hb_timeStampStrGetDT( szLog, &lJulian, &lMilliSec ) )
             {
                hb_timeStampUnpackDT( hb_timeStampPackDT( lJulian, lMilliSec ) -
-                                     ( double ) iUTC / ( 24 * 60 ),
+                                     static_cast< double >( iUTC ) / ( 24 * 60 ),
                                      &lJulian, &lMilliSec );
             }
             if( lJulian && lMilliSec )

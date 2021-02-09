@@ -83,7 +83,7 @@ double hb_random_num( void )
 
    *seed = t;
 
-   return ( double ) ( t - 1 ) / ( MODULUS - 1 );
+   return static_cast< double >( t - 1 ) / ( MODULUS - 1 );
 }
 
 void hb_random_seed( HB_I32 seed )

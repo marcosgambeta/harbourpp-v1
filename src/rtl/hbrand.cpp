@@ -55,7 +55,7 @@ void hb_random_block( void * data, HB_SIZE len )
 /* Returns a double value between 0 and 1 */
 double hb_random_num_secure( void )
 {
-   return ( double ) hb_arc4random() / HB_U32_MAX;
+   return static_cast< double >( hb_arc4random() ) / HB_U32_MAX;
 }
 
 HB_FUNC( HB_RAND32 ) /* returns an integer between 0 and 0xFFFFFFFF (inclusive) */

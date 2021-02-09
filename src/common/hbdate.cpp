@@ -193,7 +193,7 @@ double hb_dateSeconds( void )
 
    hb_timeStampGetLocal( &iYear, &iMonth, &iDay,
                          &iHour, &iMinute, &iSeconds, &iMillisec );
-   return ( double ) hb_timeEncode( iHour, iMinute, iSeconds, iMillisec ) / 1000;
+   return static_cast< double >( hb_timeEncode( iHour, iMinute, iSeconds, iMillisec ) ) / 1000;
 }
 
 long hb_dateEncode( int iYear, int iMonth, int iDay )
@@ -856,8 +856,8 @@ double hb_timeStampPackDT( long lJulian, long lMilliSec )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_timeStampPackDT(%ld, %ld)", lJulian, lMilliSec ) );
 
-   return ( double ) lJulian +
-          ( double ) lMilliSec / HB_MILLISECS_PER_DAY;
+   return static_cast< double >( lJulian ) +
+          static_cast< double >( lMilliSec ) / HB_MILLISECS_PER_DAY;
 }
 
 void hb_timeStampUnpackDT( double dTimeStamp,
@@ -900,8 +900,8 @@ double hb_timeStampPack( int iYear, int iMonth, int iDay,
 
       if( lJulian != 0 || ( iYear == 0 && iMonth == 0 && iDay == 0 ) )
       {
-         dTimeStamp = ( double ) lJulian +
-                      ( double ) ( ( ( long ) ( iHour * 60 + iMinutes ) * 60 +
+         dTimeStamp = static_cast< double >( lJulian ) +
+                      static_cast< double >( ( ( long ) ( iHour * 60 + iMinutes ) * 60 +
                                      iSeconds ) * 1000 + iMSec ) /
                       HB_MILLISECS_PER_DAY;
       }
@@ -938,8 +938,8 @@ double hb_timeStampPackD( int iYear, int iMonth, int iDay,
 
       if( lJulian != 0 || ( iYear == 0 && iMonth == 0 && iDay == 0 ) )
       {
-         dTimeStamp = ( double ) lJulian +
-                      ( double ) ( ( ( iHour * 60 + iMinutes ) * 60 ) +
+         dTimeStamp = static_cast< double >( lJulian ) +
+                      static_cast< double >( ( ( iHour * 60 + iMinutes ) * 60 ) +
                                    dSeconds ) / HB_SECONDS_PER_DAY;
       }
    }
@@ -960,7 +960,7 @@ void hb_timeStampUnpackD( double dTimeStamp,
    hb_timeDecode( lMilliSec, piHour, piMinutes, &iSeconds, &iMSec );
 
    if( pdSeconds )
-      *pdSeconds = ( double ) iSeconds + ( double ) iMSec / 1000;
+      *pdSeconds = static_cast< double >( iSeconds ) + static_cast< double >( iMSec ) / 1000;
 }
 
 long hb_timeUTCOffset( void ) /* in seconds */
@@ -1097,9 +1097,9 @@ double hb_timeLocalToUTC( double dTimeStamp )
                        &iYear, &iMonth, &iDay,
                        &iHour, &iMinutes, &iSeconds, &iMSec );
 
-   return dTimeStamp - ( double )
+   return dTimeStamp - static_cast< double >(
           hb_timeStampUTCOffset( iYear, iMonth, iDay,
-                                 iHour, iMinutes, iSeconds ) / HB_SECONDS_PER_DAY;
+                                 iHour, iMinutes, iSeconds ) ) / HB_SECONDS_PER_DAY;
 }
 
 HB_MAXUINT hb_timerGet( void )

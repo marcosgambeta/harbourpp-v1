@@ -159,12 +159,12 @@ PHB_EXPR hb_compExprReduceMod( PHB_EXPR pSelf, HB_COMP_DECL )
             if( HB_SUPPORT_HARBOUR )
             {
                double dDivisor = pRight->value.asNum.NumType == HB_ET_LONG ?
-                                 ( double ) pRight->value.asNum.val.l :
+                                 static_cast< double >( pRight->value.asNum.val.l ) :
                                  pRight->value.asNum.val.d;
                if( dDivisor )
                {
                   double dValue = pLeft->value.asNum.NumType == HB_ET_LONG ?
-                                  ( double ) pLeft->value.asNum.val.l :
+                                  static_cast< double >( pLeft->value.asNum.val.l ) :
                                   pLeft->value.asNum.val.d;
                   pSelf->value.asNum.val.d = fmod( dValue, dDivisor );
                   pSelf->value.asNum.bWidth = HB_DEFAULT_WIDTH;
@@ -213,7 +213,7 @@ PHB_EXPR hb_compExprReduceDiv( PHB_EXPR pSelf, HB_COMP_DECL )
                else
                {
                   /* Return non-integer results as double */
-                  pSelf->value.asNum.val.d = ( double ) pLeft->value.asNum.val.l / ( double ) pRight->value.asNum.val.l;
+                  pSelf->value.asNum.val.d = static_cast< double >( pLeft->value.asNum.val.l ) / static_cast< double >( pRight->value.asNum.val.l );
                   pSelf->value.asNum.bDec = HB_DEFAULT_DECIMALS;
                   pSelf->value.asNum.NumType = HB_ET_DOUBLE;
                }
@@ -240,7 +240,7 @@ PHB_EXPR hb_compExprReduceDiv( PHB_EXPR pSelf, HB_COMP_DECL )
             {
                if( pRight->value.asNum.val.l )
                {
-                  pSelf->value.asNum.val.d = pLeft->value.asNum.val.d / ( double ) pRight->value.asNum.val.l;
+                  pSelf->value.asNum.val.d = pLeft->value.asNum.val.d / static_cast< double >( pRight->value.asNum.val.l );
                   pSelf->value.asNum.bWidth = HB_DEFAULT_WIDTH;
                   pSelf->value.asNum.bDec = HB_DEFAULT_DECIMALS;
                   pSelf->value.asNum.NumType = HB_ET_DOUBLE;
@@ -251,7 +251,7 @@ PHB_EXPR hb_compExprReduceDiv( PHB_EXPR pSelf, HB_COMP_DECL )
             {
                if( pRight->value.asNum.val.d != 0.0 )
                {
-                  pSelf->value.asNum.val.d = ( double ) pLeft->value.asNum.val.l / pRight->value.asNum.val.d;
+                  pSelf->value.asNum.val.d = static_cast< double >( pLeft->value.asNum.val.l ) / pRight->value.asNum.val.d;
                   pSelf->value.asNum.bWidth = HB_DEFAULT_WIDTH;
                   pSelf->value.asNum.bDec = HB_DEFAULT_DECIMALS;
                   pSelf->value.asNum.NumType = HB_ET_DOUBLE;
@@ -301,7 +301,7 @@ PHB_EXPR hb_compExprReduceMult( PHB_EXPR pSelf, HB_COMP_DECL )
             }
             else
             {
-               pSelf->value.asNum.val.d = ( double ) dVal;
+               pSelf->value.asNum.val.d = static_cast< double >( dVal );
                pSelf->value.asNum.NumType = HB_ET_DOUBLE;
             }
             pSelf->value.asNum.bWidth = HB_DEFAULT_WIDTH;
@@ -321,12 +321,12 @@ PHB_EXPR hb_compExprReduceMult( PHB_EXPR pSelf, HB_COMP_DECL )
 
             if( pLeft->value.asNum.NumType == HB_ET_DOUBLE )
             {
-               pSelf->value.asNum.val.d = pLeft->value.asNum.val.d * ( double ) pRight->value.asNum.val.l;
+               pSelf->value.asNum.val.d = pLeft->value.asNum.val.d * static_cast< double >( pRight->value.asNum.val.l );
                pSelf->value.asNum.bDec = pLeft->value.asNum.bDec;
             }
             else
             {
-               pSelf->value.asNum.val.d = ( double ) pLeft->value.asNum.val.l * pRight->value.asNum.val.d;
+               pSelf->value.asNum.val.d = static_cast< double >( pLeft->value.asNum.val.l ) * pRight->value.asNum.val.d;
                pSelf->value.asNum.bDec = pRight->value.asNum.bDec;
             }
             pSelf->value.asNum.bWidth = HB_DEFAULT_WIDTH;
@@ -359,8 +359,8 @@ PHB_EXPR hb_compExprReducePower( PHB_EXPR pSelf, HB_COMP_DECL )
       switch( bType )
       {
          case HB_ET_LONG:
-            pSelf->value.asNum.val.d = pow( ( double ) pLeft->value.asNum.val.l,
-                                            ( double ) pRight->value.asNum.val.l );
+            pSelf->value.asNum.val.d = pow( static_cast< double >( pLeft->value.asNum.val.l ),
+                                            static_cast< double >( pRight->value.asNum.val.l ) );
             break;
 
          case HB_ET_DOUBLE:
@@ -371,9 +371,9 @@ PHB_EXPR hb_compExprReducePower( PHB_EXPR pSelf, HB_COMP_DECL )
          default:
             if( pLeft->value.asNum.NumType == HB_ET_DOUBLE )
                pSelf->value.asNum.val.d = pow( pLeft->value.asNum.val.d,
-                                               ( double ) pRight->value.asNum.val.l );
+                                               static_cast< double >( pRight->value.asNum.val.l ) );
             else
-               pSelf->value.asNum.val.d = pow( ( double ) pLeft->value.asNum.val.l,
+               pSelf->value.asNum.val.d = pow( static_cast< double >( pLeft->value.asNum.val.l ),
                                                pRight->value.asNum.val.d );
             break;
       }
@@ -475,7 +475,7 @@ PHB_EXPR hb_compExprReduceMinus( PHB_EXPR pSelf, HB_COMP_DECL )
             }
             else
             {
-               pSelf->value.asNum.val.d = ( double ) dVal;
+               pSelf->value.asNum.val.d = static_cast< double >( dVal );
                pSelf->value.asNum.NumType = HB_ET_DOUBLE;
             }
             pSelf->value.asNum.bWidth = HB_DEFAULT_WIDTH;
@@ -500,12 +500,12 @@ PHB_EXPR hb_compExprReduceMinus( PHB_EXPR pSelf, HB_COMP_DECL )
 
             if( pLeft->value.asNum.NumType == HB_ET_DOUBLE )
             {
-               pSelf->value.asNum.val.d = pLeft->value.asNum.val.d - ( double ) pRight->value.asNum.val.l;
+               pSelf->value.asNum.val.d = pLeft->value.asNum.val.d - static_cast< double >( pRight->value.asNum.val.l );
                pSelf->value.asNum.bDec = pLeft->value.asNum.bDec;
             }
             else
             {
-               pSelf->value.asNum.val.d = ( double ) pLeft->value.asNum.val.l - pRight->value.asNum.val.d;
+               pSelf->value.asNum.val.d = static_cast< double >( pLeft->value.asNum.val.l ) - pRight->value.asNum.val.d;
                pSelf->value.asNum.bDec = pRight->value.asNum.bDec;
             }
             pSelf->value.asNum.bWidth = HB_DEFAULT_WIDTH;
@@ -648,7 +648,7 @@ static HB_BOOL hb_compExprReducePlusNums( PHB_EXPR pSelf, PHB_EXPR pAdd )
             pNum->value.asNum.val.l += pAdd->value.asNum.val.l;
          else
          {
-            pNum->value.asNum.val.d = ( double ) dVal;
+            pNum->value.asNum.val.d = static_cast< double >( dVal );
             pNum->value.asNum.NumType = HB_ET_DOUBLE;
          }
          pNum->value.asNum.bWidth = HB_DEFAULT_WIDTH;
@@ -665,10 +665,10 @@ static HB_BOOL hb_compExprReducePlusNums( PHB_EXPR pSelf, PHB_EXPR pAdd )
 
       default:
          if( pNum->value.asNum.NumType == HB_ET_DOUBLE )
-            pNum->value.asNum.val.d += ( double ) pAdd->value.asNum.val.l;
+            pNum->value.asNum.val.d += static_cast< double >( pAdd->value.asNum.val.l );
          else
          {
-            pNum->value.asNum.val.d = ( double ) pNum->value.asNum.val.l + pAdd->value.asNum.val.d;
+            pNum->value.asNum.val.d = static_cast< double >( pNum->value.asNum.val.l ) + pAdd->value.asNum.val.d;
             pNum->value.asNum.bDec = pAdd->value.asNum.bDec;
             pNum->value.asNum.NumType = HB_ET_DOUBLE;
          }
@@ -705,7 +705,7 @@ PHB_EXPR hb_compExprReducePlus( PHB_EXPR pSelf, HB_COMP_DECL )
                }
                else
                {
-                  pSelf->value.asNum.val.d = ( double ) dVal;
+                  pSelf->value.asNum.val.d = static_cast< double >( dVal );
                   pSelf->value.asNum.NumType = HB_ET_DOUBLE;
                }
                pSelf->value.asNum.bWidth = HB_DEFAULT_WIDTH;
@@ -726,12 +726,12 @@ PHB_EXPR hb_compExprReducePlus( PHB_EXPR pSelf, HB_COMP_DECL )
             default:
                if( pLeft->value.asNum.NumType == HB_ET_DOUBLE )
                {
-                  pSelf->value.asNum.val.d = pLeft->value.asNum.val.d + ( double ) pRight->value.asNum.val.l;
+                  pSelf->value.asNum.val.d = pLeft->value.asNum.val.d + static_cast< double >( pRight->value.asNum.val.l );
                   pSelf->value.asNum.bDec = pLeft->value.asNum.bDec;
                }
                else
                {
-                  pSelf->value.asNum.val.d = ( double ) pLeft->value.asNum.val.l + pRight->value.asNum.val.d;
+                  pSelf->value.asNum.val.d = static_cast< double >( pLeft->value.asNum.val.l ) + pRight->value.asNum.val.d;
                   pSelf->value.asNum.bDec = pRight->value.asNum.bDec;
                }
                pSelf->value.asNum.bWidth = HB_DEFAULT_WIDTH;
@@ -943,7 +943,7 @@ PHB_EXPR hb_compExprReduceNegate( PHB_EXPR pSelf, HB_COMP_DECL )
          if( pExpr->value.asNum.val.l < -HB_VMLONG_MAX )
          {
             pExpr->value.asNum.NumType = HB_ET_DOUBLE;
-            pExpr->value.asNum.val.d = - ( double ) pExpr->value.asNum.val.l;
+            pExpr->value.asNum.val.d = - static_cast< double >( pExpr->value.asNum.val.l );
             pExpr->value.asNum.bDec = 0;
          }
          else
@@ -2488,10 +2488,10 @@ HB_BOOL hb_compExprReduceMIN( PHB_EXPR pSelf, HB_COMP_DECL )
 
             default:
                if( pFirst->value.asNum.NumType == HB_ET_DOUBLE )
-                  pExpr = ( pFirst->value.asNum.val.d <= ( double ) pNext->value.asNum.val.l ) ?
+                  pExpr = ( pFirst->value.asNum.val.d <= static_cast< double >( pNext->value.asNum.val.l ) ) ?
                           pFirst : pNext;
                else
-                  pExpr = ( ( double ) pFirst->value.asNum.val.l <= pNext->value.asNum.val.d ) ?
+                  pExpr = ( static_cast< double >( pFirst->value.asNum.val.l ) <= pNext->value.asNum.val.d ) ?
                           pFirst : pNext;
          }
       }
@@ -2574,10 +2574,10 @@ HB_BOOL hb_compExprReduceMAX( PHB_EXPR pSelf, HB_COMP_DECL )
 
             default:
                if( pFirst->value.asNum.NumType == HB_ET_DOUBLE )
-                  pExpr = ( pFirst->value.asNum.val.d >= ( double ) pNext->value.asNum.val.l ) ?
+                  pExpr = ( pFirst->value.asNum.val.d >= static_cast< double >( pNext->value.asNum.val.l ) ) ?
                           pFirst : pNext;
                else
-                  pExpr = ( ( double ) pFirst->value.asNum.val.l >= pNext->value.asNum.val.d ) ?
+                  pExpr = ( static_cast< double >( pFirst->value.asNum.val.l ) >= pNext->value.asNum.val.d ) ?
                           pFirst : pNext;
          }
       }

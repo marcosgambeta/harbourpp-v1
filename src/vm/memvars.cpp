@@ -1436,7 +1436,7 @@ static HB_DYNS_FUNC( hb_memvarSave )
          }
          else if( HB_IS_DATE( pMemvar ) )
          {
-            double dNumber = ( double ) hb_itemGetDL( pMemvar );
+            double dNumber = static_cast< double >( hb_itemGetDL( pMemvar ) );
 
             buffer[ 11 ] = 'D' + 128;
             buffer[ 16 ] = 1;

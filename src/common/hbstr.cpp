@@ -396,7 +396,7 @@ static double hb_numPow10( int nPrecision )
          return 1.0 / s_dPow10[ ( unsigned int ) -nPrecision ];
    }
 
-   return pow( 10.0, ( double ) nPrecision );
+   return pow( 10.0, static_cast< double >( nPrecision ) );
 }
 
 double hb_numRound( double dNum, int iDec )
@@ -634,7 +634,7 @@ static HB_BOOL hb_str2number( HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, 
             }
             else
             {
-               *dVal = ( double ) *lVal * 10.0 + ( c - '0' );
+               *dVal = static_cast< double >( *lVal ) * 10.0 + ( c - '0' );
                fDbl = HB_TRUE;
             }
             if( fDec )
@@ -675,7 +675,7 @@ static HB_BOOL hb_str2number( HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, 
 #endif
         fDec ) )
    {
-      *dVal = ( double ) *lVal;
+      *dVal = static_cast< double >( *lVal );
       fDbl = HB_TRUE;
    }
    if( iDec )
@@ -757,7 +757,7 @@ double hb_strVal( const char * szText, HB_SIZE nLen )
    HB_TRACE( HB_TR_DEBUG, ( "hb_strVal(%.*s, %" HB_PFS "u)", static_cast< int >( nLen ), szText, nLen ) );
 
    if( ! hb_str2number( HB_FALSE, szText, nLen, &lVal, &dVal, NULL, NULL ) )
-      dVal = ( double ) lVal;
+      dVal = static_cast< double >( lVal );
    return dVal;
 }
 

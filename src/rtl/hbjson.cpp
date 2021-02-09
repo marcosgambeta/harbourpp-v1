@@ -519,13 +519,13 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
       {
          double mult = 1;
 
-         dblValue = ( double ) nValue;
+         dblValue = static_cast< double >( nValue );
          fDbl = HB_TRUE;
          szSource++;
          while( *szSource >= '0' && *szSource <= '9' )
          {
             mult /= 10;
-            dblValue += ( ( double ) ( *szSource - '0' ) ) * mult;
+            dblValue += ( static_cast< double >( *szSource - '0' ) ) * mult;
             szSource++;
             iDec++;
          }
@@ -547,7 +547,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
          }
          if( ! fDbl )
          {
-            dblValue = ( double ) nValue;
+            dblValue = static_cast< double >( nValue );
             fDbl = HB_TRUE;
          }
          if( fNegExp )

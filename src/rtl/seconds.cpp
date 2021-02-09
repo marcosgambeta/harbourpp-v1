@@ -66,8 +66,8 @@ HB_FUNC( HB_MILLISECONDS )
 HB_FUNC( HB_CLOCKS2SECS )
 {
 #ifdef CLOCKS_PER_SEC
-   hb_retnd( ( double ) hb_parnint( 1 ) / CLOCKS_PER_SEC );
+   hb_retnd( static_cast< double >( hb_parnint( 1 ) ) / CLOCKS_PER_SEC );
 #else
-   hb_retnd( ( double ) hb_parnint( 1 ) / 1000 );
+   hb_retnd( static_cast< double >( hb_parnint( 1 ) ) / 1000 );
 #endif
 }

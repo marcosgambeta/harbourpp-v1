@@ -136,21 +136,21 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
                {
                   case HB_DISK_AVAIL:
                   case HB_DISK_FREE:
-                     dSpace = ( double ) dwNumberOfFreeClusters *
-                              ( double ) dwSectorsPerCluster *
-                              ( double ) dwBytesPerSector;
+                     dSpace = static_cast< double >( dwNumberOfFreeClusters ) *
+                              static_cast< double >( dwSectorsPerCluster ) *
+                              static_cast< double >( dwBytesPerSector );
                      break;
 
                   case HB_DISK_USED:
                   case HB_DISK_TOTAL:
-                     dSpace = ( double ) dwTotalNumberOfClusters *
-                              ( double ) dwSectorsPerCluster *
-                              ( double ) dwBytesPerSector;
+                     dSpace = static_cast< double >( dwTotalNumberOfClusters ) *
+                              static_cast< double >( dwSectorsPerCluster ) *
+                              static_cast< double >( dwBytesPerSector );
 
                      if( uiType == HB_DISK_USED )
-                        dSpace -= ( double ) dwNumberOfFreeClusters *
-                                  ( double ) dwSectorsPerCluster *
-                                  ( double ) dwBytesPerSector;
+                        dSpace -= static_cast< double >( dwNumberOfFreeClusters ) *
+                                  static_cast< double >( dwSectorsPerCluster ) *
+                                  static_cast< double >( dwBytesPerSector );
                      break;
                }
             }
@@ -163,7 +163,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
 
 #  define HB_GET_LARGE_UINT( v )  ( ( double ) (v).LowPart + \
                                     ( double ) (v).HighPart * \
-                                    ( ( ( double ) 0xFFFFFFFF ) + 1 ) )
+                                    ( ( static_cast< double >( 0xFFFFFFFF ) ) + 1 ) )
 
 #else
    /* NOTE: Borland doesn't seem to deal with the un-named
@@ -171,7 +171,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
             [pt] */
 #  define HB_GET_LARGE_UINT( v )  ( ( double ) (v).u.LowPart + \
                                     ( double ) (v).u.HighPart * \
-                                    ( ( ( double ) 0xFFFFFFFF ) + 1 ) )
+                                    ( ( static_cast< double >( 0xFFFFFFFF ) ) + 1 ) )
 #endif
 
             ULARGE_INTEGER i64FreeBytesToCaller, i64TotalBytes, i64FreeBytes;
@@ -247,21 +247,21 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
             {
                case HB_DISK_AVAIL:
                case HB_DISK_FREE:
-                  dSpace = ( double ) uiClusterFree *
-                           ( double ) uiSecPerCluster *
-                           ( double ) uiSectorSize;
+                  dSpace = static_cast< double >( uiClusterFree ) *
+                           static_cast< double >( uiSecPerCluster ) *
+                           static_cast< double >( uiSectorSize );
                   break;
 
                case HB_DISK_USED:
                case HB_DISK_TOTAL:
-                  dSpace = ( double ) uiClusterTotal *
-                           ( double ) uiSecPerCluster *
-                           ( double ) uiSectorSize;
+                  dSpace = static_cast< double >( uiClusterTotal ) *
+                           static_cast< double >( uiSecPerCluster ) *
+                           static_cast< double >( uiSectorSize );
 
                   if( uiType == HB_DISK_USED )
-                     dSpace -= ( double ) uiClusterFree *
-                               ( double ) uiSecPerCluster *
-                               ( double ) uiSectorSize;
+                     dSpace -= static_cast< double >( uiClusterFree ) *
+                               static_cast< double >( uiSecPerCluster ) *
+                               static_cast< double >( uiSectorSize );
                   break;
             }
          }
@@ -291,21 +291,21 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
             {
                case HB_DISK_AVAIL:
                case HB_DISK_FREE:
-                  dSpace = ( double ) fsa.cUnitAvail *
-                           ( double ) fsa.cSectorUnit *
-                           ( double ) fsa.cbSector;
+                  dSpace = static_cast< double >( fsa.cUnitAvail ) *
+                           static_cast< double >( fsa.cSectorUnit ) *
+                           static_cast< double >( fsa.cbSector );
                   break;
 
                case HB_DISK_USED:
                case HB_DISK_TOTAL:
-                  dSpace = ( double ) fsa.cUnit *
-                           ( double ) fsa.cSectorUnit *
-                           ( double ) fsa.cbSector;
+                  dSpace = static_cast< double >( fsa.cUnit ) *
+                           static_cast< double >( fsa.cSectorUnit ) *
+                           static_cast< double >( fsa.cbSector );
 
                   if( uiType == HB_DISK_USED )
-                     dSpace -= ( double ) fsa.cUnitAvail *
-                               ( double ) fsa.cSectorUnit *
-                               ( double ) fsa.cbSector;
+                     dSpace -= static_cast< double >( fsa.cUnitAvail ) *
+                               static_cast< double >( fsa.cSectorUnit ) *
+                               static_cast< double >( fsa.cbSector );
                   break;
             }
          }
@@ -336,20 +336,20 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
          switch( uiType )
          {
             case HB_DISK_AVAIL:
-               dSpace = ( double ) sf.f_bavail * ( double ) sf.f_bsize;
+               dSpace = static_cast< double >( sf.f_bavail ) * static_cast< double >( sf.f_bsize );
                break;
 
             case HB_DISK_FREE:
-               dSpace = ( double ) sf.f_bfree * ( double ) sf.f_bsize;
+               dSpace = static_cast< double >( sf.f_bfree ) * static_cast< double >( sf.f_bsize );
                break;
 
             case HB_DISK_USED:
-               dSpace = ( double ) ( sf.f_blocks - sf.f_bfree ) *
-                        ( double ) sf.f_bsize;
+               dSpace = static_cast< double >( sf.f_blocks - sf.f_bfree ) *
+                        static_cast< double >( sf.f_bsize );
                break;
 
             case HB_DISK_TOTAL:
-               dSpace = ( double ) sf.f_blocks * ( double ) sf.f_bsize;
+               dSpace = static_cast< double >( sf.f_blocks ) * static_cast< double >( sf.f_bsize );
                break;
          }
          hb_fsSetIOError( HB_TRUE, 0 );

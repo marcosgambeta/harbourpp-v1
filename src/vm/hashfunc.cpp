@@ -558,7 +558,7 @@ HB_FUNC( HB_HSCAN )
             if( pItem )
             {
                if( HB_IS_NUMERIC( pItem ) && hb_itemGetNInt( pItem ) == nValue &&
-                   hb_itemGetND( pItem ) == ( double ) nValue )
+                   hb_itemGetND( pItem ) == static_cast< double >( nValue ) )
                {
                   fFound = HB_TRUE;
                   break;

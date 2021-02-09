@@ -1078,7 +1078,7 @@ HB_SIZE hb_arrayScan( PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE * pnStart, HB_SI
                   PHB_ITEM pItem = pBaseArray->pItems + nStart++;
 
                   if( HB_IS_NUMERIC( pItem ) && hb_itemGetNInt( pItem ) == nValue &&
-                      hb_itemGetND( pItem ) == ( double ) nValue )
+                      hb_itemGetND( pItem ) == static_cast< double >( nValue ) )
                      return nStart;
                }
                while( --nCount > 0 );
@@ -1258,7 +1258,7 @@ HB_SIZE hb_arrayRevScan( PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE * pnStart, HB
                   PHB_ITEM pItem = pBaseArray->pItems + nStart;
 
                   if( HB_IS_NUMERIC( pItem ) && hb_itemGetNInt( pItem ) == nValue &&
-                      hb_itemGetND( pItem ) == ( double ) nValue )
+                      hb_itemGetND( pItem ) == static_cast< double >( nValue ) )
                      return nStart + 1;
                }
                while( --nCount && nStart-- );

@@ -691,14 +691,14 @@ static LPKEYINFO hb_nsxKeyPutItem( LPKEYINFO pKey, PHB_ITEM pItem, HB_ULONG ulRe
          HB_DBL2ORD( &d, pKey->val );
          break;
       case 'D':
-         d = ( double ) hb_itemGetDL( pItem );
+         d = static_cast< double >( hb_itemGetDL( pItem ) );
          HB_DBL2ORD( &d, pKey->val );
          if( puiLen && pTag->KeyType == 'T' )
             pKey->mode = NSX_CMP_DATE;
          break;
       case 'T':
          if( pTag->KeyType == 'D' )
-            d = ( double ) hb_itemGetDL( pItem );
+            d = static_cast< double >( hb_itemGetDL( pItem ) );
          else
             d = hb_itemGetTD( pItem );
          HB_DBL2ORD( &d, pKey->val );
@@ -5450,8 +5450,8 @@ static LPNSXSORTINFO hb_nsxSortNew( LPTAGINFO pTag, HB_ULONG ulRecCount )
 
    pSort = ( LPNSXSORTINFO ) hb_xgrabz( sizeof( NSXSORTINFO ) );
 
-   ulMin = ( HB_ULONG ) ceil( sqrt( ( double ) ulRecCount ) );
-   ulMax = ( ( HB_ULONG ) ceil( sqrt( ( double ) ulRecCount / ( iLen + 4 ) ) ) ) << 7;
+   ulMin = ( HB_ULONG ) ceil( sqrt( static_cast< double >( ulRecCount ) ) );
+   ulMax = ( ( HB_ULONG ) ceil( sqrt( static_cast< double >( ulRecCount ) / ( iLen + 4 ) ) ) ) << 7;
    /*
     * this effectively increase allocated memory buffer for very large files
     * moving the maximum to: 267'443'712 for 4'294'967'295 records and 250
@@ -6014,7 +6014,7 @@ static HB_ERRCODE hb_nsxTagCreate( LPTAGINFO pTag, HB_BOOL fReindex )
                   if( pTag->KeyType == 'T' )
                      d = hb_itemGetTD( pItem );
                   else
-                     d = ( double ) hb_itemGetDL( pItem );
+                     d = static_cast< double >( hb_itemGetDL( pItem ) );
                   HB_DBL2ORD( &d, szBuffer );
                   hb_nsxSortKeyAdd( pSort, pArea->dbfarea.ulRecNo, szBuffer, 8 );
                   break;

@@ -1148,7 +1148,7 @@ PHB_EXPR hb_compExprNewNegate( PHB_EXPR pNegExpr, HB_COMP_DECL )
          if( pNegExpr->value.asNum.val.l < -HB_VMLONG_MAX )
          {
             pNegExpr->value.asNum.NumType = HB_ET_DOUBLE;
-            pNegExpr->value.asNum.val.d   = -( double ) pNegExpr->value.asNum.val.l;
+            pNegExpr->value.asNum.val.d   = -static_cast< double >( pNegExpr->value.asNum.val.l );
             pNegExpr->value.asNum.bWidth  = ( HB_UCHAR ) HB_DBL_LENGTH( pNegExpr->value.asNum.val.d );
             pNegExpr->value.asNum.bDec    = 0;
          }

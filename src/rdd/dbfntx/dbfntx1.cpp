@@ -5039,8 +5039,8 @@ static LPNTXSORTINFO hb_ntxSortNew( LPTAGINFO pTag, HB_ULONG ulRecCount )
 
    pSort = ( LPNTXSORTINFO ) hb_xgrabz( sizeof( NTXSORTINFO ) );
 
-   ulMin = ( HB_ULONG ) ceil( sqrt( ( double ) ulRecCount ) );
-   ulMax = ( ( HB_ULONG ) ceil( sqrt( ( double ) ulRecCount / ( iLen + 4 ) ) ) ) << 7;
+   ulMin = ( HB_ULONG ) ceil( sqrt( static_cast< double >( ulRecCount ) ) );
+   ulMax = ( ( HB_ULONG ) ceil( sqrt( static_cast< double >( ulRecCount ) / ( iLen + 4 ) ) ) ) << 7;
    /*
     * this effectively increase allocated memory buffer for very large files
     * moving the maximum to: 270'566'400 for 4'294'967'295 records and 256

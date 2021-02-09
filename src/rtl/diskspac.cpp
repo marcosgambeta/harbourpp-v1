@@ -99,9 +99,9 @@ HB_FUNC( DISKSPACE )
 
          bError = regs.HB_XREGS.ax == 0xFFFF;
          if( ! bError )
-            dSpace = ( double ) regs.HB_XREGS.bx *
-                     ( double ) regs.HB_XREGS.ax *
-                     ( double ) regs.HB_XREGS.cx;
+            dSpace = static_cast< double >( regs.HB_XREGS.bx ) *
+                     static_cast< double >( regs.HB_XREGS.ax ) *
+                     static_cast< double >( regs.HB_XREGS.cx );
       }
       else
          bError = HB_TRUE;
@@ -113,14 +113,14 @@ HB_FUNC( DISKSPACE )
 
 #  define HB_GET_LARGE_UINT( v )  ( ( double ) (v).LowPart + \
                                     ( double ) (v).HighPart * \
-                                    ( ( ( double ) 0xFFFFFFFF ) + 1 ) )
+                                    ( ( static_cast< double >( 0xFFFFFFFF ) ) + 1 ) )
 
 #else
    /* NOTE: For compilers that don't seem to deal with the
             unnamed struct that is part of ULARGE_INTEGER [pt] */
 #  define HB_GET_LARGE_UINT( v )  ( ( double ) (v).u.LowPart + \
                                     ( double ) (v).u.HighPart * \
-                                    ( ( ( double ) 0xFFFFFFFF ) + 1 ) )
+                                    ( ( static_cast< double >( 0xFFFFFFFF ) ) + 1 ) )
 #endif
 
       int iDrive = hb_parni( 1 );
@@ -189,9 +189,9 @@ HB_FUNC( DISKSPACE )
                                           &dwNumberOfFreeClusters,
                                           &dwTotalNumberOfClusters ) ? HB_FALSE : HB_TRUE;
                if( ! bError )
-                  dSpace = ( double ) dwNumberOfFreeClusters *
-                           ( double ) dwSectorsPerCluster *
-                           ( double ) dwBytesPerSector;
+                  dSpace = static_cast< double >( dwNumberOfFreeClusters ) *
+                           static_cast< double >( dwSectorsPerCluster ) *
+                           static_cast< double >( dwBytesPerSector );
             }
          }
 #endif
@@ -208,9 +208,9 @@ HB_FUNC( DISKSPACE )
       /* Query level 1 info from filesystem */
       bError = DosQueryFSInfo( uiDrive, 1, &fsa, sizeof( fsa ) ) != 0;
       if( ! bError )
-         dSpace = ( double ) fsa.cUnitAvail *
-                  ( double ) fsa.cSectorUnit *
-                  ( double ) fsa.cbSector;
+         dSpace = static_cast< double >( fsa.cUnitAvail ) *
+                  static_cast< double >( fsa.cSectorUnit ) *
+                  static_cast< double >( fsa.cbSector );
    }
 #elif defined( HB_OS_UNIX )
    {
@@ -240,10 +240,10 @@ HB_FUNC( DISKSPACE )
          {
 #if ! defined( HB_OS_VXWORKS )
             if( getuid() == 0 )
-               dSpace = ( double ) st.f_bfree * ( double ) st.f_bsize;
+               dSpace = static_cast< double >( st.f_bfree ) * static_cast< double >( st.f_bsize );
             else
 #endif
-               dSpace = ( double ) st.f_bavail * ( double ) st.f_bsize;
+               dSpace = static_cast< double >( st.f_bavail ) * static_cast< double >( st.f_bsize );
          }
 #endif
       }

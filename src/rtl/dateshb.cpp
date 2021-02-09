@@ -265,7 +265,7 @@ HB_FUNC( HB_TTOD )
             hb_storc( hb_timeFormat( szBuffer, szTimeFormat, lTime ), 2 );
          }
          else
-            hb_stornd( ( double ) lTime / 1000, 2 );
+            hb_stornd( static_cast< double >( lTime ) / 1000, 2 );
       }
    }
    else
@@ -337,7 +337,7 @@ HB_FUNC( HB_TTOSEC )
    long lDate, lTime;
 
    if( hb_partdt( &lDate, &lTime, 1 ) )
-      hb_retnd( ( double ) lDate * HB_SECONDS_PER_DAY + ( double ) lTime / 1000 );
+      hb_retnd( static_cast< double >( lDate ) * HB_SECONDS_PER_DAY + static_cast< double >( lTime ) / 1000 );
    else
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
@@ -367,7 +367,7 @@ HB_FUNC( HB_TTOMSEC )
    long lDate, lTime;
 
    if( hb_partdt( &lDate, &lTime, 1 ) )
-      hb_retnd( ( double ) lDate * HB_MILLISECS_PER_DAY + lTime );
+      hb_retnd( static_cast< double >( lDate ) * HB_MILLISECS_PER_DAY + lTime );
    else
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
@@ -377,7 +377,7 @@ HB_FUNC( HB_TTOMIN )
    long lDate, lTime;
 
    if( hb_partdt( &lDate, &lTime, 1 ) )
-      hb_retnd( ( double ) lDate * HB_MINUTES_PER_DAY + ( double ) lTime / ( 60 * 1000 ) );
+      hb_retnd( static_cast< double >( lDate ) * HB_MINUTES_PER_DAY + static_cast< double >( lTime ) / ( 60 * 1000 ) );
    else
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
@@ -387,7 +387,7 @@ HB_FUNC( HB_TTOHOUR )
    long lDate, lTime;
 
    if( hb_partdt( &lDate, &lTime, 1 ) )
-      hb_retnd( ( double ) lDate * 24 + ( double ) lTime / ( 60 * 60 * 1000 ) );
+      hb_retnd( static_cast< double >( lDate ) * 24 + static_cast< double >( lTime ) / ( 60 * 60 * 1000 ) );
    else
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
@@ -504,7 +504,7 @@ HB_FUNC( HB_SEC )
       int iHour, iMinutes, iSeconds, iMSec;
 
       hb_timeDecode( lTime, &iHour, &iMinutes, &iSeconds, &iMSec );
-      hb_retndlen( ( double ) ( iSeconds * 1000 + iMSec ) / 1000, 3, 3 );
+      hb_retndlen( static_cast< double >( iSeconds * 1000 + iMSec ) / 1000, 3, 3 );
    }
    else
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );

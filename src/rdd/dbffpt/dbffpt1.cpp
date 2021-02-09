@@ -1717,7 +1717,7 @@ static HB_ULONG hb_fptStoreSixItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** b
             HB_PUT_LE_UINT16( &( *bBufPtr )[ 0 ], FPTIT_SIX_DNUM );
             HB_PUT_LE_UINT16( &( *bBufPtr )[ 2 ], iWidth );
             HB_PUT_LE_UINT16( &( *bBufPtr )[ 4 ], iDec );
-            HB_PUT_LE_DOUBLE( &( *bBufPtr )[ 6 ], ( double ) iVal );
+            HB_PUT_LE_DOUBLE( &( *bBufPtr )[ 6 ], static_cast< double >( iVal ) );
             *bBufPtr += SIX_ITEM_BUFSIZE;
          }
          break;
@@ -2053,7 +2053,7 @@ static void hb_fptStoreFlexItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBuf
             *( *bBufPtr )++ = FPTIT_FLEXAR_DOUBLE2;
             *( *bBufPtr )++ = ( HB_BYTE ) iWidth;
             *( *bBufPtr )++ = ( HB_BYTE ) iDec;
-            HB_PUT_LE_DOUBLE( *bBufPtr, ( double ) iVal );
+            HB_PUT_LE_DOUBLE( *bBufPtr, static_cast< double >( iVal ) );
             *bBufPtr += 8;
          }
          break;
@@ -3129,7 +3129,7 @@ static HB_ERRCODE hb_fptPutMemo( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
             }
             else
             {
-               double d = ( double ) iVal;
+               double d = static_cast< double >( iVal );
                ulType = FPTIT_FLEX_DOUBLE;
                ulSize = 8;
                HB_PUT_LE_DOUBLE( itmBuffer, d );

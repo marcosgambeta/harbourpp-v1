@@ -463,9 +463,9 @@ double  hb_parnd( int iParam )
       if( HB_IS_DOUBLE( pItem ) )
          return pItem->item.asDouble.value;
       else if( HB_IS_INTEGER( pItem ) )
-         return ( double ) pItem->item.asInteger.value;
+         return static_cast< double >( pItem->item.asInteger.value );
       else if( HB_IS_LONG( pItem ) )
-         return ( double ) pItem->item.asLong.value;
+         return static_cast< double >( pItem->item.asLong.value );
    }
 
    return 0;
@@ -1088,9 +1088,9 @@ double  hb_parvnd( int iParam, ... )
       if( HB_IS_DOUBLE( pItem ) )
          return pItem->item.asDouble.value;
       else if( HB_IS_INTEGER( pItem ) )
-         return ( double ) pItem->item.asInteger.value;
+         return static_cast< double >( pItem->item.asInteger.value );
       else if( HB_IS_LONG( pItem ) )
-         return ( double ) pItem->item.asLong.value;
+         return static_cast< double >( pItem->item.asLong.value );
       else if( HB_IS_ARRAY( pItem ) )
       {
          va_list va;

@@ -651,10 +651,10 @@ double hb_itemGetND( PHB_ITEM pItem )
          return pItem->item.asDouble.value;
 
       else if( HB_IS_INTEGER( pItem ) )
-         return ( double ) pItem->item.asInteger.value;
+         return static_cast< double >( pItem->item.asInteger.value );
 
       else if( HB_IS_LONG( pItem ) )
-         return ( double ) pItem->item.asLong.value;
+         return static_cast< double >( pItem->item.asLong.value );
    }
 
    return 0;
@@ -1076,7 +1076,7 @@ PHB_ITEM hb_itemPutNLL( PHB_ITEM pItem, HB_LONGLONG llNumber )
    pItem->item.asLong.length = HB_LONG_LENGTH( llNumber );
 #else
    pItem->type = HB_IT_DOUBLE;
-   pItem->item.asDouble.value = ( double ) llNumber;
+   pItem->item.asDouble.value = static_cast< double >( llNumber );
    pItem->item.asDouble.length = HB_DBL_LENGTH( pItem->item.asDouble.value );
    pItem->item.asDouble.decimal = 0;
 #endif
@@ -1145,7 +1145,7 @@ PHB_ITEM hb_itemPutNLen( PHB_ITEM pItem, double dNumber, int iWidth, int iDec )
    {
       HB_MAXINT nNumber = ( HB_MAXINT ) dNumber;
 
-      if( ( double ) nNumber == dNumber )
+      if( static_cast< double >( nNumber ) == dNumber )
       {
          if( iWidth <= 0 || iWidth >= HB_DEFAULT_WIDTH )
             iWidth = HB_DBL_LENGTH( dNumber );
@@ -1223,12 +1223,12 @@ double hb_itemGetNDDec( PHB_ITEM pItem, int * piDec )
    if( HB_IS_INTEGER( pItem ) )
    {
       *piDec = 0;
-      return ( double ) pItem->item.asInteger.value;
+      return static_cast< double >( pItem->item.asInteger.value );
    }
    else if( HB_IS_LONG( pItem ) )
    {
       *piDec = 0;
-      return ( double ) pItem->item.asLong.value;
+      return static_cast< double >( pItem->item.asLong.value );
    }
    else if( HB_IS_DOUBLE( pItem ) )
    {
@@ -1316,7 +1316,7 @@ PHB_ITEM hb_itemPutNLLLen( PHB_ITEM pItem, HB_LONGLONG llNumber, int iWidth )
    pItem->item.asLong.length = ( HB_USHORT ) iWidth;
 #else
    pItem->type = HB_IT_DOUBLE;
-   pItem->item.asDouble.value = ( double ) llNumber;
+   pItem->item.asDouble.value = static_cast< double >( llNumber );
    if( iWidth <= 0 || iWidth >= HB_DEFAULT_WIDTH )
       iWidth = HB_LONG_LENGTH( pItem->item.asDouble.value );
    pItem->item.asDouble.length = iWidth;

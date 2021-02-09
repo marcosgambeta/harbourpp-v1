@@ -500,7 +500,7 @@ static void hb_dbfSetBlankRecord( DBFAREAP pArea, int iType )
                 pField->uiType == HB_FT_AUTOINC )
             {
                if( pField->uiDec )
-                  nValue = ( HB_MAXINT ) hb_numDecConv( ( double ) nValue,
+                  nValue = ( HB_MAXINT ) hb_numDecConv( static_cast< double >( nValue ),
                                                         -static_cast< int >( pField->uiDec ) );
                if( uiLen == 1 )
                   *pPtr = ( signed char ) nValue;
@@ -2259,7 +2259,7 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
                   iLen = 10;
                   break;
                case 8:
-                  dVal = ( double ) HB_GET_LE_INT64( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] );
+                  dVal = static_cast< double >( HB_GET_LE_INT64( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ) );
                   iLen = 20;
                   break;
                default:
@@ -2291,7 +2291,7 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
 #ifndef HB_LONG_LONG_OFF
                   hb_itemPutNIntLen( pItem, ( HB_MAXINT ) HB_GET_LE_INT64( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ), 20 );
 #else
-                  hb_itemPutNLen( pItem, ( double ) HB_GET_LE_INT64( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ), 20, 0 );
+                  hb_itemPutNLen( pItem, static_cast< double >( HB_GET_LE_INT64( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ) ), 20, 0 );
 #endif
                   break;
                default:
@@ -2328,7 +2328,7 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
                               pField->uiLen, &lVal, &dVal );
 
          if( pField->uiDec )
-            hb_itemPutNDLen( pItem, fDbl ? dVal : ( double ) lVal,
+            hb_itemPutNDLen( pItem, fDbl ? dVal : static_cast< double >( lVal ),
                              static_cast< int >( pField->uiLen - pField->uiDec - 1 ),
                              static_cast< int >( pField->uiDec ) );
          else if( fDbl )
@@ -2779,7 +2779,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             {
                lVal = ( HB_MAXINT ) hb_itemGetNInt( pItem );
 #ifdef HB_LONG_LONG_OFF
-               dVal = ( double ) lVal;
+               dVal = static_cast< double >( lVal );
 #endif
                iSize = HB_LIM_INT8( lVal ) ? 1 :
                      ( HB_LIM_INT16( lVal ) ? 2 :

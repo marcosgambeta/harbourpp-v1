@@ -521,7 +521,7 @@ static LPCDXKEY hb_cdxKeyPutItem( LPCDXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRec,
          }
          break;
       case 'D':
-         d = ( double ) hb_itemGetDL( pItem );
+         d = static_cast< double >( hb_itemGetDL( pItem ) );
          HB_DBL2ORD( &d, buf );
          nLen = 8;
          if( iMode == CDX_CMP_PREFIX && pTag->uiType == 'T' )
@@ -529,7 +529,7 @@ static LPCDXKEY hb_cdxKeyPutItem( LPCDXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRec,
          break;
       case 'T':
          if( pTag->uiType == 'D' )
-            d = ( double ) hb_itemGetDL( pItem );
+            d = static_cast< double >( hb_itemGetDL( pItem ) );
          else
             d = hb_itemGetTD( pItem );
          HB_DBL2ORD( &d, buf );
@@ -7137,12 +7137,12 @@ static HB_ERRCODE hb_cdxClose( CDXAREAP pArea )
               "cdxTimeExtBlc=%f, cdxTimeIntBlc=%f\r\n"
               "cdxTimeIdxBld=%f\r\n"
               "cdxTimeTotal=%f\r\n",
-              ( double ) cdxTimeIntBld / 1000000, ( double ) cdxTimeExtBld / 1000000,
-              ( double ) ( cdxTimeIntBld + cdxTimeExtBld ) / 1000000,
-              ( double ) cdxTimeGetKey / 1000000, ( double ) cdxTimeFreeKey / 1000000,
-              ( double ) cdxTimeIntBlc / 1000000, ( double ) cdxTimeExtBlc / 1000000,
-              ( double ) cdxTimeIdxBld / 1000000,
-              ( double ) ( cdxTimeIntBld + cdxTimeExtBld + cdxTimeIdxBld +
+              static_cast< double >( cdxTimeIntBld ) / 1000000, static_cast< double >( cdxTimeExtBld ) / 1000000,
+              static_cast< double >( cdxTimeIntBld + cdxTimeExtBld ) / 1000000,
+              static_cast< double >( cdxTimeGetKey ) / 1000000, static_cast< double >( cdxTimeFreeKey ) / 1000000,
+              static_cast< double >( cdxTimeIntBlc ) / 1000000, static_cast< double >( cdxTimeExtBlc ) / 1000000,
+              static_cast< double >( cdxTimeIdxBld ) / 1000000,
+              static_cast< double >( cdxTimeIntBld + cdxTimeExtBld + cdxTimeIdxBld +
                            cdxTimeGetKey + cdxTimeFreeKey +
                            cdxTimeExtBlc + cdxTimeIntBlc ) / 1000000 );
       fflush( stdout );
@@ -9352,7 +9352,7 @@ static LPCDXSORTINFO hb_cdxSortNew( LPCDXTAG pTag, HB_ULONG ulRecCount )
 
    pSort = ( LPCDXSORTINFO ) hb_xgrab( sizeof( CDXSORTINFO ) );
    memset( pSort, 0, sizeof( CDXSORTINFO ) );
-   ulMax = ulMin = ( HB_ULONG ) ceil( sqrt( ( double ) ulRecCount ) );
+   ulMax = ulMin = ( HB_ULONG ) ceil( sqrt( static_cast< double >( ulRecCount ) ) );
    ulSize = ( 1L << 20 ) / ( iLen + 4 );
    while( ulMax < ulSize )
       ulMax <<= 1;
@@ -9752,7 +9752,7 @@ static void hb_cdxTagDoIndex( LPCDXTAG pTag, HB_BOOL fReindex )
                   break;
 
                case HB_IT_DATE:
-                  d = ( double ) hb_itemGetDL( pItem );
+                  d = static_cast< double >( hb_itemGetDL( pItem ) );
                   HB_DBL2ORD( &d, &cTemp[ 0 ] );
                   hb_cdxSortKeyAdd( pSort, pArea->dbfarea.ulRecNo, cTemp, 8 );
                   break;

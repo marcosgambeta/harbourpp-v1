@@ -745,7 +745,7 @@ static HB_ERRCODE hb_delimGetValue( DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITE
                               pField->uiLen, &lVal, &dVal );
 
          if( pField->uiDec )
-            hb_itemPutNDLen( pItem, fDbl ? dVal : ( double ) lVal,
+            hb_itemPutNDLen( pItem, fDbl ? dVal : static_cast< double >( lVal ),
                              static_cast< int >( pField->uiLen - pField->uiDec - 1 ),
                              static_cast< int >( pField->uiDec ) );
          else if( fDbl )
