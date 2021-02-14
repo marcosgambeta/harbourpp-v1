@@ -1054,7 +1054,7 @@ HB_FUNC( HB_SOCKETSEND )
 
    if( pSock )
    {
-      long lLen = ( long ) hb_parclen( 2 );
+      long lLen = static_cast< long >( hb_parclen( 2 ) );
       const char * data = hb_parc( 2 );
       HB_MAXINT timeout = hb_parnintdef( 5, -1 );
 
@@ -1087,7 +1087,7 @@ HB_FUNC( HB_SOCKETSENDTO )
 
    if( socket != HB_NO_SOCKET && s_socketaddrParam( 5, &addr, &len ) )
    {
-      long lLen = ( long ) hb_parclen( 2 );
+      long lLen = static_cast< long >( hb_parclen( 2 ) );
 
       if( HB_ISNUM( 3 ) )
       {
@@ -1117,13 +1117,13 @@ HB_FUNC( HB_SOCKETRECV )
          if( HB_ISNUM( 3 ) )
          {
             long lRead = hb_parnl( 3 );
-            if( lRead >= 0 && lRead < ( long ) nLen )
+            if( lRead >= 0 && lRead < static_cast< long >( nLen ) )
                nLen = lRead;
          }
          hb_retnl( pSock->fRedirAll ?
-                   hb_sockexRead( pSock, pBuffer, ( long ) nLen,
+                   hb_sockexRead( pSock, pBuffer, static_cast< long >( nLen ),
                                   hb_parnintdef( 5, -1 ) ) :
-                   hb_socketRecv( pSock->sd, pBuffer, ( long ) nLen,
+                   hb_socketRecv( pSock->sd, pBuffer, static_cast< long >( nLen ),
                                   hb_parni( 4 ), hb_parnintdef( 5, -1 ) ) );
       }
       else
@@ -1150,10 +1150,10 @@ HB_FUNC( HB_SOCKETRECVFROM )
          if( HB_ISNUM( 3 ) )
          {
             long lRead = hb_parnl( 3 );
-            if( lRead >= 0 && lRead < ( long ) nLen )
+            if( lRead >= 0 && lRead < static_cast< long >( nLen ) )
                nLen = lRead;
          }
-         hb_retnl( lRet = hb_socketRecvFrom( socket, pBuffer, ( long ) nLen,
+         hb_retnl( lRet = hb_socketRecvFrom( socket, pBuffer, static_cast< long >( nLen ),
                                              hb_parni( 4 ), &addr, &len,
                                              hb_parnintdef( 6, -1 ) ) );
          if( HB_ISBYREF( 5 ) )
@@ -1449,10 +1449,10 @@ HB_FUNC( HB_SOCKETREAD )
          if( HB_ISNUM( 3 ) )
          {
             long lRead = hb_parnl( 3 );
-            if( lRead >= 0 && lRead < ( long ) nLen )
+            if( lRead >= 0 && lRead < static_cast< long >( nLen ) )
                nLen = lRead;
          }
-         hb_retnl( hb_sockexRead( pSock, pBuffer, ( long ) nLen,
+         hb_retnl( hb_sockexRead( pSock, pBuffer, static_cast< long >( nLen ),
                                   hb_parnintdef( 4, -1 ) ) );
       }
       else
@@ -1467,7 +1467,7 @@ HB_FUNC( HB_SOCKETWRITE )
    if( pSock )
    {
       HB_MAXINT timeout = hb_parnintdef( 4, -1 );
-      long lLen = ( long ) hb_parclen( 2 );
+      long lLen = static_cast< long >( hb_parclen( 2 ) );
 
       if( HB_ISNUM( 3 ) )
       {

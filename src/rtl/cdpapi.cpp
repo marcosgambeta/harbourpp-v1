@@ -859,7 +859,7 @@ char * hb_strLower( char * szText, HB_SIZE nLen )
 
       if( cdp )
          for( u = 0; u < nLen; u++ )
-            szText[ u ] = ( char ) cdp->lower[ ( HB_UCHAR ) szText[ u ] ];
+            szText[ u ] = static_cast< char >( cdp->lower[ ( HB_UCHAR ) szText[ u ] ] );
       else
          for( u = 0; u < nLen; u++ )
             szText[ u ] = HB_TOLOWER( szText[ u ] );
@@ -878,7 +878,7 @@ char * hb_strUpper( char * szText, HB_SIZE nLen )
 
       if( cdp )
          for( u = 0; u < nLen; u++ )
-            szText[ u ] = ( char ) cdp->upper[ ( HB_UCHAR ) szText[ u ] ];
+            szText[ u ] = static_cast< char >( cdp->upper[ ( HB_UCHAR ) szText[ u ] ] );
       else
          for( u = 0; u < nLen; u++ )
             szText[ u ] = HB_TOUPPER( szText[ u ] );
@@ -2104,7 +2104,7 @@ int hb_cdpTranslateChar( int iChar, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut )
       if( HB_CDP_ISCUSTOM( cdpIn ) || HB_CDP_ISCUSTOM( cdpOut ) )
       {
          HB_SIZE n = 0;
-         char c = ( char ) iChar;
+         char c = static_cast< char >( iChar );
 
          if( HB_CDPCHAR_GET( cdpIn, &c, 1, &n, &wc ) )
          {
@@ -2150,7 +2150,7 @@ int hb_cdpTranslateDispChar( int iChar, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut 
       if( HB_CDP_ISCUSTOM( cdpIn ) || HB_CDP_ISCUSTOM( cdpOut ) )
       {
          HB_SIZE n = 0;
-         char c = ( char ) iChar;
+         char c = static_cast< char >( iChar );
 
          if( ! HB_CDPCHAR_GET( cdpIn, &c, 1, &n, &wc ) )
             wc = ( HB_WCHAR ) iChar;
@@ -2304,7 +2304,7 @@ char * hb_cdpnDupUpper( PHB_CODEPAGE cdp, const char * pszText, HB_SIZE * pnSize
       }
       else
          for( n = 0; n < nSize; n++ )
-            pszDst[ n ] = ( char ) cdp->upper[ ( HB_UCHAR ) pszText[ n ] ];
+            pszDst[ n ] = static_cast< char >( cdp->upper[ ( HB_UCHAR ) pszText[ n ] ] );
    }
    else
       for( n = 0; n < nSize; n++ )
@@ -2343,7 +2343,7 @@ char * hb_cdpnDupLower( PHB_CODEPAGE cdp, const char * pszText, HB_SIZE * pnSize
       }
       else
          for( n = 0; n < nSize; n++ )
-            pszDst[ n ] = ( char ) cdp->lower[ ( HB_UCHAR ) pszText[ n ] ];
+            pszDst[ n ] = static_cast< char >( cdp->lower[ ( HB_UCHAR ) pszText[ n ] ] );
    }
    else
       for( n = 0; n < nSize; n++ )
@@ -2362,7 +2362,7 @@ HB_SIZE hb_cdpnDup2Upper( PHB_CODEPAGE cdp, const char * pszText, HB_SIZE nSize,
          pBuffer[ n ] = HB_TOUPPER( pszText[ n ] );
    else if( ! HB_CDP_ISCUSTOM( cdp ) || ! cdp->wcharUpper )
       for( n = 0; n < nMax; n++ )
-         pBuffer[ n ] = ( char ) cdp->upper[ ( HB_UCHAR ) pszText[ n ] ];
+         pBuffer[ n ] = static_cast< char >( cdp->upper[ ( HB_UCHAR ) pszText[ n ] ] );
    else
    {
       HB_SIZE nS = 0;
@@ -2392,7 +2392,7 @@ HB_SIZE hb_cdpnDup2Lower( PHB_CODEPAGE cdp, const char * pszText, HB_SIZE nSize,
          pBuffer[ n ] = HB_TOLOWER( pszText[ n ] );
    else if( ! HB_CDP_ISCUSTOM( cdp ) || ! cdp->wcharLower )
       for( n = 0; n < nMax; n++ )
-         pBuffer[ n ] = ( char ) cdp->lower[ ( HB_UCHAR ) pszText[ n ] ];
+         pBuffer[ n ] = static_cast< char >( cdp->lower[ ( HB_UCHAR ) pszText[ n ] ] );
    else
    {
       HB_SIZE nS = 0;
@@ -2556,7 +2556,7 @@ HB_SIZE hb_cdpTextPutU16( PHB_CODEPAGE cdp, char * szText, HB_SIZE nSize, HB_WCH
          }
       }
       else
-         szText[ nLen++ ] = ( char ) wc;
+         szText[ nLen++ ] = static_cast< char >( wc );
 
       if( nLen < nSize )
          szText[ nLen ] = '\0';

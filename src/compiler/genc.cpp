@@ -808,7 +808,7 @@ static HB_GENC_FUNC( hb_p_jumpnear )
             pFunc->pCode[ nPCodePos + 1 ] );
    if( cargo->bVerbose )
    {
-      HB_ISIZ nOffset = ( signed char ) ( pFunc->pCode[ nPCodePos + 1 ] );
+      HB_ISIZ nOffset = static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] );
 
       fprintf( cargo->yyc, "\t/* %" HB_PFS "i (abs: %05" HB_PFS "i) */", nOffset, ( HB_ISIZ ) ( nPCodePos + nOffset ) );
    }
@@ -852,7 +852,7 @@ static HB_GENC_FUNC( hb_p_jumpfalsenear )
             pFunc->pCode[ nPCodePos + 1 ] );
    if( cargo->bVerbose )
    {
-      HB_ISIZ nOffset = ( signed char ) ( pFunc->pCode[ nPCodePos + 1 ] );
+      HB_ISIZ nOffset = static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] );
       fprintf( cargo->yyc, "\t/* %" HB_PFS "i (abs: %05" HB_PFS "i) */", nOffset, ( HB_ISIZ ) ( nPCodePos + nOffset ) );
    }
    fprintf( cargo->yyc, "\n" );
@@ -894,7 +894,7 @@ static HB_GENC_FUNC( hb_p_jumptruenear )
             pFunc->pCode[ nPCodePos + 1 ] );
    if( cargo->bVerbose )
    {
-      HB_ISIZ nOffset = ( signed char ) ( pFunc->pCode[ nPCodePos + 1 ] );
+      HB_ISIZ nOffset = static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] );
       fprintf( cargo->yyc, "\t/* %" HB_PFS "i (abs: %05" HB_PFS "i) */", nOffset, ( HB_ISIZ ) ( nPCodePos + nOffset ) );
    }
    fprintf( cargo->yyc, "\n" );
@@ -1315,7 +1315,7 @@ static HB_GENC_FUNC( hb_p_poplocalnear )
             pFunc->pCode[ nPCodePos + 1 ] );
    if( cargo->bVerbose )
    {
-      int iVar = ( signed char ) pFunc->pCode[ nPCodePos + 1 ];
+      int iVar = static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] );
       hb_compGenCLocalName( pFunc, iVar, nPCodePos, cargo );
    }
    fprintf( cargo->yyc, "\n" );
@@ -1574,7 +1574,7 @@ static HB_GENC_FUNC( hb_p_pushbyte )
    fprintf( cargo->yyc, "\tHB_P_PUSHBYTE, %u,",
             pFunc->pCode[ nPCodePos + 1 ] );
    if( cargo->bVerbose )
-      fprintf( cargo->yyc, "\t/* %i */", ( signed char ) pFunc->pCode[ nPCodePos + 1 ] );
+      fprintf( cargo->yyc, "\t/* %i */", static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] ) );
    fprintf( cargo->yyc, "\n" );
    return 2;
 }
@@ -1610,7 +1610,7 @@ static HB_GENC_FUNC( hb_p_pushlocalnear )
             pFunc->pCode[ nPCodePos + 1 ] );
    if( cargo->bVerbose )
    {
-      int iVar = ( signed char ) pFunc->pCode[ nPCodePos + 1 ];
+      int iVar = static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] );
       hb_compGenCLocalName( pFunc, iVar, nPCodePos, cargo );
    }
    fprintf( cargo->yyc, "\n" );
@@ -2225,7 +2225,7 @@ static HB_GENC_FUNC( hb_p_localnearaddint )
 
    if( cargo->bVerbose )
    {
-      int iVar = ( signed char ) pFunc->pCode[ nPCodePos + 1 ];
+      int iVar = static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] );
       hb_compGenCLocalName( pFunc, iVar, nPCodePos, cargo );
       fprintf( cargo->yyc, "/* %i */", HB_PCODE_MKSHORT( &pFunc->pCode[ nPCodePos + 2 ] ) );
    }

@@ -224,9 +224,9 @@ static HB_ERRCODE pgsqlExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
 
    iTuples = PQntuples( pResult );
    if( iTuples > 0 )
-      ulAffectedRows = ( unsigned long ) iTuples;
+      ulAffectedRows = static_cast< unsigned long >( iTuples );
    else
-      ulAffectedRows = ( unsigned long ) atol( PQcmdTuples( pResult ) );
+      ulAffectedRows = static_cast< unsigned long >( atol( PQcmdTuples( pResult ) ) );
 
    hb_rddsqlSetError( 0, NULL, hb_itemGetCPtr( pItem ), NULL, ulAffectedRows );
    PQclear( pResult );

@@ -976,7 +976,7 @@ static void hb_gt_dos_Tone( PHB_GT pGT, double dFrequency, double dDuration )
    dFrequency = HB_MIN( HB_MAX( 0.0, dFrequency ), 32767.0 );
 
 #if defined( __BORLANDC__ ) || defined( __WATCOMC__ )
-   sound( ( unsigned ) dFrequency );
+   sound( static_cast< unsigned >( dFrequency ) );
 #elif defined( __DJGPP__ )
    sound( static_cast< int >( dFrequency ) );
 #else
@@ -1299,7 +1299,7 @@ static void hb_gt_dos_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 
 #if defined( __DJGPP__TEXT )
       {
-         short ch_attr = ( ( short ) iColor << 8 ) | uc;
+         short ch_attr = ( static_cast< short >( iColor ) << 8 ) | uc;
          puttext( iCol + iLen + 1, iRow + 1, iCol + iLen + 1, iRow + 1, &ch_attr );
          HB_SYMBOL_UNUSED( pScreenPtr );
       }

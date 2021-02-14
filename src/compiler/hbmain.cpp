@@ -224,7 +224,7 @@ static int hb_compReadClpFile( HB_COMP_DECL, const char * szClpFile )
             while( ( ch = fgetc( inFile ) ) != EOF && ch != '"' && ch != '\n' )
             {
                if( i < ( HB_PATH_MAX - 1 ) )
-                  szFile[ i++ ] = ( char ) ch;
+                  szFile[ i++ ] = static_cast< char >( ch );
             }
             if( ch == '"' )
                continue;
@@ -245,7 +245,7 @@ static int hb_compReadClpFile( HB_COMP_DECL, const char * szClpFile )
                ch = fgetc( inFile );
          }
          else if( i < ( HB_PATH_MAX - 1 ) )
-            szFile[ i++ ] = ( char ) ch;
+            szFile[ i++ ] = static_cast< char >( ch );
       }
       while( ch != EOF );
 
@@ -1394,13 +1394,13 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
             switch( pCode[ nJumpAddr ] )
             {
                case HB_P_JUMPNEAR:
-                  if( ( signed char ) pCode[ nJumpAddr + 1 ] == 2 )
+                  if( static_cast< signed char >( pCode[ nJumpAddr + 1 ] ) == 2 )
                      hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr, 2, HB_FALSE, HB_FALSE );
                   break;
 
                case HB_P_JUMPFALSENEAR:
                case HB_P_JUMPTRUENEAR:
-                  if( ( signed char ) pCode[ nJumpAddr + 1 ] == 2 )
+                  if( static_cast< signed char >( pCode[ nJumpAddr + 1 ] ) == 2 )
                      hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr, 2, HB_TRUE, HB_FALSE );
                   break;
 
@@ -1556,7 +1556,7 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
                   case HB_P_JUMPNEAR:
                   case HB_P_JUMPFALSENEAR:
                   case HB_P_JUMPTRUENEAR:
-                     nOffset = ( signed char ) pCode[ nJumpAddr + 1 ];
+                     nOffset = static_cast< signed char >( pCode[ nJumpAddr + 1 ] );
                      break;
 
                   case HB_P_JUMP:
@@ -1613,7 +1613,7 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
                   case HB_P_JUMPNEAR:
                   case HB_P_JUMPFALSENEAR:
                   case HB_P_JUMPTRUENEAR:
-                     nOffset += ( signed char ) pCode[ nJumpAddr + 1 ];
+                     nOffset += static_cast< signed char >( pCode[ nJumpAddr + 1 ] );
                      pCode[ nJumpAddr + 1 ] = HB_LOBYTE( nOffset );
                      break;
 
@@ -3247,7 +3247,7 @@ HB_BOOL hb_compHasJump( PHB_HFUNC pFunc, HB_SIZE nPos )
          case HB_P_JUMPNEAR:
          case HB_P_JUMPFALSENEAR:
          case HB_P_JUMPTRUENEAR:
-            nJumpAddr += ( signed char ) pFunc->pCode[ nJumpAddr + 1 ];
+            nJumpAddr += static_cast< signed char >( pFunc->pCode[ nJumpAddr + 1 ] );
             break;
 
          case HB_P_JUMP:

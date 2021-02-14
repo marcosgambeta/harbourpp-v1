@@ -535,7 +535,7 @@ static void adsGetKeyItem( ADSAREAP pArea, PHB_ITEM pItem, int iKeyType,
          else /* ADS_CDX, ADS_ADT, ADS_VFP */
          {
             HB_ORD2DBL( pKeyBuf, &dValue );
-            hb_itemPutDL( pItem, ( long ) dValue );
+            hb_itemPutDL( pItem, static_cast< long >( dValue ) );
          }
          break;
 
@@ -2343,7 +2343,7 @@ static HB_ERRCODE adsGetValue( ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem
             if( pField->uiTypeExtended == ADS_SHORTINT )
                hb_itemPutNILen( pItem, static_cast< int >( lVal ), 6 );
             else
-               hb_itemPutNLLen( pItem, ( long ) lVal, 11 );
+               hb_itemPutNLLen( pItem, static_cast< long >( lVal ), 11 );
          }
          break;
 #if ADS_LIB_VERSION >= 700 && ! defined( HB_LONG_LONG_OFF )
@@ -3396,7 +3396,7 @@ static HB_ERRCODE adsInfo( ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
          if( uRetVal != AE_SUCCESS )
             return HB_FAILURE;
 
-         hb_itemPutNL( pItem, ( long ) u16Count );
+         hb_itemPutNL( pItem, static_cast< long >( u16Count ) );
          break;
       }
 
@@ -5463,7 +5463,7 @@ static HB_ERRCODE adsRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConn
       case RDDI_ERRORNO:
       {
          LPRDDADSDATA pData = RDDADSNODE_DATA( pRDD );
-         hb_itemPutNL( pItem, ( unsigned long ) pData->ulError );
+         hb_itemPutNL( pItem, static_cast< unsigned long >( pData->ulError ) );
          break;
       }
 
@@ -5477,14 +5477,14 @@ static HB_ERRCODE adsRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConn
       case RDDI_INSERTID:
       {
          LPRDDADSDATA pData = RDDADSNODE_DATA( pRDD );
-         hb_itemPutNL( pItem, ( unsigned long ) pData->ulInsertID );
+         hb_itemPutNL( pItem, static_cast< unsigned long >( pData->ulInsertID ) );
          break;
       }
 
       case RDDI_AFFECTEDROWS:
       {
          LPRDDADSDATA pData = RDDADSNODE_DATA( pRDD );
-         hb_itemPutNL( pItem, ( unsigned long ) pData->ulAffectedRows );
+         hb_itemPutNL( pItem, static_cast< unsigned long >( pData->ulAffectedRows ) );
          break;
       }
 

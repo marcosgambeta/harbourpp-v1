@@ -186,12 +186,12 @@ PHB_ZEBRA hb_zebra_create_code39( const char * szCode, HB_SIZE nLen, int iFlags 
    for( i = 0; i < iLen; i++ )
    {
       int no = _code39_charno( szCode[ i ] );
-      _code39_add( pZebra->pBits, ( char ) s_code[ no ], iFlags, HB_FALSE );
+      _code39_add( pZebra->pBits, static_cast< char >( s_code[ no ] ), iFlags, HB_FALSE );
       csum += no;
    }
 
    if( iFlags & HB_ZEBRA_FLAG_CHECKSUM )
-      _code39_add( pZebra->pBits, ( char ) s_code[ csum % 43 ], iFlags, HB_FALSE );
+      _code39_add( pZebra->pBits, static_cast< char >( s_code[ csum % 43 ] ), iFlags, HB_FALSE );
 
    _code39_add( pZebra->pBits, 0x52, iFlags, HB_TRUE );    /* stop */
    return pZebra;

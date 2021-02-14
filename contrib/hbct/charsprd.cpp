@@ -69,7 +69,7 @@ HB_FUNC( CHARSPREAD )
          if( HB_ISCHAR( 3 ) )
             cDelim = hb_parc( 3 )[ 0 ];
          else if( HB_ISNUM( 3 ) )
-            cDelim = ( char ) hb_parni( 3 );
+            cDelim = static_cast< char >( hb_parni( 3 ) );
 
          for( nPos = 0; nPos < nLen; ++nPos )
          {

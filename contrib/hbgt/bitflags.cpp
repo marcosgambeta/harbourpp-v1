@@ -20,12 +20,12 @@
 
 HB_FUNC( GT_NEWFLAG )
 {
-   unsigned FlagCount = ( unsigned ) hb_parnidef( 1, 1 );
+   unsigned FlagCount = static_cast< unsigned >( hb_parnidef( 1, 1 ) );
 
    if( FlagCount > 0 )
    {
       char *   FlagString;
-      unsigned ByteCount = ( unsigned ) ( ( FlagCount / 8 ) + 1 );
+      unsigned ByteCount = static_cast< unsigned >( ( FlagCount / 8 ) + 1 );
       unsigned Byte;
 
       if( ! ( FlagCount % 8 ) )
@@ -57,7 +57,7 @@ HB_FUNC( GT_SETFLAG )
          for( BitCount = StartBit; BitCount <= EndBit; BitCount++ )
          {
             unsigned BitPointer  = BitCount % 8;
-            unsigned BytePointer = ( unsigned ) ( BitCount / 8 );
+            unsigned BytePointer = static_cast< unsigned >( BitCount / 8 );
 
             if( ! BitPointer )
             {
@@ -90,7 +90,7 @@ HB_FUNC( GT_CLRFLAG )
          for( BitCount = StartBit; BitCount <= EndBit; BitCount++ )
          {
             unsigned BitPointer  = BitCount % 8;
-            unsigned BytePointer = ( unsigned ) ( BitCount / 8 );
+            unsigned BytePointer = static_cast< unsigned >( BitCount / 8 );
 
             if( ! BitPointer )
             {
@@ -119,7 +119,7 @@ HB_FUNC( GT_ISFLAG )
          const char * FlagString = hb_parc( 1 );
 
          unsigned BitPointer  = Bit % 8;
-         unsigned BytePointer = ( unsigned ) ( Bit / 8 );
+         unsigned BytePointer = static_cast< unsigned >( Bit / 8 );
 
          if( ! BitPointer )
          {

@@ -333,7 +333,7 @@ static HB_BOOL s_fileRecvSrvData( PHB_CONCLI conn, long len, int iStreamID, int 
             }
             else if( iType == NETIO_SRVDATA )
             {
-               long lmax = ( long ) ( pSrvData->maxsize - pSrvData->size );
+               long lmax = static_cast< long >( pSrvData->maxsize - pSrvData->size );
 
                if( len > lmax )
                   len = lmax;
@@ -379,7 +379,7 @@ static HB_BOOL s_fileSendMsg( PHB_CONCLI conn, HB_BYTE * msgbuf,
    else
    {
       len += NETIO_MSGLEN;
-      if( len > ( long ) sizeof( buffer ) )
+      if( len > static_cast< long >( sizeof( buffer ) ) )
          msg = ptr = ( HB_BYTE * ) hb_xgrab( len );
       else
          msg = buffer;
@@ -1372,7 +1372,7 @@ static HB_BOOL s_netio_procexec( int iMsg, int iType )
                   }
                   if( buffer == NULL )
                      buffer = ( char * ) hb_xgrab( nResult );
-                  nRecv = s_fileRecvAll( conn, buffer, ( long ) nResult );
+                  nRecv = s_fileRecvAll( conn, buffer, static_cast< long >( nResult ) );
                   if( nResult == nRecv )
                   {
                      data = buffer;
@@ -1762,7 +1762,7 @@ static PHB_ITEM s_fileDirectory( PHB_FILE_FUNCS pFuncs, const char * pszDirSpec,
                char * buffer = ( char * ) hb_xgrab( nResult );
                const char * data = buffer;
 
-               nRecv = s_fileRecvAll( conn, buffer, ( long ) nResult );
+               nRecv = s_fileRecvAll( conn, buffer, static_cast< long >( nResult ) );
                if( nRecv == nResult )
                   pDirArray = hb_itemDeserialize( &data, &nResult );
                hb_xfree( buffer );
@@ -2165,7 +2165,7 @@ static char * s_fileLinkRead( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
             if( nResult > 0 )
             {
                pszResult = ( char * ) hb_xgrab( nResult + 1 );
-               nRecv = s_fileRecvAll( conn, pszResult, ( long ) nResult );
+               nRecv = s_fileRecvAll( conn, pszResult, static_cast< long >( nResult ) );
                if( nRecv != nResult )
                {
                   hb_xfree( pszResult );
@@ -2353,7 +2353,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * data, HB_SIZE nSize,
                hb_errRT_NETIO( EG_DATAWIDTH, 1011, 0, NULL, HB_ERR_FUNCNAME );
                nResult = 0;
             }
-            else if( s_fileRecvAll( pFile->conn, data, ( long ) nResult ) != ( long ) nResult )
+            else if( s_fileRecvAll( pFile->conn, data, static_cast< long >( nResult ) ) != static_cast< long >( nResult ) )
             {
                pFile->conn->errcode = hb_socketGetError();
                errCode = NETIO_ERR_READ;
@@ -2379,11 +2379,11 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * data, HB_SIZE nSize,
 
       HB_PUT_LE_UINT32( &msgbuf[  0 ], NETIO_WRITE );
       HB_PUT_LE_UINT16( &msgbuf[  4 ], pFile->fd );
-      HB_PUT_LE_UINT32( &msgbuf[  6 ], ( long ) nSize );
+      HB_PUT_LE_UINT32( &msgbuf[  6 ], static_cast< long >( nSize ) );
       HB_PUT_LE_UINT64( &msgbuf[ 10 ], timeout );
       memset( msgbuf + 18, '\0', sizeof( msgbuf ) - 18 );
 
-      if( s_fileSendMsg( pFile->conn, msgbuf, data, ( long ) nSize, HB_TRUE, HB_FALSE ) )
+      if( s_fileSendMsg( pFile->conn, msgbuf, data, static_cast< long >( nSize ), HB_TRUE, HB_FALSE ) )
       {
          nResult = HB_GET_LE_UINT32( &msgbuf[ 4 ] );
          hb_fsSetError( ( HB_ERRCODE ) HB_GET_LE_UINT32( &msgbuf[ 8 ] ) );
@@ -2421,7 +2421,7 @@ static HB_SIZE s_fileReadAt( PHB_FILE pFile, void * data, HB_SIZE nSize,
                hb_errRT_NETIO( EG_DATAWIDTH, 1009, 0, NULL, HB_ERR_FUNCNAME );
                nResult = 0;
             }
-            else if( s_fileRecvAll( pFile->conn, data, ( long ) nResult ) != ( long ) nResult )
+            else if( s_fileRecvAll( pFile->conn, data, static_cast< long >( nResult ) ) != static_cast< long >( nResult ) )
             {
                pFile->conn->errcode = hb_socketGetError();
                errCode = NETIO_ERR_READ;
@@ -2447,11 +2447,11 @@ static HB_SIZE s_fileWriteAt( PHB_FILE pFile, const void * data, HB_SIZE nSize,
 
       HB_PUT_LE_UINT32( &msgbuf[  0 ], NETIO_WRITEAT );
       HB_PUT_LE_UINT16( &msgbuf[  4 ], pFile->fd );
-      HB_PUT_LE_UINT32( &msgbuf[  6 ], ( long ) nSize );
+      HB_PUT_LE_UINT32( &msgbuf[  6 ], static_cast< long >( nSize ) );
       HB_PUT_LE_UINT64( &msgbuf[ 10 ], llOffset );
       memset( msgbuf + 18, '\0', sizeof( msgbuf ) - 18 );
 
-      if( s_fileSendMsg( pFile->conn, msgbuf, data, ( long ) nSize, HB_TRUE, HB_FALSE ) )
+      if( s_fileSendMsg( pFile->conn, msgbuf, data, static_cast< long >( nSize ), HB_TRUE, HB_FALSE ) )
       {
          nResult = HB_GET_LE_UINT32( &msgbuf[ 4 ] );
          hb_fsSetError( ( HB_ERRCODE ) HB_GET_LE_UINT32( &msgbuf[ 8 ] ) );
@@ -2595,7 +2595,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
 
       hb_itemClear( pValue );
 
-      if( s_fileSendMsg( pFile->conn, msgbuf, itmData, ( long ) itmSize, HB_TRUE, HB_FALSE ) )
+      if( s_fileSendMsg( pFile->conn, msgbuf, itmData, static_cast< long >( itmSize ), HB_TRUE, HB_FALSE ) )
       {
          HB_ERRCODE errCode = ( HB_ERRCODE ) HB_GET_LE_UINT32( &msgbuf[ 12 ] );
          HB_SIZE nResult = HB_GET_LE_UINT32( &msgbuf[ 4 ] ), nRecv = 0;
@@ -2606,7 +2606,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
             char * buffer = ( char * ) hb_xgrab( nResult );
             const char * data = buffer;
 
-            nRecv = s_fileRecvAll( pFile->conn, buffer, ( long ) nResult );
+            nRecv = s_fileRecvAll( pFile->conn, buffer, static_cast< long >( nResult ) );
             if( nRecv == nResult && pValue )
             {
                PHB_ITEM pResult = hb_itemDeserialize( &data, &nResult );

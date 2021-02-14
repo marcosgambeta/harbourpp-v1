@@ -231,7 +231,7 @@ PHB_ITEM hb_itemPutC( PHB_ITEM pItem, const char * szText )
    if( nLen <= 1 )
    {
       nAlloc = 0;
-      szText = hb_szAscii[ nLen ? ( unsigned char ) szText[ 0 ] : 0 ];
+      szText = hb_szAscii[ nLen ? static_cast< unsigned char >( szText[ 0 ] ) : 0 ];
    }
    else
    {
@@ -265,7 +265,7 @@ PHB_ITEM hb_itemPutCL( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
    if( nLen <= 1 )
    {
       nAlloc = 0;
-      szValue = ( char * ) HB_UNCONST( hb_szAscii[ nLen ? ( unsigned char ) szText[ 0 ] : 0 ] );
+      szValue = ( char * ) HB_UNCONST( hb_szAscii[ nLen ? static_cast< unsigned char >( szText[ 0 ] ) : 0 ] );
    }
    else
    {
@@ -314,7 +314,7 @@ PHB_ITEM hb_itemPutCConst( PHB_ITEM pItem, const char * szText )
    pItem->item.asString.length = nLen;
    pItem->item.asString.allocated = 0;
    pItem->item.asString.value = ( char * ) HB_UNCONST( ( nLen > 1 ? szText :
-                     hb_szAscii[ nLen ? ( unsigned char ) szText[ 0 ] : 0 ] ) );
+                     hb_szAscii[ nLen ? static_cast< unsigned char >( szText[ 0 ] ) : 0 ] ) );
 
    return pItem;
 }
@@ -336,7 +336,7 @@ PHB_ITEM hb_itemPutCLConst( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
    pItem->item.asString.allocated = 0;
 
    if( nLen <= 1 )
-      pItem->item.asString.value = ( char * ) HB_UNCONST( hb_szAscii[ nLen ? ( unsigned char ) szText[ 0 ] : 0 ] );
+      pItem->item.asString.value = ( char * ) HB_UNCONST( hb_szAscii[ nLen ? static_cast< unsigned char >( szText[ 0 ] ) : 0 ] );
    else if( szText[ nLen ] == '\0' )
       pItem->item.asString.value = ( char * ) HB_UNCONST( szText );
    else
@@ -366,7 +366,7 @@ PHB_ITEM hb_itemPutCPtr( PHB_ITEM pItem, char * szText )
    if( nLen <= 1 )
    {
       pItem->item.asString.allocated = 0;
-      pItem->item.asString.value = ( char * ) HB_UNCONST( hb_szAscii[ nLen ? ( unsigned char ) szText[ 0 ] : 0 ] );
+      pItem->item.asString.value = ( char * ) HB_UNCONST( hb_szAscii[ nLen ? static_cast< unsigned char >( szText[ 0 ] ) : 0 ] );
       if( szText )
          hb_xfree( szText );
    }
@@ -396,7 +396,7 @@ PHB_ITEM hb_itemPutCLPtr( PHB_ITEM pItem, char * szText, HB_SIZE nLen )
    if( nLen <= 1 )
    {
       pItem->item.asString.allocated = 0;
-      pItem->item.asString.value = ( char * ) HB_UNCONST( hb_szAscii[ nLen ? ( unsigned char ) szText[ 0 ] : 0 ] );
+      pItem->item.asString.value = ( char * ) HB_UNCONST( hb_szAscii[ nLen ? static_cast< unsigned char >( szText[ 0 ] ) : 0 ] );
       hb_xfree( szText );
    }
    else
@@ -686,10 +686,10 @@ long hb_itemGetNL( PHB_ITEM pItem )
    if( pItem )
    {
       if( HB_IS_LONG( pItem ) )
-         return ( long ) pItem->item.asLong.value;
+         return static_cast< long >( pItem->item.asLong.value );
 
       else if( HB_IS_INTEGER( pItem ) )
-         return ( long ) pItem->item.asInteger.value;
+         return static_cast< long >( pItem->item.asInteger.value );
 
       else if( HB_IS_DOUBLE( pItem ) )
          return HB_CAST_LONG( pItem->item.asDouble.value );
@@ -1124,7 +1124,7 @@ PHB_ITEM hb_itemPutNIntLen( PHB_ITEM pItem, HB_MAXINT nNumber, int iWidth )
    else
    {
 #ifdef HB_LONG_LONG_OFF
-      return hb_itemPutNLLen( pItem, ( long ) nNumber, iWidth );
+      return hb_itemPutNLLen( pItem, static_cast< long >( nNumber ), iWidth );
 #else
       return hb_itemPutNLLLen( pItem, ( HB_LONGLONG ) nNumber, iWidth );
 #endif
@@ -1342,7 +1342,7 @@ PHB_ITEM hb_itemPutNumType( PHB_ITEM pItem, double dNumber, int iDec, int iType1
    else if( HB_DBL_LIM_LONG( dNumber ) )
    {
 #ifdef HB_LONG_LONG_OFF
-      return hb_itemPutNL( pItem, ( long ) ( unsigned long ) dNumber );
+      return hb_itemPutNL( pItem, static_cast< long >( static_cast< unsigned long >( dNumber ) ) );
 #else
       return hb_itemPutNLL( pItem, ( HB_LONGLONG ) dNumber );
 #endif
@@ -2628,7 +2628,7 @@ HB_BOOL hb_itemStrBuf( char * szResult, PHB_ITEM pNumber, int iSize, int iDec )
          while( iPos-- > 0 )
          {
             dDig = modf( dInt / doBase + 0.01, &dInt ) * doBase;
-            szResult[ iPos ] = '0' + ( char ) ( dDig + 0.01 );
+            szResult[ iPos ] = '0' + static_cast< char >( dDig + 0.01 );
             if( szResult[ iPos ] != '0' )
                iFirst = iPos;
             if( dInt < 1 )
@@ -2643,7 +2643,7 @@ HB_BOOL hb_itemStrBuf( char * szResult, PHB_ITEM pNumber, int iSize, int iDec )
             for( iPos = iDot + 1; iPos < iSize; iPos++ )
             {
                dFract = modf( dFract * doBase, &dDig );
-               szResult[ iPos ] = '0' + ( char ) ( dDig + 0.01 );
+               szResult[ iPos ] = '0' + static_cast< char >( dDig + 0.01 );
                if( iFirst < 0 )
                {
                   if( szResult[ iPos ] != '0' )
@@ -2748,7 +2748,7 @@ HB_BOOL hb_itemStrBuf( char * szResult, PHB_ITEM pNumber, int iSize, int iDec )
       fNeg = ( nNumber < 0 );
       while( iPos-- > 0 )
       {
-         szResult[ iPos ] = '0' + ( char ) ( fNeg ? -( nNumber % 10 ) : ( nNumber % 10 ) );
+         szResult[ iPos ] = '0' + static_cast< char >( fNeg ? -( nNumber % 10 ) : ( nNumber % 10 ) );
          nNumber /= 10;
          if( nNumber == 0 )
             break;
@@ -2954,7 +2954,7 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
          do
          {
             HB_UCHAR uc = ( HB_UCHAR ) ( addr & 0xf );
-            buffer[ --size ] = ( char ) ( uc + ( uc < 10 ? '0' : 'A' - 10 ) );
+            buffer[ --size ] = static_cast< char >( uc + ( uc < 10 ? '0' : 'A' - 10 ) );
             addr >>= 4;
          }
          while( size > 2 );

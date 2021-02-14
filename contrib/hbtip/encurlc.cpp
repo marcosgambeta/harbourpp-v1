@@ -89,9 +89,9 @@ HB_FUNC( TIP_URLENCODE )
                HB_UINT uiVal;
                pszRet[ nPosRet++ ] = '%';
                uiVal = ( ( HB_UCHAR ) cElem ) >> 4;
-               pszRet[ nPosRet++ ] = ( char ) ( ( uiVal < 10 ? '0' : 'A' - 10 ) + uiVal );
+               pszRet[ nPosRet++ ] = static_cast< char >( ( uiVal < 10 ? '0' : 'A' - 10 ) + uiVal );
                uiVal = ( ( HB_UCHAR ) cElem ) & 0x0F;
-               pszRet[ nPosRet ] = ( char ) ( ( uiVal < 10 ? '0' : 'A' - 10 ) + uiVal );
+               pszRet[ nPosRet ] = static_cast< char >( ( uiVal < 10 ? '0' : 'A' - 10 ) + uiVal );
             }
 
             nPosRet++;

@@ -513,7 +513,7 @@ static PHB_TASKINFO hb_taskNew( long stack_size )
    new_size &= ~ ( HB_PTRUINT ) ( HB_TASK_STACK_ALIGN - 1 );
    new_size -= ( HB_PTRUINT ) pTask->stack;
 
-   pTask->stack_size = ( long ) new_size;
+   pTask->stack_size = static_cast< long >( new_size );
    pTask->id = ++s_iTaskID;
 
    pTask->state = TASK_INIT;

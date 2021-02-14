@@ -64,7 +64,7 @@ HB_FUNC( POSCHAR )
          if( HB_ISCHAR( 2 ) )
             cReplace = *( hb_parc( 2 ) );
          else
-            cReplace = ( char ) ( hb_parns( 2 ) % 256 );
+            cReplace = static_cast< char >( hb_parns( 2 ) % 256 );
 
          if( HB_ISNUM( 3 ) )
          {

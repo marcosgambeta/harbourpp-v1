@@ -692,7 +692,7 @@ static void hb_pp_readLine( PHB_PP_STATE pState )
       /* Clipper strips \r characters even from quoted strings */
       else if( ch != '\r' )
       {
-         hb_membufAddCh( pState->pBuffer, ( char ) ch );
+         hb_membufAddCh( pState->pBuffer, static_cast< char >( ch ) );
 
          /* strip UTF-8 BOM signature */
          if( iBOM && ch == 0xBF && hb_membufLen( pState->pBuffer ) == 3 )
@@ -1664,7 +1664,7 @@ static int hb_pp_tokenStr( PHB_PP_TOKEN pToken, PHB_MEM_BUFFER pBuffer,
 
          hb_membufAddCh( pBuffer, ch );
          hb_membufAddData( pBuffer, pToken->value, pToken->len );
-         hb_membufAddCh( pBuffer, ( char ) ( ch == '[' ? ']' : ch ) );
+         hb_membufAddCh( pBuffer, static_cast< char >( ch == '[' ? ']' : ch ) );
       }
    }
    else if( HB_PP_TOKEN_TYPE( pToken->type ) == HB_PP_TOKEN_TIMESTAMP )

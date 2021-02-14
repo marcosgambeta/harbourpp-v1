@@ -113,7 +113,7 @@ HB_FUNC( HB_NUMTOHEX )
    do
    {
       int iDigit = static_cast< int >( nNum & 0x0F );
-      ret[ --iLen ] = ( char ) ( iDigit + ( iDigit < 10 ? '0' : 'A' - 10 ) );
+      ret[ --iLen ] = static_cast< char >( iDigit + ( iDigit < 10 ? '0' : 'A' - 10 ) );
       nNum >>= 4;
    }
    while( fDefaultLen ? nNum != 0 : iLen != 0 );
@@ -217,7 +217,7 @@ HB_FUNC( HB_HEXTOSTR )
 
             if( iVal & 0x100 )
             {
-               szDest[ ul++ ] = ( char ) iVal & 0xff;
+               szDest[ ul++ ] = static_cast< char >( iVal ) & 0xff;
                iVal = 0x1;
             }
             iVal <<= 4;

@@ -47,5 +47,5 @@
 /* HPDF_UseKRFonts( hDoc ) --> hStatus */
 HB_FUNC( HPDF_USEKRFONTS )
 {
-   hb_retnl( ( long ) HPDF_UseKRFonts( hb_HPDF_Doc_par( 1 ) ) );
+   hb_retnl( static_cast< long >( HPDF_UseKRFonts( hb_HPDF_Doc_par( 1 ) ) ) );
 }

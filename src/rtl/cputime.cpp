@@ -162,7 +162,7 @@ double hb_secondsCPU( int n )
       if( rc == NO_ERROR )
       {
          QSGREC * pGrec = *pBuf;
-         QSPREC * pPrec = ( QSPREC * ) ( ( ULONG ) pGrec + sizeof( QSGREC ) );
+         QSPREC * pPrec = ( QSPREC * ) ( static_cast< ULONG >( pGrec ) + sizeof( QSGREC ) );
          QSTREC * pTrec = pPrec->pThrdRec;
 
          int i;

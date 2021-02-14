@@ -224,7 +224,7 @@ HB_FUNC( HB_GZREAD )
          }
 
          hb_vmUnlock();
-         iResult = gzread( gz, szBuffer, ( unsigned ) nLen );
+         iResult = gzread( gz, szBuffer, static_cast< unsigned >( nLen ) );
          hb_vmLock();
 
          hb_retni( iResult );
@@ -252,8 +252,8 @@ HB_FUNC( HB_GZWRITE )
 
          hb_vmUnlock();
          iResult = gzwrite( gz, szData,
-                            HB_ISNUM( 3 ) ? ( unsigned ) hb_parns( 3 ) :
-                                            ( unsigned ) hb_parclen( 2 ) );
+                            HB_ISNUM( 3 ) ? static_cast< unsigned >( hb_parns( 3 ) ) :
+                                            static_cast< unsigned >( hb_parclen( 2 ) ) );
          hb_vmLock();
 
          hb_retni( iResult );

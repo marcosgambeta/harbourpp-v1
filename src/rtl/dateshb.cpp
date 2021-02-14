@@ -235,7 +235,7 @@ HB_FUNC( HB_DTOT )
          hb_timeStampStrGetDT( szTime, &lDate2, &lTime );
       else if( HB_ISNUM( 2 ) )
       {
-         lTime = ( long ) ( hb_parnd( 2 ) * 1000 );
+         lTime = static_cast< long >( hb_parnd( 2 ) * 1000 );
          if( lTime < 0 )
             lTime = 0;
       }

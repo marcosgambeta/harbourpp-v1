@@ -57,9 +57,9 @@
 #define K_STRING    0
 #define K_LIST      ( ! K_STRING )
 
-#define CR          ( ( char ) 13 )
-#define LF          ( ( char ) 10 )
-#define FEOF        ( ( char ) 26 )
+#define CR          ( static_cast< char >( 13 ) )
+#define LF          ( static_cast< char >( 10 ) )
+#define FEOF        ( static_cast< char >( 26 ) )
 
 #define BUFFERSIZE  4096         /* maximum size of the file buffer */
 #define MAXLINE     255          /* default maximum size of a line  */
@@ -130,7 +130,7 @@ static void chattr( PFT_DISPC dispc, int x, int y, int len, int attr )
       vmem++;
 
    for( i = 0; i <= len; i++, vmem += dispc->iCellSize ) /* write the new attribute value */
-      *vmem = ( char ) attr;
+      *vmem = static_cast< char >( attr );
 }
 
 /*
@@ -805,7 +805,7 @@ HB_FUNC( FT_DISPFILE )
 
    if( dispc->keytype == K_STRING )
    {
-      rval[ 0 ] = ( char ) ch;
+      rval[ 0 ] = static_cast< char >( ch );
       rval[ 1 ] = '\0';
       hb_retc( rval );
    }

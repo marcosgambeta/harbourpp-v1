@@ -118,13 +118,13 @@ HB_FUNC( WVW_APPENDMENU )
    else
       lpszCaption = ( LPCTSTR ) hb_parni( 4 );
 
-   hb_retl( AppendMenu( ( HMENU ) HB_PARHANDLE( 1 ), ( UINT ) hb_parni( 2 ), ( UINT_PTR ) hb_parni( 3 ), ( LPCTSTR ) lpszCaption ) );
+   hb_retl( AppendMenu( ( HMENU ) HB_PARHANDLE( 1 ), static_cast< UINT >( hb_parni( 2 ) ), ( UINT_PTR ) hb_parni( 3 ), ( LPCTSTR ) lpszCaption ) );
 }
 
 
 HB_FUNC( WVW_DELETEMENU )
 {
-   hb_retl( DeleteMenu( ( HMENU ) HB_PARHANDLE( 1 ), ( UINT ) hb_parni( 2 ), ( UINT ) hb_parni( 3 ) ) );
+   hb_retl( DeleteMenu( ( HMENU ) HB_PARHANDLE( 1 ), static_cast< UINT >( hb_parni( 2 ) ), static_cast< UINT >( hb_parni( 3 ) ) ) );
 }
 
 
@@ -136,7 +136,7 @@ HB_FUNC( WVW_DESTROYMENU )
 
 HB_FUNC( WVW_ENABLEMENUITEM )
 {
-   hb_retni( EnableMenuItem( ( HMENU ) HB_PARHANDLE( 1 ), ( UINT ) hb_parni( 2 ), ( UINT ) hb_parni( 3 ) ) );
+   hb_retni( EnableMenuItem( ( HMENU ) HB_PARHANDLE( 1 ), static_cast< UINT >( hb_parni( 2 ) ), static_cast< UINT >( hb_parni( 3 ) ) ) );
 }
 
 
@@ -192,7 +192,7 @@ HB_FUNC( WVW_MENUITEM_SETBITMAPS )
 
          if( ! hBitmapUnchecked )
          {
-            hBitmapUnchecked = ( HBITMAP ) LoadImage( hb_getWvwData()->hInstance, ( LPCTSTR ) MAKEINTRESOURCE( ( WORD ) hb_parni( 4 ) ), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR );
+            hBitmapUnchecked = static_cast< HBITMAP >( LoadImage( hb_getWvwData()->hInstance, ( LPCTSTR ) MAKEINTRESOURCE( ( WORD ) hb_parni( 4 ) ), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR ) );
             AddBitmapHandle( szResname, hBitmapUnchecked, iWidth, iHeight );
          }
       }
@@ -202,7 +202,7 @@ HB_FUNC( WVW_MENUITEM_SETBITMAPS )
 
          if( ! hBitmapUnchecked )
          {
-            hBitmapUnchecked = ( HBITMAP ) LoadImage( hb_getWvwData()->hInstance, hb_parcx( 4 ), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR );
+            hBitmapUnchecked = static_cast< HBITMAP >( LoadImage( hb_getWvwData()->hInstance, hb_parcx( 4 ), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR ) );
             AddBitmapHandle( hb_parcx( 4 ), hBitmapUnchecked, iWidth, iHeight );
          }
       }
@@ -218,7 +218,7 @@ HB_FUNC( WVW_MENUITEM_SETBITMAPS )
 
          if( ! hBitmapChecked )
          {
-            hBitmapChecked = ( HBITMAP ) LoadImage( hb_getWvwData()->hInstance, ( LPCTSTR ) MAKEINTRESOURCE( ( WORD ) hb_parni( 5 ) ), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR );
+            hBitmapChecked = static_cast< HBITMAP >( LoadImage( hb_getWvwData()->hInstance, ( LPCTSTR ) MAKEINTRESOURCE( ( WORD ) hb_parni( 5 ) ), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR ) );
             AddBitmapHandle( szResname, hBitmapChecked, iWidth, iHeight );
          }
       }
@@ -228,16 +228,16 @@ HB_FUNC( WVW_MENUITEM_SETBITMAPS )
 
          if( ! hBitmapChecked )
          {
-            hBitmapChecked = ( HBITMAP ) LoadImage( hb_getWvwData()->hInstance, hb_parcx( 5 ), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR );
+            hBitmapChecked = static_cast< HBITMAP >( LoadImage( hb_getWvwData()->hInstance, hb_parcx( 5 ), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR ) );
             AddBitmapHandle( hb_parcx( 5 ), hBitmapChecked, iWidth, iHeight );
          }
       }
    }
 
    if( ! HB_ISNIL( 2 ) )
-      SetMenuItemBitmaps( ( HMENU ) HB_PARHANDLE( 1 ), hb_parni( 2 ), MF_BYCOMMAND, ( HBITMAP ) hBitmapUnchecked, ( HBITMAP ) hBitmapChecked );
+      SetMenuItemBitmaps( ( HMENU ) HB_PARHANDLE( 1 ), hb_parni( 2 ), MF_BYCOMMAND, static_cast< HBITMAP >( hBitmapUnchecked ), static_cast< HBITMAP >( hBitmapChecked ) );
    else
-      SetMenuItemBitmaps( ( HMENU ) HB_PARHANDLE( 1 ), hb_parni( 3 ), MF_BYPOSITION, ( HBITMAP ) hBitmapUnchecked, ( HBITMAP ) hBitmapChecked );
+      SetMenuItemBitmaps( ( HMENU ) HB_PARHANDLE( 1 ), hb_parni( 3 ), MF_BYPOSITION, static_cast< HBITMAP >( hBitmapUnchecked ), static_cast< HBITMAP >( hBitmapChecked ) );
 }
 
 
@@ -284,7 +284,7 @@ HB_FUNC( WVW_TRACKPOPUPMENU )
 
 HB_FUNC( WIN_SETMENU )
 {
-   SetMenu( ( HWND ) HB_PARHANDLE( 1 ), ( HMENU ) HB_PARHANDLE( 2 ) );
+   SetMenu( static_cast< HWND >( HB_PARHANDLE( 1 ) ), ( HMENU ) HB_PARHANDLE( 2 ) );
 }
 
 /*
@@ -328,5 +328,5 @@ HB_FUNC( WVW_GETSYSTEMMENU )
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
    BOOL       lReset      = HB_ISNIL( 2 ) ? FALSE : hb_parl( 2 );
 
-   hb_retnl( ( ULONG ) GetSystemMenu( pWindowData->hWnd, lReset ) );
+   hb_retnl( static_cast< ULONG >( GetSystemMenu( pWindowData->hWnd, lReset ) ) );
 }

@@ -998,7 +998,7 @@ HB_FUNC( HB_SIGNALDESC )
 
    if( iSig == 0 ) /* exception */
    {
-      DWORD dwSubSig = ( DWORD ) hb_parnl( 2 );
+      DWORD dwSubSig = static_cast< DWORD >( hb_parnl( 2 ) );
 
       switch( dwSubSig )
       {

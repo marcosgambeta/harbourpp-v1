@@ -75,8 +75,8 @@ HB_FUNC( AMPM )
          nTimeLen = 2;
 
       iHour -= 12;
-      pszResult[ 0 ] = ( char ) ( iHour / 10 ) + '0';
-      pszResult[ 1 ] = ( char ) ( iHour % 10 ) + '0';
+      pszResult[ 0 ] = static_cast< char >( iHour / 10 ) + '0';
+      pszResult[ 1 ] = static_cast< char >( iHour % 10 ) + '0';
 
       if( pszResult[ 0 ] == '0' )
          pszResult[ 0 ] = ' ';

@@ -536,7 +536,7 @@ HB_FUNC( SSL_CTX_SET_OPTIONS )
       SSL_CTX * ctx = hb_SSL_CTX_par( 1 );
 
       if( ctx )
-         SSL_CTX_set_options( ctx, ( unsigned long ) hb_parnl( 2 ) );
+         SSL_CTX_set_options( ctx, static_cast< unsigned long >( hb_parnl( 2 ) ) );
    }
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );

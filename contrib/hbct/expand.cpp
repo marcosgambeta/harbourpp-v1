@@ -78,7 +78,7 @@ HB_FUNC( EXPAND )
             if( iRepl < 1 )
                iRepl = 1;
             if( HB_ISNUM( 3 ) )
-               cRepl = ( char ) hb_parni( 3 );
+               cRepl = static_cast< char >( hb_parni( 3 ) );
             else if( HB_ISCHAR( 3 ) )
                cRepl = hb_parc( 3 )[ 0 ];
             else

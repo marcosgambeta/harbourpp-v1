@@ -128,7 +128,7 @@ static HB_CODETRACE_FUNC( hb_p_default )
 
 static HB_CODETRACE_FUNC( hb_p_jumpnear )
 {
-   HB_SIZE nNewPos = nPCodePos + ( signed char ) pFunc->pCode[ nPCodePos + 1 ];
+   HB_SIZE nNewPos = nPCodePos + static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] );
 
    hb_compCodeTraceMark( cargo, nPCodePos, 2 );
    return hb_compCodeTraceNextPos( cargo, nNewPos );
@@ -154,7 +154,7 @@ static HB_CODETRACE_FUNC( hb_p_jumpfar )
 
 static HB_CODETRACE_FUNC( hb_p_jumpfalsenear )
 {
-   HB_SIZE nNewPos = nPCodePos + ( signed char ) pFunc->pCode[ nPCodePos + 1 ];
+   HB_SIZE nNewPos = nPCodePos + static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] );
 
    hb_compCodeTraceMark( cargo, nPCodePos, 2 );
    hb_compCodeTraceAddJump( cargo, nNewPos );
@@ -186,7 +186,7 @@ static HB_CODETRACE_FUNC( hb_p_jumpfalsefar )
 
 static HB_CODETRACE_FUNC( hb_p_jumptruenear )
 {
-   HB_SIZE nNewPos = nPCodePos + ( signed char ) pFunc->pCode[ nPCodePos + 1 ];
+   HB_SIZE nNewPos = nPCodePos + static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] );
 
    hb_compCodeTraceMark( cargo, nPCodePos, 2 );
    hb_compCodeTraceAddJump( cargo, nNewPos );
@@ -309,7 +309,7 @@ static HB_CODETRACE_FUNC( hb_p_switch )
       switch( pFunc->pCode[ nPCodePos ] )
       {
          case HB_P_JUMPNEAR:
-            nNewPos = nPCodePos + ( signed char ) pFunc->pCode[ nPCodePos + 1 ];
+            nNewPos = nPCodePos + static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] );
             nPCodePos += 2;
             break;
          case HB_P_JUMP:

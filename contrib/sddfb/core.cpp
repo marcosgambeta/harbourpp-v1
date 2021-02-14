@@ -153,23 +153,23 @@ static HB_ERRCODE fbConnect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
    parambuf[ i++ ] = isc_dpb_version1;
 
    parambuf[ i++ ] = isc_dpb_user_name;
-   ul = ( unsigned int ) hb_arrayGetCLen( pItem, 3 );
+   ul = static_cast< unsigned int >( hb_arrayGetCLen( pItem, 3 ) );
    if( ul > 255 )
       ul = 255;
-   parambuf[ i++ ] = ( char ) ul;
+   parambuf[ i++ ] = static_cast< char >( ul );
    memcpy( parambuf + i, hb_arrayGetCPtr( pItem, 3 ), ul );
    i += ul;
 
    parambuf[ i++ ] = isc_dpb_password;
-   ul = ( unsigned int ) hb_arrayGetCLen( pItem, 4 );
+   ul = static_cast< unsigned int >( hb_arrayGetCLen( pItem, 4 ) );
    if( ul > 255 )
       ul = 255;
-   parambuf[ i++ ] = ( char ) ul;
+   parambuf[ i++ ] = static_cast< char >( ul );
    memcpy( parambuf + i, hb_arrayGetCPtr( pItem, 4 ), ul );
    i += ul;
 
-   if( isc_attach_database( status, ( short ) hb_arrayGetCLen( pItem, 5 ), hb_arrayGetCPtr( pItem, 5 ),
-                            &hDb, ( short ) i, parambuf ) )
+   if( isc_attach_database( status, static_cast< short >( hb_arrayGetCLen( pItem, 5 ) ), hb_arrayGetCPtr( pItem, 5 ),
+                            &hDb, static_cast< short >( i ), parambuf ) )
       /* TODO: error code in status[ 1 ] */
       return HB_FAILURE;
    pConnection->pSDDConn = hb_xgrab( sizeof( SDDCONN ) );
@@ -223,7 +223,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
    if( isc_start_transaction( status, &hTrans, 1, phDb, 0, NULL ) )
    {
 #if 0
-      HB_TRACE( HB_TR_ALWAYS, ( "hTrans=%d status=%ld %ld %ld %ld", static_cast< int >( hTrans ), ( long ) status[ 0 ], ( long ) status[ 1 ], ( long ) status[ 2 ], ( long ) status[ 3 ] ) );
+      HB_TRACE( HB_TR_ALWAYS, ( "hTrans=%d status=%ld %ld %ld %ld", static_cast< int >( hTrans ), static_cast< long >( status[ 0 ] ), static_cast< long >( status[ 1 ] ), static_cast< long >( status[ 2 ] ), static_cast< long >( status[ 3 ] ) ) );
 #endif
       hb_errRT_FirebirdDD( EG_OPEN, ESQLDD_START, "Start transaction failed", NULL, ( HB_ERRCODE ) isc_sqlcode( status ) );
       return HB_FAILURE;

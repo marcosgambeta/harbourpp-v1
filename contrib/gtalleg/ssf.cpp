@@ -91,7 +91,7 @@ unsigned short ssfDrawChar( AL_BITMAP * dst, ssfFont * sfont, char c, int x, int
 
    p         = ( HB_BYTE ) c;
    charGlyph = *sfont->chars[ p ];
-   fScale    = ( float ) ( ( float ) sfont->fsize / ( float ) 65535 );
+   fScale    = static_cast< float >( ( static_cast< float >( sfont->fsize ) / static_cast< float >( 65535 ) ) );
 
    for( i = 0; i < charGlyph.num; i++ )
    {

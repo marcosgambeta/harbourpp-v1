@@ -83,10 +83,10 @@ static int hb_bz2Compress( const char * szSrc, HB_SIZE nSrc,
    memset( &stream, 0, sizeof( stream ) );
 
    stream.next_in  = ( char * ) HB_UNCONST( szSrc );
-   stream.avail_in = ( unsigned int ) nSrc;
+   stream.avail_in = static_cast< unsigned int >( nSrc );
 
    stream.next_out  = szDst;
-   stream.avail_out = ( unsigned int ) *pnDst;
+   stream.avail_out = static_cast< unsigned int >( *pnDst );
 
    stream.bzalloc = hb_bz2Alloc;
    stream.bzfree  = hb_bz2Free;
@@ -130,7 +130,7 @@ static HB_SIZE hb_bz2UncompressedSize( const char * szSrc, HB_SIZE nLen,
    memset( &stream, 0, sizeof( stream ) );
 
    stream.next_in  = ( char * ) HB_UNCONST( szSrc );
-   stream.avail_in = ( unsigned int ) nLen;
+   stream.avail_in = static_cast< unsigned int >( nLen );
 
    stream.bzalloc = hb_bz2Alloc;
    stream.bzfree  = hb_bz2Free;
@@ -177,10 +177,10 @@ static int hb_bz2Uncompress( const char * szSrc, HB_SIZE nSrc,
    memset( &stream, 0, sizeof( stream ) );
 
    stream.next_in  = ( char * ) HB_UNCONST( szSrc );
-   stream.avail_in = ( unsigned int ) nSrc;
+   stream.avail_in = static_cast< unsigned int >( nSrc );
 
    stream.next_out  = szDst;
-   stream.avail_out = ( unsigned int ) *pnDst;
+   stream.avail_out = static_cast< unsigned int >( *pnDst );
 
    stream.bzalloc = hb_bz2Alloc;
    stream.bzfree  = hb_bz2Free;

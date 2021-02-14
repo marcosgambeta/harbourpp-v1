@@ -207,7 +207,7 @@ void hb_winmainArgVBuild( void )
                because in console apps the name may be truncated
                in some cases, and in GUI apps it's not filled
                at all. [vszakats] */
-      if( GetModuleFileName( NULL, lpArgV[ 0 ], ( DWORD ) nModuleName ) != 0 )
+      if( GetModuleFileName( NULL, lpArgV[ 0 ], static_cast< DWORD >( nModuleName ) ) != 0 )
       {
          /* Windows XP does not set trailing 0 if buffer is not large enough [druzus] */
          lpArgV[ 0 ][ nModuleName - 1 ] = 0;
@@ -271,8 +271,8 @@ void hb_winmainArgVFree( void )
 
 void hb_winmainArgInit( void * hInstance, void * hPrevInstance, int iCmdShow )
 {
-   s_hInstance = ( HANDLE ) hInstance;
-   s_hPrevInstance = ( HANDLE ) hPrevInstance;
+   s_hInstance = static_cast< HANDLE >( hInstance );
+   s_hPrevInstance = static_cast< HANDLE >( hPrevInstance );
    s_iCmdShow = iCmdShow;
    s_WinMainParam = HB_TRUE;
 }

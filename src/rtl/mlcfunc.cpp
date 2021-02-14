@@ -381,7 +381,7 @@ HB_FUNC( MEMOLINE )
                            break;
                      }
                      else
-                        szLine[ nLen++ ] = ( char ) wc;
+                        szLine[ nLen++ ] = static_cast< char >( wc );
                      ++nCol;
                   }
                }
@@ -664,7 +664,7 @@ HB_FUNC( HB_MLEVAL )
                if( nRepl-- == 0 )
                   break;
                if( !cdp )
-                  pszLine[ nDst++ ] = ( char ) ch;
+                  pszLine[ nDst++ ] = static_cast< char >( ch );
                else if( ! HB_CDPCHAR_PUT( cdp, pszLine, nLineLength + 1, &nDst, ch ) )
                   break;
             }

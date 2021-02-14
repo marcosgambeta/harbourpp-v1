@@ -143,7 +143,7 @@ HB_FUNC( HB_SYSLOGMESSAGE )
       hb_retl( ReportEvent( s_RegHandle,             /* event log handle */
                             logval,                  /* event type */
                             0,                       /* category zero */
-                            ( DWORD ) hb_parnl( 3 ), /* event identifier */
+                            static_cast< DWORD >( hb_parnl( 3 ) ), /* event identifier */
                             NULL,                    /* no user security identifier */
                             1,                       /* one substitution string */
                             0,                       /* no data */

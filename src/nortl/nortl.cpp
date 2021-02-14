@@ -724,7 +724,7 @@ void hb_setSetDirCase( int iDirCase )
 
 void hb_setSetDirSeparator( int iSeparator )
 {
-   s_cDirSep = ( char ) iSeparator;
+   s_cDirSep = static_cast< char >( iSeparator );
 }
 
 void hb_setSetTrimFileName( HB_BOOL fTrim )

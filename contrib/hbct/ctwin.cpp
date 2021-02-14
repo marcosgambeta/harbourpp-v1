@@ -1797,7 +1797,7 @@ static void hb_ctw_gt_GetScrCursor( PHB_GT pGT, int * piRow, int * piCol, int * 
             *piStyle = SC_NONE;
          else
          {
-            long lIndex = ( long ) *piRow * pCTW->iMapWidth + *piCol;
+            long lIndex = static_cast< long >( *piRow ) * pCTW->iMapWidth + *piCol;
             if( pCTW->pWindowMap[ lIndex ] != iWindow )
                *piStyle = SC_NONE;
          }
@@ -1819,7 +1819,7 @@ static HB_BOOL hb_ctw_gt_GetScrChar( PHB_GT pGT, int iRow, int iCol,
        iRow >= pCTW->iBoardTop  && iRow <= pCTW->iBoardBottom &&
        iCol >= pCTW->iBoardLeft && iCol <= pCTW->iBoardRight )
    {
-      long lIndex = ( long ) iRow * pCTW->iMapWidth + iCol;
+      long lIndex = static_cast< long >( iRow ) * pCTW->iMapWidth + iCol;
       iWindow = pCTW->pWindowMap[ lIndex ];
       iShadow = pCTW->pShadowMap[ lIndex ];
    }
@@ -1831,7 +1831,7 @@ static HB_BOOL hb_ctw_gt_GetScrChar( PHB_GT pGT, int iRow, int iCol,
       iCol -= pWnd->iFirstCol;
       if( iCol >= 0 && iRow >= 0 && iRow < pWnd->iHeight && iCol < pWnd->iWidth )
       {
-         long lIndex = ( long ) iRow * pWnd->iWidth + iCol;
+         long lIndex = static_cast< long >( iRow ) * pWnd->iWidth + iCol;
          *pusChar = pWnd->screenBuffer[ lIndex ].c.usChar;
          *piColor = pWnd->screenBuffer[ lIndex ].c.bColor;
          *pbAttr  = pWnd->screenBuffer[ lIndex ].c.bAttr;
@@ -1918,7 +1918,7 @@ static HB_BOOL hb_ctw_gt_GetChar( PHB_GT pGT, int iRow, int iCol,
 
    if( iCol >= 0 && iRow >= 0 && iRow < pWnd->iHeight && iCol < pWnd->iWidth )
    {
-      long lIndex = ( long ) iRow * pWnd->iWidth + iCol;
+      long lIndex = static_cast< long >( iRow ) * pWnd->iWidth + iCol;
       *pusChar = pWnd->screenBuffer[ lIndex ].c.usChar;
       *piColor = pWnd->screenBuffer[ lIndex ].c.bColor;
       *pbAttr  = pWnd->screenBuffer[ lIndex ].c.bAttr;
@@ -1943,7 +1943,7 @@ static HB_BOOL hb_ctw_gt_PutChar( PHB_GT pGT, int iRow, int iCol,
       if( iRow >= pCTW->iBoardTop  && iRow <= pCTW->iBoardBottom &&
           iCol >= pCTW->iBoardLeft && iCol <= pCTW->iBoardRight )
       {
-         long lIndex = ( long ) iRow * pCTW->iMapWidth + iCol;
+         long lIndex = static_cast< long >( iRow ) * pCTW->iMapWidth + iCol;
          iWindow = pCTW->pWindowMap[ lIndex ];
 #if 0
          /* When window with shadow is closed CT3 restores attributes
@@ -2004,7 +2004,7 @@ static HB_BOOL hb_ctw_gt_PutChar( PHB_GT pGT, int iRow, int iCol,
       if( iWndRow >= 0 && iWndCol >= 0 &&
           iWndRow < iWndHeight && iWndCol < iWndWidth )
       {
-         long lIndex = ( long ) iWndRow * pWnd->iWidth + iWndCol;
+         long lIndex = static_cast< long >( iWndRow ) * pWnd->iWidth + iWndCol;
 
          pWnd->screenBuffer[ lIndex ].c.usChar = usChar;
          pWnd->screenBuffer[ lIndex ].c.bColor = ( HB_BYTE ) iColor;
@@ -2364,7 +2364,7 @@ static void hb_ctw_gt_RedrawDiff( PHB_GT pGT )
       {
          if( pGT->pLines[ i ] )
          {
-            lIndex = ( long ) i * pGT->iWidth;
+            lIndex = static_cast< long >( i ) * pGT->iWidth;
             for( l = 0; l < pGT->iWidth; ++l, ++lIndex )
             {
                if( pGT->prevBuffer[ lIndex ].uiValue !=
@@ -2745,7 +2745,7 @@ int  hb_ctwGetPosWindow( int iRow, int iCol )
           iRow >= pCTW->iBoardTop  && iRow <= pCTW->iBoardBottom &&
           iCol >= pCTW->iBoardLeft && iCol <= pCTW->iBoardRight )
       {
-         long lIndex = ( long ) iRow * pCTW->iMapWidth + iCol;
+         long lIndex = static_cast< long >( iRow ) * pCTW->iMapWidth + iCol;
          iResult = pCTW->pWindowMap[ lIndex ];
       }
       hb_gt_BaseFree( pCTW->pGT );

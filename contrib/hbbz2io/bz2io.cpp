@@ -117,7 +117,7 @@ static HB_SIZE s_bz2_write( PHB_FILE pFile, HB_MAXINT nTimeout )
    {
       if( nWritten < nSize )
          memmove( pFile->buffer, pFile->buffer + nWritten, nSize - nWritten );
-      pFile->bz2.avail_out += ( unsigned int ) nWritten;
+      pFile->bz2.avail_out += static_cast< unsigned int >( nWritten );
       pFile->bz2.next_out -= nWritten;
    }
 
@@ -412,7 +412,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize,
          nTimeout = pFile->nTimeout;
 
       pFile->bz2.next_out = ( char * ) buffer;
-      pFile->bz2.avail_out = ( unsigned int ) nSize;
+      pFile->bz2.avail_out = static_cast< unsigned int >( nSize );
       pFile->bz2.total_out_hi32 = pFile->bz2.total_out_lo32 = 0;
 
       while( pFile->bz2.avail_out )
@@ -441,7 +441,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize,
             if( nResult == 0 || nResult == ( HB_SIZE ) - 1 )
                break;
             pFile->bz2.next_in = ( char * ) pFile->buffer;
-            pFile->bz2.avail_in = ( unsigned int ) nResult;
+            pFile->bz2.avail_in = static_cast< unsigned int >( nResult );
          }
       }
       if( pFile->bz2.total_out_lo32 != 0 || pFile->bz2.total_out_hi32 != 0 )
@@ -489,7 +489,7 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * buffer, HB_SIZE nSize,
          nTimeout = pFile->nTimeout;
 
       pFile->bz2.next_in  = ( char * ) HB_UNCONST( buffer );
-      pFile->bz2.avail_in = ( unsigned int ) nSize;
+      pFile->bz2.avail_in = static_cast< unsigned int >( nSize );
 
       while( pFile->bz2.avail_in )
       {

@@ -349,7 +349,7 @@ static unsigned int hb_mixTagNodeParentIndex( PMIXNODE pNode )
    }
    while( ui-- );
 
-   return ( unsigned int ) -1;
+   return static_cast< unsigned int >( -1 );
 }
 
 
@@ -1296,7 +1296,7 @@ static HB_ERRCODE sqlmixSeek( SQLMIXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pIt
       uiKeyLen = pTag->uiKeyLen;
       if( pTag->bType == 'C' )
       {
-         uiKeyLen = ( unsigned int ) hb_itemGetCLen( pItem );
+         uiKeyLen = static_cast< unsigned int >( hb_itemGetCLen( pItem ) );
          if( uiKeyLen > pTag->uiKeyLen )
             uiKeyLen = pTag->uiKeyLen;
       }
@@ -1847,7 +1847,7 @@ static HB_ERRCODE sqlmixOrderInfo( SQLMIXAREAP pArea, HB_USHORT uiIndex, LPDBORD
          {
             char szType[ 2 ];
 
-            szType[ 0 ] = ( char ) pTag->bType;
+            szType[ 0 ] = static_cast< char >( pTag->bType );
             szType[ 1 ] = 0;
             pOrderInfo->itmResult = hb_itemPutC( pOrderInfo->itmResult, szType );
          }

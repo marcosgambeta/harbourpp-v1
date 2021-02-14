@@ -271,7 +271,7 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
 
    while( pLex->nSrc < pLex->nLen )
    {
-      unsigned char ch = ( unsigned char ) pLex->pString[ pLex->nSrc++ ];
+      unsigned char ch = static_cast< unsigned char >( pLex->pString[ pLex->nSrc++ ] );
       switch( ch )
       {
          case ' ':

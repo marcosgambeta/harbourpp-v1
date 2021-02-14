@@ -98,11 +98,11 @@ HB_FUNC( ADDASCII )
             else if( lResult < 0 )
                lValue--;
 
-            pcResult[ sCurrent - 1 ] = ( char ) ( lResult % 256 );
+            pcResult[ sCurrent - 1 ] = static_cast< char >( lResult % 256 );
          }
       }
       else
-         pcResult[ sPos - 1 ] = ( char ) ( ( ( HB_LONG ) pcResult[ sPos - 1 ] + lValue ) % 256 );
+         pcResult[ sPos - 1 ] = static_cast< char >( ( ( HB_LONG ) pcResult[ sPos - 1 ] + lValue ) % 256 );
 
       hb_storclen( pcResult, sLen, 1 );
 

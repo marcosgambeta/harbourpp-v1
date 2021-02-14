@@ -91,7 +91,7 @@
 #include <os2.h>
 
 /* convert 16:16 address to 0:32 */
-#define SELTOFLAT( ptr )  ( void * ) ( ( ( ( ( ULONG ) ( ptr ) ) >> 19 ) << 16 ) | ( 0xFFFF & ( ( ULONG ) ( ptr ) ) ) )
+#define SELTOFLAT( ptr )  ( void * ) ( ( ( ( static_cast< ULONG >( ptr ) ) >> 19 ) << 16 ) | ( 0xFFFF & ( static_cast< ULONG >( ptr ) ) ) )
 
 #if defined( HB_OS_OS2_GCC )
    /* 2000-03-25 - maurilio.longo@libero.it
@@ -291,8 +291,8 @@ static void hb_gt_os2_mouse_SetPos( PHB_GT pGT, int row, int col )
    if( s_uMouHandle )
    {
       PTRLOC pos;
-      pos.row = ( USHORT ) row;
-      pos.col = ( USHORT ) col;
+      pos.row = static_cast< USHORT >( row ); 
+      pos.col = static_cast< USHORT >( col );
       MouSetPtrPos( &pos, s_uMouHandle );
    }
 }
@@ -441,7 +441,7 @@ static void hb_gt_os2_SetCursorPosition( int iRow, int iCol )
 
    if( s_iCurRow != iRow || s_iCurCol != iCol )
    {
-      VioSetCurPos( ( USHORT ) iRow, ( USHORT ) iCol, 0 );
+      VioSetCurPos( static_cast< USHORT >( iRow ), static_cast< USHORT >( iCol ), 0 );
       s_iCurRow = iRow;
       s_iCurCol = iCol;
    }
@@ -464,7 +464,7 @@ static unsigned char hb_gt_os2_GetCharHeight()
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_os2_GetCharHeight()" ) );
 
-   return ( unsigned char ) ( s_vi.row ? ( s_vi.vres / s_vi.row ) - 1 : 0 );
+   return static_cast< unsigned char >( s_vi.row ? ( s_vi.vres / s_vi.row ) - 1 : 0 );
 }
 
 static int hb_gt_os2_GetCursorStyle( void )
@@ -790,14 +790,14 @@ static void hb_gt_os2_Tone( PHB_GT pGT, double dFrequency, double dDuration )
       dFrequency = 0.0;
    else if( dFrequency > 32767.0 )
       dFrequency = 32767.0;
-   ulDuration = ( ULONG ) ( dDuration * 1000.0 / 18.2 ); /* milliseconds */
+   ulDuration = static_cast< ULONG >( dDuration * 1000.0 / 18.2 ); /* milliseconds */
 
    hb_gt_BaseUnlock( pGT );
    while( ulDuration > 0 )
    {
-      USHORT temp = ( USHORT ) HB_MIN( ulDuration, USHRT_MAX );
+      USHORT temp = static_cast< USHORT >( HB_MIN( ulDuration, USHRT_MAX ) );
       ulDuration -= temp;
-      DosBeep( ( USHORT ) dFrequency, temp );
+      DosBeep( static_cast< USHORT >( dFrequency ), temp );
    }
    hb_gt_BaseLock( pGT );
 }
@@ -910,8 +910,8 @@ static void hb_gt_os2_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
       if( ! HB_GTSELF_GETSCRUC( pGT, iRow, iCol + iLen, &iColor, &bAttr, &uc, HB_TRUE ) )
          break;
 
-      *pBufPtr++ = ( char ) uc;
-      *pBufPtr++ = ( char ) iColor;
+      *pBufPtr++ = static_cast< char >( uc );
+      *pBufPtr++ = static_cast< char >( iColor );
       ++iLen;
    }
 
@@ -954,7 +954,7 @@ static HB_BOOL hb_gt_os2_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_CODEPAGE:
       {
-         USHORT usCodePageNew = ( USHORT ) hb_itemGetNI( pInfo->pNewVal );
+         USHORT usCodePageNew = static_cast< USHORT >( hb_itemGetNI( pInfo->pNewVal ) );
          USHORT usCodePage = 0;
 
          VioGetCp( 0, &usCodePage, 0 );

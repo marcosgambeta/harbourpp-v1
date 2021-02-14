@@ -94,15 +94,15 @@ HB_FUNC( WVW_PBCREATE )
    int  iOffTop, iOffLeft, iOffBottom, iOffRight;
    /* int   iStyle; */
    UINT   uiPBid;
-   USHORT usTop         = ( USHORT ) hb_parni( 2 ),
-          usLeft        = ( USHORT ) hb_parni( 3 ),
-          usBottom      = ( USHORT ) hb_parni( 4 ),
-          usRight       = ( USHORT ) hb_parni( 5 );
+   USHORT usTop         = static_cast< USHORT >( hb_parni( 2 ) ),
+          usLeft        = static_cast< USHORT >( hb_parni( 3 ) ),
+          usBottom      = static_cast< USHORT >( hb_parni( 4 ) ),
+          usRight       = static_cast< USHORT >( hb_parni( 5 ) );
    LPCTSTR lpszCaption  = HB_ISCHAR( 6 ) ? hb_parcx( 6 ) : nullptr;
    char *  szBitmap     = HB_ISCHAR( 7 ) ? ( char * ) hb_parcx( 7 ) : nullptr;
-   UINT    uiBitmap     = HB_ISNUM( 7 ) ? ( UINT ) hb_parni( 7 ) : 0;
+   UINT    uiBitmap     = HB_ISNUM( 7 ) ? static_cast< UINT >( hb_parni( 7 ) ) : 0;
    double  dStretch     = ! HB_ISNIL( 10 ) ? hb_parnd( 10 ) : 1;
-   BOOL    bMap3Dcolors = HB_ISLOG( 11 ) ? ( BOOL ) hb_parl( 11 ) : FALSE;
+   BOOL    bMap3Dcolors = HB_ISLOG( 11 ) ? static_cast< BOOL >( hb_parl( 11 ) ) : FALSE;
 
    if( ! HB_ISBLOCK( 8 ) )
    {
@@ -120,7 +120,7 @@ HB_FUNC( WVW_PBCREATE )
                           iOffTop, iOffLeft, iOffBottom, iOffRight,
                           dStretch, bMap3Dcolors,
                           BS_PUSHBUTTON );
-   hb_retnl( ( LONG ) uiPBid );
+   hb_retnl( static_cast< LONG >( uiPBid ) );
 }
 
 /*wvw_pbDestroy( [nWinNum], nPBid )
@@ -130,7 +130,7 @@ HB_FUNC( WVW_PBDESTROY )
 {
    UINT usWinNum = WVW_WHICH_WINDOW;
    WIN_DATA *     pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
-   UINT           uiPBid      = ( UINT ) ( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
+   UINT           uiPBid      = static_cast< UINT >( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
    CONTROL_DATA * pcd         = pWindowData->pcdCtrlList;
    CONTROL_DATA * pcdPrev     = nullptr;
 
@@ -185,7 +185,7 @@ HB_FUNC( WVW_PBISFOCUSED )
    byte bStyle;
    HWND hWndPB = FindControlHandle( usWinNum, WVW_CONTROL_PUSHBUTTON, uiCtrlId, &bStyle );
 
-   hb_retl( ( HWND ) GetFocus() == hWndPB );
+   hb_retl( static_cast< HWND >( GetFocus() ) == hWndPB );
 }
 
 /*wvw_pbEnable( [nWinNum], nButtonId, [lToggle] )
@@ -223,7 +223,7 @@ HB_FUNC( WVW_PBSETCODEBLOCK )
 {
    UINT usWinNum               = WVW_WHICH_WINDOW;
    WVW_DATA *     pData        = hb_getWvwData();
-   UINT           uiPBid       = ( UINT ) ( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
+   UINT           uiPBid       = static_cast< UINT >( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
    CONTROL_DATA * pcd          = GetControlData( usWinNum, WVW_CONTROL_PUSHBUTTON, NULL, uiPBid );
    PHB_ITEM       phiCodeBlock = hb_param( 3, HB_IT_BLOCK );
    BOOL           bOldSetting  = pData->s_bRecurseCBlock;
@@ -281,12 +281,12 @@ HB_FUNC( WVW_PBSETSTYLE )
 {
    UINT usWinNum = WVW_WHICH_WINDOW;
 
-   UINT  uiPBid       = ( UINT ) ( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
-   ULONG ulStyle      = ( ULONG ) ( HB_ISNIL( 3 ) ? 0  : hb_parni( 3 ) );
+   UINT  uiPBid       = static_cast< UINT >( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
+   ULONG ulStyle      = static_cast< ULONG >( HB_ISNIL( 3 ) ? 0  : hb_parni( 3 ) );
    CONTROL_DATA * pcd = GetControlData( usWinNum, WVW_CONTROL_PUSHBUTTON, NULL, uiPBid );
 
    if( pcd->hWndCtrl )
-      SendMessage( pcd->hWndCtrl, BM_SETSTYLE, ( WPARAM ) ulStyle, ( LPARAM ) TRUE );
+      SendMessage( pcd->hWndCtrl, BM_SETSTYLE, static_cast< WPARAM >( ulStyle ), static_cast< LPARAM >( TRUE ) );
 
    hb_retl( TRUE );
 }
@@ -330,15 +330,15 @@ HB_FUNC( WVW_PBSETFONT )
          while( pcd )
          {
             if( ( pcd->byCtrlClass == WVW_CONTROL_PUSHBUTTON ) &&
-                ( ( HFONT ) SendMessage( pcd->hWndCtrl, WM_GETFONT, ( WPARAM ) 0, ( LPARAM ) 0 ) == hOldFont )
+                ( static_cast< HFONT >( SendMessage( pcd->hWndCtrl, WM_GETFONT, static_cast< WPARAM >( 0 ), static_cast< LPARAM >( 0 ) ) ) == hOldFont )
                 )
-               SendMessage( pcd->hWndCtrl, WM_SETFONT, ( WPARAM ) hFont, ( LPARAM ) TRUE );
+               SendMessage( pcd->hWndCtrl, WM_SETFONT, static_cast< WPARAM >( hFont ), static_cast< LPARAM >( TRUE ) );
 
             pcd = pcd->pNext;
          }
 
          pWindowData->hPBfont = hFont;
-         DeleteObject( ( HFONT ) hOldFont );
+         DeleteObject( static_cast< HFONT >( hOldFont ) );
 
       }
       else
@@ -418,13 +418,13 @@ HB_FUNC( WVW_CBCREATE )
    int   iOffTop, iOffLeft, iOffBottom, iOffRight;
 
    UINT   uiCBid;
-   USHORT usWidth      = ( USHORT ) hb_parni( 4 );
-   USHORT usTop        = ( USHORT ) hb_parni( 2 ),
-          usLeft       = ( USHORT ) hb_parni( 3 ),
+   USHORT usWidth      = static_cast< USHORT >( hb_parni( 4 ) );
+   USHORT usTop        = static_cast< USHORT >( hb_parni( 2 ) ),
+          usLeft       = static_cast< USHORT >( hb_parni( 3 ) ),
           usBottom     = usTop,
           usRight      = usLeft + usWidth - 1;
-   USHORT usNumElement = ( USHORT ) ( HB_ISARRAY( 5 ) ? hb_arrayLen( hb_param( 5, HB_IT_ARRAY ) ) : 0 );
-   USHORT usListLines  = ( USHORT ) ( HB_ISNUM( 7 ) ? hb_parni( 7 ) : 3 );
+   USHORT usNumElement = static_cast< USHORT >( HB_ISARRAY( 5 ) ? hb_arrayLen( hb_param( 5, HB_IT_ARRAY ) ) : 0 );
+   USHORT usListLines  = static_cast< USHORT >( HB_ISNUM( 7 ) ? hb_parni( 7 ) : 3 );
    BYTE   byCharHeight = hb_wvw_LineHeight( pWindowData );
 
    /* in the future combobox type might be selectable by 8th parameter */
@@ -475,7 +475,7 @@ HB_FUNC( WVW_CBCREATE )
       0L,
       "COMBOBOX",
       ( LPSTR ) nullptr,
-      WS_CHILD | WS_VISIBLE | ( DWORD ) iStyle,
+      WS_CHILD | WS_VISIBLE | static_cast< DWORD >( iStyle ),
       iLeft,
       iTop,
       iRight - iLeft + 1,
@@ -494,18 +494,18 @@ HB_FUNC( WVW_CBCREATE )
       TCHAR   szDefault[] = TEXT( "empty" );
 
       SendMessage(
-         ( HWND ) hWndCB,
+         static_cast< HWND >( hWndCB ),
          WM_SETREDRAW,
-         ( WPARAM ) TRUE,
-         ( LPARAM ) 0
+         static_cast< WPARAM >( TRUE ),
+         static_cast< LPARAM >( 0 )
          );
 
       if( usNumElement == 0 )
       {
-         if( SendMessage( ( HWND ) hWndCB,
+         if( SendMessage( static_cast< HWND >( hWndCB ),
                           CB_ADDSTRING,
-                          ( WPARAM ) 0,
-                          ( LPARAM ) ( LPCTSTR ) szDefault
+                          static_cast< WPARAM >( 0 ),
+                          static_cast< LPARAM >( ( LPCTSTR ) szDefault )
                           ) < 0 )
          {
             /* ignore failure */
@@ -515,10 +515,10 @@ HB_FUNC( WVW_CBCREATE )
       else
          for( i = 1; i <= usNumElement; i++ )
          {
-            if( SendMessage( ( HWND ) hWndCB,
+            if( SendMessage( static_cast< HWND >( hWndCB ),
                              CB_ADDSTRING,
-                             ( WPARAM ) 0,
-                             ( LPARAM ) ( LPCTSTR ) hb_parvcx( 5, i )
+                             static_cast< WPARAM >( 0 ),
+                             static_cast< LPARAM >( ( LPCTSTR ) hb_parvcx( 5, i ) )
                              ) < 0 )
             {
                /* ignore failure */
@@ -526,7 +526,7 @@ HB_FUNC( WVW_CBCREATE )
             }
             else
             {
-               numofchars = SendMessage( ( HWND ) hWndCB, CB_GETLBTEXTLEN, i - 1, 0 );
+               numofchars = SendMessage( static_cast< HWND >( hWndCB ), CB_GETLBTEXTLEN, i - 1, 0 );
                if( numofchars > LongComboWidth )
                   LongComboWidth = numofchars;
 
@@ -534,25 +534,25 @@ HB_FUNC( WVW_CBCREATE )
          }
 
       SendMessage(
-         ( HWND ) hWndCB,
+         static_cast< HWND >( hWndCB ),
          CB_SETCURSEL,
-         ( WPARAM ) 0,
-         ( LPARAM ) 0
+         static_cast< WPARAM >( 0 ),
+         static_cast< LPARAM >( 0 )
          );
 
       SendMessage(
-         ( HWND ) hWndCB,
+         static_cast< HWND >( hWndCB ),
          CB_SETEXTENDEDUI,
-         ( WPARAM ) TRUE,
-         ( LPARAM ) 0
+         static_cast< WPARAM >( TRUE ),
+         static_cast< LPARAM >( 0 )
          );
       avgwidth = GetFontDialogUnits( hWndParent, hFont );
       NewLongComboWidth = ( LongComboWidth - 2 ) * avgwidth;
       SendMessage(
-         ( HWND ) hWndCB,
+         static_cast< HWND >( hWndCB ),
          CB_SETDROPPEDWIDTH,
-         ( WPARAM ) NewLongComboWidth + 100, /* LongComboWidth+100 */
-         ( LPARAM ) 0
+         static_cast< WPARAM >( NewLongComboWidth ) + 100, /* LongComboWidth+100 */
+         static_cast< LPARAM >( 0 )
          );
 
       rXB.top    = usTop;     rXB.left = usLeft;
@@ -563,18 +563,18 @@ HB_FUNC( WVW_CBCREATE )
 
       AddControlHandle( usWinNum, WVW_CONTROL_COMBOBOX, hWndCB, uiCBid, ( PHB_ITEM ) hb_param( 6, HB_IT_BLOCK ), rXB, rOffXB, ( byte ) bKbdType );
 
-      OldProc = ( WNDPROC ) SetWindowLongPtr( hWndCB,
-                                              GWLP_WNDPROC, ( LONG_PTR ) hb_gt_wvwCBProc );
+      OldProc = static_cast< WNDPROC >( SetWindowLongPtr( hWndCB,
+                                              GWLP_WNDPROC, ( LONG_PTR ) hb_gt_wvwCBProc ) );
 
       StoreControlProc( usWinNum, WVW_CONTROL_COMBOBOX, hWndCB, OldProc );
 
-      SendMessage( hWndCB, WM_SETFONT, ( WPARAM ) pWindowData->hCBfont, ( LPARAM ) TRUE );
-      hb_stornl( ( LONG ) hWndCB, 11 );
+      SendMessage( hWndCB, WM_SETFONT, static_cast< WPARAM >( pWindowData->hCBfont ), static_cast< LPARAM >( TRUE ) );
+      hb_stornl( static_cast< LONG >( hWndCB ), 11 );
 
-      hb_retnl( ( LONG ) uiCBid );
+      hb_retnl( static_cast< LONG >( uiCBid ) );
    }
    else
-      hb_retnl( ( LONG ) 0 );
+      hb_retnl( static_cast< LONG >( 0 ) );
 }
 
 /*wvw_cbDestroy( [nWinNum], nCBid )
@@ -584,7 +584,7 @@ HB_FUNC( WVW_CBDESTROY )
 {
    UINT usWinNum = WVW_WHICH_WINDOW;
    WIN_DATA *     pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
-   UINT           uiCBid      = ( UINT ) ( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
+   UINT           uiCBid      = static_cast< UINT >( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
    CONTROL_DATA * pcd         = pWindowData->pcdCtrlList;
    CONTROL_DATA * pcdPrev     = ( CONTROL_DATA * ) nullptr;
 
@@ -639,7 +639,7 @@ HB_FUNC( WVW_CBISFOCUSED )
    byte bStyle;
    HWND hWndCB = FindControlHandle( usWinNum, WVW_CONTROL_COMBOBOX, uiCtrlId, &bStyle );
 
-   hb_retl( ( HWND ) GetFocus() == hWndCB );
+   hb_retl( static_cast< HWND >( GetFocus() ) == hWndCB );
 }
 
 /*wvw_cbEnable( [nWinNum], nComboId, [lEnable] )
@@ -677,7 +677,7 @@ HB_FUNC( WVW_CBSETCODEBLOCK )
 {
    UINT usWinNum = WVW_WHICH_WINDOW;
 
-   UINT uiCBid        = ( UINT ) ( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
+   UINT uiCBid        = static_cast< UINT >( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
    CONTROL_DATA * pcd = GetControlData( usWinNum, WVW_CONTROL_COMBOBOX, NULL, uiCBid );
    PHB_ITEM       phiCodeBlock = hb_param( 3, HB_IT_BLOCK );
    WVW_DATA *     pData        = hb_getWvwData();
@@ -746,16 +746,16 @@ HB_FUNC( WVW_CBSETFONT )
          while( pcd )
          {
             if( ( pcd->byCtrlClass == WVW_CONTROL_COMBOBOX ) &&
-                ( ( HFONT ) SendMessage( pcd->hWndCtrl, WM_GETFONT, ( WPARAM ) 0, ( LPARAM ) 0 ) == hOldFont )
+                ( static_cast< HFONT >( SendMessage( pcd->hWndCtrl, WM_GETFONT, static_cast< WPARAM >( 0 ), static_cast< LPARAM >( 0 ) ) ) == hOldFont )
                 )
-               SendMessage( pcd->hWndCtrl, WM_SETFONT, ( WPARAM ) hFont, ( LPARAM ) TRUE );
+               SendMessage( pcd->hWndCtrl, WM_SETFONT, static_cast< WPARAM >( hFont ), static_cast< LPARAM >( TRUE ) );
 
 
             pcd = pcd->pNext;
          }
 
          pWindowData->hCBfont = hFont;
-         DeleteObject( ( HFONT ) hOldFont );
+         DeleteObject( static_cast< HFONT >( hOldFont ) );
 
       }
       else
@@ -791,10 +791,10 @@ HB_FUNC( WVW_CBSETINDEX )
       return;
    }
 
-   retval = ( SendMessage( ( HWND ) pcd->hWndCtrl,
+   retval = ( SendMessage( static_cast< HWND >( pcd->hWndCtrl ),
                            CB_SETCURSEL,
-                           ( WPARAM ) iIndex,
-                           ( LPARAM ) 0
+                           static_cast< WPARAM >( iIndex ),
+                           static_cast< LPARAM >( 0 )
                            ) == iIndex );
    hb_retl( retval );
 }
@@ -824,10 +824,10 @@ HB_FUNC( WVW_CBGETINDEX )
       return;
    }
 
-   retval = SendMessage( ( HWND ) pcd->hWndCtrl,
+   retval = SendMessage( static_cast< HWND >( pcd->hWndCtrl ),
                          CB_GETCURSEL,
-                         ( WPARAM ) 0,
-                         ( LPARAM ) 0
+                         static_cast< WPARAM >( 0 ),
+                         static_cast< LPARAM >( 0 )
                          );
    hb_retni( retval );
 }
@@ -853,10 +853,10 @@ HB_FUNC( WVW_CBFINDSTRING )
       return;
    }
 
-   retval = SendMessage( ( HWND ) pcd->hWndCtrl,
+   retval = SendMessage( static_cast< HWND >( pcd->hWndCtrl ),
                          CB_FINDSTRING,
-                         ( WPARAM ) -1,
-                         ( LPARAM ) ( LPCSTR ) hb_parcx( 3 )
+                         static_cast< WPARAM >( -1 ),
+                         static_cast< LPARAM >( ( LPCSTR ) hb_parcx( 3 ) )
                          );
    hb_retni( retval );
 }
@@ -881,15 +881,15 @@ HB_FUNC( WVW_CBGETCURTEXT )
       return;
    }
 
-   iCurSel = SendMessage( ( HWND ) pcd->hWndCtrl,
+   iCurSel = SendMessage( static_cast< HWND >( pcd->hWndCtrl ),
                           CB_GETCURSEL,
-                          ( WPARAM ) 0,
-                          ( LPARAM ) 0
+                          static_cast< WPARAM >( 0 ),
+                          static_cast< LPARAM >( 0 )
                           );
-   iTextLen = SendMessage( ( HWND ) pcd->hWndCtrl,
+   iTextLen = SendMessage( static_cast< HWND >( pcd->hWndCtrl ),
                            CB_GETLBTEXTLEN,
-                           ( WPARAM ) iCurSel,
-                           ( LPARAM ) 0
+                           static_cast< WPARAM >( iCurSel ),
+                           static_cast< LPARAM >( 0 )
                            );
    if( iTextLen == CB_ERR )
    {
@@ -898,10 +898,10 @@ HB_FUNC( WVW_CBGETCURTEXT )
    }
 
    lptstr = ( char * ) hb_xgrab( iTextLen + 1 );
-   if( SendMessage( ( HWND ) pcd->hWndCtrl,
+   if( SendMessage( static_cast< HWND >( pcd->hWndCtrl ),
                     CB_GETLBTEXT,
-                    ( WPARAM ) iCurSel,
-                    ( LPARAM ) lptstr
+                    static_cast< WPARAM >( iCurSel ),
+                    static_cast< LPARAM >( lptstr )
                     ) == CB_ERR )
       hb_retclen( lptstr, 0 );
    else
@@ -928,10 +928,10 @@ HB_FUNC( WVW_CBISDROPPED )
       return;
    }
 
-   bDropped = SendMessage( ( HWND ) pcd->hWndCtrl,
+   bDropped = SendMessage( static_cast< HWND >( pcd->hWndCtrl ),
                            CB_GETDROPPEDSTATE,
-                           ( WPARAM ) 0,
-                           ( LPARAM ) 0
+                           static_cast< WPARAM >( 0 ),
+                           static_cast< LPARAM >( 0 )
                            );
    hb_retl( bDropped );
 }

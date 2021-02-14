@@ -350,7 +350,7 @@ static HB_ERRCODE sqlite3Execute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem 
    sqlite3_free_table( pResult );
 
    /* TODO: new id */
-   hb_rddsqlSetError( 0, NULL, hb_itemGetCPtr( pItem ), NULL, ( unsigned long ) iRow );
+   hb_rddsqlSetError( 0, NULL, hb_itemGetCPtr( pItem ), NULL, static_cast< unsigned long >( iRow ) );
    return HB_SUCCESS;
 }
 

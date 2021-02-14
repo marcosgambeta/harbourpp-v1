@@ -351,7 +351,7 @@ static HB_ERRCODE odbcExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
       if( SQL_SUCCEEDED( SQLRowCount( hStmt, &iCount ) ) )
       {
          /* TODO: new id */
-         hb_rddsqlSetError( 0, NULL, hb_itemGetCPtr( pItem ), NULL, ( unsigned long ) iCount );
+         hb_rddsqlSetError( 0, NULL, hb_itemGetCPtr( pItem ), NULL, static_cast< unsigned long >( iCount ) );
 #if ODBCVER >= 0x0300
          SQLFreeHandle( SQL_HANDLE_STMT, hStmt );
 #else

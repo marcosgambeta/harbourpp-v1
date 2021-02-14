@@ -66,7 +66,7 @@ HB_FUNC( ADSMGDISCONNECT )
 
 HB_FUNC( ADSMGGETHANDLE )
 {
-   hb_retnl( ( long ) s_hMgmtHandle );
+   hb_retnl( static_cast< long >( s_hMgmtHandle ) );
 }
 
 HB_FUNC( ADSMGSETHANDLE )
@@ -262,7 +262,7 @@ HB_FUNC( ADSMGGETCOMMSTATS )
 
 HB_FUNC( ADSMGRESETCOMMSTATS )
 {
-   hb_retnl( s_hMgmtHandle ? ( long ) AdsMgResetCommStats( s_hMgmtHandle ) : -1 );
+   hb_retnl( s_hMgmtHandle ? static_cast< long >( AdsMgResetCommStats( s_hMgmtHandle ) ) : -1 );
 }
 
 HB_FUNC( ADSMGGETCONFIGINFO )

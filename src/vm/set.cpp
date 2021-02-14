@@ -444,7 +444,7 @@ HB_BOOL hb_setSetCentury( HB_BOOL new_century_setting )
          }
          else if( y_start > -1 && y_stop == -1 )
             y_stop = count;
-         szDateFormat[ count ] = ( char ) digit;
+         szDateFormat[ count ] = static_cast< char >( digit );
       }
       /* Determine size of year in current format */
       if( y_start < 0 )
@@ -957,11 +957,11 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
       case HB_SET_DIRSEPARATOR:
       {
          char szDirSep[ 2 ];
-         szDirSep[ 0 ] = ( char ) pSet->HB_SET_DIRSEPARATOR;
+         szDirSep[ 0 ] = static_cast< char >( pSet->HB_SET_DIRSEPARATOR );
          szDirSep[ 1 ] = '\0';
          pResult = hb_itemPutC( pResult, szDirSep );
          if( pArg1 != NULL )
-            pSet->HB_SET_DIRSEPARATOR = set_char( pArg1, ( char ) pSet->HB_SET_DIRSEPARATOR );
+            pSet->HB_SET_DIRSEPARATOR = set_char( pArg1, static_cast< char >( pSet->HB_SET_DIRSEPARATOR ) );
          break;
       }
       case HB_SET_DBFLOCKSCHEME:

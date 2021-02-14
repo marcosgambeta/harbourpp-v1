@@ -441,7 +441,7 @@ static size_t put_octal( char *buffer, size_t bufsize, size_t size,
       int n = nums;
       do
       {
-         char c = ( char ) ( value & 0x7 ) + '0';
+         char c = static_cast< char >( value & 0x7 ) + '0';
          value >>= 3;
          --n;
          if( size + n < bufsize )
@@ -505,7 +505,7 @@ static size_t put_dec( char *buffer, size_t bufsize, size_t size,
       int n = nums;
       do
       {
-         char c = ( char ) ( value % 10 ) + '0';
+         char c = static_cast< char >( value % 10 ) + '0';
          value /= 10;
          --n;
          if( size + n < bufsize )
@@ -598,7 +598,7 @@ static size_t put_dbl( char *buffer, size_t bufsize, size_t size,
    do
    {
       value = _MODFD( dInt / 10 + _FL_FIX, &dInt ) * 10;
-      c = '0' + ( char ) ( value + _FL_FIX );
+      c = '0' + static_cast< char >( value + _FL_FIX );
       --n;
       if( size + n < bufsize )
          buffer[ size + n ] = c;
@@ -614,7 +614,7 @@ static size_t put_dbl( char *buffer, size_t bufsize, size_t size,
       while( precision > 0 )
       {
          dFract = _MODFD( dFract * 10, &dInt );
-         c = '0' + ( char ) ( dInt + _FL_FIX );
+         c = '0' + static_cast< char >( dInt + _FL_FIX );
          if( size < bufsize )
             buffer[ size ] = c;
          ++size;
@@ -687,7 +687,7 @@ static size_t put_hex( char *buffer, size_t bufsize, size_t size,
       int n = nums;
       do
       {
-         char c = ( char ) ( value & 0x0f ) + '0';
+         char c = static_cast< char >( value & 0x0f ) + '0';
          if( c > '9' )
             c += upper ? 'A' - '9' - 1 : 'a' - '9' - 1;
          value >>= 4;
@@ -1251,9 +1251,9 @@ int hb_vsnprintf( char * buffer, size_t bufsize, const char * format, va_list ap
                   case 'd':
                   case 'i':   /* signed int decimal conversion */
                      if( length == _L_CHAR_ )
-                        argval.value.as_x_intmax_t = ( unsigned char ) va_arg_n( args, _x_int, param );
+                        argval.value.as_x_intmax_t = static_cast< unsigned char >( va_arg_n( args, _x_int, param ) );
                      else if( length == _L_SHORT_ )
-                        argval.value.as_x_intmax_t = ( unsigned short ) va_arg_n( args, _x_int, param );
+                        argval.value.as_x_intmax_t = static_cast< unsigned short >( va_arg_n( args, _x_int, param ) );
                      else if( length == _L_LONG_ )
                         argval.value.as_x_intmax_t = va_arg_n( args, _x_long, param );
                      else if( length == _L_LONGLONG_ )
@@ -1277,9 +1277,9 @@ int hb_vsnprintf( char * buffer, size_t bufsize, const char * format, va_list ap
                   case 'x':   /* unsigned int hexadecimal conversion */
                   case 'X':   /* unsigned int hexadecimal conversion */
                      if( length == _L_CHAR_ )
-                        argval.value.as_x_uintmax_t = ( unsigned char ) va_arg_n( args, _x_int, param );
+                        argval.value.as_x_uintmax_t = static_cast< unsigned char >( va_arg_n( args, _x_int, param ) );
                      else if( length == _L_SHORT_ )
-                        argval.value.as_x_uintmax_t = ( unsigned short ) va_arg_n( args, _x_int, param );
+                        argval.value.as_x_uintmax_t = static_cast< unsigned short >( va_arg_n( args, _x_int, param ) );
                      else if( length == _L_LONG_ )
                         argval.value.as_x_uintmax_t = va_arg_n( args, _x_ulong, param );
                      else if( length == _L_LONGLONG_ )
@@ -1323,7 +1323,7 @@ int hb_vsnprintf( char * buffer, size_t bufsize, const char * format, va_list ap
                            ++size;
                         }
                      }
-                     c = ( unsigned char ) va_arg_n( args, _x_int, param );
+                     c = static_cast< unsigned char >( va_arg_n( args, _x_int, param ) );
                      if( size < bufsize )
                         buffer[ size ] = c;
                      ++size;

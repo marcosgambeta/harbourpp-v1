@@ -134,7 +134,7 @@ HB_BOOL hb_gt_winapi_setClipboardRaw( HB_UINT uFormat, void * pData, HB_SIZE nSi
                memcpy( lpMem, pData, nSize );
                ( void ) GlobalUnlock( hglb );
                /* Place the handle on the clipboard. */
-               fResult = SetClipboardData( ( UINT ) uFormat, hglb ) != 0;
+               fResult = SetClipboardData( static_cast< UINT >( uFormat ), hglb ) != 0;
             }
             if( ! fResult )
                GlobalFree( hglb );
@@ -184,7 +184,7 @@ HB_BOOL hb_gt_winapi_setClipboard( HB_UINT uFormat, PHB_ITEM pItem )
                                   ( char * ) lpMem, nSize + 1 );
                ( void ) GlobalUnlock( hglb );
                /* Place the handle on the clipboard. */
-               fResult = SetClipboardData( ( UINT ) uFormat, hglb ) != 0;
+               fResult = SetClipboardData( static_cast< UINT >( uFormat ), hglb ) != 0;
             }
             if( ! fResult )
                GlobalFree( hglb );
@@ -204,7 +204,7 @@ HB_BOOL hb_gt_winapi_getClipboard( HB_UINT uFormat, PHB_ITEM pItem )
 
    if( IsClipboardFormatAvailable( uFormat ) && OpenClipboard( NULL ) )
    {
-      HGLOBAL hglb = GetClipboardData( ( UINT ) uFormat );
+      HGLOBAL hglb = GetClipboardData( static_cast< UINT >( uFormat ) );
       if( hglb )
       {
          LPVOID lpMem = GlobalLock( hglb );

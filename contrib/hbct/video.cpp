@@ -96,9 +96,9 @@ HB_FUNC( VGAPALETTE )
       return;
    }
 
-   red = ( char ) hb_parni( 2 );
-   green = ( char ) hb_parni( 3 );
-   blue = ( char ) hb_parni( 4 );
+   red = static_cast< char >( hb_parni( 2 ) );
+   green = static_cast< char >( hb_parni( 3 ) );
+   blue = static_cast< char >( hb_parni( 4 ) );
 
 #if defined( __DJGPP__ )
    {
@@ -165,7 +165,7 @@ HB_FUNC( VIDEOTYPE )
 HB_FUNC( SETFONT )
 {
    const char * font = hb_parcx( 1 );
-   unsigned len = ( unsigned ) hb_parclen( 1 );
+   unsigned len = static_cast< unsigned >( hb_parclen( 1 ) );
    int area = hb_parni( 2 );
    int offset = 0;
    int count = 256;

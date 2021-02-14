@@ -132,17 +132,17 @@ static int _datamatrix_encode( const char * szCode, int iLen, unsigned char * pC
    {
       if( _datamatrix_isdigit( szCode[ i ] ) && i < iLen - 1 && _datamatrix_isdigit( szCode[ i + 1 ] ) )
       {
-         pCW[ iPos++ ] = ( unsigned char ) ( ( szCode[ i ] - '0' ) * 10 + szCode[ i + 1 ] - '0' + PAIR_OF_DIGITS );
+         pCW[ iPos++ ] = static_cast< unsigned char >( ( szCode[ i ] - '0' ) * 10 + szCode[ i + 1 ] - '0' + PAIR_OF_DIGITS );
          i++;
       }
-      else if( ( unsigned char ) szCode[ i ] <= 127 )
+      else if( static_cast< unsigned char >( szCode[ i ] ) <= 127 )
       {
-         pCW[ iPos++ ] = ( unsigned char ) szCode[ i ] + 1;
+         pCW[ iPos++ ] = static_cast< unsigned char >( szCode[ i ] ) + 1;
       }
       else
       {
          pCW[ iPos++ ] = SHIFT_EXTENDED_ASCII;
-         pCW[ iPos++ ] = ( unsigned char ) szCode[ i ] - 127;
+         pCW[ iPos++ ] = static_cast< unsigned char >( szCode[ i ] ) - 127;
       }
    }
    return iPos;
@@ -162,12 +162,12 @@ static void _reed_solomon_encode( unsigned char * pData, int iDataLen, unsigned 
       for( j = iECLen - 1; j > 0; j-- )
       {
          if( iM && pPoly[ j ] )
-            pEC[ j ] = ( unsigned char ) ( pEC[ j - 1 ] ^ pExp[ ( pLog[ iM ] + pLog[ pPoly[ j ] ] ) % iMod ] );
+            pEC[ j ] = static_cast< unsigned char >( pEC[ j - 1 ] ^ pExp[ ( pLog[ iM ] + pLog[ pPoly[ j ] ] ) % iMod ] );
          else
             pEC[ j ] = pEC[ j - 1 ];
       }
       if( iM && pPoly[ 0 ] )
-         pEC[ 0 ] = ( unsigned char ) ( pExp[ ( pLog[ iM ] + pLog[ pPoly[ 0 ] ] ) % iMod ] );
+         pEC[ 0 ] = static_cast< unsigned char >( pExp[ ( pLog[ iM ] + pLog[ pPoly[ 0 ] ] ) % iMod ] );
       else
          pEC[ 0 ] = 0;
    }

@@ -1064,7 +1064,7 @@ static void hb_compPCodeEnumScanLocals( PHB_HFUNC pFunc, PHB_OPT_LOCAL pLocals )
          case HB_P_POPLOCALNEAR:
          case HB_P_PUSHLOCALNEAR:
          case HB_P_LOCALNEARADDINT:
-            isVar = ( signed char ) pFunc->pCode[ nPos + 1 ];
+            isVar = static_cast< signed char >( pFunc->pCode[ nPos + 1 ] );
             break;
 
          case HB_P_LOCALNAME:
@@ -1217,7 +1217,7 @@ static void hb_compPCodeEnumSelfifyLocal( PHB_HFUNC pFunc, HB_SHORT isLocal )
       switch( pFunc->pCode[ nPos ] )
       {
          case HB_P_PUSHLOCALNEAR:
-            if( isLocal == ( signed char ) pFunc->pCode[ nPos + 1 ] )
+            if( isLocal == static_cast< signed char >( pFunc->pCode[ nPos + 1 ] ) )
             {
                pFunc->pCode[ nPos ] = HB_P_PUSHSELF;
                hb_compNOOPfill( pFunc, nPos + 1, 1, HB_FALSE, HB_FALSE );
@@ -1233,7 +1233,7 @@ static void hb_compPCodeEnumSelfifyLocal( PHB_HFUNC pFunc, HB_SHORT isLocal )
             break;
 
          case HB_P_POPLOCALNEAR:
-            if( isLocal == ( signed char ) pFunc->pCode[ nPos + 1 ] )
+            if( isLocal == static_cast< signed char >( pFunc->pCode[ nPos + 1 ] ) )
             {
                assert( nPos > 0 && pFunc->pCode[ nLastPos ] == HB_P_PUSHSELF &&
                        ! hb_compHasJump( pFunc, nPos ) );
@@ -1512,7 +1512,7 @@ static void hb_compPCodeEnumRenumberLocals( PHB_HFUNC pFunc, PHB_OPT_LOCAL pLoca
          case HB_P_LOCALNEARADDINT:
          {
             HB_BYTE * pVar = &pFunc->pCode[ nPos + 1 ];
-            HB_SHORT isVar = ( signed char ) pVar[ 0 ];
+            HB_SHORT isVar = static_cast< signed char >( pVar[ 0 ] );
 
             if( isVar > 0 && pLocals[ isVar - 1 ].isNumber != isVar )
             {

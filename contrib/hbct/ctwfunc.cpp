@@ -438,7 +438,7 @@ HB_FUNC( WLIST )
          pszWindows[ iFrom++ ] = 0;
 
       for( i = 0; i < iWindows; ++i )
-         pszWindows[ iFrom + i ] = ( char ) piStack[ i ];
+         pszWindows[ iFrom + i ] = static_cast< char >( piStack[ i ] );
 
       hb_retclen_buffer( pszWindows, iWindows + 1 );
    }

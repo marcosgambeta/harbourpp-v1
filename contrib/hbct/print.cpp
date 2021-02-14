@@ -132,7 +132,7 @@ HB_FUNC( PRINTSEND )
 
    if( HB_ISNUM( 1 ) )
    {
-      szChr[ 0 ] = ( char ) hb_parni( 1 );
+      szChr[ 0 ] = static_cast< char >( hb_parni( 1 ) );
       szStr = szChr;
       nLen = 1;
    }
@@ -143,7 +143,7 @@ HB_FUNC( PRINTSEND )
    }
 
    if( HB_ISNUM( 2 ) )
-      szPort[ 3 ] = ( char ) hb_parni( 2 ) + '0';
+      szPort[ 3 ] = static_cast< char >( hb_parni( 2 ) ) + '0';
 
    if( nLen )
    {

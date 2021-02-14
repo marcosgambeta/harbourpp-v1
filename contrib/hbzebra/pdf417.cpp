@@ -575,7 +575,7 @@ static int _pdf417_isdigit( char ch  )
 
 static int _pdf417_isalpha( char ch  )
 {
-   return ( ' ' <= ch && ( unsigned char ) ch <= 127 ) || ch == '\t' || ch == '\n' || ch == '\r';
+   return ( ' ' <= ch && static_cast< unsigned char >( ch ) <= 127 ) || ch == '\t' || ch == '\n' || ch == '\r';
 }
 
 static int _pdf417_upperno( char ch  )
@@ -729,17 +729,17 @@ static int _pdf417_encode_byte( const char * szCode, int iLen, int * pCW, int iP
    {
       if( iLen - i >= 6 )
       {
-         ill =  ( unsigned char ) szCode[ i++ ];
+         ill =  static_cast< unsigned char >( szCode[ i++ ] );
          ill <<= 8;
-         ill += ( unsigned char ) szCode[ i++ ];
+         ill += static_cast< unsigned char >( szCode[ i++ ] );
          ill <<= 8;
-         ill += ( unsigned char ) szCode[ i++ ];
+         ill += static_cast< unsigned char >( szCode[ i++ ] );
          ill <<= 8;
-         ill += ( unsigned char ) szCode[ i++ ];
+         ill += static_cast< unsigned char >( szCode[ i++ ] );
          ill <<= 8;
-         ill += ( unsigned char ) szCode[ i++ ];
+         ill += static_cast< unsigned char >( szCode[ i++ ] );
          ill <<= 8;
-         ill += ( unsigned char ) szCode[ i++ ];
+         ill += static_cast< unsigned char >( szCode[ i++ ] );
 
          if( iPos + 5 > MAX_CODEWORD_COUNT )
             return -1;

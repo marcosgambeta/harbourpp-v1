@@ -58,7 +58,7 @@
    #include <windows.h>
    #include "hbwinuni.h"
    #if ! defined( INVALID_FILE_ATTRIBUTES )
-      #define INVALID_FILE_ATTRIBUTES  ( ( DWORD ) -1 )
+      #define INVALID_FILE_ATTRIBUTES  ( static_cast< DWORD >( -1 ) )
    #endif
    #if ! defined( FILE_ATTRIBUTE_DEVICE )
       #define FILE_ATTRIBUTE_DEVICE    0x00000040
@@ -164,7 +164,7 @@ PHB_FNAME hb_fsFNameSplit( const char * pszFileName )
       HB_ISIZ iSize, iPos;
 
       iPos = iSize = hb_strnlen( pszFileName, HB_PATH_MAX - 1 );
-      cDirSep = ( char ) hb_setGetDirSeparator();
+      cDirSep = static_cast< char >( hb_setGetDirSeparator() );
 
       pszPos = pFileName->szBuffer;
 
@@ -251,7 +251,7 @@ char * hb_fsFNameMerge( char * pszFileName, PHB_FNAME pFileName )
       char cDirSep;
 
       /* dir separator set by user */
-      cDirSep = ( char ) hb_setGetDirSeparator();
+      cDirSep = static_cast< char >( hb_setGetDirSeparator() );
 
       /* Set the result to an empty string */
       pszFileName[ 0 ] = '\0';
@@ -357,7 +357,7 @@ HB_ULONG hb_fsOS2DosOpen( const char * pszFileName,
                           HB_ULONG fsOpenFlags, HB_ULONG fsOpenMode )
 {
    ULONG cbMaxFH = 20;
-   HFILE hFile = ( HFILE ) -1;
+   HFILE hFile = static_cast< HFILE >( -1 );
    APIRET ret;
 
    for( ;; )
@@ -395,7 +395,7 @@ HB_ULONG hb_fsOS2DosOpenL( const char * pszFileName,
 {
    ULONG cbMaxFH = 20;
    char * pszFree;
-   HFILE hFile = ( HFILE ) -1;
+   HFILE hFile = static_cast< HFILE >( -1 );
    APIRET ret;
 
    pszFileName = hb_fsNameConv( pszFileName, &pszFree );
@@ -411,7 +411,7 @@ HB_ULONG hb_fsOS2DosOpenL( const char * pszFileName,
                            fsOpenFlags, fsOpenMode, NULL );
       else
          ret = DosOpen( ( PSZ ) pszFileName, &hFile, pulAction,
-                        ( ULONG ) nInitSize, ulAttribute,
+                        static_cast< ULONG >( nInitSize ), ulAttribute,
                         fsOpenFlags, fsOpenMode, NULL );
       if( ret == ERROR_TOO_MANY_OPEN_FILES )
       {
@@ -448,7 +448,7 @@ HB_ULONG hb_fsOS2DosSetFileLocksL( HB_FHANDLE hFile,
    APIRET ret;
 
    if( hb_isWSeB() )
-      ret = s_DosSetFileLocksL( ( HFILE ) hFile, ( PFILELOCKL ) pflUnlock,
+      ret = s_DosSetFileLocksL( static_cast< HFILE >( hFile ), ( PFILELOCKL ) pflUnlock,
                                 ( PFILELOCKL ) pflLock, timeout, flags );
    else
    {
@@ -456,12 +456,12 @@ HB_ULONG hb_fsOS2DosSetFileLocksL( HB_FHANDLE hFile,
       PFILELOCKL pflU = ( PFILELOCKL ) pflUnlock,
                  pflL = ( PFILELOCKL ) pflLock;
 
-      flUnlock.lOffset = ( LONG ) pflU->lOffset;
-      flUnlock.lRange  = ( LONG ) pflU->lRange;
-      flLock.lOffset   = ( LONG ) pflL->lOffset;
-      flLock.lRange    = ( LONG ) pflL->lRange;
+      flUnlock.lOffset = static_cast< LONG >( pflU->lOffset );
+      flUnlock.lRange  = static_cast< LONG >( pflU->lRange );
+      flLock.lOffset   = static_cast< LONG >( pflL->lOffset );
+      flLock.lRange    = static_cast< LONG >( pflL->lRange );
 
-      ret = DosSetFileLocks( ( HFILE ) hFile, &flUnlock, &flLock, timeout, flags );
+      ret = DosSetFileLocks( static_cast< HFILE >( hFile ), &flUnlock, &flLock, timeout, flags );
    }
    hb_fsSetError( ( HB_ERRCODE ) ret );
 
@@ -476,13 +476,13 @@ HB_ULONG hb_fsOS2DosSetFilePtrL( HB_FHANDLE hFile, HB_FOFFSET nPos,
    if( hb_isWSeB() )
    {
       LONGLONG llCurPos = 0;
-      ret = s_DosSetFilePtrL( ( HFILE ) hFile, ( LONGLONG ) nPos, method, &llCurPos );
+      ret = s_DosSetFilePtrL( static_cast< HFILE >( hFile ), ( LONGLONG ) nPos, method, &llCurPos );
       *pnCurPos = ( HB_FOFFSET ) llCurPos;
    }
    else
    {
       ULONG ulCurPos = 0;
-      ret = DosSetFilePtr( ( HFILE ) hFile, ( LONG ) nPos, method, &ulCurPos );
+      ret = DosSetFilePtr( static_cast< HFILE >( hFile ), static_cast< LONG >( nPos ), method, &ulCurPos );
       *pnCurPos = ( HB_FOFFSET ) ulCurPos;
    }
    hb_fsSetError( ( HB_ERRCODE ) ret );
@@ -495,9 +495,9 @@ HB_ULONG hb_fsOS2DosSetFileSizeL( HB_FHANDLE hFile, HB_FOFFSET nSize )
    APIRET ret;
 
    if( hb_isWSeB() )
-      ret = s_DosSetFileSizeL( ( HFILE ) hFile, ( LONGLONG ) nSize );
+      ret = s_DosSetFileSizeL( static_cast< HFILE >( hFile ), ( LONGLONG ) nSize );
    else
-      ret = DosSetFileSize( ( HFILE ) hFile, ( ULONG ) nSize );
+      ret = DosSetFileSize( static_cast< HFILE >( hFile ), static_cast< ULONG >( nSize ) );
 
    hb_fsSetError( ( HB_ERRCODE ) ret );
 

@@ -119,7 +119,7 @@ static HB_SIZE s_gzip_write( PHB_FILE pFile, HB_MAXINT nTimeout )
    {
       if( nWritten < nSize )
          memmove( pFile->buffer, pFile->buffer + nWritten, nSize - nWritten );
-      pFile->gz.avail_out += ( uInt ) nWritten;
+      pFile->gz.avail_out += static_cast< uInt >( nWritten );
       pFile->gz.next_out -= nWritten;
    }
 
@@ -411,7 +411,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize,
          nTimeout = pFile->nTimeout;
 
       pFile->gz.next_out  = ( Bytef * ) buffer;
-      pFile->gz.avail_out = ( uInt ) nSize;
+      pFile->gz.avail_out = static_cast< uInt >( nSize );
       pFile->gz.total_out = 0;
 
       while( pFile->gz.avail_out )
@@ -423,7 +423,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize,
             if( nResult == 0 || nResult == ( HB_SIZE ) - 1 )
                break;
             pFile->gz.next_in = ( Bytef * ) pFile->buffer;
-            pFile->gz.avail_in = ( uInt ) nResult;
+            pFile->gz.avail_in = static_cast< uInt >( nResult );
          }
          else if( err != Z_OK )
          {
@@ -475,7 +475,7 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * buffer, HB_SIZE nSize,
          nTimeout = pFile->nTimeout;
 
       pFile->gz.next_in  = ( Bytef * ) HB_UNCONST( buffer );
-      pFile->gz.avail_in = ( uInt ) nSize;
+      pFile->gz.avail_in = static_cast< uInt >( nSize );
 
       while( pFile->gz.avail_in )
       {

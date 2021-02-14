@@ -308,7 +308,7 @@ static HB_BOOL file_read( FILE * stream, char * string, int * iCharCount )
       else
       {
          if( cnbr < MAX_READ && ch != '\r' )
-            string[ cnbr++ ] = ( char ) ch;
+            string[ cnbr++ ] = static_cast< char >( ch );
       }
 
       if( cnbr >= MAX_READ )
@@ -630,7 +630,7 @@ HB_FUNC( FPARSELINE )
    {
       const char * szDelim = hb_parc( 2 );
       int          iWords  = 0;
-      hb_ParseLine( pArray, szText, szDelim ? ( unsigned char ) *szDelim : ',', &iWords );
+      hb_ParseLine( pArray, szText, szDelim ? static_cast< unsigned char >( *szDelim ) : ',', &iWords );
       nWords = iWords;
    }
 

@@ -746,7 +746,7 @@ static PHB_ITEM hb_nsxKeyGetItem( PHB_ITEM pItem, LPKEYINFO pKey,
             break;
          case 'D':
             HB_ORD2DBL( pKey->val, &d );
-            pItem = hb_itemPutDL( pItem, ( long ) d );
+            pItem = hb_itemPutDL( pItem, static_cast< long >( d ) );
             break;
          case 'T':
             HB_ORD2DBL( pKey->val, &d );
@@ -892,7 +892,7 @@ static int hb_nsxValCompare( LPTAGINFO pTag, const HB_UCHAR * val1, int len1,
 
       HB_ORD2DBL( val1, &d1 );
       HB_ORD2DBL( val2, &d2 );
-      l = ( long ) d1 - ( long ) d2;
+      l = static_cast< long >( d1 ) - static_cast< long >( d2 );
       if( l < 0 )
          iResult = -1;
       else if( l > 0 )
@@ -7548,7 +7548,7 @@ static HB_ERRCODE hb_nsxOrderInfo( NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
          case DBOI_KEYTYPE:
             {
                char szType[ 2 ];
-               szType[ 0 ] = ( char ) pTag->KeyType;
+               szType[ 0 ] = static_cast< char >( pTag->KeyType );
                szType[ 1 ] = 0;
                pInfo->itmResult = hb_itemPutC( pInfo->itmResult, szType );
             }

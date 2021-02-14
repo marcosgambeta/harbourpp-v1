@@ -1095,7 +1095,7 @@ static int addKeyMap( InOutBase * ioBase, int nKey, const char * cdesc )
    if( cdesc == NULL )
       return ret;
 
-   c   = ( unsigned char ) cdesc[ i++ ];
+   c   = static_cast< unsigned char >( cdesc[ i++ ] );
    ptr = &ioBase->pKeyTab;
 
    while( c )
@@ -1110,7 +1110,7 @@ static int addKeyMap( InOutBase * ioBase, int nKey, const char * cdesc )
       }
       if( ( *ptr )->ch == c )
       {
-         c = ( unsigned char ) cdesc[ i++ ];
+         c = static_cast< unsigned char >( cdesc[ i++ ] );
          if( c )
             ptr = &( ( *ptr )->nextCh );
          else
@@ -1130,14 +1130,14 @@ static int removeKeyMap( InOutBase * ioBase, const char * cdesc )
    int ret = K_UNDEF, i = 0, c;
    keyTab ** ptr;
 
-   c = ( unsigned char ) cdesc[ i++ ];
+   c = static_cast< unsigned char >( cdesc[ i++ ] );
    ptr = &ioBase->pKeyTab;
 
    while( c && *ptr != NULL )
    {
       if( ( *ptr )->ch == c )
       {
-         c = ( unsigned char ) cdesc[ i++ ];
+         c = static_cast< unsigned char >( cdesc[ i++ ] );
          if( ! c )
          {
             ret = ( *ptr )->key;
@@ -1795,8 +1795,8 @@ static void setDispTrans( InOutBase * ioBase, PHB_CODEPAGE cdpHost, PHB_CODEPAGE
       {
          if( hb_cdpIsAlpha( cdpHost, i ) )
          {
-            unsigned char uc = ( unsigned char )
-                               hb_cdpTranslateDispChar( i, cdpHost, cdpTerm );
+            unsigned char uc = static_cast< unsigned char >(
+                               hb_cdpTranslateDispChar( i, cdpHost, cdpTerm ) );
 
             ioBase->std_chmap[ i ] = uc | A_NORMAL;
             if( transBox )

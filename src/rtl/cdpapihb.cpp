@@ -220,7 +220,7 @@ HB_FUNC( HB_UTF8ASC )
 
       while( nLen )
       {
-         if( ! hb_cdpUTF8ToU16NextChar( ( unsigned char ) *pszString, &n, &wc ) )
+         if( ! hb_cdpUTF8ToU16NextChar( static_cast< unsigned char >( *pszString ), &n, &wc ) )
             break;
          if( n == 0 )
             break;

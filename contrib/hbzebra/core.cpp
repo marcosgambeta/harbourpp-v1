@@ -132,7 +132,7 @@ void hb_bitbuffer_cat_int( PHB_BITBUFFER pBitBuffer, int iValue, int iLen )
       pBitBuffer->nAlloc = nNewAlloc;
    }
 
-   if( ( unsigned int ) iLen > sizeof( int ) * 8 )
+   if( static_cast< unsigned int >( iLen ) > sizeof( int ) * 8 )
       iLen = sizeof( int ) * 8;
 
    /* TODO: optimize */
@@ -153,7 +153,7 @@ void hb_bitbuffer_cat_int_rev( PHB_BITBUFFER pBitBuffer, int iValue, int iLen )
       pBitBuffer->nAlloc = nNewAlloc;
    }
 
-   if( ( unsigned int ) iLen > sizeof( int ) * 8 )
+   if( static_cast< unsigned int >( iLen ) > sizeof( int ) * 8 )
       iLen = sizeof( int ) * 8;
 
    /* TODO: optimize */

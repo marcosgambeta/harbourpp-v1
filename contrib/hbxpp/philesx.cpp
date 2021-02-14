@@ -54,7 +54,7 @@ HB_FUNC( CURDRIVE )
    char szCurDrive[ 1 ];
    const char * szDrive;
 
-   szCurDrive[ 0 ] = ( ( char ) hb_fsCurDrv() ) + 'A';
+   szCurDrive[ 0 ] = ( static_cast< char >( hb_fsCurDrv() ) ) + 'A';
    hb_retclen( szCurDrive, 1 );
 
    szDrive = hb_parc( 1 );

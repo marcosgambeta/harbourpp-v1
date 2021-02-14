@@ -53,13 +53,13 @@
  */
 HB_FUNC( HPDF_LINKANNOT_SETHIGHLIGHTMODE )
 {
-   hb_retnl( ( long ) HPDF_LinkAnnot_SetHighlightMode( ( HPDF_Annotation ) hb_parptr( 1 ), ( HPDF_AnnotHighlightMode ) hb_parni( 2 ) ) );
+   hb_retnl( static_cast< long >( HPDF_LinkAnnot_SetHighlightMode( ( HPDF_Annotation ) hb_parptr( 1 ), ( HPDF_AnnotHighlightMode ) hb_parni( 2 ) ) ) );
 }
 
 /* HPDF_LinkAnnot_SetBorderStyle( hAnnot, nWidth, nDashOn, nDashOff ) --> hStatus */
 HB_FUNC( HPDF_LINKANNOT_SETBORDERSTYLE )
 {
-   hb_retnl( ( long ) HPDF_LinkAnnot_SetBorderStyle( ( HPDF_Annotation ) hb_parptr( 1 ), ( HPDF_REAL ) hb_parnd( 2 ), ( HPDF_UINT16 ) hb_parni( 3 ), ( HPDF_UINT16 ) hb_parni( 4 ) ) );
+   hb_retnl( static_cast< long >( HPDF_LinkAnnot_SetBorderStyle( ( HPDF_Annotation ) hb_parptr( 1 ), ( HPDF_REAL ) hb_parnd( 2 ), ( HPDF_UINT16 ) hb_parni( 3 ), ( HPDF_UINT16 ) hb_parni( 4 ) ) ) );
 }
 
 /* HPDF_TextAnnot_SetIcon( hAnnot, nIconID ) --> hStatus
@@ -74,13 +74,13 @@ HB_FUNC( HPDF_LINKANNOT_SETBORDERSTYLE )
  */
 HB_FUNC( HPDF_TEXTANNOT_SETICON )
 {
-   hb_retnl( ( long ) HPDF_TextAnnot_SetIcon( ( HPDF_Annotation ) hb_parptr( 1 ), ( HPDF_AnnotIcon ) hb_parni( 2 ) ) );
+   hb_retnl( static_cast< long >( HPDF_TextAnnot_SetIcon( ( HPDF_Annotation ) hb_parptr( 1 ), ( HPDF_AnnotIcon ) hb_parni( 2 ) ) ) );
 }
 
 /* HPDF_TextAnnot_SetOpened( hAnnot, lOpened ) --> hStatus */
 HB_FUNC( HPDF_TEXTANNOT_SETOPENED )
 {
-   hb_retnl( ( long ) HPDF_TextAnnot_SetOpened( ( HPDF_Annotation ) hb_parptr( 1 ), hb_parl( 2 ) ? HPDF_TRUE : HPDF_FALSE ) );
+   hb_retnl( static_cast< long >( HPDF_TextAnnot_SetOpened( ( HPDF_Annotation ) hb_parptr( 1 ), hb_parl( 2 ) ? HPDF_TRUE : HPDF_FALSE ) ) );
 }
 
 /* HPDF_EXPORT(HPDF_Annotation)
@@ -329,7 +329,7 @@ HB_FUNC( HPDF_ANNOT_SETRGBCOLOR )
    rgb.g = ( HPDF_REAL ) hb_parvnd( 2, 2 );
    rgb.b = ( HPDF_REAL ) hb_parvnd( 2, 3 );
 
-   hb_retnl( ( long ) HPDF_Annot_SetRGBColor( ( HPDF_Annotation ) hb_parptr( 1 ), rgb ) );
+   hb_retnl( static_cast< long >( HPDF_Annot_SetRGBColor( ( HPDF_Annotation ) hb_parptr( 1 ), rgb ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -348,7 +348,7 @@ HB_FUNC( HPDF_ANNOT_SETCMYKCOLOR )
    cmyk.y = ( HPDF_REAL ) hb_parvnd( 2, 3 );
    cmyk.k = ( HPDF_REAL ) hb_parvnd( 2, 4 );
 
-   hb_retnl( ( long ) HPDF_Annot_SetCMYKColor( ( HPDF_Annotation ) hb_parptr( 1 ), cmyk ) );
+   hb_retnl( static_cast< long >( HPDF_Annot_SetCMYKColor( ( HPDF_Annotation ) hb_parptr( 1 ), cmyk ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -360,7 +360,7 @@ HB_FUNC( HPDF_ANNOT_SETCMYKCOLOR )
 HB_FUNC( HPDF_ANNOT_SETGRAYCOLOR )
 {
 #if HB_HPDF_VERS( 2, 2, 0 )
-   hb_retnl( ( long ) HPDF_Annot_SetGrayColor( ( HPDF_Annotation ) hb_parptr( 1 ), ( HPDF_REAL ) hb_parnd( 2 ) ) );
+   hb_retnl( static_cast< long >( HPDF_Annot_SetGrayColor( ( HPDF_Annotation ) hb_parptr( 1 ), ( HPDF_REAL ) hb_parnd( 2 ) ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -372,7 +372,7 @@ HB_FUNC( HPDF_ANNOT_SETGRAYCOLOR )
 HB_FUNC( HPDF_ANNOT_SETNOCOLOR )
 {
 #if HB_HPDF_VERS( 2, 2, 0 )
-   hb_retnl( ( long ) HPDF_Annot_SetNoColor( ( HPDF_Annotation ) hb_parptr( 1 ) ) );
+   hb_retnl( static_cast< long >( HPDF_Annot_SetNoColor( ( HPDF_Annotation ) hb_parptr( 1 ) ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -384,7 +384,7 @@ HB_FUNC( HPDF_ANNOT_SETNOCOLOR )
 HB_FUNC( HPDF_MARKUPANNOT_SETTITLE )
 {
 #if HB_HPDF_VERS( 2, 2, 0 )
-   hb_retnl( ( long ) HPDF_MarkupAnnot_SetTitle( ( HPDF_Annotation ) hb_parptr( 1 ), hb_parc( 2 ) ) );
+   hb_retnl( static_cast< long >( HPDF_MarkupAnnot_SetTitle( ( HPDF_Annotation ) hb_parptr( 1 ), hb_parc( 2 ) ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -396,7 +396,7 @@ HB_FUNC( HPDF_MARKUPANNOT_SETTITLE )
 HB_FUNC( HPDF_MARKUPANNOT_SETSUBJECT )
 {
 #if HB_HPDF_VERS( 2, 2, 0 )
-   hb_retnl( ( long ) HPDF_MarkupAnnot_SetSubject( ( HPDF_Annotation ) hb_parptr( 1 ), hb_parc( 2 ) ) );
+   hb_retnl( static_cast< long >( HPDF_MarkupAnnot_SetSubject( ( HPDF_Annotation ) hb_parptr( 1 ), hb_parc( 2 ) ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -420,7 +420,7 @@ HB_FUNC( HPDF_MARKUPANNOT_SETCREATIONDATE )
    date.seconds = hb_parvni( 2, 6 );
    date.ind     = ' ';
 
-   hb_retnl( ( long ) HPDF_MarkupAnnot_SetCreationDate( ( HPDF_Annotation ) hb_parptr( 1 ), date ) );
+   hb_retnl( static_cast< long >( HPDF_MarkupAnnot_SetCreationDate( ( HPDF_Annotation ) hb_parptr( 1 ), date ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -432,7 +432,7 @@ HB_FUNC( HPDF_MARKUPANNOT_SETCREATIONDATE )
 HB_FUNC( HPDF_MARKUPANNOT_SETTRANSPARENCY )
 {
 #if HB_HPDF_VERS( 2, 2, 0 )
-   hb_retnl( ( long ) HPDF_MarkupAnnot_SetTransparency( ( HPDF_Annotation ) hb_parptr( 1 ), ( HPDF_REAL ) hb_parnd( 2 ) ) );
+   hb_retnl( static_cast< long >( HPDF_MarkupAnnot_SetTransparency( ( HPDF_Annotation ) hb_parptr( 1 ), ( HPDF_REAL ) hb_parnd( 2 ) ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -444,7 +444,7 @@ HB_FUNC( HPDF_MARKUPANNOT_SETTRANSPARENCY )
 HB_FUNC( HPDF_MARKUPANNOT_SETINTENT )
 {
 #if HB_HPDF_VERS( 2, 2, 0 )
-   hb_retnl( ( long ) HPDF_MarkupAnnot_SetIntent( ( HPDF_Annotation ) hb_parptr( 1 ), ( HPDF_AnnotIntent ) hb_parni( 2 ) ) );
+   hb_retnl( static_cast< long >( HPDF_MarkupAnnot_SetIntent( ( HPDF_Annotation ) hb_parptr( 1 ), ( HPDF_AnnotIntent ) hb_parni( 2 ) ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -456,7 +456,7 @@ HB_FUNC( HPDF_MARKUPANNOT_SETINTENT )
 HB_FUNC( HPDF_MARKUPANNOT_SETPOPUP )
 {
 #if HB_HPDF_VERS( 2, 2, 0 )
-   hb_retnl( ( long ) HPDF_MarkupAnnot_SetPopup( ( HPDF_Annotation ) hb_parptr( 1 ), ( HPDF_Annotation ) hb_parptr( 2 ) ) );
+   hb_retnl( static_cast< long >( HPDF_MarkupAnnot_SetPopup( ( HPDF_Annotation ) hb_parptr( 1 ), ( HPDF_Annotation ) hb_parptr( 2 ) ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -475,7 +475,7 @@ HB_FUNC( HPDF_MARKUPANNOT_SETRECTDIFF )
    rc.right  = ( HPDF_REAL ) hb_parvnd( 2, 3 );
    rc.bottom = ( HPDF_REAL ) hb_parvnd( 2, 4 );
 
-   hb_retnl( ( long ) HPDF_MarkupAnnot_SetRectDiff( ( HPDF_Annotation ) hb_parptr( 1 ), rc ) );
+   hb_retnl( static_cast< long >( HPDF_MarkupAnnot_SetRectDiff( ( HPDF_Annotation ) hb_parptr( 1 ), rc ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -487,7 +487,7 @@ HB_FUNC( HPDF_MARKUPANNOT_SETRECTDIFF )
 HB_FUNC( HPDF_MARKUPANNOT_SETCLOUDEFFECT )
 {
 #if HB_HPDF_VERS( 2, 2, 0 )
-   hb_retnl( ( long ) HPDF_MarkupAnnot_SetCloudEffect( ( HPDF_Annotation ) hb_parptr( 1 ), ( HPDF_INT ) hb_parni( 2 ) ) );
+   hb_retnl( static_cast< long >( HPDF_MarkupAnnot_SetCloudEffect( ( HPDF_Annotation ) hb_parptr( 1 ), ( HPDF_INT ) hb_parni( 2 ) ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -505,7 +505,7 @@ HB_FUNC( HPDF_MARKUPANNOT_SETINTERIORRGBCOLOR )
    rgb.g = ( HPDF_REAL ) hb_parvnd( 2, 2 );
    rgb.b = ( HPDF_REAL ) hb_parvnd( 2, 3 );
 
-   hb_retnl( ( long ) HPDF_MarkupAnnot_SetInteriorRGBColor( ( HPDF_Annotation ) hb_parptr( 1 ), rgb ) );
+   hb_retnl( static_cast< long >( HPDF_MarkupAnnot_SetInteriorRGBColor( ( HPDF_Annotation ) hb_parptr( 1 ), rgb ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -524,7 +524,7 @@ HB_FUNC( HPDF_MARKUPANNOT_SETINTERIORCMYKCOLOR )
    cmyk.y = ( HPDF_REAL ) hb_parvnd( 2, 3 );
    cmyk.k = ( HPDF_REAL ) hb_parvnd( 2, 4 );
 
-   hb_retnl( ( long ) HPDF_MarkupAnnot_SetInteriorCMYKColor( ( HPDF_Annotation ) hb_parptr( 1 ), cmyk ) );
+   hb_retnl( static_cast< long >( HPDF_MarkupAnnot_SetInteriorCMYKColor( ( HPDF_Annotation ) hb_parptr( 1 ), cmyk ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -536,7 +536,7 @@ HB_FUNC( HPDF_MARKUPANNOT_SETINTERIORCMYKCOLOR )
 HB_FUNC( HPDF_MARKUPANNOT_SETINTERIORGRAYCOLOR )
 {
 #if HB_HPDF_VERS( 2, 2, 0 )
-   hb_retnl( ( long ) HPDF_MarkupAnnot_SetInteriorGrayColor( ( HPDF_Annotation ) hb_parptr( 1 ), ( HPDF_REAL ) hb_parnd( 2 ) ) );
+   hb_retnl( static_cast< long >( HPDF_MarkupAnnot_SetInteriorGrayColor( ( HPDF_Annotation ) hb_parptr( 1 ), ( HPDF_REAL ) hb_parnd( 2 ) ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -548,7 +548,7 @@ HB_FUNC( HPDF_MARKUPANNOT_SETINTERIORGRAYCOLOR )
 HB_FUNC( HPDF_MARKUPANNOT_SETINTERIORTRANSPARENT )
 {
 #if HB_HPDF_VERS( 2, 2, 0 )
-   hb_retnl( ( long ) HPDF_MarkupAnnot_SetInteriorTransparent( ( HPDF_Annotation ) hb_parptr( 1 ) ) );
+   hb_retnl( static_cast< long >( HPDF_MarkupAnnot_SetInteriorTransparent( ( HPDF_Annotation ) hb_parptr( 1 ) ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -577,7 +577,7 @@ HB_FUNC( HPDF_TEXTMARKUPANNOT_SETQUADPOINTS )
    p4.x = ( HPDF_REAL ) hb_parvnd( 5, 1 );
    p4.y = ( HPDF_REAL ) hb_parvnd( 5, 2 );
 
-   hb_retnl( ( long ) HPDF_TextMarkupAnnot_SetQuadPoints( ( HPDF_Annotation ) hb_parptr( 1 ), p1, p2, p3, p4 ) );
+   hb_retnl( static_cast< long >( HPDF_TextMarkupAnnot_SetQuadPoints( ( HPDF_Annotation ) hb_parptr( 1 ), p1, p2, p3, p4 ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -592,7 +592,7 @@ HB_FUNC( HPDF_TEXTMARKUPANNOT_SETQUADPOINTS )
 HB_FUNC( HPDF_ANNOT_SET3DVIEW )
 {
 #if HB_HPDF_VERS( 2, 2, 0 )
-   hb_retnl( ( long ) HPDF_Annot_Set3DView( ( HPDF_MMgr ) hb_parptr( 1 ), ( HPDF_Annotation ) hb_parptr( 2 ), ( HPDF_Annotation ) hb_parptr( 3 ), ( HPDF_Dict ) hb_parptr( 4 ) ) );
+   hb_retnl( static_cast< long >( HPDF_Annot_Set3DView( ( HPDF_MMgr ) hb_parptr( 1 ), ( HPDF_Annotation ) hb_parptr( 2 ), ( HPDF_Annotation ) hb_parptr( 3 ), ( HPDF_Dict ) hb_parptr( 4 ) ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -605,7 +605,7 @@ HB_FUNC( HPDF_ANNOT_SET3DVIEW )
 HB_FUNC( HPDF_POPUPANNOT_SETOPENED )
 {
 #if HB_HPDF_VERS( 2, 2, 0 )
-   hb_retnl( ( long ) HPDF_PopupAnnot_SetOpened( ( HPDF_Annotation ) hb_parptr( 1 ), ( HPDF_BOOL ) hb_parl( 2 ) ) );
+   hb_retnl( static_cast< long >( HPDF_PopupAnnot_SetOpened( ( HPDF_Annotation ) hb_parptr( 1 ), ( HPDF_BOOL ) hb_parl( 2 ) ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -617,7 +617,7 @@ HB_FUNC( HPDF_POPUPANNOT_SETOPENED )
 HB_FUNC( HPDF_FREETEXTANNOT_SETLINEENDINGSTYLE )
 {
 #if HB_HPDF_VERS( 2, 2, 0 )
-   hb_retnl( ( long ) HPDF_FreeTextAnnot_SetLineEndingStyle( ( HPDF_Annotation ) hb_parptr( 1 ), ( HPDF_LineAnnotEndingStyle ) hb_parni( 2 ), ( HPDF_LineAnnotEndingStyle ) hb_parni( 3 ) ) );
+   hb_retnl( static_cast< long >( HPDF_FreeTextAnnot_SetLineEndingStyle( ( HPDF_Annotation ) hb_parptr( 1 ), ( HPDF_LineAnnotEndingStyle ) hb_parni( 2 ), ( HPDF_LineAnnotEndingStyle ) hb_parni( 3 ) ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -642,7 +642,7 @@ HB_FUNC( HPDF_FREETEXTANNOT_SET3POINTCALLOUTLINE )
    p3.x = ( HPDF_REAL ) hb_parvnd( 4, 1 );
    p3.y = ( HPDF_REAL ) hb_parvnd( 4, 2 );
 
-   hb_retnl( ( long ) HPDF_FreeTextAnnot_Set3PointCalloutLine( ( HPDF_Annotation ) hb_parptr( 1 ), p1, p2, p3 ) );
+   hb_retnl( static_cast< long >( HPDF_FreeTextAnnot_Set3PointCalloutLine( ( HPDF_Annotation ) hb_parptr( 1 ), p1, p2, p3 ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -663,7 +663,7 @@ HB_FUNC( HPDF_FREETEXTANNOT_SET2POINTCALLOUTLINE )
    p2.x = ( HPDF_REAL ) hb_parvnd( 3, 1 );
    p2.y = ( HPDF_REAL ) hb_parvnd( 3, 2 );
 
-   hb_retnl( ( long ) HPDF_FreeTextAnnot_Set2PointCalloutLine( ( HPDF_Annotation ) hb_parptr( 1 ), p1, p2 ) );
+   hb_retnl( static_cast< long >( HPDF_FreeTextAnnot_Set2PointCalloutLine( ( HPDF_Annotation ) hb_parptr( 1 ), p1, p2 ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -675,7 +675,7 @@ HB_FUNC( HPDF_FREETEXTANNOT_SET2POINTCALLOUTLINE )
 HB_FUNC( HPDF_FREETEXTANNOT_SETDEFAULTSTYLE )
 {
 #if HB_HPDF_VERS( 2, 2, 0 )
-   hb_retnl( ( long ) HPDF_FreeTextAnnot_SetDefaultStyle( ( HPDF_Annotation ) hb_parptr( 1 ), hb_parc( 2 ) ) );
+   hb_retnl( static_cast< long >( HPDF_FreeTextAnnot_SetDefaultStyle( ( HPDF_Annotation ) hb_parptr( 1 ), hb_parc( 2 ) ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -698,7 +698,7 @@ HB_FUNC( HPDF_LINEANNOT_SETPOSITION )
    p2.x = ( HPDF_REAL ) hb_parvnd( 4, 1 );
    p2.y = ( HPDF_REAL ) hb_parvnd( 4, 2 );
 
-   hb_retnl( ( long ) HPDF_LineAnnot_SetPosition( ( HPDF_Annotation ) hb_parptr( 1 ), p1, ( HPDF_LineAnnotEndingStyle ) hb_parni( 3 ), p2, ( HPDF_LineAnnotEndingStyle ) hb_parni( 5 ) ) );
+   hb_retnl( static_cast< long >( HPDF_LineAnnot_SetPosition( ( HPDF_Annotation ) hb_parptr( 1 ), p1, ( HPDF_LineAnnotEndingStyle ) hb_parni( 3 ), p2, ( HPDF_LineAnnotEndingStyle ) hb_parni( 5 ) ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -710,7 +710,7 @@ HB_FUNC( HPDF_LINEANNOT_SETPOSITION )
 HB_FUNC( HPDF_LINEANNOT_SETLEADER )
 {
 #if HB_HPDF_VERS( 2, 2, 0 )
-   hb_retnl( ( long ) HPDF_LineAnnot_SetLeader( ( HPDF_Annotation ) hb_parptr( 1 ), hb_parni( 2 ), hb_parni( 3 ), hb_parni( 4 ) ) );
+   hb_retnl( static_cast< long >( HPDF_LineAnnot_SetLeader( ( HPDF_Annotation ) hb_parptr( 1 ), hb_parni( 2 ), hb_parni( 3 ), hb_parni( 4 ) ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -722,7 +722,7 @@ HB_FUNC( HPDF_LINEANNOT_SETLEADER )
 HB_FUNC( HPDF_LINEANNOT_SETCAPTION )
 {
 #if HB_HPDF_VERS( 2, 2, 0 )
-   hb_retnl( ( long ) HPDF_LineAnnot_SetCaption( ( HPDF_Annotation ) hb_parptr( 1 ), hb_parl( 2 ), ( HPDF_LineAnnotCapPosition ) hb_parni( 3 ), hb_parni( 4 ), hb_parni( 5 ) ) );
+   hb_retnl( static_cast< long >( HPDF_LineAnnot_SetCaption( ( HPDF_Annotation ) hb_parptr( 1 ), hb_parl( 2 ), ( HPDF_LineAnnotCapPosition ) hb_parni( 3 ), hb_parni( 4 ), hb_parni( 5 ) ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
@@ -739,7 +739,7 @@ HB_FUNC( HPDF_LINEANNOT_SETCAPTION )
 HB_FUNC( HPDF_ANNOTATION_SETBORDERSTYLE )
 {
 #if HB_HPDF_VERS( 2, 2, 0 )
-   hb_retnl( ( long ) HPDF_Annotation_SetBorderStyle( ( HPDF_Annotation ) hb_parptr( 1 ), ( HPDF_BSSubtype ) hb_parni( 2 ), ( HPDF_REAL ) hb_parnd( 3 ), ( HPDF_UINT16 ) hb_parni( 4 ), ( HPDF_UINT16 ) hb_parni( 5 ), ( HPDF_UINT16 ) hb_parni( 6 ) ) );
+   hb_retnl( static_cast< long >( HPDF_Annotation_SetBorderStyle( ( HPDF_Annotation ) hb_parptr( 1 ), ( HPDF_BSSubtype ) hb_parni( 2 ), ( HPDF_REAL ) hb_parnd( 3 ), ( HPDF_UINT16 ) hb_parni( 4 ), ( HPDF_UINT16 ) hb_parni( 5 ), ( HPDF_UINT16 ) hb_parni( 6 ) ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif

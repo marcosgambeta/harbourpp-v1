@@ -88,24 +88,24 @@ HB_FUNC( ERR_ERROR_STRING )
 
    buffer[ 0 ] = '\0';
 
-   ERR_error_string_n( ( unsigned long ) hb_parnint( 1 ), buffer, sizeof( buffer ) );
+   ERR_error_string_n( static_cast< unsigned long >( hb_parnint( 1 ) ), buffer, sizeof( buffer ) );
 
    hb_retc( buffer );
 }
 
 HB_FUNC( ERR_LIB_ERROR_STRING )
 {
-   hb_retc( ERR_lib_error_string( ( unsigned long ) hb_parnint( 1 ) ) );
+   hb_retc( ERR_lib_error_string( static_cast< unsigned long >( hb_parnint( 1 ) ) ) );
 }
 
 HB_FUNC( ERR_FUNC_ERROR_STRING )
 {
-   hb_retc( ERR_lib_error_string( ( unsigned long ) hb_parnint( 1 ) ) );
+   hb_retc( ERR_lib_error_string( static_cast< unsigned long >( hb_parnint( 1 ) ) ) );
 }
 
 HB_FUNC( ERR_REASON_ERROR_STRING )
 {
-   hb_retc( ERR_lib_error_string( ( unsigned long ) hb_parnint( 1 ) ) );
+   hb_retc( ERR_lib_error_string( static_cast< unsigned long >( hb_parnint( 1 ) ) ) );
 }
 
 HB_FUNC( ERR_GET_ERROR_LINE )

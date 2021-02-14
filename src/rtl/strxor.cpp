@@ -88,7 +88,7 @@ HB_FUNC( HB_STRXOR )
       }
       else if( ( pItem2 = hb_param( 2, HB_IT_NUMERIC ) ) != NULL )
       {
-         char bChar = ( char ) hb_itemGetNI( pItem2 );
+         char bChar = static_cast< char >( hb_itemGetNI( pItem2 ) );
 
          if( bChar )
          {

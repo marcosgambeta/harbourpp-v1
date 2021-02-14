@@ -57,7 +57,7 @@ HB_FUNC( SAVECURSOR )
 #ifdef HB_CLP_STRICT
    iCursor = ( iCursor != 0 );
 #endif
-   hb_retnl( ( long ) iCol | ( iRow << 8 ) | ( iCursor << 16 ) );
+   hb_retnl( static_cast< long >( iCol ) | ( iRow << 8 ) | ( iCursor << 16 ) );
 }
 
 HB_FUNC( RESTCURSOR )

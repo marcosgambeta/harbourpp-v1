@@ -354,7 +354,7 @@ HB_FATTR hb_fsAttrEncode( const char * szAttr )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsAttrEncode(%p)", ( const void * ) szAttr ) );
 
-   while( ( ch = ( char ) HB_TOUPPER( *pos ) ) != '\0' )
+   while( ( ch = static_cast< char >( HB_TOUPPER( *pos ) ) ) != '\0' )
    {
       switch( ch )
       {
@@ -521,7 +521,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
          {
             ret = DosFindFirst( ( PCSZ ) ffind->pszFileMask,
                                 &info->hFindFile,
-                                ( ULONG ) hb_fsAttrToRaw( ffind->attrmask ),
+                                static_cast< ULONG >( hb_fsAttrToRaw( ffind->attrmask ) ),
                                 info->entry,
                                 info->findSize,
                                 &info->findCount,
@@ -657,7 +657,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
          {
             LPTSTR lpFileMask = HB_CHARDUP( ffind->pszFileMask );
             ffind->bFirst = HB_FALSE;
-            info->dwAttr    = ( DWORD ) hb_fsAttrToRaw( ffind->attrmask );
+            info->dwAttr    = static_cast< DWORD >( hb_fsAttrToRaw( ffind->attrmask ) );
             info->hFindFile = FindFirstFile( lpFileMask, &info->pFindFileData );
             hb_xfree( lpFileMask );
 

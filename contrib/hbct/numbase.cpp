@@ -139,7 +139,7 @@ HB_FUNC( NTOC )
             int iDigit = uValue % iBase;
             uValue /= iBase;
             iDigit += iDigit < 10 ? '0' : ( 'A' - 10 );
-            szBuffer[ i ] = ( char ) iDigit;
+            szBuffer[ i ] = static_cast< char >( iDigit );
          }
       }
       while( uValue != 0 );
@@ -151,7 +151,7 @@ HB_FUNC( NTOC )
          else
          {
             const char * szPad = hb_parc( 4 );
-            char cPad = szPad ? szPad[ 0 ] : ( char ) hb_parnidef( 4, ' ' );
+            char cPad = szPad ? szPad[ 0 ] : static_cast< char >( hb_parnidef( 4, ' ' ) );
 
             while( i > 0 )
                szBuffer[ --i ] = cPad;

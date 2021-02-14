@@ -293,9 +293,9 @@ HB_FUNC( FI_ALLOCATE )
       int      width      = hb_parni( 1 );
       int      height     = hb_parni( 2 );
       int      bpp        = hb_parni( 3 );
-      unsigned red_mask   = ( unsigned ) hb_parni( 4 );
-      unsigned green_mask = ( unsigned ) hb_parni( 5 );
-      unsigned blue_mask  = ( unsigned ) hb_parni( 6 );
+      unsigned red_mask   = static_cast< unsigned >( hb_parni( 4 ) );
+      unsigned green_mask = static_cast< unsigned >( hb_parni( 5 ) );
+      unsigned blue_mask  = static_cast< unsigned >( hb_parni( 6 ) );
 
       hb_FIBITMAP_ret( FreeImage_Allocate( width, height, bpp, red_mask, green_mask, blue_mask ), HB_TRUE );
    }
@@ -314,9 +314,9 @@ HB_FUNC( FI_ALLOCATET )
       int      width       = hb_parni( 2 );
       int      height      = hb_parni( 3 );
       int      bpp         = hb_parni( 3 );
-      unsigned red_mask    = ( unsigned ) hb_parni( 4 );
-      unsigned green_mask  = ( unsigned ) hb_parni( 5 );
-      unsigned blue_mask   = ( unsigned ) hb_parni( 6 );
+      unsigned red_mask    = static_cast< unsigned >( hb_parni( 4 ) );
+      unsigned green_mask  = static_cast< unsigned >( hb_parni( 5 ) );
+      unsigned blue_mask   = static_cast< unsigned >( hb_parni( 6 ) );
 
       hb_FIBITMAP_ret( FreeImage_AllocateT( type, width, height, bpp, red_mask, green_mask, blue_mask ), HB_TRUE );
    }
@@ -361,7 +361,7 @@ HB_FUNC( FI_LOADFROMMEMORY )
       const char *      szImage = hb_parc( 2 );
       int flags = hb_parni( 3 );
 
-      FIMEMORY * stream = FreeImage_OpenMemory( ( BYTE * ) HB_UNCONST( szImage ), ( DWORD ) hb_parclen( 2 ) );
+      FIMEMORY * stream = FreeImage_OpenMemory( ( BYTE * ) HB_UNCONST( szImage ), static_cast< DWORD >( hb_parclen( 2 ) ) );
       FIBITMAP * dib    = FreeImage_LoadFromMemory( fif, stream, flags );
       FreeImage_CloseMemory( stream );
 
@@ -784,7 +784,7 @@ HB_FUNC( FI_SETDOTSPERMETERX )
        HB_ISNUM( 2 ) )
    {
       FIBITMAP * dib = hb_FIBITMAP_par( 1 );
-      unsigned   res = ( unsigned ) hb_parni( 2 );
+      unsigned   res = static_cast< unsigned >( hb_parni( 2 ) );
 
       FreeImage_SetDotsPerMeterX( dib, res );
    }
@@ -799,7 +799,7 @@ HB_FUNC( FI_SETDOTSPERMETERY )
        HB_ISNUM( 2 ) )
    {
       FIBITMAP * dib = hb_FIBITMAP_par( 1 );
-      unsigned   res = ( unsigned ) hb_parni( 2 );
+      unsigned   res = static_cast< unsigned >( hb_parni( 2 ) );
 
       FreeImage_SetDotsPerMeterY( dib, res );
    }
@@ -1465,7 +1465,7 @@ HB_FUNC( FI_WINCONVFROMDIB )
    if( HB_ISPOINTER( 1 ) )
    {
 #if ! defined( HB_OS_WIN_CE )
-      HBITMAP bitmap = ( HBITMAP ) hb_parptr( 1 );
+      HBITMAP bitmap = static_cast< HBITMAP >( hb_parptr( 1 ) );
 
       if( bitmap )
       {
@@ -1509,7 +1509,7 @@ HB_FUNC( FI_WINDRAW )
        HB_ISNUM( 6 ) )
    {
       FIBITMAP * dib = hb_FIBITMAP_par( 1 );
-      HDC        hDC = HB_ISNUM( 2 ) ? ( HDC ) ( HB_PTRUINT ) hb_parnint( 2 ) : ( HDC ) hb_parptr( 2 );
+      HDC        hDC = HB_ISNUM( 2 ) ? static_cast< HDC >( ( HB_PTRUINT ) hb_parnint( 2 ) ) : static_cast< HDC >( hb_parptr( 2 ) );
       RECT       rcDest;
 
       rcDest.top    = hb_parni( 3 );

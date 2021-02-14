@@ -2424,8 +2424,8 @@ static void hb_gt_trm_SetKeyTrans( PHB_GTTRM pTerm )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_trm_SetKeyTrans(%p,%p,%p)", ( void * ) pTerm, ( void * ) cdpTerm, ( void * ) cdpHost ) );
 
    for( i = 0; i < 256; ++i )
-      pTerm->keyTransTbl[ i ] = ( unsigned char )
-                           hb_cdpTranslateChar( i, cdpTerm, cdpHost );
+      pTerm->keyTransTbl[ i ] = static_cast< unsigned char >(
+                           hb_cdpTranslateChar( i, cdpTerm, cdpHost ) );
 }
 #endif
 
@@ -2477,8 +2477,8 @@ static void hb_gt_trm_SetDispTrans( PHB_GTTRM pTerm, int box )
       {
          if( hb_cdpIsAlpha( cdpHost, i ) )
          {
-            unsigned char uc = ( unsigned char )
-                              hb_cdpTranslateDispChar( i, cdpHost, cdpTerm );
+            unsigned char uc = static_cast< unsigned char >(
+                              hb_cdpTranslateDispChar( i, cdpHost, cdpTerm ) );
 
             pTerm->chrattr[ i ] = uc | HB_GTTRM_ATTR_STD;
             if( box )
@@ -2496,7 +2496,7 @@ static int addKeyMap( PHB_GTTRM pTerm, int nKey, const char * cdesc )
    if( cdesc == NULL )
       return ret;
 
-   c   = ( unsigned char ) cdesc[ i++ ];
+   c   = static_cast< unsigned char >( cdesc[ i++ ] );
    ptr = &pTerm->pKeyTab;
 
    while( c )
@@ -2511,7 +2511,7 @@ static int addKeyMap( PHB_GTTRM pTerm, int nKey, const char * cdesc )
       }
       if( ( *ptr )->ch == c )
       {
-         c = ( unsigned char ) cdesc[ i++ ];
+         c = static_cast< unsigned char >( cdesc[ i++ ] );
          if( c )
             ptr = &( ( *ptr )->nextCh );
          else
@@ -2531,14 +2531,14 @@ static int removeKeyMap( PHB_GTTRM pTerm, const char * cdesc )
    int ret = K_UNDEF, i = 0, c;
    keyTab ** ptr;
 
-   c = ( unsigned char ) cdesc[ i++ ];
+   c = static_cast< unsigned char >( cdesc[ i++ ] );
    ptr = &pTerm->pKeyTab;
 
    while( c && *ptr != NULL )
    {
       if( ( *ptr )->ch == c )
       {
-         c = ( unsigned char ) cdesc[ i++ ];
+         c = static_cast< unsigned char >( cdesc[ i++ ] );
          if( ! c )
          {
             ret = ( *ptr )->key;
@@ -3855,7 +3855,7 @@ static void hb_gt_trm_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
       if( pTerm->fUTF8 )
          iLen += hb_cdpU16CharToUTF8( pTerm->pLineBuf + iLen, usChar );
       else
-         pTerm->pLineBuf[ iLen++ ] = ( char ) usChar;
+         pTerm->pLineBuf[ iLen++ ] = static_cast< char >( usChar );
       ++iChars;
 #else
       if( ! HB_GTSELF_GETSCRCHAR( pGT, iRow, iCol + iChars, &iColor, &bAttr, &usChar ) )
@@ -3884,7 +3884,7 @@ static void hb_gt_trm_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
          iLen = iChars = 0;
          iAttribute = iColor;
       }
-      pTerm->pLineBuf[ iLen++ ] = ( char ) usChar;
+      pTerm->pLineBuf[ iLen++ ] = static_cast< char >( usChar );
       ++iChars;
 #endif
    }

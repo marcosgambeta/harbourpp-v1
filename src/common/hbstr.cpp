@@ -143,7 +143,7 @@ char * hb_strupr( char * pszText )
    HB_TRACE( HB_TR_DEBUG, ( "hb_strupr(%s)", pszText ) );
 
    for( pszPos = pszText; *pszPos; pszPos++ )
-      *pszPos = ( char ) HB_TOUPPER( ( HB_UCHAR ) *pszPos );
+      *pszPos = static_cast< char >( HB_TOUPPER( ( HB_UCHAR ) *pszPos ) );
 
    return pszText;
 }
@@ -155,7 +155,7 @@ char * hb_strlow( char * pszText )
    HB_TRACE( HB_TR_DEBUG, ( "hb_strlow(%s)", pszText ) );
 
    for( pszPos = pszText; *pszPos; pszPos++ )
-      *pszPos = ( char ) HB_TOLOWER( ( HB_UCHAR ) *pszPos );
+      *pszPos = static_cast< char >( HB_TOLOWER( ( HB_UCHAR ) *pszPos ) );
 
    return pszText;
 }
@@ -254,8 +254,8 @@ int hb_stricmp( const char * s1, const char * s2 )
    {
       int c2;
 
-      c1 = HB_TOUPPER( ( unsigned char ) *s1 );
-      c2 = HB_TOUPPER( ( unsigned char ) *s2 );
+      c1 = HB_TOUPPER( static_cast< unsigned char >( *s1 ) );
+      c2 = HB_TOUPPER( static_cast< unsigned char >( *s2 ) );
 
       if( c1 != c2 )
       {
@@ -281,8 +281,8 @@ int hb_strnicmp( const char * s1, const char * s2, HB_SIZE count )
 
    for( nCount = 0; nCount < count; nCount++ )
    {
-      unsigned char c1 = ( char ) HB_TOUPPER( ( unsigned char ) s1[ nCount ] );
-      unsigned char c2 = ( char ) HB_TOUPPER( ( unsigned char ) s2[ nCount ] );
+      unsigned char c1 = static_cast< char >( HB_TOUPPER( static_cast< unsigned char >( s1[ nCount ] ) ) );
+      unsigned char c2 = static_cast< char >( HB_TOUPPER( static_cast< unsigned char >( s2[ nCount ] ) ) );
 
       if( c1 != c2 )
       {
@@ -393,7 +393,7 @@ static double hb_numPow10( int nPrecision )
       if( nPrecision >= 0 )
          return s_dPow10[ nPrecision ];
       else if( nPrecision > -16 )
-         return 1.0 / s_dPow10[ ( unsigned int ) -nPrecision ];
+         return 1.0 / s_dPow10[ static_cast< unsigned int >( -nPrecision ) ];
    }
 
    return pow( 10.0, static_cast< double >( nPrecision ) );
@@ -793,7 +793,7 @@ char * hb_numToStr( char * szBuf, HB_SIZE nSize, HB_MAXINT lNumber )
 
    while( --iPos >= 0 )
    {
-      szBuf[ iPos ] = '0' + ( char ) ( lNumber % 10 );
+      szBuf[ iPos ] = '0' + static_cast< char >( lNumber % 10 );
       lNumber /= 10;
       if( lNumber == 0 )
          break;
@@ -858,7 +858,7 @@ char * hb_dblToStr( char * szBuf, HB_SIZE nSize, double dNumber, int iMaxDec )
       if( iPos == 0 )
          return nullptr;
       dDig = modf( dInt / doBase + 0.01, &dInt ) * doBase;
-      szBuf[ --iPos ] = '0' + ( char ) ( dDig + 0.01 );
+      szBuf[ --iPos ] = '0' + static_cast< char >( dDig + 0.01 );
    }
    while( dInt >= 1 );
    if( iPos > 0 )
@@ -908,7 +908,7 @@ char * hb_dblToStr( char * szBuf, HB_SIZE nSize, double dNumber, int iMaxDec )
       while( ++iPos < iLen && iPrec > 0 && iMaxDec-- != 0 )
       {
          dFract = modf( dFract * doBase, &dDig );
-         szBuf[ iPos ] = '0' + ( char ) ( dDig + 0.01 );
+         szBuf[ iPos ] = '0' + static_cast< char >( dDig + 0.01 );
          if( szBuf[ iPos ] != '0' )
             fFirst = HB_TRUE;
          if( fFirst )
@@ -1003,7 +1003,7 @@ char * hb_strncpyLower( char * pDest, const char * pSource, HB_SIZE nLen )
 
    pDest[ nLen ] = '\0';
 
-   while( nLen && ( *pDest++ = ( char ) HB_TOLOWER( ( HB_UCHAR ) *pSource ) ) != '\0' )
+   while( nLen && ( *pDest++ = static_cast< char >( HB_TOLOWER( ( HB_UCHAR ) *pSource ) ) ) != '\0' )
    {
       nLen--;
       pSource++;
@@ -1025,7 +1025,7 @@ char * hb_strncpyUpper( char * pDest, const char * pSource, HB_SIZE nLen )
 
    pDest[ nLen ] = '\0';
 
-   while( nLen && ( *pDest++ = ( char ) HB_TOUPPER( ( HB_UCHAR ) *pSource ) ) != '\0' )
+   while( nLen && ( *pDest++ = static_cast< char >( HB_TOUPPER( ( HB_UCHAR ) *pSource ) ) ) != '\0' )
    {
       nLen--;
       pSource++;
@@ -1054,7 +1054,7 @@ char * hb_strncpyUpperTrim( char * pDest, const char * pSource, HB_SIZE nLen )
       nSLen--;
 
    while( nLen && nSLen &&
-          ( *pDest++ = ( char ) HB_TOUPPER( ( HB_UCHAR ) *pSource ) ) != '\0' )
+          ( *pDest++ = static_cast< char >( HB_TOUPPER( ( HB_UCHAR ) *pSource ) ) ) != '\0' )
    {
       nSLen--;
       nLen--;
@@ -1239,8 +1239,8 @@ void hb_strtohex( const char * pSource, HB_SIZE size, char * pDest )
    {
       int b;
       b = ( ( HB_UCHAR ) pSource[ i ] >> 4 ) & 0x0F;
-      *pDest++ = ( char ) ( b + ( b > 9 ? 'a' - 10 : '0' ) );
+      *pDest++ = static_cast< char >( b + ( b > 9 ? 'a' - 10 : '0' ) );
       b = ( HB_UCHAR ) pSource[ i ] & 0x0F;
-      *pDest++ = ( char ) ( b + ( b > 9 ? 'a' - 10 : '0' ) );
+      *pDest++ = static_cast< char >( b + ( b > 9 ? 'a' - 10 : '0' ) );
    }
 }

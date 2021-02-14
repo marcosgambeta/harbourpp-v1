@@ -532,7 +532,7 @@ char * hb_verPlatform( void )
                          aulQSV[ QSV_VERSION_MINOR - 1 ] );
          else
             hb_snprintf( pszPlatform, PLATFORM_BUF_SIZE + 1, "OS/2 %2.2f",
-                         ( float ) aulQSV[ QSV_VERSION_MINOR - 1 ] / 10 );
+                         static_cast< float >( aulQSV[ QSV_VERSION_MINOR - 1 ] ) / 10 );
       }
       else
          hb_snprintf( pszPlatform, PLATFORM_BUF_SIZE + 1, "OS/2" );
@@ -748,8 +748,8 @@ HB_BOOL hb_iswinver( int iMajor, int iMinor, int iType, HB_BOOL fOrUpper )
 
       memset( &ver, 0, sizeof( ver ) );
       ver.dwOSVersionInfoSize = sizeof( ver );
-      ver.dwMajorVersion = ( DWORD ) iMajor;
-      ver.dwMinorVersion = ( DWORD ) iMinor;
+      ver.dwMajorVersion = static_cast< DWORD >( iMajor );
+      ver.dwMinorVersion = static_cast< DWORD >( iMinor );
 
       dwlConditionMask = s_pVerSetConditionMask( dwlConditionMask, VER_MAJORVERSION, fOrUpper ? VER_GREATER_EQUAL : VER_EQUAL );
       dwlConditionMask = s_pVerSetConditionMask( dwlConditionMask, VER_MINORVERSION, fOrUpper ? VER_GREATER_EQUAL : VER_EQUAL );

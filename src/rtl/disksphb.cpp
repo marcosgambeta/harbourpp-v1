@@ -385,7 +385,7 @@ HB_FUNC( HB_DISKSPACE )
 
       if( iDrive >= 1 && iDrive < 32 )
       {
-         szPathBuf[ 0 ] = ( char ) iDrive + 'A' - 1;
+         szPathBuf[ 0 ] = static_cast< char >( iDrive ) + 'A' - 1;
          szPathBuf[ 1 ] = HB_OS_DRIVE_DELIM_CHR;
          szPathBuf[ 2 ] = HB_OS_PATH_DELIM_CHR;
          szPathBuf[ 3 ] = '\0';

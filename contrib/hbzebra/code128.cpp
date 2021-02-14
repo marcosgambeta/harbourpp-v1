@@ -176,14 +176,14 @@ static int _code128_charno( char ch, int iCodeSet )
    {
       if( ch >= ' ' && ch <= '_' )
          return ch - ' ';
-      else if( ( unsigned char ) ch <= 31 )
+      else if( static_cast< unsigned char >( ch ) <= 31 )
          return ch + 64;
       else
          return -1;
    }
    else if( iCodeSet == CODESET_B )
    {
-      if( ch >= ' ' && ( unsigned char ) ch <= 127 )
+      if( ch >= ' ' && static_cast< unsigned char >( ch ) <= 127 )
          return ch - ' ';
       else
          return -1;
@@ -205,7 +205,7 @@ PHB_ZEBRA hb_zebra_create_code128( const char * szCode, HB_SIZE nLen, int iFlags
    j = 0;
    for( i = 0; i < iLen; i++ )
    {
-      if( ( unsigned char ) szCode[ i ] >= 128 )
+      if( static_cast< unsigned char >( szCode[ i ] ) >= 128 )
       {
          pZebra->iError = HB_ZEBRA_ERROR_INVALIDCODE;
          return pZebra;

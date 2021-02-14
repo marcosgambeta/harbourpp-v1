@@ -71,7 +71,7 @@
 #     define ftime _ftime
 #  endif
 #  ifndef TIME_ZONE_ID_INVALID
-#     define TIME_ZONE_ID_INVALID ( DWORD ) 0xFFFFFFFF
+#     define TIME_ZONE_ID_INVALID static_cast< DWORD >( 0xFFFFFFFF )
 #  endif
 #endif
 
@@ -215,10 +215,10 @@ long hb_dateEncode( int iYear, int iMonth, int iDay )
       {
          int iFactor = ( iMonth < 3 ) ? -1 : 0;
 
-         return ( ( long ) ( iFactor + 4800 + iYear ) * 1461 / 4 ) +
-                ( ( long ) ( iMonth - 2 - ( iFactor * 12 ) ) * 367 ) / 12 -
-                ( ( long ) ( ( iFactor + 4900 + iYear ) / 100 ) * 3 / 4 ) +
-                ( long ) iDay - 32075;
+         return ( static_cast< long >( iFactor + 4800 + iYear ) * 1461 / 4 ) +
+                ( static_cast< long >( iMonth - 2 - ( iFactor * 12 ) ) * 367 ) / 12 -
+                ( static_cast< long >( ( iFactor + 4900 + iYear ) / 100 ) * 3 / 4 ) +
+                static_cast< long >( iDay ) - 32075;
       }
    }
 
@@ -260,16 +260,16 @@ void hb_dateStrPut( char * szDate, int iYear, int iMonth, int iDay )
 
    if( iYear >= 0 && iMonth > 0 && iDay > 0 )
    {
-      szDate[ 0 ] = ( char ) ( ( ( iYear / 1000 ) % 10 ) + '0' );
-      szDate[ 1 ] = ( char ) ( ( ( iYear / 100 ) % 10 ) + '0' );
-      szDate[ 2 ] = ( char ) ( ( ( iYear / 10 ) % 10 ) + '0' );
-      szDate[ 3 ] = ( char ) ( ( iYear % 10 ) + '0' );
+      szDate[ 0 ] = static_cast< char >( ( ( iYear / 1000 ) % 10 ) + '0' );
+      szDate[ 1 ] = static_cast< char >( ( ( iYear / 100 ) % 10 ) + '0' );
+      szDate[ 2 ] = static_cast< char >( ( ( iYear / 10 ) % 10 ) + '0' );
+      szDate[ 3 ] = static_cast< char >( ( iYear % 10 ) + '0' );
 
-      szDate[ 4 ] = ( char ) ( ( ( iMonth / 10 ) % 10 ) + '0' );
-      szDate[ 5 ] = ( char ) ( ( iMonth % 10 ) + '0' );
+      szDate[ 4 ] = static_cast< char >( ( ( iMonth / 10 ) % 10 ) + '0' );
+      szDate[ 5 ] = static_cast< char >( ( iMonth % 10 ) + '0' );
 
-      szDate[ 6 ] = ( char ) ( ( ( iDay / 10 ) % 10 ) + '0' );
-      szDate[ 7 ] = ( char ) ( ( iDay % 10 ) + '0' );
+      szDate[ 6 ] = static_cast< char >( ( ( iDay / 10 ) % 10 ) + '0' );
+      szDate[ 7 ] = static_cast< char >( ( iDay % 10 ) + '0' );
    }
    else
    {
@@ -444,7 +444,7 @@ long hb_timeEncode( int iHour, int iMinutes, int iSeconds, int iMSec )
        iSeconds >= 0 && iSeconds < 60 &&
        iMSec >= 0 && iMSec < 1000 ) /* <= intentionally for rounded milliseconds values */
    {
-      lMilliSec = ( ( long ) ( iHour * 60 + iMinutes ) * 60 + iSeconds ) *
+      lMilliSec = ( static_cast< long >( iHour * 60 + iMinutes ) * 60 + iSeconds ) *
                   1000 + iMSec;
    }
    else
@@ -871,15 +871,15 @@ void hb_timeStampUnpackDT( double dTimeStamp,
 
       dTime = modf( dTimeStamp + 0.5 / HB_MILLISECS_PER_DAY, &dJulian );
       if( plJulian )
-         *plJulian = ( long ) dJulian;
+         *plJulian = static_cast< long >( dJulian );
       if( plMilliSec )
-         *plMilliSec = ( long ) ( dTime * HB_MILLISECS_PER_DAY );
+         *plMilliSec = static_cast< long >( dTime * HB_MILLISECS_PER_DAY );
 #else
       HB_LONGLONG llMilliSec = ( HB_LONGLONG ) ( dTimeStamp * HB_MILLISECS_PER_DAY + 0.5 );
       if( plJulian )
-         *plJulian = ( long ) ( llMilliSec / HB_MILLISECS_PER_DAY );
+         *plJulian = static_cast< long >( llMilliSec / HB_MILLISECS_PER_DAY );
       if( plMilliSec )
-         *plMilliSec = ( long ) ( llMilliSec % HB_MILLISECS_PER_DAY );
+         *plMilliSec = static_cast< long >( llMilliSec % HB_MILLISECS_PER_DAY );
 #endif
    }
 }
@@ -901,7 +901,7 @@ double hb_timeStampPack( int iYear, int iMonth, int iDay,
       if( lJulian != 0 || ( iYear == 0 && iMonth == 0 && iDay == 0 ) )
       {
          dTimeStamp = static_cast< double >( lJulian ) +
-                      static_cast< double >( ( ( long ) ( iHour * 60 + iMinutes ) * 60 +
+                      static_cast< double >( ( static_cast< long >( iHour * 60 + iMinutes ) * 60 +
                                      iSeconds ) * 1000 + iMSec ) /
                       HB_MILLISECS_PER_DAY;
       }
@@ -1003,7 +1003,7 @@ long hb_timeUTCOffset( void ) /* in seconds */
       timeinfo = *localtime( &current );
       local = mktime( &timeinfo );
 #endif
-      return ( long ) difftime( local, utc ) + ( timeinfo.tm_isdst > 0 ? 3600 : 0 );
+      return static_cast< long >( difftime( local, utc ) ) + ( timeinfo.tm_isdst > 0 ? 3600 : 0 );
    }
 #endif
 }
@@ -1050,7 +1050,7 @@ long hb_timeStampUTCOffset( int iYear, int iMonth, int iDay,
                                hb_timeStampPack( st.wYear, st.wMonth, st.wDay,
                                                  st.wHour, st.wMinute, st.wSecond,
                                                  st.wMilliseconds ) ) * HB_SECONDS_PER_DAY;
-            return ( long ) ( dOffset + ( dOffset < 0 ? -0.5 : 0.5 ) );
+            return static_cast< long >( dOffset + ( dOffset < 0 ? -0.5 : 0.5 ) );
          }
       }
 
@@ -1080,7 +1080,7 @@ long hb_timeStampUTCOffset( int iYear, int iMonth, int iDay,
          timeinfo = *gmtime( &local );
          utc = mktime( &timeinfo );
 #endif
-         return ( long ) difftime( local, utc ) + isdst;
+         return static_cast< long >( difftime( local, utc ) ) + isdst;
       }
       return 0;
    }

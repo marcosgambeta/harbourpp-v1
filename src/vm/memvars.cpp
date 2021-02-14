@@ -1639,7 +1639,7 @@ HB_FUNC( __MVRESTORE )
                   HB_BYTE pbyNumber[ HB_MEM_NUM_LEN ];
 
                   if( hb_fileRead( fhnd, pbyNumber, HB_MEM_NUM_LEN, -1 ) == HB_MEM_NUM_LEN )
-                     pItem = hb_itemPutDL( pItem, ( long ) HB_GET_LE_DOUBLE( pbyNumber ) );
+                     pItem = hb_itemPutDL( pItem, static_cast< long >( HB_GET_LE_DOUBLE( pbyNumber ) ) );
                   else
                      pszName = NULL;
 

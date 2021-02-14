@@ -365,7 +365,7 @@ static HB_BOOL hb_comp_timeDecode( PHB_PP_TOKEN pTime, long * plTime )
    if( ! pTime || HB_PP_TOKEN_TYPE( pTime->type ) != HB_PP_TOKEN_RIGHT_CB )
       return HB_FALSE;
 
-   *plTime = ( long ) ( ( lHour * 60 + lMinute ) * 60000 + lMilliSec );
+   *plTime = static_cast< long >( ( lHour * 60 + lMinute ) * 60000 + lMilliSec );
 
    return HB_TRUE;
 }

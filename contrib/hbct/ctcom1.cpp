@@ -56,10 +56,10 @@ static int hb_ctComCharParam( int iParam )
    if( pszParam )
    {
       if( hb_parclen( iParam ) > 0 )
-         return ( unsigned char ) pszParam[ 0 ];
+         return static_cast< unsigned char >( pszParam[ 0 ] );
    }
    else if( HB_ISNUM( iParam ) )
-      return ( unsigned char ) hb_parni( iParam );
+      return static_cast< unsigned char >( hb_parni( iParam ) );
 
    return -1;
 }
@@ -415,12 +415,12 @@ HB_FUNC( COM_READ )
    else
    {
       lLen = hb_comInputCount( iPort );
-      if( lLen < ( long ) ( sizeof( buffer ) >> 1 ) )
+      if( lLen < static_cast< long >( sizeof( buffer ) >> 1 ) )
          lLen = sizeof( buffer );
       else
          lLen <<= 2;
    }
-   if( lLen <= ( long ) sizeof( buffer ) )
+   if( lLen <= static_cast< long >( sizeof( buffer ) ) )
       data = buffer;
    else
       data = ( char * ) hb_xgrab( lLen + 1 );
@@ -451,10 +451,10 @@ HB_FUNC( COM_SEND )
    /* TODO: add automatic drain call for ports open without send buffer */
 
    if( data )
-      lLen = ( long ) hb_parclen( 2 );
+      lLen = static_cast< long >( hb_parclen( 2 ) );
    else if( HB_ISNUM( 2 ) )
    {
-      buffer = ( unsigned char ) hb_parni( 2 );
+      buffer = static_cast< unsigned char >( hb_parni( 2 ) );
       data = &buffer;
       lLen = 1;
    }

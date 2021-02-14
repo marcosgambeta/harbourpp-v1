@@ -125,7 +125,7 @@ char * hb_dateFormat( const char * szDate, char * szFormattedDate, const char * 
                         digit_count--;
                      }
                      while( digit_count-- > 0 && format_count < size )
-                        szFormattedDate[ format_count++ ] = ( char ) digit;
+                        szFormattedDate[ format_count++ ] = static_cast< char >( digit );
                }
                used_d = HB_TRUE;
                break;
@@ -167,7 +167,7 @@ char * hb_dateFormat( const char * szDate, char * szFormattedDate, const char * 
                         digit_count--;
                      }
                      while( digit_count-- > 0 && format_count < size )
-                        szFormattedDate[ format_count++ ] = ( char ) digit;
+                        szFormattedDate[ format_count++ ] = static_cast< char >( digit );
                }
                used_m = HB_TRUE;
                break;
@@ -203,14 +203,14 @@ char * hb_dateFormat( const char * szDate, char * szFormattedDate, const char * 
                         digit_count--;
                      }
                      while( digit_count-- > 0 && format_count < size )
-                        szFormattedDate[ format_count++ ] = ( char ) digit;
+                        szFormattedDate[ format_count++ ] = static_cast< char >( digit );
                }
                used_y = HB_TRUE;
                break;
 
             default:
                while( digit_count-- > 0 && format_count < size )
-                  szFormattedDate[ format_count++ ] = ( char ) digit;
+                  szFormattedDate[ format_count++ ] = static_cast< char >( digit );
          }
       }
    }
@@ -472,14 +472,14 @@ char * hb_timeFormat( char * szBuffer, const char * szTimeFormat, long lMilliSec
          count -= digits;
          do
          {
-            szTimeBuffer[ --digits ] = ( char ) ( '0' + value % 10 );
+            szTimeBuffer[ --digits ] = static_cast< char >( '0' + value % 10 );
             value /= 10;
          }
          while( digits );
          szTimeBuffer += skip;
       }
       while( count-- )
-         *szTimeBuffer++ = ( char ) ch;
+         *szTimeBuffer++ = static_cast< char >( ch );
    }
 
    *szTimeBuffer = '\0';

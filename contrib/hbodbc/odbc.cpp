@@ -785,7 +785,7 @@ HB_FUNC( SQLNUMRESULTCOLS )  /* hStmt, @nColCount --> nRetCode */
 
       hb_retni( SQLNumResultCols( hStmt, &iCols ) );
 
-      hb_stornl( ( long ) iCols, 2 );
+      hb_stornl( static_cast< long >( iCols ), 2 );
    }
    else
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -911,7 +911,7 @@ HB_FUNC( SQLERROR )  /* hEnv, hDbc, hStmt, @cErrorClass, @nType, @cErrorMsg */
                           ( SQLSMALLINT * ) &iLen ) );
 
       O_HB_STORSTR( ( O_HB_CHAR * ) buffer, 4 );
-      hb_stornl( ( long ) lError, 5 );
+      hb_stornl( static_cast< long >( lError ), 5 );
       O_HB_STORSTRLEN( ( O_HB_CHAR * ) szErrorMsg, iLen, 6 );
    }
    else
@@ -960,7 +960,7 @@ HB_FUNC( SQLGETDIAGREC )  /* nHandleType, hHandle, nRecNumber, @cSQLState, @nErr
                                ( SQLSMALLINT * ) &iLen ) );
 
       O_HB_STORSTR( ( O_HB_CHAR * ) szSQLState, 4 );
-      hb_stornl( ( long ) lError, 5 );
+      hb_stornl( static_cast< long >( lError ), 5 );
       O_HB_STORSTRLEN( ( O_HB_CHAR * ) szErrorMsg, iLen, 6 );
    }
    else

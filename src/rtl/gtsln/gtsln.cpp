@@ -399,8 +399,8 @@ static void hb_sln_setKeyTrans( PHB_GT pGT )
    int i;
 
    for( i = 0; i < 256; i++ )
-      hb_sln_inputTab[ i ] = ( unsigned char )
-                           hb_cdpTranslateChar( i, cdpTerm, cdpHost );
+      hb_sln_inputTab[ i ] = static_cast< unsigned char >(
+                           hb_cdpTranslateChar( i, cdpTerm, cdpHost ) );
 
    /* init national chars */
    p = getenv( hb_NationCharsEnvName );
@@ -413,15 +413,15 @@ static void hb_sln_setKeyTrans( PHB_GT pGT )
          len = 128;
 
       /* the first element contains a number of Dead keys defined in an ENVAR */
-      hb_sln_convKDeadKeys[ 0 ] = ( unsigned char ) len;
+      hb_sln_convKDeadKeys[ 0 ] = static_cast< unsigned char >( len );
 
       len <<= 1;
       for( i = 0; i < len; i += 2 )
       {
-         int ch = ( unsigned char ) p[ i + 1 ];
-         hb_sln_convKDeadKeys[ i + 1 ] = ( unsigned char ) p[ i ];
+         int ch = static_cast< unsigned char >( p[ i + 1 ] );
+         hb_sln_convKDeadKeys[ i + 1 ] = static_cast< unsigned char >( p[ i ] );
          hb_sln_convKDeadKeys[ i + 2 ] = ch;
-         hb_sln_inputTab[ ( unsigned char ) p[ i ] ] = ch;
+         hb_sln_inputTab[ static_cast< unsigned char >( p[ i ] ) ] = ch;
       }
    }
 }

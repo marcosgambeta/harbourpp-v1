@@ -156,28 +156,28 @@ static HB_BOOL amf3_encode_int( amfContext * context, int value )
    if( value < 0x80 )
    {
       tmp_size = 1;
-      tmp[ 0 ] = ( char ) value;  /* TODO: some explicit casts in here to keep the compiler silent */
+      tmp[ 0 ] = static_cast< char >( value );  /* TODO: some explicit casts in here to keep the compiler silent */
    }
    else if( value < 0x4000 )
    {
       tmp_size = 2;
-      tmp[ 0 ] = ( char ) ( ( value >> 7 ) & 0x7f ) | 0x80;  /* Shift bits by 7 to fill 1st byte and set next byte flag */
-      tmp[ 1 ] = ( char ) value & 0x7f;                      /* Shift bits by 7 to fill 2nd byte, leave next byte flag unset */
+      tmp[ 0 ] = static_cast< char >( ( value >> 7 ) & 0x7f ) | 0x80;  /* Shift bits by 7 to fill 1st byte and set next byte flag */
+      tmp[ 1 ] = static_cast< char >( value ) & 0x7f;                      /* Shift bits by 7 to fill 2nd byte, leave next byte flag unset */
    }
    else if( value < 0x200000 )
    {
       tmp_size = 3;
-      tmp[ 0 ] = ( char ) ( ( value >> 14 ) & 0x7f ) | 0x80;
-      tmp[ 1 ] = ( char ) ( ( value >> 7 ) & 0x7f ) | 0x80;
-      tmp[ 2 ] = ( char ) value & 0x7f;
+      tmp[ 0 ] = static_cast< char >( ( value >> 14 ) & 0x7f ) | 0x80;
+      tmp[ 1 ] = static_cast< char >( ( value >> 7 ) & 0x7f ) | 0x80;
+      tmp[ 2 ] = static_cast< char >( value ) & 0x7f;
    }
    else if( value < 0x40000000 )
    {
       tmp_size = 4;
-      tmp[ 0 ] = ( char ) ( ( value >> 22 ) & 0x7f ) | 0x80;
-      tmp[ 1 ] = ( char ) ( ( value >> 15 ) & 0x7f ) | 0x80;
-      tmp[ 2 ] = ( char ) ( ( value >> 8 ) & 0x7f ) | 0x80; /* Shift bits by 8, since we can use all bits in the 4th byte */
-      tmp[ 3 ] = ( char ) ( value & 0xff );
+      tmp[ 0 ] = static_cast< char >( ( value >> 22 ) & 0x7f ) | 0x80;
+      tmp[ 1 ] = static_cast< char >( ( value >> 15 ) & 0x7f ) | 0x80;
+      tmp[ 2 ] = static_cast< char >( ( value >> 8 ) & 0x7f ) | 0x80; /* Shift bits by 8, since we can use all bits in the 4th byte */
+      tmp[ 3 ] = static_cast< char >( value & 0xff );
    }
    else
       return HB_FALSE;
@@ -213,7 +213,7 @@ static HB_BOOL amf3_write_int( amfContext * context, PHB_ITEM pItem )
 #if 0
 static HB_BOOL amf3_encode_float( amfContext * context, PHB_ITEM pItem )
 {
-   float n = ( float ) hb_itemGetND( pItem );
+   float n = static_cast< float >( hb_itemGetND( pItem ) );
 
    return amfX_encode_double( context, static_cast< double >( n ) );
 }

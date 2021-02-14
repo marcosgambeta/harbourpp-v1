@@ -1676,7 +1676,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
             break;
 
          case HB_P_ENUMSTART:
-            hb_vmEnumStart( ( unsigned char ) pCode[ 1 ], ( unsigned char ) pCode[ 2 ] );
+            hb_vmEnumStart( static_cast< unsigned char >( pCode[ 1 ] ), static_cast< unsigned char >( pCode[ 2 ] ) );
             pCode += 3;
             break;
 
@@ -1837,22 +1837,22 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
             break;
 
          case HB_P_FRAME:
-            hb_vmFrame( ( unsigned char ) pCode[ 1 ], ( unsigned char ) pCode[ 2 ] );
+            hb_vmFrame( static_cast< unsigned char >( pCode[ 1 ] ), static_cast< unsigned char >( pCode[ 2 ] ) );
             pCode += 3;
             break;
 
          case HB_P_VFRAME:
-            hb_vmVFrame( ( unsigned char ) pCode[ 1 ], ( unsigned char ) pCode[ 2 ] );
+            hb_vmVFrame( static_cast< unsigned char >( pCode[ 1 ] ), static_cast< unsigned char >( pCode[ 2 ] ) );
             pCode += 3;
             break;
 
          case HB_P_LARGEFRAME:
-            hb_vmFrame( HB_PCODE_MKUSHORT( &pCode[ 1 ] ), ( unsigned char ) pCode[ 3 ] );
+            hb_vmFrame( HB_PCODE_MKUSHORT( &pCode[ 1 ] ), static_cast< unsigned char >( pCode[ 3 ] ) );
             pCode += 4;
             break;
 
          case HB_P_LARGEVFRAME:
-            hb_vmVFrame( HB_PCODE_MKUSHORT( &pCode[ 1 ] ), ( unsigned char ) pCode[ 3 ] );
+            hb_vmVFrame( HB_PCODE_MKUSHORT( &pCode[ 1 ] ), static_cast< unsigned char >( pCode[ 3 ] ) );
             pCode += 4;
             break;
 
@@ -2127,7 +2127,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
          /* Jumps */
 
          case HB_P_JUMPNEAR:
-            pCode += ( signed char ) pCode[ 1 ];
+            pCode += static_cast< signed char >( pCode[ 1 ] );
             break;
 
          case HB_P_JUMP:
@@ -2140,7 +2140,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 
          case HB_P_JUMPFALSENEAR:
             if( ! hb_vmPopLogical() )
-               pCode += ( signed char ) pCode[ 1 ];
+               pCode += static_cast< signed char >( pCode[ 1 ] );
             else
                pCode += 2;
             break;
@@ -2161,7 +2161,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 
          case HB_P_JUMPTRUENEAR:
             if( hb_vmPopLogical() )
-               pCode += ( signed char ) pCode[ 1 ];
+               pCode += static_cast< signed char >( pCode[ 1 ] );
             else
                pCode += 2;
             break;
@@ -2237,7 +2237,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
                PHB_ITEM pItem = hb_stackAllocItem();
 
                pItem->type = HB_IT_INTEGER;
-               pItem->item.asInteger.value = ( signed char ) pCode[ 1 ];
+               pItem->item.asInteger.value = static_cast< signed char >( pCode[ 1 ] );
                pItem->item.asInteger.length = 10;
                HB_TRACE( HB_TR_INFO, ( "(HB_P_PUSHBYTE)" ) );
                pCode += 2;
@@ -2261,7 +2261,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 #if HB_VMINT_MAX >= INT32_MAX
             hb_vmPushIntegerConst( static_cast< int >( HB_PCODE_MKLONG( &pCode[ 1 ] ) ) );
 #else
-            hb_vmPushLongConst( ( long ) HB_PCODE_MKLONG( &pCode[ 1 ] ) );
+            hb_vmPushLongConst( static_cast< long >( HB_PCODE_MKLONG( &pCode[ 1 ] ) ) );
 #endif
             pCode += 5;
             break;
@@ -2330,7 +2330,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
                PHB_ITEM pItem = hb_stackAllocItem();
 
                pItem->type = HB_IT_DATE;
-               pItem->item.asDateTime.julian = ( long ) HB_PCODE_MKLONG( &pCode[ 1 ] );
+               pItem->item.asDateTime.julian = static_cast< long >( HB_PCODE_MKLONG( &pCode[ 1 ] ) );
                pItem->item.asDateTime.time = 0;
                pCode += 5;
             }
@@ -2342,8 +2342,8 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
                PHB_ITEM pItem = hb_stackAllocItem();
 
                pItem->type = HB_IT_TIMESTAMP;
-               pItem->item.asDateTime.julian = ( long ) HB_PCODE_MKLONG( &pCode[ 1 ] );
-               pItem->item.asDateTime.time = ( long ) HB_PCODE_MKLONG( &pCode[ 5 ] );
+               pItem->item.asDateTime.julian = static_cast< long >( HB_PCODE_MKLONG( &pCode[ 1 ] ) );
+               pItem->item.asDateTime.time = static_cast< long >( HB_PCODE_MKLONG( &pCode[ 5 ] ) );
                pCode += 9;
             }
             break;
@@ -2440,7 +2440,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
             break;
 
          case HB_P_PUSHLOCALNEAR:
-            hb_vmPushLocal( ( signed char ) pCode[ 1 ] );
+            hb_vmPushLocal( static_cast< signed char >( pCode[ 1 ] ) );
             pCode += 2;  /* only first two bytes are used */
             break;
 
@@ -2504,7 +2504,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
             break;
 
          case HB_P_SWAP:
-            hb_vmSwap( ( unsigned char ) pCode[ 1 ] );
+            hb_vmSwap( static_cast< unsigned char >( pCode[ 1 ] ) );
             pCode += 2;
             break;
 
@@ -2551,7 +2551,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
             break;
 
          case HB_P_POPLOCALNEAR:
-            hb_vmPopLocal( ( signed char ) pCode[ 1 ] );
+            hb_vmPopLocal( static_cast< signed char >( pCode[ 1 ] ) );
             pCode += 2;  /* only first two bytes are used */
             break;
 
@@ -3359,7 +3359,7 @@ static void hb_vmPlus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
       {
          if( HB_IS_NUMINT( pItem2 ) )
             hb_vmTimeStampPut( pResult, pItem1->item.asDateTime.julian +
-                                        ( long ) HB_ITEM_GET_NUMINTRAW( pItem2 ),
+                                        static_cast< long >( HB_ITEM_GET_NUMINTRAW( pItem2 ) ),
                                         pItem1->item.asDateTime.time );
          else
             hb_vmTimeStampAdd( pResult, pItem1, pItem2->item.asDouble.value );
@@ -3372,7 +3372,7 @@ static void hb_vmPlus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
       if( HB_IS_TIMESTAMP( pItem2 ) )
       {
          if( HB_IS_NUMINT( pItem1 ) )
-            hb_vmTimeStampPut( pResult, ( long ) HB_ITEM_GET_NUMINTRAW( pItem1 ) +
+            hb_vmTimeStampPut( pResult, static_cast< long >( HB_ITEM_GET_NUMINTRAW( pItem1 ) ) +
                                         pItem2->item.asDateTime.julian,
                                         pItem2->item.asDateTime.time );
          else
@@ -3448,7 +3448,7 @@ static void hb_vmMinus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
       {
          if( HB_IS_NUMINT( pItem2 ) )
             hb_vmTimeStampPut( pResult, pItem1->item.asDateTime.julian -
-                                        ( long ) HB_ITEM_GET_NUMINTRAW( pItem2 ),
+                                        static_cast< long >( HB_ITEM_GET_NUMINTRAW( pItem2 ) ),
                                         pItem1->item.asDateTime.time );
          else
             hb_vmTimeStampAdd( pResult, pItem1, - pItem2->item.asDouble.value );
@@ -5073,7 +5073,7 @@ static const HB_BYTE * hb_vmSwitch( const HB_BYTE * pCode, HB_USHORT casesCnt )
          {
             case HB_P_JUMPNEAR:
                if( fFound )
-                  pCode += ( signed char ) pCode[ 1 ];
+                  pCode += static_cast< signed char >( pCode[ 1 ] );
                else
                   pCode += 2;
                break;
@@ -6972,7 +6972,7 @@ void hb_vmPushStringPcode( const char * szText, HB_SIZE nLength )
    pItem->item.asString.allocated = 0;
    pItem->item.asString.length = nLength;
    pItem->item.asString.value = ( char * ) HB_UNCONST( ( nLength <= 1 ?
-                        hb_szAscii[ ( unsigned char ) szText[ 0 ] ] : szText ) );
+                        hb_szAscii[ static_cast< unsigned char >( szText[ 0 ] ) ] : szText ) );
 }
 
 void hb_vmPushSymbol( PHB_SYMB pSym )
@@ -9575,14 +9575,14 @@ void hb_xvmFrame( int iLocals, int iParams )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_xvmFrame(%d, %d)", iLocals, iParams ) );
 
-   hb_vmFrame( ( HB_USHORT ) iLocals, ( unsigned char ) iParams );
+   hb_vmFrame( ( HB_USHORT ) iLocals, static_cast< unsigned char >( iParams ) );
 }
 
 void hb_xvmVFrame( int iLocals, int iParams )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_xvmVFrame(%d, %d)", iLocals, iParams ) );
 
-   hb_vmVFrame( ( HB_USHORT ) iLocals, ( unsigned char ) iParams );
+   hb_vmVFrame( ( HB_USHORT ) iLocals, static_cast< unsigned char >( iParams ) );
 }
 
 void hb_xvmSFrame( PHB_SYMB pSymbol )

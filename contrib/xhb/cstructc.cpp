@@ -490,7 +490,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
       {
          case CTYPE_CHAR:  /* char */
             if( ( pBaseVar->pItems + nIndex )->type )
-               *( ( char * ) ( Buffer + uiOffset ) ) = ( char ) ( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
+               *( ( char * ) ( Buffer + uiOffset ) ) = static_cast< char >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
             else
                *( ( char * ) ( Buffer + uiOffset ) ) = 0;
             break;
@@ -555,11 +555,11 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
 
          case CTYPE_SHORT:  /* short */
             if( ( pBaseVar->pItems + nIndex )->type == HB_IT_INTEGER )
-               *( ( short * ) ( Buffer + uiOffset ) ) = ( short ) ( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
+               *( ( short * ) ( Buffer + uiOffset ) ) = static_cast< short >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
             else if( ( pBaseVar->pItems + nIndex )->type == HB_IT_LONG )
-               *( ( short * ) ( Buffer + uiOffset ) ) = ( short ) ( ( pBaseVar->pItems + nIndex )->item.asLong.value );
+               *( ( short * ) ( Buffer + uiOffset ) ) = static_cast< short >( ( pBaseVar->pItems + nIndex )->item.asLong.value );
             else if( ( pBaseVar->pItems + nIndex )->type == HB_IT_DOUBLE )
-               *( ( short * ) ( Buffer + uiOffset ) ) = ( short ) ( ( pBaseVar->pItems + nIndex )->item.asDouble.value );
+               *( ( short * ) ( Buffer + uiOffset ) ) = static_cast< short >( ( pBaseVar->pItems + nIndex )->item.asDouble.value );
             else if( ( pBaseVar->pItems + nIndex )->type == HB_IT_NIL )
                *( ( short * ) ( Buffer + uiOffset ) ) = 0;
             else
@@ -571,11 +571,11 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
 
          case CTYPE_UNSIGNED_SHORT:  /* unsigned short */
             if( ( pBaseVar->pItems + nIndex )->type == HB_IT_INTEGER )
-               *( ( unsigned short * ) ( Buffer + uiOffset ) ) = ( unsigned short ) ( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
+               *( ( unsigned short * ) ( Buffer + uiOffset ) ) = static_cast< unsigned short >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
             else if( ( pBaseVar->pItems + nIndex )->type == HB_IT_LONG )
-               *( ( unsigned short * ) ( Buffer + uiOffset ) ) = ( unsigned short ) ( ( pBaseVar->pItems + nIndex )->item.asLong.value );
+               *( ( unsigned short * ) ( Buffer + uiOffset ) ) = static_cast< unsigned short >( ( pBaseVar->pItems + nIndex )->item.asLong.value );
             else if( ( pBaseVar->pItems + nIndex )->type == HB_IT_DOUBLE )
-               *( ( unsigned short * ) ( Buffer + uiOffset ) ) = ( unsigned short ) ( ( pBaseVar->pItems + nIndex )->item.asDouble.value );
+               *( ( unsigned short * ) ( Buffer + uiOffset ) ) = static_cast< unsigned short >( ( pBaseVar->pItems + nIndex )->item.asDouble.value );
             else if( ( pBaseVar->pItems + nIndex )->type == HB_IT_NIL )
                *( ( unsigned short * ) ( Buffer + uiOffset ) ) = 0;
             else
@@ -647,11 +647,11 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
 
          case CTYPE_UNSIGNED_INT:  /* unsigned int */
             if( ( pBaseVar->pItems + nIndex )->type == HB_IT_INTEGER )
-               *( ( unsigned int * ) ( Buffer + uiOffset ) ) = ( unsigned int ) ( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
+               *( ( unsigned int * ) ( Buffer + uiOffset ) ) = static_cast< unsigned int >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
             else if( ( pBaseVar->pItems + nIndex )->type == HB_IT_LONG )
-               *( ( unsigned int * ) ( Buffer + uiOffset ) ) = ( unsigned int ) ( ( pBaseVar->pItems + nIndex )->item.asLong.value );
+               *( ( unsigned int * ) ( Buffer + uiOffset ) ) = static_cast< unsigned int >( ( pBaseVar->pItems + nIndex )->item.asLong.value );
             else if( ( pBaseVar->pItems + nIndex )->type == HB_IT_DOUBLE )
-               *( ( unsigned int * ) ( Buffer + uiOffset ) ) = ( unsigned int ) ( ( pBaseVar->pItems + nIndex )->item.asDouble.value );
+               *( ( unsigned int * ) ( Buffer + uiOffset ) ) = static_cast< unsigned int >( ( pBaseVar->pItems + nIndex )->item.asDouble.value );
             else if( ( pBaseVar->pItems + nIndex )->type == HB_IT_NIL )
                *( ( unsigned int * ) ( Buffer + uiOffset ) ) = 0;
             else
@@ -708,11 +708,11 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
 
          case CTYPE_LONG:  /* long */
             if( ( pBaseVar->pItems + nIndex )->type == HB_IT_INTEGER )
-               *( ( long * ) ( Buffer + uiOffset ) ) = ( long ) ( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
+               *( ( long * ) ( Buffer + uiOffset ) ) = static_cast< long >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
             else if( ( pBaseVar->pItems + nIndex )->type == HB_IT_LONG )
-               *( ( long * ) ( Buffer + uiOffset ) ) = ( long ) ( ( pBaseVar->pItems + nIndex )->item.asLong.value );
+               *( ( long * ) ( Buffer + uiOffset ) ) = static_cast< long >( ( pBaseVar->pItems + nIndex )->item.asLong.value );
             else if( ( pBaseVar->pItems + nIndex )->type == HB_IT_DOUBLE )
-               *( ( long * ) ( Buffer + uiOffset ) ) = ( long ) ( ( pBaseVar->pItems + nIndex )->item.asDouble.value );
+               *( ( long * ) ( Buffer + uiOffset ) ) = static_cast< long >( ( pBaseVar->pItems + nIndex )->item.asDouble.value );
             else if( ( pBaseVar->pItems + nIndex )->type == HB_IT_NIL )
                *( ( long * ) ( Buffer + uiOffset ) ) = 0;
             else
@@ -724,11 +724,11 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
 
          case CTYPE_UNSIGNED_LONG:  /* unsigned long */
             if( ( pBaseVar->pItems + nIndex )->type == HB_IT_INTEGER )
-               *( ( unsigned long * ) ( Buffer + uiOffset ) ) = ( unsigned long ) ( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
+               *( ( unsigned long * ) ( Buffer + uiOffset ) ) = static_cast< unsigned long >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
             else if( ( pBaseVar->pItems + nIndex )->type == HB_IT_LONG )
-               *( ( unsigned long * ) ( Buffer + uiOffset ) ) = ( unsigned long ) ( ( pBaseVar->pItems + nIndex )->item.asLong.value );
+               *( ( unsigned long * ) ( Buffer + uiOffset ) ) = static_cast< unsigned long >( ( pBaseVar->pItems + nIndex )->item.asLong.value );
             else if( ( pBaseVar->pItems + nIndex )->type == HB_IT_DOUBLE )
-               *( ( unsigned long * ) ( Buffer + uiOffset ) ) = ( unsigned long ) ( ( pBaseVar->pItems + nIndex )->item.asDouble.value );
+               *( ( unsigned long * ) ( Buffer + uiOffset ) ) = static_cast< unsigned long >( ( pBaseVar->pItems + nIndex )->item.asDouble.value );
             else if( ( pBaseVar->pItems + nIndex )->type == HB_IT_NIL )
                *( ( unsigned long * ) ( Buffer + uiOffset ) ) = 0;
             else
@@ -784,7 +784,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
 
          case CTYPE_FLOAT:  /* float */
             if( ( pBaseVar->pItems + nIndex )->type )
-               *( ( float * ) ( Buffer + uiOffset ) ) = ( float ) ( pBaseVar->pItems + nIndex )->item.asDouble.value;
+               *( ( float * ) ( Buffer + uiOffset ) ) = static_cast< float >( ( pBaseVar->pItems + nIndex )->item.asDouble.value );
             else
                *( ( float * ) ( Buffer + uiOffset ) ) = 0;
             break;
@@ -807,7 +807,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
 
                /* Is this correct??? IMHO It's a bug */
                case HB_IT_DOUBLE:
-                  **( ( float ** ) ( Buffer + uiOffset ) ) = ( float ) ( ( pBaseVar->pItems + nIndex )->item.asDouble.value );
+                  **( ( float ** ) ( Buffer + uiOffset ) ) = static_cast< float >( ( pBaseVar->pItems + nIndex )->item.asDouble.value );
                   break;
 
                default:
@@ -1154,7 +1154,7 @@ static PHB_ITEM StructureToArray( HB_BYTE * Buffer, HB_SIZE nBufferLen, PHB_ITEM
             break;
 
          case CTYPE_UNSIGNED_SHORT:  /* unsigned short */
-            hb_itemPutNI( pBaseVar->pItems + nIndex, ( short ) *( ( unsigned short * ) ( Buffer + uiOffset ) ) );
+            hb_itemPutNI( pBaseVar->pItems + nIndex, static_cast< short >( *( ( unsigned short * ) ( Buffer + uiOffset ) ) ) );
             break;
 
          case CTYPE_SHORT_PTR:          /* short * */
@@ -1180,7 +1180,7 @@ static PHB_ITEM StructureToArray( HB_BYTE * Buffer, HB_SIZE nBufferLen, PHB_ITEM
             break;
 
          case CTYPE_UNSIGNED_LONG:  /* unsigned long */
-            hb_itemPutNL( pBaseVar->pItems + nIndex, ( long ) *( ( unsigned long * ) ( Buffer + uiOffset ) ) );
+            hb_itemPutNL( pBaseVar->pItems + nIndex, static_cast< long >( *( ( unsigned long * ) ( Buffer + uiOffset ) ) ) );
             break;
 
          case CTYPE_LONG_PTR:          /* long * */

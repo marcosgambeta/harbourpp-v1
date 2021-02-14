@@ -213,12 +213,12 @@ static void do_token1( int iSwitch )
                   hb_retc_null();
                   if( HB_ISBYREF( 5 ) ) /* HB_EXTENSION */
                   {
-                     cRet = ( char ) ct_token->iPreSeparator;
+                     cRet = static_cast< char >( ct_token->iPreSeparator );
                      hb_storclen( &cRet, ( ct_token->iPreSeparator != -1 ? 1 : 0 ), 5 );
                   }
                   if( HB_ISBYREF( 6 ) ) /* HB_EXTENSION */
                   {
-                     cRet = ( char ) ct_token->iPostSeparator;
+                     cRet = static_cast< char >( ct_token->iPostSeparator );
                      hb_storclen( &cRet, ( ct_token->iPostSeparator != -1 ? 1 : 0 ), 6 );
                   }
                   break;
@@ -257,13 +257,13 @@ static void do_token1( int iSwitch )
             case DO_TOKEN1_TOKENLOWER:
                if( pcSubStr != pc )     /* letters can be tokenizers, too,
                                            but they should not be lowercase'd */
-                  *( pcRet + ( pcSubStr - pcString ) ) = ( char ) hb_charLower( ( HB_UCHAR ) *pcSubStr );
+                  *( pcRet + ( pcSubStr - pcString ) ) = static_cast< char >( hb_charLower( ( HB_UCHAR ) *pcSubStr ) );
                break;
 
             case DO_TOKEN1_TOKENUPPER:
                if( pcSubStr != pc )     /* letters can be tokenizers, too,
                                            but they should not be uppercase'd */
-                  *( pcRet + ( pcSubStr - pcString ) ) = ( char ) hb_charUpper( ( HB_UCHAR ) *pcSubStr );
+                  *( pcRet + ( pcSubStr - pcString ) ) = static_cast< char >( hb_charUpper( ( HB_UCHAR ) *pcSubStr ) );
                break;
 
             default:
@@ -321,12 +321,12 @@ static void do_token1( int iSwitch )
 
             if( HB_ISBYREF( 5 ) ) /* HB_EXTENSION */
             {
-               cRet = ( char ) ct_token->iPreSeparator;
+               cRet = static_cast< char >( ct_token->iPreSeparator );
                hb_storclen( &cRet, ( ct_token->iPreSeparator != -1 ? 1 : 0 ), 5 );
             }
             if( HB_ISBYREF( 6 ) ) /* HB_EXTENSION */
             {
-               cRet = ( char ) ct_token->iPostSeparator;
+               cRet = static_cast< char >( ct_token->iPostSeparator );
                hb_storclen( &cRet, ( ct_token->iPostSeparator != -1 ? 1 : 0 ), 6 );
             }
             break;
@@ -369,12 +369,12 @@ static void do_token1( int iSwitch )
 
             if( HB_ISBYREF( 5 ) ) /* HB_EXTENSION */
             {
-               cRet = ( char ) ct_token->iPreSeparator;
+               cRet = static_cast< char >( ct_token->iPreSeparator );
                hb_storclen( &cRet, ( ct_token->iPreSeparator != -1 ? 1 : 0 ), 5 );
             }
             if( HB_ISBYREF( 6 ) ) /* HB_EXTENSION */
             {
-               cRet = ( char ) ct_token->iPostSeparator;
+               cRet = static_cast< char >( ct_token->iPostSeparator );
                hb_storclen( &cRet, ( ct_token->iPostSeparator != -1 ? 1 : 0 ), 6 );
             }
 
@@ -473,7 +473,7 @@ HB_FUNC( TOKENSEP )
       /* return the separator char BEHIND the last token */
       if( ct_token->iPostSeparator != -1 )
       {
-         cRet = ( char ) ct_token->iPostSeparator;
+         cRet = static_cast< char >( ct_token->iPostSeparator );
          hb_retclen( &cRet, 1 );
       }
       else
@@ -484,7 +484,7 @@ HB_FUNC( TOKENSEP )
       /* return the separator char BEFORE the last token */
       if( ct_token->iPreSeparator != -1 )
       {
-         cRet = ( char ) ct_token->iPreSeparator;
+         cRet = static_cast< char >( ct_token->iPreSeparator );
          hb_retclen( &cRet, 1 );
       }
       else

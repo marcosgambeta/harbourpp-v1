@@ -103,11 +103,11 @@ static int hb_Inp9x( unsigned short int usPort )
 
    #elif defined( __WATCOMC__ )
 
-      usVal = ( unsigned short int ) inp( usPort );
+      usVal = static_cast< unsigned short int >( inp( usPort ) );
 
    #else
 
-      usVal = ( unsigned short int ) _inp( usPort );
+      usVal = static_cast< unsigned short int >( _inp( usPort ) );
 
    #endif
 
@@ -168,29 +168,29 @@ static void hb_gt_w9xTone( double dFreq, double dDurat )
       /* Setup Sound Control Port Registers and timer channel 2 */
       hb_Outp9x( 67, 182 );
 
-      lAdjFreq = ( unsigned long ) ( 1193180 / dFreq );
+      lAdjFreq = static_cast< unsigned long >( 1193180 / dFreq );
 
-      if( ( long ) lAdjFreq < 0 )
+      if( static_cast< long >( lAdjFreq ) < 0 )
          uLSB = lAdjFreq + 65536;
       else
          uLSB = lAdjFreq % 256;
 
-      if( ( long ) lAdjFreq < 0 )
+      if( static_cast< long >( lAdjFreq ) < 0 )
          uMSB = lAdjFreq + 65536;
       else
          uMSB = lAdjFreq / 256;
 
       /* set the frequency ( LSB, MSB ) */
 
-      hb_Outp9x( 66, ( unsigned short int ) uLSB );
-      hb_Outp9x( 66, ( unsigned short int ) uMSB );
+      hb_Outp9x( 66, static_cast< unsigned short int >( uLSB ) );
+      hb_Outp9x( 66, static_cast< unsigned short int >( uMSB ) );
 
       /* Get current Port setting */
       /* enable Speaker Data & Timer gate bits */
       /* (00000011B is bitmask to enable sound) */
       /* Turn on Speaker - sound Tone for duration.. */
 
-      hb_Outp9x( 97, ( unsigned short int ) hb_Inp9x( 97 ) | 3 );
+      hb_Outp9x( 97, static_cast< unsigned short int >( hb_Inp9x( 97 ) ) | 3 );
 
       hb_idleSleep( dDurat );
 
@@ -216,7 +216,7 @@ static void hb_gt_wNtTone( double dFreq, double dDurat )
       less than < 20 hz.  Windows NT minimum is 37... */
 
    if( dFreq >= 37.0 )
-      Beep( ( DWORD ) dFreq, ( DWORD ) ( dDurat * 1000 ) );  /* Beep wants Milliseconds */
+      Beep( static_cast< DWORD >( dFreq ), static_cast< DWORD >( dDurat * 1000 ) );  /* Beep wants Milliseconds */
    else
       hb_idleSleep( dDurat );
 }

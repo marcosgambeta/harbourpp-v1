@@ -317,7 +317,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * data,
 
    if( pFile->fRead )
    {
-      lRead = nSize > LONG_MAX ? LONG_MAX : ( long ) nSize;
+      lRead = nSize > LONG_MAX ? LONG_MAX : static_cast< long >( nSize );
       if( timeout == -1 )
          timeout = pFile->timeout;
       lRead = hb_comRecv( pFile->port, data, lRead, timeout );
@@ -343,7 +343,7 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * data,
 
    if( pFile->fWrite )
    {
-      lSent = nSize > LONG_MAX ? LONG_MAX : ( long ) nSize;
+      lSent = nSize > LONG_MAX ? LONG_MAX : static_cast< long >( nSize );
       if( timeout == -1 )
          timeout = pFile->timeout;
       lSent = hb_comSend( pFile->port, data, lSent, timeout );

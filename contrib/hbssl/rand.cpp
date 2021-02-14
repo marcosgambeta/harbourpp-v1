@@ -75,7 +75,7 @@ HB_FUNC( RAND_EVENT )
    RAND_poll();
    hb_retni( RAND_status() );
 #else
-   hb_retni( RAND_event( hb_parni( 1 ), ( WPARAM ) hb_parnint( 2 ), ( LPARAM ) hb_parnint( 3 ) ) );
+   hb_retni( RAND_event( hb_parni( 1 ), static_cast< WPARAM >( hb_parnint( 2 ) ), static_cast< LPARAM >( hb_parnint( 3 ) ) ) );
 #endif
 #else
    hb_retni( 1 );

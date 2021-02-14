@@ -157,7 +157,7 @@ static int hb_gencc_checkJumpCondAhead( HB_LONG lValue, PHB_HFUNC pFunc, HB_SIZE
       switch( pFunc->pCode[ nPCodePos + 1 ] )
       {
          case HB_P_JUMPFALSENEAR:
-            nOffset = ( signed char ) ( pFunc->pCode[ nPCodePos + 2 ] );
+            nOffset = static_cast< signed char >( pFunc->pCode[ nPCodePos + 2 ] );
             fNot = HB_TRUE;
             iSize = 3;
             break;
@@ -175,7 +175,7 @@ static int hb_gencc_checkJumpCondAhead( HB_LONG lValue, PHB_HFUNC pFunc, HB_SIZE
             break;
 
          case HB_P_JUMPTRUENEAR:
-            nOffset = ( signed char ) ( pFunc->pCode[ nPCodePos + 2 ] );
+            nOffset = static_cast< signed char >( pFunc->pCode[ nPCodePos + 2 ] );
             iSize = 3;
             break;
 
@@ -218,7 +218,7 @@ static int hb_gencc_checkNumAhead( HB_LONG lValue, PHB_HFUNC pFunc, HB_SIZE nPCo
 
          case HB_P_POPLOCALNEAR:
             fprintf( cargo->yyc, "\thb_xvmLocalSetInt( %d, %ldL );\n",
-                     ( signed char ) pFunc->pCode[ nPCodePos + 1 ], lValue );
+                     static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] ), lValue );
             return 2;
 
          case HB_P_EQUAL:
@@ -301,7 +301,7 @@ static int hb_gencc_checkPlusAhead( PHB_HFUNC pFunc, HB_SIZE nPCodePos, PHB_LABE
       {
          case HB_P_POPLOCALNEAR:
             fprintf( cargo->yyc, "\thb_xvmLocalAdd( %d );\n",
-                     ( signed char ) pFunc->pCode[ nPCodePos + 1 ] );
+                     static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] ) );
             return 2;
 
          case HB_P_POPLOCAL:
@@ -574,7 +574,7 @@ static HB_GENC_FUNC( hb_p_instring )
 
 static HB_GENC_FUNC( hb_p_jumpnear )
 {
-   HB_ISIZ nOffset = ( signed char ) ( pFunc->pCode[ nPCodePos + 1 ] );
+   HB_ISIZ nOffset = static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] );
 
    HB_GENC_LABEL();
 
@@ -607,7 +607,7 @@ static HB_GENC_FUNC( hb_p_jumpfar )
 
 static HB_GENC_FUNC( hb_p_jumpfalsenear )
 {
-   HB_ISIZ nOffset = ( signed char ) ( pFunc->pCode[ nPCodePos + 1 ] );
+   HB_ISIZ nOffset = static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] );
 
    HB_GENC_LABEL();
 
@@ -640,7 +640,7 @@ static HB_GENC_FUNC( hb_p_jumpfalsefar )
 
 static HB_GENC_FUNC( hb_p_jumptruenear )
 {
-   HB_ISIZ nOffset = ( signed char ) ( pFunc->pCode[ nPCodePos + 1 ] );
+   HB_ISIZ nOffset = static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] );
 
    HB_GENC_LABEL();
 
@@ -1000,7 +1000,7 @@ static HB_GENC_FUNC( hb_p_poplocalnear )
    HB_GENC_LABEL();
 
    fprintf( cargo->yyc, "\thb_xvmPopLocal( %d );\n",
-            ( signed char ) pFunc->pCode[ nPCodePos + 1 ] );
+            static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] ) );
    return 2;
 }
 
@@ -1186,7 +1186,7 @@ static HB_GENC_FUNC( hb_p_pushfield )
 
 static HB_GENC_FUNC( hb_p_pushbyte )
 {
-   int iVal = ( signed char ) pFunc->pCode[ nPCodePos + 1 ], iSkip;
+   int iVal = static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] ), iSkip;
 
    HB_GENC_LABEL();
 
@@ -1221,7 +1221,7 @@ static HB_GENC_FUNC( hb_p_pushlocal )
          case HB_P_POPLOCALNEAR:
             hb_gencc_copyLocals( cargo->yyc,
                         HB_PCODE_MKSHORT( &pFunc->pCode[ nPCodePos + 1 ] ),
-                        ( signed char ) pFunc->pCode[ nPCodePos + 4 ] );
+                        static_cast< signed char >( pFunc->pCode[ nPCodePos + 4 ] ) );
             return 5;
 
          case HB_P_POPLOCAL:
@@ -1247,20 +1247,20 @@ static HB_GENC_FUNC( hb_p_pushlocalnear )
       {
          case HB_P_POPLOCALNEAR:
             hb_gencc_copyLocals( cargo->yyc,
-                        ( signed char ) pFunc->pCode[ nPCodePos + 1 ],
-                        ( signed char ) pFunc->pCode[ nPCodePos + 3 ] );
+                        static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] ),
+                        static_cast< signed char >( pFunc->pCode[ nPCodePos + 3 ] ) );
             return 4;
 
          case HB_P_POPLOCAL:
             hb_gencc_copyLocals( cargo->yyc,
-                        ( signed char ) pFunc->pCode[ nPCodePos + 1 ],
+                        static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] ),
                         HB_PCODE_MKSHORT( &pFunc->pCode[ nPCodePos + 3 ] ) );
             return 5;
       }
    }
 
    fprintf( cargo->yyc, "\thb_xvmPushLocal( %d );\n",
-            ( signed char ) pFunc->pCode[ nPCodePos + 1 ] );
+            static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] ) );
    return 2;
 }
 
@@ -1320,7 +1320,7 @@ static HB_GENC_FUNC( hb_p_pushlonglong )
    iSkip = hb_gencc_checkNumAhead( llVal, pFunc, nPCodePos + 9, cargo );
 
    if( iSkip == 0 )
-      fprintf( cargo->yyc, "\thb_xvmPushLong( %ldL );\n", ( long ) llVal );
+      fprintf( cargo->yyc, "\thb_xvmPushLong( %ldL );\n", static_cast< long >( llVal ) );
    fprintf( cargo->yyc, "#else\n" );
    fprintf( cargo->yyc, "\thb_xvmPushLongLong( HB_LL( %s ) );\n",
             hb_numToStr( szBuf, sizeof( szBuf ), llVal ) );
@@ -1834,7 +1834,7 @@ static HB_GENC_FUNC( hb_p_switch )
       switch( pFunc->pCode[ nPCodePos ] )
       {
          case HB_P_JUMPNEAR:
-            nNewPos = nPCodePos + ( signed char ) pFunc->pCode[ nPCodePos + 1 ];
+            nNewPos = nPCodePos + static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] );
             nPCodePos += 2;
             break;
          case HB_P_JUMP:
@@ -1894,7 +1894,7 @@ static HB_GENC_FUNC( hb_p_switch )
       switch( pFunc->pCode[ nPCodePos ] )
       {
          case HB_P_JUMPNEAR:
-            nNewPos = nPCodePos + ( signed char ) pFunc->pCode[ nPCodePos + 1 ];
+            nNewPos = nPCodePos + static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] );
             nPCodePos += 2;
             break;
          case HB_P_JUMP:
@@ -1923,7 +1923,7 @@ static HB_GENC_FUNC( hb_p_pushdate )
    HB_GENC_LABEL();
 
    fprintf( cargo->yyc, "\thb_xvmPushDate( %ldL );\n",
-            ( long ) HB_PCODE_MKLONG( &pFunc->pCode[ nPCodePos + 1 ] ) );
+            static_cast< long >( HB_PCODE_MKLONG( &pFunc->pCode[ nPCodePos + 1 ] ) ) );
    return 5;
 }
 
@@ -1932,8 +1932,8 @@ static HB_GENC_FUNC( hb_p_pushtimestamp )
    HB_GENC_LABEL();
 
    fprintf( cargo->yyc, "\thb_xvmPushTimeStamp( %ldL, %ldL );\n",
-            ( long ) HB_PCODE_MKLONG( &pFunc->pCode[ nPCodePos + 1 ] ),
-            ( long ) HB_PCODE_MKLONG( &pFunc->pCode[ nPCodePos + 5 ] ) );
+            static_cast< long >( HB_PCODE_MKLONG( &pFunc->pCode[ nPCodePos + 1 ] ) ),
+            static_cast< long >( HB_PCODE_MKLONG( &pFunc->pCode[ nPCodePos + 5 ] ) ) );
    return 9;
 }
 

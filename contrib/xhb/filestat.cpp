@@ -62,7 +62,7 @@
 #elif defined( HB_OS_WIN )
    #include <windows.h>
    #if ! defined( INVALID_FILE_ATTRIBUTES )
-      #define INVALID_FILE_ATTRIBUTES  ( ( DWORD ) ( -1 ) )
+      #define INVALID_FILE_ATTRIBUTES  ( static_cast< DWORD >( -1 ) )
    #endif
    #include "hbwinuni.h"
 #endif

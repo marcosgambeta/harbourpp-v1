@@ -193,7 +193,7 @@ HB_FUNC( ED_NEW )
    if( bufferSize <= 0 )
       bufferSize = 32767;
 
-   pEd->escape = ( char ) hb_parni( 4 );
+   pEd->escape = static_cast< char >( hb_parni( 4 ) );
    pEd->begin  = ( char * ) hb_xgrab( bufferSize + 100 );
    memset( pEd->begin, '\0', bufferSize );
 
@@ -673,7 +673,7 @@ HB_FUNC( ED_GETTEXT )
       char *  buffer;
       char *  help;
 
-      char mietka = ( char ) hb_parni( 2 );
+      char mietka = static_cast< char >( hb_parni( 2 ) );
 
       dl = strlen( pEd->begin ) + 3;
 
@@ -2251,7 +2251,7 @@ HB_FUNC( ED_PUTCHAR )
    if( pEd )
       PutChar( pEd,
                hb_parl( 3 ),              /* current INSERT state */
-               ( char ) hb_parni( 2 ) );  /* character to paste */
+               static_cast< char >( hb_parni( 2 ) ) );  /* character to paste */
    else
       hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

@@ -185,7 +185,7 @@ static int arc4_seed_win( void )
 
    if( ! s_provider_set &&
        ! CryptAcquireContext( &s_provider, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT | CRYPT_SILENT ) &&
-       GetLastError() != ( DWORD ) NTE_BAD_KEYSET )
+       GetLastError() != static_cast< DWORD >( NTE_BAD_KEYSET ) )
       return -1;
 
    s_provider_set = 1;
@@ -421,7 +421,7 @@ static int arc4_seed_rand( void )
    HB_SIZE i;
    HB_U8   buf[ ADD_ENTROPY ];
 
-   srand( ( unsigned ) hb_dateMilliSeconds() );
+   srand( static_cast< unsigned >( hb_dateMilliSeconds() ) );
 
    for( i = 0; i < sizeof( buf ); i++ )
       buf[ i ] = ( HB_U8 ) ( rand() % 256 );  /* not biased */

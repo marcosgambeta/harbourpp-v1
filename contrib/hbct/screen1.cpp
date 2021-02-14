@@ -437,7 +437,7 @@ HB_FUNC( SCREENTEXT )  /* HB_EXTENSION */
             HB_BYTE bAttr;
             HB_USHORT usChar;
             hb_gtGetChar( iTop, iCol, &iColor, &bAttr, &usChar );
-            *szText++ = ( char ) usChar;
+            *szText++ = static_cast< char >( usChar );
             ++iCol;
          }
          ++iTop;

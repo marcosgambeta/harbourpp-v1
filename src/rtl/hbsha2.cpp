@@ -71,7 +71,7 @@ HB_FUNC( HB_SHA224 )
          }
          else
          {
-            uiChunk = ( unsigned int ) nCount;
+            uiChunk = static_cast< unsigned int >( nCount );
             nCount = 0;
          }
 
@@ -118,7 +118,7 @@ HB_FUNC( HB_SHA256 )
          }
          else
          {
-            uiChunk = ( unsigned int ) nCount;
+            uiChunk = static_cast< unsigned int >( nCount );
             nCount = 0;
          }
 
@@ -165,7 +165,7 @@ HB_FUNC( HB_SHA384 )
          }
          else
          {
-            uiChunk = ( unsigned int ) nCount;
+            uiChunk = static_cast< unsigned int >( nCount );
             nCount = 0;
          }
 
@@ -212,7 +212,7 @@ HB_FUNC( HB_SHA512 )
          }
          else
          {
-            uiChunk = ( unsigned int ) nCount;
+            uiChunk = static_cast< unsigned int >( nCount );
             nCount = 0;
          }
 

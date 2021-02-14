@@ -57,7 +57,7 @@ HB_FUNC( FT_SAVEATT )
             HB_BYTE   bAttr;
             HB_USHORT usChar;
             hb_gtGetChar( iTop, iCol, &iColor, &bAttr, &usChar );
-            *pBuffer++ = ( char ) iColor;
+            *pBuffer++ = static_cast< char >( iColor );
             ++iCol;
          }
          ++iTop;

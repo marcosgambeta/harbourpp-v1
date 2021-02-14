@@ -150,7 +150,7 @@ static int s_zsock_inbuffer( PHB_SOCKEX pSock )
       }
 
       pZ->z_read.next_out  = ( Bytef * ) pSock->buffer;
-      pZ->z_read.avail_out = ( uInt ) pSock->readahead;
+      pZ->z_read.avail_out = static_cast< uInt >( pSock->readahead );
 
       err = inflate( &pZ->z_read, Z_SYNC_FLUSH );
       if( err != Z_OK && err != Z_BUF_ERROR )
@@ -183,7 +183,7 @@ static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT tim
       int err = Z_OK;
 
       pZ->z_read.next_out  = ( Bytef * ) data;
-      pZ->z_read.avail_out = ( uInt ) len;
+      pZ->z_read.avail_out = static_cast< uInt >( len );
       pZ->z_read.total_out = 0;
 
       while( pZ->z_read.avail_out )
@@ -195,7 +195,7 @@ static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT tim
             if( lRecv <= 0 )
                break;
             pZ->z_read.next_in = ( Bytef * ) pZ->rdbuf;
-            pZ->z_read.avail_in = ( uInt ) lRecv;
+            pZ->z_read.avail_in = static_cast< uInt >( lRecv );
          }
          else if( err != Z_OK )
          {
@@ -207,7 +207,7 @@ static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT tim
       }
 
       if( pZ->z_read.total_out != 0 )
-         lRecv = ( long ) pZ->z_read.total_out;
+         lRecv = static_cast< long >( pZ->z_read.total_out );
 
       return lRecv;
    }
@@ -224,7 +224,7 @@ static long s_sockexWrite( PHB_SOCKEX pSock, const void * data, long len, HB_MAX
       long lWritten = 0;
 
       pZ->z_write.next_in  = ( Bytef * ) HB_UNCONST( data );
-      pZ->z_write.avail_in = ( uInt ) len;
+      pZ->z_write.avail_in = static_cast< uInt >( len );
 
       while( pZ->z_write.avail_in )
       {
@@ -249,7 +249,7 @@ static long s_sockexWrite( PHB_SOCKEX pSock, const void * data, long len, HB_MAX
          }
       }
 
-      return lWritten >= 0 ? ( long ) ( len - pZ->z_write.avail_in ) : lWritten;
+      return lWritten >= 0 ? static_cast< long >( len - pZ->z_write.avail_in ) : lWritten;
    }
    else
       return hb_sockexWrite( pZ->sock, data, len, timeout );

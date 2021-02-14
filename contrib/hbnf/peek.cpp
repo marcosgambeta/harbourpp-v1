@@ -36,7 +36,7 @@
 
    #if ! defined( MK_FP )
       #define MK_FP( seg, off ) \
-   ( ( void FAR * ) ( ( ( unsigned long ) ( seg ) << 4 ) | ( unsigned ) ( off ) ) )
+   ( ( void FAR * ) ( ( static_cast< unsigned long >( seg ) << 4 ) | static_cast< unsigned >( off ) ) )
    #endif
 
    #if defined( __WATCOMC__ )

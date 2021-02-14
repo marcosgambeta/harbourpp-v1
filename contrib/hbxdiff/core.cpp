@@ -165,7 +165,7 @@ HB_FUNC( XDL_INIT_MMFILE )
    mmfile_t * mmf = ( mmfile_t * ) hb_xgrab( sizeof( mmfile_t ) );
 
    if( xdl_init_mmfile( mmf,
-                        hb_parnldef( 1, XDLT_STD_BLKSIZE ), ( unsigned long ) hb_parnl( 3 ) ) == 0 )
+                        hb_parnldef( 1, XDLT_STD_BLKSIZE ), static_cast< unsigned long >( hb_parnl( 3 ) ) ) == 0 )
    {
       HB_MMF * phb_mmf;
 
@@ -244,7 +244,7 @@ HB_FUNC( XDL_READ_MMFILE )
 
       if( data && size )
       {
-         long lResult = xdl_read_mmfile( phb_mmf->mmf, data, ( long ) size );
+         long lResult = xdl_read_mmfile( phb_mmf->mmf, data, static_cast< long >( size ) );
 
          if( lResult == -1 )
          {
@@ -281,7 +281,7 @@ HB_FUNC( XDL_WRITE_MMFILE )
    {
       if( HB_ISCHAR( 2 ) )
       {
-         long lSize = ( long ) hb_parclen( 2 );
+         long lSize = static_cast< long >( hb_parclen( 2 ) );
 
          if( hb_pcount() > 2 )
             lSize = hb_parnldef( 3, lSize );
@@ -338,7 +338,7 @@ HB_FUNC( XDL_MMFILE_COMPACT )
    mmfile_t * mmfc     = ( mmfile_t * ) hb_xgrab( sizeof( mmfile_t ) );
 
    if( xdl_mmfile_compact( phb_mmfo->mmf, mmfc, hb_parnldef( 1, XDLT_STD_BLKSIZE ),
-                           ( unsigned long ) hb_parnl( 3 ) ) == 0 )
+                           static_cast< unsigned long >( hb_parnl( 3 ) ) ) == 0 )
    {
       HB_MMF * phb_mmf;
 
@@ -414,7 +414,7 @@ HB_FUNC( XDL_DIFF )
       xdemitconf_t xecfg;
       xdemitcb_t   ecb;
 
-      xpp.flags    = ( unsigned long ) hb_parnldef( 3, 0 );
+      xpp.flags    = static_cast< unsigned long >( hb_parnldef( 3, 0 ) );
       xecfg.ctxlen = hb_parnldef( 4, 3 );
 
       if( HB_ISNUM( 5 ) )

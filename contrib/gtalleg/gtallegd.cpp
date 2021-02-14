@@ -838,7 +838,7 @@ static HB_BOOL hb_gt_alleg_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          iValue         = hb_itemGetNI( pInfo->pNewVal );
          if( iValue > 0 && iValue < 256 )
          {
-            s_byFontSize  = ( unsigned short ) iValue;
+            s_byFontSize  = static_cast< unsigned short >( iValue );
             s_byFontWidth = s_byFontSize / 2;
             hb_gt_alleg_InitializeScreen( pGT, s_iScrHeight, s_iScrWidth, s_fInit );
          }
@@ -1050,7 +1050,7 @@ static void hb_gt_alleg_gfx_Text( PHB_GT pGT, int iTop, int iLeft, const char * 
    HB_GTSELF_REFRESH( pGT );
 
    if( iSize )
-      ssfSetFontSize( &s_ssfDefaultFont, ( unsigned short ) iSize );
+      ssfSetFontSize( &s_ssfDefaultFont, static_cast< unsigned short >( iSize ) );
 
    iRight  = iLeft + static_cast< int >( strlen( cBuf ) ) * ( s_ssfDefaultFont.fsize / 2 ) - 1;
    iBottom = iTop + s_ssfDefaultFont.fsize - 1;

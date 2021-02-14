@@ -93,7 +93,7 @@ HB_FUNC( DISKSPACE )
       {
          union REGS regs;
 
-         regs.HB_XREGS.dx = ( unsigned short int ) iDrive;
+         regs.HB_XREGS.dx = static_cast< unsigned short int >( iDrive );
          regs.h.ah = 0x36;
          HB_DOS_INT86( 0x21, &regs, &regs );
 

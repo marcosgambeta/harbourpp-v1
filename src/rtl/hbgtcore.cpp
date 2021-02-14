@@ -270,7 +270,7 @@ static HB_BOOL hb_gt_def_CheckPos( PHB_GT pGT, int iRow, int iCol, long * plInde
       if( iRow < iHeight && iCol < iWidth )
       {
          if( plIndex )
-            *plIndex = ( long ) iRow * iWidth + iCol;
+            *plIndex = static_cast< long >( iRow ) * iWidth + iCol;
          return HB_TRUE;
       }
    }
@@ -1243,7 +1243,7 @@ static long hb_gt_def_RectSize( PHB_GT pGT, int iTop, int iLeft, int iBottom, in
    if( iCols <= 0 || iRows <= 0 )
       return 0;
    else
-      return ( ( long ) iRows * iCols ) << ( pGT->fVgaCell ? 1 : 2 );
+      return ( static_cast< long >( iRows ) * iCols ) << ( pGT->fVgaCell ? 1 : 2 );
 }
 
 static void hb_gt_def_Save( PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight,
@@ -1482,7 +1482,7 @@ static void hb_gt_def_ScrollArea( PHB_GT pGT, int iTop, int iLeft, int iBottom, 
 
       if( iLength > 0 )
       {
-         long lIndex, lOffset = ( long ) iRows * iWidth + iCols;
+         long lIndex, lOffset = static_cast< long >( iRows ) * iWidth + iCols;
          HB_BOOL fMove = ( iRows || iCols ) && iColSize >= 0 &&
                          ( iBottom - iTop >= iRows );
 
@@ -1500,7 +1500,7 @@ static void hb_gt_def_ScrollArea( PHB_GT pGT, int iTop, int iLeft, int iBottom, 
             {
                int i;
 
-               lIndex = ( long ) iRowPos * iWidth + iColNew;
+               lIndex = static_cast< long >( iRowPos ) * iWidth + iColNew;
                if( lOffset < 0 )
                {
                   for( i = 0; i <= iColSize; ++i, ++lIndex )
@@ -1540,7 +1540,7 @@ static void hb_gt_def_ScrollUp( PHB_GT pGT, int iRows, int iColor, HB_USHORT usC
       HB_BYTE bAttr = 0;
 
       HB_GTSELF_GETSIZE( pGT, &iHeight, &iWidth );
-      lOffset = ( long ) iRows * iWidth;
+      lOffset = static_cast< long >( iRows ) * iWidth;
       for( i = iRows; i < iHeight; ++i )
       {
          pGT->pLines[ i - iRows ] = pGT->pLines[ i ];
@@ -2584,7 +2584,7 @@ static void hb_gt_def_RedrawDiff( PHB_GT pGT )
       {
          if( pGT->pLines[ i ] )
          {
-            lIndex = ( long ) i * pGT->iWidth;
+            lIndex = static_cast< long >( i ) * pGT->iWidth;
             for( l = 0; l < pGT->iWidth; ++l, ++lIndex )
             {
                if( pGT->prevBuffer[ lIndex ].uiValue !=

@@ -329,7 +329,7 @@ HB_FUNC( XHB_INDEX )
             if( XHB_IS_VALID_INDEX( nIndex, nLen ) )
             {
                char cValue = HB_IS_STRING( pValue ) ? hb_itemGetCPtr( pValue )[ 0 ] :
-                             ( char ) hb_itemGetNI( pValue );
+                             static_cast< char >( hb_itemGetNI( pValue ) );
                if( nLen == 1 )
                   hb_itemPutCL( pSelf, &cValue, 1 );
                else

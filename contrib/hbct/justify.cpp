@@ -77,7 +77,7 @@ static void do_justify( int iSwitch )
       if( hb_parclen( 2 ) > 0 )
          cJustChar = *( hb_parc( 2 ) );
       else if( HB_ISNUM( 2 ) )
-         cJustChar = ( char ) ( hb_parnl( 2 ) % 256 );
+         cJustChar = static_cast< char >( hb_parnl( 2 ) % 256 );
       else
          cJustChar = 0x20;
 

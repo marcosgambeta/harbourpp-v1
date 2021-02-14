@@ -533,9 +533,9 @@ long  hb_parnl( int iParam )
          pItem = hb_itemUnRef( pItem );
 
       if( HB_IS_LONG( pItem ) )
-         return ( long ) pItem->item.asLong.value;
+         return static_cast< long >( pItem->item.asLong.value );
       else if( HB_IS_INTEGER( pItem ) )
-         return ( long ) pItem->item.asInteger.value;
+         return static_cast< long >( pItem->item.asInteger.value );
       else if( HB_IS_DOUBLE( pItem ) )
          return HB_CAST_LONG( pItem->item.asDouble.value );
    }
@@ -557,9 +557,9 @@ long  hb_parnldef( int iParam, long lDefValue )
          pItem = hb_itemUnRef( pItem );
 
       if( HB_IS_LONG( pItem ) )
-         return ( long ) pItem->item.asLong.value;
+         return static_cast< long >( pItem->item.asLong.value );
       else if( HB_IS_INTEGER( pItem ) )
-         return ( long ) pItem->item.asInteger.value;
+         return static_cast< long >( pItem->item.asInteger.value );
       else if( HB_IS_DOUBLE( pItem ) )
          return HB_CAST_LONG( pItem->item.asDouble.value );
    }
@@ -1156,14 +1156,14 @@ long  hb_parvnl( int iParam, ... )
          pItem = hb_itemUnRef( pItem );
 
       if( HB_IS_LONG( pItem ) )
-         return ( long ) pItem->item.asLong.value;
+         return static_cast< long >( pItem->item.asLong.value );
       else if( HB_IS_INTEGER( pItem ) )
-         return ( long ) pItem->item.asInteger.value;
+         return static_cast< long >( pItem->item.asInteger.value );
       else if( HB_IS_DOUBLE( pItem ) )
          return HB_CAST_LONG( pItem->item.asDouble.value );
       /* CA-Cl*pper does it */
       else if( HB_IS_DATETIME( pItem ) )
-         return ( long ) pItem->item.asDateTime.julian;
+         return static_cast< long >( pItem->item.asDateTime.julian );
       else if( HB_IS_ARRAY( pItem ) )
       {
          va_list va;

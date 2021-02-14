@@ -108,7 +108,7 @@ static char s_xmoblock_sum( const char * szData, HB_SIZE nLen )
 
    while( nLen-- )
       uc += ( unsigned char ) *szData++;
-   return ( char ) uc;
+   return static_cast< char >( uc );
 }
 
 /* XMoBlock( <cString>, <nBlockNumber>, [<lCRC>], [<nMode>] ) --> <cXModemBlock>
@@ -132,8 +132,8 @@ HB_FUNC( XMOBLOCK )
       nLen = nSize;
    pszBlock = ( char * ) hb_xgrab( nSize + ( fCRC ? 6 : 5 ) );
    pszBlock[ 0 ] = nSize == 128 ? 1 : 2;
-   pszBlock[ 1 ] = ( char ) iBlock;
-   pszBlock[ 2 ] = ( char ) ( 0xFF - iBlock );
+   pszBlock[ 1 ] = static_cast< char >( iBlock );
+   pszBlock[ 2 ] = static_cast< char >( 0xFF - iBlock );
    if( szData )
       memcpy( pszBlock + 3, szData, nLen );
    if( nLen < nSize )
@@ -172,13 +172,13 @@ HB_FUNC( XMOCHECK )
       else
          nSize = nLen;
       if( nLen == nSize + ( fCRC ? 5 : 4 ) &&
-          ( unsigned char ) szBlock[ 1 ] +
-          ( unsigned char ) szBlock[ 2 ] == 0xFF )
+          static_cast< unsigned char >( szBlock[ 1 ] ) +
+          static_cast< unsigned char >( szBlock[ 2 ] ) == 0xFF )
       {
          if( fCRC ?
              hb_crcct( 0, szBlock + 3, nSize + 2, 0x11021 ) == 0 :
              s_xmoblock_sum( szBlock + 3, nSize ) == szBlock[ 3 + nSize ] )
-            iResult = ( unsigned char ) szBlock[ 1 ];
+            iResult = static_cast< unsigned char >( szBlock[ 1 ] );
       }
    }
    hb_retni( iResult );
@@ -204,7 +204,7 @@ HB_FUNC( ZEROINSERT )
       /* NOTE: trailing zero accessed intentionally */
       for( n = 0; n <= nLen; ++n )
       {
-         uiVal |= ( unsigned char ) szText[ n ];
+         uiVal |= static_cast< unsigned char >( szText[ n ] );
          for( i = 0; i < 8; ++i )
          {
             if( ( uiVal & 0xF800 ) == 0xF800 )
@@ -225,7 +225,7 @@ HB_FUNC( ZEROINSERT )
          nBits = n = 0;
          i = 1;
          j = 8;
-         uiVal = ( unsigned char ) szText[ n ];
+         uiVal = static_cast< unsigned char >( szText[ n ] );
          uiVal <<= 8;
          while( nBits < nDest )
          {
@@ -233,7 +233,7 @@ HB_FUNC( ZEROINSERT )
             {
                if( ++n < nLen )
                {
-                  uiVal |= ( unsigned char ) szText[ n ];
+                  uiVal |= static_cast< unsigned char >( szText[ n ] );
                   i = 8;
                }
             }

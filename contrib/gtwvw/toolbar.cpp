@@ -65,7 +65,7 @@ HB_FUNC( WVW_TBCREATE )
    HWND       hWndTB;
    int        iMaxTextRows = static_cast< int >( HB_ISNIL( 2 ) ? 0 : ( hb_parl( 2 ) ? 1 : 0 ) );
 /*   DWORD dwStyle = (DWORD) ( HB_ISNIL( 3 ) ? TBSTYLE_FLAT | TBSTYLE_TOOLTIPS : hb_parni( 3 ) ); */
-   DWORD dwStyle = ( DWORD ) ( HB_ISNIL( 3 ) ? TBSTYLE_ALTDRAG | TBSTYLE_FLAT | TBSTYLE_TOOLTIPS | TBSTYLE_TRANSPARENT | TBSTYLE_WRAPABLE : hb_parnl( 3 ) );
+   DWORD dwStyle = static_cast< DWORD >( HB_ISNIL( 3 ) ? TBSTYLE_ALTDRAG | TBSTYLE_FLAT | TBSTYLE_TOOLTIPS | TBSTYLE_TRANSPARENT | TBSTYLE_WRAPABLE : hb_parnl( 3 ) );
 
    int iSystemBitmap = static_cast< int >( HB_ISNIL( 4 ) ? 1 : hb_parni( 4 ) );
    int iImageWidth   = static_cast< int >( iSystemBitmap == 0 && HB_ISNUM( 5 ) ? hb_parni( 5 ) : -1 );
@@ -132,21 +132,21 @@ HB_FUNC( WVW_TBCREATE )
       hb_retnl( 0 );
    }
 
-   pWindowData->tbOldProc = ( WNDPROC ) SetWindowLongPtr( hWndTB,
-                                                          GWLP_WNDPROC, ( LONG_PTR ) hb_gt_wvwTBProc );
+   pWindowData->tbOldProc = static_cast< WNDPROC >( SetWindowLongPtr( hWndTB,
+                                                          GWLP_WNDPROC, ( LONG_PTR ) hb_gt_wvwTBProc ) );
 
    if( iSystemBitmap > 0 )
    {
       tbab.hInst = HINST_COMMCTRL;
 
       tbab.nID = iSystemBitmap == 1 ? IDB_STD_SMALL_COLOR : IDB_STD_LARGE_COLOR;
-      pWindowData->iStartStdBitmap = SendMessage( hWndTB, TB_ADDBITMAP, ( WPARAM ) 0, ( WPARAM ) &tbab );
+      pWindowData->iStartStdBitmap = SendMessage( hWndTB, TB_ADDBITMAP, static_cast< WPARAM >( 0 ), static_cast< WPARAM >( &tbab ) );
 
       tbab.nID = iSystemBitmap == 1 ? IDB_VIEW_SMALL_COLOR : IDB_VIEW_LARGE_COLOR;
-      pWindowData->iStartViewBitmap = SendMessage( hWndTB, TB_ADDBITMAP, ( WPARAM ) 0, ( WPARAM ) &tbab );
+      pWindowData->iStartViewBitmap = SendMessage( hWndTB, TB_ADDBITMAP, static_cast< WPARAM >( 0 ), static_cast< WPARAM >( &tbab ) );
 
       tbab.nID = iSystemBitmap == 1 ? IDB_HIST_SMALL_COLOR : IDB_HIST_LARGE_COLOR;
-      pWindowData->iStartHistBitmap = SendMessage( hWndTB, TB_ADDBITMAP, ( WPARAM ) 0, ( WPARAM ) &tbab );
+      pWindowData->iStartHistBitmap = SendMessage( hWndTB, TB_ADDBITMAP, static_cast< WPARAM >( 0 ), static_cast< WPARAM >( &tbab ) );
    }
    else
    {
@@ -158,7 +158,7 @@ HB_FUNC( WVW_TBCREATE )
    pWindowData->iTBImgWidth  = iImageWidth;
    pWindowData->iTBImgHeight = iImageHeight;
 
-   SendMessage( hWndTB, TB_SETMAXTEXTROWS, ( WPARAM ) iMaxTextRows, ( LPARAM ) 0 );
+   SendMessage( hWndTB, TB_SETMAXTEXTROWS, static_cast< WPARAM >( iMaxTextRows ), static_cast< LPARAM >( 0 ) );
 
    if( hWndTB )
    {
@@ -174,7 +174,7 @@ HB_FUNC( WVW_TBCREATE )
       hb_gt_wvwResetWindow( usWinNum );
    }
 
-   hb_retnl( ( LONG ) hWndTB );
+   hb_retnl( static_cast< LONG >( hWndTB ) );
 }
 
 /*wvw_tbAddButton([nWinNum], nCommand, xBitmap, cLabel, nBitmapType,;
@@ -204,7 +204,7 @@ HB_FUNC( WVW_TBADDBUTTON )
    int        iCommand    = HB_ISNIL( 2 ) ? 0 : hb_parni( 2 );
 
    char * szBitmap = HB_ISCHAR( 3 ) ? ( char * ) hb_parcx( 3 ) : nullptr;
-   UINT   uiBitmap = HB_ISNUM( 3 ) ? ( UINT ) hb_parni( 3 ) : 0;
+   UINT   uiBitmap = HB_ISNUM( 3 ) ? static_cast< UINT >( hb_parni( 3 ) ) : 0;
 
    char * szLabel      = HB_ISNIL( 4 ) ? ( char * ) "" : ( char * ) hb_parcx( 4 );
    int    iBitmapType  = HB_ISNIL( 5 ) ? 0 : static_cast< int >( hb_parni( 5 ) );
@@ -283,7 +283,7 @@ HB_FUNC( WVW_TBBUTTONCOUNT )
       return;
    }
 
-   hb_retni( SendMessage( hWndTB, TB_BUTTONCOUNT, ( WPARAM ) 0, ( LPARAM ) 0 ) );
+   hb_retni( SendMessage( hWndTB, TB_BUTTONCOUNT, static_cast< WPARAM >( 0 ), static_cast< LPARAM >( 0 ) ) );
 }
 
 /*wvw_tbDelButton([nWinNum], nButton)
@@ -308,7 +308,7 @@ HB_FUNC( WVW_TBDELBUTTON )
 
    usOldHeight = pWindowData->usTBHeight;
 
-   if( ! SendMessage( hWndTB, TB_DELETEBUTTON, ( WPARAM ) iButton, ( LPARAM ) 0 ) )
+   if( ! SendMessage( hWndTB, TB_DELETEBUTTON, static_cast< WPARAM >( iButton ), static_cast< LPARAM >( 0 ) ) )
    {
       hb_retl( FALSE );
       return;
@@ -338,7 +338,7 @@ HB_FUNC( WVW_TBGETBUTTONRECT )
    PHB_ITEM temp;
 
    hWndTB = pWindowData->hToolBar;
-   if( hWndTB == nullptr || iButton < 0 || ! SendMessage( hWndTB, TB_GETRECT, ( WPARAM ) iButton, ( LPARAM ) &rc ) )
+   if( hWndTB == nullptr || iButton < 0 || ! SendMessage( hWndTB, TB_GETRECT, static_cast< WPARAM >( iButton ), static_cast< LPARAM >( &rc ) ) )
    {
       hb_itemReturnRelease( aXY );
       return;
@@ -393,7 +393,7 @@ HB_FUNC( WVW_TBENABLEBUTTON )
 
    usOldHeight = pWindowData->usTBHeight;
 
-   if( ! SendMessage( hWndTB, TB_ENABLEBUTTON, ( WPARAM ) iCommand, ( LPARAM ) MAKELONG( bEnable, 0 ) ) )
+   if( ! SendMessage( hWndTB, TB_ENABLEBUTTON, static_cast< WPARAM >( iCommand ), static_cast< LPARAM >( MAKELONG( bEnable, 0 ) ) ) )
    {
       hb_retl( FALSE );
       return;
@@ -514,7 +514,7 @@ HB_FUNC( WVW_SETTOOLTIP )
    ti.hwnd   = pWindowData->hWnd;
    ti.uId    = WVW_ID_BASE_TOOLTIP + usWinNum;
 
-   if( SendMessage( pWindowData->hWndTT, TTM_GETTOOLINFO, 0, ( LPARAM ) &ti ) )
+   if( SendMessage( pWindowData->hWndTT, TTM_GETTOOLINFO, 0, static_cast< LPARAM >( &ti ) ) )
    {
       xy    = hb_gt_wvwGetXYFromColRow( pWindowData, usLeft, usTop );
       iTop  = xy.y;
@@ -530,7 +530,7 @@ HB_FUNC( WVW_SETTOOLTIP )
       ti.rect.right  = iRight;
       ti.rect.bottom = iBottom;
 
-      SendMessage( pWindowData->hWndTT, TTM_SETTOOLINFO, 0, ( LPARAM ) &ti );
+      SendMessage( pWindowData->hWndTT, TTM_SETTOOLINFO, 0, static_cast< LPARAM >( &ti ) );
    }
 }
 
@@ -545,10 +545,10 @@ HB_FUNC( WVW_SETTOOLTIPTEXT )
    ti.hwnd   = pWindowData->hWnd;
    ti.uId    = 100000;
 
-   if( SendMessage( pWindowData->hWndTT, TTM_GETTOOLINFO, 0, ( LPARAM ) &ti ) )
+   if( SendMessage( pWindowData->hWndTT, TTM_GETTOOLINFO, 0, static_cast< LPARAM >( &ti ) ) )
    {
       ti.lpszText = hb_parcx( 2 );
-      SendMessage( pWindowData->hWndTT, TTM_UPDATETIPTEXT, 0, ( LPARAM ) &ti );
+      SendMessage( pWindowData->hWndTT, TTM_UPDATETIPTEXT, 0, static_cast< LPARAM >( &ti ) );
    }
 }
 
@@ -564,7 +564,7 @@ HB_FUNC( WVW_SETTOOLTIPMARGIN )
    rc.right  = hb_parni( 5 );
    rc.bottom = hb_parni( 4 );
 
-   SendMessage( pWindowData->hWndTT, TTM_SETMARGIN, 0, ( LPARAM ) &rc );
+   SendMessage( pWindowData->hWndTT, TTM_SETMARGIN, 0, static_cast< LPARAM >( &rc ) );
 }
 
 HB_FUNC( WVW_SETTOOLTIPWIDTH )
@@ -575,7 +575,7 @@ HB_FUNC( WVW_SETTOOLTIPWIDTH )
    int iTipWidth = SendMessage( pWindowData->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0 );
 
    if( HB_ISNUM( 2 ) )
-      SendMessage( pWindowData->hWndTT, TTM_SETMAXTIPWIDTH, 0, ( LPARAM ) static_cast< int >( hb_parni( 2 ) ) );
+      SendMessage( pWindowData->hWndTT, TTM_SETMAXTIPWIDTH, 0, static_cast< LPARAM >( static_cast< int >( hb_parni( 2 ) ) ) );
 
    hb_retni( iTipWidth );
 }
@@ -589,8 +589,8 @@ HB_FUNC( WVW_SETTOOLTIPBKCOLOR )
    COLORREF cr = SendMessage( pWindowData->hWndTT, TTM_GETTIPBKCOLOR, 0, 0 );
 
    if( HB_ISNUM( 2 ) )
-      SendMessage( pWindowData->hWndTT, TTM_SETTIPBKCOLOR, ( WPARAM ) ( COLORREF ) hb_parnl( 2 ), 0 );
-   hb_retnl( ( COLORREF ) cr );
+      SendMessage( pWindowData->hWndTT, TTM_SETTIPBKCOLOR, static_cast< WPARAM >( static_cast< COLORREF >( hb_parnl( 2 ) ) ), 0 );
+   hb_retnl( static_cast< COLORREF >( cr ) );
 }
 
 
@@ -602,8 +602,8 @@ HB_FUNC( WVW_SETTOOLTIPTEXTCOLOR )
    COLORREF cr = SendMessage( pWindowData->hWndTT, TTM_GETTIPTEXTCOLOR, 0, 0 );
 
    if( HB_ISNUM( 2 ) )
-      SendMessage( pWindowData->hWndTT, TTM_SETTIPTEXTCOLOR, ( WPARAM ) ( COLORREF ) hb_parnl( 2 ), 0 );
-   hb_retnl( ( COLORREF ) cr );
+      SendMessage( pWindowData->hWndTT, TTM_SETTIPTEXTCOLOR, static_cast< WPARAM >( static_cast< COLORREF >( hb_parnl( 2 ) ) ), 0 );
+   hb_retnl( static_cast< COLORREF >( cr ) );
 }
 
 
@@ -618,7 +618,7 @@ HB_FUNC( WVW_SETTOOLTIPTITLE )
       iIcon = HB_ISNIL( 2 ) ? 0 : hb_parni( 2 );
       if( iIcon > 3 )
          iIcon = 0;
-      SendMessage( pWindowData->hWndTT, TTM_SETTITLE, ( WPARAM ) iIcon, ( LPARAM ) hb_parcx( 3 ) );
+      SendMessage( pWindowData->hWndTT, TTM_SETTITLE, static_cast< WPARAM >( iIcon ), static_cast< LPARAM >( hb_parcx( 3 ) ) );
    }
 }
 
@@ -637,7 +637,7 @@ HB_FUNC( WVW_GETTOOLTIPBKCOLOR )
    UINT       usWinNum    = WVW_WHICH_WINDOW;
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
 
-   hb_retnl( ( COLORREF ) SendMessage( pWindowData->hWndTT, TTM_GETTIPBKCOLOR, 0, 0 ) );
+   hb_retnl( static_cast< COLORREF >( SendMessage( pWindowData->hWndTT, TTM_GETTIPBKCOLOR, 0, 0 ) ) );
 }
 
 
@@ -646,7 +646,7 @@ HB_FUNC( WVW_GETTOOLTIPTEXTCOLOR )
    UINT       usWinNum    = WVW_WHICH_WINDOW;
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
 
-   hb_retnl( ( COLORREF ) SendMessage( pWindowData->hWndTT, TTM_GETTIPTEXTCOLOR, 0, 0 ) );
+   hb_retnl( static_cast< COLORREF >( SendMessage( pWindowData->hWndTT, TTM_GETTIPTEXTCOLOR, 0, 0 ) ) );
 }
 
 #endif

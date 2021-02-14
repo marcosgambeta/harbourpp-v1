@@ -90,10 +90,10 @@
 
 /* extra keysyms definitions */
 #define SL_KEY_NUM_5        SL_KEY_B2     /* this is checked explicitly */
-#define SL_KEY_MAX          ( ( unsigned int ) 0x2000 )
+#define SL_KEY_MAX          ( static_cast< unsigned int >( 0x2000 ) )
 #define SL_KEY_ESC          ( SL_KEY_MAX + 1 )
 #define SL_KEY_MOU          ( SL_KEY_ESC + 1 )
-#define SL_KEY_ALT( ch )  ( SL_KEY_MAX + ( ( unsigned int ) ch ) )
+#define SL_KEY_ALT( ch )  ( SL_KEY_MAX + ( static_cast< unsigned int >( ch ) ) )
 
 /* we choose Ctrl+\ as an abort key on Unixes where it is a SIGQUIT key by default */
 /* abort key is Ctrl+\ on Unix ( but Ctrl+@ on Linux console ) */

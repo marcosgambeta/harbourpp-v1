@@ -185,7 +185,7 @@ HB_FUNC( ATADJUST )
             cFillChar = 0x20;
       }
       else if( HB_ISNUM( 6 ) )
-         cFillChar = ( char ) ( hb_parnl( 6 ) % 256 );
+         cFillChar = static_cast< char >( hb_parnl( 6 ) % 256 );
       else
          cFillChar = 0x20;
 

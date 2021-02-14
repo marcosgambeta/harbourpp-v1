@@ -63,7 +63,7 @@
 
 #include "hbcurl.ch"
 
-#define HB_CURL_OPT_BOOL( n )      ( HB_ISLOG( n ) ? ( long ) hb_parl( n ) : hb_parnldef( n, 1 ) )
+#define HB_CURL_OPT_BOOL( n )      ( HB_ISLOG( n ) ? static_cast< long >( hb_parl( n ) ) : hb_parnldef( n, 1 ) )
 #define HB_CURL_OPT_LARGENUM( n )  ( ( curl_off_t ) hb_parnint( n ) )
 
 /* NOTE: Harbour requires libcurl 7.17.0 or upper.
@@ -228,14 +228,14 @@ static void * hb_curl_calloc( size_t nelem, size_t elsize )
 HB_FUNC( CURL_GLOBAL_INIT )
 {
 #if LIBCURL_VERSION_NUM >= 0x070A08 /* Not documented. GUESS. */
-   hb_retnl( ( long ) curl_global_init_mem( hb_parnldef( 1, CURL_GLOBAL_ALL ),
+   hb_retnl( static_cast< long >( curl_global_init_mem( hb_parnldef( 1, CURL_GLOBAL_ALL ),
                                             hb_curl_xgrab,
                                             hb_curl_xfree,
                                             hb_curl_xrealloc,
                                             hb_curl_strdup,
-                                            hb_curl_calloc ) );
+                                            hb_curl_calloc ) ) );
 #else
-   hb_retnl( ( long ) curl_global_init_mem( hb_parnldef( 1, CURL_GLOBAL_ALL ) ) );
+   hb_retnl( static_cast< long >( curl_global_init_mem( hb_parnldef( 1, CURL_GLOBAL_ALL ) ) ) );
 #endif
 }
 
@@ -671,7 +671,7 @@ HB_FUNC( CURL_EASY_PAUSE )
 #if LIBCURL_VERSION_NUM >= 0x071200
       PHB_CURL hb_curl = PHB_CURL_par( 1 );
 
-      hb_retnl( hb_curl ? ( long ) curl_easy_pause( hb_curl->curl, hb_parni( 2 ) ) : HB_CURLE_ERROR );
+      hb_retnl( hb_curl ? static_cast< long >( curl_easy_pause( hb_curl->curl, hb_parni( 2 ) ) ) : HB_CURLE_ERROR );
 #else
       hb_retnl( HB_CURLE_ERROR );
 #endif
@@ -686,7 +686,7 @@ HB_FUNC( CURL_EASY_PERFORM )
    {
       PHB_CURL hb_curl = PHB_CURL_par( 1 );
 
-      hb_retnl( hb_curl ? ( long ) curl_easy_perform( hb_curl->curl ) : HB_CURLE_ERROR );
+      hb_retnl( hb_curl ? static_cast< long >( curl_easy_perform( hb_curl->curl ) ) : HB_CURLE_ERROR );
    }
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -710,7 +710,7 @@ HB_FUNC( CURL_EASY_SEND )
          hb_storns( size, 3 );
       }
 #endif
-      hb_retnl( ( long ) res );
+      hb_retnl( static_cast< long >( res ) );
    }
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -741,7 +741,7 @@ HB_FUNC( CURL_EASY_RECV )
             hb_xfree( buffer );
       }
 #endif
-      hb_retnl( ( long ) res );
+      hb_retnl( static_cast< long >( res ) );
    }
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -1755,7 +1755,7 @@ HB_FUNC( CURL_EASY_SETOPT )
          }
       }
 
-      hb_retnl( ( long ) res );
+      hb_retnl( static_cast< long >( res ) );
    }
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -2067,7 +2067,7 @@ HB_FUNC( CURL_EASY_GETINFO )
             break;
       }
 
-      hb_stornl( ( long ) res, 3 );
+      hb_stornl( static_cast< long >( res ), 3 );
    }
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );

@@ -158,19 +158,19 @@ HB_FUNC( HPDF_IMAGE_GETCOLORSPACE )
 /* HPDF_Image_SetColorMask( hImage, nRGB_R_Min, nRGB_R_Max, nRGB_G_Min, nRGB_G_Max, nRGB_B_Min, nRGB_B_Max ) */
 HB_FUNC( HPDF_IMAGE_SETCOLORMASK )
 {
-   hb_retnl( ( long ) HPDF_Image_SetColorMask( ( HPDF_Image ) hb_parptr( 1 ),
+   hb_retnl( static_cast< long >( HPDF_Image_SetColorMask( ( HPDF_Image ) hb_parptr( 1 ),
                                                hb_parni( 2 ),
                                                hb_parni( 3 ),
                                                hb_parni( 4 ),
                                                hb_parni( 5 ),
                                                hb_parni( 6 ),
-                                               hb_parni( 7 ) ) );
+                                               hb_parni( 7 ) ) ) );
 }
 
 /* HPDF_Image_SetMaskImage( hImage, hImageMask ) --> hStatus */
 HB_FUNC( HPDF_IMAGE_SETMASKIMAGE )
 {
-   hb_retnl( ( long ) HPDF_Image_SetMaskImage( ( HPDF_Image ) hb_parptr( 1 ), ( HPDF_Image ) hb_parptr( 2 ) ) );
+   hb_retnl( static_cast< long >( HPDF_Image_SetMaskImage( ( HPDF_Image ) hb_parptr( 1 ), ( HPDF_Image ) hb_parptr( 2 ) ) ) );
 }
 
 /* HPDF_EXPORT(HPDF_STATUS)
@@ -180,7 +180,7 @@ HB_FUNC( HPDF_IMAGE_SETMASKIMAGE )
 HB_FUNC( HPDF_IMAGE_ADDSMASK )
 {
 #if HB_HPDF_VERS( 2, 2, 0 )
-   hb_retnl( ( long ) HPDF_Image_AddSMask( ( HPDF_Image ) hb_parptr( 1 ), ( HPDF_Image ) hb_parptr( 2 ) ) );
+   hb_retnl( static_cast< long >( HPDF_Image_AddSMask( ( HPDF_Image ) hb_parptr( 1 ), ( HPDF_Image ) hb_parptr( 2 ) ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif

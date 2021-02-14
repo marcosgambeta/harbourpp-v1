@@ -271,8 +271,8 @@ static void hb_gt_win_xSetCursorPos( void )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_xSetCursorPos()" ) );
 
-   s_csbi.dwCursorPosition.Y = ( SHORT ) s_iCurRow;
-   s_csbi.dwCursorPosition.X = ( SHORT ) s_iCurCol;
+   s_csbi.dwCursorPosition.Y = static_cast< SHORT >( s_iCurRow );
+   s_csbi.dwCursorPosition.X = static_cast< SHORT >( s_iCurCol );
    SetConsoleCursorPosition( s_HOutput, s_csbi.dwCursorPosition );
 }
 
@@ -333,12 +333,12 @@ static void hb_gt_win_xScreenUpdate( void )
 
          coSize.Y     = _GetScreenHeight();
          coSize.X     = _GetScreenWidth();
-         coDest.Y     = ( SHORT ) s_iUpdtTop;
-         coDest.X     = ( SHORT ) s_iUpdtLeft;
-         srWin.Top    = ( SHORT ) s_iUpdtTop;
-         srWin.Left   = ( SHORT ) s_iUpdtLeft;
-         srWin.Bottom = ( SHORT ) s_iUpdtBottom;
-         srWin.Right  = ( SHORT ) s_iUpdtRight;
+         coDest.Y     = static_cast< SHORT >( s_iUpdtTop );
+         coDest.X     = static_cast< SHORT >( s_iUpdtLeft );
+         srWin.Top    = static_cast< SHORT >( s_iUpdtTop );
+         srWin.Left   = static_cast< SHORT >( s_iUpdtLeft );
+         srWin.Bottom = static_cast< SHORT >( s_iUpdtBottom );
+         srWin.Right  = static_cast< SHORT >( s_iUpdtRight );
 
          s_iUpdtTop = _GetScreenHeight();
          s_iUpdtLeft = _GetScreenWidth();
@@ -894,17 +894,17 @@ static HB_BOOL hb_gt_win_SetMode( PHB_GT pGT, int iRows, int iCols )
       if( iRows > coBuf.Y )
          iRows = coBuf.Y;
       else
-         coBuf.Y = ( SHORT ) iRows;
+         coBuf.Y = static_cast< SHORT >( iRows );
 
       if( iCols > coBuf.X )
          iCols = coBuf.X;
       else
-         coBuf.X = ( SHORT ) iCols;
+         coBuf.X = static_cast< SHORT >( iCols );
 
       /* new console window size and scroll position */
       srWin.Top    = srWin.Left = 0;
-      srWin.Bottom = ( SHORT ) ( iRows - 1 );
-      srWin.Right  = ( SHORT ) ( iCols - 1 );
+      srWin.Bottom = static_cast< SHORT >( iRows - 1 );
+      srWin.Right  = static_cast< SHORT >( iCols - 1 );
 
       if( static_cast< int >( _GetScreenWidth() ) >= iCols &&
           static_cast< int >( _GetScreenHeight() ) >= iRows )
@@ -946,9 +946,9 @@ static HB_BOOL hb_gt_win_SetMode( PHB_GT pGT, int iRows, int iCols )
           * then the corresponding new one.
           */
          if( static_cast< int >( _GetScreenWidth() ) < iCols )
-            srWin.Right  = ( SHORT ) ( _GetScreenWidth() - 1 );
+            srWin.Right  = static_cast< SHORT >( _GetScreenWidth() - 1 );
          else
-            srWin.Bottom = ( SHORT ) ( _GetScreenHeight() - 1 );
+            srWin.Bottom = static_cast< SHORT >( _GetScreenHeight() - 1 );
          if( SetConsoleWindowInfo( s_HOutput, TRUE, &srWin ) )
          {
             /* now we can safely set the new buffer dimensions because
@@ -958,8 +958,8 @@ static HB_BOOL hb_gt_win_SetMode( PHB_GT pGT, int iRows, int iCols )
              */
             if( SetConsoleScreenBufferSize( s_HOutput, coBuf ) )
             {
-               srWin.Bottom = ( SHORT ) ( iRows - 1 );
-               srWin.Right  = ( SHORT ) ( iCols - 1 );
+               srWin.Bottom = static_cast< SHORT >( iRows - 1 );
+               srWin.Right  = static_cast< SHORT >( iCols - 1 );
                SetConsoleWindowInfo( s_HOutput, TRUE, &srWin );
             }
             fRet = HB_TRUE;
@@ -2180,7 +2180,7 @@ static void hb_gt_win_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
          HB_UCHAR uc;
          if( ! HB_GTSELF_GETSCRUC( pGT, iRow, iCol++, &iColor, &bAttr, &uc, HB_TRUE ) )
             break;
-         s_pCharInfoScreen[ i ].Char.AsciiChar = ( CHAR ) uc;
+         s_pCharInfoScreen[ i ].Char.AsciiChar = static_cast< CHAR >( uc );
 #endif
          s_pCharInfoScreen[ i ].Attributes = ( WORD ) ( iColor & 0xFF );
          ++i;

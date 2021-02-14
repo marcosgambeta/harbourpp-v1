@@ -261,7 +261,7 @@ HB_FUNC( CLEARSLOW )  /* TODO: Unicode support */
       int iColor = hb_gtGetCurrColor();
       double dX, dY, dXX, dYY;
 
-      pszFrame[ 0 ] = ( char ) ucChar;
+      pszFrame[ 0 ] = static_cast< char >( ucChar );
       pszFrame[ 1 ] = '\0';
 
       dX = iRight - iLeft + 1;
@@ -352,8 +352,8 @@ HB_FUNC( SCREENSTR )  /* TODO: Unicode support */
             HB_BYTE bAttr;
             HB_USHORT usChar;
             hb_gtGetChar( iRow, iC, &iColor, &bAttr, &usChar );
-            *szText++ = ( char ) usChar;
-            *szText++ = ( char ) iColor;
+            *szText++ = static_cast< char >( usChar );
+            *szText++ = static_cast< char >( iColor );
          }
          while( --nCount && ++iC <= iMaxCol );
       }
@@ -443,8 +443,8 @@ HB_FUNC( __HBCT_DSPTIME )  /* Helper function for ShowTime() */
          iHour -= 12;
       else if( iHour == 0 )
          iHour = 12;
-      szTime[ 0 ] = ( char ) ( iHour / 10 ) + '0';
-      szTime[ 1 ] = ( char ) ( iHour % 10 ) + '0';
+      szTime[ 0 ] = static_cast< char >( iHour / 10 ) + '0';
+      szTime[ 1 ] = static_cast< char >( iHour % 10 ) + '0';
    }
 
    if( szTime[ 0 ] == '0' )

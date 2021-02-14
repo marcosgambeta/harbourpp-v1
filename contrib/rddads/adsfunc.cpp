@@ -618,11 +618,11 @@ HB_FUNC( ADSGETRECORDCOUNT )
             hHandle = pArea->hTable;
       }
 
-      hb_retnl( ( long ) AdsGetRecordCount( hHandle,
+      hb_retnl( static_cast< long >( AdsGetRecordCount( hHandle,
                                             ( UNSIGNED16 ) hb_parnidef( 2, ADS_RESPECTFILTERS ) /* usFilterOption */,
-                                            &ulKey ) );
+                                            &ulKey ) ) );
 
-      hb_stornl( ( long ) ulKey, 3 );
+      hb_stornl( static_cast< long >( ulKey ), 3 );
    }
    else
       hb_errRT_DBCMD( EG_NOTABLE, 2001, nullptr, HB_ERR_FUNCNAME );
@@ -798,10 +798,10 @@ HB_FUNC( ADSADDCUSTOMKEY )
          else
             AdsGetIndexHandle( pArea->hTable, ( UNSIGNED8 * ) HB_UNCONST( hb_parcx( 1 ) ) /* ordName */, &hIndex );
 
-         hb_retnl( ( long ) AdsAddCustomKey( hIndex ) );
+         hb_retnl( static_cast< long >( AdsAddCustomKey( hIndex ) ) );
       }
       else if( pArea->hOrdCurrent != 0 )
-         hb_retnl( ( long ) AdsAddCustomKey( pArea->hOrdCurrent ) );
+         hb_retnl( static_cast< long >( AdsAddCustomKey( pArea->hOrdCurrent ) ) );
       else
          hb_errRT_DBCMD( EG_NOORDER, 2001, nullptr, HB_ERR_FUNCNAME );
    }
@@ -824,10 +824,10 @@ HB_FUNC( ADSDELETECUSTOMKEY )
          else
             AdsGetIndexHandle( pArea->hTable, ( UNSIGNED8 * ) HB_UNCONST( hb_parcx( 1 ) ) /* ordName */, &hIndex );
 
-         hb_retnl( ( long ) AdsDeleteCustomKey( hIndex ) );
+         hb_retnl( static_cast< long >( AdsDeleteCustomKey( hIndex ) ) );
       }
       else if( pArea->hOrdCurrent != 0 )
-         hb_retnl( ( long ) AdsDeleteCustomKey( pArea->hOrdCurrent ) );
+         hb_retnl( static_cast< long >( AdsDeleteCustomKey( pArea->hOrdCurrent ) ) );
       else
          hb_errRT_DBCMD( EG_NOORDER, 2001, nullptr, HB_ERR_FUNCNAME );
    }

@@ -291,7 +291,7 @@ static HB_ULONG hb_db2Sql( AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
             *--szVal = 0;
             do
             {
-               *--szVal = ( char ) ( ulRec % 10 ) + '0';
+               *--szVal = static_cast< char >( ulRec % 10 ) + '0';
                ulRec /= 10;
             }
             while( ulRec );

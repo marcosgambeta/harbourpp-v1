@@ -305,7 +305,7 @@ static char * hb_ntxNumToStr( PHB_ITEM pItem, char * szBuffer, HB_USHORT length,
       for( ptr = &szBuffer[ 0 ]; *ptr; ptr++ )
       {
          if( *ptr >= '0' && *ptr <= '9' )
-            *ptr = ( char ) ( '0' - ( *ptr - '0' ) - 4 );
+            *ptr = static_cast< char >( '0' - ( *ptr - '0' ) - 4 );
             /*
              * I intentionally used the above formula to avoid problems on
              * non ASCII machines though many of other xHarbour codes is
@@ -7166,7 +7166,7 @@ static HB_ERRCODE hb_ntxOrderInfo( NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
          case DBOI_KEYTYPE:
             {
                char szType[ 2 ];
-               szType[ 0 ] = ( char ) pTag->KeyType;
+               szType[ 0 ] = static_cast< char >( pTag->KeyType );
                szType[ 1 ] = 0;
                pInfo->itmResult = hb_itemPutC( pInfo->itmResult, szType );
             }

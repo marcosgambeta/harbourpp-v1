@@ -224,7 +224,7 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
             d = d * 36;
             n = static_cast< int >( d );
             d = modf( d, &x );
-            pszName[ iLen++ ] = ( char ) ( n + ( n > 9 ? 'a' - 10 : '0' ) );
+            pszName[ iLen++ ] = static_cast< char >( n + ( n > 9 ? 'a' - 10 : '0' ) );
          }
          pszName[ iLen ] = '\0';
          if( pszExt )

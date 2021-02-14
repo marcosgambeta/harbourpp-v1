@@ -175,7 +175,7 @@ void ct_charop( int iMode )
                HB_SIZE sStrLen2 = hb_parclen( 2 );
 
                for( sPos = 0; sPos < sStrLen; ++sPos )
-                  pucResult[ sPos ] = ( char ) ( pucString[ sPos ] + pucString2[ sStrLen2 ? ( sPos % sStrLen2 ) : 0 ] );
+                  pucResult[ sPos ] = static_cast< char >( pucString[ sPos ] + pucString2[ sStrLen2 ? ( sPos % sStrLen2 ) : 0 ] );
             }
             else
             {
@@ -199,7 +199,7 @@ void ct_charop( int iMode )
                HB_SIZE sStrLen2 = hb_parclen( 2 );
 
                for( sPos = 0; sPos < sStrLen; ++sPos )
-                  pucResult[ sPos ] = ( char ) ( pucString[ sPos ] - pucString2[ sStrLen2 ? ( sPos % sStrLen2 ) : 0 ] );
+                  pucResult[ sPos ] = static_cast< char >( pucString[ sPos ] - pucString2[ sStrLen2 ? ( sPos % sStrLen2 ) : 0 ] );
             }
             else
             {
@@ -223,7 +223,7 @@ void ct_charop( int iMode )
                HB_SIZE sStrLen2 = hb_parclen( 2 );
 
                for( sPos = 0; sPos < sStrLen; ++sPos )
-                  pucResult[ sPos ] = ( char ) ( pucString[ sPos ] & pucString2[ sStrLen2 ? ( sPos % sStrLen2 ) : 0 ] );
+                  pucResult[ sPos ] = static_cast< char >( pucString[ sPos ] & pucString2[ sStrLen2 ? ( sPos % sStrLen2 ) : 0 ] );
             }
             else
             {
@@ -246,7 +246,7 @@ void ct_charop( int iMode )
                HB_SIZE sStrLen2 = hb_parclen( 2 );
 
                for( sPos = 0; sPos < sStrLen; ++sPos )
-                  pucResult[ sPos ] = ( char ) ( pucString[ sPos ] | pucString2[ sStrLen2 ? ( sPos % sStrLen2 ) : 0 ] );
+                  pucResult[ sPos ] = static_cast< char >( pucString[ sPos ] | pucString2[ sStrLen2 ? ( sPos % sStrLen2 ) : 0 ] );
             }
             else
             {
@@ -269,7 +269,7 @@ void ct_charop( int iMode )
                HB_SIZE sStrLen2 = hb_parclen( 2 );
 
                for( sPos = 0; sPos < sStrLen; ++sPos )
-                  pucResult[ sPos ] = ( char ) ( pucString[ sPos ] ^ pucString2[ sStrLen2 ? ( sPos % sStrLen2 ) : 0 ] );
+                  pucResult[ sPos ] = static_cast< char >( pucString[ sPos ] ^ pucString2[ sStrLen2 ? ( sPos % sStrLen2 ) : 0 ] );
             }
             else
             {

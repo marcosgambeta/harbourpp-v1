@@ -318,17 +318,17 @@ void nxs_xorcyclic(
       if( crcpos < 4 )
       {
          /* this ensures portability across platforms */
-         cipher[ pos ] ^= ( unsigned char ) ( crc1l % 256 );
+         cipher[ pos ] ^= static_cast< unsigned char >( crc1l % 256 );
          crc1l         /= 256L;
       }
       else if( crcpos < 8 )
       {
-         cipher[ pos ] ^= ( unsigned char ) ( crc2l % 256 );
+         cipher[ pos ] ^= static_cast< unsigned char >( crc2l % 256 );
          crc2l         /= 256L;
       }
       else
       {
-         cipher[ pos ] ^= ( unsigned char ) ( crc3l % 256 );
+         cipher[ pos ] ^= static_cast< unsigned char >( crc3l % 256 );
          crc3l         /= 256L;
       }
       crcpos++;

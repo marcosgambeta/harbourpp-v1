@@ -542,7 +542,7 @@ PHB_EXPR hb_compExprReduceMinus( PHB_EXPR pSelf, HB_COMP_DECL )
    else if( pLeft->ExprType == HB_ET_DATE && pRight->ExprType == HB_ET_NUMERIC )
    {
       if( pRight->value.asNum.NumType == HB_ET_LONG )
-         pSelf->value.asDate.lDate =  pLeft->value.asDate.lDate - ( long ) pRight->value.asNum.val.l;
+         pSelf->value.asDate.lDate =  pLeft->value.asDate.lDate - static_cast< long >( pRight->value.asNum.val.l );
       else
          pSelf->value.asDate.lDate = pLeft->value.asDate.lDate - HB_CAST_LONG( pRight->value.asNum.val.d );
       pSelf->value.asDate.lTime = 0;
@@ -554,7 +554,7 @@ PHB_EXPR hb_compExprReduceMinus( PHB_EXPR pSelf, HB_COMP_DECL )
    else if( pLeft->ExprType == HB_ET_TIMESTAMP && pRight->ExprType == HB_ET_NUMERIC )
    {
       if( pRight->value.asNum.NumType == HB_ET_LONG )
-         hb_compExprReduceTimeStampPut( pSelf, pLeft->value.asDate.lDate - ( long ) pRight->value.asNum.val.l,
+         hb_compExprReduceTimeStampPut( pSelf, pLeft->value.asDate.lDate - static_cast< long >( pRight->value.asNum.val.l ),
                                         pLeft->value.asDate.lTime );
       else
          hb_compExprReduceTimeStampAdd( pSelf, pLeft, -pRight->value.asNum.val.d );
@@ -745,7 +745,7 @@ PHB_EXPR hb_compExprReducePlus( PHB_EXPR pSelf, HB_COMP_DECL )
       else if( pRight->ExprType == HB_ET_DATE )
       {
          if( pLeft->value.asNum.NumType == HB_ET_LONG )
-            pSelf->value.asDate.lDate = pRight->value.asDate.lDate + ( long ) pLeft->value.asNum.val.l;
+            pSelf->value.asDate.lDate = pRight->value.asDate.lDate + static_cast< long >( pLeft->value.asNum.val.l );
          else
             pSelf->value.asDate.lDate = pRight->value.asDate.lDate + HB_CAST_LONG( pLeft->value.asNum.val.d );
          pSelf->value.asDate.lTime = 0;
@@ -757,7 +757,7 @@ PHB_EXPR hb_compExprReducePlus( PHB_EXPR pSelf, HB_COMP_DECL )
       else if( pRight->ExprType == HB_ET_TIMESTAMP )
       {
          if( pLeft->value.asNum.NumType == HB_ET_LONG )
-            hb_compExprReduceTimeStampPut( pSelf, pRight->value.asDate.lDate + ( long ) pLeft->value.asNum.val.l,
+            hb_compExprReduceTimeStampPut( pSelf, pRight->value.asDate.lDate + static_cast< long >( pLeft->value.asNum.val.l ),
                                            pRight->value.asDate.lTime );
          else
             hb_compExprReduceTimeStampAdd( pSelf, pRight, pLeft->value.asNum.val.d );
@@ -798,7 +798,7 @@ PHB_EXPR hb_compExprReducePlus( PHB_EXPR pSelf, HB_COMP_DECL )
       if( pLeft->ExprType == HB_ET_DATE )
       {
          if( pRight->value.asNum.NumType == HB_ET_LONG )
-            pSelf->value.asDate.lDate = pLeft->value.asDate.lDate + ( long ) pRight->value.asNum.val.l;
+            pSelf->value.asDate.lDate = pLeft->value.asDate.lDate + static_cast< long >( pRight->value.asNum.val.l );
          else
             pSelf->value.asDate.lDate = pLeft->value.asDate.lDate + HB_CAST_LONG( pRight->value.asNum.val.d );
          pSelf->value.asDate.lTime = 0;
@@ -810,7 +810,7 @@ PHB_EXPR hb_compExprReducePlus( PHB_EXPR pSelf, HB_COMP_DECL )
       else if( pLeft->ExprType == HB_ET_TIMESTAMP )
       {
          if( pRight->value.asNum.NumType == HB_ET_LONG )
-            hb_compExprReduceTimeStampPut( pSelf, pLeft->value.asDate.lDate + ( long ) pRight->value.asNum.val.l,
+            hb_compExprReduceTimeStampPut( pSelf, pLeft->value.asDate.lDate + static_cast< long >( pRight->value.asNum.val.l ),
                                            pLeft->value.asDate.lTime );
          else
             hb_compExprReduceTimeStampAdd( pSelf, pLeft, pRight->value.asNum.val.d );
@@ -2343,7 +2343,7 @@ HB_BOOL hb_compExprReduceDTOS( PHB_EXPR pSelf, HB_COMP_DECL )
       PHB_EXPR pExpr;
 
       szDate = ( char * ) memcpy( hb_xgrab( 9 ),
-            hb_dateDecStr( szBuffer, ( long ) pArg->value.asDate.lDate ), 9 );
+            hb_dateDecStr( szBuffer, static_cast< long >( pArg->value.asDate.lDate ) ), 9 );
       pExpr = hb_compExprNewString( szDate, 8, HB_TRUE, HB_COMP_PARAM );
 
       HB_COMP_EXPR_FREE( pParms );
@@ -2410,8 +2410,8 @@ HB_BOOL hb_compExprReduceUPPER( PHB_EXPR pSelf, HB_COMP_DECL )
          {
             if( pArg->nLength == 1 )
             {
-               szValue = ( char * ) HB_UNCONST( hb_szAscii[ HB_TOUPPER( ( unsigned char )
-                                                   pArg->value.asString.string[ 0 ] ) ] );
+               szValue = ( char * ) HB_UNCONST( hb_szAscii[ HB_TOUPPER( static_cast< unsigned char >(
+                                                   pArg->value.asString.string[ 0 ] ) ) ] );
                fDealloc = HB_FALSE;
             }
             else
@@ -2430,7 +2430,7 @@ HB_BOOL hb_compExprReduceUPPER( PHB_EXPR pSelf, HB_COMP_DECL )
                }
                do
                {
-                  szValue[ nLen ] = ( char ) HB_TOUPPER( ( unsigned char ) szValue[ nLen ] );
+                  szValue[ nLen ] = static_cast< char >( HB_TOUPPER( static_cast< unsigned char >( szValue[ nLen ] ) ) );
                }
                while( ++nLen < pArg->nLength );
             }

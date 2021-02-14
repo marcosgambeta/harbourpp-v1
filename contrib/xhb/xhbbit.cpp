@@ -132,7 +132,7 @@ static void s_xhb_bitOper( int iOper )
             const char * pStr = hb_itemGetCPtr( pItem1 );
             char * pRet = ( char * ) hb_xmemdup( pStr, nLen1 + 1 );
             char cVal = nLen2 == 1 ? hb_itemGetCPtr( pItem2 )[ 0 ] :
-                                     ( char ) hb_itemGetNI( pItem2 );
+                                     static_cast< char >( hb_itemGetNI( pItem2 ) );
 
             nLen2 = nLen1;
             switch( iOper )

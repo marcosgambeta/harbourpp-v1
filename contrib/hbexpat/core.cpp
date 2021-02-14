@@ -1131,7 +1131,7 @@ HB_FUNC( XML_SETHASHSALT )
    if( hb_expat )
    {
 #if HB_EXPAT_VERS( 2, 1, 0 )
-      hb_retni( XML_SetHashSalt( hb_expat->parser, ( unsigned long ) hb_parnint( 2 ) ) );
+      hb_retni( XML_SetHashSalt( hb_expat->parser, static_cast< unsigned long >( hb_parnint( 2 ) ) ) );
 #else
       hb_retni( 0 );
 #endif

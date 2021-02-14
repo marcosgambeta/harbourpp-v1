@@ -263,7 +263,7 @@ static HB_ERRCODE ocilibExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
       hb_strfree( hStatement );
 
       /* TODO: new id */
-      hb_rddsqlSetError( 0, NULL, hb_itemGetCPtr( pItem ), NULL, ( unsigned long ) OCI_GetAffectedRows( st ) );
+      hb_rddsqlSetError( 0, NULL, hb_itemGetCPtr( pItem ), NULL, static_cast< unsigned long >( OCI_GetAffectedRows( st ) ) );
       OCI_StatementFree( st );
       return HB_SUCCESS;
    }

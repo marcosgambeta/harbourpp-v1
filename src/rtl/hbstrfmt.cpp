@@ -86,7 +86,7 @@ static void hb_itemHexStr( PHB_ITEM pItem, char * pStr, HB_BOOL fUpper )
    do
    {
       int iDigit = static_cast< int >( nValue & 0x0F );
-      pStr[ --iLen ] = ( char ) ( iDigit + ( iDigit < 10 ? '0' :
+      pStr[ --iLen ] = static_cast< char >( iDigit + ( iDigit < 10 ? '0' :
                                              ( fUpper ? 'A' : 'a' ) - 10 ) );
       nValue >>= 4;
    }
@@ -206,7 +206,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
          {
             char  buf[ 1 ];
 
-            buf[ 0 ] = ( char ) hb_itemGetNI( pItem );
+            buf[ 0 ] = static_cast< char >( hb_itemGetNI( pItem ) );
             if( fLeftAlign )
             {
                bufadd( &buffer, buf, 1 );

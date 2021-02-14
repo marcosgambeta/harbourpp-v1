@@ -1346,7 +1346,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem,
          break;
 
       case HB_SERIAL_INT8:
-         hb_itemPutNI( pItem, ( signed char ) pBuffer[ nOffset++ ] );
+         hb_itemPutNI( pItem, static_cast< signed char >( pBuffer[ nOffset++ ] ) );
          break;
 
       case HB_SERIAL_INT16:
@@ -1370,7 +1370,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem,
          break;
 
       case HB_SERIAL_INT8NUM:
-         hb_itemPutNILen( pItem, ( signed char ) pBuffer[ nOffset ],
+         hb_itemPutNILen( pItem, static_cast< signed char >( pBuffer[ nOffset ] ),
                           pBuffer[ nOffset + 1 ] );
          nOffset += 2;
          break;
@@ -1641,7 +1641,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem,
                hb_itemPutNI( pItem, static_cast< int >( HB_GET_BE_UINT64( &pBuffer[ nOffset ] ) ) );
                break;
             case 'L':
-               hb_itemPutNL( pItem, ( long ) HB_GET_BE_UINT64( &pBuffer[ nOffset ] ) );
+               hb_itemPutNL( pItem, static_cast< long >( HB_GET_BE_UINT64( &pBuffer[ nOffset ] ) ) );
                break;
             case 'X':
                hb_itemPutNInt( pItem, ( HB_MAXINT ) HB_GET_BE_UINT64( &pBuffer[ nOffset ] ) );
@@ -1658,7 +1658,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem,
          nOffset += 8;
          break;
       case HB_SERIAL_XHB_D:
-         hb_itemPutDL( pItem, ( long ) HB_GET_BE_UINT64( &pBuffer[ nOffset ] ) );
+         hb_itemPutDL( pItem, static_cast< long >( HB_GET_BE_UINT64( &pBuffer[ nOffset ] ) ) );
          nOffset += 8;
          break;
       case HB_SERIAL_XHB_T:

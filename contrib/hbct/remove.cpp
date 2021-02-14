@@ -74,7 +74,7 @@ static void do_remove( int iSwitch )
       if( hb_parclen( 2 ) > 0 )
          cSearch = *( hb_parc( 2 ) );
       else if( HB_ISNUM( 2 ) )
-         cSearch = ( char ) ( hb_parnl( 2 ) % 256 );
+         cSearch = static_cast< char >( hb_parnl( 2 ) % 256 );
       else
          cSearch = 0x20;
 

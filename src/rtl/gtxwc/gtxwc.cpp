@@ -2945,7 +2945,7 @@ static void hb_gt_xwc_ProcessKey( PXWND_DEF wnd, XKeyEvent * evt )
           */
          if( outISO >= 0x0100 && outISO <= 0x0fff && ( outISO & 0x80 ) == 0x80 )
          {
-            buf[ 0 ] = ( char ) ( outISO & 0xff );
+            buf[ 0 ] = static_cast< char >( outISO & 0xff );
             i = 1;
          }
          /* hack for euro sign */
@@ -3537,7 +3537,7 @@ static int hb_gt_xwc_GetColormapSize( PXWND_DEF wnd )
 
    visInfo.visualid = XVisualIDFromVisual( DefaultVisual( wnd->dpy,
                                            DefaultScreen( wnd->dpy ) ) );
-   visInfoPtr = XGetVisualInfo( wnd->dpy, ( long ) VisualIDMask,
+   visInfoPtr = XGetVisualInfo( wnd->dpy, static_cast< long >( VisualIDMask ),
                                 &visInfo, &nItems );
    if( nItems >= 1 )
    {

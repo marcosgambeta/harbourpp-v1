@@ -1458,7 +1458,7 @@ static HB_ERRCODE hb_fptReadRawSMTItem( FPTAREAP pArea, PHB_ITEM pItem, HB_FOFFS
          if( hb_fileReadAt( pArea->pMemoFile, buffer, 4, *pfOffset ) != 4 )
             return EDBF_READ;
          *pfOffset += 4;
-         hb_itemPutDL( pItem, ( long ) HB_GET_LE_UINT32( buffer ) );
+         hb_itemPutDL( pItem, static_cast< long >( HB_GET_LE_UINT32( buffer ) ) );
          break;
 
       case SMT_IT_LOGICAL:
@@ -1581,7 +1581,7 @@ static HB_ERRCODE hb_fptReadSMTItem( FPTAREAP pArea, HB_BYTE ** pbMemoBuf, HB_BY
                errCode = EDBF_CORRUPT;
                break;
             }
-            hb_itemPutDL( pItem, ( long ) HB_GET_LE_UINT32( *pbMemoBuf ) );
+            hb_itemPutDL( pItem, static_cast< long >( HB_GET_LE_UINT32( *pbMemoBuf ) ) );
             *pbMemoBuf += 4;
             break;
 
@@ -1807,7 +1807,7 @@ static HB_ERRCODE hb_fptReadSixItem( FPTAREAP pArea, HB_BYTE ** pbMemoBuf, HB_BY
       switch( usType )
       {
          case FPTIT_SIX_LNUM:
-            hb_itemPutNL( pItem, ( long ) HB_GET_LE_UINT32( &( *pbMemoBuf )[ 6 ] ) );
+            hb_itemPutNL( pItem, static_cast< long >( HB_GET_LE_UINT32( &( *pbMemoBuf )[ 6 ] ) ) );
             break;
 
          case FPTIT_SIX_DNUM:
@@ -1817,7 +1817,7 @@ static HB_ERRCODE hb_fptReadSixItem( FPTAREAP pArea, HB_BYTE ** pbMemoBuf, HB_BY
             break;
 
          case FPTIT_SIX_LDATE:
-            hb_itemPutDL( pItem, ( long ) HB_GET_LE_UINT32( &( *pbMemoBuf )[ 6 ] ) );
+            hb_itemPutDL( pItem, static_cast< long >( HB_GET_LE_UINT32( &( *pbMemoBuf )[ 6 ] ) ) );
             break;
 
          case FPTIT_SIX_LOG:
@@ -2118,7 +2118,7 @@ static HB_ERRCODE hb_fptReadFlexItem( FPTAREAP pArea, HB_BYTE ** pbMemoBuf, HB_B
       case FPTIT_FLEXAR_DATEX:
          if( bBufEnd - ( *pbMemoBuf ) >= 4 )
          {
-            hb_itemPutDL( pItem, ( long ) HB_GET_LE_UINT32( *pbMemoBuf ) );
+            hb_itemPutDL( pItem, static_cast< long >( HB_GET_LE_UINT32( *pbMemoBuf ) ) );
             *pbMemoBuf += 4;
          }
          else
@@ -2164,7 +2164,7 @@ static HB_ERRCODE hb_fptReadFlexItem( FPTAREAP pArea, HB_BYTE ** pbMemoBuf, HB_B
       case FPTIT_FLEXAR_UCHAR1:
          if( bBufEnd - ( *pbMemoBuf ) >= 2 )
          {
-            hb_itemPutNILen( pItem, ( unsigned char ) **pbMemoBuf, ( *pbMemoBuf )[ 1 ] );
+            hb_itemPutNILen( pItem, static_cast< unsigned char >( **pbMemoBuf ), ( *pbMemoBuf )[ 1 ] );
             *pbMemoBuf += 2;
          }
          else
@@ -2177,10 +2177,10 @@ static HB_ERRCODE hb_fptReadFlexItem( FPTAREAP pArea, HB_BYTE ** pbMemoBuf, HB_B
             if( iDec )
             {
                iLen -= iDec + 1;
-               hb_itemPutNDLen( pItem, ( unsigned char ) **pbMemoBuf, iLen, iDec );
+               hb_itemPutNDLen( pItem, static_cast< unsigned char >( **pbMemoBuf ), iLen, iDec );
             }
             else
-               hb_itemPutNILen( pItem, ( unsigned char ) **pbMemoBuf, iLen );
+               hb_itemPutNILen( pItem, static_cast< unsigned char >( **pbMemoBuf ), iLen );
             *pbMemoBuf += 3;
          }
          else
@@ -2259,7 +2259,7 @@ static HB_ERRCODE hb_fptReadFlexItem( FPTAREAP pArea, HB_BYTE ** pbMemoBuf, HB_B
       case FPTIT_FLEXAR_LONG:
          if( bBufEnd - ( *pbMemoBuf ) >= 4 )
          {
-            hb_itemPutNL( pItem, ( long ) HB_GET_LE_UINT32( *pbMemoBuf ) );
+            hb_itemPutNL( pItem, static_cast< long >( HB_GET_LE_UINT32( *pbMemoBuf ) ) );
             *pbMemoBuf += 4;
          }
          else
@@ -2738,7 +2738,7 @@ static HB_ERRCODE hb_fptGetMemo( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
             hb_itemSetCMemo( pItem );
             pBuffer = NULL;
          }
-         else if( ! ulSize || pBuffer[ 0 ] != ( char ) ulType )
+         else if( ! ulSize || pBuffer[ 0 ] != static_cast< char >( ulType ) )
          {
             errCode = EDBF_CORRUPT;
             hb_itemClear( pItem );
@@ -2781,22 +2781,22 @@ static HB_ERRCODE hb_fptGetMemo( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
                hb_itemPutL( pItem, HB_FALSE );
                break;
             case FPTIT_FLEX_LDATE:
-               hb_itemPutDL( pItem, ( long ) HB_GET_LE_UINT32( pBuffer ) );
+               hb_itemPutDL( pItem, static_cast< long >( HB_GET_LE_UINT32( pBuffer ) ) );
                break;
             case FPTIT_FLEX_CHAR:
-               hb_itemPutNI( pItem, ( signed char ) pBuffer[ 0 ] );
+               hb_itemPutNI( pItem, static_cast< signed char >( pBuffer[ 0 ] ) );
                break;
             case FPTIT_FLEX_UCHAR:
-               hb_itemPutNI( pItem, ( unsigned char ) pBuffer[ 0 ] );
+               hb_itemPutNI( pItem, static_cast< unsigned char >( pBuffer[ 0 ] ) );
                break;
             case FPTIT_FLEX_SHORT:
-               hb_itemPutNI( pItem, ( short ) HB_GET_LE_UINT16( pBuffer ) );
+               hb_itemPutNI( pItem, static_cast< short >( HB_GET_LE_UINT16( pBuffer ) ) );
                break;
             case FPTIT_FLEX_USHORT:
                hb_itemPutNInt( pItem, HB_GET_LE_UINT16( pBuffer ) );
                break;
             case FPTIT_FLEX_LONG:
-               hb_itemPutNL( pItem, ( long ) HB_GET_LE_UINT32( pBuffer ) );
+               hb_itemPutNL( pItem, static_cast< long >( HB_GET_LE_UINT32( pBuffer ) ) );
                break;
             case FPTIT_FLEX_ULONG:
                hb_itemPutNInt( pItem, HB_GET_LE_UINT32( pBuffer ) );
@@ -3333,7 +3333,7 @@ static HB_ERRCODE hb_fptGetVarField( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
       else if( pField->uiLen == 2 )
          hb_itemPutNIntLen( pItem, static_cast< int >( HB_GET_LE_INT16( pFieldBuf ) ), 10 );
       else if( pField->uiLen == 1 )
-         hb_itemPutNILen( pItem, ( signed char ) pFieldBuf[ 0 ], 4 );
+         hb_itemPutNILen( pItem, static_cast< signed char >( pFieldBuf[ 0 ] ), 4 );
       else if( pField->uiLen >= 6 )
       {
          HB_ULONG ulBlock = HB_GET_LE_UINT32( pFieldBuf + pField->uiLen - 6 );

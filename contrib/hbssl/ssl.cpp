@@ -1306,7 +1306,7 @@ HB_FUNC( SSL_SET_OPTIONS )
       SSL * ssl = hb_SSL_par( 1 );
 
       if( ssl )
-         SSL_set_options( ssl, ( unsigned long ) hb_parnl( 2 ) );
+         SSL_set_options( ssl, static_cast< unsigned long >( hb_parnl( 2 ) ) );
    }
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );

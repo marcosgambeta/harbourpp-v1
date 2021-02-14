@@ -1669,8 +1669,8 @@ static int hb_socketSelectRD( HB_SOCKET sd, HB_MAXINT timeout )
 #  if ! defined( HB_HAS_SELECT_TIMER )
    HB_MAXUINT timer = hb_timerInit( timeout );
 #  else
-   tv.tv_sec = ( long ) ( timeout / 1000 );
-   tv.tv_usec = ( long ) ( timeout % 1000 ) * 1000;
+   tv.tv_sec = static_cast< long >( timeout / 1000 );
+   tv.tv_usec = static_cast< long >( timeout % 1000 ) * 1000;
 #  endif
 
    for( ;; )
@@ -1685,8 +1685,8 @@ static int hb_socketSelectRD( HB_SOCKET sd, HB_MAXINT timeout )
 #  if ! defined( HB_HAS_SELECT_TIMER )
       else
       {
-         tv.tv_sec = ( long ) ( timeout / 1000 );
-         tv.tv_usec = ( long ) ( timeout % 1000 ) * 1000;
+         tv.tv_sec = static_cast< long >( timeout / 1000 );
+         tv.tv_usec = static_cast< long >( timeout % 1000 ) * 1000;
       }
 #  endif
 
@@ -1763,8 +1763,8 @@ static int hb_socketSelectWR( HB_SOCKET sd, HB_MAXINT timeout )
 #  if ! defined( HB_HAS_SELECT_TIMER )
    HB_MAXUINT timer = hb_timerInit( timeout );
 #  else
-   tv.tv_sec = ( long ) ( timeout / 1000 );
-   tv.tv_usec = ( long ) ( timeout % 1000 ) * 1000;
+   tv.tv_sec = static_cast< long >( timeout / 1000 );
+   tv.tv_usec = static_cast< long >( timeout % 1000 ) * 1000;
 #  endif
 
    for( ;; )
@@ -1779,8 +1779,8 @@ static int hb_socketSelectWR( HB_SOCKET sd, HB_MAXINT timeout )
 #  if ! defined( HB_HAS_SELECT_TIMER )
       else
       {
-         tv.tv_sec = ( long ) ( timeout / 1000 );
-         tv.tv_usec = ( long ) ( timeout % 1000 ) * 1000;
+         tv.tv_sec = static_cast< long >( timeout / 1000 );
+         tv.tv_usec = static_cast< long >( timeout % 1000 ) * 1000;
       }
 #  endif
 
@@ -1873,8 +1873,8 @@ static int hb_socketSelectWRE( HB_SOCKET sd, HB_MAXINT timeout )
 #  if ! defined( HB_HAS_SELECT_TIMER )
    HB_MAXUINT timer = hb_timerInit( timeout );
 #  else
-   tv.tv_sec = ( long ) ( timeout / 1000 );
-   tv.tv_usec = ( long ) ( timeout % 1000 ) * 1000;
+   tv.tv_sec = static_cast< long >( timeout / 1000 );
+   tv.tv_usec = static_cast< long >( timeout % 1000 ) * 1000;
 #  endif
 
    for( ;; )
@@ -1889,8 +1889,8 @@ static int hb_socketSelectWRE( HB_SOCKET sd, HB_MAXINT timeout )
 #  if ! defined( HB_HAS_SELECT_TIMER )
       else
       {
-         tv.tv_sec = ( long ) ( timeout / 1000 );
-         tv.tv_usec = ( long ) ( timeout % 1000 ) * 1000;
+         tv.tv_sec = static_cast< long >( timeout / 1000 );
+         tv.tv_usec = static_cast< long >( timeout % 1000 ) * 1000;
       }
 #  endif
 
@@ -1979,7 +1979,7 @@ HB_BOOL hb_socketLocalAddr( void ** pSockAddr, unsigned * puiLen,
 #endif
    hb_strncpy( sa.sun_path, szAddr, sizeof( sa.sun_path ) - 1 );
    *pSockAddr = memcpy( hb_xgrab( sizeof( sa ) + 1 ), &sa, sizeof( sa ) );
-   *puiLen = ( unsigned ) sizeof( sa );
+   *puiLen = static_cast< unsigned >( sizeof( sa ) );
    return HB_TRUE;
 #else
    HB_SYMBOL_UNUSED( szAddr );
@@ -2003,7 +2003,7 @@ HB_BOOL hb_socketInetAddr( void ** pSockAddr, unsigned * puiLen,
    {
       sa.sin_addr.s_addr = htonl( INADDR_ANY );
       *pSockAddr = memcpy( hb_xgrab( sizeof( sa ) + 1 ), &sa, sizeof( sa ) );
-      *puiLen = ( unsigned ) sizeof( sa );
+      *puiLen = static_cast< unsigned >( sizeof( sa ) );
       return HB_TRUE;
    }
    else
@@ -2019,7 +2019,7 @@ HB_BOOL hb_socketInetAddr( void ** pSockAddr, unsigned * puiLen,
 #endif
       {
          *pSockAddr = memcpy( hb_xgrab( sizeof( sa ) + 1 ), &sa, sizeof( sa ) );
-         *puiLen = ( unsigned ) sizeof( sa );
+         *puiLen = static_cast< unsigned >( sizeof( sa ) );
          return HB_TRUE;
       }
       else
@@ -2054,7 +2054,7 @@ HB_BOOL hb_socketInet6Addr( void ** pSockAddr, unsigned * puiLen,
       int iTODO;
 #endif
       *pSockAddr = memcpy( hb_xgrab( sizeof( sa ) + 1 ), &sa, sizeof( sa ) );
-      *puiLen = ( unsigned ) sizeof( sa );
+      *puiLen = static_cast< unsigned >( sizeof( sa ) );
       return HB_TRUE;
    }
    else
@@ -2064,7 +2064,7 @@ HB_BOOL hb_socketInet6Addr( void ** pSockAddr, unsigned * puiLen,
       if( err > 0 )
       {
          *pSockAddr = memcpy( hb_xgrab( sizeof( sa ) + 1 ), &sa, sizeof( sa ) );
-         *puiLen = ( unsigned ) sizeof( sa );
+         *puiLen = static_cast< unsigned >( sizeof( sa ) );
          return HB_TRUE;
       }
       else if( err == 0 )
@@ -2331,7 +2331,7 @@ int hb_socketGetSockName( HB_SOCKET sd, void ** pSockAddr, unsigned * puiLen )
    if( ret == 0 )
    {
       *pSockAddr = memcpy( hb_xgrab( len + 1 ), &st.sa, len );
-      *puiLen = ( unsigned ) len;
+      *puiLen = static_cast< unsigned >( len );
    }
    else
    {
@@ -2359,7 +2359,7 @@ int hb_socketGetPeerName( HB_SOCKET sd, void ** pSockAddr, unsigned * puiLen )
    if( ret == 0 )
    {
       *pSockAddr = memcpy( hb_xgrab( len + 1 ), &st.sa, len );
-      *puiLen = ( unsigned ) len;
+      *puiLen = static_cast< unsigned >( len );
    }
    else
 #endif
@@ -2539,7 +2539,7 @@ HB_SOCKET hb_socketAccept( HB_SOCKET sd, void ** pSockAddr, unsigned * puiLen, H
          if( pSockAddr && puiLen )
          {
             *pSockAddr = memcpy( hb_xgrab( len + 1 ), &st.sa, len );
-            *puiLen = ( unsigned ) len;
+            *puiLen = static_cast< unsigned >( len );
          }
          /* it's not guarantied that socket returned by accept will use
           * blocking IO operations. On some systems it inherits blocking
@@ -2762,7 +2762,7 @@ long hb_socketRecvFrom( HB_SOCKET sd, void * data, long len, int flags, void ** 
       if( lReceived != -1 && pSockAddr && puiSockLen )
       {
          *pSockAddr = memcpy( hb_xgrab( salen + 1 ), &st.sa, salen );
-         *puiSockLen = ( unsigned ) salen;
+         *puiSockLen = static_cast< unsigned >( salen );
       }
    }
    hb_vmLock();
@@ -3259,8 +3259,8 @@ int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD,
       }
       else
       {
-         tv.tv_sec = ( long ) ( timeout / 1000 );
-         tv.tv_usec = ( long ) ( timeout % 1000 ) * 1000;
+         tv.tv_sec = static_cast< long >( timeout / 1000 );
+         tv.tv_usec = static_cast< long >( timeout % 1000 ) * 1000;
       }
 
       hb_vmUnlock();
@@ -3322,7 +3322,7 @@ HB_BOOL hb_socketResolveInetAddr( void ** pSockAddr, unsigned * puiLen, const ch
    {
       sa.sin_addr.s_addr = htonl( INADDR_ANY );
       *pSockAddr = memcpy( hb_xgrab( sizeof( sa ) + 1 ), &sa, sizeof( sa ) );
-      *puiLen = ( unsigned ) sizeof( sa );
+      *puiLen = static_cast< unsigned >( sizeof( sa ) );
       return HB_TRUE;
    }
 
@@ -3350,7 +3350,7 @@ HB_BOOL hb_socketResolveInetAddr( void ** pSockAddr, unsigned * puiLen, const ch
       if( iError == 0 )
       {
          if( static_cast< int >( res->ai_addrlen ) >= static_cast< int >( sizeof( struct sockaddr_in ) ) &&
-             hb_socketGetAddrFamily( res->ai_addr, ( unsigned ) res->ai_addrlen ) == AF_INET )
+             hb_socketGetAddrFamily( res->ai_addr, static_cast< unsigned >( res->ai_addrlen ) ) == AF_INET )
          {
             sa.sin_addr.s_addr = ( ( struct sockaddr_in * ) res->ai_addr )->sin_addr.s_addr;
             fTrans = HB_TRUE;
@@ -3376,7 +3376,7 @@ HB_BOOL hb_socketResolveInetAddr( void ** pSockAddr, unsigned * puiLen, const ch
    if( fTrans )
    {
       *pSockAddr = memcpy( hb_xgrab( sizeof( sa ) + 1 ), &sa, sizeof( sa ) );
-      *puiLen = ( unsigned ) sizeof( sa );
+      *puiLen = static_cast< unsigned >( sizeof( sa ) );
       return HB_TRUE;
    }
 #else
@@ -3480,7 +3480,7 @@ char * hb_socketResolveAddr( const char * szAddr, int af )
       iError = getaddrinfo( szAddr, NULL, &hints, &res );
       if( iError == 0 )
       {
-         szResult = hb_socketAddrGetName( res->ai_addr, ( unsigned ) res->ai_addrlen );
+         szResult = hb_socketAddrGetName( res->ai_addr, static_cast< unsigned >( res->ai_addrlen ) );
          freeaddrinfo( res );
       }
       hb_vmLock();
@@ -3525,7 +3525,7 @@ PHB_ITEM hb_socketGetHosts( const char * szAddr, int af )
          iCount = 0;
          while( ai )
          {
-            char * szResult = hb_socketAddrGetName( res->ai_addr, ( unsigned ) res->ai_addrlen );
+            char * szResult = hb_socketAddrGetName( res->ai_addr, static_cast< unsigned >( res->ai_addrlen ) );
             if( szResult )
             {
                int i;

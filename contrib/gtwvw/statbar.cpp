@@ -82,19 +82,19 @@ HB_FUNC( WVW_SBCREATE )
       if( pWindowData->hSBfont == nullptr )
          pWindowData->hSBfont = CreateFontIndirect( &pData->s_lfSB );
       if( GetClientRect( hWndSB, &rSB ) )
-         pWindowData->usSBHeight = ( USHORT ) rSB.bottom;
+         pWindowData->usSBHeight = static_cast< USHORT >( rSB.bottom );
       pWindowData->hStatusBar = hWndSB;
 
       hb_gt_wvwResetWindow( usWinNum );
 
       ptArray[ 0 ] = rSB.right;
-      SendMessage( hWndSB, WM_SETFONT, ( WPARAM ) pWindowData->hSBfont, ( LPARAM ) TRUE );
+      SendMessage( hWndSB, WM_SETFONT, static_cast< WPARAM >( pWindowData->hSBfont ), static_cast< LPARAM >( TRUE ) );
 
-      SendMessage( hWndSB, SB_SETPARTS, 1, ( LPARAM ) ( LPINT ) ptArray );
+      SendMessage( hWndSB, SB_SETPARTS, 1, static_cast< LPARAM >( ( LPINT ) ptArray ) );
 
    }
 
-   hb_retnl( ( LONG ) hWndSB );
+   hb_retnl( static_cast< LONG >( hWndSB ) );
 }
 
 /*wvw_sbDestroy( [nWinNum] )
@@ -109,7 +109,7 @@ HB_FUNC( WVW_SBDESTROY )
    {
       if( pWindowData->hSBfont )
       {
-         DeleteObject( ( HFONT ) pWindowData->hSBfont );
+         DeleteObject( static_cast< HFONT >( pWindowData->hSBfont ) );
          pWindowData->hSBfont = nullptr;
       }
       DestroyWindow( pWindowData->hStatusBar );
@@ -156,18 +156,18 @@ HB_FUNC( WVW_SBADDPART )
 
    displayFlags = HB_ISNIL( 4 ) ? 0 : ( WORD ) hb_parnl( 4 );
    lResetParts  = ! HB_ISNIL( 5 ) && hb_parl( 5 );
-   usWidth      = HB_ISNIL( 3 ) || hb_parni( 3 ) <= 0 ? 5 * WVW_SPACE_BETWEEN_PARTS : ( USHORT ) hb_parni( 3 );
+   usWidth      = HB_ISNIL( 3 ) || hb_parni( 3 ) <= 0 ? 5 * WVW_SPACE_BETWEEN_PARTS : static_cast< USHORT >( hb_parni( 3 ) );
 
    if( HB_ISCHAR( 2 ) )
    {
       HDC  hDCSB = GetDC( hWndSB );
       SIZE size  = { 0 };
 
-      HFONT hFont    = ( HFONT ) SendMessage( hWndSB, WM_GETFONT, ( WPARAM ) 0, ( LPARAM ) 0 );
-      HFONT hOldFont = ( HFONT ) SelectObject( hDCSB, hFont );
+      HFONT hFont    = static_cast< HFONT >( SendMessage( hWndSB, WM_GETFONT, static_cast< WPARAM >( 0 ), static_cast< LPARAM >( 0 ) ) );
+      HFONT hOldFont = static_cast< HFONT >( SelectObject( hDCSB, hFont ) );
 
       if( GetTextExtentPoint32( hDCSB, hb_parcx( 2 ), hb_parclen( 2 ) + 1, &size ) )
-         usWidth = ( USHORT ) size.cx;
+         usWidth = static_cast< USHORT >( size.cx );
 
       SelectObject( hDCSB, hOldFont );
 
@@ -175,7 +175,7 @@ HB_FUNC( WVW_SBADDPART )
    }
 
    if( ! lResetParts )
-      numOfParts = SendMessage( hWndSB, SB_GETPARTS, WVW_MAX_STATUS_PARTS, ( LPARAM ) ( LPINT ) ptArray );
+      numOfParts = SendMessage( hWndSB, SB_GETPARTS, WVW_MAX_STATUS_PARTS, static_cast< LPARAM >( ( LPINT ) ptArray ) );
    else
       numOfParts = 0;
    numOfParts++;
@@ -187,25 +187,25 @@ HB_FUNC( WVW_SBADDPART )
       for( n = 0; n < numOfParts - 1; n++ )
          ptArray[ n ] -= ( usWidth + WVW_SPACE_BETWEEN_PARTS );
 
-   SendMessage( hWndSB, SB_SETPARTS, numOfParts, ( LPARAM ) ( LPINT ) ptArray );
+   SendMessage( hWndSB, SB_SETPARTS, numOfParts, static_cast< LPARAM >( ( LPINT ) ptArray ) );
 
    if( ! HB_ISNIL( 6 ) )
    {
       int cy = rSB.bottom - rSB.top - 4;
       int cx = cy;
 
-      hIcon = ( HICON ) LoadImage( 0, hb_parcx( 6 ), IMAGE_ICON, cx, cy, LR_LOADFROMFILE | LR_LOADMAP3DCOLORS | LR_LOADTRANSPARENT | LR_DEFAULTSIZE );
+      hIcon = static_cast< HICON >( LoadImage( 0, hb_parcx( 6 ), IMAGE_ICON, cx, cy, LR_LOADFROMFILE | LR_LOADMAP3DCOLORS | LR_LOADTRANSPARENT | LR_DEFAULTSIZE ) );
 
       if( hIcon == nullptr )
-         hIcon = ( HICON ) LoadImage( GetModuleHandle( nullptr ), hb_parcx( 6 ), IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR | LR_DEFAULTSIZE );
+         hIcon = static_cast< HICON >( LoadImage( GetModuleHandle( nullptr ), hb_parcx( 6 ), IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR | LR_DEFAULTSIZE ) );
 
       if( ! ( hIcon == nullptr ) )
-         SendMessage( hWndSB, SB_SETICON, ( WPARAM ) numOfParts - 1, ( LPARAM ) hIcon );
+         SendMessage( hWndSB, SB_SETICON, static_cast< WPARAM >( numOfParts ) - 1, static_cast< LPARAM >( hIcon ) );
    }
 
-   SendMessage( hWndSB, SB_SETTEXT, ( numOfParts - 1 ) | displayFlags, ( LPARAM ) NULL );
+   SendMessage( hWndSB, SB_SETTEXT, ( numOfParts - 1 ) | displayFlags, static_cast< LPARAM >( NULL ) );
    if( ! HB_ISNIL( 7 ) )
-      SendMessage( hWndSB, SB_SETTIPTEXT, ( WPARAM ) ( numOfParts - 1 ), ( LPARAM ) hb_parcx( 7 ) );
+      SendMessage( hWndSB, SB_SETTIPTEXT, static_cast< WPARAM >( numOfParts - 1 ), static_cast< LPARAM >( hb_parcx( 7 ) ) );
 
    hb_retni( numOfParts );
 }
@@ -234,7 +234,7 @@ HB_FUNC( WVW_SBREFRESH )
       return;
    }
 
-   numOfParts = SendMessage( hWndSB, SB_GETPARTS, WVW_MAX_STATUS_PARTS, ( LPARAM ) ( LPINT ) ptArray );
+   numOfParts = SendMessage( hWndSB, SB_GETPARTS, WVW_MAX_STATUS_PARTS, static_cast< LPARAM >( ( LPINT ) ptArray ) );
    if( numOfParts == 0 )
    {
       hb_retnl( 0 );
@@ -247,7 +247,7 @@ HB_FUNC( WVW_SBREFRESH )
    for( n = 0; n <= numOfParts - 1; n++ )
       ptArray[ n ] += iDiff;
 
-   SendMessage( hWndSB, SB_SETPARTS, numOfParts, ( LPARAM ) ( LPINT ) ptArray );
+   SendMessage( hWndSB, SB_SETPARTS, numOfParts, static_cast< LPARAM >( ( LPINT ) ptArray ) );
 
    hb_retni( numOfParts );
 }
@@ -280,11 +280,11 @@ HB_FUNC( WVW_SBSETTEXT )
    if( ( iPart == 0 ) && ( ( pWindowData->cSBColorForeground ) || ( pWindowData->cSBColorBackground ) ) )
    {
       pWindowData->bSBPaint = TRUE;
-      SendMessage( pWindowData->hStatusBar, SB_SETTEXT, SBT_OWNERDRAW, ( LPARAM ) hb_parcx( 3 ) );
+      SendMessage( pWindowData->hStatusBar, SB_SETTEXT, SBT_OWNERDRAW, static_cast< LPARAM >( hb_parcx( 3 ) ) );
       hb_gt_wvwProcessMessages( pWindowData );
    }
    else
-      SendMessage( pWindowData->hStatusBar, SB_SETTEXT, iPart, ( LPARAM ) hb_parcx( 3 ) );
+      SendMessage( pWindowData->hStatusBar, SB_SETTEXT, iPart, static_cast< LPARAM >( hb_parcx( 3 ) ) );
 }
 
 /*wvw_sbGetText([nWinNum], [nPart])
@@ -297,7 +297,7 @@ HB_FUNC( WVW_SBGETTEXT )
    int        iPart           = HB_ISNIL( 2 ) ? 1 : hb_parni( 2 );
    char       cString[ 1024 ] = "";
 
-   SendMessage( pWindowData->hStatusBar, SB_GETTEXT, ( WPARAM ) iPart, ( LPARAM ) cString );
+   SendMessage( pWindowData->hStatusBar, SB_GETTEXT, static_cast< WPARAM >( iPart ), static_cast< LPARAM >( cString ) );
    hb_retc( cString );
 }
 
@@ -348,7 +348,7 @@ HB_FUNC( WVW_SBSETFONT )
       if( hFont )
       {
          pWindowData->hSBfont = hFont;
-         DeleteObject( ( HFONT ) hOldFont );
+         DeleteObject( static_cast< HFONT >( hOldFont ) );
       }
       else
          retval = FALSE;
@@ -421,8 +421,8 @@ HB_FUNC( WVW_XBCREATE )
    int        iOffTop, iOffLeft, iOffBottom, iOffRight;
    int        iStyle = static_cast< int >( ! HB_ISNUM( 2 ) ? -1 : hb_parni( 2 ) );
    UINT       uiXBid;
-   USHORT     usTop  = ( USHORT ) hb_parni( 3 ),
-              usLeft = ( USHORT ) hb_parni( 4 ),
+   USHORT     usTop  = static_cast< USHORT >( hb_parni( 3 ) ),
+              usLeft = static_cast< USHORT >( hb_parni( 4 ) ),
               usBottom,
               usRight;
 
@@ -434,7 +434,7 @@ HB_FUNC( WVW_XBCREATE )
 
    if( iStyle == SBS_VERT )
    {
-      usBottom = usTop + ( USHORT ) hb_parni( 5 ) - 1;
+      usBottom = usTop + static_cast< USHORT >( hb_parni( 5 ) ) - 1;
       usRight  = usLeft;
 
       iOffTop    = ! HB_ISNIL( 7 ) ? hb_parvni( 7, 1 ) : 0;
@@ -444,7 +444,7 @@ HB_FUNC( WVW_XBCREATE )
    }
    else
    {
-      usRight  = usLeft + ( USHORT ) hb_parni( 5 ) - 1;
+      usRight  = usLeft + static_cast< USHORT >( hb_parni( 5 ) ) - 1;
       usBottom = usTop;
 
       iOffTop    = ! HB_ISNIL( 7 ) ? hb_parvni( 7, 1 ) : +3 - pWindowData->byLineSpacing;
@@ -485,7 +485,7 @@ HB_FUNC( WVW_XBCREATE )
       0L,                                       /* no extended styles */
       "SCROLLBAR",                              /* scroll bar control class */
       ( LPSTR ) nullptr,                        /* text for window title bar */
-      WS_CHILD | WS_VISIBLE | ( DWORD ) iStyle, /* scroll bar styles */
+      WS_CHILD | WS_VISIBLE | static_cast< DWORD >( iStyle ), /* scroll bar styles */
       iLeft,                                    /* horizontal position */
       iTop,                                     /* vertical position */
       iRight - iLeft + 1,                       /* width of the scroll bar */
@@ -513,15 +513,15 @@ HB_FUNC( WVW_XBCREATE )
 
       AddControlHandle( usWinNum, WVW_CONTROL_SCROLLBAR, hWndXB, uiXBid, ( PHB_ITEM ) hb_param( 6, HB_IT_BLOCK ), rXB, rOffXB, ( byte ) iStyle );
 
-      OldProc = ( WNDPROC ) SetWindowLongPtr( hWndXB,
-                                              GWLP_WNDPROC, ( LONG_PTR ) hb_gt_wvwXBProc );
+      OldProc = static_cast< WNDPROC >( SetWindowLongPtr( hWndXB,
+                                              GWLP_WNDPROC, ( LONG_PTR ) hb_gt_wvwXBProc ) );
 
       StoreControlProc( usWinNum, WVW_CONTROL_SCROLLBAR, hWndXB, OldProc );
 
-      hb_retnl( ( LONG ) uiXBid );
+      hb_retnl( static_cast< LONG >( uiXBid ) );
    }
    else
-      hb_retnl( ( LONG ) 0 );
+      hb_retnl( static_cast< LONG >( 0 ) );
 }
 
 /*wvw_xbDestroy( [nWinNum], nXBid )
@@ -531,7 +531,7 @@ HB_FUNC( WVW_XBDESTROY )
 {
    UINT usWinNum = WVW_WHICH_WINDOW;
    WIN_DATA *     pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
-   UINT           uiXBid      = ( UINT ) ( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
+   UINT           uiXBid      = static_cast< UINT >( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
    CONTROL_DATA * pcd         = pWindowData->pcdCtrlList;
    CONTROL_DATA * pcdPrev     = nullptr;
 
@@ -571,7 +571,7 @@ HB_FUNC( WVW_XBUPDATE )
 {
    UINT usWinNum = WVW_WHICH_WINDOW;
 
-   UINT       uiXBid = ( UINT ) ( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
+   UINT       uiXBid = static_cast< UINT >( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
    byte       bStyle;
    HWND       hWndXB = FindControlHandle( usWinNum, WVW_CONTROL_SCROLLBAR, uiXBid, &bStyle );
    int        iPos   = static_cast< int >( HB_ISNIL( 3 ) ? 0 : hb_parni( 3 ) );
@@ -599,7 +599,7 @@ HB_FUNC( WVW_XBUPDATE )
    si.fMask  = fMask;
    si.nMin   = iMin;
    si.nMax   = iMax;
-   si.nPage  = ( UINT ) iPage;
+   si.nPage  = static_cast< UINT >( iPage );
    si.nPos   = iPos;
    iRetval   = SetScrollInfo( hWndXB,
                               SB_CTL,
@@ -619,7 +619,7 @@ HB_FUNC( WVW_XBINFO )
    PHB_ITEM   aInfo;
    SCROLLINFO si;
 
-   UINT uiXBid = ( UINT ) ( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
+   UINT uiXBid = static_cast< UINT >( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
    byte bStyle;
    HWND hWndXB = FindControlHandle( usWinNum, WVW_CONTROL_SCROLLBAR, uiXBid, &bStyle );
 
@@ -666,8 +666,8 @@ HB_FUNC( WVW_XBENABLE )
 {
    UINT usWinNum = WVW_WHICH_WINDOW;
 
-   UINT uiXBid  = ( UINT ) ( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
-   UINT uiFlags = ( UINT ) ( HB_ISNIL( 3 ) ? 0  : hb_parni( 3 ) );
+   UINT uiXBid  = static_cast< UINT >( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
+   UINT uiFlags = static_cast< UINT >( HB_ISNIL( 3 ) ? 0  : hb_parni( 3 ) );
    byte bStyle;
    HWND hWndXB = uiXBid == 0 ? nullptr : FindControlHandle( usWinNum, WVW_CONTROL_SCROLLBAR, uiXBid, &bStyle );
 
@@ -690,8 +690,8 @@ HB_FUNC( WVW_XBENABLE )
 HB_FUNC( WVW_XBSHOW )
 {
    UINT usWinNum = WVW_WHICH_WINDOW;
-   UINT uiXBid   = ( UINT ) ( HB_ISNIL( 2 ) ? 0 : hb_parni( 2 ) );
-   BOOL bShow    = ( BOOL ) ( HB_ISLOG( 3 ) ? hb_parl( 3 ) : TRUE );
+   UINT uiXBid   = static_cast< UINT >( HB_ISNIL( 2 ) ? 0 : hb_parni( 2 ) );
+   BOOL bShow    = static_cast< BOOL >( HB_ISLOG( 3 ) ? hb_parl( 3 ) : TRUE );
    byte bStyle;
    HWND hWndXB = uiXBid == 0 ? nullptr : FindControlHandle( usWinNum, WVW_CONTROL_SCROLLBAR, uiXBid, &bStyle );
 

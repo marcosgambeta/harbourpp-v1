@@ -576,8 +576,8 @@ static int hb_comCanRead( PHB_COM pCom, HB_MAXINT timeout )
 #  if ! defined( HB_HAS_SELECT_TIMER )
    HB_MAXUINT timer = hb_timerInit( timeout );
 #  else
-   tv.tv_sec = ( long ) ( timeout / 1000 );
-   tv.tv_usec = ( long ) ( timeout % 1000 ) * 1000;
+   tv.tv_sec = static_cast< long >( timeout / 1000 );
+   tv.tv_usec = static_cast< long >( timeout % 1000 ) * 1000;
 #  endif
 
    for( ;; )
@@ -590,8 +590,8 @@ static int hb_comCanRead( PHB_COM pCom, HB_MAXINT timeout )
 #  if ! defined( HB_HAS_SELECT_TIMER )
       else
       {
-         tv.tv_sec = ( long ) ( timeout / 1000 );
-         tv.tv_usec = ( long ) ( timeout % 1000 ) * 1000;
+         tv.tv_sec = static_cast< long >( timeout / 1000 );
+         tv.tv_usec = static_cast< long >( timeout % 1000 ) * 1000;
       }
 #  endif
 
@@ -657,8 +657,8 @@ static int hb_comCanWrite( PHB_COM pCom, HB_MAXINT timeout )
 #  if ! defined( HB_HAS_SELECT_TIMER )
    HB_MAXUINT timer = hb_timerInit( timeout );
 #  else
-   tv.tv_sec = ( long ) ( timeout / 1000 );
-   tv.tv_usec = ( long ) ( timeout % 1000 ) * 1000;
+   tv.tv_sec = static_cast< long >( timeout / 1000 );
+   tv.tv_usec = static_cast< long >( timeout % 1000 ) * 1000;
 #  endif
 
    for( ;; )
@@ -671,8 +671,8 @@ static int hb_comCanWrite( PHB_COM pCom, HB_MAXINT timeout )
 #  if ! defined( HB_HAS_SELECT_TIMER )
       else
       {
-         tv.tv_sec = ( long ) ( timeout / 1000 );
-         tv.tv_usec = ( long ) ( timeout % 1000 ) * 1000;
+         tv.tv_sec = static_cast< long >( timeout / 1000 );
+         tv.tv_usec = static_cast< long >( timeout % 1000 ) * 1000;
       }
 #  endif
 
@@ -1937,9 +1937,9 @@ int hb_comFlowChars( int iPort, int iXONchar, int iXOFFchar )
          if( fResult )
          {
             if( iXONchar >= 0 )
-               dcb.XonChar = ( char ) iXONchar;
+               dcb.XonChar = static_cast< char >( iXONchar );
             if( iXOFFchar >= 0 )
-               dcb.XoffChar = ( char ) iXOFFchar;
+               dcb.XoffChar = static_cast< char >( iXOFFchar );
             fResult = SetCommState( pCom->hComm, &dcb );
          }
       }
@@ -1981,7 +1981,7 @@ int hb_comErrorChar( int iPort, int iChar )
          if( iChar >= 0 )
          {
             dcb.fErrorChar = TRUE;
-            dcb.ErrorChar = ( char ) iChar;
+            dcb.ErrorChar = static_cast< char >( iChar );
          }
          else
             dcb.fErrorChar = FALSE;
@@ -2062,10 +2062,10 @@ static BOOL hb_comSetTimeouts( PHB_COM pCom, HB_MAXINT rdtimeout,
    {
       timeouts.ReadIntervalTimeout = MAXDWORD;
       timeouts.ReadTotalTimeoutMultiplier = MAXDWORD;
-      timeouts.ReadTotalTimeoutConstant = ( DWORD ) rdtimeout;
+      timeouts.ReadTotalTimeoutConstant = static_cast< DWORD >( rdtimeout );
    }
    timeouts.WriteTotalTimeoutMultiplier = 0;
-   timeouts.WriteTotalTimeoutConstant = ( DWORD ) HB_MAX( wrtimeout, 1 );
+   timeouts.WriteTotalTimeoutConstant = static_cast< DWORD >( HB_MAX( wrtimeout, 1 ) );
 
    fResult = SetCommTimeouts( pCom->hComm, &timeouts );
    if( fResult )
@@ -2095,8 +2095,8 @@ long hb_comSend( int iPort, const void * data, long len, HB_MAXINT timeout )
          DWORD dwWritten = 0;
          BOOL fResult;
 
-         fResult = WriteFile( pCom->hComm, data, ( DWORD ) len, &dwWritten, NULL );
-         lSent = fResult ? ( long ) dwWritten : -1;
+         fResult = WriteFile( pCom->hComm, data, static_cast< DWORD >( len ), &dwWritten, NULL );
+         lSent = fResult ? static_cast< long >( dwWritten ) : -1;
          if( lSent == 0 )
          {
             hb_comSetComError( pCom, HB_COM_ERR_TIMEOUT );
@@ -2132,8 +2132,8 @@ long hb_comRecv( int iPort, void * data, long len, HB_MAXINT timeout )
          DWORD dwRead = 0;
          BOOL fResult;
 
-         fResult = ReadFile( pCom->hComm, data, ( DWORD ) len, &dwRead, NULL );
-         lReceived = fResult ? ( long ) dwRead : -1;
+         fResult = ReadFile( pCom->hComm, data, static_cast< DWORD >( len ), &dwRead, NULL );
+         lReceived = fResult ? static_cast< long >( dwRead ) : -1;
          if( lReceived == 0 )
          {
             hb_comSetComError( pCom, HB_COM_ERR_TIMEOUT );
@@ -2213,7 +2213,7 @@ int hb_comInit( int iPort, int iBaud, int iParity, int iSize, int iStop )
          if( fResult )
          {
             if( iBaud )
-               dcb.BaudRate = ( DWORD ) iBaud;
+               dcb.BaudRate = static_cast< DWORD >( iBaud );
             dcb.fBinary = 1;
             dcb.fParity = 0;
             dcb.fOutxCtsFlow = 0;
@@ -2872,7 +2872,7 @@ long hb_comSend( int iPort, const void * data, long len, HB_MAXINT timeout )
             timeout = USHRT_MAX;
       }
 
-      if( pCom->wrtimeout != ( USHORT ) timeout )
+      if( pCom->wrtimeout != static_cast< USHORT >( timeout ) )
       {
          DCBINFO dcb;
 
@@ -2885,14 +2885,14 @@ long hb_comSend( int iPort, const void * data, long len, HB_MAXINT timeout )
              * the minimal write timeout what seems to be reasonable.
              */
             if( timeout )
-               dcb.usWriteTimeout = ( USHORT ) ( timeout - 1 );
+               dcb.usWriteTimeout = static_cast< USHORT >( timeout - 1 );
             else
                dcb.usWriteTimeout = 0;
 
             rc = DosDevIOCtl( pCom->hFile, IOCTL_ASYNC, ASYNC_SETDCBINFO,
                               &dcb, sizeof( dcb ), NULL, NULL, 0, NULL );
             if( rc == NO_ERROR )
-               pCom->wrtimeout = ( USHORT ) timeout;
+               pCom->wrtimeout = static_cast< USHORT >( timeout );
          }
       }
 
@@ -2902,7 +2902,7 @@ long hb_comSend( int iPort, const void * data, long len, HB_MAXINT timeout )
 
          rc = DosWrite( pCom->hFile, ( void * ) data, len, &ulWritten );
          if( rc == NO_ERROR )
-            lSent = ( long ) ulWritten;
+            lSent = static_cast< long >( ulWritten );
       }
 
       if( lSent == 0 )
@@ -2939,7 +2939,7 @@ long hb_comRecv( int iPort, void * data, long len, HB_MAXINT timeout )
             timeout = USHRT_MAX;
       }
 
-      if( pCom->rdtimeout != ( USHORT ) timeout )
+      if( pCom->rdtimeout != static_cast< USHORT >( timeout ) )
       {
          DCBINFO dcb;
 
@@ -2951,7 +2951,7 @@ long hb_comRecv( int iPort, void * data, long len, HB_MAXINT timeout )
             if( timeout )
             {
                dcb.fbTimeout |= MODE_READ_TIMEOUT;
-               dcb.usReadTimeout = ( USHORT ) ( timeout - 1 );
+               dcb.usReadTimeout = static_cast< USHORT >( timeout - 1 );
             }
             else
             {
@@ -2962,7 +2962,7 @@ long hb_comRecv( int iPort, void * data, long len, HB_MAXINT timeout )
             rc = DosDevIOCtl( pCom->hFile, IOCTL_ASYNC, ASYNC_SETDCBINFO,
                               &dcb, sizeof( dcb ), NULL, NULL, 0, NULL );
             if( rc == NO_ERROR )
-               pCom->rdtimeout = ( USHORT ) timeout;
+               pCom->rdtimeout = static_cast< USHORT >( timeout );
          }
       }
 
@@ -2972,7 +2972,7 @@ long hb_comRecv( int iPort, void * data, long len, HB_MAXINT timeout )
 
          rc = DosRead( pCom->hFile, data, len, &ulRead );
          if( rc == NO_ERROR )
-            lReceived = ( long ) ulRead;
+            lReceived = static_cast< long >( ulRead );
       }
 
       if( lReceived == 0 )
@@ -3050,7 +3050,7 @@ int hb_comInit( int iPort, int iBaud, int iParity, int iSize, int iStop )
       {
          if( iBaud )
          {
-            USHORT baud = ( USHORT ) iBaud;
+            USHORT baud = static_cast< USHORT >( iBaud );
 
             rc = DosDevIOCtl( pCom->hFile, IOCTL_ASYNC, ASYNC_SETBAUDRATE,
                               &baud, sizeof( baud ), NULL, NULL, 0L, NULL );
@@ -3138,7 +3138,7 @@ int hb_comOpen( int iPort )
                                OPEN_ACCESS_READWRITE | OPEN_SHARE_DENYREADWRITE );
          if( rc == NO_ERROR )
          {
-            pCom->hFile = ( HFILE ) hFile;
+            pCom->hFile = static_cast< HFILE >( hFile );
             pCom->status |= HB_COM_OPEN;
          }
 

@@ -69,7 +69,7 @@ HB_FUNC( TABEXPAND )
          sTabWidth = 8;
 
       if( HB_ISNUM( 3 ) )
-         cFill = ( char ) ( hb_parnl( 3 ) % 256 );
+         cFill = static_cast< char >( hb_parnl( 3 ) % 256 );
       else if( hb_parclen( 3 ) > 0 )
          cFill = hb_parc( 3 )[ 0 ];
       else
@@ -93,7 +93,7 @@ HB_FUNC( TABEXPAND )
          cCR = 13;
 
       if( HB_ISNUM( 5 ) )
-         cTab = ( char ) ( hb_parnl( 5 ) % 256 );
+         cTab = static_cast< char >( hb_parnl( 5 ) % 256 );
       else if( hb_parclen( 5 ) > 0 )
          cTab = hb_parc( 5 )[ 0 ];
       else
@@ -121,7 +121,7 @@ HB_FUNC( TABEXPAND )
       sLineIndex = 0;
       while( sTabCnt > 0 )
       {
-         char cChar = ( char ) *( pcString + sIndex );
+         char cChar = static_cast< char >( *( pcString + sIndex ) );
 
          if( cChar == cTab )
          {
@@ -221,7 +221,7 @@ HB_FUNC( TABPACK )
          sTabWidth = 8;
 
       if( HB_ISNUM( 3 ) )
-         cFill = ( char ) ( hb_parnl( 3 ) % 256 );
+         cFill = static_cast< char >( hb_parnl( 3 ) % 256 );
       else if( hb_parclen( 3 ) > 0 )
          cFill = hb_parc( 3 )[ 0 ];
       else
@@ -241,7 +241,7 @@ HB_FUNC( TABPACK )
          cCR = 13;
 
       if( HB_ISNUM( 5 ) )
-         cTab = ( char ) ( hb_parnl( 5 ) % 256 );
+         cTab = static_cast< char >( hb_parnl( 5 ) % 256 );
       else if( hb_parclen( 5 ) > 0 )
          cTab = hb_parc( 5 )[ 0 ];
       else
@@ -266,7 +266,7 @@ HB_FUNC( TABPACK )
 
       while( sIndex < sStrLen )
       {
-         char cChar = ( char ) *( pcString + sIndex );
+         char cChar = static_cast< char >( *( pcString + sIndex ) );
 
          if( cChar == cFill )
          {

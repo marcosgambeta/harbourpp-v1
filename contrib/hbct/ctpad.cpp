@@ -83,7 +83,7 @@ static void do_pad( int iSwitch )
       if( hb_parclen( 3 ) > 0 )
          cFill = *( hb_parc( 3 ) );
       else if( HB_ISNUM( 3 ) )
-         cFill = ( char ) ( hb_parnl( 3 ) % 256 );
+         cFill = static_cast< char >( hb_parnl( 3 ) % 256 );
       else
          cFill = 0x20;
 

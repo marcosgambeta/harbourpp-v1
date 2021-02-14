@@ -130,7 +130,7 @@ PHB_ZEBRA hb_zebra_create_code93( const char * szCode, HB_SIZE nLen, int iFlags 
    k = 0;
    for( i = 0; i < iLen; i++ )
    {
-      if( ( unsigned char ) szCode[ i ] >= 128 )
+      if( static_cast< unsigned char >( szCode[ i ] ) >= 128 )
       {
          pZebra->iError = HB_ZEBRA_ERROR_INVALIDCODE;
          return pZebra;
@@ -199,7 +199,7 @@ PHB_ZEBRA hb_zebra_create_code93( const char * szCode, HB_SIZE nLen, int iFlags 
             no1 = 44; /* (%) */
             no2 = szCode[ i ] - '[' + 15;
          }
-         else if( szCode[ i ] >= '{' && ( unsigned char ) szCode[ i ] <= 127 )
+         else if( szCode[ i ] >= '{' && static_cast< unsigned char >( szCode[ i ] ) <= 127 )
          {
             no1 = 44; /* (%) */
             no2 = szCode[ i ] - '{' + 20;

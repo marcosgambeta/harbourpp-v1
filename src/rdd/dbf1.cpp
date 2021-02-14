@@ -503,7 +503,7 @@ static void hb_dbfSetBlankRecord( DBFAREAP pArea, int iType )
                   nValue = ( HB_MAXINT ) hb_numDecConv( static_cast< double >( nValue ),
                                                         -static_cast< int >( pField->uiDec ) );
                if( uiLen == 1 )
-                  *pPtr = ( signed char ) nValue;
+                  *pPtr = static_cast< signed char >( nValue );
                else if( uiLen == 2 )
                   HB_PUT_LE_UINT16( pPtr, nValue );
                else if( uiLen == 3 )
@@ -2796,7 +2796,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
                switch( pField->uiLen )
                {
                   case 1:
-                     pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ] = ( signed char ) lVal;
+                     pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ] = static_cast< signed char >( lVal );
                      break;
                   case 2:
                      HB_PUT_LE_UINT16( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], ( HB_U16 ) lVal );

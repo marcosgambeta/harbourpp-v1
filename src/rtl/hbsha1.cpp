@@ -72,7 +72,7 @@ HB_FUNC( HB_SHA1 )
          }
          else
          {
-            uiChunk = ( unsigned int ) nCount;
+            uiChunk = static_cast< unsigned int >( nCount );
             nCount = 0;
          }
 
