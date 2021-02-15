@@ -461,7 +461,7 @@ PHB_EXPR hb_compExprNewCodeBlock( char * string, HB_SIZE nLen, int iFlags, HB_CO
    pExpr->value.asCodeblock.pExprList = NULL;
    pExpr->value.asCodeblock.pLocals   = NULL;  /* this will hold local variables declarations */
    pExpr->ValType = HB_EV_CODEBLOCK;
-   pExpr->value.asCodeblock.flags  = ( HB_USHORT ) iFlags;
+   pExpr->value.asCodeblock.flags  = static_cast< HB_USHORT >( iFlags );
    pExpr->value.asCodeblock.string = string;
    pExpr->nLength = nLen;
    return pExpr;

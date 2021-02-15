@@ -683,7 +683,7 @@ static LPKEYINFO hb_nsxKeyPutItem( LPKEYINFO pKey, PHB_ITEM pItem, HB_ULONG ulRe
          {
             memset( pKey->val + len, pTag->TrailChar, pTag->KeyLength - len );
             if( puiLen )
-               *puiLen = ( HB_USHORT ) len;
+               *puiLen = static_cast< HB_USHORT >( len );
          }
          break;
       case 'N':
@@ -2431,7 +2431,7 @@ static HB_BOOL hb_nsxTagGetCurKey( LPTAGINFO pTag, LPPAGEINFO pPage, HB_USHORT u
              uiKey < pTag->CurKeyNo || pTag->CurKeyOffset == 0 )
          {
             pTag->CurKeyOffset = NSX_LEAFKEYOFFSET;
-            pTag->CurKeyNo = ( HB_USHORT ) -1;
+            pTag->CurKeyNo = static_cast< HB_USHORT >( -1 );
             hb_nsxTagGetPrevKey( pTag, pTag->CurKeyInfo->val, pTag->stackLevel - 1 );
          }
          pTag->CurKeyInfo->page = pPage->Page;
@@ -6987,7 +6987,7 @@ static HB_ERRCODE hb_nsxOrderCreate( NSXAREAP pArea, LPDBORDERCREATEINFO pOrderI
    if( errCode == HB_SUCCESS )
    {
       pTag = hb_nsxTagNew( pIndex, szTagName,
-                           szKey, pKeyExp, bType, ( HB_USHORT ) iLen, bTrail,
+                           szKey, pKeyExp, bType, static_cast< HB_USHORT >( iLen ), bTrail,
                            szFor, pForExp,
                            fAscend, pOrderInfo->fUnique, fCustom );
       pTag->Template = hb_nsxIsTemplateFunc( pTag->KeyExpr );
@@ -8222,7 +8222,7 @@ HB_FUNC_STATIC( DBFNSX_GETFUNCTABLE )
 
    puiCount = ( HB_USHORT * ) hb_parptr( 1 );
    pTable = ( RDDFUNCS * ) hb_parptr( 2 );
-   uiRddId = ( HB_USHORT ) hb_parni( 4 );
+   uiRddId = static_cast< HB_USHORT >( hb_parni( 4 ) );
    puiSuperRddId = ( HB_USHORT * ) hb_parptr( 5 );
 
    if( pTable )

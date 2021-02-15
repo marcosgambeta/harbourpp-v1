@@ -294,7 +294,7 @@ HB_FUNC( HB_VFDIRECTORY )
 /* hb_vfDirSpace( <cDirName>, [ <nInfoType> ] ) --> <nFreeSpace> */
 HB_FUNC( HB_VFDIRSPACE )
 {
-   HB_USHORT uiType = ( HB_USHORT ) hb_parnidef( 2, HB_DISK_AVAIL );
+   HB_USHORT uiType = static_cast< HB_USHORT >( hb_parnidef( 2, HB_DISK_AVAIL ) );
 
    hb_retnlen( hb_fileDirSpace( hb_parc( 1 ), uiType ), -1, 0 );
    hb_fsSetFError( hb_fsError() );
@@ -756,7 +756,7 @@ HB_FUNC( HB_VFSEEK )
       if( HB_ISNUM( 2 ) )
       {
          hb_retnint( hb_fileSeek( pFile, ( HB_FOFFSET ) hb_parnint( 2 ),
-                                  ( HB_USHORT ) hb_parnidef( 3, FS_SET ) ) );
+                                  static_cast< HB_USHORT >( hb_parnidef( 3, FS_SET ) ) ) );
          uiError = hb_fsError();
       }
       else

@@ -52,7 +52,7 @@
 
 HB_FUNC( INDEXCOUNT )
 {
-   AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
 
    if( pArea )
    {
@@ -68,7 +68,7 @@ HB_FUNC( INDEXCOUNT )
 
 HB_FUNC( INDEXNAMES )
 {
-   AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
 
    if( pArea )
    {

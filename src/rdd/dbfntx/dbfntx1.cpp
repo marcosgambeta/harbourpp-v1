@@ -463,7 +463,7 @@ static LPKEYINFO hb_ntxKeyPutItem( LPKEYINFO pKey, PHB_ITEM pItem, HB_ULONG ulRe
          {
             memset( pKey->key + len, ' ', pTag->KeyLength - len );
             if( puiLen )
-               *puiLen = ( HB_USHORT ) len;
+               *puiLen = static_cast< HB_USHORT >( len );
          }
          pKey->key[ pTag->KeyLength ] = '\0';
          break;
@@ -6606,7 +6606,7 @@ static HB_ERRCODE hb_ntxOrderCreate( NTXAREAP pArea, LPDBORDERCREATEINFO pOrderI
          }
       }
       pTag = hb_ntxTagNew( pIndex, szTagName, fTagName,
-                           szKey, pKeyExp, bType, ( HB_USHORT ) iLen, ( HB_USHORT ) iDec,
+                           szKey, pKeyExp, bType, static_cast< HB_USHORT >( iLen ), static_cast< HB_USHORT >( iDec ),
                            szFor, pForExp,
                            fAscend, pOrderInfo->fUnique, fCustom, pData->fSortRecNo );
       pTag->Partial = ( pArea->dbfarea.area.lpdbOrdCondInfo && ! pArea->dbfarea.area.lpdbOrdCondInfo->fAll );
@@ -7917,7 +7917,7 @@ HB_FUNC_STATIC( DBFNTX_GETFUNCTABLE )
 
    puiCount = ( HB_USHORT * ) hb_parptr( 1 );
    pTable = ( RDDFUNCS * ) hb_parptr( 2 );
-   uiRddId = ( HB_USHORT ) hb_parni( 4 );
+   uiRddId = static_cast< HB_USHORT >( hb_parni( 4 ) );
    puiSuperRddId = ( HB_USHORT * ) hb_parptr( 5 );
 
    if( pTable )

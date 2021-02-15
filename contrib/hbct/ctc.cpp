@@ -218,7 +218,7 @@ HB_FUNC( CSETARGERR )
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
-            ct_error( ( HB_USHORT ) iArgErrorMode, EG_ARG, CT_ERROR_CSETARGERR,
+            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CSETARGERR,
                       NULL, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
       }
    }
@@ -227,7 +227,7 @@ HB_FUNC( CSETARGERR )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
-         ct_error( ( HB_USHORT ) iArgErrorMode, EG_ARG, CT_ERROR_CSETARGERR, NULL,
+         ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CSETARGERR, NULL,
                    HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
    }
 }

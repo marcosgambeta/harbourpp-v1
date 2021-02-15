@@ -81,7 +81,7 @@ HB_FUNC( FLOOR )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst =
-            ct_error_subst( ( HB_USHORT ) iArgErrorMode, EG_ARG, CT_ERROR_FLOOR, NULL, HB_ERR_FUNCNAME, 0,
+            ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_FLOOR, NULL, HB_ERR_FUNCNAME, 0,
                             EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
       if( pSubst != NULL )
@@ -116,7 +116,7 @@ HB_FUNC( CEILING )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
-         pSubst = ct_error_subst( ( HB_USHORT ) iArgErrorMode, EG_ARG,
+         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_CEILING, NULL, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
@@ -149,7 +149,7 @@ HB_FUNC( SIGN )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
-         pSubst = ct_error_subst( ( HB_USHORT ) iArgErrorMode, EG_ARG,
+         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_SIGN, NULL, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
@@ -198,7 +198,7 @@ HB_FUNC( LOG10 )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
-         pSubst = ct_error_subst( ( HB_USHORT ) iArgErrorMode, EG_ARG,
+         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_LOG10, NULL, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
@@ -233,7 +233,7 @@ HB_FUNC( FACT )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
-         pSubst = ct_error_subst( ( HB_USHORT ) iArgErrorMode, EG_ARG,
+         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_FACT, NULL, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 

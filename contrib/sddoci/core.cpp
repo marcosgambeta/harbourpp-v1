@@ -320,7 +320,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
 
    rs = OCI_GetResultset( st );
 
-   uiFields = ( HB_USHORT ) OCI_GetColumnCount( rs );
+   uiFields = static_cast< HB_USHORT >( OCI_GetColumnCount( rs ) );
    SELF_SETFIELDEXTENT( &pArea->area, uiFields );
 
    pItemEof = hb_itemArrayNew( uiFields );
@@ -368,8 +368,8 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
       if( bNullable )
          dbFieldInfo.uiFlags |= HB_FF_NULLABLE;
 
-      dbFieldInfo.uiLen = ( HB_USHORT ) uiSize;
-      dbFieldInfo.uiDec = ( HB_USHORT ) iDec;
+      dbFieldInfo.uiLen = static_cast< HB_USHORT >( uiSize );
+      dbFieldInfo.uiDec = static_cast< HB_USHORT >( iDec );
 
 #if 0
       HB_TRACE( HB_TR_ALWAYS, ( "field: name=%s type=%d len=%d dec=%d nullable=%d %d %d %d %d", dbFieldInfo.atomName, uiDataType, uiSize, iDec, bNullable, OCI_ColumnGetScale( col ), OCI_ColumnGetPrecision( col ), OCI_ColumnGetFractionalPrecision( col ), OCI_ColumnGetLeadingPrecision( col ) ) );
@@ -385,11 +385,11 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
             dbFieldInfo.uiType = HB_FT_LONG;
             /* For plain 'NUMERIC', precision is zero and scale is -127 */
             if( OCI_ColumnGetPrecision( col ) > 0 )
-               dbFieldInfo.uiLen = ( HB_USHORT ) OCI_ColumnGetPrecision( col );
+               dbFieldInfo.uiLen = static_cast< HB_USHORT >( OCI_ColumnGetPrecision( col ) );
             if( OCI_ColumnGetScale( col ) >= 0 )
-               dbFieldInfo.uiDec = ( HB_USHORT ) OCI_ColumnGetScale( col );
+               dbFieldInfo.uiDec = static_cast< HB_USHORT >( OCI_ColumnGetScale( col ) );
             else
-               dbFieldInfo.uiDec = ( HB_USHORT ) hb_setGetDecimals();
+               dbFieldInfo.uiDec = static_cast< HB_USHORT >( hb_setGetDecimals() );
             break;
 
          case OCI_CDT_LONG:

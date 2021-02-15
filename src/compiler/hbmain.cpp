@@ -284,7 +284,7 @@ static PHB_HSYMBOL hb_compSymbolAdd( HB_COMP_DECL, const char * szSymbolName, HB
    HB_COMP_PARAM->symbols.iCount++;
 
    if( pwPos )
-      *pwPos = ( HB_USHORT ) ( HB_COMP_PARAM->symbols.iCount - 1 );  /* position number starts form 0 */
+      *pwPos = static_cast< HB_USHORT >( HB_COMP_PARAM->symbols.iCount - 1 );  /* position number starts form 0 */
 
    return pSym;
 }
@@ -879,7 +879,7 @@ const char * hb_compStaticVariableName( HB_COMP_DECL, HB_USHORT wVar )
 
    while( pTmp->pNext && pTmp->pNext->iStaticsBase < wVar )
       pTmp = pTmp->pNext;
-   pVar = hb_compVariableGetVar( pTmp->pStatics, ( HB_USHORT ) ( wVar - pTmp->iStaticsBase ) );
+   pVar = hb_compVariableGetVar( pTmp->pStatics, static_cast< HB_USHORT >( wVar - pTmp->iStaticsBase ) );
 
    return pVar ? pVar->szName : NULL;
 }
@@ -3633,7 +3633,7 @@ void hb_compCodeBlockEnd( HB_COMP_DECL )
    while( pVar )
    {
       if( HB_COMP_PARAM->fDebugInfo )
-         wLocalsLen += 4 + ( HB_USHORT ) strlen( pVar->szName );
+         wLocalsLen += 4 + static_cast< HB_USHORT >( strlen( pVar->szName ) );
       pVar = pVar->pNext;
       ++wLocals;
    }

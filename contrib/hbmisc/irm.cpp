@@ -224,7 +224,7 @@ PHB_IRMMAP hb_irmExecute( PHB_ITEM pItem )
                ( ! strcmp( szOper, ">=" ) && ( hb_arrayLen( pItem ) == 4 ) ) ||
                ( ! strcmp( szOper, "<=<=" ) && ( hb_arrayLen( pItem ) == 5 ) ) )
       {
-         AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+         AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
          if( pArea )
          {
             DBORDERINFO dboi;
@@ -327,7 +327,7 @@ HB_FUNC( IRMMAPSKIP )
       ulRecNo = hb_irmMapNext( pMap, ulRecNo );
       hb_stornl( ulRecNo, 2 );
       if( ulRecNo != 0 )
-         hb_retl( SELF_GOTO( ( AREAP ) hb_rddGetCurrentWorkAreaPointer(), ulRecNo ) == HB_SUCCESS );
+         hb_retl( SELF_GOTO( static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() ), ulRecNo ) == HB_SUCCESS );
       else
          hb_retl( HB_FALSE );
    }

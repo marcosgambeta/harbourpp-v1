@@ -69,7 +69,7 @@ HB_FUNC( EVAL )
       for( iParam = 2; iParam <= iPCount; iParam++ )
          hb_vmPush( hb_stackItemFromBase( iParam ) );
 
-      hb_vmSend( ( HB_USHORT ) ( iPCount - 1 ) );
+      hb_vmSend( static_cast< HB_USHORT >( iPCount - 1 ) );
    }
    else
       hb_errRT_BASE_SubstR( EG_NOMETHOD, 1004, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );

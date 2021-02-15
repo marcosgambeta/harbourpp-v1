@@ -311,7 +311,7 @@ HB_FUNC( TOKENINIT )
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
-            ct_error( ( HB_USHORT ) iArgErrorMode, EG_MEM, CT_ERROR_TOKENINIT,
+            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_MEM, CT_ERROR_TOKENINIT,
                       NULL, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT,
                       HB_ERR_ARGS_BASEPARAMS );
 
@@ -356,7 +356,7 @@ HB_FUNC( TOKENINIT )
             int iArgErrorMode = ct_getargerrormode();
 
             if( iArgErrorMode != CT_ARGERR_IGNORE )
-               ct_error( ( HB_USHORT ) iArgErrorMode, EG_MEM, CT_ERROR_TOKENINIT,
+               ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_MEM, CT_ERROR_TOKENINIT,
                          NULL, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT,
                          HB_ERR_ARGS_BASEPARAMS );
 
@@ -394,7 +394,7 @@ HB_FUNC( TOKENINIT )
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
-            pSubst = ct_error_subst( ( HB_USHORT ) iArgErrorMode, EG_ARG,
+            pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                      CT_ERROR_TOKENINIT, NULL, HB_ERR_FUNCNAME, 0,
                                      EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
@@ -422,7 +422,7 @@ HB_FUNC( TOKENNEXT )
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
-            ct_error( ( HB_USHORT ) iArgErrorMode, EG_ARG, CT_ERROR_TOKENNEXT,
+            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_TOKENNEXT,
                       NULL, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT,
                       HB_ERR_ARGS_BASEPARAMS );
          hb_retc_null();
@@ -447,7 +447,7 @@ HB_FUNC( TOKENNEXT )
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
-            ct_error( ( HB_USHORT ) iArgErrorMode, EG_ARG, CT_ERROR_TOKENNEXT, NULL,
+            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_TOKENNEXT, NULL,
                       HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
 
          sTokSave( sTokenEnvironment, 3 );
@@ -471,7 +471,7 @@ HB_FUNC( TOKENNEXT )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
-         pSubst = ct_error_subst( ( HB_USHORT ) iArgErrorMode, EG_ARG,
+         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_TOKENNEXT, NULL, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
@@ -494,7 +494,7 @@ HB_FUNC( TOKENNUM )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
-         pSubst = ct_error_subst( ( HB_USHORT ) iArgErrorMode, EG_ARG,
+         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_TOKENNUM, NULL, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
@@ -517,7 +517,7 @@ HB_FUNC( TOKENEND )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
-         pSubst = ct_error_subst( ( HB_USHORT ) iArgErrorMode, EG_ARG,
+         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_TOKENEND, NULL, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
@@ -558,7 +558,7 @@ HB_FUNC( TOKENAT )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
-         ct_error( ( HB_USHORT ) iArgErrorMode, EG_ARG, CT_ERROR_TOKENAT,
+         ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_TOKENAT,
                    NULL, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
 
       hb_retns( 0 );
@@ -576,7 +576,7 @@ HB_FUNC( TOKENAT )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
-         ct_error( ( HB_USHORT ) iArgErrorMode, EG_ARG, CT_ERROR_TOKENAT, NULL,
+         ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_TOKENAT, NULL,
                    HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
 
       hb_retns( 0 );
@@ -620,7 +620,7 @@ HB_FUNC( RESTTOKEN )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
-         pSubst = ct_error_subst( ( HB_USHORT ) iArgErrorMode, EG_ARG,
+         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_RESTTOKEN, NULL, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 

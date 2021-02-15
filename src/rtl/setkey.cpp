@@ -376,7 +376,7 @@ HB_FUNC( HB_SETKEYCHECK )
       {
          if( sk_testActive( sk_list_tmp->pIsActive, iKeyCode ) )
          {
-            HB_USHORT uiPCount = ( HB_USHORT ) hb_pcount(), uiParam;
+            HB_USHORT uiPCount = static_cast< HB_USHORT >( hb_pcount() ), uiParam;
 
             hb_vmPushEvalSym();
             hb_vmPush( sk_list_tmp->pAction );

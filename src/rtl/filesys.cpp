@@ -2433,7 +2433,7 @@ HB_USHORT hb_fsRead( HB_FHANDLE hFileHandle, void * pBuff, HB_USHORT uiCount )
       bResult = ReadFile( DosToWinHandle( hFileHandle ), pBuff, ( DWORD ) uiCount, &dwRead, NULL );
       hb_fsSetIOError( bResult != 0, 0 );
 
-      uiRead = bResult ? ( HB_USHORT ) dwRead : 0;
+      uiRead = bResult ? static_cast< HB_USHORT >( dwRead ) : 0;
    }
 #elif defined( HB_OS_OS2 )
    {
@@ -2442,13 +2442,13 @@ HB_USHORT hb_fsRead( HB_FHANDLE hFileHandle, void * pBuff, HB_USHORT uiCount )
 
       ret = DosRead( hFileHandle, pBuff, uiCount, &ulRead );
       hb_fsSetError( ( HB_ERRCODE ) ret );
-      uiRead = ret == NO_ERROR ? ( HB_USHORT ) ulRead : 0;
+      uiRead = ret == NO_ERROR ? static_cast< HB_USHORT >( ulRead ) : 0;
    }
 #else
    {
       long lRead;
       HB_FAILURE_RETRY( lRead, read( hFileHandle, pBuff, uiCount ) );
-      uiRead = lRead == -1 ? 0 : ( HB_USHORT ) lRead;
+      uiRead = lRead == -1 ? 0 : static_cast< HB_USHORT >( lRead );
    }
 #endif
 
@@ -2473,7 +2473,7 @@ HB_USHORT hb_fsWrite( HB_FHANDLE hFileHandle, const void * pBuff, HB_USHORT uiCo
       {
          DWORD dwWritten = 0;
          bResult = WriteFile( DosToWinHandle( hFileHandle ), pBuff, uiCount, &dwWritten, NULL );
-         uiWritten = bResult ? ( HB_USHORT ) dwWritten : 0;
+         uiWritten = bResult ? static_cast< HB_USHORT >( dwWritten ) : 0;
       }
       else
           bResult = SetEndOfFile( DosToWinHandle( hFileHandle ) );
@@ -2489,7 +2489,7 @@ HB_USHORT hb_fsWrite( HB_FHANDLE hFileHandle, const void * pBuff, HB_USHORT uiCo
          ULONG ulWritten = 0;
          ret = DosWrite( hFileHandle, ( void * ) pBuff, uiCount, &ulWritten );
          hb_fsSetError( ( HB_ERRCODE ) ret );
-         uiWritten = ret == NO_ERROR ? ( HB_USHORT ) ulWritten : 0;
+         uiWritten = ret == NO_ERROR ? static_cast< HB_USHORT >( ulWritten ) : 0;
       }
       else
       {
@@ -2504,7 +2504,7 @@ HB_USHORT hb_fsWrite( HB_FHANDLE hFileHandle, const void * pBuff, HB_USHORT uiCo
    {
       long lWritten;
       HB_FAILURE_RETRY( lWritten, write( hFileHandle, pBuff, uiCount ) );
-      uiWritten = lWritten == -1 ? 0 : ( HB_USHORT ) lWritten;
+      uiWritten = lWritten == -1 ? 0 : static_cast< HB_USHORT >( lWritten );
    }
    else
    {
@@ -4707,7 +4707,7 @@ HB_FHANDLE hb_fsExtOpen( const char * pszFileName, const char * pDefExt,
    else
       szPath = pszFileName;
 
-   uiFlags = ( HB_USHORT ) ( nExFlags & 0xff );
+   uiFlags = static_cast< HB_USHORT >( nExFlags & 0xff );
    if( nExFlags & ( FXO_TRUNCATE | FXO_APPEND | FXO_UNIQUE ) )
    {
       uiFlags |= FO_CREAT;

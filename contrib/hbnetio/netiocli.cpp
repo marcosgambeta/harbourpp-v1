@@ -2287,7 +2287,7 @@ static HB_BOOL s_fileLock( PHB_FILE pFile, HB_FOFFSET ulStart, HB_FOFFSET ulLen,
       HB_PUT_LE_UINT16( &msgbuf[  4 ], pFile->fd );
       HB_PUT_LE_UINT64( &msgbuf[  6 ], ulStart );
       HB_PUT_LE_UINT64( &msgbuf[ 14 ], ulLen );
-      HB_PUT_LE_UINT16( &msgbuf[ 22 ], ( HB_USHORT ) iType );
+      HB_PUT_LE_UINT16( &msgbuf[ 22 ], static_cast< HB_USHORT >( iType ) );
 #if NETIO_MSGLEN > 24
       memset( msgbuf + 24, '\0', sizeof( msgbuf ) - 24 );
 #endif
@@ -2312,7 +2312,7 @@ static int s_fileLockTest( PHB_FILE pFile, HB_FOFFSET ulStart, HB_FOFFSET ulLen,
       HB_PUT_LE_UINT16( &msgbuf[ 4 ], pFile->fd );
       HB_PUT_LE_UINT64( &msgbuf[ 6 ], ulStart );
       HB_PUT_LE_UINT64( &msgbuf[ 14 ], ulLen );
-      HB_PUT_LE_UINT16( &msgbuf[ 22 ], ( HB_USHORT ) iType );
+      HB_PUT_LE_UINT16( &msgbuf[ 22 ], static_cast< HB_USHORT >( iType ) );
 #if NETIO_MSGLEN > 24
       memset( msgbuf + 24, '\0', sizeof( msgbuf ) - 24 );
 #endif

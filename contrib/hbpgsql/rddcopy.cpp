@@ -260,7 +260,7 @@ static HB_BOOL exportBufSqlVar( pgCopyContext * context, PHB_ITEM pValue, const 
 HB_FUNC( HB_PQCOPYFROMWA )
 {
 #if PG_VERSION_NUM >= 80000
-   AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
    PGconn * pConn = hb_PGconn_par( 1 );
 
    if( pConn == NULL )
@@ -312,7 +312,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
          szFields      = ( char * ) hb_xgrab( sizeof( char ) * 2 );
          szFields[ 0 ] = '(';
          szFields[ 1 ] = '\0';
-         uiFieldCopy   = ( HB_USHORT ) hb_arrayLen( pFields );
+         uiFieldCopy   = static_cast< HB_USHORT >( hb_arrayLen( pFields ) );
 
          for( uiIter = 1; uiIter <= uiFieldCopy; uiIter++ )
          {
@@ -395,7 +395,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
             {
                for( uiIter = 1; uiIter <= uiFieldCopy; uiIter++ )
                {
-                  if( SELF_GETVALUE( pArea, ( HB_USHORT ) hb_arrayGetNI( pFields, uiIter ), pItem ) != HB_SUCCESS ||
+                  if( SELF_GETVALUE( pArea, static_cast< HB_USHORT >( hb_arrayGetNI( pFields, uiIter ) ), pItem ) != HB_SUCCESS ||
                       ! exportBufSqlVar( context, pItem, sc_szQuote, sc_szEsc ) ||
                       ! addStrToContext( context, uiIter == uiFields ? "\n" : sc_szDelim ) )
                   {

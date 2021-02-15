@@ -725,7 +725,7 @@ static HB_BOOL s_fileLock( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen,
       hb_threadLeaveCriticalSection( &s_lockMtx );
       if( fLockFS )
       {
-         hb_fsLockLarge( pFile->hFile, nStart, nLen, ( HB_USHORT ) iType );
+         hb_fsLockLarge( pFile->hFile, nStart, nLen, static_cast< HB_USHORT >( iType ) );
          hb_threadEnterCriticalSection( &s_lockMtx );
          hb_fileUnlock( pFile, NULL, nStart, nLen );
          hb_threadLeaveCriticalSection( &s_lockMtx );
@@ -746,7 +746,7 @@ static HB_BOOL s_fileLock( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen,
          else if( pFile->mode == FO_WRITE )
             iType &= ~FLX_SHARED;
 #endif
-         fResult = hb_fsLockLarge( pFile->hFile, nStart, nLen, ( HB_USHORT ) iType );
+         fResult = hb_fsLockLarge( pFile->hFile, nStart, nLen, static_cast< HB_USHORT >( iType ) );
          if( ! fResult )
          {
             hb_threadEnterCriticalSection( &s_lockMtx );
@@ -782,7 +782,7 @@ static int s_fileLockTest( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen,
 #endif
    }
    else
-      iResult = hb_fsLockTest( pFile->hFile, nStart, nLen, ( HB_USHORT ) iType );
+      iResult = hb_fsLockTest( pFile->hFile, nStart, nLen, static_cast< HB_USHORT >( iType ) );
 
    hb_vmLock();
 

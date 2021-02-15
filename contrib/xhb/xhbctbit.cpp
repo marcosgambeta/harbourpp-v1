@@ -109,7 +109,7 @@ static HB_LONG __numnot( HB_LONG lNum1, HB_LONG lNum2 )
 static void sizeofbits( HB_USHORT * pusBytes, HB_LONG * plPattern, HB_LONG * plTestMSB )
 {
    *pusBytes = ( HB_ISNIL( 1 ) || hb_parni( 1 ) == 0 ) ?
-               sizeof( int ) * 8 : ( HB_USHORT ) hb_parni( 1 );
+               sizeof( int ) * 8 : static_cast< HB_USHORT >( hb_parni( 1 ) );
 
    if( *pusBytes > sizeof( HB_LONG ) * 8 )
       *pusBytes = *pusBytes % ( sizeof( HB_LONG ) * 8 );
@@ -203,7 +203,7 @@ HB_FUNC( NUMROLX )
       HB_USHORT usBytes, usFor, usNum2;
 
       lNum1  = __getparam( 2 );                /* Number to do ROL */
-      usNum2 = ( HB_USHORT ) __getparam( 3 );  /* Iterations */
+      usNum2 = static_cast< HB_USHORT >( __getparam( 3 ) );  /* Iterations */
 
       sizeofbits( &usBytes, &lPattern, &lTestRol );
 

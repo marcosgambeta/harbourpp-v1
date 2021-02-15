@@ -97,7 +97,7 @@ HB_FUNC( SETCLEARB )
       PHB_CODEPAGE cdp = hb_vmCDP();
       if( ! HB_CDP_ISCHARUNI( cdp ) )
          iChar = hb_cdpGetU16( cdp, ( HB_UCHAR ) iChar );
-      usNew = ( HB_USHORT ) iChar;
+      usNew = static_cast< HB_USHORT >( iChar );
    }
    else if( HB_ISCHAR( 1 ) )
       usNew = hb_cdpTextGetU16( hb_vmCDP(), hb_parc( 1 ), hb_parclen( 1 ) );

@@ -298,17 +298,17 @@ HB_FUNC( UNTEXTWIN )
    {
       HB_USHORT usRepl, usInit, usEnd;
 
-      usRepl = ( HB_USHORT ) hb_ctGetClearChar( 5 );
+      usRepl = static_cast< HB_USHORT >( hb_ctGetClearChar( 5 ) );
 
       if( HB_ISNUM( 6 ) )
-         usInit = ( HB_USHORT ) hb_parni( 6 );
+         usInit = static_cast< HB_USHORT >( hb_parni( 6 ) );
       else if( hb_parclen( 6 ) > 0 )
          usInit = ( HB_UCHAR ) hb_parc( 6 )[ 0 ];
       else
          usInit = 176;
 
       if( HB_ISNUM( 7 ) )
-         usEnd = ( HB_USHORT ) hb_parni( 7 );
+         usEnd = static_cast< HB_USHORT >( hb_parni( 7 ) );
       else if( hb_parclen( 7 ) > 0 )
          usEnd = ( HB_UCHAR ) hb_parc( 7 )[ 0 ];
       else
@@ -347,10 +347,10 @@ HB_FUNC( CHARWIN )
       HB_USHORT usNewChar, usOldChar = 0;
       HB_BOOL fAll = HB_FALSE;
 
-      usNewChar = ( HB_USHORT ) hb_ctGetClearChar( 5 );
+      usNewChar = static_cast< HB_USHORT >( hb_ctGetClearChar( 5 ) );
 
       if( HB_ISNUM( 6 ) )
-         usOldChar = ( HB_USHORT ) hb_parni( 6 );
+         usOldChar = static_cast< HB_USHORT >( hb_parni( 6 ) );
       else if( hb_parclen( 6 ) > 0 )
          usOldChar = ( HB_UCHAR ) hb_parc( 6 )[ 0 ];
       else

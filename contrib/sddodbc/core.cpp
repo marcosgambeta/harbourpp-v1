@@ -434,7 +434,7 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
       return HB_FAILURE;
    }
 
-   uiFields = ( HB_USHORT ) iNameLen;
+   uiFields = static_cast< HB_USHORT >( iNameLen );
    SELF_SETFIELDEXTENT( &pArea->area, uiFields );
 
    pItemEof = hb_itemArrayNew( uiFields );
@@ -484,8 +484,8 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
          or introduce our own unsigned SQL types.
          [Mindaugas]
        */
-      dbFieldInfo.uiTypeExtended = ( HB_USHORT ) iDataType;
-      dbFieldInfo.uiLen = ( HB_USHORT ) uiSize;
+      dbFieldInfo.uiTypeExtended = static_cast< HB_USHORT >( iDataType );
+      dbFieldInfo.uiLen = static_cast< HB_USHORT >( uiSize );
       dbFieldInfo.uiDec = iDec;
       if( iNull == SQL_NULLABLE )
          dbFieldInfo.uiFlags |= HB_FF_NULLABLE;
@@ -765,7 +765,7 @@ static HB_ERRCODE odbcGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
 
             case HB_FT_INTEGER:
 #if ODBCVER >= 0x0300
-               if( pField->uiTypeExtended == ( HB_USHORT ) SQL_BIGINT )
+               if( pField->uiTypeExtended == static_cast< HB_USHORT >( SQL_BIGINT ) )
                {
                   HB_I64 val = 0;
                   /* NOTE: SQL_C_SBIGINT not available before ODBC 3.0 */

@@ -1233,7 +1233,7 @@ HB_FUNC_STATIC( SQLBASE_GETFUNCTABLE )
 
    puiCount = ( HB_USHORT * ) hb_parptr( 1 );
    pTable   = ( RDDFUNCS * ) hb_parptr( 2 );
-   uiRddId  = ( HB_USHORT ) hb_parni( 4 );
+   uiRddId  = static_cast< HB_USHORT >( hb_parni( 4 ) );
 
    if( pTable )
    {

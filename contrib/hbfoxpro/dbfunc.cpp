@@ -53,7 +53,7 @@
 static AREAP s_foxAreaPointer( int iParam )
 {
    if( HB_ISNIL( iParam ) )
-      return ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+      return static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
    else
    {
       const char * szAlias = hb_parc( iParam );
@@ -64,7 +64,7 @@ static AREAP s_foxAreaPointer( int iParam )
       else
          iArea = hb_parni( iParam );
 
-      return ( AREAP ) hb_rddGetWorkAreaPointer( iArea );
+      return static_cast< AREAP >( hb_rddGetWorkAreaPointer( iArea ) );
    }
 }
 
@@ -108,7 +108,7 @@ HB_FUNC( RELATION )
    if( pArea )
    {
       PHB_ITEM pRelExpr = hb_itemPutC( nullptr, nullptr );
-      HB_USHORT uiRelNo = ( HB_USHORT ) hb_parni( 1 );
+      HB_USHORT uiRelNo = static_cast< HB_USHORT >( hb_parni( 1 ) );
       SELF_RELTEXT( pArea, uiRelNo ? uiRelNo : 1, pRelExpr );
       hb_itemReturnRelease( pRelExpr );
    }
@@ -130,7 +130,7 @@ HB_FUNC( FSIZE )
       else if( ( szField = hb_parc( 1 ) ) != NULL )
          uiIndex = hb_rddFieldIndex( pArea, szField );
       else
-         uiIndex = ( HB_FIELDNO ) hb_parni( 1 );
+         uiIndex = static_cast< HB_FIELDNO >( hb_parni( 1 ) );
 
       if( uiIndex > 0 )
       {

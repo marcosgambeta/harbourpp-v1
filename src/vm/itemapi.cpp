@@ -156,7 +156,7 @@ HB_USHORT hb_itemPCount( void )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemPCount()" ) );
 
-   return ( HB_USHORT ) hb_pcount();
+   return static_cast< HB_USHORT >( hb_pcount() );
 }
 
 HB_BOOL hb_itemRelease( PHB_ITEM pItem )
@@ -979,7 +979,7 @@ PHB_ITEM hb_itemPutND( PHB_ITEM pItem, double dNumber )
 
    pItem->type = HB_IT_DOUBLE;
    pItem->item.asDouble.length = HB_DBL_LENGTH( dNumber );
-   pItem->item.asDouble.decimal = ( HB_USHORT ) hb_stackSetStruct()->HB_SET_DECIMALS;
+   pItem->item.asDouble.decimal = static_cast< HB_USHORT >( hb_stackSetStruct()->HB_SET_DECIMALS );
    pItem->item.asDouble.value = dNumber;
 
    return pItem;
@@ -1179,8 +1179,8 @@ PHB_ITEM hb_itemPutNDLen( PHB_ITEM pItem, double dNumber, int iWidth, int iDec )
    }
 
    pItem->type = HB_IT_DOUBLE;
-   pItem->item.asDouble.length = ( HB_USHORT ) iWidth;
-   pItem->item.asDouble.decimal = ( HB_USHORT ) iDec;
+   pItem->item.asDouble.length = static_cast< HB_USHORT >( iWidth );
+   pItem->item.asDouble.decimal = static_cast< HB_USHORT >( iDec );
    pItem->item.asDouble.value = dNumber;
 
    return pItem;
@@ -1204,11 +1204,11 @@ PHB_ITEM hb_itemPutNDDec( PHB_ITEM pItem, double dNumber, int iDec )
    if( iDec == HB_DEFAULT_DECIMALS )
    {
       HB_STACK_TLS_PRELOAD
-      pItem->item.asDouble.decimal = ( HB_USHORT ) hb_stackSetStruct()->HB_SET_DECIMALS;
+      pItem->item.asDouble.decimal = static_cast< HB_USHORT >( hb_stackSetStruct()->HB_SET_DECIMALS );
    }
    else
    {
-      pItem->item.asDouble.decimal = ( HB_USHORT ) iDec;
+      pItem->item.asDouble.decimal = static_cast< HB_USHORT >( iDec );
    }
 
    pItem->item.asDouble.value = dNumber;
@@ -1257,7 +1257,7 @@ PHB_ITEM hb_itemPutNILen( PHB_ITEM pItem, int iNumber, int iWidth )
       iWidth = HB_INT_LENGTH( iNumber );
 
    pItem->type = HB_IT_INTEGER;
-   pItem->item.asInteger.length = ( HB_USHORT ) iWidth;
+   pItem->item.asInteger.length = static_cast< HB_USHORT >( iWidth );
    pItem->item.asInteger.value = iNumber;
 
    return pItem;
@@ -1281,7 +1281,7 @@ PHB_ITEM hb_itemPutNLLen( PHB_ITEM pItem, long lNumber, int iWidth )
 
    pItem->type = HB_IT_INTEGER;
    pItem->item.asInteger.value = static_cast< int >( lNumber );
-   pItem->item.asInteger.length = ( HB_USHORT ) iWidth;
+   pItem->item.asInteger.length = static_cast< HB_USHORT >( iWidth );
 #else
    if( iWidth <= 0 || iWidth >= HB_DEFAULT_WIDTH )
       iWidth = HB_LONG_LENGTH( lNumber );
@@ -1313,7 +1313,7 @@ PHB_ITEM hb_itemPutNLLLen( PHB_ITEM pItem, HB_LONGLONG llNumber, int iWidth )
 
    pItem->type = HB_IT_LONG;
    pItem->item.asLong.value = ( HB_MAXINT ) llNumber;
-   pItem->item.asLong.length = ( HB_USHORT ) iWidth;
+   pItem->item.asLong.length = static_cast< HB_USHORT >( iWidth );
 #else
    pItem->type = HB_IT_DOUBLE;
    pItem->item.asDouble.value = static_cast< double >( llNumber );

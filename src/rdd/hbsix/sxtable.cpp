@@ -70,7 +70,7 @@
 
 HB_FUNC( SX_GETLOCKS )
 {
-   AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
 
    if( pArea )
    {
@@ -82,7 +82,7 @@ HB_FUNC( SX_GETLOCKS )
 
 HB_FUNC( SX_ISFLOCKED )
 {
-   AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
    HB_BOOL fLocked = HB_FALSE;
 
    if( pArea )
@@ -98,7 +98,7 @@ HB_FUNC( SX_ISFLOCKED )
 
 HB_FUNC( SX_ISREADONLY )
 {
-   AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
    HB_BOOL fReadOnly = HB_FALSE;
 
    if( pArea )
@@ -114,7 +114,7 @@ HB_FUNC( SX_ISREADONLY )
 
 HB_FUNC( SX_ISSHARED )
 {
-   AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
    HB_BOOL fShared = HB_FALSE;
 
    if( pArea )
@@ -130,7 +130,7 @@ HB_FUNC( SX_ISSHARED )
 
 HB_FUNC( SX_IDTYPE )
 {
-   AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
    int iType = 0;
 
    if( pArea )
@@ -146,7 +146,7 @@ HB_FUNC( SX_IDTYPE )
 
 HB_FUNC( SX_TABLETYPE )
 {
-   AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
    int iType = 0;
 
    if( pArea )
@@ -162,7 +162,7 @@ HB_FUNC( SX_TABLETYPE )
 
 HB_FUNC( SX_TABLENAME )
 {
-   AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
 
    if( pArea )
    {
@@ -200,9 +200,9 @@ HB_FUNC( SX_ROLLBACK )
    }
 
    if( iArea )
-      pArea = ( AREAP ) hb_rddGetWorkAreaPointer( iArea );
+      pArea = static_cast< AREAP >( hb_rddGetWorkAreaPointer( iArea ) );
    else
-      pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+      pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
 
    if( pArea )
    {
@@ -218,7 +218,7 @@ HB_FUNC( SX_ROLLBACK )
 
 HB_FUNC( SX_RLOCK )
 {
-   AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
    HB_BOOL fResult = HB_FALSE;
    PHB_ITEM pResult = nullptr;
 
@@ -255,7 +255,7 @@ HB_FUNC( SX_RLOCK )
 
 HB_FUNC( SX_UNLOCK )
 {
-   AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
 
    if( pArea )
    {
@@ -285,7 +285,7 @@ HB_FUNC( SX_SETPASS )
    {
       if( HB_ISCHAR( 1 ) )
       {
-         AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+         AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
          if( pArea )
          {
             pItem = hb_itemParam( 1 );
@@ -323,7 +323,7 @@ HB_FUNC( SX_SETPASS )
       }
       else if( iPCount == 2 && HB_ISNUM( 1 ) && HB_ISCHAR( 2 ) )
       {
-         AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+         AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
          if( pArea )
          {
             /* Undocumented SIX3 extension */
@@ -355,7 +355,7 @@ HB_FUNC( SX_SETPASS )
 
 HB_FUNC( SX_DBFENCRYPT )
 {
-   AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
    HB_BOOL fResult = HB_FALSE;
 
    if( pArea )
@@ -371,7 +371,7 @@ HB_FUNC( SX_DBFENCRYPT )
 
 HB_FUNC( SX_DBFDECRYPT )
 {
-   AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
    HB_BOOL fResult = HB_FALSE;
 
    if( pArea )
@@ -386,7 +386,7 @@ HB_FUNC( SX_DBFDECRYPT )
 
 HB_FUNC( SX_MEMOPACK )
 {
-   AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
    HB_BOOL fResult = HB_FALSE;
 
    if( pArea )
@@ -403,7 +403,7 @@ HB_FUNC( SX_MEMOPACK )
 
 HB_FUNC( SX_TURBOAREA )
 {
-   AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
 
    if( pArea )
    {
@@ -452,7 +452,7 @@ HB_FUNC( _SXOPENINIT )
    int iArea = hb_parni( 1 );
 
    if( iArea )
-      pArea = ( AREAP ) hb_rddGetWorkAreaPointer( iArea );
+      pArea = static_cast< AREAP >( hb_rddGetWorkAreaPointer( iArea ) );
 
    if( pArea )
    {

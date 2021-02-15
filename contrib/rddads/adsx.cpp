@@ -114,13 +114,13 @@ typedef struct _ADSXAREA_
 
 
 
-static HB_USHORT s_uiRddIdADSX    = ( HB_USHORT ) -1;
-static HB_USHORT s_uiRddIdADSNTXX = ( HB_USHORT ) -1;
-static HB_USHORT s_uiRddIdADSCDXX = ( HB_USHORT ) -1;
+static HB_USHORT s_uiRddIdADSX    = static_cast< HB_USHORT >( -1 );
+static HB_USHORT s_uiRddIdADSNTXX = static_cast< HB_USHORT >( -1 );
+static HB_USHORT s_uiRddIdADSCDXX = static_cast< HB_USHORT >( -1 );
 #if ADS_LIB_VERSION >= 900
-static HB_USHORT s_uiRddIdADSVFPX = ( HB_USHORT ) -1;
+static HB_USHORT s_uiRddIdADSVFPX = static_cast< HB_USHORT >( -1 );
 #endif
-static HB_USHORT s_uiRddIdADSADTX = ( HB_USHORT ) -1;
+static HB_USHORT s_uiRddIdADSADTX = static_cast< HB_USHORT >( -1 );
 static RDDFUNCS  adsxSuper;
 
 
@@ -778,7 +778,7 @@ static HB_ERRCODE adsxSeek( ADSXAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, H
    {
       HB_SIZE nLen = hb_itemGetCLen( pKey );
       if( nLen < ( HB_SIZE ) uiLen )
-         uiLen = ( HB_USHORT ) nLen;
+         uiLen = static_cast< HB_USHORT >( nLen );
    }
 
    /* reset any pending relations - I hope ACE make the same and the problem
@@ -1214,7 +1214,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
       case HB_IT_STRING:
       case HB_IT_MEMO:
          bType = 'C';
-         uiLen = ( HB_USHORT ) hb_itemGetCLen( pResult );
+         uiLen = static_cast< HB_USHORT >( hb_itemGetCLen( pResult ) );
          if( uiLen > MIX_MAXKEYLEN )
             uiLen = MIX_MAXKEYLEN;
          break;
@@ -1741,7 +1741,7 @@ static void adsxRegisterRDD( HB_USHORT * pusRddId, const char * szRddName )
 
    puiCount = ( HB_USHORT * ) hb_parptr( 1 );
    pTable = ( RDDFUNCS * ) hb_parptr( 2 );
-   uiRddId = ( HB_USHORT ) hb_parni( 4 );
+   uiRddId = static_cast< HB_USHORT >( hb_parni( 4 ) );
    puiSuperRddId = ( HB_USHORT * ) hb_parptr( 5 );
 
    if( pTable )

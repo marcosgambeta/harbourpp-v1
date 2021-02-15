@@ -312,7 +312,7 @@ static HB_BOOL hb_LZSSxDecode( PHB_LZSSX_COMPR pCompr )
          if( ( c = hb_LZSSxRead( pCompr ) ) == -1 )
             break;
          /* simple trick to reduce number of shift operations */
-         itemMask = ( HB_USHORT ) ( c | 0xff00 );
+         itemMask = static_cast< HB_USHORT >( c | 0xff00 );
       }
       if( ( c = hb_LZSSxRead( pCompr ) ) == -1 )
          break;

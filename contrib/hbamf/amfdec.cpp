@@ -1256,7 +1256,7 @@ HB_FUNC( AMF3_DECODE )
       hb_vmPush( context->obj_ref );
       hb_vmPush( context->str_ref );
       hb_vmPush( context->class_ref );
-      hb_vmSend( ( HB_USHORT ) 3 );
+      hb_vmSend( static_cast< HB_USHORT >( 3 ) );
    }
 #endif
 

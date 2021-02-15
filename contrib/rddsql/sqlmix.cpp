@@ -85,7 +85,7 @@
    memmove( &( ( ndst )->Child[ ( dst ) ] ), &( ( nsrc )->Child[ ( src ) ] ), ( count ) * sizeof( void * ) )
 
 
-static HB_USHORT s_uiRddIdSQLMIX = ( HB_USHORT ) -1;
+static HB_USHORT s_uiRddIdSQLMIX = static_cast< HB_USHORT >( -1 );
 
 static RDDFUNCS sqlmixSuper;
 
@@ -1580,7 +1580,7 @@ static HB_ERRCODE sqlmixOrderCreate( SQLMIXAREAP pArea, LPDBORDERCREATEINFO pOrd
       case HB_IT_STRING:
       case HB_IT_MEMO:
          bType = 'C';
-         uiLen = ( HB_USHORT ) hb_itemGetCLen( pResult );
+         uiLen = static_cast< HB_USHORT >( hb_itemGetCLen( pResult ) );
          if( uiLen > MIX_MAXKEYLEN )
             uiLen = MIX_MAXKEYLEN;
          break;
@@ -2099,7 +2099,7 @@ HB_FUNC_STATIC( SQLMIX_GETFUNCTABLE )
 
    puiCount      = ( HB_USHORT * ) hb_parptr( 1 );
    pTable        = ( RDDFUNCS * ) hb_parptr( 2 );
-   uiRddId       = ( HB_USHORT ) hb_parni( 4 );
+   uiRddId       = static_cast< HB_USHORT >( hb_parni( 4 ) );
    puiSuperRddId = ( HB_USHORT * ) hb_parptr( 5 );
 
    if( pTable )

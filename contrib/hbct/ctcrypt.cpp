@@ -65,8 +65,8 @@ HB_FUNC( CRYPT )
       HB_BYTE * pbyResult = ( HB_BYTE * ) hb_xgrab( nStringLen + 1 );
 
       HB_USHORT uiCount2 =
-         ( ( ( HB_USHORT ) ( pbyCrypt[ nCryptPos ] + ( HB_USHORT ) ( pbyCrypt[ nCryptPos + 1 ] * 256 ) ) ) &
-           0xFFFF ) ^ ( ( HB_USHORT ) nCryptLen & 0xFFFF );
+         ( ( static_cast< HB_USHORT >( pbyCrypt[ nCryptPos ] + static_cast< HB_USHORT >( pbyCrypt[ nCryptPos + 1 ] * 256 ) ) ) &
+           0xFFFF ) ^ ( static_cast< HB_USHORT >( nCryptLen ) & 0xFFFF );
       HB_USHORT uiCount1 = 0xAAAA;
 
       for( nStringPos = 0; nStringPos < nStringLen; )

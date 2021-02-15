@@ -269,7 +269,7 @@ static HB_ERRCODE hb_waCreateFields( AREAP pArea, PHB_ITEM pStruct )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_waCreateFields(%p, %p)", ( void * ) pArea, ( void * ) pStruct ) );
 
-   uiItems = ( HB_USHORT ) hb_arrayLen( pStruct );
+   uiItems = static_cast< HB_USHORT >( hb_arrayLen( pStruct ) );
    if( SELF_SETFIELDEXTENT( pArea, uiItems ) != HB_SUCCESS )
       return HB_FAILURE;
 
@@ -286,11 +286,11 @@ static HB_ERRCODE hb_waCreateFields( AREAP pArea, PHB_ITEM pStruct )
       iData = hb_arrayGetNI( pFieldDesc, DBS_LEN );
       if( iData < 0 )
          iData = 0;
-      uiLen = dbFieldInfo.uiLen = ( HB_USHORT ) iData;
+      uiLen = dbFieldInfo.uiLen = static_cast< HB_USHORT >( iData );
       iData = hb_arrayGetNI( pFieldDesc, DBS_DEC );
       if( iData < 0 )
          iData = 0;
-      uiDec = ( HB_USHORT ) iData;
+      uiDec = static_cast< HB_USHORT >( iData );
       dbFieldInfo.uiDec = 0;
       szType = hb_arrayGetCPtr( pFieldDesc, DBS_TYPE );
       iData = HB_TOUPPER( *szType );
@@ -384,7 +384,7 @@ static HB_ERRCODE hb_waCreateFields( AREAP pArea, PHB_ITEM pStruct )
          case '2':
          case '4':
             dbFieldInfo.uiType = HB_FT_INTEGER;
-            dbFieldInfo.uiLen = ( HB_USHORT ) ( iData - '0' );
+            dbFieldInfo.uiLen = static_cast< HB_USHORT >( iData - '0' );
             dbFieldInfo.uiFlags &= HB_FF_NULLABLE | HB_FF_AUTOINC;
             break;
 
@@ -1825,7 +1825,7 @@ static HB_ERRCODE hb_waEvalBlock( AREAP pArea, PHB_ITEM pBlock )
 
    pItem = hb_vmEvalBlockOrMacro( pBlock );
 
-   if( ( AREAP ) hb_rddGetWorkAreaPointer( iUsedArea ) != pArea )
+   if( static_cast< AREAP >( hb_rddGetWorkAreaPointer( iUsedArea ) ) != pArea )
       return HB_FAILURE;
 
    if( ! pArea->valResult )
@@ -2433,7 +2433,7 @@ int hb_rddRegister( const char * szDriver, HB_USHORT uiType )
    hb_strncpy( pRddNewNode->szName, szDriver, sizeof( pRddNewNode->szName ) - 1 );
    pRddNewNode->uiType = uiType;
    pRddNewNode->rddID = s_uiRddCount;
-   pRddNewNode->rddSuperID = ( HB_USHORT ) ( -1 );
+   pRddNewNode->rddSuperID = static_cast< HB_USHORT >( -1 );
 
    /* Call <szDriver>_GETFUNCTABLE() */
    hb_vmPushDynSym( pGetFuncTable );
@@ -2506,7 +2506,7 @@ HB_ERRCODE hb_rddInheritEx( RDDFUNCS * pTable, const RDDFUNCS * pSubTable,
       memcpy( pTable, &waTable, sizeof( RDDFUNCS ) );
       memcpy( pSuperTable, &waTable, sizeof( RDDFUNCS ) );
       if( puiSuperRddId )
-         *puiSuperRddId = ( HB_USHORT ) -1;
+         *puiSuperRddId = static_cast< HB_USHORT >( -1 );
    }
    else
    {

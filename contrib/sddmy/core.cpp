@@ -255,7 +255,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
       return HB_FAILURE;
    }
 
-   uiFields = ( HB_USHORT ) mysql_num_fields( pSDDData->pResult );
+   uiFields = static_cast< HB_USHORT >( mysql_num_fields( pSDDData->pResult ) );
    SELF_SETFIELDEXTENT( &pArea->area, uiFields );
 
    pItemEof = hb_itemArrayNew( uiFields );
@@ -269,7 +269,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
 
       memset( &dbFieldInfo, 0, sizeof( dbFieldInfo ) );
       dbFieldInfo.atomName = pMyField->name;
-      dbFieldInfo.uiLen    = ( HB_USHORT ) pMyField->length;
+      dbFieldInfo.uiLen    = static_cast< HB_USHORT >( pMyField->length );
 
       switch( pMyField->type )
       {
@@ -289,7 +289,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
          case MYSQL_TYPE_FLOAT:
          case MYSQL_TYPE_DOUBLE:
             dbFieldInfo.uiType = HB_FT_DOUBLE;
-            dbFieldInfo.uiDec  = ( HB_USHORT ) pMyField->decimals;
+            dbFieldInfo.uiDec  = static_cast< HB_USHORT >( pMyField->decimals );
             break;
 
          case MYSQL_TYPE_STRING:

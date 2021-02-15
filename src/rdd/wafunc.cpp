@@ -107,7 +107,7 @@ void * hb_rddNewAreaNode( LPRDDNODE pRddNode, HB_USHORT uiRddID )
    {
       HB_USHORT uiSize;
 
-      pArea = ( AREAP ) hb_xgrabz( sizeof( AREA ) );
+      pArea = static_cast< AREAP >( hb_xgrabz( sizeof( AREA ) ) );
       pArea->lprfsHost = &pRddNode->pTable;
       pArea->rddID = uiRddID;
 
@@ -117,7 +117,7 @@ void * hb_rddNewAreaNode( LPRDDNODE pRddNode, HB_USHORT uiRddID )
       /* Need more space? */
       if( uiSize > sizeof( AREA ) )   /* Size of Area changed */
       {
-         pArea = ( AREAP ) hb_xrealloc( pArea, uiSize );
+         pArea = static_cast< AREAP >( hb_xrealloc( pArea, uiSize ) );
          memset( pArea, 0, uiSize );
          pArea->lprfsHost = &pRddNode->pTable;
          pArea->rddID = uiRddID;
@@ -127,7 +127,7 @@ void * hb_rddNewAreaNode( LPRDDNODE pRddNode, HB_USHORT uiRddID )
    }
    else
    {
-      pArea = ( AREAP ) hb_xgrabz( pRddNode->uiAreaSize );
+      pArea = static_cast< AREAP >( hb_xgrabz( pRddNode->uiAreaSize ) );
       pArea->lprfsHost = &pRddNode->pTable;
       pArea->rddID = uiRddID;
    }
@@ -455,7 +455,7 @@ HB_ERRCODE hb_rddFieldGet( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddFieldGet(%p, %p)", ( void * ) pItem, ( void * ) pFieldSymbol ) );
 
-   pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
    if( pArea )
    {
       HB_USHORT uiField = 1;
@@ -484,7 +484,7 @@ HB_ERRCODE hb_rddFieldPut( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddFieldPut(%p, %p)", ( void * ) pItem, ( void * ) pFieldSymbol ) );
 
-   pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
    if( pArea )
    {
       HB_USHORT uiField = 1;
@@ -629,7 +629,7 @@ HB_ERRCODE hb_rddOpenTable( const char * szFileName, const char * szDriver,
       return HB_FAILURE;
    }
 
-   pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
 
    /* Fill pInfo structure */
    pInfo.uiArea = pArea->uiArea;
@@ -674,7 +674,7 @@ HB_ERRCODE hb_rddCreateTable( const char * szFileName, const char * szDriver,
       return HB_FAILURE;
    }
 
-   uiPrevArea = ( HB_AREANO ) hb_rddGetCurrentWorkAreaNumber();
+   uiPrevArea = static_cast< HB_AREANO >( hb_rddGetCurrentWorkAreaNumber() );
 
    /* 0 means chose first available in hb_rddInsertAreaNode() */
    hb_rddSelectWorkAreaNumber( uiArea );
@@ -690,7 +690,7 @@ HB_ERRCODE hb_rddCreateTable( const char * szFileName, const char * szDriver,
       hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
       return HB_FAILURE;
    }
-   pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
 
    /* Fill pInfo structure */
    pInfo.uiArea = pArea->uiArea;
@@ -735,7 +735,7 @@ HB_ERRCODE hb_rddCreateTableTemp( const char * szDriver,
    HB_USHORT uiPrevArea;
    AREAP pArea;
 
-   uiPrevArea = ( HB_AREANO ) hb_rddGetCurrentWorkAreaNumber();
+   uiPrevArea = static_cast< HB_AREANO >( hb_rddGetCurrentWorkAreaNumber() );
 
    /* 0 means chose first available in hb_rddInsertAreaNode() */
    hb_rddSelectWorkAreaNumber( 0 );
@@ -755,7 +755,7 @@ HB_ERRCODE hb_rddCreateTableTemp( const char * szDriver,
       hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
       return HB_FAILURE;
    }
-   pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
 
    /* Fill pInfo structure */
    pInfo.uiArea = pArea->uiArea;
@@ -923,7 +923,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest,
       return HB_FAILURE;
    if( hb_itemType( pFields ) & HB_IT_ARRAY )
    {
-      uiFields = ( HB_USHORT ) hb_arrayLen( pFields );
+      uiFields = static_cast< HB_USHORT >( hb_arrayLen( pFields ) );
       if( uiFields )
          uiSize = uiFields;
    }
@@ -982,7 +982,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest,
       else
       {
          hb_tblStructure( lpaSource, *pStruct, 0 );
-         uiSize = ( HB_USHORT ) hb_arrayLen( *pStruct );
+         uiSize = static_cast< HB_USHORT >( hb_arrayLen( *pStruct ) );
          for( uiCount = 0; uiCount < uiSize; ++uiCount )
          {
             lpdbTransInfo->lpTransItems[ uiCount ].uiSource =
@@ -1112,7 +1112,7 @@ HB_ERRCODE hb_rddTransRecords( AREAP pArea,
    HB_ERRCODE errCode;
 
    memset( &dbTransInfo, 0, sizeof( dbTransInfo ) );
-   uiPrevArea = ( HB_AREANO ) hb_rddGetCurrentWorkAreaNumber();
+   uiPrevArea = static_cast< HB_AREANO >( hb_rddGetCurrentWorkAreaNumber() );
 
    szDriver = hb_rddFindDrv( szDriver, szFileName );
 
@@ -1127,7 +1127,7 @@ HB_ERRCODE hb_rddTransRecords( AREAP pArea,
                                       szCpId, ulConnection, pStruct, pDelim );
          if( errCode == HB_SUCCESS )
             dbTransInfo.lpaDest = lpaClose =
-                                 ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+                                 static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
       }
    }
    else
@@ -1164,7 +1164,7 @@ HB_ERRCODE hb_rddTransRecords( AREAP pArea,
             if( errCode == HB_SUCCESS )
             {
                lpaClose = dbTransInfo.lpaSource =
-                                 ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+                                 static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
             }
          }
       }
@@ -1174,7 +1174,7 @@ HB_ERRCODE hb_rddTransRecords( AREAP pArea,
                                     szCpId, ulConnection, NULL, pDelim );
          if( errCode == HB_SUCCESS )
          {
-            lpaClose = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+            lpaClose = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
             errCode = hb_dbTransStruct( lpaClose, pArea, &dbTransInfo,
                                         NULL, pFields );
          }
@@ -1239,7 +1239,7 @@ static HB_ERRCODE hb_rddCloseParentRel( AREAP pArea, void * pChildArea )
    if( pArea->lpdbRelations )
    {
       LPDBRELINFO * lpdbRelationPtr = &pArea->lpdbRelations;
-      HB_USHORT uiArea = ( ( AREAP ) pChildArea )->uiArea;
+      HB_USHORT uiArea = ( static_cast< AREAP >( pChildArea ) )->uiArea;
 
       do
       {
@@ -1275,7 +1275,7 @@ HB_ERRCODE hb_rddCloseAllParentRelations( AREAP pArea )
 
    if( pArea->uiParents > 0 )
    {
-      HB_USHORT uiArea = ( HB_AREANO ) hb_rddGetCurrentWorkAreaNumber();
+      HB_USHORT uiArea = static_cast< HB_AREANO >( hb_rddGetCurrentWorkAreaNumber() );
       errCode = hb_rddIterateWorkAreas( hb_rddCloseParentRel, pArea );
       hb_rddSelectWorkAreaNumber( uiArea );
    }
@@ -1304,7 +1304,7 @@ HB_ERRCODE hb_rddEvalWA( PHB_ITEM pBlock )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddEvalWA(%p)", ( void * ) pBlock ) );
 
-   uiArea = ( HB_AREANO ) hb_rddGetCurrentWorkAreaNumber();
+   uiArea = static_cast< HB_AREANO >( hb_rddGetCurrentWorkAreaNumber() );
    errCode = hb_rddIterateWorkAreas( hb_rddEvalWABlock, pBlock );
    hb_rddSelectWorkAreaNumber( uiArea );
 

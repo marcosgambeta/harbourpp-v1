@@ -1219,7 +1219,7 @@ void hb_vmInit( HB_BOOL bStartMainProc )
    {
       hb_vmPushSymbol( s_pSymStart ); /* pushes first HB_FS_PUBLIC defined symbol to the stack */
       hb_vmPushNil();                 /* places NIL at self */
-      hb_vmProc( ( HB_USHORT ) hb_cmdargPushArgs() ); /* invoke it with number of supplied parameters */
+      hb_vmProc( static_cast< HB_USHORT >( hb_cmdargPushArgs() ) ); /* invoke it with number of supplied parameters */
    }
 }
 
@@ -5704,7 +5704,7 @@ static void hb_vmMacroDo( HB_USHORT uiArgSets )
 
    lArgs = hb_vmArgsJoin( -1, uiArgSets );
    hb_stackDecrease( uiArgSets );
-   hb_vmProc( ( HB_USHORT ) lArgs );
+   hb_vmProc( static_cast< HB_USHORT >( lArgs ) );
 }
 
 static void hb_vmMacroFunc( HB_USHORT uiArgSets )
@@ -5717,7 +5717,7 @@ static void hb_vmMacroFunc( HB_USHORT uiArgSets )
    lArgs = hb_vmArgsJoin( -1, uiArgSets );
    hb_stackDecrease( uiArgSets );
    hb_itemSetNil( hb_stackReturnItem() );
-   hb_vmProc( ( HB_USHORT ) lArgs );
+   hb_vmProc( static_cast< HB_USHORT >( lArgs ) );
    hb_stackPushReturn();
 }
 
@@ -5731,7 +5731,7 @@ static void hb_vmMacroSend( HB_USHORT uiArgSets )
    lArgs = hb_vmArgsJoin( -1, uiArgSets );
    hb_stackDecrease( uiArgSets );
    hb_itemSetNil( hb_stackReturnItem() );
-   hb_vmSend( ( HB_USHORT ) lArgs );
+   hb_vmSend( static_cast< HB_USHORT >( lArgs ) );
    hb_stackPushReturn();
 }
 
@@ -6269,7 +6269,7 @@ PHB_ITEM hb_vmEvalBlockV( PHB_ITEM pBlock, HB_ULONG ulArgCount, ... )
 
    /* take care here, possible loss of data long to short ... */
    /* added an explicit casting here for VC++ JFL */
-   hb_vmSend( ( HB_USHORT ) ulArgCount );
+   hb_vmSend( static_cast< HB_USHORT >( ulArgCount ) );
 
    return hb_stackReturnItem();
 }
@@ -6790,7 +6790,7 @@ static void hb_vmPushIntegerConst( int iNumber )
 
    pItem->type = HB_IT_INTEGER;
    pItem->item.asInteger.value = iNumber;
-   pItem->item.asInteger.length = ( HB_USHORT ) hb_vmCalcIntWidth( iNumber );
+   pItem->item.asInteger.length = static_cast< HB_USHORT >( hb_vmCalcIntWidth( iNumber ) );
 }
 #else
 static void hb_vmPushLongConst( long lNumber )
@@ -6802,7 +6802,7 @@ static void hb_vmPushLongConst( long lNumber )
 
    pItem->type = HB_IT_LONG;
    pItem->item.asLong.value = ( HB_MAXINT ) lNumber;
-   pItem->item.asLong.length = ( HB_USHORT ) hb_vmCalcIntWidth( lNumber );
+   pItem->item.asLong.length = static_cast< HB_USHORT >( hb_vmCalcIntWidth( lNumber ) );
 }
 #endif
 
@@ -6851,7 +6851,7 @@ static void hb_vmPushLongLongConst( HB_LONGLONG llNumber )
 
    pItem->type = HB_IT_LONG;
    pItem->item.asLong.value = ( HB_MAXINT ) llNumber;
-   pItem->item.asLong.length = ( HB_USHORT ) hb_vmCalcIntWidth( llNumber );
+   pItem->item.asLong.length = static_cast< HB_USHORT >( hb_vmCalcIntWidth( llNumber ) );
 }
 #endif
 
@@ -6874,9 +6874,9 @@ void hb_vmPushDouble( double dNumber, int iDec )
    pItem->item.asDouble.value = dNumber;
    pItem->item.asDouble.length = HB_DBL_LENGTH( dNumber );
    if( iDec == HB_DEFAULT_DECIMALS )
-      pItem->item.asDouble.decimal = ( HB_USHORT ) hb_stackSetStruct()->HB_SET_DECIMALS;
+      pItem->item.asDouble.decimal = static_cast< HB_USHORT >( hb_stackSetStruct()->HB_SET_DECIMALS );
    else
-      pItem->item.asDouble.decimal = ( HB_USHORT ) iDec;
+      pItem->item.asDouble.decimal = static_cast< HB_USHORT >( iDec );
 }
 
 static void hb_vmPushDoubleConst( double dNumber, int iWidth, int iDec )
@@ -6890,14 +6890,14 @@ static void hb_vmPushDoubleConst( double dNumber, int iWidth, int iDec )
    pItem->item.asDouble.value = dNumber;
 
    if( iDec == HB_DEFAULT_DECIMALS )
-      pItem->item.asDouble.decimal = ( HB_USHORT ) hb_stackSetStruct()->HB_SET_DECIMALS;
+      pItem->item.asDouble.decimal = static_cast< HB_USHORT >( hb_stackSetStruct()->HB_SET_DECIMALS );
    else
-      pItem->item.asDouble.decimal = ( HB_USHORT ) iDec;
+      pItem->item.asDouble.decimal = static_cast< HB_USHORT >( iDec );
 
    if( iWidth == HB_DEFAULT_WIDTH )
       pItem->item.asDouble.length = HB_DBL_LENGTH( dNumber );
    else
-      pItem->item.asDouble.length = ( HB_USHORT ) iWidth;
+      pItem->item.asDouble.length = static_cast< HB_USHORT >( iWidth );
 }
 
 void hb_vmPushDate( long lDate )
@@ -7909,7 +7909,7 @@ void hb_vmInitSymbolGroup( void * hNewDynLib, int argc, const char * argv[] )
                            {
                               hb_vmPushString( argv[ i ], strlen( argv[ i ] ) );
                            }
-                           hb_vmProc( ( HB_USHORT ) argc );
+                           hb_vmProc( static_cast< HB_USHORT >( argc ) );
                            if( hb_vmRequestQuery() != 0 )
                               break;
                         }
@@ -8301,7 +8301,7 @@ static void hb_vmDoInitFunctions( HB_BOOL fClipInit )
             {
                hb_vmPushSymbol( pLastSymbols->pModuleSymbols + ui );
                hb_vmPushNil();
-               hb_vmProc( ( HB_USHORT ) hb_cmdargPushArgs() );
+               hb_vmProc( static_cast< HB_USHORT >( hb_cmdargPushArgs() ) );
                if( hb_vmRequestQuery() != 0 )
                   break;
             }
@@ -9142,9 +9142,9 @@ HB_BOOL hb_vmTryEval( PHB_ITEM * pResult, PHB_ITEM pItem, HB_ULONG ulPCount, ...
             va_end( va );
          }
          if( pItem )
-            hb_vmSend( ( HB_USHORT ) ulPCount );
+            hb_vmSend( static_cast< HB_USHORT >( ulPCount ) );
          else
-            hb_vmProc( ( HB_USHORT ) ulPCount );
+            hb_vmProc( static_cast< HB_USHORT >( ulPCount ) );
 
          hb_stackPop();
          if( hb_xvmSeqEndTest() )
@@ -9575,14 +9575,14 @@ void hb_xvmFrame( int iLocals, int iParams )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_xvmFrame(%d, %d)", iLocals, iParams ) );
 
-   hb_vmFrame( ( HB_USHORT ) iLocals, static_cast< unsigned char >( iParams ) );
+   hb_vmFrame( static_cast< HB_USHORT >( iLocals ), static_cast< unsigned char >( iParams ) );
 }
 
 void hb_xvmVFrame( int iLocals, int iParams )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_xvmVFrame(%d, %d)", iLocals, iParams ) );
 
-   hb_vmVFrame( ( HB_USHORT ) iLocals, static_cast< unsigned char >( iParams ) );
+   hb_vmVFrame( static_cast< HB_USHORT >( iLocals ), static_cast< unsigned char >( iParams ) );
 }
 
 void hb_xvmSFrame( PHB_SYMB pSymbol )

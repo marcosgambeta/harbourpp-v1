@@ -81,7 +81,7 @@ static void do_atnum( int iSwitch )
                int iArgErrorMode = ct_getargerrormode();
 
                if( iArgErrorMode != CT_ARGERR_IGNORE )
-                  ct_error( ( HB_USHORT ) iArgErrorMode, EG_ARG, CT_ERROR_AFTERATNUM, NULL,
+                  ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_AFTERATNUM, NULL,
                             HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
 
                hb_retc_null();
@@ -93,7 +93,7 @@ static void do_atnum( int iSwitch )
                int iArgErrorMode = ct_getargerrormode();
 
                if( iArgErrorMode != CT_ARGERR_IGNORE )
-                  ct_error( ( HB_USHORT ) iArgErrorMode, EG_ARG, CT_ERROR_BEFORATNUM, NULL,
+                  ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_BEFORATNUM, NULL,
                             HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
 
                hb_retc_null();
@@ -105,7 +105,7 @@ static void do_atnum( int iSwitch )
                int iArgErrorMode = ct_getargerrormode();
 
                if( iArgErrorMode != CT_ARGERR_IGNORE )
-                  ct_error( ( HB_USHORT ) iArgErrorMode, EG_ARG, CT_ERROR_ATNUM, NULL, HB_ERR_FUNCNAME, 0,
+                  ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_ATNUM, NULL, HB_ERR_FUNCNAME, 0,
                             EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
 
                hb_retns( 0 );
@@ -257,7 +257,7 @@ static void do_atnum( int iSwitch )
             int iArgErrorMode = ct_getargerrormode();
 
             if( iArgErrorMode != CT_ARGERR_IGNORE )
-               pSubst = ct_error_subst( ( HB_USHORT ) iArgErrorMode, EG_ARG,
+               pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                         iSwitch ==
                                         DO_ATNUM_AFTERATNUM ? CT_ERROR_AFTERATNUM :
                                         CT_ERROR_BEFORATNUM, NULL, HB_ERR_FUNCNAME, 0,
@@ -276,7 +276,7 @@ static void do_atnum( int iSwitch )
             int iArgErrorMode = ct_getargerrormode();
 
             if( iArgErrorMode != CT_ARGERR_IGNORE )
-               pSubst = ct_error_subst( ( HB_USHORT ) iArgErrorMode, EG_ARG, CT_ERROR_ATNUM,
+               pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_ATNUM,
                                         NULL, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
                                         HB_ERR_ARGS_BASEPARAMS );
 

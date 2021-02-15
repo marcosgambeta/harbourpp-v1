@@ -65,7 +65,7 @@
  */
 HB_FUNC( BM_DBSEEKWILD )
 {
-   AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
 
    if( pArea )
    {
@@ -269,7 +269,7 @@ static HB_BOOL hb_bmCheckRecordFilter( AREAP pArea, HB_ULONG ulRecNo )
 
 static AREAP hb_bmGetCurrentWorkArea( void )
 {
-   AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
 
    if( ! pArea )
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
@@ -731,7 +731,7 @@ static void hb_bmGetFuncTable( const char * szSuper )
    puiCount = ( HB_USHORT * ) hb_parptr( 1 );
    pTable = ( RDDFUNCS * ) hb_parptr( 2 );
    pSuperTable = ( RDDFUNCS * ) hb_parptr( 3 );
-   uiRddId = ( HB_USHORT ) hb_parni( 4 );
+   uiRddId = static_cast< HB_USHORT >( hb_parni( 4 ) );
    puiSuperRddId = ( HB_USHORT * ) hb_parptr( 5 );
 
    HB_TRACE( HB_TR_DEBUG, ( "BM%s_GETFUNCTABLE(%p, %p, %p, %hu, %p)", szSuper, ( void * ) puiCount, pTable, pSuperTable, uiRddId, puiSuperRddId ) );

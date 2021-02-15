@@ -874,7 +874,7 @@ HB_ERRCODE hb_gtScrollEx( int iTop, int iLeft, int iBottom, int iRight, int iCol
       if( iChar < 0 )
          iChar = HB_GTSELF_GETCLEARCHAR( pGT );
       HB_GTSELF_SCROLL( pGT, iTop, iLeft, iBottom, iRight,
-                        iColor, ( HB_USHORT ) iChar, iRows, iCols );
+                        iColor, static_cast< HB_USHORT >( iChar ), iRows, iCols );
       HB_GTSELF_FLUSH( pGT );
       hb_gt_BaseFree( pGT );
       return HB_SUCCESS;
@@ -1223,7 +1223,7 @@ HB_USHORT hb_gtGetClearChar( void )
       hb_gt_BaseFree( pGT );
    }
    else
-      usChar = ( HB_USHORT ) ' ';
+      usChar = static_cast< HB_USHORT >( ' ' );
 
    return usChar;
 }

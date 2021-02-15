@@ -79,7 +79,7 @@ HB_FUNC( HB_FUSE )
 
    if( HB_ISCHAR( 1 ) )
    {
-      ft_text->handles[ ft_text->area ]  = hb_fsOpen( hb_parc( 1 ), ( HB_USHORT ) hb_parnidef( 2, FO_READ ) );
+      ft_text->handles[ ft_text->area ]  = hb_fsOpen( hb_parc( 1 ), static_cast< HB_USHORT >( hb_parnidef( 2, FO_READ ) ) );
       ft_text->offset[ ft_text->area ]   = 0;
       ft_text->recno[ ft_text->area ]    = 1;
       ft_text->lastbyte[ ft_text->area ] = hb_fsSeekLarge( ft_text->handles[ ft_text->area ], 0, FS_END );

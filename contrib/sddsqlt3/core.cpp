@@ -268,7 +268,7 @@ static void sqlite3DeclStru( sqlite3_stmt * st, HB_USHORT uiIndex, HB_USHORT * p
          {
             iRetLen = hb_strValInt( szDeclType + nAt, &iOverflow );
             if( ! puiDec || ( iRetLen > 0 && iRetLen < 100 ) )
-               * puiLen = ( HB_USHORT ) iRetLen;
+               * puiLen = static_cast< HB_USHORT >( iRetLen );
          }
 
          if( ! puiDec )
@@ -281,13 +281,13 @@ static void sqlite3DeclStru( sqlite3_stmt * st, HB_USHORT uiIndex, HB_USHORT * p
          {
             if( ( iRetLen = hb_strValInt( szDeclType + nAt, &iOverflow ) ) > 0 )
             {
-               * puiDec = ( HB_USHORT ) HB_MIN( * puiLen - 1, iRetLen );
+               * puiDec = static_cast< HB_USHORT >( HB_MIN( * puiLen - 1, iRetLen ) );
 
                /* SQL column declaration doesn't include space for
                 * decimal separator, while xBase stores it.
                 */
 
-               * puiLen = ( HB_USHORT ) ++iRetLen;
+               * puiLen = static_cast< HB_USHORT >( ++iRetLen );
             }
             else if( iRetLen == 0 )
                * puiDec = 0;
@@ -408,7 +408,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
       return HB_FAILURE;
    }
 
-   uiFields = ( HB_USHORT ) sqlite3_column_count( st );
+   uiFields = static_cast< HB_USHORT >( sqlite3_column_count( st ) );
    SELF_SETFIELDEXTENT( &pArea->area, uiFields );
 
    errCode = 0;
@@ -458,7 +458,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
 #ifdef HB_SQLT3_MAP_DECLARED_EMULATED
             sqlite3DeclStru( st, uiIndex, &uiRetLen, NULL );
 #endif
-            dbFieldInfo.uiLen = ( HB_USHORT ) HB_MAX( nSize, uiRetLen );
+            dbFieldInfo.uiLen = static_cast< HB_USHORT >( HB_MAX( nSize, uiRetLen ) );
             pStr = ( char * ) hb_xgrab( ( HB_SIZE ) dbFieldInfo.uiLen + 1 );
             memset( pStr, ' ', dbFieldInfo.uiLen );
             hb_itemPutCLPtr( pItem, pStr, dbFieldInfo.uiLen );
@@ -476,7 +476,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
 
          case HB_FT_LONG:
             dbFieldInfo.uiLen = 20;
-            dbFieldInfo.uiDec = ( HB_USHORT ) hb_setGetDecimals();
+            dbFieldInfo.uiDec = static_cast< HB_USHORT >( hb_setGetDecimals() );
 #ifdef HB_SQLT3_MAP_DECLARED_EMULATED
             sqlite3DeclStru( st, uiIndex, &dbFieldInfo.uiLen, &dbFieldInfo.uiDec );
 #endif

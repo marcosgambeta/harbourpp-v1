@@ -86,7 +86,7 @@ HB_FUNC( AMFSTDIO_READ )
    while( nTotal < 4 )
    {
       nToRead = ( s_nCount + 4 - nTotal > SINGLEBUF ? SINGLEBUF - s_nCount : 4 - nTotal );
-      nBytes  = hb_fsRead( hStdIn, pszStrIn, ( HB_USHORT ) nToRead );
+      nBytes  = hb_fsRead( hStdIn, pszStrIn, static_cast< HB_USHORT >( nToRead ) );
 
       countCheck( nBytes );
 
@@ -120,7 +120,7 @@ HB_FUNC( AMFSTDIO_READ )
       else
          nToRead = ( s_nCount + nLen - nTotal > SINGLEBUF ? SINGLEBUF - s_nCount : nLen - nTotal );
 
-      nBytes = hb_fsRead( hStdIn, pszStrIn, ( HB_USHORT ) nToRead );
+      nBytes = hb_fsRead( hStdIn, pszStrIn, static_cast< HB_USHORT >( nToRead ) );
 
       countCheck( nBytes );
 

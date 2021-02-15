@@ -390,7 +390,7 @@ static int xdlt_outb( void * priv, mmbuffer_t * mb, int nbuf )
       for( i = 0; i < nbuf; i++ )
          hb_vmPushString( ( const char * ) mb[ i ].ptr, mb[ i ].size );
 
-      hb_vmSend( ( HB_USHORT ) nbuf );
+      hb_vmSend( static_cast< HB_USHORT >( nbuf ) );
       iResult = hb_parnidef( -1, 0 );
 
       hb_vmRequestRestore();

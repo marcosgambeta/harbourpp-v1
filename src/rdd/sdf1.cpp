@@ -74,7 +74,7 @@ static void hb_sdfInitArea( SDFAREAP pArea, char * szFileName )
    if( ! szEol || ! szEol[ 0 ] )
       szEol = hb_conNewLine();
    pArea->szEol = hb_strdup( szEol );
-   pArea->uiEolLen = ( HB_USHORT ) strlen( szEol );
+   pArea->uiEolLen = static_cast< HB_USHORT >( strlen( szEol ) );
    pArea->fAnyEol = ( szEol[ 0 ] == '\n' || szEol[ 0 ] == '\r' ) &&
                     ( pArea->uiEolLen == 1 ||
                       ( pArea->uiEolLen == 2 && szEol[ 0 ] != szEol[ 1 ] &&

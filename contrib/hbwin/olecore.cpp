@@ -1730,9 +1730,9 @@ HB_BOOL hb_oleDispInvoke( PHB_SYMB pSym, PHB_ITEM pObject, PHB_ITEM pParam,
       }
 
       if( pObject && ! HB_IS_HASH( pObject ) )
-         hb_vmSend( ( HB_USHORT ) iParams );
+         hb_vmSend( static_cast< HB_USHORT >( iParams ) );
       else
-         hb_vmProc( ( HB_USHORT ) iParams );
+         hb_vmProc( static_cast< HB_USHORT >( iParams ) );
 
       if( pVarResult )
          hb_oleItemToVariantRef( pVarResult, hb_stackReturnItem(), NULL, pObjFunc );
@@ -1861,7 +1861,7 @@ static void PutParams( DISPPARAMS * dispparam, HB_UINT uiOffset, HB_USHORT uiCla
 
    for( uiArg = dispparam->cNamedArgs; uiArg < dispparam->cArgs; uiArg++ )
    {
-      HB_USHORT uiParam = ( HB_USHORT ) ( uiOffset + dispparam->cArgs - uiArg );
+      HB_USHORT uiParam = static_cast< HB_USHORT >( uiOffset + dispparam->cArgs - uiArg );
 
       if( HB_ISBYREF( uiParam ) )
       {
@@ -2109,7 +2109,7 @@ HB_FUNC( __OLEENUMNEXT )
       if( HB_VTBL( pEnum )->Next( HB_THIS_( pEnum ) 1, &variant, NULL ) == S_OK )
       {
          hb_oleVariantToItemEx( hb_stackReturnItem(), &variant,
-                                ( HB_USHORT ) hb_parni( 3 ) );
+                                static_cast< HB_USHORT >( hb_parni( 3 ) ) );
          VariantClear( &variant );
          fResult = HB_TRUE;
       }

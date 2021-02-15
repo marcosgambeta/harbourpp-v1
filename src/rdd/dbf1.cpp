@@ -63,7 +63,7 @@
 #include "hbapicdp.h"
 
 
-static HB_USHORT s_uiRddId = ( HB_USHORT ) -1;
+static HB_USHORT s_uiRddId = static_cast< HB_USHORT >( -1 );
 static RDDFUNCS  dbfSuper;
 
 
@@ -1021,7 +1021,7 @@ static HB_ERRCODE hb_dbfLockFile( DBFAREAP pArea, HB_USHORT * pResult )
       hb_dbfUnlockAllRecords( pArea );
 
       SELF_RAWLOCK( &pArea->area, FILE_LOCK, 0 );
-      *pResult = ( HB_USHORT ) pArea->fFLocked;
+      *pResult = static_cast< HB_USHORT >( pArea->fFLocked );
 
       if( ! pArea->fPositioned )
       {
@@ -2346,7 +2346,7 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          if( nLen && ( pszVal[ nLen ] == '+' || pszVal[ nLen ] == '-' ) &&
              ( pszVal[ nLen - 1 ] == 'e' || pszVal[ nLen - 1 ] == 'E' ) )
          {
-            HB_USHORT uiLen = ( HB_USHORT ) nLen;
+            HB_USHORT uiLen = static_cast< HB_USHORT >( nLen );
             int iExp = 0;
 
             while( ++uiLen < pField->uiLen )
@@ -3510,7 +3510,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
    pArea->fShared = HB_FALSE;    /* pCreateInfo->fShared */
    pArea->fReadonly = HB_FALSE;  /* pCreateInfo->fReadonly */
    pArea->ulRecCount = 0;
-   pArea->uiHeaderLen = ( HB_USHORT ) ( sizeof( DBFHEADER ) + nSize );
+   pArea->uiHeaderLen = static_cast< HB_USHORT >( sizeof( DBFHEADER ) + nSize );
    if( fRawBlob )
    {
       pArea->fHasMemo = HB_TRUE;
@@ -4246,7 +4246,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
    fRawBlob = SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_BLOB_SUPPORT, pOpenInfo->ulConnection, pItem ) == HB_SUCCESS &&
               hb_itemGetL( pItem );
    hb_itemClear( pItem );
-   uiDecimals = ( HB_USHORT ) ( SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_DECIMALS, pOpenInfo->ulConnection, pItem ) == HB_SUCCESS ?
+   uiDecimals = static_cast< HB_USHORT >( SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_DECIMALS, pOpenInfo->ulConnection, pItem ) == HB_SUCCESS ?
                                 hb_itemGetNI( pItem ) : 0 );
    hb_itemRelease( pItem );
    uiFlagsMask = 0;
@@ -6638,7 +6638,7 @@ static HB_ERRCODE hb_dbfExit( LPRDDNODE pRDD )
       hb_xfree( pRDD->lpvCargo );
       pRDD->lpvCargo = NULL;
    }
-   s_uiRddId = ( HB_USHORT ) -1;
+   s_uiRddId = static_cast< HB_USHORT >( -1 );
 
    if( ISSUPER_EXIT( pRDD ) )
       return SUPER_EXIT( pRDD );
@@ -6716,7 +6716,7 @@ static HB_ERRCODE hb_dbfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
          {
             int iMode = hb_itemGetNI( pItem );
             if( ( iMode & ~DB_SETHEADER_MASK ) == 0 )
-               pData->uiSetHeader = ( HB_USHORT ) iMode;
+               pData->uiSetHeader = static_cast< HB_USHORT >( iMode );
          }
          hb_itemPutNI( pItem, uiSetHeader );
          break;
@@ -6739,7 +6739,7 @@ static HB_ERRCODE hb_dbfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
          hb_itemPutNI( pItem, pData->uiIndexPageSize );
          if( iPageSize >= 0x200 && iPageSize <= 0x2000 &&
              ( ( iPageSize - 1 ) & iPageSize ) == 0 )
-            pData->uiIndexPageSize = ( HB_USHORT ) iPageSize;
+            pData->uiIndexPageSize = static_cast< HB_USHORT >( iPageSize );
          break;
       }
       case RDDI_DECIMALS:
@@ -6959,7 +6959,7 @@ HB_FUNC_STATIC( DBF_GETFUNCTABLE )
 
    puiCount = ( HB_USHORT * ) hb_parptr( 1 );
    pTable = ( RDDFUNCS * ) hb_parptr( 2 );
-   uiRddId = ( HB_USHORT ) hb_parni( 4 );
+   uiRddId = static_cast< HB_USHORT >( hb_parni( 4 ) );
 
    HB_TRACE( HB_TR_DEBUG, ( "DBF_GETFUNCTABLE(%p, %p)", ( void * ) puiCount, ( void * ) pTable ) );
 

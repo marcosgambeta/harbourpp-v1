@@ -157,7 +157,7 @@ HB_FUNC( DBF2TEXT )
    int          nCount = hb_parni( 7 );
    PHB_CODEPAGE cdp    = hb_cdpFind( hb_parcx( 8 ) );
 
-   AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
 
    /* Export DBF content to text file */
 
@@ -232,7 +232,7 @@ HB_FUNC( DBF2TEXT )
          /* Only requested fields are exported here */
          else
          {
-            HB_USHORT uiFieldCopy = ( HB_USHORT ) hb_arrayLen( pFields );
+            HB_USHORT uiFieldCopy = static_cast< HB_USHORT >( hb_arrayLen( pFields ) );
             HB_USHORT uiItter;
 
             for( uiItter = 1; uiItter <= uiFieldCopy; uiItter++ )
@@ -247,7 +247,7 @@ HB_FUNC( DBF2TEXT )
                      if( bWriteSep )
                         hb_fsWriteLarge( handle, cSep, nSepLen );
 
-                     SELF_GETVALUE( pArea, ( HB_USHORT ) iPos, pTmp );
+                     SELF_GETVALUE( pArea, static_cast< HB_USHORT >( iPos ), pTmp );
                      bWriteSep = hb_ExportVar( handle, pTmp, cDelim, cdp );
                      hb_itemClear( pTmp );
                   }

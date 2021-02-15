@@ -567,7 +567,7 @@ static LPHSXINFO hb_hsxGetPointer( int iHandle )
 
 static int hb_hsxCompile( const char * szExpr, PHB_ITEM * pExpr )
 {
-   AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
 
    *pExpr = NULL;
    if( pArea )
@@ -628,7 +628,7 @@ static int hb_hsxEval( int iHandle, PHB_ITEM pExpr, HB_BYTE * pKey, HB_BOOL * fD
       nLen = hb_itemGetCLen( pItem );
       if( fDeleted )
       {
-         AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+         AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
          if( ! pArea )
             *fDeleted = HB_FALSE;
          else if( SELF_DELETED( pArea, fDeleted ) == HB_FAILURE )
@@ -738,7 +738,7 @@ static int hb_hsxHdrRead( int iHandle )
       return HSX_BADREAD;
 
    pHSX->ulRecCount = HB_GET_LE_UINT32( buffer.header.recCount );
-   pHSX->uiRecordSize = ( HB_USHORT ) HB_GET_LE_UINT32( buffer.header.recSize );
+   pHSX->uiRecordSize = static_cast< HB_USHORT >( HB_GET_LE_UINT32( buffer.header.recSize ) );
    pHSX->fIgnoreCase = HB_GET_LE_UINT16( buffer.header.ignoreCase ) != 0;
    pHSX->iFilterType = HB_GET_LE_UINT16( buffer.header.filterType );
    pHSX->fUseHash = HB_GET_LE_UINT32( buffer.header.hashLetters ) != 0;
@@ -1420,7 +1420,7 @@ static int hb_hsxCreate( const char * szFile, int iBufSize, int iKeySize,
       ulBufSize = HSXMINBUF_LEN;
    else if( ulBufSize > HSXMAXBUF_LEN )
       ulBufSize = HSXMAXBUF_LEN;
-   uiRecordSize = ( HB_USHORT ) 0x08 << iKeySize;
+   uiRecordSize = static_cast< HB_USHORT >( 0x08 ) << iKeySize;
    ulBufSize /= uiRecordSize;
    if( ulBufSize == 0 )
       ulBufSize = 1;
@@ -1563,7 +1563,7 @@ static int hb_hsxIndex( const char * szFile, PHB_ITEM pExpr, int iKeySize,
    int iRetVal = HSX_SUCCESS, iHandle;
    HB_ULONG ulRecNo = 0, ulRecCount = 0, ulNewRec, ulRec;
    HB_ERRCODE errCode;
-   AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
 
    if( ! pArea )
    {
@@ -1616,7 +1616,7 @@ static int hb_hsxIndex( const char * szFile, PHB_ITEM pExpr, int iKeySize,
 static int hb_hsxFilter( int iHandle, const char * pSeek, HB_SIZE nSeek,
                          PHB_ITEM pVerify, int iVerifyType )
 {
-   AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
    LPHSXINFO pHSX = hb_hsxGetPointer( iHandle );
    HB_BOOL fDestroyExpr = HB_FALSE, fValid;
    int iResult = HSX_SUCCESS;
@@ -1890,7 +1890,7 @@ HB_FUNC( HS_FILTER )
    if( iHandle >= 0 && nLen > 0 && szText )
    {
       PHB_ITEM pItem = hb_itemNew( nullptr );
-      AREAP pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+      AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
 
       if( ! pArea )
       {

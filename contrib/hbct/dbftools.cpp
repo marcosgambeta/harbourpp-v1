@@ -58,7 +58,7 @@ HB_FUNC( DBFSIZE )
    HB_MAXINT llSize = 0;
    AREAP pArea;
 
-   if( ( pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer() ) != NULL )
+   if( ( pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() ) ) != NULL )
    {
       PHB_ITEM pSize = hb_itemNew( nullptr );
 

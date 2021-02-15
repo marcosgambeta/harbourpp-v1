@@ -137,12 +137,12 @@ static void do_charswap( int iSwitch )
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
          if( iSwitch == DO_CHARSWAP_CHARSWAP )
-            pSubst = ct_error_subst( ( HB_USHORT ) iArgErrorMode, EG_ARG,
+            pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                      CT_ERROR_CHARSWAP,
                                      NULL, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
                                      HB_ERR_ARGS_BASEPARAMS );
          else
-            pSubst = ct_error_subst( ( HB_USHORT ) iArgErrorMode, EG_ARG,
+            pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                      CT_ERROR_WORDSWAP,
                                      NULL, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
                                      HB_ERR_ARGS_BASEPARAMS );

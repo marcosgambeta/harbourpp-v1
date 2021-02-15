@@ -234,9 +234,9 @@ PHB_ITEM hb_itemDo( PHB_ITEM pItem, HB_ULONG ulPCount, ... )
                va_end( va );
             }
             if( pItem )
-               hb_vmSend( ( HB_USHORT ) ulPCount );
+               hb_vmSend( static_cast< HB_USHORT >( ulPCount ) );
             else
-               hb_vmProc( ( HB_USHORT ) ulPCount );
+               hb_vmProc( static_cast< HB_USHORT >( ulPCount ) );
 
             pResult = hb_itemNew( hb_stackReturnItem() );
             hb_vmRequestRestore();
@@ -279,7 +279,7 @@ PHB_ITEM hb_itemDoC( const char * szFunc, HB_ULONG ulPCount, ... )
                   hb_vmPush( va_arg( va, PHB_ITEM ) );
                va_end( va );
             }
-            hb_vmProc( ( HB_USHORT ) ulPCount );
+            hb_vmProc( static_cast< HB_USHORT >( ulPCount ) );
             pResult = hb_itemNew( hb_stackReturnItem() );
             hb_vmRequestRestore();
          }
@@ -487,9 +487,9 @@ HB_FUNC( HB_EXECFROMARRAY )
       }
 
       if( pSelf )
-         hb_vmSend( ( HB_USHORT ) iPCount );
+         hb_vmSend( static_cast< HB_USHORT >( iPCount ) );
       else
-         hb_vmProc( ( HB_USHORT ) iPCount );
+         hb_vmProc( static_cast< HB_USHORT >( iPCount ) );
    }
    else
       hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -551,9 +551,9 @@ HB_BOOL hb_execFromArray( PHB_ITEM pParam )
          }
 
          if( pSelf )
-            hb_vmSend( ( HB_USHORT ) iPCount );
+            hb_vmSend( static_cast< HB_USHORT >( iPCount ) );
          else
-            hb_vmProc( ( HB_USHORT ) iPCount );
+            hb_vmProc( static_cast< HB_USHORT >( iPCount ) );
 
          return HB_TRUE;
       }
@@ -575,7 +575,7 @@ HB_FUNC( HB_EXECMSG )
    {
       PHB_ITEM pBase = hb_stackBaseItem();
       pBase->item.asSymbol.paramcnt = pBase->item.asSymbol.paramdeclcnt = 0;
-      hb_vmProc( ( HB_USHORT ) ( iParams - 2 ) );
+      hb_vmProc( static_cast< HB_USHORT >( iParams - 2 ) );
    }
    else
       hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );

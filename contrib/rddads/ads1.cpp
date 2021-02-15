@@ -64,12 +64,12 @@
 static int s_iSetListenerHandle = 0;
 
 static HB_USHORT s_uiRddCount    = 0;
-static HB_USHORT s_uiRddIdADS    = ( HB_USHORT ) -1;
-static HB_USHORT s_uiRddIdADSADT = ( HB_USHORT ) -1;
-static HB_USHORT s_uiRddIdADSNTX = ( HB_USHORT ) -1;
-static HB_USHORT s_uiRddIdADSCDX = ( HB_USHORT ) -1;
+static HB_USHORT s_uiRddIdADS    = static_cast< HB_USHORT >( -1 );
+static HB_USHORT s_uiRddIdADSADT = static_cast< HB_USHORT >( -1 );
+static HB_USHORT s_uiRddIdADSNTX = static_cast< HB_USHORT >( -1 );
+static HB_USHORT s_uiRddIdADSCDX = static_cast< HB_USHORT >( -1 );
 #if ADS_LIB_VERSION >= 900
-static HB_USHORT s_uiRddIdADSVFP = ( HB_USHORT ) -1;
+static HB_USHORT s_uiRddIdADSVFP = static_cast< HB_USHORT >( -1 );
 #endif
 
 static RDDFUNCS adsSuper;
@@ -1536,7 +1536,7 @@ static HB_ERRCODE adsCreateFields( ADSAREAP pArea, PHB_ITEM pStruct )
 
    HB_TRACE( HB_TR_DEBUG, ( "adsCreateFields(%p, %p)", ( void * ) pArea, ( void * ) pStruct ) );
 
-   uiItems = ( HB_USHORT ) hb_arrayLen( pStruct );
+   uiItems = static_cast< HB_USHORT >( hb_arrayLen( pStruct ) );
    SELF_SETFIELDEXTENT( &pArea->area, uiItems );
 
    memset( &dbFieldInfo, 0, sizeof( dbFieldInfo ) );
@@ -1554,11 +1554,11 @@ static HB_ERRCODE adsCreateFields( ADSAREAP pArea, PHB_ITEM pStruct )
       iData = hb_arrayGetNI( pFieldDesc, DBS_LEN );
       if( iData < 0 )
          iData = 0;
-      uiLen = dbFieldInfo.uiLen = ( HB_USHORT ) iData;
+      uiLen = dbFieldInfo.uiLen = static_cast< HB_USHORT >( iData );
       iData = hb_arrayGetNI( pFieldDesc, DBS_DEC );
       if( iData < 0 )
          iData = 0;
-      uiDec = ( HB_USHORT ) iData;
+      uiDec = static_cast< HB_USHORT >( iData );
       dbFieldInfo.uiDec = 0;
       szFieldType = szType = hb_arrayGetCPtr( pFieldDesc, DBS_TYPE );
       iNameLen = static_cast< int >( strlen( szFieldType ) );
@@ -3651,7 +3651,7 @@ static HB_ERRCODE adsOpen( ADSAREAP pArea, LPDBOPENINFO pOpenInfo )
       if( ( u32RetVal = AdsGetFieldLength( pArea->hTable, szName, &u32Length ) ) != AE_SUCCESS )
          break;
 
-      dbFieldInfo.uiLen = ( HB_USHORT ) u32Length;
+      dbFieldInfo.uiLen = static_cast< HB_USHORT >( u32Length );
       dbFieldInfo.uiDec = 0;
       dbFieldInfo.uiFlags = 0;
       if( u32Length > pArea->maxFieldLen )
@@ -3678,26 +3678,26 @@ static HB_ERRCODE adsOpen( ADSAREAP pArea, LPDBOPENINFO pOpenInfo )
          case ADS_NUMERIC:
             dbFieldInfo.uiType = HB_FT_LONG;
             AdsGetFieldDecimals( pArea->hTable, szName, &usDecimals );
-            dbFieldInfo.uiDec = ( HB_USHORT ) usDecimals;
+            dbFieldInfo.uiDec = static_cast< HB_USHORT >( usDecimals );
             break;
 
          case ADS_DOUBLE:
             dbFieldInfo.uiType = HB_FT_DOUBLE;
             AdsGetFieldDecimals( pArea->hTable, szName, &usDecimals );
-            dbFieldInfo.uiDec = ( HB_USHORT ) usDecimals;
+            dbFieldInfo.uiDec = static_cast< HB_USHORT >( usDecimals );
             break;
 
          case ADS_CURDOUBLE:
             dbFieldInfo.uiType = HB_FT_CURDOUBLE;
             AdsGetFieldDecimals( pArea->hTable, szName, &usDecimals );
-            dbFieldInfo.uiDec = ( HB_USHORT ) usDecimals;
+            dbFieldInfo.uiDec = static_cast< HB_USHORT >( usDecimals );
             break;
 
 #if ADS_LIB_VERSION >= 700
          case ADS_MONEY:
             dbFieldInfo.uiType = HB_FT_CURRENCY;
             AdsGetFieldDecimals( pArea->hTable, szName, &usDecimals );
-            dbFieldInfo.uiDec = ( HB_USHORT ) usDecimals;
+            dbFieldInfo.uiDec = static_cast< HB_USHORT >( usDecimals );
             break;
 #endif
 
@@ -5660,7 +5660,7 @@ static void adsRegisterRDD( HB_USHORT * pusRddId )
 
    puiCount = ( HB_USHORT * ) hb_parptr( 1 );
    pTable = ( RDDFUNCS * ) hb_parptr( 2 );
-   uiRddId = ( HB_USHORT ) hb_parni( 4 );
+   uiRddId = static_cast< HB_USHORT >( hb_parni( 4 ) );
    puiSuperRddId = ( HB_USHORT * ) hb_parptr( 5 );
 
    if( pTable )

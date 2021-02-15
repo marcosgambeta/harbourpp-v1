@@ -303,7 +303,7 @@ HB_FUNC( CSETREF )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
-         ct_error( ( HB_USHORT ) iArgErrorMode, EG_ARG, CT_ERROR_CSETREF,
+         ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CSETREF,
                    NULL, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
    }
 }
@@ -339,7 +339,7 @@ HB_FUNC( CSETATMUPA )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
-         ct_error( ( HB_USHORT ) iArgErrorMode, EG_ARG, CT_ERROR_CSETATMUPA, NULL,
+         ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CSETATMUPA, NULL,
                    HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
    }
 }
@@ -399,7 +399,7 @@ HB_FUNC( SETATLIKE )
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
-            ct_error( ( HB_USHORT ) iArgErrorMode, EG_ARG, CT_ERROR_SETATLIKE,
+            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_SETATLIKE,
                       NULL, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT,
                       HB_ERR_ARGS_BASEPARAMS );
       }
@@ -429,7 +429,7 @@ HB_FUNC( SETATLIKE )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
-         ct_error( ( HB_USHORT ) iArgErrorMode, EG_ARG, CT_ERROR_SETATLIKE, NULL,
+         ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_SETATLIKE, NULL,
                    HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
    }
 }

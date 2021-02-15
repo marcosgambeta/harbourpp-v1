@@ -525,7 +525,7 @@ static void hb_compGenCLocalName( PHB_HFUNC pFunc, int iLocal, HB_SIZE nPCodePos
    }
    else
    {
-      const char * szName = hb_compLocalVariableName( pFunc, ( HB_USHORT ) iLocal );
+      const char * szName = hb_compLocalVariableName( pFunc, static_cast< HB_USHORT >( iLocal ) );
 
       if( szName )
          fprintf( cargo->yyc, "\t/* %s */", szName );

@@ -84,7 +84,7 @@ static void hb_waNodeInsert( PHB_STACKRDD pRddInfo, AREAP pArea )
          pRddInfo->waNums = ( HB_USHORT * ) hb_xrealloc( pRddInfo->waNums, iSize * sizeof( HB_USHORT ) );
 
       memset( &pRddInfo->waNums[ pRddInfo->uiWaNumMax ], 0, ( iSize - pRddInfo->uiWaNumMax ) * sizeof( HB_USHORT ) );
-      pRddInfo->uiWaNumMax = ( HB_USHORT ) iSize;
+      pRddInfo->uiWaNumMax = static_cast< HB_USHORT >( iSize );
    }
 
    if( pRddInfo->uiWaSpace == 0 )
@@ -104,16 +104,16 @@ static void hb_waNodeInsert( PHB_STACKRDD pRddInfo, AREAP pArea )
          if( iSize > HB_RDD_MAX_AREA_NUM )
             iSize = HB_RDD_MAX_AREA_NUM;
 
-         pRddInfo->uiWaSpace = ( HB_USHORT ) iSize;
+         pRddInfo->uiWaSpace = static_cast< HB_USHORT >( iSize );
          pRddInfo->waList = ( void ** ) hb_xrealloc( pRddInfo->waList, pRddInfo->uiWaSpace * sizeof( void * ) );
          memset( &pRddInfo->waList[ pRddInfo->uiWaMax ], 0, ( pRddInfo->uiWaSpace - pRddInfo->uiWaMax ) * sizeof( void * ) );
       }
       while( uiWaPos > 1 )
       {
-         if( ( ( AREAP ) pRddInfo->waList[ uiWaPos - 1 ] )->uiArea < pRddInfo->uiCurrArea )
+         if( ( static_cast< AREAP >( pRddInfo->waList[ uiWaPos - 1 ] ) )->uiArea < pRddInfo->uiCurrArea )
             break;
          pRddInfo->waList[ uiWaPos ] = pRddInfo->waList[ uiWaPos - 1 ];
-         pRddInfo->waNums[ ( ( AREAP ) pRddInfo->waList[ uiWaPos ] )->uiArea ] = uiWaPos;
+         pRddInfo->waNums[ ( static_cast< AREAP >( pRddInfo->waList[ uiWaPos ] ) )->uiArea ] = uiWaPos;
          uiWaPos--;
       }
    }
@@ -145,7 +145,7 @@ static void hb_waNodeDelete( PHB_STACKRDD pRddInfo )
       while( uiWaPos < pRddInfo->uiWaMax )
       {
          pRddInfo->waList[ uiWaPos ] = pRddInfo->waList[ uiWaPos + 1 ];
-         pRddInfo->waNums[ ( ( AREAP ) pRddInfo->waList[ uiWaPos ] )->uiArea ] = uiWaPos;
+         pRddInfo->waNums[ ( static_cast< AREAP >( pRddInfo->waList[ uiWaPos ] ) )->uiArea ] = uiWaPos;
          uiWaPos++;
       }
       pRddInfo->waList[ pRddInfo->uiWaMax ] = NULL;
@@ -156,7 +156,7 @@ static void hb_waNodeDelete( PHB_STACKRDD pRddInfo )
          if( iSize > HB_RDD_MAX_AREA_NUM )
             iSize = HB_RDD_MAX_AREA_NUM;
 
-         pRddInfo->uiWaSpace = ( HB_USHORT ) iSize;
+         pRddInfo->uiWaSpace = static_cast< HB_USHORT >( iSize );
          pRddInfo->waList = ( void ** ) hb_xrealloc( pRddInfo->waList, pRddInfo->uiWaSpace * sizeof( void * ) );
       }
    }
@@ -214,7 +214,7 @@ HB_USHORT hb_rddInsertAreaNode( const char * szDriver )
          return 0;
    }
 
-   pArea = ( AREAP ) hb_rddNewAreaNode( pRddNode, uiRddID );
+   pArea = static_cast< AREAP >( hb_rddNewAreaNode( pRddNode, uiRddID ) );
    if( ! pArea )
       return 0;
 
@@ -235,7 +235,7 @@ void hb_rddReleaseCurrentArea( void )
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddReleaseCurrentArea()" ) );
 
    pRddInfo = hb_stackRDD();
-   pArea = ( AREAP ) pRddInfo->pCurrArea;
+   pArea = static_cast< AREAP >( pRddInfo->pCurrArea );
    if( ! pArea )
       return;
 
@@ -268,7 +268,7 @@ void hb_rddCloseAll( void )
          isParents = HB_FALSE;
          for( uiIndex = 1; uiIndex < pRddInfo->uiWaMax; uiIndex++ )
          {
-            pArea = ( AREAP ) pRddInfo->waList[ uiIndex ];
+            pArea = static_cast< AREAP >( pRddInfo->waList[ uiIndex ] );
             HB_SET_WA( pArea->uiArea );
             if( isFinish )
             {
@@ -304,12 +304,12 @@ void hb_rddCloseAll( void )
 void hb_rddFlushAll( void )
 {
    PHB_STACKRDD pRddInfo = hb_stackRDD();
-   HB_USHORT uiArea = ( HB_AREANO ) hb_rddGetCurrentWorkAreaNumber(), uiIndex;
+   HB_USHORT uiArea = static_cast< HB_AREANO >( hb_rddGetCurrentWorkAreaNumber() ), uiIndex;
 
    for( uiIndex = 1; uiIndex < pRddInfo->uiWaMax; ++uiIndex )
    {
-      hb_rddSelectWorkAreaNumber( ( ( AREAP ) pRddInfo->waList[ uiIndex ] )->uiArea );
-      SELF_FLUSH( ( AREAP ) pRddInfo->pCurrArea );
+      hb_rddSelectWorkAreaNumber( ( static_cast< AREAP >( pRddInfo->waList[ uiIndex ] ) )->uiArea );
+      SELF_FLUSH( static_cast< AREAP >( pRddInfo->pCurrArea ) );
    }
    hb_rddSelectWorkAreaNumber( uiArea );
 }
@@ -317,12 +317,12 @@ void hb_rddFlushAll( void )
 void hb_rddUnLockAll( void )
 {
    PHB_STACKRDD pRddInfo = hb_stackRDD();
-   HB_USHORT uiArea = ( HB_AREANO ) hb_rddGetCurrentWorkAreaNumber(), uiIndex;
+   HB_USHORT uiArea = static_cast< HB_AREANO >( hb_rddGetCurrentWorkAreaNumber() ), uiIndex;
 
    for( uiIndex = 1; uiIndex < pRddInfo->uiWaMax; ++uiIndex )
    {
-      hb_rddSelectWorkAreaNumber( ( ( AREAP ) pRddInfo->waList[ uiIndex ] )->uiArea );
-      SELF_UNLOCK( ( AREAP ) pRddInfo->pCurrArea, NULL );
+      hb_rddSelectWorkAreaNumber( ( static_cast< AREAP >( pRddInfo->waList[ uiIndex ] ) )->uiArea );
+      SELF_UNLOCK( static_cast< AREAP >( pRddInfo->pCurrArea ), NULL );
    }
    hb_rddSelectWorkAreaNumber( uiArea );
 }
@@ -341,12 +341,12 @@ HB_ERRCODE hb_rddIterateWorkAreas( WACALLBACK pCallBack, void * cargo )
    pRddInfo = hb_stackRDD();
    for( uiIndex = 1; uiIndex < pRddInfo->uiWaMax; uiIndex++ )
    {
-      AREAP pArea = ( AREAP ) pRddInfo->waList[ uiIndex ];
+      AREAP pArea = static_cast< AREAP >( pRddInfo->waList[ uiIndex ] );
       errCode = pCallBack( pArea, cargo );
       if( errCode != HB_SUCCESS )
          break;
       if( uiIndex >= pRddInfo->uiWaMax ||
-          pArea != ( AREAP ) pRddInfo->waList[ uiIndex ] )
+          pArea != static_cast< AREAP >( pRddInfo->waList[ uiIndex ] ) )
          uiIndex--;
    }
    return errCode;
@@ -502,7 +502,7 @@ HB_ERRCODE hb_rddSelectWorkAreaNumber( int iArea )
    if( iArea < 1 || iArea > HB_RDD_MAX_AREA_NUM )
       HB_SET_WA( 0 );
    else
-      HB_SET_WA( ( HB_AREANO ) iArea );
+      HB_SET_WA( static_cast< HB_AREANO >( iArea ) );
 
    return ( pRddInfo->pCurrArea == NULL ) ? HB_FAILURE : HB_SUCCESS;
 }

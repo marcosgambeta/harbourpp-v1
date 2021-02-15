@@ -140,7 +140,7 @@ static VOID WINAPI hbwin_SvcMainFunction( DWORD dwArgc, LPTSTR * lpszArgv )
                   ++iArgCount;
             }
 
-            hb_vmSend( ( HB_USHORT ) iArgCount );
+            hb_vmSend( static_cast< HB_USHORT >( iArgCount ) );
 
             hb_vmRequestRestore();
          }

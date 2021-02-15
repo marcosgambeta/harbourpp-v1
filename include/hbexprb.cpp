@@ -593,7 +593,7 @@ static HB_EXPR_FUNC( hb_compExprUseArray )
 
       case HB_EA_PUSH_PCODE:
       {
-         HB_USHORT usItems = ( HB_USHORT ) hb_compExprParamListCheck( HB_COMP_PARAM, pSelf );
+         HB_USHORT usItems = static_cast< HB_USHORT >( hb_compExprParamListCheck( HB_COMP_PARAM, pSelf ) );
 
          if( usItems == 0 )
          {
@@ -689,7 +689,7 @@ static HB_EXPR_FUNC( hb_compExprUseHash )
 
       case HB_EA_PUSH_PCODE:
       {
-         HB_USHORT usItems = ( HB_USHORT ) ( pSelf->nLength >> 1 );
+         HB_USHORT usItems = static_cast< HB_USHORT >( pSelf->nLength >> 1 );
          /* NOTE: direct type change */
          pSelf->ExprType = HB_ET_ARGLIST;
          HB_EXPR_USE( pSelf, HB_EA_PUSH_PCODE );
@@ -1751,7 +1751,7 @@ static HB_EXPR_FUNC( hb_compExprUseFunCall )
          {
             HB_FUNC_ID funcID = pSelf->value.asFunCall.pFunName->value.asSymbol.funcid;
             PHB_EXPR pParms = pSelf->value.asFunCall.pParms;
-            HB_USHORT usCount = ( HB_USHORT ) hb_compExprParamListLen( pParms );
+            HB_USHORT usCount = static_cast< HB_USHORT >( hb_compExprParamListLen( pParms ) );
 
 #ifndef HB_MACRO_SUPPORT
             if( hb_compFunCallCheck( HB_COMP_PARAM, pSelf->value.asFunCall.pFunName->value.asSymbol.name, usCount ) )
@@ -2116,7 +2116,7 @@ static HB_EXPR_FUNC( hb_compExprUseFunCall )
           */
          if( pSelf->value.asFunCall.pParms )
          {
-            usCount = ( HB_USHORT ) hb_compExprParamListCheck( HB_COMP_PARAM, pSelf->value.asFunCall.pParms );
+            usCount = static_cast< HB_USHORT >( hb_compExprParamListCheck( HB_COMP_PARAM, pSelf->value.asFunCall.pParms ) );
             fArgsList = pSelf->value.asFunCall.pParms->ExprType == HB_ET_MACROARGLIST;
          }
 
@@ -2187,7 +2187,7 @@ static HB_EXPR_FUNC( hb_compExprUseFunCall )
 
          if( pSelf->value.asFunCall.pParms )
          {
-            usCount = ( HB_USHORT ) hb_compExprParamListCheck( HB_COMP_PARAM, pSelf->value.asFunCall.pParms );
+            usCount = static_cast< HB_USHORT >( hb_compExprParamListCheck( HB_COMP_PARAM, pSelf->value.asFunCall.pParms ) );
             fArgsList = pSelf->value.asFunCall.pParms->ExprType == HB_ET_MACROARGLIST;
             if( usCount )
                HB_EXPR_USE( pSelf->value.asFunCall.pParms, HB_EA_PUSH_PCODE );

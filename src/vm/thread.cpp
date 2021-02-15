@@ -1020,9 +1020,9 @@ HB_CARGO_FUNC( hb_threadStartVM )
       pThread->pParams = NULL;
 
       if( fSend )
-         hb_vmSend( ( HB_USHORT ) ( ulPCount - 1 ) );
+         hb_vmSend( static_cast< HB_USHORT >( ulPCount - 1 ) );
       else
-         hb_vmProc( ( HB_USHORT ) ( ulPCount - 1 ) );
+         hb_vmProc( static_cast< HB_USHORT >( ulPCount - 1 ) );
    }
    else
    {
@@ -2716,7 +2716,7 @@ HB_FUNC( HB_MUTEXEVAL )
             hb_vmPush( pEval );
             for( iParam = 3; iParam <= iPCount; iParam++ )
                hb_vmPush( hb_stackItemFromBase( iParam ) );
-            hb_vmSend( ( HB_USHORT ) ( iPCount - 2 ) );
+            hb_vmSend( static_cast< HB_USHORT >( iPCount - 2 ) );
             hb_threadMutexUnlock( pItem );
          }
       }

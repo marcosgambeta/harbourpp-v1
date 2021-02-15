@@ -460,7 +460,7 @@ static void func( sqlite3_context * ctx, int argc, sqlite3_value ** argv )
             }
          }
       }
-      hb_vmSend( ( HB_USHORT ) argc + 1 );
+      hb_vmSend( static_cast< HB_USHORT >( argc ) + 1 );
 
       pResult = hb_param( -1, HB_IT_ANY );
 

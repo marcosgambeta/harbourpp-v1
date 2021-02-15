@@ -1143,7 +1143,7 @@ HB_FUNC( AMF3_FROMWA )
    PHB_ITEM     pFields       = hb_param( 3, HB_IT_ARRAY );
    HB_ULONG     nCount        = hb_parnldef( 4, 0 );
    HB_BOOL      str_rtrim     = hb_parldef( 5, HB_TRUE );
-   HB_USHORT    nPkg          = ( HB_USHORT ) hb_parnidef( 6, 0 );
+   HB_USHORT    nPkg          = static_cast< HB_USHORT >( hb_parnidef( 6, 0 ) );
    amfContext * outer_context = ( amfContext * ) hb_parptr( 7 );
 
    DBORDERINFO  pInfo;
@@ -1153,7 +1153,7 @@ HB_FUNC( AMF3_FROMWA )
    HB_ULONG     uiRecNo        = 0;
    HB_BOOL      bNoFieldPassed = ( pFields == NULL || hb_arrayLen( pFields ) == 0 );
    HB_BOOL      bEof  = HB_FALSE;
-   AREAP        pArea = ( AREAP ) hb_rddGetCurrentWorkAreaPointer();
+   AREAP        pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
    PHB_ITEM     pItem;
    HB_USHORT    uiFieldCopy = 0;      /* GCC knows better (warns) */
    HB_USHORT    uiIter;
@@ -1242,7 +1242,7 @@ HB_FUNC( AMF3_FROMWA )
 
       if( ! bNoFieldPassed )
       {
-         uiFieldCopy = ( HB_USHORT ) hb_arrayLen( pFields );
+         uiFieldCopy = static_cast< HB_USHORT >( hb_arrayLen( pFields ) );
 
          for( uiIter = 1; uiIter <= uiFieldCopy; uiIter++ )
          {
@@ -1295,7 +1295,7 @@ HB_FUNC( AMF3_FROMWA )
                char * szName = ( char * ) hb_xgrab( pArea->uiMaxFieldNameLength + 1 );
                pField      = hb_itemNew( nullptr );
                szName[ 0 ] = '\0';
-               SELF_FIELDNAME( pArea, ( HB_USHORT ) hb_itemGetNI( hb_arrayGetItemPtr( pFields, uiIter ) ), szName );
+               SELF_FIELDNAME( pArea, static_cast< HB_USHORT >( hb_itemGetNI( hb_arrayGetItemPtr( pFields, uiIter ) ) ), szName );
                hb_itemPutCPtr( pField, szName );
                hb_arraySet( pFieldNames, uiIter, pField );
                hb_itemRelease( pField );
@@ -1334,7 +1334,7 @@ HB_FUNC( AMF3_FROMWA )
                   writeByte( context, NULL_TYPE );
                   for( uiIter = 1; uiIter <= uiFieldCopy; uiIter++ )
                   {
-                     SELF_GETVALUE( pArea, ( HB_USHORT ) hb_itemGetNI( hb_arrayGetItemPtr( pFields, uiIter ) ) /* hb_arrayGetNI( pFields, uiIter ) */, pItem );
+                     SELF_GETVALUE( pArea, static_cast< HB_USHORT >( hb_itemGetNI( hb_arrayGetItemPtr( pFields, uiIter ) ) ) /* hb_arrayGetNI( pFields, uiIter ) */, pItem );
                      amf3_encode( context, pItem );
                   }
                }
@@ -1362,7 +1362,7 @@ HB_FUNC( AMF3_FROMWA )
                {
                   for( uiIter = 1; uiIter <= uiFieldCopy; uiIter++ )
                   {
-                     SELF_GETVALUE( pArea, ( HB_USHORT ) hb_itemGetNI( hb_arrayGetItemPtr( pFields, uiIter ) ), pValue );
+                     SELF_GETVALUE( pArea, static_cast< HB_USHORT >( hb_itemGetNI( hb_arrayGetItemPtr( pFields, uiIter ) ) ), pValue );
                      amf3_serialize_string( context, hb_arrayGetItemPtr( pFieldNames, uiIter ) );
                      amf3_encode( context, pValue );
                   }
