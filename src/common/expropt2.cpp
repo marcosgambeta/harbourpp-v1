@@ -1161,7 +1161,7 @@ PHB_EXPR hb_compExprReduceNE( PHB_EXPR pSelf, HB_COMP_DECL )
       else
       {
          pSelf->ExprType = HB_EO_NOT;
-         pSelf->value.asOperator.pRight = NULL;
+         pSelf->value.asOperator.pRight = nullptr;
       }
       HB_COMP_EXPR_FREE( pRight );
    }
@@ -1694,7 +1694,7 @@ PHB_EXPR hb_compExprReduceEQ( PHB_EXPR pSelf, HB_COMP_DECL )
       else
       {
          pSelf->ExprType = HB_EO_NOT;
-         pSelf->value.asOperator.pRight = NULL;
+         pSelf->value.asOperator.pRight = nullptr;
       }
       HB_COMP_EXPR_FREE( pRight );
    }
@@ -1888,18 +1888,18 @@ PHB_EXPR hb_compExprReduceIIF( PHB_EXPR pSelf, HB_COMP_DECL )
          /* delete condition  - it is no longer needed
           */
          HB_COMP_EXPR_FREE( pSelf->value.asList.pExprList );
-         /* assign NULL to a start of expressions list to suppress
+         /* assign nullptr to a start of expressions list to suppress
           * deletion of expression's components - we are deleting them
           * here
           */
-         pSelf->value.asList.pExprList = NULL;
+         pSelf->value.asList.pExprList = nullptr;
          HB_COMP_EXPR_FREE( pSelf );
          /* store the TRUE expression as a result of reduction
           */
          pSelf = pExpr;
          pExpr = pExpr->pNext;       /* skip to FALSE expression */
          HB_COMP_EXPR_FREE( pExpr ); /* delete FALSE expression */
-         pSelf->pNext = NULL;
+         pSelf->pNext = nullptr;
       }
       else
       {
@@ -1909,17 +1909,17 @@ PHB_EXPR hb_compExprReduceIIF( PHB_EXPR pSelf, HB_COMP_DECL )
          /* delete condition  - it is no longer needed
           */
          HB_COMP_EXPR_FREE( pSelf->value.asList.pExprList );
-         /* assign NULL to a start of expressions list to suppress
+         /* assign nullptr to a start of expressions list to suppress
           * deletion of expression's components - we are deleting them
           * here
           */
-         pSelf->value.asList.pExprList = NULL;
+         pSelf->value.asList.pExprList = nullptr;
          HB_COMP_EXPR_FREE( pSelf );
          /* store the FALSE expression as a result of reduction
           */
          pSelf = pExpr->pNext;
          HB_COMP_EXPR_FREE( pExpr );      /* delete TRUE expression */
-         pSelf->pNext = NULL;
+         pSelf->pNext = nullptr;
       }
 
       /* this will cause warning when IIF is used as statement */
@@ -1967,7 +1967,7 @@ PHB_EXPR hb_compExprListStrip( PHB_EXPR pSelf, HB_COMP_DECL )
       PHB_EXPR pExpr = pSelf;
 
       pSelf = pSelf->value.asList.pExprList;
-      pExpr->value.asList.pExprList = NULL;
+      pExpr->value.asList.pExprList = nullptr;
       HB_COMP_EXPR_FREE( pExpr );
    }
 
@@ -2273,8 +2273,8 @@ HB_BOOL hb_compExprReduceINT( PHB_EXPR pSelf, HB_COMP_DECL )
 HB_BOOL hb_compExprReduceSTOT( PHB_EXPR pSelf, HB_USHORT usCount, HB_COMP_DECL )
 {
    PHB_EXPR pParms = pSelf->value.asFunCall.pParms;
-   PHB_EXPR pArg = pParms ? pParms->value.asList.pExprList : NULL;
-   PHB_EXPR pExpr = NULL;
+   PHB_EXPR pArg = pParms ? pParms->value.asList.pExprList : nullptr;
+   PHB_EXPR pExpr = nullptr;
 
    if( usCount == 0 )
    {
@@ -2304,8 +2304,8 @@ HB_BOOL hb_compExprReduceSTOT( PHB_EXPR pSelf, HB_USHORT usCount, HB_COMP_DECL )
 HB_BOOL hb_compExprReduceSTOD( PHB_EXPR pSelf, HB_USHORT usCount, HB_COMP_DECL )
 {
    PHB_EXPR pParms = pSelf->value.asFunCall.pParms;
-   PHB_EXPR pArg = pParms ? pParms->value.asList.pExprList : NULL;
-   PHB_EXPR pExpr = NULL;
+   PHB_EXPR pArg = pParms ? pParms->value.asList.pExprList : nullptr;
+   PHB_EXPR pExpr = nullptr;
 
    if( usCount == 0 )
    {
@@ -2465,7 +2465,7 @@ HB_BOOL hb_compExprReduceMIN( PHB_EXPR pSelf, HB_COMP_DECL )
    PHB_EXPR pParms = pSelf->value.asFunCall.pParms;
    PHB_EXPR pFirst = pParms->value.asList.pExprList;
    PHB_EXPR pNext = pFirst->pNext;
-   PHB_EXPR pExpr = NULL;
+   PHB_EXPR pExpr = nullptr;
 
    if( pFirst->ExprType == pNext->ExprType )
    {
@@ -2551,7 +2551,7 @@ HB_BOOL hb_compExprReduceMAX( PHB_EXPR pSelf, HB_COMP_DECL )
    PHB_EXPR pParms = pSelf->value.asFunCall.pParms;
    PHB_EXPR pFirst = pParms->value.asList.pExprList;
    PHB_EXPR pNext = pFirst->pNext;
-   PHB_EXPR pExpr = NULL;
+   PHB_EXPR pExpr = nullptr;
 
    if( pFirst->ExprType == pNext->ExprType )
    {

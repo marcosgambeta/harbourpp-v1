@@ -75,7 +75,7 @@ DWORD WINAPI GetEnvironmentVariableW( LPCWSTR name, LPWSTR value, DWORD size )
    }
 
    result = size * sizeof( TCHAR );
-   lret = RegQueryValueExW( hk, name, NULL, &dwType, ( LPBYTE ) value, &result );
+   lret = RegQueryValueExW( hk, name, nullptr, &dwType, ( LPBYTE ) value, &result );
    RegCloseKey( hk );
 
    if( lret != ERROR_SUCCESS )

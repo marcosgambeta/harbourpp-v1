@@ -299,7 +299,7 @@ int hb_strnicmp( const char * s1, const char * s2, HB_SIZE count )
 /*
    AJ: 2004-02-23
    Concatenates multiple strings into a single result.
-   Eg. hb_xstrcat( buffer, "A", "B", NULL ) stores "AB" in buffer.
+   Eg. hb_xstrcat( buffer, "A", "B", nullptr ) stores "AB" in buffer.
  */
 char * hb_xstrcat( char * szDest, const char * szSrc, ... )
 {
@@ -327,9 +327,9 @@ char * hb_xstrcat( char * szDest, const char * szSrc, ... )
 /*
    AJ: 2004-02-23
    Concatenates multiple strings into a single result.
-   Eg. hb_xstrcpy( buffer, "A", "B", NULL ) stores "AB" in buffer.
+   Eg. hb_xstrcpy( buffer, "A", "B", nullptr ) stores "AB" in buffer.
    Returns szDest.
-   Any existing contents of szDest are cleared. If the szDest buffer is NULL,
+   Any existing contents of szDest are cleared. If the szDest buffer is nullptr,
    allocates a new buffer with the required length and returns that. The
    buffer is allocated using hb_xgrab(), and should eventually be freed
    using hb_xfree().
@@ -341,7 +341,7 @@ char * hb_xstrcpy( char * szDest, const char * szSrc, ... )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_xstrcpy(%p, %p, ...)", ( void * ) szDest, ( const void * ) szSrc ) );
 
-   if( szDest == NULL )
+   if( szDest == nullptr )
    {
       const char * szSrcPtr = szSrc;
       HB_SIZE nSize = 1;
@@ -739,13 +739,13 @@ HB_BOOL hb_valStrnToNum( const char * szNum, HB_SIZE nLen, HB_MAXINT * plVal, do
 HB_BOOL hb_strToNum( const char * szNum, HB_MAXINT * plVal, double * pdVal )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_strToNum(%s, %p, %p)", szNum, ( void * ) plVal, ( void * ) pdVal ) );
-   return hb_str2number( HB_FALSE, szNum, strlen( szNum ), plVal, pdVal, NULL, NULL );
+   return hb_str2number( HB_FALSE, szNum, strlen( szNum ), plVal, pdVal, nullptr, nullptr );
 }
 
 HB_BOOL hb_strnToNum( const char * szNum, HB_SIZE nLen, HB_MAXINT * plVal, double * pdVal )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_strnToNum(%.*s, %" HB_PFS "u, %p, %p)", static_cast< int >( nLen ), szNum, nLen, ( void * ) plVal, ( void * ) pdVal ) );
-   return hb_str2number( HB_FALSE, szNum, nLen, plVal, pdVal, NULL, NULL );
+   return hb_str2number( HB_FALSE, szNum, nLen, plVal, pdVal, nullptr, nullptr );
 }
 
 /* returns the numeric value of a character string representation of a number */
@@ -756,7 +756,7 @@ double hb_strVal( const char * szText, HB_SIZE nLen )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_strVal(%.*s, %" HB_PFS "u)", static_cast< int >( nLen ), szText, nLen ) );
 
-   if( ! hb_str2number( HB_FALSE, szText, nLen, &lVal, &dVal, NULL, NULL ) )
+   if( ! hb_str2number( HB_FALSE, szText, nLen, &lVal, &dVal, nullptr, nullptr ) )
       dVal = static_cast< double >( lVal );
    return dVal;
 }
@@ -768,7 +768,7 @@ HB_MAXINT hb_strValInt( const char * szText, int * iOverflow )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_strValInt(%s)", szText ) );
 
-   if( hb_str2number( HB_TRUE, szText, strlen( szText ), &lVal, &dVal, NULL, NULL ) )
+   if( hb_str2number( HB_TRUE, szText, strlen( szText ), &lVal, &dVal, nullptr, nullptr ) )
    {
       *iOverflow = 1;
       return 0;
@@ -815,7 +815,7 @@ char * hb_numToStr( char * szBuf, HB_SIZE nSize, HB_MAXINT lNumber )
 /* if you want to be sure that size of buffer is enough to hold each
    double number with '\0' terminating character then it should have
    at least HB_MAX_DOUBLE_LENGTH bytes. If buffer is not large enough
-   then NULL is returned */
+   then nullptr is returned */
 char * hb_dblToStr( char * szBuf, HB_SIZE nSize, double dNumber, int iMaxDec )
 {
    double dInt, dFract, dDig, doBase = 10.0;

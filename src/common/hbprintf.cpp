@@ -1367,7 +1367,7 @@ int hb_vsnprintf( char * buffer, size_t bufsize, const char * format, va_list ap
             }
          }
 
-         /* ISO C99 defines that when size is 0 and buffer is NULL we should
+         /* ISO C99 defines that when size is 0 and buffer is nullptr we should
           * return number of characters that would have been written in case
           * the output string has been large enough without trailing 0.
           * Many implementations always returns number of characters necessary

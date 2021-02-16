@@ -79,7 +79,7 @@ static int s_flush   = -1;
 static int s_sysout  = -1;
 static const char * s_mode = "w";
 
-static FILE * s_fp = NULL;
+static FILE * s_fp = nullptr;
 
 static const char * s_slevel[ HB_TR_LAST ] =
 {
@@ -141,7 +141,7 @@ HB_BOOL hb_tracefile( const char * szFile )
 
       if( fp )
       {
-         if( s_fp != NULL && s_fp != stderr )
+         if( s_fp != nullptr && s_fp != stderr )
             fclose( s_fp );
          s_fp = fp;
          return HB_TRUE;
@@ -185,14 +185,14 @@ int hb_tr_level( void )
 
       s_level = HB_TR_DEFAULT;
 
-      if( s_fp == NULL )
+      if( s_fp == nullptr )
       {
          if( hb_getenv_buffer( "HB_TR_OUTPUT", env, sizeof( env ) ) &&
              env[ 0 ] != '\0' )
          {
             s_fp = hb_fopen( env, s_mode );
 
-            if( s_fp == NULL )
+            if( s_fp == nullptr )
                s_fp = stderr;
          }
          else

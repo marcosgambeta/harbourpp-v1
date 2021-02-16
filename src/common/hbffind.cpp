@@ -532,7 +532,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
          }
          else
          {
-            info->entry = NULL;
+            info->entry = nullptr;
             bFound = HB_FALSE;
          }
       }
@@ -614,7 +614,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
       if( ( ffind->attrmask & HB_FA_LABEL ) != 0 && ! info->fLabelDone )
       {
          TCHAR lpVolName[ HB_PATH_MAX ];
-         LPTSTR lpFileMask = NULL;
+         LPTSTR lpFileMask = nullptr;
          char * mask = nullptr;
 
          info->fLabelDone = HB_TRUE;
@@ -632,7 +632,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
          }
          bFound = GetVolumeInformation( lpFileMask, lpVolName,
                                         HB_SIZEOFARRAY( lpVolName ),
-                                        NULL, NULL, NULL, NULL, 0 ) != 0;
+                                        nullptr, nullptr, nullptr, nullptr, 0 ) != 0;
          if( bFound )
          {
             HB_OSSTRDUP2( lpVolName, ffind->szName, sizeof( ffind->szName ) - 1 );
@@ -768,7 +768,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
 
       if( info->dir && info->pattern[ 0 ] != '\0' )
       {
-         while( ( info->entry = readdir( info->dir ) ) != NULL )
+         while( ( info->entry = readdir( info->dir ) ) != nullptr )
          {
             if( hb_strMatchFile( info->entry->d_name, info->pattern ) )
             {
@@ -935,7 +935,7 @@ PHB_FFIND hb_fsFindFirst( const char * pszFileMask, HB_FATTR attrmask )
    if( hb_fsFindNext( ffind ) )
       return ffind;
 
-   /* If no file found at all, free stuff allocated so far and return NULL. */
+   /* If no file found at all, free stuff allocated so far and return nullptr. */
 
    hb_fsFindClose( ffind );
 

@@ -176,7 +176,7 @@ static HB_BOOL s_win_iswow64( void )
       if( hModule )
          pIsWow64Process = ( P_ISWOW64PROCESS ) HB_WINAPI_GETPROCADDRESS( hModule, "IsWow64Process" );
       else
-         pIsWow64Process = NULL;
+         pIsWow64Process = nullptr;
 
       if( pIsWow64Process )
       {
@@ -314,8 +314,8 @@ typedef BOOL ( WINAPI * _HB_VERIFYVERSIONINFO )( LPOSVERSIONINFOEXW, DWORD, DWOR
 typedef ULONGLONG ( WINAPI * _HB_VERSETCONDITIONMASK )( ULONGLONG, DWORD, BYTE );
 
 static HB_BOOL s_fVerInfoInit = HB_TRUE;
-static _HB_VERIFYVERSIONINFO   s_pVerifyVersionInfo   = NULL;
-static _HB_VERSETCONDITIONMASK s_pVerSetConditionMask = NULL;
+static _HB_VERIFYVERSIONINFO   s_pVerifyVersionInfo   = nullptr;
+static _HB_VERSETCONDITIONMASK s_pVerSetConditionMask = nullptr;
 
 static HB_BOOL s_hb_winVerifyVersionInit( void )
 {
@@ -1280,7 +1280,7 @@ char * hb_verCompiler( void )
 
 #else
 
-   pszName = NULL;
+   pszName = nullptr;
    iVerMajor = iVerMinor = iVerPatch = 0;
 
 #endif

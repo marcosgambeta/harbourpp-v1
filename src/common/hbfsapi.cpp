@@ -104,7 +104,7 @@ void hb_fsAddSearchPath( const char * szPath, HB_PATHNAMES ** pSearchList )
       pSearchList = &( *pSearchList )->pNext;
 
    pPath = hb_strdup( szPath );
-   while( ( pDelim = strchr( pPath, HB_OS_PATH_LIST_SEP_CHR ) ) != NULL )
+   while( ( pDelim = strchr( pPath, HB_OS_PATH_LIST_SEP_CHR ) ) != nullptr )
    {
       *pDelim = '\0';
       *pSearchList = ( HB_PATHNAMES * ) hb_xgrab( sizeof( HB_PATHNAMES ) );
@@ -116,7 +116,7 @@ void hb_fsAddSearchPath( const char * szPath, HB_PATHNAMES ** pSearchList )
    }
    *pSearchList = ( HB_PATHNAMES * ) hb_xgrab( sizeof( HB_PATHNAMES ) );
    ( *pSearchList )->szPath = pPath;
-   ( *pSearchList )->pNext  = NULL;
+   ( *pSearchList )->pNext  = nullptr;
    ( *pSearchList )->fFree  = fFree;
 }
 
@@ -156,7 +156,7 @@ PHB_FNAME hb_fsFNameSplit( const char * pszFileName )
    pFileName->szPath =
    pFileName->szName =
    pFileName->szExtension =
-   pFileName->szDrive = NULL;
+   pFileName->szDrive = nullptr;
 
    if( pszFileName )
    {
@@ -259,7 +259,7 @@ char * hb_fsFNameMerge( char * pszFileName, PHB_FNAME pFileName )
       /* Strip preceding path separators from the filename */
       pszName = pFileName->szName;
       if( pszName && pszName[ 0 ] != '\0' && ( pszName[ 0 ] == cDirSep ||
-          strchr( HB_OS_PATH_DELIM_CHR_LIST, pszName[ 0 ] ) != NULL ) )
+          strchr( HB_OS_PATH_DELIM_CHR_LIST, pszName[ 0 ] ) != nullptr ) )
          pszName++;
 
       /* Add path if specified */
@@ -273,7 +273,7 @@ char * hb_fsFNameMerge( char * pszFileName, PHB_FNAME pFileName )
          int iLen = static_cast< int >( strlen( pszFileName ) ) - 1;
 
          if( iLen < HB_PATH_MAX - 1 - 2 && pszFileName[ iLen ] != cDirSep &&
-             strchr( HB_OS_PATH_DELIM_CHR_LIST, pszFileName[ iLen ] ) == NULL )
+             strchr( HB_OS_PATH_DELIM_CHR_LIST, pszFileName[ iLen ] ) == nullptr )
          {
             pszFileName[ iLen + 1 ] = HB_OS_PATH_DELIM_CHR;
             pszFileName[ iLen + 2 ] = '\0';
@@ -336,16 +336,16 @@ HB_BOOL hb_isWSeB( void )
 #if 1
       ret = DosQueryModuleHandle( ( PCSZ ) "DOSCALLS", &hModule );
 #else
-      ret = DosLoadModule( NULL, 0, ( PCSZ ) "DOSCALL1", &hModule );
+      ret = DosLoadModule( nullptr, 0, ( PCSZ ) "DOSCALL1", &hModule );
 #endif
       if( ret == NO_ERROR )
-         ret = DosQueryProcAddr( hModule, 981, NULL, ( PFN * ) ( void * ) &s_DosOpenL );
+         ret = DosQueryProcAddr( hModule, 981, nullptr, ( PFN * ) ( void * ) &s_DosOpenL );
       if( ret == NO_ERROR )
-         ret = DosQueryProcAddr( hModule, 986, NULL, ( PFN * ) ( void * ) &s_DosSetFileLocksL );
+         ret = DosQueryProcAddr( hModule, 986, nullptr, ( PFN * ) ( void * ) &s_DosSetFileLocksL );
       if( ret == NO_ERROR )
-         ret = DosQueryProcAddr( hModule, 988, NULL, ( PFN * ) ( void * ) &s_DosSetFilePtrL );
+         ret = DosQueryProcAddr( hModule, 988, nullptr, ( PFN * ) ( void * ) &s_DosSetFilePtrL );
       if( ret == NO_ERROR )
-         ret = DosQueryProcAddr( hModule, 989, NULL, ( PFN * ) ( void * ) &s_DosSetFileSizeL );
+         ret = DosQueryProcAddr( hModule, 989, nullptr, ( PFN * ) ( void * ) &s_DosSetFileSizeL );
       s_iWSeB = ret == NO_ERROR;
    }
    return s_iWSeB;
@@ -363,7 +363,7 @@ HB_ULONG hb_fsOS2DosOpen( const char * pszFileName,
    for( ;; )
    {
       ret = DosOpen( ( PSZ ) pszFileName, &hFile, pulAction, nInitSize,
-                     ulAttribute, fsOpenFlags, fsOpenMode, NULL );
+                     ulAttribute, fsOpenFlags, fsOpenMode, nullptr );
       if( ret == ERROR_TOO_MANY_OPEN_FILES )
       {
          LONG  cbReqCount = 64;
@@ -408,11 +408,11 @@ HB_ULONG hb_fsOS2DosOpenL( const char * pszFileName,
             Is it good idea? [druzus] */
          ret = s_DosOpenL( ( PSZ ) pszFileName, &hFile, pulAction,
                            ( LONGLONG ) nInitSize, ulAttribute,
-                           fsOpenFlags, fsOpenMode, NULL );
+                           fsOpenFlags, fsOpenMode, nullptr );
       else
          ret = DosOpen( ( PSZ ) pszFileName, &hFile, pulAction,
                         static_cast< ULONG >( nInitSize ), ulAttribute,
-                        fsOpenFlags, fsOpenMode, NULL );
+                        fsOpenFlags, fsOpenMode, nullptr );
       if( ret == ERROR_TOO_MANY_OPEN_FILES )
       {
          LONG  cbReqCount = 64;
@@ -571,7 +571,7 @@ HB_BOOL hb_fsNameExists( const char * pszFileName )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsNameExists(%p)", ( const void * ) pszFileName ) );
 
-   if( pszFileName != NULL )
+   if( pszFileName != nullptr )
    {
 #if defined( HB_OS_WIN )
       LPTSTR lpFree;
@@ -582,7 +582,7 @@ HB_BOOL hb_fsNameExists( const char * pszFileName )
       if( lpFree )
          hb_xfree( lpFree );
 #elif defined( HB_OS_OS2 )
-      fExist = hb_fsOS2QueryPathInfo( pszFileName, NULL, NULL, NULL, NULL );
+      fExist = hb_fsOS2QueryPathInfo( pszFileName, nullptr, nullptr, nullptr, nullptr );
 #else
       char * pszFree = nullptr;
 
@@ -623,7 +623,7 @@ HB_BOOL hb_fsFileExists( const char * pszFileName )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsFileExists(%p)", ( const void * ) pszFileName ) );
 
-   if( pszFileName != NULL )
+   if( pszFileName != nullptr )
    {
 #if defined( HB_OS_WIN )
       LPTSTR lpFree;
@@ -639,7 +639,7 @@ HB_BOOL hb_fsFileExists( const char * pszFileName )
          hb_xfree( lpFree );
 #elif defined( HB_OS_OS2 )
       HB_FATTR nAttr;
-      fExist = hb_fsOS2QueryPathInfo( pszFileName, NULL, &nAttr, NULL, NULL ) &&
+      fExist = hb_fsOS2QueryPathInfo( pszFileName, nullptr, &nAttr, nullptr, nullptr ) &&
                ( nAttr & HB_FA_DIRECTORY ) == 0;
 #else
       char * pszFree = nullptr;
@@ -685,7 +685,7 @@ HB_BOOL hb_fsDirExists( const char * pszDirName )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsDirExists(%p)", ( const void * ) pszDirName ) );
 
-   if( pszDirName != NULL )
+   if( pszDirName != nullptr )
    {
 #if defined( HB_OS_WIN )
       LPTSTR lpFree;
@@ -700,7 +700,7 @@ HB_BOOL hb_fsDirExists( const char * pszDirName )
          hb_xfree( lpFree );
 #elif defined( HB_OS_OS2 )
       HB_FATTR nAttr;
-      fExist = hb_fsOS2QueryPathInfo( pszDirName, NULL, &nAttr, NULL, NULL ) &&
+      fExist = hb_fsOS2QueryPathInfo( pszDirName, nullptr, &nAttr, nullptr, nullptr ) &&
                ( nAttr & HB_FA_DIRECTORY ) != 0;
 #else
       char * pszFree = nullptr;

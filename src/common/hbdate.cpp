@@ -113,7 +113,7 @@ void hb_timeStampGetLocal( int * piYear, int * piMonth, int * piDay,
 
 #  if defined( HB_OS_UNIX ) || defined( HB_OS_OS2 )
       struct timeval tv;
-      gettimeofday( &tv, NULL );
+      gettimeofday( &tv, nullptr );
       seconds = tv.tv_sec;
       millisecs = tv.tv_usec / 1000;
 #  else
@@ -156,7 +156,7 @@ HB_MAXUINT hb_dateMilliSeconds( void )
 #elif defined( HB_OS_UNIX ) || defined( HB_OS_OS2 )
    {
       struct timeval tv;
-      gettimeofday( &tv, NULL );
+      gettimeofday( &tv, nullptr );
       return ( ( HB_MAXUINT ) tv.tv_sec +
                ( HB_MAXUINT ) HB_SYS_DATE_BASE * HB_SECONDS_PER_DAY ) * 1000 +
              tv.tv_usec / 1000;
@@ -800,13 +800,13 @@ HB_BOOL hb_timeStampStrGet( const char * szDateTime,
                while( HB_ISSPACE( *szDateTime ) )
                   ++szDateTime;
                if( *szDateTime == '\0' )
-                  szDateTime = NULL;
+                  szDateTime = nullptr;
             }
          }
          else
          {
             iYear = iMonth = iDay = 0;
-            szDateTime = NULL;
+            szDateTime = nullptr;
          }
       }
    }
@@ -1018,7 +1018,7 @@ long hb_timeStampUTCOffset( int iYear, int iMonth, int iDay,
       typedef BOOL ( WINAPI * P_TZSPECIFICLOCALTIMETOSYSTEMTIME )( LPTIME_ZONE_INFORMATION, LPSYSTEMTIME, LPSYSTEMTIME );
 
       static HB_BOOL s_fInit = HB_TRUE;
-      static P_TZSPECIFICLOCALTIMETOSYSTEMTIME s_pTzSpecificLocalTimeToSystemTime = NULL;
+      static P_TZSPECIFICLOCALTIMETOSYSTEMTIME s_pTzSpecificLocalTimeToSystemTime = nullptr;
 
       if( s_fInit )
       {
@@ -1042,7 +1042,7 @@ long hb_timeStampUTCOffset( int iYear, int iMonth, int iDay,
          lt.wMilliseconds = 0;
          lt.wDayOfWeek    = 0;
 
-         if( s_pTzSpecificLocalTimeToSystemTime( NULL, &lt, &st ) )
+         if( s_pTzSpecificLocalTimeToSystemTime( nullptr, &lt, &st ) )
          {
             double dOffset = ( hb_timeStampPack( lt.wYear, lt.wMonth, lt.wDay,
                                                  lt.wHour, lt.wMinute, lt.wSecond,
@@ -1142,7 +1142,7 @@ HB_MAXUINT hb_timerGet( void )
 #if defined( HB_OS_UNIX ) || defined( HB_OS_OS2 )
    {
       struct timeval tv;
-      gettimeofday( &tv, NULL );
+      gettimeofday( &tv, nullptr );
       return ( HB_MAXUINT ) tv.tv_sec * 1000 + tv.tv_usec / 1000;
    }
 #elif defined( HB_OS_WIN )
