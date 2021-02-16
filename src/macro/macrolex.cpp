@@ -91,7 +91,7 @@ void hb_macroLexDelete( PHB_MACRO pMacro )
    if( pMacro->pLex )
    {
       hb_xfree( pMacro->pLex );
-      pMacro->pLex = NULL;
+      pMacro->pLex = nullptr;
    }
 }
 
@@ -165,7 +165,7 @@ static int hb_lexDateGet( YYSTYPE * yylval_ptr, PHB_MACRO pMacro,
       *dst++ = ch;
    }
    *dst = '\0';
-   if( fOK && hb_timeStampStrGet( pLex->pDst, &iYear, &iMonth, &iDay, NULL, NULL, NULL, NULL ) )
+   if( fOK && hb_timeStampStrGet( pLex->pDst, &iYear, &iMonth, &iDay, nullptr, nullptr, nullptr, nullptr ) )
    {
       yylval_ptr->valLong.lNumber = hb_dateEncode( iYear, iMonth, iDay );
    }

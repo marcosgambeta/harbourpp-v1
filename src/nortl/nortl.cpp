@@ -84,7 +84,7 @@ typedef struct _HB_MEMINFO
 #  define HB_MEMINFO_SIZE  sizeof( HB_MEMINFO )
 #endif
 
-static PHB_MEMINFO s_pMemBlocks         = NULL;
+static PHB_MEMINFO s_pMemBlocks         = nullptr;
 static HB_ISIZ     s_nMemoryBlocks      = 0; /* memory blocks used */
 static HB_ISIZ     s_nMemoryMaxBlocks   = 0; /* maximum number of used memory blocks */
 static HB_ISIZ     s_nMemoryMaxConsumed = 0; /* memory size consumed */
@@ -106,7 +106,7 @@ void * hb_xgrab( HB_SIZE nSize )        /* allocates fixed memory, exits on fail
       if( s_pMemBlocks )
          s_pMemBlocks->pPrevBlock = ( PHB_MEMINFO ) pMem;
       ( ( PHB_MEMINFO ) pMem )->pNextBlock = s_pMemBlocks;
-      ( ( PHB_MEMINFO ) pMem )->pPrevBlock = NULL;
+      ( ( PHB_MEMINFO ) pMem )->pPrevBlock = nullptr;
       s_pMemBlocks = ( PHB_MEMINFO ) pMem;
       ( ( PHB_MEMINFO ) pMem )->nSize = nSize;
       ( ( PHB_MEMINFO ) pMem )->Signature = HB_MEMINFO_SIGNATURE;
@@ -592,7 +592,7 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
       hb_xfree( pFileName );
    }
    else if( pszFree )
-      *pszFree = NULL;
+      *pszFree = nullptr;
 
    return szFileName;
 }

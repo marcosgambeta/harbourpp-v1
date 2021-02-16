@@ -100,7 +100,7 @@ static void hb_pp_writeToken( FILE * fout, PHB_PP_TOKEN pToken,
 
       if( iOptional )
          hb_pp_writeToken( fout, pToken->pMTokens, szName, iToken + 1,
-                           pToken->pNext == NULL && fLast );
+                           pToken->pNext == nullptr && fLast );
 
       iToken += iOptional + 1;
       pToken  = pToken->pNext;
@@ -234,7 +234,7 @@ static void hb_pp_undefCompilerRules( PHB_PP_STATE pState )
                               "__LITTLE_ENDIAN__",
                               "__BIG_ENDIAN__",
                               "__PDP_ENDIAN__",
-                              NULL };
+                              nullptr };
 
    for( i = 0; szRules[ i ]; ++i )
       hb_pp_delDefine( pState, szRules[ i ] );
@@ -260,7 +260,7 @@ static int hb_pp_preprocesfile( PHB_PP_STATE pState, const char * szRuleFile, co
    int iResult = 0;
    HB_SIZE nLen;
 
-   while( hb_pp_nextLine( pState, &nLen ) != NULL && nLen )
+   while( hb_pp_nextLine( pState, &nLen ) != nullptr && nLen )
       ;
 
    if( szRuleFile )
@@ -421,12 +421,12 @@ static char * hb_fsFileFind( const char * pszFileMask )
 {
    PHB_FFIND ffind;
 
-   if( ( ffind = hb_fsFindFirst( pszFileMask, HB_FA_ALL ) ) != NULL )
+   if( ( ffind = hb_fsFindFirst( pszFileMask, HB_FA_ALL ) ) != nullptr )
    {
       char pszFileName[ HB_PATH_MAX ];
       PHB_FNAME pFileName = hb_fsFNameSplit( pszFileMask );
       pFileName->szName = ffind->szName;
-      pFileName->szExtension = NULL;
+      pFileName->szExtension = nullptr;
       hb_fsFNameMerge( pszFileName, pFileName );
       hb_fsFindClose( ffind );
       hb_xfree( pFileName );
@@ -457,7 +457,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
          "Change~?.txt",
          "Chang~??.txt",
 #endif
-         NULL
+         nullptr
       };
       int i = 0;
 
@@ -476,7 +476,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
             break;
          }
 
-         if( strchr( szToCheck, '?' ) != NULL )
+         if( strchr( szToCheck, '?' ) != nullptr )
          {
             pszFree = hb_fsFileFind( szToCheck );
             if( pszFree )
@@ -691,7 +691,7 @@ int main( int argc, char * argv[] )
       for( i = 2; szFile && i < argc; i++ )
       {
          if( ! HB_ISOPTSEP( argv[ i ][ 0 ] ) )
-            szFile = NULL;
+            szFile = nullptr;
          else
          {
             switch( argv[ i ][ 1 ] )
@@ -705,13 +705,13 @@ int main( int argc, char * argv[] )
                   else if( argv[ i ][ 2 ] >= '0' && argv[ i ][ 2 ] <= '2' && ! argv[ i ][ 3 ] )
                      iQuiet = argv[ i ][ 2 ] - '0';
                   else
-                     szFile = NULL;
+                     szFile = nullptr;
                   break;
 
                case 'd':
                case 'D':
                   if( ! argv[ i ][ 2 ] )
-                     szFile = NULL;
+                     szFile = nullptr;
                   else
                   {
                      char * szDefText = hb_strdup( argv[ i ] + 2 ), * szAssign;
@@ -729,13 +729,13 @@ int main( int argc, char * argv[] )
                   if( argv[ i ][ 2 ] )
                      szPPRuleFuncName = argv[ i ] + 2;
                   else
-                     szPPRuleFuncName = NULL;
+                     szPPRuleFuncName = nullptr;
                   break;
 
                case 'w':
                case 'W':
                   if( argv[ i ][ 2 ] )
-                     szFile = NULL;
+                     szFile = nullptr;
                   else
                      fWrite = HB_TRUE;
                   break;
@@ -752,7 +752,7 @@ int main( int argc, char * argv[] )
                   if( argv[ i ][ 2 ] )
                      hb_pp_addSearchPath( pState, argv[ i ] + 2, HB_FALSE );
                   else
-                     szFile = NULL;
+                     szFile = nullptr;
                   break;
 
                case 'o':
@@ -760,7 +760,7 @@ int main( int argc, char * argv[] )
                   if( argv[ i ][ 2 ] )
                      szRuleFile = argv[ i ] + 2;
                   else
-                     szFile = NULL;
+                     szFile = nullptr;
                   break;
 
                case 'v':
@@ -768,7 +768,7 @@ int main( int argc, char * argv[] )
                   if( argv[ i ][ 2 ] )
                      szVerFile = argv[ i ] + 2;
                   else
-                     szFile = NULL;
+                     szFile = nullptr;
                   break;
 
                case 'u':
@@ -776,11 +776,11 @@ int main( int argc, char * argv[] )
                   if( argv[ i ][ 2 ] )
                      szStdCh = argv[ i ] + 2;
                   else
-                     szStdCh = NULL;
+                     szStdCh = nullptr;
                   break;
 
                default:
-                  szFile = NULL;
+                  szFile = nullptr;
                   break;
             }
          }
@@ -799,7 +799,7 @@ int main( int argc, char * argv[] )
       if( ! szRuleFile && ! szVerFile )
          fWrite = HB_TRUE;
 
-      hb_pp_init( pState, iQuiet != 0, HB_TRUE, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL );
+      hb_pp_init( pState, iQuiet != 0, HB_TRUE, 0, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr );
 
       szInclude = hb_getenv( "INCLUDE" );
       if( szInclude )
@@ -812,7 +812,7 @@ int main( int argc, char * argv[] )
       if( szStdCh )
          hb_pp_readRules( pState, szStdCh );
 
-      if( hb_pp_inFile( pState, szFile, HB_TRUE, NULL, HB_TRUE ) )
+      if( hb_pp_inFile( pState, szFile, HB_TRUE, nullptr, HB_TRUE ) )
       {
          if( fWrite )
          {
@@ -824,7 +824,7 @@ int main( int argc, char * argv[] )
             hb_fsFNameMerge( szFileName, pFileName );
             hb_xfree( pFileName );
 
-            hb_pp_outFile( pState, szFileName, NULL );
+            hb_pp_outFile( pState, szFileName, nullptr );
          }
 
          if( fChgLog )

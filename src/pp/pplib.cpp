@@ -69,7 +69,7 @@ static void hb_pp_ErrorMessage( void * cargo, const char * const szMsgTable[],
       hb_snprintf( szMsgBuf, sizeof( szMsgBuf ), szMsgTable[ iCode - 1 ],
                    szParam1, szParam2 );
       pError = hb_errRT_New( ES_ERROR, "PP", 1001, ( HB_ERRCODE ) iCode, szMsgBuf,
-                             NULL, 0, EF_NONE | EF_CANDEFAULT );
+                             nullptr, 0, EF_NONE | EF_CANDEFAULT );
       hb_errLaunch( pError );
       hb_errRelease( pError );
    }
@@ -102,7 +102,7 @@ static HB_GARBAGE_FUNC( hb_pp_Destructor )
    if( *pStatePtr )
    {
       hb_pp_free( *pStatePtr );
-      *pStatePtr = NULL;
+      *pStatePtr = nullptr;
    }
 }
 
@@ -167,8 +167,8 @@ HB_FUNC( __PP_INIT )
       *pStatePtr = pState;
       ppItem = hb_itemPutPtrGC( nullptr, ( void * ) pStatePtr );
 
-      hb_pp_init( pState, HB_TRUE, HB_FALSE, 0, NULL, NULL, NULL,
-                  hb_pp_ErrorMessage, hb_pp_Disp, NULL, NULL,
+      hb_pp_init( pState, HB_TRUE, HB_FALSE, 0, nullptr, nullptr, nullptr,
+                  hb_pp_ErrorMessage, hb_pp_Disp, nullptr, nullptr,
                   hb_pp_CompilerSwitch );
 
       if( szPath )
@@ -245,7 +245,7 @@ HB_FUNC( __PP_ADDRULE )
             if( hb_vmRequestQuery() != 0 )
                return;
          }
-         while( hb_pp_nextLine( pState, NULL ) );
+         while( hb_pp_nextLine( pState, nullptr ) );
 
          hb_retl( HB_TRUE );
          return;
