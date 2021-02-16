@@ -82,9 +82,9 @@
 #  if defined( HB_MT_VM )
 #     if defined( HB_USE_TLS )
 #        if defined( __BORLANDC__ )
-            static PHB_STACK HB_TLS_ATTR hb_stack_ptr = NULL;
+            static PHB_STACK HB_TLS_ATTR hb_stack_ptr = nullptr;
 #        else
-            static HB_TLS_ATTR PHB_STACK hb_stack_ptr = NULL;
+            static HB_TLS_ATTR PHB_STACK hb_stack_ptr = nullptr;
 #        endif
 #     elif ! defined( hb_stack_ptr_get )
          static HB_TLS_KEY hb_stack_key;

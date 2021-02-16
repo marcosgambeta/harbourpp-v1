@@ -81,7 +81,7 @@ static HB_GARBAGE_FUNC( hb_codeblockGarbageDelete )
             hb_memvarValueDecRef( pCBlock->pLocals[ pCBlock->uiLocals-- ].item.asMemvar.value );
          hb_xfree( pCBlock->pLocals );
       }
-      pCBlock->pLocals = NULL;
+      pCBlock->pLocals = nullptr;
       pCBlock->uiLocals = 0;
    }
 }
@@ -210,7 +210,7 @@ PHB_CODEBLOCK hb_codeblockNew( const HB_BYTE * pBuffer,
             hb_xRefInc( pLocals );
       }
       else
-         pLocals = NULL;
+         pLocals = nullptr;
    }
 
    pBase = hb_stackBaseItem();
@@ -256,10 +256,10 @@ PHB_CODEBLOCK hb_codeblockMacroNew( const HB_BYTE * pBuffer, HB_SIZE nLen )
    pCBlock->dynBuffer = HB_TRUE;
    pCBlock->pDefSymb  = pBase->item.asSymbol.stackstate->uiClass ?
                         hb_clsMethodSym( pBase ) : pBase->item.asSymbol.value;
-   pCBlock->pSymbols  = NULL;  /* macro-compiled codeblock cannot access a local symbol table */
+   pCBlock->pSymbols  = nullptr;  /* macro-compiled codeblock cannot access a local symbol table */
    pCBlock->pStatics  = hb_stackGetStaticsBase();
    pCBlock->uiLocals  = 0;
-   pCBlock->pLocals   = NULL;
+   pCBlock->pLocals   = nullptr;
 
    HB_TRACE( HB_TR_INFO, ( "codeblock created %p", ( void * ) pCBlock ) );
 

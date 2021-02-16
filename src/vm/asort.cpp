@@ -368,8 +368,8 @@ HB_FUNC( ASORT )
       HB_SIZE nCount = hb_parns( 3 );
 
       hb_arraySort( pArray,
-                    HB_ISNUM( 2 ) ? &nStart : NULL,
-                    HB_ISNUM( 3 ) ? &nCount : NULL,
+                    HB_ISNUM( 2 ) ? &nStart : nullptr,
+                    HB_ISNUM( 3 ) ? &nCount : nullptr,
                     hb_param( 4, HB_IT_EVALITEM ) );
 
       hb_itemReturn( pArray ); /* ASort() returns the array itself */

@@ -60,7 +60,7 @@ HB_FUNC( HB_HASH )
       hb_errRT_BASE( EG_BOUND, 1131, nullptr, hb_langDGetErrorDesc( EG_ARRDIMENSION ), HB_ERR_ARGS_BASEPARAMS );
    else
    {
-      PHB_ITEM pHash = hb_hashNew( NULL );
+      PHB_ITEM pHash = hb_hashNew( nullptr );
       int iParam;
       for( iParam = 1; iParam <= iPCount; iParam += 2 )
       {
@@ -184,7 +184,7 @@ HB_FUNC( HB_HGETREF )
    {
       PHB_ITEM pDest = hb_hashGetItemPtr( pHash, pKey, HB_HASH_AUTOADD_ACCESS );
       hb_itemParamStore( 3, pDest );
-      hb_retl( pDest != NULL );
+      hb_retl( pDest != nullptr );
    }
    else
       hb_retl( HB_FALSE );
@@ -353,7 +353,7 @@ HB_FUNC( HB_HFILL )
       PHB_ITEM pDest;
       HB_SIZE nPos = 0;
 
-      while( ( pDest = hb_hashGetValueAt( pHash, ++nPos ) ) != NULL )
+      while( ( pDest = hb_hashGetValueAt( pHash, ++nPos ) ) != nullptr )
          hb_itemCopy( pDest, pValue );
 
       hb_itemReturn( pHash );

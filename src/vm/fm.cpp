@@ -227,8 +227,8 @@
 #  endif
 #  if defined( HB_FM_DLMT_ALLOC )
 #     define malloc( n )         mspace_malloc( hb_mspace(), ( n ) )
-#     define realloc( p, n )     mspace_realloc( NULL, ( p ), ( n ) )
-#     define free( p )           mspace_free( NULL, ( p ) )
+#     define realloc( p, n )     mspace_realloc( nullptr, ( p ), ( n ) )
+#     define free( p )           mspace_free( nullptr, ( p ) )
 #  elif defined( USE_DL_PREFIX )
 #     define malloc( n )         dlmalloc( ( n ) )
 #     define realloc( p, n )     dlrealloc( ( p ), ( n ) )
@@ -242,7 +242,7 @@
 #        define realloc( p, n )  ( void * ) LocalReAlloc( ( HLOCAL ) ( p ), ( n ), LMEM_MOVEABLE )
 #        define free( p )        LocalFree( ( HLOCAL ) ( p ) )
 #     else
-         static HANDLE s_hProcessHeap = NULL;
+         static HANDLE s_hProcessHeap = nullptr;
 #        define HB_FM_NEED_INIT
 #        define HB_FM_HEAP_INIT
 #        define malloc( n )      ( void * ) HeapAlloc( s_hProcessHeap, 0, ( n ) )
@@ -331,8 +331,8 @@ static HB_ISIZ s_nMemoryConsumed    = 0; /* memory size consumed */
 static HB_ISIZ s_nMemoryMaxConsumed = 0; /* memory max size consumed */
 static HB_ISIZ s_nMemoryLimConsumed = 0; /* limit the size of memory consumed */
 
-static PHB_MEMINFO s_pFirstBlock = NULL;
-static PHB_MEMINFO s_pLastBlock  = NULL;
+static PHB_MEMINFO s_pFirstBlock = nullptr;
+static PHB_MEMINFO s_pLastBlock  = nullptr;
 
 static char s_szFileName[ HB_PATH_MAX ] = { '\0' };
 static char s_szInfo[ 256 ] = { '\0' };
@@ -405,7 +405,7 @@ typedef struct
    mspace ms;
 } HB_MSPACE, * PHB_MSPACE;
 
-static mspace    s_gm = NULL;
+static mspace    s_gm = nullptr;
 static HB_MSPACE s_mspool[ HB_MSPACE_COUNT ];
 
 
@@ -424,7 +424,7 @@ static mspace hb_mspace( void )
 
 static PHB_MSPACE hb_mspace_alloc( void )
 {
-   if( s_mspool[ 0 ].ms == NULL && s_gm )
+   if( s_mspool[ 0 ].ms == nullptr && s_gm )
    {
       s_mspool[ 0 ].count = 1;
       s_mspool[ 0 ].ms = s_gm;
@@ -438,7 +438,7 @@ static PHB_MSPACE hb_mspace_alloc( void )
          if( s_mspool[ i ].count < s_mspool[ imin ].count )
             imin = i;
       }
-      if( s_mspool[ imin ].ms == NULL )
+      if( s_mspool[ imin ].ms == nullptr )
          s_mspool[ imin ].ms = create_mspace( 0, 1 );
       s_mspool[ imin ].count++;
       return &s_mspool[ imin ];
@@ -462,13 +462,13 @@ static void hb_mspace_cleanup( void )
 {
    int i;
 
-   s_gm = NULL;
+   s_gm = nullptr;
    for( i = 0; i < HB_MSPACE_COUNT; ++i )
    {
       if( s_mspool[ i ].ms )
       {
          destroy_mspace( s_mspool[ i ].ms );
-         s_mspool[ i ].ms = NULL;
+         s_mspool[ i ].ms = nullptr;
          s_mspool[ i ].count = 0;
       }
    }
@@ -508,7 +508,7 @@ void hb_xinit_thread( void )
 #if defined( HB_FM_DLMT_ALLOC )
    HB_STACK_TLS_PRELOAD
 
-   if( hb_stack.allocator == NULL )
+   if( hb_stack.allocator == nullptr )
    {
       HB_FM_LOCK();
       hb_stack.allocator = ( void * ) hb_mspace_alloc();
@@ -525,7 +525,7 @@ void hb_xexit_thread( void )
 
    if( pm )
    {
-      hb_stack.allocator = NULL;
+      hb_stack.allocator = nullptr;
       HB_FM_LOCK();
       if( --pm->count == 0 )
          mspace_trim( pm->ms, 0 );
@@ -588,7 +588,7 @@ void hb_xsetinfo( const char * szValue )
 #endif
 }
 
-void * hb_xalloc( HB_SIZE nSize )         /* allocates fixed memory, returns NULL on failure */
+void * hb_xalloc( HB_SIZE nSize )         /* allocates fixed memory, returns nullptr on failure */
 {
    PHB_MEMINFO pMem;
 
@@ -636,7 +636,7 @@ void * hb_xalloc( HB_SIZE nSize )         /* allocates fixed memory, returns NUL
 
       if( ! s_pFirstBlock )
       {
-         pMem->pPrevBlock = NULL;
+         pMem->pPrevBlock = nullptr;
          s_pFirstBlock = pMem;
       }
       else
@@ -645,7 +645,7 @@ void * hb_xalloc( HB_SIZE nSize )         /* allocates fixed memory, returns NUL
          s_pLastBlock->pNextBlock = pMem;
       }
       s_pLastBlock = pMem;
-      pMem->pNextBlock = NULL;
+      pMem->pNextBlock = nullptr;
 
       pMem->u32Signature = HB_MEMINFO_SIGNATURE;
       HB_FM_SETSIG( HB_MEM_PTR( pMem ), nSize );
@@ -727,7 +727,7 @@ void * hb_xgrab( HB_SIZE nSize )         /* allocates fixed memory, exits on fai
 
       if( ! s_pFirstBlock )
       {
-         pMem->pPrevBlock = NULL;
+         pMem->pPrevBlock = nullptr;
          s_pFirstBlock = pMem;
       }
       else
@@ -736,7 +736,7 @@ void * hb_xgrab( HB_SIZE nSize )         /* allocates fixed memory, exits on fai
          s_pLastBlock->pNextBlock = pMem;
       }
       s_pLastBlock = pMem;
-      pMem->pNextBlock = NULL;
+      pMem->pNextBlock = nullptr;
 
       pMem->u32Signature = HB_MEMINFO_SIGNATURE;
       HB_FM_SETSIG( HB_MEM_PTR( pMem ), nSize );
@@ -783,7 +783,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
 #endif
 
 #ifdef HB_FM_STATISTICS
-   if( pMem == NULL )
+   if( pMem == nullptr )
    {
       if( nSize == 0 )
          hb_errInternal( HB_EI_XREALLOCNULLSIZE, nullptr, nullptr, nullptr );
@@ -873,7 +873,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
 
 #else
 
-   if( pMem == NULL )
+   if( pMem == nullptr )
    {
       if( nSize == 0 )
          hb_errInternal( HB_EI_XREALLOCNULLSIZE, nullptr, nullptr, nullptr );
@@ -1076,7 +1076,7 @@ HB_SIZE hb_xsize( void * pMem ) /* returns the size of an allocated memory block
 #endif
 }
 
-/* NOTE: Debug function, it will always return NULL when HB_FM_STATISTICS is
+/* NOTE: Debug function, it will always return nullptr when HB_FM_STATISTICS is
          not defined, don't use it for final code */
 
 const char * hb_xinfo( void * pMem, HB_USHORT * puiLine )
@@ -1194,7 +1194,7 @@ void hb_xexit( void ) /* Deinitialize fixed memory subsystem */
       PHB_MEMINFO pMemBlock;
       HB_USHORT ui;
       char buffer[ 100 ];
-      FILE * hLog = NULL;
+      FILE * hLog = nullptr;
 
       if( s_nMemoryBlocks )
          hLog = hb_fopen( s_szFileName[ 0 ] ? s_szFileName : "hb_out.log", "a+" );

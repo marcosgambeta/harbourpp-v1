@@ -117,20 +117,20 @@ static HB_GARBAGE_FUNC( hb_hashGarbageRelease )
       if( pBaseHash->pnPos )
       {
          hb_xfree( pBaseHash->pnPos );
-         pBaseHash->pnPos = NULL;
+         pBaseHash->pnPos = nullptr;
       }
 
       if( pBaseHash->pPairs )
       {
          hb_xfree( pBaseHash->pPairs );
-         pBaseHash->pPairs = NULL;
+         pBaseHash->pPairs = nullptr;
       }
    }
 
    if( pBaseHash->pDefault )
    {
       PHB_ITEM pDefault = pBaseHash->pDefault;
-      pBaseHash->pDefault = NULL;
+      pBaseHash->pDefault = nullptr;
       hb_itemRelease( pDefault );
    }
 }
@@ -370,11 +370,11 @@ static void hb_hashResize( PHB_BASEHASH pBaseHash, HB_SIZE nNewSize )
       else
       {
          hb_xfree( pBaseHash->pPairs );
-         pBaseHash->pPairs = NULL;
+         pBaseHash->pPairs = nullptr;
          if( pBaseHash->pnPos )
          {
             hb_xfree( pBaseHash->pnPos );
-            pBaseHash->pnPos = NULL;
+            pBaseHash->pnPos = nullptr;
          }
       }
    }
@@ -467,12 +467,12 @@ static void hb_hashDelPair( PHB_BASEHASH pBaseHash, HB_SIZE nPos )
    if( --pBaseHash->nLen == 0 )
    {
       PHB_HASHPAIR pPairs = pBaseHash->pPairs;
-      pBaseHash->pPairs = NULL;
+      pBaseHash->pPairs = nullptr;
       pBaseHash->nSize = 0;
       if( pBaseHash->pnPos )
       {
          hb_xfree( pBaseHash->pnPos );
-         pBaseHash->pnPos = NULL;
+         pBaseHash->pnPos = nullptr;
       }
       if( HB_IS_COMPLEX( &pPairs->key ) )
          hb_itemClear( &pPairs->key );
@@ -488,19 +488,19 @@ static void hb_hashDelPair( PHB_BASEHASH pBaseHash, HB_SIZE nPos )
          HB_SIZE * pnPos, * pnDel, * pnLast;
 
          pnPos = pBaseHash->pnPos + pBaseHash->nLen;
-         pnDel = pnLast = NULL;
+         pnDel = pnLast = nullptr;
          for( ;; )
          {
             if( *pnPos == nPos )
             {
                pnDel = pnPos;
-               if( pnLast != NULL )
+               if( pnLast != nullptr )
                   break;
             }
             if( *pnPos == pBaseHash->nLen )
             {
                pnLast = pnPos;
-               if( pnDel != NULL )
+               if( pnDel != nullptr )
                   break;
             }
             if( pnPos-- == pBaseHash->pnPos )
@@ -564,18 +564,18 @@ PHB_ITEM hb_hashNew( PHB_ITEM pItem )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_hashNew(%p)", ( void * ) pItem ) );
 
-   if( pItem == NULL )
+   if( pItem == nullptr )
       pItem = hb_itemNew( nullptr );
    else if( HB_IS_COMPLEX( pItem ) )
       hb_itemClear( pItem );
 
    pBaseHash = ( PHB_BASEHASH ) hb_gcAllocRaw( sizeof( HB_BASEHASH ), &s_gcHashFuncs );
-   pBaseHash->pPairs   = NULL;
-   pBaseHash->pnPos    = NULL;
+   pBaseHash->pPairs   = nullptr;
+   pBaseHash->pnPos    = nullptr;
    pBaseHash->nSize    = 0;
    pBaseHash->nLen     = 0;
    pBaseHash->iFlags   = HB_HASH_FLAG_DEFAULT;
-   pBaseHash->pDefault = NULL;
+   pBaseHash->pDefault = nullptr;
 
    pItem->type = HB_IT_HASH;
    pItem->item.asHash.value = pBaseHash;
@@ -798,12 +798,12 @@ HB_BOOL hb_hashClear( PHB_ITEM pHash )
          if( pHash->item.asHash.value->nSize )
          {
             hb_xfree( pHash->item.asHash.value->pPairs );
-            pHash->item.asHash.value->pPairs = NULL;
+            pHash->item.asHash.value->pPairs = nullptr;
             pHash->item.asHash.value->nSize = 0;
             if( pHash->item.asHash.value->pnPos )
             {
                hb_xfree( pHash->item.asHash.value->pnPos );
-               pHash->item.asHash.value->pnPos = NULL;
+               pHash->item.asHash.value->pnPos = nullptr;
             }
          }
       }
@@ -847,7 +847,7 @@ HB_BOOL hb_hashRemove( PHB_ITEM pHash, PHB_ITEM pItem )
       {
          HB_SIZE n = 0;
          PHB_ITEM pKey;
-         while( ( pKey = hb_arrayGetItemPtr( pItem, ++n ) ) != NULL )
+         while( ( pKey = hb_arrayGetItemPtr( pItem, ++n ) ) != nullptr )
             hb_hashDel( pHash, pKey );
          return HB_TRUE;
       }
@@ -1099,7 +1099,7 @@ PHB_ITEM hb_hashGetKeys( PHB_ITEM pHash )
       PHB_ITEM pKeys = hb_itemArrayNew( hb_hashLen( pHash ) ), pKey;
       HB_SIZE nPos = 0;
 
-      while( ( pKey = hb_hashGetKeyAt( pHash, ++nPos ) ) != NULL )
+      while( ( pKey = hb_hashGetKeyAt( pHash, ++nPos ) ) != nullptr )
       {
          PHB_ITEM pDest = hb_arrayGetItemPtr( pKeys, nPos );
          if( ! pDest )
@@ -1121,7 +1121,7 @@ PHB_ITEM hb_hashGetValues( PHB_ITEM pHash )
       PHB_ITEM pValues = hb_itemArrayNew( hb_hashLen( pHash ) ), pVal;
       HB_SIZE nPos = 0;
 
-      while( ( pVal = hb_hashGetValueAt( pHash, ++nPos ) ) != NULL )
+      while( ( pVal = hb_hashGetValueAt( pHash, ++nPos ) ) != nullptr )
       {
          PHB_ITEM pDest = hb_arrayGetItemPtr( pValues, nPos );
          if( ! pDest )
@@ -1143,7 +1143,7 @@ void hb_hashSetDefault( PHB_ITEM pHash, PHB_ITEM pValue )
       if( pHash->item.asHash.value->pDefault )
       {
          hb_itemRelease( pHash->item.asHash.value->pDefault );
-         pHash->item.asHash.value->pDefault = NULL;
+         pHash->item.asHash.value->pDefault = nullptr;
       }
       if( pValue && ! HB_IS_NIL( pValue ) &&
           ( ! HB_IS_HASH( pValue ) || pHash->item.asHash.value !=
@@ -1172,7 +1172,7 @@ void hb_hashSetFlags( PHB_ITEM pHash, int iFlags )
    if( HB_IS_HASH( pHash ) )
    {
       pHash->item.asHash.value->iFlags |= iFlags;
-      if( pHash->item.asHash.value->pnPos == NULL &&
+      if( pHash->item.asHash.value->pnPos == nullptr &&
           pHash->item.asHash.value->nSize &&
           ( pHash->item.asHash.value->iFlags & HB_HASH_KEEPORDER ) != 0 )
       {
@@ -1197,12 +1197,12 @@ void hb_hashClearFlags( PHB_ITEM pHash, int iFlags )
    if( HB_IS_HASH( pHash ) )
    {
       pHash->item.asHash.value->iFlags &= ~iFlags;
-      if( pHash->item.asHash.value->pnPos != NULL &&
+      if( pHash->item.asHash.value->pnPos != nullptr &&
           ( pHash->item.asHash.value->iFlags & HB_HASH_KEEPORDER ) == 0 )
       {
          hb_hashResort( pHash->item.asHash.value );
          hb_xfree( pHash->item.asHash.value->pnPos );
-         pHash->item.asHash.value->pnPos = NULL;
+         pHash->item.asHash.value->pnPos = nullptr;
       }
    }
 }

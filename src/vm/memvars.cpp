@@ -228,7 +228,7 @@ static void hb_memvarAddPrivate( PHB_DYNS pDynSym, PHB_ITEM pValue )
          --nCount;
       }
       if( nCount <= pPrivateStack->base )
-         pMemvar = NULL;
+         pMemvar = nullptr;
    }
 
    if( ! pMemvar )
@@ -262,7 +262,7 @@ static void hb_memvarAddPrivate( PHB_DYNS pDynSym, PHB_ITEM pValue )
       {
          pMemvar = pValue->item.asMemvar.value;
          hb_xRefInc( pMemvar );
-         pValue = NULL;
+         pValue = nullptr;
       }
       else
          pMemvar = hb_memvarValueNew();
@@ -427,8 +427,8 @@ void hb_memvarGetValue( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
        */
       PHB_ITEM pError;
 
-      pError = hb_errRT_New( ES_ERROR, NULL, EG_NOVAR, 1003,
-                             NULL, pMemvarSymb->szName, 0, EF_CANRETRY );
+      pError = hb_errRT_New( ES_ERROR, nullptr, EG_NOVAR, 1003,
+                             nullptr, pMemvarSymb->szName, 0, EF_CANRETRY );
       hb_itemClear( pItem );
 
       while( hb_errLaunch( pError ) == E_RETRY )
@@ -475,8 +475,8 @@ void hb_memvarGetRefer( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
           */
          PHB_ITEM pError;
 
-         pError = hb_errRT_New( ES_ERROR, NULL, EG_NOVAR, 1003,
-                                NULL, pMemvarSymb->szName, 0, EF_CANRETRY );
+         pError = hb_errRT_New( ES_ERROR, nullptr, EG_NOVAR, 1003,
+                                nullptr, pMemvarSymb->szName, 0, EF_CANRETRY );
          hb_itemClear( pItem );
 
          while( hb_errLaunch( pError ) == E_RETRY )
@@ -613,7 +613,7 @@ char * hb_memvarGetStrValuePtr( char * szVarName, HB_SIZE * pnLen )
  *          exists already then it's value is hidden by new variable with
  *          passed scope
  * pValue - optional item used to initialize the value of created variable
- *          or NULL
+ *          or nullptr
  *
  */
 void hb_memvarCreateFromItem( PHB_ITEM pMemvar, int iScope, PHB_ITEM pValue )
@@ -719,7 +719,7 @@ static void hb_memvarRelease( PHB_ITEM pMemvar )
 
          /* No match found for PRIVATEs - it's PUBLIC so let's remove it.
           */
-         hb_memvarDetachDynSym( pDynSymbol, NULL );
+         hb_memvarDetachDynSym( pDynSymbol, nullptr );
       }
    }
    else
@@ -810,7 +810,7 @@ static HB_DYNS_FUNC( hb_memvarClear )
 {
    if( pDynSymbol != ( PHB_DYNS ) Cargo &&
        hb_dynsymGetMemvar( pDynSymbol ) )
-      hb_memvarDetachDynSym( pDynSymbol, NULL );
+      hb_memvarDetachDynSym( pDynSymbol, nullptr );
 
    return HB_TRUE;
 }
@@ -824,7 +824,7 @@ void hb_memvarsClear( HB_BOOL fAll )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarsClear(%d)", static_cast< int >( fAll ) ) );
 
-   pGetList = fAll ? NULL : hb_dynsymFind( "GETLIST" );
+   pGetList = fAll ? nullptr : hb_dynsymFind( "GETLIST" );
 
    hb_stackClearMemvarsBase();
    hb_stackGetPrivateStack()->base = 0;
@@ -917,7 +917,7 @@ static HB_DYNS_FUNC( hb_memvarFindPublicByPos )
    return bCont;
 }
 
-/* Returns the pointer to item that holds a value of variable (or NULL if
+/* Returns the pointer to item that holds a value of variable (or nullptr if
  * not found). It fills also the pointer to the variable name
  * Both pointers points to existing and used data - they shouldn't be
  * deallocated.
@@ -926,7 +926,7 @@ static PHB_ITEM hb_memvarDebugVariable( int iScope, int iPos, const char ** pszN
 {
    PHB_ITEM pValue = nullptr;
 
-   *pszName = NULL;
+   *pszName = nullptr;
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarDebugVariable(%d, %d, %p)", iScope, iPos, ( const void * ) pszName ) );
 
@@ -1089,10 +1089,10 @@ HB_FUNC( __MVPUBLIC )
                HB_SIZE n, nLen = hb_arrayLen( pMemvar );
 
                for( n = 1; n <= nLen; n++ )
-                  hb_memvarCreateFromItem( hb_arrayGetItemPtr( pMemvar, n ), HB_VSCOMP_PUBLIC, NULL );
+                  hb_memvarCreateFromItem( hb_arrayGetItemPtr( pMemvar, n ), HB_VSCOMP_PUBLIC, nullptr );
             }
             else
-               hb_memvarCreateFromItem( pMemvar, HB_VSCOMP_PUBLIC, NULL );
+               hb_memvarCreateFromItem( pMemvar, HB_VSCOMP_PUBLIC, nullptr );
          }
       }
    }
@@ -1121,10 +1121,10 @@ HB_FUNC( __MVPRIVATE )
                HB_SIZE n, nLen = hb_arrayLen( pMemvar );
 
                for( n = 1; n <= nLen; n++ )
-                  hb_memvarCreateFromItem( hb_arrayGetItemPtr( pMemvar, n ), HB_VSCOMP_PRIVATE, NULL );
+                  hb_memvarCreateFromItem( hb_arrayGetItemPtr( pMemvar, n ), HB_VSCOMP_PRIVATE, nullptr );
             }
             else
-               hb_memvarCreateFromItem( pMemvar, HB_VSCOMP_PRIVATE, NULL );
+               hb_memvarCreateFromItem( pMemvar, HB_VSCOMP_PRIVATE, nullptr );
          }
       }
       hb_memvarUpdatePrivatesBase();
@@ -1263,8 +1263,8 @@ HB_FUNC( __MVGET )
           */
          PHB_ITEM pError;
 
-         pError = hb_errRT_New( ES_ERROR, NULL, EG_NOVAR, 1003,
-                                NULL, pName->item.asString.value, 0, EF_CANRETRY );
+         pError = hb_errRT_New( ES_ERROR, nullptr, EG_NOVAR, 1003,
+                                nullptr, pName->item.asString.value, 0, EF_CANRETRY );
 
          while( hb_errLaunch( pError ) == E_RETRY )
          {
@@ -1304,7 +1304,7 @@ HB_FUNC( __MVGETDEF )
       PHB_DYNS pDynVar = hb_memvarFindSymbol( pName->item.asString.value,
                                               pName->item.asString.length );
 
-      if( pDynVar && ( pMemvar = hb_dynsymGetMemvar( pDynVar ) ) != NULL )
+      if( pDynVar && ( pMemvar = hb_dynsymGetMemvar( pDynVar ) ) != nullptr )
          hb_itemReturn( HB_IS_BYREF( pMemvar ) ? hb_itemUnRef( pMemvar ) :
                                                  pMemvar );
       else if( hb_pcount() >= 2 )
@@ -1482,20 +1482,20 @@ HB_FUNC( __MVSAVE )
       do
       {
          fhnd = hb_fileExtOpen( pszFileName,
-                                hb_stackSetStruct()->HB_SET_DEFEXTENSIONS ? ".mem" : NULL,
+                                hb_stackSetStruct()->HB_SET_DEFEXTENSIONS ? ".mem" : nullptr,
                                 FXO_TRUNCATE | FO_READWRITE | FO_EXCLUSIVE |
                                 FXO_DEFAULTS | FXO_SHARELOCK,
-                                NULL, pError );
-         if( fhnd == NULL )
+                                nullptr, pError );
+         if( fhnd == nullptr )
          {
-            pError = hb_errRT_FileError( pError, NULL, EG_CREATE, 2006, pszFileName );
+            pError = hb_errRT_FileError( pError, nullptr, EG_CREATE, 2006, pszFileName );
             if( hb_errLaunch( pError ) != E_RETRY )
                break;
          }
       }
-      while( fhnd == NULL );
+      while( fhnd == nullptr );
 
-      if( fhnd != NULL )
+      if( fhnd != nullptr )
       {
          HB_BYTE buffer[ HB_MEM_REC_LEN + HB_MEM_NUM_LEN ];
          MEMVARSAVE_CARGO msc;
@@ -1560,19 +1560,19 @@ HB_FUNC( __MVRESTORE )
       do
       {
          fhnd = hb_fileExtOpen( pszFileName,
-                                hb_stackSetStruct()->HB_SET_DEFEXTENSIONS ? ".mem" : NULL,
+                                hb_stackSetStruct()->HB_SET_DEFEXTENSIONS ? ".mem" : nullptr,
                                 FO_READ | FXO_DEFAULTS | FXO_SHARELOCK,
-                                NULL, pError );
-         if( fhnd == NULL )
+                                nullptr, pError );
+         if( fhnd == nullptr )
          {
-            pError = hb_errRT_FileError( pError, NULL, EG_OPEN, 2005, pszFileName );
+            pError = hb_errRT_FileError( pError, nullptr, EG_OPEN, 2005, pszFileName );
             if( hb_errLaunch( pError ) != E_RETRY )
                break;
          }
       }
-      while( fhnd == NULL );
+      while( fhnd == nullptr );
 
-      if( fhnd != NULL )
+      if( fhnd != nullptr )
       {
          HB_BOOL bIncludeMask;
          HB_BYTE buffer[ HB_MEM_REC_LEN ];
@@ -1616,7 +1616,7 @@ HB_FUNC( __MVRESTORE )
                   else
                   {
                      hb_xfree( pbyString );
-                     pszName = NULL;
+                     pszName = nullptr;
                   }
 
                   break;
@@ -1629,7 +1629,7 @@ HB_FUNC( __MVRESTORE )
                   if( hb_fileRead( fhnd, pbyNumber, HB_MEM_NUM_LEN, -1 ) == HB_MEM_NUM_LEN )
                      pItem = hb_itemPutNLen( pItem, HB_GET_LE_DOUBLE( pbyNumber ), uiWidth - ( uiDec ? ( uiDec + 1 ) : 0 ), uiDec );
                   else
-                     pszName = NULL;
+                     pszName = nullptr;
 
                   break;
                }
@@ -1641,7 +1641,7 @@ HB_FUNC( __MVRESTORE )
                   if( hb_fileRead( fhnd, pbyNumber, HB_MEM_NUM_LEN, -1 ) == HB_MEM_NUM_LEN )
                      pItem = hb_itemPutDL( pItem, static_cast< long >( HB_GET_LE_DOUBLE( pbyNumber ) ) );
                   else
-                     pszName = NULL;
+                     pszName = nullptr;
 
                   break;
                }
@@ -1653,7 +1653,7 @@ HB_FUNC( __MVRESTORE )
                   if( hb_fileRead( fhnd, pbyNumber, HB_MEM_NUM_LEN, -1 ) == HB_MEM_NUM_LEN )
                      pItem = hb_itemPutTD( pItem, HB_GET_LE_DOUBLE( pbyNumber ) );
                   else
-                     pszName = NULL;
+                     pszName = nullptr;
 
                   break;
                }
@@ -1665,13 +1665,13 @@ HB_FUNC( __MVRESTORE )
                   if( hb_fileRead( fhnd, pbyLogical, 1, -1 ) == 1 )
                      pItem = hb_itemPutL( pItem, pbyLogical[ 0 ] != 0 );
                   else
-                     pszName = NULL;
+                     pszName = nullptr;
 
                   break;
                }
 
                default:
-                  pszName = NULL;
+                  pszName = nullptr;
             }
 
             if( pszName )

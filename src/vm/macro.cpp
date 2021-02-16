@@ -71,7 +71,7 @@ static void hb_macroFlagsInit( void * pFlags )
    *( ( int * ) pFlags ) = HB_SM_DEFAULT;
 }
 
-static HB_TSD_NEW( s_macroFlags, sizeof( int ), hb_macroFlagsInit, NULL );
+static HB_TSD_NEW( s_macroFlags, sizeof( int ), hb_macroFlagsInit, nullptr );
 
 static int hb_macroFlags( void )
 {
@@ -112,14 +112,14 @@ static int hb_macroParse( PHB_MACRO pMacro )
    pMacro->pCodeInfo->nPCodeSize = HB_PCODE_SIZE;
    pMacro->pCodeInfo->nPCodePos  = 0;
    pMacro->pCodeInfo->fVParams   = HB_FALSE;
-   pMacro->pCodeInfo->pLocals    = NULL;
-   pMacro->pCodeInfo->pPrev      = NULL;
+   pMacro->pCodeInfo->pLocals    = nullptr;
+   pMacro->pCodeInfo->pPrev      = nullptr;
    pMacro->pCodeInfo->pCode      = ( HB_BYTE * ) hb_xgrab( HB_PCODE_SIZE );
 
    /* reset the type of compiled expression - this should be filled after
     * successfully compilation
     */
-   pMacro->pError = NULL;
+   pMacro->pError = nullptr;
    pMacro->uiListElements = 0;
    pMacro->exprType = HB_ET_NONE;
 
@@ -188,7 +188,7 @@ static HB_ERROR_HANDLE( hb_macroErrorType )
    /* ignore rest of compiled code */
    hb_vmRequestEndProc();
 
-   return NULL;   /* ignore this error */
+   return nullptr;   /* ignore this error */
 }
 
 
@@ -201,7 +201,7 @@ void hb_macroRun( PHB_MACRO pMacro )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroRun(%p)", ( void * ) pMacro ) );
 
-   hb_vmExecute( pMacro->pCodeInfo->pCode, NULL );
+   hb_vmExecute( pMacro->pCodeInfo->pCode, nullptr );
 }
 
 static void hb_macroSyntaxError( PHB_MACRO pMacro )
@@ -218,7 +218,7 @@ static void hb_macroSyntaxError( PHB_MACRO pMacro )
 
       hb_errLaunch( pMacro->pError );
       hb_errRelease( pMacro->pError );
-      pMacro->pError = NULL;
+      pMacro->pError = nullptr;
    }
    else
    {
@@ -268,7 +268,7 @@ static char * hb_macroTextSubst( const char * szString, HB_SIZE * pnStringLen )
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroTextSubst(%s, %" HB_PFS "u)", szString, *pnStringLen ) );
 
    pHead = ( char * ) memchr( szString, '&', *pnStringLen );
-   if( pHead == NULL )
+   if( pHead == nullptr )
       return ( char * ) HB_UNCONST( szString );  /* no more processing is required */
 
    /* initial length of the string and the result buffer (it can contain null bytes) */
@@ -323,7 +323,7 @@ static char * hb_macroTextSubst( const char * szString, HB_SIZE * pnStringLen )
             HB_SIZE nValLen;
 
             /* Get a pointer to the string value stored in this variable
-             * or NULL if variable doesn't exist or doesn't contain a string
+             * or nullptr if variable doesn't exist or doesn't contain a string
              * value.
              * NOTE: This doesn't create a copy of the value then it
              * shouldn't be released here.
@@ -382,7 +382,7 @@ static char * hb_macroTextSubst( const char * szString, HB_SIZE * pnStringLen )
       }
       nCharsLeft = nResStrLen - ( pHead - szResult );
    }
-   while( nCharsLeft && ( pHead = ( char * ) memchr( pHead, '&', nCharsLeft ) ) != NULL );
+   while( nCharsLeft && ( pHead = ( char * ) memchr( pHead, '&', nCharsLeft ) ) != nullptr );
 
    if( nResStrLen < nResBufLen )
    {
@@ -448,7 +448,7 @@ void hb_macroGetValue( PHB_ITEM pItem, int iContext, int flags )
       pszFree = hb_macroTextSubst( pItem->item.asString.value, &struMacro.length );
       struMacro.string = pszFree;
       if( pszFree == pItem->item.asString.value )
-         pszFree = NULL;
+         pszFree = nullptr;
 
       if( iContext != 0 )
       {
@@ -776,7 +776,7 @@ char * hb_macroTextSymbol( const char * szString, HB_SIZE nLength, HB_BOOL * pfN
       {
          if( szResult != szString )
             hb_xfree( szResult );
-         szResult = NULL;
+         szResult = nullptr;
       }
    }
    *pfNewString = szResult && szString != szResult;
@@ -807,7 +807,7 @@ PHB_MACRO hb_macroCompile( const char * szString )
    if( ! ( iStatus == HB_MACRO_OK && ( pMacro->status & HB_MACRO_CONT ) ) )
    {
       hb_macroDelete( pMacro );
-      pMacro = NULL;
+      pMacro = nullptr;
    }
 
    return pMacro;
@@ -1042,7 +1042,7 @@ void hb_macroPushSymbol( PHB_ITEM pItem )
          return;
       }
       else
-         hb_macroSyntaxError( NULL );
+         hb_macroSyntaxError( nullptr );
    }
 
    if( ! HB_IS_SYMBOL( hb_stackItemFromTop( -1 ) ) && hb_vmRequestQuery() == 0 )
@@ -1386,12 +1386,12 @@ void hb_macroGenPushSymbol( const char * szSymbolName, HB_BOOL bFunction, HB_COM
          HB_MACRO_DATA->status &= ~HB_MACRO_CONT;  /* don't run this pcode */
          /*
           * NOTE: the compiled pcode will be not executed then we can ignore
-          * NULL value for pSym
+          * nullptr value for pSym
           */
       }
       else if( bFunction )
       {
-         if( pSym->pSymbol->value.pFunPtr == NULL )
+         if( pSym->pSymbol->value.pFunPtr == nullptr )
          {
             /* static functions are not allowed in macro */
             HB_MACRO_DATA->status |= HB_MACRO_UNKN_SYM;
@@ -1809,7 +1809,7 @@ void hb_macroCodeBlockStart( HB_COMP_DECL )
    pCB->nPCodeSize = HB_PCODE_SIZE;
    pCB->nPCodePos  = 0;
    pCB->fVParams   = HB_FALSE;
-   pCB->pLocals    = NULL;
+   pCB->pLocals    = nullptr;
 
    /* replace current pcode buffer with the new one
     */

@@ -132,5 +132,5 @@ PHB_FUNC hb_vmProcAddress( const char * szFuncName )
    if( uiFirst != uiMiddle )
       iCmp = strcmp( szFuncName, s_funcTable[ uiFirst ].szFuncName );
 
-   return iCmp == 0 ? s_funcTable[ uiFirst ].pFuncAddr : NULL;
+   return iCmp == 0 ? s_funcTable[ uiFirst ].pFuncAddr : nullptr;
 }

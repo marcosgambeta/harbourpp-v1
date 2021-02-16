@@ -83,13 +83,13 @@ HB_SYM_HOLDER, * PHB_SYM_HOLDER;
 #endif /* HB_MT_VM */
 
 
-static PDYNHB_ITEM s_pDynItems = NULL;    /* Pointer to dynamic items */
+static PDYNHB_ITEM s_pDynItems = nullptr;    /* Pointer to dynamic items */
 static HB_SYMCNT   s_uiDynSymbols = 0;    /* Number of symbols present */
 
-static PHB_SYM_HOLDER s_pAllocSyms = NULL;/* symbols allocated dynamically */
+static PHB_SYM_HOLDER s_pAllocSyms = nullptr;/* symbols allocated dynamically */
 
 /* table index for dynamic symbol to number conversions */
-static PDYNHB_ITEM s_pDynIndex = NULL;
+static PDYNHB_ITEM s_pDynIndex = nullptr;
 static HB_SYMCNT   s_uiDynIdxSize = 0;
 
 /* Insert new symbol into dynamic symbol table.
@@ -179,8 +179,8 @@ static PHB_SYMB hb_symbolAlloc( const char * szName )
 
    pHolder->symbol.szName        = pHolder->szName;
    pHolder->symbol.scope.value   = 0;
-   pHolder->symbol.value.pFunPtr = NULL;
-   pHolder->symbol.pDynSym       = NULL;
+   pHolder->symbol.value.pFunPtr = nullptr;
+   pHolder->symbol.pDynSym       = nullptr;
 
    return &pHolder->symbol;
 }
@@ -445,7 +445,7 @@ PHB_SYMB hb_dynsymFindSymbol( const char * szName )
    HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymFindSymbol(%s)", szName ) );
 
    pDynSym = hb_dynsymFind( szName );
-   return pDynSym ? pDynSym->pSymbol : NULL;
+   return pDynSym ? pDynSym->pSymbol : nullptr;
 }
 
 PHB_SYMB hb_dynsymSymbol( PHB_DYNS pDynSym )
@@ -466,14 +466,14 @@ HB_BOOL hb_dynsymIsFunction( PHB_DYNS pDynSym )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymIsFunction(%p)", ( void * ) pDynSym ) );
 
-   return pDynSym->pSymbol->value.pFunPtr != NULL;
+   return pDynSym->pSymbol->value.pFunPtr != nullptr;
 }
 
 HB_BOOL hb_dynsymIsMemvar( PHB_DYNS pDynSym )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymIsMemvar(%p)", ( void * ) pDynSym ) );
 
-   return hb_dynsymHandles( pDynSym )->pMemvar != NULL;
+   return hb_dynsymHandles( pDynSym )->pMemvar != nullptr;
 }
 
 PHB_ITEM hb_dynsymGetMemvar( PHB_DYNS pDynSym )
@@ -544,7 +544,7 @@ HB_SYMCNT hb_dynsymToNum( PHB_DYNS pDynSym )
       s_uiDynIdxSize = uiSymNum;
    }
 
-   if( s_pDynIndex[ uiSymNum - 1 ].pDynSym == NULL )
+   if( s_pDynIndex[ uiSymNum - 1 ].pDynSym == nullptr )
       s_pDynIndex[ uiSymNum - 1 ].pDynSym = pDynSym;
 
    HB_DYNSYM_UNLOCK();
@@ -561,7 +561,7 @@ PHB_DYNS hb_dynsymFromNum( HB_SYMCNT uiSymNum )
    HB_DYNSYM_LOCK();
 
    pDynSym = uiSymNum > 0 && uiSymNum <= s_uiDynIdxSize ?
-             s_pDynIndex[ uiSymNum - 1 ].pDynSym : NULL;
+             s_pDynIndex[ uiSymNum - 1 ].pDynSym : nullptr;
 
    HB_DYNSYM_UNLOCK();
 
@@ -594,7 +594,7 @@ void hb_dynsymEval( PHB_DYNS_FUNC pFunction, void * Cargo )
       if( ++uiPos < s_uiDynSymbols )
          pDynSym = s_pDynItems[ uiPos ].pDynSym;
       else
-         pDynSym = NULL;
+         pDynSym = nullptr;
 
       HB_DYNSYM_UNLOCK();
 
@@ -629,7 +629,7 @@ void hb_dynsymRelease( void )
    if( s_uiDynIdxSize )
    {
       hb_xfree( s_pDynIndex );
-      s_pDynIndex = NULL;
+      s_pDynIndex = nullptr;
       s_uiDynIdxSize = 0;
    }
 
@@ -641,7 +641,7 @@ void hb_dynsymRelease( void )
       }
       while( s_uiDynSymbols );
       hb_xfree( s_pDynItems );
-      s_pDynItems = NULL;
+      s_pDynItems = nullptr;
    }
 
    while( s_pAllocSyms )
@@ -665,7 +665,7 @@ HB_FUNC( __DYNSGETNAME ) /* Get name of symbol: cSymbol = __dynsymGetName( dsInd
    HB_STACK_TLS_PRELOAD
    PHB_DYNS pDynSym = hb_dynsymGetByIndex( hb_parnl( 1 ) );
 
-   hb_retc( pDynSym ? pDynSym->pSymbol->szName : NULL );
+   hb_retc( pDynSym ? pDynSym->pSymbol->szName : nullptr );
 }
 
 HB_FUNC( __DYNSGETINDEX ) /* Gimme index number of symbol: dsIndex = __dynsymGetIndex( cSymbol ) */
@@ -766,7 +766,7 @@ HB_FUNC( __DYNSP2NAME )
    HB_STACK_TLS_PRELOAD
    PHB_DYNS pDynSym = ( PHB_DYNS ) hb_parptr( 1 );
 
-   hb_retc( pDynSym != NULL ? pDynSym->pSymbol->szName : NULL );
+   hb_retc( pDynSym != nullptr ? pDynSym->pSymbol->szName : nullptr );
 }
 
 /* internal function used to debug dynamic symbol integrity */

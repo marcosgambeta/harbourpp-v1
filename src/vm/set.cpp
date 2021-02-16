@@ -173,12 +173,12 @@ static void close_handle( PHB_SET_STRUCT pSet, HB_set_enum set_specifier )
          return;
    }
 
-   if( *handle_ptr != NULL )
+   if( *handle_ptr != nullptr )
    {
       if( set_specifier != HB_SET_PRINTFILE && pSet->HB_SET_EOF )
          hb_fileWrite( *handle_ptr, "\x1A", 1, -1 );
       hb_fileClose( *handle_ptr );
-      *handle_ptr = NULL;
+      *handle_ptr = nullptr;
    }
 }
 
@@ -309,7 +309,7 @@ static void open_handle( PHB_SET_STRUCT pSet, const char * file_name,
          if( szDevice )
          {
             szFileName = hb_strdup( szDevice );
-            def_ext = NULL;
+            def_ext = nullptr;
          }
          else
             szFileName = hb_strdup( file_name );
@@ -323,13 +323,13 @@ static void open_handle( PHB_SET_STRUCT pSet, const char * file_name,
    if( *set_value )
    {
       hb_xfree( *set_value );
-      *set_value = NULL;
+      *set_value = nullptr;
    }
 
    if( ! szFileName )
       return;
 
-   fStripEof = fAppend && szDevice == NULL && ! fPipe;
+   fStripEof = fAppend && szDevice == nullptr && ! fPipe;
 
    /* Open the file either in append (fAppend) or truncate mode (! fAppend), but
       always use binary mode */
@@ -342,26 +342,26 @@ static void open_handle( PHB_SET_STRUCT pSet, const char * file_name,
          handle = hb_filePOpen( szFileName + 1, "w" );
       else
          handle = hb_fileExtOpen( szFileName,
-                                  hb_stackSetStruct()->HB_SET_DEFEXTENSIONS ? def_ext : NULL,
+                                  hb_stackSetStruct()->HB_SET_DEFEXTENSIONS ? def_ext : nullptr,
                                   ( ! fStripEof || set_specifier == HB_SET_PRINTFILE ? FO_WRITE : FO_READWRITE ) |
                                   FO_DENYWRITE | FXO_SHARELOCK |
                                   ( fAppend ? FXO_APPEND : FXO_TRUNCATE ) |
                                   ( szDevice ? 0 : FXO_DEFAULTS ),
-                                  NULL, pError );
+                                  nullptr, pError );
 
-      if( handle == NULL )
+      if( handle == nullptr )
       {
          pError = hb_errRT_FileError( pError, HB_ERR_SS_TERMINAL, EG_CREATE, uiError, szFileName );
          if( hb_errLaunch( pError ) != E_RETRY )
             break;
       }
    }
-   while( handle == NULL );
+   while( handle == nullptr );
 
    if( pError )
       hb_itemRelease( pError );
 
-   if( handle != NULL && fStripEof )
+   if( handle != nullptr && fStripEof )
    {
       /* Position to EOF */
       if( hb_fileSeek( handle, 0, FS_END ) > 0 )
@@ -387,10 +387,10 @@ static void open_handle( PHB_SET_STRUCT pSet, const char * file_name,
    /* user RT error handler can open it too so we have to
     * close it again if necessary
     */
-   if( handle == NULL )
+   if( handle == nullptr )
    {
       hb_xfree( szFileName );
-      szFileName = NULL;
+      szFileName = nullptr;
    }
 
    close_handle( pSet, set_specifier );
@@ -529,14 +529,14 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
    HB_STACK_TLS_PRELOAD
    PHB_SET_STRUCT pSet = hb_stackSetStruct();
 
-   if( pArg1 != NULL )
+   if( pArg1 != nullptr )
       hb_setListenerNotify( set_specifier, HB_SET_LISTENER_BEFORE );
 
    switch( set_specifier )
    {
       case HB_SET_ALTERNATE:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_ALTERNATE );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_ALTERNATE = set_logical( pArg1, pSet->HB_SET_ALTERNATE );
          break;
       case HB_SET_ALTFILE:
@@ -546,12 +546,12 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          break;
       case HB_SET_AUTOPEN:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_AUTOPEN );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_AUTOPEN = set_logical( pArg1, pSet->HB_SET_AUTOPEN );
          break;
       case HB_SET_AUTORDER:
          pResult = hb_itemPutNI( pResult, pSet->HB_SET_AUTORDER );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
          {
             if( set_number( pArg1, pSet->HB_SET_AUTORDER ) < 0 )
                hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -561,7 +561,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          break;
       case HB_SET_AUTOSHARE:
          pResult = hb_itemPutNI( pResult, pSet->HB_SET_AUTOSHARE );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
          {
             if( set_number( pArg1, pSet->HB_SET_AUTOSHARE ) < 0 )
                hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -571,36 +571,36 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          break;
       case HB_SET_BELL:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_BELL );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_BELL = set_logical( pArg1, pSet->HB_SET_BELL );
          break;
       case HB_SET_CANCEL:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_CANCEL );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_CANCEL = set_logical( pArg1, pSet->HB_SET_CANCEL );
          break;
       case HB_SET_COLOR:
-         pResult = hb_itemPutC( pResult, hb_conSetColor( pArg1 != NULL && HB_IS_STRING( pArg1 ) ? hb_itemGetCPtr( pArg1 ) : NULL ) );
+         pResult = hb_itemPutC( pResult, hb_conSetColor( pArg1 != nullptr && HB_IS_STRING( pArg1 ) ? hb_itemGetCPtr( pArg1 ) : nullptr ) );
          break;
       case HB_SET_CONFIRM:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_CONFIRM );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_CONFIRM = set_logical( pArg1, pSet->HB_SET_CONFIRM );
          break;
       case HB_SET_CONSOLE:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_CONSOLE );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_CONSOLE = set_logical( pArg1, pSet->HB_SET_CONSOLE );
          break;
       case HB_SET_CURSOR:
-         if( pArg1 != NULL && HB_IS_NUMERIC( pArg1 ) )
+         if( pArg1 != nullptr && HB_IS_NUMERIC( pArg1 ) )
             pResult = hb_itemPutNI( pResult, hb_conSetCursor( HB_TRUE, hb_itemGetNI( pArg1 ) ) );
          else
             pResult = hb_itemPutNI( pResult, hb_conSetCursor( HB_FALSE, 0 ) );
          break;
       case HB_SET_DATEFORMAT:
          pResult = hb_itemPutC( pResult, pSet->HB_SET_DATEFORMAT );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
          {
             char * value;
             int year = 0;
@@ -621,17 +621,17 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          break;
       case HB_SET_TIMEFORMAT:
          pResult = hb_itemPutC( pResult, pSet->HB_SET_TIMEFORMAT );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_TIMEFORMAT = set_string( pArg1, pSet->HB_SET_TIMEFORMAT );
          break;
       case HB_SET_DEBUG:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_DEBUG );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_DEBUG = set_logical( pArg1, pSet->HB_SET_DEBUG );
          break;
       case HB_SET_DECIMALS:
          pResult = hb_itemPutNI( pResult, pSet->HB_SET_DECIMALS );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
          {
             if( set_number( pArg1, pSet->HB_SET_DECIMALS ) < 0 )
                hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -641,22 +641,22 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          break;
       case HB_SET_DEFAULT:
          pResult = hb_itemPutC( pResult, pSet->HB_SET_DEFAULT );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_DEFAULT = set_string( pArg1, pSet->HB_SET_DEFAULT );
          break;
       case HB_SET_DELETED:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_DELETED );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_DELETED = set_logical( pArg1, pSet->HB_SET_DELETED );
          break;
       case HB_SET_DELIMCHARS:
          pResult = hb_itemPutC( pResult, pSet->HB_SET_DELIMCHARS );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_DELIMCHARS = set_string( pArg1, pSet->HB_SET_DELIMCHARS );
          break;
       case HB_SET_DELIMITERS:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_DELIMITERS );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_DELIMITERS = set_logical( pArg1, pSet->HB_SET_DELIMITERS );
          break;
       case HB_SET_DEVICE:
@@ -671,12 +671,12 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          break;
       case HB_SET_EOF:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_EOF );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_EOF = set_logical( pArg1, pSet->HB_SET_EOF );
          break;
       case HB_SET_EPOCH:
          pResult = hb_itemPutNI( pResult, pSet->HB_SET_EPOCH );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
          {
             if( set_number( pArg1, pSet->HB_SET_EPOCH ) < 0 )
                hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -686,12 +686,12 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          break;
       case HB_SET_ESCAPE:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_ESCAPE );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_ESCAPE = set_logical( pArg1, pSet->HB_SET_ESCAPE );
          break;
       case HB_SET_EVENTMASK:
          pResult = hb_itemPutNI( pResult, pSet->HB_SET_EVENTMASK );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
          {
             if( set_number( pArg1, pSet->HB_SET_EVENTMASK ) < 0 )
                hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -701,23 +701,23 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          break;
       case HB_SET_EXACT:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_EXACT );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_EXACT = set_logical( pArg1, pSet->HB_SET_EXACT );
          break;
       case HB_SET_EXCLUSIVE:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_EXCLUSIVE );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_EXCLUSIVE = set_logical( pArg1, pSet->HB_SET_EXCLUSIVE );
          break;
       case HB_SET_EXIT:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_EXIT );
          /* NOTE: Otherwise ReadExit() will always set the value. [vszakats] */
-         if( pArg1 != NULL && ! HB_IS_NIL( pArg1 ) )
+         if( pArg1 != nullptr && ! HB_IS_NIL( pArg1 ) )
             pSet->HB_SET_EXIT = set_logical( pArg1, pSet->HB_SET_EXIT );
          break;
       case HB_SET_EXTRA:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_EXTRA );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_EXTRA = set_logical( pArg1, pSet->HB_SET_EXTRA );
          break;
       case HB_SET_EXTRAFILE:
@@ -727,22 +727,22 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          break;
       case HB_SET_FIXED:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_FIXED );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_FIXED = set_logical( pArg1, pSet->HB_SET_FIXED );
          break;
       case HB_SET_INSERT:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_INSERT );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_INSERT = set_logical( pArg1, pSet->HB_SET_INSERT );
          break;
       case HB_SET_INTENSITY:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_INTENSITY );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_INTENSITY = set_logical( pArg1, pSet->HB_SET_INTENSITY );
          break;
       case HB_SET_MARGIN:
          pResult = hb_itemPutNI( pResult, pSet->HB_SET_MARGIN );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
          {
             if( set_number( pArg1, pSet->HB_SET_MARGIN ) < 0 )
                hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -752,7 +752,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          break;
       case HB_SET_MBLOCKSIZE:
          pResult = hb_itemPutNI( pResult, pSet->HB_SET_MBLOCKSIZE );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
          {
             if( set_number( pArg1, pSet->HB_SET_MBLOCKSIZE ) < 0 )
                hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -762,12 +762,12 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          break;
       case HB_SET_MCENTER:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_MCENTER );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_MCENTER = set_logical( pArg1, pSet->HB_SET_MCENTER );
          break;
       case HB_SET_MESSAGE:
          pResult = hb_itemPutNI( pResult, pSet->HB_SET_MESSAGE );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
          {
             if( set_number( pArg1, pSet->HB_SET_MESSAGE ) < 0 )
                hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -777,42 +777,42 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          break;
       case HB_SET_MFILEEXT:
          pResult = hb_itemPutC( pResult, pSet->HB_SET_MFILEEXT );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_MFILEEXT = set_string( pArg1, pSet->HB_SET_MFILEEXT );
          break;
       case HB_SET_OPTIMIZE:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_OPTIMIZE );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_OPTIMIZE = set_logical( pArg1, pSet->HB_SET_OPTIMIZE );
          break;
       case HB_SET_FORCEOPT:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_FORCEOPT );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_FORCEOPT = set_logical( pArg1, pSet->HB_SET_FORCEOPT );
          break;
       case HB_SET_STRICTREAD:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_STRICTREAD );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_STRICTREAD = set_logical( pArg1, pSet->HB_SET_STRICTREAD );
          break;
       case HB_SET_HARDCOMMIT:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_HARDCOMMIT );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_HARDCOMMIT = set_logical( pArg1, pSet->HB_SET_HARDCOMMIT );
          break;
       case HB_SET_PATH:
          pResult = hb_itemPutC( pResult, pSet->HB_SET_PATH );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
          {
             pSet->HB_SET_PATH = set_string( pArg1, pSet->HB_SET_PATH );
             hb_fsFreeSearchPath( pSet->hb_set_path );
-            pSet->hb_set_path = NULL;
+            pSet->hb_set_path = nullptr;
             hb_fsAddSearchPath( pSet->HB_SET_PATH, &pSet->hb_set_path );
          }
          break;
       case HB_SET_PRINTER:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_PRINTER );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_PRINTER = set_logical( pArg1, pSet->HB_SET_PRINTER );
          break;
       case HB_SET_PRINTFILE:
@@ -821,28 +821,28 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          {
             open_handle( pSet, hb_itemGetCPtr( pArg1 ), set_logical( pArg2, HB_FALSE ), HB_SET_PRINTFILE );
             /* With SET PRINTER TO or Set( _SET_PRINTFILE, "" ) are expected to activate the default printer [jarabal] */
-            if( pSet->HB_SET_PRINTFILE == NULL )
+            if( pSet->HB_SET_PRINTFILE == nullptr )
                pSet->HB_SET_PRINTFILE = hb_set_PRINTFILE_default();
          }
          break;
       case HB_SET_SCOREBOARD:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_SCOREBOARD );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_SCOREBOARD = set_logical( pArg1, pSet->HB_SET_SCOREBOARD );
          break;
       case HB_SET_SCROLLBREAK:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_SCROLLBREAK );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_SCROLLBREAK = set_logical( pArg1, pSet->HB_SET_SCROLLBREAK );
          break;
       case HB_SET_SOFTSEEK:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_SOFTSEEK );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_SOFTSEEK = set_logical( pArg1, pSet->HB_SET_SOFTSEEK );
          break;
       case HB_SET_TYPEAHEAD:
          pResult = hb_itemPutNI( pResult, pSet->HB_SET_TYPEAHEAD );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
          {
             /* Set the value and limit the range */
             pSet->HB_SET_TYPEAHEAD = set_number( pArg1, pSet->HB_SET_TYPEAHEAD );
@@ -858,22 +858,22 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          break;
       case HB_SET_UNIQUE:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_UNIQUE );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_UNIQUE = set_logical( pArg1, pSet->HB_SET_UNIQUE );
          break;
       case HB_SET_VIDEOMODE:
          pResult = hb_itemPutNI( pResult, pSet->HB_SET_VIDEOMODE );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_VIDEOMODE = set_number( pArg1, pSet->HB_SET_VIDEOMODE );
          break;
       case HB_SET_WRAP:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_WRAP );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_WRAP = set_logical( pArg1, pSet->HB_SET_WRAP );
          break;
       case HB_SET_LANGUAGE:
          pResult = hb_itemPutC( pResult, hb_langID() );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
          {
             if( HB_IS_STRING( pArg1 ) )
                hb_langSelectID( hb_itemGetCPtr( pArg1 ) );
@@ -883,7 +883,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          break;
       case HB_SET_CODEPAGE:
          pResult = hb_itemPutC( pResult, hb_cdpID() );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
          {
             if( HB_IS_STRING( pArg1 ) )
                hb_cdpSelectID( hb_itemGetCPtr( pArg1 ) );
@@ -893,12 +893,12 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          break;
       case HB_SET_IDLEREPEAT:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_IDLEREPEAT );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_IDLEREPEAT = set_logical( pArg1, pSet->HB_SET_IDLEREPEAT );
          break;
       case HB_SET_FILECASE:
          pResult = hb_itemPutNI( pResult, pSet->HB_SET_FILECASE );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
          {
             if( HB_IS_STRING( pArg1 ) )
             {
@@ -927,7 +927,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          break;
       case HB_SET_DIRCASE:
          pResult = hb_itemPutNI( pResult, pSet->HB_SET_DIRCASE );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
          {
             if( HB_IS_STRING( pArg1 ) )
             {
@@ -960,13 +960,13 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          szDirSep[ 0 ] = static_cast< char >( pSet->HB_SET_DIRSEPARATOR );
          szDirSep[ 1 ] = '\0';
          pResult = hb_itemPutC( pResult, szDirSep );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_DIRSEPARATOR = set_char( pArg1, static_cast< char >( pSet->HB_SET_DIRSEPARATOR ) );
          break;
       }
       case HB_SET_DBFLOCKSCHEME:
          pResult = hb_itemPutNI( pResult, pSet->HB_SET_DBFLOCKSCHEME );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
          {
             if( set_number( pArg1, pSet->HB_SET_DBFLOCKSCHEME ) < 0 )
                hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -976,27 +976,27 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          break;
       case HB_SET_DEFEXTENSIONS:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_DEFEXTENSIONS );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_DEFEXTENSIONS = set_logical( pArg1, pSet->HB_SET_DEFEXTENSIONS );
          break;
       case HB_SET_EOL:
          pResult = hb_itemPutC( pResult, pSet->HB_SET_EOL );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_EOL = set_string( pArg1, pSet->HB_SET_EOL );
          break;
       case HB_SET_TRIMFILENAME:
          pResult = hb_itemPutL( pResult, pSet->HB_SET_TRIMFILENAME );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
             pSet->HB_SET_TRIMFILENAME = set_logical( pArg1, pSet->HB_SET_TRIMFILENAME );
          break;
       case HB_SET_HBOUTLOG:
          pResult = hb_itemPutC( pResult, pSet->HB_SET_HBOUTLOG );
-         if( pArg1 != NULL && ( HB_IS_STRING( pArg1 ) || HB_IS_NIL( pArg1 ) ) )
+         if( pArg1 != nullptr && ( HB_IS_STRING( pArg1 ) || HB_IS_NIL( pArg1 ) ) )
          {
             if( pSet->HB_SET_HBOUTLOG )
                hb_xfree( pSet->HB_SET_HBOUTLOG );
             if( HB_IS_NIL( pArg1 ) )
-               pSet->HB_SET_HBOUTLOG = NULL;
+               pSet->HB_SET_HBOUTLOG = nullptr;
             else
                /* Limit size of SET strings to 64 KiB, truncating if source is longer */
                pSet->HB_SET_HBOUTLOG = hb_strndup( hb_itemGetCPtr( pArg1 ), USHRT_MAX );
@@ -1005,7 +1005,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          break;
       case HB_SET_HBOUTLOGINFO:
          pResult = hb_itemPutC( pResult, pSet->HB_SET_HBOUTLOGINFO );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
          {
             pSet->HB_SET_HBOUTLOGINFO = set_string( pArg1, pSet->HB_SET_HBOUTLOGINFO );
             hb_xsetinfo( pSet->HB_SET_HBOUTLOGINFO );
@@ -1018,10 +1018,10 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
             hb_itemClear( pResult );
          else
             pResult = hb_itemNew( nullptr );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
          {
             if( HB_IS_NIL( pArg1 ) )
-               pSet->hb_set_oscp = NULL;
+               pSet->hb_set_oscp = nullptr;
             else if( HB_IS_STRING( pArg1 ) )
             {
                PHB_CODEPAGE cdp = hb_cdpFindExt( hb_itemGetCPtr( pArg1 ) );
@@ -1039,10 +1039,10 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
             hb_itemClear( pResult );
          else
             pResult = hb_itemNew( nullptr );
-         if( pArg1 != NULL )
+         if( pArg1 != nullptr )
          {
             if( HB_IS_NIL( pArg1 ) )
-               pSet->hb_set_dbcp = NULL;
+               pSet->hb_set_dbcp = nullptr;
             else if( HB_IS_STRING( pArg1 ) )
             {
                PHB_CODEPAGE cdp = hb_cdpFindExt( hb_itemGetCPtr( pArg1 ) );
@@ -1067,7 +1067,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult,
          break;
 #endif
    }
-   if( pArg1 != NULL )
+   if( pArg1 != nullptr )
       hb_setListenerNotify( set_specifier, HB_SET_LISTENER_AFTER );
 
    return pResult;
@@ -1086,8 +1086,8 @@ void hb_setInitialize( PHB_SET_STRUCT pSet )
    HB_TRACE( HB_TR_DEBUG, ( "hb_setInitialize(%p)", ( void * ) pSet ) );
 
    pSet->HB_SET_ALTERNATE = HB_FALSE;
-   pSet->HB_SET_ALTFILE = NULL;
-   pSet->hb_set_althan = NULL;
+   pSet->HB_SET_ALTFILE = nullptr;
+   pSet->hb_set_althan = nullptr;
    pSet->HB_SET_AUTOPEN = HB_TRUE;
    pSet->HB_SET_AUTORDER = 0;
    pSet->HB_SET_AUTOSHARE = 0;
@@ -1134,8 +1134,8 @@ void hb_setInitialize( PHB_SET_STRUCT pSet )
    pSet->HB_SET_EXCLUSIVE = HB_TRUE;
    pSet->HB_SET_EXIT = HB_FALSE;
    pSet->HB_SET_EXTRA = HB_FALSE;
-   pSet->HB_SET_EXTRAFILE = NULL;
-   pSet->hb_set_extrahan = NULL;
+   pSet->HB_SET_EXTRAFILE = nullptr;
+   pSet->hb_set_extrahan = nullptr;
    pSet->HB_SET_FIXED = HB_FALSE;
    pSet->HB_SET_FORCEOPT = HB_FALSE;
    pSet->HB_SET_HARDCOMMIT = HB_TRUE;
@@ -1149,10 +1149,10 @@ void hb_setInitialize( PHB_SET_STRUCT pSet )
    pSet->HB_SET_MFILEEXT = hb_strdup( "" );
    pSet->HB_SET_OPTIMIZE = HB_TRUE;
    pSet->HB_SET_PATH = hb_strdup( "" );
-   pSet->hb_set_path = NULL;
+   pSet->hb_set_path = nullptr;
    pSet->HB_SET_PRINTER = HB_FALSE;
    pSet->HB_SET_PRINTFILE = hb_set_PRINTFILE_default();
-   pSet->hb_set_printhan = NULL;
+   pSet->hb_set_printhan = nullptr;
    pSet->HB_SET_SCOREBOARD = HB_TRUE;
    pSet->HB_SET_SCROLLBREAK = HB_TRUE;
    pSet->HB_SET_SOFTSEEK = HB_FALSE;
@@ -1174,10 +1174,10 @@ void hb_setInitialize( PHB_SET_STRUCT pSet )
    hb_xsetfilename( pSet->HB_SET_HBOUTLOG );
    hb_xsetinfo( pSet->HB_SET_HBOUTLOGINFO );
 
-   pSet->hb_set_oscp = NULL;
-   pSet->hb_set_dbcp = NULL;
+   pSet->hb_set_oscp = nullptr;
+   pSet->hb_set_dbcp = nullptr;
 
-   pSet->hb_set_listener = NULL;
+   pSet->hb_set_listener = nullptr;
 }
 
 void hb_setRelease( PHB_SET_STRUCT pSet )
@@ -1226,9 +1226,9 @@ PHB_SET_STRUCT hb_setClone( PHB_SET_STRUCT pSrc )
 
    memcpy( pSet, pSrc, sizeof( HB_SET_STRUCT ) );
 
-   pSet->hb_set_althan = pSet->hb_set_extrahan = pSet->hb_set_printhan = NULL;
-   pSet->hb_set_path = NULL;
-   pSet->hb_set_listener = NULL;
+   pSet->hb_set_althan = pSet->hb_set_extrahan = pSet->hb_set_printhan = nullptr;
+   pSet->hb_set_path = nullptr;
+   pSet->hb_set_listener = nullptr;
 
    pSet->HB_SET_TYPEAHEAD = HB_DEFAULT_INKEY_BUFSIZE;
 
@@ -1268,7 +1268,7 @@ int hb_setListenerAdd( HB_SET_LISTENER_CALLBACK * callback )
 
    p_sl->callback = callback;
    p_sl->listener = ++pList->counter;
-   p_sl->next = NULL;
+   p_sl->next = nullptr;
 
    if( pList->last )
       pList->last->next = p_sl;
@@ -1303,7 +1303,7 @@ int hb_setListenerRemove( int listener )
    if( pList )
    {
       PHB_SET_LISTENER p_sl = pList->first;
-      PHB_SET_LISTENER p_sl_prev = NULL;
+      PHB_SET_LISTENER p_sl_prev = nullptr;
       while( p_sl )
       {
          if( listener == p_sl->listener )
@@ -1350,7 +1350,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
             {
                open_handle( pSet, hb_itemGetCPtr( pItem ), HB_FALSE, set_specifier );
                fResult = HB_TRUE;
-               if( set_specifier == HB_SET_PRINTFILE && pSet->HB_SET_PRINTFILE == NULL )
+               if( set_specifier == HB_SET_PRINTFILE && pSet->HB_SET_PRINTFILE == nullptr )
                   pSet->HB_SET_PRINTFILE = hb_set_PRINTFILE_default();
             }
             break;
@@ -1838,7 +1838,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
                pSet->HB_SET_PATH = szValue;
 
                hb_fsFreeSearchPath( pSet->hb_set_path );
-               pSet->hb_set_path = NULL;
+               pSet->hb_set_path = nullptr;
                hb_fsAddSearchPath( pSet->HB_SET_PATH, &pSet->hb_set_path );
 
                fResult = HB_TRUE;
@@ -1868,7 +1868,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
             if( HB_IS_STRING( pItem ) || HB_IS_NIL( pItem ) )
             {
                if( HB_IS_NIL( pItem ) )
-                  szValue = NULL;
+                  szValue = nullptr;
                else
                   szValue = hb_strndup( hb_itemGetCPtr( pItem ), USHRT_MAX );
                if( pSet->HB_SET_HBOUTLOG )
@@ -1892,7 +1892,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
          case HB_SET_OSCODEPAGE:
             if( HB_IS_NIL( pItem ) )
             {
-               pSet->hb_set_oscp = NULL;
+               pSet->hb_set_oscp = nullptr;
                fResult = HB_TRUE;
             }
             else if( HB_IS_STRING( pItem ) )
@@ -1908,7 +1908,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
          case HB_SET_DBCODEPAGE:
             if( HB_IS_NIL( pItem ) )
             {
-               pSet->hb_set_dbcp = NULL;
+               pSet->hb_set_dbcp = nullptr;
                fResult = HB_TRUE;
             }
             else if( HB_IS_STRING( pItem ) )
@@ -1960,7 +1960,7 @@ HB_BOOL hb_setSetItem2( HB_set_enum set_specifier, PHB_ITEM pItem1, PHB_ITEM pIt
                open_handle( pSet, hb_itemGetCPtr( pItem1 ),
                             set_logical( pItem2, HB_FALSE ), set_specifier );
                fResult = HB_TRUE;
-               if( set_specifier == HB_SET_PRINTFILE && pSet->HB_SET_PRINTFILE == NULL )
+               if( set_specifier == HB_SET_PRINTFILE && pSet->HB_SET_PRINTFILE == nullptr )
                   pSet->HB_SET_PRINTFILE = hb_set_PRINTFILE_default();
 
                hb_setListenerNotify( set_specifier, HB_SET_LISTENER_AFTER );
@@ -2130,9 +2130,9 @@ const char * hb_setGetCPtr( HB_set_enum set_specifier )
       case HB_SET_HBOUTLOGINFO:
          return pSet->HB_SET_HBOUTLOGINFO;
       case HB_SET_OSCODEPAGE:
-         return pSet->hb_set_oscp ? ( ( PHB_CODEPAGE ) pSet->hb_set_oscp )->id : NULL;
+         return pSet->hb_set_oscp ? ( ( PHB_CODEPAGE ) pSet->hb_set_oscp )->id : nullptr;
       case HB_SET_DBCODEPAGE:
-         return pSet->hb_set_dbcp ? ( ( PHB_CODEPAGE ) pSet->hb_set_dbcp )->id : NULL;
+         return pSet->hb_set_dbcp ? ( ( PHB_CODEPAGE ) pSet->hb_set_dbcp )->id : nullptr;
       case HB_SET_LANGUAGE:
          return hb_langID();
       case HB_SET_CODEPAGE:
@@ -2727,7 +2727,7 @@ const char * hb_setGetOSCODEPAGE( void )
    HB_STACK_TLS_PRELOAD
    PHB_SET_STRUCT pSet = hb_stackSetStruct();
 
-   return pSet->hb_set_oscp ? ( ( PHB_CODEPAGE ) pSet->hb_set_oscp )->id : NULL;
+   return pSet->hb_set_oscp ? ( ( PHB_CODEPAGE ) pSet->hb_set_oscp )->id : nullptr;
 }
 
 void * hb_setGetOSCP( void )
@@ -2741,7 +2741,7 @@ const char * hb_setGetDBCODEPAGE( void )
    HB_STACK_TLS_PRELOAD
    PHB_SET_STRUCT pSet = hb_stackSetStruct();
 
-   return pSet->hb_set_dbcp ? ( ( PHB_CODEPAGE ) pSet->hb_set_dbcp )->id : NULL;
+   return pSet->hb_set_dbcp ? ( ( PHB_CODEPAGE ) pSet->hb_set_dbcp )->id : nullptr;
 }
 
 HB_BOOL hb_osUseCP( void )
@@ -2777,13 +2777,13 @@ const char * hb_osEncodeCP( const char * szName, char ** pszFree, HB_SIZE * pnSi
             HB_SIZE nSize = 0;
             char * pszBuf;
 
-            if( pszFree == NULL )
+            if( pszFree == nullptr )
             {
                pszFree = ( char ** ) HB_UNCONST( &szName );
                nSize = strlen( szName );
             }
             pszBuf = *pszFree;
-            if( pnSize == NULL )
+            if( pnSize == nullptr )
                pnSize = &nSize;
             else if( *pnSize > 0 )
                nSize = *pnSize - 1;
@@ -2812,13 +2812,13 @@ const char * hb_osDecodeCP( const char * szName, char ** pszFree, HB_SIZE * pnSi
             HB_SIZE nSize = 0;
             char * pszBuf;
 
-            if( pszFree == NULL )
+            if( pszFree == nullptr )
             {
                pszFree = ( char ** ) HB_UNCONST( &szName );
                nSize = strlen( szName );
             }
             pszBuf = *pszFree;
-            if( pnSize == NULL )
+            if( pnSize == nullptr )
                pnSize = &nSize;
             else if( *pnSize > 0 )
                nSize = *pnSize - 1;
@@ -3008,7 +3008,7 @@ PHB_FILE hb_setGetPrinterHandle( int iType )
          return nullptr;
    }
 
-   if( pSet->hb_set_printhan == NULL && pSet->HB_SET_PRINTFILE )
+   if( pSet->hb_set_printhan == nullptr && pSet->HB_SET_PRINTFILE )
       open_handle( pSet, pSet->HB_SET_PRINTFILE, HB_FALSE, HB_SET_PRINTFILE );
 
    return pSet->hb_set_printhan;

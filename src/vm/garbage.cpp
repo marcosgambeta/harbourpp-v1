@@ -143,14 +143,14 @@ static HB_PTRUINT s_ulBlocksCheck = 0;
 #endif
 
 /* pointer to memory block that will be checked in next step */
-static PHB_GARBAGE s_pCurrBlock = NULL;
+static PHB_GARBAGE s_pCurrBlock = nullptr;
 /* memory blocks are stored in linked list with a loop */
 
 /* pointer to locked memory blocks */
-static PHB_GARBAGE s_pLockedBlock = NULL;
+static PHB_GARBAGE s_pLockedBlock = nullptr;
 
 /* pointer to memory blocks that will be deleted */
-static PHB_GARBAGE s_pDeletedBlock = NULL;
+static PHB_GARBAGE s_pDeletedBlock = nullptr;
 
 /* marks if block releasing is requested during garbage collecting */
 static HB_BOOL volatile s_bCollecting = HB_FALSE;
@@ -185,7 +185,7 @@ static void hb_gcUnlink( PHB_GARBAGE * pList, PHB_GARBAGE pAlloc )
    {
       *pList = pAlloc->pNext;
       if( *pList == pAlloc )
-         *pList = NULL;    /* this was the last block */
+         *pList = nullptr;    /* this was the last block */
    }
 }
 
@@ -453,7 +453,7 @@ void hb_gcAttach( void * pBlock )
             hb_gcUnlink( &s_pLockedBlock, pAlloc );
             hb_gcLink( &s_pCurrBlock, pAlloc );
             HB_GC_AUTO_INC();
-            pAlloc = NULL;
+            pAlloc = nullptr;
          }
       }
       HB_GC_UNLOCK();
@@ -630,7 +630,7 @@ void hb_gcCollectAll( HB_BOOL fForce )
        * deleted block list. [druzus]
        */
 
-      pAlloc = NULL; /* for stop condition */
+      pAlloc = nullptr; /* for stop condition */
       do
       {
          if( s_pCurrBlock->used == s_uUsedFlag )

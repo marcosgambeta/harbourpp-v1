@@ -102,12 +102,12 @@ static const HB_GC_FUNCS s_gcDynlibFuncs =
 
 PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
 {
-   void * hDynLib = NULL;
+   void * hDynLib = nullptr;
 
    if( hb_itemGetCLen( pLibName ) > 0 )
    {
       int argc = pArgs ? static_cast< int >( hb_arrayLen( pArgs ) ) : 0, i;
-      const char ** argv = NULL;
+      const char ** argv = nullptr;
 
       if( argc > 0 )
       {
@@ -124,7 +124,7 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
          {
             void * hFileName;
 
-            hDynLib = ( void * ) LoadLibrary( HB_ITEMGETSTR( pLibName, &hFileName, NULL ) );
+            hDynLib = ( void * ) LoadLibrary( HB_ITEMGETSTR( pLibName, &hFileName, nullptr ) );
 
             hb_strfree( hFileName );
          }
@@ -181,7 +181,7 @@ HB_BOOL hb_libFree( PHB_ITEM pDynLib )
       void * hDynLib = *pDynLibPtr;
       if( hDynLib )
       {
-         *pDynLibPtr = NULL;
+         *pDynLibPtr = nullptr;
          hb_vmExitSymbolGroup( hDynLib );
 #if defined( HB_OS_WIN )
          fResult = FreeLibrary( ( HMODULE ) hDynLib );
@@ -204,7 +204,7 @@ void * hb_libHandle( PHB_ITEM pDynLib )
 {
    void ** pDynLibPtr = ( void ** ) hb_itemGetPtrGC( pDynLib, &s_gcDynlibFuncs );
 
-   return pDynLibPtr ? *pDynLibPtr : NULL;
+   return pDynLibPtr ? *pDynLibPtr : nullptr;
 }
 
 void * hb_libSymAddr( PHB_ITEM pDynLib, const char * pszSymbol )
@@ -221,7 +221,7 @@ void * hb_libSymAddr( PHB_ITEM pDynLib, const char * pszSymbol )
 #elif defined( HB_OS_WIN )
       return ( void * ) GetProcAddress( ( HMODULE ) hDynLib, pszSymbol );
 #elif defined( HB_OS_OS2 )
-      PFN pProcAddr = NULL;
+      PFN pProcAddr = nullptr;
       if( DosQueryProcAddr( ( HMODULE ) hDynLib, 0, ( PCSZ ) pszSymbol, &pProcAddr ) == NO_ERROR )
          return ( void * ) pProcAddr;
 #elif defined( HB_HAS_DLFCN )

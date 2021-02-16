@@ -283,7 +283,7 @@ PHB_ITEM hb_itemPutCL( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
       pItem = hb_itemNew( nullptr );
 
    /* NOTE: CA-Cl*pper seems to be buggy here, it will return nLen bytes of
-            trash if the szText buffer is NULL, at least with hb_retclen().
+            trash if the szText buffer is nullptr, at least with hb_retclen().
             [vszakats] */
 
    pItem->type = HB_IT_STRING;
@@ -415,7 +415,7 @@ void hb_itemSetCMemo( PHB_ITEM pItem )
       pItem->type |= HB_IT_MEMOFLAG;
 }
 
-/* NOTE: The caller should free the pointer if it's not NULL. [vszakats] */
+/* NOTE: The caller should free the pointer if it's not nullptr. [vszakats] */
 
 char * hb_itemGetC( PHB_ITEM pItem )
 {
@@ -491,7 +491,7 @@ const char * hb_itemGetCRef( PHB_ITEM pItem, void ** phRef, HB_SIZE * pnLen )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemGetCRef(%p, %p, %p)", ( void * ) pItem, ( void * ) phRef, ( void * ) pnLen ) );
 
-   * phRef = NULL;
+   * phRef = nullptr;
 
    if( pItem && HB_IS_STRING( pItem ) )
    {
@@ -1429,7 +1429,7 @@ PHB_ITEM hb_itemPutSymbol( PHB_ITEM pItem, PHB_SYMB pSym )
 
    pItem->type = HB_IT_SYMBOL;
    pItem->item.asSymbol.value        = pSym;
-   pItem->item.asSymbol.stackstate   = NULL;
+   pItem->item.asSymbol.stackstate   = nullptr;
    pItem->item.asSymbol.paramcnt     =
    pItem->item.asSymbol.paramdeclcnt = 0;
 
@@ -1745,7 +1745,7 @@ void hb_itemCopyToRef( PHB_ITEM pDest, PHB_ITEM pSource )
    }
 
    if( HB_IS_OBJECT( pDest ) &&
-       hb_objOperatorCall( HB_OO_OP_ASSIGN, pDest, pDest, pSource, NULL ) )
+       hb_objOperatorCall( HB_OO_OP_ASSIGN, pDest, pDest, pSource, nullptr ) )
       return;
 
    hb_itemCopy( pDest, pSource );
@@ -1853,7 +1853,7 @@ void hb_itemMoveToRef( PHB_ITEM pDest, PHB_ITEM pSource )
    }
 
    if( HB_IS_OBJECT( pDest ) &&
-       hb_objOperatorCall( HB_OO_OP_ASSIGN, pDest, pDest, pSource, NULL ) )
+       hb_objOperatorCall( HB_OO_OP_ASSIGN, pDest, pDest, pSource, nullptr ) )
    {
       hb_itemSetNil( pSource );
       return;
@@ -2286,7 +2286,7 @@ HB_BOOL hb_itemEqual( PHB_ITEM pItem1, PHB_ITEM pItem2 )
    else if( HB_IS_SYMBOL( pItem1 ) )
       fResult = HB_IS_SYMBOL( pItem2 ) &&
                 ( pItem1->item.asSymbol.value == pItem2->item.asSymbol.value ||
-                  ( pItem1->item.asSymbol.value->pDynSym != NULL &&
+                  ( pItem1->item.asSymbol.value->pDynSym != nullptr &&
                     pItem1->item.asSymbol.value->pDynSym ==
                     pItem2->item.asSymbol.value->pDynSym ) );
 
@@ -2396,7 +2396,7 @@ HB_BOOL hb_itemCompare( PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, i
       if( HB_IS_SYMBOL( pItem2 ) )
       {
          *piResult = ( pItem1->item.asSymbol.value == pItem2->item.asSymbol.value ||
-                       ( pItem1->item.asSymbol.value->pDynSym != NULL &&
+                       ( pItem1->item.asSymbol.value->pDynSym != nullptr &&
                          pItem1->item.asSymbol.value->pDynSym ==
                          pItem2->item.asSymbol.value->pDynSym ) ) ? 0 :
                      ( pItem1->item.asSymbol.value < pItem2->item.asSymbol.value ? -1 : 1 );
@@ -2781,7 +2781,7 @@ HB_BOOL hb_itemStrBuf( char * szResult, PHB_ITEM pNumber, int iSize, int iDec )
    data for displaying, printing, or putting in a database.
 
    Note: The caller is responsible for calling hb_xfree() to free the results
-         buffer, but ONLY if the return value is not a NULL pointer! (If a NULL
+         buffer, but ONLY if the return value is not a nullptr pointer! (If a nullptr
          pointer is returned, then there was a conversion error.)
  */
 char * hb_itemStr( PHB_ITEM pNumber, PHB_ITEM pWidth, PHB_ITEM pDec )

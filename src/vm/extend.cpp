@@ -86,7 +86,7 @@ PHB_ITEM hb_paramError( int iParam )
 
    PHB_ITEM pParam = hb_param( iParam, HB_IT_ANY );
 
-   if( pParam == NULL )
+   if( pParam == nullptr )
    {
       hb_itemClear( &s_NIL );
       pParam = &s_NIL;
@@ -358,7 +358,7 @@ long hb_pardl( int iParam )
          return pItem->item.asDateTime.julian;
    }
 
-   return hb_itemGetDL( NULL );
+   return hb_itemGetDL( nullptr );
 }
 
 double hb_partd( int iParam )
@@ -758,7 +758,7 @@ const char * hb_parvc( int iParam, ... )
          va_end( va );
 
          pItem = hb_arrayGetItemPtr( pItem, nArrayIndex );
-         return pItem && HB_IS_STRING( pItem ) ? hb_itemGetCPtr( pItem ) : NULL;
+         return pItem && HB_IS_STRING( pItem ) ? hb_itemGetCPtr( pItem ) : nullptr;
       }
    }
 
@@ -964,7 +964,7 @@ long hb_parvdl( int iParam, ... )
       }
    }
 
-   return hb_itemGetDL( NULL );
+   return hb_itemGetDL( nullptr );
 }
 
 double hb_parvtd( int iParam, ... )

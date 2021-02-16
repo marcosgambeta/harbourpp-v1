@@ -199,7 +199,7 @@ HB_WCHAR * hb_wstrunshare( void ** phStr, const HB_WCHAR * pStr, HB_SIZE nLen )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_wstrunshare(%p,%p,%" HB_PFS "u)", ( void * ) phStr, ( const void * ) pStr, nLen ) );
 
-   if( pStr == NULL || phStr == NULL || *phStr == NULL )
+   if( pStr == nullptr || phStr == nullptr || *phStr == nullptr )
       return nullptr;
 
    if( nLen > 0 &&
@@ -223,7 +223,7 @@ char * hb_strunshare( void ** phStr, const char * pStr, HB_SIZE nLen )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_strunshare(%p,%p,%" HB_PFS "u)", ( void * ) phStr, ( const void * ) pStr, nLen ) );
 
-   if( pStr == NULL || phStr == NULL || *phStr == NULL )
+   if( pStr == nullptr || phStr == nullptr || *phStr == nullptr )
       return nullptr;
 
    if( nLen > 0 &&
@@ -279,9 +279,9 @@ const char * hb_itemGetStr( PHB_ITEM pItem, void * cdp, void ** phString, HB_SIZ
 
       pString = hb_cdpnDup3( pItem->item.asString.value,
                              pItem->item.asString.length,
-                             NULL, pnLen, &pFree, &nSize,
+                             nullptr, pnLen, &pFree, &nSize,
                              hb_vmCDP(), ( PHB_CODEPAGE ) cdp );
-      if( pFree != NULL )
+      if( pFree != nullptr )
          *phString = ( void * ) pFree;
       else if( pItem->item.asString.allocated == 0 )
          *phString = HB_UNCONST( s_szConstStr );
@@ -295,7 +295,7 @@ const char * hb_itemGetStr( PHB_ITEM pItem, void * cdp, void ** phString, HB_SIZ
 
    if( pnLen )
       *pnLen = 0;
-   *phString = NULL;
+   *phString = nullptr;
 
    return nullptr;
 }
@@ -335,7 +335,7 @@ const char * hb_itemGetStrUTF8( PHB_ITEM pItem, void ** phString, HB_SIZE * pnLe
 
    if( pnLen )
       *pnLen = 0;
-   *phString = NULL;
+   *phString = nullptr;
 
    return nullptr;
 }
@@ -371,7 +371,7 @@ const HB_WCHAR * hb_itemGetStrU16( PHB_ITEM pItem, int iEndian,
 
    if( pnLen )
       *pnLen = 0;
-   *phString = NULL;
+   *phString = nullptr;
 
    return nullptr;
 }
@@ -507,7 +507,7 @@ PHB_ITEM hb_itemPutStr( PHB_ITEM pItem, void * cdp, const char * pStr )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutStr(%p,%p,%p)", ( void * ) pItem, cdp, ( const void * ) pStr ) );
 
-   if( pStr == NULL )
+   if( pStr == nullptr )
       return hb_itemPutC( pItem, nullptr );
 
    nLen = strlen( pStr );
@@ -524,7 +524,7 @@ PHB_ITEM hb_itemPutStrUTF8( PHB_ITEM pItem, const char * pStr )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutStrUTF8(%p,%p)", ( void * ) pItem, ( const void * ) pStr ) );
 
-   if( pStr == NULL )
+   if( pStr == nullptr )
       return hb_itemPutC( pItem, nullptr );
 
    cdp = hb_vmCDP();
@@ -544,7 +544,7 @@ PHB_ITEM hb_itemPutStrU16( PHB_ITEM pItem, int iEndian, const HB_WCHAR * pStr )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutStrU16(%p,%d,%p)", ( void * ) pItem, iEndian, ( const void * ) pStr ) );
 
-   if( pStr == NULL )
+   if( pStr == nullptr )
       return hb_itemPutC( pItem, nullptr );
 
    cdp = hb_vmCDP();
@@ -569,7 +569,7 @@ const char * hb_arrayGetStr( PHB_ITEM pArray, HB_SIZE nIndex, void * cdp,
                             cdp, phString, pnLen );
    if( pnLen )
       *pnLen = 0;
-   *phString = NULL;
+   *phString = nullptr;
 
    return nullptr;
 }
@@ -584,7 +584,7 @@ const char * hb_arrayGetStrUTF8( PHB_ITEM pArray, HB_SIZE nIndex,
                                 phString, pnLen );
    if( pnLen )
       *pnLen = 0;
-   *phString = NULL;
+   *phString = nullptr;
 
    return nullptr;
 }
@@ -599,7 +599,7 @@ const HB_WCHAR * hb_arrayGetStrU16( PHB_ITEM pArray, HB_SIZE nIndex, int iEndian
                                iEndian, phString, pnLen );
    if( pnLen )
       *pnLen = 0;
-   *phString = NULL;
+   *phString = nullptr;
 
    return nullptr;
 }
@@ -711,7 +711,7 @@ const char * hb_parstr( int iParam, void * cdp, void ** phString, HB_SIZE * pnLe
 
    if( pnLen )
       *pnLen = 0;
-   *phString = NULL;
+   *phString = nullptr;
 
    return nullptr;
 }
@@ -734,7 +734,7 @@ const char * hb_parstr_utf8( int iParam, void ** phString, HB_SIZE * pnLen )
 
    if( pnLen )
       *pnLen = 0;
-   *phString = NULL;
+   *phString = nullptr;
 
    return nullptr;
 }
@@ -758,7 +758,7 @@ const HB_WCHAR * hb_parstr_u16( int iParam, int iEndian,
 
    if( pnLen )
       *pnLen = 0;
-   *phString = NULL;
+   *phString = nullptr;
 
    return nullptr;
 }
@@ -786,7 +786,7 @@ const char * hb_parastr( int iParam, HB_SIZE nIndex,
 
    if( pnLen )
       *pnLen = 0;
-   *phString = NULL;
+   *phString = nullptr;
 
    return nullptr;
 }
@@ -813,7 +813,7 @@ const char * hb_parastr_utf8( int iParam, HB_SIZE nIndex,
 
    if( pnLen )
       *pnLen = 0;
-   *phString = NULL;
+   *phString = nullptr;
 
    return nullptr;
 }
@@ -840,7 +840,7 @@ const HB_WCHAR * hb_parastr_u16( int iParam, HB_SIZE nIndex, int iEndian,
 
    if( pnLen )
       *pnLen = 0;
-   *phString = NULL;
+   *phString = nullptr;
 
    return nullptr;
 }

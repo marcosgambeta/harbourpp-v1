@@ -65,7 +65,7 @@
 
 /* Command-line argument management */
 static int     s_argc = 0;
-static char ** s_argv = NULL;
+static char ** s_argv = nullptr;
 
 #if ! defined( HB_OS_WIN )
 
@@ -76,9 +76,9 @@ static char    s_szAppName[ HB_PATH_MAX ];
 #include "hbwinuni.h"
 #include <windows.h>
 
-static LPTSTR * s_lpArgV = NULL;
+static LPTSTR * s_lpArgV = nullptr;
 #if defined( UNICODE )
-static LPSTR * s_lpArgVStr = NULL;
+static LPSTR * s_lpArgVStr = nullptr;
 #endif
 
 static HANDLE  s_hInstance     = 0;
@@ -99,13 +99,13 @@ void hb_winmainArgVBuild( void )
 
    /* NOTE: MAX_PATH used intentionally instead of HB_MAX_PATH */
    lpModuleName = ( LPTSTR ) HB_WINARG_ALLOC( ( MAX_PATH + 1 ) * sizeof( TCHAR ) );
-   nModuleName = GetModuleFileName( NULL, lpModuleName, MAX_PATH + 1 );
+   nModuleName = GetModuleFileName( nullptr, lpModuleName, MAX_PATH + 1 );
    if( nModuleName )
       nModuleName++;
    HB_WINARG_FREE( lpModuleName );
 
    lpCmdLine = GetCommandLine();
-   lpArgV = NULL;
+   lpArgV = nullptr;
    nSize = 0;
    iArgC = -1;
 
@@ -129,7 +129,7 @@ void hb_winmainArgVBuild( void )
       }
 
       lpSrc = lpCmdLine;
-      lpArg = NULL;
+      lpArg = nullptr;
       iArgC = 0;
       fQuoted = HB_FALSE;
 
@@ -137,13 +137,13 @@ void hb_winmainArgVBuild( void )
       {
          if( *lpSrc == TEXT( '"' ) )
          {
-            if( lpArg == NULL )
+            if( lpArg == nullptr )
                lpArg = lpDst;
             fQuoted = ! fQuoted;
          }
          else if( fQuoted || ! HB_ISSPACE( *lpSrc ) )
          {
-            if( lpArg == NULL )
+            if( lpArg == nullptr )
                lpArg = lpDst;
             if( iArgC > 0 || nModuleName == 0 )
             {
@@ -168,7 +168,7 @@ void hb_winmainArgVBuild( void )
                      nSize++;
                }
                iArgC++;
-               lpArg = NULL;
+               lpArg = nullptr;
             }
          }
          ++lpSrc;
@@ -207,7 +207,7 @@ void hb_winmainArgVBuild( void )
                because in console apps the name may be truncated
                in some cases, and in GUI apps it's not filled
                at all. [vszakats] */
-      if( GetModuleFileName( NULL, lpArgV[ 0 ], static_cast< DWORD >( nModuleName ) ) != 0 )
+      if( GetModuleFileName( nullptr, lpArgV[ 0 ], static_cast< DWORD >( nModuleName ) ) != 0 )
       {
          /* Windows XP does not set trailing 0 if buffer is not large enough [druzus] */
          lpArgV[ 0 ][ nModuleName - 1 ] = 0;
@@ -254,17 +254,17 @@ void hb_winmainArgVFree( void )
       if( s_lpArgVStr )
       {
          if( s_argv == s_lpArgVStr )
-            s_argv = NULL;
+            s_argv = nullptr;
          HB_WINARG_FREE( s_lpArgVStr );
-         s_lpArgVStr = NULL;
+         s_lpArgVStr = nullptr;
       }
 #else
       if( s_argv == s_lpArgV )
-         s_argv = NULL;
+         s_argv = nullptr;
 #endif
 
       HB_WINARG_FREE( s_lpArgV );
-      s_lpArgV = NULL;
+      s_lpArgV = nullptr;
       s_argc = 0;
    }
 }
@@ -300,10 +300,10 @@ void hb_cmdargInit( int argc, char * argv[] )
       return;
 #endif
 
-   if( argc == 0 || argv == NULL )
+   if( argc == 0 || argv == nullptr )
    {
       s_argc = 0;
-      s_argv = NULL;
+      s_argv = nullptr;
    }
    else
    {
@@ -324,18 +324,18 @@ char ** hb_cmdargARGV( void )
 
 const char * hb_cmdargARGVN( int argc )
 {
-   return argc >= 0 && argc < s_argc ? s_argv[ argc ] : NULL;
+   return argc >= 0 && argc < s_argc ? s_argv[ argc ] : nullptr;
 }
 
-/* NOTE: Pointer must be freed with hb_xfree() if not NULL */
+/* NOTE: Pointer must be freed with hb_xfree() if not nullptr */
 
 static char * hb_cmdargDup( int argc )
 {
 #if defined( HB_OS_WIN )
    if( s_lpArgV )
-      return argc >= 0 && argc < s_argc ? HB_OSSTRDUP( s_lpArgV[ argc ] ) : NULL;
+      return argc >= 0 && argc < s_argc ? HB_OSSTRDUP( s_lpArgV[ argc ] ) : nullptr;
 #endif
-   return argc >= 0 && argc < s_argc ? hb_osStrDecode( s_argv[ argc ] ) : NULL;
+   return argc >= 0 && argc < s_argc ? hb_osStrDecode( s_argv[ argc ] ) : nullptr;
 }
 
 void hb_cmdargUpdate( void )
@@ -347,10 +347,10 @@ void hb_cmdargUpdate( void )
    {
 #  if defined( HB_OS_OS2 )
       {
-         PPIB ppib = NULL;
+         PPIB ppib = nullptr;
          APIRET ulrc;
 
-         ulrc = DosGetInfoBlocks( NULL, &ppib );
+         ulrc = DosGetInfoBlocks( nullptr, &ppib );
          if( ulrc == NO_ERROR )
          {
             ulrc = DosQueryModuleName( ppib->pib_hmte,
@@ -372,7 +372,7 @@ void hb_cmdargUpdate( void )
 
             if( pszPATH && *pszPATH )
             {
-               HB_PATHNAMES * pSearchPath = NULL, * pNextPath;
+               HB_PATHNAMES * pSearchPath = nullptr, * pNextPath;
                hb_fsAddSearchPath( pszPATH, &pSearchPath );
                pNextPath = pSearchPath;
 
@@ -397,7 +397,7 @@ void hb_cmdargUpdate( void )
                }
                hb_fsFreeSearchPath( pSearchPath );
                if( ! fInPath )
-                  pFName->szPath = NULL;
+                  pFName->szPath = nullptr;
             }
             if( pszPATH )
                hb_xfree( pszPATH );
@@ -444,7 +444,7 @@ int hb_cmdargPushArgs( void )
    for( i = 1; i < s_argc; i++ )
    {
       /* Filter out any parameters beginning with //, like //INFO */
-      if( ! hb_cmdargIsInternal( s_argv[ i ], NULL ) )
+      if( ! hb_cmdargIsInternal( s_argv[ i ], nullptr ) )
       {
 #if defined( HB_OS_WIN )
          if( s_lpArgV )
@@ -566,7 +566,7 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
 
          pszEnd = pszNext;
          /* Search for the end of this switch */
-         while( *pszEnd && strchr( s_szSeparator, *pszEnd ) == NULL )
+         while( *pszEnd && strchr( s_szSeparator, *pszEnd ) == nullptr )
             pszEnd++;
 
          /* Check the switch */
@@ -603,10 +603,10 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
 
 HB_BOOL hb_cmdargCheck( const char * pszName )
 {
-   return hb_cmdargGet( pszName, HB_FALSE ) != NULL;
+   return hb_cmdargGet( pszName, HB_FALSE ) != nullptr;
 }
 
-/* NOTE: Pointer must be freed with hb_xfree() if not NULL */
+/* NOTE: Pointer must be freed with hb_xfree() if not nullptr */
 
 char * hb_cmdargString( const char * pszName )
 {
@@ -632,14 +632,14 @@ int hb_cmdargNum( const char * pszName )
       return -1;
 }
 
-/* NOTE: Pointer must be freed with hb_xfree() if not NULL */
+/* NOTE: Pointer must be freed with hb_xfree() if not nullptr */
 
 char * hb_cmdargProgName( void )
 {
    return hb_cmdargDup( 0 );
 }
 
-/* NOTE: Pointer must be freed with hb_xfree() if not NULL */
+/* NOTE: Pointer must be freed with hb_xfree() if not nullptr */
 
 char * hb_cmdargBaseProgName( void )
 {
@@ -715,7 +715,7 @@ HB_FUNC( HB_ARGSHIFT )
    {
       while( iArg < s_argc )
       {
-         if( ! hb_cmdargIsInternal( s_argv[ iArg ], NULL ) )
+         if( ! hb_cmdargIsInternal( s_argv[ iArg ], nullptr ) )
          {
             s_argv[ 0 ] = s_argv[ iArg ];
 #if defined( HB_OS_WIN )

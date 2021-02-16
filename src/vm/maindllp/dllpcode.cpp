@@ -90,7 +90,7 @@ HB_EXTERN_BEGIN
 #define HB_DLL_MSG_NO_FUNC( func )  \
    do \
    { \
-      MessageBox( NULL, \
+      MessageBox( nullptr, \
                   TEXT( "Function '" ) TEXT( func ) TEXT( "' not found!" ), \
                   TEXT( func ), \
                   MB_OK | MB_ICONERROR ); \
@@ -117,18 +117,18 @@ static HB_VM_EXECUTE s_pExecute = s_vmExecute;
 
 PHB_FUNC hb_dllGetProcAddress( const char * szProcName )
 {
-   static HB_PROC_GET s_pProcGet = NULL;
-   static HMODULE     s_hModule  = NULL;
+   static HB_PROC_GET s_pProcGet = nullptr;
+   static HMODULE     s_hModule  = nullptr;
 
-   if( s_hModule == NULL )
+   if( s_hModule == nullptr )
    {
       s_hModule = GetModuleHandle( HB_DLL_NAME );
-      if( s_hModule == NULL )
+      if( s_hModule == nullptr )
          s_hModule = GetModuleHandle( HB_DLL_NAME2 );
-      if( s_hModule == NULL )
+      if( s_hModule == nullptr )
          s_hModule = GetModuleHandle( nullptr );
 
-      if( s_hModule != NULL )
+      if( s_hModule != nullptr )
       {
          int i = 5;
 
@@ -142,13 +142,13 @@ PHB_FUNC hb_dllGetProcAddress( const char * szProcName )
             s_pProcGet = ( HB_PROC_GET ) GetProcAddress( s_hModule, s_szGetProcAddr + i );
 #endif
          }
-         while( s_pProcGet == NULL && ( i -= i == 4 ? 3 : 1 ) >= 0 );
-         if( s_pProcGet == NULL )
+         while( s_pProcGet == nullptr && ( i -= i == 4 ? 3 : 1 ) >= 0 );
+         if( s_pProcGet == nullptr )
             HB_DLL_MSG_NO_FUNC( "hb_vmProcAddress" );
       }
    }
 
-   return s_pProcGet ? s_pProcGet( szProcName ) : NULL;
+   return s_pProcGet ? s_pProcGet( szProcName ) : nullptr;
 }
 
 

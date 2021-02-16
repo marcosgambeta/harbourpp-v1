@@ -73,7 +73,7 @@ static void hb_arrayReleaseItems( PHB_BASEARRAY pBaseArray )
       if( pBaseArray->pItems )
       {
          hb_xfree( pBaseArray->pItems );
-         pBaseArray->pItems = NULL;
+         pBaseArray->pItems = nullptr;
       }
    }
 }
@@ -167,7 +167,7 @@ HB_BOOL hb_arrayNew( PHB_ITEM pItem, HB_SIZE nLen ) /* creates a new array */
          ( pItems + nPos )->type = HB_IT_NIL;
    }
    else
-      pItems = NULL;
+      pItems = nullptr;
 
    pBaseArray = ( PHB_BASEARRAY ) hb_gcAllocRaw( sizeof( HB_BASEARRAY ), &s_gcArrayFuncs );
    pBaseArray->pItems     = pItems;
@@ -252,7 +252,7 @@ HB_BOOL hb_arraySize( PHB_ITEM pArray, HB_SIZE nLen )
                if( nLen == 0 )
                {
                   hb_xfree( pBaseArray->pItems );
-                  pBaseArray->pItems = NULL;
+                  pBaseArray->pItems = nullptr;
                }
                else if( nLen < ( pBaseArray->nAllocated >> 1 ) )
                {
@@ -314,7 +314,7 @@ PHB_ITEM hb_arrayFromId( PHB_ITEM pItem, void * pArrayId )
    HB_STACK_TLS_PRELOAD
 
    hb_arrayPushBase( ( PHB_BASEARRAY ) pArrayId );
-   if( pItem == NULL )
+   if( pItem == nullptr )
       pItem = hb_itemNew( nullptr );
    hb_itemMove( pItem, hb_stackItemFromTop( -1 ) );
    hb_stackPop();
@@ -517,7 +517,7 @@ char * hb_arrayGetDS( PHB_ITEM pArray, HB_SIZE nIndex, char * szDate )
    else
       /* NOTE: Intentionally calling it with a bad parameter in order to get
                the default value from hb_itemGetDS(). [vszakats] */
-      return hb_itemGetDS( NULL, szDate );
+      return hb_itemGetDS( nullptr, szDate );
 }
 
 long hb_arrayGetDL( PHB_ITEM pArray, HB_SIZE nIndex )
@@ -529,7 +529,7 @@ long hb_arrayGetDL( PHB_ITEM pArray, HB_SIZE nIndex )
    else
       /* NOTE: Intentionally calling it with a bad parameter in order to get
                the default value from hb_itemGetDL(). [vszakats] */
-      return hb_itemGetDL( NULL );
+      return hb_itemGetDL( nullptr );
 }
 
 double hb_arrayGetTD( PHB_ITEM pArray, HB_SIZE nIndex )

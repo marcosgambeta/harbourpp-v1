@@ -228,8 +228,8 @@ HB_FUNC( AFILL )
          nCount = ( HB_SIZE ) lCount;
          hb_arrayFill( pArray,
                        pValue,
-                       HB_ISNUM( 3 ) ? &nStart : NULL,
-                       HB_ISNUM( 4 ) ? &nCount : NULL );
+                       HB_ISNUM( 3 ) ? &nStart : nullptr,
+                       HB_ISNUM( 4 ) ? &nCount : nullptr );
       }
    }
    else
@@ -254,8 +254,8 @@ HB_FUNC( ASCAN )
       HB_SIZE nCount = hb_parns( 4 );
 
       hb_retns( hb_arrayScan( pArray, pValue,
-                              HB_ISNUM( 3 ) ? &nStart : NULL,
-                              HB_ISNUM( 4 ) ? &nCount : NULL,
+                              HB_ISNUM( 3 ) ? &nStart : nullptr,
+                              HB_ISNUM( 4 ) ? &nCount : nullptr,
                               HB_FALSE ) );
    }
    else
@@ -274,8 +274,8 @@ HB_FUNC( HB_ASCAN )
       HB_SIZE nCount = hb_parns( 4 );
 
       hb_retns( hb_arrayScan( pArray, pValue,
-                              HB_ISNUM( 3 ) ? &nStart : NULL,
-                              HB_ISNUM( 4 ) ? &nCount : NULL,
+                              HB_ISNUM( 3 ) ? &nStart : nullptr,
+                              HB_ISNUM( 4 ) ? &nCount : nullptr,
                               hb_parl( 5 ) ) );
    }
    else
@@ -293,8 +293,8 @@ HB_FUNC( HB_RASCAN )
       HB_SIZE nCount = hb_parns( 4 );
 
       hb_retns( hb_arrayRevScan( pArray, pValue,
-                                 HB_ISNUM( 3 ) ? &nStart : NULL,
-                                 HB_ISNUM( 4 ) ? &nCount : NULL,
+                                 HB_ISNUM( 3 ) ? &nStart : nullptr,
+                                 HB_ISNUM( 4 ) ? &nCount : nullptr,
                                  hb_parl( 5 ) ) );
    }
    else
@@ -365,8 +365,8 @@ HB_FUNC( AEVAL )
 
       hb_arrayEval( pArray,
                     pBlock,
-                    HB_ISNUM( 3 ) ? &nStart : NULL,
-                    HB_ISNUM( 4 ) ? &nCount : NULL );
+                    HB_ISNUM( 3 ) ? &nStart : nullptr,
+                    HB_ISNUM( 4 ) ? &nCount : nullptr );
 
       hb_itemReturn( pArray ); /* AEval() returns the array itself */
    }
@@ -390,9 +390,9 @@ HB_FUNC( ACOPY )
 
          hb_arrayCopy( pSrcArray,
                        pDstArray,
-                       HB_ISNUM( 3 ) ? &nStart : NULL,
-                       HB_ISNUM( 4 ) ? &nCount : NULL,
-                       HB_ISNUM( 5 ) ? &nTarget : NULL );
+                       HB_ISNUM( 3 ) ? &nStart : nullptr,
+                       HB_ISNUM( 4 ) ? &nCount : nullptr,
+                       HB_ISNUM( 5 ) ? &nTarget : nullptr );
       }
 
       hb_itemReturn( pDstArray ); /* ACopy() returns the target array */

@@ -54,7 +54,7 @@
 #define HB_DLL_MSG_NO_FUNC( func )  \
    do \
    { \
-      MessageBox( NULL, \
+      MessageBox( nullptr, \
                   TEXT( "Function '" ) TEXT( func ) TEXT( "' not found!" ), \
                   TEXT( func ), \
                   MB_OK | MB_ICONERROR ); \
@@ -62,7 +62,7 @@
 
 int hb_pcount( void )
 {
-   static HB_PCOUNT s_pcount = NULL;
+   static HB_PCOUNT s_pcount = nullptr;
 
    if( ! s_pcount )
    {
@@ -76,7 +76,7 @@ int hb_pcount( void )
 
 HB_ULONG hb_parinfo( int iParam )
 {
-   static HB_PARINFO s_parinfo = NULL;
+   static HB_PARINFO s_parinfo = nullptr;
 
    if( ! s_parinfo )
    {
@@ -89,7 +89,7 @@ HB_ULONG hb_parinfo( int iParam )
 
 HB_SIZE hb_parinfa( int iParam, HB_SIZE nArrayIndex )
 {
-   static HB_PARINFA s_parinfa = NULL;
+   static HB_PARINFA s_parinfa = nullptr;
 
    if( ! s_parinfa )
    {
@@ -102,7 +102,7 @@ HB_SIZE hb_parinfa( int iParam, HB_SIZE nArrayIndex )
 
 PHB_ITEM hb_param( int iParam, long lMask )
 {
-   static HB_PARAM s_param = NULL;
+   static HB_PARAM s_param = nullptr;
 
    if( ! s_param )
    {
@@ -111,12 +111,12 @@ PHB_ITEM hb_param( int iParam, long lMask )
          HB_DLL_MSG_NO_FUNC( "hb_param" );
    }
 
-   return s_param ? s_param( iParam, lMask ) : NULL;
+   return s_param ? s_param( iParam, lMask ) : nullptr;
 }
 
 PHB_ITEM hb_paramError( int iParam )
 {
-   static HB_PARAMERROR s_paramError = NULL;
+   static HB_PARAMERROR s_paramError = nullptr;
 
    if( ! s_paramError )
    {
@@ -125,12 +125,12 @@ PHB_ITEM hb_paramError( int iParam )
          HB_DLL_MSG_NO_FUNC( "hb_paramError" );
    }
 
-   return s_paramError ? s_paramError( iParam ) : NULL;
+   return s_paramError ? s_paramError( iParam ) : nullptr;
 }
 
 HB_BOOL hb_extIsNil( int iParam )
 {
-   static HB_EXTISPARAM s_extIsNil = NULL;
+   static HB_EXTISPARAM s_extIsNil = nullptr;
 
    if( ! s_extIsNil )
    {
@@ -144,7 +144,7 @@ HB_BOOL hb_extIsNil( int iParam )
 
 HB_BOOL hb_extIsArray( int iParam )
 {
-   static HB_EXTISPARAM s_extIsArray = NULL;
+   static HB_EXTISPARAM s_extIsArray = nullptr;
 
    if( ! s_extIsArray )
    {
@@ -158,7 +158,7 @@ HB_BOOL hb_extIsArray( int iParam )
 
 HB_BOOL hb_extIsObject( int iParam )
 {
-   static HB_EXTISPARAM s_extIsObject = NULL;
+   static HB_EXTISPARAM s_extIsObject = nullptr;
 
    if( ! s_extIsObject )
    {
@@ -173,7 +173,7 @@ HB_BOOL hb_extIsObject( int iParam )
 
 void hb_ret( void )
 {
-   static HB_RET s_ret = NULL;
+   static HB_RET s_ret = nullptr;
 
    if( ! s_ret )
    {
@@ -188,7 +188,7 @@ void hb_ret( void )
 
 void hb_retc( const char * szText )
 {
-   static HB_RETC s_retc = NULL;
+   static HB_RETC s_retc = nullptr;
 
    if( ! s_retc )
    {
@@ -203,7 +203,7 @@ void hb_retc( const char * szText )
 
 void hb_retclen( const char * szText, HB_SIZE nLen )
 {
-   static HB_RETCLEN s_retclen = NULL;
+   static HB_RETCLEN s_retclen = nullptr;
 
    if( ! s_retclen )
    {
@@ -218,7 +218,7 @@ void hb_retclen( const char * szText, HB_SIZE nLen )
 
 void hb_retds( const char * szDate )
 {
-   static HB_RETDS s_retds = NULL;
+   static HB_RETDS s_retds = nullptr;
 
    if( ! s_retds )
    {
@@ -233,7 +233,7 @@ void hb_retds( const char * szDate )
 
 void hb_retd( int iYear, int iMonth, int iDay )
 {
-   static HB_RETD s_retd = NULL;
+   static HB_RETD s_retd = nullptr;
 
    if( ! s_retd )
    {
@@ -248,7 +248,7 @@ void hb_retd( int iYear, int iMonth, int iDay )
 
 void hb_retdl( long lJulian )
 {
-   static HB_RETDL s_retdl = NULL;
+   static HB_RETDL s_retdl = nullptr;
 
    if( ! s_retdl )
    {
@@ -263,7 +263,7 @@ void hb_retdl( long lJulian )
 
 void hb_retl( int iValue )
 {
-   static HB_RETL s_retl = NULL;
+   static HB_RETL s_retl = nullptr;
 
    if( ! s_retl )
    {
@@ -278,7 +278,7 @@ void hb_retl( int iValue )
 
 void hb_retnd( double dNumber )
 {
-   static HB_RETND s_retnd = NULL;
+   static HB_RETND s_retnd = nullptr;
 
    if( ! s_retnd )
    {
@@ -293,7 +293,7 @@ void hb_retnd( double dNumber )
 
 void hb_retni( int iNumber )
 {
-   static HB_RETNI s_retni = NULL;
+   static HB_RETNI s_retni = nullptr;
 
    if( ! s_retni )
    {
@@ -308,7 +308,7 @@ void hb_retni( int iNumber )
 
 void hb_retnl( long lNumber )
 {
-   static HB_RETNL s_retnl = NULL;
+   static HB_RETNL s_retnl = nullptr;
 
    if( ! s_retnl )
    {
@@ -323,7 +323,7 @@ void hb_retnl( long lNumber )
 
 void hb_retnlen( double dNumber, int iWidth, int iDec )
 {
-   static HB_RETNLEN s_retnlen = NULL;
+   static HB_RETNLEN s_retnlen = nullptr;
 
    if( ! s_retnlen )
    {
@@ -338,7 +338,7 @@ void hb_retnlen( double dNumber, int iWidth, int iDec )
 
 void hb_retndlen( double dNumber, int iWidth, int iDec )
 {
-   static HB_RETNDLEN s_retndlen = NULL;
+   static HB_RETNDLEN s_retndlen = nullptr;
 
    if( ! s_retndlen )
    {
@@ -353,7 +353,7 @@ void hb_retndlen( double dNumber, int iWidth, int iDec )
 
 void hb_retnilen( int iNumber, int iWidth )
 {
-   static HB_RETNILEN s_retnilen = NULL;
+   static HB_RETNILEN s_retnilen = nullptr;
 
    if( ! s_retnilen )
    {
@@ -368,7 +368,7 @@ void hb_retnilen( int iNumber, int iWidth )
 
 void hb_retnllen( long lNumber, int iWidth )
 {
-   static HB_RETNLLEN s_retnllen = NULL;
+   static HB_RETNLLEN s_retnllen = nullptr;
 
    if( ! s_retnllen )
    {
@@ -383,7 +383,7 @@ void hb_retnllen( long lNumber, int iWidth )
 
 void hb_reta( HB_SIZE nLen )
 {
-   static HB_RETA s_reta = NULL;
+   static HB_RETA s_reta = nullptr;
 
    if( ! s_reta )
    {
@@ -398,7 +398,7 @@ void hb_reta( HB_SIZE nLen )
 
 const char * hb_parvc( int iParam, ... )
 {
-   static HB_PARVC s_parvc = NULL;
+   static HB_PARVC s_parvc = nullptr;
 
    if( ! s_parvc )
    {
@@ -427,7 +427,7 @@ const char * hb_parvc( int iParam, ... )
 
 HB_SIZE hb_parvclen( int iParam, ... )
 {
-   static HB_PARVCLEN s_parvclen = NULL;
+   static HB_PARVCLEN s_parvclen = nullptr;
 
    if( ! s_parvclen )
    {
@@ -456,7 +456,7 @@ HB_SIZE hb_parvclen( int iParam, ... )
 
 HB_SIZE hb_parvcsiz( int iParam, ... )
 {
-   static HB_PARVCSIZ s_parvcsiz = NULL;
+   static HB_PARVCSIZ s_parvcsiz = nullptr;
 
    if( ! s_parvcsiz )
    {
@@ -485,7 +485,7 @@ HB_SIZE hb_parvcsiz( int iParam, ... )
 
 const char * hb_parvds( int iParam, ... )
 {
-   static HB_PARVDS s_parvds = NULL;
+   static HB_PARVDS s_parvds = nullptr;
 
    if( ! s_parvds )
    {
@@ -514,7 +514,7 @@ const char * hb_parvds( int iParam, ... )
 
 char * hb_parvdsbuff( char * szDate, int iParam, ... )
 {
-   static HB_PARVDSBUFF s_parvdsbuff = NULL;
+   static HB_PARVDSBUFF s_parvdsbuff = nullptr;
 
    if( ! s_parvdsbuff )
    {
@@ -543,7 +543,7 @@ char * hb_parvdsbuff( char * szDate, int iParam, ... )
 
 int hb_parvl( int iParam, ... )
 {
-   static HB_PARVL s_parvl = NULL;
+   static HB_PARVL s_parvl = nullptr;
 
    if( ! s_parvl )
    {
@@ -572,7 +572,7 @@ int hb_parvl( int iParam, ... )
 
 double hb_parvnd( int iParam, ... )
 {
-   static HB_PARVND s_parvnd = NULL;
+   static HB_PARVND s_parvnd = nullptr;
 
    if( ! s_parvnd )
    {
@@ -601,7 +601,7 @@ double hb_parvnd( int iParam, ... )
 
 int hb_parvni( int iParam, ... )
 {
-   static HB_PARVNI s_parvni = NULL;
+   static HB_PARVNI s_parvni = nullptr;
 
    if( ! s_parvni )
    {
@@ -630,7 +630,7 @@ int hb_parvni( int iParam, ... )
 
 long hb_parvnl( int iParam, ... )
 {
-   static HB_PARVNL s_parvnl = NULL;
+   static HB_PARVNL s_parvnl = nullptr;
 
    if( ! s_parvnl )
    {
@@ -659,7 +659,7 @@ long hb_parvnl( int iParam, ... )
 
 int hb_storvc( const char * szText, int iParam, ... )
 {
-   static HB_STORVC s_storvc = NULL;
+   static HB_STORVC s_storvc = nullptr;
 
    if( ! s_storvc )
    {
@@ -688,7 +688,7 @@ int hb_storvc( const char * szText, int iParam, ... )
 
 int hb_storvclen( const char * szText, HB_SIZE nLen, int iParam, ... )
 {
-   static HB_STORVCLEN s_storvclen = NULL;
+   static HB_STORVCLEN s_storvclen = nullptr;
 
    if( ! s_storvclen )
    {
@@ -717,7 +717,7 @@ int hb_storvclen( const char * szText, HB_SIZE nLen, int iParam, ... )
 
 int hb_storvds( const char * szDate, int iParam, ... )
 {
-   static HB_STORVDS s_storvds = NULL;
+   static HB_STORVDS s_storvds = nullptr;
 
    if( ! s_storvds )
    {
@@ -746,7 +746,7 @@ int hb_storvds( const char * szDate, int iParam, ... )
 
 int hb_storvl( int iLogical, int iParam, ... )
 {
-   static HB_STORVL s_storvl = NULL;
+   static HB_STORVL s_storvl = nullptr;
 
    if( ! s_storvl )
    {
@@ -775,7 +775,7 @@ int hb_storvl( int iLogical, int iParam, ... )
 
 int hb_storvni( int iValue, int iParam, ... )
 {
-   static HB_STORVNI s_storvni = NULL;
+   static HB_STORVNI s_storvni = nullptr;
 
    if( ! s_storvni )
    {
@@ -804,7 +804,7 @@ int hb_storvni( int iValue, int iParam, ... )
 
 int hb_storvnl( long lValue, int iParam, ... )
 {
-   static HB_STORVNL s_storvnl = NULL;
+   static HB_STORVNL s_storvnl = nullptr;
 
    if( ! s_storvnl )
    {
@@ -833,7 +833,7 @@ int hb_storvnl( long lValue, int iParam, ... )
 
 int hb_storvnd( double dNumber, int iParam, ... )
 {
-   static HB_STORVND s_storvnd = NULL;
+   static HB_STORVND s_storvnd = nullptr;
 
    if( ! s_storvnd )
    {
@@ -862,7 +862,7 @@ int hb_storvnd( double dNumber, int iParam, ... )
 
 HB_BOOL hb_arrayNew( PHB_ITEM pItem, HB_SIZE nLen )
 {
-   static HB_ARRAYNEW s_arrayNew = NULL;
+   static HB_ARRAYNEW s_arrayNew = nullptr;
 
    if( ! s_arrayNew )
    {
@@ -875,7 +875,7 @@ HB_BOOL hb_arrayNew( PHB_ITEM pItem, HB_SIZE nLen )
 
 HB_SIZE hb_arrayLen( PHB_ITEM pArray )
 {
-   static HB_ARRAYLEN s_arrayLen = NULL;
+   static HB_ARRAYLEN s_arrayLen = nullptr;
 
    if( ! s_arrayLen )
    {
@@ -888,7 +888,7 @@ HB_SIZE hb_arrayLen( PHB_ITEM pArray )
 
 HB_BOOL hb_arrayIsObject( PHB_ITEM pArray )
 {
-   static HB_ARRAYISOBJECT s_arrayIsObject = NULL;
+   static HB_ARRAYISOBJECT s_arrayIsObject = nullptr;
 
    if( ! s_arrayIsObject )
    {
@@ -901,7 +901,7 @@ HB_BOOL hb_arrayIsObject( PHB_ITEM pArray )
 
 HB_BOOL hb_arrayAdd( PHB_ITEM pArray, PHB_ITEM pItem )
 {
-   static HB_ARRAYADD s_arrayAdd = NULL;
+   static HB_ARRAYADD s_arrayAdd = nullptr;
 
    if( ! s_arrayAdd )
    {
@@ -914,7 +914,7 @@ HB_BOOL hb_arrayAdd( PHB_ITEM pArray, PHB_ITEM pItem )
 
 HB_BOOL hb_arrayIns( PHB_ITEM pArray, HB_SIZE nIndex )
 {
-   static HB_ARRAYINS s_arrayIns = NULL;
+   static HB_ARRAYINS s_arrayIns = nullptr;
 
    if( ! s_arrayIns )
    {
@@ -927,7 +927,7 @@ HB_BOOL hb_arrayIns( PHB_ITEM pArray, HB_SIZE nIndex )
 
 HB_BOOL hb_arrayDel( PHB_ITEM pArray, HB_SIZE nIndex )
 {
-   static HB_ARRAYDEL s_arrayDel = NULL;
+   static HB_ARRAYDEL s_arrayDel = nullptr;
 
    if( ! s_arrayDel )
    {
@@ -940,7 +940,7 @@ HB_BOOL hb_arrayDel( PHB_ITEM pArray, HB_SIZE nIndex )
 
 HB_BOOL hb_arraySize( PHB_ITEM pArray, HB_SIZE nLen )
 {
-   static HB_ARRAYSIZE s_arraySize = NULL;
+   static HB_ARRAYSIZE s_arraySize = nullptr;
 
    if( ! s_arraySize )
    {
@@ -953,7 +953,7 @@ HB_BOOL hb_arraySize( PHB_ITEM pArray, HB_SIZE nLen )
 
 HB_BOOL hb_arrayLast( PHB_ITEM pArray, PHB_ITEM pResult )
 {
-   static HB_ARRAYLAST s_arrayLast = NULL;
+   static HB_ARRAYLAST s_arrayLast = nullptr;
 
    if( ! s_arrayLast )
    {
@@ -966,7 +966,7 @@ HB_BOOL hb_arrayLast( PHB_ITEM pArray, PHB_ITEM pResult )
 
 HB_BOOL hb_arraySet( PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem )
 {
-   static HB_ARRAYSET s_arraySet = NULL;
+   static HB_ARRAYSET s_arraySet = nullptr;
 
    if( ! s_arraySet )
    {
@@ -979,7 +979,7 @@ HB_BOOL hb_arraySet( PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem )
 
 HB_BOOL hb_arrayGet( PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem )
 {
-   static HB_ARRAYGET s_arrayGet = NULL;
+   static HB_ARRAYGET s_arrayGet = nullptr;
 
    if( ! s_arrayGet )
    {
@@ -992,7 +992,7 @@ HB_BOOL hb_arrayGet( PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem )
 
 void * hb_xalloc( HB_SIZE nSize )
 {
-   static HB_XALLOC s_xalloc = NULL;
+   static HB_XALLOC s_xalloc = nullptr;
 
    if( ! s_xalloc )
    {
@@ -1001,12 +1001,12 @@ void * hb_xalloc( HB_SIZE nSize )
          HB_DLL_MSG_NO_FUNC( "hb_xalloc" );
    }
 
-   return s_xalloc ? s_xalloc( nSize ) : NULL;
+   return s_xalloc ? s_xalloc( nSize ) : nullptr;
 }
 
 void * hb_xgrab( HB_SIZE nSize )
 {
-   static HB_XGRAB s_xgrab = NULL;
+   static HB_XGRAB s_xgrab = nullptr;
 
    if( ! s_xgrab )
    {
@@ -1015,12 +1015,12 @@ void * hb_xgrab( HB_SIZE nSize )
          HB_DLL_MSG_NO_FUNC( "hb_xgrab" );
    }
 
-   return s_xgrab ? s_xgrab( nSize ) : NULL;
+   return s_xgrab ? s_xgrab( nSize ) : nullptr;
 }
 
 void hb_xfree( void * pMem )
 {
-   static HB_XFREE s_xfree = NULL;
+   static HB_XFREE s_xfree = nullptr;
 
    if( ! s_xfree )
    {
@@ -1035,7 +1035,7 @@ void hb_xfree( void * pMem )
 
 void * hb_xrealloc( void * pMem, HB_SIZE nSize )
 {
-   static HB_XREALLOC s_xrealloc = NULL;
+   static HB_XREALLOC s_xrealloc = nullptr;
 
    if( ! s_xrealloc )
    {
@@ -1044,12 +1044,12 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )
          HB_DLL_MSG_NO_FUNC( "hb_xrealloc" );
    }
 
-   return s_xrealloc ? s_xrealloc( pMem, nSize ) : NULL;
+   return s_xrealloc ? s_xrealloc( pMem, nSize ) : nullptr;
 }
 
 void hb_macroTextValue( PHB_ITEM pItem )
 {
-   static HB_MACROTEXTVALUE s_macroTextValue = NULL;
+   static HB_MACROTEXTVALUE s_macroTextValue = nullptr;
 
    if( ! s_macroTextValue )
    {

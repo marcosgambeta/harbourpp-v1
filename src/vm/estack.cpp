@@ -89,17 +89,17 @@
 #        endif
 #     elif ! defined( _HB_STACK_LOCAL_MACROS_ )
 #        if defined( __BORLANDC__ )
-            PHB_STACK HB_TLS_ATTR hb_stack_ptr = NULL;
+            PHB_STACK HB_TLS_ATTR hb_stack_ptr = nullptr;
 #        else
-            HB_TLS_ATTR PHB_STACK hb_stack_ptr = NULL;
+            HB_TLS_ATTR PHB_STACK hb_stack_ptr = nullptr;
 #        endif
 #     endif
 
 #     define hb_stack_alloc()    do { hb_stack_ptr = ( PHB_STACK ) \
                                       hb_xgrab( sizeof( HB_STACK ) ); } while( 0 )
 #     define hb_stack_dealloc()  do { hb_xfree( hb_stack_ptr ); \
-                                      hb_stack_ptr = NULL; } while( 0 )
-#     define hb_stack_ready()    (hb_stack_ptr != NULL)
+                                      hb_stack_ptr = nullptr; } while( 0 )
+#     define hb_stack_ready()    (hb_stack_ptr != nullptr)
 
 #  else
 
@@ -118,7 +118,7 @@
                                                   hb_xgrab( sizeof( HB_STACK ) ) ); \
                                  } while( 0 )
 #     define hb_stack_dealloc()  do { hb_xfree( ( void * ) hb_tls_get( hb_stack_key ) ); \
-                                      hb_tls_set( hb_stack_key, NULL ); } \
+                                      hb_tls_set( hb_stack_key, nullptr ); } \
                                  while( 0 )
 #     define hb_stack_ready()    ( s_fInited && hb_tls_get( hb_stack_key ) )
 
@@ -152,7 +152,7 @@ static HB_TRACEINFO s_traceInfo;
 
 /* --- */
 
-static HB_SYMB s_initSymbol = { "hb_stackInit", { HB_FS_STATIC }, { NULL }, NULL };
+static HB_SYMB s_initSymbol = { "hb_stackInit", { HB_FS_STATIC }, { nullptr }, nullptr };
 
 /* --- */
 
@@ -203,7 +203,7 @@ static void hb_stack_destroy_TSD( PHB_STACK pStack )
       if( --pStack->iTSD == 0 )
       {
          hb_xfree( pStack->pTSD );
-         pStack->pTSD = NULL;
+         pStack->pTSD = nullptr;
       }
    }
 }
@@ -219,7 +219,7 @@ static void hb_stack_free( PHB_STACK pStack )
    if( pStack->privates.stack )
    {
       hb_xfree( pStack->privates.stack );
-      pStack->privates.stack = NULL;
+      pStack->privates.stack = nullptr;
       pStack->privates.size = pStack->privates.count =
       pStack->privates.base = 0;
    }
@@ -227,18 +227,18 @@ static void hb_stack_free( PHB_STACK pStack )
    while( n >= 0 )
       hb_xfree( pStack->pItems[ n-- ] );
    hb_xfree( pStack->pItems );
-   pStack->pItems = pStack->pPos = pStack->pBase = NULL;
+   pStack->pItems = pStack->pPos = pStack->pBase = nullptr;
    pStack->nItems = 0;
 #if defined( HB_MT_VM )
    if( pStack->pDirBuffer )
    {
       hb_xfree( pStack->pDirBuffer );
-      pStack->pDirBuffer = NULL;
+      pStack->pDirBuffer = nullptr;
    }
    if( pStack->uiDynH )
    {
       hb_xfree( pStack->pDynH );
-      pStack->pDynH = NULL;
+      pStack->pDynH = nullptr;
       pStack->uiDynH = 0;
    }
 #endif
@@ -261,7 +261,7 @@ void * hb_stackGetTSD( PHB_TSD pTSD )
 
 #if defined( HB_MT_VM )
    if( pTSD->iHandle == 0 || pTSD->iHandle > hb_stack.iTSD ||
-       hb_stack.pTSD[ pTSD->iHandle ].pTSD == NULL )
+       hb_stack.pTSD[ pTSD->iHandle ].pTSD == nullptr )
    {
       if( pTSD->iHandle == 0 )
       {
@@ -312,9 +312,9 @@ void * hb_stackTestTSD( PHB_TSD pTSD )
 
 #if defined( HB_MT_VM )
    return ( pTSD->iHandle && pTSD->iHandle <= hb_stack.iTSD ) ?
-                          hb_stack.pTSD[ pTSD->iHandle ].value : NULL;
+                          hb_stack.pTSD[ pTSD->iHandle ].value : nullptr;
 #else
-   return pTSD->iHandle ? hb_stack.pTSD[ pTSD->iHandle ].value : NULL;
+   return pTSD->iHandle ? hb_stack.pTSD[ pTSD->iHandle ].value : nullptr;
 #endif
 }
 
@@ -330,8 +330,8 @@ void hb_stackReleaseTSD( PHB_TSD pTSD )
       if( pTSD->pCleanFunc )
          pTSD->pCleanFunc( hb_stack.pTSD[ pTSD->iHandle ].value );
       hb_xfree( hb_stack.pTSD[ pTSD->iHandle ].value );
-      hb_stack.pTSD[ pTSD->iHandle ].value = NULL;
-      hb_stack.pTSD[ pTSD->iHandle ].pTSD  = NULL;
+      hb_stack.pTSD[ pTSD->iHandle ].value = nullptr;
+      hb_stack.pTSD[ pTSD->iHandle ].pTSD  = nullptr;
       pTSD->iHandle = 0;
       /* TODO: add recovery system to not lose TSD handles and
        *       make this functionality more general and public
@@ -440,7 +440,7 @@ void hb_stackClearMemvars( HB_SYMCNT uiExcept )
          if( hb_stack.pDynH[ uiDynSym ].pMemvar )
          {
             PHB_ITEM pMemvar = ( PHB_ITEM ) hb_stack.pDynH[ uiDynSym ].pMemvar;
-            hb_stack.pDynH[ uiDynSym ].pMemvar = NULL;
+            hb_stack.pDynH[ uiDynSym ].pMemvar = nullptr;
             hb_memvarValueDecRef( pMemvar );
          }
       }
@@ -807,7 +807,7 @@ PHB_ITEM hb_stackNewFrame( PHB_STACK_STATE pFrame, HB_USHORT uiParams )
 
    pFrame->nBaseItem = hb_stack.pBase - hb_stack.pItems;
    pFrame->pStatics = hb_stack.pStatics;
-   /* as some type of protection we can set hb_stack.pStatics to NULL here */
+   /* as some type of protection we can set hb_stack.pStatics to nullptr here */
    pFrame->nPrivateBase = hb_memvarGetPrivatesBase();
    pFrame->uiClass = pFrame->uiMethod = pFrame->uiLineNo = 0;
    pFrame->fDebugging = HB_FALSE;
@@ -880,7 +880,7 @@ PHB_ITEM hb_stackLocalVariable( int iLocal )
 
 /*
    if( iLocal <= 0 )
-      hb_errInternal( HB_EI_STACKUFLOW, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_STACKUFLOW, nullptr, nullptr, nullptr );
  */
    if( pBase->item.asSymbol.paramcnt > pBase->item.asSymbol.paramdeclcnt )
    {
@@ -904,7 +904,7 @@ PHB_ITEM hb_stackLocalVariableAt( int * piFromBase )
 
 /*
    if( *piFromBase <= 0 )
-      hb_errInternal( HB_EI_STACKUFLOW, NULL, NULL, NULL );
+      hb_errInternal( HB_EI_STACKUFLOW, nullptr, nullptr, nullptr );
  */
    if( pBase->item.asSymbol.paramcnt > pBase->item.asSymbol.paramdeclcnt )
    {
@@ -1104,7 +1104,7 @@ PHB_ITEM hb_stackWithObjectItem( void )
 {
    HB_STACK_TLS_PRELOAD
    return hb_stack.nWithObject ?
-                        * ( hb_stack.pItems + hb_stack.nWithObject ) : NULL;
+                        * ( hb_stack.pItems + hb_stack.nWithObject ) : nullptr;
 }
 
 #undef hb_stackWithObjectOffset
@@ -1224,7 +1224,7 @@ HB_ISIZ hb_stackBaseSymbolOffset( PHB_SYMB pSymbol )
    {
       PHB_ITEM pItem = hb_stack.pItems[ nOffset ];
       if( pItem->item.asSymbol.value == pSymbol ||
-          ( pSymbol->pDynSym != NULL &&
+          ( pSymbol->pDynSym != nullptr &&
             pItem->item.asSymbol.value->pDynSym == pSymbol->pDynSym ) )
          return nOffset;
       nOffset = pItem->item.asSymbol.stackstate->nBaseItem;
@@ -1333,7 +1333,7 @@ static void hb_stackIsMemvarRef( PHB_STACK pStack )
       }
    }
 #else
-   hb_dynsymEval( hb_stackMemvarScan, NULL );
+   hb_dynsymEval( hb_stackMemvarScan, nullptr );
 #endif
 }
 

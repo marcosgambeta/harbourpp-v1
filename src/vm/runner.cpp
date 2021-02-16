@@ -287,7 +287,7 @@ static void hb_hrbUnLoad( PHRB_BODY pHrbBody )
             if( pDyn && pDyn->pSymbol->value.pCodeFunc ==
                         &pHrbBody->pDynFunc[ ul ].pcodeFunc )
             {
-               pDyn->pSymbol->value.pCodeFunc = NULL;
+               pDyn->pSymbol->value.pCodeFunc = nullptr;
             }
          }
          if( pHrbBody->pDynFunc[ ul ].pCode )
@@ -304,7 +304,7 @@ static void hb_hrbUnLoad( PHRB_BODY pHrbBody )
 
 static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHORT usMode, const char * szFileName )
 {
-   PHRB_BODY pHrbBody = NULL;
+   PHRB_BODY pHrbBody = nullptr;
 
    if( szHrbBody )
    {
@@ -333,9 +333,9 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
       pHrbBody->fExit = HB_FALSE;
       pHrbBody->lSymStart = -1;
       pHrbBody->ulFuncs = 0;
-      pHrbBody->pSymRead = NULL;
-      pHrbBody->pDynFunc = NULL;
-      pHrbBody->pModuleSymbols = NULL;
+      pHrbBody->pSymRead = nullptr;
+      pHrbBody->pDynFunc = nullptr;
+      pHrbBody->pModuleSymbols = nullptr;
       if( ! hb_hrbReadValue( szHrbBody, nBodySize, &nBodyOffset, &pHrbBody->ulSymbols ) ||
             pHrbBody->ulSymbols == 0 )
       {
@@ -380,7 +380,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
          while( ch );
          pSymRead[ ul ].scope.value = ( HB_BYTE ) szHrbBody[ nBodyOffset++ ];
          pSymRead[ ul ].value.pCodeFunc = ( PHB_PCODEFUNC ) ( HB_PTRUINT ) szHrbBody[ nBodyOffset++ ];
-         pSymRead[ ul ].pDynSym = NULL;
+         pSymRead[ ul ].pDynSym = nullptr;
 
          if( pHrbBody->lSymStart == -1 &&
              ( pSymRead[ ul ].scope.value & HB_FS_FIRST ) != 0 &&
@@ -412,7 +412,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
 
             /* Read name of function */
             pDynFunc[ ul ].szName = hb_hrbReadId( szHrbBody, nBodySize, &nBodyOffset );
-            if( pDynFunc[ ul ].szName == NULL )
+            if( pDynFunc[ ul ].szName == nullptr )
                break;
 
             /* Read size of function */
@@ -469,7 +469,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
          /* External function */
          if( pSymRead[ ul ].value.pCodeFunc == ( PHB_PCODEFUNC ) SYM_EXTERN )
          {
-            pSymRead[ ul ].value.pCodeFunc = NULL;
+            pSymRead[ ul ].value.pCodeFunc = nullptr;
 
             pDynSym = hb_dynsymFind( pSymRead[ ul ].szName );
 
@@ -549,7 +549,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
       {
          hb_xfree( pSymRead );
          hb_hrbUnLoad( pHrbBody );
-         pHrbBody = NULL;
+         pHrbBody = nullptr;
       }
    }
 
@@ -558,7 +558,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
 
 static PHRB_BODY hb_hrbLoadFromFile( const char * szHrb, HB_USHORT usMode )
 {
-   PHRB_BODY pHrbBody = NULL;
+   PHRB_BODY pHrbBody = nullptr;
    PHB_ITEM pError = nullptr;
    PHB_FILE pFile;
 
@@ -566,21 +566,21 @@ static PHRB_BODY hb_hrbLoadFromFile( const char * szHrb, HB_USHORT usMode )
    do
    {
       pFile = hb_fileExtOpen( szHrb,
-                              hb_stackSetStruct()->HB_SET_DEFEXTENSIONS ? ".hrb" : NULL,
-                              FO_READ | FXO_SHARELOCK, NULL, pError );
-      if( pFile == NULL )
+                              hb_stackSetStruct()->HB_SET_DEFEXTENSIONS ? ".hrb" : nullptr,
+                              FO_READ | FXO_SHARELOCK, nullptr, pError );
+      if( pFile == nullptr )
       {
-         pError = hb_errRT_FileError( pError, NULL, EG_OPEN, 6102, szHrb );
+         pError = hb_errRT_FileError( pError, nullptr, EG_OPEN, 6102, szHrb );
          if( hb_errLaunch( pError ) != E_RETRY )
             break;
       }
    }
-   while( pFile == NULL );
+   while( pFile == nullptr );
 
    if( pError )
       hb_itemRelease( pError );
 
-   if( pFile != NULL )
+   if( pFile != nullptr )
    {
       HB_SIZE nBodySize;
       HB_BYTE * pBuffer = hb_fileLoadData( pFile, 0, &nBodySize );
@@ -634,7 +634,7 @@ static HB_GARBAGE_FUNC( hb_hrb_Destructor )
    if( *pHrbPtr )
    {
       hb_hrbUnLoad( *pHrbPtr );
-      *pHrbPtr = NULL;
+      *pHrbPtr = nullptr;
    }
 }
 
@@ -648,7 +648,7 @@ static PHRB_BODY hb_hrbParam( int iParam )
 {
    PHRB_BODY * pHrbPtr = ( PHRB_BODY * ) hb_parptrGC( &s_gcHrbFuncs, iParam );
 
-   return pHrbPtr ? *pHrbPtr : NULL;
+   return pHrbPtr ? *pHrbPtr : nullptr;
 }
 
 static void hb_hrbReturn( PHRB_BODY pHrbBody )
@@ -689,14 +689,14 @@ HB_FUNC( HB_HRBRUN )
       PHRB_BODY pHrbBody;
 
       if( hb_hrbCheckSig( fileOrBody, nLen ) != 0 )
-         pHrbBody = hb_hrbLoad( fileOrBody, nLen, usMode, NULL );
+         pHrbBody = hb_hrbLoad( fileOrBody, nLen, usMode, nullptr );
       else
          pHrbBody = hb_hrbLoadFromFile( fileOrBody, usMode );
 
       if( pHrbBody )
       {
          int iPCount = hb_pcount() - nParam;
-         PHB_ITEM * pParams = NULL;
+         PHB_ITEM * pParams = nullptr;
 
          if( iPCount > 0 )
          {
@@ -740,14 +740,14 @@ HB_FUNC( HB_HRBLOAD )
       PHRB_BODY pHrbBody;
 
       if( hb_hrbCheckSig( fileOrBody, nLen ) != 0 )
-         pHrbBody = hb_hrbLoad( fileOrBody, nLen, usMode, NULL );
+         pHrbBody = hb_hrbLoad( fileOrBody, nLen, usMode, nullptr );
       else
          pHrbBody = hb_hrbLoadFromFile( fileOrBody, usMode );
 
       if( pHrbBody )
       {
          int iPCount = hb_pcount() - nParam;
-         PHB_ITEM * pParams = NULL;
+         PHB_ITEM * pParams = nullptr;
 
          if( iPCount > 0 )
          {
@@ -775,7 +775,7 @@ HB_FUNC( HB_HRBDO )
    if( pHrbBody )
    {
       int iPCount = hb_pcount() - 1;
-      PHB_ITEM * pParams = NULL;
+      PHB_ITEM * pParams = nullptr;
 
       if( iPCount > 0 )
       {
@@ -804,7 +804,7 @@ HB_FUNC( HB_HRBUNLOAD )
 
       if( pHrbBody )
       {
-         *pHrbPtr = NULL;
+         *pHrbPtr = nullptr;
          hb_hrbUnLoad( pHrbBody );
       }
    }
@@ -824,7 +824,7 @@ HB_FUNC( HB_HRBGETFUNSYM )
 
       for( nPos = 0, pSym = pHrbBody->pSymRead; nPos < pHrbBody->ulSymbols; ++pSym, ++nPos )
       {
-         if( pSym->value.pFunPtr != NULL &&
+         if( pSym->value.pFunPtr != nullptr &&
              ( pSym->scope.value & HB_FS_INITEXIT ) == 0 &&
              hb_stricmp( szName, pSym->szName ) == 0 )
          {
@@ -851,7 +851,7 @@ HB_FUNC( HB_HRBGETFUNLIST )
 
       for( nPos = 0, pSym = pHrbBody->pSymRead; nPos < pHrbBody->ulSymbols; ++pSym, ++nPos )
       {
-         if( pSym->value.pFunPtr != NULL &&
+         if( pSym->value.pFunPtr != nullptr &&
              ( pSym->scope.value & HB_FS_INITEXIT ) == 0 )
          {
             if( iType == 0 ||

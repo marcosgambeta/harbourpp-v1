@@ -113,13 +113,13 @@ PHB_ITEM hb_evalLaunch( PHB_EVALINFO pEvalInfo )
          if( pDynSym )
          {
             pSymbol = pDynSym->pSymbol;
-            pItem = NULL;
+            pItem = nullptr;
          }
       }
       else if( HB_IS_SYMBOL( pItem ) )
       {
          pSymbol = pItem->item.asSymbol.value;
-         pItem = NULL;
+         pItem = nullptr;
       }
       else if( HB_IS_BLOCK( pItem ) )
       {
@@ -163,7 +163,7 @@ HB_BOOL hb_evalRelease( PHB_EVALINFO pEvalInfo )
       for( uiParam = 0; uiParam <= pEvalInfo->paramCount; uiParam++ )
       {
          hb_itemRelease( pEvalInfo->pItems[ uiParam ] );
-         pEvalInfo->pItems[ uiParam ] = NULL;
+         pEvalInfo->pItems[ uiParam ] = nullptr;
       }
 
       pEvalInfo->paramCount = 0;
@@ -201,13 +201,13 @@ PHB_ITEM hb_itemDo( PHB_ITEM pItem, HB_ULONG ulPCount, ... )
          if( pDynSym )
          {
             pSymbol = pDynSym->pSymbol;
-            pItem = NULL;
+            pItem = nullptr;
          }
       }
       else if( HB_IS_SYMBOL( pItem ) )
       {
          pSymbol = pItem->item.asSymbol.value;
-         pItem = NULL;
+         pItem = nullptr;
       }
       else if( HB_IS_BLOCK( pItem ) )
       {
@@ -311,7 +311,7 @@ void hb_evalBlock1( PHB_ITEM pCodeBlock, PHB_ITEM pParam )
    hb_vmSend( 1 );
 }
 
-/* same functionality but with a NULL terminated list of parameters */
+/* same functionality but with a nullptr terminated list of parameters */
 void hb_evalBlock( PHB_ITEM pCodeBlock, ... )
 {
    va_list args;
@@ -322,7 +322,7 @@ void hb_evalBlock( PHB_ITEM pCodeBlock, ... )
    hb_vmPush( pCodeBlock );
 
    va_start( args, pCodeBlock );
-   while( ( pParam = va_arg( args, PHB_ITEM ) ) != NULL )
+   while( ( pParam = va_arg( args, PHB_ITEM ) ) != nullptr )
    {
       hb_vmPush( pParam );
       uiParams++;

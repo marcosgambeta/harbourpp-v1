@@ -588,7 +588,7 @@ void hb_vmSetExceptionHandler( void )
       ss.ss_size = SIGSTKSZ;
       ss.ss_flags = 0;
       /* set alternative stack for SIGSEGV executed on stack overflow */
-      if( sigaltstack( &ss, NULL ) == 0 )
+      if( sigaltstack( &ss, nullptr ) == 0 )
       {
          struct sigaction act;
          int i, sigs[] = { SIGSEGV, SIGILL, SIGFPE, SIGBUS, 0 };
@@ -624,7 +624,7 @@ void hb_vmUnsetExceptionHandler( void )
        */
 #if 0
       stack_t ss, oss;
-      ss.ss_sp = NULL;
+      ss.ss_sp = nullptr;
       ss.ss_size = SIGSTKSZ;
       ss.ss_flags = SS_DISABLE;
       /* set alternative stack for SIGSEGV executed on stack overflow */
