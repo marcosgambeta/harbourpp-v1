@@ -127,7 +127,7 @@ static void hb_compGenArgList( int iFirst, int iLast,
 
    if( pMsgFunc )
    {
-      *pMsgFunc = NULL;
+      *pMsgFunc = nullptr;
       if( HB_ISLOG( iFirst ) )
       {
          if( hb_parl( iFirst ) )
@@ -138,7 +138,7 @@ static void hb_compGenArgList( int iFirst, int iLast,
 
    if( pIncItem && pOpenFunc )
    {
-      *pOpenFunc = NULL;
+      *pOpenFunc = nullptr;
       *pIncItem = hb_param( iFirst, HB_IT_HASH );
       if( *pIncItem )
       {
@@ -190,7 +190,7 @@ static void hb_compGenArgList( int iFirst, int iLast,
             argv[ argc++ ] = hb_itemGetCPtr( pParam );
       }
    }
-   argv[ argc ] = NULL;
+   argv[ argc ] = nullptr;
 
    *pArgC = argc;
    *pArgV = argv;
@@ -205,7 +205,7 @@ HB_FUNC( HB_COMPILE )
    PHB_PP_MSG_FUNC pMsgFunc;
 
    hb_compGenArgList( 1, hb_pcount(), &argc, &argv, &pIncItem, &pOpenFunc, &pMsgFunc );
-   hb_retni( hb_compMainExt( argc, argv, NULL, NULL, NULL, 0, pIncItem, pOpenFunc, pMsgFunc ) );
+   hb_retni( hb_compMainExt( argc, argv, nullptr, nullptr, nullptr, 0, pIncItem, pOpenFunc, pMsgFunc ) );
    hb_xfree( ( void * ) argv );
 }
 
@@ -220,7 +220,7 @@ HB_FUNC( HB_COMPILEBUF )
    HB_SIZE nLen;
 
    hb_compGenArgList( 1, hb_pcount(), &argc, &argv, &pIncItem, &pOpenFunc, &pMsgFunc );
-   iResult = hb_compMainExt( argc, argv, &pBuffer, &nLen, NULL, 0, pIncItem, pOpenFunc, pMsgFunc );
+   iResult = hb_compMainExt( argc, argv, &pBuffer, &nLen, nullptr, 0, pIncItem, pOpenFunc, pMsgFunc );
    hb_xfree( ( void * ) argv );
 
    if( iResult == EXIT_SUCCESS && pBuffer )

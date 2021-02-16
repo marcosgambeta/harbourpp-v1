@@ -97,14 +97,14 @@ static const char * hb_compChkAddDefine( HB_COMP_DECL, const char * szSwitch,
          szValue = s_szUndefineMarker;
 
       pDefinePtr = &HB_COMP_PARAM->ppdefines;
-      while( *pDefinePtr != NULL &&
+      while( *pDefinePtr != nullptr &&
              strcmp( ( *pDefinePtr )->szName, szDefine ) != 0 )
          pDefinePtr = &( *pDefinePtr )->pNext;
 
-      if( *pDefinePtr == NULL )
+      if( *pDefinePtr == nullptr )
       {
          *pDefinePtr = ( PHB_PPDEFINE ) hb_xgrab( sizeof( HB_PPDEFINE ) );
-         ( *pDefinePtr )->pNext = NULL;
+         ( *pDefinePtr )->pNext = nullptr;
       }
       else
          hb_xfree( ( *pDefinePtr )->szName );
@@ -397,7 +397,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                   if( HB_COMP_PARAM->szDepExt )
                   {
                      hb_xfree( HB_COMP_PARAM->szDepExt );
-                     HB_COMP_PARAM->szDepExt = NULL;
+                     HB_COMP_PARAM->szDepExt = nullptr;
                   }
                   szSwPtr += 2;
                   if( *szSwPtr == '-' )
@@ -431,7 +431,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                   break;
 
                default:
-                  hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'F', HB_COMP_ERR_UNSUPPORTED_LANG, NULL, NULL );
+                  hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'F', HB_COMP_ERR_UNSUPPORTED_LANG, nullptr, nullptr );
                   break;
             }
             break;
@@ -661,7 +661,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                if( HB_COMP_PARAM->pPpoPath )
                {
                   hb_xfree( HB_COMP_PARAM->pPpoPath );
-                  HB_COMP_PARAM->pPpoPath = NULL;
+                  HB_COMP_PARAM->pPpoPath = nullptr;
                }
                if( *szSwPtr == '-' )
                {
@@ -718,7 +718,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                /* NOTE: ignored for Cl*pper compatibility:
                         /r[<lib>] request linker to search <lib> (or none) */
                hb_compChkIgnoredInfo( HB_COMP_PARAM, "-r[<lib>]" );
-               szSwPtr = hb_compChkOptionGet( szSwPtr, NULL, fEnv );
+               szSwPtr = hb_compChkOptionGet( szSwPtr, nullptr, fEnv );
             }
             break;
 
@@ -745,7 +745,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
             /* NOTE: ignored for Cl*pper compatibility:
                      /t<path> path for temp file creation */
             hb_compChkIgnoredInfo( HB_COMP_PARAM, "-t<path>" );
-            szSwPtr = hb_compChkOptionGet( szSwPtr + 1, NULL, fEnv );
+            szSwPtr = hb_compChkOptionGet( szSwPtr + 1, nullptr, fEnv );
             break;
 
          case 'U':
@@ -833,7 +833,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
           ( *szSwPtr != '\0' && *szSwPtr != ' ' && ! HB_ISOPTSEP( *szSwPtr ) ) )
          hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'F',
                           fEnv ? HB_COMP_ERR_BADOPTION : HB_COMP_ERR_BADPARAM,
-                          szSwitch, NULL );
+                          szSwitch, nullptr );
       else
          return szSwPtr;
    }

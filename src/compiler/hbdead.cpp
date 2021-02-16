@@ -549,7 +549,7 @@ void hb_compCodeTraceMarkDead( HB_COMP_DECL, PHB_HFUNC pFunc )
 
    assert( HB_P_LAST_PCODE == sizeof( s_codeTraceFuncTable ) / sizeof( PHB_CODETRACE_FUNC ) );
 
-   code_info.pnJumps = NULL;
+   code_info.pnJumps = nullptr;
    code_info.nJumpPos = 0;
    code_info.nJumpSize = 0;
    code_info.nJumpCount = 0;

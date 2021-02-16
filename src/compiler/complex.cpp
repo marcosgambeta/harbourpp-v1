@@ -384,7 +384,7 @@ static int hb_comp_dayTimeDecode( PHB_COMP_LEX pLex, PHB_PP_TOKEN pToken,
     *      [ <HOUR> [ : <MIN> [ : <SEC> [ . <FRAQ> ] ] ] [AM|PP] ] }
     */
 
-   PHB_PP_TOKEN pYear, pMonth, pDay, pTime = NULL;
+   PHB_PP_TOKEN pYear, pMonth, pDay, pTime = nullptr;
    HB_MAXINT lYear = 0, lMonth = 0, lDay = 0;
    long lDate = 0, lTime = 0;
    double dNumber;
@@ -554,7 +554,7 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
             return ENDERR;
          }
       }
-      pLex->lasttok = NULL;
+      pLex->lasttok = nullptr;
       return 0;
    }
 
@@ -602,13 +602,13 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
                   iYear = -1;
             }
          }
-         else if( ! hb_timeStampStrGet( pToken->value, &iYear, &iMonth, &iDay, NULL, NULL, NULL, NULL ) )
+         else if( ! hb_timeStampStrGet( pToken->value, &iYear, &iMonth, &iDay, nullptr, nullptr, nullptr, nullptr ) )
             iYear = -1;
          yylval_ptr->valLong.lNumber = hb_dateEncode( iYear, iMonth, iDay );
          if( yylval_ptr->valLong.lNumber == 0 &&
              ( iYear != 0 || iMonth != 0 || iDay != 0 ) )
          {
-            hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_DATE, pToken->value, NULL );
+            hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_DATE, pToken->value, nullptr );
          }
          return NUM_DATE;
       }
@@ -618,7 +618,7 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
                                      &yylval_ptr->valTimeStamp.date,
                                      &yylval_ptr->valTimeStamp.time ) )
          {
-            hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_TIMESTAMP, pToken->value, NULL );
+            hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_TIMESTAMP, pToken->value, nullptr );
          }
          return TIMESTAMP;
 
@@ -969,7 +969,7 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
                          HB_PP_TOKEN_TYPE( pToken->pNext->type ) == HB_PP_TOKEN_DEC ||
                          HB_PP_TOKEN_TYPE( pToken->pNext->type ) == HB_PP_TOKEN_ALIAS )
                         hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E',
-                                         HB_COMP_ERR_ENDIF, NULL, NULL );
+                                         HB_COMP_ERR_ENDIF, nullptr, nullptr );
                   }
                }
                iType = IDENTIFIER;
@@ -1071,7 +1071,7 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
                          HB_PP_TOKEN_TYPE( pToken->pNext->type ) == HB_PP_TOKEN_DEC ||
                          HB_PP_TOKEN_TYPE( pToken->pNext->type ) == HB_PP_TOKEN_ALIAS )
                         hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E',
-                                         HB_COMP_ERR_NEXTFOR, NULL, NULL );
+                                         HB_COMP_ERR_NEXTFOR, nullptr, nullptr );
                   }
                }
                iType = IDENTIFIER;
@@ -1215,7 +1215,7 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
                if( pLex->iState == FUNCTION || pLex->iState == PROCEDURE ||
                    ( ! HB_SUPPORT_HARBOUR && HB_PP_TOKEN_ISEOC( pToken->pNext ) ) )
                   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E',
-                                   HB_COMP_ERR_SYNTAX, "IIF", NULL );
+                                   HB_COMP_ERR_SYNTAX, "IIF", nullptr );
                else if( pToken->pNext &&
                         HB_PP_TOKEN_TYPE( pToken->pNext->type ) == HB_PP_TOKEN_LEFT_PB )
                {
@@ -1224,7 +1224,7 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
                }
                else if( ! HB_SUPPORT_HARBOUR )
                   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E',
-                                   HB_COMP_ERR_SYNTAX, pToken->pNext->value, NULL );
+                                   HB_COMP_ERR_SYNTAX, pToken->pNext->value, nullptr );
                else
                   iType = IDENTIFIER;
                break;
@@ -1233,7 +1233,7 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
                if( pLex->iState == FUNCTION || pLex->iState == PROCEDURE ||
                    ( ! HB_SUPPORT_HARBOUR && HB_PP_TOKEN_ISEOC( pToken->pNext ) ) )
                   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E',
-                                   HB_COMP_ERR_SYNTAX, "IF", NULL );
+                                   HB_COMP_ERR_SYNTAX, "IF", nullptr );
                else if( pToken->pNext &&
                         HB_PP_TOKEN_TYPE( pToken->pNext->type ) == HB_PP_TOKEN_LEFT_PB )
                {
@@ -1442,7 +1442,7 @@ void hb_compParserRun( HB_COMP_DECL )
                {
                   if( szExt && *szExt )
                      szFile = hb_compIdentifierNew( HB_COMP_PARAM,
-                        hb_xstrcpy( NULL, szFile, szExt, NULL ), HB_IDENT_FREE );
+                        hb_xstrcpy( nullptr, szFile, szExt, nullptr ), HB_IDENT_FREE );
                   hb_compModuleAdd( HB_COMP_PARAM, szFile, HB_FALSE );
                }
             }

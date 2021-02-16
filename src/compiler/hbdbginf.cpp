@@ -48,7 +48,7 @@
 
 PHB_DEBUGINFO hb_compGetDebugInfo( HB_COMP_DECL )
 {
-   PHB_DEBUGINFO pLineInfo = NULL, pInfo = NULL;
+   PHB_DEBUGINFO pLineInfo = nullptr, pInfo = nullptr;
    HB_SIZE nPos, nSkip, nOffset;
    HB_ULONG ulLine;
    const char * pszModuleName = "", * ptr;
@@ -72,7 +72,7 @@ PHB_DEBUGINFO hb_compGetDebugInfo( HB_COMP_DECL )
 
                case HB_P_MODULENAME:
                   pszModuleName = ( const char * ) &pFunc->pCode[ nPos + 1 ];
-                  pInfo = NULL;
+                  pInfo = nullptr;
                   break;
 
                /*
@@ -103,7 +103,7 @@ PHB_DEBUGINFO hb_compGetDebugInfo( HB_COMP_DECL )
                   i = ptr ? static_cast< int >( ptr - pszModuleName ) : static_cast< int >( strlen( pszModuleName ) );
 
                   pInfo = pLineInfo;
-                  while( pInfo != NULL )
+                  while( pInfo != nullptr )
                   {
                      if( strncmp( pszModuleName, pInfo->pszModuleName, i ) == 0 &&
                          ( pInfo->pszModuleName[ i ] == '\0' ||

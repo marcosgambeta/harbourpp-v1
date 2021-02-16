@@ -78,7 +78,7 @@ static void hb_pp_PragmaDump( void * cargo, char * pBuffer, HB_SIZE nSize,
 {
    PHB_HINLINE pInline;
 
-   pInline = hb_compInlineAdd( ( PHB_COMP ) cargo, NULL, iLine );
+   pInline = hb_compInlineAdd( ( PHB_COMP ) cargo, nullptr, iLine );
    pInline->pCode = ( HB_BYTE * ) hb_xgrab( nSize + 1 );
    memcpy( pInline->pCode, pBuffer, nSize );
    pInline->pCode[ nSize ] = '\0';
@@ -94,7 +94,7 @@ static void hb_pp_hb_inLine( void * cargo, char * szFunc,
    {
       int iCurrLine = HB_COMP_PARAM->currLine;
       HB_COMP_PARAM->currLine = iLine;
-      hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'F', HB_COMP_ERR_REQUIRES_C, NULL, NULL );
+      hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'F', HB_COMP_ERR_REQUIRES_C, nullptr, nullptr );
       HB_COMP_PARAM->fError = HB_FALSE;
       HB_COMP_PARAM->currLine = iCurrLine;
    }
@@ -383,7 +383,7 @@ static void hb_pp_fileIncluded( void * cargo, const char * szFileName )
 
    iLen = static_cast< int >( strlen( szFileName ) );
    pIncFile = ( PHB_INCLST ) hb_xgrab( sizeof( HB_INCLST ) + iLen );
-   pIncFile->pNext = NULL;
+   pIncFile->pNext = nullptr;
    memcpy( pIncFile->szFileName, szFileName, iLen + 1 );
    *pIncFilePtr = pIncFile;
 }
@@ -397,10 +397,10 @@ void hb_compInitPP( HB_COMP_DECL, PHB_PP_OPEN_FUNC pOpenFunc )
       hb_pp_init( HB_COMP_PARAM->pLex->pPP,
                   HB_COMP_PARAM->fQuiet, HB_COMP_PARAM->fGauge,
                   HB_COMP_PARAM->iMaxTransCycles,
-                  HB_COMP_PARAM, pOpenFunc, NULL,
+                  HB_COMP_PARAM, pOpenFunc, nullptr,
                   hb_pp_ErrorGen, hb_pp_Disp, hb_pp_PragmaDump,
                   HB_COMP_ISSUPPORTED( HB_COMPFLAG_HB_INLINE ) ?
-                  hb_pp_hb_inLine : NULL, hb_pp_CompilerSwitch );
+                  hb_pp_hb_inLine : nullptr, hb_pp_CompilerSwitch );
 
       if( HB_COMP_PARAM->iTraceInclude )
          hb_pp_setIncFunc( HB_COMP_PARAM->pLex->pPP, hb_pp_fileIncluded );

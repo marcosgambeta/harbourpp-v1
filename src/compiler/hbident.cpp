@@ -98,6 +98,6 @@ void hb_compIdentifierClose( HB_COMP_DECL )
    if( HB_COMP_PARAM->pIdentifiers )
    {
       hb_hashTableKill( HB_COMP_PARAM->pIdentifiers );
-      HB_COMP_PARAM->pIdentifiers = NULL;
+      HB_COMP_PARAM->pIdentifiers = nullptr;
    }
 }

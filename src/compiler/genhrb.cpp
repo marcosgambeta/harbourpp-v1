@@ -145,7 +145,7 @@ void hb_compGenPortObj( HB_COMP_DECL, PHB_FNAME pFileName )
    yyc = hb_fopen( szFileName, "wb" );
    if( ! yyc )
    {
-      hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_CREATE_OUTPUT, szFileName, NULL );
+      hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_CREATE_OUTPUT, szFileName, nullptr );
       return;
    }
 
@@ -160,7 +160,7 @@ void hb_compGenPortObj( HB_COMP_DECL, PHB_FNAME pFileName )
    hb_compGenBufPortObj( HB_COMP_PARAM, &pHrbBody, &nSize );
 
    if( fwrite( pHrbBody, nSize, 1, yyc ) != 1 )
-      hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_FILE_WRITE, szFileName, NULL );
+      hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_FILE_WRITE, szFileName, nullptr );
 
    hb_xfree( pHrbBody );
 

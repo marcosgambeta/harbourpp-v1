@@ -51,7 +51,7 @@ static PHB_I18NTABLE hb_compI18nCreate( void )
    PHB_I18NTABLE pI18n;
 
    pI18n = ( PHB_I18NTABLE ) hb_xgrab( sizeof( HB_I18NTABLE ) );
-   pI18n->pString     = NULL;
+   pI18n->pString     = nullptr;
    pI18n->uiCount     = 0;
    pI18n->uiAllocated = 0;
 
@@ -76,7 +76,7 @@ void hb_compI18nFree( HB_COMP_DECL )
          hb_xfree( pI18n->pString );
       }
       hb_xfree( pI18n );
-      HB_COMP_PARAM->pI18n = NULL;
+      HB_COMP_PARAM->pI18n = nullptr;
    }
 }
 
@@ -204,7 +204,7 @@ void hb_compI18nAddPlural( HB_COMP_DECL, const char ** szTexts, HB_ULONG ulCount
          {
             if( pString->szPlurals[ uiPlural ] == szText )
             {
-               szText = NULL;
+               szText = nullptr;
                break;
             }
          }
@@ -282,7 +282,7 @@ HB_BOOL hb_compI18nSave( HB_COMP_DECL, HB_BOOL fFinal )
    FileName.szPath            =
       FileName.szName         =
          FileName.szExtension =
-            FileName.szDrive  = NULL;
+            FileName.szDrive  = nullptr;
 
    if( HB_COMP_PARAM->pOutPath )
    {
@@ -322,7 +322,7 @@ HB_BOOL hb_compI18nSave( HB_COMP_DECL, HB_BOOL fFinal )
 
    if( ! file )
    {
-      hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_CREATE_OUTPUT, szFileName, NULL );
+      hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_CREATE_OUTPUT, szFileName, nullptr );
       return HB_FALSE;
    }
 

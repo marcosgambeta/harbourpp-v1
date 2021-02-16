@@ -2409,7 +2409,7 @@ void hb_compGenCRealCode( HB_COMP_DECL, PHB_HFUNC pFunc, FILE * yyc )
    label_info.iNestedBlock = 0;
    label_info.pFuncTable = ( const PHB_PCODE_FUNC * ) pFuncTable;
    if( pFunc->nPCodePos == 0 )
-      label_info.pnLabels = NULL;
+      label_info.pnLabels = nullptr;
    else
    {
       label_info.pnLabels = ( HB_SIZE * ) hb_xgrabz( pFunc->nPCodePos * sizeof( HB_SIZE ) );

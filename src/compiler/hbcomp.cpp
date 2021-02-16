@@ -75,7 +75,7 @@ static void hb_compExprDealloc( HB_COMP_DECL, PHB_EXPR pExpr )
       if( pExpItm == HB_COMP_PARAM->pExprLst )
       {
          if( pExpItm->pNext == pExpItm )
-            HB_COMP_PARAM->pExprLst = NULL;
+            HB_COMP_PARAM->pExprLst = nullptr;
          else
             HB_COMP_PARAM->pExprLst = pExpItm->pNext;
       }
@@ -93,7 +93,7 @@ static PHB_EXPR hb_compExprNew( HB_COMP_DECL, HB_EXPRTYPE iType )
 
    pExpr = hb_compExprAlloc( HB_COMP_PARAM );
    pExpr->ExprType = iType;
-   pExpr->pNext    = NULL;
+   pExpr->pNext    = nullptr;
    pExpr->ValType  = HB_EV_UNKNOWN;
 
    return pExpr;
@@ -122,7 +122,7 @@ static void hb_compExprLstDealloc( HB_COMP_DECL )
    {
       PHB_EXPRLST pExpItm, pExp;
       pExpItm = pExp = HB_COMP_PARAM->pExprLst;
-      HB_COMP_PARAM->pExprLst = NULL;
+      HB_COMP_PARAM->pExprLst = nullptr;
       do
       {
          hb_compExprFree( HB_COMP_PARAM, &pExp->Expression );
@@ -143,7 +143,7 @@ static PHB_EXPR hb_compErrorType( HB_COMP_DECL, PHB_EXPR pExpr )
 {
    const char * szDesc = hb_compExprDescription( pExpr );
 
-   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_TYPE, szDesc, NULL );
+   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_TYPE, szDesc, nullptr );
    return pExpr;
 }
 
@@ -151,13 +151,13 @@ static PHB_EXPR hb_compErrorSyntax( HB_COMP_DECL, PHB_EXPR pExpr )
 {
    const char * szDesc = hb_compExprDescription( pExpr );
 
-   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_SYNTAX, szDesc, NULL );
+   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_SYNTAX, szDesc, nullptr );
    return pExpr;
 }
 
 static void hb_compErrorDuplVar( HB_COMP_DECL, const char * szVarName )
 {
-   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_VAR_DUPL, szVarName, NULL );
+   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_VAR_DUPL, szVarName, nullptr );
 }
 
 static void hb_compOutMsg( void * cargo, int iErrorFmt, int iLine,
@@ -238,7 +238,7 @@ static const HB_COMP_FUNCS s_comp_funcs =
 
 PHB_COMP hb_comp_new( void )
 {
-   PHB_COMP pComp = NULL;
+   PHB_COMP pComp = nullptr;
    PHB_PP_STATE pPP = hb_pp_new();
 
    if( pPP )
