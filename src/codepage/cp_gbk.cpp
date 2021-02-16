@@ -92,7 +92,7 @@ static HB_CDP_PUT_FUNC( GBK_put )
       }
       else
       {
-         if( cdp->uniTable->uniTrans == NULL )
+         if( cdp->uniTable->uniTrans == nullptr )
             hb_cdpBuildTransTable( cdp->uniTable );
 
          if( wc <= cdp->uniTable->wcMax &&
