@@ -177,7 +177,7 @@ static int hb_gt_gui_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions,
                             int iClrNorm, int iClrHigh, double dDelay )
 {
    void * hText;
-   LPCTSTR lpText = HB_ITEMGETSTR( pMessage, &hText, NULL );
+   LPCTSTR lpText = HB_ITEMGETSTR( pMessage, &hText, nullptr );
    int iRet, iOptions = pOptions ? static_cast< int >( hb_arrayLen( pOptions ) ) : 0;
 
    if( lpText && iOptions > 0 )
@@ -223,7 +223,7 @@ static int hb_gt_gui_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions,
             break;
       }
 
-      iRet = MessageBox( NULL, lpText, TEXT( "" ), uType );
+      iRet = MessageBox( nullptr, lpText, TEXT( "" ), uType );
       iRet = hb_gt_gui_optionPos( iRet, iType, pOptions );
    }
    else
@@ -284,7 +284,7 @@ static HB_BOOL hb_gt_gui_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 #endif
          else
          {
-            if( pInfo->pResult == NULL )
+            if( pInfo->pResult == nullptr )
                pInfo->pResult = hb_itemNew( nullptr );
 #if defined( UNICODE )
             hb_gt_winapi_getClipboard( CF_UNICODETEXT, pInfo->pResult );

@@ -89,7 +89,7 @@ HB_FUNC( HB_CDPEXISTS )
    const char * id = hb_parc( 1 );
 
    if( id )
-      hb_retl( hb_cdpFind( id ) != NULL );
+      hb_retl( hb_cdpFind( id ) != nullptr );
    else
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
@@ -99,7 +99,7 @@ HB_FUNC( HB_CDPUNIID )
    const char * id = hb_parc( 1 );
    PHB_CODEPAGE cdp = id ? hb_cdpFindExt( id ) : hb_vmCDP();
 
-   hb_retc( cdp ? cdp->uniTable->uniID : NULL );
+   hb_retc( cdp ? cdp->uniTable->uniID : nullptr );
 }
 
 HB_FUNC( HB_CDPINFO )
@@ -107,7 +107,7 @@ HB_FUNC( HB_CDPINFO )
    const char * id = hb_parc( 1 );
    PHB_CODEPAGE cdp = id ? hb_cdpFindExt( id ) : hb_vmCDP();
 
-   hb_retc( cdp ? cdp->info : NULL );
+   hb_retc( cdp ? cdp->info : nullptr );
 }
 
 HB_FUNC( HB_CDPISCHARIDX )

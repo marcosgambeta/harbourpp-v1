@@ -70,7 +70,7 @@ HB_BOOL hb_fsLink( const char * pszExisting, const char * pszNewFile )
       {
          typedef BOOL ( WINAPI * _HB_CREATEHARDLINK )( LPCTSTR, LPCTSTR, LPSECURITY_ATTRIBUTES );
 
-         static _HB_CREATEHARDLINK s_pCreateHardLink = NULL;
+         static _HB_CREATEHARDLINK s_pCreateHardLink = nullptr;
 
          if( ! s_pCreateHardLink )
          {
@@ -88,7 +88,7 @@ HB_BOOL hb_fsLink( const char * pszExisting, const char * pszNewFile )
             lpFileName = HB_FSNAMECONV( pszNewFile, &lpFileNameFree );
             lpExistingFileName = HB_FSNAMECONV( pszExisting, &lpExistingFileNameFree );
 
-            fResult = s_pCreateHardLink( lpFileName, lpExistingFileName, NULL ) != 0;
+            fResult = s_pCreateHardLink( lpFileName, lpExistingFileName, nullptr ) != 0;
             hb_fsSetIOError( fResult, 0 );
 
             if( lpFileNameFree )
@@ -148,7 +148,7 @@ HB_BOOL hb_fsLinkSym( const char * pszTarget, const char * pszNewFile )
       {
          typedef BOOL ( WINAPI * _HB_CREATESYMBOLICLINK )( LPCTSTR, LPCTSTR, DWORD );
 
-         static _HB_CREATESYMBOLICLINK s_pCreateSymbolicLink = NULL;
+         static _HB_CREATESYMBOLICLINK s_pCreateSymbolicLink = nullptr;
 
          #ifndef SYMBOLIC_LINK_FLAG_DIRECTORY
          #define SYMBOLIC_LINK_FLAG_DIRECTORY 0x1
@@ -224,7 +224,7 @@ HB_BOOL hb_fsLinkSym( const char * pszTarget, const char * pszNewFile )
    return fResult;
 }
 
-/* NOTE: Caller must free the pointer, if not NULL */
+/* NOTE: Caller must free the pointer, if not nullptr */
 char * hb_fsLinkRead( const char * pszFile )
 {
    char * pszLink = nullptr;
@@ -237,7 +237,7 @@ char * hb_fsLinkRead( const char * pszFile )
       {
          typedef DWORD ( WINAPI * _HB_GETFINALPATHNAMEBYHANDLE )( HANDLE, LPTSTR, DWORD, DWORD );
 
-         static _HB_GETFINALPATHNAMEBYHANDLE s_pGetFinalPathNameByHandle = NULL;
+         static _HB_GETFINALPATHNAMEBYHANDLE s_pGetFinalPathNameByHandle = nullptr;
 
          #ifndef VOLUME_NAME_DOS
          #define VOLUME_NAME_DOS       0x0
@@ -283,10 +283,10 @@ char * hb_fsLinkRead( const char * pszFile )
             hFile = CreateFile( lpFileName,
                                 GENERIC_READ,
                                 FILE_SHARE_READ,
-                                NULL,
+                                nullptr,
                                 OPEN_EXISTING,
                                 fDir ? ( FILE_ATTRIBUTE_DIRECTORY | FILE_FLAG_BACKUP_SEMANTICS ) : FILE_ATTRIBUTE_NORMAL,
-                                NULL );
+                                nullptr );
 
             if( hFile == INVALID_HANDLE_VALUE )
                hb_fsSetIOError( HB_FALSE, 0 );
@@ -328,7 +328,7 @@ char * hb_fsLinkRead( const char * pszFile )
          if( size == ( size_t ) -1 )
          {
             hb_xfree( pszLink );
-            pszLink = NULL;
+            pszLink = nullptr;
          }
          else
          {

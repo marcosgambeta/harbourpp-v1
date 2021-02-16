@@ -70,51 +70,51 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest )
 
    do
    {
-      pSource = hb_fileExtOpen( pszSource, NULL,
+      pSource = hb_fileExtOpen( pszSource, nullptr,
                                 FO_READ | FO_SHARED | FO_PRIVATE |
                                 FXO_DEFAULTS | FXO_SHARELOCK,
-                                NULL, pError );
-      if( pSource == NULL )
+                                nullptr, pError );
+      if( pSource == nullptr )
       {
-         pError = hb_errRT_FileError( pError, NULL, EG_OPEN, 2012, pszSource );
+         pError = hb_errRT_FileError( pError, nullptr, EG_OPEN, 2012, pszSource );
          if( hb_errLaunch( pError ) != E_RETRY )
             break;
       }
    }
-   while( pSource == NULL );
+   while( pSource == nullptr );
 
    if( pError )
    {
       hb_itemRelease( pError );
-      pError = NULL;
+      pError = nullptr;
    }
 
-   if( pSource != NULL )
+   if( pSource != nullptr )
    {
       PHB_FILE pDest;
 
       do
       {
-         pDest = hb_fileExtOpen( pszDest, NULL,
+         pDest = hb_fileExtOpen( pszDest, nullptr,
                                  FO_READWRITE | FO_EXCLUSIVE | FO_PRIVATE |
                                  FXO_TRUNCATE | FXO_DEFAULTS | FXO_SHARELOCK,
-                                 NULL, pError );
-         if( pDest == NULL )
+                                 nullptr, pError );
+         if( pDest == nullptr )
          {
-            pError = hb_errRT_FileError( pError, NULL, EG_CREATE, 2012, pszDest );
+            pError = hb_errRT_FileError( pError, nullptr, EG_CREATE, 2012, pszDest );
             if( hb_errLaunch( pError ) != E_RETRY )
                break;
          }
       }
-      while( pDest == NULL );
+      while( pDest == nullptr );
 
       if( pError )
       {
          hb_itemRelease( pError );
-         pError = NULL;
+         pError = nullptr;
       }
 
-      if( pDest != NULL )
+      if( pDest != nullptr )
       {
          HB_UCHAR * buffer;
          HB_SIZE nRead;
@@ -134,7 +134,7 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest )
                   nWritten += nDone;
                if( nWritten < nRead )
                {
-                  pError = hb_errRT_FileError( pError, NULL, EG_WRITE, 2016, pszDest );
+                  pError = hb_errRT_FileError( pError, nullptr, EG_WRITE, 2016, pszDest );
                   if( hb_errLaunch( pError ) != E_RETRY )
                   {
                      bRetVal = HB_FALSE;

@@ -170,7 +170,7 @@ static HB_BOOL hb_mlInit( PHB_MLC_INFO pMLC, int iParAdd )
 
       pMLC->cdp = hb_vmCDP();
       if( ! HB_CDP_ISCHARIDX( pMLC->cdp ) )
-         pMLC->cdp = NULL;
+         pMLC->cdp = nullptr;
 
       hb_mlGetEOLs( pMLC, 5 + iParAdd );
       return HB_TRUE;
@@ -405,7 +405,7 @@ HB_FUNC( MEMOLINE )
          hb_mlExit( &MLC );
       }
    }
-   if( szLine == NULL )
+   if( szLine == nullptr )
       hb_retc_null();
    else
       hb_retclen_buffer( szLine, nLen );
@@ -570,7 +570,7 @@ HB_FUNC( HB_MLEVAL )
       char * pszLine;
 
       if( ! HB_CDP_ISCHARIDX( cdp ) )
-         cdp = NULL;
+         cdp = nullptr;
 
 #ifdef HB_CLP_STRICT
       if( nLineLength > 254 )

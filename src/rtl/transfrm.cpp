@@ -76,7 +76,7 @@ HB_FUNC( TRANSFORM )
 
    HB_BOOL bError = HB_FALSE;
 
-   if( pValue == NULL )
+   if( pValue == nullptr )
       bError = HB_TRUE;
    else if( pPic && hb_itemGetCLen( pPic ) > 0 )
    {
@@ -923,7 +923,7 @@ HB_FUNC( TRANSFORM )
 
       else
       {
-         szResult = NULL; /* To avoid GCC -O2 warning */
+         szResult = nullptr; /* To avoid GCC -O2 warning */
          nResultPos = 0; /* To avoid GCC -O2 warning */
          bError = HB_TRUE;
       }

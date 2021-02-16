@@ -70,9 +70,9 @@ HB_FUNC( HB_PROCESSOPEN )
       HB_FHANDLE hProcess;
       HB_ULONG ulPID;
 
-      phStdIn  = pStdIn  ? &hStdIn  : NULL;
-      phStdOut = pStdOut ? &hStdOut : NULL;
-      phStdErr = pStdErr ? ( pStdOut == pStdErr ? phStdOut : &hStdErr ) : NULL;
+      phStdIn  = pStdIn  ? &hStdIn  : nullptr;
+      phStdOut = pStdOut ? &hStdOut : nullptr;
+      phStdErr = pStdErr ? ( pStdOut == pStdErr ? phStdOut : &hStdErr ) : nullptr;
 
       hProcess = hb_fsProcessOpen( szName, phStdIn, phStdOut, phStdErr,
                                    fDetach, &ulPID );
@@ -143,9 +143,9 @@ HB_FUNC( HB_PROCESSRUN )
       int iResult;
 
       nStdOut = nStdErr = 0;
-      pStdOutBuf = pStdErrBuf = NULL;
-      pStdOutPtr = pStdOut ? &pStdOutBuf : NULL;
-      pStdErrPtr = pStdErr ? ( pStdOut == pStdErr ? pStdOutPtr : &pStdErrBuf ) : NULL;
+      pStdOutBuf = pStdErrBuf = nullptr;
+      pStdOutPtr = pStdOut ? &pStdOutBuf : nullptr;
+      pStdErrPtr = pStdErr ? ( pStdOut == pStdErr ? pStdOutPtr : &pStdErrBuf ) : nullptr;
 
       iResult = hb_fsProcessRun( szName, szStdIn, hb_parclen( 2 ),
                                  pStdOutPtr, &nStdOut, pStdErrPtr, &nStdErr,
@@ -158,7 +158,7 @@ HB_FUNC( HB_PROCESSRUN )
             hb_xfree( pStdOutBuf );
       }
       else if( pStdOut )
-         hb_storc( NULL, 3 );
+         hb_storc( nullptr, 3 );
 
       if( pStdErrBuf )
       {
@@ -166,7 +166,7 @@ HB_FUNC( HB_PROCESSRUN )
             hb_xfree( pStdErrBuf );
       }
       else if( pStdErr && pStdOut != pStdErr )
-         hb_storc( NULL, 4 );
+         hb_storc( nullptr, 4 );
 
       hb_retni( iResult );
    }

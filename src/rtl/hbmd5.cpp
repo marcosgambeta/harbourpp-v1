@@ -297,7 +297,7 @@ static void hb_md5_count( const void * data, HB_SIZE nLen, char * digest, const 
  */
 void hb_md5( const void * data, HB_SIZE nLen, char * digest )
 {
-   hb_md5_count( data, nLen, digest, NULL );
+   hb_md5_count( data, nLen, digest, nullptr );
 }
 
 void hb_hmac_md5( const void * key, HB_SIZE nKeyLen,
@@ -331,11 +331,11 @@ void hb_hmac_md5( const void * key, HB_SIZE nKeyLen,
  */
 HB_BOOL hb_md5file( const char * pszFileName, char * digest )
 {
-   PHB_FILE pFile = hb_fileExtOpen( pszFileName, NULL,
+   PHB_FILE pFile = hb_fileExtOpen( pszFileName, nullptr,
                                     FO_READ | FO_SHARED | FO_PRIVATE |
                                     FXO_SHARELOCK | FXO_NOSEEKPOS,
-                                    NULL, NULL );
-   if( pFile != NULL )
+                                    nullptr, nullptr );
+   if( pFile != nullptr )
    {
       MD5_BUF md5;
       HB_SIZE n;

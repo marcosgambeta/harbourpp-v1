@@ -184,7 +184,7 @@ static int arc4_seed_win( void )
    unsigned char     buf[ ADD_ENTROPY ];
 
    if( ! s_provider_set &&
-       ! CryptAcquireContext( &s_provider, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT | CRYPT_SILENT ) &&
+       ! CryptAcquireContext( &s_provider, nullptr, nullptr, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT | CRYPT_SILENT ) &&
        GetLastError() != static_cast< DWORD >( NTE_BAD_KEYSET ) )
       return -1;
 
@@ -226,7 +226,7 @@ static int arc4_seed_sysctl_linux( void )
    {
       n = sizeof( buf ) - len;
 
-      if( sysctl( mib, 3, &buf[ len ], &n, NULL, 0 ) != 0 )
+      if( sysctl( mib, 3, &buf[ len ], &n, nullptr, 0 ) != 0 )
          return -1;
    }
 
@@ -263,7 +263,7 @@ static int arc4_seed_sysctl_bsd( void )
    memset( buf, 0, sizeof( buf ) );
 
    len = sizeof( buf );
-   if( sysctl( mib, 2, buf, &len, NULL, 0 ) == -1 )
+   if( sysctl( mib, 2, buf, &len, nullptr, 0 ) == -1 )
    {
       for( len = 0; len < sizeof( buf ); len += sizeof( unsigned ) )
       {
@@ -272,7 +272,7 @@ static int arc4_seed_sysctl_bsd( void )
          if( n + len > sizeof( buf ) )
             n = len - sizeof( buf );
 
-         if( sysctl( mib, 2, &buf[ len ], &n, NULL, 0 ) == -1 )
+         if( sysctl( mib, 2, &buf[ len ], &n, nullptr, 0 ) == -1 )
             return -1;
       }
    }
@@ -385,7 +385,7 @@ static int arc4_seed_urandom( void )
       "/dev/srandom",
       "/dev/urandom",
       "/dev/random",
-      NULL
+      nullptr
    };
 
    int i;

@@ -222,7 +222,7 @@ typedef struct
 }
 HB_LANG_BASE, * PHB_LANG_BASE;
 
-static HB_LANG_BASE s_langList[ HB_LANG_MAX_ ] = { { &s_lang_en, NULL } };
+static HB_LANG_BASE s_langList[ HB_LANG_MAX_ ] = { { &s_lang_en, nullptr } };
 
 static void hb_langRelease( PHB_LANG_BASE pBase )
 {
@@ -231,15 +231,15 @@ static void hb_langRelease( PHB_LANG_BASE pBase )
       if( pBase->buffer )
       {
          hb_xfree( pBase->buffer );
-         pBase->buffer = NULL;
+         pBase->buffer = nullptr;
       }
-      pBase->lang = pBase == s_langList ? &s_lang_en : NULL;
+      pBase->lang = pBase == s_langList ? &s_lang_en : nullptr;
    }
 }
 
 static PHB_LANG_BASE hb_langFindBase( const char * pszID )
 {
-   PHB_LANG_BASE pBase = NULL;
+   PHB_LANG_BASE pBase = nullptr;
 
    if( pszID )
    {
@@ -247,12 +247,12 @@ static PHB_LANG_BASE hb_langFindBase( const char * pszID )
 
       for( iPos = 0; iPos < HB_LANG_MAX_; iPos++ )
       {
-         if( s_langList[ iPos ].lang != NULL )
+         if( s_langList[ iPos ].lang != nullptr )
          {
             if( hb_stricmp( s_langList[ iPos ].lang->pItemList[ HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID ], pszID ) == 0 )
                return &s_langList[ iPos ];
          }
-         else if( pBase == NULL )
+         else if( pBase == nullptr )
             pBase = &s_langList[ iPos ];
       }
    }
@@ -299,7 +299,7 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
    ptr    = buffer + sizeof( trans );
    for( i = 0; i < HB_LANG_ITEM_MAX_; ++i )
    {
-      if( trans.pItemList[ i ] != NULL )
+      if( trans.pItemList[ i ] != nullptr )
       {
          HB_SIZE nLen = strlen( trans.pItemList[ i ] ) + 1;
          memcpy( ptr, trans.pItemList[ i ], nLen );
@@ -313,7 +313,7 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
    memcpy( buffer, &trans, sizeof( trans ) );
 
    pBase = hb_langFindBase( szNewId );
-   if( pBase && pBase->lang == NULL )
+   if( pBase && pBase->lang == nullptr )
    {
       pBase->lang   = ( PHB_LANG ) buffer;
       pBase->buffer = ( void * ) buffer;
@@ -342,7 +342,7 @@ HB_BOOL hb_langRegister( PHB_LANG lang )
    {
       PHB_LANG_BASE pBase = hb_langFindBase( lang->pItemList[ HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID ] );
 
-      if( pBase && pBase->lang == NULL )
+      if( pBase && pBase->lang == nullptr )
       {
          pBase->lang = lang;
          return HB_TRUE;
@@ -360,7 +360,7 @@ PHB_LANG hb_langFind( const char * pszID )
 
    pBase = hb_langFindBase( pszID );
 
-   return pBase ? pBase->lang : NULL;
+   return pBase ? pBase->lang : nullptr;
 }
 
 PHB_LANG hb_langSelect( PHB_LANG lang )
@@ -409,7 +409,7 @@ const char * hb_langID( void )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_langID()" ) );
 
-   return hb_langGetItem( NULL, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID );
+   return hb_langGetItem( nullptr, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID );
 }
 
 /* NOTE: Caller must free the pointer. */
@@ -440,7 +440,7 @@ const char * hb_langDGetErrorDesc( int iIndex )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_langDGetErrorDesc(%i)", iIndex ) );
 
-   return hb_langGetItem( NULL, HB_LANG_ITEM_BASE_ERRDESC + iIndex );
+   return hb_langGetItem( nullptr, HB_LANG_ITEM_BASE_ERRDESC + iIndex );
 }
 
 const char * hb_langDGetItem( int iIndex )

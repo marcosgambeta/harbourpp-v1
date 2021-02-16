@@ -465,7 +465,7 @@ static void hb_gt_pca_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    s_bStdoutConsole = hb_fsIsDevice( s_hFilenoStdout );
    s_bStderrConsole = hb_fsIsDevice( s_hFilenoStderr );
 
-   s_cdpTerm = s_cdpHost = NULL;
+   s_cdpTerm = s_cdpHost = nullptr;
    s_fDispTrans = HB_FALSE;
 
    s_szCrLf = hb_conNewLine();
@@ -485,7 +485,7 @@ static void hb_gt_pca_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
       struct sigaction act, old;
 
       /* if( s_saved_TIO.c_lflag & TOSTOP ) != 0 */
-      sigaction( SIGTTOU, NULL, &old );
+      sigaction( SIGTTOU, nullptr, &old );
       memcpy( &act, &old, sizeof( struct sigaction ) );
       act.sa_handler = sig_handler;
       /* do not use SA_RESTART - new Linux kernels will repeat the operation */
@@ -521,7 +521,7 @@ static void hb_gt_pca_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
 #if defined( SIGTTOU )
       act.sa_handler = SIG_DFL;
-      sigaction( SIGTTOU, &old, NULL );
+      sigaction( SIGTTOU, &old, nullptr );
 #endif
    }
 

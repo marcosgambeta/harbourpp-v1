@@ -78,7 +78,7 @@ static void hb_idleDataRelease( void * Cargo )
    }
 }
 
-static HB_TSD_NEW( s_idleData, sizeof( HB_IDLEDATA ), NULL, hb_idleDataRelease );
+static HB_TSD_NEW( s_idleData, sizeof( HB_IDLEDATA ), nullptr, hb_idleDataRelease );
 
 void hb_releaseCPU( void )
 {
@@ -229,7 +229,7 @@ HB_FUNC( HB_IDLEDEL )
             else
             {
                hb_xfree( pIdleData->pIdleTasks );
-               pIdleData->pIdleTasks = NULL;
+               pIdleData->pIdleTasks = nullptr;
                pIdleData->iIdleTask  = 0;
             }
             break;

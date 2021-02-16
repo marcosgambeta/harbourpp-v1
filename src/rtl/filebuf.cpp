@@ -114,7 +114,7 @@ static const HB_FILE_FUNCS * s_fileMethods( void );
 static HB_CRITICAL_NEW( s_fileMtx );
 static HB_CRITICAL_NEW( s_lockMtx );
 
-static PHB_FILE s_openFiles = NULL;
+static PHB_FILE s_openFiles = nullptr;
 
 #if 0
 void hb_fileDsp( PHB_FILE pFile, const char * szMsg )
@@ -468,7 +468,7 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
                                HB_FATTR nExFlags, const char * pPaths,
                                PHB_ITEM pError )
 {
-   PHB_FILE pFile = NULL;
+   PHB_FILE pFile = nullptr;
 #if defined( HB_OS_UNIX )
    HB_BOOL fSeek = HB_FALSE;
 #  if defined( HB_USE_LARGEFILE64 )
@@ -531,12 +531,12 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
          if( ! fShared || ! pFile->shared || ( nExFlags & FXO_TRUNCATE ) != 0 )
          {
             fResult = HB_FALSE;
-            pFile = NULL;
+            pFile = nullptr;
          }
          else if( pFile->mode != FO_READWRITE && pFile->mode != iMode )
          {
             iMode = FO_READWRITE;
-            pFile = NULL;
+            pFile = nullptr;
          }
          else
          {
@@ -555,12 +555,12 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
    else
       fResult = HB_TRUE;
 
-   if( fResult && pFile == NULL )
+   if( fResult && pFile == nullptr )
 #endif /* HB_OS_UNIX */
    {
-      HB_FHANDLE hFile = hb_fsExtOpen( pszFile, NULL,
+      HB_FHANDLE hFile = hb_fsExtOpen( pszFile, nullptr,
                             nExFlags & ~ ( HB_FATTR ) ( FXO_DEFAULTS | FXO_COPYNAME ),
-                            NULL, NULL );
+                            nullptr, nullptr );
       if( hFile != FS_ERROR )
       {
          HB_ULONG device = 0, inode = 0;
@@ -633,7 +633,7 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
                if( pFile )
                {
                   --pFile->used;
-                  pFile = NULL;
+                  pFile = nullptr;
                }
                if( hFile != FS_ERROR )
                {
@@ -694,7 +694,7 @@ static void s_fileClose( PHB_FILE pFile )
          {
             s_openFiles = pFile->pNext;
             if( pFile == s_openFiles )
-               s_openFiles = NULL;
+               s_openFiles = nullptr;
          }
       }
       if( pFile->hFile != FS_ERROR )
@@ -727,7 +727,7 @@ static HB_BOOL s_fileLock( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen,
       {
          hb_fsLockLarge( pFile->hFile, nStart, nLen, static_cast< HB_USHORT >( iType ) );
          hb_threadEnterCriticalSection( &s_lockMtx );
-         hb_fileUnlock( pFile, NULL, nStart, nLen );
+         hb_fileUnlock( pFile, nullptr, nStart, nLen );
          hb_threadLeaveCriticalSection( &s_lockMtx );
       }
       else
@@ -750,7 +750,7 @@ static HB_BOOL s_fileLock( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen,
          if( ! fResult )
          {
             hb_threadEnterCriticalSection( &s_lockMtx );
-            hb_fileUnlock( pFile, NULL, nStart, nLen );
+            hb_fileUnlock( pFile, nullptr, nStart, nLen );
             hb_threadLeaveCriticalSection( &s_lockMtx );
          }
       }
@@ -1300,7 +1300,7 @@ HB_FOFFSET hb_fileSizeGet( const char * pszFileName, HB_BOOL bUseDirEntry )
       }
       else
       {
-         PHB_FILE pFile = hb_fileExtOpen( pszFileName, NULL, FO_READ | FO_COMPAT, NULL, NULL );
+         PHB_FILE pFile = hb_fileExtOpen( pszFileName, nullptr, FO_READ | FO_COMPAT, nullptr, nullptr );
          if( pFile )
          {
             HB_ERRCODE uiError;
@@ -1376,7 +1376,7 @@ PHB_FILE hb_fileExtOpen( const char * pszFileName, const char * pDefExt,
    if( i >= 0 )
       return s_pFileTypes[ i ]->Open( s_pFileTypes[ i ], pszFileName, pDefExt, nExFlags, pPaths, pError );
 
-   return s_fileExtOpen( NULL, pszFileName, pDefExt, nExFlags, pPaths, pError );
+   return s_fileExtOpen( nullptr, pszFileName, pDefExt, nExFlags, pPaths, pError );
 }
 
 void hb_fileClose( PHB_FILE pFile )
@@ -1467,7 +1467,7 @@ PHB_FILE hb_fileCreateTemp( const char * pszDir,
                             HB_FATTR ulAttr,
                             char * pszName )
 {
-   PHB_FILE pFile = NULL;
+   PHB_FILE pFile = nullptr;
    HB_FHANDLE hFile;
 
    hFile = hb_fsCreateTemp( pszDir, pszPrefix, ulAttr, pszName );
@@ -1483,7 +1483,7 @@ PHB_FILE hb_fileCreateTempEx( char * pszName,
                               const char * pszExt,
                               HB_FATTR ulAttr )
 {
-   PHB_FILE pFile = NULL;
+   PHB_FILE pFile = nullptr;
    HB_FHANDLE hFile;
 
    hFile = hb_fsCreateTempEx( pszName, pszDir, pszPrefix, pszExt, ulAttr );
@@ -1546,7 +1546,7 @@ HB_BOOL hb_fileIsLocalName( const char * pszFileName )
 
 PHB_FILE hb_filePOpen( const char * pszFileName, const char * pszMode )
 {
-   PHB_FILE pFile = NULL;
+   PHB_FILE pFile = nullptr;
    HB_FHANDLE hFile;
 
    hFile = hb_fsPOpen( pszFileName, pszMode );
@@ -1566,7 +1566,7 @@ HB_SIZE hb_fileResult( HB_SIZE nSize )
 HB_BYTE * hb_fileLoadData( PHB_FILE pFile, HB_SIZE nMaxSize,
                            HB_SIZE * pnSize )
 {
-   HB_BYTE * pFileBuf = NULL;
+   HB_BYTE * pFileBuf = nullptr;
    HB_SIZE nSize = 0, nRead, nBufSize;
    HB_FOFFSET nFileSize = hb_fileSize( pFile );
 
@@ -1617,7 +1617,7 @@ HB_BYTE * hb_fileLoadData( PHB_FILE pFile, HB_SIZE nMaxSize,
    else if( pFileBuf )
    {
       hb_xfree( pFileBuf );
-      pFileBuf = NULL;
+      pFileBuf = nullptr;
    }
 
    if( pnSize )
@@ -1629,13 +1629,13 @@ HB_BYTE * hb_fileLoadData( PHB_FILE pFile, HB_SIZE nMaxSize,
 HB_BYTE * hb_fileLoad( const char * pszFileName, HB_SIZE nMaxSize,
                        HB_SIZE * pnSize )
 {
-   HB_BYTE * pFileBuf = NULL;
-   PHB_FILE pFile = hb_fileExtOpen( pszFileName, NULL,
+   HB_BYTE * pFileBuf = nullptr;
+   PHB_FILE pFile = hb_fileExtOpen( pszFileName, nullptr,
                                     FO_READ | FO_SHARED | FO_PRIVATE |
                                     FXO_SHARELOCK | FXO_NOSEEKPOS,
-                                    NULL, NULL );
+                                    nullptr, nullptr );
 
-   if( pFile != NULL )
+   if( pFile != nullptr )
    {
       pFileBuf = hb_fileLoadData( pFile, nMaxSize, pnSize );
       hb_fileClose( pFile );

@@ -76,7 +76,7 @@ HB_FUNC( HB_FNAMENAMEEXT )
    char szPath[ HB_PATH_MAX ];
    PHB_FNAME pFilepath = hb_fsFNameSplit( hb_parcx( 1 ) );
 
-   pFilepath->szPath = NULL;
+   pFilepath->szPath = nullptr;
    hb_retc( hb_fsFNameMerge( szPath, pFilepath ) );
    hb_xfree( pFilepath );
 }

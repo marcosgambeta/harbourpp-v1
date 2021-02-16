@@ -98,7 +98,7 @@ typedef struct
    int col;
 } HB_PRNPOS, * PHB_PRNPOS;
 
-static HB_TSD_NEW( s_prnPos, sizeof( HB_PRNPOS ), NULL, NULL );
+static HB_TSD_NEW( s_prnPos, sizeof( HB_PRNPOS ), nullptr, nullptr );
 
 static PHB_PRNPOS hb_prnPos( void )
 {
@@ -234,19 +234,19 @@ void hb_conOutAlt( const char * szStr, HB_SIZE nLen )
    if( hb_setGetConsole() )
       hb_gtWriteCon( szStr, nLen );
 
-   if( hb_setGetAlternate() && ( pFile = hb_setGetAltHan() ) != NULL )
+   if( hb_setGetAlternate() && ( pFile = hb_setGetAltHan() ) != nullptr )
    {
       /* Print to alternate file if SET ALTERNATE ON and valid alternate file */
       hb_fileWrite( pFile, szStr, nLen, -1 );
    }
 
-   if( ( pFile = hb_setGetExtraHan() ) != NULL )
+   if( ( pFile = hb_setGetExtraHan() ) != nullptr )
    {
       /* Print to extra file if valid alternate file */
       hb_fileWrite( pFile, szStr, nLen, -1 );
    }
 
-   if( ( pFile = hb_setGetPrinterHandle( HB_SET_PRN_CON ) ) != NULL )
+   if( ( pFile = hb_setGetPrinterHandle( HB_SET_PRN_CON ) ) != nullptr )
    {
       /* Print to printer if SET PRINTER ON and valid printer file */
       hb_fileWrite( pFile, szStr, nLen, -1 );
@@ -261,7 +261,7 @@ static void hb_conOutDev( const char * szStr, HB_SIZE nLen )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_conOutDev(%s, %" HB_PFS "u)", szStr, nLen ) );
 
-   if( ( pFile = hb_setGetPrinterHandle( HB_SET_PRN_DEV ) ) != NULL )
+   if( ( pFile = hb_setGetPrinterHandle( HB_SET_PRN_DEV ) ) != nullptr )
    {
       /* Display to printer if SET DEVICE TO PRINTER and valid printer file */
       hb_fileWrite( pFile, szStr, nLen, -1 );
@@ -351,7 +351,7 @@ HB_FUNC( QOUT )
 
    hb_conOutAlt( s_szCrLf, s_iCrLfLen );
 
-   if( ( pFile = hb_setGetPrinterHandle( HB_SET_PRN_CON ) ) != NULL )
+   if( ( pFile = hb_setGetPrinterHandle( HB_SET_PRN_CON ) ) != nullptr )
    {
       PHB_PRNPOS pPrnPos = hb_prnPos();
 
@@ -385,7 +385,7 @@ HB_FUNC( __EJECT ) /* Ejects the current page from the printer */
    PHB_PRNPOS pPrnPos;
    PHB_FILE pFile;
 
-   if( ( pFile = hb_setGetPrinterHandle( HB_SET_PRN_ANY ) ) != NULL )
+   if( ( pFile = hb_setGetPrinterHandle( HB_SET_PRN_ANY ) ) != nullptr )
    {
       static const char s_szEop[ 4 ] = { 0x0C, 0x0D, 0x00, 0x00 }; /* Buffer is 4 bytes to make CodeGuard happy */
       hb_fileWrite( pFile, s_szEop, 2, -1 );
@@ -414,7 +414,7 @@ static void hb_conDevPos( int iRow, int iCol )
    /* Position printer if SET DEVICE TO PRINTER and valid printer file
       otherwise position console */
 
-   if( ( pFile = hb_setGetPrinterHandle( HB_SET_PRN_DEV ) ) != NULL )
+   if( ( pFile = hb_setGetPrinterHandle( HB_SET_PRN_DEV ) ) != nullptr )
    {
       int iPRow = iRow;
       int iPCol = iCol + hb_setGetMargin();

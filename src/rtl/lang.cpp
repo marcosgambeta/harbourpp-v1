@@ -55,14 +55,14 @@ HB_FUNC( HB_USERLANG )
    char * ietf;
 
    ietf = hb_getenv( "LC_ALL" );
-   if( ietf == NULL )
+   if( ietf == nullptr )
    {
       ietf = hb_getenv( "LC_MESSAGES" );
-      if( ietf == NULL )
+      if( ietf == nullptr )
          ietf = hb_getenv( "LANG" );
    }
 
-   if( ietf != NULL )
+   if( ietf != nullptr )
    {
       HB_ISIZ tmp;
 
@@ -283,7 +283,7 @@ HB_FUNC( HB_USERLANG )
          case 0x0443: ietfc = "uz-UZ-Latn" ; break;
          case 0x002A: ietfc = "vi"         ; break;
          case 0x042A: ietfc = "vi-VN"      ; break;
-         default:     ietfc = NULL         ; break;
+         default:     ietfc = nullptr         ; break;
       }
       hb_retc_const( ietfc );
 #else

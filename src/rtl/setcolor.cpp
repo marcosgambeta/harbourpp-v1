@@ -57,7 +57,7 @@ const char * hb_conSetColor( const char * szColor )
    szOldColor = hb_setGetColor();
    hb_gtGetColorStr( szOldColor );
 
-   if( szColor != NULL )
+   if( szColor != nullptr )
       hb_gtSetColorStr( szColor );
 
    return szOldColor;

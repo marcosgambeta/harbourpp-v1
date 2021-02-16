@@ -114,12 +114,12 @@ static HB_BOOL fsGetTempDirByCase( char * pszName, const char * pszTempDir, HB_B
       switch( hb_setGetDirCase() )
       {
          case HB_SET_CASE_LOWER:
-            pTmp = hb_cdpnDupLower( hb_vmCDP(), pszName, NULL );
+            pTmp = hb_cdpnDupLower( hb_vmCDP(), pszName, nullptr );
             fOK = strcmp( pszName, pTmp ) == 0;
             hb_xfree( pTmp );
             break;
          case HB_SET_CASE_UPPER:
-            pTmp = hb_cdpnDupUpper( hb_vmCDP(), pszName, NULL );
+            pTmp = hb_cdpnDupUpper( hb_vmCDP(), pszName, nullptr );
             fOK = strcmp( pszName, pTmp ) == 0;
             hb_xfree( pTmp );
             break;
@@ -134,7 +134,7 @@ static HB_BOOL fsGetTempDirByCase( char * pszName, const char * pszTempDir, HB_B
 #  if defined( __DJGPP__ ) || defined( HB_OS_OS2 )
       /* convert '/' to '\' */
       char * pszDelim = pszName;
-      while( ( pszDelim = strchr( pszDelim, '/' ) ) != NULL )
+      while( ( pszDelim = strchr( pszDelim, '/' ) ) != nullptr )
          *pszDelim = '\\';
 #  endif
       if( ! hb_fsDirExists( pszTempDir ) )
@@ -186,7 +186,7 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
           hb_setGetDirCase() != HB_SET_CASE_LOWER &&
           hb_setGetDirCase() != HB_SET_CASE_UPPER
 #if ! defined( HB_HAS_MKSTEMPS )
-          && ( pszExt == NULL || *pszExt == 0 )
+          && ( pszExt == nullptr || *pszExt == 0 )
 #endif
         )
       {
@@ -254,12 +254,12 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
 #if defined( HB_OS_WIN )
    {
       LPCTSTR lpPrefix, lpDir;
-      LPTSTR lpPrefixFree = NULL, lpDirFree = NULL;
+      LPTSTR lpPrefixFree = nullptr, lpDirFree = nullptr;
 
       TCHAR lpBuffer[ HB_PATH_MAX ];
       TCHAR lpTempDir[ HB_PATH_MAX ];
 
-      lpPrefix = pszPrefix ? HB_FSNAMECONV( pszPrefix, &lpPrefixFree ) : NULL;
+      lpPrefix = pszPrefix ? HB_FSNAMECONV( pszPrefix, &lpPrefixFree ) : nullptr;
 
       if( pszDir && pszDir[ 0 ] != '\0' )
          lpDir = HB_FSNAMECONV( pszDir, &lpDirFree );
@@ -293,7 +293,7 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
       HB_SYMBOL_UNUSED( pszPrefix );
 
       pTmpBuffer[ 0 ] = '\0';
-      fResult = ( tmpnam( pTmpBuffer ) != NULL );
+      fResult = ( tmpnam( pTmpBuffer ) != nullptr );
       pTmpBuffer[ L_tmpnam ] = '\0';
 
       if( fResult )
@@ -301,7 +301,7 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
 #  if defined( __DJGPP__ ) || defined( HB_OS_OS2 )
          /* convert '/' to '\' */
          char * pszDelim = pTmpBuffer;
-         while( ( pszDelim = strchr( pszDelim, '/' ) ) != NULL )
+         while( ( pszDelim = strchr( pszDelim, '/' ) ) != nullptr )
             *pszDelim = '\\';
 #  endif
          hb_osStrDecode2( pTmpBuffer, pszBuffer, HB_PATH_MAX - 1 );
@@ -323,7 +323,7 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
 HB_FHANDLE hb_fsCreateTemp( const char * pszDir, const char * pszPrefix, HB_FATTR ulAttr, char * pszName )
 {
 #if defined( HB_OS_UNIX )
-   return hb_fsCreateTempEx( pszName, pszDir, pszPrefix, NULL, ulAttr );
+   return hb_fsCreateTempEx( pszName, pszDir, pszPrefix, nullptr, ulAttr );
 #else
    /* If there was no special extension requested, we're using
       native temp file generation functions on systems where such
@@ -400,7 +400,7 @@ HB_ERRCODE hb_fsTempDir( char * pszTempDir )
 #if ! defined( HB_OS_OS2 )
       char szBuffer[ L_tmpnam ];
 
-      if( tmpnam( szBuffer ) != NULL )
+      if( tmpnam( szBuffer ) != nullptr )
       {
          PHB_FNAME pTempName = hb_fsFNameSplit( szBuffer );
          if( fsGetTempDirByCase( pszTempDir, pTempName->szPath, HB_TRUE ) )
@@ -410,7 +410,7 @@ HB_ERRCODE hb_fsTempDir( char * pszTempDir )
       if( nResult != 0 )
 #endif
       {
-         static const char * env_tmp[] = { "TEMP", "TMP", "TMPDIR", NULL };
+         static const char * env_tmp[] = { "TEMP", "TMP", "TMPDIR", nullptr };
 
          const char ** tmp = env_tmp;
 

@@ -197,7 +197,7 @@ static int         s_iUpdtTop;
 static int         s_iUpdtBottom;
 static int         s_iUpdtLeft;
 static int         s_iUpdtRight;
-static CHAR_INFO * s_pCharInfoScreen = NULL;
+static CHAR_INFO * s_pCharInfoScreen = nullptr;
 static HB_SIZE     s_nScreenBuffSize = 0;
 
 static HB_FHANDLE  s_hStdIn, s_hStdOut, s_hStdErr;
@@ -473,7 +473,7 @@ static void hb_gt_win_xInitScreenParam( PHB_GT pGT )
 
       HB_GTSELF_RESIZE( pGT, _GetScreenHeight(), _GetScreenWidth() );
 
-      if( s_pCharInfoScreen == NULL || nSize != s_nScreenBuffSize )
+      if( s_pCharInfoScreen == nullptr || nSize != s_nScreenBuffSize )
       {
          if( s_pCharInfoScreen )
             hb_xfree( s_pCharInfoScreen );
@@ -522,7 +522,7 @@ static void hb_gt_win_xInitScreenParam( PHB_GT pGT )
    else if( s_pCharInfoScreen )
    {
       hb_xfree( s_pCharInfoScreen );
-      s_pCharInfoScreen = NULL;
+      s_pCharInfoScreen = nullptr;
       s_nScreenBuffSize = 0;
    }
 }
@@ -535,8 +535,8 @@ static HB_BOOL hb_gt_win_SetPalette_Vista( HB_BOOL bSet, COLORREF * colors )
 
    typedef BOOL ( WINAPI * P_SETCONSOLESCREENBUFFERINFOEX )( HANDLE, PCONSOLE_SCREEN_BUFFER_INFOEX );
    typedef BOOL ( WINAPI * P_GETCONSOLESCREENBUFFERINFOEX )( HANDLE, PCONSOLE_SCREEN_BUFFER_INFOEX );
-   static P_GETCONSOLESCREENBUFFERINFOEX s_pGetConsoleScreenBufferInfoEx = NULL;
-   static P_SETCONSOLESCREENBUFFERINFOEX s_pSetConsoleScreenBufferInfoEx = NULL;
+   static P_GETCONSOLESCREENBUFFERINFOEX s_pGetConsoleScreenBufferInfoEx = nullptr;
+   static P_SETCONSOLESCREENBUFFERINFOEX s_pSetConsoleScreenBufferInfoEx = nullptr;
 
    HB_BOOL bDone = HB_FALSE;
    int tmp;
@@ -621,7 +621,7 @@ static HWND hb_getConsoleWindowHandle( void )
    static HB_BOOL s_fChecked = HB_FALSE;
 
    typedef HWND ( WINAPI * P_GETCONSOLEWINDOW )( void );
-   static P_GETCONSOLEWINDOW s_pGetConsoleWindow = NULL;
+   static P_GETCONSOLEWINDOW s_pGetConsoleWindow = nullptr;
 
    HWND hWnd;
 
@@ -639,7 +639,7 @@ static HWND hb_getConsoleWindowHandle( void )
    {
       TCHAR oldTitle[ 256 ];
 
-      hWnd = NULL;
+      hWnd = nullptr;
 
       if( GetConsoleTitle( oldTitle, HB_SIZEOFARRAY( oldTitle ) ) )
       {
@@ -670,8 +670,8 @@ static HWND hb_getConsoleWindowHandle( void )
 
             /* repeat in a loop to be sure title is changed */
             do
-               hWnd = FindWindow( NULL, tmpTitle );
-            while( hWnd == NULL && ( timeout = hb_timerTest( timeout, &timer ) ) != 0 );
+               hWnd = FindWindow( nullptr, tmpTitle );
+            while( hWnd == nullptr && ( timeout = hb_timerTest( timeout, &timer ) ) != 0 );
             SetConsoleTitle( oldTitle );
          }
       }
@@ -700,7 +700,7 @@ static HB_BOOL hb_gt_win_SetCloseButton( HB_BOOL bSet, HB_BOOL bClosable )
             typedef BOOL ( WINAPI * P_SETCONSOLEMENUCLOSE )( BOOL );
 
             static HB_BOOL s_fChecked = HB_FALSE;
-            static P_SETCONSOLEMENUCLOSE s_pSetConsoleMenuClose = NULL;
+            static P_SETCONSOLEMENUCLOSE s_pSetConsoleMenuClose = nullptr;
 
             if( ! s_fChecked )
             {
@@ -792,7 +792,7 @@ static void hb_gt_win_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    s_HOutput = CreateFile( TEXT( "CONOUT$" ),               /* filename    */
                      GENERIC_READ    | GENERIC_WRITE,       /* Access flag */
                      FILE_SHARE_READ | FILE_SHARE_WRITE,    /* share mode  */
-                     NULL,                                  /* security attributes */
+                     nullptr,                                  /* security attributes */
                      OPEN_EXISTING,                         /* create mode */
                      0, 0 );
 
@@ -802,7 +802,7 @@ static void hb_gt_win_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    s_HInput = CreateFile( TEXT( "CONIN$" ),                 /* filename    */
                      GENERIC_READ    | GENERIC_WRITE,       /* Access flag */
                      FILE_SHARE_READ | FILE_SHARE_WRITE,    /* share mode  */
-                     NULL,                                  /* security attributes */
+                     nullptr,                                  /* security attributes */
                      OPEN_EXISTING,                         /* create mode */
                      0, 0 );
 
@@ -854,7 +854,7 @@ static void hb_gt_win_Exit( PHB_GT pGT )
    if( s_pCharInfoScreen )
    {
       hb_xfree( s_pCharInfoScreen );
-      s_pCharInfoScreen = NULL;
+      s_pCharInfoScreen = nullptr;
       s_nScreenBuffSize = 0;
    }
 
@@ -1836,7 +1836,7 @@ static HB_BOOL hb_gt_win_IsFullScreen( void )
    if( hModule )
       pGetConsoleDisplayMode = ( P_GCDM ) HB_WINAPI_GETPROCADDRESS( hModule, "GetConsoleDisplayMode" );
    else
-      pGetConsoleDisplayMode = NULL;
+      pGetConsoleDisplayMode = nullptr;
 
    if( pGetConsoleDisplayMode && pGetConsoleDisplayMode( &dwModeFlags ) )
    {
@@ -1859,14 +1859,14 @@ static HB_BOOL hb_gt_win_FullScreen( HB_BOOL bFullScreen )
    if( hModule )
       pSetConsoleDisplayMode = ( P_SCDM ) HB_WINAPI_GETPROCADDRESS( hModule, "SetConsoleDisplayMode" );
    else
-      pSetConsoleDisplayMode = NULL;
+      pSetConsoleDisplayMode = nullptr;
 
    if( pSetConsoleDisplayMode )
    {
       if( bFullScreen )
-         return pSetConsoleDisplayMode( s_HOutput, CONSOLE_FULLSCREEN_MODE, NULL );
+         return pSetConsoleDisplayMode( s_HOutput, CONSOLE_FULLSCREEN_MODE, nullptr );
       else
-         return ! pSetConsoleDisplayMode( s_HOutput, CONSOLE_WINDOWED_MODE, NULL );
+         return ! pSetConsoleDisplayMode( s_HOutput, CONSOLE_WINDOWED_MODE, nullptr );
    }
 
    return HB_FALSE;
@@ -1927,7 +1927,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_STRING )
          {
             void * hTitle;
-            SetConsoleTitle( HB_ITEMGETSTR( pInfo->pNewVal, &hTitle, NULL ) );
+            SetConsoleTitle( HB_ITEMGETSTR( pInfo->pNewVal, &hTitle, nullptr ) );
             hb_strfree( hTitle );
          }
          break;
@@ -2082,7 +2082,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 #endif
          else
          {
-            if( pInfo->pResult == NULL )
+            if( pInfo->pResult == nullptr )
                pInfo->pResult = hb_itemNew( nullptr );
 #if defined( UNICODE )
             hb_gt_winapi_getClipboard( CF_UNICODETEXT, pInfo->pResult );

@@ -62,7 +62,7 @@ HB_FUNC( INT )
       {
          int iWidth;
 
-         hb_itemGetNLen( pNumber, &iWidth, NULL );
+         hb_itemGetNLen( pNumber, &iWidth, nullptr );
          hb_retnlen( hb_numInt( hb_itemGetND( pNumber ) ), iWidth, 0 );
       }
    }

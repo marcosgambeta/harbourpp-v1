@@ -110,7 +110,7 @@ HB_FUNC( RESTSCREEN )
    {
       int iTop, iLeft, iBottom, iRight;
       HB_SIZE nSize, nLen;
-      void * pBuffer = NULL;
+      void * pBuffer = nullptr;
       const char * pBufStr = hb_parc( 5 );
       HB_BOOL fNoCheck = HB_FALSE;
 

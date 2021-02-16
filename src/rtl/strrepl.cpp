@@ -72,7 +72,7 @@ HB_FUNC( HB_STRREPLACE )
          const char * pszText = hb_itemGetCPtr( pText );
          const char * ptr;
          char * pszResult = nullptr;
-         HB_SIZE * ptrOpt = NULL;
+         HB_SIZE * ptrOpt = nullptr;
          HB_BOOL fNext = HB_FALSE;
          HB_SIZE nDst, nSize, nPos, nAt, nSkip, nTmp;
 
@@ -97,7 +97,7 @@ HB_FUNC( HB_STRREPLACE )
                }
                if( ptrOpt[ uc ] == 0 )
                   ptrOpt[ uc ] = nAt + 1;
-               else if( pszSrc == NULL )
+               else if( pszSrc == nullptr )
                   fNext = HB_TRUE;
             }
          }

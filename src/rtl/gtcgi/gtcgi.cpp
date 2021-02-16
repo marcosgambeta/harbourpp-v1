@@ -261,7 +261,7 @@ static void hb_gt_cgi_conOut( PHB_GT pGT, const char * szText, HB_SIZE nLength,
       HB_SIZE nLen = nLength, nBufSize = 0;
       char * pBuf = nullptr;
       const char * buffer = hb_cdpnDup3( szText, nLen,
-                                         NULL, &nLen,
+                                         nullptr, &nLen,
                                          &pBuf, &nBufSize,
                                          cdpHost, cdpTerm );
       hb_gt_cgi_termOut( pGTCGI, buffer, nLen );
@@ -310,7 +310,7 @@ static void hb_gt_cgi_WriteConW( PHB_GT pGT, const HB_WCHAR * szTextW, HB_SIZE n
    char * buffer = ( char * ) hb_xgrab( nSize );
 
    hb_cdpU16ToStr( cdpTerm, HB_CDP_ENDIAN_NATIVE, szTextW, nLength, buffer, nSize );
-   hb_gt_cgi_conOut( pGT, buffer, nSize, NULL, NULL );
+   hb_gt_cgi_conOut( pGT, buffer, nSize, nullptr, nullptr );
    hb_xfree( buffer );
 }
 
@@ -328,7 +328,7 @@ static void hb_gt_cgi_WriteAtW( PHB_GT pGT, int iRow, int iCol, const HB_WCHAR *
 
    hb_cdpU16ToStr( cdpTerm, HB_CDP_ENDIAN_NATIVE, szTextW, nLength, buffer, nSize );
    hb_gt_cgi_conPos( HB_GTCGI_GET( pGT ), iRow, iCol );
-   hb_gt_cgi_conOut( pGT, buffer, nSize, NULL, NULL );
+   hb_gt_cgi_conOut( pGT, buffer, nSize, nullptr, nullptr );
    hb_xfree( buffer );
 }
 

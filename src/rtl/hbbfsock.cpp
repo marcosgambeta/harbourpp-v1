@@ -218,12 +218,12 @@ static int s_sockexCanWrite( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeou
 
 static char * s_sockexName( PHB_SOCKEX pSock )
 {
-   char * pszName = hb_sockexIsRaw( HB_BFSOCK_GET( pSock )->sock ) ? NULL :
+   char * pszName = hb_sockexIsRaw( HB_BFSOCK_GET( pSock )->sock ) ? nullptr :
                     hb_sockexName( HB_BFSOCK_GET( pSock )->sock );
    if( pszName )
    {
       char * pszFree = pszName;
-      pszName = hb_xstrcpy( NULL, pSock->pFilter->pszName, "|", pszName, NULL );
+      pszName = hb_xstrcpy( nullptr, pSock->pFilter->pszName, "|", pszName, nullptr );
       hb_xfree( pszFree );
    }
    else
@@ -270,13 +270,13 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams );
 
 static PHB_SOCKEX s_sockexNew( HB_SOCKET sd, PHB_ITEM pParams )
 {
-   PHB_SOCKEX pSock, pSockNew = NULL;
+   PHB_SOCKEX pSock, pSockNew = nullptr;
 
-   pSock = hb_sockexNew( sd, NULL, pParams );
+   pSock = hb_sockexNew( sd, nullptr, pParams );
    if( pSock )
    {
       pSockNew = s_sockexNext( pSock, pParams );
-      if( pSockNew == NULL )
+      if( pSockNew == nullptr )
          hb_sockexClose( pSock, HB_FALSE );
    }
 
@@ -300,18 +300,18 @@ static const HB_SOCKET_FILTER s_sockFilter =
 
 static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
 {
-   PHB_SOCKEX pSockNew = NULL;
+   PHB_SOCKEX pSockNew = nullptr;
 
    if( pSock )
    {
-      const void * keydata = NULL, * iv = NULL;
+      const void * keydata = nullptr, * iv = nullptr;
       int keylen = 0, ivlen = 0;
 
-      hb_socekxParamsGetStd( pParams, &keydata, &keylen, &iv, &ivlen, NULL, NULL );
+      hb_socekxParamsGetStd( pParams, &keydata, &keylen, &iv, &ivlen, nullptr, nullptr );
       if( keylen > 0 )
       {
          PHB_SOCKEX_BF pBF = ( PHB_SOCKEX_BF ) hb_xgrabz( sizeof( HB_SOCKEX_BF ) );
-         const HB_BYTE * pVect = ( const HB_BYTE * ) ( ivlen > 0 ? iv : NULL );
+         const HB_BYTE * pVect = ( const HB_BYTE * ) ( ivlen > 0 ? iv : nullptr );
          int i;
 
          hb_blowfishInit( &pBF->bf, keydata, keylen );

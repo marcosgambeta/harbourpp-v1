@@ -57,7 +57,7 @@
       C level functions:
         char * hb_jsonEncode( PHB_ITEM pValue, HB_SIZE * pnLen, int iIndent );
            pValue  - value to encode;
-           pnLen   - if pnLen is not NULL, length of returned buffer is
+           pnLen   - if pnLen is not nullptr, length of returned buffer is
                      stored to *pnLen;
            iIndent - indenting to be human readable;
            returns pointer to encoded JSON buffer. buffer must be fried
@@ -178,7 +178,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx,
    {
       HB_SIZE nPos, nLen;
       const char * szString;
-      void * hString = NULL;
+      void * hString = nullptr;
       char buf[ 8 ];
 
       if( cdp )
@@ -624,10 +624,10 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
          for( ;; )
          {
             /* Do we need to check if key does not exist yet? */
-            if( ( szSource = _hb_jsonDecode( szSource, pItemKey, cdp ) ) == NULL ||
+            if( ( szSource = _hb_jsonDecode( szSource, pItemKey, cdp ) ) == nullptr ||
                 ! HB_IS_STRING( pItemKey ) ||
                 * ( szSource = _skipws( szSource ) ) != ':' ||
-                ( szSource = _hb_jsonDecode( _skipws( szSource + 1 ), pItemValue, cdp ) ) == NULL)
+                ( szSource = _hb_jsonDecode( _skipws( szSource + 1 ), pItemValue, cdp ) ) == nullptr)
             {
                hb_itemRelease( pItemKey );
                hb_itemRelease( pItemValue );
@@ -693,7 +693,7 @@ char * hb_jsonEncodeCP( PHB_ITEM pValue, HB_SIZE * pnLen, int iIndent, PHB_CODEP
 
 char * hb_jsonEncode( PHB_ITEM pValue, HB_SIZE * pnLen, int iIndent )
 {
-   return hb_jsonEncodeCP( pValue, pnLen, iIndent, NULL );
+   return hb_jsonEncodeCP( pValue, pnLen, iIndent, nullptr );
 }
 
 HB_SIZE hb_jsonDecodeCP( const char * szSource, PHB_ITEM pValue, PHB_CODEPAGE cdp )
@@ -701,7 +701,7 @@ HB_SIZE hb_jsonDecodeCP( const char * szSource, PHB_ITEM pValue, PHB_CODEPAGE cd
    PHB_ITEM pItem = pValue ? pValue : hb_itemNew( nullptr );
    const char * sz;
 
-   sz = szSource ? _hb_jsonDecode( _skipws( szSource ), pItem, cdp ) : NULL;
+   sz = szSource ? _hb_jsonDecode( _skipws( szSource ), pItem, cdp ) : nullptr;
    if( ! pValue )
       hb_itemRelease( pItem );
    if( sz )
@@ -711,7 +711,7 @@ HB_SIZE hb_jsonDecodeCP( const char * szSource, PHB_ITEM pValue, PHB_CODEPAGE cd
 
 HB_SIZE hb_jsonDecode( const char * szSource, PHB_ITEM pValue )
 {
-   return hb_jsonDecodeCP( szSource, pValue, NULL );
+   return hb_jsonDecodeCP( szSource, pValue, nullptr );
 }
 
 /* Harbour level API functions */

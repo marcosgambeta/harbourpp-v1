@@ -81,7 +81,7 @@ static void * s_zlib_alloc( void * cargo, uInt items, uInt size )
 {
    HB_SYMBOL_UNUSED( cargo );
 
-   return ( items > 0 && size > 0 ) ? hb_xalloc( ( HB_SIZE ) items * size ) : NULL;
+   return ( items > 0 && size > 0 ) ? hb_xalloc( ( HB_SIZE ) items * size ) : nullptr;
 }
 
 static void s_zlib_free( void * cargo, void * address )
@@ -102,7 +102,7 @@ static int s_zlibCompress2( char ** pDstPtr, HB_SIZE * pnDst,
    memset( &stream, 0, sizeof( stream ) );
    stream.zalloc    = s_zlib_alloc;
    stream.zfree     = s_zlib_free;
-   stream.opaque    = NULL;
+   stream.opaque    = nullptr;
    stream.next_in   = ( Bytef* ) HB_UNCONST( pSrc );
    stream.avail_in  = static_cast< uInt >( nSrc );
    iResult = deflateInit2( &stream, level, Z_DEFLATED,
@@ -110,12 +110,12 @@ static int s_zlibCompress2( char ** pDstPtr, HB_SIZE * pnDst,
                            Z_DEFAULT_STRATEGY );
    if( iResult == Z_OK )
    {
-      if( *pDstPtr == NULL )
+      if( *pDstPtr == nullptr )
       {
          if( *pnDst == 0 )
             *pnDst = deflateBound( &stream, static_cast< uLong >( nSrc ) );
          *pDstPtr = ( char * ) hb_xalloc( *pnDst + 1 );
-         if( *pDstPtr == NULL )
+         if( *pDstPtr == nullptr )
             iResult = Z_MEM_ERROR;
       }
    }
@@ -158,7 +158,7 @@ static HB_SIZE s_zlibUncompressedSize( const char * szSrc, HB_SIZE nLen,
    memset( &stream, 0, sizeof( stream ) );
    stream.zalloc    = s_zlib_alloc;
    stream.zfree     = s_zlib_free;
-   stream.opaque    = NULL;
+   stream.opaque    = nullptr;
    stream.next_in   = ( Bytef * ) HB_UNCONST( szSrc );
    stream.avail_in  = static_cast< uInt >( nLen );
 
@@ -193,7 +193,7 @@ static int s_zlibUncompress( char * pDst, HB_SIZE * pnDst,
    memset( &stream, 0, sizeof( stream ) );
    stream.zalloc    = s_zlib_alloc;
    stream.zfree     = s_zlib_free;
-   stream.opaque    = NULL;
+   stream.opaque    = nullptr;
    stream.next_in   = ( Bytef* ) HB_UNCONST( pSrc );
    stream.avail_in  = static_cast< uInt >( nSrc );
    iResult = inflateInit2( &stream, 15 + 32 );
@@ -290,7 +290,7 @@ HB_FUNC( HB_ZCOMPRESS )
 
       if( nLen )
       {
-         PHB_ITEM pBuffer = HB_ISBYREF( 2 ) ? hb_param( 2, HB_IT_STRING ) : NULL;
+         PHB_ITEM pBuffer = HB_ISBYREF( 2 ) ? hb_param( 2, HB_IT_STRING ) : nullptr;
          HB_BOOL fAlloc = HB_FALSE;
          HB_SIZE nDstLen;
          char * pDest;
@@ -299,7 +299,7 @@ HB_FUNC( HB_ZCOMPRESS )
          if( pBuffer )
          {
             if( ! hb_itemGetWriteCL( pBuffer, &pDest, &nDstLen ) )
-               pDest = NULL;
+               pDest = nullptr;
          }
          else
          {
@@ -310,7 +310,7 @@ HB_FUNC( HB_ZCOMPRESS )
             }
             else
             {
-               pDest = NULL;
+               pDest = nullptr;
                nDstLen = 0;
                fAlloc = HB_TRUE;
             }
@@ -351,7 +351,7 @@ HB_FUNC( HB_ZCOMPRESS )
  */
 HB_FUNC( HB_ZUNCOMPRESS )
 {
-   PHB_ITEM pBuffer = HB_ISBYREF( 2 ) ? hb_param( 2, HB_IT_STRING ) : NULL;
+   PHB_ITEM pBuffer = HB_ISBYREF( 2 ) ? hb_param( 2, HB_IT_STRING ) : nullptr;
    const char * szData = hb_parc( 1 );
 
    if( szData )
@@ -437,7 +437,7 @@ HB_FUNC( HB_GZCOMPRESS )
 
       if( nLen )
       {
-         PHB_ITEM pBuffer = HB_ISBYREF( 2 ) ? hb_param( 2, HB_IT_STRING ) : NULL;
+         PHB_ITEM pBuffer = HB_ISBYREF( 2 ) ? hb_param( 2, HB_IT_STRING ) : nullptr;
          HB_BOOL fAlloc = HB_FALSE;
          HB_SIZE nDstLen;
          char * pDest;
@@ -446,7 +446,7 @@ HB_FUNC( HB_GZCOMPRESS )
          if( pBuffer )
          {
             if( ! hb_itemGetWriteCL( pBuffer, &pDest, &nDstLen ) )
-               pDest = NULL;
+               pDest = nullptr;
          }
          else
          {
@@ -457,7 +457,7 @@ HB_FUNC( HB_GZCOMPRESS )
             }
             else
             {
-               pDest = NULL;
+               pDest = nullptr;
                nDstLen = 0;
                fAlloc = HB_TRUE;
             }

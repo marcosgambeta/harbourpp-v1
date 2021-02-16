@@ -488,7 +488,7 @@ HB_FUNC( HB_FGETDATETIME )
    {
       if( HB_ISBYREF( 3 ) )
       {
-         hb_storc( NULL, 3 );
+         hb_storc( nullptr, 3 );
          hb_stordl( 0, 2 );
       }
       else
@@ -564,7 +564,7 @@ HB_FUNC( HB_PWRITE )
    HB_FHANDLE hPipe = hb_numToHandle( hb_parnintdef( 1, FS_ERROR ) );
    const char * data = hb_parc( 2 );
 
-   if( hPipe != FS_ERROR && data != NULL )
+   if( hPipe != FS_ERROR && data != nullptr )
    {
       HB_SIZE nLen = hb_parclen( 2 );
 

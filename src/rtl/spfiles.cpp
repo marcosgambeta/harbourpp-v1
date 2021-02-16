@@ -105,7 +105,7 @@ HB_BOOL hb_spFile( const char * pszFileName, char * pszRetPath )
 
    hb_xfree( pFilepath );
 
-   if( pszRetPath == NULL )
+   if( pszRetPath == nullptr )
       hb_xfree( pszPath );
 
    return bIsFile;
@@ -169,7 +169,7 @@ HB_BOOL hb_spFileExists( const char * pszFileName, char * pszRetPath )
 
    hb_xfree( pFilepath );
 
-   if( pszRetPath == NULL )
+   if( pszRetPath == nullptr )
       hb_xfree( pszPath );
 
    return bIsFile;

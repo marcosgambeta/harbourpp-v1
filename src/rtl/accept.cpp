@@ -57,7 +57,7 @@ HB_FUNC_EXTERN( QOUT );
 
 #ifdef HB_CLP_UNDOC
 
-static HB_TSD_NEW( s_szAcceptResult, ACCEPT_BUFFER_LEN, NULL, NULL );
+static HB_TSD_NEW( s_szAcceptResult, ACCEPT_BUFFER_LEN, nullptr, nullptr );
 
 static char * hb_acceptBuffer( void )
 {

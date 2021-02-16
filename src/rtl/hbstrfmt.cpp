@@ -195,10 +195,10 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
          if( iParamNo == -1 )
             iParamNo = ++iParam;
 
-         pItem = ( iParamNo > iCount ) ? NULL : pItemArray[ iParamNo - 1 ];
+         pItem = ( iParamNo > iCount ) ? nullptr : pItemArray[ iParamNo - 1 ];
       }
       else
-         pItem = NULL;
+         pItem = nullptr;
 
       switch( *pFmt )
       {
@@ -496,7 +496,7 @@ HB_FUNC( HB_STRFORMAT )
    if( pFormat )
    {
       int        iParams = hb_pcount();
-      PHB_ITEM * pItemArray = NULL;
+      PHB_ITEM * pItemArray = nullptr;
 
       if( iParams > 1 )
       {
@@ -506,7 +506,7 @@ HB_FUNC( HB_STRFORMAT )
             pItemArray[ i - 1 ] = hb_param( i + 1, HB_IT_ANY );
       }
 
-      hb_itemReturnRelease( hb_strFormat( NULL, pFormat, iParams - 1, pItemArray ) );
+      hb_itemReturnRelease( hb_strFormat( nullptr, pFormat, iParams - 1, pItemArray ) );
 
       if( iParams > 1 )
          hb_xfree( pItemArray );

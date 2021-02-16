@@ -155,7 +155,7 @@ static void hb_sln_colorTrans( void )
        * the same.
        */
       clr = ( bg << 4 ) | ( fg ^ 0x07 );
-      SLtt_set_color( clr, NULL, ( char * ) HB_UNCONST( s_colorNames[ fg ] ),
+      SLtt_set_color( clr, nullptr, ( char * ) HB_UNCONST( s_colorNames[ fg ] ),
                                  ( char * ) HB_UNCONST( s_colorNames[ bg ] ) );
 #ifdef HB_SLN_UTF8
       s_colorTab[ i ] = clr;
@@ -602,7 +602,7 @@ static void hb_gt_sln_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
             SLang_Ignore_User_Abort = 1;
 
             /* no default abort processing */
-            SLang_set_abort_signal( NULL );
+            SLang_set_abort_signal( nullptr );
 
             /* NOTE: this is incompatible with CLIPPER
                but under Unix we should assume cursor is

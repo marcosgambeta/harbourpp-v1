@@ -277,7 +277,7 @@ static HB_BOOL hb_tokenParam( int iParam, HB_SIZE nSkip,
    *pszDelim = szDelim;
    *piFlags = iFlags;
 
-   return szLine != NULL;
+   return szLine != nullptr;
 }
 
 HB_FUNC( HB_TOKENCOUNT )

@@ -54,12 +54,12 @@ HB_BOOL hb_fsCopy( const char * pszSource, const char * pszDest )
    HB_BOOL fResult = HB_FALSE;
    PHB_FILE pSrcFile;
 
-   if( ( pSrcFile = hb_fileExtOpen( pszSource, NULL, FO_READ | FO_SHARED | FXO_SHARELOCK, NULL, NULL ) ) != NULL )
+   if( ( pSrcFile = hb_fileExtOpen( pszSource, nullptr, FO_READ | FO_SHARED | FXO_SHARELOCK, nullptr, nullptr ) ) != nullptr )
    {
       PHB_FILE pDstFile;
       HB_ERRCODE errCode;
 
-      if( ( pDstFile = hb_fileExtOpen( pszDest, NULL, FXO_TRUNCATE | FO_READWRITE | FO_EXCLUSIVE | FXO_SHARELOCK, NULL, NULL ) ) != NULL )
+      if( ( pDstFile = hb_fileExtOpen( pszDest, nullptr, FXO_TRUNCATE | FO_READWRITE | FO_EXCLUSIVE | FXO_SHARELOCK, nullptr, nullptr ) ) != nullptr )
       {
          void * pbyBuffer = hb_xgrab( HB_FSCOPY_BUFFERSIZE );
 

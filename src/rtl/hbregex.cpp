@@ -80,7 +80,7 @@ static int hb_regcomp( PHB_REGEX pRegEx, const char * szRegEx )
                      ( ( pRegEx->iFlags & HBREG_NOTEOL ) ? PCRE_NOTEOL : 0 );
 
    /* use UTF8 in pcre when available and HVM CP is also UTF8. */
-   if( s_iUTF8Enabled && hb_cdpIsUTF8( NULL ) )
+   if( s_iUTF8Enabled && hb_cdpIsUTF8( nullptr ) )
       iCFlags |= PCRE_UTF8;
 
    pRegEx->re_pcre = pcre_compile( szRegEx, iCFlags, &szError,
@@ -107,7 +107,7 @@ static int hb_regexec( PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen,
 #if defined( HB_HAS_PCRE )
    int iResult, i;
 
-   iResult = pcre_exec( pRegEx->re_pcre, NULL /* pcre_extra */,
+   iResult = pcre_exec( pRegEx->re_pcre, nullptr /* pcre_extra */,
                         szString, static_cast< int >( nLen ), 0 /* startoffset */,
                         pRegEx->iEFlags, aMatches, HB_REGMATCH_SIZE( iMatches ) );
    if( iResult == 0 )
@@ -281,7 +281,7 @@ static HB_BOOL hb_regex( int iRequest )
                                  HB_REGMATCH_EO( aMatches, i ) -
                                  HB_REGMATCH_SO( aMatches, i ) );
                else
-                  hb_arraySetCL( pRetArray, i + 1, NULL, 0 );
+                  hb_arraySetCL( pRetArray, i + 1, nullptr, 0 );
             }
             hb_itemReturnRelease( pRetArray );
             fResult = HB_TRUE;
@@ -346,7 +346,7 @@ static HB_BOOL hb_regex( int iRequest )
                }
                else
                {
-                  hb_arraySetCL( pMatch, 1, NULL, 0 );
+                  hb_arraySetCL( pMatch, 1, nullptr, 0 );
                   hb_arraySetNS( pMatch, 2, 0 );
                   hb_arraySetNS( pMatch, 3, 0 );
                }
@@ -393,7 +393,7 @@ static HB_BOOL hb_regex( int iRequest )
                         }
                         else
                         {
-                           hb_arraySetCL( pMatch, 1, NULL, 0 );
+                           hb_arraySetCL( pMatch, 1, nullptr, 0 );
                            hb_arraySetNS( pMatch, 2, 0 );
                            hb_arraySetNS( pMatch, 3, 0 );
                         }
@@ -430,7 +430,7 @@ static HB_BOOL hb_regex( int iRequest )
                      }
                      else
                      {
-                        hb_arraySetCL( pMatch, 1, NULL, 0 );
+                        hb_arraySetCL( pMatch, 1, nullptr, 0 );
                         hb_arraySetNS( pMatch, 2, 0 );
                         hb_arraySetNS( pMatch, 3, 0 );
                      }

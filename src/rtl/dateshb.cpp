@@ -122,7 +122,7 @@ HB_FUNC( HB_STOD )
 {
    PHB_ITEM pDateString = hb_param( 1, HB_IT_STRING );
 
-   hb_retds( hb_itemGetCLen( pDateString ) >= 7 ? hb_itemGetCPtr( pDateString ) : NULL );
+   hb_retds( hb_itemGetCLen( pDateString ) >= 7 ? hb_itemGetCPtr( pDateString ) : nullptr );
 }
 
 HB_FUNC( YEAR )

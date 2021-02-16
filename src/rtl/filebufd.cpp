@@ -461,7 +461,7 @@ HB_BOOL hb_fileRegisterPart( HB_FILE_FUNCS * pFuncs )
    for( iCount = 0; iCount < static_cast< int >( HB_FILE_FUNC_COUNT );
         iCount++, pDummyFunc++, pFunction++ )
    {
-      if( * pFunction == NULL )
+      if( * pFunction == nullptr )
          * pFunction = * pDummyFunc;
    }
 

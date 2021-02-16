@@ -289,7 +289,7 @@ static int chrmap_parse( FILE * fp, const char * pszTerm, int * nTransTbl, const
    {
       char buf[ 256 ];
       ++line;
-      if( fgets( buf, sizeof( buf ), fp ) != NULL )
+      if( fgets( buf, sizeof( buf ), fp ) != nullptr )
       {
          n = 0;
          if( *buf == ':' )
@@ -306,7 +306,7 @@ static int chrmap_parse( FILE * fp, const char * pszTerm, int * nTransTbl, const
                *s = '\0';
                s = buf;
                i = static_cast< int >( strlen( pszTerm ) );
-               while( isTerm == 0 && ( s = strstr( s + 1, pszTerm ) ) != NULL )
+               while( isTerm == 0 && ( s = strstr( s + 1, pszTerm ) ) != nullptr )
                {
                   if( *( s - 1 ) == '|' &&
                       ( s[ i ] == '|' || s[ i ] == '\0' ) )
@@ -376,7 +376,7 @@ static int hb_gt_chrmapread( const char * pszFile, const char * pszTerm, int * n
    int isTerm = -1;
    FILE * fp = hb_fopen( pszFile, "r" );
 
-   if( fp != NULL )
+   if( fp != nullptr )
    {
       char buf[ 256 ], * ptr, * pTerm;
 
@@ -385,7 +385,7 @@ static int hb_gt_chrmapread( const char * pszFile, const char * pszTerm, int * n
       pTerm = buf;
       while( pTerm )
       {
-         if( ( ptr = strchr( pTerm, '/' ) ) != NULL )
+         if( ( ptr = strchr( pTerm, '/' ) ) != nullptr )
             *ptr++ = '\0';
 
          if( *pTerm )
@@ -406,20 +406,20 @@ int hb_gt_chrmapinit( int * piTransTbl, const char * pszTerm, HB_BOOL fSetACSC )
 
    chrmap_init( piTransTbl );
 
-   if( pszTerm == NULL || *pszTerm == '\0' )
+   if( pszTerm == nullptr || *pszTerm == '\0' )
       pszTerm = pszFree = hb_getenv( "HB_TERM" );
-   if( pszTerm == NULL || *pszTerm == '\0' )
+   if( pszTerm == nullptr || *pszTerm == '\0' )
    {
       if( pszFree )
          hb_xfree( pszFree );
       pszTerm = pszFree = hb_getenv( "TERM" );
    }
 
-   if( pszTerm != NULL && *pszTerm != '\0' )
+   if( pszTerm != nullptr && *pszTerm != '\0' )
    {
       char * pszFile = hb_getenv( "HB_CHARMAP" );
 
-      if( pszFile != NULL && *pszFile != '\0' )
+      if( pszFile != nullptr && *pszFile != '\0' )
          nRet = hb_gt_chrmapread( pszFile, pszTerm, piTransTbl );
       if( nRet == -1 )
       {
@@ -427,7 +427,7 @@ int hb_gt_chrmapinit( int * piTransTbl, const char * pszTerm, HB_BOOL fSetACSC )
          if( pszFile )
             hb_xfree( pszFile );
          pszFile = hb_getenv( "HB_ROOT" );
-         if( pszFile != NULL && sizeof( szFile ) >
+         if( pszFile != nullptr && sizeof( szFile ) >
                         strlen( pszFile ) + strlen( hb_gt_szCharMapFileDefault ) )
          {
             hb_strncpy( szFile, pszFile, sizeof( szFile ) - 1 );
@@ -461,7 +461,7 @@ int main( int argc, char ** argv )
 {
    int piTransTbl[ 256 ], i;
 
-   if( hb_gt_chrmapinit( piTransTbl, NULL ) == -1 )
+   if( hb_gt_chrmapinit( piTransTbl, nullptr ) == -1 )
    {
       printf( "cannot init charmap.\n" );
       return 1;

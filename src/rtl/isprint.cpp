@@ -62,7 +62,7 @@ HB_BOOL hb_printerIsReady( const char * pszPrinterName )
    {
       int iPort;
 
-      if( pszPrinterName == NULL )
+      if( pszPrinterName == nullptr )
          pszPrinterName = "LPT1";
 
       if( hb_strnicmp( pszPrinterName, "PRN", 3 ) == 0 )
@@ -105,17 +105,17 @@ HB_BOOL hb_printerIsReady( const char * pszPrinterName )
    {
       PHB_FILE pFile;
 
-      if( pszPrinterName == NULL )
+      if( pszPrinterName == nullptr )
 #if defined( HB_OS_UNIX )
          pszPrinterName = "/dev/lp0";
 #else
          pszPrinterName = "LPT1";
 #endif
 
-      pFile = hb_fileExtOpen( pszPrinterName, NULL,
+      pFile = hb_fileExtOpen( pszPrinterName, nullptr,
                               FXO_APPEND | FO_WRITE | FO_SHARED | FO_PRIVATE,
-                              NULL, NULL );
-      bIsPrinter = ( pFile != NULL );
+                              nullptr, nullptr );
+      bIsPrinter = ( pFile != nullptr );
       if( bIsPrinter )
          hb_fileClose( pFile );
    }
@@ -153,5 +153,5 @@ HB_FUNC( HB_ISPRINTER )
 
 HB_FUNC( ISPRINTER )
 {
-   hb_retl( hb_printerIsReady( NULL ) );
+   hb_retl( hb_printerIsReady( nullptr ) );
 }

@@ -155,7 +155,7 @@ HB_FUNC( DISKSPACE )
             typedef BOOL ( WINAPI * P_GDFSE )( LPCTSTR, PULARGE_INTEGER,
                                                PULARGE_INTEGER, PULARGE_INTEGER );
 
-            static P_GDFSE s_pGetDiskFreeSpaceEx = NULL;
+            static P_GDFSE s_pGetDiskFreeSpaceEx = nullptr;
             static HB_BOOL s_fInit = HB_FALSE;
 
             if( ! s_fInit )

@@ -98,7 +98,7 @@ HB_FUNC( EMPTY )
          break;
 
       case HB_IT_POINTER:
-         hb_retl( hb_itemGetPtr( pItem ) == NULL );
+         hb_retl( hb_itemGetPtr( pItem ) == nullptr );
          break;
 
       case HB_IT_SYMBOL:
@@ -106,7 +106,7 @@ HB_FUNC( EMPTY )
          if( pSym && ( pSym->scope.value & HB_FS_DEFERRED ) && \
              pSym->pDynSym )
             pSym = hb_dynsymSymbol( pSym->pDynSym );
-         hb_retl( pSym == NULL || pSym->value.pFunPtr == NULL );
+         hb_retl( pSym == nullptr || pSym->value.pFunPtr == nullptr );
          break;
 
       default:

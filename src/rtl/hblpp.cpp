@@ -113,7 +113,7 @@ HB_BOOL hb_lppSend( PHB_LPP pSocket, const void * data, HB_SIZE len, HB_MAXINT t
       if( pSocket->nSendPos == pSocket->nSendLen )
       {
          hb_xfree( pSocket->pSendBuffer );
-         pSocket->pSendBuffer = NULL;
+         pSocket->pSendBuffer = nullptr;
          pSocket->iError      = 0;
          return HB_TRUE;
       }
@@ -171,7 +171,7 @@ HB_BOOL hb_lppRecv( PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT time
             /* protection against remote memory exhaust attack */
             pSocket->iError = HB_LPP_ERR_TOOLARGE;
             hb_xfree( pSocket->pRecvBuffer );
-            pSocket->pRecvBuffer = NULL;
+            pSocket->pRecvBuffer = nullptr;
             return HB_FALSE;
          }
 
@@ -204,7 +204,7 @@ HB_BOOL hb_lppRecv( PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT time
       {
          *data = pSocket->pRecvBuffer;
          *len  = pSocket->nRecvLen;
-         pSocket->pRecvBuffer = NULL;
+         pSocket->pRecvBuffer = nullptr;
          pSocket->iError      = 0;
          return HB_TRUE;
       }

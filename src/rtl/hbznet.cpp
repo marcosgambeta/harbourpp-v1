@@ -442,12 +442,12 @@ long hb_znetWrite( PHB_ZNETSTREAM pStream, HB_SOCKET sd, const void * buffer, lo
 static PHB_SOCKEX s_sockexNew( HB_SOCKET sd, PHB_ITEM pParams )
 {
    PHB_SOCKEX pSock;
-   const void * keydata = NULL;
+   const void * keydata = nullptr;
    int keylen = 0,
        level = HB_ZLIB_COMPRESSION_DEFAULT,
        strategy = HB_ZLIB_STRATEGY_DEFAULT;
 
-   hb_socekxParamsGetStd( pParams, &keydata, &keylen, NULL, NULL,
+   hb_socekxParamsGetStd( pParams, &keydata, &keylen, nullptr, nullptr,
                           &level, &strategy );
 
    pSock = hb_sockexNewZNet( sd, keydata, keylen, level, strategy );
@@ -462,7 +462,7 @@ static PHB_SOCKEX s_sockexNew( HB_SOCKET sd, PHB_ITEM pParams )
  */
 static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
 {
-   PHB_SOCKEX pSockNew = NULL;
+   PHB_SOCKEX pSockNew = nullptr;
 
    if( pSock && pSock->sd != HB_NO_SOCKET )
    {
@@ -529,7 +529,7 @@ static long s_sockexWrite( PHB_SOCKEX pSock, const void * data, long len, HB_MAX
       hb_socketSetError( HB_SOCKET_ERR_INVALIDHANDLE );
       return -1;
    }
-   return pSock->cargo ? hb_znetWrite( HB_ZNET_GET( pSock ), pSock->sd, data, len, timeout, NULL ) :
+   return pSock->cargo ? hb_znetWrite( HB_ZNET_GET( pSock ), pSock->sd, data, len, timeout, nullptr ) :
                          hb_socketSend( pSock->sd, data, len, 0, timeout );
 }
 
@@ -556,7 +556,7 @@ static int s_sockexCanRead( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout
    {
       long len;
 
-      if( pSock->buffer == NULL )
+      if( pSock->buffer == nullptr )
       {
          if( pSock->readahead <= 0 )
             pSock->readahead = HB_ZNET_READAHEAD;
@@ -639,11 +639,11 @@ static const HB_SOCKET_FILTER s_sockFilter =
 PHB_SOCKEX hb_sockexNewZNet( HB_SOCKET sd, const void * keydata, int keylen,
                              int level, int strategy )
 {
-   PHB_SOCKEX pSock = NULL;
+   PHB_SOCKEX pSock = nullptr;
 
    if( sd != HB_NO_SOCKET )
    {
-      PHB_ZNETSTREAM pStream = NULL;
+      PHB_ZNETSTREAM pStream = nullptr;
 
       if( level != HB_ZLIB_COMPRESSION_DISABLE )
       {

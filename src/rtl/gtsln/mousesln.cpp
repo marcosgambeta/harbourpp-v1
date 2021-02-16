@@ -373,7 +373,7 @@ void hb_gt_sln_mouse_Init( void )
           * so I covered it with this macro, [druzus]
           */
 #ifdef HB_GPM_USE_XTRA
-         s_iMouseButtons = Gpm_GetSnapshot( NULL );
+         s_iMouseButtons = Gpm_GetSnapshot( nullptr );
 #else
          s_iMouseButtons = 3;
 #endif

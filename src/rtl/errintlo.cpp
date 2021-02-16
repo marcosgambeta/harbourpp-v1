@@ -65,16 +65,16 @@ void hb_errInternalRaw( HB_ERRCODE errCode, const char * szText, const char * sz
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_errInternal(%d, %s, %s, %s)", errCode, szText, szPar1, szPar2 ) );
 
-   if( szPar1 == NULL )
+   if( szPar1 == nullptr )
       szPar1 = "";
 
-   if( szPar2 == NULL )
+   if( szPar2 == nullptr )
       szPar2 = "";
 
-   fStack = hb_stackId() != NULL;
-   fLang = fStack && hb_langID() != NULL;
+   fStack = hb_stackId() != nullptr;
+   fLang = fStack && hb_langID() != nullptr;
 
-   szFile = fStack ? hb_setGetCPtr( HB_SET_HBOUTLOG ) : NULL;
+   szFile = fStack ? hb_setGetCPtr( HB_SET_HBOUTLOG ) : nullptr;
    if( ! szFile )
       szFile = "hb_out.log";
 
@@ -91,7 +91,7 @@ void hb_errInternalRaw( HB_ERRCODE errCode, const char * szText, const char * sz
 
       fprintf( hLog, "Application Internal Error - %s\n", hb_cmdargARGVN( 0 ) );
       fprintf( hLog, "Terminated at: %04d-%02d-%02d %s\n", iYear, iMonth, iDay, szTime );
-      szInfo = fStack ? hb_setGetCPtr( HB_SET_HBOUTLOGINFO ) : NULL;
+      szInfo = fStack ? hb_setGetCPtr( HB_SET_HBOUTLOGINFO ) : nullptr;
       if( szInfo && *szInfo )
          fprintf( hLog, "Info: %s\n", szInfo );
    }

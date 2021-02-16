@@ -63,7 +63,7 @@ static const char * s_hb_padGet( PHB_CODEPAGE cdp, HB_SIZE * pnPad )
    const char * szPad = hb_parc( 3 );
 
    *pnPad = 1;
-   if( szPad == NULL )
+   if( szPad == nullptr )
       szPad = " ";
    else if( cdp )
    {
@@ -209,14 +209,14 @@ HB_FUNC( PADL )
    PHB_CODEPAGE cdp = hb_vmCDP();
 
    if( ! HB_CDP_ISCHARIDX( cdp ) )
-      cdp = NULL;
+      cdp = nullptr;
 
    s_hb_strPad( HB_PAD_L, cdp );
 }
 
 HB_FUNC( HB_BPADL )
 {
-   s_hb_strPad( HB_PAD_L, NULL );
+   s_hb_strPad( HB_PAD_L, nullptr );
 }
 
 HB_FUNC( HB_UPADL )
@@ -224,7 +224,7 @@ HB_FUNC( HB_UPADL )
    PHB_CODEPAGE cdp = hb_vmCDP();
 
    if( ! HB_CDP_ISCUSTOM( cdp ) )
-      cdp = NULL;
+      cdp = nullptr;
 
    s_hb_strPad( HB_PAD_L, cdp );
 }
@@ -235,14 +235,14 @@ HB_FUNC( PADR )
    PHB_CODEPAGE cdp = hb_vmCDP();
 
    if( ! HB_CDP_ISCHARIDX( cdp ) )
-      cdp = NULL;
+      cdp = nullptr;
 
    s_hb_strPad( HB_PAD_R, cdp );
 }
 
 HB_FUNC( HB_BPADR )
 {
-   s_hb_strPad( HB_PAD_R, NULL );
+   s_hb_strPad( HB_PAD_R, nullptr );
 }
 
 HB_FUNC( HB_UPADR )
@@ -250,7 +250,7 @@ HB_FUNC( HB_UPADR )
    PHB_CODEPAGE cdp = hb_vmCDP();
 
    if( ! HB_CDP_ISCUSTOM( cdp ) )
-      cdp = NULL;
+      cdp = nullptr;
 
    s_hb_strPad( HB_PAD_R, cdp );
 }
@@ -261,14 +261,14 @@ HB_FUNC( PADC )
    PHB_CODEPAGE cdp = hb_vmCDP();
 
    if( ! HB_CDP_ISCHARIDX( cdp ) )
-      cdp = NULL;
+      cdp = nullptr;
 
    s_hb_strPad( HB_PAD_C, cdp );
 }
 
 HB_FUNC( HB_BPADC )
 {
-   s_hb_strPad( HB_PAD_C, NULL );
+   s_hb_strPad( HB_PAD_C, nullptr );
 }
 
 HB_FUNC( HB_UPADC )
@@ -276,7 +276,7 @@ HB_FUNC( HB_UPADC )
    PHB_CODEPAGE cdp = hb_vmCDP();
 
    if( ! HB_CDP_ISCUSTOM( cdp ) )
-      cdp = NULL;
+      cdp = nullptr;
 
    s_hb_strPad( HB_PAD_C, cdp );
 }

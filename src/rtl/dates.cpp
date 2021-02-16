@@ -562,7 +562,7 @@ long hb_timeUnformat( const char * szTime, const char * szTimeFormat )
             }
             /* fallthrough */
          default:
-            pValue = NULL;
+            pValue = nullptr;
       }
       if( pValue && *pValue < 0 )
       {

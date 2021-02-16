@@ -52,12 +52,12 @@
 HB_FUNC( HB_DYNCALL )
 {
    PHB_ITEM pParam = hb_param( 1, HB_IT_POINTER | HB_IT_ARRAY );
-   int * piArgFlags = NULL;
+   int * piArgFlags = nullptr;
    int iFuncFlags = HB_DYN_CALLCONV_CDECL;
 
    PHB_ITEM pLibraryHandle = nullptr;
    HB_BOOL bFreeLibrary = HB_FALSE;
-   void * pFunctionPtr = NULL;
+   void * pFunctionPtr = nullptr;
 
    if( pParam )
    {
@@ -76,7 +76,7 @@ HB_FUNC( HB_DYNCALL )
 
                if( HB_IS_STRING( pLibrary ) )
                {
-                  pLibraryHandle = hb_libLoad( pLibrary, NULL );
+                  pLibraryHandle = hb_libLoad( pLibrary, nullptr );
                   if( pLibraryHandle )
                      bFreeLibrary = HB_TRUE;
                }

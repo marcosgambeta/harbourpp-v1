@@ -126,7 +126,7 @@ PHB_ITEM hb_fsDirectory( const char * pszDirSpec, const char * pszAttributes, HB
          if( pszDirSpec[ nLen ] == HB_OS_PATH_DELIM_CHR )
 #endif
             pszDirSpec = pszFree =
-                           hb_xstrcpy( NULL, pszDirSpec, HB_OS_ALLFILE_MASK, NULL );
+                           hb_xstrcpy( nullptr, pszDirSpec, HB_OS_ALLFILE_MASK, nullptr );
       }
    }
    else
@@ -134,7 +134,7 @@ PHB_ITEM hb_fsDirectory( const char * pszDirSpec, const char * pszAttributes, HB
 
    /* Get the file list */
 
-   if( ( ffind = hb_fsFindFirst( pszDirSpec, ulMask ) ) != NULL )
+   if( ( ffind = hb_fsFindFirst( pszDirSpec, ulMask ) ) != nullptr )
    {
       PHB_ITEM pSubarray = hb_itemNew( nullptr );
 

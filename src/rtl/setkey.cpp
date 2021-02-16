@@ -85,10 +85,10 @@ static void hb_setkeyRelease( void * cargo )
       hb_xfree( sk_list_tmp );
    }
 
-   ( ( PHB_SK_DATA ) cargo )->sk_list = NULL;
+   ( ( PHB_SK_DATA ) cargo )->sk_list = nullptr;
 }
 
-static HB_TSD_NEW( s_skData, sizeof( HB_SK_DATA ), NULL, hb_setkeyRelease );
+static HB_TSD_NEW( s_skData, sizeof( HB_SK_DATA ), nullptr, hb_setkeyRelease );
 
 static HB_BOOL sk_testActive( PHB_ITEM pIsActive, int iKeyCode )
 {
@@ -108,7 +108,7 @@ static PHB_SETKEY sk_findkey( int iKeyCode, PHB_SETKEY sk_list,
 {
    PHB_SETKEY sk_list_tmp;
 
-   *sk_list_end = NULL;
+   *sk_list_end = nullptr;
    for( sk_list_tmp = sk_list;
         sk_list_tmp && sk_list_tmp->iKeyCode != iKeyCode;
         sk_list_tmp = sk_list_tmp->next )
@@ -125,22 +125,22 @@ static void sk_add( PHB_SETKEY * sk_list_ptr, HB_BOOL bReturn,
       PHB_SETKEY sk_list_tmp, sk_list_end;
 
       if( pIsActive && ! HB_IS_EVALITEM( pIsActive ) )
-         pIsActive = NULL;
+         pIsActive = nullptr;
       if( pAction && ! HB_IS_EVALITEM( pAction ) )
-         pAction = NULL;
+         pAction = nullptr;
 
       sk_list_tmp = sk_findkey( iKeyCode, *sk_list_ptr, &sk_list_end );
-      if( sk_list_tmp == NULL )
+      if( sk_list_tmp == nullptr )
       {
          if( pAction )
          {
             sk_list_tmp = ( PHB_SETKEY ) hb_xgrab( sizeof( HB_SETKEY ) );
-            sk_list_tmp->next = NULL;
+            sk_list_tmp->next = nullptr;
             sk_list_tmp->iKeyCode = iKeyCode;
             sk_list_tmp->pAction = hb_itemNew( pAction );
-            sk_list_tmp->pIsActive = pIsActive ? hb_itemNew( pIsActive ) : NULL;
+            sk_list_tmp->pIsActive = pIsActive ? hb_itemNew( pIsActive ) : nullptr;
 
-            if( sk_list_end == NULL )
+            if( sk_list_end == nullptr )
                *sk_list_ptr = sk_list_tmp;
             else
                sk_list_end->next = sk_list_tmp;
@@ -164,12 +164,12 @@ static void sk_add( PHB_SETKEY * sk_list_ptr, HB_BOOL bReturn,
          if( pAction )
          {
             sk_list_tmp->pAction = hb_itemNew( pAction );
-            sk_list_tmp->pIsActive = pIsActive ? hb_itemNew( pIsActive ) : NULL;
+            sk_list_tmp->pIsActive = pIsActive ? hb_itemNew( pIsActive ) : nullptr;
          }
          else
          {
             /* if this is true, then the key found is the first key in the list */
-            if( sk_list_end == NULL )
+            if( sk_list_end == nullptr )
             {
                sk_list_tmp = *sk_list_ptr;
                *sk_list_ptr = sk_list_tmp->next;
@@ -208,7 +208,7 @@ HB_FUNC( SETKEY )
       {
          /* Set a SETKEY value */
          sk_add( &sk_data->sk_list, HB_TRUE, iKeyCode,
-                 hb_param( 2, HB_IT_EVALITEM ), NULL );
+                 hb_param( 2, HB_IT_EVALITEM ), nullptr );
       }
    }
 }
@@ -228,7 +228,7 @@ HB_FUNC( HB_SETKEY )
 
          /* sk_list_end is not used in this context */
          sk_list_tmp = sk_findkey( iKeyCode, sk_data->sk_list, &sk_list_end );
-         if( sk_list_tmp == NULL )
+         if( sk_list_tmp == nullptr )
          {
             int iKeyStd = hb_inkeyKeyStd( iKeyCode );
 
@@ -361,7 +361,7 @@ HB_FUNC( HB_SETKEYCHECK )
 
       /* sk_list_end is not used in this context */
       sk_list_tmp = sk_findkey( iKeyCode, sk_data->sk_list, &sk_list_end );
-      if( sk_list_tmp == NULL )
+      if( sk_list_tmp == nullptr )
       {
          int iKeyStd = hb_inkeyKeyStd( iKeyCode );
 

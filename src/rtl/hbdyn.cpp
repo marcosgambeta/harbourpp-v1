@@ -923,7 +923,7 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
          if( iParams )
             pArg = ( HB_DYNARG * ) hb_xgrabz( iParams * sizeof( HB_DYNARG ) );
          else
-            pArg = NULL;
+            pArg = nullptr;
 
          for( tmp = 0; tmp < iParams; ++tmp )
          {
@@ -1028,7 +1028,7 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
          if( iParams )
             pArg = ( HB_DYNARG * ) hb_xgrabz( iParams * sizeof( HB_DYNARG ) );
          else
-            pArg = NULL;
+            pArg = nullptr;
 
          for( tmp = 0; tmp < iParams; ++tmp )
          {

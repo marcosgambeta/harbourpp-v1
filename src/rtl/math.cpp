@@ -83,7 +83,7 @@ static int hb_matherr( HB_MATH_EXCEPTION * pexc )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_matherr(%p)", ( void * ) pexc ) );
 
-   if( pexc == NULL || pexc->handled != 0 )
+   if( pexc == nullptr || pexc->handled != 0 )
    {
       /* error already handled by other handlers ! */
       return 1;
@@ -584,13 +584,13 @@ HB_FUNC( HB_MATHERBLOCK )  /* ([<nNewErrorBlock>]) --> <nOldErrorBlock> */
    /* immediately install hb_matherrblock and keep it permanently installed!
       This is not dangerous because hb_matherrorblock will always call the
       previous error handler */
-   if( pMathErr->prevHandler == NULL )
+   if( pMathErr->prevHandler == nullptr )
    {
       pMathErr->prevHandler = hb_mathSetHandler( hb_matherrblock );
    }
 
    /* return old math handler */
-   if( pMathErr->block == NULL )
+   if( pMathErr->block == nullptr )
    {
       hb_ret();
    }
@@ -606,7 +606,7 @@ HB_FUNC( HB_MATHERBLOCK )  /* ([<nNewErrorBlock>]) --> <nOldErrorBlock> */
 
       if( pNewErrorBlock )
       {
-         if( pMathErr->block == NULL )
+         if( pMathErr->block == nullptr )
          {
             pMathErr->block = hb_itemNew( nullptr );
          }
@@ -619,7 +619,7 @@ HB_FUNC( HB_MATHERBLOCK )  /* ([<nNewErrorBlock>]) --> <nOldErrorBlock> */
          if( pMathErr->block )
          {
             hb_itemRelease( pMathErr->block );
-            pMathErr->block = NULL;
+            pMathErr->block = nullptr;
          }
       }
    }

@@ -83,7 +83,7 @@ HB_FUNC_EXTERN( ERRORNEW );
 
 static PHB_ITEM s_pError = nullptr;
 
-static HB_SYMB s_symErrorNew = { "ERRORNEW", { HB_FS_PUBLIC | HB_FS_LOCAL }, { HB_FUNCNAME( ERRORNEW ) }, NULL };
+static HB_SYMB s_symErrorNew = { "ERRORNEW", { HB_FS_PUBLIC | HB_FS_LOCAL }, { HB_FUNCNAME( ERRORNEW ) }, nullptr };
 
 typedef struct
 {
@@ -100,7 +100,7 @@ static void hb_errorDataRelease( void * Cargo )
    hb_itemRelease( pErrData->errorBlock );
 }
 
-static HB_TSD_NEW( s_errData, sizeof( HB_ERRDATA ), NULL, hb_errorDataRelease );
+static HB_TSD_NEW( s_errData, sizeof( HB_ERRDATA ), nullptr, hb_errorDataRelease );
 
 
 static HB_BOOL hb_errGetNumCode( int * piValue, const char * szOperation )
@@ -490,7 +490,7 @@ void hb_errExit( void )
    HB_TRACE( HB_TR_DEBUG, ( "hb_errExit()" ) );
 
    hb_itemRelease( s_pError );
-   s_pError = NULL;
+   s_pError = nullptr;
 }
 
 PHB_ITEM hb_errNew( void )
@@ -541,7 +541,7 @@ HB_USHORT hb_errLaunch( PHB_ITEM pError )
          pErrData->errorHandler->Error = pError;
          pErrData->errorHandler->ErrorBlock = pErrData->errorBlock;
          pResult = ( pErrData->errorHandler->Func )( pErrData->errorHandler );
-         pErrData->errorHandler->Error = NULL;
+         pErrData->errorHandler->Error = nullptr;
       }
       else
          pResult = hb_itemDo( pErrData->errorBlock, 1, pError );
@@ -596,7 +596,7 @@ HB_USHORT hb_errLaunch( PHB_ITEM pError )
          to be substituted. [vszakats] */
 
 /* NOTE: The item pointer returned should be hb_itemRelease()-d by the
-         caller if it was not NULL. [vszakats] */
+         caller if it was not nullptr. [vszakats] */
 
 PHB_ITEM hb_errLaunchSubst( PHB_ITEM pError )
 {
@@ -635,7 +635,7 @@ PHB_ITEM hb_errLaunchSubst( PHB_ITEM pError )
          pErrData->errorHandler->Error = pError;
          pErrData->errorHandler->ErrorBlock = pErrData->errorBlock;
          pResult = ( pErrData->errorHandler->Func )( pErrData->errorHandler );
-         pErrData->errorHandler->Error = NULL;
+         pErrData->errorHandler->Error = nullptr;
       }
       else
          pResult = hb_itemDo( pErrData->errorBlock, 1, pError );
@@ -647,7 +647,7 @@ PHB_ITEM hb_errLaunchSubst( PHB_ITEM pError )
       {
          if( pResult )
             hb_itemRelease( pResult );
-         pResult = NULL;
+         pResult = nullptr;
       }
       else
       {
@@ -667,7 +667,7 @@ void hb_errRelease( PHB_ITEM pError )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_errRelease(%p)", pError ) );
 
-   /* NOTE: NULL pointer is checked by hb_itemRelease() [vszakats] */
+   /* NOTE: nullptr pointer is checked by hb_itemRelease() [vszakats] */
    hb_itemRelease( pError );
 }
 
@@ -1031,12 +1031,12 @@ HB_USHORT hb_errRT_BASE( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const cha
    /* Build the array from the passed arguments. */
    if( ulArgCount == 0 )
    {
-      pArray = NULL;
+      pArray = nullptr;
    }
    else if( ulArgCount == HB_ERR_ARGS_BASEPARAMS )
    {
       if( hb_pcount() == 0 )
-         pArray = NULL;
+         pArray = nullptr;
       else
          pArray = hb_arrayBaseParams();
    }
@@ -1089,12 +1089,12 @@ HB_USHORT hb_errRT_BASE_Ext1( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, cons
    /* Build the array from the passed arguments. */
    if( ulArgCount == 0 )
    {
-      pArray = NULL;
+      pArray = nullptr;
    }
    else if( ulArgCount == HB_ERR_ARGS_BASEPARAMS )
    {
       if( hb_pcount() == 0 )
-         pArray = NULL;
+         pArray = nullptr;
       else
          pArray = hb_arrayBaseParams();
    }
@@ -1146,12 +1146,12 @@ PHB_ITEM hb_errRT_BASE_Subst( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, cons
    /* Build the array from the passed arguments. */
    if( ulArgCount == 0 )
    {
-      pArray = NULL;
+      pArray = nullptr;
    }
    else if( ulArgCount == HB_ERR_ARGS_BASEPARAMS )
    {
       if( hb_pcount() == 0 )
-         pArray = NULL;
+         pArray = nullptr;
       else
          pArray = hb_arrayBaseParams();
    }
@@ -1202,12 +1202,12 @@ void hb_errRT_BASE_SubstR( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const c
    /* Build the array from the passed arguments. */
    if( ulArgCount == 0 )
    {
-      pArray = NULL;
+      pArray = nullptr;
    }
    else if( ulArgCount == HB_ERR_ARGS_BASEPARAMS )
    {
       if( hb_pcount() == 0 )
-         pArray = NULL;
+         pArray = nullptr;
       else
          pArray = hb_arrayBaseParams();
    }

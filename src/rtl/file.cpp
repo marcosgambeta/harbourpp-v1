@@ -53,7 +53,7 @@ HB_BOOL hb_fsFile( const char * pszFileName )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsFile(%s)", pszFileName ) );
 
-   if( ( ffind = hb_fsFindFirst( pszFileName, HB_FA_ALL ) ) != NULL )
+   if( ( ffind = hb_fsFindFirst( pszFileName, HB_FA_ALL ) ) != nullptr )
    {
       hb_fsFindClose( ffind );
       return HB_TRUE;
@@ -80,7 +80,7 @@ HB_BOOL hb_fsIsDirectory( const char * pszFileName )
    if( iLen && iLen <= ( HB_PATH_MAX - 1 ) )
    {
       PHB_FFIND ffind;
-      if( ( ffind = hb_fsFindFirst( pszFileName, HB_FA_DIRECTORY ) ) != NULL )
+      if( ( ffind = hb_fsFindFirst( pszFileName, HB_FA_DIRECTORY ) ) != nullptr )
       {
          do
          {

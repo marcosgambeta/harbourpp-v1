@@ -58,7 +58,7 @@ static HB_GARBAGE_FUNC( hb_file_Destructor )
    if( * fileHolder )
    {
       PHB_FILE pFile = * fileHolder;
-      * fileHolder = NULL;
+      * fileHolder = nullptr;
       hb_fileClose( pFile );
    }
 }
@@ -107,7 +107,7 @@ void hb_fileItemClear( PHB_ITEM pItem )
    PHB_FILE * fileHolder = ( PHB_FILE * ) hb_itemGetPtrGC( pItem, &s_gcFileFuncs );
 
    if( fileHolder )
-      * fileHolder = NULL;
+      * fileHolder = nullptr;
 }
 
 static PHB_FILE * hb_fileParamPtr( int iParam )
@@ -147,7 +147,7 @@ HB_FUNC( HB_VFEXISTS )
          hb_storc( szName, 2 );
       }
       else
-         fResult = hb_fileExists( pszFileName, NULL );
+         fResult = hb_fileExists( pszFileName, nullptr );
 
       uiError = hb_fsError();
    }
@@ -347,7 +347,7 @@ HB_FUNC( HB_VFTIMEGET )
    {
       if( HB_ISBYREF( 3 ) )
       {
-         hb_storc( NULL, 3 );
+         hb_storc( nullptr, 3 );
          hb_stordl( 0, 2 );
       }
       else
@@ -475,8 +475,8 @@ HB_FUNC( HB_VFOPEN )
       else
          nModeAttr &= ( HB_FATTR ) ~FXO_COPYNAME;
 
-      pFile = hb_fileExtOpen( pszFile, NULL /* pDefExt */, nModeAttr,
-                              NULL /* pPaths */, NULL /* pError */ );
+      pFile = hb_fileExtOpen( pszFile, nullptr /* pDefExt */, nModeAttr,
+                              nullptr /* pPaths */, nullptr /* pError */ );
 
       if( pszFile == szName )
          hb_storc( szName, 1 );
@@ -499,7 +499,7 @@ HB_FUNC( HB_VFCLOSE )
    if( pFilePtr )
    {
       PHB_FILE pFile = * pFilePtr;
-      * pFilePtr = NULL;
+      * pFilePtr = nullptr;
       hb_fileClose( pFile );
       hb_fsSetFError( hb_fsError() );
       hb_retl( HB_TRUE );

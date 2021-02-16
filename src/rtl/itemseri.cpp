@@ -330,7 +330,7 @@ static HB_BOOL hb_itemSerialValueRef( PHB_REF_LIST pRefList, void * value,
    PHB_REF_ITEM pRef;
    HB_SIZE nPos;
 
-   if( ( pRef = hb_itemSerialValueFind( pRefList, value, &nPos ) ) != NULL )
+   if( ( pRef = hb_itemSerialValueFind( pRefList, value, &nPos ) ) != nullptr )
    {
       pRef->iRefs = 1;
       return HB_TRUE;
@@ -377,7 +377,7 @@ static HB_BOOL hb_itemSerialValueOffset( PHB_REF_LIST pRefList, void * value,
    PHB_REF_ITEM pRef;
    HB_SIZE nPos;
 
-   if( ( pRef = hb_itemSerialValueFind( pRefList, value, &nPos ) ) != NULL )
+   if( ( pRef = hb_itemSerialValueFind( pRefList, value, &nPos ) ) != nullptr )
    {
       *pnRef = pRef->nOffset;
       return pRef->nOffset < nOffset;
@@ -394,12 +394,12 @@ static HB_BOOL hb_itemSerialOffsetRef( PHB_REF_LIST pRefList, HB_SIZE nOffset )
    PHB_REF_ITEM pRef;
    HB_SIZE nPos;
 
-   if( hb_itemSerialOffsetFind( pRefList, nOffset, 0, &nPos ) != NULL )
+   if( hb_itemSerialOffsetFind( pRefList, nOffset, 0, &nPos ) != nullptr )
       return HB_TRUE;
 
    pRef = hb_itemSerialRefNew( pRefList, nPos );
 
-   pRef->value = NULL;
+   pRef->value = nullptr;
    pRef->nOffset = nOffset;
    pRef->iRefs = 0;
    pRef->iType = 0;
@@ -413,11 +413,11 @@ static void hb_itemSerialTypedRef( PHB_REF_LIST pRefList, int iType,
 {
    HB_SIZE nPos;
 
-   if( hb_itemSerialOffsetFind( pRefList, nIndex, iType, &nPos ) == NULL )
+   if( hb_itemSerialOffsetFind( pRefList, nIndex, iType, &nPos ) == nullptr )
    {
       PHB_REF_ITEM pRef = hb_itemSerialRefNew( pRefList, nPos );
 
-      pRef->value = NULL;
+      pRef->value = nullptr;
       pRef->nOffset = nIndex;
       pRef->iRefs = 0;
       pRef->iType = iType;
@@ -432,7 +432,7 @@ static void hb_itemSerialOffsetSet( PHB_REF_LIST pRefList, PHB_ITEM pItem,
    PHB_REF_ITEM pRef;
    HB_SIZE nPos;
 
-   if( ( pRef = hb_itemSerialOffsetFind( pRefList, nOffset, 0, &nPos ) ) != NULL )
+   if( ( pRef = hb_itemSerialOffsetFind( pRefList, nOffset, 0, &nPos ) ) != nullptr )
       pRef->value = ( void * ) pItem;
 }
 
@@ -443,7 +443,7 @@ static void hb_itemSerialOffsetGet( PHB_REF_LIST pRefList, PHB_ITEM pItem,
    PHB_REF_ITEM pRef;
    HB_SIZE nPos;
 
-   if( ( pRef = hb_itemSerialOffsetFind( pRefList, nOffset, 0, &nPos ) ) != NULL )
+   if( ( pRef = hb_itemSerialOffsetFind( pRefList, nOffset, 0, &nPos ) ) != nullptr )
       hb_itemCopy( pItem, ( PHB_ITEM ) pRef->value );
 }
 
@@ -457,7 +457,7 @@ static void hb_itemSerialTypedSet( PHB_REF_LIST pRefList, PHB_ITEM pItem, int iT
    {
       PHB_REF_ITEM pRef = &pRefList->pRefs[ nPos ];
 
-      if( pRef->iType == iType && pRef->value == NULL )
+      if( pRef->iType == iType && pRef->value == nullptr )
       {
          if( ( HB_SIZE ) ++pRef->iRefs == pRef->nOffset )
             pRef->value = ( void * ) pItem;
@@ -472,7 +472,7 @@ static void hb_itemSerialTypedGet( PHB_REF_LIST pRefList, PHB_ITEM pItem,
    PHB_REF_ITEM pRef;
    HB_SIZE nPos;
 
-   if( ( pRef = hb_itemSerialOffsetFind( pRefList, nIndex, iType, &nPos ) ) != NULL )
+   if( ( pRef = hb_itemSerialOffsetFind( pRefList, nIndex, iType, &nPos ) ) != nullptr )
    {
       if( pRef->value )
          hb_itemCopy( pItem, ( PHB_ITEM ) pRef->value );
@@ -680,7 +680,7 @@ static HB_SIZE hb_serializeItem( PHB_ITEM pItem, HB_BOOL iFlags,
          lVal = hb_itemGetNInt( pItem );
          if( iFlags & HB_SERIALIZE_NUMSIZE )
          {
-            hb_itemGetNLen( pItem, &iWidth, NULL );
+            hb_itemGetNLen( pItem, &iWidth, nullptr );
             if( HB_LIM_INT8( lVal ) )
             {
                pBuffer[ nOffset++ ] = HB_SERIAL_INT8NUM;
@@ -1609,7 +1609,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem,
                {
                   hb_itemPutCLPtr( pItem, szVal, nLen );
                   hb_errRT_BASE_Ext1( EG_ARG, 3016, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, 1, pItem );
-                  szVal = NULL;
+                  szVal = nullptr;
                }
                /* fallthrough */
 
@@ -1697,7 +1697,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem,
          nOffset = hb_deserializeItem( pItem, cdpIn, cdpOut, pBuffer,
                                        nOffset + 8, pRefList );
          /* find class handle */
-         uiClass = hb_clsFindClass( hb_itemGetCPtr( pItem ), NULL );
+         uiClass = hb_clsFindClass( hb_itemGetCPtr( pItem ), nullptr );
          if( uiClass && hb_vmRequestReenter() )
          {
             PHB_ITEM pMsg = hb_stackAllocItem(),
@@ -1752,7 +1752,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem,
                              cdpIn, cdpOut );
          nOffset = nPad;
          /* find class handle */
-         uiClass = hb_clsFindClass( hb_itemGetCPtr( pItem ), NULL );
+         uiClass = hb_clsFindClass( hb_itemGetCPtr( pItem ), nullptr );
          hb_itemPutCLPtr( pItem, szVal, nLen );
          if( uiClass && hb_vmRequestReenter() )
          {
@@ -1834,7 +1834,7 @@ char * hb_itemSerializeCP( PHB_ITEM pItem, int iFlags,
 
 char * hb_itemSerialize( PHB_ITEM pItem, int iFlags, HB_SIZE *pnSize )
 {
-   return hb_itemSerializeCP( pItem, iFlags, NULL, NULL, pnSize );
+   return hb_itemSerializeCP( pItem, iFlags, nullptr, nullptr, pnSize );
 }
 
 PHB_ITEM hb_itemDeserializeCP( const char ** pBufferPtr, HB_SIZE * pnSize,
@@ -1857,7 +1857,7 @@ PHB_ITEM hb_itemDeserializeCP( const char ** pBufferPtr, HB_SIZE * pnSize,
 
 PHB_ITEM hb_itemDeserialize( const char ** pBufferPtr, HB_SIZE * pnSize )
 {
-   return hb_itemDeserializeCP( pBufferPtr, pnSize, NULL, NULL );
+   return hb_itemDeserializeCP( pBufferPtr, pnSize, nullptr, nullptr );
 }
 
 HB_FUNC( HB_SERIALIZE )

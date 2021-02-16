@@ -53,7 +53,7 @@ HB_FUNC( HB_SETDISPCP )
    if( HB_ISCHAR( 1 ) )
    {
       if( hb_pcount() == 2 && HB_ISLOG( 2 ) )
-         hb_gtSetDispCP( hb_parc( 1 ), NULL, hb_parl( 2 ) );
+         hb_gtSetDispCP( hb_parc( 1 ), nullptr, hb_parl( 2 ) );
       else
          hb_gtSetDispCP( hb_parc( 1 ), hb_parc( 2 ), hb_parl( 3 ) );
    }
@@ -75,8 +75,8 @@ HB_FUNC( HB_SETTERMCP )
    {
       if( hb_pcount() == 2 && HB_ISLOG( 2 ) )
       {
-         hb_gtSetDispCP( hb_parc( 1 ), NULL, hb_parl( 2 ) );
-         hb_gtSetKeyCP( hb_parc( 1 ), NULL );
+         hb_gtSetDispCP( hb_parc( 1 ), nullptr, hb_parl( 2 ) );
+         hb_gtSetKeyCP( hb_parc( 1 ), nullptr );
       }
       else
       {
@@ -96,7 +96,7 @@ HB_FUNC( HB_GTINFO )
 
       gtInfo.pNewVal  = hb_param( 2, HB_IT_ANY );
       gtInfo.pNewVal2 = hb_param( 3, HB_IT_ANY );
-      gtInfo.pResult  = NULL;
+      gtInfo.pResult  = nullptr;
 
       hb_gtInfo( hb_parni( 1 ), &gtInfo );
       if( gtInfo.pResult )

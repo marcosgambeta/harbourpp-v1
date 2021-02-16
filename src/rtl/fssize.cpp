@@ -93,7 +93,7 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
             s_pGetFileAttributesEx = ( _HB_GETFILEATTRIBUTESEX )
                HB_WINAPI_GETPROCADDRESST( hModule, "GetFileAttributesEx" );
          else
-            s_pGetFileAttributesEx = NULL;
+            s_pGetFileAttributesEx = nullptr;
       }
 
       if( s_pGetFileAttributesEx )
@@ -117,7 +117,7 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
       else
       {
          PHB_FFIND ffind = hb_fsFindFirst( pszFileName, HB_FA_ALL );
-         hb_fsSetIOError( ffind != NULL, 0 );
+         hb_fsSetIOError( ffind != nullptr, 0 );
          if( ffind )
          {
             HB_FOFFSET size = ffind->size;
@@ -127,7 +127,7 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
       }
 #elif defined( HB_OS_OS2 )
       HB_FOFFSET nSize = 0;
-      if( hb_fsOS2QueryPathInfo( pszFileName, &nSize, NULL, NULL, NULL ) )
+      if( hb_fsOS2QueryPathInfo( pszFileName, &nSize, nullptr, nullptr, nullptr ) )
          return nSize;
 #elif defined( HB_USE_LARGEFILE64 )
       char * pszFree;

@@ -220,7 +220,7 @@ static HB_GT_FUNCS SuperTable;
 
 #if defined( HB_OS_UNIX ) || defined( __DJGPP__ )
 
-#define TIMEVAL_GET( tv )           gettimeofday( &( tv ), NULL )
+#define TIMEVAL_GET( tv )           gettimeofday( &( tv ), nullptr )
 #define TIMEVAL_LESS( tv1, tv2 )    ( ( ( tv1 ).tv_sec == ( tv2 ).tv_sec ) ? \
                                       ( ( tv1 ).tv_usec < ( tv2 ).tv_usec ) : \
                                       ( ( tv1 ).tv_sec < ( tv2 ).tv_sec ) )
@@ -550,9 +550,9 @@ static int hb_gt_trm_getSize( PHB_GTTRM pTerm, int * piRows, int * piCols )
    if( *piRows <= 0 || *piCols <= 0 )
    {
       char * env;
-      if( ( env = getenv( "COLUMNS" ) ) != NULL )
+      if( ( env = getenv( "COLUMNS" ) ) != nullptr )
          *piCols = atoi( env );
-      if( ( env = getenv( "LINES" ) ) != NULL )
+      if( ( env = getenv( "LINES" ) ) != nullptr )
          *piRows = atoi( env );
    }
 
@@ -593,7 +593,7 @@ static void hb_gt_trm_termOutTrans( PHB_GTTRM pTerm, const char * pStr, int iLen
 {
    if( pTerm->iOutBufSize )
    {
-      PHB_CODEPAGE cdp = NULL;
+      PHB_CODEPAGE cdp = nullptr;
 
       if( pTerm->fUTF8 )
       {
@@ -642,10 +642,10 @@ static void hb_gt_trm_termOutTrans( PHB_GTTRM pTerm, const char * pStr, int iLen
 static int add_efds( PHB_GTTRM pTerm, int fd, int mode,
                      int ( * eventFunc )( int, int, void * ), void * cargo )
 {
-   evtFD *pefd = NULL;
+   evtFD *pefd = nullptr;
    int i;
 
-   if( eventFunc == NULL && mode != O_RDONLY )
+   if( eventFunc == nullptr && mode != O_RDONLY )
       return -1;
 
 #if defined( HB_OS_UNIX ) || defined( __DJGPP__ )
@@ -717,7 +717,7 @@ static void del_efds( PHB_GTTRM pTerm, int fd )
 
 static void del_all_efds( PHB_GTTRM pTerm )
 {
-   if( pTerm->event_fds != NULL )
+   if( pTerm->event_fds != nullptr )
    {
       int i;
 
@@ -727,8 +727,8 @@ static void del_all_efds( PHB_GTTRM pTerm )
       hb_xfree( pTerm->event_fds );
       hb_xfree( pTerm->pPollSet );
 
-      pTerm->event_fds = NULL;
-      pTerm->pPollSet = NULL;
+      pTerm->event_fds = nullptr;
+      pTerm->pPollSet = nullptr;
       pTerm->efds_no = pTerm->efds_size = 0;
    }
 }
@@ -1037,7 +1037,7 @@ static void mouse_init( PHB_GTTRM pTerm )
           * so I covered it with this macro, [druzus]
           */
 #ifdef HB_GPM_USE_XTRA
-         pTerm->mButtons = Gpm_GetSnapshot( NULL );
+         pTerm->mButtons = Gpm_GetSnapshot( nullptr );
 #else
          pTerm->mButtons = 3;
 #endif
@@ -1093,7 +1093,7 @@ static int get_inch( PHB_GTTRM pTerm, HB_MAXINT timeout )
 {
    int nRet = 0, nNext = 0, npfd = -1, nchk = pTerm->efds_no, lRead = 0;
    int mode, i, n;
-   evtFD * pefd = NULL;
+   evtFD * pefd = nullptr;
 
    HB_MAXUINT timer = hb_timerInit( timeout );
 
@@ -1120,7 +1120,7 @@ static int get_inch( PHB_GTTRM pTerm, HB_MAXINT timeout )
          {
             pTerm->event_fds[ i ]->index = -1;
             if( pTerm->event_fds[ i ]->status == EVTFDSTAT_STOP &&
-                pTerm->event_fds[ i ]->eventFunc == NULL )
+                pTerm->event_fds[ i ]->eventFunc == nullptr )
                nNext = HB_INKEY_NEW_EVENT( HB_K_TERMINATE );
          }
       }
@@ -1137,7 +1137,7 @@ static int get_inch( PHB_GTTRM pTerm, HB_MAXINT timeout )
             n = ( ( n & HB_POLLIN ) ? 1 : 0 ) | ( ( n & HB_POLLOUT ) ? 2 : 0 );
             if( n != 0 )
             {
-               if( pTerm->event_fds[ i ]->eventFunc == NULL )
+               if( pTerm->event_fds[ i ]->eventFunc == nullptr )
                {
                   lRead = 1;
                   n = read_bufch( pTerm, pTerm->event_fds[ i ]->fd );
@@ -1273,7 +1273,7 @@ again:
          nKey = EXKEY_ESC;
          esc = 1;
       }
-      while( ch >= 0 && ch <= 255 && ptr != NULL )
+      while( ch >= 0 && ch <= 255 && ptr != nullptr )
       {
          if( ptr->ch == ch )
          {
@@ -2310,7 +2310,7 @@ static HB_BOOL hb_trm_Param( const char * pszParam, int * piValue )
    {
       const char * pszAt = strstr( hb_strupr( pszGtTrmParams ), pszParam );
 
-      if( pszAt != NULL )
+      if( pszAt != nullptr )
       {
          fResult = HB_TRUE;
          if( piValue )
@@ -2344,15 +2344,15 @@ static HB_BOOL hb_trm_isUTF8( PHB_GTTRM pTerm )
       }
    }
 
-   if( hb_trm_Param( "UTF8", NULL ) || hb_trm_Param( "UTF-8", NULL ) )
+   if( hb_trm_Param( "UTF8", nullptr ) || hb_trm_Param( "UTF-8", nullptr ) )
       return HB_TRUE;
-   else if( hb_trm_Param( "ISO", NULL ) )
+   else if( hb_trm_Param( "ISO", nullptr ) )
       return HB_FALSE;
    else if( pTerm->fPosAnswer )
       return fUTF8;
 
    szLang = getenv( "LANG" );
-   if( szLang && strstr( szLang, "UTF-8" ) != NULL )
+   if( szLang && strstr( szLang, "UTF-8" ) != nullptr )
       return HB_TRUE;
 
 #ifdef IUTF8
@@ -2493,7 +2493,7 @@ static int addKeyMap( PHB_GTTRM pTerm, int nKey, const char * cdesc )
    int ret = K_UNDEF, i = 0, c;
    keyTab ** ptr;
 
-   if( cdesc == NULL )
+   if( cdesc == nullptr )
       return ret;
 
    c   = static_cast< unsigned char >( cdesc[ i++ ] );
@@ -2501,13 +2501,13 @@ static int addKeyMap( PHB_GTTRM pTerm, int nKey, const char * cdesc )
 
    while( c )
    {
-      if( *ptr == NULL )
+      if( *ptr == nullptr )
       {
          *ptr = ( keyTab * ) hb_xgrab( sizeof( keyTab ) );
          ( *ptr )->ch = c;
          ( *ptr )->key = K_UNDEF;
-         ( *ptr )->nextCh = NULL;
-         ( *ptr )->otherCh = NULL;
+         ( *ptr )->nextCh = nullptr;
+         ( *ptr )->otherCh = nullptr;
       }
       if( ( *ptr )->ch == c )
       {
@@ -2534,7 +2534,7 @@ static int removeKeyMap( PHB_GTTRM pTerm, const char * cdesc )
    c = static_cast< unsigned char >( cdesc[ i++ ] );
    ptr = &pTerm->pKeyTab;
 
-   while( c && *ptr != NULL )
+   while( c && *ptr != nullptr )
    {
       if( ( *ptr )->ch == c )
       {
@@ -2543,10 +2543,10 @@ static int removeKeyMap( PHB_GTTRM pTerm, const char * cdesc )
          {
             ret = ( *ptr )->key;
             ( *ptr )->key = K_UNDEF;
-            if( ( *ptr )->nextCh == NULL && ( *ptr )->otherCh == NULL )
+            if( ( *ptr )->nextCh == nullptr && ( *ptr )->otherCh == nullptr )
             {
                hb_xfree( *ptr );
-               *ptr = NULL;
+               *ptr = nullptr;
             }
          }
          else
@@ -2560,13 +2560,13 @@ static int removeKeyMap( PHB_GTTRM pTerm, const char * cdesc )
 
 static void removeAllKeyMap( PHB_GTTRM pTerm, keyTab ** ptr )
 {
-   if( ( *ptr )->nextCh != NULL )
+   if( ( *ptr )->nextCh != nullptr )
       removeAllKeyMap( pTerm, &( ( *ptr )->nextCh ) );
-   if( ( *ptr )->otherCh != NULL )
+   if( ( *ptr )->otherCh != nullptr )
       removeAllKeyMap( pTerm, &( ( *ptr )->otherCh ) );
 
    hb_xfree( *ptr );
-   *ptr = NULL;
+   *ptr = nullptr;
 }
 
 static void addKeyTab( PHB_GTTRM pTerm, const keySeq * keys )
@@ -2592,7 +2592,7 @@ static void init_keys( PHB_GTTRM pTerm )
       { EXKEY_ENTER , "\r"       },
       /* terminal mouse event */
       { K_MOUSETERM , "\033[M"   },
-      { 0, NULL } };
+      { 0, nullptr } };
 
    static const keySeq stdFnKeySeq[] = {
 
@@ -2649,7 +2649,7 @@ static void init_keys( PHB_GTTRM pTerm )
       { EXKEY_F11|KEY_ALTMASK , "\033[71~" }, /* kf47 */
       { EXKEY_F12|KEY_ALTMASK , "\033[72~" }, /* kf48 */
 
-      { 0, NULL } };
+      { 0, nullptr } };
 
    static const keySeq stdCursorKeySeq[] = {
       { EXKEY_HOME,   "\033[1~" }, /* khome */
@@ -2659,7 +2659,7 @@ static void init_keys( PHB_GTTRM pTerm )
       { EXKEY_PGUP,   "\033[5~" }, /* kpp   */
       { EXKEY_PGDN,   "\033[6~" }, /* knp   */
 
-      { 0, NULL } };
+      { 0, nullptr } };
 
    static const keySeq puttyKeySeq[] = {
       /* In XTerm (XFree 3.x.x) they are without CTRL,
@@ -2671,7 +2671,7 @@ static void init_keys( PHB_GTTRM pTerm )
 
       { EXKEY_CENTER|KEY_CTRLMASK, "\033OG" },
 
-      { 0, NULL } };
+      { 0, nullptr } };
 
 #if defined( HB_OS_BEOS )
    /* warning above XFree 3.x.x CTRL + {UP,DOWN,RIGHT,LEFT} kyes create
@@ -2683,7 +2683,7 @@ static void init_keys( PHB_GTTRM pTerm )
       { EXKEY_RIGHT, "\033OC" },
       { EXKEY_LEFT , "\033OD" },
 
-      { 0, NULL } };
+      { 0, nullptr } };
 #endif
 
    static const keySeq haikuCtrlKeySeq[] = {
@@ -2693,14 +2693,14 @@ static void init_keys( PHB_GTTRM pTerm )
       { EXKEY_RIGHT |KEY_CTRLMASK, "\033O5C" },
       { EXKEY_LEFT  |KEY_CTRLMASK, "\033O5D" },
 
-      { 0, NULL } };
+      { 0, nullptr } };
 
    static const keySeq rxvtKeySeq[] = {
 
       { EXKEY_HOME,     "\033[H" },
       { EXKEY_END,      "\033Ow" },
 
-      { 0, NULL } };
+      { 0, nullptr } };
 
    static const keySeq cygwinModKeySeq[] = {
       { EXKEY_F1 |KEY_CTRLMASK, "\033[11^" },
@@ -2719,7 +2719,7 @@ static void init_keys( PHB_GTTRM pTerm )
       { EXKEY_F11|KEY_SHIFTMASK, "\033[23$" },
       { EXKEY_F12|KEY_SHIFTMASK, "\033[24$" },
 
-      { 0, NULL } };
+      { 0, nullptr } };
 
    static const keySeq xtermModKeySeq[] = {
       /* XTerm  with modifiers */
@@ -2864,7 +2864,7 @@ static void init_keys( PHB_GTTRM pTerm )
 
       { EXKEY_BS |KEY_ALTMASK,     "\033\010" },
 
-      { 0, NULL } };
+      { 0, nullptr } };
 
    static const keySeq xtermFnKeySeq[] = {
 
@@ -2873,7 +2873,7 @@ static void init_keys( PHB_GTTRM pTerm )
       { EXKEY_F3, "\033OR" }, /* kf3  */
       { EXKEY_F4, "\033OS" }, /* kf4  */
 
-      { 0, NULL } };
+      { 0, nullptr } };
 
    static const keySeq xtermKeySeq[] = {
 
@@ -2926,7 +2926,7 @@ static void init_keys( PHB_GTTRM pTerm )
       { EXKEY_BS    |KEY_SHIFTMASK, "\033[W" },
 #endif
 
-      { 0, NULL } };
+      { 0, nullptr } };
 
    static const keySeq linuxKeySeq[] = {
 
@@ -2947,7 +2947,7 @@ static void init_keys( PHB_GTTRM pTerm )
 
       { EXKEY_TAB | KEY_ALTMASK, "\033[Z" }, /* kcbt */
 
-      { 0, NULL } };
+      { 0, nullptr } };
 
    static const keySeq ansiKeySeq[] = {
 
@@ -3018,13 +3018,13 @@ static void init_keys( PHB_GTTRM pTerm )
       { EXKEY_F11|KEY_ALTMASK , "\033[`" },        /* kf47 */
       { EXKEY_F12|KEY_ALTMASK , "\033[{" },        /* kf48 */
 
-      { 0, NULL } };
+      { 0, nullptr } };
 
    static const keySeq bsdConsKeySeq[] = {
 
       { EXKEY_TAB   |KEY_SHIFTMASK, "\033[Z" }, /* SHIFT+TAB */
 
-      { 0, NULL } };
+      { 0, nullptr } };
 
 
    addKeyTab( pTerm, stdKeySeq );
@@ -3078,7 +3078,7 @@ static void init_keys( PHB_GTTRM pTerm )
       { EXKEY_CENTER|KEY_CTRLMASK, "\033OE" },
       { EXKEY_END   |KEY_CTRLMASK, "\033OF" },
       { EXKEY_HOME  |KEY_CTRLMASK, "\033OH" },
-      { 0, NULL } };
+      { 0, nullptr } };
 #endif
 #if 0
    /* (curses) termcap/terminfo sequences */
@@ -3188,7 +3188,7 @@ static void hb_gt_trm_SetTerm( PHB_GTTRM pTerm )
    pTerm->colors[ 0x0E ] = 0x55FFFF;
    pTerm->colors[ 0x0F ] = 0xFFFFFF;
 
-   if( hb_trm_Param( "PUTTY", NULL ) )
+   if( hb_trm_Param( "PUTTY", nullptr ) )
       pTerm->terminal_ext |= TERM_PUTTY;
    if( hb_trm_Param( "EXCLR", &iValue ) )
    {
@@ -3204,21 +3204,21 @@ static void hb_gt_trm_SetTerm( PHB_GTTRM pTerm )
       }
    }
 
-   if( hb_trm_Param( "XTERM", NULL ) )
+   if( hb_trm_Param( "XTERM", nullptr ) )
       szTerm = "xterm";
-   else if( hb_trm_Param( "LINUX", NULL ) )
+   else if( hb_trm_Param( "LINUX", nullptr ) )
       szTerm = "linux";
-   else if( hb_trm_Param( "CONS", NULL ) )
+   else if( hb_trm_Param( "CONS", nullptr ) )
       szTerm = "cons";
-   else if( hb_trm_Param( "ANSI", NULL ) )
+   else if( hb_trm_Param( "ANSI", nullptr ) )
       szTerm = "ansi";
    else
    {
       szTerm = getenv( "HB_TERM" );
-      if( szTerm == NULL || *szTerm == '\0' )
+      if( szTerm == nullptr || *szTerm == '\0' )
       {
          szTerm = getenv( "TERM" );
-         if( szTerm == NULL || *szTerm == '\0' )
+         if( szTerm == nullptr || *szTerm == '\0' )
             szTerm = "ansi";
       }
       if( strncmp( szTerm, "putty", 5 ) == 0 )
@@ -3253,12 +3253,12 @@ static void hb_gt_trm_SetTerm( PHB_GTTRM pTerm )
       if( pTerm->iExtColor == HB_GTTRM_CLRNDF )
       {
          if( pTerm->terminal_ext & TERM_PUTTY ||
-             strstr( szTerm, "+256color" ) != NULL ||
-             strstr( szTerm, "-256color" ) != NULL )
+             strstr( szTerm, "+256color" ) != nullptr ||
+             strstr( szTerm, "-256color" ) != nullptr )
             pTerm->iExtColor = HB_GTTRM_CLR256;
-         else if( strstr( szTerm, "-88color" ) != NULL )
+         else if( strstr( szTerm, "-88color" ) != nullptr )
             pTerm->iExtColor = HB_GTTRM_CLRRGB;
-         else if( strstr( szTerm, "-16color" ) != NULL )
+         else if( strstr( szTerm, "-16color" ) != nullptr )
             pTerm->iExtColor = HB_GTTRM_CLRAIX;
       }
    }
@@ -3332,7 +3332,7 @@ static void hb_gt_trm_SetTerm( PHB_GTTRM pTerm )
       pTerm->hFileno     = pTerm->hFilenoStdin;
       pTerm->fOutTTY     = HB_TRUE;
    }
-   pTerm->fPosAnswer     = pTerm->fOutTTY && ! hb_trm_Param( "NOPOS", NULL ) &&
+   pTerm->fPosAnswer     = pTerm->fOutTTY && ! hb_trm_Param( "NOPOS", nullptr ) &&
                            pTerm->terminal_type != TERM_CYGWIN;
    pTerm->fUTF8          = HB_FALSE;
 
@@ -3341,11 +3341,11 @@ static void hb_gt_trm_SetTerm( PHB_GTTRM pTerm )
    hb_gt_chrmapinit( pTerm->charmap, szTerm, pTerm->terminal_type == TERM_XTERM );
 
 #ifndef HB_GT_UNICODE_BUF
-   pTerm->cdpHost = pTerm->cdpIn = NULL;
+   pTerm->cdpHost = pTerm->cdpIn = nullptr;
    pTerm->cdpBox = hb_cdpFind( "EN" );
 #endif
 
-   add_efds( pTerm, pTerm->hFilenoStdin, O_RDONLY, NULL, NULL );
+   add_efds( pTerm, pTerm->hFilenoStdin, O_RDONLY, nullptr, nullptr );
    init_keys( pTerm );
    mouse_init( pTerm );
 }
@@ -3376,7 +3376,7 @@ static void hb_gt_trm_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
       s_fRestTTY = HB_TRUE;
 
       /* if( pTerm->saved_TIO.c_lflag & TOSTOP ) != 0 */
-      sigaction( SIGTTOU, NULL, &old );
+      sigaction( SIGTTOU, nullptr, &old );
       memcpy( &act, &old, sizeof( struct sigaction ) );
       act.sa_handler = sig_handler;
       /* do not use SA_RESTART - new Linux kernels will repeat the operation */
@@ -3415,7 +3415,7 @@ static void hb_gt_trm_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
       tcsetattr( pTerm->hFilenoStdin, TCSAFLUSH, &pTerm->curr_TIO );
       act.sa_handler = SIG_DFL;
 
-      sigaction( SIGTTOU, &old, NULL );
+      sigaction( SIGTTOU, &old, nullptr );
       pTerm->fRestTTY = s_fRestTTY;
    }
    set_signals();
@@ -3435,7 +3435,7 @@ static void hb_gt_trm_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    pTerm->Init( pTerm );
    pTerm->SetTermMode( pTerm, 0 );
 #ifdef HB_GTTRM_CHK_EXACT_POS
-   if( pTerm->GetCursorPos( pTerm, &pTerm->iRow, &pTerm->iCol, NULL ) )
+   if( pTerm->GetCursorPos( pTerm, &pTerm->iRow, &pTerm->iCol, nullptr ) )
       HB_GTSELF_SETPOS( pGT, pTerm->iRow, pTerm->iCol );
    pTerm->fUTF8 = hb_trm_isUTF8( pTerm );
 #else
@@ -4006,17 +4006,17 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_STRING )
          {
             if( pTerm->fUTF8 )
-               szVal = hb_itemGetStrUTF8( pInfo->pNewVal, &hVal, NULL );
+               szVal = hb_itemGetStrUTF8( pInfo->pNewVal, &hVal, nullptr );
             else
 #ifdef HB_GT_UNICODE_BUF
-               szVal = hb_itemGetStr( pInfo->pNewVal, HB_GTSELF_TERMCP( pGT ), &hVal, NULL );
+               szVal = hb_itemGetStr( pInfo->pNewVal, HB_GTSELF_TERMCP( pGT ), &hVal, nullptr );
 #else
-               szVal = hb_itemGetStr( pInfo->pNewVal, pTerm->cdpTerm, &hVal, NULL );
+               szVal = hb_itemGetStr( pInfo->pNewVal, pTerm->cdpTerm, &hVal, nullptr );
 #endif
 
             if( pTerm->szTitle )
                hb_xfree( pTerm->szTitle );
-            pTerm->szTitle = ( szVal && *szVal ) ? hb_strdup( szVal ) : NULL;
+            pTerm->szTitle = ( szVal && *szVal ) ? hb_strdup( szVal ) : nullptr;
             hb_gt_trm_SetTitle( pTerm, pTerm->szTitle );
             hb_gt_trm_termFlush( pTerm );
             hb_strfree( hVal );

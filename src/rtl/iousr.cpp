@@ -124,7 +124,7 @@ static PHB_FILE s_fileNew( PHB_IOUSR pIO, PHB_ITEM pFileItm )
 
 static PHB_IOUSR s_iousrAddNew( const char * pszPrefix )
 {
-   PHB_IOUSR pIO = NULL;
+   PHB_IOUSR pIO = nullptr;
    int iCount;
 
    HB_IOUSR_LOCK();
@@ -151,7 +151,7 @@ static PHB_IOUSR s_iousrAddNew( const char * pszPrefix )
 }
 
 #define s_hasMethod( pIO, iMethod ) \
-                     ( ( pIO )->prg_funcs[ ( iMethod ) - 1 ] != NULL )
+                     ( ( pIO )->prg_funcs[ ( iMethod ) - 1 ] != nullptr )
 
 #define s_getUsrIO( p )       ( ( PHB_IOUSR ) HB_UNCONST( p ) )
 
@@ -396,7 +396,7 @@ static char * s_fileLinkRead( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
    hb_vmDo( 1 );
 
    pszLink = hb_parc( -1 );
-   return pszLink != NULL ? hb_strdup( pszLink ) : NULL;
+   return pszLink != nullptr ? hb_strdup( pszLink ) : nullptr;
 }
 
 static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
@@ -404,7 +404,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
                             const char * pPaths, PHB_ITEM pError )
 {
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
-   PHB_FILE pFile = NULL;
+   PHB_FILE pFile = nullptr;
    PHB_ITEM pFileItm;
 
    s_pushMethod( pIO, IOUSR_OPEN );
@@ -637,9 +637,9 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
    s_pushMethod( pIO, IOUSR_CONFIGURE );
    hb_vmPush( pFile->pFileItm );
    hb_vmPushInteger( iIndex );
-   if( pValue != NULL )
+   if( pValue != nullptr )
       hb_vmPush( pValue );
-   hb_vmDo( pValue != NULL ? 3 : 2 );
+   hb_vmDo( pValue != nullptr ? 3 : 2 );
 
    return hb_parl( -1 );
 }
@@ -725,7 +725,7 @@ HB_FUNC( IOUSR_REGISTER )
       {
          PHB_IOUSR pIO = s_iousrAddNew( pszPrefix );
 
-         if( pIO != NULL )
+         if( pIO != nullptr )
          {
             const HB_FILE_FUNC * pDummyFunc;
             HB_FILE_FUNC * pFunction;
@@ -735,13 +735,13 @@ HB_FUNC( IOUSR_REGISTER )
             for( nAt = 1; nAt <= nMethods; ++nAt, pDummyFunc++, pFunction++ )
             {
                pIO->prg_funcs[ nAt - 1 ] = hb_arrayGetSymbol( pMthItm, nAt );
-               if( nAt == 1 || pIO->prg_funcs[ nAt - 1 ] != NULL )
+               if( nAt == 1 || pIO->prg_funcs[ nAt - 1 ] != nullptr )
                   * pFunction = * pDummyFunc;
             }
             if( ! hb_fileRegisterPart( &pIO->funcs ) )
-               pIO = NULL;
+               pIO = nullptr;
          }
-         if( pIO == NULL )
+         if( pIO == nullptr )
             s_errRT_IOUSR( EG_ARG, 1003, pszPrefix );
       }
       else

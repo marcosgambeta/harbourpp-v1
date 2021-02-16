@@ -97,7 +97,7 @@ static const HB_GC_FUNCS s_gcRegexFuncs =
 
 HB_BOOL hb_regexIs( PHB_ITEM pItem )
 {
-   return hb_itemGetPtrGC( pItem, &s_gcRegexFuncs ) != NULL;
+   return hb_itemGetPtrGC( pItem, &s_gcRegexFuncs ) != nullptr;
 }
 
 PHB_REGEX hb_regexCompile( const char * szRegEx, HB_SIZE nLen, int iFlags )
@@ -114,7 +114,7 @@ PHB_REGEX hb_regexCompile( const char * szRegEx, HB_SIZE nLen, int iFlags )
    if( ( s_reg_comp )( pRegEx, szRegEx ) != 0 )
    {
       hb_gcFree( pRegEx );
-      pRegEx = NULL;
+      pRegEx = nullptr;
    }
 
    return pRegEx;
@@ -122,7 +122,7 @@ PHB_REGEX hb_regexCompile( const char * szRegEx, HB_SIZE nLen, int iFlags )
 
 PHB_REGEX hb_regexGet( PHB_ITEM pRegExItm, int iFlags )
 {
-   PHB_REGEX pRegEx = NULL;
+   PHB_REGEX pRegEx = nullptr;
    HB_BOOL fArgError = HB_TRUE;
 
    if( pRegExItm )

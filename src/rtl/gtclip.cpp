@@ -96,7 +96,7 @@ HB_BOOL hb_gt_getClipboard( char ** pszClipData, HB_SIZE * pnLen )
 {
    hb_threadEnterCriticalSection( &s_clipMtx );
 
-   *pszClipData = NULL;
+   *pszClipData = nullptr;
    *pnLen = s_nClipboardLen;
    if( s_nClipboardLen )
    {
@@ -116,7 +116,7 @@ HB_BOOL hb_gt_winapi_setClipboardRaw( HB_UINT uFormat, void * pData, HB_SIZE nSi
 {
    HB_BOOL fResult = HB_FALSE;
 
-   if( OpenClipboard( NULL ) )
+   if( OpenClipboard( nullptr ) )
    {
       EmptyClipboard();
 
@@ -152,16 +152,16 @@ HB_BOOL hb_gt_winapi_setClipboard( HB_UINT uFormat, PHB_ITEM pItem )
 {
    HB_BOOL fResult = HB_FALSE;
 
-   if( OpenClipboard( NULL ) )
+   if( OpenClipboard( nullptr ) )
    {
       HB_SIZE nSize;
 
       EmptyClipboard();
 
       if( uFormat == CF_UNICODETEXT )
-         nSize = hb_itemCopyStrU16( pItem, HB_CDP_ENDIAN_NATIVE, NULL, 0 );
+         nSize = hb_itemCopyStrU16( pItem, HB_CDP_ENDIAN_NATIVE, nullptr, 0 );
       else
-         nSize = hb_itemCopyStr( pItem, hb_setGetOSCP(), NULL, 0 );
+         nSize = hb_itemCopyStr( pItem, hb_setGetOSCP(), nullptr, 0 );
 
       if( nSize )
       {
@@ -202,7 +202,7 @@ HB_BOOL hb_gt_winapi_getClipboard( HB_UINT uFormat, PHB_ITEM pItem )
 {
    HB_SIZE nSize = 0;
 
-   if( IsClipboardFormatAvailable( uFormat ) && OpenClipboard( NULL ) )
+   if( IsClipboardFormatAvailable( uFormat ) && OpenClipboard( nullptr ) )
    {
       HGLOBAL hglb = GetClipboardData( static_cast< UINT >( uFormat ) );
       if( hglb )
@@ -227,7 +227,7 @@ HB_BOOL hb_gt_winapi_getClipboard( HB_UINT uFormat, PHB_ITEM pItem )
                default:
                   if( nSize )
                      hb_itemPutStrLen( pItem, uFormat == CF_TEXT ?
-                                              hb_setGetOSCP() : NULL,
+                                              hb_setGetOSCP() : nullptr,
                                        ( const char * ) lpMem, nSize );
                   break;
             }

@@ -142,7 +142,7 @@ static int s_zsock_inbuffer( PHB_SOCKEX pSock )
    {
       int err;
 
-      if( pSock->buffer == NULL )
+      if( pSock->buffer == nullptr )
       {
          if( pSock->readahead <= 0 )
             pSock->readahead = HB_ZSOCK_READAHEAD;
@@ -298,12 +298,12 @@ static int s_sockexCanWrite( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeou
 
 static char * s_sockexName( PHB_SOCKEX pSock )
 {
-   char * pszName = hb_sockexIsRaw( HB_ZSOCK_GET( pSock )->sock ) ? NULL :
+   char * pszName = hb_sockexIsRaw( HB_ZSOCK_GET( pSock )->sock ) ? nullptr :
                     hb_sockexName( HB_ZSOCK_GET( pSock )->sock );
    if( pszName )
    {
       char * pszFree = pszName;
-      pszName = hb_xstrcpy( NULL, pSock->pFilter->pszName, "|", pszName, NULL );
+      pszName = hb_xstrcpy( nullptr, pSock->pFilter->pszName, "|", pszName, nullptr );
       hb_xfree( pszFree );
    }
    else
@@ -379,13 +379,13 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams );
 
 static PHB_SOCKEX s_sockexNew( HB_SOCKET sd, PHB_ITEM pParams )
 {
-   PHB_SOCKEX pSock, pSockNew = NULL;
+   PHB_SOCKEX pSock, pSockNew = nullptr;
 
-   pSock = hb_sockexNew( sd, NULL, pParams );
+   pSock = hb_sockexNew( sd, nullptr, pParams );
    if( pSock )
    {
       pSockNew = s_sockexNext( pSock, pParams );
-      if( pSockNew == NULL )
+      if( pSockNew == nullptr )
          hb_sockexClose( pSock, HB_FALSE );
    }
 
@@ -409,7 +409,7 @@ static const HB_SOCKET_FILTER s_sockFilter =
 
 static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
 {
-   PHB_SOCKEX pSockNew = NULL;
+   PHB_SOCKEX pSockNew = nullptr;
 
    if( pSock )
    {
@@ -422,21 +422,21 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
       {
          PHB_ITEM pItem;
 
-         if( ( pItem = hb_hashGetCItemPtr( pParams, "zlib" ) ) != NULL &&
+         if( ( pItem = hb_hashGetCItemPtr( pParams, "zlib" ) ) != nullptr &&
              HB_IS_NUMERIC( pItem ) )
             level = hb_itemGetNI( pItem );
-         if( ( pItem = hb_hashGetCItemPtr( pParams, "zs" ) ) != NULL &&
+         if( ( pItem = hb_hashGetCItemPtr( pParams, "zs" ) ) != nullptr &&
              HB_IS_NUMERIC( pItem ) )
             strategy = hb_itemGetNI( pItem );
 
-         if( ( pItem = hb_hashGetCItemPtr( pParams, "gzin" ) ) != NULL &&
+         if( ( pItem = hb_hashGetCItemPtr( pParams, "gzin" ) ) != nullptr &&
              HB_IS_LOGICAL( pItem ) )
          {
             fDecompressIn = hb_itemGetL( pItem );
             if( fDecompressIn )
                windowBitsIn += 16;
          }
-         if( ( pItem = hb_hashGetCItemPtr( pParams, "zin" ) ) != NULL &&
+         if( ( pItem = hb_hashGetCItemPtr( pParams, "zin" ) ) != nullptr &&
              HB_IS_LOGICAL( pItem ) )
          {
             if( windowBitsIn == MAX_WBITS )
@@ -445,14 +445,14 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
                windowBitsIn += 16;
          }
 
-         if( ( pItem = hb_hashGetCItemPtr( pParams, "gzout" ) ) != NULL &&
+         if( ( pItem = hb_hashGetCItemPtr( pParams, "gzout" ) ) != nullptr &&
              HB_IS_LOGICAL( pItem ) )
          {
             fCompressOut = hb_itemGetL( pItem );
             if( fCompressOut )
                windowBitsOut += 16;
          }
-         if( ( pItem = hb_hashGetCItemPtr( pParams, "zout" ) ) != NULL &&
+         if( ( pItem = hb_hashGetCItemPtr( pParams, "zout" ) ) != nullptr &&
              HB_IS_LOGICAL( pItem ) && windowBitsOut == MAX_WBITS )
             fCompressOut = hb_itemGetL( pItem );
       }
@@ -476,7 +476,7 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
          pZ->z_write.zfree  = s_zsock_zfree;
          pZ->z_write.opaque = Z_NULL;
 
-         pZ->z_read.next_in  = NULL;
+         pZ->z_read.next_in  = nullptr;
          pZ->z_read.avail_in = 0;
 
          if( level != Z_DEFAULT_COMPRESSION &&
@@ -536,7 +536,7 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
          else
          {
             s_sockexClose( pSockNew, HB_FALSE );
-            pSockNew = NULL;
+            pSockNew = nullptr;
          }
       }
    }

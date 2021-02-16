@@ -96,12 +96,12 @@ static HB_BOOL hb_memowrit( HB_BOOL bHandleEOF )
 
    if( pszFileName && pString )
    {
-      PHB_FILE pFile = hb_fileExtOpen( pszFileName, NULL,
+      PHB_FILE pFile = hb_fileExtOpen( pszFileName, nullptr,
                                        FO_READWRITE | FO_EXCLUSIVE | FO_PRIVATE |
                                        FXO_TRUNCATE | FXO_SHARELOCK,
-                                       NULL, NULL );
+                                       nullptr, nullptr );
 
-      if( pFile != NULL )
+      if( pFile != nullptr )
       {
          HB_SIZE nSize = hb_itemGetCLen( pString );
          const char * pData = hb_itemGetCPtr( pString );

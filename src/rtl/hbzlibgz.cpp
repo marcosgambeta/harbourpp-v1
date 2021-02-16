@@ -68,7 +68,7 @@ static HB_GARBAGE_FUNC( hb_gz_Destructor )
       hb_vmUnlock();
       gzclose( *gzHolder );
       hb_vmLock();
-      *gzHolder = NULL;
+      *gzHolder = nullptr;
    }
 }
 
@@ -86,7 +86,7 @@ static gzFile hb_gzParam( int iParam )
       return *gzHolder;
 
    hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   return NULL;
+   return nullptr;
 }
 #endif
 
@@ -106,7 +106,7 @@ HB_FUNC( HB_GZOPEN )
       #if defined( HB_OS_WIN ) && ZLIB_VERNUM >= 0x1270
       {
          void * hFile;
-         gz = gzopen_w( hb_parstr_u16( 1, HB_CDP_ENDIAN_NATIVE, &hFile, NULL ), cMode );
+         gz = gzopen_w( hb_parstr_u16( 1, HB_CDP_ENDIAN_NATIVE, &hFile, nullptr ), cMode );
          hb_strfree( hFile );
       }
       #else
@@ -169,7 +169,7 @@ HB_FUNC( HB_GZCLOSE )
       gzFile gz = *gzHolder;
       int iResult;
 
-      *gzHolder = NULL;
+      *gzHolder = nullptr;
 
       hb_vmUnlock();
       iResult = gzclose( gz );
@@ -205,7 +205,7 @@ HB_FUNC( HB_GZSETPARAMS )
 HB_FUNC( HB_GZREAD )
 {
 #ifndef HB_NO_GZLIB
-   PHB_ITEM pBuffer = HB_ISBYREF( 2 ) ? hb_param( 2, HB_IT_STRING ) : NULL;
+   PHB_ITEM pBuffer = HB_ISBYREF( 2 ) ? hb_param( 2, HB_IT_STRING ) : nullptr;
    char * szBuffer;
    HB_SIZE nLen;
 

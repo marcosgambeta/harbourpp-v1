@@ -104,7 +104,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
                   Win95 first edition. It was introduced in Win95B (aka OSR2) [vszakats] */
          typedef BOOL ( WINAPI * P_GDFSE )( LPCTSTR, PULARGE_INTEGER,
                                             PULARGE_INTEGER, PULARGE_INTEGER );
-         static P_GDFSE s_pGetDiskFreeSpaceEx = NULL;
+         static P_GDFSE s_pGetDiskFreeSpaceEx = nullptr;
          static HB_BOOL s_fInit = HB_FALSE;
 
          if( ! s_fInit )
@@ -221,7 +221,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
    {
       HB_USHORT uiDrive;
 
-      uiDrive = pszPath == NULL || pszPath[ 0 ] == 0 ||
+      uiDrive = pszPath == nullptr || pszPath[ 0 ] == 0 ||
                 pszPath[ 1 ] != HB_OS_DRIVE_DELIM_CHR ? 0 :
                 ( pszPath[ 0 ] >= 'A' && pszPath[ 0 ] <= 'Z' ?
                   pszPath[ 0 ] - 'A' + 1 :

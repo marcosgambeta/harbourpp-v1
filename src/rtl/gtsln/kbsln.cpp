@@ -139,7 +139,7 @@ static void hb_sln_Init_TermType( void )
    hb_sln_UnderLinuxConsole = Env && strncmp( Env, "linux", 5 ) == 0;
 
    /* an uncertain way to check if we run under xterm */
-   hb_sln_UnderXterm = Env && ( strstr( Env, "xterm" ) != NULL ||
+   hb_sln_UnderXterm = Env && ( strstr( Env, "xterm" ) != nullptr ||
                                 strncmp( Env, "rxvt", 4 ) == 0 );
 }
 
@@ -179,7 +179,7 @@ static void hb_sln_Init_KeyTranslations( void )
       {
          keyname[ 1 ] = ch;
          keyseq = SLtt_tgetstr( keyname );
-         if( keyseq != NULL && keyseq[ 0 ] != 0 )
+         if( keyseq != nullptr && keyseq[ 0 ] != 0 )
             SLkp_define_keysym( keyseq, SL_KEY_F( keynum ) );
          keynum++;
       }
@@ -214,7 +214,7 @@ static void hb_sln_Init_KeyTranslations( void )
    if( hb_sln_UnderXterm )
    {
       keyseq = SLtt_tgetstr( ( char * ) "Km" );
-      if( ( keyseq != NULL ) && ( keyseq[ 0 ] != 0 ) )
+      if( ( keyseq != nullptr ) && ( keyseq[ 0 ] != 0 ) )
       {
          #if 0
          fprintf( stderr, "%s\r\n", keyseq );
