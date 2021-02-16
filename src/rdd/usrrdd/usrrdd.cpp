@@ -82,7 +82,7 @@ typedef struct _USRRDDDATA
 typedef USRRDDDATA * LPUSRRDDDATA;
 
 static HB_USHORT      s_uiUsrNodes   = 0;
-static LPUSRRDDNODE * s_pUsrRddNodes = NULL;
+static LPUSRRDDNODE * s_pUsrRddNodes = nullptr;
 
 static HB_BOOL hb_usrIsMethod( PHB_ITEM pMethods, HB_USHORT uiMethod )
 {
@@ -481,7 +481,7 @@ static HB_BOOL hb_usrItemToTransInfo( PHB_ITEM pItem, LPDBTRANSINFO pTransInfo )
          }
          else
          {
-            pTransInfo->lpTransItems = NULL;
+            pTransInfo->lpTransItems = nullptr;
          }
          return HB_TRUE;
       }
@@ -551,7 +551,7 @@ static HB_BOOL hb_usrItemToSortInfo( PHB_ITEM pItem, LPDBSORTINFO pSortInfo )
          }
          else
          {
-            pSortInfo->lpdbsItem = NULL;
+            pSortInfo->lpdbsItem = nullptr;
          }
          return HB_TRUE;
       }
@@ -755,7 +755,7 @@ static HB_BOOL hb_usrItemToOrderCreateInfo( PHB_ITEM pItem,
       }
       else
       {
-         pOrderCreateInfo->lpdbOrdCondInfo = NULL;
+         pOrderCreateInfo->lpdbOrdCondInfo = nullptr;
       }
 
       pOrderCreateInfo->abBagName   = hb_usrArrayGetCPtr( pItem, UR_ORCR_BAGNAME );
@@ -797,7 +797,7 @@ static HB_ERRCODE hb_usrInit( LPRDDNODE pRDD )
          s_pUsrRddNodes = ( LPUSRRDDNODE * ) hb_xgrab( nSize );
       do
       {
-         s_pUsrRddNodes[ s_uiUsrNodes ] = NULL;
+         s_pUsrRddNodes[ s_uiUsrNodes ] = nullptr;
       }
       while( ++s_uiUsrNodes <= pRDD->rddID );
    }
@@ -832,13 +832,13 @@ static HB_ERRCODE hb_usrExit( LPRDDNODE pRDD )
    if( pNode->pMethods )
       hb_itemRelease( pNode->pMethods );
    hb_xfree( pNode );
-   s_pUsrRddNodes[ pRDD->rddID ] = NULL;
+   s_pUsrRddNodes[ pRDD->rddID ] = nullptr;
 
    if( pRDD->rddID == s_uiUsrNodes - 1 )
    {
       while( --s_uiUsrNodes > 0 )
       {
-         if( s_pUsrRddNodes[ s_uiUsrNodes - 1 ] != NULL )
+         if( s_pUsrRddNodes[ s_uiUsrNodes - 1 ] != nullptr )
             break;
       }
 
@@ -850,7 +850,7 @@ static HB_ERRCODE hb_usrExit( LPRDDNODE pRDD )
       else
       {
          hb_xfree( s_pUsrRddNodes );
-         s_pUsrRddNodes = NULL;
+         s_pUsrRddNodes = nullptr;
       }
    }
 
@@ -2658,11 +2658,11 @@ static const HB_RDD_FUNCTABLE usrFuncTable =
    /* ( DBENTRYP_V )    */ hb_usrClose,       /* Close       */
    /* ( DBENTRYP_VO )   */ hb_usrCreate,      /* Create      */
    /* ( DBENTRYP_SI )   */ hb_usrInfo,        /* Info        */
-   /* ( DBENTRYP_V )    */ NULL, /* RDD */    /* NewArea     */
+   /* ( DBENTRYP_V )    */ nullptr, /* RDD */    /* NewArea     */
    /* ( DBENTRYP_VO )   */ hb_usrOpen,        /* Open        */
-   /* ( DBENTRYP_V )    */ NULL, /* RDD */    /* Release     */
-   /* ( DBENTRYP_SP )   */ NULL, /* RDD */    /* StructSize  */
-   /* ( DBENTRYP_CP )   */ NULL, /* RDD */    /* SysName     */
+   /* ( DBENTRYP_V )    */ nullptr, /* RDD */    /* Release     */
+   /* ( DBENTRYP_SP )   */ nullptr, /* RDD */    /* StructSize  */
+   /* ( DBENTRYP_CP )   */ nullptr, /* RDD */    /* SysName     */
    /* ( DBENTRYP_VEI )  */ hb_usrEval,        /* Eval        */
    /* ( DBENTRYP_V )    */ hb_usrPack,        /* Pack        */
    /* ( DBENTRYP_LSP )  */ hb_usrPackRec,     /* PackRec     */
@@ -2698,13 +2698,13 @@ static const HB_RDD_FUNCTABLE usrFuncTable =
    /* ( DBENTRYP_V )    */ hb_usrClearFilter, /* ClearFilter  */
    /* ( DBENTRYP_V )    */ hb_usrClearLocate, /* ClearLocate  */
    /* ( DBENTRYP_V )    */ hb_usrClearScope,  /* ClearScope   */
-   /* ( DBENTRYP_VPLP ) */ NULL,              /* CountScope   */
+   /* ( DBENTRYP_VPLP ) */ nullptr,              /* CountScope   */
    /* ( DBENTRYP_I )    */ hb_usrFilterText,  /* FilterText   */
-   /* ( DBENTRYP_SI )   */ NULL,              /* ScopeInfo    */
+   /* ( DBENTRYP_SI )   */ nullptr,              /* ScopeInfo    */
    /* ( DBENTRYP_VFI )  */ hb_usrSetFilter,   /* SetFilter    */
    /* ( DBENTRYP_VLO )  */ hb_usrSetLocate,   /* SetLocate    */
-   /* ( DBENTRYP_VOS )  */ NULL,              /* SetScope     */
-   /* ( DBENTRYP_VPL )  */ NULL,              /* SkipScope    */
+   /* ( DBENTRYP_VOS )  */ nullptr,              /* SetScope     */
+   /* ( DBENTRYP_VPL )  */ nullptr,              /* SkipScope    */
    /* ( DBENTRYP_B )    */ hb_usrLocate,      /* Locate       */
 
    /* Miscellaneous */
@@ -2729,142 +2729,142 @@ static const HB_RDD_FUNCTABLE usrFuncTable =
    /* ( DBENTRYP_V )    */ hb_usrWriteDBHeader, /* WriteDBHeader  */
 
    /* non WorkArea functions */
-   /* ( DBENTRYP_R )    */ NULL, /* RDD */    /* Init    */
-   /* ( DBENTRYP_R )    */ NULL, /* RDD */    /* Exit    */
+   /* ( DBENTRYP_R )    */ nullptr, /* RDD */    /* Init    */
+   /* ( DBENTRYP_R )    */ nullptr, /* RDD */    /* Exit    */
    /* ( DBENTRYP_RVVL ) */ hb_usrDrop,        /* Drop    */
    /* ( DBENTRYP_RVVL ) */ hb_usrExists,      /* Exists  */
    /* ( DBENTRYP_RVVVL )*/ hb_usrRename,      /* Rename  */
    /* ( DBENTRYP_RSLV ) */ hb_usrRddInfo,     /* RddInfo */
 
    /* Special and reserved methods */
-   /* ( DBENTRYP_SVP )  */ NULL               /* WhoCares */
+   /* ( DBENTRYP_SVP )  */ nullptr               /* WhoCares */
 } };
 
 static const HB_RDD_FUNCTABLE rddFuncTable =
 { {
    /* Movement and positioning methods */
-   /* ( DBENTRYP_BP )   */ NULL,              /* Bof        */
-   /* ( DBENTRYP_BP )   */ NULL,              /* Eof        */
-   /* ( DBENTRYP_BP )   */ NULL,              /* Found      */
-   /* ( DBENTRYP_V )    */ NULL,              /* GoBottom   */
-   /* ( DBENTRYP_UL )   */ NULL,              /* GoTo       */
-   /* ( DBENTRYP_I )    */ NULL,              /* GoToId     */
-   /* ( DBENTRYP_V )    */ NULL,              /* GoTop      */
-   /* ( DBENTRYP_BIB )  */ NULL,              /* Seek       */
-   /* ( DBENTRYP_L )    */ NULL,              /* Skip       */
-   /* ( DBENTRYP_L )    */ NULL,              /* SkipFilter */
-   /* ( DBENTRYP_L )    */ NULL,              /* SkipRaw    */
+   /* ( DBENTRYP_BP )   */ nullptr,              /* Bof        */
+   /* ( DBENTRYP_BP )   */ nullptr,              /* Eof        */
+   /* ( DBENTRYP_BP )   */ nullptr,              /* Found      */
+   /* ( DBENTRYP_V )    */ nullptr,              /* GoBottom   */
+   /* ( DBENTRYP_UL )   */ nullptr,              /* GoTo       */
+   /* ( DBENTRYP_I )    */ nullptr,              /* GoToId     */
+   /* ( DBENTRYP_V )    */ nullptr,              /* GoTop      */
+   /* ( DBENTRYP_BIB )  */ nullptr,              /* Seek       */
+   /* ( DBENTRYP_L )    */ nullptr,              /* Skip       */
+   /* ( DBENTRYP_L )    */ nullptr,              /* SkipFilter */
+   /* ( DBENTRYP_L )    */ nullptr,              /* SkipRaw    */
 
    /* Data management */
-   /* ( DBENTRYP_VF )   */ NULL,              /* AddField       */
-   /* ( DBENTRYP_B )    */ NULL,              /* Append         */
-   /* ( DBENTRYP_I )    */ NULL,              /* CreateFields   */
-   /* ( DBENTRYP_V )    */ NULL,              /* DeleteRec      */
-   /* ( DBENTRYP_BP )   */ NULL,              /* Deleted        */
-   /* ( DBENTRYP_SP )   */ NULL,              /* FieldCount     */
-   /* ( DBENTRYP_VF )   */ NULL,              /* FieldDisplay   */
-   /* ( DBENTRYP_SSI )  */ NULL,              /* FieldInfo      */
-   /* ( DBENTRYP_SCP )  */ NULL,              /* FieldName      */
-   /* ( DBENTRYP_V )    */ NULL,              /* Flush          */
-   /* ( DBENTRYP_PP )   */ NULL,              /* GetRec         */
-   /* ( DBENTRYP_SI )   */ NULL,              /* GetValue       */
-   /* ( DBENTRYP_SVL )  */ NULL,              /* GetVarLen      */
-   /* ( DBENTRYP_V )    */ NULL,              /* GoCold         */
-   /* ( DBENTRYP_V )    */ NULL,              /* GoHot          */
-   /* ( DBENTRYP_P )    */ NULL,              /* PutRec         */
-   /* ( DBENTRYP_SI )   */ NULL,              /* PutValue       */
-   /* ( DBENTRYP_V )    */ NULL,              /* Recall         */
-   /* ( DBENTRYP_ULP )  */ NULL,              /* RecCount       */
-   /* ( DBENTRYP_ISI )  */ NULL,              /* RecInfo        */
-   /* ( DBENTRYP_ULP )  */ NULL,              /* RecNo          */
-   /* ( DBENTRYP_I )    */ NULL,              /* RecId          */
-   /* ( DBENTRYP_S )    */ NULL,              /* SetFieldExtent */
+   /* ( DBENTRYP_VF )   */ nullptr,              /* AddField       */
+   /* ( DBENTRYP_B )    */ nullptr,              /* Append         */
+   /* ( DBENTRYP_I )    */ nullptr,              /* CreateFields   */
+   /* ( DBENTRYP_V )    */ nullptr,              /* DeleteRec      */
+   /* ( DBENTRYP_BP )   */ nullptr,              /* Deleted        */
+   /* ( DBENTRYP_SP )   */ nullptr,              /* FieldCount     */
+   /* ( DBENTRYP_VF )   */ nullptr,              /* FieldDisplay   */
+   /* ( DBENTRYP_SSI )  */ nullptr,              /* FieldInfo      */
+   /* ( DBENTRYP_SCP )  */ nullptr,              /* FieldName      */
+   /* ( DBENTRYP_V )    */ nullptr,              /* Flush          */
+   /* ( DBENTRYP_PP )   */ nullptr,              /* GetRec         */
+   /* ( DBENTRYP_SI )   */ nullptr,              /* GetValue       */
+   /* ( DBENTRYP_SVL )  */ nullptr,              /* GetVarLen      */
+   /* ( DBENTRYP_V )    */ nullptr,              /* GoCold         */
+   /* ( DBENTRYP_V )    */ nullptr,              /* GoHot          */
+   /* ( DBENTRYP_P )    */ nullptr,              /* PutRec         */
+   /* ( DBENTRYP_SI )   */ nullptr,              /* PutValue       */
+   /* ( DBENTRYP_V )    */ nullptr,              /* Recall         */
+   /* ( DBENTRYP_ULP )  */ nullptr,              /* RecCount       */
+   /* ( DBENTRYP_ISI )  */ nullptr,              /* RecInfo        */
+   /* ( DBENTRYP_ULP )  */ nullptr,              /* RecNo          */
+   /* ( DBENTRYP_I )    */ nullptr,              /* RecId          */
+   /* ( DBENTRYP_S )    */ nullptr,              /* SetFieldExtent */
 
    /* WorkArea/Database management */
-   /* ( DBENTRYP_CP )   */ NULL,              /* Alias       */
-   /* ( DBENTRYP_V )    */ NULL,              /* Close       */
-   /* ( DBENTRYP_VO )   */ NULL,              /* Create      */
-   /* ( DBENTRYP_SI )   */ NULL,              /* Info        */
+   /* ( DBENTRYP_CP )   */ nullptr,              /* Alias       */
+   /* ( DBENTRYP_V )    */ nullptr,              /* Close       */
+   /* ( DBENTRYP_VO )   */ nullptr,              /* Create      */
+   /* ( DBENTRYP_SI )   */ nullptr,              /* Info        */
    /* ( DBENTRYP_V )    */ hb_usrNewArea,     /* NewArea     */
-   /* ( DBENTRYP_VO )   */ NULL,              /* Open        */
+   /* ( DBENTRYP_VO )   */ nullptr,              /* Open        */
    /* ( DBENTRYP_V )    */ hb_usrRelease,     /* Release     */
    /* ( DBENTRYP_SP )   */ hb_usrStructSize,  /* StructSize  */
    /* ( DBENTRYP_CP )   */ hb_usrSysName,     /* SysName     */
-   /* ( DBENTRYP_VEI )  */ NULL,              /* Eval        */
-   /* ( DBENTRYP_V )    */ NULL,              /* Pack        */
-   /* ( DBENTRYP_LSP )  */ NULL,              /* PackRec     */
-   /* ( DBENTRYP_VS )   */ NULL,              /* Sort        */
-   /* ( DBENTRYP_VT )   */ NULL,              /* Trans       */
-   /* ( DBENTRYP_VT )   */ NULL,              /* TransRec    */
-   /* ( DBENTRYP_V )    */ NULL,              /* Zap         */
+   /* ( DBENTRYP_VEI )  */ nullptr,              /* Eval        */
+   /* ( DBENTRYP_V )    */ nullptr,              /* Pack        */
+   /* ( DBENTRYP_LSP )  */ nullptr,              /* PackRec     */
+   /* ( DBENTRYP_VS )   */ nullptr,              /* Sort        */
+   /* ( DBENTRYP_VT )   */ nullptr,              /* Trans       */
+   /* ( DBENTRYP_VT )   */ nullptr,              /* TransRec    */
+   /* ( DBENTRYP_V )    */ nullptr,              /* Zap         */
 
    /* Relational Methods */
-   /* ( DBENTRYP_VR )   */ NULL,              /* ChildEnd      */
-   /* ( DBENTRYP_VR )   */ NULL,              /* ChildStart    */
-   /* ( DBENTRYP_VR )   */ NULL,              /* ChildSync     */
-   /* ( DBENTRYP_V )    */ NULL,              /* SyncChildren  */
-   /* ( DBENTRYP_V )    */ NULL,              /* ClearRel      */
-   /* ( DBENTRYP_V )    */ NULL,              /* ForceRel      */
-   /* ( DBENTRYP_SCS )  */ NULL,              /* RelArea       */
-   /* ( DBENTRYP_VR )   */ NULL,              /* RelEval       */
-   /* ( DBENTRYP_SI )   */ NULL,              /* RelText       */
-   /* ( DBENTRYP_VR )   */ NULL,              /* SetRel        */
+   /* ( DBENTRYP_VR )   */ nullptr,              /* ChildEnd      */
+   /* ( DBENTRYP_VR )   */ nullptr,              /* ChildStart    */
+   /* ( DBENTRYP_VR )   */ nullptr,              /* ChildSync     */
+   /* ( DBENTRYP_V )    */ nullptr,              /* SyncChildren  */
+   /* ( DBENTRYP_V )    */ nullptr,              /* ClearRel      */
+   /* ( DBENTRYP_V )    */ nullptr,              /* ForceRel      */
+   /* ( DBENTRYP_SCS )  */ nullptr,              /* RelArea       */
+   /* ( DBENTRYP_VR )   */ nullptr,              /* RelEval       */
+   /* ( DBENTRYP_SI )   */ nullptr,              /* RelText       */
+   /* ( DBENTRYP_VR )   */ nullptr,              /* SetRel        */
 
    /* Order Management */
-   /* ( DBENTRYP_OI )   */ NULL,              /* OrderListAdd      */
-   /* ( DBENTRYP_V )    */ NULL,              /* OrderListClear    */
-   /* ( DBENTRYP_OI )   */ NULL,              /* OrderListDelete   */
-   /* ( DBENTRYP_OI )   */ NULL,              /* OrderListFocus    */
-   /* ( DBENTRYP_V )    */ NULL,              /* OrderListRebuild  */
-   /* ( DBENTRYP_VOI )  */ NULL,              /* OrderCondition    */
-   /* ( DBENTRYP_VOC )  */ NULL,              /* OrderCreate       */
-   /* ( DBENTRYP_OI )   */ NULL,              /* OrderDestroy      */
-   /* ( DBENTRYP_OII )  */ NULL,              /* OrderInfo         */
+   /* ( DBENTRYP_OI )   */ nullptr,              /* OrderListAdd      */
+   /* ( DBENTRYP_V )    */ nullptr,              /* OrderListClear    */
+   /* ( DBENTRYP_OI )   */ nullptr,              /* OrderListDelete   */
+   /* ( DBENTRYP_OI )   */ nullptr,              /* OrderListFocus    */
+   /* ( DBENTRYP_V )    */ nullptr,              /* OrderListRebuild  */
+   /* ( DBENTRYP_VOI )  */ nullptr,              /* OrderCondition    */
+   /* ( DBENTRYP_VOC )  */ nullptr,              /* OrderCreate       */
+   /* ( DBENTRYP_OI )   */ nullptr,              /* OrderDestroy      */
+   /* ( DBENTRYP_OII )  */ nullptr,              /* OrderInfo         */
 
    /* Filters and Scope Settings */
-   /* ( DBENTRYP_V )    */ NULL,              /* ClearFilter  */
-   /* ( DBENTRYP_V )    */ NULL,              /* ClearLocate  */
-   /* ( DBENTRYP_V )    */ NULL,              /* ClearScope   */
-   /* ( DBENTRYP_VPLP ) */ NULL,              /* CountScope   */
-   /* ( DBENTRYP_I )    */ NULL,              /* FilterText   */
-   /* ( DBENTRYP_SI )   */ NULL,              /* ScopeInfo    */
-   /* ( DBENTRYP_VFI )  */ NULL,              /* SetFilter    */
-   /* ( DBENTRYP_VLO )  */ NULL,              /* SetLocate    */
-   /* ( DBENTRYP_VOS )  */ NULL,              /* SetScope     */
-   /* ( DBENTRYP_VPL )  */ NULL,              /* SkipScope    */
-   /* ( DBENTRYP_B )    */ NULL,              /* Locate       */
+   /* ( DBENTRYP_V )    */ nullptr,              /* ClearFilter  */
+   /* ( DBENTRYP_V )    */ nullptr,              /* ClearLocate  */
+   /* ( DBENTRYP_V )    */ nullptr,              /* ClearScope   */
+   /* ( DBENTRYP_VPLP ) */ nullptr,              /* CountScope   */
+   /* ( DBENTRYP_I )    */ nullptr,              /* FilterText   */
+   /* ( DBENTRYP_SI )   */ nullptr,              /* ScopeInfo    */
+   /* ( DBENTRYP_VFI )  */ nullptr,              /* SetFilter    */
+   /* ( DBENTRYP_VLO )  */ nullptr,              /* SetLocate    */
+   /* ( DBENTRYP_VOS )  */ nullptr,              /* SetScope     */
+   /* ( DBENTRYP_VPL )  */ nullptr,              /* SkipScope    */
+   /* ( DBENTRYP_B )    */ nullptr,              /* Locate       */
 
    /* Miscellaneous */
-   /* ( DBENTRYP_CC )   */ NULL,              /* Compile    */
-   /* ( DBENTRYP_I )    */ NULL,              /* Error      */
-   /* ( DBENTRYP_I )    */ NULL,              /* EvalBlock  */
+   /* ( DBENTRYP_CC )   */ nullptr,              /* Compile    */
+   /* ( DBENTRYP_I )    */ nullptr,              /* Error      */
+   /* ( DBENTRYP_I )    */ nullptr,              /* EvalBlock  */
 
    /* Network operations */
-   /* ( DBENTRYP_VSP )  */ NULL,              /* RawLock  */
-   /* ( DBENTRYP_VL )   */ NULL,              /* Lock     */
-   /* ( DBENTRYP_I )    */ NULL,              /* UnLock   */
+   /* ( DBENTRYP_VSP )  */ nullptr,              /* RawLock  */
+   /* ( DBENTRYP_VL )   */ nullptr,              /* Lock     */
+   /* ( DBENTRYP_I )    */ nullptr,              /* UnLock   */
 
    /* Memofile functions */
-   /* ( DBENTRYP_V )    */ NULL,              /* CloseMemFile   */
-   /* ( DBENTRYP_VO )   */ NULL,              /* CreateMemFile  */
-   /* ( DBENTRYP_SCCS ) */ NULL,              /* GetValueFile   */
-   /* ( DBENTRYP_VO )   */ NULL,              /* OpenMemFile    */
-   /* ( DBENTRYP_SCCS ) */ NULL,              /* PutValueFile   */
+   /* ( DBENTRYP_V )    */ nullptr,              /* CloseMemFile   */
+   /* ( DBENTRYP_VO )   */ nullptr,              /* CreateMemFile  */
+   /* ( DBENTRYP_SCCS ) */ nullptr,              /* GetValueFile   */
+   /* ( DBENTRYP_VO )   */ nullptr,              /* OpenMemFile    */
+   /* ( DBENTRYP_SCCS ) */ nullptr,              /* PutValueFile   */
 
    /* Database file header handling */
-   /* ( DBENTRYP_V )    */ NULL,              /* ReadDBHeader   */
-   /* ( DBENTRYP_V )    */ NULL,              /* WriteDBHeader  */
+   /* ( DBENTRYP_V )    */ nullptr,              /* ReadDBHeader   */
+   /* ( DBENTRYP_V )    */ nullptr,              /* WriteDBHeader  */
 
    /* non WorkArea functions */
    /* ( DBENTRYP_R )    */ hb_usrInit,        /* Init    */
    /* ( DBENTRYP_R )    */ hb_usrExit,        /* Exit    */
-   /* ( DBENTRYP_RVVL ) */ NULL,              /* Drop    */
-   /* ( DBENTRYP_RVVL ) */ NULL,              /* Exists  */
-   /* ( DBENTRYP_RVVVL )*/ NULL,              /* Rename  */
-   /* ( DBENTRYP_RSLV ) */ NULL,              /* RddInfo */
+   /* ( DBENTRYP_RVVL ) */ nullptr,              /* Drop    */
+   /* ( DBENTRYP_RVVL ) */ nullptr,              /* Exists  */
+   /* ( DBENTRYP_RVVVL )*/ nullptr,              /* Rename  */
+   /* ( DBENTRYP_RSLV ) */ nullptr,              /* RddInfo */
 
    /* Special and reserved methods */
-   /* ( DBENTRYP_SVP )  */ NULL               /* WhoCares */
+   /* ( DBENTRYP_SVP )  */ nullptr               /* WhoCares */
 } };
 
 HB_FUNC( USRRDD_GETFUNCTABLE )
@@ -2903,7 +2903,7 @@ HB_FUNC( USRRDD_GETFUNCTABLE )
       for( uiCount = 1; uiCount <= RDDFUNCSCOUNT; ++uiCount )
       {
          *pFunction = *pRddFunction;
-         if( *pFunction == NULL && *pUsrFunction && uiCount <= uiSize &&
+         if( *pFunction == nullptr && *pUsrFunction && uiCount <= uiSize &&
              hb_usrIsMethod( pMethods, uiCount ) )
          {
             *pFunction = *pUsrFunction;
@@ -3106,7 +3106,7 @@ static HB_ERRCODE hb_usrErrorRT( AREAP pArea, HB_ERRCODE errGenCode, HB_ERRCODE 
 
 static AREAP hb_usrGetAreaParam( int iParams )
 {
-   AREAP pArea = NULL;
+   AREAP pArea = nullptr;
 
    if( iParams <= hb_pcount() )
    {
@@ -3133,7 +3133,7 @@ static AREAP hb_usrGetAreaParam( int iParams )
 
 static LPRDDNODE hb_usrGetNodeParam( int iParams )
 {
-   LPRDDNODE pRDD = NULL;
+   LPRDDNODE pRDD = nullptr;
    HB_USHORT uiNode = 0;
 
    if( iParams <= hb_pcount() )
@@ -3145,11 +3145,11 @@ static LPRDDNODE hb_usrGetNodeParam( int iParams )
    }
 
    if( pRDD )
-      hb_usrErrorRT( NULL, EG_UNSUPPORTED, 0 );
+      hb_usrErrorRT( nullptr, EG_UNSUPPORTED, 0 );
    else if( uiNode )
-      hb_usrErrorRT( NULL, EG_NOTABLE, EDBCMD_NOTABLE );
+      hb_usrErrorRT( nullptr, EG_NOTABLE, EDBCMD_NOTABLE );
    else
-      hb_usrErrorRT( NULL, EG_ARG, EDBCMD_NOVAR );
+      hb_usrErrorRT( nullptr, EG_ARG, EDBCMD_NOVAR );
 
    hb_retni( HB_FAILURE );
 
@@ -3951,7 +3951,7 @@ HB_FUNC_UR_SUPER( ORDSETCOND )
 
       if( pItem && HB_IS_NIL( pItem ) )
       {
-         hb_retni( SUPER_ORDSETCOND( pArea, NULL ) );
+         hb_retni( SUPER_ORDSETCOND( pArea, nullptr ) );
       }
       else
       {

@@ -60,7 +60,7 @@ HB_FUNC( SX_SLIMFAST )
       char * szDst, cQuote = 0, c;
       HB_SIZE nDst;
 
-      szDst = hb_cdpnDupUpper( hb_vmCDP(), szExp, NULL );
+      szDst = hb_cdpnDupUpper( hb_vmCDP(), szExp, nullptr );
       szExp = szDst;
       nDst = 0;
 

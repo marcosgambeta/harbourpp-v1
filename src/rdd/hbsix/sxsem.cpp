@@ -76,7 +76,7 @@ static HB_BOOL hb_sxSemName( char * szFileName )
          memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
          pOrderInfo.itmOrder = hb_param( 1, HB_IT_NUMERIC );
          if( pOrderInfo.itmOrder && hb_itemGetNI( pOrderInfo.itmOrder ) == 0 )
-            pOrderInfo.itmOrder = NULL;
+            pOrderInfo.itmOrder = nullptr;
          pOrderInfo.itmResult = hb_itemPutC( nullptr, nullptr );
          SELF_ORDINFO( pArea, DBOI_NAME, &pOrderInfo );
          szName = hb_itemGetCPtr( pOrderInfo.itmResult );
@@ -103,16 +103,16 @@ static PHB_FILE hb_sxSemOpen( char * szFileName, HB_BOOL * pfNewFile )
    {
       pFile = hb_fileExtOpen( szFileName, ".sem",
                               FO_READWRITE | FO_EXCLUSIVE | FXO_DEFAULTS |
-                              FXO_SHARELOCK | FXO_COPYNAME, NULL, NULL );
-      if( pFile != NULL )
+                              FXO_SHARELOCK | FXO_COPYNAME, nullptr, nullptr );
+      if( pFile != nullptr )
          break;
 
       if( pfNewFile )
       {
          pFile = hb_fileExtOpen( szFileName, ".sem", FXO_UNIQUE |
                                  FO_READWRITE | FO_EXCLUSIVE | FXO_DEFAULTS |
-                                 FXO_SHARELOCK | FXO_COPYNAME, NULL, NULL );
-         if( pFile != NULL )
+                                 FXO_SHARELOCK | FXO_COPYNAME, nullptr, nullptr );
+         if( pFile != nullptr )
          {
             *pfNewFile = HB_TRUE;
             break;
@@ -143,7 +143,7 @@ HB_FUNC( SX_MAKESEM )
    {
       PHB_FILE pFile = hb_sxSemOpen( szFileName, &fNewFile );
 
-      if( pFile != NULL )
+      if( pFile != nullptr )
       {
          HB_BYTE buffer[ 2 ];
 
@@ -178,9 +178,9 @@ HB_FUNC( SX_KILLSEM )
 
    if( hb_sxSemName( szFileName ) )
    {
-      PHB_FILE pFile = hb_sxSemOpen( szFileName, NULL );
+      PHB_FILE pFile = hb_sxSemOpen( szFileName, nullptr );
 
-      if( pFile != NULL )
+      if( pFile != nullptr )
       {
          HB_BYTE buffer[ 2 ];
          if( hb_fileReadAt( pFile, buffer, 2, 0 ) == 2 )
@@ -201,14 +201,14 @@ HB_FUNC( SX_KILLSEM )
 HB_FUNC( SX_ISSEM )
 {
    char szFileName[ HB_PATH_MAX ];
-   PHB_FILE pFile = NULL;
+   PHB_FILE pFile = nullptr;
 
    if( hb_sxSemName( szFileName ) )
    {
-      pFile = hb_sxSemOpen( szFileName, NULL );
-      if( pFile != NULL )
+      pFile = hb_sxSemOpen( szFileName, nullptr );
+      if( pFile != nullptr )
          hb_fileClose( pFile );
    }
 
-   hb_retl( pFile != NULL );
+   hb_retl( pFile != nullptr );
 }

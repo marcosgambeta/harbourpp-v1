@@ -87,7 +87,7 @@ HB_FUNC( ORDKEYNO )
       pOrderInfo.itmOrder = hb_param( 1, HB_IT_STRING | HB_IT_NUMERIC );
       pOrderInfo.atomBagName = hb_param( 2, HB_IT_STRING );
       /* Either or both may be NIL */
-      pOrderInfo.itmNewVal = NULL;
+      pOrderInfo.itmNewVal = nullptr;
       pOrderInfo.itmResult = hb_itemPutNL( nullptr, 0 );
       SELF_ORDINFO( pArea, DBOI_POSITION, &pOrderInfo );
       hb_itemReturnRelease( pOrderInfo.itmResult );
@@ -332,7 +332,7 @@ HB_FUNC( DBORDERINFO )
 
          pOrderInfo.itmNewVal  = hb_param( 4, HB_IT_ANY );
          pOrderInfo.itmResult  = hb_itemNew( nullptr );
-         pOrderInfo.itmCobExpr = NULL;
+         pOrderInfo.itmCobExpr = nullptr;
          pOrderInfo.fAllTags   = HB_FALSE;
          SELF_ORDINFO( pArea, static_cast< HB_USHORT >( hb_itemGetNI( pType ) ), &pOrderInfo );
          hb_itemReturnRelease( pOrderInfo.itmResult );

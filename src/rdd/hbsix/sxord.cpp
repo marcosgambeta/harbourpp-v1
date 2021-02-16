@@ -146,14 +146,14 @@ HB_FUNC( SX_TAGNO )
             if( iOrder )
             {
                Info.itmOrder = hb_itemPutNI( nullptr, iOrder );
-               Info.atomBagName = NULL;
+               Info.atomBagName = nullptr;
                hb_itemClear( Info.itmResult );
                if( SELF_ORDINFO( pArea, DBOI_FULLPATH, &Info ) == HB_SUCCESS &&
                    hb_itemGetCLen( Info.itmResult ) > 0 )
                {
                   Info.atomBagName = Info.itmResult;
                   Info.itmResult = Info.itmOrder;
-                  Info.itmOrder = NULL;
+                  Info.itmOrder = nullptr;
                   hb_itemClear( Info.itmResult );
                   if( SELF_ORDINFO( pArea, DBOI_BAGORDER, &Info ) == HB_SUCCESS )
                      iBagOrder = iOrder - hb_itemGetNI( Info.itmResult ) + 1;
@@ -459,7 +459,7 @@ HB_FUNC( SX_INDEXTYPE )
          if( hb_pcount() == 1 && HB_ISCHAR( 1 ) )
          {
             Info.atomBagName = Info.itmOrder;
-            Info.itmOrder = NULL;
+            Info.itmOrder = nullptr;
          }
          Info.itmResult = hb_itemNew( nullptr );
          if( SELF_ORDINFO( pArea, DBOI_INDEXTYPE, &Info ) == HB_SUCCESS )

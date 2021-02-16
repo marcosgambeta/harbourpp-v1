@@ -156,7 +156,7 @@ HB_ERRCODE hb_rddGetTempAlias( char * szAliasTmp )
 }
 
 /*
- * allocate and return atomAlias for new workarea or NULL if alias already exist
+ * allocate and return atomAlias for new workarea or nullptr if alias already exist
  */
 void * hb_rddAllocWorkAreaAlias( const char * szAlias, int iArea )
 {
@@ -239,7 +239,7 @@ HB_USHORT hb_rddFieldExpIndex( AREAP pArea, const char * szField )
    while( HB_ISSPACE( *szField ) )
       ++szField;
 
-   if( strchr( szField, '>' ) != NULL )
+   if( strchr( szField, '>' ) != nullptr )
    {
       char szAlias[ HB_RDD_MAX_ALIAS_LEN + 1 ];
       int j, l, n;
@@ -383,7 +383,7 @@ HB_ERRCODE hb_rddSelectWorkAreaSymbol( PHB_SYMB pSymAlias )
     * (user created error handler can open a missing database)
     */
 
-   pError = hb_errRT_New( ES_ERROR, NULL, EG_NOALIAS, EDBCMD_NOALIAS, NULL, pSymAlias->szName, 0, EF_CANRETRY );
+   pError = hb_errRT_New( ES_ERROR, nullptr, EG_NOALIAS, EDBCMD_NOALIAS, nullptr, pSymAlias->szName, 0, EF_CANRETRY );
    errCode = HB_FAILURE;
 
    do
@@ -422,7 +422,7 @@ HB_ERRCODE hb_rddSelectWorkAreaAlias( const char * szAlias )
        * generate an error with retry possibility
        * (user created error handler can open a missing database)
        */
-      PHB_ITEM pError = hb_errRT_New( ES_ERROR, NULL, EG_NOALIAS, EDBCMD_NOALIAS, NULL, szAlias, 0, EF_CANRETRY );
+      PHB_ITEM pError = hb_errRT_New( ES_ERROR, nullptr, EG_NOALIAS, EDBCMD_NOALIAS, nullptr, szAlias, 0, EF_CANRETRY );
 
       do
       {
@@ -523,8 +523,8 @@ HB_ERRCODE hb_rddGetFieldValue( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
        */
       PHB_ITEM pError;
 
-      pError = hb_errRT_New( ES_ERROR, NULL, EG_NOVAR, EDBCMD_NOVAR,
-                             NULL, pFieldSymbol->szName, 0, EF_CANRETRY );
+      pError = hb_errRT_New( ES_ERROR, nullptr, EG_NOVAR, EDBCMD_NOVAR,
+                             nullptr, pFieldSymbol->szName, 0, EF_CANRETRY );
       hb_itemClear( pItem );
 
       while( hb_errLaunch( pError ) == E_RETRY )
@@ -557,8 +557,8 @@ HB_ERRCODE hb_rddPutFieldValue( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
        * generate an error with retry possibility
        * (user created error handler can make this field accessible)
        */
-      PHB_ITEM pError = hb_errRT_New( ES_ERROR, NULL, EG_NOVAR, EDBCMD_NOVAR,
-                                      NULL, pFieldSymbol->szName, 0, EF_CANRETRY );
+      PHB_ITEM pError = hb_errRT_New( ES_ERROR, nullptr, EG_NOVAR, EDBCMD_NOVAR,
+                                      nullptr, pFieldSymbol->szName, 0, EF_CANRETRY );
 
       while( hb_errLaunch( pError ) == E_RETRY )
       {
@@ -639,7 +639,7 @@ HB_ERRCODE hb_rddOpenTable( const char * szFileName, const char * szDriver,
    pInfo.fReadonly = fReadonly;
    pInfo.cdpId = szCpId ? szCpId : hb_setGetDBCODEPAGE();
    pInfo.ulConnection = ulConnection;
-   pInfo.lpdbHeader = NULL;
+   pInfo.lpdbHeader = nullptr;
 
    errCode = pStruct ? SELF_CREATEFIELDS( pArea, pStruct ) : HB_SUCCESS;
    if( errCode == HB_SUCCESS )
@@ -700,7 +700,7 @@ HB_ERRCODE hb_rddCreateTable( const char * szFileName, const char * szDriver,
    pInfo.fReadonly = HB_FALSE;
    pInfo.cdpId = szCpId ? szCpId : hb_setGetDBCODEPAGE();
    pInfo.ulConnection = ulConnection;
-   pInfo.lpdbHeader = NULL;
+   pInfo.lpdbHeader = nullptr;
 
    if( pDelim && ! HB_IS_NIL( pDelim ) )
       errCode = SELF_INFO( pArea, DBI_SETDELIMITER, pDelim );
@@ -746,7 +746,7 @@ HB_ERRCODE hb_rddCreateTableTemp( const char * szDriver,
       szDriver = szDriverBuffer;
    }
    else
-      szDriver = hb_rddDefaultDrv( NULL );
+      szDriver = hb_rddDefaultDrv( nullptr );
 
    /* Create a new WorkArea node */
    if( ! hb_rddInsertAreaNode( szDriver ) )
@@ -759,13 +759,13 @@ HB_ERRCODE hb_rddCreateTableTemp( const char * szDriver,
 
    /* Fill pInfo structure */
    pInfo.uiArea = pArea->uiArea;
-   pInfo.abName = NULL;
+   pInfo.abName = nullptr;
    pInfo.atomAlias = szAlias;
    pInfo.fShared = HB_FALSE;
    pInfo.fReadonly = HB_FALSE;
    pInfo.cdpId = szCpId ? szCpId : hb_setGetDBCODEPAGE();
    pInfo.ulConnection = ulConnection;
-   pInfo.lpdbHeader = NULL;
+   pInfo.lpdbHeader = nullptr;
 
    pItem = hb_itemPutL( nullptr, HB_TRUE );
    errCode = SELF_INFO( pArea, DBI_ISTEMPORARY, pItem );
@@ -839,7 +839,7 @@ static const char * hb_dbTransFieldPos( PHB_ITEM pFields, HB_USHORT uiField )
          szField = hb_itemGetCPtr( pItem );
 
       if( *szField == '\0' )
-         szField = NULL;
+         szField = nullptr;
    }
 
    return szField;
@@ -865,7 +865,7 @@ LPDBTRANSINFO hb_dbTransInfoGet( PHB_ITEM pItem )
 {
    LPDBTRANSINFO * pHolder = ( LPDBTRANSINFO * ) hb_itemGetPtrGC( pItem, &s_gcTransInfo );
 
-   return pHolder ? * pHolder : NULL;
+   return pHolder ? * pHolder : nullptr;
 }
 
 /* update counters for autoinc and rowver fields */
@@ -1105,8 +1105,8 @@ HB_ERRCODE hb_rddTransRecords( AREAP pArea,
                                const char * szCpId,
                                PHB_ITEM pDelim )
 {
-   AREAP lpaClose = NULL;
-   PHB_ITEM pStruct = NULL;
+   AREAP lpaClose = nullptr;
+   PHB_ITEM pStruct = nullptr;
    DBTRANSINFO dbTransInfo;
    HB_USHORT uiPrevArea;
    HB_ERRCODE errCode;
@@ -1118,7 +1118,7 @@ HB_ERRCODE hb_rddTransRecords( AREAP pArea,
 
    if( fExport )
    {
-      errCode = hb_dbTransStruct( pArea, NULL, &dbTransInfo,
+      errCode = hb_dbTransStruct( pArea, nullptr, &dbTransInfo,
                                   &pStruct, pFields );
       if( errCode == HB_SUCCESS )
       {
@@ -1132,7 +1132,7 @@ HB_ERRCODE hb_rddTransRecords( AREAP pArea,
    }
    else
    {
-      LPRDDNODE pRddNode = hb_rddFindNode( szDriver, NULL );
+      LPRDDNODE pRddNode = hb_rddFindNode( szDriver, nullptr );
 
       if( ! pRddNode )
       {
@@ -1144,7 +1144,7 @@ HB_ERRCODE hb_rddTransRecords( AREAP pArea,
       {
          HB_USHORT uiCount;
 
-         errCode = hb_dbTransStruct( pArea, NULL, &dbTransInfo,
+         errCode = hb_dbTransStruct( pArea, nullptr, &dbTransInfo,
                                      &pStruct, pFields );
 
          /* revert area and items */
@@ -1171,12 +1171,12 @@ HB_ERRCODE hb_rddTransRecords( AREAP pArea,
       else
       {
          errCode = hb_rddOpenTable( szFileName, szDriver, 0, "", HB_TRUE, HB_TRUE,
-                                    szCpId, ulConnection, NULL, pDelim );
+                                    szCpId, ulConnection, nullptr, pDelim );
          if( errCode == HB_SUCCESS )
          {
             lpaClose = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
             errCode = hb_dbTransStruct( lpaClose, pArea, &dbTransInfo,
-                                        NULL, pFields );
+                                        nullptr, pFields );
          }
       }
    }
@@ -1204,7 +1204,7 @@ HB_ERRCODE hb_rddTransRecords( AREAP pArea,
       dbTransInfo.dbsci.fIgnoreDuplicates = HB_FALSE;
       dbTransInfo.dbsci.fBackward         = HB_FALSE;
 
-      pTransItm = hb_dbTransInfoPut( NULL, &dbTransInfo );
+      pTransItm = hb_dbTransInfoPut( nullptr, &dbTransInfo );
       errCode = SELF_INFO( dbTransInfo.lpaDest, DBI_TRANSREC, pTransItm );
       if( errCode == HB_SUCCESS )
       {

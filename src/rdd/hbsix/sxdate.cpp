@@ -94,5 +94,5 @@ HB_FUNC( SX_DTOP )
 
 HB_FUNC( SX_PTOD )
 {
-   hb_retdl( hb_sxPtoD( hb_parclen( 1 ) < 3 ? NULL : hb_parc( 1 ) ) );
+   hb_retdl( hb_sxPtoD( hb_parclen( 1 ) < 3 ? nullptr : hb_parc( 1 ) ) );
 }

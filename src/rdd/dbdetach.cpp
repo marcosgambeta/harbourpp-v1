@@ -57,7 +57,7 @@ HB_FUNC( HB_DBDETACH )
 {
    PHB_ITEM pAlias = hb_param( 1, HB_IT_ANY );
    PHB_ITEM pCargo = hb_param( 2, HB_IT_ANY ); /* HB_IT_BLOCK in Xbase++ */
-   AREAP pArea = NULL;
+   AREAP pArea = nullptr;
    int iArea;
 
    if( ! pAlias || HB_IS_NIL( pAlias ) )
@@ -99,7 +99,7 @@ HB_FUNC( HB_DBREQUEST )
    {
       const char * szAlias = hb_parc( 1 );
       HB_BOOL fNewArea = hb_parl( 2 );
-      PHB_ITEM pCargo = HB_ISBYREF( 3 ) ? hb_itemNew( nullptr ) : NULL;
+      PHB_ITEM pCargo = HB_ISBYREF( 3 ) ? hb_itemNew( nullptr ) : nullptr;
       HB_ULONG ulMilliSec = HB_THREAD_INFINITE_WAIT;
       AREAP pArea;
 
@@ -121,7 +121,7 @@ HB_FUNC( HB_DBREQUEST )
          hb_itemRelease( pCargo );
       }
 
-      hb_retl( pArea != NULL );
+      hb_retl( pArea != nullptr );
    }
    else
       hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );

@@ -60,7 +60,7 @@
       pRddInfo->uiCurrArea = n; \
       pRddInfo->pCurrArea  = ( ( pRddInfo->uiCurrArea < pRddInfo->uiWaNumMax ) ? \
                                pRddInfo->waList[ pRddInfo->waNums[ pRddInfo->uiCurrArea ] ] : \
-                               NULL ); \
+                               nullptr ); \
    } while( 0 )
 
 
@@ -137,8 +137,8 @@ static void hb_waNodeDelete( PHB_STACKRDD pRddInfo )
       pRddInfo->uiWaSpace = pRddInfo->uiWaMax = pRddInfo->uiWaNumMax = 0;
       hb_xfree( pRddInfo->waList );
       hb_xfree( pRddInfo->waNums );
-      pRddInfo->waList = NULL;
-      pRddInfo->waNums = NULL;
+      pRddInfo->waList = nullptr;
+      pRddInfo->waNums = nullptr;
    }
    else
    {
@@ -148,7 +148,7 @@ static void hb_waNodeDelete( PHB_STACKRDD pRddInfo )
          pRddInfo->waNums[ ( static_cast< AREAP >( pRddInfo->waList[ uiWaPos ] ) )->uiArea ] = uiWaPos;
          uiWaPos++;
       }
-      pRddInfo->waList[ pRddInfo->uiWaMax ] = NULL;
+      pRddInfo->waList[ pRddInfo->uiWaMax ] = nullptr;
       if( pRddInfo->uiWaSpace - pRddInfo->uiWaMax > 256 )
       {
          int iSize = ( ( static_cast< int >( pRddInfo->uiWaMax ) + 256 ) >> 8 ) << 8;
@@ -160,7 +160,7 @@ static void hb_waNodeDelete( PHB_STACKRDD pRddInfo )
          pRddInfo->waList = ( void ** ) hb_xrealloc( pRddInfo->waList, pRddInfo->uiWaSpace * sizeof( void * ) );
       }
    }
-   pRddInfo->pCurrArea = NULL;
+   pRddInfo->pCurrArea = nullptr;
 }
 
 /*
@@ -274,7 +274,7 @@ void hb_rddCloseAll( void )
             {
                SELF_RELEASE( pArea );
                pRddInfo->waNums[ pRddInfo->uiCurrArea ] = 0;
-               pRddInfo->pCurrArea = NULL;
+               pRddInfo->pCurrArea = nullptr;
             }
             else if( pArea->uiParents )
             {
@@ -295,8 +295,8 @@ void hb_rddCloseAll( void )
       pRddInfo->uiWaSpace = pRddInfo->uiWaMax = pRddInfo->uiWaNumMax = 0;
       hb_xfree( pRddInfo->waList );
       hb_xfree( pRddInfo->waNums );
-      pRddInfo->waList = NULL;
-      pRddInfo->waNums = NULL;
+      pRddInfo->waList = nullptr;
+      pRddInfo->waNums = nullptr;
       HB_SET_WA( 1 );
    }
 }
@@ -322,7 +322,7 @@ void hb_rddUnLockAll( void )
    for( uiIndex = 1; uiIndex < pRddInfo->uiWaMax; ++uiIndex )
    {
       hb_rddSelectWorkAreaNumber( ( static_cast< AREAP >( pRddInfo->waList[ uiIndex ] ) )->uiArea );
-      SELF_UNLOCK( static_cast< AREAP >( pRddInfo->pCurrArea ), NULL );
+      SELF_UNLOCK( static_cast< AREAP >( pRddInfo->pCurrArea ), nullptr );
    }
    hb_rddSelectWorkAreaNumber( uiArea );
 }
@@ -379,7 +379,7 @@ const char * hb_rddDefaultDrv( const char * szDriver )
       LPRDDNODE pRddNode;
 
       hb_strncpyUpper( szNewDriver, szDriver, sizeof( szNewDriver ) - 1 );
-      pRddNode = hb_rddFindNode( szNewDriver, NULL );
+      pRddNode = hb_rddFindNode( szNewDriver, nullptr );
       if( ! pRddNode )
          return nullptr;
 
@@ -393,7 +393,7 @@ const char * hb_rddDefaultDrv( const char * szDriver )
       pRddInfo->szDefaultRDD = "";
       for( i = 0; i < static_cast< int >( HB_SIZEOFARRAY( szDrvTable ) ); ++i )
       {
-         if( hb_rddFindNode( szDrvTable[ i ], NULL ) )
+         if( hb_rddFindNode( szDrvTable[ i ], nullptr ) )
          {
             pRddInfo->szDefaultRDD = szDrvTable[ i ];
             break;
@@ -409,7 +409,7 @@ const char * hb_rddDefaultDrv( const char * szDriver )
  */
 const char * hb_rddFindDrv( const char * szDriver, const char * szFileName )
 {
-   LPRDDNODE pRddNode = NULL;
+   LPRDDNODE pRddNode = nullptr;
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddFindDrv(%s, %s)", szDriver, szFileName ) );
 
@@ -418,7 +418,7 @@ const char * hb_rddFindDrv( const char * szDriver, const char * szFileName )
       char szNewDriver[ HB_RDD_MAX_DRIVERNAME_LEN + 1 ];
 
       hb_strncpyUpper( szNewDriver, szDriver, sizeof( szNewDriver ) - 1 );
-      pRddNode = hb_rddFindNode( szNewDriver, NULL );
+      pRddNode = hb_rddFindNode( szNewDriver, nullptr );
    }
    else
    {
@@ -427,7 +427,7 @@ const char * hb_rddFindDrv( const char * szDriver, const char * szFileName )
       if( pRddInfo->szDefaultRDD )
       {
          if( pRddInfo->szDefaultRDD[ 0 ] )
-            pRddNode = hb_rddFindNode( pRddInfo->szDefaultRDD, NULL );
+            pRddNode = hb_rddFindNode( pRddInfo->szDefaultRDD, nullptr );
       }
       else if( hb_rddGetNode( 0 ) )
       {
@@ -437,7 +437,7 @@ const char * hb_rddFindDrv( const char * szDriver, const char * szFileName )
          pRddInfo->szDefaultRDD = "";
          for( i = 0; i < static_cast< int >( HB_SIZEOFARRAY( szDrvTable ) ); ++i )
          {
-            pRddNode = hb_rddFindNode( szDrvTable[ i ], NULL );
+            pRddNode = hb_rddFindNode( szDrvTable[ i ], nullptr );
             if( pRddNode )
             {
                pRddInfo->szDefaultRDD = szDrvTable[ i ];
@@ -447,7 +447,7 @@ const char * hb_rddFindDrv( const char * szDriver, const char * szFileName )
       }
    }
 
-   return pRddNode ? hb_rddFindFileNode( pRddNode, szFileName )->szName : NULL;
+   return pRddNode ? hb_rddFindFileNode( pRddNode, szFileName )->szName : nullptr;
 }
 
 /*
@@ -504,7 +504,7 @@ HB_ERRCODE hb_rddSelectWorkAreaNumber( int iArea )
    else
       HB_SET_WA( static_cast< HB_AREANO >( iArea ) );
 
-   return ( pRddInfo->pCurrArea == NULL ) ? HB_FAILURE : HB_SUCCESS;
+   return ( pRddInfo->pCurrArea == nullptr ) ? HB_FAILURE : HB_SUCCESS;
 }
 
 
@@ -512,7 +512,7 @@ HB_ERRCODE hb_rddSelectWorkAreaNumber( int iArea )
 
 static HB_CRITICAL_NEW( s_waMtx );
 static HB_COND_NEW( s_waCond );
-static PHB_ITEM s_pDetachedAreas = NULL;
+static PHB_ITEM s_pDetachedAreas = nullptr;
 
 static HB_GARBAGE_FUNC( hb_waHolderDestructor )
 {
@@ -524,7 +524,7 @@ static HB_GARBAGE_FUNC( hb_waHolderDestructor )
       int iArea;
 
       pArea = *pHolder;
-      *pHolder = NULL;
+      *pHolder = nullptr;
 
       iArea = hb_rddGetCurrentWorkAreaNumber();
 
@@ -553,7 +553,7 @@ void hb_rddCloseDetachedAreas( void )
    /* protect by critical section access to s_pDetachedAreas array */
    hb_threadEnterCriticalSectionGC( &s_waMtx );
    pDetachedArea = s_pDetachedAreas;
-   s_pDetachedAreas = NULL;
+   s_pDetachedAreas = nullptr;
    /* leave critical section */
    hb_threadLeaveCriticalSection( &s_waMtx );
    /* release detached areas */
@@ -579,7 +579,7 @@ HB_ERRCODE hb_rddDetachArea( AREAP pArea, PHB_ITEM pCargo )
 
    /* tests shows that Xbase++ does not remove locks */
    #if 0
-   SELF_UNLOCK( pArea, NULL );
+   SELF_UNLOCK( pArea, nullptr );
    #endif
 
    /* Xbase++ documentation says that child areas are also detached but
@@ -630,7 +630,7 @@ AREAP hb_rddRequestArea( const char * szAlias, PHB_ITEM pCargo,
                          HB_BOOL fNewArea, HB_ULONG ulMilliSec )
 {
    PHB_DYNS pSymAlias = nullptr;
-   AREAP pArea = NULL;
+   AREAP pArea = nullptr;
 
    if( pCargo )
       hb_itemClear( pCargo );
@@ -689,7 +689,7 @@ AREAP hb_rddRequestArea( const char * szAlias, PHB_ITEM pCargo,
                                     hb_arrayGetPtrGC( pArray, 1, &s_gcWAFuncs );
 
             pArea = *pDetachedArea;
-            *pDetachedArea = NULL;
+            *pDetachedArea = nullptr;
             if( pCargo )
                hb_arrayGet( pArray, 2, pCargo );
             hb_arrayDel( s_pDetachedAreas, nPos );

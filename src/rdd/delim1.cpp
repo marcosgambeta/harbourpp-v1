@@ -1299,7 +1299,7 @@ static HB_ERRCODE hb_delimNewArea( DELIMAREAP pArea )
    if( SUPER_NEW( &pArea->area ) == HB_FAILURE )
       return HB_FAILURE;
 
-   pArea->pFile = NULL;
+   pArea->pFile = nullptr;
    pArea->fTransRec = HB_TRUE;
    pArea->uiRecordLen = 0;
    pArea->nBufferSize = 0;
@@ -1344,7 +1344,7 @@ static HB_ERRCODE hb_delimClose( DELIMAREAP pArea )
       }
       SELF_FLUSH( &pArea->area );
       hb_fileClose( pArea->pFile );
-      pArea->pFile = NULL;
+      pArea->pFile = nullptr;
    }
 
    SUPER_CLOSE( &pArea->area );
@@ -1352,27 +1352,27 @@ static HB_ERRCODE hb_delimClose( DELIMAREAP pArea )
    if( pArea->pFieldOffset )
    {
       hb_xfree( pArea->pFieldOffset );
-      pArea->pFieldOffset = NULL;
+      pArea->pFieldOffset = nullptr;
    }
    if( pArea->pRecord )
    {
       hb_xfree( pArea->pRecord - 1 );
-      pArea->pRecord = NULL;
+      pArea->pRecord = nullptr;
    }
    if( pArea->pBuffer )
    {
       hb_xfree( pArea->pBuffer );
-      pArea->pBuffer = NULL;
+      pArea->pBuffer = nullptr;
    }
    if( pArea->szEol )
    {
       hb_xfree( pArea->szEol );
-      pArea->szEol = NULL;
+      pArea->szEol = nullptr;
    }
    if( pArea->szFileName )
    {
       hb_xfree( pArea->szFileName );
-      pArea->szFileName = NULL;
+      pArea->szFileName = nullptr;
    }
 
    return HB_SUCCESS;
@@ -1423,10 +1423,10 @@ static HB_ERRCODE hb_delimCreate( DELIMAREAP pArea, LPDBOPENINFO pCreateInfo )
    /* Try create */
    do
    {
-      pArea->pFile = hb_fileExtOpen( szFileName, NULL,
+      pArea->pFile = hb_fileExtOpen( szFileName, nullptr,
                                      FO_READWRITE | FO_EXCLUSIVE | FXO_TRUNCATE |
                                      FXO_DEFAULTS | FXO_SHARELOCK | FXO_COPYNAME,
-                                     NULL, pError );
+                                     nullptr, pError );
       if( ! pArea->pFile )
       {
          if( ! pError )
@@ -1529,7 +1529,7 @@ static HB_ERRCODE hb_delimOpen( DELIMAREAP pArea, LPDBOPENINFO pOpenInfo )
    if( ! pOpenInfo->atomAlias && pFileName->szName )
    {
       const char * szName = strrchr( pFileName->szName, ':' );
-      if( szName == NULL )
+      if( szName == nullptr )
          szName = pFileName->szName;
       else
          ++szName;
@@ -1541,9 +1541,9 @@ static HB_ERRCODE hb_delimOpen( DELIMAREAP pArea, LPDBOPENINFO pOpenInfo )
    /* Try open */
    do
    {
-      pArea->pFile = hb_fileExtOpen( szFileName, NULL, uiFlags |
+      pArea->pFile = hb_fileExtOpen( szFileName, nullptr, uiFlags |
                                      FXO_DEFAULTS | FXO_SHARELOCK |
-                                     FXO_COPYNAME, NULL, pError );
+                                     FXO_COPYNAME, nullptr, pError );
       if( ! pArea->pFile )
       {
          if( ! pError )
@@ -1592,7 +1592,7 @@ static HB_ERRCODE hb_delimInit( LPRDDNODE pRDD )
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimInit(%p)", ( void * ) pRDD ) );
 
    pTSD = ( PHB_TSD ) hb_xgrab( sizeof( HB_TSD ) );
-   HB_TSD_INIT( pTSD, sizeof( DELIMDATA ), NULL, NULL );
+   HB_TSD_INIT( pTSD, sizeof( DELIMDATA ), nullptr, nullptr );
    pRDD->lpvCargo = ( void * ) pTSD;
 
    if( ISSUPER_INIT( pRDD ) )
@@ -1612,7 +1612,7 @@ static HB_ERRCODE hb_delimExit( LPRDDNODE pRDD )
    {
       hb_stackReleaseTSD( ( PHB_TSD ) pRDD->lpvCargo );
       hb_xfree( pRDD->lpvCargo );
-      pRDD->lpvCargo = NULL;
+      pRDD->lpvCargo = nullptr;
    }
 
    if( ISSUPER_EXIT( pRDD ) )
@@ -1641,7 +1641,7 @@ static HB_ERRCODE hb_delimRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG u
          const char * szNew = hb_itemGetCPtr( pItem );
          char * szNewVal;
 
-         szNewVal = szNew[ 0 ] == '.' && szNew[ 1 ] ? hb_strdup( szNew ) : NULL;
+         szNewVal = szNew[ 0 ] == '.' && szNew[ 1 ] ? hb_strdup( szNew ) : nullptr;
          hb_itemPutC( pItem, pData->szTableExt[ 0 ] ? pData->szTableExt : DELIM_TABLEEXT );
          if( szNewVal )
          {
@@ -1674,106 +1674,106 @@ static HB_ERRCODE hb_delimRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG u
 
 static const RDDFUNCS delimTable =
 {
-   NULL /* hb_delimBof */,
-   NULL /* hb_delimEof */,
-   NULL /* hb_delimFound */,
-   NULL /* hb_delimGoBottom */,
+   nullptr /* hb_delimBof */,
+   nullptr /* hb_delimEof */,
+   nullptr /* hb_delimFound */,
+   nullptr /* hb_delimGoBottom */,
    ( DBENTRYP_UL ) hb_delimGoTo,
    ( DBENTRYP_I ) hb_delimGoToId,
    ( DBENTRYP_V ) hb_delimGoTop,
-   NULL /* hb_delimSeek */,
-   NULL /* hb_delimSkip */,
-   NULL /* hb_delimSkipFilter */,
+   nullptr /* hb_delimSeek */,
+   nullptr /* hb_delimSkip */,
+   nullptr /* hb_delimSkipFilter */,
    ( DBENTRYP_L ) hb_delimSkipRaw,
    ( DBENTRYP_VF ) hb_delimAddField,
    ( DBENTRYP_B ) hb_delimAppend,
-   NULL /* hb_delimCreateFields */,
+   nullptr /* hb_delimCreateFields */,
    ( DBENTRYP_V ) hb_delimDeleteRec,
    ( DBENTRYP_BP ) hb_delimDeleted,
-   NULL /* hb_delimFieldCount */,
-   NULL /* hb_delimFieldDisplay */,
-   NULL /* hb_delimFieldInfo */,
-   NULL /* hb_delimFieldName */,
+   nullptr /* hb_delimFieldCount */,
+   nullptr /* hb_delimFieldDisplay */,
+   nullptr /* hb_delimFieldInfo */,
+   nullptr /* hb_delimFieldName */,
    ( DBENTRYP_V ) hb_delimFlush,
    ( DBENTRYP_PP ) hb_delimGetRec,
    ( DBENTRYP_SI ) hb_delimGetValue,
-   NULL /* hb_delimGetVarLen */,
+   nullptr /* hb_delimGetVarLen */,
    ( DBENTRYP_V ) hb_delimGoCold,
    ( DBENTRYP_V ) hb_delimGoHot,
    ( DBENTRYP_P ) hb_delimPutRec,
    ( DBENTRYP_SI ) hb_delimPutValue,
    ( DBENTRYP_V ) hb_delimRecall,
    ( DBENTRYP_ULP ) hb_delimRecCount,
-   NULL /* hb_delimRecInfo */,
+   nullptr /* hb_delimRecInfo */,
    ( DBENTRYP_ULP ) hb_delimRecNo,
    ( DBENTRYP_I ) hb_delimRecId,
    ( DBENTRYP_S ) hb_delimSetFieldExtent,
-   NULL /* hb_delimAlias */,
+   nullptr /* hb_delimAlias */,
    ( DBENTRYP_V ) hb_delimClose,
    ( DBENTRYP_VO ) hb_delimCreate,
    ( DBENTRYP_SI ) hb_delimInfo,
    ( DBENTRYP_V ) hb_delimNewArea,
    ( DBENTRYP_VO ) hb_delimOpen,
-   NULL /* hb_delimRelease */,
+   nullptr /* hb_delimRelease */,
    ( DBENTRYP_SP ) hb_delimStructSize,
-   NULL /* hb_delimSysName */,
-   NULL /* hb_delimEval */,
-   NULL /* hb_delimPack */,
-   NULL /* hb_delimPackRec */,
-   NULL /* hb_delimSort */,
+   nullptr /* hb_delimSysName */,
+   nullptr /* hb_delimEval */,
+   nullptr /* hb_delimPack */,
+   nullptr /* hb_delimPackRec */,
+   nullptr /* hb_delimSort */,
    ( DBENTRYP_VT ) hb_delimTrans,
-   NULL /* hb_delimTransRec */,
-   NULL /* hb_delimZap */,
-   NULL /* hb_delimChildEnd */,
-   NULL /* hb_delimChildStart */,
-   NULL /* hb_delimChildSync */,
-   NULL /* hb_delimSyncChildren */,
-   NULL /* hb_delimClearRel */,
-   NULL /* hb_delimForceRel */,
-   NULL /* hb_delimRelArea */,
-   NULL /* hb_delimRelEval */,
-   NULL /* hb_delimRelText */,
-   NULL /* hb_delimSetRel */,
-   NULL /* hb_delimOrderListAdd */,
-   NULL /* hb_delimOrderListClear */,
-   NULL /* hb_delimOrderListDelete */,
-   NULL /* hb_delimOrderListFocus */,
-   NULL /* hb_delimOrderListRebuild */,
-   NULL /* hb_delimOrderCondition */,
-   NULL /* hb_delimOrderCreate */,
-   NULL /* hb_delimOrderDestroy */,
-   NULL /* hb_delimOrderInfo */,
-   NULL /* hb_delimClearFilter */,
-   NULL /* hb_delimClearLocate */,
-   NULL /* hb_delimClearScope */,
-   NULL /* hb_delimCountScope */,
-   NULL /* hb_delimFilterText */,
-   NULL /* hb_delimScopeInfo */,
-   NULL /* hb_delimSetFilter */,
-   NULL /* hb_delimSetLocate */,
-   NULL /* hb_delimSetScope */,
-   NULL /* hb_delimSkipScope */,
-   NULL /* hb_delimLocate */,
-   NULL /* hb_delimCompile */,
-   NULL /* hb_delimError */,
-   NULL /* hb_delimEvalBlock */,
-   NULL /* hb_delimRawLock */,
-   NULL /* hb_delimLock */,
-   NULL /* hb_delimUnLock */,
-   NULL /* hb_delimCloseMemFile */,
-   NULL /* hb_delimCreateMemFile */,
-   NULL /* hb_delimGetValueFile */,
-   NULL /* hb_delimOpenMemFile */,
-   NULL /* hb_delimPutValueFile */,
-   NULL /* hb_delimReadDBHeader */,
-   NULL /* hb_delimWriteDBHeader */,
+   nullptr /* hb_delimTransRec */,
+   nullptr /* hb_delimZap */,
+   nullptr /* hb_delimChildEnd */,
+   nullptr /* hb_delimChildStart */,
+   nullptr /* hb_delimChildSync */,
+   nullptr /* hb_delimSyncChildren */,
+   nullptr /* hb_delimClearRel */,
+   nullptr /* hb_delimForceRel */,
+   nullptr /* hb_delimRelArea */,
+   nullptr /* hb_delimRelEval */,
+   nullptr /* hb_delimRelText */,
+   nullptr /* hb_delimSetRel */,
+   nullptr /* hb_delimOrderListAdd */,
+   nullptr /* hb_delimOrderListClear */,
+   nullptr /* hb_delimOrderListDelete */,
+   nullptr /* hb_delimOrderListFocus */,
+   nullptr /* hb_delimOrderListRebuild */,
+   nullptr /* hb_delimOrderCondition */,
+   nullptr /* hb_delimOrderCreate */,
+   nullptr /* hb_delimOrderDestroy */,
+   nullptr /* hb_delimOrderInfo */,
+   nullptr /* hb_delimClearFilter */,
+   nullptr /* hb_delimClearLocate */,
+   nullptr /* hb_delimClearScope */,
+   nullptr /* hb_delimCountScope */,
+   nullptr /* hb_delimFilterText */,
+   nullptr /* hb_delimScopeInfo */,
+   nullptr /* hb_delimSetFilter */,
+   nullptr /* hb_delimSetLocate */,
+   nullptr /* hb_delimSetScope */,
+   nullptr /* hb_delimSkipScope */,
+   nullptr /* hb_delimLocate */,
+   nullptr /* hb_delimCompile */,
+   nullptr /* hb_delimError */,
+   nullptr /* hb_delimEvalBlock */,
+   nullptr /* hb_delimRawLock */,
+   nullptr /* hb_delimLock */,
+   nullptr /* hb_delimUnLock */,
+   nullptr /* hb_delimCloseMemFile */,
+   nullptr /* hb_delimCreateMemFile */,
+   nullptr /* hb_delimGetValueFile */,
+   nullptr /* hb_delimOpenMemFile */,
+   nullptr /* hb_delimPutValueFile */,
+   nullptr /* hb_delimReadDBHeader */,
+   nullptr /* hb_delimWriteDBHeader */,
    ( DBENTRYP_R ) hb_delimInit,
    ( DBENTRYP_R ) hb_delimExit,
-   NULL /* hb_delimDrop */,
-   NULL /* hb_delimExists */,
-   NULL /* hb_delimRename */,
+   nullptr /* hb_delimDrop */,
+   nullptr /* hb_delimExists */,
+   nullptr /* hb_delimRename */,
    ( DBENTRYP_RSLV ) hb_delimRddInfo,
-   NULL /* hb_delimWhoCares */
+   nullptr /* hb_delimWhoCares */
 };
 
 HB_FUNC( DELIM ) { ; }
@@ -1792,7 +1792,7 @@ HB_FUNC_STATIC( DELIM_GETFUNCTABLE )
    {
       if( puiCount )
          *puiCount = RDDFUNCSCOUNT;
-      hb_retni( hb_rddInheritEx( pTable, &delimTable, &delimSuper, NULL, NULL ) );
+      hb_retni( hb_rddInheritEx( pTable, &delimTable, &delimSuper, nullptr, nullptr ) );
    }
    else
       hb_retni( HB_FAILURE );
@@ -1807,8 +1807,8 @@ static void hb_delimRddInit( void * cargo )
 }
 
 HB_INIT_SYMBOLS_BEGIN( delim1__InitSymbols )
-{ "DELIM",              {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( DELIM )}, NULL },
-{ "DELIM_GETFUNCTABLE", {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( DELIM_GETFUNCTABLE )}, NULL }
+{ "DELIM",              {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( DELIM )}, nullptr },
+{ "DELIM_GETFUNCTABLE", {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( DELIM_GETFUNCTABLE )}, nullptr }
 HB_INIT_SYMBOLS_END( delim1__InitSymbols )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_delim_rdd_init_ )

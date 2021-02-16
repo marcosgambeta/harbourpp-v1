@@ -209,22 +209,22 @@ static PHB_LZSSX_COMPR hb_LZSSxInit(
 {
    PHB_LZSSX_COMPR pCompr = ( PHB_LZSSX_COMPR ) hb_xgrab( sizeof( HB_LZSSX_COMPR ) );
 
-   if( pInput != NULL && nSrcBuf == 0 )
+   if( pInput != nullptr && nSrcBuf == 0 )
       nSrcBuf = LZSS_IOBUFLEN;
-   if( pOutput != NULL && nDstBuf == 0 )
+   if( pOutput != nullptr && nDstBuf == 0 )
       nDstBuf = LZSS_IOBUFLEN;
 
    pCompr->pInput      = pInput;
    pCompr->inBuffer    = ( HB_BYTE * ) HB_UNCONST( pSrcBuf );
    pCompr->inBuffSize  = nSrcBuf;
    pCompr->inBuffPos   = 0;
-   pCompr->inBuffRead  = ( pInput == NULL ) ? nSrcBuf : 0;
-   pCompr->fInFree     = ( pInput != NULL && pSrcBuf == NULL );
+   pCompr->inBuffRead  = ( pInput == nullptr ) ? nSrcBuf : 0;
+   pCompr->fInFree     = ( pInput != nullptr && pSrcBuf == nullptr );
    pCompr->pOutput     = pOutput;
    pCompr->outBuffer   = pDstBuf;
    pCompr->outBuffSize = nDstBuf;
    pCompr->outBuffPos  = 0;
-   pCompr->fOutFree    = ( pOutput != NULL && pDstBuf == NULL );
+   pCompr->fOutFree    = ( pOutput != nullptr && pDstBuf == nullptr );
 
    pCompr->nOutSize    = 0;
    pCompr->fResult     = HB_TRUE;
@@ -245,7 +245,7 @@ static PHB_LZSSX_COMPR hb_LZSSxInit(
 
 static HB_BOOL hb_LZSSxFlush( PHB_LZSSX_COMPR pCompr )
 {
-   if( pCompr->fResult && pCompr->pOutput != NULL )
+   if( pCompr->fResult && pCompr->pOutput != nullptr )
    {
       if( hb_fileWrite( pCompr->pOutput, pCompr->outBuffer,
                         pCompr->outBuffPos, -1 ) != pCompr->outBuffPos )
@@ -281,7 +281,7 @@ static int hb_LZSSxRead( PHB_LZSSX_COMPR pCompr )
    if( pCompr->inBuffPos < pCompr->inBuffRead )
       return ( HB_UCHAR ) pCompr->inBuffer[ pCompr->inBuffPos++ ];
 
-   if( pCompr->pInput != NULL )
+   if( pCompr->pInput != nullptr )
    {
       pCompr->inBuffRead = hb_fileRead( pCompr->pInput, pCompr->inBuffer,
                                         pCompr->inBuffSize, -1 );
@@ -565,8 +565,8 @@ HB_BOOL hb_LZSSxCompressMem( const char * pSrcBuf, HB_SIZE nSrcLen,
    PHB_LZSSX_COMPR pCompr;
    HB_SIZE nSize;
 
-   pCompr = hb_LZSSxInit( NULL, ( const HB_BYTE * ) pSrcBuf, nSrcLen,
-                          NULL, ( HB_BYTE * ) pDstBuf, nDstLen );
+   pCompr = hb_LZSSxInit( nullptr, ( const HB_BYTE * ) pSrcBuf, nSrcLen,
+                          nullptr, ( HB_BYTE * ) pDstBuf, nDstLen );
    nSize = hb_LZSSxEncode( pCompr );
    hb_LZSSxExit( pCompr );
    if( pnSize )
@@ -580,8 +580,8 @@ HB_BOOL hb_LZSSxDecompressMem( const char * pSrcBuf, HB_SIZE nSrcLen,
    PHB_LZSSX_COMPR pCompr;
    HB_BOOL fResult;
 
-   pCompr = hb_LZSSxInit( NULL, ( const HB_BYTE * ) pSrcBuf, nSrcLen,
-                          NULL, ( HB_BYTE * ) pDstBuf, nDstLen );
+   pCompr = hb_LZSSxInit( nullptr, ( const HB_BYTE * ) pSrcBuf, nSrcLen,
+                          nullptr, ( HB_BYTE * ) pDstBuf, nDstLen );
    fResult = hb_LZSSxDecode( pCompr );
    hb_LZSSxExit( pCompr );
    return fResult;
@@ -592,7 +592,7 @@ HB_BOOL hb_LZSSxCompressFile( PHB_FILE pInput, PHB_FILE pOutput, HB_SIZE * pnSiz
    PHB_LZSSX_COMPR pCompr;
    HB_SIZE nSize;
 
-   pCompr = hb_LZSSxInit( pInput, NULL, 0, pOutput, NULL, 0 );
+   pCompr = hb_LZSSxInit( pInput, nullptr, 0, pOutput, nullptr, 0 );
    nSize = hb_LZSSxEncode( pCompr );
    hb_LZSSxExit( pCompr );
    if( pnSize )
@@ -605,7 +605,7 @@ HB_BOOL hb_LZSSxDecompressFile( PHB_FILE pInput, PHB_FILE pOutput )
    PHB_LZSSX_COMPR pCompr;
    HB_BOOL fResult;
 
-   pCompr = hb_LZSSxInit( pInput, NULL, 0, pOutput, NULL, 0 );
+   pCompr = hb_LZSSxInit( pInput, nullptr, 0, pOutput, nullptr, 0 );
    fResult = hb_LZSSxDecode( pCompr );
    hb_LZSSxExit( pCompr );
    return fResult;
@@ -618,14 +618,14 @@ HB_FUNC( SX_FCOMPRESS )
 
    if( szSource && *szSource && szDestin && *szDestin )
    {
-      PHB_FILE pInput = hb_fileExtOpen( szSource, NULL, FO_READ | FO_DENYNONE |
-                                        FXO_DEFAULTS | FXO_SHARELOCK, NULL, NULL );
-      if( pInput != NULL )
+      PHB_FILE pInput = hb_fileExtOpen( szSource, nullptr, FO_READ | FO_DENYNONE |
+                                        FXO_DEFAULTS | FXO_SHARELOCK, nullptr, nullptr );
+      if( pInput != nullptr )
       {
-         PHB_FILE pOutput = hb_fileExtOpen( szDestin, NULL, FO_READWRITE |
+         PHB_FILE pOutput = hb_fileExtOpen( szDestin, nullptr, FO_READWRITE |
                                             FO_EXCLUSIVE | FXO_TRUNCATE |
-                                            FXO_DEFAULTS | FXO_SHARELOCK, NULL, NULL );
-         if( pOutput != NULL )
+                                            FXO_DEFAULTS | FXO_SHARELOCK, nullptr, nullptr );
+         if( pOutput != nullptr )
          {
             /* store uncompressed file size in first 4 bytes of destination
              * file in little endian order - for SIX3 compatibility
@@ -636,7 +636,7 @@ HB_FUNC( SX_FCOMPRESS )
                HB_BYTE buf[ 4 ];
                HB_PUT_LE_UINT32( buf, nSize );
                if( hb_fileWrite( pOutput, buf, 4, -1 ) == 4 )
-                  fRet = hb_LZSSxCompressFile( pInput, pOutput, NULL );
+                  fRet = hb_LZSSxCompressFile( pInput, pOutput, nullptr );
             }
             hb_fileClose( pOutput );
          }
@@ -653,14 +653,14 @@ HB_FUNC( SX_FDECOMPRESS )
 
    if( szSource && *szSource && szDestin && *szDestin )
    {
-      PHB_FILE pInput = hb_fileExtOpen( szSource, NULL, FO_READ | FO_DENYNONE |
-                                        FXO_DEFAULTS | FXO_SHARELOCK, NULL, NULL );
-      if( pInput != NULL )
+      PHB_FILE pInput = hb_fileExtOpen( szSource, nullptr, FO_READ | FO_DENYNONE |
+                                        FXO_DEFAULTS | FXO_SHARELOCK, nullptr, nullptr );
+      if( pInput != nullptr )
       {
-         PHB_FILE pOutput = hb_fileExtOpen( szDestin, NULL, FO_READWRITE |
+         PHB_FILE pOutput = hb_fileExtOpen( szDestin, nullptr, FO_READWRITE |
                                             FO_EXCLUSIVE | FXO_TRUNCATE |
-                                            FXO_DEFAULTS | FXO_SHARELOCK, NULL, NULL );
-         if( pOutput != NULL )
+                                            FXO_DEFAULTS | FXO_SHARELOCK, nullptr, nullptr );
+         if( pOutput != nullptr )
          {
             /* skip the four bytes with original file length */
             if( hb_fileSeek( pInput, 4, FS_SET ) == 4 )

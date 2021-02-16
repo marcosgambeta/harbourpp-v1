@@ -66,7 +66,7 @@ HB_FUNC( AFIELDS )
 #ifdef DBS_FLAG
    PHB_ITEM pFlags = hb_param( 5, HB_IT_ARRAY );
 #else
-   PHB_ITEM pFlags = NULL;
+   PHB_ITEM pFlags = nullptr;
 #endif
 
    if( ! pArea || ( ! pName && ! pType && ! pLen && ! pDec && ! pFlags ) )
@@ -570,9 +570,9 @@ HB_FUNC( __DBLOCATE )
       DBSCOPEINFO dbScopeInfo;
 
       dbScopeInfo.itmCobFor   = hb_param( 1, HB_IT_BLOCK );
-      dbScopeInfo.lpstrFor    = NULL;
+      dbScopeInfo.lpstrFor    = nullptr;
       dbScopeInfo.itmCobWhile = hb_param( 2, HB_IT_BLOCK );
-      dbScopeInfo.lpstrWhile  = NULL;
+      dbScopeInfo.lpstrWhile  = nullptr;
       dbScopeInfo.lNext       = hb_param( 3, HB_IT_NUMERIC );
       dbScopeInfo.itmRecID    = hb_param( 4, HB_IT_NUMERIC );
       dbScopeInfo.fRest       = hb_param( 5, HB_IT_LOGICAL );
@@ -791,7 +791,7 @@ HB_FUNC( DBSETFILTER )
          else
             pFilterInfo.abFilterText = hb_itemPutC( nullptr, nullptr );
          pFilterInfo.fFilter = HB_TRUE;
-         pFilterInfo.lpvCargo = NULL;
+         pFilterInfo.lpvCargo = nullptr;
          pFilterInfo.fOptimized = HB_FALSE;
          SELF_SETFILTER( pArea, &pFilterInfo );
          if( ! pText )
@@ -871,7 +871,7 @@ HB_FUNC( DBTABLEEXT )
    {
       LPRDDNODE pRddNode;
       HB_USHORT uiRddID;
-      pRddNode = hb_rddFindNode( hb_rddDefaultDrv( NULL ), &uiRddID );
+      pRddNode = hb_rddFindNode( hb_rddDefaultDrv( nullptr ), &uiRddID );
       if( pRddNode )
       {
          pArea = static_cast< AREAP >( hb_rddNewAreaNode( pRddNode, uiRddID ) );
@@ -895,7 +895,7 @@ HB_FUNC( DBUNLOCK )
    AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
 
    if( pArea )
-      SELF_UNLOCK( pArea, NULL );
+      SELF_UNLOCK( pArea, nullptr );
    else
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
 }
@@ -913,7 +913,7 @@ HB_FUNC( DBUSEAREA )
    hb_retl( hb_rddOpenTable( hb_parc( 3 ), hb_parc( 2 ),
          hb_parl( 1 ) ? 0 : static_cast< HB_AREANO >( hb_rddGetCurrentWorkAreaNumber() ),
          hb_parc( 4 ), HB_ISLOG( 5 ) ? hb_parl( 5 ) : ! hb_setGetExclusive(),
-         hb_parl( 6 ), hb_parc( 7 ), hb_parnl( 8 ), NULL, NULL ) == HB_SUCCESS );
+         hb_parl( 6 ), hb_parc( 7 ), hb_parnl( 8 ), nullptr, nullptr ) == HB_SUCCESS );
 }
 
 HB_FUNC( __DBZAP )
@@ -1032,7 +1032,7 @@ HB_FUNC( FLOCK )
    {
       DBLOCKINFO dbLockInfo;
       dbLockInfo.fResult  = HB_FALSE;
-      dbLockInfo.itmRecID = NULL;
+      dbLockInfo.itmRecID = nullptr;
       dbLockInfo.uiMethod = DBLM_FILE;
       SELF_LOCK( pArea, &dbLockInfo );
       hb_retl( dbLockInfo.fResult );
@@ -1101,7 +1101,7 @@ HB_FUNC( LOCK )
    {
       DBLOCKINFO dbLockInfo;
       dbLockInfo.fResult  = HB_FALSE;
-      dbLockInfo.itmRecID = NULL;
+      dbLockInfo.itmRecID = nullptr;
       dbLockInfo.uiMethod = DBLM_EXCLUSIVE;
       SELF_LOCK( pArea, &dbLockInfo );
       hb_retl( dbLockInfo.fResult );
@@ -1122,7 +1122,7 @@ HB_FUNC( LUPDATE )
       hb_itemReturnRelease( pItem );
    }
    else
-      hb_retds( NULL );
+      hb_retds( nullptr );
 }
 
 HB_FUNC( NETERR )
@@ -1144,7 +1144,7 @@ HB_FUNC( ORDBAGEXT )
    {
       LPRDDNODE pRddNode;
       HB_USHORT uiRddID;
-      pRddNode = hb_rddFindNode( hb_rddDefaultDrv( NULL ), &uiRddID );
+      pRddNode = hb_rddFindNode( hb_rddDefaultDrv( nullptr ), &uiRddID );
       if( pRddNode )
       {
          pArea = static_cast< AREAP >( hb_rddNewAreaNode( pRddNode, uiRddID ) );
@@ -1175,11 +1175,11 @@ HB_FUNC( ORDBAGNAME )
       if( pOrderInfo.itmOrder && ! HB_IS_STRING( pOrderInfo.itmOrder ) )
       {
          if( HB_IS_NIL( pOrderInfo.itmOrder ) )
-            pOrderInfo.itmOrder = NULL;
+            pOrderInfo.itmOrder = nullptr;
          else if( HB_IS_NUMERIC( pOrderInfo.itmOrder ) )
          {
             if( hb_itemGetNI( pOrderInfo.itmOrder ) == 0 )
-               pOrderInfo.itmOrder = NULL;
+               pOrderInfo.itmOrder = nullptr;
          }
          else
          {
@@ -1206,24 +1206,24 @@ HB_FUNC( ORDCONDSET )
 
       lpdbOrdCondInfo = ( LPDBORDERCONDINFO ) hb_xgrab( sizeof( DBORDERCONDINFO ) );
       lpdbOrdCondInfo->abFor = hb_parclen( 1 ) > 0 ?
-                               hb_strdup( hb_parc( 1 ) ) : NULL;
+                               hb_strdup( hb_parc( 1 ) ) : nullptr;
       pItem = hb_param( 2, HB_IT_BLOCK );
-      lpdbOrdCondInfo->itmCobFor = pItem ? hb_itemNew( pItem ) : NULL;
+      lpdbOrdCondInfo->itmCobFor = pItem ? hb_itemNew( pItem ) : nullptr;
 
       lpdbOrdCondInfo->fAll = hb_parldef( 3, HB_TRUE );
 
       lpdbOrdCondInfo->abWhile = hb_parclen( 17 ) > 0 ?
-                                 hb_strdup( hb_parc( 17 ) ) : NULL;
+                                 hb_strdup( hb_parc( 17 ) ) : nullptr;
       pItem = hb_param( 4, HB_IT_BLOCK );
-      lpdbOrdCondInfo->itmCobWhile = pItem ? hb_itemNew( pItem ) : NULL;
+      lpdbOrdCondInfo->itmCobWhile = pItem ? hb_itemNew( pItem ) : nullptr;
 
       pItem = hb_param( 5, HB_IT_BLOCK );
-      lpdbOrdCondInfo->itmCobEval = pItem ? hb_itemNew( pItem ) : NULL;
+      lpdbOrdCondInfo->itmCobEval = pItem ? hb_itemNew( pItem ) : nullptr;
 
       lpdbOrdCondInfo->lStep         = hb_parnl( 6 );
-      lpdbOrdCondInfo->itmStartRecID = HB_ISNIL( 7 ) ? NULL : hb_itemNew( hb_param( 7, HB_IT_ANY ) );
+      lpdbOrdCondInfo->itmStartRecID = HB_ISNIL( 7 ) ? nullptr : hb_itemNew( hb_param( 7, HB_IT_ANY ) );
       lpdbOrdCondInfo->lNextCount    = hb_parnl( 8 );
-      lpdbOrdCondInfo->itmRecID      = HB_ISNIL( 9 ) ? NULL : hb_itemNew( hb_param( 9, HB_IT_ANY ) );
+      lpdbOrdCondInfo->itmRecID      = HB_ISNIL( 9 ) ? nullptr : hb_itemNew( hb_param( 9, HB_IT_ANY ) );
       lpdbOrdCondInfo->fRest         = hb_parl( 10 );
       lpdbOrdCondInfo->fDescending   = hb_parl( 11 );
       /* 12th parameter is always nil in CL5.3, in CL5.2 it's compound flag */
@@ -1262,7 +1262,7 @@ HB_FUNC( ORDCONDSET )
                lpdbOrdCondInfo->fTemporary;
 
       lpdbOrdCondInfo->fScoped  = ! lpdbOrdCondInfo->fAll;
-      lpdbOrdCondInfo->lpvCargo = NULL;
+      lpdbOrdCondInfo->lpvCargo = nullptr;
 
       hb_retl( SELF_ORDSETCOND( pArea, lpdbOrdCondInfo ) == HB_SUCCESS );
    }
@@ -1282,11 +1282,11 @@ HB_FUNC( ORDCREATE )
       dbOrderInfo.lpdbOrdCondInfo = pArea->lpdbOrdCondInfo;
       dbOrderInfo.abBagName = hb_parcx( 1 );
       dbOrderInfo.atomBagName = hb_parcx( 2 );
-      dbOrderInfo.itmOrder = NULL;
+      dbOrderInfo.itmOrder = nullptr;
       dbOrderInfo.fUnique = HB_ISLOG( 5 ) ? ( HB_BOOL ) hb_parl( 5 ) : hb_setGetUnique();
       dbOrderInfo.abExpr = hb_param( 3, HB_IT_STRING );
-      if( ( ( dbOrderInfo.abBagName == NULL || dbOrderInfo.abBagName[ 0 ] == 0 ) &&
-            ( dbOrderInfo.atomBagName == NULL || dbOrderInfo.atomBagName[ 0 ] == 0 ) ) ||
+      if( ( ( dbOrderInfo.abBagName == nullptr || dbOrderInfo.abBagName[ 0 ] == 0 ) &&
+            ( dbOrderInfo.atomBagName == nullptr || dbOrderInfo.atomBagName[ 0 ] == 0 ) ) ||
           ! dbOrderInfo.abExpr )
       {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_REL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
@@ -1304,7 +1304,7 @@ HB_FUNC( ORDCREATE )
       }
       else
       {
-         dbOrderInfo.lpdbConstraintInfo = NULL;
+         dbOrderInfo.lpdbConstraintInfo = nullptr;
       }
 
       SELF_ORDCREATE( pArea, &dbOrderInfo );
@@ -1355,11 +1355,11 @@ HB_FUNC( ORDFOR )
       if( pOrderInfo.itmOrder && ! HB_IS_STRING( pOrderInfo.itmOrder ) )
       {
          if( HB_IS_NIL( pOrderInfo.itmOrder ) )
-            pOrderInfo.itmOrder = NULL;
+            pOrderInfo.itmOrder = nullptr;
          else if( HB_IS_NUMERIC( pOrderInfo.itmOrder ) )
          {
             if( hb_itemGetNI( pOrderInfo.itmOrder ) == 0 )
-               pOrderInfo.itmOrder = NULL;
+               pOrderInfo.itmOrder = nullptr;
          }
          else
          {
@@ -1370,7 +1370,7 @@ HB_FUNC( ORDFOR )
       pOrderInfo.atomBagName = hb_param( 2, HB_IT_STRING );
       pOrderInfo.itmNewVal = hb_param( 3, HB_IT_STRING );
       pOrderInfo.itmResult = hb_itemPutC( nullptr, nullptr );
-      pOrderInfo.itmCobExpr = NULL;
+      pOrderInfo.itmCobExpr = nullptr;
       pOrderInfo.fAllTags = HB_FALSE;
       SELF_ORDINFO( pArea, DBOI_CONDITION, &pOrderInfo );
       hb_itemReturnRelease( pOrderInfo.itmResult );
@@ -1391,11 +1391,11 @@ HB_FUNC( ORDKEY )
       if( pOrderInfo.itmOrder && ! HB_IS_STRING( pOrderInfo.itmOrder ) )
       {
          if( HB_IS_NIL( pOrderInfo.itmOrder ) )
-            pOrderInfo.itmOrder = NULL;
+            pOrderInfo.itmOrder = nullptr;
          else if( HB_IS_NUMERIC( pOrderInfo.itmOrder ) )
          {
             if( hb_itemGetNI( pOrderInfo.itmOrder ) == 0 )
-               pOrderInfo.itmOrder = NULL;
+               pOrderInfo.itmOrder = nullptr;
          }
          else
          {
@@ -1482,11 +1482,11 @@ HB_FUNC( ORDNAME )
       if( pOrderInfo.itmOrder )
       {
          if( HB_IS_NIL( pOrderInfo.itmOrder ) )
-            pOrderInfo.itmOrder = NULL;
+            pOrderInfo.itmOrder = nullptr;
          else if( HB_IS_NUMERIC( pOrderInfo.itmOrder ) )
          {
             if( hb_itemGetNI( pOrderInfo.itmOrder ) == 0 )
-               pOrderInfo.itmOrder = NULL;
+               pOrderInfo.itmOrder = nullptr;
          }
          else
          {
@@ -1629,7 +1629,7 @@ HB_FUNC( RLOCK )
    {
       DBLOCKINFO dbLockInfo;
       dbLockInfo.fResult = HB_FALSE;
-      dbLockInfo.itmRecID = NULL;
+      dbLockInfo.itmRecID = nullptr;
       dbLockInfo.uiMethod = DBLM_EXCLUSIVE;
       SELF_LOCK( pArea, &dbLockInfo );
       hb_retl( dbLockInfo.fResult );
@@ -1666,12 +1666,12 @@ HB_FUNC( SELECT )
 
 HB_FUNC( USED )
 {
-   hb_retl( hb_rddGetCurrentWorkAreaPointer() != NULL );
+   hb_retl( hb_rddGetCurrentWorkAreaPointer() != nullptr );
 }
 
 HB_FUNC( RDDSETDEFAULT )
 {
-   hb_retc( hb_rddDefaultDrv( NULL ) );
+   hb_retc( hb_rddDefaultDrv( nullptr ) );
 
    if( hb_parclen( 1 ) > 0 )
    {
@@ -1682,7 +1682,7 @@ HB_FUNC( RDDSETDEFAULT )
 
 HB_FUNC( DBSETDRIVER )
 {
-   hb_retc( hb_rddDefaultDrv( NULL ) );
+   hb_retc( hb_rddDefaultDrv( nullptr ) );
 
    if( hb_parclen( 1 ) > 0 )
    {
@@ -1780,7 +1780,7 @@ HB_FUNC( DBSETRELATION )
       HB_AREANO uiChildArea;
 
       if( hb_pcount() < 2 ||
-          hb_param( 1, HB_IT_NUMERIC | HB_IT_STRING ) == NULL ||
+          hb_param( 1, HB_IT_NUMERIC | HB_IT_STRING ) == nullptr ||
           ! ( HB_ISNIL( 4 ) || HB_ISLOG( 4 ) ) )
       {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_REL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
@@ -1802,7 +1802,7 @@ HB_FUNC( DBSETRELATION )
          hb_rddSelectWorkAreaNumber( iArea );
       }
 
-      pChildArea = uiChildArea ? static_cast< AREAP >( hb_rddGetWorkAreaPointer( uiChildArea ) ) : NULL;
+      pChildArea = uiChildArea ? static_cast< AREAP >( hb_rddGetWorkAreaPointer( uiChildArea ) ) : nullptr;
 
       if( ! pChildArea )
       {
@@ -1816,7 +1816,7 @@ HB_FUNC( DBSETRELATION )
       dbRelations.isOptimized = HB_FALSE;
       dbRelations.lpaChild = pChildArea;
       dbRelations.lpaParent = pArea;
-      dbRelations.lpdbriNext = NULL;
+      dbRelations.lpdbriNext = nullptr;
 
       SELF_SETREL( pArea, &dbRelations );
    }
@@ -1833,7 +1833,7 @@ HB_FUNC( __DBARRANGE )
    pSrcArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
    pDstArea = static_cast< AREAP >( hb_rddGetWorkAreaPointer( static_cast< HB_AREANO >( hb_parni( 1 ) ) ) );
 
-   /* TODO: check what Clipper does when pDstArea == NULL or pSrcArea == pDstArea */
+   /* TODO: check what Clipper does when pDstArea == nullptr or pSrcArea == pDstArea */
    if( pSrcArea && pDstArea && pSrcArea != pDstArea )
    {
       DBSORTINFO dbSortInfo;
@@ -1844,17 +1844,17 @@ HB_FUNC( __DBARRANGE )
 
       memset( &dbSortInfo, 0, sizeof( dbSortInfo ) );
       errCode = hb_dbTransStruct( pSrcArea, pDstArea, &dbSortInfo.dbtri,
-                                  NULL, pStruct );
+                                  nullptr, pStruct );
       if( errCode == HB_SUCCESS )
       {
          PHB_ITEM pTransItm;
 
          dbSortInfo.dbtri.dbsci.itmCobFor   = hb_param( 3, HB_IT_BLOCK );
-         dbSortInfo.dbtri.dbsci.lpstrFor    = NULL;
+         dbSortInfo.dbtri.dbsci.lpstrFor    = nullptr;
          dbSortInfo.dbtri.dbsci.itmCobWhile = hb_param( 4, HB_IT_BLOCK );
-         dbSortInfo.dbtri.dbsci.lpstrWhile  = NULL;
+         dbSortInfo.dbtri.dbsci.lpstrWhile  = nullptr;
          dbSortInfo.dbtri.dbsci.lNext       = hb_param( 5, HB_IT_NUMERIC );
-         dbSortInfo.dbtri.dbsci.itmRecID    = HB_ISNIL( 6 ) ? NULL : hb_param( 6, HB_IT_ANY );
+         dbSortInfo.dbtri.dbsci.itmRecID    = HB_ISNIL( 6 ) ? nullptr : hb_param( 6, HB_IT_ANY );
          dbSortInfo.dbtri.dbsci.fRest       = hb_param( 7, HB_IT_LOGICAL );
 
          dbSortInfo.dbtri.dbsci.fIgnoreFilter     =
@@ -1898,7 +1898,7 @@ HB_FUNC( __DBARRANGE )
                      dbSortInfo.lpdbsItem[ uiDest ].uiFlags |= SF_DESCEND;
                   else
                      dbSortInfo.lpdbsItem[ uiDest ].uiFlags |= SF_ASCEND;
-                  if( strchr( szPos, 'C' ) != NULL )
+                  if( strchr( szPos, 'C' ) != nullptr )
                      dbSortInfo.lpdbsItem[ uiDest ].uiFlags |= SF_CASE;
                }
                else
@@ -1916,7 +1916,7 @@ HB_FUNC( __DBARRANGE )
             hb_xfree( szFieldLine );
          }
 
-         pTransItm = hb_dbTransInfoPut( NULL, &dbSortInfo.dbtri );
+         pTransItm = hb_dbTransInfoPut( nullptr, &dbSortInfo.dbtri );
          errCode = SELF_INFO( dbSortInfo.dbtri.lpaDest, DBI_TRANSREC, pTransItm );
          if( errCode == HB_SUCCESS )
          {
@@ -1963,7 +1963,7 @@ HB_FUNC( __DBTRANS )
 
          memset( &dbTransInfo, 0, sizeof( dbTransInfo ) );
          errCode = hb_dbTransStruct( pSrcArea, pDstArea, &dbTransInfo,
-                                     NULL, pFields );
+                                     nullptr, pFields );
          if( errCode == HB_SUCCESS )
          {
             PHB_ITEM pTransItm;
@@ -1971,11 +1971,11 @@ HB_FUNC( __DBTRANS )
             hb_rddSelectWorkAreaNumber( dbTransInfo.lpaSource->uiArea );
 
             dbTransInfo.dbsci.itmCobFor   = hb_param( 3, HB_IT_BLOCK );
-            dbTransInfo.dbsci.lpstrFor    = NULL;
+            dbTransInfo.dbsci.lpstrFor    = nullptr;
             dbTransInfo.dbsci.itmCobWhile = hb_param( 4, HB_IT_BLOCK );
-            dbTransInfo.dbsci.lpstrWhile  = NULL;
+            dbTransInfo.dbsci.lpstrWhile  = nullptr;
             dbTransInfo.dbsci.lNext       = hb_param( 5, HB_IT_NUMERIC );
-            dbTransInfo.dbsci.itmRecID    = HB_ISNIL( 6 ) ? NULL : hb_param( 6, HB_IT_ANY );
+            dbTransInfo.dbsci.itmRecID    = HB_ISNIL( 6 ) ? nullptr : hb_param( 6, HB_IT_ANY );
             dbTransInfo.dbsci.fRest       = hb_param( 7, HB_IT_LOGICAL );
 
             dbTransInfo.dbsci.fIgnoreFilter     =
@@ -1985,7 +1985,7 @@ HB_FUNC( __DBTRANS )
             dbTransInfo.dbsci.fOptimized        = HB_FALSE;
             dbTransInfo.dbsci.fIncludeDeleted   = HB_TRUE;
 
-            pTransItm = hb_dbTransInfoPut( NULL, &dbTransInfo );
+            pTransItm = hb_dbTransInfoPut( nullptr, &dbTransInfo );
             errCode = SELF_INFO( dbTransInfo.lpaDest, DBI_TRANSREC, pTransItm );
             if( errCode == HB_SUCCESS )
             {
@@ -2033,11 +2033,11 @@ HB_FUNC( __DBAPP )
                hb_param( 2, HB_IT_ARRAY ),       /* Fields */
                HB_FALSE,                         /* Export? */
                hb_param( 3, HB_IT_BLOCK ),       /* cobFor */
-               NULL,                             /* lpStrFor */
+               nullptr,                          /* lpStrFor */
                hb_param( 4, HB_IT_BLOCK ),       /* cobWhile */
-               NULL,                             /* lpStrWhile */
+               nullptr,                          /* lpStrWhile */
                hb_param( 5, HB_IT_NUMERIC ),     /* Next */
-               HB_ISNIL( 6 ) ? NULL : hb_param( 6, HB_IT_ANY ),   /* RecID */
+               HB_ISNIL( 6 ) ? nullptr : hb_param( 6, HB_IT_ANY ),   /* RecID */
                hb_param( 7, HB_IT_LOGICAL ),     /* Rest */
                hb_parc( 10 ),                    /* Codepage */
                hb_param( 11, HB_IT_ANY ) ) );    /* Delimiter */
@@ -2061,11 +2061,11 @@ HB_FUNC( __DBCOPY )
                hb_param( 2, HB_IT_ARRAY ),       /* Fields */
                HB_TRUE,                          /* Export? */
                hb_param( 3, HB_IT_BLOCK ),       /* cobFor */
-               NULL,                             /* lpStrFor */
+               nullptr,                          /* lpStrFor */
                hb_param( 4, HB_IT_BLOCK ),       /* cobWhile */
-               NULL,                             /* lpStrWhile */
+               nullptr,                          /* lpStrWhile */
                hb_param( 5, HB_IT_NUMERIC ),     /* Next */
-               HB_ISNIL( 6 ) ? NULL : hb_param( 6, HB_IT_ANY ),   /* RecID */
+               HB_ISNIL( 6 ) ? nullptr : hb_param( 6, HB_IT_ANY ),   /* RecID */
                hb_param( 7, HB_IT_LOGICAL ),     /* Rest */
                hb_parc( 10 ),                    /* Codepage */
                hb_param( 11, HB_IT_ANY ) ) );    /* Delimiter */
@@ -2091,7 +2091,7 @@ HB_FUNC( HB_RDDINFO )
 
    szDriver = hb_parc( 3 );
    if( ! szDriver ) /* no VIA RDD parameter, use default */
-      szDriver = hb_rddDefaultDrv( NULL );
+      szDriver = hb_rddDefaultDrv( nullptr );
 
    ulConnection = hb_parnl( 4 );
 
@@ -2110,7 +2110,7 @@ HB_FUNC( HB_RDDINFO )
 
 HB_FUNC( HB_DBDROP )
 {
-   LPRDDNODE pRDDNode = NULL;
+   LPRDDNODE pRDDNode = nullptr;
    HB_ULONG ulConnection = hb_parnl( 4 );
    const char * szName = hb_parc( 1 );
 
@@ -2122,7 +2122,7 @@ HB_FUNC( HB_DBDROP )
          szName = hb_parc( 2 );
       szDriver = hb_rddFindDrv( hb_parc( 3 ), szName );
       if( szDriver )
-         pRDDNode = hb_rddFindNode( szDriver, NULL );  /* find the RDDNODE */
+         pRDDNode = hb_rddFindNode( szDriver, nullptr );  /* find the RDDNODE */
    }
 
    if( pRDDNode )
@@ -2136,7 +2136,7 @@ HB_FUNC( HB_DBDROP )
 
 HB_FUNC( HB_DBEXISTS )
 {
-   LPRDDNODE pRDDNode = NULL;
+   LPRDDNODE pRDDNode = nullptr;
    HB_ULONG ulConnection = hb_parnl( 4 );
    const char * szName = hb_parc( 1 );
 
@@ -2148,7 +2148,7 @@ HB_FUNC( HB_DBEXISTS )
          szName = hb_parc( 2 );
       szDriver = hb_rddFindDrv( hb_parc( 3 ), szName );
       if( szDriver )
-         pRDDNode = hb_rddFindNode( szDriver, NULL );  /* find the RDDNODE */
+         pRDDNode = hb_rddFindNode( szDriver, nullptr );  /* find the RDDNODE */
    }
    if( pRDDNode )
       hb_retl( SELF_EXISTS( pRDDNode,
@@ -2161,7 +2161,7 @@ HB_FUNC( HB_DBEXISTS )
 
 HB_FUNC( HB_DBRENAME )
 {
-   LPRDDNODE pRDDNode = NULL;
+   LPRDDNODE pRDDNode = nullptr;
    HB_ULONG ulConnection = hb_parnl( 5 );
    const char * szName = hb_parc( 1 );
    PHB_ITEM pTable, pIndex, pNewName;
@@ -2174,7 +2174,7 @@ HB_FUNC( HB_DBRENAME )
          szName = hb_parc( 2 );
       szDriver = hb_rddFindDrv( hb_parc( 4 ), szName );
       if( szDriver )
-         pRDDNode = hb_rddFindNode( szDriver, NULL );  /* find the RDDNODE */
+         pRDDNode = hb_rddFindNode( szDriver, nullptr );  /* find the RDDNODE */
    }
 
    pTable = hb_param( 1, HB_IT_STRING );
@@ -2183,7 +2183,7 @@ HB_FUNC( HB_DBRENAME )
    if( pIndex && ! pNewName )
    {
       pNewName = pIndex;
-      pIndex = NULL;
+      pIndex = nullptr;
    }
 
    if( pRDDNode && pTable && pNewName )

@@ -247,13 +247,13 @@ static HB_ULONG hb_db2Sql( AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
    const char * szNewLine = hb_conNewLine();
    char * szInsert = nullptr;
    HB_BOOL fEof = HB_TRUE;
-   HB_BOOL fNoFieldPassed = ( pFields == NULL || hb_arrayLen( pFields ) == 0 );
+   HB_BOOL fNoFieldPassed = ( pFields == nullptr || hb_arrayLen( pFields ) == 0 );
 
    if( SELF_FIELDCOUNT( pArea, &uiFields ) != HB_SUCCESS )
       return 0;
 
    if( fInsert && szTable )
-      szInsert = hb_xstrcpy( NULL, "INSERT INTO ", szTable, " VALUES ( ", NULL );
+      szInsert = hb_xstrcpy( nullptr, "INSERT INTO ", szTable, " VALUES ( ", nullptr );
 
    pFileBuf = hb_createFBuffer( pFile, HB_FILE_BUF_SIZE );
    pTmp = hb_itemNew( nullptr );
@@ -359,8 +359,8 @@ HB_FUNC( __DBSQL )
       PHB_ITEM pFor           = hb_param( 5, HB_IT_BLOCK );
       PHB_ITEM pWhile         = hb_param( 6, HB_IT_BLOCK );
       PHB_ITEM pNext          = hb_param( 7, HB_IT_NUMERIC );
-      PHB_ITEM pRecord        = HB_ISNIL( 8 ) ? NULL : hb_param( 8, HB_IT_ANY );
-      HB_BOOL fRest           = pWhile != NULL || hb_parl( 9 );
+      PHB_ITEM pRecord        = HB_ISNIL( 8 ) ? nullptr : hb_param( 8, HB_IT_ANY );
+      HB_BOOL fRest           = pWhile != nullptr || hb_parl( 9 );
       HB_BOOL fAppend         = hb_parl( 10 );
       HB_BOOL fInsert         = hb_parl( 11 );
       HB_BOOL fRecno          = hb_parl( 12 );
@@ -381,12 +381,12 @@ HB_FUNC( __DBSQL )
          /* Try to create Dat file */
          do
          {
-            pFile = hb_fileExtOpen( szFileName, NULL,
+            pFile = hb_fileExtOpen( szFileName, nullptr,
                                     ( fAppend ? 0 : FXO_TRUNCATE ) |
                                     FO_READWRITE | FO_EXCLUSIVE |
                                     FXO_DEFAULTS | FXO_SHARELOCK,
-                                    NULL, pError );
-            if( pFile == NULL )
+                                    nullptr, pError );
+            if( pFile == nullptr )
             {
                if( ! pError )
                {
@@ -419,7 +419,7 @@ HB_FUNC( __DBSQL )
          if( pError )
             hb_itemRelease( pError );
 
-         if( pFile != NULL )
+         if( pFile != nullptr )
          {
             if( fAppend )
                hb_fileSeek( pFile, 0, FS_END );

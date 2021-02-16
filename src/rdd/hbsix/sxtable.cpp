@@ -136,7 +136,7 @@ HB_FUNC( SX_IDTYPE )
    if( pArea )
    {
       PHB_ITEM pItem = hb_itemNew( nullptr );
-      if( SELF_RECINFO( pArea, NULL, DBRI_ENCRYPTED, pItem ) == HB_SUCCESS )
+      if( SELF_RECINFO( pArea, nullptr, DBRI_ENCRYPTED, pItem ) == HB_SUCCESS )
          iType = hb_itemGetL( pItem ) ? 2 : 1;
       hb_itemRelease( pItem );
    }
@@ -309,7 +309,7 @@ HB_FUNC( SX_SETPASS )
          const char * szDriver;
 
          if( iPCount == 2 ) /* no RDD parameter, use default */
-            szDriver = hb_rddDefaultDrv( NULL );
+            szDriver = hb_rddDefaultDrv( nullptr );
          else
             szDriver = hb_parc( 3 );
          pRDDNode = hb_rddFindNode( szDriver, &uiRddID );   /* find the RDDNODE */
@@ -426,7 +426,7 @@ HB_FUNC( SX_SETTURBO )
 
    szDriver = hb_parc( 2 );
    if( ! szDriver ) /* no VIA RDD parameter, use default */
-      szDriver = hb_rddDefaultDrv( NULL );
+      szDriver = hb_rddDefaultDrv( nullptr );
 
    pRDDNode = hb_rddFindNode( szDriver, &uiRddID );  /* find the RDDNODE */
    if( ! pRDDNode )
@@ -448,7 +448,7 @@ HB_FUNC( SX_SETTURBO )
  */
 HB_FUNC( _SXOPENINIT )
 {
-   AREAP pArea = NULL;
+   AREAP pArea = nullptr;
    int iArea = hb_parni( 1 );
 
    if( iArea )
@@ -456,7 +456,7 @@ HB_FUNC( _SXOPENINIT )
 
    if( pArea )
    {
-      LPDBOPENINFO pInfo = NULL;
+      LPDBOPENINFO pInfo = nullptr;
       PHB_ITEM pItem = hb_itemNew( nullptr );
 
       if( SELF_INFO( pArea, DBI_OPENINFO, pItem ) )

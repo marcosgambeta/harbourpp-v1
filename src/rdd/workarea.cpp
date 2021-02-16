@@ -143,7 +143,7 @@ static HB_ERRCODE hb_waSkipFilter( AREAP pArea, HB_LONG lUpDown )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_waSkipFilter(%p, %ld)", ( void * ) pArea, lUpDown ) );
 
-   if( pArea->dbfi.itmCobExpr == NULL && ! hb_setGetDeleted() )
+   if( pArea->dbfi.itmCobExpr == nullptr && ! hb_setGetDeleted() )
       return HB_SUCCESS;
 
    /* Since lToSkip is passed to SkipRaw, it should never request more than
@@ -952,7 +952,7 @@ static HB_ERRCODE hb_waNewArea( AREAP pArea )
    HB_TRACE( HB_TR_DEBUG, ( "hb_waNewArea(%p)", ( void * ) pArea ) );
 
    pArea->valResult = hb_itemNew( nullptr );
-   pArea->lpdbRelations = NULL;
+   pArea->lpdbRelations = nullptr;
    pArea->uiParents = 0;
    pArea->uiMaxFieldNameLength = HB_SYMBOL_NAME_LEN;
 
@@ -1027,7 +1027,7 @@ static HB_ERRCODE hb_waRelease( AREAP pArea )
       hb_itemRelease( pArea->valResult );
    if( pArea->lpdbOrdCondInfo )
       /* intentionally direct call not a method */
-      hb_waOrderCondition( pArea, NULL );
+      hb_waOrderCondition( pArea, nullptr );
    hb_xfree( pArea );
    return HB_SUCCESS;
 }
@@ -1375,10 +1375,10 @@ static HB_ERRCODE hb_waChildEnd( AREAP pArea, LPDBRELINFO pRelInfo )
    if( pRelInfo->isScoped )
    {
       DBORDERINFO pInfo;
-      pInfo.itmOrder = NULL;
-      pInfo.atomBagName = NULL;
+      pInfo.itmOrder = nullptr;
+      pInfo.atomBagName = nullptr;
       pInfo.itmResult = hb_itemNew( nullptr );
-      pInfo.itmNewVal = NULL;
+      pInfo.itmNewVal = nullptr;
       SELF_ORDINFO( pArea, DBOI_SCOPETOPCLEAR, &pInfo );
       SELF_ORDINFO( pArea, DBOI_SCOPEBOTTOMCLEAR, &pInfo );
       hb_itemRelease( pInfo.itmResult );
@@ -1510,7 +1510,7 @@ static HB_ERRCODE hb_waRelEval( AREAP pArea, LPDBRELINFO pRelInfo )
              *  Check the current order
              */
             pResult = pRelInfo->lpaParent->valResult;
-            pRelInfo->lpaParent->valResult = NULL;
+            pRelInfo->lpaParent->valResult = nullptr;
             memset( &pInfo, 0, sizeof( pInfo ) );
             pInfo.itmResult = hb_itemPutNI( nullptr, 0 );
             errCode = SELF_ORDINFO( pArea, DBOI_NUMBER, &pInfo );
@@ -1631,12 +1631,12 @@ static HB_ERRCODE hb_waClearFilter( AREAP pArea )
    if( pArea->dbfi.itmCobExpr )
    {
       hb_itemRelease( pArea->dbfi.itmCobExpr );
-      pArea->dbfi.itmCobExpr = NULL;
+      pArea->dbfi.itmCobExpr = nullptr;
    }
    if( pArea->dbfi.abFilterText )
    {
       hb_itemRelease( pArea->dbfi.abFilterText );
-      pArea->dbfi.abFilterText = NULL;
+      pArea->dbfi.abFilterText = nullptr;
    }
    pArea->dbfi.fOptimized = HB_FALSE;
    pArea->dbfi.fFilter = HB_FALSE;
@@ -1655,37 +1655,37 @@ static HB_ERRCODE hb_waClearLocate( AREAP pArea )
    if( pArea->dbsi.itmCobFor )
    {
       hb_itemRelease( pArea->dbsi.itmCobFor );
-      pArea->dbsi.itmCobFor = NULL;
+      pArea->dbsi.itmCobFor = nullptr;
    }
    if( pArea->dbsi.lpstrFor )
    {
       hb_itemRelease( pArea->dbsi.lpstrFor );
-      pArea->dbsi.lpstrFor = NULL;
+      pArea->dbsi.lpstrFor = nullptr;
    }
    if( pArea->dbsi.itmCobWhile )
    {
       hb_itemRelease( pArea->dbsi.itmCobWhile );
-      pArea->dbsi.itmCobWhile = NULL;
+      pArea->dbsi.itmCobWhile = nullptr;
    }
    if( pArea->dbsi.lpstrWhile )
    {
       hb_itemRelease( pArea->dbsi.lpstrWhile );
-      pArea->dbsi.lpstrWhile = NULL;
+      pArea->dbsi.lpstrWhile = nullptr;
    }
    if( pArea->dbsi.lNext )
    {
       hb_itemRelease( pArea->dbsi.lNext );
-      pArea->dbsi.lNext = NULL;
+      pArea->dbsi.lNext = nullptr;
    }
    if( pArea->dbsi.itmRecID )
    {
       hb_itemRelease( pArea->dbsi.itmRecID );
-      pArea->dbsi.itmRecID = NULL;
+      pArea->dbsi.itmRecID = nullptr;
    }
    if( pArea->dbsi.fRest )
    {
       hb_itemRelease( pArea->dbsi.fRest );
-      pArea->dbsi.fRest = NULL;
+      pArea->dbsi.fRest = nullptr;
    }
 
    return HB_SUCCESS;
@@ -2223,8 +2223,8 @@ static const RDDFUNCS waTable =
    ( DBENTRYP_V )       hb_waUnsupported,       /* WriteDBHeader  */
 
    /* non WorkArea functions */
-   ( DBENTRYP_R )       NULL,                      /* Init    */
-   ( DBENTRYP_R )       NULL,                      /* Exit    */
+   ( DBENTRYP_R )       nullptr,                      /* Init    */
+   ( DBENTRYP_R )       nullptr,                      /* Exit    */
    ( DBENTRYP_RVVL )    hb_waRddUnsupported_VVL,   /* Drop    */
    ( DBENTRYP_RVVL )    hb_waRddUnsupported_VVL,   /* Exists  */
    ( DBENTRYP_RVVVL )   hb_waRddUnsupported_VVVL,  /* Rename  */
@@ -2237,11 +2237,11 @@ static const RDDFUNCS waTable =
 #define HB_RDD_POOL_ALLOCSIZE  128
 /* common for all threads list of registered RDDs */
 static HB_CRITICAL_NEW( s_rddMtx );
-static LPRDDNODE * s_RddList    = NULL;   /* Registered RDDs pool */
+static LPRDDNODE * s_RddList    = nullptr;   /* Registered RDDs pool */
 static HB_USHORT   s_uiRddMax   = 0;      /* Size of RDD pool */
 static HB_USHORT   s_uiRddCount = 0;      /* Number of registered RDD */
 
-static HB_RDDACCEPT * s_rddRedirAccept  = NULL;
+static HB_RDDACCEPT * s_rddRedirAccept  = nullptr;
 static HB_USHORT      s_uiRddRedirMax   = 0;
 static HB_USHORT      s_uiRddRedirCount = 0;
 
@@ -2252,7 +2252,7 @@ LPRDDNODE hb_rddGetNode( HB_USHORT uiNode )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddGetNode(%hu)", uiNode ) );
 
-   return uiNode < s_uiRddCount ? s_RddList[ uiNode ] : NULL;
+   return uiNode < s_uiRddCount ? s_RddList[ uiNode ] : nullptr;
 }
 
 PHB_ITEM hb_rddList( HB_USHORT uiType )
@@ -2386,20 +2386,20 @@ void hb_rddShutDown( void )
    {
       for( uiCount = 0; uiCount < s_uiRddCount; uiCount++ )
       {
-         if( s_RddList[ uiCount ]->pTable.exit != NULL )
+         if( s_RddList[ uiCount ]->pTable.exit != nullptr )
          {
             SELF_EXIT( s_RddList[ uiCount ] );
          }
          hb_xfree( s_RddList[ uiCount ] );
       }
       hb_xfree( s_RddList );
-      s_RddList = NULL;
+      s_RddList = nullptr;
       s_uiRddMax = s_uiRddCount = 0;
    }
    if( s_uiRddRedirCount )
    {
       hb_xfree( s_rddRedirAccept );
-      s_rddRedirAccept = NULL;
+      s_rddRedirAccept = nullptr;
       s_uiRddRedirMax = s_uiRddRedirCount = 0;
    }
 }
@@ -2417,7 +2417,7 @@ int hb_rddRegister( const char * szDriver, HB_USHORT uiType )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddRegister(%s, %hu)", szDriver, uiType ) );
 
-   if( hb_rddFindNode( szDriver, NULL ) )    /* Duplicated RDD */
+   if( hb_rddFindNode( szDriver, nullptr ) )    /* Duplicated RDD */
       return 1;
 
    hb_snprintf( szGetFuncTable, sizeof( szGetFuncTable ), "%s_GETFUNCTABLE",
@@ -2452,7 +2452,7 @@ int hb_rddRegister( const char * szDriver, HB_USHORT uiType )
       /* repeat the test to protect against possible registering RDD by
        *  <szDriver>_GETFUNCTABLE()
        */
-      if( ! hb_rddFindNode( szDriver, NULL ) )    /* Duplicated RDD */
+      if( ! hb_rddFindNode( szDriver, nullptr ) )    /* Duplicated RDD */
       {
          if( s_uiRddCount == s_uiRddMax )
          {
@@ -2471,7 +2471,7 @@ int hb_rddRegister( const char * szDriver, HB_USHORT uiType )
 
    if( iResult != 0 )
       hb_xfree( pRddNewNode );
-   else if( pRddNewNode->pTable.init != NULL )
+   else if( pRddNewNode->pTable.init != nullptr )
       SELF_INIT( pRddNewNode );
 
    return iResult;
@@ -2512,7 +2512,7 @@ HB_ERRCODE hb_rddInheritEx( RDDFUNCS * pTable, const RDDFUNCS * pSubTable,
    {
       char szSuperName[ HB_RDD_MAX_DRIVERNAME_LEN + 1 ];
       hb_strncpyUpper( szSuperName, szDrvName, sizeof( szSuperName ) - 1 );
-      pRddNode = hb_rddFindNode( szSuperName, NULL );
+      pRddNode = hb_rddFindNode( szSuperName, nullptr );
 
       if( ! pRddNode )
          return HB_FAILURE;
@@ -2523,7 +2523,7 @@ HB_ERRCODE hb_rddInheritEx( RDDFUNCS * pTable, const RDDFUNCS * pSubTable,
          *puiSuperRddId = pRddNode->rddID;
    }
 
-   /* Copy the non NULL entries from pSubTable into pTable */
+   /* Copy the non nullptr entries from pSubTable into pTable */
    pFunction = ( DBENTRYP_V * ) pTable;
    pSubFunction = ( const DBENTRYP_V * ) pSubTable;
    for( uiCount = 0; uiCount < RDDFUNCSCOUNT; uiCount++ )
@@ -2541,7 +2541,7 @@ HB_ERRCODE hb_rddInherit( RDDFUNCS * pTable, const RDDFUNCS * pSubTable,
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddInherit(%p, %p, %p, %s)", ( void * ) pTable, ( const void * ) pSubTable, ( void * ) pSuperTable, szDrvName ) );
 
-   return hb_rddInheritEx( pTable, pSubTable, pSuperTable, szDrvName, NULL );
+   return hb_rddInheritEx( pTable, pSubTable, pSuperTable, szDrvName, nullptr );
 }
 
 HB_BOOL hb_rddIsDerivedFrom( HB_USHORT uiRddID, HB_USHORT uiSuperRddID )
