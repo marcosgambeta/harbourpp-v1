@@ -63,7 +63,7 @@ HB_FUNC( POSDIFF )
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
-            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_POSDIFF, NULL,
+            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_POSDIFF, nullptr,
                       HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
 
          hb_retns( 0 );
@@ -96,10 +96,10 @@ HB_FUNC( POSDIFF )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_POSDIFF, NULL, HB_ERR_FUNCNAME, 0,
+                                  CT_ERROR_POSDIFF, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else if( HB_ISCHAR( 1 ) || HB_ISCHAR( 2 ) )
          hb_retns( 1 );
@@ -130,7 +130,7 @@ HB_FUNC( POSEQUAL )
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
-            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_POSEQUAL, NULL,
+            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_POSEQUAL, nullptr,
                       HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
 
          hb_retns( 0 );
@@ -142,7 +142,7 @@ HB_FUNC( POSEQUAL )
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
-            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_POSEQUAL, NULL,
+            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_POSEQUAL, nullptr,
                       HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
 
          hb_retns( 0 );
@@ -185,10 +185,10 @@ HB_FUNC( POSEQUAL )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_POSEQUAL, NULL, HB_ERR_FUNCNAME, 0,
+                                  CT_ERROR_POSEQUAL, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else
          hb_retns( 0 );

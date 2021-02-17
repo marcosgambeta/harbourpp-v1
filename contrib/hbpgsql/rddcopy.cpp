@@ -263,9 +263,9 @@ HB_FUNC( HB_PQCOPYFROMWA )
    AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
    PGconn * pConn = hb_PGconn_par( 1 );
 
-   if( pConn == NULL )
+   if( pConn == nullptr )
       hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   else if( pArea == NULL )
+   else if( pArea == nullptr )
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
    else
    {
@@ -282,7 +282,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
       HB_ULONG        nBufLen   = hb_parnldef( 8, 1 );
       HB_USHORT       uiFields;
       HB_ULONG        uiRecCount = 0;
-      HB_BOOL         bNoFieldPassed = ( pFields == NULL || hb_arrayLen( pFields ) == 0 );
+      HB_BOOL         bNoFieldPassed = ( pFields == nullptr || hb_arrayLen( pFields ) == 0 );
       HB_BOOL         bEof = HB_FALSE;
       PHB_ITEM        pItem;
       HB_USHORT       uiFieldCopy = 0;
@@ -321,12 +321,12 @@ HB_FUNC( HB_PQCOPYFROMWA )
             {
                int iPos = hb_rddFieldIndex( pArea, szFieldName );
 
-               szTmp = hb_xstrcpy( NULL, szFields, szFieldName, NULL );
+               szTmp = hb_xstrcpy( nullptr, szFields, szFieldName, nullptr );
                hb_xfree( szFields );
                szFields = szTmp;
                if( uiIter != uiFieldCopy )
                {
-                  szTmp = hb_xstrcpy( NULL, szFields, sc_szDelim, NULL );
+                  szTmp = hb_xstrcpy( nullptr, szFields, sc_szDelim, nullptr );
                   hb_xfree( szFields );
                   szFields = szTmp;
                }
@@ -345,18 +345,18 @@ HB_FUNC( HB_PQCOPYFROMWA )
                uiFieldCopy--;
             }
          }
-         szTmp = hb_xstrcpy( NULL, szFields, ")", NULL );
+         szTmp = hb_xstrcpy( nullptr, szFields, ")", nullptr );
          hb_xfree( szFields );
          szFields = szTmp;
       }
 
       if( szFields )
       {
-         szInit = hb_xstrcpy( NULL, "COPY ", szTable, " ", szFields, " FROM STDIN WITH DELIMITER '", sc_szDelim, "' CSV  QUOTE AS '", sc_szQuote, "' ESCAPE AS '", sc_szEsc, "'", NULL );
+         szInit = hb_xstrcpy( nullptr, "COPY ", szTable, " ", szFields, " FROM STDIN WITH DELIMITER '", sc_szDelim, "' CSV  QUOTE AS '", sc_szQuote, "' ESCAPE AS '", sc_szEsc, "'", nullptr );
          hb_xfree( szFields );
       }
       else
-         szInit = hb_xstrcpy( NULL, "COPY ", szTable, " FROM STDIN WITH DELIMITER '", sc_szDelim, "' CSV  QUOTE AS '", sc_szQuote, "' ESCAPE AS '", sc_szEsc, "'", NULL );
+         szInit = hb_xstrcpy( nullptr, "COPY ", szTable, " FROM STDIN WITH DELIMITER '", sc_szDelim, "' CSV  QUOTE AS '", sc_szQuote, "' ESCAPE AS '", sc_szEsc, "'", nullptr );
 
       HB_VM_UNLOCK();
       pgResult = PQexec( context->connection, szInit );
@@ -422,7 +422,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
       if( bFail )
          PQputCopyEnd( context->connection, "export buffer problems" );
       else if( PQputCopyData( context->connection, context->buffer, context->position ) == -1 ||
-               PQputCopyEnd( context->connection, NULL ) == -1 )
+               PQputCopyEnd( context->connection, nullptr ) == -1 )
          bFail = HB_TRUE;
       else
       {

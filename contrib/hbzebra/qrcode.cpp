@@ -934,7 +934,7 @@ static void _qr_draw( PHB_BITBUFFER pBits, PHB_BITBUFFER pCWBits, int iVersion )
    hb_bitbuffer_set( pBits, 8 + iLength * ( iLength - 8 ), 1 );
 
 
-   /* Draw data. Note: pCWBits == NULL is used only for debugging */
+   /* Draw data. Note: pCWBits == nullptr is used only for debugging */
    if( pCWBits )
    {
       int no, up, right;

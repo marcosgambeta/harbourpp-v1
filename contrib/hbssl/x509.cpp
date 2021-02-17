@@ -67,15 +67,15 @@ static HB_GARBAGE_FUNC( X509_release )
 {
    PHB_X509 ph = ( PHB_X509 ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && ph->pX509 )
    {
       /* Destroy the object */
       if( ph->fRelease )
          X509_free( ( X509 * ) ph->pX509 );
 
-      /* set pointer to NULL just in case */
-      ph->pX509 = NULL;
+      /* set pointer to nullptr just in case */
+      ph->pX509 = nullptr;
    }
 }
 
@@ -87,7 +87,7 @@ static const HB_GC_FUNCS s_gcX509_funcs =
 
 HB_BOOL hb_X509_is( int iParam )
 {
-   return hb_parptrGC( &s_gcX509_funcs, iParam ) != NULL;
+   return hb_parptrGC( &s_gcX509_funcs, iParam ) != nullptr;
 }
 
 X509 * hb_X509_par( int iParam )

@@ -96,7 +96,7 @@ HB_FUNC( CHARREPL )
 
             while( ( pc = ct_at_exact_forward( pc, sStrLen - ( pc - pcString ),
                                                pcSearch + sIndex, 1,
-                                               &sMatchStrLen ) ) != NULL )
+                                               &sMatchStrLen ) ) != nullptr )
             {
                *( pcRet + ( pc - pcString ) ) = *( pcReplace + sReplIndex );
                pc++;
@@ -108,7 +108,7 @@ HB_FUNC( CHARREPL )
             char * pcw = pcRet;
             while( ( pcw = ( char * ) HB_UNCONST( ct_at_exact_forward( pcw, sStrLen - ( pcw - pcRet ),
                                                                        pcSearch + sIndex, 1,
-                                                                       &sMatchStrLen ) ) ) != NULL )
+                                                                       &sMatchStrLen ) ) ) != nullptr )
             {
                *pcw++ = *( pcReplace + sReplIndex );
             }
@@ -133,10 +133,10 @@ HB_FUNC( CHARREPL )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_CHARREPL, NULL, HB_ERR_FUNCNAME, 0,
+                                  CT_ERROR_CHARREPL, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else if( iNoRet )
          hb_retl( HB_FALSE );

@@ -76,7 +76,7 @@ static void hb_fi_error_init( void * cargo )
 {
    HB_FI_ERROR * pError = ( HB_FI_ERROR * ) cargo;
 
-   pError->pErrorCallback = NULL;
+   pError->pErrorCallback = nullptr;
 }
 
 static void hb_fi_error_release( void * cargo )
@@ -126,13 +126,13 @@ static HB_GARBAGE_FUNC( hb_FIBITMAP_Destructor )
    /* Retrieve image pointer holder */
    HB_FIBITMAP ** ptr = ( HB_FIBITMAP ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( *ptr )
    {
       PHB_FIBITMAP_free( *ptr );
 
-      /* set pointer to NULL to avoid multiple freeing */
-      *ptr = NULL;
+      /* set pointer to nullptr to avoid multiple freeing */
+      *ptr = nullptr;
    }
 }
 
@@ -174,10 +174,10 @@ static HB_GARBAGE_FUNC( hb_FIMULTIBITMAP_Destructor )
    /* Retrieve image pointer holder */
    FIMULTIBITMAP ** ptr = ( FIMULTIBITMAP ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( *ptr )
-      /* set pointer to NULL to avoid multiple freeing */
-      *ptr = NULL;
+      /* set pointer to nullptr to avoid multiple freeing */
+      *ptr = nullptr;
 }
 
 static const HB_GC_FUNCS s_gcFIMULTIBITMAPFuncs =
@@ -1436,7 +1436,7 @@ HB_FUNC( FI_WINCONVTODIB )
    {
 #if ! defined( HB_OS_WIN_CE )
       FIBITMAP * dib = hb_FIBITMAP_par( 1 );
-      HDC        hDC = GetDC( NULL );
+      HDC        hDC = GetDC( nullptr );
 
       /* run function */
       HBITMAP bitmap = CreateDIBitmap( hDC,
@@ -1446,7 +1446,7 @@ HB_FUNC( FI_WINCONVTODIB )
                                        FreeImage_GetInfo( dib ),
                                        DIB_RGB_COLORS );
 
-      ReleaseDC( NULL, hDC );
+      ReleaseDC( nullptr, hDC );
 
       if( bitmap )
          hb_retptr( bitmap );
@@ -1476,7 +1476,7 @@ HB_FUNC( FI_WINCONVFROMDIB )
 
          GetObject( bitmap, sizeof( BITMAP ), ( LPSTR ) &bm );
          dib = FreeImage_Allocate( bm.bmWidth, bm.bmHeight, bm.bmBitsPixel, 0, 0, 0 );
-         hDC = GetDC( NULL );
+         hDC = GetDC( nullptr );
          GetDIBits( hDC,
                     bitmap,
                     0,
@@ -1484,7 +1484,7 @@ HB_FUNC( FI_WINCONVFROMDIB )
                     FreeImage_GetBits( dib ),
                     FreeImage_GetInfo( dib ),
                     DIB_RGB_COLORS );
-         ReleaseDC( NULL, hDC );
+         ReleaseDC( nullptr, hDC );
 
          if( dib )
             hb_FIBITMAP_ret( dib, HB_TRUE );

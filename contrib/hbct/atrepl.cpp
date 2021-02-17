@@ -76,7 +76,7 @@ HB_FUNC( ATREPL )
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
-            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_ATREPL, NULL,
+            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_ATREPL, nullptr,
                       HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
 
          hb_retclen( pcString, nStrLen );
@@ -129,10 +129,10 @@ HB_FUNC( ATREPL )
                   break;
 
                default:
-                  pc = NULL;
+                  pc = nullptr;
             }
 
-            if( pc == NULL )
+            if( pc == nullptr )
             {
                hb_retclen_buffer( pcRetStr, nRetStrLen );
                return;
@@ -199,10 +199,10 @@ HB_FUNC( ATREPL )
                break;
 
             default:
-               pc = NULL;
+               pc = nullptr;
          }
 
-         if( pc == NULL )
+         if( pc == nullptr )
          {
             hb_retclen_buffer( pcRetStr, nRetStrLen );
             return;
@@ -238,10 +238,10 @@ HB_FUNC( ATREPL )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_ATREPL, NULL, HB_ERR_FUNCNAME, 0,
+                                  CT_ERROR_ATREPL, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else
          hb_retclen( hb_parc( 2 ), hb_parclen( 2 ) );

@@ -126,7 +126,7 @@ static HB_ERRCODE odbcGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo );
 
 static SDDNODE s_odbcdd =
 {
-   NULL,
+   nullptr,
    "ODBC",
    ( SDDFUNC_CONNECT ) odbcConnect,
    ( SDDFUNC_DISCONNECT ) odbcDisconnect,
@@ -134,8 +134,8 @@ static SDDNODE s_odbcdd =
    ( SDDFUNC_OPEN ) odbcOpen,
    ( SDDFUNC_CLOSE ) odbcClose,
    ( SDDFUNC_GOTO ) odbcGoTo,
-   ( SDDFUNC_GETVALUE ) NULL,
-   ( SDDFUNC_GETVARLEN ) NULL
+   ( SDDFUNC_GETVALUE ) nullptr,
+   ( SDDFUNC_GETVARLEN ) nullptr
 };
 
 
@@ -149,7 +149,7 @@ static void hb_odbcdd_init( void * cargo )
 
 HB_FUNC( HB_SDDODBC_REGISTER )
 {
-   hb_odbcdd_init( NULL );
+   hb_odbcdd_init( nullptr );
 }
 
 /* force SQLBASE linking */
@@ -157,7 +157,7 @@ HB_FUNC_TRANSLATE( SDDODBC, SQLBASE )
 
 HB_INIT_SYMBOLS_BEGIN( odbcdd__InitSymbols )
 {
-   "SDDODBC", { HB_FS_PUBLIC }, { HB_FUNCNAME( SDDODBC ) }, NULL
+   "SDDODBC", { HB_FS_PUBLIC }, { HB_FUNCNAME( SDDODBC ) }, nullptr
 },
 HB_INIT_SYMBOLS_END( odbcdd__InitSymbols )
 
@@ -202,7 +202,7 @@ static char * odbcGetError( SQLHENV hEnv, SQLHDBC hConn, SQLHSTMT hStmt, HB_ERRC
 
       szError[ 5 ] = ' ';
 
-      pRet  = O_HB_ITEMPUTSTR( NULL, ( O_HB_CHAR * ) szError );
+      pRet  = O_HB_ITEMPUTSTR( nullptr, ( O_HB_CHAR * ) szError );
       szRet = hb_strdup( hb_itemGetCPtr( pRet ) );
       hb_itemRelease( pRet );
    }
@@ -218,8 +218,8 @@ static char * odbcGetError( SQLHENV hEnv, SQLHDBC hConn, SQLHSTMT hStmt, HB_ERRC
 /* --- SDD METHODS --- */
 static HB_ERRCODE odbcConnect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
 {
-   SQLHENV    hEnv     = NULL;
-   SQLHDBC    hConnect = NULL;
+   SQLHENV    hEnv     = nullptr;
+   SQLHDBC    hConnect = nullptr;
    char *     szError;
    HB_ERRCODE errCode;
 
@@ -249,7 +249,7 @@ static HB_ERRCODE odbcConnect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
          pchConStr = O_HB_ARRAYGETSTR( pItem, 2, &hConnStr, &nConnLen );
 
          if( SQL_SUCCEEDED( SQLDriverConnect( hConnect,
-                                              NULL,
+                                              nullptr,
                                               ( SQLTCHAR * ) HB_UNCONST( pchConStr ),
                                               ( SQLSMALLINT ) nConnLen,
                                               cBuffer,
@@ -267,7 +267,7 @@ static HB_ERRCODE odbcConnect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
          {
             hb_strfree( hConnStr );
             szError = odbcGetError( hEnv, hConnect, SQL_NULL_HSTMT, &errCode );
-            hb_rddsqlSetError( errCode, szError, NULL, NULL, 0 );
+            hb_rddsqlSetError( errCode, szError, nullptr, nullptr, 0 );
             hb_xfree( szError );
          }
 #if ODBCVER >= 0x0300
@@ -351,7 +351,7 @@ static HB_ERRCODE odbcExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
       if( SQL_SUCCEEDED( SQLRowCount( hStmt, &iCount ) ) )
       {
          /* TODO: new id */
-         hb_rddsqlSetError( 0, NULL, hb_itemGetCPtr( pItem ), NULL, static_cast< unsigned long >( iCount ) );
+         hb_rddsqlSetError( 0, nullptr, hb_itemGetCPtr( pItem ), nullptr, static_cast< unsigned long >( iCount ) );
 #if ODBCVER >= 0x0300
          SQLFreeHandle( SQL_HANDLE_STMT, hStmt );
 #else
@@ -362,7 +362,7 @@ static HB_ERRCODE odbcExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
    }
 
    szError = odbcGetError( pSDDConn->hEnv, pSDDConn->hConn, hStmt, &errCode );
-   hb_rddsqlSetError( errCode, szError, hb_itemGetCPtr( pItem ), NULL, errCode );
+   hb_rddsqlSetError( errCode, szError, hb_itemGetCPtr( pItem ), nullptr, errCode );
    hb_xfree( szError );
 #if ODBCVER >= 0x0300
    SQLFreeHandle( SQL_HANDLE_STMT, hStmt );
@@ -460,7 +460,7 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
       {
          hb_itemRelease( pItemEof );
          hb_itemRelease( pItem );
-         szError = odbcGetError( pSDDConn->hEnv, pSDDConn->hConn, hStmt, NULL );
+         szError = odbcGetError( pSDDConn->hEnv, pSDDConn->hConn, hStmt, nullptr );
 #if ODBCVER >= 0x0300
          SQLFreeHandle( SQL_HANDLE_STMT, hStmt );
 #else
@@ -680,7 +680,7 @@ static HB_ERRCODE odbcClose( SQLBASEAREAP pArea )
 #endif
 
       hb_xfree( pSDDData );
-      pArea->pSDDData = NULL;
+      pArea->pSDDData = nullptr;
    }
    return HB_SUCCESS;
 }
@@ -709,7 +709,7 @@ static HB_ERRCODE odbcGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
       }
 
       pArray = hb_itemArrayNew( pArea->area.uiFieldCount );
-      pItem  = NULL;
+      pItem  = nullptr;
       for( ui = 1; ui <= pArea->area.uiFieldCount; ui++ )
       {
          iLen   = SQL_NULL_DATA;
@@ -844,7 +844,7 @@ static HB_ERRCODE odbcGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
 
          if( pItem )
          {
-            /* NULL -> NIL */
+            /* nullptr -> NIL */
             if( iLen == SQL_NULL_DATA )
                hb_itemClear( pItem );
             else

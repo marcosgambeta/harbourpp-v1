@@ -81,7 +81,7 @@ static void do_atnum( int iSwitch )
                int iArgErrorMode = ct_getargerrormode();
 
                if( iArgErrorMode != CT_ARGERR_IGNORE )
-                  ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_AFTERATNUM, NULL,
+                  ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_AFTERATNUM, nullptr,
                             HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
 
                hb_retc_null();
@@ -93,7 +93,7 @@ static void do_atnum( int iSwitch )
                int iArgErrorMode = ct_getargerrormode();
 
                if( iArgErrorMode != CT_ARGERR_IGNORE )
-                  ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_BEFORATNUM, NULL,
+                  ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_BEFORATNUM, nullptr,
                             HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
 
                hb_retc_null();
@@ -105,7 +105,7 @@ static void do_atnum( int iSwitch )
                int iArgErrorMode = ct_getargerrormode();
 
                if( iArgErrorMode != CT_ARGERR_IGNORE )
-                  ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_ATNUM, NULL, HB_ERR_FUNCNAME, 0,
+                  ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_ATNUM, nullptr, HB_ERR_FUNCNAME, 0,
                             EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
 
                hb_retns( 0 );
@@ -146,10 +146,10 @@ static void do_atnum( int iSwitch )
                   break;
 
                default:
-                  pc = NULL;
+                  pc = nullptr;
             }
 
-            if( pc == NULL )
+            if( pc == nullptr )
             {
                /* no match found; if this happens at this point,
                   there are no <nCounter> matches, so return an empty string */
@@ -195,9 +195,9 @@ static void do_atnum( int iSwitch )
                break;
 
             default:
-               pc = NULL;
+               pc = nullptr;
          }
-         if( pc == NULL )
+         if( pc == nullptr )
          {
             /* no matches found */
             switch( iSwitch )
@@ -260,10 +260,10 @@ static void do_atnum( int iSwitch )
                pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                         iSwitch ==
                                         DO_ATNUM_AFTERATNUM ? CT_ERROR_AFTERATNUM :
-                                        CT_ERROR_BEFORATNUM, NULL, HB_ERR_FUNCNAME, 0,
+                                        CT_ERROR_BEFORATNUM, nullptr, HB_ERR_FUNCNAME, 0,
                                         EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-            if( pSubst != NULL )
+            if( pSubst != nullptr )
                hb_itemReturnRelease( pSubst );
             else
                hb_retc_null();
@@ -277,10 +277,10 @@ static void do_atnum( int iSwitch )
 
             if( iArgErrorMode != CT_ARGERR_IGNORE )
                pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_ATNUM,
-                                        NULL, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
+                                        nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
                                         HB_ERR_ARGS_BASEPARAMS );
 
-            if( pSubst != NULL )
+            if( pSubst != nullptr )
                hb_itemReturnRelease( pSubst );
             else
                hb_retns( 0 );

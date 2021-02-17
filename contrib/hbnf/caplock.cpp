@@ -41,7 +41,7 @@ HB_FUNC( FT_CAPLOCK )
    {
       iState         = hb_itemGetNI( gtInfo.pResult );
       gtInfo.pNewVal = gtInfo.pResult;
-      gtInfo.pResult = NULL;
+      gtInfo.pResult = nullptr;
    }
 
    if( HB_ISLOG( 1 ) )

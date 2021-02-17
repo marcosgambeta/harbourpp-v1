@@ -113,12 +113,12 @@ HB_FUNC( HB_LZO1X_1_COMPRESS )
    if( src )
    {
       lzo_uint  src_len = ( lzo_uint ) hb_parclen( 1 );
-      lzo_bytep dst     = NULL;
+      lzo_bytep dst     = nullptr;
 
       if( src_len > 0 )
          dst = ( lzo_bytep ) hb_xalloc( HB_MAX( hb_lzo_compressbound( src_len ),
                                                 ( HB_SIZE ) hb_parns( 2 ) ) );
-      if( dst == NULL )
+      if( dst == nullptr )
          hb_storni( LZO_E_OUT_OF_MEMORY, 3 );  /* out of memory */
       else
       {
@@ -126,7 +126,7 @@ HB_FUNC( HB_LZO1X_1_COMPRESS )
          lzo_voidp wrkmem = ( lzo_voidp ) hb_xalloc( LZO1X_1_MEM_COMPRESS );
          int       r;
 
-         if( wrkmem == NULL )
+         if( wrkmem == nullptr )
          {
             r       = LZO_E_OUT_OF_MEMORY; /* out of memory */
             dst_len = 0;
@@ -173,17 +173,17 @@ HB_FUNC( HB_LZO1X_DECOMPRESS )
    if( src )
    {
       lzo_uint  src_len = ( lzo_uint ) hb_parclen( 1 );
-      lzo_bytep dst     = NULL;
+      lzo_bytep dst     = nullptr;
       lzo_uint  dst_len;
 
       if( hb_parns( 2 ) > 0 )
          dst = ( lzo_bytep ) hb_xalloc( hb_parns( 2 ) );
 
-      if( dst == NULL )
+      if( dst == nullptr )
          hb_storni( LZO_E_OUT_OF_MEMORY, 3 );  /* out of memory */
       else
       {
-         int r = lzo1x_decompress( ( const lzo_bytep ) src, src_len, dst, &dst_len, NULL );
+         int r = lzo1x_decompress( ( const lzo_bytep ) src, src_len, dst, &dst_len, nullptr );
 
          hb_storni( r, 3 );
 
@@ -208,17 +208,17 @@ HB_FUNC( HB_LZO1X_DECOMPRESS_SAFE )
    if( src )
    {
       lzo_uint  src_len = ( lzo_uint ) hb_parclen( 1 );
-      lzo_bytep dst     = NULL;
+      lzo_bytep dst     = nullptr;
       lzo_uint  dst_len = ( lzo_uint ) hb_parns( 2 );
 
       if( dst_len > 0 )
          dst = ( lzo_bytep ) hb_xalloc( dst_len );
 
-      if( dst == NULL )
+      if( dst == nullptr )
          hb_storni( LZO_E_OUT_OF_MEMORY, 3 );  /* out of memory */
       else
       {
-         int r = lzo1x_decompress_safe( ( const lzo_bytep ) src, src_len, dst, &dst_len, NULL );
+         int r = lzo1x_decompress_safe( ( const lzo_bytep ) src, src_len, dst, &dst_len, nullptr );
 
          hb_storni( r, 3 );
 

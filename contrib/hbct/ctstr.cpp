@@ -67,7 +67,7 @@ static void s_ct_str_init( void * cargo )
    ct_str->cAtLikeChar = '?';
 }
 
-static HB_TSD_NEW( s_ct_str, sizeof( CT_STR ), s_ct_str_init, NULL );
+static HB_TSD_NEW( s_ct_str, sizeof( CT_STR ), s_ct_str_init, nullptr );
 
 /* -------------- */
 /* initialization */
@@ -101,7 +101,7 @@ const char * ct_at_exact_forward( const char * pcString, HB_SIZE sStrLen,
       return nullptr;
    else
    {
-      if( psMatchStrLen != NULL )
+      if( psMatchStrLen != nullptr )
          *psMatchStrLen = sMatchLen;
       return pcString + sPos - 1;
    }
@@ -130,7 +130,7 @@ const char * ct_at_exact_backward( const char * pcString, HB_SIZE sStrLen,
       if( sIndex == sMatchLen )
       {
          /* last match found */
-         if( psMatchStrLen != NULL )
+         if( psMatchStrLen != nullptr )
             *psMatchStrLen = sMatchLen;
          return pcRet;
       }
@@ -165,7 +165,7 @@ const char * ct_at_wildcard_forward( const char * pcString, HB_SIZE sStrLen,
       }
       if( sIndex == sMatchLen )
       {
-         if( psMatchStrLen != NULL )
+         if( psMatchStrLen != nullptr )
             *psMatchStrLen = sMatchLen;
          return pcRet;
       }
@@ -200,7 +200,7 @@ const char * ct_at_wildcard_backward( const char * pcString, HB_SIZE sStrLen,
       if( sIndex == sMatchLen )
       {
          /* last match found */
-         if( psMatchStrLen != NULL )
+         if( psMatchStrLen != nullptr )
             *psMatchStrLen = sMatchLen;
          return pcRet;
       }
@@ -231,7 +231,7 @@ const char * ct_at_charset_forward( const char * pcString, HB_SIZE sStrLen,
       {
          if( *pcSet == *pcRet )
          {
-            if( psMatchedCharPos != NULL )
+            if( psMatchedCharPos != nullptr )
                *psMatchedCharPos = pcSet - pcCharSet;
             return pcRet;
          }
@@ -262,7 +262,7 @@ const char * ct_at_charset_backward( const char * pcString, HB_SIZE sStrLen,
       {
          if( *pcSet == *pcRet )
          {
-            if( psMatchedCharPos != NULL )
+            if( psMatchedCharPos != nullptr )
                *psMatchedCharPos = pcSet - pcCharSet;
             return pcRet;
          }
@@ -304,7 +304,7 @@ HB_FUNC( CSETREF )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CSETREF,
-                   NULL, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+                   nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
    }
 }
 
@@ -339,7 +339,7 @@ HB_FUNC( CSETATMUPA )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
-         ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CSETATMUPA, NULL,
+         ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CSETATMUPA, nullptr,
                    HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
    }
 }
@@ -400,7 +400,7 @@ HB_FUNC( SETATLIKE )
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
             ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_SETATLIKE,
-                      NULL, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT,
+                      nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT,
                       HB_ERR_ARGS_BASEPARAMS );
       }
    }
@@ -429,7 +429,7 @@ HB_FUNC( SETATLIKE )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
-         ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_SETATLIKE, NULL,
+         ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_SETATLIKE, nullptr,
                    HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
    }
 }

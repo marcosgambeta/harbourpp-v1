@@ -81,7 +81,7 @@ HB_FUNC( HB_GS )
          gsargv[ pos ] = ( char * ) HB_UNCONST( pszParam ? pszParam : "" );
       }
 
-      code = gsapi_new_instance( &minst, NULL );
+      code = gsapi_new_instance( &minst, nullptr );
       if( code >= 0 )
       {
          code  = gsapi_init_with_args( minst, gsargc, gsargv );
@@ -113,8 +113,8 @@ HB_FUNC( HB_GSAPI_REVISION )
    }
    else
    {
-      hb_storc( NULL, 1 );
-      hb_storc( NULL, 2 );
+      hb_storc( nullptr, 1 );
+      hb_storc( nullptr, 2 );
       hb_stornl( 0, 3 );
       hb_stornl( 0, 4 );
    }

@@ -62,10 +62,10 @@ HB_FUNC( WAPI_SHELLEXECUTE )
    void * hDirectory;
 
    hb_retnint( ( HB_PTRUINT ) ShellExecute( ( HWND ) hb_parptr( 1 ),
-                                            HB_PARSTR( 2, &hOperation, NULL ), /* edit, explore, open, print, play?, properties? */
-                                            HB_PARSTRDEF( 3, &hFile, NULL ),
-                                            HB_PARSTR( 4, &hParameters, NULL ),
-                                            HB_PARSTR( 5, &hDirectory, NULL ),
+                                            HB_PARSTR( 2, &hOperation, nullptr ), /* edit, explore, open, print, play?, properties? */
+                                            HB_PARSTRDEF( 3, &hFile, nullptr ),
+                                            HB_PARSTR( 4, &hParameters, nullptr ),
+                                            HB_PARSTR( 5, &hDirectory, nullptr ),
                                             hb_parnidef( 6, SW_SHOWNORMAL ) /* nShowCmd */ ) );
 
    hb_strfree( hOperation );
@@ -89,17 +89,17 @@ HB_FUNC( WAPI_SHELLEXECUTE_WAIT )
    ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
    ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
    ShExecInfo.hwnd = ( HWND ) hb_parptr( 1 );
-   ShExecInfo.lpVerb = HB_PARSTR( 2, &hOperation, NULL );
-   ShExecInfo.lpFile = HB_PARSTRDEF( 3, &hFile, NULL );
-   ShExecInfo.lpParameters =  HB_PARSTR( 4, &hParameters, NULL );
-   ShExecInfo.lpDirectory = HB_PARSTR( 5, &hDirectory, NULL );
+   ShExecInfo.lpVerb = HB_PARSTR( 2, &hOperation, nullptr );
+   ShExecInfo.lpFile = HB_PARSTRDEF( 3, &hFile, nullptr );
+   ShExecInfo.lpParameters =  HB_PARSTR( 4, &hParameters, nullptr );
+   ShExecInfo.lpDirectory = HB_PARSTR( 5, &hDirectory, nullptr );
    ShExecInfo.nShow = hb_parnidef( 6, SW_SHOWNORMAL );
-   ShExecInfo.hInstApp = NULL;
+   ShExecInfo.hInstApp = nullptr;
    retVal = ShellExecuteEx(&ShExecInfo);
    hb_retl( retVal );
    while( WaitForSingleObject(ShExecInfo.hProcess,1000) != WAIT_OBJECT_0 )
    {
-      while( PeekMessage( &msg, ( HWND ) NULL, 0, 0, PM_REMOVE ) )
+      while( PeekMessage( &msg, ( HWND ) nullptr, 0, 0, PM_REMOVE ) )
       {
          TranslateMessage( &msg );
          DispatchMessage( &msg );

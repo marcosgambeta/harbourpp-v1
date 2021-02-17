@@ -202,7 +202,7 @@ HB_FUNC( FILESTATS )
 
    {
       void *  hFileName;
-      LPCTSTR lpFileName = HB_PARSTR( 1, &hFileName, NULL );
+      LPCTSTR lpFileName = HB_PARSTR( 1, &hFileName, nullptr );
       DWORD   dwAttribs;
       WIN32_FIND_DATA ffind;
       FILETIME        filetime;

@@ -93,7 +93,7 @@ typedef struct _MIXTAG
    HB_ULONG  ulRecMax;
    HB_ULONG  ulRecCount;
 
-   PHB_CODEPAGE pCodepage;      /* National sort table for character key tags, NULL otherwise */
+   PHB_CODEPAGE pCodepage;      /* National sort table for character key tags, nullptr otherwise */
 
    HB_ULONG ulKeyNo;
 } MIXTAG, * PMIXTAG;
@@ -371,7 +371,7 @@ static PMIXKEY mixFindKeyLen( PMIXTAG pTag, PMIXKEY pKey, HB_USHORT uiLen, HB_UL
    if( ulKeyPos )
       *ulKeyPos = l;
 
-   return i ? NULL : pTag->pKeys[ l ];
+   return i ? nullptr : pTag->pKeys[ l ];
 }
 
 
@@ -409,7 +409,7 @@ static PMIXTAG mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_ITEM
    hb_strncpyTrim( pTag->szKeyExpr, hb_itemGetCPtr( pKeyExpr ), hb_itemGetCLen( pKeyExpr ) );
 
    /* TODO: for expression */
-   pTag->szForExpr = NULL;
+   pTag->szForExpr = nullptr;
 
    pTag->pKeyItem = pKeyItem;
    pTag->pForItem = pForItem;
@@ -482,16 +482,16 @@ static PMIXTAG mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_ITEM
          if( lStep >= pOrdCondInfo->lStep )
          {
             lStep = 0;
-            if( ! mixEvalCond( pEvalItem, NULL ) )
+            if( ! mixEvalCond( pEvalItem, nullptr ) )
                break;
          }
          ++lStep;
       }
 
-      if( pWhileItem && ! mixEvalCond( pWhileItem, NULL ) )
+      if( pWhileItem && ! mixEvalCond( pWhileItem, nullptr ) )
          break;
 
-      if( pForItem == NULL || mixEvalCond( pForItem, NULL ) )
+      if( pForItem == nullptr || mixEvalCond( pForItem, nullptr ) )
       {
          pItem = hb_vmEvalBlockOrMacro( pKeyItem );
 
@@ -632,7 +632,7 @@ static void mixUpdateDestroy( ADSXAREAP pArea, PMIXUPDATE pUpdate, int fUpdate )
    iTag = 0;
    while( pTag )
    {
-      HB_BOOL bFor = pTag->pForItem == NULL || mixEvalCond( pTag->pForItem, pArea );
+      HB_BOOL bFor = pTag->pForItem == nullptr || mixEvalCond( pTag->pForItem, pArea );
       if( pUpdate[ iTag ] == ( HB_ULONG ) -1 )
       {
          if( bFor )
@@ -927,7 +927,7 @@ static HB_ERRCODE adsxPutValue( ADSXAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
 
 static HB_ERRCODE adsxClose( ADSXAREAP pArea )
 {
-   pArea->pTagCurrent = NULL;
+   pArea->pTagCurrent = nullptr;
    while( pArea->pTagList )
    {
       PMIXTAG pTag = pArea->pTagList;
@@ -1054,7 +1054,7 @@ static HB_ERRCODE adsxOrderListFocus( ADSXAREAP pArea, LPDBORDERINFO pOrderInfo 
       {
          pOrderInfo->itmResult = hb_itemPutC( pOrderInfo->itmResult, pArea->pTagCurrent->szName );
          if( pOrderInfo->itmOrder )
-            pArea->pTagCurrent = NULL;
+            pArea->pTagCurrent = nullptr;
       }
       return HB_SUCCESS;
    }
@@ -1162,16 +1162,16 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
       if( bWhileADS && pArea->adsarea.area.lpdbOrdCondInfo->abWhile )
       {
          hb_xfree( pArea->adsarea.area.lpdbOrdCondInfo->abWhile );
-         pArea->adsarea.area.lpdbOrdCondInfo->abWhile = NULL;
+         pArea->adsarea.area.lpdbOrdCondInfo->abWhile = nullptr;
          if( pArea->adsarea.area.lpdbOrdCondInfo->itmCobWhile )
          {
             hb_itemRelease( pArea->adsarea.area.lpdbOrdCondInfo->itmCobWhile );
-            pArea->adsarea.area.lpdbOrdCondInfo->itmCobWhile = NULL;
+            pArea->adsarea.area.lpdbOrdCondInfo->itmCobWhile = nullptr;
          }
          if( pArea->adsarea.area.lpdbOrdCondInfo->itmStartRecID )
          {
             hb_itemRelease( pArea->adsarea.area.lpdbOrdCondInfo->itmStartRecID );
-            pArea->adsarea.area.lpdbOrdCondInfo->itmStartRecID = NULL;
+            pArea->adsarea.area.lpdbOrdCondInfo->itmStartRecID = nullptr;
          }
          pArea->adsarea.area.lpdbOrdCondInfo->fRest = HB_FALSE;
       }
@@ -1191,7 +1191,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
          return HB_FAILURE;
       }
       pKeyItem = pArea->adsarea.area.valResult;
-      pArea->adsarea.area.valResult = NULL;
+      pArea->adsarea.area.valResult = nullptr;
    }
 
    /* Test key codeblock on EOF */
@@ -1207,7 +1207,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
    }
 
    pResult = pArea->adsarea.area.valResult;
-   pArea->adsarea.area.valResult = NULL;
+   pArea->adsarea.area.valResult = nullptr;
 
    switch( hb_itemType( pResult ) )
    {
@@ -1248,7 +1248,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
          AdsDeleteIndex( hIndex );
       hb_vmDestroyBlockOrMacro( pKeyItem );
       SELF_GOTO( &pArea->adsarea.area, ulRecNo );
-      hb_mixErrorRT( pArea, bType == 'U' ? EG_DATATYPE : EG_DATAWIDTH, 1026, NULL, 0, 0 );
+      hb_mixErrorRT( pArea, bType == 'U' ? EG_DATATYPE : EG_DATAWIDTH, 1026, nullptr, 0, 0 );
       return HB_FAILURE;
    }
 
@@ -1270,7 +1270,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
             return HB_FAILURE;
          }
          pForItem = pArea->adsarea.area.valResult;
-         pArea->adsarea.area.valResult = NULL;
+         pArea->adsarea.area.valResult = nullptr;
       }
 
       /* Obtain WHILE codeblock */
@@ -1291,7 +1291,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
             return HB_FAILURE;
          }
          pWhileItem = pArea->adsarea.area.valResult;
-         pArea->adsarea.area.valResult = NULL;
+         pArea->adsarea.area.valResult = nullptr;
       }
    }
 
@@ -1320,11 +1320,11 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
          if( pWhileItem )
             hb_vmDestroyBlockOrMacro( pWhileItem );
          SELF_GOTO( &pArea->adsarea.area, ulRecNo );
-         hb_mixErrorRT( pArea, EG_DATATYPE, EDBF_INVALIDFOR, NULL, 0, 0 );
+         hb_mixErrorRT( pArea, EG_DATATYPE, EDBF_INVALIDFOR, nullptr, 0, 0 );
          return HB_FAILURE;
       }
       hb_itemRelease( pArea->adsarea.area.valResult );
-      pArea->adsarea.area.valResult = NULL;
+      pArea->adsarea.area.valResult = nullptr;
    }
 
    /* TODO: WHILE condition is not tested, like in DBFCDX. Why? Compatibility with Clipper? */
@@ -1385,7 +1385,7 @@ static HB_ERRCODE adsxOrderDestroy( ADSXAREAP pArea, LPDBORDERINFO pOrderInfo )
       }
 
       if( pTag == pArea->pTagCurrent )
-         pArea->pTagCurrent = NULL;
+         pArea->pTagCurrent = nullptr;
 
       mixTagDestroy( pTag );
       return HB_SUCCESS;
@@ -1428,7 +1428,7 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
 
             AdsGetNumIndexes( pArea->adsarea.hTable, &usOrder );
 
-            pTag = usSearch <= usOrder ? NULL : pArea->pTagList;
+            pTag = usSearch <= usOrder ? nullptr : pArea->pTagList;
             while( pTag )
             {
                if( ++usOrder == usSearch )
@@ -1454,7 +1454,7 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          break;
 
       case DBOI_ISCOND:
-         pOrderInfo->itmResult = hb_itemPutL( pOrderInfo->itmResult, pTag->pForItem != NULL );
+         pOrderInfo->itmResult = hb_itemPutL( pOrderInfo->itmResult, pTag->pForItem != nullptr );
          break;
 
       case DBOI_ISDESC:
@@ -1632,106 +1632,106 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
 
 
 
-static RDDFUNCS adsxTable = { NULL,
-                              NULL,
-                              NULL,
+static RDDFUNCS adsxTable = { nullptr,
+                              nullptr,
+                              nullptr,
                               ( DBENTRYP_V ) adsxGoBottom,
-                              NULL,
-                              NULL,
+                              nullptr,
+                              nullptr,
                               ( DBENTRYP_V ) adsxGoTop,
                               ( DBENTRYP_BIB ) adsxSeek,
                               ( DBENTRYP_L ) adsxSkip,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
                               ( DBENTRYP_SI ) adsxPutValue,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
                               ( DBENTRYP_V ) adsxClose,
                               ( DBENTRYP_VO ) adsxCreate,
-                              NULL,
+                              nullptr,
                               ( DBENTRYP_V ) adsxNewArea,
                               ( DBENTRYP_VO ) adsxOpen,
-                              NULL,
+                              nullptr,
                               ( DBENTRYP_SP ) adsxStructSize,
                               ( DBENTRYP_CP ) adsxSysName,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
                               ( DBENTRYP_VOI ) adsxOrderListFocus,
-                              NULL,
-                              NULL,
+                              nullptr,
+                              nullptr,
                               ( DBENTRYP_VOC ) adsxOrderCreate,
                               ( DBENTRYP_VOI ) adsxOrderDestroy,
                               ( DBENTRYP_SVOI ) adsxOrderInfo,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL,
-                              NULL };
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr,
+                              nullptr };
 
 
 static void adsxRegisterRDD( HB_USHORT * pusRddId, const char * szRddName )
@@ -1841,18 +1841,18 @@ static void hb_adsxRddInit( void * cargo )
 }
 
 HB_INIT_SYMBOLS_BEGIN( adsx1__InitSymbols )
-{ "ADSX",                 {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( ADSX )}, NULL },
-{ "ADSX_GETFUNCTABLE",    {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( ADSX_GETFUNCTABLE )}, NULL },
-{ "ADSNTXX",              {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( ADSNTXX )}, NULL },
-{ "ADSNTXX_GETFUNCTABLE", {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( ADSNTXX_GETFUNCTABLE )}, NULL },
-{ "ADSCDXX",              {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( ADSCDXX )}, NULL },
-{ "ADSCDXX_GETFUNCTABLE", {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( ADSCDXX_GETFUNCTABLE )}, NULL },
+{ "ADSX",                 {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( ADSX )}, nullptr },
+{ "ADSX_GETFUNCTABLE",    {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( ADSX_GETFUNCTABLE )}, nullptr },
+{ "ADSNTXX",              {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( ADSNTXX )}, nullptr },
+{ "ADSNTXX_GETFUNCTABLE", {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( ADSNTXX_GETFUNCTABLE )}, nullptr },
+{ "ADSCDXX",              {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( ADSCDXX )}, nullptr },
+{ "ADSCDXX_GETFUNCTABLE", {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( ADSCDXX_GETFUNCTABLE )}, nullptr },
 #if ADS_LIB_VERSION >= 900
-{ "ADSVFPX",              {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( ADSVFPX )}, NULL },
-{ "ADSVFPX_GETFUNCTABLE", {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( ADSVFPX_GETFUNCTABLE )}, NULL },
+{ "ADSVFPX",              {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( ADSVFPX )}, nullptr },
+{ "ADSVFPX_GETFUNCTABLE", {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( ADSVFPX_GETFUNCTABLE )}, nullptr },
 #endif
-{ "ADSADTX",              {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( ADSADTX )}, NULL },
-{ "ADSADTX_GETFUNCTABLE", {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( ADSADTX_GETFUNCTABLE )}, NULL }
+{ "ADSADTX",              {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( ADSADTX )}, nullptr },
+{ "ADSADTX_GETFUNCTABLE", {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( ADSADTX_GETFUNCTABLE )}, nullptr }
 HB_INIT_SYMBOLS_END( adsx1__InitSymbols )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_adsx_rdd_init_ )

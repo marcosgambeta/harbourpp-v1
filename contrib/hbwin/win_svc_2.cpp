@@ -57,13 +57,13 @@ HB_FUNC( WIN_SERVICEINSTALL )
 #if ! defined( HB_OS_WIN_CE )
 
    void * hPath;
-   LPCTSTR lpPath = HB_PARSTR( 3, &hPath, NULL );
+   LPCTSTR lpPath = HB_PARSTR( 3, &hPath, nullptr );
 
    TCHAR lpPathBuffer[ MAX_PATH ];
 
-   if( lpPath == NULL )
+   if( lpPath == nullptr )
    {
-      if( GetModuleFileName( NULL, lpPathBuffer, HB_SIZEOFARRAY( lpPathBuffer ) ) )
+      if( GetModuleFileName( nullptr, lpPathBuffer, HB_SIZEOFARRAY( lpPathBuffer ) ) )
          lpPath = lpPathBuffer;
       else
          hbwapi_SetLastError( GetLastError() );
@@ -71,7 +71,7 @@ HB_FUNC( WIN_SERVICEINSTALL )
 
    if( lpPath )
    {
-      SC_HANDLE schSCM = OpenSCManager( NULL, NULL, SC_MANAGER_ALL_ACCESS );
+      SC_HANDLE schSCM = OpenSCManager( nullptr, nullptr, SC_MANAGER_ALL_ACCESS );
 
       if( schSCM )
       {
@@ -82,10 +82,10 @@ HB_FUNC( WIN_SERVICEINSTALL )
          void * hAccountName;
          void * hPassword;
 
-         LPCTSTR lpServiceName = HB_PARSTRDEF( 1, &hServiceName, NULL );
-         LPCTSTR lpDisplayName = HB_PARSTR( 2, &hDisplayName, NULL );
-         LPCTSTR lpAccountName = HB_PARSTR( 5, &hAccountName, NULL );
-         LPCTSTR lpPassword = HB_PARSTR( 6, &hPassword, NULL );
+         LPCTSTR lpServiceName = HB_PARSTRDEF( 1, &hServiceName, nullptr );
+         LPCTSTR lpDisplayName = HB_PARSTR( 2, &hDisplayName, nullptr );
+         LPCTSTR lpAccountName = HB_PARSTR( 5, &hAccountName, nullptr );
+         LPCTSTR lpPassword = HB_PARSTR( 6, &hPassword, nullptr );
 
          schSrv = CreateService( schSCM,                    /* SCM database */
                                  lpServiceName,             /* name of service */
@@ -95,9 +95,9 @@ HB_FUNC( WIN_SERVICEINSTALL )
                                  ( DWORD ) hb_parnldef( 4, SERVICE_DEMAND_START ),  /* start type */
                                  SERVICE_ERROR_NORMAL,      /* error control type */
                                  lpPath,                    /* path to service's binary */
-                                 NULL,                      /* no load ordering group */
-                                 NULL,                      /* no tag identifier */
-                                 NULL,                      /* no dependencies */
+                                 nullptr,                      /* no load ordering group */
+                                 nullptr,                      /* no tag identifier */
+                                 nullptr,                      /* no dependencies */
                                  lpAccountName,             /* default: LocalSystem account */
                                  lpPassword );              /* default: no password */
 
@@ -134,14 +134,14 @@ HB_FUNC( WIN_SERVICEDELETE )
    HB_BOOL bRetVal = HB_FALSE;
 
 #if ! defined( HB_OS_WIN_CE )
-   SC_HANDLE schSCM = OpenSCManager( NULL, NULL, SC_MANAGER_ALL_ACCESS );
+   SC_HANDLE schSCM = OpenSCManager( nullptr, nullptr, SC_MANAGER_ALL_ACCESS );
 
    if( schSCM )
    {
       void * hServiceName;
 
       SC_HANDLE schSrv = OpenService( schSCM,
-                                      HB_PARSTRDEF( 1, &hServiceName, NULL ),
+                                      HB_PARSTRDEF( 1, &hServiceName, nullptr ),
                                       SERVICE_ALL_ACCESS );
 
       if( schSrv )
@@ -183,14 +183,14 @@ HB_FUNC( WIN_SERVICECONTROL )
    HB_BOOL bRetVal = HB_FALSE;
 
 #if ! defined( HB_OS_WIN_CE )
-   SC_HANDLE schSCM = OpenSCManager( NULL, NULL, SC_MANAGER_ALL_ACCESS );
+   SC_HANDLE schSCM = OpenSCManager( nullptr, nullptr, SC_MANAGER_ALL_ACCESS );
 
    if( schSCM )
    {
       void * hServiceName;
 
       SC_HANDLE schSrv = OpenService( schSCM,
-                                      HB_PARSTRDEF( 1, &hServiceName, NULL ),
+                                      HB_PARSTRDEF( 1, &hServiceName, nullptr ),
                                       SERVICE_ALL_ACCESS );
 
       if( schSrv )
@@ -222,14 +222,14 @@ HB_FUNC( WIN_SERVICERUN )
    HB_BOOL bRetVal = HB_FALSE;
 
 #if ! defined( HB_OS_WIN_CE )
-   SC_HANDLE schSCM = OpenSCManager( NULL, NULL, SC_MANAGER_ALL_ACCESS );
+   SC_HANDLE schSCM = OpenSCManager( nullptr, nullptr, SC_MANAGER_ALL_ACCESS );
 
    if( schSCM )
    {
       void * hServiceName;
 
       SC_HANDLE schSrv = OpenService( schSCM,
-                                      HB_PARSTRDEF( 1, &hServiceName, NULL ),
+                                      HB_PARSTRDEF( 1, &hServiceName, nullptr ),
                                       SERVICE_ALL_ACCESS );
 
       if( schSrv )
@@ -245,13 +245,13 @@ HB_FUNC( WIN_SERVICERUN )
             lpArgs = ( LPCTSTR * ) hb_xgrab( dwArgs * sizeof( LPCTSTR ) );
 
             for( pos = 0; pos < dwArgs; ++pos )
-               lpArgs[ pos ] = HB_PARSTRDEF( pos + 2, &hArgs[ pos ], NULL );
+               lpArgs[ pos ] = HB_PARSTRDEF( pos + 2, &hArgs[ pos ], nullptr );
          }
          else
          {
             dwArgs = 0;
-            hArgs = NULL;
-            lpArgs = NULL;
+            hArgs = nullptr;
+            lpArgs = nullptr;
          }
 
          bRetVal = ( HB_BOOL ) StartService( schSrv, dwArgs, lpArgs );

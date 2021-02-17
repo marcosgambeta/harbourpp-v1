@@ -95,7 +95,7 @@ typedef struct
    int        iCellSize;         /* size of one buffer cell             */
 } FT_DISPC, * PFT_DISPC;
 
-static HB_TSD_NEW( s_dispc, sizeof( FT_DISPC ), NULL, NULL );
+static HB_TSD_NEW( s_dispc, sizeof( FT_DISPC ), nullptr, nullptr );
 
 /* prototypes */
 
@@ -513,7 +513,7 @@ HB_FUNC( _FT_DFINIT )
 
    hb_gtRectSize( dispc->sline, dispc->scol, dispc->eline, dispc->ecol, &nSize );
    dispc->vseg = ( HB_UCHAR * ) hb_xalloc( nSize );
-   if( dispc->vseg != NULL )
+   if( dispc->vseg != nullptr )
       hb_gtSave( dispc->sline, dispc->scol, dispc->eline, dispc->ecol, dispc->vseg );
 
    dispc->maxlin   = hb_parni( 12 );
@@ -522,16 +522,16 @@ HB_FUNC( _FT_DFINIT )
    dispc->buffer = ( char * ) hb_xalloc( dispc->buffsize );             /* allocate memory */
    dispc->lbuff  = ( char * ) hb_xalloc( dispc->maxlin + 1 );           /* for buffers */
 
-   dispc->bIsAllocated = ! ( dispc->buffer == NULL || dispc->lbuff == NULL || dispc->vseg == NULL );
+   dispc->bIsAllocated = ! ( dispc->buffer == nullptr || dispc->lbuff == nullptr || dispc->vseg == nullptr );
    /* memory allocated? */
    if( ! dispc->bIsAllocated )
    {
       rval = 8;                     /* return error code 8 (memory) */
-      if( dispc->buffer != NULL )
+      if( dispc->buffer != nullptr )
          hb_xfree( dispc->buffer );
-      if( dispc->lbuff != NULL )
+      if( dispc->lbuff != nullptr )
          hb_xfree( dispc->lbuff );
-      if( dispc->vseg != NULL )
+      if( dispc->vseg != nullptr )
          hb_xfree( dispc->vseg );
    }
    else                                                     /* get parameters            */
@@ -612,11 +612,11 @@ HB_FUNC( _FT_DFCLOS )
 
    if( dispc->bIsAllocated )
    {
-      if( dispc->buffer != NULL )
+      if( dispc->buffer != nullptr )
          hb_xfree( dispc->buffer );                /* free up allocated buffer memory */
-      if( dispc->lbuff != NULL )
+      if( dispc->lbuff != nullptr )
          hb_xfree( dispc->lbuff );
-      if( dispc->vseg != NULL )
+      if( dispc->vseg != nullptr )
          hb_xfree( dispc->vseg );
    }
 }

@@ -154,7 +154,7 @@ static HB_GARBAGE_FUNC( hb_SQLHENV_Destructor )
 {
    PHB_SQLHENV pHEnv = ( PHB_SQLHENV ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( pHEnv->hEnv )
    {
 #if ODBCVER >= 0x0300
@@ -163,8 +163,8 @@ static HB_GARBAGE_FUNC( hb_SQLHENV_Destructor )
       SQLFreeEnv( pHEnv->hEnv );
 #endif
 
-      /* set pointer to NULL to avoid multiple freeing */
-      pHEnv->hEnv = NULL;
+      /* set pointer to nullptr to avoid multiple freeing */
+      pHEnv->hEnv = nullptr;
    }
 }
 
@@ -205,7 +205,7 @@ static HB_GARBAGE_FUNC( hb_SQLHDBC_Destructor )
    /* Retrieve image pointer holder */
    PHB_SQLHDBC pHDbc = ( PHB_SQLHDBC ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( pHDbc->hDbc )
    {
 #if ODBCVER >= 0x0300
@@ -214,15 +214,15 @@ static HB_GARBAGE_FUNC( hb_SQLHDBC_Destructor )
       SQLFreeConnect( pHDbc->hDbc );
 #endif
 
-      /* set pointer to NULL to avoid multiple freeing */
-      pHDbc->hDbc = NULL;
+      /* set pointer to nullptr to avoid multiple freeing */
+      pHDbc->hDbc = nullptr;
    }
    if( pHDbc->pHEnvItm )
    {
       /* release reference to parent handler */
       hb_itemRelease( pHDbc->pHEnvItm );
-      /* set pointer to NULL to avoid multiple freeing */
-      pHDbc->pHEnvItm = NULL;
+      /* set pointer to nullptr to avoid multiple freeing */
+      pHDbc->pHEnvItm = nullptr;
    }
 }
 
@@ -251,7 +251,7 @@ static void hb_SQLHDBC_stor( PHB_ITEM pHEnvItm, SQLHDBC hDbc, int iParam )
    /* initialize pointer scanned by mark function before allocating new
       new GC block - such allocation may activate GC and uninitialized
       pointer will be accessed from our mark function */
-   pHDbc->pHEnvItm = NULL;
+   pHDbc->pHEnvItm = nullptr;
    if( pHEnvItm )
    {
       pHDbc->pHEnvItm = hb_itemNew( pHEnvItm );
@@ -272,7 +272,7 @@ static HB_BOOL hb_SQLHDBC_check( PHB_ITEM pItem, int conn_counter )
    {
       PHB_SQLHDBC pHDbc = hb_SQLHDBC_get( pItem );
 
-      return pHDbc != NULL && pHDbc->conn_counter == conn_counter;
+      return pHDbc != nullptr && pHDbc->conn_counter == conn_counter;
    }
    else
       return HB_TRUE;
@@ -300,7 +300,7 @@ static HB_GARBAGE_FUNC( hb_SQLHSTMT_Destructor )
    /* Retrieve image pointer holder */
    PHB_SQLHSTMT pHStmt = ( PHB_SQLHSTMT ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( pHStmt->hStmt )
    {
       if( hb_SQLHDBC_check(  pHStmt->pHDbcItm, pHStmt->conn_counter ) )
@@ -312,16 +312,16 @@ static HB_GARBAGE_FUNC( hb_SQLHSTMT_Destructor )
 #endif
       }
 
-      /* set pointer to NULL to avoid multiple freeing */
-      pHStmt->hStmt = NULL;
+      /* set pointer to nullptr to avoid multiple freeing */
+      pHStmt->hStmt = nullptr;
    }
 
    if( pHStmt->pHDbcItm )
    {
       /* release reference to parent handler */
       hb_itemRelease( pHStmt->pHDbcItm );
-      /* set pointer to NULL to avoid multiple freeing */
-      pHStmt->pHDbcItm = NULL;
+      /* set pointer to nullptr to avoid multiple freeing */
+      pHStmt->pHDbcItm = nullptr;
    }
 }
 
@@ -349,7 +349,7 @@ static void hb_SQLHSTMT_stor( PHB_ITEM pHDbcItm, SQLHSTMT hStmt, int iParam )
    /* initialize pointer scanned by mark function before allocating new
       new GC block - such allocation may activate GC and uninitalized
       pointer will be accessed from our mark function */
-   pHStmt->pHDbcItm = NULL;
+   pHStmt->pHDbcItm = nullptr;
 
    if( pHDbcItm )
    {
@@ -430,7 +430,7 @@ HB_FUNC( SQLDRIVERCONNECT )  /* hDbc, @cConnectString --> nRetCode */
       buffer[ 0 ] = '\0';
 
       ret = SQLDriverConnect( hDbc,
-                              ( SQLHWND ) NULL,
+                              ( SQLHWND ) nullptr,
                               cConnStr,
                               ( SQLSMALLINT ) nConnStr,
                               ( SQLTCHAR * ) buffer,
@@ -604,7 +604,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
          case SQL_WVARCHAR:
          case SQL_WLONGVARCHAR:
          {
-            O_HB_CHAR * val = NULL;
+            O_HB_CHAR * val = nullptr;
             O_HB_CHAR buffer[ 1 ];
 #if defined( UNICODE )
             SQLSMALLINT iTargetType = SQL_C_WCHAR;
@@ -627,7 +627,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
                   if( ! SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, iTargetType, val, nLen + sizeof( O_HB_CHAR ), &nLen ) ) )
                   {
                      hb_xfree( val );
-                     val = NULL;
+                     val = nullptr;
                   }
 #if defined( UNICODE )
                   else
@@ -635,13 +635,13 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
 #endif
                }
             }
-            if( val != NULL )
+            if( val != nullptr )
             {
                O_HB_STORSTRLEN( val, ( HB_SIZE ) nLen, 5 );
                hb_xfree( val );
             }
             else
-               hb_storc( NULL, 5 );
+               hb_storc( nullptr, 5 );
             break;
          }
 
@@ -664,7 +664,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
                   if( ! SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, SQL_C_BINARY, val, nLen + 1, &nLen ) ) )
                   {
                      hb_xfree( val );
-                     val = NULL;
+                     val = nullptr;
                   }
                }
             }
@@ -674,7 +674,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
                   hb_xfree( val );
             }
             else
-               hb_storc( NULL, 5 );
+               hb_storc( nullptr, 5 );
             break;
          }
 
@@ -936,7 +936,7 @@ HB_FUNC( SQLGETDIAGREC )  /* nHandleType, hHandle, nRecNumber, @cSQLState, @nErr
          hHandle = hb_SQLHSTMT_par( 2 );
          break;
       default:
-         hHandle = NULL;
+         hHandle = nullptr;
    }
 
    if( hHandle )
@@ -967,9 +967,9 @@ HB_FUNC( SQLGETDIAGREC )  /* nHandleType, hHandle, nRecNumber, @cSQLState, @nErr
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else
    hb_retni( SQL_ERROR );
-   hb_storc( NULL, 4 );
+   hb_storc( nullptr, 4 );
    hb_stornl( 0, 5 );
-   hb_storc( NULL, 6 );
+   hb_storc( nullptr, 6 );
 #endif
 }
 
@@ -1069,7 +1069,7 @@ HB_FUNC( SQLGETCONNECTATTR )  /* hDbc, nOption, @cOption */
 #if ODBCVER >= 0x0300
       SQLPOINTER buffer[ 512 ];
       SQLINTEGER lLen = 0;
-      buffer[ 0 ] = NULL;
+      buffer[ 0 ] = nullptr;
       hb_retni( SQLGetConnectAttr( hDbc,
                                    ( SQLINTEGER ) hb_parnl( 2 ),
                                    ( SQLPOINTER ) buffer,
@@ -1098,7 +1098,7 @@ HB_FUNC( SQLGETSTMTATTR )  /* hStmt, nOption, @cOption */
 #if ODBCVER >= 0x0300
       SQLPOINTER buffer[ 512 ];
       SQLINTEGER lLen = 0;
-      buffer[ 0 ] = NULL;
+      buffer[ 0 ] = nullptr;
       hb_retni( SQLGetStmtAttr( hStmt,
                                 ( SQLINTEGER ) hb_parnl( 2 ),
                                 ( SQLPOINTER ) buffer,
@@ -1149,7 +1149,7 @@ HB_FUNC( SQLPREPARE )  /* hStmt, cStatement --> nRetCode */
       void * hStatement;
 
       hb_retni( SQLPrepare( hStmt,
-                            ( SQLTCHAR * ) HB_UNCONST( O_HB_PARSTRDEF( 2, &hStatement, NULL ) ),
+                            ( SQLTCHAR * ) HB_UNCONST( O_HB_PARSTRDEF( 2, &hStatement, nullptr ) ),
                             ( SQLINTEGER ) SQL_NTS ) );
 
       hb_strfree( hStatement );
@@ -1197,7 +1197,7 @@ HB_FUNC( HB_ODBCSTOD )
       hb_retds( szHrbDate );
    }
    else
-      hb_retds( NULL );
+      hb_retds( nullptr );
 }
 
 HB_FUNC( HB_ODBCNUMSETLEN )  /* nValue, nSize, nDecimals --> nValue (nSize, nDec) */
@@ -1206,7 +1206,7 @@ HB_FUNC( HB_ODBCNUMSETLEN )  /* nValue, nSize, nDecimals --> nValue (nSize, nDec
    int iLen = hb_parni( 2 );
    int iDec = hb_parni( 3 );
 
-   if( pValue != NULL && HB_IS_NUMINT( pValue ) && iDec == 0 )
+   if( pValue != nullptr && HB_IS_NUMINT( pValue ) && iDec == 0 )
       hb_retnintlen( hb_itemGetNInt( pValue ), iLen );
    else
       hb_retnlen( hb_itemGetND( pValue ), iLen, iDec );

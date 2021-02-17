@@ -107,7 +107,7 @@ static void hb_PEM_read_bio( PEM_READ_BIO * func, HB_PEM_TYPES type )
    else if( HB_ISNUM( 1 ) )
       bio = BIO_new_fd( hb_parni( 1 ), BIO_NOCLOSE );
    else
-      bio = NULL;
+      bio = nullptr;
 
    if( bio )
    {
@@ -122,11 +122,11 @@ static void hb_PEM_read_bio( PEM_READ_BIO * func, HB_PEM_TYPES type )
       }
       else
       {
-         cb = NULL;
+         cb = nullptr;
          cargo = HB_UNCONST( hb_parc( 2 ) );  /* NOTE: Discarding 'const' qualifier, OpenSSL will memcpy() it */
       }
 
-      result = ( *func )( bio, NULL, cb, cargo );
+      result = ( *func )( bio, nullptr, cb, cargo );
 
       if( result )
       {

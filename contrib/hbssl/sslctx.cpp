@@ -63,14 +63,14 @@ static HB_GARBAGE_FUNC( SSL_CTX_release )
 {
    void ** ph = ( void ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
       SSL_CTX_free( ( SSL_CTX * ) *ph );
 
-      /* set pointer to NULL just in case */
-      *ph = NULL;
+      /* set pointer to nullptr just in case */
+      *ph = nullptr;
    }
 }
 
@@ -82,7 +82,7 @@ static const HB_GC_FUNCS s_gcSSL_CTX_funcs =
 
 HB_BOOL hb_SSL_CTX_is( int iParam )
 {
-   return hb_parptrGC( &s_gcSSL_CTX_funcs, iParam ) != NULL;
+   return hb_parptrGC( &s_gcSSL_CTX_funcs, iParam ) != nullptr;
 }
 
 SSL_CTX * hb_SSL_CTX_par( int iParam )

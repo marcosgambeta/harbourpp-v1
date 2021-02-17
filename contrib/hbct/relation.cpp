@@ -83,7 +83,7 @@ HB_FUNC( CHARRELA )
                                     pcString1 + sOffset1, sStrLen1 - sOffset1, &sMatchStrLen );
          pc2 = ct_at_exact_forward( pcStringToMatch2, sStrToMatchLen2,
                                     pcString2 + sOffset2, sStrLen2 - sOffset2, &sMatchStrLen );
-         if( pc1 != NULL && pc2 != NULL )
+         if( pc1 != nullptr && pc2 != nullptr )
          {
             if( pc1 - pcString1 == pc2 - pcString2 )
             {
@@ -112,10 +112,10 @@ HB_FUNC( CHARRELA )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_CHARRELA, NULL, HB_ERR_FUNCNAME, 0,
+                                  CT_ERROR_CHARRELA, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else
          hb_retns( 0 );
@@ -172,7 +172,7 @@ HB_FUNC( CHARRELREP )
          pc2 = ct_at_exact_forward( pcStringToMatch2, sStrToMatchLen2,
                                     pcString2 + sOffset2, sStrLen2 - sOffset2,
                                     &sMatchStrLen );
-         if( pc1 != NULL && pc2 != NULL )
+         if( pc1 != nullptr && pc2 != nullptr )
          {
             if( pc1 - pcString1 == pc2 - pcString2 )
             {
@@ -229,10 +229,10 @@ HB_FUNC( CHARRELREP )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_CHARRELREP, NULL, HB_ERR_FUNCNAME, 0,
+                                  CT_ERROR_CHARRELREP, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else if( iNoRet )
          hb_ret();

@@ -171,7 +171,7 @@ static HB_GARBAGE_FUNC( hb_zebra_destructor )
    if( *ppZebra )
    {
       hb_zebra_destroy( *ppZebra );
-      *ppZebra = NULL;
+      *ppZebra = nullptr;
    }
 }
 
@@ -205,7 +205,7 @@ void hb_zebraItemClear( PHB_ITEM pItem )
    PHB_ZEBRA * ppZebra = ( PHB_ZEBRA * ) hb_itemGetPtrGC( pItem, &s_gcZebraFuncs );
 
    if( ppZebra )
-      *ppZebra = NULL;
+      *ppZebra = nullptr;
 }
 
 

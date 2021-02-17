@@ -52,7 +52,7 @@ HB_FUNC( WAPI_PLAYSOUND )
 {
    void * hSound;
 
-   hb_retl( PlaySound( HB_PARSTR( 1, &hSound, NULL ) /* pszSound */,
+   hb_retl( PlaySound( HB_PARSTR( 1, &hSound, nullptr ) /* pszSound */,
                        ( HMODULE ) hb_parptr( 2 ) /* hmod */,
                        ( DWORD ) hb_parnl( 3 ) /* fdwSound */ ) );
 

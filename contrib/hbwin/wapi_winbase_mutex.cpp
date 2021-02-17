@@ -53,7 +53,7 @@ static HB_GARBAGE_FUNC( hbwapi_mutex_release )
    if( ph && *ph )
    {
       CloseHandle( ( HANDLE ) *ph );
-      *ph = NULL;
+      *ph = nullptr;
    }
 }
 
@@ -87,7 +87,7 @@ static HANDLE hbwapi_mutex_par( int iParam )
 HB_FUNC( WAPI_CREATEMUTEX )
 {
    void * hName;
-   HANDLE hMutex = CreateMutex( ( LPSECURITY_ATTRIBUTES ) hb_parptr( 1 ), hb_parl( 2 ), HB_PARSTR( 3, &hName, NULL ) );
+   HANDLE hMutex = CreateMutex( ( LPSECURITY_ATTRIBUTES ) hb_parptr( 1 ), hb_parl( 2 ), HB_PARSTR( 3, &hName, nullptr ) );
 
    hbwapi_SetLastError( GetLastError() );
    hbwapi_mutex_ret( hMutex );
@@ -100,7 +100,7 @@ HB_FUNC( WAPI_OPENMUTEX )
 {
 #if ! defined( HB_OS_WIN_CE )
    void * hName;
-   HANDLE hMutex = OpenMutex( hb_parnl( 1 ), hb_parl( 2 ), HB_PARSTR( 3, &hName, NULL ) );
+   HANDLE hMutex = OpenMutex( hb_parnl( 1 ), hb_parl( 2 ), HB_PARSTR( 3, &hName, nullptr ) );
 
    hbwapi_SetLastError( GetLastError() );
    hbwapi_mutex_ret( hMutex );

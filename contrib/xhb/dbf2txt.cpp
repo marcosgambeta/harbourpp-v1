@@ -96,7 +96,7 @@ static HB_BOOL hb_ExportVar( HB_FHANDLE handle, PHB_ITEM pValue, const char * cD
          if( cdp )
             hb_cdpnDupLen( szStrEsc, strlen( szStrEsc ), hb_vmCDP(), cdp );
 
-         szString = hb_xstrcpy( NULL, cDelim, szStrEsc, cDelim, NULL );
+         szString = hb_xstrcpy( nullptr, cDelim, szStrEsc, cDelim, nullptr );
 
          /* FWrite( handle, szString ) */
          hb_fsWriteLarge( handle, szString, strlen( szString ) );
@@ -170,7 +170,7 @@ HB_FUNC( DBF2TEXT )
    HB_BOOL bEof = HB_TRUE;
    HB_BOOL bBof = HB_TRUE;
 
-   HB_BOOL bNoFieldPassed = ( pFields == NULL || hb_arrayLen( pFields ) == 0 );
+   HB_BOOL bNoFieldPassed = ( pFields == nullptr || hb_arrayLen( pFields ) == 0 );
 
    if( ! pArea )
    {
@@ -185,7 +185,7 @@ HB_FUNC( DBF2TEXT )
    }
 
    if( cdp && cdp == hb_vmCDP() )
-      cdp = NULL;
+      cdp = nullptr;
 
    pTmp = hb_itemNew( nullptr );
 
@@ -213,7 +213,7 @@ HB_FUNC( DBF2TEXT )
          break;
 
       /* For condition is met */
-      /* if For is NULL, hb__Eval returns HB_TRUE */
+      /* if For is nullptr, hb__Eval returns HB_TRUE */
       if( ! pFor || hb_itemGetL( hb_vmEvalBlock( pFor ) ) )
       {
          /* User does not request fields, copy all fields */

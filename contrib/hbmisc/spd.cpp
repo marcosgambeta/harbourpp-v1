@@ -197,7 +197,7 @@ HB_FUNC( SQL_SPRINTF )
    int          argc    = hb_pcount() - 1;
    PHB_ITEM     pItmFrm = hb_param( 1, HB_IT_STRING );
 
-   if( ! pItmFrm || ( cItmFrm = hb_itemGetCPtr( pItmFrm ) ) == NULL )
+   if( ! pItmFrm || ( cItmFrm = hb_itemGetCPtr( pItmFrm ) ) == nullptr )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError( 1 ) );
    }
@@ -220,7 +220,7 @@ HB_FUNC( SQL_SPRINTF )
       char * cIntMod, * cBuffer, * cParFrm;
       int    p, iErrorPar = 0;
 
-      cIntMod = NULL;
+      cIntMod = nullptr;
       cRes    = ( char * ) hb_xgrab( ulMaxRes );
       cBuffer = ( char * ) hb_xgrab( ulMaxBuf );
       cParFrm = ( char * ) hb_xgrab( ulItmFrm + sizeof( char ) );
@@ -309,7 +309,7 @@ HB_FUNC( SQL_SPRINTF )
                }
                else     /* Remove Internal Modifier */
                {
-                  if( cIntMod == NULL )
+                  if( cIntMod == nullptr )
                      cIntMod = ( char * ) hb_xgrab( ulItmFrm + sizeof( char ) );
 
                   while( *c++ && *c != '}' )

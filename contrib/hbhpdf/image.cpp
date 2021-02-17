@@ -91,7 +91,7 @@ HB_FUNC( HPDF_LOADPNGIMAGEFROMMEM )
                                           ( const HPDF_BYTE * ) hb_parcx( 2 ),
                                           ( HPDF_UINT ) hb_parclen( 2 ) ) );
 #else
-   hb_storc( NULL, 2 );
+   hb_storc( nullptr, 2 );
    hb_retptr( nullptr );
 #endif
 }
@@ -107,7 +107,7 @@ HB_FUNC( HPDF_LOADJPEGIMAGEFROMMEM )
                                           ( const HPDF_BYTE * ) hb_parcx( 2 ),
                                           ( HPDF_UINT ) hb_parclen( 2 ) ) );
 #else
-   hb_storc( NULL, 2 );
+   hb_storc( nullptr, 2 );
    hb_retptr( nullptr );
 #endif
 }

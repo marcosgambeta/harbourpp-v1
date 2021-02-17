@@ -158,7 +158,7 @@ typedef struct
 
 /* the TSD area is allocated by hb_xgrabz() so we do not need init
    function to clear its items */
-static HB_TSD_NEW( s_ft_text, sizeof( FT_TEXT ), NULL, NULL );
+static HB_TSD_NEW( s_ft_text, sizeof( FT_TEXT ), nullptr, nullptr );
 
 /* Routine to parse a buffer for an EOL
 
@@ -303,7 +303,7 @@ static long _ft_skip( long iRecs )
             do
             {
                /* get count of chars in this line */
-               iByteCount = _findeol( cPtr, iBytesRemaining, NULL );
+               iByteCount = _findeol( cPtr, iBytesRemaining, nullptr );
 
                if( iByteCount > 0 && iByteCount != iBytesRemaining )
                {
@@ -621,13 +621,13 @@ HB_FUNC( FT_FUSE )
    const char * pszFileName = hb_parc( 1 );
 
    ft_text->error[ ft_text->area ] = 0;
-   if( ft_text->handles[ ft_text->area ] != NULL )
+   if( ft_text->handles[ ft_text->area ] != nullptr )
    {
       hb_fileClose( ft_text->handles[ ft_text->area ] );
       hb_retnint( 0 );
       ft_text->recno[ ft_text->area ]    = 0;
       ft_text->offset[ ft_text->area ]   = 0;
-      ft_text->handles[ ft_text->area ]  = NULL;
+      ft_text->handles[ ft_text->area ]  = nullptr;
       ft_text->last_rec[ ft_text->area ] = 0;
       ft_text->last_off[ ft_text->area ] = 0;
       ft_text->lastbyte[ ft_text->area ] = 0;
@@ -637,12 +637,12 @@ HB_FUNC( FT_FUSE )
 
    if( pszFileName )
    {
-      ft_text->handles[ ft_text->area ] = hb_fileExtOpen( pszFileName, NULL,
+      ft_text->handles[ ft_text->area ] = hb_fileExtOpen( pszFileName, nullptr,
                                                           ( HB_FATTR ) ( hb_parnidef( 2, FO_READWRITE | FO_DENYNONE ) & 0xFF ),
-                                                          NULL, NULL );
+                                                          nullptr, nullptr );
       ft_text->offset[ ft_text->area ]   = 0;
       ft_text->recno[ ft_text->area ]    = 1;
-      if( ft_text->handles[ ft_text->area ] == NULL )
+      if( ft_text->handles[ ft_text->area ] == nullptr )
       {
          ft_text->error[ ft_text->area ] = hb_fsError();
          ft_text->lastbyte[ ft_text->area ] = 0;
@@ -672,7 +672,7 @@ HB_FUNC( FT_FSELECT )
          {
             for(; newArea < TEXT_WORKAREAS - 1; newArea++ )
             {
-               if( ft_text->handles[ newArea ] == NULL )
+               if( ft_text->handles[ newArea ] == nullptr )
                {
                   ft_text->area = newArea;
                   break;
@@ -878,7 +878,7 @@ HB_FUNC( FT_FAPPEND )
       /* determine if EOL exists, if not, add one */
 
       /* get count of chars in this line */
-      if( ( iByteCount = _findeol( buff, iRead, NULL ) ) == 0 )
+      if( ( iByteCount = _findeol( buff, iRead, nullptr ) ) == 0 )
          hb_fileSeek( ft_text->handles[ ft_text->area ], 0, FS_END );
       else
       {
@@ -957,7 +957,7 @@ HB_FUNC( FT_FWRITELN )
             HB_ISIZ iEOL;
 
             iRead = hb_fileResult( hb_fileRead( ft_text->handles[ ft_text->area ], buffer, BUFFSIZE, -1 ) );
-            if( ( iEOL = _findeol( buffer, iRead, NULL ) ) == 0 )
+            if( ( iEOL = _findeol( buffer, iRead, nullptr ) ) == 0 )
                iLineLen += iRead;
             else
             {

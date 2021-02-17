@@ -299,8 +299,8 @@ static void * s_signalListener( void * my_stack )
    sigaddset( &passall, SIGHUP );
 
    pthread_cleanup_push( hb_threadTerminator, my_stack );
-   pthread_setcanceltype( PTHREAD_CANCEL_DEFERRED, NULL );
-   pthread_setcancelstate( PTHREAD_CANCEL_ENABLE, NULL );
+   pthread_setcanceltype( PTHREAD_CANCEL_DEFERRED, nullptr );
+   pthread_setcancelstate( PTHREAD_CANCEL_ENABLE, nullptr );
 
    for( ;; )
    {
@@ -312,7 +312,7 @@ static void * s_signalListener( void * my_stack )
          and just once (doing it twice would be useless). */
       if( bFirst )
       {
-         pthread_sigmask( SIG_SETMASK, &passall, NULL );
+         pthread_sigmask( SIG_SETMASK, &passall, nullptr );
          bFirst = HB_FALSE;
       }
 
@@ -331,9 +331,9 @@ static void * s_signalListener( void * my_stack )
       /* lock stack before passing the ball to VM. */
       HB_STACK_LOCK;
 #if defined( HB_OS_BSD )
-      s_signalHandler( sig, NULL, NULL );
+      s_signalHandler( sig, nullptr, nullptr );
 #else
-      s_signalHandler( sinfo.si_signo, &sinfo, NULL );
+      s_signalHandler( sinfo.si_signo, &sinfo, nullptr );
 #endif
    }
 
@@ -353,7 +353,7 @@ static void * s_signalListener( void * my_stack )
 static void s_serviceSetHBSig( void );
 
 /* message filter hook for user generated signals */
-static HHOOK s_hMsgHook = NULL;
+static HHOOK s_hMsgHook = nullptr;
 
 /* old error mode */
 static UINT s_uiErrorMode = 0;
@@ -460,7 +460,7 @@ static LONG s_signalHandler( int type, int sig, PEXCEPTION_RECORD exc )
          if( type == 0 ) /* exception */
             hb_arraySetPtr( pRet, HB_SERVICE_ADDRESS, ( void * ) exc->ExceptionAddress );
          else
-            hb_arraySetPtr( pRet, HB_SERVICE_ADDRESS, NULL );
+            hb_arraySetPtr( pRet, HB_SERVICE_ADDRESS, nullptr );
 
          /* TODO: */
          hb_arraySetNI( pRet, HB_SERVICE_PROCESS, GetCurrentThreadId() );
@@ -522,7 +522,7 @@ static LRESULT CALLBACK s_MsgFilterFunc( int nCode, WPARAM wParam, LPARAM lParam
       case WM_QUIT:
          /* we'll ignore the request here.
             the application must still receive the message */
-         s_signalHandler( 1, msg->message, NULL );
+         s_signalHandler( 1, msg->message, nullptr );
    }
 
    /* return next hook anyway */
@@ -536,7 +536,7 @@ extern DWORD hb_dwCurrentStack;
 BOOL WINAPI s_ConsoleHandlerRoutine( DWORD dwCtrlType )
 {
 #ifdef HB_THREAD_SUPPORT
-   HB_STACK * pStack = NULL;
+   HB_STACK * pStack = nullptr;
 
    /* we need a new stack: this is NOT an hb thread. */
 
@@ -548,7 +548,7 @@ BOOL WINAPI s_ConsoleHandlerRoutine( DWORD dwCtrlType )
    }
 #endif
 
-   s_signalHandler( 2, dwCtrlType, NULL );
+   s_signalHandler( 2, dwCtrlType, nullptr );
 
 #ifdef HB_THREAD_SUPPORT
    if( pStack )
@@ -589,7 +589,7 @@ static void s_serviceSetHBSig( void )
    sigaddset( &blockall, SIGUSR2 );
    sigaddset( &blockall, SIGHUP );
 
-   pthread_sigmask( SIG_SETMASK, &blockall, NULL );
+   pthread_sigmask( SIG_SETMASK, &blockall, nullptr );
 #endif
 
    /* to avoid problems with differ sigaction structures and uninitialized
@@ -600,7 +600,7 @@ static void s_serviceSetHBSig( void )
    act.sa_handler = s_signalHandler;
    #else
    /* using more descriptive sa_action instead of sa_handler */
-   act.sa_handler   = NULL;            /* if act.sa.. is a union, we just clean this */
+   act.sa_handler   = nullptr;            /* if act.sa.. is a union, we just clean this */
    act.sa_sigaction = s_signalHandler; /* this is what matters */
    /* block al signals, we don't want to be interrupted. */
    #if 0
@@ -615,15 +615,15 @@ static void s_serviceSetHBSig( void )
    act.sa_flags = SA_NOCLDSTOP | SA_SIGINFO;
    #endif
 
-   sigaction( SIGHUP, &act, NULL );
-   sigaction( SIGQUIT, &act, NULL );
-   sigaction( SIGILL, &act, NULL );
-   sigaction( SIGABRT, &act, NULL );
-   sigaction( SIGFPE, &act, NULL );
-   sigaction( SIGSEGV, &act, NULL );
-   sigaction( SIGTERM, &act, NULL );
-   sigaction( SIGUSR1, &act, NULL );
-   sigaction( SIGUSR2, &act, NULL );
+   sigaction( SIGHUP, &act, nullptr );
+   sigaction( SIGQUIT, &act, nullptr );
+   sigaction( SIGILL, &act, nullptr );
+   sigaction( SIGABRT, &act, nullptr );
+   sigaction( SIGFPE, &act, nullptr );
+   sigaction( SIGSEGV, &act, nullptr );
+   sigaction( SIGTERM, &act, nullptr );
+   sigaction( SIGUSR1, &act, nullptr );
+   sigaction( SIGUSR2, &act, nullptr );
 
    /* IGNORE pipe */
    signal( SIGPIPE, SIG_IGN );
@@ -636,7 +636,7 @@ static void s_serviceSetHBSig( void )
       SEM_NOOPENFILEERRORBOX );
 
    SetUnhandledExceptionFilter( s_exceptionFilter );
-   s_hMsgHook = SetWindowsHookEx( WH_GETMESSAGE, ( HOOKPROC ) s_MsgFilterFunc, NULL, GetCurrentThreadId() );
+   s_hMsgHook = SetWindowsHookEx( WH_GETMESSAGE, ( HOOKPROC ) s_MsgFilterFunc, nullptr, GetCurrentThreadId() );
    SetConsoleCtrlHandler( s_ConsoleHandlerRoutine, TRUE );
 #endif
 }
@@ -659,11 +659,11 @@ static void s_serviceSetDflSig( void )
 #endif
 
 #ifdef HB_OS_WIN
-   SetUnhandledExceptionFilter( NULL );
-   if( s_hMsgHook != NULL )
+   SetUnhandledExceptionFilter( nullptr );
+   if( s_hMsgHook != nullptr )
    {
       UnhookWindowsHookEx( s_hMsgHook );
-      s_hMsgHook = NULL;
+      s_hMsgHook = nullptr;
    }
    SetErrorMode( s_uiErrorMode );
    SetConsoleCtrlHandler( s_ConsoleHandlerRoutine, FALSE );
@@ -710,7 +710,7 @@ static void s_signalHandlersInit()
    s_serviceSetHBSig();
 
    pStack = hb_threadCreateStack( 0 );
-   pthread_create( &res, NULL, s_signalListener, pStack );
+   pthread_create( &res, nullptr, s_signalListener, pStack );
 #else
    s_serviceSetHBSig();
 #endif
@@ -735,7 +735,7 @@ HB_FUNC( HB_STARTSERVICE )
 {
    #ifdef HB_THREAD_SUPPORT
    int iCount = hb_threadCountStacks();
-   if( iCount > 2 || ( sp_hooks == NULL && iCount > 1 ) )
+   if( iCount > 2 || ( sp_hooks == nullptr && iCount > 1 ) )
    {
       /* TODO: Right error code here */
       hb_errRT_BASE_SubstR( EG_ARG, 3012, "Service must be started before starting threads", nullptr, 0 );
@@ -776,7 +776,7 @@ HB_FUNC( HB_STARTSERVICE )
    #endif
 
    /* Initialize only if the service has not yet been initialized */
-   if( sp_hooks == NULL )
+   if( sp_hooks == nullptr )
       s_signalHandlersInit();
 }
 
@@ -795,12 +795,12 @@ HB_BOOL hb_isService( void )
  */
 void hb_serviceExit( void )
 {
-   if( sp_hooks != NULL )
+   if( sp_hooks != nullptr )
    {
       /* reset default signal handling */
       s_serviceSetDflSig();
       hb_itemRelease( sp_hooks );
-      sp_hooks = NULL;
+      sp_hooks = nullptr;
    }
 }
 
@@ -829,9 +829,9 @@ HB_FUNC( HB_SERVICELOOP )
    /* This is just here to trigger our internal hook routine, if the
       final application does not any message handling.
     */
-   if( ! PeekMessage( &msg, NULL, WM_QUIT, WM_QUIT, PM_REMOVE ) )
+   if( ! PeekMessage( &msg, nullptr, WM_QUIT, WM_QUIT, PM_REMOVE ) )
    {
-      PeekMessage( &msg, NULL, WM_USER, WM_USER + 3, PM_REMOVE );
+      PeekMessage( &msg, nullptr, WM_USER, WM_USER + 3, PM_REMOVE );
    }
 #endif
 
@@ -843,7 +843,7 @@ HB_FUNC( HB_PUSHSIGNALHANDLER )
    int      iMask = hb_parni( 1 );
    PHB_ITEM pFunc = hb_param( 2, HB_IT_ANY ), pHandEntry;
 
-   if( pFunc == NULL || iMask == 0 ||
+   if( pFunc == nullptr || iMask == 0 ||
        ( ! HB_IS_POINTER( pFunc ) && ! HB_IS_STRING( pFunc ) && ! HB_IS_BLOCK( pFunc ) )
        )
    {
@@ -857,7 +857,7 @@ HB_FUNC( HB_PUSHSIGNALHANDLER )
    hb_arraySet( pHandEntry, 2, pFunc );
 
    /* if the hook is not initialized, initialize it */
-   if( sp_hooks == NULL )
+   if( sp_hooks == nullptr )
       s_signalHandlersInit();
 
    hb_threadEnterCriticalSectionGC( &s_ServiceMutex );
@@ -874,7 +874,7 @@ HB_FUNC( HB_POPSIGNALHANDLER )
 {
    int nLen;
 
-   if( sp_hooks != NULL )
+   if( sp_hooks != nullptr )
    {
       hb_threadEnterCriticalSectionGC( &s_ServiceMutex );
 
@@ -888,7 +888,7 @@ HB_FUNC( HB_POPSIGNALHANDLER )
          if( hb_arrayLen( sp_hooks ) == 0 )
          {
             hb_itemRelease( sp_hooks );
-            sp_hooks = NULL;              /* So it can be reinitilized */
+            sp_hooks = nullptr;              /* So it can be reinitilized */
          }
       }
       else
@@ -1065,7 +1065,7 @@ HB_FUNC( HB_SIGNALDESC )
 
 HB_FUNC( HB_SERVICEGENERATEFAULT )
 {
-   int * pGPF = NULL;
+   int * pGPF = nullptr;
 
    *pGPF = 0;
    /* if it doesn't cause GPF (on some platforms it's possible) try this */

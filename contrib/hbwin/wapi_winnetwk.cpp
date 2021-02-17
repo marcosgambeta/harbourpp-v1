@@ -67,7 +67,7 @@ HB_FUNC( WAPI_WNETGETLASTERROR )
 #else
    hb_retnl( 0 );
    hb_stornl( 0, 1 );
-   hb_storc( NULL, 2 );
-   hb_storc( NULL, 3 );
+   hb_storc( nullptr, 2 );
+   hb_storc( nullptr, 3 );
 #endif
 }

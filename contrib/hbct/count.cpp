@@ -104,10 +104,10 @@ static void do_count( int iSwitch )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   iSwitch == DO_COUNT_COUNTLEFT ?
                                   CT_ERROR_COUNTLEFT : CT_ERROR_COUNTRIGHT,
-                                  NULL, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
+                                  nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
                                   HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else
          hb_retns( 0 );

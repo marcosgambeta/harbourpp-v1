@@ -182,7 +182,7 @@ PHB_IRMMAP hb_irmExecute( PHB_ITEM pItem )
 {
    const char * szOper;
 
-   if( HB_IS_ARRAY( pItem ) && ( szOper = hb_arrayGetCPtr( pItem, 1 ) ) != NULL )
+   if( HB_IS_ARRAY( pItem ) && ( szOper = hb_arrayGetCPtr( pItem, 1 ) ) != nullptr )
    {
       HB_ULONG   ulLen, ulSize;
       PHB_IRMMAP pMap;

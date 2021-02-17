@@ -50,14 +50,14 @@ static HB_GARBAGE_FUNC( s_gc_HDC_release )
 {
    void ** ph = ( void ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
       DeleteDC( ( HDC ) *ph );
 
-      /* set pointer to NULL to avoid multiple freeing */
-      *ph = NULL;
+      /* set pointer to nullptr to avoid multiple freeing */
+      *ph = nullptr;
    }
 }
 
@@ -92,14 +92,14 @@ static HB_GARBAGE_FUNC( s_gc_HPEN_release )
 {
    void ** ph = ( void ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
       DeleteObject( ( HPEN ) *ph );
 
-      /* set pointer to NULL to avoid multiple freeing */
-      *ph = NULL;
+      /* set pointer to nullptr to avoid multiple freeing */
+      *ph = nullptr;
    }
 }
 
@@ -134,14 +134,14 @@ static HB_GARBAGE_FUNC( s_gc_HBRUSH_release )
 {
    void ** ph = ( void ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
       DeleteObject( ( HBRUSH ) *ph );
 
-      /* set pointer to NULL to avoid multiple freeing */
-      *ph = NULL;
+      /* set pointer to nullptr to avoid multiple freeing */
+      *ph = nullptr;
    }
 }
 
@@ -176,14 +176,14 @@ static HB_GARBAGE_FUNC( s_gc_HFONT_release )
 {
    void ** ph = ( void ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
       DeleteObject( ( HFONT ) *ph );
 
-      /* set pointer to NULL to avoid multiple freeing */
-      *ph = NULL;
+      /* set pointer to nullptr to avoid multiple freeing */
+      *ph = nullptr;
    }
 }
 
@@ -218,14 +218,14 @@ static HB_GARBAGE_FUNC( s_gc_PDEVMODE_release )
 {
    void ** ph = ( void ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
       hb_xfree( *ph );
 
-      /* set pointer to NULL to avoid multiple freeing */
-      *ph = NULL;
+      /* set pointer to nullptr to avoid multiple freeing */
+      *ph = nullptr;
    }
 }
 

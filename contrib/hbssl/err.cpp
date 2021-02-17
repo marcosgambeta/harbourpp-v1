@@ -143,7 +143,7 @@ HB_FUNC( ERR_PEEK_LAST_ERROR_LINE )
 #else
    hb_retnint( -1 );
 
-   hb_storc( NULL, 1 );
+   hb_storc( nullptr, 1 );
    hb_storni( 0, 2 );
 #endif
 }
@@ -195,9 +195,9 @@ HB_FUNC( ERR_PEEK_LAST_ERROR_LINE_DATA )
 #else
    hb_retnint( -1 );
 
-   hb_storc( NULL, 1 );
+   hb_storc( nullptr, 1 );
    hb_storni( 0, 2 );
-   hb_storc( NULL, 3 );
+   hb_storc( nullptr, 3 );
    hb_storni( 0, 4 );
 #endif
 }

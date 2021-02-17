@@ -442,7 +442,7 @@ static HB_BOOL hb_mixTagRefreshKey( PMIXTAG pTag )
       PMIXNODE     pNode;
       unsigned int ui;
 
-      pKey = hb_mixKeyEval( NULL, pTag );
+      pKey = hb_mixKeyEval( nullptr, pTag );
 
       hb_mixTagFindKey( pTag, pKey, pTag->uiKeyLen, &pNode, &ui, HB_FALSE );
       hb_mixTagSetCurrent( pTag, pNode, ui );
@@ -586,7 +586,7 @@ static HB_BOOL hb_mixTagAddKey( PMIXTAG pTag, PMIXKEY pKey )
    if( ! i )
       return HB_FALSE;
 
-   hb_mixTagAddKeyPos( pTag, pNode, ui, pKey, NULL, NULL );
+   hb_mixTagAddKeyPos( pTag, pNode, ui, pKey, nullptr, nullptr );
    return HB_TRUE;
 }
 
@@ -698,7 +698,7 @@ static void hb_mixTagNodeAdjust( PMIXTAG pTag, PMIXNODE pNode )
          if( ! pNode->KeyCount && ! pNode->Leaf )
          {
             pTag->Root         = pNode->Child[ 0 ];
-            pTag->Root->Parent = NULL;
+            pTag->Root->Parent = nullptr;
             hb_xfree( pNode );
          }
          return;
@@ -748,7 +748,7 @@ static HB_BOOL hb_mixTagDelKey( PMIXTAG pTag, PMIXKEY pKey )
 static PMIXTAG hb_mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_ITEM pKeyItem, PHB_ITEM pForItem, PHB_ITEM pWhileItem, HB_BYTE bType, unsigned int uiKeyLen, SQLMIXAREAP pArea )
 {
    PMIXTAG pTag;
-   PMIXKEY pKey = NULL;
+   PMIXKEY pKey = nullptr;
    LPDBORDERCONDINFO pOrdCondInfo = pArea->sqlarea.area.lpdbOrdCondInfo;
    HB_ULONG          ulStartRec, ulNextCount = 0;
    HB_LONG  lStep = 0;
@@ -765,7 +765,7 @@ static PMIXTAG hb_mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_I
    hb_strncpyTrim( pTag->szKeyExpr, hb_itemGetCPtr( pKeyExpr ), hb_itemGetCLen( pKeyExpr ) );
 
    /* TODO: FOR expression */
-   pTag->szForExpr = NULL;
+   pTag->szForExpr = nullptr;
 
    pTag->pKeyItem = pKeyItem;
    pTag->pForItem = pForItem;
@@ -793,7 +793,7 @@ static PMIXTAG hb_mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_I
    }
 
    if( ! pOrdCondInfo || pOrdCondInfo->fAll )
-      pArea->pTag = NULL;
+      pArea->pTag = nullptr;
    else
    {
       if( pOrdCondInfo->itmRecID )
@@ -813,10 +813,10 @@ static PMIXTAG hb_mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_I
             ulNextCount = pOrdCondInfo->lNextCount;
       }
       else if( ! pOrdCondInfo->fUseCurrent )
-         pArea->pTag = NULL;
+         pArea->pTag = nullptr;
    }
 
-   if( ulStartRec == 0 && pArea->pTag == NULL )
+   if( ulStartRec == 0 && pArea->pTag == nullptr )
       ulStartRec = 1;
 
    if( ulStartRec )
@@ -831,16 +831,16 @@ static PMIXTAG hb_mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_I
          if( lStep >= pOrdCondInfo->lStep )
          {
             lStep = 0;
-            if( ! hb_mixEvalCond( NULL, pEvalItem ) )
+            if( ! hb_mixEvalCond( nullptr, pEvalItem ) )
                break;
          }
          ++lStep;
       }
 
-      if( pWhileItem && ! hb_mixEvalCond( NULL, pWhileItem ) )
+      if( pWhileItem && ! hb_mixEvalCond( nullptr, pWhileItem ) )
          break;
 
-      if( pForItem == NULL || hb_mixEvalCond( NULL, pForItem ) )
+      if( pForItem == nullptr || hb_mixEvalCond( nullptr, pForItem ) )
       {
          pItem = hb_vmEvalBlockOrMacro( pKeyItem );
 
@@ -1273,7 +1273,7 @@ static HB_ERRCODE sqlmixSeek( SQLMIXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pIt
 
    if( ! pArea->pTag )
    {
-      sqlmixErrorRT( pArea, EG_NOORDER, 1201, NULL, 0, EF_CANDEFAULT );
+      sqlmixErrorRT( pArea, EG_NOORDER, 1201, nullptr, 0, EF_CANDEFAULT );
       return HB_FAILURE;
    }
    else
@@ -1291,7 +1291,7 @@ static HB_ERRCODE sqlmixSeek( SQLMIXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pIt
       pArea->sqlarea.area.fTop = pArea->sqlarea.area.fBottom = HB_FALSE;
       pArea->sqlarea.area.fEof = HB_FALSE;
 
-      pKey = hb_mixKeyPutItem( NULL, pItem, fFindLast ? ( HB_ULONG ) -1 : 0, pTag );
+      pKey = hb_mixKeyPutItem( nullptr, pItem, fFindLast ? ( HB_ULONG ) -1 : 0, pTag );
 
       uiKeyLen = pTag->uiKeyLen;
       if( pTag->bType == 'C' )
@@ -1399,16 +1399,16 @@ static HB_ERRCODE sqlmixGoCold( SQLMIXAREAP pArea )
       LPDBRELINFO lpdbPendingRel;
 
       lpdbPendingRel = pArea->sqlarea.lpdbPendingRel;
-      pArea->sqlarea.lpdbPendingRel = NULL;
+      pArea->sqlarea.lpdbPendingRel = nullptr;
 
       pTag = pArea->pTagList;
       while( pTag )
       {
          if( ! pTag->fCustom )
          {
-            PMIXKEY pKey = hb_mixKeyEval( NULL, pTag );
+            PMIXKEY pKey = hb_mixKeyEval( nullptr, pTag );
 
-            if( pTag->pForItem != NULL )
+            if( pTag->pForItem != nullptr )
                fAdd = hb_mixEvalCond( pArea, pTag->pForItem );
             else
                fAdd = HB_TRUE;
@@ -1461,7 +1461,7 @@ static HB_ERRCODE sqlmixGoHot( SQLMIXAREAP pArea )
       if( ! pTag->fCustom )
       {
          pTag->HotKey = hb_mixKeyEval( pTag->HotKey, pTag );
-         pTag->HotFor = pTag->pForItem == NULL || hb_mixEvalCond( pArea, pTag->pForItem );
+         pTag->HotFor = pTag->pForItem == nullptr || hb_mixEvalCond( pArea, pTag->pForItem );
       }
       pTag = pTag->pNext;
    }
@@ -1526,7 +1526,7 @@ static HB_ERRCODE sqlmixOrderListClear( SQLMIXAREAP pArea )
       pArea->pTagList = pTag->pNext;
       hb_mixTagDestroy( pTag );
    }
-   pArea->pTag = NULL;
+   pArea->pTag = nullptr;
    return HB_SUCCESS;
 }
 
@@ -1559,7 +1559,7 @@ static HB_ERRCODE sqlmixOrderCreate( SQLMIXAREAP pArea, LPDBORDERCREATEINFO pOrd
       if( SELF_COMPILE( &pArea->sqlarea.area, hb_itemGetCPtr( pOrderInfo->abExpr ) ) == HB_FAILURE )
          return HB_FAILURE;
       pKeyItem = pArea->sqlarea.area.valResult;
-      pArea->sqlarea.area.valResult = NULL;
+      pArea->sqlarea.area.valResult = nullptr;
    }
 
    /* Test key codeblock on EOF */
@@ -1573,7 +1573,7 @@ static HB_ERRCODE sqlmixOrderCreate( SQLMIXAREAP pArea, LPDBORDERCREATEINFO pOrd
    }
 
    pResult = pArea->sqlarea.area.valResult;
-   pArea->sqlarea.area.valResult = NULL;
+   pArea->sqlarea.area.valResult = nullptr;
 
    switch( hb_itemType( pResult ) )
    {
@@ -1612,7 +1612,7 @@ static HB_ERRCODE sqlmixOrderCreate( SQLMIXAREAP pArea, LPDBORDERCREATEINFO pOrd
    {
       hb_vmDestroyBlockOrMacro( pKeyItem );
       SELF_GOTO( &pArea->sqlarea.area, ulRecNo );
-      sqlmixErrorRT( pArea, bType == 'U' ? EG_DATATYPE : EG_DATAWIDTH, 1026, NULL, 0, 0 );
+      sqlmixErrorRT( pArea, bType == 'U' ? EG_DATATYPE : EG_DATAWIDTH, 1026, nullptr, 0, 0 );
       return HB_FAILURE;
    }
 
@@ -1630,7 +1630,7 @@ static HB_ERRCODE sqlmixOrderCreate( SQLMIXAREAP pArea, LPDBORDERCREATEINFO pOrd
             return HB_FAILURE;
          }
          pForItem = pArea->sqlarea.area.valResult;
-         pArea->sqlarea.area.valResult = NULL;
+         pArea->sqlarea.area.valResult = nullptr;
       }
 
       /* Obtain WHILE codeblock */
@@ -1647,7 +1647,7 @@ static HB_ERRCODE sqlmixOrderCreate( SQLMIXAREAP pArea, LPDBORDERCREATEINFO pOrd
             return HB_FAILURE;
          }
          pWhileItem = pArea->sqlarea.area.valResult;
-         pArea->sqlarea.area.valResult = NULL;
+         pArea->sqlarea.area.valResult = nullptr;
       }
    }
 
@@ -1672,7 +1672,7 @@ static HB_ERRCODE sqlmixOrderCreate( SQLMIXAREAP pArea, LPDBORDERCREATEINFO pOrd
          if( pWhileItem )
             hb_vmDestroyBlockOrMacro( pWhileItem );
          SELF_GOTO( &pArea->sqlarea.area, ulRecNo );
-         sqlmixErrorRT( pArea, EG_DATATYPE, EDBF_INVALIDFOR, NULL, 0, 0 );
+         sqlmixErrorRT( pArea, EG_DATATYPE, EDBF_INVALIDFOR, nullptr, 0, 0 );
          return HB_FAILURE;
       }
       hb_itemRelease( pArea->sqlarea.area.valResult );
@@ -1742,15 +1742,15 @@ static HB_ERRCODE sqlmixOrderInfo( SQLMIXAREAP pArea, HB_USHORT uiIndex, LPDBORD
          pOrderInfo->itmResult = hb_itemPutC( pOrderInfo->itmResult, ( pTag ? pTag->szForExpr : nullptr ) );
          if( pTag && pOrderInfo->itmNewVal && HB_IS_STRING( pOrderInfo->itmNewVal ) )
          {
-            if( pTag->szForExpr != NULL )
+            if( pTag->szForExpr != nullptr )
             {
                hb_xfree( pTag->szForExpr );
-               pTag->szForExpr = NULL;
+               pTag->szForExpr = nullptr;
             }
-            if( pTag->pForItem != NULL )
+            if( pTag->pForItem != nullptr )
             {
                hb_vmDestroyBlockOrMacro( pTag->pForItem );
-               pTag->pForItem = NULL;
+               pTag->pForItem = nullptr;
             }
             if( hb_itemGetCLen( pOrderInfo->itmNewVal ) > 0 )
             {
@@ -1760,17 +1760,17 @@ static HB_ERRCODE sqlmixOrderInfo( SQLMIXAREAP pArea, HB_USHORT uiIndex, LPDBORD
                {
                   PHB_ITEM pForItem = pArea->sqlarea.area.valResult;
 
-                  pArea->sqlarea.area.valResult = NULL;
+                  pArea->sqlarea.area.valResult = nullptr;
                   if( SELF_EVALBLOCK( &pArea->sqlarea.area, pForItem ) == HB_SUCCESS )
                   {
                      if( hb_itemType( pArea->sqlarea.area.valResult ) & HB_IT_LOGICAL )
                      {
                         pTag->szForExpr = hb_strdup( pForExpr );
                         pTag->pForItem  = pForItem;
-                        pForItem        = NULL;
+                        pForItem        = nullptr;
                      }
                      hb_itemRelease( pArea->sqlarea.area.valResult );
-                     pArea->sqlarea.area.valResult = NULL;
+                     pArea->sqlarea.area.valResult = nullptr;
                   }
                   if( pForItem )
                      hb_vmDestroyBlockOrMacro( pForItem );
@@ -1828,7 +1828,7 @@ static HB_ERRCODE sqlmixOrderInfo( SQLMIXAREAP pArea, HB_USHORT uiIndex, LPDBORD
          break;
 
       case DBOI_ISCOND:
-         pOrderInfo->itmResult = hb_itemPutL( pOrderInfo->itmResult, pTag && pTag->szForExpr != NULL );
+         pOrderInfo->itmResult = hb_itemPutL( pOrderInfo->itmResult, pTag && pTag->szForExpr != nullptr );
          break;
 
       case DBOI_ISDESC:
@@ -1909,9 +1909,9 @@ static HB_ERRCODE sqlmixOrderInfo( SQLMIXAREAP pArea, HB_USHORT uiIndex, LPDBORD
                   LPCDXKEY pKey;
                   hb_cdxIndexLockWrite( pTag->pIndex );
                   if( pOrderInfo->itmNewVal && ! HB_IS_NIL( pOrderInfo->itmNewVal ) )
-                     pKey = hb_cdxKeyPutItem( NULL, pOrderInfo->itmNewVal, pArea->sqlarea.ulRecNo, pTag, HB_TRUE, HB_TRUE );
+                     pKey = hb_cdxKeyPutItem( nullptr, pOrderInfo->itmNewVal, pArea->sqlarea.ulRecNo, pTag, HB_TRUE, HB_TRUE );
                   else
-                     pKey = hb_cdxKeyEval( NULL, pTag );
+                     pKey = hb_cdxKeyEval( nullptr, pTag );
                   pOrderInfo->itmResult = hb_itemPutL( pOrderInfo->itmResult,
                                                        hb_cdxTagKeyAdd( pTag, pKey ) );
                   hb_cdxIndexUnLockWrite( pTag->pIndex );
@@ -1919,7 +1919,7 @@ static HB_ERRCODE sqlmixOrderInfo( SQLMIXAREAP pArea, HB_USHORT uiIndex, LPDBORD
                }
             }
             else
-               sqlmixErrorRT( pArea, 0, 1052, NULL, 0, 0 );
+               sqlmixErrorRT( pArea, 0, 1052, nullptr, 0, 0 );
          }
          break;
 
@@ -1942,9 +1942,9 @@ static HB_ERRCODE sqlmixOrderInfo( SQLMIXAREAP pArea, HB_USHORT uiIndex, LPDBORD
                   LPCDXKEY pKey;
                   hb_cdxIndexLockWrite( pTag->pIndex );
                   if( pOrderInfo->itmNewVal && ! HB_IS_NIL( pOrderInfo->itmNewVal ) )
-                     pKey = hb_cdxKeyPutItem( NULL, pOrderInfo->itmNewVal, pArea->sqlarea.ulRecNo, pTag, HB_TRUE, HB_TRUE );
+                     pKey = hb_cdxKeyPutItem( nullptr, pOrderInfo->itmNewVal, pArea->sqlarea.ulRecNo, pTag, HB_TRUE, HB_TRUE );
                   else
-                     pKey = hb_cdxKeyEval( NULL, pTag );
+                     pKey = hb_cdxKeyEval( nullptr, pTag );
                   pOrderInfo->itmResult = hb_itemPutL( pOrderInfo->itmResult,
                                                        hb_cdxTagKeyDel( pTag, pKey ) );
                   hb_cdxIndexUnLockWrite( pTag->pIndex );
@@ -1952,7 +1952,7 @@ static HB_ERRCODE sqlmixOrderInfo( SQLMIXAREAP pArea, HB_USHORT uiIndex, LPDBORD
                }
             }
             else
-               sqlmixErrorRT( pArea, 0, 1052, NULL, 0, 0 );
+               sqlmixErrorRT( pArea, 0, 1052, nullptr, 0, 0 );
          }
          break;
 #endif
@@ -1987,106 +1987,106 @@ static HB_ERRCODE sqlmixExit( LPRDDNODE pRDD )
 
 
 static RDDFUNCS sqlmixTable =
-{ ( DBENTRYP_BP ) NULL,                 /* sqlmixBof */
-  ( DBENTRYP_BP ) NULL,                 /* sqlmixEof */
-  ( DBENTRYP_BP ) NULL,                 /* sqlmixFound */
+{ ( DBENTRYP_BP ) nullptr,                 /* sqlmixBof */
+  ( DBENTRYP_BP ) nullptr,                 /* sqlmixEof */
+  ( DBENTRYP_BP ) nullptr,                 /* sqlmixFound */
   ( DBENTRYP_V ) sqlmixGoBottom,
-  ( DBENTRYP_UL ) NULL,                 /* sqlmixGoTo */
-  ( DBENTRYP_I ) NULL,                  /* sqlmixGoToId */
+  ( DBENTRYP_UL ) nullptr,                 /* sqlmixGoTo */
+  ( DBENTRYP_I ) nullptr,                  /* sqlmixGoToId */
   ( DBENTRYP_V ) sqlmixGoTop,
   ( DBENTRYP_BIB ) sqlmixSeek,
-  ( DBENTRYP_L ) NULL,                  /* sqlmixSkip */
-  ( DBENTRYP_L ) NULL,                  /* sqlmixSkipFilter */
+  ( DBENTRYP_L ) nullptr,                  /* sqlmixSkip */
+  ( DBENTRYP_L ) nullptr,                  /* sqlmixSkipFilter */
   ( DBENTRYP_L ) sqlmixSkipRaw,
-  ( DBENTRYP_VF ) NULL,                 /* sqlmixAddField */
-  ( DBENTRYP_B ) NULL,                  /* sqlmixAppend */
-  ( DBENTRYP_I ) NULL,                  /* sqlmixCreateFields */
-  ( DBENTRYP_V ) NULL,                  /* sqlmixDeleteRec */
-  ( DBENTRYP_BP ) NULL,                 /* sqlmixDeleted */
-  ( DBENTRYP_SP ) NULL,                 /* sqlmixFieldCount */
-  ( DBENTRYP_VF ) NULL,                 /* sqlmixFieldDisplay */
-  ( DBENTRYP_SSI ) NULL,                /* sqlmixFieldInfo */
-  ( DBENTRYP_SCP ) NULL,                /* sqlmixFieldName */
-  ( DBENTRYP_V ) NULL,                  /* sqlmixFlush */
-  ( DBENTRYP_PP ) NULL,                 /* sqlmixGetRec */
-  ( DBENTRYP_SI ) NULL,                 /* sqlmixGetValue */
-  ( DBENTRYP_SVL ) NULL,                /* sqlmixGetVarLen */
+  ( DBENTRYP_VF ) nullptr,                 /* sqlmixAddField */
+  ( DBENTRYP_B ) nullptr,                  /* sqlmixAppend */
+  ( DBENTRYP_I ) nullptr,                  /* sqlmixCreateFields */
+  ( DBENTRYP_V ) nullptr,                  /* sqlmixDeleteRec */
+  ( DBENTRYP_BP ) nullptr,                 /* sqlmixDeleted */
+  ( DBENTRYP_SP ) nullptr,                 /* sqlmixFieldCount */
+  ( DBENTRYP_VF ) nullptr,                 /* sqlmixFieldDisplay */
+  ( DBENTRYP_SSI ) nullptr,                /* sqlmixFieldInfo */
+  ( DBENTRYP_SCP ) nullptr,                /* sqlmixFieldName */
+  ( DBENTRYP_V ) nullptr,                  /* sqlmixFlush */
+  ( DBENTRYP_PP ) nullptr,                 /* sqlmixGetRec */
+  ( DBENTRYP_SI ) nullptr,                 /* sqlmixGetValue */
+  ( DBENTRYP_SVL ) nullptr,                /* sqlmixGetVarLen */
   ( DBENTRYP_V ) sqlmixGoCold,
   ( DBENTRYP_V ) sqlmixGoHot,
-  ( DBENTRYP_P ) NULL,                  /* sqlmixPutRec */
-  ( DBENTRYP_SI ) NULL,                 /* sqlmixPutValue */
-  ( DBENTRYP_V ) NULL,                  /* sqlmixRecall */
-  ( DBENTRYP_ULP ) NULL,                /* sqlmixRecCount */
-  ( DBENTRYP_ISI ) NULL,                /* sqlmixRecInfo */
-  ( DBENTRYP_ULP ) NULL,                /* sqlmixRecNo */
-  ( DBENTRYP_I ) NULL,                  /* sqlmixRecId */
-  ( DBENTRYP_S ) NULL,                  /* sqlmixSetFieldExtent */
-  ( DBENTRYP_CP ) NULL,                 /* sqlmixAlias */
+  ( DBENTRYP_P ) nullptr,                  /* sqlmixPutRec */
+  ( DBENTRYP_SI ) nullptr,                 /* sqlmixPutValue */
+  ( DBENTRYP_V ) nullptr,                  /* sqlmixRecall */
+  ( DBENTRYP_ULP ) nullptr,                /* sqlmixRecCount */
+  ( DBENTRYP_ISI ) nullptr,                /* sqlmixRecInfo */
+  ( DBENTRYP_ULP ) nullptr,                /* sqlmixRecNo */
+  ( DBENTRYP_I ) nullptr,                  /* sqlmixRecId */
+  ( DBENTRYP_S ) nullptr,                  /* sqlmixSetFieldExtent */
+  ( DBENTRYP_CP ) nullptr,                 /* sqlmixAlias */
   ( DBENTRYP_V ) sqlmixClose,
-  ( DBENTRYP_VO ) NULL,                 /* sqlmixCreate */
-  ( DBENTRYP_SI ) NULL,                 /* sqlmixInfo */
-  ( DBENTRYP_V ) NULL,                  /* sqlmixNewArea */
-  ( DBENTRYP_VO ) NULL,                 /* sqlmixOpen */
-  ( DBENTRYP_V ) NULL,                  /* sqlmixRelease */
+  ( DBENTRYP_VO ) nullptr,                 /* sqlmixCreate */
+  ( DBENTRYP_SI ) nullptr,                 /* sqlmixInfo */
+  ( DBENTRYP_V ) nullptr,                  /* sqlmixNewArea */
+  ( DBENTRYP_VO ) nullptr,                 /* sqlmixOpen */
+  ( DBENTRYP_V ) nullptr,                  /* sqlmixRelease */
   ( DBENTRYP_SP ) sqlmixStructSize,
-  ( DBENTRYP_CP ) NULL,                 /* sqlmixSysName */
-  ( DBENTRYP_VEI ) NULL,                /* sqlmixEval */
-  ( DBENTRYP_V ) NULL,                  /* sqlmixPack */
-  ( DBENTRYP_LSP ) NULL,                /* sqlmixPackRec */
-  ( DBENTRYP_VS ) NULL,                 /* sqlmixSort */
-  ( DBENTRYP_VT ) NULL,                 /* sqlmixTrans */
-  ( DBENTRYP_VT ) NULL,                 /* sqlmixTransRec */
+  ( DBENTRYP_CP ) nullptr,                 /* sqlmixSysName */
+  ( DBENTRYP_VEI ) nullptr,                /* sqlmixEval */
+  ( DBENTRYP_V ) nullptr,                  /* sqlmixPack */
+  ( DBENTRYP_LSP ) nullptr,                /* sqlmixPackRec */
+  ( DBENTRYP_VS ) nullptr,                 /* sqlmixSort */
+  ( DBENTRYP_VT ) nullptr,                 /* sqlmixTrans */
+  ( DBENTRYP_VT ) nullptr,                 /* sqlmixTransRec */
   ( DBENTRYP_V ) sqlmixZap,
-  ( DBENTRYP_VR ) NULL,                 /* sqlmixChildEnd */
-  ( DBENTRYP_VR ) NULL,                 /* sqlmixChildStart */
-  ( DBENTRYP_VR ) NULL,                 /* sqlmixChildSync */
-  ( DBENTRYP_V ) NULL,                  /* sqlmixSyncChildren */
-  ( DBENTRYP_V ) NULL,                  /* sqlmixClearRel */
-  ( DBENTRYP_V ) NULL,                  /* sqlmixForceRel */
-  ( DBENTRYP_SSP ) NULL,                /* sqlmixRelArea */
-  ( DBENTRYP_VR ) NULL,                 /* sqlmixRelEval */
-  ( DBENTRYP_SI ) NULL,                 /* sqlmixRelText */
-  ( DBENTRYP_VR ) NULL,                 /* sqlmixSetRel */
-  ( DBENTRYP_VOI ) NULL,                /* sqlmixOrderListAdd */
+  ( DBENTRYP_VR ) nullptr,                 /* sqlmixChildEnd */
+  ( DBENTRYP_VR ) nullptr,                 /* sqlmixChildStart */
+  ( DBENTRYP_VR ) nullptr,                 /* sqlmixChildSync */
+  ( DBENTRYP_V ) nullptr,                  /* sqlmixSyncChildren */
+  ( DBENTRYP_V ) nullptr,                  /* sqlmixClearRel */
+  ( DBENTRYP_V ) nullptr,                  /* sqlmixForceRel */
+  ( DBENTRYP_SSP ) nullptr,                /* sqlmixRelArea */
+  ( DBENTRYP_VR ) nullptr,                 /* sqlmixRelEval */
+  ( DBENTRYP_SI ) nullptr,                 /* sqlmixRelText */
+  ( DBENTRYP_VR ) nullptr,                 /* sqlmixSetRel */
+  ( DBENTRYP_VOI ) nullptr,                /* sqlmixOrderListAdd */
   ( DBENTRYP_V ) sqlmixOrderListClear,
-  ( DBENTRYP_VOI ) NULL,                /* sqlmixOrderListDelete */
+  ( DBENTRYP_VOI ) nullptr,                /* sqlmixOrderListDelete */
   ( DBENTRYP_VOI ) sqlmixOrderListFocus,
-  ( DBENTRYP_V ) NULL,                  /* sqlmixOrderListRebuild */
-  ( DBENTRYP_VOO ) NULL,                /* sqlmixOrderCondition */
+  ( DBENTRYP_V ) nullptr,                  /* sqlmixOrderListRebuild */
+  ( DBENTRYP_VOO ) nullptr,                /* sqlmixOrderCondition */
   ( DBENTRYP_VOC ) sqlmixOrderCreate,
-  ( DBENTRYP_VOI ) NULL,                /* sqlmixOrderDestroy */
+  ( DBENTRYP_VOI ) nullptr,                /* sqlmixOrderDestroy */
   ( DBENTRYP_SVOI ) sqlmixOrderInfo,
-  ( DBENTRYP_V ) NULL,                  /* sqlmixClearFilter */
-  ( DBENTRYP_V ) NULL,                  /* sqlmixClearLocate */
-  ( DBENTRYP_V ) NULL,                  /* sqlmixClearScope */
-  ( DBENTRYP_VPLP ) NULL,               /* sqlmixCountScope */
-  ( DBENTRYP_I ) NULL,                  /* sqlmixFilterText */
-  ( DBENTRYP_SI ) NULL,                 /* sqlmixScopeInfo */
-  ( DBENTRYP_VFI ) NULL,                /* sqlmixSetFilter */
-  ( DBENTRYP_VLO ) NULL,                /* sqlmixSetLocate */
-  ( DBENTRYP_VOS ) NULL,                /* sqlmixSetScope */
-  ( DBENTRYP_VPL ) NULL,                /* sqlmixSkipScope */
-  ( DBENTRYP_B ) NULL,                  /* sqlmixLocate */
-  ( DBENTRYP_CC ) NULL,                 /* sqlmixCompile */
-  ( DBENTRYP_I ) NULL,                  /* sqlmixError */
-  ( DBENTRYP_I ) NULL,                  /* sqlmixEvalBlock */
-  ( DBENTRYP_VSP ) NULL,                /* sqlmixRawLock */
-  ( DBENTRYP_VL ) NULL,                 /* sqlmixLock */
-  ( DBENTRYP_I ) NULL,                  /* sqlmixUnLock */
-  ( DBENTRYP_V ) NULL,                  /* sqlmixCloseMemFile */
-  ( DBENTRYP_VO ) NULL,                 /* sqlmixCreateMemFile */
-  ( DBENTRYP_SCCS ) NULL,               /* sqlmixGetValueFile */
-  ( DBENTRYP_VO ) NULL,                 /* sqlmixOpenMemFile */
-  ( DBENTRYP_SCCS ) NULL,               /* sqlmixPutValueFile */
-  ( DBENTRYP_V ) NULL,                  /* sqlmixReadDBHeader */
-  ( DBENTRYP_V ) NULL,                  /* sqlmixWriteDBHeader */
+  ( DBENTRYP_V ) nullptr,                  /* sqlmixClearFilter */
+  ( DBENTRYP_V ) nullptr,                  /* sqlmixClearLocate */
+  ( DBENTRYP_V ) nullptr,                  /* sqlmixClearScope */
+  ( DBENTRYP_VPLP ) nullptr,               /* sqlmixCountScope */
+  ( DBENTRYP_I ) nullptr,                  /* sqlmixFilterText */
+  ( DBENTRYP_SI ) nullptr,                 /* sqlmixScopeInfo */
+  ( DBENTRYP_VFI ) nullptr,                /* sqlmixSetFilter */
+  ( DBENTRYP_VLO ) nullptr,                /* sqlmixSetLocate */
+  ( DBENTRYP_VOS ) nullptr,                /* sqlmixSetScope */
+  ( DBENTRYP_VPL ) nullptr,                /* sqlmixSkipScope */
+  ( DBENTRYP_B ) nullptr,                  /* sqlmixLocate */
+  ( DBENTRYP_CC ) nullptr,                 /* sqlmixCompile */
+  ( DBENTRYP_I ) nullptr,                  /* sqlmixError */
+  ( DBENTRYP_I ) nullptr,                  /* sqlmixEvalBlock */
+  ( DBENTRYP_VSP ) nullptr,                /* sqlmixRawLock */
+  ( DBENTRYP_VL ) nullptr,                 /* sqlmixLock */
+  ( DBENTRYP_I ) nullptr,                  /* sqlmixUnLock */
+  ( DBENTRYP_V ) nullptr,                  /* sqlmixCloseMemFile */
+  ( DBENTRYP_VO ) nullptr,                 /* sqlmixCreateMemFile */
+  ( DBENTRYP_SCCS ) nullptr,               /* sqlmixGetValueFile */
+  ( DBENTRYP_VO ) nullptr,                 /* sqlmixOpenMemFile */
+  ( DBENTRYP_SCCS ) nullptr,               /* sqlmixPutValueFile */
+  ( DBENTRYP_V ) nullptr,                  /* sqlmixReadDBHeader */
+  ( DBENTRYP_V ) nullptr,                  /* sqlmixWriteDBHeader */
   ( DBENTRYP_R ) sqlmixInit,
   ( DBENTRYP_R ) sqlmixExit,
-  ( DBENTRYP_RVVL ) NULL,               /* sqlmixDrop */
-  ( DBENTRYP_RVVL ) NULL,               /* sqlmixExists */
-  ( DBENTRYP_RVVVL ) NULL,              /* sqlmixRename */
-  ( DBENTRYP_RSLV ) NULL,               /* sqlmixRddInfo */
-  ( DBENTRYP_SVP ) NULL,                /* sqlmixWhoCares */
+  ( DBENTRYP_RVVL ) nullptr,               /* sqlmixDrop */
+  ( DBENTRYP_RVVL ) nullptr,               /* sqlmixExists */
+  ( DBENTRYP_RVVVL ) nullptr,              /* sqlmixRename */
+  ( DBENTRYP_RSLV ) nullptr,               /* sqlmixRddInfo */
+  ( DBENTRYP_SVP ) nullptr,                /* sqlmixWhoCares */
 };
 
 /* force SQLBASE linking */
@@ -2129,9 +2129,9 @@ static void hb_sqlmixRddInit( void * cargo )
 
 HB_INIT_SYMBOLS_BEGIN( sqlmix__InitSymbols )
 {
-   "SQLMIX", { HB_FS_PUBLIC | HB_FS_LOCAL }, { HB_FUNCNAME( SQLMIX ) }, NULL
+   "SQLMIX", { HB_FS_PUBLIC | HB_FS_LOCAL }, { HB_FUNCNAME( SQLMIX ) }, nullptr
 },
-{ "SQLMIX_GETFUNCTABLE", { HB_FS_PUBLIC | HB_FS_LOCAL }, { HB_FUNCNAME( SQLMIX_GETFUNCTABLE ) }, NULL }
+{ "SQLMIX_GETFUNCTABLE", { HB_FS_PUBLIC | HB_FS_LOCAL }, { HB_FUNCNAME( SQLMIX_GETFUNCTABLE ) }, nullptr }
 HB_INIT_SYMBOLS_END( sqlmix__InitSymbols )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_sqlmix_rdd_init_ )

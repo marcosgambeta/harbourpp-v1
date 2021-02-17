@@ -87,7 +87,7 @@ static void hb_fileFindRelease( void * cargo )
       hb_fsFindClose( pFFData->ffind );
 }
 
-static HB_TSD_NEW( s_FFData, sizeof( HB_FFDATA ), NULL, hb_fileFindRelease );
+static HB_TSD_NEW( s_FFData, sizeof( HB_FFDATA ), nullptr, hb_fileFindRelease );
 
 #define HB_GET_FFDATA()  ( ( PHB_FFDATA ) hb_stackGetTSD( &s_FFData ) )
 
@@ -106,7 +106,7 @@ static PHB_FFIND _hb_fileStart( HB_BOOL fNext, HB_BOOL fAny )
       if( pFFData->ffind )
       {
          hb_fsFindClose( pFFData->ffind );
-         pFFData->ffind = NULL;
+         pFFData->ffind = nullptr;
       }
 
       if( szFile )
@@ -122,7 +122,7 @@ static PHB_FFIND _hb_fileStart( HB_BOOL fNext, HB_BOOL fAny )
             if( ! hb_fsFindNext( pFFData->ffind ) )
             {
                hb_fsFindClose( pFFData->ffind );
-               pFFData->ffind = NULL;
+               pFFData->ffind = nullptr;
             }
          }
       }
@@ -134,7 +134,7 @@ static PHB_FFIND _hb_fileStart( HB_BOOL fNext, HB_BOOL fAny )
          if( ! hb_fsFindNext( pFFData->ffind ) )
          {
             hb_fsFindClose( pFFData->ffind );
-            pFFData->ffind = NULL;
+            pFFData->ffind = nullptr;
             break;
          }
       }
@@ -243,12 +243,12 @@ HB_FUNC( FILEDELETE )
       /* In CT3 this function does not remove directories */
       nAttr &= ~HB_FA_DIRECTORY;
 
-      if( ( ffind = hb_fsFindFirst( pszDirSpec, nAttr ) ) != NULL )
+      if( ( ffind = hb_fsFindFirst( pszDirSpec, nAttr ) ) != nullptr )
       {
          PHB_FNAME pFilepath;
 
          pFilepath = hb_fsFNameSplit( pszDirSpec );
-         pFilepath->szExtension = NULL;
+         pFilepath->szExtension = nullptr;
 
          do
          {

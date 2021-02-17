@@ -56,7 +56,7 @@ static HB_GARBAGE_FUNC( hb_cairo_pattern_destructor )
    if( *ppPattern )
    {
       cairo_pattern_destroy( *ppPattern );
-      *ppPattern = NULL;
+      *ppPattern = nullptr;
    }
 }
 
@@ -104,7 +104,7 @@ HB_FUNC( CAIRO_PATTERN_DESTROY )
    if( ppPattern && *ppPattern )
    {
       cairo_pattern_destroy( *ppPattern );
-      *ppPattern = NULL;
+      *ppPattern = nullptr;
    }
    else
       hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );

@@ -100,10 +100,10 @@ HB_FUNC( RANGEREM )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_RANGEREM, NULL, HB_ERR_FUNCNAME, 0,
+                                  CT_ERROR_RANGEREM, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else if( HB_ISCHAR( 3 ) )
          hb_retclen( hb_parc( 3 ), hb_parclen( 3 ) );
@@ -187,10 +187,10 @@ HB_FUNC( RANGEREPL )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_RANGEREPL, NULL, HB_ERR_FUNCNAME, 0,
+                                  CT_ERROR_RANGEREPL, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else if( iNoRef )
          hb_ret();

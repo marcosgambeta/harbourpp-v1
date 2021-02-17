@@ -71,7 +71,7 @@ static void do_pad( int iSwitch )
          if( iArgErrorMode != CT_ARGERR_IGNORE )
             ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                       iSwitch == DO_PAD_PADLEFT ?
-                      CT_ERROR_PADLEFT : CT_ERROR_PADRIGHT, NULL,
+                      CT_ERROR_PADLEFT : CT_ERROR_PADRIGHT, nullptr,
                       HB_ERR_FUNCNAME, 0, EF_CANDEFAULT,
                       HB_ERR_ARGS_BASEPARAMS );
 
@@ -121,11 +121,11 @@ static void do_pad( int iSwitch )
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   iSwitch == DO_PAD_PADLEFT ?
-                                  CT_ERROR_PADLEFT : CT_ERROR_PADRIGHT, NULL,
+                                  CT_ERROR_PADLEFT : CT_ERROR_PADRIGHT, nullptr,
                                   HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
                                   HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else
          hb_retc_null();

@@ -92,10 +92,10 @@ static HB_GARBAGE_FUNC( hb_mmf_destructor )
          xdl_free_mmfile( pStructHolder->hb_mmf->mmf );
          hb_xfree( pStructHolder->hb_mmf->mmf );
 
-         pStructHolder->hb_mmf->mmf = NULL;
+         pStructHolder->hb_mmf->mmf = nullptr;
       }
       hb_xfree( pStructHolder->hb_mmf );
-      pStructHolder->hb_mmf = NULL;
+      pStructHolder->hb_mmf = nullptr;
    }
 }
 
@@ -186,7 +186,7 @@ HB_FUNC( XDL_FREE_MMFILE )
    if( phb_mmf && phb_mmf->mmf )
    {
       xdl_free_mmfile( phb_mmf->mmf );
-      phb_mmf->mmf = NULL;
+      phb_mmf->mmf = nullptr;
    }
    else
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -232,7 +232,7 @@ HB_FUNC( XDL_READ_MMFILE )
       if( pData )
       {
          if( ! hb_itemGetWriteCL( pData, &data, &size ) )
-            data = NULL;
+            data = nullptr;
       }
       else
       {
@@ -621,7 +621,7 @@ static void xdiff_init( void )
 {
    memallocator_t malt;
 
-   malt.priv    = NULL;
+   malt.priv    = nullptr;
    malt.malloc  = wf_malloc;
    malt.free    = wf_free;
    malt.realloc = wf_realloc;

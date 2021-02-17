@@ -157,6 +157,6 @@ HB_FUNC( WOY )
 {
    PHB_ITEM pDate = hb_param( 1, HB_IT_DATETIME );
 
-   hb_retni( pDate == NULL ? 0 :
+   hb_retni( pDate == nullptr ? 0 :
              hb_woy( hb_itemGetDL( pDate ), hb_parldef( 2, HB_TRUE ) ) );
 }

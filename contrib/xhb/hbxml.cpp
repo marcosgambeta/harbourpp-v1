@@ -452,7 +452,7 @@ static PHB_ITEM mxml_node_new( PHB_ITEM pDoc )
    pNode = hb_itemNew( hb_param( -1, HB_IT_ANY ) );
 
    /* Sets also current node line begin value, if the node is from a document */
-   if( pDoc != NULL )
+   if( pDoc != nullptr )
    {
       hb_objSendMsg( pDoc, "NLINE", 0 );
       hb_objSendMsg( pNode, "_NBEGINLINE", 1, hb_param( -1, HB_IT_ANY ) );
@@ -667,7 +667,7 @@ HB_FUNC( HBXML_NODE_ADD_BELOW )
 static PHB_ITEM mxml_node_clone( PHB_ITEM pTg )
 {
    /* Node is not from a real document, so is right to leave nBeginLine at 0 */
-   PHB_ITEM pNode = mxml_node_new( NULL );
+   PHB_ITEM pNode = mxml_node_new( nullptr );
    PHB_ITEM pArrayClone;
 
    /* sets clone type */
@@ -955,7 +955,7 @@ static MXML_STATUS mxml_node_read_attributes( MXML_REFIL * ref,
 
    hbName     = hb_itemNew( nullptr );
    hbValue    = hb_itemNew( nullptr );
-   attributes = hb_hashNew( NULL );
+   attributes = hb_hashNew( nullptr );
 
    hbAttr.pName  = hbName;
    hbAttr.pValue = hbValue;
@@ -1433,7 +1433,7 @@ static MXML_STATUS mxml_node_read( MXML_REFIL * ref, PHB_ITEM pNode, PHB_ITEM do
          return MXML_STATUS_MALFORMED;
       }
       /* resetting new node findings */
-      node = NULL;
+      node = nullptr;
 
       switch( iStatus )
       {
@@ -1516,7 +1516,7 @@ static MXML_STATUS mxml_node_read( MXML_REFIL * ref, PHB_ITEM pNode, PHB_ITEM do
       }
 
       /* have I to add a node below our structure ? */
-      if( node != NULL )
+      if( node != nullptr )
       {
          if( ref->status == MXML_STATUS_OK )
          {
@@ -1567,13 +1567,13 @@ static MXML_STATUS mxml_node_read( MXML_REFIL * ref, PHB_ITEM pNode, PHB_ITEM do
          if( hb_parni( -1 ) == MXML_TYPE_DATA )
          {
             /* first data node ? */
-            if( data_node == NULL )
+            if( data_node == nullptr )
                data_node = hb_itemNew( child_node );
             /* ... or have we more than a data node? */
             else
             {
                hb_itemRelease( data_node );
-               data_node = NULL;
+               data_node = nullptr;
                break;
             }
          }
@@ -1817,7 +1817,7 @@ static MXML_OUTPUT * mxml_output_new( MXML_OUTPUT_FUNC func, int node_count )
 {
    MXML_OUTPUT * ret = ( MXML_OUTPUT * ) MXML_ALLOCATOR( sizeof( MXML_OUTPUT ) );
 
-   if( ret == NULL )
+   if( ret == nullptr )
       return nullptr;
 
    if( mxml_output_setup( ret, func, node_count ) == MXML_STATUS_OK )
@@ -1834,7 +1834,7 @@ static MXML_OUTPUT * mxml_output_new( MXML_OUTPUT_FUNC func, int node_count )
  */
 static MXML_STATUS mxml_output_setup( MXML_OUTPUT * out, MXML_OUTPUT_FUNC func, int node_count )
 {
-   if( func == NULL )
+   if( func == nullptr )
       return MXML_STATUS_ERROR;
 
    out->output_func = func;
@@ -1947,8 +1947,8 @@ static void mxml_output_func_to_sgs( MXML_OUTPUT * out, const char * s, HB_ISIZ 
  * If buf is null, then buflen is ignored and set to 0; the first retrieval
  * of a character will then lead to refill func calling.
  * If the function is null, once the data has been read the reader returns
- * eof. If both func and buf are NULL, the creation fails, and the function
- * retunrs NULL.
+ * eof. If both func and buf are nullptr, the creation fails, and the function
+ * retunrs nullptr.
  */
 #if 0
 static MXML_REFIL * mxml_refil_new( MXML_REFIL_FUNC func, char * buf, HB_ISIZ buflen,
@@ -1956,7 +1956,7 @@ static MXML_REFIL * mxml_refil_new( MXML_REFIL_FUNC func, char * buf, HB_ISIZ bu
 {
    MXML_REFIL * ret = ( MXML_REFIL * ) MXML_ALLOCATOR( sizeof( MXML_REFIL ) );
 
-   if( ret == NULL )
+   if( ret == nullptr )
       return nullptr;
 
    if( mxml_refil_setup( ret, func, buf, buflen, bufsize ) == MXML_STATUS_OK )
@@ -1973,7 +1973,7 @@ static MXML_REFIL * mxml_refil_new( MXML_REFIL_FUNC func, char * buf, HB_ISIZ bu
  * of the allocated memory, while buflen is the count of currently valid
  * characters in that buffer.
  * If the function is null, once the data has been read the reader returns
- * eof. If both func and buf are NULL, the function fails and returns
+ * eof. If both func and buf are nullptr, the function fails and returns
  * MXML_STATUS_ERROR. On success, returns MXML_STATUS_OK.
  * Notice: ref->data member is left to fill to the
  * calling program, if this is needed.
@@ -1981,7 +1981,7 @@ static MXML_REFIL * mxml_refil_new( MXML_REFIL_FUNC func, char * buf, HB_ISIZ bu
 static MXML_STATUS mxml_refil_setup( MXML_REFIL * ref, MXML_REFIL_FUNC func,
                                      char * buf, HB_ISIZ buflen, HB_ISIZ bufsize )
 {
-   if( buf == NULL && func == NULL )
+   if( buf == nullptr && func == nullptr )
       return MXML_STATUS_ERROR;
 
    ref->refil_func = func;
@@ -1990,7 +1990,7 @@ static MXML_STATUS mxml_refil_setup( MXML_REFIL * ref, MXML_REFIL_FUNC func,
    ref->status = MXML_STATUS_OK;
    ref->error  = MXML_ERROR_NONE;
 
-   if( buf == NULL )
+   if( buf == nullptr )
       ref->buflen = ref->bufsize = 0;
    else
    {
@@ -2030,7 +2030,7 @@ static int mxml_refil_getc( MXML_REFIL * ref )
 
    if( ref->bufpos >= ref->buflen )
    {
-      if( ref->refil_func != NULL )
+      if( ref->refil_func != nullptr )
       {
          ref->refil_func( ref );
          if( ref->status != MXML_STATUS_OK || ref->buflen == 0 )
@@ -2079,11 +2079,11 @@ static MXML_SGS * mxml_sgs_new()
 {
    MXML_SGS * ret = ( MXML_SGS * ) MXML_ALLOCATOR( sizeof( MXML_SGS ) );
 
-   if( ret == NULL )
+   if( ret == nullptr )
       return nullptr;
 
    ret->buffer = ( char * ) MXML_ALLOCATOR( MXML_ALLOC_BLOCK );
-   if( ret->buffer == NULL )
+   if( ret->buffer == nullptr )
    {
       MXML_DELETOR( ret );
       return nullptr;
@@ -2097,7 +2097,7 @@ static MXML_SGS * mxml_sgs_new()
 
 static void mxml_sgs_destroy( MXML_SGS * sgs )
 {
-   if( sgs->buffer != NULL )
+   if( sgs->buffer != nullptr )
       MXML_DELETOR( sgs->buffer );
 
    MXML_DELETOR( sgs );
@@ -2113,7 +2113,7 @@ static MXML_STATUS mxml_sgs_append_char( MXML_SGS * sgs, char c )
    {
       char * buf = ( char * ) MXML_REALLOCATOR( sgs->buffer, sgs->allocated + MXML_ALLOC_BLOCK );
 
-      if( buf == NULL )
+      if( buf == nullptr )
          return MXML_STATUS_ERROR;
 
       sgs->allocated += MXML_ALLOC_BLOCK;
@@ -2132,7 +2132,7 @@ static MXML_STATUS mxml_sgs_append_string_len( MXML_SGS * sgs, const char * s, H
          HB_ISIZ blklen = ( ( sgs->length + slen ) / MXML_ALLOC_BLOCK + 1 ) * MXML_ALLOC_BLOCK;
          char * buf = ( char * ) MXML_REALLOCATOR( sgs->buffer, blklen );
 
-         if( buf == NULL )
+         if( buf == nullptr )
             return MXML_STATUS_ERROR;
 
          sgs->allocated = blklen;
@@ -2211,7 +2211,7 @@ HB_FUNC( HBXML_DATAREAD )
    char       buffer[ 512 ], * buf;
    HB_SIZE    nLen;
 
-   if( pDoc == NULL || pParam == NULL ||
+   if( pDoc == nullptr || pParam == nullptr ||
        ( ! HB_IS_STRING( pParam ) && ! HB_IS_NUMERIC( pParam ) ) )
    {
       hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -2219,7 +2219,7 @@ HB_FUNC( HBXML_DATAREAD )
    }
 
    if( hb_itemGetWriteCL( pParam, &buf, &nLen ) )
-      mxml_refil_setup( &refil, NULL, buf, nLen, nLen );
+      mxml_refil_setup( &refil, nullptr, buf, nLen, nLen );
    else /* can only be an integer, that is, a file handle */
    {
       mxml_refil_setup( &refil,
@@ -2260,13 +2260,13 @@ HB_FUNC( HBXML_NODE_TO_STRING )
    MXML_OUTPUT out;
    int         iStyle;
 
-   if( pNode == NULL )
+   if( pNode == nullptr )
    {
       hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
    }
 
-   if( pStyle == NULL )
+   if( pStyle == nullptr )
       iStyle = 0;
    else
       iStyle = hb_itemGetNI( pStyle );
@@ -2292,13 +2292,13 @@ HB_FUNC( HBXML_NODE_WRITE )
    MXML_OUTPUT out;
    int         iStyle, iRet;
 
-   if( pNode == NULL || pHandle == NULL )
+   if( pNode == nullptr || pHandle == nullptr )
    {
       hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
    }
 
-   if( pStyle == NULL )
+   if( pStyle == nullptr )
       iStyle = 0;
    else
       iStyle = hb_itemGetNI( pStyle );

@@ -139,16 +139,16 @@ static void do_charswap( int iSwitch )
          if( iSwitch == DO_CHARSWAP_CHARSWAP )
             pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                      CT_ERROR_CHARSWAP,
-                                     NULL, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
+                                     nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
                                      HB_ERR_ARGS_BASEPARAMS );
          else
             pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                      CT_ERROR_WORDSWAP,
-                                     NULL, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
+                                     nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
                                      HB_ERR_ARGS_BASEPARAMS );
       }
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else if( iNoRet )
          hb_retl( HB_FALSE );

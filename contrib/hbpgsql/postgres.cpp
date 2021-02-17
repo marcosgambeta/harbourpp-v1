@@ -55,14 +55,14 @@ static HB_GARBAGE_FUNC( PGconn_release )
 {
    void ** ph = ( void ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
       PQfinish( ( PGconn * ) *ph );
 
-      /* set pointer to NULL to avoid multiple freeing */
-      *ph = NULL;
+      /* set pointer to nullptr to avoid multiple freeing */
+      *ph = nullptr;
    }
 }
 
@@ -97,14 +97,14 @@ static HB_GARBAGE_FUNC( PGresult_release )
 {
    void ** ph = ( void ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
       PQclear( ( PGresult * ) *ph );
 
-      /* set pointer to NULL to avoid multiple freeing */
-      *ph = NULL;
+      /* set pointer to nullptr to avoid multiple freeing */
+      *ph = nullptr;
    }
 }
 
@@ -141,14 +141,14 @@ static HB_GARBAGE_FUNC( PGcancel_release )
 {
    void ** ph = ( void ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
       PQfreeCancel( ( PGcancel * ) *ph );
 
-      /* set pointer to NULL to avoid multiple freeing */
-      *ph = NULL;
+      /* set pointer to nullptr to avoid multiple freeing */
+      *ph = nullptr;
    }
 }
 
@@ -187,14 +187,14 @@ static HB_GARBAGE_FUNC( FILE_release )
 {
    void ** ph = ( void ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
       fclose( ( FILE * ) *ph );
 
-      /* set pointer to NULL to avoid multiple freeing */
-      *ph = NULL;
+      /* set pointer to nullptr to avoid multiple freeing */
+      *ph = nullptr;
    }
 }
 
@@ -420,7 +420,7 @@ HB_FUNC( PQEXECPARAMS )
       for( i = 0; i < n; ++i )
          paramvalues[ i ] = hb_arrayGetCPtr( aParam, i + 1 );
 
-      hb_PGresult_ret( PQexecParams( conn, hb_parcx( 2 ), n, NULL, paramvalues, NULL, NULL, 1 ) );
+      hb_PGresult_ret( PQexecParams( conn, hb_parcx( 2 ), n, nullptr, paramvalues, nullptr, nullptr, 1 ) );
 
       hb_xfree( ( void * ) paramvalues );
    }
@@ -1083,7 +1083,7 @@ HB_FUNC( PQCANCEL )
       hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else
    hb_retl( HB_FALSE );
-   hb_storc( NULL, 2 );
+   hb_storc( nullptr, 2 );
 #endif
 }
 
@@ -1113,7 +1113,7 @@ HB_FUNC( PQPREPARE )
    PGconn * conn = hb_PGconn_par( 1 );
 
    if( conn )
-      hb_PGresult_ret( PQprepare( conn, hb_parcx( 2 ), hb_parcx( 3 ), hb_parni( 4 ), NULL ) );
+      hb_PGresult_ret( PQprepare( conn, hb_parcx( 2 ), hb_parcx( 3 ), hb_parni( 4 ), nullptr ) );
    else
       hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
@@ -1133,7 +1133,7 @@ HB_FUNC( PQEXECPREPARED )
       for( i = 0; i < n; ++i )
          paramvalues[ i ] = hb_arrayGetCPtr( aParam, i + 1 );
 
-      hb_PGresult_ret( PQexecPrepared( conn, hb_parcx( 2 ), static_cast< int >( n ), ( const char * const * ) paramvalues, NULL, NULL, 1 ) );
+      hb_PGresult_ret( PQexecPrepared( conn, hb_parcx( 2 ), static_cast< int >( n ), ( const char * const * ) paramvalues, nullptr, nullptr, 1 ) );
 
       hb_xfree( ( void * ) paramvalues );
    }
@@ -1161,7 +1161,7 @@ HB_FUNC( PQPUTCOPYEND )
    PGconn * conn = hb_PGconn_par( 1 );
 
    if( conn )
-      hb_retni( PQputCopyEnd( conn, NULL ) );
+      hb_retni( PQputCopyEnd( conn, nullptr ) );
    else
       hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else

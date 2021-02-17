@@ -102,7 +102,7 @@ HB_FUNC( BLANK )
       else
       {
          if( bRef )
-            hb_storc( NULL, 1 );
+            hb_storc( nullptr, 1 );
          if( bRet )
             hb_retc_null();
       }

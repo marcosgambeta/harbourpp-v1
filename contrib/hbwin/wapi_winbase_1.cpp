@@ -191,7 +191,7 @@ HB_FUNC( WAPI_SETERRORMODE )
 HB_FUNC( WAPI_LOADLIBRARY )
 {
    void * hFileName;
-   HMODULE hResult = LoadLibrary( HB_PARSTRDEF( 1, &hFileName, NULL ) );
+   HMODULE hResult = LoadLibrary( HB_PARSTRDEF( 1, &hFileName, nullptr ) );
 
    hbwapi_SetLastError( GetLastError() );
    hb_retptr( hResult );
@@ -213,7 +213,7 @@ HB_FUNC( WAPI_GETPROCADDRESS )
    DWORD dwLastError;
 #if defined( HB_OS_WIN_CE )
    void * hProcName;
-   LPCTSTR lpProcName = HB_PARSTR( 2, &hProcName, NULL );
+   LPCTSTR lpProcName = HB_PARSTR( 2, &hProcName, nullptr );
    pProc = GetProcAddress( ( HMODULE ) hb_parptr( 1 ),
                            lpProcName ? lpProcName :
                            ( LPCTSTR ) ( HB_PTRUINT ) hb_parnint( 2 ) );
@@ -233,7 +233,7 @@ HB_FUNC( WAPI_GETPROCADDRESS )
 HB_FUNC( WAPI_GETMODULEHANDLE )
 {
    void * hModuleName;
-   HMODULE hResult = GetModuleHandle( HB_PARSTR( 1, &hModuleName, NULL ) );
+   HMODULE hResult = GetModuleHandle( HB_PARSTR( 1, &hModuleName, nullptr ) );
 
    hbwapi_SetLastError( GetLastError() );
    hbwapi_ret_raw_HANDLE( hResult );
@@ -256,7 +256,7 @@ static void s_getPathName( _HB_GETPATHNAME getPathName )
 {
    void * hLongPath;
    DWORD length = 0;
-   LPCTSTR lpszLongPath = HB_PARSTR( 1, &hLongPath, NULL );
+   LPCTSTR lpszLongPath = HB_PARSTR( 1, &hLongPath, nullptr );
 
    if( lpszLongPath )
    {
@@ -271,7 +271,7 @@ static void s_getPathName( _HB_GETPATHNAME getPathName )
          {
             cchBuffer = ( DWORD ) hb_parnl( 3 );
             if( cchBuffer == 0 )
-               lpszShortPath = NULL;
+               lpszShortPath = nullptr;
             else if( cchBuffer > ( DWORD ) HB_SIZEOFARRAY( buffer ) )
                lpszShortPath = ( LPTSTR ) hb_xgrab( cchBuffer * sizeof( TCHAR ) );
          }
@@ -290,7 +290,7 @@ static void s_getPathName( _HB_GETPATHNAME getPathName )
       }
       else if( getPathName )
       {
-         length = getPathName( lpszLongPath, NULL, 0 );
+         length = getPathName( lpszLongPath, nullptr, 0 );
          hbwapi_SetLastError( GetLastError() );
       }
    }
@@ -316,7 +316,7 @@ HB_FUNC( WAPI_GETSHORTPATHNAME )
 HB_FUNC( WAPI_GETLONGPATHNAME )
 {
 #if ! defined( HB_OS_WIN_CE )
-   static _HB_GETPATHNAME s_getPathNameAddr = NULL;
+   static _HB_GETPATHNAME s_getPathNameAddr = nullptr;
 
    if( ! s_getPathNameAddr )
    {
@@ -343,7 +343,7 @@ HB_FUNC( WAPI_GETSYSTEMDIRECTORY )
 #if defined( HB_OS_WIN_CE )
    hb_retc_const( "\\Windows" );
 #else
-   UINT nLen = GetSystemDirectory( NULL, 0 );
+   UINT nLen = GetSystemDirectory( nullptr, 0 );
 
    if( nLen )
    {
@@ -369,7 +369,7 @@ HB_FUNC( WAPI_GETWINDOWSDIRECTORY )
 #if defined( HB_OS_WIN_CE )
    hb_retc_const( "\\Windows" );
 #else
-   UINT nLen = GetWindowsDirectory( NULL, 0 );
+   UINT nLen = GetWindowsDirectory( nullptr, 0 );
 
    if( nLen )
    {
@@ -428,8 +428,8 @@ HB_FUNC( WAPI_GETVOLUMEINFORMATION )
 
    dwSerialNumber = dwMaxFileNameLen = dwFileSystemFlags = 0;
    dwVolNameSize = dwFSNameSize = 0;
-   lpVolNameBuf = lpFSNameBuf = NULL;
-   lpRootPath = HB_PARSTR( 1, &hRootPath, NULL );
+   lpVolNameBuf = lpFSNameBuf = nullptr;
+   lpRootPath = HB_PARSTR( 1, &hRootPath, nullptr );
    if( HB_ISBYREF( 2 ) )
    {
       dwVolNameSize = MAX_PATH + 1;

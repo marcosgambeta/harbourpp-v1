@@ -111,7 +111,7 @@ HB_FUNC( FT_GETE )
 #elif defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
    {
       LPTCH    lpEnviron = GetEnvironmentStrings(), lpEnv;
-      LPTSTR   lpResult  = NULL, lpDst;
+      LPTSTR   lpResult  = nullptr, lpDst;
       HB_SIZE  nSize     = 0, nCount = 0;
       PHB_ITEM pArray    = nullptr;
       int      rettype   = HB_ISARRAY( 1 ) ? ARRAYTYPE :
@@ -160,20 +160,20 @@ HB_FUNC( FT_GETE )
 
          if( rettype == CHARTYPE )
          {
-            PHB_ITEM pItem = HB_ITEMPUTSTRLEN( NULL, lpResult, nSize );
+            PHB_ITEM pItem = HB_ITEMPUTSTRLEN( nullptr, lpResult, nSize );
             if( ! hb_itemParamStoreRelease( 1, pItem ) )
                hb_itemRelease( pItem );
             hb_xfree( lpResult );
          }
       }
       else if( rettype == CHARTYPE )
-         hb_storc( NULL, 1 );
+         hb_storc( nullptr, 1 );
 
       hb_retns( nCount );
    }
 #else
    if( HB_ISCHAR( 1 ) )
-      hb_storc( NULL, 1 );
+      hb_storc( nullptr, 1 );
    hb_retni( 0 );
 #endif
 }

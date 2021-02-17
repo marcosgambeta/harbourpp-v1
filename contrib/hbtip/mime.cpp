@@ -78,12 +78,12 @@ static const MIME_ENTRY s_mimeTable[] =
    /*  0 */ { 0,  "MZ",                                "application/x-dosexec",         0, 0, 0                                                                },
 
    /* ELF file */
-   /*  1 */ { 0,  "\177ELF",                           NULL,                            1, 0, 0                                                                },
-   /*  2 */ { 4,  "\x00",                              NULL,                            3, 1, MIME_FLAG_CONTINUE                                               },
-   /*  3 */ { 4,  "\x01",                              NULL,                            2, 1, MIME_FLAG_CONTINUE                                               },
-   /*  4 */ { 4,  "\x02",                              NULL,                            1, 0, MIME_FLAG_CONTINUE                                               },
-   /*  5 */ { 5,  "\x00",                              NULL,                            2, 1, MIME_FLAG_CONTINUE                                               },
-   /*  6 */ { 5,  "\x01",                              NULL,                            1, 0, MIME_FLAG_CONTINUE                                               },
+   /*  1 */ { 0,  "\177ELF",                           nullptr,                         1, 0, 0                                                                },
+   /*  2 */ { 4,  "\x00",                              nullptr,                         3, 1, MIME_FLAG_CONTINUE                                               },
+   /*  3 */ { 4,  "\x01",                              nullptr,                         2, 1, MIME_FLAG_CONTINUE                                               },
+   /*  4 */ { 4,  "\x02",                              nullptr,                         1, 0, MIME_FLAG_CONTINUE                                               },
+   /*  5 */ { 5,  "\x00",                              nullptr,                         2, 1, MIME_FLAG_CONTINUE                                               },
+   /*  6 */ { 5,  "\x01",                              nullptr,                         1, 0, MIME_FLAG_CONTINUE                                               },
    /*  7 */ { 16, "\x00",                              "application/x-object",          0, 1, MIME_FLAG_CONTINUE                                               },
    /*  8 */ { 16, "\x01",                              "application/x-object",          0, 1, MIME_FLAG_CONTINUE                                               },
    /*  9 */ { 16, "\x02",                              "application/x-executable",      0, 1, MIME_FLAG_CONTINUE                                               },
@@ -749,10 +749,10 @@ HB_FUNC( TIP_FILEMIMETYPE )
          ext_type = pFileName->szExtension ? s_findExtMimeType( pFileName->szExtension ) : nullptr;
          hb_xfree( pFileName );
 
-         if( ( fileIn = hb_fileExtOpen( fname, NULL,
+         if( ( fileIn = hb_fileExtOpen( fname, nullptr,
                                         FO_READ | FO_SHARED | FO_PRIVATE |
                                         FXO_SHARELOCK,
-                                        NULL, NULL ) ) != NULL )
+                                        nullptr, nullptr ) ) != nullptr )
          {
             magic_type = s_findFileMimeType( fileIn );
             hb_fileClose( fileIn );

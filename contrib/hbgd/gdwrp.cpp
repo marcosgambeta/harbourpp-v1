@@ -88,14 +88,14 @@ static HB_GARBAGE_FUNC( hb_gdImage_Destructor )
    /* Retrieve image pointer holder */
    gdImagePtr * ptr = ( gdImagePtr * ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( *ptr )
    {
       /* Destroy the image */
       gdImageDestroy( *ptr );
 
-      /* Set pointer to NULL to avoid multiple freeing */
-      *ptr = NULL;
+      /* Set pointer to nullptr to avoid multiple freeing */
+      *ptr = nullptr;
    }
 }
 
@@ -105,7 +105,7 @@ static const HB_GC_FUNCS s_gcGDimageFuncs =
    hb_gcDummyMark
 };
 
-/* Function returns gdImage pointer or NULL when wrong variable is
+/* Function returns gdImage pointer or nullptr when wrong variable is
    passed or gdImage was freed before */
 static gdImagePtr hb_parGdImage( int iParam )
 {
@@ -151,7 +151,7 @@ static HB_GARBAGE_FUNC( hb_gdFont_Destructor )
    /* Retrieve Font pointer holder */
    gdFontPtr * ptr = ( gdFontPtr * ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( *ptr )
    {
       /* Destroy the Font */
@@ -160,8 +160,8 @@ static HB_GARBAGE_FUNC( hb_gdFont_Destructor )
       gdFontDestroy( *ptr );
 #endif
 
-      /* Set pointer to NULL to avoid multiple freeing */
-      *ptr = NULL;
+      /* Set pointer to nullptr to avoid multiple freeing */
+      *ptr = nullptr;
    }
 }
 
@@ -171,7 +171,7 @@ static const HB_GC_FUNCS s_gcGDfontFuncs =
    hb_gcDummyMark
 };
 
-/* Function returns gdFont pointer or NULL when wrong variable is
+/* Function returns gdFont pointer or nullptr when wrong variable is
    passed or gdFont was freed before */
 static gdFontPtr hb_parGdFont( int iParam )
 {
@@ -239,7 +239,7 @@ static void * LoadImageFromFile( const char * szFile, int * sz )
    else
    {
       /* File error */
-      iptr = NULL;
+      iptr = nullptr;
       *sz  = 0;
    }
 
@@ -266,7 +266,7 @@ static void SaveImageToFile( const char * szFile, const void * iptr, int sz )
 
 static void GDImageCreateFrom( int nType )
 {
-   gdImagePtr im = NULL;
+   gdImagePtr im = nullptr;
    int        sz;
    void *     iptr;
 
@@ -334,7 +334,7 @@ static void GDImageSaveTo( int nType )
       gdImagePtr im = hb_parGdImage( 1 );
 
       int    sz    = 0;
-      void * iptr  = NULL;
+      void * iptr  = nullptr;
       int    level = 0, fg = 0;
 
       /* Get file name or an output handler or NIL it I want a return string */
@@ -1518,7 +1518,7 @@ HB_FUNC( GDIMAGESTRINGFTEX )
       /* Write string */
       err = gdImageStringFTEx( im, &aRect[ 0 ], fgcolor, ( char * ) HB_UNCONST( fontname ),
                                ptsize, angle, x, y, ( char * ) HB_UNCONST( string ),
-                               ( flags != 0 ? &extra : NULL ) );
+                               ( flags != 0 ? &extra : nullptr ) );
       if( ! err )
       {
          /* Save in array the correct text rectangle dimensions */

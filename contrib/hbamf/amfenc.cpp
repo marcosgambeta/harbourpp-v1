@@ -234,7 +234,7 @@ static HB_BOOL amf3_encode_bool( amfContext * context, PHB_ITEM pItem )
 
 static HB_BOOL amf3_encode_string( amfContext * context, PHB_ITEM pItem )
 {
-   void *       hStr = NULL;       /* = hb_itemGetCPtr( pItem ); not needed with UTF-8 conversion */
+   void *       hStr = nullptr;       /* = hb_itemGetCPtr( pItem ); not needed with UTF-8 conversion */
    HB_SIZE      len;
    const char * utf8str = hb_itemGetStrUTF8( pItem, &hStr, &len );
    HB_BOOL      result;
@@ -363,7 +363,7 @@ static int amf3_encode_reference( amfContext * context, PHB_ITEM pHash, PHB_ITEM
 {
    int idx;
 
-   if( pItem == NULL )
+   if( pItem == nullptr )
       return -1;
 
    idx = amf3_get_index( context, pHash, pItem );
@@ -738,7 +738,7 @@ static PHB_ITEM class_def_from_class( /* amfContext * context, */ PHB_ITEM pItem
       "tags" which are put into the Harbour class definitions
       right now */
 
-   pClass = hb_hashNew( NULL );
+   pClass = hb_hashNew( nullptr );
 
    pKey   = hb_itemPutC( nullptr, "CLASS_DEF" );
    pValue = hb_itemNew( nullptr );
@@ -805,7 +805,7 @@ static HB_BOOL amf3_encode_object( amfContext * context, PHB_ITEM pItem )
    {
       PHB_ITEM pAnonHash = hb_itemNew( nullptr );
 
-      if( amf3_serialize_class_def( context, NULL ) == 0 )
+      if( amf3_serialize_class_def( context, nullptr ) == 0 )
       {
          hb_itemRelease( pAnonHash );
          return HB_FALSE;
@@ -1068,17 +1068,17 @@ static amfContext * context_setup( PHB_ITEM pFuncSym, HB_BOOL use_refs, HB_BOOL 
       }
       else
       {
-         context->obj_ref   = hb_hashNew( NULL );
-         context->str_ref   = hb_hashNew( NULL );
-         context->class_ref = hb_hashNew( NULL );
+         context->obj_ref   = hb_hashNew( nullptr );
+         context->str_ref   = hb_hashNew( nullptr );
+         context->class_ref = hb_hashNew( nullptr );
          context->objnref_count = 0;
       }
    }
    else
    {
-      context->obj_ref   = NULL;
-      context->str_ref   = NULL;
-      context->class_ref = NULL;
+      context->obj_ref   = nullptr;
+      context->str_ref   = nullptr;
+      context->class_ref = nullptr;
    }
 
    context->conv_function = pFuncSym;
@@ -1094,7 +1094,7 @@ static amfContext * context_setup( PHB_ITEM pFuncSym, HB_BOOL use_refs, HB_BOOL 
       if( outer_context->use_strstr )
          context->strstr_ref = outer_context->strstr_ref;
       else
-         context->strstr_ref = hb_hashNew( NULL );
+         context->strstr_ref = hb_hashNew( nullptr );
 
       if( ! context->use_refs && outer_context->use_refs )
          context->strstr_count += hb_hashLen( outer_context->str_ref );
@@ -1102,7 +1102,7 @@ static amfContext * context_setup( PHB_ITEM pFuncSym, HB_BOOL use_refs, HB_BOOL 
    else
    {
       context->strstr_count = 0;
-      context->strstr_ref   = hb_hashNew( NULL );
+      context->strstr_ref   = hb_hashNew( nullptr );
    }
 
    return context;
@@ -1151,7 +1151,7 @@ HB_FUNC( AMF3_FROMWA )
    HB_USHORT    uiFields;
    HB_ULONG     uiRecCount     = 0;
    HB_ULONG     uiRecNo        = 0;
-   HB_BOOL      bNoFieldPassed = ( pFields == NULL || hb_arrayLen( pFields ) == 0 );
+   HB_BOOL      bNoFieldPassed = ( pFields == nullptr || hb_arrayLen( pFields ) == 0 );
    HB_BOOL      bEof  = HB_FALSE;
    AREAP        pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
    PHB_ITEM     pItem;
@@ -1192,7 +1192,7 @@ HB_FUNC( AMF3_FROMWA )
 
       pItem = hb_itemNew( nullptr );
 
-      context = context_setup( NULL, HB_FALSE, str_rtrim, outer_context );
+      context = context_setup( nullptr, HB_FALSE, str_rtrim, outer_context );
 
       if( bPredictLen )
       {
@@ -1416,9 +1416,9 @@ HB_FUNC( AMF3_ENCODE )
    context->position      = 0;
    context->length        = sizeof( char ) * 8;
    context->str_rtrim     = HB_FALSE;
-   context->obj_ref       = hb_hashNew( NULL );
-   context->str_ref       = hb_hashNew( NULL );
-   context->class_ref     = hb_hashNew( NULL );
+   context->obj_ref       = hb_hashNew( nullptr );
+   context->str_ref       = hb_hashNew( nullptr );
+   context->class_ref     = hb_hashNew( nullptr );
    context->use_refs      = HB_TRUE;
    context->conv_function = pFuncSym;
    context->encode_ba     = lBA;
@@ -1429,7 +1429,7 @@ HB_FUNC( AMF3_ENCODE )
       itself and the value is id of the reference */
    context->use_strstr   = HB_TRUE;
    context->strstr_count = 0;
-   context->strstr_ref   = hb_hashNew( NULL );
+   context->strstr_ref   = hb_hashNew( nullptr );
 
    lRetval = amf3_encode( context, pItem );
 

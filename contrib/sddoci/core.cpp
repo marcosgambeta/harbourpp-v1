@@ -109,7 +109,7 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo );
 
 static SDDNODE s_ocidd =
 {
-   NULL,
+   nullptr,
    "OCILIB",
    ( SDDFUNC_CONNECT ) ocilibConnect,
    ( SDDFUNC_DISCONNECT ) ocilibDisconnect,
@@ -117,8 +117,8 @@ static SDDNODE s_ocidd =
    ( SDDFUNC_OPEN ) ocilibOpen,
    ( SDDFUNC_CLOSE ) ocilibClose,
    ( SDDFUNC_GOTO ) ocilibGoTo,
-   ( SDDFUNC_GETVALUE ) NULL,
-   ( SDDFUNC_GETVARLEN ) NULL
+   ( SDDFUNC_GETVALUE ) nullptr,
+   ( SDDFUNC_GETVARLEN ) nullptr
 };
 
 
@@ -126,7 +126,7 @@ static void hb_ocidd_init( void * cargo )
 {
    HB_SYMBOL_UNUSED( cargo );
 
-   if( ! OCI_Initialize( NULL, NULL, OCI_ENV_DEFAULT | OCI_ENV_CONTEXT | OCI_ENV_THREADED ) )
+   if( ! OCI_Initialize( nullptr, nullptr, OCI_ENV_DEFAULT | OCI_ENV_CONTEXT | OCI_ENV_THREADED ) )
       hb_errInternal( 8000, nullptr, nullptr, nullptr );
    else if( ! hb_sddRegister( &s_ocidd ) )
       hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
@@ -141,7 +141,7 @@ static void hb_ocidd_exit( void * cargo )
 
 HB_FUNC( HB_SDDOCI_REGISTER )
 {
-   hb_ocidd_init( NULL );
+   hb_ocidd_init( nullptr );
 }
 
 /* force SQLBASE linking */
@@ -149,7 +149,7 @@ HB_FUNC_TRANSLATE( SDDOCI, SQLBASE )
 
 HB_INIT_SYMBOLS_BEGIN( ocidd__InitSymbols )
 {
-   "SDDOCI", { HB_FS_PUBLIC }, { HB_FUNCNAME( SDDOCI ) }, NULL
+   "SDDOCI", { HB_FS_PUBLIC }, { HB_FUNCNAME( SDDOCI ) }, nullptr
 },
 HB_INIT_SYMBOLS_END( ocidd__InitSymbols )
 
@@ -190,7 +190,7 @@ static char * ocilibGetError( HB_ERRCODE * pErrCode )
 
    if( err )
    {
-      PHB_ITEM pRet = M_HB_ITEMPUTSTR( NULL, OCI_ErrorGetString( err ) );
+      PHB_ITEM pRet = M_HB_ITEMPUTSTR( nullptr, OCI_ErrorGetString( err ) );
       szRet = hb_strdup( hb_itemGetCPtr( pRet ) );
       hb_itemRelease( pRet );
 
@@ -217,9 +217,9 @@ static HB_ERRCODE ocilibConnect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
    void * hUser;
    void * hPass;
 
-   cn = OCI_ConnectionCreate( ( mtext * ) M_HB_ARRAYGETSTR( pItem, 2, &hConn, NULL ),
-                              ( mtext * ) M_HB_ARRAYGETSTR( pItem, 3, &hUser, NULL ),
-                              ( mtext * ) M_HB_ARRAYGETSTR( pItem, 4, &hPass, NULL ), OCI_SESSION_DEFAULT );
+   cn = OCI_ConnectionCreate( ( mtext * ) M_HB_ARRAYGETSTR( pItem, 2, &hConn, nullptr ),
+                              ( mtext * ) M_HB_ARRAYGETSTR( pItem, 3, &hUser, nullptr ),
+                              ( mtext * ) M_HB_ARRAYGETSTR( pItem, 4, &hPass, nullptr ), OCI_SESSION_DEFAULT );
 
    hb_strfree( hConn );
    hb_strfree( hUser );
@@ -258,12 +258,12 @@ static HB_ERRCODE ocilibExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
       return HB_FAILURE;
    }
 
-   if( OCI_ExecuteStmt( st, M_HB_ITEMGETSTR( pItem, &hStatement, NULL ) ) )
+   if( OCI_ExecuteStmt( st, M_HB_ITEMGETSTR( pItem, &hStatement, nullptr ) ) )
    {
       hb_strfree( hStatement );
 
       /* TODO: new id */
-      hb_rddsqlSetError( 0, NULL, hb_itemGetCPtr( pItem ), NULL, static_cast< unsigned long >( OCI_GetAffectedRows( st ) ) );
+      hb_rddsqlSetError( 0, nullptr, hb_itemGetCPtr( pItem ), nullptr, static_cast< unsigned long >( OCI_GetAffectedRows( st ) ) );
       OCI_StatementFree( st );
       return HB_SUCCESS;
    }
@@ -271,7 +271,7 @@ static HB_ERRCODE ocilibExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
       hb_strfree( hStatement );
 
    szError = ocilibGetError( &errCode );
-   hb_rddsqlSetError( errCode, szError, hb_itemGetCPtr( pItem ), NULL, 0 );
+   hb_rddsqlSetError( errCode, szError, hb_itemGetCPtr( pItem ), nullptr, 0 );
    hb_xfree( szError );
    OCI_StatementFree( st );
    return HB_FAILURE;
@@ -302,7 +302,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
 
    pItem = hb_itemPutC( nullptr, pArea->szQuery );
 
-   if( ! OCI_ExecuteStmt( st, M_HB_ITEMGETSTR( pItem, &hQuery, NULL ) ) )
+   if( ! OCI_ExecuteStmt( st, M_HB_ITEMGETSTR( pItem, &hQuery, nullptr ) ) )
    {
       hb_strfree( hQuery );
       hb_itemRelease( pItem );
@@ -349,7 +349,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
       {
          hb_itemRelease( pItemEof );
          hb_itemRelease( pItem );
-         szError = ocilibGetError( NULL );
+         szError = ocilibGetError( nullptr );
          OCI_StatementFree( st );
          hb_errRT_OCIDD( EG_OPEN, ESQLDD_STMTDESCR + 1001, szError, pArea->szQuery, 0 );
          hb_xfree( szError );
@@ -357,7 +357,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
       }
 
       memset( &dbFieldInfo, 0, sizeof( dbFieldInfo ) );
-      pName = D_HB_ITEMPUTSTR( NULL, OCI_ColumnGetName( col ) );
+      pName = D_HB_ITEMPUTSTR( nullptr, OCI_ColumnGetName( col ) );
       dbFieldInfo.atomName = hb_itemGetCPtr( pName );
 
       uiDataType = OCI_ColumnGetType( col );
@@ -512,7 +512,7 @@ static HB_ERRCODE ocilibClose( SQLBASEAREAP pArea )
          OCI_StatementFree( pSDDData->pStmt );
 
       hb_xfree( pSDDData );
-      pArea->pSDDData = NULL;
+      pArea->pSDDData = nullptr;
    }
    return HB_SUCCESS;
 }
@@ -554,7 +554,7 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                else
                {
                   const dtext * val;
-                  if( ( val = OCI_GetString( rs, ui ) ) != NULL )
+                  if( ( val = OCI_GetString( rs, ui ) ) != nullptr )
                      pItem = D_HB_ITEMPUTSTRLEN( pItem, val, ( HB_SIZE ) dtslen( val ) );  /* TODO: Pad it to pField->uiLen size with spaces? */
                }
                break;

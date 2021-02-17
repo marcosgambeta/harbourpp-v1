@@ -199,13 +199,13 @@ static HB_GARBAGE_FUNC( PHB_SSL_release )
       if( hb_ssl->ssl )
       {
          SSL_free( hb_ssl->ssl );
-         hb_ssl->ssl = NULL;
+         hb_ssl->ssl = nullptr;
       }
 
       if( hb_ssl->pCallbackArg )
       {
          hb_itemRelease( hb_ssl->pCallbackArg );
-         hb_ssl->pCallbackArg = NULL;
+         hb_ssl->pCallbackArg = nullptr;
       }
    }
 }
@@ -1319,7 +1319,7 @@ HB_FUNC( SSL_SET_VERIFY )
       SSL * ssl = hb_SSL_par( 1 );
 
       if( ssl )
-         SSL_set_verify( ssl, hb_parni( 2 ), NULL );
+         SSL_set_verify( ssl, hb_parni( 2 ), nullptr );
    }
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -1691,9 +1691,9 @@ HB_FUNC( SSL_SET_MSG_CALLBACK )
 
          if( hb_ssl->pCallbackArg )
          {
-            SSL_set_msg_callback_arg( hb_ssl->ssl, NULL );
+            SSL_set_msg_callback_arg( hb_ssl->ssl, nullptr );
             hb_itemRelease( hb_ssl->pCallbackArg );
-            hb_ssl->pCallbackArg = NULL;
+            hb_ssl->pCallbackArg = nullptr;
          }
 
          if( pCallback )
@@ -1704,7 +1704,7 @@ HB_FUNC( SSL_SET_MSG_CALLBACK )
             hb_gcUnlock( hb_ssl->pCallbackArg );
          }
          else
-            SSL_set_msg_callback( hb_ssl->ssl, NULL );
+            SSL_set_msg_callback( hb_ssl->ssl, nullptr );
 #endif
       }
    }

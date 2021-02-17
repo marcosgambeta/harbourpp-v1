@@ -62,7 +62,7 @@ HB_FUNC( FT_PROPER )
    HB_ISIZ      i;
    HB_BOOL      fCap = HB_TRUE;
 
-   hb_storc( NULL, 1 );
+   hb_storc( nullptr, 1 );
 
    for( i = 0; i < iLen; i++ )
    {

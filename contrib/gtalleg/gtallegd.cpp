@@ -272,11 +272,11 @@ static void hb_gt_alleg_DoCursor( int iRow, int iCol, int iStyle )
        hb_gt_alleg_CursorRect( iRow, iCol, iStyle,
                                &iTop, &iLeft, &iBottom, &iRight ) )
    {
-      al_drawing_mode( DRAW_MODE_XOR, NULL, 0, 0 );
+      al_drawing_mode( DRAW_MODE_XOR, nullptr, 0, 0 );
       al_scare_mouse_area( iLeft, iTop, iRight, iBottom );
       al_draw_rect_fill( al_screen, iLeft, iTop, iRight, iBottom, s_pClr[ 7 ] );
       al_unscare_mouse();
-      al_drawing_mode( DRAW_MODE_SOLID, NULL, 0, 0 );
+      al_drawing_mode( DRAW_MODE_SOLID, nullptr, 0, 0 );
    }
    s_iCurRow      = iRow;
    s_iCurCol      = iCol;

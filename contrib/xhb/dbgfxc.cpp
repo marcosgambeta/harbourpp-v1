@@ -100,7 +100,7 @@ void hb_ToLogFile( const char * sFile, const char * sTraceMsg, ... )
    {
       FILE * hFile;
 
-      if( sFile == NULL )
+      if( sFile == nullptr )
       {
          if( s_bEmptyLogFile )
          {

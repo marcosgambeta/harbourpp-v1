@@ -81,7 +81,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
                             const char * pPaths, PHB_ITEM pError )
 {
    const char * pszHost = pszName + FILE_PREFIX_LEN, * ptr;
-   PHB_FILE pFile = NULL;
+   PHB_FILE pFile = nullptr;
    HB_ERRCODE errcode = 0;
    HB_SIZE nLen = 0;
    int iPort = 0;
@@ -91,7 +91,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
    HB_SYMBOL_UNUSED( pszDefExt );
    HB_SYMBOL_UNUSED( pPaths );
 
-   if( ( ptr = strchr( pszHost, ':' ) ) != NULL && ptr != pszHost )
+   if( ( ptr = strchr( pszHost, ':' ) ) != nullptr && ptr != pszHost )
    {
       nLen = ptr - pszHost;
       ++ptr;
@@ -143,7 +143,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
                         hb_socketShutdown( sd, HB_SOCKET_SHUT_RD );
                         break;
                   }
-                  sock = hb_sockexNew( sd, NULL, NULL );
+                  sock = hb_sockexNew( sd, nullptr, nullptr );
                   if( sock )
                   {
                      hb_sockexSetShutDown( sock, HB_TRUE );
@@ -162,7 +162,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
          }
          hb_xfree( pszIpAddr );
       }
-      if( errcode == 0 && pFile == NULL )
+      if( errcode == 0 && pFile == nullptr )
          errcode = hb_socketGetError();
    }
    else
@@ -173,7 +173,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
    if( pError )
    {
       hb_errPutFileName( pError, pszName );
-      if( pFile == NULL )
+      if( pFile == nullptr )
       {
          hb_errPutOsCode( pError, errcode );
          hb_errPutGenCode( pError, ( HB_ERRCODE ) EG_OPEN );
@@ -322,40 +322,40 @@ static HB_FILE_FUNCS s_fileFuncs =
 {
    s_fileAccept,
 
-   NULL, /* s_fileExists */
-   NULL, /* s_fileDelete */
-   NULL, /* s_fileRename */
-   NULL, /* s_fileCopy */
+   nullptr, /* s_fileExists */
+   nullptr, /* s_fileDelete */
+   nullptr, /* s_fileRename */
+   nullptr, /* s_fileCopy */
 
-   NULL, /* s_fileDirExists */
-   NULL, /* s_fileDirMake */
-   NULL, /* s_fileDirRemove */
-   NULL, /* s_fileDirSpace */
-   NULL, /* s_fileDirectory */
+   nullptr, /* s_fileDirExists */
+   nullptr, /* s_fileDirMake */
+   nullptr, /* s_fileDirRemove */
+   nullptr, /* s_fileDirSpace */
+   nullptr, /* s_fileDirectory */
 
-   NULL, /* s_fileTimeGet */
-   NULL, /* s_fileTimeSet */
-   NULL, /* s_fileAttrGet */
-   NULL, /* s_fileAttrSet */
+   nullptr, /* s_fileTimeGet */
+   nullptr, /* s_fileTimeSet */
+   nullptr, /* s_fileAttrGet */
+   nullptr, /* s_fileAttrSet */
 
-   NULL, /* s_fileLink */
-   NULL, /* s_fileLinkSym */
-   NULL, /* s_fileLinkRead */
+   nullptr, /* s_fileLink */
+   nullptr, /* s_fileLinkSym */
+   nullptr, /* s_fileLinkRead */
 
    s_fileOpen,
    s_fileClose,
-   NULL, /* s_fileLock */
-   NULL, /* s_fileLockTest */
+   nullptr, /* s_fileLock */
+   nullptr, /* s_fileLockTest */
    s_fileRead,
    s_fileWrite,
-   NULL, /* s_fileReadAt */
-   NULL, /* s_fileWriteAt */
-   NULL, /* s_fileTruncAt */
-   NULL, /* s_fileSeek */
-   NULL, /* s_fileSize */
+   nullptr, /* s_fileReadAt */
+   nullptr, /* s_fileWriteAt */
+   nullptr, /* s_fileTruncAt */
+   nullptr, /* s_fileSeek */
+   nullptr, /* s_fileSize */
    s_fileEof,
    s_fileFlush,
-   NULL, /* s_fileCommit */
+   nullptr, /* s_fileCommit */
    s_fileConfigure,
    s_fileHandle
 };

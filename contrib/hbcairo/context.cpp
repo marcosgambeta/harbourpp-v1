@@ -210,10 +210,10 @@ HB_FUNC( CAIRO_SET_DASH )
    {
       PHB_ITEM pItem;
 
-      if( ( pItem = hb_param( 2, HB_IT_ARRAY ) ) != NULL )
+      if( ( pItem = hb_param( 2, HB_IT_ARRAY ) ) != nullptr )
       {
          int      i, iCount = static_cast< int >( hb_arrayLen( pItem ) );
-         double * pDashes = NULL;
+         double * pDashes = nullptr;
 
          if( iCount )
             pDashes = ( double * ) hb_xgrab( iCount * sizeof( double ) );

@@ -581,7 +581,7 @@ static PHB_ITEM class_def_from_classname( /* amfContext * context, */ PHB_ITEM p
    hb_strUpper( pszBuffer, nLen );
 
    /* get Harbour's class id/handle */
-   uiClass = hb_clsFindClass( pszBuffer, NULL );
+   uiClass = hb_clsFindClass( pszBuffer, nullptr );
 
    hb_strfree( pszBuffer );
 
@@ -591,7 +591,7 @@ static PHB_ITEM class_def_from_classname( /* amfContext * context, */ PHB_ITEM p
    if( ! uiClass )
       return nullptr;
 
-   pClass = hb_hashNew( NULL );
+   pClass = hb_hashNew( nullptr );
 
    pKey   = hb_itemPutC( nullptr, "CLASS_DEF" );
    pValue = hb_itemNew( nullptr );
@@ -689,7 +689,7 @@ static HB_BOOL amf3_decode_class_def( amfContext * context, PHB_ITEM pClass, int
       hb_itemRelease( pKey );
 
       pKey = hb_itemPutC( nullptr, "EXTERNALIZABLE_CLASS_DEF" );
-      if( hb_hashScan( pMappedClassDef, pKey, NULL ) )
+      if( hb_hashScan( pMappedClassDef, pKey, nullptr ) )
       {
          /* There is nothing else we need to do
             with externalizable ClassDefs */
@@ -1014,7 +1014,7 @@ static HB_BOOL amf3_deserialize_obj( amfContext * context, PHB_ITEM pItem, HB_BO
       pValue = hb_itemPutC( nullptr, "ANONYMOUS" );
       hb_arraySet( pItem, OBJAMF_VAR_NAME, pValue );
       hb_itemRelease( pValue );
-      pValue = hb_hashNew( NULL );
+      pValue = hb_hashNew( nullptr );
       hb_arraySet( pItem, OBJAMF_VAR_HASH, pValue );
       hb_itemRelease( pValue );
    }
@@ -1046,7 +1046,7 @@ static HB_BOOL amf3_deserialize_obj( amfContext * context, PHB_ITEM pItem, HB_BO
    {
       /* Create obj_val for all typed objects. */
 #if 0
-      obj_val = PyObject_CallMethod( class_def, "getInstance", NULL );
+      obj_val = PyObject_CallMethod( class_def, "getInstance", nullptr );
 #endif
    }
 
@@ -1241,9 +1241,9 @@ HB_FUNC( AMF3_DECODE )
    context->cBuf          = szBuffer;
    context->position      = 0;
    context->length        = hb_parclen( 1 );
-   context->obj_ref       = hb_hashNew( NULL );
-   context->str_ref       = hb_hashNew( NULL );
-   context->class_ref     = hb_hashNew( NULL );
+   context->obj_ref       = hb_hashNew( nullptr );
+   context->str_ref       = hb_hashNew( nullptr );
+   context->class_ref     = hb_hashNew( nullptr );
    context->conv_function = pFuncSym;
 
    amf3_getItem( context, pItem );

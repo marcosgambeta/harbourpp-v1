@@ -77,7 +77,7 @@ static void s_ct_token_init( void * cargo )
    ct_token->iPostSeparator = -1;
 }
 
-static HB_TSD_NEW( s_ct_token, sizeof( CT_TOKEN ), s_ct_token_init, NULL );
+static HB_TSD_NEW( s_ct_token, sizeof( CT_TOKEN ), s_ct_token_init, nullptr );
 
 /* defines */
 #define DO_TOKEN1_TOKEN       0
@@ -272,7 +272,7 @@ static void do_token1( int iSwitch )
 
          nToken++;
 
-         if( pc == NULL )
+         if( pc == nullptr )
          {
             /* little trick for return values */
             pc = pcSubStr + sSubStrLen;
@@ -380,11 +380,11 @@ static void do_token1( int iSwitch )
 
             if( iArgErrorMode != CT_ARGERR_IGNORE )
                pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                        CT_ERROR_TOKEN, NULL, HB_ERR_FUNCNAME, 0,
+                                        CT_ERROR_TOKEN, nullptr, HB_ERR_FUNCNAME, 0,
                                         EF_CANSUBSTITUTE,
                                         HB_ERR_ARGS_BASEPARAMS );
 
-            if( pSubst != NULL )
+            if( pSubst != nullptr )
                hb_itemReturnRelease( pSubst );
             else if( ! iNoRef )
                hb_retc_null();
@@ -402,11 +402,11 @@ static void do_token1( int iSwitch )
                pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                         iSwitch == DO_TOKEN1_TOKENLOWER ?
                                         CT_ERROR_TOKENLOWER : CT_ERROR_TOKENUPPER,
-                                        NULL, HB_ERR_FUNCNAME, 0,
+                                        nullptr, HB_ERR_FUNCNAME, 0,
                                         EF_CANSUBSTITUTE,
                                         HB_ERR_ARGS_BASEPARAMS );
 
-            if( pSubst != NULL )
+            if( pSubst != nullptr )
                hb_itemReturnRelease( pSubst );
             else if( ! iNoRef )
                hb_retc_null();
@@ -424,10 +424,10 @@ static void do_token1( int iSwitch )
                pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                         iSwitch == DO_TOKEN1_NUMTOKEN ?
                                         CT_ERROR_NUMTOKEN : CT_ERROR_ATTOKEN,
-                                        NULL, HB_ERR_FUNCNAME, 0,
+                                        nullptr, HB_ERR_FUNCNAME, 0,
                                         EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-            if( pSubst != NULL )
+            if( pSubst != nullptr )
                hb_itemReturnRelease( pSubst );
             else
                hb_retns( 0 );

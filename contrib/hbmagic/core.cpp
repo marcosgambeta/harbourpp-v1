@@ -56,7 +56,7 @@ static HB_GARBAGE_FUNC( magic_gc_close )
    if( ph && *ph )
    {
       magic_close( ( magic_t ) *ph );
-      *ph = NULL;
+      *ph = nullptr;
    }
 }
 

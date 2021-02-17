@@ -79,7 +79,7 @@ HB_FUNC( CUPSPRINTFILE )
    PHB_ITEM pOptions = hb_param( 4, HB_IT_HASH | HB_IT_ARRAY );
 
    int num_options         = 0;
-   cups_option_t * options = NULL;
+   cups_option_t * options = nullptr;
 
    if( pOptions )
    {

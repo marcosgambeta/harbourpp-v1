@@ -282,7 +282,7 @@ static char ** hb_tokensplit( const char * string, HB_BYTE delimiter, int iCharC
       bufptr += strlen( bufptr ) + 1;
    }
 
-   token_list[ word_count ] = NULL;
+   token_list[ word_count ] = nullptr;
 
    *iWord = word_count;
 

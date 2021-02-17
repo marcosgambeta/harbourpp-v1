@@ -50,14 +50,14 @@ static HB_GARBAGE_FUNC( SSL_SESSION_release )
 {
    void ** ph = ( void ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
       SSL_SESSION_free( ( SSL_SESSION * ) *ph );
 
-      /* set pointer to NULL just in case */
-      *ph = NULL;
+      /* set pointer to nullptr just in case */
+      *ph = nullptr;
    }
 }
 
@@ -69,7 +69,7 @@ static const HB_GC_FUNCS s_gcSSL_SESSION_funcs =
 
 HB_BOOL hb_SSL_SESSION_is( int iParam )
 {
-   return hb_parptrGC( &s_gcSSL_SESSION_funcs, iParam ) != NULL;
+   return hb_parptrGC( &s_gcSSL_SESSION_funcs, iParam ) != nullptr;
 }
 
 SSL_SESSION * hb_SSL_SESSION_par( int iParam )

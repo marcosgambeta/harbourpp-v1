@@ -92,7 +92,7 @@ static int s_filePortParams( const char * pszName, HB_MAXINT * pTimeout,
    {
       const char * pszParams = strchr( pszName, ':' );
 
-      if( pszParams != NULL && pszParams - pszName > 1 )
+      if( pszParams != nullptr && pszParams - pszName > 1 )
       {
          char * pszPort = hb_strndup( pszName + 1, pszParams - pszName - 1 );
 
@@ -235,7 +235,7 @@ static HB_BOOL s_fileAccept( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
        HB_TOUPPER( pszFileName[ 2 ] ) == 'M' )
    {
       if( pszFileName[ 3 ] == '$' )
-         return strchr( pszFileName + 4, ':' ) != NULL;
+         return strchr( pszFileName + 4, ':' ) != nullptr;
       else if( pszFileName[ 3 ] >= '1' && pszFileName[ 3 ] <= '9' )
       {
          pszFileName += 4;
@@ -268,7 +268,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
    {
       if( hb_comOpen( iPort ) == 0 &&
           hb_comInit( iPort, iBaud, iParity, iSize, iStop ) == 0 &&
-          hb_comFlowControl( iPort, NULL, iFlow ) == 0 )
+          hb_comFlowControl( iPort, nullptr, iFlow ) == 0 )
       {
          switch( nExFlags & ( FO_READ | FO_WRITE | FO_READWRITE ) )
          {
@@ -292,7 +292,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
    if( pError )
    {
       hb_errPutFileName( pError, pszName );
-      if( pFile == NULL )
+      if( pFile == nullptr )
       {
          hb_errPutOsCode( pError, errcode );
          hb_errPutGenCode( pError, ( HB_ERRCODE ) EG_OPEN );
@@ -425,40 +425,40 @@ static HB_FILE_FUNCS s_fileFuncs =
 {
    s_fileAccept,
 
-   NULL, /* s_fileExists */
-   NULL, /* s_fileDelete */
-   NULL, /* s_fileRename */
-   NULL, /* s_fileCopy */
+   nullptr, /* s_fileExists */
+   nullptr, /* s_fileDelete */
+   nullptr, /* s_fileRename */
+   nullptr, /* s_fileCopy */
 
-   NULL, /* s_fileDirExists */
-   NULL, /* s_fileDirMake */
-   NULL, /* s_fileDirRemove */
-   NULL, /* s_fileDirSpace */
-   NULL, /* s_fileDirectory */
+   nullptr, /* s_fileDirExists */
+   nullptr, /* s_fileDirMake */
+   nullptr, /* s_fileDirRemove */
+   nullptr, /* s_fileDirSpace */
+   nullptr, /* s_fileDirectory */
 
-   NULL, /* s_fileTimeGet */
-   NULL, /* s_fileTimeSet */
-   NULL, /* s_fileAttrGet */
-   NULL, /* s_fileAttrSet */
+   nullptr, /* s_fileTimeGet */
+   nullptr, /* s_fileTimeSet */
+   nullptr, /* s_fileAttrGet */
+   nullptr, /* s_fileAttrSet */
 
-   NULL, /* s_fileLink */
-   NULL, /* s_fileLinkSym */
-   NULL, /* s_fileLinkRead */
+   nullptr, /* s_fileLink */
+   nullptr, /* s_fileLinkSym */
+   nullptr, /* s_fileLinkRead */
 
    s_fileOpen,
    s_fileClose,
-   NULL, /* s_fileLock */
-   NULL, /* s_fileLockTest */
+   nullptr, /* s_fileLock */
+   nullptr, /* s_fileLockTest */
    s_fileRead,
    s_fileWrite,
-   NULL, /* s_fileReadAt */
-   NULL, /* s_fileWriteAt */
-   NULL, /* s_fileTruncAt */
-   NULL, /* s_fileSeek */
-   NULL, /* s_fileSize */
-   NULL, /* s_fileEof */
-   NULL, /* s_fileFlush */
-   NULL, /* s_fileCommit */
+   nullptr, /* s_fileReadAt */
+   nullptr, /* s_fileWriteAt */
+   nullptr, /* s_fileTruncAt */
+   nullptr, /* s_fileSeek */
+   nullptr, /* s_fileSize */
+   nullptr, /* s_fileEof */
+   nullptr, /* s_fileFlush */
+   nullptr, /* s_fileCommit */
    s_fileConfigure,
    s_fileHandle
 };

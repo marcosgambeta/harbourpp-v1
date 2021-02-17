@@ -64,7 +64,7 @@ static HB_GARBAGE_FUNC( EVP_MD_CTX_release )
 {
    void ** ph = ( void ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
@@ -76,8 +76,8 @@ static HB_GARBAGE_FUNC( EVP_MD_CTX_release )
       hb_xfree( *ph );
 #endif
 
-      /* set pointer to NULL just in case */
-      *ph = NULL;
+      /* set pointer to nullptr just in case */
+      *ph = nullptr;
    }
 }
 
@@ -89,7 +89,7 @@ static const HB_GC_FUNCS s_gcEVP_MD_CTX_funcs =
 
 static HB_BOOL hb_EVP_MD_CTX_is( int iParam )
 {
-   return hb_parptrGC( &s_gcEVP_MD_CTX_funcs, iParam ) != NULL;
+   return hb_parptrGC( &s_gcEVP_MD_CTX_funcs, iParam ) != nullptr;
 }
 
 static EVP_MD_CTX * hb_EVP_MD_CTX_par( int iParam )
@@ -151,7 +151,7 @@ const EVP_MD * hb_EVP_MD_par( int iParam )
 #ifndef OPENSSL_NO_RIPEMD
       case HB_EVP_MD_RIPEMD160:  p = EVP_ripemd160(); break;
 #endif
-      default:                   p = NULL;
+      default:                   p = nullptr;
    }
 
    return p;
@@ -441,7 +441,7 @@ HB_FUNC( EVP_DIGESTFINAL )
          else
          {
             hb_xfree( buffer );
-            hb_storc( NULL, 2 );
+            hb_storc( nullptr, 2 );
          }
       }
    }
@@ -471,7 +471,7 @@ HB_FUNC( EVP_DIGESTFINAL_EX )
          else
          {
             hb_xfree( buffer );
-            hb_storc( NULL, 2 );
+            hb_storc( nullptr, 2 );
          }
 #endif
       }
@@ -557,7 +557,7 @@ HB_FUNC( EVP_SIGNFINAL )
          else
          {
             hb_xfree( buffer );
-            hb_storc( NULL, 2 );
+            hb_storc( nullptr, 2 );
          }
       }
    }

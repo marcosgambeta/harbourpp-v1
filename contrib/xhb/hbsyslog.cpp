@@ -76,14 +76,14 @@ HB_FUNC( HB_SYSLOGOPEN )
    if( hb_iswinnt() )
    {
       void * hSourceName;
-      s_RegHandle = RegisterEventSource( NULL, HB_PARSTRDEF( 1, &hSourceName, NULL ) );
+      s_RegHandle = RegisterEventSource( nullptr, HB_PARSTRDEF( 1, &hSourceName, nullptr ) );
       hb_strfree( hSourceName );
       hb_retl( HB_TRUE );
    }
    else
       hb_retl( HB_FALSE );
 #  else
-   s_RegHandle = NULL;
+   s_RegHandle = nullptr;
    hb_retl( HB_FALSE );
 #  endif
 
@@ -131,7 +131,7 @@ HB_FUNC( HB_SYSLOGMESSAGE )
    {
       WORD    logval;
       void *  hMsg;
-      LPCTSTR lpMsg = HB_PARSTRDEF( 1, &hMsg, NULL );
+      LPCTSTR lpMsg = HB_PARSTRDEF( 1, &hMsg, nullptr );
       switch( hb_parni( 2 ) )
       {
          case HB_LOG_CRITICAL: logval = EVENTLOG_ERROR_TYPE; break;
@@ -144,11 +144,11 @@ HB_FUNC( HB_SYSLOGMESSAGE )
                             logval,                  /* event type */
                             0,                       /* category zero */
                             static_cast< DWORD >( hb_parnl( 3 ) ), /* event identifier */
-                            NULL,                    /* no user security identifier */
+                            nullptr,                    /* no user security identifier */
                             1,                       /* one substitution string */
                             0,                       /* no data */
                             &lpMsg,                  /* pointer to string array */
-                            NULL                     /* pointer to data */
+                            nullptr                     /* pointer to data */
                             ) ? HB_TRUE : HB_FALSE );
 
       hb_strfree( hMsg );

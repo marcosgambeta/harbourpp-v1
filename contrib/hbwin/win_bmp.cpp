@@ -101,7 +101,7 @@ HB_FUNC( WIN_LOADBITMAPFILE )
       if( nSize <= 2 || hbwin_bitmapType( pBuffer, nSize ) == HB_WIN_BITMAP_UNKNOWN )
       {
          hb_xfree( pBuffer );
-         pBuffer = NULL;
+         pBuffer = nullptr;
       }
    }
 
@@ -163,8 +163,8 @@ HB_FUNC( WIN_BITMAPISSUPPORTED )
 
 HB_FUNC( WIN_DRAWBITMAP )
 {
-   BITMAPINFO * pbmi = NULL;
-   BYTE * pBits = NULL;
+   BITMAPINFO * pbmi = nullptr;
+   BYTE * pBits = nullptr;
    HDC hDC = hbwapi_par_HDC( 1 );
    HB_SIZE nSize = hb_parclen( 2 );
    BITMAPFILEHEADER * pbmfh = ( BITMAPFILEHEADER * ) hb_parc( 2 );

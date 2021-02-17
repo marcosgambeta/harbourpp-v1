@@ -92,7 +92,7 @@ HB_FUNC( ISALNUM )
 {
    const char * szString = hb_parc( 1 );
 
-   if( szString != NULL )
+   if( szString != nullptr )
       hb_retl( HB_ISALNUM( ( HB_BYTE ) *szString ) );
    else
       hb_retl( HB_FALSE );
@@ -107,7 +107,7 @@ HB_FUNC( ISSPACE )
 {
    const char * szString = hb_parc( 1 );
 
-   if( szString != NULL )
+   if( szString != nullptr )
       hb_retl( HB_ISSPACE( ( HB_BYTE ) *szString ) );
    else
       hb_retl( HB_FALSE );

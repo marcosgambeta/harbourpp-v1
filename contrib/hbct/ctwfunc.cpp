@@ -353,7 +353,7 @@ HB_FUNC( CTWLASTKEY )
       hb_retni( hb_ctwLastKey( &iNewKey ) );
    }
    else
-      hb_retni( hb_ctwLastKey( NULL ) );
+      hb_retni( hb_ctwLastKey( nullptr ) );
 }
 
 /* NOTE: These two functions are emulating the MaxRow()/MaxCol() core functions

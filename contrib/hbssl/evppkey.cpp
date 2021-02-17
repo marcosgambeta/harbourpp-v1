@@ -54,14 +54,14 @@ static HB_GARBAGE_FUNC( EVP_PKEY_release )
 {
    void ** ph = ( void ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
       EVP_PKEY_free( ( EVP_PKEY * ) *ph );
 
-      /* set pointer to NULL just in case */
-      *ph = NULL;
+      /* set pointer to nullptr just in case */
+      *ph = nullptr;
    }
 }
 
@@ -73,7 +73,7 @@ static const HB_GC_FUNCS s_gcEVP_PKEY_funcs =
 
 HB_BOOL hb_EVP_PKEY_is( int iParam )
 {
-   return hb_parptrGC( &s_gcEVP_PKEY_funcs, iParam ) != NULL;
+   return hb_parptrGC( &s_gcEVP_PKEY_funcs, iParam ) != nullptr;
 }
 
 EVP_PKEY * hb_EVP_PKEY_par( int iParam )

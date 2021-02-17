@@ -52,8 +52,8 @@ HB_FUNC( WAPI_MESSAGEBOX )
    void * hStr2;
 
    int iResult = MessageBox( hbwapi_par_raw_HWND( 1 ),
-                             HB_PARSTR( 2, &hStr1, NULL ),
-                             HB_PARSTR( 3, &hStr2, NULL ),
+                             HB_PARSTR( 2, &hStr1, nullptr ),
+                             HB_PARSTR( 3, &hStr2, nullptr ),
                              hbwapi_par_INT( 4 ) );
 
    hbwapi_SetLastError( GetLastError() );
@@ -77,7 +77,7 @@ static int s_MessageBoxTimeout( IN HWND hWnd,
    if( s_pMessageBoxTimeout == ( _HB_MSGBOXTOUT ) -1 )
    {
       HMODULE hModule = GetModuleHandle( TEXT( "user32.dll" ) );
-      s_pMessageBoxTimeout = hModule == NULL ? NULL : ( _HB_MSGBOXTOUT )
+      s_pMessageBoxTimeout = hModule == nullptr ? nullptr : ( _HB_MSGBOXTOUT )
                HB_WINAPI_GETPROCADDRESST( hModule, "MessageBoxTimeout" );
    }
 
@@ -97,8 +97,8 @@ HB_FUNC( WAPI_MESSAGEBOXTIMEOUT )
    void * hStr2;
 
    int iResult = s_MessageBoxTimeout( hbwapi_par_raw_HWND( 1 ),
-                                      HB_PARSTR( 2, &hStr1, NULL ),
-                                      HB_PARSTR( 3, &hStr2, NULL ),
+                                      HB_PARSTR( 2, &hStr1, nullptr ),
+                                      HB_PARSTR( 3, &hStr2, nullptr ),
                                       hbwapi_par_UINT( 4 ),
                                       hbwapi_par_WORD( 5 ),
                                       hbwapi_par_DWORD( 6 ) );

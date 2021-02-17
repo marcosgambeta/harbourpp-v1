@@ -75,7 +75,7 @@ static HB_GARBAGE_FUNC( _DLLUnload )
        * library call here hb_libFree( xec->pLibraryHandle ).
        */
       hb_gcRefFree( xec->pLibraryHandle );
-      xec->pLibraryHandle = NULL;
+      xec->pLibraryHandle = nullptr;
    }
 }
 
@@ -110,7 +110,7 @@ HB_FUNC( DLLCALL )
    {
       if( HB_IS_STRING( pLibrary ) )
       {
-         pLibraryHandle = hb_libLoad( pLibrary, NULL );
+         pLibraryHandle = hb_libLoad( pLibrary, nullptr );
          if( pLibraryHandle )
             bFreeLibrary = HB_TRUE;
       }
@@ -135,7 +135,7 @@ HB_FUNC( DLLCALL )
                   pFunctionPtr,
                   hb_pcount(),
                   4,
-                  NULL );
+                  nullptr );
 
       if( bFreeLibrary )
          hb_libFree( pLibraryHandle );
@@ -156,7 +156,7 @@ HB_FUNC( DLLPREPARECALL )
    {
       if( HB_IS_STRING( pLibrary ) )
       {
-         pLibraryHandle = hb_libLoad( pLibrary, NULL );
+         pLibraryHandle = hb_libLoad( pLibrary, nullptr );
          if( pLibraryHandle )
             bFreeLibrary = HB_TRUE;
       }
@@ -210,5 +210,5 @@ HB_FUNC( DLLEXECUTECALL )
                   xec->pFunctionPtr,
                   hb_pcount(),
                   2,
-                  NULL );
+                  nullptr );
 }

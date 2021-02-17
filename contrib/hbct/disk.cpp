@@ -103,10 +103,10 @@ HB_FUNC( DRIVETYPE )
 
    hb_strncpy( pszDrive, hb_parcx( 1 ), nSize );
 
-   if( strstr( pszDrive, ":" ) == NULL )
+   if( strstr( pszDrive, ":" ) == nullptr )
       hb_strncat( pszDrive, ":", nSize );
 
-   if( strstr( pszDrive, "\\" ) == NULL )
+   if( strstr( pszDrive, "\\" ) == nullptr )
       hb_strncat( pszDrive, "\\", nSize );
 
    lpDrive = HB_FSNAMECONV( pszDrive, &lpFree );
@@ -194,7 +194,7 @@ HB_FUNC( VOLUME )
       const char * pszVolName = nullptr;
       char szRootBuf[ 4 ], szVolNameBuf[ 12 ];
       LPCTSTR lpRoot, lpVolName;
-      LPTSTR lpRootFree = NULL, lpVolNameFree = NULL;
+      LPTSTR lpRootFree = nullptr, lpVolNameFree = nullptr;
 
       if( hb_parclen( 1 ) > 0 )
       {
@@ -242,12 +242,12 @@ HB_FUNC( VOLSERIAL )
    LPCTSTR lpRootPath = HB_PARSTR( 1, &hDrive, &nLen );
 
    if( GetVolumeInformation( nLen > 0 ? lpRootPath : nullptr, /* RootPathName */
-                             NULL,      /* VolumeName */
+                             nullptr,      /* VolumeName */
                              0,         /* VolumeNameSize */
                              &dwSerial, /* VolumeSerialNumber */
-                             NULL,      /* MaxComponentLength */
-                             NULL,      /* FileSystemFlags */
-                             NULL,      /* FileSystemName */
+                             nullptr,      /* MaxComponentLength */
+                             nullptr,      /* FileSystemFlags */
+                             nullptr,      /* FileSystemName */
                              0 ) )      /* FileSystemSize */
       hb_retnint( dwSerial );
    else
@@ -269,9 +269,9 @@ HB_FUNC( TRUENAME )
 
       buffer[ 0 ] = buffer[ MAX_PATH ] = TEXT( '\0' );
 
-      GetFullPathName( HB_PARSTR( 1, &hFile, NULL ),
+      GetFullPathName( HB_PARSTR( 1, &hFile, nullptr ),
                        HB_SIZEOFARRAY( buffer ) - 1,
-                       buffer, NULL );
+                       buffer, nullptr );
 
       HB_RETSTR( buffer );
       hb_strfree( hFile );

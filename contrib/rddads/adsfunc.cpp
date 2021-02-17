@@ -74,17 +74,17 @@ char * hb_adsOemToAnsi( const char * pszSrc, HB_SIZE nLen )
    if( hb_ads_bOEM )
    {
 #if defined( HB_OS_WIN )
-      int nWideLen = MultiByteToWideChar( CP_OEMCP, MB_PRECOMPOSED, pszSrc, static_cast< int >( nLen ), NULL, 0 );
+      int nWideLen = MultiByteToWideChar( CP_OEMCP, MB_PRECOMPOSED, pszSrc, static_cast< int >( nLen ), nullptr, 0 );
       LPWSTR pszWide = ( LPWSTR ) hb_xgrab( ( nWideLen + 1 ) * sizeof( wchar_t ) );
 
       char * pszDst;
 
       MultiByteToWideChar( CP_OEMCP, MB_PRECOMPOSED, pszSrc, static_cast< int >( nLen ), pszWide, nWideLen );
 
-      nLen = WideCharToMultiByte( CP_ACP, 0, pszWide, nWideLen, NULL, 0, NULL, NULL );
+      nLen = WideCharToMultiByte( CP_ACP, 0, pszWide, nWideLen, nullptr, 0, nullptr, nullptr );
       pszDst = ( char * ) hb_xgrab( nLen + 1 );
 
-      WideCharToMultiByte( CP_ACP, 0, pszWide, nWideLen, pszDst, static_cast< int >( nLen ), NULL, NULL );
+      WideCharToMultiByte( CP_ACP, 0, pszWide, nWideLen, pszDst, static_cast< int >( nLen ), nullptr, nullptr );
 
       hb_xfree( pszWide );
 
@@ -102,17 +102,17 @@ char * hb_adsAnsiToOem( const char * pszSrc, HB_SIZE nLen )
    if( hb_ads_bOEM )
    {
 #if defined( HB_OS_WIN )
-      int nWideLen = MultiByteToWideChar( CP_ACP, MB_PRECOMPOSED, pszSrc, static_cast< int >( nLen ), NULL, 0 );
+      int nWideLen = MultiByteToWideChar( CP_ACP, MB_PRECOMPOSED, pszSrc, static_cast< int >( nLen ), nullptr, 0 );
       LPWSTR pszWide = ( LPWSTR ) hb_xgrab( ( nWideLen + 1 ) * sizeof( wchar_t ) );
 
       char * pszDst;
 
       MultiByteToWideChar( CP_ACP, MB_PRECOMPOSED, pszSrc, static_cast< int >( nLen ), pszWide, nWideLen );
 
-      nLen = WideCharToMultiByte( CP_OEMCP, 0, pszWide, nWideLen, NULL, 0, NULL, NULL );
+      nLen = WideCharToMultiByte( CP_OEMCP, 0, pszWide, nWideLen, nullptr, 0, nullptr, nullptr );
       pszDst = ( char * ) hb_xgrab( nLen + 1 );
 
-      WideCharToMultiByte( CP_OEMCP, 0, pszWide, nWideLen, pszDst, static_cast< int >( nLen ), NULL, NULL );
+      WideCharToMultiByte( CP_OEMCP, 0, pszWide, nWideLen, pszDst, static_cast< int >( nLen ), nullptr, nullptr );
 
       hb_xfree( pszWide );
 
@@ -156,7 +156,7 @@ static void hb_adsThreadRelease( void * cargo )
 #endif /* ! ADS_LINUX */
 }
 
-static HB_TSD_NEW( s_adsData, sizeof( HB_ADSDATA ), NULL, hb_adsThreadRelease );
+static HB_TSD_NEW( s_adsData, sizeof( HB_ADSDATA ), nullptr, hb_adsThreadRelease );
 #define HB_ADS_THREAD_DATA   ( ( PHB_ADSDATA ) hb_stackGetTSD( &s_adsData ) )
 
 #endif
@@ -635,8 +635,8 @@ HB_FUNC( ADSKEYNO )
    PHB_ITEM pFilterOption = hb_param( 3, HB_IT_NUMERIC );
 
    /* if arg 1 or 3 is bad, toss error */
-   if( ( pxOrder == NULL || HB_IS_STRING( pxOrder ) || HB_IS_NUMBER( pxOrder ) || HB_IS_NIL( pxOrder ) ) &&
-       ( pFilterOption == NULL || HB_IS_NUMBER( pFilterOption ) ) )
+   if( ( pxOrder == nullptr || HB_IS_STRING( pxOrder ) || HB_IS_NUMBER( pxOrder ) || HB_IS_NIL( pxOrder ) ) &&
+       ( pFilterOption == nullptr || HB_IS_NUMBER( pFilterOption ) ) )
    {
       ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
@@ -647,7 +647,7 @@ HB_FUNC( ADSKEYNO )
          UNSIGNED16 usFilterOption = pFilterOption ? ( UNSIGNED16 ) hb_itemGetNI( pFilterOption ) : ADS_IGNOREFILTERS;
 
          /* get an Index Handle */
-         if( pxOrder == NULL || HB_IS_NIL( pxOrder ) ) /* didn't pass it in; use current */
+         if( pxOrder == nullptr || HB_IS_NIL( pxOrder ) ) /* didn't pass it in; use current */
          {
             hIndex = pArea->hOrdCurrent;
          }
@@ -690,8 +690,8 @@ HB_FUNC( ADSKEYCOUNT )
    PHB_ITEM pFilterOption = hb_param( 3, HB_IT_NUMERIC );
 
    /* if arg 1 or 3 is bad, toss error */
-   if( ( pxOrder == NULL || HB_IS_STRING( pxOrder ) || HB_IS_NUMBER( pxOrder ) || HB_IS_NIL( pxOrder ) ) &&
-       ( pFilterOption == NULL || HB_IS_NUMBER( pFilterOption ) ) )
+   if( ( pxOrder == nullptr || HB_IS_STRING( pxOrder ) || HB_IS_NUMBER( pxOrder ) || HB_IS_NIL( pxOrder ) ) &&
+       ( pFilterOption == nullptr || HB_IS_NUMBER( pFilterOption ) ) )
    {
       ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
@@ -702,7 +702,7 @@ HB_FUNC( ADSKEYCOUNT )
          UNSIGNED16 usFilterOption = pFilterOption ? ( UNSIGNED16 ) hb_itemGetNI( pFilterOption ) : ADS_IGNOREFILTERS;
 
          /* get an Index Handle */
-         if( pxOrder == NULL || HB_IS_NIL( pxOrder ) ) /* didn't pass it in; use current */
+         if( pxOrder == nullptr || HB_IS_NIL( pxOrder ) ) /* didn't pass it in; use current */
          {
             hIndex = pArea->hOrdCurrent;
          }
@@ -897,7 +897,7 @@ HB_FUNC( ADSGETAOF )
    if( pArea )
    {
       UNSIGNED8   pucFilter[ HARBOUR_MAX_RDD_FILTER_LENGTH + 1 ];
-      UNSIGNED8 * pucFilter2 = NULL;
+      UNSIGNED8 * pucFilter2 = nullptr;
       UNSIGNED16  usLen = sizeof( pucFilter );
 
       UNSIGNED32 ulRetVal = AdsGetAOF( pArea->hTable,
@@ -938,8 +938,8 @@ HB_FUNC( ADSGETAOFOPTLEVEL )
 
       hb_retni( AdsGetAOFOptLevel( pArea->hTable,
                                    &pusOptLevel,
-                                   NULL,
-                                   NULL ) == AE_SUCCESS ? pusOptLevel : ADS_OPTIMIZED_NONE );
+                                   nullptr,
+                                   nullptr ) == AE_SUCCESS ? pusOptLevel : ADS_OPTIMIZED_NONE );
    }
    else
       hb_errRT_DBCMD( EG_NOTABLE, 2001, nullptr, HB_ERR_FUNCNAME );
@@ -1062,7 +1062,7 @@ HB_FUNC( ADSGETFILTER )
    if( pArea )
    {
       UNSIGNED8   pucFilter[ HARBOUR_MAX_RDD_FILTER_LENGTH + 1 ];
-      UNSIGNED8 * pucFilter2 = NULL;
+      UNSIGNED8 * pucFilter2 = nullptr;
       UNSIGNED16  usLen = sizeof( pucFilter );
 
       UNSIGNED32  ulRetVal = AdsGetFilter( pArea->hTable,
@@ -1545,7 +1545,7 @@ HB_FUNC( ADSREGCALLBACK )
 #endif
          fResult = HB_TRUE;
       else
-         hb_ads_setCallBack( NULL );
+         hb_ads_setCallBack( nullptr );
    }
 #endif /* ! ADS_LINUX */
 
@@ -1555,7 +1555,7 @@ HB_FUNC( ADSREGCALLBACK )
 HB_FUNC( ADSCLRCALLBACK )
 {
 #if ! defined( ADS_LINUX )
-   hb_ads_setCallBack( NULL );
+   hb_ads_setCallBack( nullptr );
 #if ADS_LIB_VERSION >= 610
    hb_retnl( AdsClearCallbackFunction() );
 #else
@@ -1637,7 +1637,7 @@ HB_FUNC( ADSGETLASTERROR )
    AdsGetLastError( &ulLastErr, aucError, &usLength );
 
    if( ulLastErr == AE_SUCCESS )
-      hb_storc( NULL, 1 );
+      hb_storc( nullptr, 1 );
    else
       hb_storclen( ( char * ) aucError, usLength, 1 );
 
@@ -1858,7 +1858,7 @@ HB_FUNC( ADSDDADDTABLE )
                            ( UNSIGNED16 ) hb_ads_iFileType,
                            ( UNSIGNED16 ) hb_ads_iCharType,
                            ( UNSIGNED8 * ) HB_UNCONST( hb_parcx( 3 ) ) /* pTableIndexFileName */,
-                           NULL ) == AE_SUCCESS );
+                           nullptr ) == AE_SUCCESS );
 #else
    hb_retl( HB_FALSE );
 #endif
@@ -2151,7 +2151,7 @@ HB_FUNC( ADSDDSETDATABASEPROPERTY )
          {
             ulRetVal = AdsDDSetDatabaseProperty( hConnect,
                                                  ulProperty,
-                                                 NULL,
+                                                 nullptr,
                                                  0 );
          }
          break;
@@ -2242,7 +2242,7 @@ HB_FUNC( ADSRESTRUCTURETABLE )
 #if ADS_LIB_VERSION >= 600
    hb_retl( AdsRestructureTable( HB_ADS_PARCONNECTION( 5 ) /* hConnect */,
                                  ( UNSIGNED8 * ) HB_UNCONST( hb_parcx( 1 ) ) /* pTableName */,
-                                 NULL /* pucAlias */,
+                                 nullptr /* pucAlias */,
                                  ( UNSIGNED16 ) hb_ads_iFileType,
                                  ( UNSIGNED16 ) hb_ads_iCharType,
                                  ( UNSIGNED16 ) hb_ads_iLockType,
@@ -2420,7 +2420,7 @@ HB_FUNC( ADSCREATEFTSINDEX )
 
    if( pArea )
       hb_retnl( AdsCreateFTSIndex( pArea->hTable,
-                                   ( UNSIGNED8 * ) HB_UNCONST( hb_parc( 1 ) )     /* pucFileName              */ , /* if NULL or the base name is the same as the table, then creates a compound AutoOpen index. */
+                                   ( UNSIGNED8 * ) HB_UNCONST( hb_parc( 1 ) )     /* pucFileName              */ , /* if nullptr or the base name is the same as the table, then creates a compound AutoOpen index. */
                                    ( UNSIGNED8 * ) HB_UNCONST( hb_parc( 2 ) )     /* pucTag                   */ ,
                                    ( UNSIGNED8 * ) HB_UNCONST( hb_parc( 3 ) )     /* pucField                 */ ,
                                    ( UNSIGNED32 )  hb_parnldef( 4, ADS_DEFAULT )  /* ulPageSize               */ ,

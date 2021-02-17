@@ -92,7 +92,7 @@ HB_FUNC( NDX )
       memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
       pOrderInfo.itmOrder = hb_param( 1, HB_IT_NUMERIC );
       if( hb_itemGetNI( pOrderInfo.itmOrder ) == 0 )
-         pOrderInfo.itmOrder = NULL;
+         pOrderInfo.itmOrder = nullptr;
       pOrderInfo.itmResult   = hb_itemPutC( nullptr, nullptr );
       SELF_ORDINFO( pArea, DBOI_NAME, &pOrderInfo );
       hb_itemReturnRelease( pOrderInfo.itmResult );
@@ -127,7 +127,7 @@ HB_FUNC( FSIZE )
 
       if( HB_ISNIL( 1 ) )
          uiIndex = 1;
-      else if( ( szField = hb_parc( 1 ) ) != NULL )
+      else if( ( szField = hb_parc( 1 ) ) != nullptr )
          uiIndex = hb_rddFieldIndex( pArea, szField );
       else
          uiIndex = static_cast< HB_FIELDNO >( hb_parni( 1 ) );
@@ -150,7 +150,7 @@ HB_FUNC( FSIZE )
 
 HB_FUNC( __FOX_USED )
 {
-   hb_retl( s_foxAreaPointer( 1 ) != NULL );
+   hb_retl( s_foxAreaPointer( 1 ) != nullptr );
 }
 
 HB_FUNC( __FOX_SEEK )

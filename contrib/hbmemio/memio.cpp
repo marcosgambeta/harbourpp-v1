@@ -253,7 +253,7 @@ static PHB_MEMFS_FILE memfsFileAlloc( PHB_MEMFS_INODE pInode )
 
 static PHB_MEMFS_FILE memfsHandleToFile( HB_FHANDLE hFile )
 {
-   if( hFile == FS_ERROR || ( HB_ULONG ) hFile == 0 || ( HB_ULONG ) hFile > s_fs.ulFileAlloc || s_fs.pFiles[ ( HB_ULONG ) hFile - 1 ] == NULL )
+   if( hFile == FS_ERROR || ( HB_ULONG ) hFile == 0 || ( HB_ULONG ) hFile > s_fs.ulFileAlloc || s_fs.pFiles[ ( HB_ULONG ) hFile - 1 ] == nullptr )
    {
 #if 0
       hb_errInternal( 9999, "memfsHandleToFile: Invalid file handle", nullptr, nullptr );
@@ -313,7 +313,7 @@ HB_MEMFS_EXPORT HB_BOOL hb_memfsFileExists( const char * szName )
    HB_BOOL bRet;
 
    HB_MEMFSMT_LOCK();
-   bRet = memfsInodeFind( szName, NULL ) != 0;
+   bRet = memfsInodeFind( szName, nullptr ) != 0;
    HB_MEMFSMT_UNLOCK();
    return bRet;
 }
@@ -325,7 +325,7 @@ HB_MEMFS_EXPORT HB_BOOL hb_memfsDelete( const char * szName )
    HB_ULONG ulFile;
 
    HB_MEMFSMT_LOCK();
-   if( ( ulFile = memfsInodeFind( szName, NULL ) ) == 0 )
+   if( ( ulFile = memfsInodeFind( szName, nullptr ) ) == 0 )
    {
       HB_MEMFSMT_UNLOCK();
       return HB_FALSE;
@@ -349,13 +349,13 @@ HB_MEMFS_EXPORT HB_BOOL hb_memfsRename( const char * szName, const char * szNewN
    HB_ULONG ulInode;
 
    HB_MEMFSMT_LOCK();
-   if( ( ulInode = memfsInodeFind( szName, NULL ) ) == 0 )
+   if( ( ulInode = memfsInodeFind( szName, nullptr ) ) == 0 )
    {
       HB_MEMFSMT_UNLOCK();
       /* File not found */
       return HB_FALSE;
    }
-   if( memfsInodeFind( szNewName, NULL ) )
+   if( memfsInodeFind( szNewName, nullptr ) )
    {
       HB_MEMFSMT_UNLOCK();
       /* File already exists */
@@ -370,7 +370,7 @@ HB_MEMFS_EXPORT HB_BOOL hb_memfsRename( const char * szName, const char * szNewN
 
 HB_MEMFS_EXPORT PHB_ITEM hb_memfsDirectory( const char * pszDirSpec, const char * pszAttr )
 {
-   PHB_MEMFS_DIRENTRY pDirEn = NULL;
+   PHB_MEMFS_DIRENTRY pDirEn = nullptr;
    char *   pszFree = nullptr;
    PHB_ITEM pDirArray;
    HB_SIZE  nLen;
@@ -386,7 +386,7 @@ HB_MEMFS_EXPORT PHB_ITEM hb_memfsDirectory( const char * pszDirSpec, const char 
          if( nLen == 0 )
             pszDirSpec = HB_OS_ALLFILE_MASK;
          else
-            pszDirSpec = pszFree = hb_xstrcpy( NULL, pszDirSpec, HB_OS_ALLFILE_MASK, NULL );
+            pszDirSpec = pszFree = hb_xstrcpy( nullptr, pszDirSpec, HB_OS_ALLFILE_MASK, nullptr );
       }
    }
    else
@@ -434,7 +434,7 @@ HB_MEMFS_EXPORT PHB_ITEM hb_memfsDirectory( const char * pszDirSpec, const char 
 
 HB_MEMFS_EXPORT HB_FHANDLE hb_memfsOpen( const char * szName, HB_USHORT uiFlags )
 {
-   PHB_MEMFS_FILE pFile = NULL;
+   PHB_MEMFS_FILE pFile = nullptr;
    HB_FHANDLE     hFile;
    HB_ULONG       ulInode;
    HB_ERRCODE     uiError = 0;
@@ -452,7 +452,7 @@ HB_MEMFS_EXPORT HB_FHANDLE hb_memfsOpen( const char * szName, HB_USHORT uiFlags 
 
    HB_MEMFSMT_LOCK();
 
-   ulInode = memfsInodeFind( szName, NULL );
+   ulInode = memfsInodeFind( szName, nullptr );
 
    if( uiFlags & FO_CREAT )
    {
@@ -547,12 +547,12 @@ HB_MEMFS_EXPORT void hb_memfsClose( HB_FHANDLE hFile )
    PHB_MEMFS_INODE pInode;
 
    HB_MEMFSMT_LOCK();
-   if( ( pFile = memfsHandleToFile( hFile ) ) == NULL )
+   if( ( pFile = memfsHandleToFile( hFile ) ) == nullptr )
    {
       HB_MEMFSMT_UNLOCK();
       return; /* invalid handle */
    }
-   s_fs.pFiles[ hFile - 1 ] = NULL;
+   s_fs.pFiles[ hFile - 1 ] = nullptr;
    pInode = pFile->pInode;
 
    if( --pInode->uiCount == 0 )
@@ -578,7 +578,7 @@ HB_MEMFS_EXPORT HB_SIZE hb_memfsReadAt( HB_FHANDLE hFile, void * pBuff, HB_SIZE 
    PHB_MEMFS_INODE pInode;
    HB_SIZE         nRead;
 
-   if( ( pFile = memfsHandleToFile( hFile ) ) == NULL )
+   if( ( pFile = memfsHandleToFile( hFile ) ) == nullptr )
       return 0;  /* invalid handle */
    pInode = pFile->pInode;
 
@@ -606,7 +606,7 @@ HB_MEMFS_EXPORT HB_SIZE hb_memfsWriteAt( HB_FHANDLE hFile, const void * pBuff, H
    PHB_MEMFS_FILE  pFile;
    PHB_MEMFS_INODE pInode;
 
-   if( ( pFile = memfsHandleToFile( hFile ) ) == NULL )
+   if( ( pFile = memfsHandleToFile( hFile ) ) == nullptr )
       return 0;  /* invalid handle */
    pInode = pFile->pInode;
 
@@ -645,7 +645,7 @@ HB_MEMFS_EXPORT HB_SIZE hb_memfsRead( HB_FHANDLE hFile, void * pBuff, HB_SIZE nC
 {
    PHB_MEMFS_FILE  pFile;
 
-   if( ( pFile = memfsHandleToFile( hFile ) ) == NULL )
+   if( ( pFile = memfsHandleToFile( hFile ) ) == nullptr )
       return 0;  /* invalid handle */
 
    return hb_memfsReadAt( hFile, pBuff, nCount, pFile->llPos );
@@ -656,7 +656,7 @@ HB_MEMFS_EXPORT HB_SIZE hb_memfsWrite( HB_FHANDLE hFile, const void * pBuff, HB_
 {
    PHB_MEMFS_FILE  pFile;
 
-   if( ( pFile = memfsHandleToFile( hFile ) ) == NULL )
+   if( ( pFile = memfsHandleToFile( hFile ) ) == nullptr )
       return 0;  /* invalid handle */
 
    return hb_memfsWriteAt( hFile, pBuff, nCount, pFile->llPos );
@@ -668,7 +668,7 @@ HB_MEMFS_EXPORT HB_BOOL hb_memfsTruncAt( HB_FHANDLE hFile, HB_FOFFSET llOffset )
    PHB_MEMFS_FILE  pFile;
    PHB_MEMFS_INODE pInode;
 
-   if( ( pFile = memfsHandleToFile( hFile ) ) == NULL )
+   if( ( pFile = memfsHandleToFile( hFile ) ) == nullptr )
       return HB_FALSE;  /* invalid handle */
    pInode = pFile->pInode;
 
@@ -712,7 +712,7 @@ HB_MEMFS_EXPORT HB_FOFFSET hb_memfsSeek( HB_FHANDLE hFile, HB_FOFFSET llOffset, 
    PHB_MEMFS_INODE pInode;
    HB_FOFFSET      llPos;
 
-   if( ( pFile = memfsHandleToFile( hFile ) ) == NULL )
+   if( ( pFile = memfsHandleToFile( hFile ) ) == nullptr )
       return 0;  /* invalid handle */
    pInode = pFile->pInode;
 
@@ -742,7 +742,7 @@ HB_MEMFS_EXPORT HB_BOOL hb_memfsEof( HB_FHANDLE hFile )
    PHB_MEMFS_INODE pInode;
    HB_BOOL         fEof;
 
-   if( ( pFile = memfsHandleToFile( hFile ) ) == NULL )
+   if( ( pFile = memfsHandleToFile( hFile ) ) == nullptr )
       return HB_FALSE;  /* invalid handle */
    pInode = pFile->pInode;
 

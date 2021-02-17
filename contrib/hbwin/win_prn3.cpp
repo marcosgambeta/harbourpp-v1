@@ -55,15 +55,15 @@ static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
 #if ! defined( HB_OS_WIN_CE )
    BOOL bFlag;
    DWORD dwNeeded = 0;
-   HANDLE hPrinter = NULL;
-   PRINTER_INFO_2 * ppi2 = NULL;
-   LPTSTR pBuffer = NULL;
+   HANDLE hPrinter = nullptr;
+   PRINTER_INFO_2 * ppi2 = nullptr;
+   LPTSTR pBuffer = nullptr;
 
    /* If Windows 95 or 98, use SetPrinter. */
    if( hb_iswin9x() )
    {
       /* Open this printer so you can get information about it. */
-      bFlag = OpenPrinter( ( LPTSTR ) lpPrinterName, &hPrinter, NULL );
+      bFlag = OpenPrinter( ( LPTSTR ) lpPrinterName, &hPrinter, nullptr );
       if( ! bFlag || ! hPrinter )
          return HB_FALSE;
 
@@ -107,7 +107,7 @@ static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
 
       /* Tell all open programs that this change occurred.
          Allow each program 1 second to handle this message. */
-      SendMessageTimeout( HWND_BROADCAST, WM_SETTINGCHANGE, 0, ( LPARAM ) ( LPCTSTR ) TEXT( "windows" ), SMTO_NORMAL, 1000, NULL );
+      SendMessageTimeout( HWND_BROADCAST, WM_SETTINGCHANGE, 0, ( LPARAM ) ( LPCTSTR ) TEXT( "windows" ), SMTO_NORMAL, 1000, nullptr );
    }
    /* If Windows NT, use the SetDefaultPrinter API for Windows 2000,
       or WriteProfileString for version 4.0 and earlier. */
@@ -142,7 +142,7 @@ static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
          HB_ISIZ nStrLen;
 
          /* Open this printer so you can get information about it. */
-         bFlag = OpenPrinter( ( LPTSTR ) lpPrinterName, &hPrinter, NULL );
+         bFlag = OpenPrinter( ( LPTSTR ) lpPrinterName, &hPrinter, nullptr );
          if( ! bFlag || ! hPrinter )
             return HB_FALSE;
 
@@ -204,7 +204,7 @@ static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
 
       /* Tell all open programs that this change occurred.
          Allow each app 1 second to handle this message. */
-      SendMessageTimeout( HWND_BROADCAST, WM_SETTINGCHANGE, 0, 0, SMTO_NORMAL, 1000, NULL );
+      SendMessageTimeout( HWND_BROADCAST, WM_SETTINGCHANGE, 0, 0, SMTO_NORMAL, 1000, nullptr );
    }
 
    /* Clean up. */

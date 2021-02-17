@@ -70,10 +70,10 @@ HB_FUNC( CELSIUS )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_CELSIUS, NULL, HB_ERR_FUNCNAME, 0,
+                                  CT_ERROR_CELSIUS, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else
          hb_retnd( 0.0 );
@@ -97,10 +97,10 @@ HB_FUNC( FAHRENHEIT )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_FAHRENHEIT, NULL, HB_ERR_FUNCNAME, 0,
+                                  CT_ERROR_FAHRENHEIT, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else
          hb_retnd( 0.0 );

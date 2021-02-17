@@ -117,8 +117,8 @@ HB_FUNC( WAPI_FINDWINDOW )
    void * hWindowName;
 
    HWND hResult = FindWindow(
-      HB_PARSTR( 1, &hClassName, NULL ),
-      HB_PARSTR( 2, &hWindowName, NULL ) );
+      HB_PARSTR( 1, &hClassName, nullptr ),
+      HB_PARSTR( 2, &hWindowName, nullptr ) );
 
    hbwapi_SetLastError( GetLastError() );
    hbwapi_ret_raw_HWND( hResult );
@@ -134,8 +134,8 @@ HB_FUNC( WAPI_CREATEWINDOWEX )
 
    HWND hResult = CreateWindowEx(
       hbwapi_par_DWORD( 1 ),            /* dwExStyle */
-      HB_PARSTRDEF( 2, &hClassName, NULL ),
-      HB_PARSTRDEF( 3, &hWindowName, NULL ),
+      HB_PARSTRDEF( 2, &hClassName, nullptr ),
+      HB_PARSTRDEF( 3, &hWindowName, nullptr ),
       HB_ISNUM( 4 ) ? hbwapi_par_DWORD( 4 ) : WS_OVERLAPPEDWINDOW, /* dwStyle */
       HB_ISNUM( 5 ) ? hbwapi_par_INT( 5 ) : static_cast< int >( CW_USEDEFAULT ), /* x */
       HB_ISNUM( 6 ) ? hbwapi_par_INT( 6 ) : static_cast< int >( CW_USEDEFAULT ), /* y */
@@ -420,7 +420,7 @@ HB_FUNC( WAPI_LOADBITMAP )
    else
    {
       void * hBmp;
-      hb_retptr( LoadBitmap( hbwapi_par_raw_HINSTANCE( 1 ), HB_PARSTRDEF( 2, &hBmp, NULL ) ) );
+      hb_retptr( LoadBitmap( hbwapi_par_raw_HINSTANCE( 1 ), HB_PARSTRDEF( 2, &hBmp, nullptr ) ) );
       hb_strfree( hBmp );
    }
 }
@@ -430,12 +430,12 @@ HB_FUNC( WAPI_LOADBITMAP )
                    [<nWidth>], [<nHeight>], [<nFlags>] ) --> <hImage> */
 HB_FUNC( WAPI_LOADIMAGE )
 {
-   void * hString = NULL;
+   void * hString = nullptr;
    HANDLE hImage;
 
    hImage = LoadImage( hbwapi_par_raw_HINSTANCE( 1 ),
                        HB_ISNUM( 2 ) ? MAKEINTRESOURCE( hbwapi_par_INT( 2 ) ) :
-                       HB_PARSTR( 2, &hString, NULL ),
+                       HB_PARSTR( 2, &hString, nullptr ),
                        HB_ISNUM( 3 ) ? hbwapi_par_UINT( 3 ) : IMAGE_BITMAP,
                        hbwapi_par_INT( 4 ),       /* desired width */
                        hbwapi_par_INT( 5 ),       /* desired height */
@@ -452,13 +452,13 @@ HB_FUNC( WAPI_LOADIMAGE )
 
 HB_FUNC( WAPI_LOADMENU )
 {
-   void * hMenuName = NULL;
+   void * hMenuName = nullptr;
    HMENU hMenu;
 
    hMenu = LoadMenu( hbwapi_par_raw_HINSTANCE( 1 ),
                      HB_ISNUM( 2 ) ?
                            ( LPTSTR ) MAKEINTRESOURCE( hbwapi_par_INT( 2 ) ) :
-                           HB_PARSTRDEF( 2, &hMenuName, NULL ) );
+                           HB_PARSTRDEF( 2, &hMenuName, nullptr ) );
    hbwapi_SetLastError( GetLastError() );
    hb_strfree( hMenuName );
    hbwapi_ret_raw_HMENU( hMenu );
@@ -525,7 +525,7 @@ HB_FUNC( WAPI_TRACKPOPUPMENU )
                               hbwapi_par_INT( 4 ),             /* y */
                               hbwapi_par_INT( 5 ),             /* nReserved */
                               hWnd ? hWnd : GetActiveWindow(), /* hWnd */
-                              NULL /* prcRect */ );
+                              nullptr /* prcRect */ );
    hbwapi_SetLastError( GetLastError() );
    hbwapi_ret_UINT( uiResult );
 }
@@ -595,7 +595,7 @@ HB_FUNC( WAPI_INSERTMENU )
         uFlags = hbwapi_par_UINT( 3 );
    HB_PTRUINT uIDNewItem;
    void * hNewItemStr;
-   LPCTSTR lpNewItem = HB_PARSTR( 5, &hNewItemStr, NULL );
+   LPCTSTR lpNewItem = HB_PARSTR( 5, &hNewItemStr, nullptr );
 
    if( hSubMenu )
    {
@@ -624,7 +624,7 @@ HB_FUNC( WAPI_APPENDMENU )
    UINT uFlags = hbwapi_par_UINT( 2 );
    HB_PTRUINT uIDNewItem;
    void * hNewItemStr;
-   LPCTSTR lpNewItem = HB_PARSTR( 4, &hNewItemStr, NULL );
+   LPCTSTR lpNewItem = HB_PARSTR( 4, &hNewItemStr, nullptr );
 
    if( hSubMenu )
    {
@@ -671,7 +671,7 @@ HB_FUNC( WAPI_GETMENU )
 {
 #if defined( HB_OS_WIN_CE )
    hbwapi_SetLastError( ERROR_INVALID_FUNCTION );
-   hbwapi_ret_raw_HMENU( NULL );
+   hbwapi_ret_raw_HMENU( nullptr );
 #else
    HWND hWnd = hbwapi_par_raw_HWND( 1 );
    HMENU hMenu = GetMenu( hWnd ? hWnd : GetActiveWindow() );
@@ -784,7 +784,7 @@ HB_FUNC( WAPI_GETMENUDEFAULTITEM )
 /* wapi_CreateAcceleratorTable( <aAccelTable> ) -> <hAccel> */
 HB_FUNC( WAPI_CREATEACCELERATORTABLE )
 {
-   HACCEL hAccel = NULL;
+   HACCEL hAccel = nullptr;
    PHB_ITEM pArray = hb_param( 1, HB_IT_ARRAY );
    int iEntries = pArray ? static_cast< int >( hb_arrayLen( pArray ) ) : 0;
 

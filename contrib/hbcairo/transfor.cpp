@@ -91,7 +91,7 @@ HB_FUNC( CAIRO_SET_MATRIX )
    if( pCairo )
    {
       PHB_ITEM pItem;
-      if( ( pItem = hb_param( 2, HB_IT_ARRAY ) ) != NULL && hb_arrayLen( pItem ) == 6 )
+      if( ( pItem = hb_param( 2, HB_IT_ARRAY ) ) != nullptr && hb_arrayLen( pItem ) == 6 )
       {
          cairo_matrix_t m;
 
@@ -123,7 +123,7 @@ HB_FUNC( CAIRO_TRANSFORM )
    if( pCairo )
    {
       PHB_ITEM pItem;
-      if( ( pItem = hb_param( 2, HB_IT_ARRAY ) ) != NULL && hb_arrayLen( pItem ) == 6 )
+      if( ( pItem = hb_param( 2, HB_IT_ARRAY ) ) != nullptr && hb_arrayLen( pItem ) == 6 )
       {
          cairo_matrix_t m;
 

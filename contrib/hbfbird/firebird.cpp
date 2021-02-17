@@ -69,7 +69,7 @@ static HB_GARBAGE_FUNC( FB_db_handle_release )
 {
    isc_db_handle * ph = ( isc_db_handle * ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       ISC_STATUS_ARRAY status;
@@ -77,7 +77,7 @@ static HB_GARBAGE_FUNC( FB_db_handle_release )
       /* Destroy the object */
       isc_detach_database( status, ph );
 
-      /* set pointer to NULL to avoid multiple freeing */
+      /* set pointer to nullptr to avoid multiple freeing */
       *ph = 0;
    }
 }
@@ -132,7 +132,7 @@ HB_FUNC( FBCREATEDB )
                    "CREATE DATABASE '%s' USER '%s' PASSWORD '%s' PAGE_SIZE = %i DEFAULT CHARACTER SET %s",
                    db_name, user, pass, page, charset );
 
-      if( isc_dsql_execute_immediate( status, &newdb, &trans, 0, create_db, dialect, NULL ) )
+      if( isc_dsql_execute_immediate( status, &newdb, &trans, 0, create_db, dialect, nullptr ) )
          hb_retnl( isc_sqlcode( status ) );
       else
          hb_retnl( 1 );
@@ -213,7 +213,7 @@ HB_FUNC( FBSTARTTRANSACTION )
       isc_tr_handle    trans = ( isc_tr_handle ) 0;
       ISC_STATUS_ARRAY status;
 
-      if( isc_start_transaction( status, &trans, 1, &db, 0, NULL ) )
+      if( isc_start_transaction( status, &trans, 1, &db, 0, nullptr ) )
          hb_retnl( isc_sqlcode( status ) );
       else
          hb_retptr( ( void * ) ( HB_PTRUINT ) trans );
@@ -272,14 +272,14 @@ HB_FUNC( FBEXECUTE )
          trans = ( isc_tr_handle ) ( HB_PTRUINT ) hb_parptr( 4 );
       else
       {
-         if( isc_start_transaction( status, &trans, 1, &db, 0, NULL ) )
+         if( isc_start_transaction( status, &trans, 1, &db, 0, nullptr ) )
          {
             hb_retnl( isc_sqlcode( status ) );
             return;
          }
       }
 
-      if( isc_dsql_execute_immediate( status, &db, &trans, 0, exec_str, dialect, NULL ) )
+      if( isc_dsql_execute_immediate( status, &db, &trans, 0, exec_str, dialect, nullptr ) )
       {
          if( ! HB_ISPOINTER( 4 ) )
             isc_rollback_transaction( status_rollback, &trans );
@@ -325,7 +325,7 @@ HB_FUNC( FBQUERY )
 
       if( HB_ISPOINTER( 4 ) )
          trans = ( isc_tr_handle ) ( HB_PTRUINT ) hb_parptr( 4 );
-      else if( isc_start_transaction( status, &trans, 1, &db, 0, NULL ) )
+      else if( isc_start_transaction( status, &trans, 1, &db, 0, nullptr ) )
       {
          hb_retnl( isc_sqlcode( status ) );
          return;
@@ -422,7 +422,7 @@ HB_FUNC( FBQUERY )
       if( ! sqlda->sqld )
       {
          /* Execute and commit non-select querys */
-         if( isc_dsql_execute( status, &trans, &stmt, dialect, NULL ) )
+         if( isc_dsql_execute( status, &trans, &stmt, dialect, nullptr ) )
          {
             hb_itemRelease( aNew );
             hb_retnl( isc_sqlcode( status ) );
@@ -696,14 +696,14 @@ HB_FUNC( FBGETBLOB )
          trans = ( isc_tr_handle ) ( HB_PTRUINT ) hb_parptr( 3 );
       else
       {
-         if( isc_start_transaction( status, &trans, 1, &db, 0, NULL ) )
+         if( isc_start_transaction( status, &trans, 1, &db, 0, nullptr ) )
          {
             hb_retnl( isc_sqlcode( status ) );
             return;
          }
       }
 
-      if( isc_open_blob2( status, &db, &trans, &blob_handle, blob_id, 0, NULL ) )
+      if( isc_open_blob2( status, &db, &trans, &blob_handle, blob_id, 0, nullptr ) )
       {
          hb_retnl( isc_sqlcode( status ) );
          return;

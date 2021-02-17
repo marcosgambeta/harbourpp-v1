@@ -91,7 +91,7 @@ static int hb_bz2Compress( const char * szSrc, HB_SIZE nSrc,
    stream.bzalloc = hb_bz2Alloc;
    stream.bzfree  = hb_bz2Free;
 #if 0
-   stream.opaque  = NULL;
+   stream.opaque  = nullptr;
 #endif
 
    iResult = BZ2_bzCompressInit( &stream, iBlockSize, 0, 0 );
@@ -135,7 +135,7 @@ static HB_SIZE hb_bz2UncompressedSize( const char * szSrc, HB_SIZE nLen,
    stream.bzalloc = hb_bz2Alloc;
    stream.bzfree  = hb_bz2Free;
 #if 0
-   stream.opaque  = NULL;
+   stream.opaque  = nullptr;
 #endif
 
    *piResult = BZ2_bzDecompressInit( &stream, 0, 0 );
@@ -185,7 +185,7 @@ static int hb_bz2Uncompress( const char * szSrc, HB_SIZE nSrc,
    stream.bzalloc = hb_bz2Alloc;
    stream.bzfree  = hb_bz2Free;
 #if 0
-   stream.opaque  = NULL;
+   stream.opaque  = nullptr;
 #endif
 
    iResult = BZ2_bzDecompressInit( &stream, 0, 0 );

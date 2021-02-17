@@ -77,7 +77,7 @@ HB_FUNC( ATADJUST )
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
-            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_ATADJUST, NULL, HB_ERR_FUNCNAME, 0,
+            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_ATADJUST, nullptr, HB_ERR_FUNCNAME, 0,
                       EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
 
          hb_retclen( pcString, sStrLen );
@@ -95,7 +95,7 @@ HB_FUNC( ATADJUST )
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
-            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_ATADJUST, NULL, HB_ERR_FUNCNAME, 0,
+            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_ATADJUST, nullptr, HB_ERR_FUNCNAME, 0,
                       EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
 
          hb_retclen( pcString, sStrLen );
@@ -130,10 +130,10 @@ HB_FUNC( ATADJUST )
                   break;
 
                default:
-                  pc = NULL;
+                  pc = nullptr;
             }
 
-            if( pc == NULL )
+            if( pc == nullptr )
             {
                /* no match found; if this happens at this point,
                   there are no <nCounter> matches, so return */
@@ -165,10 +165,10 @@ HB_FUNC( ATADJUST )
                break;
 
             default:
-               pc = NULL;
+               pc = nullptr;
          }
 
-         if( pc == NULL )
+         if( pc == nullptr )
          {
             /* no matches found */
             hb_retclen( pcString, sStrLen );
@@ -252,10 +252,10 @@ HB_FUNC( ATADJUST )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_ATADJUST, NULL, HB_ERR_FUNCNAME, 0,
+                                  CT_ERROR_ATADJUST, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else if( HB_ISCHAR( 2 ) )
          hb_retclen( hb_parc( 2 ), hb_parclen( 2 ) );

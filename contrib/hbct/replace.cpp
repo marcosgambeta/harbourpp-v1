@@ -135,10 +135,10 @@ static void do_replace( int iSwitch )
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   sulErrorSubcodes[ iSwitch ],
-                                  NULL, HB_ERR_FUNCNAME, 0,
+                                  nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else if( iNoRet )
          hb_ret();

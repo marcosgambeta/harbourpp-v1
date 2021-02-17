@@ -98,16 +98,16 @@ static HB_ERRCODE pgsqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
 
 
 static SDDNODE s_pgsqldd = {
-   NULL,
+   nullptr,
    "POSTGRESQL",
    ( SDDFUNC_CONNECT ) pgsqlConnect,
    ( SDDFUNC_DISCONNECT ) pgsqlDisconnect,
    ( SDDFUNC_EXECUTE ) pgsqlExecute,
    ( SDDFUNC_OPEN ) pgsqlOpen,
    ( SDDFUNC_CLOSE ) pgsqlClose,
-   ( SDDFUNC_GOTO ) NULL,
+   ( SDDFUNC_GOTO ) nullptr,
    ( SDDFUNC_GETVALUE ) pgsqlGetValue,
-   ( SDDFUNC_GETVARLEN ) NULL
+   ( SDDFUNC_GETVARLEN ) nullptr
 };
 
 
@@ -121,7 +121,7 @@ static void hb_pgsqldd_init( void * cargo )
 
 HB_FUNC( HB_SDDPG_REGISTER )
 {
-   hb_pgsqldd_init( NULL );
+   hb_pgsqldd_init( nullptr );
 }
 
 /* force SQLBASE linking */
@@ -129,7 +129,7 @@ HB_FUNC_TRANSLATE( SDDPG, SQLBASE )
 
 HB_INIT_SYMBOLS_BEGIN( sddpostgre__InitSymbols )
 {
-   "SDDPG", { HB_FS_PUBLIC | HB_FS_LOCAL }, { HB_FUNCNAME( SDDPG ) }, NULL
+   "SDDPG", { HB_FS_PUBLIC | HB_FS_LOCAL }, { HB_FUNCNAME( SDDPG ) }, nullptr
 },
 HB_INIT_SYMBOLS_END( sddpostgre__InitSymbols )
 
@@ -211,14 +211,14 @@ static HB_ERRCODE pgsqlExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
    pResult = PQexec( pConn, hb_itemGetCPtr( pItem ) );
    if( ! pResult )
    {
-      hb_rddsqlSetError( 1, PQerrorMessage( pConn ), hb_itemGetCPtr( pItem ), NULL, 0 );
+      hb_rddsqlSetError( 1, PQerrorMessage( pConn ), hb_itemGetCPtr( pItem ), nullptr, 0 );
       return HB_FAILURE;
    }
 
    status = PQresultStatus( pResult );
    if( status != PGRES_TUPLES_OK && status != PGRES_COMMAND_OK )
    {
-      hb_rddsqlSetError( status, PQresultErrorMessage( pResult ), hb_itemGetCPtr( pItem ), NULL, 0 );
+      hb_rddsqlSetError( status, PQresultErrorMessage( pResult ), hb_itemGetCPtr( pItem ), nullptr, 0 );
       return HB_FAILURE;
    }
 
@@ -228,7 +228,7 @@ static HB_ERRCODE pgsqlExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
    else
       ulAffectedRows = static_cast< unsigned long >( atol( PQcmdTuples( pResult ) ) );
 
-   hb_rddsqlSetError( 0, NULL, hb_itemGetCPtr( pItem ), NULL, ulAffectedRows );
+   hb_rddsqlSetError( 0, nullptr, hb_itemGetCPtr( pItem ), nullptr, ulAffectedRows );
    PQclear( pResult );
    return HB_SUCCESS;
 }
@@ -250,7 +250,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
    pResult = PQexec( pConn, pArea->szQuery );
    if( ! pResult )
    {
-      hb_errRT_PostgreSQLDD( EG_OPEN, ESQLDD_LOWMEMORY, "Query failed", NULL, 0 );  /* Low memory, etc */
+      hb_errRT_PostgreSQLDD( EG_OPEN, ESQLDD_LOWMEMORY, "Query failed", nullptr, 0 );  /* Low memory, etc */
       return HB_FAILURE;
    }
 
@@ -485,7 +485,7 @@ static HB_ERRCODE pgsqlClose( SQLBASEAREAP pArea )
          PQclear( pSDDData->pResult );
 
       hb_xfree( pSDDData );
-      pArea->pSDDData = NULL;
+      pArea->pSDDData = nullptr;
    }
    return HB_SUCCESS;
 }

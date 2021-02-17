@@ -93,7 +93,7 @@ static void hb_gt_qtc_itemGetQString( PHB_ITEM pItem, QString * pqStr )
    HB_SIZE nSize;
    void * hStr;
 
-   if( ( wStr = hb_itemGetStrU16( pItem, HB_CDP_ENDIAN_NATIVE, &hStr, &nSize ) ) != NULL )
+   if( ( wStr = hb_itemGetStrU16( pItem, HB_CDP_ENDIAN_NATIVE, &hStr, &nSize ) ) != nullptr )
    {
 #if defined( HB_OS_WIN )
       * pqStr = QString::fromWCharArray( wStr, nSize );

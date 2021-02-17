@@ -423,7 +423,7 @@ PHB_ZEBRA hb_zebra_create_datamatrix( const char * szCode, HB_SIZE nLen, int iFl
       return pZebra;
    }
 
-   pSize = NULL;
+   pSize = nullptr;
    for( i = 0; i < SIZE_COUNT; i++ )
    {
       if( s_size[ i ].iDataSize >= iDataCount )

@@ -217,14 +217,14 @@ static int hb_png_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int * 
    if( png_sig_cmp( header, ( png_size_t ) 0, sizeof( header ) ) )
       return _PNG_RET_ERR_INVALID2;
 
-   png_ptr = png_create_read_struct( PNG_LIBPNG_VER_STRING, NULL, NULL, NULL );
+   png_ptr = png_create_read_struct( PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr );
    if( ! png_ptr )
       return _PNG_RET_ERR_INIT1;
 
    info_ptr = png_create_info_struct( png_ptr );
    if( ! info_ptr )
    {
-      png_destroy_read_struct( &png_ptr, ( png_infopp ) NULL, ( png_infopp ) NULL );
+      png_destroy_read_struct( &png_ptr, ( png_infopp ) nullptr, ( png_infopp ) nullptr );
       return _PNG_RET_ERR_INIT2;
    }
 
@@ -245,7 +245,7 @@ static int hb_png_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int * 
       int bit_depth;
       int color_type;
 
-      png_get_IHDR( png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, NULL, NULL, NULL );
+      png_get_IHDR( png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, nullptr, nullptr, nullptr );
 
       if( piHeight )
          *piHeight = static_cast< int >( height );
@@ -261,7 +261,7 @@ static int hb_png_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int * 
    else
       iResult = _PNG_RET_ERR_READ;
 
-   png_destroy_read_struct( &png_ptr, &info_ptr, ( png_infopp ) NULL );
+   png_destroy_read_struct( &png_ptr, &info_ptr, ( png_infopp ) nullptr );
 
    return iResult;
 }
@@ -300,12 +300,12 @@ HB_FUNC( WIN_BITMAPDIMENSIONS )
    }
    else if( iType == HB_WIN_BITMAP_JPEG )
    {
-      bRetVal = ( hb_jpeg_get_param( ( const HB_BYTE * ) buffer, nSize, &iHeight, &iWidth, NULL, NULL ) == _JPEG_RET_OK );
+      bRetVal = ( hb_jpeg_get_param( ( const HB_BYTE * ) buffer, nSize, &iHeight, &iWidth, nullptr, nullptr ) == _JPEG_RET_OK );
    }
 #if defined( HB_HAS_PNG ) && defined( HB_HAS_ZLIB )
    else if( iType == HB_WIN_BITMAP_PNG )
    {
-      bRetVal = ( hb_png_get_param( ( const HB_BYTE * ) buffer, nSize, &iHeight, &iWidth, NULL, NULL ) == _PNG_RET_OK );
+      bRetVal = ( hb_png_get_param( ( const HB_BYTE * ) buffer, nSize, &iHeight, &iWidth, nullptr, nullptr ) == _PNG_RET_OK );
    }
 #endif
 

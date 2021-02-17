@@ -175,7 +175,7 @@ static HB_BOOL s_fileAccept( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
 {
    HB_SYMBOL_UNUSED( pFuncs );
 
-   return s_gzio_name( pszFileName, NULL ) != pszFileName;
+   return s_gzio_name( pszFileName, nullptr ) != pszFileName;
 }
 
 static HB_BOOL s_fileExists( PHB_FILE_FUNCS pFuncs, const char * pszFileName, char * pRetPath )
@@ -185,7 +185,7 @@ static HB_BOOL s_fileExists( PHB_FILE_FUNCS pFuncs, const char * pszFileName, ch
 
    HB_SYMBOL_UNUSED( pFuncs );
 
-   pszName = s_gzio_name( pszFileName, NULL );
+   pszName = s_gzio_name( pszFileName, nullptr );
    if( pRetPath )
    {
       char * pszNameBuf = ( char * ) hb_xgrab( HB_PATH_MAX );
@@ -198,7 +198,7 @@ static HB_BOOL s_fileExists( PHB_FILE_FUNCS pFuncs, const char * pszFileName, ch
       hb_xfree( pszNameBuf );
    }
    else
-      fResult = hb_fileExists( pszName, NULL );
+      fResult = hb_fileExists( pszName, nullptr );
 
    return fResult;
 }
@@ -207,15 +207,15 @@ static HB_BOOL s_fileDelete( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
 {
    HB_SYMBOL_UNUSED( pFuncs );
 
-   return hb_fileDelete( s_gzio_name( pszFileName, NULL ) );
+   return hb_fileDelete( s_gzio_name( pszFileName, nullptr ) );
 }
 
 static HB_BOOL s_fileRename( PHB_FILE_FUNCS pFuncs, const char * pszName, const char * pszNewName )
 {
    HB_SYMBOL_UNUSED( pFuncs );
 
-   return hb_fileRename( s_gzio_name( pszName, NULL ),
-                         s_gzio_name( pszNewName, NULL ) );
+   return hb_fileRename( s_gzio_name( pszName, nullptr ),
+                         s_gzio_name( pszNewName, nullptr ) );
 }
 
 static HB_BOOL s_fileCopy( PHB_FILE_FUNCS pFuncs, const char * pszSrcFile, const char * pszDstFile )
@@ -237,86 +237,86 @@ static HB_BOOL s_fileDirExists( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
 {
    HB_SYMBOL_UNUSED( pFuncs );
 
-   return hb_fileDirExists( s_gzio_name( pszDirName, NULL ) );
+   return hb_fileDirExists( s_gzio_name( pszDirName, nullptr ) );
 }
 
 static HB_BOOL s_fileDirMake( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
 {
    HB_SYMBOL_UNUSED( pFuncs );
 
-   return hb_fileDirMake( s_gzio_name( pszDirName, NULL ) );
+   return hb_fileDirMake( s_gzio_name( pszDirName, nullptr ) );
 }
 
 static HB_BOOL s_fileDirRemove( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
 {
    HB_SYMBOL_UNUSED( pFuncs );
 
-   return hb_fileDirRemove( s_gzio_name( pszDirName, NULL ) );
+   return hb_fileDirRemove( s_gzio_name( pszDirName, nullptr ) );
 }
 
 static double s_fileDirSpace( PHB_FILE_FUNCS pFuncs, const char * pszDirName, HB_USHORT uiType )
 {
    HB_SYMBOL_UNUSED( pFuncs );
 
-   return hb_fileDirSpace( s_gzio_name( pszDirName, NULL ), uiType );
+   return hb_fileDirSpace( s_gzio_name( pszDirName, nullptr ), uiType );
 }
 
 static PHB_ITEM s_fileDirectory( PHB_FILE_FUNCS pFuncs, const char * pszDirSpec, const char * pszAttr )
 {
    HB_SYMBOL_UNUSED( pFuncs );
 
-   return hb_fileDirectory( s_gzio_name( pszDirSpec, NULL ), pszAttr );
+   return hb_fileDirectory( s_gzio_name( pszDirSpec, nullptr ), pszAttr );
 }
 
 static HB_BOOL s_fileTimeGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, long * plJulian, long * plMillisec )
 {
    HB_SYMBOL_UNUSED( pFuncs );
 
-   return hb_fileTimeGet( s_gzio_name( pszFileName, NULL ), plJulian, plMillisec );
+   return hb_fileTimeGet( s_gzio_name( pszFileName, nullptr ), plJulian, plMillisec );
 }
 
 static HB_BOOL s_fileTimeSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, long lJulian, long lMillisec )
 {
    HB_SYMBOL_UNUSED( pFuncs );
 
-   return hb_fileTimeSet( s_gzio_name( pszFileName, NULL ), lJulian, lMillisec );
+   return hb_fileTimeSet( s_gzio_name( pszFileName, nullptr ), lJulian, lMillisec );
 }
 
 static HB_BOOL s_fileAttrGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR * pnAttr )
 {
    HB_SYMBOL_UNUSED( pFuncs );
 
-   return hb_fileAttrGet( s_gzio_name( pszFileName, NULL ), pnAttr );
+   return hb_fileAttrGet( s_gzio_name( pszFileName, nullptr ), pnAttr );
 }
 
 static HB_BOOL s_fileAttrSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR nAttr )
 {
    HB_SYMBOL_UNUSED( pFuncs );
 
-   return hb_fileAttrSet( s_gzio_name( pszFileName, NULL ), nAttr );
+   return hb_fileAttrSet( s_gzio_name( pszFileName, nullptr ), nAttr );
 }
 
 static HB_BOOL s_fileLink( PHB_FILE_FUNCS pFuncs, const char * pszExisting, const char * pszNewName )
 {
    HB_SYMBOL_UNUSED( pFuncs );
 
-   return hb_fileLink( s_gzio_name( pszExisting, NULL ),
-                       s_gzio_name( pszNewName, NULL ) );
+   return hb_fileLink( s_gzio_name( pszExisting, nullptr ),
+                       s_gzio_name( pszNewName, nullptr ) );
 }
 
 static HB_BOOL s_fileLinkSym( PHB_FILE_FUNCS pFuncs, const char * pszTarget, const char * pszNewName )
 {
    HB_SYMBOL_UNUSED( pFuncs );
 
-   return hb_fileLinkSym( s_gzio_name( pszTarget, NULL ),
-                          s_gzio_name( pszNewName, NULL ) );
+   return hb_fileLinkSym( s_gzio_name( pszTarget, nullptr ),
+                          s_gzio_name( pszNewName, nullptr ) );
 }
 
 static char * s_fileLinkRead( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
 {
    HB_SYMBOL_UNUSED( pFuncs );
 
-   return hb_fileLinkRead( s_gzio_name( pszFileName, NULL ) );
+   return hb_fileLinkRead( s_gzio_name( pszFileName, nullptr ) );
 }
 
 static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName,
@@ -624,9 +624,9 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
          {
             pszNext = hb_itemGetCPtr( pValue );
             if( *pszNext == '\0' )
-               pszNext = NULL;
+               pszNext = nullptr;
          }
-         hb_itemPutCPtr( pValue, hb_xstrcpy( NULL, "GZ:", pszNext, NULL ) );
+         hb_itemPutCPtr( pValue, hb_xstrcpy( nullptr, "GZ:", pszNext, nullptr ) );
          return HB_TRUE;
       }
 

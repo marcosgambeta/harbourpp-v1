@@ -111,9 +111,9 @@ HB_FUNC( WIN_COMOPEN )
       if( ( hCommPort = CreateFile( szName,
                                     GENERIC_READ | GENERIC_WRITE,
                                     0,
-                                    NULL,
+                                    nullptr,
                                     OPEN_EXISTING,
-                                    FILE_FLAG_NO_BUFFERING, NULL ) ) == INVALID_HANDLE_VALUE )
+                                    FILE_FLAG_NO_BUFFERING, nullptr ) ) == INVALID_HANDLE_VALUE )
       {
          s_PortData[ iPort ].dwError = GetLastError();
          hb_retnl( -1 );
@@ -210,7 +210,7 @@ HB_FUNC( WIN_COMWRITE )
 
       s_PortData[ iPort ].iFunction = HB_WIN_COM_FUN_WRITEFILE;
       s_PortData[ iPort ].dwError = 0;
-      if( WriteFile( hCommPort, lpBuffer, dwNumberofBytesToWrite, &dwNumberofBytesWritten, NULL ) )
+      if( WriteFile( hCommPort, lpBuffer, dwNumberofBytesToWrite, &dwNumberofBytesWritten, nullptr ) )
          hb_retnl( dwNumberofBytesWritten );
       else
       {
@@ -236,7 +236,7 @@ HB_FUNC( WIN_COMREAD )
       lpBuffer = ( char * ) hb_xgrab( dwNumberOfBytesToRead + 1 );
       s_PortData[ iPort ].iFunction = HB_WIN_COM_FUN_READFILE;
       s_PortData[ iPort ].dwError = 0;
-      if( ReadFile( hCommPort, lpBuffer, dwNumberOfBytesToRead, &dwNumberOfBytesRead, NULL ) )
+      if( ReadFile( hCommPort, lpBuffer, dwNumberOfBytesToRead, &dwNumberOfBytesRead, nullptr ) )
       {
          if( ! hb_storclen_buffer( lpBuffer, dwNumberOfBytesRead, 2 ) )
             hb_xfree( lpBuffer );
@@ -244,7 +244,7 @@ HB_FUNC( WIN_COMREAD )
       }
       else
       {
-         hb_storc( NULL, 2 );
+         hb_storc( nullptr, 2 );
          hb_xfree( lpBuffer );
          s_PortData[ iPort ].dwError = GetLastError();
          hb_retnl( -1 );
@@ -268,7 +268,7 @@ HB_FUNC( WIN_COMRECV )
       lpBuffer = ( char * ) hb_xgrab( dwNumberOfBytesToRead + 1 );
       s_PortData[ iPort ].iFunction = HB_WIN_COM_FUN_READFILE;
       s_PortData[ iPort ].dwError = 0;
-      if( ReadFile( hCommPort, lpBuffer, dwNumberOfBytesToRead, &dwNumberOfBytesRead, NULL ) )
+      if( ReadFile( hCommPort, lpBuffer, dwNumberOfBytesToRead, &dwNumberOfBytesRead, nullptr ) )
       {
          hb_retclen_buffer( lpBuffer, dwNumberOfBytesRead );
          hb_stornl( dwNumberOfBytesRead, 3 );

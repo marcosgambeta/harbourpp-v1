@@ -168,7 +168,7 @@ static const char * s_consrvFilePath( char * pszFileName, PHB_CONSRV conn, HB_BO
    }
 
    if( iLevel < 0 )
-      pszFileName = NULL;
+      pszFileName = nullptr;
    else if( conn->rootPathLen && ! fLink )
    {
       memmove( pszFileName + conn->rootPathLen, pszFileName, iPos + 1 );
@@ -193,7 +193,7 @@ static int s_srvFileNew( PHB_CONSRV conn, PHB_FILE pFile )
    {
       while( conn->firstFree < NETIO_FILES_MAX )
       {
-         if( conn->fileTable[ conn->firstFree ] == NULL )
+         if( conn->fileTable[ conn->firstFree ] == nullptr )
          {
             conn->filesCount++;
             conn->fileTable[ conn->firstFree ] = pFile;
@@ -212,7 +212,7 @@ static PHB_FILE s_srvFileFree( PHB_CONSRV conn, int iFile )
       PHB_FILE pFile = conn->fileTable[ iFile ];
       if( pFile )
       {
-         conn->fileTable[ iFile ] = NULL;
+         conn->fileTable[ iFile ] = nullptr;
          conn->filesCount--;
          if( conn->firstFree > iFile )
             conn->firstFree = iFile;
@@ -236,7 +236,7 @@ static void s_consrv_disconnect( PHB_CONSRV conn )
    if( conn->sock )
    {
       hb_sockexClose( conn->sock, HB_TRUE );
-      conn->sock = NULL;
+      conn->sock = nullptr;
    }
 }
 
@@ -283,7 +283,7 @@ static HB_GARBAGE_FUNC( s_consrv_destructor )
    if( *conn_ptr )
    {
       PHB_CONSRV conn = *conn_ptr;
-      *conn_ptr = NULL;
+      *conn_ptr = nullptr;
       s_consrv_close( conn );
    }
 }
@@ -412,7 +412,7 @@ static HB_GARBAGE_FUNC( s_listensd_destructor )
    if( *lsd_ptr )
    {
       PHB_LISTENSD lsd = *lsd_ptr;
-      *lsd_ptr = NULL;
+      *lsd_ptr = nullptr;
       if( lsd->sd != HB_NO_SOCKET )
       {
          hb_socketClose( lsd->sd );
@@ -514,7 +514,7 @@ HB_FUNC( NETIO_RPCFILTER )
       if( conn->rpcFilter )
       {
          hb_itemRelease( conn->rpcFilter );
-         conn->rpcFilter = NULL;
+         conn->rpcFilter = nullptr;
       }
       conn->rpcFunc = hb_itemGetSymbol( hb_param( 2, HB_IT_SYMBOL ) );
       if( ! conn->rpcFunc )
@@ -606,7 +606,7 @@ HB_FUNC( NETIO_LISTEN )
 HB_FUNC( NETIO_ACCEPT )
 {
    PHB_LISTENSD lsd = s_listenParam( 1, HB_TRUE );
-   PHB_CONSRV conn = NULL;
+   PHB_CONSRV conn = nullptr;
 
    if( lsd && lsd->sd != HB_NO_SOCKET && ! lsd->stop )
    {
@@ -622,7 +622,7 @@ HB_FUNC( NETIO_ACCEPT )
 
       do
       {
-         connsd = hb_socketAccept( lsd->sd, NULL, NULL, timeout < 0 ? 1000 : timeout );
+         connsd = hb_socketAccept( lsd->sd, nullptr, nullptr, timeout < 0 ? 1000 : timeout );
       }
       while( connsd == HB_NO_SOCKET && ! lsd->stop && timeout < 0 &&
              hb_socketGetError() == HB_SOCKET_ERR_TIMEOUT &&
@@ -636,11 +636,11 @@ HB_FUNC( NETIO_ACCEPT )
          hb_socketSetNoDelay( connsd, HB_TRUE );
 
          if( iLevel == HB_ZLIB_COMPRESSION_DISABLE )
-            sock = hb_sockexNew( connsd, NULL, NULL );
+            sock = hb_sockexNew( connsd, nullptr, nullptr );
          else
             sock = hb_sockexNewZNet( connsd, hb_parc( 3 ), keylen,
                                      iLevel, iStrategy );
-         if( sock != NULL )
+         if( sock != nullptr )
             conn = s_consrvNew( sock, lsd->rootPath, lsd->rpc );
          else
             hb_socketClose( connsd );
@@ -669,7 +669,7 @@ HB_FUNC( NETIO_COMPRESS )
       iStrategy = hb_parnidef( 4, HB_ZLIB_STRATEGY_DEFAULT );
 
       if( iLevel == HB_ZLIB_COMPRESSION_DISABLE )
-         sock = hb_sockexNew( hb_sockexGetHandle( conn->sock ), NULL, NULL );
+         sock = hb_sockexNew( hb_sockexGetHandle( conn->sock ), nullptr, nullptr );
       else
          sock = hb_sockexNewZNet( hb_sockexGetHandle( conn->sock ), hb_parc( 2 ), keylen,
                                   iLevel, iStrategy );
@@ -736,7 +736,7 @@ HB_FUNC( NETIO_SERVER )
 
       for( ;; )
       {
-         HB_BYTE buffer[ 2048 ], * ptr = NULL, * msg;
+         HB_BYTE buffer[ 2048 ], * ptr = nullptr, * msg;
          HB_BYTE msgbuf[ NETIO_MSGLEN ];
          HB_BOOL fNoAnswer = HB_FALSE;
          HB_ERRCODE errCode = 0, errFsCode;
@@ -785,7 +785,7 @@ HB_FUNC( NETIO_SERVER )
                                 ( uiMsg == NETIO_DIREXISTS ? hb_fileDirExists( pszName ) :
                                 ( uiMsg == NETIO_DIRMAKE   ? hb_fileDirMake( pszName ) :
                                 ( uiMsg == NETIO_DIRREMOVE ? hb_fileDirRemove( pszName ) :
-                                                             hb_fileExists( pszName, NULL ) ) ) ) ) )
+                                                             hb_fileExists( pszName, nullptr ) ) ) ) ) )
                         errCode = s_srvFsError();
                      else
                      {
@@ -1089,7 +1089,7 @@ HB_FUNC( NETIO_SERVER )
                      else
                      {
                         nFlags &= ~ ( HB_FATTR ) FXO_COPYNAME;
-                        pFile = hb_fileExtOpen( szFile, szExt, nFlags, NULL, NULL );
+                        pFile = hb_fileExtOpen( szFile, szExt, nFlags, nullptr, nullptr );
                         if( ! pFile )
                            errCode = s_srvFsError();
                         else
@@ -1129,11 +1129,11 @@ HB_FUNC( NETIO_SERVER )
                   else
                   {
                      pFile = s_srvFileGet( conn, iFileNo );
-                     if( pFile == NULL )
+                     if( pFile == nullptr )
                         errCode = NETIO_ERR_WRONG_FILE_HANDLE;
                      else
                      {
-                        PHB_ITEM pValue = NULL;
+                        PHB_ITEM pValue = nullptr;
 
                         if( size > 0 )
                         {
@@ -1206,7 +1206,7 @@ HB_FUNC( NETIO_SERVER )
                   if( size > static_cast< long >( sizeof( buffer ) - NETIO_MSGLEN ) )
                      ptr = msg = ( HB_BYTE * ) hb_xgrab( size + NETIO_MSGLEN );
                   pFile = s_srvFileGet( conn, iFileNo );
-                  if( pFile == NULL )
+                  if( pFile == nullptr )
                      errCode = NETIO_ERR_WRONG_FILE_HANDLE;
                   else
                   {
@@ -1250,7 +1250,7 @@ HB_FUNC( NETIO_SERVER )
                   else
                   {
                      pFile = s_srvFileGet( conn, iFileNo );
-                     if( pFile == NULL )
+                     if( pFile == nullptr )
                         errCode = NETIO_ERR_WRONG_FILE_HANDLE;
                      else
                      {
@@ -1278,7 +1278,7 @@ HB_FUNC( NETIO_SERVER )
                llSize = HB_GET_LE_INT64( &msgbuf[ 14 ] );
                uiFlags = HB_GET_LE_UINT16( &msgbuf[ 22 ] );
                pFile = s_srvFileGet( conn, iFileNo );
-               if( pFile == NULL )
+               if( pFile == nullptr )
                   errCode = NETIO_ERR_WRONG_FILE_HANDLE;
                else if( uiMsg == NETIO_TESTLOCK )
                {
@@ -1302,7 +1302,7 @@ HB_FUNC( NETIO_SERVER )
                iFileNo = HB_GET_LE_UINT16( &msgbuf[ 4 ] );
                llOffset = HB_GET_LE_INT64( &msgbuf[ 6 ] );
                pFile = s_srvFileGet( conn, iFileNo );
-               if( pFile == NULL )
+               if( pFile == nullptr )
                   errCode = NETIO_ERR_WRONG_FILE_HANDLE;
                else if( ! hb_fileTruncAt( pFile, llOffset ) )
                   errCode = s_srvFsError();
@@ -1318,7 +1318,7 @@ HB_FUNC( NETIO_SERVER )
                llOffset = HB_GET_LE_INT64( &msgbuf[ 6 ] );
                uiFlags = HB_GET_LE_UINT16( &msgbuf[ 14 ] );
                pFile = s_srvFileGet( conn, iFileNo );
-               if( pFile == NULL )
+               if( pFile == nullptr )
                   errCode = NETIO_ERR_WRONG_FILE_HANDLE;
                else
                {
@@ -1334,7 +1334,7 @@ HB_FUNC( NETIO_SERVER )
             case NETIO_SIZE:
                iFileNo = HB_GET_LE_UINT16( &msgbuf[ 4 ] );
                pFile = s_srvFileGet( conn, iFileNo );
-               if( pFile == NULL )
+               if( pFile == nullptr )
                   errCode = NETIO_ERR_WRONG_FILE_HANDLE;
                else
                {
@@ -1350,7 +1350,7 @@ HB_FUNC( NETIO_SERVER )
             case NETIO_EOF:
                iFileNo = HB_GET_LE_UINT16( &msgbuf[ 4 ] );
                pFile = s_srvFileGet( conn, iFileNo );
-               if( pFile == NULL )
+               if( pFile == nullptr )
                   errCode = NETIO_ERR_WRONG_FILE_HANDLE;
                else
                {
@@ -1374,7 +1374,7 @@ HB_FUNC( NETIO_SERVER )
             case NETIO_CLOSE:
                iFileNo = HB_GET_LE_UINT16( &msgbuf[ 4 ] );
                pFile = s_srvFileFree( conn, iFileNo );
-               if( pFile == NULL )
+               if( pFile == nullptr )
                   errCode = NETIO_ERR_WRONG_FILE_HANDLE;
                else
                {
@@ -1395,7 +1395,7 @@ HB_FUNC( NETIO_SERVER )
                         break;
                      pStreamPtr = &( *pStreamPtr )->next;
                   }
-                  if( *pStreamPtr != NULL )
+                  if( *pStreamPtr != nullptr )
                   {
                      PHB_CONSTREAM stream = *pStreamPtr;
                      *pStreamPtr = stream->next;
@@ -1501,7 +1501,7 @@ HB_FUNC( NETIO_SERVER )
                                     iStreamID = 0;
                                  if( iStreamID )
                                  {
-                                    if( conn->mutex == NULL )
+                                    if( conn->mutex == nullptr )
                                        conn->mutex = hb_threadMutexCreate();
                                     if( hb_threadMutexLock( conn->mutex ) )
                                     {
@@ -1653,7 +1653,7 @@ HB_FUNC( NETIO_SERVEDCONNECTION )
       {
          PHB_ITEM pItem = hb_stackItem( nOffset + 2 );
 
-         if( hb_itemGetPtrGC( pItem, &s_gcConSrvFuncs ) != NULL )
+         if( hb_itemGetPtrGC( pItem, &s_gcConSrvFuncs ) != nullptr )
             hb_itemReturn( pItem );
       }
    }
@@ -1761,7 +1761,7 @@ HB_FUNC( NETIO_SRVSTATUS )
 
    if( ! conn )
       iStatus = NETIO_SRVSTAT_WRONGHANDLE;
-   else if( conn->sock == NULL )
+   else if( conn->sock == nullptr )
       iStatus = NETIO_SRVSTAT_CLOSED;
    else if( conn->stop )
       iStatus = NETIO_SRVSTAT_STOPPED;

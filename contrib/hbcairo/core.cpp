@@ -56,7 +56,7 @@ static HB_GARBAGE_FUNC( hb_cairo_destructor )
    if( *ppCairo )
    {
       cairo_destroy( *ppCairo );
-      *ppCairo = NULL;
+      *ppCairo = nullptr;
    }
 }
 
@@ -104,7 +104,7 @@ HB_FUNC( CAIRO_DESTROY )
    if( ppCairo && *ppCairo )
    {
       cairo_destroy( *ppCairo );
-      *ppCairo = NULL;
+      *ppCairo = nullptr;
    }
    else
       hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -118,7 +118,7 @@ static HB_GARBAGE_FUNC( hb_cairo_surface_destructor )
    if( *ppSurface )
    {
       cairo_surface_destroy( *ppSurface );
-      *ppSurface = NULL;
+      *ppSurface = nullptr;
    }
 }
 
@@ -174,7 +174,7 @@ HB_FUNC( CAIRO_SURFACE_DESTROY )
    if( ppSurface && *ppSurface )
    {
       cairo_surface_destroy( *ppSurface );
-      *ppSurface = NULL;
+      *ppSurface = nullptr;
    }
    else
       hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -188,7 +188,7 @@ static HB_GARBAGE_FUNC( hb_cairo_path_destructor )
    if( *ppPath )
    {
       cairo_path_destroy( *ppPath );
-      *ppPath = NULL;
+      *ppPath = nullptr;
    }
 }
 
@@ -236,7 +236,7 @@ HB_FUNC( CAIRO_PATH_DESTROY )
    if( ppPath && *ppPath )
    {
       cairo_path_destroy( *ppPath );
-      *ppPath = NULL;
+      *ppPath = nullptr;
    }
    else
       hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -260,7 +260,7 @@ static HB_GARBAGE_FUNC( hb_cairo_path_iterator_destructor )
    if( pIterator->ppPath )
    {
       hb_gcRefFree( pIterator->ppPath );
-      pIterator->ppPath = NULL;
+      pIterator->ppPath = nullptr;
    }
 }
 
@@ -301,7 +301,7 @@ HB_FUNC( CAIRO_PATH_ITERATOR_DESTROY )
    if( pIterator && pIterator->ppPath )
    {
       hb_gcRefFree( pIterator->ppPath );
-      pIterator->ppPath = NULL;
+      pIterator->ppPath = nullptr;
    }
    else
       hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -312,7 +312,7 @@ HB_FUNC( CAIRO_PATH_ITERATOR_NEXT )
    PHB_CAIRO_PATH_ITERATOR pIterator = ( PHB_CAIRO_PATH_ITERATOR ) hb_parptrGC( &s_gcIteratorFuncs, 1 );
    cairo_path_t *          pPath;
 
-   if( pIterator && pIterator->ppPath && ( pPath = *( pIterator->ppPath ) ) != NULL )
+   if( pIterator && pIterator->ppPath && ( pPath = *( pIterator->ppPath ) ) != nullptr )
    {
       /* Skip */
       if( pIterator->iPos == -1 )
@@ -335,7 +335,7 @@ HB_FUNC( CAIRO_PATH_ITERATOR_GET_POINTS )
    PHB_CAIRO_PATH_ITERATOR pIterator = ( PHB_CAIRO_PATH_ITERATOR ) hb_parptrGC( &s_gcIteratorFuncs, 1 );
    cairo_path_t *          pPath;
 
-   if( pIterator && pIterator->ppPath && ( pPath = *( pIterator->ppPath ) ) != NULL )
+   if( pIterator && pIterator->ppPath && ( pPath = *( pIterator->ppPath ) ) != nullptr )
    {
       if( pIterator->iPos < pPath->num_data && pIterator->iPos != -1 )
       {
@@ -367,7 +367,7 @@ HB_FUNC( CAIRO_PATH_ITERATOR_SET_POINTS )
    PHB_ITEM       pArray = hb_param( 2, HB_IT_ARRAY );
    cairo_path_t * pPath;
 
-   if( pIterator && pIterator->ppPath && ( pPath = *( pIterator->ppPath ) ) != NULL && pArray )
+   if( pIterator && pIterator->ppPath && ( pPath = *( pIterator->ppPath ) ) != nullptr && pArray )
    {
       HB_SIZE nLen;
 

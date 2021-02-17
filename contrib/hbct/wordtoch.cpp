@@ -85,7 +85,7 @@ HB_FUNC( WORDTOCHAR )
          if( ! iNoReplace &&
              ( ( pc = ct_at_exact_forward( pcSearch, sSearchLen,
                                            pcRet + sRetIndex, 2,
-                                           &sMatchStrLen ) ) != NULL ) &&
+                                           &sMatchStrLen ) ) != nullptr ) &&
              ( ( ( sReplIndex = ( pc - pcSearch ) ) & 1 ) != 1 ) )
          {
             sReplIndex /= 2;
@@ -117,10 +117,10 @@ HB_FUNC( WORDTOCHAR )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_WORDTOCHAR, NULL, HB_ERR_FUNCNAME, 0,
+                                  CT_ERROR_WORDTOCHAR, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else if( HB_ISCHAR( 2 ) )
          hb_retclen( hb_parc( 2 ), hb_parclen( 2 ) );

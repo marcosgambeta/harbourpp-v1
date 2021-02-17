@@ -75,7 +75,7 @@ static void do_charone( int iSwitch )
       {
          pcString = hb_parc( 1 );
          sStrLen = hb_parclen( 1 );
-         pcDeleteSet = NULL;
+         pcDeleteSet = nullptr;
          sDeleteSetLen = 0;
       }
 
@@ -99,9 +99,9 @@ static void do_charone( int iSwitch )
                      cCurrent = *pcSub;
                      pcRet[ sRetStrLen++ ] = cCurrent;
                   }
-                  else if( pcDeleteSet != NULL &&
+                  else if( pcDeleteSet != nullptr &&
                            ! ct_at_exact_forward( pcDeleteSet, sDeleteSetLen,
-                                                  pcSub, 1, NULL ) )
+                                                  pcSub, 1, nullptr ) )
                   {
                      pcRet[ sRetStrLen++ ] = cCurrent;
                   }
@@ -117,7 +117,7 @@ static void do_charone( int iSwitch )
             break;
 
          case DO_CHARONE_WORDONE:
-            if( sStrLen > 3 && ( pcDeleteSet == NULL || sDeleteSetLen >= 2 ) )
+            if( sStrLen > 3 && ( pcDeleteSet == nullptr || sDeleteSetLen >= 2 ) )
             {
                const char * pcSub;
                char * pcRet;
@@ -139,7 +139,7 @@ static void do_charone( int iSwitch )
                      pcRet[ sRetStrLen++ ] = cCurrent1;
                      pcRet[ sRetStrLen++ ] = cCurrent2;
                   }
-                  else if( pcDeleteSet != NULL )
+                  else if( pcDeleteSet != nullptr )
                   {
                      const char * pc = nullptr;
                      const char * pStart = pcDeleteSet;
@@ -147,13 +147,13 @@ static void do_charone( int iSwitch )
 
                      while( sLen >= 2 &&
                             ( pc = ct_at_exact_forward( pStart, sLen, pcSub,
-                                                        2, NULL ) ) != 0 &&
+                                                        2, nullptr ) ) != 0 &&
                             ( pc - pcDeleteSet ) % 2 == 1 )
                      {
                         pStart = pc + 1;
                         sLen = sDeleteSetLen - ( pStart - pcDeleteSet );
                      }
-                     if( pc == NULL )
+                     if( pc == nullptr )
                      {
                         pcRet[ sRetStrLen++ ] = cCurrent1;
                         pcRet[ sRetStrLen++ ] = cCurrent2;
@@ -185,9 +185,9 @@ static void do_charone( int iSwitch )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   iSwitch == DO_CHARONE_CHARONE ?
                                   CT_ERROR_CHARONE : CT_ERROR_WORDONE,
-                                  NULL, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
+                                  nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
                                   HB_ERR_ARGS_BASEPARAMS );
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else
          hb_retc_null();

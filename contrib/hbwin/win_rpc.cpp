@@ -62,9 +62,9 @@ HB_FUNC( WIN_UUIDCREATESTRING )
    typedef RPC_STATUS ( RPC_ENTRY * _HB_UUIDTOSTRING )( UUID *, unsigned char ** );
    typedef RPC_STATUS ( RPC_ENTRY * _HB_RPCSTRINGFREE )( unsigned char ** );
 
-   static _HB_UUIDCREATE    s_pUuidCreate    = NULL;
-   static _HB_UUIDTOSTRING  s_pUuidToString  = NULL;
-   static _HB_RPCSTRINGFREE s_pRpcStringFree = NULL;
+   static _HB_UUIDCREATE    s_pUuidCreate    = nullptr;
+   static _HB_UUIDTOSTRING  s_pUuidToString  = nullptr;
+   static _HB_RPCSTRINGFREE s_pRpcStringFree = nullptr;
 
    if( ! s_pUuidCreate )
    {
@@ -80,7 +80,7 @@ HB_FUNC( WIN_UUIDCREATESTRING )
        s_pUuidToString &&
        s_pRpcStringFree )
    {
-      TCHAR * tszUuid = NULL;
+      TCHAR * tszUuid = nullptr;
       UUID    uuid;
 
       memset( &uuid, 0, sizeof( UUID ) );
@@ -89,7 +89,7 @@ HB_FUNC( WIN_UUIDCREATESTRING )
 
       s_pUuidToString( &uuid, ( unsigned char ** ) ( void * ) &tszUuid );
 
-      if( tszUuid != NULL )
+      if( tszUuid != nullptr )
       {
          HB_RETSTR( tszUuid );
 

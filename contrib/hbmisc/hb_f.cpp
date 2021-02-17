@@ -71,7 +71,7 @@ static void s_fttext_init_init( void * cargo )
    ft_text->area = 0;
 }
 
-static HB_TSD_NEW( s_fttext, sizeof( FT_TEXT ), s_fttext_init_init, NULL );
+static HB_TSD_NEW( s_fttext, sizeof( FT_TEXT ), s_fttext_init_init, nullptr );
 
 HB_FUNC( HB_FUSE )
 {

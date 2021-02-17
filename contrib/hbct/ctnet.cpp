@@ -114,7 +114,7 @@ HB_FUNC( NETCANCEL )
 #if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
    void * hDevice;
 
-   DWORD dwResult = WNetCancelConnection( HB_PARSTRDEF( 1, &hDevice, NULL ), TRUE );  /* FALSE = fail if exist open files or print jobs. */
+   DWORD dwResult = WNetCancelConnection( HB_PARSTRDEF( 1, &hDevice, nullptr ), TRUE );  /* FALSE = fail if exist open files or print jobs. */
 
    hb_strfree( hDevice );
    /* TRUE = force cancel connection even if exist
@@ -166,9 +166,9 @@ HB_FUNC( NETREDIR )
    void * hSharedRes;
    void * hPassword;
 
-   DWORD dwResult = WNetAddConnection( HB_PARSTRDEF( 2, &hSharedRes, NULL ),
-                                       HB_PARSTR( 3, &hPassword, NULL ),
-                                       HB_PARSTRDEF( 1, &hLocalDev, NULL ) );
+   DWORD dwResult = WNetAddConnection( HB_PARSTRDEF( 2, &hSharedRes, nullptr ),
+                                       HB_PARSTR( 3, &hPassword, nullptr ),
+                                       HB_PARSTRDEF( 1, &hLocalDev, nullptr ) );
 
    hb_strfree( hLocalDev  );
    hb_strfree( hSharedRes );
@@ -188,7 +188,7 @@ HB_FUNC( NETRMTNAME )
    TCHAR lpRemoteDevice[ 128 ];
    DWORD dwLen = HB_SIZEOFARRAY( lpRemoteDevice );
    DWORD dwSize = 0;
-   LPCTSTR lpLocalName = HB_PARSTRDEF( 1, &hLocalDev, NULL );
+   LPCTSTR lpLocalName = HB_PARSTRDEF( 1, &hLocalDev, nullptr );
 
    if( WNetGetConnection( lpLocalName, lpRemoteDevice, &dwSize ) == ERROR_MORE_DATA )
    {

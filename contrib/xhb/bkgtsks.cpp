@@ -92,7 +92,7 @@ static HB_ULONG s_ulBackgroundID = 0;
 /* list of background tasks
  * A pointer into an array of pointers to items with a codeblock
  */
-static PHB_BACKGROUNDTASK * s_pBackgroundTasks = NULL;
+static PHB_BACKGROUNDTASK * s_pBackgroundTasks = nullptr;
 
 static HB_BOOL s_bEnabled = HB_FALSE;
 
@@ -253,17 +253,17 @@ void hb_backgroundShutDown( void )
          PHB_BACKGROUNDTASK pBkgTask;
          pBkgTask = s_pBackgroundTasks[ --s_uiBackgroundMaxTask ];
          hb_itemRelease( pBkgTask->pTask );
-         pBkgTask->pTask = NULL;
+         pBkgTask->pTask = nullptr;
          hb_xfree( pBkgTask );
       }
       while( s_uiBackgroundMaxTask );
       hb_xfree( s_pBackgroundTasks );
 
-      s_pBackgroundTasks = NULL;
+      s_pBackgroundTasks = nullptr;
    }
 }
 
-/* caller have to free return ITEM by hb_itemRelease() if it's not NULL */
+/* caller have to free return ITEM by hb_itemRelease() if it's not nullptr */
 PHB_ITEM hb_backgroundDelFunc( HB_ULONG ulID )
 {
    int iTask;
@@ -295,7 +295,7 @@ PHB_ITEM hb_backgroundDelFunc( HB_ULONG ulID )
          else
          {
             hb_xfree( s_pBackgroundTasks );
-            s_pBackgroundTasks = NULL;
+            s_pBackgroundTasks = nullptr;
          }
          /* Pitem has now a valid value */
          break;
@@ -404,8 +404,8 @@ HB_FUNC( HB_BACKGROUNDADD )
    if( HB_IS_BLOCK( pBlock ) || HB_IS_ARRAY( pBlock ) )
    {
       hb_retnl( hb_backgroundAddFunc( pBlock,
-                                      ( pMillisec == NULL ? 0 : hb_itemGetNI( pMillisec ) ),
-                                      ( pActive == NULL ? HB_TRUE : hb_itemGetL( pActive ) )
+                                      ( pMillisec == nullptr ? 0 : hb_itemGetNI( pMillisec ) ),
+                                      ( pActive == nullptr ? HB_TRUE : hb_itemGetL( pActive ) )
                                       ) );
    }
    else

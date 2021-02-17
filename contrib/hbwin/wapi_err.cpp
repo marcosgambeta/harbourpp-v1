@@ -52,7 +52,7 @@ typedef struct
    DWORD dwLastError;
 } HB_WAPIERRDATA, * PHB_WAPIERRDATA;
 
-static HB_TSD_NEW( s_wapierrData, sizeof( HB_WAPIERRDATA ), NULL, NULL );
+static HB_TSD_NEW( s_wapierrData, sizeof( HB_WAPIERRDATA ), nullptr, nullptr );
 
 void hbwapi_SetLastError( DWORD dwLastError )
 {

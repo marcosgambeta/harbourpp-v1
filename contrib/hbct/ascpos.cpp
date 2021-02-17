@@ -85,11 +85,11 @@ static void do_ascpos( int iSwitch )
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   iSwitch == DO_ASCPOS_VALPOS ?
-                                  CT_ERROR_VALPOS : CT_ERROR_ASCPOS, NULL,
+                                  CT_ERROR_VALPOS : CT_ERROR_ASCPOS, nullptr,
                                   HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
                                   HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else
          hb_retni( 0 );

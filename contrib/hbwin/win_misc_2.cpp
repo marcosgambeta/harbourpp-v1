@@ -64,24 +64,24 @@ HB_FUNC( WIN_RUNDETACHED )
 #endif
 
    if( CreateProcess(
-          HB_PARSTR( 1, &hCommandName, NULL ),                  /* Command name */
+          HB_PARSTR( 1, &hCommandName, nullptr ),                  /* Command name */
           HB_STRUNSHARE( &hCommandLine, lpCommandRO, nLen ),    /* Command-line (Unicode version needs an non-const buffer) */
-          NULL,                                                 /* Process handle not inheritable */
-          NULL,                                                 /* Thread handle not inheritable */
+          nullptr,                                                 /* Process handle not inheritable */
+          nullptr,                                                 /* Thread handle not inheritable */
           FALSE,                                                /* Set handle inheritance to FALSE */
 #if ! defined( HB_OS_WIN_CE )
           hb_parl( 4 ) ? CREATE_NO_WINDOW : CREATE_NEW_CONSOLE, /* Creation flags */
 #else
           CREATE_NEW_CONSOLE,                                   /* Creation flags */
 #endif
-          NULL,                                                 /* Use parent's environment block */
-          NULL,                                                 /* Use parent's starting directory */
+          nullptr,                                                 /* Use parent's environment block */
+          nullptr,                                                 /* Use parent's starting directory */
 #if ! defined( HB_OS_WIN_CE )
           &si,                                                  /* Pointer to STARTUPINFO structure */
           &pi )                                                 /* Pointer to PROCESS_INFORMATION structure */
 #else
-          NULL,                                                 /* Pointer to STARTUPINFO structure */
-          NULL )                                                /* Pointer to PROCESS_INFORMATION structure */
+          nullptr,                                                 /* Pointer to STARTUPINFO structure */
+          nullptr )                                                /* Pointer to PROCESS_INFORMATION structure */
 #endif
        )
    {

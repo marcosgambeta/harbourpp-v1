@@ -73,16 +73,16 @@ static HKEY hb_regkeyconv( HB_PTRUINT nKey )
 HB_FUNC( WIN_REGCREATEKEYEX )
 {
    void * hKey;
-   HKEY hkResult = NULL;
+   HKEY hkResult = nullptr;
    DWORD dwDisposition = 0;
 
    hb_retl( RegCreateKeyEx( hb_regkeyconv( ( HB_PTRUINT ) hb_parnint( 1 ) ),
-                            HB_PARSTRDEF( 2, &hKey, NULL ),
+                            HB_PARSTRDEF( 2, &hKey, nullptr ),
                             0,
-                            NULL,
+                            nullptr,
                             hb_parnl( 5 ) /* dwOptions */,
                             hb_parnl( 6 ) /* samDesired */,
-                            NULL /* lpSecurityAttributes */,
+                            nullptr /* lpSecurityAttributes */,
                             &hkResult,
                             &dwDisposition ) == ERROR_SUCCESS );
 
@@ -95,10 +95,10 @@ HB_FUNC( WIN_REGCREATEKEYEX )
 HB_FUNC( WIN_REGOPENKEYEX )
 {
    void * hKey;
-   HKEY hkResult = NULL;
+   HKEY hkResult = nullptr;
 
    hb_retl( RegOpenKeyEx( hb_regkeyconv( ( HB_PTRUINT ) hb_parnint( 1 ) ),
-                          HB_PARSTRDEF( 2, &hKey, NULL ),
+                          HB_PARSTRDEF( 2, &hKey, nullptr ),
                           0 /* dwOptions */,
                           hb_parnl( 4 ) /* samDesired */,
                           &hkResult ) == ERROR_SUCCESS );
@@ -111,15 +111,15 @@ HB_FUNC( WIN_REGOPENKEYEX )
 HB_FUNC( WIN_REGQUERYVALUEEX )
 {
    void * hKey;
-   LPCTSTR lpKey = HB_PARSTRDEF( 2, &hKey, NULL );
+   LPCTSTR lpKey = HB_PARSTRDEF( 2, &hKey, nullptr );
    DWORD dwType = 0;
    DWORD dwSize = 0;
 
    if( RegQueryValueEx( ( HKEY ) hb_parptr( 1 ),
                         lpKey,
-                        NULL,
+                        nullptr,
                         &dwType,
-                        NULL,
+                        nullptr,
                         &dwSize ) == ERROR_SUCCESS )
    {
       if( dwSize > 0 )
@@ -132,7 +132,7 @@ HB_FUNC( WIN_REGQUERYVALUEEX )
 
             if( RegQueryValueEx( ( HKEY ) hb_parptr( 1 ),
                                  lpKey,
-                                 NULL,
+                                 nullptr,
                                  &dwType,
                                  lpValue,
                                  &dwSize ) == ERROR_SUCCESS )
@@ -152,7 +152,7 @@ HB_FUNC( WIN_REGQUERYVALUEEX )
 
             if( RegQueryValueEx( ( HKEY ) hb_parptr( 1 ),
                                  lpKey,
-                                 NULL,
+                                 nullptr,
                                  &dwType,
                                  lpValue,
                                  &dwSize ) == ERROR_SUCCESS )
@@ -168,7 +168,7 @@ HB_FUNC( WIN_REGQUERYVALUEEX )
          }
       }
       else
-         hb_storc( NULL, 5 );
+         hb_storc( nullptr, 5 );
    }
    else
       hb_stor( 5 );
@@ -183,7 +183,7 @@ HB_FUNC( WIN_REGSETVALUEEX )
 {
    void * hKey;
    DWORD dwType = ( DWORD ) hb_parnl( 4 );
-   LPCTSTR lpKey = HB_PARSTRDEF( 2, &hKey, NULL );
+   LPCTSTR lpKey = HB_PARSTRDEF( 2, &hKey, nullptr );
 
    if( dwType == REG_DWORD )
    {
@@ -244,7 +244,7 @@ HB_FUNC( WIN_REGDELETEKEY )
    void * hKey;
 
    hb_retl( RegDeleteKey( hb_regkeyconv( ( HB_PTRUINT ) hb_parnint( 1 ) ),
-                          ( LPCTSTR ) HB_PARSTRDEF( 2, &hKey, NULL ) ) == ERROR_SUCCESS );
+                          ( LPCTSTR ) HB_PARSTRDEF( 2, &hKey, nullptr ) ) == ERROR_SUCCESS );
 
    hb_strfree( hKey );
 }
@@ -254,7 +254,7 @@ HB_FUNC( WIN_REGDELETEVALUE )
    void * hValue;
 
    hb_retl( RegDeleteValue( ( HKEY ) hb_parptr( 1 ),
-                            ( LPCTSTR ) HB_PARSTR( 2, &hValue, NULL ) ) == ERROR_SUCCESS );
+                            ( LPCTSTR ) HB_PARSTR( 2, &hValue, nullptr ) ) == ERROR_SUCCESS );
 
    hb_strfree( hValue );
 }

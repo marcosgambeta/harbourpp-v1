@@ -109,8 +109,8 @@ static void do_charonly( int iSwitch )
 
       for( pcSub = pcString; pcSub < pcString + sStrLen + 1 - iShift; pcSub += iShift )
       {
-         const char * pc = ct_at_exact_forward( pcOnlySet, sOnlySetLen, pcSub, iShift, NULL );
-         HB_BOOL fBool = ( pc != NULL && ( ( pc - pcOnlySet ) % iShift ) == 0 );
+         const char * pc = ct_at_exact_forward( pcOnlySet, sOnlySetLen, pcSub, iShift, nullptr );
+         HB_BOOL fBool = ( pc != nullptr && ( ( pc - pcOnlySet ) % iShift ) == 0 );
          if( fBool ? iSwitch == DO_CHARONLY_CHARONLY || iSwitch == DO_CHARONLY_WORDONLY
                    : iSwitch == DO_CHARONLY_CHARREM  || iSwitch == DO_CHARONLY_WORDREM )
          {
@@ -154,11 +154,11 @@ static void do_charonly( int iSwitch )
                break;
          }
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, iError,
-                                  NULL, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
+                                  nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
                                   HB_ERR_ARGS_BASEPARAMS );
       }
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else
          hb_retc_null();

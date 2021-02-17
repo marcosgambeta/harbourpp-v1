@@ -81,10 +81,10 @@ HB_FUNC( FLOOR )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst =
-            ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_FLOOR, NULL, HB_ERR_FUNCNAME, 0,
+            ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_FLOOR, nullptr, HB_ERR_FUNCNAME, 0,
                             EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else
          hb_retnd( 0.0 );
@@ -117,10 +117,10 @@ HB_FUNC( CEILING )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_CEILING, NULL, HB_ERR_FUNCNAME, 0,
+                                  CT_ERROR_CEILING, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else
          hb_retnd( 0.0 );
@@ -150,10 +150,10 @@ HB_FUNC( SIGN )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_SIGN, NULL, HB_ERR_FUNCNAME, 0,
+                                  CT_ERROR_SIGN, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else
          hb_retni( 0 );
@@ -199,10 +199,10 @@ HB_FUNC( LOG10 )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_LOG10, NULL, HB_ERR_FUNCNAME, 0,
+                                  CT_ERROR_LOG10, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else
          hb_retni( 0 );
@@ -234,10 +234,10 @@ HB_FUNC( FACT )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_FACT, NULL, HB_ERR_FUNCNAME, 0,
+                                  CT_ERROR_FACT, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else
          hb_retnd( 0.0 );

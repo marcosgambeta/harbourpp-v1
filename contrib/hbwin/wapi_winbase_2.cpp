@@ -64,9 +64,9 @@ HB_FUNC( WAPI_GETCURRENTTHREADID )
 
 HB_FUNC( WAPI_FORMATMESSAGE )
 {
-   void * hSource = NULL;
-   LPTSTR lpAllocBuff = NULL;
-   LPTSTR lpBuffer = NULL;
+   void * hSource = nullptr;
+   LPTSTR lpAllocBuff = nullptr;
+   LPTSTR lpBuffer = nullptr;
    HB_SIZE nSize = 0;
    DWORD dwRetVal;
    DWORD dwFlags;
@@ -93,12 +93,12 @@ HB_FUNC( WAPI_FORMATMESSAGE )
       lpBuffer = ( LPTSTR ) &lpAllocBuff;
 
    dwRetVal = FormatMessage( dwFlags,
-                             HB_ISCHAR( 2 ) ? ( LPCVOID ) HB_PARSTR( 2, &hSource, NULL ) : hb_parptr( 2 ),
+                             HB_ISCHAR( 2 ) ? ( LPCVOID ) HB_PARSTR( 2, &hSource, nullptr ) : hb_parptr( 2 ),
                              HB_ISNUM( 3 ) ? ( DWORD ) hb_parnl( 3 ) : hbwapi_GetLastError() /* dwMessageId */,
                              ( DWORD ) hb_parnldef( 4, MAKELANGID( LANG_NEUTRAL, SUBLANG_DEFAULT ) ) /* dwLanguageId */,
                              lpBuffer,
                              ( DWORD ) nSize,
-                             NULL /* TODO: Add support for this parameter. */ );
+                             nullptr /* TODO: Add support for this parameter. */ );
 
    hbwapi_SetLastError( GetLastError() );
    hb_retnl( dwRetVal );
@@ -131,7 +131,7 @@ HB_FUNC( WAPI_OUTPUTDEBUGSTRING )
 {
    void * hOutputString;
 
-   OutputDebugString( HB_PARSTR( 1, &hOutputString, NULL ) );
+   OutputDebugString( HB_PARSTR( 1, &hOutputString, nullptr ) );
 
    hb_strfree( hOutputString );
 }
@@ -144,7 +144,7 @@ HB_FUNC( WAPI_QUERYDOSDEVICE )
    LPTSTR lpTargetPath = ( LPTSTR ) hb_xgrab( TARGET_PATH_BUFFER_SIZE * sizeof( TCHAR ) );
    DWORD dwResult;
 
-   dwResult = QueryDosDevice( HB_PARSTR( 1, &hDeviceName, NULL ), lpTargetPath, TARGET_PATH_BUFFER_SIZE );
+   dwResult = QueryDosDevice( HB_PARSTR( 1, &hDeviceName, nullptr ), lpTargetPath, TARGET_PATH_BUFFER_SIZE );
    hbwapi_SetLastError( GetLastError() );
    if( dwResult )
    {

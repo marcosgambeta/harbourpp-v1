@@ -50,14 +50,14 @@ static HB_GARBAGE_FUNC( PHB_FFIND_release )
 {
    void ** ph = ( void ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
       hb_fsFindClose( ( PHB_FFIND ) *ph );
 
-      /* set pointer to NULL just in case */
-      *ph = NULL;
+      /* set pointer to nullptr just in case */
+      *ph = nullptr;
    }
 }
 
@@ -88,7 +88,7 @@ HB_FUNC( FILEFINDFIRST )
 
       hb_storptrGC( ph, 2 );
 
-      hb_retl( ffind != NULL );
+      hb_retl( ffind != nullptr );
    }
    else
       hb_retl( HB_FALSE );

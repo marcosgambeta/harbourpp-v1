@@ -237,7 +237,7 @@ HB_FUNC( COM_HARD )
                      HB_COM_FLOW_IRTSCTS | HB_COM_FLOW_ORTSCTS );
          if( hb_parl( 2 ) )
             iFlow |= iMask;
-         hb_comFlowControl( iPort, NULL, iFlow );
+         hb_comFlowControl( iPort, nullptr, iFlow );
       }
    }
    hb_retl( fResult );
@@ -262,7 +262,7 @@ HB_FUNC( COM_SOFT )
             iFlow |= iMask;
          else
             iFlow &= ~iMask;
-         hb_comFlowControl( iPort, NULL, iFlow );
+         hb_comFlowControl( iPort, nullptr, iFlow );
       }
       if( hb_pcount() > 2 )
          hb_comFlowChars( iPort, hb_ctComCharParam( 3 ), hb_ctComCharParam( 4 ) );

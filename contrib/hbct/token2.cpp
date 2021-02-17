@@ -75,7 +75,7 @@ static TOKEN_ENVIRONMENT sTokEnvNew( void )
    TOKEN_ENVIRONMENT env = ( TOKEN_ENVIRONMENT )
          hb_xalloc( sizeof( TOKEN_POSITION ) * ( 2 + TOKEN_ENVIRONMENT_STEP ) + 1 );
 
-   if( env == NULL )
+   if( env == nullptr )
       return nullptr;
 
    /* use the first element to store current length and use of token env */
@@ -213,11 +213,11 @@ static void s_token_exit( void * cargo )
    if( *penv )
    {
       sTokEnvDel( *penv );
-      *penv = NULL;
+      *penv = nullptr;
    }
 }
 
-static HB_TSD_NEW( s_token, sizeof( TOKEN_ENVIRONMENT * ), NULL, s_token_exit );
+static HB_TSD_NEW( s_token, sizeof( TOKEN_ENVIRONMENT * ), nullptr, s_token_exit );
 
 static void sTokSet( TOKEN_ENVIRONMENT env )
 {
@@ -306,13 +306,13 @@ HB_FUNC( TOKENINIT )
          nSkip = HB_SIZE_MAX;
 
       /* allocate new token environment */
-      if( ( sTokenEnvironment = sTokEnvNew() ) == NULL )
+      if( ( sTokenEnvironment = sTokEnvNew() ) == nullptr )
       {
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
             ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_MEM, CT_ERROR_TOKENINIT,
-                      NULL, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT,
+                      nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT,
                       HB_ERR_ARGS_BASEPARAMS );
 
          hb_retl( HB_FALSE );
@@ -346,7 +346,7 @@ HB_FUNC( TOKENINIT )
             break;
 
          sTokenPosition.sStartPos = pcSubStr - pcString;
-         if( pc == NULL )
+         if( pc == nullptr )
             sTokenPosition.sEndPos = pcSubStr - pcString + sSubStrLen;
          else
             sTokenPosition.sEndPos = pc - pcString;
@@ -357,7 +357,7 @@ HB_FUNC( TOKENINIT )
 
             if( iArgErrorMode != CT_ARGERR_IGNORE )
                ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_MEM, CT_ERROR_TOKENINIT,
-                         NULL, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT,
+                         nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT,
                          HB_ERR_ARGS_BASEPARAMS );
 
             sTokEnvDel( sTokenEnvironment );
@@ -365,7 +365,7 @@ HB_FUNC( TOKENINIT )
             return;
          }
 
-         if( pc == NULL )
+         if( pc == nullptr )
             break;
       }
 
@@ -378,7 +378,7 @@ HB_FUNC( TOKENINIT )
          in the static variable -> rewind to first token */
       TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet( 4, HB_FALSE );
 
-      if( sTokenEnvironment != NULL )
+      if( sTokenEnvironment != nullptr )
       {
          /* rewind to first token */
          int iResult = sTokEnvSetPtr( sTokenEnvironment, 0 );
@@ -395,10 +395,10 @@ HB_FUNC( TOKENINIT )
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
             pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                     CT_ERROR_TOKENINIT, NULL, HB_ERR_FUNCNAME, 0,
+                                     CT_ERROR_TOKENINIT, nullptr, HB_ERR_FUNCNAME, 0,
                                      EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-         if( pSubst != NULL )
+         if( pSubst != nullptr )
             hb_itemReturnRelease( pSubst );
          else
             hb_retl( HB_FALSE );
@@ -417,13 +417,13 @@ HB_FUNC( TOKENNEXT )
       TOKEN_POSITION * psTokenPosition;
 
       /* token environment by parameter ... */
-      if( sTokenEnvironment == NULL )
+      if( sTokenEnvironment == nullptr )
       {
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
             ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_TOKENNEXT,
-                      NULL, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT,
+                      nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT,
                       HB_ERR_ARGS_BASEPARAMS );
          hb_retc_null();
          return;
@@ -442,12 +442,12 @@ HB_FUNC( TOKENNEXT )
          sTokEnvIncPtr( sTokenEnvironment );
       }
 
-      if( psTokenPosition == NULL || sStrLen <= psTokenPosition->sStartPos )
+      if( psTokenPosition == nullptr || sStrLen <= psTokenPosition->sStartPos )
       {
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
-            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_TOKENNEXT, NULL,
+            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_TOKENNEXT, nullptr,
                       HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
 
          sTokSave( sTokenEnvironment, 3 );
@@ -472,10 +472,10 @@ HB_FUNC( TOKENNEXT )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_TOKENNEXT, NULL, HB_ERR_FUNCNAME, 0,
+                                  CT_ERROR_TOKENNEXT, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else
          hb_retc_null();
@@ -486,7 +486,7 @@ HB_FUNC( TOKENNUM )
 {
    TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet( 1, HB_TRUE );
 
-   if( sTokenEnvironment != NULL )
+   if( sTokenEnvironment != nullptr )
       hb_retns( sTokEnvGetCnt( sTokenEnvironment ) );
    else
    {
@@ -495,10 +495,10 @@ HB_FUNC( TOKENNUM )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_TOKENNUM, NULL, HB_ERR_FUNCNAME, 0,
+                                  CT_ERROR_TOKENNUM, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else
          hb_retns( 0 );
@@ -509,7 +509,7 @@ HB_FUNC( TOKENEND )
 {
    TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet( 1, HB_TRUE );
 
-   if( sTokenEnvironment != NULL )
+   if( sTokenEnvironment != nullptr )
       hb_retl( sTokEnvEnd( sTokenEnvironment ) );
    else
    {
@@ -518,10 +518,10 @@ HB_FUNC( TOKENEND )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_TOKENEND, NULL, HB_ERR_FUNCNAME, 0,
+                                  CT_ERROR_TOKENEND, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else
          /* it is CT3 behaviour to return .T. if there's no string TokenInit()'ed */
@@ -533,9 +533,9 @@ HB_FUNC( TOKENEXIT )
 {
    TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet( 0, HB_TRUE );
 
-   if( sTokenEnvironment != NULL )
+   if( sTokenEnvironment != nullptr )
    {
-      sTokSet( NULL );
+      sTokSet( nullptr );
       hb_retl( HB_TRUE );
    }
    else
@@ -553,13 +553,13 @@ HB_FUNC( TOKENAT )
       iSeparatorPos = hb_parl( 1 );
 
    sTokenEnvironment = sTokGet( 3, HB_TRUE );
-   if( sTokenEnvironment == NULL )
+   if( sTokenEnvironment == nullptr )
    {
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_TOKENAT,
-                   NULL, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+                   nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
 
       hb_retns( 0 );
       return;
@@ -571,12 +571,12 @@ HB_FUNC( TOKENAT )
       sCurrentIndex = sTokEnvGetPtr( sTokenEnvironment );
 
    psTokenPosition = sTokEnvGetPosIndex( sTokenEnvironment, sCurrentIndex );
-   if( psTokenPosition == NULL )
+   if( psTokenPosition == nullptr )
    {
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
-         ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_TOKENAT, NULL,
+         ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_TOKENAT, nullptr,
                    HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
 
       hb_retns( 0 );
@@ -593,7 +593,7 @@ HB_FUNC( SAVETOKEN )
 {
    TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet( 0, HB_TRUE );
 
-   if( sTokenEnvironment != NULL )
+   if( sTokenEnvironment != nullptr )
       hb_retclen( ( char * ) sTokenEnvironment, sTokEnvGetSize( sTokenEnvironment ) );
    else
       hb_retc_null();
@@ -603,11 +603,11 @@ HB_FUNC( RESTTOKEN )
 {
    TOKEN_ENVIRONMENT sNewTokEnv = sTokGet( 1, HB_FALSE );
 
-   if( sNewTokEnv != NULL || ( HB_ISCHAR( 1 ) && hb_parclen( 1 ) == 0 ) )
+   if( sNewTokEnv != nullptr || ( HB_ISCHAR( 1 ) && hb_parclen( 1 ) == 0 ) )
    {
       TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet( 0, HB_FALSE );
 
-      if( sTokenEnvironment != NULL )
+      if( sTokenEnvironment != nullptr )
          hb_retclen( ( char * ) sTokenEnvironment, sTokEnvGetSize( sTokenEnvironment ) );
       else
          hb_retc_null();
@@ -621,10 +621,10 @@ HB_FUNC( RESTTOKEN )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_RESTTOKEN, NULL, HB_ERR_FUNCNAME, 0,
+                                  CT_ERROR_RESTTOKEN, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else
          hb_retc_null();

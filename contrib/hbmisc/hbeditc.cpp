@@ -75,7 +75,7 @@ static HB_GARBAGE_FUNC( PHB_EDITOR_release )
 {
    void ** ph = ( void ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
@@ -84,8 +84,8 @@ static HB_GARBAGE_FUNC( PHB_EDITOR_release )
       hb_xfree( ( ( PHB_EDITOR ) *ph )->begin );
       hb_xfree( ( PHB_EDITOR ) *ph );
 
-      /* set pointer to NULL just in case */
-      *ph = NULL;
+      /* set pointer to nullptr just in case */
+      *ph = nullptr;
    }
 }
 
@@ -684,7 +684,7 @@ HB_FUNC( ED_GETTEXT )
       help = buffer;
       if( mietka != HB_CHAR_SOFT1 )
       {
-         while( help != NULL )
+         while( help != nullptr )
          {
             help = strstr( buffer, "\x8D\n" );   /* Chr( 141 ) + Chr( 10 ) */
             if( help )
@@ -1592,7 +1592,7 @@ static void FormatParagraph( PHB_EDITOR pEd )
          cor++;
       }
       else
-         tmp = NULL;
+         tmp = nullptr;
 
       CrLine = pEd->current_line;
 
@@ -1616,7 +1616,7 @@ static void FormatParagraph( PHB_EDITOR pEd )
             cor++;
          }
          else
-            tmp = NULL;
+            tmp = nullptr;
 
       }
       pEd->current_line   = CrLine;
@@ -1901,7 +1901,7 @@ static void NextWord( PHB_EDITOR pEd )
       *tmp = '\0';
       hb_strncpy( tmp, pEd->begin + pEd->current_line + ccc,
                   nLen - pEd->cursor_col - pEd->first_col );
-      if( ( adr = strchr( tmp, ' ' ) ) == NULL )
+      if( ( adr = strchr( tmp, ' ' ) ) == nullptr )
       {
          GotoNextNonEmptyLine( pEd );
          if( ! pEd->fStable )

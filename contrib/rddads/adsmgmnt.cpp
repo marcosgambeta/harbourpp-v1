@@ -384,19 +384,19 @@ HB_FUNC( ADSMGGETUSERNAMES )
 #if ADS_LIB_VERSION >= 600
          hb_arraySetC(  pArrayItm, 3, ( char * ) pastUserInfo[ ulCount - 1 ].aucAddress );
 #else
-         hb_arraySetC(  pArrayItm, 3, NULL );
+         hb_arraySetC(  pArrayItm, 3, nullptr );
 #endif
 #if ADS_LIB_VERSION >= 800
          hb_arraySetC(  pArrayItm, 4, ( char * ) pastUserInfo[ ulCount - 1 ].aucAuthUserName );
          hb_arraySetC(  pArrayItm, 5, ( char * ) pastUserInfo[ ulCount - 1 ].aucOSUserLoginName );
 #else
-         hb_arraySetC(  pArrayItm, 4, NULL );
-         hb_arraySetC(  pArrayItm, 5, NULL );
+         hb_arraySetC(  pArrayItm, 4, nullptr );
+         hb_arraySetC(  pArrayItm, 5, nullptr );
 #endif
 #if ADS_LIB_VERSION >= 810
          hb_arraySetC(  pArrayItm, 6, ( char * ) pastUserInfo[ ulCount - 1 ].aucTSAddress );
 #else
-         hb_arraySetC(  pArrayItm, 6, NULL );
+         hb_arraySetC(  pArrayItm, 6, nullptr );
 #endif
       }
       hb_itemReturnRelease( pArray );
@@ -443,8 +443,8 @@ HB_FUNC( ADSMGGETLOCKOWNER )
       hb_storvc( ( char * ) pstUserInfo->aucAuthUserName, -1, 3 );   /* logon name with Data Dictionary */
       hb_storvc( ( char * ) pstUserInfo->aucAddress, -1, 4 );        /* IP address */
 #else
-      hb_storvc( NULL, -1, 3 );                                      /* logon name with Data Dictionary */
-      hb_storvc( NULL, -1, 4 );                                      /* IP address */
+      hb_storvc( nullptr, -1, 3 );                                      /* logon name with Data Dictionary */
+      hb_storvc( nullptr, -1, 4 );                                      /* IP address */
 #endif
       hb_storvnl( pusLockType, -1, 5 );                              /* type of lock */
    }
@@ -624,7 +624,7 @@ HB_FUNC( ADSMGGETWORKERTHREADACTIVITY )
 #if ADS_LIB_VERSION >= 800
          hb_arraySetC(  pArrayItm, 6, ( char * ) astWorkerThreadActivity[ ulCount - 1 ].aucOSUserLoginName );
 #else
-         hb_arraySetC(  pArrayItm, 6, NULL );
+         hb_arraySetC(  pArrayItm, 6, nullptr );
 #endif
       }
       hb_itemReturnRelease( pArray );

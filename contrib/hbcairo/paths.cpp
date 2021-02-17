@@ -210,7 +210,7 @@ HB_FUNC( CAIRO_TEXT_PATH )
    if( pCairo )
    {
       void * hText;
-      cairo_text_path( pCairo, hb_parstr_utf8( 2, &hText, NULL ) );
+      cairo_text_path( pCairo, hb_parstr_utf8( 2, &hText, nullptr ) );
       hb_strfree( hText );
    }
 }

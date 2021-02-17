@@ -87,7 +87,7 @@ HB_FUNC( HB_SSL_READ_ALL )
                if( retval )
                   hb_xfree( retval );
 
-               hb_storc( NULL, 2 );
+               hb_storc( nullptr, 2 );
                hb_retni( iLen );
                return;
             }
@@ -110,7 +110,7 @@ HB_FUNC( HB_SSL_READ_ALL )
                hb_xfree( retval );
          }
          else
-            hb_storc( NULL, 2 );
+            hb_storc( nullptr, 2 );
 
          hb_retni( iPos );
       }
@@ -157,7 +157,7 @@ HB_FUNC( HB_SSL_READ_LINE )
                if( retval )
                   hb_xfree( retval );
 
-               hb_storc( NULL, 2 );
+               hb_storc( nullptr, 2 );
                hb_retni( iLen );
                return;
             }
@@ -184,7 +184,7 @@ HB_FUNC( HB_SSL_READ_LINE )
                hb_xfree( retval );
          }
          else
-            hb_storc( NULL, 2 );
+            hb_storc( nullptr, 2 );
 
          hb_retni( iPos );
       }

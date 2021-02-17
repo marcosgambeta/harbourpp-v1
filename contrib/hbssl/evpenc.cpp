@@ -54,7 +54,7 @@ static HB_GARBAGE_FUNC( EVP_ENCODE_CTX_release )
 {
    void ** ph = ( void ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L && \
@@ -65,8 +65,8 @@ static HB_GARBAGE_FUNC( EVP_ENCODE_CTX_release )
       hb_xfree( *ph );
 #endif
 
-      /* set pointer to NULL just in case */
-      *ph = NULL;
+      /* set pointer to nullptr just in case */
+      *ph = nullptr;
    }
 }
 
@@ -78,7 +78,7 @@ static const HB_GC_FUNCS s_gcEVP_ENCODE_CTX_funcs =
 
 static HB_BOOL hb_EVP_ENCODE_CTX_is( int iParam )
 {
-   return hb_parptrGC( &s_gcEVP_ENCODE_CTX_funcs, iParam ) != NULL;
+   return hb_parptrGC( &s_gcEVP_ENCODE_CTX_funcs, iParam ) != nullptr;
 }
 
 static EVP_ENCODE_CTX * hb_EVP_ENCODE_CTX_par( int iParam )
@@ -157,7 +157,7 @@ HB_FUNC( EVP_ENCODEUPDATE )
          else
          {
             hb_xfree( buffer );
-            hb_storc( NULL, 2 );
+            hb_storc( nullptr, 2 );
          }
       }
    }
@@ -186,7 +186,7 @@ HB_FUNC( EVP_ENCODEFINAL )
          else
          {
             hb_xfree( buffer );
-            hb_storc( NULL, 2 );
+            hb_storc( nullptr, 2 );
          }
       }
    }
@@ -232,7 +232,7 @@ HB_FUNC( EVP_DECODEUPDATE )
          else
          {
             hb_xfree( buffer );
-            hb_storc( NULL, 2 );
+            hb_storc( nullptr, 2 );
          }
       }
    }
@@ -261,7 +261,7 @@ HB_FUNC( EVP_DECODEFINAL )
          else
          {
             hb_xfree( buffer );
-            hb_storc( NULL, 2 );
+            hb_storc( nullptr, 2 );
          }
       }
    }

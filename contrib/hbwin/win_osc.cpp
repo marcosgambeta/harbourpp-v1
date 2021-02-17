@@ -190,7 +190,7 @@ HB_FUNC( WIN_OSVERSIONINFO )
 #else
    hb_arraySetNL( pArray, 4, hb_iswinnt() ? VER_PLATFORM_WIN32_NT : VER_PLATFORM_WIN32_WINDOWS );
 #endif
-   hb_arraySetC( pArray, 5, NULL );
+   hb_arraySetC( pArray, 5, nullptr );
 
    if( hb_iswin2k() )
    {

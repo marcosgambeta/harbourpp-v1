@@ -114,7 +114,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
    if( pError )
    {
       hb_errPutFileName( pError, pszName );
-      if( pFile == NULL )
+      if( pFile == nullptr )
       {
          hb_errPutOsCode( pError, hb_fsError() );
          hb_errPutGenCode( pError, ( HB_ERRCODE ) EG_OPEN );
@@ -249,40 +249,40 @@ static HB_FILE_FUNCS s_fileFuncs =
 {
    s_fileAccept,
 
-   NULL, /* s_fileExists */
-   NULL, /* s_fileDelete */
-   NULL, /* s_fileRename */
-   NULL, /* s_fileCopy */
+   nullptr, /* s_fileExists */
+   nullptr, /* s_fileDelete */
+   nullptr, /* s_fileRename */
+   nullptr, /* s_fileCopy */
 
-   NULL, /* s_fileDirExists */
-   NULL, /* s_fileDirMake */
-   NULL, /* s_fileDirRemove */
-   NULL, /* s_fileDirSpace */
-   NULL, /* s_fileDirectory */
+   nullptr, /* s_fileDirExists */
+   nullptr, /* s_fileDirMake */
+   nullptr, /* s_fileDirRemove */
+   nullptr, /* s_fileDirSpace */
+   nullptr, /* s_fileDirectory */
 
-   NULL, /* s_fileTimeGet */
-   NULL, /* s_fileTimeSet */
-   NULL, /* s_fileAttrGet */
-   NULL, /* s_fileAttrSet */
+   nullptr, /* s_fileTimeGet */
+   nullptr, /* s_fileTimeSet */
+   nullptr, /* s_fileAttrGet */
+   nullptr, /* s_fileAttrSet */
 
-   NULL, /* s_fileLink */
-   NULL, /* s_fileLinkSym */
-   NULL, /* s_fileLinkRead */
+   nullptr, /* s_fileLink */
+   nullptr, /* s_fileLinkSym */
+   nullptr, /* s_fileLinkRead */
 
    s_fileOpen,
    s_fileClose,
-   NULL, /* s_fileLock */
-   NULL, /* s_fileLockTest */
+   nullptr, /* s_fileLock */
+   nullptr, /* s_fileLockTest */
    s_fileRead,
    s_fileWrite,
-   NULL, /* s_fileReadAt */
-   NULL, /* s_fileWriteAt */
-   NULL, /* s_fileTruncAt */
-   NULL, /* s_fileSeek */
-   NULL, /* s_fileSize */
+   nullptr, /* s_fileReadAt */
+   nullptr, /* s_fileWriteAt */
+   nullptr, /* s_fileTruncAt */
+   nullptr, /* s_fileSeek */
+   nullptr, /* s_fileSize */
    s_fileEof,
-   NULL, /* s_fileFlush */
-   NULL, /* s_fileCommit */
+   nullptr, /* s_fileFlush */
+   nullptr, /* s_fileCommit */
    s_fileConfigure,
    s_fileHandle
 };
@@ -306,9 +306,9 @@ static PHB_FILE hb_fileProcessOpen( const char * pszCommand, HB_FATTR nMode,
                                     HB_MAXINT timeout, HB_BOOL fDetach )
 {
    HB_FHANDLE hProcess, hPipeRD = FS_ERROR, hPipeWR = FS_ERROR;
-   HB_FHANDLE * phStdIn = NULL, * phStdOut = NULL;
+   HB_FHANDLE * phStdIn = nullptr, * phStdOut = nullptr;
 
-   if( pszCommand == NULL || *pszCommand == '\0' )
+   if( pszCommand == nullptr || *pszCommand == '\0' )
       return nullptr;
 
    switch( nMode )
@@ -327,8 +327,8 @@ static PHB_FILE hb_fileProcessOpen( const char * pszCommand, HB_FATTR nMode,
          return nullptr;
    }
 
-   hProcess = hb_fsProcessOpen( pszCommand, phStdIn, phStdOut, NULL,
-                                fDetach, NULL );
+   hProcess = hb_fsProcessOpen( pszCommand, phStdIn, phStdOut, nullptr,
+                                fDetach, nullptr );
    return hProcess != FS_ERROR ? s_fileNew( hProcess, hPipeRD, hPipeWR, timeout ) : nullptr;
 }
 

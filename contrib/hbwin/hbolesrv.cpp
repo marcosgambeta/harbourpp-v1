@@ -58,12 +58,12 @@
 
 static const LPCTSTR s_regTable[][ 3 ] =
 {
-   { TEXT( "CLSID\\@" ),                 NULL,                     TEXT( "$" )         },
-   { TEXT( "CLSID\\@\\InprocServer32" ), NULL,                     ( LPCTSTR ) -1      },
+   { TEXT( "CLSID\\@" ),                 nullptr,                  TEXT( "$" )         },
+   { TEXT( "CLSID\\@\\InprocServer32" ), nullptr,                  ( LPCTSTR ) -1      },
    { TEXT( "CLSID\\@\\InprocServer32" ), TEXT( "ThreadingModel" ), TEXT( "Apartment" ) },
-   { TEXT( "CLSID\\@\\ProgId" ),         NULL,                     TEXT( "$" )         },
-   { TEXT( "$" ),                        NULL,                     TEXT( "$" )         },
-   { TEXT( "$\\CLSID" ),                 NULL,                     TEXT( "@" )         }
+   { TEXT( "CLSID\\@\\ProgId" ),         nullptr,                  TEXT( "$" )         },
+   { TEXT( "$" ),                        nullptr,                  TEXT( "$" )         },
+   { TEXT( "$\\CLSID" ),                 nullptr,                  TEXT( "@" )         }
 };
 
 static LONG s_lLockCount;
@@ -132,7 +132,7 @@ static HB_BOOL s_hashWithNumKeys( PHB_ITEM pHash )
 
 static int s_WideToAnsiBuffer( const wchar_t * wszString, char * szBuffer, int iLen )
 {
-   int iResult = WideCharToMultiByte( CP_ACP, 0, wszString, -1, szBuffer, iLen, NULL, NULL );
+   int iResult = WideCharToMultiByte( CP_ACP, 0, wszString, -1, szBuffer, iLen, nullptr, nullptr );
 
    szBuffer[ iLen - 1 ] = '\0';
    return iResult;
@@ -220,7 +220,7 @@ static HRESULT STDMETHODCALLTYPE QueryInterface( IDispatch * lpThis,
       HB_VTBL( lpThis )->AddRef( HB_THIS( lpThis ) );
       return S_OK;
    }
-   *ppRet = NULL;
+   *ppRet = nullptr;
    return E_NOINTERFACE;
 }
 
@@ -238,7 +238,7 @@ static ULONG STDMETHODCALLTYPE Release( IDispatch * lpThis )
       if( pHbOleServer->pAction )
       {
          hb_itemRelease( pHbOleServer->pAction );
-         pHbOleServer->pAction = NULL;
+         pHbOleServer->pAction = nullptr;
       }
       hb_xfree( pHbOleServer );
       InterlockedDecrement( &s_lObjectCount );
@@ -301,7 +301,7 @@ static HRESULT STDMETHODCALLTYPE GetIDsOfNames( IDispatch * lpThis, REFIID riid,
                if( nPos == 0 )
                {
                   PHB_ITEM pKey = hb_itemPutC( hb_stackAllocItem(), szName );
-                  if( hb_hashAdd( s_pMsgHash, pKey, NULL ) )
+                  if( hb_hashAdd( s_pMsgHash, pKey, nullptr ) )
                      hb_hashScan( s_pMsgHash, pKey, &nPos );
                   hb_stackPop();
                }
@@ -377,7 +377,7 @@ static HRESULT STDMETHODCALLTYPE Invoke( IDispatch * lpThis, DISPID dispid, REFI
              ( ( wFlags & DISPATCH_PROPERTYGET ) != 0 && pParams->cArgs == 0 ) ||
              ( ( wFlags & DISPATCH_PROPERTYPUT ) != 0 && pParams->cArgs == 1 ) )
          {
-            fResult = hb_oleDispInvoke( NULL, pAction,
+            fResult = hb_oleDispInvoke( nullptr, pAction,
                                         hb_hashGetKeyAt( s_pMsgHash, ( HB_SIZE ) dispid ),
                                         pParams, pVarResult, s_objItemToVariant, uiClass );
          }
@@ -402,7 +402,7 @@ static HRESULT STDMETHODCALLTYPE Invoke( IDispatch * lpThis, DISPID dispid, REFI
                if( ( wFlags & DISPATCH_METHOD ) != 0 )
                {
                   PHB_SYMB pSym = hb_itemGetSymbol( pItem );
-                  fResult = hb_oleDispInvoke( pSym, pSym ? pAction : pItem, NULL,
+                  fResult = hb_oleDispInvoke( pSym, pSym ? pAction : pItem, nullptr,
                                               pParams, pVarResult,
                                               s_objItemToVariant, uiClass );
                }
@@ -435,12 +435,12 @@ static HRESULT STDMETHODCALLTYPE Invoke( IDispatch * lpThis, DISPID dispid, REFI
                pDynSym = hb_dynsymFindName( szName );
             }
             else
-               pDynSym = NULL;
+               pDynSym = nullptr;
          }
          if( pDynSym && hb_objHasMessage( pAction, pDynSym ) )
          {
             fResult = hb_oleDispInvoke( hb_dynsymSymbol( pDynSym ),
-                                        pAction, NULL, pParams, pVarResult,
+                                        pAction, nullptr, pParams, pVarResult,
                                         s_objItemToVariant, uiClass );
          }
       }
@@ -483,7 +483,7 @@ static HRESULT STDMETHODCALLTYPE Invoke( IDispatch * lpThis, DISPID dispid, REFI
                ! hb_dynsymIsFunction( pDynSym ) )
          return DISP_E_MEMBERNOTFOUND;
       else if( ! hb_oleDispInvoke( hb_dynsymSymbol( pDynSym ),
-                                   NULL, NULL, pParams, pVarResult,
+                                   nullptr, nullptr, pParams, pVarResult,
                                    s_objItemToVariant, uiClass ) )
          return DISP_E_MEMBERNOTFOUND;
    }
@@ -534,7 +534,7 @@ static HRESULT STDMETHODCALLTYPE classQueryInterface( IClassFactory * lpThis,
       HB_VTBL( lpThis )->AddRef( HB_THIS( lpThis ) );
       return S_OK;
    }
-   *ppRet = NULL;
+   *ppRet = nullptr;
    return E_NOINTERFACE;
 }
 
@@ -605,7 +605,7 @@ static HRESULT STDMETHODCALLTYPE classCreateInstance( IClassFactory * lpThis,
 
    HB_SYMBOL_UNUSED( lpThis );
 
-   *ppvObj = NULL;
+   *ppvObj = nullptr;
 
    if( punkOuter )
       hr = CLASS_E_NOAGGREGATION;
@@ -674,7 +674,7 @@ STDAPI DllGetClassObject( REFCLSID rclsid, REFIID riid, void ** ppv )
    }
    else
    {
-      *ppv = NULL;
+      *ppv = nullptr;
       hr = CLASS_E_CLASSNOTAVAILABLE;
    }
 
@@ -732,13 +732,13 @@ STDAPI DllRegisterServer( void )
          lpValName = lpNameBuf;
       }
       else
-         lpValName = NULL;
+         lpValName = nullptr;
       s_getKeyValue( s_regTable[ i ][ 2 ], lpValue, MAX_REGSTR_SIZE );
 
       err = RegCreateKeyEx( HKEY_CLASSES_ROOT, lpKeyName,
-                            0, NULL, REG_OPTION_NON_VOLATILE,
+                            0, nullptr, REG_OPTION_NON_VOLATILE,
                             KEY_SET_VALUE | KEY_CREATE_SUB_KEY,
-                            NULL, &hKey, NULL );
+                            nullptr, &hKey, nullptr );
 
       if( err == ERROR_SUCCESS )
       {
@@ -806,12 +806,12 @@ BOOL WINAPI DllMain( HINSTANCE hInstance, DWORD dwReason, PVOID pvReserved )
          if( s_pAction )
          {
             hb_itemRelease( s_pAction );
-            s_pAction = NULL;
+            s_pAction = nullptr;
          }
          if( s_pMsgHash )
          {
             hb_itemRelease( s_pMsgHash );
-            s_pMsgHash = NULL;
+            s_pMsgHash = nullptr;
          }
          if( s_fInit )
          {
@@ -837,15 +837,15 @@ HB_FUNC( WIN_OLESERVERINIT )
       void * hClsId, * hClsName;
       LPCTSTR lpClsId, lpClsName;
 
-      lpClsId = HB_PARSTR( 1, &hClsId, NULL );
-      lpClsName = HB_PARSTR( 2, &hClsName, NULL );
+      lpClsId = HB_PARSTR( 1, &hClsId, nullptr );
+      lpClsName = HB_PARSTR( 2, &hClsName, nullptr );
 
       if( lpClsId && lpClsName )
       {
          void * hOleClsId;
          LPCOLESTR lpOleClsId;
 
-         lpOleClsId = hb_parstr_u16( 1, HB_CDP_ENDIAN_NATIVE, &hOleClsId, NULL );
+         lpOleClsId = hb_parstr_u16( 1, HB_CDP_ENDIAN_NATIVE, &hOleClsId, nullptr );
          if( CLSIDFromString( ( LPOLESTR ) lpOleClsId, &s_IID_IHbOleServer ) == S_OK )
          {
             PHB_ITEM pAction;
@@ -854,7 +854,7 @@ HB_FUNC( WIN_OLESERVERINIT )
             if( s_pMsgHash )
             {
                hb_itemRelease( s_pMsgHash );
-               s_pMsgHash = NULL;
+               s_pMsgHash = nullptr;
             }
 
             pAction = hb_param( 3, HB_IT_HASH | HB_IT_BLOCK | HB_IT_SYMBOL );
@@ -900,7 +900,7 @@ HB_FUNC( WIN_OLESERVERINIT )
    }
 
    if( errCode )
-      hb_errRT_OLESRV( EG_ARG, errCode, 0, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_OLESRV( EG_ARG, errCode, 0, nullptr, HB_ERR_FUNCNAME );
    else
       hb_retl( s_fServerReady );
 }

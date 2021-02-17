@@ -154,7 +154,7 @@ HB_FUNC( TABEXPAND )
             if( sNewLineLen > 0 &&
                 sIndex + sNewLineLen <= sStrLen &&
                 ct_at_exact_forward( pcString + sIndex, sNewLineLen, pcNewLine,
-                                     sNewLineLen, NULL ) == pcString + sIndex )
+                                     sNewLineLen, nullptr ) == pcString + sIndex )
             {
                hb_xmemcpy( pcRet + sRetLen, pcString + sIndex, sNewLineLen );
                sRetLen += sNewLineLen;
@@ -190,10 +190,10 @@ HB_FUNC( TABEXPAND )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_TABEXPAND, NULL, HB_ERR_FUNCNAME, 0,
+                                  CT_ERROR_TABEXPAND, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else
          hb_retc_null();
@@ -317,7 +317,7 @@ HB_FUNC( TABPACK )
             if( sNewLineLen > 0 &&
                 sIndex + sNewLineLen <= sStrLen &&
                 ct_at_exact_forward( pcString + sIndex, sNewLineLen, pcNewLine,
-                                     sNewLineLen, NULL ) == pcString + sIndex )
+                                     sNewLineLen, nullptr ) == pcString + sIndex )
             {
                /* eventually not enough fill chars to fill a tab,
                   so copy them verbatim */
@@ -375,10 +375,10 @@ HB_FUNC( TABPACK )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_TABPACK, NULL, HB_ERR_FUNCNAME, 0,
+                                  CT_ERROR_TABPACK, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else
          hb_retc_null();

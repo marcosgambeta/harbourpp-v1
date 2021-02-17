@@ -87,7 +87,7 @@ HB_FUNC( WIN_PRINTDLGDC )
 
       hbwapi_ret_HDC( pd.hDC );
 #else
-      hb_storc( NULL, 1 );
+      hb_storc( nullptr, 1 );
 
 #if defined( __MINGW32__ ) /* NOTE: mingwarm has the struct names/members wrong. */
       hbwapi_ret_HDC( pd.hDC );
@@ -103,7 +103,7 @@ HB_FUNC( WIN_PRINTDLGDC )
 static LPTSTR s_dialogPairs( int iParam, DWORD * pdwIndex )
 {
    PHB_ITEM pItem = hb_param( iParam, HB_IT_ARRAY | HB_IT_STRING ), pArrItem;
-   LPTSTR lpStr = NULL;
+   LPTSTR lpStr = nullptr;
    DWORD dwMaxIndex = 0;
 
    if( pItem )
@@ -118,14 +118,14 @@ static LPTSTR s_dialogPairs( int iParam, DWORD * pdwIndex )
             pArrItem = hb_arrayGetItemPtr( pItem, n + 1 );
             if( HB_IS_STRING( pArrItem ) )
             {
-               n1 = HB_ITEMCOPYSTR( pArrItem, NULL, 0 );
+               n1 = HB_ITEMCOPYSTR( pArrItem, nullptr, 0 );
                if( n1 )
                   nLen += n1 * 2 + 2;
             }
             else if( hb_arrayLen( pArrItem ) >= 2 )
             {
-               n1 = HB_ITEMCOPYSTR( hb_arrayGetItemPtr( pArrItem, 1 ), NULL, 0 );
-               n2 = HB_ITEMCOPYSTR( hb_arrayGetItemPtr( pArrItem, 2 ), NULL, 0 );
+               n1 = HB_ITEMCOPYSTR( hb_arrayGetItemPtr( pArrItem, 1 ), nullptr, 0 );
+               n2 = HB_ITEMCOPYSTR( hb_arrayGetItemPtr( pArrItem, 2 ), nullptr, 0 );
                if( n1 && n2 )
                   nLen += n1 + n2 + 2;
             }
@@ -172,7 +172,7 @@ static LPTSTR s_dialogPairs( int iParam, DWORD * pdwIndex )
       }
       else
       {
-         nLen = HB_ITEMCOPYSTR( pItem, NULL, 0 );
+         nLen = HB_ITEMCOPYSTR( pItem, nullptr, 0 );
          if( nLen )
          {
             lpStr = ( LPTSTR ) hb_xgrab( ( nLen * 2 + 3 ) * sizeof( TCHAR ) );
@@ -204,7 +204,7 @@ static LPTSTR s_dialogPairs( int iParam, DWORD * pdwIndex )
                else
                {
                   hb_xfree( lpStr );
-                  lpStr = NULL;
+                  lpStr = nullptr;
                }
             }
          }
@@ -247,12 +247,12 @@ static void s_GetFileName( HB_BOOL fSave )
                           memset( hb_xgrab( ofn.nMaxFile * sizeof( TCHAR ) ),
                                   0, ofn.nMaxFile * sizeof( TCHAR ) );
 
-   ofn.lpstrInitialDir  = HB_PARSTR( 3, &hInitDir, NULL );
-   ofn.lpstrTitle       = HB_PARSTR( 2, &hTitle, NULL );
+   ofn.lpstrInitialDir  = HB_PARSTR( 3, &hInitDir, nullptr );
+   ofn.lpstrTitle       = HB_PARSTR( 2, &hTitle, nullptr );
    ofn.Flags            = HB_ISNUM( 1 ) ? hbwapi_par_DWORD( 1 ) :
                           ( OFN_EXPLORER | OFN_ALLOWMULTISELECT |
                             OFN_HIDEREADONLY | OFN_NOCHANGEDIR );
-   ofn.lpstrDefExt      = HB_PARSTR( 4, &hDefExt, NULL );
+   ofn.lpstrDefExt      = HB_PARSTR( 4, &hDefExt, nullptr );
    if( ofn.lpstrDefExt && ofn.lpstrDefExt[ 0 ] == '.' )
       ++ofn.lpstrDefExt;
 

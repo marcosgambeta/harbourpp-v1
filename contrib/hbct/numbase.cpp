@@ -159,7 +159,7 @@ HB_FUNC( NTOC )
          pszResult = &szBuffer[ i ];
       }
    }
-   if( pszResult == NULL )
+   if( pszResult == nullptr )
    {
       if( iLen == 0 )
          iLen = 1;

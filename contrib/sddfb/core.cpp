@@ -79,7 +79,7 @@ static HB_ERRCODE fbGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo );
 
 
 static SDDNODE s_firebirddd = {
-   NULL,
+   nullptr,
    "FIREBIRD",
    ( SDDFUNC_CONNECT ) fbConnect,
    ( SDDFUNC_DISCONNECT ) fbDisconnect,
@@ -87,8 +87,8 @@ static SDDNODE s_firebirddd = {
    ( SDDFUNC_OPEN ) fbOpen,
    ( SDDFUNC_CLOSE ) fbClose,
    ( SDDFUNC_GOTO ) fbGoTo,
-   ( SDDFUNC_GETVALUE ) NULL,
-   ( SDDFUNC_GETVARLEN ) NULL
+   ( SDDFUNC_GETVALUE ) nullptr,
+   ( SDDFUNC_GETVARLEN ) nullptr
 };
 
 
@@ -102,7 +102,7 @@ static void hb_firebirddd_init( void * cargo )
 
 HB_FUNC( HB_SDDFB_REGISTER )
 {
-   hb_firebirddd_init( NULL );
+   hb_firebirddd_init( nullptr );
 }
 
 /* force SQLBASE linking */
@@ -110,7 +110,7 @@ HB_FUNC_TRANSLATE( SDDFB, SQLBASE )
 
 HB_INIT_SYMBOLS_BEGIN( firebirddd__InitSymbols )
 {
-   "SDDFB", { HB_FS_PUBLIC | HB_FS_LOCAL }, { HB_FUNCNAME( SDDFB ) }, NULL
+   "SDDFB", { HB_FS_PUBLIC | HB_FS_LOCAL }, { HB_FUNCNAME( SDDFB ) }, nullptr
 },
 HB_INIT_SYMBOLS_END( firebirddd__InitSymbols )
 
@@ -220,18 +220,18 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
 #if 0
    HB_TRACE( HB_TR_ALWAYS, ( "db=%d", hDb ) );
 #endif
-   if( isc_start_transaction( status, &hTrans, 1, phDb, 0, NULL ) )
+   if( isc_start_transaction( status, &hTrans, 1, phDb, 0, nullptr ) )
    {
 #if 0
       HB_TRACE( HB_TR_ALWAYS, ( "hTrans=%d status=%ld %ld %ld %ld", static_cast< int >( hTrans ), static_cast< long >( status[ 0 ] ), static_cast< long >( status[ 1 ] ), static_cast< long >( status[ 2 ] ), static_cast< long >( status[ 3 ] ) ) );
 #endif
-      hb_errRT_FirebirdDD( EG_OPEN, ESQLDD_START, "Start transaction failed", NULL, ( HB_ERRCODE ) isc_sqlcode( status ) );
+      hb_errRT_FirebirdDD( EG_OPEN, ESQLDD_START, "Start transaction failed", nullptr, ( HB_ERRCODE ) isc_sqlcode( status ) );
       return HB_FAILURE;
    }
 
    if( isc_dsql_allocate_statement( status, phDb, &hStmt ) )
    {
-      hb_errRT_FirebirdDD( EG_OPEN, ESQLDD_STMTALLOC, "Allocate statement failed", NULL, ( HB_ERRCODE ) isc_sqlcode( status ) );
+      hb_errRT_FirebirdDD( EG_OPEN, ESQLDD_STMTALLOC, "Allocate statement failed", nullptr, ( HB_ERRCODE ) isc_sqlcode( status ) );
       isc_rollback_transaction( status, &hTrans );
       return HB_FAILURE;
    }
@@ -249,7 +249,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
       return HB_FAILURE;
    }
 
-   if( isc_dsql_execute( status, &hTrans, &hStmt, 1, NULL ) )
+   if( isc_dsql_execute( status, &hTrans, &hStmt, 1, nullptr ) )
    {
       hb_errRT_FirebirdDD( EG_OPEN, ESQLDD_EXECUTE, "Execute statement failed", pArea->szQuery, ( HB_ERRCODE ) isc_sqlcode( status ) );
       isc_dsql_free_statement( status, &hStmt, DSQL_drop );
@@ -268,7 +268,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
 
       if( isc_dsql_describe( status, &hStmt, SQL_DIALECT_V5, pSqlda ) )
       {
-         hb_errRT_FirebirdDD( EG_OPEN, ESQLDD_STMTDESCR, "Describe statement failed", NULL, ( HB_ERRCODE ) isc_sqlcode( status ) );
+         hb_errRT_FirebirdDD( EG_OPEN, ESQLDD_STMTDESCR, "Describe statement failed", nullptr, ( HB_ERRCODE ) isc_sqlcode( status ) );
          isc_dsql_free_statement( status, &hStmt, DSQL_drop );
          isc_rollback_transaction( status, &hTrans );
          hb_xfree( pSqlda );
@@ -454,7 +454,7 @@ static HB_ERRCODE fbClose( SQLBASEAREAP pArea )
       if( pSDDData->hTrans )
          isc_rollback_transaction( status, &pSDDData->hTrans );
       hb_xfree( pSDDData );
-      pArea->pSDDData = NULL;
+      pArea->pSDDData = nullptr;
    }
    return HB_SUCCESS;
 }
@@ -555,25 +555,25 @@ static HB_ERRCODE fbGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
          pArea->fFetched = HB_TRUE;
          if( isc_dsql_free_statement( status, phStmt, DSQL_drop ) )
          {
-            hb_errRT_FirebirdDD( EG_OPEN, ESQLDD_STMTFREE, "Statement free error", NULL, ( HB_ERRCODE ) isc_sqlcode( status ) );
+            hb_errRT_FirebirdDD( EG_OPEN, ESQLDD_STMTFREE, "Statement free error", nullptr, ( HB_ERRCODE ) isc_sqlcode( status ) );
             return HB_FAILURE;
          }
          pSDDData->hStmt = ( isc_stmt_handle ) 0;
 
          if( isc_commit_transaction( status, phTr ) )
          {
-            hb_errRT_FirebirdDD( EG_OPEN, ESQLDD_COMMIT, "Transaction commit error", NULL, ( HB_ERRCODE ) isc_sqlcode( status ) );
+            hb_errRT_FirebirdDD( EG_OPEN, ESQLDD_COMMIT, "Transaction commit error", nullptr, ( HB_ERRCODE ) isc_sqlcode( status ) );
             return HB_FAILURE;
          }
          pSDDData->hTrans = ( isc_tr_handle ) 0;
 
          hb_xfree( pSDDData->pSqlda );  /* TODO: free is more complex */
-         pSDDData->pSqlda = NULL;
+         pSDDData->pSqlda = nullptr;
 
       }
       else
       {
-         hb_errRT_FirebirdDD( EG_OPEN, ESQLDD_FETCH, "Fetch error", NULL, ( HB_ERRCODE ) lErr );
+         hb_errRT_FirebirdDD( EG_OPEN, ESQLDD_FETCH, "Fetch error", nullptr, ( HB_ERRCODE ) lErr );
          return HB_FAILURE;
       }
    }

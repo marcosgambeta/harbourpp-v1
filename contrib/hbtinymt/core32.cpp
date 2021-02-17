@@ -54,7 +54,7 @@ typedef struct
    tinymt32_t tinymt;
 } HB_TINYMTDATA, * PHB_TINYMTDATA;
 
-static HB_TSD_NEW( s_tinymtData, sizeof( HB_TINYMTDATA ), NULL, NULL );
+static HB_TSD_NEW( s_tinymtData, sizeof( HB_TINYMTDATA ), nullptr, nullptr );
 
 /* Syntax: HB_TINYMT32_INIT( <nVector1>, <nVector2>, <nVector3>, [<nSeed>] ) -> <lSuccess> */
 HB_FUNC( TINYMT32_INIT )

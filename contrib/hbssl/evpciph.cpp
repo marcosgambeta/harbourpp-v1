@@ -59,7 +59,7 @@ static HB_GARBAGE_FUNC( EVP_CIPHER_CTX_release )
 {
    void ** ph = ( void ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
@@ -71,8 +71,8 @@ static HB_GARBAGE_FUNC( EVP_CIPHER_CTX_release )
       hb_xfree( *ph );
 #endif
 
-      /* set pointer to NULL just in case */
-      *ph = NULL;
+      /* set pointer to nullptr just in case */
+      *ph = nullptr;
    }
 }
 
@@ -84,7 +84,7 @@ static const HB_GC_FUNCS s_gcEVP_CIPHER_CTX_funcs =
 
 static HB_BOOL hb_EVP_CIPHER_CTX_is( int iParam )
 {
-   return hb_parptrGC( &s_gcEVP_CIPHER_CTX_funcs, iParam ) != NULL;
+   return hb_parptrGC( &s_gcEVP_CIPHER_CTX_funcs, iParam ) != nullptr;
 }
 
 static EVP_CIPHER_CTX * hb_EVP_CIPHER_CTX_par( int iParam )
@@ -254,7 +254,7 @@ const EVP_CIPHER * hb_EVP_CIPHER_par( int iParam )
       case HB_EVP_CIPHER_SEED_CFB:             p = EVP_seed_cfb();            break;
       case HB_EVP_CIPHER_SEED_OFB:             p = EVP_seed_ofb();            break;
 #endif
-      default:                                 p = NULL;
+      default:                                 p = nullptr;
    }
 
    return p;
@@ -658,7 +658,7 @@ HB_FUNC( EVP_ENCRYPTUPDATE )
          else
          {
             hb_xfree( buffer );
-            hb_storc( NULL, 2 );
+            hb_storc( nullptr, 2 );
          }
       }
    }
@@ -687,7 +687,7 @@ HB_FUNC( EVP_ENCRYPTFINAL )
          else
          {
             hb_xfree( buffer );
-            hb_storc( NULL, 2 );
+            hb_storc( nullptr, 2 );
          }
       }
    }
@@ -717,11 +717,11 @@ HB_FUNC( EVP_ENCRYPTFINAL_EX )
          else
          {
             hb_xfree( buffer );
-            hb_storc( NULL, 2 );
+            hb_storc( nullptr, 2 );
          }
 #else
          hb_retni( 0 );
-         hb_storc( NULL, 2 );
+         hb_storc( nullptr, 2 );
 #endif
       }
    }
@@ -797,7 +797,7 @@ HB_FUNC( EVP_DECRYPTUPDATE )
          else
          {
             hb_xfree( buffer );
-            hb_storc( NULL, 2 );
+            hb_storc( nullptr, 2 );
          }
       }
    }
@@ -826,7 +826,7 @@ HB_FUNC( EVP_DECRYPTFINAL )
          else
          {
             hb_xfree( buffer );
-            hb_storc( NULL, 2 );
+            hb_storc( nullptr, 2 );
          }
       }
    }
@@ -856,11 +856,11 @@ HB_FUNC( EVP_DECRYPTFINAL_EX )
          else
          {
             hb_xfree( buffer );
-            hb_storc( NULL, 2 );
+            hb_storc( nullptr, 2 );
          }
 #else
          hb_retni( 0 );
-         hb_storc( NULL, 2 );
+         hb_storc( nullptr, 2 );
 #endif
       }
    }
@@ -938,7 +938,7 @@ HB_FUNC( EVP_CIPHERUPDATE )
          else
          {
             hb_xfree( buffer );
-            hb_storc( NULL, 2 );
+            hb_storc( nullptr, 2 );
          }
       }
    }
@@ -967,7 +967,7 @@ HB_FUNC( EVP_CIPHERFINAL )
          else
          {
             hb_xfree( buffer );
-            hb_storc( NULL, 2 );
+            hb_storc( nullptr, 2 );
          }
       }
    }
@@ -997,11 +997,11 @@ HB_FUNC( EVP_CIPHERFINAL_EX )
          else
          {
             hb_xfree( buffer );
-            hb_storc( NULL, 2 );
+            hb_storc( nullptr, 2 );
          }
 #else
          hb_retni( 0 );
-         hb_storc( NULL, 2 );
+         hb_storc( nullptr, 2 );
 #endif
       }
    }
@@ -1021,13 +1021,13 @@ HB_FUNC( EVP_SEALINIT )
       {
          int        npubk  = 0;
          PHB_ITEM   pArray = nullptr;
-         EVP_PKEY * pkey1  = NULL;
+         EVP_PKEY * pkey1  = nullptr;
 
          if( HB_ISARRAY( 5 ) )
             npubk = static_cast< int >( hb_arrayLen( pArray = hb_param( 5, HB_IT_ARRAY ) ) );
          else if( HB_ISPOINTER( 5 ) )
          {
-            if( ( pkey1 = ( EVP_PKEY * ) hb_parptr( 5 ) ) != NULL )
+            if( ( pkey1 = ( EVP_PKEY * ) hb_parptr( 5 ) ) != nullptr )
                npubk = 1;
          }
 
@@ -1108,7 +1108,7 @@ HB_FUNC( EVP_SEALUPDATE )
          else
          {
             hb_xfree( buffer );
-            hb_storc( NULL, 2 );
+            hb_storc( nullptr, 2 );
          }
       }
    }
@@ -1142,7 +1142,7 @@ HB_FUNC( EVP_SEALFINAL )
          else
          {
             hb_xfree( buffer );
-            hb_storc( NULL, 2 );
+            hb_storc( nullptr, 2 );
          }
       }
    }
@@ -1196,7 +1196,7 @@ HB_FUNC( EVP_OPENUPDATE )
          else
          {
             hb_xfree( buffer );
-            hb_storc( NULL, 2 );
+            hb_storc( nullptr, 2 );
          }
       }
    }
@@ -1225,7 +1225,7 @@ HB_FUNC( EVP_OPENFINAL )
          else
          {
             hb_xfree( buffer );
-            hb_storc( NULL, 2 );
+            hb_storc( nullptr, 2 );
          }
       }
    }

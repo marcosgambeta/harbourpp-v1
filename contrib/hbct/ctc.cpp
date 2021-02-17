@@ -219,7 +219,7 @@ HB_FUNC( CSETARGERR )
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
             ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CSETARGERR,
-                      NULL, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+                      nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
       }
    }
    else if( hb_pcount() > 0 ) /* more than one param but not integer */
@@ -227,7 +227,7 @@ HB_FUNC( CSETARGERR )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
-         ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CSETARGERR, NULL,
+         ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CSETARGERR, nullptr,
                    HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
    }
 }

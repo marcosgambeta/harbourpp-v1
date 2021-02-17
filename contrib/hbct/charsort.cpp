@@ -57,7 +57,7 @@ typedef struct
    HB_SIZE sElementPos;
 } CT_CHARSORT, * PCT_CHARSORT;
 
-static HB_TSD_NEW( s_charsort, sizeof( CT_CHARSORT ), NULL, NULL );
+static HB_TSD_NEW( s_charsort, sizeof( CT_CHARSORT ), nullptr, nullptr );
 
 /* qsort function */
 #ifdef __IBMCPP__
@@ -121,7 +121,7 @@ HB_FUNC( CHARSORT )
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
             ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CHARSORT,
-                      NULL, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT,
+                      nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT,
                       HB_ERR_ARGS_BASEPARAMS );
 
          if( iNoRet )
@@ -157,10 +157,10 @@ HB_FUNC( CHARSORT )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_CHARSORT, NULL, HB_ERR_FUNCNAME, 0,
+                                  CT_ERROR_CHARSORT, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
 
-      if( pSubst != NULL )
+      if( pSubst != nullptr )
          hb_itemReturnRelease( pSubst );
       else if( iNoRet )
          hb_retl( HB_FALSE );

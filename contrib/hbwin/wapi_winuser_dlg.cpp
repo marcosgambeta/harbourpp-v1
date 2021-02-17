@@ -117,7 +117,7 @@ HB_FUNC( WAPI_SETDLGITEMTEXT )
    void * hStr;
    int    iResult = SetDlgItemText( hbwapi_par_raw_HWND( 1 ),
                                     hbwapi_par_INT( 2 ),
-                                    HB_PARSTR( 3, &hStr, NULL ) );
+                                    HB_PARSTR( 3, &hStr, nullptr ) );
 
    hbwapi_SetLastError( GetLastError() );
    hbwapi_ret_NI( iResult );
@@ -152,7 +152,7 @@ HB_FUNC( WAPI_GETDLGITEM )
 HB_FUNC( WAPI_COMBOBOX_ADDSTRING )
 {
    void * hStr;
-   int    iResult = ComboBox_AddString( hbwapi_par_raw_HWND( 1 ), HB_PARSTR( 2, &hStr, NULL ) );
+   int    iResult = ComboBox_AddString( hbwapi_par_raw_HWND( 1 ), HB_PARSTR( 2, &hStr, nullptr ) );
 
    hbwapi_SetLastError( GetLastError() );
    hbwapi_ret_NI( iResult );

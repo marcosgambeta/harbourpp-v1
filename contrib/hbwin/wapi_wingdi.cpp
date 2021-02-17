@@ -247,9 +247,9 @@ DOCINFO * hbwapi_par_DOCINFO( DOCINFO * p, int iParam, HB_BOOL bMandatory, void 
 
    if( pStru && HB_IS_HASH( pStru ) )
    {
-      p->lpszDocName  = HB_ITEMGETSTR( hb_hashGetCItemPtr( pStru, "lpszDocName"  ), &h[ 0 ], NULL );
-      p->lpszOutput   = HB_ITEMGETSTR( hb_hashGetCItemPtr( pStru, "lpszOutput"   ), &h[ 1 ], NULL );
-      p->lpszDatatype = HB_ITEMGETSTR( hb_hashGetCItemPtr( pStru, "lpszDatatype" ), &h[ 2 ], NULL );
+      p->lpszDocName  = HB_ITEMGETSTR( hb_hashGetCItemPtr( pStru, "lpszDocName"  ), &h[ 0 ], nullptr );
+      p->lpszOutput   = HB_ITEMGETSTR( hb_hashGetCItemPtr( pStru, "lpszOutput"   ), &h[ 1 ], nullptr );
+      p->lpszDatatype = HB_ITEMGETSTR( hb_hashGetCItemPtr( pStru, "lpszDatatype" ), &h[ 2 ], nullptr );
       p->fwType       = ( DWORD ) hb_itemGetNL( hb_hashGetCItemPtr( pStru, "fwType" ) );
 
       return p;
@@ -258,7 +258,7 @@ DOCINFO * hbwapi_par_DOCINFO( DOCINFO * p, int iParam, HB_BOOL bMandatory, void 
       return p;
 
    hb_xfree( h );
-   *ph = NULL;
+   *ph = nullptr;
 
    return nullptr;
 }
@@ -278,13 +278,13 @@ HB_FUNC( __WAPI_DEVMODE_NEW )
 #if ! defined( HB_OS_WIN_CE )
    HANDLE hPrinter;
    void * hDeviceName;
-   LPCTSTR lpDeviceName = HB_PARSTR( 1, &hDeviceName, NULL );
+   LPCTSTR lpDeviceName = HB_PARSTR( 1, &hDeviceName, nullptr );
 
    hb_retptr( nullptr );
 
-   if( OpenPrinter( ( LPTSTR ) lpDeviceName, &hPrinter, NULL ) )
+   if( OpenPrinter( ( LPTSTR ) lpDeviceName, &hPrinter, nullptr ) )
    {
-      LONG lSize = DocumentProperties( 0, hPrinter, ( LPTSTR ) lpDeviceName, NULL, NULL, 0 );
+      LONG lSize = DocumentProperties( 0, hPrinter, ( LPTSTR ) lpDeviceName, nullptr, nullptr, 0 );
 
       if( lSize > 0 )
       {
@@ -368,9 +368,9 @@ HB_FUNC( WAPI_CREATEDC )
    void * hDevice;
    void * hOutput;
 
-   hbwapi_ret_HDC( CreateDC( HB_PARSTRDEF( 1, &hDriver, NULL ),
-                             HB_PARSTRDEF( 2, &hDevice, NULL ),
-                             HB_PARSTR( 3, &hOutput, NULL ),
+   hbwapi_ret_HDC( CreateDC( HB_PARSTRDEF( 1, &hDriver, nullptr ),
+                             HB_PARSTRDEF( 2, &hDevice, nullptr ),
+                             HB_PARSTR( 3, &hOutput, nullptr ),
                              hbwapi_par_PDEVMODE( 4 ) ) );
 
    hb_strfree( hDriver );
@@ -396,7 +396,7 @@ HB_FUNC( WAPI_RESETDC )
 HB_FUNC( WAPI_STARTDOC )
 {
    HDC hDC = hbwapi_par_HDC( 1 );
-   void ** hDOCINFO = NULL;
+   void ** hDOCINFO = nullptr;
    DOCINFO di;
 
    if( hDC && hbwapi_par_DOCINFO( &di, 2, HB_FALSE, &hDOCINFO ) )
@@ -547,10 +547,10 @@ HB_FUNC( WAPI_TEXTOUT )
                            hb_parni( 2 ) /* iRow */,
                            hb_parni( 3 ) /* iCol */,
                            0,
-                           NULL,
+                           nullptr,
                            lpData,
                            ( UINT ) nDataLen,
-                           NULL ) );
+                           nullptr ) );
 #endif
 
       hb_strfree( hData );
@@ -592,7 +592,7 @@ HB_FUNC( WAPI_EXTTEXTOUT )
          }
       }
       else
-         lpFontWidths = NULL;
+         lpFontWidths = nullptr;
 
 
       hb_retl( ExtTextOut( hDC,
@@ -714,7 +714,7 @@ HB_FUNC( WAPI_CREATEFONT )
                                  ( DWORD ) hb_parnldef( 11, CLIP_DEFAULT_PRECIS ) /* fdwClipPrecision */,
                                  ( DWORD ) hb_parnldef( 12, DEFAULT_QUALITY ) /* fdwQuality */,
                                  ( DWORD ) hb_parnldef( 13, DEFAULT_PITCH | FF_DONTCARE ) /* fdwPitchAndFamily */,
-                                 HB_PARSTR( 14, &hFontFace, NULL ) /* lpszFace */ ) );
+                                 HB_PARSTR( 14, &hFontFace, nullptr ) /* lpszFace */ ) );
 
    hb_strfree( hFontFace );
 #else
@@ -738,12 +738,12 @@ HB_FUNC( WAPI_SELECTOBJECT )
    HB_BOOL bRegion = HB_FALSE;
    HGDIOBJ h;
 
-   if(      ( h = hbwapi_par_HPEN( 2 ) ) != NULL ) {}
-   else if( ( h = hbwapi_par_HBRUSH( 2 ) ) != NULL ) {}
-   else if( ( h = hbwapi_par_HFONT( 2 ) ) != NULL ) {}
+   if(      ( h = hbwapi_par_HPEN( 2 ) ) != nullptr ) {}
+   else if( ( h = hbwapi_par_HBRUSH( 2 ) ) != nullptr ) {}
+   else if( ( h = hbwapi_par_HFONT( 2 ) ) != nullptr ) {}
    /* TODO: Add BITMAP, REGION */
    else
-      h = NULL;
+      h = nullptr;
 
    if( hDC && h )
    {
@@ -751,7 +751,7 @@ HB_FUNC( WAPI_SELECTOBJECT )
       if( bRegion )
          hb_retnint( ( HB_PTRUINT ) SelectObject( hDC, h ) );
       else
-         hb_retl( SelectObject( hDC, h ) != NULL );  /* NOTE: We don't return a raw pointer. */
+         hb_retl( SelectObject( hDC, h ) != nullptr );  /* NOTE: We don't return a raw pointer. */
    }
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -772,7 +772,7 @@ HB_FUNC( WAPI_MOVETOEX )
          hbwapi_stor_POINT( &p, 4 );
       }
       else
-         hb_retl( MoveToEx( hDC, hb_parni( 2 ) /* X */, hb_parni( 3 ) /* Y */, NULL ) );
+         hb_retl( MoveToEx( hDC, hb_parni( 2 ) /* X */, hb_parni( 3 ) /* Y */, nullptr ) );
    }
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );

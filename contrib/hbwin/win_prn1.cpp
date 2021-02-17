@@ -69,9 +69,9 @@ HB_FUNC( WIN_CREATEDC )
       void * hDevice;
 
       HDC hDC = CreateDC( TEXT( "" ),
-                          HB_PARSTR( 1, &hDevice, NULL ),
-                          NULL,
-                          NULL );
+                          HB_PARSTR( 1, &hDevice, nullptr ),
+                          nullptr,
+                          nullptr );
 
       hbwapi_ret_HDC( hDC );
 
@@ -92,9 +92,9 @@ HB_FUNC( WIN_STARTDOC )
       void * hDocName;
 
       sDoc.cbSize = sizeof( DOCINFO );
-      sDoc.lpszDocName = HB_PARSTR( 2, &hDocName, NULL );
-      sDoc.lpszOutput = NULL;
-      sDoc.lpszDatatype = NULL;
+      sDoc.lpszDocName = HB_PARSTR( 2, &hDocName, nullptr );
+      sDoc.lpszOutput = nullptr;
+      sDoc.lpszDatatype = nullptr;
       sDoc.fwType = 0;
       bResult = ( StartDoc( hDC, &sDoc ) > 0 );
 
@@ -183,10 +183,10 @@ HB_FUNC( WIN_TEXTOUT )
             while( n )
                aFixed[ --n ] = iWidth;
 
-            if( ExtTextOut( hDC, iRow, iCol, 0, NULL, lpData, ( UINT ) nLen, aFixed ) )
+            if( ExtTextOut( hDC, iRow, iCol, 0, nullptr, lpData, ( UINT ) nLen, aFixed ) )
                lResult = ( long ) ( nLen * iWidth );
          }
-         else if( ExtTextOut( hDC, iRow, iCol, 0, NULL, lpData, ( UINT ) nLen, NULL ) )
+         else if( ExtTextOut( hDC, iRow, iCol, 0, nullptr, lpData, ( UINT ) nLen, nullptr ) )
          {
             GetTextExtentPoint32( hDC, lpData, static_cast< int >( nLen ), &sSize ); /* Get the length of the text in device size */
             lResult = ( long ) sSize.cx; /* return the width so we can update the current pen position (::PosY) */
@@ -379,11 +379,11 @@ HB_FUNC( WIN_SETDOCUMENTPROPERTIES )
    {
       HANDLE hPrinter;
       void * hDeviceName;
-      LPCTSTR lpDeviceName = HB_PARSTR( 2, &hDeviceName, NULL );
+      LPCTSTR lpDeviceName = HB_PARSTR( 2, &hDeviceName, nullptr );
 
-      if( OpenPrinter( ( LPTSTR ) lpDeviceName, &hPrinter, NULL ) )
+      if( OpenPrinter( ( LPTSTR ) lpDeviceName, &hPrinter, nullptr ) )
       {
-         LONG lSize = DocumentProperties( 0, hPrinter, ( LPTSTR ) lpDeviceName, NULL, NULL, 0 );
+         LONG lSize = DocumentProperties( 0, hPrinter, ( LPTSTR ) lpDeviceName, nullptr, nullptr, 0 );
 
          if( lSize > 0 )
          {
@@ -462,7 +462,7 @@ HB_FUNC( WIN_SETDOCUMENTPROPERTIES )
                   hb_storni( pDevMode->dmPaperLength, 9 );
                   hb_storni( pDevMode->dmPaperWidth, 10 );
 
-                  bResult = ( ResetDC( hDC, pDevMode ) != NULL );
+                  bResult = ( ResetDC( hDC, pDevMode ) != nullptr );
                }
             }
 
@@ -486,11 +486,11 @@ HB_FUNC( WIN_GETDOCUMENTPROPERTIES )
 #if ! defined( HB_OS_WIN_CE )
    HANDLE hPrinter;
    void * hDeviceName;
-   LPCTSTR lpDeviceName = HB_PARSTR( 1, &hDeviceName, NULL );
+   LPCTSTR lpDeviceName = HB_PARSTR( 1, &hDeviceName, nullptr );
 
-   if( OpenPrinter( ( LPTSTR ) lpDeviceName, &hPrinter, NULL ) )
+   if( OpenPrinter( ( LPTSTR ) lpDeviceName, &hPrinter, nullptr ) )
    {
-      LONG lSize = DocumentProperties( 0, hPrinter, ( LPTSTR ) lpDeviceName, NULL, NULL, 0 );
+      LONG lSize = DocumentProperties( 0, hPrinter, ( LPTSTR ) lpDeviceName, nullptr, nullptr, 0 );
 
       if( lSize > 0 )
       {
@@ -544,12 +544,12 @@ HB_FUNC( WIN_ENUMFONTS )
    PHB_ITEM pArray = hb_itemArrayNew( 0 );
 
    if( fNullDC )
-      hDC = GetDC( NULL );
+      hDC = GetDC( nullptr );
 
-   EnumFonts( hDC, ( LPCTSTR ) NULL, ( FONTENUMPROC ) FontEnumCallBack, ( LPARAM ) pArray );
+   EnumFonts( hDC, ( LPCTSTR ) nullptr, ( FONTENUMPROC ) FontEnumCallBack, ( LPARAM ) pArray );
 
    if( fNullDC )
-      ReleaseDC( NULL, hDC );
+      ReleaseDC( nullptr, hDC );
 
    hb_itemReturnRelease( pArray );
 }
@@ -568,17 +568,17 @@ HB_FUNC( WIN_ENUMFONTFAMILIES )
    if( HB_ISCHAR( 2 ) )
    {
       void * hText;
-      HB_STRNCPY( Logfont.lfFaceName, HB_PARSTR( 2, &hText, NULL ), HB_SIZEOFARRAY( Logfont.lfFaceName ) - 1 );
+      HB_STRNCPY( Logfont.lfFaceName, HB_PARSTR( 2, &hText, nullptr ), HB_SIZEOFARRAY( Logfont.lfFaceName ) - 1 );
       hb_strfree( hText );
    }
 
    if( fNullDC )
-      hDC = GetDC( NULL );
+      hDC = GetDC( nullptr );
 
    EnumFontFamiliesEx( hDC, &Logfont, ( FONTENUMPROC ) FontEnumCallBack, ( LPARAM ) pArray, 0 );
 
    if( fNullDC )
-      ReleaseDC( NULL, hDC );
+      ReleaseDC( nullptr, hDC );
 #endif
 
    hb_itemReturnRelease( pArray );
@@ -659,7 +659,7 @@ HB_FUNC( WIN_LINETO )
    HDC hDC = hbwapi_par_HDC( 1 );
 
    hb_retl( hDC ? MoveToEx( hDC, hb_parni( 2 ) /* x1 */,
-                                 hb_parni( 3 ) /* y1 */, NULL ) &&
+                                 hb_parni( 3 ) /* y1 */, nullptr ) &&
                   LineTo( hDC, hb_parni( 4 ) /* x2 */,
                                hb_parni( 5 ) /* y2 */ ) : HB_FALSE );
 }

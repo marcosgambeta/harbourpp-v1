@@ -100,7 +100,7 @@ static TCHAR * hbwapi_FileNameAtSystemDir( const TCHAR * pFileName )
 #if defined( HB_OS_WIN_CE )
    return hbwapi_tstrdup( pFileName );
 #else
-   UINT nLen = GetSystemDirectory( NULL, 0 );
+   UINT nLen = GetSystemDirectory( nullptr, 0 );
 
    if( nLen )
    {
@@ -135,7 +135,7 @@ HMODULE hbwapi_LoadLibrarySystem( LPCTSTR pFileName )
    TCHAR * pLibPath = hbwapi_FileNameAtSystemDir( pFileName );
 
    /* TODO: Replace flag with LOAD_LIBRARY_SEARCH_SYSTEM32 in the future [vszakats] */
-   HMODULE h = LoadLibraryEx( pLibPath, NULL, LOAD_WITH_ALTERED_SEARCH_PATH );
+   HMODULE h = LoadLibraryEx( pLibPath, nullptr, LOAD_WITH_ALTERED_SEARCH_PATH );
 
    hb_xfree( pLibPath );
 

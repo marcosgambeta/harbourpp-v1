@@ -85,7 +85,7 @@ static HB_ERRCODE mysqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
 
 static SDDNODE s_mysqldd =
 {
-   NULL,
+   nullptr,
    "MYSQL",
    ( SDDFUNC_CONNECT ) mysqlConnect,
    ( SDDFUNC_DISCONNECT ) mysqlDisconnect,
@@ -94,7 +94,7 @@ static SDDNODE s_mysqldd =
    ( SDDFUNC_CLOSE ) mysqlClose,
    ( SDDFUNC_GOTO ) mysqlGoTo,
    ( SDDFUNC_GETVALUE ) mysqlGetValue,
-   ( SDDFUNC_GETVARLEN ) NULL
+   ( SDDFUNC_GETVARLEN ) nullptr
 };
 
 
@@ -111,7 +111,7 @@ static void hb_mysqldd_init( void * cargo )
 
 HB_FUNC( HB_SDDMY_REGISTER )
 {
-   hb_mysqldd_init( NULL );
+   hb_mysqldd_init( nullptr );
 }
 
 /* force SQLBASE linking */
@@ -119,7 +119,7 @@ HB_FUNC_TRANSLATE( SDDMY, SQLBASE )
 
 HB_INIT_SYMBOLS_BEGIN( mysqldd__InitSymbols )
 {
-   "SDDMY", { HB_FS_PUBLIC }, { HB_FUNCNAME( SDDMY ) }, NULL
+   "SDDMY", { HB_FS_PUBLIC }, { HB_FUNCNAME( SDDMY ) }, nullptr
 },
 HB_INIT_SYMBOLS_END( mysqldd__InitSymbols )
 
@@ -155,7 +155,7 @@ static HB_ERRCODE mysqlConnect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
    MYSQL *  pMySql;
    PHB_ITEM pItemUnixSocket = hb_arrayGetItemPtr( pItem, 7 );
 
-   pMySql = mysql_init( NULL );
+   pMySql = mysql_init( nullptr );
    if( ! mysql_real_connect( pMySql,
                              hb_arrayGetCPtr( pItem, 2 ) /* host */,
                              hb_arrayGetCPtr( pItem, 3 ) /* user */,
@@ -165,7 +165,7 @@ static HB_ERRCODE mysqlConnect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
                              pItemUnixSocket && HB_IS_STRING( pItemUnixSocket ) ? hb_itemGetCPtr( pItemUnixSocket ) : nullptr,
                              hb_arrayGetNI( pItem, 8 ) /* flags*/ ) )
    {
-      hb_rddsqlSetError( mysql_errno( pMySql ), mysql_error( pMySql ), NULL, NULL, 0 );
+      hb_rddsqlSetError( mysql_errno( pMySql ), mysql_error( pMySql ), nullptr, nullptr, 0 );
       mysql_close( pMySql );
       return HB_FAILURE;
    }
@@ -192,7 +192,7 @@ static HB_ERRCODE mysqlExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
 
    if( mysql_real_query( pMySql, hb_itemGetCPtr( pItem ), static_cast< unsigned long >( hb_itemGetCLen( pItem ) ) ) )
    {
-      hb_rddsqlSetError( mysql_errno( pMySql ), mysql_error( pMySql ), hb_itemGetCPtr( pItem ), NULL, 0 );
+      hb_rddsqlSetError( mysql_errno( pMySql ), mysql_error( pMySql ), hb_itemGetCPtr( pItem ), nullptr, 0 );
       return HB_FAILURE;
    }
 
@@ -201,7 +201,7 @@ static HB_ERRCODE mysqlExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
    {
       ulAffectedRows = ( HB_ULONG ) mysql_num_rows( pResult );
       mysql_free_result( pResult );
-      hb_rddsqlSetError( 0, NULL, hb_itemGetCPtr( pItem ), NULL, ulAffectedRows );
+      hb_rddsqlSetError( 0, nullptr, hb_itemGetCPtr( pItem ), nullptr, ulAffectedRows );
    }
    else
    {
@@ -212,13 +212,13 @@ static HB_ERRCODE mysqlExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
          {
             pNewID = hb_itemPutNInt( nullptr, mysql_insert_id( pMySql ) );
          }
-         hb_rddsqlSetError( 0, NULL, hb_itemGetCPtr( pItem ), pNewID, ulAffectedRows );
+         hb_rddsqlSetError( 0, nullptr, hb_itemGetCPtr( pItem ), pNewID, ulAffectedRows );
          if( pNewID )
             hb_itemRelease( pNewID );
       }
       else /* error */
       {
-         hb_rddsqlSetError( mysql_errno( pMySql ), mysql_error( pMySql ), hb_itemGetCPtr( pItem ), NULL, 0 );
+         hb_rddsqlSetError( mysql_errno( pMySql ), mysql_error( pMySql ), hb_itemGetCPtr( pItem ), nullptr, 0 );
          return HB_FAILURE;
       }
    }
@@ -248,7 +248,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
       return HB_FAILURE;
    }
 
-   if( ( pSDDData->pResult = mysql_store_result( pMySql ) ) == NULL )
+   if( ( pSDDData->pResult = mysql_store_result( pMySql ) ) == nullptr )
    {
       hb_errRT_MySQLDD( EG_MEM, ESQLDD_INVALIDQUERY, ( const char * ) mysql_error( pMySql ), pArea->szQuery,
                         mysql_errno( pMySql ) );
@@ -445,7 +445,7 @@ static HB_ERRCODE mysqlClose( SQLBASEAREAP pArea )
          mysql_free_result( pSDDData->pResult );
 
       hb_xfree( pSDDData );
-      pArea->pSDDData = NULL;
+      pArea->pSDDData = nullptr;
    }
    return HB_SUCCESS;
 }

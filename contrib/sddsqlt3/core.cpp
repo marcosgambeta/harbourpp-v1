@@ -81,7 +81,7 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo );
 
 static SDDNODE s_sqlt3dd =
 {
-   NULL,
+   nullptr,
    "SQLITE3",
    ( SDDFUNC_CONNECT ) sqlite3Connect,
    ( SDDFUNC_DISCONNECT ) sqlite3Disconnect,
@@ -89,8 +89,8 @@ static SDDNODE s_sqlt3dd =
    ( SDDFUNC_OPEN ) sqlite3Open,
    ( SDDFUNC_CLOSE ) sqlite3Close,
    ( SDDFUNC_GOTO ) sqlite3GoTo,
-   ( SDDFUNC_GETVALUE ) NULL,
-   ( SDDFUNC_GETVARLEN ) NULL
+   ( SDDFUNC_GETVALUE ) nullptr,
+   ( SDDFUNC_GETVARLEN ) nullptr
 };
 
 static void hb_sqlt3dd_init( void * cargo )
@@ -116,7 +116,7 @@ static void hb_sqlt3dd_exit( void * cargo )
 
 HB_FUNC( HB_SDDSQLITE3_REGISTER )
 {
-   hb_sqlt3dd_init( NULL );
+   hb_sqlt3dd_init( nullptr );
 }
 
 /* force SQLBASE linking */
@@ -124,7 +124,7 @@ HB_FUNC_TRANSLATE( SDDSQLITE3, SQLBASE )
 
 HB_INIT_SYMBOLS_BEGIN( sqlt3dd__InitSymbols )
 {
-   "SDDSQLITE3", { HB_FS_PUBLIC }, { HB_FUNCNAME( SDDSQLITE3 ) }, NULL
+   "SDDSQLITE3", { HB_FS_PUBLIC }, { HB_FUNCNAME( SDDSQLITE3 ) }, nullptr
 },
 HB_INIT_SYMBOLS_END( sqlt3dd__InitSymbols )
 
@@ -163,7 +163,7 @@ static char * sqlite3GetError( sqlite3 * pDb, HB_ERRCODE * pErrCode )
 
    if( pDb )
    {
-      PHB_ITEM pRet = S_HB_ITEMPUTSTR( NULL, sqlite3_errmsg( pDb ) );
+      PHB_ITEM pRet = S_HB_ITEMPUTSTR( nullptr, sqlite3_errmsg( pDb ) );
       szRet = hb_strdup( hb_itemGetCPtr( pRet ) );
       hb_itemRelease( pRet );
 
@@ -190,7 +190,7 @@ static HB_USHORT sqlite3DeclType(sqlite3_stmt * st, HB_USHORT uiIndex )
    /* the order of comparisons below is important to replicate
     * type precedence used by SQLITE3
     */
-   if( szDeclType != NULL )
+   if( szDeclType != nullptr )
    {
       HB_SIZE nLen = strlen( szDeclType );
 
@@ -250,7 +250,7 @@ static void sqlite3DeclStru( sqlite3_stmt * st, HB_USHORT uiIndex, HB_USHORT * p
 {
    const char * szDeclType = sqlite3_column_decltype( st, uiIndex );
 
-   if( szDeclType != NULL )
+   if( szDeclType != nullptr )
    {
       HB_SIZE nLen = strlen( szDeclType );
       HB_SIZE nAt;
@@ -303,7 +303,7 @@ static HB_ERRCODE sqlite3Connect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem 
    sqlite3 * db;
    void *    hConn;
 
-   if( sqlite3_open( S_HB_ARRAYGETSTR( pItem, 2, &hConn, NULL ), &db ) == SQLITE_OK )
+   if( sqlite3_open( S_HB_ARRAYGETSTR( pItem, 2, &hConn, nullptr ), &db ) == SQLITE_OK )
    {
       pConnection->pSDDConn = hb_xgrab( sizeof( SDDCONN ) );
       ( ( SDDCONN * ) pConnection->pSDDConn )->pDb = db;
@@ -333,10 +333,10 @@ static HB_ERRCODE sqlite3Execute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem 
    HB_ERRCODE errCode;
    int        iRow, iCol;
    void *     hStatement;
-   char **    pResult   = NULL;
+   char **    pResult   = nullptr;
    char *     pszErrMsg = nullptr;
 
-   if( sqlite3_get_table( pDb, S_HB_ITEMGETSTR( pItem, &hStatement, NULL ), &pResult, &iRow, &iCol, &pszErrMsg ) != SQLITE_OK )
+   if( sqlite3_get_table( pDb, S_HB_ITEMGETSTR( pItem, &hStatement, nullptr ), &pResult, &iRow, &iCol, &pszErrMsg ) != SQLITE_OK )
    {
       hb_strfree( hStatement );
       hb_xfree( sqlite3GetError( pDb, &errCode ) );
@@ -350,14 +350,14 @@ static HB_ERRCODE sqlite3Execute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem 
    sqlite3_free_table( pResult );
 
    /* TODO: new id */
-   hb_rddsqlSetError( 0, NULL, hb_itemGetCPtr( pItem ), NULL, static_cast< unsigned long >( iRow ) );
+   hb_rddsqlSetError( 0, nullptr, hb_itemGetCPtr( pItem ), nullptr, static_cast< unsigned long >( iRow ) );
    return HB_SUCCESS;
 }
 
 static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
 {
    sqlite3 *      pDb = ( ( SDDCONN * ) pArea->pConnection->pSDDConn )->pDb;
-   sqlite3_stmt * st  = NULL;
+   sqlite3_stmt * st  = nullptr;
    SDDDATA *      pSDDData;
    const char *   pszQuery;
    HB_SIZE        nQueryLen;
@@ -376,9 +376,9 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
    pszQuery = S_HB_ITEMGETSTR( pItem, &hQuery, &nQueryLen );
 
 #if SQLITE_VERSION_NUMBER >= 3020000
-   result = sqlite3_prepare_v3( pDb, pszQuery, static_cast< int >( nQueryLen ), 0, &st, NULL );
+   result = sqlite3_prepare_v3( pDb, pszQuery, static_cast< int >( nQueryLen ), 0, &st, nullptr );
 #else
-   result = sqlite3_prepare_v2( pDb, pszQuery, static_cast< int >( nQueryLen ), &st, NULL );
+   result = sqlite3_prepare_v2( pDb, pszQuery, static_cast< int >( nQueryLen ), &st, nullptr );
 #endif
 
    if( result != SQLITE_OK )
@@ -456,7 +456,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
             HB_USHORT uiRetLen = 10;
 
 #ifdef HB_SQLT3_MAP_DECLARED_EMULATED
-            sqlite3DeclStru( st, uiIndex, &uiRetLen, NULL );
+            sqlite3DeclStru( st, uiIndex, &uiRetLen, nullptr );
 #endif
             dbFieldInfo.uiLen = static_cast< HB_USHORT >( HB_MAX( nSize, uiRetLen ) );
             pStr = ( char * ) hb_xgrab( ( HB_SIZE ) dbFieldInfo.uiLen + 1 );
@@ -542,7 +542,7 @@ static HB_ERRCODE sqlite3Close( SQLBASEAREAP pArea )
          sqlite3_finalize( pSDDData->pStmt );
 
       hb_xfree( pSDDData );
-      pArea->pSDDData = NULL;
+      pArea->pSDDData = nullptr;
    }
    return HB_SUCCESS;
 }
@@ -586,7 +586,7 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
          switch( uiType )
          {
             case HB_FT_STRING:
-               pItem = S_HB_ITEMPUTSTR( NULL, ( const char * ) sqlite3_column_text( st, ui ) );
+               pItem = S_HB_ITEMPUTSTR( nullptr, ( const char * ) sqlite3_column_text( st, ui ) );
                break;
 
             case HB_FT_INTEGER:

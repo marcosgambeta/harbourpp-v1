@@ -79,7 +79,7 @@ static int  s_iXtermPid     = 0;
 static void debugInit( void )
 {
    int       iFifoResult;
-   PHB_FNAME pFileName = NULL;
+   PHB_FNAME pFileName = nullptr;
    char      szDebugName[ 128 ];
 
    if( ! s_iUseDebugName )
@@ -116,7 +116,7 @@ static void debugInit( void )
          if( iFifoResult != EEXIST )
          {
             s_iXtermPid = execlp( "xterm", "xterm", "-T", szDebugTitle, "-e",
-                                  "cat", szDebugName, NULL );
+                                  "cat", szDebugName, nullptr );
 
             if( s_iXtermPid <= 0 )
             {
@@ -139,14 +139,14 @@ HB_BOOL hb_OutDebugName( PHB_ITEM pName )
    HB_BOOL bRet;
 
 #if defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS )
-   if( s_iDebugFd == 0 && pName != NULL )
+   if( s_iDebugFd == 0 && pName != nullptr )
    {
       hb_strncpy( s_szDebugName, hb_itemGetCPtr( pName ), sizeof( s_szDebugName ) - 1 );
       s_iUseDebugName = 1;
 
       bRet = HB_TRUE;
    }
-   else if( pName == NULL )
+   else if( pName == nullptr )
    {
       s_iUseDebugName = 0;
       bRet = HB_TRUE;
@@ -169,7 +169,7 @@ void hb_OutDebug( const char * szMsg, HB_SIZE nMsgLen )
    int iStatus;
 
    /* Are we under X? */
-   if( getenv( "DISPLAY" ) != NULL )
+   if( getenv( "DISPLAY" ) != nullptr )
    {
       if( s_iDebugFd <= 0 || s_iXtermPid == 0 )
          debugInit();
