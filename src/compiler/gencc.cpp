@@ -70,10 +70,8 @@ typedef HB_GENC_FUNC_ * PHB_GENC_FUNC;
 
 void hb_compGenCString( FILE * yyc, const HB_BYTE * pText, HB_SIZE nLen )
 {
-   HB_SIZE nPos;
-
    fputc( '"', yyc );
-   for( nPos = 0; nPos < nLen; nPos++ )
+   for( HB_SIZE nPos = 0; nPos < nLen; nPos++ )
    {
       HB_BYTE uchr = ( HB_BYTE ) pText[ nPos ];
       /*
@@ -110,10 +108,8 @@ static void hb_compGenCStrData( FILE * yyc, const HB_BYTE * pText, HB_SIZE nLen,
    #endif
    if( nLen > __HB_CSTRING_SIZE_MAX )
    {
-      HB_SIZE nPos;
-
       fprintf( yyc, "\t{\tconst unsigned char str[ %" HB_PFS "u ] = {", nLen + 1 );
-      for( nPos = 0; nPos < nLen; nPos++ )
+      for( HB_SIZE nPos = 0; nPos < nLen; nPos++ )
       {
          if( ( nPos & 0x0F ) == 0 )
             fprintf( yyc, "\n\t\t" );
@@ -1076,7 +1072,7 @@ static HB_GENC_FUNC( hb_p_pushaliasedvar )
 
 static HB_GENC_FUNC( hb_p_pushblockshort )
 {
-   HB_USHORT usSize, us;
+   HB_USHORT usSize;
 
    HB_GENC_LABEL();
 
@@ -1085,7 +1081,7 @@ static HB_GENC_FUNC( hb_p_pushblockshort )
 
    fprintf( cargo->yyc, "\t{\n\t\tstatic const HB_BYTE codeblock[ %hu ] = {", usSize );
 
-   for( us = 0; us < usSize; ++us )
+   for( HB_USHORT us = 0; us < usSize; ++us )
    {
       if( ( us & 0x0f ) == 0 )
          fprintf( cargo->yyc, "\n\t\t\t" );
@@ -1101,7 +1097,7 @@ static HB_GENC_FUNC( hb_p_pushblockshort )
 
 static HB_GENC_FUNC( hb_p_pushblock )
 {
-   HB_USHORT usSize, us;
+   HB_USHORT usSize;
 
    HB_GENC_LABEL();
 
@@ -1110,7 +1106,7 @@ static HB_GENC_FUNC( hb_p_pushblock )
 
    fprintf( cargo->yyc, "\t{\n\t\tstatic const HB_BYTE codeblock[ %hu ] = {", usSize );
 
-   for( us = 0; us < usSize; ++us )
+   for( HB_USHORT us = 0; us < usSize; ++us )
    {
       if( ( us & 0x0f ) == 0 )
          fprintf( cargo->yyc, "\n\t\t\t" );
@@ -1126,7 +1122,7 @@ static HB_GENC_FUNC( hb_p_pushblock )
 
 static HB_GENC_FUNC( hb_p_pushblocklarge )
 {
-   HB_SIZE nSize, ul;
+   HB_SIZE nSize;
 
    HB_GENC_LABEL();
 
@@ -1135,7 +1131,7 @@ static HB_GENC_FUNC( hb_p_pushblocklarge )
 
    fprintf( cargo->yyc, "\t{\n\t\tstatic const HB_BYTE codeblock[ %" HB_PFS "u ] = {", nSize );
 
-   for( ul = 0; ul < nSize; ++ul )
+   for( HB_SIZE ul = 0; ul < nSize; ++ul )
    {
       if( ( ul & 0x0f ) == 0 )
          fprintf( cargo->yyc, "\n\t\t\t" );
@@ -1693,7 +1689,7 @@ static HB_GENC_FUNC( hb_p_staticname )
 static HB_GENC_FUNC( hb_p_threadstatics )
 {
    HB_USHORT w;
-   HB_SIZE nSize, ul;
+   HB_SIZE nSize;
 
    HB_GENC_LABEL();
 
@@ -1702,7 +1698,7 @@ static HB_GENC_FUNC( hb_p_threadstatics )
 
    fprintf( cargo->yyc, "\t{\n\t\tstatic const HB_BYTE statics[ %" HB_PFS "u ] = {", nSize );
 
-   for( ul = 0; ul < nSize; ++ul )
+   for( HB_SIZE ul = 0; ul < nSize; ++ul )
    {
       if( ( ul & 0x0f ) == 0 )
          fprintf( cargo->yyc, "\n\t\t\t" );

@@ -122,9 +122,8 @@ int hb_compMainExt( int argc, const char * const argv[],
    }
    else
    {
-      int i;
       /* Process all files passed via the command-line. */
-      for( i = 1; i < argc && ! HB_COMP_PARAM->fExit; i++ )
+      for( int i = 1; i < argc && ! HB_COMP_PARAM->fExit; i++ )
       {
          HB_TRACE( HB_TR_DEBUG, ( "main LOOP(%i,%s)", i, argv[ i ] ) );
          if( ! HB_ISOPTSEP( argv[ i ][ 0 ] ) )
@@ -1351,7 +1350,6 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
    HB_SIZE * pNOOPs, * pJumps;
    HB_SIZE nOptimized, nNextByte, nBytes2Copy, nJumpAddr, nNOOP, nJump;
    HB_BOOL fLineStrip = HB_COMP_PARAM->fLineNumbers;
-   int iPass;
 
    if( ! HB_COMP_ISSUPPORTED( HB_COMPFLAG_OPTJUMP ) )
       return;
@@ -1359,7 +1357,7 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
    hb_compOptimizePCode( HB_COMP_PARAM, HB_COMP_PARAM->functions.pLast );
    hb_compCodeTraceMarkDead( HB_COMP_PARAM, HB_COMP_PARAM->functions.pLast );
 
-   for( iPass = 0; iPass < 4 && ! HB_COMP_PARAM->fExit; ++iPass )
+   for( int iPass = 0; iPass < 4 && ! HB_COMP_PARAM->fExit; ++iPass )
    {
       HB_ISIZ nOffset;
 
@@ -3210,13 +3208,11 @@ static void hb_compRemovePCODE( HB_COMP_DECL, HB_SIZE nPos, HB_SIZE nCount,
    }
    else
    {
-      HB_SIZE n;
-
       memmove( pFunc->pCode + nPos, pFunc->pCode + nPos + nCount,
                pFunc->nPCodePos - nPos - nCount );
       pFunc->nPCodePos -= nCount;
 
-      for( n = pFunc->nNOOPs; n; --n )
+      for( HB_SIZE n = pFunc->nNOOPs; n; --n )
       {
          if( pFunc->pNOOPs[ n ] >= nPos )
          {
@@ -3237,9 +3233,7 @@ static void hb_compRemovePCODE( HB_COMP_DECL, HB_SIZE nPos, HB_SIZE nCount,
 
 HB_BOOL hb_compHasJump( PHB_HFUNC pFunc, HB_SIZE nPos )
 {
-   HB_SIZE nJump;
-
-   for( nJump = 0; nJump < pFunc->nJumps; nJump++ )
+   for( HB_SIZE nJump = 0; nJump < pFunc->nJumps; nJump++ )
    {
       HB_SIZE nJumpAddr = pFunc->pJumps[ nJump ];
       switch( pFunc->pCode[ nJumpAddr ] )

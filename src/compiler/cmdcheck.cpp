@@ -844,9 +844,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
 /* check command-line parameters */
 void hb_compChkCommandLine( HB_COMP_DECL, int argc, const char * const argv[] )
 {
-   int i;
-
-   for( i = 1; i < argc && ! HB_COMP_PARAM->fExit; ++i )
+   for( int i = 1; i < argc && ! HB_COMP_PARAM->fExit; ++i )
    {
       const char * szSwitch = argv[ i ];
 

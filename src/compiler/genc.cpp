@@ -267,9 +267,9 @@ void hb_compGenCCode( HB_COMP_DECL, PHB_FNAME pFileName )       /* generates the
       hb_strncpyUpper( szFileName, pFileName->szName, sizeof( szFileName ) - 1 );
       /* replace non ID characters in name of local symbol table by '_' */
       {
-         int iLen = static_cast< int >( strlen( szFileName ) ), i;
+         int iLen = static_cast< int >( strlen( szFileName ) );
 
-         for( i = 0; i < iLen; i++ )
+         for( int i = 0; i < iLen; i++ )
          {
             char c = szFileName[ i ];
             if( ! HB_ISNEXTIDCHAR( c ) )
@@ -492,9 +492,7 @@ static void hb_compGenCFunc( FILE * yyc, const char * cDecor, const char * szNam
 
 static void hb_compGenCByteStr( FILE * yyc, const HB_BYTE * pText, HB_SIZE nLen )
 {
-   HB_SIZE nPos;
-
-   for( nPos = 0; nPos < nLen; nPos++ )
+   for( HB_SIZE nPos = 0; nPos < nLen; nPos++ )
    {
       HB_BYTE uchr = ( HB_BYTE ) pText[ nPos ];
       /*
@@ -1537,11 +1535,9 @@ static HB_GENC_FUNC( hb_p_pushblocklarge )
 
 static HB_GENC_FUNC( hb_p_pushdouble )
 {
-   int i;
-
    fprintf( cargo->yyc, "\tHB_P_PUSHDOUBLE," );
    ++nPCodePos;
-   for( i = 0; i < static_cast< int >( sizeof( double ) + sizeof( HB_BYTE ) + sizeof( HB_BYTE ) ); ++i )
+   for( int i = 0; i < static_cast< int >( sizeof( double ) + sizeof( HB_BYTE ) + sizeof( HB_BYTE ) ); ++i )
    {
       fprintf( cargo->yyc, " %u,", ( HB_UCHAR ) pFunc->pCode[ nPCodePos + i ] );
    }
@@ -2043,7 +2039,7 @@ static HB_GENC_FUNC( hb_p_staticname )
 
 static HB_GENC_FUNC( hb_p_threadstatics )
 {
-   HB_USHORT w = HB_PCODE_MKUSHORT( &pFunc->pCode[ nPCodePos + 1 ] ), u;
+   HB_USHORT w = HB_PCODE_MKUSHORT( &pFunc->pCode[ nPCodePos + 1 ] );
 
    fprintf( cargo->yyc, "\tHB_P_THREADSTATICS, %u, %u,",
             pFunc->pCode[ nPCodePos + 1 ],
@@ -2053,7 +2049,7 @@ static HB_GENC_FUNC( hb_p_threadstatics )
    fprintf( cargo->yyc, "\n" );
 
    nPCodePos += 3;
-   for( u = 0; u < w; ++u )
+   for( HB_USHORT u = 0; u < w; ++u )
    {
       fprintf( cargo->yyc, "\t%u, %u,",
                pFunc->pCode[ nPCodePos ],

@@ -615,13 +615,13 @@ static HB_OPT_FUNC( hb_p_jumptruefar )
 
 static HB_OPT_FUNC( hb_p_switch )
 {
-   HB_USHORT usCases = HB_PCODE_MKUSHORT( &pFunc->pCode[ nPCodePos + 1 ] ), us;
+   HB_USHORT usCases = HB_PCODE_MKUSHORT( &pFunc->pCode[ nPCodePos + 1 ] );
    HB_SIZE nStart = nPCodePos;
 
    HB_SYMBOL_UNUSED( cargo );
 
    nPCodePos += 3;
-   for( us = 0; us < usCases; ++us )
+   for( HB_USHORT us = 0; us < usCases; ++us )
    {
       switch( pFunc->pCode[ nPCodePos ] )
       {
@@ -1344,10 +1344,10 @@ static int hb_compPCodeTraceAssignedUnused( PHB_HFUNC pFunc, HB_SIZE nPos, HB_BY
       }
       else if( pFunc->pCode[ nPos ] == HB_P_SWITCH ) /* Switch is multi-place jump */
       {
-         HB_USHORT us, usCount = HB_PCODE_MKUSHORT( pFunc->pCode + nPos + 1 );
+         HB_USHORT usCount = HB_PCODE_MKUSHORT( pFunc->pCode + nPos + 1 );
 
          nPos += 3;
-         for( us = 0; us < usCount; us++ )
+         for( HB_USHORT us = 0; us < usCount; us++ )
          {
             if( hb_compPCodeTraceAssignedUnused( pFunc, nPos, pMap, isLocal, fCanBreak ) )
                return 1;
@@ -1454,9 +1454,8 @@ static void hb_compPCodeEnumAssignedUnused( HB_COMP_DECL, PHB_HFUNC pFunc, PHB_O
       if( iCheck != 0 && ( isLocal = hb_compLocalGetNumber( &pFunc->pCode[ nPos ] ) ) > ( HB_SHORT ) pFunc->wParamCount )
       {
          PHB_HVAR pVar = pFunc->pLocals;
-         HB_SHORT is;
 
-         for( is = 1; is < isLocal; is++ )
+         for( HB_SHORT is = 1; is < isLocal; is++ )
             pVar = pVar->pNext;
 
          assert( pLocals[ isLocal - 1 ].bFlags != 0 );

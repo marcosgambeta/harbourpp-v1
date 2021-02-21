@@ -179,8 +179,8 @@ static void hb_compGenArgList( int iFirst, int iLast,
       {
          if( HB_IS_ARRAY( pParam ) )
          {
-            HB_SIZE nPos, nLen = hb_arrayLen( pParam );
-            for( nPos = 1; nPos <= nLen; ++nPos )
+            HB_SIZE nLen = hb_arrayLen( pParam );
+            for( HB_SIZE nPos = 1; nPos <= nLen; ++nPos )
             {
                if( hb_arrayGetType( pParam, nPos ) & HB_IT_STRING )
                   argv[ argc++ ] = hb_arrayGetCPtr( pParam, nPos );
