@@ -1,5 +1,5 @@
 /*
- * Compiler C source generation
+ * Compiler C++ source generation
  *
  * Copyright 1999 Antonio Linares <alinares@fivetech.com>
  *
@@ -159,13 +159,13 @@ static void hb_compFuncUsed( HB_COMP_DECL, PHB_HSYMBOL pSym )
       hb_compGenWarning( HB_COMP_PARAM, hb_comp_szWarnings, 'W', HB_COMP_WARN_STATIC_FUNC_UNUSED, pSym->szName, nullptr );
 }
 
-void hb_compGenCCode( HB_COMP_DECL, PHB_FNAME pFileName )       /* generates the C language output */
+void hb_compGenCCode( HB_COMP_DECL, PHB_FNAME pFileName )       /* generates the C++ language output */
 {
    char        szFileName[ HB_PATH_MAX ];
    PHB_HSYMBOL pSym;
    PHB_HFUNC   pFunc;
    PHB_HINLINE pInline;
-   FILE *      yyc; /* file handle for C output */
+   FILE *      yyc; /* file handle for C++ output */
    HB_BOOL     fHasHbInline = HB_FALSE;
 
    hb_fsFNameMerge( szFileName, pFileName );
@@ -184,7 +184,7 @@ void hb_compGenCCode( HB_COMP_DECL, PHB_FNAME pFileName )       /* generates the
    {
       char buffer[ 80 + HB_PATH_MAX - 1 ];
       hb_snprintf( buffer, sizeof( buffer ),
-                   "Generating C source output to \'%s\'... ", szFileName );
+                   "Generating C++ source output to \'%s\'... ", szFileName );
       hb_compOutStd( HB_COMP_PARAM, buffer );
    }
 
@@ -194,7 +194,7 @@ void hb_compGenCCode( HB_COMP_DECL, PHB_FNAME pFileName )       /* generates the
 
       fprintf( yyc, "/*\n * %s\n", szHrb );
       fprintf( yyc, " * %s\n", szCmp );
-      fprintf( yyc, " * Generated C source from \"%s\"\n */\n\n", HB_COMP_PARAM->szFile );
+      fprintf( yyc, " * Generated C++ source from \"%s\"\n */\n\n", HB_COMP_PARAM->szFile );
 
       hb_xfree( szCmp );
       hb_xfree( szHrb );
@@ -382,7 +382,7 @@ void hb_compGenCCode( HB_COMP_DECL, PHB_FNAME pFileName )       /* generates the
          pFunc = pFunc->pNext;
       }
 
-      /* Generate C inline functions
+      /* Generate C++ inline functions
        */
       pInline = HB_COMP_PARAM->inlines.pFirst;
       while( pInline )
@@ -1457,7 +1457,7 @@ static HB_GENC_FUNC( hb_p_pushblock )
       /* NOTE:
        * When a codeblock is used to initialize a static variable
        * the names of local variables cannot be determined
-       * because at the time of C code generation we don't know
+       * because at the time of C++ code generation we don't know
        * in which function was defined this local variable
        */
       if( cargo->bVerbose && ( pFunc->cScope & HB_FS_INITEXIT ) != HB_FS_INITEXIT )
@@ -1515,7 +1515,7 @@ static HB_GENC_FUNC( hb_p_pushblocklarge )
       /* NOTE:
        * When a codeblock is used to initialize a static variable
        * the names of local variables cannot be determined
-       * because at the time of C code generation we don't know
+       * because at the time of C++ code generation we don't know
        * in which function was defined this local variable
        */
       if( cargo->bVerbose && ( pFunc->cScope & HB_FS_INITEXIT ) != HB_FS_INITEXIT )
