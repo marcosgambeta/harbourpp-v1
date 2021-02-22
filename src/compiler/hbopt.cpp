@@ -931,7 +931,7 @@ void hb_compOptimizePCode( HB_COMP_DECL, PHB_HFUNC pFunc )
 
    assert( HB_P_LAST_PCODE == sizeof( s_opt_table ) / sizeof( PHB_OPT_FUNC ) );
 
-   hb_compPCodeEval( pFunc, ( const PHB_PCODE_FUNC * ) pFuncTable, nullptr );
+   hb_compPCodeEval( pFunc, static_cast< const PHB_PCODE_FUNC * >( pFuncTable ), nullptr );
 }
 
 
@@ -1004,7 +1004,7 @@ static HB_SHORT hb_compLocalGetNumber( HB_BYTE * pCode )
       case HB_P_POPLOCALNEAR:
       case HB_P_PUSHLOCALNEAR:
       case HB_P_LOCALNEARADDINT:
-         return *( ( signed char * ) pCode + 1 );
+         return *( reinterpret_cast< signed char * >( pCode ) + 1 );
 
       case HB_P_POPLOCAL:
       case HB_P_PUSHLOCAL:
@@ -1027,7 +1027,7 @@ static HB_ISIZ hb_compJumpGetOffset( HB_BYTE * pCode )
       case HB_P_JUMPNEAR:
       case HB_P_JUMPFALSENEAR:
       case HB_P_JUMPTRUENEAR:
-         return *( ( signed char * ) pCode + 1 );
+         return *( reinterpret_cast< signed char * >( pCode ) + 1 );
 
       case HB_P_JUMP:
       case HB_P_JUMPFALSE:
@@ -1373,7 +1373,7 @@ static void hb_compPCodeEnumAssignedUnused( HB_COMP_DECL, PHB_HFUNC pFunc, PHB_O
    HB_SIZE nPos = 0, nLastPos = 0;
    HB_USHORT usLine = 0;
 
-   pMap = ( HB_BYTE * ) hb_xgrab( pFunc->nPCodePos );
+   pMap = static_cast< HB_BYTE * >( hb_xgrab( pFunc->nPCodePos ) );
 
    while( nPos < pFunc->nPCodePos )
    {
@@ -1451,7 +1451,7 @@ static void hb_compPCodeEnumAssignedUnused( HB_COMP_DECL, PHB_HFUNC pFunc, PHB_O
          }
       }
 
-      if( iCheck != 0 && ( isLocal = hb_compLocalGetNumber( &pFunc->pCode[ nPos ] ) ) > ( HB_SHORT ) pFunc->wParamCount )
+      if( iCheck != 0 && ( isLocal = hb_compLocalGetNumber( &pFunc->pCode[ nPos ] ) ) > static_cast< HB_SHORT >( pFunc->wParamCount ) )
       {
          PHB_HVAR pVar = pFunc->pLocals;
 
@@ -1631,7 +1631,7 @@ void hb_compPCodeTraceOptimizer( HB_COMP_DECL )
    }
 
    /* Initial scan */
-   pLocals = ( PHB_OPT_LOCAL ) hb_xgrabz( sizeof( HB_OPT_LOCAL ) * usLocalCount );
+   pLocals = static_cast< PHB_OPT_LOCAL >( hb_xgrabz( sizeof( HB_OPT_LOCAL ) * usLocalCount ) );
    hb_compPCodeEnumScanLocals( pFunc, pLocals );
 
    /* Check */

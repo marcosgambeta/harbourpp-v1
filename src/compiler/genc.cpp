@@ -51,7 +51,7 @@ static void hb_compDumpFindCFunc( HB_COMP_DECL )
    {
       if( pInline->pCode && ! pInline->szName )
       {
-         const char * pszCCode = ( const char * ) pInline->pCode;
+         const char * pszCCode = reinterpret_cast< const char * >( pInline->pCode );
          char         ch;
          int          len;
          while( ( ch = *pszCCode++ ) != 0 )
@@ -469,13 +469,13 @@ static void hb_compGenCFunc( FILE * yyc, const char * cDecor, const char * szNam
          while( ( c = *tmp++ ) != 0 )
          {
             if( HB_ISNEXTIDCHAR( c ) )
-               fputc( ( HB_UCHAR ) c, yyc );
+               fputc( static_cast< HB_UCHAR >( c ), yyc );
             else if( ! fStrip || c != '$' || *tmp != 0 )
             {
                /* 'x' is used to force unique name and eliminate possible
                 * collisions with other function names.
                 */
-               fprintf( yyc, "x%02x", ( HB_UCHAR ) c );
+               fprintf( yyc, "x%02x", static_cast< HB_UCHAR >( c ) );
             }
          }
          if( iFuncSuffix )
@@ -484,7 +484,7 @@ static void hb_compGenCFunc( FILE * yyc, const char * cDecor, const char * szNam
       }
       else
       {
-         fputc( ( HB_UCHAR ) cDecor[ i ], yyc );
+         fputc( static_cast< HB_UCHAR >( cDecor[ i ] ), yyc );
          i++;
       }
    }
@@ -494,14 +494,14 @@ static void hb_compGenCByteStr( FILE * yyc, const HB_BYTE * pText, HB_SIZE nLen 
 {
    for( HB_SIZE nPos = 0; nPos < nLen; nPos++ )
    {
-      HB_BYTE uchr = ( HB_BYTE ) pText[ nPos ];
+      HB_BYTE uchr = static_cast< HB_BYTE >( pText[ nPos ] );
       /*
        * NOTE: After optimization some Chr( n ) can be converted
        *    into a string containing non-printable characters.
        *
        * TODO: add switch to use hexadecimal format "%#04x"
        */
-      fprintf( yyc, ( uchr < ( HB_BYTE ) ' ' || uchr >= 127 || uchr == '\\' ||
+      fprintf( yyc, ( uchr < static_cast< HB_BYTE >( ' ' ) || uchr >= 127 || uchr == '\\' ||
                       uchr == '\'' ) ? "%i, " : "\'%c\', ", uchr );
    }
 }
@@ -808,7 +808,7 @@ static HB_GENC_FUNC( hb_p_jumpnear )
    {
       HB_ISIZ nOffset = static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] );
 
-      fprintf( cargo->yyc, "\t/* %" HB_PFS "i (abs: %05" HB_PFS "i) */", nOffset, ( HB_ISIZ ) ( nPCodePos + nOffset ) );
+      fprintf( cargo->yyc, "\t/* %" HB_PFS "i (abs: %05" HB_PFS "i) */", nOffset, static_cast< HB_ISIZ >( nPCodePos + nOffset ) );
    }
    fprintf( cargo->yyc, "\n" );
    return 2;
@@ -823,7 +823,7 @@ static HB_GENC_FUNC( hb_p_jump )
    {
       HB_ISIZ nOffset = HB_PCODE_MKSHORT( &pFunc->pCode[ nPCodePos + 1 ] );
 
-      fprintf( cargo->yyc, "\t/* %" HB_PFS "i (abs: %05" HB_PFS "i) */", nOffset, ( HB_ISIZ ) ( nPCodePos + nOffset ) );
+      fprintf( cargo->yyc, "\t/* %" HB_PFS "i (abs: %05" HB_PFS "i) */", nOffset, static_cast< HB_ISIZ >( nPCodePos + nOffset ) );
    }
    fprintf( cargo->yyc, "\n" );
    return 3;
@@ -838,7 +838,7 @@ static HB_GENC_FUNC( hb_p_jumpfar )
    if( cargo->bVerbose )
    {
       HB_ISIZ nOffset = HB_PCODE_MKINT24( &pFunc->pCode[ nPCodePos + 1 ] );
-      fprintf( cargo->yyc, "\t/* %" HB_PFS "i (abs: %08" HB_PFS "i) */", nOffset, ( HB_ISIZ ) ( nPCodePos + nOffset ) );
+      fprintf( cargo->yyc, "\t/* %" HB_PFS "i (abs: %08" HB_PFS "i) */", nOffset, static_cast< HB_ISIZ >( nPCodePos + nOffset ) );
    }
    fprintf( cargo->yyc, "\n" );
    return 4;
@@ -851,7 +851,7 @@ static HB_GENC_FUNC( hb_p_jumpfalsenear )
    if( cargo->bVerbose )
    {
       HB_ISIZ nOffset = static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] );
-      fprintf( cargo->yyc, "\t/* %" HB_PFS "i (abs: %05" HB_PFS "i) */", nOffset, ( HB_ISIZ ) ( nPCodePos + nOffset ) );
+      fprintf( cargo->yyc, "\t/* %" HB_PFS "i (abs: %05" HB_PFS "i) */", nOffset, static_cast< HB_ISIZ >( nPCodePos + nOffset ) );
    }
    fprintf( cargo->yyc, "\n" );
    return 2;
@@ -865,7 +865,7 @@ static HB_GENC_FUNC( hb_p_jumpfalse )
    if( cargo->bVerbose )
    {
       HB_ISIZ nOffset = HB_PCODE_MKSHORT( &pFunc->pCode[ nPCodePos + 1 ] );
-      fprintf( cargo->yyc, "\t/* %" HB_PFS "i (abs: %05" HB_PFS "i) */", nOffset, ( HB_ISIZ ) ( nPCodePos + nOffset ) );
+      fprintf( cargo->yyc, "\t/* %" HB_PFS "i (abs: %05" HB_PFS "i) */", nOffset, static_cast< HB_ISIZ >( nPCodePos + nOffset ) );
    }
    fprintf( cargo->yyc, "\n" );
    return 3;
@@ -880,7 +880,7 @@ static HB_GENC_FUNC( hb_p_jumpfalsefar )
    if( cargo->bVerbose )
    {
       HB_ISIZ nOffset = HB_PCODE_MKINT24( &pFunc->pCode[ nPCodePos + 1 ] );
-      fprintf( cargo->yyc, "\t/* %" HB_PFS "i (abs: %08" HB_PFS "i) */", nOffset, ( HB_ISIZ ) ( nPCodePos + nOffset ) );
+      fprintf( cargo->yyc, "\t/* %" HB_PFS "i (abs: %08" HB_PFS "i) */", nOffset, static_cast< HB_ISIZ >( nPCodePos + nOffset ) );
    }
    fprintf( cargo->yyc, "\n" );
    return 4;
@@ -893,7 +893,7 @@ static HB_GENC_FUNC( hb_p_jumptruenear )
    if( cargo->bVerbose )
    {
       HB_ISIZ nOffset = static_cast< signed char >( pFunc->pCode[ nPCodePos + 1 ] );
-      fprintf( cargo->yyc, "\t/* %" HB_PFS "i (abs: %05" HB_PFS "i) */", nOffset, ( HB_ISIZ ) ( nPCodePos + nOffset ) );
+      fprintf( cargo->yyc, "\t/* %" HB_PFS "i (abs: %05" HB_PFS "i) */", nOffset, static_cast< HB_ISIZ >( nPCodePos + nOffset ) );
    }
    fprintf( cargo->yyc, "\n" );
    return 2;
@@ -907,7 +907,7 @@ static HB_GENC_FUNC( hb_p_jumptrue )
    if( cargo->bVerbose )
    {
       HB_ISIZ nOffset = HB_PCODE_MKSHORT( &pFunc->pCode[ nPCodePos + 1 ] );
-      fprintf( cargo->yyc, "\t/* %" HB_PFS "i (abs: %05" HB_PFS "i) */", nOffset, ( HB_ISIZ ) ( nPCodePos + nOffset ) );
+      fprintf( cargo->yyc, "\t/* %" HB_PFS "i (abs: %05" HB_PFS "i) */", nOffset, static_cast< HB_ISIZ >( nPCodePos + nOffset ) );
    }
    fprintf( cargo->yyc, "\n" );
    return 3;
@@ -922,7 +922,7 @@ static HB_GENC_FUNC( hb_p_jumptruefar )
    if( cargo->bVerbose )
    {
       HB_ISIZ nOffset = HB_PCODE_MKINT24( &pFunc->pCode[ nPCodePos + 1 ] );
-      fprintf( cargo->yyc, "\t/* %" HB_PFS "i (abs: %08" HB_PFS "i) */", nOffset, ( HB_ISIZ ) ( nPCodePos + nOffset ) );
+      fprintf( cargo->yyc, "\t/* %" HB_PFS "i (abs: %08" HB_PFS "i) */", nOffset, static_cast< HB_ISIZ >( nPCodePos + nOffset ) );
    }
    fprintf( cargo->yyc, "\n" );
    return 4;
@@ -969,7 +969,7 @@ static HB_GENC_FUNC( hb_p_localname )
             pFunc->pCode[ nPCodePos + 1 ],
             pFunc->pCode[ nPCodePos + 2 ] );
    if( cargo->bVerbose )
-      fprintf( cargo->yyc, "\t/* %s */", ( char * ) pFunc->pCode + nPCodePos + 3 );
+      fprintf( cargo->yyc, "\t/* %s */", reinterpret_cast< char * >( pFunc->pCode ) + nPCodePos + 3 );
    fprintf( cargo->yyc, "\n" );
    nPCodePos += 3;
    while( pFunc->pCode[ nPCodePos ] )
@@ -1141,7 +1141,7 @@ static HB_GENC_FUNC( hb_p_modulename )
 
    fprintf( cargo->yyc, "\tHB_P_MODULENAME," );
    if( cargo->bVerbose )
-      fprintf( cargo->yyc, "\t/* %s */", ( char * ) pFunc->pCode + nPCodePos + 1 );
+      fprintf( cargo->yyc, "\t/* %s */", reinterpret_cast< char * >( pFunc->pCode ) + nPCodePos + 1 );
    fprintf( cargo->yyc, "\n" );
    nPCodePos++;
    while( pFunc->pCode[ nPCodePos ] )
@@ -1539,7 +1539,7 @@ static HB_GENC_FUNC( hb_p_pushdouble )
    ++nPCodePos;
    for( int i = 0; i < static_cast< int >( sizeof( double ) + sizeof( HB_BYTE ) + sizeof( HB_BYTE ) ); ++i )
    {
-      fprintf( cargo->yyc, " %u,", ( HB_UCHAR ) pFunc->pCode[ nPCodePos + i ] );
+      fprintf( cargo->yyc, " %u,", static_cast< HB_UCHAR >( pFunc->pCode[ nPCodePos + i ] ) );
    }
    if( cargo->bVerbose )
    {
@@ -2020,7 +2020,7 @@ static HB_GENC_FUNC( hb_p_staticname )
             pFunc->pCode[ nPCodePos + 2 ],
             pFunc->pCode[ nPCodePos + 3 ] );
    if( cargo->bVerbose )
-      fprintf( cargo->yyc, "\t/* %s */", ( char * ) pFunc->pCode + nPCodePos + 4 );
+      fprintf( cargo->yyc, "\t/* %s */", reinterpret_cast< char * >( pFunc->pCode ) + nPCodePos + 4 );
    fprintf( cargo->yyc, "\n" );
 
    nPCodePos += 4;
@@ -2726,7 +2726,7 @@ static void hb_compGenCReadable( HB_COMP_DECL, PHB_HFUNC pFunc, FILE * yyc )
    genc_info.yyc = yyc;
 
    fprintf( yyc, "{\n   static const HB_BYTE pcode[] =\n   {\n" );
-   hb_compPCodeEval( pFunc, ( const PHB_PCODE_FUNC * ) pFuncTable, ( void * ) &genc_info );
+   hb_compPCodeEval( pFunc, ( const PHB_PCODE_FUNC * ) pFuncTable, static_cast< void * >( &genc_info ) );
 
    if( genc_info.bVerbose )
       fprintf( yyc, "/* %05" HB_PFS "u */\n", pFunc->nPCodePos );

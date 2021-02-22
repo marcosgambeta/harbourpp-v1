@@ -51,7 +51,7 @@ static void hb_pp_ErrorGen( void * cargo,
                             char cPrefix, int iErrorCode,
                             const char * szParam1, const char * szParam2 )
 {
-   HB_COMP_DECL = ( PHB_COMP ) cargo;
+   HB_COMP_DECL = static_cast< PHB_COMP >( cargo );
    int iCurrLine = HB_COMP_PARAM->currLine;
    const char * currModule = HB_COMP_PARAM->currModule;
 
@@ -68,7 +68,7 @@ static void hb_pp_ErrorGen( void * cargo,
 
 static void hb_pp_Disp( void * cargo, const char * szMessage )
 {
-   HB_COMP_DECL = ( PHB_COMP ) cargo;
+   HB_COMP_DECL = static_cast< PHB_COMP >( cargo );
 
    hb_compOutStd( HB_COMP_PARAM, szMessage );
 }
@@ -78,8 +78,8 @@ static void hb_pp_PragmaDump( void * cargo, char * pBuffer, HB_SIZE nSize,
 {
    PHB_HINLINE pInline;
 
-   pInline = hb_compInlineAdd( ( PHB_COMP ) cargo, nullptr, iLine );
-   pInline->pCode = ( HB_BYTE * ) hb_xgrab( nSize + 1 );
+   pInline = hb_compInlineAdd( static_cast< PHB_COMP >( cargo ), nullptr, iLine );
+   pInline->pCode = static_cast< HB_BYTE * >( hb_xgrab( nSize + 1 ) );
    memcpy( pInline->pCode, pBuffer, nSize );
    pInline->pCode[ nSize ] = '\0';
    pInline->nPCodeSize = nSize;
@@ -88,7 +88,7 @@ static void hb_pp_PragmaDump( void * cargo, char * pBuffer, HB_SIZE nSize,
 static void hb_pp_hb_inLine( void * cargo, char * szFunc,
                              char * pBuffer, HB_SIZE nSize, int iLine )
 {
-   HB_COMP_DECL = ( PHB_COMP ) cargo;
+   HB_COMP_DECL = static_cast< PHB_COMP >( cargo );
 
    if( HB_COMP_PARAM->iLanguage != HB_LANG_C )
    {
@@ -102,7 +102,7 @@ static void hb_pp_hb_inLine( void * cargo, char * szFunc,
    {
       PHB_HINLINE pInline = hb_compInlineAdd( HB_COMP_PARAM,
          hb_compIdentifierNew( HB_COMP_PARAM, szFunc, HB_IDENT_COPY ), iLine );
-      pInline->pCode = ( HB_BYTE * ) hb_xgrab( nSize + 1 );
+      pInline->pCode = static_cast< HB_BYTE * >( hb_xgrab( nSize + 1 ) );
       memcpy( pInline->pCode, pBuffer, nSize );
       pInline->pCode[ nSize ] = '\0';
       pInline->nPCodeSize = nSize;
@@ -112,7 +112,7 @@ static void hb_pp_hb_inLine( void * cargo, char * szFunc,
 static HB_BOOL hb_pp_CompilerSwitch( void * cargo, const char * szSwitch,
                                      int * piValue, HB_BOOL fSet )
 {
-   HB_COMP_DECL = ( PHB_COMP ) cargo;
+   HB_COMP_DECL = static_cast< PHB_COMP >( cargo );
    HB_BOOL fError = HB_FALSE;
    int iValue, i;
 
@@ -364,7 +364,7 @@ static HB_BOOL hb_pp_CompilerSwitch( void * cargo, const char * szSwitch,
 
 static void hb_pp_fileIncluded( void * cargo, const char * szFileName )
 {
-   HB_COMP_DECL = ( PHB_COMP ) cargo;
+   HB_COMP_DECL = static_cast< PHB_COMP >( cargo );
    PHB_INCLST pIncFile, * pIncFilePtr;
    int iLen;
 
@@ -382,7 +382,7 @@ static void hb_pp_fileIncluded( void * cargo, const char * szFileName )
    }
 
    iLen = static_cast< int >( strlen( szFileName ) );
-   pIncFile = ( PHB_INCLST ) hb_xgrab( sizeof( HB_INCLST ) + iLen );
+   pIncFile = static_cast< PHB_INCLST >( hb_xgrab( sizeof( HB_INCLST ) + iLen ) );
    pIncFile->pNext = nullptr;
    memcpy( pIncFile->szFileName, szFileName, iLen + 1 );
    *pIncFilePtr = pIncFile;

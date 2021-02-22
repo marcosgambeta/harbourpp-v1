@@ -71,7 +71,7 @@ PHB_DEBUGINFO hb_compGetDebugInfo( HB_COMP_DECL )
                   break;
 
                case HB_P_MODULENAME:
-                  pszModuleName = ( const char * ) &pFunc->pCode[ nPos + 1 ];
+                  pszModuleName = reinterpret_cast< const char * >( &pFunc->pCode[ nPos + 1 ] );
                   pInfo = nullptr;
                   break;
 
@@ -113,7 +113,7 @@ PHB_DEBUGINFO hb_compGetDebugInfo( HB_COMP_DECL )
                   }
                   if( ! pInfo )
                   {
-                     pInfo = ( PHB_DEBUGINFO ) hb_xgrab( sizeof( HB_DEBUGINFO ) );
+                     pInfo = static_cast< PHB_DEBUGINFO >( hb_xgrab( sizeof( HB_DEBUGINFO ) ) );
                      pInfo->pszModuleName = hb_strndup( pszModuleName, i );
                      pInfo->ulFirstLine = pInfo->ulLastLine = ulLine;
                      /*
@@ -123,7 +123,7 @@ PHB_DEBUGINFO hb_compGetDebugInfo( HB_COMP_DECL )
                       * parameter to hb_compGenPushString(). [druzus]
                       */
                      pInfo->ulAllocated = ( ( ulLine >> 3 ) + 0x100 ) & 0xFFFFFF00L;
-                     pInfo->pLineMap = ( HB_BYTE * ) hb_xgrabz( pInfo->ulAllocated + 1 );
+                     pInfo->pLineMap = static_cast< HB_BYTE * >( hb_xgrabz( pInfo->ulAllocated + 1 ) );
                      pInfo->pNext = pLineInfo;
                      pLineInfo = pInfo;
                   }
@@ -132,7 +132,7 @@ PHB_DEBUGINFO hb_compGetDebugInfo( HB_COMP_DECL )
                if( pInfo->ulAllocated <= nOffset )
                {
                   HB_ULONG ulNewSize = ( ( ulLine >> 3 ) + 0x100 ) & 0xFFFFFF00L;
-                  pInfo->pLineMap = ( HB_BYTE * ) hb_xrealloc( pInfo->pLineMap, ulNewSize + 1 );
+                  pInfo->pLineMap = static_cast< HB_BYTE * >( hb_xrealloc( pInfo->pLineMap, ulNewSize + 1 ) );
                   memset( pInfo->pLineMap + pInfo->ulAllocated, 0, ulNewSize - pInfo->ulAllocated + 1 );
                   pInfo->ulAllocated = ulNewSize;
                }

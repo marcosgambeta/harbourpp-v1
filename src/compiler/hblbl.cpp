@@ -377,7 +377,7 @@ void hb_compGenLabelTable( PHB_HFUNC pFunc, PHB_LABEL_INFO label_info )
 
    assert( HB_P_LAST_PCODE == sizeof( s_GenLabelFuncTable ) / sizeof( PHB_LABEL_FUNC ) );
 
-   hb_compPCodeEval( pFunc, ( const PHB_PCODE_FUNC * ) pFuncTable, ( void * ) label_info );
+   hb_compPCodeEval( pFunc, ( const PHB_PCODE_FUNC * ) pFuncTable, static_cast< void * >( label_info ) );
 
    for( HB_SIZE n = 0; n < pFunc->nPCodePos; ++n )
    {

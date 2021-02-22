@@ -277,7 +277,7 @@ static const char * hb_comp_tokenIdentifer( HB_COMP_DECL, PHB_PP_TOKEN pToken )
 static const char * hb_comp_tokenString( YYSTYPE * yylval_ptr, HB_COMP_DECL, PHB_PP_TOKEN pToken )
 {
    yylval_ptr->valChar.length = pToken->len;
-   yylval_ptr->valChar.string = ( char * ) HB_UNCONST( pToken->value );
+   yylval_ptr->valChar.string = static_cast< char * >( HB_UNCONST( pToken->value ) );
    yylval_ptr->valChar.dealloc = HB_FALSE;
    if( HB_PP_TOKEN_ALLOC( pToken->type ) )
    {
@@ -285,7 +285,7 @@ static const char * hb_comp_tokenString( YYSTYPE * yylval_ptr, HB_COMP_DECL, PHB
       pToken->value = hb_compIdentifierNew( HB_COMP_PARAM, pToken->value,
                yylval_ptr->valChar.dealloc ? HB_IDENT_COPY : HB_IDENT_FREE );
       if( ! yylval_ptr->valChar.dealloc )
-         yylval_ptr->valChar.string = ( char * ) HB_UNCONST( pToken->value );
+         yylval_ptr->valChar.string = static_cast< char * >( HB_UNCONST( pToken->value ) );
       pToken->type |= HB_PP_TOKEN_STATIC;
    }
    return pToken->value;
@@ -328,7 +328,7 @@ static HB_BOOL hb_comp_timeDecode( PHB_PP_TOKEN pTime, long * plTime )
       {
          if( dNumber < 0.0 || dNumber >= 60.0 )
             return HB_FALSE;
-         lMilliSec = ( HB_MAXINT ) ( dNumber * 1000 + 0.05 / HB_MILLISECS_PER_DAY );
+         lMilliSec = static_cast< HB_MAXINT >( dNumber * 1000 + 0.05 / HB_MILLISECS_PER_DAY );
          if( lMilliSec == 60000 )
             --lMilliSec;
       }
@@ -424,15 +424,15 @@ static int hb_comp_dayTimeDecode( PHB_COMP_LEX pLex, PHB_PP_TOKEN pToken,
          {
             if( iDec == 2 )
             {
-               lYear = ( HB_MAXINT ) dNumber;
-               lMonth = ( HB_MAXINT ) ( dNumber * 100 + 0.1 ) % 100;
+               lYear = static_cast< HB_MAXINT >( dNumber );
+               lMonth = static_cast< HB_MAXINT >( dNumber * 100 + 0.1 ) % 100;
                pDay = pYear->pNext;
                if( hb_compStrToNum( pDay->value, pDay->len, &lDay, &dNumber,
                                     &iDec, &iWidth ) )
                {
                   if( iDec == 2 )
                   {
-                     lDay = ( HB_MAXINT ) ( dNumber * 100 + 0.1 );
+                     lDay = static_cast< HB_MAXINT >( dNumber * 100 + 0.1 );
                      pTime = pDay->pNext;
                   }
                }
@@ -572,14 +572,14 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
          if( hb_compStrToNum( pToken->value, pToken->len, &lNumber, &dNumber, &iDec, &iWidth ) )
          {
             yylval_ptr->valDouble.dNumber = dNumber;
-            yylval_ptr->valDouble.bDec    = ( HB_UCHAR ) iDec;
-            yylval_ptr->valDouble.bWidth  = ( HB_UCHAR ) iWidth;
+            yylval_ptr->valDouble.bDec    = static_cast< HB_UCHAR >( iDec );
+            yylval_ptr->valDouble.bWidth  = static_cast< HB_UCHAR >( iWidth );
             return NUM_DOUBLE;
          }
          else
          {
             yylval_ptr->valLong.lNumber = lNumber;
-            yylval_ptr->valLong.bWidth  = ( HB_UCHAR ) iWidth;
+            yylval_ptr->valLong.bWidth  = static_cast< HB_UCHAR >( iWidth );
             return NUM_LONG;
          }
       }
@@ -833,14 +833,14 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
       case HB_PP_TOKEN_GT:
       case HB_PP_TOKEN_REFERENCE:
          pLex->iState = OPERATOR;
-         return ( HB_UCHAR ) pToken->value[ 0 ];
+         return static_cast< HB_UCHAR >( pToken->value[ 0 ] );
 
       case HB_PP_TOKEN_EOL:
          pLex->fEol = HB_TRUE;
          /* fallthrough */
       case HB_PP_TOKEN_EOC:
          pLex->iState = LOOKUP;
-         return ( HB_UCHAR ) pToken->value[ 0 ];
+         return static_cast< HB_UCHAR >( pToken->value[ 0 ] );
 
       case HB_PP_TOKEN_KEYWORD:
       {
@@ -1390,7 +1390,7 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
          return iType;
       }
       default:
-         return ( HB_UCHAR ) pToken->value[ 0 ];
+         return static_cast< HB_UCHAR >( pToken->value[ 0 ] );
    }
 }
 

@@ -67,7 +67,7 @@ static HB_STRIP_FUNC( hb_p_line )
          hb_compNOOPfill( pFunc, nPCodePos, 3, HB_FALSE, HB_FALSE );
          break;
       default:
-         if( ! ( ( PHB_COMP ) cargo )->fDebugInfo )
+         if( ! ( static_cast< PHB_COMP >( cargo ) )->fDebugInfo )
          {
             HB_SIZE nNewPos = nPCodePos;
             switch( pFunc->pCode[ nPCodePos + 3 ] )
@@ -285,5 +285,5 @@ void hb_compStripFuncLines( HB_COMP_DECL, PHB_HFUNC pFunc )
 {
    assert( HB_P_LAST_PCODE == sizeof( s_stripLines_table ) / sizeof( PHB_STRIP_FUNC ) );
 
-   hb_compPCodeEval( pFunc, s_stripLines_table, ( void * ) HB_COMP_PARAM );
+   hb_compPCodeEval( pFunc, s_stripLines_table, static_cast< void * >( HB_COMP_PARAM ) );
 }

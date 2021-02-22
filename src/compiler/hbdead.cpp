@@ -79,14 +79,14 @@ static void hb_compCodeTraceAddJump( PHB_CODETRACE_INFO pInfo, HB_SIZE nPCodePos
       if( pInfo->nJumpSize == 0 )
       {
          pInfo->nJumpSize = HB_JUMPADDR_ALLOC;
-         pInfo->pnJumps = ( HB_SIZE * ) hb_xgrab( pInfo->nJumpSize *
-                                                  sizeof( HB_SIZE ) );
+         pInfo->pnJumps = static_cast< HB_SIZE * >( hb_xgrab( pInfo->nJumpSize *
+                                                  sizeof( HB_SIZE ) ) );
       }
       else if( pInfo->nJumpSize == pInfo->nJumpCount )
       {
          pInfo->nJumpSize += HB_JUMPADDR_ALLOC;
-         pInfo->pnJumps = ( HB_SIZE * ) hb_xrealloc( pInfo->pnJumps,
-                                                     pInfo->nJumpSize * sizeof( HB_SIZE ) );
+         pInfo->pnJumps = static_cast< HB_SIZE * >( hb_xrealloc( pInfo->pnJumps,
+                                                     pInfo->nJumpSize * sizeof( HB_SIZE ) ) );
       }
       pInfo->pnJumps[ pInfo->nJumpCount++ ] = nPCodePos;
       pInfo->pCodeMark[ nPCodePos ] = 1;
@@ -556,9 +556,9 @@ void hb_compCodeTraceMarkDead( HB_COMP_DECL, PHB_HFUNC pFunc )
    code_info.nPCodeSize = pFunc->nPCodePos;
    code_info.fFinished = HB_FALSE;
 
-   code_info.pCodeMark = ( HB_BYTE * ) hb_xgrabz( code_info.nPCodeSize );
+   code_info.pCodeMark = static_cast< HB_BYTE * >( hb_xgrabz( code_info.nPCodeSize ) );
 
-   hb_compPCodeTrace( pFunc, ( const PHB_PCODE_FUNC * ) pFuncTable, ( void * ) &code_info );
+   hb_compPCodeTrace( pFunc, ( const PHB_PCODE_FUNC * ) pFuncTable, static_cast< void * >( &code_info ) );
 
    if( code_info.fFinished )
    {

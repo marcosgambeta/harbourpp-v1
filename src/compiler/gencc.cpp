@@ -73,7 +73,7 @@ void hb_compGenCString( FILE * yyc, const HB_BYTE * pText, HB_SIZE nLen )
    fputc( '"', yyc );
    for( HB_SIZE nPos = 0; nPos < nLen; nPos++ )
    {
-      HB_BYTE uchr = ( HB_BYTE ) pText[ nPos ];
+      HB_BYTE uchr = static_cast< HB_BYTE >( pText[ nPos ] );
       /*
        * NOTE: After optimization some Chr( n ) can be converted
        *       into a string containing non-printable characters.
@@ -88,9 +88,9 @@ void hb_compGenCString( FILE * yyc, const HB_BYTE * pText, HB_SIZE nLen )
          HB_BYTE uchrnext = nPos < nLen - 1 ? pText[ nPos + 1 ] : 0;
 
          fprintf( yyc, "\\x%02X%s", uchr,
-                  ( uchrnext >= ( HB_BYTE ) '0' && uchrnext <= ( HB_BYTE ) '9' ) ||
-                  ( uchrnext >= ( HB_BYTE ) 'a' && uchrnext <= ( HB_BYTE ) 'z' ) ||
-                  ( uchrnext >= ( HB_BYTE ) 'A' && uchrnext <= ( HB_BYTE ) 'Z' ) ? "\" \"" : "" );
+                  ( uchrnext >= static_cast< HB_BYTE >( '0' ) && uchrnext <= static_cast< HB_BYTE >( '9' ) ) ||
+                  ( uchrnext >= static_cast< HB_BYTE >( 'a' ) && uchrnext <= static_cast< HB_BYTE >( 'z' ) ) ||
+                  ( uchrnext >= static_cast< HB_BYTE >( 'A' ) && uchrnext <= static_cast< HB_BYTE >( 'Z' ) ) ? "\" \"" : "" );
       }
       else
          fprintf( yyc, "%c", uchr );
@@ -698,7 +698,7 @@ static HB_GENC_FUNC( hb_p_localname )
 
    HB_GENC_LABEL();
 
-   usLen = static_cast< HB_USHORT >( strlen( ( char * ) &pFunc->pCode[ nPCodePos + 3 ] ) );
+   usLen = static_cast< HB_USHORT >( strlen( reinterpret_cast< char * >( &pFunc->pCode[ nPCodePos + 3 ] ) ) );
    fprintf( cargo->yyc, "\thb_xvmLocalName( %hu, ",
             HB_PCODE_MKUSHORT( &pFunc->pCode[ nPCodePos + 1 ] ) );
    hb_compGenCString( cargo->yyc, &pFunc->pCode[ nPCodePos + 3 ], usLen );
@@ -850,7 +850,7 @@ static HB_GENC_FUNC( hb_p_modulename )
 
    HB_GENC_LABEL();
 
-   usLen = static_cast< HB_USHORT >( strlen( ( char * ) &pFunc->pCode[ nPCodePos + 1 ] ) );
+   usLen = static_cast< HB_USHORT >( strlen( reinterpret_cast< char * >( &pFunc->pCode[ nPCodePos + 1 ] ) ) );
    fprintf( cargo->yyc, "\thb_xvmModuleName( " );
    hb_compGenCString( cargo->yyc, &pFunc->pCode[ nPCodePos + 1 ], usLen );
    fprintf( cargo->yyc, " );\n" );
@@ -1677,7 +1677,7 @@ static HB_GENC_FUNC( hb_p_staticname )
 
    HB_GENC_LABEL();
 
-   usLen = static_cast< HB_USHORT >( strlen( ( char * ) &pFunc->pCode[ nPCodePos + 4 ] ) );
+   usLen = static_cast< HB_USHORT >( strlen( reinterpret_cast< char * >( &pFunc->pCode[ nPCodePos + 4 ] ) ) );
    fprintf( cargo->yyc, "\thb_xvmStaticName( %hu, %hu, ",
             static_cast< HB_USHORT >( pFunc->pCode[ nPCodePos + 1 ] ),
             HB_PCODE_MKUSHORT( &pFunc->pCode[ nPCodePos + 2 ] ) );
@@ -2408,7 +2408,7 @@ void hb_compGenCRealCode( HB_COMP_DECL, PHB_HFUNC pFunc, FILE * yyc )
       label_info.pnLabels = nullptr;
    else
    {
-      label_info.pnLabels = ( HB_SIZE * ) hb_xgrabz( pFunc->nPCodePos * sizeof( HB_SIZE ) );
+      label_info.pnLabels = static_cast< HB_SIZE * >( hb_xgrabz( pFunc->nPCodePos * sizeof( HB_SIZE ) ) );
       hb_compGenLabelTable( pFunc, &label_info );
    }
 
@@ -2417,7 +2417,7 @@ void hb_compGenCRealCode( HB_COMP_DECL, PHB_HFUNC pFunc, FILE * yyc )
       fprintf( yyc, "   HB_BOOL fValue;\n" );
    fprintf( yyc, "   do {\n" );
 
-   hb_compPCodeEval( pFunc, ( const PHB_PCODE_FUNC * ) pFuncTable, ( void * ) &label_info );
+   hb_compPCodeEval( pFunc, ( const PHB_PCODE_FUNC * ) pFuncTable, static_cast< void * >( &label_info ) );
 
    fprintf( yyc, "   } while( 0 );\n" );
    if( label_info.fEndRequest )

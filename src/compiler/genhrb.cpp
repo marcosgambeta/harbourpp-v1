@@ -72,7 +72,7 @@ void hb_compGenBufPortObj( HB_COMP_DECL, HB_BYTE ** pBufPtr, HB_SIZE * pnSize )
 
    *pnSize = hb_compHrbSize( HB_COMP_PARAM, &ulSymbols, &ulFunctions );
    /* additional 0 byte is for passing buffer directly as string item */
-   ptr = *pBufPtr = ( HB_BYTE * ) hb_xgrab( *pnSize + 1 );
+   ptr = *pBufPtr = static_cast< HB_BYTE * >( hb_xgrab( *pnSize + 1 ) );
 
    /* signature */
    *ptr++ = 0xC0;
@@ -98,7 +98,7 @@ void hb_compGenBufPortObj( HB_COMP_DECL, HB_BYTE ** pBufPtr, HB_SIZE * pnSize )
        *        for .hrb files in which this field will have at least
        *        16-bit [druzus]
        */
-      *ptr++ = ( HB_BYTE ) pSym->cScope;
+      *ptr++ = static_cast< HB_BYTE >( pSym->cScope );
       /* symbol type */
       if( pSym->cScope & HB_FS_LOCAL )
          *ptr++ = SYM_FUNC;      /* function defined in this module */

@@ -103,7 +103,7 @@ static const char * hb_compChkAddDefine( HB_COMP_DECL, const char * szSwitch,
 
       if( *pDefinePtr == nullptr )
       {
-         *pDefinePtr = ( PHB_PPDEFINE ) hb_xgrab( sizeof( HB_PPDEFINE ) );
+         *pDefinePtr = static_cast< PHB_PPDEFINE >( hb_xgrab( sizeof( HB_PPDEFINE ) ) );
          ( *pDefinePtr )->pNext = nullptr;
       }
       else
@@ -766,12 +766,12 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
             {
                if( szSwPtr[ 1 ] && hb_compChkOptionLen( szSwPtr + 1, fEnv ) > 0 )
                {
-                  HB_COMP_PARAM->szStdChExt = ( char ** )
+                  HB_COMP_PARAM->szStdChExt = static_cast< char ** >(
                      ( HB_COMP_PARAM->iStdChExt == 0 ?
                         hb_xgrab( sizeof( char * ) ) :
                         hb_xrealloc( HB_COMP_PARAM->szStdChExt,
                                      ( HB_COMP_PARAM->iStdChExt + 1 ) *
-                                     sizeof( char * ) ) );
+                                     sizeof( char * ) ) ) );
                   szSwPtr = hb_compChkOptionGet( szSwPtr + 1,
                                                  &HB_COMP_PARAM->szStdChExt[ HB_COMP_PARAM->iStdChExt++ ],
                                                  fEnv );

@@ -48,7 +48,7 @@
 
 static PHB_EXPR hb_compExprAlloc( HB_COMP_DECL )
 {
-   PHB_EXPRLST pExpItm = ( PHB_EXPRLST ) hb_xgrab( sizeof( HB_EXPRLST ) );
+   PHB_EXPRLST pExpItm = static_cast< PHB_EXPRLST >( hb_xgrab( sizeof( HB_EXPRLST ) ) );
 
    pExpItm->pNext = HB_COMP_PARAM->pExprLst;
    HB_COMP_PARAM->pExprLst = pExpItm;
@@ -68,7 +68,7 @@ static void hb_compExprDealloc( HB_COMP_DECL, PHB_EXPR pExpr )
 {
    if( HB_COMP_PARAM->pExprLst )
    {
-      PHB_EXPRLST pExpItm = ( PHB_EXPRLST ) pExpr;
+      PHB_EXPRLST pExpItm = reinterpret_cast< PHB_EXPRLST >( pExpr );
 
       pExpItm->pNext->pPrev = pExpItm->pPrev;
       pExpItm->pPrev->pNext = pExpItm->pNext;
@@ -89,7 +89,7 @@ static PHB_EXPR hb_compExprNew( HB_COMP_DECL, HB_EXPRTYPE iType )
 {
    PHB_EXPR pExpr;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_compExprNew(%p,%i)", ( void * ) HB_COMP_PARAM, iType ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_compExprNew(%p,%i)", static_cast< void * >( HB_COMP_PARAM ), iType ) );
 
    pExpr = hb_compExprAlloc( HB_COMP_PARAM );
    pExpr->ExprType = iType;
@@ -176,7 +176,7 @@ static void hb_compOutMsg( void * cargo, int iErrorFmt, int iLine,
       else
          hb_snprintf( buffer, sizeof( buffer ), "\n%s:%s ", szModule, szPar2 );
 
-      hb_compOutErr( ( PHB_COMP ) cargo, buffer );
+      hb_compOutErr( static_cast< PHB_COMP >( cargo ), buffer );
    }
 
    if( iErrorFmt == HB_ERRORFMT_CLIPPER )
@@ -186,10 +186,10 @@ static void hb_compOutMsg( void * cargo, int iErrorFmt, int iLine,
       hb_snprintf( buffer, sizeof( buffer ), "%s %c%04i  ",
                    cPrefix == 'W' ? "warning" : "error", cPrefix, iValue );
 
-   hb_compOutErr( ( PHB_COMP ) cargo, buffer );
+   hb_compOutErr( static_cast< PHB_COMP >( cargo ), buffer );
    hb_snprintf( buffer, sizeof( buffer ), szText, szPar1, szPar2 );
-   hb_compOutErr( ( PHB_COMP ) cargo, buffer );
-   hb_compOutErr( ( PHB_COMP ) cargo, "\n" );
+   hb_compOutErr( static_cast< PHB_COMP >( cargo ), buffer );
+   hb_compOutErr( static_cast< PHB_COMP >( cargo ), "\n" );
 }
 
 void hb_compOutStd( HB_COMP_DECL, const char * szMessage )
@@ -243,8 +243,8 @@ PHB_COMP hb_comp_new( void )
 
    if( pPP )
    {
-      pComp = ( PHB_COMP ) hb_xgrabz( sizeof( HB_COMP ) );
-      pComp->pLex = ( PHB_COMP_LEX ) hb_xgrabz( sizeof( HB_COMP_LEX ) );
+      pComp = static_cast< PHB_COMP >( hb_xgrabz( sizeof( HB_COMP ) ) );
+      pComp->pLex = static_cast< PHB_COMP_LEX >( hb_xgrabz( sizeof( HB_COMP_LEX ) ) );
 
       /* initialize default settings */
       pComp->mode = HB_MODE_COMPILER;
