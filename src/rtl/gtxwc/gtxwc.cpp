@@ -3759,7 +3759,7 @@ static void hb_gt_xwc_RepaintChar( PXWND_DEF wnd, int colStart, int rowStart, in
          }
          else
          {
-            color = ( HB_BYTE ) iColor;
+            color = static_cast< HB_BYTE >( iColor );
             if( wnd->fMarkMode &&
                 irow >= wnd->markTop && irow <= wnd->markBottom &&
                 icol >= wnd->markLeft && icol <= wnd->markRight )

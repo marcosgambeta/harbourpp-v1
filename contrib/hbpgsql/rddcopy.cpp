@@ -79,7 +79,7 @@ static HB_BOOL addToContext( pgCopyContext * context, const char c )
 
       context->position = 0;
    }
-   context->buffer[ context->position++ ] = ( HB_BYTE ) c;
+   context->buffer[ context->position++ ] = static_cast< HB_BYTE >( c );
 
    return HB_TRUE;
 }
@@ -123,7 +123,7 @@ static HB_BOOL addStrnToContext( pgCopyContext * context, const char * str, HB_S
 
          context->position = 0;
       }
-      context->buffer[ context->position++ ] = ( HB_BYTE ) str[ nSize++ ];
+      context->buffer[ context->position++ ] = static_cast< HB_BYTE >( str[ nSize++ ] );
    }
 
    return HB_TRUE;

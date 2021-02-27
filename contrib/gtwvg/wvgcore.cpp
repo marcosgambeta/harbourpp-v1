@@ -93,8 +93,8 @@ void hb_wvt_GetStringAttrib( int top, int left, int bottom, int right, HB_BYTE *
          if( hb_gtGetScrChar( irow, icol, &iColor, &bAttr, &usChar ) == HB_FAILURE )
             break;
 
-         sBuffer[ j ] = ( HB_BYTE ) usChar;
-         sAttrib[ j ] = ( HB_BYTE ) iColor;
+         sBuffer[ j ] = static_cast< HB_BYTE >( usChar );
+         sAttrib[ j ] = static_cast< HB_BYTE >( iColor );
          j++;
       }
    }

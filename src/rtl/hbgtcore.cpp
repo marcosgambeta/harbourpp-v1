@@ -161,7 +161,7 @@ static void * hb_gt_def_New( PHB_GT pGT )
    for( nIndex = 0; nIndex < nSize; ++nIndex )
    {
       pGT->screenBuffer[ nIndex ].c.usChar = usChar;
-      pGT->screenBuffer[ nIndex ].c.bColor = ( HB_BYTE ) iColor;
+      pGT->screenBuffer[ nIndex ].c.bColor = static_cast< HB_BYTE >( iColor );
       pGT->screenBuffer[ nIndex ].c.bAttr = bAttr;
       pGT->prevBuffer[ nIndex ].c.bAttr = HB_GT_ATTR_REFRESH;
    }
@@ -842,7 +842,7 @@ static HB_BOOL hb_gt_def_PutChar( PHB_GT pGT, int iRow, int iCol,
    if( HB_GTSELF_CHECKPOS( pGT, iRow, iCol, &lIndex ) )
    {
       pGT->screenBuffer[ lIndex ].c.usChar = usChar;
-      pGT->screenBuffer[ lIndex ].c.bColor = ( HB_BYTE ) iColor;
+      pGT->screenBuffer[ lIndex ].c.bColor = static_cast< HB_BYTE >( iColor );
       pGT->screenBuffer[ lIndex ].c.bAttr  = bAttr;
       pGT->pLines[ iRow ] = HB_TRUE;
       pGT->fRefresh = HB_TRUE;
@@ -1272,13 +1272,13 @@ static void hb_gt_def_Save( PHB_GT pGT, int iTop, int iLeft, int iBottom, int iR
          if( pGT->fVgaCell )
          {
             *pbyBuffer++ = hb_cdpGetChar( cdp, usChar );
-            *pbyBuffer++ = ( HB_BYTE ) iColor;
+            *pbyBuffer++ = static_cast< HB_BYTE >( iColor );
          }
          else
          {
             HB_PUT_LE_UINT16( pbyBuffer, usChar );
             pbyBuffer += 2;
-            *pbyBuffer++ = ( HB_BYTE ) iColor;
+            *pbyBuffer++ = static_cast< HB_BYTE >( iColor );
             *pbyBuffer++ = bAttr;
          }
       }
@@ -1558,7 +1558,7 @@ static void hb_gt_def_ScrollUp( PHB_GT pGT, int iRows, int iColor, HB_USHORT usC
          for( j = 0; j < iWidth; ++j )
          {
             pGT->screenBuffer[ lIndex ].c.usChar = usChar;
-            pGT->screenBuffer[ lIndex ].c.bColor = ( HB_BYTE ) iColor;
+            pGT->screenBuffer[ lIndex ].c.bColor = static_cast< HB_BYTE >( iColor );
             pGT->screenBuffer[ lIndex ].c.bAttr  = bAttr;
             ++lIndex;
          }
@@ -2434,7 +2434,7 @@ static HB_BOOL hb_gt_def_Resize( PHB_GT pGT, int iRows, int iCols )
          for( nIndex = 0; nIndex < nLen; ++nIndex )
          {
             pGT->screenBuffer[ nIndex ].c.usChar = HB_GTSELF_GETCLEARCHAR( pGT );
-            pGT->screenBuffer[ nIndex ].c.bColor = ( HB_BYTE ) HB_GTSELF_GETCLEARCOLOR( pGT );
+            pGT->screenBuffer[ nIndex ].c.bColor = static_cast< HB_BYTE >( HB_GTSELF_GETCLEARCOLOR( pGT ) );
             pGT->screenBuffer[ nIndex ].c.bAttr  = 0x00;
             pGT->prevBuffer[ nIndex ].c.bAttr = HB_GT_ATTR_REFRESH;
          }

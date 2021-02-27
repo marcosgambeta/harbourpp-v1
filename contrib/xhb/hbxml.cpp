@@ -841,7 +841,7 @@ static void mxml_node_read_data( MXML_REFIL * ref, PHB_ITEM pNode, PHB_ITEM doc,
    }
 
    /* trimming unneeded spaces */
-   while( iPos > 1 && HB_ISSPACE( ( HB_BYTE ) buf[ iPos - 1 ] ) )
+   while( iPos > 1 && HB_ISSPACE( static_cast< HB_BYTE >( buf[ iPos - 1 ] ) ) )
       iPos--;
 
    buf[ iPos ] = 0;

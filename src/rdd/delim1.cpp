@@ -382,7 +382,7 @@ static HB_ERRCODE hb_delimReadRecord( DELIMAREAP pArea )
             while( ch >= 0 && ch != cStop )
             {
                if( uiSize < uiLen )
-                  pFieldBuf[ uiSize++ ] = ( HB_BYTE ) ch;
+                  pFieldBuf[ uiSize++ ] = static_cast< HB_BYTE >( ch );
                ch = hb_delimNextChar( pArea );
             }
          }
@@ -391,7 +391,7 @@ static HB_ERRCODE hb_delimReadRecord( DELIMAREAP pArea )
             while( ch >= 0 && ch != cStop && uiSize < uiLen )
             {
                if( uiSize < sizeof( buffer ) - 1 )
-                  buffer[ uiSize++ ] = ( HB_BYTE ) ch;
+                  buffer[ uiSize++ ] = static_cast< HB_BYTE >( ch );
                ch = hb_delimNextChar( pArea );
             }
             buffer[ uiSize ] = '\0';

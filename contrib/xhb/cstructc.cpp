@@ -233,7 +233,7 @@ static HB_UINT SizeOfCStructure( PHB_ITEM aDef, HB_UINT uiAlign )
       {
          uiPad = ( ( uiMemberSize < uiAlign ) ? uiMemberSize : uiAlign );
 
-         if( ( cShift = ( HB_BYTE ) ( uiSize % uiPad ) ) > 0 )
+         if( ( cShift = static_cast< HB_BYTE >( uiSize % uiPad ) ) > 0 )
             uiSize += uiPad - cShift;
       }
 
@@ -244,7 +244,7 @@ static HB_UINT SizeOfCStructure( PHB_ITEM aDef, HB_UINT uiAlign )
       #endif
    }
 
-   if( ( cShift = ( HB_BYTE ) ( uiSize % uiAlign ) ) > 0 )
+   if( ( cShift = static_cast< HB_BYTE >( uiSize % uiAlign ) ) > 0 )
       uiSize += uiAlign - cShift;
 
    #if 0
@@ -264,7 +264,7 @@ HB_FUNC( HB_SIZEOFCSTRUCTURE )
       HB_UINT  uiAlign;
 
       if( pAlign )
-         uiAlign = ( HB_BYTE ) pAlign->item.asInteger.value;
+         uiAlign = static_cast< HB_BYTE >( pAlign->item.asInteger.value );
       else
          uiAlign = 8;
 
@@ -478,7 +478,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
       {
          HB_UINT uiPad = ( ( uiMemberSize < uiAlign ) ? uiMemberSize : uiAlign );
 
-         if( ( cShift = ( HB_BYTE ) ( uiOffset % uiPad ) ) > 0 )
+         if( ( cShift = static_cast< HB_BYTE >( uiOffset % uiPad ) ) > 0 )
             uiOffset += uiPad - cShift;
       }
 
@@ -497,7 +497,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
 
          case CTYPE_UNSIGNED_CHAR:  /* unsigned char */
             if( ( pBaseVar->pItems + nIndex )->type )
-               *( ( HB_BYTE * ) ( Buffer + uiOffset ) ) = ( HB_BYTE ) ( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
+               *( ( HB_BYTE * ) ( Buffer + uiOffset ) ) = static_cast< HB_BYTE >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
             else
                *( ( HB_BYTE * ) ( Buffer + uiOffset ) ) = 0;
             break;
@@ -942,7 +942,7 @@ HB_FUNC( HB_ARRAYTOSTRUCTURE )
       HB_BYTE * Buffer;
 
       if( pAlign )
-         uiAlign = ( HB_BYTE ) pAlign->item.asInteger.value;
+         uiAlign = static_cast< HB_BYTE >( pAlign->item.asInteger.value );
       else
          uiAlign = 8;
 
@@ -1076,7 +1076,7 @@ static PHB_ITEM StructureToArray( HB_BYTE * Buffer, HB_SIZE nBufferLen, PHB_ITEM
       {
          HB_UINT uiPad = ( ( uiMemberSize < uiAlign ) ? uiMemberSize : uiAlign );
 
-         if( ( cShift = ( HB_BYTE ) ( uiOffset % uiPad ) ) > 0 )
+         if( ( cShift = static_cast< HB_BYTE >( uiOffset % uiPad ) ) > 0 )
             uiOffset += uiPad - cShift;
 
          #if 0
@@ -1307,7 +1307,7 @@ HB_FUNC( HB_STRUCTURETOARRAY )
       HB_BOOL   bAdopt;
 
       if( pAlign )
-         uiAlign = ( HB_BYTE ) pAlign->item.asInteger.value;
+         uiAlign = static_cast< HB_BYTE >( pAlign->item.asInteger.value );
       else
          uiAlign = 8;
 

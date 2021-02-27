@@ -322,7 +322,7 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
                pBF->decounter[ i ] = pVect[ i % ivlen ];
             else
                pBF->encounter[ i ] =
-               pBF->decounter[ i ] = ( HB_BYTE ) i;
+               pBF->decounter[ i ] = static_cast< HB_BYTE >( i );
          }
 
          pSockNew = ( PHB_SOCKEX ) hb_xgrabz( sizeof( HB_SOCKEX ) );

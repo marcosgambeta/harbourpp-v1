@@ -2716,7 +2716,7 @@ void hb_compGenPopVar( const char * szVarName, HB_COMP_DECL ) /* generates the p
              */
             if( HB_LIM_INT8( iVar ) && ! HB_COMP_PARAM->functions.pLast->szName &&
                 !( HB_COMP_PARAM->functions.pLast->funFlags & HB_FUNF_EXTBLOCK ) )
-               hb_compGenPCode2( HB_P_POPLOCALNEAR, ( HB_BYTE ) iVar, HB_COMP_PARAM );
+               hb_compGenPCode2( HB_P_POPLOCALNEAR, static_cast< HB_BYTE >( iVar ), HB_COMP_PARAM );
             else
                hb_compGenPCode3( HB_P_POPLOCAL, HB_LOBYTE( iVar ), HB_HIBYTE( iVar ), HB_COMP_PARAM );
             break;

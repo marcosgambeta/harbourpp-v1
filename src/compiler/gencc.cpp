@@ -83,7 +83,7 @@ void hb_compGenCString( FILE * yyc, const HB_BYTE * pText, HB_SIZE nLen )
        */
       if( uchr == '"' || uchr == '\\' || uchr == '?' )
          fprintf( yyc, "\\%c", uchr );
-      else if( uchr < ( HB_BYTE ) ' ' || uchr >= 127 )
+      else if( uchr < static_cast< HB_BYTE >( ' ' ) || uchr >= 127 )
       {
          HB_BYTE uchrnext = nPos < nLen - 1 ? pText[ nPos + 1 ] : 0;
 

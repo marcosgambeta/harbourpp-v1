@@ -178,9 +178,9 @@ static void hb_bf_initvect( HB_BYTE * vect )
 
    for( i = 0; i < HB_BF_CIPHERBLOCK; ++i )
    {
-      vect[ i ] = ( HB_BYTE ) i;
+      vect[ i ] = static_cast< HB_BYTE >( i );
       if( iLen > 0 )
-         vect[ i ] ^= ( HB_BYTE ) pszVect[ i % iLen ];
+         vect[ i ] ^= static_cast< HB_BYTE >( pszVect[ i % iLen ] );
    }
 }
 

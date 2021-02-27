@@ -168,7 +168,7 @@ static PMIXKEY hb_mixKeyPutItem( PMIXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRecNo,
          break;
 
       case 'L':
-         pKey->val[ 0 ] = ( HB_BYTE ) ( hb_itemGetL( pItem ) ? 'T' : 'F' );
+         pKey->val[ 0 ] = static_cast< HB_BYTE >( hb_itemGetL( pItem ) ? 'T' : 'F' );
          break;
 
       default:

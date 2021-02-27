@@ -444,7 +444,7 @@ static void hb_gt_pca_AnsiPutStr( int iRow, int iCol, int iColor, const char * s
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_pca_AnsiPutStr(%d,%d,%d,%p,%d)", iRow, iCol, iColor, ( const void * ) szStr, iLen ) );
 
-   hb_gt_pca_AnsiSetAttributes( ( HB_BYTE ) iColor );
+   hb_gt_pca_AnsiSetAttributes( static_cast< HB_BYTE >( iColor ) );
    hb_gt_pca_AnsiSetCursorPos( iRow, iCol );
    hb_gt_pca_AnsiSetAutoMargin( 0 );
    hb_gt_pca_termOut( szStr, iLen );

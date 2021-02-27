@@ -274,7 +274,7 @@ static PHB_GTWVT hb_gt_wvt_New( PHB_GT pGT, HINSTANCE hInstance, int iCmdShow )
    {
       int i;
       for( i = 0; i < 256; ++i )
-         pWVT->chrTransTbl[ i ] = pWVT->keyTransTbl[ i ] = ( HB_BYTE ) i;
+         pWVT->chrTransTbl[ i ] = pWVT->keyTransTbl[ i ] = static_cast< HB_BYTE >( i );
    }
 #endif
    pWVT->bResizing         = HB_FALSE;

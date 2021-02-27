@@ -104,7 +104,7 @@ static HB_SIZE hb_AtSkipStrings( const char * szSub, HB_SIZE nSubLen, const char
 
          if( szText[ nPos ] == '[' && szSub[ 0 ] != '[' )
          {
-            if( ! ( HB_ISALPHA( ( HB_BYTE ) cLastChar ) || HB_ISDIGIT( ( HB_BYTE ) cLastChar ) || strchr( "])}_.", cLastChar ) ) )
+            if( ! ( HB_ISALPHA( static_cast< HB_BYTE >( cLastChar ) ) || HB_ISDIGIT( static_cast< HB_BYTE >( cLastChar ) ) || strchr( "])}_.", cLastChar ) ) )
             {
                while( ++nPos < nLen && szText[ nPos ] != ']' )
                {

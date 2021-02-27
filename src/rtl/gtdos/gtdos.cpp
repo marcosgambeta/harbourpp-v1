@@ -360,8 +360,8 @@ static void hb_gt_dos_SetCursorPosition( int iRow, int iCol )
    {
       regs.h.ah = 0x02;
       regs.h.bh = 0;
-      regs.h.dh = ( HB_BYTE ) iRow;
-      regs.h.dl = ( HB_BYTE ) iCol;
+      regs.h.dh = static_cast< HB_BYTE >( iRow );
+      regs.h.dl = static_cast< HB_BYTE >( iCol );
       HB_DOS_INT86( 0x10, &regs, &regs );
       s_iCurRow = iRow;
       s_iCurCol = iCol;

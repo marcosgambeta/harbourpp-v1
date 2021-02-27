@@ -889,7 +889,7 @@ static void hb_macroSetGetBlock( PHB_DYNS pVarSym, PHB_ITEM pItem,
    i += sizeof( PHB_DYNS );
    byBuf[ i++ ] = HB_P_ENDBLOCK;
 
-   byBuf[ n ] = ( HB_BYTE ) ( i - n + 1 );
+   byBuf[ n ] = static_cast< HB_BYTE >( i - n + 1 );
 
    byBuf[ i++ ] = HB_P_PUSHLOCALNEAR;
    byBuf[ i++ ] = 1;
@@ -1420,7 +1420,7 @@ void hb_macroGenPushLong( HB_MAXINT nNumber, HB_COMP_DECL )
    }
    else if( HB_LIM_INT8( nNumber ) )
    {
-      hb_macroGenPCode2( HB_P_PUSHBYTE, ( HB_BYTE ) nNumber, HB_COMP_PARAM );
+      hb_macroGenPCode2( HB_P_PUSHBYTE, static_cast< HB_BYTE >( nNumber ), HB_COMP_PARAM );
    }
    else if( HB_LIM_INT16( nNumber ) )
    {

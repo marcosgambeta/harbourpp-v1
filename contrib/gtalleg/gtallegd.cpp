@@ -455,11 +455,11 @@ static HB_BOOL hb_gt_alleg_InitializeScreen( PHB_GT pGT, int iRows, int iCols, H
        *     or for DOS, we'll mostly request unavailable resolutions
        */
       if( AL_SCREEN_W != s_byFontWidth * s_iScrWidth )
-         ixFP = ( HB_BYTE ) ( AL_SCREEN_W / s_iScrWidth ) * 2;
+         ixFP = static_cast< HB_BYTE >( AL_SCREEN_W / s_iScrWidth ) * 2;
 
       if( AL_SCREEN_H != s_byFontSize * s_iScrHeight )
       {
-         iyFP = ( HB_BYTE ) ( AL_SCREEN_H / s_iScrHeight );
+         iyFP = static_cast< HB_BYTE >( AL_SCREEN_H / s_iScrHeight );
          if( iyFP & 1 )
             iyFP--;
       }

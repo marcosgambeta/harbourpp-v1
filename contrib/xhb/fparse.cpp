@@ -250,9 +250,9 @@ static char ** hb_tokensplit( const char * string, HB_BYTE delimiter, int iCharC
 
    while( *string )
    {
-      if( ( HB_BYTE ) *string == delimiter )
+      if( static_cast< HB_BYTE >( *string ) == delimiter )
       {
-         while( ( HB_BYTE ) *string == delimiter )
+         while( static_cast< HB_BYTE >( *string ) == delimiter )
             string++;
 
          if( bufptr > buffer )
@@ -355,7 +355,7 @@ HB_FUNC( FPARSE )
    }
 
    /* default delimiter to comma */
-   nByte = pDelim ? ( HB_BYTE ) hb_itemGetCPtr( pDelim )[ 0 ] : ( HB_BYTE ) ',';
+   nByte = pDelim ? static_cast< HB_BYTE >( hb_itemGetCPtr( pDelim )[ 0 ] ) : static_cast< HB_BYTE >( ',' );
 
    /* the main array */
    pArray = hb_itemArrayNew( 0 );
@@ -432,7 +432,7 @@ HB_FUNC( FPARSEEX )
    }
 
    /* default delimiter to comma */
-   nByte = pDelim ? ( HB_BYTE ) hb_itemGetCPtr( pDelim )[ 0 ] : ( HB_BYTE ) ',';
+   nByte = pDelim ? static_cast< HB_BYTE >( hb_itemGetCPtr( pDelim )[ 0 ] ) : static_cast< HB_BYTE >( ',' );
 
    /* the main array */
    pArray    = hb_itemArrayNew( 0 );

@@ -80,7 +80,7 @@ static void hb_addToFBuffer( PHB_FILEBUF pFileBuf, char ch )
 {
    if( pFileBuf->nPos == pFileBuf->nSize )
       hb_flushFBuffer( pFileBuf );
-   pFileBuf->pBuf[ pFileBuf->nPos++ ] = ( HB_BYTE ) ch;
+   pFileBuf->pBuf[ pFileBuf->nPos++ ] = static_cast< HB_BYTE >( ch );
 }
 
 static void hb_addStrnToFBuffer( PHB_FILEBUF pFileBuf, const char * str, HB_SIZE nSize )
@@ -91,7 +91,7 @@ static void hb_addStrnToFBuffer( PHB_FILEBUF pFileBuf, const char * str, HB_SIZE
    {
       if( pFileBuf->nPos == pFileBuf->nSize )
          hb_flushFBuffer( pFileBuf );
-      pFileBuf->pBuf[ pFileBuf->nPos++ ] = ( HB_BYTE ) str[ nPos++ ];
+      pFileBuf->pBuf[ pFileBuf->nPos++ ] = static_cast< HB_BYTE >( str[ nPos++ ] );
    }
 }
 

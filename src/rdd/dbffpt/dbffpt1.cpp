@@ -1343,8 +1343,8 @@ static void hb_fptStoreSMTItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBufP
          if( iDec )
             iWidth += iDec + 1;
          *( *bBufPtr )++ = SMT_IT_DOUBLE;
-         *( *bBufPtr )++ = ( HB_BYTE ) iWidth;
-         *( *bBufPtr )++ = ( HB_BYTE ) iDec;
+         *( *bBufPtr )++ = static_cast< HB_BYTE >( iWidth );
+         *( *bBufPtr )++ = static_cast< HB_BYTE >( iDec );
          HB_PUT_LE_DOUBLE( *bBufPtr, dVal );
          *bBufPtr += 8;
          break;
@@ -2031,28 +2031,28 @@ static void hb_fptStoreFlexItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBuf
          if( HB_LIM_INT8( iVal ) )
          {
             *( *bBufPtr )++ = FPTIT_FLEXAR_CHAR1;
-            *( *bBufPtr )++ = ( HB_BYTE ) iVal;
-            *( *bBufPtr )++ = ( HB_BYTE ) iWidth;
+            *( *bBufPtr )++ = static_cast< HB_BYTE >( iVal );
+            *( *bBufPtr )++ = static_cast< HB_BYTE >( iWidth );
          }
          else if( HB_LIM_INT16( iVal ) )
          {
             *( *bBufPtr )++ = FPTIT_FLEXAR_SHORT1;
             HB_PUT_LE_UINT16( *bBufPtr, iVal );
             *bBufPtr += 2;
-            *( *bBufPtr )++ = ( HB_BYTE ) iWidth;
+            *( *bBufPtr )++ = static_cast< HB_BYTE >( iWidth );
          }
          else if( HB_LIM_INT32( iVal ) )
          {
             *( *bBufPtr )++ = FPTIT_FLEXAR_LONG1;
             HB_PUT_LE_UINT32( *bBufPtr, iVal );
             *bBufPtr += 4;
-            *( *bBufPtr )++ = ( HB_BYTE ) iWidth;
+            *( *bBufPtr )++ = static_cast< HB_BYTE >( iWidth );
          }
          else
          {
             *( *bBufPtr )++ = FPTIT_FLEXAR_DOUBLE2;
-            *( *bBufPtr )++ = ( HB_BYTE ) iWidth;
-            *( *bBufPtr )++ = ( HB_BYTE ) iDec;
+            *( *bBufPtr )++ = static_cast< HB_BYTE >( iWidth );
+            *( *bBufPtr )++ = static_cast< HB_BYTE >( iDec );
             HB_PUT_LE_DOUBLE( *bBufPtr, static_cast< double >( iVal ) );
             *bBufPtr += 8;
          }
@@ -2065,8 +2065,8 @@ static void hb_fptStoreFlexItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBuf
          if( iDec )
             iWidth += iDec + 1;
          *( *bBufPtr )++ = FPTIT_FLEXAR_DOUBLE2;
-         *( *bBufPtr )++ = ( HB_BYTE ) iWidth;
-         *( *bBufPtr )++ = ( HB_BYTE ) iDec;
+         *( *bBufPtr )++ = static_cast< HB_BYTE >( iWidth );
+         *( *bBufPtr )++ = static_cast< HB_BYTE >( iDec );
          HB_PUT_LE_DOUBLE( *bBufPtr, dVal );
          *bBufPtr += 8;
          break;
@@ -3110,7 +3110,7 @@ static HB_ERRCODE hb_fptPutMemo( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
             {
                ulType = FPTIT_FLEX_CHAR;
                ulSize = 1;
-               *itmBuffer = ( HB_BYTE ) iVal;
+               *itmBuffer = static_cast< HB_BYTE >( iVal );
                bBufPtr = itmBuffer;
             }
             else if( HB_LIM_INT16( iVal ) )
@@ -3720,8 +3720,8 @@ static HB_ERRCODE hb_fptPutVarField( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
                if( iDec )
                   iWidth += iDec + 1;
                buffer[ 0 ] = SMT_IT_DOUBLE;
-               buffer[ 1 ] = ( HB_BYTE ) iWidth;
-               buffer[ 2 ] = ( HB_BYTE ) iDec;
+               buffer[ 1 ] = static_cast< HB_BYTE >( iWidth );
+               buffer[ 2 ] = static_cast< HB_BYTE >( iDec );
                HB_PUT_LE_DOUBLE( &buffer[ 3 ], dVal );
                uiType = HB_VF_DNUM;
                if( pField->uiLen > 12 )
@@ -3956,7 +3956,7 @@ static HB_ERRCODE hb_fptCreateMemFile( FPTAREAP pArea, LPDBOPENINFO pCreateInfo 
             hb_itemRelease( pItem );
             return HB_FAILURE;
          }
-         pArea->bMemoType = ( HB_BYTE ) hb_itemGetNI( pItem );
+         pArea->bMemoType = static_cast< HB_BYTE >( hb_itemGetNI( pItem ) );
 #if 0
          if( ! pArea->bMemoType )
          {
@@ -5197,7 +5197,7 @@ static HB_ERRCODE hb_fptRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
                case DB_MEMO_DBT:
                case DB_MEMO_FPT:
                case DB_MEMO_SMT:
-                  pData->bMemoType = ( HB_BYTE ) iType;
+                  pData->bMemoType = static_cast< HB_BYTE >( iType );
             }
          }
          break;
@@ -5214,7 +5214,7 @@ static HB_ERRCODE hb_fptRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
             case DB_MEMOVER_SIX:
             case DB_MEMOVER_FLEX:
             case DB_MEMOVER_CLIP:
-               pData->bMemoExtType = ( HB_BYTE ) iType;
+               pData->bMemoExtType = static_cast< HB_BYTE >( iType );
          }
          break;
       }
