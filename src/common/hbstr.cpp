@@ -512,9 +512,9 @@ double hb_numRound( double dNum, int iDec )
    if( iDec < 16 )
    {
       if( iDec >= 0 )
-         return doComplete5i / ( HB_LONGLONG ) dPow;
+         return doComplete5i / static_cast< HB_LONGLONG >( dPow );
       else if( iDec > -16 )
-         return doComplete5i * ( HB_LONGLONG ) dPow;
+         return doComplete5i * static_cast< HB_LONGLONG >( dPow );
    }
 #endif
    if( iDec < 0 )
@@ -682,7 +682,7 @@ static HB_BOOL hb_str2number( HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, 
    {
 #if defined( __XCC__ ) || defined( __POCC__ )
       if( iDec < 16 )
-         *dVal /= ( HB_LONGLONG ) hb_numPow10( iDec );
+         *dVal /= static_cast< HB_LONGLONG >( hb_numPow10( iDec ) );
       else
 #endif
          *dVal /= hb_numPow10( iDec );

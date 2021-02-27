@@ -4116,7 +4116,7 @@ static HB_ERRCODE hb_dbfNewArea( DBFAREAP pArea )
          pArea->bTableType = static_cast< HB_BYTE >( hb_itemGetNI( pItem ) );
       hb_itemClear( pItem );
       if( SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_SETHEADER, 0, pItem ) == HB_SUCCESS )
-         pArea->uiSetHeader = ( HB_UINT ) hb_itemGetNI( pItem );
+         pArea->uiSetHeader = static_cast< HB_UINT >( hb_itemGetNI( pItem ) );
       hb_itemRelease( pItem );
    }
 

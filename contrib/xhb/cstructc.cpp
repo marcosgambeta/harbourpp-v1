@@ -212,7 +212,7 @@ static HB_UINT SizeOfCStructure( PHB_ITEM aDef, HB_UINT uiAlign )
                if( HB_IS_OBJECT( pStructure ) )
                {
                   hb_objSendMsg( pStructure, "SizeOf", 0 );
-                  uiMemberSize = ( HB_UINT ) hb_parns( -1 );
+                  uiMemberSize = static_cast< HB_UINT >( hb_parns( -1 ) );
                   hb_itemRelease( pStructure );
                }
                else
@@ -457,7 +457,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
                if( HB_IS_OBJECT( pStructure ) )
                {
                   hb_objSendMsg( pStructure, "SizeOf", 0 );
-                  uiMemberSize = ( HB_UINT ) hb_parns( -1 );
+                  uiMemberSize = static_cast< HB_UINT >( hb_parns( -1 ) );
                   hb_itemRelease( pStructure );
                }
                else
@@ -1055,7 +1055,7 @@ static PHB_ITEM StructureToArray( HB_BYTE * Buffer, HB_SIZE nBufferLen, PHB_ITEM
                if( HB_IS_OBJECT( pStructure ) )
                {
                   hb_objSendMsg( pStructure, "SizeOf", 0 );
-                  uiMemberSize = ( HB_UINT ) hb_parns( -1 );
+                  uiMemberSize = static_cast< HB_UINT >( hb_parns( -1 ) );
                   hb_itemRelease( pStructure );
                }
                else
@@ -1222,7 +1222,7 @@ static PHB_ITEM StructureToArray( HB_BYTE * Buffer, HB_SIZE nBufferLen, PHB_ITEM
 
             hb_objSendMsg( pStructure, "NALIGN", 0 );
             hb_objSendMsg( pStructure, "SizeOf", 0 );
-            uiNestedSize = ( HB_UINT ) hb_parns( -1 );
+            uiNestedSize = static_cast< HB_UINT >( hb_parns( -1 ) );
 
             #if 0
             TraceLog( nullptr, "* NestedSize: %i Offset: %i\n", uiNestedSize, uiOffset );

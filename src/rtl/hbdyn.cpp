@@ -182,7 +182,7 @@ static HB_U64 hb_u64par( PHB_ITEM pParam, PHB_DYNARG pArg )
 #if HB_VMLONG_MAX == INT32_MAX || defined( HB_LONG_LONG_OFF )
          pArg->value.t.n64 = static_cast< HB_MAXUINT >( hb_itemGetNInt( pParam ) );
 #else
-         pArg->value.t.n64 = ( HB_ULONGLONG ) hb_itemGetNInt( pParam );
+         pArg->value.t.n64 = static_cast< HB_ULONGLONG >( hb_itemGetNInt( pParam ) );
 #endif
          r = pArg->bByRef ? ( HB_PTRUINT ) &pArg->value.t.n64 : pArg->value.t.n64;
          break;
@@ -319,7 +319,7 @@ static PHB_ITEM hb_u64ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
 #if HB_VMLONG_MAX == INT32_MAX || defined( HB_LONG_LONG_OFF )
          hb_itemPutNInt( pItem, static_cast< HB_MAXINT >( value.t.n64 ) );
 #else
-         hb_itemPutNInt( pItem, ( HB_LONGLONG ) value.t.n64 );
+         hb_itemPutNInt( pItem, static_cast< HB_LONGLONG >( value.t.n64 ) );
 #endif
          break;
 
@@ -327,7 +327,7 @@ static PHB_ITEM hb_u64ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
 #if HB_VMLONG_MAX == INT32_MAX || defined( HB_LONG_LONG_OFF )
          hb_itemPutNInt( pItem, static_cast< HB_MAXUINT >( value.t.n64 ) );
 #else
-         hb_itemPutNInt( pItem, ( HB_ULONGLONG ) value.t.n64 );
+         hb_itemPutNInt( pItem, static_cast< HB_ULONGLONG >( value.t.n64 ) );
 #endif
          break;
 
@@ -543,7 +543,7 @@ static void hb_u32par( PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r
 #if HB_VMLONG_MAX == INT32_MAX || defined( HB_LONG_LONG_OFF )
          pArg->value.t.n64 = static_cast< HB_MAXUINT >( hb_itemGetNInt( pParam ) );
 #else
-         pArg->value.t.n64 = ( HB_ULONGLONG ) hb_itemGetNInt( pParam );
+         pArg->value.t.n64 = static_cast< HB_ULONGLONG >( hb_itemGetNInt( pParam ) );
 #endif
          if( pArg->bByRef )
             *r1 = ( HB_U32 ) &pArg->value.t.n64;
@@ -698,7 +698,7 @@ static PHB_ITEM hb_u32ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
 #if HB_VMLONG_MAX == INT32_MAX || defined( HB_LONG_LONG_OFF )
          hb_itemPutNInt( pItem, static_cast< HB_MAXINT >( value.t.n64 ) );
 #else
-         hb_itemPutNInt( pItem, ( HB_LONGLONG ) value.t.n64 );
+         hb_itemPutNInt( pItem, static_cast< HB_LONGLONG >( value.t.n64 ) );
 #endif
 #endif
          break;
@@ -708,7 +708,7 @@ static PHB_ITEM hb_u32ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
 #if HB_VMLONG_MAX == INT32_MAX || defined( HB_LONG_LONG_OFF )
          hb_itemPutNInt( pItem, static_cast< HB_MAXUINT >( value.t.n64 ) );
 #else
-         hb_itemPutNInt( pItem, ( HB_ULONGLONG ) value.t.n64 );
+         hb_itemPutNInt( pItem, static_cast< HB_ULONGLONG >( value.t.n64 ) );
 #endif
 #endif
          break;

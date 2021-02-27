@@ -685,13 +685,13 @@ static HB_BOOL hb_oleSafeArrayFill( SAFEARRAY * pSafeArray, VARTYPE vt, PHB_ITEM
             break;
 #endif
          case VT_INT:
-            V_INT( &v ) = pStr ? ( HB_INT ) ( unsigned char ) pStr[ uiPos - 1 ] :
-                                 ( HB_INT ) hb_arrayGetNI( pItem, uiPos );
+            V_INT( &v ) = pStr ? static_cast< HB_INT >( ( unsigned char ) pStr[ uiPos - 1 ] ) :
+                                 static_cast< HB_INT >( hb_arrayGetNI( pItem, uiPos ) );
             ptr = &V_INT( &v );
             break;
          case VT_UINT:
-            V_UINT( &v ) = pStr ? ( HB_UINT ) ( unsigned char ) pStr[ uiPos - 1 ] :
-                                  ( HB_UINT ) hb_arrayGetNI( pItem, uiPos );
+            V_UINT( &v ) = pStr ? static_cast< HB_UINT >( ( unsigned char ) pStr[ uiPos - 1 ] ) :
+                                  static_cast< HB_UINT >( hb_arrayGetNI( pItem, uiPos ) );
             ptr = &V_UINT( &v );
             break;
          case VT_ERROR:
@@ -1588,9 +1588,9 @@ void hb_oleVariantUpdate( VARIANT * pVariant, PHB_ITEM pItem,
          *V_I4REF( pVariant ) = ( long ) hb_itemGetNInt( pItem );
 #elif defined( HB_OLE_NO_LLREF )
          /* workaround for wrong OLE variant structure definition */
-         *( HB_LONGLONG * ) V_R8REF( pVariant ) = ( HB_LONGLONG ) hb_itemGetNInt( pItem );
+         *( HB_LONGLONG * ) V_R8REF( pVariant ) = static_cast< HB_LONGLONG >( hb_itemGetNInt( pItem ) );
 #else
-         *V_I8REF( pVariant ) = ( HB_LONGLONG ) hb_itemGetNInt( pItem );
+         *V_I8REF( pVariant ) = static_cast< HB_LONGLONG >( hb_itemGetNInt( pItem ) );
 #endif
          break;
 

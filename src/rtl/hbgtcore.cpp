@@ -2146,7 +2146,7 @@ static int hb_gt_def_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions,
          for( i = 1; i <= iOptions; ++i )
          {
             nLen = hb_itemCopyStrU16( hb_arrayGetItemPtr( pOptions, i ), HB_CDP_ENDIAN_NATIVE, nullptr, 0 );
-            ulCurrWidth += ( HB_UINT ) nLen + 4;
+            ulCurrWidth += static_cast< HB_UINT >( nLen ) + 4;
          }
          if( ulCurrWidth > ulMaxWidth )
             ulCurrWidth = ulMaxWidth;

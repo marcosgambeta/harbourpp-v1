@@ -162,7 +162,7 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
    bSignalEnabled = HB_FALSE;
    nPos = hb_arrayLen( sp_hooks );
    /* subsig not necessary */
-   uiSig = ( HB_UINT ) s_translateSignal( ( HB_UINT ) sig, 0 );
+   uiSig = static_cast< HB_UINT >( s_translateSignal( static_cast< HB_UINT >( sig ), 0 ) );
 
    while( nPos > 0 )
    {
@@ -170,7 +170,7 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
       HB_UINT  uiMask;
 
       pFunction = hb_arrayGetItemPtr( sp_hooks, nPos );
-      uiMask    = ( HB_UINT ) hb_arrayGetNI( pFunction, 1 );
+      uiMask    = static_cast< HB_UINT >( hb_arrayGetNI( pFunction, 1 ) );
       if( uiMask & uiSig )
       {
          PHB_ITEM pExecArray, pRet;
@@ -419,7 +419,7 @@ static LONG s_signalHandler( int type, int sig, PEXCEPTION_RECORD exc )
    bSignalEnabled = HB_FALSE;
    nPos = hb_arrayLen( sp_hooks );
    /* subsig not necessary */
-   uiSig = ( HB_UINT ) s_translateSignal( ( HB_UINT ) type, ( HB_UINT ) sig );
+   uiSig = static_cast< HB_UINT >( s_translateSignal( static_cast< HB_UINT >( type ), static_cast< HB_UINT >( sig ) ) );
 
    while( nPos > 0 )
    {
@@ -427,7 +427,7 @@ static LONG s_signalHandler( int type, int sig, PEXCEPTION_RECORD exc )
       HB_UINT  uiMask;
 
       pFunction = hb_arrayGetItemPtr( sp_hooks, nPos );
-      uiMask    = ( HB_UINT ) hb_arrayGetNI( pFunction, 1 );
+      uiMask    = static_cast< HB_UINT >( hb_arrayGetNI( pFunction, 1 ) );
       if( ( uiMask & uiSig ) == uiSig )
       {
          PHB_ITEM pExecArray, pRet;

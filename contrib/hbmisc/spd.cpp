@@ -52,7 +52,7 @@
 
 static void STAItm( PHB_ITEM pItmPar )
 {
-   HB_UINT      i, ulItmPar = ( HB_UINT ) hb_itemGetCLen( pItmPar );
+   HB_UINT      i, ulItmPar = static_cast< HB_UINT >( hb_itemGetCLen( pItmPar ) );
    const char * cItmPar = hb_itemGetCPtr( pItmPar ), * c;
    char *       cRes;
 
@@ -201,7 +201,7 @@ HB_FUNC( SQL_SPRINTF )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError( 1 ) );
    }
-   else if( ( ulItmFrm = ( HB_UINT ) hb_itemGetCLen( pItmFrm ) ) == 0 )
+   else if( ( ulItmFrm = static_cast< HB_UINT >( hb_itemGetCLen( pItmFrm ) ) ) == 0 )
    {
       hb_retc_null();
    }
@@ -487,7 +487,7 @@ HB_FUNC( SQL_SPRINTF )
                   else
                      STAItm( pItmPar );
                }
-               f = ( HB_UINT ) hb_itemGetCLen( pItmPar );
+               f = static_cast< HB_UINT >( hb_itemGetCLen( pItmPar ) );
                if( ( f = i + HB_MAX( ulWidth, f ) ) > ulMaxBuf )
                {
                   ulMaxBuf += f + DK_INCBUF;
@@ -602,7 +602,7 @@ HB_FUNC( SQL_SPRINTF )
                   HB_SIZE nLen = strlen( cStr );
                   const char * cTrimStr = hb_strLTrim( cStr, &nLen );
 
-                  f        = ( HB_UINT ) nLen;
+                  f        = static_cast< HB_UINT >( nLen );
                   if( ( f = i + HB_MAX( ulWidth, f ) ) > ulMaxBuf )
                   {
                      ulMaxBuf += f + DK_INCBUF;
@@ -647,7 +647,7 @@ HB_FUNC( SQL_SPRINTF )
          hb_strncpy( cRes + ulResPos, cBuffer, s );
          ulResPos += s;
 
-         if( ( ulParPos = ( HB_UINT ) ( c - cItmFrm ) ) >= ulItmFrm )
+         if( ( ulParPos = static_cast< HB_UINT >( c - cItmFrm ) ) >= ulItmFrm )
             break;   /* No more Par Format */
       }
 

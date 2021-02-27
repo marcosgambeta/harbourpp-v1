@@ -3519,7 +3519,7 @@ static HB_BOOL hb_cdxSetPageSize( LPCDXINDEX pIndex, HB_BOOL fLargeFile,
 
       if( uiPageSize > CDX_PAGELEN )
       {
-         while( ( HB_INT ) ( 1 << pIndex->uiPageBits ) < uiPageSize )
+         while( static_cast< HB_INT >( 1 << pIndex->uiPageBits ) < uiPageSize )
             ++pIndex->uiPageBits;
          pIndex->uiMaxKeyLen = ( ( uiPageSize - CDX_INT_HEADSIZE ) >> 1 ) - 8;
       }

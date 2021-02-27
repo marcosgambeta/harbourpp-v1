@@ -744,10 +744,10 @@ HB_LONGLONG hb_itemGetNLL( PHB_ITEM pItem )
    if( pItem )
    {
       if( HB_IS_LONG( pItem ) )
-         return ( HB_LONGLONG ) pItem->item.asLong.value;
+         return static_cast< HB_LONGLONG >( pItem->item.asLong.value );
 
       else if( HB_IS_INTEGER( pItem ) )
-         return ( HB_LONGLONG ) pItem->item.asInteger.value;
+         return static_cast< HB_LONGLONG >( pItem->item.asInteger.value );
 
       else if( HB_IS_DOUBLE( pItem ) )
          return HB_CAST_LONGLONG( pItem->item.asDouble.value );
@@ -1126,7 +1126,7 @@ PHB_ITEM hb_itemPutNIntLen( PHB_ITEM pItem, HB_MAXINT nNumber, int iWidth )
 #ifdef HB_LONG_LONG_OFF
       return hb_itemPutNLLen( pItem, static_cast< long >( nNumber ), iWidth );
 #else
-      return hb_itemPutNLLLen( pItem, ( HB_LONGLONG ) nNumber, iWidth );
+      return hb_itemPutNLLLen( pItem, static_cast< HB_LONGLONG >( nNumber ), iWidth );
 #endif
    }
 }
@@ -1344,7 +1344,7 @@ PHB_ITEM hb_itemPutNumType( PHB_ITEM pItem, double dNumber, int iDec, int iType1
 #ifdef HB_LONG_LONG_OFF
       return hb_itemPutNL( pItem, static_cast< long >( static_cast< unsigned long >( dNumber ) ) );
 #else
-      return hb_itemPutNLL( pItem, ( HB_LONGLONG ) dNumber );
+      return hb_itemPutNLL( pItem, static_cast< HB_LONGLONG >( dNumber ) );
 #endif
    }
    else

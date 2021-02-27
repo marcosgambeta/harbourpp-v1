@@ -69,7 +69,7 @@ double hb_random_num( void )
           ( ( hb_dateMilliSeconds() ^ ( HB_PTRUINT ) hb_stackId() ) % MODULUS );
 
 #if ! defined( HB_LONG_LONG_OFF )
-   t = ( HB_I32 ) ( ( HB_LONGLONG ) t * MULTIPLIER % MODULUS );
+   t = ( HB_I32 ) ( static_cast< HB_LONGLONG >( t ) * MULTIPLIER % MODULUS );
 #else
    {
       const HB_I32 Q = MODULUS / MULTIPLIER;

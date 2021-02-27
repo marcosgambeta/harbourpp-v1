@@ -463,7 +463,7 @@ void * hb_rddGetWorkAreaPointer( int iArea )
 
    if( iArea == 0 )
       return pRddInfo->pCurrArea;
-   else if( iArea >= 1 && ( HB_UINT ) iArea < ( HB_UINT ) pRddInfo->uiWaNumMax )
+   else if( iArea >= 1 && static_cast< HB_UINT >( iArea ) < static_cast< HB_UINT >( pRddInfo->uiWaNumMax ) )
       return pRddInfo->waList[ pRddInfo->waNums[ iArea ] ];
    else
       return nullptr;

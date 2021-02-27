@@ -1478,7 +1478,7 @@ PHB_SYMB hb_clsFuncSym( HB_USHORT uiClass )
 const char * hb_clsMethodName( HB_USHORT uiClass, HB_USHORT uiMethod )
 {
    if( uiClass && uiClass <= s_uiClasses &&
-       ( HB_UINT ) uiMethod < ( HB_UINT ) hb_clsMthNum( s_pClasses[ uiClass ] ) )
+       static_cast< HB_UINT >( uiMethod ) < static_cast< HB_UINT >( hb_clsMthNum( s_pClasses[ uiClass ] ) ) )
    {
       PMETHOD pMethod = s_pClasses[ uiClass ]->pMethods + uiMethod;
       if( pMethod->pMessage )

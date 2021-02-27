@@ -630,9 +630,9 @@ HB_LONGLONG  hb_parnll( int iParam )
          pItem = hb_itemUnRef( pItem );
 
       if( HB_IS_LONG( pItem ) )
-         return ( HB_LONGLONG ) pItem->item.asLong.value;
+         return static_cast< HB_LONGLONG >( pItem->item.asLong.value );
       else if( HB_IS_INTEGER( pItem ) )
-         return ( HB_LONGLONG ) pItem->item.asInteger.value;
+         return static_cast< HB_LONGLONG >( pItem->item.asInteger.value );
       else if( HB_IS_DOUBLE( pItem ) )
          return HB_CAST_LONGLONG( pItem->item.asDouble.value );
    }
@@ -1230,9 +1230,9 @@ HB_LONGLONG hb_parvnll( int iParam, ... )
          pItem = hb_itemUnRef( pItem );
 
       if( HB_IS_LONG( pItem ) )
-         return ( HB_LONGLONG ) pItem->item.asLong.value;
+         return static_cast< HB_LONGLONG >( pItem->item.asLong.value );
       else if( HB_IS_INTEGER( pItem ) )
-         return ( HB_LONGLONG ) pItem->item.asInteger.value;
+         return static_cast< HB_LONGLONG >( pItem->item.asInteger.value );
       else if( HB_IS_DOUBLE( pItem ) )
          return HB_CAST_LONGLONG( pItem->item.asDouble.value );
       else if( HB_IS_ARRAY( pItem ) )
