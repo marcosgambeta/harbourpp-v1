@@ -3329,7 +3329,7 @@ static HB_ERRCODE hb_fptGetVarField( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
       if( pField->uiLen == 3 || uiType == HB_VF_DATE )
          hb_itemPutDL( pItem, hb_sxPtoD( ( char * ) pFieldBuf ) );
       else if( pField->uiLen == 4 || uiType == HB_VF_INT )
-         hb_itemPutNIntLen( pItem, ( HB_MAXINT ) HB_GET_LE_INT32( pFieldBuf ), 10 );
+         hb_itemPutNIntLen( pItem, static_cast< HB_MAXINT >( HB_GET_LE_INT32( pFieldBuf ) ), 10 );
       else if( pField->uiLen == 2 )
          hb_itemPutNIntLen( pItem, static_cast< int >( HB_GET_LE_INT16( pFieldBuf ) ), 10 );
       else if( pField->uiLen == 1 )

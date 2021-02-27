@@ -297,7 +297,7 @@ HB_FUNC( HB_NTOMSEC )
    PHB_ITEM pNum = hb_param( 1, HB_IT_NUMERIC );
 
    if( pNum )
-      hb_retnint( ( HB_MAXINT ) ( hb_itemGetND( pNum ) * HB_MILLISECS_PER_DAY ) );
+      hb_retnint( static_cast< HB_MAXINT >( hb_itemGetND( pNum ) * HB_MILLISECS_PER_DAY ) );
    else
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

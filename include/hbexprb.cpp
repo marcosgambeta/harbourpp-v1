@@ -1877,12 +1877,12 @@ static HB_EXPR_FUNC( hb_compExprUseFunCall )
                         else if( funcID == HB_F_BITSET )
                         {
                            HB_MAXINT lBit = hb_compExprAsLongNum( pArg->pNext );
-                           lResult |= ( HB_MAXINT ) 1 << lBit;
+                           lResult |= static_cast< HB_MAXINT >( 1 ) << lBit;
                         }
                         else if( funcID == HB_F_BITRESET )
                         {
                            HB_MAXINT lBit = hb_compExprAsLongNum( pArg->pNext );
-                           lResult &= ~( ( HB_MAXINT ) 1 << lBit );
+                           lResult &= ~( static_cast< HB_MAXINT >( 1 ) << lBit );
                         }
                         else /* if( funcID == HB_F_BITSHIFT ) */
                         {
@@ -1904,7 +1904,7 @@ static HB_EXPR_FUNC( hb_compExprUseFunCall )
                         PHB_EXPR pArg = pParms->value.asList.pExprList;
                         HB_MAXINT lBit = hb_compExprAsLongNum( pArg->pNext );
                         HB_MAXINT lResult = ( hb_compExprAsLongNum( pArg ) &
-                                              ( ( HB_MAXINT ) 1 << lBit ) ) != 0;
+                                              ( static_cast< HB_MAXINT >( 1 ) << lBit ) ) != 0;
                         hb_compExprReduceBitFunc( pSelf, lResult, HB_TRUE, HB_COMP_PARAM );
                      }
                      break;

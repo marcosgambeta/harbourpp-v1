@@ -57,7 +57,7 @@ HB_FUNC( ASCIISUM )
       HB_MAXUINT ulResult = 0;
 
       for( sPos = 0; sPos < sStrSize; sPos++ )
-         ulResult += ( HB_MAXUINT ) pcString[ sPos ];
+         ulResult += static_cast< HB_MAXUINT >( pcString[ sPos ] );
 
       hb_retnint( ulResult );
    }

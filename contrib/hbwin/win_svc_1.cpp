@@ -70,7 +70,7 @@ static VOID WINAPI hbwin_SvcControlHandler( DWORD fdwControl )
       {
          hb_vmPushEvalSym();
          hb_vmPush( s_pHarbourControlFunc );
-         hb_vmPushNumInt( ( HB_MAXINT ) fdwControl );
+         hb_vmPushNumInt( static_cast< HB_MAXINT >( fdwControl ) );
          hb_vmSend( 1 );
          hb_vmRequestRestore();
       }

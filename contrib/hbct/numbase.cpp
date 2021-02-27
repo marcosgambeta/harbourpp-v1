@@ -105,7 +105,7 @@ HB_FUNC( CTON )
          else
             hb_retnint( ( HB_U32 ) nValue );
       }
-      else if( ( HB_MAXINT ) nValue < 0 )
+      else if( static_cast< HB_MAXINT >( nValue ) < 0 )
          hb_retnd( static_cast< double >( nValue ) );
       else
          hb_retnint( nValue );
@@ -126,7 +126,7 @@ HB_FUNC( NTOC )
 
    if( iBase >= 2 && iBase <= 36 && ct_numParam( 1, &nValue ) )
    {
-      HB_MAXUINT uValue = ( HB_MAXUINT ) nValue;
+      HB_MAXUINT uValue = static_cast< HB_MAXUINT >( nValue );
       int i;
 
       i = iLen == 0 ? ( int ) sizeof( szBuffer ) : iLen;

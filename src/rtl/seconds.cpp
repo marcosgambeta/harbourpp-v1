@@ -60,7 +60,7 @@ HB_FUNC( HB_SECONDSCPU )
 
 HB_FUNC( HB_MILLISECONDS )
 {
-   hb_retnint( ( HB_MAXINT ) hb_dateMilliSeconds() );
+   hb_retnint( static_cast< HB_MAXINT >( hb_dateMilliSeconds() ) );
 }
 
 HB_FUNC( HB_CLOCKS2SECS )

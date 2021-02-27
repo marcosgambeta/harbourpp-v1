@@ -1644,7 +1644,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem,
                hb_itemPutNL( pItem, static_cast< long >( HB_GET_BE_UINT64( &pBuffer[ nOffset ] ) ) );
                break;
             case 'X':
-               hb_itemPutNInt( pItem, ( HB_MAXINT ) HB_GET_BE_UINT64( &pBuffer[ nOffset ] ) );
+               hb_itemPutNInt( pItem, static_cast< HB_MAXINT >( HB_GET_BE_UINT64( &pBuffer[ nOffset ] ) ) );
                /* this is workaround for bug in xHarbour serialization code */
                nOffset += 10;
                break;

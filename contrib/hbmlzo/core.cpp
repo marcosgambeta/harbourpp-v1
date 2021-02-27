@@ -260,7 +260,7 @@ HB_FUNC( LZO_ADLER32 )
    const char * src = hb_parc( 1 );
 
    if( src )
-      hb_retnint( ( HB_MAXINT ) hb_adler32( 1, src, hb_parclen( 1 ) ) );
+      hb_retnint( static_cast< HB_MAXINT >( hb_adler32( 1, src, hb_parclen( 1 ) ) ) );
    else
       hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

@@ -448,8 +448,8 @@ static HB_BOOL s_fileLock( PHB_FILE pFile, HB_FOFFSET nStart,
 
    s_pushMethod( pIO, IOUSR_LOCK );
    hb_vmPush( pFile->pFileItm );
-   hb_vmPushNumInt( ( HB_MAXINT ) nStart );
-   hb_vmPushNumInt( ( HB_MAXINT ) nLen );
+   hb_vmPushNumInt( static_cast< HB_MAXINT >( nStart ) );
+   hb_vmPushNumInt( static_cast< HB_MAXINT >( nLen ) );
    hb_vmPushInteger( iType );
    hb_vmDo( 4 );
 
@@ -463,8 +463,8 @@ static int s_fileLockTest( PHB_FILE pFile, HB_FOFFSET nStart,
 
    s_pushMethod( pIO, IOUSR_LOCKTEST );
    hb_vmPush( pFile->pFileItm );
-   hb_vmPushNumInt( ( HB_MAXINT ) nStart );
-   hb_vmPushNumInt( ( HB_MAXINT ) nLen );
+   hb_vmPushNumInt( static_cast< HB_MAXINT >( nStart ) );
+   hb_vmPushNumInt( static_cast< HB_MAXINT >( nLen ) );
    hb_vmPushInteger( iType );
    hb_vmDo( 4 );
 
@@ -532,7 +532,7 @@ static HB_SIZE s_fileReadAt( PHB_FILE pFile, void * buffer,
    hb_vmPush( pFile->pFileItm );
    hb_xvmPushLocalByRef( ( HB_SHORT ) iOffset );
    hb_vmPushSize( nSize );
-   hb_vmPushNumInt( ( HB_MAXINT ) nOffset );
+   hb_vmPushNumInt( static_cast< HB_MAXINT >( nOffset ) );
    hb_vmDo( 4 );
 
    nResult = hb_parns( -1 );
@@ -557,7 +557,7 @@ static HB_SIZE s_fileWriteAt( PHB_FILE pFile, const void * buffer,
    hb_vmPush( pFile->pFileItm );
    hb_vmPushString( ( const char * ) buffer, nSize );
    hb_vmPushSize( nSize );
-   hb_vmPushNumInt( ( HB_MAXINT ) nOffset );
+   hb_vmPushNumInt( static_cast< HB_MAXINT >( nOffset ) );
    hb_vmDo( 4 );
 
    return hb_parns( -1 );
@@ -569,7 +569,7 @@ static HB_BOOL s_fileTruncAt( PHB_FILE pFile, HB_FOFFSET nOffset )
 
    s_pushMethod( pIO, IOUSR_TRUNCAT );
    hb_vmPush( pFile->pFileItm );
-   hb_vmPushNumInt( ( HB_MAXINT ) nOffset );
+   hb_vmPushNumInt( static_cast< HB_MAXINT >( nOffset ) );
    hb_vmDo( 2 );
 
    return hb_parl( -1 );
@@ -582,7 +582,7 @@ static HB_FOFFSET s_fileSeek( PHB_FILE pFile, HB_FOFFSET nOffset,
 
    s_pushMethod( pIO, IOUSR_SEEK );
    hb_vmPush( pFile->pFileItm );
-   hb_vmPushNumInt( ( HB_MAXINT ) nOffset );
+   hb_vmPushNumInt( static_cast< HB_MAXINT >( nOffset ) );
    hb_vmPushInteger( uiFlags );
    hb_vmDo( 3 );
 

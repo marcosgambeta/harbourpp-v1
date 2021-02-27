@@ -2973,7 +2973,7 @@ static int hb_gt_def_InkeyGet( PHB_GT pGT, HB_BOOL fWait, double dSeconds, int i
    }
 
    /* Wait forever ?, Use fixed value 100 for strict Clipper compatibility */
-   timeout = ( fWait && dSeconds * 100 >= 1 ) ? ( HB_MAXINT ) ( dSeconds * 1000 ) : -1;
+   timeout = ( fWait && dSeconds * 100 >= 1 ) ? static_cast< HB_MAXINT >( dSeconds * 1000 ) : -1;
    timer = hb_timerInit( timeout );
 
    for( ;; )
@@ -3341,7 +3341,7 @@ static int hb_gt_def_MouseReadKey( PHB_GT pGT, int iEventMask )
       if( iEventMask & INKEY_LDOWN && HB_GTSELF_MOUSEBUTTONPRESSED( pGT, 0, &iRow, &iCol ) )
       {
          HB_MAXUINT timer = hb_timerGet();
-         if( timer - pGT->nMouseLeftTimer <= ( HB_MAXUINT ) HB_GTSELF_MOUSEGETDOUBLECLICKSPEED( pGT ) )
+         if( timer - pGT->nMouseLeftTimer <= static_cast< HB_MAXUINT >( HB_GTSELF_MOUSEGETDOUBLECLICKSPEED( pGT ) ) )
             iKey = K_LDBLCLK;
          else
             iKey = K_LBUTTONDOWN;
@@ -3354,7 +3354,7 @@ static int hb_gt_def_MouseReadKey( PHB_GT pGT, int iEventMask )
       else if( iEventMask & INKEY_RDOWN && HB_GTSELF_MOUSEBUTTONPRESSED( pGT, 1, &iRow, &iCol ) )
       {
          HB_MAXUINT timer = hb_timerGet();
-         if( timer - pGT->nMouseRightTimer <= ( HB_MAXUINT ) HB_GTSELF_MOUSEGETDOUBLECLICKSPEED( pGT ) )
+         if( timer - pGT->nMouseRightTimer <= static_cast< HB_MAXUINT >( HB_GTSELF_MOUSEGETDOUBLECLICKSPEED( pGT ) ) )
             iKey = K_RDBLCLK;
          else
             iKey = K_RBUTTONDOWN;
@@ -3367,7 +3367,7 @@ static int hb_gt_def_MouseReadKey( PHB_GT pGT, int iEventMask )
       else if( iEventMask & INKEY_MMIDDLE && HB_GTSELF_MOUSEBUTTONPRESSED( pGT, 2, &iRow, &iCol ) )
       {
          HB_MAXUINT timer = hb_timerGet();
-         if( timer - pGT->nMouseMiddleTimer <= ( HB_MAXUINT ) HB_GTSELF_MOUSEGETDOUBLECLICKSPEED( pGT ) )
+         if( timer - pGT->nMouseMiddleTimer <= static_cast< HB_MAXUINT >( HB_GTSELF_MOUSEGETDOUBLECLICKSPEED( pGT ) ) )
             iKey = K_MDBLCLK;
          else
             iKey = K_MBUTTONDOWN;

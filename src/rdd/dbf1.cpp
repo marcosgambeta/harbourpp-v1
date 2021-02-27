@@ -500,8 +500,8 @@ static void hb_dbfSetBlankRecord( DBFAREAP pArea, int iType )
                 pField->uiType == HB_FT_AUTOINC )
             {
                if( pField->uiDec )
-                  nValue = ( HB_MAXINT ) hb_numDecConv( static_cast< double >( nValue ),
-                                                        -static_cast< int >( pField->uiDec ) );
+                  nValue = static_cast< HB_MAXINT >( hb_numDecConv( static_cast< double >( nValue ),
+                                                        -static_cast< int >( pField->uiDec ) ) );
                if( uiLen == 1 )
                   *pPtr = static_cast< signed char >( nValue );
                else if( uiLen == 2 )
@@ -2282,14 +2282,14 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
                   hb_itemPutNILen( pItem, static_cast< int >( HB_GET_LE_INT16( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ) ), 6 );
                   break;
                case 3:
-                  hb_itemPutNIntLen( pItem, ( HB_MAXINT ) HB_GET_LE_INT24( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ), 10 );
+                  hb_itemPutNIntLen( pItem, static_cast< HB_MAXINT >( HB_GET_LE_INT24( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ) ), 10 );
                   break;
                case 4:
-                  hb_itemPutNIntLen( pItem, ( HB_MAXINT ) HB_GET_LE_INT32( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ), 10 );
+                  hb_itemPutNIntLen( pItem, static_cast< HB_MAXINT >( HB_GET_LE_INT32( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ) ), 10 );
                   break;
                case 8:
 #ifndef HB_LONG_LONG_OFF
-                  hb_itemPutNIntLen( pItem, ( HB_MAXINT ) HB_GET_LE_INT64( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ), 20 );
+                  hb_itemPutNIntLen( pItem, static_cast< HB_MAXINT >( HB_GET_LE_INT64( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ) ), 20 );
 #else
                   hb_itemPutNLen( pItem, static_cast< double >( HB_GET_LE_INT64( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ) ), 20, 0 );
 #endif
@@ -2364,7 +2364,7 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          if( pField->uiLen == 3 )
             hb_itemPutDL( pItem, hb_sxPtoD( ( char * ) pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ) );
          else if( pField->uiLen == 4 )
-            hb_itemPutNIntLen( pItem, ( HB_MAXINT ) HB_GET_LE_INT32( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ), 10 );
+            hb_itemPutNIntLen( pItem, static_cast< HB_MAXINT >( HB_GET_LE_INT32( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ) ), 10 );
          else
             fError = HB_TRUE;
          break;
@@ -2759,7 +2759,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
                if( pField->uiDec )
                   dVal = hb_numDecConv( dVal, -static_cast< int >( pField->uiDec ) );
 #endif
-               lVal = ( HB_MAXINT ) dVal;
+               lVal = static_cast< HB_MAXINT >( dVal );
                if( ! HB_DBL_LIM_INT64( dVal ) )
                   iSize = pField->uiLen + 1;
                else
@@ -2777,7 +2777,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             }
             else
             {
-               lVal = ( HB_MAXINT ) hb_itemGetNInt( pItem );
+               lVal = static_cast< HB_MAXINT >( hb_itemGetNInt( pItem ) );
 #ifdef HB_LONG_LONG_OFF
                dVal = static_cast< double >( lVal );
 #endif
@@ -3669,12 +3669,12 @@ static HB_ERRCODE hb_dbfInfo( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
 
       case DBI_FILEHANDLE:
          hb_itemPutNInt( pItem, ! pArea->pDataFile ? FS_ERROR :
-               ( HB_MAXINT ) ( HB_NHANDLE ) hb_fileHandle( pArea->pDataFile ) );
+               static_cast< HB_MAXINT >( ( HB_NHANDLE ) hb_fileHandle( pArea->pDataFile ) ) );
          break;
 
       case DBI_MEMOHANDLE:
          hb_itemPutNInt( pItem, ! pArea->pMemoFile ? FS_ERROR :
-               ( HB_MAXINT ) ( HB_NHANDLE ) hb_fileHandle( pArea->pMemoFile ) );
+               static_cast< HB_MAXINT >( ( HB_NHANDLE ) hb_fileHandle( pArea->pMemoFile ) ) );
          break;
 
       case DBI_TRANSREC:

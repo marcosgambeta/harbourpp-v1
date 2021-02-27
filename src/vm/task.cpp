@@ -209,17 +209,17 @@ static HB_MAXINT hb_taskTimeStop( unsigned long ulMilliSec )
    {
 #if defined( __DJGPP__ )
       /* uclock_t uclock() * 1000 / UCLOCKS_PER_SEC */
-      return ( HB_MAXINT ) clock() * 1000 / CLOCKS_PER_SEC + ulMilliSec;
+      return static_cast< HB_MAXINT >( clock() ) * 1000 / CLOCKS_PER_SEC + ulMilliSec;
 #elif _POSIX_C_SOURCE >= 199309L
       struct timespec ts;
       clock_gettime( CLOCK_REALTIME, &ts );
-      return ( HB_MAXINT ) ts.tv_sec * 1000 + ts.tv_nsec / 1000000 + ulMilliSec;
+      return static_cast< HB_MAXINT >( ts.tv_sec ) * 1000 + ts.tv_nsec / 1000000 + ulMilliSec;
 #elif defined( HB_OS_UNIX )
       struct timeval tv;
       gettimeofday( &tv, nullptr );
-      return ( HB_MAXINT ) tv.tv_sec * 1000 + tv.tv_usec / 1000 + ulMilliSec;
+      return static_cast< HB_MAXINT >( tv.tv_sec ) * 1000 + tv.tv_usec / 1000 + ulMilliSec;
 #else
-      return ( HB_MAXINT ) clock() * 1000 / CLOCKS_PER_SEC + ulMilliSec;
+      return static_cast< HB_MAXINT >( clock() ) * 1000 / CLOCKS_PER_SEC + ulMilliSec;
 #endif
    }
 }

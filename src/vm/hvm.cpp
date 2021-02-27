@@ -3161,7 +3161,7 @@ static void hb_vmNegate( void )
       if( pItem->item.asInteger.value < -HB_VMINT_MAX )
       {
 #if HB_VMLONG_MAX > HB_VMINT_MAX
-         HB_MAXINT nValue = ( HB_MAXINT ) pItem->item.asInteger.value;
+         HB_MAXINT nValue = static_cast< HB_MAXINT >( pItem->item.asInteger.value );
          pItem->type = HB_IT_LONG;
          pItem->item.asLong.value = -nValue;
          pItem->item.asLong.length = HB_LONG_EXPLENGTH( -nValue );
@@ -3509,8 +3509,8 @@ static void hb_vmMult( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
 #if -( HB_VMLONG_MAX / HB_VMINT_MIN ) >= HB_VMINT_MAX && 1
    if( HB_IS_INTEGER( pItem1 ) && HB_IS_INTEGER( pItem2 ) )
    {
-      HB_MAXINT nResult = ( HB_MAXINT ) pItem1->item.asInteger.value *
-                          ( HB_MAXINT ) pItem2->item.asInteger.value;
+      HB_MAXINT nResult = static_cast< HB_MAXINT >( pItem1->item.asInteger.value ) *
+                          static_cast< HB_MAXINT >( pItem2->item.asInteger.value );
       if( HB_IS_COMPLEX( pResult ) )
          hb_itemClear( pResult );
       HB_ITEM_PUT_NUMINTRAW( pResult, nResult );
@@ -3698,7 +3698,7 @@ static void hb_vmInc( PHB_ITEM pItem )
          {
 #if HB_VMINT_MAX < HB_VMLONG_MAX
             pItem->type = HB_IT_LONG;
-            pItem->item.asLong.value = ( HB_MAXINT ) pItem->item.asInteger.value + 1;
+            pItem->item.asLong.value = static_cast< HB_MAXINT >( pItem->item.asInteger.value ) + 1;
             pItem->item.asLong.length = HB_LONG_EXPLENGTH( pItem->item.asLong.value );
 #else
             pItem->type = HB_IT_DOUBLE;
@@ -3763,7 +3763,7 @@ static void hb_vmDec( PHB_ITEM pItem )
          {
 #if HB_VMINT_MIN > HB_VMLONG_MIN
             pItem->type = HB_IT_LONG;
-            pItem->item.asLong.value = ( HB_MAXINT ) pItem->item.asInteger.value - 1;
+            pItem->item.asLong.value = static_cast< HB_MAXINT >( pItem->item.asInteger.value ) - 1;
             pItem->item.asLong.length = HB_LONG_EXPLENGTH( pItem->item.asLong.value );
 #else
             pItem->type = HB_IT_DOUBLE;
@@ -6742,7 +6742,7 @@ void hb_vmPushNumber( double dNumber, int iDec )
       hb_vmPushInteger( static_cast< int >( dNumber ) );
 
    else if( HB_DBL_LIM_LONG( dNumber ) )
-      hb_vmPushHBLong( ( HB_MAXINT ) dNumber );
+      hb_vmPushHBLong( static_cast< HB_MAXINT >( dNumber ) );
 
    else
       hb_vmPushDouble( dNumber, hb_stackSetStruct()->HB_SET_DECIMALS );
@@ -6801,7 +6801,7 @@ static void hb_vmPushLongConst( long lNumber )
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmPushLongConst(%ld)", lNumber ) );
 
    pItem->type = HB_IT_LONG;
-   pItem->item.asLong.value = ( HB_MAXINT ) lNumber;
+   pItem->item.asLong.value = static_cast< HB_MAXINT >( lNumber );
    pItem->item.asLong.length = static_cast< HB_USHORT >( hb_vmCalcIntWidth( lNumber ) );
 }
 #endif
@@ -6850,7 +6850,7 @@ static void hb_vmPushLongLongConst( HB_LONGLONG llNumber )
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmPushLongLongConst(%" PFLL "d)", llNumber ) );
 
    pItem->type = HB_IT_LONG;
-   pItem->item.asLong.value = ( HB_MAXINT ) llNumber;
+   pItem->item.asLong.value = static_cast< HB_MAXINT >( llNumber );
    pItem->item.asLong.length = static_cast< HB_USHORT >( hb_vmCalcIntWidth( llNumber ) );
 }
 #endif
@@ -10288,10 +10288,10 @@ HB_BOOL hb_xvmEqualInt( HB_LONG lValue )
    else if( HB_IS_LONG( pItem ) )
    {
 #if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
-      HB_BOOL f = pItem->item.asLong.value == ( HB_MAXINT ) lValue;
+      HB_BOOL f = pItem->item.asLong.value == static_cast< HB_MAXINT >( lValue );
       pItem->item.asLogical.value = f;
 #else
-      pItem->item.asLogical.value = pItem->item.asLong.value == ( HB_MAXINT ) lValue;
+      pItem->item.asLogical.value = pItem->item.asLong.value == static_cast< HB_MAXINT >( lValue );
 #endif
       pItem->type = HB_IT_LOGICAL;
    }
@@ -10346,10 +10346,10 @@ HB_BOOL hb_xvmEqualIntIs( HB_LONG lValue, HB_BOOL * pfValue )
    else if( HB_IS_LONG( pItem ) )
    {
 #if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
-      HB_BOOL f = pItem->item.asLong.value == ( HB_MAXINT ) lValue;
+      HB_BOOL f = pItem->item.asLong.value == static_cast< HB_MAXINT >( lValue );
       *pfValue = f;
 #else
-      *pfValue = pItem->item.asLong.value == ( HB_MAXINT ) lValue;
+      *pfValue = pItem->item.asLong.value == static_cast< HB_MAXINT >( lValue );
 #endif
       hb_stackDec();
    }
@@ -10417,10 +10417,10 @@ HB_BOOL hb_xvmNotEqualInt( HB_LONG lValue )
    else if( HB_IS_LONG( pItem ) )
    {
 #if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
-      HB_BOOL f = pItem->item.asLong.value != ( HB_MAXINT ) lValue;
+      HB_BOOL f = pItem->item.asLong.value != static_cast< HB_MAXINT >( lValue );
       pItem->item.asLogical.value = f;
 #else
-      pItem->item.asLogical.value = pItem->item.asLong.value != ( HB_MAXINT ) lValue;
+      pItem->item.asLogical.value = pItem->item.asLong.value != static_cast< HB_MAXINT >( lValue );
 #endif
       pItem->type = HB_IT_LOGICAL;
    }
@@ -10475,10 +10475,10 @@ HB_BOOL hb_xvmNotEqualIntIs( HB_LONG lValue, HB_BOOL * pfValue )
    else if( HB_IS_LONG( pItem ) )
    {
 #if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
-      HB_BOOL f = pItem->item.asLong.value != ( HB_MAXINT ) lValue;
+      HB_BOOL f = pItem->item.asLong.value != static_cast< HB_MAXINT >( lValue );
       *pfValue = f;
 #else
-      *pfValue = pItem->item.asLong.value != ( HB_MAXINT ) lValue;
+      *pfValue = pItem->item.asLong.value != static_cast< HB_MAXINT >( lValue );
 #endif
       hb_stackDec();
    }
@@ -10546,10 +10546,10 @@ HB_BOOL hb_xvmLessThenInt( HB_LONG lValue )
    else if( HB_IS_LONG( pItem ) )
    {
 #if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
-      HB_BOOL f = pItem->item.asLong.value < ( HB_MAXINT ) lValue;
+      HB_BOOL f = pItem->item.asLong.value < static_cast< HB_MAXINT >( lValue );
       pItem->item.asLogical.value = f;
 #else
-      pItem->item.asLogical.value = pItem->item.asLong.value < ( HB_MAXINT ) lValue;
+      pItem->item.asLogical.value = pItem->item.asLong.value < static_cast< HB_MAXINT >( lValue );
 #endif
       pItem->type = HB_IT_LOGICAL;
    }
@@ -10599,10 +10599,10 @@ HB_BOOL hb_xvmLessThenIntIs( HB_LONG lValue, HB_BOOL * pfValue )
    else if( HB_IS_LONG( pItem ) )
    {
 #if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
-      HB_BOOL f = pItem->item.asLong.value < ( HB_MAXINT ) lValue;
+      HB_BOOL f = pItem->item.asLong.value < static_cast< HB_MAXINT >( lValue );
       *pfValue = f;
 #else
-      *pfValue = pItem->item.asLong.value < ( HB_MAXINT ) lValue;
+      *pfValue = pItem->item.asLong.value < static_cast< HB_MAXINT >( lValue );
 #endif
       hb_stackDec();
    }
@@ -10665,10 +10665,10 @@ HB_BOOL hb_xvmLessEqualThenInt( HB_LONG lValue )
    else if( HB_IS_LONG( pItem ) )
    {
 #if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
-      HB_BOOL f = pItem->item.asLong.value <= ( HB_MAXINT ) lValue;
+      HB_BOOL f = pItem->item.asLong.value <= static_cast< HB_MAXINT >( lValue );
       pItem->item.asLogical.value = f;
 #else
-      pItem->item.asLogical.value = pItem->item.asLong.value <= ( HB_MAXINT ) lValue;
+      pItem->item.asLogical.value = pItem->item.asLong.value <= static_cast< HB_MAXINT >( lValue );
 #endif
       pItem->type = HB_IT_LOGICAL;
    }
@@ -10718,10 +10718,10 @@ HB_BOOL hb_xvmLessEqualThenIntIs( HB_LONG lValue, HB_BOOL * pfValue )
    else if( HB_IS_LONG( pItem ) )
    {
 #if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
-      HB_BOOL f = pItem->item.asLong.value <= ( HB_MAXINT ) lValue;
+      HB_BOOL f = pItem->item.asLong.value <= static_cast< HB_MAXINT >( lValue );
       *pfValue = f;
 #else
-      *pfValue = pItem->item.asLong.value <= ( HB_MAXINT ) lValue;
+      *pfValue = pItem->item.asLong.value <= static_cast< HB_MAXINT >( lValue );
 #endif
       hb_stackDec();
    }
@@ -10784,10 +10784,10 @@ HB_BOOL hb_xvmGreaterThenInt( HB_LONG lValue )
    else if( HB_IS_LONG( pItem ) )
    {
 #if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
-      HB_BOOL f = pItem->item.asLong.value > ( HB_MAXINT ) lValue;
+      HB_BOOL f = pItem->item.asLong.value > static_cast< HB_MAXINT >( lValue );
       pItem->item.asLogical.value = f;
 #else
-      pItem->item.asLogical.value = pItem->item.asLong.value > ( HB_MAXINT ) lValue;
+      pItem->item.asLogical.value = pItem->item.asLong.value > static_cast< HB_MAXINT >( lValue );
 #endif
       pItem->type = HB_IT_LOGICAL;
    }
@@ -10837,10 +10837,10 @@ HB_BOOL hb_xvmGreaterThenIntIs( HB_LONG lValue, HB_BOOL * pfValue )
    else if( HB_IS_LONG( pItem ) )
    {
 #if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
-      HB_BOOL f = pItem->item.asLong.value > ( HB_MAXINT ) lValue;
+      HB_BOOL f = pItem->item.asLong.value > static_cast< HB_MAXINT >( lValue );
       *pfValue = f;
 #else
-      *pfValue = pItem->item.asLong.value > ( HB_MAXINT ) lValue;
+      *pfValue = pItem->item.asLong.value > static_cast< HB_MAXINT >( lValue );
 #endif
       hb_stackDec();
    }
@@ -10903,10 +10903,10 @@ HB_BOOL hb_xvmGreaterEqualThenInt( HB_LONG lValue )
    else if( HB_IS_LONG( pItem ) )
    {
 #if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
-      HB_BOOL f = pItem->item.asLong.value >= ( HB_MAXINT ) lValue;
+      HB_BOOL f = pItem->item.asLong.value >= static_cast< HB_MAXINT >( lValue );
       pItem->item.asLogical.value = f;
 #else
-      pItem->item.asLogical.value = pItem->item.asLong.value >= ( HB_MAXINT ) lValue;
+      pItem->item.asLogical.value = pItem->item.asLong.value >= static_cast< HB_MAXINT >( lValue );
 #endif
       pItem->type = HB_IT_LOGICAL;
    }
@@ -10956,10 +10956,10 @@ HB_BOOL hb_xvmGreaterEqualThenIntIs( HB_LONG lValue, HB_BOOL * pfValue )
    else if( HB_IS_LONG( pItem ) )
    {
 #if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
-      HB_BOOL f = pItem->item.asLong.value >= ( HB_MAXINT ) lValue;
+      HB_BOOL f = pItem->item.asLong.value >= static_cast< HB_MAXINT >( lValue );
       *pfValue = f;
 #else
-      *pfValue = pItem->item.asLong.value >= ( HB_MAXINT ) lValue;
+      *pfValue = pItem->item.asLong.value >= static_cast< HB_MAXINT >( lValue );
 #endif
       hb_stackDec();
    }

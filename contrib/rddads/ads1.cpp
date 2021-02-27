@@ -2318,7 +2318,7 @@ static HB_ERRCODE adsGetValue( ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem
                qVal = 0;
                pArea->area.fEof = HB_TRUE;
             }
-            hb_itemPutNIntLen( pItem, ( HB_MAXINT ) qVal, 20 );
+            hb_itemPutNIntLen( pItem, static_cast< HB_MAXINT >( qVal ), 20 );
 #else
             DOUBLE   dVal = 0;
             u32RetVal = AdsGetDouble( pArea->hTable, ADSFIELD( uiIndex ), &dVal );
@@ -2356,7 +2356,7 @@ static HB_ERRCODE adsGetValue( ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem
             qVal = 0;
             pArea->area.fEof = HB_TRUE;
          }
-         hb_itemPutNIntLen( pItem, ( HB_MAXINT ) qVal, 10 );
+         hb_itemPutNIntLen( pItem, static_cast< HB_MAXINT >( qVal ), 10 );
          break;
       }
       case HB_FT_ROWVER:
@@ -2368,7 +2368,7 @@ static HB_ERRCODE adsGetValue( ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem
             qVal = 0;
             pArea->area.fEof = HB_TRUE;
          }
-         hb_itemPutNIntLen( pItem, ( HB_MAXINT ) qVal, 20 );
+         hb_itemPutNIntLen( pItem, static_cast< HB_MAXINT >( qVal ), 20 );
          break;
       }
 #else

@@ -261,7 +261,7 @@ HB_MAXINT hb_compExprAsLongNum( PHB_EXPR pExpr )
       if( pExpr->value.asNum.NumType == HB_ET_LONG )
          return pExpr->value.asNum.val.l;
       else
-         return ( HB_MAXINT ) pExpr->value.asNum.val.d;
+         return static_cast< HB_MAXINT >( pExpr->value.asNum.val.d );
    }
    else
       return 0;

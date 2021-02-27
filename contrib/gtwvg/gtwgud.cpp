@@ -1054,7 +1054,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc( HWND hWnd, UINT message, WPARAM wPara
 
             hb_arraySetNL( pEvParams, 1, ( long ) LOWORD( wParam ) );
             hb_arraySetNL( pEvParams, 2, ( long ) HIWORD( wParam ) );
-            hb_arraySetNInt( pEvParams, 3, ( HB_MAXINT ) ( HB_PTRUINT ) lParam );
+            hb_arraySetNInt( pEvParams, 3, static_cast< HB_MAXINT >( ( HB_PTRUINT ) lParam ) );
 
             hb_gt_wvt_FireEvent( pWVT, HB_GTE_HSCROLL, pEvParams );
             return 0;
@@ -1067,7 +1067,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc( HWND hWnd, UINT message, WPARAM wPara
 
             hb_arraySetNL( pEvParams, 1, ( long ) LOWORD( wParam ) );
             hb_arraySetNL( pEvParams, 2, ( long ) HIWORD( wParam ) );
-            hb_arraySetNInt( pEvParams, 3, ( HB_MAXINT ) ( HB_PTRUINT ) lParam );
+            hb_arraySetNInt( pEvParams, 3, static_cast< HB_MAXINT >( ( HB_PTRUINT ) lParam ) );
 
             hb_gt_wvt_FireEvent( pWVT, HB_GTE_VSCROLL, pEvParams );
             return 0;
@@ -1469,8 +1469,8 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
             pWVT->bIconToFree = HB_FALSE;
             pWVT->hIcon = LoadIcon( pWVT->hInstance,
-                                    MAKEINTRESOURCE( ( HB_MAXINT )
-                                         hb_itemGetNInt( pInfo->pNewVal ) ) );
+                                    MAKEINTRESOURCE( static_cast< HB_MAXINT >(
+                                         hb_itemGetNInt( pInfo->pNewVal ) ) ) );
 
             if( pWVT->hWnd )
             {
@@ -1801,8 +1801,8 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                   else if( iIconType == 2 )
                   {
                      hIcon = LoadIcon( pWVT->hInstance,
-                                          MAKEINTRESOURCE( ( HB_MAXINT )
-                                                      hb_arrayGetNInt( pInfo->pNewVal2, 3 ) ) );
+                                          MAKEINTRESOURCE( static_cast< HB_MAXINT >(
+                                                      hb_arrayGetNInt( pInfo->pNewVal2, 3 ) ) ) );
                   }
                   tnid.cbSize           = sizeof( NOTIFYICONDATA );
                   tnid.hWnd             = pWVT->hWnd;

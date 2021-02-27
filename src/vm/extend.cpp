@@ -655,9 +655,9 @@ HB_MAXINT hb_parnint( int iParam )
          pItem = hb_itemUnRef( pItem );
 
       if( HB_IS_LONG( pItem ) )
-         return ( HB_MAXINT ) pItem->item.asLong.value;
+         return static_cast< HB_MAXINT >( pItem->item.asLong.value );
       else if( HB_IS_INTEGER( pItem ) )
-         return ( HB_MAXINT ) pItem->item.asInteger.value;
+         return static_cast< HB_MAXINT >( pItem->item.asInteger.value );
       else if( HB_IS_DOUBLE( pItem ) )
          return HB_CAST_MAXINT( pItem->item.asDouble.value );
    }
@@ -679,9 +679,9 @@ HB_MAXINT hb_parnintdef( int iParam, HB_MAXINT nDefValue )
          pItem = hb_itemUnRef( pItem );
 
       if( HB_IS_LONG( pItem ) )
-         return ( HB_MAXINT ) pItem->item.asLong.value;
+         return static_cast< HB_MAXINT >( pItem->item.asLong.value );
       else if( HB_IS_INTEGER( pItem ) )
-         return ( HB_MAXINT ) pItem->item.asInteger.value;
+         return static_cast< HB_MAXINT >( pItem->item.asInteger.value );
       else if( HB_IS_DOUBLE( pItem ) )
          return HB_CAST_MAXINT( pItem->item.asDouble.value );
    }
@@ -1266,9 +1266,9 @@ HB_MAXINT hb_parvnint( int iParam, ... )
          pItem = hb_itemUnRef( pItem );
 
       if( HB_IS_LONG( pItem ) )
-         return ( HB_MAXINT ) pItem->item.asLong.value;
+         return static_cast< HB_MAXINT >( pItem->item.asLong.value );
       else if( HB_IS_INTEGER( pItem ) )
-         return ( HB_MAXINT ) pItem->item.asInteger.value;
+         return static_cast< HB_MAXINT >( pItem->item.asInteger.value );
       else if( HB_IS_DOUBLE( pItem ) )
          return HB_CAST_MAXINT( pItem->item.asDouble.value );
       else if( HB_IS_ARRAY( pItem ) )

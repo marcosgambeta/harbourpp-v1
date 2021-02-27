@@ -1289,7 +1289,7 @@ void hb_oleVariantToItemEx( PHB_ITEM pItem, VARIANT * pVariant, HB_USHORT uiClas
 
       case VT_I8:
 #if HB_VMLONG_MAX == INT32_MAX || defined( HB_LONG_LONG_OFF )
-         hb_itemPutNInt( pItem, ( HB_MAXINT ) V_I4( pVariant ) );
+         hb_itemPutNInt( pItem, static_cast< HB_MAXINT >( V_I4( pVariant ) ) );
 #elif defined( HB_OLE_NO_LL )
          /* workaround for wrong OLE variant structure definition */
          hb_itemPutNInt( pItem, *( ( HB_LONGLONG * ) &V_I4( pVariant ) ) );
@@ -1300,7 +1300,7 @@ void hb_oleVariantToItemEx( PHB_ITEM pItem, VARIANT * pVariant, HB_USHORT uiClas
 
       case VT_I8 | VT_BYREF:
 #if HB_VMLONG_MAX == INT32_MAX || defined( HB_LONG_LONG_OFF )
-         hb_itemPutNInt( pItem, ( HB_MAXINT ) *V_I4REF( pVariant ) );
+         hb_itemPutNInt( pItem, static_cast< HB_MAXINT >( *V_I4REF( pVariant ) ) );
 #elif defined( HB_OLE_NO_LLREF )
          /* workaround for wrong OLE variant structure definition */
          hb_itemPutNInt( pItem, *( HB_LONGLONG * ) V_R8REF( pVariant ) );
@@ -1336,24 +1336,24 @@ void hb_oleVariantToItemEx( PHB_ITEM pItem, VARIANT * pVariant, HB_USHORT uiClas
       case VT_UI8:
          /* TODO: sign is lost. Conversion to double will lose significant digits. */
 #if HB_VMLONG_MAX == INT32_MAX || defined( HB_LONG_LONG_OFF )
-         hb_itemPutNInt( pItem, ( HB_MAXINT ) V_UI4( pVariant ) );
+         hb_itemPutNInt( pItem, static_cast< HB_MAXINT >( V_UI4( pVariant ) ) );
 #elif defined( HB_OLE_NO_LL )
          /* workaround for wrong OLE variant structure definition */
          hb_itemPutNInt( pItem, *( ( HB_LONGLONG * ) &V_UI4( pVariant ) ) );
 #else
-         hb_itemPutNInt( pItem, ( HB_MAXINT ) V_UI8( pVariant ) );
+         hb_itemPutNInt( pItem, static_cast< HB_MAXINT >( V_UI8( pVariant ) ) );
 #endif
          break;
 
       case VT_UI8 | VT_BYREF:
          /* TODO: sign is lost. Conversion to double will lose significant digits. */
 #if HB_VMLONG_MAX == INT32_MAX || defined( HB_LONG_LONG_OFF )
-         hb_itemPutNInt( pItem, ( HB_MAXINT ) *V_UI4REF( pVariant ) );
+         hb_itemPutNInt( pItem, static_cast< HB_MAXINT >( *V_UI4REF( pVariant ) ) );
 #elif defined( HB_OLE_NO_LLREF )
          /* workaround for wrong OLE variant structure definition */
          hb_itemPutNInt( pItem, *( HB_LONGLONG * ) V_R8REF( pVariant ) );
 #else
-         hb_itemPutNInt( pItem, ( HB_MAXINT ) *V_UI8REF( pVariant ) );
+         hb_itemPutNInt( pItem, static_cast< HB_MAXINT >( *V_UI8REF( pVariant ) ) );
 #endif
          break;
 

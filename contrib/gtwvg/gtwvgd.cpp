@@ -2010,7 +2010,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc( HWND hWnd, UINT message, WPARAM wPara
                }
                {  /* To evoke if that portion is covered by GUI control */
                   PHB_ITEM pEvParams = hb_itemNew( nullptr );
-                  hb_itemPutNInt( pEvParams, ( HB_MAXINT ) ( HB_PTRUINT ) hWnd );
+                  hb_itemPutNInt( pEvParams, static_cast< HB_MAXINT >( ( HB_PTRUINT ) hWnd ) );
                   hb_gt_wvt_FireEvent( pWVT, HB_GTE_PAINT, pEvParams );
                }
             }
@@ -2023,7 +2023,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc( HWND hWnd, UINT message, WPARAM wPara
 
             hb_arraySetNL( pEvParams, 1, ( long ) LOWORD( wParam ) );
             hb_arraySetNL( pEvParams, 2, ( long ) HIWORD( wParam ) );
-            hb_arraySetNInt( pEvParams, 3, ( HB_MAXINT ) ( HB_PTRUINT ) lParam );
+            hb_arraySetNInt( pEvParams, 3, static_cast< HB_MAXINT >( ( HB_PTRUINT ) lParam ) );
 
             hb_gt_wvt_FireEvent( pWVT, HB_GTE_HSCROLL, pEvParams );
             return 0;
@@ -2036,7 +2036,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc( HWND hWnd, UINT message, WPARAM wPara
 
             hb_arraySetNL( pEvParams, 1, ( long ) LOWORD( wParam ) );
             hb_arraySetNL( pEvParams, 2, ( long ) HIWORD( wParam ) );
-            hb_arraySetNInt( pEvParams, 3, ( HB_MAXINT ) ( HB_PTRUINT ) lParam );
+            hb_arraySetNInt( pEvParams, 3, static_cast< HB_MAXINT >( ( HB_PTRUINT ) lParam ) );
 
             hb_gt_wvt_FireEvent( pWVT, HB_GTE_VSCROLL, pEvParams );
             return 0;
@@ -2058,7 +2058,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc( HWND hWnd, UINT message, WPARAM wPara
                   {
                      hb_vmPushDynSym( pWVT->pSymWVT_SETFOCUS );
                      hb_vmPushNil();
-                     hb_vmPushNumInt( ( HB_MAXINT ) ( HB_PTRUINT ) hWnd );
+                     hb_vmPushNumInt( static_cast< HB_MAXINT >( ( HB_PTRUINT ) hWnd ) );
                      hb_vmDo( 1 );
                      hb_vmRequestRestore();
                   }
@@ -2090,7 +2090,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc( HWND hWnd, UINT message, WPARAM wPara
                {
                   hb_vmPushDynSym( pWVT->pSymWVT_KILLFOCUS );
                   hb_vmPushNil();
-                  hb_vmPushNumInt( ( HB_MAXINT ) ( HB_PTRUINT ) hWnd );
+                  hb_vmPushNumInt( static_cast< HB_MAXINT >( ( HB_PTRUINT ) hWnd ) );
                   hb_vmDo( 1 );
                   hb_vmRequestRestore();
                }
@@ -2337,7 +2337,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc( HWND hWnd, UINT message, WPARAM wPara
 
             hb_arraySetNL( pEvParams, 1, ( long ) LOWORD( wParam ) );
             hb_arraySetNL( pEvParams, 2, ( long ) HIWORD( wParam ) );
-            hb_arraySetNInt( pEvParams, 3, ( HB_MAXINT ) ( HB_PTRUINT ) lParam );
+            hb_arraySetNInt( pEvParams, 3, static_cast< HB_MAXINT >( ( HB_PTRUINT ) lParam ) );
 
             hb_gt_wvt_FireEvent( pWVT, HB_GTE_KEYTOITEM, pEvParams );
             break;
@@ -2781,7 +2781,7 @@ static void hb_gt_wvt_Exit( PHB_GT pGT )
    {
       PHB_ITEM pEvParams = hb_itemNew( nullptr );
       hb_arrayNew( pEvParams, 2 );
-      hb_arraySetNInt( pEvParams, 1, ( HB_MAXINT ) ( HB_PTRUINT ) pWVT->hWnd );
+      hb_arraySetNInt( pEvParams, 1, static_cast< HB_MAXINT >( ( HB_PTRUINT ) pWVT->hWnd ) );
       hb_arraySetNInt( pEvParams, 2, pWVT->threadNO );
       hb_gt_wvt_FireEvent( pWVT, HB_GTE_CLOSED, pEvParams );
    }
@@ -3363,8 +3363,8 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
             pWVT->bIconToFree = HB_FALSE;
             pWVT->hIcon = LoadIcon( pWVT->hInstance,
-                                    MAKEINTRESOURCE( ( HB_MAXINT )
-                                         hb_itemGetNInt( pInfo->pNewVal ) ) );
+                                    MAKEINTRESOURCE( static_cast< HB_MAXINT >(
+                                         hb_itemGetNInt( pInfo->pNewVal ) ) ) );
 
             if( pWVT->hWnd )
             {
@@ -3837,8 +3837,8 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                   else if( iIconType == 2 )
                   {
                      hIcon = LoadIcon( pWVT->hInstance,
-                                          MAKEINTRESOURCE( ( HB_MAXINT )
-                                                      hb_arrayGetNInt( pInfo->pNewVal2, 3 ) ) );
+                                          MAKEINTRESOURCE( static_cast< HB_MAXINT >(
+                                                      hb_arrayGetNInt( pInfo->pNewVal2, 3 ) ) ) );
                   }
                   tnid.cbSize           = sizeof( NOTIFYICONDATA );
                   tnid.hWnd             = pWVT->hWnd;
@@ -4259,7 +4259,7 @@ static void hb_gt_wvt_Refresh( PHB_GT pGT )
          {
             PHB_ITEM pEvParams = hb_itemNew( nullptr );
             hb_arrayNew( pEvParams, 2 );
-            hb_arraySetNInt( pEvParams, 1, ( HB_MAXINT ) ( HB_PTRUINT ) pWVT->hWnd );
+            hb_arraySetNInt( pEvParams, 1, static_cast< HB_MAXINT >( ( HB_PTRUINT ) pWVT->hWnd ) );
             hb_arraySetNInt( pEvParams, 2, pWVT->threadNO );
             hb_gt_wvt_FireEvent( pWVT, HB_GTE_CREATED, pEvParams );
          }

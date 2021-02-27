@@ -236,7 +236,7 @@ HB_FUNC( CLEARBIT )
          int iBit = hb_parni( ++i );
          if( iBit < 1 || iBit > 64 )
             break;
-         lValue &= ~( ( ( HB_MAXINT ) 1 ) << ( iBit - 1 ) );
+         lValue &= ~( ( static_cast< HB_MAXINT >( 1 ) ) << ( iBit - 1 ) );
       }
 
       if( iPCount )
@@ -260,7 +260,7 @@ HB_FUNC( SETBIT )
          int iBit = hb_parni( ++i );
          if( iBit < 1 || iBit > 64 )
             break;
-         lValue |= ( ( HB_MAXINT ) 1 ) << ( iBit - 1 );
+         lValue |= ( static_cast< HB_MAXINT >( 1 ) ) << ( iBit - 1 );
       }
 
       if( iPCount )
@@ -280,7 +280,7 @@ HB_FUNC( ISBIT )
 
       if( iBit )
          --iBit;
-      lValue &= ( ( HB_MAXINT ) 1 ) << iBit;
+      lValue &= ( static_cast< HB_MAXINT >( 1 ) ) << iBit;
    }
    else
       lValue = 0;

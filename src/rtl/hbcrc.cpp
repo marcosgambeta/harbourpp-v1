@@ -216,7 +216,7 @@ HB_MAXUINT hb_crcct( HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT p
 
       while( revp >>= 1 )
          ++bits;
-      mask = ( HB_MAXINT ) 1 << ( bits - 1 );
+      mask = static_cast< HB_MAXINT >( 1 ) << ( bits - 1 );
       bits -= 8;
       if( bits < 0 )
       {
@@ -226,7 +226,7 @@ HB_MAXUINT hb_crcct( HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT p
          do
          {
             int i = 8;
-            crc ^= ( HB_MAXUINT ) ( *ucbuf++ );
+            crc ^= static_cast< HB_MAXUINT >( *ucbuf++ );
             do
             {
                crc = ( crc & mask ) ? poly ^ ( crc << 1 ) : crc << 1;
@@ -242,7 +242,7 @@ HB_MAXUINT hb_crcct( HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT p
          do
          {
             int i = 8;
-            crc ^= ( HB_MAXUINT ) ( *ucbuf++ ) << bits;
+            crc ^= static_cast< HB_MAXUINT >( *ucbuf++ ) << bits;
             do
             {
                crc = ( crc & mask ) ? poly ^ ( crc << 1 ) : crc << 1;
@@ -282,10 +282,10 @@ HB_FUNC( HB_CRC )
 
    if( szString )
    {
-      HB_MAXUINT ulPolynomial = ( HB_MAXUINT ) hb_parnint( 3 );
+      HB_MAXUINT ulPolynomial = static_cast< HB_MAXUINT >( hb_parnint( 3 ) );
       if( ulPolynomial == 0 )
          ulPolynomial = 0x11021;
-      hb_retnint( hb_crc( ( HB_MAXUINT ) hb_parnint( 2 ), szString, hb_parclen( 1 ), ulPolynomial ) );
+      hb_retnint( hb_crc( static_cast< HB_MAXUINT >( hb_parnint( 2 ) ), szString, hb_parclen( 1 ), ulPolynomial ) );
    }
    else
       hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -297,10 +297,10 @@ HB_FUNC( HB_CRCCT )
 
    if( szString )
    {
-      HB_MAXUINT ulPolynomial = ( HB_MAXUINT ) hb_parnint( 3 );
+      HB_MAXUINT ulPolynomial = static_cast< HB_MAXUINT >( hb_parnint( 3 ) );
       if( ulPolynomial == 0 )
          ulPolynomial = 0x11021;
-      hb_retnint( hb_crcct( ( HB_MAXUINT ) hb_parnint( 2 ), szString, hb_parclen( 1 ), ulPolynomial ) );
+      hb_retnint( hb_crcct( static_cast< HB_MAXUINT >( hb_parnint( 2 ) ), szString, hb_parclen( 1 ), ulPolynomial ) );
    }
    else
       hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );

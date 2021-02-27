@@ -816,7 +816,7 @@ HB_FUNC( NETIO_SERVER )
                         errCode = NETIO_ERR_WRONG_FILE_PATH;
                      else
                      {
-                        HB_MAXINT nSize = ( HB_MAXINT ) hb_fileDirSpace( pszName, uiFlags );
+                        HB_MAXINT nSize = static_cast< HB_MAXINT >( hb_fileDirSpace( pszName, uiFlags ) );
                         errFsCode = hb_fsError();
                         HB_PUT_LE_UINT32( &msg[ 0 ], uiMsg );
                         HB_PUT_LE_UINT64( &msg[ 4 ], nSize );

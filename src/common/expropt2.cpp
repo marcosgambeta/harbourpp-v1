@@ -2255,7 +2255,7 @@ HB_BOOL hb_compExprReduceINT( PHB_EXPR pSelf, HB_COMP_DECL )
       {
          HB_MAXDBL dVal = ( HB_MAXDBL ) pArg->value.asNum.val.d;
          if( HB_DBL_LIM_LONG( dVal ) )
-            pExpr = hb_compExprNewLong( ( HB_MAXINT ) pArg->value.asNum.val.d, HB_COMP_PARAM );
+            pExpr = hb_compExprNewLong( static_cast< HB_MAXINT >( pArg->value.asNum.val.d ), HB_COMP_PARAM );
          else
             pExpr = hb_compExprNewDouble( pArg->value.asNum.val.d,
                                           pArg->value.asNum.bWidth, 0,

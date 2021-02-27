@@ -322,7 +322,7 @@ BOOL CALLBACK hb_wvt_gtDlgProcMLess( HWND hDlg, UINT message, WPARAM wParam, LPA
             {
                hb_vmPushDynSym( ( PHB_DYNS ) pFunc );
                hb_vmPushNil();
-               hb_vmPushNumInt( ( HB_MAXINT ) ( HB_PTRUINT ) hDlg );
+               hb_vmPushNumInt( static_cast< HB_MAXINT >( ( HB_PTRUINT ) hDlg ) );
                hb_vmPushNumInt( message );
                hb_vmPushNumInt( wParam );
                hb_vmPushNumInt( lParam );
@@ -340,7 +340,7 @@ BOOL CALLBACK hb_wvt_gtDlgProcMLess( HWND hDlg, UINT message, WPARAM wParam, LPA
                {
                   hb_vmPushEvalSym();
                   hb_vmPush( _s->pFunc[ iIndex ] );
-                  hb_vmPushNumInt( ( HB_MAXINT ) ( HB_PTRUINT ) hDlg );
+                  hb_vmPushNumInt( static_cast< HB_MAXINT >( ( HB_PTRUINT ) hDlg ) );
                   hb_vmPushNumInt( message );
                   hb_vmPushNumInt( wParam );
                   hb_vmPushNumInt( lParam );
@@ -431,7 +431,7 @@ BOOL CALLBACK hb_wvt_gtDlgProcModal( HWND hDlg, UINT message, WPARAM wParam, LPA
             {
                hb_vmPushDynSym( ( PHB_DYNS ) pFunc );
                hb_vmPushNil();
-               hb_vmPushNumInt( ( HB_MAXINT ) ( HB_PTRUINT ) hDlg );
+               hb_vmPushNumInt( static_cast< HB_MAXINT >( ( HB_PTRUINT ) hDlg ) );
                hb_vmPushNumInt( message );
                hb_vmPushNumInt( wParam );
                hb_vmPushNumInt( lParam );
@@ -449,7 +449,7 @@ BOOL CALLBACK hb_wvt_gtDlgProcModal( HWND hDlg, UINT message, WPARAM wParam, LPA
                {
                   hb_vmPushEvalSym();
                   hb_vmPush( pFunc );
-                  hb_vmPushNumInt( ( HB_MAXINT ) ( HB_PTRUINT ) hDlg );
+                  hb_vmPushNumInt( static_cast< HB_MAXINT >( ( HB_PTRUINT ) hDlg ) );
                   hb_vmPushNumInt( message );
                   hb_vmPushNumInt( wParam );
                   hb_vmPushNumInt( lParam );

@@ -280,14 +280,14 @@ HB_FUNC( FILEDELETE )
 HB_FUNC( FILEMOVE )
 {
    hb_retnint( hb_fsRename( hb_parcx( 1 ),
-                            hb_parcx( 2 ) ) ? 0 : -( HB_MAXINT ) hb_fsOsError() );
+                            hb_parcx( 2 ) ) ? 0 : -static_cast< HB_MAXINT >( hb_fsOsError() ) );
 }
 
 HB_FUNC_TRANSLATE( RENAMEFILE, FILEMOVE )
 
 HB_FUNC( DELETEFILE )
 {
-   hb_retnint( hb_fsDelete( hb_parcx( 1 ) ) ? 0 : -( HB_MAXINT ) hb_fsOsError() );
+   hb_retnint( hb_fsDelete( hb_parcx( 1 ) ) ? 0 : -static_cast< HB_MAXINT >( hb_fsOsError() ) );
 }
 
 HB_FUNC( FILESMAX )

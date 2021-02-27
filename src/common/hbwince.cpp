@@ -244,7 +244,7 @@ int WINAPI MulDiv( int nNumber, int nNumerator, int nDenominator )
 {
    if( nDenominator )
    {
-      HB_MAXINT llResult = ( HB_MAXINT ) nNumber * nNumerator / nDenominator;
+      HB_MAXINT llResult = static_cast< HB_MAXINT >( nNumber ) * nNumerator / nDenominator;
       if( HB_LIM_INT32( llResult ) )
          return static_cast< int >( llResult );
    }

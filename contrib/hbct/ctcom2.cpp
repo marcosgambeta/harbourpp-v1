@@ -83,7 +83,7 @@ HB_FUNC( COM_CRC )
 
    if( szString )
    {
-      HB_MAXUINT nPolynomial = ( HB_MAXUINT ) hb_parnint( 3 );
+      HB_MAXUINT nPolynomial = static_cast< HB_MAXUINT >( hb_parnint( 3 ) );
 
       if( nPolynomial == 0 )
          nPolynomial = 0x11021;  /* CRC_16_X25 */

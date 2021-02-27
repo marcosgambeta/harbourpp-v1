@@ -724,10 +724,10 @@ HB_MAXINT hb_itemGetNInt( PHB_ITEM pItem )
    if( pItem )
    {
       if( HB_IS_LONG( pItem ) )
-         return ( HB_MAXINT ) pItem->item.asLong.value;
+         return static_cast< HB_MAXINT >( pItem->item.asLong.value );
 
       else if( HB_IS_INTEGER( pItem ) )
-         return ( HB_MAXINT ) pItem->item.asInteger.value;
+         return static_cast< HB_MAXINT >( pItem->item.asInteger.value );
 
       else if( HB_IS_DOUBLE( pItem ) )
          return HB_CAST_MAXINT( pItem->item.asDouble.value );
@@ -1072,7 +1072,7 @@ PHB_ITEM hb_itemPutNLL( PHB_ITEM pItem, HB_LONGLONG llNumber )
 
 #if HB_VMLONG_MAX >= LONGLONG_MAX
    pItem->type = HB_IT_LONG;
-   pItem->item.asLong.value = ( HB_MAXINT ) llNumber;
+   pItem->item.asLong.value = static_cast< HB_MAXINT >( llNumber );
    pItem->item.asLong.length = HB_LONG_LENGTH( llNumber );
 #else
    pItem->type = HB_IT_DOUBLE;
@@ -1143,7 +1143,7 @@ PHB_ITEM hb_itemPutNLen( PHB_ITEM pItem, double dNumber, int iWidth, int iDec )
 
    if( iDec == 0 )
    {
-      HB_MAXINT nNumber = ( HB_MAXINT ) dNumber;
+      HB_MAXINT nNumber = static_cast< HB_MAXINT >( dNumber );
 
       if( static_cast< double >( nNumber ) == dNumber )
       {
@@ -1287,7 +1287,7 @@ PHB_ITEM hb_itemPutNLLen( PHB_ITEM pItem, long lNumber, int iWidth )
       iWidth = HB_LONG_LENGTH( lNumber );
 
    pItem->type = HB_IT_LONG;
-   pItem->item.asLong.value = ( HB_MAXINT ) lNumber;
+   pItem->item.asLong.value = static_cast< HB_MAXINT >( lNumber );
    pItem->item.asLong.length = iWidth;
 #endif
 
@@ -1312,7 +1312,7 @@ PHB_ITEM hb_itemPutNLLLen( PHB_ITEM pItem, HB_LONGLONG llNumber, int iWidth )
       iWidth = HB_LONG_LENGTH( llNumber );
 
    pItem->type = HB_IT_LONG;
-   pItem->item.asLong.value = ( HB_MAXINT ) llNumber;
+   pItem->item.asLong.value = static_cast< HB_MAXINT >( llNumber );
    pItem->item.asLong.length = static_cast< HB_USHORT >( iWidth );
 #else
    pItem->type = HB_IT_DOUBLE;

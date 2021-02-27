@@ -149,7 +149,7 @@ HB_MAXUINT hb_dateMilliSeconds( void )
    {
       SYSTEMTIME st;
       GetSystemTime( &st );
-      return ( HB_MAXUINT ) hb_dateEncode( st.wYear, st.wMonth, st.wDay ) *
+      return static_cast< HB_MAXUINT >( hb_dateEncode( st.wYear, st.wMonth, st.wDay ) ) *
              HB_MILLISECS_PER_DAY +
              hb_timeEncode( st.wHour, st.wMinute, st.wSecond, st.wMilliseconds );
    }
@@ -157,16 +157,16 @@ HB_MAXUINT hb_dateMilliSeconds( void )
    {
       struct timeval tv;
       gettimeofday( &tv, nullptr );
-      return ( ( HB_MAXUINT ) tv.tv_sec +
-               ( HB_MAXUINT ) HB_SYS_DATE_BASE * HB_SECONDS_PER_DAY ) * 1000 +
+      return ( static_cast< HB_MAXUINT >( tv.tv_sec ) +
+               static_cast< HB_MAXUINT >( HB_SYS_DATE_BASE ) * HB_SECONDS_PER_DAY ) * 1000 +
              tv.tv_usec / 1000;
    }
 #else
    {
       struct timeb tb;
       ftime( &tb );
-      return ( ( HB_MAXUINT ) tb.time +
-               ( HB_MAXUINT ) HB_SYS_DATE_BASE * HB_SECONDS_PER_DAY ) * 1000 +
+      return ( static_cast< HB_MAXUINT >( tb.time ) +
+               static_cast< HB_MAXUINT >( HB_SYS_DATE_BASE ) * HB_SECONDS_PER_DAY ) * 1000 +
              tb.millitm;
    }
 #endif
@@ -1136,14 +1136,14 @@ HB_MAXUINT hb_timerGet( void )
          }
       }
       if( s_iClkId != 0 && clock_gettime( s_iClkId, &ts ) == 0 )
-         return ( HB_MAXUINT ) ts.tv_sec * 1000 + ts.tv_nsec / 1000000;
+         return static_cast< HB_MAXUINT >( ts.tv_sec ) * 1000 + ts.tv_nsec / 1000000;
    }
 #endif
 #if defined( HB_OS_UNIX ) || defined( HB_OS_OS2 )
    {
       struct timeval tv;
       gettimeofday( &tv, nullptr );
-      return ( HB_MAXUINT ) tv.tv_sec * 1000 + tv.tv_usec / 1000;
+      return static_cast< HB_MAXUINT >( tv.tv_sec ) * 1000 + tv.tv_usec / 1000;
    }
 #elif defined( HB_OS_WIN )
    {
@@ -1153,13 +1153,13 @@ HB_MAXUINT hb_timerGet( void )
       if( dwTime < s_dwLast )
          ++s_dwCounter;
       s_dwLast = dwTime;
-      return ( ( HB_MAXUINT ) s_dwCounter << 32 ) + dwTime;
+      return ( static_cast< HB_MAXUINT >( s_dwCounter ) << 32 ) + dwTime;
    }
 #else
    {
       struct timeb tb;
       ftime( &tb );
-      return ( HB_MAXUINT ) tb.time * 1000 + tb.millitm;
+      return static_cast< HB_MAXUINT >( tb.time ) * 1000 + tb.millitm;
    }
 #endif
 }

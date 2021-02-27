@@ -132,7 +132,7 @@ static void hb_randomint( double dRnd )
    if( ! HB_ISNUM( 1 ) )
       hb_retni( dRnd >= 0.5 ? 0 : 1 );
    else if( ! HB_ISNUM( 2 ) )
-      hb_retnint( ( HB_MAXINT ) ( 1 + ( dRnd * hb_parnint( 1 ) ) ) );
+      hb_retnint( static_cast< HB_MAXINT >( 1 + ( dRnd * hb_parnint( 1 ) ) ) );
    else
    {
       HB_MAXINT lX = hb_parnint( 1 );
@@ -143,7 +143,7 @@ static void hb_randomint( double dRnd )
          lY = lX;
          lX = lZ;
       }
-      hb_retnint( ( HB_MAXINT ) ( lX + ( dRnd * ( lY - lX + 1 ) ) ) );
+      hb_retnint( static_cast< HB_MAXINT >( lX + ( dRnd * ( lY - lX + 1 ) ) ) );
    }
 }
 

@@ -68,7 +68,7 @@ HB_FUNC( ABS )
 #if -HB_VMINT_MAX > HB_VMINT_MIN
          else if( iNumber < -INT_MAX )
 #if HB_VMLONG_MAX > HB_VMINT_MAX
-            hb_retnint( -( HB_MAXINT ) iNumber );
+            hb_retnint( -static_cast< HB_MAXINT >( iNumber ) );
 #else
             hb_retndlen( -static_cast< double >( iNumber ), 0, iDec );
 #endif
