@@ -72,15 +72,15 @@
 
 #define WIN_STATUSBAR_MAX_PARTS  256
 
-#define wvg_parwparam( n )    ( ( WPARAM ) static_cast< HB_PTRUINT >( hb_parnint( n ) ) )
-#define wvg_parlparam( n )    ( ( LPARAM ) static_cast< HB_PTRUINT >( hb_parnint( n ) ) )
-#define wvg_parhandle( n )    ( ( HANDLE ) static_cast< HB_PTRUINT >( hb_parnint( n ) ) )
-#define wvg_parhwnd( n )      ( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( n ) ) )
-#define wvg_parwndproc( n )   ( ( WNDPROC ) static_cast< HB_PTRUINT >( hb_parnint( n ) ) )
-#define wvg_parhdc( n )       ( ( HDC ) static_cast< HB_PTRUINT >( hb_parnint( n ) ) )
-#define wvg_parcolor( n )     ( ( COLORREF ) static_cast< HB_PTRUINT >( hb_parnint( n ) ) )
+#define wvg_parwparam( n )    ( ( WPARAM ) ( HB_PTRUINT ) ( hb_parnint( n ) ) )
+#define wvg_parlparam( n )    ( ( LPARAM ) ( HB_PTRUINT ) ( hb_parnint( n ) ) )
+#define wvg_parhandle( n )    ( ( HANDLE ) ( HB_PTRUINT ) ( hb_parnint( n ) ) )
+#define wvg_parhwnd( n )      ( ( HWND ) ( HB_PTRUINT ) ( hb_parnint( n ) ) )
+#define wvg_parwndproc( n )   ( ( WNDPROC ) ( HB_PTRUINT ) ( hb_parnint( n ) ) )
+#define wvg_parhdc( n )       ( ( HDC ) ( HB_PTRUINT ) ( hb_parnint( n ) ) )
+#define wvg_parcolor( n )     ( ( COLORREF ) ( HB_PTRUINT ) ( hb_parnint( n ) ) )
 
-#define wvg_rethandle( n )    ( hb_retnint( reinterpret_cast< HB_PTRUINT >( n ) ) )
+#define wvg_rethandle( n )    ( hb_retnint( ( HB_PTRUINT ) ( n ) ) )
 
 #if defined( __BORLANDC__ ) && ! defined( HB_ARCH_64BIT )
     #undef MAKELONG
