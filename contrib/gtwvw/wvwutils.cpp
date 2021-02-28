@@ -1104,7 +1104,7 @@ HB_FUNC( SELECTFONT )
 
    hfont = CreateFontIndirect( cf.lpLogFont );
 
-   hb_arraySetNInt( aMetr, 1, ( HB_PTRUINT ) hfont );
+   hb_arraySetNInt( aMetr, 1, static_cast< HB_PTRUINT >( hfont ) );
    hb_arraySetC(  aMetr, 2, lf.lfFaceName );
    hb_arraySetNL( aMetr, 3, lf.lfWidth );
    hb_arraySetNL( aMetr, 4, lf.lfHeight );
@@ -2392,7 +2392,7 @@ HB_FUNC( WVW_SAVESCREEN )
 
    hb_arraySetNI( info, 1, iWidth );
    hb_arraySetNI( info, 2, iHeight );
-   hb_arraySetNInt( info, 3, ( HB_PTRUINT ) hBmp );
+   hb_arraySetNInt( info, 3, static_cast< HB_PTRUINT >( hBmp ) );
 
    hb_itemReturnRelease( info );
 }

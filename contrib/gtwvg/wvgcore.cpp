@@ -322,7 +322,7 @@ BOOL CALLBACK hb_wvt_gtDlgProcMLess( HWND hDlg, UINT message, WPARAM wParam, LPA
             {
                hb_vmPushDynSym( ( PHB_DYNS ) pFunc );
                hb_vmPushNil();
-               hb_vmPushNumInt( static_cast< HB_MAXINT >( ( HB_PTRUINT ) hDlg ) );
+               hb_vmPushNumInt( static_cast< HB_MAXINT >( reinterpret_cast< HB_PTRUINT >( hDlg ) ) );
                hb_vmPushNumInt( message );
                hb_vmPushNumInt( wParam );
                hb_vmPushNumInt( lParam );
@@ -340,7 +340,7 @@ BOOL CALLBACK hb_wvt_gtDlgProcMLess( HWND hDlg, UINT message, WPARAM wParam, LPA
                {
                   hb_vmPushEvalSym();
                   hb_vmPush( _s->pFunc[ iIndex ] );
-                  hb_vmPushNumInt( static_cast< HB_MAXINT >( ( HB_PTRUINT ) hDlg ) );
+                  hb_vmPushNumInt( static_cast< HB_MAXINT >( reinterpret_cast< HB_PTRUINT >( hDlg ) ) );
                   hb_vmPushNumInt( message );
                   hb_vmPushNumInt( wParam );
                   hb_vmPushNumInt( lParam );
@@ -431,7 +431,7 @@ BOOL CALLBACK hb_wvt_gtDlgProcModal( HWND hDlg, UINT message, WPARAM wParam, LPA
             {
                hb_vmPushDynSym( ( PHB_DYNS ) pFunc );
                hb_vmPushNil();
-               hb_vmPushNumInt( static_cast< HB_MAXINT >( ( HB_PTRUINT ) hDlg ) );
+               hb_vmPushNumInt( static_cast< HB_MAXINT >( reinterpret_cast< HB_PTRUINT >( hDlg ) ) );
                hb_vmPushNumInt( message );
                hb_vmPushNumInt( wParam );
                hb_vmPushNumInt( lParam );
@@ -449,7 +449,7 @@ BOOL CALLBACK hb_wvt_gtDlgProcModal( HWND hDlg, UINT message, WPARAM wParam, LPA
                {
                   hb_vmPushEvalSym();
                   hb_vmPush( pFunc );
-                  hb_vmPushNumInt( static_cast< HB_MAXINT >( ( HB_PTRUINT ) hDlg ) );
+                  hb_vmPushNumInt( static_cast< HB_MAXINT >( reinterpret_cast< HB_PTRUINT >( hDlg ) ) );
                   hb_vmPushNumInt( message );
                   hb_vmPushNumInt( wParam );
                   hb_vmPushNumInt( lParam );
@@ -1839,7 +1839,7 @@ HB_FUNC( WVT_DRAWPICTUREEX )
       iBottom = xy.y - 1 + hb_parvni( 6, 3 );
       iRight  = xy.x - 1 + hb_parvni( 6, 4 );
 
-      hb_retl( hb_wvt_gtRenderPicture( iLeft, iTop, iRight - iLeft + 1, iBottom - iTop + 1, ( IPicture * ) ( HB_PTRUINT ) hb_parnint( 5 ), hb_parl( 7 ) ) );
+      hb_retl( hb_wvt_gtRenderPicture( iLeft, iTop, iRight - iLeft + 1, iBottom - iTop + 1, ( IPicture * ) static_cast< HB_PTRUINT >( hb_parnint( 5 ) ), hb_parl( 7 ) ) );
    }
 #endif
 }
@@ -2140,7 +2140,7 @@ HB_FUNC( WVT_DRAWLABELOBJ )
 
    SetTextColor( _s->hdc, fgClr );
    SetBkColor( _s->hdc, bgClr );
-   SelectObject( _s->hdc, ( HFONT ) ( HB_PTRUINT ) hb_parnint( 10 ) );
+   SelectObject( _s->hdc, ( HFONT ) static_cast< HB_PTRUINT >( hb_parnint( 10 ) ) );
 
    GetTextExtentPoint32( _s->hdc, text, lstrlen( text ), &sz );
 
@@ -2195,7 +2195,7 @@ HB_FUNC( WVT_DRAWLABELOBJ )
    {
       SetTextColor( _s->hGuiDC, fgClr );
       SetBkColor( _s->hGuiDC, bgClr );
-      SelectObject( _s->hGuiDC, ( HFONT ) ( HB_PTRUINT ) hb_parnint( 10 ) );
+      SelectObject( _s->hGuiDC, ( HFONT ) static_cast< HB_PTRUINT >( hb_parnint( 10 ) ) );
       SetTextAlign( _s->hGuiDC, iAlignH | iAlignV );
 
       ExtTextOut( _s->hGuiDC, x, y, uiOptions, &rect, text, lstrlen( text ), nullptr );
@@ -2539,7 +2539,7 @@ HB_FUNC( WVT_DRAWTEXTBOX )
    SetTextColor( _s->hdc, fgClr );
    SetBkColor( _s->hdc, bgClr );
    SetBkMode( _s->hdc, hb_parnidef( 11, OPAQUE ) );
-   SelectObject( _s->hdc, ( HFONT ) ( HB_PTRUINT ) hb_parnint( 12 ) );
+   SelectObject( _s->hdc, ( HFONT ) static_cast< HB_PTRUINT >( hb_parnint( 12 ) ) );
 
    DrawText( _s->hdc, text, lstrlen( text ), &rc, iAlignH | DT_WORDBREAK | DT_TOP );
    #if defined( __SETGUI__ )
@@ -2549,7 +2549,7 @@ HB_FUNC( WVT_DRAWTEXTBOX )
       SetTextColor( _s->hGuiDC, fgClr );
       SetBkColor( _s->hGuiDC, bgClr );
       SetBkMode( _s->hGuiDC, hb_parnidef( 11, OPAQUE ) );
-      SelectObject( _s->hGuiDC, ( HFONT ) ( HB_PTRUINT ) hb_parnint( 12 ) );
+      SelectObject( _s->hGuiDC, ( HFONT ) static_cast< HB_PTRUINT >( hb_parnint( 12 ) ) );
 
       DrawText( _s->hGuiDC, text, lstrlen( text ), &rc, iAlignH | DT_WORDBREAK | DT_TOP );
    }
@@ -2681,7 +2681,7 @@ HB_FUNC( WVT_CREATEFONT )
    HB_STRNCPY( logfont.lfFaceName, ( ! HB_ISCHAR( 1 ) ? _s->fontFace : HB_PARSTR( 1, &hText, nullptr ) ), HB_SIZEOFARRAY( logfont.lfFaceName ) - 1 );
    hb_strfree( hText );
 
-   hb_retnint( ( HB_PTRUINT ) CreateFontIndirect( &logfont ) );
+   hb_retnint( reinterpret_cast< HB_PTRUINT >( CreateFontIndirect( &logfont ) ) );
 }
 
 /* wvt_LoadPicture( nSlot, cFilePic ) */
@@ -2709,7 +2709,7 @@ HB_FUNC( WVT_LOADPICTURE )
 
 HB_FUNC( WVT_DESTROYPICTURE )
 {
-   IPicture * iPicture = ( IPicture * ) ( HB_PTRUINT ) hb_parnl( 1 );
+   IPicture * iPicture = ( IPicture * ) static_cast< HB_PTRUINT >( hb_parnl( 1 ) );
    hb_retl( hb_wvt_gtDestroyPicture( iPicture ) );
 }
 
@@ -2723,7 +2723,7 @@ HB_FUNC( WVT_LOADPICTUREEX )
    hb_strfree( hImage );
    if( iPicture )
    {
-      hb_retnint( ( HB_PTRUINT ) iPicture );
+      hb_retnint( reinterpret_cast< HB_PTRUINT >( iPicture ) );
    }
 #endif
 }
@@ -2763,7 +2763,7 @@ HB_FUNC( WVT_LOADPICTUREFROMRESOURCEEX )
    hb_strfree( hSection );
    if( iPicture )
    {
-      hb_retnint( ( HB_PTRUINT ) iPicture );
+      hb_retnint( reinterpret_cast< HB_PTRUINT >( iPicture ) );
    }
 #endif
 }
@@ -2865,7 +2865,7 @@ HB_FUNC( WVT_SAVESCREEN )
 
    hb_arraySetNI( info, 1, iWidth );
    hb_arraySetNI( info, 2, iHeight );
-   hb_arraySetNInt( info, 3, ( HB_PTRUINT ) hBmp );
+   hb_arraySetNInt( info, 3, reinterpret_cast< HB_PTRUINT >( hBmp ) );
 
    hb_itemReturnRelease( info );
 }
@@ -2895,7 +2895,7 @@ HB_FUNC( WVT_RESTSCREEN )
    iHeight = iBottom - iTop + 1;
 
    hCompDC = CreateCompatibleDC( _s->hdc );
-   hBmp    = ( HBITMAP ) SelectObject( hCompDC, ( HBITMAP ) ( HB_PTRUINT ) hb_parvnint( 5, 3 ) );
+   hBmp    = ( HBITMAP ) SelectObject( hCompDC, ( HBITMAP ) static_cast< HB_PTRUINT >( hb_parvnint( 5, 3 ) ) );
    if( hBmp )
    {
       if( ( iWidth == hb_parvni( 5, 1 ) ) && ( iHeight == hb_parvni( 5, 2 ) ) )
@@ -2924,7 +2924,7 @@ HB_FUNC( WVT_RESTSCREEN )
    if( ! bDoNotDestroyBMP )
    {
       SelectObject( hCompDC, hBmp );
-      DeleteObject( ( HBITMAP ) ( HB_PTRUINT ) hb_parvnint( 5, 3 ) );
+      DeleteObject( ( HBITMAP ) static_cast< HB_PTRUINT >( hb_parvnint( 5, 3 ) ) );
    }
    hb_retl( bResult );
 }

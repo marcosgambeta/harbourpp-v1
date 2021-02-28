@@ -141,12 +141,12 @@ HB_FUNC( WIN_UNICODE )
 
 HB_FUNC( WIN_N2P )
 {
-   hb_retptr( ( void * ) ( HB_PTRUINT ) hb_parnint( 1 ) );
+   hb_retptr( ( void * ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ) );
 }
 
 HB_FUNC( WIN_P2N )
 {
-   hb_retnint( ( HB_PTRUINT ) hb_parptr( 1 ) );
+   hb_retnint( reinterpret_cast< HB_PTRUINT >( hb_parptr( 1 ) ) );
 }
 
 HB_FUNC( WIN_HINSTANCE )

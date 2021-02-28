@@ -352,7 +352,7 @@ HB_FUNC( WVT_SETTOOLTIPWIDTH )
    int iTipWidth = static_cast< int >( SendMessage( _s->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0 ) );
 
    if( HB_ISNUM( 1 ) )
-      SendMessage( _s->hWndTT, TTM_SETMAXTIPWIDTH, 0, ( LPARAM ) ( HB_PTRUINT ) hb_parnint( 1 ) );
+      SendMessage( _s->hWndTT, TTM_SETMAXTIPWIDTH, 0, ( LPARAM ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ) );
 
    hb_retni( iTipWidth );
 #else
@@ -631,7 +631,7 @@ HB_FUNC( WVT_SETMENU )
    RECT rc = { 0, 0, 0, 0 };
    int  height, width;
 
-   SetMenu( _s->hWnd, ( HMENU ) ( HB_PTRUINT ) hb_parnint( 1 ) );
+   SetMenu( _s->hWnd, ( HMENU ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ) );
 
    GetWindowRect( _s->hWnd, &wi );
    GetClientRect( _s->hWnd, &ci );
@@ -656,38 +656,38 @@ HB_FUNC( WVT_SETPOPUPMENU )
 
    HMENU hPopup = _s->hPopup;
 
-   _s->hPopup = ( HMENU ) ( HB_PTRUINT ) hb_parnint( 1 );
+   _s->hPopup = ( HMENU ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) );
    if( hPopup )
    {
-      hb_retnint( ( HB_PTRUINT ) hPopup );
+      hb_retnint( reinterpret_cast< HB_PTRUINT >( hPopup ) );
    }
 }
 
 HB_FUNC( WVT_CREATEMENU )
 {
-   hb_retnint( ( HB_PTRUINT ) CreateMenu() );
+   hb_retnint( reinterpret_cast< HB_PTRUINT >( CreateMenu() ) );
 }
 
 HB_FUNC( WVT_CREATEPOPUPMENU )
 {
-   hb_retnint( ( HB_PTRUINT ) CreatePopupMenu() );
+   hb_retnint( reinterpret_cast< HB_PTRUINT >( CreatePopupMenu() ) );
 }
 
 HB_FUNC_TRANSLATE( WVT_APPENDMENU, WVG_APPENDMENU )
 
 HB_FUNC( WVT_DELETEMENU )
 {
-   hb_retl( DeleteMenu( ( HMENU ) ( HB_PTRUINT ) hb_parnint( 1 ), ( UINT ) hb_parni( 2 ), ( UINT ) hb_parni( 3 ) ) );
+   hb_retl( DeleteMenu( ( HMENU ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), ( UINT ) hb_parni( 2 ), ( UINT ) hb_parni( 3 ) ) );
 }
 
 HB_FUNC( WVT_DESTROYMENU )
 {
-   hb_retl( DestroyMenu( ( HMENU ) ( HB_PTRUINT ) hb_parnint( 1 ) ) );
+   hb_retl( DestroyMenu( ( HMENU ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ) ) );
 }
 
 HB_FUNC( WVT_ENABLEMENUITEM )
 {
-   hb_retni( EnableMenuItem( ( HMENU ) ( HB_PTRUINT ) hb_parnint( 1 ), ( UINT ) hb_parni( 2 ), ( UINT ) hb_parni( 3 ) ) );
+   hb_retni( EnableMenuItem( ( HMENU ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), ( UINT ) hb_parni( 2 ), ( UINT ) hb_parni( 3 ) ) );
 }
 
 HB_FUNC( WVT_GETLASTMENUEVENT )
@@ -800,7 +800,7 @@ HB_FUNC( WVT_TRACKPOPUPMENU )
 
    GetCursorPos( &xy );
 
-   hb_retnl( TrackPopupMenu( ( HMENU ) ( HB_PTRUINT ) hb_parnint( 1 ),
+   hb_retnl( TrackPopupMenu( ( HMENU ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ),
                              TPM_CENTERALIGN | TPM_RETURNCMD,
                              xy.x,
                              xy.y,
@@ -813,7 +813,7 @@ HB_FUNC( WVT_GETMENU )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   hb_retnint( ( HB_PTRUINT ) GetMenu( _s->hWnd ) );
+   hb_retnint( reinterpret_cast< HB_PTRUINT >( GetMenu( _s->hWnd ) ) );
 }
 
 /*
@@ -867,7 +867,7 @@ HB_FUNC( WVT_CREATEDIALOGDYNAMIC )
          hDlg = CreateDialogIndirect( ( HINSTANCE ) wvg_hInstance(),
                                       ( LPDLGTEMPLATE ) HB_PARSTR( 1, &hTemplate, nullptr ),
                                       hb_parl( 2 ) ? _s->hWnd : nullptr,
-                                      ( DLGPROC ) ( HB_PTRUINT ) hb_parnint( 3 ) );
+                                      ( DLGPROC ) static_cast< HB_PTRUINT >( hb_parnint( 3 ) ) );
          hb_strfree( hTemplate );
       }
       else
@@ -932,7 +932,7 @@ HB_FUNC( WVT_CREATEDIALOGDYNAMIC )
       }
    }
 
-   hb_retnint( ( HB_PTRUINT ) hDlg );
+   hb_retnint( reinterpret_cast< HB_PTRUINT >( hDlg ) );
 }
 
 HB_FUNC( WVT_CREATEDIALOGMODAL )
@@ -945,7 +945,7 @@ HB_FUNC( WVT_CREATEDIALOGMODAL )
    int        iIndex;
    int        iResource = hb_parni( 4 );
    HB_PTRDIFF iResult   = 0;
-   HWND       hParent   = HB_ISNUM( 5 ) ? ( HWND ) ( HB_PTRUINT ) hb_parnint( 5 ) : _s->hWnd;
+   HWND       hParent   = HB_ISNUM( 5 ) ? ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 5 ) ) : _s->hWnd;
 
    /* check if we still have room for a new dialog */
    for( iIndex = 0; iIndex < WVT_DLGMD_MAX; iIndex++ )
@@ -1124,7 +1124,7 @@ HB_FUNC( WVT__MAKEDLGTEMPLATE )
 
    p = lpwAlign( p );
 
-   hb_retclen( ( LPSTR ) pdlgtemplate, ( ( HB_PTRUINT ) p - ( HB_PTRUINT ) pdlgtemplate ) );
+   hb_retclen( ( LPSTR ) pdlgtemplate, ( reinterpret_cast< HB_PTRUINT >( p ) - reinterpret_cast< HB_PTRUINT >( pdlgtemplate ) ) );
 
    LocalFree( LocalHandle( pdlgtemplate ) );
 }
@@ -1135,7 +1135,7 @@ HB_FUNC( WVT__MAKEDLGTEMPLATE )
  */
 LPWORD lpwAlign( LPWORD lpIn )
 {
-   HB_PTRUINT ul = ( HB_PTRUINT ) lpIn;
+   HB_PTRUINT ul = reinterpret_cast< HB_PTRUINT >( lpIn );
 
    ul  += 3;
    ul >>= 2;
@@ -1161,36 +1161,36 @@ HB_FUNC( WVT_LBADDSTRING )
 {
    void * hText;
 
-   SendMessage( GetDlgItem( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parni( 2 ) ), LB_ADDSTRING, 0, ( LPARAM ) HB_PARSTR( 3, &hText, nullptr ) );
+   SendMessage( GetDlgItem( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), hb_parni( 2 ) ), LB_ADDSTRING, 0, ( LPARAM ) HB_PARSTR( 3, &hText, nullptr ) );
    hb_strfree( hText );
 }
 
 HB_FUNC( WVT_LBGETCOUNT )
 {
-   hb_retnl( ( long ) SendMessage( GetDlgItem( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parni( 2 ) ), LB_GETCOUNT, 0, 0 ) );
+   hb_retnl( ( long ) SendMessage( GetDlgItem( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), hb_parni( 2 ) ), LB_GETCOUNT, 0, 0 ) );
 }
 
 HB_FUNC( WVT_LBDELETESTRING )
 {
-   SendMessage( GetDlgItem( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parni( 2 ) ), LB_DELETESTRING, hb_parni( 3 ), 0 );
+   SendMessage( GetDlgItem( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), hb_parni( 2 ) ), LB_DELETESTRING, hb_parni( 3 ), 0 );
 }
 
 HB_FUNC( WVT_LBSETCURSEL )
 {
-   SendMessage( GetDlgItem( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parni( 2 ) ), LB_SETCURSEL, hb_parni( 3 ), 0 );
+   SendMessage( GetDlgItem( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), hb_parni( 2 ) ), LB_SETCURSEL, hb_parni( 3 ), 0 );
 }
 
 HB_FUNC( WVT_CBADDSTRING )
 {
    void * hText;
 
-   SendMessage( GetDlgItem( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parni( 2 ) ), CB_ADDSTRING, 0, ( LPARAM ) HB_PARSTR( 3, &hText, nullptr ) );
+   SendMessage( GetDlgItem( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), hb_parni( 2 ) ), CB_ADDSTRING, 0, ( LPARAM ) HB_PARSTR( 3, &hText, nullptr ) );
    hb_strfree( hText );
 }
 
 HB_FUNC( WVT_CBSETCURSEL )
 {
-   SendMessage( GetDlgItem( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parni( 2 ) ), CB_SETCURSEL, hb_parni( 3 ), 0 );
+   SendMessage( GetDlgItem( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), hb_parni( 2 ) ), CB_SETCURSEL, hb_parni( 3 ), 0 );
 }
 
 /*
@@ -1213,12 +1213,12 @@ HB_FUNC( WVT_DLGSETICON )
 
    if( hIcon )
    {
-      SendMessage( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), WM_SETICON, ICON_SMALL, ( LPARAM ) hIcon );  /* Set Title Bar ICON */
-      SendMessage( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), WM_SETICON, ICON_BIG, ( LPARAM ) hIcon );    /* Set Task List Icon */
+      SendMessage( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), WM_SETICON, ICON_SMALL, ( LPARAM ) hIcon );  /* Set Title Bar ICON */
+      SendMessage( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), WM_SETICON, ICON_BIG, ( LPARAM ) hIcon );    /* Set Task List Icon */
    }
 
    if( hIcon )
-      hb_retnint( ( HB_PTRUINT ) hIcon );
+      hb_retnint( reinterpret_cast< HB_PTRUINT >( hIcon ) );
 }
 
 HB_FUNC( WVT_GETFONTHANDLE )
@@ -1231,7 +1231,7 @@ HB_FUNC( WVT_GETFONTHANDLE )
    if( iSlot >= 0 && iSlot < WVT_PICTURES_MAX )
       hFont = _s->pGUI->hUserFonts[ iSlot ];
 
-   hb_retnint( ( HB_PTRUINT ) hFont );
+   hb_retnint( reinterpret_cast< HB_PTRUINT >( hFont ) );
 }
 
 /*

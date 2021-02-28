@@ -600,11 +600,11 @@ HB_FUNC( WAPI_INSERTMENU )
    if( hSubMenu )
    {
       uFlags |= MF_POPUP;
-      uIDNewItem = ( HB_PTRUINT ) hSubMenu;
+      uIDNewItem = reinterpret_cast< HB_PTRUINT >( hSubMenu );
    }
    else
-      uIDNewItem = HB_ISPOINTER( 4 ) ? ( HB_PTRUINT ) hb_parptr( 4 ) :
-                                       ( HB_PTRUINT ) hb_parnint( 4 );
+      uIDNewItem = HB_ISPOINTER( 4 ) ? reinterpret_cast< HB_PTRUINT >( hb_parptr( 4 ) ) :
+                                       static_cast< HB_PTRUINT >( hb_parnint( 4 ) );
    if( lpNewItem )
       uFlags |= MF_STRING;
    else
@@ -629,11 +629,11 @@ HB_FUNC( WAPI_APPENDMENU )
    if( hSubMenu )
    {
       uFlags |= MF_POPUP;
-      uIDNewItem = ( HB_PTRUINT ) hSubMenu;
+      uIDNewItem = reinterpret_cast< HB_PTRUINT >( hSubMenu );
    }
    else
-      uIDNewItem = HB_ISPOINTER( 3 ) ? ( HB_PTRUINT ) hb_parptr( 3 ) :
-                                       ( HB_PTRUINT ) hb_parnint( 3 );
+      uIDNewItem = HB_ISPOINTER( 3 ) ? reinterpret_cast< HB_PTRUINT >( hb_parptr( 3 ) ) :
+                                       static_cast< HB_PTRUINT >( hb_parnint( 3 ) );
    if( lpNewItem )
       uFlags |= MF_STRING;
    else

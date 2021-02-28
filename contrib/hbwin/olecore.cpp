@@ -2172,7 +2172,7 @@ HB_FUNC( WIN_OLEERRORTEXT )
       {
          char buf[ 16 ];
 
-         hb_snprintf( buf, 16, "0x%08x", ( UINT ) ( HB_PTRUINT ) lOleError );
+         hb_snprintf( buf, 16, "0x%08x", ( UINT ) static_cast< HB_PTRUINT >( lOleError ) );
          hb_retc( buf );
       }
    }

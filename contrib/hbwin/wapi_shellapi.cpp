@@ -61,12 +61,12 @@ HB_FUNC( WAPI_SHELLEXECUTE )
    void * hParameters;
    void * hDirectory;
 
-   hb_retnint( ( HB_PTRUINT ) ShellExecute( ( HWND ) hb_parptr( 1 ),
+   hb_retnint( reinterpret_cast< HB_PTRUINT >( ShellExecute( ( HWND ) hb_parptr( 1 ),
                                             HB_PARSTR( 2, &hOperation, nullptr ), /* edit, explore, open, print, play?, properties? */
                                             HB_PARSTRDEF( 3, &hFile, nullptr ),
                                             HB_PARSTR( 4, &hParameters, nullptr ),
                                             HB_PARSTR( 5, &hDirectory, nullptr ),
-                                            hb_parnidef( 6, SW_SHOWNORMAL ) /* nShowCmd */ ) );
+                                            hb_parnidef( 6, SW_SHOWNORMAL ) /* nShowCmd */ ) ) );
 
    hb_strfree( hOperation );
    hb_strfree( hFile );

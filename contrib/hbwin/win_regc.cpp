@@ -76,7 +76,7 @@ HB_FUNC( WIN_REGCREATEKEYEX )
    HKEY hkResult = nullptr;
    DWORD dwDisposition = 0;
 
-   hb_retl( RegCreateKeyEx( hb_regkeyconv( ( HB_PTRUINT ) hb_parnint( 1 ) ),
+   hb_retl( RegCreateKeyEx( hb_regkeyconv( static_cast< HB_PTRUINT >( hb_parnint( 1 ) ) ),
                             HB_PARSTRDEF( 2, &hKey, nullptr ),
                             0,
                             nullptr,
@@ -97,7 +97,7 @@ HB_FUNC( WIN_REGOPENKEYEX )
    void * hKey;
    HKEY hkResult = nullptr;
 
-   hb_retl( RegOpenKeyEx( hb_regkeyconv( ( HB_PTRUINT ) hb_parnint( 1 ) ),
+   hb_retl( RegOpenKeyEx( hb_regkeyconv( static_cast< HB_PTRUINT >( hb_parnint( 1 ) ) ),
                           HB_PARSTRDEF( 2, &hKey, nullptr ),
                           0 /* dwOptions */,
                           hb_parnl( 4 ) /* samDesired */,
@@ -243,7 +243,7 @@ HB_FUNC( WIN_REGDELETEKEY )
 {
    void * hKey;
 
-   hb_retl( RegDeleteKey( hb_regkeyconv( ( HB_PTRUINT ) hb_parnint( 1 ) ),
+   hb_retl( RegDeleteKey( hb_regkeyconv( static_cast< HB_PTRUINT >( hb_parnint( 1 ) ) ),
                           ( LPCTSTR ) HB_PARSTRDEF( 2, &hKey, nullptr ) ) == ERROR_SUCCESS );
 
    hb_strfree( hKey );

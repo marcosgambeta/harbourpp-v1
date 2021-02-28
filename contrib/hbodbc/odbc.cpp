@@ -1022,13 +1022,13 @@ HB_FUNC( SQLSETCONNECTATTR )  /* hDbc, nOption, uOption */
       hb_retni( SQLSetConnectAttr( hDbc,
                                    ( SQLINTEGER ) hb_parnl( 2 ),
                                    HB_ISCHAR( 3 ) ? ( SQLPOINTER ) HB_UNCONST( hb_parc( 3 ) ) :
-                                                    ( SQLPOINTER ) ( HB_PTRUINT ) hb_parnint( 3 ),
+                                                    ( SQLPOINTER ) static_cast< HB_PTRUINT >( hb_parnint( 3 ) ),
                                    HB_ISCHAR( 3 ) ? ( SQLINTEGER ) hb_parclen( 3 ) :
                                                     ( SQLINTEGER ) SQL_IS_INTEGER ) );
 #else
       hb_retni( SQLSetConnectOption( hDbc,
                                      ( SQLUSMALLINT ) hb_parni( 2 ),
-                                     HB_ISCHAR( 3 ) ? ( SQLULEN ) ( HB_PTRUINT ) hb_parc( 3 ) :
+                                     HB_ISCHAR( 3 ) ? ( SQLULEN ) static_cast< HB_PTRUINT >( hb_parc( 3 ) ) :
                                                       ( SQLULEN ) hb_parnl( 3 ) ) );
 #endif
    }
@@ -1046,13 +1046,13 @@ HB_FUNC( SQLSETSTMTATTR )  /* hStmt, nOption, uOption --> nRetCode */
       hb_retni( SQLSetStmtAttr( hStmt,
                                 ( SQLINTEGER ) hb_parnl( 2 ),
                                 HB_ISCHAR( 3 ) ? ( SQLPOINTER ) HB_UNCONST( hb_parc( 3 ) ) :
-                                                 ( SQLPOINTER ) ( HB_PTRUINT ) hb_parnint( 3 ),
+                                                 ( SQLPOINTER ) static_cast< HB_PTRUINT >( hb_parnint( 3 ) ),
                                 HB_ISCHAR( 3 ) ? ( SQLINTEGER ) hb_parclen( 3 ) :
                                                  ( SQLINTEGER ) SQL_IS_INTEGER ) );
 #else
       hb_retni( SQLSetStmtOption( hStmt,
                                   ( SQLUSMALLINT ) hb_parni( 2 ),
-                                  HB_ISCHAR( 3 ) ? ( SQLULEN ) ( HB_PTRUINT ) hb_parc( 3 ) :
+                                  HB_ISCHAR( 3 ) ? ( SQLULEN ) static_cast< HB_PTRUINT >( hb_parc( 3 ) ) :
                                                    ( SQLULEN ) hb_parnl( 3 ) ) );
 #endif
    }

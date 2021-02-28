@@ -72,15 +72,15 @@
 
 #define WIN_STATUSBAR_MAX_PARTS  256
 
-#define wvg_parwparam( n )    ( ( WPARAM ) ( HB_PTRUINT ) hb_parnint( n ) )
-#define wvg_parlparam( n )    ( ( LPARAM ) ( HB_PTRUINT ) hb_parnint( n ) )
-#define wvg_parhandle( n )    ( ( HANDLE ) ( HB_PTRUINT ) hb_parnint( n ) )
-#define wvg_parhwnd( n )      ( ( HWND ) ( HB_PTRUINT ) hb_parnint( n ) )
-#define wvg_parwndproc( n )   ( ( WNDPROC ) ( HB_PTRUINT ) hb_parnint( n ) )
-#define wvg_parhdc( n )       ( ( HDC ) ( HB_PTRUINT ) hb_parnint( n ) )
-#define wvg_parcolor( n )     ( ( COLORREF ) ( HB_PTRUINT ) hb_parnint( n ) )
+#define wvg_parwparam( n )    ( ( WPARAM ) static_cast< HB_PTRUINT >( hb_parnint( n ) ) )
+#define wvg_parlparam( n )    ( ( LPARAM ) static_cast< HB_PTRUINT >( hb_parnint( n ) ) )
+#define wvg_parhandle( n )    ( ( HANDLE ) static_cast< HB_PTRUINT >( hb_parnint( n ) ) )
+#define wvg_parhwnd( n )      ( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( n ) ) )
+#define wvg_parwndproc( n )   ( ( WNDPROC ) static_cast< HB_PTRUINT >( hb_parnint( n ) ) )
+#define wvg_parhdc( n )       ( ( HDC ) static_cast< HB_PTRUINT >( hb_parnint( n ) ) )
+#define wvg_parcolor( n )     ( ( COLORREF ) static_cast< HB_PTRUINT >( hb_parnint( n ) ) )
 
-#define wvg_rethandle( n )    ( hb_retnint( ( HB_PTRUINT ) n ) )
+#define wvg_rethandle( n )    ( hb_retnint( reinterpret_cast< HB_PTRUINT >( n ) ) )
 
 #if defined( __BORLANDC__ ) && ! defined( HB_ARCH_64BIT )
     #undef MAKELONG
@@ -106,7 +106,7 @@ HB_FUNC( WVG_SENDMESSAGE )
    if( lpText && HB_ISBYREF( 4 ) )
       lpText = HB_STRUNSHARE( &hText, lpText, nLen );
 
-   hb_retnl( ( HB_ULONG ) SendMessage( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ),
+   hb_retnl( ( HB_ULONG ) SendMessage( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ),
                                        ( UINT ) hb_parni( 2 ),
                                        ( ! HB_ISNUM( 3 ) ? 0 : ( WPARAM ) hb_parnint( 3 ) ),
                                        ( lpText ? ( LPARAM ) lpText : ( LPARAM ) hb_parnint( 4 ) ) ) );
@@ -130,7 +130,7 @@ HB_FUNC( WVG_SENDDLGITEMMESSAGE )
       hb_xmemcpy( cText, hb_itemGetCPtr( pText ), iLen + 1 );
    }
 
-   hb_retnl( ( long ) SendDlgItemMessage( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ),
+   hb_retnl( ( long ) SendDlgItemMessage( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ),
                                           static_cast< int >( hb_parni( 2 ) ),
                                           ( UINT ) hb_parni( 3 ),
                                           ( WPARAM ) hb_parnint( 4 ),
@@ -149,47 +149,47 @@ HB_FUNC( WVG_SENDDLGITEMMESSAGE )
  */
 HB_FUNC( WVG_SETTIMER )
 {
-   hb_retl( SetTimer( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parni( 2 ), hb_parni( 3 ), nullptr ) != 0 );
+   hb_retl( SetTimer( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), hb_parni( 2 ), hb_parni( 3 ), nullptr ) != 0 );
 }
 
 HB_FUNC( WVG_SETFOCUS )
 {
-   SetFocus( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ) );
+   SetFocus( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ) );
 }
 
 HB_FUNC( WVG_GETFOCUS )
 {
-   hb_retnint( ( HB_PTRUINT ) GetFocus() );
+   hb_retnint( reinterpret_cast< HB_PTRUINT >( GetFocus() ) );
 }
 
 HB_FUNC( WVG_SETTEXTCOLOR )
 {
-   hb_retnl( ( HB_ULONG ) SetTextColor( ( HDC ) ( HB_PTRUINT ) hb_parnint( 1 ), ( COLORREF ) hb_parnl( 2 ) ) );
+   hb_retnl( ( HB_ULONG ) SetTextColor( ( HDC ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), ( COLORREF ) hb_parnl( 2 ) ) );
 }
 
 HB_FUNC( WVG_SETBKCOLOR )
 {
-   hb_retnl( ( HB_ULONG ) SetBkColor( ( HDC ) ( HB_PTRUINT ) hb_parnint( 1 ), ( COLORREF ) hb_parnl( 2 ) ) );
+   hb_retnl( ( HB_ULONG ) SetBkColor( ( HDC ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), ( COLORREF ) hb_parnl( 2 ) ) );
 }
 
 HB_FUNC( WVG_SETBKMODE )
 {
-   hb_retni( static_cast< int >( SetBkMode( ( HDC ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parni( 2 ) ) ) );
+   hb_retni( static_cast< int >( SetBkMode( ( HDC ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), hb_parni( 2 ) ) ) );
 }
 
 HB_FUNC( WVG_GETSTOCKOBJECT )
 {
-   hb_retnint( ( HB_PTRUINT ) GetStockObject( hb_parni( 1 ) ) );
+   hb_retnint( reinterpret_cast< HB_PTRUINT >( GetStockObject( hb_parni( 1 ) ) ) );
 }
 
 HB_FUNC( WVG_DELETEOBJECT )
 {
-   hb_retl( DeleteObject( ( HGDIOBJ ) ( HB_PTRUINT ) hb_parnint( 1 ) ) );
+   hb_retl( DeleteObject( ( HGDIOBJ ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ) ) );
 }
 
 HB_FUNC( WVG_SELECTOBJECT )
 {
-   hb_retnint( ( HB_PTRUINT ) SelectObject( ( HDC ) ( HB_PTRUINT ) hb_parnint( 1 ), ( HGDIOBJ ) ( HB_PTRUINT ) hb_parnint( 2 ) ) );
+   hb_retnint( reinterpret_cast< HB_PTRUINT >( SelectObject( ( HDC ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), ( HGDIOBJ ) static_cast< HB_PTRUINT >( hb_parnint( 2 ) ) ) ) );
 }
 
 HB_FUNC( WVG_LOWORD )
@@ -211,17 +211,17 @@ HB_FUNC( WVG_SETDLGITEMTEXT )
 {
    void * hText;
 
-   SetDlgItemText( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parni( 2 ), HB_PARSTR( 3, &hText, nullptr ) );
+   SetDlgItemText( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), hb_parni( 2 ), HB_PARSTR( 3, &hText, nullptr ) );
    hb_strfree( hText );
 }
 
 HB_FUNC( WVG_GETDLGITEMTEXT )
 {
-   int    iLen  = static_cast< int >( SendMessage( GetDlgItem( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parni( 2 ) ), WM_GETTEXTLENGTH, 0, 0 ) ) + 1;
+   int    iLen  = static_cast< int >( SendMessage( GetDlgItem( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), hb_parni( 2 ) ), WM_GETTEXTLENGTH, 0, 0 ) ) + 1;
    LPTSTR cText = ( LPTSTR ) hb_xgrab( iLen * sizeof( TCHAR ) );
    UINT   iResult;
 
-   iResult = GetDlgItemText( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ),   /* handle of dialog box */
+   iResult = GetDlgItemText( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ),   /* handle of dialog box */
                              hb_parni( 2 ),                             /* identifier of control      */
                              cText,                                     /* address of buffer for text */
                              iLen                                       /* maximum size of string     */
@@ -234,18 +234,18 @@ HB_FUNC( WVG_GETDLGITEMTEXT )
 
 HB_FUNC( WVG_CHECKDLGBUTTON )
 {
-   hb_retl( CheckDlgButton( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parni( 2 ),
+   hb_retl( CheckDlgButton( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), hb_parni( 2 ),
                             ( UINT ) ( HB_ISNUM( 3 ) ? hb_parni( 3 ) : hb_parl( 3 ) ) ) );
 }
 
 HB_FUNC( WVG_ISDLGBUTTONCHECKED )
 {
-   hb_retni( IsDlgButtonChecked( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parni( 2 ) ) );
+   hb_retni( IsDlgButtonChecked( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), hb_parni( 2 ) ) );
 }
 
 HB_FUNC( WVG_CHECKRADIOBUTTON )
 {
-   hb_retl( CheckRadioButton( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ),  /* handle of dialog box */
+   hb_retl( CheckRadioButton( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ),  /* handle of dialog box */
                               hb_parni( 2 ),                            /* identifier of first radio button in group */
                               hb_parni( 3 ),                            /* identifier of last radio button in group  */
                               hb_parni( 4 )                             /* identifier of radio button to select      */
@@ -254,12 +254,12 @@ HB_FUNC( WVG_CHECKRADIOBUTTON )
 
 HB_FUNC( WVG_GETDLGITEM )
 {
-   hb_retnint( ( HB_PTRUINT ) GetDlgItem( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parni( 2 ) ) );
+   hb_retnint( reinterpret_cast< HB_PTRUINT >( GetDlgItem( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), hb_parni( 2 ) ) ) );
 }
 
 HB_FUNC( WVG_MESSAGEBOX )
 {
-   HWND   hWnd = HB_ISNUM( 1 ) ? ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ) : GetActiveWindow();
+   HWND   hWnd = HB_ISNUM( 1 ) ? ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ) : GetActiveWindow();
    void * hMsg;
    void * hTitle;
 
@@ -279,10 +279,10 @@ HB_FUNC( WVG_INVALIDATERECT )
       rc.right  = hb_parvni( 2, 3 );
       rc.bottom = hb_parvni( 2, 4 );
 
-      hb_retl( InvalidateRect( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), &rc, TRUE ) );
+      hb_retl( InvalidateRect( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), &rc, TRUE ) );
    }
    else
-      hb_retl( InvalidateRect( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), nullptr, TRUE ) );
+      hb_retl( InvalidateRect( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), nullptr, TRUE ) );
 }
 
 /*
@@ -303,7 +303,7 @@ HB_FUNC( WVG_LOADICON )
       hb_strfree( hBuffer );
    }
 
-   hb_retnint( ( HB_PTRUINT ) hIcon );
+   hb_retnint( reinterpret_cast< HB_PTRUINT >( hIcon ) );
 }
 
 /*
@@ -344,7 +344,7 @@ HB_FUNC( WVG_LOADIMAGE )
    }
 
    hb_strfree( hBuffer );
-   hb_retnint( ( HB_PTRUINT ) hImage );
+   hb_retnint( reinterpret_cast< HB_PTRUINT >( hImage ) );
 }
 
 HB_FUNC( WVG_GETCLIENTRECT )
@@ -352,7 +352,7 @@ HB_FUNC( WVG_GETCLIENTRECT )
    RECT     rc   = { 0, 0, 0, 0 };
    PHB_ITEM info = hb_itemArrayNew( 4 );
 
-   GetClientRect( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), &rc );
+   GetClientRect( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), &rc );
 
    hb_arraySetNI( info, 1, rc.left   );
    hb_arraySetNI( info, 2, rc.top    );
@@ -369,19 +369,19 @@ HB_FUNC( WVG_DRAWIMAGE )
 {
    void * hImage;
 
-   hb_retl( hb_wvt_DrawImage( ( HDC ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parni( 2 ), hb_parni( 3 ),
+   hb_retl( hb_wvt_DrawImage( ( HDC ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), hb_parni( 2 ), hb_parni( 3 ),
                               hb_parni( 4 ), hb_parni( 5 ), HB_PARSTR( 6, &hImage, nullptr ), hb_parl( 7 ) ) );
    hb_strfree( hImage );
 }
 
 HB_FUNC( WVG_GETDC )
 {
-   hb_retnint( ( HB_PTRUINT ) GetDC( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ) ) );
+   hb_retnint( reinterpret_cast< HB_PTRUINT >( GetDC( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ) ) ) );
 }
 
 HB_FUNC( WVG_RELEASEDC )
 {
-   hb_retl( ReleaseDC( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), ( HDC ) ( HB_PTRUINT ) hb_parnint( 2 ) ) );
+   hb_retl( ReleaseDC( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), ( HDC ) static_cast< HB_PTRUINT >( hb_parnint( 2 ) ) ) );
 }
 
 HB_FUNC( WVG_CREATEBRUSH )
@@ -392,9 +392,9 @@ HB_FUNC( WVG_CREATEBRUSH )
    lb.lbColor = ( COLORREF ) hb_parnldef( 2, RGB( 0, 0, 0 ) );
    lb.lbHatch = hb_parni( 3 );
 #if ! defined( HB_OS_WIN_CE )
-   hb_retnint( ( HB_PTRUINT ) CreateBrushIndirect( &lb ) );
+   hb_retnint( reinterpret_cast< HB_PTRUINT >( CreateBrushIndirect( &lb ) ) );
 #else
-   hb_retnint( ( HB_PTRUINT ) CreateSolidBrush( lb.lbColor ) );
+   hb_retnint( reinterpret_cast< HB_PTRUINT >( CreateSolidBrush( lb.lbColor ) ) );
 #endif
 }
 
@@ -412,7 +412,7 @@ HB_FUNC( WVG_DRAWTEXT )
    rc.right  = hb_parvni( 3, 3 );
    rc.bottom = hb_parvni( 3, 4 );
 
-   hb_retl( DrawText( ( HDC ) ( HB_PTRUINT ) hb_parnint( 1 ), lpBuffer, lstrlen( lpBuffer ), &rc, hb_parni( 4 ) ) );
+   hb_retl( DrawText( ( HDC ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), lpBuffer, lstrlen( lpBuffer ), &rc, hb_parni( 4 ) ) );
    hb_strfree( hBuffer );
 }
 
@@ -421,7 +421,7 @@ HB_FUNC( WVG_GETWINDOWRECT )
    RECT     rc;
    PHB_ITEM info = hb_itemArrayNew( 4 );
 
-   GetWindowRect( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), &rc );
+   GetWindowRect( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), &rc );
 
    hb_arraySetNI( info, 1, rc.left   );
    hb_arraySetNI( info, 2, rc.top    );
@@ -436,7 +436,7 @@ HB_FUNC( WVG_GETWINDOWRECT )
  */
 HB_FUNC( WVG_MOVEWINDOW )
 {
-   MoveWindow( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parnl( 2 ), hb_parnl( 3 ), hb_parnl( 4 ), hb_parnl( 5 ), hb_parl( 6 ) );
+   MoveWindow( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), hb_parnl( 2 ), hb_parnl( 3 ), hb_parnl( 4 ), hb_parnl( 5 ), hb_parl( 6 ) );
 }
 
 HB_FUNC( WVG_GETDESKTOPWINDOW )
@@ -446,7 +446,7 @@ HB_FUNC( WVG_GETDESKTOPWINDOW )
 
 HB_FUNC( WVG_SETPARENT )
 {
-   hb_retnint( ( HB_PTRUINT ) SetParent( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), ( HWND ) ( HB_PTRUINT ) hb_parnint( 2 ) ) );
+   hb_retnint( reinterpret_cast< HB_PTRUINT >( SetParent( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 2 ) ) ) ) );
 }
 
 HB_FUNC( WVG_BRINGWINDOWTOTOP )
@@ -469,12 +469,12 @@ HB_FUNC( WVG_SETWINDOWTEXT )
 
 HB_FUNC( WVG_SETWINDOWLONG )
 {
-   hb_retnl( SetWindowLong( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parni( 2 ), hb_parnl( 3 ) ) );
+   hb_retnl( SetWindowLong( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), hb_parni( 2 ), hb_parnl( 3 ) ) );
 }
 
 HB_FUNC( WVG_ISWINDOW )
 {
-   hb_retl( IsWindow( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ) ) );
+   hb_retl( IsWindow( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ) ) );
 }
 
 HB_FUNC( WVG_ENABLEWINDOW )
@@ -484,7 +484,7 @@ HB_FUNC( WVG_ENABLEWINDOW )
 
 HB_FUNC( WVG_DESTROYWINDOW )
 {
-   hb_retl( DestroyWindow( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ) ) );
+   hb_retl( DestroyWindow( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ) ) );
 }
 
 HB_FUNC( WVG_CLIENTTOSCREEN )
@@ -494,7 +494,7 @@ HB_FUNC( WVG_CLIENTTOSCREEN )
 
    if( wvt_Array2Point( pArray, &Point ) )
    {
-      if( ClientToScreen( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), &Point ) )
+      if( ClientToScreen( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), &Point ) )
       {
          wvt_Point2ArrayEx( &Point, pArray );
          hb_retl( HB_TRUE );
@@ -513,7 +513,7 @@ HB_FUNC( WVG_SCREENTOCLIENT )
 
    if( wvt_Array2Point( pArray, &Point ) )
    {
-      if( ScreenToClient( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), &Point ) > 0 )
+      if( ScreenToClient( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), &Point ) > 0 )
       {
          wvt_Point2ArrayEx( &Point, pArray );
          hb_retl( HB_TRUE );
@@ -542,11 +542,11 @@ HB_FUNC( WVG_NOT )
 
 HB_FUNC( WVG_TRACKPOPUPMENU )
 {
-   HMENU hMenu  = ( HMENU ) ( HB_PTRUINT ) hb_parnint( 1 );
+   HMENU hMenu  = ( HMENU ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) );
    UINT  uFlags = hb_parnldef( 2, TPM_CENTERALIGN | TPM_RETURNCMD );
    int   x      = hb_parni( 3 );
    int   y      = hb_parni( 4 );
-   HWND  hWnd   = HB_ISNUM( 5 ) ? ( HWND ) ( HB_PTRUINT ) hb_parnint( 5 ) : GetActiveWindow();
+   HWND  hWnd   = HB_ISNUM( 5 ) ? ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 5 ) ) : GetActiveWindow();
 
    POINT xy = { 0, 0 };
 
@@ -571,7 +571,7 @@ HB_FUNC( WVG_CHOOSECOLOR )
       crCustClr[ i ] = ( HB_ISARRAY( 2 ) ? ( COLORREF ) hb_parvnl( 2, i + 1 ) : GetSysColor( COLOR_BTNFACE ) );
 
    cc.lStructSize  = sizeof( CHOOSECOLOR );
-   cc.hwndOwner    = HB_ISNUM( 4 ) ? ( HWND ) ( HB_PTRUINT ) hb_parnint( 4 ) : nullptr;
+   cc.hwndOwner    = HB_ISNUM( 4 ) ? ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 4 ) ) : nullptr;
    cc.rgbResult    = ( COLORREF ) hb_parnl( 1 );
    cc.lpCustColors = crCustClr;
    cc.Flags        = ( WORD ) hb_parnldef( 3, CC_ANYCOLOR | CC_RGBINIT | CC_FULLOPEN );
@@ -591,7 +591,7 @@ HB_FUNC( WVG_FINDWINDOW )
    hb_strfree( hText );
 
    if( hwnd )
-      hb_retnint( ( HB_PTRUINT ) hwnd );
+      hb_retnint( reinterpret_cast< HB_PTRUINT >( hwnd ) );
    else
       hb_retnint( -1 );
 }
@@ -605,7 +605,7 @@ HB_FUNC( WVG_SLEEP )
 
 HB_FUNC( WVG_SETMENU )
 {
-   HWND hWnd = ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 );
+   HWND hWnd = ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) );
 
    #if 1
    HB_BOOL bSet;
@@ -613,7 +613,7 @@ HB_FUNC( WVG_SETMENU )
    RECT    ci = { 0, 0, 0, 0 };
    int     height, width;
 
-   bSet = SetMenu( hWnd, ( HMENU ) ( HB_PTRUINT ) hb_parnint( 2 ) );
+   bSet = SetMenu( hWnd, ( HMENU ) static_cast< HB_PTRUINT >( hb_parnint( 2 ) ) );
 
    GetWindowRect( hWnd, &wi );
    GetClientRect( hWnd, &ci );
@@ -629,18 +629,18 @@ HB_FUNC( WVG_SETMENU )
    #endif
 
    #if 0
-   hb_retl( SetMenu( hWnd, ( HMENU ) ( HB_PTRUINT ) hb_parnint( 2 ) ) );
+   hb_retl( SetMenu( hWnd, ( HMENU ) static_cast< HB_PTRUINT >( hb_parnint( 2 ) ) ) );
    #endif
 }
 
 HB_FUNC( WVG_CREATEMENU )
 {
-   hb_retnint( ( HB_PTRUINT ) CreateMenu() );
+   hb_retnint( reinterpret_cast< HB_PTRUINT >( CreateMenu() ) );
 }
 
 HB_FUNC( WVG_CREATEPOPUPMENU )
 {
-   hb_retnint( ( HB_PTRUINT ) CreatePopupMenu() );
+   hb_retnint( reinterpret_cast< HB_PTRUINT >( CreatePopupMenu() ) );
 }
 
 HB_FUNC( WVG_APPENDMENU )
@@ -648,13 +648,13 @@ HB_FUNC( WVG_APPENDMENU )
    if( HB_ISCHAR( 4 ) )
    {
       void * hBuffer;
-      hb_retl( AppendMenu( ( HMENU ) ( HB_PTRUINT ) hb_parnint( 1 ), ( UINT ) hb_parni( 2 ), ( HB_PTRUINT ) hb_parnint( 3 ), HB_PARSTR( 4, &hBuffer, nullptr ) ) );
+      hb_retl( AppendMenu( ( HMENU ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), ( UINT ) hb_parni( 2 ), static_cast< HB_PTRUINT >( hb_parnint( 3 ) ), HB_PARSTR( 4, &hBuffer, nullptr ) ) );
       hb_strfree( hBuffer );
    }
    else /* It is a SEPARATOR or Submenu */
    {
-      LPCTSTR lpszCaption = ( LPCTSTR ) ( HB_PTRUINT ) hb_parnint( 4 );
-      hb_retl( AppendMenu( ( HMENU ) ( HB_PTRUINT ) hb_parnint( 1 ), ( UINT ) hb_parni( 2 ), ( HB_PTRUINT ) hb_parnint( 3 ), ( LPCTSTR ) lpszCaption ) );
+      LPCTSTR lpszCaption = ( LPCTSTR ) static_cast< HB_PTRUINT >( hb_parnint( 4 ) );
+      hb_retl( AppendMenu( ( HMENU ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), ( UINT ) hb_parni( 2 ), static_cast< HB_PTRUINT >( hb_parnint( 3 ) ), ( LPCTSTR ) lpszCaption ) );
    }
 }
 
@@ -665,36 +665,36 @@ HB_FUNC( WVG_INSERTMENU )
    if( HB_ISCHAR( 5 ) )
    {
       void * hBuffer;
-      hb_retl( InsertMenu( ( HMENU ) ( HB_PTRUINT ) hb_parnint( 1 ), ( UINT ) hb_parni( 2 ),
-                           flags, ( HB_PTRUINT ) hb_parnint( 4 ), HB_PARSTR( 5, &hBuffer, nullptr ) ) );
+      hb_retl( InsertMenu( ( HMENU ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), ( UINT ) hb_parni( 2 ),
+                           flags, static_cast< HB_PTRUINT >( hb_parnint( 4 ) ), HB_PARSTR( 5, &hBuffer, nullptr ) ) );
       hb_strfree( hBuffer );
    }
    else /* It is a SEPARATOR or Submenu */
    {
-      LPCTSTR lpszCaption = ( LPCTSTR ) ( HB_PTRUINT ) hb_parnint( 5 );
-      hb_retl( InsertMenu( ( HMENU ) ( HB_PTRUINT ) hb_parnint( 1 ), ( UINT ) hb_parni( 2 ),
-                           flags, ( HB_PTRUINT ) hb_parnint( 4 ), ( LPCTSTR ) lpszCaption ) );
+      LPCTSTR lpszCaption = ( LPCTSTR ) static_cast< HB_PTRUINT >( hb_parnint( 5 ) );
+      hb_retl( InsertMenu( ( HMENU ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), ( UINT ) hb_parni( 2 ),
+                           flags, static_cast< HB_PTRUINT >( hb_parnint( 4 ) ), ( LPCTSTR ) lpszCaption ) );
    }
 }
 
 HB_FUNC( WVG_DELETEMENU )
 {
-   hb_retl( DeleteMenu( ( HMENU ) ( HB_PTRUINT ) hb_parnint( 1 ), ( UINT ) hb_parni( 2 ), ( UINT ) hb_parni( 3 ) ) );
+   hb_retl( DeleteMenu( ( HMENU ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), ( UINT ) hb_parni( 2 ), ( UINT ) hb_parni( 3 ) ) );
 }
 
 HB_FUNC( WVG_DESTROYMENU )
 {
-   hb_retl( DestroyMenu( ( HMENU ) ( HB_PTRUINT ) hb_parnint( 1 ) ) );
+   hb_retl( DestroyMenu( ( HMENU ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ) ) );
 }
 
 HB_FUNC( WVG_ENABLEMENUITEM )
 {
-   hb_retl( EnableMenuItem( ( HMENU ) ( HB_PTRUINT ) hb_parnint( 1 ), ( UINT ) hb_parni( 2 ), ( UINT ) hb_parni( 3 ) ) );
+   hb_retl( EnableMenuItem( ( HMENU ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), ( UINT ) hb_parni( 2 ), ( UINT ) hb_parni( 3 ) ) );
 }
 
 HB_FUNC( WVG_CHECKMENUITEM )
 {
-   hb_retni( CheckMenuItem( ( HMENU ) ( HB_PTRUINT ) hb_parnint( 1 ), ( UINT ) hb_parni( 2 ), ( UINT ) hb_parni( 3 ) ) );
+   hb_retni( CheckMenuItem( ( HMENU ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), ( UINT ) hb_parni( 2 ), ( UINT ) hb_parni( 3 ) ) );
 }
 
 HB_FUNC( WVG_ISMENUITEMCHECKED )
@@ -706,7 +706,7 @@ HB_FUNC( WVG_ISMENUITEMCHECKED )
    lpmii.cbSize = sizeof( MENUITEMINFO );
    lpmii.fMask  = MIIM_STATE;
 
-   lSuccess = GetMenuItemInfo( ( HMENU ) ( HB_PTRUINT ) hb_parnint( 1 ), ( UINT ) hb_parni( 2 ), TRUE, &lpmii );
+   lSuccess = GetMenuItemInfo( ( HMENU ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), ( UINT ) hb_parni( 2 ), TRUE, &lpmii );
    if( lSuccess )
       hb_retl( lpmii.fState & MFS_CHECKED ? TRUE : FALSE );
    else
@@ -721,7 +721,7 @@ HB_FUNC( WVG_ISMENUITEMENABLED )
    lpmii.cbSize = sizeof( MENUITEMINFO );
    lpmii.fMask  = MIIM_STATE;
 
-   lSuccess = GetMenuItemInfo( ( HMENU ) ( HB_PTRUINT ) hb_parnint( 1 ), ( UINT ) hb_parni( 2 ), TRUE, &lpmii );
+   lSuccess = GetMenuItemInfo( ( HMENU ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), ( UINT ) hb_parni( 2 ), TRUE, &lpmii );
    if( lSuccess )
       hb_retl( lpmii.fState & MFS_DISABLED ? FALSE : TRUE );
    else
@@ -740,7 +740,7 @@ HB_FUNC( WVG_SETMENUITEM )
    if( hb_parl( 5 ) )
       lpmii.dwTypeData = ( LPTSTR ) HB_PARSTR( 4, &hText, nullptr );
 
-   lSuccess = SetMenuItemInfo( ( HMENU ) ( HB_PTRUINT ) hb_parnint( 1 ), ( UINT ) hb_parni( 2 ), TRUE, &lpmii );
+   lSuccess = SetMenuItemInfo( ( HMENU ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), ( UINT ) hb_parni( 2 ), TRUE, &lpmii );
    hb_retl( lSuccess );
 
    if( hText )
@@ -749,17 +749,17 @@ HB_FUNC( WVG_SETMENUITEM )
 
 HB_FUNC( WVG_DRAWMENUBAR )
 {
-   DrawMenuBar( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ) );
+   DrawMenuBar( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ) );
 }
 
 HB_FUNC( WVG_UPDATEWINDOW )
 {
-   hb_retl( UpdateWindow( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ) ) );
+   hb_retl( UpdateWindow( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ) ) );
 }
 
 HB_FUNC( WVG_SHOWWINDOW )
 {
-   hb_retl( ShowWindow( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ), hb_parni( 2 ) ) );
+   hb_retl( ShowWindow( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), hb_parni( 2 ) ) );
 }
 
 HB_FUNC( WVG_MAKELPARAM )
@@ -779,21 +779,21 @@ HB_FUNC( WVG_CREATEWINDOWEX )
                           ( DWORD ) hb_parnint( 4 ),
                           hb_parni( 5 ), hb_parni( 6 ),
                           hb_parni( 7 ), hb_parni( 8 ),
-                          ( HWND ) ( HB_PTRUINT ) hb_parnint( 9 ),
-                          HB_ISNUM( 10 ) ? ( HMENU ) ( HB_PTRUINT ) hb_parnint( 10 ) : nullptr,
-                          HB_ISNUM( 11 ) ? ( HINSTANCE ) ( HB_PTRUINT ) hb_parnint( 11 ) : ( HINSTANCE ) wvg_hInstance(),
+                          ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 9 ) ),
+                          HB_ISNUM( 10 ) ? ( HMENU ) static_cast< HB_PTRUINT >( hb_parnint( 10 ) ) : nullptr,
+                          HB_ISNUM( 11 ) ? ( HINSTANCE ) static_cast< HB_PTRUINT >( hb_parnint( 11 ) ) : ( HINSTANCE ) wvg_hInstance(),
                           nullptr );
    hb_strfree( hClassName );
    hb_strfree( hWinName );
 
-   hb_retnint( ( HB_PTRUINT ) hWnd );
+   hb_retnint( reinterpret_cast< HB_PTRUINT >( hWnd ) );
 }
 
 HB_FUNC( WVG_SENDMESSAGETEXT )
 {
    void * hBuffer;
 
-   SendMessage( ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 ),
+   SendMessage( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ),
                 hb_parni( 2 ),
                 ( WPARAM ) hb_parni( 3 ),
                 ( LPARAM ) HB_PARSTR( 4, &hBuffer, nullptr ) );
@@ -811,17 +811,17 @@ HB_FUNC( WVG_GETMESSAGETEXT )
 
 HB_FUNC( WVG_SETWNDPROC )
 {
-   HWND    hWnd    = ( HWND ) ( HB_PTRUINT ) hb_parnint( 1 );
-   WNDPROC wndProc = ( WNDPROC ) ( HB_PTRUINT ) hb_parnint( 2 );
+   HWND    hWnd    = ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) );
+   WNDPROC wndProc = ( WNDPROC ) static_cast< HB_PTRUINT >( hb_parnint( 2 ) );
    WNDPROC oldProc;
 
 #if ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 || defined( HB_OS_WIN_CE ) ) || defined( __DMC__ ) ) && ! defined( HB_ARCH_64BIT )
    oldProc = ( WNDPROC ) SetWindowLong( hWnd, GWL_WNDPROC, ( long ) wndProc );
 #else
-   oldProc = ( WNDPROC ) SetWindowLongPtr( hWnd, GWLP_WNDPROC, ( HB_PTRUINT ) wndProc );
+   oldProc = ( WNDPROC ) SetWindowLongPtr( hWnd, GWLP_WNDPROC, reinterpret_cast< HB_PTRUINT >( wndProc ) );
 #endif
 
-   hb_retnint( ( HB_PTRUINT ) oldProc );
+   hb_retnint( reinterpret_cast< HB_PTRUINT >( oldProc ) );
 }
 
 HB_FUNC( WVG_DEFWINDOWPROC )
@@ -1305,9 +1305,9 @@ HB_FUNC( WVG_SENDCBMESSAGE )
             hb_arraySet( pCbi, 2, pRc2 );
 
             hb_arraySetNInt( pCbi, 3, cbi.stateButton );
-            hb_arraySetNInt( pCbi, 4, ( HB_PTRUINT ) cbi.hwndCombo );
-            hb_arraySetNInt( pCbi, 5, ( HB_PTRUINT ) cbi.hwndItem );
-            hb_arraySetNInt( pCbi, 6, ( HB_PTRUINT ) cbi.hwndList );
+            hb_arraySetNInt( pCbi, 4, reinterpret_cast< HB_PTRUINT >( cbi.hwndCombo ) );
+            hb_arraySetNInt( pCbi, 5, reinterpret_cast< HB_PTRUINT >( cbi.hwndItem ) );
+            hb_arraySetNInt( pCbi, 6, reinterpret_cast< HB_PTRUINT >( cbi.hwndList ) );
 
             hb_itemReturnRelease( pCbi );
             hb_itemRelease( pRc1 );
