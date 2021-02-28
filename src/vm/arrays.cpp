@@ -1530,9 +1530,9 @@ static HB_BOOL hb_nestedCloneFind( PHB_NESTED_CLONED pClonedList, void * pValue,
 
    while( nFirst < nLast )
    {
-      if( ( HB_PTRUINT ) pRef[ nMiddle ].value < ( HB_PTRUINT ) pValue )
+      if( static_cast< HB_PTRUINT >( pRef[ nMiddle ].value ) < static_cast< HB_PTRUINT >( pValue ) )
          nFirst = nMiddle + 1;
-      else if( ( HB_PTRUINT ) pRef[ nMiddle ].value > ( HB_PTRUINT ) pValue )
+      else if( static_cast< HB_PTRUINT >( pRef[ nMiddle ].value ) > static_cast< HB_PTRUINT >( pValue ) )
          nLast = nMiddle;
       else
       {

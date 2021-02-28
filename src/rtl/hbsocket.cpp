@@ -3062,7 +3062,7 @@ static HB_SOCKET s_socketSelectCallback( PHB_ITEM pItem )
       {
          sd = hb_socketItemGet( pItem );
          if( sd == HB_NO_SOCKET )
-            sd = ( HB_SOCKET ) ( HB_PTRUINT ) hb_itemGetPtr( pItem );
+            sd = ( HB_SOCKET ) reinterpret_cast< HB_PTRUINT >( hb_itemGetPtr( pItem ) );
       }
    }
    return sd;

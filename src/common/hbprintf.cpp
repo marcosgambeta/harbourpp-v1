@@ -1307,7 +1307,7 @@ int hb_vsnprintf( char * buffer, size_t bufsize, const char * format, va_list ap
                   case 'p':   /* void * pointer */
                      argval.value.as_x_ptr = va_arg_n( args, _x_ptr, param );
                      if( argval.value.as_x_ptr )
-                        size = put_hex( buffer, bufsize, size, ( HB_PTRUINT ) argval.value.as_x_ptr,
+                        size = put_hex( buffer, bufsize, size, reinterpret_cast< HB_PTRUINT >( argval.value.as_x_ptr ),
                                         flags | _F_ALTERNATE, width, precision, 0 );
                      else
                         size = put_str( buffer, bufsize, size, "(nil)",

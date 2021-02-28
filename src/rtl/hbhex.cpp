@@ -102,7 +102,7 @@ HB_FUNC( HB_NUMTOHEX )
    if( HB_ISNUM( 1 ) )
       nNum = hb_parnint( 1 );
    else if( HB_ISPOINTER( 1 ) )
-      nNum = ( HB_PTRUINT ) hb_parptr( 1 );
+      nNum = reinterpret_cast< HB_PTRUINT >( hb_parptr( 1 ) );
    else
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );

@@ -247,9 +247,9 @@ static PHB_REF_ITEM hb_itemSerialValueFind( PHB_REF_LIST pRefList, void * value,
 
    while( nFirst < nLast )
    {
-      if( ( HB_PTRUINT ) pRefList->pRefs[ nMiddle ].value < ( HB_PTRUINT ) value )
+      if( reinterpret_cast< HB_PTRUINT >( pRefList->pRefs[ nMiddle ].value ) < reinterpret_cast< HB_PTRUINT >( value ) )
          nFirst = nMiddle + 1;
-      else if( ( HB_PTRUINT ) pRefList->pRefs[ nMiddle ].value > ( HB_PTRUINT ) value )
+      else if( reinterpret_cast< HB_PTRUINT >( pRefList->pRefs[ nMiddle ].value ) > reinterpret_cast< HB_PTRUINT >( value ) )
          nLast = nMiddle;
       else
       {

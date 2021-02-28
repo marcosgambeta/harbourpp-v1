@@ -125,7 +125,7 @@ typedef struct HB_GARBAGE_
 #define HB_GC_DELETELST    4  /* item will be deleted during finalization */
 
 #ifdef HB_GC_AUTO
-#define HB_GC_AUTO_MAX        ( ( HB_PTRUINT ) ( -1 ) )
+#define HB_GC_AUTO_MAX        ( static_cast< HB_PTRUINT >( -1 ) )
 /* number of allocated memory blocks */
 static HB_PTRUINT s_ulBlocks = 0;
 /* number of allocated memory blocks after last GC activation */

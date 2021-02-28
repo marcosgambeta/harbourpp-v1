@@ -66,7 +66,7 @@ double hb_random_num( void )
    t = *seed;
    if( t == 0 )
       t = ( HB_I32 )
-          ( ( hb_dateMilliSeconds() ^ ( HB_PTRUINT ) hb_stackId() ) % MODULUS );
+          ( ( hb_dateMilliSeconds() ^ reinterpret_cast< HB_PTRUINT >( hb_stackId() ) ) % MODULUS );
 
 #if ! defined( HB_LONG_LONG_OFF )
    t = ( HB_I32 ) ( static_cast< HB_LONGLONG >( t ) * MULTIPLIER % MODULUS );
