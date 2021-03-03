@@ -127,9 +127,7 @@ static _HB_INLINE_ HB_U8 arc4_getbyte( void );
 
 static _HB_INLINE_ void arc4_init( void )
 {
-   int n;
-
-   for( n = 0; n < 256; ++n )
+   for( int n = 0; n < 256; ++n )
       rs.s[ n ] = ( HB_U8 ) n;
 
    rs.i = rs.j = 0;
@@ -137,10 +135,8 @@ static _HB_INLINE_ void arc4_init( void )
 
 static _HB_INLINE_ void arc4_addrandom( const HB_U8 * dat, int datlen )
 {
-   int n;
-
    rs.i--;
-   for( n = 0; n < 256; ++n )
+   for( int n = 0; n < 256; ++n )
    {
       HB_U8 si;
       rs.i         = ( rs.i + 1 );
@@ -216,13 +212,12 @@ static int arc4_seed_sysctl_linux( void )
     */
    int          mib[] = { CTL_KERN, KERN_RANDOM, RANDOM_UUID };
    HB_U8        buf[ ADD_ENTROPY ];
-   size_t       len, n;
-   unsigned int i;
+   size_t       n;
    int          any_set;
 
    memset( buf, 0, sizeof( buf ) );
 
-   for( len = 0; len < sizeof( buf ); len += n )
+   for( size_t len = 0; len < sizeof( buf ); len += n )
    {
       n = sizeof( buf ) - len;
 
@@ -231,7 +226,7 @@ static int arc4_seed_sysctl_linux( void )
    }
 
    /* make sure that the buffer actually got set. */
-   for( i = 0, any_set = 0; i < sizeof( buf ); ++i )
+   for( unsigned int i = 0, any_set = 0; i < sizeof( buf ); ++i )
       any_set |= buf[ i ];
 
    if( ! any_set )
@@ -258,7 +253,7 @@ static int arc4_seed_sysctl_bsd( void )
    int    mib[] = { CTL_KERN, KERN_ARND };
    HB_U8  buf[ ADD_ENTROPY ];
    size_t len, n;
-   int    i, any_set;
+   int    any_set;
 
    memset( buf, 0, sizeof( buf ) );
 
@@ -278,7 +273,7 @@ static int arc4_seed_sysctl_bsd( void )
    }
 
    /* make sure that the buffer actually got set. */
-   for( i = any_set = 0; i < static_cast< int >( sizeof( buf ) ); ++i )
+   for( int i = any_set = 0; i < static_cast< int >( sizeof( buf ) ); ++i )
       any_set |= buf[ i ];
 
    if( ! any_set )
@@ -330,9 +325,9 @@ static int arc4_seed_proc_sys_kernel_random_uuid( void )
     */
    char  buf[ 128 ];
    HB_U8 entropy[ 64 ];
-   int   bytes, i, nybbles;
+   int   i, nybbles;
 
-   for( bytes = 0; bytes < ADD_ENTROPY; )
+   for( int bytes = 0; bytes < ADD_ENTROPY; )
    {
       int fd = open( "/proc/sys/kernel/random/uuid", O_RDONLY, 0 );
       int n;
@@ -388,9 +383,7 @@ static int arc4_seed_urandom( void )
       nullptr
    };
 
-   int i;
-
-   for( i = 0; filenames[ i ]; ++i )
+   for( int i = 0; filenames[ i ]; ++i )
    {
       HB_U8 buf[ ADD_ENTROPY ];
       HB_SIZE n;
@@ -418,12 +411,11 @@ static int arc4_seed_urandom( void )
 
 static int arc4_seed_rand( void )
 {
-   HB_SIZE i;
    HB_U8   buf[ ADD_ENTROPY ];
 
    srand( static_cast< unsigned >( hb_dateMilliSeconds() ) );
 
-   for( i = 0; i < sizeof( buf ); i++ )
+   for( HB_SIZE i = 0; i < sizeof( buf ); i++ )
       buf[ i ] = ( HB_U8 ) ( rand() % 256 );  /* not biased */
 
    arc4_addrandom( buf, sizeof( buf ) );
@@ -485,8 +477,6 @@ static void arc4_seed( void )
 
 static void arc4_stir( void )
 {
-   int i;
-
    if( ! rs_initialized )
    {
       arc4_init();
@@ -513,7 +503,7 @@ static void arc4_stir( void )
     *
     * We add another sect to the cargo cult, and choose 12*256.
     */
-   for( i = 0; i < 12 * 256; i++ )
+   for( int i = 0; i < 12 * 256; i++ )
       ( void ) arc4_getbyte();
 
    arc4_count = BYTES_BEFORE_RESEED;
@@ -575,13 +565,11 @@ void arc4random_stir( void )
 
 void arc4random_addrandom( const unsigned char * dat, int datlen )
 {
-   int j;
-
    ARC4_LOCK();
    if( ! rs_initialized )
       arc4_stir();
 
-   for( j = 0; j < datlen; j += 256 )
+   for( int j = 0; j < datlen; j += 256 )
    {
       /*
        * arc4_addrandom() ignores all but the first 256 bytes of

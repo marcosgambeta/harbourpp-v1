@@ -151,9 +151,8 @@ static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT tim
       if( lRecv > 0 )
       {
          HB_BYTE * pData = ( HB_BYTE * ) data;
-         long l;
 
-         for( l = 0; l < lRecv; ++l )
+         for( long l = 0; l < lRecv; ++l )
          {
             if( ( pBF->decoded & ( HB_BF_CIPHERBLOCK - 1 ) ) == 0 )
             {

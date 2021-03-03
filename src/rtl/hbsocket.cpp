@@ -3071,9 +3071,7 @@ static HB_SOCKET s_socketSelectCallback( PHB_ITEM pItem )
 #if defined( HB_HAS_POLL )
 static int s_socketPollCheck( HB_SOCKET sd, struct pollfd * pfds, nfds_t nfds )
 {
-   nfds_t npos;
-
-   for( npos = 0; npos < nfds; ++npos )
+   for( nfds_t npos = 0; npos < nfds; ++npos )
    {
       if( pfds[ npos ].fd == sd )
          return static_cast< int >( npos );

@@ -243,9 +243,7 @@ static PHB_LANG_BASE hb_langFindBase( const char * pszID )
 
    if( pszID )
    {
-      int iPos;
-
-      for( iPos = 0; iPos < HB_LANG_MAX_; iPos++ )
+      for( int iPos = 0; iPos < HB_LANG_MAX_; iPos++ )
       {
          if( s_langList[ iPos ].lang != nullptr )
          {
@@ -326,11 +324,9 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
 
 void hb_langReleaseAll( void )
 {
-   int iPos;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_langReleaseAll()" ) );
 
-   for( iPos = 0; iPos < HB_LANG_MAX_; iPos++ )
+   for( int iPos = 0; iPos < HB_LANG_MAX_; iPos++ )
       hb_langRelease( &s_langList[ iPos ] );
 }
 

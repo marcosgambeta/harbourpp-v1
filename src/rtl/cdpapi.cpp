@@ -528,8 +528,7 @@ static int hb_cdpMulti_len( PHB_CODEPAGE cdp, HB_WCHAR wc )
 
    if( wc )
    {
-      int i;
-      for( i = 0; i < cdp->nMulti; ++i )
+      for( int i = 0; i < cdp->nMulti; ++i )
       {
          if( wc == cdp->multi[ i ].wcUp ||
              wc == cdp->multi[ i ].wcLo )
@@ -545,9 +544,8 @@ static int hb_cdpMulti_len( PHB_CODEPAGE cdp, HB_WCHAR wc )
 static int hb_cdpMulti_weight( PHB_CODEPAGE cdp, const char * szChar )
 {
    PHB_MULTICHAR pmulti = cdp->multi;
-   int i;
 
-   for( i = cdp->nMulti; i; --i, ++pmulti )
+   for( int i = cdp->nMulti; i; --i, ++pmulti )
    {
       if( ( szChar[ 0 ] == pmulti->cFirst[ 0 ] ||
             szChar[ 0 ] == pmulti->cFirst[ 1 ] ) &&
@@ -648,9 +646,8 @@ static int hb_cdpMulti_cmp( PHB_CODEPAGE cdp,
 static int hb_cdpMulti_weightI( PHB_CODEPAGE cdp, const char * szChar )
 {
    PHB_MULTICHAR pmulti = cdp->multi;
-   int i;
 
-   for( i = cdp->nMulti; i; --i, ++pmulti )
+   for( int i = cdp->nMulti; i; --i, ++pmulti )
    {
       if( ( szChar[ 0 ] == pmulti->cFirst[ 0 ] ||
             szChar[ 0 ] == pmulti->cFirst[ 1 ] ) &&
@@ -1111,11 +1108,11 @@ HB_BOOL hb_cdpUTF8ToU16NextChar( HB_UCHAR ucChar, int * n, HB_WCHAR * pwc )
 
 HB_SIZE hb_cdpUTF8StringLength( const char * pSrc, HB_SIZE nLen )
 {
-   HB_SIZE nPos, nDst;
+   HB_SIZE nDst;
    HB_WCHAR wc;
    int n = 0;
 
-   for( nPos = nDst = 0; nPos < nLen; )
+   for( HB_SIZE nPos = nDst = 0; nPos < nLen; )
    {
       if( hb_cdpUTF8ToU16NextChar( ( HB_UCHAR ) pSrc[ nPos ], &n, &wc ) )
          ++nPos;

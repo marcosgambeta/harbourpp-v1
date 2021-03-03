@@ -123,10 +123,9 @@ HB_FUNC( HB_KEYPUT )
    else if( HB_ISARRAY( 1 ) )
    {
       PHB_ITEM pArray = hb_param( 1, HB_IT_ARRAY );
-      HB_SIZE nIndex;
       HB_SIZE nElements = hb_arrayLen( pArray );
 
-      for( nIndex = 1; nIndex <= nElements; ++nIndex )
+      for( HB_SIZE nIndex = 1; nIndex <= nElements; ++nIndex )
       {
          HB_TYPE type = hb_arrayGetType( pArray, nIndex );
 
@@ -156,10 +155,9 @@ HB_FUNC( HB_KEYINS )
    else if( HB_ISARRAY( 1 ) )
    {
       PHB_ITEM pArray = hb_param( 1, HB_IT_ARRAY );
-      HB_SIZE nIndex;
       HB_SIZE nElements = hb_arrayLen( pArray );
 
-      for( nIndex = 1; nIndex <= nElements; ++nIndex )
+      for( HB_SIZE nIndex = 1; nIndex <= nElements; ++nIndex )
       {
          HB_TYPE type = hb_arrayGetType( pArray, nIndex );
 

@@ -874,7 +874,6 @@ PHB_ITEM hb_errPutFlags( PHB_ITEM pError, HB_USHORT uiFlags )
 PHB_ITEM hb_errPutArgs( PHB_ITEM pError, HB_ULONG ulArgCount, ... )
 {
    PHB_ITEM pArray;
-   HB_ULONG ulArgPos;
    va_list va;
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_errPutArgs(%p, %lu, ...)", pError, ulArgCount ) );
@@ -884,7 +883,7 @@ PHB_ITEM hb_errPutArgs( PHB_ITEM pError, HB_ULONG ulArgCount, ... )
    /* Build the array from the passed arguments. */
 
    va_start( va, ulArgCount );
-   for( ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
+   for( HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
       hb_itemArrayPut( pArray, ulArgPos, va_arg( va, PHB_ITEM ) );
    va_end( va );
 
@@ -1021,7 +1020,6 @@ HB_USHORT hb_errRT_BASE( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const cha
 
    PHB_ITEM pArray;
    va_list va;
-   HB_ULONG ulArgPos;
 
    /* I replaced EF_CANRETRY with EF_NONE for Clipper compatibility
     * If it's wrong and I missed something please fix me, Druzus.
@@ -1049,7 +1047,7 @@ HB_USHORT hb_errRT_BASE( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const cha
       pArray = hb_itemArrayNew( ulArgCount );
 
       va_start( va, ulArgCount );
-      for( ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
+      for( HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
       {
          PHB_ITEM pArg = va_arg( va, PHB_ITEM );
          if( pArg )
@@ -1082,7 +1080,6 @@ HB_USHORT hb_errRT_BASE_Ext1( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, cons
 
    PHB_ITEM pArray;
    va_list va;
-   HB_ULONG ulArgPos;
 
    pError = hb_errRT_New( ES_ERROR, HB_ERR_SS_BASE, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags );
 
@@ -1107,7 +1104,7 @@ HB_USHORT hb_errRT_BASE_Ext1( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, cons
       pArray = hb_itemArrayNew( ulArgCount );
 
       va_start( va, ulArgCount );
-      for( ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
+      for( HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
       {
          PHB_ITEM pArg = va_arg( va, PHB_ITEM );
          if( pArg )
@@ -1139,7 +1136,6 @@ PHB_ITEM hb_errRT_BASE_Subst( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, cons
 
    PHB_ITEM pArray;
    va_list va;
-   HB_ULONG ulArgPos;
 
    pError = hb_errRT_New_Subst( ES_ERROR, HB_ERR_SS_BASE, errGenCode, errSubCode, szDescription, szOperation, 0, EF_NONE );
 
@@ -1164,7 +1160,7 @@ PHB_ITEM hb_errRT_BASE_Subst( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, cons
       pArray = hb_itemArrayNew( ulArgCount );
 
       va_start( va, ulArgCount );
-      for( ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
+      for( HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
       {
          PHB_ITEM pArg = va_arg( va, PHB_ITEM );
          if( pArg )
@@ -1195,7 +1191,6 @@ void hb_errRT_BASE_SubstR( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const c
 
    PHB_ITEM pArray;
    va_list va;
-   HB_ULONG ulArgPos;
 
    pError = hb_errRT_New_Subst( ES_ERROR, HB_ERR_SS_BASE, errGenCode, errSubCode, szDescription, szOperation, 0, EF_NONE );
 
@@ -1220,7 +1215,7 @@ void hb_errRT_BASE_SubstR( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const c
       pArray = hb_itemArrayNew( ulArgCount );
 
       va_start( va, ulArgCount );
-      for( ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
+      for( HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
       {
          PHB_ITEM pArg = va_arg( va, PHB_ITEM );
          if( pArg )

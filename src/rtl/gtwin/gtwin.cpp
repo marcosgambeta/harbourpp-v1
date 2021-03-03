@@ -607,8 +607,7 @@ static HB_BOOL hb_gt_win_SetPalette( HB_BOOL bSet, COLORREF * colors )
 #else
    if( ! bSet )
    {
-      int tmp;
-      for( tmp = 0; tmp < 16; ++tmp )
+      for( int tmp = 0; tmp < 16; ++tmp )
          colors[ tmp ] = s_colorsDef[ tmp ];
    }
 
@@ -1205,9 +1204,7 @@ static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
 
          if( s_fWin9x )
          {
-            DWORD tmp;
-
-            for( tmp = 0; tmp < INPUT_BUFFER_LEN; ++tmp )
+            for( DWORD tmp = 0; tmp < INPUT_BUFFER_LEN; ++tmp )
                s_irBuffer[ tmp ].EventType = 0xFFFF;
          }
 #endif
@@ -1223,9 +1220,7 @@ static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
 #if defined( UNICODE )
          if( s_fWin9x )
          {
-            DWORD tmp;
-
-            for( tmp = 0; tmp < s_dwNumRead; ++tmp )
+            for( DWORD tmp = 0; tmp < s_dwNumRead; ++tmp )
             {
                if( s_irBuffer[ tmp ].EventType == 0xFFFF )
                   s_irBuffer[ tmp ].EventType = KEY_EVENT;
@@ -1235,8 +1230,7 @@ static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
 
 #if defined( _TRACE ) || defined( _TRACE_KEYPRESS )
          {
-            DWORD tmp;
-            for( tmp = 0; tmp < s_dwNumRead; ++tmp )
+            for( DWORD tmp = 0; tmp < s_dwNumRead; ++tmp )
             {
                INPUT_RECORD * pInRec = &s_irBuffer[ tmp ];
                if( pInRec->EventType == KEY_EVENT )

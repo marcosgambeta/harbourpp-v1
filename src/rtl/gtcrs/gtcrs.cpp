@@ -326,10 +326,8 @@ static void sig_handler( int signo )
 
 static void set_signals( void )
 {
-   int i;
-
    s_SignalFlag = HB_FALSE;
-   for( i = 1; i < MAX_SIGNO; ++i )
+   for( int i = 1; i < MAX_SIGNO; ++i )
    {
       s_SignalTable[ i ] = HB_FALSE;
       set_sig_handler( i );
@@ -380,7 +378,7 @@ static int add_efds( InOutBase * ioBase, int fd, int mode,
                      int ( * eventFunc )( int, int, void * ), void * data )
 {
    evtFD * pefd = nullptr;
-   int i, fl;
+   int fl;
 
    if( eventFunc == nullptr && mode != O_RDONLY )
       return -1;
@@ -393,7 +391,7 @@ static int add_efds( InOutBase * ioBase, int fd, int mode,
        ( fl == O_WRONLY && mode == O_RDONLY ) )
       return -1;
 
-   for( i = 0; i < ioBase->efds_no && ! pefd; i++ )
+   for( int i = 0; i < ioBase->efds_no && ! pefd; i++ )
       if( ioBase->event_fds[ i ]->fd == fd )
          pefd = ioBase->event_fds[ i ];
 
@@ -449,9 +447,7 @@ static void del_all_efds( InOutBase * ioBase )
 {
    if( ioBase->event_fds != nullptr )
    {
-      int i;
-
-      for( i = 0; i < ioBase->efds_no; i++ )
+      for( int i = 0; i < ioBase->efds_no; i++ )
          hb_xfree( ioBase->event_fds[ i ] );
 
       hb_xfree( ioBase->event_fds );
@@ -781,7 +777,7 @@ static void mouse_exit( InOutBase * ioBase )
 
 static int read_bufch( InOutBase * ioBase, int fd )
 {
-   int n = 0, i;
+   int n = 0;
 
    if( STDIN_BUFLEN > ioBase->stdin_inbuf )
    {
@@ -789,7 +785,7 @@ static int read_bufch( InOutBase * ioBase, int fd )
 
       n = read( fd, buf, STDIN_BUFLEN - ioBase->stdin_inbuf );
 
-      for( i = 0; i < n; i++ )
+      for( int i = 0; i < n; i++ )
       {
          ioBase->stdin_buf[ ioBase->stdin_ptr_r++ ] = buf[ i ];
          if( ioBase->stdin_ptr_r == STDIN_BUFLEN )
@@ -1280,10 +1276,9 @@ static HB_BOOL gt_outstr( InOutBase * ioBase, int fd, const char * str,
    if( ioBase->out_transtbl != nullptr )
    {
       unsigned char * buf;
-      int i;
 
       buf = ( unsigned char * ) hb_xgrab( len );
-      for( i = 0; i < len; ++i )
+      for( int i = 0; i < len; ++i )
       {
          unsigned char c = str[ i ];
          if( c != 9 && c != 10 && c != 13 && ioBase->out_transtbl[ c ] )
@@ -1729,12 +1724,10 @@ static void setKeyTrans( InOutBase * ioBase, PHB_CODEPAGE cdpTerm, PHB_CODEPAGE 
 {
    if( cdpTerm && cdpHost && cdpTerm != cdpHost )
    {
-      int i;
-
       if( ioBase->in_transtbl == nullptr )
          ioBase->in_transtbl = ( unsigned char * ) hb_xgrab( 256 );
 
-      for( i = 0; i < 256; ++i )
+      for( int i = 0; i < 256; ++i )
          ioBase->in_transtbl[ i ] = hb_cdpTranslateChar( i, cdpTerm, cdpHost );
    }
    else if( ioBase->in_transtbl != nullptr )
@@ -2200,8 +2193,6 @@ static int add_new_ioBase( InOutBase * ioBase )
 
    if( ! add )
    {
-      int n;
-
       if( s_ioBaseTab == nullptr )
          s_ioBaseTab = ( InOutBase ** ) hb_xgrab(
                         ( s_iSize_ioBaseTab += 10 ) * sizeof( InOutBase * ) );
@@ -2209,7 +2200,7 @@ static int add_new_ioBase( InOutBase * ioBase )
          s_ioBaseTab = ( InOutBase ** ) hb_xrealloc( s_ioBaseTab,
                         ( s_iSize_ioBaseTab += 10 ) * sizeof( InOutBase * ) );
       s_ioBaseTab[ i ] = ioBase;
-      for( n = i + 1; n < s_iSize_ioBaseTab; n++ )
+      for( int n = i + 1; n < s_iSize_ioBaseTab; n++ )
          s_ioBaseTab[ n ] = nullptr;
    }
 
@@ -2227,11 +2218,9 @@ static int del_ioBase( int iNO_ioBase )
       s_ioBaseTab[ iNO_ioBase ] = nullptr;
       if( s_iActive_ioBase == iNO_ioBase )
       {
-         int i;
-
          s_iActive_ioBase = -1;
          s_ioBase = nullptr;
-         for( i = 0; i < s_iSize_ioBaseTab && ! s_ioBase; ++i )
+         for( int i = 0; i < s_iSize_ioBaseTab && ! s_ioBase; ++i )
             if( s_ioBaseTab[ i ] )
                set_active_ioBase( i );
       }
@@ -2244,9 +2233,7 @@ static void del_all_ioBase( void )
 {
    if( s_ioBaseTab )
    {
-      int i;
-
-      for( i = 0; i < s_iSize_ioBaseTab; ++i )
+      for( int i = 0; i < s_iSize_ioBaseTab; ++i )
          if( s_ioBaseTab[ i ] )
             destroy_ioBase( s_ioBaseTab[ i ] );
       hb_xfree( s_ioBaseTab );

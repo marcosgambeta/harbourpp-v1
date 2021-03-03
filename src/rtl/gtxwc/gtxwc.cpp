@@ -3970,12 +3970,10 @@ static void hb_gt_xwc_InvalidateFull( PXWND_DEF wnd )
 static void hb_gt_xwc_InvalidatePart( PXWND_DEF wnd,
                                       int left, int top, int right, int bottom )
 {
-   int row, col;
-
-   for( row = top; row <= bottom; row++ )
+   for( int row = top; row <= bottom; row++ )
    {
       int scridx = row * wnd->cols + left;
-      for( col = left; col <= right; col++, scridx++ )
+      for( int col = left; col <= right; col++, scridx++ )
          wnd->pCurrScr[ scridx ] = 0xFFFFFFFF;
    }
 
@@ -4304,7 +4302,6 @@ static void hb_gt_xwc_ProcessMessages( PXWND_DEF wnd, HB_BOOL fSync )
                                   SelectionClear, SelectionNotify, SelectionRequest };
       HB_BOOL fRepeat = HB_FALSE;
       XEvent evt;
-      int i;
 
       hb_gt_xwc_UpdateSize( wnd );
       hb_gt_xwc_UpdatePts( wnd );
@@ -4313,7 +4310,7 @@ static void hb_gt_xwc_ProcessMessages( PXWND_DEF wnd, HB_BOOL fSync )
       if( fSync )
          XSync( wnd->dpy, False );
 
-      for( i = 0; i < static_cast< int >( HB_SIZEOFARRAY( event_types ) ); ++i )
+      for( int i = 0; i < static_cast< int >( HB_SIZEOFARRAY( event_types ) ); ++i )
       {
          if( event_types[ i ] == 0 ?
              XCheckWindowEvent( wnd->dpy, wnd->window, XWC_STD_MASK, &evt ) :
@@ -4535,7 +4532,6 @@ static HB_BOOL hb_gt_xwc_isUTF8( void )
 static PXWND_DEF hb_gt_xwc_CreateWndDef( PHB_GT pGT )
 {
    PXWND_DEF wnd = ( PXWND_DEF ) hb_xgrabz( sizeof( XWND_DEF ) );
-   int i;
 
    wnd->pGT = pGT;
    wnd->dpy = nullptr;
@@ -4578,7 +4574,7 @@ static PXWND_DEF hb_gt_xwc_CreateWndDef( PHB_GT pGT )
    wnd->keyModifiers.bAltGr = HB_FALSE;
    wnd->keyModifiers.bShift = HB_FALSE;
 
-   for( i = 0; i < 16; i++ )
+   for( int i = 0; i < 16; i++ )
       wnd->colors[ i ].value = s_rgb_values[ i ];
 
    wnd->lastEventTime = CurrentTime;

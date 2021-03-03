@@ -98,12 +98,11 @@ HB_FUNC( HB_DYNCALL )
             /* Argument flags */
             if( nBasePos <= nLen )
             {
-               HB_SIZE nPos;
                HB_SIZE nArgCount = hb_pcount() - 1;
 
                piArgFlags = ( int * ) hb_xgrab( sizeof( int ) * nArgCount );
 
-               for( nPos = 0; nPos < nArgCount; ++nPos )
+               for( HB_SIZE nPos = 0; nPos < nArgCount; ++nPos )
                   piArgFlags[ nPos ] = ( ( nPos + nBasePos ) <= nLen && HB_IS_NUMERIC( hb_arrayGetItemPtr( pParam, nPos + nBasePos ) ) ) ? hb_arrayGetNI( pParam, nPos + nBasePos ) : HB_DYN_CTYPE_DEFAULT;
             }
          }

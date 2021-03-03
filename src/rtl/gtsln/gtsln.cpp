@@ -130,9 +130,7 @@ static void sigwinch_handler( int iSig )
 
 static void hb_sln_colorTrans( void )
 {
-   int i;
-
-   for( i = 0; i < 256; i++ )
+   for( int i = 0; i < 256; i++ )
    {
       int clr, fg, bg;
 

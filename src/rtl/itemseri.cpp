@@ -208,12 +208,10 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem,
 #if 0
 static void hb_itemSerialRefListShow( PHB_REF_LIST pRefList )
 {
-   HB_SIZE nPos;
-
    printf( "\n================================\n" );
    printf( "pRefList->nSize=%ld, pRefList->nCount=%ld\n", pRefList->nSize, pRefList->nCount );
 
-   for( nPos = 0; nPos < pRefList->nCount; ++nPos )
+   for( HB_SIZE nPos = 0; nPos < pRefList->nCount; ++nPos )
    {
       printf( "\t%ld] value=0x%p, nOffset=%ld, iRefs=%d, iType=%d\n", nPos,
               pRefList->pRefs[ nPos ].value,
@@ -351,9 +349,9 @@ static void hb_itemSerialUnusedFree( PHB_REF_LIST pRefList )
 {
    if( pRefList->nSize )
    {
-      HB_SIZE nPos, nCount;
+      HB_SIZE nCount;
 
-      for( nPos = nCount = 0; nPos < pRefList->nCount; ++nPos )
+      for( HB_SIZE nPos = nCount = 0; nPos < pRefList->nCount; ++nPos )
       {
          if( pRefList->pRefs[ nPos ].iRefs != 0 )
          {
@@ -1308,11 +1306,9 @@ static HB_SIZE hb_deserializeArray( PHB_ITEM pItem,
                                     const HB_UCHAR * pBuffer, HB_SIZE nOffset,
                                     HB_SIZE nLen, PHB_REF_LIST pRefList )
 {
-   HB_SIZE u;
-
    hb_arrayNew( pItem, nLen );
 
-   for( u = 1; u <= nLen; u++ )
+   for( HB_SIZE u = 1; u <= nLen; u++ )
       nOffset = hb_deserializeItem( hb_arrayGetItemPtr( pItem, u ),
                                     cdpIn, cdpOut, pBuffer, nOffset, pRefList );
 

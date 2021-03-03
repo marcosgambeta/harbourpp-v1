@@ -90,14 +90,12 @@ HB_FUNC( DO )
 
    if( uiPCount > 0 )
    {
-      HB_USHORT uiParam;
-
       if( pSelf )
          hb_vmPush( pSelf );
       else
          hb_vmPushNil();
 
-      for( uiParam = 2; uiParam <= uiPCount; ++uiParam )
+      for( HB_USHORT uiParam = 2; uiParam <= uiPCount; ++uiParam )
          hb_vmPush( hb_stackItemFromBase( uiParam ) );
 
       if( pSelf )

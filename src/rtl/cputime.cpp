@@ -165,9 +165,7 @@ double hb_secondsCPU( int n )
          QSPREC * pPrec = ( QSPREC * ) ( static_cast< ULONG >( pGrec ) + sizeof( QSGREC ) );
          QSTREC * pTrec = pPrec->pThrdRec;
 
-         int i;
-
-         for( i = 0; i < pPrec->cTCB; i++, pTrec++ )
+         for( int i = 0; i < pPrec->cTCB; i++, pTrec++ )
          {
             if( n & 1 )
                d += pTrec->usertime;

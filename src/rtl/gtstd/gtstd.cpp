@@ -563,7 +563,7 @@ static void hb_gt_std_DispLine( PHB_GT pGT, int iRow, int iFrom, int iSize )
    int iColor;
    HB_BYTE bAttr;
    HB_USHORT usChar;
-   int iCol, iLastCol, iAll;
+   int iLastCol, iAll;
    HB_SIZE nLen, nI;
    PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP( pGT );
    PHB_GTSTD pGTSTD = HB_GTSTD_GET( pGT );
@@ -577,7 +577,7 @@ static void hb_gt_std_DispLine( PHB_GT pGT, int iRow, int iFrom, int iSize )
    else
       iAll = iSize;
 
-   for( iCol = iLastCol = iFrom, nLen = nI = 0; iSize > 0; --iSize )
+   for( int iCol = iLastCol = iFrom, nLen = nI = 0; iSize > 0; --iSize )
    {
       if( ! HB_GTSELF_GETSCRCHAR( pGT, iRow, iCol++, &iColor, &bAttr, &usChar ) )
          break;
@@ -660,14 +660,12 @@ static void hb_gt_std_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
           */
          if( pGTSTD->fStdoutConsole )
          {
-            int i;
-
             if( pGTSTD->iRow > iRow )
             {
                pGTSTD->iRow = -1;
                pGTSTD->fFullRedraw = HB_TRUE;
             }
-            for( i = pGTSTD->iRow + 1; i < iRow; ++i )
+            for( int i = pGTSTD->iRow + 1; i < iRow; ++i )
                hb_gt_std_DispLine( pGT, i, 0, -1 );
             iLineFeed = 1;
          }
@@ -711,9 +709,7 @@ static void hb_gt_std_Refresh( PHB_GT pGT )
    {
       if( pGTSTD->iRow < iHeight - 1 )
       {
-         int i;
-
-         for( i = pGTSTD->iRow + 1; i < iHeight; ++i )
+         for( int i = pGTSTD->iRow + 1; i < iHeight; ++i )
             hb_gt_std_DispLine( pGT, i, 0, -1 );
       }
    }

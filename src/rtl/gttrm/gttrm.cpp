@@ -504,11 +504,11 @@ static void set_sig_handler( int iSig )
 
 static void set_signals( void )
 {
-   int i, sigs[] = { SIGINT, SIGQUIT, SIGTSTP, SIGWINCH /*, SIGCHLD */, 0 };
+   int sigs[] = { SIGINT, SIGQUIT, SIGTSTP, SIGWINCH /*, SIGCHLD */, 0 };
 
    /* Ignore SIGPIPEs so they don't kill us. */
    signal( SIGPIPE, SIG_IGN );
-   for( i = 0; sigs[ i ]; ++i )
+   for( int i = 0; sigs[ i ]; ++i )
    {
       set_sig_handler( sigs[ i ] );
    }
@@ -719,9 +719,7 @@ static void del_all_efds( PHB_GTTRM pTerm )
 {
    if( pTerm->event_fds != nullptr )
    {
-      int i;
-
-      for( i = 0; i < pTerm->efds_no; i++ )
+      for( int i = 0; i < pTerm->efds_no; i++ )
          hb_xfree( pTerm->event_fds[ i ] );
 
       hb_xfree( pTerm->event_fds );
@@ -1069,7 +1067,6 @@ static int read_bufch( PHB_GTTRM pTerm, int fd )
    if( STDIN_BUFLEN > pTerm->stdin_inbuf )
    {
       unsigned char buf[ STDIN_BUFLEN ];
-      int i;
 
 #if defined( HB_OS_UNIX ) || defined( __DJGPP__ )
       n = read( fd, buf, STDIN_BUFLEN - pTerm->stdin_inbuf );
@@ -1077,7 +1074,7 @@ static int read_bufch( PHB_GTTRM pTerm, int fd )
       n = hb_fsRead( fd, buf, STDIN_BUFLEN - pTerm->stdin_inbuf );
 #endif
 
-      for( i = 0; i < n; i++ )
+      for( int i = 0; i < n; i++ )
       {
          pTerm->stdin_buf[ pTerm->stdin_ptr_r++ ] = buf[ i ];
          if( pTerm->stdin_ptr_r == STDIN_BUFLEN )
@@ -2419,11 +2416,10 @@ static void hb_gt_trm_SetKeyTrans( PHB_GTTRM pTerm )
 {
    PHB_CODEPAGE cdpTerm = HB_GTSELF_INCP( pTerm->pGT ),
                 cdpHost = HB_GTSELF_HOSTCP( pTerm->pGT );
-   int i;
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_trm_SetKeyTrans(%p,%p,%p)", ( void * ) pTerm, ( void * ) cdpTerm, ( void * ) cdpHost ) );
 
-   for( i = 0; i < 256; ++i )
+   for( int i = 0; i < 256; ++i )
       pTerm->keyTransTbl[ i ] = static_cast< unsigned char >(
                            hb_cdpTranslateChar( i, cdpTerm, cdpHost ) );
 }

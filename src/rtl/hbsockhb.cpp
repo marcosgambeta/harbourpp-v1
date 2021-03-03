@@ -277,9 +277,7 @@ int hb_sockexRegister( const HB_SOCKET_FILTER * pFilter )
 
    if( pFilter )
    {
-      int i;
-
-      for( i = 0; i < s_iFilterCount; ++i )
+      for( int i = 0; i < s_iFilterCount; ++i )
       {
          if( s_socketFilters[ i ] == pFilter )
             return 1;
@@ -485,9 +483,7 @@ HB_BOOL hb_sockexItemSetFilter( PHB_ITEM pItem, const char * pszFilter, PHB_ITEM
 
 static int s_socket_filter_find( const char * pszFilter )
 {
-   int i;
-
-   for( i = 0; i < s_iFilterCount; ++i )
+   for( int i = 0; i < s_iFilterCount; ++i )
    {
       if( hb_stricmp( s_socketFilters[ i ]->pszName, pszFilter ) == 0 )
          return i;
@@ -571,9 +567,7 @@ PHB_SOCKEX hb_sockexNew( HB_SOCKET sd, const char * pszFilter, PHB_ITEM pParams 
    pFilters = s_socket_getfilters( pszFilter, pBuffer, &iCount );
    if( pFilters )
    {
-      int i;
-
-      for( i = 0; i < iCount; ++i )
+      for( int i = 0; i < iCount; ++i )
       {
          PHB_SOCKEX pSockNew = pSock == nullptr ?
                                pFilters[ i ]->New( sd, pParams ) :
@@ -604,9 +598,7 @@ PHB_SOCKEX hb_sockexNext( PHB_SOCKEX pSock, const char * pszFilter, PHB_ITEM pPa
    pFilters = s_socket_getfilters( pszFilter, pBuffer, &iCount );
    if( pFilters )
    {
-      int i;
-
-      for( i = 0; pSock && i < iCount; ++i )
+      for( int i = 0; pSock && i < iCount; ++i )
       {
          PHB_SOCKEX pSockNew = pFilters[ i ]->Next( pSock, pParams );
          if( pSockNew != nullptr )

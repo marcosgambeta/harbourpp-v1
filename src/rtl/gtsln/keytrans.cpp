@@ -458,12 +458,12 @@ static int hb_sln_FindKeyTranslation( int SlangKey )
 #if 0
 int hb_sln_SetKeyInKeyTranslationTable( int SlangKey, int ClipKey )
 {
-   int i, Found = 0;
+   int Found = 0;
 
    if( ( SlangKey >= KeyTranslationTable[ 0 ][ 0 ] ) &&
        ( SlangKey <= KeyTranslationTable[ KeyTranslationTableSize - 1 ][ 0 ] ) )
    {
-      for( i = 0; i < static_cast< int >( KeyTranslationTableSize ); i++ )
+      for( int i = 0; i < static_cast< int >( KeyTranslationTableSize ); i++ )
       {
          if( SlangKey == KeyTranslationTable[ i ][ 0 ] )
             KeyTranslationTable[ i ][ 1 ] = ClipKey;

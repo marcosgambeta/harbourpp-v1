@@ -157,9 +157,7 @@ static HB_COM s_comList[ HB_COM_PORT_MAX ];
 
 static void hb_comCloseAll( void )
 {
-   int iPort;
-
-   for( iPort = 0; iPort < HB_COM_PORT_MAX; ++iPort )
+   for( int iPort = 0; iPort < HB_COM_PORT_MAX; ++iPort )
    {
       if( s_comList[ iPort ].status & HB_COM_OPEN )
          hb_comClose( iPort + 1 );
@@ -4494,9 +4492,7 @@ static void hb_com_init( void* cargo )
 
    if( ! s_iComInit )
    {
-      int iPort;
-
-      for( iPort = 0; iPort < HB_COM_PORT_MAX; ++iPort )
+      for( int iPort = 0; iPort < HB_COM_PORT_MAX; ++iPort )
       {
          s_comList[ iPort ].port = iPort + 1;
          s_comList[ iPort ].status = HB_COM_ENABLED;

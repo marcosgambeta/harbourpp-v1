@@ -88,11 +88,10 @@ HB_FUNC( HB_VERSION )
          {
             static const char * s_months[] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
             char szDate[ 9 ];
-            int  iMonth;
 
             szDate[ 4 ] = szDate[ 5 ] = '0';
 
-            for( iMonth = 11; iMonth >= 0; iMonth-- )
+            for( int iMonth = 11; iMonth >= 0; iMonth-- )
             {
                if( memcmp( pszBuildDate, s_months[ iMonth ], 3 ) == 0 )
                {

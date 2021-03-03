@@ -545,22 +545,21 @@ static void hb_gt_def_StringToColors( PHB_GT pGT, const char * szColorString, in
 
 static void hb_gt_def_ColorsToString( PHB_GT pGT, int * pColors, int iColorCount, char * pszColorString, int iBufSize )
 {
-   int iColorIndex, iPos;
+   int iPos;
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_def_ColorsToString(%p,%p,%d,%p,%d)", ( void * ) pGT, ( void * ) pColors, iColorCount, ( void * ) pszColorString, iBufSize ) );
 
    HB_SYMBOL_UNUSED( pGT );
 
    /* Go on if there's space left for the largest color string plus EOF */
-   for( iColorIndex = iPos = 0; iColorIndex < iColorCount && iPos < iBufSize - 8; ++iColorIndex )
+   for( int iColorIndex = iPos = 0; iColorIndex < iColorCount && iPos < iBufSize - 8; ++iColorIndex )
    {
       int nColor = pColors[ iColorIndex ] & 7;
-      int j;
 
       if( iColorIndex > 0 )
          pszColorString[ iPos++ ] = ',';
 
-      for( j = 0; j <= 1; j++ )
+      for( int j = 0; j <= 1; j++ )
       {
          if( ( pColors[ iColorIndex ] & ( j ? 0x8000 : 0x0800 ) ) == 0 )
          {
@@ -1254,9 +1253,7 @@ static void hb_gt_def_Save( PHB_GT pGT, int iTop, int iLeft, int iBottom, int iR
 
    while( iTop <= iBottom )
    {
-      int iCol;
-
-      for( iCol = iLeft; iCol <= iRight; ++iCol )
+      for( int iCol = iLeft; iCol <= iRight; ++iCol )
       {
          int iColor;
          HB_BYTE bAttr;
@@ -1294,9 +1291,7 @@ static void hb_gt_def_Rest( PHB_GT pGT, int iTop, int iLeft, int iBottom, int iR
 
    while( iTop <= iBottom )
    {
-      int iCol;
-
-      for( iCol = iLeft; iCol <= iRight; ++iCol )
+      for( int iCol = iLeft; iCol <= iRight; ++iCol )
       {
          int iColor;
          HB_BYTE bAttr;
@@ -1326,9 +1321,7 @@ static void hb_gt_def_SetAttribute( PHB_GT pGT, int iTop, int iLeft, int iBottom
 {
    while( iTop <= iBottom )
    {
-      int iCol;
-
-      for( iCol = iLeft; iCol <= iRight; ++iCol )
+      for( int iCol = iLeft; iCol <= iRight; ++iCol )
       {
          int iColorOld;
          HB_BYTE bAttr;
@@ -2472,9 +2465,7 @@ static void hb_gt_def_GetSize( PHB_GT pGT, int * piRows, int  * piCols )
 
 static void hb_gt_def_SemiCold( PHB_GT pGT )
 {
-   int i;
-
-   for( i = 0; i < pGT->iHeight; ++i )
+   for( int i = 0; i < pGT->iHeight; ++i )
       pGT->pLines[ i ] = HB_FALSE;
    pGT->fRefresh = HB_FALSE;
 }
@@ -2577,15 +2568,15 @@ static void hb_gt_def_RedrawDiff( PHB_GT pGT )
 {
    if( pGT->fRefresh )
    {
-      int i, l, r, s;
+      int r, s;
       long lIndex;
 
-      for( i = 0; i < pGT->iHeight; ++i )
+      for( int i = 0; i < pGT->iHeight; ++i )
       {
          if( pGT->pLines[ i ] )
          {
             lIndex = static_cast< long >( i ) * pGT->iWidth;
-            for( l = 0; l < pGT->iWidth; ++l, ++lIndex )
+            for( int l = 0; l < pGT->iWidth; ++l, ++lIndex )
             {
                if( pGT->prevBuffer[ lIndex ].uiValue !=
                    pGT->screenBuffer[ lIndex ].uiValue )
@@ -3714,9 +3705,8 @@ HB_FUNC_EXTERN( HB_GTSYS );
 static const char * hb_gt_FindDefault( void )
 {
    char szFuncName[ 15 + HB_GT_NAME_MAX_ ];
-   int iPos;
 
-   for( iPos = 0; iPos < s_iGtCount; iPos++ )
+   for( int iPos = 0; iPos < s_iGtCount; iPos++ )
    {
       hb_snprintf( szFuncName, sizeof( szFuncName ),
                    "HB_GT_%s_DEFAULT", s_gtInit[ iPos ]->id );
@@ -3733,9 +3723,8 @@ static const char * hb_gt_FindDefault( void )
 static int hb_gt_FindEntry( const char * pszID )
 {
    HB_BOOL fGt = hb_strnicmp( pszID, "gt", 2 ) == 0;
-   int iPos;
 
-   for( iPos = -1; iPos < s_iGtCount; iPos++ )
+   for( int iPos = -1; iPos < s_iGtCount; iPos++ )
    {
       const char * id = iPos < 0 ? "nul" : s_gtInit[ iPos ]->id;
 

@@ -416,11 +416,11 @@ static int hb_fsProcessExec( const char * pszFileName,
       {
          /* close all non std* handles */
          {
-            int iMaxFD, i;
+            int iMaxFD;
             iMaxFD = sysconf( _SC_OPEN_MAX );
             if( iMaxFD < 3 )
                iMaxFD = 1024;
-            for( i = 3; i < iMaxFD; ++i )
+            for( int i = 3; i < iMaxFD; ++i )
                hb_fsClose( i );
          }
          /* reset extended process attributes */
@@ -838,11 +838,11 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName,
 
          /* close all non std* handles */
          {
-            int iMaxFD, i;
+            int iMaxFD;
             iMaxFD = sysconf( _SC_OPEN_MAX );
             if( iMaxFD < 3 )
                iMaxFD = 1024;
-            for( i = 3; i < iMaxFD; ++i )
+            for( int i = 3; i < iMaxFD; ++i )
                hb_fsClose( i );
          }
 

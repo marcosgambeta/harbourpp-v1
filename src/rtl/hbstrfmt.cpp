@@ -500,9 +500,8 @@ HB_FUNC( HB_STRFORMAT )
 
       if( iParams > 1 )
       {
-         int i;
          pItemArray = ( PHB_ITEM * ) hb_xgrab( ( iParams - 1 ) * sizeof( PHB_ITEM ) );
-         for( i = 1; i < iParams; i++ )
+         for( int i = 1; i < iParams; i++ )
             pItemArray[ i - 1 ] = hb_param( i + 1, HB_IT_ANY );
       }
 

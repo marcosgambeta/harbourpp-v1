@@ -186,9 +186,7 @@ static int hb_i18n_pluralformfind( const char * szLang )
 
 static const char * hb_i18n_pluralformid( int iForm )
 {
-   int i;
-
-   for( i = 0; i < static_cast< int >( HB_PLURAL_FOMRS_COUNT ); ++i )
+   for( int i = 0; i < static_cast< int >( HB_PLURAL_FOMRS_COUNT ); ++i )
    {
       if( s_plural_forms[ i ].iForm == iForm )
          return s_plural_forms[ i ].szLangID;
@@ -1043,8 +1041,7 @@ HB_FUNC( HB_I18N_ADDTEXT )
             HB_SIZE nLen = hb_arrayLen( pTrans );
             if( nLen != 0 )
             {
-               HB_SIZE n;
-               for( n = 1; n <= nLen; ++n )
+               for( HB_SIZE n = 1; n <= nLen; ++n )
                {
                   if( ! HB_IS_STRING( hb_arrayGetItemPtr( pTrans, n ) ) )
                   {

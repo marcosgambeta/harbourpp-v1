@@ -328,12 +328,11 @@ static void hb_gt_os2_mouse_ReadMouseState( void )
       if( MouReadEventQue( &MouEvent, &WaitOption, s_uMouHandle ) == NO_ERROR )
       {
          ULONG ulDiff;
-         int i;
 
          ulDiff = s_ulMouseLastState ^ MouEvent.fs;
          s_ulMouseLastState = MouEvent.fs;
 
-         for( i = 0; i < 3; ++i )
+         for( int i = 0; i < 3; ++i )
          {
             if( ulDiff & s_ButtonMask[ i ] )
             {
@@ -545,7 +544,6 @@ static void hb_gt_os2_SetCursorStyle( int iStyle )
 static void hb_gt_os2_GetScreenContents( PHB_GT pGT )
 {
    PHB_CODEPAGE cdp;
-   int iRow, iCol;
    char * pBufPtr;
    HB_BYTE bxAttr;
 
@@ -562,12 +560,12 @@ static void hb_gt_os2_GetScreenContents( PHB_GT pGT )
          cdp = HB_GTSELF_HOSTCP( pGT );
    }
 
-   for( iRow = 0; iRow < s_vi.row; ++iRow )
+   for( int iRow = 0; iRow < s_vi.row; ++iRow )
    {
       USHORT usSize = s_vi.col << 1;
       VioReadCellStr( ( PCH ) s_sLineBuf, &usSize, iRow, 0, 0 );
 
-      for( iCol = 0, pBufPtr = s_sLineBuf; iCol < s_vi.col; ++iCol, pBufPtr += 2 )
+      for( int iCol = 0, pBufPtr = s_sLineBuf; iCol < s_vi.col; ++iCol, pBufPtr += 2 )
       {
          HB_USHORT usChar = hb_cdpGetU16( cdp, pBufPtr[ 0 ] );
          HB_GTSELF_PUTSCRCHAR( pGT, iRow, iCol, pBufPtr[ 1 ], bxAttr, usChar );

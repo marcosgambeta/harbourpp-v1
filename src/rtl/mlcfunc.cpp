@@ -190,9 +190,8 @@ static int hb_mlEol( PHB_MLC_INFO pMLC )
    const char * pszString = pMLC->pszString + pMLC->nOffset;
    HB_SIZE nLen = pMLC->nLen - pMLC->nOffset;
    PHB_EOL_INFO pEOLs = pMLC->pEOLs;
-   int i;
 
-   for( i = 0; i < pMLC->iEOLs; ++i )
+   for( int i = 0; i < pMLC->iEOLs; ++i )
    {
       if( pszString[ 0 ] == pEOLs[ i ].szEOL[ 0 ] &&
           ( pEOLs[ i ].nLen == 1 ||

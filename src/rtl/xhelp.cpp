@@ -60,14 +60,13 @@ HB_FUNC( __XHELP )
       /* NOTE: push the existing params after the dynamic symbol. [awhite] */
 
       int iPCount = hb_pcount();
-      int iParam;
 
       hb_vmPushDynSym( s_pDynSym );
       hb_vmPushNil();
       /* CA-Cl*pper respects references so hb_stackItemFromBase() is
        * used instead of hb_param() [druzus]
        */
-      for( iParam = 1; iParam <= iPCount; iParam++ )
+      for( int iParam = 1; iParam <= iPCount; iParam++ )
          hb_vmPush( hb_stackItemFromBase( iParam ) );
 
       hb_vmProc( static_cast< HB_USHORT >( iPCount ) );

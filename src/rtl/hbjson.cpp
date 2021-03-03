@@ -148,9 +148,8 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx,
    if( ( HB_IS_ARRAY( pValue ) || HB_IS_HASH( pValue ) ) && hb_itemSize( pValue ) > 0 )
    {
       void * id = HB_IS_HASH( pValue ) ? hb_hashId( pValue ) : hb_arrayId( pValue );
-      HB_SIZE nIndex;
 
-      for( nIndex = 0; nIndex < nLevel; nIndex++ )
+      for( HB_SIZE nIndex = 0; nIndex < nLevel; nIndex++ )
       {
          if( pCtx->pId[ nIndex ] == id )
          {
@@ -340,14 +339,12 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx,
 
       if( nLen )
       {
-         HB_SIZE nIndex;
-
          if( pCtx->iIndent )
             _hb_jsonCtxAddIndent( pCtx, nLevel );
 
          _hb_jsonCtxAdd( pCtx, "{", 1 );
 
-         for( nIndex = 1; nIndex <= nLen; nIndex++ )
+         for( HB_SIZE nIndex = 1; nIndex <= nLen; nIndex++ )
          {
             PHB_ITEM pKey = hb_hashGetKeyAt( pValue, nIndex );
 
@@ -454,9 +451,8 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
                case 'u':
                {
                   HB_WCHAR wc = 0;
-                  int i;
 
-                  for( i = 0; i < 4; i++ )
+                  for( int i = 0; i < 4; i++ )
                   {
                      char c = *++szSource;
                      wc <<= 4;
