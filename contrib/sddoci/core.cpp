@@ -421,7 +421,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
          {
             case HB_FT_STRING:
             {
-               char * pStr = ( char * ) hb_xgrab( ( HB_SIZE ) dbFieldInfo.uiLen + 1 );
+               char * pStr = static_cast< char * >( hb_xgrab( ( HB_SIZE ) dbFieldInfo.uiLen + 1 ) );
                memset( pStr, ' ', dbFieldInfo.uiLen );
                pStr[ dbFieldInfo.uiLen ] = '\0';
 
@@ -492,8 +492,8 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
    pArea->ulRecCount = 0;
    pArea->ulRecMax   = SQLDD_ROWSET_INIT;
 
-   pArea->pRow = ( void ** ) hb_xgrab( SQLDD_ROWSET_INIT * sizeof( void * ) );
-   pArea->pRowFlags = ( HB_BYTE * ) hb_xgrab( SQLDD_ROWSET_INIT * sizeof( HB_BYTE ) );
+   pArea->pRow = static_cast< void ** >( hb_xgrab( SQLDD_ROWSET_INIT * sizeof( void * ) ) );
+   pArea->pRowFlags = static_cast< HB_BYTE * >( hb_xgrab( SQLDD_ROWSET_INIT * sizeof( HB_BYTE ) ) );
 
    pArea->pRow[ 0 ]      = pItemEof;
    pArea->pRowFlags[ 0 ] = SQLDD_FLAG_CACHED;
@@ -545,7 +545,7 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
             case HB_FT_STRING:
                if( OCI_IsNull( rs, ui ) )
                {
-                  char * pStr = ( char * ) hb_xgrab( ( HB_SIZE ) pField->uiLen + 1 );
+                  char * pStr = static_cast< char * >( hb_xgrab( ( HB_SIZE ) pField->uiLen + 1 ) );
                   memset( pStr, ' ', pField->uiLen );
                   pStr[ pField->uiLen ] = '\0';
 

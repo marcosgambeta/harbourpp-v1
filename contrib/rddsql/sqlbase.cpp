@@ -703,7 +703,7 @@ static HB_ERRCODE sqlbaseCreate( SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo )
          {
             char * pStr;
 
-            pStr = ( char * ) hb_xgrab( pField->uiLen + 1 );
+            pStr = static_cast< char * >( hb_xgrab( pField->uiLen + 1 ) );
             memset( pStr, ' ', pField->uiLen );
             pStr[ pField->uiLen ] = '\0';
 
@@ -770,8 +770,8 @@ static HB_ERRCODE sqlbaseCreate( SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo )
 
    pArea->ulRecCount = 0;
 
-   pArea->pRow      = ( void ** ) hb_xgrab( SQLDD_ROWSET_RESIZE * sizeof( void * ) );
-   pArea->pRowFlags = ( HB_BYTE * ) hb_xgrab( SQLDD_ROWSET_RESIZE * sizeof( HB_BYTE ) );
+   pArea->pRow      = static_cast< void ** >( hb_xgrab( SQLDD_ROWSET_RESIZE * sizeof( void * ) ) );
+   pArea->pRowFlags = static_cast< HB_BYTE * >( hb_xgrab( SQLDD_ROWSET_RESIZE * sizeof( HB_BYTE ) ) );
    pArea->ulRecMax  = SQLDD_ROWSET_RESIZE;
 
    pArea->pRow[ 0 ]      = pItemEof;
@@ -1038,7 +1038,7 @@ static HB_ERRCODE sqlbaseRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ul
                if( s_pConnection )
                   s_pConnection = ( SQLDDCONNECTION ** ) hb_xrealloc( s_pConnection, sizeof( SQLDDCONNECTION * ) * ( s_ulConnectionCount + CONNECTION_LIST_EXPAND ) );
                else
-                  s_pConnection = ( SQLDDCONNECTION ** ) hb_xgrab( sizeof( SQLDDCONNECTION * ) * CONNECTION_LIST_EXPAND );
+                  s_pConnection = static_cast< SQLDDCONNECTION ** >( hb_xgrab( sizeof( SQLDDCONNECTION * ) * CONNECTION_LIST_EXPAND ) );
 
                memset( s_pConnection + s_ulConnectionCount, 0, sizeof( SQLDDCONNECTION * ) * CONNECTION_LIST_EXPAND );
                ul = s_ulConnectionCount;

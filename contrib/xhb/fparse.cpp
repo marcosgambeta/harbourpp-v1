@@ -81,7 +81,7 @@ static void hb_ParseLine( PHB_ITEM pReturn, const char * szText, int iDelimiter,
          HB_ISIZ  i          = 0;
          int      word_count = 0;
          /* booked enough memory */
-         char * szResult = ( char * ) hb_xgrab( nLen + 1 );
+         char * szResult = static_cast< char * >( hb_xgrab( nLen + 1 ) );
 
 #if 0
          while( nLen )
@@ -244,7 +244,7 @@ static char ** hb_tokensplit( const char * string, HB_BYTE delimiter, int iCharC
    char    last_char  = '\0';
    int     word_count = 0, word_nbr;
 
-   buffer = ( char * ) hb_xgrab( iCharCount + 1 );
+   buffer = static_cast< char * >( hb_xgrab( iCharCount + 1 ) );
 
    bufptr = buffer;
 
@@ -270,7 +270,7 @@ static char ** hb_tokensplit( const char * string, HB_BYTE delimiter, int iCharC
 
    *bufptr = '\0';
 
-   token_list      = ( char ** ) hb_xgrab( sizeof( char * ) * ( word_count + 2 ) );
+   token_list      = static_cast< char ** >( hb_xgrab( sizeof( char * ) * ( word_count + 2 ) ) );
    token_list[ 0 ] = buffer;
    token_list++;
 
@@ -362,7 +362,7 @@ HB_FUNC( FPARSE )
    pItem  = hb_itemNew( nullptr );
 
    /* book memory for line to read */
-   string = ( char * ) hb_xgrab( MAX_READ + 1 );
+   string = static_cast< char * >( hb_xgrab( MAX_READ + 1 ) );
 
    /* read the file until EOF */
    while( file_read( inFile, string, &iCharCount ) )
@@ -439,7 +439,7 @@ HB_FUNC( FPARSEEX )
    pSubArray = hb_itemNew( nullptr );
 
    /* book memory for line to read */
-   string = ( char * ) hb_xgrab( MAX_READ + 1 );
+   string = static_cast< char * >( hb_xgrab( MAX_READ + 1 ) );
 
    /* read the file until EOF */
    while( file_read( inFile, string, &iCharCount ) )
@@ -496,7 +496,7 @@ HB_FUNC( FWORDCOUNT )
    }
 
    /* book memory for line to read */
-   string = ( char * ) hb_xgrab( MAX_READ + 1 );
+   string = static_cast< char * >( hb_xgrab( MAX_READ + 1 ) );
 
    /* read the file until EOF */
    while( file_read( inFile, string, &iCharCount ) )

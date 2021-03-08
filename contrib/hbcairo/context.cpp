@@ -125,7 +125,7 @@ HB_FUNC( CAIRO_GET_DASH )
       double * pDashes, dOffset;
 
       iCount  = cairo_get_dash_count( pCairo );
-      pDashes = ( double * ) hb_xgrab( iCount * sizeof( double ) );
+      pDashes = static_cast< double * >( hb_xgrab( iCount * sizeof( double ) ) );
       cairo_get_dash( pCairo, pDashes, &dOffset );
       hb_stornd( dOffset, 3 );
 
@@ -216,7 +216,7 @@ HB_FUNC( CAIRO_SET_DASH )
          double * pDashes = nullptr;
 
          if( iCount )
-            pDashes = ( double * ) hb_xgrab( iCount * sizeof( double ) );
+            pDashes = static_cast< double * >( hb_xgrab( iCount * sizeof( double ) ) );
 
          for( i = 0; i < iCount; i++ )
             pDashes[ i ] = hb_arrayGetND( pItem, ( HB_SIZE ) i + 1 );

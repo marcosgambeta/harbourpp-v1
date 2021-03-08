@@ -189,7 +189,7 @@ static HB_BOOL s_fileExists( PHB_FILE_FUNCS pFuncs, const char * pszFileName, ch
    pszName = s_bz2io_name( pszFileName, nullptr );
    if( pRetPath )
    {
-      char * pszNameBuf = ( char * ) hb_xgrab( HB_PATH_MAX );
+      char * pszNameBuf = static_cast< char * >( hb_xgrab( HB_PATH_MAX ) );
       int iPref = static_cast< int >( pszName - pszFileName );
 
       fResult = hb_fileExists( pszName, pszNameBuf );
@@ -333,7 +333,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName,
    HB_SYMBOL_UNUSED( pFuncs );
 
    if( ( nExFlags & FXO_COPYNAME ) != 0 )
-      pszName = pszNameBuf = hb_strncpy( ( char * ) hb_xgrab( HB_PATH_MAX ),
+      pszName = pszNameBuf = hb_strncpy( static_cast< char * >( hb_xgrab( HB_PATH_MAX ) ),
                                          pszName, HB_PATH_MAX - 1 );
 
    pFile = hb_fileExtOpen( pszName, pszDefExt, nExFlags, pPaths, pError );

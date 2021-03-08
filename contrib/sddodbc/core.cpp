@@ -577,7 +577,7 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
             {
                char * pStr;
 
-               pStr = ( char * ) hb_xgrab( ( HB_SIZE ) dbFieldInfo.uiLen + 1 );
+               pStr = static_cast< char * >( hb_xgrab( ( HB_SIZE ) dbFieldInfo.uiLen + 1 ) );
                memset( pStr, ' ', dbFieldInfo.uiLen );
                pStr[ dbFieldInfo.uiLen ] = '\0';
 
@@ -655,8 +655,8 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
    pArea->ulRecCount = 0;
    pArea->ulRecMax   = SQLDD_ROWSET_INIT;
 
-   pArea->pRow = ( void ** ) hb_xgrab( SQLDD_ROWSET_INIT * sizeof( void * ) );
-   pArea->pRowFlags = ( HB_BYTE * ) hb_xgrab( SQLDD_ROWSET_INIT * sizeof( HB_BYTE ) );
+   pArea->pRow = static_cast< void ** >( hb_xgrab( SQLDD_ROWSET_INIT * sizeof( void * ) ) );
+   pArea->pRowFlags = static_cast< HB_BYTE * >( hb_xgrab( SQLDD_ROWSET_INIT * sizeof( HB_BYTE ) ) );
 
    pArea->pRow[ 0 ]      = pItemEof;
    pArea->pRowFlags[ 0 ] = SQLDD_FLAG_CACHED;
@@ -727,7 +727,7 @@ static HB_ERRCODE odbcGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                   {
                      if( iLen >= 0 )
                      {
-                        char * val = ( char * ) hb_xgrab( iLen + 1 );
+                        char * val = static_cast< char * >( hb_xgrab( iLen + 1 ) );
                         if( SQL_SUCCEEDED( res = SQLGetData( hStmt, ui, SQL_C_BINARY, val, iLen + 1, &iLen ) ) )
                            pItem = hb_itemPutCLPtr( pItem, val, ( HB_SIZE ) iLen );
                         else
@@ -749,7 +749,7 @@ static HB_ERRCODE odbcGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                   {
                      if( iLen >= 0 )
                      {
-                        O_HB_CHAR * val = ( O_HB_CHAR * ) hb_xgrab( iLen + sizeof( O_HB_CHAR ) );
+                        O_HB_CHAR * val = static_cast< O_HB_CHAR * >( hb_xgrab( iLen + sizeof( O_HB_CHAR ) ) );
                         if( SQL_SUCCEEDED( res = SQLGetData( hStmt, ui, iTargetType, val, iLen + sizeof( O_HB_CHAR ), &iLen ) ) )
                         {
 #if defined( UNICODE )

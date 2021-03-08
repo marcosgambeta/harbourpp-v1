@@ -75,7 +75,7 @@ HB_FUNC( POSCHAR )
          else
             sPosition = sStrLen;
 
-         pcRet = ( char * ) hb_xgrab( sStrLen + 1 );
+         pcRet = static_cast< char * >( hb_xgrab( sStrLen + 1 ) );
          hb_xmemcpy( pcRet, pcString, sStrLen );
          *( pcRet + sPosition - 1 ) = cReplace;
 
@@ -151,7 +151,7 @@ HB_FUNC( POSDEL )
          return;
       }
 
-      pcRet = ( char * ) hb_xgrab( sStrLen - sDelLen + 1 );
+      pcRet = static_cast< char * >( hb_xgrab( sStrLen - sDelLen + 1 ) );
 
       /* copy first part */
       if( sStartPos > 1 )
@@ -219,7 +219,7 @@ HB_FUNC( POSINS )
             return;
          }
 
-         pcRet = ( char * ) hb_xgrab( sStrLen + sInsLen + 1 );
+         pcRet = static_cast< char * >( hb_xgrab( sStrLen + sInsLen + 1 ) );
 
          /* copy first part */
          if( sStartPos > 1 )
@@ -314,7 +314,7 @@ HB_FUNC( POSREPL )
          else
             sRetLen = sStartPos + sReplLen - 1;
 
-         pcRet = ( char * ) hb_xgrab( sRetLen + 1 );
+         pcRet = static_cast< char * >( hb_xgrab( sRetLen + 1 ) );
 
          /* copy first part */
          if( sStartPos > 1 )

@@ -67,7 +67,7 @@ HB_FUNC( WORDTOCHAR )
       HB_SIZE sRetIndex, sIndex;
       int iNoReplace;
 
-      pcRet = ( char * ) hb_xgrab( sStrLen );
+      pcRet = static_cast< char * >( hb_xgrab( sStrLen ) );
       sRetIndex = 0;
       sIndex = 0;
       iNoReplace = 0;

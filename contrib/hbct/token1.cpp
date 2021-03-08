@@ -164,7 +164,7 @@ static void do_token1( int iSwitch )
             return;
          }
          sRetStrLen = sStrLen;
-         pcRet = ( char * ) hb_xgrab( sRetStrLen + 1 );
+         pcRet = static_cast< char * >( hb_xgrab( sRetStrLen + 1 ) );
          hb_xmemcpy( pcRet, pcString, sRetStrLen );
       }
 

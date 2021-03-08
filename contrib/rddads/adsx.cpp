@@ -177,7 +177,7 @@ static PMIXKEY mixKeyNew( PHB_ITEM pItem, HB_ULONG ulRecNo, HB_BYTE bType, HB_US
    double  dbl;
    HB_BYTE buf[ 8 ];
 
-   pKey = ( PMIXKEY ) hb_xgrab( sizeof( HB_ULONG ) + uiLen );
+   pKey = static_cast< PMIXKEY >( hb_xgrab( sizeof( HB_ULONG ) + uiLen ) );
    pKey->rec = ulRecNo;
 
    switch( bType )
@@ -402,10 +402,10 @@ static PMIXTAG mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_ITEM
 
    pTag = ( PMIXTAG ) hb_xgrabz( sizeof( MIXTAG ) );
 
-   pTag->szName = ( char * ) hb_xgrab( MIX_MAXTAGNAMELEN + 1 );
+   pTag->szName = static_cast< char * >( hb_xgrab( MIX_MAXTAGNAMELEN + 1 ) );
    hb_strncpyUpperTrim( pTag->szName, szTagName, MIX_MAXTAGNAMELEN );
 
-   pTag->szKeyExpr = ( char * ) hb_xgrab( hb_itemGetCLen( pKeyExpr ) + 1 );
+   pTag->szKeyExpr = static_cast< char * >( hb_xgrab( hb_itemGetCLen( pKeyExpr ) + 1 ) );
    hb_strncpyTrim( pTag->szKeyExpr, hb_itemGetCPtr( pKeyExpr ), hb_itemGetCLen( pKeyExpr ) );
 
    /* TODO: for expression */
@@ -421,7 +421,7 @@ static PMIXTAG mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_ITEM
        ! HB_CDP_ISBINSORT( pArea->adsarea.area.cdPage ) )
       pTag->pCodepage = pArea->adsarea.area.cdPage;
 
-   pTag->pKeys    = ( PMIXKEY * ) hb_xgrab( sizeof( PMIXKEY ) * MIX_KEYPOOLFIRST );
+   pTag->pKeys    = static_cast< PMIXKEY * >( hb_xgrab( sizeof( PMIXKEY ) * MIX_KEYPOOLFIRST ) );
    pTag->ulRecMax = MIX_KEYPOOLFIRST;
 
    ulStartRec = 0;
@@ -597,7 +597,7 @@ static PMIXUPDATE mixUpdateCreate( ADSXAREAP pArea )
       iTag++;
    }
 
-   pUpdate = ( PMIXUPDATE ) hb_xgrab( sizeof( MIXUPDATE ) * iTag );
+   pUpdate = static_cast< PMIXUPDATE >( hb_xgrab( sizeof( MIXUPDATE ) * iTag ) );
    pTag = pArea->pTagList;
    iTag = 0;
    while( pTag )

@@ -58,7 +58,7 @@ typedef struct
 
 static PHB_BIO PHB_BIO_create( BIO * bio, void * hStrRef )
 {
-   PHB_BIO hb_bio = ( PHB_BIO ) hb_xgrab( sizeof( HB_BIO ) );
+   PHB_BIO hb_bio = static_cast< PHB_BIO >( hb_xgrab( sizeof( HB_BIO ) ) );
 
    hb_bio->bio       = bio;
    hb_bio->hStrRef   = hStrRef;
@@ -537,7 +537,7 @@ HB_FUNC( BIO_READ )
 
       if( size > 0 )
       {
-         char * buffer = ( char * ) hb_xgrab( size + 1 );
+         char * buffer = static_cast< char * >( hb_xgrab( size + 1 ) );
 
          hb_retni( size = BIO_read( bio, buffer, size ) );
 
@@ -564,7 +564,7 @@ HB_FUNC( BIO_GETS )
 
       if( size > 0 )
       {
-         char * buffer = ( char * ) hb_xgrab( size + 1 );
+         char * buffer = static_cast< char * >( hb_xgrab( size + 1 ) );
 
          hb_retni( size = BIO_gets( bio, buffer, size ) );
 

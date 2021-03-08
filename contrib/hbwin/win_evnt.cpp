@@ -75,8 +75,8 @@ HB_FUNC( WIN_REPORTEVENT )
       {
          WORD i;
 
-         lpStrings = ( LPCTSTR * ) hb_xgrab( sizeof( LPCTSTR ) * wNumStrings );
-         hStrings = ( void ** ) hb_xgrab( sizeof( void * ) * wNumStrings );
+         lpStrings = static_cast< LPCTSTR * >( hb_xgrab( sizeof( LPCTSTR ) * wNumStrings ) );
+         hStrings = static_cast< void ** >( hb_xgrab( sizeof( void * ) * wNumStrings ) );
 
          for( i = 0; i < wNumStrings; ++i )
             lpStrings[ i ] = ( LPCTSTR ) HB_ARRAYGETSTR( pStrings, i + 1, &hStrings[ i ], nullptr );
@@ -85,8 +85,8 @@ HB_FUNC( WIN_REPORTEVENT )
       {
          wNumStrings = 1;
 
-         lpStrings = ( LPCTSTR * ) hb_xgrab( sizeof( LPCTSTR ) );
-         hStrings = ( void ** ) hb_xgrab( sizeof( void * ) );
+         lpStrings = static_cast< LPCTSTR * >( hb_xgrab( sizeof( LPCTSTR ) ) );
+         hStrings = static_cast< void ** >( hb_xgrab( sizeof( void * ) ) );
 
          lpStrings[ 0 ] = ( LPCTSTR ) HB_ITEMGETSTR( hb_param( 6, HB_IT_STRING ), &hStrings[ 0 ], nullptr );
       }

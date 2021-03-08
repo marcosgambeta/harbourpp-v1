@@ -113,7 +113,7 @@ HB_FUNC( TABEXPAND )
          hb_retclen( pcString, sStrLen );
          return;
       }
-      pcRet = ( char * ) hb_xgrab( sStrLen + ( sTabCnt * ( sTabWidth - 1 ) ) );
+      pcRet = static_cast< char * >( hb_xgrab( sStrLen + ( sTabCnt * ( sTabWidth - 1 ) ) ) );
 
       /* now copy the string */
       sIndex = 0;
@@ -256,7 +256,7 @@ HB_FUNC( TABPACK )
       }
       /* estimate maximum return length by assuming that there's
          nothing to pack */
-      pcRet = ( char * ) hb_xgrab( sStrLen );
+      pcRet = static_cast< char * >( hb_xgrab( sStrLen ) );
 
       /* now copy the string */
       sIndex = 0;

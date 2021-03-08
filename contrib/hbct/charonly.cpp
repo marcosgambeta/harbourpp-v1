@@ -105,7 +105,7 @@ static void do_charonly( int iSwitch )
       else
          iShift = 1;
 
-      pcRet = ( char * ) hb_xgrab( sStrLen );
+      pcRet = static_cast< char * >( hb_xgrab( sStrLen ) );
 
       for( pcSub = pcString; pcSub < pcString + sStrLen + 1 - iShift; pcSub += iShift )
       {

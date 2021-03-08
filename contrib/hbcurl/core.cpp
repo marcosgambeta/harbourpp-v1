@@ -553,7 +553,7 @@ static PHB_CURL PHB_CURL_create( CURL * from )
 
    if( curl )
    {
-      PHB_CURL hb_curl = ( PHB_CURL ) hb_xgrab( sizeof( HB_CURL ) );
+      PHB_CURL hb_curl = static_cast< PHB_CURL >( hb_xgrab( sizeof( HB_CURL ) ) );
 
       memset( hb_curl, 0, sizeof( HB_CURL ) );
       hb_curl->curl = curl;
@@ -1719,7 +1719,7 @@ HB_FUNC( CURL_EASY_SETOPT )
                {
                   hb_curl->ul_pos = 0;
                   hb_curl->ul_len = hb_parclen( 3 );
-                  hb_curl->ul_ptr = ( unsigned char * ) hb_xgrab( hb_curl->ul_len );
+                  hb_curl->ul_ptr = static_cast< unsigned char * >( hb_xgrab( hb_curl->ul_len ) );
 
                   hb_xmemcpy( hb_curl->ul_ptr, hb_parc( 3 ), hb_curl->ul_len );
 
@@ -1733,7 +1733,7 @@ HB_FUNC( CURL_EASY_SETOPT )
 
                hb_curl->dl_pos = 0;
                hb_curl->dl_len = hb_parnldef( 3, HB_CURL_DL_BUFF_SIZE_INIT );
-               hb_curl->dl_ptr = ( unsigned char * ) hb_xgrab( hb_curl->dl_len );
+               hb_curl->dl_ptr = static_cast< unsigned char * >( hb_xgrab( hb_curl->dl_len ) );
 
                curl_easy_setopt( hb_curl->curl, CURLOPT_WRITEFUNCTION, hb_curl_write_buff_callback );
                res = curl_easy_setopt( hb_curl->curl, CURLOPT_WRITEDATA, hb_curl );

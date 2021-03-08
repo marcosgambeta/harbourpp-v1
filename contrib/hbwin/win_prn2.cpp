@@ -390,7 +390,7 @@ HB_FUNC( WIN_PRINTFILERAW )
                                                 FXO_SHARELOCK, nullptr, nullptr );
                if( pFile != nullptr )
                {
-                  HB_BYTE * pbyBuffer = ( HB_BYTE * ) hb_xgrab( HB_PRINT_BUFFER_SIZE );
+                  HB_BYTE * pbyBuffer = static_cast< HB_BYTE * >( hb_xgrab( HB_PRINT_BUFFER_SIZE ) );
                   HB_SIZE nRead;
 
                   nResult = 1;

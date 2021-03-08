@@ -192,7 +192,7 @@ HB_FUNC( WVW_EBCREATE )
       if( bFromOEM )
       {
          ULONG  ulLen        = static_cast< ULONG >( strlen( lpszText ) );
-         LPTSTR lpszTextANSI = ( LPTSTR ) hb_xgrab( ulLen + 1 );
+         LPTSTR lpszTextANSI = static_cast< LPTSTR >( hb_xgrab( ulLen + 1 ) );
          OemToChar( lpszText, lpszTextANSI );
          lpszText = lpszTextANSI;
       }
@@ -517,7 +517,7 @@ HB_FUNC( WVW_EBGETTEXT )
 
    usLen = static_cast< USHORT >( SendMessage( static_cast< HWND >( pcd->hWndCtrl ), WM_GETTEXTLENGTH, 0, 0 ) ) + 1;
 
-   lpszTextANSI = ( LPTSTR ) hb_xgrab( usLen );
+   lpszTextANSI = static_cast< LPTSTR >( hb_xgrab( usLen ) );
 
    SendMessage(
       static_cast< HWND >( pcd->hWndCtrl ),
@@ -529,7 +529,7 @@ HB_FUNC( WVW_EBGETTEXT )
    if( bToOEM )
    {
       ULONG  ulLen    = static_cast< ULONG >( strlen( lpszTextANSI ) );
-      LPTSTR lpszText = ( LPTSTR ) hb_xgrab( ulLen + 1 );
+      LPTSTR lpszText = static_cast< LPTSTR >( hb_xgrab( ulLen + 1 ) );
       CharToOem( lpszTextANSI, lpszText );
       hb_retc( lpszText );
       hb_xfree( lpszText );
@@ -563,7 +563,7 @@ HB_FUNC( WVW_EBSETTEXT )
    if( bFromOEM )
    {
       ULONG  ulLen        = static_cast< ULONG >( strlen( lpszText ) );
-      LPTSTR lpszTextANSI = ( LPTSTR ) hb_xgrab( ulLen + 1 );
+      LPTSTR lpszTextANSI = static_cast< LPTSTR >( hb_xgrab( ulLen + 1 ) );
       OemToChar( lpszText, lpszTextANSI );
       lpszText = lpszTextANSI;
    }

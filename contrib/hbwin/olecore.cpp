@@ -290,7 +290,7 @@ static void hb_oleExcepDescription( EXCEPINFO * pExcep, char ** pszDescription, 
       int iLen, iStrLen;
       iStrLen = static_cast< int >( SysStringLen( pExcep->bstrSource ) );
       iLen = WideCharToMultiByte( CP_ACP, 0, pExcep->bstrSource, iStrLen, nullptr, 0, nullptr, nullptr );
-      * pszSource = ( char * ) hb_xgrab( ( iLen + 1 ) * sizeof( char ) );
+      * pszSource = static_cast< char * >( hb_xgrab( ( iLen + 1 ) * sizeof( char ) ) );
       WideCharToMultiByte( CP_ACP, 0, pExcep->bstrSource, iStrLen, * pszSource, iLen + 1, nullptr, nullptr );
       ( * pszSource )[ iLen ] = '\0';
       SysFreeString( pExcep->bstrSource );
@@ -304,14 +304,14 @@ static void hb_oleExcepDescription( EXCEPINFO * pExcep, char ** pszDescription, 
       int iLen, iStrLen;
       iStrLen = static_cast< int >( SysStringLen( pExcep->bstrDescription ) );
       iLen = WideCharToMultiByte( CP_ACP, 0, pExcep->bstrDescription, iStrLen, nullptr, 0, nullptr, nullptr );
-      * pszDescription = ( char * ) hb_xgrab( ( iLen + 14 + 1 ) * sizeof( char ) );
+      * pszDescription = static_cast< char * >( hb_xgrab( ( iLen + 14 + 1 ) * sizeof( char ) ) );
       WideCharToMultiByte( CP_ACP, 0, pExcep->bstrDescription, iStrLen, * pszDescription, iLen + 1, nullptr, nullptr );
       ( * pszDescription )[ iLen ] = '\0';
       SysFreeString( pExcep->bstrDescription );
    }
    else
    {
-      *pszDescription = ( char * ) hb_xgrab( ( 14 + 1 ) * sizeof( char ) );
+      *pszDescription = static_cast< char * >( hb_xgrab( ( 14 + 1 ) * sizeof( char ) ) );
       ( *pszDescription )[ 0 ] = '\0';
    }
 
@@ -452,7 +452,7 @@ static wchar_t * AnsiToWide( const char * szString )
    wchar_t * szWide;
 
    iLen = MultiByteToWideChar( CP_ACP, MB_PRECOMPOSED, szString, -1, nullptr, 0 );
-   szWide = ( wchar_t* ) hb_xgrab( iLen * sizeof( wchar_t ) );
+   szWide = static_cast< wchar_t* >( hb_xgrab( iLen * sizeof( wchar_t ) ) );
    MultiByteToWideChar( CP_ACP, MB_PRECOMPOSED, szString, -1, szWide, iLen );
    return szWide;
 }
@@ -784,8 +784,8 @@ static SAFEARRAY * hb_oleSafeArrayFromItem( PHB_ITEM pItem, VARTYPE vt,
       iDims = 1;
    }
 
-   sabound = iDims > static_cast< int >( HB_SIZEOFARRAY( boundbuf ) ) ? ( SAFEARRAYBOUND * )
-             hb_xgrab( sizeof( SAFEARRAYBOUND ) * iDims ) : boundbuf;
+   sabound = iDims > static_cast< int >( HB_SIZEOFARRAY( boundbuf ) ) ? static_cast< SAFEARRAYBOUND * >(
+             hb_xgrab( sizeof( SAFEARRAYBOUND ) * iDims ) ) : boundbuf;
    /* use the same buffer for dimensions and indexes */
    plIndex = &sabound[ 0 ].lLbound;
 
@@ -1469,7 +1469,7 @@ void hb_oleVariantToItemEx( PHB_ITEM pItem, VARIANT * pVariant, HB_USHORT uiClas
                {
                   if( iDims > 1 || ! hb_oleSafeArrayToString( pItem, pSafeArray ) )
                   {
-                     long * plIndex = ( long * ) hb_xgrab( iDims * sizeof( long ) );
+                     long * plIndex = static_cast< long * >( hb_xgrab( iDims * sizeof( long ) ) );
 
                      hb_oleSafeArrayToItem( pItem, pSafeArray, iDims, 1, plIndex,
                            ( VARTYPE ) ( V_VT( pVariant ) & ~( VT_ARRAY | VT_BYREF ) ),
@@ -1779,7 +1779,7 @@ static void GetParams( DISPPARAMS * dispparam, HB_UINT uiOffset, HB_BOOL fUseRef
          }
       }
 
-      pArgs = ( VARIANTARG * ) hb_xgrab( sizeof( VARIANTARG ) * ( uiArgCount + uiRefs + uiNamedArgs ) );
+      pArgs = static_cast< VARIANTARG * >( hb_xgrab( sizeof( VARIANTARG ) * ( uiArgCount + uiRefs + uiNamedArgs ) ) );
       pRefs = &pArgs[ uiArgCount + uiNamedArgs ];
 
       for( uiArg = 0; uiArg < uiNamedArgs; uiArg++ )
@@ -2823,7 +2823,7 @@ HB_FUNC( __OLEVARIANTNEW )
                iDims = iPCount;
 
                plSize = iDims < static_cast< int >( HB_SIZEOFARRAY( plBuf ) ) ? plBuf :
-                        ( long * ) hb_xgrab( sizeof( long ) * iDims );
+                        static_cast< long * >( hb_xgrab( sizeof( long ) * iDims ) );
 
                while( iPCount > 0 && HB_ISNIL( iPCount + 2 ) )
                   --iPCount;

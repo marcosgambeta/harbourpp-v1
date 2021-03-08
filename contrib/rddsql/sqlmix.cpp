@@ -123,7 +123,7 @@ static HB_ERRCODE sqlmixErrorRT( SQLMIXAREAP pArea, HB_ERRCODE errGenCode, HB_ER
 
 static PMIXKEY hb_mixKeyNew( PMIXTAG pTag )
 {
-   return ( PMIXKEY ) hb_xgrab( pTag->uiTotalLen );
+   return static_cast< PMIXKEY >( hb_xgrab( pTag->uiTotalLen ) );
 }
 
 
@@ -758,10 +758,10 @@ static PMIXTAG hb_mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_I
 
    pTag->pArea = pArea;
 
-   pTag->szName = ( char * ) hb_xgrab( MIX_MAXTAGNAMELEN + 1 );
+   pTag->szName = static_cast< char * >( hb_xgrab( MIX_MAXTAGNAMELEN + 1 ) );
    hb_strncpyUpperTrim( pTag->szName, szTagName, MIX_MAXTAGNAMELEN );
 
-   pTag->szKeyExpr = ( char * ) hb_xgrab( hb_itemGetCLen( pKeyExpr ) + 1 );
+   pTag->szKeyExpr = static_cast< char * >( hb_xgrab( hb_itemGetCLen( pKeyExpr ) + 1 ) );
    hb_strncpyTrim( pTag->szKeyExpr, hb_itemGetCPtr( pKeyExpr ), hb_itemGetCLen( pKeyExpr ) );
 
    /* TODO: FOR expression */

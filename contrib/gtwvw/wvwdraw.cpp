@@ -297,7 +297,7 @@ HB_FUNC( WVW_DRAWSCROLLBUTTON )
    iBottom = xy.y - 1 + hb_parvni( 6, 3 );
    iRight  = xy.x - 1 + hb_parvni( 6, 4 );
 
-   Point = ( POINT * ) hb_xgrab( 3 * sizeof( POINT ) );
+   Point = static_cast< POINT * >( hb_xgrab( 3 * sizeof( POINT ) ) );
    iOff  = 6;
 
    iHeight = iBottom - iTop + 1;

@@ -897,7 +897,7 @@ HB_FUNC( WVW_CBGETCURTEXT )
       return;
    }
 
-   lptstr = ( char * ) hb_xgrab( iTextLen + 1 );
+   lptstr = static_cast< char * >( hb_xgrab( iTextLen + 1 ) );
    if( SendMessage( static_cast< HWND >( pcd->hWndCtrl ),
                     CB_GETLBTEXT,
                     static_cast< WPARAM >( iCurSel ),

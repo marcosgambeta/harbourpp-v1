@@ -290,7 +290,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
    printf( "Size: %i\n", *puiSize );
    #endif
 
-   Buffer = ( HB_BYTE * ) hb_xgrab( *puiSize + 1 );
+   Buffer = static_cast< HB_BYTE * >( hb_xgrab( *puiSize + 1 ) );
 
    for( nIndex = 0; nIndex < nLen; nIndex++ )
    {

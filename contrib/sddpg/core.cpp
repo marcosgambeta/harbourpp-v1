@@ -397,7 +397,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
             {
                char * pStr;
 
-               pStr = ( char * ) hb_xgrab( dbFieldInfo.uiLen + 1 );
+               pStr = static_cast< char * >( hb_xgrab( dbFieldInfo.uiLen + 1 ) );
                memset( pStr, ' ', dbFieldInfo.uiLen );
                pStr[ dbFieldInfo.uiLen ] = '\0';
 
@@ -464,7 +464,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
    pArea->ulRecCount = ( HB_ULONG ) PQntuples( pResult );
    pArea->ulRecMax   = pArea->ulRecCount + 1;
 
-   pArea->pRow      = ( void ** ) hb_xgrab( ( pArea->ulRecCount + 1 ) * sizeof( void * ) );
+   pArea->pRow      = static_cast< void ** >( hb_xgrab( ( pArea->ulRecCount + 1 ) * sizeof( void * ) ) );
    pArea->pRowFlags = ( HB_BYTE * ) hb_xgrabz( ( pArea->ulRecCount + 1 ) * sizeof( HB_BYTE ) );
 
    pArea->pRow[ 0 ]      = pItemEof;

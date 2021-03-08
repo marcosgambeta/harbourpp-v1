@@ -85,7 +85,7 @@ HB_FUNC( EXPAND )
                cRepl = ' ';
          }
          nSize = ( nLen - 1 ) * ( iRepl + 1 ) + 1;
-         szPtr = szDest = ( char * ) hb_xgrab( nSize + 1 );
+         szPtr = szDest = static_cast< char * >( hb_xgrab( nSize + 1 ) );
          *szPtr++ = szText[ 0 ];
          for( nPos = 1; nPos < nLen; ++nPos )
          {

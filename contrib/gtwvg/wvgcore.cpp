@@ -2264,7 +2264,7 @@ HB_FUNC( WVT_DRAWSCROLLBUTTON )
    int     iHeight, iOff;
    HB_BOOL bDepressed = hb_parl( 7 );
 
-   Point = ( POINT * ) hb_xgrab( 3 * sizeof( POINT ) );
+   Point = static_cast< POINT * >( hb_xgrab( 3 * sizeof( POINT ) ) );
    iOff  = 6;
 
    iHeight = iBottom - iTop + 1;

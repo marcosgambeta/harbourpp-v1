@@ -1695,7 +1695,7 @@ HB_FUNC( SQLITE3_BLOB_READ )
       if( iLen == 0 )
          iLen = sqlite3_blob_bytes( pBlob );
 
-      buffer = ( char * ) hb_xgrab( iLen + 1 );
+      buffer = static_cast< char * >( hb_xgrab( iLen + 1 ) );
 
       if( SQLITE_OK == sqlite3_blob_read( pBlob, ( void * ) buffer, iLen, hb_parni( 3 ) ) )
          hb_retclen_buffer( buffer, iLen );
@@ -1827,7 +1827,7 @@ HB_FUNC( SQLITE3_FILE_TO_BUFF )
 
       nSize = hb_fsSeek( handle, 0, FS_END );
       hb_fsSeek( handle, 0, FS_SET );
-      buffer = ( char * ) hb_xgrab( nSize + 1 );
+      buffer = static_cast< char * >( hb_xgrab( nSize + 1 ) );
       nSize  = hb_fsReadLarge( handle, buffer, nSize );
       buffer[ nSize ] = '\0';
       hb_fsClose( handle );

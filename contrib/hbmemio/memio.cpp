@@ -157,9 +157,9 @@ static void memfsInit( void )
    s_error = 0;
    s_fs.ulInodeCount = 0;
    s_fs.ulInodeAlloc = HB_MEMFS_INITSIZE;
-   s_fs.pInodes = ( PHB_MEMFS_INODE * ) hb_xgrab( sizeof( PHB_MEMFS_INODE ) * s_fs.ulInodeAlloc );
+   s_fs.pInodes = static_cast< PHB_MEMFS_INODE * >( hb_xgrab( sizeof( PHB_MEMFS_INODE ) * s_fs.ulInodeAlloc ) );
    s_fs.ulFileAlloc = HB_MEMFS_INITSIZE;
-   s_fs.pFiles = ( PHB_MEMFS_FILE * ) hb_xgrab( sizeof( PHB_MEMFS_FILE ) * s_fs.ulFileAlloc );
+   s_fs.pFiles = static_cast< PHB_MEMFS_FILE * >( hb_xgrab( sizeof( PHB_MEMFS_FILE ) * s_fs.ulFileAlloc ) );
    memset( s_fs.pFiles, 0, sizeof( PHB_MEMFS_FILE ) * s_fs.ulFileAlloc );
    s_fs.ulFileLast = 0;
    hb_vmAtQuit( memfsExit, nullptr );
@@ -195,12 +195,12 @@ static HB_ULONG memfsInodeFind( const char * szName, HB_ULONG * pulPos )
 
 static PHB_MEMFS_INODE memfsInodeAlloc( const char * szName )
 {
-   PHB_MEMFS_INODE pInode = ( PHB_MEMFS_INODE ) hb_xgrab( sizeof( HB_MEMFS_INODE ) );
+   PHB_MEMFS_INODE pInode = static_cast< PHB_MEMFS_INODE >( hb_xgrab( sizeof( HB_MEMFS_INODE ) ) );
    HB_ULONG ulInode = 0;
 
    pInode->llSize = 0;
    pInode->llAlloc = HB_MEMFS_INITSIZE;
-   pInode->pData = ( char * ) hb_xgrab( ( HB_ULONG ) pInode->llAlloc );
+   pInode->pData = static_cast< char * >( hb_xgrab( ( HB_ULONG ) pInode->llAlloc ) );
    memset( pInode->pData, 0, ( HB_SIZE ) pInode->llAlloc );
    pInode->szName = hb_strdup( szName );
 
@@ -241,7 +241,7 @@ static void memfsInodeFree( PHB_MEMFS_INODE pInode )
 
 static PHB_MEMFS_FILE memfsFileAlloc( PHB_MEMFS_INODE pInode )
 {
-   PHB_MEMFS_FILE pFile = ( PHB_MEMFS_FILE ) hb_xgrab( sizeof( HB_MEMFS_FILE ) );
+   PHB_MEMFS_FILE pFile = static_cast< PHB_MEMFS_FILE >( hb_xgrab( sizeof( HB_MEMFS_FILE ) ) );
 
    pFile->pInode = pInode;
    pFile->llPos = 0;
@@ -397,7 +397,7 @@ HB_MEMFS_EXPORT PHB_ITEM hb_memfsDirectory( const char * pszDirSpec, const char 
    nLen = 0;
    if( ulCount )
    {
-      pDirEn = ( PHB_MEMFS_DIRENTRY ) hb_xgrab( ulCount * sizeof( HB_MEMFS_DIRENTRY ) );
+      pDirEn = static_cast< PHB_MEMFS_DIRENTRY >( hb_xgrab( ulCount * sizeof( HB_MEMFS_DIRENTRY ) ) );
       for( ul = 0; ul < ulCount; ul++ )
       {
          if( hb_strMatchFile( s_fs.pInodes[ ul ]->szName, pszDirSpec ) )
@@ -518,7 +518,7 @@ HB_MEMFS_EXPORT HB_FHANDLE hb_memfsOpen( const char * szName, HB_USHORT uiFlags 
          {
             pFile->pInode->llAlloc = HB_MEMFS_INITSIZE;
             hb_xfree( pFile->pInode->pData );
-            pFile->pInode->pData = ( char * ) hb_xgrab( ( HB_ULONG ) pFile->pInode->llAlloc );
+            pFile->pInode->pData = static_cast< char * >( hb_xgrab( ( HB_ULONG ) pFile->pInode->llAlloc ) );
          }
          memset( pFile->pInode->pData, 0, ( HB_SIZE ) pFile->pInode->llAlloc );
       }
@@ -1163,7 +1163,7 @@ static const HB_FILE_FUNCS s_fileFuncs =
 
 static PHB_FILE s_fileNew( HB_FHANDLE hFile )
 {
-   PHB_FILE pFile = ( PHB_FILE ) hb_xgrab( sizeof( HB_FILE ) );
+   PHB_FILE pFile = static_cast< PHB_FILE >( hb_xgrab( sizeof( HB_FILE ) ) );
 
    pFile->pFuncs = &s_fileFuncs;
    pFile->hFile = hFile;

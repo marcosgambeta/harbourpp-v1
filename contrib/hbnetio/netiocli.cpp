@@ -302,7 +302,7 @@ static HB_BOOL s_fileCloseSrvData( PHB_CONCLI conn, int iStreamID )
 
 static HB_BOOL s_fileRecvSrvData( PHB_CONCLI conn, long len, int iStreamID, int iType )
 {
-   char * buffer = ( char * ) hb_xgrab( len );
+   char * buffer = static_cast< char * >( hb_xgrab( len ) );
    HB_BOOL fResult = HB_FALSE;
 
    if( s_fileRecvAll( conn, buffer, len ) == len )
@@ -380,7 +380,7 @@ static HB_BOOL s_fileSendMsg( PHB_CONCLI conn, HB_BYTE * msgbuf,
    {
       len += NETIO_MSGLEN;
       if( len > static_cast< long >( sizeof( buffer ) ) )
-         msg = ptr = ( HB_BYTE * ) hb_xgrab( len );
+         msg = ptr = static_cast< HB_BYTE * >( hb_xgrab( len ) );
       else
          msg = buffer;
       memcpy( msg, msgbuf, NETIO_MSGLEN );
@@ -554,7 +554,7 @@ static PHB_CONCLI s_fileConNew( HB_SOCKET sd, const char * pszServer,
    int iLen;
 
    iLen = static_cast< int >( strlen( pszServer ) );
-   conn = ( PHB_CONCLI ) hb_xgrab( sizeof( HB_CONCLI ) + iLen );
+   conn = static_cast< PHB_CONCLI >( hb_xgrab( sizeof( HB_CONCLI ) + iLen ) );
    hb_atomic_set( &conn->used, 1 );
    hb_atomic_set( &conn->usrcount, 0 );
    conn->mutex = hb_threadMutexCreate();
@@ -1371,7 +1371,7 @@ static HB_BOOL s_netio_procexec( int iMsg, int iType )
                      buffer = nullptr;
                   }
                   if( buffer == nullptr )
-                     buffer = ( char * ) hb_xgrab( nResult );
+                     buffer = static_cast< char * >( hb_xgrab( nResult ) );
                   nRecv = s_fileRecvAll( conn, buffer, static_cast< long >( nResult ) );
                   if( nResult == nRecv )
                   {
@@ -1742,7 +1742,7 @@ static PHB_ITEM s_fileDirectory( PHB_FILE_FUNCS pFuncs, const char * pszDirSpec,
 
          if( len1 + len2 > 0 )
          {
-            pBuffer = ( HB_BYTE * ) hb_xgrab( len1 + len2 );
+            pBuffer = static_cast< HB_BYTE * >( hb_xgrab( len1 + len2 ) );
             if( len1 )
                memcpy( pBuffer, pszDirSpec, len1 );
             if( len2 )
@@ -1759,7 +1759,7 @@ static PHB_ITEM s_fileDirectory( PHB_FILE_FUNCS pFuncs, const char * pszDirSpec,
 
             if( nResult > 0 )
             {
-               char * buffer = ( char * ) hb_xgrab( nResult );
+               char * buffer = static_cast< char * >( hb_xgrab( nResult ) );
                const char * data = buffer;
 
                nRecv = s_fileRecvAll( conn, buffer, static_cast< long >( nResult ) );
@@ -1874,7 +1874,7 @@ static HB_BOOL s_fileRename( PHB_FILE_FUNCS pFuncs, const char * pszFileName, co
          HB_BYTE msgbuf[ NETIO_MSGLEN ];
          HB_U16 len1 = ( HB_U16 ) strlen( pszFileName );
          HB_U16 len2 = ( HB_U16 ) strlen( pszNewName );
-         HB_BYTE * pBuffer = ( HB_BYTE * ) hb_xgrab( len1 + len2 );
+         HB_BYTE * pBuffer = static_cast< HB_BYTE * >( hb_xgrab( len1 + len2 ) );
 
          memcpy( pBuffer, pszFileName, len1 );
          memcpy( pBuffer + len1, pszNewName, len2 );
@@ -1913,7 +1913,7 @@ static HB_BOOL s_fileCopy( PHB_FILE_FUNCS pFuncs, const char * pszSrcFile, const
          HB_BYTE msgbuf[ NETIO_MSGLEN ];
          HB_U16 len1 = ( HB_U16 ) strlen( pszSource );
          HB_U16 len2 = ( HB_U16 ) strlen( pszDstFile );
-         HB_BYTE * pBuffer = ( HB_BYTE * ) hb_xgrab( len1 + len2 );
+         HB_BYTE * pBuffer = static_cast< HB_BYTE * >( hb_xgrab( len1 + len2 ) );
 
          memcpy( pBuffer, pszSource, len1 );
          memcpy( pBuffer + len1, pszDstFile, len2 );
@@ -2078,7 +2078,7 @@ static HB_BOOL s_fileLink( PHB_FILE_FUNCS pFuncs, const char * pszExisting, cons
          HB_BYTE msgbuf[ NETIO_MSGLEN ];
          HB_U16 len1 = ( HB_U16 ) strlen( pszExisting );
          HB_U16 len2 = ( HB_U16 ) strlen( pszNewName );
-         HB_BYTE * pBuffer = ( HB_BYTE * ) hb_xgrab( len1 + len2 );
+         HB_BYTE * pBuffer = static_cast< HB_BYTE * >( hb_xgrab( len1 + len2 ) );
 
          memcpy( pBuffer, pszExisting, len1 );
          memcpy( pBuffer + len1, pszNewName, len2 );
@@ -2119,7 +2119,7 @@ static HB_BOOL s_fileLinkSym( PHB_FILE_FUNCS pFuncs, const char * pszTarget, con
          HB_BYTE msgbuf[ NETIO_MSGLEN ];
          HB_U16 len1 = ( HB_U16 ) strlen( pszTarget );
          HB_U16 len2 = ( HB_U16 ) strlen( pszNewName );
-         HB_BYTE * pBuffer = ( HB_BYTE * ) hb_xgrab( len1 + len2 );
+         HB_BYTE * pBuffer = static_cast< HB_BYTE * >( hb_xgrab( len1 + len2 ) );
 
          memcpy( pBuffer, pszTarget, len1 );
          memcpy( pBuffer + len1, pszNewName, len2 );
@@ -2164,7 +2164,7 @@ static char * s_fileLinkRead( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
 
             if( nResult > 0 )
             {
-               pszResult = ( char * ) hb_xgrab( nResult + 1 );
+               pszResult = static_cast< char * >( hb_xgrab( nResult + 1 ) );
                nRecv = s_fileRecvAll( conn, pszResult, static_cast< long >( nResult ) );
                if( nRecv != nResult )
                {
@@ -2232,7 +2232,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName,
 
          if( s_fileSendMsg( conn, msgbuf, pszFile, len, HB_TRUE, HB_FALSE ) )
          {
-            pFile = ( PHB_FILE ) hb_xgrab( sizeof( HB_FILE ) );
+            pFile = static_cast< PHB_FILE >( hb_xgrab( sizeof( HB_FILE ) ) );
             pFile->pFuncs = s_fileMethods();
             pFile->conn = conn;
             pFile->fd = HB_GET_LE_UINT16( &msgbuf[ 4 ] );
@@ -2603,7 +2603,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
          fResult = HB_GET_LE_UINT32( &msgbuf[ 8 ] ) != 0;
          if( nResult > 0 )
          {
-            char * buffer = ( char * ) hb_xgrab( nResult );
+            char * buffer = static_cast< char * >( hb_xgrab( nResult ) );
             const char * data = buffer;
 
             nRecv = s_fileRecvAll( pFile->conn, buffer, static_cast< long >( nResult ) );

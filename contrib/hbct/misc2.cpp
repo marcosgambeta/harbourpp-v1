@@ -60,7 +60,7 @@ HB_FUNC( COMPLEMENT )
          if( nLen > 0 )
          {
             const char * szSrc = hb_itemGetCPtr( pItem );
-            char * szBuffer = ( char * ) hb_xgrab( nLen + 1 );
+            char * szBuffer = static_cast< char * >( hb_xgrab( nLen + 1 ) );
             HB_SIZE nPos;
 
             for( nPos = 0; nPos < nLen; nPos++ )

@@ -180,7 +180,7 @@ static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
 
          /* Allocate buffer big enough for concatenated string.
             String will be in form "printername,drivername,portname". */
-         pBuffer = ( LPTSTR ) hb_xgrab( ( nStrLen + 1 ) * sizeof( TCHAR ) );
+         pBuffer = static_cast< LPTSTR >( hb_xgrab( ( nStrLen + 1 ) * sizeof( TCHAR ) ) );
 
          pBuffer[ 0 ] = TEXT( '\0' );
 

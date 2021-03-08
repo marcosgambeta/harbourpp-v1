@@ -205,7 +205,7 @@ static PHB_GTWVT hb_gt_wvt_New( PHB_GT pGT, HINSTANCE hInstance, int iCmdShow )
 {
    PHB_GTWVT pWVT;
 
-   pWVT = ( PHB_GTWVT ) hb_xgrab( sizeof( HB_GTWVT ) );
+   pWVT = static_cast< PHB_GTWVT >( hb_xgrab( sizeof( HB_GTWVT ) ) );
    memset( pWVT, 0, sizeof( HB_GTWVT ) );
    pWVT->pGT               = pGT;
 
@@ -254,7 +254,7 @@ static PHB_GTWVT hb_gt_wvt_New( PHB_GT pGT, HINSTANCE hInstance, int iCmdShow )
       hb_itemRelease( pItem );
    }
 
-   pWVT->pPP               = ( HB_GT_PARAMS * ) hb_xgrab( sizeof( HB_GT_PARAMS ) );
+   pWVT->pPP               = static_cast< HB_GT_PARAMS * >( hb_xgrab( sizeof( HB_GT_PARAMS ) ) );
    pWVT->pPP->style        = WS_THICKFRAME | WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
    pWVT->pPP->exStyle      = 0;
    pWVT->pPP->x            = 0;

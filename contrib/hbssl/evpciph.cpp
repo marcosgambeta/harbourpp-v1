@@ -484,7 +484,7 @@ HB_FUNC( EVP_CIPHER_CTX_NEW )
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
    ctx = EVP_CIPHER_CTX_new();
 #else
-   ctx = ( EVP_CIPHER_CTX * ) hb_xgrab( sizeof( EVP_CIPHER_CTX ) );
+   ctx = static_cast< EVP_CIPHER_CTX * >( hb_xgrab( sizeof( EVP_CIPHER_CTX ) ) );
    EVP_CIPHER_CTX_init( ctx );
 #endif
 
@@ -642,7 +642,7 @@ HB_FUNC( EVP_ENCRYPTUPDATE )
       if( ctx )
       {
          int size = static_cast< int >( hb_parclen( 3 ) ) + EVP_CIPHER_CTX_block_size( ctx ) - 1;
-         unsigned char * buffer = ( unsigned char * ) hb_xgrab( size + 1 );
+         unsigned char * buffer = static_cast< unsigned char * >( hb_xgrab( size + 1 ) );
 
          hb_retni( EVP_EncryptUpdate( ctx,
                                       buffer,
@@ -675,7 +675,7 @@ HB_FUNC( EVP_ENCRYPTFINAL )
       if( ctx )
       {
          int size = EVP_CIPHER_CTX_block_size( ctx );
-         unsigned char * buffer = ( unsigned char * ) hb_xgrab( size + 1 );
+         unsigned char * buffer = static_cast< unsigned char * >( hb_xgrab( size + 1 ) );
 
          hb_retni( EVP_EncryptFinal( ctx, buffer, &size ) );
 
@@ -705,7 +705,7 @@ HB_FUNC( EVP_ENCRYPTFINAL_EX )
       {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
          int size = EVP_CIPHER_CTX_block_size( ctx );
-         unsigned char * buffer = ( unsigned char * ) hb_xgrab( size + 1 );
+         unsigned char * buffer = static_cast< unsigned char * >( hb_xgrab( size + 1 ) );
 
          hb_retni( EVP_EncryptFinal_ex( ctx, buffer, &size ) );
 
@@ -781,7 +781,7 @@ HB_FUNC( EVP_DECRYPTUPDATE )
       if( ctx )
       {
          int size = static_cast< int >( hb_parclen( 3 ) ) + EVP_CIPHER_CTX_block_size( ctx );
-         unsigned char * buffer = ( unsigned char * ) hb_xgrab( size + 1 );
+         unsigned char * buffer = static_cast< unsigned char * >( hb_xgrab( size + 1 ) );
 
          hb_retni( EVP_DecryptUpdate( ctx,
                                       buffer,
@@ -814,7 +814,7 @@ HB_FUNC( EVP_DECRYPTFINAL )
       if( ctx )
       {
          int size = EVP_CIPHER_CTX_block_size( ctx );
-         unsigned char * buffer = ( unsigned char * ) hb_xgrab( size + 1 );
+         unsigned char * buffer = static_cast< unsigned char * >( hb_xgrab( size + 1 ) );
 
          hb_retni( EVP_DecryptFinal( ctx, buffer, &size ) );
 
@@ -844,7 +844,7 @@ HB_FUNC( EVP_DECRYPTFINAL_EX )
       {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
          int size = EVP_CIPHER_CTX_block_size( ctx );
-         unsigned char * buffer = ( unsigned char * ) hb_xgrab( size + 1 );
+         unsigned char * buffer = static_cast< unsigned char * >( hb_xgrab( size + 1 ) );
 
          hb_retni( EVP_DecryptFinal_ex( ctx, buffer, &size ) );
 
@@ -922,7 +922,7 @@ HB_FUNC( EVP_CIPHERUPDATE )
       if( ctx )
       {
          int size = static_cast< int >( hb_parclen( 3 ) ) + EVP_CIPHER_CTX_block_size( ctx ) - 1;
-         unsigned char * buffer = ( unsigned char * ) hb_xgrab( size + 1 );
+         unsigned char * buffer = static_cast< unsigned char * >( hb_xgrab( size + 1 ) );
 
          hb_retni( EVP_CipherUpdate( ctx,
                                      buffer,
@@ -955,7 +955,7 @@ HB_FUNC( EVP_CIPHERFINAL )
       if( ctx )
       {
          int size = EVP_CIPHER_CTX_block_size( ctx );
-         unsigned char * buffer = ( unsigned char * ) hb_xgrab( size + 1 );
+         unsigned char * buffer = static_cast< unsigned char * >( hb_xgrab( size + 1 ) );
 
          hb_retni( EVP_CipherFinal( ctx, buffer, &size ) );
 
@@ -985,7 +985,7 @@ HB_FUNC( EVP_CIPHERFINAL_EX )
       {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
          int size = EVP_CIPHER_CTX_block_size( ctx );
-         unsigned char * buffer = ( unsigned char * ) hb_xgrab( size + 1 );
+         unsigned char * buffer = static_cast< unsigned char * >( hb_xgrab( size + 1 ) );
 
          hb_retni( EVP_CipherFinal_ex( ctx, buffer, &size ) );
 
@@ -1033,19 +1033,19 @@ HB_FUNC( EVP_SEALINIT )
 
          if( npubk > 0 )
          {
-            unsigned char ** ek = ( unsigned char ** ) hb_xgrab( sizeof( unsigned char * ) * npubk );
-            int * ekl = ( int * ) hb_xgrab( sizeof( int ) * npubk );
+            unsigned char ** ek = static_cast< unsigned char ** >( hb_xgrab( sizeof( unsigned char * ) * npubk ) );
+            int * ekl = static_cast< int * >( hb_xgrab( sizeof( int ) * npubk ) );
             int   ivl = EVP_CIPHER_iv_length( cipher );
-            unsigned char * iv = ivl > 0 ? ( unsigned char * ) hb_xgrab( ivl + 1 ) : nullptr;
+            unsigned char * iv = ivl > 0 ? static_cast< unsigned char * >( hb_xgrab( ivl + 1 ) ) : nullptr;
 
-            EVP_PKEY ** pubk = ( EVP_PKEY ** ) hb_xgrab( sizeof( EVP_PKEY * ) * npubk + 1 );
+            EVP_PKEY ** pubk = static_cast< EVP_PKEY ** >( hb_xgrab( sizeof( EVP_PKEY * ) * npubk + 1 ) );
             PHB_ITEM    pPKEY;
             int         tmp;
 
             for( tmp = 0; tmp < npubk; tmp++ )
             {
                pubk[ tmp ] = pkey1 ? pkey1 : ( EVP_PKEY * ) hb_arrayGetPtr( pArray, tmp + 1 );
-               ek[ tmp ]   = ( unsigned char * ) hb_xgrab( EVP_PKEY_size( pubk[ tmp ] ) + 1 );
+               ek[ tmp ]   = static_cast< unsigned char * >( hb_xgrab( EVP_PKEY_size( pubk[ tmp ] ) + 1 ) );
                ekl[ tmp ]  = 0;
             }
 
@@ -1092,7 +1092,7 @@ HB_FUNC( EVP_SEALUPDATE )
       if( ctx )
       {
          int size = static_cast< int >( hb_parclen( 3 ) ) + EVP_CIPHER_CTX_block_size( ctx ) - 1;
-         unsigned char * buffer = ( unsigned char * ) hb_xgrab( size + 1 );
+         unsigned char * buffer = static_cast< unsigned char * >( hb_xgrab( size + 1 ) );
 
          hb_retni( EVP_SealUpdate( ctx,
                                    buffer,
@@ -1125,7 +1125,7 @@ HB_FUNC( EVP_SEALFINAL )
       if( ctx )
       {
          int size = EVP_CIPHER_CTX_block_size( ctx );
-         unsigned char * buffer = ( unsigned char * ) hb_xgrab( size + 1 );
+         unsigned char * buffer = static_cast< unsigned char * >( hb_xgrab( size + 1 ) );
 
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
          hb_retni( EVP_SealFinal( ctx, buffer, &size ) );
@@ -1180,7 +1180,7 @@ HB_FUNC( EVP_OPENUPDATE )
       if( ctx )
       {
          int size = static_cast< int >( hb_parclen( 3 ) ) + EVP_CIPHER_CTX_block_size( ctx ) - 1;
-         unsigned char * buffer = ( unsigned char * ) hb_xgrab( size + 1 );
+         unsigned char * buffer = static_cast< unsigned char * >( hb_xgrab( size + 1 ) );
 
          hb_retni( EVP_OpenUpdate( ctx,
                                    buffer,
@@ -1213,7 +1213,7 @@ HB_FUNC( EVP_OPENFINAL )
       if( ctx )
       {
          int size = EVP_CIPHER_CTX_block_size( ctx );
-         unsigned char * buffer = ( unsigned char * ) hb_xgrab( size + 1 );
+         unsigned char * buffer = static_cast< unsigned char * >( hb_xgrab( size + 1 ) );
 
          hb_retni( EVP_OpenFinal( ctx, buffer, &size ) );
 

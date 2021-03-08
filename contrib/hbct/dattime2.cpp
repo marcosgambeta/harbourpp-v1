@@ -154,7 +154,7 @@ HB_FUNC( DMY )
       const char * szMonth = hb_langDGetItem( HB_LANG_ITEM_BASE_MONTH + iMonth - 1 );
       int iMonLen = static_cast< int >( strlen( szMonth ) );
       int iLen = 0, iBufLen = iMonLen + 10;
-      char * szMDY = ( char * ) hb_xgrab( iBufLen );
+      char * szMDY = static_cast< char * >( hb_xgrab( iBufLen ) );
 
       if( iDay < 10 )
       {
@@ -212,7 +212,7 @@ HB_FUNC( MDY )
       const char * szMonth = hb_langDGetItem( HB_LANG_ITEM_BASE_MONTH + iMonth - 1 );
       int iLen = static_cast< int >( strlen( szMonth ) );
       int iBufLen = iLen + 9;
-      char * szMDY = ( char * ) hb_xgrab( iBufLen );
+      char * szMDY = static_cast< char * >( hb_xgrab( iBufLen ) );
 
       hb_strncpy( szMDY, szMonth, iBufLen - 1 );
       szMDY[ iLen++ ] = ' ';

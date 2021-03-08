@@ -462,7 +462,7 @@ HB_FUNC( HB_UNZIPGLOBALINFO )
          {
             if( ugi.size_comment > 0 )
             {
-               char * pszComment = ( char * ) hb_xgrab( ugi.size_comment + 1 );
+               char * pszComment = static_cast< char * >( hb_xgrab( ugi.size_comment + 1 ) );
 
                iResult = unzGetGlobalComment( hUnzip, pszComment, ugi.size_comment );
                if( iResult < 0 )
@@ -584,7 +584,7 @@ HB_FUNC( HB_UNZIPFILEINFO )
 
          if( ufi.size_file_comment > 0 && HB_ISBYREF( 11 ) )
          {
-            char * pszComment = ( char * ) hb_xgrab( ufi.size_file_comment + 1 );
+            char * pszComment = static_cast< char * >( hb_xgrab( ufi.size_file_comment + 1 ) );
 
             iResult = unzGetCurrentFileInfo( hUnzip, &ufi, nullptr, 0, nullptr, 0,
                                              pszComment, ufi.size_file_comment );
@@ -682,7 +682,7 @@ static HB_BOOL hb_zipGetFileInfoFromHandle( PHB_FILE pFile, HB_U32 * pulCRC, HB_
 
    if( pFile != nullptr )
    {
-      unsigned char * pString = ( unsigned char * ) hb_xgrab( HB_Z_IOBUF_SIZE );
+      unsigned char * pString = static_cast< unsigned char * >( hb_xgrab( HB_Z_IOBUF_SIZE ) );
       HB_SIZE         nRead;
 
       do
@@ -1033,7 +1033,7 @@ static int hb_zipStoreFile( zipFile hZip, int iParamFileName, int iParamZipName,
                                          szPassword, ulCRC, _version_made_by( fUnicode ), flags );
          if( iResult == 0 )
          {
-            char * pString = ( char * ) hb_xgrab( HB_Z_IOBUF_SIZE );
+            char * pString = static_cast< char * >( hb_xgrab( HB_Z_IOBUF_SIZE ) );
 
             while( ( nLen = hb_fileRead( pFile, pString, HB_Z_IOBUF_SIZE, -1 ) ) > 0 &&
                    nLen != ( HB_SIZE ) FS_ERROR )
@@ -1140,7 +1140,7 @@ static int hb_zipStoreFileHandle( zipFile hZip, PHB_FILE pFile, int iParamZipNam
                                    szPassword, ulCRC, _version_made_by( fUnicode ), flags );
    if( iResult == 0 )
    {
-      char * pString = ( char * ) hb_xgrab( HB_Z_IOBUF_SIZE );
+      char * pString = static_cast< char * >( hb_xgrab( HB_Z_IOBUF_SIZE ) );
       hb_fileSeek( pFile, 0, FS_SET );
       while( ( nLen = hb_fileRead( pFile, pString, HB_Z_IOBUF_SIZE, -1 ) ) > 0 &&
              nLen != ( HB_SIZE ) FS_ERROR )
@@ -1256,7 +1256,7 @@ static int hb_unzipExtractCurrentFile( unzFile hUnzip, const char * szFileName, 
                               FXO_TRUNCATE | FXO_SHARELOCK, nullptr, nullptr );
       if( pFile != nullptr )
       {
-         char * pString = ( char * ) hb_xgrab( HB_Z_IOBUF_SIZE );
+         char * pString = static_cast< char * >( hb_xgrab( HB_Z_IOBUF_SIZE ) );
 
          while( ( iResult = unzReadCurrentFile( hUnzip, pString, HB_Z_IOBUF_SIZE ) ) > 0 )
             if( hb_fileWrite( pFile, pString, ( HB_SIZE ) iResult, -1 ) != ( HB_SIZE ) iResult )
@@ -1449,7 +1449,7 @@ static int hb_unzipExtractCurrentFileToHandle( unzFile hUnzip, PHB_FILE pFile, c
 
    if( ! ( ufi.external_fa & 0x40000000 ) ) /* DIRECTORY */
    {
-      char * pString = ( char * ) hb_xgrab( HB_Z_IOBUF_SIZE );
+      char * pString = static_cast< char * >( hb_xgrab( HB_Z_IOBUF_SIZE ) );
 
       while( ( iResult = unzReadCurrentFile( hUnzip, pString, HB_Z_IOBUF_SIZE ) ) > 0 )
          if( hb_fileWrite( pFile, pString, ( HB_SIZE ) iResult, -1 ) != ( HB_SIZE ) iResult )
@@ -1558,7 +1558,7 @@ static int hb_zipDeleteFile( const char * szZipFile, const char * szFileMask )
    {
       if( ugi.size_comment > 0 )
       {
-         pszGlobalComment = ( char * ) hb_xgrab( ugi.size_comment + 1 );
+         pszGlobalComment = static_cast< char * >( hb_xgrab( ugi.size_comment + 1 ) );
          if( ( uLong ) unzGetGlobalComment( hUnzip, pszGlobalComment,
                                             ugi.size_comment ) != ugi.size_comment )
             iResult = UNZ_ERRNO;
@@ -1581,9 +1581,9 @@ static int hb_zipDeleteFile( const char * szZipFile, const char * szFileMask )
          HB_BOOL fUnicode;
 
          if( ufi.size_file_extra )
-            pExtraField = ( char * ) hb_xgrab( ufi.size_file_extra );
+            pExtraField = static_cast< char * >( hb_xgrab( ufi.size_file_extra ) );
          if( ufi.size_file_comment )
-            pszFileComment = ( char * ) hb_xgrab( ufi.size_file_comment + 1 );
+            pszFileComment = static_cast< char * >( hb_xgrab( ufi.size_file_comment + 1 ) );
 
          iResult = unzGetCurrentFileInfo( hUnzip, &ufi, nullptr, 0,
                                           pExtraField, ufi.size_file_extra,

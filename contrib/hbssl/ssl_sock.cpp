@@ -513,7 +513,7 @@ static int s_sockexCanRead( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout
       {
          if( pSock->readahead <= 0 )
             pSock->readahead = HB_SSLSOCK_READAHEAD;
-         pSock->buffer = ( HB_BYTE * ) hb_xgrab( pSock->readahead );
+         pSock->buffer = static_cast< HB_BYTE * >( hb_xgrab( pSock->readahead ) );
       }
       len = hb_ssl_socketRead( HB_SSLSOCK_GET( pSock ), pSock->sd,
                                pSock->buffer, pSock->readahead, 0 );

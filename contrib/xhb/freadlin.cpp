@@ -70,7 +70,7 @@ static char * hb_fsReadLine( HB_FHANDLE hFileHandle, HB_ISIZ * plBuffLen, const 
    if( *plBuffLen < 10 )
       *plBuffLen = READING_BLOCK;
 
-   pBuff = ( char * ) hb_xgrab( *plBuffLen + 1 );
+   pBuff = static_cast< char * >( hb_xgrab( *plBuffLen + 1 ) );
 
    do
    {
@@ -192,8 +192,8 @@ HB_FUNC( HB_FREADLINE )
             return;
          }
 
-         Term        = ( const char ** ) hb_xgrab( sizeof( char * ) * nTerms );
-         pnTermSizes = ( HB_ISIZ * ) hb_xgrab( sizeof( HB_ISIZ ) * nTerms );
+         Term        = static_cast< const char ** >( hb_xgrab( sizeof( char * ) * nTerms ) );
+         pnTermSizes = static_cast< HB_ISIZ * >( hb_xgrab( sizeof( HB_ISIZ ) * nTerms ) );
 
          for( i = 0; i < nTerms; i++ )
          {
@@ -204,8 +204,8 @@ HB_FUNC( HB_FREADLINE )
       else
       {
          pTerm1           = hb_param( 3, HB_IT_STRING );
-         Term             = ( const char ** ) hb_xgrab( sizeof( char * ) );
-         pnTermSizes      = ( HB_ISIZ * ) hb_xgrab( sizeof( HB_ISIZ ) );
+         Term             = static_cast< const char ** >( hb_xgrab( sizeof( char * ) ) );
+         pnTermSizes      = static_cast< HB_ISIZ * >( hb_xgrab( sizeof( HB_ISIZ ) ) );
          Term[ 0 ]        = hb_itemGetCPtr( pTerm1 );
          pnTermSizes[ 0 ] = hb_itemGetCLen( pTerm1 );
          nTerms           = 1;
@@ -213,8 +213,8 @@ HB_FUNC( HB_FREADLINE )
    }
    else
    {
-      Term             = ( const char ** ) hb_xgrab( sizeof( char * ) );
-      pnTermSizes      = ( HB_ISIZ * ) hb_xgrab( sizeof( HB_ISIZ ) );
+      Term             = static_cast< const char ** >( hb_xgrab( sizeof( char * ) ) );
+      pnTermSizes      = static_cast< HB_ISIZ * >( hb_xgrab( sizeof( HB_ISIZ ) ) );
       Term[ 0 ]        = "\r\n";    /* Should be preplaced with the default EOL sequence */
       nTerms           = 1;
       pnTermSizes[ 0 ] = 2;

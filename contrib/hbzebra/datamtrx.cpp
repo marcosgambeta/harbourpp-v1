@@ -186,8 +186,8 @@ static void _datamatrix_reed_solomon( unsigned char * pData, const DATAMATRIX_SI
       j >>= 1;
 
    iMod = ( 1 << iBits ) - 1;
-   pExp = ( int * ) hb_xgrab( sizeof( int ) * iMod );          /* exponent function */
-   pLog = ( int * ) hb_xgrab( sizeof( int ) * ( iMod + 1 ) );  /* logarithm function */
+   pExp = static_cast< int * >( hb_xgrab( sizeof( int ) * iMod ) );          /* exponent function */
+   pLog = static_cast< int * >( hb_xgrab( sizeof( int ) * ( iMod + 1 ) ) );  /* logarithm function */
    j = 1;
    for( i = 0; i < iMod; i++ )
    {
@@ -202,7 +202,7 @@ static void _datamatrix_reed_solomon( unsigned char * pData, const DATAMATRIX_SI
    iECLen = pSize->iBlockErrorSize;
    iIndex = 1;
 
-   pPoly = ( int * ) hb_xgrab( sizeof( int ) * ( iECLen + 1 ) );
+   pPoly = static_cast< int * >( hb_xgrab( sizeof( int ) * ( iECLen + 1 ) ) );
    pPoly[ 0 ] = 1;
    for( i = 1; i <= iECLen; i++ )
    {
@@ -330,7 +330,7 @@ static void _datamatrix_do_placement( PHB_BITBUFFER pBits, unsigned char * pCW, 
    iPRow = pSize->iRow - 2 * ( pSize->iRow / pSize->iRegionRow );
    iPCol = pSize->iCol - 2 * ( pSize->iCol / pSize->iRegionCol );
 
-   pArr = ( int * ) hb_xgrab( sizeof( int ) * iPCol * iPRow );
+   pArr = static_cast< int * >( hb_xgrab( sizeof( int ) * iPCol * iPRow ) );
    hb_xmemset( pArr, 0, sizeof( int ) * iPCol * iPRow );
 
    /* Generate placement index array */
@@ -414,7 +414,7 @@ PHB_ZEBRA hb_zebra_create_datamatrix( const char * szCode, HB_SIZE nLen, int iFl
       return pZebra;
    }
 
-   pCW = ( unsigned char * ) hb_xgrab( sizeof( char ) * iLen * 2 );
+   pCW = static_cast< unsigned char * >( hb_xgrab( sizeof( char ) * iLen * 2 ) );
    iDataCount = _datamatrix_encode( szCode, iLen, pCW );
 
    if( iDataCount > 3116 )

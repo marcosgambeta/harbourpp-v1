@@ -109,7 +109,7 @@ HB_FUNC( TIP_HTMLSPECIALCHARS )
             nLen--;
 
          /* Giving maximum final length possible */
-         pszRet = ( char * ) hb_xgrab( nLen * 6 + 1 );
+         pszRet = static_cast< char * >( hb_xgrab( nLen * 6 + 1 ) );
 
          while( nPos < nLen )
          {
@@ -212,7 +212,7 @@ HB_FUNC( TIP_JSONSPECIALCHARS )
             nLen--;
 
          /* Giving maximum final length possible */
-         pszRet = ( char * ) hb_xgrab( nLen * 2 + 1 );
+         pszRet = static_cast< char * >( hb_xgrab( nLen * 2 + 1 ) );
 
          while( nPos < nLen )
          {

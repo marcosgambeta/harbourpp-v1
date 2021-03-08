@@ -94,7 +94,7 @@ static void do_replace( int iSwitch )
       else
          cSearch = 0x20;
 
-      pcRet = ( char * ) hb_xgrab( sStrLen + 1 );
+      pcRet = static_cast< char * >( hb_xgrab( sStrLen + 1 ) );
       hb_xmemcpy( pcRet, pcString, sStrLen );
 
       if( iSwitch != DO_REPLACE_REPLRIGHT )

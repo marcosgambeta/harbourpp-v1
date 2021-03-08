@@ -94,7 +94,7 @@ HB_FUNC( CHARSPREAD )
             iRest = nRest % nTokens;
             iFirst = ( iRest + 1 ) >> 1;
             iRest >>= 1;
-            szDest = ( char * ) hb_xgrab( nSize + 1 );
+            szDest = static_cast< char * >( hb_xgrab( nSize + 1 ) );
             for( nDst = nPos = 0; nPos < nLen; ++nPos )
             {
                szDest[ nDst++ ] = szText[ nPos ];

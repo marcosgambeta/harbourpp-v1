@@ -363,7 +363,7 @@ HB_FUNC( ADSMGGETUSERNAMES )
 {
    UNSIGNED16 usArrayLen = ( UNSIGNED16 ) hb_parnidef( 2, 2000 ); /* needed for array memory allocation; caller can set with 2nd arg */
    UNSIGNED16 usStructSize = sizeof( ADS_MGMT_USER_INFO );
-   ADS_MGMT_USER_INFO * pastUserInfo = ( ADS_MGMT_USER_INFO * ) hb_xgrab( sizeof( ADS_MGMT_USER_INFO ) * usArrayLen );
+   ADS_MGMT_USER_INFO * pastUserInfo = static_cast< ADS_MGMT_USER_INFO * >( hb_xgrab( sizeof( ADS_MGMT_USER_INFO ) * usArrayLen ) );
 
    if( AdsMgGetUserNames( s_hMgmtHandle,
                           ( UNSIGNED8 * ) HB_UNCONST( hb_parc( 1 ) ) /* pucFileName */,
@@ -427,7 +427,7 @@ HB_FUNC( ADSMGGETLOCKOWNER )
 {
    UNSIGNED16 pusLockType = 0;
    UNSIGNED16 usStructSize = sizeof( ADS_MGMT_USER_INFO );
-   ADS_MGMT_USER_INFO * pstUserInfo = ( ADS_MGMT_USER_INFO * ) hb_xgrab( sizeof( ADS_MGMT_USER_INFO ) );
+   ADS_MGMT_USER_INFO * pstUserInfo = static_cast< ADS_MGMT_USER_INFO * >( hb_xgrab( sizeof( ADS_MGMT_USER_INFO ) ) );
 
    if( AdsMgGetLockOwner( s_hMgmtHandle,
                           ( UNSIGNED8 * ) HB_UNCONST( hb_parcx( 1 ) ) /* pucTableName */,
@@ -465,7 +465,7 @@ HB_FUNC( ADSMGGETOPENTABLES ) /* nMaxNumberOfFilesToReturn, cUserName, nConnecti
 {
    UNSIGNED16 usArrayLen = ( UNSIGNED16 ) hb_parnidef( 1, 300 );
    UNSIGNED16 usStructSize = sizeof( ADS_MGMT_TABLE_INFO );
-   ADS_MGMT_TABLE_INFO * astOpenTableInfo = ( ADS_MGMT_TABLE_INFO * ) hb_xgrab( sizeof( ADS_MGMT_TABLE_INFO ) * usArrayLen );
+   ADS_MGMT_TABLE_INFO * astOpenTableInfo = static_cast< ADS_MGMT_TABLE_INFO * >( hb_xgrab( sizeof( ADS_MGMT_TABLE_INFO ) * usArrayLen ) );
 
    if( AdsMgGetOpenTables( s_hMgmtHandle,
                            ( UNSIGNED8 * ) ( hb_parclen( 2 ) > 0 ? HB_UNCONST( hb_parc( 2 ) ) : nullptr ) /* pucUserName */,
@@ -497,7 +497,7 @@ HB_FUNC( ADSMGGETOPENTABLES2 ) /* nMaxNumberOfFilesToReturn, cUserName, nConnect
 {
    UNSIGNED16 usArrayLen = ( UNSIGNED16 ) hb_parnidef( 1, 300 );
    UNSIGNED16 usStructSize = sizeof( ADS_MGMT_TABLE_INFO );
-   ADS_MGMT_TABLE_INFO * astOpenTableInfo = ( ADS_MGMT_TABLE_INFO * ) hb_xgrab( sizeof( ADS_MGMT_TABLE_INFO ) * usArrayLen );
+   ADS_MGMT_TABLE_INFO * astOpenTableInfo = static_cast< ADS_MGMT_TABLE_INFO * >( hb_xgrab( sizeof( ADS_MGMT_TABLE_INFO ) * usArrayLen ) );
 
    if( AdsMgGetOpenTables( s_hMgmtHandle,
                            ( UNSIGNED8 * ) ( hb_parclen( 2 ) > 0 ? HB_UNCONST( hb_parc( 2 ) ) : nullptr ) /* pucUserName */,
@@ -535,7 +535,7 @@ HB_FUNC( ADSMGGETOPENINDEXES ) /* nMaxNumberOfFilesToReturn, cTableName, cUserNa
 {
    UNSIGNED16 usArrayLen = ( UNSIGNED16 ) hb_parnidef( 1, 300 );
    UNSIGNED16 usStructSize = sizeof( ADS_MGMT_INDEX_INFO );
-   ADS_MGMT_INDEX_INFO * astOpenIndexInfo = ( ADS_MGMT_INDEX_INFO * ) hb_xgrab( sizeof( ADS_MGMT_INDEX_INFO ) * usArrayLen );
+   ADS_MGMT_INDEX_INFO * astOpenIndexInfo = static_cast< ADS_MGMT_INDEX_INFO * >( hb_xgrab( sizeof( ADS_MGMT_INDEX_INFO ) * usArrayLen ) );
 
    if( AdsMgGetOpenIndexes( s_hMgmtHandle,
                             ( UNSIGNED8 * ) ( hb_parclen( 2 ) > 0 ? HB_UNCONST( hb_parc( 2 ) ) : nullptr ) /* pucTableName */, /* fully qualified path to that table */
@@ -568,7 +568,7 @@ HB_FUNC( ADSMGGETLOCKS )
 {
    UNSIGNED16 usArrayLen = ( UNSIGNED16 ) hb_parnidef( 1, 2000 );
    UNSIGNED16 usStructSize = sizeof( ADS_MGMT_RECORD_INFO );
-   ADS_MGMT_RECORD_INFO * astRecordInfo = ( ADS_MGMT_RECORD_INFO * ) hb_xgrab( sizeof( ADS_MGMT_RECORD_INFO ) * usArrayLen );
+   ADS_MGMT_RECORD_INFO * astRecordInfo = static_cast< ADS_MGMT_RECORD_INFO * >( hb_xgrab( sizeof( ADS_MGMT_RECORD_INFO ) * usArrayLen ) );
 
    if( AdsMgGetLocks( s_hMgmtHandle,
                       ( UNSIGNED8 * ) ( hb_parclen( 2 ) > 0 ? HB_UNCONST( hb_parc( 2 ) ) : nullptr ) /* pucTableName */, /* fully qualified path to that table */
@@ -601,7 +601,7 @@ HB_FUNC( ADSMGGETWORKERTHREADACTIVITY )
 {
    UNSIGNED16 usArrayLen = ( UNSIGNED16 ) hb_parnidef( 1, 2000 );
    UNSIGNED16 usStructSize = sizeof( ADS_MGMT_THREAD_ACTIVITY );
-   ADS_MGMT_THREAD_ACTIVITY * astWorkerThreadActivity = ( ADS_MGMT_THREAD_ACTIVITY * ) hb_xgrab( sizeof( ADS_MGMT_THREAD_ACTIVITY ) * usArrayLen );
+   ADS_MGMT_THREAD_ACTIVITY * astWorkerThreadActivity = static_cast< ADS_MGMT_THREAD_ACTIVITY * >( hb_xgrab( sizeof( ADS_MGMT_THREAD_ACTIVITY ) * usArrayLen ) );
 
    if( AdsMgGetWorkerThreadActivity( s_hMgmtHandle,
                                      astWorkerThreadActivity,

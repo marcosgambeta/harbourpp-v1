@@ -17,7 +17,7 @@ HB_FUNC( GT_CHARODD )
       HB_ISIZ      len = hb_parclen( 1 );
       HB_ISIZ      i;
 
-      s2 = ( char * ) hb_xgrab( len / 2 + 1 );  /* grab us some memory to work with */
+      s2 = static_cast< char * >( hb_xgrab( len / 2 + 1 ) );  /* grab us some memory to work with */
 
       for( i = 0; i <= len; i += 2 )
          s2[ i / 2 ] = s1[ i ] & 0x7f;

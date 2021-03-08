@@ -647,7 +647,7 @@ HB_FUNC( __AXREGISTERHANDLER )  /* ( pDisp, bHandler [, cIID] ) --> pSink */
                   DWORD dwCookie = 0;
                   ISink * pSink;
 
-                  pSink = ( ISink * ) hb_xgrab( sizeof( ISink ) );    /* TODO: GlobalAlloc/Free GMEM_FIXED ??? */
+                  pSink = static_cast< ISink * >( hb_xgrab( sizeof( ISink ) ) );    /* TODO: GlobalAlloc/Free GMEM_FIXED ??? */
 
                   pSink->lpVtbl = &ISink_Vtbl;
                   pSink->count = 0;

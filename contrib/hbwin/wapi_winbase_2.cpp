@@ -81,7 +81,7 @@ HB_FUNC( WAPI_FORMATMESSAGE )
          if( nSize == 0 && ! HB_ISNUM( 6 ) )
             nSize = hb_parclen( 5 );
          if( nSize > 0 )
-            lpBuffer = ( LPTSTR ) hb_xgrab( nSize * sizeof( TCHAR ) );
+            lpBuffer = static_cast< LPTSTR >( hb_xgrab( nSize * sizeof( TCHAR ) ) );
          else
             dwFlags |= FORMAT_MESSAGE_ALLOCATE_BUFFER;
       }
@@ -141,7 +141,7 @@ HB_FUNC( WAPI_QUERYDOSDEVICE )
 {
 #if ! defined( HB_OS_WIN_CE )
    void * hDeviceName;
-   LPTSTR lpTargetPath = ( LPTSTR ) hb_xgrab( TARGET_PATH_BUFFER_SIZE * sizeof( TCHAR ) );
+   LPTSTR lpTargetPath = static_cast< LPTSTR >( hb_xgrab( TARGET_PATH_BUFFER_SIZE * sizeof( TCHAR ) ) );
    DWORD dwResult;
 
    dwResult = QueryDosDevice( HB_PARSTR( 1, &hDeviceName, nullptr ), lpTargetPath, TARGET_PATH_BUFFER_SIZE );

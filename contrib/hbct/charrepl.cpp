@@ -77,7 +77,7 @@ HB_FUNC( CHARREPL )
          return;
       }
 
-      pcRet = ( char * ) hb_xgrab( sStrLen + 1 );
+      pcRet = static_cast< char * >( hb_xgrab( sStrLen + 1 ) );
       hb_xmemcpy( pcRet, pcString, sStrLen );
 
       for( sIndex = 0; sIndex < sSearchLen; sIndex++ )

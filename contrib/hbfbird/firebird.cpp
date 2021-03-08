@@ -339,7 +339,7 @@ HB_FUNC( FBQUERY )
       }
 
       /* Allocate an output SQLDA. Just to check number of columns */
-      sqlda          = ( XSQLDA * ) hb_xgrab( XSQLDA_LENGTH( 1 ) );
+      sqlda          = static_cast< XSQLDA * >( hb_xgrab( XSQLDA_LENGTH( 1 ) ) );
       sqlda->sqln    = 1;
       sqlda->version = 1;
 
@@ -387,22 +387,22 @@ HB_FUNC( FBQUERY )
          {
             case SQL_VARYING:
                var->sqltype = SQL_TEXT;
-               var->sqldata = ( char * ) hb_xgrab( sizeof( char ) * var->sqllen + 2 );
+               var->sqldata = static_cast< char * >( hb_xgrab( sizeof( char ) * var->sqllen + 2 ) );
                break;
             case SQL_TEXT:
-               var->sqldata = ( char * ) hb_xgrab( sizeof( char ) * var->sqllen + 2 );
+               var->sqldata = static_cast< char * >( hb_xgrab( sizeof( char ) * var->sqllen + 2 ) );
                break;
             case SQL_LONG:
                var->sqltype = SQL_LONG;
-               var->sqldata = ( char * ) hb_xgrab( sizeof( long ) );
+               var->sqldata = static_cast< char * >( hb_xgrab( sizeof( long ) ) );
                break;
             default:
-               var->sqldata = ( char * ) hb_xgrab( sizeof( char ) * var->sqllen );
+               var->sqldata = static_cast< char * >( hb_xgrab( sizeof( char ) * var->sqllen ) );
                break;
          }
 
          if( var->sqltype & 1 )
-            var->sqlind = ( short * ) hb_xgrab( sizeof( short ) );
+            var->sqlind = static_cast< short * >( hb_xgrab( sizeof( short ) ) );
 
          hb_arrayNew( aTemp, 7 );
 

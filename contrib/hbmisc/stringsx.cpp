@@ -89,7 +89,7 @@ HB_FUNC( ROT13 )
    {
       const char * szText = hb_parc( 1 );
       HB_SIZE      i, nLen = hb_parclen( 1 );
-      char *       szResult = ( char * ) hb_xgrab( nLen + 1 );
+      char *       szResult = static_cast< char * >( hb_xgrab( nLen + 1 ) );
 
       for( i = 0; i < nLen; i++ )
       {

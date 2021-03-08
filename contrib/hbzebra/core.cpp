@@ -52,7 +52,7 @@
 
 PHB_BITBUFFER hb_bitbuffer_create( void )
 {
-   PHB_BITBUFFER pBitBuffer = ( PHB_BITBUFFER ) hb_xgrab( sizeof( HB_BITBUFFER ) );
+   PHB_BITBUFFER pBitBuffer = static_cast< PHB_BITBUFFER >( hb_xgrab( sizeof( HB_BITBUFFER ) ) );
 
    hb_xmemset( pBitBuffer, 0, sizeof( HB_BITBUFFER ) );
    return pBitBuffer;
@@ -231,7 +231,7 @@ void hb_zebra_ret( PHB_ZEBRA pZebra )
 
 PHB_ZEBRA hb_zebra_create( void )
 {
-   PHB_ZEBRA pZebra = ( PHB_ZEBRA ) hb_xgrab( sizeof( HB_ZEBRA ) );
+   PHB_ZEBRA pZebra = static_cast< PHB_ZEBRA >( hb_xgrab( sizeof( HB_ZEBRA ) ) );
 
    hb_xmemset( pZebra, 0, sizeof( HB_ZEBRA ) );
    return pZebra;

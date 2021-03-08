@@ -72,7 +72,7 @@ HB_FUNC( RANGEREM )
 
       iMode = ( ucChar2 < ucChar1 );
 
-      pcRet = ( char * ) hb_xgrab( sStrLen + 1 );
+      pcRet = static_cast< char * >( hb_xgrab( sStrLen + 1 ) );
       sRetIndex = 0;
       for( pc = ( const unsigned char * ) pcString; pc < ( const unsigned char * ) pcString + sStrLen; pc++ )
       {
@@ -145,7 +145,7 @@ HB_FUNC( RANGEREPL )
 
       iMode = ( ucChar2 < ucChar1 );
 
-      pcRet = ( char * ) hb_xgrab( sStrLen + 1 );
+      pcRet = static_cast< char * >( hb_xgrab( sStrLen + 1 ) );
       sRetIndex = 0;
       for( pc = ( const unsigned char * ) pcString; pc < ( const unsigned char * ) pcString + sStrLen; pc++ )
       {

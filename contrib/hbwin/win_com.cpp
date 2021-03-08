@@ -233,7 +233,7 @@ HB_FUNC( WIN_COMREAD )
       DWORD dwNumberOfBytesToRead = ( DWORD ) hb_parclen( 2 );
       DWORD dwNumberOfBytesRead;
 
-      lpBuffer = ( char * ) hb_xgrab( dwNumberOfBytesToRead + 1 );
+      lpBuffer = static_cast< char * >( hb_xgrab( dwNumberOfBytesToRead + 1 ) );
       s_PortData[ iPort ].iFunction = HB_WIN_COM_FUN_READFILE;
       s_PortData[ iPort ].dwError = 0;
       if( ReadFile( hCommPort, lpBuffer, dwNumberOfBytesToRead, &dwNumberOfBytesRead, nullptr ) )
@@ -265,7 +265,7 @@ HB_FUNC( WIN_COMRECV )
       DWORD dwNumberOfBytesToRead = ( DWORD ) hb_parnl( 2 );
       DWORD dwNumberOfBytesRead;
 
-      lpBuffer = ( char * ) hb_xgrab( dwNumberOfBytesToRead + 1 );
+      lpBuffer = static_cast< char * >( hb_xgrab( dwNumberOfBytesToRead + 1 ) );
       s_PortData[ iPort ].iFunction = HB_WIN_COM_FUN_READFILE;
       s_PortData[ iPort ].dwError = 0;
       if( ReadFile( hCommPort, lpBuffer, dwNumberOfBytesToRead, &dwNumberOfBytesRead, nullptr ) )

@@ -342,7 +342,7 @@ HB_FUNC( SCREENSTR )  /* TODO: Unicode support */
          nSize = nCount;
       nCount = nSize;
       nSize <<= 1;
-      szText = pBuffer = ( char * ) hb_xgrab( nSize + 1 );
+      szText = pBuffer = static_cast< char * >( hb_xgrab( nSize + 1 ) );
       do
       {
          int iC = iCol;

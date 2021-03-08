@@ -174,7 +174,7 @@ static LPTSTR s_StringList( int iParam )
          if( nLen )
          {
             nTotal = nLen + 1;
-            lpStr = ( LPTSTR ) hb_xgrab( nTotal * sizeof( TCHAR ) );
+            lpStr = static_cast< LPTSTR >( hb_xgrab( nTotal * sizeof( TCHAR ) ) );
             for( n = nLen = 0; n < nSize; ++n )
             {
                pArrItem = hb_arrayGetItemPtr( pItem, n + 1 );
@@ -194,7 +194,7 @@ static LPTSTR s_StringList( int iParam )
          nLen = HB_ITEMCOPYSTR( pItem, nullptr, 0 );
          if( nLen )
          {
-            lpStr = ( LPTSTR ) hb_xgrab( ( nLen + 1 ) * sizeof( TCHAR ) );
+            lpStr = static_cast< LPTSTR >( hb_xgrab( ( nLen + 1 ) * sizeof( TCHAR ) ) );
             HB_ITEMCOPYSTR( pItem, lpStr, nLen );
             lpStr[ nLen ] = 0;
          }

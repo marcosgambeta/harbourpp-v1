@@ -126,7 +126,7 @@ HB_FUNC( WVG_SENDDLGITEMMESSAGE )
    if( pText )
    {
       iLen  = hb_itemGetCLen( pText );
-      cText = ( char * ) hb_xgrab( iLen + 1 );
+      cText = static_cast< char * >( hb_xgrab( iLen + 1 ) );
       hb_xmemcpy( cText, hb_itemGetCPtr( pText ), iLen + 1 );
    }
 
@@ -218,7 +218,7 @@ HB_FUNC( WVG_SETDLGITEMTEXT )
 HB_FUNC( WVG_GETDLGITEMTEXT )
 {
    int    iLen  = static_cast< int >( SendMessage( GetDlgItem( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ), hb_parni( 2 ) ), WM_GETTEXTLENGTH, 0, 0 ) ) + 1;
-   LPTSTR cText = ( LPTSTR ) hb_xgrab( iLen * sizeof( TCHAR ) );
+   LPTSTR cText = static_cast< LPTSTR >( hb_xgrab( iLen * sizeof( TCHAR ) ) );
    UINT   iResult;
 
    iResult = GetDlgItemText( ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ),   /* handle of dialog box */
@@ -1374,7 +1374,7 @@ HB_FUNC( WVG_SENDCBMESSAGE )
       case CB_GETLBTEXT:
       {
          HB_ISIZ iSize = SendMessage( hCB, CB_GETLBTEXTLEN, ( WPARAM ) hb_parnint( 3 ), 0 );
-         LPTSTR  text  = ( LPTSTR ) hb_xgrab( iSize + 1 );
+         LPTSTR  text  = static_cast< LPTSTR >( hb_xgrab( iSize + 1 ) );
          SendMessage( hCB, CB_GETLBTEXT, iSize, ( LPARAM ) text );
          HB_RETSTR( text );
          hb_xfree( text );

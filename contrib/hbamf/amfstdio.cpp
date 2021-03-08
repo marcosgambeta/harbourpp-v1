@@ -70,10 +70,10 @@ static void countCheck( int n )
 
 HB_FUNC( AMFSTDIO_READ )
 {
-   char *     pszStrIn     = ( char * ) hb_xgrab( SINGLEBUF );
-   char *     pszLenPrefix = ( char * ) hb_xgrab( 5 );
+   char *     pszStrIn     = static_cast< char * >( hb_xgrab( SINGLEBUF ) );
+   char *     pszLenPrefix = static_cast< char * >( hb_xgrab( 5 ) );
    #if 0
-   char *     pszBuf;      = ( char * ) hb_xgrab( SINGLEBUF );
+   char *     pszBuf;      = static_cast< char * >( hb_xgrab( SINGLEBUF ) );
    #endif
    char *     pszBuf;
    char *     pszTmp = pszLenPrefix;
@@ -105,7 +105,7 @@ HB_FUNC( AMFSTDIO_READ )
    }
 
    nTotal = 0;
-   pszBuf = ( char * ) hb_xgrab( nLen + 1 );
+   pszBuf = static_cast< char * >( hb_xgrab( nLen + 1 ) );
    pszTmp = pszBuf;
 
    while( nTotal < nLen )

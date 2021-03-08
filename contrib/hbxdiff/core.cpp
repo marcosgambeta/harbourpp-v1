@@ -162,14 +162,14 @@ static void * hb_mmf_param( int iParam, int iType, HB_BOOL fError )
 
 HB_FUNC( XDL_INIT_MMFILE )
 {
-   mmfile_t * mmf = ( mmfile_t * ) hb_xgrab( sizeof( mmfile_t ) );
+   mmfile_t * mmf = static_cast< mmfile_t * >( hb_xgrab( sizeof( mmfile_t ) ) );
 
    if( xdl_init_mmfile( mmf,
                         hb_parnldef( 1, XDLT_STD_BLKSIZE ), static_cast< unsigned long >( hb_parnl( 3 ) ) ) == 0 )
    {
       HB_MMF * phb_mmf;
 
-      phb_mmf = ( HB_MMF * ) hb_xgrab( sizeof( HB_MMF ) );
+      phb_mmf = static_cast< HB_MMF * >( hb_xgrab( sizeof( HB_MMF ) ) );
       hb_xmemset( phb_mmf, 0, sizeof( HB_MMF ) );
       phb_mmf->mmf = mmf;
       hb_mmf_ret( phb_mmf, HB_MMF_SIGN );
@@ -335,14 +335,14 @@ HB_FUNC( XDL_MMFILE_CMP )
 HB_FUNC( XDL_MMFILE_COMPACT )
 {
    HB_MMF *   phb_mmfo = ( HB_MMF * ) hb_mmf_param( 1, HB_MMF_SIGN, HB_TRUE );
-   mmfile_t * mmfc     = ( mmfile_t * ) hb_xgrab( sizeof( mmfile_t ) );
+   mmfile_t * mmfc     = static_cast< mmfile_t * >( hb_xgrab( sizeof( mmfile_t ) ) );
 
    if( xdl_mmfile_compact( phb_mmfo->mmf, mmfc, hb_parnldef( 1, XDLT_STD_BLKSIZE ),
                            static_cast< unsigned long >( hb_parnl( 3 ) ) ) == 0 )
    {
       HB_MMF * phb_mmf;
 
-      phb_mmf = ( HB_MMF * ) hb_xgrab( sizeof( HB_MMF ) );
+      phb_mmf = static_cast< HB_MMF * >( hb_xgrab( sizeof( HB_MMF ) ) );
       hb_xmemset( phb_mmf, 0, sizeof( HB_MMF ) );
       phb_mmf->mmf = mmfc;
       hb_mmf_ret( phb_mmf, HB_MMF_SIGN );

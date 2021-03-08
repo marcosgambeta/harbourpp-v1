@@ -131,7 +131,7 @@ HB_FUNC( CHARSORT )
          return;
       }
 
-      pcRet = ( char * ) hb_xgrab( sStrLen + 1 );
+      pcRet = static_cast< char * >( hb_xgrab( sStrLen + 1 ) );
       hb_xmemcpy( pcRet, pcString, sStrLen );
 
       if( iDescend )

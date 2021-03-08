@@ -81,7 +81,7 @@ static void do_justify( int iSwitch )
       else
          cJustChar = 0x20;
 
-      pcRet = ( char * ) hb_xgrab( sStrLen + 1 );
+      pcRet = static_cast< char * >( hb_xgrab( sStrLen + 1 ) );
 
       switch( iSwitch )
       {

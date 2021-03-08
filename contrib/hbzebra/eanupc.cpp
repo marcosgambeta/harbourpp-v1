@@ -148,7 +148,7 @@ PHB_ZEBRA hb_zebra_create_ean13( const char * szCode, HB_SIZE nLen, int iFlags )
 
    if( iLen == 12 )
    {
-      pZebra->szCode = ( char * ) hb_xgrab( 14 );
+      pZebra->szCode = static_cast< char * >( hb_xgrab( 14 ) );
       hb_xmemcpy( pZebra->szCode, szCode, 12 );
       pZebra->szCode[ 12 ] = _ean13_checksum( szCode );
       pZebra->szCode[ 13 ] = '\0';
@@ -160,7 +160,7 @@ PHB_ZEBRA hb_zebra_create_ean13( const char * szCode, HB_SIZE nLen, int iFlags )
          pZebra->iError = HB_ZEBRA_ERROR_BADCHECKSUM;
          return pZebra;
       }
-      pZebra->szCode = ( char * ) hb_xgrab( 14 );
+      pZebra->szCode = static_cast< char * >( hb_xgrab( 14 ) );
       hb_xmemcpy( pZebra->szCode, szCode, 13 );
       pZebra->szCode[ 13 ] = '\0';
    }
@@ -216,7 +216,7 @@ PHB_ZEBRA hb_zebra_create_ean8( const char * szCode, HB_SIZE nLen, int iFlags )
 
    if( iLen == 7 )
    {
-      pZebra->szCode = ( char * ) hb_xgrab( 9 );
+      pZebra->szCode = static_cast< char * >( hb_xgrab( 9 ) );
       hb_xmemcpy( pZebra->szCode, szCode, 7 );
       pZebra->szCode[ 7 ] = _ean8_checksum( szCode );
       pZebra->szCode[ 8 ] = '\0';
@@ -228,7 +228,7 @@ PHB_ZEBRA hb_zebra_create_ean8( const char * szCode, HB_SIZE nLen, int iFlags )
          pZebra->iError = HB_ZEBRA_ERROR_BADCHECKSUM;
          return pZebra;
       }
-      pZebra->szCode = ( char * ) hb_xgrab( 9 );
+      pZebra->szCode = static_cast< char * >( hb_xgrab( 9 ) );
       hb_xmemcpy( pZebra->szCode, szCode, 8 );
       pZebra->szCode[ 8 ] = '\0';
    }
@@ -278,7 +278,7 @@ PHB_ZEBRA hb_zebra_create_upca( const char * szCode, HB_SIZE nLen, int iFlags )
 
    if( iLen == 11 )
    {
-      pZebra->szCode = ( char * ) hb_xgrab( 13 );
+      pZebra->szCode = static_cast< char * >( hb_xgrab( 13 ) );
       hb_xmemcpy( pZebra->szCode, szCode, 11 );
       pZebra->szCode[ 11 ] = _upca_checksum( szCode );
       pZebra->szCode[ 12 ] = '\0';
@@ -290,7 +290,7 @@ PHB_ZEBRA hb_zebra_create_upca( const char * szCode, HB_SIZE nLen, int iFlags )
          pZebra->iError = HB_ZEBRA_ERROR_BADCHECKSUM;
          return pZebra;
       }
-      pZebra->szCode = ( char * ) hb_xgrab( 13 );
+      pZebra->szCode = static_cast< char * >( hb_xgrab( 13 ) );
       hb_xmemcpy( pZebra->szCode, szCode, 12 );
       pZebra->szCode[ 12 ] = '\0';
    }
@@ -340,7 +340,7 @@ PHB_ZEBRA hb_zebra_create_upce( const char * szCode, HB_SIZE nLen, int iFlags )
 
    if( iLen == 6 )
    {
-      pZebra->szCode = ( char * ) hb_xgrab( 8 );
+      pZebra->szCode = static_cast< char * >( hb_xgrab( 8 ) );
       hb_xmemcpy( pZebra->szCode, szCode, 6 );
       pZebra->szCode[ 6 ] = _upce_checksum( szCode );
       pZebra->szCode[ 7 ] = '\0';
@@ -352,7 +352,7 @@ PHB_ZEBRA hb_zebra_create_upce( const char * szCode, HB_SIZE nLen, int iFlags )
          pZebra->iError = HB_ZEBRA_ERROR_BADCHECKSUM;
          return pZebra;
       }
-      pZebra->szCode = ( char * ) hb_xgrab( 8 );
+      pZebra->szCode = static_cast< char * >( hb_xgrab( 8 ) );
       hb_xmemcpy( pZebra->szCode, szCode, 7 );
       pZebra->szCode[ 7 ] = '\0';
    }

@@ -89,7 +89,7 @@ static void do_charone( int iSwitch )
                HB_SIZE sRetStrLen = 0;
                char cCurrent = *pcString;
 
-               pcRet = ( char * ) hb_xgrab( sStrLen );
+               pcRet = static_cast< char * >( hb_xgrab( sStrLen ) );
                /* copy first char */
                pcRet[ sRetStrLen++ ] = cCurrent;
                for( pcSub = pcString + 1; pcSub < pcString + sStrLen; pcSub++ )
@@ -125,7 +125,7 @@ static void do_charone( int iSwitch )
                char cCurrent1 = pcString[ 0 ];
                char cCurrent2 = pcString[ 1 ];
 
-               pcRet = ( char * ) hb_xgrab( sStrLen );
+               pcRet = static_cast< char * >( hb_xgrab( sStrLen ) );
                /* copy first double char */
                pcRet[ sRetStrLen++ ] = cCurrent1;
                pcRet[ sRetStrLen++ ] = cCurrent2;

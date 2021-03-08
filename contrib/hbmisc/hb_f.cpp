@@ -192,7 +192,7 @@ HB_FUNC( HB_FSKIP )
 {
    PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_fttext );
 
-   char * buffer = ( char * ) hb_xgrab( _B_SIZE );
+   char * buffer = static_cast< char * >( hb_xgrab( _B_SIZE ) );
 
    hb_hbfskip( ft_text, buffer, _B_SIZE, hb_parnidef( 1, 1 ) );
 
@@ -203,7 +203,7 @@ HB_FUNC( HB_FREADLN )
 {
    PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_fttext );
 
-   char * buffer = ( char * ) hb_xgrab( _B_SIZE );
+   char * buffer = static_cast< char * >( hb_xgrab( _B_SIZE ) );
 
    HB_ISIZ x;
    HB_ISIZ read;
@@ -240,7 +240,7 @@ HB_FUNC( HB_FGOTO )
 {
    PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_fttext );
 
-   char * buffer = ( char * ) hb_xgrab( _B_SIZE );
+   char * buffer = static_cast< char * >( hb_xgrab( _B_SIZE ) );
 
    long target = hb_parnl( 1 );
 
@@ -279,7 +279,7 @@ HB_FUNC( HB_FGOBOTTOM )
    }
    else
    {
-      char * buffer = ( char * ) hb_xgrab( _B_SIZE );
+      char * buffer = static_cast< char * >( hb_xgrab( _B_SIZE ) );
 
       HB_ISIZ    loc = 0;
       HB_ISIZ    len;
@@ -392,7 +392,7 @@ HB_FUNC( HB_FREADANDSKIP )
 {
    PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_fttext );
 
-   char * buffer = ( char * ) hb_xgrab( _B_SIZE );
+   char * buffer = static_cast< char * >( hb_xgrab( _B_SIZE ) );
 
    HB_ISIZ x = 0;
    HB_ISIZ read;

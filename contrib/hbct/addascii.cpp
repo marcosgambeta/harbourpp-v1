@@ -78,7 +78,7 @@ HB_FUNC( ADDASCII )
          return;
       }
 
-      pcResult = ( char * ) hb_xgrab( sLen + 1 );
+      pcResult = static_cast< char * >( hb_xgrab( sLen + 1 ) );
       hb_xmemcpy( pcResult, pcSource, sLen );
 
       lValue = hb_parnl( 2 );

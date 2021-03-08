@@ -68,7 +68,7 @@ TCHAR * hbwapi_tstrdup( const TCHAR * pszText )
 
    nLen = ( hbwapi_tstrlen( pszText ) + 1 ) * sizeof( TCHAR );
 
-   pszDup = ( TCHAR * ) hb_xgrab( nLen );
+   pszDup = static_cast< TCHAR * >( hb_xgrab( nLen ) );
    memcpy( pszDup, pszText, nLen );
 
    return pszDup;
@@ -109,7 +109,7 @@ static TCHAR * hbwapi_FileNameAtSystemDir( const TCHAR * pFileName )
       if( pFileName )
          nLen += ( UINT ) hbwapi_tstrlen( pFileName ) + 1;
 
-      buffer = ( LPTSTR ) hb_xgrab( nLen * sizeof( TCHAR ) );
+      buffer = static_cast< LPTSTR >( hb_xgrab( nLen * sizeof( TCHAR ) ) );
 
       GetSystemDirectory( buffer, nLen );
 

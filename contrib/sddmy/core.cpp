@@ -350,7 +350,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
             {
                char * pStr;
 
-               pStr = ( char * ) hb_xgrab( dbFieldInfo.uiLen + 1 );
+               pStr = static_cast< char * >( hb_xgrab( dbFieldInfo.uiLen + 1 ) );
                memset( pStr, ' ', dbFieldInfo.uiLen );
                pStr[ dbFieldInfo.uiLen ] = '\0';
 
@@ -416,7 +416,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
    pArea->ulRecCount = ( HB_ULONG ) mysql_num_rows( pSDDData->pResult );
    pArea->ulRecMax   = pArea->ulRecCount + 1;
 
-   pArea->pRow      = ( void ** ) hb_xgrab( ( pArea->ulRecCount + 1 ) * sizeof( void * ) );
+   pArea->pRow      = static_cast< void ** >( hb_xgrab( ( pArea->ulRecCount + 1 ) * sizeof( void * ) ) );
    pArea->pRowFlags = ( HB_BYTE * ) hb_xgrabz( ( pArea->ulRecCount + 1 ) * sizeof( HB_BYTE ) );
 
    pRow = pArea->pRow;
@@ -511,7 +511,7 @@ static HB_ERRCODE mysqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
          char * pStr;
 
          /* Expand strings to field length */
-         pStr = ( char * ) hb_xgrab( pField->uiLen + 1 );
+         pStr = static_cast< char * >( hb_xgrab( pField->uiLen + 1 ) );
          memcpy( pStr, pValue, nLen );
 
          if( ( HB_SIZE ) pField->uiLen > nLen )

@@ -459,7 +459,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
             sqlite3DeclStru( st, uiIndex, &uiRetLen, nullptr );
 #endif
             dbFieldInfo.uiLen = static_cast< HB_USHORT >( HB_MAX( nSize, uiRetLen ) );
-            pStr = ( char * ) hb_xgrab( ( HB_SIZE ) dbFieldInfo.uiLen + 1 );
+            pStr = static_cast< char * >( hb_xgrab( ( HB_SIZE ) dbFieldInfo.uiLen + 1 ) );
             memset( pStr, ' ', dbFieldInfo.uiLen );
             hb_itemPutCLPtr( pItem, pStr, dbFieldInfo.uiLen );
             break;
@@ -522,8 +522,8 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
    pArea->ulRecCount = 0;
    pArea->ulRecMax   = SQLDD_ROWSET_INIT;
 
-   pArea->pRow = ( void ** ) hb_xgrab( SQLDD_ROWSET_INIT * sizeof( void * ) );
-   pArea->pRowFlags = ( HB_BYTE * ) hb_xgrab( SQLDD_ROWSET_INIT * sizeof( HB_BYTE ) );
+   pArea->pRow = static_cast< void ** >( hb_xgrab( SQLDD_ROWSET_INIT * sizeof( void * ) ) );
+   pArea->pRowFlags = static_cast< HB_BYTE * >( hb_xgrab( SQLDD_ROWSET_INIT * sizeof( HB_BYTE ) ) );
 
    pArea->pRow[ 0 ]      = pItemEof;
    pArea->pRowFlags[ 0 ] = SQLDD_FLAG_CACHED;

@@ -159,7 +159,7 @@ static BITMAPINFO * PackedDibLoad( LPCTSTR szFileName )
 
    dwPackedDibSize = bmfh.bfSize - sizeof( BITMAPFILEHEADER );
 
-   pbmi = ( BITMAPINFO * ) hb_xgrab( dwPackedDibSize );
+   pbmi = static_cast< BITMAPINFO * >( hb_xgrab( dwPackedDibSize ) );
 
    bSuccess = ReadFile( hFile, pbmi, dwPackedDibSize, &dwBytesRead, nullptr );
    CloseHandle( hFile );

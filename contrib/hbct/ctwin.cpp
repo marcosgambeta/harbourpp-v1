@@ -666,13 +666,13 @@ static int hb_ctw_CreateWindow( PHB_GTCTW pCTW, int iTop, int iLeft, int iBottom
          if( ! pCTW->fBoardSet )
             hb_ctw_SetWindowBoard( pCTW, 0, 0, pCTW->iMapHeight - 1, pCTW->iMapWidth - 1 );
          nSize = ( HB_SIZE ) pCTW->iMapHeight * pCTW->iMapWidth * sizeof( int );
-         pCTW->pWindowMap = ( int * ) hb_xgrab( nSize );
-         pCTW->pShadowMap = ( int * ) hb_xgrab( nSize );
+         pCTW->pWindowMap = static_cast< int * >( hb_xgrab( nSize ) );
+         pCTW->pShadowMap = static_cast< int * >( hb_xgrab( nSize ) );
          hb_ctw_ClearMap( pCTW );
 
          pCTW->iMaxWindow = HB_CTWIN_ALLOC;
-         pCTW->windows = ( PHB_CT_WND * ) hb_xgrab( ( HB_CTWIN_ALLOC + 1 ) * sizeof( PHB_CT_WND ) );
-         pCTW->windowStack = ( int * ) hb_xgrab( HB_CTWIN_ALLOC * sizeof( int ) );
+         pCTW->windows = static_cast< PHB_CT_WND * >( hb_xgrab( ( HB_CTWIN_ALLOC + 1 ) * sizeof( PHB_CT_WND ) ) );
+         pCTW->windowStack = static_cast< int * >( hb_xgrab( HB_CTWIN_ALLOC * sizeof( int ) ) );
          pCTW->windows[ 0 ] = nullptr;
       }
       else
@@ -719,7 +719,7 @@ static int hb_ctw_CreateWindow( PHB_GTCTW pCTW, int iTop, int iLeft, int iBottom
    else if( iCol > iRight )
       iCol = iRight;
 
-   pWnd = ( PHB_CT_WND ) hb_xgrab( sizeof( HB_CT_WND ) );
+   pWnd = static_cast< PHB_CT_WND >( hb_xgrab( sizeof( HB_CT_WND ) ) );
    memset( pWnd, 0, sizeof( HB_CT_WND ) );
 
    pWnd->fHidden = ! fVisible;
@@ -734,8 +734,8 @@ static int hb_ctw_CreateWindow( PHB_GTCTW pCTW, int iTop, int iLeft, int iBottom
 
    HB_GTSELF_GETCOLORDATA( pCTW->pGT, &pWnd->piColors, &pWnd->iColorCount, &pWnd->iColorIndex );
 
-   pWnd->screenBuffer = ( PHB_SCREENCELL ) hb_xgrab( ( HB_SIZE ) pWnd->iHeight *
-                                    pWnd->iWidth * sizeof( HB_SCREENCELL ) );
+   pWnd->screenBuffer = static_cast< PHB_SCREENCELL >( hb_xgrab( ( HB_SIZE ) pWnd->iHeight *
+                                    pWnd->iWidth * sizeof( HB_SCREENCELL ) ) );
 
    if( pWnd->iShadowAttr >= 0 )
       fClear = HB_TRUE;
@@ -1197,7 +1197,7 @@ static PHB_GTCTW hb_ctw_base( void )
          return HB_GTCTW_GET( pGT );
       else
       {
-         PHB_GTCTW pCTW = ( PHB_GTCTW ) hb_xgrab( sizeof( HB_GTCTW ) );
+         PHB_GTCTW pCTW = static_cast< PHB_GTCTW >( hb_xgrab( sizeof( HB_GTCTW ) ) );
 
          memset( pCTW, 0, sizeof( HB_GTCTW ) );
          HB_GTLOCAL( pGT ) = pCTW;
@@ -1763,7 +1763,7 @@ static void hb_ctw_gt_GetColorData( PHB_GT pGT, int ** pColorsPtr, int * piColor
    {
       PHB_CT_WND pWnd = pCTW->windows[ iWindow ];
 
-      *pColorsPtr = ( int * ) hb_xgrab( pWnd->iColorCount * sizeof( int ) );
+      *pColorsPtr = static_cast< int * >( hb_xgrab( pWnd->iColorCount * sizeof( int ) ) );
       memcpy( *pColorsPtr, pWnd->piColors, pWnd->iColorCount * sizeof( int ) );
       *piColorCount = pWnd->iColorCount;
       *piColorIndex = pWnd->iColorIndex;

@@ -74,7 +74,7 @@ void ct_charop( int iMode )
          return;
       }
 
-      pucResult = ( unsigned char * ) hb_xgrab( sStrLen + 1 );
+      pucResult = static_cast< unsigned char * >( hb_xgrab( sStrLen + 1 ) );
 
       switch( iMode )
       {

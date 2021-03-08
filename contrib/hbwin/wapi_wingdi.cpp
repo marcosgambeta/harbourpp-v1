@@ -580,7 +580,7 @@ HB_FUNC( WAPI_EXTTEXTOUT )
          HB_SIZE tmp;
          INT iWidth = 0;
 
-         lpFontWidths = ( INT * ) hb_xgrab( nDataLen * sizeof( INT ) );
+         lpFontWidths = static_cast< INT * >( hb_xgrab( nDataLen * sizeof( INT ) ) );
 
          for( tmp = 0; tmp < nDataLen; ++tmp )
          {

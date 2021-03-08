@@ -296,10 +296,10 @@ HB_FUNC( HB_PQCOPYFROMWA )
 
       pItem = hb_itemNew( nullptr );
 
-      context = ( pgCopyContext * ) hb_xgrab( sizeof( pgCopyContext ) );
+      context = static_cast< pgCopyContext * >( hb_xgrab( sizeof( pgCopyContext ) ) );
       memset( context, 0, sizeof( pgCopyContext ) );
 
-      context->buffer     = ( char * ) hb_xgrab( sizeof( char ) * nBufLen * 1400 );
+      context->buffer     = static_cast< char * >( hb_xgrab( sizeof( char ) * nBufLen * 1400 ) );
       context->position   = 0;
       context->length     = sizeof( char ) * nBufLen * 1400;
       context->str_trim   = str_rtrim;
@@ -309,7 +309,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
 
       if( ! bNoFieldPassed )
       {
-         szFields      = ( char * ) hb_xgrab( sizeof( char ) * 2 );
+         szFields      = static_cast< char * >( hb_xgrab( sizeof( char ) * 2 ) );
          szFields[ 0 ] = '(';
          szFields[ 1 ] = '\0';
          uiFieldCopy   = static_cast< HB_USHORT >( hb_arrayLen( pFields ) );

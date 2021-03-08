@@ -77,14 +77,14 @@ PHB_ZEBRA hb_zebra_create_itf( const char * szCode, HB_SIZE nLen, int iFlags )
    }
    if( ( iLen + ( ( iFlags & HB_ZEBRA_FLAG_CHECKSUM ) ? 1 : 0 ) ) & 1 )
    {
-      pZebra->szCode = ( char * ) hb_xgrab( iLen + 2 );
+      pZebra->szCode = static_cast< char * >( hb_xgrab( iLen + 2 ) );
       pZebra->szCode[ 0 ] = '0';
       hb_xmemcpy( pZebra->szCode + 1, szCode, iLen );
       pZebra->szCode[ iLen + 1 ] = '\0';
    }
    else
    {
-      pZebra->szCode = ( char * ) hb_xgrab( iLen + 1 );
+      pZebra->szCode = static_cast< char * >( hb_xgrab( iLen + 1 ) );
       hb_xmemcpy( pZebra->szCode, szCode, iLen );
       pZebra->szCode[ iLen ] = '\0';
    }

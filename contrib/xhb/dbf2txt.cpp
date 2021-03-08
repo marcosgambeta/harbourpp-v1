@@ -61,7 +61,7 @@ static char * hb_strescape( const char * szInput, HB_ISIZ nLen, const char * cDe
    char *       szEscape;
    char *       szReturn;
 
-   szReturn = szEscape = ( char * ) hb_xgrab( nLen * 2 + 4 );
+   szReturn = szEscape = static_cast< char * >( hb_xgrab( nLen * 2 + 4 ) );
 
    while( nLen && HB_ISSPACE( szInput[ nLen - 1 ] ) )
       nLen--;
@@ -109,7 +109,7 @@ static HB_BOOL hb_ExportVar( HB_FHANDLE handle, PHB_ITEM pValue, const char * cD
       /* a "D" field */
       case HB_IT_DATE:
       {
-         char * szDate = ( char * ) hb_xgrab( 9 );
+         char * szDate = static_cast< char * >( hb_xgrab( 9 ) );
 
          hb_itemGetDS( pValue, szDate );
          hb_fsWriteLarge( handle, szDate, strlen( szDate ) );

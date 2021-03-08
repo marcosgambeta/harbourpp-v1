@@ -75,14 +75,14 @@ char * hb_adsOemToAnsi( const char * pszSrc, HB_SIZE nLen )
    {
 #if defined( HB_OS_WIN )
       int nWideLen = MultiByteToWideChar( CP_OEMCP, MB_PRECOMPOSED, pszSrc, static_cast< int >( nLen ), nullptr, 0 );
-      LPWSTR pszWide = ( LPWSTR ) hb_xgrab( ( nWideLen + 1 ) * sizeof( wchar_t ) );
+      LPWSTR pszWide = static_cast< LPWSTR >( hb_xgrab( ( nWideLen + 1 ) * sizeof( wchar_t ) ) );
 
       char * pszDst;
 
       MultiByteToWideChar( CP_OEMCP, MB_PRECOMPOSED, pszSrc, static_cast< int >( nLen ), pszWide, nWideLen );
 
       nLen = WideCharToMultiByte( CP_ACP, 0, pszWide, nWideLen, nullptr, 0, nullptr, nullptr );
-      pszDst = ( char * ) hb_xgrab( nLen + 1 );
+      pszDst = static_cast< char * >( hb_xgrab( nLen + 1 ) );
 
       WideCharToMultiByte( CP_ACP, 0, pszWide, nWideLen, pszDst, static_cast< int >( nLen ), nullptr, nullptr );
 
@@ -103,14 +103,14 @@ char * hb_adsAnsiToOem( const char * pszSrc, HB_SIZE nLen )
    {
 #if defined( HB_OS_WIN )
       int nWideLen = MultiByteToWideChar( CP_ACP, MB_PRECOMPOSED, pszSrc, static_cast< int >( nLen ), nullptr, 0 );
-      LPWSTR pszWide = ( LPWSTR ) hb_xgrab( ( nWideLen + 1 ) * sizeof( wchar_t ) );
+      LPWSTR pszWide = static_cast< LPWSTR >( hb_xgrab( ( nWideLen + 1 ) * sizeof( wchar_t ) ) );
 
       char * pszDst;
 
       MultiByteToWideChar( CP_ACP, MB_PRECOMPOSED, pszSrc, static_cast< int >( nLen ), pszWide, nWideLen );
 
       nLen = WideCharToMultiByte( CP_OEMCP, 0, pszWide, nWideLen, nullptr, 0, nullptr, nullptr );
-      pszDst = ( char * ) hb_xgrab( nLen + 1 );
+      pszDst = static_cast< char * >( hb_xgrab( nLen + 1 ) );
 
       WideCharToMultiByte( CP_OEMCP, 0, pszWide, nWideLen, pszDst, static_cast< int >( nLen ), nullptr, nullptr );
 
@@ -906,7 +906,7 @@ HB_FUNC( ADSGETAOF )
 
       if( usLen > HARBOUR_MAX_RDD_FILTER_LENGTH )
       {
-         pucFilter2 = ( UNSIGNED8 * ) hb_xgrab( usLen + 1 );
+         pucFilter2 = static_cast< UNSIGNED8 * >( hb_xgrab( usLen + 1 ) );
          ulRetVal = AdsGetAOF( pArea->hTable,
                                pucFilter2,
                                &usLen );
@@ -962,7 +962,7 @@ HB_FUNC( ADSGETAOFNOOPT )
 
       if( usLen > HARBOUR_MAX_RDD_FILTER_LENGTH )
       {
-         UNSIGNED8 * pucNonOpt2 = ( UNSIGNED8 * ) hb_xgrab( usLen + 1 );
+         UNSIGNED8 * pucNonOpt2 = static_cast< UNSIGNED8 * >( hb_xgrab( usLen + 1 ) );
 
          hb_retc( AdsGetAOFOptLevel( pArea->hTable,
                                      &pusOptLevel,
@@ -1071,7 +1071,7 @@ HB_FUNC( ADSGETFILTER )
 
       if( usLen > HARBOUR_MAX_RDD_FILTER_LENGTH )
       {
-         pucFilter2 = ( UNSIGNED8 * ) hb_xgrab( usLen + 1 );
+         pucFilter2 = static_cast< UNSIGNED8 * >( hb_xgrab( usLen + 1 ) );
          ulRetVal = AdsGetFilter( pArea->hTable,
                                   pucFilter2,
                                   &usLen );

@@ -623,7 +623,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
 #endif
                   if( nMaxLen > 0 && nMaxLen < nLen )
                      nLen = nMaxLen;
-                  val = ( O_HB_CHAR * ) hb_xgrab( nLen + sizeof( O_HB_CHAR ) );
+                  val = static_cast< O_HB_CHAR * >( hb_xgrab( nLen + sizeof( O_HB_CHAR ) ) );
                   if( ! SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, iTargetType, val, nLen + sizeof( O_HB_CHAR ), &nLen ) ) )
                   {
                      hb_xfree( val );
@@ -660,7 +660,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
 
                   if( nMaxLen > 0 && nMaxLen < nLen )
                      nLen = nMaxLen;
-                  val = ( char * ) hb_xgrab( nLen + 1 );
+                  val = static_cast< char * >( hb_xgrab( nLen + 1 ) );
                   if( ! SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, SQL_C_BINARY, val, nLen + 1, &nLen ) ) )
                   {
                      hb_xfree( val );
@@ -808,7 +808,7 @@ HB_FUNC( SQLDESCRIBECOL )  /* hStmt, nCol, @cName, nLen, @nBufferLen, @nDataType
       if( iLen <= 0 )
          iLen = 64;
 
-      buffer      = ( SQLTCHAR * ) hb_xgrab( iLen * sizeof( SQLTCHAR ) );
+      buffer      = static_cast< SQLTCHAR * >( hb_xgrab( iLen * sizeof( SQLTCHAR ) ) );
       buffer[ 0 ] = '\0';
 
       hb_retni( SQLDescribeCol( hStmt,
@@ -853,7 +853,7 @@ HB_FUNC( SQLCOLATTRIBUTE )  /* hStmt, nCol, nField, @cName, nLen, @nBufferLen, @
       if( iLen <= 0 )
          iLen = 64;
 
-      buffer      = ( char * ) hb_xgrab( iLen );
+      buffer      = static_cast< char * >( hb_xgrab( iLen ) );
       buffer[ 0 ] = '\0';
 
 #if ODBCVER >= 0x0300

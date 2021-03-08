@@ -423,7 +423,7 @@ HB_FUNC( COM_READ )
    if( lLen <= static_cast< long >( sizeof( buffer ) ) )
       data = buffer;
    else
-      data = ( char * ) hb_xgrab( lLen + 1 );
+      data = static_cast< char * >( hb_xgrab( lLen + 1 ) );
 
    lRecv = hb_comRecv( iPort, buffer, lLen, 0 );
    if( lRecv < 0 )

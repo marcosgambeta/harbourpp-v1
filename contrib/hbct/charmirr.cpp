@@ -76,7 +76,7 @@ HB_FUNC( CHARMIRR )
          return;
       }
 
-      pcRet = ( char * ) hb_xgrab( sStrLen + 1 );
+      pcRet = static_cast< char * >( hb_xgrab( sStrLen + 1 ) );
 
       pc1 = pcString + sStrLen - 1;
       if( iDontMirrorSpaces )

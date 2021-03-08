@@ -1235,7 +1235,7 @@ HB_FUNC( AMF3_DECODE )
    if( ! szBuffer )
       return;
 
-   context = ( amfContext * ) hb_xgrab( sizeof( amfContext ) );
+   context = static_cast< amfContext * >( hb_xgrab( sizeof( amfContext ) ) );
    memset( context, 0, sizeof( amfContext ) );
 
    context->cBuf          = szBuffer;

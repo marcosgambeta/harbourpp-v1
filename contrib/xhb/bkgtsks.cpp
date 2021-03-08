@@ -123,7 +123,7 @@ HB_ULONG hb_backgroundAddFunc( PHB_ITEM pBlock, int nMillisec, HB_BOOL bActive )
    /* store a copy of passed codeblock
     */
 
-   pBkgTask = ( PHB_BACKGROUNDTASK ) hb_xgrab( sizeof( HB_BACKGROUNDTASK ) );
+   pBkgTask = static_cast< PHB_BACKGROUNDTASK >( hb_xgrab( sizeof( HB_BACKGROUNDTASK ) ) );
 
    pBkgTask->pTask    = hb_itemNew( pBlock );
    pBkgTask->dSeconds = hb_dateSeconds();
@@ -133,7 +133,7 @@ HB_ULONG hb_backgroundAddFunc( PHB_ITEM pBlock, int nMillisec, HB_BOOL bActive )
    if( ! s_pBackgroundTasks )
    {
       pBkgTask->ulTaskID = s_ulBackgroundID = 1;
-      s_pBackgroundTasks = ( PHB_BACKGROUNDTASK * ) hb_xgrab( sizeof( HB_BACKGROUNDTASK ) );
+      s_pBackgroundTasks = static_cast< PHB_BACKGROUNDTASK * >( hb_xgrab( sizeof( HB_BACKGROUNDTASK ) ) );
    }
    else
    {

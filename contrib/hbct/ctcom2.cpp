@@ -130,7 +130,7 @@ HB_FUNC( XMOBLOCK )
    iBlock &= 0xFF;
    if( nLen > nSize )
       nLen = nSize;
-   pszBlock = ( char * ) hb_xgrab( nSize + ( fCRC ? 6 : 5 ) );
+   pszBlock = static_cast< char * >( hb_xgrab( nSize + ( fCRC ? 6 : 5 ) ) );
    pszBlock[ 0 ] = nSize == 128 ? 1 : 2;
    pszBlock[ 1 ] = static_cast< char >( iBlock );
    pszBlock[ 2 ] = static_cast< char >( 0xFF - iBlock );
@@ -218,7 +218,7 @@ HB_FUNC( ZEROINSERT )
       if( nBits )
       {
          HB_SIZE nDest = nLen + ( ( nBits + 7 ) >> 3 );
-         char * pszDest = ( char * ) hb_xgrab( nDest + 1 );
+         char * pszDest = static_cast< char * >( hb_xgrab( nDest + 1 ) );
          unsigned char c = 0;
          int j;
 
@@ -350,7 +350,7 @@ HB_FUNC( ZEROREMOVE )
          hb_retc_null();
       else if( nBits )
       {
-         char * pszDest = ( char * ) hb_xgrab( nDest + 1 );
+         char * pszDest = static_cast< char * >( hb_xgrab( nDest + 1 ) );
 
          j = 8;
          l = 0;

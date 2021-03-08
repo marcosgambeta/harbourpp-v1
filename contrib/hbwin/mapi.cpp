@@ -113,7 +113,7 @@ HB_FUNC( WIN_MAPISENDMAIL )
          memset( &note, 0, sizeof( note ) );
          memset( &origin, 0, sizeof( origin ) );
 
-         hString = ( void ** ) hb_xgrab( ( 4 + 2 + ( 2 * nRecpCount ) + ( 2 * nFileCount ) ) * sizeof( void * ) );
+         hString = static_cast< void ** >( hb_xgrab( ( 4 + 2 + ( 2 * nRecpCount ) + ( 2 * nFileCount ) ) * sizeof( void * ) ) );
 
          note.lpszSubject      = ( LPSTR ) HB_PARSTR( 1, &hString[ iString++ ], nullptr );
          note.lpszNoteText     = ( LPSTR ) HB_PARSTR( 2, &hString[ iString++ ], nullptr );
@@ -122,13 +122,13 @@ HB_FUNC( WIN_MAPISENDMAIL )
 
          if( nRecpCount )
          {
-            note.lpRecips = ( MapiRecipDesc * ) hb_xgrab( nRecpCount * sizeof( MapiRecipDesc ) );
+            note.lpRecips = static_cast< MapiRecipDesc * >( hb_xgrab( nRecpCount * sizeof( MapiRecipDesc ) ) );
             memset( note.lpRecips, 0, nRecpCount * sizeof( MapiRecipDesc ) );
          }
 
          if( nFileCount )
          {
-            note.lpFiles = ( MapiFileDesc * ) hb_xgrab( nFileCount * sizeof( MapiFileDesc ) );
+            note.lpFiles = static_cast< MapiFileDesc * >( hb_xgrab( nFileCount * sizeof( MapiFileDesc ) ) );
             memset( note.lpFiles, 0, nFileCount * sizeof( MapiFileDesc ) );
          }
 

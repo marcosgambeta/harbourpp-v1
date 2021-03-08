@@ -30,7 +30,7 @@ HB_FUNC( GT_NEWFLAG )
 
       if( ! ( FlagCount % 8 ) )
          --ByteCount;
-      FlagString = ( char * ) hb_xgrab( ByteCount );
+      FlagString = static_cast< char * >( hb_xgrab( ByteCount ) );
       for( Byte = 0; Byte < ByteCount; Byte++ )
          FlagString[ Byte ] = 0;
       hb_retclen( FlagString, ByteCount );

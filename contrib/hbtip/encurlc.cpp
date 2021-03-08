@@ -62,7 +62,7 @@ HB_FUNC( TIP_URLENCODE )
          HB_ISIZ nPos = 0, nPosRet = 0;
 
          /* Giving maximum final length possible */
-         char * pszRet = ( char * ) hb_xgrab( nLen * 3 + 1 );
+         char * pszRet = static_cast< char * >( hb_xgrab( nLen * 3 + 1 ) );
 
          while( nPos < nLen )
          {
@@ -121,7 +121,7 @@ HB_FUNC( TIP_URLDECODE )
          HB_ISIZ nPos = 0, nPosRet = 0;
 
          /* maximum possible length */
-         char * pszRet = ( char * ) hb_xgrab( nLen );
+         char * pszRet = static_cast< char * >( hb_xgrab( nLen ) );
 
          while( nPos < nLen )
          {

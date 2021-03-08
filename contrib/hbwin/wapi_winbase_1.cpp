@@ -98,7 +98,7 @@ HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTS )
 
    if( nCount > 0 && nCount <= MAXIMUM_WAIT_OBJECTS )
    {
-      HANDLE * handles = ( HANDLE * ) hb_xgrab( nCount * sizeof( HANDLE ) );
+      HANDLE * handles = static_cast< HANDLE * >( hb_xgrab( nCount * sizeof( HANDLE ) ) );
       DWORD nPos;
       DWORD dwResult;
 
@@ -124,7 +124,7 @@ HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTSEX )
 
    if( nCount > 0 && nCount <= MAXIMUM_WAIT_OBJECTS )
    {
-      HANDLE * handles = ( HANDLE * ) hb_xgrab( nCount * sizeof( HANDLE ) );
+      HANDLE * handles = static_cast< HANDLE * >( hb_xgrab( nCount * sizeof( HANDLE ) ) );
       DWORD nPos;
       DWORD dwResult;
 
@@ -273,14 +273,14 @@ static void s_getPathName( _HB_GETPATHNAME getPathName )
             if( cchBuffer == 0 )
                lpszShortPath = nullptr;
             else if( cchBuffer > ( DWORD ) HB_SIZEOFARRAY( buffer ) )
-               lpszShortPath = ( LPTSTR ) hb_xgrab( cchBuffer * sizeof( TCHAR ) );
+               lpszShortPath = static_cast< LPTSTR >( hb_xgrab( cchBuffer * sizeof( TCHAR ) ) );
          }
 
          length = getPathName( lpszLongPath, lpszShortPath, cchBuffer );
          if( ! fSize && length > cchBuffer )  /* default buffer size was too small */
          {
             cchBuffer = length;
-            lpszShortPath = ( LPTSTR ) hb_xgrab( cchBuffer * sizeof( TCHAR ) );
+            lpszShortPath = static_cast< LPTSTR >( hb_xgrab( cchBuffer * sizeof( TCHAR ) ) );
             length = getPathName( lpszLongPath, lpszShortPath, cchBuffer );
          }
          hbwapi_SetLastError( GetLastError() );
@@ -347,7 +347,7 @@ HB_FUNC( WAPI_GETSYSTEMDIRECTORY )
 
    if( nLen )
    {
-      LPTSTR buffer = ( LPTSTR ) hb_xgrab( ( nLen + 1 ) * sizeof( TCHAR ) );
+      LPTSTR buffer = static_cast< LPTSTR >( hb_xgrab( ( nLen + 1 ) * sizeof( TCHAR ) ) );
 
       nLen = GetSystemDirectory( buffer, nLen );
       hbwapi_SetLastError( GetLastError() );
@@ -373,7 +373,7 @@ HB_FUNC( WAPI_GETWINDOWSDIRECTORY )
 
    if( nLen )
    {
-      LPTSTR buffer = ( LPTSTR ) hb_xgrab( ( nLen + 1 ) * sizeof( TCHAR ) );
+      LPTSTR buffer = static_cast< LPTSTR >( hb_xgrab( ( nLen + 1 ) * sizeof( TCHAR ) ) );
 
       nLen = GetWindowsDirectory( buffer, nLen );
       hbwapi_SetLastError( GetLastError() );
@@ -433,12 +433,12 @@ HB_FUNC( WAPI_GETVOLUMEINFORMATION )
    if( HB_ISBYREF( 2 ) )
    {
       dwVolNameSize = MAX_PATH + 1;
-      lpVolNameBuf = ( LPTSTR ) hb_xgrab( MAX_PATH + 1 );
+      lpVolNameBuf = static_cast< LPTSTR >( hb_xgrab( MAX_PATH + 1 ) );
    }
    if( HB_ISBYREF( 6 ) )
    {
       dwFSNameSize = MAX_PATH + 1;
-      lpFSNameBuf = ( LPTSTR ) hb_xgrab( MAX_PATH + 1 );
+      lpFSNameBuf = static_cast< LPTSTR >( hb_xgrab( MAX_PATH + 1 ) );
    }
 
    bResult = GetVolumeInformation( lpRootPath,         /* RootPathName */

@@ -108,7 +108,7 @@ HB_FUNC( ATREPL )
          HB_SIZE nMatchCounter = 0;
 
          nRetStrLen = nStrLen;
-         pcRetStr = ( char * ) hb_xgrab( nRetStrLen + 1 );
+         pcRetStr = static_cast< char * >( hb_xgrab( nRetStrLen + 1 ) );
          hb_xmemcpy( pcRetStr, pcString, nRetStrLen );
 
          pcRetSubStr = pcRetStr + nIgnore;
@@ -181,7 +181,7 @@ HB_FUNC( ATREPL )
       {
          /* find and replace last match */
          nRetStrLen = nStrLen;
-         pcRetStr = ( char * ) hb_xgrab( nRetStrLen + 1 );
+         pcRetStr = static_cast< char * >( hb_xgrab( nRetStrLen + 1 ) );
          hb_xmemcpy( pcRetStr, pcString, nRetStrLen );
 
          /* we have to find the last match and replace it */

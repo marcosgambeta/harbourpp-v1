@@ -46,7 +46,7 @@ HB_FUNC( FT_DESCEND )
       HB_SIZE uiLen = hb_itemSize( iP );
       HB_SIZE n;
 
-      char * pDescend = ( char * ) hb_xgrab( uiLen );
+      char * pDescend = static_cast< char * >( hb_xgrab( uiLen ) );
 
       hb_itemCopyC( iP, pDescend, uiLen );
 

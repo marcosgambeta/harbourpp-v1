@@ -769,8 +769,8 @@ static unsigned char * _qr_checksum( PHB_BITBUFFER pData, int iVersion, int iLev
       j >>= 1;
 
    iMod = ( 1 << iBits ) - 1;
-   pExp = ( int * ) hb_xgrab( sizeof( int ) * iMod );          /* exponent function */
-   pLog = ( int * ) hb_xgrab( sizeof( int ) * ( iMod + 1 ) );  /* logarithm function */
+   pExp = static_cast< int * >( hb_xgrab( sizeof( int ) * iMod ) );          /* exponent function */
+   pLog = static_cast< int * >( hb_xgrab( sizeof( int ) * ( iMod + 1 ) ) );  /* logarithm function */
    j = 1;
    pLog[ 0 ] = iMod;
    for( i = 0; i < iMod; i++ )
@@ -786,7 +786,7 @@ static unsigned char * _qr_checksum( PHB_BITBUFFER pData, int iVersion, int iLev
    iECCLen = pLevel->block[ 0 ].uiECC;
    iIndex = 0; /* why this parameter is different from DataMatrix ??? */
 
-   pPoly = ( int * ) hb_xgrab( sizeof( int ) * ( iECCLen + 1 ) );
+   pPoly = static_cast< int * >( hb_xgrab( sizeof( int ) * ( iECCLen + 1 ) ) );
    pPoly[ 0 ] = 1;
    for( i = 1; i <= iECCLen; i++ )
    {
@@ -807,7 +807,7 @@ static unsigned char * _qr_checksum( PHB_BITBUFFER pData, int iVersion, int iLev
       HB_TRACE( HB_TR_ALWAYS, ( "POLY[%3d %02X]:%3d %02X", i, i, pPoly[ i ], pPoly[ i ] ) );
 #endif
 
-   pECC = ( unsigned char * ) hb_xgrab( pLevel->block[ 0 ].uiECC * ( pLevel->block[ 0 ].uiCount + pLevel->block[ 1 ].uiCount ) );
+   pECC = static_cast< unsigned char * >( hb_xgrab( pLevel->block[ 0 ].uiECC * ( pLevel->block[ 0 ].uiCount + pLevel->block[ 1 ].uiCount ) ) );
    pECCPtr = pECC;
 
    /* Divide data into blocks and do Reed-Solomon encoding for each block */

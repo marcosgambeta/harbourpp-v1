@@ -22,14 +22,14 @@ typedef struct
 
 PHB_IRMMAP hb_irmMapAlloc( HB_ULONG ulSize )
 {
-   PHB_IRMMAP pMap = ( PHB_IRMMAP ) hb_xgrab( sizeof( HB_IRMMAP ) );
+   PHB_IRMMAP pMap = static_cast< PHB_IRMMAP >( hb_xgrab( sizeof( HB_IRMMAP ) ) );
 
    if( ulSize == 0 )
       ulSize = 256;
 
    pMap->ulSize  = ulSize;
    pMap->ulAlloc = ( ulSize + 7 ) & ~7UL;
-   pMap->pBits   = ( HB_BYTE * ) hb_xgrab( pMap->ulAlloc >> 3 );
+   pMap->pBits   = static_cast< HB_BYTE * >( hb_xgrab( pMap->ulAlloc >> 3 ) );
    memset( pMap->pBits, 0, pMap->ulAlloc >> 3 );
    return pMap;
 }
@@ -194,7 +194,7 @@ PHB_IRMMAP hb_irmExecute( PHB_ITEM pItem )
          PHB_IRMMAP * pMapArray;
 
          --ulLen;
-         pMapArray = ( PHB_IRMMAP * ) hb_xgrab( sizeof( PHB_IRMMAP ) * ulLen );
+         pMapArray = static_cast< PHB_IRMMAP * >( hb_xgrab( sizeof( PHB_IRMMAP ) * ulLen ) );
          for( ul = 0; ul < ulLen; ++ul )
             pMapArray[ ul ] = hb_irmExecute( hb_arrayGetItemPtr( pItem, ul + 2 ) );
          ulSize = ( pMapArray[ 0 ]->ulSize + 7 ) >> 3;

@@ -163,7 +163,7 @@ HB_FUNC( FILESTR )
          else
             nLength = ( HB_ISIZ ) ( nFileSize - nPos );
 
-         pcResult = ( char * ) hb_xgrab( nLength + 1 );
+         pcResult = static_cast< char * >( hb_xgrab( nLength + 1 ) );
          if( nLength > 0 )
             nLength = hb_fsReadLarge( hFile, pcResult, ( HB_SIZE ) nLength );
 
@@ -192,7 +192,7 @@ HB_FUNC( SCREENFILE )
       HB_SIZE nSize;
 
       hb_gtRectSize( 0, 0, hb_gtMaxRow(), hb_gtMaxCol(), &nSize );
-      pBuffer = ( char * ) hb_xgrab( nSize );
+      pBuffer = static_cast< char * >( hb_xgrab( nSize ) );
 
       hb_gtSave( 0, 0, hb_gtMaxRow(), hb_gtMaxCol(), pBuffer );
 
@@ -221,7 +221,7 @@ HB_FUNC( FILESCREEN )
             hb_fsSeekLarge( hFile, ( HB_FOFFSET ) hb_parnint( 2 ), FS_SET );
 
          hb_gtRectSize( 0, 0, hb_gtMaxRow(), hb_gtMaxCol(), &nSize );
-         pBuffer = ( char * ) hb_xgrab( nSize );
+         pBuffer = static_cast< char * >( hb_xgrab( nSize ) );
 
          nLength = hb_fsReadLarge( hFile, pBuffer, nSize );
          hb_gtRest( 0, 0, hb_gtMaxRow(), hb_gtMaxCol(), pBuffer );

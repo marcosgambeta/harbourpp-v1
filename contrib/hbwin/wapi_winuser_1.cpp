@@ -790,7 +790,7 @@ HB_FUNC( WAPI_CREATEACCELERATORTABLE )
 
    if( iEntries > 0 )
    {
-      LPACCEL lpAccel = ( LPACCEL ) hb_xgrab( sizeof( ACCEL ) * iEntries );
+      LPACCEL lpAccel = static_cast< LPACCEL >( hb_xgrab( sizeof( ACCEL ) * iEntries ) );
       int i;
 
       for( i = 0; i < iEntries; ++i )

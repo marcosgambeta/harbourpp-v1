@@ -86,7 +86,7 @@ HB_FUNC( ENVPARAM )
 
       if( nSize > 0 )
       {
-         pResult = ( char * ) hb_xgrab( ( nSize + 1 ) * sizeof( char ) );
+         pResult = static_cast< char * >( hb_xgrab( ( nSize + 1 ) * sizeof( char ) ) );
          for( pEnv = pEnviron, pDst = pResult; *pEnv; pEnv++ )
          {
             HB_SIZE n = strlen( *pEnv );
@@ -120,7 +120,7 @@ HB_FUNC( ENVPARAM )
       {
          LPTSTR lpDst;
 
-         lpResult = ( LPTSTR ) hb_xgrab( ( nSize + 1 ) * sizeof( TCHAR ) );
+         lpResult = static_cast< LPTSTR >( hb_xgrab( ( nSize + 1 ) * sizeof( TCHAR ) ) );
          for( lpEnv = lpEnviron, lpDst = lpResult; *lpEnv; lpEnv++ )
          {
             do

@@ -70,7 +70,7 @@ HB_FUNC( FT_PROPER )
       {
          if( ! cDst )
          {
-            cDst = ( char * ) hb_xgrab( iLen + 1 );
+            cDst = static_cast< char * >( hb_xgrab( iLen + 1 ) );
             memcpy( cDst, cStr, iLen + 1 );
          }
          if( fCap )

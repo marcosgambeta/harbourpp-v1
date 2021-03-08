@@ -389,7 +389,7 @@ HB_FUNC( HB_CRYPT )
    PHB_ITEM pSource = hb_param( 1, HB_IT_ANY );
    PHB_ITEM pKey    = hb_param( 2, HB_IT_ANY );
 
-   unsigned char * cRes = ( unsigned char * ) hb_xgrab( hb_itemGetCLen( pSource ) + 8 );
+   unsigned char * cRes = static_cast< unsigned char * >( hb_xgrab( hb_itemGetCLen( pSource ) + 8 ) );
 
    nxs_crypt(
       ( const unsigned char * ) hb_itemGetCPtr( pSource ), hb_itemGetCLen( pSource ),
@@ -408,7 +408,7 @@ HB_FUNC( HB_DECRYPT )
    PHB_ITEM pSource = hb_param( 1, HB_IT_ANY );
    PHB_ITEM pKey    = hb_param( 2, HB_IT_ANY );
 
-   unsigned char * cRes = ( unsigned char * ) hb_xgrab( hb_itemGetCLen( pSource ) + 8 );
+   unsigned char * cRes = static_cast< unsigned char * >( hb_xgrab( hb_itemGetCLen( pSource ) + 8 ) );
 
    nxs_decrypt(
       ( const unsigned char * ) hb_itemGetCPtr( pSource ), hb_itemGetCLen( pSource ),

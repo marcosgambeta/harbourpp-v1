@@ -87,7 +87,7 @@ static void do_pad( int iSwitch )
       else
          cFill = 0x20;
 
-      pcRet = ( char * ) hb_xgrab( sRetLen + 1 );
+      pcRet = static_cast< char * >( hb_xgrab( sRetLen + 1 ) );
 
       if( iSwitch == DO_PAD_PADLEFT )
       {

@@ -67,7 +67,7 @@ HB_FUNC( WIN_SENDMESSAGE )
 
    if( HB_ISBYREF( 4 ) )
    {
-      cText = ( char * ) hb_xgrab( hb_parcsiz( 4 ) );
+      cText = static_cast< char * >( hb_xgrab( hb_parcsiz( 4 ) ) );
       hb_xmemcpy( cText, hb_parcx( 4 ), hb_parcsiz( 4 ) );
    }
 
@@ -94,7 +94,7 @@ HB_FUNC( WIN_SENDDLGITEMMESSAGE )
 
    if( pText )
    {
-      cText = ( char * ) hb_xgrab( hb_itemGetCLen( pText ) + 1 );
+      cText = static_cast< char * >( hb_xgrab( hb_itemGetCLen( pText ) + 1 ) );
       hb_xmemcpy( cText, hb_itemGetCPtr( pText ), hb_itemGetCLen( pText ) + 1 );
    }
    else
@@ -189,7 +189,7 @@ HB_FUNC( WIN_SETDLGITEMTEXT )
 HB_FUNC( WIN_GETDLGITEMTEXT )
 {
    USHORT iLen  = static_cast< USHORT >( SendMessage( static_cast< HWND >( GetDlgItem( static_cast< HWND >( HB_PARHANDLE( 1 ) ), hb_parni( 2 ) ) ), static_cast< UINT >( WM_GETTEXTLENGTH ), static_cast< WPARAM >( 0 ), static_cast< LPARAM >( 0 ) ) ) + 1;
-   char * cText = ( char * ) hb_xgrab( iLen + 1  );
+   char * cText = static_cast< char * >( hb_xgrab( iLen + 1  ) );
 
    GetDlgItemText( static_cast< HWND >( HB_PARHANDLE( 1 ) ),
                    hb_parni( 2 ),
@@ -1147,7 +1147,7 @@ HB_FUNC( TOOLBARADDBUTTONS )
    /* HWND hToolTip = ( HWND ) hb_parnl( 5 ) ; */
    PHB_ITEM   pArray   = hb_param( 3, HB_IT_ARRAY );
    int        iButtons = hb_parni( 4 );
-   TBBUTTON * tb       = ( struct _TBBUTTON * ) hb_xgrab( iButtons * sizeof( TBBUTTON ) );
+   TBBUTTON * tb       = static_cast< struct _TBBUTTON * >( hb_xgrab( iButtons * sizeof( TBBUTTON ) ) );
    PHB_ITEM   pTemp;
    /* BOOL bSystem; */
 

@@ -202,7 +202,7 @@ HB_FUNC( HB_TABEXPAND )
       HB_ISIZ nSize;
       char * szRet;
       nSize = nStrLen + nTabCount * ( nTabLen - 1 );
-      szRet = ( char * ) hb_xgrab( nSize + 1 );
+      szRet = static_cast< char * >( hb_xgrab( nSize + 1 ) );
       memset( szRet, ' ', nSize );
       nStrLen = hb_tabexpand( szText, szRet, nStrLen, nTabLen );
       hb_retclen_buffer( szRet, nStrLen );
@@ -260,8 +260,8 @@ HB_FUNC( HB_READLINE )
       HB_SIZE i;
 
       nTerms      = hb_arrayLen( pTerm1 );
-      pTerm       = ( const char ** ) hb_xgrab( sizeof( char * ) * nTerms );
-      pnTermSizes = ( HB_SIZE * ) hb_xgrab( sizeof( HB_SIZE ) * nTerms );
+      pTerm       = static_cast< const char ** >( hb_xgrab( sizeof( char * ) * nTerms ) );
+      pnTermSizes = static_cast< HB_SIZE * >( hb_xgrab( sizeof( HB_SIZE ) * nTerms ) );
 
       for( i = 0; i < nTerms; i++ )
       {
@@ -272,8 +272,8 @@ HB_FUNC( HB_READLINE )
    }
    else
    {
-      pTerm            = ( const char ** ) hb_xgrab( sizeof( char * ) );
-      pnTermSizes      = ( HB_SIZE * ) hb_xgrab( sizeof( HB_SIZE ) * 1 );
+      pTerm            = static_cast< const char ** >( hb_xgrab( sizeof( char * ) ) );
+      pnTermSizes      = static_cast< HB_SIZE * >( hb_xgrab( sizeof( HB_SIZE ) * 1 ) );
       pTerm[ 0 ]       = hb_itemGetCPtr( pTerm1 );
       pnTermSizes[ 0 ] = hb_itemGetCLen( pTerm1 );
       nTerms           = 1;

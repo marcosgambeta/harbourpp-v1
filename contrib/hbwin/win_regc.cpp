@@ -128,7 +128,7 @@ HB_FUNC( WIN_REGQUERYVALUEEX )
              dwType == REG_EXPAND_SZ ||
              dwType == REG_MULTI_SZ )
          {
-            LPBYTE lpValue = ( LPBYTE ) hb_xgrab( ( dwSize + 1 ) * sizeof( TCHAR ) );
+            LPBYTE lpValue = static_cast< LPBYTE >( hb_xgrab( ( dwSize + 1 ) * sizeof( TCHAR ) ) );
 
             if( RegQueryValueEx( ( HKEY ) hb_parptr( 1 ),
                                  lpKey,
@@ -148,7 +148,7 @@ HB_FUNC( WIN_REGQUERYVALUEEX )
          }
          else /* No translation for binary data */
          {
-            LPBYTE lpValue = ( LPBYTE ) hb_xgrab( dwSize + 1 );
+            LPBYTE lpValue = static_cast< LPBYTE >( hb_xgrab( dwSize + 1 ) );
 
             if( RegQueryValueEx( ( HKEY ) hb_parptr( 1 ),
                                  lpKey,

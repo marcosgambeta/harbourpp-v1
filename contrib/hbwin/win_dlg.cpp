@@ -133,7 +133,7 @@ static LPTSTR s_dialogPairs( int iParam, DWORD * pdwIndex )
          if( nLen )
          {
             nTotal = nLen + 1;
-            lpStr = ( LPTSTR ) hb_xgrab( nTotal * sizeof( TCHAR ) );
+            lpStr = static_cast< LPTSTR >( hb_xgrab( nTotal * sizeof( TCHAR ) ) );
             for( n = nLen = 0; n < nSize; ++n )
             {
                pArrItem = hb_arrayGetItemPtr( pItem, n + 1 );
@@ -175,7 +175,7 @@ static LPTSTR s_dialogPairs( int iParam, DWORD * pdwIndex )
          nLen = HB_ITEMCOPYSTR( pItem, nullptr, 0 );
          if( nLen )
          {
-            lpStr = ( LPTSTR ) hb_xgrab( ( nLen * 2 + 3 ) * sizeof( TCHAR ) );
+            lpStr = static_cast< LPTSTR >( hb_xgrab( ( nLen * 2 + 3 ) * sizeof( TCHAR ) ) );
             HB_ITEMCOPYSTR( pItem, lpStr, nLen + 1 );
             for( n = n1 = 0; n < nLen; ++n )
             {

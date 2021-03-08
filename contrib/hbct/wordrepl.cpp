@@ -68,7 +68,7 @@ HB_FUNC( WORDREPL )
       char * pcRet;
       HB_SIZE sIndex;
 
-      pcRet = ( char * ) hb_xgrab( sStrLen + 1 );
+      pcRet = static_cast< char * >( hb_xgrab( sStrLen + 1 ) );
       hb_xmemcpy( pcRet, pcString, sStrLen );
 
       for( sIndex = 0; sIndex < ( sSearchLen & 0xFFFFFFFE ); sIndex += 2 )

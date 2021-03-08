@@ -415,7 +415,7 @@ HB_FUNC( PQEXECPARAMS )
       int n = static_cast< int >( hb_arrayLen( aParam ) );
       int i;
 
-      const char ** paramvalues = ( const char ** ) hb_xgrab( sizeof( char * ) * n );
+      const char ** paramvalues = static_cast< const char ** >( hb_xgrab( sizeof( char * ) * n ) );
 
       for( i = 0; i < n; ++i )
          paramvalues[ i ] = hb_arrayGetCPtr( aParam, i + 1 );
@@ -714,7 +714,7 @@ HB_FUNC( PQESCAPESTRING )
 {
    const char * source = hb_parcx( 1 );
    HB_SIZE      size   = strlen( source );
-   char *       dest   = ( char * ) hb_xgrab( size * 2 + 1 );
+   char *       dest   = static_cast< char * >( hb_xgrab( size * 2 + 1 ) );
 
    PQescapeString( dest, source, ( size_t ) size );
 
@@ -1128,7 +1128,7 @@ HB_FUNC( PQEXECPREPARED )
       HB_SIZE  n      = hb_arrayLen( aParam );
       HB_SIZE  i;
 
-      const char ** paramvalues = ( const char ** ) hb_xgrab( sizeof( char * ) * n );
+      const char ** paramvalues = static_cast< const char ** >( hb_xgrab( sizeof( char * ) * n ) );
 
       for( i = 0; i < n; ++i )
          paramvalues[ i ] = hb_arrayGetCPtr( aParam, i + 1 );

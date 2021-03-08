@@ -267,7 +267,7 @@ static long _ft_skip( long iRecs )
       HB_ISIZ iBytesRead, iBytesRemaining;
       char *  cPtr;
 
-      char *     cBuff    = ( char * ) hb_xgrab( BUFFSIZE );
+      char *     cBuff    = static_cast< char * >( hb_xgrab( BUFFSIZE ) );
       HB_FOFFSET fpOffset = ft_text->offset[ ft_text->area ];
 
       ft_text->isBof[ ft_text->area ] = HB_FALSE;
@@ -445,8 +445,8 @@ static long _ft_skip( long iRecs )
      write to them before they mean anything */
 static int _ins_buff( PFT_TEXT ft_text, HB_ISIZ iLen )
 {
-   char *     ReadBuff  = ( char * ) hb_xgrab( BUFFSIZE );
-   char *     WriteBuff = ( char * ) hb_xgrab( BUFFSIZE );
+   char *     ReadBuff  = static_cast< char * >( hb_xgrab( BUFFSIZE ) );
+   char *     WriteBuff = static_cast< char * >( hb_xgrab( BUFFSIZE ) );
    char *     SaveBuff;
    HB_FOFFSET fpRead, fpWrite;
    HB_ISIZ    WriteLen, ReadLen;
@@ -533,7 +533,7 @@ static int _ins_buff( PFT_TEXT ft_text, HB_ISIZ iLen )
 /* deletes xxx bytes from the current file, beginning at the current record */
 static int _del_buff( PFT_TEXT ft_text, HB_ISIZ iLen )
 {
-   char *     WriteBuff = ( char * ) hb_xgrab( BUFFSIZE );
+   char *     WriteBuff = static_cast< char * >( hb_xgrab( BUFFSIZE ) );
    HB_FOFFSET fpRead, fpWrite;
    HB_ISIZ    WriteLen;
 
@@ -752,7 +752,7 @@ HB_FUNC( FT_FREADLN )
       HB_ISIZ iByteCount;
       HB_ISIZ iBytesRead;
       HB_ISIZ eol_len;
-      char *  cPtr = ( char * ) hb_xgrab( BUFFSIZE );
+      char *  cPtr = static_cast< char * >( hb_xgrab( BUFFSIZE ) );
 
       if( ( iBytesRead = hb_fileResult( hb_fileReadAt( ft_text->handles[ ft_text->area ], cPtr, BUFFSIZE, ft_text->offset[ ft_text->area ] ) ) ) == 0 )
          ft_text->error[ ft_text->area ] = hb_fsError();
@@ -781,7 +781,7 @@ HB_FUNC( FT_FDELETE )
       HB_FOFFSET destPtr;
       long       cur_rec = ft_text->recno[ ft_text->area ];
       HB_FOFFSET cur_off = ft_text->offset[ ft_text->area ];
-      char *     Buff    = ( char * ) hb_xgrab( BUFFSIZE );
+      char *     Buff    = static_cast< char * >( hb_xgrab( BUFFSIZE ) );
 
       /* save address to current record ( first record to be deleted ) */
       destPtr = ft_text->offset[ ft_text->area ];
@@ -865,7 +865,7 @@ HB_FUNC( FT_FAPPEND )
       HB_ISIZ iRead;
       HB_ISIZ iByteCount;
 
-      char * buff = ( char * ) hb_xgrab( BUFFSIZE );
+      char * buff = static_cast< char * >( hb_xgrab( BUFFSIZE ) );
 
       ft_text->error[ ft_text->area ] = 0;
 
@@ -946,7 +946,7 @@ HB_FUNC( FT_FWRITELN )
       else
       {
          /* overwrite mode, determine how many bytes over/under */
-         char * buffer = ( char * ) hb_xgrab( BUFFSIZE );
+         char * buffer = static_cast< char * >( hb_xgrab( BUFFSIZE ) );
 
          HB_ISIZ iLineLen = 0;
          HB_ISIZ iRead;

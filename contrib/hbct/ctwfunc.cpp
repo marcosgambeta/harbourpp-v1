@@ -429,7 +429,7 @@ HB_FUNC( WLIST )
       hb_retclen( "\000", 1 );
    else
    {
-      char * pszWindows = ( char * ) hb_xgrab( iWindows + 2 );
+      char * pszWindows = static_cast< char * >( hb_xgrab( iWindows + 2 ) );
 
       iFrom = 0;
       if( hb_ctwCurrentWindow() == 0 )

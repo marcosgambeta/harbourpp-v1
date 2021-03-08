@@ -1049,10 +1049,10 @@ static amfContext * context_setup( PHB_ITEM pFuncSym, HB_BOOL use_refs, HB_BOOL 
 {
    amfContext * context;
 
-   context = ( amfContext * ) hb_xgrab( sizeof( amfContext ) );
+   context = static_cast< amfContext * >( hb_xgrab( sizeof( amfContext ) ) );
    memset( context, 0, sizeof( amfContext ) );
 
-   context->cBuf = ( char * ) hb_xgrab( sizeof( char ) * 8 );
+   context->cBuf = static_cast< char * >( hb_xgrab( sizeof( char ) * 8 ) );
    context->position  = 0;
    context->length    = sizeof( char ) * 8;
    context->str_rtrim = str_rtrim;
@@ -1278,7 +1278,7 @@ HB_FUNC( AMF3_FROMWA )
             hb_arrayNew( pFieldNames, uiFields );
             for( uiIter = 1; uiIter <= uiFields; uiIter++ )
             {
-               char * szName = ( char * ) hb_xgrab( pArea->uiMaxFieldNameLength + 1 );
+               char * szName = static_cast< char * >( hb_xgrab( pArea->uiMaxFieldNameLength + 1 ) );
                pField      = hb_itemNew( nullptr );
                szName[ 0 ] = '\0';
                SELF_FIELDNAME( pArea, uiIter, szName );
@@ -1292,7 +1292,7 @@ HB_FUNC( AMF3_FROMWA )
             hb_arrayNew( pFieldNames, uiFieldCopy );
             for( uiIter = 1; uiIter <= uiFieldCopy; uiIter++ )
             {
-               char * szName = ( char * ) hb_xgrab( pArea->uiMaxFieldNameLength + 1 );
+               char * szName = static_cast< char * >( hb_xgrab( pArea->uiMaxFieldNameLength + 1 ) );
                pField      = hb_itemNew( nullptr );
                szName[ 0 ] = '\0';
                SELF_FIELDNAME( pArea, static_cast< HB_USHORT >( hb_itemGetNI( hb_arrayGetItemPtr( pFields, uiIter ) ) ), szName );
@@ -1409,10 +1409,10 @@ HB_FUNC( AMF3_ENCODE )
    if( ! pItem )
       return;
 
-   context = ( amfContext * ) hb_xgrab( sizeof( amfContext ) );
+   context = static_cast< amfContext * >( hb_xgrab( sizeof( amfContext ) ) );
    memset( context, 0, sizeof( amfContext ) );
 
-   context->cBuf = ( char * ) hb_xgrab( sizeof( char ) * 8 );
+   context->cBuf = static_cast< char * >( hb_xgrab( sizeof( char ) * 8 ) );
    context->position      = 0;
    context->length        = sizeof( char ) * 8;
    context->str_rtrim     = HB_FALSE;

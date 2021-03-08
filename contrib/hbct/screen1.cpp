@@ -427,7 +427,7 @@ HB_FUNC( SCREENTEXT )  /* HB_EXTENSION */
       char * pBuffer;
       char * szText;
       HB_SIZE nSize = ( HB_SIZE ) ( iBottom - iTop + 1 ) * ( iRight - iLeft + 1 );
-      szText = pBuffer = ( char * ) hb_xgrab( nSize + 1 );
+      szText = pBuffer = static_cast< char * >( hb_xgrab( nSize + 1 ) );
       while( iTop <= iBottom )
       {
          int iCol = iLeft;

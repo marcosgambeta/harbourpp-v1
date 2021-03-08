@@ -88,7 +88,7 @@ HB_FUNC( BLANK )
       if( pMode && hb_itemGetL( pMode ) )
       {
          HB_SIZE nLen = hb_itemGetCLen( pItem );
-         char * szResult = ( char * ) hb_xgrab( nLen + 1 );
+         char * szResult = static_cast< char * >( hb_xgrab( nLen + 1 ) );
 
          if( nLen > 0 )
             hb_xmemset( szResult, ' ', nLen );

@@ -102,7 +102,7 @@ typedef struct
 
 static PHB_FIBITMAP PHB_FIBITMAP_create( FIBITMAP * dib, HB_BOOL fFree )
 {
-   PHB_FIBITMAP hb_dib = ( PHB_FIBITMAP ) hb_xgrab( sizeof( HB_FIBITMAP ) );
+   PHB_FIBITMAP hb_dib = static_cast< PHB_FIBITMAP >( hb_xgrab( sizeof( HB_FIBITMAP ) ) );
 
    hb_dib->dib   = dib;
    hb_dib->fFree = fFree;

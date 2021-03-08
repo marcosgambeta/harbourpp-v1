@@ -113,7 +113,7 @@ HB_FUNC( STRFORMAT )
       }
 
       /* Assemble return value */
-      pszRetVal = pszRetValSave = ( char * ) hb_xgrab( nRetValLen + 1 );
+      pszRetVal = pszRetValSave = static_cast< char * >( hb_xgrab( nRetValLen + 1 ) );
       for( nMaskPos = 0; nMaskPos < nMaskLen; nMaskPos++ )
       {
          if( pszMask[ nMaskPos ] == '%' )

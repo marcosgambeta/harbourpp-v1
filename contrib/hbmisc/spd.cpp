@@ -61,7 +61,7 @@ static void STAItm( PHB_ITEM pItmPar )
       if( *c == '\'' )
          i++;                 /* Count ' Tokens */
    }
-   cRes = ( char * ) hb_xgrab( ulItmPar + i * sizeof( char ) );
+   cRes = static_cast< char * >( hb_xgrab( ulItmPar + i * sizeof( char ) ) );
    i    = 0; c = cItmPar; cRes[ i++ ] = '\'';
    while( *c )
    {
@@ -207,7 +207,7 @@ HB_FUNC( SQL_SPRINTF )
    }
    else if( ! argc )
    {
-      cRes = ( char * ) hb_xgrab( ulItmFrm + sizeof( char ) );
+      cRes = static_cast< char * >( hb_xgrab( ulItmFrm + sizeof( char ) ) );
       memcpy( cRes, cItmFrm, ulItmFrm + sizeof( char ) );
       hb_retclen_buffer( cRes, ulItmFrm );
    }
@@ -221,9 +221,9 @@ HB_FUNC( SQL_SPRINTF )
       int    p, iErrorPar = 0;
 
       cIntMod = nullptr;
-      cRes    = ( char * ) hb_xgrab( ulMaxRes );
-      cBuffer = ( char * ) hb_xgrab( ulMaxBuf );
-      cParFrm = ( char * ) hb_xgrab( ulItmFrm + sizeof( char ) );
+      cRes    = static_cast< char * >( hb_xgrab( ulMaxRes ) );
+      cBuffer = static_cast< char * >( hb_xgrab( ulMaxBuf ) );
+      cParFrm = static_cast< char * >( hb_xgrab( ulItmFrm + sizeof( char ) ) );
 
       for( p = 0; p < argc;  /* Not p++ by support index & indirect arguments */ )
       {
@@ -310,7 +310,7 @@ HB_FUNC( SQL_SPRINTF )
                else     /* Remove Internal Modifier */
                {
                   if( cIntMod == nullptr )
-                     cIntMod = ( char * ) hb_xgrab( ulItmFrm + sizeof( char ) );
+                     cIntMod = static_cast< char * >( hb_xgrab( ulItmFrm + sizeof( char ) ) );
 
                   while( *c++ && *c != '}' )
                      cIntMod[ s++ ] = *c;
