@@ -582,7 +582,7 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
                   pszNext++;
 
                nLen = pszEnd > pszNext ? pszEnd - pszNext : 0;
-               pszRetVal = ( char * ) hb_xgrab( nLen + 1 );
+               pszRetVal = static_cast< char * >( hb_xgrab( nLen + 1 ) );
                hb_strncpy( pszRetVal, pszNext, nLen );
             }
             else
@@ -773,7 +773,7 @@ HB_FUNC( HB_CMDLINE )
          for( iArg = 1; iArg < s_argc; iArg++ )
             nLen += HB_STRLEN( s_lpArgV[ iArg ] ) + 1;
 
-         ptr = lpBuffer = ( LPTSTR ) hb_xgrab( nLen * sizeof( TCHAR ) );
+         ptr = lpBuffer = static_cast< LPTSTR >( hb_xgrab( nLen * sizeof( TCHAR ) ) );
          for( iArg = 1; iArg < s_argc; iArg++ )
          {
             nLen = HB_STRLEN( s_lpArgV[ iArg ] );
@@ -799,7 +799,7 @@ HB_FUNC( HB_CMDLINE )
          for( iArg = 1; iArg < s_argc; iArg++ )
             nLen += strlen( s_argv[ iArg ] ) + 1;
 
-         ptr = pszBuffer = ( char * ) hb_xgrab( nLen );
+         ptr = pszBuffer = static_cast< char * >( hb_xgrab( nLen ) );
          for( iArg = 1; iArg < s_argc; iArg++ )
          {
             nLen = strlen( s_argv[ iArg ] );

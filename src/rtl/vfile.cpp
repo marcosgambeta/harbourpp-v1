@@ -621,7 +621,7 @@ HB_FUNC( HB_VFREADLEN )
 
       if( nToRead > 0 )
       {
-         char * buffer = ( char * ) hb_xgrab( nToRead + 1 );
+         char * buffer = static_cast< char * >( hb_xgrab( nToRead + 1 ) );
          HB_SIZE nRead;
 
          nRead = hb_fileRead( pFile, buffer, nToRead, hb_parnintdef( 3, -1 ) );

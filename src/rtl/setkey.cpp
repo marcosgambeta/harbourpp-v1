@@ -134,7 +134,7 @@ static void sk_add( PHB_SETKEY * sk_list_ptr, HB_BOOL bReturn,
       {
          if( pAction )
          {
-            sk_list_tmp = ( PHB_SETKEY ) hb_xgrab( sizeof( HB_SETKEY ) );
+            sk_list_tmp = static_cast< PHB_SETKEY >( hb_xgrab( sizeof( HB_SETKEY ) ) );
             sk_list_tmp->next = nullptr;
             sk_list_tmp->iKeyCode = iKeyCode;
             sk_list_tmp->pAction = hb_itemNew( pAction );

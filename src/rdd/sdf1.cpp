@@ -81,7 +81,7 @@ static void hb_sdfInitArea( SDFAREAP pArea, char * szFileName )
                         ( szEol[ 1 ] == '\n' || szEol[ 1 ] == '\r' ) ) );
 
    /* allocate record buffer, one additional byte is for deleted flag */
-   pArea->pRecord = ( HB_BYTE * ) hb_xgrab( pArea->uiRecordLen + pArea->uiEolLen + 1 );
+   pArea->pRecord = static_cast< HB_BYTE * >( hb_xgrab( pArea->uiRecordLen + pArea->uiEolLen + 1 ) );
    /* pseudo deleted flag */
    *pArea->pRecord++ = ' ';
    memcpy( pArea->pRecord + pArea->uiRecordLen,
@@ -93,7 +93,7 @@ static void hb_sdfInitArea( SDFAREAP pArea, char * szFileName )
       pArea->nBufferSize += pArea->fAnyEol ? 2 : pArea->uiEolLen;
       if( pArea->nBufferSize < 8192 )
          pArea->nBufferSize = 8192;
-      pArea->pBuffer = ( HB_BYTE * ) hb_xgrab( pArea->nBufferSize );
+      pArea->pBuffer = static_cast< HB_BYTE * >( hb_xgrab( pArea->nBufferSize ) );
    }
    pArea->ulRecCount = 0;
    pArea->nBufferIndex = pArea->nBufferRead = pArea->nBufferSize;

@@ -2287,17 +2287,17 @@ static HB_BOOL hb_gt_xwc_DefineBoxChar( PXWND_DEF wnd, HB_USHORT usCh, XWC_CharT
       switch( type )
       {
          case CH_SEG:
-            bxCh->u.seg = ( XSegment * ) hb_xgrab( sizeof( XSegment ) * size );
+            bxCh->u.seg = static_cast< XSegment * >( hb_xgrab( sizeof( XSegment ) * size ) );
             memcpy( bxCh->u.seg, segs, sizeof( XSegment ) * size );
             break;
          case CH_RECT:
-            bxCh->u.rect = ( XRectangle * ) hb_xgrab( sizeof( XRectangle ) * size );
+            bxCh->u.rect = static_cast< XRectangle * >( hb_xgrab( sizeof( XRectangle ) * size ) );
             memcpy( bxCh->u.rect, rect, sizeof( XRectangle ) * size );
             break;
          case CH_PTS:
          case CH_LINE:
          case CH_POLY:
-            bxCh->u.pts = ( XPoint * ) hb_xgrab( sizeof( XPoint ) * size );
+            bxCh->u.pts = static_cast< XPoint * >( hb_xgrab( sizeof( XPoint ) * size ) );
             memcpy( bxCh->u.pts, pts, sizeof( XPoint ) * size );
             break;
          case CH_UNDEF:
@@ -3153,7 +3153,7 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
                hb_gt_xwc_InvalidateChar( wnd, left, top, right, bottom );
 
                nSize = ( bottom - top + 1 ) * ( right - left + 2 ) * 3;
-               pBuffer = ( char * ) hb_xgrab( nSize + 1 );
+               pBuffer = static_cast< char * >( hb_xgrab( nSize + 1 ) );
                nI = 0;
                while( top <= bottom )
                {
@@ -3573,8 +3573,8 @@ static HB_BOOL hb_gt_xwc_AllocColor( PXWND_DEF wnd, XColor * pColor )
       XColor *colorTable;
       HB_BYTE *checkTable;
 
-      colorTable = ( XColor * ) hb_xgrab( iCMapSize * sizeof( XColor ) );
-      checkTable = ( HB_BYTE * ) hb_xgrab( iCMapSize * sizeof( HB_BYTE ) );
+      colorTable = static_cast< XColor * >( hb_xgrab( iCMapSize * sizeof( XColor ) ) );
+      checkTable = static_cast< HB_BYTE * >( hb_xgrab( iCMapSize * sizeof( HB_BYTE ) ) );
       for( i = 0; i < iCMapSize; i++ )
       {
          colorTable[ i ].pixel = ( HB_GT_PIXELTYPE ) i;
@@ -4145,7 +4145,7 @@ static HB_BOOL hb_gt_xwc_SetScrBuff( PXWND_DEF wnd, HB_USHORT cols, HB_USHORT ro
 
          if( wnd->pCurrScr != nullptr )
             hb_xfree( wnd->pCurrScr );
-         wnd->pCurrScr = ( HB_U32 * ) hb_xgrab( cols * rows * sizeof( HB_U32 ) );
+         wnd->pCurrScr = static_cast< HB_U32 * >( hb_xgrab( cols * rows * sizeof( HB_U32 ) ) );
          hb_gt_xwc_InvalidateFull( wnd );
 
          return HB_TRUE;
@@ -4418,7 +4418,7 @@ static void hb_gt_xwc_SetSelection( PXWND_DEF wnd, const char * szData, HB_SIZE 
    {
       if( fCopy )
       {
-         wnd->ClipboardData = ( unsigned char * ) hb_xgrab( nSize + 1 );
+         wnd->ClipboardData = static_cast< unsigned char * >( hb_xgrab( nSize + 1 ) );
          memcpy( wnd->ClipboardData, szData, nSize );
          wnd->ClipboardData[ nSize ] = '\0';
       }

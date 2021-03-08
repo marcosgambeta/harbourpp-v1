@@ -456,7 +456,7 @@ char * hb_verPlatform( void )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_verPlatform()" ) );
 
-   pszPlatform = ( char * ) hb_xgrab( PLATFORM_BUF_SIZE + 1 );
+   pszPlatform = static_cast< char * >( hb_xgrab( PLATFORM_BUF_SIZE + 1 ) );
 
 #if defined( HB_OS_DOS )
 
@@ -950,7 +950,7 @@ char * hb_verCompiler( void )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_verCompiler()" ) );
 
-   pszCompiler = ( char * ) hb_xgrab( COMPILER_BUF_SIZE );
+   pszCompiler = static_cast< char * >( hb_xgrab( COMPILER_BUF_SIZE ) );
    szSub[ 0 ] = '\0';
 
 #if defined( __IBMC__ ) || defined( __IBMCPP__ )
@@ -1337,7 +1337,7 @@ char * hb_verHarbour( void )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_verHarbour()" ) );
 
-   pszVersion = ( char * ) hb_xgrab( 80 );
+   pszVersion = static_cast< char * >( hb_xgrab( 80 ) );
    hb_snprintf( pszVersion, 80, "Harbour++ %d.%d.%d%s (r%d)",
                 HB_VER_MAJOR, HB_VER_MINOR, HB_VER_RELEASE, HB_VER_STATUS,
                 hb_verRevision() );
@@ -1351,7 +1351,7 @@ char * hb_verPCode( void )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_verPCode()" ) );
 
-   pszPCode = ( char * ) hb_xgrab( 24 );
+   pszPCode = static_cast< char * >( hb_xgrab( 24 ) );
    hb_snprintf( pszPCode, 24, "PCode version: %d.%d",
                 HB_PCODE_VER >> 8, HB_PCODE_VER & 0xFF );
 
@@ -1364,7 +1364,7 @@ char * hb_verBuildDate( void )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_verBuildDate()" ) );
 
-   pszDate = ( char * ) hb_xgrab( 64 );
+   pszDate = static_cast< char * >( hb_xgrab( 64 ) );
    hb_snprintf( pszDate, 64, "%s %s", __DATE__, __TIME__ );
 
    return pszDate;

@@ -327,7 +327,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
          return nullptr;
       }
 
-      pHrbBody = ( PHRB_BODY ) hb_xgrab( sizeof( HRB_BODY ) );
+      pHrbBody = static_cast< PHRB_BODY >( hb_xgrab( sizeof( HRB_BODY ) ) );
 
       pHrbBody->fInit = HB_FALSE;
       pHrbBody->fExit = HB_FALSE;
@@ -367,7 +367,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
 
       nBodyOffset = nPos;
       ul = pHrbBody->ulSymbols * sizeof( HB_SYMB );
-      pSymRead = ( PHB_SYMB ) hb_xgrab( nSize + ul );
+      pSymRead = static_cast< PHB_SYMB >( hb_xgrab( nSize + ul ) );
       buffer = ( ( char * ) pSymRead ) + ul;
 
       for( ul = 0; ul < pHrbBody->ulSymbols; ul++ )  /* Read symbols in .hrb */
@@ -425,7 +425,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
                break;
 
             /* Copy function body */
-            pDynFunc[ ul ].pCode = ( HB_BYTE * ) hb_xgrab( nSize );
+            pDynFunc[ ul ].pCode = static_cast< HB_BYTE * >( hb_xgrab( nSize ) );
             memcpy( ( char * ) pDynFunc[ ul ].pCode, szHrbBody + nBodyOffset, nSize );
             nBodyOffset += nSize;
 
@@ -701,7 +701,7 @@ HB_FUNC( HB_HRBRUN )
          if( iPCount > 0 )
          {
             int i;
-            pParams = ( PHB_ITEM * ) hb_xgrab( sizeof( PHB_ITEM ) * iPCount );
+            pParams = static_cast< PHB_ITEM * >( hb_xgrab( sizeof( PHB_ITEM ) * iPCount ) );
             for( i = 0; i < iPCount; i++ )
                pParams[ i ] = hb_stackItemFromBase( i + 1 + nParam );
          }
@@ -752,7 +752,7 @@ HB_FUNC( HB_HRBLOAD )
          if( iPCount > 0 )
          {
             int i;
-            pParams = ( PHB_ITEM * ) hb_xgrab( sizeof( PHB_ITEM ) * iPCount );
+            pParams = static_cast< PHB_ITEM * >( hb_xgrab( sizeof( PHB_ITEM ) * iPCount ) );
             for( i = 0; i < iPCount; i++ )
                pParams[ i ] = hb_stackItemFromBase( i + 1 + nParam );
          }
@@ -780,7 +780,7 @@ HB_FUNC( HB_HRBDO )
       if( iPCount > 0 )
       {
          int i;
-         pParams = ( PHB_ITEM * ) hb_xgrab( sizeof( PHB_ITEM ) * iPCount );
+         pParams = static_cast< PHB_ITEM * >( hb_xgrab( sizeof( PHB_ITEM ) * iPCount ) );
          for( i = 0; i < iPCount; i++ )
             pParams[ i ] = hb_stackItemFromBase( i + 2 );
       }

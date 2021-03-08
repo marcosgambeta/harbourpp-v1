@@ -170,7 +170,7 @@ HB_WCHAR * hb_wstrdup( const HB_WCHAR * szText )
    HB_TRACE( HB_TR_DEBUG, ( "hb_wstrdup(%p)", ( const void * ) szText ) );
 
    nSize = ( hb_wstrlen( szText ) + 1 ) * sizeof( HB_WCHAR );
-   pszDest = ( HB_WCHAR * ) hb_xgrab( nSize );
+   pszDest = static_cast< HB_WCHAR * >( hb_xgrab( nSize ) );
 
    memcpy( pszDest, szText, nSize );
 
@@ -188,7 +188,7 @@ HB_WCHAR * hb_wstrndup( const HB_WCHAR * szText, HB_SIZE nLen )
    if( nSize < nLen )
       nLen = nSize;
    nSize = nLen * sizeof( HB_WCHAR );
-   pszDest = ( HB_WCHAR * ) hb_xgrab( nSize + sizeof( HB_WCHAR ) );
+   pszDest = static_cast< HB_WCHAR * >( hb_xgrab( nSize + sizeof( HB_WCHAR ) ) );
    memcpy( pszDest, szText, nSize );
    pszDest[ nLen ] = 0;
 
@@ -205,8 +205,8 @@ HB_WCHAR * hb_wstrunshare( void ** phStr, const HB_WCHAR * pStr, HB_SIZE nLen )
    if( nLen > 0 &&
        ( *phStr == ( const void * ) s_szConstStr || hb_xRefCount( *phStr ) > 1 ) )
    {
-      HB_WCHAR * pszDest = ( HB_WCHAR * ) hb_xgrab( ( nLen + 1 ) *
-                                                    sizeof( HB_WCHAR ) );
+      HB_WCHAR * pszDest = static_cast< HB_WCHAR * >( hb_xgrab( ( nLen + 1 ) *
+                                                    sizeof( HB_WCHAR ) ) );
       memcpy( pszDest, pStr, nLen * sizeof( HB_WCHAR ) );
       pszDest[ nLen ] = 0;
       if( *phStr != ( const void * ) s_szConstStr )
@@ -229,7 +229,7 @@ char * hb_strunshare( void ** phStr, const char * pStr, HB_SIZE nLen )
    if( nLen > 0 &&
        ( *phStr == ( const void * ) s_szConstStr || hb_xRefCount( *phStr ) > 1 ) )
    {
-      char * pszDest = ( char * ) hb_xgrab( ( nLen + 1 ) * sizeof( char ) );
+      char * pszDest = static_cast< char * >( hb_xgrab( ( nLen + 1 ) * sizeof( char ) ) );
       memcpy( pszDest, pStr, nLen * sizeof( char ) );
       pszDest[ nLen ] = 0;
       if( *phStr != ( const void * ) s_szConstStr )
@@ -315,7 +315,7 @@ const char * hb_itemGetStrUTF8( PHB_ITEM pItem, void ** phString, HB_SIZE * pnLe
 
       if( nLen != pItem->item.asString.length )
       {
-         char * pszUtf8 = ( char * ) hb_xgrab( nLen + 1 );
+         char * pszUtf8 = static_cast< char * >( hb_xgrab( nLen + 1 ) );
          hb_cdpStrToUTF8( cdp,
                           pItem->item.asString.value, pItem->item.asString.length,
                           pszUtf8, nLen + 1 );
@@ -360,7 +360,7 @@ const HB_WCHAR * hb_itemGetStrU16( PHB_ITEM pItem, int iEndian,
          return s_szConstStr;
       }
 
-      pszU16 = ( HB_WCHAR * ) hb_xgrab( ( nLen + 1 ) * sizeof( HB_WCHAR ) );
+      pszU16 = static_cast< HB_WCHAR * >( hb_xgrab( ( nLen + 1 ) * sizeof( HB_WCHAR ) ) );
       hb_cdpStrToU16( cdp, iEndian,
                       pItem->item.asString.value, pItem->item.asString.length,
                       pszU16, nLen + 1 );
@@ -474,7 +474,7 @@ PHB_ITEM hb_itemPutStrLenUTF8( PHB_ITEM pItem, const char * pStr, HB_SIZE nLen )
 
    cdp = hb_vmCDP();
    nDest = hb_cdpUTF8AsStrLen( cdp, pStr, nLen, 0 );
-   pszDest = ( char * ) hb_xgrab( nDest + 1 );
+   pszDest = static_cast< char * >( hb_xgrab( nDest + 1 ) );
    hb_cdpUTF8ToStr( cdp, pStr, nLen, pszDest, nDest + 1 );
 
    return hb_itemPutCLPtr( pItem, pszDest, nDest );
@@ -493,7 +493,7 @@ PHB_ITEM hb_itemPutStrLenU16( PHB_ITEM pItem, int iEndian, const HB_WCHAR * pStr
 
    cdp = hb_vmCDP();
    nDest = hb_cdpU16AsStrLen( cdp, pStr, nLen, 0 );
-   pszDest = ( char * ) hb_xgrab( nDest + 1 );
+   pszDest = static_cast< char * >( hb_xgrab( nDest + 1 ) );
    hb_cdpU16ToStr( cdp, iEndian, pStr, nLen, pszDest, nDest + 1 );
 
    return hb_itemPutCLPtr( pItem, pszDest, nDest );
@@ -530,7 +530,7 @@ PHB_ITEM hb_itemPutStrUTF8( PHB_ITEM pItem, const char * pStr )
    cdp = hb_vmCDP();
    nLen = strlen( pStr );
    nDest = hb_cdpUTF8AsStrLen( cdp, pStr, nLen, 0 );
-   pszDest = ( char * ) hb_xgrab( nDest + 1 );
+   pszDest = static_cast< char * >( hb_xgrab( nDest + 1 ) );
    hb_cdpUTF8ToStr( cdp, pStr, nLen, pszDest, nDest + 1 );
 
    return hb_itemPutCLPtr( pItem, pszDest, nDest );
@@ -550,7 +550,7 @@ PHB_ITEM hb_itemPutStrU16( PHB_ITEM pItem, int iEndian, const HB_WCHAR * pStr )
    cdp = hb_vmCDP();
    nLen = hb_wstrlen( pStr );
    nDest = hb_cdpU16AsStrLen( cdp, pStr, nLen, 0 );
-   pszDest = ( char * ) hb_xgrab( nDest + 1 );
+   pszDest = static_cast< char * >( hb_xgrab( nDest + 1 ) );
    hb_cdpU16ToStr( cdp, iEndian, pStr, nLen, pszDest, nDest + 1 );
 
    return hb_itemPutCLPtr( pItem, pszDest, nDest );

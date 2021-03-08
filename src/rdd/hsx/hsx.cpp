@@ -1170,12 +1170,12 @@ static int hb_hsxSeekSet( int iHandle, const char * pStr, HB_SIZE nLen )
       {
          if( pHSX->pSearchVal )
             hb_xfree( pHSX->pSearchVal );
-         pHSX->pSearchVal = ( char * ) hb_xgrab( nLen + 1 );
+         pHSX->pSearchVal = static_cast< char * >( hb_xgrab( nLen + 1 ) );
          memcpy( pHSX->pSearchVal, pStr, nLen );
          pHSX->pSearchVal[ nLen ] = '\0';
          pHSX->nSearch = nLen;
          if( ! pHSX->pSearchKey )
-            pHSX->pSearchKey = ( HB_BYTE * ) hb_xgrab( pHSX->uiRecordSize );
+            pHSX->pSearchKey = static_cast< HB_BYTE * >( hb_xgrab( pHSX->uiRecordSize ) );
          hb_hsxHashStr( pStr, nLen, pHSX->pSearchKey,
                         pHSX->uiRecordSize, pHSX->fIgnoreCase,
                         pHSX->iFilterType, pHSX->fUseHash );
@@ -1878,7 +1878,7 @@ HB_FUNC( HS_FILTER )
             nLen = pHSX->nSearch;
             if( nLen && pHSX->pSearchVal )
             {
-               pBuff = ( char * ) hb_xgrab( nLen + 1 );
+               pBuff = static_cast< char * >( hb_xgrab( nLen + 1 ) );
                memcpy( pBuff, pHSX->pSearchVal, nLen );
                pBuff[ nLen ] = '\0';
                szText = pBuff;

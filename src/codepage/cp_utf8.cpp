@@ -254,7 +254,7 @@ static void hb_cp_init( PHB_CODEPAGE cdp )
    HB_UCHAR * flags, * upper, * lower;
    int i;
 
-   cdp->buffer = ( HB_UCHAR * ) hb_xgrab( 0x300 );
+   cdp->buffer = static_cast< HB_UCHAR * >( hb_xgrab( 0x300 ) );
    cdp->flags = flags = ( HB_UCHAR * ) cdp->buffer;
    cdp->upper = upper = ( HB_UCHAR * ) cdp->buffer + 0x100;
    cdp->lower = lower = ( HB_UCHAR * ) cdp->buffer + 0x200;

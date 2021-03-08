@@ -408,7 +408,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
       char * szDest, * szHead;
       HB_SIZE nAlloc = 16;
 
-      szHead = szDest = ( char * ) hb_xgrab( nAlloc );
+      szHead = szDest = static_cast< char * >( hb_xgrab( nAlloc ) );
       szSource++;
       while( *szSource != '\"' )
       {
@@ -662,11 +662,11 @@ char * hb_jsonEncodeCP( PHB_ITEM pValue, HB_SIZE * pnLen, int iIndent, PHB_CODEP
    char * szRet;
    HB_SIZE nLen;
 
-   pCtx = ( PHB_JSON_ENCODE_CTX ) hb_xgrab( sizeof( HB_JSON_ENCODE_CTX ) );
+   pCtx = static_cast< PHB_JSON_ENCODE_CTX >( hb_xgrab( sizeof( HB_JSON_ENCODE_CTX ) ) );
    pCtx->nAlloc = 16;
-   pCtx->pHead = pCtx->pBuffer = ( char * ) hb_xgrab( pCtx->nAlloc );
+   pCtx->pHead = pCtx->pBuffer = static_cast< char * >( hb_xgrab( pCtx->nAlloc ) );
    pCtx->nAllocId = 8;
-   pCtx->pId = ( void ** ) hb_xgrab( sizeof( void * ) * pCtx->nAllocId );
+   pCtx->pId = static_cast< void ** >( hb_xgrab( sizeof( void * ) * pCtx->nAllocId ) );
    pCtx->iIndent = iIndent;
    pCtx->szEol = hb_setGetEOL();
    if( ! pCtx->szEol || ! pCtx->szEol[ 0 ] )

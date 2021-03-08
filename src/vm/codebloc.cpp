@@ -170,7 +170,7 @@ PHB_CODEBLOCK hb_codeblockNew( const HB_BYTE * pBuffer,
        * NOTE: This table can be shared by codeblocks created during
        * evaluation of this codeblock
        */
-      pLocals = ( PHB_ITEM ) hb_xgrab( ( uiLocals + 1 ) * sizeof( HB_ITEM ) );
+      pLocals = static_cast< PHB_ITEM >( hb_xgrab( ( uiLocals + 1 ) * sizeof( HB_ITEM ) ) );
       pLocals[ 0 ].type = HB_IT_NIL;
 
       do

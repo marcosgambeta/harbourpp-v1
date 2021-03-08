@@ -285,7 +285,7 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
    }
 #else
    {
-      char * pTmpBuffer = ( char * ) hb_xgrab( L_tmpnam + 1 );
+      char * pTmpBuffer = static_cast< char * >( hb_xgrab( L_tmpnam + 1 ) );
 
       /* TODO: Implement these: */
       HB_SYMBOL_UNUSED( pszDir );

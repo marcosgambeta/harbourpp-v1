@@ -70,7 +70,7 @@ HB_FUNC( HB_STRXOR )
             const char * pStr2 = hb_itemGetCPtr( pItem2 );
             HB_SIZE n2;
 
-            pRet = ( char * ) hb_xgrab( nLen1 + 1 );
+            pRet = static_cast< char * >( hb_xgrab( nLen1 + 1 ) );
             memcpy( pRet, pStr1, nLen1 + 1 );
             n2 = 0;
             for( n = 0; n < nLen1; n++ )
@@ -92,7 +92,7 @@ HB_FUNC( HB_STRXOR )
 
          if( bChar )
          {
-            pRet = ( char * ) hb_xgrab( nLen1 + 1 );
+            pRet = static_cast< char * >( hb_xgrab( nLen1 + 1 ) );
             memcpy( pRet, pStr1, nLen1 + 1 );
             for( n = 0; n < nLen1; n++ )
                pRet[ n ] ^= bChar;

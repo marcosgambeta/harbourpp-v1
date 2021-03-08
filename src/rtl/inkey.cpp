@@ -66,7 +66,7 @@ static void hb_inkeySetTextKeys( const char * pszText, HB_SIZE nSize, HB_BOOL fI
       HB_SIZE n = 0;
 
       keys = nSize <= HB_SIZEOFARRAY( buffer ) ? buffer :
-                        ( HB_WCHAR * ) hb_xgrab( nSize * sizeof( HB_WCHAR ) );
+                        static_cast< HB_WCHAR * >( hb_xgrab( nSize * sizeof( HB_WCHAR ) ) );
       while( HB_CDPCHAR_GET( cdp, pszText, nSize, &nIndex, &wc ) )
          keys[ n++ ] = wc;
 

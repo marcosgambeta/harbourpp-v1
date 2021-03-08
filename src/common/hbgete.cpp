@@ -79,7 +79,7 @@ char * hb_getenv( const char * szName )
 
       if( size != 0 )
       {
-         LPTSTR lpBuffer = ( LPTSTR ) hb_xgrab( size * sizeof( TCHAR ) );
+         LPTSTR lpBuffer = static_cast< LPTSTR >( hb_xgrab( size * sizeof( TCHAR ) ) );
          GetEnvironmentVariable( lpName, lpBuffer, size );
          pszBuffer = HB_OSSTRDUP( lpBuffer );
          hb_xfree( lpBuffer );
@@ -124,7 +124,7 @@ HB_BOOL hb_getenv_buffer( const char * szName, char * szBuffer, int nSize )
       LPTSTR lpName = HB_CHARDUP( szName ), lpBuffer;
 
       if( szBuffer != nullptr || nSize > 0 )
-         lpBuffer = ( LPTSTR ) hb_xgrab( nSize * sizeof( TCHAR ) );
+         lpBuffer = static_cast< LPTSTR >( hb_xgrab( nSize * sizeof( TCHAR ) ) );
       else
          lpBuffer = nullptr;
 

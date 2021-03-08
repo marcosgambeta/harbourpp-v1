@@ -779,7 +779,7 @@ static HB_BOOL hb_dbfPasswordSet( DBFAREAP pArea, PHB_ITEM pPasswd, HB_BOOL fRaw
          /* at this moment only one encryption method is used,
             I'll add other later, [druzus] */
          pArea->bCryptType = DB_CRYPT_SIX;
-         pArea->pCryptKey = ( char * ) hb_xgrab( 8 );
+         pArea->pCryptKey = static_cast< char * >( hb_xgrab( 8 ) );
 
          /* SIX encode the key with its own value before use */
          if( ! fRaw )
@@ -973,7 +973,7 @@ static HB_ERRCODE hb_dbfLockRecord( DBFAREAP pArea, HB_ULONG ulRecNo, HB_USHORT 
    {
       if( pArea->ulNumLocksPos == 0 )               /* Create the list */
       {
-         pArea->pLocksPos = ( HB_ULONG * ) hb_xgrab( sizeof( HB_ULONG ) );
+         pArea->pLocksPos = static_cast< HB_ULONG * >( hb_xgrab( sizeof( HB_ULONG ) ) );
       }
       else                                          /* Resize the list */
       {
@@ -2526,7 +2526,7 @@ static HB_ERRCODE hb_dbfPutRec( DBFAREAP pArea, const HB_BYTE * pBuffer )
 
          if( pArea->bCryptType == DB_CRYPT_SIX && pArea->fEncrypted )
          {
-            pRecord = ( HB_BYTE * ) hb_xgrab( pArea->uiRecordLen );
+            pRecord = static_cast< HB_BYTE * >( hb_xgrab( pArea->uiRecordLen ) );
             pRecord[ 0 ] = pArea->fDeleted ? 'D' : 'E';
             hb_sxEnCrypt( ( const char * ) pArea->pRecord + 1,
                           ( char * ) pRecord + 1,
@@ -3599,7 +3599,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
    }
 
    /* Alloc buffer */
-   pArea->pRecord = ( HB_BYTE * ) hb_xgrab( pArea->uiRecordLen );
+   pArea->pRecord = static_cast< HB_BYTE * >( hb_xgrab( pArea->uiRecordLen ) );
    pArea->fValidBuffer = HB_FALSE;
 
    /* Update the number of record for corrupted headers */
@@ -4042,7 +4042,7 @@ static HB_ERRCODE hb_dbfRecInfo( DBFAREAP pArea, PHB_ITEM pRecID, HB_USHORT uiIn
             break;
          }
          nLength = uiInfoType == DBRI_RAWDATA ? pArea->uiRecordLen : 0;
-         pResult = ( HB_BYTE * ) hb_xgrab( nLength + 1 );
+         pResult = static_cast< HB_BYTE * >( hb_xgrab( nLength + 1 ) );
          if( nLength )
          {
             memcpy( pResult, pArea->pRecord, nLength );
@@ -4305,7 +4305,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
       uiSkip = 0;
       uiFields = ( pArea->uiHeaderLen - sizeof( DBFHEADER ) ) / sizeof( DBFFIELD );
       nSize = ( HB_SIZE ) uiFields * sizeof( DBFFIELD );
-      pBuffer = uiFields ? ( HB_BYTE * ) hb_xgrab( nSize ) : nullptr;
+      pBuffer = uiFields ? static_cast< HB_BYTE * >( hb_xgrab( nSize ) ) : nullptr;
 
       /* Read fields and exit if error */
       do
@@ -4723,7 +4723,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
    }
 
    /* Alloc buffer */
-   pArea->pRecord = ( HB_BYTE * ) hb_xgrab( pArea->uiRecordLen );
+   pArea->pRecord = static_cast< HB_BYTE * >( hb_xgrab( pArea->uiRecordLen ) );
    pArea->fValidBuffer = HB_FALSE;
 
    /* Update the number of record for corrupted headers */
@@ -5208,8 +5208,8 @@ static HB_DBRECNO * hb_dbfSortSort( LPDBSORTREC pSortRec )
    HB_DBRECNO nCount;
 
    if( pSortRec->pnIndex == nullptr )
-      pSortRec->pnIndex = ( HB_SORTIDX * ) hb_xgrab(
-            ( ( HB_SIZE ) pSortRec->nCount << 1 ) * sizeof( HB_SORTIDX ) );
+      pSortRec->pnIndex = static_cast< HB_SORTIDX * >( hb_xgrab(
+            ( ( HB_SIZE ) pSortRec->nCount << 1 ) * sizeof( HB_SORTIDX ) ) );
    for( nCount = 0; nCount < pSortRec->nCount; ++nCount )
       pSortRec->pnIndex[ nCount ] = ( HB_SORTIDX ) nCount;
 
@@ -5219,8 +5219,8 @@ static HB_DBRECNO * hb_dbfSortSort( LPDBSORTREC pSortRec )
       pOrder += pSortRec->nCount;
 
    if( pSortRec->pnOrder == nullptr )
-      pSortRec->pnOrder = ( HB_DBRECNO * ) hb_xgrab(
-            ( HB_SIZE ) pSortRec->nCount * sizeof( HB_DBRECNO ) );
+      pSortRec->pnOrder = static_cast< HB_DBRECNO * >( hb_xgrab(
+            ( HB_SIZE ) pSortRec->nCount * sizeof( HB_DBRECNO ) ) );
    for( nCount = 0; nCount < pSortRec->nCount; ++nCount )
       pSortRec->pnOrder[ nCount ] = pSortRec->pnRecords[ pOrder[ nCount ] ];
 
@@ -5411,12 +5411,12 @@ static HB_ERRCODE hb_dbfSortFinish( LPDBSORTREC pSortRec )
          nCount = pSortRec->nMaxRec * pSortRec->nPages - nCount;
 
          pSortRec->pSortArray = hb_itemArrayNew( pSortRec->nPages );
-         pSortRec->pnRecords = ( HB_DBRECNO * ) hb_xgrab( pSortRec->nPages *
-                                                          sizeof( HB_DBRECNO ) );
-         pSortRec->pnIndex = ( HB_SORTIDX * ) hb_xgrab( pSortRec->nPages *
-                                                        sizeof( HB_SORTIDX ) );
-         pSortRec->pnOrder = pnOrder = ( HB_DBRECNO * )
-                                       hb_xgrab( nCount * sizeof( HB_DBRECNO ) );
+         pSortRec->pnRecords = static_cast< HB_DBRECNO * >( hb_xgrab( pSortRec->nPages *
+                                                          sizeof( HB_DBRECNO ) ) );
+         pSortRec->pnIndex = static_cast< HB_SORTIDX * >( hb_xgrab( pSortRec->nPages *
+                                                        sizeof( HB_SORTIDX ) ) );
+         pSortRec->pnOrder = pnOrder = static_cast< HB_DBRECNO * >(
+                                       hb_xgrab( nCount * sizeof( HB_DBRECNO ) ) );
          for( nPage = 0; nPage < pSortRec->nPages; ++nPage, pnOrder += pSortRec->nMaxRec )
          {
             pSortRec->pSwapPages[ nPage ].pnRecords = pnOrder;
@@ -6618,7 +6618,7 @@ static HB_ERRCODE hb_dbfInit( LPRDDNODE pRDD )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_dbfInit(%p)", ( void * ) pRDD ) );
 
-   pTSD = ( PHB_TSD ) hb_xgrab( sizeof( HB_TSD ) );
+   pTSD = static_cast< PHB_TSD >( hb_xgrab( sizeof( HB_TSD ) ) );
    HB_TSD_INIT( pTSD, sizeof( DBFDATA ), hb_dbfInitTSD, hb_dbfDestroyTSD );
    pRDD->lpvCargo = ( void * ) pTSD;
 

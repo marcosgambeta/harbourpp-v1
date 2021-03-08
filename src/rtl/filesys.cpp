@@ -346,7 +346,7 @@ static int fs_win_get_drive( void )
    if( dwResult > dwSize )
    {
       dwSize = dwResult;
-      lpBuffer = ( TCHAR * ) hb_xgrab( dwSize * sizeof( TCHAR ) );
+      lpBuffer = static_cast< TCHAR * >( hb_xgrab( dwSize * sizeof( TCHAR ) ) );
       dwResult = GetCurrentDirectory( dwSize, lpBuffer );
    }
    hb_fsSetIOError( dwResult != 0, 0 );
@@ -4136,7 +4136,7 @@ HB_ERRCODE hb_fsCurDirBuff( int iDrive, char * pszBuffer, HB_SIZE nSize )
 #if defined( HB_OS_WIN )
    {
       DWORD dwSize = ( DWORD ) nSize;
-      LPTSTR lpBuffer = ( LPTSTR ) hb_xgrab( dwSize * sizeof( TCHAR ) );
+      LPTSTR lpBuffer = static_cast< LPTSTR >( hb_xgrab( dwSize * sizeof( TCHAR ) ) );
       lpBuffer[ 0 ] = TEXT( '\0' );
       hb_fsSetIOError( ( GetCurrentDirectory( dwSize, lpBuffer ) != 0 ), 0 );
       lpBuffer[ dwSize - 1 ] = TEXT( '\0' );
@@ -4256,7 +4256,7 @@ HB_BOOL hb_fsGetCWD( char * pszBuffer, HB_SIZE nSize )
 #if defined( HB_OS_WIN )
    {
       DWORD dwSize = ( DWORD ) nSize;
-      LPTSTR lpBuffer = ( LPTSTR ) hb_xgrab( dwSize * sizeof( TCHAR ) );
+      LPTSTR lpBuffer = static_cast< LPTSTR >( hb_xgrab( dwSize * sizeof( TCHAR ) ) );
       lpBuffer[ 0 ] = TEXT( '\0' );
       fResult = GetCurrentDirectory( dwSize, lpBuffer ) != 0;
       hb_fsSetIOError( fResult, 0 );
@@ -4609,7 +4609,7 @@ char * hb_fsExtName( const char * pszFileName, const char * pDefExt,
    HB_BOOL fIsFile = HB_FALSE;
    char * szPath;
 
-   szPath = ( char * ) hb_xgrab( HB_PATH_MAX );
+   szPath = static_cast< char * >( hb_xgrab( HB_PATH_MAX ) );
 
    pFilepath = hb_fsFNameSplit( pszFileName );
 
@@ -4889,7 +4889,7 @@ const char * hb_fsNameConv( const char * pszFileName, char ** pszFree )
 
       if( pszFree )
       {
-         pszFileName = *pszFree = hb_strncpy( ( char * ) hb_xgrab( HB_PATH_MAX ),
+         pszFileName = *pszFree = hb_strncpy( static_cast< char * >( hb_xgrab( HB_PATH_MAX ) ),
                                               pszFileName, HB_PATH_MAX - 1 );
       }
 
@@ -5027,7 +5027,7 @@ HB_WCHAR * hb_fsNameConvU16( const char * pszFileName )
       char * pszPath = nullptr, * pszName = nullptr, * pszExt = nullptr;
       PHB_FNAME pFileName;
 
-      pszFileName = pszBuffer = hb_strncpy( ( char * ) hb_xgrab( HB_PATH_MAX ),
+      pszFileName = pszBuffer = hb_strncpy( static_cast< char * >( hb_xgrab( HB_PATH_MAX ) ),
                                             pszFileName, HB_PATH_MAX - 1 );
 
       if( cDirSep != HB_OS_PATH_DELIM_CHR )

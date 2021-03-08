@@ -934,8 +934,8 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest,
 
    lpdbTransInfo->lpaSource    = lpaSource;
    lpdbTransInfo->lpaDest      = lpaDest;
-   lpdbTransInfo->lpTransItems = ( LPDBTRANSITEM )
-                                    hb_xgrab( uiSize * sizeof( DBTRANSITEM ) );
+   lpdbTransInfo->lpTransItems = static_cast< LPDBTRANSITEM >(
+                                    hb_xgrab( uiSize * sizeof( DBTRANSITEM ) ) );
 
    if( ! lpaDest )
    {

@@ -1419,7 +1419,7 @@ static PHB_CBVAR hb_compExprCBVarNew( const char * szVarName, HB_BYTE bType )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_compExprCBVarNew(%s)", szVarName ) );
 
-   pVar = ( PHB_CBVAR ) hb_xgrab( sizeof( HB_CBVAR ) );
+   pVar = static_cast< PHB_CBVAR >( hb_xgrab( sizeof( HB_CBVAR ) ) );
 
    pVar->szName = szVarName;
    pVar->bType  = bType;

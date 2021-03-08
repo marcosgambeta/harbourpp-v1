@@ -543,7 +543,7 @@ static void hb_gt_pca_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    {
       s_iOutBufIndex = 0;
       s_iOutBufSize = 16384;
-      s_sOutBuf = ( char * ) hb_xgrab( s_iOutBufSize );
+      s_sOutBuf = static_cast< char * >( hb_xgrab( s_iOutBufSize ) );
    }
 
    HB_GTSELF_RESIZE( pGT, iRows, iCols );
@@ -848,7 +848,7 @@ static void hb_gt_pca_Refresh( PHB_GT pGT )
 
    if( s_iLineBufSize == 0 )
    {
-      s_sLineBuf = ( char * ) hb_xgrab( iWidth );
+      s_sLineBuf = static_cast< char * >( hb_xgrab( iWidth ) );
       s_iLineBufSize = iWidth;
    }
    else if( s_iLineBufSize != iWidth )

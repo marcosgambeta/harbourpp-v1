@@ -115,7 +115,7 @@ typedef struct HB_GARBAGE_
 #define HB_BLOCK_PTR( p )       ( ( void * ) ( ( HB_BYTE * ) ( p ) + HB_GARBAGE_SIZE ) )
 
 /* we may use a cache later */
-#define HB_GARBAGE_NEW( nSize )    ( ( PHB_GARBAGE ) hb_xgrab( HB_GARBAGE_SIZE + ( nSize ) ) )
+#define HB_GARBAGE_NEW( nSize )    ( static_cast< PHB_GARBAGE >( hb_xgrab( HB_GARBAGE_SIZE + ( nSize ) ) ) )
 #define HB_GARBAGE_FREE( pAlloc )   hb_xfree( ( void * ) ( pAlloc ) )
 
 /* status of memory block */

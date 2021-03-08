@@ -1271,7 +1271,7 @@ char * hb_cdpUTF8StringSubstr( const char * pSrc, HB_SIZE nLen,
          while( nPos < nLen && nCnt );
 
          nDst = nPos - nFrom;
-         pDst = ( char * ) hb_xgrab( nDst + 1 );
+         pDst = static_cast< char * >( hb_xgrab( nDst + 1 ) );
          memcpy( pDst, &pSrc[ nFrom ], nDst );
          pDst[ nDst ] = '\0';
       }
@@ -1849,7 +1849,7 @@ HB_WCHAR * hb_cdpnStrDupU16( PHB_CODEPAGE cdp, int iEndian,
                              HB_SIZE * pnDst )
 {
    HB_SIZE nLen = hb_cdpStrAsU16Len( cdp, pSrc, nSrc, 0 );
-   HB_WCHAR * pDst = ( HB_WCHAR * ) hb_xgrab( ( nLen + 1 ) * sizeof( HB_WCHAR ) );
+   HB_WCHAR * pDst = static_cast< HB_WCHAR * >( hb_xgrab( ( nLen + 1 ) * sizeof( HB_WCHAR ) ) );
 
    hb_cdpStrToU16( cdp, iEndian, pSrc, nSrc, pDst, nLen + 1 );
    if( pnDst )
@@ -2203,7 +2203,7 @@ char * hb_cdpnDup( const char * pSrc, HB_SIZE * pnLen,
    HB_SIZE nDst;
 
    nDst = hb_cdpTransLen( pSrc, *pnLen, 0, cdpIn, cdpOut );
-   pDst = ( char * ) hb_xgrab( nDst + 1 );
+   pDst = static_cast< char * >( hb_xgrab( nDst + 1 ) );
    hb_cdpTransTo( pSrc, *pnLen, pDst, nDst + 1, cdpIn, cdpOut );
    *pnLen = nDst;
 
@@ -2241,7 +2241,7 @@ const char * hb_cdpnDup3( const char * pSrc, HB_SIZE nSrc,
       if( nDst >= *pnSize || ( pDst == pSrc && HB_CDP_ISCUSTOM( cdpOut ) ) )
       {
          pPrev = *pFree;
-         pDst = *pFree = ( char * ) hb_xgrab( nDst + 1 );
+         pDst = *pFree = static_cast< char * >( hb_xgrab( nDst + 1 ) );
          *pnSize = nDst + 1;
       }
 
@@ -2275,7 +2275,7 @@ char * hb_cdpDupn( const char * pszSrc, HB_SIZE nLen, PHB_CODEPAGE cdpIn, PHB_CO
 char * hb_cdpnDupUpper( PHB_CODEPAGE cdp, const char * pszText, HB_SIZE * pnSize )
 {
    HB_SIZE nSize = pnSize ? *pnSize : strlen( pszText ), n;
-   char * pszDst = ( char * ) hb_xgrab( nSize + 1 );
+   char * pszDst = static_cast< char * >( hb_xgrab( nSize + 1 ) );
 
    if( cdp )
    {
@@ -2314,7 +2314,7 @@ char * hb_cdpnDupUpper( PHB_CODEPAGE cdp, const char * pszText, HB_SIZE * pnSize
 char * hb_cdpnDupLower( PHB_CODEPAGE cdp, const char * pszText, HB_SIZE * pnSize )
 {
    HB_SIZE nSize = pnSize ? *pnSize : strlen( pszText ), n;
-   char * pszDst = ( char * ) hb_xgrab( nSize + 1 );
+   char * pszDst = static_cast< char * >( hb_xgrab( nSize + 1 ) );
 
    if( cdp )
    {
@@ -3299,7 +3299,7 @@ const char ** hb_cdpList( void )
       cdp = cdp->next;
    }
 
-   list = ( const char ** ) hb_xgrab( ( iCount + 1 ) * sizeof( char * ) );
+   list = static_cast< const char ** >( hb_xgrab( ( iCount + 1 ) * sizeof( char * ) ) );
 
    cdp = s_cdpList;
    iPos = 0;

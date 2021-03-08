@@ -119,7 +119,7 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest )
          HB_UCHAR * buffer;
          HB_SIZE nRead;
 
-         buffer = ( HB_UCHAR * ) hb_xgrab( BUFFER_SIZE );
+         buffer = static_cast< HB_UCHAR * >( hb_xgrab( BUFFER_SIZE ) );
          bRetVal = HB_TRUE;
 
          while( ( nRead = hb_fileRead( pSource, buffer, BUFFER_SIZE, -1 ) ) != 0 &&

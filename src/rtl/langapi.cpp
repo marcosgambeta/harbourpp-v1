@@ -293,7 +293,7 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
          hb_xfree( pszTrans );
    }
 
-   buffer = ( char * ) hb_xgrab( nSize );
+   buffer = static_cast< char * >( hb_xgrab( nSize ) );
    ptr    = buffer + sizeof( trans );
    for( i = 0; i < HB_LANG_ITEM_MAX_; ++i )
    {
@@ -418,7 +418,7 @@ char * hb_langName( const char * pszID )
    lang = pszID ? hb_langFind( pszID ) : hb_vmLang();
    if( lang )
    {
-      pszName = ( char * ) hb_xgrab( 128 );
+      pszName = static_cast< char * >( hb_xgrab( 128 ) );
       hb_snprintf( pszName, 128, "Harbour Language: %s %s (%s)",
                    hb_langGetItem( pszID, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID ),
                    hb_langGetItem( pszID, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_NAME ),

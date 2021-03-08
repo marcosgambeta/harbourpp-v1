@@ -69,7 +69,7 @@ HB_FUNC( REPLICATE )
             HB_SIZE nSize = nLen * nTimes;
             char * szResult, * szPtr;
 
-            szResult = szPtr = ( char * ) hb_xgrab( nSize + 1 );
+            szResult = szPtr = static_cast< char * >( hb_xgrab( nSize + 1 ) );
             if( nLen == 1 )
                memset( szResult, szText[ 0 ], nSize );
             else

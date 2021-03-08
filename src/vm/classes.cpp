@@ -770,7 +770,7 @@ static HB_USHORT hb_clsAddInitValue( PCLASS pClass, PHB_ITEM pItem,
 
    if( ! pClass->uiInitDatas )
    {
-      pClass->pInitData = ( PINITDATA ) hb_xgrab( sizeof( INITDATA ) );
+      pClass->pInitData = static_cast< PINITDATA >( hb_xgrab( sizeof( INITDATA ) ) );
       pInitData = pClass->pInitData + pClass->uiInitDatas++;
    }
    else
@@ -1013,7 +1013,7 @@ static void hb_clsCopyClass( PCLASS pClsDst, PCLASS pClsSrc )
       HB_USHORT uiData;
 
       pClsDst->uiInitDatas = pClsSrc->uiInitDatas;
-      pClsDst->pInitData = ( PINITDATA ) hb_xgrab( nSize );
+      pClsDst->pInitData = static_cast< PINITDATA >( hb_xgrab( nSize ) );
       memcpy( pClsDst->pInitData, pClsSrc->pInitData, nSize );
       for( uiData = 0; uiData < pClsDst->uiInitDatas; ++uiData )
       {
@@ -1038,8 +1038,8 @@ static void hb_clsCopyClass( PCLASS pClsDst, PCLASS pClsSrc )
    if( pClsSrc->uiSuperClasses )
    {
       pClsDst->uiSuperClasses = pClsSrc->uiSuperClasses;
-      pClsDst->pSuperClasses = ( PHB_CLSCAST )
-                     hb_xgrab( pClsSrc->uiSuperClasses * sizeof( HB_CLSCAST ) );
+      pClsDst->pSuperClasses = static_cast< PHB_CLSCAST >(
+                     hb_xgrab( pClsSrc->uiSuperClasses * sizeof( HB_CLSCAST ) ) );
       memcpy( pClsDst->pSuperClasses, pClsSrc->pSuperClasses,
               pClsSrc->uiSuperClasses * sizeof( HB_CLSCAST ) );
    }
@@ -1085,7 +1085,7 @@ static void hb_clsAddFriendSymbol( PCLASS pClass, PHB_SYMB pSym )
    {
       if( pClass->uiFriendSyms == 0 )
       {
-         pClass->pFriendSyms = ( PHB_SYMB * ) hb_xgrab( sizeof( PHB_SYMB ) );
+         pClass->pFriendSyms = static_cast< PHB_SYMB * >( hb_xgrab( sizeof( PHB_SYMB ) ) );
          pClass->pFriendSyms[ 0 ] = pSym;
          pClass->uiFriendSyms++;
       }
@@ -1141,7 +1141,7 @@ void hb_clsInit( void )
 
    s_uiClsSize = HB_CLASS_POOL_SIZE;
    s_uiClasses = 0;
-   s_pClasses = ( PCLASS * ) hb_xgrab( ( ( HB_SIZE ) s_uiClsSize + 1 ) * sizeof( PCLASS ) );
+   s_pClasses = static_cast< PCLASS * >( hb_xgrab( ( ( HB_SIZE ) s_uiClsSize + 1 ) * sizeof( PCLASS ) ) );
    s_pClasses[ 0 ] = nullptr;
 
 #if defined( HB_MT_VM )

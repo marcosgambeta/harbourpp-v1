@@ -1523,8 +1523,8 @@ HB_FUNC( HB_THREADWAIT )
          }
          if( pThreads == pAlloc && iThreads >= HB_THREAD_WAIT_ALLOC )
          {
-            pThreads = ( PHB_THREADSTATE * )
-                       hb_xgrab( sizeof( PHB_THREADSTATE ) * iLen );
+            pThreads = static_cast< PHB_THREADSTATE * >(
+                       hb_xgrab( sizeof( PHB_THREADSTATE ) * iLen ) );
             memcpy( pThreads, pAlloc, sizeof( pAlloc ) );
          }
          pThreads[ iThreads++ ] = pThread;

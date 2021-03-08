@@ -146,7 +146,7 @@ static int s_zsock_inbuffer( PHB_SOCKEX pSock )
       {
          if( pSock->readahead <= 0 )
             pSock->readahead = HB_ZSOCK_READAHEAD;
-         pSock->buffer = ( HB_BYTE * ) hb_xgrab( pSock->readahead );
+         pSock->buffer = static_cast< HB_BYTE * >( hb_xgrab( pSock->readahead ) );
       }
 
       pZ->z_read.next_out  = ( Bytef * ) pSock->buffer;
@@ -501,7 +501,7 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
             if( inflateInit2( &pZ->z_read, windowBitsIn ) == Z_OK )
             {
                pZ->fDecompressIn = HB_TRUE;
-               pZ->rdbuf = ( HB_BYTE * ) hb_xgrab( HB_ZSOCK_RDBUFSIZE );
+               pZ->rdbuf = static_cast< HB_BYTE * >( hb_xgrab( HB_ZSOCK_RDBUFSIZE ) );
             }
             else
                level = HB_ZLIB_COMPRESSION_DISABLE;
@@ -517,7 +517,7 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
                               strategy ) == Z_OK )
             {
                pZ->fCompressOut = HB_TRUE;
-               pZ->wrbuf = ( HB_BYTE * ) hb_xgrab( HB_ZSOCK_WRBUFSIZE );
+               pZ->wrbuf = static_cast< HB_BYTE * >( hb_xgrab( HB_ZSOCK_WRBUFSIZE ) );
                pZ->z_write.next_out  = ( Bytef * ) pZ->wrbuf;
                pZ->z_write.avail_out = HB_ZSOCK_WRBUFSIZE;
             }

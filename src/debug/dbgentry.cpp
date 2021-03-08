@@ -71,7 +71,7 @@ static HB_BOOL hb_clsSetScope( HB_BOOL fScope )
 #endif
 
 #define ARRAY_ADD( type, array, length ) \
-   ( ( ++length == 1 ) ? ( array = ( type * ) hb_xgrab( sizeof( type ) ) ) : \
+   ( ( ++length == 1 ) ? ( array = static_cast< type * >( hb_xgrab( sizeof( type ) ) ) ) : \
      ( ( array = ( type * ) hb_xrealloc( array, sizeof( type ) * length ) ) + \
        length - 1 ) )
 
@@ -1195,7 +1195,7 @@ static int hb_dbgEvalSubstituteVar( HB_WATCHPOINT * watch,
 
    n = strlen( watch->szExpr );
    j = hb_snprintf( buf, sizeof( buf ), "__dbg[%d]", j + 1 );
-   szExpr = ( char * ) hb_xgrab( n - nLen + j + 1 );
+   szExpr = static_cast< char * >( hb_xgrab( n - nLen + j + 1 ) );
    memcpy( szExpr, watch->szExpr, nStart );
    memcpy( szExpr + nStart, buf, j );
    memcpy( szExpr + nStart + j, watch->szExpr + nStart + nLen, n - nLen - nStart );
@@ -1345,7 +1345,7 @@ static PHB_ITEM hb_dbgEvalMakeBlock( HB_WATCHPOINT * watch )
 
    buffsize = 8 + strlen( watch->szExpr ) + 1;
 
-   szBlock = ( char * ) hb_xgrab( buffsize + 1 );
+   szBlock = static_cast< char * >( hb_xgrab( buffsize + 1 ) );
    hb_strncpy( szBlock, "{|__dbg|", buffsize );
    hb_strncat( szBlock, watch->szExpr, buffsize );
    hb_strncat( szBlock, "}", buffsize );
@@ -1380,7 +1380,7 @@ static PHB_ITEM hb_dbgEvalResolve( HB_DEBUGINFO * info, HB_WATCHPOINT * watch )
    if( ! watch->nVars )
       return aVars;
 
-   scopes = ( HB_VARINFO * ) hb_xgrab( watch->nVars * sizeof( HB_VARINFO ) );
+   scopes = static_cast< HB_VARINFO * >( hb_xgrab( watch->nVars * sizeof( HB_VARINFO ) ) );
    nProcLevel = hb_dbg_ProcLevel();
 
    HB_DBGCOMMON_LOCK();

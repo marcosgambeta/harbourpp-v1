@@ -108,7 +108,7 @@ static PHB_DYNS hb_dynsymInsert( PHB_SYMB pSymbol, HB_SYMCNT uiPos )
    }
    else if( s_uiDynSymbols == 1 )
    {
-      s_pDynItems = ( PDYNHB_ITEM ) hb_xgrab( sizeof( DYNHB_ITEM ) );
+      s_pDynItems = static_cast< PDYNHB_ITEM >( hb_xgrab( sizeof( DYNHB_ITEM ) ) );
    }
    else
    {
@@ -172,7 +172,7 @@ static PHB_SYMB hb_symbolAlloc( const char * szName )
    HB_TRACE( HB_TR_DEBUG, ( "hb_symbolAlloc(%s)", szName ) );
 
    iLen = static_cast< int >( strlen( szName ) );
-   pHolder = ( PHB_SYM_HOLDER ) hb_xgrab( sizeof( HB_SYM_HOLDER ) + iLen );
+   pHolder = static_cast< PHB_SYM_HOLDER >( hb_xgrab( sizeof( HB_SYM_HOLDER ) + iLen ) );
    memcpy( pHolder->szName, szName, iLen + 1 );
    pHolder->pNext = s_pAllocSyms;
    s_pAllocSyms = pHolder;

@@ -162,7 +162,7 @@ HB_BOOL hb_arrayNew( PHB_ITEM pItem, HB_SIZE nLen ) /* creates a new array */
    if( nLen > 0 )
    {
       HB_SIZE nPos;
-      pItems = ( PHB_ITEM ) hb_xgrab( sizeof( HB_ITEM ) * nLen );
+      pItems = static_cast< PHB_ITEM >( hb_xgrab( sizeof( HB_ITEM ) * nLen ) );
       for( nPos = 0; nPos < nLen; ++nPos )
          ( pItems + nPos )->type = HB_IT_NIL;
    }
@@ -209,7 +209,7 @@ HB_BOOL hb_arraySize( PHB_ITEM pArray, HB_SIZE nLen )
 
          if( pBaseArray->nLen == 0 )
          {
-            pBaseArray->pItems = ( PHB_ITEM ) hb_xgrab( nLen * sizeof( HB_ITEM ) );
+            pBaseArray->pItems = static_cast< PHB_ITEM >( hb_xgrab( nLen * sizeof( HB_ITEM ) ) );
             pBaseArray->nAllocated = nLen;
 
             for( nPos = 0; nPos < nLen; nPos++ )
@@ -1507,8 +1507,8 @@ void hb_nestedCloneInit( PHB_NESTED_CLONED pClonedList, void * pValue, PHB_ITEM 
 {
    pClonedList->nSize  = 16;
    pClonedList->nCount = 1;
-   pClonedList->pRefs  = ( PHB_NESTED_REF )
-                     hb_xgrab( pClonedList->nSize * sizeof( HB_NESTED_REF ) );
+   pClonedList->pRefs  = static_cast< PHB_NESTED_REF >(
+                     hb_xgrab( pClonedList->nSize * sizeof( HB_NESTED_REF ) ) );
    pClonedList->pRefs[ 0 ].value = pValue;
    pClonedList->pRefs[ 0 ].pDest = pDest;
 }

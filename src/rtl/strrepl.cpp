@@ -220,7 +220,7 @@ HB_FUNC( HB_STRREPLACE )
                nPos += nSkip;
                if( nPos == nText )
                {
-                  pszResult = ( char * ) hb_xgrab( nSize + 1 );
+                  pszResult = static_cast< char * >( hb_xgrab( nSize + 1 ) );
                   nSize = nPos = 0;
                }
             }

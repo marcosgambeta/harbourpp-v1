@@ -170,7 +170,7 @@ static void hb_compGenArgList( int iFirst, int iLast,
       }
    }
 
-   argv = ( const char ** ) hb_xgrab( sizeof( char * ) * ( argc + 1 ) );
+   argv = static_cast< const char ** >( hb_xgrab( sizeof( char * ) * ( argc + 1 ) ) );
    argc = 0;
    for( i = iFirst; i <= iLast; ++i )
    {

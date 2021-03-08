@@ -357,7 +357,7 @@ static LPKEYINFO hb_ntxKeyNew( LPKEYINFO pKeyFrom, int keylen )
 {
    LPKEYINFO pKey;
 
-   pKey = ( LPKEYINFO ) hb_xgrab( sizeof( KEYINFO ) + keylen );
+   pKey = static_cast< LPKEYINFO >( hb_xgrab( sizeof( KEYINFO ) + keylen ) );
    if( pKeyFrom )
    {
       memcpy( pKey->key, pKeyFrom->key, keylen + 1 );
@@ -1539,7 +1539,7 @@ static HB_ERRCODE hb_ntxTagAdd( LPNTXINDEX pIndex, LPTAGINFO pTag )
       pIndex->lpTags = ( LPTAGINFO * ) hb_xrealloc( pIndex->lpTags,
                                  sizeof( LPTAGINFO ) * ( pIndex->iTags + 1 ) );
    else
-      pIndex->lpTags = ( LPTAGINFO * ) hb_xgrab( sizeof( LPTAGINFO ) );
+      pIndex->lpTags = static_cast< LPTAGINFO * >( hb_xgrab( sizeof( LPTAGINFO ) ) );
 
    pIndex->lpTags[ pIndex->iTags++ ] = pTag;
    pIndex->pArea->fSetTagNumbers = HB_TRUE;
@@ -1869,7 +1869,7 @@ static HB_ERRCODE hb_ntxIndexLoad( LPNTXINDEX pIndex, const char * szTagName )
    if( ! pIndex->fValidHeader )
    {
       if( ! pIndex->HeaderBuff )
-         pIndex->HeaderBuff = ( HB_BYTE * ) hb_xgrab( NTXBLOCKSIZE );
+         pIndex->HeaderBuff = static_cast< HB_BYTE * >( hb_xgrab( NTXBLOCKSIZE ) );
       if( ! hb_ntxBlockRead( pIndex, 0, pIndex->HeaderBuff, NTXBLOCKSIZE ) )
          return HB_FAILURE;
       pIndex->fValidHeader = HB_TRUE;
@@ -1926,7 +1926,7 @@ static HB_ERRCODE hb_ntxIndexHeaderRead( LPNTXINDEX pIndex )
    HB_USHORT type;
 
    if( ! pIndex->HeaderBuff )
-      pIndex->HeaderBuff = ( HB_BYTE * ) hb_xgrab( NTXBLOCKSIZE );
+      pIndex->HeaderBuff = static_cast< HB_BYTE * >( hb_xgrab( NTXBLOCKSIZE ) );
 
    if( ! hb_ntxBlockRead( pIndex, 0, pIndex->HeaderBuff, NTXBLOCKSIZE ) )
       return HB_FAILURE;
@@ -2278,7 +2278,7 @@ static void hb_ntxTagSetPageStack( LPTAGINFO pTag, HB_ULONG ulPage, HB_USHORT ui
       if( pTag->stackSize == 0 )
       {
          pTag->stackSize = NTX_STACKSIZE;
-         pTag->stack = (LPTREESTACK) hb_xgrab( sizeof(TREE_STACK) * NTX_STACKSIZE );
+         pTag->stack = static_cast< LPTREESTACK >( hb_xgrab( sizeof( TREE_STACK ) * NTX_STACKSIZE ) );
       }
       else
       {
@@ -4878,7 +4878,7 @@ static void hb_ntxSortGetPageKey( LPNTXSORTINFO pSort, HB_ULONG ulPage,
 static void hb_ntxSortOrderPages( LPNTXSORTINFO pSort )
 {
    pSort->ulFirst = 0;
-   pSort->pSortedPages = ( HB_ULONG * ) hb_xgrab( pSort->ulPages * sizeof( HB_ULONG ) );
+   pSort->pSortedPages = static_cast< HB_ULONG * >( hb_xgrab( pSort->ulPages * sizeof( HB_ULONG ) ) );
    pSort->pSortedPages[ 0 ] = 0;
 
    if( pSort->ulTotKeys > 0 )
@@ -5091,7 +5091,7 @@ static LPNTXSORTINFO hb_ntxSortNew( LPTAGINFO pTag, HB_ULONG ulRecCount )
        * take many hours, Druzus.
        */
       ulMax = ulMin;
-      pBuf = ( HB_BYTE * ) hb_xgrab( ( ulMax << 1 ) * ( iLen + 4 ) );
+      pBuf = static_cast< HB_BYTE * >( hb_xgrab( ( ulMax << 1 ) * ( iLen + 4 ) ) );
    }
 
    pSort->pTag = pTag;
@@ -5421,7 +5421,7 @@ static HB_ERRCODE hb_ntxTagCreate( LPTAGINFO pTag, HB_BOOL fReindex )
       }
 
       pSort->ulSizeIO = ( 1 << 16 ) / NTXBLOCKSIZE;
-      pSort->pBuffIO = ( HB_BYTE * ) hb_xgrab( pSort->ulSizeIO * NTXBLOCKSIZE );
+      pSort->pBuffIO = static_cast< HB_BYTE * >( hb_xgrab( pSort->ulSizeIO * NTXBLOCKSIZE ) );
       iRecBufSize = ( pSort->ulSizeIO * NTXBLOCKSIZE ) / pArea->dbfarea.uiRecordLen;
       fDirectRead = ! hb_setGetStrictRead() && iRecBufSize > 1 && /* ! pArea->dbfarea.area.lpdbRelations && */
                     ( ! pArea->dbfarea.area.lpdbOrdCondInfo || pArea->dbfarea.area.lpdbOrdCondInfo->fAll ||
@@ -6593,7 +6593,7 @@ static HB_ERRCODE hb_ntxOrderCreate( NTXAREAP pArea, LPDBORDERCREATEINFO pOrderI
          if( fCompound )
          {
             if( ! pIndex->HeaderBuff )
-               pIndex->HeaderBuff = ( HB_BYTE * ) hb_xgrab( NTXBLOCKSIZE );
+               pIndex->HeaderBuff = static_cast< HB_BYTE * >( hb_xgrab( NTXBLOCKSIZE ) );
             memset( pIndex->HeaderBuff, 0, NTXBLOCKSIZE );
             pIndex->fValidHeader = HB_TRUE;
          }

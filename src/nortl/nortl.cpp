@@ -515,7 +515,7 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
 
       if( pszFree )
       {
-         szFileName = *pszFree = hb_strncpy( ( char * ) hb_xgrab( HB_PATH_MAX ),
+         szFileName = *pszFree = hb_strncpy( static_cast< char * >( hb_xgrab( HB_PATH_MAX ) ),
                                              szFileName, HB_PATH_MAX - 1 );
       }
 
@@ -608,7 +608,7 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
    {
       PHB_FNAME pFileName;
 
-      szFileName = pszBuffer = hb_strncpy( ( char * ) hb_xgrab( HB_PATH_MAX ),
+      szFileName = pszBuffer = hb_strncpy( static_cast< char * >( hb_xgrab( HB_PATH_MAX ) ),
                                            szFileName, HB_PATH_MAX - 1 );
 
       if( s_cDirSep != HB_OS_PATH_DELIM_CHR )

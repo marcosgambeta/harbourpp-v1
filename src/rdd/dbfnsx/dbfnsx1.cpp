@@ -520,7 +520,7 @@ static LPKEYINFO hb_nsxKeyNew( int keylen )
 {
    LPKEYINFO pKey;
 
-   pKey = ( LPKEYINFO ) hb_xgrab( sizeof( KEYINFO ) + keylen );
+   pKey = static_cast< LPKEYINFO >( hb_xgrab( sizeof( KEYINFO ) + keylen ) );
    pKey->val[ keylen ] = '\0';
    pKey->page = pKey->rec = 0;
 
@@ -533,7 +533,7 @@ static LPKEYINFO hb_nsxKeyNew( int keylen )
 static LPKEYINFO hb_nsxKeyCopy( LPKEYINFO pKeyDest, LPKEYINFO pKey, int keylen )
 {
    if( ! pKeyDest )
-      pKeyDest = ( LPKEYINFO ) hb_xgrab( sizeof( KEYINFO ) + keylen );
+      pKeyDest = static_cast< LPKEYINFO >( hb_xgrab( sizeof( KEYINFO ) + keylen ) );
 
    memcpy( pKeyDest, pKey, sizeof( KEYINFO ) + keylen );
 
@@ -1784,7 +1784,7 @@ static HB_ERRCODE hb_nsxTagAdd( LPNSXINDEX pIndex, LPTAGINFO pTag )
       pIndex->lpTags = ( LPTAGINFO * ) hb_xrealloc( pIndex->lpTags,
                                  sizeof( LPTAGINFO ) * ( pIndex->iTags + 1 ) );
    else
-      pIndex->lpTags = ( LPTAGINFO * ) hb_xgrab( sizeof( LPTAGINFO ) );
+      pIndex->lpTags = static_cast< LPTAGINFO * >( hb_xgrab( sizeof( LPTAGINFO ) ) );
 
    pIndex->lpTags[ pIndex->iTags++ ] = pTag;
    pIndex->pArea->fSetTagNumbers = HB_TRUE;
@@ -2492,7 +2492,7 @@ static void hb_nsxTagSetPageStack( LPTAGINFO pTag, LPPAGEINFO pPage, HB_USHORT u
    if( ! hb_nsxIsLeaf( pPage ) && uiKey )
    {
       if( ! pTag->stack[ pTag->stackLevel ].value )
-         pTag->stack[ pTag->stackLevel ].value = ( HB_UCHAR * ) hb_xgrab( pTag->KeyLength );
+         pTag->stack[ pTag->stackLevel ].value = static_cast< HB_UCHAR * >( hb_xgrab( pTag->KeyLength ) );
       memcpy( pTag->stack[ pTag->stackLevel ].value,
               hb_nsxGetKeyVal( pPage, pTag->KeyLength, uiKey - 1 ),
               pTag->KeyLength );
@@ -2639,7 +2639,7 @@ static HB_BOOL hb_nsxTagNextKey( LPTAGINFO pTag )
             if( pPage->uiKeys && pTag->stack[ iLevel ].ikey < ( HB_SHORT ) pPage->uiKeys )
             {
                if( ! pTag->stack[ iLevel ].value )
-                  pTag->stack[ iLevel ].value = ( HB_UCHAR * ) hb_xgrab( pTag->KeyLength );
+                  pTag->stack[ iLevel ].value = static_cast< HB_UCHAR * >( hb_xgrab( pTag->KeyLength ) );
                memcpy( pTag->stack[ iLevel ].value,
                        hb_nsxGetKeyVal( pPage, pTag->KeyLength,
                                         pTag->stack[ iLevel ].ikey ),
@@ -2684,7 +2684,7 @@ static HB_BOOL hb_nsxTagPrevKey( LPTAGINFO pTag )
          if( --pTag->stack[ iLevel ].ikey )
          {
             if( ! pTag->stack[ iLevel ].value )
-               pTag->stack[ iLevel ].value = ( HB_UCHAR * ) hb_xgrab( pTag->KeyLength );
+               pTag->stack[ iLevel ].value = static_cast< HB_UCHAR * >( hb_xgrab( pTag->KeyLength ) );
             memcpy( pTag->stack[ iLevel ].value,
                     hb_nsxGetKeyVal( pPage, pTag->KeyLength,
                                      pTag->stack[ iLevel ].ikey - 1 ),
@@ -3025,7 +3025,7 @@ static HB_BOOL hb_nsxTagInsertKey( LPTAGINFO pTag, LPPAGEINFO pPage,
    hb_nsxPageCheckKeys( pPage, pTag, uiKey, 41 );
 #endif
 
-   ptr = pKeyBuff = ( HB_UCHAR * ) hb_xgrab( ( uiKeys + 1 ) * ( iLen + 4 ) );
+   ptr = pKeyBuff = static_cast< HB_UCHAR * >( hb_xgrab( ( uiKeys + 1 ) * ( iLen + 4 ) ) );
    if( pKeyPrev )
       memcpy( pKeyVal, pKeyPrev, iLen );
    else
@@ -3360,7 +3360,7 @@ static HB_BOOL hb_nsxTagKeyDel( LPTAGINFO pTag, LPKEYINFO pKey )
       }
       hb_nsxSetKeyRec( pBasePage, pTag->KeyLength, iBaseKey, ulRecNo );
       if( ! pTag->stack[ iBaseLevel ].value )
-         pTag->stack[ iBaseLevel ].value = ( HB_UCHAR * ) hb_xgrab( pTag->KeyLength );
+         pTag->stack[ iBaseLevel ].value = static_cast< HB_UCHAR * >( hb_xgrab( pTag->KeyLength ) );
       memcpy( pTag->stack[ iBaseLevel ].value,
               hb_nsxGetKeyVal( pBasePage, pTag->KeyLength, iBaseKey ),
               pTag->KeyLength );
@@ -5300,7 +5300,7 @@ static void hb_nsxSortGetPageKey( LPNSXSORTINFO pSort, HB_ULONG ulPage,
 static void hb_nsxSortOrderPages( LPNSXSORTINFO pSort )
 {
    pSort->ulFirst = 0;
-   pSort->pSortedPages = ( HB_ULONG * ) hb_xgrab( pSort->ulPages * sizeof( HB_ULONG ) );
+   pSort->pSortedPages = static_cast< HB_ULONG * >( hb_xgrab( pSort->ulPages * sizeof( HB_ULONG ) ) );
    pSort->pSortedPages[ 0 ] = 0;
 
    if( pSort->ulTotKeys > 0 )
@@ -5502,7 +5502,7 @@ static LPNSXSORTINFO hb_nsxSortNew( LPTAGINFO pTag, HB_ULONG ulRecCount )
        * take many hours, Druzus.
        */
       ulMax = ulMin;
-      pBuf = ( HB_UCHAR * ) hb_xgrab( ( ulMax << 1 ) * ( iLen + 4 ) );
+      pBuf = static_cast< HB_UCHAR * >( hb_xgrab( ( ulMax << 1 ) * ( iLen + 4 ) ) );
    }
 
    pSort->pTag = pTag;
@@ -5909,7 +5909,7 @@ static HB_ERRCODE hb_nsxTagCreate( LPTAGINFO pTag, HB_BOOL fReindex )
       }
 
       pSort->ulSizeIO = ( 1 << 16 ) / NSX_PAGELEN;
-      pSort->pBuffIO = ( HB_UCHAR * ) hb_xgrab( pSort->ulSizeIO * NSX_PAGELEN );
+      pSort->pBuffIO = static_cast< HB_UCHAR * >( hb_xgrab( pSort->ulSizeIO * NSX_PAGELEN ) );
       iRecBufSize = ( pSort->ulSizeIO * NSX_PAGELEN ) / pArea->dbfarea.uiRecordLen;
       fDirectRead = ! hb_setGetStrictRead() && iRecBufSize > 1 && /* ! pArea->dbfarea.area.lpdbRelations && */
                     ( ! pArea->dbfarea.area.lpdbOrdCondInfo || pArea->dbfarea.area.lpdbOrdCondInfo->fAll ||

@@ -82,7 +82,7 @@ static void hb_delimInitArea( DELIMAREAP pArea, char * szFileName )
                         ( szEol[ 1 ] == '\n' || szEol[ 1 ] == '\r' ) ) );
 
    /* allocate record buffer, one additional byte is for deleted flag */
-   pArea->pRecord = ( HB_BYTE * ) hb_xgrab( pArea->uiRecordLen + 1 );
+   pArea->pRecord = static_cast< HB_BYTE * >( hb_xgrab( pArea->uiRecordLen + 1 ) );
    /* pseudo deleted flag */
    *pArea->pRecord++ = ' ';
 
@@ -90,7 +90,7 @@ static void hb_delimInitArea( DELIMAREAP pArea, char * szFileName )
    pArea->nBufferSize += pArea->fAnyEol ? 2 : pArea->uiEolLen;
    if( pArea->fReadonly && pArea->nBufferSize < 8192 )
       pArea->nBufferSize = 8192;
-   pArea->pBuffer = ( HB_BYTE * ) hb_xgrab( pArea->nBufferSize );
+   pArea->pBuffer = static_cast< HB_BYTE * >( hb_xgrab( pArea->nBufferSize ) );
 
    pArea->ulRecCount = 0;
    pArea->nBufferIndex = pArea->nBufferRead = pArea->nBufferSize;
@@ -136,7 +136,7 @@ static HB_ERRCODE hb_delimWriteHeader( DELIMAREAP pArea )
    {
       nSize += pArea->uiEolLen - 1;
       if( nSize > pArea->nBufferSize )
-         pBuffer = ( HB_BYTE * ) hb_xgrab( nSize );
+         pBuffer = static_cast< HB_BYTE * >( hb_xgrab( nSize ) );
 
       nSize = 0;
       for( uiCount = 0; uiCount < pArea->area.uiFieldCount; uiCount++ )
@@ -1591,7 +1591,7 @@ static HB_ERRCODE hb_delimInit( LPRDDNODE pRDD )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimInit(%p)", ( void * ) pRDD ) );
 
-   pTSD = ( PHB_TSD ) hb_xgrab( sizeof( HB_TSD ) );
+   pTSD = static_cast< PHB_TSD >( hb_xgrab( sizeof( HB_TSD ) ) );
    HB_TSD_INIT( pTSD, sizeof( DELIMDATA ), nullptr, nullptr );
    pRDD->lpvCargo = ( void * ) pTSD;
 

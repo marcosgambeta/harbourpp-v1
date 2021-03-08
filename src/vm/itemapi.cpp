@@ -423,7 +423,7 @@ char * hb_itemGetC( PHB_ITEM pItem )
 
    if( pItem && HB_IS_STRING( pItem ) )
    {
-      char * szResult = ( char * ) hb_xgrab( pItem->item.asString.length + 1 );
+      char * szResult = static_cast< char * >( hb_xgrab( pItem->item.asString.length + 1 ) );
       hb_xmemcpy( szResult, pItem->item.asString.value, pItem->item.asString.length );
       szResult[ pItem->item.asString.length ] = '\0';
 
@@ -2114,7 +2114,7 @@ PHB_ITEM hb_itemReSizeString( PHB_ITEM pItem, HB_SIZE nSize )
 
    if( pItem->item.asString.allocated == 0 )
    {
-      char * szText = ( char * ) hb_xgrab( nSize + 1 );
+      char * szText = static_cast< char * >( hb_xgrab( nSize + 1 ) );
       hb_xmemcpy( szText, pItem->item.asString.value,
                   pItem->item.asString.length );
       szText[ nSize ] = '\0';
@@ -2830,7 +2830,7 @@ char * hb_itemStr( PHB_ITEM pNumber, PHB_ITEM pWidth, PHB_ITEM pDec )
 
       if( iSize > 0 )
       {
-         szResult = ( char * ) hb_xgrab( iSize + 1 );
+         szResult = static_cast< char * >( hb_xgrab( iSize + 1 ) );
          hb_itemStrBuf( szResult, pNumber, iSize, iDec );
       }
    }
@@ -2866,7 +2866,7 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
 
          hb_dateDecStr( szDate, pItem->item.asDateTime.julian );
 
-         buffer = ( char * ) hb_xgrab( 11 );
+         buffer = static_cast< char * >( hb_xgrab( 11 ) );
          hb_dateFormat( szDate, buffer, hb_stackSetStruct()->HB_SET_DATEFORMAT );
          * nLen = strlen( buffer );
          * bFreeReq = HB_TRUE;
@@ -2932,7 +2932,7 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
       case HB_IT_SYMBOL:
          *bFreeReq = HB_TRUE;
          *nLen = strlen( hb_itemGetSymbol( pItem )->szName ) + 3;
-         buffer = ( char * ) hb_xgrab( *nLen + 1 );
+         buffer = static_cast< char * >( hb_xgrab( *nLen + 1 ) );
          buffer[ 0 ] = '@';
          memcpy( buffer + 1, hb_itemGetSymbol( pItem )->szName, *nLen - 3 );
          buffer[ *nLen - 2 ] = '(';
@@ -2947,7 +2947,7 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
 
          *nLen = size - 1;
          *bFreeReq = HB_TRUE;
-         buffer = ( char * ) hb_xgrab( size );
+         buffer = static_cast< char * >( hb_xgrab( size ) );
          buffer[ 0 ] = '0';
          buffer[ 1 ] = 'x';
          buffer[ --size ] = '\0';

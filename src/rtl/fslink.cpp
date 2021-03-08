@@ -322,7 +322,7 @@ char * hb_fsLinkRead( const char * pszFile )
 
          pszFile = hb_fsNameConv( pszFile, &pszFileFree );
 
-         pszLink = ( char * ) hb_xgrab( HB_PATH_MAX + 1 );
+         pszLink = static_cast< char * >( hb_xgrab( HB_PATH_MAX + 1 ) );
          size = readlink( pszFile, pszLink, HB_PATH_MAX );
          hb_fsSetIOError( size != ( size_t ) -1, 0 );
          if( size == ( size_t ) -1 )

@@ -90,7 +90,7 @@ static PHB_ITEM hb_memvarValueNew( void )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarValueNew()" ) );
 
-   pMemvar = ( PHB_ITEM ) hb_xgrab( sizeof( HB_ITEM ) );
+   pMemvar = static_cast< PHB_ITEM >( hb_xgrab( sizeof( HB_ITEM ) ) );
    pMemvar->type = HB_IT_NIL;
 
    return pMemvar;
@@ -241,8 +241,8 @@ static void hb_memvarAddPrivate( PHB_DYNS pDynSym, PHB_ITEM pValue )
           */
          if( pPrivateStack->size == 0 )
          {
-            pPrivateStack->stack = ( PHB_PRIVATE_ITEM )
-                  hb_xgrab( sizeof( HB_PRIVATE_ITEM ) * TABLE_INITHB_VALUE );
+            pPrivateStack->stack = static_cast< PHB_PRIVATE_ITEM >(
+                  hb_xgrab( sizeof( HB_PRIVATE_ITEM ) * TABLE_INITHB_VALUE ) );
             pPrivateStack->size  = TABLE_INITHB_VALUE;
             pPrivateStack->count = pPrivateStack->base = 0;
          }
@@ -994,11 +994,11 @@ PHB_ITEM hb_memvarSaveInArray( int iScope, HB_BOOL fCopy )
       iScope = 0;
 
 #if ! defined( HB_MT_VM )
-   MVInfo.pDyns = ( PHB_DYNS * ) hb_xgrab( hb_dynsymCount() *
-                                           sizeof( PHB_DYNS ) );
+   MVInfo.pDyns = static_cast< PHB_DYNS * >( hb_xgrab( hb_dynsymCount() *
+                                           sizeof( PHB_DYNS ) ) );
 #else
-   MVInfo.pDyns = ( PHB_DYNS * ) hb_xgrab( hb_stackDynHandlesCount() *
-                                           sizeof( PHB_DYNS ) );
+   MVInfo.pDyns = static_cast< PHB_DYNS * >( hb_xgrab( hb_stackDynHandlesCount() *
+                                           sizeof( PHB_DYNS ) ) );
 #endif
    MVInfo.nCount = 0;
    MVInfo.iScope = iScope;
@@ -1609,7 +1609,7 @@ HB_FUNC( __MVRESTORE )
                   HB_BYTE * pbyString;
 
                   uiWidth += uiDec * 256;
-                  pbyString = ( HB_BYTE * ) hb_xgrab( uiWidth );
+                  pbyString = static_cast< HB_BYTE * >( hb_xgrab( uiWidth ) );
 
                   if( hb_fileRead( fhnd, pbyString, uiWidth, -1 ) == ( HB_SIZE ) uiWidth )
                      pItem = hb_itemPutCLPtr( pItem, ( char * ) pbyString, uiWidth - 1 );

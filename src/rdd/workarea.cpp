@@ -1599,14 +1599,14 @@ static HB_ERRCODE hb_waSetRel( AREAP pArea, LPDBRELINFO lpdbRelInf )
    lpdbRelations = pArea->lpdbRelations;
    if( ! lpdbRelations )
    {
-      pArea->lpdbRelations = ( LPDBRELINFO ) hb_xgrab( sizeof( DBRELINFO ) );
+      pArea->lpdbRelations = static_cast< LPDBRELINFO >( hb_xgrab( sizeof( DBRELINFO ) ) );
       lpdbRelations = pArea->lpdbRelations;
    }
    else
    {
       while( lpdbRelations->lpdbriNext )
          lpdbRelations = lpdbRelations->lpdbriNext;
-      lpdbRelations->lpdbriNext = ( LPDBRELINFO ) hb_xgrab( sizeof( DBRELINFO ) );
+      lpdbRelations->lpdbriNext = static_cast< LPDBRELINFO >( hb_xgrab( sizeof( DBRELINFO ) ) );
       lpdbRelations = lpdbRelations->lpdbriNext;
    }
    lpdbRelations->lpaParent = pArea;

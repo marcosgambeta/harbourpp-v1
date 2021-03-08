@@ -115,10 +115,10 @@ static void hb_destroyFBuffer( PHB_FILEBUF pFileBuf )
 
 static PHB_FILEBUF hb_createFBuffer( PHB_FILE pFile, HB_SIZE nSize )
 {
-   PHB_FILEBUF pFileBuf = ( PHB_FILEBUF ) hb_xgrab( sizeof( HB_FILEBUF ) );
+   PHB_FILEBUF pFileBuf = static_cast< PHB_FILEBUF >( hb_xgrab( sizeof( HB_FILEBUF ) ) );
 
    pFileBuf->pFile = pFile;
-   pFileBuf->pBuf = ( HB_BYTE * ) hb_xgrab( nSize );
+   pFileBuf->pBuf = static_cast< HB_BYTE * >( hb_xgrab( nSize ) );
    pFileBuf->nSize = nSize;
    pFileBuf->nPos = 0;
    return pFileBuf;

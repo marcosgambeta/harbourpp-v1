@@ -283,7 +283,7 @@ static char ** hb_buildArgs( const char *pszFileName )
       ++src;
    }
 
-   argv = ( char ** ) hb_xgrab( ( argc + 2 ) * sizeof( char * ) );
+   argv = static_cast< char ** >( hb_xgrab( ( argc + 2 ) * sizeof( char * ) ) );
    argv[ 0 ] = dst;
    argv[ argc + 1 ] = nullptr;
    argc = 0;
@@ -1206,7 +1206,7 @@ int hb_fsProcessRun( const char * pszFileName,
          nOutBuf = hb_fsSeek( hStdout, 0, FS_END );
          if( nOutBuf )
          {
-            pOutBuf = ( char * ) hb_xgrab( nOutBuf + 1 );
+            pOutBuf = static_cast< char * >( hb_xgrab( nOutBuf + 1 ) );
             hb_fsSeek( hStdout, 0, FS_SET );
             nOutBuf = hb_fsReadLarge( hStdout, pOutBuf, nOutBuf );
          }
@@ -1222,7 +1222,7 @@ int hb_fsProcessRun( const char * pszFileName,
          nErrBuf = hb_fsSeek( hStderr, 0, FS_END );
          if( nErrBuf )
          {
-            pErrBuf = ( char * ) hb_xgrab( nErrBuf + 1 );
+            pErrBuf = static_cast< char * >( hb_xgrab( nErrBuf + 1 ) );
             hb_fsSeek( hStderr, 0, FS_SET );
             nErrBuf = hb_fsReadLarge( hStderr, pErrBuf, nErrBuf );
          }

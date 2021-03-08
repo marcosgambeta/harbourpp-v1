@@ -308,8 +308,8 @@ static PHB_GTWVT hb_gt_wvt_New( PHB_GT pGT, HINSTANCE hInstance, int iCmdShow )
    pWVT->ROWS              = WVT_DEFAULT_ROWS;
    pWVT->COLS              = WVT_DEFAULT_COLS;
 
-   pWVT->TextLine          = ( TCHAR * ) hb_xgrab( pWVT->COLS * sizeof( TCHAR ) );
-   pWVT->FixedSize         = ( int * ) hb_xgrab( pWVT->COLS * sizeof( int ) );
+   pWVT->TextLine          = static_cast< TCHAR * >( hb_xgrab( pWVT->COLS * sizeof( TCHAR ) ) );
+   pWVT->FixedSize         = static_cast< int * >( hb_xgrab( pWVT->COLS * sizeof( int ) ) );
 
    pWVT->COLORS[ 0 ]       = BLACK;
    pWVT->COLORS[ 1 ]       = BLUE;
@@ -2278,7 +2278,7 @@ static void hb_gt_wvt_MouseEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
 
                nSize = ( rect.bottom - rect.top + 1 ) *
                        ( rect.right - rect.left + 1 + 2 );
-               sBuffer = ( TCHAR * ) hb_xgrab( nSize * sizeof( TCHAR ) + 1 );
+               sBuffer = static_cast< TCHAR * >( hb_xgrab( nSize * sizeof( TCHAR ) + 1 ) );
 
                for( n = 0, row = rect.top; row <= rect.bottom; row++ )
                {
@@ -4155,7 +4155,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                {
                   if( fAdd )
                   {
-                     * pMenu = ( PHB_GTWVT_MNU ) hb_xgrab( sizeof( HB_GTWVT_MNU ) );
+                     * pMenu = static_cast< PHB_GTWVT_MNU >( hb_xgrab( sizeof( HB_GTWVT_MNU ) ) );
                      ( * pMenu )->iKey   = iVal;
                      ( * pMenu )->iEvent = iEvent + 1;
                      ( * pMenu )->pNext  = nullptr;

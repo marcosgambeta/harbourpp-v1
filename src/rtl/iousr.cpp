@@ -114,7 +114,7 @@ static void s_iousrFreeAll( void * cargo )
 
 static PHB_FILE s_fileNew( PHB_IOUSR pIO, PHB_ITEM pFileItm )
 {
-   PHB_FILE pFile = ( PHB_FILE ) hb_xgrab( sizeof( HB_FILE ) );
+   PHB_FILE pFile = static_cast< PHB_FILE >( hb_xgrab( sizeof( HB_FILE ) ) );
 
    pFile->pFuncs = &pIO->funcs;
    pFile->pFileItm = pFileItm;

@@ -478,7 +478,7 @@ static void hb_gt_win_xInitScreenParam( PHB_GT pGT )
          if( s_pCharInfoScreen )
             hb_xfree( s_pCharInfoScreen );
          s_nScreenBuffSize = nSize;
-         s_pCharInfoScreen = ( CHAR_INFO * ) hb_xgrab( s_nScreenBuffSize );
+         s_pCharInfoScreen = static_cast< CHAR_INFO * >( hb_xgrab( s_nScreenBuffSize ) );
       }
 
       s_iCurRow = s_csbi.dwCursorPosition.Y;

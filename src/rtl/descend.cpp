@@ -72,7 +72,7 @@ HB_FUNC( DESCEND )
 
          if( nLen > 0 )
          {
-            char * szBuffer = ( char * ) hb_xgrab( nLen + 1 );
+            char * szBuffer = static_cast< char * >( hb_xgrab( nLen + 1 ) );
             hb_strDescend( szBuffer, hb_itemGetCPtr( pItem ), nLen );
             hb_retclen_buffer( szBuffer, nLen );
          }

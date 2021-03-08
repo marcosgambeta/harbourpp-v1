@@ -1598,7 +1598,7 @@ HB_BYTE * hb_fileLoadData( PHB_FILE pFile, HB_SIZE nMaxSize,
       if( nMaxSize > 0 && nBufSize > nMaxSize )
          nBufSize = nMaxSize;
 
-      pFileBuf = ( HB_BYTE * ) hb_xgrab( nBufSize + 1 );
+      pFileBuf = static_cast< HB_BYTE * >( hb_xgrab( nBufSize + 1 ) );
       do
       {
          nRead = hb_fileReadAt( pFile, pFileBuf + nSize, nBufSize - nSize, nSize );

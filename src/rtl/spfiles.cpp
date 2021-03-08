@@ -58,7 +58,7 @@ HB_BOOL hb_spFile( const char * pszFileName, char * pszRetPath )
    if( pszRetPath )
       pszPath = pszRetPath;
    else
-      pszPath = ( char * ) hb_xgrab( HB_PATH_MAX );
+      pszPath = static_cast< char * >( hb_xgrab( HB_PATH_MAX ) );
 
    pFilepath = hb_fsFNameSplit( pszFileName );
 
@@ -122,7 +122,7 @@ HB_BOOL hb_spFileExists( const char * pszFileName, char * pszRetPath )
    if( pszRetPath )
       pszPath = pszRetPath;
    else
-      pszPath = ( char * ) hb_xgrab( HB_PATH_MAX );
+      pszPath = static_cast< char * >( hb_xgrab( HB_PATH_MAX ) );
 
    pFilepath = hb_fsFNameSplit( pszFileName );
 

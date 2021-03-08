@@ -144,7 +144,7 @@ HB_FUNC( HB_STRTOHEX )
       HB_SIZE nDest = ( nStr << 1 ) + ( nStr - 1 ) * nSep;
       char * szDest, * szPtr;
 
-      szPtr = szDest = ( char * ) hb_xgrab( nDest + 1 );
+      szPtr = szDest = static_cast< char * >( hb_xgrab( nDest + 1 ) );
       do
       {
          HB_UCHAR uc = ( HB_UCHAR ) *szStr++, ud;
@@ -200,7 +200,7 @@ HB_FUNC( HB_HEXTOSTR )
       {
          int iVal = 0x10;
 
-         char * szDest = ( char * ) hb_xgrab( nDest + 1 );
+         char * szDest = static_cast< char * >( hb_xgrab( nDest + 1 ) );
 
          /* ul = 0; see above stop condition */
          do

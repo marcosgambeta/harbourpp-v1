@@ -3821,7 +3821,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
       if( len <= 0 )
          len = 0x8000;
       len *= sizeof( struct ifreq );
-      buf = ( char * ) hb_xgrab( len );
+      buf = static_cast< char * >( hb_xgrab( len ) );
 
       ifc.ifc_len = len;
       ifc.ifc_buf = ( caddr_t ) buf;
@@ -4086,12 +4086,12 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
             ULONG ulBufLen = sizeof( IP_ADAPTER_INFO );
             DWORD dwResult;
 
-            pAdapterInfo = ( PIP_ADAPTER_INFO ) hb_xgrab( ulBufLen );
+            pAdapterInfo = static_cast< PIP_ADAPTER_INFO >( hb_xgrab( ulBufLen ) );
             dwResult = GetAdaptersInfo( pAdapterInfo, &ulBufLen );
             if( dwResult == ERROR_BUFFER_OVERFLOW )
             {
                hb_xfree( pAdapterInfo );
-               pAdapterInfo = ( PIP_ADAPTER_INFO ) hb_xgrab( ulBufLen );
+               pAdapterInfo = static_cast< PIP_ADAPTER_INFO >( hb_xgrab( ulBufLen ) );
                dwResult = GetAdaptersInfo( pAdapterInfo, &ulBufLen );
             }
             if( dwResult == NO_ERROR )

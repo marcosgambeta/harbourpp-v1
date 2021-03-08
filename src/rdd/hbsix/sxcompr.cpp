@@ -207,7 +207,7 @@ static PHB_LZSSX_COMPR hb_LZSSxInit(
                         PHB_FILE pInput, const HB_BYTE * pSrcBuf, HB_SIZE nSrcBuf,
                         PHB_FILE pOutput, HB_BYTE * pDstBuf, HB_SIZE nDstBuf )
 {
-   PHB_LZSSX_COMPR pCompr = ( PHB_LZSSX_COMPR ) hb_xgrab( sizeof( HB_LZSSX_COMPR ) );
+   PHB_LZSSX_COMPR pCompr = static_cast< PHB_LZSSX_COMPR >( hb_xgrab( sizeof( HB_LZSSX_COMPR ) ) );
 
    if( pInput != nullptr && nSrcBuf == 0 )
       nSrcBuf = LZSS_IOBUFLEN;
@@ -231,9 +231,9 @@ static PHB_LZSSX_COMPR hb_LZSSxInit(
    pCompr->fContinue   = HB_FALSE;
 
    if( pCompr->fInFree )
-      pCompr->inBuffer    = ( HB_BYTE * ) hb_xgrab( nDstBuf );
+      pCompr->inBuffer    = static_cast< HB_BYTE * >( hb_xgrab( nDstBuf ) );
    if( pCompr->fOutFree )
-      pCompr->outBuffer   = ( HB_BYTE * ) hb_xgrab( nDstBuf );
+      pCompr->outBuffer   = static_cast< HB_BYTE * >( hb_xgrab( nDstBuf ) );
 
    /* initialize the ring buffer with spaces, because SIX uses
       dynamic ring buffer then we do not have to fill last MAXLENGTH
@@ -684,7 +684,7 @@ HB_FUNC( _SX_STRCOMPRESS )
 
       /* this is for strict SIX compatibility - in general very bad idea */
       nBuf = nLen + 257;
-      pBuf = ( char * ) hb_xgrab( nBuf );
+      pBuf = static_cast< char * >( hb_xgrab( nBuf ) );
       HB_PUT_LE_UINT32( pBuf, nLen );
       if( ! hb_LZSSxCompressMem( pStr, nLen, pBuf + 4, nBuf - 4, &nDst ) )
       {

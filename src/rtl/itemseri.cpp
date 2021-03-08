@@ -1456,7 +1456,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem,
          nPad = pBuffer[ nOffset++ ];
          nLen = hb_cdpnDupLen( ( const char * ) &pBuffer[ nOffset ], nSize,
                                 cdpIn, cdpOut );
-         szVal = ( char * ) hb_xgrab( nLen + nPad + 1 );
+         szVal = static_cast< char * >( hb_xgrab( nLen + nPad + 1 ) );
          hb_cdpnDup2( ( const char * ) &pBuffer[ nOffset ], nSize,
                       szVal, &nLen, cdpIn, cdpOut );
          memset( szVal + nLen, ' ', nPad );
@@ -1470,7 +1470,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem,
          nOffset += 2;
          nLen = hb_cdpnDupLen( ( const char * ) &pBuffer[ nOffset ], nSize,
                                 cdpIn, cdpOut );
-         szVal = ( char * ) hb_xgrab( nLen + nPad + 1 );
+         szVal = static_cast< char * >( hb_xgrab( nLen + nPad + 1 ) );
          hb_cdpnDup2( ( const char * ) &pBuffer[ nOffset ], nSize,
                       szVal, &nLen, cdpIn, cdpOut );
          memset( szVal + nLen, ' ', nPad );
@@ -1484,7 +1484,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem,
          nOffset += 4;
          nLen = hb_cdpnDupLen( ( const char * ) &pBuffer[ nOffset ], nSize,
                                 cdpIn, cdpOut );
-         szVal = ( char * ) hb_xgrab( nLen + nPad + 1 );
+         szVal = static_cast< char * >( hb_xgrab( nLen + nPad + 1 ) );
          hb_cdpnDup2( ( const char * ) &pBuffer[ nOffset ], nSize,
                       szVal, &nLen, cdpIn, cdpOut );
          hb_xmemset( szVal + nLen, ' ', nPad );
@@ -1583,7 +1583,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem,
          nOffset += 4;
          nLen = HB_GET_LE_UINT32( &pBuffer[ nOffset ] );
          nOffset += 4;
-         szVal = ( char * ) hb_xgrab( nLen + 1 );
+         szVal = static_cast< char * >( hb_xgrab( nLen + 1 ) );
          switch( hb_zlibUncompress( szVal, &nLen,
                                     ( const char * ) &pBuffer[ nOffset ], nSize ) )
          {
@@ -1793,7 +1793,7 @@ char * hb_itemSerializeCP( PHB_ITEM pItem, int iFlags,
 
    hb_itemSerialRefListInit( &refList );
    nSize = hb_itemSerialSize( pItem, iFlags, cdpIn, cdpOut, &refList, 0 );
-   pBuffer = ( HB_UCHAR * ) hb_xgrab( nSize + 1 );
+   pBuffer = static_cast< HB_UCHAR * >( hb_xgrab( nSize + 1 ) );
    hb_itemSerialUnusedFree( &refList );
    hb_serializeItem( pItem, iFlags, cdpIn, cdpOut, pBuffer, 0, &refList );
    hb_itemSerialRefListFree( &refList );
@@ -1803,7 +1803,7 @@ char * hb_itemSerializeCP( PHB_ITEM pItem, int iFlags,
       HB_SIZE nDest = hb_zlibCompressBound( nSize );
       if( nDest > 0 )
       {
-         char * pDest = ( char * ) hb_xgrab( nDest );
+         char * pDest = static_cast< char * >( hb_xgrab( nDest ) );
          if( hb_zlibCompress( pDest, &nDest, ( const char * ) pBuffer, nSize,
                            HB_ZLIB_COMPRESSION_DEFAULT ) == HB_ZLIB_RES_OK )
          {

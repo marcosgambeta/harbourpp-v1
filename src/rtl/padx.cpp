@@ -119,7 +119,7 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
                      {
                         HB_SIZE nRep = ( ( HB_SIZE ) nLen - nSize ), nPos = 0;
                         nLen += nRep * ( nPad - 1 );
-                        szResult = ( char * ) hb_xgrab( nLen + 1 );
+                        szResult = static_cast< char * >( hb_xgrab( nLen + 1 ) );
                         while( nRep-- )
                         {
                            hb_xmemcpy( szResult + nPos, szPad, nPad );
@@ -129,7 +129,7 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
                      }
                      else
                      {
-                        szResult = ( char * ) hb_xgrab( nLen + 1 );
+                        szResult = static_cast< char * >( hb_xgrab( nLen + 1 ) );
                         hb_xmemset( szResult, szPad[ 0 ], ( HB_SIZE ) nLen - nSize );
                         hb_xmemcpy( szResult + ( HB_SIZE ) nLen - nSize, szText, nSize );
                      }
@@ -138,7 +138,7 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
                      if( nPad > 1 )
                      {
                         nLen += ( nLen - nSize ) * ( nPad - 1 );
-                        szResult = ( char * ) hb_xgrab( nLen + 1 );
+                        szResult = static_cast< char * >( hb_xgrab( nLen + 1 ) );
                         hb_xmemcpy( szResult, szText, nSize );
                         while( nSize < ( HB_SIZE ) nLen )
                         {
@@ -148,7 +148,7 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
                      }
                      else
                      {
-                        szResult = ( char * ) hb_xgrab( nLen + 1 );
+                        szResult = static_cast< char * >( hb_xgrab( nLen + 1 ) );
                         hb_xmemcpy( szResult, szText, nSize );
                         hb_xmemset( szResult + nSize, szPad[ 0 ], ( HB_SIZE ) nLen - nSize );
                      }
@@ -158,7 +158,7 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
                      {
                         HB_SIZE nRep = ( ( HB_SIZE ) nLen - nSize ) >> 1, nPos = 0;
                         nLen += ( nLen - nSize ) * ( nPad - 1 );
-                        szResult = ( char * ) hb_xgrab( nLen + 1 );
+                        szResult = static_cast< char * >( hb_xgrab( nLen + 1 ) );
                         while( nRep-- )
                         {
                            hb_xmemcpy( szResult + nPos, szPad, nPad );
@@ -174,7 +174,7 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
                      }
                      else
                      {
-                        szResult = ( char * ) hb_xgrab( nLen + 1 );
+                        szResult = static_cast< char * >( hb_xgrab( nLen + 1 ) );
                         nPad = ( ( HB_SIZE ) nLen - nSize ) >> 1;
                         hb_xmemset( szResult, szPad[ 0 ], nPad );
                         hb_xmemcpy( szResult + nPad, szText, nSize );

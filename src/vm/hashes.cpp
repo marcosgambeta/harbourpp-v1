@@ -223,8 +223,8 @@ static int hb_hashItemCmp( PHB_ITEM pKey1, PHB_ITEM pKey2, int iFlags )
 static void hb_hashResort( PHB_BASEHASH pBaseHash )
 {
    HB_SIZE nPos;
-   PHB_HASHPAIR pPairs = ( PHB_HASHPAIR )
-                           hb_xgrab( pBaseHash->nLen * sizeof( HB_HASHPAIR ) );
+   PHB_HASHPAIR pPairs = static_cast< PHB_HASHPAIR >(
+                           hb_xgrab( pBaseHash->nLen * sizeof( HB_HASHPAIR ) ) );
    for( nPos = 0; nPos < pBaseHash->nLen; ++nPos )
    {
       memcpy( pPairs + nPos, pBaseHash->pPairs + pBaseHash->pnPos[ nPos ], sizeof( HB_HASHPAIR ) );
@@ -344,9 +344,9 @@ static void hb_hashResize( PHB_BASEHASH pBaseHash, HB_SIZE nNewSize )
       }
       else
       {
-         pBaseHash->pPairs = ( PHB_HASHPAIR ) hb_xgrab( nNewSize * sizeof( HB_HASHPAIR ) );
+         pBaseHash->pPairs = static_cast< PHB_HASHPAIR >( hb_xgrab( nNewSize * sizeof( HB_HASHPAIR ) ) );
          if( pBaseHash->iFlags & HB_HASH_KEEPORDER )
-            pBaseHash->pnPos = ( HB_SIZE * ) hb_xgrab( nNewSize * sizeof( HB_SIZE ) );
+            pBaseHash->pnPos = static_cast< HB_SIZE * >( hb_xgrab( nNewSize * sizeof( HB_SIZE ) ) );
       }
 
       do
@@ -1178,8 +1178,8 @@ void hb_hashSetFlags( PHB_ITEM pHash, int iFlags )
       {
          HB_SIZE n = pHash->item.asHash.value->nSize;
 
-         pHash->item.asHash.value->pnPos = ( HB_SIZE * )
-                                             hb_xgrab( n * sizeof( HB_SIZE ) );
+         pHash->item.asHash.value->pnPos = static_cast< HB_SIZE * >(
+                                             hb_xgrab( n * sizeof( HB_SIZE ) ) );
          do
          {
             --n;

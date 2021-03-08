@@ -655,7 +655,7 @@ static long s_inetRecv( PHB_SOCKET_STRUCT socket, char * buffer, long size,
    if( readahead && socket->inbuffer == 0 && socket->readahead > size )
    {
       if( socket->buffer == nullptr )
-         socket->buffer = ( char * ) hb_xgrab( socket->readahead );
+         socket->buffer = static_cast< char * >( hb_xgrab( socket->readahead ) );
       socket->posbuffer = 0;
       if( socket->recvFunc )
          rec = socket->recvFunc( socket->stream, socket->sd,
@@ -818,7 +818,7 @@ static void s_inetRecvPattern( const char * const * patterns, int * patternsizes
 
    socket->iError = HB_INET_ERR_OK;
 
-   buffer = ( char * ) hb_xgrab( iBufferSize );
+   buffer = static_cast< char * >( hb_xgrab( iBufferSize ) );
    iAllocated = iBufferSize;
 
    do
@@ -924,8 +924,8 @@ HB_FUNC( HB_INETRECVENDBLOCK )
       {
          if( iPatternsCount > HB_PATERN_BUF_SIZE )
          {
-            patterns = ( const char ** ) hb_xgrab( sizeof( char * ) * iPatternsCount );
-            patternsizes = ( int * ) hb_xgrab( sizeof( int ) * iPatternsCount );
+            patterns = static_cast< const char ** >( hb_xgrab( sizeof( char * ) * iPatternsCount ) );
+            patternsizes = static_cast< int * >( hb_xgrab( sizeof( int ) * iPatternsCount ) );
          }
          iPatternsCount = 0;
          for( i = 1; i <= iPatternsMax; i++ )

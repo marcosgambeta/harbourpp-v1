@@ -218,7 +218,7 @@ HB_FUNC( HB_UPOKE )
             }
             else
             {
-               pszText = ( char * ) hb_xgrab( nLen - nOldChar + nChar + 1 );
+               pszText = static_cast< char * >( hb_xgrab( nLen - nOldChar + nChar + 1 ) );
 
                memcpy( pszText, szText, nPos );
                memcpy( pszText + nPos, szChar, nChar );
@@ -646,7 +646,7 @@ HB_FUNC( HB_BSTUFF )
 
       if( ( nTot = nLen + nIns - nDel ) > 0 )
       {
-         char * szResult = ( char * ) hb_xgrab( nTot + 1 );
+         char * szResult = static_cast< char * >( hb_xgrab( nTot + 1 ) );
 
          hb_xmemcpy( szResult, szText, nPos );
          hb_xmemcpy( szResult + nPos, szIns, nIns );
@@ -693,7 +693,7 @@ HB_FUNC( HB_USTUFF )
 
       if( ( nTot = nLen + nIns - nDel ) > 0 )
       {
-         char * szResult = ( char * ) hb_xgrab( nTot + 1 );
+         char * szResult = static_cast< char * >( hb_xgrab( nTot + 1 ) );
 
          hb_xmemcpy( szResult, szText, nPos );
          hb_xmemcpy( szResult + nPos, szIns, nIns );

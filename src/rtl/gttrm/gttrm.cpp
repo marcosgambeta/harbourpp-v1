@@ -684,7 +684,7 @@ static int add_efds( PHB_GTTRM pTerm, int fd, int mode,
                             pTerm->efds_size * sizeof( HB_POLLFD ) );
       }
 
-      pefd = ( evtFD * ) hb_xgrab( sizeof( evtFD ) );
+      pefd = static_cast< evtFD * >( hb_xgrab( sizeof( evtFD ) ) );
       pefd->fd = fd;
       pefd->mode = mode;
       pefd->cargo = cargo;
@@ -2499,7 +2499,7 @@ static int addKeyMap( PHB_GTTRM pTerm, int nKey, const char * cdesc )
    {
       if( *ptr == nullptr )
       {
-         *ptr = ( keyTab * ) hb_xgrab( sizeof( keyTab ) );
+         *ptr = static_cast< keyTab * >( hb_xgrab( sizeof( keyTab ) ) );
          ( *ptr )->ch = c;
          ( *ptr )->key = K_UNDEF;
          ( *ptr )->nextCh = nullptr;
@@ -3157,7 +3157,7 @@ static void hb_gt_trm_SetTerm( PHB_GTTRM pTerm )
    {
       pTerm->iOutBufIndex = 0;
       pTerm->iOutBufSize = 16384;
-      pTerm->pOutBuf = ( char * ) hb_xgrab( pTerm->iOutBufSize );
+      pTerm->pOutBuf = static_cast< char * >( hb_xgrab( pTerm->iOutBufSize ) );
    }
    pTerm->mouse_type    = MOUSE_NONE;
    pTerm->esc_delay     = ESC_DELAY;

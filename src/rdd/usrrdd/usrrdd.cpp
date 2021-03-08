@@ -470,7 +470,7 @@ static HB_BOOL hb_usrItemToTransInfo( PHB_ITEM pItem, LPDBTRANSINFO pTransInfo )
             LPDBTRANSITEM pTransItem;
 
             pTransInfo->lpTransItems = pTransItem =
-               ( LPDBTRANSITEM ) hb_xgrab( uiItemCount * sizeof( DBTRANSITEM ) );
+               static_cast< LPDBTRANSITEM >( hb_xgrab( uiItemCount * sizeof( DBTRANSITEM ) ) );
 
             for( uiCount = 1; uiCount <= uiItemCount; ++uiCount, ++pTransItem )
             {
@@ -540,7 +540,7 @@ static HB_BOOL hb_usrItemToSortInfo( PHB_ITEM pItem, LPDBSORTINFO pSortInfo )
             LPDBSORTITEM pSortItem;
 
             pSortInfo->lpdbsItem = pSortItem =
-               ( LPDBSORTITEM ) hb_xgrab( uiItemCount * sizeof( DBSORTITEM ) );
+               static_cast< LPDBSORTITEM >( hb_xgrab( uiItemCount * sizeof( DBSORTITEM ) ) );
 
             for( uiCount = 1; uiCount <= uiItemCount; ++uiCount, ++pSortItem )
             {
@@ -745,7 +745,7 @@ static HB_BOOL hb_usrItemToOrderCreateInfo( PHB_ITEM pItem,
       if( hb_arrayLen( pCond ) > 0 )
       {
          LPDBORDERCONDINFO pOrderCondInfo;
-         pOrderCondInfo = ( LPDBORDERCONDINFO ) hb_xgrab( sizeof( DBORDERCONDINFO ) );
+         pOrderCondInfo = static_cast< LPDBORDERCONDINFO >( hb_xgrab( sizeof( DBORDERCONDINFO ) ) );
          if( ! hb_usrItemToOrderCondInfo( pCond, pOrderCondInfo ) )
          {
             hb_xfree( pOrderCondInfo );
@@ -794,7 +794,7 @@ static HB_ERRCODE hb_usrInit( LPRDDNODE pRDD )
       if( s_uiUsrNodes )
          s_pUsrRddNodes = ( LPUSRRDDNODE * ) hb_xrealloc( s_pUsrRddNodes, nSize );
       else
-         s_pUsrRddNodes = ( LPUSRRDDNODE * ) hb_xgrab( nSize );
+         s_pUsrRddNodes = static_cast< LPUSRRDDNODE * >( hb_xgrab( nSize ) );
       do
       {
          s_pUsrRddNodes[ s_uiUsrNodes ] = nullptr;
@@ -3323,7 +3323,7 @@ HB_FUNC_UR_SUPER( FIELDNAME )
 
    if( pArea )
    {
-      char * szName = ( char * ) hb_xgrab( pArea->uiMaxFieldNameLength + 1 );
+      char * szName = static_cast< char * >( hb_xgrab( pArea->uiMaxFieldNameLength + 1 ) );
 
       hb_retni( SUPER_FIELDNAME( pArea, static_cast< HB_USHORT >( hb_parni( 2 ) ),
                                         szName ) );
@@ -3955,8 +3955,8 @@ HB_FUNC_UR_SUPER( ORDSETCOND )
       }
       else
       {
-         LPDBORDERCONDINFO lpdbOrderCondInfo = ( LPDBORDERCONDINFO )
-                                       hb_xgrab( sizeof( DBORDERCONDINFO ) );
+         LPDBORDERCONDINFO lpdbOrderCondInfo = static_cast< LPDBORDERCONDINFO >(
+                                       hb_xgrab( sizeof( DBORDERCONDINFO ) ) );
          if( hb_usrItemToOrderCondInfo( pItem, lpdbOrderCondInfo ) )
          {
             hb_usrOrderCondClone( lpdbOrderCondInfo );

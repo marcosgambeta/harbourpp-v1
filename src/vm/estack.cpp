@@ -95,8 +95,8 @@
 #        endif
 #     endif
 
-#     define hb_stack_alloc()    do { hb_stack_ptr = ( PHB_STACK ) \
-                                      hb_xgrab( sizeof( HB_STACK ) ); } while( 0 )
+#     define hb_stack_alloc()    do { hb_stack_ptr = static_cast< PHB_STACK >( \
+                                      hb_xgrab( sizeof( HB_STACK ) ) ); } while( 0 )
 #     define hb_stack_dealloc()  do { hb_xfree( hb_stack_ptr ); \
                                       hb_stack_ptr = nullptr; } while( 0 )
 #     define hb_stack_ready()    (hb_stack_ptr != nullptr)
@@ -164,7 +164,7 @@ static void hb_stack_init( PHB_STACK pStack )
 
    memset( pStack, 0, sizeof( HB_STACK ) );
 
-   pStack->pItems = ( PHB_ITEM * ) hb_xgrab( sizeof( PHB_ITEM ) * STACK_INITHB_ITEMS );
+   pStack->pItems = static_cast< PHB_ITEM * >( hb_xgrab( sizeof( PHB_ITEM ) * STACK_INITHB_ITEMS ) );
    pStack->pBase  = pStack->pItems;
    pStack->pPos   = pStack->pItems;       /* points to the first stack item */
    pStack->nItems = STACK_INITHB_ITEMS;
@@ -172,7 +172,7 @@ static void hb_stack_init( PHB_STACK pStack )
 
    for( n = 0; n < pStack->nItems; ++n )
    {
-      pStack->pItems[ n ] = ( PHB_ITEM ) hb_xgrab( sizeof( HB_ITEM ) );
+      pStack->pItems[ n ] = static_cast< PHB_ITEM >( hb_xgrab( sizeof( HB_ITEM ) ) );
       pStack->pItems[ n ]->type = HB_IT_NIL;
    }
 
@@ -673,7 +673,7 @@ void hb_stackIncrease( void )
 
    do
    {
-      hb_stack.pItems[ nEndIndex ] = ( PHB_ITEM ) hb_xgrab( sizeof( HB_ITEM ) );
+      hb_stack.pItems[ nEndIndex ] = static_cast< PHB_ITEM >( hb_xgrab( sizeof( HB_ITEM ) ) );
       hb_stack.pItems[ nEndIndex ]->type = HB_IT_NIL;
    }
    while( ++nEndIndex < hb_stack.nItems );
@@ -1008,7 +1008,7 @@ char * hb_stackDirBuffer( void )
    {
       HB_STACK_TLS_PRELOAD
       if( ! hb_stack.pDirBuffer )
-         hb_stack.pDirBuffer = ( char * ) hb_xgrab( HB_PATH_MAX );
+         hb_stack.pDirBuffer = static_cast< char * >( hb_xgrab( HB_PATH_MAX ) );
       return hb_stack.pDirBuffer;
    }
 #endif

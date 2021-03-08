@@ -414,7 +414,7 @@ static int add_efds( InOutBase * ioBase, int fd, int mode,
                             ioBase->efds_size * sizeof( HB_POLLFD ) );
       }
 
-      pefd = ( evtFD * ) hb_xgrab( sizeof( evtFD ) );
+      pefd = static_cast< evtFD * >( hb_xgrab( sizeof( evtFD ) ) );
       pefd->fd = fd;
       pefd->mode = mode;
       pefd->data = data;
@@ -1098,7 +1098,7 @@ static int addKeyMap( InOutBase * ioBase, int nKey, const char * cdesc )
    {
       if( *ptr == nullptr )
       {
-         *ptr = ( keyTab * ) hb_xgrab( sizeof( keyTab ) );
+         *ptr = static_cast< keyTab * >( hb_xgrab( sizeof( keyTab ) ) );
          ( *ptr )->ch = c;
          ( *ptr )->key = K_UNDEF;
          ( *ptr )->nextCh = nullptr;
@@ -1277,7 +1277,7 @@ static HB_BOOL gt_outstr( InOutBase * ioBase, int fd, const char * str,
    {
       unsigned char * buf;
 
-      buf = ( unsigned char * ) hb_xgrab( len );
+      buf = static_cast< unsigned char * >( hb_xgrab( len ) );
       for( int i = 0; i < len; ++i )
       {
          unsigned char c = str[ i ];
@@ -1725,7 +1725,7 @@ static void setKeyTrans( InOutBase * ioBase, PHB_CODEPAGE cdpTerm, PHB_CODEPAGE 
    if( cdpTerm && cdpHost && cdpTerm != cdpHost )
    {
       if( ioBase->in_transtbl == nullptr )
-         ioBase->in_transtbl = ( unsigned char * ) hb_xgrab( 256 );
+         ioBase->in_transtbl = static_cast< unsigned char * >( hb_xgrab( 256 ) );
 
       for( int i = 0; i < 256; ++i )
          ioBase->in_transtbl[ i ] = hb_cdpTranslateChar( i, cdpTerm, cdpHost );
@@ -1919,7 +1919,7 @@ static InOutBase * create_ioBase( char * term, int infd, int outfd, int errfd,
       ioBase->cvvis = ioBase->cnorm;
    ioBase->acsc = tiGetS( "acsc" );
 
-   ioBase->charmap = ( int * ) hb_xgrab( 256 * sizeof( int ) );
+   ioBase->charmap = static_cast< int * >( hb_xgrab( 256 * sizeof( int ) ) );
    hb_gt_chrmapinit( ioBase->charmap, term, ioBase->terminal_type == TERM_XTERM );
    setDispTrans( ioBase, nullptr, nullptr, 0 );
 
@@ -2194,8 +2194,8 @@ static int add_new_ioBase( InOutBase * ioBase )
    if( ! add )
    {
       if( s_ioBaseTab == nullptr )
-         s_ioBaseTab = ( InOutBase ** ) hb_xgrab(
-                        ( s_iSize_ioBaseTab += 10 ) * sizeof( InOutBase * ) );
+         s_ioBaseTab = static_cast< InOutBase ** >( hb_xgrab(
+                        ( s_iSize_ioBaseTab += 10 ) * sizeof( InOutBase * ) ) );
       else
          s_ioBaseTab = ( InOutBase ** ) hb_xrealloc( s_ioBaseTab,
                         ( s_iSize_ioBaseTab += 10 ) * sizeof( InOutBase * ) );

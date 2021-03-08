@@ -277,7 +277,7 @@ static PHB_ITEM hb_i18n_pluralexp_compile( PHB_ITEM pExp )
 
    if( nLen > 0 )
    {
-      char * szMacro = ( char * ) hb_xgrab( nLen + 6 );
+      char * szMacro = static_cast< char * >( hb_xgrab( nLen + 6 ) );
       const char * szType;
       PHB_ITEM pMacro;
 

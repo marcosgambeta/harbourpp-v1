@@ -147,10 +147,10 @@ static void * hb_gt_def_New( PHB_GT pGT )
    nSize = ( HB_SIZE ) pGT->iHeight * pGT->iWidth;
 
    pGT->screenBuffer =
-            ( PHB_SCREENCELL ) hb_xgrab( sizeof( HB_SCREENCELL ) * nSize );
+            static_cast< PHB_SCREENCELL >( hb_xgrab( sizeof( HB_SCREENCELL ) * nSize ) );
    pGT->prevBuffer =
             ( PHB_SCREENCELL ) hb_xgrabz( sizeof( HB_SCREENCELL ) * nSize );
-   pGT->pLines = ( HB_BOOL * ) hb_xgrab( sizeof( HB_BOOL ) * pGT->iHeight );
+   pGT->pLines = static_cast< HB_BOOL * >( hb_xgrab( sizeof( HB_BOOL ) * pGT->iHeight ) );
 
    for( i = 0; i < pGT->iHeight; ++i )
       pGT->pLines[ i ] = HB_TRUE;
@@ -342,14 +342,14 @@ static void hb_gt_def_GetColorData( PHB_GT pGT, int ** pColorsPtr, int * piColor
 {
    if( pGT->iColorCount )
    {
-      *pColorsPtr = ( int * ) hb_xgrab( pGT->iColorCount * sizeof( int ) );
+      *pColorsPtr = static_cast< int * >( hb_xgrab( pGT->iColorCount * sizeof( int ) ) );
       memcpy( *pColorsPtr, pGT->pColor, pGT->iColorCount * sizeof( int ) );
       *piColorCount = pGT->iColorCount;
       *piColorIndex = pGT->iColorIndex;
    }
    else
    {
-      *pColorsPtr = ( int * ) hb_xgrab( sizeof( int ) );
+      *pColorsPtr = static_cast< int * >( hb_xgrab( sizeof( int ) ) );
       *pColorsPtr[ 0 ] = 0;
       *piColorCount = 1;
       *piColorIndex = 0;
@@ -2054,7 +2054,7 @@ static int hb_gt_def_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions,
          ulDefWidth = ( ulMaxWidth * 3 ) >> 2;
          if( ulDefWidth == 0 )
             ulDefWidth = 1;
-         szMsgDsp = ( HB_WCHAR * ) hb_xgrab( ( nLen + ( nLen / ulDefWidth ) + 1 ) * sizeof( HB_WCHAR ) );
+         szMsgDsp = static_cast< HB_WCHAR * >( hb_xgrab( ( nLen + ( nLen / ulDefWidth ) + 1 ) * sizeof( HB_WCHAR ) ) );
 
          while( ulMsg < nLen )
          {
@@ -3044,7 +3044,7 @@ static void hb_gt_def_InkeySetText( PHB_GT pGT, const char * szText, HB_SIZE nLe
       HB_WCHAR wc, prev = 0;
 
       pGT->StrBufferSize = pGT->StrBufferPos = 0;
-      pGT->StrBuffer = ( HB_WCHAR * ) hb_xgrab( nLen * sizeof( HB_WCHAR ) );
+      pGT->StrBuffer = static_cast< HB_WCHAR * >( hb_xgrab( nLen * sizeof( HB_WCHAR ) ) );
       while( HB_CDPCHAR_GET( cdp, szText, nLen, &nIndex, &wc ) )
       {
          if( fEol )
@@ -3099,7 +3099,7 @@ static void hb_gt_def_InkeyReset( PHB_GT pGT )
       if( iTypeAhead > HB_DEFAULT_INKEY_BUFSIZE )
       {
          pGT->inkeyBufferSize = iTypeAhead;
-         pGT->inkeyBuffer = ( int * ) hb_xgrab( pGT->inkeyBufferSize * sizeof( int ) );
+         pGT->inkeyBuffer = static_cast< int * >( hb_xgrab( pGT->inkeyBufferSize * sizeof( int ) ) );
       }
       else
       {
@@ -3766,7 +3766,7 @@ PHB_GT hb_gtLoad( const char * szGtName, PHB_GT pGT, PHB_GT_FUNCS pSuperTable )
             hb_errInternal( 9996, "Harbour terminal (GT) initialization failure", nullptr, nullptr );
 
          pGT = ( PHB_GT_BASE ) hb_xgrabz( sizeof( HB_GT_BASE ) );
-         pGT->pFuncTable = ( PHB_GT_FUNCS ) hb_xgrab( sizeof( HB_GT_FUNCS ) );
+         pGT->pFuncTable = static_cast< PHB_GT_FUNCS >( hb_xgrab( sizeof( HB_GT_FUNCS ) ) );
          memcpy( pGT->pFuncTable, &s_gtCoreFunc, sizeof( HB_GT_FUNCS ) );
          pGT->iUsed++;
          return pGT;
@@ -3778,7 +3778,7 @@ PHB_GT hb_gtLoad( const char * szGtName, PHB_GT pGT, PHB_GT_FUNCS pSuperTable )
          if( fNew )
          {
             pGT = ( PHB_GT_BASE ) hb_xgrabz( sizeof( HB_GT_BASE ) );
-            pGT->pFuncTable = ( PHB_GT_FUNCS ) hb_xgrab( sizeof( HB_GT_FUNCS ) );
+            pGT->pFuncTable = static_cast< PHB_GT_FUNCS >( hb_xgrab( sizeof( HB_GT_FUNCS ) ) );
             memcpy( pGT->pFuncTable, &s_gtCoreFunc, sizeof( HB_GT_FUNCS ) );
             pGT->iUsed++;
          }

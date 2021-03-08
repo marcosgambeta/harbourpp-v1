@@ -306,7 +306,7 @@ static void hb_breakBlockRelease( void )
 
 static void hb_vmAddModuleFunction( PHB_FUNC_LIST * pLstPtr, HB_INIT_FUNC pFunc, void * cargo )
 {
-   PHB_FUNC_LIST pLst = ( PHB_FUNC_LIST ) hb_xgrab( sizeof( HB_FUNC_LIST ) );
+   PHB_FUNC_LIST pLst = static_cast< PHB_FUNC_LIST >( hb_xgrab( sizeof( HB_FUNC_LIST ) ) );
 
    pLst->pFunc = pFunc;
    pLst->cargo = cargo;
@@ -4711,7 +4711,7 @@ static void hb_vmEnumReference( PHB_ITEM pBase )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmEnumReference(%p)", ( void * ) pBase ) );
 
-   pEnumExtRef = ( PHB_ENUMREF ) hb_xgrab( sizeof( HB_ENUMREF ) );
+   pEnumExtRef = static_cast< PHB_ENUMREF >( hb_xgrab( sizeof( HB_ENUMREF ) ) );
    pEnumExtRef->oldvalue.type = HB_IT_NIL;
    pEnumExtRef->enumref.type = HB_IT_NIL;
    hb_itemRawCpy( &pEnumExtRef->basevalue, pBase );
@@ -6651,7 +6651,7 @@ static void hb_vmTSVReference( PHB_ITEM pStatic )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmTSVReference(%p)", ( void * ) pStatic ) );
 
-   pTSVRef = ( PHB_TSVREF ) hb_xgrab( sizeof( HB_TSVREF ) );
+   pTSVRef = static_cast< PHB_TSVREF >( hb_xgrab( sizeof( HB_TSVREF ) ) );
 
    pTSVRef->source.type = HB_IT_NIL;
    HB_TSD_INIT( &pTSVRef->threadData, sizeof( HB_ITEM ), nullptr, hb_vmTSVarClean );
@@ -8018,7 +8018,7 @@ PHB_SYMBOLS hb_vmRegisterSymbols( PHB_SYMB pModuleSymbols, HB_USHORT uiSymbols,
          }
       }
 
-      pNewSymbols = ( PHB_SYMBOLS ) hb_xgrab( sizeof( HB_SYMBOLS ) );
+      pNewSymbols = static_cast< PHB_SYMBOLS >( hb_xgrab( sizeof( HB_SYMBOLS ) ) );
       pNewSymbols->pModuleSymbols = pModuleSymbols;
       pNewSymbols->uiModuleSymbols = uiSymbols;
       pNewSymbols->uiStaticsOffset = 0;
@@ -8467,9 +8467,9 @@ void hb_vmPushItemRef( PHB_ITEM pItem )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmPushItemRef(%p)", ( void * ) pItem ) );
 
-   pItmRef = ( PHB_ITMREF ) hb_xgrab( sizeof( HB_ITMREF ) );
+   pItmRef = static_cast< PHB_ITMREF >( hb_xgrab( sizeof( HB_ITMREF ) ) );
 
-   pItmRef->value = ( PHB_ITEM ) hb_xgrab( sizeof( HB_ITEM ) );
+   pItmRef->value = static_cast< PHB_ITEM >( hb_xgrab( sizeof( HB_ITEM ) ) );
    pItmRef->value->type = HB_IT_BYREF | HB_IT_EXTREF;
    pItmRef->value->item.asExtRef.value = ( void * ) pItem;
    pItmRef->value->item.asExtRef.func = &s_ItmExtRawRef;
@@ -8630,7 +8630,7 @@ HB_BOOL hb_vmMsgReference( PHB_ITEM pObject, PHB_DYNS pMessage, PHB_DYNS pAccMsg
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmMsgReference(%p,%p,%p)", ( void * ) pObject, ( void * ) pMessage, ( void * ) pAccMsg ) );
 
-   pMsgRef = ( PHB_MSGREF ) hb_xgrab( sizeof( HB_MSGREF ) );
+   pMsgRef = static_cast< PHB_MSGREF >( hb_xgrab( sizeof( HB_MSGREF ) ) );
    pMsgRef->access = pAccMsg;
    pMsgRef->assign = pMessage;
    pMsgRef->value.type = HB_IT_NIL | HB_IT_DEFAULT;
@@ -8791,7 +8791,7 @@ static void hb_vmMsgIndexReference( PHB_ITEM pRefer, PHB_ITEM pObject, PHB_ITEM 
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmMsgIndexReference(%p,%p,%p)", ( void * ) pRefer, ( void * ) pObject, ( void * ) pIndex ) );
 
-   pMsgIdxRef = ( PHB_MSGIDXREF ) hb_xgrab( sizeof( HB_MSGIDXREF ) );
+   pMsgIdxRef = static_cast< PHB_MSGIDXREF >( hb_xgrab( sizeof( HB_MSGIDXREF ) ) );
    pMsgIdxRef->value.type = HB_IT_NIL | HB_IT_DEFAULT;
    pMsgIdxRef->object.type = HB_IT_NIL;
    pMsgIdxRef->index.type = HB_IT_NIL;

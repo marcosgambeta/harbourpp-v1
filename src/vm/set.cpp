@@ -463,7 +463,7 @@ HB_BOOL hb_setSetCentury( HB_BOOL new_century_setting )
          size += 2;
 
       /* Create the new date format */
-      szNewFormat = ( char * ) hb_xgrab( size + 1 );
+      szNewFormat = static_cast< char * >( hb_xgrab( size + 1 ) );
 
       {
          int format_len;
@@ -1095,7 +1095,7 @@ void hb_setInitialize( PHB_SET_STRUCT pSet )
    pSet->HB_SET_CANCEL = HB_TRUE;
    pSet->hb_set_century = HB_FALSE;
    pSet->hb_set_prndevice = HB_FALSE;
-   pSet->HB_SET_COLOR = ( char * ) hb_xgrab( HB_CLRSTR_LEN + 1 );
+   pSet->HB_SET_COLOR = static_cast< char * >( hb_xgrab( HB_CLRSTR_LEN + 1 ) );
    /* NOTE: color must be synced with the one in IsDefColor() function */
    hb_strncpy( pSet->HB_SET_COLOR, "W/N,N/W,N/N,N/N,N/W", HB_CLRSTR_LEN );
    pSet->HB_SET_CONFIRM = HB_FALSE;
@@ -1222,7 +1222,7 @@ void hb_setRelease( PHB_SET_STRUCT pSet )
 
 PHB_SET_STRUCT hb_setClone( PHB_SET_STRUCT pSrc )
 {
-   PHB_SET_STRUCT pSet = ( PHB_SET_STRUCT ) hb_xgrab( sizeof( HB_SET_STRUCT ) );
+   PHB_SET_STRUCT pSet = static_cast< PHB_SET_STRUCT >( hb_xgrab( sizeof( HB_SET_STRUCT ) ) );
 
    memcpy( pSet, pSrc, sizeof( HB_SET_STRUCT ) );
 
@@ -1232,7 +1232,7 @@ PHB_SET_STRUCT hb_setClone( PHB_SET_STRUCT pSrc )
 
    pSet->HB_SET_TYPEAHEAD = HB_DEFAULT_INKEY_BUFSIZE;
 
-   pSet->HB_SET_COLOR = ( char * ) hb_xgrab( HB_CLRSTR_LEN + 1 );
+   pSet->HB_SET_COLOR = static_cast< char * >( hb_xgrab( HB_CLRSTR_LEN + 1 ) );
    hb_strncpy( pSet->HB_SET_COLOR, pSrc->HB_SET_COLOR, HB_CLRSTR_LEN );
 
    if( pSet->HB_SET_ALTFILE )      pSet->HB_SET_ALTFILE      = hb_strdup( pSet->HB_SET_ALTFILE );
@@ -1258,7 +1258,7 @@ int hb_setListenerAdd( HB_SET_LISTENER_CALLBACK * callback )
 {
    HB_STACK_TLS_PRELOAD
    PHB_SET_STRUCT pSet = hb_stackSetStruct();
-   PHB_SET_LISTENER p_sl = ( PHB_SET_LISTENER ) hb_xgrab( sizeof( HB_SET_LISTENER ) );
+   PHB_SET_LISTENER p_sl = static_cast< PHB_SET_LISTENER >( hb_xgrab( sizeof( HB_SET_LISTENER ) ) );
    PHB_SET_LISTENER_LST pList;
 
    if( ! pSet->hb_set_listener )
@@ -2918,7 +2918,7 @@ HB_WCHAR * hb_osStrU16Encode( const char * pszName )
 
          nLen = strlen( pszName );
          nSize = hb_cdpStrAsU16Len( cdp, pszName, nLen, 0 );
-         pszBufferW = ( HB_WCHAR * ) hb_xgrab( ( nSize + 1 ) * sizeof( HB_WCHAR ) );
+         pszBufferW = static_cast< HB_WCHAR * >( hb_xgrab( ( nSize + 1 ) * sizeof( HB_WCHAR ) ) );
          hb_cdpStrToU16( cdp, HB_CDP_ENDIAN_NATIVE, pszName, nLen, pszBufferW, nSize + 1 );
          return pszBufferW;
       }
@@ -2939,7 +2939,7 @@ HB_WCHAR * hb_osStrU16EncodeN( const char * pszName, HB_SIZE nLen )
 
          nLen = hb_strnlen( pszName, nLen );
          nSize = hb_cdpStrAsU16Len( cdp, pszName, nLen, 0 );
-         pszBufferW = ( HB_WCHAR * ) hb_xgrab( ( nSize + 1 ) * sizeof( HB_WCHAR ) );
+         pszBufferW = static_cast< HB_WCHAR * >( hb_xgrab( ( nSize + 1 ) * sizeof( HB_WCHAR ) ) );
          hb_cdpStrToU16( cdp, HB_CDP_ENDIAN_NATIVE, pszName, nLen, pszBufferW, nSize + 1 );
          return pszBufferW;
       }
@@ -2960,7 +2960,7 @@ char * hb_osStrU16Decode( const HB_WCHAR * pszNameW )
 
          nLen = hb_wstrlen( pszNameW );
          nSize = hb_cdpU16AsStrLen( cdp, pszNameW, nLen, 0 );
-         pszBuffer = ( char * ) hb_xgrab( nSize + 1 );
+         pszBuffer = static_cast< char * >( hb_xgrab( nSize + 1 ) );
          hb_cdpU16ToStr( cdp, HB_CDP_ENDIAN_NATIVE, pszNameW, nLen, pszBuffer, nSize + 1 );
          return pszBuffer;
       }

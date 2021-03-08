@@ -293,11 +293,11 @@ static const HB_PP_OPERATOR * hb_pp_operatorFind( PHB_PP_STATE pState,
 
 static PHB_MEM_BUFFER hb_membufNew( void )
 {
-   PHB_MEM_BUFFER pBuffer = ( PHB_MEM_BUFFER ) hb_xgrab( sizeof( HB_MEM_BUFFER ) );
+   PHB_MEM_BUFFER pBuffer = static_cast< PHB_MEM_BUFFER >( hb_xgrab( sizeof( HB_MEM_BUFFER ) ) );
 
    pBuffer->nLen = 0;
    pBuffer->nAllocated = HB_MEMBUF_DEFAULT_SIZE;
-   pBuffer->pBufPtr = ( char * ) hb_xgrab( pBuffer->nAllocated );
+   pBuffer->pBufPtr = static_cast< char * >( hb_xgrab( pBuffer->nAllocated ) );
 
    return pBuffer;
 }
@@ -462,7 +462,7 @@ static PHB_PP_TOKEN hb_pp_tokenResultEnd( PHB_PP_TOKEN * pTokenPtr, HB_BOOL fDir
 static PHB_PP_TOKEN hb_pp_tokenNew( const char * value, HB_SIZE nLen,
                                     HB_SIZE nSpaces, HB_USHORT type )
 {
-   PHB_PP_TOKEN pToken = ( PHB_PP_TOKEN ) hb_xgrab( sizeof( HB_PP_TOKEN ) );
+   PHB_PP_TOKEN pToken = static_cast< PHB_PP_TOKEN >( hb_xgrab( sizeof( HB_PP_TOKEN ) ) );
 
    if( HB_PP_TOKEN_ALLOC( type ) )
    {
@@ -513,7 +513,7 @@ static void hb_pp_tokenSetValue( PHB_PP_TOKEN pToken,
 
 static PHB_PP_TOKEN hb_pp_tokenClone( PHB_PP_TOKEN pSource )
 {
-   PHB_PP_TOKEN pDest = ( PHB_PP_TOKEN ) hb_xgrab( sizeof( HB_PP_TOKEN ) );
+   PHB_PP_TOKEN pDest = static_cast< PHB_PP_TOKEN >( hb_xgrab( sizeof( HB_PP_TOKEN ) ) );
 
    memcpy( pDest, pSource, sizeof( HB_PP_TOKEN ) );
    if( HB_PP_TOKEN_ALLOC( pDest->type ) )
@@ -1761,7 +1761,7 @@ static HB_BOOL hb_pp_patternAddResult( PHB_PP_RULE pRule, HB_USHORT marker,
    if( pMarker->matches == 0 || pMarker->canrepeat )
    {
       PHB_PP_RESULT * pResultPtr,
-               pResult = ( PHB_PP_RESULT ) hb_xgrab( sizeof( HB_PP_RESULT ) );
+               pResult = static_cast< PHB_PP_RESULT >( hb_xgrab( sizeof( HB_PP_RESULT ) ) );
       pMarker->matches++;
       pResult->pFirstToken = pFirst;
       pResult->pNextExpr = pNext;
@@ -1780,7 +1780,7 @@ static PHB_PP_RULE hb_pp_ruleNew( PHB_PP_TOKEN pMatch, PHB_PP_TOKEN pResult,
                                   HB_USHORT mode, HB_USHORT markers,
                                   PHB_PP_MARKER pMarkers )
 {
-   PHB_PP_RULE pRule = ( PHB_PP_RULE ) hb_xgrab( sizeof( HB_PP_RULE ) );
+   PHB_PP_RULE pRule = static_cast< PHB_PP_RULE >( hb_xgrab( sizeof( HB_PP_RULE ) ) );
 
    pRule->pPrev = nullptr;
    pRule->mode = mode;
@@ -2265,7 +2265,7 @@ static void hb_pp_pragmaStreamFile( PHB_PP_STATE pState, const char * szFileName
                hb_membufAddData( pState->pStreamBuffer, pFile->pLineBuf, nSize );
             else
             {
-               char * pBuffer = ( char * ) hb_xgrab( nSize * sizeof( char ) );
+               char * pBuffer = static_cast< char * >( hb_xgrab( nSize * sizeof( char ) ) );
 
                if( pFile->file_in )
                   nSize = ( HB_SIZE ) fread( pBuffer, sizeof( char ), nSize, pFile->file_in );
@@ -2373,8 +2373,8 @@ static HB_BOOL hb_pp_pragmaOperatorNew( PHB_PP_STATE pState, PHB_PP_TOKEN pToken
                      pState->pOperators,
                      sizeof( HB_PP_OPERATOR ) * ( pState->iOperators + 1 ) );
          else
-            pState->pOperators = ( PHB_PP_OPERATOR ) hb_xgrab(
-                     sizeof( HB_PP_OPERATOR ) * ( pState->iOperators + 1 ) );
+            pState->pOperators = static_cast< PHB_PP_OPERATOR >( hb_xgrab(
+                     sizeof( HB_PP_OPERATOR ) * ( pState->iOperators + 1 ) ) );
          pOperator = &pState->pOperators[ pState->iOperators++ ];
          pOperator->name  = hb_strndup( pBuffer, nLen );
          pOperator->len   = nLen;
@@ -3075,7 +3075,7 @@ static HB_BOOL hb_pp_matchMarkerNew( PHB_PP_TOKEN * pTokenPtr,
       }
       if( ! pMrkLst )
       {
-         pMrkLst = ( PHB_PP_MARKERLST ) hb_xgrab( sizeof( HB_PP_MARKERLST ) );
+         pMrkLst = static_cast< PHB_PP_MARKERLST >( hb_xgrab( sizeof( HB_PP_MARKERLST ) ) );
          if( pMrkPrev )
             pMrkPrev->pNext = pMrkLst;
          else
@@ -3085,7 +3085,7 @@ static HB_BOOL hb_pp_matchMarkerNew( PHB_PP_TOKEN * pTokenPtr,
          pMrkLst->canrepeat = HB_TRUE;
          pMrkLst->index = 0;
       }
-      pMrkPtr = ( PHB_PP_MARKERPTR ) hb_xgrab( sizeof( HB_PP_MARKERPTR ) );
+      pMrkPtr = static_cast< PHB_PP_MARKERPTR >( hb_xgrab( sizeof( HB_PP_MARKERPTR ) ) );
       pMrkPtr->pNext = pMrkLst->pMatchMarkers;
       pMrkLst->pMatchMarkers = pMrkPtr;
       pMrkPtr->pToken = pMarkerId;
@@ -5034,8 +5034,8 @@ static void hb_pp_conditionPush( PHB_PP_STATE pState, HB_BOOL fCond )
          pState->pCondStack = ( int * ) hb_xrealloc( pState->pCondStack,
                                  pState->iCondStackSize * sizeof( HB_BOOL ) );
       else
-         pState->pCondStack = ( int * ) hb_xgrab( pState->iCondStackSize *
-                                                          sizeof( HB_BOOL ) );
+         pState->pCondStack = static_cast< int * >( hb_xgrab( pState->iCondStackSize *
+                                                          sizeof( HB_BOOL ) ) );
    }
    pState->pCondStack[ pState->iCondCount++ ] = pState->iCondCompile;
    pState->iCondCompile = pState->iCondCompile ? HB_PP_COND_DISABLE :
@@ -6252,7 +6252,7 @@ void hb_pp_tokenUpper( PHB_PP_TOKEN pToken )
    {
       if( ! HB_PP_TOKEN_ALLOC( pToken->type ) )
       {
-         char * value = ( char * ) hb_xgrab( pToken->len + 1 );
+         char * value = static_cast< char * >( hb_xgrab( pToken->len + 1 ) );
          memcpy( value, pToken->value, pToken->len + 1 );
          pToken->value = value;
          pToken->type &= ~HB_PP_TOKEN_STATIC;

@@ -79,7 +79,7 @@ static void hb_waNodeInsert( PHB_STACKRDD pRddInfo, AREAP pArea )
          iSize = HB_RDD_MAX_AREA_NUM;
 
       if( pRddInfo->uiWaNumMax == 0 )
-         pRddInfo->waNums = ( HB_USHORT * ) hb_xgrab( iSize * sizeof( HB_USHORT ) );
+         pRddInfo->waNums = static_cast< HB_USHORT * >( hb_xgrab( iSize * sizeof( HB_USHORT ) ) );
       else
          pRddInfo->waNums = ( HB_USHORT * ) hb_xrealloc( pRddInfo->waNums, iSize * sizeof( HB_USHORT ) );
 

@@ -306,7 +306,7 @@ static char * hb_pp_escapeString( char * szString )
    }
    while( ch );
 
-   szResult = ( char * ) hb_xgrab( iLen );
+   szResult = static_cast< char * >( hb_xgrab( iLen ) );
    iLen = 0;
    do
    {

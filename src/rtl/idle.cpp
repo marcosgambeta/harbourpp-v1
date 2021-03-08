@@ -181,7 +181,7 @@ HB_FUNC( HB_IDLEADD )
       ++pIdleData->iIdleMaxTask;
 
       if( ! pIdleData->pIdleTasks )
-         pIdleData->pIdleTasks = ( PHB_ITEM * ) hb_xgrab( sizeof( PHB_ITEM ) );
+         pIdleData->pIdleTasks = static_cast< PHB_ITEM * >( hb_xgrab( sizeof( PHB_ITEM ) ) );
       else
          pIdleData->pIdleTasks = ( PHB_ITEM * ) hb_xrealloc( pIdleData->pIdleTasks, sizeof( PHB_ITEM ) * pIdleData->iIdleMaxTask );
 
