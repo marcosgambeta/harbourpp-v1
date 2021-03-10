@@ -260,7 +260,7 @@ static PHB_SRVDATA s_fileFindSrvData( PHB_CONCLI conn, int iStreamID, int iType 
 
 static int s_fileNewSrvData( PHB_CONCLI conn, int iType )
 {
-   PHB_SRVDATA pSrvData = ( PHB_SRVDATA ) hb_xgrabz( sizeof( HB_SRVDATA ) );
+   PHB_SRVDATA pSrvData = static_cast< PHB_SRVDATA >( hb_xgrabz( sizeof( HB_SRVDATA ) ) );
 
    pSrvData->id = s_fileGenSrvDataID( conn );
    pSrvData->type = iType;

@@ -1021,7 +1021,7 @@ static HB_ERRCODE sqlbaseRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ul
          }
 
          hb_rddsqlSetError( 0, nullptr, nullptr, nullptr, 0 );
-         pConn = ( SQLDDCONNECTION * ) hb_xgrabz( sizeof( SQLDDCONNECTION ) );
+         pConn = static_cast< SQLDDCONNECTION * >( hb_xgrabz( sizeof( SQLDDCONNECTION ) ) );
          if( pNode && pNode->Connect( pConn, pItem ) == HB_SUCCESS )
          {
             pConn->pSDD = pNode;

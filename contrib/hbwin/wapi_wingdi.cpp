@@ -237,7 +237,7 @@ LOGFONT * hbwapi_par_LOGFONT( LOGFONT * p, int iParam, HB_BOOL bMandatory )
 DOCINFO * hbwapi_par_DOCINFO( DOCINFO * p, int iParam, HB_BOOL bMandatory, void *** ph )
 {
    PHB_ITEM pStru = hb_param( iParam, HB_IT_ANY );
-   void ** h = ( void ** ) hb_xgrabz( 3 * sizeof( void * ) );
+   void ** h = static_cast< void ** >( hb_xgrabz( 3 * sizeof( void * ) ) );
 
    *ph = h;
 
@@ -288,7 +288,7 @@ HB_FUNC( __WAPI_DEVMODE_NEW )
 
       if( lSize > 0 )
       {
-         PDEVMODE pDevMode = ( PDEVMODE ) hb_xgrabz( lSize );
+         PDEVMODE pDevMode = static_cast< PDEVMODE >( hb_xgrabz( lSize ) );
 
          if( DocumentProperties( 0, hPrinter, ( LPTSTR ) lpDeviceName, pDevMode, pDevMode, DM_OUT_BUFFER ) == IDOK )
             hbwapi_ret_PDEVMODE( pDevMode );

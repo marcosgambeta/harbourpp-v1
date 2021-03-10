@@ -281,7 +281,7 @@ PHB_SSLSTREAM hb_ssl_socketNew( HB_SOCKET sd, SSL * ssl, HB_BOOL fServer,
    HB_MAXUINT timer;
    int iResult;
 
-   pStream = ( HB_SSLSTREAM * ) hb_xgrabz( sizeof( HB_SSLSTREAM ) );
+   pStream = static_cast< HB_SSLSTREAM * >( hb_xgrabz( sizeof( HB_SSLSTREAM ) ) );
 
    pStream->ssl = ssl;
    pStream->pSSL = pSSL ? hb_itemNew( pSSL ) : nullptr;
@@ -574,7 +574,7 @@ PHB_SOCKEX hb_sockexNewSSL( HB_SOCKET sd, SSL * ssl, HB_BOOL fServer,
       PHB_SSLSTREAM pStream = hb_ssl_socketNew( sd, ssl, fServer, timeout, pSSL, nullptr );
       if( pStream )
       {
-         pSock = ( PHB_SOCKEX ) hb_xgrabz( sizeof( HB_SOCKEX ) );
+         pSock = static_cast< PHB_SOCKEX >( hb_xgrabz( sizeof( HB_SOCKEX ) ) );
          pSock->sd = sd;
          pSock->fRedirAll = HB_TRUE;
          pSock->fShutDown = HB_TRUE;

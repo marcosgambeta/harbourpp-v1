@@ -699,7 +699,7 @@ static PHB_FILE s_filebz2New( PHB_FILE pFile, int iMode, int iBlockSize )
 {
    if( pFile )
    {
-      PHB_FILE pFileBZ2 = ( PHB_FILE ) hb_xgrabz( sizeof( HB_FILE ) );
+      PHB_FILE pFileBZ2 = static_cast< PHB_FILE >( hb_xgrabz( sizeof( HB_FILE ) ) );
 
       pFileBZ2->pFuncs = &s_fileFuncs;
       pFileBZ2->pFile = pFile;

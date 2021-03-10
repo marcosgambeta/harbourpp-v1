@@ -716,7 +716,7 @@ HB_FUNC( SQLITE3_OPEN )
       {
          HB_SQLITE3 * hbsqlite3;
 
-         hbsqlite3 = ( HB_SQLITE3 * ) hb_xgrabz( sizeof( HB_SQLITE3 ) );
+         hbsqlite3 = static_cast< HB_SQLITE3 * >( hb_xgrabz( sizeof( HB_SQLITE3 ) ) );
          hbsqlite3->db = db;
          hb_sqlite3_ret( hbsqlite3, HB_SQLITE3_DB );
       }
@@ -749,7 +749,7 @@ HB_FUNC( SQLITE3_OPEN_V2 )
    {
       HB_SQLITE3 * hbsqlite3;
 
-      hbsqlite3 = ( HB_SQLITE3 * ) hb_xgrabz( sizeof( HB_SQLITE3 ) );
+      hbsqlite3 = static_cast< HB_SQLITE3 * >( hb_xgrabz( sizeof( HB_SQLITE3 ) ) );
       hbsqlite3->db = db;
       hb_sqlite3_ret( hbsqlite3, HB_SQLITE3_DB );
    }

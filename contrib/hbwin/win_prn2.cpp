@@ -92,7 +92,7 @@ HB_FUNC( WIN_PRINTEREXISTS )
          if( dwNeeded )
          {
             PRINTER_INFO_5 * pPrinterEnumBak;
-            PRINTER_INFO_5 * pPrinterEnum = pPrinterEnumBak = ( PRINTER_INFO_5 * ) hb_xgrabz( dwNeeded );
+            PRINTER_INFO_5 * pPrinterEnum = pPrinterEnumBak = static_cast< PRINTER_INFO_5 * >( hb_xgrabz( dwNeeded ) );
 
             if( EnumPrinters( _ENUMPRN_FLAGS_, nullptr, 5, ( LPBYTE ) pPrinterEnum, dwNeeded, &dwNeeded, &dwReturned ) )
             {
@@ -184,7 +184,7 @@ static void hb_GetDefaultPrinter( PHB_ITEM pPrinterName )
       EnumPrinters( PRINTER_ENUM_DEFAULT, nullptr, 2, nullptr, 0, &dwNeeded, &dwReturned );
       if( dwNeeded )
       {
-         PRINTER_INFO_2 * pPrinterInfo = ( PRINTER_INFO_2 * ) hb_xgrabz( dwNeeded );
+         PRINTER_INFO_2 * pPrinterInfo = static_cast< PRINTER_INFO_2 * >( hb_xgrabz( dwNeeded ) );
 
          if( EnumPrinters( PRINTER_ENUM_DEFAULT, nullptr, 2, ( LPBYTE ) pPrinterInfo, dwNeeded, &dwNeeded, &dwReturned ) && dwReturned )
             HB_ITEMPUTSTR( pPrinterName, pPrinterInfo->pPrinterName );
@@ -215,7 +215,7 @@ static HB_BOOL hb_GetJobs( HANDLE hPrinter, JOB_INFO_2 ** ppJobInfo, DWORD * pdw
    GetPrinter( hPrinter, 2, nullptr, 0, &dwNeeded );
    if( dwNeeded )
    {
-      PRINTER_INFO_2 * pPrinterInfo = ( PRINTER_INFO_2 * ) hb_xgrabz( dwNeeded );
+      PRINTER_INFO_2 * pPrinterInfo = static_cast< PRINTER_INFO_2 * >( hb_xgrabz( dwNeeded ) );
       DWORD dwUsed = 0;
 
       if( GetPrinter( hPrinter, 2, ( LPBYTE ) pPrinterInfo, dwNeeded, &dwUsed ) )
@@ -225,7 +225,7 @@ static HB_BOOL hb_GetJobs( HANDLE hPrinter, JOB_INFO_2 ** ppJobInfo, DWORD * pdw
          EnumJobs( hPrinter, 0, pPrinterInfo->cJobs, 2, nullptr, 0, &dwNeeded, &dwReturned );
          if( dwNeeded )
          {
-            JOB_INFO_2 * pJobInfo = ( JOB_INFO_2 * ) hb_xgrabz( dwNeeded );
+            JOB_INFO_2 * pJobInfo = static_cast< JOB_INFO_2 * >( hb_xgrabz( dwNeeded ) );
 
             if( EnumJobs( hPrinter, 0, dwReturned, 2, ( LPBYTE ) pJobInfo, dwNeeded, &dwUsed, &dwReturned ) )
             {
@@ -267,7 +267,7 @@ HB_FUNC( WIN_PRINTERSTATUS )
          GetPrinter( hPrinter, 2, nullptr, 0, &dwNeeded );
          if( dwNeeded )
          {
-            PRINTER_INFO_2 * pPrinterInfo = ( PRINTER_INFO_2 * ) hb_xgrabz( dwNeeded );
+            PRINTER_INFO_2 * pPrinterInfo = static_cast< PRINTER_INFO_2 * >( hb_xgrabz( dwNeeded ) );
 
             if( GetPrinter( hPrinter, 2, ( LPBYTE ) pPrinterInfo, dwNeeded, &dwNeeded ) )
                nStatus = ( long ) pPrinterInfo->Status;
@@ -325,7 +325,7 @@ HB_FUNC( WIN_PRINTERPORTTONAME )
       if( dwNeeded )
       {
          PRINTER_INFO_5 * pPrinterEnumBak;
-         PRINTER_INFO_5 * pPrinterEnum = pPrinterEnumBak = ( PRINTER_INFO_5 * ) hb_xgrabz( dwNeeded );
+         PRINTER_INFO_5 * pPrinterEnum = pPrinterEnumBak = static_cast< PRINTER_INFO_5 * >( hb_xgrabz( dwNeeded ) );
 
          if( EnumPrinters( _ENUMPRN_FLAGS_, nullptr, 5, ( LPBYTE ) pPrinterEnum, dwNeeded, &dwNeeded, &dwReturned ) )
          {
@@ -540,7 +540,7 @@ HB_FUNC( WIN_PRINTERLIST )
    if( dwNeeded )
    {
       PRINTER_INFO_5 * pPrinterEnumBak;
-      PRINTER_INFO_5 * pPrinterEnum = pPrinterEnumBak = ( PRINTER_INFO_5 * ) hb_xgrabz( dwNeeded );
+      PRINTER_INFO_5 * pPrinterEnum = pPrinterEnumBak = static_cast< PRINTER_INFO_5 * >( hb_xgrabz( dwNeeded ) );
 
       if( EnumPrinters( _ENUMPRN_FLAGS_, nullptr, 5, ( LPBYTE ) pPrinterEnum, dwNeeded, &dwNeeded, &dwReturned ) )
       {
@@ -566,7 +566,7 @@ HB_FUNC( WIN_PRINTERLIST )
                         HB_ARRAYSETSTR( pTempItem, HB_WINPRN_NAME, pPrinterEnum->pPrinterName );
 
                         {
-                           PRINTER_INFO_2 * pPrinterInfo2 = ( PRINTER_INFO_2 * ) hb_xgrabz( dwNeeded );
+                           PRINTER_INFO_2 * pPrinterInfo2 = static_cast< PRINTER_INFO_2 * >( hb_xgrabz( dwNeeded ) );
 
                            if( GetPrinter( hPrinter, 2, ( LPBYTE ) pPrinterInfo2, dwNeeded, &dwNeeded ) )
                            {

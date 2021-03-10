@@ -687,7 +687,7 @@ static PHB_FILE s_filegzipNew( PHB_FILE pFile, int iMode, int iLevel )
 {
    if( pFile )
    {
-      PHB_FILE pFileGZ = ( PHB_FILE ) hb_xgrabz( sizeof( HB_FILE ) );
+      PHB_FILE pFileGZ = static_cast< PHB_FILE >( hb_xgrabz( sizeof( HB_FILE ) ) );
 
       pFileGZ->pFuncs = &s_fileFuncs;
       pFileGZ->pFile = pFile;

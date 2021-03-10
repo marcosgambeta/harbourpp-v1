@@ -269,7 +269,7 @@ HB_FUNC( EVP_MD_CTX_NEW )
     ! defined( LIBRESSL_VERSION_NUMBER )
    ctx = EVP_MD_CTX_new();
 #else
-   ctx = ( EVP_MD_CTX * ) hb_xgrabz( sizeof( EVP_MD_CTX ) );
+   ctx = static_cast< EVP_MD_CTX * >( hb_xgrabz( sizeof( EVP_MD_CTX ) ) );
 #endif
 
    *ph = ctx;

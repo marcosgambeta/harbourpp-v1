@@ -97,7 +97,7 @@ HB_FUNC( EVP_ENCODE_CTX_NEW )
     ! defined( LIBRESSL_VERSION_NUMBER )
    ctx = EVP_ENCODE_CTX_new();
 #else
-   ctx = ( EVP_ENCODE_CTX * ) hb_xgrabz( sizeof( EVP_ENCODE_CTX ) );
+   ctx = static_cast< EVP_ENCODE_CTX * >( hb_xgrabz( sizeof( EVP_ENCODE_CTX ) ) );
 #endif
 
    *ph = ctx;
