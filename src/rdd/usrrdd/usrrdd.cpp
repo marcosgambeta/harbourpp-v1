@@ -802,7 +802,7 @@ static HB_ERRCODE hb_usrInit( LPRDDNODE pRDD )
       while( ++s_uiUsrNodes <= pRDD->rddID );
    }
 
-   s_pUsrRddNodes[ pRDD->rddID ] = pNode = ( LPUSRRDDNODE ) hb_xgrabz( sizeof( USRRDDNODE ) );
+   s_pUsrRddNodes[ pRDD->rddID ] = pNode = static_cast< LPUSRRDDNODE >( hb_xgrabz( sizeof( USRRDDNODE ) ) );
    pNode->pSuperTable = &pRDD->pSuperTable;
    pNode->pMethods = ( PHB_ITEM ) pRDD->pTable.whoCares;
    pRDD->pTable.whoCares = pRDD->pSuperTable.whoCares;

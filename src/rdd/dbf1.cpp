@@ -559,7 +559,7 @@ static void hb_dbfAllocNullFlag( DBFAREAP pArea, HB_USHORT uiField, HB_BOOL fLen
    if( ! pArea->pFieldBits )
    {
       HB_SIZE nSize = sizeof( HB_DBFFIELDBITS ) * pArea->area.uiFieldExtent;
-      pArea->pFieldBits = ( PHB_DBFFIELDBITS ) hb_xgrabz( nSize );
+      pArea->pFieldBits = static_cast< PHB_DBFFIELDBITS >( hb_xgrabz( nSize ) );
    }
    if( fLength )
       pArea->pFieldBits[ uiField ].uiLengthBit = pArea->uiNullCount++;
@@ -2984,7 +2984,7 @@ static HB_ERRCODE hb_dbfSetFieldExtent( DBFAREAP pArea, HB_USHORT uiFieldExtent 
 
    /* Alloc field offsets array */
    if( uiFieldExtent )
-      pArea->pFieldOffset = ( HB_USHORT * ) hb_xgrabz( uiFieldExtent * sizeof( HB_USHORT ) );
+      pArea->pFieldOffset = static_cast< HB_USHORT * >( hb_xgrabz( uiFieldExtent * sizeof( HB_USHORT ) ) );
 
    return HB_SUCCESS;
 }
@@ -3226,7 +3226,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
 
    pArea->szDataFileName = hb_strdup( szFileName );
 
-   pBuffer = ( HB_BYTE * ) hb_xgrabz( nSize + sizeof( DBFFIELD ) + 1 );
+   pBuffer = static_cast< HB_BYTE * >( hb_xgrabz( nSize + sizeof( DBFFIELD ) + 1 ) );
    pThisField = ( DBFFIELD * ) pBuffer;
 
    pArea->fHasMemo = HB_FALSE;
@@ -5433,7 +5433,7 @@ static HB_ERRCODE hb_dbfSortFinish( LPDBSORTREC pSortRec )
       }
       else
       {
-         pSortRec->pSwapPages = ( PHB_DBSORTPAGE ) hb_xgrabz( sizeof( HB_DBSORTPAGE ) );
+         pSortRec->pSwapPages = static_cast< PHB_DBSORTPAGE >( hb_xgrabz( sizeof( HB_DBSORTPAGE ) ) );
          pSortRec->pSwapPages[ 0 ].nCount =
          pSortRec->pSwapPages[ 0 ].nInBuf = pSortRec->nCount;
          pSortRec->pSwapPages[ 0 ].pnRecords = hb_dbfSortSort( pSortRec );

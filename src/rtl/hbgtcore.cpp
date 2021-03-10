@@ -149,7 +149,7 @@ static void * hb_gt_def_New( PHB_GT pGT )
    pGT->screenBuffer =
             static_cast< PHB_SCREENCELL >( hb_xgrab( sizeof( HB_SCREENCELL ) * nSize ) );
    pGT->prevBuffer =
-            ( PHB_SCREENCELL ) hb_xgrabz( sizeof( HB_SCREENCELL ) * nSize );
+            static_cast< PHB_SCREENCELL >( hb_xgrabz( sizeof( HB_SCREENCELL ) * nSize ) );
    pGT->pLines = static_cast< HB_BOOL * >( hb_xgrab( sizeof( HB_BOOL ) * pGT->iHeight ) );
 
    for( i = 0; i < pGT->iHeight; ++i )
@@ -504,7 +504,7 @@ static void hb_gt_def_StringToColors( PHB_GT pGT, const char * szColorString, in
    if( *piColorCount == 0 )
    {
       *piColorCount = HB_CLR_MAX_ + 1;
-      *pColorsPtr = ( int * ) hb_xgrabz( *piColorCount * sizeof( int ) );
+      *pColorsPtr = static_cast< int * >( hb_xgrabz( *piColorCount * sizeof( int ) ) );
    }
 
    pColors = *pColorsPtr;
@@ -3765,7 +3765,7 @@ PHB_GT hb_gtLoad( const char * szGtName, PHB_GT pGT, PHB_GT_FUNCS pSuperTable )
          if( pGT || pSuperTable )
             hb_errInternal( 9996, "Harbour terminal (GT) initialization failure", nullptr, nullptr );
 
-         pGT = ( PHB_GT_BASE ) hb_xgrabz( sizeof( HB_GT_BASE ) );
+         pGT = static_cast< PHB_GT_BASE >( hb_xgrabz( sizeof( HB_GT_BASE ) ) );
          pGT->pFuncTable = static_cast< PHB_GT_FUNCS >( hb_xgrab( sizeof( HB_GT_FUNCS ) ) );
          memcpy( pGT->pFuncTable, &s_gtCoreFunc, sizeof( HB_GT_FUNCS ) );
          pGT->iUsed++;
@@ -3777,7 +3777,7 @@ PHB_GT hb_gtLoad( const char * szGtName, PHB_GT pGT, PHB_GT_FUNCS pSuperTable )
 
          if( fNew )
          {
-            pGT = ( PHB_GT_BASE ) hb_xgrabz( sizeof( HB_GT_BASE ) );
+            pGT = static_cast< PHB_GT_BASE >( hb_xgrabz( sizeof( HB_GT_BASE ) ) );
             pGT->pFuncTable = static_cast< PHB_GT_FUNCS >( hb_xgrab( sizeof( HB_GT_FUNCS ) ) );
             memcpy( pGT->pFuncTable, &s_gtCoreFunc, sizeof( HB_GT_FUNCS ) );
             pGT->iUsed++;

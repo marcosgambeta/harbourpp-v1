@@ -79,7 +79,7 @@ HB_FUNC( HB_STRREPLACE )
          nDst = hb_itemSize( HB_IS_HASH( pSrc ) ? pSrc : pDst );
          if( nText > 1024 )
          {
-            ptrOpt = ( HB_SIZE * ) hb_xgrabz( 256 * sizeof( HB_SIZE ) );
+            ptrOpt = static_cast< HB_SIZE * >( hb_xgrabz( 256 * sizeof( HB_SIZE ) ) );
             for( nAt = 0; nAt < nSrc; ++nAt )
             {
                HB_UCHAR uc;

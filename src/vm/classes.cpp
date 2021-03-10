@@ -425,7 +425,7 @@ static HB_BOOL hb_clsDictRealloc( PCLASS pClass )
          hb_errInternal( 6002, "Could not realloc class message in __clsDictRealloc()", nullptr, nullptr );
 
 #ifdef HB_MSG_POOL
-      puiMsgIdx = ( HB_SYMCNT * ) hb_xgrabz( ( nNewHashKey << BUCKETBITS ) * sizeof( HB_SYMCNT ) );
+      puiMsgIdx = static_cast< HB_SYMCNT * >( hb_xgrabz( ( nNewHashKey << BUCKETBITS ) * sizeof( HB_SYMCNT ) ) );
 
       for( n = 0; n < nLimit; n++ )
       {
@@ -463,7 +463,7 @@ static HB_BOOL hb_clsDictRealloc( PCLASS pClass )
 
 #else
 
-      pNewMethods = ( PMETHOD ) hb_xgrabz( ( nNewHashKey << BUCKETBITS ) * sizeof( METHOD ) );
+      pNewMethods = static_cast< PMETHOD >( hb_xgrabz( ( nNewHashKey << BUCKETBITS ) * sizeof( METHOD ) ) );
 
       for( n = 0; n < nLimit; n++ )
       {
@@ -513,13 +513,13 @@ static void hb_clsDictInit( PCLASS pClass, HB_SYMCNT uiHashKey )
    pClass->uiHashKey = uiHashKey;
 #ifdef HB_MSG_POOL
    nSize = ( ( ( HB_SIZE ) uiHashKey + 1 ) << BUCKETBITS ) * sizeof( HB_SYMCNT );
-   pClass->puiMsgIdx = ( HB_SYMCNT * ) hb_xgrabz( nSize );
+   pClass->puiMsgIdx = static_cast< HB_SYMCNT * >( hb_xgrabz( nSize ) );
 
    pClass->uiMethodCount = 1;
-   pClass->pMethods = ( PMETHOD ) hb_xgrabz( sizeof( METHOD ) );
+   pClass->pMethods = static_cast< PMETHOD >( hb_xgrabz( sizeof( METHOD ) ) );
 #else
    nSize = ( ( ( HB_SIZE ) uiHashKey + 1 ) << BUCKETBITS ) * sizeof( METHOD );
-   pClass->pMethods = ( PMETHOD ) hb_xgrabz( nSize );
+   pClass->pMethods = static_cast< PMETHOD >( hb_xgrabz( nSize ) );
 #endif
 }
 
@@ -2306,7 +2306,7 @@ static void hb_objSuperDestructorCall( PHB_ITEM pObject, PCLASS pClass )
    char * pcClasses;
    HB_USHORT uiClass;
 
-   pcClasses = ( char * ) hb_xgrabz( ( HB_SIZE ) s_uiClasses + 1 );
+   pcClasses = static_cast< char * >( hb_xgrabz( ( HB_SIZE ) s_uiClasses + 1 ) );
 
    do
    {
@@ -3380,7 +3380,7 @@ static HB_USHORT hb_clsNew( const char * szClassName, HB_USHORT uiDatas,
    uiSuper  = static_cast< HB_USHORT >( pSuperArray ? hb_arrayLen( pSuperArray ) : 0 );
    pClassFunc = hb_vmGetRealFuncSym( pClassFunc );
 
-   pNewCls = ( PCLASS ) hb_xgrabz( sizeof( CLASS ) );
+   pNewCls = static_cast< PCLASS >( hb_xgrabz( sizeof( CLASS ) ) );
 
    HB_CLASS_LOCK();
 
@@ -5067,7 +5067,7 @@ static PHB_ITEM hb_objGetIVars( PHB_ITEM pObject,
    pClass = s_pClasses[ uiClass ];
    nLen = nCount = hb_arrayLen( pObject );
    nSize = 0;
-   pIndex = nLen ? ( PHB_IVARINFO ) hb_xgrabz( nLen * sizeof( HB_IVARINFO ) ) : nullptr;
+   pIndex = nLen ? static_cast< PHB_IVARINFO >( hb_xgrabz( nLen * sizeof( HB_IVARINFO ) ) ) : nullptr;
 
    if( fChanged && pClass->uiInitDatas )
    {

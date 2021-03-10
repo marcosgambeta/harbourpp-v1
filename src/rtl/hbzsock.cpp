@@ -460,9 +460,9 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
       if( level != HB_ZLIB_COMPRESSION_DISABLE &&
           ( fDecompressIn || fCompressOut ) )
       {
-         PHB_SOCKEX_Z pZ = ( PHB_SOCKEX_Z ) hb_xgrabz( sizeof( HB_SOCKEX_Z ) );
+         PHB_SOCKEX_Z pZ = static_cast< PHB_SOCKEX_Z >( hb_xgrabz( sizeof( HB_SOCKEX_Z ) ) );
 
-         pSockNew = ( PHB_SOCKEX ) hb_xgrabz( sizeof( HB_SOCKEX ) );
+         pSockNew = static_cast< PHB_SOCKEX >( hb_xgrabz( sizeof( HB_SOCKEX ) ) );
          pSockNew->sd = HB_NO_SOCKET;
          pSockNew->fRedirAll = HB_TRUE;
          pSockNew->pFilter = &s_sockFilter;

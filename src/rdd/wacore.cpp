@@ -90,7 +90,7 @@ static void hb_waNodeInsert( PHB_STACKRDD pRddInfo, AREAP pArea )
    if( pRddInfo->uiWaSpace == 0 )
    {
       pRddInfo->uiWaSpace = 256;
-      pRddInfo->waList = ( void ** ) hb_xgrabz( pRddInfo->uiWaSpace * sizeof( void * ) );
+      pRddInfo->waList = static_cast< void ** >( hb_xgrabz( pRddInfo->uiWaSpace * sizeof( void * ) ) );
       uiWaPos = 1;
       pRddInfo->uiWaMax = 2;
    }

@@ -313,7 +313,7 @@ static PHB_I18N_TRANS hb_i18n_new( void )
    PHB_I18N_TRANS pI18N;
    PHB_ITEM pKey;
 
-   pI18N = ( PHB_I18N_TRANS ) hb_xgrabz( sizeof( HB_I18N_TRANS ) );
+   pI18N = static_cast< PHB_I18N_TRANS >( hb_xgrabz( sizeof( HB_I18N_TRANS ) ) );
    hb_atomic_set( &pI18N->iUsers, 1 );
    pI18N->table = hb_hashNew( hb_itemNew( nullptr ) );
    pI18N->context_table = hb_hashNew( hb_itemNew( nullptr ) );
@@ -391,7 +391,7 @@ static PHB_I18N_TRANS hb_i18n_initialize( PHB_ITEM pTable )
       {
          PHB_ITEM pValue;
 
-         pI18N = ( PHB_I18N_TRANS ) hb_xgrabz( sizeof( HB_I18N_TRANS ) );
+         pI18N = static_cast< PHB_I18N_TRANS >( hb_xgrabz( sizeof( HB_I18N_TRANS ) ) );
          hb_atomic_set( &pI18N->iUsers, 1 );
          pI18N->table = pTable;
          pI18N->context_table = hb_itemNew( pContext );

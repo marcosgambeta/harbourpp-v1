@@ -921,7 +921,7 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
             iRetTypeRaw = _RETTYPERAW_INT64;
 
          if( iParams )
-            pArg = ( HB_DYNARG * ) hb_xgrabz( iParams * sizeof( HB_DYNARG ) );
+            pArg = static_cast< HB_DYNARG * >( hb_xgrabz( iParams * sizeof( HB_DYNARG ) ) );
          else
             pArg = nullptr;
 
@@ -1026,7 +1026,7 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
             iRetTypeRaw = _RETTYPERAW_INT32;
 
          if( iParams )
-            pArg = ( HB_DYNARG * ) hb_xgrabz( iParams * sizeof( HB_DYNARG ) );
+            pArg = static_cast< HB_DYNARG * >( hb_xgrabz( iParams * sizeof( HB_DYNARG ) ) );
          else
             pArg = nullptr;
 

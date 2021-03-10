@@ -502,7 +502,7 @@ void hb_dbgEntry( int nMode, int nLine, const char * szName, int nIndex, PHB_ITE
    {
       if( ! info )
       {
-         info = *infoPtr = ( HB_DEBUGINFO * ) hb_xgrabz( sizeof( HB_DEBUGINFO ) );
+         info = *infoPtr = static_cast< HB_DEBUGINFO * >( hb_xgrabz( sizeof( HB_DEBUGINFO ) ) );
          info->bCBTrace = HB_TRUE;
       }
       else if( info->bInside || info->bQuit )
@@ -891,7 +891,7 @@ static void hb_dbgAddStopLines( PHB_ITEM pItem )
                const char * pNewBuffer = hb_arrayGetCPtr( pEntry, 3 );
                HB_ISIZ nLen = ( ( nMax - nMin ) >> 3 ) + 1;
                HB_ISIZ k;
-               char * pBuffer = ( char * ) hb_xgrabz( nLen + 1 );
+               char * pBuffer = static_cast< char * >( hb_xgrabz( nLen + 1 ) );
 
                /* the bitfields with line numbers should use
                 * 8bit alignment so it's safe to use byte copy

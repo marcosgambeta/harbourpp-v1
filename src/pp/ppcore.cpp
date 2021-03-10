@@ -2042,7 +2042,7 @@ static PHB_PP_FILE hb_pp_FileNew( PHB_PP_STATE pState, const char * szFileName,
          ( pState->pIncFunc )( pState->cargo, szFileName );
    }
 
-   pFile = ( PHB_PP_FILE ) hb_xgrabz( sizeof( HB_PP_FILE ) );
+   pFile = static_cast< PHB_PP_FILE >( hb_xgrabz( sizeof( HB_PP_FILE ) ) );
 
    pFile->szFileName = hb_strdup( szFileName );
    pFile->file_in = file_in;
@@ -2056,7 +2056,7 @@ static PHB_PP_FILE hb_pp_FileNew( PHB_PP_STATE pState, const char * szFileName,
 
 static PHB_PP_FILE hb_pp_FileBufNew( const char * pLineBuf, HB_SIZE nLineBufLen )
 {
-   PHB_PP_FILE pFile = ( PHB_PP_FILE ) hb_xgrabz( sizeof( HB_PP_FILE ) );
+   PHB_PP_FILE pFile = static_cast< PHB_PP_FILE >( hb_xgrabz( sizeof( HB_PP_FILE ) ) );
 
    pFile->fFree = HB_FALSE;
    pFile->pLineBuf = pLineBuf;
@@ -2130,7 +2130,7 @@ static void hb_pp_TraceFileFree( PHB_PP_STATE pState )
 
 static PHB_PP_STATE hb_pp_stateNew( void )
 {
-   PHB_PP_STATE pState = ( PHB_PP_STATE ) hb_xgrabz( sizeof( HB_PP_STATE ) );
+   PHB_PP_STATE pState = static_cast< PHB_PP_STATE >( hb_xgrabz( sizeof( HB_PP_STATE ) ) );
 
    /* create new line buffer */
    pState->pBuffer = hb_membufNew();
@@ -2915,7 +2915,7 @@ static void hb_pp_defineNew( PHB_PP_STATE pState, PHB_PP_TOKEN pToken, HB_BOOL f
          if( usPCount )
          {
             /* create regular match and result markers from parameters */
-            pMarkers = ( PHB_PP_MARKER ) hb_xgrabz( usPCount * sizeof( HB_PP_MARKER ) );
+            pMarkers = static_cast< PHB_PP_MARKER >( hb_xgrabz( usPCount * sizeof( HB_PP_MARKER ) ) );
          }
       }
       hb_pp_defineAdd( pState, HB_PP_CMP_CASE, usPCount, pMarkers, pMatch, pResult );
@@ -3560,7 +3560,7 @@ static void hb_pp_directiveNew( PHB_PP_STATE pState, PHB_PP_TOKEN pToken,
       if( fValid && usPCount )
       {
          /* create regular match and result markers from parameters */
-         pMarkers = ( PHB_PP_MARKER ) hb_xgrabz( usPCount * sizeof( HB_PP_MARKER ) );
+         pMarkers = static_cast< PHB_PP_MARKER >( hb_xgrabz( usPCount * sizeof( HB_PP_MARKER ) ) );
       }
 
       /* free marker index list */
@@ -5477,7 +5477,7 @@ void hb_pp_initRules( PHB_PP_RULE * pRulesPtr, int * piRules,
          HB_USHORT marker;
          HB_ULONG ulBit;
 
-         pMarkers = ( PHB_PP_MARKER ) hb_xgrabz( pDefRule->markers * sizeof( HB_PP_MARKER ) );
+         pMarkers = static_cast< PHB_PP_MARKER >( hb_xgrabz( pDefRule->markers * sizeof( HB_PP_MARKER ) ) );
          for( marker = 0, ulBit = 1; marker < pDefRule->markers; ++marker, ulBit <<= 1 )
          {
             if( pDefRule->repeatbits & ulBit )

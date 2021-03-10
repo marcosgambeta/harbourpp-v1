@@ -309,7 +309,7 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
       hb_socekxParamsGetStd( pParams, &keydata, &keylen, &iv, &ivlen, nullptr, nullptr );
       if( keylen > 0 )
       {
-         PHB_SOCKEX_BF pBF = ( PHB_SOCKEX_BF ) hb_xgrabz( sizeof( HB_SOCKEX_BF ) );
+         PHB_SOCKEX_BF pBF = static_cast< PHB_SOCKEX_BF >( hb_xgrabz( sizeof( HB_SOCKEX_BF ) ) );
          const HB_BYTE * pVect = ( const HB_BYTE * ) ( ivlen > 0 ? iv : nullptr );
          int i;
 
@@ -324,7 +324,7 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
                pBF->decounter[ i ] = static_cast< HB_BYTE >( i );
          }
 
-         pSockNew = ( PHB_SOCKEX ) hb_xgrabz( sizeof( HB_SOCKEX ) );
+         pSockNew = static_cast< PHB_SOCKEX >( hb_xgrabz( sizeof( HB_SOCKEX ) ) );
          pSockNew->sd = pSock->sd;
          pSockNew->fRedirAll = HB_TRUE;
          pSockNew->fShutDown = pSock->fShutDown;

@@ -1165,7 +1165,7 @@ static LPPAGEINFO hb_ntxPageGetBuffer( LPTAGINFO pTag, HB_ULONG ulPage )
       pIndex->ulPages = 1;
       pIndex->ulPageLast = 0;
       pIndex->ulPagesDepth = NTX_PAGES_PER_TAG;
-      pIndex->pages = ( LPPAGEINFO * ) hb_xgrabz( sizeof( LPPAGEINFO ) * NTX_PAGES_PER_TAG );
+      pIndex->pages = static_cast< LPPAGEINFO * >( hb_xgrabz( sizeof( LPPAGEINFO ) * NTX_PAGES_PER_TAG ) );
       pPagePtr = &pIndex->pages[ 0 ];
    }
    else
@@ -1198,10 +1198,10 @@ static LPPAGEINFO hb_ntxPageGetBuffer( LPTAGINFO pTag, HB_ULONG ulPage )
    }
 
    if( ! *pPagePtr )
-      *pPagePtr = ( LPPAGEINFO ) hb_xgrabz( sizeof( HB_PAGEINFO ) );
+      *pPagePtr = static_cast< LPPAGEINFO >( hb_xgrabz( sizeof( HB_PAGEINFO ) ) );
 #ifdef HB_NTX_EXTERNAL_PAGEBUFFER
    if( ! hb_ntxPageBuffer( *pPagePtr ) )
-      hb_ntxPageBuffer( *pPagePtr ) = ( char * ) hb_xgrabz( NTXBLOCKSIZE );
+      hb_ntxPageBuffer( *pPagePtr ) = static_cast< char * >( hb_xgrabz( NTXBLOCKSIZE ) );
 #endif
    ( *pPagePtr )->pPrev = nullptr;
    ( *pPagePtr )->Page  = ulPage;
@@ -1435,7 +1435,7 @@ static LPTAGINFO hb_ntxTagNew( LPNTXINDEX pIndex,
 {
    LPTAGINFO pTag;
 
-   pTag = ( LPTAGINFO ) hb_xgrabz( sizeof( TAGINFO ) );
+   pTag = static_cast< LPTAGINFO >( hb_xgrabz( sizeof( TAGINFO ) ) );
    pTag->TagName = hb_strndup( szTagName, NTX_MAX_TAGNAME );
    pTag->fTagName = fTagName;
    pTag->pIndex = pIndex;
@@ -1793,7 +1793,7 @@ static LPNTXINDEX hb_ntxIndexNew( NTXAREAP pArea )
 {
    LPNTXINDEX pIndex;
 
-   pIndex = ( LPNTXINDEX ) hb_xgrabz( sizeof( NTXINDEX ) );
+   pIndex = static_cast< LPNTXINDEX >( hb_xgrabz( sizeof( NTXINDEX ) ) );
 
    pIndex->DiskFile = nullptr;
    pIndex->pArea = pArea;
@@ -5037,7 +5037,7 @@ static LPNTXSORTINFO hb_ntxSortNew( LPTAGINFO pTag, HB_ULONG ulRecCount )
    if( ulRecCount == 0 )
       ulRecCount = 1;
 
-   pSort = ( LPNTXSORTINFO ) hb_xgrabz( sizeof( NTXSORTINFO ) );
+   pSort = static_cast< LPNTXSORTINFO >( hb_xgrabz( sizeof( NTXSORTINFO ) ) );
 
    ulMin = ( HB_ULONG ) ceil( sqrt( static_cast< double >( ulRecCount ) ) );
    ulMax = ( ( HB_ULONG ) ceil( sqrt( static_cast< double >( ulRecCount ) / ( iLen + 4 ) ) ) ) << 7;
@@ -5106,7 +5106,7 @@ static LPNTXSORTINFO hb_ntxSortNew( LPTAGINFO pTag, HB_ULONG ulRecCount )
    /* check for overflow on 32-bit machines when number of records is nearly 2^32 */
    if( ! pSort->ulPages )
       pSort->ulPages = ulRecCount / pSort->ulPgKeys + 1;
-   pSort->pSwapPage = ( LPNTXSWAPPAGE ) hb_xgrabz( sizeof( NTXSWAPPAGE ) * pSort->ulPages );
+   pSort->pSwapPage = static_cast< LPNTXSWAPPAGE >( hb_xgrabz( sizeof( NTXSWAPPAGE ) * pSort->ulPages ) );
    return pSort;
 }
 

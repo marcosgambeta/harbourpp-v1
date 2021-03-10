@@ -287,7 +287,7 @@ void * hb_stackGetTSD( PHB_TSD pTSD )
       HB_SIZE nSize = ( hb_stack.iTSD + 2 ) * sizeof( HB_TSD_HOLDER );
       if( hb_stack.iTSD == 0 )
       {
-         hb_stack.pTSD = ( PHB_TSD_HOLDER ) hb_xgrabz( nSize );
+         hb_stack.pTSD = static_cast< PHB_TSD_HOLDER >( hb_xgrabz( nSize ) );
       }
       else
       {

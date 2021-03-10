@@ -1241,7 +1241,7 @@ static LPHSXINFO hb_hsxNew( void )
    if( pTable->iHandleSize == 0 )
    {
       pTable->iHandleSize = HSX_HALLOC;
-      pTable->handleArray = ( LPHSXINFO * ) hb_xgrabz( sizeof( LPHSXINFO ) * HSX_HALLOC );
+      pTable->handleArray = static_cast< LPHSXINFO * >( hb_xgrabz( sizeof( LPHSXINFO ) * HSX_HALLOC ) );
    }
    else
    {
@@ -1259,7 +1259,7 @@ static LPHSXINFO hb_hsxNew( void )
          memset( &pTable->handleArray[ iHandle ], 0, sizeof( LPHSXINFO ) * HSX_HALLOC );
       }
    }
-   pTable->handleArray[ iHandle ] = pHSX = ( LPHSXINFO ) hb_xgrabz( sizeof( HSXINFO ) );
+   pTable->handleArray[ iHandle ] = pHSX = static_cast< LPHSXINFO >( hb_xgrabz( sizeof( HSXINFO ) ) );
    pTable->iHandleCount++;
    pHSX->iHandle = iHandle;
    pHSX->pFile = nullptr;

@@ -166,7 +166,7 @@ void hb_cdpBuildTransTable( PHB_UNITABLE uniTable )
          if( wc > wcMax )
             wcMax = wc;
       }
-      uniTrans = ( HB_UCHAR * ) hb_xgrabz( ( wcMax + 1 ) * sizeof( HB_UCHAR ) );
+      uniTrans = static_cast< HB_UCHAR * >( hb_xgrabz( ( wcMax + 1 ) * sizeof( HB_UCHAR ) ) );
       for( i = 0; i < 256; ++i )
       {
          if( uniTable->uniCodes[ i ] )
@@ -179,7 +179,7 @@ void hb_cdpBuildTransTable( PHB_UNITABLE uniTable )
       if( s_rev_ctrl == nullptr )
       {
          wcMax = HB_MAX_CTRL_CODE;
-         s_rev_ctrl = ( HB_UCHAR * ) hb_xgrabz( ( wcMax + 1 ) * sizeof( HB_UCHAR ) );
+         s_rev_ctrl = static_cast< HB_UCHAR * >( hb_xgrabz( ( wcMax + 1 ) * sizeof( HB_UCHAR ) ) );
          for( i = 0; i < 32; ++i )
             s_rev_ctrl[ s_uniCtrls[ i ] ] = ( HB_UCHAR ) i;
       }
@@ -2813,7 +2813,7 @@ static PHB_CODEPAGE hb_buildCodePage( const char * id, const char * info,
    if( iMulti )
       nSize += iMulti * sizeof( HB_MULTICHAR );
 
-   buffer = ( HB_UCHAR * ) hb_xgrabz( nSize );
+   buffer = static_cast< HB_UCHAR * >( hb_xgrabz( nSize ) );
    cdp = ( PHB_CODEPAGE ) &buffer[ ul ];
    cdp->buffer = buffer;
 

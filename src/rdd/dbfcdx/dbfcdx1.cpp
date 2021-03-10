@@ -245,7 +245,7 @@ static LPCDXKEY hb_cdxKeyNew( HB_USHORT uiLen )
 {
    LPCDXKEY pKey;
 
-   pKey = ( LPCDXKEY ) hb_xgrabz( sizeof( CDXKEY ) + uiLen );
+   pKey = static_cast< LPCDXKEY >( hb_xgrabz( sizeof( CDXKEY ) + uiLen ) );
    pKey->len = uiLen;
 
    return pKey;
@@ -1006,7 +1006,7 @@ static HB_ULONG hb_cdxIndexGetAvailPage( LPCDXINDEX pIndex, HB_BOOL fHeader )
 
          if( nSize < ( HB_SIZE ) pIndex->uiPageLen )
             nSize = pIndex->uiPageLen;
-         byPageBuf = ( HB_BYTE * ) hb_xgrabz( nSize );
+         byPageBuf = static_cast< HB_BYTE * >( hb_xgrabz( nSize ) );
 
          hb_cdxIndexLockFlush( pIndex );
          if( hb_fileWriteAt( pFile, byPageBuf, nSize,
@@ -1069,7 +1069,7 @@ static void hb_cdxIndexFlushAvailPage( LPCDXINDEX pIndex )
    ulPage = pIndex->freePage;
    if( pLst && pLst->fStat )
    {
-      HB_BYTE * byPageBuf = ( HB_BYTE * ) hb_xgrabz( pIndex->uiPageLen );
+      HB_BYTE * byPageBuf = static_cast< HB_BYTE * >( hb_xgrabz( pIndex->uiPageLen ) );
 
       do
       {
@@ -2431,7 +2431,7 @@ static LPCDXPAGE hb_cdxPageNew( LPCDXTAG pTag, LPCDXPAGE pOwnerPage, HB_ULONG ul
       HB_SIZE nSize = sizeof( CDXPAGE );
 
       nSize += pTag->uiLen + 8 + pTag->pIndex->uiPageLen - sizeof( pPage->node );
-      pPage = ( LPCDXPAGE ) hb_xgrabz( nSize );
+      pPage = static_cast< LPCDXPAGE >( hb_xgrabz( nSize ) );
 
       pPage->PageType = CDX_NODE_UNUSED;
       pPage->Left = pPage->Right = CDX_DUMMYNODE;
@@ -9409,7 +9409,7 @@ static LPCDXSORTINFO hb_cdxSortNew( LPCDXTAG pTag, HB_ULONG ulRecCount )
    pSort->ulPages = ( ulRecCount + pSort->ulPgKeys - 1 ) / pSort->ulPgKeys;
    pSort->pSwapPage = static_cast< LPCDXSWAPPAGE >( hb_xgrab( sizeof( CDXSWAPPAGE ) * pSort->ulPages ) );
    memset( pSort->pSwapPage, 0, sizeof( CDXSWAPPAGE ) * pSort->ulPages );
-   pSort->pLastKey = ( HB_BYTE * ) hb_xgrabz( iLen + 1 );
+   pSort->pLastKey = static_cast< HB_BYTE * >( hb_xgrabz( iLen + 1 ) );
 
    return pSort;
 }

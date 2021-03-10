@@ -199,7 +199,7 @@ static void hb_gt_std_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Init(%p,%p,%p,%p)", ( void * ) pGT, ( void * ) static_cast< HB_PTRUINT >( hFilenoStdin ), ( void * ) static_cast< HB_PTRUINT >( hFilenoStdout ), ( void * ) static_cast< HB_PTRUINT >( hFilenoStderr ) ) );
 
-   HB_GTLOCAL( pGT ) = pGTSTD = ( PHB_GTSTD ) hb_xgrabz( sizeof( HB_GTSTD ) );
+   HB_GTLOCAL( pGT ) = pGTSTD = static_cast< PHB_GTSTD >( hb_xgrabz( sizeof( HB_GTSTD ) ) );
 
    pGTSTD->hStdin  = hFilenoStdin;
    pGTSTD->hStdout = hFilenoStdout;

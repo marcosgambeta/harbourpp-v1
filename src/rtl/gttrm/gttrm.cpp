@@ -3353,7 +3353,7 @@ static void hb_gt_trm_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_trm_Init(%p,%p,%p,%p)", ( void * ) pGT, ( void * ) static_cast< HB_PTRUINT >( hFilenoStdin ), ( void * ) static_cast< HB_PTRUINT >( hFilenoStdout ), ( void * ) static_cast< HB_PTRUINT >( hFilenoStderr ) ) );
 
-   HB_GTLOCAL( pGT ) = pTerm = ( PHB_GTTRM ) hb_xgrabz( sizeof( HB_GTTRM ) );
+   HB_GTLOCAL( pGT ) = pTerm = static_cast< PHB_GTTRM >( hb_xgrabz( sizeof( HB_GTTRM ) ) );
 
    pTerm->pGT = pGT;
    pTerm->hFilenoStdin  = hFilenoStdin;

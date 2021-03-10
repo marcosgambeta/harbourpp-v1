@@ -156,7 +156,7 @@ static PHB_FILE hb_fileNew( HB_FHANDLE hFile, HB_BOOL fShared, int iMode,
 
    if( ! pFile )
    {
-      pFile = ( PHB_FILE ) hb_xgrabz( sizeof( HB_FILE ) );
+      pFile = static_cast< PHB_FILE >( hb_xgrabz( sizeof( HB_FILE ) ) );
       pFile->pFuncs  = s_fileMethods();
       pFile->device  = device;
       pFile->inode   = inode;
@@ -1092,7 +1092,7 @@ static const HB_FILE_FUNCS * s_fileposMethods( void )
 
 static PHB_FILE hb_fileposNew( PHB_FILE pFile )
 {
-   PHB_FILEPOS pFilePos = ( PHB_FILEPOS ) hb_xgrabz( sizeof( HB_FILEPOS ) );
+   PHB_FILEPOS pFilePos = static_cast< PHB_FILEPOS >( hb_xgrabz( sizeof( HB_FILEPOS ) ) );
 
    pFilePos->pFuncs   = s_fileposMethods();
    pFilePos->pFile    = pFile;

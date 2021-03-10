@@ -111,7 +111,7 @@ void hb_znetClose( PHB_ZNETSTREAM pStream )
  */
 PHB_ZNETSTREAM hb_znetOpen( int level, int strategy )
 {
-   PHB_ZNETSTREAM pStream = ( PHB_ZNETSTREAM ) hb_xgrabz( sizeof( HB_ZNETSTREAM ) );
+   PHB_ZNETSTREAM pStream = static_cast< PHB_ZNETSTREAM >( hb_xgrabz( sizeof( HB_ZNETSTREAM ) ) );
 
    if( level != Z_DEFAULT_COMPRESSION &&
        !( level >= Z_NO_COMPRESSION && level <= Z_BEST_COMPRESSION ) )
@@ -658,7 +658,7 @@ PHB_SOCKEX hb_sockexNewZNet( HB_SOCKET sd, const void * keydata, int keylen,
       }
       if( sd != HB_NO_SOCKET )
       {
-         pSock = ( PHB_SOCKEX ) hb_xgrabz( sizeof( HB_SOCKEX ) );
+         pSock = static_cast< PHB_SOCKEX >( hb_xgrabz( sizeof( HB_SOCKEX ) ) );
          pSock->sd = sd;
          pSock->fRedirAll = HB_TRUE;
          pSock->fShutDown = HB_TRUE;
