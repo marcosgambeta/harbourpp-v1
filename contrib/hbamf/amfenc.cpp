@@ -67,7 +67,7 @@ static HB_ISIZ bufferGrow( amfContext * context, HB_ISIZ len )
 
    if( current_len != context->length )
    {
-      context->cBuf = ( char * ) hb_xrealloc( context->cBuf, sizeof( char ) * current_len );
+      context->cBuf = static_cast< char * >( hb_xrealloc( context->cBuf, sizeof( char ) * current_len ) );
       if( ! context->cBuf )
          return -1;
 
@@ -1384,7 +1384,7 @@ HB_FUNC( AMF3_FROMWA )
       if( ! bAsArray )
          hb_itemRelease( pFieldNames );
 
-      context->cBuf = ( char * ) hb_xrealloc( context->cBuf, sizeof( char ) * context->position + 1 );
+      context->cBuf = static_cast< char * >( hb_xrealloc( context->cBuf, sizeof( char ) * context->position + 1 ) );
 
       hb_retclen_buffer( context->cBuf, context->position );
 
@@ -1455,7 +1455,7 @@ HB_FUNC( AMF3_ENCODE )
       return;
    }
 
-   context->cBuf = ( char * ) hb_xrealloc( context->cBuf, sizeof( char ) * context->position + 1 );
+   context->cBuf = static_cast< char * >( hb_xrealloc( context->cBuf, sizeof( char ) * context->position + 1 ) );
 
    hb_retclen_buffer( context->cBuf, context->position );
    hb_xfree( context );

@@ -433,7 +433,7 @@ HB_FUNC( SQL_SPRINTF )
             if( ( f = i + sizeof( char ) ) > ulMaxBuf )
             {
                ulMaxBuf += f + DK_INCBUF;
-               cBuffer   = ( char * ) hb_xrealloc( cBuffer, ulMaxBuf );
+               cBuffer   = static_cast< char * >( hb_xrealloc( cBuffer, ulMaxBuf ) );
             }
             hb_strncpy( cBuffer, cParFrm, i );
             s = i;
@@ -458,7 +458,7 @@ HB_FUNC( SQL_SPRINTF )
                if( ( f = i + 8 ) > ulMaxBuf )   /* size of "DEFAULT" == 8 */
                {
                   ulMaxBuf += f + DK_INCBUF;
-                  cBuffer   = ( char * ) hb_xrealloc( cBuffer, ulMaxBuf );
+                  cBuffer   = static_cast< char * >( hb_xrealloc( cBuffer, ulMaxBuf ) );
                }
                pItmCpy = hb_itemNew( nullptr );
 #ifdef HB_IT_NULL
@@ -491,7 +491,7 @@ HB_FUNC( SQL_SPRINTF )
                if( ( f = i + HB_MAX( ulWidth, f ) ) > ulMaxBuf )
                {
                   ulMaxBuf += f + DK_INCBUF;
-                  cBuffer   = ( char * ) hb_xrealloc( cBuffer, ulMaxBuf );
+                  cBuffer   = static_cast< char * >( hb_xrealloc( cBuffer, ulMaxBuf ) );
                }
                s = SCItm( cBuffer, ulMaxBuf, cParFrm, iCOut, IsIndW, iIndWidth, IsIndP, iIndPrec,
                           pItmPar );
@@ -541,7 +541,7 @@ HB_FUNC( SQL_SPRINTF )
                if( ( f = i + HB_MAX( ulWidth, 29 ) ) > ulMaxBuf )
                {
                   ulMaxBuf += f + DK_INCBUF;
-                  cBuffer   = ( char * ) hb_xrealloc( cBuffer, ulMaxBuf );
+                  cBuffer   = static_cast< char * >( hb_xrealloc( cBuffer, ulMaxBuf ) );
                }
                pItmCpy = hb_itemNew( nullptr );
                hb_itemPutC( pItmCpy, cDTFrm );
@@ -585,7 +585,7 @@ HB_FUNC( SQL_SPRINTF )
                                  HB_MAX( ulWidth, DK_BLKBUF ) ) ) > ulMaxBuf )
                {
                   ulMaxBuf += f + DK_INCBUF;   /* size of "FALSE" == 6 */
-                  cBuffer   = ( char * ) hb_xrealloc( cBuffer, ulMaxBuf );
+                  cBuffer   = static_cast< char * >( hb_xrealloc( cBuffer, ulMaxBuf ) );
                }
                s = SCItm( cBuffer, ulMaxBuf, cParFrm, iCOut, IsIndW, iIndWidth, IsIndP, iIndPrec,
                           pItmPar );
@@ -606,7 +606,7 @@ HB_FUNC( SQL_SPRINTF )
                   if( ( f = i + HB_MAX( ulWidth, f ) ) > ulMaxBuf )
                   {
                      ulMaxBuf += f + DK_INCBUF;
-                     cBuffer   = ( char * ) hb_xrealloc( cBuffer, ulMaxBuf );
+                     cBuffer   = static_cast< char * >( hb_xrealloc( cBuffer, ulMaxBuf ) );
                   }
                   pItmCpy = hb_itemNew( nullptr );
                   hb_itemPutCL( pItmCpy, cTrimStr, f );
@@ -626,7 +626,7 @@ HB_FUNC( SQL_SPRINTF )
                if( ( f = i + HB_MAX( ulWidth, DK_BLKBUF ) ) > ulMaxBuf )
                {
                   ulMaxBuf += f + DK_INCBUF;
-                  cBuffer   = ( char * ) hb_xrealloc( cBuffer, ulMaxBuf );
+                  cBuffer   = static_cast< char * >( hb_xrealloc( cBuffer, ulMaxBuf ) );
                }
                s = SCItm( cBuffer, ulMaxBuf, cParFrm, iCOut, IsIndW, iIndWidth, IsIndP, iIndPrec,
                           pItmPar );
@@ -641,7 +641,7 @@ HB_FUNC( SQL_SPRINTF )
          if( ( f = s + ulResPos + sizeof( char ) ) > ulMaxRes )
          {
             ulMaxRes += f + DK_INCRES;
-            cRes      = ( char * ) hb_xrealloc( cRes, ulMaxRes );
+            cRes      = static_cast< char * >( hb_xrealloc( cRes, ulMaxRes ) );
          }
 
          hb_strncpy( cRes + ulResPos, cBuffer, s );

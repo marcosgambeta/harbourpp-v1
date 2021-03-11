@@ -446,7 +446,7 @@ PHB_ZEBRA hb_zebra_create_datamatrix( const char * szCode, HB_SIZE nLen, int iFl
 
    iErrorSize = ( pSize->iDataSize + 2 ) / pSize->iBlockSize * pSize->iBlockErrorSize;
 
-   pCW = ( unsigned char * ) hb_xrealloc( pCW, pSize->iDataSize + iErrorSize );
+   pCW = static_cast< unsigned char * >( hb_xrealloc( pCW, pSize->iDataSize + iErrorSize ) );
    for( i = iDataCount; i < pSize->iDataSize; i++ )
       pCW[ i ] = PADDING;
 

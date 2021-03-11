@@ -97,9 +97,9 @@ static int sTokEnvAddPos( TOKEN_ENVIRONMENT * pEnv, TOKEN_POSITION * pPos )
    /* new memory needed? */
    if( env[ 0 ].sStartPos == env[ 0 ].sEndPos )
    {
-      env = *pEnv = ( TOKEN_ENVIRONMENT )
+      env = *pEnv = static_cast< TOKEN_ENVIRONMENT >(
                hb_xrealloc( env, sizeof( TOKEN_POSITION ) *
-                            ( 2 + env[ 0 ].sEndPos + TOKEN_ENVIRONMENT_STEP ) + 1 );
+                            ( 2 + env[ 0 ].sEndPos + TOKEN_ENVIRONMENT_STEP ) + 1 ) );
 
       env[ 0 ].sEndPos += TOKEN_ENVIRONMENT_STEP;
    }

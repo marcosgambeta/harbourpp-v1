@@ -499,7 +499,7 @@ static PMIXTAG mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_ITEM
 
          if( pTag->ulRecCount == pTag->ulRecMax )
          {
-            pTag->pKeys = ( PMIXKEY * ) hb_xrealloc( pTag->pKeys, sizeof( PMIXKEY ) * ( pTag->ulRecMax + MIX_KEYPOOLRESIZE ) );
+            pTag->pKeys = static_cast< PMIXKEY * >( hb_xrealloc( pTag->pKeys, sizeof( PMIXKEY ) * ( pTag->ulRecMax + MIX_KEYPOOLRESIZE ) ) );
             pTag->ulRecMax += MIX_KEYPOOLRESIZE;
          }
 
@@ -644,7 +644,7 @@ static void mixUpdateDestroy( ADSXAREAP pArea, PMIXUPDATE pUpdate, int fUpdate )
             /* insert key into index */
             if( pTag->ulRecCount == pTag->ulRecMax )
             {
-               pTag->pKeys = ( PMIXKEY* ) hb_xrealloc( pTag->pKeys, sizeof( PMIXKEY ) * ( pTag->ulRecMax + MIX_KEYPOOLRESIZE ) );
+               pTag->pKeys = static_cast< PMIXKEY* >( hb_xrealloc( pTag->pKeys, sizeof( PMIXKEY ) * ( pTag->ulRecMax + MIX_KEYPOOLRESIZE ) ) );
                pTag->ulRecMax += MIX_KEYPOOLRESIZE;
             }
             if( ulKeyPos < pTag->ulRecCount )

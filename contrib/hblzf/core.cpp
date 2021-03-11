@@ -191,7 +191,7 @@ HB_FUNC( HB_LZF_DECOMPRESS )
             do
             {
                buffer_size <<= 1;
-               buffer        = ( char * ) hb_xrealloc( buffer, buffer_size + 1 );
+               buffer        = static_cast< char * >( hb_xrealloc( buffer, buffer_size + 1 ) );
 
                uiResult = lzf_decompress( in_data, static_cast< unsigned int >( in_len ), buffer, static_cast< unsigned int >( buffer_size ) );
             }

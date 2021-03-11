@@ -342,8 +342,8 @@ static HB_BOOL s_fileRecvSrvData( PHB_CONCLI conn, long len, int iStreamID, int 
                   pSrvData->bufsize = ( pSrvData->size + len ) << 1;
                   if( pSrvData->bufsize > pSrvData->maxsize )
                      pSrvData->bufsize = pSrvData->maxsize;
-                  pSrvData->data = ( char * ) hb_xrealloc( pSrvData->data,
-                                                           pSrvData->bufsize );
+                  pSrvData->data = static_cast< char * >( hb_xrealloc( pSrvData->data,
+                                                           pSrvData->bufsize ) );
                }
                memcpy( pSrvData->data + pSrvData->size, buffer, len );
                pSrvData->size += len;
@@ -1304,7 +1304,7 @@ static const char * s_netio_params( int iParam, int iMsg, const char * pszName, 
       if( data == nullptr )
          data = ( char * ) memcpy( hb_xgrab( size + itmSize ), pszName, size );
       else
-         data = ( char * ) hb_xrealloc( data, size + itmSize );
+         data = static_cast< char * >( hb_xrealloc( data, size + itmSize ) );
       memcpy( data + size, itmData, itmSize );
       size += itmSize;
       hb_xfree( itmData );

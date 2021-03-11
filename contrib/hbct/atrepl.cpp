@@ -149,8 +149,8 @@ HB_FUNC( ATREPL )
                   /* save pc pointer */
                   HB_SIZE sPCPos = pc - pcRetStr;
 
-                  pcRetStr = ( char * ) hb_xrealloc( pcRetStr,
-                                 nRetStrLen + ( nReplaceLen - nMatchStrLen ) + 1 );
+                  pcRetStr = static_cast< char * >( hb_xrealloc( pcRetStr,
+                                 nRetStrLen + ( nReplaceLen - nMatchStrLen ) + 1 ) );
                   pc = pcRetStr + sPCPos;
                }
 
@@ -215,8 +215,8 @@ HB_FUNC( ATREPL )
             /* save pc pointer */
             HB_SIZE sPCPos = pc - pcRetStr;
 
-            pcRetStr = ( char * ) hb_xrealloc( pcRetStr,
-                                 nRetStrLen + ( nReplaceLen - nMatchStrLen ) + 1 );
+            pcRetStr = static_cast< char * >( hb_xrealloc( pcRetStr,
+                                 nRetStrLen + ( nReplaceLen - nMatchStrLen ) + 1 ) );
             pc = pcRetStr + sPCPos;
          }
 

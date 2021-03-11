@@ -363,7 +363,7 @@ HB_FUNC( FBQUERY )
       if( sqlda->sqld > sqlda->sqln )
       {
          ISC_SHORT n = sqlda->sqld;
-         sqlda          = ( XSQLDA * ) hb_xrealloc( sqlda, XSQLDA_LENGTH( n ) );
+         sqlda          = static_cast< XSQLDA * >( hb_xrealloc( sqlda, XSQLDA_LENGTH( n ) ) );
          sqlda->sqln    = n;
          sqlda->version = 1;
 

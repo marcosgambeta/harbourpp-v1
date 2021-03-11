@@ -181,7 +181,7 @@ HB_FUNC( TIP_HTMLSPECIALCHARS )
             nPos++;
          }
 
-         hb_retclen_buffer( ( char * ) hb_xrealloc( pszRet, nPosRet + 1 ), nPosRet );
+         hb_retclen_buffer( static_cast< char * >( hb_xrealloc( pszRet, nPosRet + 1 ) ), nPosRet );
       }
       else
          hb_retc_null();
@@ -266,7 +266,7 @@ HB_FUNC( TIP_JSONSPECIALCHARS )
             nPos++;
          }
 
-         hb_retclen_buffer( ( char * ) hb_xrealloc( pszRet, nPosRet + 1 ), nPosRet );
+         hb_retclen_buffer( static_cast< char * >( hb_xrealloc( pszRet, nPosRet + 1 ) ), nPosRet );
       }
       else
          hb_retc_null();

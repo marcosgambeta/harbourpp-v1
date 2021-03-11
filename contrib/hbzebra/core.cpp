@@ -91,7 +91,7 @@ void hb_bitbuffer_set( PHB_BITBUFFER pBitBuffer, HB_SIZE nPos, HB_BOOL fValue )
    if( pBitBuffer->nAlloc * 8 <= nPos )
    {
       HB_SIZE nNewAlloc = ( ( pBitBuffer->nAlloc >> 1 ) + nPos + 8 ) / 8;
-      pBitBuffer->pBuffer = ( unsigned char * ) hb_xrealloc( pBitBuffer->pBuffer, nNewAlloc );
+      pBitBuffer->pBuffer = static_cast< unsigned char * >( hb_xrealloc( pBitBuffer->pBuffer, nNewAlloc ) );
       hb_xmemset( pBitBuffer->pBuffer + pBitBuffer->nAlloc, 0, nNewAlloc - pBitBuffer->nAlloc );
       pBitBuffer->nAlloc = nNewAlloc;
    }
@@ -111,7 +111,7 @@ void hb_bitbuffer_not( PHB_BITBUFFER pBitBuffer, HB_SIZE nPos )
    if( pBitBuffer->nAlloc * 8 <= nPos )
    {
       HB_SIZE nNewAlloc = ( ( pBitBuffer->nAlloc >> 1 ) + nPos + 8 ) / 8;
-      pBitBuffer->pBuffer = ( unsigned char * ) hb_xrealloc( pBitBuffer->pBuffer, nNewAlloc );
+      pBitBuffer->pBuffer = static_cast< unsigned char * >( hb_xrealloc( pBitBuffer->pBuffer, nNewAlloc ) );
       hb_xmemset( pBitBuffer->pBuffer + pBitBuffer->nAlloc, 0, nNewAlloc - pBitBuffer->nAlloc );
       pBitBuffer->nAlloc = nNewAlloc;
    }
@@ -127,7 +127,7 @@ void hb_bitbuffer_cat_int( PHB_BITBUFFER pBitBuffer, int iValue, int iLen )
    if( ( pBitBuffer->nLen + iLen ) >= pBitBuffer->nAlloc * 8 )
    {
       HB_SIZE nNewAlloc = pBitBuffer->nAlloc + ( ( pBitBuffer->nAlloc >> 1 ) + iLen + 7 ) / 8;
-      pBitBuffer->pBuffer = ( unsigned char * ) hb_xrealloc( pBitBuffer->pBuffer, nNewAlloc );
+      pBitBuffer->pBuffer = static_cast< unsigned char * >( hb_xrealloc( pBitBuffer->pBuffer, nNewAlloc ) );
       hb_xmemset( pBitBuffer->pBuffer + pBitBuffer->nAlloc, 0, nNewAlloc - pBitBuffer->nAlloc );
       pBitBuffer->nAlloc = nNewAlloc;
    }
@@ -148,7 +148,7 @@ void hb_bitbuffer_cat_int_rev( PHB_BITBUFFER pBitBuffer, int iValue, int iLen )
    if( ( pBitBuffer->nLen + iLen ) >= pBitBuffer->nAlloc * 8 )
    {
       HB_SIZE nNewAlloc = pBitBuffer->nAlloc + ( ( pBitBuffer->nAlloc >> 1 ) + iLen + 7 ) / 8;
-      pBitBuffer->pBuffer = ( unsigned char * ) hb_xrealloc( pBitBuffer->pBuffer, nNewAlloc );
+      pBitBuffer->pBuffer = static_cast< unsigned char * >( hb_xrealloc( pBitBuffer->pBuffer, nNewAlloc ) );
       hb_xmemset( pBitBuffer->pBuffer + pBitBuffer->nAlloc, 0, nNewAlloc - pBitBuffer->nAlloc );
       pBitBuffer->nAlloc = nNewAlloc;
    }

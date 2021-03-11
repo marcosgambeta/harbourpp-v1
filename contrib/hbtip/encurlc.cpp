@@ -147,7 +147,7 @@ HB_FUNC( TIP_URLDECODE )
 
          /* this function also adds a zero */
          /* hopefully reduce the size of pszRet */
-         hb_retclen_buffer( ( char * ) hb_xrealloc( pszRet, nPosRet + 1 ), nPosRet );
+         hb_retclen_buffer( static_cast< char * >( hb_xrealloc( pszRet, nPosRet + 1 ) ), nPosRet );
       }
       else
          hb_retc_null();

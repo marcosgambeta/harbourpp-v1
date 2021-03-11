@@ -372,7 +372,7 @@ static size_t hb_curl_write_buff_callback( void * buffer, size_t size, size_t nm
       if( nTodo > nLeft )
       {
          hb_curl->dl_len += HB_CURL_DL_BUFF_SIZE_INCR;
-         hb_curl->dl_ptr  = ( unsigned char * ) hb_xrealloc( hb_curl->dl_ptr, hb_curl->dl_len );
+         hb_curl->dl_ptr  = static_cast< unsigned char * >( hb_xrealloc( hb_curl->dl_ptr, hb_curl->dl_len ) );
       }
 
       hb_xmemcpy( hb_curl->dl_ptr + hb_curl->dl_pos, buffer, nTodo );

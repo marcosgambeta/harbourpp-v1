@@ -212,7 +212,7 @@ static PHB_MEMFS_INODE memfsInodeAlloc( const char * szName )
    if( s_fs.ulInodeCount >= s_fs.ulInodeAlloc )
    {
       s_fs.ulInodeAlloc += s_fs.ulInodeAlloc >> 1;
-      s_fs.pInodes = ( PHB_MEMFS_INODE * ) hb_xrealloc( s_fs.pInodes, s_fs.ulInodeAlloc * sizeof( PHB_MEMFS_INODE ) );
+      s_fs.pInodes = static_cast< PHB_MEMFS_INODE * >( hb_xrealloc( s_fs.pInodes, s_fs.ulInodeAlloc * sizeof( PHB_MEMFS_INODE ) ) );
    }
 
    if( memfsInodeFind( szName, &ulInode ) )
@@ -290,7 +290,7 @@ static HB_FHANDLE memfsHandleAlloc( PHB_MEMFS_FILE pFile )
       }
    }
 
-   s_fs.pFiles = ( PHB_MEMFS_FILE * ) hb_xrealloc( s_fs.pFiles, ( s_fs.ulFileAlloc << 1 ) * sizeof( PHB_MEMFS_FILE ) );
+   s_fs.pFiles = static_cast< PHB_MEMFS_FILE * >( hb_xrealloc( s_fs.pFiles, ( s_fs.ulFileAlloc << 1 ) * sizeof( PHB_MEMFS_FILE ) ) );
    memset( s_fs.pFiles + s_fs.ulFileAlloc, 0, s_fs.ulFileAlloc * sizeof( PHB_MEMFS_FILE ) );
    ul = s_fs.ulFileAlloc;
    s_fs.ulFileAlloc <<= 1;
@@ -626,7 +626,7 @@ HB_MEMFS_EXPORT HB_SIZE hb_memfsWriteAt( HB_FHANDLE hFile, const void * pBuff, H
       if( llNewAlloc < llOffset + ( HB_FOFFSET ) nCount )
          llNewAlloc = llOffset + ( HB_FOFFSET ) nCount;
 
-      pInode->pData = ( char * ) hb_xrealloc( pInode->pData, ( HB_SIZE ) llNewAlloc );
+      pInode->pData = static_cast< char * >( hb_xrealloc( pInode->pData, ( HB_SIZE ) llNewAlloc ) );
       memset( pInode->pData + ( HB_SIZE ) pInode->llAlloc, 0, ( HB_SIZE ) ( llNewAlloc - pInode->llAlloc ) );
       pInode->llAlloc = llNewAlloc;
    }
@@ -688,14 +688,14 @@ HB_MEMFS_EXPORT HB_BOOL hb_memfsTruncAt( HB_FHANDLE hFile, HB_FOFFSET llOffset )
       if( llNewAlloc < llOffset )
          llNewAlloc = llOffset;
 
-      pInode->pData = ( char * ) hb_xrealloc( pInode->pData, ( HB_SIZE ) llNewAlloc );
+      pInode->pData = static_cast< char * >( hb_xrealloc( pInode->pData, ( HB_SIZE ) llNewAlloc ) );
       memset( pInode->pData + ( HB_SIZE ) pInode->llAlloc, 0, ( HB_SIZE ) ( llNewAlloc - pInode->llAlloc ) );
       pInode->llAlloc = llNewAlloc;
    }
    else if( ( pInode->llAlloc >> 2 ) > ( llOffset > HB_MEMFS_INITSIZE ? llOffset : HB_MEMFS_INITSIZE ) )
    {
       pInode->llAlloc = ( llOffset > HB_MEMFS_INITSIZE ? llOffset : HB_MEMFS_INITSIZE );
-      pInode->pData = ( char * ) hb_xrealloc( pInode->pData, ( HB_SIZE ) pInode->llAlloc );
+      pInode->pData = static_cast< char * >( hb_xrealloc( pInode->pData, ( HB_SIZE ) pInode->llAlloc ) );
    }
 
    memset( pInode->pData + ( HB_SIZE ) llOffset, 0, ( HB_SIZE ) ( pInode->llAlloc - llOffset ) );

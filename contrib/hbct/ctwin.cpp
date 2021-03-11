@@ -474,8 +474,8 @@ static int hb_ctw_ChangeWindowHandle( PHB_GTCTW pCTW, int iNewWindow )
             i = pCTW->iMaxWindow;
             while( iNewWindow > pCTW->iMaxWindow )
                pCTW->iMaxWindow += HB_CTWIN_ALLOC;
-            pCTW->windows = ( PHB_CT_WND * ) hb_xrealloc( pCTW->windows, ( pCTW->iMaxWindow + 1 ) * sizeof( PHB_CT_WND ) );
-            pCTW->windowStack = ( int * ) hb_xrealloc( pCTW->windowStack, pCTW->iMaxWindow * sizeof( int ) );
+            pCTW->windows = static_cast< PHB_CT_WND * >( hb_xrealloc( pCTW->windows, ( pCTW->iMaxWindow + 1 ) * sizeof( PHB_CT_WND ) ) );
+            pCTW->windowStack = static_cast< int * >( hb_xrealloc( pCTW->windowStack, pCTW->iMaxWindow * sizeof( int ) ) );
             do
             {
                pCTW->windows[ i + 1 ] = nullptr;
@@ -678,8 +678,8 @@ static int hb_ctw_CreateWindow( PHB_GTCTW pCTW, int iTop, int iLeft, int iBottom
       else
       {
          pCTW->iMaxWindow += HB_CTWIN_ALLOC;
-         pCTW->windows = ( PHB_CT_WND * ) hb_xrealloc( pCTW->windows, ( pCTW->iMaxWindow + 1 ) * sizeof( PHB_CT_WND ) );
-         pCTW->windowStack = ( int * ) hb_xrealloc( pCTW->windowStack, pCTW->iMaxWindow * sizeof( int ) );
+         pCTW->windows = static_cast< PHB_CT_WND * >( hb_xrealloc( pCTW->windows, ( pCTW->iMaxWindow + 1 ) * sizeof( PHB_CT_WND ) ) );
+         pCTW->windowStack = static_cast< int * >( hb_xrealloc( pCTW->windowStack, pCTW->iMaxWindow * sizeof( int ) ) );
       }
       do
       {
@@ -2042,8 +2042,8 @@ static HB_BOOL hb_ctw_gt_Resize( PHB_GT pGT, int iRows, int iCols )
          pCTW->iMapWidth  = iCols;
          pCTW->iShadowWidth = hb_ctw_CalcShadowWidth( pCTW->iMapHeight, pCTW->iMapWidth );
          nSize = ( HB_SIZE ) pCTW->iMapHeight * pCTW->iMapWidth * sizeof( int );
-         pCTW->pWindowMap = ( int * ) hb_xrealloc( pCTW->pWindowMap, nSize );
-         pCTW->pShadowMap = ( int * ) hb_xrealloc( pCTW->pShadowMap, nSize );
+         pCTW->pWindowMap = static_cast< int * >( hb_xrealloc( pCTW->pWindowMap, nSize ) );
+         pCTW->pShadowMap = static_cast< int * >( hb_xrealloc( pCTW->pShadowMap, nSize ) );
       }
       if( pCTW->fBoardSet )
          hb_ctw_SetWindowBoard( pCTW, 0, 0, iRows - 1, iCols - 1 );

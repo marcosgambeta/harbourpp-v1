@@ -78,7 +78,7 @@ static char * hb_fsReadLine( HB_FHANDLE hFileHandle, HB_ISIZ * plBuffLen, const 
       {
          /* pBuff can be enlarged to hold the line as needed.. */
          nSize    = ( *plBuffLen * ( nTries + 1 ) ) + 1;
-         pBuff    = ( char * ) hb_xrealloc( pBuff, nSize );
+         pBuff    = static_cast< char * >( hb_xrealloc( pBuff, nSize ) );
          nOffset += nRead;
       }
 

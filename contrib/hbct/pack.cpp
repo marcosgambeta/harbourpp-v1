@@ -86,7 +86,7 @@ static HB_UCHAR * buf_append( HB_UCHAR * buf, HB_SIZE * buf_size, HB_SIZE count,
    if( *buf_len + count > *buf_size )
    {
       *buf_size = HB_MAX( *buf_len + count, *buf_size + 32768 );
-      buf = ( HB_UCHAR * ) hb_xrealloc( buf, *buf_size );
+      buf = static_cast< HB_UCHAR * >( hb_xrealloc( buf, *buf_size ) );
    }
    memset( buf + *buf_len, c, count );
    *buf_len += count;

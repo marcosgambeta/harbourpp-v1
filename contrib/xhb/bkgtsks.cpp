@@ -158,7 +158,7 @@ HB_ULONG hb_backgroundAddFunc( PHB_ITEM pBlock, int nMillisec, HB_BOOL bActive )
             }
          }
       }
-      s_pBackgroundTasks = ( PHB_BACKGROUNDTASK * ) hb_xrealloc( s_pBackgroundTasks, sizeof( HB_BACKGROUNDTASK ) * ( s_uiBackgroundMaxTask ) );
+      s_pBackgroundTasks = static_cast< PHB_BACKGROUNDTASK * >( hb_xrealloc( s_pBackgroundTasks, sizeof( HB_BACKGROUNDTASK ) * ( s_uiBackgroundMaxTask ) ) );
    }
    s_pBackgroundTasks[ s_uiBackgroundMaxTask ] = pBkgTask;
    ++s_uiBackgroundMaxTask;
@@ -290,7 +290,7 @@ PHB_ITEM hb_backgroundDelFunc( HB_ULONG ulID )
                memmove( &s_pBackgroundTasks[ iTask ], &s_pBackgroundTasks[ iTask + 1 ],
                         sizeof( HB_BACKGROUNDTASK ) * ( s_uiBackgroundMaxTask - iTask ) );
             }
-            s_pBackgroundTasks = ( PHB_BACKGROUNDTASK * ) hb_xrealloc( s_pBackgroundTasks, sizeof( HB_BACKGROUNDTASK ) * s_uiBackgroundMaxTask );
+            s_pBackgroundTasks = static_cast< PHB_BACKGROUNDTASK * >( hb_xrealloc( s_pBackgroundTasks, sizeof( HB_BACKGROUNDTASK ) * s_uiBackgroundMaxTask ) );
          }
          else
          {

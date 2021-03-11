@@ -421,8 +421,8 @@ static HB_ERRCODE sqlbaseAppend( SQLBASEAREAP pArea, HB_BOOL bUnLockAll )
 
    if( pArea->ulRecCount + 1 >= pArea->ulRecMax )
    {
-      pArea->pRow      = ( void ** ) hb_xrealloc( pArea->pRow, ( pArea->ulRecMax + SQLDD_ROWSET_RESIZE ) * sizeof( void * ) );
-      pArea->pRowFlags = ( HB_BYTE * ) hb_xrealloc( pArea->pRowFlags, ( pArea->ulRecMax + SQLDD_ROWSET_RESIZE ) * sizeof( HB_BYTE ) );
+      pArea->pRow      = static_cast< void ** >( hb_xrealloc( pArea->pRow, ( pArea->ulRecMax + SQLDD_ROWSET_RESIZE ) * sizeof( void * ) ) );
+      pArea->pRowFlags = static_cast< HB_BYTE * >( hb_xrealloc( pArea->pRowFlags, ( pArea->ulRecMax + SQLDD_ROWSET_RESIZE ) * sizeof( HB_BYTE ) ) );
       pArea->ulRecMax += SQLDD_ROWSET_RESIZE;
    }
 
@@ -613,8 +613,8 @@ static HB_ERRCODE sqlbaseZap( SQLBASEAREAP pArea )
    pArea->ulRecCount = 0;
    pArea->ulRecNo = 0;
 
-   pArea->pRow = ( void ** ) hb_xrealloc( pArea->pRow, SQLDD_ROWSET_RESIZE * sizeof( void * ) );
-   pArea->pRowFlags = ( HB_BYTE * ) hb_xrealloc( pArea->pRowFlags, SQLDD_ROWSET_RESIZE * sizeof( HB_BYTE ) );
+   pArea->pRow = static_cast< void ** >( hb_xrealloc( pArea->pRow, SQLDD_ROWSET_RESIZE * sizeof( void * ) ) );
+   pArea->pRowFlags = static_cast< HB_BYTE * >( hb_xrealloc( pArea->pRowFlags, SQLDD_ROWSET_RESIZE * sizeof( HB_BYTE ) ) );
    pArea->ulRecMax = SQLDD_ROWSET_RESIZE;
 
    pArea->fFetched = HB_TRUE;
@@ -1036,7 +1036,7 @@ static HB_ERRCODE sqlbaseRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ul
             {
                /* Realloc connection table */
                if( s_pConnection )
-                  s_pConnection = ( SQLDDCONNECTION ** ) hb_xrealloc( s_pConnection, sizeof( SQLDDCONNECTION * ) * ( s_ulConnectionCount + CONNECTION_LIST_EXPAND ) );
+                  s_pConnection = static_cast< SQLDDCONNECTION ** >( hb_xrealloc( s_pConnection, sizeof( SQLDDCONNECTION * ) * ( s_ulConnectionCount + CONNECTION_LIST_EXPAND ) ) );
                else
                   s_pConnection = static_cast< SQLDDCONNECTION ** >( hb_xgrab( sizeof( SQLDDCONNECTION * ) * CONNECTION_LIST_EXPAND ) );
 
