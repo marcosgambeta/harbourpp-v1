@@ -919,9 +919,9 @@ static HB_ERRCODE hb_dbfUnlockRecord( DBFAREAP pArea, HB_ULONG ulRecNo )
          HB_ULONG * pList = pArea->pLocksPos + ulCount;
          memmove( pList, pList + 1, ( pArea->ulNumLocksPos - ulCount - 1 ) *
                   sizeof( HB_ULONG ) );
-         pArea->pLocksPos = ( HB_ULONG * ) hb_xrealloc( pArea->pLocksPos,
+         pArea->pLocksPos = static_cast< HB_ULONG * >( hb_xrealloc( pArea->pLocksPos,
                                                         ( pArea->ulNumLocksPos - 1 ) *
-                                                        sizeof( HB_ULONG ) );
+                                                        sizeof( HB_ULONG ) ) );
          pArea->ulNumLocksPos--;
       }
    }
@@ -977,9 +977,9 @@ static HB_ERRCODE hb_dbfLockRecord( DBFAREAP pArea, HB_ULONG ulRecNo, HB_USHORT 
       }
       else                                          /* Resize the list */
       {
-         pArea->pLocksPos = ( HB_ULONG * ) hb_xrealloc( pArea->pLocksPos,
+         pArea->pLocksPos = static_cast< HB_ULONG * >( hb_xrealloc( pArea->pLocksPos,
                                                       ( pArea->ulNumLocksPos + 1 ) *
-                                                        sizeof( HB_ULONG ) );
+                                                        sizeof( HB_ULONG ) ) );
       }
       pArea->pLocksPos[ pArea->ulNumLocksPos++ ] = ulRecNo;
       *pResult = HB_TRUE;
@@ -4065,7 +4065,7 @@ static HB_ERRCODE hb_dbfRecInfo( DBFAREAP pArea, PHB_ITEM pRecID, HB_USHORT uiIn
                   nLen = hb_itemGetCLen( pInfo );
                   if( nLen > 0 )
                   {
-                     pResult = ( HB_BYTE * ) hb_xrealloc( pResult, nLength + nLen + 1 );
+                     pResult = static_cast< HB_BYTE * >( hb_xrealloc( pResult, nLength + nLen + 1 ) );
                      memcpy( pResult + nLength, hb_itemGetCPtr( pInfo ), nLen );
                      nLength += nLen;
                   }
@@ -5281,8 +5281,8 @@ static HB_ERRCODE hb_dbfSortWritePage( LPDBSORTREC pSortRec )
    if( pSortRec->nPages == pSortRec->nMaxPage )
    {
       pSortRec->nMaxPage += 8;
-      pSortRec->pSwapPages = ( PHB_DBSORTPAGE ) hb_xrealloc( pSortRec->pSwapPages,
-                             pSortRec->nMaxPage * sizeof( HB_DBSORTPAGE ) );
+      pSortRec->pSwapPages = static_cast< PHB_DBSORTPAGE >( hb_xrealloc( pSortRec->pSwapPages,
+                             pSortRec->nMaxPage * sizeof( HB_DBSORTPAGE ) ) );
    }
    memset( &pSortRec->pSwapPages[ pSortRec->nPages ], 0, sizeof( HB_DBSORTPAGE ) );
    pSortRec->pSwapPages[ pSortRec->nPages ].nCount = pSortRec->nCount;
@@ -5438,7 +5438,7 @@ static HB_ERRCODE hb_dbfSortFinish( LPDBSORTREC pSortRec )
          pSortRec->pSwapPages[ 0 ].nInBuf = pSortRec->nCount;
          pSortRec->pSwapPages[ 0 ].pnRecords = hb_dbfSortSort( pSortRec );
          pSortRec->nPages = 1;
-         pSortRec->pnIndex = ( HB_SORTIDX * ) hb_xrealloc( pSortRec->pnIndex, sizeof( HB_SORTIDX ) );
+         pSortRec->pnIndex = static_cast< HB_SORTIDX * >( hb_xrealloc( pSortRec->pnIndex, sizeof( HB_SORTIDX ) ) );
          pSortRec->pnIndex[ 0 ] = 0;
          if( pSortRec->pSortArray )
          {
@@ -5486,8 +5486,8 @@ static HB_ERRCODE hb_dbfSortAdd( LPDBSORTREC pSortRec )
          if( pSortRec->nMaxRec > HB_SORTREC_ARRAYSIZE )
             pSortRec->nMaxRec = HB_SORTREC_ARRAYSIZE;
 
-         pSortRec->pnRecords = ( HB_DBRECNO * ) hb_xrealloc( pSortRec->pnRecords,
-               ( HB_SIZE ) pSortRec->nMaxRec * sizeof( HB_DBRECNO ) );
+         pSortRec->pnRecords = static_cast< HB_DBRECNO * >( hb_xrealloc( pSortRec->pnRecords,
+               ( HB_SIZE ) pSortRec->nMaxRec * sizeof( HB_DBRECNO ) ) );
          if( pSortRec->pSortArray )
             hb_arraySize( pSortRec->pSortArray, pSortRec->nMaxRec );
          else

@@ -853,7 +853,7 @@ static void hb_gt_pca_Refresh( PHB_GT pGT )
    }
    else if( s_iLineBufSize != iWidth )
    {
-      s_sLineBuf = ( char * ) hb_xrealloc( s_sLineBuf, iWidth );
+      s_sLineBuf = static_cast< char * >( hb_xrealloc( s_sLineBuf, iWidth ) );
       s_iLineBufSize = iWidth;
    }
 

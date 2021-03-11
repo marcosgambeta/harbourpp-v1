@@ -1290,7 +1290,7 @@ int hb_fsProcessRun( const char * pszFileName,
                   nOutSize = HB_STD_BUFFER_SIZE;
                else
                   nOutSize += nOutSize >> 1;
-               pOutBuf = ( char * ) hb_xrealloc( pOutBuf, nOutSize + 1 );
+               pOutBuf = static_cast< char * >( hb_xrealloc( pOutBuf, nOutSize + 1 ) );
             }
             nLen = hb_fsReadLarge( hStdout, pOutBuf + nOutBuf, nOutSize - nOutBuf );
             if( nLen > 0 )
@@ -1312,7 +1312,7 @@ int hb_fsProcessRun( const char * pszFileName,
                   nErrSize = HB_STD_BUFFER_SIZE;
                else
                   nErrSize += nErrSize >> 1;
-               pErrBuf = ( char * ) hb_xrealloc( pErrBuf, nErrSize + 1 );
+               pErrBuf = static_cast< char * >( hb_xrealloc( pErrBuf, nErrSize + 1 ) );
             }
             nLen = hb_fsReadLarge( hStderr, pErrBuf + nErrBuf, nErrSize - nErrBuf );
             if( nLen > 0 )
@@ -1425,7 +1425,7 @@ int hb_fsProcessRun( const char * pszFileName,
                   nOutSize = HB_STD_BUFFER_SIZE;
                else
                   nOutSize += nOutSize >> 1;
-               pOutBuf = ( char * ) hb_xrealloc( pOutBuf, nOutSize + 1 );
+               pOutBuf = static_cast< char * >( hb_xrealloc( pOutBuf, nOutSize + 1 ) );
             }
             if( iPipeCount == 1 )
                nLen = hb_fsReadLarge( hStdout, pOutBuf + nOutBuf, nOutSize - nOutBuf );
@@ -1452,7 +1452,7 @@ int hb_fsProcessRun( const char * pszFileName,
                   nErrSize = HB_STD_BUFFER_SIZE;
                else
                   nErrSize += nErrSize >> 1;
-               pErrBuf = ( char * ) hb_xrealloc( pErrBuf, nErrSize + 1 );
+               pErrBuf = static_cast< char * >( hb_xrealloc( pErrBuf, nErrSize + 1 ) );
             }
             if( iPipeCount == 1 )
                nLen = hb_fsReadLarge( hStderr, pErrBuf + nErrBuf, nErrSize - nErrBuf );
@@ -1630,7 +1630,7 @@ int hb_fsProcessRun( const char * pszFileName,
                   nOutSize = HB_STD_BUFFER_SIZE;
                else
                   nOutSize += nOutSize >> 1;
-               pOutBuf = ( char * ) hb_xrealloc( pOutBuf, nOutSize + 1 );
+               pOutBuf = static_cast< char * >( hb_xrealloc( pOutBuf, nOutSize + 1 ) );
             }
             nLen = hb_fsReadLarge( hStdout, pOutBuf + nOutBuf, nOutSize - nOutBuf );
             if( nLen == 0 )
@@ -1653,7 +1653,7 @@ int hb_fsProcessRun( const char * pszFileName,
                   nErrSize = HB_STD_BUFFER_SIZE;
                else
                   nErrSize += nErrSize >> 1;
-               pErrBuf = ( char * ) hb_xrealloc( pErrBuf, nErrSize + 1 );
+               pErrBuf = static_cast< char * >( hb_xrealloc( pErrBuf, nErrSize + 1 ) );
             }
             nLen = hb_fsReadLarge( hStderr, pErrBuf + nErrBuf, nErrSize - nErrBuf );
             if( nLen == 0 )

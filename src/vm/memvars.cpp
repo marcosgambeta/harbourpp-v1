@@ -249,9 +249,9 @@ static void hb_memvarAddPrivate( PHB_DYNS pDynSym, PHB_ITEM pValue )
          else
          {
             pPrivateStack->size += TABLE_EXPANDHB_VALUE;
-            pPrivateStack->stack = ( PHB_PRIVATE_ITEM )
+            pPrivateStack->stack = static_cast< PHB_PRIVATE_ITEM >(
                   hb_xrealloc( pPrivateStack->stack,
-                               sizeof( HB_PRIVATE_ITEM ) * pPrivateStack->size );
+                               sizeof( HB_PRIVATE_ITEM ) * pPrivateStack->size ) );
          }
       }
 

@@ -81,7 +81,7 @@ static void hb_waNodeInsert( PHB_STACKRDD pRddInfo, AREAP pArea )
       if( pRddInfo->uiWaNumMax == 0 )
          pRddInfo->waNums = static_cast< HB_USHORT * >( hb_xgrab( iSize * sizeof( HB_USHORT ) ) );
       else
-         pRddInfo->waNums = ( HB_USHORT * ) hb_xrealloc( pRddInfo->waNums, iSize * sizeof( HB_USHORT ) );
+         pRddInfo->waNums = static_cast< HB_USHORT * >( hb_xrealloc( pRddInfo->waNums, iSize * sizeof( HB_USHORT ) ) );
 
       memset( &pRddInfo->waNums[ pRddInfo->uiWaNumMax ], 0, ( iSize - pRddInfo->uiWaNumMax ) * sizeof( HB_USHORT ) );
       pRddInfo->uiWaNumMax = static_cast< HB_USHORT >( iSize );
@@ -105,7 +105,7 @@ static void hb_waNodeInsert( PHB_STACKRDD pRddInfo, AREAP pArea )
             iSize = HB_RDD_MAX_AREA_NUM;
 
          pRddInfo->uiWaSpace = static_cast< HB_USHORT >( iSize );
-         pRddInfo->waList = ( void ** ) hb_xrealloc( pRddInfo->waList, pRddInfo->uiWaSpace * sizeof( void * ) );
+         pRddInfo->waList = static_cast< void ** >( hb_xrealloc( pRddInfo->waList, pRddInfo->uiWaSpace * sizeof( void * ) ) );
          memset( &pRddInfo->waList[ pRddInfo->uiWaMax ], 0, ( pRddInfo->uiWaSpace - pRddInfo->uiWaMax ) * sizeof( void * ) );
       }
       while( uiWaPos > 1 )
@@ -157,7 +157,7 @@ static void hb_waNodeDelete( PHB_STACKRDD pRddInfo )
             iSize = HB_RDD_MAX_AREA_NUM;
 
          pRddInfo->uiWaSpace = static_cast< HB_USHORT >( iSize );
-         pRddInfo->waList = ( void ** ) hb_xrealloc( pRddInfo->waList, pRddInfo->uiWaSpace * sizeof( void * ) );
+         pRddInfo->waList = static_cast< void ** >( hb_xrealloc( pRddInfo->waList, pRddInfo->uiWaSpace * sizeof( void * ) ) );
       }
    }
    pRddInfo->pCurrArea = nullptr;

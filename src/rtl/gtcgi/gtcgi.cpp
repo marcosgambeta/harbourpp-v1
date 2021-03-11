@@ -414,7 +414,7 @@ static void hb_gt_cgi_Refresh( PHB_GT pGT )
    iWidth *= HB_MAX_CHAR_LEN;
    if( pGTCGI->iLineBufSize < iWidth )
    {
-      pGTCGI->sLineBuf = ( char * ) hb_xrealloc( pGTCGI->sLineBuf, iWidth );
+      pGTCGI->sLineBuf = static_cast< char * >( hb_xrealloc( pGTCGI->sLineBuf, iWidth ) );
       pGTCGI->iLineBufSize = iWidth;
    }
    HB_GTSUPER_REFRESH( pGT );

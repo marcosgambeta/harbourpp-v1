@@ -334,7 +334,7 @@ static void hb_membufAddCh( PHB_MEM_BUFFER pBuffer, char ch )
    if( pBuffer->nLen == pBuffer->nAllocated )
    {
       pBuffer->nAllocated <<= 1;
-      pBuffer->pBufPtr = ( char * ) hb_xrealloc( pBuffer->pBufPtr, pBuffer->nAllocated );
+      pBuffer->pBufPtr = static_cast< char * >( hb_xrealloc( pBuffer->pBufPtr, pBuffer->nAllocated ) );
    }
    pBuffer->pBufPtr[ pBuffer->nLen++ ] = ch;
 }
@@ -348,7 +348,7 @@ static void hb_membufAddData( PHB_MEM_BUFFER pBuffer, const char * data, HB_SIZE
          pBuffer->nAllocated <<= 1;
       }
       while( pBuffer->nLen + nLen > pBuffer->nAllocated );
-      pBuffer->pBufPtr = ( char * ) hb_xrealloc( pBuffer->pBufPtr, pBuffer->nAllocated );
+      pBuffer->pBufPtr = static_cast< char * >( hb_xrealloc( pBuffer->pBufPtr, pBuffer->nAllocated ) );
    }
 
    memcpy( &pBuffer->pBufPtr[ pBuffer->nLen ], data, nLen );
@@ -2369,9 +2369,9 @@ static HB_BOOL hb_pp_pragmaOperatorNew( PHB_PP_STATE pState, PHB_PP_TOKEN pToken
             nDstLen = nLen;
          }
          if( pState->iOperators )
-            pState->pOperators = ( PHB_PP_OPERATOR ) hb_xrealloc(
+            pState->pOperators = static_cast< PHB_PP_OPERATOR >( hb_xrealloc(
                      pState->pOperators,
-                     sizeof( HB_PP_OPERATOR ) * ( pState->iOperators + 1 ) );
+                     sizeof( HB_PP_OPERATOR ) * ( pState->iOperators + 1 ) ) );
          else
             pState->pOperators = static_cast< PHB_PP_OPERATOR >( hb_xgrab(
                      sizeof( HB_PP_OPERATOR ) * ( pState->iOperators + 1 ) ) );
@@ -5031,8 +5031,8 @@ static void hb_pp_conditionPush( PHB_PP_STATE pState, HB_BOOL fCond )
    {
       pState->iCondStackSize += 5;
       if( pState->pCondStack )
-         pState->pCondStack = ( int * ) hb_xrealloc( pState->pCondStack,
-                                 pState->iCondStackSize * sizeof( HB_BOOL ) );
+         pState->pCondStack = static_cast< int * >( hb_xrealloc( pState->pCondStack,
+                                 pState->iCondStackSize * sizeof( HB_BOOL ) ) );
       else
          pState->pCondStack = static_cast< int * >( hb_xgrab( pState->iCondStackSize *
                                                           sizeof( HB_BOOL ) ) );

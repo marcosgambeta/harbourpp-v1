@@ -826,7 +826,7 @@ static void s_inetRecvPattern( const char * const * patterns, int * patternsizes
       if( iPos == iAllocated - 1 )
       {
          iAllocated += iBufferSize;
-         buffer = ( char * ) hb_xrealloc( buffer, iAllocated );
+         buffer = static_cast< char * >( hb_xrealloc( buffer, iAllocated ) );
       }
 
       iLen = s_inetRecv( socket, &cChar, 1, HB_TRUE, socket->iTimeout );

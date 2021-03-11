@@ -357,7 +357,7 @@ static char * hb_macroTextSubst( const char * szString, HB_SIZE * pnStringLen )
                      HB_SIZE nHead = pHead - szResult;
                      HB_SIZE nTail = pTail - szResult;
                      nResBufLen = nResStrLen;
-                     szResult = ( char * ) hb_xrealloc( szResult, nResBufLen + 1 );
+                     szResult = static_cast< char * >( hb_xrealloc( szResult, nResBufLen + 1 ) );
                      pHead = szResult + nHead;
                      pTail = szResult + nTail;
                   }
@@ -389,7 +389,7 @@ static char * hb_macroTextSubst( const char * szString, HB_SIZE * pnStringLen )
       /* result string is shorter then allocated buffer -
        * cut it to a required length
        */
-      szResult = ( char * ) hb_xrealloc( szResult, nResStrLen + 1 );
+      szResult = static_cast< char * >( hb_xrealloc( szResult, nResStrLen + 1 ) );
    }
    szResult[ nResStrLen ] = 0;  /* place terminating null character */
    /* return a length of result string */
@@ -1732,7 +1732,7 @@ void hb_macroGenPCode1( HB_BYTE byte, HB_COMP_DECL )
    PHB_PCODE_INFO pFunc = HB_PCODE_DATA;
 
    if( ( pFunc->nPCodeSize - pFunc->nPCodePos ) < 1 )
-      pFunc->pCode = ( HB_BYTE * ) hb_xrealloc( pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_SIZE );
+      pFunc->pCode = static_cast< HB_BYTE * >( hb_xrealloc( pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_SIZE ) );
 
    pFunc->pCode[ pFunc->nPCodePos++ ] = byte;
 }
@@ -1742,7 +1742,7 @@ void hb_macroGenPCode2( HB_BYTE byte1, HB_BYTE byte2, HB_COMP_DECL )
    PHB_PCODE_INFO pFunc = HB_PCODE_DATA;
 
    if( ( pFunc->nPCodeSize - pFunc->nPCodePos ) < 2 )
-      pFunc->pCode = ( HB_BYTE * ) hb_xrealloc( pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_SIZE );
+      pFunc->pCode = static_cast< HB_BYTE * >( hb_xrealloc( pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_SIZE ) );
 
    pFunc->pCode[ pFunc->nPCodePos++ ] = byte1;
    pFunc->pCode[ pFunc->nPCodePos++ ] = byte2;
@@ -1753,7 +1753,7 @@ void hb_macroGenPCode3( HB_BYTE byte1, HB_BYTE byte2, HB_BYTE byte3, HB_COMP_DEC
    PHB_PCODE_INFO pFunc = HB_PCODE_DATA;
 
    if( ( pFunc->nPCodeSize - pFunc->nPCodePos ) < 3 )
-      pFunc->pCode = ( HB_BYTE * ) hb_xrealloc( pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_SIZE );
+      pFunc->pCode = static_cast< HB_BYTE * >( hb_xrealloc( pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_SIZE ) );
 
    pFunc->pCode[ pFunc->nPCodePos++ ] = byte1;
    pFunc->pCode[ pFunc->nPCodePos++ ] = byte2;
@@ -1765,7 +1765,7 @@ void hb_macroGenPCode4( HB_BYTE byte1, HB_BYTE byte2, HB_BYTE byte3, HB_BYTE byt
    PHB_PCODE_INFO pFunc = HB_PCODE_DATA;
 
    if( ( pFunc->nPCodeSize - pFunc->nPCodePos ) < 4 )
-      pFunc->pCode = ( HB_BYTE * ) hb_xrealloc( pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_SIZE );
+      pFunc->pCode = static_cast< HB_BYTE * >( hb_xrealloc( pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_SIZE ) );
 
    pFunc->pCode[ pFunc->nPCodePos++ ] = byte1;
    pFunc->pCode[ pFunc->nPCodePos++ ] = byte2;
@@ -1781,7 +1781,7 @@ void hb_macroGenPCodeN( const HB_BYTE * pBuffer, HB_SIZE nSize, HB_COMP_DECL )
    {
       /* not enough free space in pcode buffer - increase it */
       pFunc->nPCodeSize += ( ( ( nSize / HB_PCODE_SIZE ) + 1 ) * HB_PCODE_SIZE );
-      pFunc->pCode = ( HB_BYTE * ) hb_xrealloc( pFunc->pCode, pFunc->nPCodeSize );
+      pFunc->pCode = static_cast< HB_BYTE * >( hb_xrealloc( pFunc->pCode, pFunc->nPCodeSize ) );
    }
 
    memcpy( pFunc->pCode + pFunc->nPCodePos, pBuffer, nSize );

@@ -1185,8 +1185,8 @@ static LPPAGEINFO hb_ntxPageGetBuffer( LPTAGINFO pTag, HB_ULONG ulPage )
          {
             ul = pIndex->ulPagesDepth;
             pIndex->ulPagesDepth += NTX_PAGES_PER_TAG >> 1;
-            pIndex->pages = ( LPPAGEINFO * ) hb_xrealloc( pIndex->pages,
-                                 sizeof( LPPAGEINFO ) * pIndex->ulPagesDepth );
+            pIndex->pages = static_cast< LPPAGEINFO * >( hb_xrealloc( pIndex->pages,
+                                 sizeof( LPPAGEINFO ) * pIndex->ulPagesDepth ) );
             memset( pIndex->pages + ul, 0,
                          ( NTX_PAGES_PER_TAG >> 1 ) * sizeof( LPPAGEINFO ) );
             pIndex->ulPages++;
@@ -1516,8 +1516,8 @@ static void hb_ntxTagDelete( LPTAGINFO pTag )
          while( ++i < pIndex->iTags )
             pIndex->lpTags[ i - 1 ] = pIndex->lpTags[ i ];
          if( --pIndex->iTags )
-            pIndex->lpTags = ( LPTAGINFO * ) hb_xrealloc( pIndex->lpTags,
-                                       sizeof( LPTAGINFO ) * pIndex->iTags );
+            pIndex->lpTags = static_cast< LPTAGINFO * >( hb_xrealloc( pIndex->lpTags,
+                                       sizeof( LPTAGINFO ) * pIndex->iTags ) );
          else
             hb_xfree( pIndex->lpTags );
          break;
@@ -1536,8 +1536,8 @@ static HB_ERRCODE hb_ntxTagAdd( LPNTXINDEX pIndex, LPTAGINFO pTag )
       return HB_FAILURE;
 
    if( pIndex->iTags )
-      pIndex->lpTags = ( LPTAGINFO * ) hb_xrealloc( pIndex->lpTags,
-                                 sizeof( LPTAGINFO ) * ( pIndex->iTags + 1 ) );
+      pIndex->lpTags = static_cast< LPTAGINFO * >( hb_xrealloc( pIndex->lpTags,
+                                 sizeof( LPTAGINFO ) * ( pIndex->iTags + 1 ) ) );
    else
       pIndex->lpTags = static_cast< LPTAGINFO * >( hb_xgrab( sizeof( LPTAGINFO ) ) );
 
@@ -2283,8 +2283,8 @@ static void hb_ntxTagSetPageStack( LPTAGINFO pTag, HB_ULONG ulPage, HB_USHORT ui
       else
       {
          pTag->stackSize += NTX_STACKSIZE;
-         pTag->stack = ( LPTREESTACK ) hb_xrealloc( pTag->stack,
-                                    sizeof( TREE_STACK ) * pTag->stackSize );
+         pTag->stack = static_cast< LPTREESTACK >( hb_xrealloc( pTag->stack,
+                                    sizeof( TREE_STACK ) * pTag->stackSize ) );
       }
    }
    pTag->stack[ pTag->stackLevel ].page = ulPage;

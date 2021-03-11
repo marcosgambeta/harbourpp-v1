@@ -113,7 +113,7 @@ static void _hb_jsonCtxAdd( PHB_JSON_ENCODE_CTX pCtx, const char * szString, HB_
       HB_SIZE nSize = pCtx->pHead - pCtx->pBuffer;
 
       pCtx->nAlloc += ( pCtx->nAlloc << 1 ) + nLen;
-      pCtx->pBuffer = ( char * ) hb_xrealloc( pCtx->pBuffer, pCtx->nAlloc );
+      pCtx->pBuffer = static_cast< char * >( hb_xrealloc( pCtx->pBuffer, pCtx->nAlloc ) );
       pCtx->pHead = pCtx->pBuffer + nSize;
    }
    if( szString )
@@ -133,7 +133,7 @@ static void _hb_jsonCtxAddIndent( PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nLevel )
          HB_SIZE nSize = pCtx->pHead - pCtx->pBuffer;
 
          pCtx->nAlloc += ( pCtx->nAlloc << 1 ) + nCount;
-         pCtx->pBuffer = ( char * ) hb_xrealloc( pCtx->pBuffer, pCtx->nAlloc );
+         pCtx->pBuffer = static_cast< char * >( hb_xrealloc( pCtx->pBuffer, pCtx->nAlloc ) );
          pCtx->pHead = pCtx->pBuffer + nSize;
       }
       hb_xmemset( pCtx->pHead, pCtx->iIndent > 0 ? ' ' : '\t', nCount );
@@ -162,7 +162,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx,
       if( nLevel >= pCtx->nAllocId )
       {
          pCtx->nAllocId += 8;
-         pCtx->pId = ( void ** ) hb_xrealloc( pCtx->pId, sizeof( void * ) * pCtx->nAllocId );
+         pCtx->pId = static_cast< void ** >( hb_xrealloc( pCtx->pId, sizeof( void * ) * pCtx->nAllocId ) );
       }
       pCtx->pId[ nLevel ] = id;
    }
@@ -416,7 +416,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
          {
             HB_SIZE nLen = szHead - szDest;
             nAlloc += nAlloc << 1;
-            szDest = ( char * ) hb_xrealloc( szDest, nAlloc );
+            szDest = static_cast< char * >( hb_xrealloc( szDest, nAlloc ) );
             szHead = szDest + nLen;
          }
          if( *szSource == '\\' )
@@ -678,7 +678,7 @@ char * hb_jsonEncodeCP( PHB_ITEM pValue, HB_SIZE * pnLen, int iIndent, PHB_CODEP
       _hb_jsonCtxAdd( pCtx, pCtx->szEol, pCtx->iEolLen );
 
    nLen = pCtx->pHead - pCtx->pBuffer;
-   szRet = ( char * ) hb_xrealloc( pCtx->pBuffer, nLen + 1 );
+   szRet = static_cast< char * >( hb_xrealloc( pCtx->pBuffer, nLen + 1 ) );
    szRet[ nLen ] = '\0';
    hb_xfree( pCtx->pId );
    hb_xfree( pCtx );

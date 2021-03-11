@@ -406,12 +406,12 @@ static int add_efds( InOutBase * ioBase, int fd, int mode,
    {
       if( ioBase->efds_size <= ioBase->efds_no )
       {
-         ioBase->event_fds = ( evtFD ** )
+         ioBase->event_fds = static_cast< evtFD ** >(
                hb_xrealloc( ioBase->event_fds,
-                            ( ioBase->efds_size += 10 ) * sizeof( evtFD * ) );
-         ioBase->pPollSet = ( PHB_POLLFD )
+                            ( ioBase->efds_size += 10 ) * sizeof( evtFD * ) ) );
+         ioBase->pPollSet = static_cast< PHB_POLLFD >(
                hb_xrealloc( ioBase->pPollSet,
-                            ioBase->efds_size * sizeof( HB_POLLFD ) );
+                            ioBase->efds_size * sizeof( HB_POLLFD ) ) );
       }
 
       pefd = static_cast< evtFD * >( hb_xgrab( sizeof( evtFD ) ) );
@@ -2197,8 +2197,8 @@ static int add_new_ioBase( InOutBase * ioBase )
          s_ioBaseTab = static_cast< InOutBase ** >( hb_xgrab(
                         ( s_iSize_ioBaseTab += 10 ) * sizeof( InOutBase * ) ) );
       else
-         s_ioBaseTab = ( InOutBase ** ) hb_xrealloc( s_ioBaseTab,
-                        ( s_iSize_ioBaseTab += 10 ) * sizeof( InOutBase * ) );
+         s_ioBaseTab = static_cast< InOutBase ** >( hb_xrealloc( s_ioBaseTab,
+                        ( s_iSize_ioBaseTab += 10 ) * sizeof( InOutBase * ) ) );
       s_ioBaseTab[ i ] = ioBase;
       for( int n = i + 1; n < s_iSize_ioBaseTab; n++ )
          s_ioBaseTab[ n ] = nullptr;

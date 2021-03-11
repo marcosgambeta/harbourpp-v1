@@ -1254,8 +1254,8 @@ static LPHSXINFO hb_hsxNew( void )
       if( iHandle == pTable->iHandleSize )
       {
          pTable->iHandleSize += HSX_HALLOC;
-         pTable->handleArray = ( LPHSXINFO * ) hb_xrealloc( pTable->handleArray,
-                                          sizeof( LPHSXINFO ) * pTable->iHandleSize );
+         pTable->handleArray = static_cast< LPHSXINFO * >( hb_xrealloc( pTable->handleArray,
+                                          sizeof( LPHSXINFO ) * pTable->iHandleSize ) );
          memset( &pTable->handleArray[ iHandle ], 0, sizeof( LPHSXINFO ) * HSX_HALLOC );
       }
    }

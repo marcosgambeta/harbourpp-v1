@@ -60,7 +60,7 @@ static void bufadd( BUFFERTYPE * pBuf, const char * pAdd, HB_SIZE nLen )
    if( pBuf->nLen + nLen >= pBuf->nMax )
    {
       pBuf->nMax += ( pBuf->nMax >> 1 ) + nLen;
-      pBuf->pData = ( char * ) hb_xrealloc( pBuf->pData, pBuf->nMax );
+      pBuf->pData = static_cast< char * >( hb_xrealloc( pBuf->pData, pBuf->nMax ) );
    }
    memcpy( pBuf->pData + pBuf->nLen, pAdd, nLen );
    pBuf->nLen += nLen;
@@ -365,7 +365,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
 
                if( pStr[ 0 ] == '*' && iSize < 255 )
                {
-                  pStr2 = pStr = ( char * ) hb_xrealloc( pStr, 256 );
+                  pStr2 = pStr = static_cast< char * >( hb_xrealloc( pStr, 256 ) );
                   hb_itemStrBuf( pStr, pItem, 255, iD );
                }
                while( *pStr2 == ' ' )

@@ -233,7 +233,7 @@ HB_BOOL hb_arraySize( PHB_ITEM pArray, HB_SIZE nLen )
                        - adding of 1, allows reduce reallocation count for small arrays.
                    */
                   pBaseArray->nAllocated = ( pBaseArray->nAllocated >> 1 ) + 1 + nLen;
-                  pBaseArray->pItems = ( PHB_ITEM ) hb_xrealloc( pBaseArray->pItems, sizeof( HB_ITEM ) * pBaseArray->nAllocated );
+                  pBaseArray->pItems = static_cast< PHB_ITEM >( hb_xrealloc( pBaseArray->pItems, sizeof( HB_ITEM ) * pBaseArray->nAllocated ) );
                }
 
                /* set value for new items */
@@ -256,7 +256,7 @@ HB_BOOL hb_arraySize( PHB_ITEM pArray, HB_SIZE nLen )
                }
                else if( nLen < ( pBaseArray->nAllocated >> 1 ) )
                {
-                  pBaseArray->pItems = ( PHB_ITEM ) hb_xrealloc( pBaseArray->pItems, sizeof( HB_ITEM ) * nLen );
+                  pBaseArray->pItems = static_cast< PHB_ITEM >( hb_xrealloc( pBaseArray->pItems, sizeof( HB_ITEM ) * nLen ) );
                   pBaseArray->nAllocated = nLen;
                }
             }
@@ -1545,9 +1545,9 @@ static HB_BOOL hb_nestedCloneFind( PHB_NESTED_CLONED pClonedList, void * pValue,
    if( pClonedList->nCount >= pClonedList->nSize )
    {
       pClonedList->nSize += pClonedList->nSize >> 1;
-      pClonedList->pRefs = ( PHB_NESTED_REF )
+      pClonedList->pRefs = static_cast< PHB_NESTED_REF >(
                   hb_xrealloc( pClonedList->pRefs,
-                               pClonedList->nSize * sizeof( HB_NESTED_REF ) );
+                               pClonedList->nSize * sizeof( HB_NESTED_REF ) ) );
    }
 
    pRef = &pClonedList->pRefs[ nMiddle ];

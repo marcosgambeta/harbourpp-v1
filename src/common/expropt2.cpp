@@ -75,7 +75,7 @@ static PHB_EXPR hb_compExprReducePlusStrings( PHB_EXPR pLeft, PHB_EXPR pRight, H
 {
    if( pLeft->value.asString.dealloc )
    {
-      pLeft->value.asString.string = ( char * ) hb_xrealloc( pLeft->value.asString.string, pLeft->nLength + pRight->nLength + 1 );
+      pLeft->value.asString.string = static_cast< char * >( hb_xrealloc( pLeft->value.asString.string, pLeft->nLength + pRight->nLength + 1 ) );
       memcpy( pLeft->value.asString.string + pLeft->nLength,
               pRight->value.asString.string, pRight->nLength );
       pLeft->nLength += pRight->nLength;
@@ -106,7 +106,7 @@ static PHB_EXPR hb_compExprReduceMinusStrings( PHB_EXPR pLeft, PHB_EXPR pRight, 
 
    if( pLeft->value.asString.dealloc )
    {
-      pLeft->value.asString.string = ( char * ) hb_xrealloc( pLeft->value.asString.string, pLeft->nLength + pRight->nLength + 1 );
+      pLeft->value.asString.string = static_cast< char * >( hb_xrealloc( pLeft->value.asString.string, pLeft->nLength + pRight->nLength + 1 ) );
       memcpy( pLeft->value.asString.string + nLen,
               pRight->value.asString.string, pRight->nLength );
       memset( pLeft->value.asString.string + nLen + pRight->nLength, ' ',

@@ -2362,8 +2362,8 @@ void hb_rddSetFileRedirector( HB_RDDACCEPT funcAccept, HB_BOOL fEnable )
       if( s_uiRddRedirCount == s_uiRddRedirMax )
       {
          s_uiRddRedirMax += HB_RDD_POOL_ALLOCSIZE;
-         s_rddRedirAccept = ( HB_RDDACCEPT * )
-            hb_xrealloc( s_rddRedirAccept, sizeof( HB_RDDACCEPT ) * s_uiRddRedirMax );
+         s_rddRedirAccept = static_cast< HB_RDDACCEPT * >(
+            hb_xrealloc( s_rddRedirAccept, sizeof( HB_RDDACCEPT ) * s_uiRddRedirMax ) );
       }
       s_rddRedirAccept[ s_uiRddRedirCount ] = funcAccept;
       s_uiRddRedirCount++;
@@ -2457,8 +2457,8 @@ int hb_rddRegister( const char * szDriver, HB_USHORT uiType )
          if( s_uiRddCount == s_uiRddMax )
          {
             s_uiRddMax += HB_RDD_POOL_ALLOCSIZE;
-            s_RddList = ( LPRDDNODE * )
-                  hb_xrealloc( s_RddList, sizeof( LPRDDNODE ) * s_uiRddMax );
+            s_RddList = static_cast< LPRDDNODE * >(
+                  hb_xrealloc( s_RddList, sizeof( LPRDDNODE ) * s_uiRddMax ) );
          }
          s_RddList[ s_uiRddCount ] = pRddNewNode;   /* Add the new RDD node */
          s_uiRddCount++;
@@ -2572,8 +2572,8 @@ HB_FUNC( __RDDPREALLOCATE )
    if( lNewSize > ( HB_LONG ) s_uiRddMax )
    {
       s_uiRddMax += HB_RDD_POOL_ALLOCSIZE;
-      s_RddList = ( LPRDDNODE * )
-                  hb_xrealloc( s_RddList, sizeof( LPRDDNODE ) * s_uiRddMax );
+      s_RddList = static_cast< LPRDDNODE * >(
+                  hb_xrealloc( s_RddList, sizeof( LPRDDNODE ) * s_uiRddMax ) );
    }
 
    hb_retnl( s_uiRddMax );

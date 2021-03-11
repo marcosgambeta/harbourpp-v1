@@ -2290,7 +2290,7 @@ char * hb_cdpnDupUpper( PHB_CODEPAGE cdp, const char * pszText, HB_SIZE * pnSize
             if( ! HB_CDPCHAR_PUT( cdp, pszDst, nSize, &nD, wc ) )
             {
                nSize += ( nSrc - nS + 2 );
-               pszDst = ( char * ) hb_xrealloc( pszDst, nSize + 1 );
+               pszDst = static_cast< char * >( hb_xrealloc( pszDst, nSize + 1 ) );
                if( ! HB_CDPCHAR_PUT( cdp, pszDst, nSize, &nD, wc ) )
                   break;
             }
@@ -2329,7 +2329,7 @@ char * hb_cdpnDupLower( PHB_CODEPAGE cdp, const char * pszText, HB_SIZE * pnSize
             if( ! HB_CDPCHAR_PUT( cdp, pszDst, nSize, &nD, wc ) )
             {
                nSize += ( nSrc - nS + 2 );
-               pszDst = ( char * ) hb_xrealloc( pszDst, nSize + 1 );
+               pszDst = static_cast< char * >( hb_xrealloc( pszDst, nSize + 1 ) );
                if( ! HB_CDPCHAR_PUT( cdp, pszDst, nSize, &nD, wc ) )
                   break;
             }

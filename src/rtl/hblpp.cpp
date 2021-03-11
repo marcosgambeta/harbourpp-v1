@@ -178,7 +178,7 @@ HB_BOOL hb_lppRecv( PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT time
          pSocket->nRecvLen     = 0;
          pSocket->fRecvHasSize = HB_TRUE;
          if( pSocket->nRecvSize != 4 )
-            pSocket->pRecvBuffer = ( char * ) hb_xrealloc( pSocket->pRecvBuffer, pSocket->nRecvSize );
+            pSocket->pRecvBuffer = static_cast< char * >( hb_xrealloc( pSocket->pRecvBuffer, pSocket->nRecvSize ) );
       }
 
       if( pSocket->nRecvSize - pSocket->nRecvLen < ( HB_SIZE ) LONG_MAX )

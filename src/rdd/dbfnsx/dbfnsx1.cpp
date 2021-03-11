@@ -1432,8 +1432,8 @@ static LPPAGEINFO hb_nsxPageGetBuffer( LPTAGINFO pTag, HB_ULONG ulPage )
          {
             ul = pIndex->ulPagesDepth;
             pIndex->ulPagesDepth += NSX_PAGE_BUFFER >> 1;
-            pIndex->pages = ( LPPAGEINFO * ) hb_xrealloc( pIndex->pages,
-                                 sizeof( LPPAGEINFO ) * pIndex->ulPagesDepth );
+            pIndex->pages = static_cast< LPPAGEINFO * >( hb_xrealloc( pIndex->pages,
+                                 sizeof( LPPAGEINFO ) * pIndex->ulPagesDepth ) );
             memset( pIndex->pages + ul, 0,
                          ( NSX_PAGE_BUFFER >> 1 ) * sizeof( LPPAGEINFO ) );
             pIndex->ulPages++;
@@ -1761,8 +1761,8 @@ static void hb_nsxTagDelete( LPTAGINFO pTag )
          while( ++i < pIndex->iTags )
             pIndex->lpTags[ i - 1 ] = pIndex->lpTags[ i ];
          if( --pIndex->iTags )
-            pIndex->lpTags = ( LPTAGINFO * ) hb_xrealloc( pIndex->lpTags,
-                                       sizeof( LPTAGINFO ) * pIndex->iTags );
+            pIndex->lpTags = static_cast< LPTAGINFO * >( hb_xrealloc( pIndex->lpTags,
+                                       sizeof( LPTAGINFO ) * pIndex->iTags ) );
          else
             hb_xfree( pIndex->lpTags );
          break;
@@ -1781,8 +1781,8 @@ static HB_ERRCODE hb_nsxTagAdd( LPNSXINDEX pIndex, LPTAGINFO pTag )
       return HB_FAILURE;
 
    if( pIndex->iTags )
-      pIndex->lpTags = ( LPTAGINFO * ) hb_xrealloc( pIndex->lpTags,
-                                 sizeof( LPTAGINFO ) * ( pIndex->iTags + 1 ) );
+      pIndex->lpTags = static_cast< LPTAGINFO * >( hb_xrealloc( pIndex->lpTags,
+                                 sizeof( LPTAGINFO ) * ( pIndex->iTags + 1 ) ) );
    else
       pIndex->lpTags = static_cast< LPTAGINFO * >( hb_xgrab( sizeof( LPTAGINFO ) ) );
 
@@ -2481,8 +2481,8 @@ static void hb_nsxTagSetPageStack( LPTAGINFO pTag, LPPAGEINFO pPage, HB_USHORT u
       }
       else
       {
-         pTag->stack = ( LPTREESTACK ) hb_xrealloc( pTag->stack,
-                  sizeof( TREE_STACK ) * ( pTag->stackSize + NSX_STACKSIZE ) );
+         pTag->stack = static_cast< LPTREESTACK >( hb_xrealloc( pTag->stack,
+                  sizeof( TREE_STACK ) * ( pTag->stackSize + NSX_STACKSIZE ) ) );
          memset( pTag->stack + sizeof( TREE_STACK ) * pTag->stackSize, 0,
                  sizeof( TREE_STACK ) * NSX_STACKSIZE );
          pTag->stackSize += NSX_STACKSIZE;

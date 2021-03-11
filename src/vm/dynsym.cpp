@@ -112,7 +112,7 @@ static PHB_DYNS hb_dynsymInsert( PHB_SYMB pSymbol, HB_SYMCNT uiPos )
    }
    else
    {
-      s_pDynItems = ( PDYNHB_ITEM ) hb_xrealloc( s_pDynItems, s_uiDynSymbols * sizeof( DYNHB_ITEM ) );
+      s_pDynItems = static_cast< PDYNHB_ITEM >( hb_xrealloc( s_pDynItems, s_uiDynSymbols * sizeof( DYNHB_ITEM ) ) );
       memmove( &s_pDynItems[ uiPos + 1 ], &s_pDynItems[ uiPos ],
                sizeof( DYNHB_ITEM ) * ( s_uiDynSymbols - uiPos - 1 ) );
    }
@@ -537,8 +537,8 @@ HB_SYMCNT hb_dynsymToNum( PHB_DYNS pDynSym )
 
    if( uiSymNum > s_uiDynIdxSize )
    {
-      s_pDynIndex = ( PDYNHB_ITEM )
-                    hb_xrealloc( s_pDynIndex, uiSymNum * sizeof( DYNHB_ITEM ) );
+      s_pDynIndex = static_cast< PDYNHB_ITEM >(
+                    hb_xrealloc( s_pDynIndex, uiSymNum * sizeof( DYNHB_ITEM ) ) );
       memset( &s_pDynIndex[ s_uiDynIdxSize ], 0, ( uiSymNum - s_uiDynIdxSize ) *
                                                  sizeof( DYNHB_ITEM ) );
       s_uiDynIdxSize = uiSymNum;

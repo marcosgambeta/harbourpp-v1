@@ -317,7 +317,7 @@ static v_param * va_arg_get( int iArg, v_paramlst * plst, int iType )
             plst->arglst = ( v_param * ) memcpy( hb_xgrab( plst->size * sizeof( v_param ) ),
                                                  plst->arglst, _ARGBUF_SIZE * sizeof( v_param ) );
          else
-            plst->arglst = ( v_param * ) hb_xrealloc( plst->arglst, plst->size * sizeof( v_param ) );
+            plst->arglst = static_cast< v_param * >( hb_xrealloc( plst->arglst, plst->size * sizeof( v_param ) ) );
          memset( &plst->arglst[ prev_size ], 0, ( plst->size - prev_size ) *
                                                   sizeof( v_param ) );
       }

@@ -792,7 +792,7 @@ static HB_ERRCODE hb_usrInit( LPRDDNODE pRDD )
    {
       HB_SIZE nSize = ( pRDD->rddID + 1 ) * sizeof( LPUSRRDDNODE );
       if( s_uiUsrNodes )
-         s_pUsrRddNodes = ( LPUSRRDDNODE * ) hb_xrealloc( s_pUsrRddNodes, nSize );
+         s_pUsrRddNodes = static_cast< LPUSRRDDNODE * >( hb_xrealloc( s_pUsrRddNodes, nSize ) );
       else
          s_pUsrRddNodes = static_cast< LPUSRRDDNODE * >( hb_xgrab( nSize ) );
       do
@@ -844,8 +844,8 @@ static HB_ERRCODE hb_usrExit( LPRDDNODE pRDD )
 
       if( s_uiUsrNodes )
       {
-         s_pUsrRddNodes = ( LPUSRRDDNODE * ) hb_xrealloc( s_pUsrRddNodes,
-                                       s_uiUsrNodes * sizeof( LPUSRRDDNODE ) );
+         s_pUsrRddNodes = static_cast< LPUSRRDDNODE * >( hb_xrealloc( s_pUsrRddNodes,
+                                       s_uiUsrNodes * sizeof( LPUSRRDDNODE ) ) );
       }
       else
       {

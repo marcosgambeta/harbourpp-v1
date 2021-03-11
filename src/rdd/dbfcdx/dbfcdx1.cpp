@@ -267,7 +267,7 @@ static LPCDXKEY hb_cdxKeyCopy( LPCDXKEY pKeyDest, LPCDXKEY pKey )
    if( ! pKeyDest )
       pKeyDest = hb_cdxKeyNew( pKey->len );
    else if( pKeyDest->len != pKey->len )
-      pKeyDest = ( LPCDXKEY ) hb_xrealloc( pKeyDest, sizeof( CDXKEY ) + pKey->len );
+      pKeyDest = static_cast< LPCDXKEY >( hb_xrealloc( pKeyDest, sizeof( CDXKEY ) + pKey->len ) );
 
    return ( LPCDXKEY ) memcpy( pKeyDest, pKey, sizeof( CDXKEY ) + pKey->len );
 }
@@ -284,7 +284,7 @@ static LPCDXKEY hb_cdxKeyPut( LPCDXKEY pKey, const HB_BYTE * pbVal, HB_USHORT ui
       pKey = hb_cdxKeyNew( uiLen );
    else if( pKey->len != uiLen )
    {
-      pKey = ( LPCDXKEY ) hb_xrealloc( pKey, sizeof( CDXKEY ) + uiLen );
+      pKey = static_cast< LPCDXKEY >( hb_xrealloc( pKey, sizeof( CDXKEY ) + uiLen ) );
       pKey->len = uiLen;
    }
 
@@ -307,7 +307,7 @@ static LPCDXKEY hb_cdxKeyPutCL( LPCDXKEY pKey, const char * pText, HB_SIZE nLen,
       pKey = hb_cdxKeyNew( uiKeyLen );
    else if( pKey->len != uiKeyLen )
    {
-      pKey = ( LPCDXKEY ) hb_xrealloc( pKey, sizeof( CDXKEY ) + uiKeyLen );
+      pKey = static_cast< LPCDXKEY >( hb_xrealloc( pKey, sizeof( CDXKEY ) + uiKeyLen ) );
       pKey->len = uiKeyLen;
    }
 
@@ -2123,7 +2123,7 @@ static int hb_cdxPageLeafAddKey( LPCDXPAGE pPage, LPCDXKEY pKey )
    }
    else
    {
-      pPage->pKeyBuf = ( HB_BYTE * ) hb_xrealloc( pPage->pKeyBuf, ( pPage->iKeys + 1 ) * iLen );
+      pPage->pKeyBuf = static_cast< HB_BYTE * >( hb_xrealloc( pPage->pKeyBuf, ( pPage->iKeys + 1 ) * iLen ) );
    }
 
 #ifdef HB_CDX_DBGCODE_EXT

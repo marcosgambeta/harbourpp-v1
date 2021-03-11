@@ -676,12 +676,12 @@ static int add_efds( PHB_GTTRM pTerm, int fd, int mode,
    {
       if( pTerm->efds_size <= pTerm->efds_no )
       {
-         pTerm->event_fds = ( evtFD ** )
+         pTerm->event_fds = static_cast< evtFD ** >(
                hb_xrealloc( pTerm->event_fds,
-                            ( pTerm->efds_size += 10 ) * sizeof( evtFD * ) );
-         pTerm->pPollSet = ( PHB_POLLFD )
+                            ( pTerm->efds_size += 10 ) * sizeof( evtFD * ) ) );
+         pTerm->pPollSet = static_cast< PHB_POLLFD >(
                hb_xrealloc( pTerm->pPollSet,
-                            pTerm->efds_size * sizeof( HB_POLLFD ) );
+                            pTerm->efds_size * sizeof( HB_POLLFD ) ) );
       }
 
       pefd = static_cast< evtFD * >( hb_xgrab( sizeof( evtFD ) ) );
@@ -3907,7 +3907,7 @@ static void hb_gt_trm_Refresh( PHB_GT pGT )
 #endif
    if( pTerm->nLineBufSize != nLineBufSize )
    {
-      pTerm->pLineBuf = ( char * ) hb_xrealloc( pTerm->pLineBuf, nLineBufSize );
+      pTerm->pLineBuf = static_cast< char * >( hb_xrealloc( pTerm->pLineBuf, nLineBufSize ) );
       pTerm->nLineBufSize = nLineBufSize;
    }
 

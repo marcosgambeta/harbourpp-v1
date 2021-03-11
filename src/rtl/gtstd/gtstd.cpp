@@ -700,7 +700,7 @@ static void hb_gt_std_Refresh( PHB_GT pGT )
 
    if( pGTSTD->iLineBufSize != iSize )
    {
-      pGTSTD->sLineBuf = ( char * ) hb_xrealloc( pGTSTD->sLineBuf, iSize );
+      pGTSTD->sLineBuf = static_cast< char * >( hb_xrealloc( pGTSTD->sLineBuf, iSize ) );
       pGTSTD->iLineBufSize = iSize;
    }
    pGTSTD->fFullRedraw = HB_FALSE;

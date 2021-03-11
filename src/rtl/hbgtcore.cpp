@@ -528,7 +528,7 @@ static void hb_gt_def_StringToColors( PHB_GT pGT, const char * szColorString, in
          if( nPos == *piColorCount )
          {
             ++*piColorCount;
-            pColors = *pColorsPtr = ( int * ) hb_xrealloc( pColors, *piColorCount * sizeof( int ) );
+            pColors = *pColorsPtr = static_cast< int * >( hb_xrealloc( pColors, *piColorCount * sizeof( int ) ) );
             pColors[ nPos ] = 0;
          }
          if( nColor != -1 )
@@ -2411,14 +2411,14 @@ static HB_BOOL hb_gt_def_Resize( PHB_GT pGT, int iRows, int iCols )
          }
 
          pGT->screenBuffer =
-               ( PHB_SCREENCELL ) hb_xrealloc( pGT->screenBuffer,
-                                             sizeof( HB_SCREENCELL ) * nLen );
+               static_cast< PHB_SCREENCELL >( hb_xrealloc( pGT->screenBuffer,
+                                             sizeof( HB_SCREENCELL ) * nLen ) );
          pGT->prevBuffer =
-               ( PHB_SCREENCELL ) hb_xrealloc( pGT->prevBuffer,
-                                             sizeof( HB_SCREENCELL ) * nLen );
+               static_cast< PHB_SCREENCELL >( hb_xrealloc( pGT->prevBuffer,
+                                             sizeof( HB_SCREENCELL ) * nLen ) );
          pGT->pLines =
-               ( HB_BOOL * ) hb_xrealloc( pGT->pLines,
-                                             sizeof( HB_BOOL ) * iRows );
+               static_cast< HB_BOOL * >( hb_xrealloc( pGT->pLines,
+                                             sizeof( HB_BOOL ) * iRows ) );
 
          memset( pGT->screenBuffer, 0, sizeof( HB_SCREENCELL ) * nLen );
          memset( pGT->prevBuffer, 0, sizeof( HB_SCREENCELL ) * nLen );

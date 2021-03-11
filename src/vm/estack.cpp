@@ -274,9 +274,9 @@ void * hb_stackGetTSD( PHB_TSD pTSD )
 
       if( pTSD->iHandle > hb_stack.iTSD )
       {
-         hb_stack.pTSD = ( PHB_TSD_HOLDER )
+         hb_stack.pTSD = static_cast< PHB_TSD_HOLDER >(
                          hb_xrealloc( hb_stack.pTSD, ( pTSD->iHandle + 1 ) *
-                                                     sizeof( HB_TSD_HOLDER ) );
+                                                     sizeof( HB_TSD_HOLDER ) ) );
          memset( &hb_stack.pTSD[ hb_stack.iTSD + 1 ], 0,
                  ( pTSD->iHandle - hb_stack.iTSD ) * sizeof( HB_TSD_HOLDER ) );
          hb_stack.iTSD = pTSD->iHandle;
@@ -291,7 +291,7 @@ void * hb_stackGetTSD( PHB_TSD pTSD )
       }
       else
       {
-         hb_stack.pTSD = ( PHB_TSD_HOLDER ) hb_xrealloc( hb_stack.pTSD, nSize );
+         hb_stack.pTSD = static_cast< PHB_TSD_HOLDER >( hb_xrealloc( hb_stack.pTSD, nSize ) );
       }
       pTSD->iHandle = ++hb_stack.iTSD;
 #endif
@@ -415,8 +415,8 @@ PHB_DYN_HANDLES hb_stackGetDynHandle( PHB_DYNS pDynSym )
    uiDynSym = pDynSym->uiSymNum;
    if( uiDynSym > hb_stack.uiDynH )
    {
-      hb_stack.pDynH = ( PHB_DYN_HANDLES ) hb_xrealloc( hb_stack.pDynH,
-                                          uiDynSym * sizeof( HB_DYN_HANDLES ) );
+      hb_stack.pDynH = static_cast< PHB_DYN_HANDLES >( hb_xrealloc( hb_stack.pDynH,
+                                          uiDynSym * sizeof( HB_DYN_HANDLES ) ) );
       memset( &hb_stack.pDynH[ hb_stack.uiDynH ], 0,
               ( uiDynSym - hb_stack.uiDynH ) * sizeof( HB_DYN_HANDLES ) );
       hb_stack.uiDynH = uiDynSym;
@@ -662,8 +662,8 @@ void hb_stackIncrease( void )
    nEndIndex  = hb_stack.pEnd - hb_stack.pItems;
 
    /* no, make more headroom: */
-   hb_stack.pItems = ( PHB_ITEM * ) hb_xrealloc( ( void * ) hb_stack.pItems,
-            sizeof( PHB_ITEM ) * ( hb_stack.nItems + STACK_EXPANDHB_ITEMS ) );
+   hb_stack.pItems = static_cast< PHB_ITEM * >( hb_xrealloc( ( void * ) hb_stack.pItems,
+            sizeof( PHB_ITEM ) * ( hb_stack.nItems + STACK_EXPANDHB_ITEMS ) ) );
 
    /* fix possibly modified by realloc pointers: */
    hb_stack.pPos   = hb_stack.pItems + nCurrIndex;

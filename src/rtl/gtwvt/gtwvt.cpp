@@ -2053,10 +2053,10 @@ static HB_BOOL hb_gt_wvt_SetWindowSize( PHB_GTWVT pWVT, int iRows, int iCols )
    {
       if( pWVT->COLS != iCols )
       {
-         pWVT->TextLine = ( TCHAR * ) hb_xrealloc( pWVT->TextLine,
-                                                   iCols * sizeof( TCHAR ) );
-         pWVT->FixedSize = ( int * ) hb_xrealloc( pWVT->FixedSize,
-                                                  iCols * sizeof( int ) );
+         pWVT->TextLine = static_cast< TCHAR * >( hb_xrealloc( pWVT->TextLine,
+                                                   iCols * sizeof( TCHAR ) ) );
+         pWVT->FixedSize = static_cast< int * >( hb_xrealloc( pWVT->FixedSize,
+                                                  iCols * sizeof( int ) ) );
       }
       if( pWVT->hWnd && ( iRows != pWVT->ROWS || iCols != pWVT->COLS ) )
          hb_gt_wvt_AddCharToInputQueue( pWVT, HB_K_RESIZE );

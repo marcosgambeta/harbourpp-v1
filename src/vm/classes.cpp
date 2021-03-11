@@ -583,8 +583,8 @@ static PMETHOD hb_clsAllocMsg( PCLASS pClass, PHB_DYNS pMsg )
       {
          if( *puiMsgIdx == 0 )
          {
-            pClass->pMethods = ( PMETHOD ) hb_xrealloc( pClass->pMethods,
-                           sizeof( METHOD ) * ( pClass->uiMethodCount + 1 ) );
+            pClass->pMethods = static_cast< PMETHOD >( hb_xrealloc( pClass->pMethods,
+                           sizeof( METHOD ) * ( pClass->uiMethodCount + 1 ) ) );
             memset( &pClass->pMethods[ pClass->uiMethodCount ], 0, sizeof( METHOD ) );
             *puiMsgIdx = pClass->uiMethodCount++;
             return &pClass->pMethods[ *puiMsgIdx ];
@@ -791,8 +791,8 @@ static HB_USHORT hb_clsAddInitValue( PCLASS pClass, PHB_ITEM pItem,
 
       if( ui == 0 )
       {
-         pClass->pInitData = ( PINITDATA ) hb_xrealloc( pClass->pInitData,
-                  ( HB_SIZE ) ( pClass->uiInitDatas + 1 ) * sizeof( INITDATA ) );
+         pClass->pInitData = static_cast< PINITDATA >( hb_xrealloc( pClass->pInitData,
+                  ( HB_SIZE ) ( pClass->uiInitDatas + 1 ) * sizeof( INITDATA ) ) );
          pInitData = pClass->pInitData + pClass->uiInitDatas++;
       }
    }
@@ -929,8 +929,8 @@ static void hb_clsAddSuperClass( PCLASS pClass, HB_USHORT uiSuperCls, HB_USHORT 
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsAddSuperClass(%p,%hu,%hu)", ( void * ) pClass, uiSuperCls, uiOffset ) );
 
-   pClass->pSuperClasses = ( PHB_CLSCAST ) hb_xrealloc( pClass->pSuperClasses,
-                     ( pClass->uiSuperClasses + 1 ) * sizeof( HB_CLSCAST ) );
+   pClass->pSuperClasses = static_cast< PHB_CLSCAST >( hb_xrealloc( pClass->pSuperClasses,
+                     ( pClass->uiSuperClasses + 1 ) * sizeof( HB_CLSCAST ) ) );
    pClass->pSuperClasses[ pClass->uiSuperClasses ].uiClass = uiSuperCls;
    pClass->pSuperClasses[ pClass->uiSuperClasses++ ].uiOffset = uiOffset;
 }
@@ -1029,8 +1029,8 @@ static void hb_clsCopyClass( PCLASS pClsDst, PCLASS pClsSrc )
    memcpy( pClsDst->puiMsgIdx, pClsSrc->puiMsgIdx,
       ( ( ( HB_SIZE ) pClsSrc->uiHashKey + 1 ) << BUCKETBITS ) * sizeof( HB_SYMCNT ) );
    pClsDst->uiMethodCount = pClsSrc->uiMethodCount;
-   pClsDst->pMethods = ( PMETHOD ) hb_xrealloc( pClsDst->pMethods,
-                                                nLimit * sizeof( METHOD ) );
+   pClsDst->pMethods = static_cast< PMETHOD >( hb_xrealloc( pClsDst->pMethods,
+                                                nLimit * sizeof( METHOD ) ) );
 #endif
    memcpy( pClsDst->pMethods, pClsSrc->pMethods, nLimit * sizeof( METHOD ) );
    pClsDst->uiMethods = pClsSrc->uiMethods;
@@ -1091,8 +1091,8 @@ static void hb_clsAddFriendSymbol( PCLASS pClass, PHB_SYMB pSym )
       }
       else
       {
-         pClass->pFriendSyms = ( PHB_SYMB * ) hb_xrealloc( pClass->pFriendSyms,
-                           ( pClass->uiFriendSyms + 1 ) * sizeof( PHB_SYMB ) );
+         pClass->pFriendSyms = static_cast< PHB_SYMB * >( hb_xrealloc( pClass->pFriendSyms,
+                           ( pClass->uiFriendSyms + 1 ) * sizeof( PHB_SYMB ) ) );
          pClass->pFriendSyms[ pClass->uiFriendSyms++ ] = pSym;
       }
    }
@@ -3387,8 +3387,8 @@ static HB_USHORT hb_clsNew( const char * szClassName, HB_USHORT uiDatas,
    if( s_uiClasses == s_uiClsSize )
    {
       s_uiClsSize += HB_CLASS_POOL_RESIZE;
-      s_pClasses = ( PCLASS * ) hb_xrealloc( s_pClasses, sizeof( PCLASS ) *
-                                             ( ( HB_SIZE ) s_uiClsSize + 1 ) );
+      s_pClasses = static_cast< PCLASS * >( hb_xrealloc( s_pClasses, sizeof( PCLASS ) *
+                                             ( ( HB_SIZE ) s_uiClsSize + 1 ) ) );
    }
    pNewCls->uiClass = s_uiClasses + 1;
    s_pClasses[ pNewCls->uiClass ] = pNewCls;
@@ -3429,8 +3429,8 @@ static HB_USHORT hb_clsNew( const char * szClassName, HB_USHORT uiDatas,
             {
                if( nLenClsDatas > uiClassDataSize )
                {
-                  puiClassData = ( HB_USHORT * ) hb_xrealloc( puiClassData,
-                                             sizeof( HB_USHORT ) * nLenClsDatas );
+                  puiClassData = static_cast< HB_USHORT * >( hb_xrealloc( puiClassData,
+                                             sizeof( HB_USHORT ) * nLenClsDatas ) );
                   uiClassDataSize = nLenClsDatas;
                }
                memset( puiClassData, 0, sizeof( HB_USHORT ) * nLenClsDatas );
@@ -5446,8 +5446,8 @@ HB_FUNC( __CLSPREALLOCATE )
    if( lNewSize > ( HB_LONG ) s_uiClsSize )
    {
       s_uiClsSize = static_cast< HB_USHORT >( lNewSize );
-      s_pClasses = ( PCLASS * ) hb_xrealloc( s_pClasses, sizeof( PCLASS ) *
-                                             ( ( HB_SIZE ) s_uiClsSize + 1 ) );
+      s_pClasses = static_cast< PCLASS * >( hb_xrealloc( s_pClasses, sizeof( PCLASS ) *
+                                             ( ( HB_SIZE ) s_uiClsSize + 1 ) ) );
    }
 
    HB_CLASS_UNLOCK();

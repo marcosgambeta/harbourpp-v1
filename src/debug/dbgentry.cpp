@@ -72,7 +72,7 @@ static HB_BOOL hb_clsSetScope( HB_BOOL fScope )
 
 #define ARRAY_ADD( type, array, length ) \
    ( ( ++length == 1 ) ? ( array = static_cast< type * >( hb_xgrab( sizeof( type ) ) ) ) : \
-     ( ( array = ( type * ) hb_xrealloc( array, sizeof( type ) * length ) ) + \
+     ( ( array = static_cast< type * >( hb_xrealloc( array, sizeof( type ) * length ) ) ) + \
        length - 1 ) )
 
 #define ARRAY_DEL( type, array, length, index ) \
