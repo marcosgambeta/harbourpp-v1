@@ -256,7 +256,9 @@ static int hb_compReadClpFile( HB_COMP_DECL, const char * szClpFile )
          }
 
          while( i == 0 && HB_ISSPACE( ch ) )
+         {
             ch = fgetc( inFile );
+         }
 
          if( ch == EOF || HB_ISSPACE( ch ) || ch == '#' )
          {
@@ -269,7 +271,9 @@ static int hb_compReadClpFile( HB_COMP_DECL, const char * szClpFile )
             }
             i = 0;
             while( ch != EOF && ch != '\n' )
+            {
                ch = fgetc( inFile );
+            }
          }
          else if( i < ( HB_PATH_MAX - 1 ) )
          {
@@ -558,7 +562,9 @@ void hb_compVariableAdd( HB_COMP_DECL, const char * szVarName, PHB_VARTYPE pVarT
             {
                PHB_HVAR pMemVar = pFunc->pMemvars;
                while( pMemVar && strcmp( pMemVar->szName, pVar->szName ) != 0 )
+               {
                   pMemVar = pMemVar->pNext;
+               }
                /* Not declared as memvar. */
                if( pMemVar == nullptr )
                {
@@ -585,7 +591,9 @@ void hb_compVariableAdd( HB_COMP_DECL, const char * szVarName, PHB_VARTYPE pVarT
             {
                PHB_HVAR pMemVar = pFunc->pMemvars;
                while( pMemVar && strcmp( pMemVar->szName, pVar->szName ) != 0 )
+               {
                   pMemVar = pMemVar->pNext;
+               }
                /* Not declared as memvar. */
                if( pMemVar == nullptr )
                {
@@ -662,8 +670,10 @@ void hb_compFieldSetAlias( HB_COMP_DECL, const char * szAlias, int iField )
 
    pVar = HB_COMP_PARAM->functions.pLast->pFields;
    while( iField-- && pVar )
+   {
       pVar = pVar->pNext;
-
+   }
+   
    while( pVar )
    {
       pVar->szAlias = szAlias;
@@ -710,7 +720,9 @@ static PHB_HVAR hb_compVariableGet( PHB_HVAR pVars, const char * szVarName, int 
 static PHB_HVAR hb_compVariableGetVar( PHB_HVAR pVars, HB_USHORT wOrder )
 {
    while( pVars && --wOrder )
+   {
       pVars = pVars->pNext;
+   }
    return pVars;
 }
 
@@ -959,7 +971,9 @@ const char * hb_compStaticVariableName( HB_COMP_DECL, HB_USHORT wVar )
    PHB_HFUNC pTmp = HB_COMP_PARAM->functions.pFirst;
 
    while( pTmp->pNext && pTmp->pNext->iStaticsBase < wVar )
+   {
       pTmp = pTmp->pNext;
+   }
    pVar = hb_compVariableGetVar( pTmp->pStatics, static_cast< HB_USHORT >( wVar - pTmp->iStaticsBase ) );
 
    return pVar ? pVar->szName : nullptr;
@@ -4127,7 +4141,9 @@ void hb_compCodeBlockEnd( HB_COMP_DECL )
    if( pVar )
    {
       while( pVar->pNext )
+      {
          pVar = pVar->pNext;
+      }
       pVar->pNext = pCodeblock->pStatics;
    }
    else
@@ -4166,7 +4182,9 @@ void hb_compCodeBlockStop( HB_COMP_DECL )
       /* find the function that owns the codeblock */
       PHB_HFUNC pFunc = pCodeblock->pOwner;
       while( pFunc->pOwner )
+      {
          pFunc = pFunc->pOwner;
+      }
       while( pVar )
       {
          if( pFunc->szName && pVar->szName && ! ( pVar->iUsed & HB_VU_USED ) )
@@ -4378,7 +4396,9 @@ void hb_compCompileEnd( HB_COMP_DECL )
       PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pFirst;
 
       while( pFunc )
+      {
          pFunc = hb_compFunctionKill( HB_COMP_PARAM, pFunc );
+      }
       HB_COMP_PARAM->functions.pFirst = nullptr;
    }
 
@@ -4802,7 +4822,9 @@ static int hb_compCompile( HB_COMP_DECL, const char * szPrg, const char * szBuff
 
       while( pModule && ! pModule->force &&
              hb_compIsModuleFunc( HB_COMP_PARAM, pModule->szName ) )
+      {
          pModule = pModule->pNext;
+      }   
    }
 
    if( pFileName && HB_COMP_PARAM->pFileName != pFileName )

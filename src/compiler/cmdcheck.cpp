@@ -58,7 +58,9 @@ static HB_SIZE hb_compChkOptionLen( const char * szSwitch, HB_BOOL fEnv )
       nLen = 0;
       while( szSwitch[ nLen ] != '\0' &&
              szSwitch[ nLen ] != ' ' && szSwitch[ nLen ] != '-' )
+      {
          ++nLen;
+      }
    }
    else
    {
@@ -103,8 +105,9 @@ static const char * hb_compChkAddDefine( HB_COMP_DECL, const char * szSwitch,
       pDefinePtr = &HB_COMP_PARAM->ppdefines;
       while( *pDefinePtr != nullptr &&
              strcmp( ( *pDefinePtr )->szName, szDefine ) != 0 )
+      {
          pDefinePtr = &( *pDefinePtr )->pNext;
-
+      }
       if( *pDefinePtr == nullptr )
       {
          *pDefinePtr = static_cast< PHB_PPDEFINE >( hb_xgrab( sizeof( HB_PPDEFINE ) ) );
@@ -156,7 +159,9 @@ static const char * hb_compChkOptionFName( const char * szSwitch,
    if( nLen > 0 )
    {
       if( *pResult )
+      {
          hb_xfree( *pResult );
+      }
       if( szSwitch[ nLen ] != '\0' )
       {
          char * szVal = hb_strndup( szSwitch, nLen );
@@ -760,7 +765,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                   int iCycles = 0;
                   ++szSwPtr;
                   while( HB_ISDIGIT( *szSwPtr ) )
+                  {
                      iCycles = iCycles * 10 + *szSwPtr++ - '0';
+                  }
                   if( iCycles > 0 )
                   {
                      HB_COMP_PARAM->iMaxTransCycles = iCycles;
@@ -945,7 +952,9 @@ void hb_compChkEnvironment( HB_COMP_DECL )
       while( *szSwitch )
       {
          while( *szSwitch == ' ' )
+         {
             ++szSwitch;
+         }
          if( *szSwitch )
          {
             szSwitch = hb_compChkParseSwitch( HB_COMP_PARAM, szSwitch, HB_TRUE );

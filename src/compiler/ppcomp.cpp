@@ -517,8 +517,10 @@ void hb_compInitPP( HB_COMP_DECL, PHB_PP_OPEN_FUNC pOpenFunc )
          int i = 0;
 
          while( i < HB_COMP_PARAM->iStdChExt )
+         {
             hb_pp_readRules( HB_COMP_PARAM->pLex->pPP,
                              HB_COMP_PARAM->szStdChExt[ i++ ] );
+         }                    
       }
 
       /* mark current rules as standard ones */

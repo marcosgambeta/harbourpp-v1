@@ -67,8 +67,10 @@ static HB_HASH_FUNC( hb_comp_IdentKey )    /* HB_SIZE func (void *Value, void *C
    const char * szName = static_cast< const char * >( Value );
 
    while( *szName )
+   {
       nSum += *szName++;
-
+   }
+   
    HB_SYMBOL_UNUSED( HashPtr );
    HB_SYMBOL_UNUSED( Cargo );
 

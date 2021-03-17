@@ -495,7 +495,9 @@ static int hb_comp_dayTimeDecode( PHB_COMP_LEX pLex, PHB_PP_TOKEN pToken,
    if( iType )
    {
       while( HB_PP_TOKEN_TYPE( pToken->type ) != HB_PP_TOKEN_RIGHT_CB )
+      {
          pToken = hb_pp_tokenGet( pLex->pPP );
+      }
       if( iType == TIMESTAMP )
       {
          yylval_ptr->valTimeStamp.date = lDate;

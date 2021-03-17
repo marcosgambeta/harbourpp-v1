@@ -62,21 +62,29 @@ static void hb_compDumpFindCFunc( HB_COMP_DECL )
                {
                   pszCCode += 13;
                   while( HB_ISSPACE( *pszCCode ) )
+                  {
                      ++pszCCode;
+                  }
                   if( *pszCCode == '(' )
                   {
                      ++pszCCode;
                      while( HB_ISSPACE( *pszCCode ) )
+                     {
                         ++pszCCode;
+                     }
                      if( HB_ISFIRSTIDCHAR( *pszCCode ) )
                      {
                         const char * pszName = pszCCode++;
 
                         while( HB_ISNEXTIDCHAR( *pszCCode ) )
+                        {
                            ++pszCCode;
+                        }
                         len = static_cast< int >( pszCCode - pszName );
                         while( HB_ISSPACE( *pszCCode ) )
+                        {
                            ++pszCCode;
+                        }
                         if( *pszCCode == ')' )
                         {
                            char * name = hb_strndup( pszName, len );
@@ -87,7 +95,9 @@ static void hb_compDumpFindCFunc( HB_COMP_DECL )
                   }
                }
                while( HB_ISNEXTIDCHAR( *pszCCode ) )
+               {
                   ++pszCCode;
+               }
             }
             else if( ch == '/' && *pszCCode == '*' )
             {
@@ -219,8 +229,10 @@ void hb_compGenCCode( HB_COMP_DECL, PHB_FNAME pFileName )       /* generates the
           ( ( pFunc->funFlags & HB_FUNF_FILE_DECL ) != 0 ||
             pFunc == HB_COMP_PARAM->pInitFunc ||
             pFunc == HB_COMP_PARAM->pLineFunc ) )
+   {
       pFunc = pFunc->pNext;
-
+   }
+   
    if( pFunc )
    {
       int iFuncSuffix;
