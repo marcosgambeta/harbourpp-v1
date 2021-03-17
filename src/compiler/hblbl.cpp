@@ -144,7 +144,9 @@ static HB_LABEL_FUNC( hb_p_seqalways )
    HB_SIZE nAlwaysPos = nPCodePos + HB_PCODE_MKINT24( pAddr );
 
    if( cargo->fSetSeqBegin )
+   {
       cargo->pnLabels[ nAlwaysPos ]++;
+   }
    return 4;
 }
 
@@ -154,7 +156,9 @@ static HB_LABEL_FUNC( hb_p_alwaysbegin )
    HB_SIZE nAlwaysEndPos = nPCodePos + HB_PCODE_MKINT24( pAddr );
 
    if( cargo->fSetSeqBegin )
+   {
       cargo->pnLabels[ nAlwaysEndPos ]++;
+   }
    return 4;
 }
 
@@ -164,7 +168,9 @@ static HB_LABEL_FUNC( hb_p_seqbegin )
    HB_SIZE nRecoverPos = nPCodePos + HB_PCODE_MKINT24( pAddr );
 
    if( cargo->fSetSeqBegin )
+   {
       cargo->pnLabels[ nRecoverPos ]++;
+   }
    return 4;
 }
 
@@ -175,7 +181,9 @@ static HB_LABEL_FUNC( hb_p_seqend )
    HB_SIZE nNewPos = nPCodePos + nOffset;
 
    if( cargo->fSetSeqBegin || nOffset != 4 )
+   {
       cargo->pnLabels[ nNewPos ]++;
+   }
    return 4;
 }
 

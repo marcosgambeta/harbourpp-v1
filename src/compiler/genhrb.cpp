@@ -101,13 +101,21 @@ void hb_compGenBufPortObj( HB_COMP_DECL, HB_BYTE ** pBufPtr, HB_SIZE * pnSize )
       *ptr++ = static_cast< HB_BYTE >( pSym->cScope );
       /* symbol type */
       if( pSym->cScope & HB_FS_LOCAL )
+      {
          *ptr++ = SYM_FUNC;      /* function defined in this module */
+      }
       else if( pSym->cScope & HB_FS_DEFERRED )
+      {
          *ptr++ = SYM_DEFERRED;  /* lately bound function */
+      }
       else if( pSym->iFunc )
+      {
          *ptr++ = SYM_EXTERN;    /* external function */
+      }
       else
+      {
          *ptr++ = SYM_NOLINK;    /* other symbol */
+      }
       pSym = pSym->pNext;
    }
 
@@ -139,7 +147,9 @@ void hb_compGenPortObj( HB_COMP_DECL, PHB_FNAME pFileName )
    FILE * yyc;
 
    if( ! pFileName->szExtension )
+   {
       pFileName->szExtension = ".hrb";
+   }
    hb_fsFNameMerge( szFileName, pFileName );
 
    yyc = hb_fopen( szFileName, "wb" );
@@ -160,12 +170,16 @@ void hb_compGenPortObj( HB_COMP_DECL, PHB_FNAME pFileName )
    hb_compGenBufPortObj( HB_COMP_PARAM, &pHrbBody, &nSize );
 
    if( fwrite( pHrbBody, nSize, 1, yyc ) != 1 )
+   {
       hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_FILE_WRITE, szFileName, nullptr );
+   }
 
    hb_xfree( pHrbBody );
 
    fclose( yyc );
 
    if( ! HB_COMP_PARAM->fQuiet )
+   {
       hb_compOutStd( HB_COMP_PARAM, "Done.\n" );
+   }
 }

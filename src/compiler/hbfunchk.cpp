@@ -117,20 +117,28 @@ HB_BOOL hb_compFunCallCheck( HB_COMP_DECL, const char * szFuncCall, int iArgs )
     * however SECO32() is a valid name.
     */
    if( iLen < 4 )
+   {
       iLen = 4;
+   }
    do
    {
       uiMiddle = ( uiFirst + uiLast ) >> 1;
       iCmp = strncmp( szFuncCall, s_stdFunc[ uiMiddle ].cFuncName, iLen );
       if( iCmp <= 0 )
+      {
          uiLast = uiMiddle;
+      }
       else
+      {
          uiFirst = uiMiddle + 1;
+      }
    }
    while( uiFirst < uiLast );
 
    if( uiFirst != uiMiddle )
+   {
       iCmp = strncmp( szFuncCall, s_stdFunc[ uiFirst ].cFuncName, iLen );
+   }
 
    if( iCmp == 0 )
    {
@@ -144,16 +152,26 @@ HB_BOOL hb_compFunCallCheck( HB_COMP_DECL, const char * szFuncCall, int iArgs )
          if( HB_COMP_ISSUPPORTED( HB_COMPFLAG_HARBOUR ) )
          {
             if( pFunc->iMinParam == pFunc->iMaxParam )
+            {
                hb_snprintf( szMsg, sizeof( szMsg ), "\nPassed: %i, expected: %i", iArgs, pFunc->iMinParam );
+            }
             else if( pFunc->iMaxParam == -1 )
+            {
                hb_snprintf( szMsg, sizeof( szMsg ), "\nPassed: %i, expected at least: %i", iArgs, pFunc->iMinParam );
+            }
             else if( pFunc->iMinParam == -1 )
+            {
                hb_snprintf( szMsg, sizeof( szMsg ), "\nPassed: %i, expected less than: %i", iArgs, pFunc->iMaxParam );
+            }
             else
+            {
                hb_snprintf( szMsg, sizeof( szMsg ), "\nPassed: %i, expected from: %i to: %i", iArgs, pFunc->iMinParam, pFunc->iMaxParam );
+            }
          }
          else
+         {
             szMsg[ 0 ] = '\0';
+         }
 
          hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_CHECKING_ARGS, szFuncCall, szMsg );
 

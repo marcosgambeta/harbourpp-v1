@@ -154,7 +154,9 @@ void hb_compPrintModes( HB_COMP_DECL )
       if( iLine < static_cast< int >( HB_SIZEOFARRAY( s_flags ) ) &&
           ( s_flags[ iLine ] < 0 ? HB_COMP_ISSUPPORTED( ~s_flags[ iLine ] ) == 0 :
                                    HB_COMP_ISSUPPORTED( s_flags[ iLine ] ) != 0 ) )
+      {
          hb_compOutStd( HB_COMP_PARAM, " (default)" );
+      }
    }
 }
 

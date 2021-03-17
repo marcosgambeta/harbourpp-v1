@@ -108,7 +108,9 @@ PHB_DEBUGINFO hb_compGetDebugInfo( HB_COMP_DECL )
                      if( strncmp( pszModuleName, pInfo->pszModuleName, i ) == 0 &&
                          ( pInfo->pszModuleName[ i ] == '\0' ||
                            pInfo->pszModuleName[ i ] == ':' ) )
+                     {
                         break;
+                     }
                      pInfo = pInfo->pNext;
                   }
                   if( ! pInfo )
@@ -142,9 +144,13 @@ PHB_DEBUGINFO hb_compGetDebugInfo( HB_COMP_DECL )
                 * if some external file is included more then once. [druzus]
                 */
                if( pInfo->ulFirstLine > ulLine )
+               {
                   pInfo->ulFirstLine = ulLine;
+               }
                if( pInfo->ulLastLine < ulLine )
+               {
                   pInfo->ulLastLine = ulLine;
+               }
                ulLine = 0;
             }
 
@@ -152,7 +158,9 @@ PHB_DEBUGINFO hb_compGetDebugInfo( HB_COMP_DECL )
             {
                nSkip = hb_compPCodeSize( pFunc, nPos );
                if( nSkip == 0 )
+               {
                   break;
+               }
             }
             nPos += nSkip;
          }

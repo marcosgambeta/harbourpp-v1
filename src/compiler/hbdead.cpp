@@ -96,13 +96,17 @@ static void hb_compCodeTraceAddJump( PHB_CODETRACE_INFO pInfo, HB_SIZE nPCodePos
 static HB_SIZE hb_compCodeTraceNextPos( PHB_CODETRACE_INFO pInfo, HB_SIZE nPCodePos )
 {
    if( nPCodePos < pInfo->nPCodeSize && pInfo->pCodeMark[ nPCodePos ] == 0 )
+   {
       return nPCodePos;
+   }
 
    while( pInfo->nJumpPos < pInfo->nJumpCount )
    {
       nPCodePos = pInfo->pnJumps[ pInfo->nJumpPos++ ];
       if( pInfo->pCodeMark[ nPCodePos ] == 1 )
+      {
          return nPCodePos;
+      }
    }
 
    pInfo->fFinished = HB_TRUE;
@@ -545,7 +549,9 @@ void hb_compCodeTraceMarkDead( HB_COMP_DECL, PHB_HFUNC pFunc )
    HB_CODETRACE_INFO code_info;
 
    if( ! HB_COMP_ISSUPPORTED( HB_COMPFLAG_OPTJUMP ) || pFunc->nPCodePos < 2 )
+   {
       return;
+   }
 
    assert( HB_P_LAST_PCODE == sizeof( s_codeTraceFuncTable ) / sizeof( PHB_CODETRACE_FUNC ) );
 
@@ -568,7 +574,9 @@ void hb_compCodeTraceMarkDead( HB_COMP_DECL, PHB_HFUNC pFunc )
       do
       {
          if( code_info.pCodeMark[ nPos ] == 0 )
+         {
             ++nCount;
+         }
          else
          {
             bLastCode = pFunc->pCode[ nPos ];
@@ -605,5 +613,7 @@ void hb_compCodeTraceMarkDead( HB_COMP_DECL, PHB_HFUNC pFunc )
 
    hb_xfree( code_info.pCodeMark );
    if( code_info.pnJumps )
+   {
       hb_xfree( code_info.pnJumps );
+   }
 }

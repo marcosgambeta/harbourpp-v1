@@ -41,15 +41,21 @@ const char * hb_compIdentifierNew( HB_COMP_DECL, const char * szName, int iType 
        * so it will not be necessary to allocate separate buffer for them
        */
       if( iType == HB_IDENT_COPY || iType == HB_IDENT_STATIC )
+      {
          szIdent = hb_strdup( szName );
+      }
       else
+      {
          szIdent = szName;
+      }
 
       hb_hashTableAdd( HB_COMP_PARAM->pIdentifiers,
                        static_cast< const void * >( szIdent ), static_cast< const void * >( szIdent ) );
    }
    else if( iType == HB_IDENT_FREE )
+   {
       hb_xfree( HB_UNCONST( szName ) );
+   }
 
    return szIdent;
 }

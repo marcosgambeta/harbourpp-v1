@@ -178,7 +178,9 @@ void hb_compGenError( HB_COMP_DECL, const char * const szErrors[],
       }
       /* fatal error - exit immediately */
       if( cPrefix == 'F' )
+      {
          HB_COMP_PARAM->fExit = HB_TRUE;
+      }
    }
 }
 

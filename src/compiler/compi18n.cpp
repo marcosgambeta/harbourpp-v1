@@ -69,7 +69,9 @@ void hb_compI18nFree( HB_COMP_DECL )
          for( HB_UINT ui = 0; ui < pI18n->uiCount; ui++ )
          {
             if( pI18n->pString[ ui ].uiPosCount )
+            {
                hb_xfree( pI18n->pString[ ui ].pPosLst );
+            }
          }
          hb_xfree( pI18n->pString );
       }
@@ -84,7 +86,9 @@ static int hb_compI18nCompare( PHB_I18NSTRING pString, const char * pText, const
 
    i = pString->szText == pText ? 0 : pString->szText > pText ? 1 : -1;
    if( i == 0 && pString->szContext != pContext )
+   {
       i = pString->szContext > pContext ? 1 : -1;
+   }
 
    return i;
 }
@@ -97,12 +101,16 @@ static PHB_I18NSTRING hb_compI18nAddSingle( HB_COMP_DECL, const char * szText, c
    HB_UINT        uiLeft, uiRight;
 
    if( ! HB_COMP_PARAM->pI18n )
+   {
       HB_COMP_PARAM->pI18n = hb_compI18nCreate();
+   }
    pI18n = HB_COMP_PARAM->pI18n;
 
    szText = hb_compIdentifierNew( HB_COMP_PARAM, szText, HB_IDENT_COPY );
    if( szContext )
+   {
       szContext = hb_compIdentifierNew( HB_COMP_PARAM, szContext, HB_IDENT_COPY );
+   }
 
    if( pI18n->uiCount >= pI18n->uiAllocated )
    {
@@ -148,9 +156,13 @@ static PHB_I18NSTRING hb_compI18nAddSingle( HB_COMP_DECL, const char * szText, c
          return pString;
       }
       else if( iCompare < 0 )
+      {
          uiLeft = uiMiddle + 1;
+      }
       else
+      {
          uiRight = uiMiddle;
+      }
    }
 
    memmove( &pI18n->pString[ uiLeft + 1 ], &pI18n->pString[ uiLeft ],
@@ -205,7 +217,9 @@ void hb_compI18nAddPlural( HB_COMP_DECL, const char ** szTexts, HB_ULONG ulCount
             }
          }
          if( szText )
+         {
             pString->szPlurals[ pString->uiPlurals++ ] = szText;
+         }
       }
    }
 }
@@ -217,24 +231,40 @@ static void hb_compI18nEscapeString( FILE * file, const char * szText )
       if( static_cast< HB_UCHAR >( *szText ) < ' ' )
       {
          if( *szText == '\t' )
+         {
             fprintf( file, "\\t" );
+         }
          else if( *szText == '\n' )
+         {
             fprintf( file, "\\n" );
+         }
          else if( *szText == '\r' )
+         {
             fprintf( file, "\\r" );
+         }
          else if( ( static_cast< HB_UCHAR >( szText[ 1 ] ) >= '0' && static_cast< HB_UCHAR >( szText[ 1 ] ) <= '9' ) ||
                   ( static_cast< HB_UCHAR >( szText[ 1 ] ) >= 'A' && static_cast< HB_UCHAR >( szText[ 1 ] ) <= 'F' ) ||
                   ( static_cast< HB_UCHAR >( szText[ 1 ] ) >= 'a' && static_cast< HB_UCHAR >( szText[ 1 ] ) <= 'f' ) )
+         {
             fprintf( file, "\\%03o", *szText );
+         }
          else
+         {
             fprintf( file, "\\x%02X", *szText );
+         }
       }
       else if( *szText == '"' )
+      {
          fprintf( file, "\\\"" );
+      }
       else if( *szText == '\\' )
+      {
          fprintf( file, "\\\\" );
+      }
       else
+      {
          fprintf( file, "%c", *szText );
+      }
 
       szText++;
    }
@@ -248,12 +278,16 @@ static char * hb_compI18nFileName( char * szBuffer, const char * szFileName )
    do
    {
       if( ui == HB_PATH_MAX - 1 )
+      {
          ch = '\0';
+      }
       else
       {
          ch = szFileName[ ui ];
          if( ch == '\\' )
+         {
             ch = '/';
+         }
       }
       szBuffer[ ui++ ] = ch;
    }
@@ -272,7 +306,9 @@ HB_BOOL hb_compI18nSave( HB_COMP_DECL, HB_BOOL fFinal )
 
    pI18n = HB_COMP_PARAM->pI18n;
    if( ! pI18n )
+   {
       return HB_FALSE;
+   }
 
    FileName.szPath            =
       FileName.szName         =
@@ -288,10 +324,14 @@ HB_BOOL hb_compI18nSave( HB_COMP_DECL, HB_BOOL fFinal )
    if( HB_COMP_PARAM->pI18nFileName )
    {
       if( HB_COMP_PARAM->pI18nFileName->szName )
+      {
          FileName.szName = HB_COMP_PARAM->pI18nFileName->szName;
+      }
 
       if( HB_COMP_PARAM->pI18nFileName->szExtension )
+      {
          FileName.szExtension = HB_COMP_PARAM->pI18nFileName->szExtension;
+      }
 
       if( HB_COMP_PARAM->pI18nFileName->szPath )
       {
@@ -301,15 +341,21 @@ HB_BOOL hb_compI18nSave( HB_COMP_DECL, HB_BOOL fFinal )
    }
 
    if( ! FileName.szName )
+   {
       FileName.szName = HB_COMP_PARAM->pFileName->szName;
+   }
    else if( ! fFinal )
+   {
       /* The exact file name was given generate single .pot file for
        * all compiled .prg files in final phase.
        */
       return HB_FALSE;
+   }
 
    if( ! FileName.szExtension )
+   {
       FileName.szExtension = ".pot";
+   }
 
    hb_fsFNameMerge( szFileName, &FileName );
 
@@ -353,9 +399,13 @@ HB_BOOL hb_compI18nSave( HB_COMP_DECL, HB_BOOL fFinal )
       for( uiLine = 0; uiLine < pString->uiPlurals; ++uiLine )
       {
          if( uiLine == 0 )
+         {
             fprintf( file, "\"\nmsgid_plural \"" );
+         }
          else
+         {
             fprintf( file, "\"\nmsgid_plural%u \"", uiLine + 1 );
+         }
          hb_compI18nEscapeString( file, pString->szPlurals[ uiLine ] );
       }
       fprintf( file, "\"\nmsgstr%s \"\"\n\n", pString->uiPlurals ? "[0]" : "" );

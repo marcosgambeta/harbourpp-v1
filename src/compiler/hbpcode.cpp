@@ -505,7 +505,9 @@ HB_ISIZ hb_compPCodeSize( PHB_HFUNC pFunc, HB_SIZE nOffset )
          PHB_PCODE_FUNC pCall = s_psize_table[ opcode ];
 
          if( pCall != nullptr )
+         {
             nSize = pCall( pFunc, nOffset, nullptr );
+         }
       }
    }
    return nSize;
@@ -534,7 +536,9 @@ void hb_compPCodeEval( PHB_HFUNC pFunc, const PHB_PCODE_FUNC * pFunctions, void 
             {
                pCall = s_psize_table[ opcode ];
                if( pCall != nullptr )
+               {
                   nSkip = pCall( pFunc, nPos, nullptr );
+               }
             }
          }
 
@@ -584,9 +588,13 @@ void hb_compPCodeTrace( PHB_HFUNC pFunc, const PHB_PCODE_FUNC * pFunctions, void
       {
          PHB_PCODE_FUNC pCall = pFunctions[ opcode ];
          if( pCall )
+         {
             nPos = pCall( pFunc, nPos, cargo );
+         }
          else
+         {
             nPos += hb_comp_pcode_len[ opcode ];
+         }
       }
       else
       {
@@ -609,7 +617,9 @@ void hb_compGenPCode1( HB_BYTE byte, HB_COMP_DECL )
       pFunc->nPCodePos  = 0;
    }
    else if( ( pFunc->nPCodeSize - pFunc->nPCodePos ) < 1 )
+   {
       pFunc->pCode = static_cast< HB_BYTE * >( hb_xrealloc( pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK ) );
+   }
 
    pFunc->pCode[ pFunc->nPCodePos++ ] = byte;
 }
@@ -625,7 +635,9 @@ void hb_compGenPCode2( HB_BYTE byte1, HB_BYTE byte2, HB_COMP_DECL )
       pFunc->nPCodePos  = 0;
    }
    else if( ( pFunc->nPCodeSize - pFunc->nPCodePos ) < 2 )
+   {
       pFunc->pCode = static_cast< HB_BYTE * >( hb_xrealloc( pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK ) );
+   }
 
    pFunc->pCode[ pFunc->nPCodePos++ ] = byte1;
    pFunc->pCode[ pFunc->nPCodePos++ ] = byte2;
@@ -642,7 +654,9 @@ void hb_compGenPCode3( HB_BYTE byte1, HB_BYTE byte2, HB_BYTE byte3, HB_COMP_DECL
       pFunc->nPCodePos  = 0;
    }
    else if( ( pFunc->nPCodeSize - pFunc->nPCodePos ) < 3 )
+   {
       pFunc->pCode = static_cast< HB_BYTE * >( hb_xrealloc( pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK ) );
+   }
 
    pFunc->pCode[ pFunc->nPCodePos++ ] = byte1;
    pFunc->pCode[ pFunc->nPCodePos++ ] = byte2;
@@ -660,7 +674,9 @@ void hb_compGenPCode4( HB_BYTE byte1, HB_BYTE byte2, HB_BYTE byte3, HB_BYTE byte
       pFunc->nPCodePos  = 0;
    }
    else if( ( pFunc->nPCodeSize - pFunc->nPCodePos ) < 4 )
+   {
       pFunc->pCode = static_cast< HB_BYTE * >( hb_xrealloc( pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK ) );
+   }
 
    pFunc->pCode[ pFunc->nPCodePos++ ] = byte1;
    pFunc->pCode[ pFunc->nPCodePos++ ] = byte2;

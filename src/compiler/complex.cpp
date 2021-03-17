@@ -231,7 +231,9 @@ static int hb_comp_asType( PHB_PP_TOKEN pToken, HB_BOOL fArray )
       {
          if( pKey->minlen <= pToken->len && pToken->len <= pKey->maxlen &&
              memcmp( pKey->value, pToken->value, pToken->len ) == 0 )
+         {
             return ( fArray ? s_asArrayTypes : s_asTypes )[ pKey->type ];
+         }
          ++pKey;
       }
       while( --i );
@@ -285,7 +287,9 @@ static const char * hb_comp_tokenString( YYSTYPE * yylval_ptr, HB_COMP_DECL, PHB
       pToken->value = hb_compIdentifierNew( HB_COMP_PARAM, pToken->value,
                yylval_ptr->valChar.dealloc ? HB_IDENT_COPY : HB_IDENT_FREE );
       if( ! yylval_ptr->valChar.dealloc )
+      {
          yylval_ptr->valChar.string = static_cast< char * >( HB_UNCONST( pToken->value ) );
+      }
       pToken->type |= HB_PP_TOKEN_STATIC;
    }
    return pToken->value;
@@ -301,45 +305,65 @@ static HB_BOOL hb_comp_timeDecode( PHB_PP_TOKEN pTime, long * plTime )
    if( ! pTime || HB_PP_TOKEN_TYPE( pTime->type ) != HB_PP_TOKEN_NUMBER ||
        hb_compStrToNum( pTime->value, pTime->len, &lHour, &dNumber,
                         &iDec, &iWidth ) || lHour < 0 || lHour >= 24 )
+   {
       return HB_FALSE;
+   }
 
    pTime = pTime->pNext;
    if( ! pTime || HB_PP_TOKEN_TYPE( pTime->type ) != HB_PP_TOKEN_SEND )
+   {
       return HB_FALSE;
+   }
 
    pTime = pTime->pNext;
    if( ! pTime || HB_PP_TOKEN_TYPE( pTime->type ) != HB_PP_TOKEN_NUMBER ||
        hb_compStrToNum( pTime->value, pTime->len, &lMinute, &dNumber,
                         &iDec, &iWidth ) || lMinute < 0 || lMinute >= 60 )
+   {
       return HB_FALSE;
+   }
 
    pTime = pTime->pNext;
    if( ! pTime )
+   {
       return HB_FALSE;
+   }
 
    if( HB_PP_TOKEN_TYPE( pTime->type ) == HB_PP_TOKEN_SEND )
    {
       pTime = pTime->pNext;
       if( ! pTime || HB_PP_TOKEN_TYPE( pTime->type ) != HB_PP_TOKEN_NUMBER )
+      {
          return HB_FALSE;
+      }
 
       if( hb_compStrToNum( pTime->value, pTime->len, &lMilliSec, &dNumber,
                            &iDec, &iWidth ) )
       {
          if( dNumber < 0.0 || dNumber >= 60.0 )
+         {
             return HB_FALSE;
+         }
          lMilliSec = static_cast< HB_MAXINT >( dNumber * 1000 + 0.05 / HB_MILLISECS_PER_DAY );
          if( lMilliSec == 60000 )
+         {
             --lMilliSec;
+         }
       }
       else if( lMilliSec < 0 || lMilliSec >= 60 )
+      {
          return HB_FALSE;
+      }
       else
+      {
          lMilliSec *= 1000;
+      }
       pTime = pTime->pNext;
    }
    else
+   {
       lMilliSec = 0;
+   }
 
    if( HB_PP_TOKEN_TYPE( pTime->type ) == HB_PP_TOKEN_KEYWORD &&
        lHour > 0 && lHour <= 12 )
@@ -349,7 +373,9 @@ static HB_BOOL hb_comp_timeDecode( PHB_PP_TOKEN pTime, long * plTime )
           ( pTime->len == 2 && hb_stricmp( pTime->value, "AM" ) == 0 ) )
       {
          if( lHour == 12 )
+         {
             lHour = 0;
+         }
          pTime = pTime->pNext;
       }
       else if( ( pTime->len == 1 &&
@@ -357,13 +383,17 @@ static HB_BOOL hb_comp_timeDecode( PHB_PP_TOKEN pTime, long * plTime )
                ( pTime->len == 2 && hb_stricmp( pTime->value, "PM" ) == 0 ) )
       {
          if( lHour < 12 )
+         {
             lHour += 12;
+         }
          pTime = pTime->pNext;
       }
    }
 
    if( ! pTime || HB_PP_TOKEN_TYPE( pTime->type ) != HB_PP_TOKEN_RIGHT_CB )
+   {
       return HB_FALSE;
+   }
 
    *plTime = static_cast< long >( ( lHour * 60 + lMinute ) * 60000 + lMilliSec );
 
@@ -449,13 +479,17 @@ static int hb_comp_dayTimeDecode( PHB_COMP_LEX pLex, PHB_PP_TOKEN pToken,
             if( HB_PP_TOKEN_TYPE( pTime->type ) != HB_PP_TOKEN_RIGHT_CB )
             {
                if( HB_PP_TOKEN_TYPE( pTime->type ) == HB_PP_TOKEN_COMMA )
+               {
                   pTime = pTime->pNext;
+               }
                iType = hb_comp_timeDecode( pTime, &lTime ) ? TIMESTAMP : 0;
             }
          }
       }
       else if( hb_comp_timeDecode( pYear, &lTime ) )
+      {
          iType = TIMESTAMP;
+      }
    }
 
    if( iType )
@@ -468,7 +502,9 @@ static int hb_comp_dayTimeDecode( PHB_COMP_LEX pLex, PHB_PP_TOKEN pToken,
          yylval_ptr->valTimeStamp.time = lTime;
       }
       else
+      {
          yylval_ptr->valLong.lNumber = lDate;
+      }
 
       pLex->iState = LITERAL;
    }
@@ -517,7 +553,9 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
       {
          hb_comp_funcStart( HB_COMP_PARAM, yylval_ptr );
          if( pLex->iClose > 0 )
+         {
             return ENDERR;
+         }
       }
       else if( pLex->iClose > 0 )
       {
@@ -599,11 +637,15 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
             {
                iYear = iMonth = iDay = 0;
                if( pToken->len != 3 || pToken->value[ 2 ] != '0' )
+               {
                   iYear = -1;
+               }
             }
          }
          else if( ! hb_timeStampStrGet( pToken->value, &iYear, &iMonth, &iDay, nullptr, nullptr, nullptr, nullptr ) )
+         {
             iYear = -1;
+         }
          yylval_ptr->valLong.lNumber = hb_dateEncode( iYear, iMonth, iDay );
          if( yylval_ptr->valLong.lNumber == 0 &&
              ( iYear != 0 || iMonth != 0 || iDay != 0 ) )
@@ -693,7 +735,9 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
             {
                int iType = hb_comp_dayTimeDecode( pLex, pToken, yylval_ptr );
                if( iType )
+               {
                   return iType;
+               }
             }
 #endif
          }
@@ -968,8 +1012,10 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
                          HB_PP_TOKEN_TYPE( pToken->pNext->type ) == HB_PP_TOKEN_INC ||
                          HB_PP_TOKEN_TYPE( pToken->pNext->type ) == HB_PP_TOKEN_DEC ||
                          HB_PP_TOKEN_TYPE( pToken->pNext->type ) == HB_PP_TOKEN_ALIAS )
+                     {
                         hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E',
                                          HB_COMP_ERR_ENDIF, nullptr, nullptr );
+                     }
                   }
                }
                iType = IDENTIFIER;
@@ -1070,8 +1116,10 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
                          HB_PP_TOKEN_TYPE( pToken->pNext->type ) == HB_PP_TOKEN_INC ||
                          HB_PP_TOKEN_TYPE( pToken->pNext->type ) == HB_PP_TOKEN_DEC ||
                          HB_PP_TOKEN_TYPE( pToken->pNext->type ) == HB_PP_TOKEN_ALIAS )
+                     {
                         hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E',
                                          HB_COMP_ERR_NEXTFOR, nullptr, nullptr );
+                     }
                   }
                }
                iType = IDENTIFIER;
@@ -1214,8 +1262,10 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
             case IIF:
                if( pLex->iState == FUNCTION || pLex->iState == PROCEDURE ||
                    ( ! HB_SUPPORT_HARBOUR && HB_PP_TOKEN_ISEOC( pToken->pNext ) ) )
+               {
                   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E',
                                    HB_COMP_ERR_SYNTAX, "IIF", nullptr );
+               }
                else if( pToken->pNext &&
                         HB_PP_TOKEN_TYPE( pToken->pNext->type ) == HB_PP_TOKEN_LEFT_PB )
                {
@@ -1223,17 +1273,23 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
                   return IIF;
                }
                else if( ! HB_SUPPORT_HARBOUR )
+               {
                   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E',
                                    HB_COMP_ERR_SYNTAX, pToken->pNext->value, nullptr );
+               }
                else
+               {
                   iType = IDENTIFIER;
+               }
                break;
 
             case IF:
                if( pLex->iState == FUNCTION || pLex->iState == PROCEDURE ||
                    ( ! HB_SUPPORT_HARBOUR && HB_PP_TOKEN_ISEOC( pToken->pNext ) ) )
+               {
                   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E',
                                    HB_COMP_ERR_SYNTAX, "IF", nullptr );
+               }
                else if( pToken->pNext &&
                         HB_PP_TOKEN_TYPE( pToken->pNext->type ) == HB_PP_TOKEN_LEFT_PB )
                {
@@ -1248,20 +1304,26 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
                         {
                            if( ! hb_pp_tokenNextExp( &pNext ) && pNext &&
                                HB_PP_TOKEN_TYPE( pNext->type ) == HB_PP_TOKEN_RIGHT_PB )
+                           {
                               pLex->iState = IIF;
+                           }
                         }
                      }
                   }
                   else
+                  {
                      pLex->iState = IIF;
+                  }
 
                   return pLex->iState;
                }
                else if( HB_PP_LEX_NEEDLEFT( pToken->pNext ) || pLex->iState != LOOKUP )
                {
                   if( ! HB_SUPPORT_HARBOUR )
+                  {
                      hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E',
                                       HB_COMP_ERR_SYNTAX2, pToken->pNext->value, "IF" );
+                  }
                }
                else
                {
@@ -1361,7 +1423,9 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
 
             case NIL:
                if( pLex->iState == DECLARE_TYPE )
+               {
                   iType = IDENTIFIER;
+               }
                break;
 
             case LOOP:
@@ -1405,15 +1469,21 @@ void hb_compParserRun( HB_COMP_DECL )
       {
          PHB_PP_TOKEN pToken = hb_pp_tokenGet( HB_COMP_PARAM->pLex->pPP );
          if( ! pToken )
+         {
             break;
+         }
       }
       else
       {
          iToken = hb_comp_yylex( &yylval, HB_COMP_PARAM );
          if( iToken == 0 )
+         {
             break;
+         }
          if( iToken == DOIDENT )
+         {
             hb_compModuleAdd( HB_COMP_PARAM, yylval.string, HB_FALSE );
+         }
          else if( iToken == PROCREQ )
          {
             iToken = hb_comp_yylex( &yylval, HB_COMP_PARAM );
@@ -1422,9 +1492,13 @@ void hb_compParserRun( HB_COMP_DECL )
                const char * szFile, * szExt = nullptr;
 
                if( yylval.valChar.dealloc )
+               {
                   szFile = hb_compIdentifierNew( HB_COMP_PARAM, yylval.valChar.string, HB_IDENT_FREE );
+               }
                else
+               {
                   szFile = yylval.valChar.string;
+               }
                iToken = hb_comp_yylex( &yylval, HB_COMP_PARAM );
                if( iToken == '+' )
                {
@@ -1432,17 +1506,23 @@ void hb_compParserRun( HB_COMP_DECL )
                   if( iToken == LITERAL )
                   {
                      if( yylval.valChar.dealloc )
+                     {
                         szExt = hb_compIdentifierNew( HB_COMP_PARAM, yylval.valChar.string, HB_IDENT_FREE );
+                     }
                      else
+                     {
                         szExt = yylval.valChar.string;
+                     }
                   }
                   iToken = hb_comp_yylex( &yylval, HB_COMP_PARAM );
                }
                if( iToken == ')' )
                {
                   if( szExt && *szExt )
+                  {
                      szFile = hb_compIdentifierNew( HB_COMP_PARAM,
                         hb_xstrcpy( nullptr, szFile, szExt, nullptr ), HB_IDENT_FREE );
+                  }
                   hb_compModuleAdd( HB_COMP_PARAM, szFile, HB_FALSE );
                }
             }

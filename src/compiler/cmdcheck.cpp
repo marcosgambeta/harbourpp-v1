@@ -61,7 +61,9 @@ static HB_SIZE hb_compChkOptionLen( const char * szSwitch, HB_BOOL fEnv )
          ++nLen;
    }
    else
+   {
       nLen = strlen( szSwitch );
+   }
 
    return nLen;
 }
@@ -94,7 +96,9 @@ static const char * hb_compChkAddDefine( HB_COMP_DECL, const char * szSwitch,
          *szValue++ = '\0';
       }
       if( ! fAdd )
+      {
          szValue = s_szUndefineMarker;
+      }
 
       pDefinePtr = &HB_COMP_PARAM->ppdefines;
       while( *pDefinePtr != nullptr &&
@@ -107,7 +111,9 @@ static const char * hb_compChkAddDefine( HB_COMP_DECL, const char * szSwitch,
          ( *pDefinePtr )->pNext = nullptr;
       }
       else
+      {
          hb_xfree( ( *pDefinePtr )->szName );
+      }
       ( *pDefinePtr )->szName = szDefine;
       ( *pDefinePtr )->szValue = szValue;
    }
@@ -135,7 +141,9 @@ static const char * hb_compChkOptionGet( const char * szSwitch,
    HB_SIZE nLen = hb_compChkOptionLen( szSwitch, fEnv );
 
    if( pszResult )
+   {
       *pszResult = hb_strndup( szSwitch, nLen );
+   }
 
    return szSwitch + nLen;
 }
@@ -156,7 +164,9 @@ static const char * hb_compChkOptionFName( const char * szSwitch,
          hb_xfree( szVal );
       }
       else
+      {
          *pResult = hb_fsFNameSplit( szSwitch );
+      }
    }
    return szSwitch + nLen;
 }
@@ -175,7 +185,9 @@ static const char * hb_compChkOptionAddPath( HB_COMP_DECL, const char * szSwitch
          hb_xfree( szVal );
       }
       else
+      {
          hb_pp_addSearchPath( HB_COMP_PARAM->pLex->pPP, szSwitch, HB_FALSE );
+      }
    }
    return szSwitch + nLen;
 }
@@ -214,7 +226,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                HB_COMP_PARAM->fAutoMemvarAssume = HB_FALSE;
             }
             else
+            {
                HB_COMP_PARAM->fAutoMemvarAssume = HB_TRUE;
+            }
             break;
 
          case 'B':
@@ -326,7 +340,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                   {
                      szSwPtr += 2;
                      if( *szSwPtr == '-' )
+                     {
                         ++szSwPtr;
+                     }
                      hb_setSetDirCase( HB_SET_CASE_MIXED );
                   }
                   break;
@@ -343,7 +359,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                   else
                   {
                      if( *szSwPtr == '-' )
+                     {
                         ++szSwPtr;
+                     }
                      hb_setSetDirSeparator( HB_OS_PATH_DELIM_CHR );
                   }
                   break;
@@ -355,7 +373,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                      hb_setSetTrimFileName( HB_FALSE );
                   }
                   else
+                  {
                      hb_setSetTrimFileName( HB_TRUE );
+                  }
             }
             break;
 
@@ -409,7 +429,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                   {
                      HB_COMP_PARAM->iTraceInclude = 2;
                      if( *szSwPtr == '.' )
+                     {
                         szSwPtr = hb_compChkOptionGet( szSwPtr, &HB_COMP_PARAM->szDepExt, fEnv );
+                     }
                   }
                   break;
 
@@ -463,7 +485,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
             ++szSwPtr;
             HB_COMP_PARAM->fI18n = HB_TRUE;
             if( *szSwPtr )
+            {
                szSwPtr = hb_compChkOptionFName( szSwPtr, &HB_COMP_PARAM->pI18nFileName, fEnv );
+            }
             break;
 
          case 'K':
@@ -490,7 +514,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                         ++szSwPtr;
                      }
                      else
+                     {
                         HB_COMP_PARAM->supported |= HB_COMPFLAG_HARBOUR;
+                     }
                      break;
 
                   case 'C':
@@ -507,7 +533,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                         ++szSwPtr;
                      }
                      else
+                     {
                         HB_COMP_PARAM->supported |= HB_COMPFLAG_XBASE;
+                     }
                      break;
 
                   case 'I':
@@ -517,7 +545,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                         ++szSwPtr;
                      }
                      else
+                     {
                         HB_COMP_PARAM->supported |= HB_COMPFLAG_HB_INLINE;
+                     }
                      break;
 
                   case 'J':
@@ -527,7 +557,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                         ++szSwPtr;
                      }
                      else
+                     {
                         HB_COMP_PARAM->supported &= ~HB_COMPFLAG_OPTJUMP;
+                     }
                      break;
 
                   case 'M':
@@ -537,7 +569,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                         ++szSwPtr;
                      }
                      else
+                     {
                         HB_COMP_PARAM->supported &= ~HB_COMPFLAG_MACROTEXT;
+                     }
                      break;
 
                   case 'D':
@@ -547,7 +581,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                         ++szSwPtr;
                      }
                      else
+                     {
                         HB_COMP_PARAM->supported |= HB_COMPFLAG_MACRODECL;
+                     }
                      break;
 
                   case 'R':
@@ -557,7 +593,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                         ++szSwPtr;
                      }
                      else
+                     {
                         HB_COMP_PARAM->supported |= HB_COMPFLAG_RT_MACRO;
+                     }
                      break;
 
                   case 'S':
@@ -567,7 +605,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                         ++szSwPtr;
                      }
                      else
+                     {
                         HB_COMP_PARAM->supported |= HB_COMPFLAG_ARRSTR;
+                     }
                      break;
 
                   case 'O':
@@ -577,7 +617,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                         ++szSwPtr;
                      }
                      else
+                     {
                         HB_COMP_PARAM->supported |= HB_COMPFLAG_EXTOPT;
+                     }
                      break;
 
                   case 'U':
@@ -587,7 +629,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                         ++szSwPtr;
                      }
                      else
+                     {
                         HB_COMP_PARAM->supported |= HB_COMPFLAG_USERCP;
+                     }
                      break;
 
                   default:
@@ -596,7 +640,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                      break;
                }
                if( ch == -1 )
+               {
                   break;
+               }
             }
             break;
 
@@ -608,7 +654,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                ++szSwPtr;
             }
             else
+            {
                HB_COMP_PARAM->fLineNumbers = HB_FALSE;
+            }
             break;
 
          case 'M':
@@ -619,7 +667,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                ++szSwPtr;
             }
             else
+            {
                HB_COMP_PARAM->fSingleModule = HB_TRUE;
+            }
             break;
 
          case 'N':
@@ -671,7 +721,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                else
                {
                   if( *szSwPtr )
+                  {
                      szSwPtr = hb_compChkOptionFName( szSwPtr, &HB_COMP_PARAM->pPpoPath, fEnv );
+                  }
                   HB_COMP_PARAM->fPPO = HB_TRUE;
                }
             }
@@ -710,7 +762,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                   while( HB_ISDIGIT( *szSwPtr ) )
                      iCycles = iCycles * 10 + *szSwPtr++ - '0';
                   if( iCycles > 0 )
+                  {
                      HB_COMP_PARAM->iMaxTransCycles = iCycles;
+                  }
                }
             }
             else
@@ -757,7 +811,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                   szSwPtr += 12;
                }
                else
+               {
                   szSwPtr = hb_compChkAddDefine( HB_COMP_PARAM, szSwPtr + 6, HB_FALSE, fEnv );
+               }
                break;
             }
             ++szSwPtr;
@@ -780,7 +836,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
             else
             {
                if( HB_COMP_PARAM->szStdCh )
+               {
                   hb_xfree( HB_COMP_PARAM->szStdCh );
+               }
                szSwPtr = hb_compChkOptionGet( szSwPtr, &HB_COMP_PARAM->szStdCh, fEnv );
             }
             break;
@@ -793,7 +851,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                ++szSwPtr;
             }
             else
+            {
                HB_COMP_PARAM->fForceMemvars = HB_TRUE;
+            }
             break;
 
          case 'W':
@@ -822,7 +882,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                ++szSwPtr;
             }
             else
+            {
                HB_COMP_PARAM->supported &= ~HB_COMPFLAG_SHORTCUTS;
+            }
             break;
       }
    }
@@ -831,11 +893,15 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
    {
       if( szSwPtr - szSwitch <= 1 ||
           ( *szSwPtr != '\0' && *szSwPtr != ' ' && ! HB_ISOPTSEP( *szSwPtr ) ) )
+      {
          hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'F',
                           fEnv ? HB_COMP_ERR_BADOPTION : HB_COMP_ERR_BADPARAM,
                           szSwitch, nullptr );
+      }
       else
+      {
          return szSwPtr;
+      }
    }
 
    return "";
@@ -866,7 +932,9 @@ void hb_compChkEnvironment( HB_COMP_DECL )
    if( ! szEnvCMD || szEnvCMD[ 0 ] == '\0' )
    {
       if( szEnvCMD )
+      {
          hb_xfree( szEnvCMD );
+      }
       szEnvCMD = hb_getenv( "CLIPPERCMD" );
    }
 
@@ -879,7 +947,9 @@ void hb_compChkEnvironment( HB_COMP_DECL )
          while( *szSwitch == ' ' )
             ++szSwitch;
          if( *szSwitch )
+         {
             szSwitch = hb_compChkParseSwitch( HB_COMP_PARAM, szSwitch, HB_TRUE );
+         }
       }
       hb_xfree( szEnvCMD );
    }
@@ -892,7 +962,9 @@ void hb_compChkAddIncPaths( HB_COMP_DECL )
    if( szInclude )
    {
       if( szInclude[ 0 ] != '\0' )
+      {
          hb_pp_addSearchPath( HB_COMP_PARAM->pLex->pPP, szInclude, HB_FALSE );
+      }
       hb_xfree( szInclude );
    }
 }
@@ -904,9 +976,13 @@ void hb_compChkSetDefines( HB_COMP_DECL )
    while( pDefine )
    {
       if( pDefine->szValue == s_szUndefineMarker )
+      {
          hb_pp_delDefine( HB_COMP_PARAM->pLex->pPP, pDefine->szName );
+      }
       else
+      {
          hb_pp_addDefine( HB_COMP_PARAM->pLex->pPP, pDefine->szName, pDefine->szValue );
+      }
       pDefine = pDefine->pNext;
    }
 }

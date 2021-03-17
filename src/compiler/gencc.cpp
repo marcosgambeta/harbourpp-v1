@@ -82,7 +82,9 @@ void hb_compGenCString( FILE * yyc, const HB_BYTE * pText, HB_SIZE nLen )
        * are part of ANSI C standard
        */
       if( uchr == '"' || uchr == '\\' || uchr == '?' )
+      {
          fprintf( yyc, "\\%c", uchr );
+      }
       else if( uchr < static_cast< HB_BYTE >( ' ' ) || uchr >= 127 )
       {
          HB_BYTE uchrnext = nPos < nLen - 1 ? pText[ nPos + 1 ] : 0;
@@ -93,7 +95,9 @@ void hb_compGenCString( FILE * yyc, const HB_BYTE * pText, HB_SIZE nLen )
                   ( uchrnext >= static_cast< HB_BYTE >( 'A' ) && uchrnext <= static_cast< HB_BYTE >( 'Z' ) ) ? "\" \"" : "" );
       }
       else
+      {
          fprintf( yyc, "%c", uchr );
+      }
    }
    fputc( '"', yyc );
 }
@@ -112,14 +116,20 @@ static void hb_compGenCStrData( FILE * yyc, const HB_BYTE * pText, HB_SIZE nLen,
       for( HB_SIZE nPos = 0; nPos < nLen; nPos++ )
       {
          if( ( nPos & 0x0F ) == 0 )
+         {
             fprintf( yyc, "\n\t\t" );
+         }
          fprintf( yyc, "%d,", static_cast< int >( pText[ nPos ] ) );
       }
       fprintf( yyc, "0 };\n\t\thb_xvmPushString" );
       if( iMethod < 0 )
+      {
          fprintf( yyc, "Const( " );
+      }
       else
+      {
          fprintf( yyc, "Hidden( %d, ", iMethod );
+      }
       fprintf( yyc, "( const char * ) str,  %" HB_PFS "u );\n\t}\n", nLen );
    }
    else
@@ -127,9 +137,13 @@ static void hb_compGenCStrData( FILE * yyc, const HB_BYTE * pText, HB_SIZE nLen,
    {
       fprintf( yyc, "\thb_xvmPushString" );
       if( iMethod < 0 )
+      {
          fprintf( yyc, "Const( " );
+      }
       else
+      {
          fprintf( yyc, "Hidden( %d, ", iMethod );
+      }
       hb_compGenCString( yyc, pText, nLen );
       fprintf( yyc, ", %" HB_PFS "u );\n", nLen );
    }
@@ -138,7 +152,9 @@ static void hb_compGenCStrData( FILE * yyc, const HB_BYTE * pText, HB_SIZE nLen,
 static void hb_gencc_copyLocals( FILE * yyc, int iLocal1, int iLocal2 )
 {
    if( iLocal1 != iLocal2 )
+   {
       fprintf( yyc, "\thb_xvmCopyLocals( %d, %d );\n", iLocal1, iLocal2 );
+   }
 }
 
 static int hb_gencc_checkJumpCondAhead( HB_LONG lValue, PHB_HFUNC pFunc, HB_SIZE nPCodePos, PHB_LABEL_INFO cargo,
@@ -272,7 +288,9 @@ static int hb_gencc_checkNumAhead( HB_LONG lValue, PHB_HFUNC pFunc, HB_SIZE nPCo
             }
 #if -LONG_MAX > LONG_MIN
             else if( lValue < -LONG_MAX )
+            {
                break;
+            }
 #endif
             lValue = -lValue;
             /* fallthrough */
@@ -924,7 +942,9 @@ static HB_GENC_FUNC( hb_p_plus )
    iSkip = hb_gencc_checkPlusAhead( pFunc, nPCodePos + 1, cargo );
 
    if( iSkip != 0 )
+   {
       return 1 + iSkip;
+   }
 
    fprintf( cargo->yyc, "\tif( hb_xvmPlus() ) break;\n" );
    return 1;
@@ -1084,11 +1104,17 @@ static HB_GENC_FUNC( hb_p_pushblockshort )
    for( HB_USHORT us = 0; us < usSize; ++us )
    {
       if( ( us & 0x0f ) == 0 )
+      {
          fprintf( cargo->yyc, "\n\t\t\t" );
+      }
       if( us == usSize - 1 )
+      {
          fprintf( cargo->yyc, "%u", pFunc->pCode[ nPCodePos + us ] );
+      }
       else
+      {
          fprintf( cargo->yyc, "%u, ", pFunc->pCode[ nPCodePos + us ] );
+      }
    }
    fprintf( cargo->yyc, " };\n\t\thb_xvmPushBlockShort( codeblock, symbols );\n\t}\n" );
 
@@ -1109,11 +1135,17 @@ static HB_GENC_FUNC( hb_p_pushblock )
    for( HB_USHORT us = 0; us < usSize; ++us )
    {
       if( ( us & 0x0f ) == 0 )
+      {
          fprintf( cargo->yyc, "\n\t\t\t" );
+      }
       if( us == usSize - 1 )
+      {
          fprintf( cargo->yyc, "%u", pFunc->pCode[ nPCodePos + us ] );
+      }
       else
+      {
          fprintf( cargo->yyc, "%u, ", pFunc->pCode[ nPCodePos + us ] );
+      }
    }
    fprintf( cargo->yyc, " };\n\t\thb_xvmPushBlock( codeblock, symbols );\n\t}\n" );
 
@@ -1134,11 +1166,17 @@ static HB_GENC_FUNC( hb_p_pushblocklarge )
    for( HB_SIZE ul = 0; ul < nSize; ++ul )
    {
       if( ( ul & 0x0f ) == 0 )
+      {
          fprintf( cargo->yyc, "\n\t\t\t" );
+      }
       if( ul == nSize - 1 )
+      {
          fprintf( cargo->yyc, "%u", pFunc->pCode[ nPCodePos + ul ] );
+      }
       else
+      {
          fprintf( cargo->yyc, "%u, ", pFunc->pCode[ nPCodePos + ul ] );
+      }
    }
    fprintf( cargo->yyc, " };\n\t\thb_xvmPushBlock( codeblock, symbols );\n\t}\n" );
 
@@ -1189,7 +1227,9 @@ static HB_GENC_FUNC( hb_p_pushbyte )
    iSkip = hb_gencc_checkNumAhead( iVal, pFunc, nPCodePos + 2, cargo );
 
    if( iSkip == 0 )
+   {
       fprintf( cargo->yyc, "\thb_xvmPushInteger( %d );\n", iVal );
+   }
    return 2 + iSkip;
 }
 
@@ -1202,7 +1242,9 @@ static HB_GENC_FUNC( hb_p_pushint )
    iSkip = hb_gencc_checkNumAhead( iVal, pFunc, nPCodePos + 3, cargo );
 
    if( iSkip == 0 )
+   {
       fprintf( cargo->yyc, "\thb_xvmPushInteger( %d );\n", iVal );
+   }
    return 3 + iSkip;
 }
 
@@ -1316,7 +1358,9 @@ static HB_GENC_FUNC( hb_p_pushlonglong )
    iSkip = hb_gencc_checkNumAhead( llVal, pFunc, nPCodePos + 9, cargo );
 
    if( iSkip == 0 )
+   {
       fprintf( cargo->yyc, "\thb_xvmPushLong( %ldL );\n", static_cast< long >( llVal ) );
+   }
    fprintf( cargo->yyc, "#else\n" );
    fprintf( cargo->yyc, "\thb_xvmPushLongLong( HB_LL( %s ) );\n",
             hb_numToStr( szBuf, sizeof( szBuf ), llVal ) );
@@ -1327,11 +1371,15 @@ static HB_GENC_FUNC( hb_p_pushlonglong )
       {
          HB_BYTE opcode = pFunc->pCode[ nPCodePos + 9 + iDone ];
          if( opcode >= HB_P_LAST_PCODE )
+         {
             break;
+         }
          iDone += ( int ) cargo->pFuncTable[ opcode ]( pFunc, nPCodePos + 9 + iDone, cargo );
       }
       if( iDone != iSkip )
+      {
          HB_GENC_ERROR( "PCODE mismatch" );
+      }
    }
    fprintf( cargo->yyc, "#endif\n" );
    return 9 + iSkip;
@@ -1636,10 +1684,14 @@ static HB_GENC_FUNC( hb_p_seqend )
    HB_GENC_LABEL();
 
    if( nOffset == 4 ) /* no RECOVER clause */
+   {
       fprintf( cargo->yyc, "\tbreak;\n\t}\n\tif( hb_xvmSeqEnd() ) break;\n" );
+   }
    else               /* RECOVER exists */
+   {
       fprintf( cargo->yyc, "\tif( hb_xvmSeqEndTest() ) break;\n\tgoto lab%05" HB_PFS "u;\n\t}\n",
                HB_GENC_GETLABEL( nPCodePos + nOffset ) );
+   }
    cargo->iNestedBlock--;
    return 4;
 }
@@ -1701,11 +1753,17 @@ static HB_GENC_FUNC( hb_p_threadstatics )
    for( HB_SIZE ul = 0; ul < nSize; ++ul )
    {
       if( ( ul & 0x0f ) == 0 )
+      {
          fprintf( cargo->yyc, "\n\t\t\t" );
+      }
       if( ul == nSize - 1 )
+      {
          fprintf( cargo->yyc, "%u", pFunc->pCode[ nPCodePos + ul + 3 ] );
+      }
       else
+      {
          fprintf( cargo->yyc, "%u, ", pFunc->pCode[ nPCodePos + ul + 3 ] );
+      }
    }
    fprintf( cargo->yyc, " };\n\t\thb_xvmThreadStatics( %hu, statics );\n\t}\n", w );
 
@@ -1736,7 +1794,9 @@ static HB_GENC_FUNC( hb_p_one )
 
    iSkip = hb_gencc_checkNumAhead( 1, pFunc, nPCodePos + 1, cargo );
    if( iSkip == 0 )
+   {
       fprintf( cargo->yyc, "\thb_xvmPushInteger( 1 );\n" );
+   }
    return 1 + iSkip;
 }
 
@@ -1748,7 +1808,9 @@ static HB_GENC_FUNC( hb_p_zero )
 
    iSkip = hb_gencc_checkNumAhead( 0, pFunc, nPCodePos + 1, cargo );
    if( iSkip == 0 )
+   {
       fprintf( cargo->yyc, "\thb_xvmPushInteger( 0 );\n" );
+   }
    return 1 + iSkip;
 }
 
@@ -1849,9 +1911,13 @@ static HB_GENC_FUNC( hb_p_switch )
    {
       fprintf( cargo->yyc, "\t{\n\t\tPHB_ITEM pSwitch;\n\t\tHB_TYPE type;\n" );
       if( fStr )
+      {
          fprintf( cargo->yyc, "\t\tconst char * pszText;\n\t\tHB_SIZE nLen;\n" );
+      }
       if( fNum )
+      {
          fprintf( cargo->yyc, "\t\tlong lVal;\n" );
+      }
       fprintf( cargo->yyc,
                "\t\tif( hb_xvmSwitchGet( &pSwitch ) ) break;\n"
                "\t\ttype = hb_itemType( pSwitch );\n" );
@@ -1861,7 +1927,9 @@ static HB_GENC_FUNC( hb_p_switch )
          fprintf( cargo->yyc, "\t\tnLen = pszText ? hb_itemGetCLen( pSwitch ) : 0;\n" );
       }
       if( fNum )
+      {
          fprintf( cargo->yyc, "\t\tlVal = ( type & HB_IT_NUMINT ) ? hb_itemGetNL( pSwitch ) : 0;\n\n" );
+      }
    }
 
    nPCodePos = nStart + 3;
@@ -1907,9 +1975,13 @@ static HB_GENC_FUNC( hb_p_switch )
                HB_GENC_GETLABEL( nNewPos ) );
    }
    if( ! fDefault )
+   {
       fprintf( cargo->yyc, "\t\thb_stackPop();\n" );
+   }
    if( fStr || fNum )
+   {
       fprintf( cargo->yyc, "\t}\n" );
+   }
 
    return nPCodePos - nStart;
 }
@@ -2143,10 +2215,14 @@ static HB_GENC_FUNC( hb_p_withobjectmessage )
    HB_GENC_LABEL();
 
    if( usSym == 0xFFFF )
+   {
       fprintf( cargo->yyc, "\thb_xvmWithObjectMessage( NULL );\n" );
+   }
    else
+   {
       fprintf( cargo->yyc, "\thb_xvmWithObjectMessage( symbols + %hu );\n",
                usSym );
+   }
 
    return 3;
 }
@@ -2405,7 +2481,9 @@ void hb_compGenCRealCode( HB_COMP_DECL, PHB_HFUNC pFunc, FILE * yyc )
    label_info.iNestedBlock = 0;
    label_info.pFuncTable = ( const PHB_PCODE_FUNC * ) pFuncTable;
    if( pFunc->nPCodePos == 0 )
+   {
       label_info.pnLabels = nullptr;
+   }
    else
    {
       label_info.pnLabels = static_cast< HB_SIZE * >( hb_xgrabz( pFunc->nPCodePos * sizeof( HB_SIZE ) ) );
@@ -2414,16 +2492,22 @@ void hb_compGenCRealCode( HB_COMP_DECL, PHB_HFUNC pFunc, FILE * yyc )
 
    fprintf( yyc, "{\n" );
    if( label_info.fCondJump )
+   {
       fprintf( yyc, "   HB_BOOL fValue;\n" );
+   }
    fprintf( yyc, "   do {\n" );
 
    hb_compPCodeEval( pFunc, ( const PHB_PCODE_FUNC * ) pFuncTable, static_cast< void * >( &label_info ) );
 
    fprintf( yyc, "   } while( 0 );\n" );
    if( label_info.fEndRequest )
+   {
       fprintf( yyc, "   hb_xvmExitProc();\n" );
+   }
    fprintf( yyc, "}\n" );
 
    if( label_info.pnLabels )
+   {
       hb_xfree( label_info.pnLabels );
+   }   
 }

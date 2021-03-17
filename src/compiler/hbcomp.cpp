@@ -59,7 +59,9 @@ static PHB_EXPR hb_compExprAlloc( HB_COMP_DECL )
       pExpItm->pPrev->pNext = pExpItm;
    }
    else
+   {
       pExpItm->pPrev = pExpItm->pNext = pExpItm;
+   }
 
    return &pExpItm->Expression;
 }
@@ -75,14 +77,20 @@ static void hb_compExprDealloc( HB_COMP_DECL, PHB_EXPR pExpr )
       if( pExpItm == HB_COMP_PARAM->pExprLst )
       {
          if( pExpItm->pNext == pExpItm )
+         {
             HB_COMP_PARAM->pExprLst = nullptr;
+         }
          else
+         {
             HB_COMP_PARAM->pExprLst = pExpItm->pNext;
+         }
       }
       hb_xfree( pExpItm );
    }
    else
+   {
       pExpr->ExprType = HB_ET_NONE;
+   }
 }
 
 static PHB_EXPR hb_compExprNew( HB_COMP_DECL, HB_EXPRTYPE iType )
@@ -170,21 +178,31 @@ static void hb_compOutMsg( void * cargo, int iErrorFmt, int iLine,
    if( szModule )
    {
       if( iErrorFmt == HB_ERRORFMT_CLIPPER )
+      {
          hb_snprintf( buffer, sizeof( buffer ), "\r%s(%i) ", szModule, iLine );
+      }
       else if( iLine )
+      {
          hb_snprintf( buffer, sizeof( buffer ), "\n%s:%i: ", szModule, iLine );
+      }
       else
+      {
          hb_snprintf( buffer, sizeof( buffer ), "\n%s:%s ", szModule, szPar2 );
+      }
 
       hb_compOutErr( static_cast< PHB_COMP >( cargo ), buffer );
    }
 
    if( iErrorFmt == HB_ERRORFMT_CLIPPER )
+   {
       hb_snprintf( buffer, sizeof( buffer ), "%s %c%04i  ",
                    cPrefix == 'W' ? "Warning" : "Error", cPrefix, iValue );
+   }
    else
+   {
       hb_snprintf( buffer, sizeof( buffer ), "%s %c%04i  ",
                    cPrefix == 'W' ? "warning" : "error", cPrefix, iValue );
+   }
 
    hb_compOutErr( static_cast< PHB_COMP >( cargo ), buffer );
    hb_snprintf( buffer, sizeof( buffer ), szText, szPar1, szPar2 );
@@ -197,7 +215,9 @@ void hb_compOutStd( HB_COMP_DECL, const char * szMessage )
    if( ! HB_COMP_PARAM->fFullQuiet )
    {
       if( HB_COMP_PARAM->outStdFunc )
+      {
          HB_COMP_PARAM->outStdFunc( HB_COMP_PARAM, szMessage );
+      }
       else
       {
 #if defined( HB_OS_DOS )
@@ -214,7 +234,9 @@ void hb_compOutErr( HB_COMP_DECL, const char * szMessage )
    if( ! HB_COMP_PARAM->fFullQuiet )
    {
       if( HB_COMP_PARAM->outErrFunc )
+      {
          HB_COMP_PARAM->outErrFunc( HB_COMP_PARAM, szMessage );
+      }
       else
       {
 #if defined( HB_OS_DOS )
@@ -306,15 +328,21 @@ void hb_comp_free( PHB_COMP pComp )
     * memory leaks
     */
    if( pComp->iErrorCount != 0 )
+   {
       hb_compExprLstDealloc( pComp );
+   }
 
    hb_compIdentifierClose( pComp );
 
    if( pComp->pOutPath )
+   {
       hb_xfree( pComp->pOutPath );
+   }
 
    if( pComp->pPpoPath )
+   {
       hb_xfree( pComp->pPpoPath );
+   }
 
    while( pComp->modules )
    {
@@ -333,20 +361,28 @@ void hb_comp_free( PHB_COMP pComp )
    }
 
    if( pComp->pOutBuf )
+   {
       hb_xfree( pComp->pOutBuf );
+   }
 
    if( pComp->pLex )
    {
       if( pComp->pLex->pPP )
+      {
          hb_pp_free( pComp->pLex->pPP );
+      }
       hb_xfree( pComp->pLex );
    }
 
    if( pComp->szDepExt )
+   {
       hb_xfree( pComp->szDepExt );
+   }
 
    if( pComp->szStdCh )
+   {
       hb_xfree( pComp->szStdCh );
+   }
 
    if( pComp->iStdChExt > 0 )
    {
@@ -359,7 +395,9 @@ void hb_comp_free( PHB_COMP pComp )
    }
 
    if( pComp->pI18nFileName )
+   {
       hb_xfree( pComp->pI18nFileName );
+   }
 
    hb_xfree( pComp );
 }

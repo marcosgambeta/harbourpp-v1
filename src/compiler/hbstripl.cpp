@@ -83,7 +83,9 @@ static HB_STRIP_FUNC( hb_p_line )
                   break;
             }
             if( nNewPos != nPCodePos && pFunc->pCode[ nNewPos ] == HB_P_LINE )
+            {
                hb_compNOOPfill( pFunc, nPCodePos, 3, HB_FALSE, HB_FALSE );
+            }
          }
    }
 

@@ -61,12 +61,16 @@ static void s_pp_msg( void * cargo, int iErrorFmt, int iLine,
 
       hb_snprintf( szMsgBuf, sizeof( szMsgBuf ), szText, szPar1, szPar2 );
       if( ! szModule || *szModule == 0 || strcmp( szModule, "{SOURCE}.prg" ) == 0 )
+      {
          hb_snprintf( szLine, sizeof( szLine ),
                       "line:%i", iLine );
+      }
       else
+      {
          hb_snprintf( szLine, sizeof( szLine ),
                       iErrorFmt == HB_ERRORFMT_CLIPPER ? "%s(%i)" : "%s:%i",
                       szModule, iLine );
+      }
       pError = hb_errRT_New( ES_ERROR, "COMPILER", 1001, static_cast< HB_ERRCODE >( iValue ),
                              szMsgBuf, szLine, 0 /*OsCode*/, EF_NONE );
       hb_errLaunch( pError );
@@ -160,13 +164,17 @@ static void hb_compGenArgList( int iFirst, int iLast,
                do
                {
                   if( hb_arrayGetType( pParam, nPos ) & HB_IT_STRING )
+                  {
                      ++argc;
+                  }
                }
                while( --nPos );
             }
          }
          else if( HB_IS_STRING( pParam ) )
+         {
             ++argc;
+         }
       }
    }
 
@@ -183,11 +191,15 @@ static void hb_compGenArgList( int iFirst, int iLast,
             for( HB_SIZE nPos = 1; nPos <= nLen; ++nPos )
             {
                if( hb_arrayGetType( pParam, nPos ) & HB_IT_STRING )
+               {
                   argv[ argc++ ] = hb_arrayGetCPtr( pParam, nPos );
+               }
             }
          }
          else if( HB_IS_STRING( pParam ) )
+         {
             argv[ argc++ ] = hb_itemGetCPtr( pParam );
+         }
       }
    }
    argv[ argc ] = nullptr;
@@ -224,7 +236,9 @@ HB_FUNC( HB_COMPILEBUF )
    hb_xfree( static_cast< void * >( argv ) );
 
    if( iResult == EXIT_SUCCESS && pBuffer )
+   {
       hb_retclen_buffer( reinterpret_cast< char * >( pBuffer ), nLen );
+   }
 }
 
 HB_FUNC( HB_COMPILEFROMBUF )
@@ -246,6 +260,8 @@ HB_FUNC( HB_COMPILEFROMBUF )
       hb_xfree( static_cast< void * >( argv ) );
 
       if( iResult == EXIT_SUCCESS && pBuffer )
+      {
          hb_retclen_buffer( reinterpret_cast< char * >( pBuffer ), nLen );
+      }   
    }
 }
