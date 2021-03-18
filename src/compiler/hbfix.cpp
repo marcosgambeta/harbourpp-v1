@@ -57,7 +57,6 @@ typedef struct HB_stru_fix_info
 typedef HB_FIX_FUNC( HB_FIX_FUNC_ );
 typedef HB_FIX_FUNC_ * PHB_FIX_FUNC;
 
-
 static HB_FIX_FUNC( hb_p_pushblock )
 {
    HB_BYTE * pLocal = &pFunc->pCode[ nPCodePos + 7 ];

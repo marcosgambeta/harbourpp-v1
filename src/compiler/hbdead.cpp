@@ -65,7 +65,6 @@ typedef HB_CODETRACE_FUNC_ * PHB_CODETRACE_FUNC;
 
 #define HB_JUMPADDR_ALLOC  64
 
-
 static void hb_compCodeTraceAddJump( PHB_CODETRACE_INFO pInfo, HB_SIZE nPCodePos )
 {
    /* Checking for nPCodePos < pInfo->nPCodeSize disabled intentionally
@@ -79,14 +78,12 @@ static void hb_compCodeTraceAddJump( PHB_CODETRACE_INFO pInfo, HB_SIZE nPCodePos
       if( pInfo->nJumpSize == 0 )
       {
          pInfo->nJumpSize = HB_JUMPADDR_ALLOC;
-         pInfo->pnJumps = static_cast< HB_SIZE * >( hb_xgrab( pInfo->nJumpSize *
-                                                  sizeof( HB_SIZE ) ) );
+         pInfo->pnJumps = static_cast< HB_SIZE * >( hb_xgrab( pInfo->nJumpSize * sizeof( HB_SIZE ) ) );
       }
       else if( pInfo->nJumpSize == pInfo->nJumpCount )
       {
          pInfo->nJumpSize += HB_JUMPADDR_ALLOC;
-         pInfo->pnJumps = static_cast< HB_SIZE * >( hb_xrealloc( pInfo->pnJumps,
-                                                     pInfo->nJumpSize * sizeof( HB_SIZE ) ) );
+         pInfo->pnJumps = static_cast< HB_SIZE * >( hb_xrealloc( pInfo->pnJumps, pInfo->nJumpSize * sizeof( HB_SIZE ) ) );
       }
       pInfo->pnJumps[ pInfo->nJumpCount++ ] = nPCodePos;
       pInfo->pCodeMark[ nPCodePos ] = 1;
@@ -250,8 +247,7 @@ static HB_CODETRACE_FUNC( hb_p_seqbegin )
    /* this is a hack for -gc3 output - it's not really necessary
     * for pure PCODE evaluation
     */
-   if( pFunc->pCode[ nRecoverPos ] != HB_P_SEQEND &&
-       pFunc->pCode[ nRecoverPos - 4 ] == HB_P_SEQEND )
+   if( pFunc->pCode[ nRecoverPos ] != HB_P_SEQEND && pFunc->pCode[ nRecoverPos - 4 ] == HB_P_SEQEND )
    {
       hb_compCodeTraceAddJump( cargo, nRecoverPos - 4 );
    }
@@ -330,8 +326,7 @@ static HB_CODETRACE_FUNC( hb_p_switch )
    }
    hb_compCodeTraceMark( cargo, nStart, nPCodePos - nStart );
 
-   return hb_compCodeTraceNextPos( cargo, us > usCases ?
-                                   cargo->nPCodeSize : nPCodePos );
+   return hb_compCodeTraceNextPos( cargo, us > usCases ? cargo->nPCodeSize : nPCodePos );
 }
 
 static HB_CODETRACE_FUNC( hb_p_endblock )

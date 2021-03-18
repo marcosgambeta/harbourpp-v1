@@ -103,8 +103,7 @@ void hb_compPrintUsage( HB_COMP_DECL, const char * szSelf )
    };
    char buffer[ 256 ];
 
-   hb_snprintf( buffer, sizeof( buffer ),
-                "\nSyntax:  %s <file[s][.prg]|@file> [options]\n", szSelf );
+   hb_snprintf( buffer, sizeof( buffer ), "\nSyntax:  %s <file[s][.prg]|@file> [options]\n", szSelf );
    hb_compOutStd( HB_COMP_PARAM, buffer );
 
    for( int iLine = 0; iLine < static_cast< int >( HB_SIZEOFARRAY( s_szOptions ) ); iLine++ )
@@ -265,7 +264,6 @@ void hb_compPrintLogo( HB_COMP_DECL )
    #define HB_VER_ORIGIN_URL   "https://harbour.github.io/"
 
    hb_compOutStd( HB_COMP_PARAM, szVer );
-   hb_compOutStd( HB_COMP_PARAM,
-      "\nCopyright (c) 1999-" HB_VER_COMMIT_YEAR ", " HB_VER_ORIGIN_URL "\n" );
+   hb_compOutStd( HB_COMP_PARAM, "\nCopyright (c) 1999-" HB_VER_COMMIT_YEAR ", " HB_VER_ORIGIN_URL "\n" );
    hb_xfree( szVer );
 }

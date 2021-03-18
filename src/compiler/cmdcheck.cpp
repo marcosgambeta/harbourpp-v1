@@ -56,8 +56,7 @@ static HB_SIZE hb_compChkOptionLen( const char * szSwitch, HB_BOOL fEnv )
    if( fEnv )
    {
       nLen = 0;
-      while( szSwitch[ nLen ] != '\0' &&
-             szSwitch[ nLen ] != ' ' && szSwitch[ nLen ] != '-' )
+      while( szSwitch[ nLen ] != '\0' && szSwitch[ nLen ] != ' ' && szSwitch[ nLen ] != '-' )
       {
          ++nLen;
       }
@@ -70,8 +69,7 @@ static HB_SIZE hb_compChkOptionLen( const char * szSwitch, HB_BOOL fEnv )
    return nLen;
 }
 
-static const char * hb_compChkAddDefine( HB_COMP_DECL, const char * szSwitch,
-                                         HB_BOOL fAdd, HB_BOOL fEnv )
+static const char * hb_compChkAddDefine( HB_COMP_DECL, const char * szSwitch, HB_BOOL fAdd, HB_BOOL fEnv )
 {
    const char * szSwPtr = szSwitch;
    HB_SIZE nValue = 0;
@@ -103,8 +101,7 @@ static const char * hb_compChkAddDefine( HB_COMP_DECL, const char * szSwitch,
       }
 
       pDefinePtr = &HB_COMP_PARAM->ppdefines;
-      while( *pDefinePtr != nullptr &&
-             strcmp( ( *pDefinePtr )->szName, szDefine ) != 0 )
+      while( *pDefinePtr != nullptr && strcmp( ( *pDefinePtr )->szName, szDefine ) != 0 )
       {
          pDefinePtr = &( *pDefinePtr )->pNext;
       }
@@ -134,12 +131,10 @@ static void hb_compChkIgnoredInfo( HB_COMP_DECL, const char * szSwitch )
 
 static char * hb_compChkOptionDup( const char * szSwitch )
 {
-   return hb_strupr( hb_strndup( szSwitch,
-                                 hb_compChkOptionLen( szSwitch, HB_TRUE ) ) );
+   return hb_strupr( hb_strndup( szSwitch, hb_compChkOptionLen( szSwitch, HB_TRUE ) ) );
 }
 
-static const char * hb_compChkOptionGet( const char * szSwitch,
-                                         char ** pszResult, HB_BOOL fEnv )
+static const char * hb_compChkOptionGet( const char * szSwitch, char ** pszResult, HB_BOOL fEnv )
 {
    HB_SIZE nLen = hb_compChkOptionLen( szSwitch, fEnv );
 
@@ -151,8 +146,7 @@ static const char * hb_compChkOptionGet( const char * szSwitch,
    return szSwitch + nLen;
 }
 
-static const char * hb_compChkOptionFName( const char * szSwitch,
-                                           PHB_FNAME * pResult, HB_BOOL fEnv )
+static const char * hb_compChkOptionFName( const char * szSwitch, PHB_FNAME * pResult, HB_BOOL fEnv )
 {
    HB_SIZE nLen = hb_compChkOptionLen( szSwitch, fEnv );
 
@@ -176,8 +170,7 @@ static const char * hb_compChkOptionFName( const char * szSwitch,
    return szSwitch + nLen;
 }
 
-static const char * hb_compChkOptionAddPath( HB_COMP_DECL, const char * szSwitch,
-                                             HB_BOOL fEnv )
+static const char * hb_compChkOptionAddPath( HB_COMP_DECL, const char * szSwitch, HB_BOOL fEnv )
 {
    HB_SIZE nLen = hb_compChkOptionLen( szSwitch, fEnv );
 
@@ -197,8 +190,7 @@ static const char * hb_compChkOptionAddPath( HB_COMP_DECL, const char * szSwitch
    return szSwitch + nLen;
 }
 
-static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
-                                           HB_BOOL fEnv )
+static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, HB_BOOL fEnv )
 {
    const char * szSwPtr = szSwitch;
 
@@ -264,8 +256,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
          {
             char *szOption = hb_compChkOptionDup( szSwPtr );
 
-            if( strlen( szOption ) >= 4 &&
-                strncmp( "CREDITS", szOption, strlen( szOption ) ) == 0 )
+            if( strlen( szOption ) >= 4 && strncmp( "CREDITS", szOption, strlen( szOption ) ) == 0 )
             {
                HB_COMP_PARAM->fCredits = HB_TRUE;
                szSwPtr += strlen( szOption );
@@ -527,8 +518,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                   case 'C':
                      /* clear all flags - minimal set of features */
                      HB_COMP_PARAM->supported &= HB_COMPFLAG_SHORTCUTS;
-                     HB_COMP_PARAM->supported |= HB_COMPFLAG_OPTJUMP |
-                                                 HB_COMPFLAG_MACROTEXT;
+                     HB_COMP_PARAM->supported |= HB_COMPFLAG_OPTJUMP | HB_COMPFLAG_MACROTEXT;
                      break;
 
                   case 'X':
@@ -832,9 +822,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
                   HB_COMP_PARAM->szStdChExt = static_cast< char ** >(
                      ( HB_COMP_PARAM->iStdChExt == 0 ?
                         hb_xgrab( sizeof( char * ) ) :
-                        hb_xrealloc( HB_COMP_PARAM->szStdChExt,
-                                     ( HB_COMP_PARAM->iStdChExt + 1 ) *
-                                     sizeof( char * ) ) ) );
+                        hb_xrealloc( HB_COMP_PARAM->szStdChExt, ( HB_COMP_PARAM->iStdChExt + 1 ) * sizeof( char * ) ) ) );
                   szSwPtr = hb_compChkOptionGet( szSwPtr + 1,
                                                  &HB_COMP_PARAM->szStdChExt[ HB_COMP_PARAM->iStdChExt++ ],
                                                  fEnv );
@@ -898,8 +886,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch,
 
    if( ! HB_COMP_PARAM->fExit )
    {
-      if( szSwPtr - szSwitch <= 1 ||
-          ( *szSwPtr != '\0' && *szSwPtr != ' ' && ! HB_ISOPTSEP( *szSwPtr ) ) )
+      if( szSwPtr - szSwitch <= 1 || ( *szSwPtr != '\0' && *szSwPtr != ' ' && ! HB_ISOPTSEP( *szSwPtr ) ) )
       {
          hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'F',
                           fEnv ? HB_COMP_ERR_BADOPTION : HB_COMP_ERR_BADPARAM,

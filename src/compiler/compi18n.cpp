@@ -165,8 +165,7 @@ static PHB_I18NSTRING hb_compI18nAddSingle( HB_COMP_DECL, const char * szText, c
       }
    }
 
-   memmove( &pI18n->pString[ uiLeft + 1 ], &pI18n->pString[ uiLeft ],
-            ( pI18n->uiCount - uiLeft ) * sizeof( HB_I18NSTRING ) );
+   memmove( &pI18n->pString[ uiLeft + 1 ], &pI18n->pString[ uiLeft ], ( pI18n->uiCount - uiLeft ) * sizeof( HB_I18NSTRING ) );
 
    pString              = &pI18n->pString[ uiLeft ];
    pString->szText      = szText;
@@ -181,8 +180,7 @@ static PHB_I18NSTRING hb_compI18nAddSingle( HB_COMP_DECL, const char * szText, c
    return pString;
 }
 
-void hb_compI18nAdd( HB_COMP_DECL, const char * szText, const char * szContext,
-                     const char * szModule, HB_UINT uiLine )
+void hb_compI18nAdd( HB_COMP_DECL, const char * szText, const char * szContext, const char * szModule, HB_UINT uiLine )
 {
    hb_compI18nAddSingle( HB_COMP_PARAM, szText, szContext, szModule, uiLine );
 }
@@ -376,9 +374,7 @@ HB_BOOL hb_compI18nSave( HB_COMP_DECL, HB_BOOL fFinal )
       PHB_I18NSTRING pString = &pI18n->pString[ uiIndex ];
       HB_UINT        uiLine;
 
-      fprintf( file, "#: %s:%u",
-               hb_compI18nFileName( szFileName, pString->pPos.szFile ),
-               pString->pPos.uiLine );
+      fprintf( file, "#: %s:%u", hb_compI18nFileName( szFileName, pString->pPos.szFile ), pString->pPos.uiLine );
 
       for( uiLine = 0; uiLine < pString->uiPosCount; ++uiLine )
          fprintf( file, " %s:%u",

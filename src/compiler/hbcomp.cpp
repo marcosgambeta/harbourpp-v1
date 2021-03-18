@@ -195,13 +195,11 @@ static void hb_compOutMsg( void * cargo, int iErrorFmt, int iLine,
 
    if( iErrorFmt == HB_ERRORFMT_CLIPPER )
    {
-      hb_snprintf( buffer, sizeof( buffer ), "%s %c%04i  ",
-                   cPrefix == 'W' ? "Warning" : "Error", cPrefix, iValue );
+      hb_snprintf( buffer, sizeof( buffer ), "%s %c%04i  ", cPrefix == 'W' ? "Warning" : "Error", cPrefix, iValue );
    }
    else
    {
-      hb_snprintf( buffer, sizeof( buffer ), "%s %c%04i  ",
-                   cPrefix == 'W' ? "warning" : "error", cPrefix, iValue );
+      hb_snprintf( buffer, sizeof( buffer ), "%s %c%04i  ", cPrefix == 'W' ? "warning" : "error", cPrefix, iValue );
    }
 
    hb_compOutErr( static_cast< PHB_COMP >( cargo ), buffer );

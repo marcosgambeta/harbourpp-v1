@@ -77,8 +77,7 @@ static void hb_pp_Disp( void * cargo, const char * szMessage )
    hb_compOutStd( HB_COMP_PARAM, szMessage );
 }
 
-static void hb_pp_PragmaDump( void * cargo, char * pBuffer, HB_SIZE nSize,
-                              int iLine )
+static void hb_pp_PragmaDump( void * cargo, char * pBuffer, HB_SIZE nSize, int iLine )
 {
    PHB_HINLINE pInline;
 
@@ -89,8 +88,7 @@ static void hb_pp_PragmaDump( void * cargo, char * pBuffer, HB_SIZE nSize,
    pInline->nPCodeSize = nSize;
 }
 
-static void hb_pp_hb_inLine( void * cargo, char * szFunc,
-                             char * pBuffer, HB_SIZE nSize, int iLine )
+static void hb_pp_hb_inLine( void * cargo, char * szFunc, char * pBuffer, HB_SIZE nSize, int iLine )
 {
    HB_COMP_DECL = static_cast< PHB_COMP >( cargo );
 
@@ -113,8 +111,7 @@ static void hb_pp_hb_inLine( void * cargo, char * szFunc,
    }
 }
 
-static HB_BOOL hb_pp_CompilerSwitch( void * cargo, const char * szSwitch,
-                                     int * piValue, HB_BOOL fSet )
+static HB_BOOL hb_pp_CompilerSwitch( void * cargo, const char * szSwitch, int * piValue, HB_BOOL fSet )
 {
    HB_COMP_DECL = static_cast< PHB_COMP >( cargo );
    HB_BOOL fError = HB_FALSE;
@@ -294,8 +291,7 @@ static HB_BOOL hb_pp_CompilerSwitch( void * cargo, const char * szSwitch,
                {
                   /* clear all flags - minimal set of features */
                   HB_COMP_PARAM->supported &= HB_COMPFLAG_SHORTCUTS;
-                  HB_COMP_PARAM->supported |= HB_COMPFLAG_OPTJUMP |
-                                              HB_COMPFLAG_MACROTEXT;
+                  HB_COMP_PARAM->supported |= HB_COMPFLAG_OPTJUMP | HB_COMPFLAG_MACROTEXT;
                }
                else
                {
@@ -518,9 +514,8 @@ void hb_compInitPP( HB_COMP_DECL, PHB_PP_OPEN_FUNC pOpenFunc )
 
          while( i < HB_COMP_PARAM->iStdChExt )
          {
-            hb_pp_readRules( HB_COMP_PARAM->pLex->pPP,
-                             HB_COMP_PARAM->szStdChExt[ i++ ] );
-         }                    
+            hb_pp_readRules( HB_COMP_PARAM->pLex->pPP, HB_COMP_PARAM->szStdChExt[ i++ ] );
+         }
       }
 
       /* mark current rules as standard ones */

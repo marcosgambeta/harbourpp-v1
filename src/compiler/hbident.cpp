@@ -49,8 +49,7 @@ const char * hb_compIdentifierNew( HB_COMP_DECL, const char * szName, int iType 
          szIdent = szName;
       }
 
-      hb_hashTableAdd( HB_COMP_PARAM->pIdentifiers,
-                       static_cast< const void * >( szIdent ), static_cast< const void * >( szIdent ) );
+      hb_hashTableAdd( HB_COMP_PARAM->pIdentifiers, static_cast< const void * >( szIdent ), static_cast< const void * >( szIdent ) );
    }
    else if( iType == HB_IDENT_FREE )
    {
@@ -70,7 +69,7 @@ static HB_HASH_FUNC( hb_comp_IdentKey )    /* HB_SIZE func (void *Value, void *C
    {
       nSum += *szName++;
    }
-   
+
    HB_SYMBOL_UNUSED( HashPtr );
    HB_SYMBOL_UNUSED( Cargo );
 
@@ -96,8 +95,7 @@ static HB_HASH_FUNC( hb_comp_IdentComp )
 /* initialize the hash table for identifiers */
 void hb_compIdentifierOpen( HB_COMP_DECL )
 {
-   HB_COMP_PARAM->pIdentifiers = hb_hashTableCreate( HB_IDENT_TABLE_SIZE,
-                     hb_comp_IdentKey, hb_comp_IdentDel, hb_comp_IdentComp );
+   HB_COMP_PARAM->pIdentifiers = hb_hashTableCreate( HB_IDENT_TABLE_SIZE, hb_comp_IdentKey, hb_comp_IdentDel, hb_comp_IdentComp );
 }
 
 /* release identifiers table */

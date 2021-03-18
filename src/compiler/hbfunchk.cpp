@@ -33,7 +33,6 @@ typedef struct
    int          iMaxParam;                /* max number of parameters needed */
 } HB_FUNCINFO, * PHB_FUNCINFO;
 
-
 /* NOTE: THIS TABLE MUST BE SORTED ALPHABETICALLY
  */
 static const HB_FUNCINFO s_stdFunc[] =

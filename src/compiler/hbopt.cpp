@@ -52,7 +52,6 @@
 typedef HB_OPT_FUNC( HB_OPT_FUNC_ );
 typedef HB_OPT_FUNC_ * PHB_OPT_FUNC;
 
-
 static HB_OPT_FUNC( hb_p_poplocal )
 {
    HB_BYTE * pVar = &pFunc->pCode[ nPCodePos + 1 ];
@@ -88,8 +87,7 @@ static HB_OPT_FUNC( hb_p_pushlocal )
    {
       hb_compNOOPfill( pFunc, nPCodePos, 5, HB_FALSE, HB_FALSE );
    }
-   else if( pFunc->pCode[ nPCodePos + 3 ] == HB_P_POP &&
-            ! hb_compHasJump( pFunc, nPCodePos + 3 ) )
+   else if( pFunc->pCode[ nPCodePos + 3 ] == HB_P_POP && ! hb_compHasJump( pFunc, nPCodePos + 3 ) )
    {
       hb_compNOOPfill( pFunc, nPCodePos, 4, HB_FALSE, HB_FALSE );
    }
@@ -119,8 +117,7 @@ static HB_OPT_FUNC( hb_p_pushlocalnear )
    {
       hb_compNOOPfill( pFunc, nPCodePos, 4, HB_FALSE, HB_FALSE );
    }
-   else if( pFunc->pCode[ nPCodePos + 2 ] == HB_P_POP &&
-            ! hb_compHasJump( pFunc, nPCodePos + 2 ) )
+   else if( pFunc->pCode[ nPCodePos + 2 ] == HB_P_POP && ! hb_compHasJump( pFunc, nPCodePos + 2 ) )
    {
       hb_compNOOPfill( pFunc, nPCodePos, 3, HB_FALSE, HB_FALSE );
    }
@@ -156,8 +153,7 @@ static HB_OPT_FUNC( hb_p_pushstatic )
    {
       hb_compNOOPfill( pFunc, nPCodePos, 6, HB_FALSE, HB_FALSE );
    }
-   else if( pFunc->pCode[ nPCodePos + 3 ] == HB_P_POP &&
-            ! hb_compHasJump( pFunc, nPCodePos + 3 ) )
+   else if( pFunc->pCode[ nPCodePos + 3 ] == HB_P_POP && ! hb_compHasJump( pFunc, nPCodePos + 3 ) )
    {
       hb_compNOOPfill( pFunc, nPCodePos, 4, HB_FALSE, HB_FALSE );
    }
@@ -176,8 +172,7 @@ static HB_OPT_FUNC( hb_p_pushmemvar )
    {
       hb_compNOOPfill( pFunc, nPCodePos, 6, HB_FALSE, HB_FALSE );
    }
-   else if( pFunc->pCode[ nPCodePos + 3 ] == HB_P_POP &&
-            ! hb_compHasJump( pFunc, nPCodePos + 3 ) )
+   else if( pFunc->pCode[ nPCodePos + 3 ] == HB_P_POP && ! hb_compHasJump( pFunc, nPCodePos + 3 ) )
    {
       hb_compNOOPfill( pFunc, nPCodePos, 4, HB_FALSE, HB_FALSE );
    }
@@ -189,8 +184,7 @@ static HB_OPT_FUNC( hb_p_pushnil )
 {
    HB_SYMBOL_UNUSED( cargo );
 
-   if( pFunc->pCode[ nPCodePos + 1 ] == HB_P_POP &&
-       ! hb_compHasJump( pFunc, nPCodePos + 1 ) )
+   if( pFunc->pCode[ nPCodePos + 1 ] == HB_P_POP && ! hb_compHasJump( pFunc, nPCodePos + 1 ) )
    {
       hb_compNOOPfill( pFunc, nPCodePos, 2, HB_FALSE, HB_FALSE );
    }
@@ -474,8 +468,7 @@ static HB_OPT_FUNC( hb_p_not )
          break;
    }
 
-   if( opcode < HB_P_LAST_PCODE &&
-       ! hb_compHasJump( pFunc, nPCodePos + 1 ) )
+   if( opcode < HB_P_LAST_PCODE && ! hb_compHasJump( pFunc, nPCodePos + 1 ) )
    {
       hb_compNOOPfill( pFunc, nPCodePos, 1, HB_FALSE, HB_FALSE );
       if( opcode == HB_P_NOOP )
@@ -558,8 +551,7 @@ static HB_OPT_FUNC( hb_p_jumpfalsefar )
 
    HB_SYMBOL_UNUSED( cargo );
 
-   if( nOffset == 8 && pFunc->pCode[ nPCodePos + 4 ] == HB_P_JUMPFAR &&
-       ! hb_compHasJump( pFunc, nPCodePos + 4 ) )
+   if( nOffset == 8 && pFunc->pCode[ nPCodePos + 4 ] == HB_P_JUMPFAR && ! hb_compHasJump( pFunc, nPCodePos + 4 ) )
    {
       hb_compNOOPfill( pFunc, nPCodePos, 4, HB_FALSE, HB_FALSE );
       pFunc->pCode[ nPCodePos + 4 ] = HB_P_JUMPTRUEFAR;
@@ -604,8 +596,7 @@ static HB_OPT_FUNC( hb_p_jumptruefar )
 
    HB_SYMBOL_UNUSED( cargo );
 
-   if( nOffset == 8 && pFunc->pCode[ nPCodePos + 4 ] == HB_P_JUMPFAR &&
-       ! hb_compHasJump( pFunc, nPCodePos + 4 ) )
+   if( nOffset == 8 && pFunc->pCode[ nPCodePos + 4 ] == HB_P_JUMPFAR && ! hb_compHasJump( pFunc, nPCodePos + 4 ) )
    {
       hb_compNOOPfill( pFunc, nPCodePos, 4, HB_FALSE, HB_FALSE );
       pFunc->pCode[ nPCodePos + 4 ] = HB_P_JUMPFALSEFAR;
@@ -703,8 +694,7 @@ static HB_OPT_FUNC( hb_p_function )
 {
    HB_SYMBOL_UNUSED( cargo );
 
-   if( pFunc->pCode[ nPCodePos + 3 ] == HB_P_RETVALUE &&
-       ! hb_compHasJump( pFunc, nPCodePos + 3 ) )
+   if( pFunc->pCode[ nPCodePos + 3 ] == HB_P_RETVALUE && ! hb_compHasJump( pFunc, nPCodePos + 3 ) )
    {
       pFunc->pCode[ nPCodePos ] = HB_P_DO;
       hb_compNOOPfill( pFunc, nPCodePos + 3, 1, HB_FALSE, HB_FALSE );
@@ -716,8 +706,7 @@ static HB_OPT_FUNC( hb_p_functionshort )
 {
    HB_SYMBOL_UNUSED( cargo );
 
-   if( pFunc->pCode[ nPCodePos + 2 ] == HB_P_RETVALUE &&
-       ! hb_compHasJump( pFunc, nPCodePos + 2 ) )
+   if( pFunc->pCode[ nPCodePos + 2 ] == HB_P_RETVALUE && ! hb_compHasJump( pFunc, nPCodePos + 2 ) )
    {
       pFunc->pCode[ nPCodePos ] = HB_P_DOSHORT;
       hb_compNOOPfill( pFunc, nPCodePos + 2, 1, HB_FALSE, HB_FALSE );
@@ -729,8 +718,7 @@ static HB_OPT_FUNC( hb_p_macrofunc )
 {
    HB_SYMBOL_UNUSED( cargo );
 
-   if( pFunc->pCode[ nPCodePos + 3 ] == HB_P_RETVALUE &&
-       ! hb_compHasJump( pFunc, nPCodePos + 3 ) )
+   if( pFunc->pCode[ nPCodePos + 3 ] == HB_P_RETVALUE && ! hb_compHasJump( pFunc, nPCodePos + 3 ) )
    {
       pFunc->pCode[ nPCodePos ] = HB_P_MACRODO;
       hb_compNOOPfill( pFunc, nPCodePos + 3, 1, HB_FALSE, HB_FALSE );
@@ -742,8 +730,7 @@ static HB_OPT_FUNC( hb_p_endblock )
 {
    HB_SYMBOL_UNUSED( cargo );
 
-   if( nPCodePos + 1 < pFunc->nPCodePos &&
-       pFunc->pCode[ nPCodePos + 1 ] == HB_P_ENDBLOCK )
+   if( nPCodePos + 1 < pFunc->nPCodePos && pFunc->pCode[ nPCodePos + 1 ] == HB_P_ENDBLOCK )
    {
       hb_compNOOPfill( pFunc, nPCodePos, 1, HB_FALSE, HB_FALSE );
    }
@@ -754,8 +741,7 @@ static HB_OPT_FUNC( hb_p_endproc )
 {
    HB_SYMBOL_UNUSED( cargo );
 
-   if( nPCodePos + 1 < pFunc->nPCodePos &&
-       pFunc->pCode[ nPCodePos + 1 ] == HB_P_ENDPROC )
+   if( nPCodePos + 1 < pFunc->nPCodePos && pFunc->pCode[ nPCodePos + 1 ] == HB_P_ENDPROC )
    {
       hb_compNOOPfill( pFunc, nPCodePos, 1, HB_FALSE, HB_FALSE );
    }
@@ -962,7 +948,6 @@ void hb_compOptimizePCode( HB_COMP_DECL, PHB_HFUNC pFunc )
    hb_compPCodeEval( pFunc, static_cast< const PHB_PCODE_FUNC * >( pFuncTable ), nullptr );
 }
 
-
 /*
  *   PCode trace optimizer
  */
@@ -980,14 +965,12 @@ typedef struct
    HB_BYTE  bFlags;
 } HB_OPT_LOCAL, * PHB_OPT_LOCAL;
 
-
 static HB_BOOL hb_compIsJump( HB_BYTE bPCode )
 {
    return ( bPCode >= HB_P_JUMPNEAR && bPCode <= HB_P_JUMPTRUEFAR ) || /* All jumps */
             bPCode == HB_P_SEQBEGIN || bPCode == HB_P_SEQEND ||
             bPCode == HB_P_SEQALWAYS || bPCode == HB_P_ALWAYSBEGIN;
 }
-
 
 static HB_BOOL hb_compIsUncondJump( HB_BYTE bPCode )
 {
@@ -1047,7 +1030,6 @@ static HB_SHORT hb_compLocalGetNumber( HB_BYTE * pCode )
    return 0;
 }
 
-
 static HB_ISIZ hb_compJumpGetOffset( HB_BYTE * pCode )
 {
    switch( *pCode )
@@ -1074,7 +1056,6 @@ static HB_ISIZ hb_compJumpGetOffset( HB_BYTE * pCode )
    assert( 0 );
    return 0;
 }
-
 
 static void hb_compPCodeEnumScanLocals( PHB_HFUNC pFunc, PHB_OPT_LOCAL pLocals )
 {
@@ -1115,8 +1096,7 @@ static void hb_compPCodeEnumScanLocals( PHB_HFUNC pFunc, PHB_OPT_LOCAL pLocals )
          case HB_P_POPLOCAL:
             if( isVar > 0 )
             {
-               if( nPos > 0 && pFunc->pCode[ nLastPos ] == HB_P_PUSHSELF &&
-                   ! hb_compHasJump( pFunc, nPos ) && ! fWasJump )
+               if( nPos > 0 && pFunc->pCode[ nLastPos ] == HB_P_PUSHSELF && ! hb_compHasJump( pFunc, nPos ) && ! fWasJump )
                {
                   /* For real POPSELF support we need to do backward tree
                      tracing. This is not implemented, but using fWasJump
@@ -1249,7 +1229,6 @@ static void hb_compPCodeEnumScanLocals( PHB_HFUNC pFunc, PHB_OPT_LOCAL pLocals )
    }
 }
 
-
 static void hb_compPCodeEnumSelfifyLocal( PHB_HFUNC pFunc, HB_SHORT isLocal )
 {
    HB_SIZE nPos = 0, nLastPos = 0;
@@ -1277,8 +1256,7 @@ static void hb_compPCodeEnumSelfifyLocal( PHB_HFUNC pFunc, HB_SHORT isLocal )
          case HB_P_POPLOCALNEAR:
             if( isLocal == static_cast< signed char >( pFunc->pCode[ nPos + 1 ] ) )
             {
-               assert( nPos > 0 && pFunc->pCode[ nLastPos ] == HB_P_PUSHSELF &&
-                       ! hb_compHasJump( pFunc, nPos ) );
+               assert( nPos > 0 && pFunc->pCode[ nLastPos ] == HB_P_PUSHSELF && ! hb_compHasJump( pFunc, nPos ) );
 
                hb_compNOOPfill( pFunc, nLastPos, 1, HB_FALSE, HB_FALSE );
                hb_compNOOPfill( pFunc, nPos, 2, HB_FALSE, HB_FALSE );
@@ -1288,8 +1266,7 @@ static void hb_compPCodeEnumSelfifyLocal( PHB_HFUNC pFunc, HB_SHORT isLocal )
          case HB_P_POPLOCAL:
             if( isLocal == HB_PCODE_MKSHORT( &pFunc->pCode[ nPos + 1 ] ) )
             {
-               assert( nPos > 0 && pFunc->pCode[ nLastPos ] == HB_P_PUSHSELF &&
-                       ! hb_compHasJump( pFunc, nPos ) );
+               assert( nPos > 0 && pFunc->pCode[ nLastPos ] == HB_P_PUSHSELF && ! hb_compHasJump( pFunc, nPos ) );
 
                hb_compNOOPfill( pFunc, nLastPos, 1, HB_FALSE, HB_FALSE );
                hb_compNOOPfill( pFunc, nPos, 3, HB_FALSE, HB_FALSE );
@@ -1300,7 +1277,6 @@ static void hb_compPCodeEnumSelfifyLocal( PHB_HFUNC pFunc, HB_SHORT isLocal )
       nPos += hb_compPCodeSize( pFunc, nPos );
    }
 }
-
 
 static int hb_compPCodeTraceAssignedUnused( PHB_HFUNC pFunc, HB_SIZE nPos, HB_BYTE * pMap, HB_SHORT isLocal, HB_BOOL fCanBreak )
 {
@@ -1340,8 +1316,7 @@ static int hb_compPCodeTraceAssignedUnused( PHB_HFUNC pFunc, HB_SIZE nPos, HB_BY
       {
          if( hb_compLocalGetNumber( pFunc->pCode + nPos ) == isLocal )
          {
-            if( pFunc->pCode[ nPos ] == HB_P_POPLOCAL ||
-                pFunc->pCode[ nPos ] == HB_P_POPLOCALNEAR )
+            if( pFunc->pCode[ nPos ] == HB_P_POPLOCAL || pFunc->pCode[ nPos ] == HB_P_POPLOCALNEAR )
             {
                if( fCanBreak )
                {
@@ -1420,7 +1395,6 @@ static int hb_compPCodeTraceAssignedUnused( PHB_HFUNC pFunc, HB_SIZE nPos, HB_BY
    return 0;
 }
 
-
 static void hb_compPCodeEnumAssignedUnused( HB_COMP_DECL, PHB_HFUNC pFunc, PHB_OPT_LOCAL pLocals )
 {
    HB_BYTE * pMap;
@@ -1434,8 +1408,7 @@ static void hb_compPCodeEnumAssignedUnused( HB_COMP_DECL, PHB_HFUNC pFunc, PHB_O
       HB_SHORT isLocal;
       int iCheck = 0;
 
-      if( pFunc->pCode[ nPos ] == HB_P_POPLOCAL ||
-          pFunc->pCode[ nPos ] == HB_P_POPLOCALNEAR )
+      if( pFunc->pCode[ nPos ] == HB_P_POPLOCAL || pFunc->pCode[ nPos ] == HB_P_POPLOCALNEAR )
       {
          /* skip pop NIL (var := NIL), to allow force garbage collection */
          if( nPos == 0 || pFunc->pCode[ nLastPos ] != HB_P_PUSHNIL )
@@ -1527,8 +1500,7 @@ static void hb_compPCodeEnumAssignedUnused( HB_COMP_DECL, PHB_HFUNC pFunc, PHB_O
                pMap[ nPos ] = 1;
             }
 
-            if( ! hb_compPCodeTraceAssignedUnused( pFunc, nPos + hb_compPCodeSize( pFunc, nPos ),
-                                                   pMap, isLocal, HB_FALSE ) )
+            if( ! hb_compPCodeTraceAssignedUnused( pFunc, nPos + hb_compPCodeSize( pFunc, nPos ), pMap, isLocal, HB_FALSE ) )
             {
                char szFun[ 256 ];
 
@@ -1558,7 +1530,6 @@ static void hb_compPCodeEnumAssignedUnused( HB_COMP_DECL, PHB_HFUNC pFunc, PHB_O
    }
    hb_xfree( pMap );
 }
-
 
 static void hb_compPCodeEnumRenumberLocals( PHB_HFUNC pFunc, PHB_OPT_LOCAL pLocals )
 {
@@ -1654,7 +1625,6 @@ static void hb_compPCodeEnumRenumberLocals( PHB_HFUNC pFunc, PHB_OPT_LOCAL pLoca
       nPos += hb_compPCodeSize( pFunc, nPos );
    }
 }
-
 
 void hb_compPCodeTraceOptimizer( HB_COMP_DECL )
 {
