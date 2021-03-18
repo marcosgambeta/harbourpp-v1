@@ -1485,8 +1485,10 @@ static void hb_compPCodeEnumAssignedUnused( HB_COMP_DECL, PHB_HFUNC pFunc, PHB_O
          PHB_HVAR pVar = pFunc->pLocals;
 
          for( HB_SHORT is = 1; is < isLocal; is++ )
+         {
             pVar = pVar->pNext;
-
+         }
+         
          assert( pLocals[ isLocal - 1 ].bFlags != 0 );
 
          /* Skip detachables, referenced, optimizable self */
@@ -1718,8 +1720,10 @@ void hb_compPCodeTraceOptimizer( HB_COMP_DECL )
    {
       pVar = pFunc->pLocals;
       for( usIndex = 0; usIndex < pFunc->wParamCount; usIndex++ )
+      {
          pVar = pVar->pNext;
-
+      }
+      
       for( usIndex = pFunc->wParamCount; usIndex < usLocalCount; usIndex++ )
       {
          if( pLocals[ usIndex ].bFlags == ( OPT_LOCAL_FLAG_PUSH | OPT_LOCAL_FLAG_POPSELF ) ||

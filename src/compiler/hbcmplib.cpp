@@ -131,7 +131,9 @@ static void hb_compGenArgList( int iFirst, int iLast,
       if( HB_ISLOG( iFirst ) )
       {
          if( hb_parl( iFirst ) )
+         {
             *pMsgFunc = s_pp_msg;
+         }
          ++iFirst;
       }
    }

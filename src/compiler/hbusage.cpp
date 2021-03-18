@@ -107,7 +107,9 @@ void hb_compPrintUsage( HB_COMP_DECL, const char * szSelf )
    hb_compOutStd( HB_COMP_PARAM, buffer );
 
    for( int iLine = 0; iLine < static_cast< int >( HB_SIZEOFARRAY( s_szOptions ) ); iLine++ )
+   {
       hb_compOutStd( HB_COMP_PARAM, s_szOptions[ iLine ] );
+   }   
 }
 
 /* List of compatibility/features modes */

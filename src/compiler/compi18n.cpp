@@ -377,9 +377,11 @@ HB_BOOL hb_compI18nSave( HB_COMP_DECL, HB_BOOL fFinal )
       fprintf( file, "#: %s:%u", hb_compI18nFileName( szFileName, pString->pPos.szFile ), pString->pPos.uiLine );
 
       for( uiLine = 0; uiLine < pString->uiPosCount; ++uiLine )
+      {
          fprintf( file, " %s:%u",
                   hb_compI18nFileName( szFileName, pString->pPosLst[ uiLine ].szFile ),
                   pString->pPosLst[ uiLine ].uiLine );
+      }
 
       fprintf( file, "\n#, c-format\n" );
 

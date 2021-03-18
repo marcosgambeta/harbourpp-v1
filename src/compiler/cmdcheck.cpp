@@ -314,7 +314,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
                   {
                      szSwPtr += 2;
                      if( *szSwPtr == '-' )
+                     {
                         ++szSwPtr;
+                     }
                      hb_setSetFileCase( HB_SET_CASE_MIXED );
                   }
                   break;
@@ -911,7 +913,9 @@ void hb_compChkCommandLine( HB_COMP_DECL, int argc, const char * const argv[] )
       if( HB_ISOPTSEP( szSwitch[ 0 ] ) )
       {
          do
+         {
             szSwitch = hb_compChkParseSwitch( HB_COMP_PARAM, szSwitch, HB_FALSE );
+         }
          while( *szSwitch != '\0' );
       }
    }

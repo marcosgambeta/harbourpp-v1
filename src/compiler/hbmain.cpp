@@ -950,7 +950,9 @@ const char * hb_compLocalVariableName( PHB_HFUNC pFunc, HB_USHORT wVar )
    PHB_HVAR pVar;
 
    if( pFunc->wParamCount && ! ( pFunc->funFlags & HB_FUNF_USES_LOCAL_PARAMS ) )
+   {
       wVar -= pFunc->wParamCount;
+   }
    pVar = hb_compVariableGetVar( pFunc->pLocals, wVar );
 
    return pVar ? pVar->szName : nullptr;
@@ -1715,7 +1717,9 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
          plShifts = static_cast< HB_ISIZ * >( hb_xgrab( nSize ) );
 
          for( nJump = 0; nJump < HB_COMP_PARAM->functions.pLast->nJumps; nJump++ )
+         {
             plSizes[ nJump ] = plShifts[ nJump ] = 0;
+         }
 
          /* First Scan NOOPS - Adjust Jump addresses. */
          for( nNOOP = 0; nNOOP < HB_COMP_PARAM->functions.pLast->nNOOPs; nNOOP++ )
@@ -4388,7 +4392,9 @@ void hb_compCompileEnd( HB_COMP_DECL )
 
       HB_COMP_PARAM->inlines.pFirst = pInline->pNext;
       if( pInline->pCode )
+      {
          hb_xfree( pInline->pCode );
+      }
       hb_xfree( pInline );
    }
 
@@ -4740,9 +4746,13 @@ static int hb_compCompile( HB_COMP_DECL, const char * szPrg, const char * szBuff
          {
             int iExitLevel = HB_COMP_PARAM->iExitLevel;
             if( HB_COMP_PARAM->iSyntaxCheckOnly >= 2 )
+            {
                hb_compParserRun( HB_COMP_PARAM );
+            }
             else
+            {
                hb_comp_yyparse( HB_COMP_PARAM );
+            }
             HB_COMP_PARAM->iExitLevel = HB_MAX( iExitLevel, HB_COMP_PARAM->iExitLevel );
          }
       }

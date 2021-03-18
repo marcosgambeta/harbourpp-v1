@@ -1220,7 +1220,9 @@ static HB_GENC_FUNC( hb_p_message )
 {
    fprintf( cargo->yyc, "\tHB_P_MESSAGE, %u, %u,", pFunc->pCode[ nPCodePos + 1 ], pFunc->pCode[ nPCodePos + 2 ] );
    if( cargo->bVerbose )
+   {
       fprintf( cargo->yyc, "\t/* %s */", hb_compSymbolName( cargo->HB_COMP_PARAM, HB_PCODE_MKUSHORT( &pFunc->pCode[ nPCodePos + 1 ] ) ) );
+   }
    fprintf( cargo->yyc, "\n" );
    return 3;
 }
