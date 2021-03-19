@@ -107,12 +107,9 @@ static void hb_gt_qtc_itemGetQString( PHB_ITEM pItem, QString * pqStr )
 static PHB_ITEM hb_gt_qtc_itemPutQString( PHB_ITEM pItem, const QString * pqStr )
 {
 #if defined( HB_OS_WIN )
-   return hb_itemPutStrLenU16( pItem, HB_CDP_ENDIAN_NATIVE,
-                               reinterpret_cast< const HB_WCHAR * >( pqStr->utf16() ),
-                               pqStr->size() );
+   return hb_itemPutStrLenU16( pItem, HB_CDP_ENDIAN_NATIVE, reinterpret_cast< const HB_WCHAR * >( pqStr->utf16() ), pqStr->size() );
 #else
-   return hb_itemPutStrLenU16( pItem, HB_CDP_ENDIAN_NATIVE,
-                               pqStr->utf16(), pqStr->size() );
+   return hb_itemPutStrLenU16( pItem, HB_CDP_ENDIAN_NATIVE, pqStr->utf16(), pqStr->size() );
 #endif
 }
 
@@ -196,6 +193,7 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
    QPoint pts[ 3 ];
 
    if( usCh >= HB_BOXCH_RC_MIN && usCh <= HB_BOXCH_RC_MAX )
+   {
       switch( usCh )
       {
          case HB_BOXCH_RC_ARROW_DL:
@@ -203,10 +201,14 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             hb_bm_paint_begin( qBitMap );
             yy = celly / 2 - 1;
             for( y = celly - 4, x = cellx - 1; x >= 3 && y >= yy; --x, --y )
+            {
                hb_bm_line( x, y, cellx - 1, y );
+            }
             xx = HB_MAX( cellx * 2 / 5, 3 ) | 1;
             for( x = cellx - xx / 2 - 1; y >= 3; --y )
+            {
                hb_bm_line( x, y, cellx - 1, y );
+            }
             hb_bm_paint_end();
             break;
 
@@ -215,10 +217,14 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             hb_bm_paint_begin( qBitMap );
             yy = ( celly + 1 ) / 2;
             for( y = celly - 5, x = 0; x < cellx - 4 && y >= yy; ++x, --y )
+            {
                hb_bm_line( 0, y, x, y );
+            }
             xx = HB_MAX( cellx * 2 / 5, 3 ) | 1;
             for( x = xx / 2 - 1; y >= 3; --y )
+            {
                hb_bm_line( 0, y, x, y );
+            }
             hb_bm_paint_end();
             break;
 
@@ -227,10 +233,14 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             hb_bm_paint_begin( qBitMap );
             yy = ( celly + 1 ) / 2;
             for( y = 3, x = cellx - 1; x >= 3 && y <= yy; --x, ++y )
+            {
                hb_bm_line( x, y, cellx - 1, y );
+            }
             xx = HB_MAX( cellx * 2 / 5, 3 ) | 1;
             for( x = cellx - xx / 2 - 1; y < celly - 3; ++y )
+            {
                hb_bm_line( x, y, cellx - 1, y );
+            }
             hb_bm_paint_end();
             break;
 
@@ -239,10 +249,14 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             hb_bm_paint_begin( qBitMap );
             yy = ( celly + 1 ) / 2;
             for( y = 4, x = 0; x < cellx - 4 && y <= yy; ++x, ++y )
+            {
                hb_bm_line( 0, y, x, y );
+            }
             xx = HB_MAX( cellx * 2 / 5, 3 ) | 1;
             for( x = xx / 2 - 1; y < celly - 3; ++y )
+            {
                hb_bm_line( 0, y, x, y );
+            }
             hb_bm_paint_end();
             break;
 
@@ -251,9 +265,13 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             hb_bm_paint_begin( qBitMap );
             yy = ( celly - 1 ) / 2;
             for( y = 3, x = cellx - 1; x >= 3 && y < yy; --x, ++y )
+            {
                hb_bm_line( x, y, cellx - 1, y );
+            }
             for( y = yy + 2, ++x; x <= cellx - 1 && y < celly - 3; ++x, ++y )
+            {
                hb_bm_line( x, y, cellx - 1, y );
+            }
             hb_bm_paint_end();
             break;
 
@@ -262,9 +280,13 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             hb_bm_paint_begin( qBitMap );
             yy = ( celly - 1 ) / 2;
             for( y = 4, x = 0; x < cellx - 4 && y < yy; ++x, ++y )
+            {
                hb_bm_line( 0, y, x, y );
+            }
             for( y = yy + 2, --x; x >= 0 && y < celly - 3; --x, ++y )
+            {
                hb_bm_line( 0, y, x, y );
+            }
             hb_bm_paint_end();
             break;
 
@@ -281,7 +303,9 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             hb_bm_paint_begin( qBitMap );
             yy = ( celly - 1 ) / 2;
             for( x = 3, y = 0; x < cellx; ++x, ++y )
+            {
                hb_bm_line( x, yy - y, x, yy + y );
+            }
             hb_bm_paint_end();
             break;
 
@@ -290,7 +314,9 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             hb_bm_paint_begin( qBitMap );
             yy = HB_MAX( celly / 5, 3 ) | 1;
             for( y = ( celly - yy ) / 2; yy--; ++y )
+            {
                hb_bm_line( 0, y, cellx - 4, y );
+            }
             hb_bm_paint_end();
             break;
 
@@ -299,7 +325,9 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             hb_bm_paint_begin( qBitMap );
             yy = HB_MAX( celly / 5, 3 ) | 1;
             for( y = ( celly - yy ) / 2; yy--; ++y )
+            {
                hb_bm_line( 3, y, cellx - 1, y );
+            }
             hb_bm_paint_end();
             break;
 
@@ -308,7 +336,9 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             hb_bm_paint_begin( qBitMap );
             yy = ( celly - 1 ) / 2;
             for( x = cellx - 4, y = 0; x >= 0; --x, ++y )
+            {
                hb_bm_line( x, yy - y, x, yy + y );
+            }
             hb_bm_paint_end();
             break;
 
@@ -333,7 +363,9 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             for( y = celly / 2 + 1; y < celly; y++ )
             {
                for( x = ( y & 1 ) + 2; x < cellx; x += 2 )
+               {
                   hb_bm_point( x, y );
+               }
             }
             hb_bm_paint_end();
             break;
@@ -350,7 +382,9 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             for( y = celly / 2 + 1; y < celly; y++ )
             {
                for( x = ( y ^ cellx ) & 1; x < cellx - 2; x += 2 )
+               {
                   hb_bm_point( x, y );
+               }
             }
             hb_bm_paint_end();
             break;
@@ -365,7 +399,9 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             for( y = 0; y < celly / 2; y++ )
             {
                for( x = ( y & 1 ) + 2; x < cellx; x += 2 )
+               {
                   hb_bm_point( x, y );
+               }
             }
             hb_bm_paint_end();
             break;
@@ -381,7 +417,9 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             for( y = 0; y < celly / 2; y++ )
             {
                for( x = ( y ^ cellx ) & 1; x < cellx - 2; x += 2 )
+               {
                   hb_bm_point( x, y );
+               }
             }
             hb_bm_paint_end();
             break;
@@ -395,7 +433,9 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             for( y = 0; y < celly; y++ )
             {
                for( x = ( y & 1 ) + 2; x < cellx; x += 2 )
+               {
                   hb_bm_point( x, y );
+               }
             }
             hb_bm_paint_end();
             break;
@@ -409,7 +449,9 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             for( y = 0; y < celly; y++ )
             {
                for( x = ( y ^ cellx ) & 1; x < cellx - 2; x += 2 )
+               {
                   hb_bm_point( x, y );
+               }
             }
             hb_bm_paint_end();
             break;
@@ -424,7 +466,9 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             for( y = 2; y < celly - 2; y++ )
             {
                for( x = y & 1; x < cellx; x += 2 )
+               {
                   hb_bm_point( x, y );
+               }
             }
             hb_bm_paint_end();
             break;
@@ -614,12 +658,18 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             yy = celly - 2 / 3;
             xx = cellx - 4;
             if( yy > xx )
+            {
                yy = xx;
+            }
             xx = ( xx * 2 + 1 ) / 3;
             if( xx < 2 )
+            {
                xx = 2;
+            }
             for( y = celly - yy - 3 - xx, i = 0; i < xx; ++y, ++i )
+            {
                hb_bm_line( 3, y, 3 + yy - 1, y + yy - 1 );
+            }
             y = celly - 5 - xx;
             hb_bm_line( cellx - 1, y, cellx - 1, y + xx - 1 );
             hb_bm_paint_end();
@@ -631,12 +681,18 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             yy = celly - 2 / 3;
             xx = cellx - 4;
             if( yy > xx )
+            {
                yy = xx;
+            }
             xx = ( xx * 2 + 1 ) / 3;
             if( xx < 2 )
+            {
                xx = 2;
+            }
             for( y = celly - 6 - xx, i = 0; i < xx; ++y, ++i )
+            {
                hb_bm_line( 0, y, yy, y - yy );
+            }
             hb_bm_paint_end();
             break;
 
@@ -646,7 +702,9 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             yy = ( celly - cellx ) / 2 + 1;
             yy = HB_MAX( yy, 2 );
             for( y = celly - yy - 1, x = cellx - 1; x >= 2 && y >= 3; --x, --y )
+            {
                hb_bm_line( x, y, cellx - 1, y );
+            }
             hb_bm_paint_end();
             break;
 
@@ -656,7 +714,9 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             yy = ( celly - cellx ) / 2 + 1;
             yy = HB_MAX( yy, 2 );
             for( y = celly - yy - 2, x = 0; x < cellx - 3 && y >= 3; ++x, --y )
+            {
                hb_bm_line( 0, y, x, y );
+            }
             hb_bm_paint_end();
             break;
 
@@ -665,7 +725,9 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             hb_bm_paint_begin( qBitMap );
 
             for( x = 1; x < cellx; x += 2 )
+            {
                hb_bm_point( x, celly / 2 );
+            }
             hb_bm_paint_end();
             break;
 
@@ -695,7 +757,9 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             hb_bm_paint_end();
             break;
       }
+   }
    else
+   {
       switch( usCh )
       {
          case HB_BOXCH_FILLER1:
@@ -726,10 +790,14 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             for( y = 0; y < celly; y++ )
             {
                for( x = start + ( skip >> 1 ) * ( ( y & 1 ) ^ mod ); x < cellx; x += skip )
+               {
                   hb_bm_point( x, y );
+               }
             }
             if( usCh == HB_BOXCH_FILLER3 )
+            {
                hb_bm_invertrect( 0, 0, cellx, celly );
+            }
             hb_bm_paint_end();
             break;
          }
@@ -1198,6 +1266,7 @@ static QBitmap * hb_gt_qtc_defineBoxChar( PHB_GTQTC pQTC, HB_USHORT usCh )
             hb_bm_paint_end();
             break;
       }
+   }
 
    return qBitMap;
 }
@@ -1208,7 +1277,9 @@ static QBitmap * hb_gt_qtc_getBoxChar( PHB_GTQTC pQTC, HB_USHORT * puc16 )
    int iPos, iTrans;
 
    if( ( pQTC->fontAttribute & HB_GTI_FONTA_DRAWBOX ) == 0 )
+   {
       return nullptr;
+   }
 
    if( uc16 >= HB_BOXCH_RC_0 && uc16 <= HB_BOXCH_RC_ACC )
    {
@@ -1255,21 +1326,33 @@ static QBitmap * hb_gt_qtc_getBoxChar( PHB_GTQTC pQTC, HB_USHORT * puc16 )
    }
 
    if     ( uc16 == HB_BOXCH_ARROW_R )
+   {
       iPos = 0;
+   }
    else if( uc16 == HB_BOXCH_ARROW_L )
+   {
       iPos = 1;
+   }
    else if( uc16 == HB_BOXCH_ARROW_U )
+   {
       iPos = 2;
+   }
    else if( uc16 == HB_BOXCH_ARROW_D )
+   {
       iPos = 3;
+   }
    else if( uc16 >= HB_BOXCH_BOX_MIN && uc16 <= HB_BOXCH_BOX_MAX )
-      iPos = HB_BOXCH_CHR_BASE +
-             ( uc16 - HB_BOXCH_BOX_MIN );
+   {
+      iPos = HB_BOXCH_CHR_BASE + ( uc16 - HB_BOXCH_BOX_MIN );
+   }
    else if( uc16 >= HB_BOXCH_RC_MIN && uc16 <= HB_BOXCH_RC_MAX )
-      iPos = HB_BOXCH_CHR_BASE + ( HB_BOXCH_BOX_MAX - HB_BOXCH_BOX_MIN + 1 ) +
-             ( uc16 - HB_BOXCH_RC_MIN );
+   {
+      iPos = HB_BOXCH_CHR_BASE + ( HB_BOXCH_BOX_MAX - HB_BOXCH_BOX_MIN + 1 ) + ( uc16 - HB_BOXCH_RC_MIN );
+   }
    else
+   {
       return nullptr;
+   }
 
    iTrans = pQTC->boxIndex[ iPos ];
    if( iTrans == HB_BOXCH_TRANS_MAX )
@@ -1279,12 +1362,18 @@ static QBitmap * hb_gt_qtc_getBoxChar( PHB_GTQTC pQTC, HB_USHORT * puc16 )
          iTrans = pQTC->boxCount + 1;
          pQTC->boxImage[ iTrans ] = hb_gt_qtc_defineBoxChar( pQTC, uc16 );
          if( pQTC->boxImage[ iTrans ] )
+         {
             pQTC->boxCount = iTrans;
+         }
          else
+         {
             iTrans = 0;
+         }
       }
       else
+      {
          iTrans = 0;
+      }
       pQTC->boxIndex[ iPos ] = iTrans;
    }
 
@@ -1296,13 +1385,17 @@ static void hb_gt_qtc_resetBoxCharBitmaps( PHB_GTQTC pQTC )
    int i;
 
    for( i = 1; i <= pQTC->boxCount; i++ )
+   {
       delete pQTC->boxImage[ i ];
+   }
 
    memset( pQTC->boxImage, 0, sizeof( pQTC->boxImage ) );
    pQTC->boxCount = 0;
 
    for( i = 0; i < HB_BOXCH_TRANS_COUNT; ++i )
+   {
       pQTC->boxIndex[ i ] = HB_BOXCH_TRANS_MAX;
+   }
 }
 
 /* --- */
@@ -1316,21 +1409,31 @@ static void hb_gt_qtc_free( PHB_GTQTC pQTC )
    }
 
    if( pQTC->qWnd )
+   {
       delete pQTC->qWnd;
+   }
 
    hb_gt_qtc_resetBoxCharBitmaps( pQTC );
 
    if( pQTC->fontName )
+   {
       delete pQTC->fontName;
+   }
 
    if( pQTC->wndTitle )
+   {
       delete pQTC->wndTitle;
+   }
 
    if( pQTC->qIcon )
+   {
       delete pQTC->qIcon;
+   }
 
    if( pQTC->textLine )
+   {
       hb_xfree( pQTC->textLine );
+   }
 
    hb_xfree( pQTC );
 }
@@ -1466,9 +1569,10 @@ static void hb_gt_qtc_addKeyToInputQueue( PHB_GTQTC pQTC, int iKey )
             return;
          }
       }
-      else if( iKey == HB_K_RESIZE &&
-               iKey == pQTC->keyBuffer[ pQTC->keyLast ] )
+      else if( iKey == HB_K_RESIZE && iKey == pQTC->keyBuffer[ pQTC->keyLast ] )
+      {
          return;
+      }
    }
 
    /* When the buffer is full new event overwrite the last one
@@ -1476,9 +1580,13 @@ static void hb_gt_qtc_addKeyToInputQueue( PHB_GTQTC pQTC, int iKey )
     */
    pQTC->keyBuffer[ pQTC->keyLast = iHead ] = iKey;
    if( ++iHead >= QTC_KEY_QUEUE_SIZE )
+   {
       iHead = 0;
+   }
    if( iHead != pQTC->keyTail )
+   {
       pQTC->keyHead = iHead;
+   }
 }
 
 static HB_BOOL hb_gt_qtc_getKeyFromInputQueue( PHB_GTQTC pQTC, int * piKey )
@@ -1487,21 +1595,32 @@ static HB_BOOL hb_gt_qtc_getKeyFromInputQueue( PHB_GTQTC pQTC, int * piKey )
    {
       *piKey = pQTC->keyBuffer[ pQTC->keyTail ];
       if( ++pQTC->keyTail >= QTC_KEY_QUEUE_SIZE )
+      {
          pQTC->keyTail = 0;
+      }
       return HB_TRUE;
    }
    *piKey = 0;
    return HB_FALSE;
 }
 
-static int hb_gt_qtc_getKbdState( void )
+static int hb_gt_qtc_getKbdState()
 {
    int iKbdState = 0;
    Qt::KeyboardModifiers kbState = QApplication::keyboardModifiers();
 
-   if( kbState & Qt::ShiftModifier   ) iKbdState |= HB_GTI_KBD_SHIFT;
-   if( kbState & Qt::ControlModifier ) iKbdState |= HB_GTI_KBD_CTRL;
-   if( kbState & Qt::AltModifier     ) iKbdState |= HB_GTI_KBD_ALT;
+   if( kbState & Qt::ShiftModifier   )
+   {
+      iKbdState |= HB_GTI_KBD_SHIFT;
+   }
+   if( kbState & Qt::ControlModifier )
+   {
+      iKbdState |= HB_GTI_KBD_CTRL;
+   }
+   if( kbState & Qt::AltModifier     )
+   {
+      iKbdState |= HB_GTI_KBD_ALT;
+   }
 
    return iKbdState;
 }
@@ -1510,24 +1629,38 @@ static int hb_gt_qtc_getKeyFlags( Qt::KeyboardModifiers keyFlags )
 {
    int iFlags = 0;
 
-   if( keyFlags & Qt::AltModifier     ) iFlags |= HB_KF_ALT;
-   if( keyFlags & Qt::ControlModifier ) iFlags |= HB_KF_CTRL;
-   if( keyFlags & Qt::ShiftModifier   ) iFlags |= HB_KF_SHIFT;
-   if( keyFlags & Qt::KeypadModifier  ) iFlags |= HB_KF_KEYPAD;
+   if( keyFlags & Qt::AltModifier     )
+   {
+      iFlags |= HB_KF_ALT;
+   }
+   if( keyFlags & Qt::ControlModifier )
+   {
+      iFlags |= HB_KF_CTRL;
+   }
+   if( keyFlags & Qt::ShiftModifier   )
+   {
+      iFlags |= HB_KF_SHIFT;
+   }
+   if( keyFlags & Qt::KeypadModifier  )
+   {
+      iFlags |= HB_KF_KEYPAD;
+   }
 #ifdef HB_OS_DARWIN
-   if( keyFlags & Qt::MetaModifier )    iFlags |= HB_KF_CTRL;
+   if( keyFlags & Qt::MetaModifier )
+   {
+      iFlags |= HB_KF_CTRL;
+   }
 #elif defined( HB_OS_ANDROID )
-   if( ( keyFlags & Qt::AltModifier ) != 0 &&
-       ( keyFlags & Qt::ShiftModifier ) != 0 &&
-       ( keyFlags & Qt::ControlModifier ) == 0 )
+   if( ( keyFlags & Qt::AltModifier ) != 0 && ( keyFlags & Qt::ShiftModifier ) != 0 && ( keyFlags & Qt::ControlModifier ) == 0 )
+   {
       iFlags = ( iFlags & ~( HB_KF_ALT | HB_KF_SHIFT ) ) | HB_KF_CTRL;
+   }
 #endif
 
    return iFlags;
 }
 
-static void hb_gt_qtc_setMouseKey( PHB_GTQTC pQTC, int x, int y, int iKey,
-                                   Qt::KeyboardModifiers keyFlags )
+static void hb_gt_qtc_setMouseKey( PHB_GTQTC pQTC, int x, int y, int iKey, Qt::KeyboardModifiers keyFlags )
 {
    x -= pQTC->marginLeft;
    y -= pQTC->marginTop;
@@ -1554,11 +1687,14 @@ static HB_BOOL hb_gt_qtc_setWindowSize( PHB_GTQTC pQTC, int iRows, int iCols )
    if( HB_GTSELF_RESIZE( pQTC->pGT, iRows, iCols ) )
    {
       if( pQTC->iCols != iCols )
-         pQTC->textLine = static_cast< QChar * >( hb_xrealloc( pQTC->textLine,
-                                                               iCols * sizeof( QChar ) ) );
+      {
+         pQTC->textLine = static_cast< QChar * >( hb_xrealloc( pQTC->textLine, iCols * sizeof( QChar ) ) );
+      }
 
       if( pQTC->qWnd && ( iRows != pQTC->iRows || iCols != pQTC->iCols ) )
+      {
          hb_gt_qtc_addKeyToInputQueue( pQTC, HB_K_RESIZE );
+      }
 
       pQTC->iRows = iRows;
       pQTC->iCols = iCols;
@@ -1573,9 +1709,13 @@ static void hb_gt_qtc_setWindowFlags( PHB_GTQTC pQTC, Qt::WindowFlags flags, HB_
    Qt::WindowFlags currFlags = pQTC->qWnd->windowFlags(), newFlags;
 
    if( fSet )
+   {
       newFlags = currFlags | flags;
+   }
    else
+   {
       newFlags = currFlags & ~flags;
+   }
 
    if( newFlags != currFlags )
    {
@@ -1591,9 +1731,13 @@ static void hb_gt_qtc_setWindowState( PHB_GTQTC pQTC, Qt::WindowStates state, HB
    Qt::WindowStates currState = pQTC->qWnd->windowState(), newState;
 
    if( fSet )
+   {
       newState = currState | state;
+   }
    else
+   {
       newState = currState & ~state;
+   }
 
    if( newState != currState )
    {
@@ -1624,14 +1768,18 @@ static void hb_gt_qtc_initWindow( PHB_GTQTC pQTC, HB_BOOL fCenter )
     * disables this modes [druzus]
     */
    if( ( pQTC->qWnd->windowState() & ( Qt::WindowMaximized | Qt::WindowFullScreen ) ) == 0 )
+   {
       pQTC->qWnd->move( pQTC->iNewPosX, pQTC->iNewPosY );
+   }
 }
 
 static void hb_gt_qtc_createConsoleWindow( PHB_GTQTC pQTC )
 {
    pQTC->qWnd = new QTCWindow( pQTC );
    if( ! pQTC->qWnd )
+   {
       hb_errInternal( 10002, "Failed to create QTC window", nullptr, nullptr );
+   }
 
    hb_gt_qtc_initWindow( pQTC, HB_FALSE );
 
@@ -1643,13 +1791,13 @@ static void hb_gt_qtc_createConsoleWindow( PHB_GTQTC pQTC )
 
 /* --- */
 
-static void hb_gt_qtc_InitMT( void );
+static void hb_gt_qtc_InitMT();
 
 static void hb_gt_qtc_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr )
 {
    PHB_GTQTC pQTC;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_Init(%p,%p,%p,%p)", pGT, ( void * ) static_cast< HB_PTRUINT >( hFilenoStdin ), ( void * ) static_cast< HB_PTRUINT >( hFilenoStdout ), ( void * ) static_cast< HB_PTRUINT >( hFilenoStderr ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_Init(%p,%p,%p,%p)", pGT, static_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdin ) ), static_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdout ) ), static_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStderr ) ) ) );
 
    if( ! s_qtapp )
    {
@@ -1669,7 +1817,9 @@ static void hb_gt_qtc_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
          s_qtapp = new QApplication( s_argc, s_argv );
          if( ! s_qtapp )
+         {
             hb_errInternal( 10001, "QT initialization error.", nullptr, nullptr );
+         }
 
          hb_vmAtQuit( hb_gt_qtc_appFree, nullptr );
          hb_cmdargInit( s_argc, s_argv );
@@ -1680,7 +1830,9 @@ static void hb_gt_qtc_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    HB_GTLOCAL( pGT ) = static_cast< void * >( pQTC );
 
    if( ! pQTC->qEventLoop )
+   {
       pQTC->qEventLoop = new QEventLoop();
+   }
 
    /* SUPER GT initialization */
    HB_GTSUPER_INIT( pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr );
@@ -1695,13 +1847,15 @@ static void hb_gt_qtc_Exit( PHB_GT pGT )
 {
    PHB_GTQTC pQTC;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_Exit(%p)", ( void * ) pGT ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_Exit(%p)", static_cast< void * >( pGT ) ) );
 
    pQTC = HB_GTQTC_GET( pGT );
    HB_GTSUPER_EXIT( pGT );
 
    if( pQTC )
+   {
       hb_gt_qtc_free( pQTC );
+   }
 }
 
 /* --- */
@@ -1710,18 +1864,17 @@ static void hb_gt_qtc_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 {
    PHB_GTQTC pQTC;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_Redraw(%p,%d,%d,%d)", ( void * ) pGT, iRow, iCol, iSize ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_Redraw(%p,%d,%d,%d)", static_cast< void * >( pGT ), iRow, iCol, iSize ) );
 
    pQTC = HB_GTQTC_GET( pGT );
    if( pQTC )
    {
       if( !pQTC->qWnd )
+      {
          hb_gt_qtc_createConsoleWindow( pQTC );
+      }
 
-      pQTC->qWnd->qConsole->repaintChars( QRect( iCol * pQTC->cellX,
-                                                 iRow * pQTC->cellY,
-                                                 iSize * pQTC->cellX,
-                                                 pQTC->cellY ) );
+      pQTC->qWnd->qConsole->repaintChars( QRect( iCol * pQTC->cellX, iRow * pQTC->cellY, iSize * pQTC->cellX, pQTC->cellY ) );
    }
 }
 
@@ -1731,17 +1884,18 @@ static void hb_gt_qtc_Refresh( PHB_GT pGT )
 {
    PHB_GTQTC pQTC;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_Refresh(%p)", ( void * ) pGT ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_Refresh(%p)", static_cast< void * >( pGT ) ) );
 
    HB_GTSUPER_REFRESH( pGT );
 
    pQTC = HB_GTQTC_GET( pGT );
    if( pQTC )
    {
-      HB_GTSELF_GETSCRCURSOR( pGT, &pQTC->cursorRow, &pQTC->cursorCol,
-                                   &pQTC->cursorType );
+      HB_GTSELF_GETSCRCURSOR( pGT, &pQTC->cursorRow, &pQTC->cursorCol, &pQTC->cursorType );
       if( pQTC->qWnd )
+      {
          hb_gt_qtc_updateCursor( pQTC );
+      }
    }
 }
 
@@ -1752,7 +1906,7 @@ static HB_BOOL hb_gt_qtc_SetMode( PHB_GT pGT, int iRows, int iCols )
    PHB_GTQTC pQTC;
    HB_BOOL fResult, fCenter;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_SetMode(%p,%d,%d)", ( void * ) pGT, iRows, iCols ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_SetMode(%p,%d,%d)", static_cast< void * >( pGT ), iRows, iCols ) );
 
    pQTC = HB_GTQTC_GET( pGT );
    fCenter = iRows != pQTC->iRows || iCols != pQTC->iCols;
@@ -1765,7 +1919,9 @@ static HB_BOOL hb_gt_qtc_SetMode( PHB_GT pGT, int iRows, int iCols )
          HB_GTSELF_REFRESH( pGT );
       }
       else
+      {
          HB_GTSELF_SEMICOLD( pGT );
+      }
    }
 
    return fResult;
@@ -1775,12 +1931,14 @@ static HB_BOOL hb_gt_qtc_SetMode( PHB_GT pGT, int iRows, int iCols )
 
 static const char * hb_gt_qtc_Version( PHB_GT pGT, int iType )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_Version(%p,%d)", ( void * ) pGT, iType ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_Version(%p,%d)", static_cast< void * >( pGT ), iType ) );
 
    HB_SYMBOL_UNUSED( pGT );
 
    if( iType == 0 )
+   {
       return HB_GT_DRVNAME( HB_GT_NAME );
+   }
 
    return "Harbour Terminal: QT GUI console (QTC)";
 }
@@ -1791,7 +1949,7 @@ static int hb_gt_qtc_ReadKey( PHB_GT pGT, int iEventMask )
 {
    PHB_GTQTC pQTC;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_ReadKey(%p,%d)", ( void * ) pGT, iEventMask ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_ReadKey(%p,%d)", static_cast< void * >( pGT ), iEventMask ) );
 
    HB_SYMBOL_UNUSED( iEventMask );
 
@@ -1802,13 +1960,19 @@ static int hb_gt_qtc_ReadKey( PHB_GT pGT, int iEventMask )
 
       HB_QTC_LOCK();
       if( pQTC->qEventLoop )
+      {
          pQTC->qEventLoop->processEvents( QEventLoop::AllEvents );
+      }
       else
+      {
          QApplication::processEvents( QEventLoop::AllEvents );
+      }
       HB_QTC_UNLOCK();
 
       if( hb_gt_qtc_getKeyFromInputQueue( pQTC, &iKey ) )
+      {
          return iKey;
+      }
    }
    return 0;
 }
@@ -1817,7 +1981,7 @@ static int hb_gt_qtc_ReadKey( PHB_GT pGT, int iEventMask )
 
 static void hb_gt_qtc_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_Tone(%p,%lf,%lf)", ( void * ) pGT, dFrequency, dDuration ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_Tone(%p,%lf,%lf)", static_cast< void * >( pGT ), dFrequency, dDuration ) );
 
    HB_SYMBOL_UNUSED( pGT );
    HB_SYMBOL_UNUSED( dFrequency );
@@ -1831,7 +1995,7 @@ static void hb_gt_qtc_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 
 static HB_BOOL hb_gt_qtc_mouse_IsPresent( PHB_GT pGT )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_mouse_IsPresent(%p)", ( void * ) pGT ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_mouse_IsPresent(%p)", static_cast< void * >( pGT ) ) );
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -1842,7 +2006,7 @@ static void hb_gt_qtc_mouse_GetPos( PHB_GT pGT, int * piRow, int * piCol )
 {
    PHB_GTQTC pQTC;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_mouse_GetPos(%p,%p,%p)", ( void * ) pGT, piRow, piCol ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_mouse_GetPos(%p,%p,%p)", static_cast< void * >( pGT ), piRow, piCol ) );
 
    pQTC = HB_GTQTC_GET( pGT );
    *piRow = pQTC->mouseRow;
@@ -1851,7 +2015,7 @@ static void hb_gt_qtc_mouse_GetPos( PHB_GT pGT, int * piRow, int * piCol )
 
 static HB_BOOL hb_gt_qtc_mouse_ButtonState( PHB_GT pGT, int iButton )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_mouse_ButtonState(%p,%i)", ( void * ) pGT, iButton ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_mouse_ButtonState(%p,%i)", static_cast< void * >( pGT ), iButton ) );
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -1873,7 +2037,7 @@ static HB_BOOL hb_gt_qtc_mouse_ButtonState( PHB_GT pGT, int iButton )
 
 static int hb_gt_qtc_mouse_CountButton( PHB_GT pGT )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_mouse_CountButton(%p)", ( void * ) pGT ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_mouse_CountButton(%p)", static_cast< void * >( pGT ) ) );
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -1887,7 +2051,7 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
    PHB_GTQTC pQTC;
    int iVal;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_Info(%p,%d,%p)", ( void * ) pGT, iType, ( void * ) pInfo ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_Info(%p,%d,%p)", static_cast< void * >( pGT ), iType, static_cast< void * >( pInfo ) ) );
 
    pQTC = HB_GTQTC_GET( pGT );
 
@@ -1922,8 +2086,10 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, pQTC->cellX );
          iVal = hb_itemGetNI( pInfo->pNewVal );
          if( iVal > 0 )
+         {
             /* store font status for next operation on fontsize */
             pQTC->fontWidth = iVal;
+         }
          break;
 
       case HB_GTI_FONTWEIGHT:
@@ -1946,72 +2112,72 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
       case HB_GTI_FONTNAME:
          pInfo->pResult = hb_gt_qtc_itemPutQString( pInfo->pResult, pQTC->fontName );
          if( pInfo->pNewVal && HB_IS_STRING( pInfo->pNewVal ) )
+         {
             /* store font status for next operation on fontsize */
             hb_gt_qtc_itemGetQString( pInfo->pNewVal, pQTC->fontName );
+         }
          break;
 
       case HB_GTI_FONTATTRIBUTE:
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, pQTC->fontAttribute );
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
+         {
             pQTC->fontAttribute = hb_itemGetNI( pInfo->pNewVal ) &
                                                 ( HB_GTI_FONTA_FIXMETRIC |
                                                   HB_GTI_FONTA_CLRBKG    |
                                                   HB_GTI_FONTA_CTRLCHARS |
                                                   HB_GTI_FONTA_DRAWBOX   |
                                                   HB_GTI_FONTA_NOSTRETCH );
+         }
          break;
 
       case HB_GTI_SCREENHEIGHT:
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, pQTC->cellY * pQTC->iRows );
          iVal = hb_itemGetNI( pInfo->pNewVal );
          if( iVal > 0 )
+         {
             HB_GTSELF_SETMODE( pGT, static_cast< HB_USHORT >( iVal / pQTC->cellY ), pQTC->iCols );
+         }
          break;
 
       case HB_GTI_SCREENWIDTH:
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, pQTC->cellX * pQTC->iCols );
          iVal = hb_itemGetNI( pInfo->pNewVal );
          if( iVal > 0 )
+         {
             HB_GTSELF_SETMODE( pGT, pQTC->iRows, static_cast< HB_USHORT >( iVal / pQTC->cellX ) );
+         }
          break;
 
       case HB_GTI_DESKTOPWIDTH:
 #if QT_VERSION >= 0x060000
-         pInfo->pResult = hb_itemPutNI( pInfo->pResult,
-                                        QGuiApplication::primaryScreen()->geometry().width() );
+         pInfo->pResult = hb_itemPutNI( pInfo->pResult, QGuiApplication::primaryScreen()->geometry().width() );
 #else
-         pInfo->pResult = hb_itemPutNI( pInfo->pResult,
-                                        QApplication::desktop()->screenGeometry().width() );
+         pInfo->pResult = hb_itemPutNI( pInfo->pResult, QApplication::desktop()->screenGeometry().width() );
 #endif
          break;
 
       case HB_GTI_DESKTOPHEIGHT:
 #if QT_VERSION >= 0x060000
-         pInfo->pResult = hb_itemPutNI( pInfo->pResult,
-                                        QGuiApplication::primaryScreen()->geometry().height() );
+         pInfo->pResult = hb_itemPutNI( pInfo->pResult, QGuiApplication::primaryScreen()->geometry().height() );
 #else
-         pInfo->pResult = hb_itemPutNI( pInfo->pResult,
-                                        QApplication::desktop()->screenGeometry().height() );
+         pInfo->pResult = hb_itemPutNI( pInfo->pResult, QApplication::desktop()->screenGeometry().height() );
 #endif
          break;
 
       case HB_GTI_DESKTOPCOLS:
 #if QT_VERSION >= 0x060000
-         pInfo->pResult = hb_itemPutNI( pInfo->pResult,
-                                        QGuiApplication::primaryScreen()->geometry().width() / pQTC->cellX );
+         pInfo->pResult = hb_itemPutNI( pInfo->pResult, QGuiApplication::primaryScreen()->geometry().width() / pQTC->cellX );
 #else
-         pInfo->pResult = hb_itemPutNI( pInfo->pResult,
-                                        QApplication::desktop()->screenGeometry().width() / pQTC->cellX );
+         pInfo->pResult = hb_itemPutNI( pInfo->pResult, QApplication::desktop()->screenGeometry().width() / pQTC->cellX );
 #endif
          break;
 
       case HB_GTI_DESKTOPROWS:
 #if QT_VERSION >= 0x060000
-         pInfo->pResult = hb_itemPutNI( pInfo->pResult,
-                                        QGuiApplication::primaryScreen()->geometry().height() / pQTC->cellY );
+         pInfo->pResult = hb_itemPutNI( pInfo->pResult, QGuiApplication::primaryScreen()->geometry().height() / pQTC->cellY );
 #else
-         pInfo->pResult = hb_itemPutNI( pInfo->pResult,
-                                        QApplication::desktop()->screenGeometry().height() / pQTC->cellY );
+         pInfo->pResult = hb_itemPutNI( pInfo->pResult, QApplication::desktop()->screenGeometry().height() / pQTC->cellY );
 #endif
          break;
 
@@ -2021,7 +2187,9 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          {
             hb_gt_qtc_itemGetQString( pInfo->pNewVal, pQTC->wndTitle );
             if( pQTC->qWnd )
+            {
                pQTC->qWnd->setWindowTitle( *pQTC->wndTitle );
+            }
          }
          break;
 
@@ -2031,10 +2199,14 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             QString qStr;
             hb_gt_qtc_itemGetQString( pInfo->pNewVal, &qStr );
             if( pQTC->qIcon )
+            {
                delete pQTC->qIcon;
+            }
             pQTC->qIcon = new QIcon( qStr );
             if( pQTC->qWnd )
+            {
                pQTC->qWnd->setWindowIcon( *pQTC->qIcon );
+            }
          }
          break;
 
@@ -2048,14 +2220,20 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          {
             iVal = hb_itemGetNI( pInfo->pNewVal );
             if( iVal < 0 )
+            {
                iVal = 0;
+            }
             QApplication::setCursorFlashTime( iVal );
             if( pQTC->qWnd )
             {
                if( pQTC->qWnd->qConsole->timer->isActive() )
+               {
                   pQTC->qWnd->qConsole->timer->stop();
+               }
                if( QApplication::cursorFlashTime() / 2 > 0 )
+               {
                   pQTC->qWnd->qConsole->timer->start( QApplication::cursorFlashTime() / 2, pQTC->qWnd->qConsole );
+               }
             }
          }
          break;
@@ -2067,7 +2245,9 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          {
             qStr = QApplication::clipboard()->text( QClipboard::Selection );
             if( qStr.isEmpty() && QApplication::clipboard()->supportsFindBuffer() )
+            {
                qStr = QApplication::clipboard()->text( QClipboard::FindBuffer );
+            }
          }
          pInfo->pResult = hb_gt_qtc_itemPutQString( pInfo->pResult, &qStr );
          if( pInfo->pNewVal && HB_IS_STRING( pInfo->pNewVal ) )
@@ -2075,13 +2255,17 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             hb_gt_qtc_itemGetQString( pInfo->pNewVal, &qStr );
             QApplication::clipboard()->setText( qStr );
             if( QApplication::clipboard()->supportsSelection() )
+            {
                QApplication::clipboard()->setText( qStr, QClipboard::Selection );
+            }
          }
          break;
       }
       case HB_GTI_SCREENSIZE:
          if( ! pInfo->pResult )
+         {
             pInfo->pResult = hb_itemNew( nullptr );
+         }
 
          hb_arrayNew( pInfo->pResult, 2 );
          hb_arraySetNI( pInfo->pResult, 2, pQTC->cellY * pQTC->iRows );
@@ -2090,59 +2274,71 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_MAXIMIZED:
          if( pQTC->qWnd )
+         {
             pQTC->fMaximized = ( pQTC->qWnd->windowState() & Qt::WindowMaximized ) != 0;
+         }
          pInfo->pResult = hb_itemPutL( pInfo->pResult, pQTC->fMaximized );
-         if( pInfo->pNewVal && HB_IS_LOGICAL( pInfo->pNewVal ) &&
-             ( hb_itemGetL( pInfo->pNewVal ) ? ! pQTC->fMaximized : pQTC->fMaximized ) )
+         if( pInfo->pNewVal && HB_IS_LOGICAL( pInfo->pNewVal ) && ( hb_itemGetL( pInfo->pNewVal ) ? ! pQTC->fMaximized : pQTC->fMaximized ) )
          {
             pQTC->fMaximized = ! pQTC->fMaximized;
             if( pQTC->qWnd )
+            {
                hb_gt_qtc_setWindowState( pQTC, Qt::WindowMaximized, pQTC->fMaximized, HB_TRUE );
+            }
          }
          break;
 
       case HB_GTI_ISFULLSCREEN:
          if( pQTC->qWnd )
+         {
             pQTC->fFullScreen = ( pQTC->qWnd->windowState() & Qt::WindowFullScreen ) != 0;
+         }
          pInfo->pResult = hb_itemPutL( pInfo->pResult, pQTC->fFullScreen );
-         if( pInfo->pNewVal && HB_IS_LOGICAL( pInfo->pNewVal ) &&
-             ( hb_itemGetL( pInfo->pNewVal ) ? ! pQTC->fFullScreen : pQTC->fFullScreen ) )
+         if( pInfo->pNewVal && HB_IS_LOGICAL( pInfo->pNewVal ) && ( hb_itemGetL( pInfo->pNewVal ) ? ! pQTC->fFullScreen : pQTC->fFullScreen ) )
          {
             pQTC->fFullScreen = ! pQTC->fFullScreen;
             if( pQTC->qWnd )
+            {
                hb_gt_qtc_setWindowState( pQTC, Qt::WindowFullScreen, pQTC->fFullScreen, HB_TRUE );
+            }
          }
          break;
 
       case HB_GTI_ALTENTER:
          pInfo->pResult = hb_itemPutL( pInfo->pResult, pQTC->fAltEnter );
          if( pInfo->pNewVal && HB_IS_LOGICAL( pInfo->pNewVal ) )
+         {
             pQTC->fAltEnter = hb_itemGetL( pInfo->pNewVal );
+         }
          break;
 
       case HB_GTI_MINIMIZED:
          if( pQTC->qWnd )
+         {
             pQTC->fMinimized = ( pQTC->qWnd->windowState() & Qt::WindowMinimized ) != 0;
+         }
          pInfo->pResult = hb_itemPutL( pInfo->pResult, pQTC->fMinimized );
-         if( pInfo->pNewVal && HB_IS_LOGICAL( pInfo->pNewVal ) &&
-             ( hb_itemGetL( pInfo->pNewVal ) ? ! pQTC->fMinimized : pQTC->fMinimized ) )
+         if( pInfo->pNewVal && HB_IS_LOGICAL( pInfo->pNewVal ) && ( hb_itemGetL( pInfo->pNewVal ) ? ! pQTC->fMinimized : pQTC->fMinimized ) )
          {
             pQTC->fMinimized = ! pQTC->fMinimized;
             if( pQTC->qWnd )
+            {
                hb_gt_qtc_setWindowState( pQTC, Qt::WindowMinimized, pQTC->fMinimized, ! pQTC->fMinimized );
+            }
          }
          break;
 
       case HB_GTI_CLOSABLE:
          pInfo->pResult = hb_itemPutL( pInfo->pResult, pQTC->iCloseMode == 0 );
          if( pInfo->pNewVal && HB_IS_LOGICAL( pInfo->pNewVal ) &&
-             ( hb_itemGetL( pInfo->pNewVal ) ? ( pQTC->iCloseMode != 0 ) :
-                                               ( pQTC->iCloseMode == 0 ) ) )
+             ( hb_itemGetL( pInfo->pNewVal ) ? ( pQTC->iCloseMode != 0 ) : ( pQTC->iCloseMode == 0 ) ) )
          {
             iVal = pQTC->iCloseMode;
             pQTC->iCloseMode = iVal == 0 ? 1 : 0;
             if( pQTC->qWnd )
+            {
                hb_gt_qtc_setWindowFlags( pQTC, Qt::WindowCloseButtonHint, pQTC->iCloseMode < 2 );
+            }
          }
          break;
 
@@ -2155,15 +2351,16 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             {
                pQTC->iCloseMode = iVal;
                if( pQTC->qWnd )
+               {
                   hb_gt_qtc_setWindowFlags( pQTC, Qt::WindowCloseButtonHint, pQTC->iCloseMode < 2 );
+               }
             }
          }
          break;
 
       case HB_GTI_RESIZABLE:
          pInfo->pResult = hb_itemPutL( pInfo->pResult, pQTC->fResizable );
-         if( pInfo->pNewVal && HB_IS_LOGICAL( pInfo->pNewVal ) &&
-             ( hb_itemGetL( pInfo->pNewVal ) ? ! pQTC->fResizable : pQTC->fResizable ) )
+         if( pInfo->pNewVal && HB_IS_LOGICAL( pInfo->pNewVal ) && ( hb_itemGetL( pInfo->pNewVal ) ? ! pQTC->fResizable : pQTC->fResizable ) )
          {
             pQTC->fResizable = ! pQTC->fResizable;
             if( pQTC->qWnd )
@@ -2187,7 +2384,9 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                   {
                      pQTC->iResizeMode = iVal;
                      if( pQTC->qWnd )
+                     {
                         pQTC->qWnd->setResizing();
+                     }
                   }
                   break;
             }
@@ -2196,24 +2395,29 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_RESIZESTEP:
          pInfo->pResult = hb_itemPutL( pInfo->pResult, pQTC->fResizeInc );
-         if( pInfo->pNewVal && HB_IS_LOGICAL( pInfo->pNewVal ) &&
-             ( hb_itemGetL( pInfo->pNewVal ) ? ! pQTC->fResizeInc : pQTC->fResizeInc ) )
+         if( pInfo->pNewVal && HB_IS_LOGICAL( pInfo->pNewVal ) && ( hb_itemGetL( pInfo->pNewVal ) ? ! pQTC->fResizeInc : pQTC->fResizeInc ) )
          {
             pQTC->fResizeInc = ! pQTC->fResizeInc;
             if( pQTC->qWnd )
+            {
                pQTC->qWnd->setResizing();
+            }
          }
          break;
 
       case HB_GTI_SELECTCOPY:
          pInfo->pResult = hb_itemPutL( pInfo->pResult, pQTC->fSelectCopy );
          if( pInfo->pNewVal && HB_IS_LOGICAL( pInfo->pNewVal ) )
+         {
             pQTC->fSelectCopy = hb_itemGetL( pInfo->pNewVal );
+         }
          break;
 
       case HB_GTI_MOUSEPOS_XY:
          if( ! pInfo->pResult )
+         {
             pInfo->pResult = hb_itemNew( nullptr );
+         }
          hb_arrayNew( pInfo->pResult, 2 );
          hb_arraySetNI( pInfo->pResult, 1, pQTC->mousePosX );
          hb_arraySetNI( pInfo->pResult, 2, pQTC->mousePosY );
@@ -2230,7 +2434,9 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             y = pQTC->qWnd->pos().y();
          }
          if( ! pInfo->pResult )
+         {
             pInfo->pResult = hb_itemNew( nullptr );
+         }
          hb_arrayNew( pInfo->pResult, 2 );
 
          if( iType == HB_GTI_SETPOS_ROWCOL )
@@ -2242,20 +2448,20 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          hb_arraySetNI( pInfo->pResult, 1, x );
          hb_arraySetNI( pInfo->pResult, 2, y );
 
-         if( pInfo->pNewVal && HB_IS_NUMERIC( pInfo->pNewVal ) &&
-             pInfo->pNewVal2 && HB_IS_NUMERIC( pInfo->pNewVal2 ) )
+         if( pInfo->pNewVal && HB_IS_NUMERIC( pInfo->pNewVal ) && pInfo->pNewVal2 && HB_IS_NUMERIC( pInfo->pNewVal2 ) )
          {
             x = hb_itemGetNI( pInfo->pNewVal );
             y = hb_itemGetNI( pInfo->pNewVal2 );
          }
-         else if( pInfo->pNewVal && HB_IS_ARRAY( pInfo->pNewVal ) &&
-                  hb_arrayLen( pInfo->pNewVal ) == 2 )
+         else if( pInfo->pNewVal && HB_IS_ARRAY( pInfo->pNewVal ) && hb_arrayLen( pInfo->pNewVal ) == 2 )
          {
             x = hb_arrayGetNI( pInfo->pNewVal, 1 );
             y = hb_arrayGetNI( pInfo->pNewVal, 2 );
          }
          else
+         {
             break;
+         }
 
          if( iType == HB_GTI_SETPOS_ROWCOL )
          {
@@ -2264,7 +2470,9 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             y = iVal * pQTC->cellY;
          }
          if( pQTC->qWnd )
+         {
             pQTC->qWnd->move( x, y );
+         }
          else
          {
             pQTC->iNewPosX = x;
@@ -2278,8 +2486,7 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             iVal = hb_itemGetNI( pInfo->pNewVal );
             if( iVal >= 0 && iVal < 16 )
             {
-               pInfo->pResult = hb_itemPutNI( pInfo->pResult,
-                                              QTC_RGB2NUM( pQTC->colors[ iVal ] ) );
+               pInfo->pResult = hb_itemPutNI( pInfo->pResult, QTC_RGB2NUM( pQTC->colors[ iVal ] ) );
                if( pInfo->pNewVal2 && HB_IS_NUMERIC( pInfo->pNewVal2 ) )
                {
                   int iColor = hb_itemGetNI( pInfo->pNewVal2 );
@@ -2288,7 +2495,9 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                   {
                      pQTC->colors[ iVal ] = rgb;
                      if( pQTC->qWnd )
+                     {
                         HB_GTSELF_EXPOSEAREA( pQTC->pGT, 0, 0, pQTC->iRows, pQTC->iCols );
+                     }
                   }
                }
             }
@@ -2296,13 +2505,15 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          else
          {
             if( ! pInfo->pResult )
+            {
                pInfo->pResult = hb_itemNew( nullptr );
+            }
             hb_arrayNew( pInfo->pResult, 16 );
             for( iVal = 0; iVal < 16; iVal++ )
-               hb_arraySetNL( pInfo->pResult, iVal + 1,
-                              QTC_RGB2NUM( pQTC->colors[ iVal ] ) );
-            if( pInfo->pNewVal && HB_IS_ARRAY( pInfo->pNewVal ) &&
-                hb_arrayLen( pInfo->pNewVal ) == 16 )
+            {
+               hb_arraySetNL( pInfo->pResult, iVal + 1, QTC_RGB2NUM( pQTC->colors[ iVal ] ) );
+            }
+            if( pInfo->pNewVal && HB_IS_ARRAY( pInfo->pNewVal ) && hb_arrayLen( pInfo->pNewVal ) == 16 )
             {
                for( iVal = 0; iVal < 16; iVal++ )
                {
@@ -2310,7 +2521,9 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                   pQTC->colors[ iVal ] = QTC_NUM2RGB( iColor );
                }
                if( pQTC->qWnd )
+               {
                   HB_GTSELF_EXPOSEAREA( pQTC->pGT, 0, 0, pQTC->iRows, pQTC->iCols );
+               }
             }
          }
          break;
@@ -2320,8 +2533,7 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_DISPIMAGE:
-         if( pQTC->qWnd &&
-             ( hb_itemType( pInfo->pNewVal ) & ( HB_IT_STRING | HB_IT_ARRAY ) ) )
+         if( pQTC->qWnd && ( hb_itemType( pInfo->pNewVal ) & ( HB_IT_STRING | HB_IT_ARRAY ) ) )
          {
             QImage qImg = QImage();
 
@@ -2377,20 +2589,30 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                      {
                         iPitch = ( iWidth * iDepth + iPad - 1 ) / iPad;
                         if( nSize == static_cast< HB_SIZE >( iHeight * iPitch ) )
+                        {
                            data = reinterpret_cast< const uchar * >( hb_arrayGetCPtr( pInfo->pNewVal, 1 ) );
+                        }
                         else
+                        {
                            iPad >>= 1;
+                        }
                      }
                   }
                   else
+                  {
                      data = reinterpret_cast< const uchar * >( hb_arrayGetPtr( pInfo->pNewVal, 1 ) );
+                  }
                }
                if( data != nullptr )
                {
                   if( iPitch == 0 )
+                  {
                      qImg = QImage( data, iWidth, iHeight, QImage::Format_RGB32 );
+                  }
                   else
+                  {
                      qImg = QImage( data, iWidth, iHeight, iPitch, QImage::Format_RGB32 );
+                  }
                }
             }
 
@@ -2404,7 +2626,9 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                      rx.setLeft( hb_arrayGetNI( pInfo->pNewVal2, 1 ) );
                      rx.setTop( hb_arrayGetNI( pInfo->pNewVal2, 2 ) );
                      if( ! qImg.isNull() )
+                     {
                         rx.setSize( qImg.size() );
+                     }
                      break;
                   case 4:
                      rx.setCoords( hb_arrayGetNI( pInfo->pNewVal2, 1 ),
@@ -2417,14 +2641,20 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             {
                iVal = qImg.height() * rx.width() / qImg.width();
                if( iVal <= rx.height() )
+               {
                   rx.setHeight( iVal );
+               }
                else
+               {
                   rx.setWidth( qImg.width() * rx.height() / qImg.height() );
+               }
                rx.moveCenter( pQTC->qWnd->qConsole->image->rect().center() );
             }
 
             if( qImg.isNull() )
+            {
                pQTC->qWnd->qConsole->repaintChars( rx );
+            }
             else
             {
                QPainter painter( pQTC->qWnd->qConsole->image );
@@ -2454,7 +2684,7 @@ static int hb_gt_qtc_gfx_Primitive( PHB_GT pGT, int iType, int iTop, int iLeft, 
    PHB_GTQTC pQTC;
    int iRet = 1;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_gfx_Primitive(%p,%d,%d,%d,%d,%d,%d)", ( void * ) pGT, iType, iTop, iLeft, iBottom, iRight, iColor ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_gfx_Primitive(%p,%d,%d,%d,%d,%d,%d)", static_cast< void * >( pGT ), iType, iTop, iLeft, iBottom, iRight, iColor ) );
 
    pQTC = HB_GTQTC_GET( pGT );
 
@@ -2551,7 +2781,7 @@ static int hb_gt_qtc_gfx_Primitive( PHB_GT pGT, int iType, int iTop, int iLeft, 
 
 static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_FuncInit(%p)", ( void * ) pFuncTable ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_FuncInit(%p)", static_cast< void * >( pFuncTable ) ) );
 
    pFuncTable->Init                 = hb_gt_qtc_Init;
    pFuncTable->Exit                 = hb_gt_qtc_Exit;
@@ -2575,10 +2805,7 @@ static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
 
 /* --- */
 
-static const HB_GT_INIT gtInit = { HB_GT_DRVNAME( HB_GT_NAME ),
-                                   hb_gt_FuncInit,
-                                   HB_GTSUPER,
-                                   HB_GTID_PTR };
+static const HB_GT_INIT gtInit = { HB_GT_DRVNAME( HB_GT_NAME ), hb_gt_FuncInit, HB_GTSUPER, HB_GTID_PTR };
 
 HB_GT_ANNOUNCE( HB_GT_NAME )
 
@@ -2639,25 +2866,31 @@ QTConsole::QTConsole( PHB_GTQTC pStructQTC, QWidget *parnt ) : QWidget( parnt )
 
    timer = new QBasicTimer();
    if( QApplication::cursorFlashTime() / 2 > 0 )
+   {
       timer->start( QApplication::cursorFlashTime() / 2, this );
+   }
 }
 
-QTConsole::~QTConsole( void )
+QTConsole::~QTConsole()
 {
    delete image;
 
    if( timer->isActive() )
+   {
       timer->stop();
+   }
    delete timer;
 }
 
-void QTConsole::resetWindowSize( void )
+void QTConsole::resetWindowSize()
 {
    font = QFont( *pQTC->fontName );
    if( pQTC->fontWeight )
+   {
       font.setWeight( pQTC->fontWeight == HB_GTI_FONTW_THIN ? QFont::Light :
                       ( pQTC->fontWeight == HB_GTI_FONTW_BOLD ? QFont::Bold :
                         QFont::Normal ) ) ;
+   }
    font.setFixedPitch( true );
    font.setKerning( false );
    setFontSize( pQTC->fontHeight, pQTC->fontWidth );
@@ -2668,11 +2901,12 @@ void QTConsole::setFontSize( int iFH, int iFW )
 {
    int iDec = 0, iHeight, iWidth, iAscent;
    bool bStretch = ( pQTC->fontAttribute & HB_GTI_FONTA_NOSTRETCH ) == 0;
-   bool bMaxSize = ( pQTC->qWnd->windowState() &
-                     ( Qt::WindowMaximized | Qt::WindowFullScreen ) ) != 0;
+   bool bMaxSize = ( pQTC->qWnd->windowState() & ( Qt::WindowMaximized | Qt::WindowFullScreen ) ) != 0;
 
    if( iFH < 4 )
+   {
       iFH = 4;
+   }
 
    font.setStretch( 100 );
    do
@@ -2683,14 +2917,18 @@ void QTConsole::setFontSize( int iFH, int iFW )
       iWidth  = fm.averageCharWidth();
       iAscent = fm.ascent();
       if( iHeight <= iFH && ( bStretch || ! bMaxSize || iWidth <= iFW ) )
+      {
          break;
+      }
    }
    while( iFH - ++iDec >= 4 );
 
    if( iFW > 0 && bStretch )
    {
       if( iFW < 2 )
+      {
          iFW = 2;
+      }
 
       if( iWidth != iFW )
       {
@@ -2698,9 +2936,13 @@ void QTConsole::setFontSize( int iFH, int iFW )
 
          iDec = ( iFW * 100 ) / iWidth;
          if( iDec < 1 )
+         {
             iDec = 1;
+         }
          else if( iDec >= 4000 )
+         {
             iDec = 3999;
+         }
          iDir = iDec;
          do
          {
@@ -2711,18 +2953,24 @@ void QTConsole::setFontSize( int iFH, int iFW )
             iAscent = fm.ascent();
 
             if( iWidth == iFW )
+            {
                break;
+            }
 
             if( iWidth < iFW )
             {
                if( iDir > iDec )
+               {
                   break;
+               }
                ++iDec;
             }
             else /* iWidth > iFW */
             {
                if( --iDec <= iDir )
+               {
                   iDir = iDec + 1;
+               }
             }
          }
          while( iDec > ( iDir >> 1 ) && iDec < ( iDir << 1 ) && iDec < 4000 );
@@ -2735,17 +2983,20 @@ void QTConsole::setFontSize( int iFH, int iFW )
        ( pQTC->fontAttribute & HB_GTI_FONTA_FIXMETRIC ) != 0 )
    {
       if( iHeight < iFH )
+      {
          iHeight = iFH;
+      }
       if( iWidth < iFW )
+      {
          iWidth = iFW;
+      }
    }
 
    pQTC->fontHeight = iHeight;
    pQTC->fontWidth  = iWidth;
    pQTC->fontAscent = iAscent;
 
-   pQTC->fRepaint = pQTC->cellX != pQTC->fontWidth ||
-                    pQTC->cellY != pQTC->fontHeight;
+   pQTC->fRepaint = pQTC->cellX != pQTC->fontWidth || pQTC->cellY != pQTC->fontHeight;
 
    pQTC->cellX = pQTC->fontWidth;
    pQTC->cellY = pQTC->fontHeight;
@@ -2754,13 +3005,14 @@ void QTConsole::setFontSize( int iFH, int iFW )
    {
       hb_gt_qtc_resetBoxCharBitmaps( pQTC );
       if( ! image->isNull() && pQTC->iResizeMode == HB_GTI_RESIZEMODE_ROWS )
-         hb_gt_qtc_setWindowSize( pQTC, pQTC->qWnd->height() / pQTC->cellY,
-                                        pQTC->qWnd->width() / pQTC->cellX );
+      {
+         hb_gt_qtc_setWindowSize( pQTC, pQTC->qWnd->height() / pQTC->cellY, pQTC->qWnd->width() / pQTC->cellX );
+      }
    }
    setImageSize();
 }
 
-void QTConsole::setImageSize( void )
+void QTConsole::setImageSize()
 {
    int iWidth  = pQTC->cellX * pQTC->iCols;
    int iHeight = pQTC->cellY * pQTC->iRows;
@@ -2794,50 +3046,47 @@ void QTConsole::resizeEvent( QResizeEvent * evt )
          int iCols  = iWidth / pQTC->cellX;
 
          if( hb_gt_qtc_setWindowSize( pQTC, iRows, iCols ) )
+         {
             setImageSize();
+         }
       }
       else
+      {
          setFontSize( iHeight / pQTC->iRows, iWidth / pQTC->iCols );
+      }
 
       update();
    }
    else
+   {
       QWidget::resizeEvent( evt );
+   }
 }
 
 static QRect hb_gt_qtc_cellToPixel( PHB_GTQTC pQTC, const QRect & rc )
 {
-   return QRect( rc.left()   * pQTC->cellX,
-                 rc.top()    * pQTC->cellY,
-                 rc.width()  * pQTC->cellX,
-                 rc.height() * pQTC->cellY );
+   return QRect( rc.left() * pQTC->cellX, rc.top() * pQTC->cellY, rc.width() * pQTC->cellX, rc.height() * pQTC->cellY );
 }
 
 static QRect hb_gt_qtc_pixelToCell( PHB_GTQTC pQTC, const QRect & rx )
 {
    QRect rc;
-   rc.setCoords( rx.left()   / pQTC->cellX,
-                 rx.top()    / pQTC->cellY,
-                 rx.right()  / pQTC->cellX,
-                 rx.bottom() / pQTC->cellY );
+   rc.setCoords( rx.left() / pQTC->cellX, rx.top() / pQTC->cellY, rx.right() / pQTC->cellX, rx.bottom() / pQTC->cellY );
    return rc;
 }
 
 static QRect hb_gt_qtc_mapRect( PHB_GTQTC pQTC, const QImage * image, const QRect & rx )
 {
-   return hb_gt_qtc_pixelToCell( pQTC,
-             ( rx.normalized() & QRect( pQTC->marginLeft, pQTC->marginTop,
-                                        image->width(), image->height() ) )
-             .translated( -pQTC->marginLeft, -pQTC->marginTop ) );
+   return hb_gt_qtc_pixelToCell( pQTC, ( rx.normalized() & QRect( pQTC->marginLeft, pQTC->marginTop,
+                                 image->width(), image->height() ) ).translated( -pQTC->marginLeft, -pQTC->marginTop ) );
 }
 
 static QRect hb_gt_qtc_unmapRect( PHB_GTQTC pQTC, const QRect & rc )
 {
-   return hb_gt_qtc_cellToPixel( pQTC, rc ).translated( pQTC->marginLeft,
-                                                        pQTC->marginTop );
+   return hb_gt_qtc_cellToPixel( pQTC, rc ).translated( pQTC->marginLeft, pQTC->marginTop );
 }
 
-void QTConsole::copySelection( void )
+void QTConsole::copySelection()
 {
    const QRect rc = hb_gt_qtc_mapRect( pQTC, image, selectRect );
    int iRow, iCol;
@@ -2858,16 +3107,22 @@ void QTConsole::copySelection( void )
          HB_USHORT usChar;
 
          if( ! HB_GTSELF_GETSCRCHAR( pQTC->pGT, iRow, iCol, &iColor, &bAttr, &usChar ) )
+         {
             break;
+         }
          qStr += QChar( usChar );
       }
       if( rc.height() > 1 )
+      {
          qStr += qStrEol;
+      }
    }
 
    QApplication::clipboard()->setText( qStr );
    if( QApplication::clipboard()->supportsSelection() )
+   {
       QApplication::clipboard()->setText( qStr, QClipboard::Selection );
+   }
 }
 
 void QTConsole::repaintChars( const QRect & rx )
@@ -2882,9 +3137,13 @@ void QTConsole::repaintChars( const QRect & rx )
    QPainter painter( image );
    painter.setFont( QFont( font, painter.device() ) );
    if( bClrBkg )
+   {
       painter.setBackgroundMode( Qt::TransparentMode );
+   }
    else
+   {
       painter.setBackgroundMode( Qt::OpaqueMode );
+   }
 
    for( iRow = rc.top(); iRow <= rc.bottom(); ++iRow )
    {
@@ -2896,10 +3155,14 @@ void QTConsole::repaintChars( const QRect & rx )
       while( iCol <= rc.right() )
       {
          if( ! HB_GTSELF_GETSCRCHAR( pQTC->pGT, iRow, iCol, &iColor, &bAttr, &usChar ) )
+         {
             break;
+         }
 
          if( ( pQTC->fontAttribute & HB_GTI_FONTA_CTRLCHARS ) == 0 )
+         {
             usChar = hb_cdpGetU16Ctrl( usChar );
+         }
          iColor &= 0xff;
 
          QBitmap * qBitMap = hb_gt_qtc_getBoxChar( pQTC, &usChar );
@@ -2907,15 +3170,15 @@ void QTConsole::repaintChars( const QRect & rx )
          if( iLen > 0 && ( iColor != iTextColor || bFixMetric || qBitMap ) )
          {
             if( bClrBkg )
-               painter.fillRect( iStartCol * pQTC->cellX, iRow * pQTC->cellY,
-                                 iLen * pQTC->cellX, pQTC->cellY,
-                                 pQTC->colors[ iTextColor >> 4 ] );
+            {
+               painter.fillRect( iStartCol * pQTC->cellX, iRow * pQTC->cellY, iLen * pQTC->cellX, pQTC->cellY, pQTC->colors[ iTextColor >> 4 ] );
+            }
             else
+            {
                painter.setBackground( QBrush( pQTC->colors[ iTextColor >> 4 ] ) );
+            }
             painter.setPen( pQTC->colors[ iTextColor & 0x0F ] );
-            painter.drawText( iStartCol * pQTC->cellX,
-                              ( iRow * pQTC->cellY ) + pQTC->fontAscent,
-                              QString( pQTC->textLine, iLen ) );
+            painter.drawText( iStartCol * pQTC->cellX, ( iRow * pQTC->cellY ) + pQTC->fontAscent, QString( pQTC->textLine, iLen ) );
             iLen = 0;
          }
          if( qBitMap )
@@ -2925,7 +3188,9 @@ void QTConsole::repaintChars( const QRect & rx )
             painter.setPen( pQTC->colors[ iColor & 0x0F ] );
             painter.drawPixmap( iCol * pQTC->cellX, iRow * pQTC->cellY, *qBitMap );
             if( bClrBkg )
+            {
                painter.setBackgroundMode( Qt::TransparentMode );
+            }
          }
          else
          {
@@ -2941,15 +3206,15 @@ void QTConsole::repaintChars( const QRect & rx )
       if( iLen > 0 )
       {
          if( bClrBkg )
-            painter.fillRect( iStartCol * pQTC->cellX, iRow * pQTC->cellY,
-                              iLen * pQTC->cellX, pQTC->cellY,
-                              pQTC->colors[ iTextColor >> 4 ] );
+         {
+            painter.fillRect( iStartCol * pQTC->cellX, iRow * pQTC->cellY, iLen * pQTC->cellX, pQTC->cellY, pQTC->colors[ iTextColor >> 4 ] );
+         }
          else
+         {
             painter.setBackground( QBrush( pQTC->colors[ iTextColor >> 4 ] ) );
+         }
          painter.setPen( pQTC->colors[ iTextColor & 0x0F ] );
-         painter.drawText( iStartCol * pQTC->cellX,
-                           ( iRow * pQTC->cellY ) + pQTC->fontAscent,
-                           QString( pQTC->textLine, iLen ) );
+         painter.drawText( iStartCol * pQTC->cellX, ( iRow * pQTC->cellY ) + pQTC->fontAscent, QString( pQTC->textLine, iLen ) );
       }
    }
 
@@ -3026,8 +3291,7 @@ void QTConsole::paintEvent( QPaintEvent * evt )
          HB_USHORT usChar;
          int       iColor;
 
-         if( HB_GTSELF_GETSCRCHAR( pQTC->pGT, pQTC->cursorRow, pQTC->cursorCol,
-                                   &iColor, &bAttr, &usChar ) )
+         if( HB_GTSELF_GETSCRCHAR( pQTC->pGT, pQTC->cursorRow, pQTC->cursorCol, &iColor, &bAttr, &usChar ) )
          {
             painter.fillRect( rCrs, pQTC->colors[ iColor & 0x0F ] );
          }
@@ -3051,7 +3315,9 @@ void QTConsole::timerEvent( QTimerEvent * evt )
       }
    }
    else
+   {
       QWidget::timerEvent( evt );
+   }
 }
 
 void QTConsole::focusInEvent( QFocusEvent * evt )
@@ -3078,13 +3344,22 @@ void QTConsole::mouseMoveEvent( QMouseEvent * evt )
       selectRect.setBottomRight( evt->pos() );
       QRect rSel2 = hb_gt_qtc_unmapRect( pQTC, hb_gt_qtc_mapRect( pQTC, image, selectRect ) );
       if( rSel1 != rSel2 )
+      {
          update( QRegion( rSel1 ).xored( QRegion( rSel2 ) ) );
+      }
    }
    else
+   {
+#if QT_VERSION >= 0x060000
+      hb_gt_qtc_setMouseKey( pQTC, evt->position().x(), evt->position().y(), 0, evt->modifiers() );
+#else
       hb_gt_qtc_setMouseKey( pQTC, evt->x(), evt->y(), 0, evt->modifiers() );
+#endif
+   }
 }
 
 #if QT_VERSION >= 0x060000
+#if 0
 void QTConsole::wheelEvent( QWheelEvent * evt )
 {
    int iKey;
@@ -3103,21 +3378,64 @@ void QTConsole::wheelEvent( QWheelEvent * evt )
    {
       case Qt::Vertical:
          if( evt->angleDelta().y() < 0 )
+         {
             iKey = K_MWBACKWARD;
+         }
          else
+         {
             iKey = K_MWFORWARD;
+         }
          break;
 
       case Qt::Horizontal:
          if( evt->angleDelta().x() < 0 )
+         {
             iKey = K_MWLEFT;
+         }
          else
+         {
             iKey = K_MWRIGHT;
+         }
          break;
 
       default:
          QWidget::wheelEvent( evt );
          return;
+   }
+
+   hb_gt_qtc_setMouseKey( pQTC, evt->position().x(), evt->position().y(), iKey, evt->modifiers() );
+}
+#endif
+void QTConsole::wheelEvent( QWheelEvent * evt )
+{
+   int iKey;
+
+   if( evt->angleDelta().y() != 0 ) /* Qt::Vertical */
+   {
+      if( evt->angleDelta().y() < 0 )
+      {
+         iKey = K_MWBACKWARD;
+      }
+      else
+      {
+         iKey = K_MWFORWARD;
+      }
+   }
+   else if( evt->angleDelta().x() != 0 ) /* Qt::Horizontal */
+   {
+      if( evt->angleDelta().x() < 0 )
+      {
+         iKey = K_MWLEFT;
+      }
+      else
+      {
+         iKey = K_MWRIGHT;
+      }
+   }
+   else
+   {
+      QWidget::wheelEvent( evt );
+      return;
    }
 
    hb_gt_qtc_setMouseKey( pQTC, evt->position().x(), evt->position().y(), iKey, evt->modifiers() );
@@ -3131,16 +3449,24 @@ void QTConsole::wheelEvent( QWheelEvent * evt )
    {
       case Qt::Vertical:
          if( evt->delta() < 0 )
+         {
             iKey = K_MWBACKWARD;
+         }
          else
+         {
             iKey = K_MWFORWARD;
+         }
          break;
 
       case Qt::Horizontal:
          if( evt->delta() < 0 )
+         {
             iKey = K_MWLEFT;
+         }
          else
+         {
             iKey = K_MWRIGHT;
+         }
          break;
 
       default:
@@ -3185,7 +3511,11 @@ void QTConsole::mouseDoubleClickEvent( QMouseEvent * evt )
          return;
    }
 
+#if QT_VERSION >= 0x060000
+   hb_gt_qtc_setMouseKey( pQTC, evt->position().x(), evt->position().y(), iKey, evt->modifiers() );
+#else
    hb_gt_qtc_setMouseKey( pQTC, evt->x(), evt->y(), iKey, evt->modifiers() );
+#endif
 }
 
 void QTConsole::mousePressEvent( QMouseEvent * evt )
@@ -3198,7 +3528,11 @@ void QTConsole::mousePressEvent( QMouseEvent * evt )
          if( ! selectMode && ( evt->modifiers() & Qt::ShiftModifier ) )
          {
             selectMode = true;
+#if QT_VERSION >= 0x060000
+            selectRect.setCoords( evt->position().x(), evt->position().y(), evt->position().x(), evt->position().y() );
+#else
             selectRect.setCoords( evt->x(), evt->y(), evt->x(), evt->y() );
+#endif
             update( hb_gt_qtc_unmapRect( pQTC, hb_gt_qtc_mapRect( pQTC, image, selectRect ) ) );
             return;
          }
@@ -3222,7 +3556,11 @@ void QTConsole::mousePressEvent( QMouseEvent * evt )
          return;
    }
 
+#if QT_VERSION >= 0x060000
+   hb_gt_qtc_setMouseKey( pQTC, evt->position().x(), evt->position().y(), iKey, evt->modifiers() );
+#else
    hb_gt_qtc_setMouseKey( pQTC, evt->x(), evt->y(), iKey, evt->modifiers() );
+#endif
 }
 
 void QTConsole::mouseReleaseEvent( QMouseEvent * evt )
@@ -3257,7 +3595,11 @@ void QTConsole::mouseReleaseEvent( QMouseEvent * evt )
          return;
    }
 
+#if QT_VERSION >= 0x060000
+   hb_gt_qtc_setMouseKey( pQTC, evt->position().x(), evt->position().y(), iKey, evt->modifiers() );
+#else
    hb_gt_qtc_setMouseKey( pQTC, evt->x(), evt->y(), iKey, evt->modifiers() );
+#endif
 }
 
 bool QTConsole::event( QEvent * evt )
@@ -3301,21 +3643,24 @@ void QTConsole::inputMethodEvent( QInputMethodEvent * evt )
       evt->accept();
    }
    else
+   {
       QWidget::inputMethodEvent( evt );
+   }
 }
 
 void QTConsole::keyReleaseEvent( QKeyEvent * evt )
 {
    if( selectMode && ( evt->modifiers() & Qt::ShiftModifier ) == 0 )
+   {
       copySelection();
+   }
 
    QWidget::keyReleaseEvent( evt );
 }
 
 void QTConsole::keyPressEvent( QKeyEvent * evt )
 {
-   int iKey = 0, iFlags = hb_gt_qtc_getKeyFlags( evt->modifiers() ),
-       iSize;
+   int iKey = 0, iFlags = hb_gt_qtc_getKeyFlags( evt->modifiers() ), iSize;
 
    /* support for national characters */
    if( ( iSize = evt->text().size() ) > 0 )
@@ -3328,8 +3673,10 @@ void QTConsole::keyPressEvent( QKeyEvent * evt )
          int i;
 
          if( ( iFlags & HB_KF_CTRL ) != 0 && ( iFlags & HB_KF_ALT ) != 0 )
+         {
             /* workaround for AltGR and German keyboard */
             iFlags &= ~( HB_KF_CTRL | HB_KF_ALT );
+         }
 
          for( i = 0; i < iSize; ++i )
          {
@@ -3427,8 +3774,7 @@ void QTConsole::keyPressEvent( QKeyEvent * evt )
          break;
       case Qt::Key_Return:
       case Qt::Key_Enter:
-         if( pQTC->fAltEnter && ( iFlags & HB_KF_ALT ) != 0 &&
-                                ( iFlags & HB_KF_KEYPAD ) == 0 )
+         if( pQTC->fAltEnter && ( iFlags & HB_KF_ALT ) != 0 && ( iFlags & HB_KF_KEYPAD ) == 0 )
          {
             pQTC->fFullScreen = ( pQTC->qWnd->windowState() & Qt::WindowFullScreen ) == 0;
             hb_gt_qtc_setWindowState( pQTC, Qt::WindowFullScreen, pQTC->fFullScreen, HB_TRUE );
@@ -3660,9 +4006,13 @@ void QTConsole::keyPressEvent( QKeyEvent * evt )
    }
 
    if( iKey != 0 )
+   {
       hb_gt_qtc_addKeyToInputQueue( pQTC, HB_INKEY_NEW_KEY( iKey, iFlags ) );
+   }
    else
+   {
       QWidget::keyPressEvent( evt );
+   }
 }
 
 /* --- */
@@ -3676,9 +4026,13 @@ QTCWindow::QTCWindow( PHB_GTQTC pQTC )
                            Qt::WindowTitleHint                     |
                            Qt::Window;
    if( pQTC->iCloseMode < 2 )
+   {
       flags |= Qt::WindowCloseButtonHint;
+   }
    if( pQTC->fResizable )
+   {
       flags |= Qt::WindowMaximizeButtonHint;
+   }
 
    setWindowFlags( flags );
 
@@ -3688,14 +4042,22 @@ QTCWindow::QTCWindow( PHB_GTQTC pQTC )
    resize( pQTC->cellX * pQTC->iCols, pQTC->cellY * pQTC->iRows );
 
    if( pQTC->fFullScreen )
+   {
       setWindowState( windowState() | Qt::WindowFullScreen );
+   }
    else if( pQTC->fMaximized )
+   {
       setWindowState( windowState() | Qt::WindowMaximized );
+   }
    else if( pQTC->fMinimized )
+   {
       setWindowState( windowState() | Qt::WindowMinimized );
+   }
 
    if( pQTC->qIcon )
+   {
       setWindowIcon( *pQTC->qIcon );
+   }
    setWindowTitle( *pQTC->wndTitle );
 
    qConsole = new QTConsole( pQTC );
@@ -3708,7 +4070,7 @@ QTCWindow::QTCWindow( PHB_GTQTC pQTC )
    setFocus( Qt::OtherFocusReason );
 }
 
-QTCWindow::~QTCWindow( void )
+QTCWindow::~QTCWindow()
 {
    delete qConsole;
 }
@@ -3716,28 +4078,40 @@ QTCWindow::~QTCWindow( void )
 void QTCWindow::closeEvent( QCloseEvent * evt )
 {
    if( qConsole->pQTC->iCloseMode == 0 )
+   {
       hb_vmRequestQuit();
+   }
    else
+   {
       hb_gt_qtc_addKeyToInputQueue( qConsole->pQTC, HB_K_CLOSE );
+   }
 
    evt->ignore();
 }
 
-void QTCWindow::setWindowSize( void )
+void QTCWindow::setWindowSize()
 {
    if( ( windowState() & ( Qt::WindowMaximized | Qt::WindowFullScreen ) ) != 0 )
    {
       qConsole->pQTC->marginLeft = width() - qConsole->image->width();
       if( qConsole->pQTC->marginLeft > 0 )
+      {
          qConsole->pQTC->marginLeft >>= 1;
+      }
       else
+      {
          qConsole->pQTC->marginLeft = 0;
+      }
 
       qConsole->pQTC->marginTop = height() - qConsole->image->height();
       if( qConsole->pQTC->marginTop > 0 )
+      {
          qConsole->pQTC->marginTop >>= 1;
+      }
       else
+      {
          qConsole->pQTC->marginTop = 0;
+      }
    }
    else
    {
@@ -3747,7 +4121,7 @@ void QTCWindow::setWindowSize( void )
    setResizing();
 }
 
-void QTCWindow::setResizing( void )
+void QTCWindow::setResizing()
 {
    if( qConsole->pQTC->fResizable )
    {
@@ -3760,17 +4134,25 @@ void QTCWindow::setResizing( void )
       {
          setMinimumSize( qConsole->pQTC->cellX << 1, qConsole->pQTC->cellY << 1 );
          if( ! qConsole->pQTC->fResizeInc || ( windowState() & Qt::WindowMaximized ) != 0 )
+         {
             setSizeIncrement( 0, 0 );
+         }
          else
+         {
             setSizeIncrement( qConsole->pQTC->cellX, qConsole->pQTC->cellY );
+         }
       }
       else
       {
          setMinimumSize( qConsole->pQTC->iCols << 1, qConsole->pQTC->iRows << 2 );
          if( ! qConsole->pQTC->fResizeInc || ( windowState() & Qt::WindowMaximized ) != 0 )
+         {
             setSizeIncrement( 0, 0 );
+         }
          else
+         {
             setSizeIncrement( qConsole->pQTC->iCols, qConsole->pQTC->iRows );
+         }
       }
    }
    else
@@ -3786,18 +4168,20 @@ void QTCWindow::setResizing( void )
 
 #include <X11/Xlib.h>
 
-static void hb_gt_qtc_InitMT( void )
+static void hb_gt_qtc_InitMT()
 {
    if( hb_vmIsMt() )
    {
       if( ! XInitThreads() )
+      {
          hb_errInternal( 10002, "XInitThreads() failed !!!", nullptr, nullptr );
+      }
    }
 }
 
 #else
 
-static void hb_gt_qtc_InitMT( void ) { }
+static void hb_gt_qtc_InitMT() { }
 
 #endif
 

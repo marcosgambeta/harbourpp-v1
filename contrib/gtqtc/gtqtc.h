@@ -346,7 +346,7 @@ class QTConsole : public QWidget
 
 public:
    QTConsole( PHB_GTQTC pStructQTC, QWidget *parnt = 0 );
-   virtual ~QTConsole( void );
+   virtual ~QTConsole();
 
    PHB_GTQTC      pQTC;
 
@@ -358,10 +358,10 @@ public:
    bool           selectMode;
    QRect          selectRect;
 
-   void resetWindowSize( void );
+   void resetWindowSize();
    void setFontSize( int iFH, int iFW );
-   void setImageSize( void );
-   void copySelection( void );
+   void setImageSize();
+   void copySelection();
    void repaintChars( const QRect & rect );
 
 protected:
@@ -388,11 +388,11 @@ class QTCWindow : public QMainWindow
 
 public:
     QTCWindow( PHB_GTQTC pQTC );
-    virtual ~QTCWindow( void );
+    virtual ~QTCWindow();
 
     QTConsole * qConsole;
-    void setWindowSize( void );
-    void setResizing( void );
+    void setWindowSize();
+    void setResizing();
 
 protected:
     void closeEvent( QCloseEvent * evt );
