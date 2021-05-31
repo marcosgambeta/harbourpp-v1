@@ -150,9 +150,13 @@ static PHB_DYNS hb_dynsymPos( const char * szName, HB_SYMCNT * puiPos )
          return s_pDynItems[ uiMiddle ].pDynSym;
       }
       else if( iCmp < 0 )
+      {
          uiLast = uiMiddle;
+      }
       else /* if( iCmp > 0 ) */
+      {
          uiFirst = uiMiddle + 1;
+      }
       uiMiddle = ( uiFirst + uiLast ) >> 1;
    }
 
@@ -208,9 +212,13 @@ PHB_DYNS hb_dynsymFind( const char * szName )
          return s_pDynItems[ uiMiddle ].pDynSym;
       }
       else if( iCmp < 0 )
+      {
          uiLast = uiMiddle;
+      }
       else /* if( iCmp > 0 ) */
+      {
          uiFirst = uiMiddle + 1;
+      }   
    }
 
    HB_DYNSYM_UNLOCK();
@@ -246,7 +254,9 @@ PHB_DYNS hb_dynsymNew( PHB_SYMB pSymbol )
 
    pDynSym = hb_dynsymPos( pSymbol->szName, &uiPos ); /* Find position */
    if( ! pDynSym )
+   {
       pDynSym = hb_dynsymInsert( pSymbol, uiPos );
+   }
    else
    {
       pSymbol->pDynSym = pDynSym;
@@ -366,8 +376,10 @@ PHB_DYNS hb_dynsymGetCase( const char * szName )
 
    pDynSym = hb_dynsymPos( szName, &uiPos );
    if( ! pDynSym )
+   {
       pDynSym = hb_dynsymInsert( hb_symbolAlloc( szName ), uiPos );
-
+   }
+   
    HB_DYNSYM_UNLOCK();
 
    return pDynSym;
@@ -389,11 +401,17 @@ PHB_DYNS hb_dynsymGet( const char * szName )  /* finds and creates a symbol if n
       {
          char cChar = *szName++;
          if( cChar == 0 || cChar == ' ' || cChar == '\t' )
+         {
             break;
+         }
          else if( cChar >= 'a' && cChar <= 'z' )
+         {
             *pDest++ = cChar - ( 'a' - 'A' );
+         }
          else
+         {
             *pDest++ = cChar;
+         }   
       }
       while( --iLen );
       *pDest = '\0';
@@ -418,11 +436,17 @@ PHB_DYNS hb_dynsymFindName( const char * szName )  /* finds a symbol */
       {
          char cChar = *szName++;
          if( cChar == 0 || cChar == ' ' || cChar == '\t' )
+         {
             break;
+         }
          else if( cChar >= 'a' && cChar <= 'z' )
+         {
             *pDest++ = cChar - ( 'a' - 'A' );
+         }
          else
+         {
             *pDest++ = cChar;
+         }   
       }
       while( --iLen );
       *pDest = '\0';
@@ -511,8 +535,10 @@ static PHB_DYNS hb_dynsymGetByIndex( HB_LONG lIndex )
    HB_DYNSYM_LOCK();
 
    if( lIndex >= 1 && ( HB_ULONG ) lIndex <= s_uiDynSymbols )
+   {
       pDynSym = s_pDynItems[ lIndex - 1 ].pDynSym;
-
+   }
+   
    HB_DYNSYM_UNLOCK();
 
    return pDynSym;
@@ -545,8 +571,10 @@ HB_SYMCNT hb_dynsymToNum( PHB_DYNS pDynSym )
    }
 
    if( s_pDynIndex[ uiSymNum - 1 ].pDynSym == nullptr )
+   {
       s_pDynIndex[ uiSymNum - 1 ].pDynSym = pDynSym;
-
+   }
+   
    HB_DYNSYM_UNLOCK();
 
    return uiSymNum;
@@ -588,18 +616,26 @@ void hb_dynsymEval( PHB_DYNS_FUNC pFunction, void * Cargo )
          while( s_pDynItems[ uiPos ].pDynSym != pDynSym )
          {
             if( ++uiPos >= s_uiDynSymbols )
+            {
                break;
+            }   
          }
       }
       if( ++uiPos < s_uiDynSymbols )
+      {
          pDynSym = s_pDynItems[ uiPos ].pDynSym;
+      }
       else
+      {
          pDynSym = nullptr;
+      }
 
       HB_DYNSYM_UNLOCK();
 
       if( ! pDynSym || ! ( pFunction ) ( pDynSym, Cargo ) )
+      {
          break;
+      }   
    }
 }
 
@@ -614,7 +650,9 @@ void hb_dynsymProtectEval( PHB_DYNS_FUNC pFunction, void * Cargo )
    while( uiPos < s_uiDynSymbols )
    {
       if( ! ( pFunction ) ( s_pDynItems[ uiPos++ ].pDynSym, Cargo ) )
+      {
          break;
+      }   
    }
 
    HB_DYNSYM_UNLOCK();
@@ -681,9 +719,13 @@ HB_FUNC( __DYNSGETINDEX ) /* Gimme index number of symbol: dsIndex = __dynsymGet
       {
          HB_DYNSYM_LOCK();
          if( hb_dynsymPos( pDynSym->pSymbol->szName, &uiPos ) )
+         {
             ++uiPos;
+         }
          else
+         {
             uiPos = 0;
+         }
          HB_DYNSYM_UNLOCK();
       }
    }
@@ -702,7 +744,9 @@ HB_FUNC( HB_ISFUNCTION ) /* returns .T. if a symbol has a function/procedure poi
    {
       PHB_DYNS pDynSym = hb_dynsymFindName( szProc );
       if( pDynSym )
+      {
          fResult = hb_dynsymIsFunction( pDynSym );
+      }   
    }
 
    hb_retl( fResult );
@@ -758,7 +802,9 @@ HB_FUNC( __DYNSN2SYM )
    const char * szName = hb_parc( 1 );
 
    if( szName )
+   {
       hb_itemPutSymbol( hb_stackReturnItem(), hb_dynsymGet( szName )->pSymbol );
+   }   
 }
 
 HB_FUNC( __DYNSP2NAME )
@@ -788,13 +834,21 @@ static int hb_dynsymVerify( void )
       if( uiPos > 0 &&
           ( iCmp = strcmp( s_pDynItems[ uiPos - 1 ].pDynSym->pSymbol->szName,
                            pDynSym->pSymbol->szName ) ) <= 0 )
+      {
          iResult = iCmp == 0 ? -1 : -2;
+      }
       else if( hb_dynsymPos( pDynSym->pSymbol->szName, &uiAt ) != pDynSym )
+      {
          iResult = -3;
+      }
       else if( uiAt != uiPos )
+      {
          iResult = -4;
+      }
       else
+      {
          ++uiPos;
+      }
    }
 
    HB_DYNSYM_UNLOCK();

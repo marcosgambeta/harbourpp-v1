@@ -101,7 +101,9 @@ void hb_winmainArgVBuild( void )
    lpModuleName = ( LPTSTR ) HB_WINARG_ALLOC( ( MAX_PATH + 1 ) * sizeof( TCHAR ) );
    nModuleName = GetModuleFileName( nullptr, lpModuleName, MAX_PATH + 1 );
    if( nModuleName )
+   {
       nModuleName++;
+   }
    HB_WINARG_FREE( lpModuleName );
 
    lpCmdLine = GetCommandLine();
@@ -138,19 +140,27 @@ void hb_winmainArgVBuild( void )
          if( *lpSrc == TEXT( '"' ) )
          {
             if( lpArg == nullptr )
+            {
                lpArg = lpDst;
+            }
             fQuoted = ! fQuoted;
          }
          else if( fQuoted || ! HB_ISSPACE( *lpSrc ) )
          {
             if( lpArg == nullptr )
+            {
                lpArg = lpDst;
+            }
             if( iArgC > 0 || nModuleName == 0 )
             {
                if( lpArgV )
+               {
                   *lpDst++ = *lpSrc;
+               }
                else
+               {
                   nSize++;
+               }   
             }
          }
          else
@@ -165,7 +175,9 @@ void hb_winmainArgVBuild( void )
                      lpArgV[ iArgC ] = lpArg;
                   }
                   else
+                  {
                      nSize++;
+                  }   
                }
                iArgC++;
                lpArg = nullptr;
@@ -183,7 +195,9 @@ void hb_winmainArgVBuild( void )
                lpArgV[ iArgC ] = lpArg;
             }
             else
+            {
                nSize++;
+            }   
          }
          iArgC++;
       }
@@ -199,7 +213,9 @@ void hb_winmainArgVBuild( void )
          lpArgV[ 0 ] = ( LPTSTR ) ( lpArgV + iArgC );
       }
       else
+      {
          iArgC = 0;
+      }   
    }
    if( iArgC > 0 && nModuleName != 0 )
    {
@@ -254,13 +270,17 @@ void hb_winmainArgVFree( void )
       if( s_lpArgVStr )
       {
          if( s_argv == s_lpArgVStr )
+         {
             s_argv = nullptr;
+         }
          HB_WINARG_FREE( s_lpArgVStr );
          s_lpArgVStr = nullptr;
       }
 #else
       if( s_argv == s_lpArgV )
+      {
          s_argv = nullptr;
+      }   
 #endif
 
       HB_WINARG_FREE( s_lpArgV );
@@ -280,11 +300,17 @@ void hb_winmainArgInit( void * hInstance, void * hPrevInstance, int iCmdShow )
 HB_BOOL hb_winmainArgGet( void * phInstance, void * phPrevInstance, int * piCmdShow )
 {
    if( phInstance )
+   {
       *( ( HANDLE * ) phInstance ) = s_hInstance;
+   }
    if( phPrevInstance )
+   {
       *( ( HANDLE * ) phPrevInstance ) = s_hPrevInstance;
+   }
    if( piCmdShow )
+   {
       *piCmdShow = s_iCmdShow;
+   }   
 
    return s_WinMainParam;
 }
@@ -297,7 +323,9 @@ void hb_cmdargInit( int argc, char * argv[] )
 
 #if defined( HB_OS_WIN )
    if( s_lpArgV )
+   {
       return;
+   }   
 #endif
 
    if( argc == 0 || argv == nullptr )
@@ -333,7 +361,9 @@ static char * hb_cmdargDup( int argc )
 {
 #if defined( HB_OS_WIN )
    if( s_lpArgV )
+   {
       return argc >= 0 && argc < s_argc ? HB_OSSTRDUP( s_lpArgV[ argc ] ) : nullptr;
+   }   
 #endif
    return argc >= 0 && argc < s_argc ? hb_osStrDecode( s_argv[ argc ] ) : nullptr;
 }
@@ -357,7 +387,9 @@ void hb_cmdargUpdate( void )
                                        HB_SIZEOFARRAY( s_szAppName ),
                                        s_szAppName );
             if( ulrc == NO_ERROR )
+            {
                s_argv[ 0 ] = s_szAppName;
+            }   
          }
       }
 #  else
@@ -397,10 +429,14 @@ void hb_cmdargUpdate( void )
                }
                hb_fsFreeSearchPath( pSearchPath );
                if( ! fInPath )
+               {
                   pFName->szPath = nullptr;
+               }   
             }
             if( pszPATH )
+            {
                hb_xfree( pszPATH );
+            }   
          }
          if( pFName->szPath )
          {
@@ -412,7 +448,9 @@ void hb_cmdargUpdate( void )
             {
                if( pFName->szPath[ 0 ] == '.' &&
                    pFName->szPath[ 1 ] == HB_OS_PATH_DELIM_CHR )
+               {
                   pFName->szPath += 2;
+               }   
                s_szAppName[ 0 ] = HB_OS_PATH_DELIM_CHR;
                hb_fsCurDirBuff( 0, s_szAppName + 1, HB_PATH_MAX - 1 );
                if( s_szAppName[ 1 ] != 0 )
@@ -426,7 +464,9 @@ void hb_cmdargUpdate( void )
                }
             }
             else if( fInPath )
+            {
                s_argv[ 0 ] = s_szAppName;
+            }   
          }
          hb_xfree( pFName );
       }
@@ -448,10 +488,14 @@ int hb_cmdargPushArgs( void )
       {
 #if defined( HB_OS_WIN )
          if( s_lpArgV )
+         {
             HB_ITEMPUTSTR( hb_stackAllocItem(), s_lpArgV[ i ] );
+         }   
          else
 #endif
+         {
             hb_vmPushString( s_argv[ i ], strlen( s_argv[ i ] ) );
+         }
          iArgCount++;
       }
    }
@@ -470,8 +514,10 @@ HB_BOOL hb_cmdargIsInternal( const char * szArg, int * piLen )
        hb_strnicmp( szArg, "//hb:", 5 ) == 0 )
    {
       if( piLen )
+      {
          *piLen = 5;
-
+      }
+      
       return HB_TRUE;
    }
    else if( strlen( szArg ) >= 2 &&
@@ -479,8 +525,10 @@ HB_BOOL hb_cmdargIsInternal( const char * szArg, int * piLen )
             szArg[ 1 ] == '/' )
    {
       if( piLen )
+      {
          *piLen = 2;
-
+      }
+      
       return HB_TRUE;
    }
 
@@ -511,7 +559,9 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
                LPCTSTR lpPos = s_lpArgV[ i ] + iPrefixLen + strlen( pszName );
 
                if( *lpPos == TEXT( ':' ) )
+               {
                   lpPos++;
+               }
                return HB_OSSTRDUP( lpPos );
             }
             else
@@ -520,13 +570,17 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
                char * pszPos = s_argv[ i ] + iPrefixLen + strlen( pszName );
 
                if( *pszPos == ':' )
+               {
                   pszPos++;
-
+               }
+               
                return hb_osStrDecode( pszPos );
             }
          }
          else
+         {
             return ( char * ) "";
+         }   
       }
    }
 
@@ -535,8 +589,10 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
    if( ! pszEnvVar || pszEnvVar[ 0 ] == '\0' )
    {
       if( pszEnvVar )
+      {
          hb_xfree( pszEnvVar );
-
+      }
+      
       pszEnvVar = hb_getenv( "CLIPPER" );
    }
 
@@ -562,8 +618,10 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
 
          /* The // is optional in the envvar */
          if( hb_cmdargIsInternal( pszNext, &iPrefixLen ) )
+         {
             pszNext += iPrefixLen;
-
+         }
+         
          pszEnd = pszNext;
          /* Search for the end of this switch */
          while( *pszEnd && strchr( s_szSeparator, *pszEnd ) == nullptr )
@@ -579,14 +637,18 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
 
                /* Skip value separator colon. */
                if( *pszNext == ':' )
+               {
                   pszNext++;
-
+               }
+               
                nLen = pszEnd > pszNext ? pszEnd - pszNext : 0;
                pszRetVal = static_cast< char * >( hb_xgrab( nLen + 1 ) );
                hb_strncpy( pszRetVal, pszNext, nLen );
             }
             else
+            {
                pszRetVal = ( char * ) "";
+            }
             break;
          }
 
@@ -596,8 +658,10 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
    }
 
    if( pszEnvVar )
+   {
       hb_xfree( pszEnvVar );
-
+   }
+   
    return pszRetVal;
 }
 
@@ -629,7 +693,9 @@ int hb_cmdargNum( const char * pszName )
       return iValue;
    }
    else
+   {
       return -1;
+   }   
 }
 
 /* NOTE: Pointer must be freed with hb_xfree() if not nullptr */
@@ -702,9 +768,13 @@ HB_FUNC( HB_ARGV )
    char * pszArg = hb_cmdargDup( hb_parni( 1 ) );
 
    if( pszArg )
+   {
       hb_retc_buffer( pszArg );
+   }
    else
+   {
       hb_retc_null();
+   }   
 }
 
 HB_FUNC( HB_ARGSHIFT )
@@ -720,7 +790,9 @@ HB_FUNC( HB_ARGSHIFT )
             s_argv[ 0 ] = s_argv[ iArg ];
 #if defined( HB_OS_WIN )
             if( s_lpArgV )
+            {
                s_lpArgV[ 0 ] = s_lpArgV[ iArg ];
+            }   
 #endif
             break;
          }
@@ -735,7 +807,9 @@ HB_FUNC( HB_ARGSHIFT )
          s_argv[ iArg ] = s_argv[ iArg + 1 ];
 #if defined( HB_OS_WIN )
          if( s_lpArgV )
+         {
             s_lpArgV[ iArg ] = s_lpArgV[ iArg + 1 ];
+         }   
 #endif
          ++iArg;
       }
@@ -755,7 +829,9 @@ HB_FUNC( HB_ACMDLINE )
       hb_itemReturnRelease( pArray );
    }
    else
+   {
       hb_reta( 0 );
+   }   
 }
 
 HB_FUNC( HB_CMDLINE )
@@ -814,7 +890,9 @@ HB_FUNC( HB_CMDLINE )
       }
    }
    else
+   {
       hb_retc_null();
+   }   
 }
 
 /* Check for command-line internal arguments */
@@ -851,8 +929,10 @@ void hb_cmdargProcess( void )
    }
 
    if( hb_cmdargCheck( "BUILD" ) )
+   {
       hb_verBuildInfo();
-
+   }
+   
    iHandles = hb_cmdargNum( "F" );
    if( iHandles > 20 )
    {

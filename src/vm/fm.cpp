@@ -414,10 +414,14 @@ static mspace hb_mspace( void )
    PHB_MSPACE pm = ( PHB_MSPACE ) hb_stackAllocator();
 
    if( pm )
+   {
       return pm->ms;
+   }
 
    if( ! s_gm )
+   {
       s_gm = create_mspace( 0, 1 );
+   }   
 
    return s_gm;
 }
@@ -436,10 +440,14 @@ static PHB_MSPACE hb_mspace_alloc( void )
       for( i = 1; i < HB_MSPACE_COUNT; ++i )
       {
          if( s_mspool[ i ].count < s_mspool[ imin ].count )
+         {
             imin = i;
+         }   
       }
       if( s_mspool[ imin ].ms == nullptr )
+      {
          s_mspool[ imin ].ms = create_mspace( 0, 1 );
+      }
       s_mspool[ imin ].count++;
       return &s_mspool[ imin ];
    }
@@ -492,7 +500,9 @@ static void dlmalloc_destroy( void )
          flag_t flag = sp->sflags;
          sp = sp->next;
          if( ( flag & USE_MMAP_BIT ) && ! ( flag & EXTERN_BIT ) )
+         {
             CALL_MUNMAP( base, size );
+         }   
       }
    }
 }
@@ -528,7 +538,9 @@ void hb_xexit_thread( void )
       hb_stack.allocator = nullptr;
       HB_FM_LOCK();
       if( --pm->count == 0 )
+      {
          mspace_trim( pm->ms, 0 );
+      }
       HB_FM_UNLOCK();
    }
 #endif
@@ -542,15 +554,19 @@ void hb_xclean( void )
       int i, imax, icount;
 
       if( s_gm )
+      {
          mspace_trim( s_gm, 0 );
-
+      }
+      
       for( i = imax = icount = 0; i < HB_MSPACE_COUNT; ++i )
       {
          if( s_mspool[ i ].ms )
          {
             icount += s_mspool[ i ].count;
             if( imax < s_mspool[ i ].count )
+            {
                imax = s_mspool[ i ].count;
+            }
             mspace_trim( s_mspool[ i ].ms, 0 );
          }
       }
@@ -571,9 +587,13 @@ void hb_xsetfilename( const char * szValue )
 {
 #ifdef HB_FM_STATISTICS
    if( szValue )
+   {
       hb_strncpy( s_szFileName, szValue, sizeof( s_szFileName ) - 1 );
+   }
    else
+   {
       s_szFileName[ 0 ] = '\0';
+   }   
 #else
    HB_SYMBOL_UNUSED( szValue );
 #endif
@@ -595,18 +615,24 @@ void * hb_xalloc( HB_SIZE nSize )         /* allocates fixed memory, returns nul
    HB_TRACE_FM( HB_TR_DEBUG, ( "hb_xalloc(%" HB_PFS "u)", nSize ) );
 
    if( nSize == 0 )
+   {
       hb_errInternal( HB_EI_XALLOCNULLSIZE, nullptr, nullptr, nullptr );
-
+   }
+   
 #ifdef HB_FM_NEED_INIT
    if( ! s_fInitedFM )
+   {
       hb_xinit();
+   }   
 #endif
 
    pMem = ( PHB_MEMINFO ) malloc( HB_ALLOC_SIZE( nSize ) );
 
    if( ! pMem )
+   {
       return pMem;
-
+   }
+   
 #ifdef HB_FM_STATISTICS
 
    if( s_fStatistic )
@@ -622,9 +648,13 @@ void * hb_xalloc( HB_SIZE nSize )         /* allocates fixed memory, returns nul
           */
          pMem->uiProcLine = pTrace->line; /* C line number */
          if( pTrace->file )
+         {
             hb_strncpy( pMem->szProcName, pTrace->file, sizeof( pMem->szProcName ) - 1 );
+         }
          else
+         {
             pMem->szProcName[ 0 ] = '\0';
+         }   
          pTrace->level = -1;
       }
       else
@@ -653,11 +683,15 @@ void * hb_xalloc( HB_SIZE nSize )         /* allocates fixed memory, returns nul
 
       s_nMemoryConsumed += nSize + sizeof( HB_COUNTER );
       if( s_nMemoryMaxConsumed < s_nMemoryConsumed )
+      {
          s_nMemoryMaxConsumed = s_nMemoryConsumed;
+      }
       s_nMemoryBlocks++;
       if( s_nMemoryMaxBlocks < s_nMemoryBlocks )
+      {
          s_nMemoryMaxBlocks = s_nMemoryBlocks;
-
+      }
+      
       HB_FM_UNLOCK();
 
       if( s_nMemoryLimConsumed > 0 && s_nMemoryConsumed > s_nMemoryLimConsumed )
@@ -686,18 +720,24 @@ void * hb_xgrab( HB_SIZE nSize )         /* allocates fixed memory, exits on fai
    HB_TRACE_FM( HB_TR_DEBUG, ( "hb_xgrab(%" HB_PFS "u)", nSize ) );
 
    if( nSize == 0 )
+   {
       hb_errInternal( HB_EI_XGRABNULLSIZE, nullptr, nullptr, nullptr );
-
+   }
+   
 #ifdef HB_FM_NEED_INIT
    if( ! s_fInitedFM )
+   {
       hb_xinit();
+   }   
 #endif
 
    pMem = ( PHB_MEMINFO ) malloc( HB_ALLOC_SIZE( nSize ) );
 
    if( ! pMem )
+   {
       hb_errInternal( HB_EI_XGRABALLOC, nullptr, nullptr, nullptr );
-
+   }
+   
 #ifdef HB_FM_STATISTICS
 
    if( s_fStatistic )
@@ -713,9 +753,13 @@ void * hb_xgrab( HB_SIZE nSize )         /* allocates fixed memory, exits on fai
           */
          pMem->uiProcLine = pTrace->line; /* C line number */
          if( pTrace->file )
+         {
             hb_strncpy( pMem->szProcName, pTrace->file, sizeof( pMem->szProcName ) - 1 );
+         }
          else
+         {
             pMem->szProcName[ 0 ] = '\0';
+         }   
          pTrace->level = -1;
       }
       else
@@ -744,11 +788,15 @@ void * hb_xgrab( HB_SIZE nSize )         /* allocates fixed memory, exits on fai
 
       s_nMemoryConsumed += nSize + sizeof( HB_COUNTER );
       if( s_nMemoryMaxConsumed < s_nMemoryConsumed )
+      {
          s_nMemoryMaxConsumed = s_nMemoryConsumed;
+      }
       s_nMemoryBlocks++;
       if( s_nMemoryMaxBlocks < s_nMemoryBlocks )
+      {
          s_nMemoryMaxBlocks = s_nMemoryBlocks;
-
+      }
+      
       HB_FM_UNLOCK();
 
       if( s_nMemoryLimConsumed > 0 && s_nMemoryConsumed > s_nMemoryLimConsumed )
@@ -776,17 +824,23 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
 #if 0
    /* disabled to make hb_xrealloc() ANSI-C realloc() compatible */
    if( ! pMem )
+   {
       hb_errInternal( HB_EI_XREALLOCNULL, nullptr, nullptr, nullptr );
-
+   }
+   
    if( nSize == 0 )
+   {
       hb_errInternal( HB_EI_XREALLOCNULLSIZE, nullptr, nullptr, nullptr );
+   }   
 #endif
 
 #ifdef HB_FM_STATISTICS
    if( pMem == nullptr )
    {
       if( nSize == 0 )
+      {
          hb_errInternal( HB_EI_XREALLOCNULLSIZE, nullptr, nullptr, nullptr );
+      }
       return hb_xgrab( nSize );
    }
    else if( nSize == 0 )
@@ -802,13 +856,17 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
       pMemBlock = HB_FM_PTR( pMem );
 
       if( pMemBlock->u32Signature != HB_MEMINFO_SIGNATURE )
+      {
          hb_errInternal( HB_EI_XREALLOCINV, nullptr, nullptr, nullptr );
-
+      }
+      
       nMemSize = pMemBlock->nSize;
 
       if( HB_FM_GETSIG( pMem, nMemSize ) != HB_MEMINFO_SIGNATURE )
+      {
          hb_errInternal( HB_EI_XMEMOVERFLOW, nullptr, nullptr, nullptr );
-
+      }
+      
       pMemBlock->u32Signature = 0;
       HB_FM_CLRSIG( HB_MEM_PTR( pMemBlock ), nMemSize );
 
@@ -831,21 +889,31 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
 
          s_nMemoryConsumed += ( nSize - nMemSize );
          if( s_nMemoryMaxConsumed < s_nMemoryConsumed )
+         {
             s_nMemoryMaxConsumed = s_nMemoryConsumed;
-
+         }
+         
          ( ( PHB_MEMINFO ) pMem )->nSize = nSize;  /* size of the memory block */
          ( ( PHB_MEMINFO ) pMem )->u32Signature = HB_MEMINFO_SIGNATURE;
          HB_FM_SETSIG( HB_MEM_PTR( pMem ), nSize );
 
          if( ( ( PHB_MEMINFO ) pMem )->pPrevBlock )
+         {
             ( ( PHB_MEMINFO ) pMem )->pPrevBlock->pNextBlock = ( PHB_MEMINFO ) pMem;
+         }
          if( ( ( PHB_MEMINFO ) pMem )->pNextBlock )
+         {
             ( ( PHB_MEMINFO ) pMem )->pNextBlock->pPrevBlock = ( PHB_MEMINFO ) pMem;
+         }
 
          if( s_pFirstBlock == pMemBlock )
+         {
             s_pFirstBlock = ( PHB_MEMINFO ) pMem;
+         }
          if( s_pLastBlock == pMemBlock )
+         {
             s_pLastBlock = ( PHB_MEMINFO ) pMem;
+         }   
       }
 
       HB_FM_UNLOCK();
@@ -860,26 +928,36 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
 #  ifdef HB_PARANOID_MEM_CHECK
       memset( pMemBlock, HB_MEMFILER, HB_ALLOC_SIZE( nMemSize ) );
       if( nSize > nMemSize && pMem )
+      {
          memset( ( HB_BYTE * ) HB_MEM_PTR( pMem ) + nMemSize, HB_MEMFILER, nSize - nMemSize );
+      }   
 #  endif
       free( pMemBlock );
 #endif
    }
    else
+   {
       pMem = realloc( HB_FM_PTR( pMem ), HB_ALLOC_SIZE( nSize ) );
+   }   
 
    if( ! pMem )
+   {
       hb_errInternal( HB_EI_XREALLOC, nullptr, nullptr, nullptr );
+   }   
 
 #else
 
    if( pMem == nullptr )
    {
       if( nSize == 0 )
+      {
          hb_errInternal( HB_EI_XREALLOCNULLSIZE, nullptr, nullptr, nullptr );
+      }
       pMem = malloc( HB_ALLOC_SIZE( nSize ) );
       if( pMem )
+      {
          HB_ATOM_SET( HB_COUNTER_PTR( HB_MEM_PTR( pMem ) ), 1 );
+      }   
    }
    else if( nSize == 0 )
    {
@@ -905,7 +983,9 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
    }
 
    if( ! pMem )
+   {
       hb_errInternal( HB_EI_XREALLOC, nullptr, nullptr, nullptr );
+   }   
 
 #endif
 
@@ -925,26 +1005,38 @@ void hb_xfree( void * pMem )            /* frees fixed memory */
       if( s_fStatistic )
       {
          if( pMemBlock->u32Signature != HB_MEMINFO_SIGNATURE )
+         {
             hb_errInternal( HB_EI_XFREEINV, nullptr, nullptr, nullptr );
+         }
 
          if( HB_FM_GETSIG( pMem, pMemBlock->nSize ) != HB_MEMINFO_SIGNATURE )
+         {
             hb_errInternal( HB_EI_XMEMOVERFLOW, nullptr, nullptr, nullptr );
-
+         }
+         
          HB_FM_LOCK();
 
          s_nMemoryConsumed -= pMemBlock->nSize + sizeof( HB_COUNTER );
          s_nMemoryBlocks--;
 
          if( pMemBlock->pPrevBlock )
+         {
             pMemBlock->pPrevBlock->pNextBlock = pMemBlock->pNextBlock;
+         }
          else
+         {
             s_pFirstBlock = pMemBlock->pNextBlock;
+         }
 
          if( pMemBlock->pNextBlock )
+         {
             pMemBlock->pNextBlock->pPrevBlock = pMemBlock->pPrevBlock;
+         }
          else
+         {
             s_pLastBlock = pMemBlock->pPrevBlock;
-
+         }
+         
          HB_FM_UNLOCK();
 
          pMemBlock->u32Signature = 0;
@@ -963,7 +1055,9 @@ void hb_xfree( void * pMem )            /* frees fixed memory */
 #endif
    }
    else
+   {
       hb_errInternal( HB_EI_XFREENULL, nullptr, nullptr, nullptr );
+   }   
 }
 
 /* increment reference counter */
@@ -987,15 +1081,21 @@ void hb_xRefFree( void * pMem )
 #ifdef HB_FM_STATISTICS
 
    if( s_fStatistic && HB_FM_PTR( pMem )->u32Signature != HB_MEMINFO_SIGNATURE )
+   {
       hb_errInternal( HB_EI_XFREEINV, nullptr, nullptr, nullptr );
-
+   }
+   
    if( HB_ATOM_DEC( HB_COUNTER_PTR( pMem ) ) == 0 )
+   {
       hb_xfree( pMem );
+   }   
 
 #else
 
    if( HB_ATOM_DEC( HB_COUNTER_PTR( pMem ) ) == 0 )
+   {
       free( HB_FM_PTR( pMem ) );
+   }   
 
 #endif
 }
@@ -1018,14 +1118,18 @@ void * hb_xRefResize( void * pMem, HB_SIZE nSave, HB_SIZE nSize, HB_SIZE * pnAll
       void * pMemNew = memcpy( hb_xgrab( nSize ), pMem, HB_MIN( nSave, nSize ) );
 
       if( HB_ATOM_DEC( HB_COUNTER_PTR( pMem ) ) == 0 )
+      {
          hb_xfree( pMem );
+      }   
 
       *pnAllocated = nSize;
       return pMemNew;
    }
    else if( nSize <= *pnAllocated )
+   {
       return pMem;
-
+   }
+   
    *pnAllocated = nSize;
    return hb_xrealloc( pMem, nSize );
 
@@ -1040,19 +1144,25 @@ void * hb_xRefResize( void * pMem, HB_SIZE nSave, HB_SIZE nSize, HB_SIZE * pnAll
          HB_ATOM_SET( HB_COUNTER_PTR( HB_MEM_PTR( pMemNew ) ), 1 );
          memcpy( HB_MEM_PTR( pMemNew ), pMem, HB_MIN( nSave, nSize ) );
          if( HB_ATOM_DEC( HB_COUNTER_PTR( pMem ) ) == 0 )
+         {
             free( HB_FM_PTR( pMem ) );
+         }   
          *pnAllocated = nSize;
          return HB_MEM_PTR( pMemNew );
       }
    }
    else if( nSize <= *pnAllocated )
+   {
       return pMem;
+   }
    else
    {
       *pnAllocated = nSize;
       pMem = realloc( HB_FM_PTR( pMem ), HB_ALLOC_SIZE( nSize ) );
       if( pMem )
+      {
          return HB_MEM_PTR( pMem );
+      }   
    }
 
    hb_errInternal( HB_EI_XREALLOC, nullptr, nullptr, nullptr );
@@ -1088,7 +1198,9 @@ const char * hb_xinfo( void * pMem, HB_USHORT * puiLine )
       PHB_MEMINFO pMemBlock = HB_FM_PTR( pMem );
 
       if( puiLine )
+      {
          * puiLine = pMemBlock->uiProcLine;
+      }   
 
       return pMemBlock->szProcName;
    }
@@ -1097,7 +1209,9 @@ const char * hb_xinfo( void * pMem, HB_USHORT * puiLine )
    HB_SYMBOL_UNUSED( pMem );
 
    if( puiLine )
+   {
       * puiLine = 0;
+   }   
 
    return nullptr;
 #endif
@@ -1123,13 +1237,19 @@ void hb_xinit( void ) /* Initialize fixed memory subsystem */
          if( hb_getenv_buffer( "HB_FM_STAT", buffer, sizeof( buffer ) ) )
          {
             if( hb_stricmp( "yes", buffer ) == 0 )
+            {
                s_fStatistic = HB_TRUE;
+            }
             else if( hb_stricmp( "no", buffer ) == 0 )
+            {
                s_fStatistic = HB_FALSE;
+            }   
          }
 #     ifndef HB_FM_STATISTICS_DYN_OFF
          else
+         {
             s_fStatistic = HB_TRUE;  /* enabled by default */
+         }   
 #     endif /* HB_FM_STATISTICS_DYN_OFF */
       }
 #  endif /* HB_FM_STATISTICS */
@@ -1150,7 +1270,9 @@ static char * hb_mem2str( char * membuffer, void * pMem, HB_SIZE nSize )
    for( nIndex = 0; nIndex < nSize; nIndex++ )
    {
       if( ( cMem[ nIndex ] & 0x60 ) != 0 )
+      {
          nPrintable++;
+      }   
    }
 
    if( nPrintable * 100 / nSize > 70 ) /* more then 70% printable chars */
@@ -1159,9 +1281,13 @@ static char * hb_mem2str( char * membuffer, void * pMem, HB_SIZE nSize )
       for( nIndex = 0; nIndex < nSize; nIndex++ )
       {
          if( cMem[ nIndex ] >= ' ' )
+         {
             membuffer[ nIndex ] = cMem[ nIndex ];
+         }   
          else
+         {
             membuffer[ nIndex ] = '.';
+         }   
       }
       membuffer[ nIndex ] = '\0';
    }
@@ -1197,8 +1323,10 @@ void hb_xexit( void ) /* Deinitialize fixed memory subsystem */
       FILE * hLog = nullptr;
 
       if( s_nMemoryBlocks )
+      {
          hLog = hb_fopen( s_szFileName[ 0 ] ? s_szFileName : "hb_out.log", "a+" );
-
+      }
+      
       hb_conOutErr( hb_conNewLine(), 0 );
       hb_conOutErr( "----------------------------------------", 0 );
       hb_conOutErr( hb_conNewLine(), 0 );
@@ -1218,7 +1346,9 @@ void hb_xexit( void ) /* Deinitialize fixed memory subsystem */
             fprintf( hLog, HB_I_( "Application Memory Allocation Report - %s\n" ), hb_cmdargARGVN( 0 ) );
             fprintf( hLog, HB_I_( "Terminated at: %04d-%02d-%02d %s\n" ), iYear, iMonth, iDay, szTime );
             if( s_szInfo[ 0 ] )
+            {
                fprintf( hLog, HB_I_( "Info: %s\n" ), s_szInfo );
+            }   
             fprintf( hLog, "%s\n", buffer );
          }
 
@@ -1227,7 +1357,9 @@ void hb_xexit( void ) /* Deinitialize fixed memory subsystem */
          hb_conOutErr( buffer, 0 );
 
          if( hLog )
+         {
             fprintf( hLog, "%s\n", buffer );
+         }   
       }
       else
       {
@@ -1313,9 +1445,13 @@ HB_SIZE hb_xquery( int iMode )
             ULONG ulSysInfo = 0;
 
             if( DosQuerySysInfo( QSV_TOTAVAILMEM, QSV_TOTAVAILMEM, &ulSysInfo, sizeof( ULONG ) ) != NO_ERROR )
+            {
                nResult = 0;
+            }   
             else
+            {
                nResult = ulSysInfo / 1024;
+            }   
          }
 #else
          nResult = 9999;
@@ -1334,9 +1470,13 @@ HB_SIZE hb_xquery( int iMode )
             ULONG ulSysInfo = 0;
 
             if( DosQuerySysInfo( QSV_TOTAVAILMEM, QSV_TOTAVAILMEM, &ulSysInfo, sizeof( ULONG ) ) != NO_ERROR )
+            {
                nResult = 0;
+            }   
             else
+            {
                nResult = HB_MIN( ulSysInfo, ULONG_MAX ) / 1024;
+            }   
          }
 #else
          nResult = 9999;
@@ -1355,9 +1495,13 @@ HB_SIZE hb_xquery( int iMode )
             ULONG ulSysInfo = 0;
 
             if( DosQuerySysInfo( QSV_TOTAVAILMEM, QSV_TOTAVAILMEM, &ulSysInfo, sizeof( ULONG ) ) != NO_ERROR )
+            {
                nResult = 0;
+            }   
             else
+            {
                nResult = ulSysInfo / 1024;
+            }   
          }
 #else
          nResult = 9999;
@@ -1376,9 +1520,13 @@ HB_SIZE hb_xquery( int iMode )
             ULONG ulSysInfo = 0;
 
             if( DosQuerySysInfo( QSV_TOTAVAILMEM, QSV_TOTAVAILMEM, &ulSysInfo, sizeof( ULONG ) ) != NO_ERROR )
+            {
                nResult = 0;
+            }   
             else
+            {
                nResult = ulSysInfo / 1024;
+            }   
          }
 #else
          nResult = 9999;
@@ -1405,9 +1553,13 @@ HB_SIZE hb_xquery( int iMode )
             ULONG ulSysInfo = 0;
 
             if( DosQuerySysInfo( QSV_MAXPRMEM, QSV_MAXPRMEM, &ulSysInfo, sizeof( ULONG ) ) != NO_ERROR )
+            {
                nResult = 0;
+            }   
             else
+            {
                nResult = ulSysInfo / 1024;
+            }   
          }
 #elif defined( HB_OS_DOS )
          {
@@ -1553,7 +1705,9 @@ HB_FUNC( __FM_ALLOCLIMIT )
       HB_ISIZ nLimit = hb_parns( 1 );
 
       if( nLimit <= 0 )
+      {
          nLimit = -1;
+      }   
       mspace_set_footprint_limit( hb_mspace(), nLimit );
    }
 #elif defined( HB_FM_DL_ALLOC )
@@ -1563,7 +1717,9 @@ HB_FUNC( __FM_ALLOCLIMIT )
       HB_ISIZ nLimit = hb_parns( 1 );
 
       if( nLimit <= 0 )
+      {
          nLimit = -1;
+      }   
       dlmalloc_set_footprint_limit( ( size_t ) nLimit );
    }
 #elif defined( HB_FM_STATISTICS )

@@ -422,8 +422,10 @@ static HB_BOOL hb_clsDictRealloc( PCLASS pClass )
    {
       nNewHashKey <<= 1;
       if( nNewHashKey > HASH_KEYMAX )
+      {
          hb_errInternal( 6002, "Could not realloc class message in __clsDictRealloc()", nullptr, nullptr );
-
+      }
+      
 #ifdef HB_MSG_POOL
       puiMsgIdx = static_cast< HB_SYMCNT * >( hb_xgrabz( ( nNewHashKey << BUCKETBITS ) * sizeof( HB_SYMCNT ) ) );
 
@@ -539,7 +541,9 @@ static PMETHOD hb_clsFindMsg( PCLASS pClass, PHB_DYNS pMsg )
       PMETHOD pMethod = &pClass->pMethods[ *puiMsgIdx ];
 
       if( pMethod->pMessage == pMsg )
+      {
          return pMethod;
+      }
       ++puiMsgIdx;
    }
    while( --uiBucket );
@@ -557,7 +561,9 @@ static PMETHOD hb_clsFindMsg( PCLASS pClass, PHB_DYNS pMsg )
    do
    {
       if( pMethod->pMessage == pMsg )
+      {
          return pMethod;
+      }
       ++pMethod;
    }
    while( --uiBucket );
@@ -590,7 +596,9 @@ static PMETHOD hb_clsAllocMsg( PCLASS pClass, PHB_DYNS pMsg )
             return &pClass->pMethods[ *puiMsgIdx ];
          }
          else if( pClass->pMethods[ *puiMsgIdx ].pMessage == pMsg )
+         {
             return &pClass->pMethods[ *puiMsgIdx ];
+         }
          ++puiMsgIdx;
       }
       while( --uiBucket );
@@ -603,7 +611,9 @@ static PMETHOD hb_clsAllocMsg( PCLASS pClass, PHB_DYNS pMsg )
       do
       {
          if( ! pMethod->pMessage || pMethod->pMessage == pMsg )
+         {
             return pMethod;
+         }
          ++pMethod;
       }
       while( --uiBucket );
@@ -626,7 +636,9 @@ static HB_BOOL hb_clsCanClearMethod( PMETHOD pMethod, HB_BOOL fError )
    if( pMethod->pFuncSym == &s___msgSuper )
    {
       if( fError )
+      {
          hb_errRT_BASE( EG_ARG, 3000, "Cannot delete supercast messages", HB_ERR_FUNCNAME, 0 );
+      }
       return HB_FALSE;
    }
 #endif
@@ -702,7 +714,9 @@ static HB_BOOL hb_clsHasParentClass( PCLASS pClass, HB_USHORT uiParentCls )
    while( uiCount )
    {
       if( pClass->pSuperClasses[ --uiCount ].uiClass == uiParentCls )
+      {
          return HB_TRUE;
+      }   
    }
    return HB_FALSE;
 
@@ -723,7 +737,9 @@ static HB_USHORT hb_clsGetParent( PCLASS pClass, PHB_DYNS pParentSym )
    {
       HB_USHORT uiClass = pClass->pSuperClasses[ --uiCount ].uiClass;
       if( s_pClasses[ uiClass ]->pClassSym == pParentSym )
+      {
          return uiClass;
+      }   
    }
    return 0;
 
@@ -743,7 +759,9 @@ static HB_USHORT hb_clsParentInstanceOffset( PCLASS pClass, HB_USHORT uiParentCl
    while( uiCount )
    {
       if( pClass->pSuperClasses[ --uiCount ].uiClass == uiParentCls )
+      {
          return pClass->pSuperClasses[ uiCount ].uiOffset;
+      }   
    }
    return 0;
 }
@@ -766,8 +784,10 @@ static HB_USHORT hb_clsAddInitValue( PCLASS pClass, PHB_ITEM pItem,
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsAddInitValue(%p,%p,%hu,%hu,%hu,%hu)", ( void * ) pClass, ( void * ) pItem, uiType, uiData, uiOffset, uiSprClass ) );
 
    if( ! pItem || HB_IS_NIL( pItem ) )
+   {
       return 0;
-
+   }
+   
    if( ! pClass->uiInitDatas )
    {
       pClass->pInitData = static_cast< PINITDATA >( hb_xgrab( sizeof( INITDATA ) ) );
@@ -779,8 +799,7 @@ static HB_USHORT hb_clsAddInitValue( PCLASS pClass, PHB_ITEM pItem,
       pInitData = pClass->pInitData;
       do
       {
-         if( pInitData->uiType == uiType &&
-             pInitData->uiData + pInitData->uiOffset == uiData + uiOffset )
+         if( pInitData->uiType == uiType && pInitData->uiData + pInitData->uiOffset == uiData + uiOffset )
          {
             hb_itemRelease( pInitData->pInitValue );
             break;
@@ -887,15 +906,15 @@ static HB_BOOL hb_clsUpdateHiddenMessages( PMETHOD pSrcMethod, PMETHOD pDstMetho
          pDstMethod->uiScope |= HB_OO_CLSTP_OVERLOADED | HB_OO_CLSTP_SUPER;
          pFuncSym = pDstMethod->pFuncSym;
          if( pFuncSym == &s___msgSync || pFuncSym == &s___msgSyncClass )
+         {
             pFuncSym = pDstMethod->pRealSym;
-         if( pFuncSym == &s___msgSetData ||
-             pFuncSym == &s___msgGetData )
+         }
+         if( pFuncSym == &s___msgSetData || pFuncSym == &s___msgGetData )
          {
             pDstMethod->uiOffset = hb_clsParentInstanceOffset( pDstClass,
                                                    pDstMethod->uiSprClass );
          }
-         else if( pFuncSym == &s___msgSetClsData ||
-                  pFuncSym == &s___msgGetClsData )
+         else if( pFuncSym == &s___msgSetClsData || pFuncSym == &s___msgGetClsData )
          {
             PCLASS pSrcClass = s_pClasses[ pDstMethod->uiSprClass ];
             HB_USHORT uiData;
@@ -952,7 +971,9 @@ static void hb_clsDefineSuperClass( PCLASS pClass, HB_USHORT uiSuperCls, HB_BOOL
          pClass->uiDatas += pSprCls->uiDatas - pSprCls->uiDataFirst;
       }
       else
+      {
          hb_clsAddSuperClass( pClass, uiSuperCls, pSprCls->uiDataFirst );
+      }   
    }
 
    pMethod = hb_clsAllocMsg( pClass, pSprCls->pClassSym );
@@ -971,9 +992,13 @@ static void hb_clsDefineSuperClass( PCLASS pClass, HB_USHORT uiSuperCls, HB_BOOL
       PHB_SYMB pFuncSym = pMethod->pFuncSym;
 
       if( pFuncSym == &s___msgSync || pFuncSym == &s___msgSyncClass )
+      {
          pFuncSym = pMethod->pRealSym;
+      }
       if( pFuncSym == &s___msgSuper && pMethod->uiData == uiSuperCls )
+      {
          pMethod->uiOffset = hb_clsParentInstanceOffset( pClass, uiSuperCls );
+      }   
    }
 }
 
@@ -1005,8 +1030,10 @@ static void hb_clsCopyClass( PCLASS pClsDst, PCLASS pClsSrc )
    pClsDst->uiMutexOffset = pClsSrc->uiMutexOffset;
    pClsDst->nOpFlags = pClsSrc->nOpFlags;
    if( pClsSrc->pMutex )
+   {
       pClsDst->pMutex = hb_threadMutexCreate();
-
+   }
+   
    if( pClsSrc->uiInitDatas )
    {
       HB_SIZE nSize = ( HB_SIZE ) pClsSrc->uiInitDatas * sizeof( INITDATA );
@@ -1018,9 +1045,10 @@ static void hb_clsCopyClass( PCLASS pClsDst, PCLASS pClsSrc )
       for( uiData = 0; uiData < pClsDst->uiInitDatas; ++uiData )
       {
          if( pClsDst->pInitData[ uiData ].uiType == HB_OO_MSG_INITIALIZED )
+         {
             pClsDst->pInitData[ uiData ].uiType = HB_OO_MSG_CLASSDATA;
-         pClsDst->pInitData[ uiData ].pInitValue =
-                        hb_itemNew( pClsDst->pInitData[ uiData ].pInitValue );
+         }
+         pClsDst->pInitData[ uiData ].pInitValue = hb_itemNew( pClsDst->pInitData[ uiData ].pInitValue );
       }
    }
 
@@ -1064,14 +1092,17 @@ static HB_BOOL hb_clsIsFriendSymbol( PCLASS pClass, PHB_SYMB pSym )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsIsFriendSymbol(%p,%p)", ( void * ) pClass, ( void * ) pSym ) );
 
-   if( pSym >= pClass->pFriendModule &&
-       pSym < pClass->pFriendModule + pClass->uiFriendModule )
+   if( pSym >= pClass->pFriendModule && pSym < pClass->pFriendModule + pClass->uiFriendModule )
+   {
       return HB_TRUE;
+   }
 
    for( uiCount = 0; uiCount < pClass->uiFriendSyms; ++uiCount )
    {
       if( pClass->pFriendSyms[ uiCount ] == pSym )
+      {
          return HB_TRUE;
+      }   
    }
 
    return HB_FALSE;
@@ -1181,7 +1212,9 @@ void hb_clsDoInit( void )
          hb_vmPushNil();
          hb_vmProc( 0 );
          if( HB_IS_OBJECT( pReturn ) )
+         {
             *( s_puiHandles[ i ] ) = pReturn->item.asArray.value->uiClass;
+         }   
       }
    }
 }
@@ -1209,23 +1242,39 @@ static void hb_clsRelease( PCLASS pClass )
    }
 
    if( pClass->szName )
+   {
       hb_xfree( pClass->szName );
+   }
    if( pClass->pMethods )
+   {
       hb_xfree( pClass->pMethods );
+   }
    if( pClass->uiFriendSyms )
+   {
       hb_xfree( pClass->pFriendSyms );
+   }
    if( pClass->pSuperClasses )
+   {
       hb_xfree( pClass->pSuperClasses );
+   }
 #ifdef HB_MSG_POOL
    if( pClass->puiMsgIdx )
+   {
       hb_xfree( pClass->puiMsgIdx );
+   }
 #endif
    if( pClass->pClassDatas )
+   {
       hb_itemRelease( pClass->pClassDatas );
+   }
    if( pClass->pSharedDatas )
+   {
       hb_itemRelease( pClass->pSharedDatas );
+   }
    if( pClass->pInlines )
+   {
       hb_itemRelease( pClass->pInlines );
+   }
 
    hb_xfree( pClass );
 }
@@ -1287,13 +1336,19 @@ void hb_clsIsClassRef( void )
       PCLASS pClass = s_pClasses[ uiClass-- ];
 
       if( pClass->pInlines )
+      {
          hb_gcItemRef( pClass->pInlines );
+      }
 
       if( pClass->pClassDatas )
+      {
          hb_gcItemRef( pClass->pClassDatas );
+      }
 
       if( pClass->pSharedDatas )
+      {
          hb_gcItemRef( pClass->pSharedDatas );
+      }
 
       if( pClass->uiInitDatas )
       {
@@ -1303,7 +1358,9 @@ void hb_clsIsClassRef( void )
          do
          {
             if( HB_IS_GCITEM( pInitData->pInitValue ) )
+            {
                hb_gcItemRef( pInitData->pInitValue );
+            }
             ++pInitData;
          }
          while( --ui );
@@ -1319,13 +1376,17 @@ HB_BOOL hb_clsIsParent( HB_USHORT uiClass, const char * szParentName )
       PCLASS pClass = s_pClasses[ uiClass ];
 
       if( strcmp( pClass->szName, szParentName ) == 0 )
+      {
          return HB_TRUE;
+      }
       else
       {
          PHB_DYNS pMsg = hb_dynsymFindName( szParentName );
 
          if( pMsg )
+         {
             return hb_clsGetParent( pClass, pMsg ) != 0;
+         }   
       }
    }
 
@@ -1335,9 +1396,13 @@ HB_BOOL hb_clsIsParent( HB_USHORT uiClass, const char * szParentName )
 HB_USHORT hb_objGetClass( PHB_ITEM pItem )
 {
    if( pItem && HB_IS_ARRAY( pItem ) )
+   {
       return pItem->item.asArray.value->uiClass;
+   }
    else
+   {
       return 0;
+   }   
 }
 
 /* get object class handle using class name and class function name */
@@ -1345,11 +1410,9 @@ HB_USHORT hb_objSetClass( PHB_ITEM pItem, const char * szClass, const char * szF
 {
    HB_USHORT uiClass = 0;
 
-   if( pItem && HB_IS_ARRAY( pItem ) &&
-       pItem->item.asArray.value->uiClass == 0 )
+   if( pItem && HB_IS_ARRAY( pItem ) && pItem->item.asArray.value->uiClass == 0 )
    {
-      uiClass = pItem->item.asArray.value->uiClass =
-                                          hb_clsFindClass( szClass, szFunc );
+      uiClass = pItem->item.asArray.value->uiClass = hb_clsFindClass( szClass, szFunc );
    }
    return uiClass;
 }
@@ -1364,40 +1427,55 @@ static HB_USHORT hb_objGetClassH( PHB_ITEM pObject )
    if( HB_IS_ARRAY( pObject ) )
    {
       if( pObject->item.asArray.value->uiClass != 0 )
+      {
          return pObject->item.asArray.value->uiClass;
+      }
       else
+      {
          return s_uiArrayClass;
+      }
    }
    /* built in types */
    else if( HB_IS_NIL( pObject ) )
+   {
       return s_uiNilClass;
-
+   }
    else if( HB_IS_STRING( pObject ) )
+   {
       return s_uiCharacterClass;
-
+   }
    else if( HB_IS_NUMERIC( pObject ) )
+   {
       return s_uiNumericClass;
-
+   }
    else if( HB_IS_DATE( pObject ) )
+   {
       return s_uiDateClass;
-
+   }
    else if( HB_IS_TIMESTAMP( pObject ) )
+   {
       return s_uiTimeStampClass;
-
+   }
    else if( HB_IS_LOGICAL( pObject ) )
+   {
       return s_uiLogicalClass;
-
+   }
    else if( HB_IS_BLOCK( pObject ) )
+   {
       return s_uiBlockClass;
-
+   }
    else if( HB_IS_HASH( pObject ) )
+   {
       return s_uiHashClass;
-
+   }
    else if( HB_IS_POINTER( pObject ) )
+   {
       return s_uiPointerClass;
-
+   }
    else if( HB_IS_SYMBOL( pObject ) )
+   {
       return s_uiSymbolClass;
+   }
 
    return 0;
 }
@@ -1410,85 +1488,111 @@ const char * hb_objGetClsName( PHB_ITEM pObject )
    if( HB_IS_ARRAY( pObject ) )
    {
       if( pObject->item.asArray.value->uiClass != 0 )
+      {
          return s_pClasses[ pObject->item.asArray.value->uiClass ]->szName;
+      }
       else
+      {
          return "ARRAY";
+      }   
    }
    /* built in types */
    else if( HB_IS_NIL( pObject ) )
+   {
       return "NIL";
-
+   }
    else if( HB_IS_STRING( pObject ) )
+   {
       return "CHARACTER";
-
+   }
    else if( HB_IS_NUMERIC( pObject ) )
+   {
       return "NUMERIC";
-
+   }
    else if( HB_IS_DATE( pObject ) )
+   {
       return "DATE";
-
+   }
    else if( HB_IS_TIMESTAMP( pObject ) )
+   {
       return "TIMESTAMP";
-
+   }
    else if( HB_IS_LOGICAL( pObject ) )
+   {
       return "LOGICAL";
-
+   }
    else if( HB_IS_BLOCK( pObject ) )
+   {
       return "BLOCK";
-
+   }
    else if( HB_IS_HASH( pObject ) )
+   {
       return "HASH";
-
+   }
    else if( HB_IS_POINTER( pObject ) )
+   {
       return "POINTER";
-
+   }
    else if( HB_IS_SYMBOL( pObject ) )
+   {
       return "SYMBOL";
-
+   }
    else
+   {
       return "UNKNOWN";
+   }   
 }
 
 const char * hb_clsName( HB_USHORT uiClass )
 {
    if( uiClass && uiClass <= s_uiClasses )
+   {
       return s_pClasses[ uiClass ]->szName;
+   }
    else
+   {
       return nullptr;
+   }   
 }
 
 const char * hb_clsFuncName( HB_USHORT uiClass )
 {
    if( uiClass && uiClass <= s_uiClasses )
-      return s_pClasses[ uiClass ]->pClassFuncSym ?
-             s_pClasses[ uiClass ]->pClassFuncSym->szName :
-             "";
+   {
+      return s_pClasses[ uiClass ]->pClassFuncSym ? s_pClasses[ uiClass ]->pClassFuncSym->szName : "";
+   }
    else
+   {
       return nullptr;
+   }   
 }
 
 PHB_SYMB hb_clsFuncSym( HB_USHORT uiClass )
 {
    if( uiClass && uiClass <= s_uiClasses )
+   {
       return s_pClasses[ uiClass ]->pClassFuncSym;
+   }
    else
+   {
       return nullptr;
+   }   
 }
 
 const char * hb_clsMethodName( HB_USHORT uiClass, HB_USHORT uiMethod )
 {
-   if( uiClass && uiClass <= s_uiClasses &&
-       static_cast< HB_UINT >( uiMethod ) < static_cast< HB_UINT >( hb_clsMthNum( s_pClasses[ uiClass ] ) ) )
+   if( uiClass && uiClass <= s_uiClasses && static_cast< HB_UINT >( uiMethod ) < static_cast< HB_UINT >( hb_clsMthNum( s_pClasses[ uiClass ] ) ) )
    {
       PMETHOD pMethod = s_pClasses[ uiClass ]->pMethods + uiMethod;
       if( pMethod->pMessage )
+      {
          return pMethod->pMessage->pSymbol->szName;
+      }
    }
    return nullptr;
 }
 
-static HB_SIZE hb_clsGetVarIndexEx( HB_USHORT uiClass, PHB_DYNS pVarSym,
-                                    HB_USHORT uiSuper )
+static HB_SIZE hb_clsGetVarIndexEx( HB_USHORT uiClass, PHB_DYNS pVarSym, HB_USHORT uiSuper )
 {
    PMETHOD pMethod = hb_clsFindMsg( s_pClasses[ uiSuper ], pVarSym );
    if( pMethod )
@@ -1496,7 +1600,9 @@ static HB_SIZE hb_clsGetVarIndexEx( HB_USHORT uiClass, PHB_DYNS pVarSym,
       PHB_SYMB pFuncSym = pMethod->pFuncSym;
 
       if( pFuncSym == &s___msgSync || pFuncSym == &s___msgSyncClass )
+      {
          pFuncSym = pMethod->pRealSym;
+      }
 
       if( pFuncSym == &s___msgSetData || pFuncSym == &s___msgGetData )
       {
@@ -1511,9 +1617,13 @@ static HB_SIZE hb_clsGetVarIndexEx( HB_USHORT uiClass, PHB_DYNS pVarSym,
 HB_SIZE hb_clsGetVarIndex( HB_USHORT uiClass, PHB_DYNS pVarSym )
 {
    if( uiClass && uiClass <= s_uiClasses )
+   {
       return hb_clsGetVarIndexEx( uiClass, pVarSym, uiClass );
+   }
    else
+   {
       return 0;
+   }   
 }
 
 HB_USHORT hb_clsFindClass( const char * szClass, const char * szClassFunc )
@@ -1557,21 +1667,26 @@ PHB_SYMB hb_clsMethodSym( PHB_ITEM pBaseSymbol )
       PHB_SYMB pFuncSym = pMethod->pFuncSym;
 
       if( pFuncSym == &s___msgSync || pFuncSym == &s___msgSyncClass )
+      {
          pFuncSym = pMethod->pRealSym;
+      }
 
       if( pFuncSym == &s___msgEvalInline )
       {
-         PHB_ITEM pItem = hb_arrayGetItemPtr( s_pClasses[ pMethod->uiSprClass ]->pInlines,
-                                              pMethod->uiData );
+         PHB_ITEM pItem = hb_arrayGetItemPtr( s_pClasses[ pMethod->uiSprClass ]->pInlines, pMethod->uiData );
          return pItem ? pItem->item.asBlock.value->pDefSymb : nullptr;
       }
 /*
       else if( pFuncSym == &s___msgPerform )
  */
       else if( pFuncSym == &s___msgDelegate )
+      {
          return s_pClasses[ pStack->uiClass ]->pMethods[ pMethod->uiData ].pFuncSym;
+      }
       else
+      {
          return pFuncSym;
+      }   
    }
 
    return pBaseSymbol->item.asSymbol.value;
@@ -1596,10 +1711,14 @@ const char * hb_objGetRealClsName( PHB_ITEM pObject, const char * szName )
       {
          PMETHOD pMethod = hb_clsFindMsg( s_pClasses[ uiClass ], pMsg );
          if( pMethod )
+         {
             uiClass = pMethod->uiSprClass;
+         }
       }
       if( uiClass && uiClass <= s_uiClasses )
+      {
          return s_pClasses[ uiClass ]->szName;
+      }   
    }
 
    return hb_objGetClsName( pObject );
@@ -1637,9 +1756,13 @@ static HB_USHORT hb_clsSenderClass( void )
    HB_ISIZ nOffset = hb_clsSenderOffset();
 
    if( nOffset > 0 )
+   {
       return hb_stackItem( nOffset )->item.asSymbol.stackstate->uiClass;
+   }
    else
+   {
       return 0;
+   }   
 }
 #endif
 
@@ -1653,8 +1776,9 @@ static HB_USHORT hb_clsSenderMethodClass( void )
       PHB_STACK_STATE pStack = hb_stackItem( nOffset )->item.asSymbol.stackstate;
 
       if( pStack->uiClass )
-         return ( s_pClasses[ pStack->uiClass ]->pMethods +
-                  pStack->uiMethod )->uiSprClass;
+      {
+         return ( s_pClasses[ pStack->uiClass ]->pMethods + pStack->uiMethod )->uiSprClass;
+      }   
    }
    return 0;
 }
@@ -1674,7 +1798,9 @@ static PHB_SYMB hb_clsSenderSymbol( void )
          PHB_ITEM pBlock = hb_stackItem( nOffset + 1 );
 
          if( HB_IS_BLOCK( pBlock ) )
+         {
             pSym = pBlock->item.asBlock.value->pDefSymb;
+         }   
       }
    }
 
@@ -1691,33 +1817,34 @@ static HB_USHORT hb_clsSenderObjectClass( void )
       PHB_ITEM pSender = hb_stackItem( nOffset + 1 );
 
       if( HB_IS_ARRAY( pSender ) )
+      {
          return pSender->item.asArray.value->uiClass;
+      }   
    }
    return 0;
 }
 
 static PHB_SYMB hb_clsValidScope( PMETHOD pMethod, PHB_STACK_STATE pStack )
 {
-   if( pMethod->uiScope & ( HB_OO_CLSTP_HIDDEN | HB_OO_CLSTP_PROTECTED |
-                            HB_OO_CLSTP_OVERLOADED ) )
+   if( pMethod->uiScope & ( HB_OO_CLSTP_HIDDEN | HB_OO_CLSTP_PROTECTED | HB_OO_CLSTP_OVERLOADED ) )
    {
       HB_USHORT uiSenderClass = hb_clsSenderMethodClass();
 
       if( uiSenderClass == pMethod->uiSprClass )
+      {
          return pMethod->pFuncSym;
+      }
       else if( uiSenderClass )
       {
          /* Warning!!! Friends cannot access overloaded non virtual methods.
           * This feature is available _ONLY_ for real class members, [druzus]
           */
-         if( pMethod->uiScope & HB_OO_CLSTP_OVERLOADED &&
-             hb_clsHasParentClass( s_pClasses[ pStack->uiClass ], uiSenderClass ) )
+         if( pMethod->uiScope & HB_OO_CLSTP_OVERLOADED && hb_clsHasParentClass( s_pClasses[ pStack->uiClass ], uiSenderClass ) )
          {
             PCLASS pClass = s_pClasses[ uiSenderClass ];
             PMETHOD pHiddenMthd = hb_clsFindMsg( pClass, pMethod->pMessage );
 
-            if( pHiddenMthd && ( pHiddenMthd->uiScope & HB_OO_CLSTP_NONVIRTUAL ) &&
-                pHiddenMthd->uiSprClass == uiSenderClass )
+            if( pHiddenMthd && ( pHiddenMthd->uiScope & HB_OO_CLSTP_NONVIRTUAL ) && pHiddenMthd->uiSprClass == uiSenderClass )
             {
                pStack->uiClass = uiSenderClass;
                pStack->uiMethod = static_cast< HB_USHORT >( pHiddenMthd - pClass->pMethods );
@@ -1727,9 +1854,10 @@ static PHB_SYMB hb_clsValidScope( PMETHOD pMethod, PHB_STACK_STATE pStack )
 
          if( pMethod->uiScope & HB_OO_CLSTP_HIDDEN )
          {
-            if( ! hb_clsIsFriendSymbol( s_pClasses[ pMethod->uiSprClass ],
-                              s_pClasses[ uiSenderClass ]->pClassFuncSym ) )
+            if( ! hb_clsIsFriendSymbol( s_pClasses[ pMethod->uiSprClass ], s_pClasses[ uiSenderClass ]->pClassFuncSym ) )
+            {
                return &s___msgScopeErr;
+            }
          }
          else if( pMethod->uiScope & HB_OO_CLSTP_PROTECTED &&
              ! hb_clsHasParentClass( s_pClasses[ pStack->uiClass ],
@@ -1741,7 +1869,9 @@ static PHB_SYMB hb_clsValidScope( PMETHOD pMethod, PHB_STACK_STATE pStack )
              ( pStack->uiClass == pMethod->uiSprClass ||
                ! hb_clsIsFriendSymbol( s_pClasses[ pStack->uiClass ],
                               s_pClasses[ uiSenderClass ]->pClassFuncSym ) ) )
+         {
             return &s___msgScopeErr;
+         }
       }
       else if( pMethod->uiScope & ( HB_OO_CLSTP_HIDDEN | HB_OO_CLSTP_PROTECTED ) )
       {
@@ -1749,9 +1879,10 @@ static PHB_SYMB hb_clsValidScope( PMETHOD pMethod, PHB_STACK_STATE pStack )
 
          if( ! hb_clsIsFriendSymbol( s_pClasses[ pMethod->uiSprClass ], pSym ) )
          {
-            if( ( pMethod->uiScope & HB_OO_CLSTP_HIDDEN ) ||
-                ! hb_clsIsFriendSymbol( s_pClasses[ pStack->uiClass ], pSym ) )
+            if( ( pMethod->uiScope & HB_OO_CLSTP_HIDDEN ) || ! hb_clsIsFriendSymbol( s_pClasses[ pStack->uiClass ], pSym ) )
+            {
                return &s___msgScopeErr;
+            }
          }
       }
    }
@@ -1759,8 +1890,7 @@ static PHB_SYMB hb_clsValidScope( PMETHOD pMethod, PHB_STACK_STATE pStack )
    return pMethod->pFuncSym;
 }
 
-static PHB_SYMB hb_clsScalarMethod( PCLASS pClass, PHB_DYNS pMsg,
-                                    PHB_STACK_STATE pStack )
+static PHB_SYMB hb_clsScalarMethod( PCLASS pClass, PHB_DYNS pMsg, PHB_STACK_STATE pStack )
 {
    PMETHOD pMethod = hb_clsFindMsg( pClass, pMsg );
 
@@ -1774,13 +1904,14 @@ static PHB_SYMB hb_clsScalarMethod( PCLASS pClass, PHB_DYNS pMsg,
       }
    }
    else if( pMethod )
+   {
       return pMethod->pFuncSym;
+   }
 
    return nullptr;
 }
 
-static void hb_clsMakeSuperObject( PHB_ITEM pDest, PHB_ITEM pObject,
-                                   HB_USHORT uiSuperClass )
+static void hb_clsMakeSuperObject( PHB_ITEM pDest, PHB_ITEM pObject, HB_USHORT uiSuperClass )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsMakeSuperObject(%p, %p, %hu)", ( void * ) pDest, ( void * ) pObject, uiSuperClass ) );
 
@@ -1831,8 +1962,10 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage,
                   hb_itemMove( pObject, hb_stackReturnItem() );
                }
                else
+               {
                   /* Someone tried to manipulate with supercast array */
                   hb_itemClear( pObject );
+               }   
             }
 #ifdef HB_MSG_POOL
             {
@@ -1866,7 +1999,9 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage,
          {
             PMETHOD pMethod = hb_clsFindMsg( pClass, pMsg );
             if( pMethod )
+            {
                return pMethod->pFuncSym;
+            }   
          }
       }
       else if( s_uiArrayClass )
@@ -1875,21 +2010,27 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage,
          {
             PHB_SYMB pExecSym = hb_clsScalarMethod( pClass, pMsg, pStack );
             if( pExecSym )
+            {
                return pExecSym;
+            }   
          }
       }
    }
    else if( HB_IS_BLOCK( pObject ) )
    {
       if( pMsg == hb_symEval.pDynSym )
+      {
          return &hb_symEval;
+      }
       else if( s_uiBlockClass )
       {
          pClass = s_pClasses[ s_uiBlockClass ];
          {
             PHB_SYMB pExecSym = hb_clsScalarMethod( pClass, pMsg, pStack );
             if( pExecSym )
+            {
                return pExecSym;
+            }   
          }
       }
    }
@@ -1912,7 +2053,9 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage,
             {
                hb_itemPutNS( hb_stackReturnItem(), pEnum->item.asEnum.offset );
                if( hb_pcount() > 0 && HB_ISNUM( 1 ) )
+               {
                   pEnum->item.asEnum.offset = hb_itemGetNS( hb_param( 1, HB_IT_ANY ) );
+               }
                return &s___msgEnumIndex;
             }
             else if( pMsg == s___msgEnumKey.pDynSym )
@@ -1924,21 +2067,26 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage,
                {
                   pBase = hb_hashGetKeyAt( pBase, pEnum->item.asEnum.offset );
                   if( pBase )
+                  {
                      hb_itemCopy( hb_stackReturnItem(), pBase );
+                  }   
                }
                return &s___msgEnumKey;
             }
             else if( pMsg == s___msgEnumBase.pDynSym )
             {
                if( HB_IS_BYREF( pEnum->item.asEnum.basePtr ) )
-                  hb_itemCopy( hb_stackReturnItem(),
-                               hb_itemUnRef( pEnum->item.asEnum.basePtr ) );
+               {
+                  hb_itemCopy( hb_stackReturnItem(), hb_itemUnRef( pEnum->item.asEnum.basePtr ) );
+               }
                else
-                  hb_itemCopy( hb_stackReturnItem(),
-                               pEnum->item.asEnum.basePtr );
+               {
+                  hb_itemCopy( hb_stackReturnItem(), pEnum->item.asEnum.basePtr );
+               }   
                if( hb_pcount() > 0 )
-                  hb_itemCopy( pEnum->item.asEnum.basePtr,
-                               hb_itemUnRef( hb_stackItemFromBase( 1 ) ) );
+               {
+                  hb_itemCopy( pEnum->item.asEnum.basePtr, hb_itemUnRef( hb_stackItemFromBase( 1 ) ) );
+               }
                return &s___msgEnumBase;
             }
             else if( pMsg == s___msgEnumValue.pDynSym )
@@ -1946,7 +2094,9 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage,
                pEnum = hb_itemUnRef( pEnum );
                hb_itemCopy( hb_stackReturnItem(), pEnum );
                if( hb_pcount() > 0 )
+               {
                   hb_itemCopy( pEnum, hb_itemUnRef( hb_stackItemFromBase( 1 ) ) );
+               }
                return &s___msgEnumValue;
             }
             else if( pMsg == s___msgEnumIsFirst.pDynSym )
@@ -1954,9 +2104,10 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage,
                PHB_ITEM pBase = HB_IS_BYREF( pEnum->item.asEnum.basePtr ) ?
                                 hb_itemUnRef( pEnum->item.asEnum.basePtr ) :
                                 pEnum->item.asEnum.basePtr;
-               if( HB_IS_OBJECT( pBase ) &&
-                   hb_objHasOperator( pBase, HB_OO_OP_ENUMISFIRST ) )
+               if( HB_IS_OBJECT( pBase ) && hb_objHasOperator( pBase, HB_OO_OP_ENUMISFIRST ) )
+               {
                   return hb_objGetMethod( pBase, pMessage, pStack );
+               }
                hb_itemPutL( hb_stackReturnItem(), ( HB_SIZE ) pEnum->item.asEnum.offset <= 1 );
                return &s___msgEnumIsFirst;
             }
@@ -1967,16 +2118,23 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage,
                                 pEnum->item.asEnum.basePtr;
                if( HB_IS_ARRAY( pBase ) )
                {
-                  if( HB_IS_OBJECT( pBase ) &&
-                      hb_objHasOperator( pBase, HB_OO_OP_ENUMISLAST ) )
+                  if( HB_IS_OBJECT( pBase ) && hb_objHasOperator( pBase, HB_OO_OP_ENUMISLAST ) )
+                  {
                      return hb_objGetMethod( pBase, pMessage, pStack );
+                  }
                   else
+                  {
                      hb_itemPutL( hb_stackReturnItem(), ( HB_SIZE ) pEnum->item.asEnum.offset >= hb_arrayLen( pBase ) );
+                  }   
                }
                else if( HB_IS_HASH( pBase ) )
+               {
                   hb_itemPutL( hb_stackReturnItem(), ( HB_SIZE ) pEnum->item.asEnum.offset >= hb_hashLen( pBase ) );
+               }
                else if( HB_IS_STRING( pBase ) )
+               {
                   hb_itemPutL( hb_stackReturnItem(), ( HB_SIZE ) pEnum->item.asEnum.offset >= hb_itemGetCLen( pBase ) );
+               }
 
                return &s___msgEnumIsLast;
             }
@@ -1991,21 +2149,25 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage,
          {
             PHB_SYMB pExecSym = hb_clsScalarMethod( pClass, pMsg, pStack );
             if( pExecSym )
+            {
                return pExecSym;
+            }   
          }
       }
       if( pMsg == s___msgExec.pDynSym || pMsg == hb_symEval.pDynSym )
       {
-         if( ! pObject->item.asSymbol.value->value.pFunPtr &&
-               pObject->item.asSymbol.value->pDynSym )
+         if( ! pObject->item.asSymbol.value->value.pFunPtr && pObject->item.asSymbol.value->pDynSym )
+         {
             return pObject->item.asSymbol.value->pDynSym->pSymbol;
+         }
          else
+         {
             return pObject->item.asSymbol.value;
+         }   
       }
       else if( pMsg == s___msgName.pDynSym )
       {
-         hb_itemPutC( hb_stackReturnItem(),
-                      pObject->item.asSymbol.value->szName );
+         hb_itemPutC( hb_stackReturnItem(), pObject->item.asSymbol.value->szName );
          return &s___msgName;
       }
    }
@@ -2017,7 +2179,9 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage,
          {
             PHB_SYMB pExecSym = hb_clsScalarMethod( pClass, pMsg, pStack );
             if( pExecSym )
+            {
                return pExecSym;
+            }
          }
       }
 
@@ -2069,7 +2233,9 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage,
          {
             PHB_SYMB pExecSym = hb_clsScalarMethod( pClass, pMsg, pStack );
             if( pExecSym )
+            {
                return pExecSym;
+            }   
          }
       }
    }
@@ -2081,7 +2247,9 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage,
          {
             PHB_SYMB pExecSym = hb_clsScalarMethod( pClass, pMsg, pStack );
             if( pExecSym )
+            {
                return pExecSym;
+            }
          }
       }
    }
@@ -2093,7 +2261,9 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage,
          {
             PHB_SYMB pExecSym = hb_clsScalarMethod( pClass, pMsg, pStack );
             if( pExecSym )
+            {
                return pExecSym;
+            }
          }
       }
    }
@@ -2105,7 +2275,9 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage,
          {
             PHB_SYMB pExecSym = hb_clsScalarMethod( pClass, pMsg, pStack );
             if( pExecSym )
+            {
                return pExecSym;
+            }
          }
       }
    }
@@ -2117,7 +2289,9 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage,
          {
             PHB_SYMB pExecSym = hb_clsScalarMethod( pClass, pMsg, pStack );
             if( pExecSym )
+            {
                return pExecSym;
+            }
          }
       }
    }
@@ -2129,7 +2303,9 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage,
          {
             PHB_SYMB pExecSym = hb_clsScalarMethod( pClass, pMsg, pStack );
             if( pExecSym )
+            {
                return pExecSym;
+            }
          }
       }
    }
@@ -2141,7 +2317,9 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage,
          {
             PHB_SYMB pExecSym = hb_clsScalarMethod( pClass, pMsg, pStack );
             if( pExecSym )
+            {
                return pExecSym;
+            }
          }
       }
    }
@@ -2175,20 +2353,30 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage,
       }
    }
    else if( pMsg == s___msgClassName.pDynSym )
+   {
       return &s___msgClassName;
+   }
 
    else if( pMsg == s___msgClassH.pDynSym )
+   {
       return &s___msgClassH;
+   }
 
    else if( pMsg == s___msgClassSel.pDynSym )
+   {
       return &s___msgClassSel;
+   }
 
 /*
    else if( pMsg == s___msgClsParent.pDynSym )
+   {
       return &s___msgClsParent;
+   }
 
    else if( pMsg == s___msgClass.pDynSym )
+   {
       return &s___msgClass;
+   }
  */
    if( pStack )
    {
@@ -2208,8 +2396,7 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage,
    return nullptr;
 }
 
-HB_BOOL hb_objGetVarRef( PHB_ITEM pObject, PHB_SYMB pMessage,
-                         PHB_STACK_STATE pStack )
+HB_BOOL hb_objGetVarRef( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pStack )
 {
    PHB_SYMB pExecSym;
 
@@ -2221,7 +2408,9 @@ HB_BOOL hb_objGetVarRef( PHB_ITEM pObject, PHB_SYMB pMessage,
       PHB_ITEM pValue = hb_hashGetItemRefPtr( pObject, pIndex );
       hb_stackPop();
       if( pValue )
+      {
          hb_itemReturn( pValue );
+      }
       return pValue != nullptr;
    }
 #endif
@@ -2238,14 +2427,19 @@ HB_BOOL hb_objGetVarRef( PHB_ITEM pObject, PHB_SYMB pMessage,
          HB_SIZE nIndex       = pMethod->uiData;
 
          if( pStack->uiClass != uiObjClass )
-            nIndex += hb_clsParentInstanceOffset( s_pClasses[ uiObjClass ],
-                                                  pMethod->uiSprClass );
+         {
+            nIndex += hb_clsParentInstanceOffset( s_pClasses[ uiObjClass ], pMethod->uiSprClass );
+         }
          else
+         {
             nIndex += pMethod->uiOffset;
+         }   
 
          /* will arise only if the class has been modified after first instance */
          if( nIndex > hb_arrayLen( pObject ) ) /* Resize needed */
+         {
             hb_arraySize( pObject, nIndex );   /* Make large enough */
+         }
 
          return hb_arrayGetItemRef( pObject, nIndex, hb_stackReturnItem() );
       }
@@ -2254,16 +2448,14 @@ HB_BOOL hb_objGetVarRef( PHB_ITEM pObject, PHB_SYMB pMessage,
          PCLASS pClass   = s_pClasses[ pStack->uiClass ];
          PMETHOD pMethod = pClass->pMethods + pStack->uiMethod;
 
-         return hb_arrayGetItemRef( pClass->pClassDatas, pMethod->uiData,
-                                    hb_stackReturnItem() );
+         return hb_arrayGetItemRef( pClass->pClassDatas, pMethod->uiData, hb_stackReturnItem() );
       }
       else if( pExecSym == &s___msgSetShrData )
       {
          PCLASS pClass   = s_pClasses[ pStack->uiClass ];
          PMETHOD pMethod = pClass->pMethods + pStack->uiMethod;
 
-         return hb_arrayGetItemRef( s_pClasses[ pMethod->uiSprClass ]->pSharedDatas,
-                                    pMethod->uiData, hb_stackReturnItem() );
+         return hb_arrayGetItemRef( s_pClasses[ pMethod->uiSprClass ]->pSharedDatas, pMethod->uiData, hb_stackReturnItem() );
       }
       else if( pExecSym == &s___msgScopeErr )
       {
@@ -2275,10 +2467,14 @@ HB_BOOL hb_objGetVarRef( PHB_ITEM pObject, PHB_SYMB pMessage,
          PMETHOD pMethod = pClass->pMethods + pStack->uiMethod;
 
          if( pMethod->pMessage == s___msgOnError.pDynSym )
+         {
             return hb_vmMsgReference( pObject, pMessage->pDynSym, nullptr );
+         }
 
          if( ! pMethod->pAccMsg )
+         {
             pMethod->pAccMsg = hb_dynsymGetCase( pMessage->szName + 1 );
+         }
 
          return hb_vmMsgReference( pObject, pMessage->pDynSym, pMethod->pAccMsg );
       }
@@ -2291,9 +2487,13 @@ HB_BOOL hb_objGetVarRef( PHB_ITEM pObject, PHB_SYMB pMessage,
 HB_BOOL hb_clsHasDestructor( HB_USHORT uiClass )
 {
    if( uiClass && uiClass <= s_uiClasses )
+   {
       return s_pClasses[ uiClass ]->fHasDestructor;
+   }
    else
+   {
       return HB_FALSE;
+   }   
 }
 
 /* Call all known super destructors */
@@ -2316,10 +2516,14 @@ static void hb_objSuperDestructorCall( PHB_ITEM pObject, PCLASS pClass )
          {
             PCLASS pSuperClass = s_pClasses[ pMethod->uiData ];
             if( pSuperClass->fHasDestructor && pSuperClass != pClass )
+            {
                pcClasses[ pMethod->uiData ] |= 1;
+            }
          }
          else if( pMethod->pMessage == s___msgDestructor.pDynSym )
+         {
             pcClasses[ pMethod->uiSprClass ] |= 2;
+         }
       }
       ++pMethod;
    }
@@ -2329,8 +2533,7 @@ static void hb_objSuperDestructorCall( PHB_ITEM pObject, PCLASS pClass )
    {
       if( pcClasses[ uiClass ] == 1 )
       {
-         PMETHOD pDestructor = hb_clsFindMsg( s_pClasses[ uiClass ],
-                                              s___msgDestructor.pDynSym );
+         PMETHOD pDestructor = hb_clsFindMsg( s_pClasses[ uiClass ], s___msgDestructor.pDynSym );
          if( pDestructor )
          {
             if( pcClasses[ pDestructor->uiSprClass ] == 1 )
@@ -2339,7 +2542,9 @@ static void hb_objSuperDestructorCall( PHB_ITEM pObject, PCLASS pClass )
                hb_clsMakeSuperObject( hb_stackAllocItem(), pObject, uiClass );
                hb_vmSend( 0 );
                if( hb_vmRequestQuery() != 0 )
+               {
                   break;
+               }
                pcClasses[ pDestructor->uiSprClass ] |= 2;
             }
          }
@@ -2371,7 +2576,9 @@ static void hb_objSuperDestructorCall( PHB_ITEM pObject, PCLASS pClass )
                hb_clsMakeSuperObject( hb_stackAllocItem(), pObject, uiParentCls );
                hb_vmSend( 0 );
                if( hb_vmRequestQuery() != 0 )
+               {
                   break;
+               }   
             }
          }
       }
@@ -2382,8 +2589,7 @@ static void hb_objSuperDestructorCall( PHB_ITEM pObject, PCLASS pClass )
 /* Call object destructor */
 void hb_objDestructorCall( PHB_ITEM pObject )
 {
-   if( HB_IS_OBJECT( pObject ) &&
-       pObject->item.asArray.value->uiClass <= s_uiClasses )
+   if( HB_IS_OBJECT( pObject ) && pObject->item.asArray.value->uiClass <= s_uiClasses )
    {
       PCLASS pClass = s_pClasses[ pObject->item.asArray.value->uiClass ];
 
@@ -2395,7 +2601,9 @@ void hb_objDestructorCall( PHB_ITEM pObject )
             hb_vmPush( pObject );
             hb_vmSend( 0 );
             if( hb_vmRequestQuery() == 0 )
+            {
                hb_objSuperDestructorCall( pObject, pClass );
+            }
             hb_vmRequestRestore();
          }
       }
@@ -2442,10 +2650,14 @@ HB_BOOL hb_objOperatorCall( HB_USHORT uiOperator, PHB_ITEM pResult, PHB_ITEM pOb
             hb_vmSend( 2 );
          }
          else
+         {
             hb_vmSend( 1 );
+         }   
       }
       else
+      {
          hb_vmSend( 0 );
+      }   
 
       /* store the return value */
       hb_itemMove( pResult, hb_stackReturnItem() );
@@ -2474,9 +2686,13 @@ HB_BOOL hb_objHasMsg( PHB_ITEM pObject, const char * szString )
 
    pDynSym = hb_dynsymFindName( szString );
    if( pDynSym )
+   {
       return hb_objGetMethod( pObject, pDynSym->pSymbol, nullptr ) != nullptr;
+   }
    else
+   {
       return HB_FALSE;
+   }   
 }
 
 PHB_ITEM hb_objSendMessage( PHB_ITEM pObject, PHB_DYNS pMsgSym, HB_ULONG ulArg, ... )
@@ -2501,7 +2717,9 @@ PHB_ITEM hb_objSendMessage( PHB_ITEM pObject, PHB_DYNS pMsgSym, HB_ULONG ulArg, 
       hb_vmSend( static_cast< HB_USHORT >( ulArg ) );
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 3000, nullptr, "__objSendMessage()", 0 );
+   }   
 
    {
       HB_STACK_TLS_PRELOAD
@@ -2546,7 +2764,9 @@ PHB_ITEM hb_objGetVarPtr( PHB_ITEM pObject, PHB_DYNS pVarMsg )
          PHB_SYMB pFuncSym = pMethod->pFuncSym;
 
          if( pFuncSym == &s___msgSync || pFuncSym == &s___msgSyncClass )
+         {
             pFuncSym = pMethod->pRealSym;
+         }
 
          if( pFuncSym == &s___msgSetData || pFuncSym == &s___msgGetData )
          {
@@ -2555,11 +2775,13 @@ PHB_ITEM hb_objGetVarPtr( PHB_ITEM pObject, PHB_DYNS pVarMsg )
             {
                pObject = hb_arrayGetItemPtr( pObject, 1 );
                if( ! pObject )
+               {
                   return nullptr;
+               }
                if( uiClass != pObject->item.asArray.value->uiClass )
-                  nIndex = pMethod->uiData +
-                           hb_clsParentInstanceOffset( s_pClasses[ pObject->item.asArray.value->uiClass ],
-                                                       pMethod->uiSprClass );
+               {
+                  nIndex = pMethod->uiData + hb_clsParentInstanceOffset( s_pClasses[ pObject->item.asArray.value->uiClass ], pMethod->uiSprClass );
+               }
             }
             return hb_arrayGetItemPtr( pObject, nIndex );
          }
@@ -2577,16 +2799,22 @@ static PHB_DYNS hb_objGetMsgSym( PHB_ITEM pMessage )
       const char * szMsg = nullptr;
 
       if( HB_IS_STRING( pMessage ) )
+      {
          szMsg = pMessage->item.asString.value;
+      }
       else if( HB_IS_SYMBOL( pMessage ) )
       {
          pDynSym = pMessage->item.asSymbol.value->pDynSym;
          if( ! pDynSym )
+         {
             szMsg = pMessage->item.asSymbol.value->szName;
+         }
       }
 
       if( szMsg && *szMsg )
+      {
          pDynSym = hb_dynsymGet( szMsg );
+      }
    }
 
    return pDynSym;
@@ -2597,13 +2825,17 @@ static PHB_SYMB hb_objGetFuncSym( PHB_ITEM pItem )
    if( pItem )
    {
       if( HB_IS_SYMBOL( pItem ) )
+      {
          return pItem->item.asSymbol.value;
+      }
       else if( HB_IS_STRING( pItem ) )
       {
          PHB_DYNS pDynSym = hb_dynsymFindName( hb_itemGetCPtr( pItem ) );
 
          if( pDynSym && pDynSym->pSymbol->value.pFunPtr )
+         {
             return pDynSym->pSymbol;
+         }   
       }
    }
 
@@ -2698,19 +2930,22 @@ void hb_dbg_objSendMessage( int iProcLevel, PHB_ITEM pObject, PHB_ITEM pMessage,
       hb_vmSend( uiParams );
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 3000, nullptr, "hb_dbg_objSendMessage()", 2, pObject, pMsgSym );
+   }   
 }
 
 static HB_USHORT hb_clsUpdateScope( HB_USHORT uiScope, HB_BOOL fAssign )
 {
    if( ! fAssign )
+   {
       uiScope &= ~HB_OO_CLSTP_READONLY;
+   }
    else
    {
       uiScope &= ~HB_OO_CLSTP_PERSIST;
 
-      if( ( uiScope & HB_OO_CLSTP_READONLY ) &&
-         !( uiScope & HB_OO_CLSTP_HIDDEN ) )
+      if( ( uiScope & HB_OO_CLSTP_READONLY ) && !( uiScope & HB_OO_CLSTP_HIDDEN ) )
       {
          /* Class(y) does not allow to write to HIDDEN+READONLY
             instance variables, [druzus] */
@@ -2734,7 +2969,9 @@ static HB_TYPE hb_clsGetItemType( PHB_ITEM pItem, HB_TYPE nDefault )
             case 'C':
             case 'c':
                if( hb_strnicmp( hb_itemGetCPtr( pItem ), "code", 4 ) == 0 )
+               {
                   return HB_IT_BLOCK;
+               }
                /* fallthrough */
             case '\0':
                return HB_IT_STRING;
@@ -2742,9 +2979,13 @@ static HB_TYPE hb_clsGetItemType( PHB_ITEM pItem, HB_TYPE nDefault )
             case 'S':
             case 's':
                if( hb_strnicmp( hb_itemGetCPtr( pItem ), "str", 3 ) == 0 )
+               {
                   return HB_IT_STRING;
+               }
                else
+               {
                   return HB_IT_SYMBOL;
+               }   
 
             case 'B':
             case 'b':
@@ -2753,9 +2994,13 @@ static HB_TYPE hb_clsGetItemType( PHB_ITEM pItem, HB_TYPE nDefault )
             case 'D':
             case 'd':
                if( hb_strnicmp( hb_itemGetCPtr( pItem ), "datet", 5 ) == 0 )
+               {
                   return HB_IT_TIMESTAMP;
+               }
                else
+               {
                   return HB_IT_DATE;
+               }   
 
             case 'T':
             case 't':
@@ -2772,9 +3017,13 @@ static HB_TYPE hb_clsGetItemType( PHB_ITEM pItem, HB_TYPE nDefault )
             case 'N':
             case 'n':
                if( hb_stricmp( hb_itemGetCPtr( pItem ), "nil" ) == 0 )
+               {
                   return HB_IT_NIL;
+               }
                else
+               {
                   return HB_IT_NUMERIC;
+               }   
 
             case 'A':
             case 'a':
@@ -2792,34 +3041,46 @@ static HB_TYPE hb_clsGetItemType( PHB_ITEM pItem, HB_TYPE nDefault )
       else if( HB_IS_ARRAY( pItem ) )
       {
          if( pItem->item.asArray.value->uiClass == 0 )
+         {
             return HB_IT_ARRAY;
+         }   
       }
       else if( HB_IS_NUMINT( pItem ) )
+      {
          return HB_IT_NUMINT;
-
+      }
       else if( HB_IS_NUMERIC( pItem ) )
+      {
          return HB_IT_NUMERIC;
-
+      }
       else if( HB_IS_DATE( pItem ) )
+      {
          return HB_IT_DATE;
-
+      }
       else if( HB_IS_TIMESTAMP( pItem ) )
+      {
          return HB_IT_TIMESTAMP;
-
+      }
       else if( HB_IS_LOGICAL( pItem ) )
+      {
          return HB_IT_LOGICAL;
-
+      }
       else if( HB_IS_BLOCK( pItem ) )
+      {
          return HB_IT_BLOCK;
-
+      }
       else if( HB_IS_POINTER( pItem ) )
+      {
          return HB_IT_POINTER;
-
+      }
       else if( HB_IS_SYMBOL( pItem ) )
+      {
          return HB_IT_SYMBOL;
-
+      }
       else if( HB_IS_NIL( pItem ) )
+      {
          return HB_IT_NIL;
+      }
    }
 
    return nDefault;
@@ -2889,70 +3150,132 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage,
       HB_U32    nOpFlags = 0;
 
       if( pClass->fLocked )
+      {
          return HB_FALSE;
-
+      }
+      
       if( ! ( uiScope & ( HB_OO_CLSTP_EXPORTED | HB_OO_CLSTP_PROTECTED | HB_OO_CLSTP_HIDDEN ) ) )
+      {
          uiScope |= HB_OO_CLSTP_EXPORTED;
+      }
 
       /* translate names of operator overloading messages */
       if( uiType == HB_OO_MSG_DESTRUCTOR )
+      {
          pMessage = s___msgDestructor.pDynSym;
+      }
       else if( uiType == HB_OO_MSG_ONERROR )
+      {
          pMessage = s___msgOnError.pDynSym;
+      }
       else if( strcmp( "+", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_PLUS )->pDynSym;
+      }
       else if( strcmp( "-", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_MINUS )->pDynSym;
+      }
       else if( strcmp( "*", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_MULT )->pDynSym;
+      }
       else if( strcmp( "/", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_DIVIDE )->pDynSym;
+      }
       else if( strcmp( "%", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_MOD )->pDynSym;
+      }
       else if( strcmp( "^", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_POWER )->pDynSym;
+      }
       else if( strcmp( "**", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_POWER )->pDynSym;
+      }
       else if( strcmp( "++", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_INC )->pDynSym;
+      }
       else if( strcmp( "--", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_DEC )->pDynSym;
+      }
       else if( strcmp( "==", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_EXACTEQUAL )->pDynSym;
+      }
       else if( strcmp( "=", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_EQUAL )->pDynSym;
+      }
       else if( strcmp( "!=", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_NOTEQUAL )->pDynSym;
+      }
       else if( strcmp( "<>", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_NOTEQUAL )->pDynSym;
+      }
       else if( strcmp( "#", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_NOTEQUAL )->pDynSym;
+      }
       else if( strcmp( "<", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_LESS )->pDynSym;
+      }
       else if( strcmp( "<=", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_LESSEQUAL )->pDynSym;
+      }
       else if( strcmp( ">", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_GREATER )->pDynSym;
+      }
       else if( strcmp( ">=", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_GREATEREQUAL )->pDynSym;
+      }
       else if( strcmp( ":=", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_ASSIGN )->pDynSym;
+      }
       else if( strcmp( "$", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_INSTRING )->pDynSym;
+      }
       else if( strcmp( "$$", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_INCLUDE )->pDynSym;
+      }
       else if( strcmp( "!", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_NOT )->pDynSym;
+      }
       else if( hb_stricmp( ".NOT.", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_NOT )->pDynSym;
+      }
       else if( hb_stricmp( ".AND.", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_AND )->pDynSym;
+      }
       else if( hb_stricmp( ".OR.", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_OR )->pDynSym;
+      }
       else if( strcmp( "[]", szMessage ) == 0 )
+      {
          pMessage = ( s_opSymbols + HB_OO_OP_ARRAYINDEX )->pDynSym;
+      }
       else
+      {
          pMessage = hb_dynsymGet( szMessage );
+      }   
 
       for( uiOperator = 0, pOpSym = s_opSymbols;
            uiOperator <= HB_OO_MAX_OPERATOR; ++uiOperator, ++pOpSym )
@@ -3008,7 +3331,9 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage,
             {
                pNewMeth = hb_clsFindMsg( pClass, pDelegMsg );
                if( pNewMeth )
+               {
                   uiIndex = static_cast< HB_USHORT >( pNewMeth - pClass->pMethods );
+               }   
             }
             fOK = pFunction == nullptr || HB_IS_NIL( pFunction ) || uiIndex != 0;
             if( fOK )
@@ -3018,10 +3343,11 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage,
                {
                   pNewMeth = hb_clsFindMsg( pClass, pDelegMsg );
                   if( pNewMeth )
+                  {
                      uiSprClass = static_cast< HB_USHORT >( pNewMeth - pClass->pMethods );
+                  }
                }
-               fOK = ( pInit == nullptr || HB_IS_NIL( pInit ) || uiSprClass != 0 ) &&
-                     ( uiIndex != 0 || uiSprClass != 0 );
+               fOK = ( pInit == nullptr || HB_IS_NIL( pInit ) || uiSprClass != 0 ) && ( uiIndex != 0 || uiSprClass != 0 );
             }
             break;
          }
@@ -3048,11 +3374,15 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage,
 
 #ifndef HB_VIRTUAL_HIDDEN
       if( uiScope & HB_OO_CLSTP_HIDDEN )
+      {
          uiScope |= HB_OO_CLSTP_NONVIRTUAL;
+      }   
 #endif
 
       if( ! pNewMeth->pMessage )
+      {
          pClass->uiMethods++;           /* One more message */
+      }
       else
       {
          HB_BOOL fOverLoad = ( pNewMeth->uiScope & HB_OO_CLSTP_OVERLOADED ) ||
@@ -3062,11 +3392,15 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage,
          uiPrevCls = pNewMeth->uiPrevCls;
          uiPrevMth = pNewMeth->uiPrevMth;
          if( ! hb_clsCanClearMethod( pNewMeth, HB_TRUE ) )
+         {
             return HB_FALSE;
+         }
 
          memset( pNewMeth, 0, sizeof( METHOD ) );
          if( fOverLoad )
+         {
             uiScope |= HB_OO_CLSTP_OVERLOADED;
+         }   
       }
       pNewMeth->pMessage = pMessage;
       pNewMeth->uiSprClass = uiClass;
@@ -3086,9 +3420,10 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage,
             pNewMeth->uiScope = hb_clsUpdateScope( uiScope, HB_TRUE );
             /* Class(y) does not allow to write to HIDDEN+READONLY
                instance variables, [druzus] */
-            if( pNewMeth->uiScope & HB_OO_CLSTP_READONLY &&
-                pNewMeth->uiScope & HB_OO_CLSTP_HIDDEN )
+            if( pNewMeth->uiScope & HB_OO_CLSTP_READONLY && pNewMeth->uiScope & HB_OO_CLSTP_HIDDEN )
+            {
                pNewMeth->pFuncSym = &s___msgScopeErr;
+            }
             else
             {
                pNewMeth->pFuncSym = &s___msgSetData;
@@ -3115,19 +3450,24 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage,
             pNewMeth->uiScope = hb_clsUpdateScope( uiScope, HB_TRUE );
             /* Class(y) does not allow to write to HIDDEN+READONLY
                instance variables, [druzus] */
-            if( pNewMeth->uiScope & HB_OO_CLSTP_READONLY &&
-                pNewMeth->uiScope & HB_OO_CLSTP_HIDDEN )
+            if( pNewMeth->uiScope & HB_OO_CLSTP_READONLY && pNewMeth->uiScope & HB_OO_CLSTP_HIDDEN )
+            {
                pNewMeth->pFuncSym = &s___msgScopeErr;
+            }
             else if( pNewMeth->uiScope & HB_OO_CLSTP_SHARED )
             {
                if( hb_arrayLen( pClass->pSharedDatas ) < ( HB_SIZE ) pNewMeth->uiData )
+               {
                   hb_arraySize( pClass->pSharedDatas, pNewMeth->uiData );
+               }
                pNewMeth->pFuncSym = &s___msgSetShrData;
             }
             else
             {
                if( hb_arrayLen( pClass->pClassDatas ) < ( HB_SIZE ) pNewMeth->uiData )
+               {
                   hb_arraySize( pClass->pClassDatas, pNewMeth->uiData );
+               }
                pNewMeth->pFuncSym = &s___msgSetClsData;
             }
             break;
@@ -3139,8 +3479,10 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage,
             if( pNewMeth->uiScope & HB_OO_CLSTP_SHARED )
             {
                if( hb_arrayLen( pClass->pSharedDatas ) < ( HB_SIZE ) pNewMeth->uiData )
+               {
                   hb_arraySize( pClass->pSharedDatas, pNewMeth->uiData );
-
+               }
+               
                if( pInit && ! HB_IS_NIL( pInit ) ) /* Initializer found */
                {
                   /* Shared Classdata need to be initialized only once
@@ -3156,12 +3498,13 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage,
             else
             {
                if( hb_arrayLen( pClass->pClassDatas ) < ( HB_SIZE ) pNewMeth->uiData )
+               {
                   hb_arraySize( pClass->pClassDatas, pNewMeth->uiData );
+               }
                /* uiOffset is used to copy ancestor class data initializers when
                 * new class is created
                 */
-               pNewMeth->uiOffset = hb_clsAddInitValue( pClass, pInit,
-                           HB_OO_MSG_CLASSDATA, pNewMeth->uiData, 0, uiClass );
+               pNewMeth->uiOffset = hb_clsAddInitValue( pClass, pInit, HB_OO_MSG_CLASSDATA, pNewMeth->uiData, 0, uiClass );
                pNewMeth->pFuncSym = &s___msgGetClsData;
             }
             break;
@@ -3231,13 +3574,17 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage,
          if( uiScope & HB_OO_CLSTP_CLASS )
          {
             if( ! pClass->pMutex )
+            {
                pClass->pMutex = hb_threadMutexCreate();
+            }
             pNewMeth->pFuncSym = &s___msgSyncClass;
          }
          else
          {
             if( ! pClass->uiMutexOffset )
+            {
                pClass->uiMutexOffset = pClass->uiDatas + 1;
+            }
             pNewMeth->pFuncSym = &s___msgSync;
          }
       }
@@ -3319,32 +3666,28 @@ HB_FUNC( __CLSADDMSG )
                                          HB_OO_MSG_CLSACCESS;
       }
       /* to make xHarbour users happy ;-) */
-      else if( nType == HB_OO_MSG_PROPERTY ||
-               nType == HB_OO_MSG_CLASSPROPERTY )
+      else if( nType == HB_OO_MSG_PROPERTY || nType == HB_OO_MSG_CLASSPROPERTY )
       {
          PHB_ITEM pType = hb_param( 7, HB_IT_ANY );
          char szAssign[ HB_SYMBOL_NAME_LEN + 1 ];
          int iLen = static_cast< int >( hb_parclen( 2 ) );
          if( iLen >= HB_SYMBOL_NAME_LEN )
+         {
             iLen = HB_SYMBOL_NAME_LEN - 1;
+         }
          szAssign[ 0 ] = '_';
          memcpy( szAssign + 1, szMessage, iLen );
          szAssign[ iLen + 1 ] = '\0';
 
-         uiScope = ( uiScope | HB_OO_CLSTP_EXPORTED ) &
-                  ~( HB_OO_CLSTP_PROTECTED | HB_OO_CLSTP_HIDDEN );
+         uiScope = ( uiScope | HB_OO_CLSTP_EXPORTED ) & ~( HB_OO_CLSTP_PROTECTED | HB_OO_CLSTP_HIDDEN );
          if( nType == HB_OO_MSG_PROPERTY )
          {
-            hb_clsAddMsg( uiClass, szAssign, HB_OO_MSG_ASSIGN,
-                          static_cast< HB_USHORT >( uiScope & ~HB_OO_CLSTP_PERSIST ),
-                          pFunction, pType );
+            hb_clsAddMsg( uiClass, szAssign, HB_OO_MSG_ASSIGN, static_cast< HB_USHORT >( uiScope & ~HB_OO_CLSTP_PERSIST ), pFunction, pType );
             nType = HB_OO_MSG_ACCESS;
          }
          else
          {
-            hb_clsAddMsg( uiClass, szAssign, HB_OO_MSG_CLSASSIGN,
-                          static_cast< HB_USHORT >( uiScope & ~HB_OO_CLSTP_PERSIST ),
-                          pFunction, pType );
+            hb_clsAddMsg( uiClass, szAssign, HB_OO_MSG_CLSASSIGN, static_cast< HB_USHORT >( uiScope & ~HB_OO_CLSTP_PERSIST ), pFunction, pType );
             nType = HB_OO_MSG_CLSACCESS;
          }
       }
@@ -3399,11 +3742,14 @@ static HB_USHORT hb_clsNew( const char * szClassName, HB_USHORT uiDatas,
    pNewCls->szName = hb_strdup( szClassName );
    pNewCls->pClassSym = hb_dynsymGet( pNewCls->szName );
    if( ! pClassFunc )
+   {
       pClassFunc = hb_vmGetRealFuncSym( pNewCls->pClassSym->pSymbol );
+   }
    pNewCls->pClassFuncSym = pClassFunc;
    if( fModuleFriendly )
-      hb_vmFindModuleSymbols( pClassFunc, &pNewCls->pFriendModule,
-                                          &pNewCls->uiFriendModule );
+   {
+      hb_vmFindModuleSymbols( pClassFunc, &pNewCls->pFriendModule, &pNewCls->uiFriendModule );
+   }   
 
    for( ui = 1; ui <= uiSuper; ++ui )
    {
@@ -3470,7 +3816,9 @@ static HB_USHORT hb_clsNew( const char * szClassName, HB_USHORT uiDatas,
 
                   /* update instance area offset */
                   if( pMethod->pMessage && pMethod->pFuncSym == &s___msgSuper )
+                  {
                      pMethod->uiOffset = hb_clsParentInstanceOffset( pNewCls, pMethod->uiData );
+                  }
 
                   /* Ok, this bucket is empty */
                   if( pMethod->pMessage == nullptr ||
@@ -3480,8 +3828,10 @@ static HB_USHORT hb_clsNew( const char * szClassName, HB_USHORT uiDatas,
                             pMethod->uiSprClass == s_uiObjectClass ) ) ) )
                   {
                      if( pMethod->pMessage == nullptr )
+                     {
                         /* Now, we can increment the msg count */
                         pNewCls->uiMethods++;
+                     }
 
                      memcpy( pMethod, pSprCls->pMethods + n, sizeof( METHOD ) );
                      if( ! hb_clsUpdateHiddenMessages( pMethod, pMethod, pNewCls ) )
@@ -3489,20 +3839,21 @@ static HB_USHORT hb_clsNew( const char * szClassName, HB_USHORT uiDatas,
                         PHB_SYMB pFuncSym = pMethod->pFuncSym;
 
                         if( pFuncSym == &s___msgSync || pFuncSym == &s___msgSyncClass )
+                        {
                            pFuncSym = pMethod->pRealSym;
+                        }
 
-                        if( pFuncSym == &s___msgSetClsData ||
-                            pFuncSym == &s___msgGetClsData )
+                        if( pFuncSym == &s___msgSetClsData || pFuncSym == &s___msgGetClsData )
                         {
                            if( pMethod->uiData > nLenClsDatas )
+                           {
                               hb_errInternal( HB_EI_CLSINVMETHOD, nullptr, "__clsNew()", nullptr );
+                           }
 
                            if( puiClassData[ pMethod->uiData - 1 ] == 0 )
                            {
-                              puiClassData[ pMethod->uiData - 1 ] = static_cast< HB_USHORT >(
-                                          hb_arrayLen( pNewCls->pClassDatas ) ) + 1;
-                              hb_arraySize( pNewCls->pClassDatas,
-                                            puiClassData[ pMethod->uiData - 1 ] );
+                              puiClassData[ pMethod->uiData - 1 ] = static_cast< HB_USHORT >( hb_arrayLen( pNewCls->pClassDatas ) ) + 1;
+                              hb_arraySize( pNewCls->pClassDatas, puiClassData[ pMethod->uiData - 1 ] );
                            }
                            if( pMethod->uiOffset )
                            {
@@ -3513,39 +3864,48 @@ static HB_USHORT hb_clsNew( const char * szClassName, HB_USHORT uiDatas,
                            }
                            pMethod->uiData = puiClassData[ pMethod->uiData - 1 ];
                         }
-                        else if( pFuncSym == &s___msgSetData ||
-                                 pFuncSym == &s___msgGetData )
+                        else if( pFuncSym == &s___msgSetData || pFuncSym == &s___msgGetData )
                         {
-                           pMethod->uiOffset = hb_clsParentInstanceOffset( pNewCls,
-                                                            pMethod->uiSprClass );
+                           pMethod->uiOffset = hb_clsParentInstanceOffset( pNewCls, pMethod->uiSprClass );
                         }
                         pMethod->uiScope |= HB_OO_CLSTP_SUPER;
                      }
                   }
                   else
                   {
-                     if( pSprCls->pMethods[ n ].uiScope &
-                         ( HB_OO_CLSTP_OVERLOADED | HB_OO_CLSTP_NONVIRTUAL ) )
+                     if( pSprCls->pMethods[ n ].uiScope & ( HB_OO_CLSTP_OVERLOADED | HB_OO_CLSTP_NONVIRTUAL ) )
+                     {
                         pMethod->uiScope |= HB_OO_CLSTP_OVERLOADED;
+                     }
 
                      hb_clsUpdateHiddenMessages( pSprCls->pMethods + n, pMethod, pNewCls );
                   }
                }
             }
             if( pSprCls->fHasOnError )
+            {
                pNewCls->fHasOnError = HB_TRUE;
+            }
             if( pSprCls->fHasDestructor )
+            {
                pNewCls->fHasDestructor = HB_TRUE;
+            }
             pNewCls->nOpFlags |= pSprCls->nOpFlags;
             if( pSprCls->uiMutexOffset )
+            {
                pNewCls->uiMutexOffset = 1;
+            }
             if( pSprCls->pMutex )
+            {
                fClsMutex = HB_TRUE;
+            }
          }
       }
    }
    if( puiClassData )
+   {
       hb_xfree( puiClassData );
+   }
 
    if( ! hb_clsInited( pNewCls ) )
    {
@@ -3560,9 +3920,13 @@ static HB_USHORT hb_clsNew( const char * szClassName, HB_USHORT uiDatas,
    hb_clsDefineSuperClass( pNewCls, pNewCls->uiClass, HB_FALSE );
    pNewCls->uiDatas += uiDatas;
    if( pNewCls->uiMutexOffset )
+   {
       pNewCls->uiMutexOffset = pNewCls->uiDatas + 1;
+   }
    if( fClsMutex && ! pNewCls->pMutex )
+   {
       pNewCls->pMutex = hb_threadMutexCreate();
+   }
 
    return pNewCls->uiClass;
 }
@@ -3589,15 +3953,21 @@ HB_FUNC( __CLSNEW )
 
    pSuperArray = hb_param( 3, HB_IT_ANY );
    if( pSuperArray && HB_IS_NIL( pSuperArray ) )
+   {
       pSuperArray = nullptr;
+   }
 
    pClassFunc = hb_param( 4, HB_IT_ANY );
    if( pClassFunc && HB_IS_NIL( pClassFunc ) )
+   {
       pClassFunc = nullptr;
+   }
 
    pModFriend = hb_param( 5, HB_IT_ANY );
    if( pModFriend && HB_IS_NIL( pModFriend ) )
+   {
       pModFriend = nullptr;
+   }
 
    if( szClassName &&
        ( ! pDatas || HB_IS_NUMERIC( pDatas ) ) &&
@@ -3613,7 +3983,9 @@ HB_FUNC( __CLSNEW )
       hb_retni( uiClass );
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 3000, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 }
 
 /* __clsAddFriend( <hClass>, <sFuncSym> )
@@ -3630,10 +4002,11 @@ HB_FUNC( __CLSADDFRIEND )
 
       if( ! pClass->fLocked )
       {
-         PHB_SYMB pSym = hb_vmGetRealFuncSym( hb_itemGetSymbol( hb_param( 2,
-                                                         HB_IT_SYMBOL ) ) );
+         PHB_SYMB pSym = hb_vmGetRealFuncSym( hb_itemGetSymbol( hb_param( 2, HB_IT_SYMBOL ) ) );
          if( pSym )
+         {
             hb_clsAddFriendSymbol( pClass, pSym );
+         }
       }
    }
 }
@@ -3650,13 +4023,14 @@ HB_FUNC( __CLSDELMSG )
    HB_USHORT uiClass = static_cast< HB_USHORT >( hb_parni( 1 ) );
    PHB_ITEM pString = hb_param( 2, HB_IT_STRING );
 
-   if( uiClass && uiClass <= s_uiClasses && pString &&
-       ! s_pClasses[ uiClass ]->fLocked )
+   if( uiClass && uiClass <= s_uiClasses && pString && ! s_pClasses[ uiClass ]->fLocked )
    {
       PHB_DYNS pMsg = hb_dynsymFindName( pString->item.asString.value );
 
       if( pMsg )
+      {
          hb_clsFreeMsg( s_pClasses[ uiClass ], pMsg );
+      }
    }
 }
 
@@ -3675,7 +4049,9 @@ static PHB_ITEM hb_clsInst( HB_USHORT uiClass )
       HB_USHORT uiDatas = pClass->uiDatas;
 
       if( pClass->uiMutexOffset )
+      {
          ++uiDatas;
+      }
       pSelf = hb_itemNew( nullptr );
       hb_arrayNew( pSelf, uiDatas );
       pSelf->item.asArray.value->uiClass = uiClass;
@@ -3696,21 +4072,25 @@ static PHB_ITEM hb_clsInst( HB_USHORT uiClass )
          do
          {
             if( pInitData->uiType == HB_OO_MSG_DATA )
-               pDestItm = hb_arrayGetItemPtr( pSelf,
-                                    pInitData->uiData + pInitData->uiOffset );
+            {
+               pDestItm = hb_arrayGetItemPtr( pSelf, pInitData->uiData + pInitData->uiOffset );
+            }   
             else if( pInitData->uiType == HB_OO_MSG_CLASSDATA )
             {
-               pDestItm = hb_arrayGetItemPtr( pClass->pClassDatas,
-                                              pInitData->uiData );
+               pDestItm = hb_arrayGetItemPtr( pClass->pClassDatas, pInitData->uiData );
                /* do not initialize it again */
                pInitData->uiType = HB_OO_MSG_INITIALIZED;
             }
             else
+            {
                pDestItm = nullptr;
+            }   
 
             if( pDestItm )
+            {
                hb_itemCloneTo( pDestItm, pInitData->pInitValue );
-
+            }
+            
             ++pInitData;
          }
          while( --ui );
@@ -3729,7 +4109,9 @@ HB_FUNC( __CLSINST )
    PHB_ITEM pSelf = hb_clsInst( static_cast< HB_USHORT >( hb_parni( 1 ) ) );
 
    if( pSelf )
+   {
       hb_itemReturnRelease( pSelf );
+   }   
 }
 
 /* __clsLock( <hClass> )
@@ -3741,7 +4123,9 @@ HB_FUNC( __CLSLOCK )
    HB_USHORT uiClass = static_cast< HB_USHORT >( hb_parni( 1 ) );
 
    if( uiClass && uiClass <= s_uiClasses )
+   {
       s_pClasses[ uiClass ]->fLocked = HB_TRUE;
+   }   
 }
 
 /* __clsModMsg( <hClass>, <cMessage>, <pFunc> )
@@ -3753,8 +4137,7 @@ HB_FUNC( __CLSMODMSG )
    HB_USHORT uiClass = static_cast< HB_USHORT >( hb_parni( 1 ) );
    PHB_ITEM pString = hb_param( 2, HB_IT_STRING );
 
-   if( uiClass && uiClass <= s_uiClasses && pString &&
-       ! s_pClasses[ uiClass ]->fLocked )
+   if( uiClass && uiClass <= s_uiClasses && pString && ! s_pClasses[ uiClass ]->fLocked )
    {
       PHB_DYNS pMsg = hb_dynsymFindName( pString->item.asString.value );
 
@@ -3816,11 +4199,9 @@ HB_FUNC( __CLSMODMSG )
                PHB_ITEM pBlock = hb_param( 3, HB_IT_BLOCK );
                if( pBlock )
                {
-                  if( pFuncSym == &s___msgEvalInline &&
-                      pMethod->uiSprClass == uiClass )
+                  if( pFuncSym == &s___msgEvalInline && pMethod->uiSprClass == uiClass )
                   {
-                     hb_arraySet( s_pClasses[ pMethod->uiSprClass ]->pInlines,
-                                  pMethod->uiData, pBlock );
+                     hb_arraySet( s_pClasses[ pMethod->uiSprClass ]->pInlines, pMethod->uiData, pBlock );
                   }
                   else
                   {
@@ -3837,7 +4218,9 @@ HB_FUNC( __CLSMODMSG )
                      pMethod->uiData = 0;
                   }
                   else
+                  {
                      hb_errRT_BASE( EG_ARG, 3000, nullptr, HB_ERR_FUNCNAME, 0 );
+                  }   
                }
             }
          }
@@ -3857,9 +4240,13 @@ HB_FUNC( __OBJGETCLSNAME )
    HB_USHORT uiClass;
 
    if( pObject )
+   {
       uiClass = pObject->item.asArray.value->uiClass;
+   }
    else
+   {
       uiClass = static_cast< HB_USHORT >( hb_parni( 1 ) );
+   }   
 
    hb_retc( hb_clsName( uiClass ) );
 }
@@ -3879,7 +4266,9 @@ HB_FUNC( __OBJHASMSG )
       hb_retl( hb_objHasMessage( hb_param( 1, HB_IT_ANY ), pMessage ) );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 }
 
 /* __objHasMsgAssigned( <oObj>, <cMsgName> | <sMsgName> ) --> <lExists>
@@ -3893,12 +4282,13 @@ HB_FUNC( __OBJHASMSGASSIGNED )
    if( pMessage )
    {
       HB_STACK_TLS_PRELOAD
-      PHB_SYMB pExecSym = hb_objGetMethod( hb_param( 1, HB_IT_ANY ),
-                                           pMessage->pSymbol, nullptr );
+      PHB_SYMB pExecSym = hb_objGetMethod( hb_param( 1, HB_IT_ANY ), pMessage->pSymbol, nullptr );
       hb_retl( pExecSym && pExecSym != &s___msgVirtual );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 }
 
 /* __objSendMsg( <oObj>, <cMsgName> | <sMsgName>, <xArg,..> ) --> <xRet>
@@ -3924,7 +4314,9 @@ HB_FUNC( __OBJSENDMSG )
       hb_vmSend( static_cast< HB_USHORT >( uiPCount - 2 ) );             /* Execute message */
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 3000, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 }
 
 /* __objClone( <oSource> ) --> <oNew>
@@ -3937,9 +4329,13 @@ HB_FUNC( __OBJCLONE )
    PHB_ITEM pObject = hb_param( 1, HB_IT_OBJECT );
 
    if( pObject )
+   {
       hb_arrayCloneTo( hb_stackReturnItem(), pObject );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 3001, nullptr, HB_ERR_FUNCNAME, 0 );
+   }   
 }
 
 /* __clsInstSuper( <cClassName> | <sClassFunc> ) --> <hClass>
@@ -3957,12 +4353,16 @@ HB_FUNC( __CLSINSTSUPER )
    if( pItem )
    {
       if( HB_IS_SYMBOL( pItem ) )
+      {
          pClassFuncSym = hb_itemGetSymbol( pItem );
+      }
       else if( HB_IS_STRING( pItem ) )
       {
          PHB_DYNS pDynSym = hb_dynsymFindName( hb_itemGetCPtr( pItem ) );
          if( pDynSym )
+         {
             pClassFuncSym = pDynSym->pSymbol;
+         }   
       }
       pClassFuncSym = hb_vmGetRealFuncSym( pClassFuncSym );
    }
@@ -3985,7 +4385,9 @@ HB_FUNC( __CLSINSTSUPER )
                uiClass = pObject->item.asArray.value->uiClass;
 
                if( s_pClasses[ uiClass ]->pClassFuncSym == pClassFuncSym )
+               {
                   uiClassH = uiClass;
+               }
                else
                {
                   uiClassH = hb_clsFindClassByFunc( pClassFuncSym );
@@ -4001,7 +4403,9 @@ HB_FUNC( __CLSINSTSUPER )
                      {
                         uiClass = pObject->item.asArray.value->uiClass;
                         if( s_pClasses[ uiClass ]->pClassFuncSym == pClassFuncSym )
+                        {
                            uiClassH = uiClass;
+                        }   
                      }
                   }
                }
@@ -4009,12 +4413,12 @@ HB_FUNC( __CLSINSTSUPER )
 
             /* This disables destructor execution for this object */
             if( uiClassH && HB_IS_OBJECT( pObject ) )
+            {
                pObject->item.asArray.value->uiClass = 0;
+            }
             else if( hb_vmRequestQuery() == 0 )
             {
-               hb_snprintf( szDesc, sizeof( szDesc ),
-                            "Super class '%s' does not return an object",
-                            pClassFuncSym->szName );
+               hb_snprintf( szDesc, sizeof( szDesc ), "Super class '%s' does not return an object", pClassFuncSym->szName );
                hb_errRT_BASE( EG_ARG, 3002, szDesc, HB_ERR_FUNCNAME, 0 );
             }
          }
@@ -4026,11 +4430,14 @@ HB_FUNC( __CLSINSTSUPER )
 
       pClassFuncSym = hb_itemGetSymbol( pItem );
       if( pClassFuncSym )
+      {
          pszName = pClassFuncSym->szName;
+      }
       else
+      {
          pszName = hb_itemGetCPtr( pItem );
-      hb_snprintf( szDesc, sizeof( szDesc ),
-                   "Cannot find super class '%s'", pszName );
+      }   
+      hb_snprintf( szDesc, sizeof( szDesc ), "Cannot find super class '%s'", pszName );
       hb_errRT_BASE( EG_ARG, 3003, szDesc, HB_ERR_FUNCNAME, 0 );
    }
 
@@ -4053,7 +4460,9 @@ HB_FUNC( __CLSASSOCTYPE )
       HB_TYPE nType = hb_clsGetItemType( pType, HB_IT_ANY );
 
       if( s_pClasses[ uiClass ]->uiDatas )
+      {
          hb_errRT_BASE( EG_ARG, 3005, "Scalar class can not contain instance variables", HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      }
       else if( nType != HB_IT_ANY )
       {
          switch( nType )
@@ -4159,15 +4568,18 @@ HB_FUNC( __CLS_DECDATA )
    HB_STACK_TLS_PRELOAD
    HB_USHORT uiClass = static_cast< HB_USHORT >( hb_parni( 1 ) );
 
-   if( uiClass && uiClass <= s_uiClasses &&
-       s_pClasses[ uiClass ]->uiDatas > s_pClasses[ uiClass ]->uiDataFirst )
+   if( uiClass && uiClass <= s_uiClasses && s_pClasses[ uiClass ]->uiDatas > s_pClasses[ uiClass ]->uiDataFirst )
    {
       if( ! s_pClasses[ uiClass ]->fLocked )
+      {
          s_pClasses[ uiClass ]->uiDatas--;
+      }
       hb_retni( s_pClasses[ uiClass ]->uiDatas - s_pClasses[ uiClass ]->uiDataFirst );
    }
    else
+   {
       hb_retni( 0 );
+   }   
 }
 
 /* __cls_IncData( <hClass> ) --> <nCount>
@@ -4182,11 +4594,15 @@ HB_FUNC( __CLS_INCDATA )
    if( uiClass && uiClass <= s_uiClasses )
    {
       if( ! s_pClasses[ uiClass ]->fLocked )
+      {
          s_pClasses[ uiClass ]->uiDatas++;
+      }
       hb_retni( s_pClasses[ uiClass ]->uiDatas - s_pClasses[ uiClass ]->uiDataFirst );
    }
    else
+   {
       hb_retni( 0 );
+   }   
 }
 
 /* NOTE: Undocumented Clipper function */
@@ -4228,13 +4644,17 @@ HB_FUNC( __CLASSSEL )
       do
       {
          if( pMethod->pMessage )    /* Hash Entry used ? */
+         {
             hb_arraySetC( pReturn, ++nPos, pMethod->pMessage->pSymbol->szName );
+         }   
          ++pMethod;
       }
       while( --nLimit );
 
       if( nPos < ( HB_SIZE ) pClass->uiMethods )
+      {
          hb_arraySize( pReturn, nPos );
+      }   
    }
 
    hb_itemReturnRelease( pReturn );
@@ -4272,11 +4692,9 @@ HB_FUNC( __SENDER )
       PHB_ITEM pSelf = hb_stackItem( nOffset + 1 );
 
       /* Is it inline method? */
-      if( nOffset > 0 && HB_IS_BLOCK( pSelf ) &&
-          hb_stackItem( nOffset )->item.asSymbol.value == &hb_symEval )
+      if( nOffset > 0 && HB_IS_BLOCK( pSelf ) && hb_stackItem( nOffset )->item.asSymbol.value == &hb_symEval )
       {
-         pSelf = hb_stackItem( hb_stackItem( nOffset )->
-                               item.asSymbol.stackstate->nBaseItem + 1 );
+         pSelf = hb_stackItem( hb_stackItem( nOffset )->item.asSymbol.stackstate->nBaseItem + 1 );
       }
 
       if( HB_IS_OBJECT( pSelf ) )
@@ -4318,14 +4736,20 @@ HB_FUNC( __CLSSYNCWAIT )
 
             /* Is it inline method? */
             if( HB_IS_BLOCK( pSelf ) && pBase->item.asSymbol.value == &hb_symEval )
+            {
                pSelf = hb_stackItem( pBase->item.asSymbol.stackstate->nBaseItem + 1 );
+            }
 
             uiClass = hb_objGetClass( pSelf );
             if( uiClass && uiClass <= s_uiClasses )
+            {
                pMutex = hb_arrayGetItemPtr( pSelf, s_pClasses[ uiClass ]->uiMutexOffset );
+            }
          }
          else if( pMethod->pFuncSym == &s___msgSyncClass )
+         {
             pMutex = pClass->pMutex;
+         }   
       }
    }
 
@@ -4333,7 +4757,9 @@ HB_FUNC( __CLSSYNCWAIT )
    {
       double dTimeOut = hb_parnd( 2 );
       if( dTimeOut > 0 )
+      {
          ulMilliSec = ( HB_ULONG ) ( dTimeOut * 10 );
+      }   
    }
 
    hb_retl( hb_threadMutexSyncWait( hb_param( 1, HB_IT_ANY ), ulMilliSec, pMutex ) );
@@ -4375,9 +4801,13 @@ HB_FUNC_STATIC( msgClassName )
    HB_USHORT uiClass = hb_stackBaseItem()->item.asSymbol.stackstate->uiClass;
 
    if( uiClass )
+   {
       hb_retc( s_pClasses[ uiClass ]->szName );
+   }
    else
+   {
       hb_retc( hb_objGetClsName( hb_stackSelfItem() ) );
+   }   
 }
 
 
@@ -4386,44 +4816,57 @@ static int hb_methodType( PMETHOD pMethod )
    PHB_SYMB pFuncSym = pMethod->pFuncSym;
 
    if( pFuncSym == &s___msgSync || pFuncSym == &s___msgSyncClass )
+   {
       pFuncSym = pMethod->pRealSym;
+   }
 
    if     ( pFuncSym == &s___msgSetClsData ||
             pFuncSym == &s___msgGetClsData ||
             pFuncSym == &s___msgSetShrData ||
             pFuncSym == &s___msgGetShrData )
+   {
       return HB_OO_MSG_CLASSDATA;
-
-   else if( pFuncSym == &s___msgSetData ||
-            pFuncSym == &s___msgGetData )
+   }
+   else if( pFuncSym == &s___msgSetData || pFuncSym == &s___msgGetData )
+   {
       return HB_OO_MSG_DATA;
-
+   }
    else if( pFuncSym == &s___msgEvalInline )
+   {
       return HB_OO_MSG_INLINE;
-
+   }
    else if( pFuncSym == &s___msgVirtual )
+   {
       return HB_OO_MSG_VIRTUAL;
-
+   }
    else if( pFuncSym == &s___msgSuper )
+   {
       return HB_OO_MSG_SUPER;
-
+   }
    else if( pFuncSym == &s___msgRealClass )
+   {
       return HB_OO_MSG_REALCLASS;
-
+   }
    else if( pFuncSym == &s___msgDelegate )
+   {
       return HB_OO_MSG_DELEGATE;
-
+   }
    else if( pFuncSym == &s___msgPerform )
+   {
       return HB_OO_MSG_PERFORM;
-
+   }
    else if( pMethod->pMessage == s___msgOnError.pDynSym )
+   {
       return HB_OO_MSG_ONERROR;
-
+   }
    else if( pMethod->pMessage == s___msgDestructor.pDynSym )
+   {
       return HB_OO_MSG_DESTRUCTOR;
-
+   }
    else
+   {
       return HB_OO_MSG_METHOD;
+   }   
 }
 
 /* <aMessages> := <obj>:ClassSel()
@@ -4474,8 +4917,9 @@ HB_FUNC_STATIC( msgClassSel )
                      }
                   }
                   else
-                     hb_arraySetC( pReturn, ++nPos,
-                                   pMethod->pMessage->pSymbol->szName );
+                  {
+                     hb_arraySetC( pReturn, ++nPos, pMethod->pMessage->pSymbol->szName );
+                  }   
                }
             }
          }
@@ -4484,7 +4928,9 @@ HB_FUNC_STATIC( msgClassSel )
       while( --nLimit && nPos < ( HB_SIZE ) pClass->uiMethods );
 
       if( nPos < ( HB_SIZE ) pClass->uiMethods )
+      {
          hb_arraySize( pReturn, nPos );
+      }
       hb_itemReturnRelease( pReturn );
    }
 }
@@ -4518,10 +4964,13 @@ HB_FUNC_STATIC( msgClassParent )
    if( pItemParam && uiClass && uiClass <= s_uiClasses )
    {
       if( HB_IS_OBJECT( pItemParam ) )
-         fHasParent = hb_clsHasParentClass( s_pClasses[ uiClass ],
-                                   pItemParam->item.asArray.value->uiClass );
+      {
+         fHasParent = hb_clsHasParentClass( s_pClasses[ uiClass ], pItemParam->item.asArray.value->uiClass );
+      }
       else if( HB_IS_STRING( pItemParam ) )
+      {
          fHasParent = hb_clsIsParent( uiClass, hb_parc( pItemParam ) )
+      }
    }
 
    hb_retl( fHasParent );
@@ -4572,16 +5021,18 @@ HB_FUNC_STATIC( msgPerform )
       PHB_SYMB pSym = nullptr;
 
       if( HB_IS_SYMBOL( pItem ) )
+      {
          pSym = pItem->item.asSymbol.value;
+      }
 
-      else if( HB_IS_OBJECT( pItem ) &&
-               s_pClasses[ pItem->item.asArray.value->uiClass ]->pClassSym ==
-               s___msgSymbol.pDynSym )
+      else if( HB_IS_OBJECT( pItem ) && s_pClasses[ pItem->item.asArray.value->uiClass ]->pClassSym == s___msgSymbol.pDynSym )
       {
          /* Dirty hack */
          pItem = hb_arrayGetItemPtr( pItem, 1 );
          if( pItem && HB_IS_SYMBOL( pItem ) )
+         {
             pSym = pItem->item.asSymbol.value;
+         }
       }
 
       if( pSym )
@@ -4607,7 +5058,9 @@ HB_FUNC_STATIC( msgDelegate )
    PHB_SYMB pExecSym = pClass->pMethods[ pMethod->uiData ].pFuncSym;
 
    if( pExecSym )
+   {
       HB_VM_FUNCUNREF( pExecSym );
+   }
    if( pExecSym && HB_VM_ISFUNC( pExecSym ) )
    {
       HB_VM_EXECUTE( pExecSym );
@@ -4627,7 +5080,9 @@ HB_FUNC_STATIC( msgSync )
    PHB_SYMB pExecSym = pMethod->pRealSym;
 
    if( pExecSym )
+   {
       HB_VM_FUNCUNREF( pExecSym );
+   }
    if( pExecSym && HB_VM_ISFUNC( pExecSym ) )
    {
       PHB_ITEM pObject = hb_stackSelfItem();
@@ -4635,13 +5090,16 @@ HB_FUNC_STATIC( msgSync )
       PHB_ITEM pMutex = nullptr;
 
       if( uiClass && uiClass <= s_uiClasses )
+      {
          pMutex = hb_arrayGetItemPtr( pObject, s_pClasses[ uiClass ]->uiMutexOffset );
-
+      }
       if( ! pMutex || hb_threadMutexLock( pMutex ) )
       {
          HB_VM_EXECUTE( pExecSym );
          if( pMutex )
+         {
             hb_threadMutexUnlock( pMutex );
+         }   
       }
    }
    else
@@ -4659,14 +5117,18 @@ HB_FUNC_STATIC( msgSyncClass )
    PHB_SYMB pExecSym = pMethod->pRealSym;
 
    if( pExecSym )
+   {
       HB_VM_FUNCUNREF( pExecSym );
+   }
    if( pExecSym && HB_VM_ISFUNC( pExecSym ) )
    {
       if( ! pClass->pMutex || hb_threadMutexLock( pClass->pMutex ) )
       {
          HB_VM_EXECUTE( pExecSym );
          if( pClass->pMutex )
+         {
             hb_threadMutexUnlock( pClass->pMutex );
+         }   
       }
    }
    else
@@ -4686,9 +5148,13 @@ HB_FUNC_STATIC( msgNoMethod )
 
 #if 1  /* Clipper compatible error message */
    if( pSym->szName[ 0 ] == '_' )
+   {
       hb_errRT_BASE_SubstR( EG_NOVARMETHOD, 1005, nullptr, pSym->szName + 1, HB_ERR_ARGS_SELFPARAMS );
+   }
    else
+   {
       hb_errRT_BASE_SubstR( EG_NOMETHOD, 1004, nullptr, pSym->szName, HB_ERR_ARGS_SELFPARAMS );
+   }   
 #else
    char szDesc[ 40 + HB_SYMBOL_NAME_LEN ];
 
@@ -4721,9 +5187,13 @@ HB_FUNC_STATIC( msgScopeErr )
    pszProcName = hb_xstrcpy( nullptr, hb_objGetClsName( pObject ), ":",
                              pMethod->pMessage->pSymbol->szName, nullptr );
    if( pMethod->uiScope & HB_OO_CLSTP_HIDDEN )
+   {
       hb_errRT_BASE( EG_NOMETHOD, 41, "Scope violation (hidden)", pszProcName, 0 );
+   }
    else
+   {
       hb_errRT_BASE( EG_NOMETHOD, 42, "Scope violation (protected)", pszProcName, 0 );
+   }   
    hb_xfree( pszProcName );
 }
 
@@ -4767,8 +5237,7 @@ HB_FUNC_STATIC( msgRealClass )
    HB_USHORT uiClass = hb_clsSenderMethodClass();
    HB_USHORT uiCurClass = hb_objGetClassH( pObject );
 
-   if( uiClass && uiClass != uiCurClass &&
-       hb_clsSenderObjectClass() == uiCurClass )
+   if( uiClass && uiClass != uiCurClass && hb_clsSenderObjectClass() == uiCurClass )
    {
       hb_clsMakeSuperObject( hb_stackReturnItem(), pObject, uiClass );
    }
@@ -4808,15 +5277,17 @@ HB_FUNC_STATIC( msgSetClsData )
    PHB_ITEM pReturn = hb_param( 1, HB_IT_ANY );
 
    if( ! pReturn )
+   {
       hb_arrayGet( pClass->pClassDatas, pMethod->uiData, hb_stackReturnItem() );
-
+   }
    else
    {
-      if( pMethod->itemType &&
-          ! ( pMethod->itemType & HB_ITEM_TYPERAW( pReturn ) ) )
+      if( pMethod->itemType && ! ( pMethod->itemType & HB_ITEM_TYPERAW( pReturn ) ) )
       {
          if( pMethod->itemType == HB_IT_NUMINT && HB_IS_NUMERIC( pReturn ) )
+         {
             hb_itemPutNInt( pReturn, hb_itemGetNInt( pReturn ) );
+         }
          else
          {
             ( s___msgTypeErr.value.pFunPtr )();
@@ -4859,15 +5330,17 @@ HB_FUNC_STATIC( msgSetShrData )
    PHB_ITEM pReturn = hb_param( 1, HB_IT_ANY );
 
    if( ! pReturn )
-      hb_arrayGet( s_pClasses[ pMethod->uiSprClass ]->pSharedDatas,
-                   pMethod->uiData, hb_stackReturnItem() );
+   {
+      hb_arrayGet( s_pClasses[ pMethod->uiSprClass ]->pSharedDatas, pMethod->uiData, hb_stackReturnItem() );
+   }
    else
    {
-      if( pMethod->itemType &&
-          ! ( pMethod->itemType & HB_ITEM_TYPERAW( pReturn ) ) )
+      if( pMethod->itemType && ! ( pMethod->itemType & HB_ITEM_TYPERAW( pReturn ) ) )
       {
          if( pMethod->itemType == HB_IT_NUMINT && HB_IS_NUMERIC( pReturn ) )
+         {
             hb_itemPutNInt( pReturn, hb_itemGetNInt( pReturn ) );
+         }
          else
          {
             ( s___msgTypeErr.value.pFunPtr )();
@@ -4875,8 +5348,7 @@ HB_FUNC_STATIC( msgSetShrData )
          }
       }
 
-      hb_arraySet( s_pClasses[ pMethod->uiSprClass ]->pSharedDatas,
-                   pMethod->uiData, pReturn );
+      hb_arraySet( s_pClasses[ pMethod->uiSprClass ]->pSharedDatas, pMethod->uiData, pReturn );
       hb_itemReturn( pReturn );
    }
 }
@@ -4901,8 +5373,7 @@ HB_FUNC_STATIC( msgGetData )
 
       if( uiClass != uiObjClass )
       {
-         nIndex += hb_clsParentInstanceOffset( s_pClasses[ uiObjClass ],
-                                               pMethod->uiSprClass );
+         nIndex += hb_clsParentInstanceOffset( s_pClasses[ uiObjClass ], pMethod->uiSprClass );
       }
       else
       {
@@ -4934,8 +5405,7 @@ HB_FUNC_STATIC( msgSetData )
 
       if( uiClass != uiObjClass )
       {
-         nIndex += hb_clsParentInstanceOffset( s_pClasses[ uiObjClass ],
-                                               pMethod->uiSprClass );
+         nIndex += hb_clsParentInstanceOffset( s_pClasses[ uiObjClass ], pMethod->uiSprClass );
       }
       else
       {
@@ -4943,15 +5413,17 @@ HB_FUNC_STATIC( msgSetData )
       }
 
       if( ! pReturn )
+      {
          hb_arrayGet( pObject, nIndex, hb_stackReturnItem() );
-
+      }
       else
       {
-         if( pMethod->itemType &&
-             ! ( pMethod->itemType & HB_ITEM_TYPERAW( pReturn ) ) )
+         if( pMethod->itemType && ! ( pMethod->itemType & HB_ITEM_TYPERAW( pReturn ) ) )
          {
             if( pMethod->itemType == HB_IT_NUMINT && HB_IS_NUMERIC( pReturn ) )
+            {
                hb_itemPutNInt( pReturn, hb_itemGetNInt( pReturn ) );
+            }
             else
             {
                ( s___msgTypeErr.value.pFunPtr )();
@@ -4961,7 +5433,9 @@ HB_FUNC_STATIC( msgSetData )
 
          /* will arise only if the class has been modified after first instance */
          if( nIndex > hb_arrayLen( pObject ) ) /* Resize needed ? */
+         {
             hb_arraySize( pObject, nIndex );   /* Make large enough */
+         }
          hb_arraySet( pObject, nIndex, pReturn );
          hb_itemReturn( pReturn );
       }
@@ -5004,7 +5478,9 @@ void hb_mthAddTime( HB_ULONG ulClockTicks )
       {
          pSym->pDynSym->ulCalls++;
          if( --pSym->pDynSym->ulRecurse == 0 )
+         {
             pSym->pDynSym->ulTime += ulClockTicks;
+         }
       }
    }
 }
@@ -5061,7 +5537,9 @@ static PHB_ITEM hb_objGetIVars( PHB_ITEM pObject,
    HB_USHORT uiClass, uiSuperClasses;
 
    if( ! pObject || ! HB_IS_OBJECT( pObject ) )
+   {
       return nullptr;
+   }
 
    uiClass = pObject->item.asArray.value->uiClass;
    pClass = s_pClasses[ uiClass ];
@@ -5088,7 +5566,9 @@ static PHB_ITEM hb_objGetIVars( PHB_ITEM pObject,
                   --nCount;
                }
                else
+               {
                   pIndex[ nIndex - 1 ].uiStatus = 1;
+               }   
             }
          }
          ++pInitData;
@@ -5109,33 +5589,42 @@ static PHB_ITEM hb_objGetIVars( PHB_ITEM pObject,
          PHB_SYMB pFuncSym = pMethod->pFuncSym;
 
          if( pFuncSym == &s___msgSync || pFuncSym == &s___msgSyncClass )
+         {
             pFuncSym = pMethod->pRealSym;
+         }
 
          if( pFuncSym == &s___msgGetData || pFuncSym == &s___msgSetData )
          {
             HB_USHORT uiStatus = pFuncSym == &s___msgGetData ? 3 : 2;
 
-            nIndex = ( uiClass == pClass->uiClass ?
-                     ( HB_SIZE ) pMethod->uiOffset : nOffset ) + pMethod->uiData;
+            nIndex = ( uiClass == pClass->uiClass ? ( HB_SIZE ) pMethod->uiOffset : nOffset ) + pMethod->uiData;
             if( nIndex == 0 || nIndex > nLen )
+            {
                hb_errInternal( HB_EI_CLSINVMETHOD, nullptr, "__objGetIVars()", nullptr );
+            }
 
             pInfo = &pIndex[ nIndex - 1 ];
             if( pInfo->uiStatus < uiStatus )
             {
                pItem = hb_arrayGetItemPtr( pObject, nIndex );
                if( ! pItem || ( pInfo->uiStatus == 0 && HB_IS_NIL( pItem ) ) )
+               {
                   uiStatus = 3;
+               }
                else
                {
                   if( ! pInfo->pMethod )
+                  {
                      ++nSize;
+                  }
                   pInfo->pMethod = pMethod;
                   pInfo->uiClass = uiClass;
                }
                pInfo->uiStatus = uiStatus;
                if( uiStatus == 3 )
+               {
                   --nCount;
+               }   
             }
          }
       }
@@ -5145,8 +5634,12 @@ static PHB_ITEM hb_objGetIVars( PHB_ITEM pObject,
          if( uiSuperClasses-- )
          {
             if( uiClass == pClass->pSuperClasses[ uiSuperClasses ].uiClass )
+            {
                if( uiSuperClasses-- == 0 )
+               {
                   break;
+               }   
+            }
             uiClass = pClass->pSuperClasses[ uiSuperClasses ].uiClass;
             nOffset = pClass->pSuperClasses[ uiSuperClasses ].uiOffset;
             nLimit = hb_clsMthNum( s_pClasses[ uiClass ] );
@@ -5168,27 +5661,28 @@ static PHB_ITEM hb_objGetIVars( PHB_ITEM pObject,
          hb_arrayNew( pValue, 2 );
          if( pInfo->uiClass != pClass->uiClass )
          {
-            char * pszCast = hb_xstrcpy( nullptr, s_pClasses[ pInfo->uiClass ]->szName,
-                                         ":", pszVar, nullptr );
+            char * pszCast = hb_xstrcpy( nullptr, s_pClasses[ pInfo->uiClass ]->szName, ":", pszVar, nullptr );
             hb_arraySetCPtr( pValue, 1, pszCast );
          }
          else
+         {
             hb_arraySetCConst( pValue, 1, pszVar );
+         }   
          hb_arraySet( pValue, 2, hb_arrayGetItemPtr( pObject, nIndex ) );
       }
    }
 
    if( pIndex )
+   {
       hb_xfree( pIndex );
+   }   
 
    return pReturn;
 }
 
 static void hb_objSetIVars( PHB_ITEM pObject, PHB_ITEM pArray )
 {
-   if( pObject && HB_IS_OBJECT( pObject ) &&
-       pArray && HB_IS_ARRAY( pArray ) &&
-       pArray->item.asArray.value->uiClass == 0 )
+   if( pObject && HB_IS_OBJECT( pObject ) && pArray && HB_IS_ARRAY( pArray ) && pArray->item.asArray.value->uiClass == 0 )
    {
       HB_USHORT uiClass = pObject->item.asArray.value->uiClass;
       HB_SIZE nPos, nIndex, nLen;
@@ -5216,16 +5710,16 @@ static void hb_objSetIVars( PHB_ITEM pObject, PHB_ITEM pArray )
                   memcpy( szClassName, pszMethod, nLen );
                   szClassName[ nLen ] = '\0';
                   pParentSym = hb_dynsymFindName( szClassName );
-                  uiSuper = pParentSym == nullptr ? 0 :
-                            hb_clsGetParent( s_pClasses[ uiClass ], pParentSym );
+                  uiSuper = pParentSym == nullptr ? 0 : hb_clsGetParent( s_pClasses[ uiClass ], pParentSym );
                }
                pVarSym = hb_dynsymFindName( pszClass + 1 );
             }
             else
+            {
                pVarSym = hb_dynsymFindName( pszMethod );
+            }   
          }
-         if( uiSuper && pNewVal && pVarSym &&
-             ( nIndex = hb_clsGetVarIndexEx( uiClass, pVarSym, uiSuper ) ) != 0 )
+         if( uiSuper && pNewVal && pVarSym && ( nIndex = hb_clsGetVarIndexEx( uiClass, pVarSym, uiSuper ) ) != 0 )
          {
             hb_arraySet( pObject, nIndex, pNewVal );
          }
@@ -5258,20 +5752,32 @@ HB_FUNC( __OBJSETIVARS )
       PHB_ITEM pNewObj = nullptr;
 
       if( HB_IS_NUMERIC( pObject ) )
+      {
          pObject = pNewObj = hb_clsInst( static_cast< HB_USHORT >( hb_itemGetNI( pObject ) ) );
+      }
       else if( HB_IS_STRING( pObject ) )
+      {
          pObject = pNewObj = hb_clsInst( hb_clsFindClass( hb_itemGetCPtr( pObject ), nullptr ) );
+      }
       else if( HB_IS_SYMBOL( pObject ) )
+      {
          pObject = pNewObj = hb_clsInst( hb_clsFindClassByFunc( hb_itemGetSymbol( pObject ) ) );
+      }
       else if( ! HB_IS_OBJECT( pObject ) )
+      {
          pObject = nullptr;
+      }
 
       hb_objSetIVars( pObject, pArray );
 
       if( pObject )
+      {
          hb_itemReturn( pObject );
+      }
       if( pNewObj )
+      {
          hb_itemRelease( pNewObj );
+      }
    }
 }
 
@@ -5287,13 +5793,18 @@ HB_FUNC( __OBJRESTOREIVARS )
    {
       PHB_ITEM pObject = nullptr;
 
-
       if( HB_IS_NUMERIC( pClass ) )
+      {
          pObject = hb_clsInst( static_cast< HB_USHORT >( hb_itemGetNI( pClass ) ) );
+      }
       else if( HB_IS_STRING( pClass ) )
+      {
          pObject = hb_clsInst( hb_clsFindClass( hb_itemGetCPtr( pClass ), hb_parc( 3 ) ) );
+      }
       else if( HB_IS_SYMBOL( pClass ) )
+      {
          pObject = hb_clsInst( hb_clsFindClassByFunc( hb_itemGetSymbol( pClass ) ) );
+      }
 
       if( pObject )
       {
@@ -5326,7 +5837,9 @@ HB_FUNC( __CLSGETPROPERTIES )
       HB_USHORT uiScope = HB_OO_CLSTP_PERSIST;
 
       if( hb_parl( 2 ) )
+      {
          uiScope |= HB_OO_CLSTP_EXPORTED;
+      }
 
       nCount = 0;
       nLimit = hb_clsMthNum( pClass );
@@ -5336,14 +5849,20 @@ HB_FUNC( __CLSGETPROPERTIES )
          if( pMethod->pMessage && ( pMethod->uiScope & uiScope ) != 0 )
          {
             if( ( pMethod->uiScope & HB_OO_CLSTP_PERSIST ) != 0 )
+            {
                ++nCount;
+            }
             else if( pMethod->pMessage->pSymbol->szName[ 0 ] == '_' )
             {
                if( ! pMethod->pAccMsg )
+               {
                   pMethod->pAccMsg = hb_dynsymGetCase( pMethod->pMessage->pSymbol->szName + 1 );
+               }
                pAccMth = hb_clsFindMsg( pClass, pMethod->pAccMsg );
                if( pAccMth && ( pAccMth->uiScope & HB_OO_CLSTP_PERSIST ) == 0 )
+               {
                   ++nCount;
+               }
             }
          }
          ++pMethod;
@@ -5360,13 +5879,16 @@ HB_FUNC( __CLSGETPROPERTIES )
          if( pMethod->pMessage && ( pMethod->uiScope & uiScope ) != 0 )
          {
             if( ( pMethod->uiScope & HB_OO_CLSTP_PERSIST ) != 0 )
+            {
                hb_arraySetC( pReturn, ++nCount, pMethod->pMessage->pSymbol->szName );
-            else if( pMethod->pMessage->pSymbol->szName[ 0 ] == '_' &&
-                     pMethod->pAccMsg )
+            }
+            else if( pMethod->pMessage->pSymbol->szName[ 0 ] == '_' && pMethod->pAccMsg )
             {
                pAccMth = hb_clsFindMsg( pClass, pMethod->pAccMsg );
                if( pAccMth && ( pAccMth->uiScope & HB_OO_CLSTP_PERSIST ) == 0 )
+               {
                   hb_arraySetC( pReturn, ++nCount, pMethod->pMessage->pSymbol->szName + 1 );
+               }
             }
          }
          ++pMethod;
@@ -5395,7 +5917,9 @@ HB_FUNC( __CLSGETANCESTORS )
       {
          HB_USHORT uiSuperCls = pClass->pSuperClasses[ uiCount ].uiClass;
          if( uiSuperCls != uiClass )
+         {
             hb_arraySetNI( pReturn, ++nPos, uiSuperCls );
+         }
       }
       hb_arraySize( pReturn, nPos );
    }
@@ -5418,12 +5942,16 @@ HB_FUNC( __CLSMSGTYPE )
       PMETHOD pMethod = nullptr;
 
       if( uiClass && uiClass <= s_uiClasses )
+      {
          pMethod = hb_clsFindMsg( s_pClasses[ uiClass ], pMessage );
+      }
 
       hb_retni( pMethod ? hb_methodType( pMethod ) : -1 );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 }
 
 /* extend the size of classes buffer to given value to avoid later
@@ -5439,15 +5967,16 @@ HB_FUNC( __CLSPREALLOCATE )
    HB_LONG lNewSize = hb_parnl( 1 );
 
    if( lNewSize > ( HB_LONG ) USHRT_MAX )
+   {
       lNewSize = USHRT_MAX;
+   }
 
    HB_CLASS_LOCK();
 
    if( lNewSize > ( HB_LONG ) s_uiClsSize )
    {
       s_uiClsSize = static_cast< HB_USHORT >( lNewSize );
-      s_pClasses = static_cast< PCLASS * >( hb_xrealloc( s_pClasses, sizeof( PCLASS ) *
-                                             ( ( HB_SIZE ) s_uiClsSize + 1 ) ) );
+      s_pClasses = static_cast< PCLASS * >( hb_xrealloc( s_pClasses, sizeof( PCLASS ) * ( ( HB_SIZE ) s_uiClsSize + 1 ) ) );
    }
 
    HB_CLASS_UNLOCK();
@@ -5467,9 +5996,13 @@ HB_FUNC( __CLSLOCKDEF )
       if( ! s_pClassMtx || hb_threadMutexLock( s_pClassMtx ) )
       {
          if( HB_IS_NIL( pClsItm ) )
+         {
             fLocked = HB_TRUE;
+         }
          else if( s_pClassMtx )
+         {
             hb_threadMutexUnlock( s_pClassMtx );
+         }
       }
    }
    hb_retl( fLocked );
@@ -5490,7 +6023,9 @@ HB_FUNC( __CLSUNLOCKDEF )
    }
 
    if( s_pClassMtx )
+   {
       hb_threadMutexUnlock( s_pClassMtx );
+   }   
 }
 
 /* Dirty functions which converts array to object of given class
@@ -5505,7 +6040,9 @@ HB_FUNC( __OBJSETCLASS )
       const char * szClass = hb_parc( 2 );
 
       if( szClass )
+      {
          hb_objSetClass( pObject, szClass, hb_parc( 3 ) );
+      }
    }
 
    hb_itemReturn( pObject );
@@ -5529,7 +6066,9 @@ HB_FUNC( __OBJSETCLASSHANDLE )
 
       uiPrevClassHandle = pObject->item.asArray.value->uiClass;
       if( uiClass <= s_uiClasses )
+      {
          pObject->item.asArray.value->uiClass = uiClass;
+      }
    }
 
    hb_retnl( uiPrevClassHandle );
@@ -5570,7 +6109,9 @@ void hb_clsAssociate( HB_USHORT usClassH )
    PHB_ITEM pSelf = hb_clsInst( usClassH );
 
    if( pSelf )
+   {
       hb_itemReturnRelease( pSelf );
+   }
    else
    {
       HB_STACK_TLS_PRELOAD
@@ -5596,16 +6137,19 @@ HB_FUNC( __CLSVERIFY )
          {
             PHB_DYNS pDynSym = hb_dynsymFind( pMethod->pMessage->pSymbol->szName );
 
-            if( pMethod->pMessage != pDynSym ||
-                hb_clsFindMsg( pClass, pDynSym ) != pMethod )
+            if( pMethod->pMessage != pDynSym || hb_clsFindMsg( pClass, pDynSym ) != pMethod )
+            {
                hb_arraySetC( pReturn, ++nPos, pMethod->pMessage->pSymbol->szName );
+            }
          }
          ++pMethod;
       }
       while( --nLimit );
 
       if( nPos < ( HB_SIZE ) pClass->uiMethods )
+      {
          hb_arraySize( pReturn, nPos );
+      }
    }
 
    hb_itemReturnRelease( pReturn );
@@ -5631,7 +6175,9 @@ const char * hb_clsRealMethodName( void )
             PMETHOD pMethod = pClass->pMethods + pStack->uiMethod;
 
             if( pMethod->pMessage )
+            {
                szName = pMethod->pMessage->pSymbol->szName;
+            }
          }
       }
    }

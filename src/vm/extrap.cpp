@@ -350,7 +350,9 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
          {
             /* FIXME: Unsafe function. */
             if( IsBadReadPtr( pc, 1 ) )
+            {
                break;
+            }
             hb_snprintf( buf, sizeof( buf ), " %02X", ( int ) pc[ i ] );
             hb_strncat( errmsg, buf, errmsglen );
          }
@@ -360,7 +362,9 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
          {
             /* FIXME: Unsafe function. */
             if( IsBadReadPtr( sc, 4 ) )
+            {
                break;
+            }
             hb_snprintf( buf, sizeof( buf ), " %08X", sc[ i ] );
             hb_strncat( errmsg, buf, errmsglen );
          }
@@ -376,7 +380,9 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
             {
                /* FIXME: Unsafe function. */
                if( ( unsigned int ) ebp % 4 != 0 || IsBadWritePtr( ebp, 40 ) || ( unsigned int ) ebp >= ebp[ 0 ] )
+               {
                   break;
+               }
                hb_snprintf( buf, sizeof( buf ), "    %08X %08X  ", ( int ) eip, ( int ) ebp );
                hb_strncat( errmsg, buf, errmsglen );
                for( j = 0; j < 10 && ( unsigned int ) ( ebp + j ) < ebp[ 0 ]; j++ )
@@ -579,7 +585,9 @@ void hb_vmSetExceptionHandler( void )
       s_regRec.ExceptionHandler = ( ERR ) hb_os2ExceptionHandler;
       rc = DosSetExceptionHandler( &s_regRec );
       if( rc != NO_ERROR )
+      {
          hb_errInternal( HB_EI_ERRUNRECOV, "Could not setup exception handler (DosSetExceptionHandler())", nullptr, nullptr );
+      }   
    }
 #elif defined( HB_SIGNAL_EXCEPTION_HANDLER )
    {
@@ -631,7 +639,9 @@ void hb_vmUnsetExceptionHandler( void )
       if( sigaltstack( &ss, &oss ) == 0 )
       {
          if( oss.ss_sp && SS_DISABLE )
+         {
             free( oss.ss_sp );
+         }   
       }
 #endif
    }

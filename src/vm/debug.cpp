@@ -119,7 +119,9 @@ static void AddToArray( PHB_ITEM pItem, PHB_ITEM pReturn, HB_SIZE nPos )
       }
    }
    else                                         /* Normal types             */
+   {
       hb_itemArrayPut( pReturn, nPos, pItem );
+   }   
 }
 
 /* __dbgVMStkGCount() --> <nVars>
@@ -128,9 +130,13 @@ static void AddToArray( PHB_ITEM pItem, PHB_ITEM pReturn, HB_SIZE nPos )
 HB_FUNC( __DBGVMSTKGCOUNT )
 {
    if( hb_vmInternalsEnabled() )
+   {
       hb_retns( hb_stackTopOffset() );
+   }
    else
+   {
       hb_retns( 0 );
+   }   
 }
 
 /* __dbgVMStkGList() --> <aStack>
@@ -152,7 +158,9 @@ HB_FUNC( __DBGVMSTKGLIST )
       hb_itemReturnRelease( pReturn );
    }
    else
+   {
       hb_reta( 0 );
+   }   
 }
 
 /* hb_stackLen( <nProcLevel> ) --> <nVars>
@@ -174,7 +182,9 @@ static HB_ISIZ hb_stackLen( int iLevel )
       nLen = nBaseOffset - nPrevOffset - 3;
    }
    else
+   {
       nLen = 0;
+   }   
 
    return nLen;
 }
@@ -185,9 +195,13 @@ static HB_ISIZ hb_stackLen( int iLevel )
 HB_FUNC( __DBGVMSTKLCOUNT )
 {
    if( hb_vmInternalsEnabled() )
+   {
       hb_retns( hb_stackLen( hb_parni( 1 ) + 1 ) );
+   }
    else
+   {
       hb_retns( 0 );
+   }   
 }
 
 /* __dbgVMStkLList() --> <aStack>
@@ -219,7 +233,9 @@ HB_FUNC( __DBGVMSTKLLIST )
       hb_itemReturnRelease( pReturn );
    }
    else
+   {
       hb_reta( 0 );
+   }   
 }
 
 HB_FUNC( __DBGVMLOCALLIST )
@@ -245,7 +261,9 @@ HB_FUNC( __DBGVMLOCALLIST )
          nLen = nBaseOffset - nPrevOffset - 2;
       }
       else
+      {
          nLen = nPrevOffset = 0;
+      }   
 
       pArray = hb_itemArrayNew( nLen );
       for( n = 1; n <= nLen; ++n )
@@ -255,15 +273,21 @@ HB_FUNC( __DBGVMLOCALLIST )
       hb_itemReturnRelease( pArray );
    }
    else
+   {
       hb_reta( 0 );
+   }   
 }
 
 HB_FUNC( __DBGVMPARLLIST )
 {
    if( hb_vmInternalsEnabled() )
+   {
       hb_itemReturnRelease( hb_arrayFromParams( hb_parni( 1 ) + 1 ) );
+   }
    else
+   {
       hb_reta( 0 );
+   }   
 }
 
 PHB_ITEM hb_dbg_vmVarLGet( int iLevel, int iLocal )
@@ -289,15 +313,21 @@ PHB_ITEM hb_dbg_vmVarLGet( int iLevel, int iLocal )
 
          if( pBase->item.asSymbol.paramcnt > pBase->item.asSymbol.paramdeclcnt &&
              iLocal > pBase->item.asSymbol.paramdeclcnt )
+         {
             iLocal += pBase->item.asSymbol.paramcnt - pBase->item.asSymbol.paramdeclcnt;
+         }
 
          pLocal = hb_stackItem( nBaseOffset + iLocal );
       }
       else
+      {
          pLocal = hb_codeblockGetRef( hb_stackItem( nBaseOffset )->item.asBlock.value, iLocal );
+      }   
 
       if( HB_IS_BYREF( pLocal ) )
+      {
          pLocal = hb_itemUnRef( pLocal );
+      }   
    }
 
    return pLocal;
@@ -312,9 +342,13 @@ HB_FUNC( __DBGVMVARLGET )
       PHB_ITEM pLocal = hb_dbg_vmVarLGet( iLevel, iLocal );
 
       if( pLocal )
+      {
          hb_itemReturn( pLocal );
+      }
       else
+      {
          hb_errRT_BASE( EG_ARG, 6005, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      }   
    }
 }
 
@@ -346,12 +380,16 @@ HB_FUNC( __DBGVMVARLSET )
 
             if( pBase->item.asSymbol.paramcnt > pBase->item.asSymbol.paramdeclcnt &&
                 iLocal > pBase->item.asSymbol.paramdeclcnt )
+            {
                iLocal += pBase->item.asSymbol.paramcnt - pBase->item.asSymbol.paramdeclcnt;
+            }
 
             pLocal = hb_stackItem( nBaseOffset + iLocal );
          }
          else
+         {
             pLocal = hb_codeblockGetRef( hb_stackItem( nBaseOffset )->item.asBlock.value, iLocal );
+         }   
 
          hb_itemCopyToRef( pLocal, hb_stackItemFromBase( 3 ) );
       }

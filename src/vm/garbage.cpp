@@ -185,7 +185,9 @@ static void hb_gcUnlink( PHB_GARBAGE * pList, PHB_GARBAGE pAlloc )
    {
       *pList = pAlloc->pNext;
       if( *pList == pAlloc )
+      {
          *pList = nullptr;    /* this was the last block */
+      }   
    }
 }
 
@@ -244,7 +246,9 @@ void hb_gcFree( void * pBlock )
       {
          HB_GC_LOCK();
          if( pAlloc->locked )
+         {
             hb_gcUnlink( &s_pLockedBlock, pAlloc );
+         }
          else
          {
             hb_gcUnlink( &s_pCurrBlock, pAlloc );
@@ -298,14 +302,18 @@ void hb_gcRefFree( void * pBlock )
                {
                   pAlloc->used = s_uUsedFlag;
                   if( hb_vmRequestQuery() == 0 )
+                  {
                      hb_errRT_BASE( EG_DESTRUCTOR, 1301, nullptr, "Reference to freed block", 0 );
+                  }   
                }
             }
             else
             {
                HB_GC_LOCK();
                if( pAlloc->locked )
+               {
                   hb_gcUnlink( &s_pLockedBlock, pAlloc );
+               }   
                else
                {
                   hb_gcUnlink( &s_pCurrBlock, pAlloc );
@@ -350,7 +358,9 @@ HB_GARBAGE_FUNC( hb_gcGripMark )
 static HB_GARBAGE_FUNC( hb_gcGripRelease )
 {
    if( HB_IS_COMPLEX( ( PHB_ITEM ) Cargo ) )
+   {
       hb_itemClear( ( PHB_ITEM ) Cargo );
+   }   
 }
 
 static const HB_GC_FUNCS s_gcGripFuncs =
@@ -375,7 +385,9 @@ PHB_ITEM hb_gcGripGet( PHB_ITEM pOrigin )
    HB_GC_UNLOCK();
 
    if( pOrigin )
+   {
       hb_itemCopy( pItem, pOrigin );
+   }   
 
    return pItem;
 }
@@ -459,7 +471,9 @@ void hb_gcAttach( void * pBlock )
       HB_GC_UNLOCK();
    }
    if( pAlloc )
+   {
       hb_xRefInc( pAlloc );
+   }   
 }
 
 /* mark passed memory block as used so it will be not released by the GC */
@@ -481,7 +495,9 @@ void hb_gcItemRef( PHB_ITEM pItem )
    while( HB_IS_BYREF( pItem ) )
    {
       if( HB_IS_ENUM( pItem ) )
+      {
          return;
+      }   
       else if( HB_IS_EXTREF( pItem ) )
       {
          pItem->item.asExtRef.func->mark( pItem->item.asExtRef.value );
@@ -645,7 +661,9 @@ void hb_gcCollectAll( HB_BOOL fForce )
          {
             /* at least one block will not be deleted, set new stop condition */
             if( ! pAlloc )
+            {
                pAlloc = s_pCurrBlock;
+            }   
             s_pCurrBlock = s_pCurrBlock->pNext;
          }
       }
@@ -661,12 +679,16 @@ void hb_gcCollectAll( HB_BOOL fForce )
       /* store number of marked blocks for automatic GC activation */
       s_ulBlocksMarked = s_ulBlocks;
       if( s_ulBlocksAuto == 0 )
+      {
          s_ulBlocksCheck = HB_GC_AUTO_MAX;
+      }   
       else
       {
          s_ulBlocksCheck = s_ulBlocksMarked + s_ulBlocksAuto;
          if( s_ulBlocksCheck <= s_ulBlocksMarked )
+         {
             s_ulBlocksCheck = HB_GC_AUTO_MAX;
+         }   
       }
 #endif
 
@@ -703,10 +725,14 @@ void hb_gcCollectAll( HB_BOOL fForce )
                HB_GC_AUTO_INC();
                HB_GC_UNLOCK();
                if( hb_vmRequestQuery() == 0 )
+               {
                   hb_errRT_BASE( EG_DESTRUCTOR, 1302, nullptr, "Reference to freed block", 0 );
+               }   
             }
             else
+            {
                HB_GARBAGE_FREE( pDelete );
+            }   
          }
          while( s_pDeletedBlock );
       }
@@ -799,12 +825,16 @@ HB_FUNC( HB_GCSETAUTO )
    {
       s_ulBlocksAuto = nBlocks;
       if( s_ulBlocksAuto == 0 )
+      {
          s_ulBlocksCheck = HB_GC_AUTO_MAX;
+      }   
       else
       {
          s_ulBlocksCheck = s_ulBlocksMarked + s_ulBlocksAuto;
          if( s_ulBlocksCheck <= s_ulBlocksMarked )
+         {
             s_ulBlocksCheck = HB_GC_AUTO_MAX;
+         }
       }
    }
    HB_GC_UNLOCK();

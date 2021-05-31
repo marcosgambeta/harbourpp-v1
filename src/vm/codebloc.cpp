@@ -207,10 +207,14 @@ PHB_CODEBLOCK hb_codeblockNew( const HB_BYTE * pBuffer,
          uiLocals = pOwner->uiLocals;
          pLocals  = pOwner->pLocals;
          if( pLocals )
+         {
             hb_xRefInc( pLocals );
+         }   
       }
       else
+      {
          pLocals = nullptr;
+      }   
    }
 
    pBase = hb_stackBaseItem();
@@ -289,16 +293,24 @@ PHB_ITEM hb_codeblockGetRef( PHB_CODEBLOCK pCBlock, int iItemPos )
 void * hb_codeblockId( PHB_ITEM pItem )
 {
    if( HB_IS_BLOCK( pItem ) )
+   {
       return ( void * ) pItem->item.asBlock.value;
+   }
    else
+   {
       return nullptr;
+   }   
 }
 
 /* retrieves numer of references to the codeblock */
 HB_COUNTER hb_codeblockRefs( PHB_ITEM pItem )
 {
    if( HB_IS_BLOCK( pItem ) )
+   {
       return hb_gcRefCount( pItem->item.asBlock.value );
+   }
    else
+   {
       return 0;
+   }
 }

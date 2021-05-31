@@ -134,7 +134,9 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
             HMODULE hDynModule;
             if( DosLoadModule( ( PSZ ) LoadError, sizeof( LoadError ),
                                ( PCSZ ) hb_itemGetCPtr( pLibName ), &hDynModule ) == NO_ERROR )
+            {
                hDynLib = ( void * ) hDynModule;
+            }   
          }
 #elif defined( HB_HAS_DLFCN )
          hDynLib = ( void * ) dlopen( hb_itemGetCPtr( pLibName ), RTLD_LAZY | RTLD_GLOBAL );
@@ -157,7 +159,9 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
       }
 
       if( argv )
+      {
          hb_xfree( ( void * ) argv );
+      }   
    }
 
    if( hDynLib )
@@ -223,7 +227,9 @@ void * hb_libSymAddr( PHB_ITEM pDynLib, const char * pszSymbol )
 #elif defined( HB_OS_OS2 )
       PFN pProcAddr = nullptr;
       if( DosQueryProcAddr( ( HMODULE ) hDynLib, 0, ( PCSZ ) pszSymbol, &pProcAddr ) == NO_ERROR )
+      {
          return ( void * ) pProcAddr;
+      }   
 #elif defined( HB_HAS_DLFCN )
       return dlsym( hDynLib, pszSymbol );
 #elif defined( HB_CAUSEWAY_DLL )
@@ -250,7 +256,9 @@ HB_FUNC( HB_LIBLOAD )
    hb_itemReturnRelease( hb_libLoad( hb_param( 1, HB_IT_ANY ), pArgs ) );
 
    if( pArgs )
+   {
       hb_itemRelease( pArgs );
+   }   
 }
 
 HB_FUNC( HB_LIBFREE )
@@ -283,7 +291,9 @@ HB_FUNC( HB_LIBGETFUNSYM )
          PHB_SYMB pSym = hb_vmFindFuncSym( szFuncName, hDynLib );
 
          if( pSym )
+         {
             hb_itemPutSymbol( hb_stackReturnItem(), pSym );
+         }   
       }
    }
 }

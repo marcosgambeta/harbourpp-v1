@@ -65,7 +65,9 @@ HB_BOOL hb_evalNew( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
       return HB_TRUE;
    }
    else
+   {
       return HB_FALSE;
+   }   
 }
 
 /* NOTE: CA-Cl*pper is buggy and will not check if more parameters are
@@ -92,7 +94,9 @@ HB_BOOL hb_evalPutParam( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
       return HB_TRUE;
    }
    else
+   {
       return HB_FALSE;
+   }   
 }
 
 PHB_ITEM hb_evalLaunch( PHB_EVALINFO pEvalInfo )
@@ -132,15 +136,23 @@ PHB_ITEM hb_evalLaunch( PHB_EVALINFO pEvalInfo )
 
          hb_vmPushSymbol( pSymbol );
          if( pItem )
+         {
             hb_vmPush( pItem );
+         }
          else
+         {
             hb_vmPushNil();
+         }
          while( uiParam < pEvalInfo->paramCount )
             hb_vmPush( pEvalInfo->pItems[ ++uiParam ] );
          if( pItem )
+         {
             hb_vmSend( uiParam );
+         }
          else
+         {
             hb_vmProc( uiParam );
+         }
          pResult = hb_itemNew( hb_stackReturnItem() );
       }
    }
@@ -171,7 +183,9 @@ HB_BOOL hb_evalRelease( PHB_EVALINFO pEvalInfo )
       return HB_TRUE;
    }
    else
+   {
       return HB_FALSE;
+   }   
 }
 
 /* NOTE: Same purpose as hb_evalLaunch(), but simpler, faster and more flexible.
@@ -220,10 +234,14 @@ PHB_ITEM hb_itemDo( PHB_ITEM pItem, HB_ULONG ulPCount, ... )
          {
             hb_vmPushSymbol( pSymbol );
             if( pItem )
+            {
                hb_vmPush( pItem );
+            }
             else
+            {
                hb_vmPushNil();
-
+            }
+            
             if( ulPCount )
             {
                HB_ULONG ulParam;
@@ -234,10 +252,14 @@ PHB_ITEM hb_itemDo( PHB_ITEM pItem, HB_ULONG ulPCount, ... )
                va_end( va );
             }
             if( pItem )
+            {
                hb_vmSend( static_cast< HB_USHORT >( ulPCount ) );
+            }
             else
+            {
                hb_vmProc( static_cast< HB_USHORT >( ulPCount ) );
-
+            }
+            
             pResult = hb_itemNew( hb_stackReturnItem() );
             hb_vmRequestRestore();
          }
@@ -431,7 +453,9 @@ HB_FUNC( HB_EXECFROMARRAY )
             }
          }
          else
+         {
             pFunc = pParam;
+         }   
       }
       else if( HB_IS_OBJECT( pParam ) && iPCount <= 3 )
       {
@@ -449,9 +473,13 @@ HB_FUNC( HB_EXECFROMARRAY )
    if( pFunc && ( ! pArray || HB_IS_ARRAY( pArray ) ) )
    {
       if( HB_IS_SYMBOL( pFunc ) )
+      {
          pExecSym = hb_itemGetSymbol( pFunc );
+      }
       else if( HB_IS_STRING( pFunc ) )
+      {
          pExecSym = hb_dynsymGet( hb_itemGetCPtr( pFunc ) )->pSymbol;
+      }
       else if( HB_IS_BLOCK( pFunc ) && ! pSelf )
       {
          pSelf = pFunc;
@@ -471,10 +499,14 @@ HB_FUNC( HB_EXECFROMARRAY )
       iPCount = 0;
       hb_vmPushSymbol( pExecSym );
       if( pSelf )
+      {
          hb_vmPush( pSelf );
+      }
       else
+      {
          hb_vmPushNil();
-
+      }
+      
       if( pArray )
       {
          pItem = hb_arrayGetItemPtr( pArray, ++ulParamOffset );
@@ -487,12 +519,18 @@ HB_FUNC( HB_EXECFROMARRAY )
       }
 
       if( pSelf )
+      {
          hb_vmSend( static_cast< HB_USHORT >( iPCount ) );
+      }
       else
+      {
          hb_vmProc( static_cast< HB_USHORT >( iPCount ) );
+      }   
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 }
 
 HB_BOOL hb_execFromArray( PHB_ITEM pParam )
@@ -512,7 +550,9 @@ HB_BOOL hb_execFromArray( PHB_ITEM pParam )
          ulParamOffset = 2;
       }
       else
+      {
          ulParamOffset = 1;
+      }   
    }
 
    if( pParam )
@@ -520,9 +560,13 @@ HB_BOOL hb_execFromArray( PHB_ITEM pParam )
       PHB_SYMB pExecSym = nullptr;
 
       if( HB_IS_SYMBOL( pParam ) )
+      {
          pExecSym = hb_itemGetSymbol( pParam );
+      }
       else if( HB_IS_STRING( pParam ) )
+      {
          pExecSym = hb_dynsymGet( hb_itemGetCPtr( pParam ) )->pSymbol;
+      }
       else if( HB_IS_BLOCK( pParam ) && ! pSelf )
       {
          pSelf = pParam;
@@ -535,9 +579,13 @@ HB_BOOL hb_execFromArray( PHB_ITEM pParam )
 
          hb_vmPushSymbol( pExecSym );
          if( pSelf )
+         {
             hb_vmPush( pSelf );
+         }
          else
+         {
             hb_vmPushNil();
+         }
 
          if( pArray )
          {
@@ -551,10 +599,14 @@ HB_BOOL hb_execFromArray( PHB_ITEM pParam )
          }
 
          if( pSelf )
+         {
             hb_vmSend( static_cast< HB_USHORT >( iPCount ) );
+         }
          else
+         {
             hb_vmProc( static_cast< HB_USHORT >( iPCount ) );
-
+         }
+         
          return HB_TRUE;
       }
    }
@@ -578,5 +630,7 @@ HB_FUNC( HB_EXECMSG )
       hb_vmProc( static_cast< HB_USHORT >( iParams - 2 ) );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }

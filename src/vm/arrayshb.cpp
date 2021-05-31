@@ -103,7 +103,9 @@ HB_FUNC( ARRAY )
       }
 
       if( ! bError )
+      {
          hb_arrayNewRagged( hb_stackReturnItem(), 1 );
+      }   
    }
 }
 
@@ -116,12 +118,18 @@ HB_FUNC( AADD )
       PHB_ITEM pValue = hb_param( 2, HB_IT_ANY );
 
       if( pValue && hb_arrayAdd( pArray, pValue ) )
+      {
          hb_itemReturn( pValue );
+      }
       else
+      {
          hb_errRT_BASE( EG_BOUND, 1187, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      }   
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 }
 
 /* NOTE: CA-Cl*pper 5.3 and older will return NIL on bad parameter, 5.3a,b
@@ -141,11 +149,13 @@ HB_FUNC( ASIZE )
    }
 #ifdef HB_COMPAT_C53 /* From CA-Cl*pper 5.3a */
    else
+   {
 #ifdef HB_CLP_STRICT
       hb_errRT_BASE( EG_ARG, 2023, nullptr, HB_ERR_FUNCNAME, 0 );
 #else
       hb_errRT_BASE( EG_ARG, 2023, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #endif
+   }
 #endif
 }
 
@@ -154,7 +164,9 @@ HB_FUNC( ATAIL )
    PHB_ITEM pArray = hb_param( 1, HB_IT_ARRAY );
 
    if( pArray )
+   {
       hb_arrayLast( pArray, hb_stackReturnItem() );
+   }   
 }
 
 HB_FUNC( AINS )
@@ -166,8 +178,10 @@ HB_FUNC( AINS )
       HB_ISIZ nPos = hb_parns( 2 );
 
       if( nPos == 0 )
+      {
          nPos = 1;
-
+      }
+      
       hb_arrayIns( pArray, nPos );
 
       hb_itemReturn( pArray ); /* AIns() returns the array itself */
@@ -183,8 +197,10 @@ HB_FUNC( ADEL )
       HB_ISIZ nPos = hb_parns( 2 );
 
       if( nPos == 0 )
+      {
          nPos = 1;
-
+      }
+      
       hb_arrayDel( pArray, nPos );
 
       hb_itemReturn( pArray ); /* ADel() returns the array itself */
@@ -208,21 +224,31 @@ HB_FUNC( AFILL )
 
          /* Explicit lCount of 0 - Nothing to do! */
          if( HB_ISNUM( 4 ) && lCount == 0 )
+         {
             return;
+         }
          /* Clipper aborts if negative start. */
          else if( lStart < 0 )
+         {
             return;
+         }
          /* Clipper allows Start to be of wrong type, or 0, and corrects it to 1. */
          else if( lStart == 0 )
+         {
             lStart = 1;
+         }
          if( lCount < 0 )
          {
             /* Clipper allows the Count to be negative, if start is 1, and corrects it to maximum elements. */
             if( lStart == 1 )
+            {
                nCount = 0;
+            }
             /* Clipper aborts if negative count and start is not at 1. */
             else
+            {
                return;
+            }   
          }
          nStart = ( HB_SIZE ) lStart;
          nCount = ( HB_SIZE ) lCount;
@@ -233,6 +259,7 @@ HB_FUNC( AFILL )
       }
    }
    else
+   {
 #ifdef HB_CLP_STRICT
       /* NOTE: In CA-Cl*pper AFill() is written in a manner that it will
                call AEval() to do the job, so the error (if any) will also be
@@ -241,6 +268,7 @@ HB_FUNC( AFILL )
 #else
       hb_errRT_BASE( EG_ARG, 6004, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #endif
+   }
 }
 
 HB_FUNC( ASCAN )
@@ -259,7 +287,9 @@ HB_FUNC( ASCAN )
                               HB_FALSE ) );
    }
    else
+   {
       hb_retni( 0 );
+   }   
 }
 
 /* Same as AScan() but has an additional parameter to force exact comparison. */
@@ -279,7 +309,9 @@ HB_FUNC( HB_ASCAN )
                               hb_parl( 5 ) ) );
    }
    else
+   {
       hb_retni( 0 );
+   }   
 }
 
 HB_FUNC( HB_RASCAN )
@@ -298,7 +330,9 @@ HB_FUNC( HB_RASCAN )
                                  hb_parl( 5 ) ) );
    }
    else
+   {
       hb_retni( 0 );
+   }   
 }
 
 HB_FUNC( HB_AINS )
@@ -310,19 +344,25 @@ HB_FUNC( HB_AINS )
       HB_ISIZ nPos = hb_parns( 2 );
 
       if( nPos == 0 )
+      {
          nPos = 1;
-
+      }
+      
       if( hb_parl( 4 ) )
       {
          HB_SIZE nLen = hb_arrayLen( pArray ) + 1;
          if( nPos >= 1 && ( HB_SIZE ) nPos <= nLen )
+         {
             hb_arraySize( pArray, nLen );
+         }   
       }
 
       if( hb_arrayIns( pArray, nPos ) )
       {
          if( ! HB_ISNIL( 3 ) )
+         {
             hb_arraySet( pArray, nPos, hb_param( 3, HB_IT_ANY ) );
+         }   
       }
 
       hb_itemReturn( pArray ); /* AIns() returns the array itself */
@@ -338,12 +378,16 @@ HB_FUNC( HB_ADEL )
       HB_ISIZ nPos = hb_parns( 2 );
 
       if( nPos == 0 )
+      {
          nPos = 1;
-
+      }
+      
       if( hb_arrayDel( pArray, nPos ) )
       {
          if( hb_parl( 3 ) )
+         {
             hb_arraySize( pArray, hb_arrayLen( pArray ) - 1 );
+         }   
       }
 
       hb_itemReturn( pArray ); /* ADel() returns the array itself */
@@ -371,7 +415,9 @@ HB_FUNC( AEVAL )
       hb_itemReturn( pArray ); /* AEval() returns the array itself */
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 }
 
 HB_FUNC( ACOPY )
@@ -406,7 +452,9 @@ HB_FUNC( ACLONE )
    PHB_ITEM pSrcArray = hb_param( 1, HB_IT_ARRAY );
 
    if( pSrcArray && ! hb_arrayIsObject( pSrcArray ) )
+   {
       hb_arrayCloneTo( hb_stackReturnItem(), pSrcArray ); /* AClone() returns the new array */
+   }
 }
 
 HB_FUNC( HB_APARAMS )
