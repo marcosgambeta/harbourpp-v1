@@ -5,14 +5,14 @@
 
 -w3 -es2
 
--depkeyhead=mysql:mysql.h
--depcontrol=mysql:no{HB_BUILD_3RDEXT='no'}
--depcontrol=mysql:${HB_WITH_MARIADB}
--depincpath=mysql:/usr/include/mysql
--depincpath=mysql:/usr/local/include/mysql
--depincpath=mysql:/opt/local/include/mysql5/mysql
--depimplibs=mysql:../lib/opt/libmariadb.dll
--depimplibs=mysql:../lib/libmariadb.dll
+-depkeyhead=mariadb:mysql.h
+-depcontrol=mariadb:no{HB_BUILD_3RDEXT='no'}
+-depcontrol=mariadb:${HB_WITH_MARIADB}
+-depincpath=mariadb:/usr/include/mysql
+-depincpath=mariadb:/usr/local/include/mysql
+-depincpath=mariadb:/opt/local/include/mysql5/mysql
+-depimplibs=mariadb:../lib/opt/libmariadb.dll
+-depimplibs=mariadb:../lib/libmariadb.dll
 
 ${hb_name}.hbx
 
