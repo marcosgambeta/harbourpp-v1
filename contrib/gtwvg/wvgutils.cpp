@@ -910,7 +910,7 @@ HB_FUNC( WVT_CREATEDIALOGDYNAMIC )
                hDlg = CreateDialog( static_cast< HINSTANCE >( wvg_hInstance() ),
                                     HB_PARSTR( 1, &hTemplate, nullptr ),
                                     hb_parl( 2 ) ? _s->hWnd : nullptr,
-                                    static_cast< DLGPROC >( hb_wvt_gtDlgProcMLess ) );
+                                    reinterpret_cast< DLGPROC >( hb_wvt_gtDlgProcMLess ) );
                hb_strfree( hTemplate );
             }
             break;
@@ -919,7 +919,7 @@ HB_FUNC( WVT_CREATEDIALOGDYNAMIC )
                hDlg = CreateDialog( static_cast< HINSTANCE >( wvg_hInstance() ),
                                     MAKEINTRESOURCE( static_cast< WORD >( hb_parni( 1 ) ) ),
                                     hb_parl( 2 ) ? _s->hWnd : nullptr,
-                                    static_cast< DLGPROC >( hb_wvt_gtDlgProcMLess ) );
+                                    reinterpret_cast< DLGPROC >( hb_wvt_gtDlgProcMLess ) );
                break;
 
             case 2:
@@ -927,7 +927,7 @@ HB_FUNC( WVT_CREATEDIALOGDYNAMIC )
                hDlg = CreateDialogIndirect( static_cast< HINSTANCE >( wvg_hInstance() ),
                                             ( LPDLGTEMPLATE ) hb_parc( 1 ), /* TODO: C-style cast to C++ cast */
                                             hb_parl( 2 ) ? _s->hWnd : nullptr,
-                                            static_cast< DLGPROC >( hb_wvt_gtDlgProcMLess ) );
+                                            reinterpret_cast< DLGPROC >( hb_wvt_gtDlgProcMLess ) );
                break;
          }
       }
@@ -1026,7 +1026,7 @@ HB_FUNC( WVT_CREATEDIALOGMODAL )
          iResult = DialogBoxParam( static_cast< HINSTANCE >( wvg_hInstance() ),
                                    HB_PARSTR( 1, &hTemplate, nullptr ),
                                    hParent,
-                                   static_cast< DLGPROC >( hb_wvt_gtDlgProcModal ),
+                                   reinterpret_cast< DLGPROC >( hb_wvt_gtDlgProcModal ),
                                    static_cast< LPARAM >( static_cast< DWORD >( iIndex ) ) + 1 );
          hb_strfree( hTemplate );
       }
@@ -1036,7 +1036,7 @@ HB_FUNC( WVT_CREATEDIALOGMODAL )
          iResult = DialogBoxParam( static_cast< HINSTANCE >( wvg_hInstance() ),
                                    MAKEINTRESOURCE( static_cast< WORD >( hb_parni( 1 ) ) ),
                                    hParent,
-                                   static_cast< DLGPROC >( hb_wvt_gtDlgProcModal ),
+                                   reinterpret_cast< DLGPROC >( hb_wvt_gtDlgProcModal ),
                                    static_cast< LPARAM >( static_cast< DWORD >( iIndex ) ) + 1 );
          break;
 
@@ -1045,7 +1045,7 @@ HB_FUNC( WVT_CREATEDIALOGMODAL )
          iResult = DialogBoxIndirectParam( static_cast< HINSTANCE >( wvg_hInstance() ),
                                            ( LPDLGTEMPLATE ) hb_parc( 1 ), /* TODO: C-style cast to C++ cast */
                                            hParent,
-                                           static_cast< DLGPROC >( hb_wvt_gtDlgProcModal ),
+                                           reinterpret_cast< DLGPROC >( hb_wvt_gtDlgProcModal ),
                                            static_cast< LPARAM >( static_cast< DWORD >( iIndex ) ) + 1 );
          break;
    }
