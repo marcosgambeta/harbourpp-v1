@@ -152,13 +152,13 @@ HB_SQLHENV, * PHB_SQLHENV;
 
 static HB_GARBAGE_FUNC( hb_SQLHENV_Destructor )
 {
-   PHB_SQLHENV pHEnv = ( PHB_SQLHENV ) Cargo;
+   PHB_SQLHENV pHEnv = static_cast< PHB_SQLHENV >( Cargo );
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( pHEnv->hEnv )
    {
 #if ODBCVER >= 0x0300
-      SQLFreeHandle( SQL_HANDLE_ENV, ( SQLHANDLE ) pHEnv->hEnv );
+      SQLFreeHandle( SQL_HANDLE_ENV, static_cast< SQLHANDLE >( pHEnv->hEnv ) );
 #else
       SQLFreeEnv( pHEnv->hEnv );
 #endif
@@ -176,16 +176,16 @@ static const HB_GC_FUNCS s_gcSQLHENVFuncs =
 
 static void hb_SQLHENV_stor( SQLHENV hEnv, int iParam )
 {
-   PHB_SQLHENV pHEnv = ( PHB_SQLHENV ) hb_gcAllocate( sizeof( HB_SQLHENV ), &s_gcSQLHENVFuncs );
+   PHB_SQLHENV pHEnv = static_cast< PHB_SQLHENV >( hb_gcAllocate( sizeof( HB_SQLHENV ), &s_gcSQLHENVFuncs ) );
 
    pHEnv->hEnv = hEnv;
 
-   hb_storptrGC( ( void * ) pHEnv, iParam );
+   hb_storptrGC( static_cast< void * >( pHEnv ), iParam );
 }
 
 static SQLHENV hb_SQLHENV_par( int iParam )
 {
-   PHB_SQLHENV pHEnv = ( PHB_SQLHENV ) hb_parptrGC( &s_gcSQLHENVFuncs, iParam );
+   PHB_SQLHENV pHEnv = static_cast< PHB_SQLHENV >( hb_parptrGC( &s_gcSQLHENVFuncs, iParam ) );
 
    return pHEnv ? pHEnv->hEnv : nullptr;
 }
@@ -203,13 +203,13 @@ HB_SQLHDBC, * PHB_SQLHDBC;
 static HB_GARBAGE_FUNC( hb_SQLHDBC_Destructor )
 {
    /* Retrieve image pointer holder */
-   PHB_SQLHDBC pHDbc = ( PHB_SQLHDBC ) Cargo;
+   PHB_SQLHDBC pHDbc = static_cast< PHB_SQLHDBC >( Cargo );
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( pHDbc->hDbc )
    {
 #if ODBCVER >= 0x0300
-      SQLFreeHandle( SQL_HANDLE_DBC, ( SQLHANDLE ) pHDbc->hDbc );
+      SQLFreeHandle( SQL_HANDLE_DBC, static_cast< SQLHANDLE >( pHDbc->hDbc ) );
 #else
       SQLFreeConnect( pHDbc->hDbc );
 #endif
@@ -229,11 +229,13 @@ static HB_GARBAGE_FUNC( hb_SQLHDBC_Destructor )
 static HB_GARBAGE_FUNC( hb_SQLHDBC_Mark )
 {
    /* Retrieve image pointer holder */
-   PHB_SQLHDBC pHDbc = ( PHB_SQLHDBC ) Cargo;
+   PHB_SQLHDBC pHDbc = static_cast< PHB_SQLHDBC >( Cargo );
 
    if( pHDbc->pHEnvItm )
+   {
       /* mark parent item handler as used */
       hb_gcMark( pHDbc->pHEnvItm );
+   }
 }
 
 static const HB_GC_FUNCS s_gcSQLHDBCFuncs =
@@ -244,7 +246,7 @@ static const HB_GC_FUNCS s_gcSQLHDBCFuncs =
 
 static void hb_SQLHDBC_stor( PHB_ITEM pHEnvItm, SQLHDBC hDbc, int iParam )
 {
-   PHB_SQLHDBC pHDbc = ( PHB_SQLHDBC ) hb_gcAllocate( sizeof( HB_SQLHDBC ), &s_gcSQLHDBCFuncs );
+   PHB_SQLHDBC pHDbc = static_cast< PHB_SQLHDBC >( hb_gcAllocate( sizeof( HB_SQLHDBC ), &s_gcSQLHDBCFuncs ) );
 
    pHDbc->hDbc = hDbc;
    pHDbc->conn_counter = 1;
@@ -258,12 +260,12 @@ static void hb_SQLHDBC_stor( PHB_ITEM pHEnvItm, SQLHDBC hDbc, int iParam )
       hb_gcUnlock( pHDbc->pHEnvItm );
    }
 
-   hb_storptrGC( ( void * ) pHDbc, iParam );
+   hb_storptrGC( static_cast< void * >( pHDbc ), iParam );
 }
 
 static PHB_SQLHDBC hb_SQLHDBC_get( PHB_ITEM pItem )
 {
-   return ( PHB_SQLHDBC ) hb_itemGetPtrGC( pItem, &s_gcSQLHDBCFuncs );
+   return static_cast< PHB_SQLHDBC >( hb_itemGetPtrGC( pItem, &s_gcSQLHDBCFuncs ) );
 }
 
 static HB_BOOL hb_SQLHDBC_check( PHB_ITEM pItem, int conn_counter )
@@ -275,7 +277,9 @@ static HB_BOOL hb_SQLHDBC_check( PHB_ITEM pItem, int conn_counter )
       return pHDbc != nullptr && pHDbc->conn_counter == conn_counter;
    }
    else
+   {
       return HB_TRUE;
+   }
 }
 
 static SQLHDBC hb_SQLHDBC_par( int iParam )
@@ -298,7 +302,7 @@ HB_SQLHSTMT, * PHB_SQLHSTMT;
 static HB_GARBAGE_FUNC( hb_SQLHSTMT_Destructor )
 {
    /* Retrieve image pointer holder */
-   PHB_SQLHSTMT pHStmt = ( PHB_SQLHSTMT ) Cargo;
+   PHB_SQLHSTMT pHStmt = static_cast< PHB_SQLHSTMT >( Cargo );
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( pHStmt->hStmt )
@@ -306,7 +310,7 @@ static HB_GARBAGE_FUNC( hb_SQLHSTMT_Destructor )
       if( hb_SQLHDBC_check(  pHStmt->pHDbcItm, pHStmt->conn_counter ) )
       {
 #if ODBCVER >= 0x0300
-         SQLFreeHandle( SQL_HANDLE_STMT, ( SQLHANDLE ) pHStmt->hStmt );
+         SQLFreeHandle( SQL_HANDLE_STMT, static_cast< SQLHANDLE >( pHStmt->hStmt ) );
 #else
          SQLFreeStmt( pHStmt->hStmt, SQL_DROP );
 #endif
@@ -328,11 +332,13 @@ static HB_GARBAGE_FUNC( hb_SQLHSTMT_Destructor )
 static HB_GARBAGE_FUNC( hb_SQLHSTMT_Mark )
 {
    /* Retrieve image pointer holder */
-   PHB_SQLHSTMT pHStmt = ( PHB_SQLHSTMT ) Cargo;
+   PHB_SQLHSTMT pHStmt = static_cast< PHB_SQLHSTMT >( Cargo );
 
    if( pHStmt->pHDbcItm )
+   {
       /* mark parent item handler as used */
       hb_gcMark( pHStmt->pHDbcItm );
+   }
 }
 static const HB_GC_FUNCS s_gcSQLHSTMTFuncs =
 {
@@ -342,7 +348,7 @@ static const HB_GC_FUNCS s_gcSQLHSTMTFuncs =
 
 static void hb_SQLHSTMT_stor( PHB_ITEM pHDbcItm, SQLHSTMT hStmt, int iParam )
 {
-   PHB_SQLHSTMT pHStmt = ( PHB_SQLHSTMT ) hb_gcAllocate( sizeof( HB_SQLHSTMT ), &s_gcSQLHSTMTFuncs );
+   PHB_SQLHSTMT pHStmt = static_cast< PHB_SQLHSTMT >( hb_gcAllocate( sizeof( HB_SQLHSTMT ), &s_gcSQLHSTMTFuncs ) );
 
    pHStmt->hStmt = hStmt;
    pHStmt->conn_counter = 0;
@@ -363,16 +369,14 @@ static void hb_SQLHSTMT_stor( PHB_ITEM pHDbcItm, SQLHSTMT hStmt, int iParam )
       }
    }
 
-   hb_storptrGC( ( void * ) pHStmt, iParam );
+   hb_storptrGC( static_cast< void * >( pHStmt ), iParam );
 }
 
 static SQLHSTMT hb_SQLHSTMT_par( int iParam )
 {
-   PHB_SQLHSTMT pHStmt = ( PHB_SQLHSTMT ) hb_parptrGC( &s_gcSQLHSTMTFuncs, iParam );
+   PHB_SQLHSTMT pHStmt = static_cast< PHB_SQLHSTMT >( hb_parptrGC( &s_gcSQLHSTMTFuncs, iParam ) );
 
-   return ( pHStmt && pHStmt->hStmt &&
-            hb_SQLHDBC_check(  pHStmt->pHDbcItm, pHStmt->conn_counter ) ) ?
-          pHStmt->hStmt : nullptr;
+   return ( pHStmt && pHStmt->hStmt && hb_SQLHDBC_check(  pHStmt->pHDbcItm, pHStmt->conn_counter ) ) ? pHStmt->hStmt : nullptr;
 }
 
 HB_FUNC( SQLALLOCENV )  /* @hEnv --> nRetCode */
@@ -384,7 +388,9 @@ HB_FUNC( SQLALLOCENV )  /* @hEnv --> nRetCode */
    result = SQLAllocHandle( SQL_HANDLE_ENV, SQL_NULL_HANDLE, &hEnv );
 
    if( SQL_SUCCEEDED( result ) )
-      SQLSetEnvAttr( hEnv, SQL_ATTR_ODBC_VERSION, ( SQLPOINTER ) SQL_OV_ODBC3, SQL_IS_UINTEGER );
+   {
+      SQLSetEnvAttr( hEnv, SQL_ATTR_ODBC_VERSION, reinterpret_cast< SQLPOINTER >( SQL_OV_ODBC3 ), SQL_IS_UINTEGER );
+   }
 #else
    result = SQLAllocEnv( &hEnv );
 #endif
@@ -411,7 +417,9 @@ HB_FUNC( SQLALLOCCONNECT )  /* hEnv, @hDbc --> nRetCode */
       hb_SQLHDBC_stor( hb_param( 1, HB_IT_ANY ), hDbc, 2 );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SQLDRIVERCONNECT )  /* hDbc, @cConnectString --> nRetCode */
@@ -424,28 +432,30 @@ HB_FUNC( SQLDRIVERCONNECT )  /* hDbc, @cConnectString --> nRetCode */
       SQLRETURN   ret;
       void *      hConnStr;
       HB_SIZE     nConnStr;
-      SQLTCHAR *  cConnStr = ( SQLTCHAR * ) HB_UNCONST( O_HB_PARSTRDEF( 2, &hConnStr, &nConnStr ) );
+      SQLTCHAR *  cConnStr = static_cast< SQLTCHAR * >( HB_UNCONST( O_HB_PARSTRDEF( 2, &hConnStr, &nConnStr ) ) );
       SQLTCHAR    buffer[ 1024 ];
 
       buffer[ 0 ] = '\0';
 
       ret = SQLDriverConnect( hDbc,
-                              ( SQLHWND ) nullptr,
+                              static_cast< SQLHWND >( nullptr ),
                               cConnStr,
-                              ( SQLSMALLINT ) nConnStr,
-                              ( SQLTCHAR * ) buffer,
-                              ( SQLSMALLINT ) HB_SIZEOFARRAY( buffer ),
-                              ( SQLSMALLINT * ) &iLen,
-                              ( SQLUSMALLINT ) SQL_DRIVER_COMPLETE );
+                              static_cast< SQLSMALLINT >( nConnStr ),
+                              static_cast< SQLTCHAR * >( buffer ),
+                              static_cast< SQLSMALLINT >( HB_SIZEOFARRAY( buffer ) ),
+                              static_cast< SQLSMALLINT * >( &iLen ),
+                              static_cast< SQLUSMALLINT >( SQL_DRIVER_COMPLETE ) );
 
       hb_strfree( hConnStr );
 
-      O_HB_STORSTR( ( O_HB_CHAR * ) buffer, 3 );
+      O_HB_STORSTR( static_cast< O_HB_CHAR * >( buffer ), 3 );
 
       hb_retni( ret );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SQLCONNECT )  /* hDbc, cDSN, cUseName, cPassword --> nRetCode */
@@ -462,17 +472,17 @@ HB_FUNC( SQLCONNECT )  /* hDbc, cDSN, cUseName, cPassword --> nRetCode */
       void *     hUser;
       void *     hPass;
       HB_SIZE    nDSN, nUser, nPass;
-      SQLTCHAR * cDSN  = ( SQLTCHAR * ) HB_UNCONST( O_HB_PARSTRDEF( 2, &hDSN, &nDSN ) );
-      SQLTCHAR * cUser = ( SQLTCHAR * ) HB_UNCONST( O_HB_PARSTRDEF( 3, &hUser, &nUser ) );
-      SQLTCHAR * cPass = ( SQLTCHAR * ) HB_UNCONST( O_HB_PARSTRDEF( 4, &hPass, &nPass ) );
+      SQLTCHAR * cDSN  = static_cast< SQLTCHAR * >( HB_UNCONST( O_HB_PARSTRDEF( 2, &hDSN, &nDSN ) ) );
+      SQLTCHAR * cUser = static_cast< SQLTCHAR * >( HB_UNCONST( O_HB_PARSTRDEF( 3, &hUser, &nUser ) ) );
+      SQLTCHAR * cPass = static_cast< SQLTCHAR * >( HB_UNCONST( O_HB_PARSTRDEF( 4, &hPass, &nPass ) ) );
 
       ret = SQLConnect( hDbc,
                         cDSN,
-                        ( SQLSMALLINT ) nDSN,
+                        static_cast< SQLSMALLINT >( nDSN ),
                         cUser,
-                        ( SQLSMALLINT ) nUser,
+                        static_cast< SQLSMALLINT >( nUser ),
                         cPass,
-                        ( SQLSMALLINT ) nPass );
+                        static_cast< SQLSMALLINT >( nPass ) );
 
       hb_strfree( hDSN );
       hb_strfree( hUser );
@@ -481,7 +491,9 @@ HB_FUNC( SQLCONNECT )  /* hDbc, cDSN, cUseName, cPassword --> nRetCode */
       hb_retni( ret );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SQLDISCONNECT )  /* hDbc --> nRetCode */
@@ -493,12 +505,16 @@ HB_FUNC( SQLDISCONNECT )  /* hDbc --> nRetCode */
       SQLRETURN result = SQLDisconnect( pHDbc->hDbc );
 
       if( SQL_SUCCEEDED( result ) )
+      {
          pHDbc->conn_counter++;
+      }
 
       hb_retni( result );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 #if defined( HB_LEGACY_LEVEL4 )
@@ -534,7 +550,9 @@ HB_FUNC( SQLALLOCSTMT )  /* hDbc, @hStmt --> nRetCode */
       hb_SQLHSTMT_stor( hb_param( 1, HB_IT_ANY ), hStmt, 2 );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SQLEXECDIRECT )  /* hStmt, cStatement --> nRetCode */
@@ -545,15 +563,17 @@ HB_FUNC( SQLEXECDIRECT )  /* hStmt, cStatement --> nRetCode */
    {
       void *     hStatement;
       HB_SIZE    nStatement;
-      SQLTCHAR * cStatement = ( SQLTCHAR * ) HB_UNCONST( O_HB_PARSTRDEF( 2, &hStatement, &nStatement ) );
+      SQLTCHAR * cStatement = static_cast< SQLTCHAR * >( HB_UNCONST( O_HB_PARSTRDEF( 2, &hStatement, &nStatement ) ) );
 
       hb_retni( SQLExecDirect( hStmt,
                                cStatement,
-                               ( SQLINTEGER ) nStatement ) );
+                               static_cast< SQLINTEGER >( nStatement ) ) );
       hb_strfree( hStatement );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SQLFETCH )  /* hStmt --> nRetCode */
@@ -561,9 +581,13 @@ HB_FUNC( SQLFETCH )  /* hStmt --> nRetCode */
    SQLHSTMT hStmt = hb_SQLHSTMT_par( 1 );
 
    if( hStmt )
+   {
       hb_retni( SQLFetch( hStmt ) );
+   }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SQLFETCHSCROLL )
@@ -574,14 +598,16 @@ HB_FUNC( SQLFETCHSCROLL )
    {
 #if ODBCVER >= 0x0300
       hb_retni( SQLFetchScroll( hStmt,
-                                ( SQLSMALLINT ) hb_parni( 2 ),
-                                ( SQLLEN ) hb_parnint( 3 ) ) );
+                                static_cast< SQLSMALLINT >( hb_parni( 2 ) ),
+                                static_cast< SQLLEN >( hb_parnint( 3 ) ) ) );
 #else
       hb_retni( SQL_ERROR );
 #endif
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode */
@@ -590,8 +616,8 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
 
    if( hStmt )
    {
-      SQLUSMALLINT uiField = ( SQLUSMALLINT ) hb_parni( 2 );
-      SQLSMALLINT  iType   = ( SQLSMALLINT ) hb_parnidef( 3, SQL_BINARY );
+      SQLUSMALLINT uiField = static_cast< SQLUSMALLINT >( hb_parni( 2 ) );
+      SQLSMALLINT  iType   = static_cast< SQLSMALLINT >( hb_parnidef( 3, SQL_BINARY ) );
       SQLLEN       nLen    = 0;
       SQLRETURN    res     = SQL_ERROR;
 
@@ -616,13 +642,15 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
             {
                if( nLen > 0 )
                {
-                  SQLLEN nMaxLen = ( SQLLEN ) hb_parnint( 4 );
+                  SQLLEN nMaxLen = static_cast< SQLLEN >( hb_parnint( 4 ) );
 
 #if defined( UNICODE )
                   nMaxLen <<= 1;
 #endif
                   if( nMaxLen > 0 && nMaxLen < nLen )
+                  {
                      nLen = nMaxLen;
+                  }
                   val = static_cast< O_HB_CHAR * >( hb_xgrab( nLen + sizeof( O_HB_CHAR ) ) );
                   if( ! SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, iTargetType, val, nLen + sizeof( O_HB_CHAR ), &nLen ) ) )
                   {
@@ -631,17 +659,21 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
                   }
 #if defined( UNICODE )
                   else
+                  {
                      nLen >>= 1;
+                  }
 #endif
                }
             }
             if( val != nullptr )
             {
-               O_HB_STORSTRLEN( val, ( HB_SIZE ) nLen, 5 );
+               O_HB_STORSTRLEN( val, static_cast< HB_SIZE >( nLen ), 5 );
                hb_xfree( val );
             }
             else
+            {
                hb_storc( nullptr, 5 );
+            }
             break;
          }
 
@@ -656,10 +688,12 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
             {
                if( nLen > 0 )
                {
-                  SQLLEN nMaxLen = ( SQLLEN ) hb_parnint( 4 );
+                  SQLLEN nMaxLen = static_cast< SQLLEN >( hb_parnint( 4 ) );
 
                   if( nMaxLen > 0 && nMaxLen < nLen )
+                  {
                      nLen = nMaxLen;
+                  }
                   val = static_cast< char * >( hb_xgrab( nLen + 1 ) );
                   if( ! SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, SQL_C_BINARY, val, nLen + 1, &nLen ) ) )
                   {
@@ -670,11 +704,15 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
             }
             if( val )
             {
-               if( ! hb_storclen_buffer( val, ( HB_SIZE ) nLen, 5 ) )
+               if( ! hb_storclen_buffer( val, static_cast< HB_SIZE >( nLen ), 5 ) )
+               {
                   hb_xfree( val );
+               }
             }
             else
+            {
                hb_storc( nullptr, 5 );
+            }
             break;
          }
 
@@ -684,9 +722,13 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
             HB_I64 val = 0;
             /* NOTE: SQL_C_SBIGINT not available before ODBC 3.0 */
             if( SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, SQL_C_SBIGINT, &val, sizeof( val ), &nLen ) ) )
+            {
                hb_stornint( val, 5 );
+            }
             else
+            {
                hb_stornint( 0, 5 );
+            }
             break;
          }
 #endif
@@ -696,9 +738,13 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
          {
             SQLINTEGER val = 0;
             if( SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, SQL_C_LONG, &val, sizeof( val ), &nLen ) ) )
+            {
                hb_stornint( val, 5 );
+            }
             else
+            {
                hb_stornint( 0, 5 );
+            }
             break;
          }
 
@@ -710,9 +756,13 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
          {
             double val = 0.0;
             if( SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, SQL_C_DOUBLE, &val, sizeof( val ), &nLen ) ) )
+            {
                hb_stornd( val, 5 );
+            }
             else
+            {
                hb_stornd( 0.0, 5 );
+            }
             break;
          }
 
@@ -720,9 +770,13 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
          {
             unsigned char val = 0;
             if( SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, SQL_C_BIT, &val, sizeof( val ), &nLen ) ) )
+            {
                hb_storl( val != 0, 5 );
+            }
             else
+            {
                hb_storl( HB_FALSE, 5 );
+            }
             break;
          }
 
@@ -733,9 +787,13 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
          {
             DATE_STRUCT val = { 0, 0, 0 };
             if( SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, SQL_C_DATE, &val, sizeof( val ), &nLen ) ) )
+            {
                hb_stordl( hb_dateEncode( val.year, val.month, val.day ), 5 );
+            }
             else
+            {
                hb_stordl( 0, 5 );
+            }
             break;
          }
 
@@ -746,9 +804,13 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
          {
             TIME_STRUCT val = { 0, 0, 0 };
             if( SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, SQL_C_TIME, &val, sizeof( val ), &nLen ) ) )
+            {
                hb_stortdt( 0, hb_timeEncode( val.hour, val.minute, val.second, 0 ), 5 );
+            }
             else
+            {
                hb_stortdt( 0, 0, 5 );
+            }
             break;
          }
 
@@ -759,10 +821,14 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
          {
             TIMESTAMP_STRUCT val = { 0, 0, 0, 0, 0, 0, 0 };
             if( SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, SQL_C_TIMESTAMP, &val, sizeof( val ), &nLen ) ) )
+            {
                hb_stortdt( hb_dateEncode( val.year, val.month, val.day ),
                            hb_timeEncode( val.hour, val.minute, val.second, val.fraction / 1000000 ), 5 );
+            }
             else
+            {
                hb_stortdt( 0, 0, 5 );
+            }
             break;
          }
          default:
@@ -772,7 +838,9 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
       hb_retni( res );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SQLNUMRESULTCOLS )  /* hStmt, @nColCount --> nRetCode */
@@ -788,7 +856,9 @@ HB_FUNC( SQLNUMRESULTCOLS )  /* hStmt, @nColCount --> nRetCode */
       hb_stornl( static_cast< long >( iCols ), 2 );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SQLDESCRIBECOL )  /* hStmt, nCol, @cName, nLen, @nBufferLen, @nDataType, @nColSize, @nDec, @nNull --> nRetCode */
@@ -797,31 +867,33 @@ HB_FUNC( SQLDESCRIBECOL )  /* hStmt, nCol, @cName, nLen, @nBufferLen, @nDataType
 
    if( hStmt )
    {
-      SQLSMALLINT iLen      = ( SQLSMALLINT ) hb_parni( 4 );
-      SQLSMALLINT iBufLen   = ( SQLUSMALLINT ) hb_parni( 5 );
-      SQLSMALLINT iDataType = ( SQLUSMALLINT ) hb_parni( 6 );
-      SQLULEN     nColSize  = ( SQLULEN ) hb_parnint( 7 );
-      SQLSMALLINT iDecimals = ( SQLUSMALLINT ) hb_parni( 8 );
-      SQLSMALLINT iNullable = ( SQLUSMALLINT ) hb_parni( 9 );
+      SQLSMALLINT iLen      = static_cast< SQLSMALLINT >( hb_parni( 4 ) );
+      SQLSMALLINT iBufLen   = static_cast< SQLUSMALLINT >( hb_parni( 5 ) );
+      SQLSMALLINT iDataType = static_cast< SQLUSMALLINT >( hb_parni( 6 ) );
+      SQLULEN     nColSize  = static_cast< SQLULEN >( hb_parnint( 7 ) );
+      SQLSMALLINT iDecimals = static_cast< SQLUSMALLINT >( hb_parni( 8 ) );
+      SQLSMALLINT iNullable = static_cast< SQLUSMALLINT >( hb_parni( 9 ) );
       SQLTCHAR *  buffer;
 
       if( iLen <= 0 )
+      {
          iLen = 64;
+      }
 
       buffer      = static_cast< SQLTCHAR * >( hb_xgrab( iLen * sizeof( SQLTCHAR ) ) );
       buffer[ 0 ] = '\0';
 
       hb_retni( SQLDescribeCol( hStmt,
-                                ( SQLUSMALLINT ) hb_parni( 2 ),
-                                ( SQLTCHAR * ) buffer,
-                                ( SQLSMALLINT ) iLen,
-                                ( SQLSMALLINT * ) &iBufLen,
-                                ( SQLSMALLINT * ) &iDataType,
-                                ( SQLULEN * ) &nColSize,
-                                ( SQLSMALLINT * ) &iDecimals,
-                                ( SQLSMALLINT * ) &iNullable ) );
+                                static_cast< SQLUSMALLINT >( hb_parni( 2 ) ),
+                                static_cast< SQLTCHAR * >( buffer ),
+                                static_cast< SQLSMALLINT >( iLen ),
+                                static_cast< SQLSMALLINT * >( &iBufLen ),
+                                static_cast< SQLSMALLINT * >( &iDataType ),
+                                static_cast< SQLULEN * >( &nColSize ),
+                                static_cast< SQLSMALLINT * >( &iDecimals ),
+                                static_cast< SQLSMALLINT * >( &iNullable ) ) );
 
-      O_HB_STORSTRLEN( ( O_HB_CHAR * ) buffer, ( HB_SIZE ) iBufLen, 3 );
+      O_HB_STORSTRLEN( static_cast< O_HB_CHAR * >( buffer ), static_cast< HB_SIZE >( iBufLen ), 3 );
       hb_storni( static_cast< int >( iBufLen ), 5 );
       hb_storni( static_cast< int >( iDataType ), 6 );
       hb_stornint( nColSize, 7 );
@@ -831,7 +903,9 @@ HB_FUNC( SQLDESCRIBECOL )  /* hStmt, nCol, @cName, nLen, @nBufferLen, @nDataType
       hb_xfree( buffer );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SQLCOLATTRIBUTE )  /* hStmt, nCol, nField, @cName, nLen, @nBufferLen, @nAttribute --> nRetCode */
@@ -840,48 +914,52 @@ HB_FUNC( SQLCOLATTRIBUTE )  /* hStmt, nCol, nField, @cName, nLen, @nBufferLen, @
 
    if( hStmt )
    {
-      SQLSMALLINT iLen    = ( SQLSMALLINT ) hb_parni( 5 );
-      SQLSMALLINT iBufLen = ( SQLUSMALLINT ) hb_parni( 6 );
+      SQLSMALLINT iLen    = static_cast< SQLSMALLINT >( hb_parni( 5 ) );
+      SQLSMALLINT iBufLen = static_cast< SQLUSMALLINT >( hb_parni( 6 ) );
 
 #if ODBCVER >= 0x0300
-      SQLLEN nNumPtr = ( SQLLEN ) hb_parnint( 7 );
+      SQLLEN nNumPtr = static_cast< SQLLEN >( hb_parnint( 7 ) );
 #else
-      SQLINTEGER nNumPtr = ( SQLINTEGER ) hb_parnl( 7 );
+      SQLINTEGER nNumPtr = static_cast< SQLINTEGER >( hb_parnl( 7 ) );
 #endif
       char * buffer;
 
       if( iLen <= 0 )
+      {
          iLen = 64;
+      }
 
       buffer      = static_cast< char * >( hb_xgrab( iLen ) );
       buffer[ 0 ] = '\0';
 
 #if ODBCVER >= 0x0300
       hb_retni( SQLColAttribute( hStmt,
-                                 ( SQLUSMALLINT ) hb_parni( 2 ),
-                                 ( SQLUSMALLINT ) hb_parni( 3 ),
-                                 ( SQLPOINTER ) buffer,
+                                 static_cast< SQLUSMALLINT >( hb_parni( 2 ) ),
+                                 static_cast< SQLUSMALLINT >( hb_parni( 3 ) ),
+                                 static_cast< SQLPOINTER >( buffer ),
                                  iLen,
-                                 ( SQLSMALLINT * ) &iBufLen,
-                                 ( SQLLEN * ) &nNumPtr ) );
+                                 static_cast< SQLSMALLINT * >( &iBufLen ),
+                                 static_cast< SQLLEN * >( &nNumPtr ) ) );
 #else
       hb_retni( SQLColAttributes( hStmt,
-                                  ( SQLUSMALLINT ) hb_parni( 2 ),
-                                  ( SQLUSMALLINT ) hb_parni( 3 ),
-                                  ( SQLPOINTER ) buffer,
+                                  static_cast< SQLUSMALLINT >( hb_parni( 2 ) ),
+                                  static_cast< SQLUSMALLINT >( hb_parni( 3 ) ),
+                                  static_cast< SQLPOINTER >( buffer ),
                                   iLen,
-                                  ( SQLSMALLINT * ) &iBufLen,
-                                  ( SQLINTEGER * ) &nNumPtr ) );
+                                  static_cast< SQLSMALLINT * >( &iBufLen ),
+                                  static_cast< SQLINTEGER * >( &nNumPtr ) ) );
 #endif
 
-      hb_storclen( buffer, ( HB_SIZE ) iBufLen, 4 );
+      hb_storclen( buffer, static_cast< HB_SIZE >( iBufLen ), 4 );
       hb_storni( static_cast< int >( iBufLen ), 6 );
       hb_stornint( nNumPtr, 7 );
 
       hb_xfree( buffer );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SQLERROR )  /* hEnv, hDbc, hStmt, @cErrorClass, @nType, @cErrorMsg */
@@ -904,24 +982,26 @@ HB_FUNC( SQLERROR )  /* hEnv, hDbc, hStmt, @cErrorClass, @nType, @cErrorMsg */
       hb_retni( SQLError( hEnv,
                           hDbc,
                           hStmt,
-                          ( SQLTCHAR * ) buffer,
-                          ( SQLINTEGER * ) &lError,
-                          ( SQLTCHAR * ) szErrorMsg,
-                          ( SQLSMALLINT ) HB_SIZEOFARRAY( szErrorMsg ),
-                          ( SQLSMALLINT * ) &iLen ) );
+                          static_cast< SQLTCHAR * >( buffer ),
+                          static_cast< SQLINTEGER * >( &lError ),
+                          static_cast< SQLTCHAR * >( szErrorMsg ),
+                          static_cast< SQLSMALLINT >( HB_SIZEOFARRAY( szErrorMsg ) ),
+                          static_cast< SQLSMALLINT * >( &iLen ) ) );
 
-      O_HB_STORSTR( ( O_HB_CHAR * ) buffer, 4 );
+      O_HB_STORSTR( static_cast< O_HB_CHAR * >( buffer ), 4 );
       hb_stornl( static_cast< long >( lError ), 5 );
-      O_HB_STORSTRLEN( ( O_HB_CHAR * ) szErrorMsg, iLen, 6 );
+      O_HB_STORSTRLEN( static_cast< O_HB_CHAR * >( szErrorMsg ), iLen, 6 );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SQLGETDIAGREC )  /* nHandleType, hHandle, nRecNumber, @cSQLState, @nError, @cErrorMsg */
 {
 #if ODBCVER >= 0x0300
-   SQLSMALLINT iHandleType = ( SQLSMALLINT ) hb_parni( 1 );
+   SQLSMALLINT iHandleType = static_cast< SQLSMALLINT >( hb_parni( 1 ) );
    SQLHANDLE   hHandle;
 
    switch( iHandleType )
@@ -952,19 +1032,21 @@ HB_FUNC( SQLGETDIAGREC )  /* nHandleType, hHandle, nRecNumber, @cSQLState, @nErr
 
       hb_retni( SQLGetDiagRec( iHandleType,
                                hHandle,
-                               ( SQLSMALLINT ) hb_parni( 3 ),
-                               ( SQLTCHAR * ) szSQLState,
-                               ( SQLINTEGER * ) &lError,
-                               ( SQLTCHAR * ) szErrorMsg,
-                               ( SQLSMALLINT ) HB_SIZEOFARRAY( szErrorMsg ),
-                               ( SQLSMALLINT * ) &iLen ) );
+                               static_cast< SQLSMALLINT >( hb_parni( 3 ) ),
+                               static_cast< SQLTCHAR * >( szSQLState ),
+                               static_cast< SQLINTEGER * >( &lError ),
+                               static_cast< SQLTCHAR * >( szErrorMsg ),
+                               static_cast< SQLSMALLINT >( HB_SIZEOFARRAY( szErrorMsg ) ),
+                               static_cast< SQLSMALLINT * >( &iLen ) ) );
 
-      O_HB_STORSTR( ( O_HB_CHAR * ) szSQLState, 4 );
+      O_HB_STORSTR( static_cast< O_HB_CHAR * >( szSQLState ), 4 );
       hb_stornl( static_cast< long >( lError ), 5 );
-      O_HB_STORSTRLEN( ( O_HB_CHAR * ) szErrorMsg, iLen, 6 );
+      O_HB_STORSTRLEN( static_cast< O_HB_CHAR * >( szErrorMsg ), iLen, 6 );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 #else
    hb_retni( SQL_ERROR );
    hb_storc( nullptr, 4 );
@@ -979,14 +1061,16 @@ HB_FUNC( SQLROWCOUNT )
 
    if( hStmt )
    {
-      SQLLEN iRowCountPtr = ( SQLLEN ) hb_parnint( 2 );
+      SQLLEN iRowCountPtr = static_cast< SQLLEN >( hb_parnint( 2 ) );
 
-      hb_retni( SQLRowCount( hStmt, ( SQLLEN * ) &iRowCountPtr ) );
+      hb_retni( SQLRowCount( hStmt, static_cast< SQLLEN * >( &iRowCountPtr ) ) );
 
       hb_stornint( iRowCountPtr, 2 );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SQLGETINFO )  /* hDbc, nType, @cResult */
@@ -1001,15 +1085,17 @@ HB_FUNC( SQLGETINFO )  /* hDbc, nType, @cResult */
       buffer[ 0 ] = '\0';
 
       hb_retni( SQLGetInfo( hDbc,
-                            ( SQLUSMALLINT ) hb_parni( 2 ),
-                            ( SQLPOINTER ) buffer,
-                            ( SQLSMALLINT ) sizeof( buffer ),
-                            ( SQLSMALLINT * ) &iLen ) );
+                            static_cast< SQLUSMALLINT >( hb_parni( 2 ) ),
+                            static_cast< SQLPOINTER >( buffer ),
+                            static_cast< SQLSMALLINT >( sizeof( buffer ) ),
+                            static_cast< SQLSMALLINT * >( &iLen ) ) );
 
       hb_storclen( buffer, iLen, 3 );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SQLSETCONNECTATTR )  /* hDbc, nOption, uOption */
@@ -1020,20 +1106,22 @@ HB_FUNC( SQLSETCONNECTATTR )  /* hDbc, nOption, uOption */
    {
 #if ODBCVER >= 0x0300
       hb_retni( SQLSetConnectAttr( hDbc,
-                                   ( SQLINTEGER ) hb_parnl( 2 ),
-                                   HB_ISCHAR( 3 ) ? ( SQLPOINTER ) HB_UNCONST( hb_parc( 3 ) ) :
-                                                    ( SQLPOINTER ) static_cast< HB_PTRUINT >( hb_parnint( 3 ) ),
-                                   HB_ISCHAR( 3 ) ? ( SQLINTEGER ) hb_parclen( 3 ) :
-                                                    ( SQLINTEGER ) SQL_IS_INTEGER ) );
+                                   static_cast< SQLINTEGER >( hb_parnl( 2 ) ),
+                                   HB_ISCHAR( 3 ) ? static_cast< SQLPOINTER >( HB_UNCONST( hb_parc( 3 ) ) ) :
+                                                    reinterpret_cast< SQLPOINTER >( static_cast< HB_PTRUINT >( hb_parnint( 3 ) ) ),
+                                   HB_ISCHAR( 3 ) ? static_cast< SQLINTEGER >( hb_parclen( 3 ) ) :
+                                                    static_cast< SQLINTEGER >( SQL_IS_INTEGER ) ) );
 #else
       hb_retni( SQLSetConnectOption( hDbc,
-                                     ( SQLUSMALLINT ) hb_parni( 2 ),
-                                     HB_ISCHAR( 3 ) ? ( SQLULEN ) static_cast< HB_PTRUINT >( hb_parc( 3 ) ) :
-                                                      ( SQLULEN ) hb_parnl( 3 ) ) );
+                                     static_cast< SQLUSMALLINT >( hb_parni( 2 ) ),
+                                     HB_ISCHAR( 3 ) ? static_cast< SQLULEN >( static_cast< HB_PTRUINT >( hb_parc( 3 ) ) ) :
+                                                      static_cast< SQLULEN >( hb_parnl( 3 ) ) ) );
 #endif
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SQLSETSTMTATTR )  /* hStmt, nOption, uOption --> nRetCode */
@@ -1044,20 +1132,22 @@ HB_FUNC( SQLSETSTMTATTR )  /* hStmt, nOption, uOption --> nRetCode */
    {
 #if ODBCVER >= 0x0300
       hb_retni( SQLSetStmtAttr( hStmt,
-                                ( SQLINTEGER ) hb_parnl( 2 ),
-                                HB_ISCHAR( 3 ) ? ( SQLPOINTER ) HB_UNCONST( hb_parc( 3 ) ) :
-                                                 ( SQLPOINTER ) static_cast< HB_PTRUINT >( hb_parnint( 3 ) ),
-                                HB_ISCHAR( 3 ) ? ( SQLINTEGER ) hb_parclen( 3 ) :
-                                                 ( SQLINTEGER ) SQL_IS_INTEGER ) );
+                                static_cast< SQLINTEGER >( hb_parnl( 2 ) ),
+                                HB_ISCHAR( 3 ) ? static_cast< SQLPOINTER >( HB_UNCONST( hb_parc( 3 ) ) ) :
+                                                 reinterpret_cast< SQLPOINTER >( static_cast< HB_PTRUINT >( hb_parnint( 3 ) ) ),
+                                HB_ISCHAR( 3 ) ? static_cast< SQLINTEGER >( hb_parclen( 3 ) ) :
+                                                 static_cast< SQLINTEGER >( SQL_IS_INTEGER ) ) );
 #else
       hb_retni( SQLSetStmtOption( hStmt,
-                                  ( SQLUSMALLINT ) hb_parni( 2 ),
-                                  HB_ISCHAR( 3 ) ? ( SQLULEN ) static_cast< HB_PTRUINT >( hb_parc( 3 ) ) :
-                                                   ( SQLULEN ) hb_parnl( 3 ) ) );
+                                  static_cast< SQLUSMALLINT >( hb_parni( 2 ) ),
+                                  HB_ISCHAR( 3 ) ? static_cast< SQLULEN >( static_cast< HB_PTRUINT >( hb_parc( 3 ) ) ) :
+                                                   static_cast< SQLULEN >( hb_parnl( 3 ) ) ) );
 #endif
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SQLGETCONNECTATTR )  /* hDbc, nOption, @cOption */
@@ -1071,22 +1161,24 @@ HB_FUNC( SQLGETCONNECTATTR )  /* hDbc, nOption, @cOption */
       SQLINTEGER lLen = 0;
       buffer[ 0 ] = nullptr;
       hb_retni( SQLGetConnectAttr( hDbc,
-                                   ( SQLINTEGER ) hb_parnl( 2 ),
-                                   ( SQLPOINTER ) buffer,
-                                   ( SQLINTEGER ) sizeof( buffer ),
-                                   ( SQLINTEGER * ) &lLen ) );
-      hb_storclen( ( char * ) buffer, lLen, 3 );
+                                   static_cast< SQLINTEGER >( hb_parnl( 2 ) ),
+                                   static_cast< SQLPOINTER >( buffer ),
+                                   static_cast< SQLINTEGER >( sizeof( buffer ) ),
+                                   static_cast< SQLINTEGER * >( &lLen ) ) );
+      hb_storclen( reinterpret_cast< char * >( buffer ), lLen, 3 );
 #else
       char buffer[ 512 ];
       buffer[ 0 ] = '\0';
       hb_retni( SQLGetConnectOption( hDbc,
-                                     ( SQLSMALLINT ) hb_parni( 2 ),
-                                     ( SQLPOINTER ) buffer ) );
+                                     static_cast< SQLSMALLINT >( hb_parni( 2 ) ),
+                                     static_cast< SQLPOINTER >( buffer ) ) );
       hb_storc( buffer, 3 );
 #endif
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SQLGETSTMTATTR )  /* hStmt, nOption, @cOption */
@@ -1100,22 +1192,24 @@ HB_FUNC( SQLGETSTMTATTR )  /* hStmt, nOption, @cOption */
       SQLINTEGER lLen = 0;
       buffer[ 0 ] = nullptr;
       hb_retni( SQLGetStmtAttr( hStmt,
-                                ( SQLINTEGER ) hb_parnl( 2 ),
-                                ( SQLPOINTER ) buffer,
-                                ( SQLINTEGER ) sizeof( buffer ),
-                                ( SQLINTEGER * ) &lLen ) );
-      hb_storclen( ( char * ) buffer, lLen, 3 );
+                                static_cast< SQLINTEGER >( hb_parnl( 2 ) ),
+                                static_cast< SQLPOINTER >( buffer ),
+                                static_cast< SQLINTEGER >( sizeof( buffer ) ),
+                                static_cast< SQLINTEGER * >( &lLen ) ) );
+      hb_storclen( reinterpret_cast< char * >( buffer ), lLen, 3 );
 #else
       char buffer[ 512 ];
       buffer[ 0 ] = '\0';
       hb_retni( SQLGetStmtOption( hStmt,
-                                  ( SQLSMALLINT ) hb_parni( 2 ),
-                                  ( SQLPOINTER ) buffer ) );
+                                  static_cast< SQLSMALLINT >( hb_parni( 2 ) ),
+                                  static_cast< SQLPOINTER >( buffer ) ) );
       hb_storc( buffer, 3 );
 #endif
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SQLCOMMIT )  /* hEnv, hDbc */
@@ -1124,9 +1218,13 @@ HB_FUNC( SQLCOMMIT )  /* hEnv, hDbc */
    SQLHDBC hDbc = hb_SQLHDBC_par( 2 );
 
    if( hEnv && hDbc )
+   {
       hb_retni( SQLTransact( hEnv, hDbc, SQL_COMMIT ) );
+   }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SQLROLLBACK )  /* hEnv, hDbc */
@@ -1135,9 +1233,13 @@ HB_FUNC( SQLROLLBACK )  /* hEnv, hDbc */
    SQLHDBC hDbc = hb_SQLHDBC_par( 2 );
 
    if( hEnv && hDbc )
+   {
       hb_retni( SQLTransact( hEnv, hDbc, SQL_ROLLBACK ) );
+   }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SQLPREPARE )  /* hStmt, cStatement --> nRetCode */
@@ -1149,13 +1251,15 @@ HB_FUNC( SQLPREPARE )  /* hStmt, cStatement --> nRetCode */
       void * hStatement;
 
       hb_retni( SQLPrepare( hStmt,
-                            ( SQLTCHAR * ) HB_UNCONST( O_HB_PARSTRDEF( 2, &hStatement, nullptr ) ),
-                            ( SQLINTEGER ) SQL_NTS ) );
+                            static_cast< SQLTCHAR * >( HB_UNCONST( O_HB_PARSTRDEF( 2, &hStatement, nullptr ) ) ),
+                            static_cast< SQLINTEGER >( SQL_NTS ) ) );
 
       hb_strfree( hStatement );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SQLEXECUTE )  /* hStmt --> nRetCode */
@@ -1163,9 +1267,13 @@ HB_FUNC( SQLEXECUTE )  /* hStmt --> nRetCode */
    SQLHSTMT hStmt = hb_SQLHSTMT_par( 1 );
 
    if( hStmt )
+   {
       hb_retni( SQLExecute( hStmt ) );
+   }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SQLMORERESULTS )  /* hEnv, hDbc */
@@ -1173,9 +1281,13 @@ HB_FUNC( SQLMORERESULTS )  /* hEnv, hDbc */
    SQLHSTMT hStmt = hb_SQLHSTMT_par( 1 );
 
    if( hStmt )
+   {
       hb_retni( SQLMoreResults( hStmt ) );
+   }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( HB_ODBCSTOD )
@@ -1197,7 +1309,9 @@ HB_FUNC( HB_ODBCSTOD )
       hb_retds( szHrbDate );
    }
    else
+   {
       hb_retds( nullptr );
+   }
 }
 
 HB_FUNC( HB_ODBCNUMSETLEN )  /* nValue, nSize, nDecimals --> nValue (nSize, nDec) */
@@ -1207,9 +1321,13 @@ HB_FUNC( HB_ODBCNUMSETLEN )  /* nValue, nSize, nDecimals --> nValue (nSize, nDec
    int iDec = hb_parni( 3 );
 
    if( pValue != nullptr && HB_IS_NUMINT( pValue ) && iDec == 0 )
+   {
       hb_retnintlen( hb_itemGetNInt( pValue ), iLen );
+   }
    else
+   {
       hb_retnlen( hb_itemGetND( pValue ), iLen, iDec );
+   }
 }
 
 HB_FUNC( HB_ODBCVER )
