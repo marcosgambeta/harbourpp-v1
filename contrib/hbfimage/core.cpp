@@ -1394,7 +1394,8 @@ HB_FUNC( FI_ROTATECLASSIC )
       FIBITMAP * dib = hb_FIBITMAP_par( 1 );
       double angle = hb_parnd( 2 );
 
-      hb_FIBITMAP_ret( FreeImage_RotateClassic( dib, angle ), HB_TRUE );
+      // hb_FIBITMAP_ret( FreeImage_RotateClassic( dib, angle ), HB_TRUE ); NOTE: DEPRECATED (3.13) and REMOVED (3.18)
+      hb_FIBITMAP_ret( FreeImage_Rotate( dib, angle ), HB_TRUE );
    }
    else
    {
