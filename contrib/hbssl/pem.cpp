@@ -66,7 +66,7 @@ static int hb_ssl_pem_password_cb( char * buf, int size, int rwflag, void * user
    if( size > 0 && userdata && hb_vmRequestReenter() )
    {
       hb_vmPushEvalSym();
-      hb_vmPush( ( PHB_ITEM ) userdata );
+      hb_vmPush( static_cast< PHB_ITEM >( userdata ) );
       hb_vmPushLogical( rwflag );
       hb_vmSend( 1 );
 
@@ -77,7 +77,9 @@ static int hb_ssl_pem_password_cb( char * buf, int size, int rwflag, void * user
       if( retsize > 0 )
       {
          if( retsize > size )
+         {
             retsize = size;
+         }
 
          memcpy( buf, hb_parc( -1 ), retsize );
       }
@@ -101,13 +103,21 @@ static void hb_PEM_read_bio( PEM_READ_BIO * func, HB_PEM_TYPES type )
    BIO * bio;
 
    if( hb_BIO_is( 1 ) )
+   {
       bio = hb_BIO_par( 1 );
+   }
    else if( HB_ISCHAR( 1 ) )
+   {
       bio = BIO_new_file( hb_parc( 1 ), "r" );
+   }
    else if( HB_ISNUM( 1 ) )
+   {
       bio = BIO_new_fd( hb_parni( 1 ), BIO_NOCLOSE );
+   }
    else
+   {
       bio = nullptr;
+   }
 
    if( bio )
    {
@@ -144,13 +154,19 @@ static void hb_PEM_read_bio( PEM_READ_BIO * func, HB_PEM_TYPES type )
          }
       }
       else
+      {
          hb_retptr( nullptr );
+      }
 
       if( ! hb_BIO_is( 1 ) )
+      {
          BIO_free( bio );
+      }
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( PEM_READ_BIO_PRIVATEKEY    ) { hb_PEM_read_bio( ( PEM_READ_BIO * ) PEM_read_bio_PrivateKey   , hb_PEM_ANY ); }

@@ -65,14 +65,16 @@ typedef struct
 
 static HB_GARBAGE_FUNC( X509_release )
 {
-   PHB_X509 ph = ( PHB_X509 ) Cargo;
+   PHB_X509 ph = static_cast< PHB_X509 >( Cargo );
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && ph->pX509 )
    {
       /* Destroy the object */
       if( ph->fRelease )
-         X509_free( ( X509 * ) ph->pX509 );
+      {
+         X509_free( static_cast< X509 * >( ph->pX509 ) );
+      }
 
       /* set pointer to nullptr just in case */
       ph->pX509 = nullptr;
@@ -92,19 +94,19 @@ HB_BOOL hb_X509_is( int iParam )
 
 X509 * hb_X509_par( int iParam )
 {
-   PHB_X509 ph = ( PHB_X509 ) hb_parptrGC( &s_gcX509_funcs, iParam );
+   PHB_X509 ph = static_cast< PHB_X509 >( hb_parptrGC( &s_gcX509_funcs, iParam ) );
 
    return ph ? ph->pX509 : nullptr;
 }
 
 void hb_X509_ret( X509 * x509, HB_BOOL fRelease )
 {
-   PHB_X509 ph = ( PHB_X509 ) hb_gcAllocate( sizeof( HB_X509 ), &s_gcX509_funcs );
+   PHB_X509 ph = static_cast< PHB_X509 >( hb_gcAllocate( sizeof( HB_X509 ), &s_gcX509_funcs ) );
 
    ph->pX509    = x509;
    ph->fRelease = fRelease;
 
-   hb_retptrGC( ( void * ) ph );
+   hb_retptrGC( static_cast< void * >( ph ) );
 }
 
 HB_FUNC( X509_GET_SUBJECT_NAME )
@@ -114,10 +116,14 @@ HB_FUNC( X509_GET_SUBJECT_NAME )
       X509 * x509 = hb_X509_par( 1 );
 
       if( x509 )
+      {
          hb_retptr( X509_get_subject_name( x509 ) );
+      }
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( X509_GET_ISSUER_NAME )
@@ -127,10 +133,14 @@ HB_FUNC( X509_GET_ISSUER_NAME )
       X509 * x509 = hb_X509_par( 1 );
 
       if( x509 )
+      {
          hb_retptr( X509_get_issuer_name( x509 ) );
+      }
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( X509_NAME_ONELINE )
@@ -145,7 +155,9 @@ HB_FUNC( X509_NAME_ONELINE )
       hb_retc( buffer );
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 #endif
 }
 
@@ -156,8 +168,12 @@ HB_FUNC( X509_GET_PUBKEY )
       X509 * x509 = hb_X509_par( 1 );
 
       if( x509 )
+      {
          hb_retptr( X509_get_pubkey( x509 ) );
+      }
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }

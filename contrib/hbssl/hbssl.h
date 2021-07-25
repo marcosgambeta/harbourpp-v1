@@ -178,17 +178,12 @@ HB_EXTERN_BEGIN
 struct _HB_SSLSTREAM;
 typedef struct _HB_SSLSTREAM * PHB_SSLSTREAM;
 
-extern PHB_SOCKEX         hb_sockexNewSSL( HB_SOCKET sd, SSL * ssl, HB_BOOL fServer,
-                                           HB_MAXINT timeout, PHB_ITEM pSSL );
-extern PHB_SSLSTREAM      hb_ssl_socketNew( HB_SOCKET sd, SSL * ssl, HB_BOOL fServer,
-                                            HB_MAXINT timeout, PHB_ITEM pSSL, int * piResult );
+extern PHB_SOCKEX         hb_sockexNewSSL( HB_SOCKET sd, SSL * ssl, HB_BOOL fServer, HB_MAXINT timeout, PHB_ITEM pSSL );
+extern PHB_SSLSTREAM      hb_ssl_socketNew( HB_SOCKET sd, SSL * ssl, HB_BOOL fServer, HB_MAXINT timeout, PHB_ITEM pSSL, int * piResult );
 extern void               hb_ssl_socketClose( PHB_SSLSTREAM pStream );
 extern const char *       hb_ssl_socketErrorStr( int iError );
-extern long               hb_ssl_socketRead( PHB_SSLSTREAM pStream, HB_SOCKET sd,
-                                             void * buffer, long len, HB_MAXINT timeout );
-extern long               hb_ssl_socketWrite( PHB_SSLSTREAM pStream, HB_SOCKET sd,
-                                              const void * buffer, long len,
-                                              HB_MAXINT timeout, long * plast );
+extern long               hb_ssl_socketRead( PHB_SSLSTREAM pStream, HB_SOCKET sd, void * buffer, long len, HB_MAXINT timeout );
+extern long               hb_ssl_socketWrite( PHB_SSLSTREAM pStream, HB_SOCKET sd, const void * buffer, long len, HB_MAXINT timeout, long * plast );
 
 extern const SSL_METHOD * hb_ssl_method_id_to_ptr( int n );
 

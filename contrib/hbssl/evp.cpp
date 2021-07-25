@@ -53,7 +53,7 @@ char * hb_openssl_strdup( const char * pszText )
    char * pszDup;
    size_t len = strlen( pszText ) + 1;
 
-   pszDup = ( char * ) OPENSSL_malloc( len );
+   pszDup = static_cast< char * >( OPENSSL_malloc( len ) );
    memcpy( pszDup, pszText, len );
 
    return pszDup;
@@ -76,12 +76,16 @@ HB_FUNC( ERR_LOAD_EVP_STRINGS )
 
 HB_FUNC( EVP_PKEY_FREE )
 {
-   EVP_PKEY * key = ( EVP_PKEY * ) hb_parptr( 1 );
+   EVP_PKEY * key = static_cast< EVP_PKEY * >( hb_parptr( 1 ) );
 
    if( key )
+   {
       EVP_PKEY_free( key );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( EVP_BYTESTOKEY )
@@ -95,17 +99,19 @@ HB_FUNC( EVP_BYTESTOKEY )
       unsigned char iv[ EVP_MAX_IV_LENGTH ];
 
       hb_retni( EVP_BytesToKey( cipher,
-                                ( HB_SSL_CONST EVP_MD * ) md,
-                                ( HB_SSL_CONST unsigned char * ) hb_parc( 3 ) /* salt */,
-                                ( HB_SSL_CONST unsigned char * ) hb_parcx( 4 ) /* data */,
+                                static_cast< HB_SSL_CONST EVP_MD * >( md ),
+                                reinterpret_cast< HB_SSL_CONST unsigned char * >( hb_parc( 3 ) ) /* salt */,
+                                reinterpret_cast< HB_SSL_CONST unsigned char * >( hb_parcx( 4 ) ) /* data */,
                                 static_cast< int >( hb_parclen( 4 ) ),
                                 hb_parni( 5 ) /* count */,
                                 key,
                                 iv ) );
 
-      hb_storc( ( char * ) key, 6 );
-      hb_storc( ( char * ) iv, 7 );
+      hb_storc( reinterpret_cast< char * >( key ), 6 );
+      hb_storc( reinterpret_cast< char * >( iv ), 7 );
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }

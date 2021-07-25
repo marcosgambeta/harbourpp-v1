@@ -54,10 +54,12 @@ HB_FUNC( SSL_CIPHER_DESCRIPTION )
 
       buffer[ 0 ] = '\0';
 
-      hb_retc( hb_parptr( 1 ) ? SSL_CIPHER_description( ( SSL_CIPHER * ) hb_parptr( 1 ), buffer, sizeof( buffer ) ) : nullptr );
+      hb_retc( hb_parptr( 1 ) ? SSL_CIPHER_description( static_cast< SSL_CIPHER * >( hb_parptr( 1 ) ), buffer, sizeof( buffer ) ) : nullptr );
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SSL_CIPHER_GET_BITS )
@@ -66,26 +68,36 @@ HB_FUNC( SSL_CIPHER_GET_BITS )
    {
       int alg_bits = 0;
 
-      hb_retni( hb_parptr( 1 ) ? SSL_CIPHER_get_bits( ( SSL_CIPHER * ) hb_parptr( 1 ), &alg_bits ) : 0 );
+      hb_retni( hb_parptr( 1 ) ? SSL_CIPHER_get_bits( static_cast< SSL_CIPHER * >( hb_parptr( 1 ) ), &alg_bits ) : 0 );
 
       hb_storni( alg_bits, 2 );
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SSL_CIPHER_GET_NAME )
 {
    if( HB_ISPOINTER( 1 ) )
-      hb_retc( hb_parptr( 1 ) ? SSL_CIPHER_get_name( ( SSL_CIPHER * ) hb_parptr( 1 ) ) : nullptr );
+   {
+      hb_retc( hb_parptr( 1 ) ? SSL_CIPHER_get_name( static_cast< SSL_CIPHER * >( hb_parptr( 1 ) ) ) : nullptr );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SSL_CIPHER_GET_VERSION )
 {
    if( HB_ISPOINTER( 1 ) )
-      hb_retc( hb_parptr( 1 ) ? SSL_CIPHER_get_version( ( SSL_CIPHER * ) hb_parptr( 1 ) ) : nullptr );
+   {
+      hb_retc( hb_parptr( 1 ) ? SSL_CIPHER_get_version( static_cast< SSL_CIPHER * >( hb_parptr( 1 ) ) ) : nullptr );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }

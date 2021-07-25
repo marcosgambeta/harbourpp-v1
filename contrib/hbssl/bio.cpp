@@ -69,7 +69,9 @@ static PHB_BIO PHB_BIO_create( BIO * bio, void * hStrRef )
 static void PHB_BIO_free( PHB_BIO hb_bio )
 {
    if( hb_bio->hStrRef )
+   {
       hb_itemFreeCRef( hb_bio->hStrRef );
+   }
 
    hb_xfree( hb_bio );
 }
@@ -80,7 +82,7 @@ static void PHB_BIO_free( PHB_BIO hb_bio )
 static HB_GARBAGE_FUNC( HB_BIO_Destructor )
 {
    /* Retrieve image pointer holder */
-   HB_BIO ** ptr = ( HB_BIO ** ) Cargo;
+   HB_BIO ** ptr = static_cast< HB_BIO ** >( Cargo );
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( *ptr )
@@ -100,25 +102,25 @@ static const HB_GC_FUNCS s_gcBIOFuncs =
 
 BIO * hb_BIO_par( int iParam )
 {
-   HB_BIO ** ptr = ( HB_BIO ** ) hb_parptrGC( &s_gcBIOFuncs, iParam );
+   HB_BIO ** ptr = static_cast< HB_BIO ** >( hb_parptrGC( &s_gcBIOFuncs, iParam ) );
 
    return ptr ? ( *ptr )->bio : nullptr;
 }
 
 HB_BOOL hb_BIO_is( int iParam )
 {
-   HB_BIO ** ptr = ( HB_BIO ** ) hb_parptrGC( &s_gcBIOFuncs, iParam );
+   HB_BIO ** ptr = static_cast< HB_BIO ** >( hb_parptrGC( &s_gcBIOFuncs, iParam ) );
 
    return ptr && ( *ptr )->bio;
 }
 
 static void hb_BIO_ret( BIO * bio, void * hStrRef )
 {
-   HB_BIO ** ptr = ( HB_BIO ** ) hb_gcAllocate( sizeof( HB_BIO * ), &s_gcBIOFuncs );
+   HB_BIO ** ptr = static_cast< HB_BIO ** >( hb_gcAllocate( sizeof( HB_BIO * ), &s_gcBIOFuncs ) );
 
    *ptr = PHB_BIO_create( bio, hStrRef );
 
-   hb_retptrGC( ( void * ) ptr );
+   hb_retptrGC( static_cast< void * >( ptr ) );
 }
 
 /* */
@@ -211,9 +213,13 @@ static int hb_BIO_METHOD_ptr_to_id( const BIO_METHOD * p )
 HB_FUNC( BIO_NEW )
 {
    if( hb_BIO_METHOD_is( 1 ) )
+   {
       hb_BIO_ret( BIO_new( hb_BIO_METHOD_par( 1 ) ), nullptr );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_SET )
@@ -221,14 +227,17 @@ HB_FUNC( BIO_SET )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio && hb_BIO_METHOD_is( 2 ) )
-#if OPENSSL_VERSION_NUMBER < 0x10100000L || \
-    defined( LIBRESSL_VERSION_NUMBER )
+   {
+#if OPENSSL_VERSION_NUMBER < 0x10100000L || defined( LIBRESSL_VERSION_NUMBER )
       hb_retni( BIO_set( bio, hb_BIO_METHOD_par( 2 ) ) );
 #else
       hb_retni( 0 );
 #endif
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_CLEAR_FLAGS )
@@ -236,9 +245,13 @@ HB_FUNC( BIO_CLEAR_FLAGS )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       BIO_clear_flags( bio, hb_parni( 2 ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_SET_FLAGS )
@@ -246,9 +259,13 @@ HB_FUNC( BIO_SET_FLAGS )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       BIO_set_flags( bio, hb_parni( 2 ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_GET_FLAGS )
@@ -256,9 +273,13 @@ HB_FUNC( BIO_GET_FLAGS )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       hb_retni( BIO_get_flags( bio ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_TEST_FLAGS )
@@ -266,13 +287,17 @@ HB_FUNC( BIO_TEST_FLAGS )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
 #if OPENSSL_VERSION_NUMBER >= 0x00908050L && ! defined( HB_OPENSSL_OLD_OSX_ )
       hb_retni( BIO_test_flags( bio, hb_parni( 2 ) ) );
 #else
       hb_retni( 0 );
 #endif
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_SET_FD )
@@ -280,9 +305,13 @@ HB_FUNC( BIO_SET_FD )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       hb_retni( BIO_set_fd( bio, hb_parnl( 2 ), hb_parnidef( 3, BIO_NOCLOSE ) ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_GET_FD )
@@ -290,9 +319,13 @@ HB_FUNC( BIO_GET_FD )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       hb_retnl( BIO_get_fd( bio, nullptr ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_GET_RETRY_REASON )
@@ -300,9 +333,13 @@ HB_FUNC( BIO_GET_RETRY_REASON )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       hb_retni( BIO_get_retry_reason( bio ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_SET_RETRY_SPECIAL )
@@ -310,9 +347,13 @@ HB_FUNC( BIO_SET_RETRY_SPECIAL )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       BIO_set_retry_special( bio );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_SET_RETRY_READ )
@@ -320,9 +361,13 @@ HB_FUNC( BIO_SET_RETRY_READ )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       BIO_set_retry_read( bio );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_SET_RETRY_WRITE )
@@ -330,9 +375,13 @@ HB_FUNC( BIO_SET_RETRY_WRITE )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       BIO_set_retry_write( bio );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_SHOULD_READ )
@@ -340,9 +389,13 @@ HB_FUNC( BIO_SHOULD_READ )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       hb_retni( BIO_should_read( bio ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_SHOULD_WRITE )
@@ -350,9 +403,13 @@ HB_FUNC( BIO_SHOULD_WRITE )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       hb_retni( BIO_should_write( bio ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_SHOULD_IO_SPECIAL )
@@ -360,9 +417,13 @@ HB_FUNC( BIO_SHOULD_IO_SPECIAL )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       hb_retni( BIO_should_io_special( bio ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_RETRY_TYPE )
@@ -370,9 +431,13 @@ HB_FUNC( BIO_RETRY_TYPE )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       hb_retni( BIO_retry_type( bio ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_SHOULD_RETRY )
@@ -380,9 +445,13 @@ HB_FUNC( BIO_SHOULD_RETRY )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       hb_retni( BIO_should_retry( bio ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_CTRL_PENDING )
@@ -390,9 +459,13 @@ HB_FUNC( BIO_CTRL_PENDING )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       hb_retnint( BIO_ctrl_pending( bio ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_CTRL_WPENDING )
@@ -400,9 +473,13 @@ HB_FUNC( BIO_CTRL_WPENDING )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       hb_retnint( BIO_ctrl_wpending( bio ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_FLUSH )
@@ -410,9 +487,13 @@ HB_FUNC( BIO_FLUSH )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       hb_retni( BIO_flush( bio ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_SEEK )
@@ -420,9 +501,13 @@ HB_FUNC( BIO_SEEK )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       hb_retnl( BIO_seek( bio, hb_parnl( 2 ) ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_TELL )
@@ -430,9 +515,13 @@ HB_FUNC( BIO_TELL )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       hb_retnl( BIO_tell( bio ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_RESET )
@@ -440,9 +529,13 @@ HB_FUNC( BIO_RESET )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       hb_retni( BIO_reset( bio ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_EOF )
@@ -450,9 +543,13 @@ HB_FUNC( BIO_EOF )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       hb_retni( BIO_eof( bio ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_SET_CLOSE )
@@ -460,9 +557,13 @@ HB_FUNC( BIO_SET_CLOSE )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       hb_retni( BIO_set_close( bio, hb_parnidef( 2, BIO_NOCLOSE ) ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_GET_CLOSE )
@@ -470,26 +571,38 @@ HB_FUNC( BIO_GET_CLOSE )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       hb_retni( BIO_get_close( bio ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_NEW_SOCKET )
 {
    if( HB_ISNUM( 1 ) )
+   {
       hb_BIO_ret( BIO_new_socket( hb_parni( 1 ), hb_parnidef( 2, BIO_NOCLOSE ) ), nullptr );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_NEW_DGRAM )
 {
 #ifndef OPENSSL_NO_DGRAM
    if( HB_ISNUM( 1 ) )
+   {
       hb_BIO_ret( BIO_new_dgram( hb_parni( 1 ), hb_parnidef( 2, BIO_NOCLOSE ) ), nullptr );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 #else
    hb_errRT_BASE( EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #endif
@@ -498,17 +611,25 @@ HB_FUNC( BIO_NEW_DGRAM )
 HB_FUNC( BIO_NEW_FD )
 {
    if( HB_ISNUM( 1 ) )
+   {
       hb_BIO_ret( BIO_new_fd( hb_parnl( 1 ), hb_parnidef( 2, BIO_NOCLOSE ) ), nullptr );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_NEW_FILE )
 {
    if( HB_ISCHAR( 1 ) )
+   {
       hb_BIO_ret( BIO_new_file( hb_parc( 1 ), hb_parcx( 2 ) ), nullptr );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_NEW_MEM_BUF )
@@ -524,7 +645,9 @@ HB_FUNC( BIO_NEW_MEM_BUF )
       hb_BIO_ret( BIO_new_mem_buf( HB_UNCONST( pszBuffer ), static_cast< int >( nLen ) ), hStrRef );
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_READ )
@@ -542,7 +665,9 @@ HB_FUNC( BIO_READ )
          hb_retni( size = BIO_read( bio, buffer, size ) );
 
          if( ! hb_storclen( buffer, size, 2 ) )
+         {
             hb_xfree( buffer );
+         }
       }
       else
       {
@@ -551,7 +676,9 @@ HB_FUNC( BIO_READ )
       }
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_GETS )
@@ -569,7 +696,9 @@ HB_FUNC( BIO_GETS )
          hb_retni( size = BIO_gets( bio, buffer, size ) );
 
          if( ! hb_storclen( buffer, size, 2 ) )
+         {
             hb_xfree( buffer );
+         }
       }
       else
       {
@@ -578,7 +707,9 @@ HB_FUNC( BIO_GETS )
       }
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_WRITE )
@@ -593,13 +724,17 @@ HB_FUNC( BIO_WRITE )
       {
          int towrite = hb_parni( 3 );
          if( towrite >= 0 && towrite < size )
+         {
             size = towrite;
+         }
       }
 
       hb_retni( BIO_write( bio, hb_parcx( 2 ), size ) );
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_PUTS )
@@ -607,23 +742,29 @@ HB_FUNC( BIO_PUTS )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       hb_retni( BIO_puts( bio, hb_parcx( 2 ) ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_FREE )
 {
-   void ** ph = ( void ** ) hb_parptrGC( &s_gcBIOFuncs, 1 );
+   void ** ph = static_cast< void ** >( hb_parptrGC( &s_gcBIOFuncs, 1 ) );
 
    if( ph )
    {
-      BIO * bio = ( BIO * ) *ph;
+      BIO * bio = static_cast< BIO * >( *ph );
       *ph = nullptr;
       hb_retni( bio ? BIO_free( bio ) : 0 );
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC_TRANSLATE( BIO_VFREE, BIO_FREE )
@@ -634,29 +775,35 @@ HB_FUNC_TRANSLATE( BIO_FREE_ALL, BIO_FREE )  /* These wrappers don't allow to cr
 HB_FUNC( BIO_NEW_CONNECT )
 {
    if( HB_ISCHAR( 1 ) )
-#if OPENSSL_VERSION_NUMBER >= 0x10002000L && \
-    ! defined( LIBRESSL_VERSION_NUMBER )
+   {
+#if OPENSSL_VERSION_NUMBER >= 0x10002000L && ! defined( LIBRESSL_VERSION_NUMBER )
       hb_BIO_ret( BIO_new_connect( hb_parc( 1 ) ), nullptr );
 #else
       /* NOTE: Discarding 'const', OpenSSL will strdup() */
-      hb_BIO_ret( BIO_new_connect( ( char * ) HB_UNCONST( hb_parc( 1 ) ) ), nullptr );
+      hb_BIO_ret( BIO_new_connect( static_cast< char * >( HB_UNCONST( hb_parc( 1 ) ) ) ), nullptr );
 #endif
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_NEW_ACCEPT )
 {
    if( HB_ISCHAR( 1 ) )
-#if OPENSSL_VERSION_NUMBER >= 0x10002000L && \
-    ! defined( LIBRESSL_VERSION_NUMBER )
+   {
+#if OPENSSL_VERSION_NUMBER >= 0x10002000L && ! defined( LIBRESSL_VERSION_NUMBER )
       hb_BIO_ret( BIO_new_accept( hb_parc( 1 ) ), nullptr );
 #else
       /* NOTE: Discarding 'const', OpenSSL will strdup() */
-      hb_BIO_ret( BIO_new_accept( ( char * ) HB_UNCONST( hb_parc( 1 ) ) ), nullptr );
+      hb_BIO_ret( BIO_new_accept( static_cast< char * >( HB_UNCONST( hb_parc( 1 ) ) ) ), nullptr );
 #endif
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_SET_CONN_HOSTNAME )
@@ -664,9 +811,13 @@ HB_FUNC( BIO_SET_CONN_HOSTNAME )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio && HB_ISCHAR( 2 ) )
+   {
       hb_retnl( BIO_set_conn_hostname( bio, HB_UNCONST( hb_parc( 2 ) ) ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_SET_CONN_PORT )
@@ -674,9 +825,13 @@ HB_FUNC( BIO_SET_CONN_PORT )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio && HB_ISCHAR( 2 ) )
+   {
       hb_retnl( BIO_set_conn_port( bio, HB_UNCONST( hb_parc( 2 ) ) ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_SET_CONN_INT_PORT )
@@ -689,7 +844,9 @@ HB_FUNC( BIO_SET_CONN_INT_PORT )
       hb_retnl( BIO_set_conn_port( bio, &port ) );
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_SET_CONN_IP )
@@ -703,13 +860,19 @@ HB_FUNC( BIO_SET_CONN_IP )
       hb_retnl( 0 );
 #else
       if( hb_parclen( 2 ) == 4 )
+      {
          hb_retnl( BIO_set_conn_ip( bio, HB_UNCONST( hb_parc( 2 ) ) ) );
+      }
       else
+      {
          hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      }
 #endif
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_GET_CONN_HOSTNAME )
@@ -717,9 +880,13 @@ HB_FUNC( BIO_GET_CONN_HOSTNAME )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       hb_retc( BIO_get_conn_hostname( bio ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_GET_CONN_PORT )
@@ -727,9 +894,13 @@ HB_FUNC( BIO_GET_CONN_PORT )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       hb_retc( BIO_get_conn_port( bio ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_GET_CONN_IP )
@@ -748,7 +919,9 @@ HB_FUNC( BIO_GET_CONN_IP )
 #endif
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_GET_CONN_INT_PORT )
@@ -758,8 +931,7 @@ HB_FUNC( BIO_GET_CONN_INT_PORT )
 
    if( bio )
    {
-#if OPENSSL_VERSION_NUMBER == 0x1000206fL /* 1.0.2f */ || \
-    OPENSSL_VERSION_NUMBER == 0x1000112fL /* 1.0.1r */
+#if OPENSSL_VERSION_NUMBER == 0x1000206fL /* 1.0.2f */ || OPENSSL_VERSION_NUMBER == 0x1000112fL /* 1.0.1r */
       /* Fix for header regression */
       hb_retnl( BIO_ctrl( bio, BIO_C_GET_CONNECT, 3, nullptr ) );
 #elif OPENSSL_VERSION_NUMBER >= 0x1010007fL
@@ -770,7 +942,9 @@ HB_FUNC( BIO_GET_CONN_INT_PORT )
 #endif
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 #else
    hb_errRT_BASE( EG_UNSUPPORTED, 2001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #endif
@@ -781,9 +955,13 @@ HB_FUNC( BIO_SET_NBIO )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       hb_retnl( BIO_set_nbio( bio, hb_parni( 2 ) ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( BIO_DO_CONNECT )
@@ -791,9 +969,13 @@ HB_FUNC( BIO_DO_CONNECT )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       hb_retni( BIO_do_connect( bio ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( ERR_LOAD_BIO_STRINGS )

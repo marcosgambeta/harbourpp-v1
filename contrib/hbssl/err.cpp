@@ -58,9 +58,13 @@ HB_FUNC( ERR_PRINT_ERRORS )
    BIO * bio = hb_BIO_par( 1 );
 
    if( bio )
+   {
       ERR_print_errors( bio );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( ERR_GET_ERROR )

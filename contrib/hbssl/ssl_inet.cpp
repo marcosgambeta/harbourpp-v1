@@ -52,26 +52,22 @@
 #include "hbdate.h"
 #include "hbznet.h"
 
-static long hb_inetReadSSL( PHB_ZNETSTREAM pStream, HB_SOCKET sd,
-                            void * buffer, long len, HB_MAXINT timeout )
+static long hb_inetReadSSL( PHB_ZNETSTREAM pStream, HB_SOCKET sd, void * buffer, long len, HB_MAXINT timeout )
 {
-   return hb_ssl_socketRead( ( PHB_SSLSTREAM ) pStream, sd, buffer, len, timeout );
+   return hb_ssl_socketRead( reinterpret_cast< PHB_SSLSTREAM >( pStream ), sd, buffer, len, timeout );
 }
 
-static long hb_inetWriteSSL( PHB_ZNETSTREAM pStream, HB_SOCKET sd,
-                             const void * buffer, long len, HB_MAXINT timeout,
-                             long * plast )
+static long hb_inetWriteSSL( PHB_ZNETSTREAM pStream, HB_SOCKET sd, const void * buffer, long len, HB_MAXINT timeout, long * plast )
 {
-   return hb_ssl_socketWrite( ( PHB_SSLSTREAM ) pStream, sd, buffer, len, timeout, plast );
+   return hb_ssl_socketWrite( reinterpret_cast< PHB_SSLSTREAM >( pStream ), sd, buffer, len, timeout, plast );
 }
 
 static void hb_inetCloseSSL( PHB_ZNETSTREAM pStream )
 {
-   hb_ssl_socketClose( ( PHB_SSLSTREAM ) pStream );
+   hb_ssl_socketClose( reinterpret_cast< PHB_SSLSTREAM >( pStream ) );
 }
 
-static long hb_inetFlushSSL( PHB_ZNETSTREAM pStream, HB_SOCKET sd,
-                             HB_MAXINT timeout, HB_BOOL fSync )
+static long hb_inetFlushSSL( PHB_ZNETSTREAM pStream, HB_SOCKET sd, HB_MAXINT timeout, HB_BOOL fSync )
 {
    HB_SYMBOL_UNUSED( pStream );
    HB_SYMBOL_UNUSED( sd );
@@ -109,14 +105,11 @@ static void hb_inetStartSSL( HB_BOOL fServer )
 
          if( ssl )
          {
-            HB_MAXINT timeout = HB_ISNUM( 3 ) ? hb_parnint( 3 ) :
-                                hb_znetInetTimeout( pItem, HB_FALSE );
-            PHB_SSLSTREAM pStream = hb_ssl_socketNew( sd, ssl, fServer, timeout,
-                                                      hb_param( 2, HB_IT_POINTER ),
-                                                      &iResult );
+            HB_MAXINT timeout = HB_ISNUM( 3 ) ? hb_parnint( 3 ) : hb_znetInetTimeout( pItem, HB_FALSE );
+            PHB_SSLSTREAM pStream = hb_ssl_socketNew( sd, ssl, fServer, timeout, hb_param( 2, HB_IT_POINTER ), &iResult );
             if( pStream )
             {
-               if( ! hb_znetInetInitialize( pItem, ( PHB_ZNETSTREAM ) pStream,
+               if( ! hb_znetInetInitialize( pItem, reinterpret_cast< PHB_ZNETSTREAM >( pStream ),
                                             hb_inetReadSSL, hb_inetWriteSSL,
                                             hb_inetFlushSSL, hb_inetCloseSSL,
                                             hb_inetErrorSSL, hb_inetErrStrSSL ) )
@@ -129,7 +122,9 @@ static void hb_inetStartSSL( HB_BOOL fServer )
          hb_retni( iResult );
       }
       else
+      {
          hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      }
    }
 }
 

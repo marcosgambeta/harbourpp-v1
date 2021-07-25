@@ -52,13 +52,13 @@
 
 static HB_GARBAGE_FUNC( EVP_PKEY_release )
 {
-   void ** ph = ( void ** ) Cargo;
+   void ** ph = static_cast< void ** >( Cargo );
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
-      EVP_PKEY_free( ( EVP_PKEY * ) *ph );
+      EVP_PKEY_free( static_cast< EVP_PKEY * >( *ph ) );
 
       /* set pointer to nullptr just in case */
       *ph = nullptr;
@@ -78,14 +78,14 @@ HB_BOOL hb_EVP_PKEY_is( int iParam )
 
 EVP_PKEY * hb_EVP_PKEY_par( int iParam )
 {
-   void ** ph = ( void ** ) hb_parptrGC( &s_gcEVP_PKEY_funcs, iParam );
+   void ** ph = static_cast< void ** >( hb_parptrGC( &s_gcEVP_PKEY_funcs, iParam ) );
 
-   return ph ? ( EVP_PKEY * ) *ph : nullptr;
+   return ph ? static_cast< EVP_PKEY * >( *ph ) : nullptr;
 }
 
 void hb_EVP_PKEY_ret( EVP_PKEY * pkey )
 {
-   void ** ph = ( void ** ) hb_gcAllocate( sizeof( EVP_PKEY * ), &s_gcEVP_PKEY_funcs );
+   void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof( EVP_PKEY * ), &s_gcEVP_PKEY_funcs ) );
 
    *ph = pkey;
 
@@ -109,10 +109,14 @@ HB_FUNC( EVP_PKEY_SIZE )
       EVP_PKEY * pkey = hb_EVP_PKEY_par( 1 );
 
       if( pkey )
+      {
          hb_retni( EVP_PKEY_size( pkey ) );
+      }
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( EVP_PKEY_BITS )
@@ -122,10 +126,14 @@ HB_FUNC( EVP_PKEY_BITS )
       EVP_PKEY * pkey = hb_EVP_PKEY_par( 1 );
 
       if( pkey )
+      {
          hb_retni( EVP_PKEY_bits( pkey ) );
+      }
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( EVP_PKEY_ASSIGN )
@@ -135,11 +143,15 @@ HB_FUNC( EVP_PKEY_ASSIGN )
       EVP_PKEY * pkey = hb_EVP_PKEY_par( 1 );
 
       if( pkey )
+      {
          /* QUESTION: Is hb_openssl_strdup() okay here? [vszakats] */
          hb_retni( EVP_PKEY_assign( pkey, hb_parni( 2 ), hb_openssl_strdup( hb_parcx( 3 ) ) ) );
+      }
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( EVP_PKEY_ASSIGN_RSA )
@@ -148,13 +160,17 @@ HB_FUNC( EVP_PKEY_ASSIGN_RSA )
    if( hb_EVP_PKEY_is( 1 ) && HB_ISPOINTER( 2 ) )
    {
       EVP_PKEY * pkey = hb_EVP_PKEY_par( 1 );
-      RSA *      key  = ( RSA * ) hb_parptr( 2 );
+      RSA *      key  = static_cast< RSA * >( hb_parptr( 2 ) );
 
       if( pkey && key )
+      {
          hb_retni( EVP_PKEY_assign_RSA( pkey, key ) );
+      }
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 #else
    hb_errRT_BASE( EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #endif
@@ -166,13 +182,17 @@ HB_FUNC( EVP_PKEY_ASSIGN_DSA )
    if( hb_EVP_PKEY_is( 1 ) && HB_ISPOINTER( 2 ) )
    {
       EVP_PKEY * pkey = hb_EVP_PKEY_par( 1 );
-      DSA *      key  = ( DSA * ) hb_parptr( 2 );
+      DSA *      key  = static_cast< DSA * >( hb_parptr( 2 ) );
 
       if( pkey && key )
+      {
          hb_retni( EVP_PKEY_assign_DSA( pkey, key ) );
+      }
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 #else
    hb_errRT_BASE( EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #endif
@@ -184,13 +204,17 @@ HB_FUNC( EVP_PKEY_ASSIGN_DH )
    if( hb_EVP_PKEY_is( 1 ) && HB_ISPOINTER( 2 ) )
    {
       EVP_PKEY * pkey = hb_EVP_PKEY_par( 1 );
-      DH *       key  = ( DH * ) hb_parptr( 2 );
+      DH *       key  = static_cast< DH * >( hb_parptr( 2 ) );
 
       if( pkey && key )
+      {
          hb_retni( EVP_PKEY_assign_DH( pkey, key ) );
+      }
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 #else
    hb_errRT_BASE( EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #endif

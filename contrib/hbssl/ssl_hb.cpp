@@ -71,21 +71,26 @@ HB_FUNC( HB_SSL_READ_ALL )
             int  iLen;
             int  sd = SSL_get_rfd( ssl );
 
-            if( SSL_pending( ssl ) ||
-                ( sd >= 0 && hb_socketSelectRead( ( HB_SOCKET ) sd, iTimeout ) ) )
+            if( SSL_pending( ssl ) || ( sd >= 0 && hb_socketSelectRead( static_cast< HB_SOCKET >( sd ), iTimeout ) ) )
             {
                iLen = SSL_read( ssl, buffer, 1 );
 
                if( iLen == SSL_ERROR_WANT_READ )
+               {
                   continue;
+               }
             }
             else
+            {
                break;
+            }
 
             if( iLen <= 0 )
             {
                if( retval )
+               {
                   hb_xfree( retval );
+               }
 
                hb_storc( nullptr, 2 );
                hb_retni( iLen );
@@ -101,22 +106,30 @@ HB_FUNC( HB_SSL_READ_ALL )
             retval[ iPos++ ] = buffer[ 0 ];
 
             if( iPos == iMax )
+            {
                break;
+            }
          }
 
          if( retval )
          {
             if( ! hb_storclen_buffer( retval, iPos, 2 ) )
+            {
                hb_xfree( retval );
+            }
          }
          else
+         {
             hb_storc( nullptr, 2 );
+         }
 
          hb_retni( iPos );
       }
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( HB_SSL_READ_LINE )
@@ -141,30 +154,39 @@ HB_FUNC( HB_SSL_READ_LINE )
             int  iLen;
             int  sd = SSL_get_rfd( ssl );
 
-            if( SSL_pending( ssl ) ||
-                ( sd >= 0 && hb_socketSelectRead( ( HB_SOCKET ) sd, iTimeout ) ) )
+            if( SSL_pending( ssl ) || ( sd >= 0 && hb_socketSelectRead( static_cast< HB_SOCKET >( sd ), iTimeout ) ) )
             {
                iLen = SSL_read( ssl, buffer, 1 );
 
                if( iLen == SSL_ERROR_WANT_READ )
+               {
                   continue;
+               }
             }
             else
+            {
                break;
+            }
 
             if( iLen <= 0 )
             {
                if( retval )
+               {
                   hb_xfree( retval );
+               }
 
                hb_storc( nullptr, 2 );
                hb_retni( iLen );
                return;
             }
             else if( buffer[ 0 ] == '\r' )
+            {
                continue;
+            }
             else if( buffer[ 0 ] == '\n' )
+            {
                break;
+            }
 
             if( iPos == iAllocated )
             {
@@ -175,20 +197,28 @@ HB_FUNC( HB_SSL_READ_LINE )
             retval[ iPos++ ] = buffer[ 0 ];
 
             if( iPos == iMax )
+            {
                break;
+            }
          }
 
          if( retval )
          {
             if( ! hb_storclen_buffer( retval, iPos, 2 ) )
+            {
                hb_xfree( retval );
+            }
          }
          else
+         {
             hb_storc( nullptr, 2 );
+         }
 
          hb_retni( iPos );
       }
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }

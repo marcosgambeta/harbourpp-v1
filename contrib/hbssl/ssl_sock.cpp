@@ -92,8 +92,7 @@ const char * hb_ssl_socketErrorStr( int iError )
    return hb_socketErrorStr( iError );
 }
 
-long hb_ssl_socketRead( PHB_SSLSTREAM pStream, HB_SOCKET sd,
-                        void * buffer, long len, HB_MAXINT timeout )
+long hb_ssl_socketRead( PHB_SSLSTREAM pStream, HB_SOCKET sd, void * buffer, long len, HB_MAXINT timeout )
 {
    long lRead = -1;
    int iToRead = -1;
@@ -105,7 +104,9 @@ long hb_ssl_socketRead( PHB_SSLSTREAM pStream, HB_SOCKET sd,
 
 #if LONG_MAX > INT_MAX
    if( len > INT_MAX )
+   {
       len = INT_MAX;
+   }
 #endif
 
 #if 0
@@ -115,7 +116,9 @@ long hb_ssl_socketRead( PHB_SSLSTREAM pStream, HB_SOCKET sd,
    if( pStream->blocking ? timeout >= 0 : timeout < 0 )
    {
       if( hb_socketSetBlockingIO( sd, timeout < 0 ) >= 0 )
+      {
          pStream->blocking = ! pStream->blocking;
+      }
    }
 
    timer = hb_timerInit( timeout );
@@ -127,19 +130,27 @@ long hb_ssl_socketRead( PHB_SSLSTREAM pStream, HB_SOCKET sd,
       {
          iToRead = timeout < 0 ? 1 : hb_socketSelectRead( sd, timeout );
          if( iToRead > 0 )
+         {
             iToRead = static_cast< int >( len );
+         }
          else if( iToRead == 0 )
+         {
             hb_socketSetError( HB_SOCKET_ERR_TIMEOUT );
+         }
       }
       else if( iToRead > len )
+      {
          iToRead = static_cast< int >( len );
+      }
    }
 
    while( iToRead > 0 )
    {
       lRead = SSL_read( pStream->ssl, buffer, iToRead );
       if( lRead > 0 )
+      {
          hb_socketSetError( 0 );
+      }
       else
       {
          int iError = SSL_get_error( pStream->ssl, static_cast< int >( lRead ) );
@@ -158,13 +169,21 @@ long hb_ssl_socketRead( PHB_SSLSTREAM pStream, HB_SOCKET sd,
                      if( ( timeout = hb_timerTest( timeout, &timer ) ) != 0 )
                      {
                         if( iError == SSL_ERROR_WANT_READ )
+                        {
                            iError = hb_socketSelectRead( sd, timeout );
+                        }
                         else
+                        {
                            iError = hb_socketSelectWrite( sd, timeout );
+                        }
                         if( iError > 0 )
+                        {
                            continue;
+                        }
                         else if( iError < 0 )
+                        {
                            break;
+                        }
                      }
                   }
                   hb_socketSetError( HB_SOCKET_ERR_TIMEOUT );
@@ -181,9 +200,7 @@ long hb_ssl_socketRead( PHB_SSLSTREAM pStream, HB_SOCKET sd,
    return lRead;
 }
 
-long hb_ssl_socketWrite( PHB_SSLSTREAM pStream, HB_SOCKET sd,
-                         const void * buffer, long len, HB_MAXINT timeout,
-                         long * plast )
+long hb_ssl_socketWrite( PHB_SSLSTREAM pStream, HB_SOCKET sd, const void * buffer, long len, HB_MAXINT timeout, long * plast )
 {
    long lWritten = 0, lWr = 0;
    HB_MAXUINT timer;
@@ -194,7 +211,9 @@ long hb_ssl_socketWrite( PHB_SSLSTREAM pStream, HB_SOCKET sd,
 
 #if LONG_MAX > INT_MAX
    if( len > INT_MAX )
+   {
       len = INT_MAX;
+   }
 #endif
 
 #if 0
@@ -204,7 +223,9 @@ long hb_ssl_socketWrite( PHB_SSLSTREAM pStream, HB_SOCKET sd,
    if( pStream->blocking ? timeout >= 0 : timeout < 0 )
    {
       if( hb_socketSetBlockingIO( sd, timeout < 0 ) >= 0 )
+      {
          pStream->blocking = ! pStream->blocking;
+      }
    }
 
    timer = hb_timerInit( timeout );
@@ -214,13 +235,15 @@ long hb_ssl_socketWrite( PHB_SSLSTREAM pStream, HB_SOCKET sd,
       lWr = SSL_write( pStream->ssl, buffer, static_cast< int >( len ) );
 
       if( plast )
+      {
          *plast = lWr;
+      }
 
       if( lWr > 0 )
       {
          lWritten += lWr;
          len -= lWr;
-         buffer = ( const char * ) buffer + lWr;
+         buffer = static_cast< const char * >( buffer ) + lWr;
          hb_socketSetError( 0 );
       }
       else
@@ -237,19 +260,31 @@ long hb_ssl_socketWrite( PHB_SSLSTREAM pStream, HB_SOCKET sd,
                      if( ( timeout = hb_timerTest( timeout, &timer ) ) != 0 )
                      {
                         if( iError == SSL_ERROR_WANT_READ )
+                        {
                            iError = hb_socketSelectRead( sd, timeout );
+                        }
                         else
+                        {
                            iError = hb_socketSelectWrite( sd, timeout );
+                        }
                         if( iError > 0 )
+                        {
                            continue;
+                        }
                      }
                      else
+                     {
                         iError = 0;
+                     }
                   }
                   else
+                  {
                      iError = 0;
+                  }
                   if( lWritten == 0 && iError == 0 )
+                  {
                      hb_socketSetError( HB_SOCKET_ERR_TIMEOUT );
+                  }
                   break;
                }
                /* fallthrough */
@@ -267,15 +302,17 @@ void hb_ssl_socketClose( PHB_SSLSTREAM pStream )
 {
    SSL_shutdown( pStream->ssl );
    if( pStream->pSSL )
+   {
       hb_itemRelease( pStream->pSSL );
+   }
    else
+   {
       SSL_free( pStream->ssl );
+   }
    hb_xfree( pStream );
 }
 
-PHB_SSLSTREAM hb_ssl_socketNew( HB_SOCKET sd, SSL * ssl, HB_BOOL fServer,
-                                HB_MAXINT timeout, PHB_ITEM pSSL,
-                                int * piResult )
+PHB_SSLSTREAM hb_ssl_socketNew( HB_SOCKET sd, SSL * ssl, HB_BOOL fServer, HB_MAXINT timeout, PHB_ITEM pSSL, int * piResult )
 {
    PHB_SSLSTREAM pStream;
    HB_MAXUINT timer;
@@ -287,7 +324,9 @@ PHB_SSLSTREAM hb_ssl_socketNew( HB_SOCKET sd, SSL * ssl, HB_BOOL fServer,
    pStream->pSSL = pSSL ? hb_itemNew( pSSL ) : nullptr;
    pStream->blocking = timeout < 0;
    if( hb_socketSetBlockingIO( sd, pStream->blocking ) < 0 )
+   {
       pStream->blocking = ! pStream->blocking;
+   }
 
    SSL_set_mode( ssl, HB_SSL_MODE_AUTO_RETRY );
    iResult = SSL_set_fd( ssl, sd );  /* Truncates `sd` on win64. OpenSSL bug: https://rt.openssl.org/Ticket/Display.html?id=1928&user=guest&pass=guest */
@@ -297,15 +336,18 @@ PHB_SSLSTREAM hb_ssl_socketNew( HB_SOCKET sd, SSL * ssl, HB_BOOL fServer,
    while( iResult == 1 )
    {
       if( fServer )
+      {
          iResult = SSL_accept( ssl );
+      }
       else
+      {
          iResult = SSL_connect( ssl );
+      }
 
       if( iResult != 1 && hb_vmRequestQuery() == 0 )
       {
          int iError = SSL_get_error( ssl, iResult );
-         if( iError == SSL_ERROR_WANT_READ ||
-             iError == SSL_ERROR_WANT_WRITE )
+         if( iError == SSL_ERROR_WANT_READ || iError == SSL_ERROR_WANT_WRITE )
          {
             if( timeout < 0 )
             {
@@ -317,9 +359,13 @@ PHB_SSLSTREAM hb_ssl_socketNew( HB_SOCKET sd, SSL * ssl, HB_BOOL fServer,
                if( ( timeout = hb_timerTest( timeout, &timer ) ) != 0 )
                {
                   if( iError == SSL_ERROR_WANT_READ )
+                  {
                      iError = hb_socketSelectRead( sd, timeout );
+                  }
                   else
+                  {
                      iError = hb_socketSelectWrite( sd, timeout );
+                  }
                   if( iError > 0 )
                   {
                      iResult = 1;
@@ -339,10 +385,14 @@ PHB_SSLSTREAM hb_ssl_socketNew( HB_SOCKET sd, SSL * ssl, HB_BOOL fServer,
       pStream = nullptr;
    }
    else
+   {
       pStream->blocking = hb_socketSetBlockingIO( sd, HB_FALSE ) < 0;
+   }
 
    if( piResult )
+   {
       *piResult = iResult;
+   }
 
    return pStream;
 }
@@ -358,7 +408,9 @@ static SSL * s_SSL_itemGet( PHB_ITEM pItem, PHB_ITEM * pSSL, HB_BOOL * pfFree )
       PHB_ITEM pRelease = nullptr;
 
       if( HB_IS_EVALITEM( pItem ) )
+      {
          pItem = pRelease = hb_itemDo( pItem, 0 );
+      }
 
       ssl = hb_SSL_itemGet( pItem );
       if( ssl == nullptr )
@@ -368,7 +420,9 @@ static SSL * s_SSL_itemGet( PHB_ITEM pItem, PHB_ITEM * pSSL, HB_BOOL * pfFree )
          {
             ssl = SSL_new( ssl_ctx );
             if( pRelease )
+            {
                hb_itemRelease( pRelease );
+            }
             pItem = pRelease = nullptr;
          }
       }
@@ -378,12 +432,14 @@ static SSL * s_SSL_itemGet( PHB_ITEM pItem, PHB_ITEM * pSSL, HB_BOOL * pfFree )
          * pfFree = pRelease != nullptr;
       }
       else if( pRelease )
+      {
          hb_itemRelease( pRelease );
+      }
    }
    return ssl;
 }
 
-#define HB_SSLSOCK_GET( p )   ( ( PHB_SSLSTREAM ) p->cargo )
+#define HB_SSLSOCK_GET( p )   ( static_cast< PHB_SSLSTREAM >( p->cargo ) )
 #define HB_SSLSOCK_READAHEAD  0x40
 
 static PHB_SOCKEX s_sockexNew( HB_SOCKET sd, PHB_ITEM pParams )
@@ -399,28 +455,41 @@ static PHB_SOCKEX s_sockexNew( HB_SOCKET sd, PHB_ITEM pParams )
       PHB_ITEM pItem;
 
       if( ssl == nullptr )
+      {
          ssl = s_SSL_itemGet( hb_hashGetCItemPtr( pParams, "ssl" ), &pSSL, &fFree );
+      }
       if( ssl == nullptr )
+      {
          ssl = s_SSL_itemGet( hb_hashGetCItemPtr( pParams, "ctx" ), &pSSL, &fFree );
+      }
       if( ssl == nullptr )
+      {
          ssl = s_SSL_itemGet( hb_hashGetCItemPtr( pParams, "key" ), &pSSL, &fFree );
+      }
 
-      if( ( pItem = hb_hashGetCItemPtr( pParams, "timeout" ) ) != nullptr &&
-          HB_IS_NUMERIC( pItem ) )
+      if( ( pItem = hb_hashGetCItemPtr( pParams, "timeout" ) ) != nullptr && HB_IS_NUMERIC( pItem ) )
+      {
          timeout = hb_itemGetNInt( pItem );
-      if( ( pItem = hb_hashGetCItemPtr( pParams, "server" ) ) != nullptr &&
-          HB_IS_LOGICAL( pItem ) )
+      }
+      if( ( pItem = hb_hashGetCItemPtr( pParams, "server" ) ) != nullptr && HB_IS_LOGICAL( pItem ) )
+      {
          fServer = hb_itemGetL( pItem );
-      else if( ( pItem = hb_hashGetCItemPtr( pParams, "client" ) ) != nullptr &&
-               HB_IS_LOGICAL( pItem ) )
+      }
+      else if( ( pItem = hb_hashGetCItemPtr( pParams, "client" ) ) != nullptr && HB_IS_LOGICAL( pItem ) )
+      {
          fServer = ! hb_itemGetL( pItem );
+      }
    }
 
    pSock = hb_sockexNewSSL( sd, ssl, fServer, timeout, pSSL );
    if( pSock )
+   {
       hb_socekxParamsInit( pSock, pParams );
+   }
    if( fFree )
+   {
       hb_itemRelease( pSSL );
+   }
 
    return pSock;
 }
@@ -436,7 +505,9 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
    {
       pSockNew = s_sockexNew( pSock->sd, pParams );
       if( pSockNew )
+      {
          hb_sockexClose( pSock, HB_FALSE );
+      }
    }
 
    return pSockNew;
@@ -447,7 +518,9 @@ static int s_sockexClose( PHB_SOCKEX pSock, HB_BOOL fClose )
    int iResult;
 
    if( pSock->cargo )
+   {
       hb_ssl_socketClose( HB_SSLSOCK_GET( pSock ) );
+   }
 
    iResult = hb_sockexRawClear( pSock, fClose );
    hb_xfree( pSock );
@@ -464,9 +537,13 @@ static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT tim
       memcpy( data, pSock->buffer + pSock->posbuffer, lRead );
       pSock->inbuffer -= lRead;
       if( pSock->inbuffer )
+      {
          pSock->posbuffer += lRead;
+      }
       else
+      {
          pSock->posbuffer = 0;
+      }
       return lRead;
    }
    else if( pSock->sd == HB_NO_SOCKET )
@@ -499,7 +576,9 @@ static long s_sockexFlush( PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync )
 static int s_sockexCanRead( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout )
 {
    if( pSock->inbuffer )
+   {
       return 1;
+   }
    else if( pSock->sd == HB_NO_SOCKET )
    {
       hb_socketSetError( HB_SOCKET_ERR_INVALIDHANDLE );
@@ -512,11 +591,12 @@ static int s_sockexCanRead( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout
       if( pSock->buffer == nullptr )
       {
          if( pSock->readahead <= 0 )
+         {
             pSock->readahead = HB_SSLSOCK_READAHEAD;
+         }
          pSock->buffer = static_cast< HB_BYTE * >( hb_xgrab( pSock->readahead ) );
       }
-      len = hb_ssl_socketRead( HB_SSLSOCK_GET( pSock ), pSock->sd,
-                               pSock->buffer, pSock->readahead, 0 );
+      len = hb_ssl_socketRead( HB_SSLSOCK_GET( pSock ), pSock->sd, pSock->buffer, pSock->readahead, 0 );
       if( len > 0 )
       {
          pSock->inbuffer = len;
@@ -564,8 +644,7 @@ static const HB_SOCKET_FILTER s_sockFilter =
    s_sockexErrorStr
 };
 
-PHB_SOCKEX hb_sockexNewSSL( HB_SOCKET sd, SSL * ssl, HB_BOOL fServer,
-                            HB_MAXINT timeout, PHB_ITEM pSSL )
+PHB_SOCKEX hb_sockexNewSSL( HB_SOCKET sd, SSL * ssl, HB_BOOL fServer, HB_MAXINT timeout, PHB_ITEM pSSL )
 {
    PHB_SOCKEX pSock = nullptr;
 
@@ -579,7 +658,7 @@ PHB_SOCKEX hb_sockexNewSSL( HB_SOCKET sd, SSL * ssl, HB_BOOL fServer,
          pSock->fRedirAll = HB_TRUE;
          pSock->fShutDown = HB_TRUE;
          pSock->pFilter = &s_sockFilter;
-         pSock->cargo = ( void * ) pStream;
+         pSock->cargo = static_cast< void * >( pStream );
       }
    }
 
@@ -596,18 +675,26 @@ static void s_sslSocketNew( HB_BOOL fServer )
       SSL * ssl = hb_SSL_par( 2 );
 
       if( ssl )
+      {
          pSock = hb_sockexNewSSL( sd, ssl, fServer, hb_parnintdef( 3, - 1 ), hb_param( 2, HB_IT_ANY ) );
+      }
       else if( HB_ISHASH( 2 ) )
+      {
          pSock = hb_sockexNew( sd, s_sockFilter.pszName, hb_param( 2, HB_IT_ANY ) );
+      }
       else
+      {
          hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSock )
       {
          PHB_ITEM pSockItm = hb_param( 1, HB_IT_POINTER );
 
          if( HB_ISBYREF( 1 ) && hb_sockexItemReplace( pSockItm, pSock ) )
+         {
             hb_itemReturn( pSockItm );
+         }
          else
          {
             hb_socketItemClear( pSockItm );
