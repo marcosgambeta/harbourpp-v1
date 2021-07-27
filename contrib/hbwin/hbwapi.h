@@ -54,39 +54,39 @@
 
 #include <windows.h>
 
-#define hbwapi_par_WPARAM( n )              ( ( WPARAM           ) hb_parptr( n ) )
-#define hbwapi_par_LPARAM( n )              ( ( LPARAM           ) hb_parptr( n ) )
+#define hbwapi_par_WPARAM( n )              ( static_cast< WPARAM           >( hb_parptr( n ) ) )
+#define hbwapi_par_LPARAM( n )              ( static_cast< LPARAM           >( hb_parptr( n ) ) )
 
-#define hbwapi_par_raw_WNDPROC( n )         ( ( WNDPROC          ) hb_parptr( n ) )
-#define hbwapi_par_raw_HWND( n )            ( ( HWND             ) hb_parptr( n ) )
-#define hbwapi_par_raw_HDC( n )             ( ( HDC              ) hb_parptr( n ) )
-#define hbwapi_par_raw_HANDLE( n )          ( ( HANDLE           ) hb_parptr( n ) )
-#define hbwapi_par_raw_HGDIOBJ( n )         ( ( HGDIOBJ          ) hb_parptr( n ) )
-#define hbwapi_par_raw_HBRUSH( n )          ( ( HBRUSH           ) hb_parptr( n ) )
-#define hbwapi_par_raw_HBITMAP( n )         ( ( HBITMAP          ) hb_parptr( n ) )
-#define hbwapi_par_raw_HICON( n )           ( ( HICON            ) hb_parptr( n ) )
-#define hbwapi_par_raw_HMENU( n )           ( ( HMENU            ) hb_parptr( n ) )
-#define hbwapi_par_raw_HACCEL( n )          ( ( HACCEL           ) hb_parptr( n ) )
-#define hbwapi_par_raw_HIMAGELIST( n )      ( ( HIMAGELIST       ) hb_parptr( n ) )
-#define hbwapi_par_raw_HFONT( n )           ( ( HFONT            ) hb_parptr( n ) )
-#define hbwapi_par_raw_HINSTANCE( n )       ( ( HINSTANCE        ) hb_parptr( n ) )
-#define hbwapi_par_raw_TREEITEM( n )        ( ( HTREEITEM        ) hb_parptr( n ) )
-#define hbwapi_par_raw_HITEM( n )           ( ( HTREEITEM        ) hb_parptr( n ) )
-#define hbwapi_par_raw_TVHITTESTINFO( n )   ( ( TVHITTESTINFO *  ) hb_parptr( n ) )
-#define hbwapi_par_raw_TVINSERTSTRUCT( n )  ( ( TVINSERTSTRUCT * ) hb_parptr( n ) )
-#define hbwapi_par_raw_TVITEM( n )          ( ( TVITEM *         ) hb_parptr( n ) )
+#define hbwapi_par_raw_WNDPROC( n )         ( static_cast< WNDPROC          >( hb_parptr( n ) ) )
+#define hbwapi_par_raw_HWND( n )            ( static_cast< HWND             >( hb_parptr( n ) ) )
+#define hbwapi_par_raw_HDC( n )             ( static_cast< HDC              >( hb_parptr( n ) ) )
+#define hbwapi_par_raw_HANDLE( n )          ( static_cast< HANDLE           >( hb_parptr( n ) ) )
+#define hbwapi_par_raw_HGDIOBJ( n )         ( static_cast< HGDIOBJ          >( hb_parptr( n ) ) )
+#define hbwapi_par_raw_HBRUSH( n )          ( static_cast< HBRUSH           >( hb_parptr( n ) ) )
+#define hbwapi_par_raw_HBITMAP( n )         ( static_cast< HBITMAP          >( hb_parptr( n ) ) )
+#define hbwapi_par_raw_HICON( n )           ( static_cast< HICON            >( hb_parptr( n ) ) )
+#define hbwapi_par_raw_HMENU( n )           ( static_cast< HMENU            >( hb_parptr( n ) ) )
+#define hbwapi_par_raw_HACCEL( n )          ( static_cast< HACCEL           >( hb_parptr( n ) ) )
+#define hbwapi_par_raw_HIMAGELIST( n )      ( static_cast< HIMAGELIST       >( hb_parptr( n ) ) )
+#define hbwapi_par_raw_HFONT( n )           ( static_cast< HFONT            >( hb_parptr( n ) ) )
+#define hbwapi_par_raw_HINSTANCE( n )       ( static_cast< HINSTANCE        >( hb_parptr( n ) ) )
+#define hbwapi_par_raw_TREEITEM( n )        ( static_cast< HTREEITEM        >( hb_parptr( n ) ) )
+#define hbwapi_par_raw_HITEM( n )           ( static_cast< HTREEITEM        >( hb_parptr( n ) ) )
+#define hbwapi_par_raw_TVHITTESTINFO( n )   ( static_cast< TVHITTESTINFO *  >( hb_parptr( n ) ) )
+#define hbwapi_par_raw_TVINSERTSTRUCT( n )  ( static_cast< TVINSERTSTRUCT * >( hb_parptr( n ) ) )
+#define hbwapi_par_raw_TVITEM( n )          ( static_cast< TVITEM *         >( hb_parptr( n ) ) )
 
 #define hbwapi_par_raw_STRUCT( n )          ( hb_parc( n ) )
 
-#define hbwapi_par_COLORREF( n )            ( ( COLORREF ) hb_parnint( n ) )
+#define hbwapi_par_COLORREF( n )            ( static_cast< COLORREF >( hb_parnint( n ) ) )
 
-#define hbwapi_par_BOOL( n )                ( ( BOOL  ) ( hb_parl( n ) ? TRUE : FALSE ) )
-#define hbwapi_par_INT( n )                 ( ( INT   ) hb_parni( n ) )
-#define hbwapi_par_UINT( n )                ( ( UINT  ) hb_parni( n ) )
-#define hbwapi_par_LONG( n )                ( ( LONG  ) hb_parnl( n ) )
-#define hbwapi_par_WORD( n )                ( ( WORD  ) hb_parnl( n ) )
-#define hbwapi_par_DWORD( n )               ( ( DWORD ) hb_parnl( n ) )
-#define hbwapi_par_SHORT( n )               ( ( SHORT ) hb_parni( n ) )
+#define hbwapi_par_BOOL( n )                ( static_cast< BOOL  >( hb_parl( n ) ? TRUE : FALSE ) )
+#define hbwapi_par_INT( n )                 ( static_cast< INT   >( hb_parni( n ) ) )
+#define hbwapi_par_UINT( n )                ( static_cast< UINT  >( hb_parni( n ) ) )
+#define hbwapi_par_LONG( n )                ( static_cast< LONG  >( hb_parnl( n ) ) )
+#define hbwapi_par_WORD( n )                ( static_cast< WORD  >( hb_parnl( n ) ) )
+#define hbwapi_par_DWORD( n )               ( static_cast< DWORD >( hb_parnl( n ) ) )
+#define hbwapi_par_SHORT( n )               ( static_cast< SHORT >( hb_parni( n ) ) )
 
 #define hbwapi_ret_NINT( i )                ( hb_retnint( i ) )
 #define hbwapi_ret_NI( i )                  ( hb_retni( i ) )
@@ -105,8 +105,7 @@
 #define hbwapi_ret_LRESULT( hr )            ( hb_retnint( hr ) )
 #define hbwapi_ret_COLORREF( cr )           ( hb_retnint( cr ) )
 
-#if ( ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 || defined( HB_OS_WIN_CE ) ) ) || \
-   defined( __DMC__ ) ) && ! defined( HB_ARCH_64BIT )
+#if ( ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 || defined( HB_OS_WIN_CE ) ) ) || defined( __DMC__ ) ) && ! defined( HB_ARCH_64BIT )
 #  ifndef GetWindowLongPtr
 #     define GetWindowLongPtr  GetWindowLong
 #  endif
@@ -119,11 +118,9 @@
 #endif
 
 #if defined( __BORLANDC__ )
-#  define HBWAPI_GET_LARGEUINT( v )  ( ( HB_MAXUINT ) ( v ).u.LowPart | \
-                                       ( ( HB_MAXUINT ) ( v ).u.HighPart << 32 ) )
+#  define HBWAPI_GET_LARGEUINT( v )  ( ( HB_MAXUINT ) ( v ).u.LowPart | ( ( HB_MAXUINT ) ( v ).u.HighPart << 32 ) )
 #else
-#  define HBWAPI_GET_LARGEUINT( v )  ( ( HB_MAXUINT ) ( v ).LowPart | \
-                                       ( ( HB_MAXUINT ) ( v ).HighPart << 32 ) )
+#  define HBWAPI_GET_LARGEUINT( v )  ( ( HB_MAXUINT ) ( v ).LowPart | ( ( HB_MAXUINT ) ( v ).HighPart << 32 ) )
 #endif
 
 HB_EXTERN_BEGIN

@@ -50,10 +50,12 @@ HB_SIZE hbwapi_tstrlen( const TCHAR * pText )
 {
    HB_SIZE nLen = 0;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hbwapi_tstrlen(%p)", ( const void * ) pText ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hbwapi_tstrlen(%p)", static_cast< const void * >( pText ) ) );
 
    while( pText[ nLen ] != TEXT( '\0' ) )
+   {
       ++nLen;
+   }
 
    return nLen;
 }
@@ -64,7 +66,7 @@ TCHAR * hbwapi_tstrdup( const TCHAR * pszText )
    TCHAR * pszDup;
    HB_SIZE nLen;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hbwapi_tstrdup(%p)", ( const void * ) pszText ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hbwapi_tstrdup(%p)", static_cast< const void * >( pszText ) ) );
 
    nLen = ( hbwapi_tstrlen( pszText ) + 1 ) * sizeof( TCHAR );
 
@@ -79,7 +81,7 @@ TCHAR * hbwapi_tstrncat( TCHAR * pDest, const TCHAR * pSource, HB_SIZE nLen )
 {
    TCHAR * pBuf = pDest;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hbwapi_tstrncat(%p, %p, %" HB_PFS "u)", ( void * ) pDest, ( const void * ) pSource, nLen ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hbwapi_tstrncat(%p, %p, %" HB_PFS "u)", static_cast< void * >( pDest ), static_cast< const void * >( pSource ), nLen ) );
 
    pDest[ nLen ] = TEXT( '\0' );
 
@@ -90,7 +92,9 @@ TCHAR * hbwapi_tstrncat( TCHAR * pDest, const TCHAR * pSource, HB_SIZE nLen )
    }
 
    while( nLen && ( *pDest++ = *pSource++ ) != TEXT( '\0' ) )
+   {
       nLen--;
+   }
 
    return pBuf;
 }
@@ -107,7 +111,9 @@ static TCHAR * hbwapi_FileNameAtSystemDir( const TCHAR * pFileName )
       LPTSTR buffer;
 
       if( pFileName )
-         nLen += ( UINT ) hbwapi_tstrlen( pFileName ) + 1;
+      {
+         nLen += static_cast< UINT >( hbwapi_tstrlen( pFileName ) ) + 1;
+      }
 
       buffer = static_cast< LPTSTR >( hb_xgrab( nLen * sizeof( TCHAR ) ) );
 
@@ -122,7 +128,9 @@ static TCHAR * hbwapi_FileNameAtSystemDir( const TCHAR * pFileName )
       return buffer;
    }
    else
+   {
       return hbwapi_tstrdup( pFileName );
+   }
 #endif
 }
 

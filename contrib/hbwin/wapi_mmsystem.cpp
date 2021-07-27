@@ -53,8 +53,8 @@ HB_FUNC( WAPI_PLAYSOUND )
    void * hSound;
 
    hb_retl( PlaySound( HB_PARSTR( 1, &hSound, nullptr ) /* pszSound */,
-                       ( HMODULE ) hb_parptr( 2 ) /* hmod */,
-                       ( DWORD ) hb_parnl( 3 ) /* fdwSound */ ) );
+                       static_cast< HMODULE >( hb_parptr( 2 ) ) /* hmod */,
+                       static_cast< DWORD >( hb_parnl( 3 ) ) /* fdwSound */ ) );
 
    hb_strfree( hSound );
 }

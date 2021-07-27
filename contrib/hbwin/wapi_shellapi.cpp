@@ -61,7 +61,7 @@ HB_FUNC( WAPI_SHELLEXECUTE )
    void * hParameters;
    void * hDirectory;
 
-   hb_retnint( reinterpret_cast< HB_PTRUINT >( ShellExecute( ( HWND ) hb_parptr( 1 ),
+   hb_retnint( reinterpret_cast< HB_PTRUINT >( ShellExecute( static_cast< HWND >( hb_parptr( 1 ) ),
                                             HB_PARSTR( 2, &hOperation, nullptr ), /* edit, explore, open, print, play?, properties? */
                                             HB_PARSTRDEF( 3, &hFile, nullptr ),
                                             HB_PARSTR( 4, &hParameters, nullptr ),
@@ -88,7 +88,7 @@ HB_FUNC( WAPI_SHELLEXECUTE_WAIT )
    SHELLEXECUTEINFO ShExecInfo = {0};
    ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
    ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
-   ShExecInfo.hwnd = ( HWND ) hb_parptr( 1 );
+   ShExecInfo.hwnd = static_cast< HWND >( hb_parptr( 1 ) );
    ShExecInfo.lpVerb = HB_PARSTR( 2, &hOperation, nullptr );
    ShExecInfo.lpFile = HB_PARSTRDEF( 3, &hFile, nullptr );
    ShExecInfo.lpParameters =  HB_PARSTR( 4, &hParameters, nullptr );
@@ -99,7 +99,7 @@ HB_FUNC( WAPI_SHELLEXECUTE_WAIT )
    hb_retl( retVal );
    while( WaitForSingleObject(ShExecInfo.hProcess,1000) != WAIT_OBJECT_0 )
    {
-      while( PeekMessage( &msg, ( HWND ) nullptr, 0, 0, PM_REMOVE ) )
+      while( PeekMessage( &msg, static_cast< HWND >( nullptr ), 0, 0, PM_REMOVE ) )
       {
          TranslateMessage( &msg );
          DispatchMessage( &msg );
@@ -120,10 +120,11 @@ HB_FUNC( WAPI_ISUSERANADMIN )
    if( hLib )
    {
       typedef int ( WINAPI * ISUSERANADMIN )( void );
-      ISUSERANADMIN pIsUserAnAdmin = ( ISUSERANADMIN )
-                                     HB_WINAPI_GETPROCADDRESS( hLib, "IsUserAnAdmin" );
+      ISUSERANADMIN pIsUserAnAdmin = static_cast< ISUSERANADMIN >( HB_WINAPI_GETPROCADDRESS( hLib, "IsUserAnAdmin" ) );
       if( pIsUserAnAdmin )
+      {
          bResult = ( pIsUserAnAdmin )();
+      }
 
       FreeLibrary( hLib );
    }

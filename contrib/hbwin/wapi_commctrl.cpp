@@ -51,8 +51,8 @@
 
 #if defined( __BORLANDC__ ) && ! defined( HB_ARCH_64BIT )
     #undef MAKELONG
-    #define MAKELONG( a, b )  ( ( LONG ) ( ( ( WORD ) ( ( DWORD_PTR ) ( a ) & 0xffff ) ) | \
-                                           ( ( ( DWORD ) ( ( WORD ) ( ( DWORD_PTR ) ( b ) & 0xffff ) ) ) << 16 ) ) )
+    #define MAKELONG( a, b )  ( static_cast< LONG >( ( static_cast< WORD >( static_cast< DWORD_PTR >( a ) & 0xffff ) ) | \
+                              ( ( static_cast< DWORD >( static_cast< WORD >( static_cast< DWORD_PTR >( b ) & 0xffff ) ) ) << 16 ) ) )
 #endif
 
 /*----------------------------------------------------------------------*/
@@ -232,7 +232,9 @@ HB_FUNC( WAPI_IMAGELIST_GETICONSIZE )
       hb_retl( HB_TRUE );
    }
    else
+   {
       hb_retl( HB_FALSE );
+   }
 }
 
 /* int ImageList_GetImageCount( HIMAGELIST himl ); */
@@ -247,9 +249,13 @@ HB_FUNC( WAPI_IMAGELIST_GETIMAGEINFO )
    IMAGEINFO ii;
 
    if( ImageList_GetImageInfo( hbwapi_par_raw_HIMAGELIST( 1 ), hbwapi_par_INT( 2 ), &ii ) )
-      hb_retclen( ( char * ) &ii, sizeof( ii ) );
+   {
+      hb_retclen( reinterpret_cast< char * >( &ii ), sizeof( ii ) );
+   }
    else
+   {
       hb_retc_null();
+   }
 }
 
 /* HIMAGELIST ImageList_LoadImage( HINSTANCE hi, LPCTSTR lpbmp, int cx, int cGrow,
@@ -260,9 +266,13 @@ HB_FUNC( WAPI_IMAGELIST_LOADIMAGE )
    LPCTSTR image;
 
    if( HB_ISCHAR( 2 ) )
-      image = ( LPCTSTR ) hb_parc( 2 );
+   {
+      image = reinterpret_cast< LPCTSTR >( hb_parc( 2 ) );
+   }
    else
-      image = ( LPCTSTR ) MAKEINTRESOURCE( hbwapi_par_INT( 2 ) );
+   {
+      image = static_cast< LPCTSTR >( MAKEINTRESOURCE( hbwapi_par_INT( 2 ) ) );
+   }
 
    hbwapi_ret_raw_HANDLE( ImageList_LoadImage( hbwapi_par_raw_HINSTANCE( 1 ),
                                                image,
@@ -395,7 +405,6 @@ HB_FUNC( WAPI_IMAGELIST_WRITEEX )
 #endif
 /* --- END - ImageList_* - API --- */
 
-
 /* --- Tab Control Macros --- */
 
 /* wapi_TabCtrl_InsertItem( hWndTab, nInsertPos, cText, iImageListIndex ) */
@@ -407,7 +416,7 @@ HB_FUNC( WAPI_TABCTRL_INSERTITEM )
 
    item.mask    = TCIF_TEXT | TCIF_IMAGE;
    item.iImage  = HB_ISNUM( 4 ) ? hbwapi_par_INT( 4 ) : -1;
-   item.pszText = ( LPTSTR ) HB_PARSTRDEF( 3, &hText, nullptr );
+   item.pszText = const_cast< LPTSTR >( HB_PARSTRDEF( 3, &hText, nullptr ) );
 
    hbwapi_ret_NI( TabCtrl_InsertItem( hbwapi_par_raw_HWND( 1 ), hbwapi_par_INT( 3 ), &item ) );
 
@@ -483,7 +492,7 @@ HB_FUNC( WAPI_TABCTRL_SETITEM )
 
    item.mask    = TCIF_TEXT | TCIF_IMAGE;
    item.iImage  = HB_ISNUM( 4 ) ? hbwapi_par_INT( 4 ) : -1;
-   item.pszText = ( LPTSTR ) HB_PARSTRDEF( 3, &hText, nullptr );
+   item.pszText = const_cast< LPTSTR >( HB_PARSTRDEF( 3, &hText, nullptr ) );
 
    hbwapi_ret_L( TabCtrl_SetItem( hbwapi_par_raw_HWND( 1 ), hbwapi_par_INT( 2 ), &item ) );
 
@@ -501,7 +510,7 @@ HB_FUNC( WAPI_TABCTRL_DELETEALLITEMS )
 /* (BOOL)SNDMSG((hwnd), TCM_DELETEITEM, (WPARAM)(int)(i), 0) */
 HB_FUNC( WAPI_TABCTRL_DELETEITEM )
 {
-   hbwapi_ret_L( TabCtrl_DeleteItem( hbwapi_par_raw_HWND( 1 ), ( WPARAM ) hbwapi_par_INT( 2 ) ) );
+   hbwapi_ret_L( TabCtrl_DeleteItem( hbwapi_par_raw_HWND( 1 ), static_cast< WPARAM >( hbwapi_par_INT( 2 ) ) ) );
 }
 
 /* TabCtrl_HitTest(hwndTC, pinfo) */
@@ -607,7 +616,7 @@ HB_FUNC( WAPI_TABCTRL_SETMINTABWIDTH )
    #if 0
    hbwapi_ret_NI( TabCtrl_SetMinTabWidth( hbwapi_par_raw_HWND( 1 ), hbwapi_par_INT( 2 ) ) );
    #endif
-   hbwapi_ret_NI( static_cast< int >( SendMessage( hbwapi_par_raw_HWND( 1 ), TCM_SETMINTABWIDTH, ( WPARAM ) 0, ( LPARAM ) hbwapi_par_INT( 2 ) ) ) );
+   hbwapi_ret_NI( static_cast< int >( SendMessage( hbwapi_par_raw_HWND( 1 ), TCM_SETMINTABWIDTH, static_cast< WPARAM >( 0 ), static_cast< LPARAM >( hbwapi_par_INT( 2 ) ) ) ) );
 }
 
 /* TabCtrl_DeselectAll(hwnd, fExcludeFocus) */
@@ -617,7 +626,7 @@ HB_FUNC( WAPI_TABCTRL_DESELECTALL )
    #if 0
    TabCtrl_DeselectAll( hbwapi_par_raw_HWND( 1 ), hbwapi_par_UINT( 2 ) );
    #endif
-   SendMessage( hbwapi_par_raw_HWND( 1 ), TCM_DESELECTALL, ( WPARAM ) hbwapi_par_UINT( 2 ), ( LPARAM ) 0 );
+   SendMessage( hbwapi_par_raw_HWND( 1 ), TCM_DESELECTALL, static_cast< WPARAM >( hbwapi_par_UINT( 2 ) ), static_cast< LPARAM >( 0 ) );
 }
 
 /* TabCtrl_HighlightItem(hwnd, i, fHighlight) */
@@ -679,9 +688,9 @@ HB_FUNC( WAPI_TABCTRL_GETUNICODEFORMAT )
 HB_FUNC( WAPI_TABCTRL_CREATE )
 {
    HWND hwnd = hbwapi_par_raw_HWND( 1 );
-   HWND hbutton = CreateWindowEx( 0, WC_TABCONTROL, nullptr, ( LONG ) hb_parnl( 6 ) /* style */, hb_parni( 2 ), hb_parni( 3 ), hb_parni( 4 ), hb_parni( 5 ), hwnd, nullptr, GetModuleHandle( nullptr ), nullptr );
+   HWND hbutton = CreateWindowEx( 0, WC_TABCONTROL, nullptr, static_cast< LONG >( hb_parnl( 6 ) ) /* style */, hb_parni( 2 ), hb_parni( 3 ), hb_parni( 4 ), hb_parni( 5 ), hwnd, nullptr, GetModuleHandle( nullptr ), nullptr );
 
-   SendMessage( hbutton, ( UINT ) WM_SETFONT, ( WPARAM ) ( HFONT ) SendMessage( hwnd, WM_GETFONT, 0, 0 ), 1 );
+   SendMessage( hbutton, static_cast< UINT >( WM_SETFONT ), reinterpret_cast< WPARAM >( reinterpret_cast< HFONT >( SendMessage( hwnd, WM_GETFONT, 0, 0 ) ) ), 1 );
    hbwapi_ret_raw_HANDLE( hbutton );
 }
 
@@ -695,7 +704,7 @@ HB_FUNC( WAPI_TABCTRL_ADDITEM )
 
    item.mask    = TCIF_TEXT | TCIF_IMAGE;
    item.iImage  = HB_ISNUM( 3 ) ? hbwapi_par_INT( 3 ) : -1;
-   item.pszText = ( LPTSTR ) HB_PARSTRDEF( 2, &hText, nullptr );
+   item.pszText = const_cast< LPTSTR >( HB_PARSTRDEF( 2, &hText, nullptr ) );
 
    hbwapi_ret_NI( TabCtrl_InsertItem( hbwapi_par_raw_HWND( 1 ), iCount, &item ) );
 
@@ -864,14 +873,14 @@ HB_FUNC( WAPI_TREEVIEW_GETITEMRECT )
 {
    LPRECT prc = nullptr;
 
-   hbwapi_ret_L( TreeView_GetItemRect( hbwapi_par_raw_HWND( 1 ), ( HTREEITEM ) hbwapi_par_raw_HANDLE( 2 ), prc, hbwapi_par_BOOL( 4 ) ) );
+   hbwapi_ret_L( TreeView_GetItemRect( hbwapi_par_raw_HWND( 1 ), static_cast< HTREEITEM >( hbwapi_par_raw_HANDLE( 2 ) ), prc, hbwapi_par_BOOL( 4 ) ) );
 }
 
 /* IE 5.0 UINT TreeView_GetItemState( HWND hwndTV, HTREEITEM hItem, UINT stateMask ); */
 HB_FUNC( WAPI_TREEVIEW_GETITEMSTATE )
 {
 #if ( _WIN32_IE >= 0x0500 )
-   hbwapi_ret_UINT( TreeView_GetItemState( hbwapi_par_raw_HWND( 1 ), ( HTREEITEM ) hbwapi_par_raw_HANDLE( 2 ), hbwapi_par_UINT( 3 ) ) );
+   hbwapi_ret_UINT( TreeView_GetItemState( hbwapi_par_raw_HWND( 1 ), static_cast< HTREEITEM >( hbwapi_par_raw_HANDLE( 2 ) ), hbwapi_par_UINT( 3 ) ) );
 #else
    hbwapi_ret_UINT( 0 );
 #endif

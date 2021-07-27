@@ -74,7 +74,9 @@ HB_FUNC( WIN_ANSITOOEM )
       hb_retclen_buffer( pszDst, nLen );
    }
    else
+   {
       hb_retc_null();
+   }
 }
 
 HB_FUNC( WIN_OEMTOANSI )
@@ -102,5 +104,7 @@ HB_FUNC( WIN_OEMTOANSI )
       hb_retclen_buffer( pszDst, nLen );
    }
    else
+   {
       hb_retc_null();
+   }
 }
