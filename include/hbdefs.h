@@ -56,7 +56,7 @@
 #include "hbsetup.h"
 #include "hbver.h"
 
-#if defined( __XCC__ ) || defined( __POCC__ ) || defined( __LCC__ ) || \
+#if defined( __LCC__ ) || \
     defined( __MINGW32__ ) || defined( __DMC__ ) || defined( __TINYC__ ) || \
     ( defined( _MSC_VER ) && _MSC_VER >= 1600 ) || \
     ( defined( __BORLANDC__ ) && __BORLANDC__ >= 0x0582 ) || \
@@ -1490,11 +1490,7 @@ typedef HB_U32 HB_FATTR;
 #define HB_DECONST( c, p )    ( ( c ) HB_UNCONST( p ) )
 
 
-#if defined( __POCC__ ) || defined( __XCC__ )
-   #define HB_SYMBOL_UNUSED( symbol )  do if( symbol ) {;} while( 0 )
-#else
-   #define HB_SYMBOL_UNUSED( symbol )  ( void ) symbol
-#endif
+#define HB_SYMBOL_UNUSED( symbol )  ( void ) symbol
 
 /*
  * The name of starting procedure
@@ -1508,7 +1504,7 @@ typedef HB_U32 HB_FATTR;
 #endif
 
 #if defined( __WATCOMC__ ) || defined( __DMC__ ) || \
-    defined( _MSC_VER ) || defined( __POCC__ )
+    defined( _MSC_VER ) 
    #define HB_DLL_ENTRY_POINT    DllMain
 #else
    #define HB_DLL_ENTRY_POINT    DllEntryPoint
