@@ -154,7 +154,6 @@ HB_FUNC( WIN_OSVERSIONINFO )
 
    int iMajor = 4;
    int iMinor = 0;
-   int pos;
 
    typedef struct
    {
@@ -172,7 +171,7 @@ HB_FUNC( WIN_OSVERSIONINFO )
       { 5, 1 },
       { 5, 0 } };
 
-   for( pos = 0; pos < static_cast< int >( HB_SIZEOFARRAY( s_vers ) ); ++pos )
+   for( int pos = 0; pos < static_cast< int >( HB_SIZEOFARRAY( s_vers ) ); ++pos )
    {
       if( hb_iswinver( s_vers[ pos ].iMajor, s_vers[ pos ].iMinor, 0, ( pos == 0 ) ) )
       {
@@ -194,9 +193,7 @@ HB_FUNC( WIN_OSVERSIONINFO )
 
    if( hb_iswin2k() )
    {
-      int tmp;
-
-      for( tmp = 5; tmp > 0; --tmp )
+      for( int tmp = 5; tmp > 0; --tmp )
       {
          if( hb_iswinsp( tmp, HB_TRUE ) )
          {

@@ -94,28 +94,36 @@ HB_FUNC( WIN_SHELLNOTIFYICON )
    tnid.uID = hbwapi_par_UINT( 2 );
    tnid.uCallbackMessage = hbwapi_par_UINT( 3 );
    if( tnid.uCallbackMessage )
+   {
       tnid.uFlags = NIF_MESSAGE;
+   }
    tnid.hIcon = hbwapi_par_raw_HICON( 4 );
    if( tnid.hIcon )
+   {
       tnid.uFlags |= NIF_ICON;
-   if( HB_ITEMCOPYSTR( hb_param( 5, HB_IT_ANY ),
-                       tnid.szTip, HB_SIZEOFARRAY( tnid.szTip ) ) > 0 )
+   }
+   if( HB_ITEMCOPYSTR( hb_param( 5, HB_IT_ANY ), tnid.szTip, HB_SIZEOFARRAY( tnid.szTip ) ) > 0 )
+   {
       tnid.uFlags |= NIF_TIP;
+   }
 
    #if defined( NIF_INFO ) /* did the headers provide Windows 2000 features? */
    if( hb_iswin2k() )      /* are we running on Windows 2000 or above? */
    {
       if( HB_ITEMCOPYSTR( hb_param( 7, HB_IT_ANY ), tnid.szInfo, HB_SIZEOFARRAY( tnid.szInfo ) ) > 0 )
+      {
          tnid.uFlags |= NIF_INFO;
+      }
       HB_WIN_V_UNION( tnid, uTimeout ) = ( UINT ) hb_parni( 8 );
       if( HB_ITEMCOPYSTR( hb_param( 9, HB_IT_ANY ), tnid.szInfoTitle, HB_SIZEOFARRAY( tnid.szInfoTitle ) ) > 0 )
+      {
          tnid.uFlags |= NIF_INFO;
+      }
       tnid.dwInfoFlags = ( DWORD ) hb_parnl( 10 );
    }
    #endif
 
-   hbwapi_ret_L( Shell_NotifyIcon( HB_ISLOG( 6 ) ?
-                 ( hb_parl( 6 ) ? NIM_ADD : NIM_DELETE ) : NIM_MODIFY, &tnid ) );
+   hbwapi_ret_L( Shell_NotifyIcon( HB_ISLOG( 6 ) ? ( hb_parl( 6 ) ? NIM_ADD : NIM_DELETE ) : NIM_MODIFY, &tnid ) );
 #else
    hb_retl( HB_FALSE );
 #endif
@@ -168,7 +176,9 @@ static LPTSTR s_StringList( int iParam )
             {
                n1 = HB_ITEMCOPYSTR( pArrItem, nullptr, 0 );
                if( n1 )
+               {
                   nLen += n1 + 1;
+               }
             }
          }
          if( nLen )
@@ -180,10 +190,11 @@ static LPTSTR s_StringList( int iParam )
                pArrItem = hb_arrayGetItemPtr( pItem, n + 1 );
                if( HB_IS_STRING( pArrItem ) )
                {
-                  n1 = HB_ITEMCOPYSTR( pArrItem,
-                                       lpStr + nLen, nTotal - nLen );
+                  n1 = HB_ITEMCOPYSTR( pArrItem, lpStr + nLen, nTotal - nLen );
                   if( n1 )
+                  {
                      nLen += n1 + 1;
+                  }
                }
             }
             lpStr[ nLen ] = 0;
@@ -221,10 +232,10 @@ HB_FUNC( WIN_SHFILEOPERATION )
    void * hProgressTitle;
 
    fop.hwnd                  = hbwapi_par_raw_HWND( 1 );
-   fop.wFunc                 = ( UINT ) hb_parni( 2 );
-   fop.pFrom                 = ( LPCTSTR ) s_StringList( 3 );
-   fop.pTo                   = ( LPCTSTR ) s_StringList( 4 );
-   fop.fFlags                = ( FILEOP_FLAGS ) hb_parnl( 5 );
+   fop.wFunc                 = static_cast< UINT >( hb_parni( 2 ) );
+   fop.pFrom                 = static_cast< LPCTSTR >( s_StringList( 3 ) );
+   fop.pTo                   = static_cast< LPCTSTR >( s_StringList( 4 ) );
+   fop.fFlags                = static_cast< FILEOP_FLAGS >( hb_parnl( 5 ) );
    fop.fAnyOperationsAborted = FALSE;
    fop.hNameMappings         = nullptr;
    fop.lpszProgressTitle     = HB_PARSTR( 8, &hProgressTitle, nullptr );
@@ -235,16 +246,20 @@ HB_FUNC( WIN_SHFILEOPERATION )
    hb_storl( fop.fAnyOperationsAborted, 6 );
 
    if( fop.pFrom )
-      hb_xfree( ( void * ) fop.pFrom );
+   {
+      hb_xfree( static_cast< void * >( const_cast< LPWSTR >( fop.pFrom ) ) );
+   }
 
    if( fop.pTo )
-      hb_xfree( ( void * ) fop.pTo );
+   {
+      hb_xfree( static_cast< void * >( const_cast< LPWSTR >( fop.pTo ) ) );
+   }
 
    hb_strfree( hProgressTitle );
 
    if( ( fop.fFlags & FOF_WANTMAPPINGHANDLE ) != 0 )
    {
-      HANDLETOMAPPINGS * hm = ( HANDLETOMAPPINGS * ) fop.hNameMappings;
+      HANDLETOMAPPINGS * hm = static_cast< HANDLETOMAPPINGS * >( fop.hNameMappings );
       PHB_ITEM pArray = hb_param( 7, HB_IT_ARRAY );
 
       /* Process hNameMappings */
@@ -253,30 +268,29 @@ HB_FUNC( WIN_SHFILEOPERATION )
          if( pArray )
          {
             PHB_ITEM pTempItem = hb_itemNew( nullptr );
-            UINT tmp;
             LPSHNAMEMAPPING pmap = hm->lpSHNameMapping;
             HB_BOOL bIsWin9x = hb_iswin9x();
 
             hb_arraySize( pArray, hm->uNumberOfMappings );
 
-            for( tmp = 0; tmp < hm->uNumberOfMappings; ++tmp )
+            for( UINT tmp = 0; tmp < hm->uNumberOfMappings; ++tmp )
             {
                hb_arrayNew( pTempItem, 2 );
 
                if( bIsWin9x )
                {
                   /* always returns non-UNICODE on Win9x systems */
-                  hb_arraySetCL( pTempItem, 1, ( char * ) pmap[ tmp ].pszOldPath, pmap[ tmp ].cchOldPath );
-                  hb_arraySetCL( pTempItem, 2, ( char * ) pmap[ tmp ].pszNewPath, pmap[ tmp ].cchNewPath );
+                  hb_arraySetCL( pTempItem, 1, reinterpret_cast< char * >( pmap[ tmp ].pszOldPath ), pmap[ tmp ].cchOldPath );
+                  hb_arraySetCL( pTempItem, 2, reinterpret_cast< char * >( pmap[ tmp ].pszNewPath ), pmap[ tmp ].cchNewPath );
                }
                else
                {
                   /* always returns UNICODE on NT and upper systems */
-                  HB_ARRAYSETSTRLEN( pTempItem, 1, ( LPTSTR ) pmap[ tmp ].pszOldPath, pmap[ tmp ].cchOldPath );
-                  HB_ARRAYSETSTRLEN( pTempItem, 2, ( LPTSTR ) pmap[ tmp ].pszNewPath, pmap[ tmp ].cchNewPath );
+                  HB_ARRAYSETSTRLEN( pTempItem, 1, static_cast< LPTSTR >( pmap[ tmp ].pszOldPath ), pmap[ tmp ].cchOldPath );
+                  HB_ARRAYSETSTRLEN( pTempItem, 2, static_cast< LPTSTR >( pmap[ tmp ].pszNewPath ), pmap[ tmp ].cchNewPath );
                }
 
-               hb_arraySetForward( pArray, ( HB_SIZE ) ( tmp + 1 ), pTempItem );
+               hb_arraySetForward( pArray, static_cast< HB_SIZE >( tmp + 1 ), pTempItem );
             }
 
             hb_itemRelease( pTempItem );
@@ -285,7 +299,9 @@ HB_FUNC( WIN_SHFILEOPERATION )
          SHFreeNameMappings( hm );
       }
       else if( pArray )
+      {
          hb_arraySize( pArray, 0 );
+      }
    }
 #endif
    hb_retni( iRetVal );

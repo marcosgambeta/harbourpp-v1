@@ -70,15 +70,13 @@ HB_FUNC( WIN_UUIDCREATESTRING )
    {
       HMODULE hRpcrt4 = GetModuleHandle( TEXT( "rpcrt4.dll" ) );
 
-      s_pUuidCreate = ( _HB_UUIDCREATE ) HB_WINAPI_GETPROCADDRESS( hRpcrt4, "UuidCreate" );
+      s_pUuidCreate = reinterpret_cast< _HB_UUIDCREATE >( HB_WINAPI_GETPROCADDRESS( hRpcrt4, "UuidCreate" ) );
 
-      s_pUuidToString = ( _HB_UUIDTOSTRING ) HB_WINAPI_GETPROCADDRESST( hRpcrt4, "UuidToString" );
-      s_pRpcStringFree = ( _HB_RPCSTRINGFREE ) HB_WINAPI_GETPROCADDRESST( hRpcrt4, "RpcStringFree" );
+      s_pUuidToString = reinterpret_cast< _HB_UUIDTOSTRING >( HB_WINAPI_GETPROCADDRESST( hRpcrt4, "UuidToString" ) );
+      s_pRpcStringFree = reinterpret_cast< _HB_RPCSTRINGFREE >( HB_WINAPI_GETPROCADDRESST( hRpcrt4, "RpcStringFree" ) );
    }
 
-   if( s_pUuidCreate &&
-       s_pUuidToString &&
-       s_pRpcStringFree )
+   if( s_pUuidCreate && s_pUuidToString && s_pRpcStringFree )
    {
       TCHAR * tszUuid = nullptr;
       UUID    uuid;
@@ -87,19 +85,23 @@ HB_FUNC( WIN_UUIDCREATESTRING )
 
       lRPCStatus = s_pUuidCreate( &uuid );
 
-      s_pUuidToString( &uuid, ( unsigned char ** ) ( void * ) &tszUuid );
+      s_pUuidToString( &uuid, static_cast< unsigned char ** >( static_cast< void * >( &tszUuid ) ) );
 
       if( tszUuid != nullptr )
       {
          HB_RETSTR( tszUuid );
 
-         s_pRpcStringFree( ( unsigned char ** ) ( void * ) &tszUuid );
+         s_pRpcStringFree( static_cast< unsigned char ** >( static_cast< void * >( &tszUuid ) ) );
       }
       else
+      {
          hb_retc_null();
+      }
    }
    else
+   {
       hb_retc_null();
+   }
 #else
    long lRPCStatus = HB_RPC_S_ERROR;
    hb_retc_null();

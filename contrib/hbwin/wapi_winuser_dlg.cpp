@@ -59,11 +59,13 @@ static BOOL CALLBACK wapi_DialogFuncProc( HWND hDlg, UINT message, WPARAM wParam
 
    if( message == WM_INITDIALOG && lParam )
    {
-      pSymbol = ( PHB_SYMB ) lParam;
-      SetWindowLongPtr( hDlg, GWLP_USERDATA, ( LONG_PTR ) pSymbol );
+      pSymbol = reinterpret_cast< PHB_SYMB >( lParam );
+      SetWindowLongPtr( hDlg, GWLP_USERDATA, reinterpret_cast< LONG_PTR >( pSymbol ) );
    }
    else
-      pSymbol = ( PHB_SYMB ) GetWindowLongPtr( hDlg, GWLP_USERDATA );
+   {
+      pSymbol = reinterpret_cast< PHB_SYMB >( GetWindowLongPtr( hDlg, GWLP_USERDATA ) );
+   }
 
    if( pSymbol )
    {
@@ -81,21 +83,23 @@ static BOOL CALLBACK wapi_DialogFuncProc( HWND hDlg, UINT message, WPARAM wParam
          hb_vmDo( 6 );
       }
       else
+      {
          hb_vmDo( 4 );
+      }
    }
 
-   return ( BOOL ) hb_parnl( -1 );
+   return static_cast< BOOL >( hb_parnl( -1 ) );
 }
 
 /* Creates a modal dialog box from a dialog box template resource. */
 HB_FUNC( WAPI_DIALOGBOXPARAM )
 {
    INT_PTR nResult = DialogBoxParam(
-      hbwapi_par_raw_HINSTANCE( 1 ),                              /* hInstance */
-      ( LPCTSTR ) MAKEINTRESOURCE( hbwapi_par_INT( 2 ) ),         /* lpTemplate */
-      hbwapi_par_raw_HWND( 3 ),                                   /* hWndParent */
-      ( DLGPROC ) wapi_DialogFuncProc,                            /* lpDialogFunc */
-      ( LPARAM ) hb_itemGetSymbol( hb_param( 4, HB_IT_SYMBOL ) )  /* dwInitParam */
+      hbwapi_par_raw_HINSTANCE( 1 ),                                            /* hInstance */
+      static_cast< LPCTSTR >( MAKEINTRESOURCE( hbwapi_par_INT( 2 ) ) ),         /* lpTemplate */
+      hbwapi_par_raw_HWND( 3 ),                                                 /* hWndParent */
+      static_cast< DLGPROC >( wapi_DialogFuncProc ),                            /* lpDialogFunc */
+      reinterpret_cast< LPARAM >( hb_itemGetSymbol( hb_param( 4, HB_IT_SYMBOL ) ) )  /* dwInitParam */
       );
 
    hbwapi_SetLastError( GetLastError() );
@@ -106,8 +110,7 @@ HB_FUNC( WAPI_DIALOGBOXPARAM )
    dialog box. */
 HB_FUNC( WAPI_ENDDIALOG )
 {
-   hbwapi_ret_L( EndDialog( hbwapi_par_raw_HWND( 1 ),
-                            hbwapi_par_INT( 2 ) ) );
+   hbwapi_ret_L( EndDialog( hbwapi_par_raw_HWND( 1 ), hbwapi_par_INT( 2 ) ) );
    hbwapi_SetLastError( GetLastError() );
 }
 

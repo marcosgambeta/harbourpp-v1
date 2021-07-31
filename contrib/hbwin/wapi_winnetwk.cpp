@@ -57,11 +57,9 @@ HB_FUNC( WAPI_WNETGETLASTERROR )
    TCHAR lpDescription[ 256 ];
    TCHAR lpProvider[ 256 ];
 
-   hb_retnl( ( long ) WNetGetLastError( &dwLastError,
-                                        lpDescription, HB_SIZEOFARRAY( lpDescription ),
-                                        lpProvider, HB_SIZEOFARRAY( lpProvider ) ) );
+   hb_retnl( static_cast< long >( WNetGetLastError( &dwLastError, lpDescription, HB_SIZEOFARRAY( lpDescription ), lpProvider, HB_SIZEOFARRAY( lpProvider ) ) ) );
 
-   hb_stornl( ( long ) dwLastError, 1 );
+   hb_stornl( static_cast< long >( dwLastError ), 1 );
    HB_STORSTR( lpDescription, 2 );
    HB_STORSTR( lpProvider, 3 );
 #else

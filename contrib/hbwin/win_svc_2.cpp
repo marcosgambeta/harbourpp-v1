@@ -64,9 +64,13 @@ HB_FUNC( WIN_SERVICEINSTALL )
    if( lpPath == nullptr )
    {
       if( GetModuleFileName( nullptr, lpPathBuffer, HB_SIZEOFARRAY( lpPathBuffer ) ) )
+      {
          lpPath = lpPathBuffer;
+      }
       else
+      {
          hbwapi_SetLastError( GetLastError() );
+      }
    }
 
    if( lpPath )
@@ -92,7 +96,7 @@ HB_FUNC( WIN_SERVICEINSTALL )
                                  lpDisplayName,             /* service name to display */
                                  SERVICE_ALL_ACCESS,        /* desired access */
                                  SERVICE_WIN32_OWN_PROCESS, /* service type */
-                                 ( DWORD ) hb_parnldef( 4, SERVICE_DEMAND_START ),  /* start type */
+                                 static_cast< DWORD >( hb_parnldef( 4, SERVICE_DEMAND_START ) ),  /* start type */
                                  SERVICE_ERROR_NORMAL,      /* error control type */
                                  lpPath,                    /* path to service's binary */
                                  nullptr,                      /* no load ordering group */
@@ -118,7 +122,9 @@ HB_FUNC( WIN_SERVICEINSTALL )
          CloseServiceHandle( schSCM );
       }
       else
+      {
          hbwapi_SetLastError( GetLastError() );
+      }
    }
 
    hb_strfree( hPath );
@@ -152,26 +158,31 @@ HB_FUNC( WIN_SERVICEDELETE )
 
             if( ControlService( schSrv, SERVICE_CONTROL_STOP, &ssStatus ) )
             {
-               while( ssStatus.dwCurrentState != SERVICE_STOPPED &&
-                      QueryServiceStatus( schSrv, &ssStatus ) )
+               while( ssStatus.dwCurrentState != SERVICE_STOPPED && QueryServiceStatus( schSrv, &ssStatus ) )
+               {
                   hb_idleSleep( 1.0 );
+               }
             }
          }
 
-         bRetVal = ( HB_BOOL ) DeleteService( schSrv );
+         bRetVal = static_cast< HB_BOOL >( DeleteService( schSrv ) );
          hbwapi_SetLastError( GetLastError() );
 
          CloseServiceHandle( schSrv );
       }
       else
+      {
          hbwapi_SetLastError( GetLastError() );
+      }
 
       hb_strfree( hServiceName );
 
       CloseServiceHandle( schSCM );
    }
    else
+   {
       hbwapi_SetLastError( GetLastError() );
+   }
 #else
    hbwapi_SetLastError( ERROR_NOT_SUPPORTED );
 #endif
@@ -197,20 +208,24 @@ HB_FUNC( WIN_SERVICECONTROL )
       {
          SERVICE_STATUS ssStatus;
          memset( &ssStatus, 0, sizeof( ssStatus ) );
-         bRetVal = ( HB_BOOL ) ControlService( schSrv, ( DWORD ) hb_parnl( 2 ), &ssStatus );
+         bRetVal = static_cast< HB_BOOL >( ControlService( schSrv, static_cast< DWORD >( hb_parnl( 2 ) ), &ssStatus ) );
          hbwapi_SetLastError( GetLastError() );
 
          CloseServiceHandle( schSrv );
       }
       else
+      {
          hbwapi_SetLastError( GetLastError() );
+      }
 
       hb_strfree( hServiceName );
 
       CloseServiceHandle( schSCM );
    }
    else
+   {
       hbwapi_SetLastError( GetLastError() );
+   }
 #else
    hbwapi_SetLastError( ERROR_NOT_SUPPORTED );
 #endif
@@ -245,7 +260,9 @@ HB_FUNC( WIN_SERVICERUN )
             lpArgs = static_cast< LPCTSTR * >( hb_xgrab( dwArgs * sizeof( LPCTSTR ) ) );
 
             for( pos = 0; pos < dwArgs; ++pos )
+            {
                lpArgs[ pos ] = HB_PARSTRDEF( pos + 2, &hArgs[ pos ], nullptr );
+            }
          }
          else
          {
@@ -254,13 +271,15 @@ HB_FUNC( WIN_SERVICERUN )
             lpArgs = nullptr;
          }
 
-         bRetVal = ( HB_BOOL ) StartService( schSrv, dwArgs, lpArgs );
+         bRetVal = static_cast< HB_BOOL >( StartService( schSrv, dwArgs, lpArgs ) );
          hbwapi_SetLastError( GetLastError() );
 
          if( hArgs )
          {
             for( pos = 0; pos < dwArgs; ++pos )
+            {
                hb_strfree( hArgs[ pos ] );
+            }
 
             hb_xfree( hArgs );
             hb_xfree( lpArgs );
@@ -269,14 +288,18 @@ HB_FUNC( WIN_SERVICERUN )
          CloseServiceHandle( schSrv );
       }
       else
+      {
          hbwapi_SetLastError( GetLastError() );
+      }
 
       hb_strfree( hServiceName );
 
       CloseServiceHandle( schSCM );
    }
    else
+   {
       hbwapi_SetLastError( GetLastError() );
+   }
 #else
    hbwapi_SetLastError( ERROR_NOT_SUPPORTED );
 #endif

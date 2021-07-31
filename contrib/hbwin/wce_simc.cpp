@@ -69,7 +69,7 @@ HB_FUNC( WCE_SIMINITIALIZE ) /* hSim by reference, lNotifications */
 HB_FUNC( WCE_SIMDEINITIALIZE ) /* hSim */
 {
 #ifdef __HB_COMPONENT_SUPPORTED__
-   hb_retnl( SimDeinitialize( ( HSIM ) hb_parptr( 1 ) ) );
+   hb_retnl( SimDeinitialize( static_cast< HSIM >( hb_parptr( 1 ) ) ) );
 #else
    hb_retnl( -1 );
 #endif
@@ -79,10 +79,10 @@ HB_FUNC( WCE_SIMPHONEBOOKSTATUS ) /* hSim, nLocation, @nTotal, @nUsed */
 {
 #ifdef __HB_COMPONENT_SUPPORTED__
    DWORD dwUsed = 0, dwTotal = 0;
-   HRESULT hResult = SimGetPhonebookStatus( ( HSIM ) hb_parptr( 1 ), ( DWORD ) hb_parnl( 2 ) /* dwLocation */, &dwUsed, &dwTotal );
+   HRESULT hResult = SimGetPhonebookStatus( static_cast< HSIM >( hb_parptr( 1 ) ), static_cast< DWORD >( hb_parnl( 2 ) ) /* dwLocation */, &dwUsed, &dwTotal );
 
-   hb_stornl( hResult == S_OK ? ( long ) dwTotal : 0, 3 );
-   hb_stornl( hResult == S_OK ? ( long ) dwUsed : 0, 4 );
+   hb_stornl( hResult == S_OK ? static_cast< long >( dwTotal ) : 0, 3 );
+   hb_stornl( hResult == S_OK ? static_cast< long >( dwUsed ) : 0, 4 );
 
    hb_retnl( hResult );
 #else
@@ -95,13 +95,13 @@ HB_FUNC( WCE_SIMPHONEBOOKSTATUS ) /* hSim, nLocation, @nTotal, @nUsed */
 HB_FUNC( WCE_SIMREADPHONEBOOKENTRY ) /* hSim, nLocation, nPos, @aEntry */
 {
 #ifdef __HB_COMPONENT_SUPPORTED__
-   HSIM hSim = ( HSIM ) hb_parptr( 1 );
-   DWORD dwIndex = ( DWORD ) hb_parnl( 3 );
+   HSIM hSim = static_cast< HSIM >( hb_parptr( 1 ) );
+   DWORD dwIndex = static_cast< DWORD >( hb_parnl( 3 ) );
    SIMPHONEBOOKENTRY PhoneEntry;
    PHB_ITEM pArray;
 
    PhoneEntry.cbSize = sizeof( SIMPHONEBOOKENTRY );
-   hb_retnl( SimReadPhonebookEntry( hSim, ( DWORD ) hb_parnl( 2 ) /* dwLocation */, dwIndex, &PhoneEntry ) );
+   hb_retnl( SimReadPhonebookEntry( hSim, static_cast< DWORD >( hb_parnl( 2 ) ) /* dwLocation */, dwIndex, &PhoneEntry ) );
 
    pArray = hb_itemArrayNew( 5 );
 
@@ -130,10 +130,10 @@ HB_FUNC( WCE_SIMWRITEPHONEBOOKENTRY ) /* hSim, nLocation, nPos, cNumber, cName, 
    PhoneEntry.dwParams = SIM_PARAM_PBE_ALL;
    wcsncpy( PhoneEntry.lpszAddress, HB_PARSTRDEF( 4, &hAddress, nullptr ), MAX_LENGTH_ADDRESS );
    wcsncpy( PhoneEntry.lpszText   , HB_PARSTRDEF( 5, &hText   , nullptr ), MAX_LENGTH_PHONEBOOKENTRYTEXT );
-   PhoneEntry.dwAddressType = ( DWORD ) hb_parnl( 7 );
-   PhoneEntry.dwNumPlan     = ( DWORD ) hb_parnl( 6 );
+   PhoneEntry.dwAddressType = static_cast< DWORD >( hb_parnl( 7 ) );
+   PhoneEntry.dwNumPlan     = static_cast< DWORD >( hb_parnl( 6 ) );
 
-   hb_retnl( SimWritePhonebookEntry( ( HSIM ) hb_parptr( 1 ), ( DWORD ) hb_parnl( 2 ), ( DWORD ) hb_parnl( 3 ), &PhoneEntry ) );
+   hb_retnl( SimWritePhonebookEntry( static_cast< HSIM >( hb_parptr( 1 ) ), static_cast< DWORD >( hb_parnl( 2 ) ), static_cast< DWORD >( hb_parnl( 3 ) ), &PhoneEntry ) );
 
    hb_strfree( hAddress );
    hb_strfree( hText );
@@ -145,7 +145,7 @@ HB_FUNC( WCE_SIMWRITEPHONEBOOKENTRY ) /* hSim, nLocation, nPos, cNumber, cName, 
 HB_FUNC( WCE_SIMDELETEPHONEBOOKENTRY ) /* hSim, nLocation, nPos */
 {
 #ifdef __HB_COMPONENT_SUPPORTED__
-   hb_retnl( SimDeletePhonebookEntry( ( HSIM ) hb_parptr( 1 ), ( DWORD ) hb_parnl( 2 ), ( DWORD ) hb_parnl( 3 ) ) );
+   hb_retnl( SimDeletePhonebookEntry( static_cast< HSIM >( hb_parptr( 1 ) ), static_cast< DWORD >( hb_parnl( 2 ) ), static_cast< DWORD >( hb_parnl( 3 ) ) ) );
 #else
    hb_retnl( -1 );
 #endif

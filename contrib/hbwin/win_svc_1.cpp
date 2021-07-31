@@ -75,7 +75,9 @@ static VOID WINAPI hbwin_SvcControlHandler( DWORD fdwControl )
          hb_vmRequestRestore();
       }
       else
+      {
          HB_TRACE( HB_TR_DEBUG, ( "HVM stack not available" ) );
+      }
       return;
    }
 
@@ -108,7 +110,7 @@ static VOID WINAPI hbwin_SvcMainFunction( DWORD dwArgc, LPTSTR * lpszArgv )
    s_ServiceStatus.dwCheckPoint              = 0;
    s_ServiceStatus.dwWaitHint                = 0;
 
-   s_hStatus = RegisterServiceCtrlHandler( s_lpServiceName, ( LPHANDLER_FUNCTION ) hbwin_SvcControlHandler );
+   s_hStatus = RegisterServiceCtrlHandler( s_lpServiceName, static_cast< LPHANDLER_FUNCTION >( hbwin_SvcControlHandler ) );
 
    if( s_hStatus != ( SERVICE_STATUS_HANDLE ) 0 )
    {
@@ -116,7 +118,6 @@ static VOID WINAPI hbwin_SvcMainFunction( DWORD dwArgc, LPTSTR * lpszArgv )
       {
          if( hb_vmRequestReenterExt() )
          {
-            DWORD i;
             int iArgCount = 0;
 
             if( ! s_pHarbourControlFunc )
@@ -129,15 +130,19 @@ static VOID WINAPI hbwin_SvcMainFunction( DWORD dwArgc, LPTSTR * lpszArgv )
             hb_vmPushEvalSym();
             hb_vmPush( s_pHarbourEntryFunc );
 
-            for( i = 1; i < dwArgc; ++i )
+            for( DWORD i = 1; i < dwArgc; ++i )
             {
                PHB_ITEM pItem = hb_stackAllocItem();
 
                HB_ITEMPUTSTR( pItem, lpszArgv[ i ] );
                if( hb_cmdargIsInternal( hb_itemGetCPtr( pItem ), nullptr ) )
+               {
                   hb_stackPop();
+               }
                else
+               {
                   ++iArgCount;
+               }
             }
 
             hb_vmSend( static_cast< HB_USHORT >( iArgCount ) );
@@ -145,13 +150,19 @@ static VOID WINAPI hbwin_SvcMainFunction( DWORD dwArgc, LPTSTR * lpszArgv )
             hb_vmRequestRestore();
          }
          else
+         {
             HB_TRACE( HB_TR_DEBUG, ( "HVM stack not available" ) );
+         }
       }
       else
+      {
          HB_TRACE( HB_TR_DEBUG, ( "Harbour service entry function not found" ) );
+      }
    }
    else
+   {
       HB_TRACE( HB_TR_DEBUG, ( "Error registering service" ) );
+   }
 }
 
 #endif
@@ -169,8 +180,8 @@ HB_FUNC( WIN_SERVICESETSTATUS )
 {
 #if ! defined( HB_OS_WIN_CE )
    HB_BOOL bRetVal;
-   s_ServiceStatus.dwCurrentState = ( DWORD ) hb_parnl( 1 );
-   bRetVal = ( HB_BOOL ) SetServiceStatus( s_hStatus, &s_ServiceStatus );
+   s_ServiceStatus.dwCurrentState = static_cast< DWORD >( hb_parnl( 1 ) );
+   bRetVal = static_cast< HB_BOOL >( SetServiceStatus( s_hStatus, &s_ServiceStatus ) );
    hbwapi_SetLastError( GetLastError() );
    hb_retl( bRetVal );
 #else
@@ -183,8 +194,8 @@ HB_FUNC( WIN_SERVICESETEXITCODE )
 {
 #if ! defined( HB_OS_WIN_CE )
    HB_BOOL bRetVal;
-   s_ServiceStatus.dwWin32ExitCode = ( DWORD ) hb_parnl( 1 );
-   bRetVal = ( HB_BOOL ) SetServiceStatus( s_hStatus, &s_ServiceStatus );
+   s_ServiceStatus.dwWin32ExitCode = static_cast< DWORD >( hb_parnl( 1 ) );
+   bRetVal = static_cast< HB_BOOL >( SetServiceStatus( s_hStatus, &s_ServiceStatus ) );
    hbwapi_SetLastError( GetLastError() );
    hb_retl( bRetVal );
 #else
@@ -198,7 +209,7 @@ HB_FUNC( WIN_SERVICESTOP )
 #if ! defined( HB_OS_WIN_CE )
    HB_BOOL bRetVal;
    s_ServiceStatus.dwCurrentState = SERVICE_STOPPED;
-   bRetVal = ( HB_BOOL ) SetServiceStatus( s_hStatus, &s_ServiceStatus );
+   bRetVal = static_cast< HB_BOOL >( SetServiceStatus( s_hStatus, &s_ServiceStatus ) );
    hbwapi_SetLastError( GetLastError() );
    hb_retl( bRetVal );
 #else
@@ -227,7 +238,9 @@ HB_FUNC( WIN_SERVICESTART )
    pEntryFunc = hb_param( 2, HB_IT_EVALITEM );
 
    if( pEntryFunc )
+   {
       s_pHarbourEntryFunc = hb_itemNew( pEntryFunc );
+   }
 
    if( s_pHarbourControlFunc )
    {
@@ -238,7 +251,9 @@ HB_FUNC( WIN_SERVICESTART )
    pEntryFunc = hb_param( 3, HB_IT_EVALITEM );
 
    if( pEntryFunc )
+   {
       s_pHarbourControlFunc = hb_itemNew( pEntryFunc );
+   }
 
    lpServiceTable[ 0 ].lpServiceName = s_lpServiceName;
    lpServiceTable[ 0 ].lpServiceProc = ( LPSERVICE_MAIN_FUNCTION ) hbwin_SvcMainFunction;
@@ -246,7 +261,7 @@ HB_FUNC( WIN_SERVICESTART )
    lpServiceTable[ 1 ].lpServiceName = nullptr;
    lpServiceTable[ 1 ].lpServiceProc = nullptr;
 
-   bRetVal = ( HB_BOOL ) StartServiceCtrlDispatcher( lpServiceTable );
+   bRetVal = static_cast< HB_BOOL >( StartServiceCtrlDispatcher( lpServiceTable ) );
    hbwapi_SetLastError( GetLastError() );
 #else
    bRetVal = HB_FALSE;

@@ -64,7 +64,7 @@ HB_FUNC( WAPI_GETCURRENTTHREAD )
 
 HB_FUNC( WAPI_WAITFORSINGLEOBJECT )
 {
-   DWORD dwResult = WaitForSingleObject( hbwapi_par_raw_HANDLE( 1 ), ( DWORD ) hb_parnl( 2 ) );
+   DWORD dwResult = WaitForSingleObject( hbwapi_par_raw_HANDLE( 1 ), static_cast< DWORD >( hb_parnl( 2 ) ) );
 
    hbwapi_SetLastError( GetLastError() );
    hb_retnl( dwResult );
@@ -83,7 +83,7 @@ HB_FUNC( WAPI_WAITFORSINGLEOBJECTEX )
    dwResult = 0;
    dwLastError = ERROR_INVALID_FUNCTION;
 #else
-   dwResult = WaitForSingleObjectEx( hbwapi_par_raw_HANDLE( 1 ), ( DWORD ) hb_parnl( 2 ), hb_parl( 3 ) );
+   dwResult = WaitForSingleObjectEx( hbwapi_par_raw_HANDLE( 1 ), static_cast< DWORD >( hb_parnl( 2 ) ), hb_parl( 3 ) );
    dwLastError = GetLastError();
 #endif
 
@@ -94,18 +94,19 @@ HB_FUNC( WAPI_WAITFORSINGLEOBJECTEX )
 HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTS )
 {
    PHB_ITEM pArray = hb_param( 2, HB_IT_ARRAY );
-   DWORD nCount = pArray ? ( DWORD ) hb_arrayLen( pArray ) : 0;
+   DWORD nCount = pArray ? static_cast< DWORD >( hb_arrayLen( pArray ) ) : 0;
 
    if( nCount > 0 && nCount <= MAXIMUM_WAIT_OBJECTS )
    {
       HANDLE * handles = static_cast< HANDLE * >( hb_xgrab( nCount * sizeof( HANDLE ) ) );
-      DWORD nPos;
       DWORD dwResult;
 
-      for( nPos = 0; nPos < nCount; ++nPos )
+      for( DWORD nPos = 0; nPos < nCount; ++nPos )
+      {
          handles[ nPos ] = hb_arrayGetPtr( pArray, nPos + 1 );
+      }
 
-      dwResult = WaitForMultipleObjects( nCount, handles, hb_parl( 3 ), ( DWORD ) hb_parnl( 4 ) );
+      dwResult = WaitForMultipleObjects( nCount, handles, hb_parl( 3 ), static_cast< DWORD >( hb_parnl( 4 ) ) );
 
       hbwapi_SetLastError( GetLastError() );
       hb_retnl( dwResult );
@@ -113,25 +114,28 @@ HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTS )
       hb_xfree( handles );
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 1001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTSEX )
 {
 #if ! defined( HB_OS_WIN_CE )
    PHB_ITEM pArray = hb_param( 2, HB_IT_ARRAY );
-   DWORD nCount = pArray ? ( DWORD ) hb_arrayLen( pArray ) : 0;
+   DWORD nCount = pArray ? static_cast< DWORD >( hb_arrayLen( pArray ) ) : 0;
 
    if( nCount > 0 && nCount <= MAXIMUM_WAIT_OBJECTS )
    {
       HANDLE * handles = static_cast< HANDLE * >( hb_xgrab( nCount * sizeof( HANDLE ) ) );
-      DWORD nPos;
       DWORD dwResult;
 
-      for( nPos = 0; nPos < nCount; ++nPos )
+      for( DWORD nPos = 0; nPos < nCount; ++nPos )
+      {
          handles[ nPos ] = hb_arrayGetPtr( pArray, nPos + 1 );
+      }
 
-      dwResult = WaitForMultipleObjectsEx( nCount, handles, hb_parl( 3 ), ( DWORD ) hb_parnl( 4 ), hb_parl( 5 ) );
+      dwResult = WaitForMultipleObjectsEx( nCount, handles, hb_parl( 3 ), static_cast< DWORD >( hb_parnl( 4 ) ), hb_parl( 5 ) );
 
       hbwapi_SetLastError( GetLastError() );
       hb_retnl( dwResult );
@@ -139,7 +143,9 @@ HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTSEX )
       hb_xfree( handles );
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 1001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 #else
    /* WinCE (WinMobile6) does not support
     * WaitFor{Single,Multiple}Object[Ex]() though it supports:
@@ -162,8 +168,8 @@ HB_FUNC( WAPI_SETPROCESSWORKINGSETSIZE )
 #else
    bResult = SetProcessWorkingSetSize(
       hbwapi_par_raw_HANDLE( 1 ) /* hProcess */,
-      ( SIZE_T ) hb_parnint( 2 ) /* dwMinimumWorkingSetSize */,
-      ( SIZE_T ) hb_parnint( 3 ) /* dwMaximumWorkingSetSize */ );
+      static_cast< SIZE_T >( hb_parnint( 2 ) ) /* dwMinimumWorkingSetSize */,
+      static_cast< SIZE_T >( hb_parnint( 3 ) ) /* dwMaximumWorkingSetSize */ );
    dwLastError = GetLastError();
 #endif
 
@@ -173,7 +179,7 @@ HB_FUNC( WAPI_SETPROCESSWORKINGSETSIZE )
 
 HB_FUNC( WAPI_SETLASTERROR )
 {
-   DWORD dwLastError = ( DWORD ) hb_parnl( 1 );
+   DWORD dwLastError = static_cast< DWORD >( hb_parnl( 1 ) );
 
    SetLastError( dwLastError );
    hbwapi_SetLastError( dwLastError );
@@ -184,7 +190,7 @@ HB_FUNC( WAPI_SETERRORMODE )
 #if defined( HB_OS_WIN_CE )
    hb_retni( 0 );
 #else
-   hb_retni( SetErrorMode( ( UINT ) hb_parni( 1 ) ) );
+   hb_retni( SetErrorMode( static_cast< UINT >( hb_parni( 1 ) ) ) );
 #endif
 }
 
@@ -201,7 +207,7 @@ HB_FUNC( WAPI_LOADLIBRARY )
 
 HB_FUNC( WAPI_FREELIBRARY )
 {
-   BOOL bResult = FreeLibrary( ( HMODULE ) hb_parptr( 1 ) );
+   BOOL bResult = FreeLibrary( static_cast< HMODULE >( hb_parptr( 1 ) ) );
 
    hbwapi_SetLastError( GetLastError() );
    hbwapi_ret_L( bResult );
@@ -214,19 +220,19 @@ HB_FUNC( WAPI_GETPROCADDRESS )
 #if defined( HB_OS_WIN_CE )
    void * hProcName;
    LPCTSTR lpProcName = HB_PARSTR( 2, &hProcName, nullptr );
-   pProc = GetProcAddress( ( HMODULE ) hb_parptr( 1 ),
+   pProc = GetProcAddress( static_cast< HMODULE >( hb_parptr( 1 ) ),
                            lpProcName ? lpProcName :
-                           ( LPCTSTR ) static_cast< HB_PTRUINT >( hb_parnint( 2 ) ) );
+                           static_cast< LPCTSTR >( static_cast< HB_PTRUINT >( hb_parnint( 2 ) ) ) );
    dwLastError = GetLastError();
    hb_strfree( hProcName );
 #else
-   pProc = GetProcAddress( ( HMODULE ) hb_parptr( 1 ),
+   pProc = GetProcAddress( static_cast< HMODULE >( hb_parptr( 1 ) ),
                            HB_ISCHAR( 2 ) ? hb_parc( 2 ) :
-                           ( LPCSTR ) static_cast< HB_PTRUINT >( hb_parnint( 2 ) ) );
+                           reinterpret_cast< LPCSTR >( static_cast< HB_PTRUINT >( hb_parnint( 2 ) ) ) );
    dwLastError = GetLastError();
 #endif
    hbwapi_SetLastError( dwLastError );
-   hb_retptr( ( void * ) reinterpret_cast< HB_PTRUINT >( pProc ) );
+   hb_retptr( reinterpret_cast< void * >( reinterpret_cast< HB_PTRUINT >( pProc ) ) );
 }
 
 /* HMODULE WINAPI GetModuleHandle( __in_opt LPCTSTR lpModuleName ); */
@@ -263,17 +269,21 @@ static void s_getPathName( _HB_GETPATHNAME getPathName )
       if( HB_ISBYREF( 2 ) )
       {
          TCHAR buffer[ HB_PATH_MAX ];
-         DWORD cchBuffer = ( DWORD ) HB_SIZEOFARRAY( buffer );
+         DWORD cchBuffer = static_cast< DWORD >( HB_SIZEOFARRAY( buffer ) );
          LPTSTR lpszShortPath = buffer;
          HB_BOOL fSize = HB_ISNUM( 3 );
 
          if( fSize )    /* the size of buffer is limited by user */
          {
-            cchBuffer = ( DWORD ) hb_parnl( 3 );
+            cchBuffer = static_cast< DWORD >( hb_parnl( 3 ) );
             if( cchBuffer == 0 )
+            {
                lpszShortPath = nullptr;
-            else if( cchBuffer > ( DWORD ) HB_SIZEOFARRAY( buffer ) )
+            }
+            else if( cchBuffer > static_cast< DWORD >( HB_SIZEOFARRAY( buffer ) ) )
+            {
                lpszShortPath = static_cast< LPTSTR >( hb_xgrab( cchBuffer * sizeof( TCHAR ) ) );
+            }
          }
 
          length = getPathName( lpszLongPath, lpszShortPath, cchBuffer );
@@ -286,7 +296,9 @@ static void s_getPathName( _HB_GETPATHNAME getPathName )
          hbwapi_SetLastError( GetLastError() );
          HB_STORSTRLEN( lpszShortPath, length > cchBuffer ? 0 : length, 2 );
          if( lpszShortPath && lpszShortPath != buffer )
+         {
             hb_xfree( lpszShortPath );
+         }
       }
       else if( getPathName )
       {
@@ -321,12 +333,14 @@ HB_FUNC( WAPI_GETLONGPATHNAME )
    if( ! s_getPathNameAddr )
    {
       s_getPathNameAddr =
-         ( _HB_GETPATHNAME )
+         reinterpret_cast< _HB_GETPATHNAME >(
             HB_WINAPI_GETPROCADDRESST( GetModuleHandle( HB_WINAPI_KERNEL32_DLL() ),
-                                       "GetLongPathName" );
+                                       "GetLongPathName" ) );
 
       if( ! s_getPathNameAddr )
+      {
          s_getPathNameAddr = GetShortPathName;
+      }
    }
    s_getPathName( s_getPathNameAddr );
 #else
@@ -390,14 +404,15 @@ HB_FUNC( WAPI_GETWINDOWSDIRECTORY )
 #endif
 }
 
-
 HB_FUNC( WAPI_QUERYPERFORMANCECOUNTER )
 {
    LARGE_INTEGER counter;
    BOOL result = QueryPerformanceCounter( &counter );
 
    if( result )
+   {
       hb_stornint( HBWAPI_GET_LARGEUINT( counter ), 1 );
+   }
    hb_retl( result != 0 );
 }
 
@@ -407,7 +422,9 @@ HB_FUNC( WAPI_QUERYPERFORMANCEFREQUENCY )
    BOOL result = QueryPerformanceFrequency( &frequency );
 
    if( result )
+   {
       hb_stornint( HBWAPI_GET_LARGEUINT( frequency ), 1 );
+   }
    hb_retl( result != 0 );
 }
 

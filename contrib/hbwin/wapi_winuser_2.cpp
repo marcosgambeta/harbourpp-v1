@@ -72,18 +72,15 @@ static int s_MessageBoxTimeout( IN HWND hWnd,
                                                IN LPCTSTR lpText, IN LPCTSTR lpCaption,
                                                IN UINT uType, IN WORD wLanguageId,
                                                IN DWORD dwMilliseconds );
-   static _HB_MSGBOXTOUT s_pMessageBoxTimeout = ( _HB_MSGBOXTOUT ) -1;
+   static _HB_MSGBOXTOUT s_pMessageBoxTimeout = reinterpret_cast< _HB_MSGBOXTOUT >( -1 );
 
-   if( s_pMessageBoxTimeout == ( _HB_MSGBOXTOUT ) -1 )
+   if( s_pMessageBoxTimeout == reinterpret_cast< _HB_MSGBOXTOUT >( -1 ) )
    {
       HMODULE hModule = GetModuleHandle( TEXT( "user32.dll" ) );
-      s_pMessageBoxTimeout = hModule == nullptr ? nullptr : ( _HB_MSGBOXTOUT )
-               HB_WINAPI_GETPROCADDRESST( hModule, "MessageBoxTimeout" );
+      s_pMessageBoxTimeout = hModule == nullptr ? nullptr : reinterpret_cast< _HB_MSGBOXTOUT >( HB_WINAPI_GETPROCADDRESST( hModule, "MessageBoxTimeout" ) );
    }
 
-   return s_pMessageBoxTimeout ?
-            s_pMessageBoxTimeout( hWnd, lpText, lpCaption, uType,
-                                  wLanguageId, dwMilliseconds ) :
+   return s_pMessageBoxTimeout ? s_pMessageBoxTimeout( hWnd, lpText, lpCaption, uType, wLanguageId, dwMilliseconds ) :
 #if ! defined( HB_OS_WIN_CE )
             MessageBoxEx( hWnd, lpText, lpCaption, uType, wLanguageId );
 #else

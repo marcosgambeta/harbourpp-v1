@@ -70,11 +70,17 @@ int hbwin_bitmapType( const void * pImgBuf, HB_SIZE size )
    if( pImgBuf )
    {
       if(      size > 2 && memcmp( pImgBuf, "BM", 2 ) == 0 )
+      {
          iType = HB_WIN_BITMAP_BMP;
+      }
       else if( size > 3 && memcmp( pImgBuf, "\xFF\xD8\xFF", 3 ) == 0 )
+      {
          iType = HB_WIN_BITMAP_JPEG;
+      }
       else if( size > 4 && memcmp( pImgBuf, "\x89PNG", 4 ) == 0 )
+      {
          iType = HB_WIN_BITMAP_PNG;
+      }
    }
 
    return iType;
@@ -90,7 +96,7 @@ HB_FUNC( WIN_BITMAPTYPE )
 HB_FUNC( WIN_LOADBITMAPFILE )
 {
    HB_SIZE nSize;
-   char * pBuffer = ( char * ) hb_fileLoad( hb_parcx( 1 ), HB_MAX_BMP_SIZE, &nSize );
+   char * pBuffer = reinterpret_cast< char * >( hb_fileLoad( hb_parcx( 1 ), HB_MAX_BMP_SIZE, &nSize ) );
 
    if( pBuffer )
    {
@@ -106,9 +112,13 @@ HB_FUNC( WIN_LOADBITMAPFILE )
    }
 
    if( pBuffer )
+   {
       hb_retclen_buffer( pBuffer, nSize );
+   }
    else
+   {
       hb_retc_null();
+   }
 }
 
 /* Some compilers don't implement these define [jarabal] */
@@ -127,30 +137,42 @@ static int hbwin_bitmapIsSupported( HDC hDC, int iType, const void * pImgBuf, HB
        nSize >= sizeof( BITMAPCOREHEADER ) )
    {
       if( iType == HB_WIN_BITMAP_BMP )
+      {
          return 0;
+      }
       else
       {
          int iRes = iType = ( iType == HB_WIN_BITMAP_JPEG ? CHECKJPEGFORMAT : CHECKPNGFORMAT );
 
-         iRes = ExtEscape( hDC, QUERYESCSUPPORT, sizeof( iRes ), ( LPCSTR ) &iRes, 0, 0 );
+         iRes = ExtEscape( hDC, QUERYESCSUPPORT, sizeof( iRes ), reinterpret_cast< LPCSTR >( &iRes ), 0, 0 );
          if( iRes > 0 )
          {
-            if( ExtEscape( hDC, iType, static_cast< int >( nSize ), ( LPCSTR ) pImgBuf, sizeof( iRes ), ( LPSTR ) &iRes ) > 0 )
+            if( ExtEscape( hDC, iType, static_cast< int >( nSize ), static_cast< LPCSTR >( pImgBuf ), sizeof( iRes ), reinterpret_cast< LPSTR >( &iRes ) ) > 0 )
             {
                if( iRes == 1 )
+               {
                   return 0;
+               }
                else
+               {
                   return -4;
+               }
             }
             else
+            {
                return -3;
+            }
          }
          else
+         {
             return -2;
+         }
       }
    }
    else
+   {
       return -1;
+   }
 }
 
 HB_FUNC( WIN_BITMAPISSUPPORTED )
@@ -167,7 +189,7 @@ HB_FUNC( WIN_DRAWBITMAP )
    BYTE * pBits = nullptr;
    HDC hDC = hbwapi_par_HDC( 1 );
    HB_SIZE nSize = hb_parclen( 2 );
-   BITMAPFILEHEADER * pbmfh = ( BITMAPFILEHEADER * ) hb_parc( 2 );
+   BITMAPFILEHEADER * pbmfh = reinterpret_cast< BITMAPFILEHEADER * >( const_cast< char * >( hb_parc( 2 ) ) );
    int iType = hbwin_bitmapType( pbmfh, nSize );
 
    /* FIXME: No check is done on 2nd parameter which is a large security hole
@@ -180,14 +202,14 @@ HB_FUNC( WIN_DRAWBITMAP )
 
       if( iType == HB_WIN_BITMAP_BMP )
       {
-         pbmi  = ( BITMAPINFO * ) ( pbmfh + 1 );
-         pBits = ( BYTE * ) pbmfh + pbmfh->bfOffBits;
+         pbmi  = reinterpret_cast< BITMAPINFO * >( pbmfh + 1 );
+         pBits = reinterpret_cast< BYTE * >( pbmfh ) + pbmfh->bfOffBits;
 
          /* Remember there are 2 types of BitMap File */
          if( pbmi->bmiHeader.biSize == sizeof( BITMAPCOREHEADER ) )
          {
-            iWidth  = ( ( BITMAPCOREHEADER * ) pbmi )->bcWidth;
-            iHeight = ( ( BITMAPCOREHEADER * ) pbmi )->bcHeight;
+            iWidth  = ( reinterpret_cast< BITMAPCOREHEADER * >( pbmi ) )->bcWidth;
+            iHeight = ( reinterpret_cast< BITMAPCOREHEADER * >( pbmi ) )->bcHeight;
          }
          else
          {
@@ -206,9 +228,9 @@ HB_FUNC( WIN_DRAWBITMAP )
          bmi.bmiHeader.biPlanes      = 1;
          bmi.bmiHeader.biBitCount    = 0;
          bmi.bmiHeader.biCompression = ( iType == HB_WIN_BITMAP_JPEG ? BI_JPEG : BI_PNG );
-         bmi.bmiHeader.biSizeImage   = ( DWORD ) nSize;
+         bmi.bmiHeader.biSizeImage   = static_cast< DWORD >( nSize );
          pbmi = &bmi;
-         pBits = ( BYTE * ) pbmfh;
+         pBits = reinterpret_cast< BYTE * >( pbmfh );
       }
 
       if( pbmi && pBits )
@@ -221,8 +243,12 @@ HB_FUNC( WIN_DRAWBITMAP )
                                  DIB_RGB_COLORS, SRCCOPY ) != static_cast< int >( GDI_ERROR ) );
       }
       else
+      {
          hb_retl( HB_FALSE );
+      }
    }
    else
+   {
       hb_retl( HB_FALSE );
+   }
 }

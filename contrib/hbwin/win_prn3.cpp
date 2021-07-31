@@ -63,9 +63,11 @@ static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
    if( hb_iswin9x() )
    {
       /* Open this printer so you can get information about it. */
-      bFlag = OpenPrinter( ( LPTSTR ) lpPrinterName, &hPrinter, nullptr );
+      bFlag = OpenPrinter( const_cast< LPTSTR >( lpPrinterName ), &hPrinter, nullptr );
       if( ! bFlag || ! hPrinter )
+      {
          return HB_FALSE;
+      }
 
       /* The first GetPrinter() tells you how big our buffer must
          be to hold ALL of PRINTER_INFO_2. Note that this will
@@ -87,7 +89,7 @@ static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
 
       /* The second GetPrinter() will fill in all the current information
          so that all you have to do is modify what you are interested in. */
-      bFlag = GetPrinter( hPrinter, 2, ( LPBYTE ) ppi2, dwNeeded, &dwNeeded );
+      bFlag = GetPrinter( hPrinter, 2, reinterpret_cast< LPBYTE >( ppi2 ), dwNeeded, &dwNeeded );
       if( ! bFlag )
       {
          ClosePrinter( hPrinter );
@@ -97,7 +99,7 @@ static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
 
       /* Set default printer attribute for this printer. */
       ppi2->Attributes |= PRINTER_ATTRIBUTE_DEFAULT;
-      bFlag = SetPrinter( hPrinter, 2, ( LPBYTE ) ppi2, 0 );
+      bFlag = SetPrinter( hPrinter, 2, reinterpret_cast< LPBYTE >( ppi2 ), 0 );
       if( ! bFlag )
       {
          ClosePrinter( hPrinter );
@@ -107,7 +109,7 @@ static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
 
       /* Tell all open programs that this change occurred.
          Allow each program 1 second to handle this message. */
-      SendMessageTimeout( HWND_BROADCAST, WM_SETTINGCHANGE, 0, ( LPARAM ) ( LPCTSTR ) TEXT( "windows" ), SMTO_NORMAL, 1000, nullptr );
+      SendMessageTimeout( HWND_BROADCAST, WM_SETTINGCHANGE, 0, reinterpret_cast< LPARAM >( static_cast< LPCTSTR >( TEXT( "windows" ) ) ), SMTO_NORMAL, 1000, nullptr );
    }
    /* If Windows NT, use the SetDefaultPrinter API for Windows 2000,
       or WriteProfileString for version 4.0 and earlier. */
@@ -121,10 +123,11 @@ static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
 
          hWinSpool = hbwapi_LoadLibrarySystem( TEXT( "winspool.drv" ) );
          if( ! hWinSpool )
+         {
             return HB_FALSE;
+         }
 
-         fnSetDefaultPrinter = ( DEFPRINTER ) HB_WINAPI_GETPROCADDRESST( hWinSpool,
-            "SetDefaultPrinter" );
+         fnSetDefaultPrinter = ( DEFPRINTER ) HB_WINAPI_GETPROCADDRESST( hWinSpool, "SetDefaultPrinter" );
 
          if( ! fnSetDefaultPrinter )
          {
@@ -135,16 +138,20 @@ static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
          bFlag = ( *fnSetDefaultPrinter )( lpPrinterName );
          FreeLibrary( hWinSpool );
          if( ! bFlag )
+         {
             return HB_FALSE;
+         }
       }
       else /* NT4.0 or earlier */
       {
          HB_ISIZ nStrLen;
 
          /* Open this printer so you can get information about it. */
-         bFlag = OpenPrinter( ( LPTSTR ) lpPrinterName, &hPrinter, nullptr );
+         bFlag = OpenPrinter( const_cast< LPTSTR >( lpPrinterName ), &hPrinter, nullptr );
          if( ! bFlag || ! hPrinter )
+         {
             return HB_FALSE;
+         }
 
          /* The first GetPrinter() tells you how big our buffer must
             be to hold ALL of PRINTER_INFO_2. Note that this will
@@ -166,7 +173,7 @@ static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
 
          /* The second GetPrinter() fills in all the current
             information. */
-         bFlag = GetPrinter( hPrinter, 2, ( LPBYTE ) ppi2, dwNeeded, &dwNeeded );
+         bFlag = GetPrinter( hPrinter, 2, reinterpret_cast< LPBYTE >( ppi2 ), dwNeeded, &dwNeeded );
          if( ( ! bFlag ) || ( ! ppi2->pDriverName ) || ( ! ppi2->pPortName ) )
          {
             ClosePrinter( hPrinter );
@@ -209,11 +216,17 @@ static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
 
    /* Clean up. */
    if( hPrinter )
+   {
       ClosePrinter( hPrinter );
+   }
    if( ppi2 )
+   {
       hb_xfree( ppi2 );
+   }
    if( pBuffer )
+   {
       hb_xfree( pBuffer );
+   }
 
    return HB_TRUE;
 #else

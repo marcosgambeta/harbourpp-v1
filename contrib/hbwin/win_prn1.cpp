@@ -68,17 +68,16 @@ HB_FUNC( WIN_CREATEDC )
    {
       void * hDevice;
 
-      HDC hDC = CreateDC( TEXT( "" ),
-                          HB_PARSTR( 1, &hDevice, nullptr ),
-                          nullptr,
-                          nullptr );
+      HDC hDC = CreateDC( TEXT( "" ), HB_PARSTR( 1, &hDevice, nullptr ), nullptr, nullptr );
 
       hbwapi_ret_HDC( hDC );
 
       hb_strfree( hDevice );
    }
    else
+   {
       hb_retptr( nullptr );
+   }
 }
 
 HB_FUNC( WIN_STARTDOC )
@@ -112,9 +111,13 @@ HB_FUNC( WIN_ENDDOC )
    if( hDC )
    {
       if( hb_parl( 2 ) )
+      {
          bResult = ( AbortDoc( hDC ) > 0 );
+      }
       else
+      {
          bResult = ( EndDoc( hDC ) > 0 );
+      }
    }
 
    hb_retl( bResult );
@@ -161,7 +164,9 @@ HB_FUNC( WIN_TEXTOUT )
       LPCTSTR lpData = HB_PARSTR( 4, &hData, &nDataLen );
 
       if( nLen > nDataLen )
+      {
          nLen = nDataLen;
+      }
 
       if( nLen > 0 )
       {
@@ -172,7 +177,9 @@ HB_FUNC( WIN_TEXTOUT )
          int iWidth = hb_parni( 6 ); /* defaults to 0 */
 
          if( HB_ISNUM( 7 ) )
-            SetTextAlign( ( HDC ) hDC, TA_NOUPDATECP | hb_parni( 7 ) );
+         {
+            SetTextAlign( static_cast< HDC >( hDC ), TA_NOUPDATECP | hb_parni( 7 ) );
+         }
 
          if( iWidth < 0 && nLen < 1024 )
          {
@@ -181,15 +188,19 @@ HB_FUNC( WIN_TEXTOUT )
             iWidth = -iWidth;
 
             while( n )
+            {
                aFixed[ --n ] = iWidth;
+            }
 
-            if( ExtTextOut( hDC, iRow, iCol, 0, nullptr, lpData, ( UINT ) nLen, aFixed ) )
-               lResult = ( long ) ( nLen * iWidth );
+            if( ExtTextOut( hDC, iRow, iCol, 0, nullptr, lpData, static_cast< UINT >( nLen ), aFixed ) )
+            {
+               lResult = static_cast< long >( nLen * iWidth );
+            }
          }
-         else if( ExtTextOut( hDC, iRow, iCol, 0, nullptr, lpData, ( UINT ) nLen, nullptr ) )
+         else if( ExtTextOut( hDC, iRow, iCol, 0, nullptr, lpData, static_cast< UINT >( nLen ), nullptr ) )
          {
             GetTextExtentPoint32( hDC, lpData, static_cast< int >( nLen ), &sSize ); /* Get the length of the text in device size */
-            lResult = ( long ) sSize.cx; /* return the width so we can update the current pen position (::PosY) */
+            lResult = static_cast< long >( sSize.cx ); /* return the width so we can update the current pen position (::PosY) */
          }
       }
 
@@ -213,7 +224,9 @@ HB_FUNC( WIN_GETTEXTSIZE )
       LPCTSTR lpData = HB_PARSTR( 2, &hData, &nDataLen );
 
       if( nLen > nDataLen )
+      {
          nLen = nDataLen;
+      }
 
       if( nLen > 0 )
       {
@@ -222,9 +235,13 @@ HB_FUNC( WIN_GETTEXTSIZE )
          GetTextExtentPoint32( hDC, lpData, static_cast< int >( nLen ), &sSize );  /* Get the length of the text in device size */
 
          if( hb_parldef( 4, HB_TRUE ) )
-            lResult = ( long ) sSize.cx;  /* return the width */
+         {
+            lResult = static_cast< long >( sSize.cx );  /* return the width */
+         }
          else
-            lResult = ( long ) sSize.cy;  /* return the height */
+         {
+            lResult = static_cast< long >( sSize.cy );  /* return the height */
+         }
       }
 
       hb_strfree( hData );
@@ -244,9 +261,13 @@ HB_FUNC( WIN_GETCHARSIZE )
 
       GetTextMetrics( hDC, &tm );
       if( hb_parl( 2 ) )
-         lResult = ( long ) tm.tmHeight;
+      {
+         lResult = static_cast< long >( tm.tmHeight );
+      }
       else
-         lResult = ( long ) tm.tmAveCharWidth;
+      {
+         lResult = static_cast< long >( tm.tmAveCharWidth );
+      }
    }
 
    hb_retnl( lResult );
@@ -256,7 +277,7 @@ HB_FUNC( WIN_GETDEVICECAPS )
 {
    HDC hDC = hbwapi_par_HDC( 1 );
 
-   hb_retni( hDC && HB_ISNUM( 2 ) ? ( long ) GetDeviceCaps( hDC, hb_parni( 2 ) ) : 0 );
+   hb_retni( hDC && HB_ISNUM( 2 ) ? static_cast< long >( GetDeviceCaps( hDC, hb_parni( 2 ) ) ) : 0 );
 }
 
 HB_FUNC( WIN_SETMAPMODE )
@@ -301,33 +322,39 @@ HB_FUNC( WIN_CREATEFONT )
          iHeight = -MulDiv( hb_parni( 3 ), GetDeviceCaps( hDC, LOGPIXELSY ), 72 );
 
          if( iDiv )
+         {
             iWidth = MulDiv( abs( iMul ), GetDeviceCaps( hDC, LOGPIXELSX ), abs( iDiv ) );
+         }
          else
+         {
             iWidth = 0;  /* Use the default font width */
+         }
       }
 
-      lf.lfHeight         = ( LONG ) iHeight;
-      lf.lfWidth          = ( LONG ) iWidth;
+      lf.lfHeight         = static_cast< LONG >( iHeight );
+      lf.lfWidth          = static_cast< LONG >( iWidth );
       lf.lfEscapement     = 0;
       lf.lfOrientation    = 0;
-      lf.lfWeight         = ( LONG ) iWeight;
-      lf.lfItalic         = ( BYTE ) hb_parl( 8 );
-      lf.lfUnderline      = ( BYTE ) hb_parl( 7 );
-      lf.lfStrikeOut      = ( BYTE ) 0;
-      lf.lfCharSet        = ( BYTE ) hb_parnl( 9 );
+      lf.lfWeight         = static_cast< LONG >( iWeight );
+      lf.lfItalic         = static_cast< BYTE >( hb_parl( 8 ) );
+      lf.lfUnderline      = static_cast< BYTE >( hb_parl( 7 ) );
+      lf.lfStrikeOut      = static_cast< BYTE >( 0 );
+      lf.lfCharSet        = static_cast< BYTE >( hb_parnl( 9 ) );
 #if defined( HB_OS_WIN_CE )
-      lf.lfOutPrecision   = ( BYTE ) OUT_DEFAULT_PRECIS;
+      lf.lfOutPrecision   = static_cast< BYTE >( OUT_DEFAULT_PRECIS );
 #else
-      lf.lfOutPrecision   = ( BYTE ) OUT_DEVICE_PRECIS;
+      lf.lfOutPrecision   = static_cast< BYTE >( OUT_DEVICE_PRECIS );
 #endif
-      lf.lfClipPrecision  = ( BYTE ) CLIP_DEFAULT_PRECIS;
-      lf.lfQuality        = ( BYTE ) DRAFT_QUALITY;
-      lf.lfPitchAndFamily = ( BYTE ) DEFAULT_PITCH | FF_DONTCARE;
+      lf.lfClipPrecision  = static_cast< BYTE >( CLIP_DEFAULT_PRECIS );
+      lf.lfQuality        = static_cast< BYTE >( DRAFT_QUALITY );
+      lf.lfPitchAndFamily = static_cast< BYTE >( DEFAULT_PITCH | FF_DONTCARE );
 
       pfFaceName = HB_PARSTR( 2, &hfFaceName, &nLen );
 
       if( nLen > ( LF_FACESIZE - 1 ) )
+      {
          nLen = LF_FACESIZE - 1;
+      }
 
       memcpy( lf.lfFaceName, pfFaceName, nLen * sizeof( TCHAR ) );
       lf.lfFaceName[ nLen ] = TEXT( '\0' );
@@ -339,10 +366,14 @@ HB_FUNC( WIN_CREATEFONT )
       hbwapi_ret_HFONT( hFont );
 
       if( hFont )
+      {
          SelectObject( hDC, hFont );
+      }
    }
    else
+   {
       hb_retptr( nullptr );
+   }
 }
 
 HB_FUNC( WIN_GETPRINTERFONTNAME )
@@ -358,7 +389,9 @@ HB_FUNC( WIN_GETPRINTERFONTNAME )
       HB_RETSTR( tszFontName );
    }
    else
+   {
       hb_retc_null();
+   }
 }
 
 HB_FUNC( WIN_BITMAPSOK )
@@ -381,15 +414,15 @@ HB_FUNC( WIN_SETDOCUMENTPROPERTIES )
       void * hDeviceName;
       LPCTSTR lpDeviceName = HB_PARSTR( 2, &hDeviceName, nullptr );
 
-      if( OpenPrinter( ( LPTSTR ) lpDeviceName, &hPrinter, nullptr ) )
+      if( OpenPrinter( const_cast< LPTSTR >( lpDeviceName ), &hPrinter, nullptr ) )
       {
-         LONG lSize = DocumentProperties( 0, hPrinter, ( LPTSTR ) lpDeviceName, nullptr, nullptr, 0 );
+         LONG lSize = DocumentProperties( 0, hPrinter, const_cast< LPTSTR >( lpDeviceName ), nullptr, nullptr, 0 );
 
          if( lSize > 0 )
          {
             PDEVMODE pDevMode = static_cast< PDEVMODE >( hb_xgrabz( lSize ) );
 
-            if( DocumentProperties( 0, hPrinter, ( LPTSTR ) lpDeviceName, pDevMode, pDevMode, DM_OUT_BUFFER ) == IDOK )
+            if( DocumentProperties( 0, hPrinter, const_cast< LPTSTR >( lpDeviceName ), pDevMode, pDevMode, DM_OUT_BUFFER ) == IDOK )
             {
                DWORD dmFields = 0, fMode;
                HB_BOOL fUserDialog;
@@ -402,46 +435,44 @@ HB_FUNC( WIN_SETDOCUMENTPROPERTIES )
 
                if( ( iProp = hb_parni( 3 ) ) != 0 )      /* [2007-02-22] don't change if 0 */
                {
-                  pDevMode->dmPaperSize = ( short ) iProp;
+                  pDevMode->dmPaperSize = static_cast< short >( iProp );
                   dmFields |= DM_PAPERSIZE;
                }
 
                if( HB_ISLOG( 4 ) )
                {
-                  pDevMode->dmOrientation = ( short ) ( hb_parl( 4 ) ? DMORIENT_LANDSCAPE : DMORIENT_PORTRAIT );
+                  pDevMode->dmOrientation = static_cast< short >( hb_parl( 4 ) ? DMORIENT_LANDSCAPE : DMORIENT_PORTRAIT );
                   dmFields |= DM_ORIENTATION;
                }
 
                if( ( iProp = hb_parni( 5 ) ) > 0 )
                {
-                  pDevMode->dmCopies = ( short ) iProp;
+                  pDevMode->dmCopies = static_cast< short >( iProp );
                   dmFields |= DM_COPIES;
                }
 
                if( ( iProp = hb_parni( 6 ) ) != 0 )      /* [2007-02-22] don't change if 0 */
                {
-                  pDevMode->dmDefaultSource = ( short ) iProp;
+                  pDevMode->dmDefaultSource = static_cast< short >( iProp );
                   dmFields |= DM_DEFAULTSOURCE;
                }
 
                if( ( iProp = hb_parni( 7 ) ) != 0 )      /* [2007-02-22] don't change if 0 */
                {
-                  pDevMode->dmDuplex = ( short ) iProp;
+                  pDevMode->dmDuplex = static_cast< short >( iProp );
                   dmFields |= DM_DUPLEX;
                }
 
                if( ( iProp = hb_parni( 8 ) ) != 0 )      /* [2007-02-22] don't change if 0 */
                {
-                  pDevMode->dmPrintQuality = ( short ) iProp;
+                  pDevMode->dmPrintQuality = static_cast< short >( iProp );
                   dmFields |= DM_PRINTQUALITY;
                }
 
-               if( pDevMode->dmPaperSize == DMPAPER_USER &&
-                   ( iProp = hb_parni( 9 ) ) > 0 &&
-                   ( iProp2 = hb_parni( 10 ) ) > 0 )
+               if( pDevMode->dmPaperSize == DMPAPER_USER && ( iProp = hb_parni( 9 ) ) > 0 && ( iProp2 = hb_parni( 10 ) ) > 0 )
                {
-                  pDevMode->dmPaperLength = ( short ) iProp;
-                  pDevMode->dmPaperWidth = ( short ) iProp2;
+                  pDevMode->dmPaperLength = static_cast< short >( iProp );
+                  pDevMode->dmPaperWidth = static_cast< short >( iProp2 );
                   dmFields |= DM_PAPERLENGTH | DM_PAPERWIDTH;
                }
 
@@ -449,9 +480,11 @@ HB_FUNC( WIN_SETDOCUMENTPROPERTIES )
 
                fMode = DM_IN_BUFFER | DM_OUT_BUFFER;
                if( fUserDialog )
+               {
                   fMode |= DM_IN_PROMPT;
+               }
 
-               if( DocumentProperties( 0, hPrinter, ( LPTSTR ) lpDeviceName, pDevMode, pDevMode, fMode ) == IDOK )
+               if( DocumentProperties( 0, hPrinter, const_cast< LPTSTR >( lpDeviceName ), pDevMode, pDevMode, fMode ) == IDOK )
                {
                   hb_storni( pDevMode->dmPaperSize, 3 );
                   hb_storl( pDevMode->dmOrientation == DMORIENT_LANDSCAPE, 4 );
@@ -488,15 +521,15 @@ HB_FUNC( WIN_GETDOCUMENTPROPERTIES )
    void * hDeviceName;
    LPCTSTR lpDeviceName = HB_PARSTR( 1, &hDeviceName, nullptr );
 
-   if( OpenPrinter( ( LPTSTR ) lpDeviceName, &hPrinter, nullptr ) )
+   if( OpenPrinter( const_cast< LPTSTR >( lpDeviceName ), &hPrinter, nullptr ) )
    {
-      LONG lSize = DocumentProperties( 0, hPrinter, ( LPTSTR ) lpDeviceName, nullptr, nullptr, 0 );
+      LONG lSize = DocumentProperties( 0, hPrinter, const_cast< LPTSTR >( lpDeviceName ), nullptr, nullptr, 0 );
 
       if( lSize > 0 )
       {
          PDEVMODE pDevMode = static_cast< PDEVMODE >( hb_xgrabz( lSize ) );
 
-         if( DocumentProperties( 0, hPrinter, ( LPTSTR ) lpDeviceName, pDevMode, pDevMode, DM_OUT_BUFFER ) == IDOK )
+         if( DocumentProperties( 0, hPrinter, const_cast< LPTSTR >( lpDeviceName ), pDevMode, pDevMode, DM_OUT_BUFFER ) == IDOK )
          {
             hb_storni( pDevMode->dmPaperSize, 2 );
             hb_storl( pDevMode->dmOrientation == DMORIENT_LANDSCAPE, 3 );
@@ -521,8 +554,7 @@ HB_FUNC( WIN_GETDOCUMENTPROPERTIES )
    hb_retl( bResult );
 }
 
-static int CALLBACK FontEnumCallBack( LOGFONT * lplf, TEXTMETRIC * lpntm,
-                                      DWORD dwFontType, LPVOID pArray )
+static int CALLBACK FontEnumCallBack( LOGFONT * lplf, TEXTMETRIC * lpntm, DWORD dwFontType, LPVOID pArray )
 {
    PHB_ITEM pSubItems = hb_itemArrayNew( 4 );
 
@@ -530,7 +562,7 @@ static int CALLBACK FontEnumCallBack( LOGFONT * lplf, TEXTMETRIC * lpntm,
    hb_arraySetL( pSubItems, 2, ( lplf->lfPitchAndFamily & FIXED_PITCH ) != 0 );
    hb_arraySetL( pSubItems, 3, ( dwFontType & TRUETYPE_FONTTYPE ) != 0 );
    hb_arraySetNL( pSubItems, 4, lpntm->tmCharSet );
-   hb_arrayAddForward( ( PHB_ITEM ) pArray, pSubItems );
+   hb_arrayAddForward( static_cast< PHB_ITEM >( pArray ), pSubItems );
 
    hb_itemRelease( pSubItems );
 
@@ -544,12 +576,16 @@ HB_FUNC( WIN_ENUMFONTS )
    PHB_ITEM pArray = hb_itemArrayNew( 0 );
 
    if( fNullDC )
+   {
       hDC = GetDC( nullptr );
+   }
 
-   EnumFonts( hDC, ( LPCTSTR ) nullptr, ( FONTENUMPROC ) FontEnumCallBack, ( LPARAM ) pArray );
+   EnumFonts( hDC, static_cast< LPCTSTR >( nullptr ), reinterpret_cast< FONTENUMPROC >( FontEnumCallBack ), reinterpret_cast< LPARAM >( pArray ) );
 
    if( fNullDC )
+   {
       ReleaseDC( nullptr, hDC );
+   }
 
    hb_itemReturnRelease( pArray );
 }
@@ -564,7 +600,7 @@ HB_FUNC( WIN_ENUMFONTFAMILIES )
 
    memset( &Logfont, 0, sizeof( Logfont ) );
 
-   Logfont.lfCharSet = ( BYTE ) hb_parnidef( 1, DEFAULT_CHARSET );
+   Logfont.lfCharSet = static_cast< BYTE >( hb_parnidef( 1, DEFAULT_CHARSET ) );
    if( HB_ISCHAR( 2 ) )
    {
       void * hText;
@@ -573,12 +609,16 @@ HB_FUNC( WIN_ENUMFONTFAMILIES )
    }
 
    if( fNullDC )
+   {
       hDC = GetDC( nullptr );
+   }
 
-   EnumFontFamiliesEx( hDC, &Logfont, ( FONTENUMPROC ) FontEnumCallBack, ( LPARAM ) pArray, 0 );
+   EnumFontFamiliesEx( hDC, &Logfont, reinterpret_cast< FONTENUMPROC >( FontEnumCallBack ), reinterpret_cast< LPARAM >( pArray ), 0 );
 
    if( fNullDC )
+   {
       ReleaseDC( nullptr, hDC );
+   }
 #endif
 
    hb_itemReturnRelease( pArray );
@@ -591,18 +631,28 @@ HB_FUNC( WIN_SETCOLOR )
    if( hDC )
    {
       if( HB_ISNUM( 2 ) )
-         hb_retnl( ( long ) SetTextColor( hDC, ( COLORREF ) hb_parnl( 2 ) ) );
+      {
+         hb_retnl( static_cast< long >( SetTextColor( hDC, static_cast< COLORREF >( hb_parnl( 2 ) ) ) ) );
+      }
       else
-         hb_retnl( ( long ) GetTextColor( hDC ) );
+      {
+         hb_retnl( static_cast< long >( GetTextColor( hDC ) ) );
+      }
 
       if( HB_ISNUM( 3 ) )
-         SetBkColor( hDC, ( COLORREF ) hb_parnl( 3 ) );
+      {
+         SetBkColor( hDC, static_cast< COLORREF >( hb_parnl( 3 ) ) );
+      }
 
       if( HB_ISNUM( 4 ) )
+      {
          SetTextAlign( hDC, hb_parni( 4 ) );
+      }
    }
    else
-      hb_retnl( ( long ) CLR_INVALID );
+   {
+      hb_retnl( static_cast< long >( CLR_INVALID ) );
+   }
 }
 
 HB_FUNC( WIN_SETPEN )
@@ -614,21 +664,27 @@ HB_FUNC( WIN_SETPEN )
       HPEN hPen;
 
       if( HB_ISPOINTER( 2 ) )
+      {
          hPen = hbwapi_par_HPEN( 2 );
+      }
       else
       {
          hPen = CreatePen( hb_parni( 2 ),                /* pen style */
                            hb_parni( 3 ),                /* pen width */
-                           ( COLORREF ) hb_parnl( 4 ) ); /* pen color */
+                           static_cast< COLORREF >( hb_parnl( 4 ) ) ); /* pen color */
 
          hbwapi_ret_HPEN( hPen );
       }
 
       if( hPen )
+      {
          SelectObject( hDC, hPen );
+      }
    }
    else
+   {
       hb_retptr( nullptr );
+   }
 }
 
 HB_FUNC( WIN_FILLRECT )
@@ -638,7 +694,7 @@ HB_FUNC( WIN_FILLRECT )
 
    if( hDC )
    {
-      HBRUSH hBrush = CreateSolidBrush( ( COLORREF ) hb_parnl( 6 ) );
+      HBRUSH hBrush = CreateSolidBrush( static_cast< COLORREF >( hb_parnl( 6 ) ) );
       RECT rct;
 
       rct.left   = hb_parnl( 2 );
@@ -647,7 +703,9 @@ HB_FUNC( WIN_FILLRECT )
       rct.bottom = hb_parnl( 5 );
 
       if( FillRect( hDC, &rct, hBrush ) )
+      {
          fResult = HB_TRUE;
+      }
 
       DeleteObject( hBrush );
    }
@@ -675,9 +733,13 @@ HB_FUNC( WIN_RECTANGLE )
    int iHeight = hb_parni( 7 );
 
    if( iWidth && iHeight )
+   {
       hb_retl( hDC ? RoundRect( hDC, x1, y1, x2, y2, iWidth, iHeight ) : HB_FALSE );
+   }
    else
+   {
       hb_retl( hDC ? Rectangle( hDC, x1, y1, x2, y2 ) : HB_FALSE );
+   }
 }
 
 HB_FUNC( WIN_ARC )
@@ -714,9 +776,13 @@ HB_FUNC( WIN_SETBKMODE )
    if( hDC )
    {
       if( HB_ISNUM( 2 ) )
+      {
          iMode = SetBkMode( hDC, hb_parni( 2 ) );
+      }
       else
+      {
          iMode = GetBkMode( hDC );
+      }
    }
    hb_retni( iMode );
 }

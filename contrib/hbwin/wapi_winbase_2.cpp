@@ -49,7 +49,7 @@
 
 HB_FUNC( WAPI_GETLASTERROR )
 {
-   hb_retnl( ( long ) hbwapi_GetLastError() );
+   hb_retnl( static_cast< long >( hbwapi_GetLastError() ) );
 }
 
 HB_FUNC( WAPI_GETCURRENTPROCESSID )
@@ -71,7 +71,7 @@ HB_FUNC( WAPI_FORMATMESSAGE )
    DWORD dwRetVal;
    DWORD dwFlags;
 
-   dwFlags = ( DWORD ) hb_parnldef( 1, FORMAT_MESSAGE_FROM_SYSTEM );
+   dwFlags = static_cast< DWORD >( hb_parnldef( 1, FORMAT_MESSAGE_FROM_SYSTEM ) );
 
    if( HB_ISBYREF( 5 ) )
    {
@@ -79,25 +79,35 @@ HB_FUNC( WAPI_FORMATMESSAGE )
       if( ( dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER ) == 0 )
       {
          if( nSize == 0 && ! HB_ISNUM( 6 ) )
+         {
             nSize = hb_parclen( 5 );
+         }
          if( nSize > 0 )
+         {
             lpBuffer = static_cast< LPTSTR >( hb_xgrab( nSize * sizeof( TCHAR ) ) );
+         }
          else
+         {
             dwFlags |= FORMAT_MESSAGE_ALLOCATE_BUFFER;
+         }
       }
    }
    else
-      dwFlags = ( DWORD ) ~FORMAT_MESSAGE_ALLOCATE_BUFFER;
+   {
+      dwFlags = static_cast< DWORD >( ~FORMAT_MESSAGE_ALLOCATE_BUFFER );
+   }
 
    if( dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER )
-      lpBuffer = ( LPTSTR ) &lpAllocBuff;
+   {
+      lpBuffer = reinterpret_cast< LPTSTR >( &lpAllocBuff );
+   }
 
    dwRetVal = FormatMessage( dwFlags,
-                             HB_ISCHAR( 2 ) ? ( LPCVOID ) HB_PARSTR( 2, &hSource, nullptr ) : hb_parptr( 2 ),
-                             HB_ISNUM( 3 ) ? ( DWORD ) hb_parnl( 3 ) : hbwapi_GetLastError() /* dwMessageId */,
-                             ( DWORD ) hb_parnldef( 4, MAKELANGID( LANG_NEUTRAL, SUBLANG_DEFAULT ) ) /* dwLanguageId */,
+                             HB_ISCHAR( 2 ) ? static_cast< LPCVOID >( HB_PARSTR( 2, &hSource, nullptr ) ) : hb_parptr( 2 ),
+                             HB_ISNUM( 3 ) ? static_cast< DWORD >( hb_parnl( 3 ) ) : hbwapi_GetLastError() /* dwMessageId */,
+                             static_cast< DWORD >( hb_parnldef( 4, MAKELANGID( LANG_NEUTRAL, SUBLANG_DEFAULT ) ) ) /* dwLanguageId */,
                              lpBuffer,
-                             ( DWORD ) nSize,
+                             static_cast< DWORD >( nSize ),
                              nullptr /* TODO: Add support for this parameter. */ );
 
    hbwapi_SetLastError( GetLastError() );
@@ -106,16 +116,24 @@ HB_FUNC( WAPI_FORMATMESSAGE )
    if( lpBuffer )
    {
       if( dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER )
+      {
          lpBuffer = lpAllocBuff;
+      }
       else
+      {
          lpBuffer[ nSize - 1 ] = '\0';
+      }
 
       HB_STORSTR( dwRetVal ? lpBuffer : nullptr, 5 );
 
       if( lpAllocBuff )
+      {
          LocalFree( lpAllocBuff );
+      }
       else if( lpBuffer )
+      {
          hb_xfree( lpBuffer );
+      }
    }
 
    hb_strfree( hSource );
@@ -124,7 +142,7 @@ HB_FUNC( WAPI_FORMATMESSAGE )
 /* VOID WINAPI Sleep( __in DWORD dwMilliseconds ); */
 HB_FUNC( WAPI_SLEEP )
 {
-   Sleep( ( DWORD ) hb_parnl( 1 ) );
+   Sleep( static_cast< DWORD >( hb_parnl( 1 ) ) );
 }
 
 HB_FUNC( WAPI_OUTPUTDEBUGSTRING )
@@ -165,7 +183,9 @@ HB_FUNC( WAPI_QUERYDOSDEVICE )
       hb_itemReturnRelease( pArray );
    }
    else
+   {
       hb_reta( 0 );
+   }
 
    hb_strfree( hDeviceName );
    hb_xfree( lpTargetPath );
