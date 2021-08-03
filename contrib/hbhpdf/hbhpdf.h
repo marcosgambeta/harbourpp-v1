@@ -53,7 +53,7 @@
 
 #include "hpdf.h"
 
-#define HB_HPDF_VERS( ma, mi, mu )  \
+#define HB_HPDF_VERS( ma, mi, mu ) \
    ( HPDF_MAJOR_VERSION > ma || \
    ( HPDF_MAJOR_VERSION == ma && \
    ( HPDF_MINOR_VERSION > mi || \

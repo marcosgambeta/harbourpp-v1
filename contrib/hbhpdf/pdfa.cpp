@@ -51,7 +51,7 @@ HB_FUNC( HPDF_PDFA_SETPDFACONFORMANCE )
           out it is design decision or bug, I excluded them from dynamic
           builds. [vszakats] */
 #if HB_HPDF_VERS( 2, 2, 0 ) && ! defined( HB_DYNLIB )
-   hb_retnl( HPDF_PDFA_SetPDFAConformance( hb_HPDF_Doc_par( 1 ), ( HPDF_PDFAType ) hb_parni( 2 ) ) );
+   hb_retnl( HPDF_PDFA_SetPDFAConformance( hb_HPDF_Doc_par( 1 ), static_cast< HPDF_PDFAType >( hb_parni( 2 ) ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif
