@@ -514,7 +514,7 @@ static HB_ERRCODE mysqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
          pStr = static_cast< char * >( hb_xgrab( pField->uiLen + 1 ) );
          memcpy( pStr, pValue, nLen );
 
-         if( ( HB_SIZE ) pField->uiLen > nLen )
+         if( static_cast< HB_SIZE >( pField->uiLen ) > nLen )
             memset( pStr + nLen, ' ', pField->uiLen - nLen );
 
          pStr[ pField->uiLen ] = '\0';

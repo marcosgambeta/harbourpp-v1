@@ -374,7 +374,7 @@ HB_FUNC( HB_UTF8SUBSTR )
       else if( nFrom )
          --nFrom;
 
-      if( nLen > ( HB_SIZE ) nFrom && nCount > 0 )
+      if( nLen > static_cast< HB_SIZE >( nFrom ) && nCount > 0 )
          szDest = hb_cdpUTF8StringSubstr( szString, nLen,
                                           nFrom, nCount, &nDest );
       if( szDest )

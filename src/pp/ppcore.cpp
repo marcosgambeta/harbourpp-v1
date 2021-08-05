@@ -2268,7 +2268,7 @@ static void hb_pp_pragmaStreamFile( PHB_PP_STATE pState, const char * szFileName
                char * pBuffer = static_cast< char * >( hb_xgrab( nSize * sizeof( char ) ) );
 
                if( pFile->file_in )
-                  nSize = ( HB_SIZE ) fread( pBuffer, sizeof( char ), nSize, pFile->file_in );
+                  nSize = static_cast< HB_SIZE >( fread( pBuffer, sizeof( char ), nSize, pFile->file_in ) );
                else
                   memcpy( pBuffer, pFile->pLineBuf, nSize );
 

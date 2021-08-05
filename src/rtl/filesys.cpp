@@ -1418,9 +1418,9 @@ HB_SIZE hb_fsPipeIsData( HB_FHANDLE hPipeHandle, HB_SIZE nBufferSize,
           hb_vmRequestQuery() == 0 );
 
    if( ! fResult )
-      nToRead = ( HB_SIZE ) FS_ERROR;
+      nToRead = static_cast< HB_SIZE >( FS_ERROR );
    else if( dwAvail > 0 )
-      nToRead = ( ( HB_SIZE ) dwAvail < nBufferSize ) ? dwAvail : nBufferSize;
+      nToRead = ( static_cast< HB_SIZE >( dwAvail ) < nBufferSize ) ? dwAvail : nBufferSize;
 }
 #elif defined( HB_OS_OS2 )
 {
@@ -1460,9 +1460,9 @@ HB_SIZE hb_fsPipeIsData( HB_FHANDLE hPipeHandle, HB_SIZE nBufferSize,
           hb_vmRequestQuery() == 0 );
 
    if( ! fResult )
-      nToRead = ( HB_SIZE ) FS_ERROR;
+      nToRead = static_cast< HB_SIZE >( FS_ERROR );
    else if( avail.cbpipe > 0 )
-      nToRead = ( ( HB_SIZE ) avail.cbpipe < nBufferSize ) ? avail.cbpipe :
+      nToRead = ( static_cast< HB_SIZE >( avail.cbpipe ) < nBufferSize ) ? avail.cbpipe :
                                                              nBufferSize;
 #  endif
 }
@@ -1473,7 +1473,7 @@ HB_SIZE hb_fsPipeIsData( HB_FHANDLE hPipeHandle, HB_SIZE nBufferSize,
    if( iResult > 0 )
       nToRead = nBufferSize;
    else if( iResult < 0 )
-      nToRead = ( HB_SIZE ) FS_ERROR;
+      nToRead = static_cast< HB_SIZE >( FS_ERROR );
 }
 #else
 {
@@ -1500,11 +1500,11 @@ HB_SIZE hb_fsPipeRead( HB_FHANDLE hPipeHandle, void * buffer, HB_SIZE nSize,
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsPipeRead(%p,%p,%" HB_PFS "u,%" PFHL "d)", ( void * ) static_cast< HB_PTRUINT >( hPipeHandle ), buffer, nSize, nTimeOut ) );
 
    nRead = hb_fsPipeIsData( hPipeHandle, nSize, nTimeOut );
-   if( nRead != ( HB_SIZE ) FS_ERROR && nRead > 0 )
+   if( nRead != static_cast< HB_SIZE >( FS_ERROR ) && nRead > 0 )
    {
       nRead = hb_fsReadLarge( hPipeHandle, buffer, nRead );
       if( nRead == 0 )
-         nRead = ( HB_SIZE ) FS_ERROR;
+         nRead = static_cast< HB_SIZE >( FS_ERROR );
    }
 
    return nRead;
@@ -1551,9 +1551,9 @@ HB_SIZE hb_fsPipeWrite( HB_FHANDLE hPipeHandle, const void * buffer, HB_SIZE nSi
             dwToWrite = 4096;
          fResult = WriteFile( hPipe, ( const HB_BYTE * ) buffer + nWritten, dwToWrite, &dwWritten, nullptr ) != 0;
          if( fResult )
-            nWritten += ( HB_SIZE ) dwWritten;
+            nWritten += static_cast< HB_SIZE >( dwWritten );
          else if( nWritten == 0 )
-            nWritten = ( HB_SIZE ) FS_ERROR;
+            nWritten = static_cast< HB_SIZE >( FS_ERROR );
          hb_fsSetIOError( fResult, 0 );
       }
       while( fResult && nWritten < nSize &&
@@ -1566,7 +1566,7 @@ HB_SIZE hb_fsPipeWrite( HB_FHANDLE hPipeHandle, const void * buffer, HB_SIZE nSi
    else
    {
       hb_fsSetIOError( HB_FALSE, 0 );
-      nWritten = ( HB_SIZE ) FS_ERROR;
+      nWritten = static_cast< HB_SIZE >( FS_ERROR );
    }
 }
 #elif defined( HB_OS_OS2 )
@@ -1602,7 +1602,7 @@ HB_SIZE hb_fsPipeWrite( HB_FHANDLE hPipeHandle, const void * buffer, HB_SIZE nSi
                          cbActual, &cbActual );
          hb_fsSetError( ( HB_ERRCODE ) ret );
          fResult = ret == NO_ERROR;
-         nWritten = fResult ? ( HB_SIZE ) cbActual : ( HB_SIZE ) FS_ERROR;
+         nWritten = fResult ? static_cast< HB_SIZE >( cbActual ) : static_cast< HB_SIZE >( FS_ERROR );
       }
       while( fResult && nWritten == 0 &&
              ( nTimeOut = hb_timerTest( nTimeOut, &timer ) ) != 0 &&
@@ -1614,7 +1614,7 @@ HB_SIZE hb_fsPipeWrite( HB_FHANDLE hPipeHandle, const void * buffer, HB_SIZE nSi
    else
    {
       hb_fsSetError( ( HB_ERRCODE ) ret );
-      nWritten = ( HB_SIZE ) FS_ERROR;
+      nWritten = static_cast< HB_SIZE >( FS_ERROR );
    }
 #  endif
 }
@@ -1635,7 +1635,7 @@ HB_SIZE hb_fsPipeWrite( HB_FHANDLE hPipeHandle, const void * buffer, HB_SIZE nSi
       if( iResult == -1 )
       {
          hb_fsSetIOError( HB_FALSE, 0 );
-         nWritten = ( HB_SIZE ) FS_ERROR;
+         nWritten = static_cast< HB_SIZE >( FS_ERROR );
       }
       else
          nWritten = hb_fsWriteLarge( hPipeHandle, buffer, nSize );
@@ -1643,7 +1643,7 @@ HB_SIZE hb_fsPipeWrite( HB_FHANDLE hPipeHandle, const void * buffer, HB_SIZE nSi
          fcntl( hPipeHandle, F_SETFL, iFlags );
    }
    else
-      nWritten = ( HB_SIZE ) iResult;
+      nWritten = static_cast< HB_SIZE >( iResult );
 }
 #else
 {
@@ -2544,10 +2544,10 @@ HB_SIZE hb_fsReadLarge( HB_FHANDLE hFileHandle, void * pBuff, HB_SIZE nCount )
          DWORD dwRead;
 
          /* Determine how much to read this time */
-         if( nCount > ( HB_SIZE ) HB_WIN_IOREAD_LIMIT )
+         if( nCount > static_cast< HB_SIZE >( HB_WIN_IOREAD_LIMIT ) )
          {
             dwToRead = HB_WIN_IOREAD_LIMIT;
-            nCount -= ( HB_SIZE ) dwToRead;
+            nCount -= static_cast< HB_SIZE >( dwToRead );
          }
          else
          {
@@ -2560,7 +2560,7 @@ HB_SIZE hb_fsReadLarge( HB_FHANDLE hFileHandle, void * pBuff, HB_SIZE nCount )
          if( ! bResult )
             break;
 
-         nRead += ( HB_SIZE ) dwRead;
+         nRead += static_cast< HB_SIZE >( dwRead );
 
          if( dwRead != dwToRead )
             break;
@@ -2570,7 +2570,7 @@ HB_SIZE hb_fsReadLarge( HB_FHANDLE hFileHandle, void * pBuff, HB_SIZE nCount )
       BOOL bResult;
 
       bResult = ReadFile( DosToWinHandle( hFileHandle ), pBuff, nCount, &dwRead, nullptr );
-      nRead = bResult ? ( HB_SIZE ) dwRead : 0;
+      nRead = bResult ? static_cast< HB_SIZE >( dwRead ) : 0;
 #  endif
       hb_fsSetIOError( bResult != 0, 0 );
    }
@@ -2581,7 +2581,7 @@ HB_SIZE hb_fsReadLarge( HB_FHANDLE hFileHandle, void * pBuff, HB_SIZE nCount )
 
       ret = DosRead( hFileHandle, pBuff, nCount, &ulRead );
       hb_fsSetError( ( HB_ERRCODE ) ret );
-      nRead = ret == NO_ERROR ? ( HB_SIZE ) ulRead : 0;
+      nRead = ret == NO_ERROR ? static_cast< HB_SIZE >( ulRead ) : 0;
    }
 #elif defined( HB_FS_IO_16BIT )
    {
@@ -2593,10 +2593,10 @@ HB_SIZE hb_fsReadLarge( HB_FHANDLE hFileHandle, void * pBuff, HB_SIZE nCount )
          long lRead;
 
          /* Determine how much to read this time */
-         if( nCount > ( HB_SIZE ) INT_MAX )
+         if( nCount > static_cast< HB_SIZE >( INT_MAX ) )
          {
             uiToRead = INT_MAX;
-            nCount -= ( HB_SIZE ) uiToRead;
+            nCount -= static_cast< HB_SIZE >( uiToRead );
          }
          else
          {
@@ -2650,10 +2650,10 @@ HB_SIZE hb_fsWriteLarge( HB_FHANDLE hFileHandle, const void * pBuff, HB_SIZE nCo
          DWORD dwWritten;
 
          /* Determine how much to write this time */
-         if( nCount > ( HB_SIZE ) HB_WIN_IOWRITE_LIMIT )
+         if( nCount > static_cast< HB_SIZE >( HB_WIN_IOWRITE_LIMIT ) )
          {
             dwToWrite = HB_WIN_IOWRITE_LIMIT;
-            nCount -= ( HB_SIZE ) dwToWrite;
+            nCount -= static_cast< HB_SIZE >( dwToWrite );
          }
          else
          {
@@ -2666,7 +2666,7 @@ HB_SIZE hb_fsWriteLarge( HB_FHANDLE hFileHandle, const void * pBuff, HB_SIZE nCo
          if( ! bResult )
             break;
 
-         nWritten += ( HB_SIZE ) dwWritten;
+         nWritten += static_cast< HB_SIZE >( dwWritten );
 
          if( dwWritten != dwToWrite )
             break;
@@ -2677,7 +2677,7 @@ HB_SIZE hb_fsWriteLarge( HB_FHANDLE hFileHandle, const void * pBuff, HB_SIZE nCo
       bResult = WriteFile( DosToWinHandle( hFileHandle ), pBuff,
                            nCount, &dwWritten, nullptr );
       if( bResult )
-         nWritten = ( HB_SIZE ) dwWritten;
+         nWritten = static_cast< HB_SIZE >( dwWritten );
 #  endif
       hb_fsSetIOError( bResult != 0, 0 );
    }
@@ -2693,7 +2693,7 @@ HB_SIZE hb_fsWriteLarge( HB_FHANDLE hFileHandle, const void * pBuff, HB_SIZE nCo
          ULONG ulWritten = 0;
          ret = DosWrite( hFileHandle, ( void * ) pBuff, nCount, &ulWritten );
          hb_fsSetError( ( HB_ERRCODE ) ret );
-         nWritten = ret == NO_ERROR ? ( HB_SIZE ) ulWritten : 0;
+         nWritten = ret == NO_ERROR ? static_cast< HB_SIZE >( ulWritten ) : 0;
       }
       else
       {
@@ -2714,10 +2714,10 @@ HB_SIZE hb_fsWriteLarge( HB_FHANDLE hFileHandle, const void * pBuff, HB_SIZE nCo
          long lWritten;
 
          /* Determine how much to write this time */
-         if( nCount > ( HB_SIZE ) INT_MAX )
+         if( nCount > static_cast< HB_SIZE >( INT_MAX ) )
          {
             uiToWrite = INT_MAX;
-            nCount -= ( HB_SIZE ) uiToWrite;
+            nCount -= static_cast< HB_SIZE >( uiToWrite );
          }
          else
          {
@@ -2794,10 +2794,10 @@ HB_SIZE hb_fsReadAt( HB_FHANDLE hFileHandle, void * pBuff, HB_SIZE nCount, HB_FO
          DWORD dwToRead;
          DWORD dwRead;
 
-         if( nCount > ( HB_SIZE ) HB_WIN_IOREAD_LIMIT )
+         if( nCount > static_cast< HB_SIZE >( HB_WIN_IOREAD_LIMIT ) )
          {
             dwToRead = HB_WIN_IOREAD_LIMIT;
-            nCount -= ( HB_SIZE ) dwToRead;
+            nCount -= static_cast< HB_SIZE >( dwToRead );
          }
          else
          {
@@ -2811,7 +2811,7 @@ HB_SIZE hb_fsReadAt( HB_FHANDLE hFileHandle, void * pBuff, HB_SIZE nCount, HB_FO
          if( ! bResult )
             break;
 
-         nRead += ( HB_SIZE ) dwRead;
+         nRead += static_cast< HB_SIZE >( dwRead );
 
          if( dwRead != dwToRead )
             break;
@@ -2933,10 +2933,10 @@ HB_SIZE hb_fsWriteAt( HB_FHANDLE hFileHandle, const void * pBuff, HB_SIZE nCount
          DWORD dwToWrite;
          DWORD dwWritten;
 
-         if( nCount > ( HB_SIZE ) HB_WIN_IOWRITE_LIMIT )
+         if( nCount > static_cast< HB_SIZE >( HB_WIN_IOWRITE_LIMIT ) )
          {
             dwToWrite = HB_WIN_IOWRITE_LIMIT;
-            nCount -= ( HB_SIZE ) dwToWrite;
+            nCount -= static_cast< HB_SIZE >( dwToWrite );
          }
          else
          {
@@ -2950,7 +2950,7 @@ HB_SIZE hb_fsWriteAt( HB_FHANDLE hFileHandle, const void * pBuff, HB_SIZE nCount
          if( ! bResult )
             break;
 
-         nWritten += ( HB_SIZE ) dwWritten;
+         nWritten += static_cast< HB_SIZE >( dwWritten );
 
          if( dwWritten != dwToWrite )
             break;
@@ -3496,7 +3496,7 @@ HB_BOOL hb_fsLockLarge( HB_FHANDLE hFileHandle, HB_FOFFSET nStart,
       hb_vmLock();
    }
 #else
-   fResult = hb_fsLock( hFileHandle, ( HB_SIZE ) nStart, ( HB_SIZE ) nLength, uiMode );
+   fResult = hb_fsLock( hFileHandle, static_cast< HB_SIZE >( nStart ), static_cast< HB_SIZE >( nLength ), uiMode );
 #endif
 
    return fResult;

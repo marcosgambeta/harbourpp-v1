@@ -210,7 +210,7 @@ HB_BOOL hb_gt_winapi_getClipboard( HB_UINT uFormat, PHB_ITEM pItem )
          LPVOID lpMem = GlobalLock( hglb );
          if( lpMem )
          {
-            nSize = ( HB_SIZE ) GlobalSize( hglb );
+            nSize = static_cast< HB_SIZE >( GlobalSize( hglb ) );
 
             switch( uFormat )
             {

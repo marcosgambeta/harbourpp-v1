@@ -2692,7 +2692,7 @@ static HB_ERRCODE adsPutValue( ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem
                void * hString;
                const HB_WCHAR * pwBuffer = hb_itemGetStrU16( pItem, HB_CDP_ENDIAN_LITTLE,
                                                              &hString, &nLen );
-               if( nLen > ( HB_SIZE ) pField->uiLen && pField->uiType == HB_FT_STRING )
+               if( nLen > static_cast< HB_SIZE >( pField->uiLen ) && pField->uiType == HB_FT_STRING )
                   nLen = pField->uiLen;
                u32RetVal = AdsSetStringW( pArea->hTable, ADSFIELD( uiIndex ),
                                           ( WCHAR * ) HB_UNCONST( pwBuffer ),
@@ -2703,7 +2703,7 @@ static HB_ERRCODE adsPutValue( ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem
 #endif
             {
                nLen = hb_itemGetCLen( pItem );
-               if( nLen > ( HB_SIZE ) pField->uiLen )
+               if( nLen > static_cast< HB_SIZE >( pField->uiLen ) )
                {
 #if ADS_LIB_VERSION >= 900
                   if( pField->uiType == HB_FT_STRING || pArea->iFileType == ADS_VFP )

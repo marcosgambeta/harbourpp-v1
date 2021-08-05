@@ -87,7 +87,7 @@ HB_SOCKEX_Z, * PHB_SOCKEX_Z;
 static voidpf s_zsock_zalloc( voidpf opaque, uInt items, uInt size )
 {
    HB_SYMBOL_UNUSED( opaque );
-   return hb_xalloc( ( HB_SIZE ) items * size );
+   return hb_xalloc( static_cast< HB_SIZE >( items ) * size );
 }
 
 static void s_zsock_zfree( voidpf opaque, voidpf address )

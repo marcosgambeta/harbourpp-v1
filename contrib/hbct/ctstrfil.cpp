@@ -165,7 +165,7 @@ HB_FUNC( FILESTR )
 
          pcResult = static_cast< char * >( hb_xgrab( nLength + 1 ) );
          if( nLength > 0 )
-            nLength = hb_fsReadLarge( hFile, pcResult, ( HB_SIZE ) nLength );
+            nLength = hb_fsReadLarge( hFile, pcResult, static_cast< HB_SIZE >( nLength ) );
 
          if( bCtrlZ )
          {

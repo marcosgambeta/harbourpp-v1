@@ -468,7 +468,7 @@ static void hb_gt_win_xInitScreenParam( PHB_GT pGT )
    {
       COORD coDest;
       SMALL_RECT srWin;
-      HB_SIZE nSize = ( HB_SIZE ) _GetScreenWidth() * _GetScreenHeight() *
+      HB_SIZE nSize = static_cast< HB_SIZE >( _GetScreenWidth() ) * _GetScreenHeight() *
                       sizeof( CHAR_INFO );
 
       HB_GTSELF_RESIZE( pGT, _GetScreenHeight(), _GetScreenWidth() );

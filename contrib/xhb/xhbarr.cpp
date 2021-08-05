@@ -104,7 +104,7 @@ HB_FUNC( ASPLICE )
          int nNew = 0;
          int nAdd = hb_pcount() - 3;
 
-         if( ( HB_SIZE ) nAdd > nRemove )
+         if( static_cast< HB_SIZE >( nAdd ) > nRemove )
          {
             HB_SIZE nMore  = nAdd - nRemove;
             HB_SIZE nShift = nLen - ( nStart + nRemove );
@@ -127,7 +127,7 @@ HB_FUNC( ASPLICE )
             for( nIndex = nStart; ++nNew <= nAdd; nIndex++ )
                hb_itemMove( hb_arrayGetItemPtr( pArray, nIndex + 1 ), hb_param( 3 + nNew, HB_IT_ANY ) );
 
-            if( nRemove > ( HB_SIZE ) nAdd )
+            if( nRemove > static_cast< HB_SIZE >( nAdd ) )
             {
                nRemove -= nAdd;
 
@@ -232,7 +232,7 @@ HB_FUNC( XHB_AINS )
             nPos = 1;
          else if( nPos < 0 )
             nPos += nLen + 1;
-         if( nPos >= 1 && ( HB_SIZE ) nPos <= nLen )
+         if( nPos >= 1 && static_cast< HB_SIZE >( nPos ) <= nLen )
             hb_arraySize( pArray, nLen );
       }
       else if( nPos == 0 )

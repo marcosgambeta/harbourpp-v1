@@ -577,7 +577,7 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
             {
                char * pStr;
 
-               pStr = static_cast< char * >( hb_xgrab( ( HB_SIZE ) dbFieldInfo.uiLen + 1 ) );
+               pStr = static_cast< char * >( hb_xgrab( static_cast< HB_SIZE >( dbFieldInfo.uiLen ) + 1 ) );
                memset( pStr, ' ', dbFieldInfo.uiLen );
                pStr[ dbFieldInfo.uiLen ] = '\0';
 
@@ -729,7 +729,7 @@ static HB_ERRCODE odbcGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                      {
                         char * val = static_cast< char * >( hb_xgrab( iLen + 1 ) );
                         if( SQL_SUCCEEDED( res = SQLGetData( hStmt, ui, SQL_C_BINARY, val, iLen + 1, &iLen ) ) )
-                           pItem = hb_itemPutCLPtr( pItem, val, ( HB_SIZE ) iLen );
+                           pItem = hb_itemPutCLPtr( pItem, val, static_cast< HB_SIZE >( iLen ) );
                         else
                            hb_xfree( val );
                      }
@@ -755,7 +755,7 @@ static HB_ERRCODE odbcGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
 #if defined( UNICODE )
                            iLen >>= 1;
 #endif
-                           pItem = O_HB_ITEMPUTSTRLEN( pItem, val, ( HB_SIZE ) iLen );
+                           pItem = O_HB_ITEMPUTSTRLEN( pItem, val, static_cast< HB_SIZE >( iLen ) );
                         }
                         hb_xfree( val );
                      }

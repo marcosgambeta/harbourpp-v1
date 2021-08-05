@@ -109,7 +109,7 @@ static HB_BOOL hb_memowrit( HB_BOOL bHandleEOF )
          while( nSize > 0 )
          {
             HB_SIZE nWritten = hb_fileWrite( pFile, pData, nSize, 0 );
-            if( nWritten == 0 || nWritten == ( HB_SIZE ) FS_ERROR )
+            if( nWritten == 0 || nWritten == static_cast< HB_SIZE >( FS_ERROR ) )
                break;
             nSize -= nWritten;
             pData += nWritten;

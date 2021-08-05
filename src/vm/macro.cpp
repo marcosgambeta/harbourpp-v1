@@ -758,7 +758,7 @@ char * hb_macroTextSymbol( const char * szString, HB_SIZE nLength, HB_BOOL * pfN
          }
          ++nLen;
       }
-      if( nLen == nLength && nLen > ( HB_SIZE ) ( szResult[ 0 ] == '_' ? 1 : 0 ) )
+      if( nLen == nLength && nLen > static_cast< HB_SIZE >( szResult[ 0 ] == '_' ? 1 : 0 ) )
       {
          if( nLen > HB_SYMBOL_NAME_LEN )
             nLen = HB_SYMBOL_NAME_LEN;

@@ -165,7 +165,7 @@ HB_FUNC( TRANSFORM )
                   nParamS = 0;
                   while( nPicLen > 1 && *szPic >= '0' && *szPic <= '9' )
                   {
-                     nParamS = ( nParamS * 10 ) + ( ( HB_SIZE ) ( *szPic++ - '0' ) );
+                     nParamS = ( nParamS * 10 ) + ( static_cast< HB_SIZE >( *szPic++ - '0' ) );
                      nPicLen--;
                   }
                   break;
@@ -501,7 +501,7 @@ HB_FUNC( TRANSFORM )
          {
             if( uiPicFlags & PF_EXCHANG )
             {
-               for( i = 0; i < ( HB_SIZE ) iWidth; ++i )
+               for( i = 0; i < static_cast< HB_SIZE >( iWidth ); ++i )
                {
                   if( szResult[ i ] == '.' )
                   {
@@ -573,7 +573,7 @@ HB_FUNC( TRANSFORM )
                       szResult[ 1 ] == ' ' )
                      ++iCount;
                }
-               while( ( HB_SIZE ) iCount + 1 < i && szResult[ iCount + 1 ] == ' ' )
+               while( static_cast< HB_SIZE >( iCount ) + 1 < i && szResult[ iCount + 1 ] == ' ' )
                   ++iCount;
 
 #ifndef HB_CLP_STRICT
@@ -583,7 +583,7 @@ HB_FUNC( TRANSFORM )
                      szPic[ iCount ] != szResult[ iCount ] ) )
                {
                   szResult[ iCount ] = '(';
-                  for( ++iCount; ( HB_SIZE ) iCount < i; iCount++ )
+                  for( ++iCount; static_cast< HB_SIZE >( iCount ) < i; iCount++ )
                   {
                      if( szResult[ iCount ] >= '0' && szResult[ iCount ] <= '9' &&
                          ( nPicLen == 0 || szPic[ iCount ] == '9' ||
@@ -604,7 +604,7 @@ HB_FUNC( TRANSFORM )
                if( *szResult >= '1' && *szResult <= '9' &&
                    ( nPicLen == 0 || *szPic == '9' || *szPic != *szResult ) )
                {
-                  for( iCount = 1; ( HB_SIZE ) iCount < i; iCount++ )
+                  for( iCount = 1; static_cast< HB_SIZE >( iCount ) < i; iCount++ )
                   {
                      if( szResult[ iCount ] >= '0' && szResult[ iCount ] <= '9' &&
                          ( nPicLen == 0 || szPic[ iCount ] == '9' ||

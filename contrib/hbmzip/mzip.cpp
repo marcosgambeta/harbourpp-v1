@@ -688,7 +688,7 @@ static HB_BOOL hb_zipGetFileInfoFromHandle( PHB_FILE pFile, HB_U32 * pulCRC, HB_
       do
       {
          nRead = hb_fileRead( pFile, pString, HB_Z_IOBUF_SIZE, -1 );
-         if( nRead > 0 && nRead != ( HB_SIZE ) FS_ERROR )
+         if( nRead > 0 && nRead != static_cast< HB_SIZE >( FS_ERROR ) )
          {
             ulCRC = crc32( ulCRC, pString, ( uInt ) nRead );
             if( fText )
@@ -1036,7 +1036,7 @@ static int hb_zipStoreFile( zipFile hZip, int iParamFileName, int iParamZipName,
             char * pString = static_cast< char * >( hb_xgrab( HB_Z_IOBUF_SIZE ) );
 
             while( ( nLen = hb_fileRead( pFile, pString, HB_Z_IOBUF_SIZE, -1 ) ) > 0 &&
-                   nLen != ( HB_SIZE ) FS_ERROR )
+                   nLen != static_cast< HB_SIZE >( FS_ERROR ) )
                zipWriteInFileInZip( hZip, pString, ( unsigned ) nLen );
 
             hb_xfree( pString );
@@ -1143,7 +1143,7 @@ static int hb_zipStoreFileHandle( zipFile hZip, PHB_FILE pFile, int iParamZipNam
       char * pString = static_cast< char * >( hb_xgrab( HB_Z_IOBUF_SIZE ) );
       hb_fileSeek( pFile, 0, FS_SET );
       while( ( nLen = hb_fileRead( pFile, pString, HB_Z_IOBUF_SIZE, -1 ) ) > 0 &&
-             nLen != ( HB_SIZE ) FS_ERROR )
+             nLen != static_cast< HB_SIZE >( FS_ERROR ) )
          zipWriteInFileInZip( hZip, pString, ( unsigned ) nLen );
       hb_xfree( pString );
 
@@ -1259,7 +1259,7 @@ static int hb_unzipExtractCurrentFile( unzFile hUnzip, const char * szFileName, 
          char * pString = static_cast< char * >( hb_xgrab( HB_Z_IOBUF_SIZE ) );
 
          while( ( iResult = unzReadCurrentFile( hUnzip, pString, HB_Z_IOBUF_SIZE ) ) > 0 )
-            if( hb_fileWrite( pFile, pString, ( HB_SIZE ) iResult, -1 ) != ( HB_SIZE ) iResult )
+            if( hb_fileWrite( pFile, pString, static_cast< HB_SIZE >( iResult ), -1 ) != static_cast< HB_SIZE >( iResult ) )
                break;
 
          hb_xfree( pString );
@@ -1452,7 +1452,7 @@ static int hb_unzipExtractCurrentFileToHandle( unzFile hUnzip, PHB_FILE pFile, c
       char * pString = static_cast< char * >( hb_xgrab( HB_Z_IOBUF_SIZE ) );
 
       while( ( iResult = unzReadCurrentFile( hUnzip, pString, HB_Z_IOBUF_SIZE ) ) > 0 )
-         if( hb_fileWrite( pFile, pString, ( HB_SIZE ) iResult, -1 ) != ( HB_SIZE ) iResult )
+         if( hb_fileWrite( pFile, pString, static_cast< HB_SIZE >( iResult ), -1 ) != static_cast< HB_SIZE >( iResult ) )
             break;
 
       hb_xfree( pString );

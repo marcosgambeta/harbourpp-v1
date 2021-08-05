@@ -2345,7 +2345,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * data, HB_SIZE nSize,
       {
          HB_ERRCODE errCode = ( HB_ERRCODE ) HB_GET_LE_UINT32( &msgbuf[ 8 ] );
          nResult = HB_GET_LE_UINT32( &msgbuf[ 4 ] );
-         if( nResult > 0 && nResult != ( HB_SIZE ) FS_ERROR )
+         if( nResult > 0 && nResult != static_cast< HB_SIZE >( FS_ERROR ) )
          {
             if( nResult > nSize ) /* error, it should not happen, enemy attack? */
             {
@@ -2413,7 +2413,7 @@ static HB_SIZE s_fileReadAt( PHB_FILE pFile, void * data, HB_SIZE nSize,
       {
          HB_ERRCODE errCode = ( HB_ERRCODE ) HB_GET_LE_UINT32( &msgbuf[ 8 ] );
          nResult = HB_GET_LE_UINT32( &msgbuf[ 4 ] );
-         if( nResult > 0 && nResult != ( HB_SIZE ) FS_ERROR )
+         if( nResult > 0 && nResult != static_cast< HB_SIZE >( FS_ERROR ) )
          {
             if( nResult > nSize ) /* error, it should not happen, enemy attack? */
             {

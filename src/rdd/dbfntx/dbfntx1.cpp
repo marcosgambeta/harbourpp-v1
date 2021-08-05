@@ -455,11 +455,11 @@ static LPKEYINFO hb_ntxKeyPutItem( LPKEYINFO pKey, PHB_ITEM pItem, HB_ULONG ulRe
          else
          {
             len = hb_itemGetCLen( pItem );
-            if( len > ( HB_SIZE ) pTag->KeyLength )
+            if( len > static_cast< HB_SIZE >( pTag->KeyLength ) )
                len = pTag->KeyLength;
             memcpy( pKey->key, hb_itemGetCPtr( pItem ), len );
          }
-         if( len < ( HB_SIZE ) pTag->KeyLength )
+         if( len < static_cast< HB_SIZE >( pTag->KeyLength ) )
          {
             memset( pKey->key + len, ' ', pTag->KeyLength - len );
             if( puiLen )
@@ -690,7 +690,7 @@ static int hb_ntxValCompare( LPTAGINFO pTag, const char * val1, int len1,
          if( HB_CDP_ISBINSORT( pTag->pIndex->pArea->dbfarea.area.cdPage ) )
             iResult = memcmp( val1, val2, iLimit );
          else
-            return -hb_cdpcmp( val2, ( HB_SIZE ) len2, val1, ( HB_SIZE ) len1,
+            return -hb_cdpcmp( val2, static_cast< HB_SIZE >( len2 ), val1, static_cast< HB_SIZE >( len1 ),
                                pTag->pIndex->pArea->dbfarea.area.cdPage, 0 );
       }
 
@@ -957,7 +957,7 @@ static HB_BOOL hb_ntxBlockRead( LPNTXINDEX pIndex, HB_ULONG ulBlock, void * buff
    s_rdNO++;
 #endif
    if( hb_fileReadAt( pIndex->DiskFile, buffer, iSize,
-                      hb_ntxFileOffset( pIndex, ulBlock ) ) != ( HB_SIZE ) iSize )
+                      hb_ntxFileOffset( pIndex, ulBlock ) ) != static_cast< HB_SIZE >( iSize ) )
    {
       hb_ntxErrorRT( pIndex->pArea, EG_READ, EDBF_READ,
                      pIndex->IndexName, hb_fsError(), 0, nullptr );
@@ -978,7 +978,7 @@ static HB_BOOL hb_ntxBlockWrite( LPNTXINDEX pIndex, HB_ULONG ulBlock, const void
    s_wrNO++;
 #endif
    if( hb_fileWriteAt( pIndex->DiskFile, buffer, iSize,
-                       hb_ntxFileOffset( pIndex, ulBlock ) ) != ( HB_SIZE ) iSize )
+                       hb_ntxFileOffset( pIndex, ulBlock ) ) != static_cast< HB_SIZE >( iSize ) )
    {
       hb_ntxErrorRT( pIndex->pArea, EG_WRITE, EDBF_WRITE,
                      pIndex->IndexName, hb_fsError(), 0, nullptr );
@@ -4729,7 +4729,7 @@ static HB_BOOL hb_ntxQSort( LPNTXSORTINFO pSort, HB_BYTE * pSrc, HB_BYTE * pBuf,
 
 static void hb_ntxSortSortPage( LPNTXSORTINFO pSort )
 {
-   HB_SIZE nSize = ( HB_SIZE ) pSort->ulKeys * ( pSort->keyLen + 4 );
+   HB_SIZE nSize = static_cast< HB_SIZE >( pSort->ulKeys ) * ( pSort->keyLen + 4 );
 
    if( ! hb_ntxQSort( pSort, pSort->pKeyPool, &pSort->pKeyPool[ nSize ], pSort->ulKeys ) )
       pSort->pStartKey = &pSort->pKeyPool[ nSize ];
@@ -4742,7 +4742,7 @@ static void hb_ntxSortBufferFlush( LPNTXSORTINFO pSort )
    if( pSort->ulPagesIO )
    {
       LPNTXINDEX pIndex = pSort->pTag->pIndex;
-      HB_SIZE nSize = ( HB_SIZE ) pSort->ulPagesIO * NTXBLOCKSIZE;
+      HB_SIZE nSize = static_cast< HB_SIZE >( pSort->ulPagesIO ) * NTXBLOCKSIZE;
       if( hb_fileWriteAt( pIndex->DiskFile, pSort->pBuffIO, nSize,
                      hb_ntxFileOffset( pIndex, pSort->ulFirstIO ) ) != nSize )
       {
@@ -4820,7 +4820,7 @@ static void hb_ntxSortAddNodeKey( LPNTXSORTINFO pSort, HB_BYTE * pKeyVal, HB_ULO
 
 static void hb_ntxSortWritePage( LPNTXSORTINFO pSort )
 {
-   HB_SIZE nSize = ( HB_SIZE ) pSort->ulKeys * ( pSort->keyLen + 4 );
+   HB_SIZE nSize = static_cast< HB_SIZE >( pSort->ulKeys ) * ( pSort->keyLen + 4 );
 
    hb_ntxSortSortPage( pSort );
 
@@ -4858,7 +4858,7 @@ static void hb_ntxSortGetPageKey( LPNTXSORTINFO pSort, HB_ULONG ulPage,
    if( pSort->pSwapPage[ ulPage ].ulKeyBuf == 0 )
    {
       HB_ULONG ulKeys = HB_MIN( pSort->ulPgKeys, pSort->pSwapPage[ ulPage ].ulKeys );
-      HB_SIZE nSize = ( HB_SIZE ) ulKeys * ( iLen + 4 );
+      HB_SIZE nSize = static_cast< HB_SIZE >( ulKeys ) * ( iLen + 4 );
 
       if( pSort->pTempFile != nullptr &&
           hb_fileReadAt( pSort->pTempFile, pSort->pSwapPage[ ulPage ].pKeyPool,
@@ -5465,7 +5465,7 @@ static HB_ERRCODE hb_ntxTagCreate( LPTAGINFO pTag, HB_BOOL fReindex )
                   iRec = ulRecCount - ulRecNo + 1;
                if( ulNextCount > 0 && ulNextCount < ( HB_ULONG ) iRec )
                   iRec = static_cast< int >( ulNextCount );
-               nSize = ( HB_SIZE ) iRec * pArea->dbfarea.uiRecordLen;
+               nSize = static_cast< HB_SIZE >( iRec ) * pArea->dbfarea.uiRecordLen;
                if( hb_fileReadAt( pArea->dbfarea.pDataFile, pSort->pBuffIO, nSize,
                                   ( HB_FOFFSET ) pArea->dbfarea.uiHeaderLen +
                                   ( HB_FOFFSET ) ( ulRecNo - 1 ) *

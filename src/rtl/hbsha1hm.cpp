@@ -64,10 +64,10 @@ HB_FUNC( HB_HMAC_SHA1 )
       {
          unsigned int uiChunk;
 
-         if( nCount > ( HB_SIZE ) UINT_MAX )
+         if( nCount > static_cast< HB_SIZE >( UINT_MAX ) )
          {
             uiChunk = UINT_MAX;
-            nCount -= ( HB_SIZE ) uiChunk;
+            nCount -= static_cast< HB_SIZE >( uiChunk );
          }
          else
          {
@@ -77,7 +77,7 @@ HB_FUNC( HB_HMAC_SHA1 )
 
          hb_HMAC_SHA1_UpdateKey( &ctx, buffer + nDone, uiChunk );
 
-         nDone += ( HB_SIZE ) uiChunk;
+         nDone += static_cast< HB_SIZE >( uiChunk );
       }
    }
    #else
@@ -96,10 +96,10 @@ HB_FUNC( HB_HMAC_SHA1 )
       {
          unsigned int uiChunk;
 
-         if( nCount > ( HB_SIZE ) UINT_MAX )
+         if( nCount > static_cast< HB_SIZE >( UINT_MAX ) )
          {
             uiChunk = UINT_MAX;
-            nCount -= ( HB_SIZE ) uiChunk;
+            nCount -= static_cast< HB_SIZE >( uiChunk ); 
          }
          else
          {
@@ -109,7 +109,7 @@ HB_FUNC( HB_HMAC_SHA1 )
 
          hb_HMAC_SHA1_UpdateMessage( &ctx, buffer + nDone, uiChunk );
 
-         nDone += ( HB_SIZE ) uiChunk;
+         nDone += static_cast< HB_SIZE >( uiChunk );
       }
    }
    #else

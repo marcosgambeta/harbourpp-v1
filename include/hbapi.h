@@ -715,7 +715,7 @@ extern HB_EXPORT void   hb_retnll( HB_LONGLONG lNumber ); /* returns a long long
 extern HB_EXPORT void   hb_retnlllen( HB_LONGLONG lNumber, int iWidth ); /* returns a long long number, with specific width */
 #endif
 
-#define HB_IS_VALID_INDEX( idx, max )  ( (idx) > 0 && ( HB_SIZE ) (idx) <= (max) )
+#define HB_IS_VALID_INDEX( idx, max )  ( (idx) > 0 && static_cast< HB_SIZE >(idx) <= (max) )
 
 #ifdef _HB_API_MACROS_
 

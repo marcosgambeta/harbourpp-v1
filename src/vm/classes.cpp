@@ -2450,7 +2450,7 @@ static void hb_objSuperDestructorCall( PHB_ITEM pObject, PCLASS pClass )
    char * pcClasses;
    HB_USHORT uiClass;
 
-   pcClasses = static_cast< char * >( hb_xgrabz( ( HB_SIZE ) s_uiClasses + 1 ) );
+   pcClasses = static_cast< char * >( hb_xgrabz( static_cast< HB_SIZE >( s_uiClasses ) + 1 ) );
 
    do
    {
@@ -6062,7 +6062,7 @@ const char * hb_clsRealMethodName( void )
       {
          PCLASS pClass = s_pClasses[ pStack->uiClass ];
 
-         if( ( HB_SIZE ) pStack->uiMethod < hb_clsMthNum( pClass ) )
+         if( static_cast< HB_SIZE >( pStack->uiMethod ) < hb_clsMthNum( pClass ) )
          {
             PMETHOD pMethod = pClass->pMethods + pStack->uiMethod;
 

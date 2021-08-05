@@ -81,7 +81,7 @@ static void * s_zlib_alloc( void * cargo, uInt items, uInt size )
 {
    HB_SYMBOL_UNUSED( cargo );
 
-   return ( items > 0 && size > 0 ) ? hb_xalloc( ( HB_SIZE ) items * size ) : nullptr;
+   return ( items > 0 && size > 0 ) ? hb_xalloc( static_cast< HB_SIZE >( items ) * size ) : nullptr;
 }
 
 static void s_zlib_free( void * cargo, void * address )
@@ -371,7 +371,7 @@ HB_FUNC( HB_ZUNCOMPRESS )
          }
          else
          {
-            nDstLen = HB_ISNUM( 2 ) ? ( HB_SIZE ) hb_parns( 2 ) :
+            nDstLen = HB_ISNUM( 2 ) ? static_cast< HB_SIZE >( hb_parns( 2 ) ) :
                            s_zlibUncompressedSize( szData, nLen, &iResult );
             if( iResult == Z_OK )
             {

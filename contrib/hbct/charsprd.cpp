@@ -57,7 +57,7 @@ HB_FUNC( CHARSPREAD )
    {
       HB_ISIZ nSize = hb_parns( 2 );
 
-      if( nSize < 0 || ( HB_SIZE ) nSize <= nLen )
+      if( nSize < 0 || static_cast< HB_SIZE >( nSize ) <= nLen )
          hb_itemReturn( hb_param( 1, HB_IT_ANY ) );
       else
       {
@@ -89,7 +89,7 @@ HB_FUNC( CHARSPREAD )
             HB_SIZE nDst, nRest;
             char * szDest;
 
-            nRest = ( HB_SIZE ) nSize - nLen;
+            nRest = static_cast< HB_SIZE >( nSize ) - nLen;
             iRepl = nRest / nTokens;
             iRest = nRest % nTokens;
             iFirst = ( iRest + 1 ) >> 1;

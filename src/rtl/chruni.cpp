@@ -368,9 +368,9 @@ HB_FUNC( HB_ULEFT )
       else
       {
          HB_SIZE nText = hb_itemGetCLen( pText );
-         if( ( HB_SIZE ) nLen < nText )
+         if( static_cast< HB_SIZE >( nLen ) < nText )
             nLen = hb_cdpTextPos( hb_vmCDP(), hb_itemGetCPtr( pText ), nText, nLen );
-         if( ( HB_SIZE ) nLen >= nText )
+         if( static_cast< HB_SIZE >( nLen ) >= nText )
             hb_itemReturn( pText );
          else
             hb_retclen( hb_itemGetCPtr( pText ), nLen );
@@ -394,7 +394,7 @@ HB_FUNC( HB_BLEFT )
       else
       {
          HB_SIZE nText = hb_itemGetCLen( pText );
-         if( ( HB_SIZE ) nLen >= nText )
+         if( static_cast< HB_SIZE >( nLen ) >= nText )
             hb_itemReturn( pText );
          else
             hb_retclen( hb_itemGetCPtr( pText ), nLen );
@@ -414,16 +414,16 @@ HB_FUNC( HB_URIGHT )
 
    if( nLen > 0 && nText > 0 )
    {
-      if( ( HB_SIZE ) nLen < nText )
+      if( static_cast< HB_SIZE >( nLen ) < nText )
       {
          PHB_CODEPAGE cdp = hb_vmCDP();
          HB_SIZE nChars = hb_cdpTextLen( cdp, hb_itemGetCPtr( pText ), nText );
-         if( nChars > ( HB_SIZE ) nLen )
+         if( nChars > static_cast< HB_SIZE >( nLen ) )
             nLen = nText - hb_cdpTextPos( cdp, hb_itemGetCPtr( pText ), nText, nChars - nLen );
          else
             nLen = nText;
       }
-      if( ( HB_SIZE ) nLen >= nText )
+      if( static_cast< HB_SIZE >( nLen ) >= nText )
          hb_itemReturn( pText );
       else
          hb_retclen( hb_itemGetCPtr( pText ) + nText - nLen, nLen );
@@ -442,7 +442,7 @@ HB_FUNC( HB_BRIGHT )
 
    if( nLen > 0 && nText > 0 )
    {
-      if( ( HB_SIZE ) nLen >= nText )
+      if( static_cast< HB_SIZE >( nLen ) >= nText )
          hb_itemReturn( pText );
       else
          hb_retclen( hb_itemGetCPtr( pText ) + nText - nLen, nLen );

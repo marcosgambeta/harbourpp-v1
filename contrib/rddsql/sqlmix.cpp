@@ -145,13 +145,13 @@ static PMIXKEY hb_mixKeyPutItem( PMIXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRecNo,
       {
          HB_SIZE nLen = hb_itemGetCLen( pItem );
 
-         if( nLen > ( HB_SIZE ) pTag->uiKeyLen )
+         if( nLen > static_cast< HB_SIZE >( pTag->uiKeyLen ) )
             nLen = pTag->uiKeyLen;
 
          memcpy( pKey->val, hb_itemGetCPtr( pItem ), nLen );
 
-         if( nLen < ( HB_SIZE ) pTag->uiKeyLen )
-            memset( pKey->val + nLen, ' ', ( HB_SIZE ) pTag->uiKeyLen - nLen );
+         if( nLen < static_cast< HB_SIZE >( pTag->uiKeyLen ) )
+            memset( pKey->val + nLen, ' ', static_cast< HB_SIZE >( pTag->uiKeyLen ) - nLen );
 
          break;
       }
@@ -246,7 +246,7 @@ static int hb_mixKeyCompare( PMIXTAG pTag, PMIXKEY pKey1, PMIXKEY pKey2, unsigne
    uiSize = pTag->uiKeyLen > uiLen ? uiLen : pTag->uiKeyLen;
 
    if( pTag->pCodepage )
-      i = hb_cdpcmp( ( const char * ) pKey1->val, ( HB_SIZE ) uiSize, ( const char * ) pKey2->val, ( HB_SIZE ) uiSize, pTag->pCodepage, 0 );
+      i = hb_cdpcmp( ( const char * ) pKey1->val, static_cast< HB_SIZE >( uiSize ), ( const char * ) pKey2->val, static_cast< HB_SIZE >( uiSize ), pTag->pCodepage, 0 );
    else if( uiSize > 0 )
       i = memcmp( pKey1->val, pKey2->val, uiSize );
 

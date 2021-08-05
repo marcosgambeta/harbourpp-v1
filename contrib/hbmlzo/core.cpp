@@ -62,7 +62,7 @@ HB_FUNC( HB_LZO_COMPRESSBOUND )
 {
    if( HB_ISCHAR( 1 ) || HB_ISNUM( 1 ) )
    {
-      HB_SIZE nLen = HB_ISCHAR( 1 ) ? hb_parclen( 1 ) : ( HB_SIZE ) hb_parns( 1 );
+      HB_SIZE nLen = HB_ISCHAR( 1 ) ? hb_parclen( 1 ) : static_cast< HB_SIZE >( hb_parns( 1 ) );
 
       hb_retns( hb_lzo_compressbound( nLen ) );
    }
@@ -117,7 +117,7 @@ HB_FUNC( HB_LZO1X_1_COMPRESS )
 
       if( src_len > 0 )
          dst = ( lzo_bytep ) hb_xalloc( HB_MAX( hb_lzo_compressbound( src_len ),
-                                                ( HB_SIZE ) hb_parns( 2 ) ) );
+                                                static_cast< HB_SIZE >( hb_parns( 2 ) ) ) );
       if( dst == nullptr )
          hb_storni( LZO_E_OUT_OF_MEMORY, 3 );  /* out of memory */
       else

@@ -1558,7 +1558,7 @@ PHB_FILE hb_filePOpen( const char * pszFileName, const char * pszMode )
 
 HB_SIZE hb_fileResult( HB_SIZE nSize )
 {
-   return nSize == ( HB_SIZE ) FS_ERROR ? 0 : nSize;
+   return nSize == static_cast< HB_SIZE >( FS_ERROR ) ? 0 : nSize;
 }
 
 #define HB_FILELOAD_BUFFERSIZE  65536
@@ -1587,14 +1587,14 @@ HB_BYTE * hb_fileLoadData( PHB_FILE pFile, HB_SIZE nMaxSize,
             pFileBuf = static_cast< HB_BYTE * >( hb_xrealloc( pFileBuf, nBufSize ) );
          }
          nRead = hb_fileRead( pFile, pFileBuf + nSize, nBufSize - nSize, -1 );
-         if( nRead == 0 || nRead == ( HB_SIZE ) FS_ERROR )
+         if( nRead == 0 || nRead == static_cast< HB_SIZE >( FS_ERROR ) )
             break;
          nSize += nRead;
       }
    }
    else if( nFileSize > 0 )
    {
-      nBufSize = ( HB_SIZE ) nFileSize;
+      nBufSize = static_cast< HB_SIZE >( nFileSize );
       if( nMaxSize > 0 && nBufSize > nMaxSize )
          nBufSize = nMaxSize;
 
@@ -1602,7 +1602,7 @@ HB_BYTE * hb_fileLoadData( PHB_FILE pFile, HB_SIZE nMaxSize,
       do
       {
          nRead = hb_fileReadAt( pFile, pFileBuf + nSize, nBufSize - nSize, nSize );
-         if( nRead == 0 || nRead == ( HB_SIZE ) FS_ERROR )
+         if( nRead == 0 || nRead == static_cast< HB_SIZE >( FS_ERROR ) )
             break;
          nSize += nRead;
       }

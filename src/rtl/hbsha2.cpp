@@ -64,10 +64,10 @@ HB_FUNC( HB_SHA224 )
       {
          unsigned int uiChunk;
 
-         if( nCount > ( HB_SIZE ) UINT_MAX )
+         if( nCount > static_cast< HB_SIZE >( UINT_MAX ) )
          {
             uiChunk = UINT_MAX;
-            nCount -= ( HB_SIZE ) uiChunk;
+            nCount -= static_cast< HB_SIZE >( uiChunk );
          }
          else
          {
@@ -77,7 +77,7 @@ HB_FUNC( HB_SHA224 )
 
          hb_sha224_update( &ctx, buffer + nDone, uiChunk );
 
-         nDone += ( HB_SIZE ) uiChunk;
+         nDone += static_cast< HB_SIZE >( uiChunk );
       }
    }
    #else
@@ -111,10 +111,10 @@ HB_FUNC( HB_SHA256 )
       {
          unsigned int uiChunk;
 
-         if( nCount > ( HB_SIZE ) UINT_MAX )
+         if( nCount > static_cast< HB_SIZE >( UINT_MAX ) )
          {
             uiChunk = UINT_MAX;
-            nCount -= ( HB_SIZE ) uiChunk;
+            nCount -= static_cast< HB_SIZE >( uiChunk );
          }
          else
          {
@@ -124,7 +124,7 @@ HB_FUNC( HB_SHA256 )
 
          hb_sha256_update( &ctx, buffer + nDone, uiChunk );
 
-         nDone += ( HB_SIZE ) uiChunk;
+         nDone += static_cast< HB_SIZE >( uiChunk );
       }
    }
    #else
@@ -158,10 +158,10 @@ HB_FUNC( HB_SHA384 )
       {
          unsigned int uiChunk;
 
-         if( nCount > ( HB_SIZE ) UINT_MAX )
+         if( nCount > static_cast< HB_SIZE >( UINT_MAX ) )
          {
             uiChunk = UINT_MAX;
-            nCount -= ( HB_SIZE ) uiChunk;
+            nCount -= static_cast< HB_SIZE >( uiChunk );
          }
          else
          {
@@ -171,7 +171,7 @@ HB_FUNC( HB_SHA384 )
 
          hb_sha384_update( &ctx, buffer + nDone, uiChunk );
 
-         nDone += ( HB_SIZE ) uiChunk;
+         nDone += static_cast< HB_SIZE >( uiChunk ); 
       }
    }
    #else
@@ -205,10 +205,10 @@ HB_FUNC( HB_SHA512 )
       {
          unsigned int uiChunk;
 
-         if( nCount > ( HB_SIZE ) UINT_MAX )
+         if( nCount > static_cast< HB_SIZE >( UINT_MAX ) )
          {
             uiChunk = UINT_MAX;
-            nCount -= ( HB_SIZE ) uiChunk;
+            nCount -= static_cast< HB_SIZE >( uiChunk );
          }
          else
          {
@@ -218,7 +218,7 @@ HB_FUNC( HB_SHA512 )
 
          hb_sha512_update( &ctx, buffer + nDone, uiChunk );
 
-         nDone += ( HB_SIZE ) uiChunk;
+         nDone += static_cast< HB_SIZE >( uiChunk );
       }
    }
    #else

@@ -277,7 +277,7 @@ static int hb_delimNextChar( DELIMAREAP pArea )
          pArea->nBufferRead = hb_fileRead( pArea->pFile,
                                            pArea->pBuffer + nLeft,
                                            pArea->nBufferSize - nLeft, -1 );
-         if( pArea->nBufferRead == ( HB_SIZE ) FS_ERROR )
+         if( pArea->nBufferRead == static_cast< HB_SIZE >( FS_ERROR ) )
             pArea->nBufferRead = 0;
          pArea->nBufferRead += nLeft;
       }
@@ -304,7 +304,7 @@ static int hb_delimNextChar( DELIMAREAP pArea )
          if( pArea->uiEolLen == 1 )
             return -1;
          else if( pArea->nBufferRead - pArea->nBufferIndex >=
-                  ( HB_SIZE ) pArea->uiEolLen - 1 &&
+                  static_cast< HB_SIZE >( pArea->uiEolLen ) - 1 &&
                   memcmp( pArea->pBuffer + pArea->nBufferIndex,
                           pArea->szEol + 1, pArea->uiEolLen - 1 ) == 0 )
          {
@@ -818,12 +818,12 @@ static HB_ERRCODE hb_delimPutValue( DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITE
             else
             {
                nSize = hb_itemGetCLen( pItem );
-               if( nSize > ( HB_SIZE ) pField->uiLen )
+               if( nSize > static_cast< HB_SIZE >( pField->uiLen ) )
                   nSize = pField->uiLen;
                memcpy( pArea->pRecord + pArea->pFieldOffset[ uiIndex ],
                        hb_itemGetCPtr( pItem ), nSize );
             }
-            if( nSize < ( HB_SIZE ) pField->uiLen )
+            if( nSize < static_cast< HB_SIZE >( pField->uiLen ) )
                memset( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] + nSize,
                        ' ', pField->uiLen - nSize );
          }

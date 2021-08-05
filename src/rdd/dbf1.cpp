@@ -541,8 +541,8 @@ static void hb_dbfSetBlankRecord( DBFAREAP pArea, int iType )
    memset( pPtr, bFill, nSize );
 
    nSize += pPtr - pArea->pRecord;
-   if( nSize < ( HB_SIZE ) pArea->uiRecordLen )
-      memset( pArea->pRecord + nSize, '\0', ( HB_SIZE ) pArea->uiRecordLen - nSize );
+   if( nSize < static_cast< HB_SIZE >( pArea->uiRecordLen ) )
+      memset( pArea->pRecord + nSize, '\0', static_cast< HB_SIZE >( pArea->uiRecordLen ) - nSize );
 
    /* set varlength and nullable bits in _NullFlags */
    if( pArea->uiNullCount )
@@ -694,7 +694,7 @@ static HB_BOOL hb_dbfReadRecord( DBFAREAP pArea )
                       ( HB_FOFFSET ) pArea->uiHeaderLen +
                       ( HB_FOFFSET ) ( pArea->ulRecNo - 1 ) *
                       ( HB_FOFFSET ) pArea->uiRecordLen ) !=
-       ( HB_SIZE ) pArea->uiRecordLen )
+       static_cast< HB_SIZE >( pArea->uiRecordLen ) )
    {
       hb_dbfErrorRT( pArea, EG_READ, EDBF_READ,
                      pArea->szDataFileName, hb_fsError(), 0, nullptr );
@@ -2177,7 +2177,7 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          {
             nLen = HB_GET_LE_UINT16( &pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] + ( nLen << 1 ) ] );
             if( nLen == 0xFFFF ||
-                nLen > ( HB_SIZE ) pField->uiLen ) /* protection against corrupted files */
+                nLen > static_cast< HB_SIZE >( pField->uiLen ) ) /* protection against corrupted files */
                nLen = 0;
             hb_itemPutStrLenU16( pItem, HB_CDP_ENDIAN_LITTLE,
                                  ( const HB_WCHAR * ) &pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ],
@@ -2189,7 +2189,7 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             {
                nLen = ( HB_UCHAR ) pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] + nLen - 1 ];
                /* protection against corrupted files */
-               if( nLen > ( HB_SIZE ) pField->uiLen )
+               if( nLen > static_cast< HB_SIZE >( pField->uiLen ) )
                   nLen = pField->uiLen;
             }
             if( ( pField->uiFlags & HB_FF_BINARY ) == 0 )
@@ -2542,7 +2542,7 @@ static HB_ERRCODE hb_dbfPutRec( DBFAREAP pArea, const HB_BYTE * pBuffer )
       if( pRecord != pArea->pRecord )
          hb_xfree( pRecord );
 
-      if( nWritten != ( HB_SIZE ) pArea->uiRecordLen )
+      if( nWritten != static_cast< HB_SIZE >( pArea->uiRecordLen ) )
       {
          hb_dbfErrorRT( pArea, EG_WRITE, EDBF_WRITE, pArea->szDataFileName,
                         hb_fsError(), 0, nullptr );
@@ -2616,7 +2616,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
                HB_WCHAR * pwBuffer = ( HB_WCHAR * ) &pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ];
                nLen = hb_itemCopyStrU16( pItem, HB_CDP_ENDIAN_LITTLE,
                                          pwBuffer, nLen );
-               while( nLen < ( HB_SIZE ) pField->uiLen )
+               while( nLen < static_cast< HB_SIZE >( pField->uiLen ) )
                {
                   HB_PUT_LE_UINT16( &pwBuffer[ nLen ], ' ' );
                   ++nLen;
@@ -2639,7 +2639,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
                   memcpy( pArea->pRecord + pArea->pFieldOffset[ uiIndex ],
                           hb_itemGetCPtr( pItem ), nLen );
                }
-               if( nLen < ( HB_SIZE ) pField->uiLen )
+               if( nLen < static_cast< HB_SIZE >( pField->uiLen ) )
                   memset( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] + nLen,
                           ' ', pField->uiLen - nLen );
             }
@@ -2659,7 +2659,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
                nSize = hb_itemGetCLen( pItem );
                if( ( pField->uiFlags & HB_FF_BINARY ) == 0 )
                {
-                  if( nLen > ( HB_SIZE ) sizeof( szBuffer ) )
+                  if( nLen > static_cast< HB_SIZE >( sizeof( szBuffer ) ) )
                      nLen = sizeof( szBuffer );
                   pszPtr = hb_cdpnDup2( pszPtr, nSize, szBuffer, &nLen,
                                         hb_vmCDP(), pArea->area.cdPage );
@@ -2671,7 +2671,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
                }
                memcpy( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], pszPtr, nLen );
 
-               if( nLen < ( HB_SIZE ) pField->uiLen )
+               if( nLen < static_cast< HB_SIZE >( pField->uiLen ) )
                {
                   pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] + pField->uiLen - 1 ] = static_cast< HB_BYTE >( nLen );
                   hb_dbfSetNullFlag( pArea->pRecord, pArea->uiNullOffset, pArea->pFieldBits[ uiIndex ].uiLengthBit );
@@ -3187,7 +3187,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
    if( pItem )
       hb_itemRelease( pItem );
 
-   nSize = ( HB_SIZE ) pArea->area.uiFieldCount * sizeof( DBFFIELD ) +
+   nSize = static_cast< HB_SIZE >( pArea->area.uiFieldCount ) * sizeof( DBFFIELD ) +
            ( pArea->bTableType == DB_DBF_VFP ? 264 : 2 );
    if( nSize + sizeof( DBFHEADER ) > UINT16_MAX )
    {
@@ -4304,7 +4304,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
       /* Add fields */
       uiSkip = 0;
       uiFields = ( pArea->uiHeaderLen - sizeof( DBFHEADER ) ) / sizeof( DBFFIELD );
-      nSize = ( HB_SIZE ) uiFields * sizeof( DBFFIELD );
+      nSize = static_cast< HB_SIZE >( uiFields ) * sizeof( DBFFIELD );
       pBuffer = uiFields ? static_cast< HB_BYTE * >( hb_xgrab( nSize ) ) : nullptr;
 
       /* Read fields and exit if error */
@@ -5209,7 +5209,7 @@ static HB_DBRECNO * hb_dbfSortSort( LPDBSORTREC pSortRec )
 
    if( pSortRec->pnIndex == nullptr )
       pSortRec->pnIndex = static_cast< HB_SORTIDX * >( hb_xgrab(
-            ( ( HB_SIZE ) pSortRec->nCount << 1 ) * sizeof( HB_SORTIDX ) ) );
+            ( static_cast< HB_SIZE >( pSortRec->nCount ) << 1 ) * sizeof( HB_SORTIDX ) ) );
    for( nCount = 0; nCount < pSortRec->nCount; ++nCount )
       pSortRec->pnIndex[ nCount ] = ( HB_SORTIDX ) nCount;
 
@@ -5220,7 +5220,7 @@ static HB_DBRECNO * hb_dbfSortSort( LPDBSORTREC pSortRec )
 
    if( pSortRec->pnOrder == nullptr )
       pSortRec->pnOrder = static_cast< HB_DBRECNO * >( hb_xgrab(
-            ( HB_SIZE ) pSortRec->nCount * sizeof( HB_DBRECNO ) ) );
+            static_cast< HB_SIZE >( pSortRec->nCount ) * sizeof( HB_DBRECNO ) ) );
    for( nCount = 0; nCount < pSortRec->nCount; ++nCount )
       pSortRec->pnOrder[ nCount ] = pSortRec->pnRecords[ pOrder[ nCount ] ];
 
@@ -5262,7 +5262,7 @@ static void hb_dbfSortInsPage( LPDBSORTREC pSortRec, HB_SORTIDX * pIndex,
 static HB_ERRCODE hb_dbfSortWritePage( LPDBSORTREC pSortRec )
 {
    HB_DBRECNO * pData = hb_dbfSortSort( pSortRec );
-   HB_SIZE nSize = ( HB_SIZE ) pSortRec->nCount * sizeof( HB_DBRECNO );
+   HB_SIZE nSize = static_cast< HB_SIZE >( pSortRec->nCount ) * sizeof( HB_DBRECNO );
    AREAP pArea = pSortRec->pSortInfo->dbtri.lpaSource;
 
    if( pSortRec->pTempFile == nullptr )
@@ -5326,7 +5326,7 @@ static HB_ERRCODE hb_dbfSortReadPage( LPDBSORTREC pSortRec, PHB_DBSORTPAGE pPage
 {
    AREAP pArea = pSortRec->pSortInfo->dbtri.lpaSource;
    HB_DBRECNO nCount = HB_MIN( pSortRec->nMaxRec, pPage->nCount );
-   HB_SIZE nSize = ( HB_SIZE ) nCount * sizeof( HB_DBRECNO );
+   HB_SIZE nSize = static_cast< HB_SIZE >( nCount ) * sizeof( HB_DBRECNO );
 
    if( hb_fileReadAt( pSortRec->pTempFile, pPage->pnRecords, nSize,
                       pPage->nOffset ) != nSize )
@@ -5487,7 +5487,7 @@ static HB_ERRCODE hb_dbfSortAdd( LPDBSORTREC pSortRec )
             pSortRec->nMaxRec = HB_SORTREC_ARRAYSIZE;
 
          pSortRec->pnRecords = static_cast< HB_DBRECNO * >( hb_xrealloc( pSortRec->pnRecords,
-               ( HB_SIZE ) pSortRec->nMaxRec * sizeof( HB_DBRECNO ) ) );
+               static_cast< HB_SIZE >( pSortRec->nMaxRec ) * sizeof( HB_DBRECNO ) ) );
          if( pSortRec->pSortArray )
             hb_arraySize( pSortRec->pSortArray, pSortRec->nMaxRec );
          else
@@ -6041,7 +6041,7 @@ static HB_ERRCODE hb_dbfGetValueFile( DBFAREAP pArea, HB_USHORT uiIndex, const c
       {
          if( hb_fileWriteAt( pFile, pArea->pRecord + pArea->pFieldOffset[ uiIndex ],
                              pField->uiLen, hb_fileSize( pFile ) ) !=
-             ( HB_SIZE ) pField->uiLen )
+             static_cast< HB_SIZE >( pField->uiLen ) )
          {
             errCode = EDBF_WRITE;
          }
@@ -6126,8 +6126,8 @@ static HB_ERRCODE hb_dbfPutValueFile( DBFAREAP pArea, HB_USHORT uiIndex, const c
          HB_SIZE nRead = hb_fileReadAt( pFile, pArea->pRecord +
                                                pArea->pFieldOffset[ uiIndex ],
                                         pField->uiLen, 0 );
-         if( nRead != ( HB_SIZE ) FS_ERROR &&
-             nRead < ( HB_SIZE ) pField->uiLen )
+         if( nRead != static_cast< HB_SIZE >( FS_ERROR ) &&
+             nRead < static_cast< HB_SIZE >( pField->uiLen ) )
             memset( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] + nRead,
                     ' ', pField->uiLen - nRead );
          hb_fileClose( pFile );

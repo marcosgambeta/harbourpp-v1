@@ -5765,7 +5765,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
       case HB_GTI_DISPIMAGE:
          if( wnd->window && pInfo->pNewVal &&
              ( ( HB_IS_ARRAY( pInfo->pNewVal ) &&
-                 hb_arrayLen( pInfo->pNewVal ) == ( HB_SIZE )
+                 hb_arrayLen( pInfo->pNewVal ) == static_cast< HB_SIZE >
                  ( ( hb_arrayGetType( pInfo->pNewVal, 4 ) & HB_IT_NUMERIC ) ? 4 : 3 ) ) ||
                HB_IS_STRING( pInfo->pNewVal ) ) )
          {
@@ -5794,7 +5794,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                      while( pFreeImage == nullptr && iPad >= 8 )
                      {
                         int iPitch = ( iWidth * iDepth + iPad - 1 ) / iPad;
-                        if( nSize == ( HB_SIZE ) ( iHeight * iPitch ) )
+                        if( nSize == static_cast< HB_SIZE >( iHeight * iPitch ) )
                            pFreeImage = hb_arrayGetCPtr( pInfo->pNewVal, 1 );
                         else
                            iPad >>= 1;

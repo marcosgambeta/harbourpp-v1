@@ -1398,7 +1398,7 @@ HB_FUNC( MXMLSAVESTRING )
 
             bytes = mxmlSaveString( node, buffer, static_cast< int >( buffer_size + 1 ), cb );
 
-            if( bytes > 0 && ( HB_SIZE ) bytes <= buffer_size )
+            if( bytes > 0 && static_cast< HB_SIZE >( bytes ) <= buffer_size )
                hb_storclen( buffer, bytes, 2 );
 
             hb_retni( bytes );

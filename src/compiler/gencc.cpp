@@ -1689,7 +1689,7 @@ static HB_GENC_FUNC( hb_p_threadstatics )
    HB_GENC_LABEL();
 
    w = HB_PCODE_MKUSHORT( &pFunc->pCode[ nPCodePos + 1 ] );
-   nSize = ( HB_SIZE ) w << 1;
+   nSize = static_cast< HB_SIZE >( w ) << 1;
 
    fprintf( cargo->yyc, "\t{\n\t\tstatic const HB_BYTE statics[ %" HB_PFS "u ] = {", nSize );
 

@@ -419,7 +419,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
             if( ! hb_hrbReadValue( szHrbBody, nBodySize, &nBodyOffset, &ulValue ) )
                break;
 
-            nSize = ( HB_SIZE ) ulValue;
+            nSize = static_cast< HB_SIZE >( ulValue );
 
             if( nBodyOffset + nSize > nBodySize )
                break;

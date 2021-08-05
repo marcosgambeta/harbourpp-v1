@@ -78,7 +78,7 @@ static void do_pad( int iSwitch )
          hb_retc_null();
          return;
       }
-      sRetLen = ( HB_SIZE ) nRetLen;
+      sRetLen = static_cast< HB_SIZE >( nRetLen );
 
       if( hb_parclen( 3 ) > 0 )
          cFill = *( hb_parc( 3 ) );

@@ -98,7 +98,7 @@ HB_BOOL hb_lppSend( PHB_LPP pSocket, const void * data, HB_SIZE len, HB_MAXINT t
 
    for( ;; )
    {
-      if( pSocket->nSendLen - pSocket->nSendPos < ( HB_SIZE ) LONG_MAX )
+      if( pSocket->nSendLen - pSocket->nSendPos < static_cast< HB_SIZE >( LONG_MAX ) )
          lSend = static_cast< long >( pSocket->nSendLen - pSocket->nSendPos );
       else
          lSend = LONG_MAX;
@@ -181,7 +181,7 @@ HB_BOOL hb_lppRecv( PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT time
             pSocket->pRecvBuffer = static_cast< char * >( hb_xrealloc( pSocket->pRecvBuffer, pSocket->nRecvSize ) );
       }
 
-      if( pSocket->nRecvSize - pSocket->nRecvLen < ( HB_SIZE ) LONG_MAX )
+      if( pSocket->nRecvSize - pSocket->nRecvLen < static_cast< HB_SIZE >( LONG_MAX ) )
          lRecv = static_cast< long >( pSocket->nRecvSize - pSocket->nRecvLen );
       else
          lRecv = LONG_MAX;

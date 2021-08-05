@@ -459,7 +459,7 @@ HB_FUNC( EVP_DIGESTFINAL )
 
          if( size > 0 )
          {
-            if( ! hb_storclen_buffer( reinterpret_cast< char * >( buffer ), ( HB_SIZE ) size, 2 ) )
+            if( ! hb_storclen_buffer( reinterpret_cast< char * >( buffer ), static_cast< HB_SIZE >( size ), 2 ) )
             {
                hb_xfree( buffer );
             }
@@ -493,7 +493,7 @@ HB_FUNC( EVP_DIGESTFINAL_EX )
 
          if( size > 0 )
          {
-            if( ! hb_storclen_buffer( reinterpret_cast< char * >( buffer ), ( HB_SIZE ) size, 2 ) )
+            if( ! hb_storclen_buffer( reinterpret_cast< char * >( buffer ), static_cast< HB_SIZE >( size ), 2 ) )
             {
                hb_xfree( buffer );
             }
@@ -591,7 +591,7 @@ HB_FUNC( EVP_SIGNFINAL )
 
          if( size > 0 )
          {
-            if( ! hb_storclen_buffer( reinterpret_cast< char * >( buffer ), ( HB_SIZE ) size, 2 ) )
+            if( ! hb_storclen_buffer( reinterpret_cast< char * >( buffer ), static_cast< HB_SIZE >( size ), 2 ) )
             {
                hb_xfree( buffer );
             }

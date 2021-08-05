@@ -201,7 +201,7 @@ static PHB_MEMFS_INODE memfsInodeAlloc( const char * szName )
    pInode->llSize = 0;
    pInode->llAlloc = HB_MEMFS_INITSIZE;
    pInode->pData = static_cast< char * >( hb_xgrab( ( HB_ULONG ) pInode->llAlloc ) );
-   memset( pInode->pData, 0, ( HB_SIZE ) pInode->llAlloc );
+   memset( pInode->pData, 0, static_cast< HB_SIZE >( pInode->llAlloc ) );
    pInode->szName = hb_strdup( szName );
 
    pInode->uiCount = 1;
@@ -411,7 +411,7 @@ HB_MEMFS_EXPORT PHB_ITEM hb_memfsDirectory( const char * pszDirSpec, const char 
    HB_MEMFSMT_UNLOCK();
 
    pDirArray = hb_itemArrayNew( nLen );
-   for( ul = 0; ( HB_SIZE ) ul < nLen; ul++ )
+   for( ul = 0; static_cast< HB_SIZE >( ul ) < nLen; ul++ )
    {
       PHB_ITEM pSubarray = hb_arrayGetItemPtr( pDirArray, ul + 1 );
 
@@ -520,7 +520,7 @@ HB_MEMFS_EXPORT HB_FHANDLE hb_memfsOpen( const char * szName, HB_USHORT uiFlags 
             hb_xfree( pFile->pInode->pData );
             pFile->pInode->pData = static_cast< char * >( hb_xgrab( ( HB_ULONG ) pFile->pInode->llAlloc ) );
          }
-         memset( pFile->pInode->pData, 0, ( HB_SIZE ) pFile->pInode->llAlloc );
+         memset( pFile->pInode->pData, 0, static_cast< HB_SIZE >( pFile->pInode->llAlloc ) );
       }
 
       pFile->pInode->uiDeny |= uiFlags & FOX_DENYFLAGS;
@@ -592,9 +592,9 @@ HB_MEMFS_EXPORT HB_SIZE hb_memfsReadAt( HB_FHANDLE hFile, void * pBuff, HB_SIZE 
    if( pInode->llSize >= llOffset + ( HB_FOFFSET ) nCount )
       nRead = nCount;
    else
-      nRead = ( HB_SIZE ) ( pInode->llSize - llOffset );
+      nRead = static_cast< HB_SIZE >( pInode->llSize - llOffset );
 
-   memcpy( pBuff, pInode->pData + ( HB_SIZE ) llOffset, nRead );
+   memcpy( pBuff, pInode->pData + static_cast< HB_SIZE >( llOffset ), nRead );
    HB_MEMFSMT_UNLOCK();
    pFile->llPos = llOffset + ( HB_FOFFSET ) nCount;
    return nRead;
@@ -626,11 +626,11 @@ HB_MEMFS_EXPORT HB_SIZE hb_memfsWriteAt( HB_FHANDLE hFile, const void * pBuff, H
       if( llNewAlloc < llOffset + ( HB_FOFFSET ) nCount )
          llNewAlloc = llOffset + ( HB_FOFFSET ) nCount;
 
-      pInode->pData = static_cast< char * >( hb_xrealloc( pInode->pData, ( HB_SIZE ) llNewAlloc ) );
-      memset( pInode->pData + ( HB_SIZE ) pInode->llAlloc, 0, ( HB_SIZE ) ( llNewAlloc - pInode->llAlloc ) );
+      pInode->pData = static_cast< char * >( hb_xrealloc( pInode->pData, static_cast< HB_SIZE >( llNewAlloc ) ) );
+      memset( pInode->pData + static_cast< HB_SIZE >( pInode->llAlloc ), 0, static_cast< HB_SIZE >( llNewAlloc - pInode->llAlloc ) );
       pInode->llAlloc = llNewAlloc;
    }
-   memcpy( pInode->pData + ( HB_SIZE ) llOffset, pBuff, nCount );
+   memcpy( pInode->pData + static_cast< HB_SIZE >( llOffset ), pBuff, nCount );
 
    if( pInode->llSize < llOffset + ( HB_FOFFSET ) nCount )
       pInode->llSize = llOffset + ( HB_FOFFSET ) nCount;
@@ -688,17 +688,17 @@ HB_MEMFS_EXPORT HB_BOOL hb_memfsTruncAt( HB_FHANDLE hFile, HB_FOFFSET llOffset )
       if( llNewAlloc < llOffset )
          llNewAlloc = llOffset;
 
-      pInode->pData = static_cast< char * >( hb_xrealloc( pInode->pData, ( HB_SIZE ) llNewAlloc ) );
-      memset( pInode->pData + ( HB_SIZE ) pInode->llAlloc, 0, ( HB_SIZE ) ( llNewAlloc - pInode->llAlloc ) );
+      pInode->pData = static_cast< char * >( hb_xrealloc( pInode->pData, static_cast< HB_SIZE >( llNewAlloc ) ) );
+      memset( pInode->pData + static_cast< HB_SIZE >( pInode->llAlloc ), 0, static_cast< HB_SIZE >( llNewAlloc - pInode->llAlloc ) );
       pInode->llAlloc = llNewAlloc;
    }
    else if( ( pInode->llAlloc >> 2 ) > ( llOffset > HB_MEMFS_INITSIZE ? llOffset : HB_MEMFS_INITSIZE ) )
    {
       pInode->llAlloc = ( llOffset > HB_MEMFS_INITSIZE ? llOffset : HB_MEMFS_INITSIZE );
-      pInode->pData = static_cast< char * >( hb_xrealloc( pInode->pData, ( HB_SIZE ) pInode->llAlloc ) );
+      pInode->pData = static_cast< char * >( hb_xrealloc( pInode->pData, static_cast< HB_SIZE >( pInode->llAlloc ) ) );
    }
 
-   memset( pInode->pData + ( HB_SIZE ) llOffset, 0, ( HB_SIZE ) ( pInode->llAlloc - llOffset ) );
+   memset( pInode->pData + static_cast< HB_SIZE >( llOffset ), 0, static_cast< HB_SIZE >( pInode->llAlloc - llOffset ) );
 
    pInode->llSize = llOffset;
    HB_MEMFSMT_UNLOCK();

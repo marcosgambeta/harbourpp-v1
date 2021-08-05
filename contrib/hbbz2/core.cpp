@@ -56,7 +56,7 @@ static void * hb_bz2Alloc( void * cargo, int nmemb, int size )
 {
    HB_SYMBOL_UNUSED( cargo );
 
-   return ( nmemb > 0 && size > 0 ) ? hb_xalloc( ( HB_SIZE ) nmemb * size ) : nullptr;
+   return ( nmemb > 0 && size > 0 ) ? hb_xalloc( static_cast< HB_SIZE >( nmemb ) * size ) : nullptr;
 }
 
 static void hb_bz2Free( void * cargo, void * ptr )
@@ -106,9 +106,9 @@ static int hb_bz2Compress( const char * szSrc, HB_SIZE nSrc,
       if( iResult == BZ_STREAM_END )
       {
 #if HB_SIZE_MAX <= UINT_MAX
-         *pnDst = ( HB_SIZE ) stream.total_out_lo32;
+         *pnDst = static_cast< HB_SIZE >( stream.total_out_lo32 );
 #else
-         *pnDst = ( ( HB_SIZE ) stream.total_out_hi32 << 32 ) |
+         *pnDst = ( static_cast< HB_SIZE >( stream.total_out_hi32 ) << 32 ) |
                   stream.total_out_lo32;
 #endif
          iResult = BZ_OK;
@@ -156,9 +156,9 @@ static HB_SIZE hb_bz2UncompressedSize( const char * szSrc, HB_SIZE nLen,
          if( stream.total_out_hi32 != 0 )
             *piResult = BZ_MEM_ERROR;
          else
-            nDest = ( HB_SIZE ) stream.total_out_lo32;
+            nDest = static_cast< HB_SIZE >( stream.total_out_lo32 );
 #else
-         nDest = ( ( HB_SIZE ) stream.total_out_hi32 << 32 ) |
+         nDest = ( static_cast< HB_SIZE >( stream.total_out_hi32 ) << 32 ) |
                  stream.total_out_lo32;
 #endif
       }
@@ -200,9 +200,9 @@ static int hb_bz2Uncompress( const char * szSrc, HB_SIZE nSrc,
       if( iResult == BZ_STREAM_END )
       {
 #if HB_SIZE_MAX <= UINT_MAX
-         *pnDst = ( HB_SIZE ) stream.total_out_lo32;
+         *pnDst = static_cast< HB_SIZE >( stream.total_out_lo32 );
 #else
-         *pnDst = ( ( HB_SIZE ) stream.total_out_hi32 << 32 ) |
+         *pnDst = ( static_cast< HB_SIZE >( stream.total_out_hi32 ) << 32 ) |
                   stream.total_out_lo32;
 #endif
          iResult = BZ_OK;
@@ -225,7 +225,7 @@ HB_FUNC( HB_BZ2_COMPRESSBOUND )
    if( HB_ISCHAR( 1 ) )
       hb_retnint( hb_bz2CompressBound( hb_parclen( 1 ) ) );
    else if( HB_ISNUM( 1 ) )
-      hb_retnint( hb_bz2CompressBound( ( HB_SIZE ) hb_parnint( 1 ) ) );
+      hb_retnint( hb_bz2CompressBound( static_cast< HB_SIZE >( hb_parnint( 1 ) ) ) );
    else
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
@@ -279,8 +279,8 @@ HB_FUNC( HB_BZ2_COMPRESS )
          }
          else
          {
-            nDstLen = HB_ISNUM( 2 ) ? ( HB_SIZE ) hb_parnint( 2 ) :
-                      ( HB_SIZE ) hb_bz2CompressBound( nLen );
+            nDstLen = HB_ISNUM( 2 ) ? static_cast< HB_SIZE >( hb_parnint( 2 ) ) :
+                      static_cast< HB_SIZE >( hb_bz2CompressBound( nLen ) );
             pDest = ( char * ) hb_xalloc( nDstLen + 1 );
          }
 
@@ -337,7 +337,7 @@ HB_FUNC( HB_BZ2_UNCOMPRESS )
          }
          else
          {
-            nDstLen = HB_ISNUM( 2 ) ? ( HB_SIZE ) hb_parnint( 2 ) :
+            nDstLen = HB_ISNUM( 2 ) ? static_cast< HB_SIZE >( hb_parnint( 2 ) ) :
                       hb_bz2UncompressedSize( szData, nLen, &iResult );
             if( iResult == BZ_OK )
             {

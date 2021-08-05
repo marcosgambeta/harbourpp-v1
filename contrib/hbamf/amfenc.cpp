@@ -182,7 +182,7 @@ static HB_BOOL amf3_encode_int( amfContext * context, int value )
    else
       return HB_FALSE;
 
-   if( ( HB_SIZE ) writeBuffer( context, tmp, tmp_size ) != tmp_size )
+   if( static_cast< HB_SIZE >( writeBuffer( context, tmp, tmp_size ) ) != tmp_size )
       return HB_FALSE;
 
    return HB_TRUE;

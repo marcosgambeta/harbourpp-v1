@@ -511,7 +511,7 @@ static HB_ERRCODE pgsqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
    }
 
    pValue = PQgetvalue( pSDDData->pResult, pArea->ulRecNo - 1, uiIndex );
-   nLen   = ( HB_SIZE ) PQgetlength( pSDDData->pResult, pArea->ulRecNo - 1, uiIndex );
+   nLen   = static_cast< HB_SIZE >( PQgetlength( pSDDData->pResult, pArea->ulRecNo - 1, uiIndex ) );
 
 #if 0
    HB_TRACE( HB_TR_ALWAYS, ( "fieldget recno=%d index=%d value=%s len=%d", dbFieldInfo.atomName, PQftype( pResult, static_cast< int >( uiCount ) ), pArea->ulRecNo, uiIndex, pValue, nLen ) );

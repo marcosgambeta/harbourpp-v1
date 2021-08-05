@@ -139,7 +139,7 @@ HB_FUNC( WAPI_GETDLGITEMTEXT )
                                   lpResult,
                                   nSize + 1 );
 
-   HB_RETSTRLEN( lpResult, ( HB_SIZE ) nResult );
+   HB_RETSTRLEN( lpResult, static_cast< HB_SIZE >( nResult ) );
    hbwapi_SetLastError( GetLastError() );
    hb_xfree( lpResult );
 }

@@ -1603,7 +1603,7 @@ HB_BOOL hb_dbgIsValidStopLine( void * handle, const char * szModule, int nLine )
             int nMin = hb_arrayGetNL( pEntry, 2 );
             int nOfs = nLine - nMin;
 
-            if( nOfs >= 0 && ( HB_SIZE ) ( nOfs >> 3 ) < hb_arrayGetCLen( pEntry, 3 ) )
+            if( nOfs >= 0 && static_cast< HB_SIZE >( nOfs >> 3 ) < hb_arrayGetCLen( pEntry, 3 ) )
                fResult = ( hb_arrayGetCPtr( pEntry, 3 )[ nOfs >> 3 ] & ( 1 << ( nOfs & 0x07 ) ) ) != 0;
 
             break;

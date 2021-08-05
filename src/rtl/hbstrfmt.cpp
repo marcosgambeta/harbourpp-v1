@@ -287,7 +287,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
                for( i = iSize; i < iDec; i++ )
                   bufadd( &buffer, "0", 1 );
 
-               bufadd( &buffer, pStr2, ( HB_SIZE ) iSize );
+               bufadd( &buffer, pStr2, static_cast< HB_SIZE >( iSize ) );
                if( iDec > iSize )
                   iSize = iDec;
                for( i = iSize + iExtra; i < iWidth; i++ )
@@ -327,7 +327,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
                   for( i = iSize; i < iDec; i++ )
                      bufadd( &buffer, "0", 1 );
 
-                  bufadd( &buffer, pStr2, ( HB_SIZE ) iSize );
+                  bufadd( &buffer, pStr2, static_cast< HB_SIZE >( iSize ) );
                }
             }
 
@@ -396,7 +396,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
                         bufadd( &buffer, " ", 1 );
                   }
                }
-               bufadd( &buffer, pStr2, ( HB_SIZE ) iSize );
+               bufadd( &buffer, pStr2, static_cast< HB_SIZE >( iSize ) );
                for( i = iSize + iExtra; i < iWidth; i++ )
                   bufadd( &buffer, " ", 1 );
             }
@@ -441,7 +441,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
                            bufadd( &buffer, " ", 1 );
                      }
                   }
-                  bufadd( &buffer, pStr2, ( HB_SIZE ) iSize );
+                  bufadd( &buffer, pStr2, static_cast< HB_SIZE >( iSize ) );
                }
             }
 
@@ -457,7 +457,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
             nSize = hb_itemGetCLen( pItem );
             if( iDec >= 0 )
             {
-               if( ( HB_SIZE ) iDec < nSize )
+               if( static_cast< HB_SIZE >( iDec ) < nSize )
                   nSize = iDec;
             }
             if( fLeftAlign )

@@ -537,7 +537,7 @@ HB_FUNC( HB_PREAD )
       {
          HB_ISIZ nToRead = hb_parns( 3 );
 
-         if( nToRead >= 0 && ( HB_SIZE ) nToRead < nSize )
+         if( nToRead >= 0 && static_cast< HB_SIZE >( nToRead ) < nSize )
             nSize = nToRead;
       }
 
@@ -547,7 +547,7 @@ HB_FUNC( HB_PREAD )
          uiError = hb_fsError();
       }
 
-      if( nSize == ( HB_SIZE ) FS_ERROR )
+      if( nSize == static_cast< HB_SIZE >( FS_ERROR ) )
          hb_retni( FS_ERROR );
       else
          hb_retns( nSize );
@@ -576,7 +576,7 @@ HB_FUNC( HB_PWRITE )
       }
       nLen = hb_fsPipeWrite( hPipe, data, nLen, hb_parnint( 4 ) );
       hb_fsSetFError( hb_fsError() );
-      if( nLen == ( HB_SIZE ) FS_ERROR )
+      if( nLen == static_cast< HB_SIZE >( FS_ERROR ) )
          hb_retni( FS_ERROR );
       else
          hb_retns( nLen );

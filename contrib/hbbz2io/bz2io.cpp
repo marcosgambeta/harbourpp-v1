@@ -84,7 +84,7 @@ static void * s_filebz2Alloc( void * cargo, int nmemb, int size )
 {
    HB_SYMBOL_UNUSED( cargo );
 
-   return ( nmemb > 0 && size > 0 ) ? hb_xalloc( ( HB_SIZE ) nmemb * size ) : nullptr;
+   return ( nmemb > 0 && size > 0 ) ? hb_xalloc( static_cast< HB_SIZE >( nmemb ) * size ) : nullptr;
 }
 
 static void s_filebz2Free( void * cargo, void * ptr )
@@ -103,7 +103,7 @@ static HB_SIZE s_bz2_write( PHB_FILE pFile, HB_MAXINT nTimeout )
    {
       HB_SIZE nWr = _PHB_FILE->pFuncs->Write( _PHB_FILE, pFile->buffer + nWritten,
                                               nSize - nWritten, nTimeout );
-      if( nWr == ( HB_SIZE ) -1 )
+      if( nWr == static_cast< HB_SIZE >( -1 ) )
          return nWr;
       else if( nWr == 0 )
          break;
@@ -138,7 +138,7 @@ static void s_bz2_flush( PHB_FILE pFile, HB_BOOL fClose )
    while( pFile->bz2.avail_out < HB_BZ2_BUFSIZE )
    {
       HB_SIZE nWr = s_bz2_write( pFile, pFile->nTimeout );
-      if( nWr == 0 || nWr == ( HB_SIZE ) -1 )
+      if( nWr == 0 || nWr == static_cast< HB_SIZE >( -1 ) )
          return;
       if( err == BZ_FLUSH_OK || err == BZ_FINISH_OK )
          err = BZ2_bzCompress( &pFile->bz2, fClose ? BZ_FINISH : BZ_FLUSH );
@@ -401,7 +401,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize,
          if( err != BZ_OK )
          {
             hb_fsSetError( HB_BZ2_ERROR_BASE - err );
-            return ( HB_SIZE ) -1;
+            return static_cast< HB_SIZE >( -1 );
          }
          pFile->fInited = HB_TRUE;
          pFile->iMode = FO_READ;
@@ -430,7 +430,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize,
             else
             {
                hb_fsSetError( HB_BZ2_ERROR_BASE - err );
-               nResult = ( HB_SIZE ) -1;
+               nResult = static_cast< HB_SIZE >( -1 );
             }
             break;
          }
@@ -438,7 +438,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize,
          {
             nResult = _PHB_FILE->pFuncs->Read( _PHB_FILE, pFile->buffer,
                         HB_BZ2_BUFSIZE, pFile->bz2.avail_out ? nTimeout : 0 );
-            if( nResult == 0 || nResult == ( HB_SIZE ) - 1 )
+            if( nResult == 0 || nResult == static_cast< HB_SIZE >( - 1 ) )
                break;
             pFile->bz2.next_in = ( char * ) pFile->buffer;
             pFile->bz2.avail_in = static_cast< unsigned int >( nResult );
@@ -447,10 +447,10 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize,
       if( pFile->bz2.total_out_lo32 != 0 || pFile->bz2.total_out_hi32 != 0 )
       {
 #if HB_SIZE_MAX <= UINT_MAX
-         nResult = ( HB_SIZE ) pFile->bz2.total_out_lo32;
+         nResult = static_cast< HB_SIZE >( pFile->bz2.total_out_lo32 );
 #else
-         nResult = ( ( HB_SIZE ) pFile->bz2.total_out_hi32 << 32 ) |
-                   ( HB_SIZE ) pFile->bz2.total_out_lo32;
+         nResult = ( static_cast< HB_SIZE >( pFile->bz2.total_out_hi32 ) << 32 ) |
+                   static_cast< HB_SIZE >( pFile->bz2.total_out_lo32 );
 #endif
       }
       pFile->seek_pos += hb_fileResult( nResult );
@@ -478,7 +478,7 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * buffer, HB_SIZE nSize,
          if( err != BZ_OK )
          {
             hb_fsSetError( HB_BZ2_ERROR_BASE - err );
-            return ( HB_SIZE ) -1;
+            return static_cast< HB_SIZE >( -1 );
          }
          pFile->fInited = HB_TRUE;
          pFile->iMode = FO_WRITE;
@@ -496,18 +496,18 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * buffer, HB_SIZE nSize,
          if( pFile->bz2.avail_out == 0 )
          {
             nResult = s_bz2_write( pFile, nTimeout );
-            if( nResult == 0 || nResult == ( HB_SIZE ) - 1 )
+            if( nResult == 0 || nResult == static_cast< HB_SIZE >( - 1 ) )
                break;
          }
          err = BZ2_bzCompress( &pFile->bz2, BZ_RUN );
          if( err != BZ_RUN_OK )
          {
             hb_fsSetError( HB_BZ2_ERROR_BASE - err );
-            nResult = ( HB_SIZE ) -1;
+            nResult = static_cast< HB_SIZE >( -1 );
             break;
          }
       }
-      if( nResult != ( HB_SIZE ) - 1 )
+      if( nResult != static_cast< HB_SIZE >( - 1 ) )
          nResult = nSize - pFile->bz2.avail_in;
       pFile->seek_pos += hb_fileResult( nResult );
    }

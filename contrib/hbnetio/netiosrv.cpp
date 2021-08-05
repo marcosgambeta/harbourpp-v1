@@ -868,7 +868,7 @@ HB_FUNC( NETIO_SERVER )
 
                         if( itmSize <= sizeof( buffer ) - NETIO_MSGLEN )
                            msg = buffer;
-                        else if( ! ptr || itmSize > ( HB_SIZE ) HB_MAX( size, size2 ) + conn->rootPathLen + 1 - NETIO_MSGLEN )
+                        else if( ! ptr || itmSize > static_cast< HB_SIZE >( HB_MAX( size, size2 ) ) + conn->rootPathLen + 1 - NETIO_MSGLEN )
                         {
                            if( ptr )
                               hb_xfree( ptr );
@@ -1155,7 +1155,7 @@ HB_FUNC( NETIO_SERVER )
 
                            if( itmSize <= sizeof( buffer ) - NETIO_MSGLEN )
                               msg = buffer;
-                           else if( ! ptr || itmSize > ( HB_SIZE ) size - NETIO_MSGLEN )
+                           else if( ! ptr || itmSize > static_cast< HB_SIZE >( size ) - NETIO_MSGLEN )
                            {
                               if( ptr )
                                  hb_xfree( ptr );
@@ -1555,7 +1555,7 @@ HB_FUNC( NETIO_SERVER )
                                     char * itmData = hb_itemSerialize( pResult, HB_SERIALIZE_NUMSIZE, &itmSize );
                                     if( itmSize <= sizeof( buffer ) - NETIO_MSGLEN )
                                        msg = buffer;
-                                    else if( ! ptr || itmSize > ( HB_SIZE ) size - NETIO_MSGLEN )
+                                    else if( ! ptr || itmSize > static_cast< HB_SIZE >( size ) - NETIO_MSGLEN )
                                     {
                                        if( ptr )
                                           hb_xfree( ptr );

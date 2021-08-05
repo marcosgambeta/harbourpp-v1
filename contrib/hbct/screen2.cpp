@@ -77,8 +77,8 @@ HB_FUNC( SAYDOWN )
 
          int iColor = hb_gtGetCurrColor();
 
-         if( nLen > ( HB_SIZE ) ( iMaxRow - iRow + 1 ) )
-            nLen = ( HB_SIZE ) ( iMaxRow - iRow + 1 );
+         if( nLen > static_cast< HB_SIZE >( iMaxRow - iRow + 1 ) )
+            nLen = static_cast< HB_SIZE >( iMaxRow - iRow + 1 );
 
          hb_gtBeginWrite();
          while( nLen-- )
@@ -337,7 +337,7 @@ HB_FUNC( SCREENSTR )  /* TODO: Unicode support */
    if( iRow >= 0 && iRow <= iMaxRow && iCol >= 0 && iCol <= iMaxCol && nCount )
    {
       char * szText;
-      HB_SIZE nSize = ( HB_SIZE ) ( iMaxRow - iRow + 1 ) * ( iMaxCol - iCol + 1 );
+      HB_SIZE nSize = static_cast< HB_SIZE >( iMaxRow - iRow + 1 ) * ( iMaxCol - iCol + 1 );
       if( nSize > nCount )
          nSize = nCount;
       nCount = nSize;

@@ -140,7 +140,7 @@ HB_FUNC( MSAVESTATE )
 
 HB_FUNC( MRESTSTATE )
 {
-   if( hb_parclen( 1 ) == ( HB_SIZE ) hb_mouseStorageSize() )
+   if( hb_parclen( 1 ) == static_cast< HB_SIZE >( hb_mouseStorageSize() ) )
       hb_mouseRestoreState( hb_parc( 1 ) );
 }
 

@@ -197,7 +197,7 @@ void hb_OutDebug( const char * szMsg, HB_SIZE nMsgLen )
       {
          if( hb_fsCanWrite( s_iDebugFd, 100 ) > 0 ) /* wait each time a tenth of second */
          {
-            if( ( HB_SIZE ) write( s_iDebugFd, szMsg, nMsgLen ) == nMsgLen )
+            if( static_cast< HB_SIZE >( write( s_iDebugFd, szMsg, nMsgLen ) ) == nMsgLen )
             {
                if( hb_fsCanWrite( s_iDebugFd, 100 ) > 0 )
                {

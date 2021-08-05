@@ -2192,7 +2192,7 @@ static HB_GENC_FUNC( hb_p_threadstatics )
       nPCodePos += 2;
    }
 
-   return ( ( HB_SIZE ) w << 1 ) + 3;
+   return ( static_cast< HB_SIZE >( w ) << 1 ) + 3;
 }
 
 static HB_GENC_FUNC( hb_p_swapalias )

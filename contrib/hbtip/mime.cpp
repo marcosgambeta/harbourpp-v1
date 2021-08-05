@@ -629,7 +629,7 @@ static const char * s_findStringMimeType( const char * cData, HB_SIZE nLen )
    {
       const MIME_ENTRY * elem = s_mimeTable + uiCount;
       HB_SIZE nPos     = elem->pos;
-      HB_SIZE nDataLen = ( HB_SIZE ) strlen( elem->pattern );
+      HB_SIZE nDataLen = static_cast< HB_SIZE >( strlen( elem->pattern ) );
 
       if( ( elem->flags & MIME_FLAG_CONTINUE ) != 0 )
          continue;

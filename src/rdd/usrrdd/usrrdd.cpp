@@ -457,7 +457,7 @@ static HB_BOOL hb_usrItemToTransInfo( PHB_ITEM pItem, LPDBTRANSINFO pTransInfo )
       HB_USHORT uiItemCount = static_cast< HB_USHORT >( hb_arrayGetNI( pItem, UR_TI_ITEMCOUNT ) ), uiCount;
       PHB_ITEM pItems = hb_arrayGetItemPtr( pItem, UR_TI_ITEMS );
 
-      if( hb_arrayLen( pItems ) == ( HB_SIZE ) uiItemCount &&
+      if( hb_arrayLen( pItems ) == static_cast< HB_SIZE >( uiItemCount ) &&
           hb_usrItemToScopeInfo( hb_arrayGetItemPtr( pItem, UR_TI_SCOPE ),
                                  &pTransInfo->dbsci ) )
       {
@@ -530,7 +530,7 @@ static HB_BOOL hb_usrItemToSortInfo( PHB_ITEM pItem, LPDBSORTINFO pSortInfo )
       HB_USHORT uiItemCount = static_cast< HB_USHORT >( hb_arrayGetNI( pItem, UR_SRI_ITEMCOUNT ) ), uiCount;
       PHB_ITEM pItems = hb_arrayGetItemPtr( pItem, UR_SRI_ITEMS );
 
-      if( hb_arrayLen( pItems ) == ( HB_SIZE ) uiItemCount &&
+      if( hb_arrayLen( pItems ) == static_cast< HB_SIZE >( uiItemCount ) &&
           hb_usrItemToTransInfo( hb_arrayGetItemPtr( pItem, UR_SRI_TRANSINFO ),
                                  &pSortInfo->dbtri ) )
       {

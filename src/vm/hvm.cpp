@@ -2287,9 +2287,9 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 
          case HB_P_PUSHSTRSHORT:
             if( bDynCode )
-               hb_vmPushString( ( const char * ) pCode + 2, ( HB_SIZE ) pCode[ 1 ] - 1 );
+               hb_vmPushString( ( const char * ) pCode + 2, static_cast< HB_SIZE >( pCode[ 1 ] ) - 1 );
             else
-               hb_vmPushStringPcode( ( const char * ) pCode + 2, ( HB_SIZE ) pCode[ 1 ] - 1 );
+               hb_vmPushStringPcode( ( const char * ) pCode + 2, static_cast< HB_SIZE >( pCode[ 1 ] ) - 1 );
             pCode += 2 + pCode[ 1 ];
             break;
 
@@ -2317,7 +2317,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 
          case HB_P_PUSHSTRHIDDEN:
          {
-            HB_SIZE nSize = ( HB_SIZE ) HB_PCODE_MKUSHORT( &pCode[ 2 ] );
+            HB_SIZE nSize = static_cast< HB_SIZE >( HB_PCODE_MKUSHORT( &pCode[ 2 ] ) );
             char * szText = hb_compDecodeString( pCode[ 1 ], ( const char * ) pCode + 4, &nSize );
             hb_itemPutCLPtr( hb_stackAllocItem(), szText, nSize );
             pCode += ( 4 + nSize );
@@ -4871,7 +4871,7 @@ static void hb_vmEnumNext( void )
                hb_itemRelease( pEnum->item.asEnum.valuePtr );
                pEnum->item.asEnum.valuePtr = nullptr;
             }
-            if( ( HB_SIZE ) ++pEnum->item.asEnum.offset >
+            if( static_cast< HB_SIZE >( ++pEnum->item.asEnum.offset ) >
                 pBase->item.asArray.value->nLen )
                break;
          }
@@ -4886,12 +4886,12 @@ static void hb_vmEnumNext( void )
             hb_itemRelease( pEnum->item.asEnum.valuePtr );
             pEnum->item.asEnum.valuePtr = nullptr;
          }
-         if( ( HB_SIZE ) ++pEnum->item.asEnum.offset > hb_hashLen( pBase ) )
+         if( static_cast< HB_SIZE >( ++pEnum->item.asEnum.offset ) > hb_hashLen( pBase ) )
             break;
       }
       else if( HB_IS_STRING( pBase ) )
       {
-         if( ( HB_SIZE ) ++pEnum->item.asEnum.offset >
+         if( static_cast< HB_SIZE >( ++pEnum->item.asEnum.offset ) >
              pBase->item.asString.length )
             break;
          pEnum->item.asEnum.valuePtr = hb_itemPutCL(
@@ -5055,7 +5055,7 @@ static const HB_BYTE * hb_vmSwitch( const HB_BYTE * pCode, HB_USHORT casesCnt )
                   #if 0
                   fFound = hb_itemStrCmp( pItem1, pItem2, bExact );
                   #endif
-                  fFound = ( HB_SIZE ) pCode[ 1 ] - 1 == pSwitch->item.asString.length &&
+                  fFound = static_cast< HB_SIZE >( pCode[ 1 ] ) - 1 == pSwitch->item.asString.length &&
                            memcmp( pSwitch->item.asString.value, &pCode[ 2 ],
                                    pSwitch->item.asString.length ) == 0;
                }
@@ -5224,11 +5224,11 @@ static void hb_vmArrayPush( void )
       return;
    }
    else if( HB_IS_INTEGER( pIndex ) )
-      nIndex = ( HB_SIZE ) pIndex->item.asInteger.value;
+      nIndex = static_cast< HB_SIZE >( pIndex->item.asInteger.value );
    else if( HB_IS_LONG( pIndex ) )
-      nIndex = ( HB_SIZE ) pIndex->item.asLong.value;
+      nIndex = static_cast< HB_SIZE >( pIndex->item.asLong.value );
    else if( HB_IS_DOUBLE( pIndex ) )
-      nIndex = ( HB_SIZE ) pIndex->item.asDouble.value;
+      nIndex = static_cast< HB_SIZE >( pIndex->item.asDouble.value );
    else
    {
       if( hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pArray, pArray, pIndex, nullptr ) )
@@ -5313,11 +5313,11 @@ static void hb_vmArrayPushRef( void )
       return;
    }
    else if( HB_IS_INTEGER( pIndex ) )
-      nIndex = ( HB_SIZE ) pIndex->item.asInteger.value;
+      nIndex = static_cast< HB_SIZE >( pIndex->item.asInteger.value );
    else if( HB_IS_LONG( pIndex ) )
-      nIndex = ( HB_SIZE ) pIndex->item.asLong.value;
+      nIndex = static_cast< HB_SIZE >( pIndex->item.asLong.value );
    else if( HB_IS_DOUBLE( pIndex ) )
-      nIndex = ( HB_SIZE ) pIndex->item.asDouble.value;
+      nIndex = static_cast< HB_SIZE >( pIndex->item.asDouble.value );
    else if( hb_objHasOperator( pArray, HB_OO_OP_ARRAYINDEX ) )
    {
       /* create extended object index reference */
@@ -5417,11 +5417,11 @@ static void hb_vmArrayPop( void )
       return;
    }
    else if( HB_IS_INTEGER( pIndex ) )
-      nIndex = ( HB_SIZE ) pIndex->item.asInteger.value;
+      nIndex = static_cast< HB_SIZE >( pIndex->item.asInteger.value );
    else if( HB_IS_LONG( pIndex ) )
-      nIndex = ( HB_SIZE ) pIndex->item.asLong.value;
+      nIndex = static_cast< HB_SIZE >( pIndex->item.asLong.value );
    else if( HB_IS_DOUBLE( pIndex ) )
-      nIndex = ( HB_SIZE ) pIndex->item.asDouble.value;
+      nIndex = static_cast< HB_SIZE >( pIndex->item.asDouble.value );
    else
    {
       if( hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pArray, pArray, pIndex, pValue ) )

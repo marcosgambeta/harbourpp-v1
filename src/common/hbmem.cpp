@@ -77,7 +77,7 @@ void * hb_xmemcpy( void * pDestArg, const void * pSourceArg, HB_SIZE nLen )
       if( nRemaining > UINT_MAX )
       {
          iCopySize = UINT_MAX;
-         nRemaining -= ( HB_SIZE ) iCopySize;
+         nRemaining -= static_cast< HB_SIZE >( iCopySize );
       }
       else
       {
@@ -111,7 +111,7 @@ void * hb_xmemset( void * pDestArg, int iFill, HB_SIZE nLen )
       if( nRemaining > UINT_MAX )
       {
          iSetSize = UINT_MAX;
-         nRemaining -= ( HB_SIZE ) iSetSize;
+         nRemaining -= static_cast< HB_SIZE >( iSetSize );
       }
       else
       {

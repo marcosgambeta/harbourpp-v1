@@ -64,13 +64,13 @@ HB_FUNC( LEFT )
       else
       {
          HB_SIZE nText = hb_itemGetCLen( pText );
-         if( ( HB_SIZE ) nLen < nText )
+         if( static_cast< HB_SIZE >( nLen ) < nText )
          {
             PHB_CODEPAGE cdp = hb_vmCDP();
             if( HB_CDP_ISCHARIDX( cdp ) )
                nLen = hb_cdpTextPos( cdp, hb_itemGetCPtr( pText ), nText, nLen );
          }
-         if( ( HB_SIZE ) nLen >= nText )
+         if( static_cast< HB_SIZE >( nLen ) >= nText )
             hb_itemReturn( pText );
          else
             hb_retclen( hb_itemGetCPtr( pText ), nLen );

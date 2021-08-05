@@ -421,7 +421,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
          {
             case HB_FT_STRING:
             {
-               char * pStr = static_cast< char * >( hb_xgrab( ( HB_SIZE ) dbFieldInfo.uiLen + 1 ) );
+               char * pStr = static_cast< char * >( hb_xgrab( static_cast< HB_SIZE >( dbFieldInfo.uiLen ) + 1 ) );
                memset( pStr, ' ', dbFieldInfo.uiLen );
                pStr[ dbFieldInfo.uiLen ] = '\0';
 
@@ -545,7 +545,7 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
             case HB_FT_STRING:
                if( OCI_IsNull( rs, ui ) )
                {
-                  char * pStr = static_cast< char * >( hb_xgrab( ( HB_SIZE ) pField->uiLen + 1 ) );
+                  char * pStr = static_cast< char * >( hb_xgrab( static_cast< HB_SIZE >( pField->uiLen ) + 1 ) );
                   memset( pStr, ' ', pField->uiLen );
                   pStr[ pField->uiLen ] = '\0';
 
@@ -555,7 +555,7 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                {
                   const dtext * val;
                   if( ( val = OCI_GetString( rs, ui ) ) != nullptr )
-                     pItem = D_HB_ITEMPUTSTRLEN( pItem, val, ( HB_SIZE ) dtslen( val ) );  /* TODO: Pad it to pField->uiLen size with spaces? */
+                     pItem = D_HB_ITEMPUTSTRLEN( pItem, val, static_cast< HB_SIZE >( dtslen( val ) ) );  /* TODO: Pad it to pField->uiLen size with spaces? */
                }
                break;
 

@@ -952,7 +952,7 @@ static PHB_ITEM hb_memvarDebugVariable( int iScope, int iPos, const char ** pszN
       else
       {
          HB_STACK_TLS_PRELOAD
-         if( ( HB_SIZE ) iPos < hb_stackGetPrivateStack()->count )
+         if( static_cast< HB_SIZE >( iPos ) < hb_stackGetPrivateStack()->count )
          {
             PHB_DYNS pDynSym = hb_stackGetPrivateStack()->stack[ iPos ].pDynSym;
 
@@ -1611,7 +1611,7 @@ HB_FUNC( __MVRESTORE )
                   uiWidth += uiDec * 256;
                   pbyString = static_cast< HB_BYTE * >( hb_xgrab( uiWidth ) );
 
-                  if( hb_fileRead( fhnd, pbyString, uiWidth, -1 ) == ( HB_SIZE ) uiWidth )
+                  if( hb_fileRead( fhnd, pbyString, uiWidth, -1 ) == static_cast< HB_SIZE >( uiWidth ) )
                      pItem = hb_itemPutCLPtr( pItem, ( char * ) pbyString, uiWidth - 1 );
                   else
                   {

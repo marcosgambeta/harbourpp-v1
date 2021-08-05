@@ -1401,7 +1401,7 @@ int hb_fsProcessRun( const char * pszFileName,
                nLen = hb_fsWriteLarge( hStdin, pStdInBuf, nStdInLen );
             else
                nLen = hb_fsPipeWrite( hStdin, pStdInBuf, nStdInLen, nTimeOut );
-            if( nLen == ( HB_SIZE ) ( iPipeCount == 1 ? 0 : FS_ERROR ) )
+            if( nLen == static_cast< HB_SIZE >( iPipeCount == 1 ? 0 : FS_ERROR ) )
                nStdInLen = 0;
             else if( nLen > 0 )
             {
@@ -1431,7 +1431,7 @@ int hb_fsProcessRun( const char * pszFileName,
                nLen = hb_fsReadLarge( hStdout, pOutBuf + nOutBuf, nOutSize - nOutBuf );
             else
                nLen = hb_fsPipeRead( hStdout, pOutBuf + nOutBuf, nOutSize - nOutBuf, nTimeOut );
-            if( nLen == ( HB_SIZE ) ( iPipeCount == 1 ? 0 : FS_ERROR ) )
+            if( nLen == static_cast< HB_SIZE >( iPipeCount == 1 ? 0 : FS_ERROR ) )
             {
                hb_fsClose( hStdout );
                hStdout = FS_ERROR;
@@ -1458,7 +1458,7 @@ int hb_fsProcessRun( const char * pszFileName,
                nLen = hb_fsReadLarge( hStderr, pErrBuf + nErrBuf, nErrSize - nErrBuf );
             else
                nLen = hb_fsPipeRead( hStderr, pErrBuf + nErrBuf, nErrSize - nErrBuf, nTimeOut );
-            if( nLen == ( HB_SIZE ) ( iPipeCount == 1 ? 0 : FS_ERROR ) )
+            if( nLen == static_cast< HB_SIZE >( iPipeCount == 1 ? 0 : FS_ERROR ) )
             {
                hb_fsClose( hStderr );
                hStderr = FS_ERROR;

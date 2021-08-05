@@ -144,7 +144,7 @@ static void * hb_gt_def_New( PHB_GT pGT )
    hb_gt_def_BaseInit( pGT );
 
    HB_GTSELF_GETSIZE( pGT, &pGT->iHeight, &pGT->iWidth );
-   nSize = ( HB_SIZE ) pGT->iHeight * pGT->iWidth;
+   nSize = static_cast< HB_SIZE >( pGT->iHeight ) * pGT->iWidth;
 
    pGT->screenBuffer =
             static_cast< PHB_SCREENCELL >( hb_xgrab( sizeof( HB_SCREENCELL ) * nSize ) );
@@ -889,7 +889,7 @@ static void hb_gt_def_Replicate( PHB_GT pGT, int iRow, int iCol, int iColor,
 {
    if( iCol < 0 )
    {
-      if( nLen < ( HB_SIZE ) -iCol )
+      if( nLen < static_cast< HB_SIZE >( -iCol ) )
          nLen = 0;
       else
          nLen += iCol;
@@ -920,7 +920,7 @@ static void hb_gt_def_WriteAtW( PHB_GT pGT, int iRow, int iCol, const HB_WCHAR *
 
    /* Truncate the text if the cursor will end up off the right edge */
    iCol = HB_GTSELF_PUTTEXTW( pGT, iRow, iCol, HB_GTSELF_GETCOLOR( pGT ), szText,
-                              HB_MIN( nLength, ( HB_SIZE ) ( iMaxCol - iCol + 1 ) ) );
+                              HB_MIN( nLength, static_cast< HB_SIZE >( iMaxCol - iCol + 1 ) ) );
 
    /* Finally, save the new cursor position, even if off-screen */
    HB_GTSELF_SETPOS( pGT, iRow, iCol );
@@ -2145,7 +2145,7 @@ static int hb_gt_def_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions,
             ulCurrWidth = ulMaxWidth;
          if( ulCurrWidth > ulWidth )
             ulWidth = ulCurrWidth;
-         if( ( HB_SIZE ) iRows < ulLines + 4 )
+         if( static_cast< HB_SIZE >( iRows ) < ulLines + 4 )
             ulLines = iRows - 4;
          iTop = ( iRows - ulLines - 4 ) >> 1;
          iLeft = ( iCols - ulWidth - 4 ) >> 1;
@@ -2398,7 +2398,7 @@ static HB_BOOL hb_gt_def_Resize( PHB_GT pGT, int iRows, int iCols )
       if( pGT->iHeight != iRows || pGT->iWidth != iCols )
       {
          void * pBuffer = nullptr;
-         HB_SIZE nLen = ( HB_SIZE ) iRows * iCols, nIndex;
+         HB_SIZE nLen = static_cast< HB_SIZE >( iRows ) * iCols, nIndex;
          HB_SIZE nSize;
          int iFlag, i;
 

@@ -285,7 +285,7 @@ static int hb_LZSSxRead( PHB_LZSSX_COMPR pCompr )
    {
       pCompr->inBuffRead = hb_fileRead( pCompr->pInput, pCompr->inBuffer,
                                         pCompr->inBuffSize, -1 );
-      if( pCompr->inBuffRead == ( HB_SIZE ) FS_ERROR )
+      if( pCompr->inBuffRead == static_cast< HB_SIZE >( FS_ERROR ) )
          pCompr->inBuffRead = 0;
       pCompr->inBuffPos = 0;
       if( pCompr->inBuffPos < pCompr->inBuffRead )
@@ -512,7 +512,7 @@ static HB_SIZE hb_LZSSxEncode( PHB_LZSSX_COMPR pCompr )
          for( i = 0; i < item; i++ )
          {
             if( ! hb_LZSSxWrite( pCompr, itemSet[ i ] ) )
-               return ( HB_SIZE ) -1;
+               return static_cast< HB_SIZE >( -1 );
          }
          nSize += item;
          itemSet[ 0 ] = 0;
@@ -546,13 +546,13 @@ static HB_SIZE hb_LZSSxEncode( PHB_LZSSX_COMPR pCompr )
       for( i = 0; i < item; i++ )
       {
          if( ! hb_LZSSxWrite( pCompr, itemSet[ i ] ) )
-            return ( HB_SIZE ) -1;
+            return static_cast< HB_SIZE >( -1 );
       }
       nSize += item;
    }
 
    if( ! hb_LZSSxFlush( pCompr ) )
-      return ( HB_SIZE ) -1;
+      return static_cast< HB_SIZE >( -1 );
 
    return nSize;
 }
@@ -597,7 +597,7 @@ HB_BOOL hb_LZSSxCompressFile( PHB_FILE pInput, PHB_FILE pOutput, HB_SIZE * pnSiz
    hb_LZSSxExit( pCompr );
    if( pnSize )
       *pnSize = nSize;
-   return nSize != ( HB_SIZE ) -1;
+   return nSize != static_cast< HB_SIZE >( -1 );
 }
 
 HB_BOOL hb_LZSSxDecompressFile( PHB_FILE pInput, PHB_FILE pOutput )
@@ -630,7 +630,7 @@ HB_FUNC( SX_FCOMPRESS )
             /* store uncompressed file size in first 4 bytes of destination
              * file in little endian order - for SIX3 compatibility
              */
-            HB_SIZE nSize = ( HB_SIZE ) hb_fileSize( pInput );
+            HB_SIZE nSize = static_cast< HB_SIZE >( hb_fileSize( pInput ) );
             if( hb_fileSeek( pInput, 0, FS_SET ) == 0 )
             {
                HB_BYTE buf[ 4 ];

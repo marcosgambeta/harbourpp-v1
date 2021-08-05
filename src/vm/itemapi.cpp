@@ -1944,7 +1944,7 @@ PHB_ITEM hb_itemUnRefOnce( PHB_ITEM pItem )
             else if( HB_IS_STRING( pBase ) )
             {
                if( pItem->item.asEnum.offset > 0 &&
-                   ( HB_SIZE ) pItem->item.asEnum.offset <= pBase->item.asString.length )
+                   static_cast< HB_SIZE >( pItem->item.asEnum.offset ) <= pBase->item.asString.length )
                {
                   pItem->item.asEnum.valuePtr = hb_itemPutCL( nullptr,
                      pBase->item.asString.value + pItem->item.asEnum.offset - 1, 1 );
@@ -1977,7 +1977,7 @@ PHB_ITEM hb_itemUnRefOnce( PHB_ITEM pItem )
             if( pItem->item.asRefer.offset == 0 )
             {
                /* a reference to a static variable or array item */
-               if( ( HB_SIZE ) pItem->item.asRefer.value <
+               if( static_cast< HB_SIZE >( pItem->item.asRefer.value ) <
                    pItem->item.asRefer.BasePtr.array->nLen )
                {
                   pItem = pItem->item.asRefer.BasePtr.array->pItems +
@@ -1994,7 +1994,7 @@ PHB_ITEM hb_itemUnRefOnce( PHB_ITEM pItem )
                   hb_stackPop();
 
                   /* check it again - user error handler can resize the array */
-                  if( ( HB_SIZE ) pItem->item.asRefer.value <
+                  if( static_cast< HB_SIZE >( pItem->item.asRefer.value ) <
                       pItem->item.asRefer.BasePtr.array->nLen )
                   {
                      pItem = pItem->item.asRefer.BasePtr.array->pItems +
@@ -2068,7 +2068,7 @@ PHB_ITEM hb_itemUnRefWrite( PHB_ITEM pItem, PHB_ITEM pSource )
          {
             PHB_ITEM pBase = hb_itemUnRef( pItem->item.asEnum.basePtr );
             if( HB_IS_STRING( pBase ) &&
-                ( HB_SIZE ) pItem->item.asEnum.offset <= pBase->item.asString.length )
+                static_cast< HB_SIZE >( pItem->item.asEnum.offset ) <= pBase->item.asString.length )
             {
                hb_itemUnShareString( pBase );
                pBase->item.asString.value[ pItem->item.asEnum.offset - 1 ] =

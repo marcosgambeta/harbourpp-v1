@@ -289,7 +289,7 @@ static HB_BOOL hb_regex( int iRequest )
 
          case 1: /* LIKE */
             fResult = HB_REGMATCH_SO( aMatches, 0 ) == 0 &&
-                      ( HB_SIZE ) HB_REGMATCH_EO( aMatches, 0 ) == nLen;
+                      static_cast< HB_SIZE >( HB_REGMATCH_EO( aMatches, 0 ) ) == nLen;
             break;
 
          case 2: /* MATCH ( HAS ) */

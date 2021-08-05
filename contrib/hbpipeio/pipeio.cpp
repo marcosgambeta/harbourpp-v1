@@ -148,7 +148,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * data,
          timeout = pFile->timeout;
 
       nRead = hb_fsPipeRead( pFile->hPipeRD, data, nSize, timeout );
-      if( nRead == ( HB_SIZE ) -1 )
+      if( nRead == static_cast< HB_SIZE >( -1 ) )
       {
          pFile->fEof = HB_TRUE;
          nRead = 0;
@@ -161,7 +161,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * data,
 static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * data,
                             HB_SIZE nSize, HB_MAXINT timeout )
 {
-   HB_SIZE nWritten = ( HB_SIZE ) -1;
+   HB_SIZE nWritten = static_cast< HB_SIZE >( -1 );
 
    if( pFile->hPipeWR == FS_ERROR )
       hb_fsSetError( 6 );

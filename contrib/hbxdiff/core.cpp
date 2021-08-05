@@ -367,7 +367,7 @@ static int xdlt_outf( void * priv, mmbuffer_t * mb, int nbuf )
 
    for( i = 0; i < nbuf; i++ )
    {
-      hb_fsWriteLarge( hb_ptrToHandle( priv ), mb[ i ].ptr, ( HB_SIZE ) mb[ i ].size );
+      hb_fsWriteLarge( hb_ptrToHandle( priv ), mb[ i ].ptr, static_cast< HB_SIZE >( mb[ i ].size ) );
 
       if( hb_fsError() != 0 )
          return -1;
