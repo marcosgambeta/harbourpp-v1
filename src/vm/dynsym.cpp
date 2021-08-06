@@ -534,7 +534,7 @@ static PHB_DYNS hb_dynsymGetByIndex( HB_LONG lIndex )
 
    HB_DYNSYM_LOCK();
 
-   if( lIndex >= 1 && ( HB_ULONG ) lIndex <= s_uiDynSymbols )
+   if( lIndex >= 1 && static_cast< HB_ULONG >( lIndex ) <= s_uiDynSymbols )
    {
       pDynSym = s_pDynItems[ lIndex - 1 ].pDynSym;
    }

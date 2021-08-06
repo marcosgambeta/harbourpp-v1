@@ -1085,7 +1085,7 @@ HB_FUNC( ADSGETFILTER )
       }
       else
       {
-         HB_TRACE( HB_TR_DEBUG, ( "adsGetFilter() error %lu", ( HB_ULONG ) ulRetVal ) );
+         HB_TRACE( HB_TR_DEBUG, ( "adsGetFilter() error %lu", static_cast< HB_ULONG >( ulRetVal ) ) );
          hb_retc_null();
       }
 
@@ -1734,11 +1734,11 @@ HB_FUNC( ADSVERSION )
    {
       case 0:
          hb_snprintf( szVersion, sizeof( szVersion ), "%lu.%lu%c",
-                      ( HB_ULONG ) ulMajor, ( HB_ULONG ) ulMinor, ucLetter );
+                      static_cast< HB_ULONG >( ulMajor ), static_cast< HB_ULONG >( ulMinor ), ucLetter );
          break;
       case 3:
          hb_snprintf( szVersion, sizeof( szVersion ), "%s, v%lu.%lu%c",
-                      ( char * ) ucDesc, ( HB_ULONG ) ulMajor, ( HB_ULONG ) ulMinor, ucLetter );
+                      ( char * ) ucDesc, static_cast< HB_ULONG >( ulMajor ), static_cast< HB_ULONG >( ulMinor ), ucLetter );
          break;
       default:
          szVersion[ 0 ] = '\0';

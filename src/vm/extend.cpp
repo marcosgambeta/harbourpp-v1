@@ -107,7 +107,7 @@ HB_ULONG hb_parinfo( int iParam )
 
    if( iParam == 0 )
    {
-      return ( HB_ULONG ) hb_pcount();
+      return static_cast< HB_ULONG >( hb_pcount() );
    }
    else
    {
@@ -121,7 +121,7 @@ HB_ULONG hb_parinfo( int iParam )
             uiType |= HB_ITEM_TYPE( hb_itemUnRef( pItem ) );
          }
          
-         return ( HB_ULONG ) uiType;
+         return static_cast< HB_ULONG >( uiType );
       }
       else
       {
@@ -146,7 +146,7 @@ HB_SIZE hb_parinfa( int iParamNum, HB_SIZE nArrayIndex )
       }
       else
       {
-         return ( HB_ISIZ ) hb_arrayGetType( pArray, nArrayIndex );
+         return static_cast< HB_ISIZ >( hb_arrayGetType( pArray, nArrayIndex ) );
       }
    }
    else
@@ -704,11 +704,11 @@ HB_ISIZ hb_parns( int iParam )
 
       if( HB_IS_LONG( pItem ) )
       {
-         return ( HB_ISIZ ) pItem->item.asLong.value;
+         return static_cast< HB_ISIZ >( pItem->item.asLong.value );
       }
       else if( HB_IS_INTEGER( pItem ) )
       {
-         return ( HB_ISIZ ) pItem->item.asInteger.value;
+         return static_cast< HB_ISIZ >( pItem->item.asInteger.value );
       }
       else if( HB_IS_DOUBLE( pItem ) )
       {
@@ -736,11 +736,11 @@ HB_ISIZ hb_parnsdef( int iParam, HB_ISIZ nDefValue )
 
       if( HB_IS_LONG( pItem ) )
       {
-         return ( HB_ISIZ ) pItem->item.asLong.value;
+         return static_cast< HB_ISIZ >( pItem->item.asLong.value );
       }
       else if( HB_IS_INTEGER( pItem ) )
       {
-         return ( HB_ISIZ ) pItem->item.asInteger.value;
+         return static_cast< HB_ISIZ >( pItem->item.asInteger.value );
       }
       else if( HB_IS_DOUBLE( pItem ) )
       {
@@ -1433,11 +1433,11 @@ HB_ISIZ hb_parvns( int iParam, ... )
 
       if( HB_IS_LONG( pItem ) )
       {
-         return ( HB_ISIZ ) pItem->item.asLong.value;
+         return static_cast< HB_ISIZ >( pItem->item.asLong.value );
       }
       else if( HB_IS_INTEGER( pItem ) )
       {
-         return ( HB_ISIZ ) pItem->item.asInteger.value;
+         return static_cast< HB_ISIZ >( pItem->item.asInteger.value );
       }
       else if( HB_IS_DOUBLE( pItem ) )
       {

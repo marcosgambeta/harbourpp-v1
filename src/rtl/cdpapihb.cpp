@@ -363,7 +363,7 @@ HB_FUNC( HB_UTF8SUBSTR )
       char * szDest = nullptr;
       HB_SIZE nLen = hb_parclen( 1 ), nDest = 0;
       HB_ISIZ nFrom = hb_parns( 2 );
-      HB_ISIZ nCount = iPCount < 3 ? ( HB_ISIZ ) nLen : hb_parns( 3 );
+      HB_ISIZ nCount = iPCount < 3 ? static_cast< HB_ISIZ >( nLen ) : hb_parns( 3 );
 
       if( nFrom < 0 )
       {

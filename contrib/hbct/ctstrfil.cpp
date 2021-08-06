@@ -134,7 +134,7 @@ HB_FUNC( STRFILE )
    {
       hb_retns( ct_StrFile( hb_parc( 2 ), hb_parc( 1 ),
                             hb_parclen( 1 ), hb_parl( 3 ),
-                            ( HB_FOFFSET ) hb_parnint( 4 ), hb_parl( 5 ) ) );
+                            static_cast< HB_FOFFSET >( hb_parnint( 4 ) ), hb_parl( 5 ) ) );
    }
    else
       hb_retns( 0 );
@@ -149,7 +149,7 @@ HB_FUNC( FILESTR )
       if( hFile != FS_ERROR )
       {
          HB_FOFFSET nFileSize = hb_fsSeekLarge( hFile, 0, FS_END );
-         HB_FOFFSET nPos = hb_fsSeekLarge( hFile, ( HB_FOFFSET ) hb_parnint( 3 ), FS_SET );
+         HB_FOFFSET nPos = hb_fsSeekLarge( hFile, static_cast< HB_FOFFSET >( hb_parnint( 3 ) ), FS_SET );
          HB_ISIZ nLength;
          char * pcResult, * pCtrlZ;
          HB_BOOL bCtrlZ = hb_parl( 4 );
@@ -157,11 +157,11 @@ HB_FUNC( FILESTR )
          if( HB_ISNUM( 2 ) )
          {
             nLength = hb_parns( 2 );
-            if( nLength > ( HB_ISIZ ) ( nFileSize - nPos ) )
-               nLength = ( HB_ISIZ ) ( nFileSize - nPos );
+            if( nLength > static_cast< HB_ISIZ >( nFileSize - nPos ) )
+               nLength = static_cast< HB_ISIZ >( nFileSize - nPos );
          }
          else
-            nLength = ( HB_ISIZ ) ( nFileSize - nPos );
+            nLength = static_cast< HB_ISIZ >( nFileSize - nPos );
 
          pcResult = static_cast< char * >( hb_xgrab( nLength + 1 ) );
          if( nLength > 0 )
@@ -198,7 +198,7 @@ HB_FUNC( SCREENFILE )
 
       hb_retns( ct_StrFile( hb_parc( 1 ), pBuffer,
                             nSize, hb_parl( 2 ),
-                            ( HB_FOFFSET ) hb_parnint( 3 ), hb_parl( 4 ) ) );
+                            static_cast< HB_FOFFSET >( hb_parnint( 3 ) ), hb_parl( 4 ) ) );
       hb_xfree( pBuffer );
    }
    else
@@ -218,7 +218,7 @@ HB_FUNC( FILESCREEN )
          HB_SIZE nLength;
 
          if( HB_ISNUM( 2 ) )
-            hb_fsSeekLarge( hFile, ( HB_FOFFSET ) hb_parnint( 2 ), FS_SET );
+            hb_fsSeekLarge( hFile, static_cast< HB_FOFFSET >( hb_parnint( 2 ) ), FS_SET );
 
          hb_gtRectSize( 0, 0, hb_gtMaxRow(), hb_gtMaxCol(), &nSize );
          pBuffer = static_cast< char * >( hb_xgrab( nSize ) );

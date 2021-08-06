@@ -386,7 +386,7 @@ static HB_SYMCNT hb_clsBucketPos( PHB_DYNS pMsg, HB_SYMCNT uiMask )
     * HB_DYNS structure
     */
    /*
-      return ( ( HB_USHORT ) ( static_cast< HB_PTRUINT >( pMsg ) >> 4 ) & uiMask ) << BUCKETBITS;
+      return ( static_cast< HB_USHORT >( static_cast< HB_PTRUINT >( pMsg ) >> 4 ) & uiMask ) << BUCKETBITS;
     */
 
    /* Using continuous symbol numbers we are 100% sure that we will cover

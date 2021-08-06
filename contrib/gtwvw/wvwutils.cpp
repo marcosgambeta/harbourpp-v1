@@ -1721,7 +1721,7 @@ HB_FUNC( WVW_CHOOSECOLOR )
    cc.rgbResult    = HB_ISNIL( 1 ) ?  0 : static_cast< COLORREF >( hb_parnl( 1 ) );
    cc.lpCustColors = crCustClr;
 
-   cc.Flags = ( WORD ) ( HB_ISNIL( 3 ) ? CC_ANYCOLOR | CC_RGBINIT | CC_FULLOPEN : hb_parnl( 3 ) );
+   cc.Flags = static_cast< WORD >( HB_ISNIL( 3 ) ? CC_ANYCOLOR | CC_RGBINIT | CC_FULLOPEN : hb_parnl( 3 ) );
 
    if( ChooseColor( &cc ) )
       hb_retnl( cc.rgbResult );
@@ -1985,7 +1985,7 @@ HB_FUNC( WVW_SETBRUSH )
 HB_FUNC( WVW__MAKEDLGTEMPLATE )
 {
    WORD * p, * pdlgtemplate;
-   WORD   nItems = ( WORD ) hb_parvni( 1, 4 );
+   WORD   nItems = static_cast< WORD >( hb_parvni( 1, 4 ) );
    int    i, nchar;
    DWORD  lStyle;
 
@@ -2004,7 +2004,7 @@ HB_FUNC( WVW__MAKEDLGTEMPLATE )
    *p++ = LOWORD( lStyle );
    *p++ = HIWORD( lStyle );
 
-   *p++ = ( WORD ) nItems;
+   *p++ = static_cast< WORD >( nItems );
    *p++ = static_cast< short >( hb_parvni( 1, 5 ) );
    *p++ = static_cast< short >( hb_parvni( 1, 6 ) );
    *p++ = static_cast< short >( hb_parvni( 1, 7 ) );
@@ -2060,7 +2060,7 @@ HB_FUNC( WVW__MAKEDLGTEMPLATE )
       else
       {
          *p++ = 0xFFFF;
-         *p++ = ( WORD ) hb_parvni( 10, i );
+         *p++ = static_cast< WORD >( hb_parvni( 10, i ) );
       }
 
       if( hb_parinfa( 11, i ) == HB_IT_STRING )
@@ -2071,7 +2071,7 @@ HB_FUNC( WVW__MAKEDLGTEMPLATE )
       else
       {
          *p++ = 0xFFFF;
-         *p++ = ( WORD ) hb_parvni( 11, i );
+         *p++ = static_cast< WORD >( hb_parvni( 11, i ) );
       }
 
       *p++ = 0x00;
@@ -2186,7 +2186,7 @@ HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
 
             case 1:
                hDlg = CreateDialog( hb_getWvwData()->hInstance,
-                                    MAKEINTRESOURCE( ( WORD ) hb_parni( 1 ) ),
+                                    MAKEINTRESOURCE( static_cast< WORD >( hb_parni( 1 ) ) ),
                                     hb_parl( 2 ) ? p->s_pWindows[ 0 ]->hWnd : nullptr,
                                     ( DLGPROC ) hb_gt_wvwDlgProcMLess );
                break;
@@ -2289,7 +2289,7 @@ HB_FUNC( WVW_CREATEDIALOGMODAL )
 
       case 1:
          iResult = DialogBoxParam( hb_getWvwData()->hInstance,
-                                   MAKEINTRESOURCE( ( WORD ) hb_parni( 1 ) ),
+                                   MAKEINTRESOURCE( static_cast< WORD >( hb_parni( 1 ) ) ),
                                    hParent,
                                    ( DLGPROC ) hb_gt_wvwDlgProcModal,
                                    static_cast< LPARAM >( static_cast< DWORD >( iIndex ) ) + 1 );

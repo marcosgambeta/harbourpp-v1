@@ -218,7 +218,7 @@ static void buff_align( PFT_DISPC dispc )
        */
 
       if( dispc->buffoffset + dispc->buffbot > dispc->fsize )
-         dispc->buffbot = ( HB_ISIZ ) ( dispc->fsize - dispc->buffoffset );
+         dispc->buffbot = static_cast< HB_ISIZ >( dispc->fsize - dispc->buffoffset );
 
       i = dispc->buffbot;               /* point the end of the buffer to a valid */
       /* complete text line.                    */

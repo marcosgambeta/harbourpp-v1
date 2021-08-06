@@ -74,7 +74,7 @@ static HB_USHORT s_uiRddId;
 #define HB_INTCAST     int
 
 #define hb_nsxKeyFree( K )                hb_xfree( K )
-#define hb_nsxFileOffset( I, B )          ( ( HB_FOFFSET ) ( B ) << ( ( I )->LargeFile ? NSX_PAGELEN_BITS : 0 ) )
+#define hb_nsxFileOffset( I, B )          ( static_cast< HB_FOFFSET >( B ) << ( ( I )->LargeFile ? NSX_PAGELEN_BITS : 0 ) )
 #define hb_nsxGetRecSize( r )             ( ( r ) < 0x10000 ? 2 : ( ( r ) < 0x1000000 ? 3 : 4 ) )
 #define hb_nsxPageBuffer( p )             ( ( p )->data.buffer )
 #define hb_nsxIsLeaf( p )                 ( ( ( p )->data.buffer[ 0 ] & NSX_LEAFPAGE ) != 0 )
@@ -1085,7 +1085,7 @@ static void hb_nsxTagRefreshScope( LPTAGINFO pTag )
  */
 static HB_BOOL hb_nsxCheckRecordScope( NSXAREAP pArea, HB_ULONG ulRec )
 {
-   HB_LONG lRecNo = ( HB_LONG ) ulRec;
+   HB_LONG lRecNo = static_cast< HB_LONG >( ulRec );
 
    if( SELF_COUNTSCOPE( &pArea->dbfarea.area, nullptr, &lRecNo ) == HB_SUCCESS && lRecNo == 0 )
    {
@@ -1608,7 +1608,7 @@ static HB_ULONG hb_nsxPageAlloc( LPNSXINDEX pIndex )
    {
       HB_FOFFSET fOffset;
       fOffset = hb_fileSize( pIndex->pFile );
-      pIndex->FileSize = ( HB_ULONG )
+      pIndex->FileSize = static_cast< HB_ULONG >
                      ( fOffset >> ( pIndex->LargeFile ? NSX_PAGELEN_BITS : 0 ) );
    }
    ulPage = pIndex->FileSize;
@@ -2636,7 +2636,7 @@ static HB_BOOL hb_nsxTagNextKey( LPTAGINFO pTag )
             pPage = hb_nsxPageLoad( pTag, pTag->stack[ iLevel ].page );
             if( ! pPage )
                return HB_FALSE;
-            if( pPage->uiKeys && pTag->stack[ iLevel ].ikey < ( HB_SHORT ) pPage->uiKeys )
+            if( pPage->uiKeys && pTag->stack[ iLevel ].ikey < static_cast< HB_SHORT >( pPage->uiKeys ) )
             {
                if( ! pTag->stack[ iLevel ].value )
                   pTag->stack[ iLevel ].value = static_cast< HB_UCHAR * >( hb_xgrab( pTag->KeyLength ) );
@@ -3248,7 +3248,7 @@ static HB_BOOL hb_nsxTagKeyAdd( LPTAGINFO pTag, LPKEYINFO pKey )
       pPage = hb_nsxPageBottomMove( pTag, ulPage );
       if( ! pPage )
          return HB_FALSE;
-      if( pTag->stack[ pTag->stackLevel - 1 ].ikey < ( HB_SHORT ) pPage->uiKeys )
+      if( pTag->stack[ pTag->stackLevel - 1 ].ikey < static_cast< HB_SHORT >( pPage->uiKeys ) )
          pTag->stack[ pTag->stackLevel - 1 ].ikey++;
    }
 
@@ -4204,14 +4204,14 @@ static HB_BOOL hb_nsxOrdKeyGoto( LPTAGINFO pTag, HB_ULONG ulKeyNo )
          {
             if( hb_nsxIsLeaf( pPage ) )
             {
-               if( ( HB_ULONG ) iKey < ulKeyNo )
+               if( static_cast< HB_ULONG >( iKey ) < ulKeyNo )
                {
                   --iLevel;
                   ulKeyNo -= iKey;
                }
                else
                {
-                  pTag->stack[ iLevel ].ikey -= ( HB_SHORT ) ulKeyNo;
+                  pTag->stack[ iLevel ].ikey -= static_cast< HB_SHORT >( ulKeyNo );
                   ulKeyNo = 0;
                }
             }
@@ -4260,14 +4260,14 @@ static HB_BOOL hb_nsxOrdKeyGoto( LPTAGINFO pTag, HB_ULONG ulKeyNo )
             else
             {
                iKey = pPage->uiKeys - iKey - 1;
-               if( ( HB_ULONG ) iKey < ulKeyNo )
+               if( static_cast< HB_ULONG >( iKey ) < ulKeyNo )
                {
                   --iLevel;
                   ulKeyNo -= iKey;
                }
                else
                {
-                  pTag->stack[ iLevel ].ikey += ( HB_SHORT ) ulKeyNo;
+                  pTag->stack[ iLevel ].ikey += static_cast< HB_SHORT >( ulKeyNo );
                   ulKeyNo = 0;
                }
             }
@@ -4984,7 +4984,7 @@ static HB_ULONG hb_nsxOrdScopeEval( LPTAGINFO pTag,
                                     HB_EVALSCOPE_FUNC pFunc, void * pParam,
                                     PHB_ITEM pItemLo, PHB_ITEM pItemHi )
 {
-   HB_ULONG ulCount = 0, ulLen = ( HB_ULONG ) pTag->KeyLength;
+   HB_ULONG ulCount = 0, ulLen = static_cast< HB_ULONG >( pTag->KeyLength );
    PHB_ITEM pItemTop = hb_itemNew( nullptr ), pItemBottom = hb_itemNew( nullptr );
    HB_BOOL fDescend = pTag->fUsrDescend;
 
@@ -5385,7 +5385,7 @@ static HB_BOOL hb_nsxSortKeyGet( LPNSXSORTINFO pSort, HB_UCHAR ** pKeyVal, HB_UL
          else
             r = m - 1;
       }
-      if( l > ( HB_LONG ) pSort->ulFirst + 1 )
+      if( l > static_cast< HB_LONG >( pSort->ulFirst ) + 1 )
       {
          ulPage = pSort->pSortedPages[ pSort->ulFirst ];
          for( r = pSort->ulFirst + 1; r < l; r++ )
@@ -5450,8 +5450,8 @@ static LPNSXSORTINFO hb_nsxSortNew( LPTAGINFO pTag, HB_ULONG ulRecCount )
 
    pSort = static_cast< LPNSXSORTINFO >( hb_xgrabz( sizeof( NSXSORTINFO ) ) );
 
-   ulMin = ( HB_ULONG ) ceil( sqrt( static_cast< double >( ulRecCount ) ) );
-   ulMax = ( ( HB_ULONG ) ceil( sqrt( static_cast< double >( ulRecCount ) / ( iLen + 4 ) ) ) ) << 7;
+   ulMin = static_cast< HB_ULONG >( ceil( sqrt( static_cast< double >( ulRecCount ) ) ) );
+   ulMax = ( static_cast< HB_ULONG >( ceil( sqrt( static_cast< double >( ulRecCount ) / ( iLen + 4 ) ) ) ) ) << 7;
    /*
     * this effectively increase allocated memory buffer for very large files
     * moving the maximum to: 267'443'712 for 4'294'967'295 records and 250
@@ -5947,17 +5947,17 @@ static HB_ERRCODE hb_nsxTagCreate( LPTAGINFO pTag, HB_BOOL fReindex )
             {
                HB_SIZE nSize;
 
-               if( ulRecCount - ulRecNo >= ( HB_ULONG ) iRecBufSize )
+               if( ulRecCount - ulRecNo >= static_cast< HB_ULONG >( iRecBufSize ) )
                   iRec = iRecBufSize;
                else
                   iRec = ulRecCount - ulRecNo + 1;
-               if( ulNextCount > 0 && ulNextCount < ( HB_ULONG ) iRec )
+               if( ulNextCount > 0 && ulNextCount < static_cast< HB_ULONG >( iRec ) )
                   iRec = static_cast< int >( ulNextCount );
                nSize = static_cast< HB_SIZE >( iRec ) * pArea->dbfarea.uiRecordLen;
                if( hb_fileReadAt( pArea->dbfarea.pDataFile, pSort->pBuffIO, nSize,
-                                  ( HB_FOFFSET ) pArea->dbfarea.uiHeaderLen +
-                                  ( HB_FOFFSET ) ( ulRecNo - 1 ) *
-                                  ( HB_FOFFSET ) pArea->dbfarea.uiRecordLen ) != nSize )
+                                  static_cast< HB_FOFFSET >( pArea->dbfarea.uiHeaderLen ) +
+                                  static_cast< HB_FOFFSET >( ulRecNo - 1 ) *
+                                  static_cast< HB_FOFFSET >( pArea->dbfarea.uiRecordLen ) ) != nSize )
                {
                   hb_nsxErrorRT( pTag->pIndex->pArea, EG_READ, EDBF_READ,
                                  pTag->pIndex->IndexName, hb_fsError(), 0, nullptr );
@@ -7701,7 +7701,7 @@ static HB_ERRCODE hb_nsxOrderInfo( NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
                {
                   HB_ULONG ulRecCount, ulRecNo;
                   SELF_RECCOUNT( &pArea->dbfarea.area, &ulRecCount );
-                  ulRecNo = ( HB_ULONG ) dPos * ulRecCount + 1;
+                  ulRecNo = static_cast< HB_ULONG >( dPos ) * ulRecCount + 1;
                   if( ulRecNo >= ulRecCount )
                      ulRecNo = ulRecCount;
                   if( SELF_GOTO( &pArea->dbfarea.area, ulRecNo ) == HB_SUCCESS &&

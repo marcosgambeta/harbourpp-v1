@@ -1033,12 +1033,12 @@ long hb_timeStampUTCOffset( int iYear, int iMonth, int iDay,
       {
          SYSTEMTIME lt, st;
 
-         lt.wYear         = ( WORD ) iYear;
-         lt.wMonth        = ( WORD ) iMonth;
-         lt.wDay          = ( WORD ) iDay;
-         lt.wHour         = ( WORD ) iHour;
-         lt.wMinute       = ( WORD ) iMinutes;
-         lt.wSecond       = ( WORD ) iSeconds;
+         lt.wYear         = static_cast< WORD >( iYear );
+         lt.wMonth        = static_cast< WORD >( iMonth );
+         lt.wDay          = static_cast< WORD >( iDay );
+         lt.wHour         = static_cast< WORD >( iHour );
+         lt.wMinute       = static_cast< WORD >( iMinutes );
+         lt.wSecond       = static_cast< WORD >( iSeconds );
          lt.wMilliseconds = 0;
          lt.wDayOfWeek    = 0;
 

@@ -154,7 +154,7 @@ HB_FUNC( WVW_SBADDPART )
       return;
    }
 
-   displayFlags = HB_ISNIL( 4 ) ? 0 : ( WORD ) hb_parnl( 4 );
+   displayFlags = HB_ISNIL( 4 ) ? 0 : static_cast< WORD >( hb_parnl( 4 ) );
    lResetParts  = ! HB_ISNIL( 5 ) && hb_parl( 5 );
    usWidth      = HB_ISNIL( 3 ) || hb_parni( 3 ) <= 0 ? 5 * WVW_SPACE_BETWEEN_PARTS : static_cast< USHORT >( hb_parni( 3 ) );
 

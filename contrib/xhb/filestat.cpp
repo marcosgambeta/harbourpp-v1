@@ -169,7 +169,7 @@ HB_FUNC( FILESTATS )
          else if( S_ISREG( statbuf.st_mode ) && ushbAttr == 0 )
             ushbAttr |= HB_FA_ARCHIVE;
 
-         llSize = ( HB_FOFFSET ) statbuf.st_size;
+         llSize = static_cast< HB_FOFFSET >( statbuf.st_size );
 
          ftime = statbuf.st_mtime;
 #if defined( HB_HAS_LOCALTIME_R )
@@ -223,7 +223,7 @@ HB_FUNC( FILESTATS )
             FindClose( hFind );
 
             /* get file times and work them out */
-            llSize = ( HB_FOFFSET ) ffind.nFileSizeLow + ( ( HB_FOFFSET ) ffind.nFileSizeHigh << 32 );
+            llSize = static_cast< HB_FOFFSET >( ffind.nFileSizeLow ) + ( static_cast< HB_FOFFSET >( ffind.nFileSizeHigh ) << 32 );
 
             if( FileTimeToLocalFileTime( &ffind.ftCreationTime, &filetime ) &&
                 FileTimeToSystemTime( &filetime, &time ) )
@@ -263,7 +263,7 @@ HB_FUNC( FILESTATS )
       if( findinfo )
       {
          hb_fsAttrDecode( findinfo->attr, szAttr );
-         llSize = ( HB_FOFFSET ) findinfo->size;
+         llSize = static_cast< HB_FOFFSET >( findinfo->size );
          lcDate = findinfo->lDate;
          lcTime = ( findinfo->szTime[ 0 ] - '0' ) * 36000 +
                   ( findinfo->szTime[ 1 ] - '0' ) * 3600 +

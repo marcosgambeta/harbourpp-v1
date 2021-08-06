@@ -1336,7 +1336,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 
 #ifndef HB_NO_PROFILER
    if( hb_bProfiler )
-      ulPastClock = ( HB_ULONG ) clock();
+      ulPastClock = static_cast< HB_ULONG >( clock() );
 #endif
 
    for( ;; )
@@ -1344,7 +1344,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 #ifndef HB_NO_PROFILER
       if( hb_bProfiler )
       {
-         HB_ULONG ulActualClock = ( HB_ULONG ) clock();
+         HB_ULONG ulActualClock = static_cast< HB_ULONG >( clock() );
 
          hb_ulOpcodesTime[ ulLastOpcode ] += ( ulActualClock - ulPastClock );
          ulPastClock = ulActualClock;
@@ -1870,7 +1870,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
          {
             HB_USHORT uiCount = HB_PCODE_MKUSHORT( &pCode[ 1 ] );
             hb_vmInitThreadStatics( uiCount, &pCode[ 3 ] );
-            pCode += 3 + ( ( HB_ULONG ) uiCount << 1 );
+            pCode += 3 + ( static_cast< HB_ULONG >( uiCount ) << 1 );
             break;
          }
 
@@ -5523,11 +5523,11 @@ static HB_BOOL hb_vmArrayNew( PHB_ITEM pArray, HB_USHORT uiDimension )
 
    /* use the proper type of number of elements */
    if( HB_IS_INTEGER( pDim ) )
-      nElements = ( HB_ISIZ ) pDim->item.asInteger.value;
+      nElements = static_cast< HB_ISIZ >( pDim->item.asInteger.value );
    else if( HB_IS_LONG( pDim ) )
-      nElements = ( HB_ISIZ ) pDim->item.asLong.value;
+      nElements = static_cast< HB_ISIZ >( pDim->item.asLong.value );
    else if( HB_IS_DOUBLE( pDim ) )
-      nElements = ( HB_ISIZ ) pDim->item.asDouble.value;
+      nElements = static_cast< HB_ISIZ >( pDim->item.asDouble.value );
    else
       /* NOTE: Clipper creates empty array if non-numeric value is
        * specified as dimension and stops further processing.
@@ -5948,7 +5948,7 @@ void hb_vmProc( HB_USHORT uiParams )
 
 #ifndef HB_NO_PROFILER
    if( bProfiler )
-      ulClock = ( HB_ULONG ) clock();
+      ulClock = static_cast< HB_ULONG >( clock() );
 #endif
 
    /* Poll the console keyboard */
@@ -6010,7 +6010,7 @@ void hb_vmDo( HB_USHORT uiParams )
 
 #ifndef HB_NO_PROFILER
    if( bProfiler )
-      ulClock = ( HB_ULONG ) clock();
+      ulClock = static_cast< HB_ULONG >( clock() );
 #endif
 
    /* Poll the console keyboard */
@@ -6101,7 +6101,7 @@ void hb_vmSend( HB_USHORT uiParams )
 
 #ifndef HB_NO_PROFILER
    if( bProfiler )
-      ulClock = ( HB_ULONG ) clock();
+      ulClock = static_cast< HB_ULONG >( clock() );
 #endif
 
    /* Poll the console keyboard */
@@ -6177,7 +6177,7 @@ void hb_vmEval( HB_USHORT uiParams )
 
 #ifndef HB_NO_PROFILER
    if( bProfiler )
-      ulClock = ( HB_ULONG ) clock();
+      ulClock = static_cast< HB_ULONG >( clock() );
 #endif
 
    hb_stackNewFrame( &sStackState, uiParams );
@@ -10282,7 +10282,7 @@ HB_BOOL hb_xvmEqualInt( HB_LONG lValue )
    pItem = hb_stackItemFromTop( -1 );
    if( HB_IS_INTEGER( pItem ) )
    {
-      pItem->item.asLogical.value = ( HB_LONG ) pItem->item.asInteger.value == lValue;
+      pItem->item.asLogical.value = static_cast< HB_LONG >( pItem->item.asInteger.value ) == lValue;
       pItem->type = HB_IT_LOGICAL;
    }
    else if( HB_IS_LONG( pItem ) )
@@ -10340,7 +10340,7 @@ HB_BOOL hb_xvmEqualIntIs( HB_LONG lValue, HB_BOOL * pfValue )
    pItem = hb_stackItemFromTop( -1 );
    if( HB_IS_INTEGER( pItem ) )
    {
-      *pfValue = ( HB_LONG ) pItem->item.asInteger.value == lValue;
+      *pfValue = static_cast< HB_LONG >( pItem->item.asInteger.value ) == lValue;
       hb_stackDec();
    }
    else if( HB_IS_LONG( pItem ) )
@@ -10411,7 +10411,7 @@ HB_BOOL hb_xvmNotEqualInt( HB_LONG lValue )
    pItem = hb_stackItemFromTop( -1 );
    if( HB_IS_INTEGER( pItem ) )
    {
-      pItem->item.asLogical.value = ( HB_LONG ) pItem->item.asInteger.value != lValue;
+      pItem->item.asLogical.value = static_cast< HB_LONG >( pItem->item.asInteger.value ) != lValue;
       pItem->type = HB_IT_LOGICAL;
    }
    else if( HB_IS_LONG( pItem ) )
@@ -10469,7 +10469,7 @@ HB_BOOL hb_xvmNotEqualIntIs( HB_LONG lValue, HB_BOOL * pfValue )
    pItem = hb_stackItemFromTop( -1 );
    if( HB_IS_INTEGER( pItem ) )
    {
-      *pfValue = ( HB_LONG ) pItem->item.asInteger.value != lValue;
+      *pfValue = static_cast< HB_LONG >( pItem->item.asInteger.value ) != lValue;
       hb_stackDec();
    }
    else if( HB_IS_LONG( pItem ) )
@@ -10540,7 +10540,7 @@ HB_BOOL hb_xvmLessThenInt( HB_LONG lValue )
    pItem = hb_stackItemFromTop( -1 );
    if( HB_IS_INTEGER( pItem ) )
    {
-      pItem->item.asLogical.value = ( HB_LONG ) pItem->item.asInteger.value < lValue;
+      pItem->item.asLogical.value = static_cast< HB_LONG >( pItem->item.asInteger.value ) < lValue;
       pItem->type = HB_IT_LOGICAL;
    }
    else if( HB_IS_LONG( pItem ) )
@@ -10593,7 +10593,7 @@ HB_BOOL hb_xvmLessThenIntIs( HB_LONG lValue, HB_BOOL * pfValue )
    pItem = hb_stackItemFromTop( -1 );
    if( HB_IS_INTEGER( pItem ) )
    {
-      *pfValue = ( HB_LONG ) pItem->item.asInteger.value < lValue;
+      *pfValue = static_cast< HB_LONG >( pItem->item.asInteger.value ) < lValue;
       hb_stackDec();
    }
    else if( HB_IS_LONG( pItem ) )
@@ -10659,7 +10659,7 @@ HB_BOOL hb_xvmLessEqualThenInt( HB_LONG lValue )
    pItem = hb_stackItemFromTop( -1 );
    if( HB_IS_INTEGER( pItem ) )
    {
-      pItem->item.asLogical.value = ( HB_LONG ) pItem->item.asInteger.value <= lValue;
+      pItem->item.asLogical.value = static_cast< HB_LONG >( pItem->item.asInteger.value ) <= lValue;
       pItem->type = HB_IT_LOGICAL;
    }
    else if( HB_IS_LONG( pItem ) )
@@ -10712,7 +10712,7 @@ HB_BOOL hb_xvmLessEqualThenIntIs( HB_LONG lValue, HB_BOOL * pfValue )
    pItem = hb_stackItemFromTop( -1 );
    if( HB_IS_INTEGER( pItem ) )
    {
-      *pfValue = ( HB_LONG ) pItem->item.asInteger.value <= lValue;
+      *pfValue = static_cast< HB_LONG >( pItem->item.asInteger.value ) <= lValue;
       hb_stackDec();
    }
    else if( HB_IS_LONG( pItem ) )
@@ -10778,7 +10778,7 @@ HB_BOOL hb_xvmGreaterThenInt( HB_LONG lValue )
    pItem = hb_stackItemFromTop( -1 );
    if( HB_IS_INTEGER( pItem ) )
    {
-      pItem->item.asLogical.value = ( HB_LONG ) pItem->item.asInteger.value > lValue;
+      pItem->item.asLogical.value = static_cast< HB_LONG >( pItem->item.asInteger.value ) > lValue;
       pItem->type = HB_IT_LOGICAL;
    }
    else if( HB_IS_LONG( pItem ) )
@@ -10831,7 +10831,7 @@ HB_BOOL hb_xvmGreaterThenIntIs( HB_LONG lValue, HB_BOOL * pfValue )
    pItem = hb_stackItemFromTop( -1 );
    if( HB_IS_INTEGER( pItem ) )
    {
-      *pfValue = ( HB_LONG ) pItem->item.asInteger.value > lValue;
+      *pfValue = static_cast< HB_LONG >( pItem->item.asInteger.value ) > lValue;
       hb_stackDec();
    }
    else if( HB_IS_LONG( pItem ) )
@@ -10897,7 +10897,7 @@ HB_BOOL hb_xvmGreaterEqualThenInt( HB_LONG lValue )
    pItem = hb_stackItemFromTop( -1 );
    if( HB_IS_INTEGER( pItem ) )
    {
-      pItem->item.asLogical.value = ( HB_LONG ) pItem->item.asInteger.value >= lValue;
+      pItem->item.asLogical.value = static_cast< HB_LONG >( pItem->item.asInteger.value ) >= lValue;
       pItem->type = HB_IT_LOGICAL;
    }
    else if( HB_IS_LONG( pItem ) )
@@ -10950,7 +10950,7 @@ HB_BOOL hb_xvmGreaterEqualThenIntIs( HB_LONG lValue, HB_BOOL * pfValue )
    pItem = hb_stackItemFromTop( -1 );
    if( HB_IS_INTEGER( pItem ) )
    {
-      *pfValue = ( HB_LONG ) pItem->item.asInteger.value >= lValue;
+      *pfValue = static_cast< HB_LONG >( pItem->item.asInteger.value ) >= lValue;
       hb_stackDec();
    }
    else if( HB_IS_LONG( pItem ) )

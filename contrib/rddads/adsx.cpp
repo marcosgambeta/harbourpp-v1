@@ -276,7 +276,7 @@ static int mixQSortCompare( PMIXKEY p1, PMIXKEY p2, HB_USHORT uiLen, PHB_CODEPAG
 
    if( pCodepage )
    {
-      i = hb_cdpcmp( ( const char * ) p1->val, ( HB_ULONG ) uiLen, ( const char * ) p2->val, ( HB_ULONG ) uiLen, pCodepage, 0 );
+      i = hb_cdpcmp( ( const char * ) p1->val, static_cast< HB_ULONG >( uiLen ), ( const char * ) p2->val, static_cast< HB_ULONG >( uiLen ), pCodepage, 0 );
    }
    else
       i = memcmp( p1->val, p2->val, uiLen );
@@ -605,7 +605,7 @@ static PMIXUPDATE mixUpdateCreate( ADSXAREAP pArea )
       PMIXKEY  pKey = mixKeyEval( pTag, pArea );
       HB_ULONG ulKeyPos;
 
-      pUpdate[ iTag ] = mixFindKey( pTag, pKey, &ulKeyPos ) ? ulKeyPos : ( HB_ULONG ) -1;
+      pUpdate[ iTag ] = mixFindKey( pTag, pKey, &ulKeyPos ) ? ulKeyPos : static_cast< HB_ULONG >( -1 );
       mixKeyFree( pKey );
 
       pTag = pTag->pNext;
@@ -633,7 +633,7 @@ static void mixUpdateDestroy( ADSXAREAP pArea, PMIXUPDATE pUpdate, int fUpdate )
    while( pTag )
    {
       HB_BOOL bFor = pTag->pForItem == nullptr || mixEvalCond( pTag->pForItem, pArea );
-      if( pUpdate[ iTag ] == ( HB_ULONG ) -1 )
+      if( pUpdate[ iTag ] == static_cast< HB_ULONG >( -1 ) )
       {
          if( bFor )
          {
@@ -772,7 +772,7 @@ static HB_ERRCODE adsxSeek( ADSXAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, H
 
    /* TODO: pKey type validation, EG_DATATYPE runtime error */
    uiLen = pArea->pTagCurrent->uiLen;
-   pMixKey = mixKeyNew( pKey, bFindLast ? ( HB_ULONG ) ( -1 ) : 0, pArea->pTagCurrent->bType, uiLen );
+   pMixKey = mixKeyNew( pKey, bFindLast ? static_cast< HB_ULONG >( -1 ) : 0, pArea->pTagCurrent->bType, uiLen );
 
    if( pArea->pTagCurrent->bType == 'C' )
    {
@@ -853,8 +853,8 @@ static HB_ERRCODE adsxSkip( ADSXAREAP pArea, HB_LONG lToSkip )
       pKey = mixKeyEval( pArea->pTagCurrent, pArea );
 
       if( mixFindKey( pArea->pTagCurrent, pKey, &ulKeyPos ) &&
-          pArea->pTagCurrent->ulRecCount > ( HB_ULONG ) lToSkip &&
-          ulKeyPos < pArea->pTagCurrent->ulRecCount - ( HB_ULONG ) lToSkip )
+          pArea->pTagCurrent->ulRecCount > static_cast< HB_ULONG >( lToSkip ) &&
+          ulKeyPos < pArea->pTagCurrent->ulRecCount - static_cast< HB_ULONG >( lToSkip ) )
       {
          if( SELF_GOTO( &pArea->adsarea.area, pArea->pTagCurrent->pKeys[ ulKeyPos + lToSkip ]->rec ) == HB_FAILURE )
             errCode = HB_FAILURE;
@@ -888,8 +888,8 @@ static HB_ERRCODE adsxSkip( ADSXAREAP pArea, HB_LONG lToSkip )
       pKey = mixKeyEval( pArea->pTagCurrent, pArea );
 
       if( mixFindKey( pArea->pTagCurrent, pKey, &ulKeyPos ) &&
-          pArea->pTagCurrent->ulRecCount >= ( HB_ULONG ) ( -lToSkip ) &&
-          ulKeyPos >= ( HB_ULONG ) ( -lToSkip ) )
+          pArea->pTagCurrent->ulRecCount >= static_cast< HB_ULONG >( -lToSkip ) &&
+          ulKeyPos >= static_cast< HB_ULONG >( -lToSkip ) )
       {
          if( SELF_GOTO( &pArea->adsarea.area, pArea->pTagCurrent->pKeys[ ulKeyPos + lToSkip ]->rec ) == HB_FAILURE )
             errCode = HB_FAILURE;
@@ -1017,7 +1017,7 @@ static HB_ERRCODE adsxSysName( ADSXAREAP pArea, HB_BYTE * pBuffer )
       u32RetVal = AdsGetTableType( pArea->adsarea.hTable, &u16TableType );
       if( u32RetVal != AE_SUCCESS )
       {
-         HB_TRACE( HB_TR_DEBUG, ( "Error in adsxSysName: %lu  pArea->adsarea.hTable %p", ( HB_ULONG ) u32RetVal, ( void * ) static_cast< HB_PTRUINT >( pArea->adsarea.hTable ) ) );
+         HB_TRACE( HB_TR_DEBUG, ( "Error in adsxSysName: %lu  pArea->adsarea.hTable %p", static_cast< HB_ULONG >( u32RetVal ), ( void * ) static_cast< HB_PTRUINT >( pArea->adsarea.hTable ) ) );
          u16TableType = ( UNSIGNED16 ) pArea->adsarea.iFileType;
       }
    }
@@ -1527,7 +1527,7 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          {
             HB_ULONG ulPos;
 
-            ulPos = ( HB_ULONG ) ( hb_itemGetND( pOrderInfo->itmNewVal ) * static_cast< double >( pTag->ulRecCount ) );
+            ulPos = static_cast< HB_ULONG >( hb_itemGetND( pOrderInfo->itmNewVal ) * static_cast< double >( pTag->ulRecCount ) );
 
             if( ulPos > 0 && ulPos <= pTag->ulRecCount )
                SELF_GOTO( &pArea->adsarea.area, pTag->pKeys[ ulPos - 1 ]->rec );

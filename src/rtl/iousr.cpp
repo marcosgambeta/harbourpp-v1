@@ -299,8 +299,8 @@ static HB_BOOL s_fileTimeGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, l
 
    s_pushMethod( pIO, IOUSR_TIMEGET );
    hb_vmPushString( pszFileName, strlen( pszFileName ) );
-   hb_xvmPushLocalByRef( ( HB_SHORT ) iOffset );
-   hb_xvmPushLocalByRef( ( HB_SHORT ) ( iOffset + 1 ) );
+   hb_xvmPushLocalByRef( static_cast< HB_SHORT >( iOffset ) );
+   hb_xvmPushLocalByRef( static_cast< HB_SHORT >( iOffset + 1 ) );
    hb_vmDo( 3 );
 
    fResult = hb_parl( -1 );
@@ -339,7 +339,7 @@ static HB_BOOL s_fileAttrGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, H
 
    s_pushMethod( pIO, IOUSR_ATTRGET );
    hb_vmPushString( pszFileName, strlen( pszFileName ) );
-   hb_xvmPushLocalByRef( ( HB_SHORT ) iOffset );
+   hb_xvmPushLocalByRef( static_cast< HB_SHORT >( iOffset ) );
    hb_vmDo( 2 );
 
    fResult = hb_parl( -1 );
@@ -484,7 +484,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * data,
 
    s_pushMethod( pIO, IOUSR_READ );
    hb_vmPush( pFile->pFileItm );
-   hb_xvmPushLocalByRef( ( HB_SHORT ) iOffset );
+   hb_xvmPushLocalByRef( static_cast< HB_SHORT >( iOffset ) );
    hb_vmPushSize( nSize );
    hb_vmPushNumInt( timeout );
    hb_vmDo( 4 );
@@ -530,7 +530,7 @@ static HB_SIZE s_fileReadAt( PHB_FILE pFile, void * buffer,
 
    s_pushMethod( pIO, IOUSR_READAT );
    hb_vmPush( pFile->pFileItm );
-   hb_xvmPushLocalByRef( ( HB_SHORT ) iOffset );
+   hb_xvmPushLocalByRef( static_cast< HB_SHORT >( iOffset ) );
    hb_vmPushSize( nSize );
    hb_vmPushNumInt( static_cast< HB_MAXINT >( nOffset ) );
    hb_vmDo( 4 );
@@ -586,7 +586,7 @@ static HB_FOFFSET s_fileSeek( PHB_FILE pFile, HB_FOFFSET nOffset,
    hb_vmPushInteger( uiFlags );
    hb_vmDo( 3 );
 
-   return ( HB_FOFFSET ) hb_parnint( -1 );
+   return static_cast< HB_FOFFSET >( hb_parnint( -1 ) );
 }
 
 static HB_FOFFSET s_fileSize( PHB_FILE pFile )
@@ -597,7 +597,7 @@ static HB_FOFFSET s_fileSize( PHB_FILE pFile )
    hb_vmPush( pFile->pFileItm );
    hb_vmDo( 1 );
 
-   return ( HB_FOFFSET ) hb_parnint( -1 );
+   return static_cast< HB_FOFFSET >( hb_parnint( -1 ) );
 }
 
 static HB_BOOL s_fileEof( PHB_FILE pFile )

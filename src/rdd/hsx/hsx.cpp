@@ -649,7 +649,7 @@ static int hb_hsxEval( int iHandle, PHB_ITEM pExpr, HB_BYTE * pKey, HB_BOOL * fD
 
 static void hb_hsxGetRecCount( LPHSXINFO pHSX )
 {
-   pHSX->ulRecCount = ( HB_ULONG ) ( ( hb_fileSize( pHSX->pFile ) -
+   pHSX->ulRecCount = static_cast< HB_ULONG >( ( hb_fileSize( pHSX->pFile ) -
                                        HSXHEADER_LEN ) / pHSX->uiRecordSize );
 }
 
@@ -700,9 +700,9 @@ static int hb_hsxFlush( int iHandle )
       HB_FOFFSET fOffset;
       HB_SIZE nSize;
 
-      fOffset = ( HB_FOFFSET ) HSXHEADER_LEN +
-                ( HB_FOFFSET ) ( pHSX->ulFirstRec - 1 ) *
-                ( HB_FOFFSET ) pHSX->uiRecordSize;
+      fOffset = static_cast< HB_FOFFSET >( HSXHEADER_LEN ) +
+                static_cast< HB_FOFFSET >( pHSX->ulFirstRec - 1 ) *
+                static_cast< HB_FOFFSET >( pHSX->uiRecordSize );
       nSize = pHSX->ulBufRec * pHSX->uiRecordSize;
 
       if( hb_fileWriteAt( pHSX->pFile, pHSX->pBuffer, nSize, fOffset ) != nSize )
@@ -798,9 +798,9 @@ static int hb_hsxRead( int iHandle, HB_ULONG ulRecord, HB_BYTE ** pRecPtr )
          pHSX->ulBufRec = HB_MIN( pHSX->ulBufSize, pHSX->ulRecCount - ulFirst + 1 );
       }
 
-      fOffset = ( HB_FOFFSET ) HSXHEADER_LEN +
-                ( HB_FOFFSET ) ( ulFirst - 1 ) *
-                ( HB_FOFFSET ) pHSX->uiRecordSize;
+      fOffset = static_cast< HB_FOFFSET >( HSXHEADER_LEN ) +
+                static_cast< HB_FOFFSET >( ulFirst - 1 ) *
+                static_cast< HB_FOFFSET >( pHSX->uiRecordSize );
       nSize = pHSX->ulBufRec * pHSX->uiRecordSize;
 
       if( hb_fileReadAt( pHSX->pFile, pHSX->pBuffer, nSize, fOffset ) != nSize )

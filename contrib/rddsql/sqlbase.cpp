@@ -271,7 +271,7 @@ static HB_ERRCODE sqlbaseGoBottom( SQLBASEAREAP pArea )
       return HB_FAILURE;
 
 
-   if( ! pArea->fFetched && pArea->pSDD->GoTo( pArea, ( HB_ULONG ) -1 ) == HB_FAILURE )
+   if( ! pArea->fFetched && pArea->pSDD->GoTo( pArea, static_cast< HB_ULONG >( -1 ) ) == HB_FAILURE )
       return HB_FAILURE;
 
    pArea->area.fTop    = HB_FALSE;
@@ -396,7 +396,7 @@ static HB_ERRCODE sqlbaseSkipRaw( SQLBASEAREAP pArea, HB_LONG lToSkip )
       pArea->area.fBof = bBof;
       pArea->area.fEof = bEof;
    }
-   else if( lToSkip < 0 && ( HB_ULONG ) ( -lToSkip ) >= pArea->ulRecNo )
+   else if( lToSkip < 0 && static_cast< HB_ULONG >( -lToSkip ) >= pArea->ulRecNo )
    {
       errCode = SELF_GOTO( &pArea->area, 1 );
       pArea->area.fBof = HB_TRUE;

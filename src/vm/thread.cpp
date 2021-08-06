@@ -986,7 +986,7 @@ HB_CARGO_FUNC( hb_threadStartVM )
    HB_ULONG ulPCount, ulParam;
    HB_BOOL fSend = HB_FALSE;
 
-   ulPCount = ( HB_ULONG ) hb_arrayLen( pThread->pParams );
+   ulPCount = static_cast< HB_ULONG >( hb_arrayLen( pThread->pParams ) );
    if( ulPCount > 0 )
    {
       PHB_ITEM pStart = hb_arrayGetItemPtr( pThread->pParams, 1 );
@@ -1187,7 +1187,7 @@ HB_FUNC( HB_THREADSTART )
    pStart = hb_param( ulStart, HB_IT_ANY );
    while( pStart && HB_IS_NUMERIC( pStart ) )
    {
-      ulAttr |= ( HB_ULONG ) hb_itemGetNL( pStart );
+      ulAttr |= static_cast< HB_ULONG >( hb_itemGetNL( pStart ) );
       pStart = hb_param( ++ulStart, HB_IT_ANY );
    }
 
@@ -1417,7 +1417,7 @@ static int hb_threadWait( PHB_THREADSTATE * pThreads, int iThreads,
          if( timer <= curr )
             fExit = HB_TRUE;
          else
-            ulMilliSec = ( HB_ULONG ) ( timer - curr );
+            ulMilliSec = static_cast< HB_ULONG >( timer - curr );
       }
 #endif
 
@@ -1544,7 +1544,7 @@ HB_FUNC( HB_THREADWAIT )
       if( HB_ISNUM( 2 ) )
       {
          double dTimeOut = hb_parnd( 2 );
-         ulMilliSec = dTimeOut > 0 ? ( HB_ULONG ) ( dTimeOut * 1000 ) : 0;
+         ulMilliSec = dTimeOut > 0 ? static_cast< HB_ULONG >( dTimeOut * 1000 ) : 0;
       }
 
       fAll = hb_parl( 3 );
@@ -2252,7 +2252,7 @@ void hb_threadMutexNotify( PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting 
 
          if( pMutex->events )
          {
-            ulLen = ( HB_ULONG ) hb_arrayLen( pMutex->events );
+            ulLen = static_cast< HB_ULONG >( hb_arrayLen( pMutex->events ) );
             iCount -= ulLen;
             if( iCount > 0 )
                hb_arraySize( pMutex->events, ulLen + iCount );
@@ -2600,7 +2600,7 @@ HB_FUNC( HB_MUTEXLOCK )
          HB_ULONG ulMilliSec = 0;
          double dTimeOut = hb_parnd( 2 );
          if( dTimeOut > 0 )
-            ulMilliSec = ( HB_ULONG ) ( dTimeOut * 1000 );
+            ulMilliSec = static_cast< HB_ULONG >( dTimeOut * 1000 );
          hb_retl( hb_threadMutexTimedLock( pItem, ulMilliSec ) );
       }
       else
@@ -2649,7 +2649,7 @@ HB_FUNC( HB_MUTEXSUBSCRIBE )
          HB_ULONG ulMilliSec = 0;
          double dTimeOut = hb_parnd( 2 );
          if( dTimeOut > 0 )
-            ulMilliSec = ( HB_ULONG ) ( dTimeOut * 1000 );
+            ulMilliSec = static_cast< HB_ULONG >( dTimeOut * 1000 );
          pResult = hb_threadMutexTimedSubscribe( pItem, ulMilliSec, HB_FALSE );
       }
       else
@@ -2680,7 +2680,7 @@ HB_FUNC( HB_MUTEXSUBSCRIBENOW )
          HB_ULONG ulMilliSec = 0;
          double dTimeOut = hb_parnd( 2 );
          if( dTimeOut > 0 )
-            ulMilliSec = ( HB_ULONG ) ( dTimeOut * 1000 );
+            ulMilliSec = static_cast< HB_ULONG >( dTimeOut * 1000 );
          pResult = hb_threadMutexTimedSubscribe( pItem, ulMilliSec, HB_TRUE );
       }
       else

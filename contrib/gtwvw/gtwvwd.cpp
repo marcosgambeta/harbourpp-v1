@@ -8390,7 +8390,7 @@ int nCopyAnsiToWideChar( LPWORD lpWCStr, LPSTR lpAnsiIn )
 
    do
    {
-      *lpWCStr++ = ( WORD ) *lpAnsiIn;
+      *lpWCStr++ = static_cast< WORD >( *lpAnsiIn );
       nChar++;
    }
    while( *lpAnsiIn++ );
@@ -8418,7 +8418,7 @@ IPicture * rr_LoadPictureFromResource( const char * resname, UINT iresimage, LON
 
       if( ! hbmpx )
       {
-         hbmpx = static_cast< HBITMAP >( LoadImage( s_pWvwData->hInstance, ( LPCTSTR ) MAKEINTRESOURCE( ( WORD ) iresimage ), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR ) );
+         hbmpx = static_cast< HBITMAP >( LoadImage( s_pWvwData->hInstance, ( LPCTSTR ) MAKEINTRESOURCE( static_cast< WORD >( iresimage ) ), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR ) );
          AddBitmapHandle( szResname, hbmpx, iWidth, iHeight );
       }
    }
@@ -8824,7 +8824,7 @@ static HBITMAP hPrepareBitmap( char * szBitmap, UINT uiBitmap,
       if( ! hBitmap )
       {
          hBitmap = static_cast< HBITMAP >( LoadImage( s_pWvwData->hInstance,
-                                          ( LPCTSTR ) MAKEINTRESOURCE( ( WORD ) uiBitmap ),
+                                          ( LPCTSTR ) MAKEINTRESOURCE( static_cast< WORD >( uiBitmap ) ),
                                           IMAGE_BITMAP,
                                           iExpWidth,
                                           iExpHeight,

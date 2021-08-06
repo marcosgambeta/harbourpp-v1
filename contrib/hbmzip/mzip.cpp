@@ -82,7 +82,7 @@
 #elif defined( HB_OS_WIN )
    #include <windows.h>
    #if ! defined( INVALID_FILE_ATTRIBUTES )
-      #define INVALID_FILE_ATTRIBUTES  ( ( DWORD ) -1 )
+      #define INVALID_FILE_ATTRIBUTES  ( static_cast< DWORD >( -1 ) )
    #endif
    #include "hbwinuni.h"
 #elif defined( HB_OS_OS2 )
@@ -1270,12 +1270,12 @@ static int hb_unzipExtractCurrentFile( unzFile hUnzip, const char * szFileName, 
             FILETIME   ftutc, ft;
             SYSTEMTIME st;
 
-            st.wSecond       = ( WORD ) ufi.tmu_date.tm_sec;
-            st.wMinute       = ( WORD ) ufi.tmu_date.tm_min;
-            st.wHour         = ( WORD ) ufi.tmu_date.tm_hour;
-            st.wDay          = ( WORD ) ufi.tmu_date.tm_mday;
-            st.wMonth        = ( WORD ) ufi.tmu_date.tm_mon + 1;
-            st.wYear         = ( WORD ) ufi.tmu_date.tm_year;
+            st.wSecond       = static_cast< WORD >( ufi.tmu_date.tm_sec );
+            st.wMinute       = static_cast< WORD >( ufi.tmu_date.tm_min );
+            st.wHour         = static_cast< WORD >( ufi.tmu_date.tm_hour );
+            st.wDay          = static_cast< WORD >( ufi.tmu_date.tm_mday );
+            st.wMonth        = static_cast< WORD >( ufi.tmu_date.tm_mon ) + 1;
+            st.wYear         = static_cast< WORD >( ufi.tmu_date.tm_year );
             st.wMilliseconds = 0;
 
             if( SystemTimeToFileTime( &st, &ft ) &&
@@ -1463,12 +1463,12 @@ static int hb_unzipExtractCurrentFileToHandle( unzFile hUnzip, PHB_FILE pFile, c
          FILETIME   ftutc, ft;
          SYSTEMTIME st;
 
-         st.wSecond       = ( WORD ) ufi.tmu_date.tm_sec;
-         st.wMinute       = ( WORD ) ufi.tmu_date.tm_min;
-         st.wHour         = ( WORD ) ufi.tmu_date.tm_hour;
-         st.wDay          = ( WORD ) ufi.tmu_date.tm_mday;
-         st.wMonth        = ( WORD ) ufi.tmu_date.tm_mon + 1;
-         st.wYear         = ( WORD ) ufi.tmu_date.tm_year;
+         st.wSecond       = static_cast< WORD >( ufi.tmu_date.tm_sec );
+         st.wMinute       = static_cast< WORD >( ufi.tmu_date.tm_min );
+         st.wHour         = static_cast< WORD >( ufi.tmu_date.tm_hour );
+         st.wDay          = static_cast< WORD >( ufi.tmu_date.tm_mday );
+         st.wMonth        = static_cast< WORD >( ufi.tmu_date.tm_mon ) + 1;
+         st.wYear         = static_cast< WORD >( ufi.tmu_date.tm_year );
          st.wMilliseconds = 0;
 
          if( SystemTimeToFileTime( &st, &ft ) &&

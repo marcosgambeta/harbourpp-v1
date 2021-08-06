@@ -165,7 +165,7 @@ static HB_ISIZ read_all( int fd, HB_U8 * buf, size_t count )
       numread += result;
    }
 
-   return ( HB_ISIZ ) numread;
+   return static_cast< HB_ISIZ >( numread );
 }
 #endif /* HB_OS_UNIX */
 

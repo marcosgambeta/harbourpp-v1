@@ -134,7 +134,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
          ( HB_U32 ) pCtx->EFlags );
 
       if( pExceptionInfo->ExceptionRecord->NumberParameters &&
-          pExceptionInfo->ExceptionRecord->NumberParameters < ( DWORD ) EXCEPTION_MAXIMUM_PARAMETERS )
+          pExceptionInfo->ExceptionRecord->NumberParameters < static_cast< DWORD >( EXCEPTION_MAXIMUM_PARAMETERS ) )
       {
          DWORD arg;
 
@@ -323,7 +323,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
          ( HB_U32 ) pCtx->EFlags );
 
       if( pExceptionInfo->ExceptionRecord->NumberParameters &&
-          pExceptionInfo->ExceptionRecord->NumberParameters < ( DWORD ) EXCEPTION_MAXIMUM_PARAMETERS )
+          pExceptionInfo->ExceptionRecord->NumberParameters < static_cast< DWORD >( EXCEPTION_MAXIMUM_PARAMETERS ) )
       {
          DWORD arg;
 

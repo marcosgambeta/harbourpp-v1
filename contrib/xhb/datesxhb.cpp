@@ -63,13 +63,13 @@ static HB_ULONG hb_TimeStrToSec( const char * pszTime )
    nLen = strlen( pszTime );
 
    if( nLen >= 1 )
-      ulTime += ( HB_ULONG ) hb_strVal( pszTime, nLen ) * 3600;
+      ulTime += static_cast< HB_ULONG >( hb_strVal( pszTime, nLen ) ) * 3600;
 
    if( nLen >= 4 )
-      ulTime += ( HB_ULONG ) hb_strVal( pszTime + 3, nLen - 3 ) * 60;
+      ulTime += static_cast< HB_ULONG >( hb_strVal( pszTime + 3, nLen - 3 ) ) * 60;
 
    if( nLen >= 7 )
-      ulTime += ( HB_ULONG ) hb_strVal( pszTime + 6, nLen - 6 );
+      ulTime += static_cast< HB_ULONG >( hb_strVal( pszTime + 6, nLen - 6 ) );
 
    return ulTime;
 }

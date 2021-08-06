@@ -252,7 +252,7 @@ HB_EXTERN_BEGIN
 #  define HB_THREAD_INFINITE_WAIT   SEM_INDEFINITE_WAIT
 
 #  ifndef SEM_INDEFINITE_WAIT
-#     define SEM_INDEFINITE_WAIT    ( ( HB_ULONG ) -1 )
+#     define SEM_INDEFINITE_WAIT    ( static_cast< HB_ULONG >( -1 ) )
 #  endif
 
 #else
@@ -360,7 +360,7 @@ HB_EXTERN_BEGIN
 #endif
 
 #ifndef HB_THREAD_INFINITE_WAIT
-#  define HB_THREAD_INFINITE_WAIT   ( ( HB_ULONG ) -1 )
+#  define HB_THREAD_INFINITE_WAIT   ( static_cast< HB_ULONG >( -1 ) )
 #endif
 
 typedef HB_THREAD_STARTFUNC( PHB_THREAD_STARTFUNC );

@@ -480,7 +480,7 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
          real SQL type in uiTypeExtended. SQL types are signed, so, HB_USHORT type casting
          is a little hackish. We need to remember use this casting also in expressions like
          this:
-            if( pField->uiTypeExtended == ( HB_USHORT ) SQL_BIGINT )
+            if( pField->uiTypeExtended == static_cast< HB_USHORT >( SQL_BIGINT ) )
          or introduce our own unsigned SQL types.
          [Mindaugas]
        */

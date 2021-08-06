@@ -299,7 +299,7 @@ HB_FUNC( FILESMAX )
 
    r.h.ah = 0x62;               /* Get PSP address */
    __dpmi_int( 0x21, &r );
-   psp = ( ( ( HB_ULONG ) r.x.bx ) << 4 ) & 0xFFFFF;
+   psp = ( ( static_cast< HB_ULONG >( r.x.bx ) ) << 4 ) & 0xFFFFF;
 
    handles = _farpeekw( _dos_ds, psp + 0x32 );
    hb_retni( handles );

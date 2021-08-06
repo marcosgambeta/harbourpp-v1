@@ -385,7 +385,7 @@ extern void        hb_stackUpdateAllocator( void *, PHB_ALLOCUPDT_FUNC, int );
 /* #define hb_stackTotalItems( )       ( hb_stack.nItems ) */
 #define hb_stackBaseItem( )         ( * hb_stack.pBase )
 #define hb_stackSelfItem( )         ( * ( hb_stack.pBase + 1 ) )
-#define hb_stackItem( iItemPos )    ( * ( hb_stack.pItems + ( HB_ISIZ ) ( iItemPos ) ) )
+#define hb_stackItem( iItemPos )    ( * ( hb_stack.pItems + static_cast< HB_ISIZ >( iItemPos ) ) )
 #define hb_stackReturnItem( )       ( &hb_stack.Return )
 #define hb_stackDateBuffer( )       ( hb_stack.szDate )
 #define hb_stackItemBasePtr( )      ( &hb_stack.pItems )

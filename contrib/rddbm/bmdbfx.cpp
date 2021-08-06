@@ -378,7 +378,7 @@ HB_FUNC( BM_DBSETFILTERARRAY )
 
                for( nPos = hb_arrayLen( pArray ); nPos; nPos-- )
                {
-                  HB_ULONG ulRec = ( HB_ULONG ) hb_arrayGetNL( pArray, nPos );
+                  HB_ULONG ulRec = static_cast< HB_ULONG >( hb_arrayGetNL( pArray, nPos ) );
                   BM_SETREC( pBM, ulRec );
                }
             }
@@ -405,7 +405,7 @@ HB_FUNC( BM_DBSETFILTERARRAYADD )
 
             for( nPos = hb_arrayLen( pArray ); nPos; nPos-- )
             {
-               HB_ULONG ulRec = ( HB_ULONG ) hb_arrayGetNL( pArray, nPos );
+               HB_ULONG ulRec = static_cast< HB_ULONG >( hb_arrayGetNL( pArray, nPos ) );
                BM_SETREC( pBM, ulRec );
             }
             hb_bmResetFilterOpt( pArea );
@@ -432,7 +432,7 @@ HB_FUNC( BM_DBSETFILTERARRAYDEL )
 
             for( nPos = hb_arrayLen( pArray ); nPos; nPos-- )
             {
-               HB_ULONG ulRec = ( HB_ULONG ) hb_arrayGetNL( pArray, nPos );
+               HB_ULONG ulRec = static_cast< HB_ULONG >( hb_arrayGetNL( pArray, nPos ) );
                BM_CLRREC( pBM, ulRec );
             }
             hb_bmResetFilterOpt( pArea );
@@ -536,7 +536,7 @@ static HB_ERRCODE hb_bmCountScope( AREAP pArea, void * pPtr, HB_LONG * plRec )
    {
       PBM_FILTER pBM = BM_GETFILTER( pArea );
 
-      if( pBM && pArea->dbfi.fFilter && ! BM_GETREC( pBM, ( HB_ULONG ) *plRec ) )
+      if( pBM && pArea->dbfi.fFilter && ! BM_GETREC( pBM, static_cast< HB_ULONG >( *plRec ) ) )
          *plRec = 0;
 
       return HB_SUCCESS;

@@ -519,8 +519,8 @@ HB_FUNC( HB_VFLOCK )
       if( HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
       {
          fResult = hb_fileLock( pFile,
-                                ( HB_FOFFSET ) hb_parnint( 2 ),
-                                ( HB_FOFFSET ) hb_parnint( 3 ),
+                                static_cast< HB_FOFFSET >( hb_parnint( 2 ) ),
+                                static_cast< HB_FOFFSET >( hb_parnint( 3 ) ),
                                 FL_LOCK | ( hb_parni( 4 ) & ~FL_MASK ) );
          uiError = hb_fsError();
       }
@@ -542,8 +542,8 @@ HB_FUNC( HB_VFUNLOCK )
       if( HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
       {
          fResult = hb_fileLock( pFile,
-                                ( HB_FOFFSET ) hb_parnint( 2 ),
-                                ( HB_FOFFSET ) hb_parnint( 3 ),
+                                static_cast< HB_FOFFSET >( hb_parnint( 2 ) ),
+                                static_cast< HB_FOFFSET >( hb_parnint( 3 ) ),
                                 FL_UNLOCK );
          uiError = hb_fsError();
       }
@@ -565,8 +565,8 @@ HB_FUNC( HB_VFLOCKTEST )
       if( HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
       {
          iResult = hb_fileLockTest( pFile,
-                                    ( HB_FOFFSET ) hb_parnint( 2 ),
-                                    ( HB_FOFFSET ) hb_parnint( 3 ),
+                                    static_cast< HB_FOFFSET >( hb_parnint( 2 ) ),
+                                    static_cast< HB_FOFFSET >( hb_parnint( 3 ) ),
                                     FL_LOCK | ( hb_parni( 4 ) & ~FL_MASK ) );
          uiError = hb_fsError();
       }
@@ -696,7 +696,7 @@ HB_FUNC( HB_VFREADAT )
                nSize = nRead;
          }
          nRead = hb_fileReadAt( pFile, buffer, nSize,
-                                ( HB_FOFFSET ) hb_parnintdef( 4, -1 ) );
+                                static_cast< HB_FOFFSET >( hb_parnintdef( 4, -1 ) ) );
          uiError = hb_fsError();
       }
 
@@ -730,7 +730,7 @@ HB_FUNC( HB_VFWRITEAT )
          }
 
          nLen = hb_fileWriteAt( pFile, pszData, nLen,
-                                ( HB_FOFFSET ) hb_parnintdef( 4, -1 ) );
+                                static_cast< HB_FOFFSET >( hb_parnintdef( 4, -1 ) ) );
          if( nLen == static_cast< HB_SIZE >( FS_ERROR ) )
             hb_retni( FS_ERROR );
          else
@@ -755,7 +755,7 @@ HB_FUNC( HB_VFSEEK )
 
       if( HB_ISNUM( 2 ) )
       {
-         hb_retnint( hb_fileSeek( pFile, ( HB_FOFFSET ) hb_parnint( 2 ),
+         hb_retnint( hb_fileSeek( pFile, static_cast< HB_FOFFSET >( hb_parnint( 2 ) ),
                                   static_cast< HB_USHORT >( hb_parnidef( 3, FS_SET ) ) ) );
          uiError = hb_fsError();
       }
@@ -773,7 +773,7 @@ HB_FUNC( HB_VFTRUNC )
 
    if( pFile )
    {
-      hb_retl( hb_fileTruncAt( pFile, ( HB_FOFFSET ) hb_parnint( 2 ) ) );
+      hb_retl( hb_fileTruncAt( pFile, static_cast< HB_FOFFSET >( hb_parnint( 2 ) ) ) );
       hb_fsSetFError( hb_fsError() );
    }
 }

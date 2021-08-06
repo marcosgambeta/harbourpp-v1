@@ -142,10 +142,10 @@ HB_FUNC( SETTIME )
 #if defined( HB_OS_WIN )
       SYSTEMTIME st;
       GetLocalTime( &st );
-      st.wHour         = ( WORD ) iTime[ 0 ];
-      st.wMinute       = ( WORD ) iTime[ 1 ];
-      st.wSecond       = ( WORD ) iTime[ 2 ];
-      st.wMilliseconds = ( WORD ) iTime[ 3 ] * 10;
+      st.wHour         = static_cast< WORD >( iTime[ 0 ] );
+      st.wMinute       = static_cast< WORD >( iTime[ 1 ] );
+      st.wSecond       = static_cast< WORD >( iTime[ 2 ] );
+      st.wMilliseconds = static_cast< WORD >( iTime[ 3 ] ) * 10;
       fResult = SetLocalTime( &st );
 #elif defined( HB_OS_LINUX ) && ! defined( HB_OS_ANDROID ) && ! defined( __WATCOMC__ )
       /* stime() exists only in SVr4, SVID, X/OPEN and Linux */
@@ -177,10 +177,10 @@ HB_FUNC( SETDATE )
 #if defined( HB_OS_WIN )
          SYSTEMTIME st;
          GetLocalTime( &st );
-         st.wYear      = ( WORD ) iYear;
-         st.wMonth     = ( WORD ) iMonth;
-         st.wDay       = ( WORD ) iDay;
-         st.wDayOfWeek = ( WORD ) hb_dateJulianDOW( lDate );
+         st.wYear      = static_cast< WORD >( iYear );
+         st.wMonth     = static_cast< WORD >( iMonth );
+         st.wDay       = static_cast< WORD >( iDay );
+         st.wDayOfWeek = static_cast< WORD >( hb_dateJulianDOW( lDate ) );
          fResult       = SetLocalTime( &st );
 #elif defined( HB_OS_LINUX ) && ! defined( HB_OS_ANDROID ) && ! defined( __WATCOMC__ )
          /* stime() exists only in SVr4, SVID, X/OPEN and Linux */

@@ -383,7 +383,7 @@ static BOOL WINAPI hb_gt_win_CtrlHandler( DWORD dwCtrlType )
 {
    BOOL bHandled;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_CtrlHandler(%lu)", ( HB_ULONG ) dwCtrlType ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_CtrlHandler(%lu)", static_cast< HB_ULONG >( dwCtrlType ) ) );
 
    switch( dwCtrlType )
    {
@@ -402,7 +402,7 @@ static BOOL WINAPI hb_gt_win_CtrlHandler( DWORD dwCtrlType )
       case CTRL_SHUTDOWN_EVENT:
       default:
 #if 0
-         printf( " Event %lu ", ( HB_ULONG ) dwCtrlType );
+         printf( " Event %lu ", static_cast< HB_ULONG >( dwCtrlType ) );
 #endif
          bHandled = FALSE;
          break;
@@ -2176,7 +2176,7 @@ static void hb_gt_win_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
             break;
          s_pCharInfoScreen[ i ].Char.AsciiChar = static_cast< CHAR >( uc );
 #endif
-         s_pCharInfoScreen[ i ].Attributes = ( WORD ) ( iColor & 0xFF );
+         s_pCharInfoScreen[ i ].Attributes = static_cast< WORD >( iColor & 0xFF );
          ++i;
       }
 

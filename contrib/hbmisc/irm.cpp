@@ -188,7 +188,7 @@ PHB_IRMMAP hb_irmExecute( PHB_ITEM pItem )
       PHB_IRMMAP pMap;
 
       /* Expression operators */
-      if( ( ! strcmp( szOper, "&" ) || ! strcmp( szOper, "|" ) ) && ( ulLen = ( HB_ULONG ) hb_arrayLen( pItem ) ) > 1 )
+      if( ( ! strcmp( szOper, "&" ) || ! strcmp( szOper, "|" ) ) && ( ulLen = static_cast< HB_ULONG >( hb_arrayLen( pItem ) ) ) > 1 )
       {
          HB_ULONG     ul, ul2;
          PHB_IRMMAP * pMapArray;

@@ -176,10 +176,10 @@
    #endif
    #if ! defined( INVALID_SET_FILE_POINTER ) && \
        ( defined( __DMC__ ) || defined( _MSC_VER ) || defined( __LCC__ ) )
-      #define INVALID_SET_FILE_POINTER ( ( DWORD ) -1 )
+      #define INVALID_SET_FILE_POINTER ( static_cast< DWORD >( -1 ) )
    #endif
    #if ! defined( INVALID_FILE_ATTRIBUTES )
-      #define INVALID_FILE_ATTRIBUTES     ( ( DWORD ) -1 )
+      #define INVALID_FILE_ATTRIBUTES     ( static_cast< DWORD >( -1 ) )
    #endif
    #if defined( HB_OS_WIN_64 )
       #if ! defined( HB_WIN_IOREAD_LIMIT )
@@ -1543,7 +1543,7 @@ HB_SIZE hb_fsPipeWrite( HB_FHANDLE hPipeHandle, const void * buffer, HB_SIZE nSi
          if( fResult )
             hb_releaseCPU();
 
-         dwToWrite = ( DWORD ) ( nSize - nWritten );
+         dwToWrite = static_cast< DWORD >( nSize - nWritten );
          /* real life tests show that MSDN is wrong and MS-Windows
             refuse to accept even single byte if data is longer then
             size of PIPE buffer in unblocking mode [druzus] */
@@ -2155,16 +2155,16 @@ HB_BOOL hb_fsSetFileTime( const char * pszFileName, long lJulian, long lMillisec
 
          if( lJulian > 0 )
          {
-            st.wYear = ( WORD ) iYear;
-            st.wMonth = ( WORD ) iMonth;
-            st.wDay = ( WORD ) iDay;
+            st.wYear = static_cast< WORD >( iYear );
+            st.wMonth = static_cast< WORD >( iMonth );
+            st.wDay = static_cast< WORD >( iDay );
          }
          if( lMillisec >= 0 )
          {
-            st.wHour = ( WORD ) iHour;
-            st.wMinute = ( WORD ) iMinute;
-            st.wSecond = ( WORD ) iSecond;
-            st.wMilliseconds = ( WORD ) iMSec;
+            st.wHour = static_cast< WORD >( iHour );
+            st.wMinute = static_cast< WORD >( iMinute );
+            st.wSecond = static_cast< WORD >( iSecond );
+            st.wMilliseconds = static_cast< WORD >( iMSec );
          }
 
          if( SystemTimeToFileTime( &st, &local_ft ) )
@@ -2430,7 +2430,7 @@ HB_USHORT hb_fsRead( HB_FHANDLE hFileHandle, void * pBuff, HB_USHORT uiCount )
       DWORD dwRead;
       BOOL bResult;
 
-      bResult = ReadFile( DosToWinHandle( hFileHandle ), pBuff, ( DWORD ) uiCount, &dwRead, nullptr );
+      bResult = ReadFile( DosToWinHandle( hFileHandle ), pBuff, static_cast< DWORD >( uiCount ), &dwRead, nullptr );
       hb_fsSetIOError( bResult != 0, 0 );
 
       uiRead = bResult ? static_cast< HB_USHORT >( dwRead ) : 0;
@@ -2551,7 +2551,7 @@ HB_SIZE hb_fsReadLarge( HB_FHANDLE hFileHandle, void * pBuff, HB_SIZE nCount )
          }
          else
          {
-            dwToRead = ( DWORD ) nCount;
+            dwToRead = static_cast< DWORD >( nCount );
             nCount = 0;
          }
 
@@ -2657,7 +2657,7 @@ HB_SIZE hb_fsWriteLarge( HB_FHANDLE hFileHandle, const void * pBuff, HB_SIZE nCo
          }
          else
          {
-            dwToWrite = ( DWORD ) nCount;
+            dwToWrite = static_cast< DWORD >( nCount );
             nCount = 0;
          }
 
@@ -2785,8 +2785,8 @@ HB_SIZE hb_fsReadAt( HB_FHANDLE hFileHandle, void * pBuff, HB_SIZE nCount, HB_FO
       BOOL bResult = TRUE;
 
       memset( &Overlapped, 0, sizeof( Overlapped ) );
-      Overlapped.Offset     = ( DWORD ) ( nOffset & 0xFFFFFFFF );
-      Overlapped.OffsetHigh = ( DWORD ) ( nOffset >> 32 );
+      Overlapped.Offset     = static_cast< DWORD >( nOffset & 0xFFFFFFFF );
+      Overlapped.OffsetHigh = static_cast< DWORD >( nOffset >> 32 );
 
       nRead = 0;
       while( nCount )
@@ -2801,7 +2801,7 @@ HB_SIZE hb_fsReadAt( HB_FHANDLE hFileHandle, void * pBuff, HB_SIZE nCount, HB_FO
          }
          else
          {
-            dwToRead = ( DWORD ) nCount;
+            dwToRead = static_cast< DWORD >( nCount );
             nCount = 0;
          }
 
@@ -2824,10 +2824,10 @@ HB_SIZE hb_fsReadAt( HB_FHANDLE hFileHandle, void * pBuff, HB_SIZE nCount, HB_FO
       DWORD dwRead = 0;
       OVERLAPPED Overlapped;
       memset( &Overlapped, 0, sizeof( Overlapped ) );
-      Overlapped.Offset     = ( DWORD ) ( nOffset & 0xFFFFFFFF );
-      Overlapped.OffsetHigh = ( DWORD ) ( nOffset >> 32 );
+      Overlapped.Offset     = static_cast< DWORD >( nOffset & 0xFFFFFFFF );
+      Overlapped.OffsetHigh = static_cast< DWORD >( nOffset >> 32 );
       hb_fsSetIOError( ReadFile( DosToWinHandle( hFileHandle ),
-                                 pBuff, ( DWORD ) nCount, &dwRead, &Overlapped ) != 0, 0 );
+                                 pBuff, static_cast< DWORD >( nCount ), &dwRead, &Overlapped ) != 0, 0 );
       nRead = dwRead;
    }
    else
@@ -2846,7 +2846,7 @@ HB_SIZE hb_fsReadAt( HB_FHANDLE hFileHandle, void * pBuff, HB_SIZE nCount, HB_FO
       {
          DWORD dwRead = 0;
          hb_fsSetIOError( ReadFile( DosToWinHandle( hFileHandle ),
-                                    pBuff, ( DWORD ) nCount, &dwRead, nullptr ) != 0, 0 );
+                                    pBuff, static_cast< DWORD >( nCount ), &dwRead, nullptr ) != 0, 0 );
          nRead = dwRead;
       }
    }
@@ -2879,7 +2879,7 @@ HB_SIZE hb_fsReadAt( HB_FHANDLE hFileHandle, void * pBuff, HB_SIZE nCount, HB_FO
 #  else
       HB_FOFFSET nPos = lseek( hFileHandle, nOffset, SEEK_SET );
 #  endif
-      if( nPos == ( HB_FOFFSET ) -1 )
+      if( nPos == static_cast< HB_FOFFSET >( -1 ) )
       {
          hb_fsSetIOError( HB_FALSE, 0 );
          nRead = 0;
@@ -2924,8 +2924,8 @@ HB_SIZE hb_fsWriteAt( HB_FHANDLE hFileHandle, const void * pBuff, HB_SIZE nCount
       BOOL bResult = TRUE;
 
       memset( &Overlapped, 0, sizeof( Overlapped ) );
-      Overlapped.Offset     = ( DWORD ) ( nOffset & 0xFFFFFFFF );
-      Overlapped.OffsetHigh = ( DWORD ) ( nOffset >> 32 );
+      Overlapped.Offset     = static_cast< DWORD >( nOffset & 0xFFFFFFFF );
+      Overlapped.OffsetHigh = static_cast< DWORD >( nOffset >> 32 );
 
       nWritten = 0;
       while( nCount )
@@ -2940,7 +2940,7 @@ HB_SIZE hb_fsWriteAt( HB_FHANDLE hFileHandle, const void * pBuff, HB_SIZE nCount
          }
          else
          {
-            dwToWrite = ( DWORD ) nCount;
+            dwToWrite = static_cast< DWORD >( nCount );
             nCount = 0;
          }
 
@@ -2963,10 +2963,10 @@ HB_SIZE hb_fsWriteAt( HB_FHANDLE hFileHandle, const void * pBuff, HB_SIZE nCount
       DWORD dwWritten = 0;
       OVERLAPPED Overlapped;
       memset( &Overlapped, 0, sizeof( Overlapped ) );
-      Overlapped.Offset     = ( DWORD ) ( nOffset & 0xFFFFFFFF );
-      Overlapped.OffsetHigh = ( DWORD ) ( nOffset >> 32 );
+      Overlapped.Offset     = static_cast< DWORD >( nOffset & 0xFFFFFFFF );
+      Overlapped.OffsetHigh = static_cast< DWORD >( nOffset >> 32 );
       hb_fsSetIOError( WriteFile( DosToWinHandle( hFileHandle ),
-                                  pBuff, ( DWORD ) nCount, &dwWritten, &Overlapped ) != 0, 0 );
+                                  pBuff, static_cast< DWORD >( nCount ), &dwWritten, &Overlapped ) != 0, 0 );
       nWritten = dwWritten;
    }
    else
@@ -2985,7 +2985,7 @@ HB_SIZE hb_fsWriteAt( HB_FHANDLE hFileHandle, const void * pBuff, HB_SIZE nCount
       {
          DWORD dwWritten = 0;
          hb_fsSetIOError( WriteFile( DosToWinHandle( hFileHandle ),
-                                     pBuff, ( DWORD ) nCount, &dwWritten, nullptr ) != 0, 0 );
+                                     pBuff, static_cast< DWORD >( nCount ), &dwWritten, nullptr ) != 0, 0 );
          nWritten = dwWritten;
       }
    }
@@ -3018,7 +3018,7 @@ HB_SIZE hb_fsWriteAt( HB_FHANDLE hFileHandle, const void * pBuff, HB_SIZE nCount
 #  else
       HB_FOFFSET nPos = lseek( hFileHandle, nOffset, SEEK_SET );
 #  endif
-      if( nPos == ( HB_FOFFSET ) -1 )
+      if( nPos == static_cast< HB_FOFFSET >( -1 ) )
       {
          hb_fsSetIOError( HB_FALSE, 0 );
          nWritten = 0;
@@ -3057,8 +3057,8 @@ HB_BOOL hb_fsTruncAt( HB_FHANDLE hFileHandle, HB_FOFFSET nOffset )
        */
       ulOffsetLow = SetFilePointer( DosToWinHandle( hFileHandle ),
                                     ulOffsetLow, ( PLONG ) &ulOffsetHigh,
-                                    ( DWORD ) SEEK_SET );
-      if( ( ( ( HB_FOFFSET ) ulOffsetHigh << 32 ) | ulOffsetLow ) == nOffset )
+                                    static_cast< DWORD >( SEEK_SET ) );
+      if( ( ( static_cast< HB_FOFFSET >( ulOffsetHigh ) << 32 ) | ulOffsetLow ) == nOffset )
          fResult = SetEndOfFile( DosToWinHandle( hFileHandle ) ) != 0;
       else
          fResult = HB_FALSE;
@@ -3176,7 +3176,7 @@ HB_BOOL hb_fsLock( HB_FHANDLE hFileHandle, HB_ULONG ulStart,
             OVERLAPPED sOlap;
             DWORD dwFlags;
             memset( &sOlap, 0, sizeof( sOlap ) );
-            sOlap.Offset = ( DWORD ) ulStart;
+            sOlap.Offset = static_cast< DWORD >( ulStart );
             dwFlags = ( uiMode & FLX_SHARED ) ? 0 : LOCKFILE_EXCLUSIVE_LOCK;
             if( ! s_fUseWaitLocks || ! ( uiMode & FLX_WAIT ) )
             {
@@ -3196,7 +3196,7 @@ HB_BOOL hb_fsLock( HB_FHANDLE hFileHandle, HB_ULONG ulStart,
          {
             OVERLAPPED sOlap;
             memset( &sOlap, 0, sizeof( sOlap ) );
-            sOlap.Offset = ( DWORD ) ulStart;
+            sOlap.Offset = static_cast< DWORD >( ulStart );
             fResult = UnlockFileEx( DosToWinHandle( hFileHandle ), 0, ulLength, 0, &sOlap ) != 0;
          }
          else
@@ -3359,10 +3359,10 @@ HB_BOOL hb_fsLockLarge( HB_FHANDLE hFileHandle, HB_FOFFSET nStart,
 
 #if defined( HB_OS_WIN )
    {
-      DWORD dwOffsetLo = ( DWORD ) ( nStart & 0xFFFFFFFF ),
-            dwOffsetHi = ( DWORD ) ( nStart >> 32 ),
-            dwLengthLo = ( DWORD ) ( nLength & 0xFFFFFFFF ),
-            dwLengthHi = ( DWORD ) ( nLength >> 32 );
+      DWORD dwOffsetLo = static_cast< DWORD >( nStart & 0xFFFFFFFF ),
+            dwOffsetHi = static_cast< DWORD >( nStart >> 32 ),
+            dwLengthLo = static_cast< DWORD >( nLength & 0xFFFFFFFF ),
+            dwLengthHi = static_cast< DWORD >( nLength >> 32 );
 
       hb_vmUnlock();
       switch( uiMode & FL_MASK )
@@ -3567,7 +3567,7 @@ HB_ULONG hb_fsSeek( HB_FHANDLE hFileHandle, HB_LONG lOffset, HB_USHORT uiFlags )
    }
    else
    {
-      ulPos = ( ULONG ) SetFilePointer( DosToWinHandle( hFileHandle ), lOffset, nullptr, ( DWORD ) nFlags );
+      ulPos = ( ULONG ) SetFilePointer( DosToWinHandle( hFileHandle ), lOffset, nullptr, static_cast< DWORD >( nFlags ) );
       hb_fsSetIOError( ulPos != ( ULONG ) INVALID_SET_FILE_POINTER, 0 );
    }
 
@@ -3598,13 +3598,13 @@ HB_ULONG hb_fsSeek( HB_FHANDLE hFileHandle, HB_LONG lOffset, HB_USHORT uiFlags )
    /* This DOS hack creates 2 GiB file size limit, Druzus */
    if( lOffset < 0 && nFlags == SEEK_SET )
    {
-      ulPos = ( HB_ULONG ) -1;
+      ulPos = static_cast< HB_ULONG >( -1 );
       hb_fsSetError( 25 ); /* 'Seek Error' */
    }
    else
    {
       ulPos = lseek( hFileHandle, lOffset, nFlags );
-      hb_fsSetIOError( ulPos != ( HB_ULONG ) -1, 0 );
+      hb_fsSetIOError( ulPos != static_cast< HB_ULONG >( -1 ), 0 );
 #  if defined( HB_OS_UNIX )
       /* small trick to resolve problem with position reported for directories */
       if( ulPos == LONG_MAX && lOffset == 0 && nFlags == SEEK_END )
@@ -3618,10 +3618,10 @@ HB_ULONG hb_fsSeek( HB_FHANDLE hFileHandle, HB_LONG lOffset, HB_USHORT uiFlags )
 #  endif
    }
 
-   if( ulPos == ( HB_ULONG ) -1 )
+   if( ulPos == static_cast< HB_ULONG >( -1 ) )
    {
       ulPos = lseek( hFileHandle, 0L, SEEK_CUR );
-      if( ulPos == ( HB_ULONG ) -1 )
+      if( ulPos == static_cast< HB_ULONG >( -1 ) )
          ulPos = 0;
    }
 #endif
@@ -3646,22 +3646,22 @@ HB_FOFFSET hb_fsSeekLarge( HB_FHANDLE hFileHandle, HB_FOFFSET nOffset, HB_USHORT
       hb_vmUnlock();
       if( nOffset < 0 && nFlags == SEEK_SET )
       {
-         nPos = ( HB_FOFFSET ) -1;
+         nPos = static_cast< HB_FOFFSET >( -1 );
          hb_fsSetError( 25 ); /* 'Seek Error' */
       }
       else
       {
          ulOffsetLow = SetFilePointer( DosToWinHandle( hFileHandle ),
                                        ulOffsetLow, ( PLONG ) &ulOffsetHigh,
-                                       ( DWORD ) nFlags );
+                                       static_cast< DWORD >( nFlags ) );
          if( ulOffsetLow == ( ULONG ) INVALID_SET_FILE_POINTER && GetLastError() != NO_ERROR )
-            nPos = ( HB_FOFFSET ) -1;
+            nPos = static_cast< HB_FOFFSET >( -1 );
          else
-            nPos = ( ( HB_FOFFSET ) ulOffsetHigh << 32 ) | ulOffsetLow;
-         hb_fsSetIOError( nPos != ( HB_FOFFSET ) -1, 0 );
+            nPos = ( static_cast< HB_FOFFSET >( ulOffsetHigh ) << 32 ) | ulOffsetLow;
+         hb_fsSetIOError( nPos != static_cast< HB_FOFFSET >( -1 ), 0 );
       }
 
-      if( nPos == ( HB_FOFFSET ) -1 )
+      if( nPos == static_cast< HB_FOFFSET >( -1 ) )
       {
          ulOffsetHigh = 0;
          ulOffsetLow = SetFilePointer( DosToWinHandle( hFileHandle ),
@@ -3669,7 +3669,7 @@ HB_FOFFSET hb_fsSeekLarge( HB_FHANDLE hFileHandle, HB_FOFFSET nOffset, HB_USHORT
          if( ulOffsetLow == ( ULONG ) INVALID_SET_FILE_POINTER && GetLastError() != NO_ERROR )
             nPos = 0;
          else
-            nPos = ( ( HB_FOFFSET ) ulOffsetHigh << 32 ) | ulOffsetLow;
+            nPos = ( static_cast< HB_FOFFSET >( ulOffsetHigh ) << 32 ) | ulOffsetLow;
       }
       hb_vmLock();
    }
@@ -3700,13 +3700,13 @@ HB_FOFFSET hb_fsSeekLarge( HB_FHANDLE hFileHandle, HB_FOFFSET nOffset, HB_USHORT
       hb_vmUnlock();
       if( nOffset < 0 && nFlags == SEEK_SET )
       {
-         nPos = ( HB_FOFFSET ) -1;
+         nPos = static_cast< HB_FOFFSET >( -1 );
          hb_fsSetError( 25 ); /* 'Seek Error' */
       }
       else
       {
          nPos = lseek64( hFileHandle, nOffset, nFlags );
-         hb_fsSetIOError( nPos != ( HB_FOFFSET ) -1, 0 );
+         hb_fsSetIOError( nPos != static_cast< HB_FOFFSET >( -1 ), 0 );
 #  if defined( HB_OS_UNIX )
          /* small trick to resolve problem with position reported for directories */
          if( nPos == LONG_MAX && nOffset == 0 && nFlags == SEEK_END )
@@ -3719,16 +3719,16 @@ HB_FOFFSET hb_fsSeekLarge( HB_FHANDLE hFileHandle, HB_FOFFSET nOffset, HB_USHORT
 #  endif
       }
 
-      if( nPos == ( HB_FOFFSET ) -1 )
+      if( nPos == static_cast< HB_FOFFSET >( -1 ) )
       {
          nPos = lseek64( hFileHandle, 0L, SEEK_CUR );
-         if( nPos == ( HB_FOFFSET ) -1 )
+         if( nPos == static_cast< HB_FOFFSET >( -1 ) )
             nPos = 0;
       }
       hb_vmLock();
    }
 #else
-   nPos = ( HB_FOFFSET ) hb_fsSeek( hFileHandle, ( HB_ISIZ ) nOffset, uiFlags );
+   nPos = static_cast< HB_FOFFSET >( hb_fsSeek( hFileHandle, static_cast< HB_ISIZ >( nOffset ), uiFlags ) );
 #endif
 
    return nPos;
@@ -3754,7 +3754,7 @@ HB_FOFFSET hb_fsGetSize( HB_FHANDLE hFileHandle )
       fOK = dwFileSizeLow != INVALID_FILE_SIZE || GetLastError() == NO_ERROR;
       hb_fsSetIOError( fOK, 0 );
 
-      return fOK ? ( ( HB_FOFFSET ) dwFileSizeHigh << 32 ) | dwFileSizeLow : 0;
+      return fOK ? ( static_cast< HB_FOFFSET >( dwFileSizeHigh ) << 32 ) | dwFileSizeLow : 0;
    }
 #else
    return hb_fsSeekLarge( hFileHandle, 0, FS_END );
@@ -4135,7 +4135,7 @@ HB_ERRCODE hb_fsCurDirBuff( int iDrive, char * pszBuffer, HB_SIZE nSize )
 
 #if defined( HB_OS_WIN )
    {
-      DWORD dwSize = ( DWORD ) nSize;
+      DWORD dwSize = static_cast< DWORD >( nSize );
       LPTSTR lpBuffer = static_cast< LPTSTR >( hb_xgrab( dwSize * sizeof( TCHAR ) ) );
       lpBuffer[ 0 ] = TEXT( '\0' );
       hb_fsSetIOError( ( GetCurrentDirectory( dwSize, lpBuffer ) != 0 ), 0 );
@@ -4255,7 +4255,7 @@ HB_BOOL hb_fsGetCWD( char * pszBuffer, HB_SIZE nSize )
 
 #if defined( HB_OS_WIN )
    {
-      DWORD dwSize = ( DWORD ) nSize;
+      DWORD dwSize = static_cast< DWORD >( nSize );
       LPTSTR lpBuffer = static_cast< LPTSTR >( hb_xgrab( dwSize * sizeof( TCHAR ) ) );
       lpBuffer[ 0 ] = TEXT( '\0' );
       fResult = GetCurrentDirectory( dwSize, lpBuffer ) != 0;

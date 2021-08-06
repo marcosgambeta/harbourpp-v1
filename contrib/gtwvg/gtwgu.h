@@ -339,7 +339,7 @@ typedef struct
 /*-*/
 
 #ifndef INVALID_FILE_SIZE
-   #define INVALID_FILE_SIZE ( DWORD ) 0xFFFFFFFF
+   #define INVALID_FILE_SIZE static_cast< DWORD >( 0xFFFFFFFF )
 #endif
 
 #ifndef CC_ANYCOLOR

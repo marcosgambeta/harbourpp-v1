@@ -767,7 +767,7 @@ HB_BOOL hb_iswinver( int iMajor, int iMinor, int iType, HB_BOOL fOrUpper )
          in above calls, both fixes the problem. [vszakats] */
 #if defined( __HB_DISABLE_WINE_VERIFYVERSIONINFO_BUG_WORKAROUND )
       ver.wServicePackMajor =
-      ver.wServicePackMinor = ( WORD ) 0;
+      ver.wServicePackMinor = static_cast< WORD >( 0 ); 
       dwTypeMask |= VER_SERVICEPACKMAJOR | VER_SERVICEPACKMINOR;
       dwlConditionMask = s_pVerSetConditionMask( dwlConditionMask, VER_SERVICEPACKMAJOR, VER_GREATER_EQUAL );
       dwlConditionMask = s_pVerSetConditionMask( dwlConditionMask, VER_SERVICEPACKMINOR, VER_GREATER_EQUAL );
@@ -801,7 +801,7 @@ HB_BOOL hb_iswinsp( int iServicePackMajor, HB_BOOL fOrUpper )
 
       memset( &ver, 0, sizeof( ver ) );
       ver.dwOSVersionInfoSize = sizeof( ver );
-      ver.wServicePackMajor = ( WORD ) iServicePackMajor;
+      ver.wServicePackMajor = static_cast< WORD >( iServicePackMajor );
 
       dwlConditionMask = s_pVerSetConditionMask( dwlConditionMask, VER_SERVICEPACKMAJOR, fOrUpper ? VER_GREATER_EQUAL : VER_EQUAL );
 

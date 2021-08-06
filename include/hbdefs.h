@@ -469,7 +469,7 @@ typedef HB_MAXUINT   HB_VMMAXUINT;
 typedef HB_U32       HB_SYMCNT;
 
 #define HB_DBL_LIM_INT(d)     ( HB_VMINT_MIN <= (d) && (d) <= HB_VMINT_MAX )
-#define HB_DBL_LIM_LONG(d)    ( (HB_MAXDBL) HB_VMLONG_MIN <= (HB_MAXDBL) (d) && (HB_MAXDBL) (d) <= (HB_MAXDBL) HB_VMLONG_MAX )
+#define HB_DBL_LIM_LONG(d)    ( static_cast< HB_MAXDBL >( HB_VMLONG_MIN ) <= static_cast< HB_MAXDBL >(d) && static_cast< HB_MAXDBL >(d) <= static_cast< HB_MAXDBL >( HB_VMLONG_MAX ) )
 #define HB_LIM_INT(l)         ( HB_VMINT_MIN <= (l) && (l) <= HB_VMINT_MAX )
 #define HB_LIM_LONG(l)        ( HB_VMLONG_MIN <= (l) && (l) <= HB_VMLONG_MAX )
 
@@ -477,18 +477,18 @@ typedef HB_U32       HB_SYMCNT;
 #define HB_DBL_LIM_INT16(d)   ( INT16_MIN <= (d) && (d) <= INT16_MAX )
 #define HB_DBL_LIM_INT24(d)   ( INT24_MIN <= (d) && (d) <= INT24_MAX )
 #define HB_DBL_LIM_INT32(d)   ( INT32_MIN <= (d) && (d) <= INT32_MAX )
-#define HB_DBL_LIM_INT64(d)   ( (HB_MAXDBL) INT64_MIN <= (HB_MAXDBL) (d) && (HB_MAXDBL) (d) <= (HB_MAXDBL) INT64_MAX )
+#define HB_DBL_LIM_INT64(d)   ( static_cast< HB_MAXDBL >( INT64_MIN ) <= static_cast< HB_MAXDBL >(d) && static_cast< HB_MAXDBL >(d) <= static_cast< HB_MAXDBL >( INT64_MAX ) )
 #define HB_LIM_INT8(l)        ( -128 <= (l) && (l) <= 127 )
 #define HB_LIM_INT16(l)       ( INT16_MIN <= (l) && (l) <= INT16_MAX )
 #define HB_LIM_INT24(l)       ( INT24_MIN <= (l) && (l) <= INT24_MAX )
 #define HB_LIM_INT32(l)       ( INT32_MIN <= (l) && (l) <= INT32_MAX )
 #define HB_LIM_INT64(l)       ( INT64_MIN <= (l) && (l) <= INT64_MAX )
 
-#define HB_CAST_INT( d )      ( ( int ) ( HB_MAXINT ) ( d ) )
-#define HB_CAST_LONG( d )     ( ( long ) ( HB_MAXINT ) ( d ) )
-#define HB_CAST_LONGLONG( d ) ( ( HB_LONGLONG ) ( d ) )
-#define HB_CAST_MAXINT( d )   ( ( HB_MAXINT ) ( d ) )
-#define HB_CAST_ISIZ( d )     ( ( HB_ISIZ ) ( HB_MAXINT ) ( d ) )
+#define HB_CAST_INT( d )      ( static_cast< int >( static_cast< HB_MAXINT >( d ) ) )
+#define HB_CAST_LONG( d )     ( static_cast< long >( static_cast< HB_MAXINT >( d ) ) )
+#define HB_CAST_LONGLONG( d ) ( static_cast< HB_LONGLONG >( d ) )
+#define HB_CAST_MAXINT( d )   ( static_cast< HB_MAXINT >( d ) )
+#define HB_CAST_ISIZ( d )     ( static_cast< HB_ISIZ >( static_cast< HB_MAXINT >( d ) ) )
 
 /*
  * It's a hack for compilers which don't support LL suffix for LONGLONG
@@ -713,14 +713,14 @@ typedef HB_U32 HB_FATTR;
 #define HB_UHBYTE( w )          ( ( HB_BYTE ) ( ( ( w ) >> 24 ) & 0xFF ) )
 #define HB_LOWORD( l )          ( ( HB_U16 ) ( l ) )
 #define HB_HIWORD( l )          ( ( HB_U16 ) ( ( ( l ) >> 16 ) & 0xFFFF ) )
-#define HB_MKSHORT( lo, hi )    ( ( HB_SHORT ) ( ( ( HB_I16 ) ( hi ) ) << 8 ) | ( lo ) )
-#define HB_MKUSHORT( lo, hi )   ( ( HB_USHORT ) ( ( ( HB_U16 ) ( hi ) ) << 8 ) | ( lo ) )
-#define HB_MKLONG( b1, b2, b3, b4 )  ( ( HB_LONG ) \
+#define HB_MKSHORT( lo, hi )    ( static_cast< HB_SHORT >( ( ( HB_I16 ) ( hi ) ) << 8 ) | ( lo ) )
+#define HB_MKUSHORT( lo, hi )   ( static_cast< HB_USHORT >( ( ( HB_U16 ) ( hi ) ) << 8 ) | ( lo ) )
+#define HB_MKLONG( b1, b2, b3, b4 )  ( static_cast< HB_LONG > \
                                        ( ( ( ( HB_I32 ) ( b4 ) ) << 24 ) | \
                                          ( ( ( HB_I32 ) ( b3 ) ) << 16 ) | \
                                          ( ( ( HB_I32 ) ( b2 ) ) <<  8 ) | \
                                          ( ( ( HB_I32 ) ( b1 ) ) ) ) )
-#define HB_MKULONG( b1, b2, b3, b4 ) ( ( HB_ULONG ) \
+#define HB_MKULONG( b1, b2, b3, b4 ) ( static_cast< HB_ULONG > \
                                        ( ( ( ( HB_U32 ) ( b4 ) ) << 24 ) | \
                                          ( ( ( HB_U32 ) ( b3 ) ) << 16 ) | \
                                          ( ( ( HB_U32 ) ( b2 ) ) <<  8 ) | \
@@ -1443,15 +1443,15 @@ typedef HB_U32 HB_FATTR;
 #define HB_GET_LE_INT32( p )        (( HB_I32 ) HB_GET_LE_UINT32( p ))
 #define HB_GET_LE_INT64( p )        (( HB_I64 ) HB_GET_LE_UINT64( p ))
 
-#define HB_PCODE_MKSHORT( p )       (( HB_SHORT )     HB_GET_LE_INT16( p ))
-#define HB_PCODE_MKUSHORT( p )      (( HB_USHORT )    HB_GET_LE_UINT16( p ))
-#define HB_PCODE_MKLONG( p )        (( HB_LONG )      HB_GET_LE_INT32( p ))
-#define HB_PCODE_MKULONG( p )       (( HB_ULONG )     HB_GET_LE_UINT32( p ))
+#define HB_PCODE_MKSHORT( p )       ( static_cast< HB_SHORT >( HB_GET_LE_INT16( p ) ) )
+#define HB_PCODE_MKUSHORT( p )      ( static_cast< HB_USHORT >( HB_GET_LE_UINT16( p ) ) )
+#define HB_PCODE_MKLONG( p )        ( static_cast< HB_LONG >( HB_GET_LE_INT32( p ) ) )
+#define HB_PCODE_MKULONG( p )       ( static_cast< HB_ULONG >( HB_GET_LE_UINT32( p ) ) )
 #define HB_PCODE_MKLONGLONG( p )    (( HB_LONGLONG )  HB_GET_LE_INT64( p ))
 #define HB_PCODE_MKULONGLONG( p )   (( HB_ULONGLONG ) HB_GET_LE_UINT64( p ))
 #define HB_PCODE_MKDOUBLE( p )      (( double )       HB_GET_LE_DOUBLE( p ))
-#define HB_PCODE_MKINT24( p )       (( HB_LONG )      HB_GET_LE_INT24( p ))
-#define HB_PCODE_MKUINT24( p )      (( HB_ULONG )     HB_GET_LE_UINT24( p ))
+#define HB_PCODE_MKINT24( p )       ( static_cast< HB_LONG >( HB_GET_LE_INT24( p ) ) )
+#define HB_PCODE_MKUINT24( p )      ( static_cast< HB_ULONG >( HB_GET_LE_UINT24( p ) ) )
 
 /*
  * Below are hacked version of INT64 macros which operates on double
@@ -1473,9 +1473,9 @@ typedef HB_U32 HB_FATTR;
                                                          ( double ) ( d ) )
    #define HB_PCODE_MKLONGLONG( p )    ( ( double ) HB_GET_LE_INT64( p ) )
    #define HB_PCODE_MKULONGLONG( p )   ( ( double ) HB_GET_LE_UINT64( p ) )
-   #define HB_DBL_LIM_INT64( d )       ( ( HB_MAXDBL ) -UINT64_MAXDBL / 2 - 1 <= \
-                                         ( HB_MAXDBL ) ( d ) && ( HB_MAXDBL ) ( d ) <= \
-                                         ( HB_MAXDBL ) UINT64_MAXDBL / 2 )
+   #define HB_DBL_LIM_INT64( d )       ( static_cast< HB_MAXDBL >( -UINT64_MAXDBL ) / 2 - 1 <= \
+                                         static_cast< HB_MAXDBL >( d ) && static_cast< HB_MAXDBL >( d ) <= \
+                                         static_cast< HB_MAXDBL >( UINT64_MAXDBL ) / 2 )
 #endif
 
 #define HB_MACRO2STRING( macro )    HB_MACRO2STRING_( macro )

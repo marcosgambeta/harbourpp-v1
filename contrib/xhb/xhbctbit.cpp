@@ -79,7 +79,7 @@ static HB_LONG __getparam( int iParam )
    const char * szHexNum = hb_parc( iParam );
 
    if( szHexNum )
-      return ( HB_LONG ) hb_hextonum( szHexNum );
+      return static_cast< HB_LONG >( hb_hextonum( szHexNum ) );
    else
       return hb_parnl( iParam );
 }
@@ -114,7 +114,7 @@ static void sizeofbits( HB_USHORT * pusBytes, HB_LONG * plPattern, HB_LONG * plT
    if( *pusBytes > sizeof( HB_LONG ) * 8 )
       *pusBytes = *pusBytes % ( sizeof( HB_LONG ) * 8 );
 
-   *plPattern = ( *pusBytes == ( sizeof( HB_LONG ) * 8 ) ) ? 0 : ( HB_LONG ) ( ULONG_MAX << *pusBytes );
+   *plPattern = ( *pusBytes == ( sizeof( HB_LONG ) * 8 ) ) ? 0 : static_cast< HB_LONG >( ULONG_MAX << *pusBytes );
 
    *plTestMSB = ( *pusBytes == 0 ) ? 0 : ( 1 << ( *pusBytes - 1 ) );
 }

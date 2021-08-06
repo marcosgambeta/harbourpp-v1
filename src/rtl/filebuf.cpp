@@ -524,8 +524,8 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
 
    if( fResult )
    {
-      pFile = hb_fileFind( ( HB_ULONG ) statbuf.st_dev,
-                           ( HB_ULONG ) statbuf.st_ino );
+      pFile = hb_fileFind( static_cast< HB_ULONG >( statbuf.st_dev ),
+                           static_cast< HB_ULONG >( statbuf.st_ino ) );
       if( pFile )
       {
          if( ! fShared || ! pFile->shared || ( nExFlags & FXO_TRUNCATE ) != 0 )
@@ -573,8 +573,8 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
          if( fstat( hFile, &statbuf ) == 0 )
 #  endif
          {
-            device = ( HB_ULONG ) statbuf.st_dev;
-            inode  = ( HB_ULONG ) statbuf.st_ino;
+            device = static_cast< HB_ULONG >( statbuf.st_dev );
+            inode  = static_cast< HB_ULONG >( statbuf.st_ino );
             if( ( nExFlags & FXO_NOSEEKPOS ) == 0 )
             {
 #  if defined( HB_OS_VXWORKS )

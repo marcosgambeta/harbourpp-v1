@@ -90,7 +90,7 @@ HB_FUNC( ADDASCII )
 
          for( sCurrent = sPos; sCurrent > 0 && lValue != 0; sCurrent-- )
          {
-            HB_LONG lResult = ( HB_LONG ) pcSource[ sCurrent - 1 ] + ( lValue % 256 );
+            HB_LONG lResult = static_cast< HB_LONG >( pcSource[ sCurrent - 1 ] ) + ( lValue % 256 );
 
             lValue /= 256;
             if( lResult > 255 )
@@ -102,7 +102,7 @@ HB_FUNC( ADDASCII )
          }
       }
       else
-         pcResult[ sPos - 1 ] = static_cast< char >( ( ( HB_LONG ) pcResult[ sPos - 1 ] + lValue ) % 256 );
+         pcResult[ sPos - 1 ] = static_cast< char >( ( static_cast< HB_LONG >( pcResult[ sPos - 1 ] ) + lValue ) % 256 );
 
       hb_storclen( pcResult, sLen, 1 );
 

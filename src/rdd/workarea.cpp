@@ -2567,9 +2567,9 @@ HB_FUNC( __RDDPREALLOCATE )
 {
    HB_LONG lNewSize = hb_parnl( 1 );
 
-   if( lNewSize > ( HB_LONG ) USHRT_MAX )
+   if( lNewSize > static_cast< HB_LONG >( USHRT_MAX ) )
       lNewSize = USHRT_MAX;
-   if( lNewSize > ( HB_LONG ) s_uiRddMax )
+   if( lNewSize > static_cast< HB_LONG >( s_uiRddMax ) )
    {
       s_uiRddMax += HB_RDD_POOL_ALLOCSIZE;
       s_RddList = static_cast< LPRDDNODE * >(

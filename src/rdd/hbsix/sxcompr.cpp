@@ -381,8 +381,8 @@ static void hb_LZSSxNodeInsert( PHB_LZSSX_COMPR pCompr, int r )
             p = pCompr->right[ p ];
          else
          {
-            pCompr->right[ p ] = ( HB_SHORT ) r;
-            pCompr->parent[ r ] = ( HB_SHORT ) p;
+            pCompr->right[ p ] = static_cast< HB_SHORT >( r );
+            pCompr->parent[ r ] = static_cast< HB_SHORT >( p );
             return;
          }
       }
@@ -392,8 +392,8 @@ static void hb_LZSSxNodeInsert( PHB_LZSSX_COMPR pCompr, int r )
             p = pCompr->left[ p ];
          else
          {
-            pCompr->left[ p ] = ( HB_SHORT ) r;
-            pCompr->parent[ r ] = ( HB_SHORT ) p;
+            pCompr->left[ p ] = static_cast< HB_SHORT >( r ); 
+            pCompr->parent[ r ] = static_cast< HB_SHORT >( p );
             return;
          }
       }
@@ -404,8 +404,8 @@ static void hb_LZSSxNodeInsert( PHB_LZSSX_COMPR pCompr, int r )
       }
       if( i > pCompr->match_length )
       {
-         pCompr->match_offset = ( HB_SHORT ) p;
-         pCompr->match_length = ( HB_SHORT ) i;
+         pCompr->match_offset = static_cast< HB_SHORT >( p );
+         pCompr->match_length = static_cast< HB_SHORT >( i );
          if( i >= MAXLENGTH )
             break;
       }
@@ -413,12 +413,12 @@ static void hb_LZSSxNodeInsert( PHB_LZSSX_COMPR pCompr, int r )
    pCompr->parent[ r ] = pCompr->parent[ p ];
    pCompr->left[ r ]   = pCompr->left[ p ];
    pCompr->right[ r ]  = pCompr->right[ p ];
-   pCompr->parent[ pCompr->left[ p ] ]  = ( HB_SHORT ) r;
-   pCompr->parent[ pCompr->right[ p ] ] = ( HB_SHORT ) r;
+   pCompr->parent[ pCompr->left[ p ] ]  = static_cast< HB_SHORT >( r );
+   pCompr->parent[ pCompr->right[ p ] ] = static_cast< HB_SHORT >( r );
    if( pCompr->right[ pCompr->parent[ p ] ] == p )
-      pCompr->right[ pCompr->parent[ p ] ] = ( HB_SHORT ) r;
+      pCompr->right[ pCompr->parent[ p ] ] = static_cast< HB_SHORT >( r );
    else
-      pCompr->left[ pCompr->parent[ p ] ] = ( HB_SHORT ) r;
+      pCompr->left[ pCompr->parent[ p ] ] = static_cast< HB_SHORT >( r );
    pCompr->parent[ p ] = DUMMYNODE;
 }
 
@@ -444,16 +444,16 @@ static void hb_LZSSxNodeDelete( PHB_LZSSX_COMPR pCompr, int p )
             pCompr->right[ pCompr->parent[ q ] ] = pCompr->left[ q ];
             pCompr->parent[ pCompr->left[ q ] ] = pCompr->parent[ q ];
             pCompr->left[ q ] = pCompr->left[ p ];
-            pCompr->parent[ pCompr->left[ p ] ] = ( HB_SHORT ) q;
+            pCompr->parent[ pCompr->left[ p ] ] = static_cast< HB_SHORT >( q );
          }
          pCompr->right[ q ] = pCompr->right[ p ];
-         pCompr->parent[ pCompr->right[ p ] ] = ( HB_SHORT ) q;
+         pCompr->parent[ pCompr->right[ p ] ] = static_cast< HB_SHORT >( q );
       }
       pCompr->parent[ q ] = pCompr->parent[ p ];
       if( pCompr->right[ pCompr->parent[ p ] ] == p )
-         pCompr->right[ pCompr->parent[ p ] ] = ( HB_SHORT ) q;
+         pCompr->right[ pCompr->parent[ p ] ] = static_cast< HB_SHORT >( q );
       else
-         pCompr->left[ pCompr->parent[ p ] ] = ( HB_SHORT ) q;
+         pCompr->left[ pCompr->parent[ p ] ] = static_cast< HB_SHORT >( q );
       pCompr->parent[ p ] = DUMMYNODE;
    }
 }
@@ -477,7 +477,7 @@ static HB_SIZE hb_LZSSxEncode( PHB_LZSSX_COMPR pCompr )
 
    for( len = 0; len < MAXLENGTH; len++ )
    {
-      if( ( c = ( HB_SHORT ) hb_LZSSxRead( pCompr ) ) == -1 )
+      if( ( c = static_cast< HB_SHORT >( hb_LZSSxRead( pCompr ) ) ) == -1 )
          break;
       pCompr->ring_buffer[ r + len ] = ( HB_UCHAR ) c;
    }
@@ -520,21 +520,21 @@ static HB_SIZE hb_LZSSxEncode( PHB_LZSSX_COMPR pCompr )
       }
       last_match_length = pCompr->match_length;
       for( i = 0; i < last_match_length &&
-                  ( c = ( HB_SHORT ) hb_LZSSxRead( pCompr ) ) != -1; i++ )
+                  ( c = static_cast< HB_SHORT >( hb_LZSSxRead( pCompr ) ) ) != -1; i++ )
       {
          hb_LZSSxNodeDelete( pCompr, s );
          pCompr->ring_buffer[ s ] = ( HB_UCHAR ) c;
          if( s < MAXLENGTH - 1 )
             pCompr->ring_buffer[ s + RBUFLENGTH ] = ( HB_UCHAR ) c;
-         s = ( HB_SHORT ) RBUFINDEX( s + 1 );
-         r = ( HB_SHORT ) RBUFINDEX( r + 1 );
+         s = static_cast< HB_SHORT >( RBUFINDEX( s + 1 ) );
+         r = static_cast< HB_SHORT >( RBUFINDEX( r + 1 ) );
          hb_LZSSxNodeInsert( pCompr, r );
       }
       while( i++ < last_match_length )
       {
          hb_LZSSxNodeDelete( pCompr, s );
-         s = ( HB_SHORT ) RBUFINDEX( s + 1 );
-         r = ( HB_SHORT ) RBUFINDEX( r + 1 );
+         s = static_cast< HB_SHORT >( RBUFINDEX( s + 1 ) );
+         r = static_cast< HB_SHORT >( RBUFINDEX( r + 1 ) );
          if( --len )
             hb_LZSSxNodeInsert( pCompr, r );
       }

@@ -65,7 +65,7 @@ HB_FUNC( TABEXPAND )
 
       if( HB_ISNUM( 2 ) )
          sTabWidth = hb_parns( 2 );
-      if( ( HB_ISIZ ) sTabWidth <= 0 )
+      if( static_cast< HB_ISIZ >( sTabWidth ) <= 0 )
          sTabWidth = 8;
 
       if( HB_ISNUM( 3 ) )
@@ -217,7 +217,7 @@ HB_FUNC( TABPACK )
 
       if( HB_ISNUM( 2 ) )
          sTabWidth = hb_parns( 2 );
-      if( ( HB_ISIZ ) sTabWidth <= 0 )
+      if( static_cast< HB_ISIZ >( sTabWidth ) <= 0 )
          sTabWidth = 8;
 
       if( HB_ISNUM( 3 ) )

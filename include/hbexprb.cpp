@@ -1316,9 +1316,9 @@ static HB_EXPR_FUNC( hb_compExprUseArrayAt )
             HB_ISIZ nIndex;
 
             if( pIdx->value.asNum.NumType == HB_ET_LONG )
-               nIndex = ( HB_ISIZ ) pIdx->value.asNum.val.l;
+               nIndex = static_cast< HB_ISIZ >( pIdx->value.asNum.val.l );
             else
-               nIndex = ( HB_ISIZ ) pIdx->value.asNum.val.d;
+               nIndex = static_cast< HB_ISIZ >( pIdx->value.asNum.val.d ); 
 
             if( pExpr->ExprType == HB_ET_ARRAY )   /* is it a literal array */
             {

@@ -396,8 +396,8 @@ HB_FUNC( HB_FLOCK )
    if( HB_ISNUM( 1 ) && HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
    {
       fResult = hb_fsLockLarge( hb_numToHandle( hb_parnint( 1 ) ),
-                                ( HB_FOFFSET ) hb_parnint( 2 ),
-                                ( HB_FOFFSET ) hb_parnint( 3 ),
+                                static_cast< HB_FOFFSET >( hb_parnint( 2 ) ),
+                                static_cast< HB_FOFFSET >( hb_parnint( 3 ) ),
                                 FL_LOCK | ( static_cast< HB_USHORT >( hb_parni( 4 ) ) & ~FL_MASK ) );
       uiError = hb_fsError();
    }
@@ -413,8 +413,8 @@ HB_FUNC( HB_FUNLOCK )
    if( HB_ISNUM( 1 ) && HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
    {
       fResult = hb_fsLockLarge( hb_numToHandle( hb_parnint( 1 ) ),
-                                ( HB_FOFFSET ) hb_parnint( 2 ),
-                                ( HB_FOFFSET ) hb_parnint( 3 ),
+                                static_cast< HB_FOFFSET >( hb_parnint( 2 ) ),
+                                static_cast< HB_FOFFSET >( hb_parnint( 3 ) ),
                                 FL_UNLOCK );
       uiError = hb_fsError();
    }

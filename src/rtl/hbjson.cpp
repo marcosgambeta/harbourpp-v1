@@ -744,7 +744,7 @@ HB_FUNC( HB_JSONDECODE )
 
    if( HB_ISBYREF( 2 ) )
    {
-      hb_retns( ( HB_ISIZ ) nSize );
+      hb_retns( static_cast< HB_ISIZ >( nSize ) );
       hb_itemParamStoreForward( 2, pItem );
       hb_itemRelease( pItem );
    }

@@ -705,10 +705,10 @@ HB_ISIZ hb_itemGetNS( PHB_ITEM pItem )
    if( pItem )
    {
       if( HB_IS_LONG( pItem ) )
-         return ( HB_ISIZ ) pItem->item.asLong.value;
+         return static_cast< HB_ISIZ >( pItem->item.asLong.value );
 
       else if( HB_IS_INTEGER( pItem ) )
-         return ( HB_ISIZ ) pItem->item.asInteger.value;
+         return static_cast< HB_ISIZ >( pItem->item.asInteger.value );
 
       else if( HB_IS_DOUBLE( pItem ) )
          return HB_CAST_ISIZ( pItem->item.asDouble.value );

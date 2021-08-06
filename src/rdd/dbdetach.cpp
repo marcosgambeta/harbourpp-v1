@@ -106,7 +106,7 @@ HB_FUNC( HB_DBREQUEST )
       if( HB_ISNUM( 4 ) )
       {
          double dTimeOut = hb_parnd( 4 );
-         ulMilliSec = dTimeOut > 0 ? ( HB_ULONG ) ( dTimeOut * 1000 ) : 0;
+         ulMilliSec = dTimeOut > 0 ? static_cast< HB_ULONG >( dTimeOut * 1000 ) : 0;
       }
       else if( ! hb_parl( 4 ) )
          ulMilliSec = 0;

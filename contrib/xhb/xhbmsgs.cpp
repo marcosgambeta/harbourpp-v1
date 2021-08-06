@@ -302,7 +302,7 @@ HB_FUNC( XHB_GREATEREQ )
  * in xHarbour compatibility mode where negative indexes are used to access
  * data from tail
  */
-#define XHB_IS_VALID_INDEX( idx, max )  ( ( ( HB_ISIZ ) ( idx ) < 0 ? ( idx ) += ( max ) + 1 : ( idx ) ) > 0 && static_cast< HB_SIZE >( idx ) <= ( max ) )
+#define XHB_IS_VALID_INDEX( idx, max )  ( ( static_cast< HB_ISIZ >( idx ) < 0 ? ( idx ) += ( max ) + 1 : ( idx ) ) > 0 && static_cast< HB_SIZE >( idx ) <= ( max ) )
 
 HB_FUNC( XHB_INDEX )
 {

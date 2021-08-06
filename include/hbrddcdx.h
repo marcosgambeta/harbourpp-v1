@@ -125,7 +125,7 @@ HB_EXTERN_BEGIN
 #define CURKEY_REFRESH(pTag)
 */
 
-#define HB_CDXBITMASK( x )    ( ( HB_LONG ) ( ( 1L << ( x ) ) - 1 ) )
+#define HB_CDXBITMASK( x )    ( static_cast< HB_LONG >( ( 1L << ( x ) ) - 1 ) )
 
 /* #define FAST_GOCOLD( A )      ((A)->dbfarea.fRecordChanged || (A)->fCdxAppend ? (SELF_GOCOLD((AREAP)(A))) : HB_SUCCESS) */
 #define FAST_GOCOLD( A )      SELF_GOCOLD(A)

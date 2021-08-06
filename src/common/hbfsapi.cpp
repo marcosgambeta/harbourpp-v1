@@ -477,13 +477,13 @@ HB_ULONG hb_fsOS2DosSetFilePtrL( HB_FHANDLE hFile, HB_FOFFSET nPos,
    {
       LONGLONG llCurPos = 0;
       ret = s_DosSetFilePtrL( static_cast< HFILE >( hFile ), ( LONGLONG ) nPos, method, &llCurPos );
-      *pnCurPos = ( HB_FOFFSET ) llCurPos;
+      *pnCurPos = static_cast< HB_FOFFSET >( llCurPos );
    }
    else
    {
       ULONG ulCurPos = 0;
       ret = DosSetFilePtr( static_cast< HFILE >( hFile ), static_cast< LONG >( nPos ), method, &ulCurPos );
-      *pnCurPos = ( HB_FOFFSET ) ulCurPos;
+      *pnCurPos = static_cast< HB_FOFFSET >( ulCurPos );
    }
    hb_fsSetError( ( HB_ERRCODE ) ret );
 
@@ -532,7 +532,7 @@ HB_BOOL hb_fsOS2QueryPathInfo( const char * pszPathName,
       if( fIsWSeB )
       {
          if( pnSize )
-            *pnSize = ( HB_FOFFSET ) findBuffer.ffbl.cbFile;
+            *pnSize = static_cast< HB_FOFFSET >( findBuffer.ffbl.cbFile );
          if( pnAttr )
             *pnAttr = hb_fsAttrFromRaw( ( HB_FATTR ) findBuffer.ffbl.attrFile );
          if( plJulian )
@@ -547,7 +547,7 @@ HB_BOOL hb_fsOS2QueryPathInfo( const char * pszPathName,
       else
       {
          if( pnSize )
-            *pnSize = ( HB_FOFFSET ) findBuffer.ffb.cbFile;
+            *pnSize = static_cast< HB_FOFFSET >( findBuffer.ffb.cbFile );
          if( pnAttr )
             *pnAttr = hb_fsAttrFromRaw( ( HB_FATTR ) findBuffer.ffb.attrFile );
          if( plJulian )

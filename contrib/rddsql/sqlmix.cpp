@@ -252,7 +252,7 @@ static int hb_mixKeyCompare( PMIXTAG pTag, PMIXKEY pKey1, PMIXKEY pKey2, unsigne
 
    if( i == 0 )
    {
-      if( pKey2->rec == ( HB_ULONG ) -1 )
+      if( pKey2->rec == static_cast< HB_ULONG >( -1 ) )
       {
          /* This condition seems inverted, but it's ok for seek last */
          if( pTag->uiKeyLen > uiLen )
@@ -963,14 +963,14 @@ static void hb_mixTagSkip( PMIXTAG pTag, HB_LONG lSkip )
       {
          if( pNode->Leaf )
          {
-            if( ( HB_LONG ) ( pNode->KeyCount - 1 - uiPos ) >= lSkip )
+            if( static_cast< HB_LONG >( pNode->KeyCount - 1 - uiPos ) >= lSkip )
             {
                uiPos += lSkip;
                lSkip  = 0;
             }
             else if( pNode->KeyCount - 1 > uiPos )
             {
-               lSkip -= ( HB_LONG ) ( pNode->KeyCount - 1 - uiPos );
+               lSkip -= static_cast< HB_LONG >( pNode->KeyCount - 1 - uiPos );
                uiPos  = pNode->KeyCount - 1;
             }
             if( lSkip )
@@ -1019,7 +1019,7 @@ static void hb_mixTagSkip( PMIXTAG pTag, HB_LONG lSkip )
       {
          if( pNode->Leaf )
          {
-            if( ( HB_LONG ) uiPos >= lSkip )
+            if( static_cast< HB_LONG >( uiPos ) >= lSkip )
             {
                uiPos -= lSkip;
                lSkip  = 0;
@@ -1291,7 +1291,7 @@ static HB_ERRCODE sqlmixSeek( SQLMIXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pIt
       pArea->sqlarea.area.fTop = pArea->sqlarea.area.fBottom = HB_FALSE;
       pArea->sqlarea.area.fEof = HB_FALSE;
 
-      pKey = hb_mixKeyPutItem( nullptr, pItem, fFindLast ? ( HB_ULONG ) -1 : 0, pTag );
+      pKey = hb_mixKeyPutItem( nullptr, pItem, fFindLast ? static_cast< HB_ULONG >( -1 ) : 0, pTag );
 
       uiKeyLen = pTag->uiKeyLen;
       if( pTag->bType == 'C' )
@@ -1311,13 +1311,13 @@ static HB_ERRCODE sqlmixSeek( SQLMIXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pIt
          else
             hb_mixTagSkip( pTag, -1 );
 
-         pArea->sqlarea.area.fFound = ! pTag->fEof && ( uiKeyLen == 0 || memcmp( pTag->CurKey->val, pKey->val, ( HB_ULONG ) uiKeyLen ) == 0 );
+         pArea->sqlarea.area.fFound = ! pTag->fEof && ( uiKeyLen == 0 || memcmp( pTag->CurKey->val, pKey->val, static_cast< HB_ULONG >( uiKeyLen ) ) == 0 );
 
          if( ! pArea->sqlarea.area.fFound )
             hb_mixTagSetCurrent( pTag, pNode, ui );
       }
       else
-         pArea->sqlarea.area.fFound = ! pTag->fEof && ( uiKeyLen == 0 || memcmp( pTag->CurKey->val, pKey->val, ( HB_ULONG ) uiKeyLen ) == 0 );
+         pArea->sqlarea.area.fFound = ! pTag->fEof && ( uiKeyLen == 0 || memcmp( pTag->CurKey->val, pKey->val, static_cast< HB_ULONG >( uiKeyLen ) ) == 0 );
 
       fEOF = pTag->fEof;
 
@@ -1329,7 +1329,7 @@ static HB_ERRCODE sqlmixSeek( SQLMIXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pIt
             errCode = SELF_SKIPFILTER( &pArea->sqlarea.area, fFindLast ? -1 : 1 );
             if( errCode != HB_FAILURE && pArea->sqlarea.fPositioned )
             {
-               pArea->sqlarea.area.fFound = ( uiKeyLen == 0 || memcmp( pTag->CurKey->val, pKey->val, ( HB_ULONG ) uiKeyLen ) == 0 );
+               pArea->sqlarea.area.fFound = ( uiKeyLen == 0 || memcmp( pTag->CurKey->val, pKey->val, static_cast< HB_ULONG >( uiKeyLen ) ) == 0 );
                if( ! pArea->sqlarea.area.fFound && ! fSoftSeek )
                   fEOF = HB_TRUE;
             }

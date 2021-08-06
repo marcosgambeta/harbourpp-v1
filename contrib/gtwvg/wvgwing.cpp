@@ -112,8 +112,8 @@
 
 #if defined( __BORLANDC__ ) && ! defined( HB_ARCH_64BIT )
     #undef MAKELONG
-    #define MAKELONG( a, b )  ( ( LONG ) ( ( ( WORD ) ( ( DWORD_PTR ) ( a ) & 0xffff ) ) | \
-                                           ( ( ( DWORD ) ( ( WORD ) ( ( DWORD_PTR ) ( b ) & 0xffff ) ) ) << 16 ) ) )
+    #define MAKELONG( a, b )  ( ( LONG ) ( ( static_cast< WORD >( static_cast< DWORD_PTR >( a ) & 0xffff ) ) | \
+                                           ( ( static_cast< DWORD >( static_cast< WORD >( static_cast< DWORD_PTR >( b ) & 0xffff ) ) ) << 16 ) ) )
 #endif
 
 static HINSTANCE wvg_hInstance( void )

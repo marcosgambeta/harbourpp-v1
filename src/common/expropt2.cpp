@@ -292,7 +292,7 @@ PHB_EXPR hb_compExprReduceMult( PHB_EXPR pSelf, HB_COMP_DECL )
       {
          case HB_ET_LONG:
          {
-            HB_MAXDBL dVal = ( HB_MAXDBL ) pLeft->value.asNum.val.l * ( HB_MAXDBL ) pRight->value.asNum.val.l;
+            HB_MAXDBL dVal = static_cast< HB_MAXDBL >( pLeft->value.asNum.val.l ) * static_cast< HB_MAXDBL >( pRight->value.asNum.val.l );
 
             if( HB_DBL_LIM_LONG( dVal ) )
             {
@@ -466,7 +466,7 @@ PHB_EXPR hb_compExprReduceMinus( PHB_EXPR pSelf, HB_COMP_DECL )
       {
          case HB_ET_LONG:
          {
-            HB_MAXDBL dVal = ( HB_MAXDBL ) pLeft->value.asNum.val.l - ( HB_MAXDBL ) pRight->value.asNum.val.l;
+            HB_MAXDBL dVal = static_cast< HB_MAXDBL >( pLeft->value.asNum.val.l ) - static_cast< HB_MAXDBL >( pRight->value.asNum.val.l );
 
             if( HB_DBL_LIM_LONG( dVal ) )
             {
@@ -643,7 +643,7 @@ static HB_BOOL hb_compExprReducePlusNums( PHB_EXPR pSelf, PHB_EXPR pAdd )
    {
       case HB_ET_LONG:
       {
-         HB_MAXDBL dVal = ( HB_MAXDBL ) pNum->value.asNum.val.l + ( HB_MAXDBL ) pAdd->value.asNum.val.l;
+         HB_MAXDBL dVal = static_cast< HB_MAXDBL >( pNum->value.asNum.val.l ) + static_cast< HB_MAXDBL >( pAdd->value.asNum.val.l );
          if( HB_DBL_LIM_LONG( dVal ) )
             pNum->value.asNum.val.l += pAdd->value.asNum.val.l;
          else
@@ -696,7 +696,7 @@ PHB_EXPR hb_compExprReducePlus( PHB_EXPR pSelf, HB_COMP_DECL )
          {
             case HB_ET_LONG:
             {
-               HB_MAXDBL dVal = ( HB_MAXDBL ) pLeft->value.asNum.val.l + ( HB_MAXDBL ) pRight->value.asNum.val.l;
+               HB_MAXDBL dVal = static_cast< HB_MAXDBL >( pLeft->value.asNum.val.l ) + static_cast< HB_MAXDBL >( pRight->value.asNum.val.l );
 
                if( HB_DBL_LIM_LONG( dVal ) )
                {
@@ -2253,7 +2253,7 @@ HB_BOOL hb_compExprReduceINT( PHB_EXPR pSelf, HB_COMP_DECL )
          pExpr = hb_compExprNewLong( pArg->value.asNum.val.l, HB_COMP_PARAM );
       else
       {
-         HB_MAXDBL dVal = ( HB_MAXDBL ) pArg->value.asNum.val.d;
+         HB_MAXDBL dVal = static_cast< HB_MAXDBL >( pArg->value.asNum.val.d );
          if( HB_DBL_LIM_LONG( dVal ) )
             pExpr = hb_compExprNewLong( static_cast< HB_MAXINT >( pArg->value.asNum.val.d ), HB_COMP_PARAM );
          else

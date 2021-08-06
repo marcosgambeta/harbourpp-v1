@@ -111,8 +111,8 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
          if( lpFree )
             hb_xfree( lpFree );
          if( fResult )
-            return ( HB_FOFFSET ) attrex.nFileSizeLow +
-                 ( ( HB_FOFFSET ) attrex.nFileSizeHigh << 32 );
+            return static_cast< HB_FOFFSET >( attrex.nFileSizeLow ) +
+                 ( static_cast< HB_FOFFSET >( attrex.nFileSizeHigh ) << 32 );
       }
       else
       {
@@ -142,7 +142,7 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
       if( pszFree )
          hb_xfree( pszFree );
       if( fResult )
-         return ( HB_FOFFSET ) statbuf.st_size;
+         return static_cast< HB_FOFFSET >( statbuf.st_size );
 #else
       char * pszFree;
       HB_BOOL fResult;
@@ -156,7 +156,7 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
       if( pszFree )
          hb_xfree( pszFree );
       if( fResult )
-         return ( HB_FOFFSET ) statbuf.st_size;
+         return static_cast< HB_FOFFSET >( statbuf.st_size );
 #endif
    }
    else

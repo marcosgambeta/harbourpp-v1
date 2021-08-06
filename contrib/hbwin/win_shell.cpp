@@ -119,7 +119,7 @@ HB_FUNC( WIN_SHELLNOTIFYICON )
       {
          tnid.uFlags |= NIF_INFO;
       }
-      tnid.dwInfoFlags = ( DWORD ) hb_parnl( 10 );
+      tnid.dwInfoFlags = static_cast< DWORD >( hb_parnl( 10 ) );
    }
    #endif
 

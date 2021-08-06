@@ -656,7 +656,7 @@ static HB_ULONG hb_dbfCalcRecCount( DBFAREAP pArea )
    if( ! pArea->pDataFile )
       return 0;
    else
-      return ( HB_ULONG ) ( ( hb_fileSize( pArea->pDataFile ) -
+      return static_cast< HB_ULONG >( ( hb_fileSize( pArea->pDataFile ) -
                               pArea->uiHeaderLen ) / pArea->uiRecordLen );
 }
 
@@ -691,9 +691,9 @@ static HB_BOOL hb_dbfReadRecord( DBFAREAP pArea )
 
    /* Read data from file */
    if( hb_fileReadAt( pArea->pDataFile, pArea->pRecord, pArea->uiRecordLen,
-                      ( HB_FOFFSET ) pArea->uiHeaderLen +
-                      ( HB_FOFFSET ) ( pArea->ulRecNo - 1 ) *
-                      ( HB_FOFFSET ) pArea->uiRecordLen ) !=
+                      static_cast< HB_FOFFSET >( pArea->uiHeaderLen ) +
+                      static_cast< HB_FOFFSET >( pArea->ulRecNo - 1 ) *
+                      static_cast< HB_FOFFSET >( pArea->uiRecordLen ) ) !=
        static_cast< HB_SIZE >( pArea->uiRecordLen ) )
    {
       hb_dbfErrorRT( pArea, EG_READ, EDBF_READ,
@@ -1436,7 +1436,7 @@ HB_BOOL hb_dbfLockIdxFile( DBFAREAP pArea, PHB_FILE pFile,
          {
             HB_FOFFSET size = 1, offset = pLockData->offset;
             if( pLockData->count != 0 )
-               offset += ( HB_FOFFSET ) ( hb_random_num() * pLockData->size ) + 1;
+               offset += static_cast< HB_FOFFSET >( hb_random_num() * pLockData->size ) + 1;
             else if( pLockData->size != 0 )
                size = pLockData->size + 1;
             if( hb_fileLock( pFile, offset, size,
@@ -1857,7 +1857,7 @@ static HB_ERRCODE hb_dbfSkipRaw( DBFAREAP pArea, HB_LONG lToSkip )
       pArea->area.fBof = bBof;
       pArea->area.fEof = bEof;
    }
-   else if( lToSkip < 0 && ( HB_ULONG ) ( -lToSkip ) >= pArea->ulRecNo )
+   else if( lToSkip < 0 && static_cast< HB_ULONG >( -lToSkip ) >= pArea->ulRecNo )
    {
       errCode = SELF_GOTO( &pArea->area, 1 );
       pArea->area.fBof = HB_TRUE;
@@ -2536,9 +2536,9 @@ static HB_ERRCODE hb_dbfPutRec( DBFAREAP pArea, const HB_BYTE * pBuffer )
 
       /* Write data to file */
       nWritten = hb_fileWriteAt( pArea->pDataFile, pRecord, pArea->uiRecordLen,
-                                 ( HB_FOFFSET ) pArea->uiHeaderLen +
-                                 ( HB_FOFFSET ) ( pArea->ulRecNo - 1 ) *
-                                 ( HB_FOFFSET ) pArea->uiRecordLen );
+                                 static_cast< HB_FOFFSET >( pArea->uiHeaderLen ) +
+                                 static_cast< HB_FOFFSET >( pArea->ulRecNo - 1 ) *
+                                 static_cast< HB_FOFFSET >( pArea->uiRecordLen ) );
       if( pRecord != pArea->pRecord )
          hb_xfree( pRecord );
 
@@ -6334,9 +6334,9 @@ static HB_ERRCODE hb_dbfWriteDBHeader( DBFAREAP pArea )
       if( ! pArea->fShared || ( pArea->uiSetHeader & DB_SETHEADER_EOL ) != 0 )
       {
          /* write eof mark */
-         HB_FOFFSET nOffset = ( HB_FOFFSET ) pArea->uiHeaderLen +
-                              ( HB_FOFFSET ) pArea->uiRecordLen *
-                              ( HB_FOFFSET ) pArea->ulRecCount;
+         HB_FOFFSET nOffset = static_cast< HB_FOFFSET >( pArea->uiHeaderLen ) +
+                              static_cast< HB_FOFFSET >( pArea->uiRecordLen ) *
+                              static_cast< HB_FOFFSET >( pArea->ulRecCount );
          if( hb_fileWriteAt( pArea->pDataFile, "\032", 1, nOffset ) == 1 )
             hb_fileTruncAt( pArea->pDataFile, nOffset + 1 );
          else

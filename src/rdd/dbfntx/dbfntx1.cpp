@@ -155,7 +155,7 @@ static HB_USHORT s_uiRddId;
 #define HB_INTCAST     int
 
 #define hb_ntxKeyFree( K )             hb_xfree( K )
-#define hb_ntxFileOffset( I, B )       ( ( HB_FOFFSET ) ( B ) << ( ( I )->LargeFile ? NTXBLOCKBITS : 0 ) )
+#define hb_ntxFileOffset( I, B )       ( static_cast< HB_FOFFSET >( B ) << ( ( I )->LargeFile ? NTXBLOCKBITS : 0 ) )
 #define hb_ntxPageBuffer( p )          ( ( p )->buffer )
 
 /*
@@ -893,7 +893,7 @@ static void hb_ntxTagRefreshScope( LPTAGINFO pTag )
  */
 static HB_BOOL hb_ntxCheckRecordScope( NTXAREAP pArea, HB_ULONG ulRec )
 {
-   HB_LONG lRecNo = ( HB_LONG ) ulRec;
+   HB_LONG lRecNo = static_cast< HB_LONG >( ulRec );
 
    if( SELF_COUNTSCOPE( &pArea->dbfarea.area, nullptr, &lRecNo ) == HB_SUCCESS && lRecNo == 0 )
    {
@@ -1330,7 +1330,7 @@ static HB_ULONG hb_ntxPageAlloc( LPNTXINDEX pIndex )
    {
       HB_FOFFSET fOffset;
       fOffset = hb_fileSize( pIndex->DiskFile );
-      pIndex->TagBlock = ( HB_ULONG )
+      pIndex->TagBlock = static_cast< HB_ULONG >
                          ( fOffset >> ( pIndex->LargeFile ? NTXBLOCKBITS : 0 ) );
    }
    ulPage = pIndex->TagBlock;
@@ -2396,7 +2396,7 @@ static HB_BOOL hb_ntxTagNextKey( LPTAGINFO pTag )
       pPage = hb_ntxPageLoad( pTag, pTag->stack[ iLevel ].page );
       if( ! pPage )
          return HB_FALSE;
-      if( pTag->stack[ iLevel ].ikey < ( HB_SHORT ) pPage->uiKeys )
+      if( pTag->stack[ iLevel ].ikey < static_cast< HB_SHORT >( pPage->uiKeys ) )
          ulPage = hb_ntxGetKeyPage( pPage, pTag->stack[ iLevel ].ikey + 1 );
       if( ulPage || pTag->stack[ iLevel ].ikey + 1 < pPage->uiKeys )
       {
@@ -2417,7 +2417,7 @@ static HB_BOOL hb_ntxTagNextKey( LPTAGINFO pTag )
             pPage = hb_ntxPageLoad( pTag, pTag->stack[ iLevel ].page );
             if( ! pPage )
                return HB_FALSE;
-            if( pTag->stack[ iLevel ].ikey < ( HB_SHORT ) pPage->uiKeys )
+            if( pTag->stack[ iLevel ].ikey < static_cast< HB_SHORT >( pPage->uiKeys ) )
                break;
          }
          if( iLevel < 0 )
@@ -2959,7 +2959,7 @@ static HB_BOOL hb_ntxTagKeyAdd( LPTAGINFO pTag, LPKEYINFO pKey )
          if( ! pPage )
             return HB_FALSE;
          iLevel = pTag->stackLevel - 1;
-         if( pTag->stack[ iLevel ].ikey < ( HB_SHORT ) pPage->uiKeys )
+         if( pTag->stack[ iLevel ].ikey < static_cast< HB_SHORT >( pPage->uiKeys ) )
             pTag->stack[ iLevel ].ikey++;
       }
    }
@@ -4619,7 +4619,7 @@ static HB_ULONG hb_ntxOrdScopeEval( LPTAGINFO pTag,
                                     HB_EVALSCOPE_FUNC pFunc, void * pParam,
                                     PHB_ITEM pItemLo, PHB_ITEM pItemHi )
 {
-   HB_ULONG ulCount = 0, ulLen = ( HB_ULONG ) pTag->KeyLength;
+   HB_ULONG ulCount = 0, ulLen = static_cast< HB_ULONG >( pTag->KeyLength );
    PHB_ITEM pItemTop = hb_itemNew( nullptr ), pItemBottom = hb_itemNew( nullptr );
 
    hb_ntxTagGetScope( pTag, 0, pItemTop );
@@ -4974,7 +4974,7 @@ static HB_BOOL hb_ntxSortKeyGet( LPNTXSORTINFO pSort, HB_BYTE ** pKeyVal, HB_ULO
          else
             r = m - 1;
       }
-      if( l > ( HB_LONG ) pSort->ulFirst + 1 )
+      if( l > static_cast< HB_LONG >( pSort->ulFirst ) + 1 )
       {
          ulPage = pSort->pSortedPages[ pSort->ulFirst ];
          for( r = pSort->ulFirst + 1; r < l; r++ )
@@ -5039,8 +5039,8 @@ static LPNTXSORTINFO hb_ntxSortNew( LPTAGINFO pTag, HB_ULONG ulRecCount )
 
    pSort = static_cast< LPNTXSORTINFO >( hb_xgrabz( sizeof( NTXSORTINFO ) ) );
 
-   ulMin = ( HB_ULONG ) ceil( sqrt( static_cast< double >( ulRecCount ) ) );
-   ulMax = ( ( HB_ULONG ) ceil( sqrt( static_cast< double >( ulRecCount ) / ( iLen + 4 ) ) ) ) << 7;
+   ulMin = static_cast< HB_ULONG >( ceil( sqrt( static_cast< double >( ulRecCount ) ) ) );
+   ulMax = ( static_cast< HB_ULONG >( ceil( sqrt( static_cast< double >( ulRecCount ) / ( iLen + 4 ) ) ) ) ) << 7;
    /*
     * this effectively increase allocated memory buffer for very large files
     * moving the maximum to: 270'566'400 for 4'294'967'295 records and 256
@@ -5459,17 +5459,17 @@ static HB_ERRCODE hb_ntxTagCreate( LPTAGINFO pTag, HB_BOOL fReindex )
             {
                HB_SIZE nSize;
 
-               if( ulRecCount - ulRecNo >= ( HB_ULONG ) iRecBufSize )
+               if( ulRecCount - ulRecNo >= static_cast< HB_ULONG >( iRecBufSize ) )
                   iRec = iRecBufSize;
                else
                   iRec = ulRecCount - ulRecNo + 1;
-               if( ulNextCount > 0 && ulNextCount < ( HB_ULONG ) iRec )
+               if( ulNextCount > 0 && ulNextCount < static_cast< HB_ULONG >( iRec ) )
                   iRec = static_cast< int >( ulNextCount );
                nSize = static_cast< HB_SIZE >( iRec ) * pArea->dbfarea.uiRecordLen;
                if( hb_fileReadAt( pArea->dbfarea.pDataFile, pSort->pBuffIO, nSize,
-                                  ( HB_FOFFSET ) pArea->dbfarea.uiHeaderLen +
-                                  ( HB_FOFFSET ) ( ulRecNo - 1 ) *
-                                  ( HB_FOFFSET ) pArea->dbfarea.uiRecordLen ) != nSize )
+                                  static_cast< HB_FOFFSET >( pArea->dbfarea.uiHeaderLen ) +
+                                  static_cast< HB_FOFFSET >( ulRecNo - 1 ) *
+                                  static_cast< HB_FOFFSET >( pArea->dbfarea.uiRecordLen ) ) != nSize )
                {
                   hb_ntxErrorRT( pTag->pIndex->pArea, EG_READ, EDBF_READ,
                                  pTag->pIndex->IndexName, hb_fsError(), 0, nullptr );
@@ -7327,7 +7327,7 @@ static HB_ERRCODE hb_ntxOrderInfo( NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
                {
                   HB_ULONG ulRecCount, ulRecNo;
                   SELF_RECCOUNT( &pArea->dbfarea.area, &ulRecCount );
-                  ulRecNo = ( HB_ULONG ) dPos * ulRecCount + 1;
+                  ulRecNo = static_cast< HB_ULONG >( dPos ) * ulRecCount + 1;
                   if( ulRecNo >= ulRecCount )
                      ulRecNo = ulRecCount;
                   if( SELF_GOTO( &pArea->dbfarea.area, ulRecNo ) == HB_SUCCESS &&
