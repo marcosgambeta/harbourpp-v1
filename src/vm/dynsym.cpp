@@ -99,7 +99,7 @@ static PHB_DYNS hb_dynsymInsert( PHB_SYMB pSymbol, HB_SYMCNT uiPos )
 {
    PHB_DYNS pDynSym;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymInsert(%p, %u)", ( void * ) pSymbol, uiPos ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymInsert(%p, %u)", static_cast< void * >( pSymbol ), uiPos ) );
 
    if( ++s_uiDynSymbols == 0 )
    {
@@ -113,8 +113,7 @@ static PHB_DYNS hb_dynsymInsert( PHB_SYMB pSymbol, HB_SYMCNT uiPos )
    else
    {
       s_pDynItems = static_cast< PDYNHB_ITEM >( hb_xrealloc( s_pDynItems, s_uiDynSymbols * sizeof( DYNHB_ITEM ) ) );
-      memmove( &s_pDynItems[ uiPos + 1 ], &s_pDynItems[ uiPos ],
-               sizeof( DYNHB_ITEM ) * ( s_uiDynSymbols - uiPos - 1 ) );
+      memmove( &s_pDynItems[ uiPos + 1 ], &s_pDynItems[ uiPos ], sizeof( DYNHB_ITEM ) * ( s_uiDynSymbols - uiPos - 1 ) );
    }
 
    pDynSym = static_cast< PHB_DYNS >( hb_xgrabz( sizeof( HB_DYNS ) ) );
@@ -134,7 +133,7 @@ static PHB_DYNS hb_dynsymPos( const char * szName, HB_SYMCNT * puiPos )
 {
    HB_SYMCNT uiFirst, uiLast, uiMiddle;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymPos(%s, %p)", szName, ( void * ) puiPos ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymPos(%s, %p)", szName, static_cast< void * >( puiPos ) ) );
 
    uiFirst = 0;
    uiLast = s_uiDynSymbols;
@@ -218,7 +217,7 @@ PHB_DYNS hb_dynsymFind( const char * szName )
       else /* if( iCmp > 0 ) */
       {
          uiFirst = uiMiddle + 1;
-      }   
+      }
    }
 
    HB_DYNSYM_UNLOCK();
@@ -248,7 +247,7 @@ PHB_DYNS hb_dynsymNew( PHB_SYMB pSymbol )
    PHB_DYNS pDynSym;
    HB_SYMCNT uiPos;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymNew(%p)", ( void * ) pSymbol ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymNew(%p)", static_cast< void * >( pSymbol ) ) );
 
    HB_DYNSYM_LOCK();
 
@@ -261,9 +260,7 @@ PHB_DYNS hb_dynsymNew( PHB_SYMB pSymbol )
    {
       pSymbol->pDynSym = pDynSym;
 
-      if( ( pDynSym->pSymbol->scope.value &
-            pSymbol->scope.value & HB_FS_LOCAL ) != 0 &&
-            pDynSym->pSymbol != pSymbol )
+      if( ( pDynSym->pSymbol->scope.value & pSymbol->scope.value & HB_FS_LOCAL ) != 0 && pDynSym->pSymbol != pSymbol )
       {
          /* Someone is using linker which allows to create binaries
           * with multiple function definitions. It's a big chance that
@@ -347,8 +344,7 @@ PHB_DYNS hb_dynsymNew( PHB_SYMB pSymbol )
          }
       }
 
-      if( ( ! pDynSym->pSymbol->value.pFunPtr && pSymbol->value.pFunPtr ) ||
-          ( pSymbol->scope.value & HB_FS_LOCAL ) != 0 )
+      if( ( ! pDynSym->pSymbol->value.pFunPtr && pSymbol->value.pFunPtr ) || ( pSymbol->scope.value & HB_FS_LOCAL ) != 0 )
       {
          pDynSym->pSymbol = pSymbol;
 #ifndef HB_NO_PROFILER
@@ -379,7 +375,7 @@ PHB_DYNS hb_dynsymGetCase( const char * szName )
    {
       pDynSym = hb_dynsymInsert( hb_symbolAlloc( szName ), uiPos );
    }
-   
+
    HB_DYNSYM_UNLOCK();
 
    return pDynSym;
@@ -411,7 +407,7 @@ PHB_DYNS hb_dynsymGet( const char * szName )  /* finds and creates a symbol if n
          else
          {
             *pDest++ = cChar;
-         }   
+         }
       }
       while( --iLen );
       *pDest = '\0';
@@ -446,7 +442,7 @@ PHB_DYNS hb_dynsymFindName( const char * szName )  /* finds a symbol */
          else
          {
             *pDest++ = cChar;
-         }   
+         }
       }
       while( --iLen );
       *pDest = '\0';
@@ -474,56 +470,56 @@ PHB_SYMB hb_dynsymFindSymbol( const char * szName )
 
 PHB_SYMB hb_dynsymSymbol( PHB_DYNS pDynSym )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymSymbol(%p)", ( void * ) pDynSym ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymSymbol(%p)", static_cast< void * >( pDynSym ) ) );
 
    return pDynSym->pSymbol;
 }
 
 const char * hb_dynsymName( PHB_DYNS pDynSym )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymName(%p)", ( void * ) pDynSym ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymName(%p)", static_cast< void * >( pDynSym ) ) );
 
    return pDynSym->pSymbol->szName;
 }
 
 HB_BOOL hb_dynsymIsFunction( PHB_DYNS pDynSym )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymIsFunction(%p)", ( void * ) pDynSym ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymIsFunction(%p)", static_cast< void * >( pDynSym ) ) );
 
    return pDynSym->pSymbol->value.pFunPtr != nullptr;
 }
 
 HB_BOOL hb_dynsymIsMemvar( PHB_DYNS pDynSym )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymIsMemvar(%p)", ( void * ) pDynSym ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymIsMemvar(%p)", static_cast< void * >( pDynSym ) ) );
 
    return hb_dynsymHandles( pDynSym )->pMemvar != nullptr;
 }
 
 PHB_ITEM hb_dynsymGetMemvar( PHB_DYNS pDynSym )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymGetMemvar(%p)", ( void * ) pDynSym ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymGetMemvar(%p)", static_cast< void * >( pDynSym ) ) );
 
-   return ( PHB_ITEM ) hb_dynsymHandles( pDynSym )->pMemvar;
+   return static_cast< PHB_ITEM >( hb_dynsymHandles( pDynSym )->pMemvar );
 }
 
 void hb_dynsymSetMemvar( PHB_DYNS pDynSym, PHB_ITEM pMemvar )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymSetMemvar(%p, %p)", ( void * ) pDynSym, ( void * ) pMemvar ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymSetMemvar(%p, %p)", static_cast< void * >( pDynSym ), static_cast< void * >( pMemvar ) ) );
 
-   hb_dynsymHandles( pDynSym )->pMemvar = ( void * ) pMemvar;
+   hb_dynsymHandles( pDynSym )->pMemvar = static_cast< void * >( pMemvar );
 }
 
 int hb_dynsymAreaHandle( PHB_DYNS pDynSym )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymAreaHandle(%p)", ( void * ) pDynSym ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymAreaHandle(%p)", static_cast< void * >( pDynSym ) ) );
 
    return hb_dynsymHandles( pDynSym )->uiArea;
 }
 
 void hb_dynsymSetAreaHandle( PHB_DYNS pDynSym, int iArea )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymSetAreaHandle(%p, %d)", ( void * ) pDynSym, iArea ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymSetAreaHandle(%p, %d)", static_cast< void * >( pDynSym ), iArea ) );
 
    hb_dynsymHandles( pDynSym )->uiArea = static_cast< HB_USHORT >( iArea );
 }
@@ -538,7 +534,7 @@ static PHB_DYNS hb_dynsymGetByIndex( HB_LONG lIndex )
    {
       pDynSym = s_pDynItems[ lIndex - 1 ].pDynSym;
    }
-   
+
    HB_DYNSYM_UNLOCK();
 
    return pDynSym;
@@ -555,7 +551,7 @@ HB_SYMCNT hb_dynsymToNum( PHB_DYNS pDynSym )
 {
    HB_SYMCNT uiSymNum;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymToNum(%p)", ( void * ) pDynSym ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymToNum(%p)", static_cast< void * >( pDynSym ) ) );
 
    HB_DYNSYM_LOCK();
 
@@ -563,10 +559,8 @@ HB_SYMCNT hb_dynsymToNum( PHB_DYNS pDynSym )
 
    if( uiSymNum > s_uiDynIdxSize )
    {
-      s_pDynIndex = static_cast< PDYNHB_ITEM >(
-                    hb_xrealloc( s_pDynIndex, uiSymNum * sizeof( DYNHB_ITEM ) ) );
-      memset( &s_pDynIndex[ s_uiDynIdxSize ], 0, ( uiSymNum - s_uiDynIdxSize ) *
-                                                 sizeof( DYNHB_ITEM ) );
+      s_pDynIndex = static_cast< PDYNHB_ITEM >( hb_xrealloc( s_pDynIndex, uiSymNum * sizeof( DYNHB_ITEM ) ) );
+      memset( &s_pDynIndex[ s_uiDynIdxSize ], 0, ( uiSymNum - s_uiDynIdxSize ) * sizeof( DYNHB_ITEM ) );
       s_uiDynIdxSize = uiSymNum;
    }
 
@@ -574,7 +568,7 @@ HB_SYMCNT hb_dynsymToNum( PHB_DYNS pDynSym )
    {
       s_pDynIndex[ uiSymNum - 1 ].pDynSym = pDynSym;
    }
-   
+
    HB_DYNSYM_UNLOCK();
 
    return uiSymNum;
@@ -588,8 +582,7 @@ PHB_DYNS hb_dynsymFromNum( HB_SYMCNT uiSymNum )
 
    HB_DYNSYM_LOCK();
 
-   pDynSym = uiSymNum > 0 && uiSymNum <= s_uiDynIdxSize ?
-             s_pDynIndex[ uiSymNum - 1 ].pDynSym : nullptr;
+   pDynSym = uiSymNum > 0 && uiSymNum <= s_uiDynIdxSize ? s_pDynIndex[ uiSymNum - 1 ].pDynSym : nullptr;
 
    HB_DYNSYM_UNLOCK();
 
@@ -601,7 +594,7 @@ void hb_dynsymEval( PHB_DYNS_FUNC pFunction, void * Cargo )
    PHB_DYNS pDynSym = nullptr;
    HB_SYMCNT uiPos = 0;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymEval(%p, %p)", ( void * ) pFunction, Cargo ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymEval(%p, %p)", static_cast< void * >( pFunction ), Cargo ) );
 
    for( ;; )
    {
@@ -618,7 +611,7 @@ void hb_dynsymEval( PHB_DYNS_FUNC pFunction, void * Cargo )
             if( ++uiPos >= s_uiDynSymbols )
             {
                break;
-            }   
+            }
          }
       }
       if( ++uiPos < s_uiDynSymbols )
@@ -635,7 +628,7 @@ void hb_dynsymEval( PHB_DYNS_FUNC pFunction, void * Cargo )
       if( ! pDynSym || ! ( pFunction ) ( pDynSym, Cargo ) )
       {
          break;
-      }   
+      }
    }
 }
 
@@ -643,7 +636,7 @@ void hb_dynsymProtectEval( PHB_DYNS_FUNC pFunction, void * Cargo )
 {
    HB_SYMCNT uiPos = 0;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymProtectEval(%p, %p)", ( void * ) pFunction, Cargo ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymProtectEval(%p, %p)", static_cast< void * >( pFunction ), Cargo ) );
 
    HB_DYNSYM_LOCK();
 
@@ -652,7 +645,7 @@ void hb_dynsymProtectEval( PHB_DYNS_FUNC pFunction, void * Cargo )
       if( ! ( pFunction ) ( s_pDynItems[ uiPos++ ].pDynSym, Cargo ) )
       {
          break;
-      }   
+      }
    }
 
    HB_DYNSYM_UNLOCK();
@@ -733,8 +726,7 @@ HB_FUNC( __DYNSGETINDEX ) /* Gimme index number of symbol: dsIndex = __dynsymGet
    hb_retnint( uiPos );
 }
 
-HB_FUNC( HB_ISFUNCTION ) /* returns .T. if a symbol has a function/procedure pointer,
-                            given its name */
+HB_FUNC( HB_ISFUNCTION ) /* returns .T. if a symbol has a function/procedure pointer, given its name */
 {
    HB_STACK_TLS_PRELOAD
    const char * szProc = hb_parc( 1 );
@@ -746,26 +738,22 @@ HB_FUNC( HB_ISFUNCTION ) /* returns .T. if a symbol has a function/procedure poi
       if( pDynSym )
       {
          fResult = hb_dynsymIsFunction( pDynSym );
-      }   
+      }
    }
 
    hb_retl( fResult );
 }
 
-HB_FUNC( __DYNSISFUN ) /* returns .T. if a symbol has a function/procedure pointer,
-                          given its symbol index or name */
+HB_FUNC( __DYNSISFUN ) /* returns .T. if a symbol has a function/procedure pointer, given its symbol index or name */
 {
    HB_STACK_TLS_PRELOAD
    const char * szName = hb_parc( 1 );
-   PHB_DYNS pDynSym = szName ? hb_dynsymFindName( szName ) :
-                               hb_dynsymGetByIndex( hb_parnl( 1 ) );
+   PHB_DYNS pDynSym = szName ? hb_dynsymFindName( szName ) : hb_dynsymGetByIndex( hb_parnl( 1 ) );
 
    hb_retl( pDynSym && hb_dynsymIsFunction( pDynSym ) );
 }
 
-HB_FUNC( __DYNSGETPRF ) /* profiler: It returns an array with a function or procedure
-                                     called and consumed times { nTimes, nTime },
-                                     given the dynamic symbol index */
+HB_FUNC( __DYNSGETPRF ) /* profiler: It returns an array with a function or procedure called and consumed times { nTimes, nTime }, given the dynamic symbol index */
 {
    HB_STACK_TLS_PRELOAD
 #ifndef HB_NO_PROFILER
@@ -804,13 +792,13 @@ HB_FUNC( __DYNSN2SYM )
    if( szName )
    {
       hb_itemPutSymbol( hb_stackReturnItem(), hb_dynsymGet( szName )->pSymbol );
-   }   
+   }
 }
 
 HB_FUNC( __DYNSP2NAME )
 {
    HB_STACK_TLS_PRELOAD
-   PHB_DYNS pDynSym = ( PHB_DYNS ) hb_parptr( 1 );
+   PHB_DYNS pDynSym = static_cast< PHB_DYNS >( hb_parptr( 1 ) );
 
    hb_retc( pDynSym != nullptr ? pDynSym->pSymbol->szName : nullptr );
 }
@@ -831,9 +819,7 @@ static int hb_dynsymVerify( void )
       HB_SYMCNT uiAt;
       int iCmp;
 
-      if( uiPos > 0 &&
-          ( iCmp = strcmp( s_pDynItems[ uiPos - 1 ].pDynSym->pSymbol->szName,
-                           pDynSym->pSymbol->szName ) ) <= 0 )
+      if( uiPos > 0 && ( iCmp = strcmp( s_pDynItems[ uiPos - 1 ].pDynSym->pSymbol->szName, pDynSym->pSymbol->szName ) ) <= 0 )
       {
          iResult = iCmp == 0 ? -1 : -2;
       }

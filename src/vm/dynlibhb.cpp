@@ -106,25 +106,27 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
 
    if( hb_itemGetCLen( pLibName ) > 0 )
    {
-      int argc = pArgs ? static_cast< int >( hb_arrayLen( pArgs ) ) : 0, i;
+      int argc = pArgs ? static_cast< int >( hb_arrayLen( pArgs ) ) : 0;
       const char ** argv = nullptr;
 
       if( argc > 0 )
       {
          argv = static_cast< const char ** >( hb_xgrab( sizeof( char * ) * argc ) );
-         for( i = 0; i < argc; ++i )
+         for( int i = 0; i < argc; ++i )
+         {
             argv[ i ] = hb_arrayGetCPtr( pArgs, i + 1 );
+         }
       }
 
       if( hb_vmLockModuleSymbols() )
       {
          /* use stack address as first level marker */
-         hb_vmBeginSymbolGroup( ( void * ) hb_stackId(), HB_TRUE );
+         hb_vmBeginSymbolGroup( static_cast< void * >( hb_stackId() ), HB_TRUE );
 #if defined( HB_OS_WIN )
          {
             void * hFileName;
 
-            hDynLib = ( void * ) LoadLibrary( HB_ITEMGETSTR( pLibName, &hFileName, nullptr ) );
+            hDynLib = static_cast< void * >( LoadLibrary( HB_ITEMGETSTR( pLibName, &hFileName, nullptr ) ) );
 
             hb_strfree( hFileName );
          }
@@ -132,14 +134,13 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
          {
             HB_UCHAR LoadError[ 256 ] = "";  /* Area for load failure information */
             HMODULE hDynModule;
-            if( DosLoadModule( ( PSZ ) LoadError, sizeof( LoadError ),
-                               ( PCSZ ) hb_itemGetCPtr( pLibName ), &hDynModule ) == NO_ERROR )
+            if( DosLoadModule( static_cast< PSZ >( LoadError ), sizeof( LoadError ), static_cast< PCSZ >( hb_itemGetCPtr( pLibName ) ), &hDynModule ) == NO_ERROR )
             {
-               hDynLib = ( void * ) hDynModule;
-            }   
+               hDynLib = static_cast< void * >( hDynModule );
+            }
          }
 #elif defined( HB_HAS_DLFCN )
-         hDynLib = ( void * ) dlopen( hb_itemGetCPtr( pLibName ), RTLD_LAZY | RTLD_GLOBAL );
+         hDynLib = static_cast< void * >( dlopen( hb_itemGetCPtr( pLibName ), RTLD_LAZY | RTLD_GLOBAL ) );
 
          if( ! hDynLib )
          {
@@ -160,13 +161,13 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
 
       if( argv )
       {
-         hb_xfree( ( void * ) argv );
-      }   
+         hb_xfree( static_cast< void * >( argv ) );
+      }
    }
 
    if( hDynLib )
    {
-      void ** pLibPtr = ( void ** ) hb_gcAllocate( sizeof( void * ), &s_gcDynlibFuncs );
+      void ** pLibPtr = static_cast< void ** >( hb_gcAllocate( sizeof( void * ), &s_gcDynlibFuncs ) );
       *pLibPtr = hDynLib;
       return hb_itemPutPtrGC( nullptr, pLibPtr );
    }
@@ -177,10 +178,9 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
 HB_BOOL hb_libFree( PHB_ITEM pDynLib )
 {
    HB_BOOL fResult = HB_FALSE;
-   void ** pDynLibPtr = ( void ** ) hb_itemGetPtrGC( pDynLib, &s_gcDynlibFuncs );
+   void ** pDynLibPtr = static_cast< void ** >( hb_itemGetPtrGC( pDynLib, &s_gcDynlibFuncs ) );
 
-   if( pDynLibPtr && *pDynLibPtr &&
-       hb_vmLockModuleSymbols() )
+   if( pDynLibPtr && *pDynLibPtr && hb_vmLockModuleSymbols() )
    {
       void * hDynLib = *pDynLibPtr;
       if( hDynLib )
@@ -188,9 +188,9 @@ HB_BOOL hb_libFree( PHB_ITEM pDynLib )
          *pDynLibPtr = nullptr;
          hb_vmExitSymbolGroup( hDynLib );
 #if defined( HB_OS_WIN )
-         fResult = FreeLibrary( ( HMODULE ) hDynLib );
+         fResult = FreeLibrary( static_cast< HMODULE >( hDynLib ) );
 #elif defined( HB_OS_OS2 )
-         fResult = DosFreeModule( ( HMODULE ) hDynLib ) == NO_ERROR;
+         fResult = DosFreeModule( static_cast< HMODULE >( hDynLib ) ) == NO_ERROR;
 #elif defined( HB_HAS_DLFCN )
          fResult = dlclose( hDynLib ) == 0;
 #elif defined( HB_CAUSEWAY_DLL )
@@ -206,7 +206,7 @@ HB_BOOL hb_libFree( PHB_ITEM pDynLib )
 
 void * hb_libHandle( PHB_ITEM pDynLib )
 {
-   void ** pDynLibPtr = ( void ** ) hb_itemGetPtrGC( pDynLib, &s_gcDynlibFuncs );
+   void ** pDynLibPtr = static_cast< void ** >( hb_itemGetPtrGC( pDynLib, &s_gcDynlibFuncs ) );
 
    return pDynLibPtr ? *pDynLibPtr : nullptr;
 }
@@ -219,17 +219,17 @@ void * hb_libSymAddr( PHB_ITEM pDynLib, const char * pszSymbol )
    {
 #if defined( HB_OS_WIN_CE )
       LPTSTR lpSymbol = hb_mbtowc( pszSymbol );
-      void * hFuncAddr = ( void * ) GetProcAddress( ( HMODULE ) hDynLib, lpSymbol );
+      void * hFuncAddr = static_cast< void * >( GetProcAddress( ( HMODULE ) hDynLib, lpSymbol ) );
       hb_xfree( lpSymbol );
       return hFuncAddr;
 #elif defined( HB_OS_WIN )
-      return ( void * ) GetProcAddress( ( HMODULE ) hDynLib, pszSymbol );
+      return reinterpret_cast< void * >( GetProcAddress( static_cast< HMODULE >( hDynLib ), pszSymbol ) );
 #elif defined( HB_OS_OS2 )
       PFN pProcAddr = nullptr;
-      if( DosQueryProcAddr( ( HMODULE ) hDynLib, 0, ( PCSZ ) pszSymbol, &pProcAddr ) == NO_ERROR )
+      if( DosQueryProcAddr( static_cast< HMODULE >( hDynLib ), 0, static_cast< PCSZ >( pszSymbol ), &pProcAddr ) == NO_ERROR )
       {
-         return ( void * ) pProcAddr;
-      }   
+         return static_cast< void * >( pProcAddr );
+      }
 #elif defined( HB_HAS_DLFCN )
       return dlsym( hDynLib, pszSymbol );
 #elif defined( HB_CAUSEWAY_DLL )
@@ -243,14 +243,16 @@ void * hb_libSymAddr( PHB_ITEM pDynLib, const char * pszSymbol )
 
 HB_FUNC( HB_LIBLOAD )
 {
-   int iPCount = hb_pcount(), i;
+   int iPCount = hb_pcount();
    PHB_ITEM pArgs = nullptr;
 
    if( iPCount > 1 )
    {
       pArgs = hb_itemArrayNew( iPCount - 1 );
-      for( i = 2; i <= iPCount; ++i )
+      for( int i = 2; i <= iPCount; ++i )
+      {
          hb_arraySet( pArgs, i, hb_param( i, HB_IT_ANY ) );
+      }
    }
 
    hb_itemReturnRelease( hb_libLoad( hb_param( 1, HB_IT_ANY ), pArgs ) );
@@ -258,7 +260,7 @@ HB_FUNC( HB_LIBLOAD )
    if( pArgs )
    {
       hb_itemRelease( pArgs );
-   }   
+   }
 }
 
 HB_FUNC( HB_LIBFREE )

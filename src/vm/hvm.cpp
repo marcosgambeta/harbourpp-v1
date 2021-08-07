@@ -2280,8 +2280,8 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 
          case HB_P_PUSHDOUBLE:
             hb_vmPushDoubleConst( HB_PCODE_MKDOUBLE( &pCode[ 1 ] ),
-                                  ( int ) *( const unsigned char * ) &pCode[ 1 + sizeof( double ) ],
-                                  ( int ) *( const unsigned char * ) &pCode[ 2 + sizeof( double ) ] );
+                                  static_cast< int >( *( const unsigned char * ) &pCode[ 1 + sizeof( double ) ] ),
+                                  static_cast< int >( *( const unsigned char * ) &pCode[ 2 + sizeof( double ) ] ) );
             pCode += 3 + sizeof( double );
             break;
 

@@ -58,7 +58,6 @@ HB_FUNC( EVAL )
    if( pItem )
    {
       int iPCount = hb_pcount();
-      int iParam;
 
       hb_vmPushEvalSym();
       hb_vmPush( pItem );
@@ -66,8 +65,10 @@ HB_FUNC( EVAL )
        * because we need to pass the references too.
        * hb_param() is dereferencing the passed parameters
        */
-      for( iParam = 2; iParam <= iPCount; iParam++ )
+      for( int iParam = 2; iParam <= iPCount; iParam++ )
+      {
          hb_vmPush( hb_stackItemFromBase( iParam ) );
+      }
 
       hb_vmSend( static_cast< HB_USHORT >( iPCount - 1 ) );
    }

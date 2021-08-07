@@ -63,8 +63,7 @@ HB_FUNC( HB_HASH )
    else
    {
       PHB_ITEM pHash = hb_hashNew( nullptr );
-      int iParam;
-      for( iParam = 1; iParam <= iPCount; iParam += 2 )
+      for( int iParam = 1; iParam <= iPCount; iParam += 2 )
       {
          PHB_ITEM pKey = hb_param( iParam, HB_IT_HASHKEY );
          PHB_ITEM pValue = hb_param( iParam + 1, HB_IT_ANY );
@@ -96,7 +95,7 @@ HB_FUNC( HB_HHASKEY )
    else
    {
       hb_errRT_BASE( EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HPOS )
@@ -113,7 +112,7 @@ HB_FUNC( HB_HPOS )
    else
    {
       hb_errRT_BASE( EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HGET )
@@ -131,12 +130,12 @@ HB_FUNC( HB_HGET )
       else
       {
          hb_errRT_BASE( EG_BOUND, 1132, nullptr, hb_langDGetErrorDesc( EG_ARRACCESS ), 2, pHash, pKey );
-      }   
+      }
    }
    else
    {
       hb_errRT_BASE( EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HGETDEF )
@@ -157,13 +156,13 @@ HB_FUNC( HB_HGETDEF )
          if( pDefault )
          {
             hb_itemReturn( pDefault );
-         }   
+         }
       }
    }
    else
    {
       hb_errRT_BASE( EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HSETDEF )
@@ -180,14 +179,14 @@ HB_FUNC( HB_HSETDEF )
       {
          hb_hashSetFlags( pHash, HB_HASH_AUTOADD_ACCESS );
       }
-      
+
       pDest = hb_hashGetItemPtr( pHash, pKey, HB_HASH_AUTOADD_ACCESS );
 
       if( ( iFlags & HB_HASH_AUTOADD_ACCESS ) == 0 )
       {
          hb_hashClearFlags( pHash, HB_HASH_AUTOADD_ACCESS );
       }
-      
+
       if( pDest )
       {
          if( pDefault && ! hb_itemTypeCmp( pDest, pDefault ) )
@@ -200,7 +199,7 @@ HB_FUNC( HB_HSETDEF )
    else
    {
       hb_errRT_BASE( EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HGETREF )
@@ -217,7 +216,7 @@ HB_FUNC( HB_HGETREF )
    else
    {
       hb_retl( HB_FALSE );
-   }   
+   }
 }
 
 HB_FUNC( HB_HSET )
@@ -234,7 +233,7 @@ HB_FUNC( HB_HSET )
    else
    {
       hb_errRT_BASE( EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HDEL )
@@ -250,7 +249,7 @@ HB_FUNC( HB_HDEL )
    else
    {
       hb_errRT_BASE( EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HKEYAT )
@@ -268,12 +267,12 @@ HB_FUNC( HB_HKEYAT )
       else
       {
          hb_errRT_BASE( EG_BOUND, 1187, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-      }   
+      }
    }
    else
    {
       hb_errRT_BASE( EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HVALUEAT )
@@ -294,18 +293,18 @@ HB_FUNC( HB_HVALUEAT )
          else
          {
             pValue = pItem;
-         }   
+         }
          hb_itemReturn( pValue );
       }
       else
       {
          hb_errRT_BASE( EG_BOUND, 1187, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-      }   
+      }
    }
    else
    {
       hb_errRT_BASE( EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HPAIRAT )
@@ -337,12 +336,12 @@ HB_FUNC( HB_HPAIRAT )
       else
       {
          hb_errRT_BASE( EG_BOUND, 1187, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-      }   
+      }
    }
    else
    {
       hb_errRT_BASE( EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HDELAT )
@@ -359,14 +358,13 @@ HB_FUNC( HB_HDELAT )
       else
       {
          hb_errRT_BASE( EG_BOUND, 1133, nullptr, hb_langDGetErrorDesc( EG_ARRASSIGN ), 2, pHash, pPos );
-      }   
+      }
    }
    else
    {
       hb_errRT_BASE( EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
-
 
 HB_FUNC( HB_HKEYS )
 {
@@ -379,7 +377,7 @@ HB_FUNC( HB_HKEYS )
    else
    {
       hb_errRT_BASE( EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HVALUES )
@@ -393,7 +391,7 @@ HB_FUNC( HB_HVALUES )
    else
    {
       hb_errRT_BASE( EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HCLEAR )
@@ -408,7 +406,7 @@ HB_FUNC( HB_HCLEAR )
    else
    {
       hb_errRT_BASE( EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HFILL )
@@ -422,14 +420,16 @@ HB_FUNC( HB_HFILL )
       HB_SIZE nPos = 0;
 
       while( ( pDest = hb_hashGetValueAt( pHash, ++nPos ) ) != nullptr )
+      {
          hb_itemCopy( pDest, pValue );
+      }
 
       hb_itemReturn( pHash );
    }
    else
    {
       hb_errRT_BASE( EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HCLONE )
@@ -443,7 +443,7 @@ HB_FUNC( HB_HCLONE )
    else
    {
       hb_errRT_BASE( EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HCOPY )
@@ -475,7 +475,7 @@ HB_FUNC( HB_HCOPY )
             else
             {
                break;
-            }   
+            }
             ++nStart;
          }
       }
@@ -484,7 +484,7 @@ HB_FUNC( HB_HCOPY )
    else
    {
       hb_errRT_BASE( EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HMERGE )
@@ -518,26 +518,26 @@ HB_FUNC( HB_HMERGE )
                      if( HB_IS_LOGICAL( pReturn ) && hb_itemGetL( pReturn ) )
                      {
                         hb_hashAdd( pDest, pKey, pValue );
-                     }   
+                     }
                   }
                }
                else
                {
                   break;
-               }   
+               }
             }
          }
          else
          {
             hb_hashJoin( pDest, pSource, pAction ? hb_itemGetNI( pAction ) : HB_HASH_UNION );
-         }   
+         }
       }
       hb_itemReturn( pDest );
    }
    else
    {
       hb_errRT_BASE( EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HEVAL )
@@ -572,7 +572,7 @@ HB_FUNC( HB_HEVAL )
          else
          {
             break;
-         }   
+         }
          ++nStart;
       }
 
@@ -581,7 +581,7 @@ HB_FUNC( HB_HEVAL )
    else
    {
       hb_errRT_BASE( EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HSCAN )
@@ -627,7 +627,7 @@ HB_FUNC( HB_HSCAN )
             else
             {
                break;
-            }   
+            }
             ++nStart;
          }
       }
@@ -647,7 +647,7 @@ HB_FUNC( HB_HSCAN )
             else
             {
                break;
-            }   
+            }
             ++nStart;
          }
       }
@@ -659,8 +659,7 @@ HB_FUNC( HB_HSCAN )
             PHB_ITEM pItem = hb_hashGetValueAt( pHash, nStart );
             if( pItem )
             {
-               if( HB_IS_NUMERIC( pItem ) && hb_itemGetNInt( pItem ) == nValue &&
-                   hb_itemGetND( pItem ) == static_cast< double >( nValue ) )
+               if( HB_IS_NUMERIC( pItem ) && hb_itemGetNInt( pItem ) == nValue && hb_itemGetND( pItem ) == static_cast< double >( nValue ) )
                {
                   fFound = HB_TRUE;
                   break;
@@ -669,7 +668,7 @@ HB_FUNC( HB_HSCAN )
             else
             {
                break;
-            }   
+            }
             ++nStart;
          }
       }
@@ -690,7 +689,7 @@ HB_FUNC( HB_HSCAN )
             else
             {
                break;
-            }   
+            }
             ++nStart;
          }
       }
@@ -712,7 +711,7 @@ HB_FUNC( HB_HSCAN )
             else
             {
                break;
-            }   
+            }
             ++nStart;
          }
       }
@@ -733,7 +732,7 @@ HB_FUNC( HB_HSCAN )
             else
             {
                break;
-            }   
+            }
             ++nStart;
          }
       }
@@ -753,7 +752,7 @@ HB_FUNC( HB_HSCAN )
             else
             {
                break;
-            }   
+            }
             ++nStart;
          }
       }
@@ -774,7 +773,7 @@ HB_FUNC( HB_HSCAN )
             else
             {
                break;
-            }   
+            }
             ++nStart;
          }
       }
@@ -795,7 +794,7 @@ HB_FUNC( HB_HSCAN )
             else
             {
                break;
-            }   
+            }
             ++nStart;
          }
       }
@@ -806,8 +805,7 @@ HB_FUNC( HB_HSCAN )
             PHB_ITEM pItem = hb_hashGetValueAt( pHash, nStart );
             if( pItem )
             {
-               if( HB_IS_HASH( pItem ) &&
-                   pItem->item.asHash.value == pValue->item.asHash.value )
+               if( HB_IS_HASH( pItem ) && pItem->item.asHash.value == pValue->item.asHash.value )
                {
                   fFound = HB_TRUE;
                   break;
@@ -816,7 +814,7 @@ HB_FUNC( HB_HSCAN )
             else
             {
                break;
-            }   
+            }
             ++nStart;
          }
       }
@@ -826,7 +824,7 @@ HB_FUNC( HB_HSCAN )
    else
    {
       hb_errRT_BASE( EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HSORT )
@@ -841,7 +839,7 @@ HB_FUNC( HB_HSORT )
    else
    {
       hb_errRT_BASE( EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HCASEMATCH )
@@ -875,7 +873,7 @@ HB_FUNC( HB_HCASEMATCH )
    else
    {
       hb_errRT_BASE( EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HBINARY )
@@ -909,7 +907,7 @@ HB_FUNC( HB_HBINARY )
    else
    {
       hb_errRT_BASE( EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HAUTOADD )
@@ -927,20 +925,19 @@ HB_FUNC( HB_HAUTOADD )
       {
          hb_hashSetDefault( pHash, hb_param( 3, HB_IT_ANY ) );
       }
-      
+
       if( pValue )
       {
          if( HB_IS_LOGICAL( pValue ) )
          {
             if( hb_itemGetL( pValue ) )
             {
-               hb_hashSetFlags( pHash, hb_hashGetDefault( pHash ) ?
-                           HB_HASH_AUTOADD_ALWAYS : HB_HASH_AUTOADD_ASSIGN );
+               hb_hashSetFlags( pHash, hb_hashGetDefault( pHash ) ? HB_HASH_AUTOADD_ALWAYS : HB_HASH_AUTOADD_ASSIGN );
             }
             else if( iOldFlags )
             {
                hb_hashClearFlags( pHash, iOldFlags );
-            }   
+            }
          }
          else
          {
@@ -952,14 +949,14 @@ HB_FUNC( HB_HAUTOADD )
             if( iNewFlags )
             {
                hb_hashSetFlags( pHash, iNewFlags );
-            }   
+            }
          }
       }
    }
    else
    {
       hb_errRT_BASE( EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HKEEPORDER )
@@ -980,21 +977,21 @@ HB_FUNC( HB_HKEEPORDER )
             if( ( iFlags & HB_HASH_KEEPORDER ) == 0 )
             {
                hb_hashSetFlags( pHash, HB_HASH_KEEPORDER );
-            }   
+            }
          }
          else
          {
             if( ( iFlags & HB_HASH_KEEPORDER ) != 0 )
             {
                hb_hashClearFlags( pHash, HB_HASH_KEEPORDER );
-            }   
+            }
          }
       }
    }
    else
    {
       hb_errRT_BASE( EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HALLOCATE )
@@ -1008,12 +1005,12 @@ HB_FUNC( HB_HALLOCATE )
       if( nMem >= 0 )
       {
          hb_hashPreallocate( pHash, nMem );
-      }   
+      }
    }
    else
    {
       hb_errRT_BASE( EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_HDEFAULT )
@@ -1031,7 +1028,7 @@ HB_FUNC( HB_HDEFAULT )
    else
    {
       hb_errRT_BASE( EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 #if defined( HB_LEGACY_LEVEL5 )

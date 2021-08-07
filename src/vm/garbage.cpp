@@ -108,15 +108,15 @@ typedef struct HB_GARBAGE_
 #  define HB_GARBAGE_SIZE     sizeof( HB_GARBAGE )
 #endif
 
-#define HB_GC_PTR( p )        ( ( PHB_GARBAGE ) ( ( HB_BYTE * ) ( p ) - HB_GARBAGE_SIZE ) )
+#define HB_GC_PTR( p )        ( reinterpret_cast< PHB_GARBAGE >( reinterpret_cast< HB_BYTE * >( p ) - HB_GARBAGE_SIZE ) )
 
 #endif /* ! defined( HB_GC_PTR ) */
 
-#define HB_BLOCK_PTR( p )       ( ( void * ) ( ( HB_BYTE * ) ( p ) + HB_GARBAGE_SIZE ) )
+#define HB_BLOCK_PTR( p )       ( static_cast< void * >( reinterpret_cast< HB_BYTE * >( p ) + HB_GARBAGE_SIZE ) )
 
 /* we may use a cache later */
 #define HB_GARBAGE_NEW( nSize )    ( static_cast< PHB_GARBAGE >( hb_xgrab( HB_GARBAGE_SIZE + ( nSize ) ) ) )
-#define HB_GARBAGE_FREE( pAlloc )   hb_xfree( ( void * ) ( pAlloc ) )
+#define HB_GARBAGE_FREE( pAlloc )   hb_xfree( static_cast< void * >( pAlloc ) )
 
 /* status of memory block */
 /* flags stored in 'used' slot */
@@ -160,7 +160,6 @@ static HB_BOOL volatile s_bCollecting = HB_FALSE;
  */
 static HB_USHORT s_uUsedFlag = HB_GC_USED_FLAG;
 
-
 static void hb_gcLink( PHB_GARBAGE * pList, PHB_GARBAGE pAlloc )
 {
    if( *pList )
@@ -187,7 +186,7 @@ static void hb_gcUnlink( PHB_GARBAGE * pList, PHB_GARBAGE pAlloc )
       if( *pList == pAlloc )
       {
          *pList = nullptr;    /* this was the last block */
-      }   
+      }
    }
 }
 
@@ -304,7 +303,7 @@ void hb_gcRefFree( void * pBlock )
                   if( hb_vmRequestQuery() == 0 )
                   {
                      hb_errRT_BASE( EG_DESTRUCTOR, 1301, nullptr, "Reference to freed block", 0 );
-                  }   
+                  }
                }
             }
             else
@@ -313,7 +312,7 @@ void hb_gcRefFree( void * pBlock )
                if( pAlloc->locked )
                {
                   hb_gcUnlink( &s_pLockedBlock, pAlloc );
-               }   
+               }
                else
                {
                   hb_gcUnlink( &s_pCurrBlock, pAlloc );
@@ -331,14 +330,12 @@ void hb_gcRefFree( void * pBlock )
    }
 }
 
-
 /* return number of references */
 #undef hb_gcRefCount
 HB_COUNTER hb_gcRefCount( void * pBlock )
 {
    return hb_xRefCount( HB_GC_PTR( pBlock ) );
 }
-
 
 HB_GARBAGE_FUNC( hb_gcDummyClear )
 {
@@ -357,10 +354,10 @@ HB_GARBAGE_FUNC( hb_gcGripMark )
 
 static HB_GARBAGE_FUNC( hb_gcGripRelease )
 {
-   if( HB_IS_COMPLEX( ( PHB_ITEM ) Cargo ) )
+   if( HB_IS_COMPLEX( static_cast< PHB_ITEM >( Cargo ) ) )
    {
-      hb_itemClear( ( PHB_ITEM ) Cargo );
-   }   
+      hb_itemClear( static_cast< PHB_ITEM >( Cargo ) );
+   }
 }
 
 static const HB_GC_FUNCS s_gcGripFuncs =
@@ -372,7 +369,7 @@ static const HB_GC_FUNCS s_gcGripFuncs =
 PHB_ITEM hb_gcGripGet( PHB_ITEM pOrigin )
 {
    PHB_GARBAGE pAlloc = HB_GARBAGE_NEW( sizeof( HB_ITEM ) );
-   PHB_ITEM pItem = ( PHB_ITEM ) HB_BLOCK_PTR( pAlloc );
+   PHB_ITEM pItem = static_cast< PHB_ITEM >( HB_BLOCK_PTR( pAlloc ) );
 
    pAlloc->pFuncs = &s_gcGripFuncs;
    pAlloc->locked = 1;
@@ -387,7 +384,7 @@ PHB_ITEM hb_gcGripGet( PHB_ITEM pOrigin )
    if( pOrigin )
    {
       hb_itemCopy( pItem, pOrigin );
-   }   
+   }
 
    return pItem;
 }
@@ -473,7 +470,7 @@ void hb_gcAttach( void * pBlock )
    if( pAlloc )
    {
       hb_xRefInc( pAlloc );
-   }   
+   }
 }
 
 /* mark passed memory block as used so it will be not released by the GC */
@@ -497,15 +494,13 @@ void hb_gcItemRef( PHB_ITEM pItem )
       if( HB_IS_ENUM( pItem ) )
       {
          return;
-      }   
+      }
       else if( HB_IS_EXTREF( pItem ) )
       {
          pItem->item.asExtRef.func->mark( pItem->item.asExtRef.value );
          return;
       }
-      else if( ! HB_IS_MEMVAR( pItem ) &&
-               pItem->item.asRefer.offset == 0 &&
-               pItem->item.asRefer.value >= 0 )
+      else if( ! HB_IS_MEMVAR( pItem ) && pItem->item.asRefer.offset == 0 && pItem->item.asRefer.value >= 0 )
       {
          /* array item reference */
          PHB_GARBAGE pAlloc = HB_GC_PTR( pItem->item.asRefer.BasePtr.array );
@@ -663,7 +658,7 @@ void hb_gcCollectAll( HB_BOOL fForce )
             if( ! pAlloc )
             {
                pAlloc = s_pCurrBlock;
-            }   
+            }
             s_pCurrBlock = s_pCurrBlock->pNext;
          }
       }
@@ -681,14 +676,14 @@ void hb_gcCollectAll( HB_BOOL fForce )
       if( s_ulBlocksAuto == 0 )
       {
          s_ulBlocksCheck = HB_GC_AUTO_MAX;
-      }   
+      }
       else
       {
          s_ulBlocksCheck = s_ulBlocksMarked + s_ulBlocksAuto;
          if( s_ulBlocksCheck <= s_ulBlocksMarked )
          {
             s_ulBlocksCheck = HB_GC_AUTO_MAX;
-         }   
+         }
       }
 #endif
 
@@ -727,12 +722,12 @@ void hb_gcCollectAll( HB_BOOL fForce )
                if( hb_vmRequestQuery() == 0 )
                {
                   hb_errRT_BASE( EG_DESTRUCTOR, 1302, nullptr, "Reference to freed block", 0 );
-               }   
+               }
             }
             else
             {
                HB_GARBAGE_FREE( pDelete );
-            }   
+            }
          }
          while( s_pDeletedBlock );
       }
@@ -740,7 +735,6 @@ void hb_gcCollectAll( HB_BOOL fForce )
       s_bCollecting = HB_FALSE;
    }
 }
-
 
 /* MTNOTE: It's executed at the end of HVM cleanup code just before
  *         application exit when other threads are destroyed, so it
@@ -769,7 +763,7 @@ void hb_gcReleaseAll( void )
       do
       {
          PHB_GARBAGE pDelete;
-         HB_TRACE( HB_TR_INFO, ( "Release %p", ( void * ) s_pCurrBlock ) );
+         HB_TRACE( HB_TR_INFO, ( "Release %p", static_cast< void * >( s_pCurrBlock ) ) );
          pDelete = s_pCurrBlock;
          hb_gcUnlink( &s_pCurrBlock, pDelete );
          HB_GC_AUTO_DEC();
@@ -827,7 +821,7 @@ HB_FUNC( HB_GCSETAUTO )
       if( s_ulBlocksAuto == 0 )
       {
          s_ulBlocksCheck = HB_GC_AUTO_MAX;
-      }   
+      }
       else
       {
          s_ulBlocksCheck = s_ulBlocksMarked + s_ulBlocksAuto;

@@ -98,7 +98,7 @@ void hb_winmainArgVBuild( void )
    int iArgC;
 
    /* NOTE: MAX_PATH used intentionally instead of HB_MAX_PATH */
-   lpModuleName = ( LPTSTR ) HB_WINARG_ALLOC( ( MAX_PATH + 1 ) * sizeof( TCHAR ) );
+   lpModuleName = static_cast< LPTSTR >( HB_WINARG_ALLOC( ( MAX_PATH + 1 ) * sizeof( TCHAR ) ) );
    nModuleName = GetModuleFileName( nullptr, lpModuleName, MAX_PATH + 1 );
    if( nModuleName )
    {
@@ -118,15 +118,14 @@ void hb_winmainArgVBuild( void )
 
       if( nSize != 0 )
       {
-         lpArgV = ( LPTSTR * ) HB_WINARG_ALLOC( iArgC * sizeof( LPTSTR ) +
-                                                nSize * sizeof( TCHAR ) );
-         lpDst = ( LPTSTR ) ( lpArgV + iArgC );
+         lpArgV = static_cast< LPTSTR * >( HB_WINARG_ALLOC( iArgC * sizeof( LPTSTR ) + nSize * sizeof( TCHAR ) ) );
+         lpDst = reinterpret_cast< LPTSTR >( lpArgV + iArgC );
          lpArgV[ 0 ] = lpDst;
          lpDst += nModuleName;
       }
       else
       {
-         lpDst = ( LPTSTR ) lpCmdLine;
+         lpDst = const_cast< LPTSTR >( lpCmdLine );
          nSize = nModuleName;
       }
 
@@ -160,7 +159,7 @@ void hb_winmainArgVBuild( void )
                else
                {
                   nSize++;
-               }   
+               }
             }
          }
          else
@@ -177,7 +176,7 @@ void hb_winmainArgVBuild( void )
                   else
                   {
                      nSize++;
-                  }   
+                  }
                }
                iArgC++;
                lpArg = nullptr;
@@ -197,7 +196,7 @@ void hb_winmainArgVBuild( void )
             else
             {
                nSize++;
-            }   
+            }
          }
          iArgC++;
       }
@@ -208,14 +207,13 @@ void hb_winmainArgVBuild( void )
       if( nModuleName != 0 )
       {
          iArgC = 1;
-         lpArgV = ( LPTSTR * ) HB_WINARG_ALLOC( iArgC * sizeof( LPTSTR ) +
-                                                nModuleName * sizeof( TCHAR ) );
-         lpArgV[ 0 ] = ( LPTSTR ) ( lpArgV + iArgC );
+         lpArgV = static_cast< LPTSTR * >( HB_WINARG_ALLOC( iArgC * sizeof( LPTSTR ) + nModuleName * sizeof( TCHAR ) ) );
+         lpArgV[ 0 ] = reinterpret_cast< LPTSTR >( lpArgV + iArgC );
       }
       else
       {
          iArgC = 0;
-      }   
+      }
    }
    if( iArgC > 0 && nModuleName != 0 )
    {
@@ -242,11 +240,12 @@ void hb_winmainArgVBuild( void )
 
          nSize = 0;
          for( iArgC = 0; iArgC < s_argc; ++iArgC )
+         {
             nSize += hb_wctomblen( s_lpArgV[ iArgC ] ) + 1;
+         }
 
-         s_lpArgVStr = ( LPSTR * ) HB_WINARG_ALLOC( s_argc * sizeof( LPSTR ) +
-                                                    nSize * sizeof( char ) );
-         lpStr = ( LPSTR ) ( s_lpArgVStr + s_argc );
+         s_lpArgVStr = static_cast< LPSTR * >( HB_WINARG_ALLOC( s_argc * sizeof( LPSTR ) + nSize * sizeof( char ) ) );
+         lpStr = reinterpret_cast< LPSTR >( s_lpArgVStr + s_argc );
          for( iArgC = 0; iArgC < s_argc; ++iArgC )
          {
             nSize = hb_wctomblen( s_lpArgV[ iArgC ] ) + 1;
@@ -280,7 +279,7 @@ void hb_winmainArgVFree( void )
       if( s_argv == s_lpArgV )
       {
          s_argv = nullptr;
-      }   
+      }
 #endif
 
       HB_WINARG_FREE( s_lpArgV );
@@ -301,16 +300,16 @@ HB_BOOL hb_winmainArgGet( void * phInstance, void * phPrevInstance, int * piCmdS
 {
    if( phInstance )
    {
-      *( ( HANDLE * ) phInstance ) = s_hInstance;
+      *( static_cast< HANDLE * >( phInstance ) ) = s_hInstance;
    }
    if( phPrevInstance )
    {
-      *( ( HANDLE * ) phPrevInstance ) = s_hPrevInstance;
+      *( static_cast< HANDLE * >( phPrevInstance ) ) = s_hPrevInstance;
    }
    if( piCmdShow )
    {
       *piCmdShow = s_iCmdShow;
-   }   
+   }
 
    return s_WinMainParam;
 }
@@ -319,13 +318,13 @@ HB_BOOL hb_winmainArgGet( void * phInstance, void * phPrevInstance, int * piCmdS
 
 void hb_cmdargInit( int argc, char * argv[] )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargInit(%d, %p)", argc, ( void * ) argv ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargInit(%d, %p)", argc, static_cast< void * >( argv ) ) );
 
 #if defined( HB_OS_WIN )
    if( s_lpArgV )
    {
       return;
-   }   
+   }
 #endif
 
    if( argc == 0 || argv == nullptr )
@@ -363,7 +362,7 @@ static char * hb_cmdargDup( int argc )
    if( s_lpArgV )
    {
       return argc >= 0 && argc < s_argc ? HB_OSSTRDUP( s_lpArgV[ argc ] ) : nullptr;
-   }   
+   }
 #endif
    return argc >= 0 && argc < s_argc ? hb_osStrDecode( s_argv[ argc ] ) : nullptr;
 }
@@ -383,13 +382,11 @@ void hb_cmdargUpdate( void )
          ulrc = DosGetInfoBlocks( nullptr, &ppib );
          if( ulrc == NO_ERROR )
          {
-            ulrc = DosQueryModuleName( ppib->pib_hmte,
-                                       HB_SIZEOFARRAY( s_szAppName ),
-                                       s_szAppName );
+            ulrc = DosQueryModuleName( ppib->pib_hmte, HB_SIZEOFARRAY( s_szAppName ), s_szAppName );
             if( ulrc == NO_ERROR )
             {
                s_argv[ 0 ] = s_szAppName;
-            }   
+            }
          }
       }
 #  else
@@ -431,12 +428,12 @@ void hb_cmdargUpdate( void )
                if( ! fInPath )
                {
                   pFName->szPath = nullptr;
-               }   
+               }
             }
             if( pszPATH )
             {
                hb_xfree( pszPATH );
-            }   
+            }
          }
          if( pFName->szPath )
          {
@@ -446,11 +443,10 @@ void hb_cmdargUpdate( void )
             if( pFName->szPath[ 0 ] != HB_OS_PATH_DELIM_CHR )
 #     endif
             {
-               if( pFName->szPath[ 0 ] == '.' &&
-                   pFName->szPath[ 1 ] == HB_OS_PATH_DELIM_CHR )
+               if( pFName->szPath[ 0 ] == '.' && pFName->szPath[ 1 ] == HB_OS_PATH_DELIM_CHR )
                {
                   pFName->szPath += 2;
-               }   
+               }
                s_szAppName[ 0 ] = HB_OS_PATH_DELIM_CHR;
                hb_fsCurDirBuff( 0, s_szAppName + 1, HB_PATH_MAX - 1 );
                if( s_szAppName[ 1 ] != 0 )
@@ -466,7 +462,7 @@ void hb_cmdargUpdate( void )
             else if( fInPath )
             {
                s_argv[ 0 ] = s_szAppName;
-            }   
+            }
          }
          hb_xfree( pFName );
       }
@@ -479,9 +475,9 @@ void hb_cmdargUpdate( void )
 
 int hb_cmdargPushArgs( void )
 {
-   int iArgCount = 0, i;
+   int iArgCount = 0;
 
-   for( i = 1; i < s_argc; i++ )
+   for( int i = 1; i < s_argc; i++ )
    {
       /* Filter out any parameters beginning with //, like //INFO */
       if( ! hb_cmdargIsInternal( s_argv[ i ], nullptr ) )
@@ -490,7 +486,7 @@ int hb_cmdargPushArgs( void )
          if( s_lpArgV )
          {
             HB_ITEMPUTSTR( hb_stackAllocItem(), s_lpArgV[ i ] );
-         }   
+         }
          else
 #endif
          {
@@ -505,30 +501,27 @@ int hb_cmdargPushArgs( void )
 
 HB_BOOL hb_cmdargIsInternal( const char * szArg, int * piLen )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargIsInternal(%s, %p)", szArg, ( void * ) piLen ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargIsInternal(%s, %p)", szArg, static_cast< void * >( piLen ) ) );
 
    /* NOTE: Not checking for '--' here, as it would filter out
             valid command-line options used by applications. [vszakats] */
 
-   if( hb_strnicmp( szArg, "--hb:", 5 ) == 0 ||
-       hb_strnicmp( szArg, "//hb:", 5 ) == 0 )
+   if( hb_strnicmp( szArg, "--hb:", 5 ) == 0 || hb_strnicmp( szArg, "//hb:", 5 ) == 0 )
    {
       if( piLen )
       {
          *piLen = 5;
       }
-      
+
       return HB_TRUE;
    }
-   else if( strlen( szArg ) >= 2 &&
-            szArg[ 0 ] == '/' &&
-            szArg[ 1 ] == '/' )
+   else if( strlen( szArg ) >= 2 && szArg[ 0 ] == '/' && szArg[ 1 ] == '/' )
    {
       if( piLen )
       {
          *piLen = 2;
       }
-      
+
       return HB_TRUE;
    }
 
@@ -548,8 +541,7 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
 
    for( i = 1; i < s_argc; i++ )
    {
-      if( hb_cmdargIsInternal( s_argv[ i ], &iPrefixLen ) &&
-          hb_strnicmp( s_argv[ i ] + iPrefixLen, pszName, strlen( pszName ) ) == 0 )
+      if( hb_cmdargIsInternal( s_argv[ i ], &iPrefixLen ) && hb_strnicmp( s_argv[ i ] + iPrefixLen, pszName, strlen( pszName ) ) == 0 )
       {
          if( bRetValue )
          {
@@ -573,14 +565,14 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
                {
                   pszPos++;
                }
-               
+
                return hb_osStrDecode( pszPos );
             }
          }
          else
          {
             return ( char * ) "";
-         }   
+         }
       }
    }
 
@@ -592,7 +584,7 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
       {
          hb_xfree( pszEnvVar );
       }
-      
+
       pszEnvVar = hb_getenv( "CLIPPER" );
    }
 
@@ -614,18 +606,22 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
 
          /* Skip the separators */
          while( *pszNext && strchr( s_szSeparator, *pszNext ) )
+         {
             pszNext++;
+         }
 
          /* The // is optional in the envvar */
          if( hb_cmdargIsInternal( pszNext, &iPrefixLen ) )
          {
             pszNext += iPrefixLen;
          }
-         
+
          pszEnd = pszNext;
          /* Search for the end of this switch */
          while( *pszEnd && strchr( s_szSeparator, *pszEnd ) == nullptr )
+         {
             pszEnd++;
+         }
 
          /* Check the switch */
          if( hb_strnicmp( pszNext, pszName, i ) == 0 )
@@ -640,14 +636,14 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
                {
                   pszNext++;
                }
-               
+
                nLen = pszEnd > pszNext ? pszEnd - pszNext : 0;
                pszRetVal = static_cast< char * >( hb_xgrab( nLen + 1 ) );
                hb_strncpy( pszRetVal, pszNext, nLen );
             }
             else
             {
-               pszRetVal = ( char * ) "";
+               pszRetVal = static_cast< char * >( "" );
             }
             break;
          }
@@ -661,7 +657,7 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
    {
       hb_xfree( pszEnvVar );
    }
-   
+
    return pszRetVal;
 }
 
@@ -695,7 +691,7 @@ int hb_cmdargNum( const char * pszName )
    else
    {
       return -1;
-   }   
+   }
 }
 
 /* NOTE: Pointer must be freed with hb_xfree() if not nullptr */
@@ -774,7 +770,7 @@ HB_FUNC( HB_ARGV )
    else
    {
       hb_retc_null();
-   }   
+   }
 }
 
 HB_FUNC( HB_ARGSHIFT )
@@ -792,7 +788,7 @@ HB_FUNC( HB_ARGSHIFT )
             if( s_lpArgV )
             {
                s_lpArgV[ 0 ] = s_lpArgV[ iArg ];
-            }   
+            }
 #endif
             break;
          }
@@ -809,7 +805,7 @@ HB_FUNC( HB_ARGSHIFT )
          if( s_lpArgV )
          {
             s_lpArgV[ iArg ] = s_lpArgV[ iArg + 1 ];
-         }   
+         }
 #endif
          ++iArg;
       }
@@ -820,18 +816,20 @@ HB_FUNC( HB_ACMDLINE )
 {
    if( s_argc > 1 )
    {
-      int iPos, iLen = s_argc - 1;
+      int iLen = s_argc - 1;
       PHB_ITEM pArray = hb_itemArrayNew( iLen );
 
-      for( iPos = 1; iPos <= iLen; ++iPos )
+      for( int iPos = 1; iPos <= iLen; ++iPos )
+      {
          hb_arraySetCPtr( pArray, iPos, hb_cmdargDup( iPos ) );
+      }
 
       hb_itemReturnRelease( pArray );
    }
    else
    {
       hb_reta( 0 );
-   }   
+   }
 }
 
 HB_FUNC( HB_CMDLINE )
@@ -847,7 +845,9 @@ HB_FUNC( HB_CMDLINE )
          LPTSTR lpBuffer, ptr;
 
          for( iArg = 1; iArg < s_argc; iArg++ )
+         {
             nLen += HB_STRLEN( s_lpArgV[ iArg ] ) + 1;
+         }
 
          ptr = lpBuffer = static_cast< LPTSTR >( hb_xgrab( nLen * sizeof( TCHAR ) ) );
          for( iArg = 1; iArg < s_argc; iArg++ )
@@ -864,7 +864,7 @@ HB_FUNC( HB_CMDLINE )
          HB_RETSTR( lpBuffer );
          hb_xfree( lpBuffer );
 #else
-         hb_retc_buffer( ( char * ) hb_osDecodeCP( lpBuffer, nullptr, nullptr ) );
+         hb_retc_buffer( static_cast< char * >( hb_osDecodeCP( lpBuffer, nullptr, nullptr ) ) );
 #endif
       }
       else
@@ -873,7 +873,9 @@ HB_FUNC( HB_CMDLINE )
          char * pszBuffer, * ptr;
 
          for( iArg = 1; iArg < s_argc; iArg++ )
+         {
             nLen += strlen( s_argv[ iArg ] ) + 1;
+         }
 
          ptr = pszBuffer = static_cast< char * >( hb_xgrab( nLen ) );
          for( iArg = 1; iArg < s_argc; iArg++ )
@@ -886,13 +888,13 @@ HB_FUNC( HB_CMDLINE )
          *--ptr = '\0';
 
          /* Convert from OS codepage */
-         hb_retc_buffer( ( char * ) HB_UNCONST( hb_osDecodeCP( pszBuffer, nullptr, nullptr ) ) );
+         hb_retc_buffer( static_cast< char * >( HB_UNCONST( hb_osDecodeCP( pszBuffer, nullptr, nullptr ) ) ) );
       }
    }
    else
    {
       hb_retc_null();
-   }   
+   }
 }
 
 /* Check for command-line internal arguments */
@@ -932,7 +934,7 @@ void hb_cmdargProcess( void )
    {
       hb_verBuildInfo();
    }
-   
+
    iHandles = hb_cmdargNum( "F" );
    if( iHandles > 20 )
    {

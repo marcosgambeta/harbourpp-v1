@@ -60,7 +60,7 @@ static const HB_BYTE s_pCode[ 2 ] = { HB_P_PUSHNIL, HB_P_ENDBLOCK };
 /* Release all allocated memory when called from the garbage collector */
 static HB_GARBAGE_FUNC( hb_codeblockGarbageDelete )
 {
-   PHB_CODEBLOCK pCBlock = ( PHB_CODEBLOCK ) Cargo;
+   PHB_CODEBLOCK pCBlock = static_cast< PHB_CODEBLOCK >( Cargo );
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockGarbageDelete(%p)", Cargo ) );
 
@@ -78,7 +78,9 @@ static HB_GARBAGE_FUNC( hb_codeblockGarbageDelete )
       if( hb_xRefDec( pCBlock->pLocals ) )
       {
          while( pCBlock->uiLocals )
+         {
             hb_memvarValueDecRef( pCBlock->pLocals[ pCBlock->uiLocals-- ].item.asMemvar.value );
+         }
          hb_xfree( pCBlock->pLocals );
       }
       pCBlock->pLocals = nullptr;
@@ -88,7 +90,7 @@ static HB_GARBAGE_FUNC( hb_codeblockGarbageDelete )
 
 static HB_GARBAGE_FUNC( hb_codeblockGarbageMark )
 {
-   PHB_CODEBLOCK pCBlock = ( PHB_CODEBLOCK ) Cargo;
+   PHB_CODEBLOCK pCBlock = static_cast< PHB_CODEBLOCK >( Cargo );
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockGarbageMark(%p)", Cargo ) );
 
@@ -120,18 +122,14 @@ static const HB_GC_FUNCS s_gcCodeblockFuncs =
  *
  * Note: pLocalPosTable cannot be used if uiLocals is ZERO
  */
-PHB_CODEBLOCK hb_codeblockNew( const HB_BYTE * pBuffer,
-                               HB_USHORT uiLocals,
-                               const HB_BYTE * pLocalPosTable,
-                               PHB_SYMB pSymbols,
-                               HB_SIZE nLen )
+PHB_CODEBLOCK hb_codeblockNew( const HB_BYTE * pBuffer, HB_USHORT uiLocals, const HB_BYTE * pLocalPosTable, PHB_SYMB pSymbols, HB_SIZE nLen )
 {
    HB_STACK_TLS_PRELOAD
    PHB_CODEBLOCK pCBlock;
    PHB_ITEM pLocals, pBase;
    const HB_BYTE * pCode;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockNew(%p, %hu, %p, %p, %" HB_PFS "u)", ( const void * ) pBuffer, uiLocals, ( const void * ) pLocalPosTable, ( void * ) pSymbols, nLen ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockNew(%p, %hu, %p, %p, %" HB_PFS "u)", static_cast< const void * >( pBuffer ), uiLocals, static_cast< const void * >( pLocalPosTable ), static_cast< void * >( pSymbols ), nLen ) );
 
    /* Allocate memory for code block body and detach items hb_gcAllocRaw()
     * to be safe for automatic GC activation in hb_xgrab() without
@@ -144,7 +142,7 @@ PHB_CODEBLOCK hb_codeblockNew( const HB_BYTE * pBuffer,
        * can be deallocated after creation of a codeblock. We have to duplicate
        * the passed buffer
        */
-      pCode = ( const HB_BYTE * ) memcpy( hb_xgrab( nLen ), pBuffer, nLen );
+      pCode = static_cast< const HB_BYTE * >( memcpy( hb_xgrab( nLen ), pBuffer, nLen ) );
    }
    else
    {
@@ -209,27 +207,26 @@ PHB_CODEBLOCK hb_codeblockNew( const HB_BYTE * pBuffer,
          if( pLocals )
          {
             hb_xRefInc( pLocals );
-         }   
+         }
       }
       else
       {
          pLocals = nullptr;
-      }   
+      }
    }
 
    pBase = hb_stackBaseItem();
-   pCBlock = ( PHB_CODEBLOCK ) hb_gcAllocRaw( sizeof( HB_CODEBLOCK ), &s_gcCodeblockFuncs );
+   pCBlock = static_cast< PHB_CODEBLOCK >( hb_gcAllocRaw( sizeof( HB_CODEBLOCK ), &s_gcCodeblockFuncs ) );
 
    pCBlock->pCode     = pCode;
    pCBlock->dynBuffer = nLen != 0;
-   pCBlock->pDefSymb  = pBase->item.asSymbol.stackstate->uiClass ?
-                        hb_clsMethodSym( pBase ) : pBase->item.asSymbol.value;
+   pCBlock->pDefSymb  = pBase->item.asSymbol.stackstate->uiClass ? hb_clsMethodSym( pBase ) : pBase->item.asSymbol.value;
    pCBlock->pSymbols  = pSymbols;
    pCBlock->pStatics  = hb_stackGetStaticsBase();
    pCBlock->uiLocals  = uiLocals;
    pCBlock->pLocals   = pLocals;
 
-   HB_TRACE( HB_TR_INFO, ( "codeblock created %p", ( void * ) pCBlock ) );
+   HB_TRACE( HB_TR_INFO, ( "codeblock created %p", static_cast< void * >( pCBlock ) ) );
 
    return pCBlock;
 }
@@ -241,7 +238,7 @@ PHB_CODEBLOCK hb_codeblockMacroNew( const HB_BYTE * pBuffer, HB_SIZE nLen )
    PHB_ITEM pBase;
    HB_BYTE * pCode;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockMacroNew(%p, %" HB_PFS "u)", ( const void * ) pBuffer, nLen ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockMacroNew(%p, %" HB_PFS "u)", static_cast< const void * >( pBuffer ), nLen ) );
 
    /* The codeblock pcode is stored in dynamically allocated memory that
     * can be deallocated after creation of a codeblock. We have to duplicate
@@ -251,21 +248,20 @@ PHB_CODEBLOCK hb_codeblockMacroNew( const HB_BYTE * pBuffer, HB_SIZE nLen )
     * to be safe for automatic GC activation in hb_xgrab() without
     * calling hb_gcLock()/hb_gcUnlock(). [druzus]
     */
-   pCode = ( HB_BYTE * ) memcpy( hb_xgrab( nLen ), pBuffer, nLen );
+   pCode = static_cast< HB_BYTE * >( memcpy( hb_xgrab( nLen ), pBuffer, nLen ) );
 
-   pCBlock = ( PHB_CODEBLOCK ) hb_gcAllocRaw( sizeof( HB_CODEBLOCK ), &s_gcCodeblockFuncs );
+   pCBlock = static_cast< PHB_CODEBLOCK >( hb_gcAllocRaw( sizeof( HB_CODEBLOCK ), &s_gcCodeblockFuncs ) );
    pBase = hb_stackBaseItem();
    /* Store the number of referenced local variables */
    pCBlock->pCode     = pCode;
    pCBlock->dynBuffer = HB_TRUE;
-   pCBlock->pDefSymb  = pBase->item.asSymbol.stackstate->uiClass ?
-                        hb_clsMethodSym( pBase ) : pBase->item.asSymbol.value;
+   pCBlock->pDefSymb  = pBase->item.asSymbol.stackstate->uiClass ? hb_clsMethodSym( pBase ) : pBase->item.asSymbol.value;
    pCBlock->pSymbols  = nullptr;  /* macro-compiled codeblock cannot access a local symbol table */
    pCBlock->pStatics  = hb_stackGetStaticsBase();
    pCBlock->uiLocals  = 0;
    pCBlock->pLocals   = nullptr;
 
-   HB_TRACE( HB_TR_INFO, ( "codeblock created %p", ( void * ) pCBlock ) );
+   HB_TRACE( HB_TR_INFO, ( "codeblock created %p", static_cast< void * >( pCBlock ) ) );
 
    return pCBlock;
 }
@@ -275,7 +271,7 @@ PHB_ITEM hb_codeblockGetVar( PHB_ITEM pItem, int iItemPos )
 {
    PHB_CODEBLOCK pCBlock = pItem->item.asBlock.value;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockGetVar(%p, %d)", ( void * ) pItem, iItemPos ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockGetVar(%p, %d)", static_cast< void * >( pItem ), iItemPos ) );
 
    /* local variables accessed in a codeblock are always stored as reference */
    return hb_itemUnRef( pCBlock->pLocals - iItemPos );
@@ -284,7 +280,7 @@ PHB_ITEM hb_codeblockGetVar( PHB_ITEM pItem, int iItemPos )
 /* Get local variable passed by reference */
 PHB_ITEM hb_codeblockGetRef( PHB_CODEBLOCK pCBlock, int iItemPos )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockGetRef(%p, %d)", ( void * ) pCBlock, iItemPos ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockGetRef(%p, %d)", static_cast< void * >( pCBlock ), iItemPos ) );
 
    return pCBlock->pLocals - iItemPos;
 }
@@ -294,12 +290,12 @@ void * hb_codeblockId( PHB_ITEM pItem )
 {
    if( HB_IS_BLOCK( pItem ) )
    {
-      return ( void * ) pItem->item.asBlock.value;
+      return static_cast< void * >( pItem->item.asBlock.value );
    }
    else
    {
       return nullptr;
-   }   
+   }
 }
 
 /* retrieves numer of references to the codeblock */

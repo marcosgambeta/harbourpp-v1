@@ -54,7 +54,7 @@
 
 HB_BOOL hb_evalNew( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_evalNew(%p, %p)", ( void * ) pEvalInfo, ( void * ) pItem ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_evalNew(%p, %p)", static_cast< void * >( pEvalInfo ), static_cast< void * >( pItem ) ) );
 
    if( pEvalInfo )
    {
@@ -67,7 +67,7 @@ HB_BOOL hb_evalNew( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
    else
    {
       return HB_FALSE;
-   }   
+   }
 }
 
 /* NOTE: CA-Cl*pper is buggy and will not check if more parameters are
@@ -85,7 +85,7 @@ HB_BOOL hb_evalNew( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
 
 HB_BOOL hb_evalPutParam( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_evalPutParam(%p, %p)", ( void * ) pEvalInfo, ( void * ) pItem ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_evalPutParam(%p, %p)", static_cast< void * >( pEvalInfo ), static_cast< void * >( pItem ) ) );
 
    if( pEvalInfo && pItem && pEvalInfo->paramCount < HB_EVAL_PARAM_MAX_ )
    {
@@ -96,14 +96,14 @@ HB_BOOL hb_evalPutParam( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
    else
    {
       return HB_FALSE;
-   }   
+   }
 }
 
 PHB_ITEM hb_evalLaunch( PHB_EVALINFO pEvalInfo )
 {
    PHB_ITEM pResult = nullptr;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_evalLaunch(%p)", ( void * ) pEvalInfo ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_evalLaunch(%p)", static_cast< void * >( pEvalInfo ) ) );
 
    if( pEvalInfo )
    {
@@ -144,7 +144,9 @@ PHB_ITEM hb_evalLaunch( PHB_EVALINFO pEvalInfo )
             hb_vmPushNil();
          }
          while( uiParam < pEvalInfo->paramCount )
+         {
             hb_vmPush( pEvalInfo->pItems[ ++uiParam ] );
+         }
          if( pItem )
          {
             hb_vmSend( uiParam );
@@ -166,13 +168,11 @@ PHB_ITEM hb_evalLaunch( PHB_EVALINFO pEvalInfo )
 
 HB_BOOL hb_evalRelease( PHB_EVALINFO pEvalInfo )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_evalRelease(%p)", ( void * ) pEvalInfo ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_evalRelease(%p)", static_cast< void * >( pEvalInfo ) ) );
 
    if( pEvalInfo )
    {
-      HB_USHORT uiParam;
-
-      for( uiParam = 0; uiParam <= pEvalInfo->paramCount; uiParam++ )
+      for( HB_USHORT uiParam = 0; uiParam <= pEvalInfo->paramCount; uiParam++ )
       {
          hb_itemRelease( pEvalInfo->pItems[ uiParam ] );
          pEvalInfo->pItems[ uiParam ] = nullptr;
@@ -185,7 +185,7 @@ HB_BOOL hb_evalRelease( PHB_EVALINFO pEvalInfo )
    else
    {
       return HB_FALSE;
-   }   
+   }
 }
 
 /* NOTE: Same purpose as hb_evalLaunch(), but simpler, faster and more flexible.
@@ -202,7 +202,7 @@ PHB_ITEM hb_itemDo( PHB_ITEM pItem, HB_ULONG ulPCount, ... )
 {
    PHB_ITEM pResult = nullptr;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_itemDo(%p, %lu, ...)", ( void * ) pItem, ulPCount ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_itemDo(%p, %lu, ...)", static_cast< void * >( pItem ), ulPCount ) );
 
    if( pItem )
    {
@@ -241,14 +241,15 @@ PHB_ITEM hb_itemDo( PHB_ITEM pItem, HB_ULONG ulPCount, ... )
             {
                hb_vmPushNil();
             }
-            
+
             if( ulPCount )
             {
-               HB_ULONG ulParam;
                va_list va;
                va_start( va, ulPCount );
-               for( ulParam = 1; ulParam <= ulPCount; ulParam++ )
+               for( HB_ULONG ulParam = 1; ulParam <= ulPCount; ulParam++ )
+               {
                   hb_vmPush( va_arg( va, PHB_ITEM ) );
+               }
                va_end( va );
             }
             if( pItem )
@@ -259,7 +260,7 @@ PHB_ITEM hb_itemDo( PHB_ITEM pItem, HB_ULONG ulPCount, ... )
             {
                hb_vmProc( static_cast< HB_USHORT >( ulPCount ) );
             }
-            
+
             pResult = hb_itemNew( hb_stackReturnItem() );
             hb_vmRequestRestore();
          }
@@ -294,11 +295,12 @@ PHB_ITEM hb_itemDoC( const char * szFunc, HB_ULONG ulPCount, ... )
             hb_vmPushNil();
             if( ulPCount )
             {
-               HB_ULONG ulParam;
                va_list va;
                va_start( va, ulPCount );
-               for( ulParam = 1; ulParam <= ulPCount; ulParam++ )
+               for( HB_ULONG ulParam = 1; ulParam <= ulPCount; ulParam++ )
+               {
                   hb_vmPush( va_arg( va, PHB_ITEM ) );
+               }
                va_end( va );
             }
             hb_vmProc( static_cast< HB_USHORT >( ulPCount ) );
@@ -455,7 +457,7 @@ HB_FUNC( HB_EXECFROMARRAY )
          else
          {
             pFunc = pParam;
-         }   
+         }
       }
       else if( HB_IS_OBJECT( pParam ) && iPCount <= 3 )
       {
@@ -506,7 +508,7 @@ HB_FUNC( HB_EXECFROMARRAY )
       {
          hb_vmPushNil();
       }
-      
+
       if( pArray )
       {
          pItem = hb_arrayGetItemPtr( pArray, ++ulParamOffset );
@@ -525,12 +527,12 @@ HB_FUNC( HB_EXECFROMARRAY )
       else
       {
          hb_vmProc( static_cast< HB_USHORT >( iPCount ) );
-      }   
+      }
    }
    else
    {
       hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_BOOL hb_execFromArray( PHB_ITEM pParam )
@@ -552,7 +554,7 @@ HB_BOOL hb_execFromArray( PHB_ITEM pParam )
       else
       {
          ulParamOffset = 1;
-      }   
+      }
    }
 
    if( pParam )
@@ -606,7 +608,7 @@ HB_BOOL hb_execFromArray( PHB_ITEM pParam )
          {
             hb_vmProc( static_cast< HB_USHORT >( iPCount ) );
          }
-         
+
          return HB_TRUE;
       }
    }

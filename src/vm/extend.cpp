@@ -69,16 +69,16 @@ PHB_ITEM hb_param( int iParam, long lMask )
       if( pItem->type & HB_IT_BYREF )
       {
          pItem = hb_itemUnRef( pItem );
-         if( ( HB_TYPE ) lMask == HB_IT_BYREF )
+         if( static_cast< HB_TYPE >( lMask ) == HB_IT_BYREF )
          {
             return pItem;
-         }   
+         }
       }
 
-      if( ( pItem->type & ( HB_TYPE ) lMask ) || ( HB_TYPE ) lMask == HB_IT_ANY )
+      if( ( pItem->type & static_cast< HB_TYPE >( lMask ) ) || static_cast< HB_TYPE >( lMask ) == HB_IT_ANY )
       {
          return pItem;
-      }   
+      }
    }
 
    return nullptr;
@@ -120,13 +120,13 @@ HB_ULONG hb_parinfo( int iParam )
          {
             uiType |= HB_ITEM_TYPE( hb_itemUnRef( pItem ) );
          }
-         
+
          return static_cast< HB_ULONG >( uiType );
       }
       else
       {
          return 0;
-      }   
+      }
    }
 }
 
@@ -152,7 +152,7 @@ HB_SIZE hb_parinfa( int iParamNum, HB_SIZE nArrayIndex )
    else
    {
       return 0;
-   }   
+   }
 }
 
 HB_BOOL hb_extIsNil( int iParam )
@@ -174,15 +174,14 @@ HB_BOOL hb_extIsNil( int iParam )
    {
       return HB_TRUE;
    }
-   
+
    if( HB_IS_BYREF( pItem ) )
    {
       pItem = hb_itemUnRef( pItem );
    }
-   
+
    return HB_IS_NIL( pItem );
 }
-
 
 /* function to be called from pcode DLLs to detect if the extend system
  * is going to use an array item */
@@ -204,12 +203,12 @@ HB_BOOL hb_extIsArray( int iParam )
    {
       return HB_FALSE;
    }
-   
+
    if( HB_IS_BYREF( pItem ) )
    {
       pItem = hb_itemUnRef( pItem );
    }
-   
+
    return HB_IS_ARRAY( pItem ) && ! HB_ARRAY_OBJ( pItem );
 }
 
@@ -233,12 +232,12 @@ HB_BOOL hb_extIsObject( int iParam )
    {
       return HB_FALSE;
    }
-   
+
    if( HB_IS_BYREF( pItem ) )
    {
       pItem = hb_itemUnRef( pItem );
    }
-   
+
    return HB_IS_OBJECT( pItem );
 }
 
@@ -263,7 +262,7 @@ const char * hb_parc( int iParam )
       if( HB_IS_STRING( pItem ) )
       {
          return pItem->item.asString.value;
-      }   
+      }
    }
 
    return nullptr;
@@ -287,7 +286,7 @@ const char * hb_parcx( int iParam )
       if( HB_IS_STRING( pItem ) )
       {
          return pItem->item.asString.value;
-      }   
+      }
    }
 
    return "";
@@ -311,7 +310,7 @@ HB_SIZE hb_parclen( int iParam )
       if( HB_IS_STRING( pItem ) )
       {
          return pItem->item.asString.length;
-      }   
+      }
    }
 
    return 0;
@@ -341,7 +340,7 @@ HB_SIZE hb_parcsiz( int iParam )
          if( HB_IS_STRING( pItem ) )
          {
             return pItem->item.asString.length + 1;
-         }   
+         }
       }
    }
 
@@ -369,7 +368,7 @@ const char * hb_pards( int iParam )
       if( HB_IS_DATETIME( pItem ) )
       {
          return hb_dateDecStr( hb_stackDateBuffer(), pItem->item.asDateTime.julian );
-      }   
+      }
    }
 
    return hb_dateDecStr( hb_stackDateBuffer(), 0 );
@@ -381,7 +380,7 @@ char * hb_pardsbuff( char * szDate, int iParam )
 {
    HB_STACK_TLS_PRELOAD
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_pardsbuff(%p, %d)", ( void * ) szDate, iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_pardsbuff(%p, %d)", static_cast< void * >( szDate ), iParam ) );
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
@@ -395,7 +394,7 @@ char * hb_pardsbuff( char * szDate, int iParam )
       if( HB_IS_DATETIME( pItem ) )
       {
          return hb_dateDecStr( szDate, pItem->item.asDateTime.julian );
-      }   
+      }
    }
 
    return hb_dateDecStr( szDate, 0 );
@@ -421,7 +420,7 @@ long hb_pardl( int iParam )
       if( HB_IS_DATETIME( pItem ) )
       {
          return pItem->item.asDateTime.julian;
-      }   
+      }
    }
 
    return hb_itemGetDL( nullptr );
@@ -444,9 +443,8 @@ double hb_partd( int iParam )
 
       if( HB_IS_DATETIME( pItem ) )
       {
-         return hb_timeStampPackDT( pItem->item.asDateTime.julian,
-                                    pItem->item.asDateTime.time );
-      }                              
+         return hb_timeStampPackDT( pItem->item.asDateTime.julian, pItem->item.asDateTime.time );
+      }
    }
 
    return 0;
@@ -456,7 +454,7 @@ HB_BOOL hb_partdt( long * plJulian, long * plMilliSec, int iParam )
 {
    HB_STACK_TLS_PRELOAD
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_partdt(%p,%p,%d)", ( void * ) plJulian, ( void * ) plMilliSec, iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_partdt(%p,%p,%d)", static_cast< void * >( plJulian ), static_cast< void * >( plMilliSec ), iParam ) );
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
@@ -478,7 +476,6 @@ HB_BOOL hb_partdt( long * plJulian, long * plMilliSec, int iParam )
    return HB_FALSE;
 }
 
-
 int  hb_parl( int iParam )
 {
    HB_STACK_TLS_PRELOAD
@@ -497,7 +494,7 @@ int  hb_parl( int iParam )
       if( HB_IS_LOGICAL( pItem ) )
       {
          return pItem->item.asLogical.value ? 1 : 0;
-      }   
+      }
    }
 
    return 0;
@@ -521,7 +518,7 @@ int  hb_parldef( int iParam, int iDefValue )
       if( HB_IS_LOGICAL( pItem ) )
       {
          return pItem->item.asLogical.value ? 1 : 0;
-      }   
+      }
    }
 
    return iDefValue;
@@ -553,7 +550,7 @@ double  hb_parnd( int iParam )
       else if( HB_IS_LONG( pItem ) )
       {
          return static_cast< double >( pItem->item.asLong.value );
-      }   
+      }
    }
 
    return 0;
@@ -585,7 +582,7 @@ int  hb_parni( int iParam )
       else if( HB_IS_DOUBLE( pItem ) )
       {
          return HB_CAST_INT( pItem->item.asDouble.value );
-      }   
+      }
    }
 
    return 0;
@@ -617,7 +614,7 @@ int  hb_parnidef( int iParam, int iDefValue )
       else if( HB_IS_DOUBLE( pItem ) )
       {
          return HB_CAST_INT( pItem->item.asDouble.value );
-      }   
+      }
    }
 
    return iDefValue;
@@ -649,7 +646,7 @@ long  hb_parnl( int iParam )
       else if( HB_IS_DOUBLE( pItem ) )
       {
          return HB_CAST_LONG( pItem->item.asDouble.value );
-      }   
+      }
    }
 
    return 0;
@@ -681,7 +678,7 @@ long  hb_parnldef( int iParam, long lDefValue )
       else if( HB_IS_DOUBLE( pItem ) )
       {
          return HB_CAST_LONG( pItem->item.asDouble.value );
-      }   
+      }
    }
 
    return lDefValue;
@@ -713,7 +710,7 @@ HB_ISIZ hb_parns( int iParam )
       else if( HB_IS_DOUBLE( pItem ) )
       {
          return HB_CAST_ISIZ( pItem->item.asDouble.value );
-      }   
+      }
    }
 
    return 0;
@@ -745,7 +742,7 @@ HB_ISIZ hb_parnsdef( int iParam, HB_ISIZ nDefValue )
       else if( HB_IS_DOUBLE( pItem ) )
       {
          return HB_CAST_ISIZ( pItem->item.asDouble.value );
-      }   
+      }
    }
 
    return nDefValue;
@@ -778,7 +775,7 @@ HB_LONGLONG  hb_parnll( int iParam )
       else if( HB_IS_DOUBLE( pItem ) )
       {
          return HB_CAST_LONGLONG( pItem->item.asDouble.value );
-      }   
+      }
    }
 
    return 0;
@@ -811,7 +808,7 @@ HB_MAXINT hb_parnint( int iParam )
       else if( HB_IS_DOUBLE( pItem ) )
       {
          return HB_CAST_MAXINT( pItem->item.asDouble.value );
-      }   
+      }
    }
 
    return 0;
@@ -843,7 +840,7 @@ HB_MAXINT hb_parnintdef( int iParam, HB_MAXINT nDefValue )
       else if( HB_IS_DOUBLE( pItem ) )
       {
          return HB_CAST_MAXINT( pItem->item.asDouble.value );
-      }   
+      }
    }
 
    return nDefValue;
@@ -867,7 +864,7 @@ void * hb_parptr( int iParam )
       if( HB_IS_POINTER( pItem ) )
       {
          return pItem->item.asPointer.value;
-      }   
+      }
    }
 
    return nullptr;
@@ -877,7 +874,7 @@ void * hb_parptrGC( const HB_GC_FUNCS * pFuncs, int iParam )
 {
    HB_STACK_TLS_PRELOAD
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_parptrGC(%p,%d)", ( const void * ) pFuncs, iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_parptrGC(%p,%d)", static_cast< const void * >( pFuncs ), iParam ) );
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
@@ -888,11 +885,10 @@ void * hb_parptrGC( const HB_GC_FUNCS * pFuncs, int iParam )
          pItem = hb_itemUnRef( pItem );
       }
 
-      if( HB_IS_POINTER( pItem ) && pItem->item.asPointer.collect &&
-          hb_gcFuncs( pItem->item.asPointer.value ) == pFuncs )
+      if( HB_IS_POINTER( pItem ) && pItem->item.asPointer.collect && hb_gcFuncs( pItem->item.asPointer.value ) == pFuncs )
       {
          return pItem->item.asPointer.value;
-      }   
+      }
    }
 
    return nullptr;
@@ -1093,7 +1089,7 @@ char  * hb_parvdsbuff( char * szDate, int iParam, ... )
 {
    HB_STACK_TLS_PRELOAD
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_parvdsbuff(%p, %d, ...)", ( void * ) szDate, iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_parvdsbuff(%p, %d, ...)", static_cast< void * >( szDate ), iParam ) );
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
@@ -1178,8 +1174,7 @@ double hb_parvtd( int iParam, ... )
 
       if( HB_IS_DATETIME( pItem ) )
       {
-         return hb_timeStampPackDT( pItem->item.asDateTime.julian,
-                                    pItem->item.asDateTime.time );
+         return hb_timeStampPackDT( pItem->item.asDateTime.julian, pItem->item.asDateTime.time );
       }
       else if( HB_IS_ARRAY( pItem ) )
       {
@@ -1201,7 +1196,7 @@ HB_BOOL hb_parvtdt( long * plJulian, long * plMilliSec, int iParam, ... )
 {
    HB_STACK_TLS_PRELOAD
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_parvtdt(%p,%p,%d, ...)", ( void * ) plJulian, ( void * ) plMilliSec, iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_parvtdt(%p,%p,%d, ...)", static_cast< void * >( plJulian ), static_cast< void * >( plMilliSec ), iParam ) );
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
@@ -1233,7 +1228,6 @@ HB_BOOL hb_parvtdt( long * plJulian, long * plMilliSec, int iParam, ... )
 
    return HB_FALSE;
 }
-
 
 int  hb_parvl( int iParam, ... )
 {
@@ -1586,7 +1580,7 @@ void * hb_parvptrGC( const HB_GC_FUNCS * pFuncs, int iParam, ... )
 {
    HB_STACK_TLS_PRELOAD
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_parvptrGC(%p,%d, ...)", ( const void * ) pFuncs, iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_parvptrGC(%p,%d, ...)", static_cast< const void * >( pFuncs ), iParam ) );
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
@@ -1599,8 +1593,7 @@ void * hb_parvptrGC( const HB_GC_FUNCS * pFuncs, int iParam, ... )
 
       if( HB_IS_POINTER( pItem ) )
       {
-         if( pItem->item.asPointer.collect &&
-             hb_gcFuncs( pItem->item.asPointer.value ) == pFuncs )
+         if( pItem->item.asPointer.collect && hb_gcFuncs( pItem->item.asPointer.value ) == pFuncs )
          {
             return pItem->item.asPointer.value;
          }
@@ -1615,9 +1608,7 @@ void * hb_parvptrGC( const HB_GC_FUNCS * pFuncs, int iParam, ... )
          va_end( va );
 
          pItem = hb_arrayGetItemPtr( pItem, nArrayIndex );
-         if( pItem && HB_IS_POINTER( pItem ) &&
-             pItem->item.asPointer.collect &&
-             hb_gcFuncs( pItem->item.asPointer.value ) == pFuncs )
+         if( pItem && HB_IS_POINTER( pItem ) && pItem->item.asPointer.collect && hb_gcFuncs( pItem->item.asPointer.value ) == pFuncs )
          {
             return pItem->item.asPointer.value;
          }
