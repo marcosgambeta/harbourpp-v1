@@ -177,8 +177,7 @@ static HB_SYMB symbols[] = {
    { "YEAR",      { HB_FS_PUBLIC }, { HB_FUNCNAME( YEAR )      }, nullptr }
 };
 
-/* NOTE: The system symbol table with runtime functions HAVE TO be called
-         last */
+/* NOTE: The system symbol table with runtime functions HAVE TO be called last */
 
 void hb_vmSymbolInit_RT( void )
 {
