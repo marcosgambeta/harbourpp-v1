@@ -44,8 +44,7 @@
  *
  */
 
-/* NOTE: This is only a container source file, don't put real program
-         code here. */
+/* NOTE: This is only a container source file, don't put real program code here. */
 
 #include "hbsetup.h"
 

@@ -76,7 +76,7 @@ HB_EXTERN_END
 
 int main( int argc, char * argv[] )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "main(%d, %p)", argc, ( void * ) argv ) );
+   HB_TRACE( HB_TR_DEBUG, ( "main(%d, %p)", argc, static_cast< void * >( argv ) ) );
 
 #if defined( __DJGPP__ )
    __system_flags =
