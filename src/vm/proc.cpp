@@ -75,9 +75,13 @@ HB_FUNC( PROCLINE )
    HB_ISIZ nOffset = hb_stackBaseProcOffset( hb_parni( 1 ) + 1 );
 
    if( nOffset > 0 )
+   {
       hb_retni( hb_stackItem( nOffset )->item.asSymbol.stackstate->uiLineNo );
+   }
    else
+   {
       hb_retni( 0 );
+   }
 }
 
 #ifdef HB_CLP_UNDOC
@@ -99,7 +103,9 @@ HB_FUNC( PROCFILE )
       PHB_DYNS pDynSym = hb_dynsymFindName( hb_parc( 1 ) );
 
       if( pDynSym )
+      {
          pSym = pDynSym->pSymbol;
+      }
    }
    else
    {
@@ -115,12 +121,18 @@ HB_FUNC( PROCFILE )
             PHB_ITEM pSelf = hb_stackItem( nOffset + 1 );
 
             if( HB_IS_BLOCK( pSelf ) )
+            {
                pSym = pSelf->item.asBlock.value->pDefSymb;
+            }
             else if( pBase->item.asSymbol.stackstate->uiClass )
+            {
                pSym = hb_clsMethodSym( pBase );
+            }
          }
          else if( pBase->item.asSymbol.stackstate->uiClass )
+         {
             pSym = hb_clsMethodSym( pBase );
+         }
       }
    }
    hb_retc( hb_vmFindModuleSymbolName( hb_vmGetRealFuncSym( pSym ) ) );
@@ -146,9 +158,7 @@ char * hb_procname( int iLevel, char * szName, HB_BOOL fMethodName )
       pBase = hb_stackItem( nOffset );
       pSelf = hb_stackItem( nOffset + 1 );
 
-      if( fMethodName && nOffset > 0 &&
-          pBase->item.asSymbol.value == &hb_symEval &&
-          pBase->item.asSymbol.stackstate->uiClass )
+      if( fMethodName && nOffset > 0 && pBase->item.asSymbol.value == &hb_symEval && pBase->item.asSymbol.stackstate->uiClass )
       {
          HB_ISIZ nPrevOffset = hb_stackItem( nOffset )->item.asSymbol.stackstate->nBaseItem;
 
@@ -162,34 +172,35 @@ char * hb_procname( int iLevel, char * szName, HB_BOOL fMethodName )
          }
       }
 
-      if( pBase->item.asSymbol.value == &hb_symEval ||
-          pBase->item.asSymbol.value->pDynSym == hb_symEval.pDynSym )
+      if( pBase->item.asSymbol.value == &hb_symEval || pBase->item.asSymbol.value->pDynSym == hb_symEval.pDynSym )
       {
          hb_strncat( szName, "(b)", HB_PROCBUF_LEN );
          /* it is a method name? */
          if( fMethodName && pBase->item.asSymbol.stackstate->uiClass )
          {
-            hb_strncat( szName, hb_clsName( pBase->item.asSymbol.stackstate->uiClass ),
-                        HB_PROCBUF_LEN );
+            hb_strncat( szName, hb_clsName( pBase->item.asSymbol.stackstate->uiClass ), HB_PROCBUF_LEN );
             hb_strncat( szName, ":", HB_PROCBUF_LEN );
-            hb_strncat( szName, hb_clsMethodName( pBase->item.asSymbol.stackstate->uiClass,
-                                                  pBase->item.asSymbol.stackstate->uiMethod ), HB_PROCBUF_LEN );
+            hb_strncat( szName, hb_clsMethodName( pBase->item.asSymbol.stackstate->uiClass, pBase->item.asSymbol.stackstate->uiMethod ), HB_PROCBUF_LEN );
          }
          else if( HB_IS_BLOCK( pSelf ) )
-            hb_strncat( szName, pSelf->item.asBlock.value->pDefSymb->szName,
-                        HB_PROCBUF_LEN );
+         {
+            hb_strncat( szName, pSelf->item.asBlock.value->pDefSymb->szName, HB_PROCBUF_LEN );
+         }
          else if( HB_IS_SYMBOL( pSelf ) )
+         {
             hb_strncpy( szName, pSelf->item.asSymbol.value->szName, HB_PROCBUF_LEN );
+         }
          else
+         {
             hb_strncat( szName, pBase->item.asSymbol.value->szName, HB_PROCBUF_LEN );
+         }
       }
       else
       {
          /* it is a method name? */
          if( pBase->item.asSymbol.stackstate->uiClass )
          {
-            hb_strncat( szName, hb_clsName( pBase->item.asSymbol.stackstate->uiClass ),
-                        HB_PROCBUF_LEN );
+            hb_strncat( szName, hb_clsName( pBase->item.asSymbol.stackstate->uiClass ), HB_PROCBUF_LEN );
             hb_strncat( szName, ":", HB_PROCBUF_LEN );
          }
          hb_strncat( szName, pBase->item.asSymbol.value->szName, HB_PROCBUF_LEN );
@@ -226,17 +237,19 @@ HB_BOOL hb_procinfo( int iLevel, char * szName, HB_USHORT * puiLine, char * szFi
             hb_strncat( szName, "(b)", HB_PROCBUF_LEN );
 
             if( HB_IS_BLOCK( pSelf ) )
-               hb_strncat( szName, pSelf->item.asBlock.value->pDefSymb->szName,
-                           HB_PROCBUF_LEN );
+            {
+               hb_strncat( szName, pSelf->item.asBlock.value->pDefSymb->szName, HB_PROCBUF_LEN );
+            }
             else
+            {
                hb_strncat( szName, pSym->szName, HB_PROCBUF_LEN );
+            }
          }
          else
          {
             if( pBase->item.asSymbol.stackstate->uiClass ) /* it is a method name */
             {
-               hb_strncat( szName, hb_clsName( pBase->item.asSymbol.stackstate->uiClass ),
-                           HB_PROCBUF_LEN );
+               hb_strncat( szName, hb_clsName( pBase->item.asSymbol.stackstate->uiClass ), HB_PROCBUF_LEN );
                hb_strncat( szName, ":", HB_PROCBUF_LEN );
             }
             hb_strncat( szName, pSym->szName, HB_PROCBUF_LEN );
@@ -244,35 +257,50 @@ HB_BOOL hb_procinfo( int iLevel, char * szName, HB_USHORT * puiLine, char * szFi
       }
 
       if( puiLine )
+      {
          *puiLine = pBase->item.asSymbol.stackstate->uiLineNo;
+      }
 
       if( szFile )
       {
          const char * szModule;
 
-         if( HB_IS_BLOCK( pSelf ) &&
-             ( pSym == &hb_symEval || pSym->pDynSym == hb_symEval.pDynSym ) )
+         if( HB_IS_BLOCK( pSelf ) && ( pSym == &hb_symEval || pSym->pDynSym == hb_symEval.pDynSym ) )
+         {
             pSym = pSelf->item.asBlock.value->pDefSymb;
+         }
          else if( pBase->item.asSymbol.stackstate->uiClass )
+         {
             pSym = hb_clsMethodSym( pBase );
+         }
 
          szModule = hb_vmFindModuleSymbolName( hb_vmGetRealFuncSym( pSym ) );
 
          if( szModule )
+         {
             hb_strncpy( szFile, szModule, HB_PATH_MAX - 1 );
+         }
          else
+         {
             szFile[ 0 ] = '\0';
+         }
       }
 
       return HB_TRUE;
    }
 
    if( szName )
+   {
       szName[ 0 ] = '\0';
+   }
    if( puiLine )
+   {
       *puiLine = 0;
+   }
    if( szFile )
+   {
       szFile[ 0 ] = '\0';
+   }
 
    return HB_FALSE;
 }

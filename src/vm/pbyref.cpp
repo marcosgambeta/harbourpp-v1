@@ -55,7 +55,9 @@ HB_FUNC( HB_PISBYREF )
    PHB_ITEM pItem = nullptr;
 
    if( uiParam && uiParam <= hb_stackItem( nOffset )->item.asSymbol.paramcnt )
+   {
       pItem = hb_stackItem( nOffset + 1 + uiParam );
+   }
 
    hb_retl( pItem && HB_IS_BYREF( pItem ) );
 }

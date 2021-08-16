@@ -100,7 +100,6 @@ void hb_xvunwire( HB_VMHANDLE h )
    HB_SYMBOL_UNUSED( h );
 }
 
-
 /* State */
 
 HB_SIZE hb_xvlockcount( HB_VMHANDLE h )
