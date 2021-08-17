@@ -284,7 +284,7 @@ HB_FUNC( WVW_TRACKPOPUPMENU )
 
 HB_FUNC( WIN_SETMENU )
 {
-   SetMenu( static_cast< HWND >( HB_PARHANDLE( 1 ) ), ( HMENU ) HB_PARHANDLE( 2 ) );
+   SetMenu( reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) ), ( HMENU ) HB_PARHANDLE( 2 ) );
 }
 
 /*
@@ -328,5 +328,5 @@ HB_FUNC( WVW_GETSYSTEMMENU )
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
    BOOL       lReset      = HB_ISNIL( 2 ) ? FALSE : hb_parl( 2 );
 
-   hb_retnl( static_cast< ULONG >( GetSystemMenu( pWindowData->hWnd, lReset ) ) );
+   hb_retnl( reinterpret_cast< ULONG >( GetSystemMenu( pWindowData->hWnd, lReset ) ) );
 }

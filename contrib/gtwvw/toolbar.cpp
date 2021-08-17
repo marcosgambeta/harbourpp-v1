@@ -132,7 +132,7 @@ HB_FUNC( WVW_TBCREATE )
       hb_retnl( 0 );
    }
 
-   pWindowData->tbOldProc = static_cast< WNDPROC >( SetWindowLongPtr( hWndTB,
+   pWindowData->tbOldProc = reinterpret_cast< WNDPROC >( SetWindowLongPtr( hWndTB,
                                                           GWLP_WNDPROC, ( LONG_PTR ) hb_gt_wvwTBProc ) );
 
    if( iSystemBitmap > 0 )
@@ -140,13 +140,13 @@ HB_FUNC( WVW_TBCREATE )
       tbab.hInst = HINST_COMMCTRL;
 
       tbab.nID = iSystemBitmap == 1 ? IDB_STD_SMALL_COLOR : IDB_STD_LARGE_COLOR;
-      pWindowData->iStartStdBitmap = SendMessage( hWndTB, TB_ADDBITMAP, static_cast< WPARAM >( 0 ), static_cast< WPARAM >( &tbab ) );
+      pWindowData->iStartStdBitmap = SendMessage( hWndTB, TB_ADDBITMAP, static_cast< WPARAM >( 0 ), reinterpret_cast< WPARAM >( &tbab ) );
 
       tbab.nID = iSystemBitmap == 1 ? IDB_VIEW_SMALL_COLOR : IDB_VIEW_LARGE_COLOR;
-      pWindowData->iStartViewBitmap = SendMessage( hWndTB, TB_ADDBITMAP, static_cast< WPARAM >( 0 ), static_cast< WPARAM >( &tbab ) );
+      pWindowData->iStartViewBitmap = SendMessage( hWndTB, TB_ADDBITMAP, static_cast< WPARAM >( 0 ), reinterpret_cast< WPARAM >( &tbab ) );
 
       tbab.nID = iSystemBitmap == 1 ? IDB_HIST_SMALL_COLOR : IDB_HIST_LARGE_COLOR;
-      pWindowData->iStartHistBitmap = SendMessage( hWndTB, TB_ADDBITMAP, static_cast< WPARAM >( 0 ), static_cast< WPARAM >( &tbab ) );
+      pWindowData->iStartHistBitmap = SendMessage( hWndTB, TB_ADDBITMAP, static_cast< WPARAM >( 0 ), reinterpret_cast< WPARAM >( &tbab ) );
    }
    else
    {
@@ -174,7 +174,7 @@ HB_FUNC( WVW_TBCREATE )
       hb_gt_wvwResetWindow( usWinNum );
    }
 
-   hb_retnl( static_cast< LONG >( hWndTB ) );
+   hb_retnl( reinterpret_cast< LONG >( hWndTB ) );
 }
 
 /*wvw_tbAddButton([nWinNum], nCommand, xBitmap, cLabel, nBitmapType,;
@@ -338,7 +338,7 @@ HB_FUNC( WVW_TBGETBUTTONRECT )
    PHB_ITEM temp;
 
    hWndTB = pWindowData->hToolBar;
-   if( hWndTB == nullptr || iButton < 0 || ! SendMessage( hWndTB, TB_GETRECT, static_cast< WPARAM >( iButton ), static_cast< LPARAM >( &rc ) ) )
+   if( hWndTB == nullptr || iButton < 0 || ! SendMessage( hWndTB, TB_GETRECT, static_cast< WPARAM >( iButton ), reinterpret_cast< LPARAM >( &rc ) ) )
    {
       hb_itemReturnRelease( aXY );
       return;
@@ -349,10 +349,10 @@ HB_FUNC( WVW_TBGETBUTTONRECT )
    hb_arrayNew( aXY, 4 );
 
    rcRect = hb_gt_wvwGetColRowFromXYRect( pWindowData, rc );
-   hb_arraySetForward( aXY, 1, hb_itemPutNL( temp, max( 0, rcRect.top ) ) );
+   hb_arraySetForward( aXY, 1, hb_itemPutNL( temp, HB_MAX( 0, rcRect.top ) ) );
    hb_arraySetForward( aXY, 2, hb_itemPutNL( temp, rcRect.left ) );
 
-   hb_arraySetForward( aXY, 3, hb_itemPutNL( temp, min( pWindowData->ROWS - 1, rcRect.bottom ) ) );
+   hb_arraySetForward( aXY, 3, hb_itemPutNL( temp, HB_MIN( pWindowData->ROWS - 1, rcRect.bottom ) ) );
    hb_arraySetForward( aXY, 4, hb_itemPutNL( temp, rcRect.right ) );
    hb_itemRelease( temp );
 

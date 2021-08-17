@@ -346,9 +346,9 @@ HB_FUNC( WVW_CXSTATUSFONT )
    if( pcd->hWndCtrl )
    {
       if( bFocus )
-         SendMessage( pcd->hWndCtrl, WM_SETFONT, static_cast< WPARAM >( pWindowData->hCXfont ), static_cast< LPARAM >( TRUE ) );
+         SendMessage( pcd->hWndCtrl, WM_SETFONT, reinterpret_cast< WPARAM >( pWindowData->hCXfont ), static_cast< LPARAM >( TRUE ) );
       else
-         SendMessage( pcd->hWndCtrl, WM_SETFONT, static_cast< WPARAM >( pWindowData->hPBfont ), static_cast< LPARAM >( TRUE ) );
+         SendMessage( pcd->hWndCtrl, WM_SETFONT, reinterpret_cast< WPARAM >( pWindowData->hPBfont ), static_cast< LPARAM >( TRUE ) );
    }
 
    hb_retl( TRUE );
@@ -574,7 +574,7 @@ HB_FUNC( WVW_PGSETPOS )
       return;
    }
 
-   SendMessage( hWndPG, PBM_GETRANGE, static_cast< WPARAM >( TRUE ), static_cast< LPARAM >( &pbrange ) );
+   SendMessage( hWndPG, PBM_GETRANGE, static_cast< WPARAM >( TRUE ), reinterpret_cast< LPARAM >( &pbrange ) );
 
    if( iPos < pbrange.iLow || iPos > pbrange.iHigh )
    {

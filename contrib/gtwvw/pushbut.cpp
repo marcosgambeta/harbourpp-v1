@@ -330,9 +330,9 @@ HB_FUNC( WVW_PBSETFONT )
          while( pcd )
          {
             if( ( pcd->byCtrlClass == WVW_CONTROL_PUSHBUTTON ) &&
-                ( static_cast< HFONT >( SendMessage( pcd->hWndCtrl, WM_GETFONT, static_cast< WPARAM >( 0 ), static_cast< LPARAM >( 0 ) ) ) == hOldFont )
+                ( reinterpret_cast< HFONT >( SendMessage( pcd->hWndCtrl, WM_GETFONT, static_cast< WPARAM >( 0 ), static_cast< LPARAM >( 0 ) ) ) == hOldFont )
                 )
-               SendMessage( pcd->hWndCtrl, WM_SETFONT, static_cast< WPARAM >( hFont ), static_cast< LPARAM >( TRUE ) );
+               SendMessage( pcd->hWndCtrl, WM_SETFONT, reinterpret_cast< WPARAM >( hFont ), static_cast< LPARAM >( TRUE ) );
 
             pcd = pcd->pNext;
          }
@@ -505,7 +505,7 @@ HB_FUNC( WVW_CBCREATE )
          if( SendMessage( static_cast< HWND >( hWndCB ),
                           CB_ADDSTRING,
                           static_cast< WPARAM >( 0 ),
-                          static_cast< LPARAM >( ( LPCTSTR ) szDefault )
+                          reinterpret_cast< LPARAM >( ( LPCTSTR ) szDefault )
                           ) < 0 )
          {
             /* ignore failure */
@@ -518,7 +518,7 @@ HB_FUNC( WVW_CBCREATE )
             if( SendMessage( static_cast< HWND >( hWndCB ),
                              CB_ADDSTRING,
                              static_cast< WPARAM >( 0 ),
-                             static_cast< LPARAM >( ( LPCTSTR ) hb_parvcx( 5, i ) )
+                             reinterpret_cast< LPARAM >( ( LPCTSTR ) hb_parvcx( 5, i ) )
                              ) < 0 )
             {
                /* ignore failure */
@@ -563,13 +563,13 @@ HB_FUNC( WVW_CBCREATE )
 
       AddControlHandle( usWinNum, WVW_CONTROL_COMBOBOX, hWndCB, uiCBid, ( PHB_ITEM ) hb_param( 6, HB_IT_BLOCK ), rXB, rOffXB, ( byte ) bKbdType );
 
-      OldProc = static_cast< WNDPROC >( SetWindowLongPtr( hWndCB,
+      OldProc = reinterpret_cast< WNDPROC >( SetWindowLongPtr( hWndCB,
                                               GWLP_WNDPROC, ( LONG_PTR ) hb_gt_wvwCBProc ) );
 
       StoreControlProc( usWinNum, WVW_CONTROL_COMBOBOX, hWndCB, OldProc );
 
-      SendMessage( hWndCB, WM_SETFONT, static_cast< WPARAM >( pWindowData->hCBfont ), static_cast< LPARAM >( TRUE ) );
-      hb_stornl( static_cast< LONG >( hWndCB ), 11 );
+      SendMessage( hWndCB, WM_SETFONT, reinterpret_cast< WPARAM >( pWindowData->hCBfont ), static_cast< LPARAM >( TRUE ) );
+      hb_stornl( reinterpret_cast< LONG >( hWndCB ), 11 );
 
       hb_retnl( static_cast< LONG >( uiCBid ) );
    }
@@ -746,9 +746,9 @@ HB_FUNC( WVW_CBSETFONT )
          while( pcd )
          {
             if( ( pcd->byCtrlClass == WVW_CONTROL_COMBOBOX ) &&
-                ( static_cast< HFONT >( SendMessage( pcd->hWndCtrl, WM_GETFONT, static_cast< WPARAM >( 0 ), static_cast< LPARAM >( 0 ) ) ) == hOldFont )
+                ( reinterpret_cast< HFONT >( SendMessage( pcd->hWndCtrl, WM_GETFONT, static_cast< WPARAM >( 0 ), static_cast< LPARAM >( 0 ) ) ) == hOldFont )
                 )
-               SendMessage( pcd->hWndCtrl, WM_SETFONT, static_cast< WPARAM >( hFont ), static_cast< LPARAM >( TRUE ) );
+               SendMessage( pcd->hWndCtrl, WM_SETFONT, reinterpret_cast< WPARAM >( hFont ), static_cast< LPARAM >( TRUE ) );
 
 
             pcd = pcd->pNext;
@@ -856,7 +856,7 @@ HB_FUNC( WVW_CBFINDSTRING )
    retval = SendMessage( static_cast< HWND >( pcd->hWndCtrl ),
                          CB_FINDSTRING,
                          static_cast< WPARAM >( -1 ),
-                         static_cast< LPARAM >( ( LPCSTR ) hb_parcx( 3 ) )
+                         reinterpret_cast< LPARAM >( ( LPCSTR ) hb_parcx( 3 ) )
                          );
    hb_retni( retval );
 }
@@ -901,7 +901,7 @@ HB_FUNC( WVW_CBGETCURTEXT )
    if( SendMessage( static_cast< HWND >( pcd->hWndCtrl ),
                     CB_GETLBTEXT,
                     static_cast< WPARAM >( iCurSel ),
-                    static_cast< LPARAM >( lptstr )
+                    reinterpret_cast< LPARAM >( lptstr )
                     ) == CB_ERR )
       hb_retclen( lptstr, 0 );
    else

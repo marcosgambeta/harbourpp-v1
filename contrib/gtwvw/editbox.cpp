@@ -201,7 +201,7 @@ HB_FUNC( WVW_EBCREATE )
          static_cast< HWND >( hWndEB ),
          WM_SETTEXT,
          0,
-         static_cast< LPARAM >( lpszText )
+         reinterpret_cast< LPARAM >( lpszText )
          );
 
       if( bFromOEM )
@@ -222,12 +222,12 @@ HB_FUNC( WVW_EBCREATE )
 
       AddControlHandle( usWinNum, WVW_CONTROL_EDITBOX, hWndEB, uiEBid, ( PHB_ITEM ) hb_param( 7, HB_IT_BLOCK ), rXB, rOffXB, ( byte ) bEBType );
 
-      OldProc = static_cast< WNDPROC >( SetWindowLongPtr( hWndEB,
+      OldProc = reinterpret_cast< WNDPROC >( SetWindowLongPtr( hWndEB,
                                               GWLP_WNDPROC, ( LONG_PTR ) hb_gt_wvwEBProc ) );
 
       StoreControlProc( usWinNum, WVW_CONTROL_EDITBOX, hWndEB, OldProc );
 
-      SendMessage( hWndEB, WM_SETFONT, static_cast< WPARAM >( pWindowData->hEBfont ), static_cast< LPARAM >( TRUE ) );
+      SendMessage( hWndEB, WM_SETFONT, reinterpret_cast< WPARAM >( pWindowData->hEBfont ), static_cast< LPARAM >( TRUE ) );
 
       hb_retnl( static_cast< LONG >( uiEBid ) );
    }
@@ -435,9 +435,9 @@ HB_FUNC( WVW_EBSETFONT )
          while( pcd )
          {
             if( ( pcd->byCtrlClass == WVW_CONTROL_EDITBOX ) &&
-                ( static_cast< HFONT >( SendMessage( pcd->hWndCtrl, WM_GETFONT, static_cast< WPARAM >( 0 ), static_cast< LPARAM >( 0 ) ) ) == hOldFont )
+                ( reinterpret_cast< HFONT >( SendMessage( pcd->hWndCtrl, WM_GETFONT, static_cast< WPARAM >( 0 ), static_cast< LPARAM >( 0 ) ) ) == hOldFont )
                 )
-               SendMessage( pcd->hWndCtrl, WM_SETFONT, static_cast< WPARAM >( hFont ), static_cast< LPARAM >( TRUE ) );
+               SendMessage( pcd->hWndCtrl, WM_SETFONT, reinterpret_cast< WPARAM >( hFont ), static_cast< LPARAM >( TRUE ) );
 
 
             pcd = pcd->pNext;
@@ -523,7 +523,7 @@ HB_FUNC( WVW_EBGETTEXT )
       static_cast< HWND >( pcd->hWndCtrl ),
       WM_GETTEXT,
       usLen,
-      static_cast< LPARAM >( lpszTextANSI )
+      reinterpret_cast< LPARAM >( lpszTextANSI )
       );
 
    if( bToOEM )
@@ -572,7 +572,7 @@ HB_FUNC( WVW_EBSETTEXT )
       static_cast< HWND >( pcd->hWndCtrl ),
       WM_SETTEXT,
       0,
-      static_cast< LPARAM >( lpszText )
+      reinterpret_cast< LPARAM >( lpszText )
       );
 
    if( bFromOEM )
@@ -603,8 +603,8 @@ HB_FUNC( WVW_EBGETSEL )
 
    SendMessage( static_cast< HWND >( pcd->hWndCtrl ),
                 EM_GETSEL,
-                static_cast< WPARAM >( &dwStart ),
-                static_cast< LPARAM >( &dwEnd )
+                reinterpret_cast< WPARAM >( &dwStart ),
+                reinterpret_cast< LPARAM >( &dwEnd )
                 );
 
    if( HB_ISBYREF( 3 ) )
@@ -684,7 +684,7 @@ HB_FUNC( WVW_STCREATE )
 
 
    if( HB_ISNUM( 8 ) )
-      hFont = static_cast< HFONT >( HB_PARHANDLE( 8 ) );
+      hFont = reinterpret_cast< HFONT >( HB_PARHANDLE( 8 ) );
    else
    if( pWindowData->hSTfont == nullptr )
    {
@@ -743,11 +743,11 @@ HB_FUNC( WVW_STCREATE )
    if( hWndCB )
    {
       if( HB_ISCHAR( 5 ) )
-         SendMessage( hWndCB, WM_SETTEXT, 0, static_cast< LPARAM >( hb_parc( 5 ) ) );
+         SendMessage( hWndCB, WM_SETTEXT, 0, reinterpret_cast< LPARAM >( hb_parc( 5 ) ) );
       if( hFont )
-         SendMessage( hWndCB, WM_SETFONT, static_cast< WPARAM >( hFont ), static_cast< LPARAM >( TRUE ) );
+         SendMessage( hWndCB, WM_SETFONT, reinterpret_cast< WPARAM >( hFont ), static_cast< LPARAM >( TRUE ) );
       else
-         SendMessage( hWndCB, WM_SETFONT, static_cast< WPARAM >( pWindowData->hSTfont ), static_cast< LPARAM >( TRUE ) );
+         SendMessage( hWndCB, WM_SETFONT, reinterpret_cast< WPARAM >( pWindowData->hSTfont ), static_cast< LPARAM >( TRUE ) );
       hb_retnl( static_cast< LONG >( uiCBid ) );
       HB_STOREHANDLE( hWndCB, 9 );
    }
@@ -758,7 +758,7 @@ HB_FUNC( WVW_STCREATE )
 
 HB_FUNC( WVW_STSETTEXT )
 {
-   HWND hWndCB = static_cast< HWND >( HB_PARHANDLE( 2 ) );
+   HWND hWndCB = reinterpret_cast< HWND >( HB_PARHANDLE( 2 ) );
 
    if( hWndCB )
    {
@@ -804,9 +804,9 @@ HB_FUNC( WVW_STSETFONT )
          while( pcd )
          {
             if( ( pcd->byCtrlClass == WVW_CONTROL_STATIC ) &&
-                ( static_cast< HFONT >( SendMessage( pcd->hWndCtrl, WM_GETFONT, static_cast< WPARAM >( 0 ), static_cast< LPARAM >( 0 ) ) ) == hOldFont )
+                ( reinterpret_cast< HFONT >( SendMessage( pcd->hWndCtrl, WM_GETFONT, static_cast< WPARAM >( 0 ), static_cast< LPARAM >( 0 ) ) ) == hOldFont )
                 )
-               SendMessage( pcd->hWndCtrl, WM_SETFONT, static_cast< WPARAM >( hFont ), static_cast< LPARAM >( TRUE ) );
+               SendMessage( pcd->hWndCtrl, WM_SETFONT, reinterpret_cast< WPARAM >( hFont ), static_cast< LPARAM >( TRUE ) );
 
 
             pcd = pcd->pNext;

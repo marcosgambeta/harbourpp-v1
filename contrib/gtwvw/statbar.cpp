@@ -88,13 +88,13 @@ HB_FUNC( WVW_SBCREATE )
       hb_gt_wvwResetWindow( usWinNum );
 
       ptArray[ 0 ] = rSB.right;
-      SendMessage( hWndSB, WM_SETFONT, static_cast< WPARAM >( pWindowData->hSBfont ), static_cast< LPARAM >( TRUE ) );
+      SendMessage( hWndSB, WM_SETFONT, reinterpret_cast< WPARAM >( pWindowData->hSBfont ), static_cast< LPARAM >( TRUE ) );
 
-      SendMessage( hWndSB, SB_SETPARTS, 1, static_cast< LPARAM >( ( LPINT ) ptArray ) );
+      SendMessage( hWndSB, SB_SETPARTS, 1, reinterpret_cast< LPARAM >( ( LPINT ) ptArray ) );
 
    }
 
-   hb_retnl( static_cast< LONG >( hWndSB ) );
+   hb_retnl( reinterpret_cast< LONG >( hWndSB ) );
 }
 
 /*wvw_sbDestroy( [nWinNum] )
@@ -163,7 +163,7 @@ HB_FUNC( WVW_SBADDPART )
       HDC  hDCSB = GetDC( hWndSB );
       SIZE size  = { 0 };
 
-      HFONT hFont    = static_cast< HFONT >( SendMessage( hWndSB, WM_GETFONT, static_cast< WPARAM >( 0 ), static_cast< LPARAM >( 0 ) ) );
+      HFONT hFont    = reinterpret_cast< HFONT >( SendMessage( hWndSB, WM_GETFONT, static_cast< WPARAM >( 0 ), static_cast< LPARAM >( 0 ) ) );
       HFONT hOldFont = static_cast< HFONT >( SelectObject( hDCSB, hFont ) );
 
       if( GetTextExtentPoint32( hDCSB, hb_parcx( 2 ), hb_parclen( 2 ) + 1, &size ) )
@@ -175,7 +175,7 @@ HB_FUNC( WVW_SBADDPART )
    }
 
    if( ! lResetParts )
-      numOfParts = SendMessage( hWndSB, SB_GETPARTS, WVW_MAX_STATUS_PARTS, static_cast< LPARAM >( ( LPINT ) ptArray ) );
+      numOfParts = SendMessage( hWndSB, SB_GETPARTS, WVW_MAX_STATUS_PARTS, reinterpret_cast< LPARAM >( ( LPINT ) ptArray ) );
    else
       numOfParts = 0;
    numOfParts++;
@@ -187,7 +187,7 @@ HB_FUNC( WVW_SBADDPART )
       for( n = 0; n < numOfParts - 1; n++ )
          ptArray[ n ] -= ( usWidth + WVW_SPACE_BETWEEN_PARTS );
 
-   SendMessage( hWndSB, SB_SETPARTS, numOfParts, static_cast< LPARAM >( ( LPINT ) ptArray ) );
+   SendMessage( hWndSB, SB_SETPARTS, numOfParts, reinterpret_cast< LPARAM >( ( LPINT ) ptArray ) );
 
    if( ! HB_ISNIL( 6 ) )
    {
@@ -200,12 +200,12 @@ HB_FUNC( WVW_SBADDPART )
          hIcon = static_cast< HICON >( LoadImage( GetModuleHandle( nullptr ), hb_parcx( 6 ), IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR | LR_DEFAULTSIZE ) );
 
       if( ! ( hIcon == nullptr ) )
-         SendMessage( hWndSB, SB_SETICON, static_cast< WPARAM >( numOfParts ) - 1, static_cast< LPARAM >( hIcon ) );
+         SendMessage( hWndSB, SB_SETICON, static_cast< WPARAM >( numOfParts ) - 1, reinterpret_cast< LPARAM >( hIcon ) );
    }
 
    SendMessage( hWndSB, SB_SETTEXT, ( numOfParts - 1 ) | displayFlags, static_cast< LPARAM >( NULL ) );
    if( ! HB_ISNIL( 7 ) )
-      SendMessage( hWndSB, SB_SETTIPTEXT, static_cast< WPARAM >( numOfParts - 1 ), static_cast< LPARAM >( hb_parcx( 7 ) ) );
+      SendMessage( hWndSB, SB_SETTIPTEXT, static_cast< WPARAM >( numOfParts - 1 ), reinterpret_cast< LPARAM >( hb_parcx( 7 ) ) );
 
    hb_retni( numOfParts );
 }
@@ -234,7 +234,7 @@ HB_FUNC( WVW_SBREFRESH )
       return;
    }
 
-   numOfParts = SendMessage( hWndSB, SB_GETPARTS, WVW_MAX_STATUS_PARTS, static_cast< LPARAM >( ( LPINT ) ptArray ) );
+   numOfParts = SendMessage( hWndSB, SB_GETPARTS, WVW_MAX_STATUS_PARTS, reinterpret_cast< LPARAM >( ( LPINT ) ptArray ) );
    if( numOfParts == 0 )
    {
       hb_retnl( 0 );
@@ -247,7 +247,7 @@ HB_FUNC( WVW_SBREFRESH )
    for( n = 0; n <= numOfParts - 1; n++ )
       ptArray[ n ] += iDiff;
 
-   SendMessage( hWndSB, SB_SETPARTS, numOfParts, static_cast< LPARAM >( ( LPINT ) ptArray ) );
+   SendMessage( hWndSB, SB_SETPARTS, numOfParts, reinterpret_cast< LPARAM >( ( LPINT ) ptArray ) );
 
    hb_retni( numOfParts );
 }
@@ -280,11 +280,11 @@ HB_FUNC( WVW_SBSETTEXT )
    if( ( iPart == 0 ) && ( ( pWindowData->cSBColorForeground ) || ( pWindowData->cSBColorBackground ) ) )
    {
       pWindowData->bSBPaint = TRUE;
-      SendMessage( pWindowData->hStatusBar, SB_SETTEXT, SBT_OWNERDRAW, static_cast< LPARAM >( hb_parcx( 3 ) ) );
+      SendMessage( pWindowData->hStatusBar, SB_SETTEXT, SBT_OWNERDRAW, reinterpret_cast< LPARAM >( hb_parcx( 3 ) ) );
       hb_gt_wvwProcessMessages( pWindowData );
    }
    else
-      SendMessage( pWindowData->hStatusBar, SB_SETTEXT, iPart, static_cast< LPARAM >( hb_parcx( 3 ) ) );
+      SendMessage( pWindowData->hStatusBar, SB_SETTEXT, iPart, reinterpret_cast< LPARAM >( hb_parcx( 3 ) ) );
 }
 
 /*wvw_sbGetText([nWinNum], [nPart])
@@ -297,7 +297,7 @@ HB_FUNC( WVW_SBGETTEXT )
    int        iPart           = HB_ISNIL( 2 ) ? 1 : hb_parni( 2 );
    char       cString[ 1024 ] = "";
 
-   SendMessage( pWindowData->hStatusBar, SB_GETTEXT, static_cast< WPARAM >( iPart ), static_cast< LPARAM >( cString ) );
+   SendMessage( pWindowData->hStatusBar, SB_GETTEXT, static_cast< WPARAM >( iPart ), reinterpret_cast< LPARAM >( cString ) );
    hb_retc( cString );
 }
 
@@ -513,7 +513,7 @@ HB_FUNC( WVW_XBCREATE )
 
       AddControlHandle( usWinNum, WVW_CONTROL_SCROLLBAR, hWndXB, uiXBid, ( PHB_ITEM ) hb_param( 6, HB_IT_BLOCK ), rXB, rOffXB, ( byte ) iStyle );
 
-      OldProc = static_cast< WNDPROC >( SetWindowLongPtr( hWndXB,
+      OldProc = reinterpret_cast< WNDPROC >( SetWindowLongPtr( hWndXB,
                                               GWLP_WNDPROC, ( LONG_PTR ) hb_gt_wvwXBProc ) );
 
       StoreControlProc( usWinNum, WVW_CONTROL_SCROLLBAR, hWndXB, OldProc );

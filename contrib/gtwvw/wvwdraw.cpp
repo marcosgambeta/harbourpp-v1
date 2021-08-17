@@ -118,7 +118,7 @@ HB_FUNC( WVW_DRAWLABELOBJ )
 
    oldTextColor = SetTextColor( pWindowData->hdc, HB_ISNIL( 9 ) ? pWindowData->foreground : static_cast< COLORREF >( hb_parnl( 9 ) ) );
    oldBkColor   = SetBkColor( pWindowData->hdc, HB_ISNIL( 10 ) ? pWindowData->background : static_cast< COLORREF >( hb_parnl( 10 ) ) );
-   oldFont      = static_cast< HFONT >( SelectObject( pWindowData->hdc, static_cast< HFONT >( HB_PARHANDLE( 11 ) ) ) );
+   oldFont      = static_cast< HFONT >( SelectObject( pWindowData->hdc, reinterpret_cast< HFONT >( HB_PARHANDLE( 11 ) ) ) );
 
    GetTextExtentPoint32( pWindowData->hdc, hb_parcx( 6 ), strlen( hb_parcx( 6 ) ), &sz );
 
@@ -595,7 +595,7 @@ HB_FUNC( WVW_DRAWTEXTBOX )
    oldTextColor = SetTextColor( pWindowData->hdc, HB_ISNIL( 10 ) ? pWindowData->foreground : static_cast< COLORREF >( hb_parnl( 10 ) ) );
    oldBkColor   = SetBkColor( pWindowData->hdc, HB_ISNIL( 11 ) ? pWindowData->background : static_cast< COLORREF >( hb_parnl( 11 ) ) );
    oldBkMode    = SetBkMode( pWindowData->hdc, HB_ISNIL( 12 ) ? OPAQUE : hb_parni( 12 ) );
-   oldFont      = static_cast< HFONT >( SelectObject( pWindowData->hdc, static_cast< HFONT >( HB_PARHANDLE( 13 ) ) ) );
+   oldFont      = static_cast< HFONT >( SelectObject( pWindowData->hdc, reinterpret_cast< HFONT >( HB_PARHANDLE( 13 ) ) ) );
 
    DrawText( pWindowData->hdc, hb_parcx( 7 ), strlen( hb_parcx( 7 ) ), &rc, iAlignH | DT_WORDBREAK | DT_TOP );
 
