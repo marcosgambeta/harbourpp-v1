@@ -273,8 +273,10 @@ static void   hb_wvw_vmouse_SetPos( WIN_DATA * pWindowData, USHORT usRow, USHORT
 static int    hb_gt_wvw_usDispCount( WIN_DATA * pWindowData );
 static void   hb_gt_wvw_vDispBegin( WIN_DATA * pWindowData );
 static void   hb_gt_wvw_vDispEnd( WIN_DATA * pWindowData );
+#if 0
 static void  hb_gt_wvw_vGetText( WIN_DATA * pWindowData, USHORT top, USHORT left, USHORT bottom, USHORT right, BYTE * sBuffer );
 static void  hb_gt_wvw_vPuts( WIN_DATA * pWindowData, int iRow, int iCol, BYTE byColor, BYTE byAttr, BYTE * pbyStr, ULONG ulLen );
+#endif
 static void  hb_gt_wvw_vReplicate( WIN_DATA * pWindowData, int iRow, int iCol, int bColor, BYTE bAttr, USHORT usChar, ULONG ulLen );
 static void  hb_gt_wvw_vPutText( WIN_DATA * pWindowData, USHORT top, USHORT left, USHORT bottom, USHORT right, const char * sBuffer, int bColor );
 static void  hb_gt_wvw_vSetAttribute( WIN_DATA * pWindowData, int iTop, int iLeft, int iBottom, int iRight, int bColor );
@@ -351,7 +353,7 @@ LONG  GetFontDialogUnits( HWND h, HFONT f )
    HFONT  hFontOld;
    LONG   avgWidth;
    HDC    hDc;
-   char * tmp = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+   const char * tmp = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
    SIZE   sz;
 
    /* get the hdc to the main window */
@@ -447,7 +449,7 @@ static void hb_gt_wvw_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
    s_pWvwData->hInstance = static_cast< HINSTANCE >( hInstance );
 
-   s_pWvwData->s_pWindows[ 0 ]->hWnd = hb_gt_wvwCreateWindow( static_cast< HINSTANCE >( hInstance ), static_cast< HINSTANCE >( hPrevInstance ), "", iCmdShow );
+   s_pWvwData->s_pWindows[ 0 ]->hWnd = hb_gt_wvwCreateWindow( static_cast< HINSTANCE >( hInstance ), static_cast< HINSTANCE >( hPrevInstance ), nullptr, iCmdShow );
 
    if( ! s_pWvwData->s_pWindows[ 0 ]->hWnd )
       /*  Runtime error
@@ -866,6 +868,7 @@ static void hb_gt_wvw_SetAttribute( PHB_GT pGT, int iTop, int iLeft, int iBottom
 /*    copied from gtwin...                                           */
 /*                                                                   */
 
+#if 0
 static void hb_gt_wvw_Scroll( PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, int bColor, USHORT bChar, int iRows, int iCols )
 {
    LONG usSaveRow, usSaveCol;
@@ -980,6 +983,7 @@ static void hb_gt_wvw_Scroll( PHB_GT pGT, int iTop, int iLeft, int iBottom, int 
    nCountScroll++;
 #endif
 }
+#endif
 
 
 /*                                                                   */
@@ -3812,7 +3816,7 @@ static void hb_gt_wvwCreateToolTipWindow( WIN_DATA * pWindowData )
    ti.hwnd      = pWindowData->hWnd;
    ti.uId       = WVW_ID_BASE_TOOLTIP + pWindowData->byWinId;
    ti.hinst     = s_pWvwData->hInstance;
-   ti.lpszText  = "";
+   ti.lpszText  = nullptr;
    ti.rect.left = ti.rect.top = ti.rect.bottom = ti.rect.right = 0;
 
    /* Add the tool to the control, displaying an error if needed.
@@ -4521,7 +4525,7 @@ static void hb_gtInitStatics( UINT usWinNum, LPCTSTR lpszWinName, USHORT usRow1,
       h = LoadLibrary( "msimg32.dll" );
       if( h )
       {
-         s_pWvwData->s_sApp->pfnGF = ( wvwGradientFill ) HB_WINAPI_GETPROCADDRESS( h, "GradientFill" );
+         s_pWvwData->s_sApp->pfnGF = reinterpret_cast< wvwGradientFill >( HB_WINAPI_GETPROCADDRESS( h, "GradientFill" ) );
          if( s_pWvwData->s_sApp->pfnGF )
             s_pWvwData->s_sApp->hMSImg32 = h;
       }
@@ -5632,6 +5636,7 @@ static void   hb_gt_wvw_vDispEnd( WIN_DATA * pWindowData )
       hb_gt_wvwDoInvalidateRect( pWindowData );
 }
 
+#if 0
 static void hb_gt_wvw_vGetText( WIN_DATA * pWindowData, USHORT top, USHORT left, USHORT bottom, USHORT right, BYTE * sBuffer )
 {
    USHORT irow, icol, index, j;
@@ -5653,7 +5658,9 @@ static void hb_gt_wvw_vGetText( WIN_DATA * pWindowData, USHORT top, USHORT left,
       }
    }
 }
+#endif
 
+#if 0
 static void  hb_gt_wvw_vPuts( WIN_DATA * pWindowData, int iRow, int iCol, BYTE byColor, BYTE byAttr, BYTE * pbyStr, ULONG ulLen )
 {
    hb_gt_wvwSetStringInTextBuffer( pWindowData, iCol, iRow, byColor, byAttr, pbyStr, ulLen );
@@ -5661,6 +5668,7 @@ static void  hb_gt_wvw_vPuts( WIN_DATA * pWindowData, int iRow, int iCol, BYTE b
    nCountPuts++;
 #endif
 }
+#endif
 
 static void  hb_gt_wvw_vReplicate( WIN_DATA * pWindowData, int iRow, int iCol, int bColor, BYTE bAttr, USHORT usChar, ULONG ulLen )
 {
@@ -10414,7 +10422,7 @@ LRESULT CALLBACK hb_gt_wvwEBProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
             case VK_RETURN:
                if( bMultiline || bAlt || bShift || bCtrl )
                   break;
-               else if( ! bMultiline )
+               else /* if( ! bMultiline ) */
                {
                   SetFocus( hWndParent );
                   PostMessage( hWndParent, message, wParam, lParam );

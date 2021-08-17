@@ -795,7 +795,7 @@ HB_FUNC( OPENIMAGE )
    int          iFileSize;
    FILE *       fp;
    /* IPicture * pPic; */
-   LPPICTURE pPic;
+   LPPICTURE pPic = nullptr;
    IStream * pStream;
    HGLOBAL   hG;
    HBITMAP   hBitmap = 0;
@@ -1152,7 +1152,9 @@ HB_FUNC( TOOLBARADDBUTTONS )
    /* BOOL bSystem; */
 
    ULONG  ulCount;
+#if 0
    ULONG  ulID;
+#endif
    DWORD  style = GetWindowLong( hWndCtrl, GWL_STYLE );
    USHORT usOldHeight;
 
@@ -1164,7 +1166,9 @@ HB_FUNC( TOOLBARADDBUTTONS )
    {
 
       pTemp = hb_arrayGetItemPtr( pArray, ulCount + 1 );
+#if 0
       ulID  = hb_arrayGetNI( pTemp, 1 );
+#endif
       /* bSystem = hb_arrayGetL( pTemp, 9 ); */
 
 #if 0
@@ -2157,7 +2161,8 @@ HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
       pFunc = hb_itemNew( pFirst );
       iType = 2;
    }
-   else if( HB_IS_STRING( pFirst ) == HB_IT_STRING )
+   //else if( HB_IS_STRING( pFirst ) == HB_IT_STRING )
+   else if( HB_IS_STRING( pFirst ) )
    {
       pExecSym = hb_dynsymFindName( hb_itemGetCPtr( pFirst ) );
       if( pExecSym )
@@ -2268,7 +2273,8 @@ HB_FUNC( WVW_CREATEDIALOGMODAL )
       p->s_sApp->pFuncModal[ iIndex ] = pFunc;
       p->s_sApp->iTypeModal[ iIndex ] = 2;
    }
-   else if( HB_IS_STRING( pFirst ) == HB_IT_STRING )
+   //else if( HB_IS_STRING( pFirst ) == HB_IT_STRING )
+   else if( HB_IS_STRING( pFirst ) )
    {
       pExecSym = hb_dynsymFindName( hb_itemGetCPtr( pFirst ) );
       if( pExecSym )
