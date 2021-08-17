@@ -78,7 +78,7 @@ HB_FUNC( WVW_SBCREATE )
    if( hWndSB )
    {
 
-      RECT rSB = { 0 };
+      RECT rSB; memset( &rSB, 0, sizeof( rSB ) );
       if( pWindowData->hSBfont == nullptr )
          pWindowData->hSBfont = CreateFontIndirect( &pData->s_lfSB );
       if( GetClientRect( hWndSB, &rSB ) )
@@ -141,7 +141,7 @@ HB_FUNC( WVW_SBADDPART )
    int        ptArray[ WVW_MAX_STATUS_PARTS ];
    int        numOfParts;
    int        n;
-   RECT       rSB = { 0 };
+   RECT       rSB; memset( &rSB, 0, sizeof( rSB ) );
    WORD       displayFlags;
    HICON      hIcon;
    BOOL       lResetParts;
@@ -161,7 +161,7 @@ HB_FUNC( WVW_SBADDPART )
    if( HB_ISCHAR( 2 ) )
    {
       HDC  hDCSB = GetDC( hWndSB );
-      SIZE size  = { 0 };
+      SIZE size; memset( &size, 0, sizeof( size ) );
 
       HFONT hFont    = reinterpret_cast< HFONT >( SendMessage( hWndSB, WM_GETFONT, static_cast< WPARAM >( 0 ), static_cast< LPARAM >( 0 ) ) );
       HFONT hOldFont = static_cast< HFONT >( SelectObject( hDCSB, hFont ) );
@@ -225,7 +225,7 @@ HB_FUNC( WVW_SBREFRESH )
    int        numOfParts;
    int        n;
    int        iDiff;
-   RECT       rSB = { 0 };
+   RECT       rSB; memset( &rSB, 0, sizeof( rSB ) );
 
    hWndSB = pWindowData->hStatusBar;
    if( hWndSB == nullptr )
@@ -264,7 +264,7 @@ HB_FUNC( WVW_SBSETTEXT )
    if( ! HB_ISNIL( 4 ) )
    {
       if( HB_ISCHAR( 4 ) )
-         pWindowData->cSBColorForeground = strtol( hb_parc( 4 ), NULL, 10 );
+         pWindowData->cSBColorForeground = strtol( hb_parc( 4 ), nullptr, 10 );
       else
          pWindowData->cSBColorForeground = hb_parnl( 4 );
    }
@@ -272,7 +272,7 @@ HB_FUNC( WVW_SBSETTEXT )
    if( ! HB_ISNIL( 5 ) )
    {
       if( HB_ISCHAR( 5 ) )
-         pWindowData->cSBColorBackground = strtol( hb_parc( 5 ), NULL, 10 );
+         pWindowData->cSBColorBackground = strtol( hb_parc( 5 ), nullptr, 10 );
       else
          pWindowData->cSBColorBackground = hb_parnl( 5 );
    }
@@ -331,12 +331,12 @@ HB_FUNC( WVW_SBSETFONT )
    pData->s_lfSB.lfEscapement  = 0;
    pData->s_lfSB.lfOrientation = 0;
    pData->s_lfSB.lfWeight      = HB_ISNIL( 5 ) ? pData->s_lfSB.lfWeight : hb_parni( 5 );
-   pData->s_lfSB.lfItalic      = HB_ISNIL( 7 ) ? pData->s_lfSB.lfItalic :    ( BYTE ) hb_parl( 7 );
-   pData->s_lfSB.lfUnderline   = HB_ISNIL( 8 ) ? pData->s_lfSB.lfUnderline : ( BYTE ) hb_parl( 8 );
-   pData->s_lfSB.lfStrikeOut   = HB_ISNIL( 9 ) ? pData->s_lfSB.lfStrikeOut : ( BYTE ) hb_parl( 9 );
+   pData->s_lfSB.lfItalic      = HB_ISNIL( 7 ) ? pData->s_lfSB.lfItalic :    static_cast< BYTE >( hb_parl( 7 ) );
+   pData->s_lfSB.lfUnderline   = HB_ISNIL( 8 ) ? pData->s_lfSB.lfUnderline : static_cast< BYTE >( hb_parl( 8 ) );
+   pData->s_lfSB.lfStrikeOut   = HB_ISNIL( 9 ) ? pData->s_lfSB.lfStrikeOut : static_cast< BYTE >( hb_parl( 9 ) );
    pData->s_lfSB.lfCharSet     = DEFAULT_CHARSET;
 
-   pData->s_lfSB.lfQuality        = HB_ISNIL( 6 ) ? pData->s_lfSB.lfQuality : ( BYTE ) hb_parni( 6 );
+   pData->s_lfSB.lfQuality        = HB_ISNIL( 6 ) ? pData->s_lfSB.lfQuality : static_cast< BYTE >( hb_parni( 6 ) );
    pData->s_lfSB.lfPitchAndFamily = FF_DONTCARE;
    if( HB_ISCHAR( 2 ) )
       strcpy( pData->s_lfSB.lfFaceName, hb_parcx( 2 ) );
@@ -416,7 +416,7 @@ HB_FUNC( WVW_XBCREATE )
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
    HWND       hWndParent  = pWindowData->hWnd;
    HWND       hWndXB;
-   POINT      xy = { 0 };
+   POINT      xy; memset( &xy, 0, sizeof( xy ) );
    int        iTop, iLeft, iBottom, iRight;
    int        iOffTop, iOffLeft, iOffBottom, iOffRight;
    int        iStyle = static_cast< int >( ! HB_ISNUM( 2 ) ? -1 : hb_parni( 2 ) );
@@ -499,7 +499,8 @@ HB_FUNC( WVW_XBCREATE )
    if( hWndXB )
    {
 
-      RECT rXB = { 0 }, rOffXB = { 0 };
+      RECT rXB; memset( &rXB, 0, sizeof( rXB ) );
+      RECT rOffXB; memset( &rOffXB, 0, sizeof( rOffXB ) );
 
       WNDPROC OldProc;
 
@@ -511,7 +512,7 @@ HB_FUNC( WVW_XBCREATE )
       SetScrollRange( hWndXB, SB_CTL, 0, 99, FALSE );
       SetScrollPos( hWndXB, SB_CTL, 0, TRUE );
 
-      AddControlHandle( usWinNum, WVW_CONTROL_SCROLLBAR, hWndXB, uiXBid, ( PHB_ITEM ) hb_param( 6, HB_IT_BLOCK ), rXB, rOffXB, ( byte ) iStyle );
+      AddControlHandle( usWinNum, WVW_CONTROL_SCROLLBAR, hWndXB, uiXBid, ( PHB_ITEM ) hb_param( 6, HB_IT_BLOCK ), rXB, rOffXB, static_cast< byte >( iStyle ) );
 
       OldProc = reinterpret_cast< WNDPROC >( SetWindowLongPtr( hWndXB,
                                               GWLP_WNDPROC, ( LONG_PTR ) hb_gt_wvwXBProc ) );

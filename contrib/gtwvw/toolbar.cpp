@@ -70,7 +70,7 @@ HB_FUNC( WVW_TBCREATE )
    int iSystemBitmap = static_cast< int >( HB_ISNIL( 4 ) ? 1 : hb_parni( 4 ) );
    int iImageWidth   = static_cast< int >( iSystemBitmap == 0 && HB_ISNUM( 5 ) ? hb_parni( 5 ) : -1 );
    int iImageHeight  = static_cast< int >( iSystemBitmap == 0 && HB_ISNUM( 6 ) ? hb_parni( 6 ) : -1 );
-   TBADDBITMAP tbab  = { 0 };
+   TBADDBITMAP tbab; memset( &tbab, 0, sizeof( tbab ) );
 
    InitCommonControls();
 
@@ -332,7 +332,7 @@ HB_FUNC( WVW_TBGETBUTTONRECT )
    int        iButton     = HB_ISNUM( 2 ) ? hb_parni( 2 ) : -1;
    HWND       hWndTB;
    RECT       rc;
-   RECT       rcRect = { 0 };
+   RECT       rcRect; memset( &rcRect, 0, sizeof( rcRect ) );
 
    PHB_ITEM aXY = hb_itemNew( nullptr );
    PHB_ITEM temp;
@@ -495,8 +495,8 @@ HB_FUNC( WVW_SETTOOLTIP )
    UINT       usWinNum    = WVW_WHICH_WINDOW;
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
 
-   TOOLINFO ti = { 0 };
-   POINT    xy = { 0 };
+   TOOLINFO ti; memset( &ti, 0, sizeof( ti ) );
+   POINT    xy; memset( &xy, 0, sizeof( xy ) );
    int      iTop, iLeft, iBottom, iRight;
 
    USHORT usTop    = hb_parni( 2 ),
@@ -557,7 +557,7 @@ HB_FUNC( WVW_SETTOOLTIPMARGIN )
 {
    UINT       usWinNum    = WVW_WHICH_WINDOW;
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
-   RECT       rc = { 0 };
+   RECT       rc; memset( &rc, 0, sizeof( rc ) );
 
    rc.left   = hb_parni( 3 );
    rc.top    = hb_parni( 2 );

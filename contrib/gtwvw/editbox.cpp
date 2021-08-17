@@ -98,7 +98,7 @@ HB_FUNC( WVW_EBCREATE )
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
    HWND       hWndParent  = pWindowData->hWnd;
    HWND       hWndEB;
-   POINT      xy = { 0 };
+   POINT      xy; memset( &xy, 0, sizeof( xy ) );
    int        iTop, iLeft, iBottom, iRight;
    int        iOffTop, iOffLeft, iOffBottom, iOffRight;
    UINT       uiEBid;
@@ -109,7 +109,7 @@ HB_FUNC( WVW_EBCREATE )
    LPTSTR lpszText     = ( LPTSTR ) hb_parcx( 6 );
 
    BOOL bMultiline = HB_ISLOG( 8 ) ? hb_parl( 8 ) : FALSE;
-   BYTE bEBType    = ( BYTE ) ( bMultiline ? WVW_EB_MULTILINE : WVW_EB_SINGLELINE );
+   BYTE bEBType    = static_cast< BYTE >( bMultiline ? WVW_EB_MULTILINE : WVW_EB_SINGLELINE );
 
    DWORD dwMoreStyle = static_cast< DWORD >( HB_ISNUM( 9 ) ? hb_parnl( 9 ) : 0 );
 
@@ -184,7 +184,8 @@ HB_FUNC( WVW_EBCREATE )
 
    if( hWndEB )
    {
-      RECT    rXB = { 0 }, rOffXB = { 0 };
+      RECT    rXB; memset( &rXB, 0, sizeof( rXB ) );
+      RECT    rOffXB; memset( &rOffXB, 0, sizeof( rOffXB ) );
       WNDPROC OldProc;
       /* USHORT i; */
       BOOL bFromOEM = ( pWindowData->CodePage == OEM_CHARSET );
@@ -220,7 +221,7 @@ HB_FUNC( WVW_EBCREATE )
       rOffXB.top    = iOffTop;     rOffXB.left = iOffLeft;
       rOffXB.bottom = iOffBottom; rOffXB.right = iOffRight;
 
-      AddControlHandle( usWinNum, WVW_CONTROL_EDITBOX, hWndEB, uiEBid, ( PHB_ITEM ) hb_param( 7, HB_IT_BLOCK ), rXB, rOffXB, ( byte ) bEBType );
+      AddControlHandle( usWinNum, WVW_CONTROL_EDITBOX, hWndEB, uiEBid, ( PHB_ITEM ) hb_param( 7, HB_IT_BLOCK ), rXB, rOffXB, static_cast< byte >( bEBType ) );
 
       OldProc = reinterpret_cast< WNDPROC >( SetWindowLongPtr( hWndEB,
                                               GWLP_WNDPROC, ( LONG_PTR ) hb_gt_wvwEBProc ) );
@@ -368,7 +369,7 @@ HB_FUNC( WVW_EBSETCODEBLOCK )
    UINT usWinNum = WVW_WHICH_WINDOW;
 
    UINT uiEBid                 = static_cast< UINT >( HB_ISNIL( 2 ) ? 0  : hb_parni( 2 ) );
-   CONTROL_DATA * pcd          = GetControlData( usWinNum, WVW_CONTROL_EDITBOX, NULL, uiEBid );
+   CONTROL_DATA * pcd          = GetControlData( usWinNum, WVW_CONTROL_EDITBOX, nullptr, uiEBid );
    WVW_DATA *     pData        = hb_getWvwData();
    PHB_ITEM       phiCodeBlock = hb_param( 3, HB_IT_BLOCK );
    BOOL bOldSetting            = pData->s_bRecurseCBlock;
@@ -414,12 +415,12 @@ HB_FUNC( WVW_EBSETFONT )
    pData->s_lfEB.lfEscapement  = 0;
    pData->s_lfEB.lfOrientation = 0;
    pData->s_lfEB.lfWeight      = HB_ISNIL( 5 ) ? pData->s_lfEB.lfWeight : hb_parni( 5 );
-   pData->s_lfEB.lfItalic      = HB_ISNIL( 7 ) ? pData->s_lfEB.lfItalic    : ( BYTE ) hb_parl( 7 );
-   pData->s_lfEB.lfUnderline   = HB_ISNIL( 8 ) ? pData->s_lfEB.lfUnderline : ( BYTE ) hb_parl( 8 );
-   pData->s_lfEB.lfStrikeOut   = HB_ISNIL( 9 ) ? pData->s_lfEB.lfStrikeOut : ( BYTE ) hb_parl( 9 );
+   pData->s_lfEB.lfItalic      = HB_ISNIL( 7 ) ? pData->s_lfEB.lfItalic    : static_cast< BYTE >( hb_parl( 7 ) );
+   pData->s_lfEB.lfUnderline   = HB_ISNIL( 8 ) ? pData->s_lfEB.lfUnderline : static_cast< BYTE >( hb_parl( 8 ) );
+   pData->s_lfEB.lfStrikeOut   = HB_ISNIL( 9 ) ? pData->s_lfEB.lfStrikeOut : static_cast< BYTE >( hb_parl( 9 ) );
    pData->s_lfEB.lfCharSet     = DEFAULT_CHARSET;
 
-   pData->s_lfEB.lfQuality        = HB_ISNIL( 6 ) ? pData->s_lfEB.lfQuality : ( BYTE ) hb_parni( 6 );
+   pData->s_lfEB.lfQuality        = HB_ISNIL( 6 ) ? pData->s_lfEB.lfQuality : static_cast< BYTE >( hb_parni( 6 ) );
    pData->s_lfEB.lfPitchAndFamily = FF_DONTCARE;
    if( HB_ISCHAR( 2 ) )
       strcpy( pData->s_lfEB.lfFaceName, hb_parcx( 2 ) );
@@ -464,7 +465,7 @@ HB_FUNC( WVW_EBISMULTILINE )
 {
    UINT usWinNum      = WVW_WHICH_WINDOW;
    UINT uiEBid        = hb_parni( 2 );
-   CONTROL_DATA * pcd = GetControlData( usWinNum, WVW_CONTROL_EDITBOX, NULL, uiEBid );
+   CONTROL_DATA * pcd = GetControlData( usWinNum, WVW_CONTROL_EDITBOX, nullptr, uiEBid );
    BOOL bMultiline;
 
    if( pcd == nullptr )
@@ -493,7 +494,7 @@ HB_FUNC( WVW_EBGETTEXT )
 {
    UINT usWinNum         = WVW_WHICH_WINDOW;
    UINT uiEBid           = hb_parni( 2 );
-   CONTROL_DATA * pcd    = GetControlData( usWinNum, WVW_CONTROL_EDITBOX, NULL, uiEBid );
+   CONTROL_DATA * pcd    = GetControlData( usWinNum, WVW_CONTROL_EDITBOX, nullptr, uiEBid );
    BOOL       bSoftBreak = HB_ISLOG( 3 ) ? hb_parl( 3 ) : FALSE;
    USHORT     usLen;
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
@@ -549,7 +550,7 @@ HB_FUNC( WVW_EBSETTEXT )
    UINT usWinNum = WVW_WHICH_WINDOW;
    UINT uiEBid   = hb_parni( 2 );
    WIN_DATA *     pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
-   CONTROL_DATA * pcd         = GetControlData( usWinNum, WVW_CONTROL_EDITBOX, NULL, uiEBid );
+   CONTROL_DATA * pcd         = GetControlData( usWinNum, WVW_CONTROL_EDITBOX, nullptr, uiEBid );
    BOOL   bRetval;
    LPTSTR lpszText = ( LPTSTR ) hb_parcx( 3 );
    BOOL   bFromOEM = ( pWindowData->CodePage == OEM_CHARSET );
@@ -592,7 +593,7 @@ HB_FUNC( WVW_EBGETSEL )
 {
    UINT usWinNum      = WVW_WHICH_WINDOW;
    UINT uiEBid        = hb_parni( 2 );
-   CONTROL_DATA * pcd = GetControlData( usWinNum, WVW_CONTROL_EDITBOX, NULL, uiEBid );
+   CONTROL_DATA * pcd = GetControlData( usWinNum, WVW_CONTROL_EDITBOX, nullptr, uiEBid );
    DWORD          dwStart, dwEnd;
 
    if( pcd == nullptr )
@@ -627,7 +628,7 @@ HB_FUNC( WVW_EBSETSEL )
 {
    UINT usWinNum          = WVW_WHICH_WINDOW;
    UINT uiEBid            = hb_parni( 2 );
-   CONTROL_DATA * pcd     = GetControlData( usWinNum, WVW_CONTROL_EDITBOX, NULL, uiEBid );
+   CONTROL_DATA * pcd     = GetControlData( usWinNum, WVW_CONTROL_EDITBOX, nullptr, uiEBid );
    DWORD          dwStart = static_cast< DWORD >( HB_ISNUM( 3 ) ? hb_parnl( 3 ) : 0 );
    DWORD          dwEnd   = static_cast< DWORD >( HB_ISNUM( 4 ) ? hb_parnl( 4 ) : 0 );
 
@@ -660,7 +661,7 @@ HB_FUNC( WVW_STCREATE )
    HDC  hDc;
 #endif
 
-   POINT xy = { 0 };
+   POINT xy; memset( &xy, 0, sizeof( xy ) );
    int   iTop, iLeft, iBottom, iRight;
    int   iOffTop, iOffLeft, iOffBottom, iOffRight;
    UINT  uiCBid;
@@ -783,12 +784,12 @@ HB_FUNC( WVW_STSETFONT )
    pData->s_lfST.lfEscapement  = 0;
    pData->s_lfST.lfOrientation = 0;
    pData->s_lfST.lfWeight      = HB_ISNIL( 5 ) ? pData->s_lfST.lfWeight : hb_parni( 5 );
-   pData->s_lfST.lfItalic      = HB_ISNIL( 7 ) ? pData->s_lfST.lfItalic    : ( BYTE ) hb_parl( 7 );
-   pData->s_lfST.lfUnderline   = HB_ISNIL( 8 ) ? pData->s_lfST.lfUnderline : ( BYTE ) hb_parl( 8 );
-   pData->s_lfST.lfStrikeOut   = HB_ISNIL( 9 ) ? pData->s_lfST.lfStrikeOut : ( BYTE ) hb_parl( 9 );
+   pData->s_lfST.lfItalic      = HB_ISNIL( 7 ) ? pData->s_lfST.lfItalic    : static_cast< BYTE >( hb_parl( 7 ) );
+   pData->s_lfST.lfUnderline   = HB_ISNIL( 8 ) ? pData->s_lfST.lfUnderline : static_cast< BYTE >( hb_parl( 8 ) );
+   pData->s_lfST.lfStrikeOut   = HB_ISNIL( 9 ) ? pData->s_lfST.lfStrikeOut : static_cast< BYTE >( hb_parl( 9 ) );
    pData->s_lfST.lfCharSet     = DEFAULT_CHARSET;
 
-   pData->s_lfST.lfQuality        = HB_ISNIL( 6 ) ? pData->s_lfST.lfQuality : ( BYTE ) hb_parni( 6 );
+   pData->s_lfST.lfQuality        = HB_ISNIL( 6 ) ? pData->s_lfST.lfQuality : static_cast< BYTE >( hb_parni( 6 ) );
    pData->s_lfST.lfPitchAndFamily = FF_DONTCARE;
    if( HB_ISCHAR( 2 ) )
       strcpy( pData->s_lfST.lfFaceName, hb_parcx( 2 ) );
