@@ -116,7 +116,7 @@
       #if ! defined( _MSC_VER )
 
          #if ! defined( LONG_PTR )
-typedef __int64 LONG_PTR;
+         using LONG_PTR = __int64; // typedef __int64 LONG_PTR;
          #endif
       #endif
    #endif
@@ -272,7 +272,7 @@ typedef __int64 LONG_PTR;
    #define PBM_GETRANGE           ( WM_USER + 7 )
    #define PBM_GETPOS             ( WM_USER + 8 )
 
-typedef DWORD UINT_PTR;
+using UINT_PTR = DWORD; // typedef DWORD UINT_PTR;
 
 typedef struct
 {
@@ -282,7 +282,7 @@ typedef struct
 
    #define ICC_BAR_CLASSES  0x00000004
 
-typedef USHORT COLOR16;
+using COLOR16 = USHORT; // typedef USHORT COLOR16;
 
 typedef struct _TRIVERTEX
 {
@@ -311,13 +311,7 @@ typedef struct _GRADIENT_RECT
 
 #define WM_MY_UPDATE_CARET  ( WM_USER + 0x0101 )
 
-typedef BOOL ( WINAPI * wvwGradientFill )(
-   HDC hdc,
-   PTRIVERTEX pVertex,
-   ULONG dwNumVertex,
-   PVOID pMesh,
-   ULONG dwNumMesh,
-   ULONG dwMode      );
+typedef BOOL ( WINAPI * wvwGradientFill )( HDC hdc, PTRIVERTEX pVertex, ULONG dwNumVertex, PVOID pMesh, ULONG dwNumMesh, ULONG dwMode );
 
 #ifndef _MAX_PATH
    #define _MAX_PATH  256
@@ -348,7 +342,6 @@ typedef struct picture_handle
 #define WVW_CONTROL_STATIC       6
 
 #define WVW_MAXCAPTIONLENGTH     80
-
 
 typedef struct control_data
 {
@@ -544,44 +537,29 @@ typedef struct win_data
 typedef struct wvw_data
 {
    UINT s_uiPaintRefresh;        /* milliseconds between timer check */
-
    BOOL s_bMainCoordMode;        /* in this mode, all HB_GT_FUNC() uses Main Window's coordinate */
-
    BOOL s_bVertCaret;            /* if TRUE, caret is in Vertical style */
-
    BOOL s_bNOSTARTUPSUBWINDOW;   /* if TRUE, subwindow will not be displayed during opening */
    /* use wvw_NoStartupSubWindow() to check/set it */
-
    BOOL s_bDefCentreWindow;   /* default CentreWindow setting for subwindows */
-
    BOOL s_bDefHCentreWindow;  /* default HCentreWindow setting for subwindows */
    BOOL s_bDefVCentreWindow;  /* default VCentreWindow setting for subwindows */
-
    int s_byDefLineSpacing;    /* default line spacing */
-
    int s_iDefLSpaceColor;     /* if >= 0 this will be the color index                                          for spacing between lines */
-
    BOOL s_bAllowNonTop;       /* allow non-topmost window's control to  accept input */
-
    BOOL s_bRecurseCBlock;     /* allow control's codeblock to recurse */
-
    LOGFONT s_lfPB;            /* default font for pushbuttons */
-
    LOGFONT s_lfSB;            /* default font for statusbar  */
    LOGFONT s_lfCB;            /* default font for comboboxes */
-
    LOGFONT s_lfEB;            /* default font for editboxes */
-
    LOGFONT s_lfCX;            /* font for 'focused'checkbox */
    LOGFONT s_lfST;            /* font for  control    */
-
    HWND hWndTT;               /* Window handle Tool Tip     */
 
 /* read only by user ***/
 
 /* for GTWVW private use: ***********************************************/
    BOOL s_bQuickSetMode;   /* quick SetMode(), to reset MaxRow() and MaxCol() only */
-
    BOOL s_bFlashingWindow;
    /* topmost window is flashing
                                             due to invalid input on other
@@ -596,16 +574,13 @@ typedef struct wvw_data
    TCHAR szAppName[ 13 ];
    TCHAR szSubWinName[ 25 ];
    BOOL  s_bSWRegistered;
-
    HINSTANCE hInstance;
-
    UINT s_usNumWindows;                      /*number of windows                         */
    UINT s_usCurWindow;                       /*current window handled by HB_GT_FUNC(...) */
-
    WIN_DATA * s_pWindows[ WVW_MAXWINDOWS ];  /*array of WIN_DATA                         */
    APP_DATA * s_sApp;                        /*application wide vars                     */
 
-}WVW_DATA;
+} WVW_DATA;
 
 #if 0
 #define HB_RETHANDLE( h )          hb_retptr( ( void * ) ( h ) )
@@ -630,15 +605,11 @@ extern BOOL hb_gt_wvwSetMenuKeyEvent( UINT usWinNum, int iMenuKeyEvent );
 /* bitmap caching functions: */
 extern HBITMAP FindBitmapHandle( const char * szFileName, int * piWidth, int * piHeight );
 extern void AddBitmapHandle( const char * szFileName, HBITMAP hBitmap, int iWidth, int iHeight );
-
 extern void hb_gt_wvwFUNCPrologue( BYTE byNumCoord, int * iRow1, int * iCol1, int * iRow2, int * iCol2 );
 extern void hb_gt_wvwFUNCEpilogue( void );
-extern void hb_wvw_HBFUNCPrologue( UINT usWinNum,
-                                   USHORT * pusRow1, USHORT * pusCol1,
-                                   USHORT * pusRow2, USHORT * pusCol2 );
+extern void hb_wvw_HBFUNCPrologue( UINT usWinNum, USHORT * pusRow1, USHORT * pusCol1, USHORT * pusRow2, USHORT * pusCol2 );
 extern RECT    hb_gt_wvwGetXYFromColRowRect( WIN_DATA * pWindowData, RECT colrow );
 extern POINT hb_gt_wvwGetXYFromColRow( WIN_DATA * pWindowData, USHORT col, USHORT row );
-
 extern DWORD hb_gt_wvwGetColorData( int iIndex );
 extern BOOL GetImageDimension( const char * image, int * pWidth, int * pHeight );
 extern BOOL GetIPictDimension( IPicture * pPic, int * pWidth, int * pHeight );
@@ -655,9 +626,7 @@ extern HWND FindControlHandle( UINT usWinNum, BYTE byCtrlClass, UINT uiCtrlid, b
 extern UINT FindControlId( UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, byte * pbStyle );
 extern UINT LastControlId( UINT usWinNum, BYTE byCtrlClass );
 extern void AddControlHandle( UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, UINT uiCtrlid, PHB_ITEM phiCodeBlock, RECT rCtrl, RECT rOffCtrl, byte bStyle );
-
 extern CONTROL_DATA * GetControlData( UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, UINT uiCtrlid );
-
 extern BOOL StoreControlProc( UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, WNDPROC OldProc );
 extern WNDPROC GetControlProc( UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl );
 extern LRESULT CALLBACK hb_gt_wvwXBProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam );

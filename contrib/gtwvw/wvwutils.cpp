@@ -61,6 +61,7 @@ HB_FUNC( WVW_YESCLOSE )
       DrawMenuBar( pWindowData->hWnd );
    }
 }
+
 HB_FUNC( WIN_SENDMESSAGE )
 {
    char * cText = nullptr;
@@ -74,8 +75,8 @@ HB_FUNC( WIN_SENDMESSAGE )
    hb_retnl( static_cast< ULONG >( SendMessage( reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) ),
                                     static_cast< UINT >( hb_parni( 2 ) ),
                                     ( HB_ISNIL( 3 ) ? 0 : static_cast< WPARAM >( hb_parnl( 3 ) ) ),
-                                    ( HB_ISNIL( 4 ) ? 0 : ( HB_ISBYREF( 4 ) ? reinterpret_cast< LPARAM >( ( LPSTR ) cText ) :
-                                                            ( HB_ISCHAR( 4 ) ? reinterpret_cast< LPARAM >( ( LPSTR ) hb_parcx( 4 ) ) :
+                                    ( HB_ISNIL( 4 ) ? 0 : ( HB_ISBYREF( 4 ) ? reinterpret_cast< LPARAM >( static_cast< LPSTR >( cText ) ) :
+                                                            ( HB_ISCHAR( 4 ) ? reinterpret_cast< LPARAM >( const_cast< LPSTR >( hb_parcx( 4 ) ) ) :
                                                               static_cast< LPARAM >( hb_parnl( 4 ) ) ) ) ) ) )
              );
 
@@ -85,7 +86,6 @@ HB_FUNC( WIN_SENDMESSAGE )
       hb_xfree( cText );
    }
 }
-
 
 HB_FUNC( WIN_SENDDLGITEMMESSAGE )
 {
@@ -98,7 +98,9 @@ HB_FUNC( WIN_SENDDLGITEMMESSAGE )
       hb_xmemcpy( cText, hb_itemGetCPtr( pText ), hb_itemGetCLen( pText ) + 1 );
    }
    else
+   {
       cText = nullptr;
+   }
 
    hb_retnl( static_cast< LONG >( SendDlgItemMessage( reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) ),
                                           static_cast< int >( hb_parni( 2 ) ),
@@ -109,10 +111,14 @@ HB_FUNC( WIN_SENDDLGITEMMESSAGE )
              );
 
    if( pText )
+   {
       hb_storclen( cText, hb_itemGetCLen( pText ), 5 );
+   }
 
    if( cText )
+   {
       hb_xfree( cText );
+   }
 }
 
 /*
@@ -125,117 +131,91 @@ HB_FUNC( WIN_SETTIMER )
    hb_retl( SetTimer( reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) ), hb_parni( 2 ), hb_parni( 3 ), nullptr ) );
 }
 
-
 HB_FUNC( WIN_SETFOCUS )
 {
    SetFocus( reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) ) );
 }
-
 
 HB_FUNC( WIN_SETTEXTCOLOR )
 {
    hb_retnl( static_cast< ULONG >( SetTextColor( reinterpret_cast< HDC >( HB_PARHANDLE( 1 ) ), static_cast< COLORREF >( hb_parnl( 2 ) ) ) ) );
 }
 
-
 HB_FUNC( WIN_SETBKCOLOR )
 {
    hb_retnl( static_cast< ULONG >( SetBkColor( reinterpret_cast< HDC >( HB_PARHANDLE( 1 ) ), static_cast< COLORREF >( hb_parnl( 2 ) ) ) ) );
 }
-
 
 HB_FUNC( WVW_SETBKMODE )
 {
    hb_retni( static_cast< int >( SetBkMode( reinterpret_cast< HDC >( HB_PARHANDLE( 1 ) ), hb_parni( 2 ) ) ) );
 }
 
-
 HB_FUNC( WIN_GETSTOCKOBJECT )
 {
    hb_retnl( reinterpret_cast< ULONG >( GetStockObject( hb_parnl( 1 ) ) ) );
 }
 
-
 HB_FUNC( WIN_DELETEOBJECT )
 {
-   hb_retl( DeleteObject( ( HGDIOBJ ) HB_PARHANDLE( 1 ) ) );
+   hb_retl( DeleteObject( reinterpret_cast< HGDIOBJ >( HB_PARHANDLE( 1 ) ) ) );
 }
-
 
 HB_FUNC( WIN_SELECTOBJECT )
 {
-   hb_retnl( reinterpret_cast< ULONG >( SelectObject( reinterpret_cast< HDC >( HB_PARHANDLE( 1 ) ), ( HGDIOBJ ) HB_PARHANDLE( 2 ) ) ) );
+   hb_retnl( reinterpret_cast< ULONG >( SelectObject( reinterpret_cast< HDC >( HB_PARHANDLE( 1 ) ), reinterpret_cast< HGDIOBJ >( HB_PARHANDLE( 2 ) ) ) ) );
 }
-
 
 HB_FUNC( WIN_MULDIV )
 {
    hb_retni( MulDiv( hb_parni( 1 ), hb_parni( 2 ), hb_parni( 3 ) ) );
 }
 
-
 HB_FUNC( WIN_GETDIALOGBASEUNITS )
 {
    hb_retnl( static_cast< LONG >( GetDialogBaseUnits() ) );
 }
-
 
 HB_FUNC( WIN_SETDLGITEMTEXT )
 {
    SetDlgItemText( reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) ), hb_parni( 2 ), hb_parc( 3 ) );
 }
 
-
 HB_FUNC( WIN_GETDLGITEMTEXT )
 {
    USHORT iLen  = static_cast< USHORT >( SendMessage( static_cast< HWND >( GetDlgItem( reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) ), hb_parni( 2 ) ) ), static_cast< UINT >( WM_GETTEXTLENGTH ), static_cast< WPARAM >( 0 ), static_cast< LPARAM >( 0 ) ) ) + 1;
    char * cText = static_cast< char * >( hb_xgrab( iLen + 1  ) );
 
-   GetDlgItemText( reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) ),
-                   hb_parni( 2 ),
-                   ( LPTSTR ) cText,
-                   iLen
-                   );
+   GetDlgItemText( reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) ), hb_parni( 2 ), static_cast< LPTSTR >( cText ), iLen );
 
    hb_retc( cText );
    hb_xfree( cText );
 }
 
-
 HB_FUNC( WIN_CHECKDLGBUTTON )
 {
-   hb_retl( CheckDlgButton( reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) ), hb_parni( 2 ),
-                            HB_ISNUM( 3 ) ? hb_parni( 3 ) : static_cast< UINT >( hb_parl( 3 ) ) ) );
+   hb_retl( CheckDlgButton( reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) ), hb_parni( 2 ), HB_ISNUM( 3 ) ? hb_parni( 3 ) : static_cast< UINT >( hb_parl( 3 ) ) ) );
 }
-
 
 HB_FUNC( WIN_ISDLGBUTTONCHECKED )
 {
    hb_retni( IsDlgButtonChecked( reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) ), hb_parni( 2 ) ) );
 }
 
-
 HB_FUNC( WIN_CHECKRADIOBUTTON )
 {
-   hb_retl( CheckRadioButton( reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) ),
-                              hb_parni( 2 ),
-                              hb_parni( 3 ),
-                              hb_parni( 4 )
-                              ) );
+   hb_retl( CheckRadioButton( reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) ), hb_parni( 2 ), hb_parni( 3 ), hb_parni( 4 ) ) );
 }
-
 
 HB_FUNC( WIN_GETDLGITEM )
 {
    hb_retnl( reinterpret_cast< ULONG >( GetDlgItem( reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) ), hb_parni( 2 ) ) ) );
 }
 
-
 HB_FUNC( WIN_MESSAGEBOX )
 {
    hb_retni( MessageBox( reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) ), hb_parcx( 2 ), hb_parcx( 3 ), HB_ISNIL( 4 ) ? MB_OK : hb_parni( 4 ) ) );
 }
-
 
 HB_FUNC( WIN_INVALIDATERECT )
 {
@@ -252,9 +232,13 @@ HB_FUNC( WIN_LOADICON )
    HICON hIcon;
 
    if( HB_ISNUM( 1 ) )
+   {
       hIcon = LoadIcon( hb_getWvwData()->hInstance, MAKEINTRESOURCE( hb_parni( 1 ) ) );
+   }
    else
+   {
       hIcon = static_cast< HICON >( LoadImage( static_cast< HINSTANCE >( nullptr ), hb_parc( 1 ), IMAGE_ICON, 0, 0, LR_LOADFROMFILE ) );
+   }
 
    hb_retnl( reinterpret_cast< ULONG >( hIcon ) );
 }
@@ -290,7 +274,6 @@ HB_FUNC( WIN_LOADIMAGE )
    hb_retnl( reinterpret_cast< ULONG >( hImage ) );
 }
 
-
 HB_FUNC( WIN_GETCLIENTRECT )
 {
    RECT     rc; memset( &rc, 0, sizeof( rc ) );
@@ -319,24 +302,20 @@ HB_FUNC( WIN_GETCLIENTRECT )
    }
  */
 
-
 HB_FUNC( WIN_GETDC )
 {
    HB_RETHANDLE( GetDC( reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) ) ) );
 }
-
 
 HB_FUNC( WIN_RELEASEDC )
 {
    hb_retl( ReleaseDC( reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) ), reinterpret_cast< HDC >( HB_PARHANDLE( 2 ) ) ) );
 }
 
-
 HB_FUNC( WVW_RECTANGLE )
 {
    Rectangle( reinterpret_cast< HDC >( HB_PARHANDLE( 1 ) ), hb_parni( 2 ), hb_parni( 3 ), hb_parni( 4 ), hb_parni( 5 ) );
 }
-
 
 HB_FUNC( WIN_CREATEBRUSH )
 {
@@ -366,7 +345,6 @@ HB_FUNC( WIN_DRAWTEXT )
    hb_retl( DrawText( reinterpret_cast< HDC >( HB_PARHANDLE( 1 ) ), hb_parc( 2 ), strlen( hb_parc( 2 ) ), &rc, hb_parni( 4 ) ) );
 }
 
-
 /* Adiciones a GtWVW desarrolladas por SOLUCIONES PERCEPTIVAS... */
 
 HB_FUNC( WVW_GBCREATE )
@@ -380,7 +358,7 @@ HB_FUNC( WVW_GBCREATE )
           usBottom      = static_cast< USHORT >( hb_parni( 4 ) ),
           usRight       = static_cast< USHORT >( hb_parni( 5 ) );
    LPCTSTR lpszCaption  = HB_ISCHAR( 6 ) ? hb_parcx( 6 ) : nullptr;
-   char *  szBitmap     = HB_ISCHAR( 7 ) ? ( char * ) hb_parcx( 7 ) : nullptr;
+   char *  szBitmap     = HB_ISCHAR( 7 ) ? const_cast< char * >( hb_parcx( 7 ) ) : nullptr;
    UINT    uiBitmap     = HB_ISNUM( 7 ) ? static_cast< UINT >( hb_parni( 7 ) ) : 0;
    double  dStretch     = ! HB_ISNIL( 10 ) ? hb_parnd( 10 ) : 1;
    BOOL    bMap3Dcolors = HB_ISLOG( 11 ) ? static_cast< BOOL >( hb_parl( 11 ) ) : FALSE;
@@ -412,7 +390,7 @@ HB_FUNC( WVW_RBCREATE )
           usBottom      = static_cast< USHORT >( hb_parni( 4 ) ),
           usRight       = static_cast< USHORT >( hb_parni( 5 ) );
    LPCTSTR lpszCaption  = HB_ISCHAR( 6 ) ? hb_parcx( 6 ) : nullptr;
-   char *  szBitmap     = HB_ISCHAR( 7 ) ? ( char * ) hb_parcx( 7 ) : nullptr;
+   char *  szBitmap     = HB_ISCHAR( 7 ) ? const_cast< char * >( hb_parcx( 7 ) ) : nullptr;
    UINT    uiBitmap     = HB_ISNUM( 7 ) ? static_cast< UINT >( hb_parni( 7 ) ) : 0;
    double  dStretch     = ! HB_ISNIL( 10 ) ? hb_parnd( 10 ) : 1;
    BOOL    bMap3Dcolors = HB_ISLOG( 11 ) ? static_cast< BOOL >( hb_parl( 11 ) ) : FALSE;
@@ -444,7 +422,9 @@ HB_FUNC( WVW_SETCONTROLTEXT )
    HWND hWndPB = FindControlHandle( usWinNum, WVW_CONTROL_PUSHBUTTON, uiCtrlId, &bStyle );
 
    if( uiCtrlId == 0 || hWndPB == nullptr )
+   {
       return;
+   }
    SetWindowText( hWndPB, hb_parcx( 3 ) );
    hb_retl( TRUE );
 }
@@ -465,9 +445,13 @@ HB_FUNC( WVW_PBVISIBLE )
    }
 
    if( bEnable )
+   {
       iCmdShow = SW_SHOW;
+   }
    else
+   {
       iCmdShow = SW_HIDE;
+   }
    hb_retl( ShowWindow( hWndPB, iCmdShow ) == 0 );
 }
 
@@ -483,13 +467,19 @@ HB_FUNC( WVW_CBVISIBLE )
    if( hWndCB )
    {
       if( bEnable )
+      {
          iCmdShow = SW_SHOW;
+      }
       else
+      {
          iCmdShow = SW_HIDE;
+      }
       hb_retl( ShowWindow( hWndCB, iCmdShow ) == 0 );
    }
    else
+   {
       hb_retl( FALSE );
+   }
 }
 
 HB_FUNC( WVW_CXVISIBLE )
@@ -508,9 +498,13 @@ HB_FUNC( WVW_CXVISIBLE )
    }
 
    if( bEnable )
+   {
       iCmdShow = SW_SHOW;
+   }
    else
+   {
       iCmdShow = SW_HIDE;
+   }
    hb_retl( ShowWindow( hWndPB, iCmdShow ) == 0 );
 }
 
@@ -539,7 +533,6 @@ HB_FUNC( WVW_XBVISIBLE )
    hb_retl( ShowScrollBar( hWndXB, SB_CTL, bShow ) );
 }
 
-
 HB_FUNC( WVW_MOUSE_COL )
 {
    WVW_DATA * pData = hb_getWvwData();
@@ -547,14 +540,19 @@ HB_FUNC( WVW_MOUSE_COL )
    if( pData )
    {
       if( hb_gt_wvw_GetMainCoordMode() )
+      {
          hb_retni( hb_gt_wvwGetMouseX( pData->s_pWindows[ pData->s_usNumWindows - 1 ] ) + hb_gt_wvwColOfs( pData->s_usNumWindows - 1 ) );
+      }
       else
+      {
          hb_retni( hb_gt_wvwGetMouseX( pData->s_pWindows[ pData->s_usCurWindow ] ) );
+      }
    }
    else
+   {
       hb_retni( 0 );
+   }
 }
-
 
 HB_FUNC( WVW_MOUSE_ROW )
 {
@@ -563,12 +561,18 @@ HB_FUNC( WVW_MOUSE_ROW )
    if( pData )
    {
       if( hb_gt_wvw_GetMainCoordMode() )
+      {
          hb_retni( hb_gt_wvwGetMouseY( pData->s_pWindows[ pData->s_usNumWindows - 1 ] ) + hb_gt_wvwRowOfs( pData->s_usNumWindows - 1 ) );
+      }
       else
+      {
          hb_retni( hb_gt_wvwGetMouseY( pData->s_pWindows[ pData->s_usCurWindow ] ) );
+      }
    }
    else
+   {
       hb_retni( 0 );
+   }
 }
 
 HB_FUNC( SENDMESSAGE )
@@ -593,9 +597,10 @@ HB_FUNC( SETPARENT )
    HWND       hWndParent1  = pWindowData1->hWnd;
 
    if( usWinNum1 != 0 )
+   {
       SetParent( hWndParent, hWndParent1 );
+   }
 }
-
 
 HB_FUNC( BRINGTOTOP1 )
 {
@@ -621,7 +626,6 @@ HB_FUNC( ISWINDOW )
 {
    hb_retl( IsWindow( reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) ) ) );
 }
-
 
 HB_FUNC( ADDTOOLTIPEX ) /* changed by MAG */
 {
@@ -651,9 +655,9 @@ HB_FUNC( ADDTOOLTIPEX ) /* changed by MAG */
 #endif
 
    if( ! pData->hWndTT )
-      pData->hWndTT = CreateWindow( TOOLTIPS_CLASS, ( LPSTR ) nullptr, iStyle,
+      pData->hWndTT = CreateWindow( TOOLTIPS_CLASS, static_cast< LPSTR >( nullptr ), iStyle,
                                     CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
-                                    nullptr, ( HMENU ) nullptr, GetModuleHandle( nullptr ), nullptr );
+                                    nullptr, static_cast< HMENU >( nullptr ), GetModuleHandle( nullptr ), nullptr );
    if( ! pData->hWndTT )
    {
       hb_retnl( 0 );
@@ -664,11 +668,10 @@ HB_FUNC( ADDTOOLTIPEX ) /* changed by MAG */
    ti.uId    = static_cast< UINT >( hb_parnl( 2 ) );
 /* ti.uId    = ( UINT ) GetDlgItem( hWnd, hb_parni( 2 ) ); */
    ti.hinst    = GetModuleHandle( nullptr );
-   ti.lpszText = ( LPSTR ) hb_parc( 3 );
+   ti.lpszText = const_cast< LPSTR >( hb_parc( 3 ) );
 
-   hb_retl( SendMessage( pData->hWndTT, TTM_ADDTOOL, 0, reinterpret_cast< LPARAM >( ( LPTOOLINFO ) &ti ) ) );
+   hb_retl( SendMessage( pData->hWndTT, TTM_ADDTOOL, 0, reinterpret_cast< LPARAM >( static_cast< LPTOOLINFO >( &ti ) ) ) );
 }
-
 
 /*
  * CreateImageList( array, cx, cy, nGrow, flags )
@@ -681,8 +684,7 @@ HB_FUNC( CREATEIMAGELIST )
    ULONG      ul, ulLen = hb_arrayLen( pArray );
    HBITMAP    hbmp;
 
-   himl = ImageList_Create( hb_parni( 2 ), hb_parni( 3 ), flags,
-                            ulLen, hb_parni( 4 ) );
+   himl = ImageList_Create( hb_parni( 2 ), hb_parni( 3 ), flags, ulLen, hb_parni( 4 ) );
 
    for( ul = 1; ul <= ulLen; ul++ )
    {
@@ -696,21 +698,20 @@ HB_FUNC( CREATEIMAGELIST )
 
 HB_FUNC( IMAGELIST_ADD )
 {
-   hb_retnl( ImageList_Add( ( HIMAGELIST ) HB_PARHANDLE( 1 ), reinterpret_cast< HBITMAP >( HB_PARHANDLE( 2 ) ), static_cast< HBITMAP >( nullptr ) ) );
+   hb_retnl( ImageList_Add( reinterpret_cast< HIMAGELIST >( HB_PARHANDLE( 1 ) ), reinterpret_cast< HBITMAP >( HB_PARHANDLE( 2 ) ), static_cast< HBITMAP >( nullptr ) ) );
 }
 
 HB_FUNC( IMAGELIST_ADDMASKED )
 {
-   hb_retnl( ImageList_AddMasked( ( HIMAGELIST ) HB_PARHANDLE( 1 ), reinterpret_cast< HBITMAP >( HB_PARHANDLE( 2 ) ), static_cast< COLORREF >( hb_parnl( 3 ) ) ) );
+   hb_retnl( ImageList_AddMasked( reinterpret_cast< HIMAGELIST >( HB_PARHANDLE( 1 ) ), reinterpret_cast< HBITMAP >( HB_PARHANDLE( 2 ) ), static_cast< COLORREF >( hb_parnl( 3 ) ) ) );
 }
-
 
 HB_FUNC( GETBITMAPSIZE )
 {
    BITMAP   bitmap;
    PHB_ITEM aMetr = hb_itemArrayNew( 3 );
 
-   GetObject( reinterpret_cast< HBITMAP >( HB_PARHANDLE( 1 ) ), sizeof( BITMAP ), ( LPVOID ) &bitmap );
+   GetObject( reinterpret_cast< HBITMAP >( HB_PARHANDLE( 1 ) ), sizeof( BITMAP ), static_cast< LPVOID >( &bitmap ) );
 
    hb_arraySetNL( aMetr, 1, bitmap.bmWidth );
    hb_arraySetNL( aMetr, 2, bitmap.bmHeight );
@@ -732,29 +733,30 @@ HB_FUNC( GETICONSIZE )
    hb_itemReturnRelease( aMetr );
 }
 
-
 HB_FUNC( LOADIMAGE )
 {
    if( HB_ISNUM( 2 ) )
+   {
       hb_retnl( reinterpret_cast< LONG >(
                 LoadImage( hb_getWvwData()->hInstance,                     /* HB_ISNIL( 1 ) ? GetModuleHandle(NULL) : (HINSTANCE) hb_parnl( 1 ),   handle of the instance that contains the image */
-                           ( LPCTSTR ) MAKEINTRESOURCE( hb_parnl( 2 ) ),   /* name or identifier of image */
+                           static_cast< LPCTSTR >( MAKEINTRESOURCE( hb_parnl( 2 ) ) ),   /* name or identifier of image */
                            static_cast< UINT >( hb_parni( 3 ) ),           /* type of image */
                            hb_parni( 4 ),                                  /* desired width */
                            hb_parni( 5 ),                                  /* desired height */
                            static_cast< UINT >( hb_parni( 6 ) )            /* load flags */
                            ) ) );
-
+   }
    else
+   {
       HB_RETHANDLE(
          LoadImage( reinterpret_cast< HINSTANCE >( hb_parnl( 1 ) ),          /* handle of the instance that contains the image */
-                    ( LPCTSTR ) hb_parc( 2 ),             /* name or identifier of image */
+                    static_cast< LPCTSTR >( hb_parc( 2 ) ),             /* name or identifier of image */
                     static_cast< UINT >( hb_parni( 3 ) ), /* type of image */
                     hb_parni( 4 ),                        /* desired width */
                     hb_parni( 5 ),                        /* desired height */
                     static_cast< UINT >( hb_parni( 6 ) )  /* load flags */
                     ) );
-
+   }
 }
 
 HB_FUNC( LOADBITMAP )
@@ -762,13 +764,19 @@ HB_FUNC( LOADBITMAP )
    if( HB_ISNUM( 1 ) )
    {
       if( ! HB_ISNIL( 2 ) && hb_parl( 2 ) )
+      {
 /*               hb_retnl( (LONG) LoadBitmap( GetModuleHandle( NULL ),  MAKEINTRESOURCE(hb_parnl( 1 ) )) ); */
-         HB_RETHANDLE( LoadBitmap( nullptr, ( LPCTSTR ) hb_parnl( 1 ) ) );
+         HB_RETHANDLE( LoadBitmap( nullptr, reinterpret_cast< LPCTSTR >( hb_parnl( 1 ) ) ) );
+      }
       else
-         HB_RETHANDLE( LoadBitmap( GetModuleHandle( nullptr ), ( LPCTSTR ) hb_parnl( 1 ) ) );
+      {
+         HB_RETHANDLE( LoadBitmap( GetModuleHandle( nullptr ), reinterpret_cast< LPCTSTR >( hb_parnl( 1 ) ) ) );
+      }
    }
    else
-      HB_RETHANDLE( LoadBitmap( GetModuleHandle( nullptr ), ( LPCTSTR ) hb_parc( 1 ) ) );
+   {
+      HB_RETHANDLE( LoadBitmap( GetModuleHandle( nullptr ), static_cast< LPCTSTR >( hb_parc( 1 ) ) ) );
+   }
 }
 
 HB_FUNC( LOADBITMAPEX )
@@ -778,15 +786,20 @@ HB_FUNC( LOADBITMAPEX )
    if( HB_ISNUM( 1 ) && HB_ISNUM( 2 ) )
    {
       if( ! HB_ISNIL( 3 ) && hb_parl( 3 ) )
+      {
 /*               hb_retnl( (LONG) LoadBitmap( h,  MAKEINTRESOURCE(hb_parnl( 2 ) )) ); */
-         HB_RETHANDLE( LoadBitmap( h, ( LPCTSTR ) hb_parnl( 3 ) ) );
+         HB_RETHANDLE( LoadBitmap( h, reinterpret_cast< LPCTSTR >( hb_parnl( 3 ) ) ) );
+      }
       else
-         HB_RETHANDLE( LoadBitmap( static_cast< HINSTANCE >( h ), ( LPCTSTR ) hb_parnl( 2 ) ) );
+      {
+         HB_RETHANDLE( LoadBitmap( static_cast< HINSTANCE >( h ), reinterpret_cast< LPCTSTR >( hb_parnl( 2 ) ) ) );
+      }
    }
    else
-      HB_RETHANDLE( LoadBitmap( h, ( LPCTSTR ) hb_parc( 2 ) ) );
+   {
+      HB_RETHANDLE( LoadBitmap( h, static_cast< LPCTSTR >( hb_parc( 2 ) ) ) );
+   }
 }
-
 
 HB_FUNC( OPENIMAGE )
 {
@@ -809,7 +822,7 @@ HB_FUNC( OPENIMAGE )
          hb_retnl( 0 );
          return;
       }
-      memcpy( ( void * ) hG, ( void * ) cFileName, iFileSize );
+      memcpy( static_cast< void * >( hG ), static_cast< void * >( const_cast< char * >( cFileName ) ), iFileSize );
    }
    else
    {
@@ -830,7 +843,7 @@ HB_FUNC( OPENIMAGE )
          return;
       }
       fseek( fp, 0, SEEK_SET );
-      fread( ( void * ) hG, 1, iFileSize, fp );
+      fread( static_cast< void * >( hG ), 1, iFileSize, fp );
       fclose( fp );
    }
 
@@ -845,10 +858,10 @@ HB_FUNC( OPENIMAGE )
 
 #if 0
 #if defined( __cplusplus )
-   OleLoadPicture( pStream, 0, 0, &IID_IPicture, ( void ** ) &pPic );
+   OleLoadPicture( pStream, 0, 0, &IID_IPicture, static_cast< void ** >( &pPic ) );
    pStream->Release();
 #else
-   OleLoadPicture( pStream, 0, 0, &IID_IPicture, ( void ** ) &pPic );
+   OleLoadPicture( pStream, 0, 0, &IID_IPicture, static_cast< void ** >( &pPic ) );
    pStream->lpVtbl->Release( pStream );
 #endif
 #endif
@@ -863,9 +876,9 @@ HB_FUNC( OPENIMAGE )
 
 #if 0
 #if defined( __cplusplus )
-   pPic->get_Handle( ( OLE_HANDLE * ) &hBitmap );
+   pPic->get_Handle( static_cast< OLE_HANDLE * >( &hBitmap ) );
 #else
-   pPic->lpVtbl->get_Handle( pPic, ( OLE_HANDLE * ) &hBitmap );
+   pPic->lpVtbl->get_Handle( pPic, static_cast< OLE_HANDLE * >( &hBitmap ) );
 #endif
 #endif
 
@@ -891,10 +904,10 @@ HB_FUNC( OPENBITMAP )
    HBITMAP hbm;
    HDC     hDC  = ( hb_pcount() > 1 && ! HB_ISNIL( 2 ) ) ? reinterpret_cast< HDC >( HB_PARHANDLE( 2 ) ) : nullptr;
    HANDLE  hfbm = CreateFile( hb_parc( 1 ), GENERIC_READ, FILE_SHARE_READ,
-                              ( LPSECURITY_ATTRIBUTES ) nullptr, OPEN_EXISTING,
+                              static_cast< LPSECURITY_ATTRIBUTES >( nullptr ), OPEN_EXISTING,
                               FILE_ATTRIBUTE_READONLY, static_cast< HANDLE >( nullptr ) );
 
-   if( ( ( long int ) hfbm ) <= 0 )
+   if( ( reinterpret_cast< long int >( hfbm ) ) <= 0 )
    {
       HB_RETHANDLE( nullptr );
       return;
@@ -907,9 +920,8 @@ HB_FUNC( OPENBITMAP )
 
    /* Allocate memory for the BITMAPINFO structure. */
 
-   hmem1 = GlobalAlloc( GHND, sizeof( BITMAPINFOHEADER ) +
-                        ( ( 1 << bmih.biBitCount ) * sizeof( RGBQUAD ) ) );
-   lpbmi = ( LPBITMAPINFO ) GlobalLock( hmem1 );
+   hmem1 = GlobalAlloc( GHND, sizeof( BITMAPINFOHEADER ) + ( ( 1 << bmih.biBitCount ) * sizeof( RGBQUAD ) ) );
+   lpbmi = static_cast< LPBITMAPINFO >( GlobalLock( hmem1 ) );
 
    /*  Load BITMAPINFOHEADER into the BITMAPINFO  structure. */
    lpbmi->bmiHeader.biSize   = bmih.biSize;
@@ -933,17 +945,13 @@ HB_FUNC( OPENBITMAP )
       case 1:
       case 4:
       case 8:
-         ReadFile( hfbm, lpbmi->bmiColors,
-                   ( ( 1 << bmih.biBitCount ) * sizeof( RGBQUAD ) ),
-                   &dwRead, ( LPOVERLAPPED ) nullptr );
+         ReadFile( hfbm, lpbmi->bmiColors, ( ( 1 << bmih.biBitCount ) * sizeof( RGBQUAD ) ), &dwRead, static_cast< LPOVERLAPPED >( nullptr ) );
          break;
 
       case 16:
       case 32:
          if( bmih.biCompression == BI_BITFIELDS )
-            ReadFile( hfbm, lpbmi->bmiColors,
-                      ( 3 * sizeof( RGBQUAD ) ),
-                      &dwRead, ( LPOVERLAPPED ) nullptr );
+            ReadFile( hfbm, lpbmi->bmiColors, ( 3 * sizeof( RGBQUAD ) ), &dwRead, static_cast< LPOVERLAPPED >( nullptr ) );
          break;
 
       case 24:
@@ -959,13 +967,17 @@ HB_FUNC( OPENBITMAP )
    ReadFile( hfbm, lpvBits, ( bmfh.bfSize - bmfh.bfOffBits ), &dwRead, nullptr );
 
    if( ! hDC )
+   {
       hDC = GetDC( 0 );
+   }
 
    /* Create a bitmap from the data stored in the .BMP file.  */
    hbm = CreateDIBitmap( hDC, &bmih, CBM_INIT, lpvBits, lpbmi, DIB_RGB_COLORS );
 
    if( hb_pcount() < 2 || HB_ISNIL( 2 ) )
+   {
       ReleaseDC( 0, hDC );
+   }
 
    /* Unlock the global memory objects and close the .BMP file. */
    GlobalUnlock( hmem1 );
@@ -976,7 +988,6 @@ HB_FUNC( OPENBITMAP )
 
    HB_RETHANDLE( hbm );
 }
-
 
 HB_FUNC( SETTEXTCOLOR )
 {
@@ -1000,16 +1011,14 @@ HB_FUNC( SETBKCOLOR )
 
 HB_FUNC( CREATESOLIDBRUSH )
 {
-   HB_RETHANDLE( CreateSolidBrush(
-                    static_cast< COLORREF >( hb_parnl( 1 ) ) /* brush color */
-                    ) );
+   HB_RETHANDLE( CreateSolidBrush( static_cast< COLORREF >( hb_parnl( 1 ) ) /* brush color */ ) );
 }
 
 HB_FUNC( CREATEHATCHBRUSH )
 {
-   HB_RETHANDLE( CreateHatchBrush(
-                    hb_parni( 1 ), static_cast< COLORREF >( hb_parnl( 2 ) ) ) );
+   HB_RETHANDLE( CreateHatchBrush( hb_parni( 1 ), static_cast< COLORREF >( hb_parnl( 2 ) ) ) );
 }
+
 HB_FUNC( RGB )
 {
    hb_retnl( RGB( hb_parni( 1 ), hb_parni( 2 ), hb_parni( 3 ) ) );
@@ -1056,15 +1065,13 @@ HB_FUNC( CREATEFONT )
       0,                         /* clipping precision */
       0,                         /* output quality */
       0,                         /* pitch and family */
-      ( LPCTSTR ) hb_parc( 1 )   /* pointer to typeface name string */
+      static_cast< LPCTSTR >( hb_parc( 1 ) )  /* pointer to typeface name string */
       );
    HB_RETHANDLE( hFont );
 }
 
-
 HB_FUNC( SELECTFONT )
 {
-
    CHOOSEFONT cf;
    LOGFONT    lf;
    HFONT      hfont;
@@ -1080,11 +1087,11 @@ HB_FUNC( SELECTFONT )
    cf.Flags          = CF_SCREENFONTS | ( ( pObj ) ? CF_INITTOLOGFONTSTRUCT : 0 );
    cf.rgbColors      = RGB( 0, 0, 0 );
    cf.lCustData      = 0L;
-   cf.lpfnHook       = ( LPCFHOOKPROC ) nullptr;
-   cf.lpTemplateName = ( LPSTR ) nullptr;
+   cf.lpfnHook       = static_cast< LPCFHOOKPROC >( nullptr );
+   cf.lpTemplateName = static_cast< LPSTR >( nullptr );
 
    cf.hInstance = static_cast< HINSTANCE >( nullptr );
-   cf.lpszStyle = ( LPSTR ) nullptr;
+   cf.lpszStyle = static_cast< LPSTR >( nullptr );
    cf.nFontType = SCREEN_FONTTYPE;
    cf.nSizeMin  = 0;
    cf.nSizeMax  = 0;
@@ -1115,7 +1122,6 @@ HB_FUNC( SELECTFONT )
    hb_arraySetNI( aMetr, 9, lf.lfStrikeOut );
 
    hb_itemReturnRelease( aMetr );
-
 }
 
 HB_FUNC( INVALIDATERECT )
@@ -1139,7 +1145,6 @@ HB_FUNC( INVALIDATERECT )
 
 HB_FUNC( TOOLBARADDBUTTONS )
 {
-
    UINT       usWinNum    = WVW_WHICH_WINDOW;
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
 
@@ -1164,7 +1169,6 @@ HB_FUNC( TOOLBARADDBUTTONS )
    usOldHeight = pWindowData->usTBHeight;
    for( ulCount = 0; ( ulCount < hb_arrayLen( pArray ) ); ulCount++ )
    {
-
       pTemp = hb_arrayGetItemPtr( pArray, ulCount + 1 );
 #if 0
       ulID  = hb_arrayGetNI( pTemp, 1 );
@@ -1190,12 +1194,14 @@ HB_FUNC( TOOLBARADDBUTTONS )
 
    }
 
-   SendMessage( hWndCtrl, TB_ADDBUTTONS, static_cast< WPARAM >( iButtons ), reinterpret_cast< LPARAM >( ( LPTBBUTTON ) tb ) );
+   SendMessage( hWndCtrl, TB_ADDBUTTONS, static_cast< WPARAM >( iButtons ), reinterpret_cast< LPARAM >( static_cast< LPTBBUTTON >( tb ) ) );
    SendMessage( hWndCtrl, TB_AUTOSIZE, 0, 0 );
    hb_gt_wvwTBinitSize( pWindowData, hWndCtrl );
 
    if( pWindowData->usTBHeight != usOldHeight )
+   {
       hb_gt_wvwResetWindow( usWinNum );
+   }
 
    hb_xfree( tb );
 }
@@ -1211,7 +1217,6 @@ HB_FUNC( SETBITMAPRESOURCEID )
    int         iNewBitmap;
    int         iBitmapType = hb_parni( 2 );
    int         iOffset;
-
 
    switch( iBitmapType )
    {
@@ -1234,19 +1239,16 @@ HB_FUNC( SETBITMAPRESOURCEID )
 
    if( iBitmapType == 0 )
    {
-
-
       tbab.hInst = nullptr;
       tbab.nID   = reinterpret_cast< UINT >( hBitmap );
       iNewBitmap = SendMessage( hWndToolbar, TB_ADDBITMAP, static_cast< WPARAM >( 1 ), reinterpret_cast< WPARAM >( &tbab ) );
-
    }
    else /* system bitmap */
+   {
       iNewBitmap = static_cast< int >( uiBitmap ) + iOffset;
+   }
    hb_retni( iNewBitmap );
-
 }
-
 
 HB_FUNC( DRAWICON )
 {
@@ -1256,10 +1258,15 @@ HB_FUNC( DRAWICON )
 HB_FUNC( LOADICON )
 {
    if( HB_ISNUM( 1 ) )
-      HB_RETHANDLE( LoadIcon( nullptr, ( LPCTSTR ) hb_parnl( 1 ) ) );
+   {
+      HB_RETHANDLE( LoadIcon( nullptr, reinterpret_cast< LPCTSTR >( hb_parnl( 1 ) ) ) );
+   }
    else
-      HB_RETHANDLE( LoadIcon( GetModuleHandle( nullptr ), ( LPCTSTR ) hb_parc( 1 ) ) );
+   {
+      HB_RETHANDLE( LoadIcon( GetModuleHandle( nullptr ), static_cast< LPCTSTR >( hb_parc( 1 ) ) ) );
+   }
 }
+
 HB_FUNC( DRAWBITMAP )
 {
    HDC     hDC      = reinterpret_cast< HDC >( HB_PARHANDLE( 1 ) );
@@ -1271,15 +1278,19 @@ HB_FUNC( DRAWBITMAP )
    int     nHeightDest = ( hb_pcount() >= 6 && ! HB_ISNIL( 7 ) ) ? hb_parni( 7 ) : 0;
 
    SelectObject( hDCmem, hBitmap );
-   GetObject( hBitmap, sizeof( BITMAP ), ( LPVOID ) &bitmap );
+   GetObject( hBitmap, sizeof( BITMAP ), static_cast< LPVOID >( &bitmap ) );
    if( nWidthDest && ( nWidthDest != bitmap.bmWidth || nHeightDest != bitmap.bmHeight ) )
-      StretchBlt( hDC, hb_parni( 4 ), hb_parni( 5 ), nWidthDest, nHeightDest, hDCmem,
-                  0, 0, bitmap.bmWidth, bitmap.bmHeight, dwraster );
+   {
+      StretchBlt( hDC, hb_parni( 4 ), hb_parni( 5 ), nWidthDest, nHeightDest, hDCmem, 0, 0, bitmap.bmWidth, bitmap.bmHeight, dwraster );
+   }
    else
+   {
       BitBlt( hDC, hb_parni( 4 ), hb_parni( 5 ), bitmap.bmWidth, bitmap.bmHeight, hDCmem, 0, 0, dwraster );
+   }
 
    DeleteDC( hDCmem );
 }
+
 HB_FUNC( WINDOW2BITMAP )
 {
    HWND    hWnd   = reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) );
@@ -1290,9 +1301,13 @@ HB_FUNC( WINDOW2BITMAP )
    RECT    rc;
 
    if( lFull )
+   {
       GetWindowRect( hWnd, &rc );
+   }
    else
+   {
       GetClientRect( hWnd, &rc );
+   }
 
    hBitmap = CreateCompatibleBitmap( hDC, rc.right - rc.left, rc.bottom - rc.top );
    SelectObject( hDCmem, hBitmap );
@@ -1303,7 +1318,6 @@ HB_FUNC( WINDOW2BITMAP )
    DeleteDC( hDC );
    HB_RETHANDLE( hBitmap );
 }
-
 
 /* wvw_SetMaxBMCache([nMax])
    Get/Set maximum user-bitmap cache (default is 20, minimum is 1).
@@ -1325,6 +1339,7 @@ HB_FUNC( WINDOW2BITMAP )
    wvw_SetMaxBMCache(1)  :: this will cache one bitmap only
    wvw_SetMaxBMCache(50) :: allows up to 50 bitmap stored in the cache
  */
+
 HB_FUNC( WVW_SETMAXBMCACHE )
 {
    WVW_DATA * p = hb_getWvwData();
@@ -1335,7 +1350,9 @@ HB_FUNC( WVW_SETMAXBMCACHE )
       uiOldMaxBMcache = p->s_sApp->uiMaxBMcache;
 
       if( ! HB_ISNIL( 1 ) )
+      {
          p->s_sApp->uiMaxBMcache = static_cast< UINT >( hb_parni( 1 ) );
+      }
    }
 
    hb_retni( uiOldMaxBMcache );
@@ -1351,15 +1368,11 @@ HB_FUNC( WVW_NUMBMCACHE )
    hb_retni( p ? p->s_sApp->uiBMcache : 0 );
 }
 
-
 /*                                                                   */
 /*               Miscellaneous xHarbour callable functions           */
 /*               Budyanto Dj. <budyanto@centrin.net.id>              */
 /*                                                                   */
-
-
 /* TIMER                                                             */
-
 
 /*wvw_SetTimer([nWinNum], nInterval)
  * set timer event for every nInterval millisec
@@ -1382,7 +1395,9 @@ HB_FUNC( WVW_SETTIMER )
       hb_retl( TRUE );
    }
    else
+   {
       hb_retl( FALSE );
+   }
 }
 
 /*wvw_KillTimer([nWinNum])
@@ -1403,9 +1418,10 @@ HB_FUNC( WVW_KILLTIMER )
       hb_retl( TRUE );
    }
    else
+   {
       hb_retl( FALSE );
+   }
 }
-
 
 /*wvw_GetPaintRect( nWinNum )   nWinNum is 0 based               */
 /*returns array of paint pending rect {top, left, bottom, right} */
@@ -1429,7 +1445,6 @@ HB_FUNC( WVW_GETPAINTRECT )
 
    hb_itemReturnRelease( info );
 }
-
 
 HB_FUNC( WVW_SETPOINTER )
 {
@@ -1509,9 +1524,8 @@ HB_FUNC( WVW_SETPOINTER )
          break;
    }
 
-   SetClassLongPtr( pWindowData->hWnd, GCLP_HCURSOR, ( LONG_PTR ) hCursor );
+   SetClassLongPtr( pWindowData->hWnd, GCLP_HCURSOR, reinterpret_cast< LONG_PTR >( hCursor ) );
 }
-
 
 /*                                                                   */
 /*   wvw_LoadPicture( nSlot, cFilePic )                              */
@@ -1528,7 +1542,9 @@ HB_FUNC( WVW_LOADPICTURE )
       int iSlot = hb_parni( 1 ) - 1;
 
       if( p->s_sApp->iPicture[ iSlot ] )
+      {
          hb_gt_wvwDestroyPicture( p->s_sApp->iPicture[ iSlot ] );
+      }
 
       p->s_sApp->iPicture[ iSlot ] = iPicture;
 
@@ -1537,7 +1553,6 @@ HB_FUNC( WVW_LOADPICTURE )
 
    hb_retl( bResult );
 }
-
 
 /*                                                                                                */
 /* wvw_LoadFont( nSlotFont, cFontFace, nHeight, nWidth, nWeight, lItalic, lUnderline, lStrikeout, */
@@ -1575,12 +1590,13 @@ HB_FUNC( WVW_LOADFONT )
       if( hFont )
       {
          if( p->s_sApp->hUserFonts[ iSlot ] )
+         {
             DeleteObject( static_cast< HFONT >( p->s_sApp->hUserFonts[ iSlot ] ) );
+         }
          p->s_sApp->hUserFonts[ iSlot ] = hFont;
       }
    }
 }
-
 
 /*                                                                   */
 /*  wvw_LoadPen( nSlot, nStyle, nWidth, nRGBColor )                  */
@@ -1602,15 +1618,18 @@ HB_FUNC( WVW_LOADPEN )
    if( hPen )
    {
       if( p->s_sApp->hUserPens[ iSlot ] )
+      {
          DeleteObject( static_cast< HPEN >( p->s_sApp->hUserPens[ iSlot ] ) );
+      }
       p->s_sApp->hUserPens[ iSlot ] = hPen;
 
       hb_retl( TRUE );
    }
    else
+   {
       hb_retl( FALSE );
+   }
 }
-
 
 HB_FUNC( WVW_MESSAGEBOX )
 {
@@ -1620,13 +1639,11 @@ HB_FUNC( WVW_MESSAGEBOX )
    hb_retni( MessageBox( pWindowData->hWnd, hb_parcx( 2 ), hb_parcx( 3 ), HB_ISNIL( 4 ) ? MB_OK : hb_parni( 4 ) ) );
 }
 
-
 /*                    End of Drawing Primitives                      */
 
 /*                                                                   */
 /*              Utility Functions . A Natural Extension              */
 /*                copied and modified from gtwvt                     */
-
 
 /*                                                                      */
 /*     wvw_ChooseFont( cFontName, nHeight, nWidth, nWeight, nQuality, ; */
@@ -1642,7 +1659,9 @@ HB_FUNC( WVW_CHOOSEFONT )
    WVW_DATA * p         = hb_getWvwData();
 
    if( ! HB_ISNIL( 2 ) )
+   {
       PointSize = -MulDiv( static_cast< LONG >( hb_parnl( 2 ) ), GetDeviceCaps( p->s_pWindows[ p->s_usNumWindows - 1 ]->hdc, LOGPIXELSY ), 72 );
+   }
 
    lf.lfHeight         = PointSize;
    lf.lfWidth          = HB_ISNIL( 3 ) ? 0 : hb_parni( 3 );
@@ -1654,7 +1673,9 @@ HB_FUNC( WVW_CHOOSEFONT )
    lf.lfQuality        = HB_ISNIL( 5 ) ? DEFAULT_QUALITY : static_cast< BYTE >( hb_parni( 5 ) );
    lf.lfPitchAndFamily = FF_DONTCARE;
    if( HB_ISCHAR( 1 ) )
+   {
       strcpy( lf.lfFaceName, hb_parcx( 1 ) );
+   }
 
    cf.lStructSize    = sizeof( CHOOSEFONT );
    cf.hwndOwner      = p->s_pWindows[ p->s_usNumWindows - 1 ]->hWnd;
@@ -1664,10 +1685,10 @@ HB_FUNC( WVW_CHOOSEFONT )
    cf.Flags          = CF_SCREENFONTS | CF_EFFECTS | CF_SHOWHELP | CF_INITTOLOGFONTSTRUCT;
    cf.rgbColors      = RGB( 0, 0, 0 );
    cf.lCustData      = 0L;
-   cf.lpfnHook       = ( LPCFHOOKPROC ) nullptr;
-   cf.lpTemplateName = ( LPSTR ) nullptr;
+   cf.lpfnHook       = static_cast< LPCFHOOKPROC >( nullptr );
+   cf.lpTemplateName = static_cast< LPSTR >( nullptr );
    cf.hInstance      = static_cast< HINSTANCE >( nullptr );
-   cf.lpszStyle      = ( LPSTR ) nullptr;
+   cf.lpszStyle      = static_cast< LPSTR >( nullptr );
    cf.nFontType      = SCREEN_FONTTYPE;
    cf.nSizeMin       = 0;
    cf.nSizeMax       = 0;
@@ -1704,21 +1725,21 @@ HB_FUNC( WVW_CHOOSEFONT )
    return;
 }
 
-
 /*                                                                   */
 /*    wvw_ChooseColor( nRGBInit, aRGB16, nFlags ) => nRGBSelected    */
 /*                                                                   */
 
 HB_FUNC( WVW_CHOOSECOLOR )
 {
-
    CHOOSECOLOR cc;
    COLORREF    crCustClr[ 16 ];
    int         i;
    WVW_DATA *  p = hb_getWvwData();
 
    for( i = 0; i < 16; i++ )
+   {
       crCustClr[ i ] = HB_ISARRAY( 2 ) ? static_cast< COLORREF >( hb_parvnl( 2, i + 1 ) ) : GetSysColor( COLOR_BTNFACE );
+   }
 
    cc.lStructSize  = sizeof( CHOOSECOLOR );
    cc.hwndOwner    = p->s_pWindows[ p->s_usNumWindows - 1 ]->hWnd;
@@ -1728,11 +1749,14 @@ HB_FUNC( WVW_CHOOSECOLOR )
    cc.Flags = static_cast< WORD >( HB_ISNIL( 3 ) ? CC_ANYCOLOR | CC_RGBINIT | CC_FULLOPEN : hb_parnl( 3 ) );
 
    if( ChooseColor( &cc ) )
+   {
       hb_retnl( cc.rgbResult );
+   }
    else
+   {
       hb_retnl( -1 );
+   }
 }
-
 
 /*wvw_SetMousePos( nWinNum, nRow, nCol ) nWinNum is 0 based        */
 /*WHAT'S the difference with GT_FUNC( mouse_SetPos ) ???           */
@@ -1751,16 +1775,21 @@ HB_FUNC( WVW_SETMOUSEPOS )
               usCol = static_cast< USHORT >( hb_parni( 3 ) );
 
    if( hb_gt_wvw_GetMainCoordMode() )
+   {
       hb_wvw_HBFUNCPrologue( usWinNum, &usRow, &usCol, nullptr, nullptr );
+   }
 
    xy = hb_gt_wvwGetXYFromColRow( pWindowData, usCol, usRow );
 
    if( ClientToScreen( pWindowData->hWnd, &xy ) )
+   {
       hb_retl( SetCursorPos( xy.x, xy.y + ( pWindowData->PTEXTSIZE.y / 2 ) ) );
+   }
    else
+   {
       hb_retl( FALSE );
+   }
 }
-
 
 /*by bdj                                                                                */
 /*none in gtwvt                                                                         */
@@ -1796,7 +1825,9 @@ HB_FUNC( WVW_FILLRECTANGLE )
    RECT     xyRect; memset( &xyRect, 0, sizeof( xyRect ) );
 
    if( hb_gt_wvw_GetMainCoordMode() )
+   {
       hb_wvw_HBFUNCPrologue( usWinNum, &usTop, &usLeft, &usBottom, &usRight );
+   }
 
    iOffTop    = ! HB_ISNIL( 9 ) ? hb_parvni( 9, 1 ) : 0;
    iOffLeft   = ! HB_ISNIL( 9 ) ? hb_parvni( 9, 2 ) : 0;
@@ -1842,10 +1873,9 @@ HB_FUNC( WVW_FILLRECTANGLE )
    hb_retl( TRUE );
 }
 
-
 HB_FUNC( WVW_LBADDSTRING )
 {
-   SendMessage( GetDlgItem( reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) ), hb_parni( 2 ) ), LB_ADDSTRING, 0, reinterpret_cast< LPARAM >( ( LPSTR ) hb_parcx( 3 ) ) );
+   SendMessage( GetDlgItem( reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) ), hb_parni( 2 ) ), LB_ADDSTRING, 0, reinterpret_cast< LPARAM >( const_cast< LPSTR >( hb_parcx( 3 ) ) ) );
 }
 
 HB_FUNC( WVW_LBSETCURSEL )
@@ -1856,7 +1886,7 @@ HB_FUNC( WVW_LBSETCURSEL )
 /* WARNING!!! this function is not member of WVW_CB* group of functions */
 HB_FUNC( WVW_CBADDSTRING )
 {
-   SendMessage( GetDlgItem( reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) ), hb_parni( 2 ) ), CB_ADDSTRING, 0, reinterpret_cast< LPARAM >( ( LPSTR ) hb_parcx( 3 ) ) );
+   SendMessage( GetDlgItem( reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) ), hb_parni( 2 ) ), CB_ADDSTRING, 0, reinterpret_cast< LPARAM >( const_cast< LPSTR >( hb_parcx( 3 ) ) ) );
 }
 
 /* WARNING!!! this function is not member of WVW_CB* group of functions */
@@ -1870,9 +1900,13 @@ HB_FUNC( WVW_DLGSETICON )
    HICON hIcon;
 
    if( HB_ISNUM( 2 ) )
+   {
       hIcon = LoadIcon( hb_getWvwData()->hInstance, MAKEINTRESOURCE( hb_parni( 2 ) ) );
+   }
    else
+   {
       hIcon = static_cast< HICON >( LoadImage( static_cast< HINSTANCE >( nullptr ), hb_parc( 2 ), IMAGE_ICON, 0, 0, LR_LOADFROMFILE ) );
+   }
 
    if( hIcon )
    {
@@ -1881,9 +1915,10 @@ HB_FUNC( WVW_DLGSETICON )
    }
 
    if( hIcon )
+   {
       hb_retnl( reinterpret_cast< ULONG >( hIcon ) );
+   }
 }
-
 
 /*                                                                   */
 /*                      GUI Drawing Functions                        */
@@ -1901,14 +1936,15 @@ HB_FUNC( WVW_DLGSETICON )
 
 HB_FUNC( WVW_SETPEN )
 {
-
    int        iPenWidth, iPenStyle;
    COLORREF   crColor;
    HPEN       hPen;
    WVW_DATA * p = hb_getWvwData();
 
    if( HB_ISNIL( 1 ) )
+   {
       hb_retl( FALSE );
+   }
 
    iPenStyle = hb_parni( 1 );
    iPenWidth = HB_ISNIL( 2 ) ? 0 : hb_parni( 2 );
@@ -1927,16 +1963,19 @@ HB_FUNC( WVW_SETPEN )
        */
 
       if( p->s_sApp->currentPen )
+      {
          DeleteObject( static_cast< HPEN >( p->s_sApp->currentPen ) );
+      }
 
       p->s_sApp->currentPen = hPen;
 
       hb_retl( TRUE );
    }
    else
+   {
       hb_retl( FALSE );
+   }
 }
-
 
 /*                                                                   */
 /*   wvw_SetBrush( nStyle, nColor, [ nHatch ] )                      */
@@ -1948,13 +1987,14 @@ HB_FUNC( WVW_SETPEN )
 
 HB_FUNC( WVW_SETBRUSH )
 {
-
    HBRUSH     hBrush;
    LOGBRUSH   lb; memset( &lb, 0, sizeof( lb ) );
    WVW_DATA * p  = hb_getWvwData();
 
    if( HB_ISNIL( 1 ) )
+   {
       hb_retl( FALSE );
+   }
 
    lb.lbStyle = hb_parnl( 1 );
    lb.lbColor = HB_ISNIL( 2 ) ? RGB( 0, 0, 0 ) : static_cast< COLORREF >( hb_parnl( 2 ) );
@@ -1982,9 +2022,10 @@ HB_FUNC( WVW_SETBRUSH )
       hb_retl( TRUE );
    }
    else
+   {
       hb_retl( FALSE );
+   }
 }
-
 
 HB_FUNC( WVW__MAKEDLGTEMPLATE )
 {
@@ -1993,7 +2034,7 @@ HB_FUNC( WVW__MAKEDLGTEMPLATE )
    int    i, nchar;
    DWORD  lStyle;
 
-   pdlgtemplate = p = ( PWORD ) LocalAlloc( LPTR, 65534 );
+   pdlgtemplate = p = static_cast< PWORD >( LocalAlloc( LPTR, 65534 ) );
 
    lStyle = hb_parvnl( 1, 3 );
 
@@ -2018,11 +2059,13 @@ HB_FUNC( WVW__MAKEDLGTEMPLATE )
 
    if( hb_parinfa( 1, 11 ) == HB_IT_STRING )
    {
-      nchar = nCopyAnsiToWideChar( p, TEXT( ( char * ) hb_parvcx( 1, 11 ) ) );
+      nchar = nCopyAnsiToWideChar( p, TEXT( const_cast< char * >( hb_parvcx( 1, 11 ) ) ) );
       p    += nchar;
    }
    else
+   {
       *p++ = 0;
+   }
 
    if( ( lStyle & DS_SETFONT ) )
    {
@@ -2030,7 +2073,7 @@ HB_FUNC( WVW__MAKEDLGTEMPLATE )
       *p++ = static_cast< short >( hb_parvni( 1, 13 ) );
       *p++ = static_cast< short >( hb_parvni( 1, 14 ) );
 
-      nchar = nCopyAnsiToWideChar( p, TEXT( ( char * ) hb_parvcx( 1, 15 ) ) );
+      nchar = nCopyAnsiToWideChar( p, TEXT( const_cast< char * >( hb_parvcx( 1, 15 ) ) ) );
       p    += nchar;
    }
 
@@ -2058,7 +2101,7 @@ HB_FUNC( WVW__MAKEDLGTEMPLATE )
 
       if( hb_parinfa( 10, i ) == HB_IT_STRING )
       {
-         nchar = nCopyAnsiToWideChar( p, TEXT( ( char * ) hb_parvcx( 10, i ) ) );
+         nchar = nCopyAnsiToWideChar( p, TEXT( const_cast< char * >( hb_parvcx( 10, i ) ) ) );
          p    += nchar;
       }
       else
@@ -2083,11 +2126,10 @@ HB_FUNC( WVW__MAKEDLGTEMPLATE )
 
    p = lpwAlign( p );
 
-   hb_retclen( ( LPSTR ) pdlgtemplate, ( reinterpret_cast< ULONG >( p ) - reinterpret_cast< ULONG >( pdlgtemplate ) ) );
+   hb_retclen( reinterpret_cast< LPSTR >( pdlgtemplate ), ( reinterpret_cast< ULONG >( p ) - reinterpret_cast< ULONG >( pdlgtemplate ) ) );
 
    LocalFree( LocalHandle( pdlgtemplate ) );
 }
-
 
 HB_FUNC( WVW_GETCURSORPOS )
 {
@@ -2102,7 +2144,6 @@ HB_FUNC( WVW_GETCURSORPOS )
    hb_itemReturnRelease( info );
 }
 
-
 /* wvw_ShowWindow( [nWinNum], nCmdShow ) */
 HB_FUNC( WVW_SHOWWINDOW )
 {
@@ -2112,7 +2153,6 @@ HB_FUNC( WVW_SHOWWINDOW )
 
    ShowWindow( pWindowData->hWnd, iCmdShow );
 }
-
 
 /* wvw_UpdateWindow( [nWinNum] ) */
 HB_FUNC( WVW_UPDATEWINDOW )
@@ -2144,8 +2184,12 @@ HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
    /* check if we still have room for a new dialog */
 
    for( iIndex = 0; iIndex < WVW_DLGML_MAX; iIndex++ )
+   {
       if( p->s_sApp->hDlgModeless[ iIndex ] == nullptr )
+      {
          break;
+      }
+   }
 
    if( iIndex >= WVW_DLGML_MAX )
    {
@@ -2156,7 +2200,6 @@ HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
 
    if( HB_IS_BLOCK( pFirst ) )
    {
-
       /* pFunc is pointing to stored code block (later) */
       pFunc = hb_itemNew( pFirst );
       iType = 2;
@@ -2166,41 +2209,43 @@ HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
    {
       pExecSym = hb_dynsymFindName( hb_itemGetCPtr( pFirst ) );
       if( pExecSym )
+      {
          pFunc = ( PHB_ITEM ) pExecSym;
+      }
       iType = 1;
    }
 
    {
-
       if( HB_ISNUM( 3 ) )
+      {
          hDlg = CreateDialogIndirect( hb_getWvwData()->hInstance,
-                                      ( LPDLGTEMPLATE ) hb_parc( 1 ),
+                                      reinterpret_cast< LPDLGTEMPLATE >( const_cast< char * >( hb_parc( 1 ) ) ),
                                       hb_parl( 2 ) ? p->s_pWindows[ 0 ]->hWnd : nullptr,
-                                      ( DLGPROC ) hb_parnl( 3 ) );
+                                      reinterpret_cast< DLGPROC >( hb_parnl( 3 ) ) );
+      }
       else
       {
-
          switch( iResource )
          {
             case 0:
                hDlg = CreateDialog( hb_getWvwData()->hInstance,
                                     hb_parc( 1 ),
                                     hb_parl( 2 ) ? p->s_pWindows[ 0 ]->hWnd : nullptr,
-                                    ( DLGPROC ) hb_gt_wvwDlgProcMLess );
+                                    static_cast< DLGPROC >( hb_gt_wvwDlgProcMLess ) );
                break;
 
             case 1:
                hDlg = CreateDialog( hb_getWvwData()->hInstance,
                                     MAKEINTRESOURCE( static_cast< WORD >( hb_parni( 1 ) ) ),
                                     hb_parl( 2 ) ? p->s_pWindows[ 0 ]->hWnd : nullptr,
-                                    ( DLGPROC ) hb_gt_wvwDlgProcMLess );
+                                    static_cast< DLGPROC >( hb_gt_wvwDlgProcMLess ) );
                break;
 
             case 2:
                hDlg = CreateDialogIndirect( hb_getWvwData()->hInstance,
-                                            ( LPDLGTEMPLATE ) hb_parc( 1 ),
+                                            reinterpret_cast< LPDLGTEMPLATE >( const_cast< char * >( hb_parc( 1 ) ) ),
                                             hb_parl( 2 ) ? p->s_pWindows[ 0 ]->hWnd : nullptr,
-                                            ( DLGPROC ) hb_gt_wvwDlgProcMLess );
+                                            static_cast< DLGPROC >( hb_gt_wvwDlgProcMLess ) );
                break;
          }
       }
@@ -2213,8 +2258,9 @@ HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
 
             /* if codeblock, store the codeblock and lock it there */
             if( HB_IS_BLOCK( pFirst ) )
+            {
                p->s_sApp->pcbFunc[ iIndex ] = pFunc;
-
+            }
 
             p->s_sApp->pFunc[ iIndex ] = pFunc;
             p->s_sApp->iType[ iIndex ] = iType;
@@ -2228,9 +2274,10 @@ HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
       }
       else
       {
-
          if( iType == 2 && pFunc )
+         {
             hb_itemRelease( pFunc );
+         }
 
          p->s_sApp->hDlgModeless[ iIndex ] = nullptr;
       }
@@ -2238,7 +2285,6 @@ HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
 
    hb_retnl( reinterpret_cast< ULONG >( hDlg ) );
 }
-
 
 HB_FUNC( WVW_CREATEDIALOGMODAL )
 {
@@ -2253,8 +2299,12 @@ HB_FUNC( WVW_CREATEDIALOGMODAL )
 
    /* check if we still have room for a new dialog */
    for( iIndex = 0; iIndex < WVW_DLGMD_MAX; iIndex++ )
+   {
       if( p->s_sApp->hDlgModal[ iIndex ] == nullptr )
+      {
          break;
+      }
+   }
 
    if( iIndex >= WVW_DLGMD_MAX )
    {
@@ -2278,7 +2328,9 @@ HB_FUNC( WVW_CREATEDIALOGMODAL )
    {
       pExecSym = hb_dynsymFindName( hb_itemGetCPtr( pFirst ) );
       if( pExecSym )
-         pFunc = ( PHB_ITEM ) pExecSym;
+      {
+         pFunc = static_cast< PHB_ITEM >( pExecSym );
+      }
       p->s_sApp->pFuncModal[ iIndex ] = pFunc;
       p->s_sApp->iTypeModal[ iIndex ] = 1;
    }
@@ -2289,7 +2341,7 @@ HB_FUNC( WVW_CREATEDIALOGMODAL )
          iResult = DialogBoxParam( hb_getWvwData()->hInstance,
                                    hb_parc( 1 ),
                                    hParent,
-                                   ( DLGPROC ) hb_gt_wvwDlgProcModal,
+                                   static_cast< DLGPROC >( hb_gt_wvwDlgProcModal ),
                                    static_cast< LPARAM >( static_cast< DWORD >( iIndex ) ) + 1 );
          break;
 
@@ -2297,27 +2349,27 @@ HB_FUNC( WVW_CREATEDIALOGMODAL )
          iResult = DialogBoxParam( hb_getWvwData()->hInstance,
                                    MAKEINTRESOURCE( static_cast< WORD >( hb_parni( 1 ) ) ),
                                    hParent,
-                                   ( DLGPROC ) hb_gt_wvwDlgProcModal,
+                                   static_cast< DLGPROC >( hb_gt_wvwDlgProcModal ),
                                    static_cast< LPARAM >( static_cast< DWORD >( iIndex ) ) + 1 );
          break;
 
       case 2:
          iResult = DialogBoxIndirectParam( hb_getWvwData()->hInstance,
-                                           ( LPDLGTEMPLATE ) hb_parc( 1 ),
+                                           reinterpret_cast< LPDLGTEMPLATE >( const_cast< char * >( hb_parc( 1 ) ) ),
                                            hParent,
-                                           ( DLGPROC ) hb_gt_wvwDlgProcModal,
+                                           static_cast< DLGPROC >( hb_gt_wvwDlgProcModal ),
                                            static_cast< LPARAM >( static_cast< DWORD >( iIndex ) ) + 1 );
          break;
    }
 
    hb_retni( iResult );
 }
+
 /* removed from GTWVT, so we remove it from here also. I really don;t like doing it... */
 HB_FUNC( WVW_DELETEOBJECT )
 {
-   hb_retl( DeleteObject( ( HGDIOBJ ) HB_PARHANDLE( 1 ) ) );
+   hb_retl( DeleteObject( reinterpret_cast< HGDIOBJ >( HB_PARHANDLE( 1 ) ) ) );
 }
-
 
 HB_FUNC( WVW_SETONTOP )
 {
@@ -2327,14 +2379,8 @@ HB_FUNC( WVW_SETONTOP )
 
    GetWindowRect( pWindowData->hWnd, &rect );
 
-   hb_retl( SetWindowPos( pWindowData->hWnd, HWND_TOPMOST,
-                          rect.left,
-                          rect.top,
-                          0,
-                          0,
-                          SWP_NOSIZE + SWP_NOMOVE + SWP_NOACTIVATE ) );
+   hb_retl( SetWindowPos( pWindowData->hWnd, HWND_TOPMOST, rect.left, rect.top, 0, 0, SWP_NOSIZE + SWP_NOMOVE + SWP_NOACTIVATE ) );
 }
-
 
 HB_FUNC( WVW_SETASNORMAL )
 {
@@ -2344,14 +2390,8 @@ HB_FUNC( WVW_SETASNORMAL )
 
    GetWindowRect( pWindowData->hWnd, &rect );
 
-   hb_retl( SetWindowPos( pWindowData->hWnd, HWND_NOTOPMOST,
-                          rect.left,
-                          rect.top,
-                          0,
-                          0,
-                          SWP_NOSIZE + SWP_NOMOVE + SWP_NOACTIVATE ) );
+   hb_retl( SetWindowPos( pWindowData->hWnd, HWND_NOTOPMOST, rect.left, rect.top, 0, 0, SWP_NOSIZE + SWP_NOMOVE + SWP_NOACTIVATE ) );
 }
-
 
 /*                                                                   */
 /*   aScr := wvw_SaveScreen( nWinNum, nTop, nLeft, nBottom, nRight ) */
@@ -2377,7 +2417,9 @@ HB_FUNC( WVW_SAVESCREEN )
           usRight  = static_cast< USHORT >( hb_parni( 5 ) );
 
    if( hb_gt_wvw_GetMainCoordMode() )
+   {
       hb_wvw_HBFUNCPrologue( usWinNum, &usTop, &usLeft, &usBottom, &usRight );
+   }
 
    xy    = hb_gt_wvwGetXYFromColRow( pWindowData, usLeft, usTop );
    iTop  = xy.y;
@@ -2402,7 +2444,6 @@ HB_FUNC( WVW_SAVESCREEN )
 
    hb_itemReturnRelease( info );
 }
-
 
 /*                                                                     */
 /*   wvw_RestScreen( nWinNum, nTop, nLeft, nBottom, nRight, aScr, lDoNotDestroyBMP )*/
@@ -2430,7 +2471,9 @@ HB_FUNC( WVW_RESTSCREEN )
           usRight  = static_cast< USHORT >( hb_parni( 5 ) );
 
    if( hb_gt_wvw_GetMainCoordMode() )
+   {
       hb_wvw_HBFUNCPrologue( usWinNum, &usTop, &usLeft, &usBottom, &usRight );
+   }
 
    xy    = hb_gt_wvwGetXYFromColRow( pWindowData, usLeft, usTop );
    iTop  = xy.y;
@@ -2443,45 +2486,31 @@ HB_FUNC( WVW_RESTSCREEN )
    iWidth  = iRight - iLeft + 1;
    iHeight = iBottom - iTop + 1;
 
-   hBmp = static_cast< HBITMAP >( SelectObject( pWindowData->hCompDC, ( HBITMAP ) hb_parvnl( 6, 3 ) ) );
+   hBmp = static_cast< HBITMAP >( SelectObject( pWindowData->hCompDC, reinterpret_cast< HBITMAP >( hb_parvnl( 6, 3 ) ) ) );
    if( hBmp )
    {
       if( ( iWidth == hb_parvni( 6, 1 ) ) && ( iHeight == hb_parvni( 6, 2 ) ) )
       {
-         if( BitBlt( pWindowData->hdc,
-                     iLeft,
-                     iTop,
-                     iWidth,
-                     iHeight,
-                     pWindowData->hCompDC,
-                     0,
-                     0,
-                     SRCCOPY ) )
+         if( BitBlt( pWindowData->hdc, iLeft, iTop, iWidth, iHeight, pWindowData->hCompDC, 0, 0, SRCCOPY ) )
+         {
             bResult = TRUE;
+         }
       }
-      else if( StretchBlt( pWindowData->hdc,
-                           iLeft,
-                           iTop,
-                           iWidth,
-                           iHeight,
-                           pWindowData->hCompDC,
-                           0,
-                           0,
-                           hb_parvni( 6, 1 ),
-                           hb_parvni( 6, 2 ),
-                           SRCCOPY ) )
+      else if( StretchBlt( pWindowData->hdc, iLeft, iTop, iWidth, iHeight, pWindowData->hCompDC, 0, 0, hb_parvni( 6, 1 ), hb_parvni( 6, 2 ), SRCCOPY ) )
+      {
          bResult = TRUE;
-
+      }
    }
 
    SelectObject( pWindowData->hCompDC, hBmp );
 
    if( ! bDoNotDestroyBMP )
+   {
       DeleteObject( reinterpret_cast< HBITMAP >( hb_parvnl( 6, 3 ) ) );
+   }
 
    hb_retl( bResult );
 }
-
 
 /*                                                                     */
 /* wvw_CreateFont( cFontFace, nHeight, nWidth, nWeight, lItalic, lUnderline,*/
@@ -2493,7 +2522,6 @@ HB_FUNC( WVW_CREATEFONT )
    UINT       usWinNum = p->s_usNumWindows - 1;
 
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
-
 
    LOGFONT logfont;
    HFONT   hFont;
@@ -2516,9 +2544,13 @@ HB_FUNC( WVW_CREATEFONT )
 
    hFont = CreateFontIndirect( &logfont );
    if( hFont )
+   {
       hb_retnl( reinterpret_cast< ULONG >( hFont ) );
+   }
    else
+   {
       hb_retnl( 0 );
+   }
 }
 
 HB_FUNC( WVW_GETKEYSTATE )

@@ -127,13 +127,11 @@ HB_FUNC( WVW_TBCREATE )
 
    if( hWndTB == nullptr )
    {
-      MessageBox( nullptr, TEXT( "Failed CreateToolbarEx..." ),
-                  hb_gt_wvw_GetAppName(), MB_ICONERROR );
+      MessageBox( nullptr, TEXT( "Failed CreateToolbarEx..." ), hb_gt_wvw_GetAppName(), MB_ICONERROR );
       hb_retnl( 0 );
    }
 
-   pWindowData->tbOldProc = reinterpret_cast< WNDPROC >( SetWindowLongPtr( hWndTB,
-                                                          GWLP_WNDPROC, ( LONG_PTR ) hb_gt_wvwTBProc ) );
+   pWindowData->tbOldProc = reinterpret_cast< WNDPROC >( SetWindowLongPtr( hWndTB, GWLP_WNDPROC, reinterpret_cast< LONG_PTR >( hb_gt_wvwTBProc ) ) );
 
    if( iSystemBitmap > 0 )
    {
@@ -203,10 +201,10 @@ HB_FUNC( WVW_TBADDBUTTON )
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
    int        iCommand    = HB_ISNIL( 2 ) ? 0 : hb_parni( 2 );
 
-   char * szBitmap = HB_ISCHAR( 3 ) ? ( char * ) hb_parcx( 3 ) : nullptr;
+   char * szBitmap = HB_ISCHAR( 3 ) ? const_cast< char * >( hb_parcx( 3 ) ) : nullptr;
    UINT   uiBitmap = HB_ISNUM( 3 ) ? static_cast< UINT >( hb_parni( 3 ) ) : 0;
 
-   char * szLabel      = HB_ISNIL( 4 ) ? ( char * ) "" : ( char * ) hb_parcx( 4 );
+   char * szLabel      = HB_ISNIL( 4 ) ? nullptr : const_cast< char * >( hb_parcx( 4 ) );
    int    iBitmapType  = HB_ISNIL( 5 ) ? 0 : static_cast< int >( hb_parni( 5 ) );
    BOOL   bMap3Dcolors = HB_ISLOG( 6 ) ? hb_parl( 6 ) : FALSE;
    BOOL   bDropdown    = HB_ISLOG( 7 ) ? hb_parl( 7 ) : FALSE;
@@ -222,16 +220,14 @@ HB_FUNC( WVW_TBADDBUTTON )
 
    if( iCommand >= WVW_ID_BASE_PUSHBUTTON )
    {
-      MessageBox( nullptr, TEXT( "Toolbar button Command Id too high. Potential conflict with pushbutton" ),
-                  hb_gt_wvw_GetAppName(), MB_ICONERROR );
+      MessageBox( nullptr, TEXT( "Toolbar button Command Id too high. Potential conflict with pushbutton" ), hb_gt_wvw_GetAppName(), MB_ICONERROR );
       hb_retl( FALSE );
       return;
    }
 
    if( strlen( szLabel ) > WVW_TB_LABELMAXLENGTH )
    {
-      MessageBox( nullptr, TEXT( "Cannot addbutton, Label too long..." ),
-                  hb_gt_wvw_GetAppName(), MB_ICONERROR );
+      MessageBox( nullptr, TEXT( "Cannot addbutton, Label too long..." ), hb_gt_wvw_GetAppName(), MB_ICONERROR );
       hb_retl( FALSE );
       return;
    }
@@ -244,16 +240,14 @@ HB_FUNC( WVW_TBADDBUTTON )
       {
          if( ! AddTBButton( hWndTB, szBitmap, uiBitmap, szLabel, iCommand, 1, bMap3Dcolors, pWindowData, bDropdown ) )
          {
-            MessageBox( nullptr, TEXT( "Failed addbutton..." ),
-                        hb_gt_wvw_GetAppName(), MB_ICONERROR );
+            MessageBox( nullptr, TEXT( "Failed addbutton..." ), hb_gt_wvw_GetAppName(), MB_ICONERROR );
             hb_retl( FALSE );
             return;
          }
       }
       else
       {
-         MessageBox( nullptr, TEXT( "Failed addbutton..." ),
-                     hb_gt_wvw_GetAppName(), MB_ICONERROR );
+         MessageBox( nullptr, TEXT( "Failed addbutton..." ), hb_gt_wvw_GetAppName(), MB_ICONERROR );
          hb_retl( FALSE );
          return;
       }
@@ -262,7 +256,9 @@ HB_FUNC( WVW_TBADDBUTTON )
    hb_gt_wvwTBinitSize( pWindowData, hWndTB );
 
    if( pWindowData->usTBHeight != usOldHeight )
+   {
       hb_gt_wvwResetWindow( usWinNum );
+   }
 
    hb_retl( TRUE );
 }
@@ -317,7 +313,9 @@ HB_FUNC( WVW_TBDELBUTTON )
    hb_gt_wvwTBinitSize( pWindowData, hWndTB );
 
    if( pWindowData->usTBHeight != usOldHeight )
+   {
       hb_gt_wvwResetWindow( usWinNum );
+   }
 
    hb_retl( TRUE );
 }
@@ -360,7 +358,6 @@ HB_FUNC( WVW_TBGETBUTTONRECT )
    hb_itemReturnRelease( aXY );
 }
 
-
 /*wvw_tbEnableButton([nWinNum], nButton, [lToggle])
  * nButton is zero based index of button to enable/disable
  * index=0 is the leftmost button
@@ -402,7 +399,9 @@ HB_FUNC( WVW_TBENABLEBUTTON )
    hb_gt_wvwTBinitSize( pWindowData, hWndTB );
 
    if( pWindowData->usTBHeight != usOldHeight )
+   {
       hb_gt_wvwResetWindow( usWinNum );
+   }
 
    hb_retl( TRUE );
 }
@@ -454,17 +453,13 @@ HB_FUNC( WVW_TBCMD2INDEX )
    hb_retni( CommandToIndex( hWndTB, iCmd ) );
 }
 
-
 /* TOOLBAR ends                                                      */
 
-
 #if _WIN32_IE > 0x400
-
 
 /*                                                                   */
 /*                              Tooltips                             */
 /*                                                                   */
-
 
 /*WVW_SetToolTopActive([nWinNum], [lToggle]) */
 HB_FUNC( WVW_SETTOOLTIPACTIVE )
@@ -478,14 +473,15 @@ HB_FUNC( WVW_SETTOOLTIPACTIVE )
    {
 
       if( hb_parl( 2 ) && ( pWindowData->hWndTT == nullptr ) )
+      {
          hb_gt_wvwCreateToolTipWindow( pWindowData );
+      }
 
       pWindowData->bToolTipActive = hb_parl( 2 );
    }
 
    hb_retl( bActive );
 }
-
 
 /*                                                                        */
 /*   Wvw_SetToolTip( [nWinNum], nTop, nLeft, nBottom, nRight, cToolText ) */
@@ -505,10 +501,14 @@ HB_FUNC( WVW_SETTOOLTIP )
           usRight  = hb_parni( 5 );
 
    if( ! pWindowData->bToolTipActive )
+   {
       return;
+   }
 
    if( hb_getWvwData()->s_bMainCoordMode )
+   {
       hb_wvw_HBFUNCPrologue( usWinNum, &usTop, &usLeft, &usBottom, &usRight );
+   }
 
    ti.cbSize = sizeof( TOOLINFO );
    ti.hwnd   = pWindowData->hWnd;
@@ -534,7 +534,6 @@ HB_FUNC( WVW_SETTOOLTIP )
    }
 }
 
-
 HB_FUNC( WVW_SETTOOLTIPTEXT )
 {
    UINT       usWinNum    = WVW_WHICH_WINDOW;
@@ -551,7 +550,6 @@ HB_FUNC( WVW_SETTOOLTIPTEXT )
       SendMessage( pWindowData->hWndTT, TTM_UPDATETIPTEXT, 0, static_cast< LPARAM >( &ti ) );
    }
 }
-
 
 HB_FUNC( WVW_SETTOOLTIPMARGIN )
 {
@@ -575,11 +573,12 @@ HB_FUNC( WVW_SETTOOLTIPWIDTH )
    int iTipWidth = SendMessage( pWindowData->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0 );
 
    if( HB_ISNUM( 2 ) )
+   {
       SendMessage( pWindowData->hWndTT, TTM_SETMAXTIPWIDTH, 0, static_cast< LPARAM >( static_cast< int >( hb_parni( 2 ) ) ) );
+   }
 
    hb_retni( iTipWidth );
 }
-
 
 HB_FUNC( WVW_SETTOOLTIPBKCOLOR )
 {
@@ -589,10 +588,11 @@ HB_FUNC( WVW_SETTOOLTIPBKCOLOR )
    COLORREF cr = SendMessage( pWindowData->hWndTT, TTM_GETTIPBKCOLOR, 0, 0 );
 
    if( HB_ISNUM( 2 ) )
+   {
       SendMessage( pWindowData->hWndTT, TTM_SETTIPBKCOLOR, static_cast< WPARAM >( static_cast< COLORREF >( hb_parnl( 2 ) ) ), 0 );
+   }
    hb_retnl( static_cast< COLORREF >( cr ) );
 }
-
 
 HB_FUNC( WVW_SETTOOLTIPTEXTCOLOR )
 {
@@ -602,10 +602,11 @@ HB_FUNC( WVW_SETTOOLTIPTEXTCOLOR )
    COLORREF cr = SendMessage( pWindowData->hWndTT, TTM_GETTIPTEXTCOLOR, 0, 0 );
 
    if( HB_ISNUM( 2 ) )
+   {
       SendMessage( pWindowData->hWndTT, TTM_SETTIPTEXTCOLOR, static_cast< WPARAM >( static_cast< COLORREF >( hb_parnl( 2 ) ) ), 0 );
+   }
    hb_retnl( static_cast< COLORREF >( cr ) );
 }
-
 
 HB_FUNC( WVW_SETTOOLTIPTITLE )
 {
@@ -617,11 +618,12 @@ HB_FUNC( WVW_SETTOOLTIPTITLE )
    {
       iIcon = HB_ISNIL( 2 ) ? 0 : hb_parni( 2 );
       if( iIcon > 3 )
+      {
          iIcon = 0;
+      }
       SendMessage( pWindowData->hWndTT, TTM_SETTITLE, static_cast< WPARAM >( iIcon ), static_cast< LPARAM >( hb_parcx( 3 ) ) );
    }
 }
-
 
 HB_FUNC( WVW_GETTOOLTIPWIDTH )
 {
@@ -631,7 +633,6 @@ HB_FUNC( WVW_GETTOOLTIPWIDTH )
    hb_retni( SendMessage( pWindowData->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0 ) );
 }
 
-
 HB_FUNC( WVW_GETTOOLTIPBKCOLOR )
 {
    UINT       usWinNum    = WVW_WHICH_WINDOW;
@@ -639,7 +640,6 @@ HB_FUNC( WVW_GETTOOLTIPBKCOLOR )
 
    hb_retnl( static_cast< COLORREF >( SendMessage( pWindowData->hWndTT, TTM_GETTIPBKCOLOR, 0, 0 ) ) );
 }
-
 
 HB_FUNC( WVW_GETTOOLTIPTEXTCOLOR )
 {
