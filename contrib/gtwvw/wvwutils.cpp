@@ -681,12 +681,12 @@ HB_FUNC( CREATEIMAGELIST )
    PHB_ITEM   pArray = hb_param( 1, HB_IT_ARRAY );
    UINT       flags  = HB_ISNIL( 5 ) ? ILC_COLOR : hb_parni( 5 );
    HIMAGELIST himl;
-   ULONG      ul, ulLen = hb_arrayLen( pArray );
+   ULONG      ulLen = hb_arrayLen( pArray );
    HBITMAP    hbmp;
 
    himl = ImageList_Create( hb_parni( 2 ), hb_parni( 3 ), flags, ulLen, hb_parni( 4 ) );
 
-   for( ul = 1; ul <= ulLen; ul++ )
+   for( ULONG ul = 1; ul <= ulLen; ul++ )
    {
       hbmp = reinterpret_cast< HBITMAP >( hb_arrayGetNL( pArray, ul ) );
       ImageList_Add( himl, hbmp, static_cast< HBITMAP >( nullptr ) );
@@ -1156,7 +1156,6 @@ HB_FUNC( TOOLBARADDBUTTONS )
    PHB_ITEM   pTemp;
    /* BOOL bSystem; */
 
-   ULONG  ulCount;
 #if 0
    ULONG  ulID;
 #endif
@@ -1167,7 +1166,7 @@ HB_FUNC( TOOLBARADDBUTTONS )
 
    SendMessage( hWndCtrl, TB_BUTTONSTRUCTSIZE, sizeof( TBBUTTON ), 0L );
    usOldHeight = pWindowData->usTBHeight;
-   for( ulCount = 0; ( ulCount < hb_arrayLen( pArray ) ); ulCount++ )
+   for( ULONG ulCount = 0; ( ulCount < hb_arrayLen( pArray ) ); ulCount++ )
    {
       pTemp = hb_arrayGetItemPtr( pArray, ulCount + 1 );
 #if 0
@@ -1733,10 +1732,9 @@ HB_FUNC( WVW_CHOOSECOLOR )
 {
    CHOOSECOLOR cc;
    COLORREF    crCustClr[ 16 ];
-   int         i;
    WVW_DATA *  p = hb_getWvwData();
 
-   for( i = 0; i < 16; i++ )
+   for( int i = 0; i < 16; i++ )
    {
       crCustClr[ i ] = HB_ISARRAY( 2 ) ? static_cast< COLORREF >( hb_parvnl( 2, i + 1 ) ) : GetSysColor( COLOR_BTNFACE );
    }
@@ -2031,7 +2029,7 @@ HB_FUNC( WVW__MAKEDLGTEMPLATE )
 {
    WORD * p, * pdlgtemplate;
    WORD   nItems = static_cast< WORD >( hb_parvni( 1, 4 ) );
-   int    i, nchar;
+   int    nchar;
    DWORD  lStyle;
 
    pdlgtemplate = p = static_cast< PWORD >( LocalAlloc( LPTR, 65534 ) );
@@ -2077,7 +2075,7 @@ HB_FUNC( WVW__MAKEDLGTEMPLATE )
       p    += nchar;
    }
 
-   for( i = 1; i <= nItems; i++ )
+   for( int i = 1; i <= nItems; i++ )
    {
 
       p = lpwAlign( p );
