@@ -1441,7 +1441,7 @@ void hb_stackIsStackRef( void * pStackId, PHB_TSD_FUNC pCleanFunc )
 
 void hb_stackUpdateAllocator( void * pStackId, PHB_ALLOCUPDT_FUNC pFunc, int iCount )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_stackUpdateAllocator(%p, %p, %d)", pStackId, static_cast< void * >( pFunc ), iCount ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_stackUpdateAllocator(%p, %p, %d)", pStackId, reinterpret_cast< void * >( pFunc ), iCount ) );
 
 #if defined( HB_MT_VM )
    {

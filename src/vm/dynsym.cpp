@@ -594,7 +594,7 @@ void hb_dynsymEval( PHB_DYNS_FUNC pFunction, void * Cargo )
    PHB_DYNS pDynSym = nullptr;
    HB_SYMCNT uiPos = 0;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymEval(%p, %p)", static_cast< void * >( pFunction ), Cargo ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymEval(%p, %p)", reinterpret_cast< void * >( pFunction ), Cargo ) );
 
    for( ;; )
    {
@@ -636,7 +636,7 @@ void hb_dynsymProtectEval( PHB_DYNS_FUNC pFunction, void * Cargo )
 {
    HB_SYMCNT uiPos = 0;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymProtectEval(%p, %p)", static_cast< void * >( pFunction ), Cargo ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymProtectEval(%p, %p)", reinterpret_cast< void * >( pFunction ), Cargo ) );
 
    HB_DYNSYM_LOCK();
 

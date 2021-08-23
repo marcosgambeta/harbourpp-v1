@@ -1064,7 +1064,7 @@ void hb_vmThreadQuitRequest( void * Cargo )
 
 PHB_ITEM hb_vmThreadStart( HB_ULONG ulAttr, PHB_CARGO_FUNC pFunc, void * cargo )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_vmThreadStart(%lu,%p,%p)", ulAttr, static_cast< void * >( pFunc ), cargo ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_vmThreadStart(%lu,%p,%p)", ulAttr, reinterpret_cast< void * >( pFunc ), cargo ) );
 
 #if defined( HB_MT_VM )
    return hb_threadStart( ulAttr, pFunc, cargo );
@@ -6593,7 +6593,7 @@ PHB_ITEM hb_vmEvalBlock( PHB_ITEM pBlock )
 {
    HB_STACK_TLS_PRELOAD
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_vmEvalBlock(%p)", static_cast<( void * >( pBlock ) ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_vmEvalBlock(%p)", static_cast< void * >( pBlock ) ) );
 
    hb_vmPushEvalSym();
    hb_vmPush( pBlock );
@@ -12588,7 +12588,7 @@ HB_DBGENTRY_FUNC hb_dbg_SetEntry( HB_DBGENTRY_FUNC pFunDbgEntry )
 {
    HB_DBGENTRY_FUNC pPrevFunc;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_dbg_SetEntry(%p)", static_cast< void * >( pFunDbgEntry ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_dbg_SetEntry(%p)", reinterpret_cast< void * >( pFunDbgEntry ) ) );
 
 #ifndef HB_NO_DEBUG
    pPrevFunc = s_pFunDbgEntry;
@@ -12826,7 +12826,7 @@ void hb_vmIsStackRef( void )
 
 void hb_vmUpdateAllocator( PHB_ALLOCUPDT_FUNC pFunc, int iCount )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_vmUpdateAllocator(%p, %d)", static_cast< void * >( pFunc ), iCount ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_vmUpdateAllocator(%p, %d)", reinterpret_cast< void * >( pFunc ), iCount ) );
 
 #if defined( HB_MT_VM )
    if( s_vmStackLst )
