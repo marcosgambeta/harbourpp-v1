@@ -21,20 +21,24 @@ O projeto está sendo desenvolvido e testado com os compiladores GCC (MinGW) e M
 set HB_USER_CFLAGS=-std=c++11
 
 #### Exemplo
+```Batch
 set PATH=C:\MinGW810\bin;%PATH%
 set HB_INSTALL_PREFIX=C:\HarbourPP
 set HB_USER_CFLAGS=-std=c++11
 win-make install 1>log1.log 2>log2.log
+```
 
 ### Visual C++
 * Se necessário, definir o padrão conforme abaixo:  
 set HB_USER_CFLAGS=/std=c++11
 
 #### Exemplo
+```Batch
 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars32.bat"
 set HB_INSTALL_PREFIX=C:\HarbourPP
 set HB_USER_CFLAGS=/std=c++11
 win-make install 1>log1.log 2>log2.log
+```
 
 ## Contato
 
