@@ -72,13 +72,14 @@ HB_FUNC( ORDKEYCOUNT )
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
+   {
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
-
+   }
 }
 
 HB_FUNC( ORDKEYNO )
 {
-   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() ); 
+   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
 
    if( pArea )
    {
@@ -93,7 +94,9 @@ HB_FUNC( ORDKEYNO )
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
+   {
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+   }
 }
 
 HB_FUNC( ORDKEYGOTO )
@@ -110,7 +113,9 @@ HB_FUNC( ORDKEYGOTO )
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
+   {
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+   }
 }
 
 HB_FUNC( ORDKEYRELPOS )
@@ -127,7 +132,9 @@ HB_FUNC( ORDKEYRELPOS )
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
+   {
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+   }
 }
 
 HB_FUNC( ORDFINDREC )
@@ -140,12 +147,13 @@ HB_FUNC( ORDFINDREC )
       memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
       pOrderInfo.itmNewVal = hb_param( 1, HB_IT_NUMERIC );
       pOrderInfo.itmResult = hb_itemPutL( nullptr, HB_FALSE );
-      SELF_ORDINFO( pArea, hb_parl( 2 ) ? DBOI_FINDRECCONT :
-                                          DBOI_FINDREC, &pOrderInfo );
+      SELF_ORDINFO( pArea, hb_parl( 2 ) ? DBOI_FINDRECCONT : DBOI_FINDREC, &pOrderInfo );
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
+   {
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+   }
 }
 
 HB_FUNC( ORDSKIPRAW )
@@ -153,11 +161,14 @@ HB_FUNC( ORDSKIPRAW )
    AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
 
    if( pArea )
+   {
       SELF_SKIPRAW( pArea, hb_parnldef( 1, 1 ) );
+   }
    else
+   {
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+   }
 }
-
 
 HB_FUNC( ORDSKIPUNIQUE )
 {
@@ -173,7 +184,9 @@ HB_FUNC( ORDSKIPUNIQUE )
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
+   {
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+   }
 }
 
 HB_FUNC( ORDKEYVAL )
@@ -189,7 +202,9 @@ HB_FUNC( ORDKEYVAL )
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
+   {
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+   }
 }
 
 HB_FUNC( ORDKEYADD )
@@ -209,7 +224,9 @@ HB_FUNC( ORDKEYADD )
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
+   {
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+   }
 }
 
 HB_FUNC( ORDKEYDEL )
@@ -229,7 +246,9 @@ HB_FUNC( ORDKEYDEL )
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
+   {
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+   }
 }
 
 HB_FUNC( ORDDESCEND )
@@ -249,7 +268,9 @@ HB_FUNC( ORDDESCEND )
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
+   {
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+   }
 }
 
 HB_FUNC( ORDISUNIQUE )
@@ -269,7 +290,9 @@ HB_FUNC( ORDISUNIQUE )
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
+   {
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+   }
 }
 
 HB_FUNC( ORDCUSTOM )
@@ -289,7 +312,9 @@ HB_FUNC( ORDCUSTOM )
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
+   {
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+   }
 }
 
 HB_FUNC( DBINFO )
@@ -309,10 +334,14 @@ HB_FUNC( DBINFO )
          hb_itemReturnRelease( pInfo );
       }
       else
+      {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_DBINFOBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
+      }
    }
    else
+   {
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+   }
 }
 
 HB_FUNC( DBORDERINFO )
@@ -338,10 +367,14 @@ HB_FUNC( DBORDERINFO )
          hb_itemReturnRelease( pOrderInfo.itmResult );
       }
       else
+      {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
+      }
    }
    else
+   {
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+   }
 }
 
 HB_FUNC( DBFIELDINFO )
@@ -355,8 +388,7 @@ HB_FUNC( DBFIELDINFO )
 
       pType = hb_param( 1, HB_IT_NUMERIC );
       uiIndex = static_cast< HB_FIELDNO >( hb_parni( 2 ) );
-      if( pType && SELF_FIELDCOUNT( pArea, &uiFields ) == HB_SUCCESS &&
-          uiIndex > 0 && uiIndex <= uiFields )
+      if( pType && SELF_FIELDCOUNT( pArea, &uiFields ) == HB_SUCCESS && uiIndex > 0 && uiIndex <= uiFields )
       {
          PHB_ITEM pInfo = hb_itemNew( hb_param( 3, HB_IT_ANY ) );
 
@@ -364,10 +396,14 @@ HB_FUNC( DBFIELDINFO )
          hb_itemReturnRelease( pInfo );
       }
       else
+      {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
+      }
    }
    else
+   {
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+   }
 }
 
 HB_FUNC( DBRECORDINFO )
@@ -391,7 +427,9 @@ HB_FUNC( DBRECORDINFO )
          hb_errRT_DBCMD( EG_ARG, EDBCMD_INFOBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
    }
    else
+   {
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+   }
 }
 
 /*
@@ -408,23 +446,28 @@ HB_FUNC( DBFILEGET )
       const char * szField = hb_parc( 1 );
 
       if( szField )
-         uiIndex = hb_rddFieldIndex( pArea, szField );
-      else
-         uiIndex = static_cast< HB_FIELDNO >( hb_parni( 1 ) );
-
-      pMode = hb_param( 3, HB_IT_NUMERIC );
-      if( uiIndex > 0 && pMode && hb_parclen( 2 ) > 0 &&
-          SELF_FIELDCOUNT( pArea, &uiFields ) == HB_SUCCESS &&
-          uiIndex <= uiFields )
       {
-         hb_retl( SELF_GETVALUEFILE( pArea, uiIndex, hb_parc( 2 ),
-                                     static_cast< HB_USHORT >( hb_itemGetNI( pMode ) ) ) == HB_SUCCESS );
+         uiIndex = hb_rddFieldIndex( pArea, szField );
       }
       else
+      {
+         uiIndex = static_cast< HB_FIELDNO >( hb_parni( 1 ) );
+      }
+
+      pMode = hb_param( 3, HB_IT_NUMERIC );
+      if( uiIndex > 0 && pMode && hb_parclen( 2 ) > 0 && SELF_FIELDCOUNT( pArea, &uiFields ) == HB_SUCCESS && uiIndex <= uiFields )
+      {
+         hb_retl( SELF_GETVALUEFILE( pArea, uiIndex, hb_parc( 2 ), static_cast< HB_USHORT >( hb_itemGetNI( pMode ) ) ) == HB_SUCCESS );
+      }
+      else
+      {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_DBFILEGETBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
+      }
    }
    else
+   {
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+   }
 }
 
 /*
@@ -440,21 +483,26 @@ HB_FUNC( DBFILEPUT )
       const char * szField = hb_parc( 1 );
 
       if( szField )
-         uiIndex = hb_rddFieldIndex( pArea, szField );
-      else
-         uiIndex = static_cast< HB_FIELDNO >( hb_parni( 1 ) );
-      if( uiIndex > 0 && hb_parclen( 2 ) > 0 &&
-          SELF_FIELDCOUNT( pArea, &uiFields ) == HB_SUCCESS &&
-          uiIndex <= uiFields )
       {
-         hb_retl( SELF_PUTVALUEFILE( pArea, uiIndex, hb_parc( 2 ),
-                                     static_cast< HB_USHORT >( hb_parni( 3 ) ) ) == HB_SUCCESS );
+         uiIndex = hb_rddFieldIndex( pArea, szField );
       }
       else
+      {
+         uiIndex = static_cast< HB_FIELDNO >( hb_parni( 1 ) );
+      }
+      if( uiIndex > 0 && hb_parclen( 2 ) > 0 && SELF_FIELDCOUNT( pArea, &uiFields ) == HB_SUCCESS && uiIndex <= uiFields )
+      {
+         hb_retl( SELF_PUTVALUEFILE( pArea, uiIndex, hb_parc( 2 ), static_cast< HB_USHORT >( hb_parni( 3 ) ) ) == HB_SUCCESS );
+      }
+      else
+      {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_DBFILEPUTBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
+      }
    }
    else
+   {
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+   }
 }
 
 #endif

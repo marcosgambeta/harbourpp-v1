@@ -76,32 +76,43 @@ HB_FUNC( ORDWILDSEEK )
          if( ! fCont )
          {
             if( fBack )
+            {
                errCode = SELF_GOBOTTOM( pArea );
+            }
             else
+            {
                errCode = SELF_GOTOP( pArea );
+            }
 
             if( errCode == HB_SUCCESS )
             {
                errCode = SELF_ORDINFO( pArea, DBOI_KEYVAL, &OrderInfo );
                if( errCode == HB_SUCCESS )
+               {
                   fFound = hb_strMatchWild( hb_itemGetCPtr( OrderInfo.itmResult ), szPattern );
+               }
             }
          }
          if( ! fFound && errCode == HB_SUCCESS )
          {
             OrderInfo.itmNewVal = hb_param( 1, HB_IT_STRING );
-            if( SELF_ORDINFO( pArea, fBack ? DBOI_SKIPWILDBACK : DBOI_SKIPWILD,
-                              &OrderInfo ) == HB_SUCCESS )
+            if( SELF_ORDINFO( pArea, fBack ? DBOI_SKIPWILDBACK : DBOI_SKIPWILD, &OrderInfo ) == HB_SUCCESS )
+            {
                fFound = hb_itemGetL( OrderInfo.itmResult );
+            }
          }
          hb_itemRelease( OrderInfo.itmResult );
          hb_retl( fFound );
       }
       else
+      {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_SEEK_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
+      }
    }
    else
+   {
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+   }
 }
 
 #endif

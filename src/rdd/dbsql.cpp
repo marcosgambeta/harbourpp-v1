@@ -45,7 +45,6 @@
  *
  */
 
-
 #include "hbapi.h"
 #include "hbapifs.h"
 #include "hbapigt.h"
@@ -79,7 +78,9 @@ static void hb_flushFBuffer( PHB_FILEBUF pFileBuf )
 static void hb_addToFBuffer( PHB_FILEBUF pFileBuf, char ch )
 {
    if( pFileBuf->nPos == pFileBuf->nSize )
+   {
       hb_flushFBuffer( pFileBuf );
+   }
    pFileBuf->pBuf[ pFileBuf->nPos++ ] = static_cast< HB_BYTE >( ch );
 }
 
@@ -90,7 +91,9 @@ static void hb_addStrnToFBuffer( PHB_FILEBUF pFileBuf, const char * str, HB_SIZE
    while( nPos < nSize )
    {
       if( pFileBuf->nPos == pFileBuf->nSize )
+      {
          hb_flushFBuffer( pFileBuf );
+      }
       pFileBuf->pBuf[ pFileBuf->nPos++ ] = static_cast< HB_BYTE >( str[ nPos++ ] );
    }
 }
@@ -100,8 +103,10 @@ static void hb_addStrToFBuffer( PHB_FILEBUF pFileBuf, const char * szStr )
    while( *szStr )
    {
       if( pFileBuf->nPos == pFileBuf->nSize )
+      {
          hb_flushFBuffer( pFileBuf );
-      pFileBuf->pBuf[ pFileBuf->nPos++ ] = ( HB_BYTE ) *szStr++;
+      }
+      pFileBuf->pBuf[ pFileBuf->nPos++ ] = static_cast< HB_BYTE >( *szStr++ );
    }
 }
 
@@ -109,7 +114,9 @@ static void hb_destroyFBuffer( PHB_FILEBUF pFileBuf )
 {
    hb_flushFBuffer( pFileBuf );
    if( pFileBuf->pBuf )
+   {
       hb_xfree( pFileBuf->pBuf );
+   }
    hb_xfree( pFileBuf );
 }
 
@@ -124,10 +131,8 @@ static PHB_FILEBUF hb_createFBuffer( PHB_FILE pFile, HB_SIZE nSize )
    return pFileBuf;
 }
 
-
 /* Export field value into the buffer in SQL format */
-static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue,
-                                   const char * szDelim, const char * szEsc )
+static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const char * szDelim, const char * szEsc )
 {
    switch( hb_itemType( pValue ) )
    {
@@ -140,14 +145,20 @@ static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue,
 
          hb_addStrToFBuffer( pFileBuf, szDelim );
          while( nLen && HB_ISSPACE( szVal[ nLen - 1 ] ) )
+         {
             nLen--;
+         }
 
          while( *szVal && nCnt++ < nLen )
          {
             if( *szVal == *szDelim || *szVal == *szEsc )
+            {
                hb_addToFBuffer( pFileBuf, *szEsc );
+            }
             if( ( HB_UCHAR ) *szVal >= 32 )
+            {
                hb_addToFBuffer( pFileBuf, *szVal );
+            }
             else
             {
 #if 0
@@ -221,7 +232,9 @@ static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue,
             hb_addStrnToFBuffer( pFileBuf, &szResult[ iPos ], iSize );
          }
          else
+         {
             hb_addToFBuffer( pFileBuf, '0' );
+         }
          break;
       }
       /* an "M" field or the other, might be a "V" in SixDriver */
@@ -250,10 +263,14 @@ static HB_ULONG hb_db2Sql( AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
    HB_BOOL fNoFieldPassed = ( pFields == nullptr || hb_arrayLen( pFields ) == 0 );
 
    if( SELF_FIELDCOUNT( pArea, &uiFields ) != HB_SUCCESS )
+   {
       return 0;
+   }
 
    if( fInsert && szTable )
+   {
       szInsert = hb_xstrcpy( nullptr, "INSERT INTO ", szTable, " VALUES ( ", nullptr );
+   }
 
    pFileBuf = hb_createFBuffer( pFile, HB_FILE_BUF_SIZE );
    pTmp = hb_itemNew( nullptr );
@@ -262,25 +279,32 @@ static HB_ULONG hb_db2Sql( AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
    {
       if( pWhile )
       {
-         if( SELF_EVALBLOCK( pArea, pWhile ) != HB_SUCCESS ||
-             ! hb_itemGetL( pArea->valResult ) )
+         if( SELF_EVALBLOCK( pArea, pWhile ) != HB_SUCCESS || ! hb_itemGetL( pArea->valResult ) )
+         {
             break;
+         }
       }
 
       if( SELF_EOF( pArea, &fEof ) != HB_SUCCESS || fEof )
+      {
          break;
+      }
 
       if( pFor )
       {
          if( SELF_EVALBLOCK( pArea, pFor ) != HB_SUCCESS )
+         {
             break;
+         }
       }
       if( ! pFor || hb_itemGetL( pArea->valResult ) )
       {
          ++ulRecords;
 
          if( szInsert )
+         {
             hb_addStrToFBuffer( pFileBuf, szInsert );
+         }
 
          if( fRecno )
          {
@@ -304,13 +328,19 @@ static HB_ULONG hb_db2Sql( AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
             for( ui = 1; ui <= uiFields; ui++ )
             {
                if( SELF_GETVALUE( pArea, ui, pTmp ) != HB_SUCCESS )
+               {
                   break;
+               }
                if( fWriteSep )
+               {
                   hb_addStrToFBuffer( pFileBuf, szSep );
+               }
                fWriteSep = hb_exportBufSqlVar( pFileBuf, pTmp, szDelim, szEsc );
             }
             if( ui <= uiFields )
+            {
                break;
+            }
          }
          else
          {
@@ -318,20 +348,28 @@ static HB_ULONG hb_db2Sql( AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
          }
 
          if( szInsert )
+         {
             hb_addStrToFBuffer( pFileBuf, " );" );
+         }
          hb_addStrToFBuffer( pFileBuf, szNewLine );
          fWriteSep = HB_FALSE;
       }
 
       if( SELF_SKIP( pArea, 1 ) != HB_SUCCESS )
+      {
          break;
+      }
 
       if( ( llNext % 10000 ) == 0 )
+      {
          hb_inkeyPoll();
+      }
    }
 
    if( szInsert )
+   {
       hb_xfree( szInsert );
+   }
    hb_destroyFBuffer( pFileBuf );
    hb_itemRelease( pTmp );
 
@@ -372,7 +410,9 @@ HB_FUNC( __DBSQL )
       PHB_FILE pFile;
 
       if( ! szFileName )
+      {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
+      }
       else if( fExport )   /* COPY TO SQL */
       {
          PHB_ITEM pError = nullptr;
@@ -412,17 +452,23 @@ HB_FUNC( __DBSQL )
                fRetry = hb_errLaunch( pError ) == E_RETRY;
             }
             else
+            {
                fRetry = HB_FALSE;
+            }
          }
          while( fRetry );
 
          if( pError )
+         {
             hb_itemRelease( pError );
+         }
 
          if( pFile != nullptr )
          {
             if( fAppend )
+            {
                hb_fileSeek( pFile, 0, FS_END );
+            }
 
             errCode = HB_SUCCESS;
             if( pRecord )
@@ -440,9 +486,7 @@ HB_FUNC( __DBSQL )
 
             if( errCode == HB_SUCCESS )
             {
-               hb_retnint( hb_db2Sql( pArea, pFields, llNext, pWhile, pFor,
-                                      szDelim, szSep, szEsc,
-                                      szTable, pFile, fInsert, fRecno ) );
+               hb_retnint( hb_db2Sql( pArea, pFields, llNext, pWhile, pFor, szDelim, szSep, szEsc, szTable, pFile, fInsert, fRecno ) );
             }
             hb_fileClose( pFile );
          }
@@ -453,5 +497,7 @@ HB_FUNC( __DBSQL )
       }
    }
    else
+   {
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+   }
 }

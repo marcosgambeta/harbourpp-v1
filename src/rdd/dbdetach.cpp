@@ -69,13 +69,17 @@ HB_FUNC( HB_DBDETACH )
       const char * szAlias = hb_itemGetCPtr( pAlias );
       hb_rddGetAliasNumber( szAlias, &iArea );
       if( iArea > 0 )
+      {
          pArea = static_cast< AREAP >( hb_rddGetWorkAreaPointer( iArea ) );
+      }
    }
    else if( HB_IS_NUMBER( pAlias ) )
    {
       iArea = hb_itemGetNI( pAlias );
       if( iArea > 0 )
+      {
          pArea = static_cast< AREAP >( hb_rddGetWorkAreaPointer( iArea ) );
+      }
    }
    else
    {
@@ -84,9 +88,13 @@ HB_FUNC( HB_DBDETACH )
    }
 
    if( pArea )
+   {
       hb_retl( hb_rddDetachArea( pArea, pCargo ) == HB_SUCCESS );
+   }
    else
+   {
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+   }
 }
 
 /*
@@ -109,11 +117,15 @@ HB_FUNC( HB_DBREQUEST )
          ulMilliSec = dTimeOut > 0 ? static_cast< HB_ULONG >( dTimeOut * 1000 ) : 0;
       }
       else if( ! hb_parl( 4 ) )
+      {
          ulMilliSec = 0;
+      }
 
       pArea = hb_rddRequestArea( szAlias, pCargo, fNewArea, ulMilliSec );
       if( pArea )
+      {
          hb_rddSelectWorkAreaNumber( pArea->uiArea );
+      }
 
       if( pCargo )
       {
@@ -124,5 +136,7 @@ HB_FUNC( HB_DBREQUEST )
       hb_retl( pArea != nullptr );
    }
    else
+   {
       hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
+   }
 }
