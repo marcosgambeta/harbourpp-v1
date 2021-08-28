@@ -369,7 +369,9 @@ typedef struct app_data
    BOOL CaretExist;                          /* TRUE if a caret has been created                */
    BOOL displayCaret;                        /* flag to indicate if caret is on                 */
 
+#if 0
    BOOL Win9X;                               /* Flag to say if running on Win9X not NT/2000/XP  */
+#endif
    BOOL AltF4Close;                          /* Can use Alt+F4 to close application             */
 
    HPEN   penWhite;                          /* White pen to draw GDI elements */
@@ -391,8 +393,10 @@ typedef struct app_data
    HFONT      hUserFonts[ WVW_FONTS_MAX ];   /* User defined font handles */
    HPEN       hUserPens[ WVW_PENS_MAX ];     /* User defined pens */
 
+#if 0
    HINSTANCE       hMSImg32;                 /* Handle to the loaded library msimg32.dll */
    wvwGradientFill pfnGF;                    /* Pointer to Address of the GradientFill function in MSImg32.dll */
+#endif
 
    HWND hDlgModeless[ WVW_DLGML_MAX ];       /* Handle to a modeless dialog                               */
 

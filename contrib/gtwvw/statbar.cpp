@@ -139,7 +139,6 @@ HB_FUNC( WVW_SBADDPART )
    HWND       hWndSB;
    int        ptArray[ WVW_MAX_STATUS_PARTS ];
    int        numOfParts;
-   int        n;
    RECT       rSB; memset( &rSB, 0, sizeof( rSB ) );
    WORD       displayFlags;
    HICON      hIcon;
@@ -190,7 +189,7 @@ HB_FUNC( WVW_SBADDPART )
    ptArray[ numOfParts - 1 ] = rSB.right;
    if( ! lResetParts )
    {
-      for( n = 0; n < numOfParts - 1; n++ )
+      for( int n = 0; n < numOfParts - 1; n++ )
       {
          ptArray[ n ] -= ( usWidth + WVW_SPACE_BETWEEN_PARTS );
       }
@@ -238,7 +237,6 @@ HB_FUNC( WVW_SBREFRESH )
    HWND       hWndSB;
    int        ptArray[ WVW_MAX_STATUS_PARTS ];
    int        numOfParts;
-   int        n;
    int        iDiff;
    RECT       rSB; memset( &rSB, 0, sizeof( rSB ) );
 
@@ -259,7 +257,7 @@ HB_FUNC( WVW_SBREFRESH )
    GetClientRect( hWndSB, &rSB );
    iDiff = rSB.right - ptArray[ numOfParts - 1 ];
 
-   for( n = 0; n <= numOfParts - 1; n++ )
+   for( int n = 0; n <= numOfParts - 1; n++ )
    {
       ptArray[ n ] += iDiff;
    }

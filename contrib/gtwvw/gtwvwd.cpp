@@ -606,10 +606,12 @@ static void hb_gt_wvw_Exit( PHB_GT pGT )
       }
    }
 
+#if 0
    if( s_pWvwData->s_sApp->hMSImg32 )
    {
       FreeLibrary( s_pWvwData->s_sApp->hMSImg32 );
    }
+#endif
 
    while( s_pWvwData->s_sApp->pbhBitmapList )
    {
@@ -2348,7 +2350,6 @@ static void hb_gt_wvwResetWindowSize( WIN_DATA * pWindowData, HWND hWnd )
 
    RECT       rcWorkArea; memset( &rcWorkArea, 0, sizeof( rcWorkArea ) );
    RECT       rcMainClientArea; memset( &rcMainClientArea, 0, sizeof( rcMainClientArea ) );
-   int        n;
    WIN_DATA * pMainWindow;
 
    pMainWindow = s_pWvwData->s_pWindows[ 0 ];
@@ -2381,7 +2382,10 @@ static void hb_gt_wvwResetWindowSize( WIN_DATA * pWindowData, HWND hWnd )
    pWindowData->PTEXTSIZE.y = tm.tmHeight;                                                                  /*     but seems to be a problem on Win9X so */
    /*     assume proportional fonts always for Win9X */
 
+#if 0
    if( pWindowData->fontWidth < 0 || s_pWvwData->s_sApp->Win9X || ( tm.tmPitchAndFamily & TMPF_FIXED_PITCH ) || ( pWindowData->PTEXTSIZE.x != tm.tmMaxCharWidth ) )
+#endif
+   if( pWindowData->fontWidth < 0 || ( tm.tmPitchAndFamily & TMPF_FIXED_PITCH ) || ( pWindowData->PTEXTSIZE.x != tm.tmMaxCharWidth ) )
    {
       pWindowData->FixedFont = FALSE;
    }
@@ -2390,7 +2394,7 @@ static void hb_gt_wvwResetWindowSize( WIN_DATA * pWindowData, HWND hWnd )
       pWindowData->FixedFont = TRUE;
    }
 
-   for( n = 0; n < pWindowData->COLS; n++ ) /* pWindowData->FixedSize[] is used by ExtTextOut() to emulate fixed font when a proportional font is used */
+   for( int n = 0; n < pWindowData->COLS; n++ ) /* pWindowData->FixedSize[] is used by ExtTextOut() to emulate fixed font when a proportional font is used */
    {
       pWindowData->FixedSize[ n ] = pWindowData->PTEXTSIZE.x;
    }
@@ -3681,6 +3685,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc( HWND hWnd, UINT message, WPARAM wParam
 
             return 0;
          }
+         break;
 
       case WM_MOVE:
          if( hb_wvw_Move_Ready( 0 ) )
@@ -3700,6 +3705,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc( HWND hWnd, UINT message, WPARAM wParam
             }
             return 0;
          }
+         break;
       case WM_CTLCOLORSTATIC:
       case WM_CTLCOLOREDIT:
          if( s_pWvwData->s_sApp->pSymWVW_ONCTLCOLOR )
@@ -3719,6 +3725,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc( HWND hWnd, UINT message, WPARAM wParam
                return ( LRESULT ) res;
             }
          }
+         break;
 
       case WM_SYSCOMMAND: /* handle system menu items */  /*SP-ADDED*/
          if( s_pWvwData->s_usNumWindows != usWinNum + 1 )
@@ -3739,6 +3746,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc( HWND hWnd, UINT message, WPARAM wParam
                   hb_gt_wvwHandleMenuSelection( static_cast< int >( LOWORD( wParam ) ) );
             }
          }
+         break;
 
       case WM_DRAWITEM:
          if( pWindowData->bSBPaint )
@@ -3939,7 +3947,6 @@ static void hb_gt_wvwCreateToolTipWindow( WIN_DATA * pWindowData )
 DWORD hb_gt_wvwProcessMessages( WIN_DATA * pWindowData )
 {
    MSG  msg;
-   int  iIndex;
    BOOL bProcessed;
 
    HB_SYMBOL_UNUSED( pWindowData );
@@ -3975,7 +3982,7 @@ DWORD hb_gt_wvwProcessMessages( WIN_DATA * pWindowData )
 
       bProcessed = FALSE;
 
-      for( iIndex = 0; iIndex < WVW_DLGML_MAX; iIndex++ )
+      for( int iIndex = 0; iIndex < WVW_DLGML_MAX; iIndex++ )
       {
          if( s_pWvwData->s_sApp->hDlgModeless[ iIndex ] != 0 )
          {
@@ -3995,7 +4002,6 @@ DWORD hb_gt_wvwProcessMessages( WIN_DATA * pWindowData )
    }
 
    return msg.wParam;
-
 }
 
 POINT hb_gt_wvwGetXYFromColRow( WIN_DATA * pWindowData, USHORT col, USHORT row )
@@ -4490,7 +4496,9 @@ HFONT hb_gt_wvwGetFont( const char * pszFace, int iHeight, int iWidth, int iWeig
 static void hb_gtInitStatics( UINT usWinNum, LPCTSTR lpszWinName, USHORT usRow1, USHORT usCol1, USHORT usRow2, USHORT usCol2 )
 {
    OSVERSIONINFO osvi;
+#if 0
    HINSTANCE     h;
+#endif
    WIN_DATA *    pWindowData;
    WIN_DATA *    pPrevWindow;
    int iIndex;
@@ -4553,7 +4561,9 @@ static void hb_gtInitStatics( UINT usWinNum, LPCTSTR lpszWinName, USHORT usRow1,
 
       osvi.dwOSVersionInfoSize = sizeof( OSVERSIONINFO );
       GetVersionEx( &osvi );
+#if 0
       s_pWvwData->s_sApp->Win9X      = ( osvi.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS );
+#endif      
       s_pWvwData->s_sApp->AltF4Close = FALSE;
 
       pWindowData->InvalidateWindow = TRUE;
@@ -4661,6 +4671,7 @@ static void hb_gtInitStatics( UINT usWinNum, LPCTSTR lpszWinName, USHORT usRow1,
       s_pWvwData->s_sApp->pSymWVW_TIMER      = hb_dynsymFind( "WVW_TIMER" );
       s_pWvwData->s_sApp->pSymWVW_ONCTLCOLOR = hb_dynsymFind( "WVW_ONCTLCOLOR" );
 
+#if 0
       h = LoadLibrary( "msimg32.dll" );
 
       if( h )
@@ -4671,6 +4682,7 @@ static void hb_gtInitStatics( UINT usWinNum, LPCTSTR lpszWinName, USHORT usRow1,
             s_pWvwData->s_sApp->hMSImg32 = h;
          }
       }
+#endif
 
       for( iIndex = 0; iIndex < WVW_DLGML_MAX; iIndex++ )
       {
@@ -5577,14 +5589,15 @@ static void hb_gt_wvwInputNotAllowed( UINT usWinNum, UINT message, WPARAM wParam
 
    MessageBeep( MB_OK );
 
-   /* this simpler method is not available in Win95
-      fwi.cbSize = sizeof(fwi);
-      fwi.hwnd = s_pWvwData->s_pWindows[ s_pWvwData->s_usNumWindows-1 ]->hWnd;
-      fwi.dwFlags = FLASHW_CAPTION | FLASHW_TRAY;
-      fwi.uCount = 5;
-      fwi.dwTimeout = 100;
-      FlashWindowEx(&fwi);
-    */
+#if 0
+   /* this simpler method is not available in Win95 */
+   fwi.cbSize = sizeof(fwi);
+   fwi.hwnd = s_pWvwData->s_pWindows[ s_pWvwData->s_usNumWindows-1 ]->hWnd;
+   fwi.dwFlags = FLASHW_CAPTION | FLASHW_TRAY;
+   fwi.uCount = 5;
+   fwi.dwTimeout = 100;
+   FlashWindowEx(&fwi);
+#endif
 
    if( ! s_pWvwData->s_bFlashingWindow )
    {
@@ -9466,6 +9479,7 @@ LRESULT CALLBACK hb_gt_wvwTBProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
          }
 
          hb_gt_wvwTBMouseEvent( pWindowData, hWnd, message, wParam, lParam );
+         return 0;
 #if 0
          return 0;
          TB_ISBUTTONHIGHLIGHTED

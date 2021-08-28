@@ -480,6 +480,7 @@ HB_FUNC( WVW_DRAWSCROLLTHUMBHORZ )
 /*                                                                                                      */
 /*    wvw_DrawShadedRect( [nWinNum], nTop, nLeft, nBottom, nRight, aPxlOffSet, nHorVert, aRGBb, aRGBe  )*/
 /*                                                                                                      */
+#if 0
 HB_FUNC( WVW_DRAWSHADEDRECT )
 {
    UINT       usWinNum    = WVW_WHICH_WINDOW;
@@ -519,23 +520,80 @@ HB_FUNC( WVW_DRAWSHADEDRECT )
 
       vert[ 0 ].x     = iLeft;
       vert[ 0 ].y     = iTop;
-      vert[ 0 ].Red   = ( COLOR16 ) hb_parvni( 8, 1 );
-      vert[ 0 ].Green = ( COLOR16 ) hb_parvni( 8, 2 );
-      vert[ 0 ].Blue  = ( COLOR16 ) hb_parvni( 8, 3 );
-      vert[ 0 ].Alpha = ( COLOR16 ) hb_parvni( 8, 4 );
+      vert[ 0 ].Red   = static_cast< COLOR16 >( hb_parvni( 8, 1 ) );
+      vert[ 0 ].Green = static_cast< COLOR16 >( hb_parvni( 8, 2 ) );
+      vert[ 0 ].Blue  = static_cast< COLOR16 >( hb_parvni( 8, 3 ) );
+      vert[ 0 ].Alpha = static_cast< COLOR16 >( hb_parvni( 8, 4 ) );
 
       vert[ 1 ].x     = iRight;
       vert[ 1 ].y     = iBottom;
-      vert[ 1 ].Red   = ( COLOR16 ) hb_parvni( 9, 1 );
-      vert[ 1 ].Green = ( COLOR16 ) hb_parvni( 9, 2 );
-      vert[ 1 ].Blue  = ( COLOR16 ) hb_parvni( 9, 3 );
-      vert[ 1 ].Alpha = ( COLOR16 ) hb_parvni( 9, 4 );
+      vert[ 1 ].Red   = static_cast< COLOR16 >( hb_parvni( 9, 1 ) );
+      vert[ 1 ].Green = static_cast< COLOR16 >( hb_parvni( 9, 2 ) );
+      vert[ 1 ].Blue  = static_cast< COLOR16 >( hb_parvni( 9, 3 ) );
+      vert[ 1 ].Alpha = static_cast< COLOR16 >( hb_parvni( 9, 4 ) );
 
       gRect.UpperLeft  = 0;
       gRect.LowerRight = 1;
 
       bGF = static_cast< BOOL >( s_sApp->pfnGF( pWindowData->hdc, vert, 2, &gRect, 1, iMode ) );
    }
+   hb_retl( bGF );
+}
+#endif
+
+HB_FUNC( WVW_DRAWSHADEDRECT )
+{
+   UINT       usWinNum    = WVW_WHICH_WINDOW;
+   WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
+   BOOL       bGF         = FALSE;
+
+   USHORT usTop    = static_cast< USHORT >( hb_parni( 2 ) ),
+          usLeft   = static_cast< USHORT >( hb_parni( 3 ) ),
+          usBottom = static_cast< USHORT >( hb_parni( 4 ) ),
+          usRight  = static_cast< USHORT >( hb_parni( 5 ) );
+
+   if( hb_gt_wvw_GetMainCoordMode() )
+   {
+      hb_wvw_HBFUNCPrologue( usWinNum, &usTop, &usLeft, &usBottom, &usRight );
+   }
+
+   TRIVERTEX     vert[ 2 ];
+   GRADIENT_RECT gRect; memset( &gRect, 0, sizeof( gRect ) );
+
+   int   iMode = HB_ISNIL( 7 ) ? GRADIENT_FILL_RECT_H : hb_parni( 7 );
+   POINT xy; memset( &xy, 0, sizeof( xy ) );
+   int   iTop, iLeft, iBottom, iRight;
+
+   xy    = hb_gt_wvwGetXYFromColRow( pWindowData, usLeft, usTop );
+   iTop  = xy.y + hb_parvni( 6, 1 );
+   iLeft = xy.x + hb_parvni( 6, 2 );
+
+   xy = hb_gt_wvwGetXYFromColRow( pWindowData, usRight + 1, usBottom + 1 );
+
+   xy.y -= pWindowData->byLineSpacing;
+
+   iBottom = xy.y - 1 + hb_parvni( 6, 3 );
+   iRight  = xy.x - 1 + hb_parvni( 6, 4 );
+
+   vert[ 0 ].x     = iLeft;
+   vert[ 0 ].y     = iTop;
+   vert[ 0 ].Red   = static_cast< COLOR16 >( hb_parvni( 8, 1 ) );
+   vert[ 0 ].Green = static_cast< COLOR16 >( hb_parvni( 8, 2 ) );
+   vert[ 0 ].Blue  = static_cast< COLOR16 >( hb_parvni( 8, 3 ) );
+   vert[ 0 ].Alpha = static_cast< COLOR16 >( hb_parvni( 8, 4 ) );
+
+   vert[ 1 ].x     = iRight;
+   vert[ 1 ].y     = iBottom;
+   vert[ 1 ].Red   = static_cast< COLOR16 >( hb_parvni( 9, 1 ) );
+   vert[ 1 ].Green = static_cast< COLOR16 >( hb_parvni( 9, 2 ) );
+   vert[ 1 ].Blue  = static_cast< COLOR16 >( hb_parvni( 9, 3 ) );
+   vert[ 1 ].Alpha = static_cast< COLOR16 >( hb_parvni( 9, 4 ) );
+
+   gRect.UpperLeft  = 0;
+   gRect.LowerRight = 1;
+
+   bGF = GradientFill( pWindowData->hdc, vert, 2, &gRect, 1, iMode );
+
    hb_retl( bGF );
 }
 
@@ -2023,7 +2081,7 @@ HB_FUNC( WVW_DRAWGRIDHORZ )
    UINT       usWinNum = WVW_WHICH_WINDOW;
    USHORT     usAtRow  = static_cast< USHORT >( hb_parni( 2 ) );
    int        iRows    = hb_parni( 5 );
-   int        i, y;
+   int        y;
    int        iLeft, iRight;
    WIN_DATA * pWindowData;
    APP_DATA * s_sApp = hb_gt_wvwGetAppData();
@@ -2049,7 +2107,7 @@ HB_FUNC( WVW_DRAWGRIDHORZ )
 
    SelectObject( pWindowData->hdc, s_sApp->gridPen );
 
-   for( i = 0; i < iRows; i++ )
+   for( int i = 0; i < iRows; i++ )
    {
       y = ( ( usAtRow ) * hb_wvw_LineHeight( pWindowData ) );
 
@@ -2079,7 +2137,6 @@ HB_FUNC( WVW_DRAWGRIDVERT )
    UINT       usWinNum = WVW_WHICH_WINDOW;
    int        iTop, iBottom, x;
    int        iOffTop, iOffLeft, iOffBottom, iOffRight;
-   int        i;
    int        iCharHeight, iCharWidth;
    int        iTabs = hb_parni( 5 );
    WIN_DATA * pWindowData;
@@ -2121,7 +2178,7 @@ HB_FUNC( WVW_DRAWGRIDVERT )
 
    SelectObject( pWindowData->hdc, s_sApp->gridPen );
 
-   for( i = 1; i <= iTabs; i++ )
+   for( int i = 1; i <= iTabs; i++ )
    {
       usCol = static_cast< USHORT >( hb_parvni( 4, i ) );
       if( hb_gt_wvw_GetMainCoordMode() )
@@ -2298,7 +2355,7 @@ HB_FUNC( WVW_DRAWSTATUSBAR )
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
    APP_DATA * s_sApp      = hb_gt_wvwGetAppData();
    int        iPanels     = hb_parni( 2 );
-   int        i, iNext;
+   int        iNext;
    int        iTop, iLeft, iBottom, iRight;
    POINT      xy; memset( &xy, 0, sizeof( xy ) );
    USHORT     usTop,
@@ -2308,7 +2365,7 @@ HB_FUNC( WVW_DRAWSTATUSBAR )
 
    iNext = 0;
 
-   for( i = 0; i < iPanels; i++ )
+   for( int i = 0; i < iPanels; i++ )
    {
       usTop    = static_cast< USHORT >( hb_parvni( 3, iNext + 1 ) );
       usLeft   = static_cast< USHORT >( hb_parvni( 3, iNext + 2 ) );

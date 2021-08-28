@@ -520,7 +520,6 @@ HB_FUNC( WVW_CBCREATE )
       RECT rXB; memset( &rXB, 0, sizeof( rXB ) );
       RECT rOffXB; memset( &rOffXB, 0, sizeof( rOffXB ) );
       WNDPROC OldProc;
-      USHORT  i;
       TCHAR   szDefault[] = TEXT( "empty" );
 
       SendMessage( static_cast< HWND >( hWndCB ), WM_SETREDRAW, static_cast< WPARAM >( TRUE ), static_cast< LPARAM >( 0 ) );
@@ -534,7 +533,7 @@ HB_FUNC( WVW_CBCREATE )
       }
       else
       {
-         for( i = 1; i <= usNumElement; i++ )
+         for( USHORT i = 1; i <= usNumElement; i++ )
          {
             if( SendMessage( static_cast< HWND >( hWndCB ), CB_ADDSTRING, static_cast< WPARAM >( 0 ), reinterpret_cast< LPARAM >( static_cast< LPCTSTR >( hb_parvcx( 5, i ) ) ) ) < 0 )
             {
