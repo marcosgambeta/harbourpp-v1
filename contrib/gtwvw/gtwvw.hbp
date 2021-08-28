@@ -1,3 +1,5 @@
+-stop={!x86}skip=yes
+
 -hblib
 -inc
 
