@@ -98,7 +98,7 @@ HB_FUNC( WAPI_DIALOGBOXPARAM )
       hbwapi_par_raw_HINSTANCE( 1 ),                                            /* hInstance */
       static_cast< LPCTSTR >( MAKEINTRESOURCE( hbwapi_par_INT( 2 ) ) ),         /* lpTemplate */
       hbwapi_par_raw_HWND( 3 ),                                                 /* hWndParent */
-      static_cast< DLGPROC >( wapi_DialogFuncProc ),                            /* lpDialogFunc */
+      reinterpret_cast< DLGPROC >( wapi_DialogFuncProc ),                            /* lpDialogFunc */
       reinterpret_cast< LPARAM >( hb_itemGetSymbol( hb_param( 4, HB_IT_SYMBOL ) ) )  /* dwInitParam */
       );
 
