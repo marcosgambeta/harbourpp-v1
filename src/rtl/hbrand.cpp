@@ -71,7 +71,7 @@ HB_FUNC( HB_RANDSTR )
    {
       void * data = hb_xgrab( len + 1 );
       hb_random_block( data, len );
-      hb_retclen_buffer( ( char * ) data, len );
+      hb_retclen_buffer( static_cast< char * >( data ), len );
    }
    else
       hb_retc_null();

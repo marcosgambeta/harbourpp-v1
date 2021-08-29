@@ -351,8 +351,8 @@ PHB_EXPR hb_compExprNewFunCall( PHB_EXPR pName, PHB_EXPR pParms, HB_COMP_DECL )
                   {
                      if( ! pVar->value.asString.dealloc )
                      {
-                        szVar = pVar->value.asString.string = ( char * )
-                           hb_xmemdup( pVar->value.asString.string, i + 1 );
+                        szVar = pVar->value.asString.string = static_cast< char * >(
+                           hb_xmemdup( pVar->value.asString.string, i + 1 ) );
                         pVar->value.asString.dealloc = HB_TRUE;
                      }
                      szVar[ i ] = 0;
@@ -690,7 +690,7 @@ PHB_EXPR hb_compExprSetCodeblockBody( PHB_EXPR pExpr, HB_BYTE * pCode, HB_SIZE n
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_compExprSetCodeblockBody(%p,%p,%" HB_PFS "u)", ( void * ) pExpr, ( void * ) pCode, nLen ) );
 
-   pExpr->value.asCodeblock.string = ( char * ) hb_xgrab( nLen + 1 );
+   pExpr->value.asCodeblock.string = static_cast< char * >( hb_xgrab( nLen + 1 ) );
    memcpy( pExpr->value.asCodeblock.string, pCode, nLen );
    pExpr->value.asCodeblock.string[ nLen ] = '\0';
    pExpr->nLength = nLen;

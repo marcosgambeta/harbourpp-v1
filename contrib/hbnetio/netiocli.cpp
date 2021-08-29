@@ -1302,7 +1302,7 @@ static const char * s_netio_params( int iParam, int iMsg, const char * pszName, 
    {
       char * itmData = hb_itemSerialize( hb_param( iParam, HB_IT_ANY ), HB_SERIALIZE_NUMSIZE, &itmSize );
       if( data == nullptr )
-         data = ( char * ) memcpy( hb_xgrab( size + itmSize ), pszName, size );
+         data = static_cast< char * >( memcpy( hb_xgrab( size + itmSize ), pszName, size ) );
       else
          data = static_cast< char * >( hb_xrealloc( data, size + itmSize ) );
       memcpy( data + size, itmData, itmSize );
@@ -2216,8 +2216,8 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName,
             HB_PUT_LE_UINT32( &msgbuf[ 6 ], nExFlags );
             memset( msgbuf + 10, '\0', sizeof( msgbuf ) - 10 );
             if( pDefExt )
-               hb_strncpy( ( char * ) &msgbuf[ 10 ],
-                           ( const char * ) pDefExt, sizeof( msgbuf ) - 11 );
+               hb_strncpy( reinterpret_cast< char * >( &msgbuf[ 10 ] ),
+                           static_cast< const char * >( pDefExt ), sizeof( msgbuf ) - 11 );
          }
          else
          {
@@ -2226,8 +2226,8 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName,
             HB_PUT_LE_UINT16( &msgbuf[ 6 ], ( HB_U16 ) nExFlags );
             memset( msgbuf + 8, '\0', sizeof( msgbuf ) - 8 );
             if( pDefExt )
-               hb_strncpy( ( char * ) &msgbuf[ 8 ],
-                           ( const char * ) pDefExt, sizeof( msgbuf ) - 9 );
+               hb_strncpy( reinterpret_cast< char * >( &msgbuf[ 8 ] ),
+                           static_cast< const char * >( pDefExt ), sizeof( msgbuf ) - 9 );
          }
 
          if( s_fileSendMsg( conn, msgbuf, pszFile, len, HB_TRUE, HB_FALSE ) )

@@ -312,7 +312,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
             dbFieldInfo.uiLen  = pVar->sqllen;
             pVar->sqldata = static_cast< char * >( hb_xgrab( sizeof( char ) * pVar->sqllen + 2 ) );
 
-            pStr  = ( char * ) memset( hb_xgrab( dbFieldInfo.uiLen ), ' ', dbFieldInfo.uiLen );
+            pStr  = static_cast< char * >( memset( hb_xgrab( dbFieldInfo.uiLen ), ' ', dbFieldInfo.uiLen ) );
             pItem = hb_itemPutCL( nullptr, pStr, dbFieldInfo.uiLen );
             hb_xfree( pStr );
             break;
@@ -327,7 +327,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
             /* pVar->sqltype = SQL_TEXT;  Coercing */
             pVar->sqldata = static_cast< char * >( hb_xgrab( sizeof( char ) * pVar->sqllen + 2 ) );
 
-            pStr  = ( char * ) memset( hb_xgrab( dbFieldInfo.uiLen ), ' ', dbFieldInfo.uiLen );
+            pStr  = static_cast< char * >( memset( hb_xgrab( dbFieldInfo.uiLen ), ' ', dbFieldInfo.uiLen ) );
             pItem = hb_itemPutCL( nullptr, pStr, dbFieldInfo.uiLen );
             hb_xfree( pStr );
             break;

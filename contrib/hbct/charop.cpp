@@ -284,12 +284,12 @@ void ct_charop( int iMode )
             break;
       }
 
-      hb_storclen( ( char * ) pucResult, sStrLen, 1 );
+      hb_storclen( reinterpret_cast< char * >( pucResult ), sStrLen, 1 );
 
       if( iNoRet )
          hb_xfree( pucResult );
       else
-         hb_retclen_buffer( ( char * ) pucResult, sStrLen );
+         hb_retclen_buffer( reinterpret_cast< char * >( pucResult ), sStrLen );
    }
    else
    {

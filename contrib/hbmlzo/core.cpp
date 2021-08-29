@@ -147,7 +147,7 @@ HB_FUNC( HB_LZO1X_1_COMPRESS )
                hb_storni( LZO_E_NOT_COMPRESSIBLE, 3 );  /* incompressible data */
             else
             {
-               hb_retclen_buffer( ( char * ) dst, dst_len );
+               hb_retclen_buffer( reinterpret_cast< char * >( dst ), dst_len );
                return;
             }
          }
@@ -190,7 +190,7 @@ HB_FUNC( HB_LZO1X_DECOMPRESS )
          if( r == LZO_E_OK )
          {
             hb_storns( dst_len, 2 );
-            hb_retclen_buffer( ( char * ) dst, dst_len );
+            hb_retclen_buffer( reinterpret_cast< char * >( dst ), dst_len );
             return;
          }
          hb_xfree( dst );
@@ -225,7 +225,7 @@ HB_FUNC( HB_LZO1X_DECOMPRESS_SAFE )
          if( r == LZO_E_OK )
          {
             hb_storns( dst_len, 2 );
-            hb_retclen_buffer( ( char * ) dst, dst_len );
+            hb_retclen_buffer( reinterpret_cast< char * >( dst ), dst_len );
             return;
          }
          hb_xfree( dst );

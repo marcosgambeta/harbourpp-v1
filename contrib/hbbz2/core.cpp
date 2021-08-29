@@ -82,7 +82,7 @@ static int hb_bz2Compress( const char * szSrc, HB_SIZE nSrc,
 
    memset( &stream, 0, sizeof( stream ) );
 
-   stream.next_in  = ( char * ) HB_UNCONST( szSrc );
+   stream.next_in  = static_cast< char * >( HB_UNCONST( szSrc ) );
    stream.avail_in = static_cast< unsigned int >( nSrc );
 
    stream.next_out  = szDst;
@@ -129,7 +129,7 @@ static HB_SIZE hb_bz2UncompressedSize( const char * szSrc, HB_SIZE nLen,
 
    memset( &stream, 0, sizeof( stream ) );
 
-   stream.next_in  = ( char * ) HB_UNCONST( szSrc );
+   stream.next_in  = static_cast< char * >( HB_UNCONST( szSrc ) );
    stream.avail_in = static_cast< unsigned int >( nLen );
 
    stream.bzalloc = hb_bz2Alloc;
@@ -176,7 +176,7 @@ static int hb_bz2Uncompress( const char * szSrc, HB_SIZE nSrc,
 
    memset( &stream, 0, sizeof( stream ) );
 
-   stream.next_in  = ( char * ) HB_UNCONST( szSrc );
+   stream.next_in  = static_cast< char * >( HB_UNCONST( szSrc ) );
    stream.avail_in = static_cast< unsigned int >( nSrc );
 
    stream.next_out  = szDst;
@@ -281,7 +281,7 @@ HB_FUNC( HB_BZ2_COMPRESS )
          {
             nDstLen = HB_ISNUM( 2 ) ? static_cast< HB_SIZE >( hb_parnint( 2 ) ) :
                       static_cast< HB_SIZE >( hb_bz2CompressBound( nLen ) );
-            pDest = ( char * ) hb_xalloc( nDstLen + 1 );
+            pDest = static_cast< char * >( hb_xalloc( nDstLen + 1 ) );
          }
 
          if( pDest )
@@ -341,7 +341,7 @@ HB_FUNC( HB_BZ2_UNCOMPRESS )
                       hb_bz2UncompressedSize( szData, nLen, &iResult );
             if( iResult == BZ_OK )
             {
-               pDest = ( char * ) hb_xalloc( nDstLen + 1 );
+               pDest = static_cast< char * >( hb_xalloc( nDstLen + 1 ) );
                if( ! pDest )
                   iResult = BZ_MEM_ERROR;
             }

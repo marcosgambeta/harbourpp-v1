@@ -1594,7 +1594,7 @@ HB_WCHAR hb_cdpGetU16( PHB_CODEPAGE cdp, HB_UCHAR ch )
       if( HB_CDP_ISCUSTOM( cdp ) )
       {
          HB_SIZE n = 0;
-         if( ! HB_CDPCHAR_GET( cdp, ( const char * ) &ch, 1, &n, &wc ) )
+         if( ! HB_CDPCHAR_GET( cdp, reinterpret_cast< const char * >( &ch ), 1, &n, &wc ) )
             wc = 0;
       }
       else
@@ -1613,7 +1613,7 @@ HB_WCHAR hb_cdpGetWC( PHB_CODEPAGE cdp, HB_UCHAR ch, HB_WCHAR wcDef )
       {
          HB_WCHAR wc;
          HB_SIZE n = 0;
-         if( HB_CDPCHAR_GET( cdp, ( const char * ) &ch, 1, &n, &wc ) )
+         if( HB_CDPCHAR_GET( cdp, reinterpret_cast< const char * >( &ch ), 1, &n, &wc ) )
             wcDef = wc;
       }
       else if( cdp->uniTable->uniCodes[ ch ] )
@@ -1632,7 +1632,7 @@ HB_WCHAR hb_cdpGetU16Disp( PHB_CODEPAGE cdp, HB_UCHAR ch )
       if( HB_CDP_ISCUSTOM( cdp ) )
       {
          HB_SIZE n = 0;
-         if( ! HB_CDPCHAR_GET( cdp, ( const char * ) &ch, 1, &n, &wc ) )
+         if( ! HB_CDPCHAR_GET( cdp, reinterpret_cast< const char * >( &ch ), 1, &n, &wc ) )
             wc = 0;
       }
       else
@@ -2235,7 +2235,7 @@ const char * hb_cdpnDup3( const char * pSrc, HB_SIZE nSrc,
       {
          pDst = *pFree;
          if( pDst == nullptr && *pnSize > 0 )
-            pDst = ( char * ) HB_UNCONST( pSrc );
+            pDst = static_cast< char * >( HB_UNCONST( pSrc ) );
       }
 
       if( nDst >= *pnSize || ( pDst == pSrc && HB_CDP_ISCUSTOM( cdpOut ) ) )
@@ -2648,7 +2648,7 @@ static HB_UCHAR hb_cdpUtf8Char( const char ** pStrPtr, PHB_UNITABLE uniTable )
       while( *pszString )
          pszString++;
    }
-   *pStrPtr = ( const char * ) pszString;
+   *pStrPtr = static_cast< const char * >( pszString );
 
    return uc;
 }

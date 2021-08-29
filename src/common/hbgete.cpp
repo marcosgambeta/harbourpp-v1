@@ -93,7 +93,7 @@ char * hb_getenv( const char * szName )
 
       szName = hb_osEncodeCP( szName, &pszNameFree, nullptr );
       if( DosScanEnv( ( PCSZ ) szName, &EnvValue ) == NO_ERROR )
-         pszBuffer = hb_osStrDecode( ( char * ) EnvValue );
+         pszBuffer = hb_osStrDecode( static_cast< char * >( EnvValue ) );
       if( pszNameFree )
          hb_xfree( pszNameFree );
    }
@@ -152,7 +152,7 @@ HB_BOOL hb_getenv_buffer( const char * szName, char * szBuffer, int nSize )
          hb_xfree( pszNameFree );
 
       if( fRetVal && szBuffer != nullptr && nSize != 0 )
-         hb_osStrDecode2( ( char * ) EnvValue, szBuffer, nSize - 1 );
+         hb_osStrDecode2( static_cast< char * >( EnvValue ), szBuffer, nSize - 1 );
    }
 #else
    {

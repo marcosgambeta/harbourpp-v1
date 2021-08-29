@@ -2208,7 +2208,7 @@ HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
       pExecSym = hb_dynsymFindName( hb_itemGetCPtr( pFirst ) );
       if( pExecSym )
       {
-         pFunc = ( PHB_ITEM ) pExecSym;
+         pFunc = static_cast< PHB_ITEM >( pExecSym );
       }
       iType = 1;
    }

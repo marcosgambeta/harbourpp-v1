@@ -444,7 +444,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
       {
          case HB_FT_STRING:
          {
-            HB_SIZE nSize = hb_cdpUTF8StringLength( ( const char * ) sqlite3_column_text( st, uiIndex ),
+            HB_SIZE nSize = hb_cdpUTF8StringLength( reinterpret_cast< const char * >( sqlite3_column_text( st, uiIndex ) ),
                                                     sqlite3_column_bytes( st, uiIndex ) );
 
             /* sqlite3_column_bytes() returns variable lengths for UTF-8
@@ -586,7 +586,7 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
          switch( uiType )
          {
             case HB_FT_STRING:
-               pItem = S_HB_ITEMPUTSTR( nullptr, ( const char * ) sqlite3_column_text( st, ui ) );
+               pItem = S_HB_ITEMPUTSTR( nullptr, reinterpret_cast< const char * >( sqlite3_column_text( st, ui ) ) );
                break;
 
             case HB_FT_INTEGER:
@@ -603,7 +603,7 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                if( sqlite3_column_bytes( st, ui ) >= 10 )
                {
                   char szDate[ 9 ];
-                  const char * pValue = ( const char * ) sqlite3_column_text( st, ui );
+                  const char * pValue = static_cast< const char * >( sqlite3_column_text( st, ui ) );
 
                   szDate[ 0 ] = pValue[ 0 ];
                   szDate[ 1 ] = pValue[ 1 ];
@@ -617,7 +617,7 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                   pItem = hb_itemPutDS( nullptr, szDate );
                }
                else if( sqlite3_column_bytes( st, ui ) == 8 )
-                  pItem = hb_itemPutDS( nullptr, ( const char * ) sqlite3_column_text( st, ui ) );
+                  pItem = hb_itemPutDS( nullptr, static_cast< const char * >( sqlite3_column_text( st, ui ) ) );
 
                break;
 
@@ -625,7 +625,7 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                if( sqlite3_column_bytes( st, ui ) >= 10 )
                {
                   long lDate, lTime;
-                  const char * pValue = ( const char * ) sqlite3_column_text( st, ui );
+                  const char * pValue = static_cast< const char * >( sqlite3_column_text( st, ui ) );
 
                   hb_timeStampStrGetDT( pValue, &lDate, &lTime );
                   pItem = hb_itemPutTDT( nullptr, lDate, lTime );
@@ -633,7 +633,7 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                }
 #endif
             case HB_FT_BLOB:
-               pItem = hb_itemPutCL( nullptr, ( const char * ) sqlite3_column_blob( st, ui ), sqlite3_column_bytes( st, ui ) );
+               pItem = hb_itemPutCL( nullptr, static_cast< const char * >( sqlite3_column_blob( st, ui ) ), sqlite3_column_bytes( st, ui ) );
                break;
          }
 

@@ -148,7 +148,7 @@ static void hbmxml_release( mxml_node_t * node )
       if( ( user_data = mxmlGetUserData( node ) ) != nullptr )
       {
          mxmlSetUserData( node, nullptr );
-         hb_itemRelease( ( PHB_ITEM ) user_data );
+         hb_itemRelease( static_cast< PHB_ITEM >( user_data ) );
       }
    }
 
@@ -588,7 +588,7 @@ HB_FUNC( MXMLGETUSERDATA )
 
    if( node )
    {
-      PHB_ITEM pItem = ( PHB_ITEM ) mxmlGetUserData( node );
+      PHB_ITEM pItem = static_cast< PHB_ITEM >( mxmlGetUserData( node ) );
 
       if( pItem )
          hb_itemCopy( hb_stackReturnItem(), pItem );
@@ -1104,7 +1104,7 @@ static void sax_cb( mxml_node_t * node, mxml_sax_event_t event, void * data )
 
          if( data != nullptr )
          {
-            hb_vmPush( ( PHB_ITEM ) data );
+            hb_vmPush( static_cast< PHB_ITEM >( data ) );
             uPCount++;
          }
          hb_vmSend( uPCount );
@@ -1320,7 +1320,7 @@ HB_FUNC( MXMLSAVEALLOCSTRING )
          hb_retclen( buffer, bytes );
       else
       {
-         char * s = ( char * ) hb_xalloc( bytes + 1 );
+         char * s = static_cast< char * >( hb_xalloc( bytes + 1 ) );
 
          if( s == nullptr )
             hb_retc_null();
@@ -1629,7 +1629,7 @@ HB_FUNC( MXMLGETCUSTOM )
 
    if( node )
    {
-      PHB_ITEM pItem = ( PHB_ITEM ) HB_UNCONST( mxmlGetCustom( node ) );
+      PHB_ITEM pItem = static_cast< PHB_ITEM >( HB_UNCONST( mxmlGetCustom( node ) ) );
 
       if( pItem )
          hb_itemReturn( pItem );
@@ -1642,7 +1642,7 @@ HB_FUNC( MXMLGETCUSTOM )
 
 static void custom_destroy_cb( void * Cargo )
 {
-   PHB_ITEM pItem = ( PHB_ITEM ) Cargo;
+   PHB_ITEM pItem = static_cast< PHB_ITEM >( Cargo );
 
    if( pItem != nullptr )
       hb_itemRelease( pItem );

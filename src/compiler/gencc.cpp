@@ -129,7 +129,7 @@ static void hb_compGenCStrData( FILE * yyc, const HB_BYTE * pText, HB_SIZE nLen,
       {
          fprintf( yyc, "Hidden( %d, ", iMethod );
       }
-      fprintf( yyc, "( const char * ) str,  %" HB_PFS "u );\n\t}\n", nLen );
+      fprintf( yyc, "static_cast< const char * >( str ),  %" HB_PFS "u );\n\t}\n", nLen );
    }
    else
 #endif

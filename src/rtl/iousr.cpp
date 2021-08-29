@@ -480,7 +480,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * data,
 
    iOffset = static_cast< int >( hb_stackTopOffset() - hb_stackBaseOffset() );
    memset( data, 0, nSize );
-   hb_vmPushString( ( const char * ) data, nSize );
+   hb_vmPushString( static_cast< const char * >( data ), nSize );
 
    s_pushMethod( pIO, IOUSR_READ );
    hb_vmPush( pFile->pFileItm );
@@ -509,7 +509,7 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * data,
 
    s_pushMethod( pIO, IOUSR_WRITE );
    hb_vmPush( pFile->pFileItm );
-   hb_vmPushString( ( const char * ) data, nSize );
+   hb_vmPushString( static_cast< const char * >( data ), nSize );
    hb_vmPushSize( nSize );
    hb_vmPushNumInt( timeout );
    hb_vmDo( 4 );
@@ -526,7 +526,7 @@ static HB_SIZE s_fileReadAt( PHB_FILE pFile, void * buffer,
 
    iOffset = static_cast< int >( hb_stackTopOffset() - hb_stackBaseOffset() );
    memset( buffer, 0, nSize );
-   hb_vmPushString( ( const char * ) buffer, nSize );
+   hb_vmPushString( static_cast< const char * >( buffer ), nSize );
 
    s_pushMethod( pIO, IOUSR_READAT );
    hb_vmPush( pFile->pFileItm );
@@ -555,7 +555,7 @@ static HB_SIZE s_fileWriteAt( PHB_FILE pFile, const void * buffer,
 
    s_pushMethod( pIO, IOUSR_WRITEAT );
    hb_vmPush( pFile->pFileItm );
-   hb_vmPushString( ( const char * ) buffer, nSize );
+   hb_vmPushString( static_cast< const char * >( buffer ), nSize );
    hb_vmPushSize( nSize );
    hb_vmPushNumInt( static_cast< HB_MAXINT >( nOffset ) );
    hb_vmDo( 4 );

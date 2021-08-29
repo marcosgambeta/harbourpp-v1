@@ -340,7 +340,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName,
    if( ( nExFlags & FXO_COPYNAME ) != 0 )
    {
       if( pFile )
-         hb_strncpy( ( char * ) HB_UNCONST( pszFileName ) + iPref, pszNameBuf,
+         hb_strncpy( static_cast< char * >( HB_UNCONST( pszFileName ) ) + iPref, pszNameBuf,
                      HB_PATH_MAX - 1 - iPref );
       hb_xfree( pszNameBuf );
    }

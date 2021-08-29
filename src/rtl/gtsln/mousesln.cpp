@@ -322,11 +322,11 @@ void hb_gt_sln_mouse_Init( void )
       (void)SLtt_set_mouse_mode( 1, 1 );
 
       /* initial xterm settings */
-      SLtt_write_string( ( char * ) HB_UNCONST( SaveHilit ) );
-      SLtt_write_string( ( char * ) HB_UNCONST( EnabTrack ) );
+      SLtt_write_string( static_cast< char * >( HB_UNCONST( SaveHilit ) ) );
+      SLtt_write_string( static_cast< char * >( HB_UNCONST( EnabTrack ) ) );
       SLtt_flush_output();
 
-      s_iMouseButtons = SLtt_tgetnum( ( char * ) "BT" );
+      s_iMouseButtons = SLtt_tgetnum( static_cast< char * >( "BT" ) );
 
       /* force two buttons mouse under xterm */
       if( s_iMouseButtons < 1 )
@@ -399,8 +399,8 @@ void hb_gt_sln_mouse_Exit( void )
          const char * RestoHilit = "\033[?1001r"; /* restore old hilit tracking */
 
          /* restore xterm settings */
-         SLtt_write_string( ( char * ) HB_UNCONST( DisabTrack ) );
-         SLtt_write_string( ( char * ) HB_UNCONST( RestoHilit ) );
+         SLtt_write_string( static_cast< char * >( HB_UNCONST( DisabTrack ) ) );
+         SLtt_write_string( static_cast< char * >( HB_UNCONST( RestoHilit ) ) );
          SLtt_flush_output();
 
          /* force mouse usage under xterm */

@@ -3310,7 +3310,7 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
 
                   wnd->ClipboardSize = text.nitems;
                   wnd->ClipboardData = ( unsigned char * )
-                     hb_cdpnDup( ( const char * ) text.value, &wnd->ClipboardSize,
+                     hb_cdpnDup( static_cast< const char * >( text.value ), &wnd->ClipboardSize,
                                  HB_GTSELF_INCP( wnd->pGT ), wnd->utf8CDP );
                   wnd->ClipboardTime = evt->xselection.time;
                   wnd->ClipboardRcvd = HB_TRUE;
@@ -3388,7 +3388,7 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
             {
                HB_SIZE nLen = wnd->ClipboardSize;
                unsigned char * pBuffer = ( unsigned char * )
-                     hb_cdpnDup( ( const char * ) wnd->ClipboardData, &nLen,
+                     hb_cdpnDup( static_cast< const char * >( wnd->ClipboardData ), &nLen,
                                  wnd->utf8CDP, cdpin );
 
                XChangeProperty( wnd->dpy, req->requestor, req->property,
@@ -3543,7 +3543,7 @@ static int hb_gt_xwc_GetColormapSize( PXWND_DEF wnd )
    {
       iCMapSize = visInfoPtr->colormap_size;
    }
-   XFree( ( char * ) visInfoPtr );
+   XFree( static_cast< char * >( visInfoPtr ) );
 
    return iCMapSize;
 }
@@ -5465,7 +5465,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             hb_gt_xwc_RealRefresh( wnd, HB_FALSE );
             hb_gt_xwc_RequestSelection( wnd );
             pInfo->pResult = hb_itemPutStrLenUTF8( pInfo->pResult,
-                                                   ( char * ) wnd->ClipboardData,
+                                                   static_cast< char * >( wnd->ClipboardData ),
                                                    wnd->ClipboardSize );
          }
          break;
@@ -5801,11 +5801,11 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                      }
                   }
                   else
-                     pFreeImage = ( const char * ) hb_arrayGetPtr( pInfo->pNewVal, 1 );
+                     pFreeImage = static_cast< const char * >( hb_arrayGetPtr( pInfo->pNewVal, 1 ) );
                }
                if( pFreeImage != nullptr )
                   xImage = XCreateImage( wnd->dpy, DefaultVisual( wnd->dpy, DefaultScreen( wnd->dpy ) ),
-                                         iDepth, ZPixmap, 0, ( char * ) HB_UNCONST( pFreeImage ),
+                                         iDepth, ZPixmap, 0, static_cast< char * >( HB_UNCONST( pFreeImage ) ),
                                          iWidth, iHeight, iPad, 0 );
                HB_XWC_XLIB_UNLOCK( wnd->dpy );
             }

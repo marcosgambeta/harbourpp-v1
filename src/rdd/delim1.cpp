@@ -829,7 +829,7 @@ static HB_ERRCODE hb_delimGetValue( DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITE
          PHB_ITEM pError = hb_errNew();
          hb_errPutGenCode( pError, EG_DATATYPE );
          hb_errPutDescription( pError, hb_langDGetErrorDesc( EG_DATATYPE ) );
-         hb_errPutOperation( pError, hb_dynsymName( ( PHB_DYNS ) pField->sym ) );
+         hb_errPutOperation( pError, hb_dynsymName( static_cast< PHB_DYNS >( pField->sym ) ) );
          hb_errPutSubCode( pError, EDBF_DATATYPE );
          SELF_ERROR( &pArea->area, pError );
          hb_itemRelease( pError );
@@ -970,7 +970,7 @@ static HB_ERRCODE hb_delimPutValue( DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITE
 
       hb_errPutGenCode( pError, errGenCode );
       hb_errPutDescription( pError, hb_langDGetErrorDesc( errGenCode ) );
-      hb_errPutOperation( pError, hb_dynsymName( ( PHB_DYNS ) pField->sym ) );
+      hb_errPutOperation( pError, hb_dynsymName( static_cast< PHB_DYNS >( pField->sym ) ) );
       hb_errPutSubCode( pError, errCode );
       hb_errPutFlags( pError, EF_CANDEFAULT );
       errCode = SELF_ERROR( &pArea->area, pError );

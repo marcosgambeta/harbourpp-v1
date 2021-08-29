@@ -2952,7 +2952,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          }
          else if( pField->uiType == HB_FT_ANY && pField->uiLen == 3 )
          {
-            hb_sxDtoP( ( char * ) pArea->pRecord + pArea->pFieldOffset[ uiIndex ], hb_itemGetDL( pItem ) );
+            hb_sxDtoP( reinterpret_cast< char * >( pArea->pRecord ) + pArea->pFieldOffset[ uiIndex ], hb_itemGetDL( pItem ) );
          }
          else
          {

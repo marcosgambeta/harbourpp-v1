@@ -10207,10 +10207,10 @@ UINT ButtonCreate( UINT usWinNum, USHORT usTop, USHORT usLeft, USHORT usBottom, 
       rOffXB.top    = iOffTop;     rOffXB.left = iOffLeft;
       rOffXB.bottom = iOffBottom; rOffXB.right = iOffRight;
 
-      AddControlHandle( usWinNum, WVW_CONTROL_PUSHBUTTON, hWndButton, uiPBid, ( PHB_ITEM ) phbiCodeBlock, rXB, rOffXB, static_cast< byte >( iStyle ) );
+      AddControlHandle( usWinNum, WVW_CONTROL_PUSHBUTTON, hWndButton, uiPBid, static_cast< PHB_ITEM >( phbiCodeBlock ), rXB, rOffXB, static_cast< byte >( iStyle ) );
 
 #if 0
-      OldProc = SetWindowLongPtr( hWndButton, GWLP_WNDPROC, ( LONG_PTR ) hb_gt_wvwBtnProc );
+      OldProc = SetWindowLongPtr( hWndButton, GWLP_WNDPROC, static_cast< LONG_PTR >( hb_gt_wvwBtnProc ) );
 #endif
       OldProc = SubclassWindow( hWndButton, hb_gt_wvwBtnProc );
 

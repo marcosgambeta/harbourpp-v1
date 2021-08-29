@@ -68,7 +68,7 @@ HB_FUNC( HB_BLOWFISHKEY )
       HB_BLOWFISH bf;
 
       hb_blowfishInit( &bf, hb_parc( 1 ), iLen );
-      hb_retclen( ( const char * ) &bf, sizeof( HB_BLOWFISH ) );
+      hb_retclen( reinterpret_cast< const char * >( &bf ), sizeof( HB_BLOWFISH ) );
    }
 }
 

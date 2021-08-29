@@ -443,7 +443,7 @@ static void GDImageSaveTo( int nType )
       /* Return image as string) */
       else
          /* Return as string */
-         hb_retclen( ( const char * ) iptr, static_cast< HB_SIZE >( sz ) );
+         hb_retclen( static_cast< const char * >( iptr ), static_cast< HB_SIZE >( sz ) );
 
       /* Free memory */
       gdFree( iptr );
@@ -1516,8 +1516,8 @@ HB_FUNC( GDIMAGESTRINGFTEX )
       }
 
       /* Write string */
-      err = gdImageStringFTEx( im, &aRect[ 0 ], fgcolor, ( char * ) HB_UNCONST( fontname ),
-                               ptsize, angle, x, y, ( char * ) HB_UNCONST( string ),
+      err = gdImageStringFTEx( im, &aRect[ 0 ], fgcolor, static_cast< char * >( HB_UNCONST( fontname ) ),
+                               ptsize, angle, x, y, static_cast< char * >( HB_UNCONST( string ) ),
                                ( flags != 0 ? &extra : nullptr ) );
       if( ! err )
       {
@@ -1563,9 +1563,9 @@ HB_FUNC( GDIMAGESTRINGFTCIRCLE ) /* char *gdImageStringFTCircle(gdImagePtr im, i
 
       /* Write string */
       hb_retc( gdImageStringFTCircle( im, cx, cy, radius, textRadius, fillPortion,
-                                      ( char * ) HB_UNCONST( fontname ), points,
-                                      ( char * ) HB_UNCONST( top ),
-                                      ( char * ) HB_UNCONST( bottom ), fgcolor ) );
+                                      static_cast< char * >( HB_UNCONST( fontname ) ), points,
+                                      static_cast< char * >( HB_UNCONST( top ) ),
+                                      static_cast< char * >( HB_UNCONST( bottom ) ), fgcolor ) );
    }
    else
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );

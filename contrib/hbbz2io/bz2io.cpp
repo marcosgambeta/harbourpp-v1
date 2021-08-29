@@ -341,7 +341,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName,
    if( ( nExFlags & FXO_COPYNAME ) != 0 )
    {
       if( pFile )
-         hb_strncpy( ( char * ) HB_UNCONST( pszFileName + iPref ), pszNameBuf,
+         hb_strncpy( static_cast< char * >( HB_UNCONST( pszFileName + iPref ) ), pszNameBuf,
                      HB_PATH_MAX - 1 - iPref );
       hb_xfree( pszNameBuf );
    }
@@ -411,7 +411,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize,
       if( nTimeout == -1 )
          nTimeout = pFile->nTimeout;
 
-      pFile->bz2.next_out = ( char * ) buffer;
+      pFile->bz2.next_out = static_cast< char * >( buffer );
       pFile->bz2.avail_out = static_cast< unsigned int >( nSize );
       pFile->bz2.total_out_hi32 = pFile->bz2.total_out_lo32 = 0;
 
@@ -440,7 +440,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize,
                         HB_BZ2_BUFSIZE, pFile->bz2.avail_out ? nTimeout : 0 );
             if( nResult == 0 || nResult == static_cast< HB_SIZE >( - 1 ) )
                break;
-            pFile->bz2.next_in = ( char * ) pFile->buffer;
+            pFile->bz2.next_in = reinterpret_cast< char * >( pFile->buffer );
             pFile->bz2.avail_in = static_cast< unsigned int >( nResult );
          }
       }
@@ -472,7 +472,7 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * buffer, HB_SIZE nSize,
 
       if( ! pFile->fInited )
       {
-         pFile->bz2.next_out  = ( char * ) pFile->buffer;
+         pFile->bz2.next_out  = reinterpret_cast< char * >( pFile->buffer );
          pFile->bz2.avail_out = HB_BZ2_BUFSIZE;
          err = BZ2_bzCompressInit( &pFile->bz2, pFile->iBlockSize, 0, 0 );
          if( err != BZ_OK )
@@ -488,7 +488,7 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * buffer, HB_SIZE nSize,
       if( nTimeout == -1 )
          nTimeout = pFile->nTimeout;
 
-      pFile->bz2.next_in  = ( char * ) HB_UNCONST( buffer );
+      pFile->bz2.next_in  = static_cast< char * >( HB_UNCONST( buffer ) );
       pFile->bz2.avail_in = static_cast< unsigned int >( nSize );
 
       while( pFile->bz2.avail_in )

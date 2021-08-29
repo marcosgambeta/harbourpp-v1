@@ -401,7 +401,7 @@ HB_FUNC( XHB_PLUS )
    {
       HB_UCHAR uc = ( HB_UCHAR ) hb_itemGetCPtr( pSelf )[ 0 ];
       uc += ( HB_UCHAR ) hb_itemGetNI( pValue );
-      hb_retclen( ( char * ) &uc, 1 );
+      hb_retclen( reinterpret_cast< char * >( &uc ), 1 );
    }
    else if( HB_IS_HASH( pSelf ) && HB_IS_HASH( pValue ) )
    {
@@ -434,7 +434,7 @@ HB_FUNC( XHB_MINUS )
    {
       HB_UCHAR uc = ( HB_UCHAR ) hb_itemGetCPtr( pSelf )[ 0 ];
       uc -= ( HB_UCHAR ) hb_itemGetNI( pValue );
-      hb_retclen( ( char * ) &uc, 1 );
+      hb_retclen( reinterpret_cast< char * >( &uc ), 1 );
    }
    else if( HB_IS_HASH( pSelf ) && HB_IS_HASH( pValue ) )
    {
@@ -459,7 +459,7 @@ HB_FUNC( XHB_INC )
    else if( HB_IS_STRING( pSelf ) && hb_itemGetCLen( pSelf ) == 1 )
    {
       HB_UCHAR uc = ( HB_UCHAR ) hb_itemGetCPtr( pSelf )[ 0 ] + 1;
-      hb_retclen( ( char * ) &uc, 1 );
+      hb_retclen( reinterpret_cast< char * >( &uc ), 1 );
    }
    else
    {
@@ -478,7 +478,7 @@ HB_FUNC( XHB_DEC )
    else if( HB_IS_STRING( pSelf ) && hb_itemGetCLen( pSelf ) == 1 )
    {
       HB_UCHAR uc = ( HB_UCHAR ) hb_itemGetCPtr( pSelf )[ 0 ] - 1;
-      hb_retclen( ( char * ) &uc, 1 );
+      hb_retclen( reinterpret_cast< char * >( &uc ), 1 );
    }
    else
    {

@@ -349,7 +349,7 @@ HB_GARBAGE_FUNC( hb_gcDummyMark )
 
 HB_GARBAGE_FUNC( hb_gcGripMark )
 {
-   hb_gcItemRef( ( PHB_ITEM ) Cargo );
+   hb_gcItemRef( static_cast< PHB_ITEM >( Cargo ) );
 }
 
 static HB_GARBAGE_FUNC( hb_gcGripRelease )

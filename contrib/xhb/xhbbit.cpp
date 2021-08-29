@@ -88,7 +88,7 @@ static void s_xhb_bitOper( int iOper )
          {
             const char * pStr1 = hb_itemGetCPtr( pItem1 ),
                        * pStr2 = hb_itemGetCPtr( pItem2 );
-            char * pRet = ( char * ) hb_xmemdup( pStr1, nLen1 + 1 );
+            char * pRet = static_cast< char * >( hb_xmemdup( pStr1, nLen1 + 1 ) );
             HB_SIZE n1, n2;
 
             switch( iOper )
@@ -130,7 +130,7 @@ static void s_xhb_bitOper( int iOper )
          if( nLen1 )
          {
             const char * pStr = hb_itemGetCPtr( pItem1 );
-            char * pRet = ( char * ) hb_xmemdup( pStr, nLen1 + 1 );
+            char * pRet = static_cast< char * >( hb_xmemdup( pStr, nLen1 + 1 ) );
             char cVal = nLen2 == 1 ? hb_itemGetCPtr( pItem2 )[ 0 ] :
                                      static_cast< char >( hb_itemGetNI( pItem2 ) );
 

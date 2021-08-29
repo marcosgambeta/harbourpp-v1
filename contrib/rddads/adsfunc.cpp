@@ -94,7 +94,7 @@ char * hb_adsOemToAnsi( const char * pszSrc, HB_SIZE nLen )
       HB_SYMBOL_UNUSED( nLen );
 #endif
    }
-   return ( char * ) HB_UNCONST( pszSrc );
+   return static_cast< char * >( HB_UNCONST( pszSrc ) );
 }
 
 char * hb_adsAnsiToOem( const char * pszSrc, HB_SIZE nLen )
@@ -122,7 +122,7 @@ char * hb_adsAnsiToOem( const char * pszSrc, HB_SIZE nLen )
       HB_SYMBOL_UNUSED( nLen );
 #endif
    }
-   return ( char * ) HB_UNCONST( pszSrc );
+   return static_cast< char * >( HB_UNCONST( pszSrc ) );
 }
 
 void hb_adsOemAnsiFree( char * pszSrc )
@@ -271,7 +271,7 @@ HB_FUNC( ADSSETDATEFORMAT )
 
    AdsGetDateFormat( pucFormat, &usLen );
 
-   hb_retc( usLen > 0 ? ( char * ) pucFormat : nullptr );
+   hb_retc( usLen > 0 ? static_cast< char * >( pucFormat ) : nullptr );
 
    if( HB_ISCHAR( 1 ) )
       AdsSetDateFormat( ( UNSIGNED8 * ) HB_UNCONST( hb_parc( 1 ) ) );
@@ -398,8 +398,8 @@ HB_FUNC( ADSGETSERVERTIME )
                          &usTimeBufLen ) == AE_SUCCESS )
    {
       hb_reta( 3 );
-      hb_storvc( ( char * ) pucDateBuf, -1, 1 );
-      hb_storvc( ( char * ) pucTimeBuf, -1, 2 );
+      hb_storvc( static_cast< char * >( pucDateBuf ), -1, 1 );
+      hb_storvc( static_cast< char * >( pucTimeBuf ), -1, 2 );
       hb_storvnl( plTime, -1, 3 );
    }
    /* QUESTION: Returning NIL on error. Is this what we want? [vszakats] */
@@ -513,7 +513,7 @@ HB_FUNC( ADSSETDEFAULT )
 
    AdsGetDefault( pucDefault, &usLen );
 
-   hb_retclen( ( char * ) pucDefault, usLen );
+   hb_retclen( static_cast< char * >( pucDefault ), usLen );
 
    if( HB_ISCHAR( 1 ) )
       AdsSetDefault( ( UNSIGNED8 * ) HB_UNCONST( hb_parc( 1 ) ) );
@@ -526,7 +526,7 @@ HB_FUNC( ADSSETSEARCHPATH )
 
    AdsGetSearchPath( pucPath, &usLen );
 
-   hb_retclen( ( char * ) pucPath, usLen );
+   hb_retclen( static_cast< char * >( pucPath ), usLen );
 
    if( HB_ISCHAR( 1 ) )
       AdsSetSearchPath( ( UNSIGNED8 * ) HB_UNCONST( hb_parc( 1 ) ) );
@@ -882,7 +882,7 @@ HB_FUNC( ADSGETTABLEALIAS )
       if( AdsGetTableAlias( pArea->hTable,
                             pucAlias,
                             &usLen ) == AE_SUCCESS )
-         hb_retclen( ( char * ) pucAlias, usLen );
+         hb_retclen( static_cast< char * >( pucAlias ), usLen );
       else
          hb_retc_null();
    }
@@ -914,7 +914,7 @@ HB_FUNC( ADSGETAOF )
 
       if( ulRetVal == AE_SUCCESS )
       {
-         char * szRet = hb_adsAnsiToOem( ( char * ) ( pucFilter2 ? pucFilter2 : pucFilter ), usLen );
+         char * szRet = hb_adsAnsiToOem( static_cast< char * >( pucFilter2 ? pucFilter2 : pucFilter ), usLen );
          hb_retc( szRet );
          hb_adsOemAnsiFree( szRet );
       }
@@ -967,12 +967,12 @@ HB_FUNC( ADSGETAOFNOOPT )
          hb_retc( AdsGetAOFOptLevel( pArea->hTable,
                                      &pusOptLevel,
                                      pucNonOpt2,
-                                     &usLen ) == AE_SUCCESS ? ( char * ) pucNonOpt2 : nullptr );
+                                     &usLen ) == AE_SUCCESS ? static_cast< char * >( pucNonOpt2 ) : nullptr );
 
          hb_xfree( pucNonOpt2 );
       }
       else
-         hb_retc( ulRetVal == AE_SUCCESS ? ( char * ) pucNonOpt : nullptr );
+         hb_retc( ulRetVal == AE_SUCCESS ? static_cast< char * >( pucNonOpt ) : nullptr );
    }
    else
       hb_errRT_DBCMD( EG_NOTABLE, 2001, nullptr, HB_ERR_FUNCNAME );
@@ -1079,7 +1079,7 @@ HB_FUNC( ADSGETFILTER )
 
       if( ulRetVal == AE_SUCCESS )
       {
-         char * szRet = hb_adsAnsiToOem( ( char * ) ( pucFilter2 ? pucFilter2 : pucFilter ), usLen );
+         char * szRet = hb_adsAnsiToOem( static_cast< char * >( pucFilter2 ? pucFilter2 : pucFilter ), usLen );
          hb_retc( szRet );
          hb_adsOemAnsiFree( szRet );
       }
@@ -1639,7 +1639,7 @@ HB_FUNC( ADSGETLASTERROR )
    if( ulLastErr == AE_SUCCESS )
       hb_storc( nullptr, 1 );
    else
-      hb_storclen( ( char * ) aucError, usLength, 1 );
+      hb_storclen( static_cast< char * >( aucError ), usLength, 1 );
 
    hb_retnl( ulLastErr );
 }
@@ -1738,7 +1738,7 @@ HB_FUNC( ADSVERSION )
          break;
       case 3:
          hb_snprintf( szVersion, sizeof( szVersion ), "%s, v%lu.%lu%c",
-                      ( char * ) ucDesc, static_cast< HB_ULONG >( ulMajor ), static_cast< HB_ULONG >( ulMinor ), ucLetter );
+                      static_cast< char * >( ucDesc ), static_cast< HB_ULONG >( ulMajor ), static_cast< HB_ULONG >( ulMinor ), ucLetter );
          break;
       default:
          szVersion[ 0 ] = '\0';
@@ -2177,7 +2177,7 @@ HB_FUNC( ADSDDGETUSERPROPERTY )
                                                   pvProperty,
                                                   &usPropertyLen );
 
-      hb_storc( ulRetVal == AE_SUCCESS ? ( char * ) pvProperty : nullptr, 3 );
+      hb_storc( ulRetVal == AE_SUCCESS ? static_cast< char * >( pvProperty ) : nullptr, 3 );
 
       hb_retl( ulRetVal == AE_SUCCESS );
    }
@@ -2223,7 +2223,7 @@ HB_FUNC( ADSTESTLOGIN )
                                          pucUserName,
                                          ( UNSIGNED16 ) hb_parni( 6 ) /* usPropertyID */,
                                          pvProperty,
-                                         &usPropertyLen ) == AE_SUCCESS ? ( char * ) pvProperty : nullptr, 7 );
+                                         &usPropertyLen ) == AE_SUCCESS ? static_cast< char * >( pvProperty ) : nullptr, 7 );
       }
 
       AdsDisconnect( adsTestHandle );
@@ -2315,7 +2315,7 @@ HB_FUNC( ADSDIRECTORY )
    {
       while( ulRetVal == AE_SUCCESS )
       {
-         PHB_ITEM pitmFileName = hb_itemPutCL( nullptr, ( const char * ) ucFileName, usFileNameLen );
+         PHB_ITEM pitmFileName = hb_itemPutCL( nullptr, static_cast< const char * >( ucFileName ), usFileNameLen );
          hb_arrayAddForward( pitmDir, pitmFileName );
 
          usFileNameLen = sizeof( ucFileName );
@@ -2391,7 +2391,7 @@ HB_FUNC( ADSGETSERVERNAME )
    if( AdsGetServerName( HB_ADS_PARCONNECTION( 1 ) /* hConnect */,
                          buf,
                          &usLen ) == AE_SUCCESS )
-      hb_retclen( ( char * ) buf, usLen );
+      hb_retclen( static_cast< char * >( buf ), usLen );
 #endif
    /* QUESTION: Design decision or mistake to return NIL on error? [vszakats] */
 }

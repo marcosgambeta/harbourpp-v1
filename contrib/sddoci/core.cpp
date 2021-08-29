@@ -581,7 +581,7 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                   if( OCI_LongGetType( val ) == OCI_CLONG )
                      pItem = D_HB_ITEMPUTSTRLEN( pItem, ( D_HB_CHAR * ) OCI_LongGetBuffer( val ), uiSize );
                   else
-                     pItem = hb_itemPutCL( pItem, ( const char * ) OCI_LongGetBuffer( val ), uiSize );
+                     pItem = hb_itemPutCL( pItem, static_cast< const char * >( OCI_LongGetBuffer( val ) ), uiSize );
                }
                break;
             }
@@ -592,7 +592,7 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
             {
                OCI_Long * val = OCI_GetLong( rs, ui );
                if( val )
-                  pItem = hb_itemPutCL( pItem, ( const char * ) OCI_LongGetBuffer( val ), OCI_LongGetSize( val ) );
+                  pItem = hb_itemPutCL( pItem, static_cast< const char * >( OCI_LongGetBuffer( val ) ), OCI_LongGetSize( val ) );
                break;
             }
 

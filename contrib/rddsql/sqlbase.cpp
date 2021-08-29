@@ -461,7 +461,7 @@ static HB_ERRCODE sqlbaseGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_IT
 
    if( pArea->bRecordFlags & SQLDD_FLAG_CACHED )
    {
-      hb_arrayGet( ( PHB_ITEM ) pArea->pRecord, uiIndex, pItem );
+      hb_arrayGet( static_cast< PHB_ITEM >( pArea->pRecord ), uiIndex, pItem );
       return HB_SUCCESS;
    }
    return pArea->pSDD->GetValue( pArea, uiIndex, pItem );
@@ -486,7 +486,7 @@ static HB_ERRCODE sqlbaseGoCold( SQLBASEAREAP pArea )
    if( pArea->fRecordChanged )
    {
       if( ! pArea->fAppend && pArea->pRowFlags[ pArea->ulRecNo ] & SQLDD_FLAG_CACHED )
-         hb_itemRelease( ( PHB_ITEM ) ( pArea->pRow[ pArea->ulRecNo ] ) );
+         hb_itemRelease( static_cast< PHB_ITEM >( pArea->pRow[ pArea->ulRecNo ] ) );
       pArea->pRow[ pArea->ulRecNo ]      = pArea->pRecord;
       pArea->pRowFlags[ pArea->ulRecNo ] = pArea->bRecordFlags;
       pArea->fRecordChanged = HB_FALSE;
@@ -542,7 +542,7 @@ static HB_ERRCODE sqlbasePutValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_IT
        pField->uiType == HB_FT_ANY ||
        HB_IS_NIL( pItem ) )
    {
-      hb_arraySet( ( PHB_ITEM ) pArea->pRecord, uiIndex, pItem );
+      hb_arraySet( static_cast< PHB_ITEM >( pArea->pRecord ), uiIndex, pItem );
    }
    else
    {
@@ -551,7 +551,7 @@ static HB_ERRCODE sqlbasePutValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_IT
       pError = hb_errNew();
       hb_errPutGenCode( pError, EG_DATATYPE );
       hb_errPutDescription( pError, hb_langDGetErrorDesc( EG_DATATYPE ) );
-      hb_errPutOperation( pError, hb_dynsymName( ( PHB_DYNS ) pField->sym ) );
+      hb_errPutOperation( pError, hb_dynsymName( static_cast< PHB_DYNS >( pField->sym ) ) );
       hb_errPutSubCode( pError, errCode );
       hb_errPutFlags( pError, EF_CANDEFAULT );
       errCode = SELF_ERROR( &pArea->area, pError );
@@ -607,7 +607,7 @@ static HB_ERRCODE sqlbaseZap( SQLBASEAREAP pArea )
    for( ulIndex = 1; ulIndex <= pArea->ulRecCount; ulIndex++ )
    {
       if( pArea->pRowFlags[ ulIndex ] & SQLDD_FLAG_CACHED )
-         hb_itemRelease( ( PHB_ITEM ) pArea->pRow[ ulIndex ] );
+         hb_itemRelease( static_cast< PHB_ITEM >( pArea->pRow[ ulIndex ] ) );
    }
 
    pArea->ulRecCount = 0;
@@ -643,7 +643,7 @@ static HB_ERRCODE sqlbaseClose( SQLBASEAREAP pArea )
       for( ulIndex = 0; ulIndex <= pArea->ulRecCount; ulIndex++ )
       {
          if( pArea->pRowFlags[ ulIndex ] & SQLDD_FLAG_CACHED )
-            hb_itemRelease( ( PHB_ITEM ) pArea->pRow[ ulIndex ] );
+            hb_itemRelease( static_cast< PHB_ITEM >( pArea->pRow[ ulIndex ] ) );
       }
       hb_xfree( pArea->pRow );
       hb_xfree( pArea->pRowFlags );

@@ -122,7 +122,7 @@ HB_FUNC( CRYPT )
             nCryptPos = 0;
       }
 
-      hb_retclen_buffer( ( char * ) pbyResult, nStringLen );
+      hb_retclen_buffer( reinterpret_cast< char * >( pbyResult ), nStringLen );
    }
    else
       hb_retc_null();

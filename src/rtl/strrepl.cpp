@@ -140,8 +140,8 @@ HB_FUNC( HB_STRREPLACE )
             }
             else if( pszSrc )
             {
-               ptr = ( const char * )
-                     memchr( pszSrc, ( HB_UCHAR ) pszText[ nPos ], nSrc );
+               ptr = static_cast< const char * >(
+                     memchr( pszSrc, ( HB_UCHAR ) pszText[ nPos ], nSrc ) );
                nAt = ptr ? ptr - pszSrc + 1 : 0;
                nSkip = 1;
             }

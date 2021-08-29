@@ -593,7 +593,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
 
          if( oNextEntryOffset > 0 )
          {
-            info->next = ( char * ) info->next + oNextEntryOffset;
+            info->next = static_cast< char * >( info->next ) + oNextEntryOffset;
             info->findCount--;
          }
          else

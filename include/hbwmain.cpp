@@ -85,7 +85,7 @@ int WINAPI WinMain( HINSTANCE hInstance,      /* handle to current instance */
    LPSTR pFree;
 #  endif
 
-   argv[ argc++ ] = ( char * ) "";
+   argv[ argc++ ] = static_cast< char * >( "" );
 
    pArg = NULL;
 

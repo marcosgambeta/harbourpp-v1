@@ -319,7 +319,7 @@ HB_FUNC( TRANSFORM )
             if( uiPicFlags & PF_UPPER )
                szResult = hb_cdpnDupUpper( cdp, szExp, &nResultPos );
             else
-               szResult = ( char * ) hb_xmemdup( szExp, nResultPos + 1 );
+               szResult = static_cast< char * >( hb_xmemdup( szExp, nResultPos + 1 ) );
 
             if( uiPicFlags & PF_EXCHANG )
             {

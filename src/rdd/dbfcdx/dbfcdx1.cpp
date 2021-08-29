@@ -3931,7 +3931,7 @@ static void hb_cdxTagLoad( LPCDXTAG pTag )
    }
 
    pTag->KeyExpr   = static_cast< char * >( hb_xgrab( uiKeyLen + 1 ) );
-   hb_strncpyTrim( pTag->KeyExpr, ( const char * ) tagHeader.keyExpPool, uiKeyLen );
+   hb_strncpyTrim( pTag->KeyExpr, reinterpret_cast< const char * >( tagHeader.keyExpPool ), uiKeyLen );
 
    pTag->uiLen     = HB_GET_LE_UINT16( tagHeader.keySize );
    pTag->MaxKeys   = ( pTag->pIndex->uiPageLen - CDX_INT_HEADSIZE ) / ( pTag->uiLen + 8 );

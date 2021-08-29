@@ -74,7 +74,7 @@ void hb_ToOutDebug( const char * sTraceMsg, ... )
       hb_vsnprintf( buffer, sizeof( buffer ), sTraceMsg, ap );
       va_end( ap );
 
-      hb_OutDebug( ( const char * ) buffer, strlen( buffer ) );
+      hb_OutDebug( static_cast< const char * >( buffer ), strlen( buffer ) );
    }
 }
 

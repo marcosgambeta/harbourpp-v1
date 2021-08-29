@@ -715,7 +715,7 @@ static void mouse_init( InOutBase * ioBase )
       memset( ( void * ) &ioBase->mLastEvt, 0, sizeof( ioBase->mLastEvt ) );
       ioBase->mLastEvt.click_delay = DBLCLK_DELAY;
       /* curses mouse buttons check */
-      ioBase->mButtons = tigetnum( ( char * ) "btns" );
+      ioBase->mButtons = tigetnum( static_cast< char * >( "btns" ) );
       if( ioBase->mButtons < 1 )
          ioBase->mButtons = 3;
    }
@@ -1309,10 +1309,10 @@ static char * tiGetS( const char * capname )
 {
    char * ptr;
 
-   ptr = tigetstr( ( char * ) HB_UNCONST( capname ) );
+   ptr = tigetstr( static_cast< char * >( HB_UNCONST( capname ) ) );
    if( ptr )
    {
-      if( ptr == ( char * ) -1 )
+      if( ptr == static_cast< char * >( -1 ) )
          ptr = nullptr;
       else if( ! ptr[ 0 ] )
          ptr = nullptr;
@@ -1630,7 +1630,7 @@ static int gt_getsize( InOutBase * ioBase, int * rows, int * cols )
    {
       struct winsize win;
 
-      if( ioctl( ioBase->base_outfd, TIOCGWINSZ, ( char * ) &win ) != -1 )
+      if( ioctl( ioBase->base_outfd, TIOCGWINSZ, static_cast< char * >( &win ) ) != -1 )
       {
          *rows = win.ws_row;
          *cols = win.ws_col;
@@ -1706,11 +1706,11 @@ static int gt_setsize( InOutBase * ioBase, int rows, int cols )
       {
          struct winsize win;
 
-         if( ioctl( ioBase->base_outfd, TIOCGWINSZ, ( char * ) &win ) != -1 )
+         if( ioctl( ioBase->base_outfd, TIOCGWINSZ, static_cast< char * >( &win ) ) != -1 )
          {
             win.ws_row = rows;
             win.ws_col = cols;
-            ioctl( ioBase->base_outfd, TIOCSWINSZ, ( char * ) &win );
+            ioctl( ioBase->base_outfd, TIOCSWINSZ, static_cast< char * >( &win ) );
          }
          ret = gt_resize( ioBase );
       }

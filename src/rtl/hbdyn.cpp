@@ -201,8 +201,8 @@ static HB_U64 hb_u64par( PHB_ITEM pParam, PHB_DYNARG pArg )
          HB_SIZE nLen = hb_itemGetCLen( pParam );
          pArg->hString = hb_xgrab( nLen + sizeof( char ) );
          pArg->bRawBuffer = HB_TRUE;
-         memcpy( ( char * ) pArg->hString, hb_itemGetCPtr( pParam ), nLen );
-         ( ( char * ) pArg->hString )[ nLen ] = '\0';
+         memcpy( static_cast< char * >( pArg->hString ), hb_itemGetCPtr( pParam ), nLen );
+         ( static_cast< char * >( pArg->hString ) )[ nLen ] = '\0';
          r = reinterpret_cast< HB_PTRUINT >( pArg->hString );
          pArg->value.t.n64 = r;
          break;
@@ -237,8 +237,8 @@ static HB_U64 hb_u64par( PHB_ITEM pParam, PHB_DYNARG pArg )
                HB_SIZE nLen = hb_itemGetCLen( pParam );
                pArg->hString = hb_xgrab( nLen + sizeof( char ) );
                pArg->bRawBuffer = HB_TRUE;
-               memcpy( ( char * ) pArg->hString, hb_itemGetCPtr( pParam ), nLen );
-               ( ( char * ) pArg->hString )[ nLen ] = '\0';
+               memcpy( static_cast< char * >( pArg->hString ), hb_itemGetCPtr( pParam ), nLen );
+               ( static_cast< char * >( pArg->hString ) )[ nLen ] = '\0';
                r = reinterpret_cast< HB_PTRUINT >( pArg->hString );
                break;
             }
@@ -333,9 +333,9 @@ static PHB_ITEM hb_u64ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
 
       case HB_DYN_CTYPE_CHAR_UNSIGNED_PTR:
          if( nLen == -1 )
-            hb_itemPutC( pItem, ( const char * ) value.t.n64 );
+            hb_itemPutC( pItem, reinterpret_cast< const char * >( value.t.n64 ) );
          else
-            hb_itemPutCL( pItem, ( const char * ) value.t.n64, nLen );
+            hb_itemPutCL( pItem, reinterpret_cast< const char * >( value.t.n64 ), nLen );
          break;
 
       case HB_DYN_CTYPE_CHAR_PTR:
@@ -343,15 +343,15 @@ static PHB_ITEM hb_u64ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
          {
             case HB_DYN_ENC_ASCII:
                if( nLen == -1 )
-                  hb_itemPutStr( pItem, hb_setGetOSCP(), ( const char * ) value.t.n64 );
+                  hb_itemPutStr( pItem, hb_setGetOSCP(), reinterpret_cast< const char * >( value.t.n64 ) );
                else
-                  hb_itemPutStrLen( pItem, hb_setGetOSCP(), ( const char * ) value.t.n64, nLen );
+                  hb_itemPutStrLen( pItem, hb_setGetOSCP(), reinterpret_cast< const char * >( value.t.n64 ), nLen );
                break;
             case HB_DYN_ENC_UTF8:
                if( nLen == -1 )
-                  hb_itemPutStrUTF8( pItem, ( const char * ) value.t.n64 );
+                  hb_itemPutStrUTF8( pItem, reinterpret_cast< const char * >( value.t.n64 ) );
                else
-                  hb_itemPutStrLenUTF8( pItem, ( const char * ) value.t.n64, nLen );
+                  hb_itemPutStrLenUTF8( pItem, reinterpret_cast< const char * >( value.t.n64 ), nLen );
                break;
             case HB_DYN_ENC_UTF16:
                if( nLen == -1 )
@@ -361,9 +361,9 @@ static PHB_ITEM hb_u64ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
                break;
             default:
                if( nLen == -1 )
-                  hb_itemPutC( pItem, ( const char * ) value.t.n64 );
+                  hb_itemPutC( pItem, reinterpret_cast< const char * >( value.t.n64 ) );
                else
-                  hb_itemPutCL( pItem, ( const char * ) value.t.n64, nLen );
+                  hb_itemPutCL( pItem, reinterpret_cast< const char * >( value.t.n64 ), nLen );
          }
          break;
 
@@ -581,8 +581,8 @@ static void hb_u32par( PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r
          HB_SIZE nLen = hb_itemGetCLen( pParam );
          pArg->hString = hb_xgrab( nLen + sizeof( char ) );
          pArg->bRawBuffer = HB_TRUE;
-         memcpy( ( char * ) pArg->hString, hb_itemGetCPtr( pParam ), nLen );
-         ( ( char * ) pArg->hString )[ nLen ] = '\0';
+         memcpy( static_cast< char * >( pArg->hString ), hb_itemGetCPtr( pParam ), nLen );
+         ( static_cast< char * >( pArg->hString ) )[ nLen ] = '\0';
          *r1 = reinterpret_cast< HB_PTRUINT >( pArg->hString );
          pArg->value.t.n32 = *r1;
          break;
@@ -617,8 +617,8 @@ static void hb_u32par( PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r
                HB_SIZE nLen = hb_itemGetCLen( pParam );
                pArg->hString = hb_xgrab( nLen + sizeof( char ) );
                pArg->bRawBuffer = HB_TRUE;
-               memcpy( ( char * ) pArg->hString, hb_itemGetCPtr( pParam ), nLen );
-               ( ( char * ) pArg->hString )[ nLen ] = '\0';
+               memcpy( static_cast< char * >( pArg->hString ), hb_itemGetCPtr( pParam ), nLen );
+               ( static_cast< char * >( pArg->hString ) )[ nLen ] = '\0';
                *r1 = reinterpret_cast< HB_PTRUINT >( pArg->hString );
                break;
             }
@@ -715,9 +715,9 @@ static PHB_ITEM hb_u32ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
 
       case HB_DYN_CTYPE_CHAR_UNSIGNED_PTR:
          if( nLen == -1 )
-            hb_itemPutC( pItem, ( const char * ) value.t.n32 );
+            hb_itemPutC( pItem, reinterpret_cast< const char * >( value.t.n32 ) );
          else
-            hb_itemPutCL( pItem, ( const char * ) value.t.n32, nLen );
+            hb_itemPutCL( pItem, reinterpret_cast< const char * >( value.t.n32 ), nLen );
          break;
 
       case HB_DYN_CTYPE_CHAR_PTR:
@@ -726,15 +726,15 @@ static PHB_ITEM hb_u32ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
          {
             case HB_DYN_ENC_ASCII:
                if( nLen == -1 )
-                  hb_itemPutStr( pItem, hb_setGetOSCP(), ( const char * ) value.t.n32 );
+                  hb_itemPutStr( pItem, hb_setGetOSCP(), reinterpret_cast< const char * >( value.t.n32 ) );
                else
-                  hb_itemPutStrLen( pItem, hb_setGetOSCP(), ( const char * ) value.t.n32, nLen );
+                  hb_itemPutStrLen( pItem, hb_setGetOSCP(), reinterpret_cast< const char * >( value.t.n32 ), nLen );
                break;
             case HB_DYN_ENC_UTF8:
                if( nLen == -1 )
-                  hb_itemPutStrUTF8( pItem, ( const char * ) value.t.n32 );
+                  hb_itemPutStrUTF8( pItem, reinterpret_cast< const char * >( value.t.n32 ) );
                else
-                  hb_itemPutStrLenUTF8( pItem, ( const char * ) value.t.n32, nLen );
+                  hb_itemPutStrLenUTF8( pItem, reinterpret_cast< const char * >( value.t.n32 ), nLen );
                break;
             case HB_DYN_ENC_UTF16:
                if( nLen == -1 )
@@ -744,9 +744,9 @@ static PHB_ITEM hb_u32ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
                break;
             default:
                if( nLen == -1 )
-                  hb_itemPutC( pItem, ( const char * ) value.t.n32 );
+                  hb_itemPutC( pItem, reinterpret_cast< const char * >( value.t.n32 ) );
                else
-                  hb_itemPutCL( pItem, ( const char * ) value.t.n32, nLen );
+                  hb_itemPutCL( pItem, reinterpret_cast< const char * >( value.t.n32 ), nLen );
          }
          break;
 

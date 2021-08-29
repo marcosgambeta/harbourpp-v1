@@ -169,7 +169,7 @@ HB_FUNC( FILESTR )
 
          if( bCtrlZ )
          {
-            pCtrlZ = ( char * ) memchr( pcResult, 26, nLength );
+            pCtrlZ = static_cast< char * >( memchr( pcResult, 26, nLength ) );
             if( pCtrlZ )
                nLength = pCtrlZ - pcResult;
          }

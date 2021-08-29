@@ -669,7 +669,7 @@ static LPKEYINFO hb_nsxKeyPutItem( LPKEYINFO pKey, PHB_ITEM pItem, HB_ULONG ulRe
          {
             len = pTag->KeyLength;
             hb_cdpnDup2( hb_itemGetCPtr( pItem ), hb_itemGetCLen( pItem ),
-                         ( char * ) pKey->val, &len,
+                         reinterpret_cast< char * >( pKey->val ), &len,
                          hb_vmCDP(), pTag->pIndex->pArea->dbfarea.area.cdPage );
          }
          else
@@ -731,13 +731,13 @@ static PHB_ITEM hb_nsxKeyGetItem( PHB_ITEM pItem, LPKEYINFO pKey,
             if( fTrans )
             {
                HB_SIZE nLen = pTag->KeyLength;
-               char * pszVal = hb_cdpnDup( ( const char * ) pKey->val, &nLen,
+               char * pszVal = hb_cdpnDup( reinterpret_cast< const char * >( pKey->val ), &nLen,
                                            pTag->pIndex->pArea->dbfarea.area.cdPage, hb_vmCDP() );
                pItem = hb_itemPutCLPtr( pItem, pszVal, nLen );
             }
             else
             {
-               pItem = hb_itemPutCL( pItem, ( char * ) pKey->val, pTag->KeyLength );
+               pItem = hb_itemPutCL( pItem, reinterpret_cast< char * >( pKey->val ), pTag->KeyLength );
             }
             break;
          case 'N':
@@ -868,8 +868,8 @@ static int hb_nsxValCompare( LPTAGINFO pTag, const HB_UCHAR * val1, int len1,
          if( HB_CDP_ISBINSORT( pTag->pIndex->pArea->dbfarea.area.cdPage ) )
             iResult = memcmp( val1, val2, iLimit );
          else
-            return -hb_cdpcmp( ( const char * ) val2, static_cast< HB_SIZE >( len2 ),
-                               ( const char * ) val1, static_cast< HB_SIZE >( len1 ),
+            return -hb_cdpcmp( reinterpret_cast< const char * >( val2 ), static_cast< HB_SIZE >( len2 ),
+                               reinterpret_cast< const char * >( val1 ), static_cast< HB_SIZE >( len1 ),
                                pTag->pIndex->pArea->dbfarea.area.cdPage, 0 );
       }
 
@@ -1812,14 +1812,14 @@ static LPTAGINFO hb_nsxTagLoad( LPNSXINDEX pIndex, HB_ULONG ulBlock,
        uiKeySize == 0 || uiKeySize > NSX_MAXKEYLEN || lpNSX->KeyExpr[ 0 ] < 0x20 )
       return nullptr;
 
-   if( SELF_COMPILE( &pIndex->pArea->dbfarea.area, ( const char * ) lpNSX->KeyExpr ) == HB_FAILURE )
+   if( SELF_COMPILE( &pIndex->pArea->dbfarea.area, reinterpret_cast< const char * >( lpNSX->KeyExpr ) ) == HB_FAILURE )
       return nullptr;
    pKeyExp = pIndex->pArea->dbfarea.area.valResult;
    pIndex->pArea->dbfarea.area.valResult = nullptr;
 
    if( lpNSX->ForExpr[ 0 ] >= 0x20 )
    {
-      if( SELF_COMPILE( &pIndex->pArea->dbfarea.area, ( const char * ) lpNSX->ForExpr ) == HB_FAILURE )
+      if( SELF_COMPILE( &pIndex->pArea->dbfarea.area, reinterpret_cast< const char * >( lpNSX->ForExpr ) ) == HB_FAILURE )
       {
          hb_vmDestroyBlockOrMacro( pKeyExp );
          return nullptr;
@@ -1828,9 +1828,9 @@ static LPTAGINFO hb_nsxTagLoad( LPNSXINDEX pIndex, HB_ULONG ulBlock,
       pIndex->pArea->dbfarea.area.valResult = nullptr;
    }
    pTag = hb_nsxTagNew( pIndex, szTagName,
-                        ( const char * ) lpNSX->KeyExpr, pKeyExp,
+                        reinterpret_cast< const char * >( lpNSX->KeyExpr ), pKeyExp,
                         ucType, uiKeySize, ucTrail,
-                        ( const char * ) lpNSX->ForExpr, pForExp,
+                        reinterpret_cast< const char * >( lpNSX->ForExpr ), pForExp,
                         uiDescend == 0, uiUnique != 0,
                         ( lpNSX->TagFlags[ 0 ] & NSX_TAG_NOUPDATE ) != 0 );
 
@@ -1852,14 +1852,14 @@ static void hb_nsxIndexTagAdd( LPNSXINDEX pIndex, LPTAGINFO pTag )
 
    for( i = 0; i < iTags; pTagItem++, i++ )
    {
-      if( ! hb_strnicmp( ( const char * ) pTagItem->TagName, pTag->TagName, NSX_TAGNAME ) )
+      if( ! hb_strnicmp( reinterpret_cast< const char * >( pTagItem->TagName ), pTag->TagName, NSX_TAGNAME ) )
          break;
    }
    if( i == iTags )
    {
       ++iTags;
       HB_PUT_LE_UINT16( pIndex->HeaderBuff.TagCount, iTags );
-      hb_strncpy( ( char * ) pTagItem->TagName, pTag->TagName, NSX_TAGNAME );
+      hb_strncpy( reinterpret_cast< char * >( pTagItem->TagName ), pTag->TagName, NSX_TAGNAME );
    }
    HB_PUT_LE_UINT32( pTagItem->TagOffset, pTag->HeadBlock );
    pIndex->Update = HB_TRUE;
@@ -1875,7 +1875,7 @@ static void hb_nsxIndexTagDel( LPNSXINDEX pIndex, const char * szTagName )
 
    for( i = 0; i < iTags; pTagItem++, i++ )
    {
-      if( ! hb_strnicmp( ( const char * ) pTagItem->TagName, szTagName, NSX_TAGNAME ) )
+      if( ! hb_strnicmp( reinterpret_cast< const char * >( pTagItem->TagName ), szTagName, NSX_TAGNAME ) )
       {
          memmove( pTagItem, pTagItem + 1, ( iTags - i ) * sizeof( NSXTAGITEM ) );
          memset( pTagItem + iTags - 1, 0, sizeof( NSXTAGITEM ) );
@@ -1897,7 +1897,7 @@ static HB_ULONG hb_nsxIndexTagFind( LPNSXROOTHEADER lpNSX, const char * szTagNam
 
    for( i = 0; i < iTags; pTagItem++, i++ )
    {
-      if( ! hb_strnicmp( ( const char * ) pTagItem->TagName, szTagName, NSX_TAGNAME ) )
+      if( ! hb_strnicmp( reinterpret_cast< const char * >( pTagItem->TagName ), szTagName, NSX_TAGNAME ) )
          return HB_GET_LE_UINT32( pTagItem->TagOffset );
    }
    return NSX_DUMMYNODE;
@@ -2076,7 +2076,7 @@ static HB_ERRCODE hb_nsxIndexLoad( LPNSXINDEX pIndex )
          if( ! hb_nsxBlockRead( pIndex, ulBlock,
                                 &tagbuffer, sizeof( NSXTAGHEADER ) ) )
             return HB_FAILURE;
-         pTag = hb_nsxTagLoad( pIndex, ulBlock, ( const char * ) pTagItem->TagName, &tagbuffer );
+         pTag = hb_nsxTagLoad( pIndex, ulBlock, reinterpret_cast< const char * >( pTagItem->TagName ), &tagbuffer );
          if( ! pTag )
             return HB_FAILURE;
          hb_nsxTagAdd( pIndex, pTag );
@@ -4691,14 +4691,14 @@ static HB_BOOL hb_nsxOrdSkipWild( LPTAGINFO pTag, HB_BOOL fForward, PHB_ITEM pWi
 
          while( fForward ? ! pTag->TagEOF : ! pTag->TagBOF )
          {
-            if( hb_strMatchWild( ( const char * ) pTag->CurKeyInfo->val, szPattern ) )
+            if( hb_strMatchWild( reinterpret_cast< const char * >( pTag->CurKeyInfo->val ), szPattern ) )
             {
                HB_ULONG ulRecNo = pTag->CurKeyInfo->rec;
                if( SELF_GOTO( &pArea->dbfarea.area, ulRecNo ) != HB_SUCCESS )
                   break;
                if( SELF_SKIPFILTER( &pArea->dbfarea.area, fForward ? 1 : -1 ) != HB_SUCCESS ||
                    pArea->dbfarea.ulRecNo == ulRecNo ||
-                   hb_strMatchWild( ( const char * ) pTag->CurKeyInfo->val, szPattern ) )
+                   hb_strMatchWild( reinterpret_cast< const char * >( pTag->CurKeyInfo->val ), szPattern ) )
                {
                   fFound = HB_TRUE;
                   break;
@@ -4798,12 +4798,12 @@ static HB_BOOL hb_nsxOrdSkipRegEx( LPTAGINFO pTag, HB_BOOL fForward, PHB_ITEM pR
             if( SELF_GOTO( &pArea->dbfarea.area, pTag->CurKeyInfo->rec ) != HB_SUCCESS )
                break;
 
-            if( hb_nsxRegexMatch( pTag, pRegEx, ( const char * ) pTag->CurKeyInfo->val ) )
+            if( hb_nsxRegexMatch( pTag, pRegEx, reinterpret_cast< const char * >( pTag->CurKeyInfo->val ) ) )
             {
                HB_ULONG ulRecNo = pArea->dbfarea.ulRecNo;
                if( SELF_SKIPFILTER( &pArea->dbfarea.area, fForward ? 1 : -1 ) != HB_SUCCESS ||
                    pArea->dbfarea.ulRecNo == ulRecNo ||
-                   hb_nsxRegexMatch( pTag, pRegEx, ( const char * ) pTag->CurKeyInfo->val ) )
+                   hb_nsxRegexMatch( pTag, pRegEx, reinterpret_cast< const char * >( pTag->CurKeyInfo->val ) ) )
                {
                   fFound = HB_TRUE;
                   break;

@@ -246,7 +246,7 @@ static int hb_mixKeyCompare( PMIXTAG pTag, PMIXKEY pKey1, PMIXKEY pKey2, unsigne
    uiSize = pTag->uiKeyLen > uiLen ? uiLen : pTag->uiKeyLen;
 
    if( pTag->pCodepage )
-      i = hb_cdpcmp( ( const char * ) pKey1->val, static_cast< HB_SIZE >( uiSize ), ( const char * ) pKey2->val, static_cast< HB_SIZE >( uiSize ), pTag->pCodepage, 0 );
+      i = hb_cdpcmp( reinterpret_cast< const char * >( pKey1->val ), static_cast< HB_SIZE >( uiSize ), reinterpret_cast< const char * >( pKey2->val ), static_cast< HB_SIZE >( uiSize ), pTag->pCodepage, 0 );
    else if( uiSize > 0 )
       i = memcmp( pKey1->val, pKey2->val, uiSize );
 
@@ -311,7 +311,7 @@ static void hb_mixTagPrintNode( PMIXTAG pTag, PMIXNODE pNode, int iLevel )
          hb_mixTagPrintNode( pTag, pNode->Child[ i ], iLevel + 1 );
       }
       printf( "%*ld %*s\n", iLevel * 10 + 5, MIX_KEY( pTag, pNode, i )->rec, pTag->uiKeyLen,
-              MIX_KEY( pTag, pNode, i )->notnul ? ( char * ) MIX_KEY( pTag, pNode, i )->val : "NULL" );
+              MIX_KEY( pTag, pNode, i )->notnul ? static_cast< char * >( MIX_KEY( pTag, pNode, i )->val ) : "NULL" );
    }
 
    if( ! pNode->Leaf )

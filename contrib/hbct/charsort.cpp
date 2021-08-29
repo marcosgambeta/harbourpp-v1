@@ -67,10 +67,10 @@ static int
 #endif
 _hb_do_sortascend( const void * p1, const void * p2 )
 {
-   PCT_CHARSORT charsort = ( PCT_CHARSORT ) hb_stackGetTSD( &s_charsort );
+   PCT_CHARSORT charsort = static_cast< PCT_CHARSORT >( hb_stackGetTSD( &s_charsort ) );
 
-   return strncmp( ( const char * ) p1 + charsort->sElementPos,
-                   ( const char * ) p2 + charsort->sElementPos,
+   return strncmp( static_cast< const char * >( p1 ) + charsort->sElementPos,
+                   static_cast< const char * >( p2 ) + charsort->sElementPos,
                    charsort->sCompareLen );
 }
 
@@ -81,10 +81,10 @@ static int
 #endif
 _hb_do_sortdescend( const void * p1, const void * p2 )
 {
-   PCT_CHARSORT charsort = ( PCT_CHARSORT ) hb_stackGetTSD( &s_charsort );
+   PCT_CHARSORT charsort = static_cast< PCT_CHARSORT >( hb_stackGetTSD( &s_charsort ) );
 
-   return -strncmp( ( const char * ) p1 + charsort->sElementPos,
-                    ( const char * ) p2 + charsort->sElementPos,
+   return -strncmp( static_cast< const char * >( p1 ) + charsort->sElementPos,
+                    static_cast< const char * >( p2 ) + charsort->sElementPos,
                     charsort->sCompareLen );
 }
 
@@ -96,7 +96,7 @@ HB_FUNC( CHARSORT )
    /* param check I */
    if( HB_ISCHAR( 1 ) )
    {
-      PCT_CHARSORT charsort = ( PCT_CHARSORT ) hb_stackGetTSD( &s_charsort );
+      PCT_CHARSORT charsort = static_cast< PCT_CHARSORT >( hb_stackGetTSD( &s_charsort ) );
 
       /* get parameters */
       const char * pcString = hb_parc( 1 );

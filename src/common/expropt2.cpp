@@ -2060,20 +2060,20 @@ HB_BOOL hb_compExprReduceCHR( PHB_EXPR pSelf, HB_COMP_DECL )
              ( pArg->value.asNum.val.l & 0xff ) == 0 &&
                pArg->value.asNum.val.l != 0 )
          {
-            pExpr->value.asString.string = ( char * ) "";
+            pExpr->value.asString.string = static_cast< char * >( "" );
             pExpr->value.asString.dealloc = HB_FALSE;
             pExpr->nLength = 0;
          }
          else
          {
-            pExpr->value.asString.string = ( char * ) HB_UNCONST( hb_szAscii[ static_cast< int >( pArg->value.asNum.val.l ) & 0xff ] );
+            pExpr->value.asString.string = static_cast< char * >( HB_UNCONST( hb_szAscii[ static_cast< int >( pArg->value.asNum.val.l ) & 0xff ] ) );
             pExpr->value.asString.dealloc = HB_FALSE;
             pExpr->nLength = 1;
          }
       }
       else
       {
-         pExpr->value.asString.string = ( char * ) HB_UNCONST( hb_szAscii[ HB_CAST_INT( pArg->value.asNum.val.d ) & 0xff ] );
+         pExpr->value.asString.string = static_cast< char * >( HB_UNCONST( hb_szAscii[ HB_CAST_INT( pArg->value.asNum.val.d ) & 0xff ] ) );
          pExpr->value.asString.dealloc = HB_FALSE;
          pExpr->nLength = 1;
       }
@@ -2099,9 +2099,9 @@ HB_BOOL hb_compExprReduceBCHAR( PHB_EXPR pSelf, HB_COMP_DECL )
 
       pExpr->ValType = HB_EV_STRING;
       pExpr->value.asString.string =
-         ( char * ) HB_UNCONST( hb_szAscii[ ( pArg->value.asNum.NumType == HB_ET_LONG ?
+         static_cast< char * >( HB_UNCONST( hb_szAscii[ ( pArg->value.asNum.NumType == HB_ET_LONG ?
                                 static_cast< int >( pArg->value.asNum.val.l ) :
-                                HB_CAST_INT( pArg->value.asNum.val.d ) ) & 0xff ] );
+                                HB_CAST_INT( pArg->value.asNum.val.d ) ) & 0xff ] ) );
       pExpr->value.asString.dealloc = HB_FALSE;
       pExpr->nLength = 1;
 
@@ -2342,8 +2342,8 @@ HB_BOOL hb_compExprReduceDTOS( PHB_EXPR pSelf, HB_COMP_DECL )
       char szBuffer[ 9 ], * szDate;
       PHB_EXPR pExpr;
 
-      szDate = ( char * ) memcpy( hb_xgrab( 9 ),
-            hb_dateDecStr( szBuffer, static_cast< long >( pArg->value.asDate.lDate ) ), 9 );
+      szDate = static_cast< char * >( memcpy( hb_xgrab( 9 ),
+            hb_dateDecStr( szBuffer, static_cast< long >( pArg->value.asDate.lDate ) ), 9 ) );
       pExpr = hb_compExprNewString( szDate, 8, HB_TRUE, HB_COMP_PARAM );
 
       HB_COMP_EXPR_FREE( pParms );
@@ -2410,8 +2410,8 @@ HB_BOOL hb_compExprReduceUPPER( PHB_EXPR pSelf, HB_COMP_DECL )
          {
             if( pArg->nLength == 1 )
             {
-               szValue = ( char * ) HB_UNCONST( hb_szAscii[ HB_TOUPPER( static_cast< unsigned char >(
-                                                   pArg->value.asString.string[ 0 ] ) ) ] );
+               szValue = static_cast< char * >( HB_UNCONST( hb_szAscii[ HB_TOUPPER( static_cast< unsigned char >(
+                                                   pArg->value.asString.string[ 0 ] ) ) ] ) );
                fDealloc = HB_FALSE;
             }
             else

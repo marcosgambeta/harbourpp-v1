@@ -243,14 +243,14 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
 
    if( mysql_real_query( pMySql, pArea->szQuery, static_cast< unsigned long >( strlen( pArea->szQuery ) ) ) )
    {
-      hb_errRT_MySQLDD( EG_OPEN, ESQLDD_INVALIDQUERY, ( const char * ) mysql_error( pMySql ), pArea->szQuery,
+      hb_errRT_MySQLDD( EG_OPEN, ESQLDD_INVALIDQUERY, static_cast< const char * >( mysql_error( pMySql ) ), pArea->szQuery,
                         mysql_errno( pMySql ) );
       return HB_FAILURE;
    }
 
    if( ( pSDDData->pResult = mysql_store_result( pMySql ) ) == nullptr )
    {
-      hb_errRT_MySQLDD( EG_MEM, ESQLDD_INVALIDQUERY, ( const char * ) mysql_error( pMySql ), pArea->szQuery,
+      hb_errRT_MySQLDD( EG_MEM, ESQLDD_INVALIDQUERY, static_cast< const char * >( mysql_error( pMySql ) ), pArea->szQuery,
                         mysql_errno( pMySql ) );
       return HB_FAILURE;
    }

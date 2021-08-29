@@ -777,7 +777,7 @@ HB_FUNC( NETIO_SERVER )
                      errCode = NETIO_ERR_READ;
                   else
                   {
-                     const char * pszName = s_consrvFilePath( ( char * ) msg, conn, HB_FALSE );
+                     const char * pszName = s_consrvFilePath( reinterpret_cast< char * >( msg ), conn, HB_FALSE );
 
                      if( ! pszName )
                         errCode = NETIO_ERR_WRONG_FILE_PATH;
@@ -810,7 +810,7 @@ HB_FUNC( NETIO_SERVER )
                      errCode = NETIO_ERR_READ;
                   else
                   {
-                     const char * pszName = s_consrvFilePath( ( char * ) msg, conn, HB_FALSE );
+                     const char * pszName = s_consrvFilePath( reinterpret_cast< char * >( msg ), conn, HB_FALSE );
 
                      if( ! pszName )
                         errCode = NETIO_ERR_WRONG_FILE_PATH;
@@ -841,7 +841,7 @@ HB_FUNC( NETIO_SERVER )
                      errCode = NETIO_ERR_READ;
                   else
                   {
-                     const char * pszName = s_consrvFilePath( ( char * ) msg, conn, HB_FALSE );
+                     const char * pszName = s_consrvFilePath( reinterpret_cast< char * >( msg ), conn, HB_FALSE );
                      char * pszDirSpec;
 
                      pszDirSpec = pszName ? hb_strdup( pszName ) : nullptr;
@@ -855,7 +855,7 @@ HB_FUNC( NETIO_SERVER )
                      {
                         HB_SIZE itmSize = 0;
                         char * itmData = nullptr;
-                        const char * pszAttr = size2 ? ( const char * ) msg : nullptr;
+                        const char * pszAttr = size2 ? reinterpret_cast< const char * >( msg ) : nullptr;
                         PHB_ITEM pResult = hb_fileDirectory( pszDirSpec, pszAttr );
 
                         errFsCode = hb_fsError();
@@ -905,7 +905,7 @@ HB_FUNC( NETIO_SERVER )
                      errCode = NETIO_ERR_READ;
                   else
                   {
-                     const char * pszName = s_consrvFilePath( ( char * ) msg, conn, HB_FALSE );
+                     const char * pszName = s_consrvFilePath( reinterpret_cast< char * >( msg ), conn, HB_FALSE );
 
                      if( ! pszName )
                         errCode = NETIO_ERR_WRONG_FILE_PATH;
@@ -956,7 +956,7 @@ HB_FUNC( NETIO_SERVER )
                      errCode = NETIO_ERR_READ;
                   else
                   {
-                     const char * szFile = s_consrvFilePath( ( char * ) msg, conn, uiMsg == NETIO_LINKSYM );
+                     const char * szFile = s_consrvFilePath( reinterpret_cast< char * >( msg ), conn, uiMsg == NETIO_LINKSYM );
                      char * szOldName = szFile ? hb_strdup( szFile ) : nullptr;
 
                      msg[ size2 ] = '\0';
@@ -966,7 +966,7 @@ HB_FUNC( NETIO_SERVER )
                         errCode = NETIO_ERR_WRONG_FILE_PATH;
                      else
                      {
-                        szFile = s_consrvFilePath( ( char * ) msg, conn, HB_FALSE );
+                        szFile = s_consrvFilePath( reinterpret_cast< char * >( msg ), conn, HB_FALSE );
                         if( ! szFile )
                            errCode = NETIO_ERR_WRONG_FILE_PATH;
                         else if( ! ( uiMsg == NETIO_RENAME ? hb_fileRename( szOldName, szFile ) :
@@ -1001,7 +1001,7 @@ HB_FUNC( NETIO_SERVER )
                      errCode = NETIO_ERR_READ;
                   else
                   {
-                     const char * pszName = s_consrvFilePath( ( char * ) msg, conn, HB_FALSE );
+                     const char * pszName = s_consrvFilePath( reinterpret_cast< char * >( msg ), conn, HB_FALSE );
 
                      if( ! pszName )
                         errCode = NETIO_ERR_WRONG_FILE_PATH;
@@ -1035,7 +1035,7 @@ HB_FUNC( NETIO_SERVER )
                      errCode = NETIO_ERR_READ;
                   else
                   {
-                     const char * pszName = s_consrvFilePath( ( char * ) msg, conn, HB_FALSE );
+                     const char * pszName = s_consrvFilePath( reinterpret_cast< char * >( msg ), conn, HB_FALSE );
 
                      if( ! pszName )
                         errCode = NETIO_ERR_WRONG_FILE_PATH;
@@ -1060,13 +1060,13 @@ HB_FUNC( NETIO_SERVER )
                if( uiMsg == NETIO_OPEN2 )
                {
                   nFlags = HB_GET_LE_UINT32( &msgbuf[ 6 ] );
-                  szExt = msgbuf[ 10 ] ? hb_strndup( ( const char * ) &msgbuf[ 10 ],
+                  szExt = msgbuf[ 10 ] ? hb_strndup( reinterpret_cast< const char * >( &msgbuf[ 10 ] ),
                                                      NETIO_MSGLEN - 10 ) : nullptr;
                }
                else
                {
                   nFlags = HB_GET_LE_UINT16( &msgbuf[ 6 ] );
-                  szExt = msgbuf[ 8 ] ? hb_strndup( ( const char * ) &msgbuf[ 8 ],
+                  szExt = msgbuf[ 8 ] ? hb_strndup( reinterpret_cast< const char * >( &msgbuf[ 8 ] ),
                                                     NETIO_MSGLEN - 8 ) : nullptr;
                }
                if( size <= 0 )
@@ -1082,7 +1082,7 @@ HB_FUNC( NETIO_SERVER )
                      errCode = NETIO_ERR_FILES_MAX;
                   else
                   {
-                     const char * szFile = s_consrvFilePath( ( char * ) msg, conn, HB_FALSE );
+                     const char * szFile = s_consrvFilePath( reinterpret_cast< char * >( msg ), conn, HB_FALSE );
 
                      if( ! szFile )
                         errCode = NETIO_ERR_WRONG_FILE_PATH;
@@ -1137,7 +1137,7 @@ HB_FUNC( NETIO_SERVER )
 
                         if( size > 0 )
                         {
-                           const char * data = ( const char * ) msg;
+                           const char * data = reinterpret_cast< const char * >( msg );
                            HB_SIZE nSize = size;
 
                            pValue = hb_itemDeserialize( &data, &nSize );
@@ -1437,7 +1437,7 @@ HB_FUNC( NETIO_SERVER )
                      errCode = NETIO_ERR_UNSUPPORTED;
                   else
                   {
-                     const char * data = ( const char * ) msg;
+                     const char * data = reinterpret_cast< const char * >( msg );
                      size2 = static_cast< long >( hb_strnlen( data, size ) ) + 1;
                      if( size2 > size )
                         errCode = NETIO_ERR_WRONG_PARAM;

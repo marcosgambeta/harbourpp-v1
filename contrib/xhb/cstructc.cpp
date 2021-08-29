@@ -75,7 +75,7 @@ static PHB_ITEM hb_itemPutCRaw( PHB_ITEM pItem, const char * szText, HB_SIZE nLe
    }
    pItem->type = HB_IT_STRING;
    pItem->item.asString.length    = nLen;
-   pItem->item.asString.value     = ( char * ) HB_UNCONST( szText );
+   pItem->item.asString.value     = static_cast< char * >( HB_UNCONST( szText ) );
    pItem->item.asString.allocated = nLen;
 
    return pItem;
@@ -97,7 +97,7 @@ static PHB_ITEM hb_itemPutCRawStatic( PHB_ITEM pItem, const char * szText, HB_SI
    pItem->type = HB_IT_STRING;
    pItem->item.asString.allocated = 0;
    pItem->item.asString.length    = nLen;
-   pItem->item.asString.value     = ( char * ) HB_UNCONST( szText );
+   pItem->item.asString.value     = static_cast< char * >( HB_UNCONST( szText ) );
 
    return pItem;
 }
@@ -490,9 +490,9 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
       {
          case CTYPE_CHAR:  /* char */
             if( ( pBaseVar->pItems + nIndex )->type )
-               *( ( char * ) ( Buffer + uiOffset ) ) = static_cast< char >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
+               *( reinterpret_cast< char * >( Buffer + uiOffset ) ) = static_cast< char >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
             else
-               *( ( char * ) ( Buffer + uiOffset ) ) = 0;
+               *( reinterpret_cast< char * >( Buffer + uiOffset ) ) = 0;
             break;
 
          case CTYPE_UNSIGNED_CHAR:  /* unsigned char */
@@ -510,15 +510,15 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
                   break;
 
                case HB_IT_POINTER:
-                  *( ( char ** ) ( Buffer + uiOffset ) ) = ( char * ) ( pBaseVar->pItems + nIndex )->item.asPointer.value;
+                  *( ( char ** ) ( Buffer + uiOffset ) ) = static_cast< char * >( ( pBaseVar->pItems + nIndex )->item.asPointer.value );
                   break;
 #if UINT_MAX == ULONG_MAX
                case HB_IT_INTEGER:
-                  *( ( char ** ) ( Buffer + uiOffset ) ) = ( char * ) static_cast< HB_PTRUINT >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
+                  *( ( char ** ) ( Buffer + uiOffset ) ) = reinterpret_cast< char * >( static_cast< HB_PTRUINT >( ( pBaseVar->pItems + nIndex )->item.asInteger.value ) );
                   break;
 #endif
                case HB_IT_LONG:
-                  *( ( char ** ) ( Buffer + uiOffset ) ) = ( char * ) static_cast< HB_PTRUINT >( ( pBaseVar->pItems + nIndex )->item.asLong.value );
+                  *( ( char ** ) ( Buffer + uiOffset ) ) = reinterpret_cast< char * >( static_cast< HB_PTRUINT >( ( pBaseVar->pItems + nIndex )->item.asLong.value ) );
                   break;
 
                default:
@@ -948,7 +948,7 @@ HB_FUNC( HB_ARRAYTOSTRUCTURE )
 
       Buffer = ArrayToStructure( aVar, aDef, uiAlign, &uiSize );
 
-      hb_retclen_buffer( ( char * ) Buffer, uiSize );
+      hb_retclen_buffer( reinterpret_cast< char * >( Buffer ), uiSize );
    }
    else
       hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError( 1 ), hb_paramError( 2 ), hb_paramError( 3 ) );
@@ -1096,7 +1096,7 @@ static PHB_ITEM StructureToArray( HB_BYTE * Buffer, HB_SIZE nBufferLen, PHB_ITEM
       switch( ( pBaseDef->pItems + nIndex )->item.asInteger.value )
       {
          case CTYPE_CHAR:  /* char */
-            hb_itemPutNI( pBaseVar->pItems + nIndex, ( int ) *( ( char * ) ( Buffer + uiOffset ) ) );
+            hb_itemPutNI( pBaseVar->pItems + nIndex, ( int ) *( reinterpret_cast< char * >( Buffer + uiOffset ) ) );
             break;
 
          case CTYPE_UNSIGNED_CHAR:  /* unsigned char */
@@ -1267,7 +1267,7 @@ static PHB_ITEM StructureToArray( HB_BYTE * Buffer, HB_SIZE nBufferLen, PHB_ITEM
                TraceLog( nullptr, "Before Devalue\n" );
                #endif
 
-               hb_itemPutCRawStatic( pInternalBuffer, ( char * ) ( HB_BYTE * ) ( Buffer + uiOffset ), uiNestedSize );
+               hb_itemPutCRawStatic( pInternalBuffer, reinterpret_cast< char * >( static_cast< HB_BYTE * >( Buffer + uiOffset ) ), uiNestedSize );
 
                hb_objSendMsg( pStructure, "DEVALUE", 1, &Adopt );
 
@@ -1328,11 +1328,11 @@ HB_FUNC( HB_POINTER2STRING )
    PHB_ITEM pLen     = hb_param( 2, HB_IT_NUMERIC );
 
    if( HB_IS_POINTER( pPointer ) && pLen )
-      hb_retclen( ( char * ) hb_itemGetPtr( pPointer ), hb_itemGetNS( pLen ) );
+      hb_retclen( static_cast< char * >( hb_itemGetPtr( pPointer ) ), hb_itemGetNS( pLen ) );
    else if( HB_IS_INTEGER( pPointer ) && pLen )
-      hb_retclen( ( char * ) static_cast< HB_PTRUINT >( hb_itemGetNI( pPointer ) ), hb_itemGetNS( pLen ) );
+      hb_retclen( reinterpret_cast< char * >( static_cast< HB_PTRUINT >( hb_itemGetNI( pPointer ) ) ), hb_itemGetNS( pLen ) );
    else if( HB_IS_LONG( pPointer ) && pLen )
-      hb_retclen( ( char * ) static_cast< HB_PTRUINT >( hb_itemGetNL( pPointer ) ), hb_itemGetNS( pLen ) );
+      hb_retclen( reinterpret_cast< char * >( static_cast< HB_PTRUINT >( hb_itemGetNL( pPointer ) ) ), hb_itemGetNS( pLen ) );
    else
       hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, 2, hb_paramError( 1 ), hb_paramError( 2 ) );
 }

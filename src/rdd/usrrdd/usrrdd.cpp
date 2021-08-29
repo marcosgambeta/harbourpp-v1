@@ -804,7 +804,7 @@ static HB_ERRCODE hb_usrInit( LPRDDNODE pRDD )
 
    s_pUsrRddNodes[ pRDD->rddID ] = pNode = static_cast< LPUSRRDDNODE >( hb_xgrabz( sizeof( USRRDDNODE ) ) );
    pNode->pSuperTable = &pRDD->pSuperTable;
-   pNode->pMethods = ( PHB_ITEM ) pRDD->pTable.whoCares;
+   pNode->pMethods = reinterpret_cast< PHB_ITEM >( pRDD->pTable.whoCares );
    pRDD->pTable.whoCares = pRDD->pSuperTable.whoCares;
    pNode->pItem = hb_itemNew( nullptr );
 

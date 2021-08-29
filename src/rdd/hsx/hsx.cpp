@@ -677,7 +677,7 @@ static int hb_hsxHdrFlush( int iHandle )
 
       memset( buffer.header.keyExpression, 0, HSXKEYEXP_LEN + 1 );
       if( pHSX->szKeyExpr )
-         hb_strncpy( ( char * ) buffer.header.keyExpression, pHSX->szKeyExpr, HSXKEYEXP_LEN );
+         hb_strncpy( reinterpret_cast< char * >( buffer.header.keyExpression ), pHSX->szKeyExpr, HSXKEYEXP_LEN );
 
       if( hb_fileWriteAt( pHSX->pFile, buffer.data, HSXHEADER_LEN, 0 ) != HSXHEADER_LEN )
          return HSX_BADHDRWRITE;
@@ -746,7 +746,7 @@ static int hb_hsxHdrRead( int iHandle )
    if( buffer.header.keyExpression[ 0 ] >= ' ' )
    {
       buffer.data[ HSXHEADER_LEN - 1 ] = '\0';
-      pHSX->szKeyExpr = hb_strdup( ( char * ) buffer.header.keyExpression );
+      pHSX->szKeyExpr = hb_strdup( reinterpret_cast< char * >( buffer.header.keyExpression ) );
       iResult = hb_hsxCompile( pHSX->szKeyExpr, &pHSX->pKeyItem );
    }
 

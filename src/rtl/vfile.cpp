@@ -885,7 +885,7 @@ HB_FUNC( HB_VFLOAD )
    if( pszFileName )
    {
       HB_SIZE nSize;
-      char * pBuffer = ( char * ) hb_fileLoad( pszFileName, hb_parns( 2 ), &nSize );
+      char * pBuffer = reinterpret_cast< char * >( hb_fileLoad( pszFileName, hb_parns( 2 ), &nSize ) );
       if( pBuffer )
          hb_retclen_buffer( pBuffer, nSize );
    }

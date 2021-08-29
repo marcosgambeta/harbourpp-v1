@@ -314,7 +314,7 @@ void hb_xexit( void )
       for( i = 1, pMemBlock = s_pMemBlocks; pMemBlock; ++i, pMemBlock = pMemBlock->pNextBlock )
          HB_TRACE( HB_TR_ERROR, ( "Block %i %p (size %" HB_PFS "u) \"%s\"", i,
                 ( void * ) pMemBlock + HB_MEMINFO_SIZE, pMemBlock->nSize,
-                hb_memToStr( szBuffer, ( char * ) pMemBlock + HB_MEMINFO_SIZE,
+                hb_memToStr( szBuffer, static_cast< char * >( pMemBlock ) + HB_MEMINFO_SIZE,
                              pMemBlock->nSize ) ) );
    }
 #endif
@@ -521,7 +521,7 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
 
       if( s_cDirSep != HB_OS_PATH_DELIM_CHR )
       {
-         char * p = ( char * ) HB_UNCONST( szFileName );
+         char * p = static_cast< char * >( HB_UNCONST( szFileName ) );
          while( *p )
          {
             if( *p == s_cDirSep )
@@ -547,7 +547,7 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
                ++pFileName->szName;
                --nLen;
             }
-            ( ( char * ) HB_UNCONST( pFileName->szName ) )[ nLen ] = '\0';
+            ( static_cast< char * >( HB_UNCONST( pFileName->szName ) ) )[ nLen ] = '\0';
          }
          if( pFileName->szExtension )
          {
@@ -559,7 +559,7 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
                ++pFileName->szExtension;
                --nLen;
             }
-            ( ( char * ) HB_UNCONST( pFileName->szExtension ) )[ nLen ] = '\0';
+            ( static_cast< char * >( HB_UNCONST( pFileName->szExtension ) ) )[ nLen ] = '\0';
          }
       }
 
@@ -567,28 +567,28 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
       if( s_iFileCase == HB_SET_CASE_LOWER )
       {
          if( pFileName->szName )
-            hb_strlow( ( char * ) HB_UNCONST( pFileName->szName ) );
+            hb_strlow( static_cast< char * >( HB_UNCONST( pFileName->szName ) ) );
          if( pFileName->szExtension )
-            hb_strlow( ( char * ) HB_UNCONST( pFileName->szExtension ) );
+            hb_strlow( static_cast< char * >( HB_UNCONST( pFileName->szExtension ) ) );
       }
       else if( s_iFileCase == HB_SET_CASE_UPPER )
       {
          if( pFileName->szName )
-            hb_strupr( ( char * ) HB_UNCONST( pFileName->szName ) );
+            hb_strupr( static_cast< char * >( HB_UNCONST( pFileName->szName ) ) );
          if( pFileName->szExtension )
-            hb_strupr( ( char * ) HB_UNCONST( pFileName->szExtension ) );
+            hb_strupr( static_cast< char * >( HB_UNCONST( pFileName->szExtension ) ) );
       }
 
       /* DIRCASE */
       if( pFileName->szPath )
       {
          if( s_iDirCase == HB_SET_CASE_LOWER )
-            hb_strlow( ( char * ) HB_UNCONST( pFileName->szPath ) );
+            hb_strlow( static_cast< char * >( HB_UNCONST( pFileName->szPath ) ) );
          else if( s_iDirCase == HB_SET_CASE_UPPER )
-            hb_strupr( ( char * ) HB_UNCONST( pFileName->szPath ) );
+            hb_strupr( static_cast< char * >( HB_UNCONST( pFileName->szPath ) ) );
       }
 
-      hb_fsFNameMerge( ( char * ) HB_UNCONST( szFileName ), pFileName );
+      hb_fsFNameMerge( static_cast< char * >( HB_UNCONST( szFileName ) ), pFileName );
       hb_xfree( pFileName );
    }
    else if( pszFree )
@@ -613,7 +613,7 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
 
       if( s_cDirSep != HB_OS_PATH_DELIM_CHR )
       {
-         char * p = ( char * ) HB_UNCONST( szFileName );
+         char * p = static_cast< char * >( HB_UNCONST( szFileName ) );
          while( *p )
          {
             if( *p == s_cDirSep )
@@ -639,7 +639,7 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
                ++pFileName->szName;
                --nLen;
             }
-            ( ( char * ) pFileName->szName )[ nLen ] = '\0';
+            ( const_cast< char * >( pFileName->szName ) )[ nLen ] = '\0';
          }
          if( pFileName->szExtension )
          {
@@ -651,7 +651,7 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
                ++pFileName->szExtension;
                --nLen;
             }
-            ( ( char * ) pFileName->szExtension )[ nLen ] = '\0';
+            ( const_cast< char * >( pFileName->szExtension ) )[ nLen ] = '\0';
          }
       }
 
@@ -659,28 +659,28 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
       if( s_iFileCase == HB_SET_CASE_LOWER )
       {
          if( pFileName->szName )
-            hb_strlow( ( char * ) pFileName->szName );
+            hb_strlow( const_cast< char * >( pFileName->szName ) );
          if( pFileName->szExtension )
-            hb_strlow( ( char * ) pFileName->szExtension );
+            hb_strlow( const_cast< char * >( pFileName->szExtension ) );
       }
       else if( s_iFileCase == HB_SET_CASE_UPPER )
       {
          if( pFileName->szName )
-            hb_strupr( ( char * ) pFileName->szName );
+            hb_strupr( const_cast< char * >( pFileName->szName ) );
          if( pFileName->szExtension )
-            hb_strupr( ( char * ) pFileName->szExtension );
+            hb_strupr( const_cast< char * >( pFileName->szExtension ) );
       }
 
       /* DIRCASE */
       if( pFileName->szPath )
       {
          if( s_iDirCase == HB_SET_CASE_LOWER )
-            hb_strlow( ( char * ) pFileName->szPath );
+            hb_strlow( const_cast< char * >( pFileName->szPath ) );
          else if( s_iDirCase == HB_SET_CASE_UPPER )
-            hb_strupr( ( char * ) pFileName->szPath );
+            hb_strupr( const_cast< char * >( pFileName->szPath ) );
       }
 
-      hb_fsFNameMerge( ( char * ) szFileName, pFileName );
+      hb_fsFNameMerge( const_cast< char * >( szFileName ), pFileName );
       hb_xfree( pFileName );
    }
 

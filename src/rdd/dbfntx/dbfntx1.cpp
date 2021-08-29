@@ -1566,14 +1566,14 @@ static LPTAGINFO hb_ntxTagLoad( LPNTXINDEX pIndex, HB_ULONG ulBlock,
        lpNTX->key_expr[ 0 ] < 0x20 )
       return nullptr;
 
-   if( SELF_COMPILE( &pIndex->pArea->dbfarea.area, ( const char * ) lpNTX->key_expr ) == HB_FAILURE )
+   if( SELF_COMPILE( &pIndex->pArea->dbfarea.area, reinterpret_cast< const char * >( lpNTX->key_expr ) ) == HB_FAILURE )
       return nullptr;
    pKeyExp = pIndex->pArea->dbfarea.area.valResult;
    pIndex->pArea->dbfarea.area.valResult = nullptr;
 
    if( usType & NTX_FLAG_FORITEM && lpNTX->for_expr[ 0 ] >= 0x20 )
    {
-      if( SELF_COMPILE( &pIndex->pArea->dbfarea.area, ( const char * ) lpNTX->for_expr ) == HB_FAILURE )
+      if( SELF_COMPILE( &pIndex->pArea->dbfarea.area, reinterpret_cast< const char * >( lpNTX->for_expr ) ) == HB_FAILURE )
       {
          hb_vmDestroyBlockOrMacro( pKeyExp );
          return nullptr;
@@ -1583,12 +1583,12 @@ static LPTAGINFO hb_ntxTagLoad( LPNTXINDEX pIndex, HB_ULONG ulBlock,
    }
    fName = ! pIndex->Compound && lpNTX->tag_name[ 0 ] >= 0x20;
    pTag  = hb_ntxTagNew( pIndex,
-                         fName ? ( const char * ) lpNTX->tag_name : szTagName, fName,
-                         ( const char * ) lpNTX->key_expr, pKeyExp,
+                         fName ? reinterpret_cast< const char * >( lpNTX->tag_name ) : szTagName, fName,
+                         reinterpret_cast< const char * >( lpNTX->key_expr ), pKeyExp,
                          '\0',
                          HB_GET_LE_UINT16( lpNTX->key_size ),
                          HB_GET_LE_UINT16( lpNTX->key_dec ),
-                         ( const char * ) lpNTX->for_expr, pForExp,
+                         reinterpret_cast< const char * >( lpNTX->for_expr ), pForExp,
                          lpNTX->descend[ 0 ] == 0, lpNTX->unique[ 0 ] != 0,
                          ( usType & NTX_FLAG_CUSTOM ) != 0 || lpNTX->custom[ 0 ] != 0,
                          ( usType & NTX_FLAG_SORTRECNO ) != 0 );
@@ -1637,7 +1637,7 @@ static void hb_ntxIndexTagAdd( LPNTXINDEX pIndex, LPTAGINFO pTag )
 
    for( i = 0; i < iTags; pTagItem++, i++ )
    {
-      if( ! hb_strnicmp( ( const char * ) pTagItem->tag_name, pTag->TagName, NTX_MAX_TAGNAME ) )
+      if( ! hb_strnicmp( reinterpret_cast< const char * >( pTagItem->tag_name ), pTag->TagName, NTX_MAX_TAGNAME ) )
          break;
    }
    if( i == iTags )
@@ -1665,7 +1665,7 @@ static void hb_ntxIndexTagDel( LPNTXINDEX pIndex, const char * szTagName )
 
    for( i = 0; i < iTags; pTagItem++, i++ )
    {
-      if( ! hb_strnicmp( ( const char * ) pTagItem->tag_name, szTagName, NTX_MAX_TAGNAME ) )
+      if( ! hb_strnicmp( reinterpret_cast< const char * >( pTagItem->tag_name ), szTagName, NTX_MAX_TAGNAME ) )
       {
          memmove( pTagItem, pTagItem + 1, ( iTags - i ) * sizeof( CTXTAGITEM ) );
          memset( pTagItem + iTags - 1, 0, sizeof( CTXTAGITEM ) );
@@ -1687,7 +1687,7 @@ static HB_ULONG hb_ntxIndexTagFind( LPCTXHEADER lpCTX, const char * szTagName )
 
    for( i = 0; i < iTags; pTagItem++, i++ )
    {
-      if( ! hb_strnicmp( ( const char * ) pTagItem->tag_name, szTagName, NTX_MAX_TAGNAME ) )
+      if( ! hb_strnicmp( reinterpret_cast< const char * >( pTagItem->tag_name ), szTagName, NTX_MAX_TAGNAME ) )
          return HB_GET_LE_UINT32( pTagItem->tag_header );
    }
    return NTX_DUMMYNODE;
@@ -1900,7 +1900,7 @@ static HB_ERRCODE hb_ntxIndexLoad( LPNTXINDEX pIndex, const char * szTagName )
             return HB_FAILURE;
          if( ! hb_ntxBlockRead( pIndex, ulBlock, tagbuffer, NTXBLOCKSIZE ) )
             return HB_FAILURE;
-         pTag = hb_ntxTagLoad( pIndex, ulBlock, ( const char * ) pTagItem->tag_name, tagbuffer );
+         pTag = hb_ntxTagLoad( pIndex, ulBlock, reinterpret_cast< const char * >( pTagItem->tag_name ), tagbuffer );
          if( ! pTag )
             return HB_FAILURE;
          hb_ntxTagAdd( pIndex, pTag );
@@ -4433,12 +4433,12 @@ static HB_BOOL hb_ntxOrdSkipRegEx( LPTAGINFO pTag, HB_BOOL fForward, PHB_ITEM pR
             if( SELF_GOTO( &pArea->dbfarea.area, pTag->CurKeyInfo->Xtra ) != HB_SUCCESS )
                break;
 
-            if( hb_ntxRegexMatch( pTag, pRegEx, ( const char * ) pTag->CurKeyInfo->key ) )
+            if( hb_ntxRegexMatch( pTag, pRegEx, static_cast< const char * >( pTag->CurKeyInfo->key ) ) )
             {
                HB_ULONG ulRecNo = pArea->dbfarea.ulRecNo;
                if( SELF_SKIPFILTER( &pArea->dbfarea.area, fForward ? 1 : -1 ) != HB_SUCCESS ||
                    pArea->dbfarea.ulRecNo == ulRecNo ||
-                   hb_ntxRegexMatch( pTag, pRegEx, ( const char * ) pTag->CurKeyInfo->key ) )
+                   hb_ntxRegexMatch( pTag, pRegEx, static_cast< const char * >( pTag->CurKeyInfo->key ) ) )
                {
                   fFound = HB_TRUE;
                   break;
@@ -4655,7 +4655,7 @@ static int hb_ntxQuickSortCompare( LPNTXSORTINFO pSort, HB_BYTE * pKey1, HB_BYTE
 {
    int iLen = pSort->keyLen, i;
 
-   i = hb_ntxValCompare( pSort->pTag, ( const char * ) pKey1, iLen, ( const char * ) pKey2, iLen, HB_TRUE );
+   i = hb_ntxValCompare( pSort->pTag, reinterpret_cast< const char * >( pKey1 ), iLen, reinterpret_cast< const char * >( pKey2 ), iLen, HB_TRUE );
    if( i == 0 )
    {
       if( pSort->pTag->fSortRec )
@@ -4905,7 +4905,7 @@ static void hb_ntxSortOrderPages( LPNTXSORTINFO pSort )
             m = ( l + r ) >> 1;
             ulPage = pSort->pSortedPages[ m ];
             pTmp = &pSort->pSwapPage[ ulPage ].pKeyPool[ pSort->pSwapPage[ ulPage ].ulCurKey * ( iLen + 4 ) ];
-            i = hb_ntxValCompare( pSort->pTag, ( const char * ) pKey, iLen, ( const char * ) pTmp, iLen, HB_TRUE );
+            i = hb_ntxValCompare( pSort->pTag, reinterpret_cast< const char * >( pKey ), iLen, reinterpret_cast< const char * >( pTmp ), iLen, HB_TRUE );
             if( i == 0 )
             {
                if( pSort->pTag->fSortRec )
@@ -4959,7 +4959,7 @@ static HB_BOOL hb_ntxSortKeyGet( LPNTXSORTINFO pSort, HB_BYTE ** pKeyVal, HB_ULO
          m = ( l + r ) >> 1;
          ulPg = pSort->pSortedPages[ m ];
          pTmp = &pSort->pSwapPage[ ulPg ].pKeyPool[ pSort->pSwapPage[ ulPg ].ulCurKey * ( iLen + 4 ) ];
-         i = hb_ntxValCompare( pSort->pTag, ( const char * ) pKey, iLen, ( const char * ) pTmp, iLen, HB_TRUE );
+         i = hb_ntxValCompare( pSort->pTag, reinterpret_cast< const char * >( pKey ), iLen, reinterpret_cast< const char * >( pTmp ), iLen, HB_TRUE );
          if( i == 0 )
          {
             if( pSort->pTag->fSortRec )
@@ -5199,7 +5199,7 @@ static void hb_ntxSortOut( LPNTXSORTINFO pSort )
       }
       if( fUnique )
       {
-         if( ulKey != 0 && hb_ntxValCompare( pTag, ( const char * ) pSort->pLastKey, iLen, ( const char * ) pKeyVal, iLen, HB_TRUE ) == 0 )
+         if( ulKey != 0 && hb_ntxValCompare( pTag, reinterpret_cast< const char * >( pSort->pLastKey ), iLen, reinterpret_cast< const char * >( pKeyVal ), iLen, HB_TRUE ) == 0 )
          {
             continue;
          }
@@ -5213,7 +5213,7 @@ static void hb_ntxSortOut( LPNTXSORTINFO pSort )
 #ifdef HB_NTX_DEBUG_EXT
       if( ulKey != 0 )
       {
-         int i = hb_ntxValCompare( pTag, ( const char * ) pSort->pLastKey, iLen, ( const char * ) pKeyVal, iLen, HB_TRUE );
+         int i = hb_ntxValCompare( pTag, static_cast< const char * >( pSort->pLastKey ), iLen, static_cast< const char * >( pKeyVal ), iLen, HB_TRUE );
          if( ! pTag->AscendKey )
             i = -i;
          if( i == 0 )

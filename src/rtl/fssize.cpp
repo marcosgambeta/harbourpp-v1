@@ -150,7 +150,7 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
       pszFileName = hb_fsNameConv( pszFileName, &pszFree );
       statbuf.st_size = 0;
       hb_vmUnlock();
-      fResult = stat( ( char * ) pszFileName, &statbuf ) == 0;
+      fResult = stat( static_cast< char * >( pszFileName ), &statbuf ) == 0;
       hb_fsSetIOError( fResult, 0 );
       hb_vmLock();
       if( pszFree )

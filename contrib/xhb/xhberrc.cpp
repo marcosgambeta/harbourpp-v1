@@ -82,7 +82,7 @@ LONG WINAPI PRGUnhandledExceptionFilter( EXCEPTION_POINTERS * ExceptionInfo )
 
             hb_itemMove( &Exception, hb_stackReturnItem() );
 
-            hb_itemPutCLStatic( &Buffer, ( char * ) ExceptionInfo, sizeof( EXCEPTION_POINTERS ) );
+            hb_itemPutCLStatic( &Buffer, static_cast< char * >( ExceptionInfo ), sizeof( EXCEPTION_POINTERS ) );
 
             Adopt.type = HB_IT_LOGICAL;
             Adopt.item.asLogical.value = HB_FALSE;

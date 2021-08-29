@@ -176,7 +176,7 @@ static char * hb_buildArgsOS2( const char *pszFileName, APIRET * ret )
                        PAG_COMMIT | PAG_READ | PAG_WRITE | OBJ_TILE );
    if( *ret == NO_ERROR )
    {
-      pArgs = ( char * ) pMem;
+      pArgs = static_cast< char * >( pMem );
       memcpy( pArgs, szFileBuf, nLen + 1 );
       memcpy( pArgs + nLen + 1, pszFileName, nLen2 + 1 );
       pArgs[ nLen + nLen2 + 2 ] = '\0';

@@ -118,7 +118,7 @@ HB_FUNC( HB_LZF_COMPRESS )
                       static_cast< HB_SIZE >( hb_parns( 2 ) ) :
                       hb_lzf_compressbound( in_len );
 
-            out_data = ( char * ) hb_xalloc( out_len + 1 );
+            out_data = static_cast< char * >( hb_xalloc( out_len + 1 ) );
          }
 
          if( out_data )
@@ -181,7 +181,7 @@ HB_FUNC( HB_LZF_DECOMPRESS )
             buffer_size = ( HB_ISNUM( 2 ) && hb_parns( 2 ) >= 0 ) ?
                           hb_parns( 2 ) : HB_LZF_DEFAULT_BUFFSIZE;
 
-            buffer = ( char * ) hb_xalloc( buffer_size + 1 );
+            buffer = static_cast< char * >( hb_xalloc( buffer_size + 1 ) );
          }
 
          if( buffer && buffer_size )

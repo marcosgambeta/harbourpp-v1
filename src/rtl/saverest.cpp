@@ -101,7 +101,7 @@ HB_FUNC( SAVESCREEN )
    pBuffer = hb_xgrab( nSize + 1 );
 
    hb_gtSave( iTop, iLeft, iBottom, iRight, pBuffer );
-   hb_retclen_buffer( ( char * ) pBuffer, nSize );
+   hb_retclen_buffer( static_cast< char * >( pBuffer ), nSize );
 }
 
 HB_FUNC( RESTSCREEN )
@@ -123,8 +123,8 @@ HB_FUNC( RESTSCREEN )
       {
          pBuffer = hb_xgrab( nSize );
          memcpy( pBuffer, pBufStr, nLen );
-         memset( ( char * ) pBuffer + nLen, 0, nSize - nLen );
-         pBufStr = ( const char * ) pBuffer;
+         memset( static_cast< char * >( pBuffer ) + nLen, 0, nSize - nLen );
+         pBufStr = static_cast< const char * >( pBuffer );
       }
 
       hb_gtRest( iTop, iLeft, iBottom, iRight, pBufStr );

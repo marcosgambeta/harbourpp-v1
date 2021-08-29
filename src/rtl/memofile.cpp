@@ -59,7 +59,7 @@ static void hb_memoread( HB_BOOL bHandleEOF )
    if( pszFileName )
    {
       HB_SIZE nSize;
-      char * pBuffer = ( char * ) hb_fileLoad( pszFileName, 0, &nSize );
+      char * pBuffer = reinterpret_cast< char * >( hb_fileLoad( pszFileName, 0, &nSize ) );
 
       if( pBuffer )
       {

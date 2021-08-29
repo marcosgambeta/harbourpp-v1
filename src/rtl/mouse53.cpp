@@ -132,7 +132,7 @@ HB_FUNC( MSAVESTATE )
       void * pBuffer = hb_xgrab( iLen + 1 );
 
       hb_mouseSaveState( pBuffer );
-      hb_retclen_buffer( ( char * ) pBuffer, iLen );
+      hb_retclen_buffer( static_cast< char * >( pBuffer ), iLen );
    }
    else
       hb_retc_null();

@@ -1342,7 +1342,7 @@ long hb_comRecv( int iPort, void * data, long len, HB_MAXINT timeout )
       {
          do
          {
-            lReceived = read( pCom->fd, ( char * ) data, len );
+            lReceived = read( pCom->fd, static_cast< char * >( data ), len );
             hb_comSetOsError( pCom, lReceived == -1 );
          }
          while( lReceived == -1 && HB_COM_IS_EINTR( pCom ) && hb_vmRequestQuery() == 0 );
@@ -3480,7 +3480,7 @@ long hb_comSend( int iPort, const void * data, long len, HB_MAXINT timeout )
 
    if( pCom )
    {
-      const char * buffer = ( const char * ) data;
+      const char * buffer = static_cast< const char * >( data );
       HB_MAXUINT timer = hb_timerInit( timeout );
 
       hb_comSetOsError( pCom, SER_SUCCESS );
@@ -3533,7 +3533,7 @@ long hb_comRecv( int iPort, void * data, long len, HB_MAXINT timeout )
 
    if( pCom )
    {
-      char * buffer = ( char * ) data;
+      char * buffer = static_cast< char * >( data );
       HB_MAXUINT timer = hb_timerInit( timeout );
 
       hb_comSetOsError( pCom, SER_SUCCESS );
@@ -4019,7 +4019,7 @@ long hb_comSend( int iPort, const void * data, long len, HB_MAXINT timeout )
 
    if( pCom )
    {
-      const char * buffer = ( const char * ) data;
+      const char * buffer = static_cast< const char * >( data );
       HB_MAXUINT timer = hb_timerInit( timeout );
 
       hb_comSetOsError( pCom, 0 );
@@ -4065,7 +4065,7 @@ long hb_comRecv( int iPort, void * data, long len, HB_MAXINT timeout )
 
    if( pCom )
    {
-      char * buffer = ( char * ) data;
+      char * buffer = static_cast< char * >( data );
       HB_MAXUINT timer = hb_timerInit( timeout );
 
       hb_comSetOsError( pCom, 0 );

@@ -519,8 +519,8 @@ HB_FUNC( _FT_DFINIT )
    dispc->maxlin   = hb_parni( 12 );
    dispc->buffsize = hb_parns( 13 );                                    /* yes - load value */
 
-   dispc->buffer = ( char * ) hb_xalloc( dispc->buffsize );             /* allocate memory */
-   dispc->lbuff  = ( char * ) hb_xalloc( dispc->maxlin + 1 );           /* for buffers */
+   dispc->buffer = static_cast< char * >( hb_xalloc( dispc->buffsize ) );             /* allocate memory */
+   dispc->lbuff  = static_cast< char * >( hb_xalloc( dispc->maxlin + 1 ) );           /* for buffers */
 
    dispc->bIsAllocated = ! ( dispc->buffer == nullptr || dispc->lbuff == nullptr || dispc->vseg == nullptr );
    /* memory allocated? */

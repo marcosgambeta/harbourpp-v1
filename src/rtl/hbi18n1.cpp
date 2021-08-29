@@ -444,8 +444,8 @@ static PHB_ITEM hb_i18n_serialize( PHB_I18N_TRANS pI18N )
       PHB_ITEM pKey, pValue;
 
       ulCRC = hb_crc32( 0, pBuffer, nSize );
-      pI18Nbuffer = ( char * ) memset( hb_xgrab( nSize + HB_I18N_HEADER_SIZE + 1 ),
-                                       0, HB_I18N_HEADER_SIZE );
+      pI18Nbuffer = static_cast< char * >( memset( hb_xgrab( nSize + HB_I18N_HEADER_SIZE + 1 ),
+                                       0, HB_I18N_HEADER_SIZE ) );
       memcpy( pI18Nbuffer + HB_I18N_HEADER_SIZE, pBuffer, nSize );
       hb_xfree( pBuffer );
 

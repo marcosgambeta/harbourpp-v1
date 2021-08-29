@@ -578,7 +578,7 @@ static HB_ERRCODE hb_waFieldInfo( AREAP pArea, HB_USHORT uiIndex, HB_USHORT uiTy
    switch( uiType )
    {
       case DBS_NAME:
-         hb_itemPutC( pItem, hb_dynsymName( ( PHB_DYNS ) pField->sym ) );
+         hb_itemPutC( pItem, hb_dynsymName( static_cast< PHB_DYNS >( pField->sym ) ) );
          break;
 
       case DBS_TYPE:
@@ -760,7 +760,7 @@ static HB_ERRCODE hb_waFieldName( AREAP pArea, HB_USHORT uiIndex, char * szName 
    }
 
    pField = pArea->lpFields + uiIndex - 1;
-   hb_strncpy( szName, hb_dynsymName( ( PHB_DYNS ) pField->sym ), pArea->uiMaxFieldNameLength );
+   hb_strncpy( szName, hb_dynsymName( static_cast< PHB_DYNS >( pField->sym ) ), pArea->uiMaxFieldNameLength );
    return HB_SUCCESS;
 }
 

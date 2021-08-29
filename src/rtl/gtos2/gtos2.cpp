@@ -825,7 +825,7 @@ static HB_BOOL hb_gt_os2_Resize( PHB_GT pGT, int iRows, int iCols )
          if( s_iLineBufSize != 0 )
             DosFreeMem( ( PVOID ) s_sLineBuf );
          if( iRows )
-            s_sLineBuf = ( char * ) hb_gt_os2_allocMem( iRows );
+            s_sLineBuf = static_cast< char * >( hb_gt_os2_allocMem( iRows ) );
          s_iLineBufSize = iRows;
       }
       return HB_TRUE;

@@ -277,7 +277,7 @@ HB_FUNC( HB_GZGETS )
       gzFile gz = hb_gzParam( 1 );
       if( gz )
       {
-         char * szBuffer = ( char * ) hb_xalloc( iLen + 1 );
+         char * szBuffer = static_cast< char * >( hb_xalloc( iLen + 1 ) );
 
          if( szBuffer )
          {

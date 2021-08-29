@@ -261,7 +261,7 @@ static int sTokSave( TOKEN_ENVIRONMENT sTokenEnvironment, int iParam )
 {
    if( iParam != 0 && HB_ISBYREF( iParam ) )
    {
-      if( ! hb_storclen_buffer( ( char * ) sTokenEnvironment,
+      if( ! hb_storclen_buffer( reinterpret_cast< char * >( sTokenEnvironment ),
                                 sTokEnvGetSize( sTokenEnvironment ), iParam ) )
       {
          sTokEnvDel( sTokenEnvironment );
@@ -594,7 +594,7 @@ HB_FUNC( SAVETOKEN )
    TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet( 0, HB_TRUE );
 
    if( sTokenEnvironment != nullptr )
-      hb_retclen( ( char * ) sTokenEnvironment, sTokEnvGetSize( sTokenEnvironment ) );
+      hb_retclen( reinterpret_cast< char * >( sTokenEnvironment ), sTokEnvGetSize( sTokenEnvironment ) );
    else
       hb_retc_null();
 }
@@ -608,7 +608,7 @@ HB_FUNC( RESTTOKEN )
       TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet( 0, HB_FALSE );
 
       if( sTokenEnvironment != nullptr )
-         hb_retclen( ( char * ) sTokenEnvironment, sTokEnvGetSize( sTokenEnvironment ) );
+         hb_retclen( reinterpret_cast< char * >( sTokenEnvironment ), sTokEnvGetSize( sTokenEnvironment ) );
       else
          hb_retc_null();
 

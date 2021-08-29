@@ -181,7 +181,7 @@ HB_BOOL hb_gt_winapi_setClipboard( HB_UINT uFormat, PHB_ITEM pItem )
                                      ( wchar_t * ) lpMem, nSize + 1 );
                else
                   hb_itemCopyStr( pItem, hb_setGetOSCP(),
-                                  ( char * ) lpMem, nSize + 1 );
+                                  static_cast< char * >( lpMem ), nSize + 1 );
                ( void ) GlobalUnlock( hglb );
                /* Place the handle on the clipboard. */
                fResult = SetClipboardData( static_cast< UINT >( uFormat ), hglb ) != 0;
@@ -222,13 +222,13 @@ HB_BOOL hb_gt_winapi_getClipboard( HB_UINT uFormat, PHB_ITEM pItem )
                   break;
                case CF_OEMTEXT:
                case CF_TEXT:
-                  nSize = hb_strnlen( ( const char * ) lpMem, nSize );
+                  nSize = hb_strnlen( static_cast< const char * >( lpMem ), nSize );
                   /* fallthrough */
                default:
                   if( nSize )
                      hb_itemPutStrLen( pItem, uFormat == CF_TEXT ?
                                               hb_setGetOSCP() : nullptr,
-                                       ( const char * ) lpMem, nSize );
+                                       static_cast< const char * >( lpMem ), nSize );
                   break;
             }
             ( void ) GlobalUnlock( hglb );

@@ -1904,7 +1904,7 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          {
             void * pBuffer = hb_xgrab( nSize + 1 );
             HB_GTSELF_SAVE( pGT, 0, 0, iRow, iCol, pBuffer );
-            hb_arraySetCLPtr( pInfo->pResult, 6, ( char * ) pBuffer, nSize );
+            hb_arraySetCLPtr( pInfo->pResult, 6, static_cast< char * >( pBuffer ), nSize );
          }
          if( iFlag != 0 )
             HB_GTSELF_SETFLAG( pGT, HB_GTI_COMPATBUFFER, iFlag );
@@ -3919,7 +3919,7 @@ static HB_BOOL hb_gtTryInit( const char * szGtName, HB_BOOL fFree )
       {
          if( fFree )
          {
-            char * pszStr = ( char * ) strchr( szGtName, ':' );
+            char * pszStr = static_cast< char * >( strchr( szGtName, ':' ) );
             if( pszStr != nullptr )
                * pszStr = '\0';
          }

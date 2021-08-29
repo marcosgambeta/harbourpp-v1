@@ -270,7 +270,7 @@ static char * hb_macroTextSubst( const char * szString, HB_SIZE * pnStringLen )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroTextSubst(%s, %" HB_PFS "u)", szString, *pnStringLen ) );
 
-   pHead = ( char * ) ( memchr( szString, '&', *pnStringLen ) ); /* TODO: C++ cast */
+   pHead = static_cast< char * >( memchr( szString, '&', *pnStringLen ) );
    if( pHead == nullptr )
    {
       return static_cast< char * >( HB_UNCONST( szString ) );  /* no more processing is required */

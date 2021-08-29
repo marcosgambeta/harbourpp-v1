@@ -239,7 +239,7 @@ HB_FUNC( XDL_READ_MMFILE )
          size = ( HB_ISNUM( 3 ) && hb_parns( 3 ) >= 0 ) ?
                 hb_parns( 3 ) : xdl_mmfile_size( phb_mmf->mmf );
 
-         data = ( char * ) hb_xalloc( size + 1 );
+         data = static_cast< char * >( hb_xalloc( size + 1 ) );
       }
 
       if( data && size )
@@ -377,7 +377,7 @@ static int xdlt_outf( void * priv, mmbuffer_t * mb, int nbuf )
 
 static int xdlt_outb( void * priv, mmbuffer_t * mb, int nbuf )
 {
-   PHB_ITEM pCallback = ( PHB_ITEM ) priv;
+   PHB_ITEM pCallback = static_cast< PHB_ITEM >( priv );
 
    if( pCallback && hb_vmRequestReenter() )
    {
@@ -388,7 +388,7 @@ static int xdlt_outb( void * priv, mmbuffer_t * mb, int nbuf )
       hb_vmPush( pCallback );
 
       for( i = 0; i < nbuf; i++ )
-         hb_vmPushString( ( const char * ) mb[ i ].ptr, mb[ i ].size );
+         hb_vmPushString( static_cast< const char * >( mb[ i ].ptr ), mb[ i ].size );
 
       hb_vmSend( static_cast< HB_USHORT >( nbuf ) );
       iResult = hb_parnidef( -1, 0 );

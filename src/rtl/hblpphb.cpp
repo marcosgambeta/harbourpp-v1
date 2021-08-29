@@ -262,7 +262,7 @@ HB_FUNC( HB_LPPRECV )
    if( bRet )
    {
       if( HB_ISBYREF( 2 ) )
-         hb_storclen( ( char * ) data, len, 2 );
+         hb_storclen( static_cast< char * >( data ), len, 2 );
       hb_xfree( data );
    }
    hb_retl( bRet );

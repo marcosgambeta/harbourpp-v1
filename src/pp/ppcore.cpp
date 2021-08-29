@@ -473,7 +473,7 @@ static PHB_PP_TOKEN hb_pp_tokenNew( const char * value, HB_SIZE nLen,
       }
       else
       {
-         char * val = ( char * ) memcpy( hb_xgrab( nLen + 1 ), value, nLen );
+         char * val = static_cast< char * >( memcpy( hb_xgrab( nLen + 1 ), value, nLen ) );
          val[ nLen ] = '\0';
          pToken->value = val;
       }
@@ -503,7 +503,7 @@ static void hb_pp_tokenSetValue( PHB_PP_TOKEN pToken,
    }
    else
    {
-      char * val = ( char * ) memcpy( hb_xgrab( nLen + 1 ), value, nLen );
+      char * val = static_cast< char * >( memcpy( hb_xgrab( nLen + 1 ), value, nLen ) );
       val[ nLen ] = '\0';
       pToken->value = val;
       pToken->type &= ~HB_PP_TOKEN_STATIC;
@@ -518,8 +518,8 @@ static PHB_PP_TOKEN hb_pp_tokenClone( PHB_PP_TOKEN pSource )
    memcpy( pDest, pSource, sizeof( HB_PP_TOKEN ) );
    if( HB_PP_TOKEN_ALLOC( pDest->type ) )
    {
-      char * val = ( char * ) memcpy( hb_xgrab( pDest->len + 1 ),
-                                      pSource->value, pDest->len );
+      char * val = static_cast< char * >( memcpy( hb_xgrab( pDest->len + 1 ),
+                                      pSource->value, pDest->len ) );
       val[ pDest->len ] = '\0';
       pDest->value = val;
    }
@@ -6239,13 +6239,13 @@ void hb_pp_tokenUpper( PHB_PP_TOKEN pToken )
       {
          if( ! HB_PP_TOKEN_ALLOC( pToken->type ) )
          {
-            pToken->value = ( char * ) memcpy( hb_xgrab( pToken->len + 1 ),
-                                               pToken->value + 1, pToken->len );
+            pToken->value = static_cast< char * >( memcpy( hb_xgrab( pToken->len + 1 ),
+                                               pToken->value + 1, pToken->len ) );
             pToken->type &= ~HB_PP_TOKEN_STATIC;
          }
          else
             memmove( HB_UNCONST( pToken->value ), pToken->value + 1, pToken->len );
-         ( ( char * ) HB_UNCONST( pToken->value ) )[ pToken->len ] = '\0';
+         ( static_cast< char * >( HB_UNCONST( pToken->value ) ) )[ pToken->len ] = '\0';
       }
    }
    else if( pToken->len > 1 )
@@ -6261,7 +6261,7 @@ void hb_pp_tokenUpper( PHB_PP_TOKEN pToken )
           pToken->len > HB_SYMBOL_NAME_LEN )
       {
          pToken->len = HB_SYMBOL_NAME_LEN;
-         ( ( char * ) HB_UNCONST( pToken->value ) )[ HB_SYMBOL_NAME_LEN ] = '\0';
+         ( static_cast< char * >( HB_UNCONST( pToken->value ) ) )[ HB_SYMBOL_NAME_LEN ] = '\0';
       }
    }
 
@@ -6276,7 +6276,7 @@ void hb_pp_tokenUpper( PHB_PP_TOKEN pToken )
       pToken->value = hb_szAscii[ ucVal ];
    }
    else
-      hb_strupr( ( char * ) HB_UNCONST( pToken->value ) );
+      hb_strupr( static_cast< char * >( HB_UNCONST( pToken->value ) ) );
 }
 
 /*

@@ -305,9 +305,9 @@ void nxs_xorcyclic(
    HB_U32  crc1l, crc2l, crc3l;
 
    /* Build the cyclic key seed */
-   crc1 = keylen >= 2 ? hb_adler32( 0, ( const char * ) key + 0, keylen - 2 ) : 1;
-   crc2 = keylen >= 4 ? hb_adler32( 0, ( const char * ) key + 2, keylen - 4 ) : 1;
-   crc3 = keylen >= 2 ? hb_adler32( 0, ( const char * ) key + 1, keylen - 2 ) : 1;
+   crc1 = keylen >= 2 ? hb_adler32( 0, reinterpret_cast< const char * >( key ) + 0, keylen - 2 ) : 1;
+   crc2 = keylen >= 4 ? hb_adler32( 0, reinterpret_cast< const char * >( key ) + 2, keylen - 4 ) : 1;
+   crc3 = keylen >= 2 ? hb_adler32( 0, reinterpret_cast< const char * >( key ) + 1, keylen - 2 ) : 1;
 
    crc1l = crc1 = nxs_cyclic_sequence( crc1 );
    crc2l = crc2 = nxs_cyclic_sequence( crc2 );
@@ -396,7 +396,7 @@ HB_FUNC( HB_CRYPT )
       ( const unsigned char * ) hb_itemGetCPtr( pKey ), hb_itemGetCLen( pKey ),
       cRes );
 
-   hb_retclen_buffer( ( char * ) cRes, hb_itemGetCLen( pSource ) );
+   hb_retclen_buffer( reinterpret_cast< char * >( cRes ), hb_itemGetCLen( pSource ) );
 }
 
 /* Decrypt a text using a key
@@ -415,5 +415,5 @@ HB_FUNC( HB_DECRYPT )
       ( const unsigned char * ) hb_itemGetCPtr( pKey ), hb_itemGetCLen( pKey ),
       cRes );
 
-   hb_retclen_buffer( ( char * ) cRes, hb_itemGetCLen( pSource ) );
+   hb_retclen_buffer( reinterpret_cast< char * >( cRes ), hb_itemGetCLen( pSource ) );
 }

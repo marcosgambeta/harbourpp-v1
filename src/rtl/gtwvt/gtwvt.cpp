@@ -259,7 +259,7 @@ static void hb_gt_wvt_Free( PHB_GTWVT pWVT )
       DeleteObject( pWVT->hFontBox );
 #else
    if( pWVT->wcTrans )
-      hb_itemFreeC( ( char * ) pWVT->wcTrans );
+      hb_itemFreeC( reinterpret_cast< char * >( pWVT->wcTrans ) );
 
    hb_gt_wvt_ResetBoxCharBitmaps( pWVT );
 
@@ -3962,13 +3962,13 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 #else
       case HB_GTI_UNITRANS:
          if( pWVT->wcTrans )
-            pInfo->pResult = hb_itemPutCL( pInfo->pResult, ( char * ) pWVT->wcTrans,
+            pInfo->pResult = hb_itemPutCL( pInfo->pResult, reinterpret_cast< char * >( pWVT->wcTrans ),
                                            pWVT->wcTransLen * sizeof( HB_WCHAR ) );
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_STRING )
          {
             if( pWVT->wcTrans )
             {
-               hb_itemFreeC( ( char * ) pWVT->wcTrans );
+               hb_itemFreeC( reinterpret_cast< char * >( pWVT->wcTrans ) );
                pWVT->wcTrans = nullptr;
             }
             pWVT->wcTransLen = hb_itemGetCLen( pInfo->pNewVal ) / sizeof( HB_WCHAR );

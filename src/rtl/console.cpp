@@ -280,7 +280,7 @@ static char * hb_itemStringCon( PHB_ITEM pItem, HB_SIZE * pnLen, HB_BOOL * pfFre
    {
       *pnLen = 1;
       *pfFreeReq = HB_FALSE;
-      return ( char * ) ( hb_itemGetL( pItem ) ? "T" : "F" );
+      return const_cast< char * >( hb_itemGetL( pItem ) ? "T" : "F" );
    }
    return hb_itemString( pItem, pnLen, pfFreeReq );
 }

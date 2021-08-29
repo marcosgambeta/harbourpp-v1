@@ -88,11 +88,11 @@ HB_FUNC( HB_HMAC_SHA224 )
    if( ! hb_parl( 3 ) )
    {
       char hex[ ( sizeof( mac ) * 2 ) + 1 ];
-      hb_strtohex( ( char * ) mac, sizeof( mac ), hex );
+      hb_strtohex( reinterpret_cast< char * >( mac ), sizeof( mac ), hex );
       hb_retclen( hex, HB_SIZEOFARRAY( hex ) - 1 );
    }
    else
-      hb_retclen( ( char * ) mac, sizeof( mac ) );
+      hb_retclen( reinterpret_cast< char * >( mac ), sizeof( mac ) );
 }
 
 HB_FUNC( HB_HMAC_SHA256 )
@@ -135,11 +135,11 @@ HB_FUNC( HB_HMAC_SHA256 )
    if( ! hb_parl( 3 ) )
    {
       char hex[ ( sizeof( mac ) * 2 ) + 1 ];
-      hb_strtohex( ( char * ) mac, sizeof( mac ), hex );
+      hb_strtohex( reinterpret_cast< char * >( mac ), sizeof( mac ), hex );
       hb_retclen( hex, HB_SIZEOFARRAY( hex ) - 1 );
    }
    else
-      hb_retclen( ( char * ) mac, sizeof( mac ) );
+      hb_retclen( reinterpret_cast< char * >( mac ), sizeof( mac ) );
 }
 
 HB_FUNC( HB_HMAC_SHA384 )
@@ -182,11 +182,11 @@ HB_FUNC( HB_HMAC_SHA384 )
    if( ! hb_parl( 3 ) )
    {
       char hex[ ( sizeof( mac ) * 2 ) + 1 ];
-      hb_strtohex( ( char * ) mac, sizeof( mac ), hex );
+      hb_strtohex( reinterpret_cast< char * >( mac ), sizeof( mac ), hex );
       hb_retclen( hex, HB_SIZEOFARRAY( hex ) - 1 );
    }
    else
-      hb_retclen( ( char * ) mac, sizeof( mac ) );
+      hb_retclen( reinterpret_cast< char * >( mac ), sizeof( mac ) );
 }
 
 HB_FUNC( HB_HMAC_SHA512 )
@@ -229,9 +229,9 @@ HB_FUNC( HB_HMAC_SHA512 )
    if( ! hb_parl( 3 ) )
    {
       char hex[ ( sizeof( mac ) * 2 ) + 1 ];
-      hb_strtohex( ( char * ) mac, sizeof( mac ), hex );
+      hb_strtohex( reinterpret_cast< char * >( mac ), sizeof( mac ), hex );
       hb_retclen( hex, HB_SIZEOFARRAY( hex ) - 1 );
    }
    else
-      hb_retclen( ( char * ) mac, sizeof( mac ) );
+      hb_retclen( reinterpret_cast< char * >( mac ), sizeof( mac ) );
 }

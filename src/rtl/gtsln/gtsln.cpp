@@ -153,8 +153,8 @@ static void hb_sln_colorTrans( void )
        * the same.
        */
       clr = ( bg << 4 ) | ( fg ^ 0x07 );
-      SLtt_set_color( clr, nullptr, ( char * ) HB_UNCONST( s_colorNames[ fg ] ),
-                                 ( char * ) HB_UNCONST( s_colorNames[ bg ] ) );
+      SLtt_set_color( clr, nullptr, static_cast< char * >( HB_UNCONST( s_colorNames[ fg ] ) ),
+                                 static_cast< char * >( HB_UNCONST( s_colorNames[ bg ] ) ) );
 #ifdef HB_SLN_UTF8
       s_colorTab[ i ] = clr;
 #else
@@ -231,7 +231,7 @@ static void hb_sln_setACSCtrans( void )
    if( ( p = ( unsigned char * ) SLtt_Graphics_Char_Pairs ) )
    {
       SLsmg_Char_Type SLch;
-      int i, len = strlen( ( char * ) p );
+      int i, len = strlen( static_cast< char * >( p ) );
 
       memset( &SLch, 0, sizeof( SLsmg_Char_Type ) );
       for( i = 0; i < len; i += 2 )
@@ -700,8 +700,8 @@ static void hb_gt_sln_Exit( PHB_GT pGT )
    /* restore a standard bell frequency and duration */
    if( hb_sln_UnderLinuxConsole )
    {
-      SLtt_write_string( ( char * ) "\033[10]" );
-      SLtt_write_string( ( char * ) "\033[11]" );
+      SLtt_write_string( static_cast< char * >( "\033[10]" ) );
+      SLtt_write_string( static_cast< char * >( "\033[11]" ) );
       SLtt_flush_output();
    }
 

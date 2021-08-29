@@ -537,7 +537,7 @@ static int hb_gt_trm_getSize( PHB_GTTRM pTerm, int * piRows, int * piCols )
    {
       struct winsize win;
 
-      if( ioctl( pTerm->hFileno, TIOCGWINSZ, ( char * ) &win ) != -1 )
+      if( ioctl( pTerm->hFileno, TIOCGWINSZ, static_cast< char * >( &win ) ) != -1 )
       {
          *piRows = win.ws_row;
          *piCols = win.ws_col;

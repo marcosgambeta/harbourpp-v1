@@ -719,7 +719,7 @@ HB_FUNC( _SX_STRDECOMPRESS )
          }
          else
          {
-            char * pBuf = ( char * ) hb_xalloc( nBuf + 1 );
+            char * pBuf = static_cast< char * >( hb_xalloc( nBuf + 1 ) );
             if( pBuf )
             {
                fOK = hb_LZSSxDecompressMem( pStr + 4, nLen - 4, pBuf, nBuf );

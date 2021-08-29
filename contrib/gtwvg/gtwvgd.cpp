@@ -283,12 +283,12 @@ static void hb_gt_wvt_Free( PHB_GTWVT pWVT )
    {
       if( pWVT->pFunc[ iIndex ] != nullptr && pWVT->iType[ iIndex ] == 2 )
       {
-         hb_itemRelease( ( PHB_ITEM ) pWVT->pFunc[ iIndex ] );
+         hb_itemRelease( static_cast< PHB_ITEM >( pWVT->pFunc[ iIndex ] ) );
          pWVT->pFunc[ iIndex ] = nullptr;
       }
       if( pWVT->pcbFunc[ iIndex ] != nullptr )
       {
-         hb_itemRelease( ( PHB_ITEM ) pWVT->pcbFunc[ iIndex ] );
+         hb_itemRelease( static_cast< PHB_ITEM >( pWVT->pcbFunc[ iIndex ] ) );
          pWVT->pcbFunc[ iIndex ] = nullptr;
       }
    }

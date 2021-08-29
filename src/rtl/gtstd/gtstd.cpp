@@ -271,7 +271,7 @@ static void hb_gt_std_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    {
       struct winsize win;
 
-      if( ioctl( pGTSTD->hStdout, TIOCGWINSZ, ( char * ) &win ) != -1 )
+      if( ioctl( pGTSTD->hStdout, TIOCGWINSZ, static_cast< char * >( &win ) ) != -1 )
       {
          HB_GTSELF_RESIZE( pGT, win.ws_row, win.ws_col );
       }

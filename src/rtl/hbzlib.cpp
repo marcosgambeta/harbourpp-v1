@@ -114,7 +114,7 @@ static int s_zlibCompress2( char ** pDstPtr, HB_SIZE * pnDst,
       {
          if( *pnDst == 0 )
             *pnDst = deflateBound( &stream, static_cast< uLong >( nSrc ) );
-         *pDstPtr = ( char * ) hb_xalloc( *pnDst + 1 );
+         *pDstPtr = static_cast< char * >( hb_xalloc( *pnDst + 1 ) );
          if( *pDstPtr == nullptr )
             iResult = Z_MEM_ERROR;
       }
@@ -306,7 +306,7 @@ HB_FUNC( HB_ZCOMPRESS )
             if( HB_ISNUM( 2 ) )
             {
                nDstLen = hb_parns( 2 );
-               pDest = ( char * ) hb_xalloc( nDstLen + 1 );
+               pDest = static_cast< char * >( hb_xalloc( nDstLen + 1 ) );
             }
             else
             {
@@ -375,7 +375,7 @@ HB_FUNC( HB_ZUNCOMPRESS )
                            s_zlibUncompressedSize( szData, nLen, &iResult );
             if( iResult == Z_OK )
             {
-               pDest = ( char * ) hb_xalloc( nDstLen + 1 );
+               pDest = static_cast< char * >( hb_xalloc( nDstLen + 1 ) );
                if( ! pDest )
                   iResult = Z_MEM_ERROR;
             }
@@ -453,7 +453,7 @@ HB_FUNC( HB_GZCOMPRESS )
             if( HB_ISNUM( 2 ) )
             {
                nDstLen = hb_parns( 2 );
-               pDest = ( char * ) hb_xalloc( nDstLen + 1 );
+               pDest = static_cast< char * >( hb_xalloc( nDstLen + 1 ) );
             }
             else
             {

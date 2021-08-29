@@ -106,7 +106,7 @@ static void hb_zebra_draw_codeblock_callback( void * pDrawBlock, double dX, doub
    if( pDrawBlock && HB_IS_BLOCK( pDrawBlock ) && hb_vmRequestReenter() )
    {
       hb_vmPushEvalSym();
-      hb_vmPush( ( PHB_ITEM ) pDrawBlock );
+      hb_vmPush( static_cast< PHB_ITEM >( pDrawBlock ) );
       hb_vmPushDouble( dX, HB_DEFAULT_DECIMALS );
       hb_vmPushDouble( dY, HB_DEFAULT_DECIMALS );
       hb_vmPushDouble( dWidth, HB_DEFAULT_DECIMALS );
