@@ -102,13 +102,13 @@ HB_FUNC( ADSMGGETINSTALLINFO )
    {
       hb_reta( 8 );
       hb_storvnl( stInstallInfo.ulUserOption                , -1, 1 );  /* User option purchased */
-      hb_storvc( static_cast< char * >( stInstallInfo.aucRegisteredOwner ), -1, 2 );  /* Registered owner */
-      hb_storvc( static_cast< char * >( stInstallInfo.aucVersionStr )     , -1, 3 );  /* Advantage version */
-      hb_storvc( static_cast< char * >( stInstallInfo.aucInstallDate )    , -1, 4 );  /* Install date string */
-      hb_storvc( static_cast< char * >( stInstallInfo.aucOemCharName )    , -1, 5 );  /* OEM char language */
-      hb_storvc( static_cast< char * >( stInstallInfo.aucAnsiCharName )   , -1, 6 );  /* ANSI char language */
-      hb_storvc( static_cast< char * >( stInstallInfo.aucEvalExpireDate ) , -1, 7 );  /* Eval expiration date */
-      hb_storvc( static_cast< char * >( stInstallInfo.aucSerialNumber )   , -1, 8 );  /* Serial number string */
+      hb_storvc( reinterpret_cast< char * >( stInstallInfo.aucRegisteredOwner ), -1, 2 );  /* Registered owner */
+      hb_storvc( reinterpret_cast< char * >( stInstallInfo.aucVersionStr )     , -1, 3 );  /* Advantage version */
+      hb_storvc( reinterpret_cast< char * >( stInstallInfo.aucInstallDate )    , -1, 4 );  /* Install date string */
+      hb_storvc( reinterpret_cast< char * >( stInstallInfo.aucOemCharName )    , -1, 5 );  /* OEM char language */
+      hb_storvc( reinterpret_cast< char * >( stInstallInfo.aucAnsiCharName )   , -1, 6 );  /* ANSI char language */
+      hb_storvc( reinterpret_cast< char * >( stInstallInfo.aucEvalExpireDate ) , -1, 7 );  /* Eval expiration date */
+      hb_storvc( reinterpret_cast< char * >( stInstallInfo.aucSerialNumber )   , -1, 8 );  /* Serial number string */
    }
    else
       hb_reta( 0 );
@@ -310,9 +310,9 @@ HB_FUNC( ADSMGGETCONFIGINFO )
             hb_storvni( 0                                      , -1, 17 );  /* reserved */
             hb_storvni( 0                                      , -1, 18 );  /* reserved */
 #endif
-            hb_storvc( static_cast< char * >( stConfigValues.aucErrorLog )   , -1, 19 );  /* error log path */
-            hb_storvc( static_cast< char * >( stConfigValues.aucSemaphore )  , -1, 20 );  /* semaphore file path */
-            hb_storvc( static_cast< char * >( stConfigValues.aucTransaction ), -1, 21 );  /* TPS log file path */
+            hb_storvc( reinterpret_cast< char * >( stConfigValues.aucErrorLog )   , -1, 19 );  /* error log path */
+            hb_storvc( reinterpret_cast< char * >( stConfigValues.aucSemaphore )  , -1, 20 );  /* semaphore file path */
+            hb_storvc( reinterpret_cast< char * >( stConfigValues.aucTransaction ), -1, 21 );  /* TPS log file path */
             hb_storvni( stConfigValues.ucReserved3             , -1, 22 );  /* reserved */
             hb_storvni( stConfigValues.ucReserved4             , -1, 23 );  /* reserved */
             hb_storvnl( stConfigValues.usSendIPPort            , -1, 24 );  /* NT Service IP send port # */
@@ -379,22 +379,22 @@ HB_FUNC( ADSMGGETUSERNAMES )
          PHB_ITEM pArrayItm = hb_arrayGetItemPtr( pArray, ulCount );
          hb_arrayNew( pArrayItm, 6 );
 
-         hb_arraySetC(  pArrayItm, 1, static_cast< char * >( pastUserInfo[ ulCount - 1 ].aucUserName ) );
+         hb_arraySetC(  pArrayItm, 1, reinterpret_cast< char * >( pastUserInfo[ ulCount - 1 ].aucUserName ) );
          hb_arraySetNL( pArrayItm, 2,            pastUserInfo[ ulCount - 1 ].usConnNumber );
 #if ADS_LIB_VERSION >= 600
-         hb_arraySetC(  pArrayItm, 3, static_cast< char * >( pastUserInfo[ ulCount - 1 ].aucAddress ) );
+         hb_arraySetC(  pArrayItm, 3, reinterpret_cast< char * >( pastUserInfo[ ulCount - 1 ].aucAddress ) );
 #else
          hb_arraySetC(  pArrayItm, 3, nullptr );
 #endif
 #if ADS_LIB_VERSION >= 800
-         hb_arraySetC(  pArrayItm, 4, static_cast< char * >( pastUserInfo[ ulCount - 1 ].aucAuthUserName ) );
-         hb_arraySetC(  pArrayItm, 5, static_cast< char * >( pastUserInfo[ ulCount - 1 ].aucOSUserLoginName ) );
+         hb_arraySetC(  pArrayItm, 4, reinterpret_cast< char * >( pastUserInfo[ ulCount - 1 ].aucAuthUserName ) );
+         hb_arraySetC(  pArrayItm, 5, reinterpret_cast< char * >( pastUserInfo[ ulCount - 1 ].aucOSUserLoginName ) );
 #else
          hb_arraySetC(  pArrayItm, 4, nullptr );
          hb_arraySetC(  pArrayItm, 5, nullptr );
 #endif
 #if ADS_LIB_VERSION >= 810
-         hb_arraySetC(  pArrayItm, 6, static_cast< char * >( pastUserInfo[ ulCount - 1 ].aucTSAddress ) );
+         hb_arraySetC(  pArrayItm, 6, reinterpret_cast< char * >( pastUserInfo[ ulCount - 1 ].aucTSAddress ) );
 #else
          hb_arraySetC(  pArrayItm, 6, nullptr );
 #endif
@@ -437,11 +437,11 @@ HB_FUNC( ADSMGGETLOCKOWNER )
                           &pusLockType ) == AE_SUCCESS )
    {
       hb_reta( 5 );
-      hb_storvc( static_cast< char * >( pstUserInfo->aucUserName ), -1, 1 );       /* Machine name under NT */
+      hb_storvc( reinterpret_cast< char * >( pstUserInfo->aucUserName ), -1, 1 );       /* Machine name under NT */
       hb_storvnl( ( UNSIGNED16 ) pstUserInfo->usConnNumber, -1, 2 ); /* NetWare conn # (NLM only) */
 #if ADS_LIB_VERSION >= 600
-      hb_storvc( static_cast< char * >( pstUserInfo->aucAuthUserName ), -1, 3 );   /* logon name with Data Dictionary */
-      hb_storvc( static_cast< char * >( pstUserInfo->aucAddress ), -1, 4 );        /* IP address */
+      hb_storvc( reinterpret_cast< char * >( pstUserInfo->aucAuthUserName ), -1, 3 );   /* logon name with Data Dictionary */
+      hb_storvc( reinterpret_cast< char * >( pstUserInfo->aucAddress ), -1, 4 );        /* IP address */
 #else
       hb_storvc( nullptr, -1, 3 );                                      /* logon name with Data Dictionary */
       hb_storvc( nullptr, -1, 4 );                                      /* IP address */
@@ -478,7 +478,7 @@ HB_FUNC( ADSMGGETOPENTABLES ) /* nMaxNumberOfFilesToReturn, cUserName, nConnecti
       UNSIGNED16 ulCount;
 
       for( ulCount = 1; ulCount <= usArrayLen; ulCount++ )
-         hb_arraySetC( pArray, static_cast< HB_ULONG >( ulCount ), static_cast< char * >( astOpenTableInfo[ ulCount - 1 ].aucTableName ) );
+         hb_arraySetC( pArray, static_cast< HB_ULONG >( ulCount ), reinterpret_cast< char * >( astOpenTableInfo[ ulCount - 1 ].aucTableName ) );
 
       hb_itemReturnRelease( pArray );
    }
@@ -514,7 +514,7 @@ HB_FUNC( ADSMGGETOPENTABLES2 ) /* nMaxNumberOfFilesToReturn, cUserName, nConnect
          PHB_ITEM pArrayItm = hb_arrayGetItemPtr( pArray, ulCount );
          hb_arrayNew( pArrayItm, 2 );
 
-         hb_arraySetC(  pArrayItm, 1, static_cast< char * >( astOpenTableInfo[ ulCount - 1 ].aucTableName ) );
+         hb_arraySetC(  pArrayItm, 1, reinterpret_cast< char * >( astOpenTableInfo[ ulCount - 1 ].aucTableName ) );
          hb_arraySetNI( pArrayItm, 2, astOpenTableInfo[ ulCount - 1 ].usLockType ); /* Advantage locking mode */
       }
 
@@ -549,7 +549,7 @@ HB_FUNC( ADSMGGETOPENINDEXES ) /* nMaxNumberOfFilesToReturn, cTableName, cUserNa
       UNSIGNED16 ulCount;
 
       for( ulCount = 1; ulCount <= usArrayLen; ulCount++ )
-         hb_arraySetC( pArray, static_cast< HB_ULONG >( ulCount ), static_cast< char * >( astOpenIndexInfo[ ulCount - 1 ].aucIndexName ) );
+         hb_arraySetC( pArray, static_cast< HB_ULONG >( ulCount ), reinterpret_cast< char * >( astOpenIndexInfo[ ulCount - 1 ].aucIndexName ) );
 
       hb_itemReturnRelease( pArray );
    }
@@ -618,11 +618,11 @@ HB_FUNC( ADSMGGETWORKERTHREADACTIVITY )
 
          hb_arraySetNL( pArrayItm, 1,            astWorkerThreadActivity[ ulCount - 1 ].ulThreadNumber );
          hb_arraySetNI( pArrayItm, 2,            astWorkerThreadActivity[ ulCount - 1 ].usOpCode );
-         hb_arraySetC(  pArrayItm, 3, static_cast< char * >( astWorkerThreadActivity[ ulCount - 1 ].aucUserName ) );
+         hb_arraySetC(  pArrayItm, 3, reinterpret_cast< char * >( astWorkerThreadActivity[ ulCount - 1 ].aucUserName ) );
          hb_arraySetNI( pArrayItm, 4,            astWorkerThreadActivity[ ulCount - 1 ].usConnNumber );
          hb_arraySetNI( pArrayItm, 5,            astWorkerThreadActivity[ ulCount - 1 ].usReserved1 );
 #if ADS_LIB_VERSION >= 800
-         hb_arraySetC(  pArrayItm, 6, static_cast< char * >( astWorkerThreadActivity[ ulCount - 1 ].aucOSUserLoginName ) );
+         hb_arraySetC(  pArrayItm, 6, reinterpret_cast< char * >( astWorkerThreadActivity[ ulCount - 1 ].aucOSUserLoginName ) );
 #else
          hb_arraySetC(  pArrayItm, 6, nullptr );
 #endif

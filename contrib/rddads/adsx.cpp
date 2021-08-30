@@ -276,7 +276,7 @@ static int mixQSortCompare( PMIXKEY p1, PMIXKEY p2, HB_USHORT uiLen, PHB_CODEPAG
 
    if( pCodepage )
    {
-      i = hb_cdpcmp( static_cast< const char * >( p1->val ), static_cast< HB_ULONG >( uiLen ), static_cast< const char * >( p2->val ), static_cast< HB_ULONG >( uiLen ), pCodepage, 0 );
+      i = hb_cdpcmp( reinterpret_cast< const char * >( p1->val ), static_cast< HB_ULONG >( uiLen ), reinterpret_cast< const char * >( p2->val ), static_cast< HB_ULONG >( uiLen ), pCodepage, 0 );
    }
    else
       i = memcmp( p1->val, p2->val, uiLen );
@@ -1027,18 +1027,18 @@ static HB_ERRCODE adsxSysName( ADSXAREAP pArea, HB_BYTE * pBuffer )
    switch( u16TableType )
    {
       case ADS_NTX:
-         hb_strncpy( static_cast< char * >( pBuffer ), "ADSNTXX", HB_RDD_MAX_DRIVERNAME_LEN );
+         hb_strncpy( reinterpret_cast< char * >( pBuffer ), "ADSNTXX", HB_RDD_MAX_DRIVERNAME_LEN );
          break;
       case ADS_CDX:
-         hb_strncpy( static_cast< char * >( pBuffer ), "ADSCDXX", HB_RDD_MAX_DRIVERNAME_LEN );
+         hb_strncpy( reinterpret_cast< char * >( pBuffer ), "ADSCDXX", HB_RDD_MAX_DRIVERNAME_LEN );
          break;
 #if ADS_LIB_VERSION >= 900
       case ADS_VFP:
-         hb_strncpy( static_cast< char * >( pBuffer ), "ADSVFPX", HB_RDD_MAX_DRIVERNAME_LEN );
+         hb_strncpy( reinterpret_cast< char * >( pBuffer ), "ADSVFPX", HB_RDD_MAX_DRIVERNAME_LEN );
          break;
 #endif
       case ADS_ADT:
-         hb_strncpy( static_cast< char * >( pBuffer ), "ADSADTX", HB_RDD_MAX_DRIVERNAME_LEN );
+         hb_strncpy( reinterpret_cast< char * >( pBuffer ), "ADSADTX", HB_RDD_MAX_DRIVERNAME_LEN );
          break;
    }
 
@@ -1466,7 +1466,7 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          break;
 
       case DBOI_KEYTYPE:
-         pOrderInfo->itmResult = hb_itemPutCL( pOrderInfo->itmResult, static_cast< char * >( &pTag->bType ), 1 );
+         pOrderInfo->itmResult = hb_itemPutCL( pOrderInfo->itmResult, reinterpret_cast< char * >( &pTag->bType ), 1 );
          break;
 
       case DBOI_KEYSIZE:
