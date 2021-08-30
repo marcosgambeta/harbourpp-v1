@@ -9,6 +9,7 @@
 
 -depkeyhead=ads:ace.h
 -depcontrol=ads:${HB_WITH_ADS}
+-depincpath=ads:${HB_WITH_ADS}
 -depincpath=ads:/usr/local/ads/acesdk
 -depincpath=ads:${HOME}/ads/acesdk
 {x86_64}-depimplibs=ads:ace64.dll
@@ -20,7 +21,7 @@
 -cflag+=-Wno-unknown-pragmas{allgcc}
 
 # for ADS headers
--c=gnu90
+#-c=gnu90
 
 ${hb_name}.hbx
 
