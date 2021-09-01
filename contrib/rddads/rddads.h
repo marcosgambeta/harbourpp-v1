@@ -158,9 +158,8 @@ typedef ADSAREA * ADSAREAP;
           ! ( p )->lpdbPendingRel->isOptimized ) \
          SELF_FORCEREL( &( p )->area ); \
       else \
-         ( p )->lpdbPendingRel = NULL; \
+         ( p )->lpdbPendingRel = nullptr; \
    }
-
 
 #define HB_RDD_ADS_VERSION_STRING  "ADS RDD 1.4"
 
@@ -170,10 +169,10 @@ typedef ADSAREA * ADSAREAP;
 #  undef ADS_USE_OEM_TRANSLATION
 #endif
 
-#define HB_ADS_PARCONNECTION( n )     ( ( ADSHANDLE ) hb_parnintdef( n, hb_ads_getConnection() ) )
+#define HB_ADS_PARCONNECTION( n )     ( static_cast< ADSHANDLE >( hb_parnintdef( n, hb_ads_getConnection() ) ) )
 #define HB_ADS_RETCONNECTION( h )     hb_retnint( h )
-#define HB_ADS_GETCONNECTION( p )     ( ( hb_itemType( p ) & HB_IT_NUMERIC ) ? ( ADSHANDLE ) hb_itemGetNInt( p ) : hb_ads_getConnection() )
-#define HB_ADS_PUTCONNECTION( p, h )  hb_itemPutNInt( ( p ), ( ADSHANDLE ) ( h ) )
+#define HB_ADS_GETCONNECTION( p )     ( ( hb_itemType( p ) & HB_IT_NUMERIC ) ? static_cast< ADSHANDLE >( hb_itemGetNInt( p ) ) : hb_ads_getConnection() )
+#define HB_ADS_PUTCONNECTION( p, h )  hb_itemPutNInt( ( p ), static_cast< ADSHANDLE >( h ) )
 #define HB_ADS_DEFCONNECTION( h, s )  hb_ads_defConnection( ( h ), ( s ) )
 
 extern int     hb_ads_iFileType;    /* current global setting */
@@ -211,8 +210,8 @@ extern ADSAREAP   hb_adsGetWorkAreaPointer( void );
                                          UNSIGNED32 * pulLen );
 
 #else
-#  define hb_adsOemToAnsi( s, l )  ( ( char * ) HB_UNCONST( s ) )
-#  define hb_adsAnsiToOem( s, l )  ( ( char * ) HB_UNCONST( s ) )
+#  define hb_adsOemToAnsi( s, l )  ( static_cast< char * >( HB_UNCONST( s ) ) )
+#  define hb_adsAnsiToOem( s, l )  ( static_cast< char * >( HB_UNCONST( s ) ) )
 #  define hb_adsOemAnsiFree( s )
 #endif
 
