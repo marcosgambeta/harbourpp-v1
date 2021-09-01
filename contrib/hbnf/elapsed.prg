@@ -24,7 +24,11 @@
 
 FUNCTION ft_Elapsed( dStart, dEnd, cTimeStart, cTimeEnd )
 
-   LOCAL nTotalSec, nCtr, nConstant, nTemp, aRetVal[ 4 ][ 2 ]
+   LOCAL nTotalSec
+   LOCAL nCtr
+   LOCAL nConstant
+   LOCAL nTemp
+   LOCAL aRetVal[ 4 ][ 2 ]
 
    IF HB_ISSTRING( dStart )
       cTimeStart := dStart

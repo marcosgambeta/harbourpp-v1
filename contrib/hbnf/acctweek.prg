@@ -24,7 +24,8 @@
 
 FUNCTION ft_AcctWeek( dGivenDate, nWeekNum )
 
-   LOCAL nTemp, aRetVal
+   LOCAL nTemp
+   LOCAL aRetVal
 
    IF HB_ISNUMERIC( dGivenDate )
       nWeekNum := dGivenDate

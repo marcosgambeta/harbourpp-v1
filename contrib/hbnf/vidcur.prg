@@ -85,7 +85,8 @@ PROCEDURE ft_SetVcur( nPage, nRow, nCol )
 
 FUNCTION ft_GetVCur( nPage )
 
-   LOCAL nTop, nBot
+   LOCAL nTop
+   LOCAL nBot
 
    HB_SYMBOL_UNUSED( nPage )
 

@@ -52,12 +52,18 @@
 //  NOTE: When evaluated a code block is passed the array element to
 //          be edited
 
-FUNCTION ft_ArEdit( nTop, nLeft, nBot, nRight, ;
-      ar, nElem, aHeadings, aBlocks, bGetFunc )
+FUNCTION ft_ArEdit( nTop, nLeft, nBot, nRight, ar, nElem, aHeadings, aBlocks, bGetFunc )
 
-   LOCAL exit_requested, nKey, meth_no
-   LOCAL cSaveWin, i, b, column
-   LOCAL nDim, cType, cVal
+   LOCAL exit_requested
+   LOCAL nKey
+   LOCAL meth_no
+   LOCAL cSaveWin
+   LOCAL i
+   LOCAL b
+   LOCAL column
+   LOCAL nDim
+   LOCAL cType
+   LOCAL cVal
    LOCAL tb_methods := ;
       { ;
       { K_DOWN,       {| b | b:down() } }, ;

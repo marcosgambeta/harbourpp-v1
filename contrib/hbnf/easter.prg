@@ -22,8 +22,15 @@
 
 FUNCTION ft_Easter( nYear )
 
-   LOCAL nGold, nCent, nCorx, nCorz, nSunday, nEpact, nMoon
-   LOCAL nMonth := 0, nDay := 0
+   LOCAL nGold
+   LOCAL nCent
+   LOCAL nCorx
+   LOCAL nCorz
+   LOCAL nSunday
+   LOCAL nEpact
+   LOCAL nMoon
+   LOCAL nMonth := 0
+   LOCAL nDay := 0
 
    IF HB_ISSTRING( nYear )
       nYear := Val( nYear )

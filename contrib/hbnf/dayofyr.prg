@@ -24,7 +24,8 @@
 
 FUNCTION ft_DayOfYr( dGivenDate, nDayNum, lIsAcct )
 
-   LOCAL nTemp, aRetVal
+   LOCAL nTemp
+   LOCAL aRetVal
 
    IF HB_ISNUMERIC( dGivenDate )
       nDayNum    := dGivenDate

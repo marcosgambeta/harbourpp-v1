@@ -19,7 +19,10 @@
 
 FUNCTION ft_AEMinLen( aArray, nDimension, nStart, nCount )
 
-   LOCAL i, nLast, nMinlen := NIL, nLen
+   LOCAL i
+   LOCAL nLast
+   LOCAL nMinlen := NIL
+   LOCAL nLen
 
    __defaultNIL( @nDimension, 1 )
    __defaultNIL( @nStart, 1 )

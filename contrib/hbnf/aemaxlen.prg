@@ -19,7 +19,9 @@
 
 FUNCTION ft_AEMaxLen( aArray, nDimension, nStart, nCount )
 
-   LOCAL i, nLast, nMaxlen := 0
+   LOCAL i
+   LOCAL nLast
+   LOCAL nMaxlen := 0
 
    __defaultNIL( @nDimension, 1 )
    __defaultNIL( @nStart, 1 )

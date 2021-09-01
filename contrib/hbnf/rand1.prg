@@ -23,7 +23,8 @@ FUNCTION ft_Rand1( nMax )
 
    THREAD STATIC t_nSeed
 
-   LOCAL m := 100000000, b := 31415621
+   LOCAL m := 100000000
+   LOCAL b := 31415621
 
    t_nSeed := iif( t_nSeed == NIL, Seconds(), t_nSeed )
 

@@ -22,9 +22,15 @@
 
 FUNCTION ft_Calendar( nRow, nCol, cColor, lShadow, lShowHelp )
 
-   LOCAL nJump := 0, nKey := 0, cSavColor, cSaveScreen, cSaveCursor
+   LOCAL nJump := 0
+   LOCAL nKey := 0
+   LOCAL cSavColor
+   LOCAL cSaveScreen
+   LOCAL cSaveCursor
    LOCAL aRetVal[ 8 ]
-   LOCAL nHelpRow, cSaveHelp, lHelpIsDisplayed := .F.
+   LOCAL nHelpRow
+   LOCAL cSaveHelp
+   LOCAL lHelpIsDisplayed := .F.
 
    __defaultNIL( @nRow, 1 )         // check display row
    __defaultNIL( @nCol, 63 )        // check display col

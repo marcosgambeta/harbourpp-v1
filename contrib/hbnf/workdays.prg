@@ -24,7 +24,9 @@
 
 FUNCTION ft_Workdays( dStart, dStop )
 
-   LOCAL nWorkDays := 0, nDays, nAdjust
+   LOCAL nWorkDays := 0
+   LOCAL nDays
+   LOCAL nAdjust
 
    IF dStart != NIL .AND. dStop != NIL
       IF dStart != dStop

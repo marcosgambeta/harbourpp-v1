@@ -33,7 +33,10 @@ FUNCTION ft_Min2Mil( nMin )
 
 FUNCTION ft_Mil2Civ( cMILTIME )
 
-   LOCAL cHRS, cMINS, nHRS, cCIVTIME
+   LOCAL cHRS
+   LOCAL cMINS
+   LOCAL nHRS
+   LOCAL cCIVTIME
 
    nHRS  := Val( Left( cMILTIME, 2 ) )
    cMINS := Right( cMILTIME, 2 )
@@ -64,7 +67,8 @@ FUNCTION ft_Mil2Civ( cMILTIME )
 
 FUNCTION ft_Civ2Mil( cTIME )
 
-   LOCAL cKEY, cMILTIME
+   LOCAL cKEY
+   LOCAL cMILTIME
 
    // ** Ensure leading 0's
 

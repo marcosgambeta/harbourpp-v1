@@ -218,7 +218,8 @@ FUNCTION ft_Metaph( cName, nSize ) //  Calculates the metaphone of a character s
 
 STATIC FUNCTION _ftMakeAlpha( cStr ) //  Strips non-alpha characters from a string, leaving spaces
 
-   LOCAL x, cAlpha := ""
+   LOCAL x
+   LOCAL cAlpha := ""
 
    FOR x := 1 TO Len( cStr )
       IF SubStr( cStr, x, 1 ) == " " .OR. IsAlpha( SubStr( cStr, x, 1 ) )
@@ -230,7 +231,8 @@ STATIC FUNCTION _ftMakeAlpha( cStr ) //  Strips non-alpha characters from a stri
 
 STATIC FUNCTION _ftConvVowel( cStr ) //  Converts all vowels to letter 'v'
 
-   LOCAL x, cConverted := ""
+   LOCAL x
+   LOCAL cConverted := ""
 
    FOR x := 1 TO Len( cStr )
       IF SubStr( cStr, x, 1 ) $ "AEIOU"

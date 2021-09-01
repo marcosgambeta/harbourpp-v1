@@ -40,5 +40,7 @@ HB_FUNC( FT_ALT )
    hb_gtInfo( HB_GTI_KBDSHIFTS, &gtInfo );
    hb_retl( ( hb_itemGetNI( gtInfo.pResult ) & HB_GTI_KBD_ALT ) != 0 );
    if( gtInfo.pResult )
+   {
       hb_itemRelease( gtInfo.pResult );
+   }
 }

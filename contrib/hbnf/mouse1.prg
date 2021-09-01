@@ -8,7 +8,8 @@ THREAD STATIC t_lMInit := .F.
 
 FUNCTION ft_MDblClk( nClick, nButton, nInterval, nRow, nCol, nStart )
 
-   LOCAL nVert, nHorz  // local row and col coordinates
+   LOCAL nVert         // local row and col coordinates
+   LOCAL nHorz
    LOCAL lDouble       // double click actually occurred
    LOCAL lDone         // loop flag
    LOCAL nPrs          // number of presses which occurred
@@ -113,7 +114,9 @@ FUNCTION ft_MSetCoord( nX, nY )
 
 FUNCTION ft_MSetSens( nHoriz, nVert, nDouble )
 
-   LOCAL nCurHoriz, nCurVert, nCurDouble
+   LOCAL nCurHoriz
+   LOCAL nCurVert
+   LOCAL nCurDouble
 
    // Get current values
 
@@ -189,7 +192,8 @@ FUNCTION ft_MHideCrs() // decrement internal cursor flag and hide cursor
 
 FUNCTION ft_MXLimit( nMin, nMax )
 
-   LOCAL nTop, nBottom
+   LOCAL nTop
+   LOCAL nBottom
 
    hb_MGetBounds( @nTop,, @nBottom )
    MSetBounds( nTop, nMin, nBottom, nMax )
@@ -198,7 +202,8 @@ FUNCTION ft_MXLimit( nMin, nMax )
 
 FUNCTION ft_MYLimit( nMin, nMax )
 
-   LOCAL nLeft, nRight
+   LOCAL nLeft
+   LOCAL nRight
 
    hb_MGetBounds(, @nLeft,, @nRight )
    MSetBounds( nMin, nLeft, nMax, nRight )

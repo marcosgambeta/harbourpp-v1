@@ -129,7 +129,12 @@ FUNCTION ft_MenuTo( bGetSet, cReadVar, lCold )
    LOCAL nCount  := Len( t_aRow[ nMenu ] )
    LOCAL lChoice := .F.
    LOCAL nCursor := Set( _SET_CURSOR, SC_NONE )
-   LOCAL nKey, bKey, nScan, lWrap, cScreen, nPrev
+   LOCAL nKey
+   LOCAL bKey
+   LOCAL nScan
+   LOCAL lWrap
+   LOCAL cScreen
+   LOCAL nPrev
 
    IF ! HB_ISLOGICAL( lCold )
       lCold := .F.

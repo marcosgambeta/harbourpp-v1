@@ -27,7 +27,11 @@
 
 FUNCTION ft_Linked( cFuncs )
 
-   LOCAL aFuncArray := {}, nSpace, nComma, nFEnd, lRetVal := .F.
+   LOCAL aFuncArray := {}
+   LOCAL nSpace
+   LOCAL nComma
+   LOCAL nFEnd
+   LOCAL lRetVal := .F.
 
    IF At( "(", cFuncs ) == 0
       // No functions in string

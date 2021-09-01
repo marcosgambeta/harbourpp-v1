@@ -98,7 +98,11 @@ THREAD STATIC t_aStdColor
 
 FUNCTION ft_Adder()
 
-   LOCAL nOldDecim, cMoveTotSubTot, cTotal, lDone, nKey
+   LOCAL nOldDecim
+   LOCAL cMoveTotSubTot
+   LOCAL cTotal
+   LOCAL lDone
+   LOCAL nKey
    LOCAL oGet        := GetActive()
    LOCAL nOldCurs    := SetCursor( SC_NONE )
    LOCAL nOldRow     := Row()
@@ -107,7 +111,8 @@ FUNCTION ft_Adder()
    LOCAL nOldLastKey := LastKey()
    LOCAL lShowRight  := .T.
    LOCAL aAdder      := Array( 23 )
-   LOCAL tmp, tmp1
+   LOCAL tmp
+   LOCAL tmp1
 
    LOCAL lAC_exit_ok
 
@@ -742,7 +747,8 @@ STATIC FUNCTION _ftValDeci( oGet )
 
 STATIC FUNCTION _ftDisplayTape( aAdder, nKey )
 
-   LOCAL nDispTape, nTopTape := 1
+   LOCAL nDispTape
+   LOCAL nTopTape := 1
 
    IF ( nKey == hb_keyCode( "T" ) .OR. nKey == hb_keyCode( "t" ) ) .AND. lTape  // Stop displaying tape
       lTape := .F.
@@ -821,7 +827,13 @@ STATIC FUNCTION _ftPopKeys
 
 STATIC FUNCTION _ftPushMessage( cMessage, lWait, cTitle, cBotTitle, xQuiet, nTop )
 
-   LOCAL nMessLen, nNumRows, nWide, nLeft, nBottom, nRight, cOldDevic
+   LOCAL nMessLen
+   LOCAL nNumRows
+   LOCAL nWide
+   LOCAL nLeft
+   LOCAL nBottom
+   LOCAL nRight
+   LOCAL cOldDevic
    LOCAL lOldPrint
    LOCAL cOldColor   := SetColor()
    LOCAL nOldLastkey := LastKey()
@@ -881,8 +893,20 @@ STATIC FUNCTION _ftPopMessage
 
 STATIC FUNCTION _ftQuest( cMessage, xVarVal, cPict, bValid, lNoESC, nWinColor, nTop )
 
-   LOCAL nOldRow, nOldCol, cOldColor, nMessLen, nWide, nNumRows, nBottom, nLeft
-   LOCAL nRight, oNewGet, nNumMessRow, nLenLastRow, lGetOnNextLine, nOldCurs
+   LOCAL nOldRow
+   LOCAL nOldCol
+   LOCAL cOldColor
+   LOCAL nMessLen
+   LOCAL nWide
+   LOCAL nNumRows
+   LOCAL nBottom
+   LOCAL nLeft
+   LOCAL nRight
+   LOCAL oNewGet
+   LOCAL nNumMessRow
+   LOCAL nLenLastRow
+   LOCAL lGetOnNextLine
+   LOCAL nOldCurs
    LOCAL cVarType := ValType( xVarVal )
    LOCAL nVarLen  := ;
       iif( cVarType == "C", Len( xVarVal ), ;
@@ -973,7 +997,8 @@ STATIC FUNCTION _ftQuest( cMessage, xVarVal, cPict, bValid, lNoESC, nWinColor, n
 
 STATIC FUNCTION _ftAdderTapeUDF( mode, cur_elem, rel_pos, /* @ */ lAC_exit_ok )
 
-   LOCAL nKey, nRtnVal
+   LOCAL nKey
+   LOCAL nRtnVal
 
    HB_SYMBOL_UNUSED( cur_elem )
    HB_SYMBOL_UNUSED( rel_pos )
@@ -1005,9 +1030,21 @@ STATIC FUNCTION _ftAdderTapeUDF( mode, cur_elem, rel_pos, /* @ */ lAC_exit_ok )
 
 STATIC FUNCTION _ftError( cMessage, xDontReset )
 
-   LOCAL nOldRow, nOldCol, nOldCurs, nTop, nLeft, nBot, nRight, cOldColor
-   LOCAL nOldLastKey, cErrorScr, nMessLen, nWide, nNumRows
-   LOCAL cOldDevic, lOldPrint
+   LOCAL nOldRow
+   LOCAL nOldCol
+   LOCAL nOldCurs
+   LOCAL nTop
+   LOCAL nLeft
+   LOCAL nBot
+   LOCAL nRight
+   LOCAL cOldColor
+   LOCAL nOldLastKey
+   LOCAL cErrorScr
+   LOCAL nMessLen
+   LOCAL nWide
+   LOCAL nNumRows
+   LOCAL cOldDevic
+   LOCAL lOldPrint
    LOCAL lResetLKey := ( xDontReset == NIL )
 
    nOldLastKey := LastKey()
@@ -1053,7 +1090,8 @@ STATIC FUNCTION _ftError( cMessage, xDontReset )
 
 STATIC FUNCTION _ftStuffComma( cStrToStuff, lTrimStuffedStr )
 
-   LOCAL nDecPosit, x
+   LOCAL nDecPosit
+   LOCAL x
 
    __defaultNIL( @lTrimStuffedStr, .F. )
 

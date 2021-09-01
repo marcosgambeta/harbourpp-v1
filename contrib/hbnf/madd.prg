@@ -24,7 +24,9 @@
 
 FUNCTION ft_MAdd( dGivenDate, nAddMonths, lMakeEOM )
 
-   LOCAL nAdjDay, dTemp, i
+   LOCAL nAdjDay
+   LOCAL dTemp
+   LOCAL i
 
    hb_default( @dGivenDate, Date() )
    hb_default( @nAddMonths, 0 )

@@ -64,7 +64,10 @@ FUNCTION ft_ClrSel( aClrs, lColour, cChr )
 
    LOCAL aClrOld := AClone( aClrs )
    LOCAL aOptions
-   LOCAL nB, nT, nL, nR
+   LOCAL nB
+   LOCAL nT
+   LOCAL nL
+   LOCAL nR
    LOCAL nChoice := 1
    LOCAL nLen    := 0
    LOCAL aPrompt := {}
@@ -151,7 +154,10 @@ STATIC FUNCTION _ftHiLite( nRow, nCol, cStr, nLen )
 
 STATIC FUNCTION _ftColours( aOpt, aClrPal, lColour )
 
-   LOCAL nB, nT, nL, nR
+   LOCAL nB
+   LOCAL nT
+   LOCAL nL
+   LOCAL nR
    LOCAL nX
    LOCAL aClrs   := {}
    LOCAL cClr
@@ -466,7 +472,8 @@ STATIC FUNCTION _ftDeskChar( aOpt )
    LOCAL cChar := aOpt[ C_CHAR ]
    LOCAL cClr  := aOpt[ C_CLR ]
    LOCAL nElem := hb_AScan( aChar, cChar,,, .T. )
-   LOCAL n, nKey
+   LOCAL n
+   LOCAL nKey
 
    IF nElem == 0             // this allows another character to be selected
       AAdd( aChar, cChar )   // but there is the possibility that it will
@@ -515,7 +522,8 @@ STATIC FUNCTION _ftDeskChar( aOpt )
 
 STATIC FUNCTION _ftChr2Arr( cString, cDelim )
 
-   LOCAL n, aArray := {}
+   LOCAL n
+   LOCAL aArray := {}
 
    __defaultNIL( @cDelim, "," )
    __defaultNIL( @cString, "" )  // this should really be passed
@@ -552,7 +560,8 @@ STATIC FUNCTION _ftArr2Chr( aArray, cDelim )
 
 STATIC FUNCTION _ftShowPal( aClrPal, cChr )
 
-   LOCAL nF, nB
+   LOCAL nF
+   LOCAL nB
    LOCAL nTop    := 0
    LOCAL nLeft   := 28
    LOCAL nBottom := nTop  + Len( aClrPal ) + 1
@@ -578,7 +587,8 @@ STATIC FUNCTION _ftShowPal( aClrPal, cChr )
 
 STATIC FUNCTION _ftInitPal( aClrTab )
 
-   LOCAL nF, nB
+   LOCAL nF
+   LOCAL nB
    LOCAL nDim    := Len( aClrTab )
    LOCAL aClrPal := Array( nDim * 2, nDim * 2 )
 

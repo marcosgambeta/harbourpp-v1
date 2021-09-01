@@ -23,7 +23,11 @@
 
 FUNCTION ft_AMedian( aArray, nStart, nEnd )
 
-   LOCAL nTemplen, aTemparray, nMiddle1, nMiddle2, nMedian
+   LOCAL nTemplen
+   LOCAL aTemparray
+   LOCAL nMiddle1
+   LOCAL nMiddle2
+   LOCAL nMedian
 
    __defaultNIL( @nStart, 1 )
    __defaultNIL( @nEnd, Len( aArray ) )

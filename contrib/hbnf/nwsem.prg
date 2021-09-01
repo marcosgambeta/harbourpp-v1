@@ -41,7 +41,9 @@
 
 FUNCTION ft_NWSemOpen( cName, nInitVal, nHandle, nOpenCnt )
 
-   LOCAL aRegs[ INT86_MAX_REGS ], cRequest, nRet
+   LOCAL aRegs[ INT86_MAX_REGS ]
+   LOCAL cRequest
+   LOCAL nRet
 
    __defaultNIL( @cName, "" )
    __defaultNIL( @nInitVal, 0 )
@@ -69,7 +71,8 @@ FUNCTION ft_NWSemOpen( cName, nInitVal, nHandle, nOpenCnt )
 
 FUNCTION ft_NWSemEx( nHandle, nValue, nOpenCnt )
 
-   LOCAL aRegs[ INT86_MAX_REGS ], nRet
+   LOCAL aRegs[ INT86_MAX_REGS ]
+   LOCAL nRet
 
    __defaultNIL( @nHandle, 0 )
    __defaultNIL( @nValue, 0 )
@@ -106,7 +109,8 @@ FUNCTION ft_NWSemClose( nHandle )
 
 STATIC FUNCTION _ftnwsem( nOp, nHandle, nTimeout )
 
-   LOCAL aRegs[ INT86_MAX_REGS ], nRet
+   LOCAL aRegs[ INT86_MAX_REGS ]
+   LOCAL nRet
 
    __defaultNIL( @nOp, SIGNAL_SEMAPHORE )
    __defaultNIL( @nHandle, 0 )

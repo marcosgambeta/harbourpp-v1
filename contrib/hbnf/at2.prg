@@ -24,7 +24,9 @@
 
 FUNCTION ft_At2( cSearch, cTarget, nOccurs, lCaseSens )
 
-   LOCAL nCount, nPos, nPos2 := 0
+   LOCAL nCount
+   LOCAL nPos
+   LOCAL nPos2 := 0
    LOCAL cSubstr := cTarget
 
    // Set default parameters as necessary.
@@ -58,7 +60,9 @@ FUNCTION ft_At2( cSearch, cTarget, nOccurs, lCaseSens )
 
 FUNCTION ft_RAt2( cSearch, cTarget, nOccurs, lCaseSens )
 
-   LOCAL nCount, nPos, nPos2 := 0
+   LOCAL nCount
+   LOCAL nPos
+   LOCAL nPos2 := 0
    LOCAL cSubstr := cTarget
 
    // Set default parameters as necessary.

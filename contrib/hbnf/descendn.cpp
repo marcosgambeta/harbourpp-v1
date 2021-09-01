@@ -27,31 +27,37 @@ HB_FUNC( FT_DESCEND )
    PHB_ITEM iR = nullptr;
 
    if( ( uiType & HB_IT_NUMERIC ) && ( uiType & HB_IT_DOUBLE ) )
+   {
       iR = hb_itemPutND( nullptr, 0 - hb_itemGetND( iP ) );
-
+   }
    else if( uiType & HB_IT_NUMERIC )
+   {
       iR = hb_itemPutNL( nullptr, 0 - hb_itemGetNL( iP ) );
-
+   }
    else if( uiType & HB_IT_DATE )
+   {
       iR = hb_itemPutNL( nullptr, 0x4FD4C0L - hb_itemGetNL( iP ) );
-
+   }
    else if( uiType & HB_IT_TIMESTAMP )
+   {
       iR = hb_itemPutND( nullptr, 0x4FD4C0L - hb_itemGetTD( iP ) );
-
+   }
    else if( uiType & HB_IT_LOGICAL )
+   {
       iR = hb_itemPutL( 0, ( hb_itemGetL( iP ) > 0 ) ? 0 : 1 );
-
+   }
    else if( uiType & HB_IT_STRING )
    {
       HB_SIZE uiLen = hb_itemSize( iP );
-      HB_SIZE n;
 
       char * pDescend = static_cast< char * >( hb_xgrab( uiLen ) );
 
       hb_itemCopyC( iP, pDescend, uiLen );
 
-      for( n = 0; n < uiLen; n++ )
+      for( HB_SIZE n = 0; n < uiLen; n++ )
+      {
          pDescend[ n ] = static_cast< char >( 0 ) - pDescend[ n ];
+      }
 
       iR = hb_itemPutCL( nullptr, pDescend, uiLen );
 

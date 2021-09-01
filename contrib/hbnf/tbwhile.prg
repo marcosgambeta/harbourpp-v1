@@ -56,10 +56,19 @@
 FUNCTION ft_BrwsWhl( aFields, bWhileCond, cKey, nFreeze, lSaveScrn, ;
       cColorList, cColorShad, nTop, nLeft, nBottom, nRight )
 
-   LOCAL b, column, i
-   LOCAL cHead, bField, lKeepScrn, cScrnSave
-   LOCAL cColorSave, cColorBack, nCursSave
-   LOCAL lMore, nKey, nPassRec
+   LOCAL b
+   LOCAL column
+   LOCAL i
+   LOCAL cHead
+   LOCAL bField
+   LOCAL lKeepScrn
+   LOCAL cScrnSave
+   LOCAL cColorSave
+   LOCAL cColorBack
+   LOCAL nCursSave
+   LOCAL lMore
+   LOCAL nKey
+   LOCAL nPassRec
 
    __defaultNIL( @nFreeze, 0 )
    __defaultNIL( @lSaveScrn, .T. )

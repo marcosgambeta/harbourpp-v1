@@ -83,9 +83,13 @@ HB_FUNC( FT_SETDATE )
    union REGS regs;
 
    if( HB_ISDATE( 1 ) )
+   {
       hb_dateDecode( hb_pardl( 1 ), &iYear, &iMonth, &iDay );
+   }
    else
+   {
       hb_dateToday( &iYear, &iMonth, &iDay );
+   }
 
    regs.h.ah        = 43;
    regs.HB_XREGS.cx = iYear;

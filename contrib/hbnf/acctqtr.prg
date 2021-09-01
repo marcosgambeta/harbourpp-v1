@@ -24,7 +24,9 @@
 
 FUNCTION ft_AcctQtr( dGivenDate, nQtrNum )
 
-   LOCAL nYTemp, nQTemp, aRetVal
+   LOCAL nYTemp
+   LOCAL nQTemp
+   LOCAL aRetVal
 
    IF HB_ISNUMERIC( dGivenDate )
       nQtrNum    := dGivenDate

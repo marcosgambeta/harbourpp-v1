@@ -24,7 +24,8 @@
 
 FUNCTION ft_AcctYear( dGivenDate )
 
-   LOCAL nYTemp, aRetVal
+   LOCAL nYTemp
+   LOCAL aRetVal
 
    IF ! HB_ISDATE( dGivenDate )
       dGivenDate := Date()

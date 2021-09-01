@@ -22,7 +22,10 @@
 
 FUNCTION ft_WoY( dInDate )
 
-   LOCAL nFirstDays, nDayOffset, nWkNumber, cCentury
+   LOCAL nFirstDays
+   LOCAL nDayOffset
+   LOCAL nWkNumber
+   LOCAL cCentury
 
    IF HB_ISDATE( dInDate )
 

@@ -21,7 +21,8 @@
 
 FUNCTION ft_Byt2Bit( cByte )
 
-   LOCAL nCounter, cBitstring
+   LOCAL nCounter
+   LOCAL cBitstring
 
    IF HB_ISSTRING( cByte )
       cByte := hb_BCode( cByte )

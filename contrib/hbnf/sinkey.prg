@@ -21,7 +21,8 @@
 
 FUNCTION ft_SInkey( waittime )
 
-   LOCAL nKey, cBlock
+   LOCAL nKey
+   LOCAL cBlock
 
    DO CASE
    CASE PCount() == 0 /* if no WAITTIME passed, go straight through */

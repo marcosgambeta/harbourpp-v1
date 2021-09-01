@@ -28,7 +28,8 @@
 
 FUNCTION ft_SaveArr( aArray, cFileName, /* @ */ nErrorCode )
 
-   LOCAL nHandle, lRet
+   LOCAL nHandle
+   LOCAL lRet
 
    nHandle := FCreate( cFileName )
    nErrorCode := FError()
@@ -47,7 +48,9 @@ FUNCTION ft_SaveArr( aArray, cFileName, /* @ */ nErrorCode )
 
 STATIC FUNCTION _ftsavesub( xMemVar, nHandle, /* @ */ nErrorCode )
 
-   LOCAL cValType, nLen, cString
+   LOCAL cValType
+   LOCAL nLen
+   LOCAL cString
 
    LOCAL lRet := .T.
 
@@ -98,7 +101,8 @@ STATIC FUNCTION _ftsavesub( xMemVar, nHandle, /* @ */ nErrorCode )
 
 FUNCTION ft_RestArr( cFileName, /* @ */ nErrorCode )
 
-   LOCAL nHandle, aArray
+   LOCAL nHandle
+   LOCAL aArray
 
    nHandle := FOpen( cFileName )
    nErrorCode := FError()
@@ -113,7 +117,12 @@ FUNCTION ft_RestArr( cFileName, /* @ */ nErrorCode )
 
 STATIC FUNCTION _ftrestsub( nHandle, /* @ */ nErrorCode )
 
-   LOCAL cValType, nLen, cLenStr, xMemVar, cMemVar, nk
+   LOCAL cValType
+   LOCAL nLen
+   LOCAL cLenStr
+   LOCAL xMemVar
+   LOCAL cMemVar
+   LOCAL nk
 
    cValType := " "
    FRead( nHandle, @cValType, 1 )

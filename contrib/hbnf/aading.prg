@@ -19,7 +19,8 @@
 
 FUNCTION ft_AAddition( aList1, aList2, lTrimmer, lCaseSens )
 
-   LOCAL nElement, bScanCode
+   LOCAL nElement
+   LOCAL bScanCode
    LOCAL aNewArray := AClone( aList1 )
 
    __defaultNIL( @lCaseSens, .T. )

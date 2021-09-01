@@ -39,8 +39,16 @@
 
 FUNCTION ft_Pegs()
 
-   LOCAL XX, MOVE, MPOS, POSSIBLE_, BUFFER, TOPROW, OLDSCORE, MOVE2
-   LOCAL SCANBLOCK, OLDCOLOR := SetColor( "w/n" )
+   LOCAL XX
+   LOCAL MOVE
+   LOCAL MPOS
+   LOCAL POSSIBLE_
+   LOCAL BUFFER
+   LOCAL TOPROW
+   LOCAL OLDSCORE
+   LOCAL MOVE2
+   LOCAL SCANBLOCK
+   LOCAL OLDCOLOR := SetColor( "w/n" )
    LOCAL oldscrn := SaveScreen( 0, 0, MaxRow(), MaxCol() )
    LOCAL GetList
 
@@ -189,7 +197,11 @@ STATIC FUNCTION err_msg( msg )
 
 STATIC FUNCTION moremoves( board_ )
 
-   LOCAL xx, yy, canmove := .F., piecesleft := 0, buffer
+   LOCAL xx
+   LOCAL yy
+   LOCAL canmove := .F.
+   LOCAL piecesleft := 0
+   LOCAL buffer
 
    FOR xx := 1 TO 33
       FOR yy := 1 TO Len( board_[ xx ][ 2 ] )

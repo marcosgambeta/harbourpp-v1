@@ -172,26 +172,30 @@ static HB_TSD_NEW( s_ft_text, sizeof( FT_TEXT ), nullptr, nullptr );
  */
 static HB_ISIZ _findeol( char * buf, HB_ISIZ buf_len, HB_ISIZ * eol_len )
 {
-   HB_ISIZ tmp;
-
-   for( tmp = 0; tmp < buf_len; tmp++ )
+   for( HB_ISIZ tmp = 0; tmp < buf_len; tmp++ )
    {
       if( tmp < buf_len - 1 && buf[ tmp ] == FT_CHR_CR && buf[ tmp + 1 ] == FT_CHR_LF )
       {
          if( eol_len )
+         {
             *eol_len = 2;
+         }
          return tmp + 2;
       }
       else if( buf[ tmp ] == FT_CHR_LF || buf[ tmp ] == FT_CHR_CR )
       {
          if( eol_len )
+         {
             *eol_len = 1;
+         }
          return tmp + 1;
       }
    }
 
    if( eol_len )
+   {
       *eol_len = 0;
+   }
 
    return 0;
 }
@@ -218,7 +222,9 @@ static HB_ISIZ _findbol( char * buf, HB_ISIZ buf_len )
          tmp--;
 
          if( tmp == 0 )
+         {
             return buf_len;
+         }
       }
 
       if( b == FT_CHR_LF )
@@ -227,7 +233,9 @@ static HB_ISIZ _findbol( char * buf, HB_ISIZ buf_len )
          tmp--;
 
          if( tmp == 0 )
+         {
             return buf_len;
+         }
 
          if( *p == FT_CHR_CR )
          {
@@ -235,16 +243,22 @@ static HB_ISIZ _findbol( char * buf, HB_ISIZ buf_len )
             tmp--;
 
             if( tmp == 0 )
+            {
                return buf_len;
+            }
          }
       }
 
       for(; tmp > 0; tmp--, p-- )
       {
          if( *p == FT_CHR_LF && *( p - 1 ) == FT_CHR_CR )
+         {
             return buf_len - ( tmp + 2 ) + 1;
+         }
          else if( *p == FT_CHR_LF )
+         {
             return buf_len - ( tmp + 1 ) + 1;
+         }
       }
    }
 
@@ -257,7 +271,7 @@ static HB_ISIZ _findbol( char * buf, HB_ISIZ buf_len )
    Returns a long indicating the number of records skipped */
 static long _ft_skip( long iRecs )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_ft_text );
+   PFT_TEXT ft_text = static_cast< PFT_TEXT >( hb_stackGetTSD( &s_ft_text ) );
 
    long iSkipped = 0;
 
@@ -315,7 +329,9 @@ static long _ft_skip( long iRecs )
                   ft_text->recno[ ft_text->area ]++;
                   iSkipped++;
                   if( iRecs && ( iSkipped == iRecs ) )
+                  {
                      iBytesRemaining = iBytesRead = 0;
+                  }
                }
                else
                {
@@ -330,7 +346,9 @@ static long _ft_skip( long iRecs )
                      ft_text->last_rec[ ft_text->area ] = ft_text->recno[ ft_text->area ];
                      ft_text->last_off[ ft_text->area ] = ft_text->offset[ ft_text->area ];
                      if( iRecs )
+                     {
                         ft_text->isEof[ ft_text->area ] = HB_TRUE;
+                     }
                   }
                   else
                   {
@@ -394,7 +412,9 @@ static long _ft_skip( long iRecs )
                      ft_text->recno[ ft_text->area ]--;
                      iSkipped++;
                      if( iSkipped == iRecs )
+                     {
                         iBytesRemaining = iBytesRead = 0;
+                     }
                   }
                   else
                   {
@@ -638,7 +658,7 @@ HB_FUNC( FT_FUSE )
    if( pszFileName )
    {
       ft_text->handles[ ft_text->area ] = hb_fileExtOpen( pszFileName, nullptr,
-                                                          ( HB_FATTR ) ( hb_parnidef( 2, FO_READWRITE | FO_DENYNONE ) & 0xFF ),
+                                                          static_cast< HB_FATTR >( hb_parnidef( 2, FO_READWRITE | FO_DENYNONE ) & 0xFF ),
                                                           nullptr, nullptr );
       ft_text->offset[ ft_text->area ]   = 0;
       ft_text->recno[ ft_text->area ]    = 1;
@@ -658,7 +678,7 @@ HB_FUNC( FT_FUSE )
 
 HB_FUNC( FT_FSELECT )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_ft_text );
+   PFT_TEXT ft_text = static_cast< PFT_TEXT >( hb_stackGetTSD( &s_ft_text ) );
 
    int oldarea = ft_text->area + 1;
 
@@ -680,7 +700,9 @@ HB_FUNC( FT_FSELECT )
             }
          }
          else
+         {
             ft_text->area = newArea - 1;
+         }
       }
    }
    hb_retni( oldarea );
@@ -688,7 +710,7 @@ HB_FUNC( FT_FSELECT )
 
 HB_FUNC( FT_FGOTOP )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_ft_text );
+   PFT_TEXT ft_text = static_cast< PFT_TEXT >( hb_stackGetTSD( &s_ft_text ) );
 
    ft_text->error[ ft_text->area ]  = 0;
    ft_text->offset[ ft_text->area ] = 0;
@@ -699,21 +721,21 @@ HB_FUNC( FT_FGOTOP )
 
 HB_FUNC( FT_FERROR )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_ft_text );
+   PFT_TEXT ft_text = static_cast< PFT_TEXT >( hb_stackGetTSD( &s_ft_text ) );
 
    hb_retni( ft_text->error[ ft_text->area ] );
 }
 
 HB_FUNC( FT_FRECNO )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_ft_text );
+   PFT_TEXT ft_text = static_cast< PFT_TEXT >( hb_stackGetTSD( &s_ft_text ) );
 
    hb_retnl( ft_text->recno[ ft_text->area ] );
 }
 
 HB_FUNC( FT_FGOBOT )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_ft_text );
+   PFT_TEXT ft_text = static_cast< PFT_TEXT >( hb_stackGetTSD( &s_ft_text ) );
 
    ft_text->error[ ft_text->area ] = 0;
    if( ! ft_text->last_rec[ ft_text->area ] )
@@ -735,17 +757,23 @@ HB_FUNC( FT_FSKIP )
    if( HB_ISNUM( 1 ) )
    {
       if( hb_parnl( 1 ) )
+      {
          hb_retnl( _ft_skip( hb_parnl( 1 ) ) );
+      }
       else
+      {
          hb_retnl( 0 );
+      }
    }
    else
+   {
       hb_retnl( _ft_skip( 1 ) );
+   }
 }
 
 HB_FUNC( FT_FREADLN )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_ft_text );
+   PFT_TEXT ft_text = static_cast< PFT_TEXT >( hb_stackGetTSD( &s_ft_text ) );
 
    if( ft_text->handles[ ft_text->area ] )
    {
@@ -755,24 +783,34 @@ HB_FUNC( FT_FREADLN )
       char *  cPtr = static_cast< char * >( hb_xgrab( BUFFSIZE ) );
 
       if( ( iBytesRead = hb_fileResult( hb_fileReadAt( ft_text->handles[ ft_text->area ], cPtr, BUFFSIZE, ft_text->offset[ ft_text->area ] ) ) ) == 0 )
+      {
          ft_text->error[ ft_text->area ] = hb_fsError();
+      }
       else
+      {
          ft_text->error[ ft_text->area ] = 0;
+      }
 
       if( ( iByteCount = _findeol( cPtr, iBytesRead, &eol_len ) ) > 0 )
+      {
          hb_retclen( cPtr, iByteCount - eol_len );
+      }
       else
+      {
          hb_retclen( cPtr, iBytesRead );
+      }
 
       hb_xfree( cPtr );
    }
    else
+   {
       hb_retc_null();
+   }
 }
 
 HB_FUNC( FT_FDELETE )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_ft_text );
+   PFT_TEXT ft_text = static_cast< PFT_TEXT >( hb_stackGetTSD( &s_ft_text ) );
 
    if( ft_text->handles[ ft_text->area ] )
    {
@@ -818,7 +856,9 @@ HB_FUNC( FT_FDELETE )
 
       /* if we've deleted to EOF, leave EOF flag set, otherwise clear it */
       if( ft_text->recno[ ft_text->area ] != ft_text->last_rec[ ft_text->area ] )
+      {
          ft_text->isEof[ ft_text->area ] = HB_FALSE;
+      }
 
       hb_xfree( Buff );
    }
@@ -828,7 +868,7 @@ HB_FUNC( FT_FDELETE )
 
 HB_FUNC( FT_FINSERT )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_ft_text );
+   PFT_TEXT ft_text = static_cast< PFT_TEXT >( hb_stackGetTSD( &s_ft_text ) );
 
    HB_BOOL fSuccess = HB_FALSE;
 
@@ -857,7 +897,7 @@ HB_FUNC( FT_FINSERT )
 
 HB_FUNC( FT_FAPPEND )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_ft_text );
+   PFT_TEXT ft_text = static_cast< PFT_TEXT >( hb_stackGetTSD( &s_ft_text ) );
 
    if( ft_text->handles[ ft_text->area ] )
    {
@@ -879,7 +919,9 @@ HB_FUNC( FT_FAPPEND )
 
       /* get count of chars in this line */
       if( ( iByteCount = _findeol( buff, iRead, nullptr ) ) == 0 )
+      {
          hb_fileSeek( ft_text->handles[ ft_text->area ], 0, FS_END );
+      }
       else
       {
          ft_text->offset[ ft_text->area ] = hb_fileSeek( ft_text->handles[ ft_text->area ], ft_text->offset[ ft_text->area ] + iByteCount, FS_SET );
@@ -919,7 +961,7 @@ HB_FUNC( FT_FAPPEND )
 
 HB_FUNC( FT_FWRITELN )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_ft_text );
+   PFT_TEXT ft_text = static_cast< PFT_TEXT >( hb_stackGetTSD( &s_ft_text ) );
 
    HB_BOOL fSuccess = HB_FALSE;
 
@@ -958,7 +1000,9 @@ HB_FUNC( FT_FWRITELN )
 
             iRead = hb_fileResult( hb_fileRead( ft_text->handles[ ft_text->area ], buffer, BUFFSIZE, -1 ) );
             if( ( iEOL = _findeol( buffer, iRead, nullptr ) ) == 0 )
+            {
                iLineLen += iRead;
+            }
             else
             {
                iLineLen += iEOL;
@@ -997,7 +1041,7 @@ HB_FUNC_TRANSLATE( FT_FWRITEL, FT_FWRITELN )
 
 HB_FUNC( FT_FLASTRE )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_ft_text );
+   PFT_TEXT ft_text = static_cast< PFT_TEXT >( hb_stackGetTSD( &s_ft_text ) );
 
    if( ft_text->handles[ ft_text->area ] )
    {
@@ -1011,28 +1055,30 @@ HB_FUNC( FT_FLASTRE )
       ft_text->offset[ ft_text->area ] = cur_offset;
    }
    else
+   {
       hb_retnl( 0 );
+   }
 }
 
 HB_FUNC_TRANSLATE( FT_FLASTREC, FT_FLASTRE )
 
 HB_FUNC( FT_FEOF )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_ft_text );
+   PFT_TEXT ft_text = static_cast< PFT_TEXT >( hb_stackGetTSD( &s_ft_text ) );
 
    hb_retl( ft_text->isEof[ ft_text->area ] );
 }
 
 HB_FUNC( FT_FBOF )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_ft_text );
+   PFT_TEXT ft_text = static_cast< PFT_TEXT >( hb_stackGetTSD( &s_ft_text ) );
 
    hb_retl( ft_text->isBof[ ft_text->area ] );
 }
 
 HB_FUNC( FT_FGOTO )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_ft_text );
+   PFT_TEXT ft_text = static_cast< PFT_TEXT >( hb_stackGetTSD( &s_ft_text ) );
 
    long target = hb_parnl( 1 );
 
@@ -1043,7 +1089,9 @@ HB_FUNC( FT_FGOTO )
       target -= ft_text->recno[ ft_text->area ];
 
       if( target )
+      {
          _ft_skip( target );
+      }
    }
    else
    {
@@ -1056,7 +1104,9 @@ HB_FUNC( FT_FGOTO )
       ft_text->isEof[ ft_text->area ]  = HB_FALSE;
 
       if( --target )
+      {
          _ft_skip( target );
+      }
    }
    ft_text->error[ ft_text->area ] = hb_fsError();
 }

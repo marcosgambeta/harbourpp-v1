@@ -28,7 +28,9 @@ HB_FUNC( FT_COLOR2N )
    {
       iRet = hb_gtColorToN( hb_parc( 1 ) );
       if( iRet == -1 )
+      {
          iRet = 0;
+      }
    }
 
    hb_retni( iRet );

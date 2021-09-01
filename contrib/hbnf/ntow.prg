@@ -36,7 +36,9 @@ STATIC sc_qualifiers := { "", " Thousand", " Million", " Billion", " Trillion" }
 
 FUNCTION ft_NToW( nAmount )
 
-   LOCAL nTemp, sResult := " ", nQualNo
+   LOCAL nTemp
+   LOCAL sResult := " "
+   LOCAL nQualNo
    LOCAL nDiv := 10 ^ ( Int( sol10( nAmount ) / 3 ) * 3 )
 
    nTemp   := Int( nAmount % nDiv )
@@ -54,7 +56,8 @@ FUNCTION ft_NToW( nAmount )
 
 STATIC FUNCTION grp_to_words( nGrp, sQual )
 
-   LOCAL sResult := "", nTemp
+   LOCAL sResult := ""
+   LOCAL nTemp
 
    nTemp   := Int( nGrp % 100 )
    nGrp    := Int( nGrp / 100 )

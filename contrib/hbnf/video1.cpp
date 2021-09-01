@@ -50,11 +50,7 @@
 
 HB_FUNC( FT_SETATTR )
 {
-   hb_gtSetAttribute( hb_parni( 1 ),
-                      hb_parni( 2 ),
-                      hb_parni( 3 ),
-                      hb_parni( 4 ),
-                      hb_parni( 5 ) );
+   hb_gtSetAttribute( hb_parni( 1 ), hb_parni( 2 ), hb_parni( 3 ), hb_parni( 4 ), hb_parni( 5 ) );
 }
 
 HB_FUNC( FT_REVATTR )
@@ -67,13 +63,21 @@ HB_FUNC( FT_REVATTR )
    int iRight  = hb_parnidef( 4, iMaxCol );
 
    if( iTop < 0 )
+   {
       iTop = 0;
+   }
    if( iLeft < 0 )
+   {
       iLeft = 0;
+   }
    if( iBottom > iMaxRow )
+   {
       iBottom = iMaxRow;
+   }
    if( iRight > iMaxCol )
+   {
       iRight = iMaxCol;
+   }
 
    if( iTop <= iBottom && iLeft <= iRight )
    {

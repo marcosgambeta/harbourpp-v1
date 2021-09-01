@@ -28,8 +28,14 @@
 
 FUNCTION ft_PChr( c_nums )
 
-   LOCAL c_ret := "", c_st := 0, c_part, c_st2, c_hex := "0123456789ABCDEF"
-   LOCAL c_upper, c_t1, c_t2
+   LOCAL c_ret := ""
+   LOCAL c_st := 0
+   LOCAL c_part
+   LOCAL c_st2
+   LOCAL c_hex := "0123456789ABCDEF"
+   LOCAL c_upper
+   LOCAL c_t1
+   LOCAL c_t2
 
    IF Left( c_nums, 1 ) == "," .OR. RTrim( c_nums ) == ""
       RETURN ""

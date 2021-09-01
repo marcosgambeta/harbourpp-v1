@@ -18,7 +18,9 @@
 
 FUNCTION ft_Sqzn( nValue, nSize, nDecimals )
 
-   LOCAL tmpstr, cCompressed, k
+   LOCAL tmpstr
+   LOCAL cCompressed
+   LOCAL k
 
    __defaultNIL( @nSize, 10 )
    __defaultNIL( @nDecimals, 0 )
@@ -37,7 +39,10 @@ FUNCTION ft_Sqzn( nValue, nSize, nDecimals )
 
 FUNCTION ft_Unsqzn( cCompressed, nSize, nDecimals )
 
-   LOCAL tmp := "", k, cValue, multi
+   LOCAL tmp := ""
+   LOCAL k
+   LOCAL cValue
+   LOCAL multi
 
    __defaultNIL( @nSize, 10 )
    __defaultNIL( @nDecimals, 0 )

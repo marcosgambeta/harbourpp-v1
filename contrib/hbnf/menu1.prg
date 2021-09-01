@@ -48,7 +48,9 @@ THREAD STATIC t_nMaxCol
 FUNCTION ft_Menu1( aBar, aOptions, aColors, nTopRow, lShadow )
 
    LOCAL nTtlUsed
-   LOCAL sMainScrn, lCancMode, lLooping := .T.
+   LOCAL sMainScrn
+   LOCAL lCancMode
+   LOCAL lLooping := .T.
 
    // column position for each item on the menu bar
    LOCAL aBarCol[ Len( aBar ) ]
@@ -231,7 +233,9 @@ STATIC FUNCTION _ftLocat( i, aBarCol, aBarWidth, aBoxLoc, t_nMaxCol )
 
 STATIC FUNCTION _ftBailOut( cBorder, cBox )
 
-   LOCAL sOldScreen, nKeyPress, nOldCursor
+   LOCAL sOldScreen
+   LOCAL nKeyPress
+   LOCAL nOldCursor
 
    nOldCursor := SetCursor( SC_NONE )
    sOldScreen := SaveScreen( t_nMaxRow / 2 - 1, 24, t_nMaxRow / 2 + 2, 55 )

@@ -88,17 +88,22 @@ HB_FUNC( FT_SETTIME )
       HB_SIZE      nLen    = strlen( pszTime );
 
       if( nLen >= 1 )
+      {
          iHour = static_cast< int >( hb_strVal( pszTime, nLen ) );
+      }
       if( nLen >= 4 )
+      {
          iMinute = static_cast< int >( hb_strVal( pszTime + 3, nLen - 3 ) );
+      }
       if( nLen >= 7 )
+      {
          iSeconds = static_cast< int >( hb_strVal( pszTime + 6, nLen - 6 ) );
+      }
    }
    else
    {
       int iYear, iMonth, iDay, iMillisec;
-      hb_timeStampGetLocal( &iYear, &iMonth, &iDay,
-                            &iHour, &iMinute, &iSeconds, &iMillisec );
+      hb_timeStampGetLocal( &iYear, &iMonth, &iDay, &iHour, &iMinute, &iSeconds, &iMillisec );
    }
 
    regs.h.ah = 45;

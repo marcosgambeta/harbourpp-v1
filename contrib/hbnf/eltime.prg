@@ -21,7 +21,12 @@
 
 FUNCTION ft_ElTime( cTIME1, cTIME2 )
 
-   LOCAL  nDELSECS, nHRS, nMINS, nSECS, nSECS1, nSECS2
+   LOCAL nDELSECS
+   LOCAL nHRS
+   LOCAL nMINS
+   LOCAL nSECS
+   LOCAL nSECS1
+   LOCAL nSECS2
 
    nSECS1   := ( Val( SubStr( cTIME1, 1, 2 ) ) * 3600 ) + ;
       ( Val( SubStr( cTIME1, 4, 2 ) ) * 60 ) + Val( SubStr( cTIME1, 7 ) )

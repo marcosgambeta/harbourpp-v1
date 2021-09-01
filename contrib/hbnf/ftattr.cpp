@@ -32,13 +32,21 @@ HB_FUNC( FT_SAVEATT )
    int iRight  = hb_parnidef( 4, iMaxRow );
 
    if( iTop < 0 )
+   {
       iTop = 0;
+   }
    if( iLeft < 0 )
+   {
       iLeft = 0;
+   }
    if( iBottom > iMaxRow )
+   {
       iBottom = iMaxRow;
+   }
    if( iRight > iMaxCol )
+   {
       iRight = iMaxCol;
+   }
 
    if( iTop <= iBottom && iLeft <= iRight )
    {
@@ -65,7 +73,9 @@ HB_FUNC( FT_SAVEATT )
       hb_retclen_buffer( pAttrib, nSize );
    }
    else
+   {
       hb_retc_null();
+   }
 }
 
 /*
@@ -104,13 +114,21 @@ HB_FUNC( FT_RESTATT )
       int iRight  = hb_parnidef( 4, iMaxCol );
 
       if( iTop < 0 )
+      {
          iTop = 0;
+      }
       if( iLeft < 0 )
+      {
          iLeft = 0;
+      }
       if( iBottom > iMaxRow )
+      {
          iBottom = iMaxRow;
+      }
       if( iRight > iMaxCol )
+      {
          iRight = iMaxCol;
+      }
 
       if( iTop <= iBottom && iLeft <= iRight )
       {
@@ -127,7 +145,7 @@ HB_FUNC( FT_RESTATT )
                HB_BYTE   bAttr;
                HB_USHORT usChar;
                hb_gtGetChar( iTop, iCol, &iColor, &bAttr, &usChar );
-               iColor = ( HB_UCHAR ) *pAttrib++;
+               iColor = static_cast< HB_UCHAR >( *pAttrib++ );
                hb_gtPutChar( iTop, iCol, iColor, bAttr, usChar );
                ++iCol;
                --nLen;
