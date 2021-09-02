@@ -64,9 +64,13 @@ static const char s_code[] = {
 static int _code11_charno( char ch )
 {
    if( '0' <= ch && ch <= '9' )
+   {
       return ch - '0';
+   }
    else if( ch == '-' )
+   {
       return 10;
+   }
    return -1;
 }
 
@@ -82,7 +86,9 @@ static void _code11_add( PHB_BITBUFFER pBits, char code, int iFlags, HB_BOOL fLa
          code >>= 1;
       }
       if( ! fLast )
+      {
          hb_bitbuffer_cat_int( pBits, 0, 2 );
+      }
    }
    else if( iFlags & HB_ZEBRA_FLAG_WIDE3 )
    {
@@ -92,7 +98,9 @@ static void _code11_add( PHB_BITBUFFER pBits, char code, int iFlags, HB_BOOL fLa
          code >>= 1;
       }
       if( ! fLast )
+      {
          hb_bitbuffer_cat_int( pBits, 0, 1 );
+      }
    }
    else
    {
@@ -102,7 +110,9 @@ static void _code11_add( PHB_BITBUFFER pBits, char code, int iFlags, HB_BOOL fLa
          code >>= 1;
       }
       if( ! fLast )
+      {
          hb_bitbuffer_cat_int( pBits, 0, 1 );
+      }
    }
 }
 
@@ -154,13 +164,16 @@ PHB_ZEBRA hb_zebra_create_code11( const char * szCode, HB_SIZE nLen, int iFlags 
    return pZebra;
 }
 
-
 HB_FUNC( HB_ZEBRA_CREATE_CODE11 )
 {
    PHB_ITEM pItem = hb_param( 1, HB_IT_STRING );
 
    if( pItem )
+   {
       hb_zebra_ret( hb_zebra_create_code11( hb_itemGetCPtr( pItem ), hb_itemGetCLen( pItem ), hb_parni( 2 ) ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }

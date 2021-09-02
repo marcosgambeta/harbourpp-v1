@@ -46,7 +46,6 @@
 
 #include "hbzebra.h"
 
-
 /* Usually one character bitmap does not fit into 1 byte, but if we use enough
    good encoding, we can manage to fit :) [Mindaugas] */
 static const HB_UCHAR s_code[] =
@@ -101,14 +100,20 @@ static int _code39_charno( char ch )
    static const char * s_symbols = "-. $/+%";
 
    if( '0' <= ch && ch <= '9' )
+   {
       return ch - '0';
+   }
    else if( 'A' <= ch && ch <= 'Z' )
+   {
       return ch - 'A' + 10;
+   }
    else
    {
       const char * ptr = strchr( s_symbols, ch );
       if( ptr && *ptr )
+      {
          return static_cast< int >( ptr - s_symbols + 36 );
+      }
    }
    return -1;
 }
@@ -127,7 +132,9 @@ static void _code39_add( PHB_BITBUFFER pBits, char code, int iFlags, HB_BOOL fLa
       }
       hb_bitbuffer_cat_int( pBits, 31, cnt < 3 ? 5 : 2 );
       if( ! fLast )
+      {
          hb_bitbuffer_cat_int( pBits, 0, 2 );
+      }
    }
    else if( iFlags & HB_ZEBRA_FLAG_WIDE3 )
    {
@@ -139,7 +146,9 @@ static void _code39_add( PHB_BITBUFFER pBits, char code, int iFlags, HB_BOOL fLa
       }
       hb_bitbuffer_cat_int( pBits, 31, cnt < 3 ? 3 : 1 );
       if( ! fLast )
+      {
          hb_bitbuffer_cat_int( pBits, 0, 1 );
+      }
    }
    else
    {
@@ -151,7 +160,9 @@ static void _code39_add( PHB_BITBUFFER pBits, char code, int iFlags, HB_BOOL fLa
       }
       hb_bitbuffer_cat_int( pBits, 31, cnt < 3 ? 2 : 1 );
       if( ! fLast )
+      {
          hb_bitbuffer_cat_int( pBits, 0, 1 );
+      }
    }
 }
 
@@ -191,19 +202,24 @@ PHB_ZEBRA hb_zebra_create_code39( const char * szCode, HB_SIZE nLen, int iFlags 
    }
 
    if( iFlags & HB_ZEBRA_FLAG_CHECKSUM )
+   {
       _code39_add( pZebra->pBits, static_cast< char >( s_code[ csum % 43 ] ), iFlags, HB_FALSE );
+   }
 
    _code39_add( pZebra->pBits, 0x52, iFlags, HB_TRUE );    /* stop */
    return pZebra;
 }
-
 
 HB_FUNC( HB_ZEBRA_CREATE_CODE39 )
 {
    PHB_ITEM pItem = hb_param( 1, HB_IT_STRING );
 
    if( pItem )
+   {
       hb_zebra_ret( hb_zebra_create_code39( hb_itemGetCPtr( pItem ), hb_itemGetCLen( pItem ), hb_parni( 2 ) ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }

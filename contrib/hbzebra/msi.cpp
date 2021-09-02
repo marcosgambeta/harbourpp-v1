@@ -46,17 +46,18 @@
 
 #include "hbzebra.h"
 
-
 static char _msi_checksum( const char * szCode )
 {
-   int i, j = 1, sum = 0;
+   int j = 1, sum = 0;
 
    /* Luhn algorithm */
-   for( i = static_cast< int >( strlen( szCode ) ) - 1; i >= 0; i-- )
+   for( int i = static_cast< int >( strlen( szCode ) ) - 1; i >= 0; i-- )
    {
       int k = ( szCode[ i ] - '0' ) * ( j ? 2 : 1 );
       if( k > 9 )
+      {
          k -= 9;
+      }
       sum += k;
       j = 1 - j;
    }
@@ -151,13 +152,16 @@ PHB_ZEBRA hb_zebra_create_msi( const char * szCode, HB_SIZE nLen, int iFlags )
    return pZebra;
 }
 
-
 HB_FUNC( HB_ZEBRA_CREATE_MSI )
 {
    PHB_ITEM pItem = hb_param( 1, HB_IT_STRING );
 
    if( pItem )
+   {
       hb_zebra_ret( hb_zebra_create_msi( hb_itemGetCPtr( pItem ), hb_itemGetCLen( pItem ), hb_parni( 2 ) ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }

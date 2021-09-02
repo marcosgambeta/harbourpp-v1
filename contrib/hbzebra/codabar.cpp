@@ -46,7 +46,6 @@
 
 #include "hbzebra.h"
 
-
 static const char s_code[] = {
    0x60,   /* 0 */
    0x30,   /* 1 */
@@ -72,14 +71,18 @@ static const char s_code[] = {
 static int _codabar_charno( char ch )
 {
    if( '0' <= ch && ch <= '9' )
+   {
       return ch - '0';
+   }
    else
    {
       static const char * s_symbols = "-$:/.+ABCD";
 
       const char * ptr = strchr( s_symbols, ch );
       if( ptr && *ptr )
+      {
          return static_cast< int >( ptr - s_symbols + 10 );
+      }
    }
    return -1;
 }
@@ -96,7 +99,9 @@ static void _codabar_add( PHB_BITBUFFER pBits, char code, int iFlags, HB_BOOL fL
          code >>= 1;
       }
       if( ! fLast )
+      {
          hb_bitbuffer_cat_int( pBits, 0, 2 );
+      }
    }
    else if( iFlags & HB_ZEBRA_FLAG_WIDE3 )
    {
@@ -106,7 +111,9 @@ static void _codabar_add( PHB_BITBUFFER pBits, char code, int iFlags, HB_BOOL fL
          code >>= 1;
       }
       if( ! fLast )
+      {
          hb_bitbuffer_cat_int( pBits, 0, 1 );
+      }
    }
    else
    {
@@ -116,7 +123,9 @@ static void _codabar_add( PHB_BITBUFFER pBits, char code, int iFlags, HB_BOOL fL
          code >>= 1;
       }
       if( ! fLast )
+      {
          hb_bitbuffer_cat_int( pBits, 0, 1 );
+      }
    }
 }
 
@@ -147,7 +156,9 @@ PHB_ZEBRA hb_zebra_create_codabar( const char * szCode, HB_SIZE nLen, int iFlags
    pZebra->pBits = hb_bitbuffer_create();
 
    if( iLen == 0 || _codabar_charno( static_cast< int >( szCode[ 0 ] ) ) < 16 )
+   {
       _codabar_add( pZebra->pBits, s_code[ _codabar_charno( 'A' ) ], iFlags, HB_FALSE );  /* Default start A */
+   }
 
    for( i = 0; i < iLen; i++ )
    {
@@ -156,18 +167,23 @@ PHB_ZEBRA hb_zebra_create_codabar( const char * szCode, HB_SIZE nLen, int iFlags
    }
 
    if( iLen == 0 || _codabar_charno( szCode[ i - 1 ] ) < 16 )
+   {
       _codabar_add( pZebra->pBits, s_code[ _codabar_charno( 'B' ) ], iFlags, HB_TRUE );  /* Default stop B */
+   }
 
    return pZebra;
 }
-
 
 HB_FUNC( HB_ZEBRA_CREATE_CODABAR )
 {
    PHB_ITEM pItem = hb_param( 1, HB_IT_STRING );
 
    if( pItem )
+   {
       hb_zebra_ret( hb_zebra_create_codabar( hb_itemGetCPtr( pItem ), hb_itemGetCLen( pItem ), hb_parni( 2 ) ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }

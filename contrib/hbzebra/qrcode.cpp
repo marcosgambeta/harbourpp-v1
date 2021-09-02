@@ -256,7 +256,6 @@ static const QRVERSION s_version[] =
            {2430, {{20,  15, 30}, {61,  16, 30}}}}}
 };
 
-
 static const unsigned char s_rev[ 256 ] =
 {
 #define R2( n )  n,       n + 2 * 64,       n + 1 * 64,       n + 3 * 64
@@ -264,7 +263,6 @@ static const unsigned char s_rev[ 256 ] =
 #define R6( n )  R4( n ), R4( n + 2 * 4 ),  R4( n + 1 * 4 ),  R4( n + 3 * 4 )
    R6( 0 ), R6( 2 ), R6( 1 ), R6( 3 )
 };
-
 
 /* zero terminated align patterns positions */
 static unsigned char s_align01[] = { 0 };
@@ -351,14 +349,13 @@ static unsigned char * s_align[ 40 ] = {
    s_align40
 };
 
-
 #ifdef DEBUG_CODE
 static int _qr_check_version_table( void )
 {
-   int iV, iL;
+   int iL;
    unsigned int uiSumD, uiSumE;
 
-   for( iV = 1; iV <= 40; iV++ )
+   for( int iV = 1; iV <= 40; iV++ )
    {
       const QRVERSION * pQRVersion = &s_version[ iV - 1 ];
 
@@ -367,20 +364,28 @@ static int _qr_check_version_table( void )
          uiSumE = static_cast< unsigned int >( pQRVersion->level[ iL ].block[ 0 ].uiCount ) * ( pQRVersion->level[ iL ].block[ 0 ].uiECC ) +
                   static_cast< unsigned int >( pQRVersion->level[ iL ].block[ 1 ].uiCount ) * ( pQRVersion->level[ iL ].block[ 1 ].uiECC );
          if( uiSumE != pQRVersion->level[ iL ].uiECC )
+         {
             return iV + 10000 + ( iL + 1 ) * 1000;
+         }
 
          uiSumD = static_cast< unsigned int >( pQRVersion->level[ iL ].block[ 0 ].uiCount ) * ( pQRVersion->level[ iL ].block[ 0 ].uiData ) +
                   static_cast< unsigned int >( pQRVersion->level[ iL ].block[ 1 ].uiCount ) * ( pQRVersion->level[ iL ].block[ 1 ].uiData );
          if( uiSumD + uiSumE != pQRVersion->uiTotal )
+         {
             return iV + 20000 + ( iL + 1 ) * 1000;
+         }
 
          if( pQRVersion->level[ iL ].block[ 1 ].uiCount > 0 )
          {
             if( pQRVersion->level[ iL ].block[ 0 ].uiData > pQRVersion->level[ iL ].block[ 1 ].uiData )
+            {
                return iV + 30000 + ( iL + 1 ) * 1000;
+            }
 
             if( pQRVersion->level[ iL ].block[ 0 ].uiECC != pQRVersion->level[ iL ].block[ 1 ].uiECC )
+            {
                return iV + 40000 + ( iL + 1 ) * 1000;
+            }
          }
       }
    }
@@ -393,7 +398,6 @@ HB_FUNC( _QR_CHECK_VERSION_TABLE )
 }
 #endif
 
-
 static int _qr_version_crc( int iVersion )
 {
    int i, iValue, iVersionRev;
@@ -403,7 +407,9 @@ static int _qr_version_crc( int iVersion )
    {
       iVersionRev <<= 1;
       if( iVersion & 1 )
+      {
          iVersionRev |= 1;
+      }
       iVersion >>= 1;
    }
 
@@ -411,7 +417,9 @@ static int _qr_version_crc( int iVersion )
    for( i = 0; i < 6; i++ )
    {
       if( iValue & 1 )
+      {
          iValue ^= 0x149F; /* 0x149F - reversed 12-bit polynom */
+      }
       iValue >>= 1;
    }
    iValue <<= 6;
@@ -419,19 +427,20 @@ static int _qr_version_crc( int iVersion )
    return iValue; /* 18-bit return value */
 }
 
-
 static int _qr_format_crc( int iLevel, int iMask )
 {
-   int i, iValue, iRev;
+   int iValue, iRev;
 
    iRev = ( ( iLevel & 1 ) ? 0 : 2 ) | ( ( iLevel & 2 ) ? 1 : 0 );  /* 0->1, 1->0, 2->3, 3->2 + reverse bits */
    iRev |= ( ( iMask & 1 ) ? 16 : 0 ) | ( ( iMask & 2 ) ? 8 : 0 ) | ( ( iMask & 4 ) ? 4 : 0 ); /* reverse bits */
 
    iValue = iRev;
-   for( i = 0; i < 5; i++ )
+   for( int i = 0; i < 5; i++ )
    {
       if( iValue & 1 )
+      {
          iValue ^= 0x765;  /* 0x765 - reversed 10-bit polynom */
+      }
       iValue >>= 1;
    }
    iValue <<= 5;
@@ -439,13 +448,11 @@ static int _qr_format_crc( int iLevel, int iMask )
    return iValue ^ 0x2415; /* 15-bit return value */
 }
 
-
 #ifdef DEBUG_CODE
 HB_FUNC( _QR_VERSION_CRC )
 {
    hb_retni( _qr_version_crc( hb_parni( 1 ) ) );
 }
-
 
 HB_FUNC( _QR_FORMAT_CRC )
 {
@@ -453,12 +460,10 @@ HB_FUNC( _QR_FORMAT_CRC )
 }
 #endif
 
-
 static int _qr_versionlength( int iVersion )
 {
    return iVersion * 4 + 17;
 }
-
 
 static int _qr_fixed( int iVersion, int iRow, int iCol )
 {
@@ -467,15 +472,23 @@ static int _qr_fixed( int iVersion, int iRow, int iCol )
 
    /* position detection markers and version info */
    if( iRow < 9 && iCol < 9 )
+   {
       return 1;
+   }
    if( iRow < 9 && iCol >= iLength - 8 )
+   {
       return 1;
+   }
    if( iRow >= iLength - 8 && iCol < 9 )
+   {
       return 1;
+   }
 
    /* timing patterns */
    if( iRow == 6 || iCol == 6 )
+   {
       return 1;
+   }
 
    /* alignment patterns */
    pi = s_align[ iVersion - 1 ];
@@ -489,7 +502,9 @@ static int _qr_fixed( int iVersion, int iRow, int iCol )
          {
             if( ( *pi == 6 && static_cast< int >( *pj ) > iLength - 10 ) ||
                 ( static_cast< int >( *pi ) > iLength - 10 && *pj == 6 ) )
+            {
                break;
+            }
 
             return 1;
          }
@@ -497,13 +512,13 @@ static int _qr_fixed( int iVersion, int iRow, int iCol )
    }
 
    /* format info */
-   if( iVersion >= 7 &&
-       ( ( iCol < 6 && iRow >= iLength - 11 ) || ( iCol >= iLength - 11 && iRow < 6 ) ) )
+   if( iVersion >= 7 && ( ( iCol < 6 && iRow >= iLength - 11 ) || ( iCol >= iLength - 11 && iRow < 6 ) ) )
+   {
       return 1;
+   }
 
    return 0;
 }
-
 
 static PHB_BITBUFFER _qr_interlace( PHB_BITBUFFER pData, unsigned char * pECC, int iVersion, int iLevel )
 {
@@ -564,22 +579,29 @@ static PHB_BITBUFFER _qr_interlace( PHB_BITBUFFER pData, unsigned char * pECC, i
 
 #ifdef DEBUG_CODE
    if( uiDst != pVersion->uiTotal )
+   {
       HB_TRACE( HB_TR_ALWAYS, ( "ERROR!!! uiDst:%d  pVersion->uiTotal:%d", uiDst, pVersion->uiTotal ) );
+   }
 
    for( uiPos = 0; uiPos < pVersion->uiTotal; uiPos++ )
+   {
       HB_TRACE( HB_TR_ALWAYS, ( "interlaced:%3d %02X", static_cast< int >( s_rev[ static_cast< unsigned char >( pRetBuf[ uiPos ] ) ] ), static_cast< int >( s_rev[ static_cast< unsigned char >( pRetBuf[ uiPos ] ) ] ) ) );
+   }
 #endif
    return pRet;
 }
 
-
 static int _qr_alphanumeric_no( char ch )
 {
    if( '0' <= ch && ch <= '9' )
+   {
       return ch - '0';
+   }
 
    if( 'A' <= ch && ch <= 'Z' )
+   {
       return ch - 'A' + 10;
+   }
 
    switch( ch )
    {
@@ -608,14 +630,19 @@ static int _qr_alphanumeric_no( char ch )
 static int _qr_cci_len( int iVersion, int iMode ) /* Character Count Indicator */
 {
    if( iMode == 1 )
+   {
       return iVersion <= 9 ? 10 : ( iVersion <= 26 ? 12 : 14 );
+   }
    if( iMode == 2 )
+   {
       return iVersion <= 9 ? 9 : ( iVersion <= 26 ? 11 : 13 );
+   }
    if( iMode == 4 )
+   {
       return iVersion <= 9 ? 8 : 16;
+   }
    return 0;
 }
-
 
 static int _qr_dataencode( const char * szCode, HB_SIZE nSize, PHB_BITBUFFER pData, int iLevel )
 {
@@ -631,9 +658,10 @@ static int _qr_dataencode( const char * szCode, HB_SIZE nSize, PHB_BITBUFFER pDa
       if( '0' <= ch && ch <= '9' )
       {
       }
-      else if( ( 'A' <= ch && ch <= 'Z' ) ||
-               ch == ' ' || ch == '$' || ch == '%' || ch == '*' || ch == '+' || ch == '-' || ch == '.' || ch == '/' || ch == ':' )
+      else if( ( 'A' <= ch && ch <= 'Z' ) || ch == ' ' || ch == '$' || ch == '%' || ch == '*' || ch == '+' || ch == '-' || ch == '.' || ch == '/' || ch == ':' )
+      {
          iMode = 2;
+      }
       else
       {
          iMode = 4;
@@ -643,11 +671,17 @@ static int _qr_dataencode( const char * szCode, HB_SIZE nSize, PHB_BITBUFFER pDa
 
    /* Calculate data length in bits */
    if( iMode == 1 )
+   {
       iLen = ( nSize / 3 ) * 10 + ( ( nSize % 3 ) == 0 ? 0 : ( ( nSize % 3 ) == 1 ? 4 : 7 ) );
+   }
    else if( iMode == 2 )
+   {
       iLen = ( nSize / 2 ) * 11 + ( nSize % 2 ) * 6;
+   }
    else /* if( iMode == 4 ) */
+   {
       iLen = nSize * 8;
+   }
 
    iLen += 4; /* Mode indicator length */
 
@@ -664,7 +698,9 @@ static int _qr_dataencode( const char * szCode, HB_SIZE nSize, PHB_BITBUFFER pDa
       }
    }
    if( i > 40 )
+   {
       return 0; /* Too large */
+   }
 
 #ifdef DEBUG_CODE
    HB_TRACE( HB_TR_ALWAYS, ( "iMode:%d iLen:%" HB_PFS "d iDataLen:%d iVersion:%d", iMode, iLen, iDataLen, iVersion ) );
@@ -682,10 +718,14 @@ static int _qr_dataencode( const char * szCode, HB_SIZE nSize, PHB_BITBUFFER pDa
                                                 static_cast< int >( static_cast< unsigned char >( szCode[ n + 2 ] - '0' ) ), 10 );
       }
       if( n + 1 == nSize )
+      {
          hb_bitbuffer_cat_int_rev( pData, static_cast< int >( static_cast< unsigned char >( szCode[ n ] - '0' ) ), 4 );
+      }
       else
+      {
          hb_bitbuffer_cat_int_rev( pData, 10 * static_cast< int >( static_cast< unsigned char >( szCode[ n     ] - '0' ) ) +
                                                static_cast< int >( static_cast< unsigned char >( szCode[ n + 1 ] - '0' ) ), 7 );
+      }
    }
    else if( iMode == 2 )
    {
@@ -701,16 +741,22 @@ static int _qr_dataencode( const char * szCode, HB_SIZE nSize, PHB_BITBUFFER pDa
    else if( iMode == 4 )
    {
       for( n = 0; n < nSize; n++ )
+      {
          hb_bitbuffer_cat_int_rev( pData, static_cast< int >( static_cast< unsigned char >( szCode[ n ] ) ), 8 );
+      }
    }
 
    /* Terminator */
    if( iDataLen * 8 >= static_cast< int >( hb_bitbuffer_len( pData ) ) + 4 )
+   {
       hb_bitbuffer_cat_int_rev( pData, 0, 4 );
+   }
 
    /* Padding */
    if( hb_bitbuffer_len( pData ) & 7 )
+   {
       hb_bitbuffer_cat_int_rev( pData, 0, 8 - ( hb_bitbuffer_len( pData ) & 7 ) );
+   }
 
    iLen = iDataLen - hb_bitbuffer_len( pData ) / 8;
    for( m = 0; m < iLen; m++ )
@@ -720,18 +766,21 @@ static int _qr_dataencode( const char * szCode, HB_SIZE nSize, PHB_BITBUFFER pDa
 
 #ifdef DEBUG_CODE
    for( m = 0; m < iDataLen; m++ )
+   {
       HB_TRACE( HB_TR_ALWAYS, ( "data:%3d %02X", s_rev[ *( hb_bitbuffer_buffer( pData ) + m ) ], s_rev[ *( hb_bitbuffer_buffer( pData ) + m ) ] ) );
+   }
 #endif
    return iVersion;
 }
-
 
 static void _reed_solomon_encode( unsigned char * pData, int iDataLen, unsigned char * pECC, int iECCLen, int * pPoly, int * pExp, int * pLog, int iMod )
 {
    int i, j;
 
    for( i = 0; i < iECCLen; i++ )
+   {
       pECC[ i ] = 0;
+   }
 
    for( i = 0; i < iDataLen; i++ )
    {
@@ -740,17 +789,24 @@ static void _reed_solomon_encode( unsigned char * pData, int iDataLen, unsigned 
       for( j = iECCLen - 1; j > 0; j-- )
       {
          if( iM && pPoly[ j ] )
+         {
             pECC[ j ] = static_cast< unsigned char >( pECC[ j - 1 ] ^ pExp[ ( pLog[ iM ] + pLog[ pPoly[ j ] ] ) % iMod ] );
+         }
          else
+         {
             pECC[ j ] = pECC[ j - 1 ];
+         }
       }
       if( iM && pPoly[ 0 ] )
+      {
          pECC[ 0 ] = static_cast< unsigned char >( pExp[ ( pLog[ iM ] + pLog[ pPoly[ 0 ] ] ) % iMod ] );
+      }
       else
+      {
          pECC[ 0 ] = 0;
+      }
    }
 }
-
 
 static unsigned char * _qr_checksum( PHB_BITBUFFER pData, int iVersion, int iLevel )
 {
@@ -766,7 +822,9 @@ static unsigned char * _qr_checksum( PHB_BITBUFFER pData, int iVersion, int iLev
 
    j = iPoly;
    for( iBits = 0; j > 1; iBits++ )
+   {
       j >>= 1;
+   }
 
    iMod = ( 1 << iBits ) - 1;
    pExp = static_cast< int * >( hb_xgrab( sizeof( int ) * iMod ) );          /* exponent function */
@@ -779,7 +837,9 @@ static unsigned char * _qr_checksum( PHB_BITBUFFER pData, int iVersion, int iLev
       pLog[ j ] = i;
       j <<= 1;
       if( j & ( 1 << iBits ) )
+      {
          j ^= iPoly;
+      }
    }
 
    /* Init Reed-Solomon encode. Parameters: iECCLen, iIndex */
@@ -794,7 +854,9 @@ static unsigned char * _qr_checksum( PHB_BITBUFFER pData, int iVersion, int iLev
       for( j = i - 1; j > 0; j-- )
       {
          if( pPoly[ j ] )
+         {
             pPoly[ j ] = pExp[ ( pLog[ pPoly[ j ] ] + iIndex ) % iMod ];
+         }
 
          pPoly[ j ] ^= pPoly[ j - 1 ];
       }
@@ -804,7 +866,9 @@ static unsigned char * _qr_checksum( PHB_BITBUFFER pData, int iVersion, int iLev
 
 #ifdef DEBUG_CODE
    for( i = 0; i <= iECCLen; i++ )
+   {
       HB_TRACE( HB_TR_ALWAYS, ( "POLY[%3d %02X]:%3d %02X", i, i, pPoly[ i ], pPoly[ i ] ) );
+   }
 #endif
 
    pECC = static_cast< unsigned char * >( hb_xgrab( pLevel->block[ 0 ].uiECC * ( pLevel->block[ 0 ].uiCount + pLevel->block[ 1 ].uiCount ) ) );
@@ -845,11 +909,12 @@ static unsigned char * _qr_checksum( PHB_BITBUFFER pData, int iVersion, int iLev
 #ifdef DEBUG_CODE
    iECCLen = pLevel->block[ 0 ].uiECC * ( pLevel->block[ 0 ].uiCount + pLevel->block[ 1 ].uiCount );
    for( i = 0; i < iECCLen; i++ )
+   {
       HB_TRACE( HB_TR_ALWAYS, ( "ecc:%3d %02X", static_cast< int >( static_cast< unsigned char >( pECC[ i ] ) ), static_cast< int >( static_cast< unsigned char >( pECC[ i ] ) ) ) );
+   }
 #endif
    return pECC;
 }
-
 
 static void _qr_draw( PHB_BITBUFFER pBits, PHB_BITBUFFER pCWBits, int iVersion )
 {
@@ -900,9 +965,7 @@ static void _qr_draw( PHB_BITBUFFER pBits, PHB_BITBUFFER pCWBits, int iVersion )
       const unsigned char * pj = s_align[ iVersion - 1 ];
       for( ; *pj; pj++ )
       {
-         if( ( *pi > 10 && *pi < iLength - 10 ) ||
-             ( *pj > 10 && *pj < iLength - 10 ) ||
-             ( *pi > 10 && *pj > 10 ))
+         if( ( *pi > 10 && *pi < iLength - 10 ) || ( *pj > 10 && *pj < iLength - 10 ) || ( *pi > 10 && *pj > 10 ) )
          {
             hb_bitbuffer_set( pBits, iLength * *pi + *pj - 1, 0 );
             hb_bitbuffer_set( pBits, iLength * *pi + *pj + 1, 0 );
@@ -946,7 +1009,9 @@ static void _qr_draw( PHB_BITBUFFER pBits, PHB_BITBUFFER pCWBits, int iVersion )
       while( i >= 0 && j >= 0 )
       {
          if( ! _qr_fixed( iVersion, i, j ) )
+         {
             hb_bitbuffer_set( pBits, i * iLength + j, hb_bitbuffer_get( pCWBits, no++ ) );
+         }
 
          if( right )
          {
@@ -983,11 +1048,12 @@ static void _qr_draw( PHB_BITBUFFER pBits, PHB_BITBUFFER pCWBits, int iVersion )
          }
          right = ! right;
          if( j == 6 )
+         {
             j--;
+         }
       }
    }
 }
-
 
 static int _qr_penalty( PHB_BITBUFFER pBits, int iVersion )
 {
@@ -1006,16 +1072,22 @@ static int _qr_penalty( PHB_BITBUFFER pBits, int iVersion )
          if( bBit != bBitLast )
          {
             if( k >= 5 )
+            {
                iPenalty += 3 + ( k - 5 );
+            }
 
             bBitLast = bBit;
             k = 1;
          }
          else
+         {
             k++;
+         }
       }
       if( k >= 5 )
+      {
          iPenalty = 3 + ( k - 5 );
+      }
 
       /* Col */
       bBitLast = hb_bitbuffer_get( pBits, i );
@@ -1026,16 +1098,22 @@ static int _qr_penalty( PHB_BITBUFFER pBits, int iVersion )
          if( bBit != bBitLast )
          {
             if( k >= 5 )
+            {
                iPenalty += 3 + ( k - 5 );
+            }
 
             bBitLast = bBit;
             k = 1;
          }
          else
+         {
             k++;
+         }
       }
       if( k >= 5 )
+      {
          iPenalty = 3 + ( k - 5 );
+      }
    }
 
    /* 2. Block of same color modules */
@@ -1049,7 +1127,9 @@ static int _qr_penalty( PHB_BITBUFFER pBits, int iVersion )
          if( hb_bitbuffer_get( pBits, i * iLen + j + 1 ) == bBit &&
              hb_bitbuffer_get( pBits, ( i + 1 ) * iLen + j ) == bBit &&
              hb_bitbuffer_get( pBits, ( i + 1 ) * iLen + j + 1 ) == bBit )
+         {
             iPenalty += 3;
+         }
       }
    }
 
@@ -1065,7 +1145,9 @@ static int _qr_penalty( PHB_BITBUFFER pBits, int iVersion )
                hb_bitbuffer_get( pBits, i * iLen + j + 4 ) &&
              ! hb_bitbuffer_get( pBits, i * iLen + j + 5 ) &&
                hb_bitbuffer_get( pBits, i * iLen + j + 6 ) )
+         {
             iPenalty += 40;
+         }
 
          if(   hb_bitbuffer_get( pBits, i         * iLen + j ) &&
              ! hb_bitbuffer_get( pBits, ( i + 1 ) * iLen + j ) &&
@@ -1074,24 +1156,33 @@ static int _qr_penalty( PHB_BITBUFFER pBits, int iVersion )
                hb_bitbuffer_get( pBits, ( i + 4 ) * iLen + j ) &&
              ! hb_bitbuffer_get( pBits, ( i + 5 ) * iLen + j ) &&
                hb_bitbuffer_get( pBits, ( i + 6 ) * iLen + j ) )
+         {
             iPenalty += 40;
+         }
       }
    }
 
    /* 4. Proportion of color modules */
    k = 0;
    for( i = 0; i < iLen; i++ )
+   {
       for( j = 0; j < iLen; j++ )
+      {
          if( hb_bitbuffer_get( pBits, i * iLen + j ) )
+         {
             k++;
+         }
+      }
+   }
    k = k * 100 / ( iLen * iLen );
    if( k < 50 )
+   {
       k = 100 - k;
+   }
    iPenalty += ( k / 5 ) * 10;
 
    return iPenalty;
 }
-
 
 static void _qr_mask_pattern( PHB_BITBUFFER pBits, int iVersion, int iMask )
 {
@@ -1131,18 +1222,19 @@ static void _qr_mask_pattern( PHB_BITBUFFER pBits, int iVersion, int iMask )
                   break;
             }
             if( k )
+            {
                hb_bitbuffer_not( pBits, i * iLen + j );
+            }
          }
       }
    }
 }
 
-
 static int _qr_mask( PHB_BITBUFFER pBits, int iVersion )
 {
-   int i, iPenaltyMin = 0, iMaskMin = 0;
+   int iPenaltyMin = 0, iMaskMin = 0;
 
-   for( i = 0; i < 8; i++ )
+   for( int i = 0; i < 8; i++ )
    {
       int iPenalty;
 
@@ -1169,7 +1261,6 @@ static int _qr_mask( PHB_BITBUFFER pBits, int iVersion )
    return iMaskMin;
 }
 
-
 static void _qr_draw_version_format( PHB_BITBUFFER pBits, int iVersion, int iLevel, int iMask )
 {
    int i, iCRC, iLen = _qr_versionlength( iVersion );
@@ -1194,15 +1285,23 @@ static void _qr_draw_version_format( PHB_BITBUFFER pBits, int iVersion, int iLev
       {
          /* Top left */
          if( i <= 7 )
+         {
             hb_bitbuffer_set( pBits, ( i + ( i >= 6 ? 1 : 0 ) ) * iLen + 8, 1 );
+         }
          else
+         {
             hb_bitbuffer_set( pBits, ( 14 - i ) + ( i == 8 ? 1 : 0 ) + iLen * 8, 1 );
+         }
 
          /* Top right and bottom left */
          if( i <= 7 )
+         {
             hb_bitbuffer_set( pBits, iLen - 1 - i + iLen * 8, 1 );
+         }
          else
+         {
             hb_bitbuffer_set( pBits, ( iLen - 15 + i ) * iLen + 8, 1 );
+         }
       }
       iCRC <<= 1;
    }
@@ -1211,13 +1310,13 @@ static void _qr_draw_version_format( PHB_BITBUFFER pBits, int iVersion, int iLev
    /* _qr_fixed() test code */
    for( i = 0; i < iLen; i++ )
    {
-      int j;
-      for( j = 0; j < iLen; j++ )
+      for( int j = 0; j < iLen; j++ )
+      {
          hb_bitbuffer_set( pBits, i * iLen + j, _qr_fixed( iVersion, i, j ) );
+      }
    }
 #endif
 }
-
 
 PHB_ZEBRA hb_zebra_create_qrcode( const char * szCode, HB_SIZE nLen, int iFlags )
 {
@@ -1289,13 +1388,16 @@ PHB_ZEBRA hb_zebra_create_qrcode( const char * szCode, HB_SIZE nLen, int iFlags 
    return pZebra;
 }
 
-
 HB_FUNC( HB_ZEBRA_CREATE_QRCODE )
 {
    PHB_ITEM pItem = hb_param( 1, HB_IT_STRING );
 
    if( pItem )
+   {
       hb_zebra_ret( hb_zebra_create_qrcode( hb_itemGetCPtr( pItem ), hb_itemGetCLen( pItem ), hb_parni( 2 ) ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }

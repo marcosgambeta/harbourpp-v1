@@ -53,27 +53,31 @@ typedef void ( *HB_ZEBRA_CALLBACK )( void * cargo, double dX, double dY, double 
 int hb_zebra_draw( PHB_ZEBRA pZebra, HB_ZEBRA_CALLBACK pCallback, void * cargo, double dX, double dY, double dWidth, double dHeight, int iFlags )
 {
    double  dLast;
-   HB_SIZE n, nLen, nCount;
+   HB_SIZE nLen, nCount;
    HB_BOOL fLastBit;
    int     i, iCol = pZebra->iCol;
 
    HB_SYMBOL_UNUSED( iFlags );
 
    if( pZebra->iError != 0 )
+   {
       return HB_ZEBRA_ERROR_INVALIDZEBRA;
+   }
 
    nLen = hb_bitbuffer_len( pZebra->pBits );
    fLastBit = hb_bitbuffer_get( pZebra->pBits, 0 );
    dLast = dX;
    nCount = 0;
    i = 0;
-   for( n = 0; n < nLen; n++ )
+   for( HB_SIZE n = 0; n < nLen; n++ )
    {
       HB_BOOL fBit = hb_bitbuffer_get( pZebra->pBits, n );
       if( fBit != fLastBit )
       {
          if( fLastBit && pCallback )
+         {
             pCallback( cargo, dLast, dY, dWidth * nCount, dHeight );
+         }
 
          dLast += dWidth * nCount;
          nCount = 0;
@@ -85,18 +89,24 @@ int hb_zebra_draw( PHB_ZEBRA pZebra, HB_ZEBRA_CALLBACK pCallback, void * cargo, 
          if( nCount )
          {
             if( fBit && pCallback )
+            {
                pCallback( cargo, dLast, dY, dWidth * nCount, dHeight );
+            }
             nCount = 0;
          }
          i = 0;
          dY += dHeight;
          dLast = dX;
          if( n + 1 < nLen )
+         {
             fLastBit = hb_bitbuffer_get( pZebra->pBits, n + 1 );
+         }
       }
    }
    if( fLastBit && nCount && pCallback )
+   {
       pCallback( cargo, dLast, dY, dWidth * nCount, dHeight );
+   }
 
    return 0;
 }
@@ -129,8 +139,12 @@ HB_FUNC( HB_ZEBRA_DRAW )
    {
       PHB_ITEM pDrawBlock = hb_param( 2, HB_IT_BLOCK );
       if( pDrawBlock )
+      {
          hb_retni( hb_zebra_draw_codeblock( pZebra, pDrawBlock, hb_parnd( 3 ), hb_parnd( 4 ), hb_parnd( 5 ), hb_parnd( 6 ), hb_parni( 7 ) ) );
+      }
       else
+      {
          hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      }
    }
 }
