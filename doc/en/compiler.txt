@@ -77,9 +77,9 @@
       =================
       `-g<type>`         output type generated is <type>
 
-          `-gc[<type>]`  output type: C source `.c` (default)
+          `-gc[<type>]`  output type: C++ source `.cpp` (default)
                           <type>: `0`=compact (default) `1`=normal `2`=verbose
-                                  `3`=generate real C code
+                                  `3`=generate real C++ code
 
           `-gh`          output type: Harbour Portable Object `.hrb`
 

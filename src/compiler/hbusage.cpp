@@ -61,9 +61,9 @@ void hb_compPrintUsage( HB_COMP_DECL, const char * szSelf )
       "\n          -fp[:<char>]     set path separator",
       "\n          -fs[-]           turn filename space trimming on or off (default)",
       "\n          -g<type>         output type generated is <type> (see below)",
-      "\n          -gc[<type>]      output type: C source (.c) (default)",
+      "\n          -gc[<type>]      output type: C++ source (.cpp) (default)",
       "\n                           <type>: 0=compact (default) 1=normal 2=verbose",
-      "\n                                   3=generate real C code",
+      "\n                                   3=generate real C++ code",
       "\n          -gh              output type: Harbour Portable Object (.hrb)",
       "\n          -gd[.<destext>]  generate dependencies list into (.d) file",
       "\n          -ge[<mode>]      error output <mode>: 0=Clipper (default)",
@@ -109,7 +109,7 @@ void hb_compPrintUsage( HB_COMP_DECL, const char * szSelf )
    for( int iLine = 0; iLine < static_cast< int >( HB_SIZEOFARRAY( s_szOptions ) ); iLine++ )
    {
       hb_compOutStd( HB_COMP_PARAM, s_szOptions[ iLine ] );
-   }   
+   }
 }
 
 /* List of compatibility/features modes */
