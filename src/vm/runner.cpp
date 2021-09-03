@@ -155,7 +155,7 @@ static HB_ULONG hb_hrbFindSymbol( const char * szName, PHB_DYNF pDynFunc, HB_ULO
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_hrbFindSymbol(%s, %p, %lu)", szName, static_cast< void * >( pDynFunc ), ulLoaded ) );
 
-   for( HB_LONG ulRet = 0; ulRet < ulLoaded; ++ulRet )
+   for( HB_ULONG ulRet = 0; ulRet < ulLoaded; ++ulRet )
    {
       if( ! strcmp( szName, pDynFunc[ ulRet ].szName ) )
       {
