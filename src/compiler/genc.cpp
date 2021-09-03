@@ -322,7 +322,7 @@ void hb_compGenCCode( HB_COMP_DECL, PHB_FNAME pFileName )       /* generates the
              * we are using these two bits to mark the special function used to
              * initialize static variables or debugging info about valid stop lines
              */
-            fprintf( yyc, "{ \"%s\", {HB_FS_INITEXIT | HB_FS_LOCAL}, {hb_INIT%s}, NULL }",
+            fprintf( yyc, "{ \"%s\", {HB_FS_INITEXIT | HB_FS_LOCAL}, {hb_INIT%s}, nullptr }",
                      pSym->szName, ! memcmp( pSym->szName + 1, "_INITLINES", 10 ) ?
                      "LINES" : "STATICS" ); /* NOTE: "hb_" intentionally in lower case */
          }
@@ -371,28 +371,28 @@ void hb_compGenCCode( HB_COMP_DECL, PHB_FNAME pFileName )       /* generates the
                iFuncSuffix = pSym->pFunc ? pSym->pFunc->iFuncSuffix : 0;
                if( pSym->cScope & HB_FS_INIT )
                {
-                  hb_compGenCFunc( yyc, "}, {HB_INIT_FUNCNAME( %s )}, NULL }", pSym->szName, HB_TRUE, iFuncSuffix );
+                  hb_compGenCFunc( yyc, "}, {HB_INIT_FUNCNAME( %s )}, nullptr }", pSym->szName, HB_TRUE, iFuncSuffix );
                }
                else if( pSym->cScope & HB_FS_EXIT )
                {
-                  hb_compGenCFunc( yyc, "}, {HB_EXIT_FUNCNAME( %s )}, NULL }", pSym->szName, HB_TRUE, iFuncSuffix );
+                  hb_compGenCFunc( yyc, "}, {HB_EXIT_FUNCNAME( %s )}, nullptr }", pSym->szName, HB_TRUE, iFuncSuffix );
                }
                else
                {
-                  hb_compGenCFunc( yyc, "}, {HB_FUNCNAME( %s )}, NULL }", pSym->szName, HB_FALSE, iFuncSuffix );
+                  hb_compGenCFunc( yyc, "}, {HB_FUNCNAME( %s )}, nullptr }", pSym->szName, HB_FALSE, iFuncSuffix );
                }
             }
             else if( pSym->cScope & HB_FS_DEFERRED ) /* is it a function declared as dynamic */
             {
-               fprintf( yyc, " | HB_FS_DEFERRED}, {NULL}, NULL }" );
+               fprintf( yyc, " | HB_FS_DEFERRED}, {nullptr}, nullptr }" );
             }
             else if( pSym->iFunc )                   /* is it a function called from this module */
             {
-               hb_compGenCFunc( yyc, "}, {HB_FUNCNAME( %s )}, NULL }", pSym->szName, HB_FALSE, 0 );
+               hb_compGenCFunc( yyc, "}, {HB_FUNCNAME( %s )}, nullptr }", pSym->szName, HB_FALSE, 0 );
             }
             else
             {
-               fprintf( yyc, "}, {NULL}, NULL }" );   /* memvar | alias | message */
+               fprintf( yyc, "}, {nullptr}, nullptr }" );   /* memvar | alias | message */
             }
          }
 

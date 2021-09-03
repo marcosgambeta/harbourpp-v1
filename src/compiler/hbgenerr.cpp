@@ -53,7 +53,7 @@ const char * const hb_comp_szErrors[] =
    "Unterminated array index",
    "Could not allocate %s byte(s)",
    "Could not reallocate %s byte(s)",
-   "Freeing a NULL memory pointer",
+   "Freeing a nullptr memory pointer",
    "Syntax error \"%s at '%s'\"",
    "Jump offset too long",
    "Can't create output file '%s'",

@@ -1865,7 +1865,7 @@ static HB_GENC_FUNC( hb_p_switch )
                "\t\ttype = hb_itemType( pSwitch );\n" );
       if( fStr )
       {
-         fprintf( cargo->yyc, "\t\tpszText = ( type & HB_IT_STRING ) ? hb_itemGetCPtr( pSwitch ) : NULL;\n" );
+         fprintf( cargo->yyc, "\t\tpszText = ( type & HB_IT_STRING ) ? hb_itemGetCPtr( pSwitch ) : nullptr;\n" );
          fprintf( cargo->yyc, "\t\tnLen = pszText ? hb_itemGetCLen( pSwitch ) : 0;\n" );
       }
       if( fNum )
@@ -2152,7 +2152,7 @@ static HB_GENC_FUNC( hb_p_withobjectmessage )
 
    if( usSym == 0xFFFF )
    {
-      fprintf( cargo->yyc, "\thb_xvmWithObjectMessage( NULL );\n" );
+      fprintf( cargo->yyc, "\thb_xvmWithObjectMessage( nullptr );\n" );
    }
    else
    {
