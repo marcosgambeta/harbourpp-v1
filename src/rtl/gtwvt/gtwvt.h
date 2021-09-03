@@ -251,7 +251,6 @@
 #define HB_BOXCH_TRANS_COUNT        ( HB_BOXCH_CHR_BASE + ( HB_BOXCH_BOX_MAX - HB_BOXCH_BOX_MIN + 1 ) + ( HB_BOXCH_RC_MAX - HB_BOXCH_RC_MIN + 1 ) )
 #define HB_BOXCH_TRANS_MAX          0xFF
 
-
 typedef struct _HB_GTWVT_MNU
 {
    int      iKey;
@@ -260,7 +259,6 @@ typedef struct _HB_GTWVT_MNU
    LPCTSTR  lpName;
    struct _HB_GTWVT_MNU * pNext;
 } HB_GTWVT_MNU, * PHB_GTWVT_MNU;
-
 
 typedef struct
 {

@@ -45,7 +45,6 @@
  *
  */
 
-
 /* NOTE: User programs should never call this layer directly! */
 
 #define HB_GT_NAME  GUI
@@ -100,17 +99,20 @@ static int hb_gt_gui_optionId( const char * pszOption )
       HB_SIZE nSize;
 
       while( HB_ISSPACE( *pszOption ) )
+      {
          pszOption++;
+      }
       nSize = strlen( pszOption );
       while( nSize > 0 && HB_ISSPACE( pszOption[ nSize - 1 ] ) )
+      {
          nSize--;
+      }
 
       if( nSize >= 2 && nSize <= 9 )
       {
          for( int i = 0; i < static_cast< int >( _HB_BUTTON_COUNT ); ++i )
          {
-            if( nSize == s_buttons[ i ].len &&
-                hb_strnicmp( s_buttons[ i ].name, pszOption, nSize ) == 0 )
+            if( nSize == s_buttons[ i ].len && hb_strnicmp( s_buttons[ i ].name, pszOption, nSize ) == 0 )
             {
                return s_buttons[ i ].id;
             }
@@ -166,14 +168,15 @@ static int hb_gt_gui_optionPos( int id, int iType, PHB_ITEM pOptions )
       {
          id = hb_gt_gui_optionId( hb_arrayGetCPtr( pOptions, i ) );
          if( iButton == id || ( iOptions == 1 && iType == id ) )
+         {
             return i;
+         }
       }
    }
    return 0;
 }
 
-static int hb_gt_gui_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions,
-                            int iClrNorm, int iClrHigh, double dDelay )
+static int hb_gt_gui_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int iClrNorm, int iClrHigh, double dDelay )
 {
    void * hText;
    LPCTSTR lpText = HB_ITEMGETSTR( pMessage, &hText, nullptr );
@@ -185,7 +188,9 @@ static int hb_gt_gui_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions,
       UINT uType;
 
       for( int i = 1; i <= iOptions; ++i )
+      {
          iType |= hb_gt_gui_optionId( hb_arrayGetCPtr( pOptions, i ) );
+      }
 
       switch( iType )
       {
@@ -226,8 +231,9 @@ static int hb_gt_gui_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions,
       iRet = hb_gt_gui_optionPos( iRet, iType, pOptions );
    }
    else
-      iRet = HB_GTSUPER_ALERT( pGT, pMessage, pOptions, iClrNorm,
-                               iClrHigh, dDelay );
+   {
+      iRet = HB_GTSUPER_ALERT( pGT, pMessage, pOptions, iClrNorm, iClrHigh, dDelay );
+   }
 
    hb_strfree( hText );
 
@@ -240,12 +246,14 @@ static int hb_gt_gui_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions,
 
 static const char * hb_gt_gui_Version( PHB_GT pGT, int iType )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_gui_Version(%p,%d)", ( void * ) pGT, iType ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_gui_Version(%p,%d)", static_cast< void * >( pGT ), iType ) );
 
    HB_SYMBOL_UNUSED( pGT );
 
    if( iType == 0 )
+   {
       return HB_GT_DRVNAME( HB_GT_NAME );
+   }
 
    return "Harbour Terminal: Windows dummy console for GUI programs";
 }
@@ -254,7 +262,7 @@ static const char * hb_gt_gui_Version( PHB_GT pGT, int iType )
 /* dDuration is in 'Ticks' (18.2 per second) */
 static void hb_gt_gui_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_gui_Tone(%p,%lf,%lf)", ( void * ) pGT, dFrequency, dDuration ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_gui_Tone(%p,%lf,%lf)", static_cast< void * >( pGT ), dFrequency, dDuration ) );
 
 #if defined( HB_OS_WIN )
    hb_gt_BaseUnlock( pGT );
@@ -269,22 +277,26 @@ static void hb_gt_gui_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 
 static HB_BOOL hb_gt_gui_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_gui_Info(%p,%d,%p)", ( void * ) pGT, iType, ( void * ) pInfo ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_gui_Info(%p,%d,%p)", static_cast< void * >( pGT ), iType, static_cast< void * >( pInfo ) ) );
 
    switch( iType )
    {
 #if defined( HB_OS_WIN )
       case HB_GTI_CLIPBOARDDATA:
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_STRING )
+         {
 #if defined( UNICODE )
             hb_gt_winapi_setClipboard( CF_UNICODETEXT, pInfo->pNewVal );
 #else
             hb_gt_winapi_setClipboard( CF_TEXT, pInfo->pNewVal );
 #endif
+         }
          else
          {
             if( pInfo->pResult == nullptr )
+            {
                pInfo->pResult = hb_itemNew( nullptr );
+            }
 #if defined( UNICODE )
             hb_gt_winapi_getClipboard( CF_UNICODETEXT, pInfo->pResult );
 #else
@@ -296,7 +308,9 @@ static HB_BOOL hb_gt_gui_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
       case HB_GTI_KBDSHIFTS:
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, hb_gt_winapi_getKbdState() );
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
+         {
             hb_gt_winapi_setKbdState( hb_itemGetNI( pInfo->pNewVal ) );
+         }
          break;
 #endif
       default:
@@ -310,7 +324,7 @@ static HB_BOOL hb_gt_gui_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
 static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_FuncInit(%p)", ( void * ) pFuncTable ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_FuncInit(%p)", static_cast< void * >( pFuncTable ) ) );
 
    pFuncTable->Version                    = hb_gt_gui_Version;
    pFuncTable->Tone                       = hb_gt_gui_Tone;
