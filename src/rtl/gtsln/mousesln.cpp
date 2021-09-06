@@ -326,7 +326,7 @@ void hb_gt_sln_mouse_Init( void )
       SLtt_write_string( static_cast< char * >( HB_UNCONST( EnabTrack ) ) );
       SLtt_flush_output();
 
-      s_iMouseButtons = SLtt_tgetnum( static_cast< char * >( "BT" ) );
+      s_iMouseButtons = SLtt_tgetnum( const_cast< char * >( "BT" ) );
 
       /* force two buttons mouse under xterm */
       if( s_iMouseButtons < 1 )

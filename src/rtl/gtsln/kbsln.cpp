@@ -161,7 +161,7 @@ static void hb_sln_Init_KeyTranslations( void )
 
    /* on Unix systems ESC is a special key so let
       assume ESC is a double pressed ESC key */
-   SLkp_define_keysym( static_cast< char * >( "^[^[" ), SL_KEY_ESC );
+   SLkp_define_keysym( const_cast< char * >( "^[^[" ), SL_KEY_ESC );
 
    /* try to define Shift-Fn and Ctrl-Fn keys.
       Because we assume terminal has only 10 Fkeys
@@ -213,7 +213,7 @@ static void hb_sln_Init_KeyTranslations( void )
    /* mouse events under xterm */
    if( hb_sln_UnderXterm )
    {
-      keyseq = SLtt_tgetstr( static_cast< char * >( "Km" ) );
+      keyseq = SLtt_tgetstr( const_cast< char * >( "Km" ) );
       if( ( keyseq != nullptr ) && ( keyseq[ 0 ] != 0 ) )
       {
          #if 0

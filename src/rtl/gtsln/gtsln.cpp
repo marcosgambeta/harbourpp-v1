@@ -700,8 +700,8 @@ static void hb_gt_sln_Exit( PHB_GT pGT )
    /* restore a standard bell frequency and duration */
    if( hb_sln_UnderLinuxConsole )
    {
-      SLtt_write_string( static_cast< char * >( "\033[10]" ) );
-      SLtt_write_string( static_cast< char * >( "\033[11]" ) );
+      SLtt_write_string( const_cast< char * >( "\033[10]" ) );
+      SLtt_write_string( const_cast< char * >( "\033[11]" ) );
       SLtt_flush_output();
    }
 

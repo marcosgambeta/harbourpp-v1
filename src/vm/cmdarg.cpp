@@ -571,7 +571,7 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
          }
          else
          {
-            return static_cast< char * >( "" );
+            return const_cast< char * >( "" );
          }
       }
    }
@@ -643,7 +643,7 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
             }
             else
             {
-               pszRetVal = static_cast< char * >( "" );
+               pszRetVal = const_cast< char * >( "" );
             }
             break;
          }
