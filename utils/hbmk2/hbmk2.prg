@@ -1960,7 +1960,7 @@ STATIC FUNCTION __hbmk( aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExit
 #endif
       aCOMPSUP := { ;
          "mingw", "msvc", "clang", "bcc", "watcom", "icc", "pocc", "xcc", "tcc", ;
-         "mingw64", "msvc64", "msvcia64", "bcc64", "iccia64", "pocc64" }
+         "mingw64", "msvc64", "msvcia64", "clang64", "bcc64", "iccia64", "pocc64" }
       l_aLIBHBGT := { "gtwin", "gtwvt", "gtgui" }
       hbmk[ _HBMK_cGTDEFAULT ] := "gtwin"
       hbmk[ _HBMK_cDynLibPrefix ] := ""
@@ -3574,7 +3574,7 @@ STATIC FUNCTION __hbmk( aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExit
       CASE hb_FNameExt( cParamL ) == ".res"
 
          IF HBMK_ISCOMP( "mingw|mingw64|mingwarm" ) .OR. ;
-            ( hbmk[ _HBMK_cPLAT ] == "win" .AND. HBMK_ISCOMP( "clang" ) ) .OR. ;
+            ( hbmk[ _HBMK_cPLAT ] == "win" .AND. HBMK_ISCOMP( "clang|clang64" ) ) .OR. ;
             ( hbmk[ _HBMK_cPLAT ] == "os2" .AND. HBMK_ISCOMP( "gcc|gccomf" ) )
             /* For MinGW/EMX GCC family add .res files as source input, as they
                will need to be converted to coff format with windres (just
@@ -4340,6 +4340,7 @@ STATIC FUNCTION __hbmk( aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExit
            ( hbmk[ _HBMK_cPLAT ] == "win" .AND. hbmk[ _HBMK_cCOMP ] == "mingw" ) .OR. ;
            ( hbmk[ _HBMK_cPLAT ] == "win" .AND. hbmk[ _HBMK_cCOMP ] == "mingw64" ) .OR. ;
            ( hbmk[ _HBMK_cPLAT ] == "win" .AND. hbmk[ _HBMK_cCOMP ] == "clang" ) .OR. ;
+           ( hbmk[ _HBMK_cPLAT ] == "win" .AND. hbmk[ _HBMK_cCOMP ] == "clang64" ) .OR. ;
            ( hbmk[ _HBMK_cPLAT ] == "win" .AND. hbmk[ _HBMK_cCOMP ] == "tcc" ) .OR. ;
            ( hbmk[ _HBMK_cPLAT ] == "wce" .AND. hbmk[ _HBMK_cCOMP ] == "mingw" ) .OR. ;
            ( hbmk[ _HBMK_cPLAT ] == "wce" .AND. hbmk[ _HBMK_cCOMP ] == "mingwarm" )
@@ -4535,7 +4536,7 @@ STATIC FUNCTION __hbmk( aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExit
             ENDIF
          ENDIF
 
-         IF HBMK_ISCOMP( "mingw|mingw64|mingwarm|clang" )
+         IF HBMK_ISCOMP( "mingw|mingw64|mingwarm|clang|clang64" )
             cBin_Res := hbmk[ _HBMK_cCCPREFIX ] + "windres" + hbmk[ _HBMK_cCCEXT ]
             cResExt := ".reso"
             cOpt_Res := "{FR} {IR} -O coff -o {OS}"
@@ -6170,7 +6171,7 @@ STATIC FUNCTION __hbmk( aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExit
                            "LNK4217: locally defined symbol ... imported in function ..."
                            if using 'dllimport'. [vszakats] */
                   tmp := ""
-               CASE HBMK_ISCOMP( "gcc|mingw|mingw64|mingwarm|clang" )
+               CASE HBMK_ISCOMP( "gcc|mingw|mingw64|mingwarm|clang|clang64" )
                   tmp := "__attribute__ (( dllimport ))"
                CASE HBMK_ISCOMP( "bcc|bcc64|watcom" )
                   tmp := "__declspec( dllimport )"
@@ -8382,7 +8383,7 @@ STATIC FUNCTION FindNewerHeaders( hbmk, cFileName, tTimeParent, lCMode, cBin_Com
    cExt := Lower( hb_FNameExt( cFileName ) )
 
    /* Filter out non-source format inputs for MinGW / windres */
-   IF HBMK_ISCOMP( "gcc|mingw|mingw64|mingwarm|clang" ) .AND. HBMK_ISPLAT( "win|wce" ) .AND. cExt == ".res"
+   IF HBMK_ISCOMP( "gcc|mingw|mingw64|mingwarm|clang|clang64" ) .AND. HBMK_ISPLAT( "win|wce" ) .AND. cExt == ".res"
       RETURN .F.
    ENDIF
 
@@ -8435,7 +8436,7 @@ STATIC FUNCTION FindNewerHeaders( hbmk, cFileName, tTimeParent, lCMode, cBin_Com
          ENDIF
       NEXT
 
-   ELSEIF lCMode .AND. hbmk[ _HBMK_nHEAD ] == _HEAD_NATIVE .AND. HBMK_ISCOMP( "gcc|mingw|mingw64|mingwarm|djgpp|gccomf|clang|open64" )
+   ELSEIF lCMode .AND. hbmk[ _HBMK_nHEAD ] == _HEAD_NATIVE .AND. HBMK_ISCOMP( "gcc|mingw|mingw64|mingwarm|djgpp|gccomf|clang|clang64|open64" )
 
       IF hbmk[ _HBMK_lDEBUGINC ]
          _hbmk_OutStd( hbmk, hb_StrFormat( "debuginc: Calling C/C++ compiler to detect dependencies of %1$s", cFileName ) )
@@ -9439,7 +9440,7 @@ STATIC FUNCTION LibExists( hbmk, cDir, cLib, cLibPrefix, cLibExt )
    cDir := hb_DirSepAdd( hb_DirSepToOS( cDir ) )
 
    DO CASE
-   CASE HBMK_ISCOMP( "gcc|mingw|mingw64|mingwarm|clang" ) .AND. HBMK_ISPLAT( "win|wce|cygwin" )
+   CASE HBMK_ISCOMP( "gcc|mingw|mingw64|mingwarm|clang|clang64" ) .AND. HBMK_ISPLAT( "win|wce|cygwin" )
       /* NOTE: ld/gcc option -dll-search-prefix is not taken into account here,
                So, '<prefix>xxx.dll' format libs will not be found here in any case. */
       DO CASE
@@ -10165,7 +10166,7 @@ STATIC FUNCTION ListCookLib( hbmk, aLIB, aLIBA, array, cPrefix, cExtNew )
    LOCAL cLibNameCooked
    LOCAL cName, cExt
 
-   IF HBMK_ISCOMP( "gcc|mingw|mingw64|mingwarm|djgpp|gccomf|clang|open64" )
+   IF HBMK_ISCOMP( "gcc|mingw|mingw64|mingwarm|djgpp|gccomf|clang|clang64|open64" )
       FOR EACH cLibName IN array
          hb_FNameSplit( cLibName, @cDir )
          IF Empty( cDir )
@@ -10300,7 +10301,7 @@ STATIC FUNCTION PathSepToTarget( hbmk, cFileName, nStart )
 
    hb_default( @nStart, 1 )
 
-   IF HBMK_ISPLAT( "win|wce|dos|os2" ) .AND. ! HBMK_ISCOMP( "mingw|mingw64|mingwarm|clang" )
+   IF HBMK_ISPLAT( "win|wce|dos|os2" ) .AND. ! HBMK_ISCOMP( "mingw|mingw64|mingwarm|clang|clang64" )
       RETURN Left( cFileName, nStart - 1 ) + StrTran( SubStr( cFileName, nStart ), "/", "\" )
    ENDIF
 
@@ -10677,7 +10678,7 @@ STATIC FUNCTION HBC_ProcessOne( hbmk, cFileName, nNestingLevel )
                   NEXT
                CASE hb_FNameExt( cItemL ) == ".res"
                   IF HBMK_ISCOMP( "mingw|mingw64|mingwarm" ) .OR. ;
-                     ( hbmk[ _HBMK_cPLAT ] == "win" .AND. HBMK_ISCOMP( "clang" ) ) .OR. ;
+                     ( hbmk[ _HBMK_cPLAT ] == "win" .AND. HBMK_ISCOMP( "clang|clang" ) ) .OR. ;
                      ( hbmk[ _HBMK_cPLAT ] == "os2" .AND. HBMK_ISCOMP( "gcc|gccomf" ) )
                      /* For MinGW/EMX GCC family add .res files as source input, as they
                         will need to be converted to coff format with windres (just
@@ -11835,7 +11836,7 @@ STATIC FUNCTION getFirstFunc( hbmk, cFile )
    LOCAL cFuncList, cExecNM, cFuncName, cExt, cLine, n, c
 
    cFuncName := ""
-   IF HBMK_ISCOMP( "gcc|mingw|mingw64|mingwarm|gccomf|clang" )
+   IF HBMK_ISCOMP( "gcc|mingw|mingw64|mingwarm|gccomf|clang|clang64" )
       hb_FNameSplit( cFile,,, @cExt )
       IF cExt == ".c"
          FOR EACH cLine IN hb_ATokens( StrTran( hb_MemoRead( cFile ), Chr( 13 ), Chr( 10 ) ), Chr( 10 ) )
@@ -12019,6 +12020,7 @@ STATIC PROCEDURE PlatformPRGFlags( hbmk, aOPTPRG )
       CASE HBMK_ISPLAT( "wce|win" )
          AAdd( aDf, "__LITTLE_ENDIAN__" ) /* Windows is currently little-endian on all supported CPUs. */
          IF hbmk[ _HBMK_cCOMP ] == "mingw64" .OR. ;
+            hbmk[ _HBMK_cCOMP ] == "clang64" .OR. ;
             hbmk[ _HBMK_cCOMP ] == "msvc64" .OR. ;
             hbmk[ _HBMK_cCOMP ] == "pocc64" .OR. ;
             hbmk[ _HBMK_cCOMP ] == "msvcia64" .OR. ;
@@ -13014,6 +13016,7 @@ STATIC FUNCTION hbmk_CPU( hbmk )
                 and targets can be overridden using user options. */
       RETURN "x86"
    CASE hbmk[ _HBMK_cCOMP ] == "mingw64" .OR. ;
+        hbmk[ _HBMK_cCOMP ] == "clang64" .OR. ;
         hbmk[ _HBMK_cCOMP ] == "msvc64" .OR. ;
         hbmk[ _HBMK_cCOMP ] == "bcc64" .OR. ;
         hbmk[ _HBMK_cCOMP ] == "pocc64"
@@ -13078,7 +13081,7 @@ FUNCTION hbmk_KEYW( hbmk, cFileName, cKeyword, cValue, cOperator )
    CASE "winansi"  ; RETURN ! hbmk[ _HBMK_lWINUNI ]
    CASE "unix"     ; RETURN HBMK_ISPLAT( "bsd|hpux|sunos|beos|qnx|android|vxworks|symbian|linux|darwin|cygwin|minix|aix" )
    CASE "allwin"   ; RETURN HBMK_ISPLAT( "win|wce" )
-   CASE "allgcc"   ; RETURN HBMK_ISCOMP( "gcc|mingw|mingw64|mingwarm|djgpp|gccomf|clang|open64|pcc" )
+   CASE "allgcc"   ; RETURN HBMK_ISCOMP( "gcc|mingw|mingw64|mingwarm|djgpp|gccomf|clang|clang64|open64|pcc" )
    CASE "allmingw" ; RETURN HBMK_ISCOMP( "mingw|mingw64|mingwarm" )
    CASE "allmsvc"  ; RETURN HBMK_ISCOMP( "msvc|msvc64|msvcia64|msvcarm" )
    CASE "allbcc"   ; RETURN HBMK_ISCOMP( "bcc|bcc64" )
@@ -13106,7 +13109,7 @@ FUNCTION hbmk_KEYW( hbmk, cFileName, cKeyword, cValue, cOperator )
       "|mingw|mingw64|mingwarm|bcc|bcc64|watcom" + ;
       "|gcc|gccomf|djgpp" + ;
       "|hblib|hbdyn|hbdynvm|hbimplib|hbexe" + ;
-      "|icc|iccia64|clang|open64|sunpro|diab|pcc" + ;
+      "|icc|iccia64|clang|clang64|open64|sunpro|diab|pcc" + ;
       "|x86|x86_64|ia64|arm|mips|sh" )
 
       /* handle pseudo-functions */
@@ -15801,7 +15804,7 @@ STATIC PROCEDURE ShowHelp( hbmk, lMore, lLong )
       , ;
       { "linux"   , "gcc, clang, icc, watcom, sunpro, open64" }, ;
       { "darwin"  , "gcc, clang, icc" }, ;
-      { "win"     , "mingw, msvc, clang, bcc, bcc64, watcom, icc, pocc, xcc, mingw64, msvc64, msvcia64, iccia64, pocc64" }, ;
+      { "win"     , "mingw, msvc, clang, bcc, bcc64, watcom, icc, pocc, xcc, mingw64, msvc64, msvcia64, clang64, iccia64, pocc64" }, ;
       { "wce"     , "mingwarm, mingw, msvcarm, poccarm" }, ;
       { "os2"     , "gcc, gccomf, watcom" }, ;
       { "dos"     , "djgpp, watcom" }, ;
@@ -16191,7 +16194,7 @@ STATIC PROCEDURE ShowHelp( hbmk, lMore, lLong )
       { "{winansi}"               , I_( "Windows ANSI mode (see -winuni- option)" ) }, ;
       { "{unix}"                  , I_( "target platform is *nix compatible (bsd, hpux, sunos, beos, qnx, android, vxworks, symbian, linux, darwin, cygwin, minix, aix)" ) }, ;
       { "{allwin}"                , I_( "target platform is Windows compatible (win, wce)" ) }, ;
-      { "{allgcc}"                , I_( "target C compiler belongs to gcc family (gcc, mingw, mingw64, mingwarm, djgpp, gccomf, clang, open64, pcc)" ) }, ;
+      { "{allgcc}"                , I_( "target C compiler belongs to gcc family (gcc, mingw, mingw64, mingwarm, djgpp, gccomf, clang, clang64, open64, pcc)" ) }, ;
       { "{allmingw}"              , I_( "target C compiler is mingw* (mingw, mingw64, mingwarm)" ) }, ;
       { "{allmsvc}"               , I_( "target C compiler is msvc* (msvc, msvc64, msvcia64, msvcarm)" ) }, ;
       { "{allbcc}"                , I_( "target C compiler is bcc* (bcc, bcc64)" ) }, ;
