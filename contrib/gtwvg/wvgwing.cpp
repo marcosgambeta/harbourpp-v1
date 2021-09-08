@@ -1242,7 +1242,7 @@ HB_FUNC( WVG_CREATETOOLTIPWINDOW )
    toolInfo.hwnd     = static_cast< HWND >( wvg_parhwnd( 1 ) );
    toolInfo.uFlags   = TTF_IDISHWND | TTF_SUBCLASS;
    toolInfo.uId      = reinterpret_cast< UINT_PTR >( const_cast< HWND >( wvg_parhwnd( 1 ) ) );
-   toolInfo.lpszText = static_cast< LPTSTR >( TEXT( "" ) );
+   toolInfo.lpszText = const_cast< LPTSTR >( TEXT( "" ) );
 
    if( SendMessage( hwndTip, TTM_ADDTOOL, 0, reinterpret_cast< LPARAM >( &toolInfo ) ) )
    {
