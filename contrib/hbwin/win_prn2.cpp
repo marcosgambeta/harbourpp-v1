@@ -399,7 +399,7 @@ HB_FUNC( WIN_PRINTFILERAW )
 
          DocInfo.pDocName = const_cast< LPTSTR >( HB_PARSTR( HB_ISCHAR( 3 ) ? 3 : 2, &hDocName, nullptr ) );
          DocInfo.pOutputFile = nullptr;
-         DocInfo.pDatatype = static_cast< LPTSTR >( TEXT( "RAW" ) );
+         DocInfo.pDatatype = const_cast< LPTSTR >( TEXT( "RAW" ) );
 
          if( StartDocPrinter( hPrinter, 1, reinterpret_cast< LPBYTE >( &DocInfo ) ) != 0 )
          {
@@ -493,7 +493,7 @@ HB_FUNC( WIN_PRINTDATARAW )
 
          DocInfo.pDocName = const_cast< LPTSTR >( HB_PARSTR( 3, &hDocName, nullptr ) );
          DocInfo.pOutputFile = nullptr;
-         DocInfo.pDatatype = static_cast< LPTSTR >( TEXT( "RAW" ) );
+         DocInfo.pDatatype = const_cast< LPTSTR >( TEXT( "RAW" ) );
          if( DocInfo.pDocName == nullptr )
          {
             DocInfo.pDocName = DocInfo.pDatatype;
