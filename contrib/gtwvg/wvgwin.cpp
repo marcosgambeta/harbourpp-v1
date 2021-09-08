@@ -1054,29 +1054,15 @@ HB_FUNC( WVG_FORCEWINDOWTOTOP )
  */
 HB_FUNC( WVG_SETLAYEREDWINDOWATTRIBUTES )
 {
-#if ( _WIN32_WINNT >= 0x0500 )
-   HINSTANCE h;
-   wvtSetLayeredWindowAttributes pfnLayered;
+   HWND     hWnd = hbwapi_par_raw_HWND( 1 );
+   COLORREF cr   = HB_ISNUM( 2 ) ? hbwapi_par_COLORREF( 2 ) : RGB( 255, 255, 255 );
 
-   h = GetModuleHandle( TEXT( "user32.dll" ) );
-   if( h )
+   SetWindowLong( hWnd, GWL_EXSTYLE, GetWindowLong( hWnd, GWL_EXSTYLE ) | WS_EX_LAYERED );
+
+   if( SetLayeredWindowAttributes( hWnd, cr, static_cast< BYTE >( hb_parni( 3 ) ), /*LWA_COLORKEY |*/ LWA_ALPHA ) == false )
    {
-      pfnLayered = reinterpret_cast< wvtSetLayeredWindowAttributes >( HB_WINAPI_GETPROCADDRESS( h, "SetLayeredWindowAttributes" ) );
-      if( pfnLayered )
-      {
-         HWND     hWnd = hbwapi_par_raw_HWND( 1 );
-         COLORREF cr   = HB_ISNUM( 2 ) ? hbwapi_par_COLORREF( 2 ) : RGB( 255, 255, 255 );
-
-         SetWindowLong( hWnd, GWL_EXSTYLE, GetWindowLong( hWnd, GWL_EXSTYLE ) | WS_EX_LAYERED );
-
-         if( pfnLayered( hWnd, cr, static_cast< BYTE >( hb_parni( 3 ) ), /*LWA_COLORKEY |*/ LWA_ALPHA ) == 0 )
-         {
-            /* Just to supress warning */
-         }
-      }
-      FreeLibrary( h );
+      /* Just to supress warning */
    }
-#endif
 }
 
 HB_FUNC( WVG_SENDTOOLBARMESSAGE )
