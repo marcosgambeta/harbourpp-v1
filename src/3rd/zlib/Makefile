@@ -6,6 +6,7 @@ LIBNAME := hbzlib
 
 HB_BUILD_WARN := no
 HB_BUILD_MODE := c
+HB_USER_CFLAGS :=
 
 # Ugly workaround to avoid fatal error when building for pocc64 (6.x)
 ifneq ($(HB_COMPILER),pocc64)

@@ -6,6 +6,7 @@ LIBNAME := png
 
 HB_BUILD_WARN := no
 HB_BUILD_MODE := c
+HB_USER_CFLAGS :=
 
 C_SOURCES := \
    png.c \
