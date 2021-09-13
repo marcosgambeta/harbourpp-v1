@@ -115,7 +115,7 @@ void hb_verBuildInfo( void )
       const char * pszFlags = hb_verFlagsC();
       if( pszFlags && *pszFlags )
       {
-         hb_conOutErr( "Extra C compiler options: ", 0 );
+         hb_conOutErr( "Extra C++ compiler options: ", 0 );
          hb_conOutErr( pszFlags, 0 );
          hb_conOutErr( hb_conNewLine(), 0 );
       }
