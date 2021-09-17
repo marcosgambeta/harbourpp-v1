@@ -57,15 +57,13 @@
 static HB_U32 hb_sxInitSeed( const char * pKeyVal, HB_U16 * puiKey )
 {
    HB_U32 ulSeed = 0;
-   int i;
 
-   for( i = 0; i < 7; i++ )
+   for( int i = 0; i < 7; i++ )
    {
-      ulSeed = ( ( ( ulSeed >> 16 ) + ( ulSeed << 16 ) ) * 17 ) +
-               HB_GET_LE_UINT16( &pKeyVal[ i ] );
+      ulSeed = ( ( ( ulSeed >> 16 ) + ( ulSeed << 16 ) ) * 17 ) + HB_GET_LE_UINT16( &pKeyVal[ i ] );
    }
    ulSeed |= 1;
-   *puiKey = ( HB_U16 ) ulSeed;
+   *puiKey = static_cast< HB_U16 >( ulSeed );
    return ( ulSeed << 16 ) + ( ulSeed >> 16 );
 }
 
@@ -74,13 +72,13 @@ static HB_U32 hb_sxNextSeed( HB_U32 ulSeed, const char * pKeyVal, HB_U16 * puiKe
    HB_U32 ulTemp1, ulTemp2;
    HB_U16 uiSeedLo, uiSeedHi;
 
-   uiSeedLo = ( HB_U16 ) ulSeed;
-   ulTemp1  = ( HB_U32 ) rnd_mul1 * ( HB_U32 ) uiSeedLo;
-   ulTemp2  = ( HB_U32 ) rnd_mul2 * ( HB_U32 ) uiSeedLo + ( ulTemp1 >> 16 );
-   uiSeedLo = ( HB_U16 ) ulTemp1;
-   ulTemp1  = ( HB_U32 ) rnd_mul1 * ( ulSeed >> 16 );
-   uiSeedHi = ( HB_U16 ) ( ulTemp1 + ulTemp2 );
-   ulSeed   = ( ( HB_U32 ) uiSeedHi << 16 ) + ( HB_U32 ) uiSeedLo;
+   uiSeedLo = static_cast< HB_U16 >( ulSeed );
+   ulTemp1  = static_cast< HB_U32 >( rnd_mul1 ) * static_cast< HB_U32 >( uiSeedLo );
+   ulTemp2  = static_cast< HB_U32 >( rnd_mul2 ) * static_cast< HB_U32 >( uiSeedLo ) + ( ulTemp1 >> 16 );
+   uiSeedLo = static_cast< HB_U16 >( ulTemp1 );
+   ulTemp1  = static_cast< HB_U32 >( rnd_mul1 ) * ( ulSeed >> 16 );
+   uiSeedHi = static_cast< HB_U16 >( ulTemp1 + ulTemp2 );
+   ulSeed   = ( static_cast< HB_U32 >( uiSeedHi ) << 16 ) + static_cast< HB_U32 >( uiSeedLo );
    uiSeedHi |= 1;
    *puiKey  = uiSeedHi + HB_GET_LE_UINT16( pKeyVal );
    return ulSeed;
@@ -98,13 +96,14 @@ void hb_sxEnCrypt( const char * pSrc, char * pDst, const char * pKeyVal, HB_SIZE
    {
       HB_UCHAR ucChar, ucShft;
 
-      ucChar = ( HB_UCHAR ) pSrc[ nPos ];
-      ucShft = ( HB_UCHAR ) ( uiKey & 0x07 );
-      pDst[ nPos ] = ( ( ucChar >> ucShft ) + ( ucChar << ( 8 - ucShft ) ) +
-                       ( uiKey & 0xFF ) );
+      ucChar = static_cast< HB_UCHAR >( pSrc[ nPos ] );
+      ucShft = static_cast< HB_UCHAR >( uiKey & 0x07 );
+      pDst[ nPos ] = ( ( ucChar >> ucShft ) + ( ucChar << ( 8 - ucShft ) ) + ( uiKey & 0xFF ) );
       ulSeed = hb_sxNextSeed( ulSeed, &pKeyVal[ i ], &uiKey );
       if( ++i == 7 )
+      {
          i = 0;
+      }
    }
 }
 
@@ -120,12 +119,14 @@ void hb_sxDeCrypt( const char * pSrc, char * pDst, const char * pKeyVal, HB_SIZE
    {
       HB_UCHAR ucChar, ucShft;
 
-      ucChar = ( HB_UCHAR ) pSrc[ nPos ] - ( uiKey & 0xFF );
-      ucShft = ( HB_UCHAR ) ( uiKey & 0x07 );
+      ucChar = static_cast< HB_UCHAR >( pSrc[ nPos ] ) - ( uiKey & 0xFF );
+      ucShft = static_cast< HB_UCHAR >( uiKey & 0x07 );
       pDst[ nPos ] = ( ( ucChar << ucShft ) + ( ucChar >> ( 8 - ucShft ) ) );
       ulSeed = hb_sxNextSeed( ulSeed, &pKeyVal[ i ], &uiKey );
       if( ++i == 7 )
+      {
          i = 0;
+      }
    }
 }
 
@@ -142,20 +143,28 @@ static HB_BOOL _hb_sxGetKey( PHB_ITEM pKeyItem, char * pKeyVal )
       {
          pItem = hb_itemNew( nullptr );
          if( SELF_INFO( pArea, DBI_PASSWORD, pItem ) == HB_SUCCESS )
+         {
             pKeyItem = pItem;
+         }
       }
    }
    if( hb_itemType( pKeyItem ) & HB_IT_STRING )
    {
       HB_SIZE nKey = hb_itemGetCLen( pKeyItem );
       if( nKey )
+      {
          memcpy( pKeyVal, hb_itemGetCPtr( pKeyItem ), HB_MIN( nKey, 8 ) );
+      }
       if( nKey < 8 )
+      {
          memset( pKeyVal + nKey, 0, 8 - nKey );
+      }
       fResult = HB_TRUE;
    }
    if( pItem )
+   {
       hb_itemRelease( pItem );
+   }
    return fResult;
 }
 
@@ -174,7 +183,9 @@ HB_FUNC( SX_ENCRYPT )
          hb_retclen_buffer( pDst, nLen );
       }
       else
+      {
          hb_itemReturn( hb_param( 1, HB_IT_ANY ) );
+      }
    }
 }
 
@@ -193,6 +204,8 @@ HB_FUNC( SX_DECRYPT )
          hb_retclen_buffer( pDst, nLen );
       }
       else
+      {
          hb_itemReturn( hb_param( 1, HB_IT_ANY ) );
+      }
    }
 }

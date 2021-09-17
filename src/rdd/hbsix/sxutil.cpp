@@ -67,13 +67,19 @@ HB_FUNC( SX_SLIMFAST )
       while( ( c = *szExp++ ) != 0 )
       {
          if( c == cQuote )
+         {
             cQuote = 0;
+         }
          else if( ! cQuote )
          {
             if( c == '"' || c == '\'' )
+            {
                cQuote = c;
+            }
             else if( c == ' ' && nDst && szDst[ nDst - 1 ] == ' ' )
+            {
                continue;
+            }
          }
          szDst[ nDst++ ] = c;
       }
@@ -81,7 +87,9 @@ HB_FUNC( SX_SLIMFAST )
       hb_retclen_buffer( szDst, nDst );
    }
    else
+   {
       hb_retc_null();
+   }
 }
 
 HB_FUNC( SX_WILDMATCH )
@@ -90,7 +98,9 @@ HB_FUNC( SX_WILDMATCH )
    HB_BOOL fMatch = HB_FALSE;
 
    if( szPattern && szPattern[ 0 ] && szValue )
+   {
       fMatch = hb_strMatchWild( szValue, szPattern );
+   }
 
    hb_retl( fMatch );
 }

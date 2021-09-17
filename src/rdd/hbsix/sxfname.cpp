@@ -63,12 +63,18 @@ HB_FUNC( SX_FNAMEPARSER )
       szFileName = hb_fsNameConv( szFileName, &pszFree );
       pFileName = hb_fsFNameSplit( szFileName );
       if( pszFree )
+      {
          hb_xfree( pszFree );
+      }
 
       if( ! hb_parl( 2 ) )
+      {
          pFileName->szPath = nullptr;
+      }
       if( ! hb_parl( 3 ) )
+      {
          pFileName->szExtension = nullptr;
+      }
 
       if( ! hb_setGetTrimFileName() )
       {
@@ -92,5 +98,7 @@ HB_FUNC( SX_FNAMEPARSER )
       hb_xfree( pFileName );
    }
    else
+   {
       hb_retc_null();
+   }
 }

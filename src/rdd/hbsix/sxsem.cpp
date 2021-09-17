@@ -52,7 +52,6 @@
 #include "hbapifs.h"
 #include "hbapirdd.h"
 
-
 static HB_BOOL hb_sxSemName( char * szFileName )
 {
    const char * szName = hb_parc( 1 );
@@ -60,8 +59,7 @@ static HB_BOOL hb_sxSemName( char * szFileName )
 
    if( szName && szName[ 0 ] )
    {
-      hb_cdpnDup2Lower( hb_vmCDP(), szName, strlen( szName ),
-                        szFileName, HB_PATH_MAX );
+      hb_cdpnDup2Lower( hb_vmCDP(), szName, strlen( szName ), szFileName, HB_PATH_MAX );
       szFileName[ HB_PATH_MAX - 1 ] = '\0';
       fResult = HB_TRUE;
    }
@@ -76,14 +74,15 @@ static HB_BOOL hb_sxSemName( char * szFileName )
          memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
          pOrderInfo.itmOrder = hb_param( 1, HB_IT_NUMERIC );
          if( pOrderInfo.itmOrder && hb_itemGetNI( pOrderInfo.itmOrder ) == 0 )
+         {
             pOrderInfo.itmOrder = nullptr;
+         }
          pOrderInfo.itmResult = hb_itemPutC( nullptr, nullptr );
          SELF_ORDINFO( pArea, DBOI_NAME, &pOrderInfo );
          szName = hb_itemGetCPtr( pOrderInfo.itmResult );
          if( szName && szName[ 0 ] )
          {
-            hb_cdpnDup2Lower( hb_vmCDP(), szName, strlen( szName ),
-                              szFileName, HB_PATH_MAX );
+            hb_cdpnDup2Lower( hb_vmCDP(), szName, strlen( szName ), szFileName, HB_PATH_MAX );
             szFileName[ HB_PATH_MAX - 1 ] = '\0';
             fResult = HB_TRUE;
          }
@@ -105,7 +104,9 @@ static PHB_FILE hb_sxSemOpen( char * szFileName, HB_BOOL * pfNewFile )
                               FO_READWRITE | FO_EXCLUSIVE | FXO_DEFAULTS |
                               FXO_SHARELOCK | FXO_COPYNAME, nullptr, nullptr );
       if( pFile != nullptr )
+      {
          break;
+      }
 
       if( pfNewFile )
       {
@@ -122,7 +123,9 @@ static PHB_FILE hb_sxSemOpen( char * szFileName, HB_BOOL * pfNewFile )
       {
          HB_ERRCODE errCode = hb_fsError();
          if( errCode != 5 && errCode != 32 && errCode != 33 )
+         {
             break;
+         }
       }
 
       hb_idleSleep( 0.01 );
@@ -131,7 +134,6 @@ static PHB_FILE hb_sxSemOpen( char * szFileName, HB_BOOL * pfNewFile )
 
    return pFile;
 }
-
 
 HB_FUNC( SX_MAKESEM )
 {
@@ -148,28 +150,37 @@ HB_FUNC( SX_MAKESEM )
          HB_BYTE buffer[ 2 ];
 
          if( fNewFile )
+         {
             iUsers = 1;
+         }
          else
          {
             if( hb_fileReadAt( pFile, buffer, 2, 0 ) != 2 )
+            {
                fError = HB_TRUE;
+            }
             else
+            {
                iUsers = HB_GET_LE_INT16( buffer ) + 1;
+            }
          }
          if( ! fError )
          {
             HB_PUT_LE_UINT16( buffer, iUsers );
             if( hb_fileWriteAt( pFile, buffer, 2, 0 ) != 2 )
+            {
                fError = HB_TRUE;
+            }
          }
          hb_fileClose( pFile );
       }
    }
    if( fError )
+   {
       iUsers = -1;
+   }
    hb_retni( iUsers );
 }
-
 
 HB_FUNC( SX_KILLSEM )
 {
@@ -191,12 +202,13 @@ HB_FUNC( SX_KILLSEM )
          }
          hb_fileClose( pFile );
          if( iUsers == 0 )
+         {
             hb_fileDelete( szFileName );
+         }
       }
    }
    hb_retni( iUsers );
 }
-
 
 HB_FUNC( SX_ISSEM )
 {
@@ -207,7 +219,9 @@ HB_FUNC( SX_ISSEM )
    {
       pFile = hb_sxSemOpen( szFileName, nullptr );
       if( pFile != nullptr )
+      {
          hb_fileClose( pFile );
+      }
    }
 
    hb_retl( pFile != nullptr );

@@ -67,7 +67,6 @@
 #include "hbapirdd.h"
 #include "hbapierr.h"
 
-
 HB_FUNC( SX_GETLOCKS )
 {
    AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
@@ -137,7 +136,9 @@ HB_FUNC( SX_IDTYPE )
    {
       PHB_ITEM pItem = hb_itemNew( nullptr );
       if( SELF_RECINFO( pArea, nullptr, DBRI_ENCRYPTED, pItem ) == HB_SUCCESS )
+      {
          iType = hb_itemGetL( pItem ) ? 2 : 1;
+      }
       hb_itemRelease( pItem );
    }
 
@@ -153,7 +154,9 @@ HB_FUNC( SX_TABLETYPE )
    {
       PHB_ITEM pItem = hb_itemNew( nullptr );
       if( SELF_INFO( pArea, DBI_ISENCRYPTED, pItem ) == HB_SUCCESS )
+      {
          iType = hb_itemGetL( pItem ) ? 2 : 1;
+      }
       hb_itemRelease( pItem );
    }
 
@@ -171,7 +174,9 @@ HB_FUNC( SX_TABLENAME )
       hb_itemReturnRelease( pList );
    }
    else
+   {
       hb_retc_null();
+   }
 }
 
 static void hb_sxRollBackChild( AREAP pArea, PHB_ITEM pItem )
@@ -181,7 +186,9 @@ static void hb_sxRollBackChild( AREAP pArea, PHB_ITEM pItem )
    while( lpdbRelation )
    {
       if( SELF_INFO( lpdbRelation->lpaChild, DBI_ROLLBACK, pItem ) != HB_SUCCESS )
+      {
          break;
+      }
       hb_sxRollBackChild( lpdbRelation->lpaChild, pItem );
       lpdbRelation = lpdbRelation->lpdbriNext;
    }
@@ -200,16 +207,22 @@ HB_FUNC( SX_ROLLBACK )
    }
 
    if( iArea )
+   {
       pArea = static_cast< AREAP >( hb_rddGetWorkAreaPointer( iArea ) );
+   }
    else
+   {
       pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
+   }
 
    if( pArea )
    {
       PHB_ITEM pItem = hb_itemNew( nullptr );
       fResult = SELF_INFO( pArea, DBI_ROLLBACK, pItem ) == HB_SUCCESS;
       if( fResult && fRollChild )
+      {
          hb_sxRollBackChild( pArea, pItem );
+      }
       hb_itemRelease( pItem );
    }
 
@@ -230,9 +243,9 @@ HB_FUNC( SX_RLOCK )
       dbLockInfo.uiMethod = DBLM_MULTIPLE;
       if( pRecords )
       {
-         HB_SIZE nPos, nLen = hb_arrayLen( pRecords );
+         HB_SIZE nLen = hb_arrayLen( pRecords );
          pResult = hb_itemArrayNew( nLen );
-         for( nPos = 1; nPos <= nLen; ++nPos )
+         for( HB_SIZE nPos = 1; nPos <= nLen; ++nPos )
          {
             dbLockInfo.itmRecID = hb_arrayGetItemPtr( pRecords, nPos );
             SELF_LOCK( pArea, &dbLockInfo );
@@ -248,9 +261,13 @@ HB_FUNC( SX_RLOCK )
    }
 
    if( pResult )
+   {
       hb_itemReturnRelease( pResult );
+   }
    else
+   {
       hb_retl( fResult );
+   }
 }
 
 HB_FUNC( SX_UNLOCK )
@@ -262,8 +279,8 @@ HB_FUNC( SX_UNLOCK )
       PHB_ITEM pRecords = hb_param( 1, HB_IT_ARRAY );
       if( pRecords )
       {
-         HB_SIZE nPos, nLen = hb_arrayLen( pRecords );
-         for( nPos = 1; nPos <= nLen; ++nPos )
+         HB_SIZE nLen = hb_arrayLen( pRecords );
+         for( HB_SIZE nPos = 1; nPos <= nLen; ++nPos )
          {
             SELF_UNLOCK( pArea, hb_arrayGetItemPtr( pRecords, nPos ) );
          }
@@ -290,15 +307,16 @@ HB_FUNC( SX_SETPASS )
          {
             pItem = hb_itemParam( 1 );
             if( SELF_INFO( pArea, DBI_PASSWORD, pItem ) == HB_SUCCESS )
+            {
                fResult = HB_TRUE;
+            }
             hb_itemRelease( pItem );
          }
       }
    }
    else if( iPCount >= 2 && iPCount <= 4 )
    {
-      if( HB_ISCHAR( 1 ) && HB_ISNUM( 2 ) && ( iPCount < 3 || HB_ISCHAR( 3 ) ) &&
-          ( iPCount < 4 || HB_ISNUM( 4 ) ) )
+      if( HB_ISCHAR( 1 ) && HB_ISNUM( 2 ) && ( iPCount < 3 || HB_ISCHAR( 3 ) ) && ( iPCount < 4 || HB_ISNUM( 4 ) ) )
       {
          /* Set pending password for table which will be open
           * 3rd and 4th parameters are optional Harbour extensions
@@ -309,15 +327,21 @@ HB_FUNC( SX_SETPASS )
          const char * szDriver;
 
          if( iPCount == 2 ) /* no RDD parameter, use default */
+         {
             szDriver = hb_rddDefaultDrv( nullptr );
+         }
          else
+         {
             szDriver = hb_parc( 3 );
+         }
          pRDDNode = hb_rddFindNode( szDriver, &uiRddID );   /* find the RDDNODE */
          if( pRDDNode )
          {
             pItem = hb_itemParam( 1 );
             if( SELF_RDDINFO( pRDDNode, RDDI_PENDINGPASSWORD, hb_parnl( 4 ), pItem ) == HB_SUCCESS )
+            {
                fResult = HB_TRUE;
+            }
             hb_itemRelease( pItem );
          }
       }
@@ -332,7 +356,9 @@ HB_FUNC( SX_SETPASS )
                case 1:  /* return current password key in raw form */
                   pItem = hb_itemNew( nullptr );
                   if( SELF_INFO( pArea, DBI_PASSWORD, pItem ) == HB_SUCCESS )
+                  {
                      hb_itemReturn( pItem );
+                  }
                   hb_itemRelease( pItem );
                   break;
                case 2:  /* set raw password key */
@@ -363,7 +389,9 @@ HB_FUNC( SX_DBFENCRYPT )
       PHB_ITEM pItem = hb_itemParam( 1 );
 
       if( SELF_INFO( pArea, DBI_ENCRYPT, pItem ) == HB_SUCCESS )
+      {
          fResult = hb_itemGetL( pItem );
+      }
       hb_itemRelease( pItem );
    }
    hb_retl( fResult );
@@ -378,7 +406,9 @@ HB_FUNC( SX_DBFDECRYPT )
    {
       PHB_ITEM pItem = hb_itemParam( 1 );
       if( SELF_INFO( pArea, DBI_DECRYPT, pItem ) == HB_SUCCESS )
+      {
          fResult = hb_itemGetL( pItem );
+      }
       hb_itemRelease( pItem );
    }
    hb_retl( fResult );
@@ -392,9 +422,11 @@ HB_FUNC( SX_MEMOPACK )
    if( pArea )
    {
       PHB_ITEM pItem = hb_itemArrayNew( 3 );
-      int i, iPCount = hb_pcount();
-      for( i = 1; i <= iPCount; ++i )
+      int iPCount = hb_pcount();
+      for( int i = 1; i <= iPCount; ++i )
+      {
          hb_arraySet( pItem, i, hb_param( i, HB_IT_ANY ) );
+      }
       fResult = SELF_INFO( pArea, DBI_MEMOPACK, pItem ) == HB_SUCCESS;
       hb_itemRelease( pItem );
    }
@@ -409,13 +441,19 @@ HB_FUNC( SX_TURBOAREA )
    {
       PHB_ITEM pItem = hb_itemParam( 1 );
       if( hb_pcount() > 0 && HB_IS_NIL( pItem ) )
+      {
          hb_itemPutNI( pItem, 0 );
+      }
       if( SELF_INFO( pArea, DBI_DIRTYREAD, pItem ) != HB_SUCCESS )
+      {
          hb_itemPutL( pItem, HB_FALSE );
+      }
       hb_itemReturnRelease( pItem );
    }
    else
+   {
       hb_retl( HB_FALSE );
+   }
 }
 
 HB_FUNC( SX_SETTURBO )
@@ -426,19 +464,26 @@ HB_FUNC( SX_SETTURBO )
 
    szDriver = hb_parc( 2 );
    if( ! szDriver ) /* no VIA RDD parameter, use default */
+   {
       szDriver = hb_rddDefaultDrv( nullptr );
+   }
 
    pRDDNode = hb_rddFindNode( szDriver, &uiRddID );  /* find the RDDNODE */
    if( ! pRDDNode )
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME,
-                            HB_ERR_ARGS_BASEPARAMS );
+   {
+      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
    else
    {
       PHB_ITEM pItem = hb_itemParam( 1 );
       if( hb_pcount() > 0 && HB_IS_NIL( pItem ) )
+      {
          hb_itemPutNI( pItem, 0 );
+      }
       if( SELF_RDDINFO( pRDDNode, RDDI_DIRTYREAD, 0, pItem ) != HB_SUCCESS )
+      {
          hb_itemPutL( pItem, HB_FALSE );
+      }
       hb_itemReturnRelease( pItem );
    }
 }
@@ -452,7 +497,9 @@ HB_FUNC( _SXOPENINIT )
    int iArea = hb_parni( 1 );
 
    if( iArea )
+   {
       pArea = static_cast< AREAP >( hb_rddGetWorkAreaPointer( iArea ) );
+   }
 
    if( pArea )
    {
@@ -460,21 +507,31 @@ HB_FUNC( _SXOPENINIT )
       PHB_ITEM pItem = hb_itemNew( nullptr );
 
       if( SELF_INFO( pArea, DBI_OPENINFO, pItem ) )
-         pInfo = ( LPDBOPENINFO ) hb_itemGetPtr( pItem );
+      {
+         pInfo = static_cast< LPDBOPENINFO >( hb_itemGetPtr( pItem ) );
+      }
       hb_itemRelease( pItem );
       if( pInfo )
       {
          if( HB_ISLOG( 2 ) )
+         {
             pInfo->fShared = hb_parl( 2 );
+         }
          if( HB_ISLOG( 3 ) )
+         {
             pInfo->fReadonly = hb_parl( 2 );
+         }
          if( HB_ISCHAR( 4 ) )
          {
             const char * szAlias = hb_parc( 1 );
             if( szAlias && szAlias[ 0 ] )
+            {
                pInfo->atomAlias = hb_dynsymName( hb_dynsymGet( szAlias ) );
+            }
             else
+            {
                pInfo->atomAlias = "";
+            }
          }
       }
    }
