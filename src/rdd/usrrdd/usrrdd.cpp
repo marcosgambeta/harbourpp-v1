@@ -477,10 +477,9 @@ static PHB_ITEM hb_usrTransInfoToItem( LPDBTRANSINFO pTransInfo )
    {
       PHB_ITEM pItems = hb_arrayGetItemPtr( pItem, UR_TI_ITEMS );
       LPDBTRANSITEM pTransItem = pTransInfo->lpTransItems;
-      HB_USHORT uiCount;
 
       hb_arrayNew( pItems, pTransInfo->uiItemCount );
-      for( uiCount = 1; uiCount <= pTransInfo->uiItemCount; ++uiCount, ++pTransItem )
+      for( HB_USHORT uiCount = 1; uiCount <= pTransInfo->uiItemCount; ++uiCount, ++pTransItem )
       {
          PHB_ITEM pItm = hb_arrayGetItemPtr( pItems, uiCount );
          hb_arrayNew( pItm, UR_TITEM_SIZE );
@@ -497,7 +496,7 @@ static HB_BOOL hb_usrItemToTransInfo( PHB_ITEM pItem, LPDBTRANSINFO pTransInfo )
 {
    if( pItem && hb_arrayLen( pItem ) == UR_TI_SIZE )
    {
-      HB_USHORT uiItemCount = static_cast< HB_USHORT >( hb_arrayGetNI( pItem, UR_TI_ITEMCOUNT ) ), uiCount;
+      HB_USHORT uiItemCount = static_cast< HB_USHORT >( hb_arrayGetNI( pItem, UR_TI_ITEMCOUNT ) );
       PHB_ITEM pItems = hb_arrayGetItemPtr( pItem, UR_TI_ITEMS );
 
       if( hb_arrayLen( pItems ) == static_cast< HB_SIZE >( uiItemCount ) &&
@@ -514,7 +513,7 @@ static HB_BOOL hb_usrItemToTransInfo( PHB_ITEM pItem, LPDBTRANSINFO pTransInfo )
 
             pTransInfo->lpTransItems = pTransItem = static_cast< LPDBTRANSITEM >( hb_xgrab( uiItemCount * sizeof( DBTRANSITEM ) ) );
 
-            for( uiCount = 1; uiCount <= uiItemCount; ++uiCount, ++pTransItem )
+            for( HB_USHORT uiCount = 1; uiCount <= uiItemCount; ++uiCount, ++pTransItem )
             {
                PHB_ITEM pItm = hb_arrayGetItemPtr( pItems, uiCount );
                pTransItem->uiSource = static_cast< HB_USHORT >( hb_arrayGetNI( pItm, UR_TITEM_SOURCE ) );
@@ -551,10 +550,9 @@ static PHB_ITEM hb_usrSortInfoToItem( LPDBSORTINFO pSortInfo )
    {
       PHB_ITEM pItems = hb_arrayGetItemPtr( pItem, UR_SRI_ITEMS );
       LPDBSORTITEM pSortItem = pSortInfo->lpdbsItem;
-      HB_USHORT uiCount;
 
       hb_arrayNew( pItems, pSortInfo->uiItemCount );
-      for( uiCount = 1; uiCount <= pSortInfo->uiItemCount; ++uiCount, ++pSortItem )
+      for( HB_USHORT uiCount = 1; uiCount <= pSortInfo->uiItemCount; ++uiCount, ++pSortItem )
       {
          PHB_ITEM pItm = hb_arrayGetItemPtr( pItems, uiCount );
          hb_arrayNew( pItm, UR_SITEM_SIZE );
@@ -571,7 +569,7 @@ static HB_BOOL hb_usrItemToSortInfo( PHB_ITEM pItem, LPDBSORTINFO pSortInfo )
 {
    if( pItem && hb_arrayLen( pItem ) == UR_SRI_SIZE )
    {
-      HB_USHORT uiItemCount = static_cast< HB_USHORT >( hb_arrayGetNI( pItem, UR_SRI_ITEMCOUNT ) ), uiCount;
+      HB_USHORT uiItemCount = static_cast< HB_USHORT >( hb_arrayGetNI( pItem, UR_SRI_ITEMCOUNT ) );
       PHB_ITEM pItems = hb_arrayGetItemPtr( pItem, UR_SRI_ITEMS );
 
       if( hb_arrayLen( pItems ) == static_cast< HB_SIZE >( uiItemCount ) &&
@@ -585,7 +583,7 @@ static HB_BOOL hb_usrItemToSortInfo( PHB_ITEM pItem, LPDBSORTINFO pSortInfo )
 
             pSortInfo->lpdbsItem = pSortItem = static_cast< LPDBSORTITEM >( hb_xgrab( uiItemCount * sizeof( DBSORTITEM ) ) );
 
-            for( uiCount = 1; uiCount <= uiItemCount; ++uiCount, ++pSortItem )
+            for( HB_USHORT uiCount = 1; uiCount <= uiItemCount; ++uiCount, ++pSortItem )
             {
                PHB_ITEM pItm = hb_arrayGetItemPtr( pItems, uiCount );
                pSortItem->uiField = static_cast< HB_USHORT >( hb_arrayGetNI( pItm, UR_SITEM_FIELD ) );
@@ -3188,7 +3186,7 @@ static const HB_RDD_FUNCTABLE rddFuncTable =
 HB_FUNC( USRRDD_GETFUNCTABLE )
 {
    RDDFUNCS * pSelfTable, * pSuperTable;
-   HB_USHORT * puiCount, * puiSuperRddId, uiCount, uiSize;
+   HB_USHORT * puiCount, * puiSuperRddId, uiSize;
    const char * szSuperRDD;
    PHB_ITEM pMethods;
 
@@ -3218,7 +3216,7 @@ HB_FUNC( USRRDD_GETFUNCTABLE )
       pRddFunction = rddFuncTable.funcentries;
       pFunction    = funcTable.funcentries;
 
-      for( uiCount = 1; uiCount <= RDDFUNCSCOUNT; ++uiCount )
+      for( HB_USHORT uiCount = 1; uiCount <= RDDFUNCSCOUNT; ++uiCount )
       {
          *pFunction = *pRddFunction;
          if( *pFunction == nullptr && *pUsrFunction && uiCount <= uiSize && hb_usrIsMethod( pMethods, uiCount ) )
