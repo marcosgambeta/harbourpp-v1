@@ -510,7 +510,7 @@ ifeq ($(HB_PLATFORM),)
       ifneq ($(filter $(HB_COMPILER),msvcarm msvcmips msvcsh mingwarm),)
          HB_PLATFORM := wce
       else
-      ifneq ($(filter $(HB_COMPILER),mingw mingw64 msvc msvc64 msvcia64 bcc bcc64),)
+      ifneq ($(filter $(HB_COMPILER),mingw mingw64 clang clang64 msvc msvc64 msvcia64 clang-cl clang-cl64 bcc bcc64),)
          HB_PLATFORM := win
       endif
       endif
