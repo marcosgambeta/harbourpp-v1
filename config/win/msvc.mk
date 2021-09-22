@@ -4,7 +4,12 @@ LIB_EXT := .lib
 
 HB_DYN_COPT := -DHB_DYNLIB
 
-CC := cl.exe
+ifneq ($(filter $(HB_COMPILER),clang-cl clang-cl64),)
+   CC := clang-cl.exe
+else
+   CC := cl.exe
+endif
+
 CC_IN := -c
 CC_OUT := -Fo
 
