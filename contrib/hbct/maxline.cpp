@@ -58,7 +58,7 @@ HB_FUNC( MAXLINE )
 
       while( nStrLen > 0 )
       {
-         pBuffer = static_cast< char * >( memchr( pcString, 13, nStrLen ) );
+         pBuffer = static_cast< char * >( const_cast< void * >( memchr( pcString, 13, nStrLen ) ) );
          if( ! pBuffer )
             pBuffer = pcString + nStrLen;
 
