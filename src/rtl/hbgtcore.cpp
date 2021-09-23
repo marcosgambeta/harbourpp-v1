@@ -3919,7 +3919,7 @@ static HB_BOOL hb_gtTryInit( const char * szGtName, HB_BOOL fFree )
       {
          if( fFree )
          {
-            char * pszStr = static_cast< char * >( strchr( szGtName, ':' ) );
+            char * pszStr = const_cast< char * >( strchr( szGtName, ':' ) );
             if( pszStr != nullptr )
                * pszStr = '\0';
          }
