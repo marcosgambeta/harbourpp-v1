@@ -60,7 +60,9 @@ HB_FUNC( RIGHT )
    {
       HB_ISIZ nLen = hb_parns( 2 );
       if( nLen <= 0 )
+      {
          hb_retc_null();
+      }
       else
       {
          HB_SIZE nText = hb_itemGetCLen( pText );
@@ -71,17 +73,27 @@ HB_FUNC( RIGHT )
             {
                HB_SIZE nChars = hb_cdpTextLen( cdp, hb_itemGetCPtr( pText ), nText );
                if( nChars > static_cast< HB_SIZE >( nLen ) )
+               {
                   nLen = nText - hb_cdpTextPos( cdp, hb_itemGetCPtr( pText ), nText, nChars - nLen );
+               }
                else
+               {
                   nLen = nText;
+               }
             }
          }
          if( static_cast< HB_SIZE >( nLen ) >= nText )
+         {
             hb_itemReturn( pText );
+         }
          else
+         {
             hb_retclen( hb_itemGetCPtr( pText ) + nText - nLen, nLen );
+         }
       }
    }
    else
+   {
       hb_retc_null();  /* Clipper doesn't error */
+   }
 }

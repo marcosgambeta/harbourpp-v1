@@ -77,12 +77,16 @@ HB_FUNC( HB_STRXOR )
             {
                pRet[ n ] ^= pStr2[ n2 ];
                if( ++n2 == nLen2 )
+               {
                   n2 = 0;
+               }
             }
             hb_retclen_buffer( pRet, nLen1 );
          }
          else
+         {
             hb_itemReturn( pItem );
+         }
 
          return;
       }
@@ -100,7 +104,9 @@ HB_FUNC( HB_STRXOR )
             hb_retclen_buffer( pRet, nLen1 );
          }
          else
+         {
             hb_itemReturn( pItem );
+         }
 
          return;
       }

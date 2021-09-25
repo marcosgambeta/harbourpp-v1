@@ -343,14 +343,15 @@ void hb_inkeyReset( void )
 
 static int s_inkeyTransChar( int iKey, int iFlags, const HB_KEY_VALUE * pKeyVal )
 {
-   if( ( iFlags & HB_KF_KEYPAD ) != 0 &&
-       ( iFlags & ( HB_KF_ALT | HB_KF_CTRL ) ) != 0 )
+   if( ( iFlags & HB_KF_KEYPAD ) != 0 && ( iFlags & ( HB_KF_ALT | HB_KF_CTRL ) ) != 0 )
    {
       switch( iKey )
       {
          case HB_KX_ENTER:
             if( iFlags & HB_KF_ALT )
+            {
                return KP_ALT_ENTER;
+            }
             break;
          case '+':
             return ( iFlags & HB_KF_ALT ) ? KP_ALT_PLUS : KP_CTRL_PLUS;
@@ -363,7 +364,9 @@ static int s_inkeyTransChar( int iKey, int iFlags, const HB_KEY_VALUE * pKeyVal 
          case '.':
          case ',':
             if( iFlags & HB_KF_CTRL )
+            {
                return K_CTRL_DEL;
+            }
             break;
          case '0':
          case '1':
@@ -376,19 +379,29 @@ static int s_inkeyTransChar( int iKey, int iFlags, const HB_KEY_VALUE * pKeyVal 
          case '8':
          case '9':
             if( iFlags & HB_KF_CTRL )
+            {
                return s_keyPadCtrl[ iKey - '0' ];
+            }
             break;
       }
    }
 
    if( ( iFlags & HB_KF_ALT ) != 0 && pKeyVal->alt_key )
+   {
       return pKeyVal->alt_key;
+   }
    else if( ( iFlags & HB_KF_CTRL ) != 0 && ( pKeyVal->ctrl_key || pKeyVal->key == '@' ) )
+   {
       return pKeyVal->ctrl_key;
+   }
    else if( ( iFlags & HB_KF_SHIFT ) != 0 && pKeyVal->shift_key )
+   {
       return pKeyVal->shift_key;
+   }
    else
+   {
       return pKeyVal->key;
+   }   
 }
 
 HB_SIZE hb_inkeyKeyString( int iKey, char * buffer, HB_SIZE nSize )
@@ -404,7 +417,9 @@ HB_SIZE hb_inkeyKeyString( int iKey, char * buffer, HB_SIZE nSize )
    else
    {
       if( HB_INKEY_ISCHAR( iKey ) )
+      {
          iKey = HB_INKEY_VALUE( iKey );
+      }
       else if( HB_INKEY_ISKEY( iKey ) )
       {
          int iFlags = HB_INKEY_FLAGS( iKey );
@@ -412,15 +427,18 @@ HB_SIZE hb_inkeyKeyString( int iKey, char * buffer, HB_SIZE nSize )
          iKey = HB_INKEY_VALUE( iKey );
 
          if( iKey > 0 && iKey <= static_cast< int >( HB_SIZEOFARRAY( s_transKeyFun ) ) )
+         {
             iKey = s_inkeyTransChar( iKey, iFlags, &s_transKeyFun[ iKey - 1 ] );
+         }
          else if( iKey >= 32 && iKey <= 127 )
+         {
             iKey = s_inkeyTransChar( iKey, iFlags, &s_transKeyStd[ iKey - 32 ] );
+         }   
       }
       if( iKey >= 32 && iKey <= 255 && iKey != 127 )
       {
          PHB_CODEPAGE cdp = hb_vmCDP();
-         nLen = hb_cdpTextPutU16( cdp, buffer, nSize,
-                                  hb_cdpGetU16( cdp, ( HB_UCHAR ) iKey ) );
+         nLen = hb_cdpTextPutU16( cdp, buffer, nSize, hb_cdpGetU16( cdp, ( HB_UCHAR ) iKey ) );
       }
    }
    return nLen;
@@ -435,23 +453,30 @@ int hb_inkeyKeyStd( int iKey )
       int iFlags = HB_INKEY_FLAGS( iKey );
 
       if( HB_INKEY_ISMOUSEPOS( iKey ) )
+      {
          iKey = K_MOUSEMOVE;
+      }
       else if( HB_INKEY_ISKEY( iKey ) )
       {
          iKey = HB_INKEY_VALUE( iKey );
 
          if( iKey > 0 && iKey <= static_cast< int >( HB_SIZEOFARRAY( s_transKeyFun ) ) )
+         {
             iKey = s_inkeyTransChar( iKey, iFlags, &s_transKeyFun[ iKey - 1 ] );
+         }
          else if( iKey >= 32 && iKey <= 127 )
+         {
             iKey = s_inkeyTransChar( iKey, iFlags, &s_transKeyStd[ iKey - 32 ] );
+         }
       }
       else if( HB_INKEY_ISCHAR( iKey ) || HB_INKEY_ISUNICODE( iKey ) )
       {
          int iVal = HB_INKEY_VALUE( iKey );
 
-         if( iVal >= 32 && iVal <= 127 &&
-             ( iFlags & ( HB_KF_ALT | HB_KF_CTRL ) ) != 0 )
+         if( iVal >= 32 && iVal <= 127 && ( iFlags & ( HB_KF_ALT | HB_KF_CTRL ) ) != 0 )
+         {
             iKey = s_inkeyTransChar( iVal, iFlags, &s_transKeyStd[ iVal - 32 ] );
+         }
          else if( HB_INKEY_ISUNICODE( iKey ) )
          {
             HB_WCHAR wc = ( HB_WCHAR ) iVal;
@@ -459,16 +484,24 @@ int hb_inkeyKeyStd( int iKey )
             {
                HB_UCHAR uc = hb_cdpGetUC( hb_vmCDP(), wc, 0 );
                if( uc != 0 )
+               {
                   iKey = uc;
+               }
             }
             else
+            {
                iKey = 0;
+            }
          }
          else
+         {
             iKey = iVal;
+         }
       }
       else /* HB_INKEY_ISMOUSEKEY | HB_INKEY_ISEVENT */
+      {
          iKey = HB_INKEY_VALUE( iKey );
+      }
    }
    return iKey;
 }
@@ -480,7 +513,9 @@ int hb_inkeyKeyMod( int iKey )
    HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyKeyMod(%d)", iKey ) );
 
    if( HB_INKEY_ISEXT( iKey ) && ! HB_INKEY_ISMOUSEPOS( iKey ) )
+   {
       iFlags = HB_INKEY_FLAGS( iKey );
+   }
 
    return iFlags;
 }
@@ -492,7 +527,9 @@ int hb_inkeyKeyVal( int iKey )
    HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyKeyVal(%d)", iKey ) );
 
    if( HB_INKEY_ISEXT( iKey ) && ! HB_INKEY_ISMOUSEPOS( iKey ) )
+   {
       iValue = HB_INKEY_VALUE( iKey );
+   }
 
    return iValue;
 }
@@ -507,7 +544,9 @@ int hb_inkeyKeyExt( int iKey )
    {
       iValue = HB_INKEY_VALUE( iKey );
       if( iValue < 1 || iValue > static_cast< int >( HB_SIZEOFARRAY( s_transKeyFun ) ) )
+      {
          iValue = 0;
+      }
    }
 
    return iValue;

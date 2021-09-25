@@ -81,8 +81,10 @@ HB_FUNC( __ACCEPT )
 
    /* cPrompt(s) passed ? */
    if( hb_pcount() >= 1 )
+   {
       HB_FUNC_EXEC( QOUT );
-
+   }
+   
    szAcceptResult[ 0 ] = '\0';
 
    while( input != K_ENTER && hb_vmRequestQuery() == 0 )
@@ -97,16 +99,22 @@ HB_FUNC( __ACCEPT )
             {
                nChar = hb_cdpTextLen( cdp, szAcceptResult, nLen );
                if( nChar > 0 )
+               {
                   nLen = hb_cdpTextPos( cdp, szAcceptResult, nLen, nChar - 1 );
+               }
                else
+               {
                   nLen = 0;
+               }
 
                szKey[ 0 ] = HB_CHAR_BS;
 
                nChar = 1;
             }
             else
+            {
                nChar = 0;
+            }
             break;
 
          default:
@@ -118,7 +126,9 @@ HB_FUNC( __ACCEPT )
             }
       }
       if( nChar > 0 )
+      {
          hb_conOutAlt( szKey, nChar );
+      }   
    }
 
    szAcceptResult[ nLen ] = '\0';

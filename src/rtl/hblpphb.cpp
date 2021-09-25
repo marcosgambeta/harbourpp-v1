@@ -149,7 +149,9 @@ static HB_GARBAGE_FUNC( hb_lpp_mark )
    PHB_LPP_GC pGC = ( PHB_LPP_GC ) Cargo;
 
    if( pGC->pItemSocket )
+   {
       hb_gcMark( pGC->pItemSocket );
+   }   
 }
 
 
@@ -262,7 +264,9 @@ HB_FUNC( HB_LPPRECV )
    if( bRet )
    {
       if( HB_ISBYREF( 2 ) )
+      {
          hb_storclen( static_cast< char * >( data ), len, 2 );
+      }
       hb_xfree( data );
    }
    hb_retl( bRet );

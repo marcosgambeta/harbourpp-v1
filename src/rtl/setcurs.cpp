@@ -56,7 +56,9 @@ int hb_conSetCursor( HB_BOOL bSetCursor, int iNewCursor )
    hb_gtGetCursor( &iCursor );
 
    if( bSetCursor )
+   {
       hb_gtSetCursor( iNewCursor );
+   }
 
    return iCursor;
 }
@@ -70,5 +72,7 @@ HB_FUNC( SETCURSOR )
    hb_retni( iCursor );
 
    if( HB_ISNUM( 1 ) )
+   {
       hb_gtSetCursor( hb_parni( 1 ) );
+   }
 }

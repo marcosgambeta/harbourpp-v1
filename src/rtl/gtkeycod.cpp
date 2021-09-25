@@ -626,19 +626,22 @@ int hb_gt_dos_keyCodeTranslate( int iKey, int iFlags, PHB_CODEPAGE cdp )
             iFlags |= HB_KF_CTRL;
             iKey += 'A' - 1;
          }
-         else if( iKey <= 255 &&
-                  ( iKey >= 128 || ( iFlags & ( HB_KF_CTRL | HB_KF_ALT ) ) == 0 ) )
+         else if( iKey <= 255 && ( iKey >= 128 || ( iFlags & ( HB_KF_CTRL | HB_KF_ALT ) ) == 0 ) )
          {
             if( cdp )
             {
                int uc = hb_cdpGetWC( cdp, ( HB_UCHAR ) ( iKey ), 0 );
                if( uc )
+               {
                   return HB_INKEY_NEW_UNICODEF( uc, iFlags );
+               }
             }
             return HB_INKEY_NEW_CHARF( iKey, iFlags );
          }
          else
+         {
             return iKey;
+         }   
    }
 
    return HB_INKEY_NEW_KEY( iKey, iFlags );

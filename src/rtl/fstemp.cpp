@@ -107,9 +107,13 @@ static HB_BOOL fsGetTempDirByCase( char * pszName, const char * pszTempDir, HB_B
       char * pTmp;
 
       if( fTrans )
+      {
          hb_osStrDecode2( pszTempDir, pszName, HB_PATH_MAX - 1 );
+      }
       else
+      {
          hb_strncpy( pszName, pszTempDir, HB_PATH_MAX - 1 );
+      }
 
       switch( hb_setGetDirCase() )
       {
@@ -138,7 +142,9 @@ static HB_BOOL fsGetTempDirByCase( char * pszName, const char * pszTempDir, HB_B
          *pszDelim = '\\';
 #  endif
       if( ! hb_fsDirExists( pszTempDir ) )
+      {
          fOK = HB_FALSE;
+      }   
    }
 
    return fOK;
@@ -159,22 +165,24 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
       {
          hb_strncpy( pszName, pszDir, HB_PATH_MAX - 1 );
          iLen = static_cast< int >( strlen( pszName ) );
-         if( pszName[ iLen - 1 ] != HB_OS_PATH_DELIM_CHR &&
-             iLen < HB_PATH_MAX - 1 )
+         if( pszName[ iLen - 1 ] != HB_OS_PATH_DELIM_CHR && iLen < HB_PATH_MAX - 1 )
          {
             pszName[ iLen ] = HB_OS_PATH_DELIM_CHR;
             pszName[ iLen + 1 ] = '\0';
          }
       }
       else
+      {
          hb_fsTempDir( pszName );
+      }
 
       if( pszPrefix )
+      {
          hb_strncat( pszName, pszPrefix, HB_PATH_MAX - 1 );
+      }
 
       iLen = static_cast< int >( strlen( pszName ) );
-      if( iLen > ( HB_PATH_MAX - 1 ) - 6 -
-                 ( pszExt ? static_cast< int >( strlen( pszExt ) ) : 0 ) )
+      if( iLen > ( HB_PATH_MAX - 1 ) - 6 - ( pszExt ? static_cast< int >( strlen( pszExt ) ) : 0 ) )
       {
          fd = FS_ERROR;
          break;
@@ -227,12 +235,16 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
          }
          pszName[ iLen ] = '\0';
          if( pszExt )
+         {
             hb_strncat( pszName, pszExt, HB_PATH_MAX - 1 );
+         }
          fd = hb_fsCreateEx( pszName, ulAttr, FO_EXCLUSIVE | FO_EXCL );
       }
 
       if( fd != ( HB_FHANDLE ) FS_ERROR )
+      {
          break;
+      }
    }
    while( --iAttemptLeft );
 
@@ -261,7 +273,9 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
       lpPrefix = pszPrefix ? HB_FSNAMECONV( pszPrefix, &lpPrefixFree ) : nullptr;
 
       if( pszDir && pszDir[ 0 ] != '\0' )
+      {
          lpDir = HB_FSNAMECONV( pszDir, &lpDirFree );
+      }
       else
       {
          if( ! GetTempPath( HB_PATH_MAX, lpTempDir ) )
@@ -276,12 +290,18 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
       fResult = GetTempFileName( lpDir, lpPrefix ? lpPrefix : TEXT( "hb" ), 0, lpBuffer );
 
       if( fResult )
+      {
          HB_OSSTRDUP2( lpBuffer, pszBuffer, HB_PATH_MAX - 1 );
+      }
 
       if( lpPrefixFree )
+      {
          hb_xfree( lpPrefixFree );
+      }
       if( lpDirFree )
+      {
          hb_xfree( lpDirFree );
+      }
    }
 #else
    {
@@ -346,7 +366,9 @@ HB_FHANDLE hb_fsCreateTemp( const char * pszDir, const char * pszPrefix, HB_FATT
             used between generation and the file creation. */
 
          if( fhnd != FS_ERROR )
+         {
             return fhnd;
+         }
       }
       else
       {
@@ -372,16 +394,24 @@ HB_ERRCODE hb_fsTempDir( char * pszTempDir )
       char * pszTempDirEnv = hb_getenv( "TMPDIR" );
 
       if( fsGetTempDirByCase( pszTempDir, pszTempDirEnv, HB_FALSE ) )
+      {
          nResult = 0;
+      }
 #ifdef P_tmpdir
       else if( fsGetTempDirByCase( pszTempDir, P_tmpdir, HB_TRUE ) )
+      {
          nResult = 0;
+      }
 #endif
       else if( fsGetTempDirByCase( pszTempDir, "/tmp", HB_TRUE ) )
+      {
          nResult = 0;
+      }
 
       if( pszTempDirEnv )
+      {
          hb_xfree( pszTempDirEnv );
+      }
    }
 #elif defined( HB_OS_WIN )
    {
@@ -403,7 +433,9 @@ HB_ERRCODE hb_fsTempDir( char * pszTempDir )
       {
          PHB_FNAME pTempName = hb_fsFNameSplit( szBuffer );
          if( fsGetTempDirByCase( pszTempDir, pTempName->szPath, HB_TRUE ) )
+         {
             nResult = 0;
+         }
          hb_xfree( pTempName );
       }
       if( nResult != 0 )
@@ -420,7 +452,9 @@ HB_ERRCODE hb_fsTempDir( char * pszTempDir )
             if( pszTempDirEnv )
             {
                if( fsGetTempDirByCase( pszTempDir, pszTempDirEnv, HB_FALSE ) )
+               {
                   nResult = 0;
+               }
                hb_xfree( pszTempDirEnv );
             }
          }
@@ -431,8 +465,7 @@ HB_ERRCODE hb_fsTempDir( char * pszTempDir )
    if( nResult == 0 && pszTempDir[ 0 ] != '\0' )
    {
       int len = static_cast< int >( strlen( pszTempDir ) );
-      if( pszTempDir[ len - 1 ] != HB_OS_PATH_DELIM_CHR &&
-          len < HB_PATH_MAX - 1 )
+      if( pszTempDir[ len - 1 ] != HB_OS_PATH_DELIM_CHR && len < HB_PATH_MAX - 1 )
       {
          pszTempDir[ len ] = HB_OS_PATH_DELIM_CHR;
          pszTempDir[ len + 1 ] = '\0';
@@ -452,10 +485,7 @@ HB_FUNC( HB_FTEMPCREATE )
 {
    char szName[ HB_PATH_MAX ];
 
-   hb_retnint( ( HB_NHANDLE ) hb_fsCreateTemp( hb_parc( 1 ),
-                                               hb_parc( 2 ),
-                                               ( HB_FATTR ) hb_parnldef( 3, FC_NORMAL ),
-                                               szName ) );
+   hb_retnint( ( HB_NHANDLE ) hb_fsCreateTemp( hb_parc( 1 ), hb_parc( 2 ), ( HB_FATTR ) hb_parnldef( 3, FC_NORMAL ), szName ) );
 
    hb_storc( szName, 4 );
 }
@@ -464,11 +494,7 @@ HB_FUNC( HB_FTEMPCREATEEX )
 {
    char szName[ HB_PATH_MAX ];
 
-   hb_retnint( ( HB_NHANDLE ) hb_fsCreateTempEx( szName,
-                                                 hb_parc( 2 ),
-                                                 hb_parc( 3 ),
-                                                 hb_parc( 4 ),
-                                                 ( HB_FATTR ) hb_parnldef( 5, FC_NORMAL ) ) );
+   hb_retnint( ( HB_NHANDLE ) hb_fsCreateTempEx( szName, hb_parc( 2 ), hb_parc( 3 ), hb_parc( 4 ), ( HB_FATTR ) hb_parnldef( 5, FC_NORMAL ) ) );
 
    hb_storc( szName, 1 );
 }
@@ -478,7 +504,11 @@ HB_FUNC( HB_DIRTEMP )
    char szTempDir[ HB_PATH_MAX ];
 
    if( hb_fsTempDir( szTempDir ) != ( HB_ERRCODE ) FS_ERROR )
+   {
       hb_retc( szTempDir );
+   }
    else
+   {
       hb_retc_null();
+   }
 }

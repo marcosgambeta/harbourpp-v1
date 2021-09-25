@@ -70,19 +70,27 @@ HB_FUNC( GETENV )
       char * pszValue = nullptr;
 
       if( pszName[ 0 ] != '\0' )
+      {
          pszValue = hb_getenv( pszName );
+      }
 
       if( pszValue )
+      {
          hb_retc_buffer( pszValue );
+      }
       else
+      {
          hb_retc_null();
+      }
 
 #ifdef _HB_GETENV_REQUIRES_UPPERCASE
       hb_xfree( pszName );
 #endif
    }
    else
+   {
       hb_retc_null();
+   }
 }
 
 /* NOTE: Undocumented Clipper function. [vszakats] */
@@ -102,27 +110,34 @@ HB_FUNC( HB_GETENV )
    if( pName )
    {
 #ifdef _HB_GETENV_REQUIRES_UPPERCASE
-      char * pszName = hb_cdpnDupUpper( hb_vmCDP(),
-                                        hb_itemGetCPtr( pName ), nullptr );
+      char * pszName = hb_cdpnDupUpper( hb_vmCDP(), hb_itemGetCPtr( pName ), nullptr );
 #else
       const char * pszName = hb_itemGetCPtr( pName );
 #endif
       char * pszValue = nullptr;
 
       if( pszName[ 0 ] != '\0' )
+      {
          pszValue = hb_getenv( pszName );
+      }
 
       if( pszValue )
+      {
          hb_retc_buffer( pszValue );
+      }
       else
+      {
          hb_retc( hb_parc( 2 ) );
+      }
 
 #ifdef _HB_GETENV_REQUIRES_UPPERCASE
       hb_xfree( pszName );
 #endif
    }
    else
+   {
       hb_retc( hb_parc( 2 ) );
+   }
 }
 
 HB_FUNC( HB_SETENV )
@@ -131,7 +146,9 @@ HB_FUNC( HB_SETENV )
    HB_BOOL fResult = HB_FALSE;
 
    if( pszName )
+   {
       fResult = hb_setenv( pszName, hb_parc( 2 ) );
+   }
 
    hb_retl( fResult );
 }

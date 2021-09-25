@@ -74,5 +74,7 @@ HB_FUNC( HB_RANDSTR )
       hb_retclen_buffer( static_cast< char * >( data ), len );
    }
    else
+   {
       hb_retc_null();
+   }
 }

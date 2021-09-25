@@ -63,7 +63,9 @@ HB_BOOL hb_printerIsReady( const char * pszPrinterName )
       int iPort;
 
       if( pszPrinterName == nullptr )
+      {
          pszPrinterName = "LPT1";
+      }
 
       if( hb_strnicmp( pszPrinterName, "PRN", 3 ) == 0 )
       {
@@ -76,9 +78,7 @@ HB_BOOL hb_printerIsReady( const char * pszPrinterName )
 
          bIsPrinter = ( regs.h.ah == 0x90 );
       }
-      else if( strlen( pszPrinterName ) >= 4 &&
-               hb_strnicmp( pszPrinterName, "LPT", 3 ) == 0 &&
-               ( iPort = atoi( pszPrinterName + 3 ) ) > 0 )
+      else if( strlen( pszPrinterName ) >= 4 && hb_strnicmp( pszPrinterName, "LPT", 3 ) == 0 && ( iPort = atoi( pszPrinterName + 3 ) ) > 0 )
       {
          union REGS regs;
 
@@ -90,7 +90,9 @@ HB_BOOL hb_printerIsReady( const char * pszPrinterName )
          bIsPrinter = ( regs.h.ah == 0x90 );
       }
       else
+      {
          bIsPrinter = HB_FALSE;
+      }   
    }
 
 #else
@@ -106,18 +108,20 @@ HB_BOOL hb_printerIsReady( const char * pszPrinterName )
       PHB_FILE pFile;
 
       if( pszPrinterName == nullptr )
+      {
 #if defined( HB_OS_UNIX )
          pszPrinterName = "/dev/lp0";
 #else
          pszPrinterName = "LPT1";
 #endif
+      }
 
-      pFile = hb_fileExtOpen( pszPrinterName, nullptr,
-                              FXO_APPEND | FO_WRITE | FO_SHARED | FO_PRIVATE,
-                              nullptr, nullptr );
+      pFile = hb_fileExtOpen( pszPrinterName, nullptr, FXO_APPEND | FO_WRITE | FO_SHARED | FO_PRIVATE, nullptr, nullptr );
       bIsPrinter = ( pFile != nullptr );
       if( bIsPrinter )
+      {
          hb_fileClose( pFile );
+      }
    }
 
 #endif

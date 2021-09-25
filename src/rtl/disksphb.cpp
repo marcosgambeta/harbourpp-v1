@@ -79,7 +79,9 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
    double dSpace = 0.0;
 
    if( uiType > HB_DISK_TOTAL )
+   {
       uiType = HB_DISK_AVAIL;
+   }
 
    if( ! pszPath )
    {
@@ -102,8 +104,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
 #if ! defined( HB_OS_WIN_CE ) && ! defined( HB_OS_WIN_64 )
          /* NOTE: We need to call this function dynamically to maintain support
                   Win95 first edition. It was introduced in Win95B (aka OSR2) [vszakats] */
-         typedef BOOL ( WINAPI * P_GDFSE )( LPCTSTR, PULARGE_INTEGER,
-                                            PULARGE_INTEGER, PULARGE_INTEGER );
+         typedef BOOL ( WINAPI * P_GDFSE )( LPCTSTR, PULARGE_INTEGER, PULARGE_INTEGER, PULARGE_INTEGER );
          static P_GDFSE s_pGetDiskFreeSpaceEx = nullptr;
          static HB_BOOL s_fInit = HB_FALSE;
 
@@ -111,8 +112,9 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
          {
             HMODULE hModule = GetModuleHandle( HB_WINAPI_KERNEL32_DLL() );
             if( hModule )
-               s_pGetDiskFreeSpaceEx = ( P_GDFSE )
-                  HB_WINAPI_GETPROCADDRESST( hModule, "GetDiskFreeSpaceEx" );
+            {
+               s_pGetDiskFreeSpaceEx = ( P_GDFSE ) HB_WINAPI_GETPROCADDRESST( hModule, "GetDiskFreeSpaceEx" );
+            }
             s_fInit = HB_TRUE;
          }
 
@@ -148,9 +150,11 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
                               static_cast< double >( dwBytesPerSector );
 
                      if( uiType == HB_DISK_USED )
+                     {
                         dSpace -= static_cast< double >( dwNumberOfFreeClusters ) *
                                   static_cast< double >( dwSectorsPerCluster ) *
                                   static_cast< double >( dwBytesPerSector );
+                     }
                      break;
                }
             }
@@ -158,20 +162,15 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
          else
 #endif
          {
-#if defined( _MSC_VER ) || defined( __LCC__ ) || \
-    ( defined( __GNUC__ ) && ! defined( __RSXNT__ ) )
+#if defined( _MSC_VER ) || defined( __LCC__ ) || ( defined( __GNUC__ ) && ! defined( __RSXNT__ ) )
 
-#  define HB_GET_LARGE_UINT( v )  ( ( double ) (v).LowPart + \
-                                    ( double ) (v).HighPart * \
-                                    ( ( static_cast< double >( 0xFFFFFFFF ) ) + 1 ) )
+#  define HB_GET_LARGE_UINT( v )  ( ( double ) (v).LowPart + ( double ) (v).HighPart * ( ( static_cast< double >( 0xFFFFFFFF ) ) + 1 ) )
 
 #else
    /* NOTE: Borland doesn't seem to deal with the un-named
             struct that is part of ULARGE_INTEGER
             [pt] */
-#  define HB_GET_LARGE_UINT( v )  ( ( double ) (v).u.LowPart + \
-                                    ( double ) (v).u.HighPart * \
-                                    ( ( static_cast< double >( 0xFFFFFFFF ) ) + 1 ) )
+#  define HB_GET_LARGE_UINT( v )  ( ( double ) (v).u.LowPart + ( double ) (v).u.HighPart * ( ( static_cast< double >( 0xFFFFFFFF ) ) + 1 ) )
 #endif
 
             ULARGE_INTEGER i64FreeBytesToCaller, i64TotalBytes, i64FreeBytes;
@@ -206,8 +205,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
                      break;
 
                   case HB_DISK_USED:
-                     dSpace = HB_GET_LARGE_UINT( i64TotalBytes ) -
-                              HB_GET_LARGE_UINT( i64FreeBytes );
+                     dSpace = HB_GET_LARGE_UINT( i64TotalBytes ) - HB_GET_LARGE_UINT( i64FreeBytes );
                      break;
                }
             }
@@ -215,7 +213,9 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
          SetErrorMode( uiErrMode );
       }
       if( lpFree )
+      {
          hb_xfree( lpFree );
+      }
    }
 #elif defined( HB_OS_DOS ) || defined( HB_OS_OS2 )
    {
@@ -247,28 +247,26 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
             {
                case HB_DISK_AVAIL:
                case HB_DISK_FREE:
-                  dSpace = static_cast< double >( uiClusterFree ) *
-                           static_cast< double >( uiSecPerCluster ) *
-                           static_cast< double >( uiSectorSize );
+                  dSpace = static_cast< double >( uiClusterFree ) * static_cast< double >( uiSecPerCluster ) * static_cast< double >( uiSectorSize );
                   break;
 
                case HB_DISK_USED:
                case HB_DISK_TOTAL:
-                  dSpace = static_cast< double >( uiClusterTotal ) *
-                           static_cast< double >( uiSecPerCluster ) *
-                           static_cast< double >( uiSectorSize );
+                  dSpace = static_cast< double >( uiClusterTotal ) * static_cast< double >( uiSecPerCluster ) * static_cast< double >( uiSectorSize );
 
                   if( uiType == HB_DISK_USED )
-                     dSpace -= static_cast< double >( uiClusterFree ) *
-                               static_cast< double >( uiSecPerCluster ) *
-                               static_cast< double >( uiSectorSize );
+                  {
+                     dSpace -= static_cast< double >( uiClusterFree ) * static_cast< double >( uiSecPerCluster ) * static_cast< double >( uiSectorSize );
+                  }
                   break;
             }
          }
          else
          {
             if( hb_errRT_BASE_Ext1( EG_OPEN, 2018, nullptr, nullptr, 0, ( EF_CANDEFAULT | EF_CANRETRY ), HB_ERR_ARGS_BASEPARAMS ) == E_RETRY )
+            {
                continue;
+            }
          }
          break;
       }
@@ -280,7 +278,9 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
          while( ( rc = DosQueryFSInfo( uiDrive, 1, &fsa, sizeof( fsa ) ) ) != NO_ERROR )
          {
             if( hb_errRT_BASE_Ext1( EG_OPEN, 2018, nullptr, nullptr, 0, ( EF_CANDEFAULT | EF_CANRETRY ), HB_ERR_ARGS_BASEPARAMS ) != E_RETRY )
+            {
                break;
+            }
          }
 
          hb_fsSetError( ( HB_ERRCODE ) rc );
@@ -291,21 +291,17 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
             {
                case HB_DISK_AVAIL:
                case HB_DISK_FREE:
-                  dSpace = static_cast< double >( fsa.cUnitAvail ) *
-                           static_cast< double >( fsa.cSectorUnit ) *
-                           static_cast< double >( fsa.cbSector );
+                  dSpace = static_cast< double >( fsa.cUnitAvail ) * static_cast< double >( fsa.cSectorUnit ) * static_cast< double >( fsa.cbSector );
                   break;
 
                case HB_DISK_USED:
                case HB_DISK_TOTAL:
-                  dSpace = static_cast< double >( fsa.cUnit ) *
-                           static_cast< double >( fsa.cSectorUnit ) *
-                           static_cast< double >( fsa.cbSector );
+                  dSpace = static_cast< double >( fsa.cUnit ) * static_cast< double >( fsa.cSectorUnit ) * static_cast< double >( fsa.cbSector );
 
                   if( uiType == HB_DISK_USED )
-                     dSpace -= static_cast< double >( fsa.cUnitAvail ) *
-                               static_cast< double >( fsa.cSectorUnit ) *
-                               static_cast< double >( fsa.cbSector );
+                  {
+                     dSpace -= static_cast< double >( fsa.cUnitAvail ) * static_cast< double >( fsa.cSectorUnit ) * static_cast< double >( fsa.cbSector );
+                  }
                   break;
             }
          }
@@ -313,11 +309,9 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
 #endif
    }
 
-#elif defined( HB_OS_UNIX ) && \
-      !( defined( __WATCOMC__ ) || defined( __CEGCC__ ) || defined( HB_OS_SYMBIAN ) )
+#elif defined( HB_OS_UNIX ) && !( defined( __WATCOMC__ ) || defined( __CEGCC__ ) || defined( HB_OS_SYMBIAN ) )
    {
-#if defined( HB_OS_DARWIN ) || defined( HB_OS_ANDROID ) || \
-    defined( HB_OS_VXWORKS )
+#if defined( HB_OS_DARWIN ) || defined( HB_OS_ANDROID ) || defined( HB_OS_VXWORKS )
       struct statfs sf;
 #else
       struct statvfs sf;
@@ -326,8 +320,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
 
       pszPath = hb_fsNameConv( pszPath, &pszFree );
 
-#if defined( HB_OS_DARWIN ) || defined( HB_OS_ANDROID ) || \
-    defined( HB_OS_VXWORKS )
+#if defined( HB_OS_DARWIN ) || defined( HB_OS_ANDROID ) || defined( HB_OS_VXWORKS )
       if( statfs( pszPath, &sf ) == 0 )
 #else
       if( statvfs( pszPath, &sf ) == 0 )
@@ -344,8 +337,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
                break;
 
             case HB_DISK_USED:
-               dSpace = static_cast< double >( sf.f_blocks - sf.f_bfree ) *
-                        static_cast< double >( sf.f_bsize );
+               dSpace = static_cast< double >( sf.f_blocks - sf.f_bfree ) * static_cast< double >( sf.f_bsize );
                break;
 
             case HB_DISK_TOTAL:
@@ -355,10 +347,14 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
          hb_fsSetIOError( HB_TRUE, 0 );
       }
       else
+      {
          hb_fsSetIOError( HB_FALSE, 0 );
+      }
 
       if( pszFree )
+      {
          hb_xfree( pszFree );
+      }
    }
 #else
    {

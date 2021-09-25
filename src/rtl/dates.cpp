@@ -64,7 +64,9 @@ char * hb_dateFormat( const char * szDate, char * szFormattedDate, const char * 
     */
    size = static_cast< int >( strlen( szDateFormat ) );
    if( size > 10 )
+   {
       size = 10;
+   }
 
    if( szDate && strlen( szDate ) == 8 ) /* A valid date is always 8 characters */
    {
@@ -84,7 +86,9 @@ char * hb_dateFormat( const char * szDate, char * szFormattedDate, const char * 
          {
             szPtr++;
             if( format_count + digit_count < size )
+            {
                digit_count++;
+            }
          }
          switch( digit )
          {
@@ -253,7 +257,9 @@ static int hb_dateUnformatRaw( const char * szDate, const char * szDateFormat, l
       int count, digit, non_digit, size, used;
 
       if( ! szDateFormat )
+      {
          szDateFormat = hb_setGetDateFormat();
+      }
       size = static_cast< int >( strlen( szDateFormat ) );
 
       for( count = used = 0; count < size && used < 3; count++ )
@@ -266,11 +272,17 @@ static int hb_dateUnformatRaw( const char * szDate, const char * szDateFormat, l
                {
                   ++used;
                   if( m_pos == 0 && y_pos == 0 )
+                  {
                      d_pos = 1;
+                  }
                   else if( m_pos == 0 || y_pos == 0 )
+                  {
                      d_pos = 2;
+                  }
                   else
+                  {
                      d_pos = 3;
+                  }
                }
                break;
             case 'M':
@@ -279,11 +291,17 @@ static int hb_dateUnformatRaw( const char * szDate, const char * szDateFormat, l
                {
                   ++used;
                   if( d_pos == 0 && y_pos == 0 )
+                  {
                      m_pos = 1;
+                  }
                   else if( d_pos == 0 || y_pos == 0 )
+                  {
                      m_pos = 2;
+                  }
                   else
+                  {
                      m_pos = 3;
+                  }
                }
                break;
             case 'Y':
@@ -292,11 +310,17 @@ static int hb_dateUnformatRaw( const char * szDate, const char * szDateFormat, l
                {
                   ++used;
                   if( m_pos == 0 && d_pos == 0 )
+                  {
                      y_pos = 1;
+                  }
                   else if( m_pos == 0 || d_pos == 0 )
+                  {
                      y_pos = 2;
+                  }
                   else
+                  {
                      y_pos = 3;
+                  }
                }
          }
       }
@@ -312,11 +336,17 @@ static int hb_dateUnformatRaw( const char * szDate, const char * szDateFormat, l
          {
             /* Process the digit for the current date field */
             if( d_pos == 1 )
+            {
                d_value = ( d_value * 10 ) + digit - '0';
+            }
             else if( m_pos == 1 )
+            {
                m_value = ( m_value * 10 ) + digit - '0';
+            }
             else if( y_pos == 1 )
+            {
                y_value = ( y_value * 10 ) + digit - '0';
+            }
             /* Treat the next non-digit as a date field separator */
             non_digit = 0;
          }
@@ -332,7 +362,9 @@ static int hb_dateUnformatRaw( const char * szDate, const char * szDateFormat, l
                m_pos--;
                y_pos--;
                if( ++used >= 3 )
+               {
                   break;
+               }
             }
          }
       }
@@ -391,9 +423,13 @@ char * hb_timeFormat( char * szBuffer, const char * szTimeFormat, long lMilliSec
             iHour -= 12;
          }
          if( iHour == 0 )
+         {
             iHour += 12;
+         }
          if( iHour < 10 )
+         {
             i12 = 1;
+         }
          break;
       }
    }
@@ -421,7 +457,9 @@ char * hb_timeFormat( char * szBuffer, const char * szTimeFormat, long lMilliSec
                digits = count;
             }
             else
+            {
                digits = 1;
+            }
             iHour = -1;
             break;
          case 'M':
@@ -493,9 +531,7 @@ char * hb_timeFormat( char * szBuffer, const char * szTimeFormat, long lMilliSec
  * total maximal size of formatted timestamp value: 10 + 16 = 26
  * always safe buffer size is: 27
  */
-char * hb_timeStampFormat( char * szBuffer,
-                           const char * szDateFormat, const char * szTimeFormat,
-                           long lJulian, long lMilliSec )
+char * hb_timeStampFormat( char * szBuffer, const char * szDateFormat, const char * szTimeFormat, long lJulian, long lMilliSec )
 {
    char szDate[ 9 ], * szTimeBuffer;
 
@@ -505,7 +541,9 @@ char * hb_timeStampFormat( char * szBuffer,
    hb_dateFormat( szDate, szBuffer, szDateFormat );
    szTimeBuffer = szBuffer + strlen( szBuffer );
    if( *szBuffer )
+   {
       *szTimeBuffer++ = ' ';
+   }
    hb_timeFormat( szTimeBuffer, szTimeFormat, lMilliSec );
 
    return szBuffer;
@@ -519,10 +557,14 @@ long hb_timeUnformat( const char * szTime, const char * szTimeFormat )
    HB_TRACE( HB_TR_DEBUG, ( "hb_timeUnformat(%s, %s)", szTime, szTimeFormat ) );
 
    if( ! szTime )
+   {
       return 0;
+   }
 
    if( ! szTimeFormat )
+   {
       szTimeFormat = hb_setGetTimeFormat();
+   }
 
    size = static_cast< int >( hb_strnlen( szTime, hb_strnlen( szTimeFormat, 16 ) ) );
    iHour = iMinutes = iSeconds = iMSec = iPM = -1;
@@ -556,9 +598,13 @@ long hb_timeUnformat( const char * szTime, const char * szTimeFormat )
                       szTime[ count ] != 'A' && szTime[ count ] != 'a' )
                   ++count;
                if     ( szTime[ count ] == 'P' || szTime[ count ] == 'p' )
+               {
                   iPM = 1;
+               }
                else if( szTime[ count ] == 'A' || szTime[ count ] == 'a' )
+               {
                   iPM = 0;
+               }
             }
             /* fallthrough */
          default:
@@ -574,18 +620,28 @@ long hb_timeUnformat( const char * szTime, const char * szTimeFormat )
             *pValue = *pValue * 10 + ( szTime[ count ] - '0' );
             ++count;
             if( pValue == &iMSec )
+            {
                ++prec;
+            }
          }
       }
    }
    if( iHour < 0 )
+   {
       iHour = 0;
+   }
    if( iMinutes < 0 )
+   {
       iMinutes = 0;
+   }
    if( iSeconds < 0 )
+   {
       iSeconds = 0;
+   }
    if( iMSec < 0 )
+   {
       iMSec = 0;
+   }
    else if( iMSec > 0 )
    {
       if( prec > 3 )
@@ -605,24 +661,30 @@ long hb_timeUnformat( const char * szTime, const char * szTimeFormat )
    if( iPM > 0 )
    {
       if( iHour == 0 )
+      {
          iHour = 24;    /* wrong time */
+      }
       else if( iHour != 12 )
+      {
          iHour += 12;
+      }
    }
    else if( iPM == 0 )
    {
       if( iHour == 0 )
+      {
          iHour = 24;    /* wrong time */
+      }
       else if( iHour == 12 )
+      {
          iHour = 0;
+      }
    }
 
    return hb_timeEncode( iHour, iMinutes, iSeconds, iMSec );
 }
 
-void hb_timeStampUnformat( const char * szDateTime,
-                           const char * szDateFormat, const char * szTimeFormat,
-                           long * plJulian, long * plMilliSec )
+void hb_timeStampUnformat( const char * szDateTime, const char * szDateFormat, const char * szTimeFormat, long * plJulian, long * plMilliSec )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_timeStampUnformat(%s, %s, %s, %p, %p)", szDateTime, szDateFormat, szTimeFormat, ( void * ) plJulian, ( void * ) plMilliSec ) );
 
@@ -631,10 +693,14 @@ void hb_timeStampUnformat( const char * szDateTime,
       int size;
 
       if( ! szDateFormat )
+      {
          szDateFormat = hb_setGetDateFormat();
+      }
       size = hb_dateUnformatRaw( szDateTime, szDateFormat, plJulian );
       *plMilliSec = hb_timeUnformat( szDateTime + size, szTimeFormat );
    }
    else
+   {
       *plJulian = *plMilliSec = 0;
+   }
 }

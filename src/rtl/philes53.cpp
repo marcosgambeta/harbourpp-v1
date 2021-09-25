@@ -59,12 +59,16 @@ HB_FUNC( FSETDEVMOD )
    {
       iRet = hb_fsSetDevMode( hb_numToHandle( hb_parnint( 1 ) ), hb_parni( 2 ) );
       if( iRet != FD_TEXT )
+      {
          iRet = FD_BINARY;
+      }
       hb_fsSetFError( hb_fsError() );
    }
    else
+   {
       hb_fsSetFError( 6 );  /* ERROR_INVALID_HANDLE */
-
+   }
+   
    hb_retni( iRet );
 }
 

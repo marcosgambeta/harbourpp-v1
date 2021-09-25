@@ -92,9 +92,13 @@ HB_FUNC( __NATISAFFIRM )
       {
          PHB_CODEPAGE cdp = hb_vmCDP();
          if( cdp )
+         {
             fIS = hb_cdpicmp( hb_parc( 1 ), nLen, szYesNo, nStr, cdp, HB_FALSE ) == 0;
+         }
          else
+         {
             fIS = hb_strnicmp( hb_parc( 1 ), szYesNo, nStr ) == 0;
+         }   
       }
    }
    hb_retl( fIS );
@@ -112,16 +116,22 @@ HB_FUNC( __NATISNEGATIVE )
 
       while( *szYesNo )
          if( *szYesNo++ == '/' )
+         {
             break;
+         }
       nStr = strlen( szYesNo );
 
       if( nStr && nLen >= nStr )
       {
          PHB_CODEPAGE cdp = hb_vmCDP();
          if( cdp )
+         {
             fIS = hb_cdpicmp( hb_parc( 1 ), nLen, szYesNo, nStr, cdp, HB_FALSE ) == 0;
+         }
          else
+         {
             fIS = hb_strnicmp( hb_parc( 1 ), szYesNo, nStr ) == 0;
+         }   
       }
    }
    hb_retl( fIS );
@@ -130,12 +140,18 @@ HB_FUNC( __NATISNEGATIVE )
 HB_FUNC( __NATMSG )
 {
    if( hb_pcount() == 0 )
+   {
       /* TODO: Replace this with Language API call. */
       hb_retc_const( "Invalid argument" );
+   }
    else if( HB_ISNUM( 1 ) )
+   {
       hb_retc_const( hb_nationGetMsg( hb_parni( 1 ) ) );
+   }
    else
+   {
       hb_retc_null();
+   }   
 }
 
 HB_FUNC( __NATMSGVER )

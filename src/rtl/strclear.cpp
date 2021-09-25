@@ -68,6 +68,8 @@ HB_FUNC( HB_STRCLEAR )
          hb_retl( pszPtr == pBuffer );
       }
       else
+      {
          hb_retl( HB_FALSE );
+      }
    }
 }

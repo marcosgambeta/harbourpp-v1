@@ -88,8 +88,10 @@ HB_BOOL hb_fsCopy( const char * pszSource, const char * pszDest )
          hb_fileClose( pDstFile );
       }
       else
+      {
          errCode = hb_fsError();
-
+      }
+      
       hb_fileClose( pSrcFile );
 
       if( fResult )
@@ -97,7 +99,9 @@ HB_BOOL hb_fsCopy( const char * pszSource, const char * pszDest )
          HB_FATTR ulAttr;
 
          if( hb_fileAttrGet( pszSource, &ulAttr ) )
+         {
             hb_fileAttrSet( pszDest, ulAttr );
+         }   
       }
       hb_fsSetError( errCode );
    }

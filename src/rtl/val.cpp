@@ -68,10 +68,14 @@ static void hb_val( HB_BOOL fExt )
          iLen = hb_parnidef( 2, iLen );
 
          if( fDbl && iDec > 0 )
+         {
             iLen -= iDec + 1;
+         }
 
          if( iLen > iWidth )
+         {
             iWidth = iLen;
+         }
          else if( iLen > 0 )
          {
             while( iWidth > iLen && *szText == ' ' )
@@ -83,12 +87,18 @@ static void hb_val( HB_BOOL fExt )
       }
 
       if( fDbl )
+      {
          hb_retndlen( dValue, iWidth, iDec );
+      }
       else
+      {
          hb_retnintlen( lValue, iWidth );
+      }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 1098, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( VAL )

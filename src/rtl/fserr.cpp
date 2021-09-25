@@ -193,7 +193,9 @@ void  hb_fsSetIOError( HB_BOOL fResult, HB_USHORT uiOperation )
    HB_SYMBOL_UNUSED( uiOperation );
 
    if( fResult )
+   {
       uiOsErrorLast = uiErrorLast = 0;
+   }
    else
    {
 #if defined( HB_OS_WIN )

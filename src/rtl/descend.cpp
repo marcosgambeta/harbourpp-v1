@@ -52,7 +52,9 @@ void hb_strDescend( char * szStringTo, const char * szStringFrom, HB_SIZE nLen )
    HB_TRACE( HB_TR_DEBUG, ( "hb_strDescend(%p, %s, %" HB_PFS "u)", ( void * ) szStringTo, szStringFrom, nLen ) );
 
    if( nLen == 1 && szStringFrom[ 0 ] == '\0' )
+   {
       szStringTo[ 0 ] = '\0';
+   }
    else
    {
       for(; nLen--; szStringTo++, szStringFrom++ )
@@ -77,13 +79,21 @@ HB_FUNC( DESCEND )
             hb_retclen_buffer( szBuffer, nLen );
          }
          else
+         {
             hb_retc_null();
+         }
       }
       else if( HB_IS_DATE( pItem ) )
+      {
          hb_retnl( 5231808 - hb_itemGetDL( pItem ) );
+      }
       else if( HB_IS_NUMERIC( pItem ) )
+      {
          hb_retnd( -1 * hb_itemGetND( pItem ) );
+      }
       else if( HB_IS_LOGICAL( pItem ) )
+      {
          hb_retl( ! hb_itemGetL( pItem ) );
+      }
    }
 }

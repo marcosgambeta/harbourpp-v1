@@ -76,7 +76,9 @@ static void hb_inkeySetTextKeys( const char * pszText, HB_SIZE nSize, HB_BOOL fI
          hb_inkeyIns( iKey );
       }
       if( nSize > HB_SIZEOFARRAY( buffer ) )
+      {
          hb_xfree( keys );
+      }   
    }
    else
    {
@@ -102,7 +104,9 @@ HB_FUNC( __KEYBOARD )
    hb_inkeyReset();
 
    if( HB_ISCHAR( 1 ) )
+   {
       hb_inkeySetText( hb_parc( 1 ), hb_parclen( 1 ), HB_FALSE );
+   }   
 }
 
 HB_FUNC( HB_KEYCLEAR )
@@ -135,8 +139,7 @@ HB_FUNC( HB_KEYPUT )
          }
          else if( type & HB_IT_STRING )
          {
-            hb_inkeySetTextKeys( hb_arrayGetCPtr( pArray, nIndex ),
-                                 hb_arrayGetCLen( pArray, nIndex ), HB_FALSE );
+            hb_inkeySetTextKeys( hb_arrayGetCPtr( pArray, nIndex ), hb_arrayGetCLen( pArray, nIndex ), HB_FALSE );
          }
       }
    }
@@ -167,8 +170,7 @@ HB_FUNC( HB_KEYINS )
          }
          else if( type & HB_IT_STRING )
          {
-            hb_inkeySetTextKeys( hb_arrayGetCPtr( pArray, nIndex ),
-                                 hb_arrayGetCLen( pArray, nIndex ), HB_TRUE );
+            hb_inkeySetTextKeys( hb_arrayGetCPtr( pArray, nIndex ), hb_arrayGetCLen( pArray, nIndex ), HB_TRUE );
          }
       }
    }
@@ -197,7 +199,9 @@ HB_FUNC( LASTKEY )
 HB_FUNC( HB_KEYSETLAST )
 {
    if( HB_ISNUM( 1 ) )
+   {
       hb_retni( hb_inkeySetLast( hb_parni( 1 ) ) );
+   }   
 }
 
 #if defined( HB_LEGACY_LEVEL5 )
@@ -218,12 +222,18 @@ HB_FUNC( HB_KEYCODE )
       HB_WCHAR wc;
 
       if( HB_CDPCHAR_GET( cdp, szValue, hb_parclen( 1 ), &nIndex, &wc ) )
+      {
          iKey = wc >= 128 ? HB_INKEY_NEW_UNICODE( wc ) : wc;
+      }
       else
+      {
          iKey = 0;
+      }
    }
    else
+   {
       iKey = 0;
+   }
 
    hb_retni( iKey );
 }

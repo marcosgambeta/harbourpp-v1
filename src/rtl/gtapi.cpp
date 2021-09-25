@@ -70,7 +70,9 @@ HB_ERRCODE hb_gtInit( HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHAN
 
    pGT = hb_gt_Base();
    if( ! pGT )
+   {
       return HB_FAILURE;
+   }
 
    HB_GTSELF_INIT( pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr );
    HB_GTSELF_SETCOLORSTR( pGT, hb_setGetColor() );
@@ -104,7 +106,9 @@ HB_ERRCODE hb_gtLock( void )
    if( pGT )
    {
       if( HB_GTSELF_LOCK( pGT ) )
+      {
          errCode = HB_SUCCESS;
+      }
       hb_gt_BaseFree( pGT );
    }
    return errCode;
@@ -171,7 +175,9 @@ HB_ERRCODE hb_gtBoxEx( int iTop, int iLeft, int iBottom, int iRight, const char 
    if( pGT )
    {
       if( iColor == -1 )
+      {
          iColor = HB_GTSELF_GETCOLOR( pGT );
+      }
       HB_GTSELF_BOX( pGT, iTop, iLeft, iBottom, iRight, szFrame, iColor );
       HB_GTSELF_SETPOS( pGT, iTop + 1, iLeft + 1 );
       HB_GTSELF_FLUSH( pGT );
@@ -227,7 +233,9 @@ HB_ERRCODE hb_gtDrawBox( int iTop, int iLeft, int iBottom, int iRight, const cha
    if( pGT )
    {
       if( iColor == -1 )
+      {
          iColor = HB_GTSELF_GETCOLOR( pGT );
+      }
 
       HB_GTSELF_BOX( pGT, iTop, iLeft, iBottom, iRight, szFrame, iColor );
       HB_GTSELF_FLUSH( pGT );
@@ -313,7 +321,9 @@ HB_ERRCODE hb_gtPreExt( void )
    if( pGT )
    {
       if( HB_GTSELF_PREEXT( pGT ) )
+      {
          errCode = HB_SUCCESS;
+      }
       hb_gt_BaseFree( pGT );
    }
    return errCode;
@@ -330,7 +340,9 @@ HB_ERRCODE hb_gtPostExt( void )
    if( pGT )
    {
       if( HB_GTSELF_POSTEXT( pGT ) )
+      {
          errCode = HB_SUCCESS;
+      }
       hb_gt_BaseFree( pGT );
    }
    return errCode;
@@ -509,7 +521,9 @@ int hb_gtMaxCol( void )
       hb_gt_BaseFree( pGT );
    }
    else
+   {
       iMaxCol = 79;
+   }
 
    return iMaxCol;
 }
@@ -528,7 +542,9 @@ int hb_gtMaxRow( void )
       hb_gt_BaseFree( pGT );
    }
    else
+   {
       iMaxRow = 24;
+   }
 
    return iMaxRow;
 }
@@ -661,7 +677,9 @@ HB_ERRCODE hb_gtGetChar( int iRow, int iCol, int * piColor, HB_BYTE * pbAttr, HB
    if( pGT )
    {
       if( HB_GTSELF_GETCHAR( pGT, iRow, iCol, piColor, pbAttr, pusChar ) )
+      {
          errCode = HB_SUCCESS;
+      }
       hb_gt_BaseFree( pGT );
    }
    return errCode;
@@ -678,7 +696,9 @@ HB_ERRCODE hb_gtPutChar( int iRow, int iCol, int iColor, HB_BYTE bAttr, HB_USHOR
    if( pGT )
    {
       if( HB_GTSELF_PUTCHAR( pGT, iRow, iCol, iColor, bAttr, usChar ) )
+      {
          errCode = HB_SUCCESS;
+      }
       hb_gt_BaseFree( pGT );
    }
    return errCode;
@@ -695,7 +715,9 @@ HB_ERRCODE hb_gtBeginWrite( void )
    if( pGT )
    {
       if( HB_GTSELF_LOCK( pGT ) )
+      {
          errCode = HB_SUCCESS;
+      }
       hb_gt_BaseFree( pGT );
    }
 
@@ -763,7 +785,9 @@ HB_ERRCODE hb_gtSetMode( int iRows, int iCols )
    if( pGT )
    {
       if( HB_GTSELF_SETMODE( pGT, iRows, iCols ) )
+      {
          errCode = HB_SUCCESS;
+      }
       hb_gt_BaseFree( pGT );
    }
    return errCode;
@@ -780,7 +804,9 @@ HB_ERRCODE hb_gtPutText( int iRow, int iCol,
    if( pGT )
    {
       if( iColor == -1 )
+      {
          iColor = HB_GTSELF_GETCOLOR( pGT );
+      }
 
       HB_GTSELF_PUTTEXT( pGT, iRow, iCol, iColor, szStr, nLength );
       HB_GTSELF_FLUSH( pGT );
@@ -851,8 +877,7 @@ HB_ERRCODE hb_gtScroll( int iTop, int iLeft, int iBottom, int iRight, int iRows,
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_SCROLL( pGT, iTop, iLeft, iBottom, iRight,
-                        HB_GTSELF_GETCOLOR( pGT ), ' ', iRows, iCols );
+      HB_GTSELF_SCROLL( pGT, iTop, iLeft, iBottom, iRight, HB_GTSELF_GETCOLOR( pGT ), ' ', iRows, iCols );
       HB_GTSELF_FLUSH( pGT );
       hb_gt_BaseFree( pGT );
       return HB_SUCCESS;
@@ -870,11 +895,14 @@ HB_ERRCODE hb_gtScrollEx( int iTop, int iLeft, int iBottom, int iRight, int iCol
    if( pGT )
    {
       if( iColor == -1 )
+      {
          iColor = HB_GTSELF_GETCOLOR( pGT );
+      }
       if( iChar < 0 )
+      {
          iChar = HB_GTSELF_GETCLEARCHAR( pGT );
-      HB_GTSELF_SCROLL( pGT, iTop, iLeft, iBottom, iRight,
-                        iColor, static_cast< HB_USHORT >( iChar ), iRows, iCols );
+      }
+      HB_GTSELF_SCROLL( pGT, iTop, iLeft, iBottom, iRight, iColor, static_cast< HB_USHORT >( iChar ), iRows, iCols );
       HB_GTSELF_FLUSH( pGT );
       hb_gt_BaseFree( pGT );
       return HB_SUCCESS;
@@ -979,7 +1007,9 @@ HB_ERRCODE hb_gtSuspend( void )
    if( pGT )
    {
       if( HB_GTSELF_SUSPEND( pGT ) )
+      {
          errCode = HB_SUCCESS;
+      }
       hb_gt_BaseFree( pGT );
    }
    return errCode;
@@ -996,7 +1026,9 @@ HB_ERRCODE hb_gtResume( void )
    if( pGT )
    {
       if( HB_GTSELF_RESUME( pGT ) )
+      {
          errCode = HB_SUCCESS;
+      }
       hb_gt_BaseFree( pGT );
    }
    return errCode;
@@ -1015,7 +1047,9 @@ HB_ERRCODE hb_gtOutStd( const char * szStr, HB_SIZE nLen )
       hb_gt_BaseFree( pGT );
    }
    else
+   {
       hb_fsWriteLarge( ( HB_FHANDLE ) HB_STDOUT_HANDLE, szStr, nLen );
+   }
 
    return HB_SUCCESS;
 }
@@ -1033,7 +1067,9 @@ HB_ERRCODE hb_gtOutErr( const char * szStr, HB_SIZE nLen )
       hb_gt_BaseFree( pGT );
    }
    else
+   {
       hb_fsWriteLarge( ( HB_FHANDLE ) HB_STDERR_HANDLE, szStr, nLen );
+   }
 
    return HB_SUCCESS;
 }
@@ -1049,7 +1085,9 @@ HB_ERRCODE hb_gtSetDispCP( const char * pszTermCDP, const char * pszHostCDP, HB_
    if( pGT )
    {
       if( HB_GTSELF_SETDISPCP( pGT, pszTermCDP, pszHostCDP, fBox ) )
+      {
          errCode = HB_SUCCESS;
+      }
       hb_gt_BaseFree( pGT );
    }
    return errCode;
@@ -1066,7 +1104,9 @@ HB_ERRCODE hb_gtSetKeyCP( const char * pszTermCDP, const char * pszHostCDP )
    if( pGT )
    {
       if( HB_GTSELF_SETKEYCP( pGT, pszTermCDP, pszHostCDP ) )
+      {
          errCode = HB_SUCCESS;
+      }
       hb_gt_BaseFree( pGT );
    }
    return errCode;
@@ -1115,7 +1155,9 @@ HB_ERRCODE hb_gtInfo( int iType, PHB_GT_INFO pInfo )
    if( pGT )
    {
       if( HB_GTSELF_INFO( pGT, iType, pInfo ) )
+      {
          errCode = HB_SUCCESS;
+      }
       hb_gt_BaseFree( pGT );
    }
    return errCode;
@@ -1132,8 +1174,7 @@ int hb_gtAlert( PHB_ITEM pMessage, PHB_ITEM pOptions,
    pGT = hb_gt_Base();
    if( pGT )
    {
-      iResult = HB_GTSELF_ALERT( pGT, pMessage, pOptions, iClrNorm,
-                                 iClrHigh, dDelay );
+      iResult = HB_GTSELF_ALERT( pGT, pMessage, pOptions, iClrNorm, iClrHigh, dDelay );
       hb_gt_BaseFree( pGT );
    }
    return iResult;
@@ -1169,7 +1210,9 @@ int hb_gtGetCurrColor( void )
       hb_gt_BaseFree( pGT );
    }
    else
+   {
       iColor = 0x07;
+   }
 
    return iColor;
 }
@@ -1188,7 +1231,9 @@ int hb_gtGetClearColor( void )
       hb_gt_BaseFree( pGT );
    }
    else
+   {
       iColor = 0x07;
+   }
 
    return iColor;
 }
@@ -1223,8 +1268,10 @@ HB_USHORT hb_gtGetClearChar( void )
       hb_gt_BaseFree( pGT );
    }
    else
+   {
       usChar = static_cast< HB_USHORT >( ' ' );
-
+   }
+   
    return usChar;
 }
 
@@ -1255,7 +1302,9 @@ HB_ERRCODE hb_gtGetScrChar( int iRow, int iCol, int * piColor, HB_BYTE * pbAttr,
    if( pGT )
    {
       if( HB_GTSELF_GETSCRCHAR( pGT, iRow, iCol, piColor, pbAttr, pusChar ) )
+      {
          errCode = HB_SUCCESS;
+      }
       hb_gt_BaseFree( pGT );
    }
    return errCode;
@@ -1272,7 +1321,9 @@ HB_ERRCODE hb_gtPutScrChar( int iRow, int iCol, int iColor, HB_BYTE bAttr, HB_US
    if( pGT )
    {
       if( HB_GTSELF_PUTSCRCHAR( pGT, iRow, iCol, iColor, bAttr, usChar ) )
+      {
          errCode = HB_SUCCESS;
+      }
       hb_gt_BaseFree( pGT );
    }
    return errCode;

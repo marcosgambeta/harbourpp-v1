@@ -77,7 +77,9 @@ HB_FUNC( TRANSFORM )
    HB_BOOL bError = HB_FALSE;
 
    if( pValue == nullptr )
+   {
       bError = HB_TRUE;
+   }
    else if( pPic && hb_itemGetCLen( pPic ) > 0 )
    {
       PHB_CODEPAGE cdp = hb_vmCDP();
@@ -255,12 +257,15 @@ HB_FUNC( TRANSFORM )
                      default:
                         HB_CDPCHAR_PUT( cdp, szResult, nSize, &nResultPos, wcPict );
                         if( uiPicFlags & PF_REMAIN )
+                        {
                            nExpPos = nExpPrev;
+                        }
                   }
                }
                else if( ! ( uiPicFlags & PF_REMAIN ) )
+               {
                   break;
-
+               }
                else
                {
 /* NOTE: This is a FoxPro compatible [jarabal] */
@@ -296,8 +301,9 @@ HB_FUNC( TRANSFORM )
             if( ( uiPicFlags & PF_REMAIN ) && nExpPos == 0 && nExpPos < nExpLen )
             {
                if( uiPicFlags & PF_UPPER )
-                  nResultPos += hb_cdpnDup2Upper( cdp, szExp + nExpPos, nExpLen - nExpPos,
-                                                  szResult + nResultPos, nSize - nResultPos );
+               {
+                  nResultPos += hb_cdpnDup2Upper( cdp, szExp + nExpPos, nExpLen - nExpPos, szResult + nResultPos, nSize - nResultPos );
+               }
                else
                {
                   while( HB_CDPCHAR_GET( cdp, szExp, nExpLen, &nExpPos, &wcExp ) )
@@ -317,9 +323,13 @@ HB_FUNC( TRANSFORM )
          {
             nResultPos = nExpLen;
             if( uiPicFlags & PF_UPPER )
+            {
                szResult = hb_cdpnDupUpper( cdp, szExp, &nResultPos );
+            }
             else
+            {
                szResult = static_cast< char * >( hb_xmemdup( szExp, nResultPos + 1 ) );
+            }
 
             if( uiPicFlags & PF_EXCHANG )
             {
@@ -328,7 +338,9 @@ HB_FUNC( TRANSFORM )
                while( nExpPos < nResultPos )
                {
                   if( szResult[ nExpPos ] == ',' )
+                  {
                      szResult[ nExpPos ] = '.';
+                  }
                   else if( ! bFound && szResult[ nExpPos ] == '.' )
                   {
                      szResult[ nExpPos ] = ',';
@@ -412,20 +424,22 @@ HB_FUNC( TRANSFORM )
             {
                while( ++i < nPicLen )
                {
-                  if( szPic[ i ] == '9' || szPic[ i ] == '#' ||
-                      szPic[ i ] == '$' || szPic[ i ] == '*' )
+                  if( szPic[ i ] == '9' || szPic[ i ] == '#' || szPic[ i ] == '$' || szPic[ i ] == '*' )
                   {
                      iWidth++;
                      iDec++;
                   }
                }
                if( iDec )
+               {
                   iWidth++;
+               }
                break;
             }
-            else if( szPic[ i ] == '9' || szPic[ i ] == '#' ||
-                     szPic[ i ] == '$' || szPic[ i ] == '*' )
+            else if( szPic[ i ] == '9' || szPic[ i ] == '#' || szPic[ i ] == '$' || szPic[ i ] == '*' )
+            {
                iWidth++;
+            }
          }
 
          iCount = 0;
@@ -435,12 +449,18 @@ HB_FUNC( TRANSFORM )
             if( hb_setGetFixed() )
             {
                if( HB_IS_NUMINT( pValue ) )
+               {
                   iWidth += 2 + ( hb_setGetDecimals() << 1 );
+               }
                else
+               {
                   iDec = hb_setGetDecimals();
+               }
             }
             if( iDec )
+            {
                iWidth += iDec + 1;
+            }
          }
          else if( iDec > 0 && iWidth - iDec == 1 )
          {
@@ -452,21 +472,29 @@ HB_FUNC( TRANSFORM )
          {
             /* Always convert absolute val */
             if( HB_IS_NUMINT( pValue ) ) /* workaround for 64-bit integer conversion */
+            {
                pNumber = hb_itemPutNInt( nullptr, -hb_itemGetNInt( pValue ) );
+            }
             else
+            {
                pNumber = hb_itemPutND( nullptr, -dValue );
+            }
             pValue = pNumber;
          }
 
          if( dValue != 0 )
+         {
             /* Don't empty the result if the number is not zero */
             uiPicFlags &= ~PF_EMPTY;
+         }
 
          /* allocate 4 additional bytes for possible ") CR" or ") DB" suffix */
          szResult = static_cast< char * >( hb_xgrab( iWidth + 5 ) );
          hb_itemStrBuf( szResult, pValue, iWidth, iDec );
          if( pNumber )
+         {
             hb_itemRelease( pNumber );
+         }
 
          if( iCount )
          {
@@ -477,7 +505,9 @@ HB_FUNC( TRANSFORM )
                *szResult = '.';
             }
             else
+            {
                memmove( szResult, szResult + 1, iWidth );
+            }
             szResult[ iWidth ] = '\0';
          }
 
@@ -544,19 +574,22 @@ HB_FUNC( TRANSFORM )
                else if( cPic == ',' && i && iCount < iWidth )
                {
                   if( HB_ISDIGIT( ( HB_UCHAR ) szResult[ i - 1 ] ) )
+                  {
                      szResult[ i ] = ( uiPicFlags & PF_EXCHANG ) ? '.' : ',';
+                  }
                   else
                   {
                      szResult[ i ] = szResult[ i - 1 ];
                      if( szResult[ i - 1 ] == '-' )
                      {
-                        szResult[ i - 1 ] = i > 1 && szResult[ i - 2 ] != '$' ?
-                                            szResult[ i - 2 ] : ' ';
+                        szResult[ i - 1 ] = i > 1 && szResult[ i - 2 ] != '$' ? szResult[ i - 2 ] : ' ';
                      }
                   }
                }
                else
+               {
                   szResult[ i ] = cPic;
+               }
             }
             hb_xfree( szStr );
          }
@@ -569,9 +602,10 @@ HB_FUNC( TRANSFORM )
                iCount = 0;
                if( nPicLen && i > 1 )
                {
-                  if( *szPic == *szResult && ( *szPic == '*' || *szPic == '$' ) &&
-                      szResult[ 1 ] == ' ' )
+                  if( *szPic == *szResult && ( *szPic == '*' || *szPic == '$' ) && szResult[ 1 ] == ' ' )
+                  {
                      ++iCount;
+                  }
                }
                while( static_cast< HB_SIZE >( iCount ) + 1 < i && szResult[ iCount + 1 ] == ' ' )
                   ++iCount;
@@ -588,7 +622,9 @@ HB_FUNC( TRANSFORM )
                      if( szResult[ iCount ] >= '0' && szResult[ iCount ] <= '9' &&
                          ( nPicLen == 0 || szPic[ iCount ] == '9' ||
                            szPic[ iCount ] != szResult[ iCount ] ) )
+                     {
                         szResult[ iCount ] = '*';
+                     }
                   }
                }
                else
@@ -601,15 +637,16 @@ HB_FUNC( TRANSFORM )
             {
 #ifndef HB_CLP_STRICT
                /* This is not Clipper compatible */
-               if( *szResult >= '1' && *szResult <= '9' &&
-                   ( nPicLen == 0 || *szPic == '9' || *szPic != *szResult ) )
+               if( *szResult >= '1' && *szResult <= '9' && ( nPicLen == 0 || *szPic == '9' || *szPic != *szResult ) )
                {
                   for( iCount = 1; static_cast< HB_SIZE >( iCount ) < i; iCount++ )
                   {
                      if( szResult[ iCount ] >= '0' && szResult[ iCount ] <= '9' &&
                          ( nPicLen == 0 || szPic[ iCount ] == '9' ||
                            szPic[ iCount ] != szResult[ iCount ] ) )
+                     {
                         szResult[ iCount ] = '*';
+                     }
                   }
                }
 #endif
@@ -671,7 +708,9 @@ HB_FUNC( TRANSFORM )
                   szBritish++;
                }
                else if( ! *szDateFormat )
+               {
                   break;
+               }
                else if( *szBritish &&
                         ( *szDateFormat == 'Y' || *szDateFormat == 'y' ||
                           *szDateFormat == 'D' || *szDateFormat == 'd' ||
@@ -685,7 +724,9 @@ HB_FUNC( TRANSFORM )
                   while( szDateFormat[ -1 ] == szDateFormat[ 0 ] );
                }
                else
+               {
                   szNewFormat[ nFor ] = *szDateFormat++;
+               }
             }
             szNewFormat[ nFor ] = '\0';
             szDateFormat = szNewFormat;
@@ -748,9 +789,13 @@ HB_FUNC( TRANSFORM )
 
          szResult = static_cast< char * >( hb_xgrab( 29 ) );
          if( ( uiPicFlags & ( PF_DATE | PF_TIME ) ) != PF_TIME )
+         {
             szDateFormat = hb_setGetDateFormat();
+         }
          if( ( uiPicFlags & ( PF_DATE | PF_TIME ) ) != PF_DATE )
+         {
             szTimeFormat = hb_setGetTimeFormat();
+         }
 
 #ifndef HB_CLP_STRICT
          if( szDateFormat && ( uiPicFlags & PF_BRITISH ) )
@@ -775,7 +820,9 @@ HB_FUNC( TRANSFORM )
                   szBritish++;
                }
                else if( ! *szDateFormat )
+               {
                   break;
+               }
                else if( *szBritish &&
                         ( *szDateFormat == 'Y' || *szDateFormat == 'y' ||
                           *szDateFormat == 'D' || *szDateFormat == 'd' ||
@@ -789,7 +836,9 @@ HB_FUNC( TRANSFORM )
                   while( szDateFormat[ -1 ] == szDateFormat[ 0 ] );
                }
                else
+               {
                   szNewFormat[ nFor ] = *szDateFormat++;
+               }
             }
             szNewFormat[ nFor ] = '\0';
             szDateFormat = szNewFormat;
@@ -800,9 +849,13 @@ HB_FUNC( TRANSFORM )
          if( szTimeFormat )
          {
             if( szDateFormat )
+            {
                hb_timeStampFormat( szResult, szDateFormat, szTimeFormat, lDate, lTime );
+            }
             else
+            {
                hb_timeFormat( szResult, szTimeFormat, lTime );
+            }
          }
          else
          {
@@ -874,7 +927,9 @@ HB_FUNC( TRANSFORM )
          for( ; ( nPicLen || ! bDone ) && ! bExit; nResultPos++, szPic++, nPicLen-- )
          {
             if( nPicLen )
+            {
                cPic = *szPic;
+            }
             else
             {
                cPic  = 'L';
@@ -892,7 +947,9 @@ HB_FUNC( TRANSFORM )
                      bDone = HB_TRUE;           /* Logical written */
                   }
                   else
+                  {
                      szResult[ nResultPos ] = ' ';
+                  }
 
                   break;
 
@@ -906,7 +963,9 @@ HB_FUNC( TRANSFORM )
                      bDone = HB_TRUE;
                   }
                   else
+                  {
                      szResult[ nResultPos ] = ' ';
+                  }
 
                   break;
 
@@ -915,7 +974,9 @@ HB_FUNC( TRANSFORM )
             }
 
             if( ! ( uiPicFlags & PF_REMAIN ) )
+            {
                bExit = HB_TRUE;
+            }
          }
       }
 
@@ -931,7 +992,9 @@ HB_FUNC( TRANSFORM )
       if( ! bError )
       {
          if( uiPicFlags & PF_EMPTY )
+         {
             memset( szResult, ' ', nResultPos );
+         }
          else if( uiPicFlags & PF_LEFT )
          {
             /* Trim left and pad with spaces */
@@ -976,9 +1039,13 @@ HB_FUNC( TRANSFORM )
 
             szStr = hb_itemString( pValue, &nLen, &bFreeReq );
             if( bFreeReq )
+            {
                hb_retclen_buffer( szStr, nLen );
+            }
             else
+            {
                hb_retclen( szStr, nLen );
+            }
          }
       }
       else if( HB_IS_DATE( pValue ) )
@@ -1001,13 +1068,19 @@ HB_FUNC( TRANSFORM )
          hb_retc_const( hb_itemGetL( pValue ) ? "T" : "F" );
       }
       else
+      {
          bError = HB_TRUE;
+      }
    }
    else
+   {
       bError = HB_TRUE;
+   }
 
    /* If there was any parameter error, launch a runtime error */
 
    if( bError )
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 1122, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }

@@ -66,11 +66,17 @@ HB_FUNC( HB_AT )
       HB_SIZE      nFrom, nPos = 0;
 
       if( nStart <= 1 )
+      {
          nStart = nFrom = 0;
+      }
       else if( HB_CDP_ISCHARIDX( cdp ) )
+      {
          nFrom = hb_cdpTextPos( cdp, pszText, nTextLength, --nStart );
+      }
       else
+      {
          nFrom = --nStart;
+      }
 
       if( nFrom < nTextLength )
       {
@@ -82,18 +88,26 @@ HB_FUNC( HB_AT )
          {
             nTo = hb_parns( 4 );
             if( nTo <= nStart )
+            {
                nTo = 0;
+            }
             else
             {
                nTo -= nStart;
                if( HB_CDP_ISCHARIDX( cdp ) )
+               {
                   nTo = hb_cdpTextPos( cdp, pszText, nTextLength, nTo );
+               }
                if( nTo > nTextLength )
+               {
                   nTo = nTextLength;
+               }   
             }
          }
          else
+         {
             nTo = nTextLength;
+         }
 
          if( nTo > 0 )
          {
@@ -102,16 +116,22 @@ HB_FUNC( HB_AT )
             if( nPos > 0 )
             {
                if( HB_CDP_ISCHARIDX( cdp ) )
+               {
                   nPos = hb_cdpTextLen( cdp, pszText, nPos - 1 ) + 1 + nStart;
+               }
                else
+               {
                   nPos += nFrom;
+               }
             }
          }
       }
       hb_retns( nPos );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 1108, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( AT )
@@ -121,16 +141,19 @@ HB_FUNC( AT )
 
    if( pText && pSub )
    {
-      HB_SIZE nPos = hb_strAt( hb_itemGetCPtr( pSub ), hb_itemGetCLen( pSub ),
-                               hb_itemGetCPtr( pText ), hb_itemGetCLen( pText ) );
+      HB_SIZE nPos = hb_strAt( hb_itemGetCPtr( pSub ), hb_itemGetCLen( pSub ), hb_itemGetCPtr( pText ), hb_itemGetCLen( pText ) );
       if( nPos )
       {
          PHB_CODEPAGE cdp = hb_vmCDP();
          if( HB_CDP_ISCHARIDX( cdp ) )
+         {
             nPos = hb_cdpTextLen( cdp, hb_itemGetCPtr( pText ), nPos - 1 ) + 1;
+         }
       }
       hb_retns( nPos );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 1108, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }

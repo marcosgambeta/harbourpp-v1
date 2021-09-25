@@ -125,8 +125,10 @@ void hb_idleReset( void )
    PHB_IDLEDATA pIdleData = ( PHB_IDLEDATA ) hb_stackGetTSD( &s_idleData );
 
    if( pIdleData->iIdleTask == pIdleData->iIdleMaxTask && ! hb_setGetIdleRepeat() )
+   {
       pIdleData->iIdleTask = 0;
-
+   }
+   
    pIdleData->fCollectGarbage = HB_TRUE;
 }
 
@@ -181,9 +183,13 @@ HB_FUNC( HB_IDLEADD )
       ++pIdleData->iIdleMaxTask;
 
       if( ! pIdleData->pIdleTasks )
+      {
          pIdleData->pIdleTasks = static_cast< PHB_ITEM * >( hb_xgrab( sizeof( PHB_ITEM ) ) );
+      }
       else
+      {
          pIdleData->pIdleTasks = static_cast< PHB_ITEM * >( hb_xrealloc( pIdleData->pIdleTasks, sizeof( PHB_ITEM ) * pIdleData->iIdleMaxTask ) );
+      }
 
       /* store a copy of passed codeblock
        */
@@ -224,7 +230,9 @@ HB_FUNC( HB_IDLEDEL )
                }
                pIdleData->pIdleTasks = static_cast< PHB_ITEM * >( hb_xrealloc( pIdleData->pIdleTasks, sizeof( PHB_ITEM ) * pIdleData->iIdleMaxTask ) );
                if( pIdleData->iIdleTask >= pIdleData->iIdleMaxTask )
+               {
                   pIdleData->iIdleTask = 0;
+               }
             }
             else
             {

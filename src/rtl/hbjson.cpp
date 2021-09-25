@@ -154,7 +154,9 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx,
          if( pCtx->pId[ nIndex ] == id )
          {
             if( ! fEOL && pCtx->iIndent )
+            {
                _hb_jsonCtxAddIndent( pCtx, nLevel );
+            }
             _hb_jsonCtxAdd( pCtx, "null", 4 );
             return;
          }
@@ -202,7 +204,9 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx,
          {
             _hb_jsonCtxAdd( pCtx, szString + nPos, nPos2 - nPos );
             if( nPos2 >= nLen )
+            {
                break;
+            }
             nPos = nPos2;
          }
 
@@ -247,12 +251,16 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx,
       int i = 0;
 
       if( fNeg )
+      {
          nVal = -nVal;
+      }
       do
          buf[ sizeof( buf ) - ++i ] = ( nVal % 10 ) + '0';
       while( ( nVal /= 10 ) != 0 );
       if( fNeg )
+      {
          buf[ sizeof( buf ) - ++i ] = '-';
+      }
       _hb_jsonCtxAdd( pCtx, &buf[ sizeof( buf ) - i ], i );
    }
    else if( HB_IS_NUMERIC( pValue ) )
@@ -271,10 +279,13 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx,
    else if( HB_IS_LOGICAL( pValue ) )
    {
       if( hb_itemGetL( pValue ) )
+      {
          _hb_jsonCtxAdd( pCtx, "true", 4 );
+      }
       else
+      {
          _hb_jsonCtxAdd( pCtx, "false", 5 );
-
+      }
    }
    else if( HB_IS_DATE( pValue ) )
    {
@@ -302,7 +313,9 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx,
          HB_SIZE nIndex;
 
          if( pCtx->iIndent )
+         {
             _hb_jsonCtxAddIndent( pCtx, nLevel );
+         }
 
          _hb_jsonCtxAdd( pCtx, "[", 1 );
 
@@ -311,15 +324,19 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx,
             PHB_ITEM pItem = hb_arrayGetItemPtr( pValue, nIndex );
 
             if( nIndex > 1 )
+            {
                _hb_jsonCtxAdd( pCtx, ",", 1 );
+            }
 
             if( pCtx->iIndent )
+            {
                _hb_jsonCtxAdd( pCtx, pCtx->szEol, pCtx->iEolLen );
+            }
 
-            if( pCtx->iIndent &&
-                ! ( ( HB_IS_ARRAY( pItem ) || HB_IS_HASH( pItem ) ) &&
-                    hb_itemSize( pItem ) > 0 ) )
+            if( pCtx->iIndent && ! ( ( HB_IS_ARRAY( pItem ) || HB_IS_HASH( pItem ) ) && hb_itemSize( pItem ) > 0 ) )
+            {
                _hb_jsonCtxAddIndent( pCtx, ( nLevel + 1 ) );
+            }
 
             _hb_jsonEncode( pItem, pCtx, nLevel + 1, HB_FALSE, cdp );
          }
@@ -331,7 +348,9 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx,
          _hb_jsonCtxAdd( pCtx, "]", 1 );
       }
       else
+      {
          _hb_jsonCtxAdd( pCtx, "[]", 2 );
+      }
    }
    else if( HB_IS_HASH( pValue ) )
    {
@@ -340,7 +359,9 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx,
       if( nLen )
       {
          if( pCtx->iIndent )
+         {
             _hb_jsonCtxAddIndent( pCtx, nLevel );
+         }
 
          _hb_jsonCtxAdd( pCtx, "{", 1 );
 
@@ -353,7 +374,9 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx,
                PHB_ITEM pItem = hb_hashGetValueAt( pValue, nIndex );
 
                if( nIndex > 1 )
+               {
                   _hb_jsonCtxAdd( pCtx, ",", 1 );
+               }
 
                if( pCtx->iIndent )
                {
@@ -384,7 +407,9 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx,
          _hb_jsonCtxAdd( pCtx, "}", 1 );
       }
       else
+      {
          _hb_jsonCtxAdd( pCtx, "{}", 2 );
+      }
    }
    else
    {
@@ -392,7 +417,6 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx,
       _hb_jsonCtxAdd( pCtx, "null", 4 );
    }
 }
-
 
 static const char * _skipws( const char * szSource )
 {
@@ -457,19 +481,24 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
                      char c = *++szSource;
                      wc <<= 4;
                      if( c >= '0' && c <= '9' )
+                     {
                         wc += c - '0';
+                     }
                      else if( c >= 'A' && c <= 'F' )
+                     {
                         wc += c - 'A' + 10;
+                     }
                      else if( c >= 'a' && c <= 'f' )
+                     {
                         wc += c - 'a' + 10;
+                     }
                      else
                      {
                         hb_xfree( szDest );
                         return nullptr;
                      }
                   }
-                  szHead += hb_cdpU16ToStr( cdp ? cdp : hb_vmCDP(), HB_CDP_ENDIAN_NATIVE,
-                                            &wc, 1, szHead, szDest + nAlloc - szHead );
+                  szHead += hb_cdpU16ToStr( cdp ? cdp : hb_vmCDP(), HB_CDP_ENDIAN_NATIVE, &wc, 1, szHead, szDest + nAlloc - szHead );
                   break;
                }
                default:
@@ -479,7 +508,9 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
             szSource++;
          }
          else if( *( const unsigned char * ) szSource >= ' ' )
+         {
             *szHead++ = *szSource++;
+         }
          else
          {
             hb_xfree( szDest );
@@ -487,9 +518,13 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
          }
       }
       if( cdp && hb_vmCDP() != cdp )
+      {
          hb_itemPutStrLen( pValue, cdp, szDest, szHead - szDest );
+      }
       else
+      {
          hb_itemPutCL( pValue, szDest, szHead - szDest );
+      }
       hb_xfree( szDest );
       return szSource + 1;
    }
@@ -504,7 +539,9 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
 
       fNeg = *szSource == '-';
       if( fNeg )
+      {
          szSource++;
+      }
 
       while( *szSource >= '0' && *szSource <= '9' )
       {
@@ -534,7 +571,9 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
          szSource++;
          fNegExp = *szSource == '-';
          if( fNegExp )
+         {
             szSource++;
+         }
 
          while( *szSource >= '0' && *szSource <= '9' )
          {
@@ -547,14 +586,20 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
             fDbl = HB_TRUE;
          }
          if( fNegExp )
+         {
             iDec += iExp;
+         }
          dblValue = hb_numExpConv( dblValue, fNegExp ? iExp : -iExp );
       }
 
       if( fDbl )
+      {
          hb_itemPutNDDec( pValue, hb_numRound( fNeg ? -dblValue : dblValue, iDec ), iDec );
+      }
       else
+      {
          hb_itemPutNInt( pValue, fNeg ? -nValue : nValue );
+      }
       return szSource;
    }
    else if( ! strncmp( szSource, "null", 4 ) )
@@ -597,7 +642,9 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
                continue;
             }
             else if( *szSource == ']' )
+            {
                break;
+            }
             else
             {
                hb_itemRelease( pItem );
@@ -638,7 +685,9 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
                continue;
             }
             else if( *szSource == '}' )
+            {
                break;
+            }
             else
             {
                hb_itemRelease( pItemKey );
@@ -670,12 +719,16 @@ char * hb_jsonEncodeCP( PHB_ITEM pValue, HB_SIZE * pnLen, int iIndent, PHB_CODEP
    pCtx->iIndent = iIndent;
    pCtx->szEol = hb_setGetEOL();
    if( ! pCtx->szEol || ! pCtx->szEol[ 0 ] )
+   {
       pCtx->szEol = hb_conNewLine();
+   }
    pCtx->iEolLen = static_cast< int >( strlen( pCtx->szEol ) );
 
    _hb_jsonEncode( pValue, pCtx, 0, HB_FALSE, cdp );
    if( iIndent )
+   {
       _hb_jsonCtxAdd( pCtx, pCtx->szEol, pCtx->iEolLen );
+   }
 
    nLen = pCtx->pHead - pCtx->pBuffer;
    szRet = static_cast< char * >( hb_xrealloc( pCtx->pBuffer, nLen + 1 ) );
@@ -683,7 +736,9 @@ char * hb_jsonEncodeCP( PHB_ITEM pValue, HB_SIZE * pnLen, int iIndent, PHB_CODEP
    hb_xfree( pCtx->pId );
    hb_xfree( pCtx );
    if( pnLen )
+   {
       *pnLen = nLen;
+   }
    return szRet;
 }
 
@@ -699,9 +754,13 @@ HB_SIZE hb_jsonDecodeCP( const char * szSource, PHB_ITEM pValue, PHB_CODEPAGE cd
 
    sz = szSource ? _hb_jsonDecode( _skipws( szSource ), pItem, cdp ) : nullptr;
    if( ! pValue )
+   {
       hb_itemRelease( pItem );
+   }
    if( sz )
+   {
       return sz - szSource;
+   }
    return 0;
 }
 
@@ -719,7 +778,9 @@ static PHB_CODEPAGE _hb_jsonCdpPar( int iParam )
       const char * szCdp = hb_parc( iParam );
 
       if( szCdp )
+      {
          return hb_cdpFindExt( szCdp );
+      }
    }
    return nullptr;
 }
@@ -749,5 +810,7 @@ HB_FUNC( HB_JSONDECODE )
       hb_itemRelease( pItem );
    }
    else
+   {
       hb_itemReturnRelease( pItem );
+   }
 }

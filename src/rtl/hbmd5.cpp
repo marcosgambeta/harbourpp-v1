@@ -260,12 +260,16 @@ static void hb_md5_count( const void * data, HB_SIZE nLen, char * digest, const 
       hb_md5go( &md5 );
    }
    if( init_block )
+   {
       nLen += 64;
+   }
    /* prepare additional block(s) */
    memset( buf, 0, sizeof( buf ) );
    n = nLen & 63;
    if( n )
+   {
       memcpy( buf, ucdata, n );
+   }
    buf[ n ] = 0x80;
    /* count bits length */
    i = 56;
@@ -308,9 +312,13 @@ void hb_hmac_md5( const void * key, HB_SIZE nKeyLen,
 
    memset( init_block, 0, sizeof( init_block ) );
    if( nKeyLen <= sizeof( init_block ) )
+   {
       memcpy( init_block, key, nKeyLen );
+   }
    else
+   {
       hb_md5( key, nKeyLen, init_block );
+   }
 
    for( i = 0; i < static_cast< int >( sizeof( init_block ) ); ++i )
       init_block[ i ] ^= IPAD;
@@ -347,7 +355,9 @@ HB_BOOL hb_md5file( const char * pszFileName, char * digest )
       hb_md5accinit( md5.accum );
       n = hb_fileRead( pFile, readbuf, MAX_FBUF, -1 );
       if( n == static_cast< HB_SIZE >( FS_ERROR ) )
+      {
          n = 0;
+      }
       flen += n;
       while( n == MAX_FBUF )
       {
@@ -358,7 +368,9 @@ HB_BOOL hb_md5file( const char * pszFileName, char * digest )
          }
          n = hb_fileRead( pFile, readbuf, MAX_FBUF, -1 );
          if( n == static_cast< HB_SIZE >( FS_ERROR ) )
+         {
             n = 0;
+         }
          flen += n;
       }
       hb_fileClose( pFile );
@@ -372,7 +384,9 @@ HB_BOOL hb_md5file( const char * pszFileName, char * digest )
       }
       memset( buf, 0, sizeof( buf ) );
       if( n )
+      {
          memcpy( buf, readbuf + i, n );
+      }
       buf[ n ] = 0x80;
       i = 56;
       if( n >= 56 )
@@ -416,7 +430,9 @@ HB_FUNC( HB_MD5 )  /* Considered insecure. Use SHA256 or higher instead. */
          hb_retclen( digest, HB_SIZEOFARRAY( digest ) - 1 );
       }
       else
+      {
          hb_retclen( dststr, HB_SIZEOFARRAY( dststr ) );
+      }
       if( ! hb_parl( 2 ) )
       {
          char digest[ ( sizeof( dststr ) * 2 ) + 1 ];
@@ -424,10 +440,14 @@ HB_FUNC( HB_MD5 )  /* Considered insecure. Use SHA256 or higher instead. */
          hb_retclen( digest, HB_SIZEOFARRAY( digest ) - 1 );
       }
       else
+      {
          hb_retclen( dststr, HB_SIZEOFARRAY( dststr ) );
+      }
    }
    else
+   {
       hb_retc_null();  /* return empty string on wrong call */
+   }
 }
 
 HB_FUNC( HB_MD5FILE )  /* Considered insecure. Use SHA256 or higher instead. */
@@ -444,10 +464,14 @@ HB_FUNC( HB_MD5FILE )  /* Considered insecure. Use SHA256 or higher instead. */
          hb_retclen( digest, HB_SIZEOFARRAY( digest ) - 1 );
       }
       else
+      {
          hb_retclen( dststr, HB_SIZEOFARRAY( dststr ) );
+      }
    }
    else
+   {
       hb_retc_null(); /* return empty string on wrong call */
+   }
 }
 
 HB_FUNC( HB_HMAC_MD5 )
@@ -464,5 +488,7 @@ HB_FUNC( HB_HMAC_MD5 )
       hb_retclen( digest, HB_SIZEOFARRAY( digest ) - 1 );
    }
    else
+   {
       hb_retclen( dststr, HB_SIZEOFARRAY( dststr ) );
+   }
 }

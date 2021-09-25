@@ -236,12 +236,16 @@ HB_FUNC( HB_COMRECV )
       {
          long lRead = hb_parnl( 3 );
          if( lRead >= 0 && lRead < static_cast< long >( nLen ) )
+         {
             nLen = lRead;
+         }
       }
       hb_retnl( hb_comRecv( hb_parni( 1 ), pBuffer, static_cast< long >( nLen ), hb_parnint( 4 ) ) );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 }
 
 HB_FUNC( HB_COMSEND )
@@ -253,7 +257,9 @@ HB_FUNC( HB_COMSEND )
       long lParam = hb_parnl( 3 );
 
       if( lParam >= 0 && lParam < lLen )
+      {
          lLen = lParam;
+      }
    }
    hb_retnl( hb_comSend( hb_parni( 1 ), hb_parc( 2 ), lLen, hb_parnint( 4 ) ) );
 }

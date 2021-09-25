@@ -461,7 +461,9 @@ HB_BOOL hb_fileRegisterPart( HB_FILE_FUNCS * pFuncs )
         iCount++, pDummyFunc++, pFunction++ )
    {
       if( * pFunction == nullptr )
+      {
          * pFunction = * pDummyFunc;
+      }
    }
 
    return hb_fileRegisterFull( pFuncs );

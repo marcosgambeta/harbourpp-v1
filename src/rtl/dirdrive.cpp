@@ -50,17 +50,25 @@
 HB_FUNC( HB_DIRCREATE )
 {
    if( HB_ISCHAR( 1 ) )
+   {
       hb_retni( hb_fsMkDir( hb_parc( 1 ) ) ? 0 : hb_fsError() );
+   }
    else
+   {
       hb_retni( F_ERROR );
+   }   
 }
 
 HB_FUNC( HB_DIRDELETE )
 {
    if( HB_ISCHAR( 1 ) )
+   {
       hb_retni( hb_fsRmDir( hb_parc( 1 ) ) ? 0 : hb_fsError() );
+   }
    else
+   {
       hb_retni( F_ERROR );
+   }   
 }
 
 /* NOTE: Clipper 5.3 functions */
@@ -70,9 +78,13 @@ HB_FUNC( HB_DIRDELETE )
 HB_FUNC( DIRCHANGE )
 {
    if( HB_ISCHAR( 1 ) )
+   {
       hb_retni( hb_fsChDir( hb_parc( 1 ) ) ? 0 : hb_fsError() );
+   }
    else
+   {
       hb_retni( F_ERROR );
+   }   
 }
 
 /* NOTE: Clipper 5.3 NG incorrectly states that the name of this function is
@@ -93,9 +105,13 @@ HB_FUNC( ISDISK )
    if( szDrive )
    {
       if( *szDrive >= 'A' && *szDrive <= 'Z' )
+      {
          fResult = hb_fsIsDrv( *szDrive - 'A' ) == 0;
+      }
       else if( *szDrive >= 'a' && *szDrive <= 'z' )
+      {
          fResult = hb_fsIsDrv( *szDrive - 'a' ) == 0;
+      }
    }
    hb_retl( fResult );
 }
@@ -108,9 +124,13 @@ HB_FUNC( DISKCHANGE )
    if( szDrive )
    {
       if( *szDrive >= 'A' && *szDrive <= 'Z' )
+      {
          fResult = hb_fsChDrv( *szDrive - 'A' ) == 0;
+      }
       else if( *szDrive >= 'a' && *szDrive <= 'z' )
+      {
          fResult = hb_fsChDrv( *szDrive - 'a' ) == 0;
+      }
    }
    hb_retl( fResult );
 }

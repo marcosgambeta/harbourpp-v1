@@ -62,11 +62,17 @@ HB_FUNC( HB_HEXTONUM )
          int iDigit;
          char c = *szHex++;
          if( c >= '0' && c <= '9' )
+         {
             iDigit = c - '0';
+         }
          else if( c >= 'A' && c <= 'F' )
+         {
             iDigit = c - ( 'A' - 10 );
+         }
          else if( c >= 'a' && c <= 'f' )
+         {
             iDigit = c - ( 'a' - 10 );
+         }
          else
          {
             nNum = 0;
@@ -77,7 +83,9 @@ HB_FUNC( HB_HEXTONUM )
       hb_retnint( nNum );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 }
 
 HB_FUNC( HB_NUMTOHEX )
@@ -100,9 +108,13 @@ HB_FUNC( HB_NUMTOHEX )
    }
 
    if( HB_ISNUM( 1 ) )
+   {
       nNum = hb_parnint( 1 );
+   }
    else if( HB_ISPOINTER( 1 ) )
+   {
       nNum = reinterpret_cast< HB_PTRUINT >( hb_parptr( 1 ) );
+   }
    else
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -162,7 +174,9 @@ HB_FUNC( HB_STRTOHEX )
       hb_retclen_buffer( szDest, nDest );
    }
    else
+   {
       hb_retc_null();
+   }   
 }
 
 HB_FUNC( HB_HEXTOSTR )
@@ -188,10 +202,10 @@ HB_FUNC( HB_HEXTOSTR )
       do
       {
          char c = *szPtr++;
-         if( ( c >= '0' && c <= '9' ) ||
-             ( c >= 'A' && c <= 'F' ) ||
-             ( c >= 'a' && c <= 'f' ) )
+         if( ( c >= '0' && c <= '9' ) || ( c >= 'A' && c <= 'F' ) || ( c >= 'a' && c <= 'f' ) )
+         {
             ++nDest;
+         }
       }
       while( --ul );
 
@@ -207,13 +221,21 @@ HB_FUNC( HB_HEXTOSTR )
          {
             char c = *szStr++;
             if( c >= '0' && c <= '9' )
+            {
                iVal += c - '0';
+            }
             else if( c >= 'A' && c <= 'F' )
+            {
                iVal += c - ( 'A' - 10 );
+            }
             else if( c >= 'a' && c <= 'f' )
+            {
                iVal += c - ( 'a' - 10 );
+            }
             else
+            {
                continue;
+            }
 
             if( iVal & 0x100 )
             {

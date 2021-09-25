@@ -97,8 +97,10 @@ double hb_secondsCPU( int n )
 #endif
 
    if( ( n < 1 || n > 3 ) && ( n < 11 || n > 13 ) )
+   {
       n = 3;
-
+   }
+   
 #if defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS )
    {
       struct tms tm;
@@ -109,14 +111,22 @@ double hb_secondsCPU( int n )
       {
          n -= 10;
          if( n & 1 )
+         {
             d += tm.tms_cutime;
+         }
          if( n & 2 )
+         {
             d += tm.tms_cstime;
+         }
       }
       if( n & 1 )
+      {
          d += tm.tms_utime;
+      }
       if( n & 2 )
+      {
          d += tm.tms_stime;
+      }
 
       /* In POSIX-1996 the CLK_TCK symbol is mentioned as obsolescent */
       #if 0
@@ -126,20 +136,19 @@ double hb_secondsCPU( int n )
    }
 #else
    if( n > 10 )
+   {
       n -= 10;
+   }
 #if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
-   if( hb_iswinnt() &&
-       GetProcessTimes( GetCurrentProcess(), &Create, &Exit, &Kernel, &User ) )
+   if( hb_iswinnt() && GetProcessTimes( GetCurrentProcess(), &Create, &Exit, &Kernel, &User ) )
    {
       if( n & 1 )
       {
-         d += static_cast< double >( ( static_cast< HB_MAXINT >( User.dwHighDateTime ) << 32 ) +
-                             static_cast< HB_MAXINT >( User.dwLowDateTime ) );
+         d += static_cast< double >( ( static_cast< HB_MAXINT >( User.dwHighDateTime ) << 32 ) + static_cast< HB_MAXINT >( User.dwLowDateTime ) );
       }
       if( n & 2 )
       {
-         d += static_cast< double >( ( static_cast< HB_MAXINT >( Kernel.dwHighDateTime ) << 32 ) +
-                             static_cast< HB_MAXINT >( Kernel.dwLowDateTime ) );
+         d += static_cast< double >( ( static_cast< HB_MAXINT >( Kernel.dwHighDateTime ) << 32 ) + static_cast< HB_MAXINT >( Kernel.dwLowDateTime ) );
       }
       d /= 10000000.0;
    }
@@ -147,7 +156,9 @@ double hb_secondsCPU( int n )
 #elif defined( HB_OS_OS2 )
 
    if( s_timer_interval == 0 )
+   {
       DosQuerySysInfo( QSV_TIMER_INTERVAL, QSV_TIMER_INTERVAL, ( PVOID ) &s_timer_interval, sizeof( ULONG ) );
+   }
 
    pBuf = ( QSGREC ** ) hb_xalloc( BUFSIZE );
 
@@ -168,10 +179,14 @@ double hb_secondsCPU( int n )
          for( int i = 0; i < pPrec->cTCB; i++, pTrec++ )
          {
             if( n & 1 )
+            {
                d += pTrec->usertime;
+            }
 
             if( n & 2 )
+            {
                d += pTrec->systime;
+            }
          }
 
          d = d * 10.0 / s_timer_interval;
@@ -187,7 +202,9 @@ double hb_secondsCPU( int n )
                calculate process time */
 
       if( n & 1 )
+      {
          d = hb_dateSeconds();
+      }
    }
 #endif
    return d;

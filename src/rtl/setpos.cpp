@@ -52,7 +52,9 @@
 HB_FUNC( SETPOS )  /* Sets the screen position */
 {
    if( HB_ISNUM( 1 ) && HB_ISNUM( 2 ) )
+   {
       hb_gtSetPos( hb_parni( 1 ), hb_parni( 2 ) );
+   }
 
 #if defined( HB_COMPAT_C53 ) || defined( HB_CLP_UNDOC )
    /* NOTE: Both C5.2e and C5.3 does that, but it's only documented

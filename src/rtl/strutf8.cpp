@@ -66,21 +66,29 @@ HB_FUNC( HB_STRISUTF8 )
             while( ( c <<= 1 ) & 0x80  )
                ++i;
             if( i == 0 || static_cast< HB_SIZE >( i ) >= nLen )
+            {
                break;
+            }
             nLen -= i;
             do
                if( ( *szText++ & 0xC0 ) != 0x80 )
+               {
                   break;
+               }
             while( --i );
             if( i != 0 )
+            {
                break;
+            }
 
             fUtf8 = HB_TRUE;
          }
       }
       while( --nLen );
       if( nLen != 0 )
+      {
          fUtf8 = HB_FALSE;
+      }
    }
 
    hb_retl( fUtf8 );

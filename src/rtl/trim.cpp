@@ -97,12 +97,18 @@ HB_FUNC( LTRIM )
       szText = hb_strLTrim( hb_itemGetCPtr( pText ), &nLen );
 
       if( nLen == nSrc )
+      {
          hb_itemReturn( pText );
+      }
       else
+      {
          hb_retclen( szText, nLen );
+      }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 1101, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 /* trims trailing spaces from a string */
@@ -122,13 +128,19 @@ HB_FUNC( RTRIM )
       nLen = hb_strRTrimLen( szText, nSrc, HB_FALSE );
 
       if( nLen == nSrc )
+      {
          hb_itemReturn( pText );
+      }
       else
+      {
          hb_retclen( szText, nLen );
+      }
    }
    else
+   {
       /* NOTE: "TRIM" is correct here [vszakats] */
       hb_errRT_BASE_SubstR( EG_ARG, 1100, nullptr, "TRIM", HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 /* synonymn for RTRIM */
@@ -152,9 +164,13 @@ HB_FUNC( ALLTRIM )
       szText = hb_strLTrim( szText, &nLen );
 
       if( nLen == nSrc )
+      {
          hb_itemReturn( pText );
+      }
       else
+      {
          hb_retclen( szText, nLen );
+      }
    }
    else
 #ifdef HB_COMPAT_C53

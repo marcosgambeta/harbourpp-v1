@@ -86,13 +86,17 @@ HB_FUNC( HB_MD5ENCRYPT )
          {
             int i = static_cast< int >( n & 0x0F );
             if( i == 0 )
+            {
                hb_md5_next_seed( vect, pszKey, iLen );
+            }
             pszData[ n ] = ( vect[ i ] ^= pszSource[ n ] );
          }
          hb_retclen_buffer( pszData, nLen );
       }
       else
+      {
          hb_retc_null();
+      }
    }
 }
 
@@ -121,13 +125,17 @@ HB_FUNC( HB_MD5DECRYPT )
          {
             int i = static_cast< int >( n & 0x0F );
             if( i == 0 )
+            {
                hb_md5_next_seed( vect, pszKey, iLen );
+            }
             pszData[ n ] = ( vect[ i ] ^ pszSource[ n ] );
             vect[ i ] = pszSource[ n ];
          }
          hb_retclen_buffer( pszData, nLen );
       }
       else
+      {
          hb_retc_null();
+      }
    }
 }

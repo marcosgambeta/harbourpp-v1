@@ -83,26 +83,40 @@ HB_FUNC( DO )
          pSelf = pItem;
       }
       else if( HB_IS_SYMBOL( pItem ) )
+      {
          hb_vmPush( pItem );
+      }
       else
+      {
          uiPCount = 0;
+      }
    }
 
    if( uiPCount > 0 )
    {
       if( pSelf )
+      {
          hb_vmPush( pSelf );
+      }
       else
+      {
          hb_vmPushNil();
+      }
 
       for( HB_USHORT uiParam = 2; uiParam <= uiPCount; ++uiParam )
          hb_vmPush( hb_stackItemFromBase( uiParam ) );
 
       if( pSelf )
+      {
          hb_vmSend( static_cast< HB_USHORT >( uiPCount - 1 ) );
+      }
       else
+      {
          hb_vmProc( static_cast< HB_USHORT >( uiPCount - 1 ) );
+      }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }

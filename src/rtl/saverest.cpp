@@ -66,14 +66,22 @@ static void hb_getScreenRange( int * piMin, int * piMax,
    }
 
    if( iFrom < 0 )
+   {
       iFrom = 0;
+   }
    else if( iFrom > iMax && ! fNoCheck )
+   {
       iFrom = iMax;
+   }
 
    if( iTo < 0 )
+   {
       iTo = 0;
+   }
    else if( iTo > iMax && ! fNoCheck )
+   {
       iTo = iMax;
+   }
 
    if( iFrom > iTo )
    {
@@ -130,6 +138,8 @@ HB_FUNC( RESTSCREEN )
       hb_gtRest( iTop, iLeft, iBottom, iRight, pBufStr );
 
       if( pBuffer )
+      {
          hb_xfree( pBuffer );
+      }
    }
 }

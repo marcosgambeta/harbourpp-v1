@@ -57,10 +57,14 @@ HB_FUNC( HB_BASE64ENCODE )
       HB_SIZE dst = ( 4 * ( ( len + 2 ) / 3 ) + 1 );
 
       if( lin <= 2 )
+      {
          lin = 0;
-
+      }
+      
       if( lin )
+      {
          dst += ( ( dst + lin - 1 ) / lin ) * 2;
+      }
       dst *= sizeof( char );
 
       if( dst > len )
@@ -113,8 +117,12 @@ HB_FUNC( HB_BASE64ENCODE )
          hb_retclen_buffer( t, p - t );
       }
       else
+      {
          hb_errRT_BASE( EG_STROVERFLOW, 9999, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      }   
    }
    else
+   {
       hb_retc_null();
+   }
 }

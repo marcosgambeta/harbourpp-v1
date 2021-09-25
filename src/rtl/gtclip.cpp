@@ -78,7 +78,9 @@ HB_BOOL hb_gt_setClipboard( const char * szClipData, HB_SIZE nLen )
    hb_threadEnterCriticalSection( &s_clipMtx );
 
    if( s_nClipboardLen )
+   {
       hb_xfree( s_szClipboardData );
+   }
    s_nClipboardLen = nLen;
    if( nLen )
    {
@@ -137,12 +139,16 @@ HB_BOOL hb_gt_winapi_setClipboardRaw( HB_UINT uFormat, void * pData, HB_SIZE nSi
                fResult = SetClipboardData( static_cast< UINT >( uFormat ), hglb ) != 0;
             }
             if( ! fResult )
+            {
                GlobalFree( hglb );
+            }
          }
       }
       else
+      {
          fResult = HB_TRUE;
-
+      }
+      
       CloseClipboard();
    }
    return fResult;
@@ -159,16 +165,18 @@ HB_BOOL hb_gt_winapi_setClipboard( HB_UINT uFormat, PHB_ITEM pItem )
       EmptyClipboard();
 
       if( uFormat == CF_UNICODETEXT )
+      {
          nSize = hb_itemCopyStrU16( pItem, HB_CDP_ENDIAN_NATIVE, nullptr, 0 );
+      }
       else
+      {
          nSize = hb_itemCopyStr( pItem, hb_setGetOSCP(), nullptr, 0 );
-
+      }
+      
       if( nSize )
       {
          /* Allocate a global memory object for the text. */
-         HGLOBAL hglb = GlobalAlloc( GMEM_MOVEABLE, ( nSize + 1 ) *
-                                     ( uFormat == CF_UNICODETEXT ?
-                                       sizeof( wchar_t ) : sizeof( char ) ) );
+         HGLOBAL hglb = GlobalAlloc( GMEM_MOVEABLE, ( nSize + 1 ) * ( uFormat == CF_UNICODETEXT ? sizeof( wchar_t ) : sizeof( char ) ) );
          if( hglb )
          {
             /* Lock the handle and copy the text to the buffer. */
@@ -177,22 +185,28 @@ HB_BOOL hb_gt_winapi_setClipboard( HB_UINT uFormat, PHB_ITEM pItem )
             if( lpMem )
             {
                if( uFormat == CF_UNICODETEXT )
-                  hb_itemCopyStrU16( pItem, HB_CDP_ENDIAN_NATIVE,
-                                     ( wchar_t * ) lpMem, nSize + 1 );
+               {
+                  hb_itemCopyStrU16( pItem, HB_CDP_ENDIAN_NATIVE, ( wchar_t * ) lpMem, nSize + 1 );
+               }
                else
-                  hb_itemCopyStr( pItem, hb_setGetOSCP(),
-                                  static_cast< char * >( lpMem ), nSize + 1 );
+               {
+                  hb_itemCopyStr( pItem, hb_setGetOSCP(), static_cast< char * >( lpMem ), nSize + 1 );
+               }
                ( void ) GlobalUnlock( hglb );
                /* Place the handle on the clipboard. */
                fResult = SetClipboardData( static_cast< UINT >( uFormat ), hglb ) != 0;
             }
             if( ! fResult )
+            {
                GlobalFree( hglb );
+            }
          }
       }
       else
+      {
          fResult = HB_TRUE;
-
+      }
+      
       CloseClipboard();
    }
    return fResult;
@@ -217,8 +231,9 @@ HB_BOOL hb_gt_winapi_getClipboard( HB_UINT uFormat, PHB_ITEM pItem )
                case CF_UNICODETEXT:
                   nSize = hb_wstrnlen( ( const wchar_t * ) lpMem, nSize >> 1 );
                   if( nSize )
-                     hb_itemPutStrLenU16( pItem, HB_CDP_ENDIAN_NATIVE,
-                                          ( const wchar_t * ) lpMem, nSize );
+                  {
+                     hb_itemPutStrLenU16( pItem, HB_CDP_ENDIAN_NATIVE, ( const wchar_t * ) lpMem, nSize );
+                  }
                   break;
                case CF_OEMTEXT:
                case CF_TEXT:
@@ -226,9 +241,9 @@ HB_BOOL hb_gt_winapi_getClipboard( HB_UINT uFormat, PHB_ITEM pItem )
                   /* fallthrough */
                default:
                   if( nSize )
-                     hb_itemPutStrLen( pItem, uFormat == CF_TEXT ?
-                                              hb_setGetOSCP() : nullptr,
-                                       static_cast< const char * >( lpMem ), nSize );
+                  {
+                     hb_itemPutStrLen( pItem, uFormat == CF_TEXT ? hb_setGetOSCP() : nullptr, static_cast< const char * >( lpMem ), nSize );
+                  }
                   break;
             }
             ( void ) GlobalUnlock( hglb );
@@ -238,7 +253,9 @@ HB_BOOL hb_gt_winapi_getClipboard( HB_UINT uFormat, PHB_ITEM pItem )
    }
 
    if( nSize == 0 )
+   {
       hb_itemPutC( pItem, nullptr );
+   }
 
    return nSize != 0;
 }

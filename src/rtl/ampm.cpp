@@ -63,8 +63,10 @@ HB_FUNC( AMPM )
    if( iHour == 0 || iHour == 24 )
    {
       if( nTimeLen < 2 )
+      {
          nTimeLen = 2;
-
+      }
+      
       pszResult[ 0 ] = '1';
       pszResult[ 1 ] = '2';
       bAM = HB_TRUE;
@@ -72,20 +74,26 @@ HB_FUNC( AMPM )
    else if( iHour > 12 )
    {
       if( nTimeLen < 2 )
+      {
          nTimeLen = 2;
-
+      }
+      
       iHour -= 12;
       pszResult[ 0 ] = static_cast< char >( iHour / 10 ) + '0';
       pszResult[ 1 ] = static_cast< char >( iHour % 10 ) + '0';
 
       if( pszResult[ 0 ] == '0' )
+      {
          pszResult[ 0 ] = ' ';
-
+      }
+      
       bAM = HB_FALSE;
    }
    else
+   {
       bAM = ( iHour != 12 );
-
+   }
+   
    memcpy( pszResult + nTimeLen, bAM ? " am" : " pm", 4 );
 
    hb_retclen_buffer( pszResult, nTimeLen + 3 );

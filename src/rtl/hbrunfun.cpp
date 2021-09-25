@@ -78,7 +78,9 @@ HB_FUNC( HB_RUN )
          iResult = system( hb_osEncodeCP( pszCommand, &pszFree, nullptr ) );
 
          if( pszFree )
+         {
             hb_xfree( pszFree );
+         }
 #endif
 
          hb_gtResume();
@@ -86,5 +88,7 @@ HB_FUNC( HB_RUN )
       hb_retni( iResult );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 }

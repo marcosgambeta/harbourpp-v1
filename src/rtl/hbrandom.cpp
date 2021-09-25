@@ -65,8 +65,9 @@ double hb_random_num( void )
 
    t = *seed;
    if( t == 0 )
-      t = ( HB_I32 )
-          ( ( hb_dateMilliSeconds() ^ reinterpret_cast< HB_PTRUINT >( hb_stackId() ) ) % MODULUS );
+   {
+      t = ( HB_I32 ) ( ( hb_dateMilliSeconds() ^ reinterpret_cast< HB_PTRUINT >( hb_stackId() ) ) % MODULUS );
+   }
 
 #if ! defined( HB_LONG_LONG_OFF )
    t = ( HB_I32 ) ( static_cast< HB_LONGLONG >( t ) * MULTIPLIER % MODULUS );
@@ -77,7 +78,9 @@ double hb_random_num( void )
 
       t = MULTIPLIER * ( t % Q ) - R * ( t / Q );
       if( t < 0 )
+      {
          t += MODULUS;
+      }   
    }
 #endif
 
@@ -95,9 +98,13 @@ void hb_random_seed( HB_I32 seed )
 static void hb_random( double dRnd )
 {
    if( ! HB_ISNUM( 1 ) )
+   {
       hb_retnd( dRnd );
+   }
    else if( ! HB_ISNUM( 2 ) )
+   {
       hb_retnd( dRnd * hb_parnd( 1 ) );
+   }
    else
    {
       double dX = hb_parnd( 2 );
@@ -130,9 +137,13 @@ HB_FUNC( HB_RANDNUM )
 static void hb_randomint( double dRnd )
 {
    if( ! HB_ISNUM( 1 ) )
+   {
       hb_retni( dRnd >= 0.5 ? 0 : 1 );
+   }
    else if( ! HB_ISNUM( 2 ) )
+   {
       hb_retnint( static_cast< HB_MAXINT >( 1 + ( dRnd * hb_parnint( 1 ) ) ) );
+   }
    else
    {
       HB_MAXINT lX = hb_parnint( 1 );

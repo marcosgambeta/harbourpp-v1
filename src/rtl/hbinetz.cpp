@@ -59,20 +59,27 @@ HB_FUNC( HB_INETCOMPRESS )
        iStrategy = hb_parnidef( 3, HB_ZLIB_STRATEGY_DEFAULT );
 
    if( iLevel == HB_ZLIB_COMPRESSION_DISABLE )
+   {
       hb_znetInetInitialize( pItem, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr );
+   }
    else
    {
       PHB_ZNETSTREAM pStream = hb_znetOpen( iLevel, iStrategy );
       if( pStream == nullptr )
+      {
          pItem = nullptr;  /* to force RTE */
-      if( hb_znetInetInitialize( pItem, pStream, hb_znetRead, hb_znetWrite,
-                                 hb_znetFlush, hb_znetClose, nullptr, nullptr ) )
+      }
+      if( hb_znetInetInitialize( pItem, pStream, hb_znetRead, hb_znetWrite, hb_znetFlush, hb_znetClose, nullptr, nullptr ) )
       {
          int keylen = static_cast< int >( hb_parclen( 4 ) );
          if( keylen )
+         {
             hb_znetEncryptKey( pStream, hb_parc( 4 ), keylen );
+         }
       }
       else if( pStream )
+      {
          hb_znetClose( pStream );
+      }
    }
 }

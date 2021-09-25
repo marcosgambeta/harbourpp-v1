@@ -78,7 +78,9 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest )
       {
          pError = hb_errRT_FileError( pError, nullptr, EG_OPEN, 2012, pszSource );
          if( hb_errLaunch( pError ) != E_RETRY )
+         {
             break;
+         }
       }
    }
    while( pSource == nullptr );
@@ -103,7 +105,9 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest )
          {
             pError = hb_errRT_FileError( pError, nullptr, EG_CREATE, 2012, pszDest );
             if( hb_errLaunch( pError ) != E_RETRY )
+            {
                break;
+            }
          }
       }
       while( pDest == nullptr );
@@ -122,8 +126,7 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest )
          buffer = static_cast< HB_UCHAR * >( hb_xgrab( BUFFER_SIZE ) );
          bRetVal = HB_TRUE;
 
-         while( ( nRead = hb_fileRead( pSource, buffer, BUFFER_SIZE, -1 ) ) != 0 &&
-                nRead != static_cast< HB_SIZE >( FS_ERROR ) )
+         while( ( nRead = hb_fileRead( pSource, buffer, BUFFER_SIZE, -1 ) ) != 0 && nRead != static_cast< HB_SIZE >( FS_ERROR ) )
          {
             HB_SIZE nWritten = 0;
 
@@ -131,7 +134,9 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest )
             {
                HB_SIZE nDone = hb_fileWrite( pDest, buffer + nWritten, nRead - nWritten, -1 );
                if( nDone != static_cast< HB_SIZE >( FS_ERROR ) )
+               {
                   nWritten += nDone;
+               }
                if( nWritten < nRead )
                {
                   pError = hb_errRT_FileError( pError, nullptr, EG_WRITE, 2016, pszDest );
@@ -145,7 +150,9 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest )
          }
 
          if( pError )
+         {
             hb_itemRelease( pError );
+         }
 
          hb_xfree( buffer );
 
@@ -160,7 +167,9 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest )
          HB_FATTR ulAttr;
 
          if( hb_fileAttrGet( pszSource, &ulAttr ) )
+         {
             hb_fileAttrSet( pszDest, ulAttr );
+         }
       }
 #endif
    }
@@ -178,8 +187,12 @@ HB_FUNC( __COPYFILE )
    if( szSource && szDest )
    {
       if( ! hb_copyfile( szSource, szDest ) )
+      {
          hb_retl( HB_FALSE );
+      }
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );  /* NOTE: Undocumented but existing Clipper Run-time error */
+   }
 }

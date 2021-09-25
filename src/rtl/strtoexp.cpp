@@ -125,9 +125,13 @@ HB_FUNC( HB_STRTOEXP )
          nRet = nLen + 2;
          pDst = pszResult = static_cast< char * >( hb_xgrab( nRet + 1 ) );
          if( ( iType & 1 ) == 0 )
+         {
             *pDst++ = ch = '"';
+         }
          else if( ( iType & 2 ) == 0 )
+         {
             *pDst++ = ch = '\'';
+         }
          else
          {
             *pDst++ = '[';

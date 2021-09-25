@@ -65,7 +65,9 @@ static void hb_xSaveRestRelease( void * cargo )
    PHB_SCRDATA pScrData = ( PHB_SCRDATA ) cargo;
 
    if( pScrData->buffer )
+   {
       hb_xfree( pScrData->buffer );
+   }   
 }
 
 static HB_TSD_NEW( s_scrData, sizeof( HB_SCRDATA ), nullptr, hb_xSaveRestRelease );
@@ -80,7 +82,9 @@ HB_FUNC( __XSAVESCREEN )
    pScrData->maxcol = hb_gtMaxCol();
    hb_gtRectSize( 0, 0, pScrData->maxrow, pScrData->maxcol, &nSize );
    if( pScrData->buffer )
+   {
       hb_xfree( pScrData->buffer );
+   }
    pScrData->buffer = hb_xgrab( nSize );
    hb_gtSave( 0, 0, pScrData->maxrow, pScrData->maxcol, pScrData->buffer );
 }

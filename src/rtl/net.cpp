@@ -108,7 +108,9 @@ char * hb_netname( void )
    lpValue[ MAX_COMPUTERNAME_LENGTH ] = TEXT( '\0' );
 
    if( lpValue[ 0 ] )
+   {
       return HB_OSSTRDUP( lpValue );
+   }
 
 #elif defined( HB_OS_DOS )
 
@@ -117,7 +119,9 @@ char * hb_netname( void )
       szValue[ 0 ] = szValue[ MAXGETHOSTNAME ] = '\0';
       gethostname( szValue, MAXGETHOSTNAME );
       if( szValue[ 0 ] )
+      {
          return hb_osStrDecode( szValue );
+      }
 #  else
       union REGS regs;
       struct SREGS sregs;
@@ -131,7 +135,9 @@ char * hb_netname( void )
       HB_DOS_INT86X( 0x21, &regs, &regs, &sregs );
 
       if( regs.h.ch != 0 && szValue[ 0 ] )
+      {
          return hb_osStrDecode( szValue );
+      }
 #  endif
 
 #elif ( defined( HB_OS_UNIX ) && ! defined( __WATCOMC__ ) ) || \
@@ -141,7 +147,9 @@ char * hb_netname( void )
    szValue[ 0 ] = szValue[ MAXGETHOSTNAME ] = '\0';
    gethostname( szValue, MAXGETHOSTNAME );
    if( szValue[ 0 ] )
+   {
       return hb_osStrDecode( szValue );
+   }
 
 #endif
 
@@ -153,7 +161,11 @@ HB_FUNC( NETNAME )
    char * buffer = hb_netname();
 
    if( buffer )
+   {
       hb_retc_buffer( buffer );
+   }
    else
+   {
       hb_retc_null();
+   }
 }

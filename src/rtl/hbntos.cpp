@@ -64,8 +64,10 @@ HB_FUNC( HB_NTOS )
             ++nToTrim;
 
          if( nToTrim )
+         {
             memmove( szResult, szResult + nToTrim, strlen( szResult + nToTrim ) + 1 );
-
+         }
+         
          hb_retc_buffer( szResult );
          return;
       }
@@ -89,7 +91,9 @@ HB_FUNC( HB_NTOC )
          HB_BOOL fNeg = nNumber < 0;
 
          if( fNeg )
+         {
             nNumber = -nNumber;
+         }
          szBuffer[ --iPos ] = '\0';
          do
          {
@@ -98,14 +102,19 @@ HB_FUNC( HB_NTOC )
          }
          while( nNumber != 0 );
          if( fNeg )
+         {
             szBuffer[ --iPos ] = '-';
+         }
 
          hb_retc( szBuffer + iPos );
       }
       else
-         hb_retc( hb_dblToStr( szBuffer, sizeof( szBuffer ),
-                               hb_itemGetND( pNumber ), hb_parnidef( 2, -1 ) ) );
+      {
+         hb_retc( hb_dblToStr( szBuffer, sizeof( szBuffer ), hb_itemGetND( pNumber ), hb_parnidef( 2, -1 ) ) );
+      }
    }
    else
+   {
       hb_retc_null();
+   }
 }

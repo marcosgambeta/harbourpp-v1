@@ -83,7 +83,9 @@ static gzFile hb_gzParam( int iParam )
    gzFile * gzHolder = ( gzFile * ) hb_parptrGC( &s_gcGZFuncs, iParam );
 
    if( gzHolder && *gzHolder )
+   {
       return *gzHolder;
+   }
 
    hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    return nullptr;
@@ -116,14 +118,15 @@ HB_FUNC( HB_GZOPEN )
 
       if( gz )
       {
-         gzFile * gzHolder = ( gzFile * ) hb_gcAllocate( sizeof( gzFile ),
-                                                         &s_gcGZFuncs );
+         gzFile * gzHolder = ( gzFile * ) hb_gcAllocate( sizeof( gzFile ), &s_gcGZFuncs );
          *gzHolder = gz;
          hb_retptrGC( gzHolder );
       }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 #endif
 }
 
@@ -145,14 +148,15 @@ HB_FUNC( HB_GZDOPEN )
 
       if( gz )
       {
-         gzFile * gzHolder = ( gzFile * ) hb_gcAllocate( sizeof( gzFile ),
-                                                         &s_gcGZFuncs );
+         gzFile * gzHolder = ( gzFile * ) hb_gcAllocate( sizeof( gzFile ), &s_gcGZFuncs );
          *gzHolder = gz;
          hb_retptrGC( gzHolder );
       }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 #endif
 }
 
@@ -178,7 +182,9 @@ HB_FUNC( HB_GZCLOSE )
       hb_retni( iResult );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 #endif
 }
 
@@ -192,10 +198,14 @@ HB_FUNC( HB_GZSETPARAMS )
    {
       gzFile gz = hb_gzParam( 1 );
       if( gz )
+      {
          hb_retni( gzsetparams( gz, hb_parni( 2 ), hb_parni( 3 ) ) );
+      }   
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 #endif
 }
 
@@ -220,7 +230,9 @@ HB_FUNC( HB_GZREAD )
          {
             HB_SIZE nLim = hb_parns( 3 );
             if( nLim < nLen )
+            {
                nLen = nLim;
+            }   
          }
 
          hb_vmUnlock();
@@ -231,7 +243,9 @@ HB_FUNC( HB_GZREAD )
       }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 #endif
 }
 
@@ -260,7 +274,9 @@ HB_FUNC( HB_GZWRITE )
       }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 #endif
 }
 
@@ -288,14 +304,20 @@ HB_FUNC( HB_GZGETS )
             hb_vmLock();
 
             if( szBuff != Z_NULL )
+            {
                hb_retc_buffer( szBuffer );
+            }
             else
+            {
                hb_xfree( szBuffer );
+            }
          }
       }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 #endif
 }
 
@@ -322,7 +344,9 @@ HB_FUNC( HB_GZPUTS )
       }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 #endif
 }
 
@@ -347,7 +371,9 @@ HB_FUNC( HB_GZPUTC )
       }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 #endif
 }
 
@@ -395,7 +421,9 @@ HB_FUNC( HB_GZUNGETC )
 #endif
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 #endif
 }
 
@@ -434,15 +462,16 @@ HB_FUNC( HB_GZSEEK )
          HB_MAXINT nResult;
 
          hb_vmUnlock();
-         nResult = gzseek( gz, ( z_off_t ) hb_parnint( 2 ),
-                           hb_parnidef( 3, SEEK_SET ) );
+         nResult = gzseek( gz, ( z_off_t ) hb_parnint( 2 ), hb_parnidef( 3, SEEK_SET ) );
          hb_vmLock();
 
          hb_retnint( nResult );
       }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 #endif
 }
 
@@ -558,7 +587,9 @@ HB_FUNC( HB_GZCLEARERR )
 #if ZLIB_VERNUM >= 0x1202
    gzFile gz = hb_gzParam( 1 );
    if( gz )
+   {
       gzclearerr( gz );
+   }
 #endif
 #endif
 }

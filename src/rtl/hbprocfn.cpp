@@ -80,17 +80,25 @@ HB_FUNC( HB_PROCESSOPEN )
       if( hProcess != FS_ERROR )
       {
          if( phStdIn )
+         {
             hb_stornint( ( HB_NHANDLE ) *phStdIn, 2 );
+         }
          if( phStdOut )
+         {
             hb_stornint( ( HB_NHANDLE ) *phStdOut, 3 );
+         }
          if( phStdErr && phStdOut != phStdErr )
+         {
             hb_stornint( ( HB_NHANDLE ) *phStdErr, 4 );
+         }
          hb_stornint( ulPID, 6 );
       }
       hb_retnint( ( HB_NHANDLE ) hProcess );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 }
 
 HB_FUNC( HB_PROCESSVALUE )
@@ -104,7 +112,9 @@ HB_FUNC( HB_PROCESSVALUE )
       hb_retni( iResult );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 }
 
 HB_FUNC( HB_PROCESSCLOSE )
@@ -118,7 +128,9 @@ HB_FUNC( HB_PROCESSCLOSE )
       hb_retl( fResult );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 }
 
 /* hb_processRun( <cCommand>, [ <cStdIn> ], [ @<cStdOut> ], [ @<cStdErr> ], ;
@@ -147,29 +159,38 @@ HB_FUNC( HB_PROCESSRUN )
       pStdOutPtr = pStdOut ? &pStdOutBuf : nullptr;
       pStdErrPtr = pStdErr ? ( pStdOut == pStdErr ? pStdOutPtr : &pStdErrBuf ) : nullptr;
 
-      iResult = hb_fsProcessRun( szName, szStdIn, hb_parclen( 2 ),
-                                 pStdOutPtr, &nStdOut, pStdErrPtr, &nStdErr,
+      iResult = hb_fsProcessRun( szName, szStdIn, hb_parclen( 2 ), pStdOutPtr, &nStdOut, pStdErrPtr, &nStdErr,
                                  fDetach );
       hb_fsSetFError( hb_fsError() );
 
       if( pStdOutBuf )
       {
          if( ! hb_storclen_buffer( pStdOutBuf, nStdOut, 3 ) )
+         {
             hb_xfree( pStdOutBuf );
+         }
       }
       else if( pStdOut )
+      {
          hb_storc( nullptr, 3 );
+      }
 
       if( pStdErrBuf )
       {
          if( ! hb_storclen_buffer( pStdErrBuf, nStdErr, 4 ) )
+         {
             hb_xfree( pStdErrBuf );
+         }
       }
       else if( pStdErr && pStdOut != pStdErr )
+      {
          hb_storc( nullptr, 4 );
+      }
 
       hb_retni( iResult );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 }

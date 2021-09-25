@@ -67,10 +67,14 @@ HB_FUNC( HB_STRDECODESCAPE )
          hb_retclen_buffer( str, nLen );
       }
       else
+      {
          hb_itemReturn( pText );
+      }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 /* hb_StrCDecode( <cStr> [, @<lCont> ] ) --> <cResult> | NIL
@@ -111,7 +115,9 @@ HB_FUNC( HB_STRCDECODE )
                }
             }
             if( ! fCont || ! nLen )
+            {
                break;
+            }
 
             n = 0;
             while( n < nLen )
@@ -148,11 +154,17 @@ HB_FUNC( HB_STRCDECODE )
             hb_storl( fCont, 2 );
          }
          else
+         {
             hb_xfree( pszDst );
+         }
       }
       else if( fCont )
+      {
          hb_itemReturn( pText );
+      }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }

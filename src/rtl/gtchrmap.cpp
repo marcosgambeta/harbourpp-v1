@@ -204,7 +204,9 @@ static int parse_line( char * buf, int * from, int * to, char * op, int * val, i
          case '\'':
             ina ^= 1;
             if( ina )
+            {
                ++s;
+            }
             break;
          case '\n':
          case '\r':
@@ -213,7 +215,9 @@ static int parse_line( char * buf, int * from, int * to, char * op, int * val, i
             break;
       }
       if( *s != '\0' )
+      {
          ++s;
+      }   
    }
 
    s = buf;
@@ -243,7 +247,9 @@ static int parse_line( char * buf, int * from, int * to, char * op, int * val, i
             *to = get_val( &s );
          }
          else
+         {
             *to = *from;
+         }
       }
 
       if( *to >= 0 && *s == ':' && s[ 1 ] == ' ' )
@@ -264,7 +270,9 @@ static int parse_line( char * buf, int * from, int * to, char * op, int * val, i
             *mod = get_val( &s );
             skip_blank( &s );
             if( *mod >= 0 && *mod <= 5 && *s == '\0' )
+            {
                ret = 1;
+            }
          }
       }
    }
@@ -291,7 +299,9 @@ static int chrmap_parse( FILE * fp, const char * pszTerm, int * nTransTbl, const
          if( *buf == ':' )
          {
             if( isTerm == 1 )
+            {
                isTerm = 2;
+            }
             else
             {
                *buf = '|';
@@ -306,7 +316,9 @@ static int chrmap_parse( FILE * fp, const char * pszTerm, int * nTransTbl, const
                {
                   if( *( s - 1 ) == '|' &&
                       ( s[ i ] == '|' || s[ i ] == '\0' ) )
+                  {
                      isTerm = 1;
+                  }
                }
             }
          }
@@ -382,11 +394,17 @@ static int hb_gt_chrmapread( const char * pszFile, const char * pszTerm, int * n
       while( pTerm )
       {
          if( ( ptr = strchr( pTerm, '/' ) ) != nullptr )
+         {
             *ptr++ = '\0';
+         }
 
          if( *pTerm )
+         {
             if( chrmap_parse( fp, pTerm, nTransTbl, pszFile ) > 0 )
+            {
                isTerm = 1;
+            }
+         }
 
          pTerm = ptr;
       }
@@ -403,11 +421,15 @@ int hb_gt_chrmapinit( int * piTransTbl, const char * pszTerm, HB_BOOL fSetACSC )
    chrmap_init( piTransTbl );
 
    if( pszTerm == nullptr || *pszTerm == '\0' )
+   {
       pszTerm = pszFree = hb_getenv( "HB_TERM" );
+   }
    if( pszTerm == nullptr || *pszTerm == '\0' )
    {
       if( pszFree )
+      {
          hb_xfree( pszFree );
+      }
       pszTerm = pszFree = hb_getenv( "TERM" );
    }
 
@@ -416,15 +438,18 @@ int hb_gt_chrmapinit( int * piTransTbl, const char * pszTerm, HB_BOOL fSetACSC )
       char * pszFile = hb_getenv( "HB_CHARMAP" );
 
       if( pszFile != nullptr && *pszFile != '\0' )
+      {
          nRet = hb_gt_chrmapread( pszFile, pszTerm, piTransTbl );
+      }
       if( nRet == -1 )
       {
          char szFile[ HB_PATH_MAX ];
          if( pszFile )
+         {
             hb_xfree( pszFile );
+         }
          pszFile = hb_getenv( "HB_ROOT" );
-         if( pszFile != nullptr && sizeof( szFile ) >
-                        strlen( pszFile ) + strlen( hb_gt_szCharMapFileDefault ) )
+         if( pszFile != nullptr && sizeof( szFile ) > strlen( pszFile ) + strlen( hb_gt_szCharMapFileDefault ) )
          {
             hb_strncpy( szFile, pszFile, sizeof( szFile ) - 1 );
             hb_strncat( szFile, hb_gt_szCharMapFileDefault, sizeof( szFile ) - 1 );
@@ -432,21 +457,31 @@ int hb_gt_chrmapinit( int * piTransTbl, const char * pszTerm, HB_BOOL fSetACSC )
          }
       }
       if( pszFile )
+      {
          hb_xfree( pszFile );
+      }
       if( nRet == -1 )
+      {
          nRet = hb_gt_chrmapread( hb_gt_szCharMapFileDefault, pszTerm, piTransTbl );
+      }
    }
 
    if( pszFree )
+   {
       hb_xfree( pszFree );
+   }
 
    if( nRet == -1 )
    {
       chrmap_dotctrl( piTransTbl );
       if( fSetACSC )
+      {
          chrmap_acscbox( piTransTbl );
+      }
       else
+      {
          chrmap_ascictrl( piTransTbl );
+      }   
    }
 
    return nRet;

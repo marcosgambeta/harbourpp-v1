@@ -58,7 +58,9 @@ HB_FUNC( HB_COLORINDEX )
       for( nColorPos = 0; pszColor[ nColorPos ] != '\0' && iColorIndex > 0; nColorPos++ )
       {
          if( pszColor[ nColorPos ] == ',' )
+         {
             iColorIndex--;
+         }
       }
 
       /* if found, continue */
@@ -72,21 +74,23 @@ HB_FUNC( HB_COLORINDEX )
 
          /* Search for next comma or end of string */
          nColorLen = 0;
-         while( pszColor[ nColorPos + nColorLen ] != '\0' &&
-                pszColor[ nColorPos + nColorLen ] != ',' )
+         while( pszColor[ nColorPos + nColorLen ] != '\0' && pszColor[ nColorPos + nColorLen ] != ',' )
             nColorLen++;
 
          /* Skip the trailing spaces */
-         while( nColorLen > 0 &&
-                pszColor[ nColorPos + nColorLen - 1 ] == ' ' )
+         while( nColorLen > 0 && pszColor[ nColorPos + nColorLen - 1 ] == ' ' )
             nColorLen--;
 
          /* Return the string */
          hb_retclen( pszColor + nColorPos, nColorLen );
       }
       else
+      {
          hb_retc_null();
+      }
    }
    else
+   {
       hb_retc_null();
+   }
 }

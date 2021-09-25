@@ -59,11 +59,9 @@ HB_FUNC( __BOX )
    const char * pszBox = hb_parc( 5 );
 
    if( pTop && pLeft && pBottom && pRight && pszBox )
-      hb_gtBox( hb_itemGetNI( pTop ),
-                hb_itemGetNI( pLeft ),
-                hb_itemGetNI( pBottom ),
-                hb_itemGetNI( pRight ),
-                pszBox );
+   {
+      hb_gtBox( hb_itemGetNI( pTop ), hb_itemGetNI( pLeft ), hb_itemGetNI( pBottom ), hb_itemGetNI( pRight ), pszBox );
+   }
 }
 
 HB_FUNC( __BOXD )
@@ -74,10 +72,9 @@ HB_FUNC( __BOXD )
    PHB_ITEM pRight  = hb_param( 4, HB_IT_NUMERIC );
 
    if( pTop && pLeft && pBottom && pRight )
-      hb_gtBoxD( hb_itemGetNI( pTop ),
-                 hb_itemGetNI( pLeft ),
-                 hb_itemGetNI( pBottom ),
-                 hb_itemGetNI( pRight ) );
+   {
+      hb_gtBoxD( hb_itemGetNI( pTop ), hb_itemGetNI( pLeft ), hb_itemGetNI( pBottom ), hb_itemGetNI( pRight ) );
+   }
 }
 
 HB_FUNC( __BOXS )
@@ -88,10 +85,9 @@ HB_FUNC( __BOXS )
    PHB_ITEM pRight  = hb_param( 4, HB_IT_NUMERIC );
 
    if( pTop && pLeft && pBottom && pRight )
-      hb_gtBoxS( hb_itemGetNI( pTop ),
-                 hb_itemGetNI( pLeft ),
-                 hb_itemGetNI( pBottom ),
-                 hb_itemGetNI( pRight ) );
+   {
+      hb_gtBoxS( hb_itemGetNI( pTop ), hb_itemGetNI( pLeft ), hb_itemGetNI( pBottom ), hb_itemGetNI( pRight ) );
+   }
 }
 
 #endif

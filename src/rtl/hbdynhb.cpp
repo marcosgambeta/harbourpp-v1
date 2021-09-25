@@ -78,20 +78,28 @@ HB_FUNC( HB_DYNCALL )
                {
                   pLibraryHandle = hb_libLoad( pLibrary, nullptr );
                   if( pLibraryHandle )
+                  {
                      bFreeLibrary = HB_TRUE;
+                  }
                }
                else if( hb_libHandle( pLibrary ) )
+               {
                   pLibraryHandle = pLibrary;
+               }
 
                if( pLibraryHandle )
+               {
                   pFunctionPtr = hb_libSymAddr( pLibraryHandle, hb_itemGetCPtr( pFunction ) );
+               }
 
                ++nBasePos;
             }
 
             /* Function flags */
             if( nBasePos <= nLen )
+            {
                iFuncFlags = hb_arrayGetNI( pParam, nBasePos );
+            }
 
             ++nBasePos;
 
@@ -112,8 +120,12 @@ HB_FUNC( HB_DYNCALL )
    hb_dynCall( iFuncFlags, pFunctionPtr, hb_pcount(), 2, piArgFlags );
 
    if( piArgFlags )
+   {
       hb_xfree( piArgFlags );
+   }
 
    if( bFreeLibrary )
+   {
       hb_libFree( pLibraryHandle );
+   }
 }

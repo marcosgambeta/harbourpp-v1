@@ -108,11 +108,12 @@ static HB_BOOL hb_errGetNumCode( int * piValue, const char * szOperation )
    PHB_ITEM pItem = hb_param( 1, HB_IT_NUMERIC );
 
    if( pItem )
+   {
       *piValue = hb_itemGetNI( pItem );
+   }
    else
    {
-      pItem = hb_errRT_BASE_Subst( EG_ARG, 0, nullptr, szOperation,
-                                   HB_ERR_ARGS_BASEPARAMS );
+      pItem = hb_errRT_BASE_Subst( EG_ARG, 0, nullptr, szOperation, HB_ERR_ARGS_BASEPARAMS );
       if( ! pItem )
       {
          *piValue = 0;
@@ -120,7 +121,9 @@ static HB_BOOL hb_errGetNumCode( int * piValue, const char * szOperation )
       }
 
       if( ! HB_IS_NUMERIC( pItem ) )
+      {
          hb_errInternal( HB_EI_ERRRECFAILURE, nullptr, nullptr, nullptr );
+      }
 
       *piValue = hb_itemGetNI( pItem );
       hb_itemRelease( pItem );
@@ -140,7 +143,9 @@ HB_FUNC_STATIC( _CARGO )
    PHB_ITEM pItem = hb_param( 1, HB_IT_ANY );
 
    if( pItem )
+   {
       hb_errPutCargo( hb_stackSelfItem(), pItem );
+   }
 
    hb_itemReturn( pItem );
 }
@@ -156,7 +161,9 @@ HB_FUNC_STATIC( _ARGS )
    PHB_ITEM pItem = hb_param( 1, HB_IT_ARRAY );
 
    if( pItem )
+   {
       hb_errPutArgsArray( hb_stackSelfItem(), pItem );
+   }
 
    hb_itemReturn( pItem );
 }
@@ -175,9 +182,13 @@ HB_FUNC_STATIC( _CANDEFAULT )
       HB_BOOL fCan = hb_parl( 1 );
 
       if( fCan )
+      {
          hb_errPutFlags( pError, static_cast< HB_USHORT >( hb_errGetFlags( pError ) | EF_CANDEFAULT ) );
+      }
       else
+      {
          hb_errPutFlags( pError, static_cast< HB_USHORT >( hb_errGetFlags( pError ) & ~EF_CANDEFAULT ) );
+      }
 
       hb_retl( fCan );
    }
@@ -197,9 +208,13 @@ HB_FUNC_STATIC( _CANRETRY )
       HB_BOOL fCan = hb_parl( 1 );
 
       if( fCan )
+      {
          hb_errPutFlags( pError, static_cast< HB_USHORT >( hb_errGetFlags( pError ) | EF_CANRETRY ) );
+      }
       else
+      {
          hb_errPutFlags( pError, static_cast< HB_USHORT >( hb_errGetFlags( pError ) & ~EF_CANRETRY ) );
+      }
 
       hb_retl( fCan );
    }
@@ -219,9 +234,13 @@ HB_FUNC_STATIC( _CANSUBST )
       HB_BOOL fCan = hb_parl( 1 );
 
       if( fCan )
+      {
          hb_errPutFlags( pError, static_cast< HB_USHORT >( hb_errGetFlags( pError ) | EF_CANSUBSTITUTE ) );
+      }
       else
+      {
          hb_errPutFlags( pError, static_cast< HB_USHORT >( hb_errGetFlags( pError ) & ~EF_CANSUBSTITUTE ) );
+      }
 
       hb_retl( fCan );
    }
@@ -238,7 +257,9 @@ HB_FUNC_STATIC( _DESCRIPTION )
    PHB_ITEM pItem = hb_param( 1, HB_IT_ANY );
 
    if( pItem && HB_IS_STRING( pItem ) )
+   {
       hb_errPutDescription( hb_stackSelfItem(), hb_itemGetCPtr( pItem ) );
+   }
 
    hb_itemReturn( pItem );
 }
@@ -254,7 +275,9 @@ HB_FUNC_STATIC( _FILENAME )
    PHB_ITEM pItem = hb_param( 1, HB_IT_ANY );
 
    if( pItem && HB_IS_STRING( pItem ) )
+   {
       hb_errPutFileName( hb_stackSelfItem(), hb_itemGetCPtr( pItem ) );
+   }
 
    hb_itemReturn( pItem );
 }
@@ -270,7 +293,9 @@ HB_FUNC_STATIC( _OPERATION )
    PHB_ITEM pItem = hb_param( 1, HB_IT_ANY );
 
    if( pItem && HB_IS_STRING( pItem ) )
+   {
       hb_errPutOperation( hb_stackSelfItem(), hb_itemGetCPtr( pItem ) );
+   }
 
    hb_itemReturn( pItem );
 }
@@ -286,7 +311,9 @@ HB_FUNC_STATIC( _SUBSYSTEM )
    PHB_ITEM pItem = hb_param( 1, HB_IT_ANY );
 
    if( pItem && HB_IS_STRING( pItem ) )
+   {
       hb_errPutSubSystem( hb_stackSelfItem(), hb_itemGetCPtr( pItem ) );
+   }
 
    hb_itemReturn( pItem );
 }
@@ -304,8 +331,7 @@ HB_FUNC_STATIC( _GENCODE )
    if( hb_errGetNumCode( &iValue, "GENCODE" ) )
    {
       hb_errPutGenCode( hb_stackSelfItem(), ( HB_ERRCODE ) iValue );
-      hb_errPutDescription( hb_stackSelfItem(),
-                            hb_langDGetErrorDesc( iValue ) );
+      hb_errPutDescription( hb_stackSelfItem(), hb_langDGetErrorDesc( iValue ) );
    }
 
    hb_retni( iValue );
@@ -322,7 +348,9 @@ HB_FUNC_STATIC( _OSCODE )
    int iValue;
 
    if( hb_errGetNumCode( &iValue, "OSCODE" ) )
+   {
       hb_errPutOsCode( hb_stackSelfItem(), ( HB_ERRCODE ) iValue );
+   }
 
    hb_retni( iValue );
 }
@@ -338,7 +366,9 @@ HB_FUNC_STATIC( _SUBCODE )
    int iValue;
 
    if( hb_errGetNumCode( &iValue, "SUBCODE" ) )
+   {
       hb_errPutSubCode( hb_stackSelfItem(), ( HB_ERRCODE ) iValue );
+   }
 
    hb_retni( iValue );
 }
@@ -354,7 +384,9 @@ HB_FUNC_STATIC( _SEVERITY )
    int iValue;
 
    if( hb_errGetNumCode( &iValue, "SEVERITY" ) )
+   {
       hb_errPutSeverity( hb_stackSelfItem(), static_cast< HB_USHORT >( iValue ) );
+   }
 
    hb_retni( iValue );
 }
@@ -370,7 +402,9 @@ HB_FUNC_STATIC( _TRIES )
    int iValue;
 
    if( hb_errGetNumCode( &iValue, "TRIES" ) )
+   {
       hb_errPutTries( hb_stackSelfItem(), static_cast< HB_USHORT >( iValue ) );
+   }
 
    hb_retni( iValue );
 }
@@ -442,7 +476,9 @@ PHB_ITEM hb_errorBlock( void )
    PHB_ERRDATA pErrData = ( PHB_ERRDATA ) hb_stackGetTSD( &s_errData );
 
    if( ! pErrData->errorBlock )
+   {
       pErrData->errorBlock = hb_itemNew( nullptr );
+   }
 
    return pErrData->errorBlock;
 }
@@ -456,7 +492,9 @@ PHB_ERROR_INFO hb_errorHandler( PHB_ERROR_INFO pNewHandler )
    PHB_ERROR_INFO pOld = pErrData->errorHandler;
 
    if( pNewHandler )
+   {
       pNewHandler->Previous = pErrData->errorHandler;
+   }
    pErrData->errorHandler = pNewHandler;
 
    return pOld;
@@ -469,7 +507,9 @@ HB_FUNC( DOSERROR )
    hb_retni( pErrData->uiErrorDOS );
 
    if( HB_ISNUM( 1 ) )
+   {
       pErrData->uiErrorDOS = hb_parni( 1 );
+   }
 }
 
 void hb_errInit( void )
@@ -498,7 +538,9 @@ PHB_ITEM hb_errNew( void )
    HB_TRACE( HB_TR_DEBUG, ( "hb_errNew()" ) );
 
    if( ! s_pError || ! HB_IS_OBJECT( s_pError ) )
+   {
       hb_errInternal( HB_EI_ERRRECFAILURE, nullptr, nullptr, nullptr );
+   }
 
    return hb_arrayClone( s_pError );
 }
@@ -517,11 +559,15 @@ HB_USHORT hb_errLaunch( PHB_ITEM pError )
 
       /* Check if we have a valid error handler */
       if( ! pErrData->errorBlock || ! HB_IS_EVALITEM( pErrData->errorBlock ) )
+      {
          hb_errInternal( HB_EI_ERRNOBLOCK, nullptr, nullptr, nullptr );
+      }
 
       /* Check if the error launcher was called too many times recursively */
       if( pErrData->iLaunchCount == HB_ERROR_LAUNCH_MAX )
+      {
          hb_errInternal( HB_EI_ERRTOOMANY, nullptr, nullptr, nullptr );
+      }
 
       /* Launch the error handler: "lResult := Eval( ErrorBlock(), oError )" */
       pErrData->iLaunchCount++;
@@ -531,7 +577,9 @@ HB_USHORT hb_errLaunch( PHB_ITEM pError )
 
       /* Add one try to the counter. */
       if( uiFlags & EF_CANRETRY )
+      {
          hb_errPutTries( pError, static_cast< HB_USHORT >( hb_errGetTries( pError ) + 1 ) );
+      }
 
       if( pErrData->errorHandler )
       {
@@ -544,7 +592,9 @@ HB_USHORT hb_errLaunch( PHB_ITEM pError )
          pErrData->errorHandler->Error = nullptr;
       }
       else
+      {
          pResult = hb_itemDo( pErrData->errorBlock, 1, pError );
+      }
 
       pErrData->iLaunchCount--;
 
@@ -552,7 +602,9 @@ HB_USHORT hb_errLaunch( PHB_ITEM pError )
       if( hb_vmRequestQuery() != 0 )
       {
          if( pResult )
+         {
             hb_itemRelease( pResult );
+         }
          uiAction = E_BREAK;
       }
       else if( pResult )
@@ -562,27 +614,36 @@ HB_USHORT hb_errLaunch( PHB_ITEM pError )
          /* If the error block didn't return a logical value, */
          /* or the canSubstitute flag has been set, consider it as a failure */
          if( ! HB_IS_LOGICAL( pResult ) || ( uiFlags & EF_CANSUBSTITUTE ) )
+         {
             bFailure = HB_TRUE;
+         }
          else
          {
             uiAction = hb_itemGetL( pResult ) ? E_RETRY : E_DEFAULT;
 
-            if( ( uiAction == E_DEFAULT && !( uiFlags & EF_CANDEFAULT ) ) ||
-                ( uiAction == E_RETRY   && !( uiFlags & EF_CANRETRY ) ) )
+            if( ( uiAction == E_DEFAULT && !( uiFlags & EF_CANDEFAULT ) ) || ( uiAction == E_RETRY   && !( uiFlags & EF_CANRETRY ) ) )
+            {
                bFailure = HB_TRUE;
+            }
          }
 
          hb_itemRelease( pResult );
 
          if( bFailure )
+         {
             hb_errInternal( HB_EI_ERRRECFAILURE, nullptr, nullptr, nullptr );
+         }
 
       }
       else
+      {
          hb_errInternal( HB_EI_ERRRECFAILURE, nullptr, nullptr, nullptr );
+      }
    }
    else
+   {
       uiAction = E_RETRY;  /* Clipper does this, undocumented */
+   }
 
    return uiAction;
 }
@@ -611,12 +672,16 @@ PHB_ITEM hb_errLaunchSubst( PHB_ITEM pError )
 
       /* Check if we have a valid error handler */
       if( ! pErrData->errorBlock || ! HB_IS_EVALITEM( pErrData->errorBlock ) )
+      {
          hb_errInternal( HB_EI_ERRNOBLOCK, nullptr, nullptr, nullptr );
-
+      }
+      
       /* Check if the error launcher was called too many times recursively */
       if( pErrData->iLaunchCount == HB_ERROR_LAUNCH_MAX )
+      {
          hb_errInternal( HB_EI_ERRTOOMANY, nullptr, nullptr, nullptr );
-
+      }
+      
       /* Launch the error handler: "xResult := Eval( ErrorBlock(), oError )" */
       pErrData->iLaunchCount++;
 
@@ -625,8 +690,10 @@ PHB_ITEM hb_errLaunchSubst( PHB_ITEM pError )
 
       /* Add one try to the counter. */
       if( uiFlags & EF_CANRETRY )
+      {
          hb_errPutTries( pError, static_cast< HB_USHORT >( hb_errGetTries( pError ) + 1 ) );
-
+      }
+      
       if( pErrData->errorHandler )
       {
          /* there is a low-level error handler defined - use it instead
@@ -638,7 +705,9 @@ PHB_ITEM hb_errLaunchSubst( PHB_ITEM pError )
          pErrData->errorHandler->Error = nullptr;
       }
       else
+      {
          pResult = hb_itemDo( pErrData->errorBlock, 1, pError );
+      }
 
       pErrData->iLaunchCount--;
 
@@ -646,7 +715,9 @@ PHB_ITEM hb_errLaunchSubst( PHB_ITEM pError )
       if( hb_vmRequestQuery() != 0 )
       {
          if( pResult )
+         {
             hb_itemRelease( pResult );
+         }
          pResult = nullptr;
       }
       else
@@ -654,11 +725,15 @@ PHB_ITEM hb_errLaunchSubst( PHB_ITEM pError )
          /* If the canSubstitute flag has not been set,
             consider it as a failure. */
          if( ! ( uiFlags & EF_CANSUBSTITUTE ) )
+         {
             hb_errInternal( HB_EI_ERRRECFAILURE, nullptr, nullptr, nullptr );
+         }
       }
    }
    else
+   {
       pResult = hb_itemNew( nullptr );
+   }
 
    return pResult;
 }
@@ -766,7 +841,9 @@ PHB_ITEM hb_errPutOperation( PHB_ITEM pError, const char * szOperation )
    {
       PHB_SYMB pSym = hb_itemGetSymbol( hb_stackBaseItem() );
       if( pSym )
+      {
          szOperation = pSym->szName;
+      }
    }
 
    hb_arraySetC( pError, HB_TERROR_OPERATION, szOperation );
@@ -1034,9 +1111,13 @@ HB_USHORT hb_errRT_BASE( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const cha
    else if( ulArgCount == HB_ERR_ARGS_BASEPARAMS )
    {
       if( hb_pcount() == 0 )
+      {
          pArray = nullptr;
+      }
       else
+      {
          pArray = hb_arrayBaseParams();
+      }
    }
    else if( ulArgCount == HB_ERR_ARGS_SELFPARAMS )
    {
@@ -1051,7 +1132,9 @@ HB_USHORT hb_errRT_BASE( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const cha
       {
          PHB_ITEM pArg = va_arg( va, PHB_ITEM );
          if( pArg )
+         {
             hb_itemArrayPut( pArray, ulArgPos, pArg );
+         }
       }
       va_end( va );
    }
@@ -1091,9 +1174,13 @@ HB_USHORT hb_errRT_BASE_Ext1( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, cons
    else if( ulArgCount == HB_ERR_ARGS_BASEPARAMS )
    {
       if( hb_pcount() == 0 )
+      {
          pArray = nullptr;
+      }
       else
+      {
          pArray = hb_arrayBaseParams();
+      }
    }
    else if( ulArgCount == HB_ERR_ARGS_SELFPARAMS )
    {
@@ -1108,7 +1195,9 @@ HB_USHORT hb_errRT_BASE_Ext1( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, cons
       {
          PHB_ITEM pArg = va_arg( va, PHB_ITEM );
          if( pArg )
+         {
             hb_itemArrayPut( pArray, ulArgPos, pArg );
+         }
       }
       va_end( va );
    }
@@ -1147,9 +1236,13 @@ PHB_ITEM hb_errRT_BASE_Subst( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, cons
    else if( ulArgCount == HB_ERR_ARGS_BASEPARAMS )
    {
       if( hb_pcount() == 0 )
+      {
          pArray = nullptr;
+      }
       else
+      {
          pArray = hb_arrayBaseParams();
+      }
    }
    else if( ulArgCount == HB_ERR_ARGS_SELFPARAMS )
    {
@@ -1164,7 +1257,9 @@ PHB_ITEM hb_errRT_BASE_Subst( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, cons
       {
          PHB_ITEM pArg = va_arg( va, PHB_ITEM );
          if( pArg )
+         {
             hb_itemArrayPut( pArray, ulArgPos, pArg );
+         }
       }
       va_end( va );
    }
@@ -1202,9 +1297,13 @@ void hb_errRT_BASE_SubstR( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const c
    else if( ulArgCount == HB_ERR_ARGS_BASEPARAMS )
    {
       if( hb_pcount() == 0 )
+      {
          pArray = nullptr;
+      }
       else
+      {
          pArray = hb_arrayBaseParams();
+      }
    }
    else if( ulArgCount == HB_ERR_ARGS_SELFPARAMS )
    {
@@ -1219,7 +1318,9 @@ void hb_errRT_BASE_SubstR( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const c
       {
          PHB_ITEM pArg = va_arg( va, PHB_ITEM );
          if( pArg )
+         {
             hb_itemArrayPut( pArray, ulArgPos, pArg );
+         }
       }
       va_end( va );
    }
@@ -1240,8 +1341,7 @@ void hb_errRT_BASE_SubstR( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const c
 HB_USHORT hb_errRT_TERM( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char * szDescription, const char * szOperation, HB_ERRCODE errOsCode, HB_USHORT uiFlags )
 {
    HB_USHORT uiAction;
-   PHB_ITEM pError =
-      hb_errRT_New( ES_ERROR, HB_ERR_SS_TERMINAL, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags );
+   PHB_ITEM pError = hb_errRT_New( ES_ERROR, HB_ERR_SS_TERMINAL, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags );
 
    uiAction = hb_errLaunch( pError );
 
@@ -1253,8 +1353,7 @@ HB_USHORT hb_errRT_TERM( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const cha
 HB_USHORT hb_errRT_DBCMD( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char * szDescription, const char * szOperation )
 {
    HB_USHORT uiAction;
-   PHB_ITEM pError =
-      hb_errRT_New( ES_ERROR, HB_ERR_SS_DBCMD, errGenCode, errSubCode, szDescription, szOperation, 0, EF_NONE );
+   PHB_ITEM pError = hb_errRT_New( ES_ERROR, HB_ERR_SS_DBCMD, errGenCode, errSubCode, szDescription, szOperation, 0, EF_NONE );
 
    uiAction = hb_errLaunch( pError );
 

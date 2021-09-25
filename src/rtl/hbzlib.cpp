@@ -89,12 +89,12 @@ static void s_zlib_free( void * cargo, void * address )
    HB_SYMBOL_UNUSED( cargo );
 
    if( address )
+   {
       hb_xfree( address );
+   }
 }
 
-static int s_zlibCompress2( char ** pDstPtr, HB_SIZE * pnDst,
-                            const char * pSrc, HB_SIZE nSrc,
-                            HB_BOOL fGZip, int level )
+static int s_zlibCompress2( char ** pDstPtr, HB_SIZE * pnDst, const char * pSrc, HB_SIZE nSrc, HB_BOOL fGZip, int level )
 {
    z_stream stream;
    int iResult;
@@ -113,10 +113,14 @@ static int s_zlibCompress2( char ** pDstPtr, HB_SIZE * pnDst,
       if( *pDstPtr == nullptr )
       {
          if( *pnDst == 0 )
+         {
             *pnDst = deflateBound( &stream, static_cast< uLong >( nSrc ) );
+         }
          *pDstPtr = static_cast< char * >( hb_xalloc( *pnDst + 1 ) );
          if( *pDstPtr == nullptr )
+         {
             iResult = Z_MEM_ERROR;
+         }   
       }
    }
 
@@ -226,7 +230,9 @@ static int s_zlibUncompress( char * pDst, HB_SIZE * pnDst,
 HB_FUNC( HB_ZLIBVERSION )
 {
    if( hb_parni( 1 ) == 1 )
+   {
       hb_retc_const( ZLIB_VERSION );
+   }
    else
 #if defined( HB_OS_QNX )
       /* NOTE: Hack to avoid "undefined reference to 'zlibVersion' when linking hbrun on QNX 6.2.1. */
@@ -242,11 +248,17 @@ HB_FUNC( HB_ZLIBVERSION )
 HB_FUNC( HB_ZCOMPRESSBOUND )
 {
    if( HB_ISCHAR( 1 ) )
+   {
       hb_retnint( s_zlibCompressBound( hb_parclen( 1 ) ) );
+   }
    else if( HB_ISNUM( 1 ) )
+   {
       hb_retnint( s_zlibCompressBound( hb_parns( 1 ) ) );
+   }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 /*
@@ -263,17 +275,25 @@ HB_FUNC( HB_ZUNCOMPRESSLEN )
       int iResult = Z_OK;
 
       if( nLen )
+      {
          nLen = s_zlibUncompressedSize( szData, nLen, &iResult );
+      }
 
       if( iResult == Z_OK )
+      {
          hb_retnint( nLen );
+      }
       else
+      {
          hb_retni( -1 );
+      }
 
       hb_storni( iResult, 2 );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 /*
@@ -299,7 +319,9 @@ HB_FUNC( HB_ZCOMPRESS )
          if( pBuffer )
          {
             if( ! hb_itemGetWriteCL( pBuffer, &pDest, &nDstLen ) )
+            {
                pDest = nullptr;
+            }
          }
          else
          {
@@ -323,15 +345,23 @@ HB_FUNC( HB_ZCOMPRESS )
             if( ! pBuffer )
             {
                if( iResult == Z_OK )
+               {
                   hb_retclen_buffer( pDest, nDstLen );
+               }
                else if( pDest )
+               {
                   hb_xfree( pDest );
+               }
             }
             else if( iResult == Z_OK )
+            {
                hb_retclen( pDest, nDstLen );
+            }
          }
          else
+         {
             iResult = Z_MEM_ERROR;
+         }
 
          hb_storni( iResult, 3 );
       }
@@ -342,7 +372,9 @@ HB_FUNC( HB_ZCOMPRESS )
       }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 /*
@@ -367,17 +399,20 @@ HB_FUNC( HB_ZUNCOMPRESS )
          if( pBuffer )
          {
             if( ! hb_itemGetWriteCL( pBuffer, &pDest, &nDstLen ) )
+            {
                iResult = Z_MEM_ERROR;
+            }
          }
          else
          {
-            nDstLen = HB_ISNUM( 2 ) ? static_cast< HB_SIZE >( hb_parns( 2 ) ) :
-                           s_zlibUncompressedSize( szData, nLen, &iResult );
+            nDstLen = HB_ISNUM( 2 ) ? static_cast< HB_SIZE >( hb_parns( 2 ) ) : s_zlibUncompressedSize( szData, nLen, &iResult );
             if( iResult == Z_OK )
             {
                pDest = static_cast< char * >( hb_xalloc( nDstLen + 1 ) );
                if( ! pDest )
+               {
                   iResult = Z_MEM_ERROR;
+               }
             }
          }
 
@@ -388,12 +423,18 @@ HB_FUNC( HB_ZUNCOMPRESS )
             if( ! pBuffer )
             {
                if( iResult == Z_OK )
+               {
                   hb_retclen_buffer( pDest, nDstLen );
+               }
                else
+               {
                   hb_xfree( pDest );
+               }
             }
             else if( iResult == Z_OK )
+            {
                hb_retclen( pDest, nDstLen );
+            }
          }
          hb_storni( iResult, 3 );
       }
@@ -404,7 +445,9 @@ HB_FUNC( HB_ZUNCOMPRESS )
       }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 /*
@@ -413,11 +456,17 @@ HB_FUNC( HB_ZUNCOMPRESS )
 HB_FUNC( HB_GZCOMPRESSBOUND )
 {
    if( HB_ISCHAR( 1 ) )
+   {
       hb_retnint( s_zlibCompressBound( static_cast< uLong >( hb_parclen( 1 ) ) ) + 12 );
+   }
    else if( HB_ISNUM( 1 ) )
+   {
       hb_retnint( s_zlibCompressBound( static_cast< uLong >( hb_parns( 1 ) ) ) + 12 );
+   }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 /*
@@ -446,7 +495,9 @@ HB_FUNC( HB_GZCOMPRESS )
          if( pBuffer )
          {
             if( ! hb_itemGetWriteCL( pBuffer, &pDest, &nDstLen ) )
+            {
                pDest = nullptr;
+            }
          }
          else
          {
@@ -465,20 +516,27 @@ HB_FUNC( HB_GZCOMPRESS )
 
          if( pDest || fAlloc )
          {
-            iResult = s_zlibCompress2( &pDest, &nDstLen, szData, nLen, HB_TRUE,
-                                       hb_parnidef( 4, Z_DEFAULT_COMPRESSION ) );
+            iResult = s_zlibCompress2( &pDest, &nDstLen, szData, nLen, HB_TRUE, hb_parnidef( 4, Z_DEFAULT_COMPRESSION ) );
             if( ! pBuffer )
             {
                if( iResult == Z_OK )
+               {
                   hb_retclen_buffer( pDest, nDstLen );
+               }
                else if( pDest )
+               {
                   hb_xfree( pDest );
+               }
             }
             else if( iResult == Z_OK )
+            {
                hb_retclen( pDest, nDstLen );
+            }
          }
          else
+         {
             iResult = Z_MEM_ERROR;
+         }
 
          hb_storni( iResult, 3 );
       }
@@ -489,7 +547,9 @@ HB_FUNC( HB_GZCOMPRESS )
       }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 /*

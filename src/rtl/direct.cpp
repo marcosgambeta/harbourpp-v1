@@ -109,7 +109,9 @@ PHB_ITEM hb_fsDirectory( const char * pszDirSpec, const char * pszAttributes, HB
    ulMask = HB_FA_ARCHIVE | HB_FA_READONLY;
 
    if( pszAttributes && *pszAttributes )
+   {
       ulMask |= hb_fsAttrEncode( pszAttributes );
+   }
 
    if( pszDirSpec && *pszDirSpec )
    {
@@ -120,17 +122,19 @@ PHB_ITEM hb_fsDirectory( const char * pszDirSpec, const char * pszAttributes, HB
           */
          HB_SIZE nLen = strlen( pszDirSpec ) - 1;
 #ifdef HB_OS_HAS_DRIVE_LETTER
-         if( pszDirSpec[ nLen ] == HB_OS_PATH_DELIM_CHR ||
-             pszDirSpec[ nLen ] == HB_OS_DRIVE_DELIM_CHR )
+         if( pszDirSpec[ nLen ] == HB_OS_PATH_DELIM_CHR || pszDirSpec[ nLen ] == HB_OS_DRIVE_DELIM_CHR )
 #else
          if( pszDirSpec[ nLen ] == HB_OS_PATH_DELIM_CHR )
 #endif
-            pszDirSpec = pszFree =
-                           hb_xstrcpy( nullptr, pszDirSpec, HB_OS_ALLFILE_MASK, nullptr );
+         {
+            pszDirSpec = pszFree = hb_xstrcpy( nullptr, pszDirSpec, HB_OS_ALLFILE_MASK, nullptr );
+         }
       }
    }
    else
+   {
       pszDirSpec = HB_OS_ALLFILE_MASK;
+   }
 
    /* Get the file list */
 
@@ -149,9 +153,13 @@ PHB_ITEM hb_fsDirectory( const char * pszDirSpec, const char * pszAttributes, HB
          hb_arraySetC   ( pSubarray, F_ATTR, hb_fsAttrDecode( ffind->attr, buffer ) );
 
          if( fDateTime )
+         {
             hb_arraySetTDT( pSubarray, F_DATE, ffind->lDate, ffind->lTime );
+         }
          else
+         {
             hb_arraySetDL ( pSubarray, F_DATE, ffind->lDate );
+         }
 
          /* Don't exit when array limit is reached */
          hb_arrayAddForward( pDir, pSubarray );
@@ -164,7 +172,9 @@ PHB_ITEM hb_fsDirectory( const char * pszDirSpec, const char * pszAttributes, HB
    }
 
    if( pszFree )
+   {
       hb_xfree( pszFree );
+   }
 
    return pDir;
 }

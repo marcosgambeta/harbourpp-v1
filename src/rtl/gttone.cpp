@@ -171,15 +171,23 @@ static void hb_gt_w9xTone( double dFreq, double dDurat )
       lAdjFreq = static_cast< unsigned long >( 1193180 / dFreq );
 
       if( static_cast< long >( lAdjFreq ) < 0 )
+      {
          uLSB = lAdjFreq + 65536;
+      }
       else
+      {
          uLSB = lAdjFreq % 256;
-
+      }
+      
       if( static_cast< long >( lAdjFreq ) < 0 )
+      {
          uMSB = lAdjFreq + 65536;
+      }
       else
+      {
          uMSB = lAdjFreq / 256;
-
+      }
+      
       /* set the frequency ( LSB, MSB ) */
 
       hb_Outp9x( 66, static_cast< unsigned short int >( uLSB ) );
@@ -202,7 +210,9 @@ static void hb_gt_w9xTone( double dFreq, double dDurat )
       hb_Outp9x( 97, hb_Inp9x( 97 ) & 0xFC );
    }
    else
+   {
       hb_idleSleep( dDurat );
+   }   
 }
 
 #endif
@@ -216,9 +226,13 @@ static void hb_gt_wNtTone( double dFreq, double dDurat )
       less than < 20 hz.  Windows NT minimum is 37... */
 
    if( dFreq >= 37.0 )
+   {
       Beep( static_cast< DWORD >( dFreq ), static_cast< DWORD >( dDurat * 1000 ) );  /* Beep wants Milliseconds */
+   }
    else
+   {
       hb_idleSleep( dDurat );
+   }   
 }
 
 /* dDuration is in 'Ticks' (18.2 per second) */
@@ -239,8 +253,10 @@ void hb_gt_winapi_tone( double dFrequency, double dDuration )
 
 #if defined( HB_HAS_WIN9X_TONE )
    if( hb_iswin9x() )
+   {
       /* If Windows 95 or 98, use w9xTone for chosen C compilers */
       hb_gt_w9xTone( dFrequency, dDuration );
+   }
    else
 #endif
       /* If Windows NT or NT2k, use wNtTone, which redirects Tone() to

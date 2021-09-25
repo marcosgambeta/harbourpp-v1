@@ -90,14 +90,17 @@ char * hb_username( void )
    lpValue[ 255 ] = TEXT( '\0' );
 
    if( lpValue[ 0 ] )
+   {
       return HB_OSSTRDUP( lpValue );
+   }
 
-#elif ( defined( HB_OS_OS2 ) && defined( __GNUC__ ) ) || \
-      ( defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS ) && ! defined( __WATCOMC__ ) )
+#elif ( defined( HB_OS_OS2 ) && defined( __GNUC__ ) ) || ( defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS ) && ! defined( __WATCOMC__ ) )
 
    struct passwd * pwd = getpwuid( getuid() );
    if( pwd && pwd->pw_name )
+   {
       return hb_osStrDecode( pwd->pw_name );
+   }
 
 #endif
 
@@ -109,7 +112,11 @@ HB_FUNC( HB_USERNAME )
    char * buffer = hb_username();
 
    if( buffer )
+   {
       hb_retc_buffer( buffer );
+   }
    else
+   {
       hb_retc_null();
+   }
 }

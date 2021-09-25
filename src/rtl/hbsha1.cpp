@@ -94,5 +94,7 @@ HB_FUNC( HB_SHA1 )
       hb_retclen( hex, HB_SIZEOFARRAY( hex ) - 1 );
    }
    else
+   {
       hb_retclen( reinterpret_cast< char * >( digest ), sizeof( digest ) );
+   }   
 }

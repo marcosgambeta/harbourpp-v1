@@ -67,15 +67,21 @@ static void hb_memoread( HB_BOOL bHandleEOF )
          if( bHandleEOF && nSize > 0 )
          {
             if( pBuffer[ nSize - 1 ] == HB_CHAR_EOF )
+            {
                --nSize;
+            }
          }
          hb_retclen_buffer( pBuffer, nSize );
       }
       else
+      {
          hb_retc_null();
+      }
    }
    else
+   {
       hb_retc_null();
+   }
 }
 
 HB_FUNC( HB_MEMOREAD )
@@ -110,7 +116,9 @@ static HB_BOOL hb_memowrit( HB_BOOL bHandleEOF )
          {
             HB_SIZE nWritten = hb_fileWrite( pFile, pData, nSize, 0 );
             if( nWritten == 0 || nWritten == static_cast< HB_SIZE >( FS_ERROR ) )
+            {
                break;
+            }
             nSize -= nWritten;
             pData += nWritten;
          }

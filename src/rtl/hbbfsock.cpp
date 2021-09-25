@@ -116,13 +116,17 @@ static long s_bf_send( PHB_SOCKEX_BF pBF, HB_MAXINT timeout )
       }
       lSent += l;
       if( timeout > 0 )
+      {
          timeout = 0;
+      }   
    }
 
    if( lSent > 0 )
    {
       if( lSent < len )
+      {
          memmove( pBF->buffer, pBF->buffer + lSent, len - lSent );
+      }
       pBF->inbuffer -= lSent;
    }
 
@@ -141,9 +145,13 @@ static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT tim
       lRecv = HB_MIN( pSock->inbuffer, len );
       memcpy( data, pSock->buffer + pSock->posbuffer, lRecv );
       if( ( pSock->inbuffer -= lRecv ) > 0 )
+      {
          pSock->posbuffer += lRecv;
+      }
       else
+      {
          pSock->posbuffer = 0;
+      }   
    }
    else
    {
@@ -178,7 +186,9 @@ static long s_sockexWrite( PHB_SOCKEX pSock, const void * data, long len, HB_MAX
       {
          lWritten = s_bf_send( pBF, timeout );
          if( lWritten <= 0 )
+         {
             break;
+         }
          timeout = 0;
       }
       if( ( pBF->encoded & ( HB_BF_CIPHERBLOCK - 1 ) ) == 0 )
@@ -199,7 +209,9 @@ static long s_sockexFlush( PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync )
    while( pBF->inbuffer > 0 )
    {
       if( s_bf_send( pBF, timeout ) <= 0 )
+      {
          break;
+      }   
    }
    return pBF->inbuffer + hb_sockexFlush( pBF->sock, timeout, fSync );
 }
@@ -226,8 +238,10 @@ static char * s_sockexName( PHB_SOCKEX pSock )
       hb_xfree( pszFree );
    }
    else
+   {
       pszName = hb_strdup( pSock->pFilter->pszName );
-
+   }
+   
    return pszName;
 }
 
@@ -244,14 +258,20 @@ static int s_sockexClose( PHB_SOCKEX pSock, HB_BOOL fClose )
    if( pBF )
    {
       if( pBF->sock )
+      {
          s_sockexFlush( pSock, HB_MAX( 15000, pSock->iAutoFlush ), HB_TRUE );
-
+      }
+      
       if( pBF->sock )
       {
          if( pSock->fShutDown )
+         {
             pBF->sock->fShutDown = HB_TRUE;
+         }
          if( pSock->iAutoFlush != 0 && pBF->sock->iAutoFlush == 0 )
+         {
             pBF->sock->iAutoFlush = pSock->iAutoFlush;
+         }
          iResult = hb_sockexClose( pBF->sock, fClose );
       }
       memset( pBF, 0, sizeof( *pBF ) );
@@ -276,7 +296,9 @@ static PHB_SOCKEX s_sockexNew( HB_SOCKET sd, PHB_ITEM pParams )
    {
       pSockNew = s_sockexNext( pSock, pParams );
       if( pSockNew == nullptr )
+      {
          hb_sockexClose( pSock, HB_FALSE );
+      }
    }
 
    return pSockNew;
@@ -317,11 +339,13 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
          for( i = 0; i < HB_BF_CIPHERBLOCK; ++i )
          {
             if( pVect && ivlen > 0 )
-               pBF->encounter[ i ] =
-               pBF->decounter[ i ] = pVect[ i % ivlen ];
+            {
+               pBF->encounter[ i ] = pBF->decounter[ i ] = pVect[ i % ivlen ];
+            }
             else
-               pBF->encounter[ i ] =
-               pBF->decounter[ i ] = static_cast< HB_BYTE >( i );
+            {
+               pBF->encounter[ i ] = pBF->decounter[ i ] = static_cast< HB_BYTE >( i );
+            }   
          }
 
          pSockNew = static_cast< PHB_SOCKEX >( hb_xgrabz( sizeof( HB_SOCKEX ) ) );

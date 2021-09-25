@@ -59,10 +59,16 @@ HB_FUNC( HB_VALTOSTR )
       char * buffer = hb_itemString( pItem, &nLen, &bFreeReq );
 
       if( bFreeReq )
+      {
          hb_retclen_buffer( buffer, nLen );
+      }
       else
+      {
          hb_retclen( buffer, nLen );
+      }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }

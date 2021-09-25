@@ -66,17 +66,23 @@ HB_FUNC( STUFF )
       if( HB_CDP_ISCHARIDX( cdp ) )
       {
          if( nPos )
+         {
             nPos = nPos < 1 ? nLen : hb_cdpTextPos( cdp, szText, nLen, nPos - 1 );
+         }
          if( nDel )
          {
             if( nPos < nLen )
             {
                nDel = hb_cdpTextPos( cdp, szText + nPos, nLen - nPos, nDel );
                if( nDel == 0 )
+               {
                   nDel = nLen - nPos;
+               }
             }
             else
+            {
                nDel = 0;
+            }
          }
       }
       else
@@ -84,14 +90,20 @@ HB_FUNC( STUFF )
          if( nPos )
          {
             if( nPos < 1 || nPos > nLen )
+            {
                nPos = nLen;
+            }
             else
+            {
                nPos--;
+            }
          }
          if( nDel )
          {
             if( nDel < 1 || nDel > nLen - nPos )
+            {
                nDel = nLen - nPos;
+            }
          }
       }
 
@@ -101,13 +113,16 @@ HB_FUNC( STUFF )
 
          hb_xmemcpy( szResult, szText, nPos );
          hb_xmemcpy( szResult + nPos, szIns, nIns );
-         hb_xmemcpy( szResult + nPos + nIns, szText + nPos + nDel,
-                     nLen - ( nPos + nDel ) );
+         hb_xmemcpy( szResult + nPos + nIns, szText + nPos + nDel, nLen - ( nPos + nDel ) );
          hb_retclen_buffer( szResult, nTot );
       }
       else
+      {
          hb_retc_null();
+      }
    }
    else
+   {
       hb_retc_null();
+   }
 }

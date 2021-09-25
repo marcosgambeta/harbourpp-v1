@@ -93,13 +93,19 @@ int hb_znetError( PHB_ZNETSTREAM pStream )
 void hb_znetClose( PHB_ZNETSTREAM pStream )
 {
    if( pStream->inbuf )
+   {
       hb_xfree( pStream->inbuf );
+   }
 
    if( pStream->outbuf )
+   {
       hb_xfree( pStream->outbuf );
+   }
 
    if( pStream->bf )
+   {
       hb_xfree( pStream->bf );
+   }
 
    deflateEnd( &pStream->wr );
    inflateEnd( &pStream->rd );
@@ -113,9 +119,10 @@ PHB_ZNETSTREAM hb_znetOpen( int level, int strategy )
 {
    PHB_ZNETSTREAM pStream = static_cast< PHB_ZNETSTREAM >( hb_xgrabz( sizeof( HB_ZNETSTREAM ) ) );
 
-   if( level != Z_DEFAULT_COMPRESSION &&
-       !( level >= Z_NO_COMPRESSION && level <= Z_BEST_COMPRESSION ) )
+   if( level != Z_DEFAULT_COMPRESSION && !( level >= Z_NO_COMPRESSION && level <= Z_BEST_COMPRESSION ) )
+   {
       level = Z_DEFAULT_COMPRESSION;
+   }
 
    if( strategy != Z_FILTERED     &&
 #if defined( Z_RLE )
@@ -127,15 +134,16 @@ PHB_ZNETSTREAM hb_znetOpen( int level, int strategy )
        strategy != Z_HUFFMAN_ONLY )
       strategy = Z_DEFAULT_STRATEGY;
 
-   if( deflateInit2( &pStream->wr, level,
-                     Z_DEFLATED, -MAX_WBITS, HB_ZNET_MEM_LEVEL, strategy ) == Z_OK )
+   if( deflateInit2( &pStream->wr, level, Z_DEFLATED, -MAX_WBITS, HB_ZNET_MEM_LEVEL, strategy ) == Z_OK )
    {
       pStream->wr.next_out = pStream->outbuf = static_cast< Bytef * >( hb_xgrab( HB_ZNET_BUFSIZE ) );
       pStream->wr.avail_out = HB_ZNET_BUFSIZE;
 
       pStream->rd.next_in = pStream->inbuf = static_cast< Bytef * >( hb_xgrab( HB_ZNET_BUFSIZE ) );
       if( inflateInit2( &pStream->rd, -MAX_WBITS ) == Z_OK )
+      {
          return pStream;
+      }
    }
 
    hb_znetClose( pStream );
@@ -164,9 +172,13 @@ void hb_znetEncryptKey( PHB_ZNETSTREAM pStream, const void * keydata, int keylen
       pStream->crypt_out = pStream->wr.next_out;
       pStream->wr.next_out += 2;
       if( pStream->wr.avail_out < 2 )
+      {
          pStream->skip_out = 2 - pStream->wr.avail_out;
+      }
       else
+      {
          pStream->skip_out = 0;
+      }
       pStream->wr.avail_out -= 2 - pStream->skip_out;
    }
 }
@@ -213,16 +225,22 @@ long hb_znetRead( PHB_ZNETSTREAM pStream, HB_SOCKET sd, void * buffer, long len,
             pStream->skip_in = 0;
          }
          if( pStream->crypt_in && pStream->rd.next_in > pStream->inbuf )
+         {
             memmove( pStream->inbuf, pStream->rd.next_in, pStream->crypt_in );
+         }
          pStream->rd.next_in = pStream->inbuf;
 
          if( ! pStream->crypt || pStream->crypt_in < 8 )
          {
             if( pStream->rd.avail_out != static_cast< uInt >( len ) )
+            {
                timeout = 0;
+            }
             rec = hb_socketRecv( sd, pStream->inbuf + pStream->crypt_in, HB_ZNET_BUFSIZE - pStream->crypt_in, 0, timeout );
             if( rec <= 0 )
+            {
                break;
+            }
          }
 
          if( pStream->crypt )
@@ -248,7 +266,9 @@ long hb_znetRead( PHB_ZNETSTREAM pStream, HB_SOCKET sd, void * buffer, long len,
                long l = ( pStream->crypt_size + 0x07 ) & ~0x07;
                rec = pStream->crypt_in & ~0x07;
                if( rec > l )
+               {
                   rec = l;
+               }
                /* decrypt the buffer */
                for( l = 0; l < rec; l += 8 )
                   hb_znetDecrypt( pStream, pStream->rd.next_in + pStream->rd.avail_in + l );
@@ -267,9 +287,13 @@ long hb_znetRead( PHB_ZNETSTREAM pStream, HB_SOCKET sd, void * buffer, long len,
          if( pStream->rd.avail_in == 0 )
          {
             if( pStream->rd.avail_out == static_cast< uInt >( len ) )
+            {
                continue;
+            }
             else
+            {
                break;
+            }
          }
       }
       pStream->err = inflate( &pStream->rd, Z_SYNC_FLUSH );
@@ -277,8 +301,7 @@ long hb_znetRead( PHB_ZNETSTREAM pStream, HB_SOCKET sd, void * buffer, long len,
       if( pStream->err == Z_STREAM_END && pStream->rd.avail_in == 0 )
          pStream->err = Z_BUF_ERROR;
  */
-      if( pStream->err != Z_OK &&
-          ! ( pStream->err == Z_BUF_ERROR && pStream->rd.avail_in == 0 ) )
+      if( pStream->err != Z_OK && ! ( pStream->err == Z_BUF_ERROR && pStream->rd.avail_in == 0 ) )
       {
          hb_socketSetError( HB_ZNET_SOCK_ERROR_BASE - pStream->err );
          rec = -1;
@@ -318,17 +341,23 @@ static long hb_znetStreamWrite( PHB_ZNETSTREAM pStream, HB_SOCKET sd, HB_MAXINT 
             pStream->crypt_out = pStream->wr.next_out;
             pStream->wr.next_out += 2;
             if( pStream->wr.avail_out < 2 )
+            {
                pStream->skip_out = 2 - pStream->wr.avail_out;
+            }
             pStream->wr.avail_out -= 2 - pStream->skip_out;
          }
       }
       else
+      {
          rest = 0;
+      }
       tosnd = static_cast< long >( pStream->crypt_out - pStream->outbuf );
    }
    else
+   {
       tosnd = HB_ZNET_BUFSIZE - pStream->wr.avail_out;
-
+   }
+   
    if( tosnd > 0 )
    {
       snd = hb_socketSend( sd, pStream->outbuf, tosnd, 0, timeout );
@@ -336,7 +365,9 @@ static long hb_znetStreamWrite( PHB_ZNETSTREAM pStream, HB_SOCKET sd, HB_MAXINT 
       {
          tosnd += rest - snd;
          if( tosnd > 0 )
+         {
             memmove( pStream->outbuf, pStream->outbuf + snd, tosnd );
+         }
          pStream->wr.avail_out += static_cast< uInt >( snd );
          pStream->wr.next_out -= snd;
          pStream->crypt_out -= snd;
@@ -361,8 +392,7 @@ static long hb_znetStreamWrite( PHB_ZNETSTREAM pStream, HB_SOCKET sd, HB_MAXINT 
 /* flush data in stream structure - return number of bytes left in the
  * buffer which were not sent
  */
-long hb_znetFlush( PHB_ZNETSTREAM pStream, HB_SOCKET sd, HB_MAXINT timeout,
-                   HB_BOOL fSync )
+long hb_znetFlush( PHB_ZNETSTREAM pStream, HB_SOCKET sd, HB_MAXINT timeout, HB_BOOL fSync )
 {
    uInt uiSize = HB_ZNET_BUFSIZE - ( pStream->crypt ? 2 : 0 );
 
@@ -371,26 +401,36 @@ long hb_znetFlush( PHB_ZNETSTREAM pStream, HB_SOCKET sd, HB_MAXINT timeout,
       return 0;
 
    if( pStream->wr.avail_out > 0 )
-      pStream->err = deflate( &pStream->wr,
-                              fSync ? Z_FULL_FLUSH : Z_PARTIAL_FLUSH );
+   {
+      pStream->err = deflate( &pStream->wr, fSync ? Z_FULL_FLUSH : Z_PARTIAL_FLUSH );
+   }
    else
+   {
       pStream->err = Z_OK;
-
+   }
+   
    while( pStream->wr.avail_out < uiSize )
    {
       if( hb_znetStreamWrite( pStream, sd, timeout ) <= 0 )
+      {
          break;
+      }
 
       if( pStream->err == Z_OK || pStream->err == Z_BUF_ERROR )
-         pStream->err = deflate( &pStream->wr,
-                                 fSync ? Z_FULL_FLUSH : Z_PARTIAL_FLUSH );
+      {
+         pStream->err = deflate( &pStream->wr, fSync ? Z_FULL_FLUSH : Z_PARTIAL_FLUSH );
+      }
    }
 
    if( pStream->err == Z_BUF_ERROR )
+   {
       pStream->err = Z_OK;
+   }
 
    if( pStream->err != Z_OK )
+   {
       hb_socketSetError( HB_ZNET_SOCK_ERROR_BASE - pStream->err );
+   }
 
    return uiSize - pStream->wr.avail_out;
 }
@@ -411,16 +451,22 @@ long hb_znetWrite( PHB_ZNETSTREAM pStream, HB_SOCKET sd, const void * buffer, lo
       {
          snd = hb_znetStreamWrite( pStream, sd, timeout );
          if( plast )
+         {
             *plast = snd;
+         }
          if( snd <= 0 )
+         {
             break;
+         }
          snd = 0;
       }
       pStream->err = deflate( &pStream->wr, Z_NO_FLUSH );
       if( pStream->err != Z_OK )
       {
          if( pStream->err == Z_BUF_ERROR )
+         {
             pStream->err = Z_OK;
+         }
          else
          {
             hb_socketSetError( HB_ZNET_SOCK_ERROR_BASE - pStream->err );
@@ -447,12 +493,13 @@ static PHB_SOCKEX s_sockexNew( HB_SOCKET sd, PHB_ITEM pParams )
        level = HB_ZLIB_COMPRESSION_DEFAULT,
        strategy = HB_ZLIB_STRATEGY_DEFAULT;
 
-   hb_socekxParamsGetStd( pParams, &keydata, &keylen, nullptr, nullptr,
-                          &level, &strategy );
+   hb_socekxParamsGetStd( pParams, &keydata, &keylen, nullptr, nullptr, &level, &strategy );
 
    pSock = hb_sockexNewZNet( sd, keydata, keylen, level, strategy );
    if( pSock )
+   {
       hb_socekxParamsInit( pSock, pParams );
+   }
 
    return pSock;
 }
@@ -468,7 +515,9 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
    {
       pSockNew = s_sockexNew( pSock->sd, pParams );
       if( pSockNew )
+      {
          hb_sockexClose( pSock, HB_FALSE );
+      }
    }
 
    return pSockNew;
@@ -481,8 +530,9 @@ static int s_sockexClose( PHB_SOCKEX pSock, HB_BOOL fClose )
    if( pSock->cargo )
    {
       if( pSock->sd != HB_NO_SOCKET )
-         hb_znetFlush( HB_ZNET_GET( pSock ), pSock->sd,
-                       HB_MAX( 15000, pSock->iAutoFlush ), HB_TRUE );
+      {
+         hb_znetFlush( HB_ZNET_GET( pSock ), pSock->sd, HB_MAX( 15000, pSock->iAutoFlush ), HB_TRUE );
+      }
       hb_znetClose( HB_ZNET_GET( pSock ) );
    }
 
@@ -501,12 +551,18 @@ static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT tim
       memcpy( data, pSock->buffer + pSock->posbuffer, lRead );
       pSock->inbuffer -= lRead;
       if( pSock->inbuffer )
+      {
          pSock->posbuffer += lRead;
+      }
       else
+      {
          pSock->posbuffer = 0;
+      }
       len -= lRead;
       if( len == 0 || pSock->sd == HB_NO_SOCKET )
+      {
          return lRead;
+      }
       data = ( HB_BYTE * ) data + lRead;
       timeout = 0;
    }
@@ -546,7 +602,9 @@ static long s_sockexFlush( PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync )
 static int s_sockexCanRead( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout )
 {
    if( pSock->inbuffer )
+   {
       return 1;
+   }
    else if( pSock->sd == HB_NO_SOCKET )
    {
       hb_socketSetError( HB_SOCKET_ERR_INVALIDHANDLE );
@@ -559,11 +617,12 @@ static int s_sockexCanRead( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout
       if( pSock->buffer == nullptr )
       {
          if( pSock->readahead <= 0 )
+         {
             pSock->readahead = HB_ZNET_READAHEAD;
+         }
          pSock->buffer = static_cast< HB_BYTE * >( hb_xgrab( pSock->readahead ) );
       }
-      len = hb_znetRead( HB_ZNET_GET( pSock ), pSock->sd, pSock->buffer,
-                         pSock->readahead, 0 );
+      len = hb_znetRead( HB_ZNET_GET( pSock ), pSock->sd, pSock->buffer, pSock->readahead, 0 );
       if( len > 0 )
       {
          pSock->inbuffer = len;
@@ -584,9 +643,13 @@ static int s_sockexCanWrite( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeou
    else if( fBuffer && pSock->cargo && /* HB_ZNET_GET( pSock )->wr.avail_out > 0 && */
             static_cast< uInt >( HB_ZNET_BUFSIZE - ( HB_ZNET_GET( pSock )->crypt ? 2 : 0 ) ) <=
             HB_ZNET_GET( pSock )->wr.avail_out )
+   {
       return 1;
+   }
    else
+   {
       return fBuffer ? 0 : hb_socketSelectWrite( pSock->sd, timeout );
+   }
 }
 
 static char * s_sockexName( PHB_SOCKEX pSock )
@@ -636,8 +699,7 @@ static const HB_SOCKET_FILTER s_sockFilter =
    s_sockexErrorStr
 };
 
-PHB_SOCKEX hb_sockexNewZNet( HB_SOCKET sd, const void * keydata, int keylen,
-                             int level, int strategy )
+PHB_SOCKEX hb_sockexNewZNet( HB_SOCKET sd, const void * keydata, int keylen, int level, int strategy )
 {
    PHB_SOCKEX pSock = nullptr;
 
@@ -651,10 +713,14 @@ PHB_SOCKEX hb_sockexNewZNet( HB_SOCKET sd, const void * keydata, int keylen,
          if( pStream )
          {
             if( keydata && keylen > 0 )
+            {
                hb_znetEncryptKey( pStream, keydata, keylen );
+            }
          }
          else
+         {
             sd = HB_NO_SOCKET;
+         }
       }
       if( sd != HB_NO_SOCKET )
       {

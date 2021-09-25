@@ -186,7 +186,9 @@ HB_MAXUINT hb_crc( HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT pol
          mask <<= 1;
          revp <<= 1;
          if( poly & 1 )
+         {
             revp |= 1;
+         }
          poly >>= 1;
       }
       crc ^= --mask;
@@ -261,9 +263,13 @@ HB_FUNC( HB_CRC32 )
    const char * szString = hb_parc( 1 );
 
    if( szString )
+   {
       hb_retnint( hb_crc32( ( HB_U32 ) hb_parnl( 2 ), szString, hb_parclen( 1 ) ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 }
 
 HB_FUNC( HB_CRC16 )
@@ -271,9 +277,13 @@ HB_FUNC( HB_CRC16 )
    const char * szString = hb_parc( 1 );
 
    if( szString )
+   {
       hb_retnint( hb_crc16( ( HB_U16 ) hb_parnl( 2 ), szString, hb_parclen( 1 ) ) );
+   }
    else
+   {
       hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 }
 
 HB_FUNC( HB_CRC )
@@ -284,11 +294,15 @@ HB_FUNC( HB_CRC )
    {
       HB_MAXUINT ulPolynomial = static_cast< HB_MAXUINT >( hb_parnint( 3 ) );
       if( ulPolynomial == 0 )
+      {
          ulPolynomial = 0x11021;
+      }
       hb_retnint( hb_crc( static_cast< HB_MAXUINT >( hb_parnint( 2 ) ), szString, hb_parclen( 1 ), ulPolynomial ) );
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 }
 
 HB_FUNC( HB_CRCCT )
@@ -299,9 +313,13 @@ HB_FUNC( HB_CRCCT )
    {
       HB_MAXUINT ulPolynomial = static_cast< HB_MAXUINT >( hb_parnint( 3 ) );
       if( ulPolynomial == 0 )
+      {
          ulPolynomial = 0x11021;
+      }
       hb_retnint( hb_crcct( static_cast< HB_MAXUINT >( hb_parnint( 2 ) ), szString, hb_parclen( 1 ), ulPolynomial ) );
    }
    else
+   {
       hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }

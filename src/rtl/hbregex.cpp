@@ -81,10 +81,11 @@ static int hb_regcomp( PHB_REGEX pRegEx, const char * szRegEx )
 
    /* use UTF8 in pcre when available and HVM CP is also UTF8. */
    if( s_iUTF8Enabled && hb_cdpIsUTF8( nullptr ) )
+   {
       iCFlags |= PCRE_UTF8;
+   }
 
-   pRegEx->re_pcre = pcre_compile( szRegEx, iCFlags, &szError,
-                                   &iErrOffset, pCharTable );
+   pRegEx->re_pcre = pcre_compile( szRegEx, iCFlags, &szError, &iErrOffset, pCharTable );
    return pRegEx->re_pcre ? 0 : -1;
 #elif defined( HB_POSIX_REGEX )
    int iCFlags = REG_EXTENDED |
@@ -115,7 +116,9 @@ static int hb_regexec( PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen,
       for( i = 0; i < iMatches; i++ )
       {
          if( HB_REGMATCH_EO( aMatches, i ) != HB_REGMATCH_UNSET )
+         {
             iResult = i + 1;
+         }
       }
    }
    return iResult;
@@ -136,13 +139,19 @@ static int hb_regexec( PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen,
       for( i = 0; i < iMatches; i++ )
       {
          if( HB_REGMATCH_EO( aMatches, i ) != HB_REGMATCH_UNSET )
+         {
             iResult = i + 1;
+         }
       }
    }
    else
+   {
       iResult = -1;
+   }
    if( szBuffer )
+   {
       hb_xfree( szBuffer );
+   }
    return iResult;
 #else
    HB_SYMBOL_UNUSED( pRegEx );
@@ -160,16 +169,22 @@ HB_FUNC( HB_REGEXCOMP )
    HB_SIZE nLen = hb_parclen( 1 );
 
    if( nLen == 0 )
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
    else
    {
       int iFlags = HBREG_EXTENDED;
       PHB_REGEX pRegEx;
 
       if( ! hb_parldef( 2, HB_TRUE ) )
+      {
          iFlags |= HBREG_ICASE;
+      }
       if( hb_parl( 3 ) )
+      {
          iFlags |= HBREG_NEWLINE;
+      }
 
       pRegEx = hb_regexCompile( hb_parc( 1 ), nLen, iFlags );
       if( pRegEx )
@@ -191,8 +206,7 @@ HB_FUNC( HB_ATX )
 
    if( pString )
    {
-      PHB_REGEX pRegEx = hb_regexGet( hb_param( 1, HB_IT_ANY ),
-                                      ! hb_parldef( 3, HB_TRUE ) ? HBREG_ICASE : 0 );
+      PHB_REGEX pRegEx = hb_regexGet( hb_param( 1, HB_IT_ANY ), ! hb_parldef( 3, HB_TRUE ) ? HBREG_ICASE : 0 );
 
       if( pRegEx )
       {
@@ -206,7 +220,9 @@ HB_FUNC( HB_ATX )
             HB_REGMATCH aMatches[ HB_REGMATCH_SIZE( 1 ) ];
 
             if( nEnd < nLen )
+            {
                nLen = nEnd;
+            }
             if( nStart )
             {
                --nStart;
@@ -220,10 +236,14 @@ HB_FUNC( HB_ATX )
                hb_retclen( pszString + nStart - 1, nLen );
             }
             else
+            {
                nStart = nLen = 0;
+            }
          }
          else
+         {
             nStart = nLen = 0;
+         }
 
          hb_regexFree( pRegEx );
 
@@ -237,7 +257,9 @@ HB_FUNC( HB_ATX )
       }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3013, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 }
 
 static HB_BOOL hb_regex( int iRequest )
@@ -256,16 +278,15 @@ static HB_BOOL hb_regex( int iRequest )
       hb_errRT_BASE_SubstR( EG_ARG, 3014, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return HB_FALSE;
    }
-   pRegEx = hb_regexGet( hb_param( 1, HB_IT_ANY ),
-                         ( ! hb_parldef( 3, HB_TRUE ) ? HBREG_ICASE : 0 ) |
-                         ( hb_parl( 4 ) ? HBREG_NEWLINE : 0 ) );
+   pRegEx = hb_regexGet( hb_param( 1, HB_IT_ANY ), ( ! hb_parldef( 3, HB_TRUE ) ? HBREG_ICASE : 0 ) | ( hb_parl( 4 ) ? HBREG_NEWLINE : 0 ) );
    if( ! pRegEx )
+   {
       return HB_FALSE;
+   }
 
    pszString = hb_itemGetCPtr( pString );
    nLen      = hb_itemGetCLen( pString );
-   iMaxMatch = iRequest == 0 || iRequest == 4 || iRequest == 5 ?
-               REGEX_MAX_GROUPS : 1;
+   iMaxMatch = iRequest == 0 || iRequest == 4 || iRequest == 5 ? REGEX_MAX_GROUPS : 1;
    iMatches = hb_regexec( pRegEx, pszString, nLen, iMaxMatch, aMatches );
    if( iMatches > 0 )
    {
@@ -276,20 +297,23 @@ static HB_BOOL hb_regex( int iRequest )
             for( i = 0; i < iMatches; i++ )
             {
                if( HB_REGMATCH_EO( aMatches, i ) > -1 )
+               {
                   hb_arraySetCL( pRetArray, i + 1,
                                  pszString + HB_REGMATCH_SO( aMatches, i ),
                                  HB_REGMATCH_EO( aMatches, i ) -
                                  HB_REGMATCH_SO( aMatches, i ) );
+               }
                else
+               {
                   hb_arraySetCL( pRetArray, i + 1, nullptr, 0 );
+               }   
             }
             hb_itemReturnRelease( pRetArray );
             fResult = HB_TRUE;
             break;
 
          case 1: /* LIKE */
-            fResult = HB_REGMATCH_SO( aMatches, 0 ) == 0 &&
-                      static_cast< HB_SIZE >( HB_REGMATCH_EO( aMatches, 0 ) ) == nLen;
+            fResult = HB_REGMATCH_SO( aMatches, 0 ) == 0 && static_cast< HB_SIZE >( HB_REGMATCH_EO( aMatches, 0 ) ) == nLen;
             break;
 
          case 2: /* MATCH ( HAS ) */
@@ -370,8 +394,7 @@ static HB_BOOL hb_regex( int iRequest )
             do
             {
                /* If I want all matches */
-               if( iGetMatch == 0 || /* Check boundaries */
-                   ( iGetMatch < 0 || iGetMatch > iMatches ) )
+               if( iGetMatch == 0 || /* Check boundaries */ ( iGetMatch < 0 || iGetMatch > iMatches ) )
                {
                   pAtxArray = hb_itemArrayNew( iMatches );
                   for( i = 0; i < iMatches; i++ )
@@ -401,10 +424,14 @@ static HB_BOOL hb_regex( int iRequest )
                      else
                      {
                         if( iEO != -1 )
+                        {
                            /* matched string */
                            hb_itemPutCL( pMatch, pszString + iSO, iEO - iSO );
+                        }
                         else
+                        {
                            hb_itemPutC( pMatch, nullptr );
+                        }   
                      }
                   }
                   hb_arrayAddForward( pRetArray, pAtxArray );
@@ -438,10 +465,14 @@ static HB_BOOL hb_regex( int iRequest )
                   else
                   {
                      if( iEO != -1 )
+                     {
                         /* matched string */
                         hb_itemPutCL( pMatch, pszString + iSO, iEO - iSO );
+                     }
                      else
+                     {
                         hb_itemPutC( pMatch, nullptr );
+                     }
                   }
                   hb_arrayAddForward( pRetArray, pMatch );
                   hb_itemRelease( pMatch );
@@ -449,14 +480,15 @@ static HB_BOOL hb_regex( int iRequest )
 
                iEO = HB_REGMATCH_EO( aMatches, 0 );
                if( iEO == -1 )
+               {
                   break;
+               }
                nLen -= iEO;
                pszString += iEO;
                nOffset += iEO;
                iCount++;
             }
-            while( iEO && nLen && ( iMax == 0 || iCount < iMax ) &&
-                   ( iMatches = hb_regexec( pRegEx, pszString, nLen, iMaxMatch, aMatches ) ) > 0 );
+            while( iEO && nLen && ( iMax == 0 || iCount < iMax ) && ( iMatches = hb_regexec( pRegEx, pszString, nLen, iMaxMatch, aMatches ) ) > 0 );
             hb_itemReturnRelease( pRetArray );
             fResult = HB_TRUE;
             break;
@@ -479,7 +511,9 @@ static HB_BOOL hb_regex( int iRequest )
 HB_FUNC( HB_REGEX )
 {
    if( ! hb_regex( 0 ) )
+   {
       hb_reta( 0 );
+   }
 }
 
 /* Returns just .T. if match found or .F. otherwise. */
@@ -509,14 +543,18 @@ HB_FUNC( HB_REGEXHAS )
 HB_FUNC( HB_REGEXSPLIT )
 {
    if( ! hb_regex( 3 ) )
+   {
       hb_reta( 0 );
+   }
 }
 
 /* Returns array of { Match, start, end }, { Sub-Matches, start, end } */
 HB_FUNC( HB_REGEXATX )
 {
    if( ! hb_regex( 4 ) )
+   {
       hb_reta( 0 );
+   }
 }
 
 /* 2005-12-16 - Francesco Saverio Giudice
@@ -538,7 +576,9 @@ HB_FUNC( HB_REGEXATX )
 HB_FUNC( HB_REGEXALL )
 {
    if( ! hb_regex( 5 ) )
+   {
       hb_reta( 0 );
+   }
 }
 
 #if defined( HB_HAS_PCRE )
@@ -559,7 +599,9 @@ HB_CALL_ON_STARTUP_BEGIN( _hb_regex_init_ )
     * then the one included in BCC RTL.
     */
    if( pcre_config( PCRE_CONFIG_UTF8, &s_iUTF8Enabled ) != 0 )
+   {
       s_iUTF8Enabled = 0;
+   }
 
    pcre_malloc = hb_pcre_grab;
    pcre_free = hb_pcre_free;

@@ -105,7 +105,9 @@ HB_FUNC( EMPTY )
          pSym = hb_itemGetSymbol( pItem );
          if( pSym && ( pSym->scope.value & HB_FS_DEFERRED ) && \
              pSym->pDynSym )
+         {
             pSym = hb_dynsymSymbol( pSym->pDynSym );
+         }
          hb_retl( pSym == nullptr || pSym->value.pFunPtr == nullptr );
          break;
 

@@ -95,7 +95,9 @@ HB_FUNC( STRTRAN )
                      {
                         nReplaced++;
                         if( --nCount == 0 )
+                        {
                            nT = nText;
+                        }
                      }
                      nS = 0;
                   }
@@ -106,7 +108,9 @@ HB_FUNC( STRTRAN )
                   nS = 0;
                }
                else
+               {
                   ++nT;
+               }
             }
 
             if( nReplaced )
@@ -114,9 +118,13 @@ HB_FUNC( STRTRAN )
                HB_SIZE nLength = nText;
 
                if( nSeek > nReplace )
+               {
                   nLength -= ( nSeek - nReplace ) * nReplaced;
+               }
                else
+               {
                   nLength += ( nReplace - nSeek ) * nReplaced;
+               }
 
                if( nLength )
                {
@@ -167,16 +175,24 @@ HB_FUNC( STRTRAN )
                   hb_retclen_buffer( szResult, nLength );
                }
                else
+               {
                   hb_retc_null();
+               }
             }
             else
+            {
                hb_itemReturn( pText );
+            }
          }
          else
+         {
             hb_itemReturn( pText );
+         }
       }
       else
+      {
          hb_retc_null();
+      }
    }
    else
    {

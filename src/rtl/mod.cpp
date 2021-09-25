@@ -74,7 +74,9 @@ HB_FUNC( MOD )
          double dResult = fmod( dNumber, dBase );
 
          if( dResult && ( dNumber > 0 ? dBase < 0 : dBase > 0 ) )
+         {
             dResult += dBase;
+         }
          hb_retnd( dResult );
       }
       else
@@ -100,7 +102,9 @@ HB_FUNC( MOD )
       }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 1085, nullptr, "%", 2, hb_param( 1, HB_IT_ANY ), hb_param( 2, HB_IT_ANY ) );
+   }   
 }
 
 /*

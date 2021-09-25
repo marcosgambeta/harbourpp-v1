@@ -64,12 +64,16 @@ static const char * s_hb_padGet( PHB_CODEPAGE cdp, HB_SIZE * pnPad )
 
    *pnPad = 1;
    if( szPad == nullptr )
+   {
       szPad = " ";
+   }
    else if( cdp )
    {
       *pnPad = hb_cdpTextPos( cdp, szPad, hb_parclen( 3 ), 1 );
       if( *pnPad == 0 )
+      {
          szPad = "";
+      }
    }
    return szPad;
 }
@@ -86,8 +90,7 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
    {
       PHB_ITEM pItem = hb_param( 1, HB_IT_ANY );
 
-      if( pItem && HB_IS_STRING( pItem ) &&
-          static_cast< HB_SIZE >( nLen ) == hb_cdpItemLen( cdp, pItem ) )
+      if( pItem && HB_IS_STRING( pItem ) && static_cast< HB_SIZE >( nLen ) == hb_cdpItemLen( cdp, pItem ) )
       {
          hb_itemReturn( pItem );
       }
@@ -178,29 +181,38 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
                         nPad = ( static_cast< HB_SIZE >( nLen ) - nSize ) >> 1;
                         hb_xmemset( szResult, szPad[ 0 ], nPad );
                         hb_xmemcpy( szResult + nPad, szText, nSize );
-                        hb_xmemset( szResult + nPad + nSize, szPad[ 0 ],
-                                    static_cast< HB_SIZE >( nLen ) - nSize - nPad );
+                        hb_xmemset( szResult + nPad + nSize, szPad[ 0 ], static_cast< HB_SIZE >( nLen ) - nSize - nPad );
                      }
                      break;
                }
                hb_retclen_buffer( szResult, static_cast< HB_SIZE >( nLen ) );
                if( bFreeReq )
+               {
                   hb_xfree( szText );
+               }
             }
             else
             {
                if( bFreeReq )
+               {
                   hb_retclen_buffer( szText, static_cast< HB_SIZE >( nLen ) );
+               }
                else
+               {
                   hb_retclen( szText, nLen );
+               }
             }
          }
          else
+         {
             hb_retc_null();
+         }
       }
    }
    else
+   {
       hb_retc_null();
+   }
 }
 
 /* left-pads a date, number, or string with spaces or supplied character */
@@ -209,7 +221,9 @@ HB_FUNC( PADL )
    PHB_CODEPAGE cdp = hb_vmCDP();
 
    if( ! HB_CDP_ISCHARIDX( cdp ) )
+   {
       cdp = nullptr;
+   }
 
    s_hb_strPad( HB_PAD_L, cdp );
 }
@@ -224,7 +238,9 @@ HB_FUNC( HB_UPADL )
    PHB_CODEPAGE cdp = hb_vmCDP();
 
    if( ! HB_CDP_ISCUSTOM( cdp ) )
+   {
       cdp = nullptr;
+   }
 
    s_hb_strPad( HB_PAD_L, cdp );
 }
@@ -235,7 +251,9 @@ HB_FUNC( PADR )
    PHB_CODEPAGE cdp = hb_vmCDP();
 
    if( ! HB_CDP_ISCHARIDX( cdp ) )
+   {
       cdp = nullptr;
+   }
 
    s_hb_strPad( HB_PAD_R, cdp );
 }
@@ -250,7 +268,9 @@ HB_FUNC( HB_UPADR )
    PHB_CODEPAGE cdp = hb_vmCDP();
 
    if( ! HB_CDP_ISCUSTOM( cdp ) )
+   {
       cdp = nullptr;
+   }
 
    s_hb_strPad( HB_PAD_R, cdp );
 }
@@ -261,7 +281,9 @@ HB_FUNC( PADC )
    PHB_CODEPAGE cdp = hb_vmCDP();
 
    if( ! HB_CDP_ISCHARIDX( cdp ) )
+   {
       cdp = nullptr;
+   }
 
    s_hb_strPad( HB_PAD_C, cdp );
 }
@@ -276,7 +298,9 @@ HB_FUNC( HB_UPADC )
    PHB_CODEPAGE cdp = hb_vmCDP();
 
    if( ! HB_CDP_ISCUSTOM( cdp ) )
+   {
       cdp = nullptr;
+   }
 
    s_hb_strPad( HB_PAD_C, cdp );
 }

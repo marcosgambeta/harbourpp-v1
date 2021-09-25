@@ -57,7 +57,9 @@ HB_FUNC( INT )
    if( pNumber )
    {
       if( HB_IS_NUMINT( pNumber ) )
+      {
          hb_itemReturn( pNumber );
+      }
       else
       {
          int iWidth;
@@ -67,7 +69,9 @@ HB_FUNC( INT )
       }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 1090, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( ROUND )
@@ -86,11 +90,17 @@ HB_FUNC( ROUND )
       hb_retndlen( hb_numRound( hb_itemGetND( pNumber ), iDec ), 0, HB_MAX( iDec, 0 ) );
 #else
       if( iDec == 0 && HB_IS_NUMINT( pNumber ) )
+      {
          hb_retnint( hb_itemGetNInt( pNumber ) );
+      }
       else
+      {
          hb_retnlen( hb_numRound( hb_itemGetND( pNumber ), iDec ), 0, HB_MAX( iDec, 0 ) );
+      }
 #endif
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 1094, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }

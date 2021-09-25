@@ -127,14 +127,18 @@ void hb_conInit( void )
       int iStderr = hb_cmdargNum( "STDERR" );
 
       if( iStderr == 0 || iStderr == 1 )  /* //STDERR with no parameter or 0 */
+      {
          s_hFilenoStderr = s_hFilenoStdout;
+      }
       /* disabled in default builds. It's not multi-platform and very
        * dangerous because it can redirect error messages to data files
        * [druzus]
        */
 #ifdef HB_CLP_STRICT
       else if( iStderr > 0 ) /* //STDERR:x */
+      {
          s_hFilenoStderr = ( HB_FHANDLE ) iStderr;
+      }
 #endif
    }
 #endif
@@ -148,7 +152,9 @@ void hb_conInit( void )
    hb_fsSetDevMode( s_hFilenoStderr, FD_BINARY );
 
    if( hb_gtInit( s_hFilenoStdin, s_hFilenoStdout, s_hFilenoStderr ) != HB_SUCCESS )
+   {
       hb_errInternal( 9995, "Harbour terminal (GT) initialization failure", nullptr, nullptr );
+   }
 
    if( hb_cmdargCheck( "INFO" ) )
    {
@@ -206,10 +212,14 @@ void hb_conOutStd( const char * szStr, HB_SIZE nLen )
    HB_TRACE( HB_TR_DEBUG, ( "hb_conOutStd(%s, %" HB_PFS "u)", szStr, nLen ) );
 
    if( nLen == 0 )
+   {
       nLen = strlen( szStr );
+   }
 
    if( nLen > 0 )
+   {
       hb_gtOutStd( szStr, nLen );
+   }
 }
 
 /* Output an item to STDERR */
@@ -218,10 +228,14 @@ void hb_conOutErr( const char * szStr, HB_SIZE nLen )
    HB_TRACE( HB_TR_DEBUG, ( "hb_conOutErr(%s, %" HB_PFS "u)", szStr, nLen ) );
 
    if( nLen == 0 )
+   {
       nLen = strlen( szStr );
+   }
 
    if( nLen > 0 )
+   {
       hb_gtOutErr( szStr, nLen );
+   }
 }
 
 /* Output an item to the screen and/or printer and/or alternate */
@@ -232,7 +246,9 @@ void hb_conOutAlt( const char * szStr, HB_SIZE nLen )
    HB_TRACE( HB_TR_DEBUG, ( "hb_conOutAlt(%s, %" HB_PFS "u)", szStr, nLen ) );
 
    if( hb_setGetConsole() )
+   {
       hb_gtWriteCon( szStr, nLen );
+   }
 
    if( hb_setGetAlternate() && ( pFile = hb_setGetAltHan() ) != nullptr )
    {
@@ -268,8 +284,10 @@ static void hb_conOutDev( const char * szStr, HB_SIZE nLen )
       hb_prnPos()->col += static_cast< int >( nLen );
    }
    else
+   {
       /* Otherwise, display to console */
       hb_gtWrite( szStr, nLen );
+   }
 }
 
 static char * hb_itemStringCon( PHB_ITEM pItem, HB_SIZE * pnLen, HB_BOOL * pfFreeReq )
@@ -296,12 +314,18 @@ HB_FUNC( OUTSTD ) /* writes a list of values to the standard output device */
       HB_BOOL fFree;
 
       if( iParam > 1 )
+      {
          hb_conOutStd( " ", 1 );
+      }
       pszString = hb_itemString( hb_param( iParam, HB_IT_ANY ), &nLen, &fFree );
       if( nLen )
+      {
          hb_conOutStd( pszString, nLen );
+      }
       if( fFree )
+      {
          hb_xfree( pszString );
+      }
    }
 }
 
@@ -316,12 +340,18 @@ HB_FUNC( OUTERR ) /* writes a list of values to the standard error device */
       HB_BOOL fFree;
 
       if( iParam > 1 )
+      {
          hb_conOutErr( " ", 1 );
+      }
       pszString = hb_itemString( hb_param( iParam, HB_IT_ANY ), &nLen, &fFree );
       if( nLen )
+      {
          hb_conOutErr( pszString, nLen );
+      }
       if( fFree )
+      {
          hb_xfree( pszString );
+      }
    }
 }
 
@@ -336,12 +366,18 @@ HB_FUNC( QQOUT ) /* writes a list of values to the current device (screen or pri
       HB_BOOL fFree;
 
       if( iParam > 1 )
+      {
          hb_conOutAlt( " ", 1 );
+      }
       pszString = hb_itemString( hb_param( iParam, HB_IT_ANY ), &nLen, &fFree );
       if( nLen )
+      {
          hb_conOutAlt( pszString, nLen );
+      }
       if( fFree )
+      {
          hb_xfree( pszString );
+      }
    }
 }
 
@@ -470,11 +506,15 @@ static void hb_conDevPos( int iRow, int iCol )
          }
 
          if( iPtr )
+         {
             hb_fileWrite( pFile, buf, static_cast< HB_USHORT >( iPtr ), -1 );
+         }
       }
    }
    else
+   {
       hb_gtSetPos( iRow, iCol );
+   }
 }
 
 /* NOTE: This should be placed after the hb_conDevPos() definition. */
@@ -482,7 +522,9 @@ static void hb_conDevPos( int iRow, int iCol )
 HB_FUNC( DEVPOS ) /* Sets the screen and/or printer position */
 {
    if( HB_ISNUM( 1 ) && HB_ISNUM( 2 ) )
+   {
       hb_conDevPos( hb_parni( 1 ), hb_parni( 2 ) );
+   }
 
 #if defined( HB_CLP_UNDOC )
    /* NOTE: Both 5.2e and 5.3 does that, while the documentation
@@ -516,9 +558,13 @@ HB_FUNC( DEVOUT ) /* writes a single value to the current device (screen or prin
 
       pszString = hb_itemStringCon( hb_param( 1, HB_IT_ANY ), &nLen, &fFree );
       if( nLen )
+      {
          hb_conOutDev( pszString, nLen );
+      }
       if( fFree )
+      {
          hb_xfree( pszString );
+      }
 
       hb_gtSetColorStr( szOldColor );
    }
@@ -526,9 +572,13 @@ HB_FUNC( DEVOUT ) /* writes a single value to the current device (screen or prin
    {
       pszString = hb_itemStringCon( hb_param( 1, HB_IT_ANY ), &nLen, &fFree );
       if( nLen )
+      {
          hb_conOutDev( pszString, nLen );
+      }
       if( fFree )
+      {
          hb_xfree( pszString );
+      }
    }
 }
 
@@ -550,7 +600,9 @@ HB_FUNC( DISPOUT ) /* writes a single value to the screen, but is not affected b
       hb_gtWrite( pszString, nLen );
 
       if( bFreeReq )
+      {
          hb_xfree( pszString );
+      }
 
       hb_gtSetColorStr( szOldColor );
    }
@@ -561,7 +613,9 @@ HB_FUNC( DISPOUT ) /* writes a single value to the screen, but is not affected b
       hb_gtWrite( pszString, nLen );
 
       if( bFreeReq )
+      {
          hb_xfree( pszString );
+      }
    }
 }
 
@@ -587,7 +641,9 @@ HB_FUNC( DISPOUTAT )  /* writes a single value to the screen at specific positio
       hb_gtWriteAt( hb_parni( 1 ), hb_parni( 2 ), pszString, nLen );
 
       if( bFreeReq )
+      {
          hb_xfree( pszString );
+      }
 
       hb_gtSetColorStr( szOldColor );
    }
@@ -598,7 +654,9 @@ HB_FUNC( DISPOUTAT )  /* writes a single value to the screen at specific positio
       hb_gtWriteAt( hb_parni( 1 ), hb_parni( 2 ), pszString, nLen );
 
       if( bFreeReq )
+      {
          hb_xfree( pszString );
+      }
    }
 }
 
@@ -616,16 +674,24 @@ HB_FUNC( HB_DISPOUTAT )
       pszString = hb_itemStringCon( hb_param( 3, HB_IT_ANY ), &nLen, &bFreeReq );
 
       if( HB_ISCHAR( 4 ) )
+      {
          iColor = hb_gtColorToN( hb_parc( 4 ) );
+      }
       else if( HB_ISNUM( 4 ) )
+      {
          iColor = hb_parni( 4 );
+      }
       else
+      {
          iColor = -1;
+      }
 
       hb_gtPutText( hb_parni( 1 ), hb_parni( 2 ), pszString, nLen, iColor );
 
       if( bFreeReq )
+      {
          hb_xfree( pszString );
+      }
    }
 }
 
@@ -646,11 +712,17 @@ HB_FUNC( HB_DISPOUTATBOX )
       HB_WCHAR wc;
 
       if( HB_ISCHAR( 4 ) )
+      {
          iColor = hb_gtColorToN( hb_parc( 4 ) );
+      }
       else if( HB_ISNUM( 4 ) )
+      {
          iColor = hb_parni( 4 );
+      }
       else
+      {
          iColor = hb_gtGetCurrColor();
+      }
 
       cdp = hb_gtBoxCP();
 

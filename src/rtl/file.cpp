@@ -75,7 +75,9 @@ HB_BOOL hb_fsIsDirectory( const char * pszFileName )
       --iLen;
 
    if( pszFileName[ iLen ] )
+   {
       pszFileName = pszFree = hb_strndup( pszFileName, iLen );
+   }
 
    if( iLen && iLen <= ( HB_PATH_MAX - 1 ) )
    {
@@ -96,7 +98,9 @@ HB_BOOL hb_fsIsDirectory( const char * pszFileName )
    }
 
    if( pszFree )
+   {
       hb_xfree( pszFree );
+   }
 
    return bResult;
 }

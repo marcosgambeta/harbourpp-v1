@@ -62,7 +62,9 @@ HB_FUNC( REPLICATE )
       if( nLen > 0 && nTimes > 0 )
       {
          if( nTimes == 1 )
+         {
             hb_itemReturn( pItem );
+         }
          else if( static_cast< double >( nLen ) * nTimes < HB_SIZE_MAX )
          {
             const char * szText = hb_itemGetCPtr( pItem );
@@ -71,7 +73,9 @@ HB_FUNC( REPLICATE )
 
             szResult = szPtr = static_cast< char * >( hb_xgrab( nSize + 1 ) );
             if( nLen == 1 )
+            {
                memset( szResult, szText[ 0 ], nSize );
+            }
             else
             {
                while( nTimes-- > 0 )
@@ -83,11 +87,17 @@ HB_FUNC( REPLICATE )
             hb_retclen_buffer( szResult, nSize );
          }
          else
+         {
             hb_errRT_BASE_SubstR( EG_STROVERFLOW, 1234, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         }
       }
       else
+      {
          hb_retc_null();
+      }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 1106, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 }

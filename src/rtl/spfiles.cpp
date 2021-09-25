@@ -56,9 +56,13 @@ HB_BOOL hb_spFile( const char * pszFileName, char * pszRetPath )
    HB_TRACE( HB_TR_DEBUG, ( "hb_spFile(%s, %p)", pszFileName, ( void * ) pszRetPath ) );
 
    if( pszRetPath )
+   {
       pszPath = pszRetPath;
+   }
    else
+   {
       pszPath = static_cast< char * >( hb_xgrab( HB_PATH_MAX ) );
+   }
 
    pFilepath = hb_fsFNameSplit( pszFileName );
 
@@ -106,7 +110,9 @@ HB_BOOL hb_spFile( const char * pszFileName, char * pszRetPath )
    hb_xfree( pFilepath );
 
    if( pszRetPath == nullptr )
+   {
       hb_xfree( pszPath );
+   }
 
    return bIsFile;
 }
@@ -120,9 +126,13 @@ HB_BOOL hb_spFileExists( const char * pszFileName, char * pszRetPath )
    HB_TRACE( HB_TR_DEBUG, ( "hb_spFileExists(%s, %p)", pszFileName, ( void * ) pszRetPath ) );
 
    if( pszRetPath )
+   {
       pszPath = pszRetPath;
+   }
    else
+   {
       pszPath = static_cast< char * >( hb_xgrab( HB_PATH_MAX ) );
+   }
 
    pFilepath = hb_fsFNameSplit( pszFileName );
 
@@ -170,7 +180,9 @@ HB_BOOL hb_spFileExists( const char * pszFileName, char * pszRetPath )
    hb_xfree( pFilepath );
 
    if( pszRetPath == nullptr )
+   {
       hb_xfree( pszPath );
+   }
 
    return bIsFile;
 }
@@ -182,9 +194,13 @@ HB_FHANDLE hb_spOpen( const char * pszFileName, HB_USHORT uiFlags )
    HB_TRACE( HB_TR_DEBUG, ( "hb_spOpen(%p, %hu)", ( const void * ) pszFileName, uiFlags ) );
 
    if( hb_spFile( pszFileName, szPath ) )
+   {
       return hb_fsOpen( szPath, uiFlags );
+   }
    else
+   {
       return hb_fsOpen( pszFileName, uiFlags );
+   }
 }
 
 HB_FHANDLE hb_spCreate( const char * pszFileName, HB_FATTR ulAttr )
@@ -196,7 +212,9 @@ HB_FHANDLE hb_spCreate( const char * pszFileName, HB_FATTR ulAttr )
 
    pFilepath = hb_fsFNameSplit( pszFileName );
    if( ! pFilepath->szPath )
+   {
       pFilepath->szPath = hb_setGetDefault();
+   }
 
    hb_fsFNameMerge( szPath, pFilepath );
    hb_xfree( pFilepath );
@@ -213,7 +231,9 @@ HB_FHANDLE hb_spCreateEx( const char * pszFileName, HB_FATTR ulAttr, HB_USHORT u
 
    pFilepath = hb_fsFNameSplit( pszFileName );
    if( ! pFilepath->szPath )
+   {
       pFilepath->szPath = hb_setGetDefault();
+   }
 
    hb_fsFNameMerge( szPath, pFilepath );
    hb_xfree( pFilepath );

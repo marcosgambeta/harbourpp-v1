@@ -59,12 +59,16 @@ HB_FUNC( STR )
    {
       pWidth = hb_param( 2, HB_IT_NUMERIC );
       if( pWidth == nullptr )
+      {
          pNumber = nullptr;
+      }
       else if( iParams >= 3 )
       {
          pDec = hb_param( 3, HB_IT_NUMERIC );
          if( pDec == nullptr )
+         {
             pNumber = nullptr;
+         }
       }
    }
 
@@ -73,10 +77,16 @@ HB_FUNC( STR )
       char * szResult = hb_itemStr( pNumber, pWidth, pDec );
 
       if( szResult )
+      {
          hb_retc_buffer( szResult );
+      }
       else
+      {
          hb_retc_null();
+      }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }

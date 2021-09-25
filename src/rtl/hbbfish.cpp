@@ -308,7 +308,9 @@ void hb_blowfishInit( HB_BLOWFISH * bf, const void * keydata, int keylen )
          xL <<= 8;
          xL |= key[ j++ ];
          if( j >= keylen )
+         {
             j = 0;
+         }   
       }
       P( i ) ^= xL;
    }

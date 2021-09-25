@@ -94,9 +94,13 @@ HB_FUNC( BIN2L )
       {
          const char * pszString = hb_itemGetCPtr( pItem );
          if( nLen >= 3 )
+         {
             iResult = HB_GET_LE_INT32( pszString );
+         }
          else
+         {
             iResult = HB_GET_LE_UINT16( pszString );
+         }   
       }
    }
    hb_retnint( iResult );

@@ -52,9 +52,13 @@
 static const HB_BLOWFISH * hb_bf_keyparam( void )
 {
    if( hb_parclen( 1 ) == sizeof( HB_BLOWFISH ) )
+   {
       return ( const HB_BLOWFISH * ) hb_parc( 1 );
+   }
    else
+   {
       return nullptr;
+   }   
 }
 
 /* hb_blowfishKey( <cPasswd> ) --> <cBfKey>
@@ -102,7 +106,9 @@ HB_FUNC( HB_BLOWFISHENCRYPT )
          memcpy( pszData, hb_itemGetCPtr( pData ), nLen );
          memset( pszData + nLen, '\0', nSize - nLen );
          if( ! fRaw )
+         {
             pszData[ nSize - 1 ] = static_cast< char >( nSize - nLen );
+         }
          for( nLen = 0; nLen < nSize; nLen += 8 )
          {
             HB_U32 xl, xr;
@@ -115,7 +121,9 @@ HB_FUNC( HB_BLOWFISHENCRYPT )
          hb_retclen_buffer( pszData, nSize );
       }
       else
+      {
          hb_retc_null();
+      }   
    }
 }
 
@@ -158,12 +166,18 @@ HB_FUNC( HB_BLOWFISHDECRYPT )
             nLen -= ( ( nSize - 1 ) & ~0x07 ) == 0 ? nSize : nLen;
          }
          if( nLen )
+         {
             hb_retclen_buffer( pszData, nLen );
+         }
          else
+         {
             hb_xfree( pszData );
+         }   
       }
       else if( nSize == 0 )
+      {
          hb_retc_null();
+      }   
    }
 }
 
@@ -179,7 +193,9 @@ static void hb_bf_initvect( HB_BYTE * vect )
    {
       vect[ i ] = static_cast< HB_BYTE >( i );
       if( iLen > 0 )
+      {
          vect[ i ] ^= static_cast< HB_BYTE >( pszVect[ i % iLen ] );
+      }   
    }
 }
 
@@ -220,13 +236,17 @@ HB_FUNC( HB_BLOWFISHENCRYPT_CFB )
          {
             int i = static_cast< int >( n & ( HB_BF_CIPHERBLOCK - 1 ) );
             if( i == 0 )
+            {
                hb_bf_encode( bf, vect );
+            }
             pszData[ n ] = ( vect[ i ] ^= pszSource[ n ] );
          }
          hb_retclen_buffer( pszData, nLen );
       }
       else
+      {
          hb_retc_null();
+      }   
    }
 }
 
@@ -256,13 +276,17 @@ HB_FUNC( HB_BLOWFISHDECRYPT_CFB )
          {
             int i = static_cast< int >( n & ( HB_BF_CIPHERBLOCK - 1 ) );
             if( i == 0 )
+            {
                hb_bf_encode( bf, vect );
+            }
             pszData[ n ] = ( vect[ i ] ^ pszSource[ n ] );
             vect[ i ] = pszSource[ n ];
          }
          hb_retclen_buffer( pszData, nLen );
       }
       else
+      {
          hb_retc_null();
+      }   
    }
 }

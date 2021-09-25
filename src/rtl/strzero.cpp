@@ -62,12 +62,16 @@ HB_FUNC( STRZERO )
       {
          pWidth = hb_param( 2, HB_IT_NUMERIC );
          if( pWidth == nullptr )
+         {
             pNumber = nullptr;
+         }
          else if( iParams >= 3 )
          {
             pDec = hb_param( 3, HB_IT_NUMERIC );
             if( pDec == nullptr )
+            {
                pNumber = nullptr;
+            }
          }
       }
 
@@ -106,7 +110,9 @@ HB_FUNC( STRZERO )
             hb_retc_buffer( szResult );
          }
          else
+         {
             hb_retc_null();
+         }
       }
       else
 #ifdef HB_CLP_STRICT

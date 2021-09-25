@@ -97,7 +97,9 @@ HB_FUNC( HB_FNAMEEXTSETDEF )
    PHB_FNAME pFilepath = hb_fsFNameSplit( hb_parcx( 1 ) );
 
    if( ! pFilepath->szExtension )
+   {
       pFilepath->szExtension = hb_parc( 2 );
+   }
    hb_retc( hb_fsFNameMerge( szPath, pFilepath ) );
    hb_xfree( pFilepath );
 }

@@ -63,8 +63,10 @@ static signed char base64_decode_value( int value_in )
 
    value_in -= 43;
    if( value_in < 0 || value_in >= static_cast< int >( HB_SIZEOFARRAY( s_decoding ) ) )
+   {
       return -1;
-
+   }
+   
    return s_decoding[ value_in ];
 }
 
@@ -80,7 +82,9 @@ static HB_SIZE base64_decode_block( const char * code_in, const HB_SIZE length_i
       do
       {
          if( codechar == code_end )
+         {
             return pszPlainchar - pszPlainttextOut;
+         }
          fragment = base64_decode_value( *codechar++ );
       }
       while( fragment < 0 );
@@ -89,7 +93,9 @@ static HB_SIZE base64_decode_block( const char * code_in, const HB_SIZE length_i
       do
       {
          if( codechar == code_end )
+         {
             return pszPlainchar - pszPlainttextOut;
+         }
          fragment = base64_decode_value( *codechar++ );
       }
       while( fragment < 0 );
@@ -99,7 +105,9 @@ static HB_SIZE base64_decode_block( const char * code_in, const HB_SIZE length_i
       do
       {
          if( codechar == code_end )
+         {
             return pszPlainchar - pszPlainttextOut;
+         }
          fragment = base64_decode_value( *codechar++ );
       }
       while( fragment < 0 );
@@ -109,7 +117,9 @@ static HB_SIZE base64_decode_block( const char * code_in, const HB_SIZE length_i
       do
       {
          if( codechar == code_end )
+         {
             return pszPlainchar - pszPlainttextOut;
+         }
          fragment = base64_decode_value( *codechar++ );
       }
       while( fragment < 0 );
@@ -130,5 +140,7 @@ HB_FUNC( HB_BASE64DECODE )
       hb_retclen_buffer( code, nDstLen );
    }
    else
+   {
       hb_retc_null();
+   }
 }

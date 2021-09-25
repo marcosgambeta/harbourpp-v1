@@ -108,7 +108,9 @@ HB_FUNC( HB_VERSION )
             hb_retds( szDate );
          }
          else
+         {
             hb_retds( nullptr );
+         }
 
          hb_xfree( pszBuildDate );
          break;

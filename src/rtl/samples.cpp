@@ -80,13 +80,19 @@ static long hb_TimeStrToSec( const char * pszTime )
    nLen = strlen( pszTime );
 
    if( nLen >= 1 )
+   {
       lTime += static_cast< long >( hb_strVal( pszTime, nLen ) ) * 3600;
+   }
 
    if( nLen >= 4 )
+   {
       lTime += static_cast< long >( hb_strVal( pszTime + 3, nLen - 3 ) ) * 60;
+   }
 
    if( nLen >= 7 )
+   {
       lTime += static_cast< long >( hb_strVal( pszTime + 6, nLen - 6 ) );
+   }
 
    return lTime;
 }

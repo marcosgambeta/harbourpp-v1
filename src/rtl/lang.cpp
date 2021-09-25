@@ -59,7 +59,9 @@ HB_FUNC( HB_USERLANG )
    {
       ietf = hb_getenv( "LC_MESSAGES" );
       if( ietf == nullptr )
+      {
          ietf = hb_getenv( "LANG" );
+      }   
    }
 
    if( ietf != nullptr )
@@ -69,7 +71,9 @@ HB_FUNC( HB_USERLANG )
       for( tmp = 0; ietf[ tmp ] && ietf[ tmp ] != '.'; tmp++ )
       {
          if( ietf[ tmp ] == '_' )
+         {
             ietf[ tmp ] = '-';
+         }   
       }
 
       hb_retclen_buffer( ietf, tmp );

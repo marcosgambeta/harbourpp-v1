@@ -70,17 +70,22 @@ HB_FUNC( __DEFPATH )
       for DOS compatible operating systems while preventing it from being
       with a Unix compatible OS. */
 #ifdef HB_OS_HAS_DRIVE_LETTER
-   if( size && buffer[ size - 1 ] != HB_OS_PATH_DELIM_CHR &&
-               buffer[ size - 1 ] != HB_OS_DRIVE_DELIM_CHR )
+   if( size && buffer[ size - 1 ] != HB_OS_PATH_DELIM_CHR && buffer[ size - 1 ] != HB_OS_DRIVE_DELIM_CHR )
    {
       if( size == 1 )
+      {
          buffer[ size++ ] = HB_OS_DRIVE_DELIM_CHR;
+      }
       else
+      {
          buffer[ size++ ] = HB_OS_PATH_DELIM_CHR;
+      }   
    }
 #else
    if( size && buffer[ size - 1 ] != HB_OS_PATH_DELIM_CHR )
+   {
       buffer[ size++ ] = HB_OS_PATH_DELIM_CHR;
+   }
 #endif
 
    hb_retclen( buffer, size );

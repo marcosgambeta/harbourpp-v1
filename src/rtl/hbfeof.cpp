@@ -57,7 +57,9 @@ HB_FUNC( HB_FEOF )
       uiError = hb_fsError();
    }
    else
+   {
       hb_retl( HB_TRUE );
+   }
 
    hb_fsSetFError( uiError );
 }

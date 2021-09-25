@@ -90,10 +90,13 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
       {
          HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
          if( hModule )
-            s_pGetFileAttributesEx = ( _HB_GETFILEATTRIBUTESEX )
-               HB_WINAPI_GETPROCADDRESST( hModule, "GetFileAttributesEx" );
+         {
+            s_pGetFileAttributesEx = ( _HB_GETFILEATTRIBUTESEX ) HB_WINAPI_GETPROCADDRESST( hModule, "GetFileAttributesEx" );
+         }
          else
+         {
             s_pGetFileAttributesEx = nullptr;
+         }
       }
 
       if( s_pGetFileAttributesEx )
@@ -109,10 +112,14 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
                    ( attrex.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ) == 0;
          hb_fsSetIOError( fResult, 0 );
          if( lpFree )
+         {
             hb_xfree( lpFree );
+         }
          if( fResult )
+         {
             return static_cast< HB_FOFFSET >( attrex.nFileSizeLow ) +
                  ( static_cast< HB_FOFFSET >( attrex.nFileSizeHigh ) << 32 );
+         }
       }
       else
       {
@@ -128,7 +135,9 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
 #elif defined( HB_OS_OS2 )
       HB_FOFFSET nSize = 0;
       if( hb_fsOS2QueryPathInfo( pszFileName, &nSize, nullptr, nullptr, nullptr ) )
+      {
          return nSize;
+      }   
 #elif defined( HB_USE_LARGEFILE64 )
       char * pszFree;
       HB_BOOL fResult;
@@ -140,9 +149,13 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
       hb_fsSetIOError( fResult, 0 );
       hb_vmLock();
       if( pszFree )
+      {
          hb_xfree( pszFree );
+      }
       if( fResult )
+      {
          return static_cast< HB_FOFFSET >( statbuf.st_size );
+      }
 #else
       char * pszFree;
       HB_BOOL fResult;
@@ -154,9 +167,13 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
       hb_fsSetIOError( fResult, 0 );
       hb_vmLock();
       if( pszFree )
+      {
          hb_xfree( pszFree );
+      }
       if( fResult )
+      {
          return static_cast< HB_FOFFSET >( statbuf.st_size );
+      }
 #endif
    }
    else

@@ -77,11 +77,15 @@ HB_FUNC( CHR )
          hb_retclen( szChar, nLen );
       }
       else
+      {
          hb_retclen( hb_szAscii[ hb_parni( 1 ) & 0xFF ], 1 );
+      }
 #endif
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 1104, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 /* converts a character value to an ASCII code */
@@ -94,12 +98,18 @@ HB_FUNC( ASC )
       int iChar;
       PHB_CODEPAGE cdp = hb_vmCDP();
       if( HB_CDP_ISCHARUNI( cdp ) )
+      {
          iChar = hb_cdpTextGetU16( cdp, szValue, hb_parclen( 1 ) );
+      }
       else
+      {
          iChar = ( HB_UCHAR ) szValue[ 0 ];
+      }
 
       hb_retni( iChar );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 1107, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }

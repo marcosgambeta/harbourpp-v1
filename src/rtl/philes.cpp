@@ -59,8 +59,7 @@ HB_FUNC( FOPEN )
 
    if( szFile )
    {
-      hb_retnint( ( HB_NHANDLE ) hb_fsOpen( szFile,
-                  static_cast< HB_USHORT >( hb_parnidef( 2, FO_READ | FO_COMPAT ) ) ) );
+      hb_retnint( ( HB_NHANDLE ) hb_fsOpen( szFile, static_cast< HB_USHORT >( hb_parnidef( 2, FO_READ | FO_COMPAT ) ) ) );
       hb_fsSetFError( hb_fsError() );
    }
    else
@@ -77,8 +76,7 @@ HB_FUNC( FCREATE )
 
    if( szFile )
    {
-      hb_retnint( ( HB_NHANDLE ) hb_fsCreate( szFile,
-                  hb_parnidef( 2, FC_NORMAL ) ) );
+      hb_retnint( ( HB_NHANDLE ) hb_fsCreate( szFile, hb_parnidef( 2, FC_NORMAL ) ) );
       hb_fsSetFError( hb_fsError() );
    }
    else
@@ -94,9 +92,7 @@ HB_FUNC( HB_FCREATE )
 
    if( szFile )
    {
-      hb_retnint( ( HB_NHANDLE ) hb_fsCreateEx( szFile,
-                  hb_parnidef( 2, FC_NORMAL ),
-                  static_cast< HB_USHORT >( hb_parnidef( 3, FO_COMPAT ) ) ) );
+      hb_retnint( ( HB_NHANDLE ) hb_fsCreateEx( szFile, hb_parnidef( 2, FC_NORMAL ), static_cast< HB_USHORT >( hb_parnidef( 3, FO_COMPAT ) ) ) );
       hb_fsSetFError( hb_fsError() );
    }
    else
@@ -124,14 +120,15 @@ HB_FUNC( FREAD )
                will be one more than the length of the passed buffer, because
                the terminating zero could be used if needed. [vszakats] */
 
-      if( nRead <= hb_parcsiz( 2 ) &&
-          hb_itemGetWriteCL( pBuffer, &buffer, &nSize ) )
+      if( nRead <= hb_parcsiz( 2 ) && hb_itemGetWriteCL( pBuffer, &buffer, &nSize ) )
       {
          nRead = hb_fsReadLarge( hb_numToHandle( hb_parnint( 1 ) ), buffer, nRead );
          uiError = hb_fsError();
       }
       else
+      {
          nRead = 0;
+      }   
    }
 
    hb_retns( nRead );
@@ -150,14 +147,18 @@ HB_FUNC( FWRITE )
       {
          HB_SIZE nWrite = hb_parns( 3 );
          if( nWrite < nLen )
+         {
             nLen = nWrite;
+         }
       }
 
       hb_retns( hb_fsWriteLarge( hb_numToHandle( hb_parnint( 1 ) ), hb_parc( 2 ), nLen ) );
       uiError = hb_fsError();
    }
    else
+   {
       hb_retns( 0 );
+   }
    hb_fsSetFError( uiError );
 }
 
@@ -177,7 +178,9 @@ HB_FUNC( FCLOSE )
       hb_retl( uiError == 0 );
    }
    else
+   {
       hb_retl( HB_FALSE );
+   }
    hb_fsSetFError( uiError );
 }
 
@@ -192,7 +195,9 @@ HB_FUNC( FERASE )
       uiError = hb_fsError();
    }
    else
+   {
       hb_retni( F_ERROR );
+   }
    hb_fsSetFError( uiError );
 }
 
@@ -208,7 +213,9 @@ HB_FUNC( FRENAME )
       uiError = hb_fsError();
    }
    else
+   {
       hb_retni( F_ERROR );
+   }
    hb_fsSetFError( uiError );
 }
 
@@ -218,14 +225,14 @@ HB_FUNC( FSEEK )
 
    if( HB_ISNUM( 1 ) && HB_ISNUM( 2 ) )
    {
-      hb_retnint( hb_fsSeekLarge( hb_numToHandle( hb_parnint( 1 ) ),
-                                  hb_parnint( 2 ),
-                                  static_cast< HB_USHORT >( hb_parnidef( 3, FS_SET ) ) ) );
+      hb_retnint( hb_fsSeekLarge( hb_numToHandle( hb_parnint( 1 ) ), hb_parnint( 2 ), static_cast< HB_USHORT >( hb_parnidef( 3, FS_SET ) ) ) );
       uiError = hb_fsError();
    }
    else
+   {
       hb_retni( 0 );
-
+   }
+   
    hb_fsSetFError( uiError );
 }
 
@@ -251,10 +258,14 @@ HB_FUNC( FREADSTR )
          hb_retc_buffer( buffer );
       }
       else
+      {
          hb_retc_null();
+      }   
    }
    else
+   {
       hb_retc_null();
+   }
    hb_fsSetFError( uiError );
 }
 
@@ -275,7 +286,9 @@ HB_FUNC( HB_FREADLEN )
       hb_retclen_buffer( buffer, nRead );
    }
    else
+   {
       hb_retc_null();
+   }
    hb_fsSetFError( uiError );
 }
 
@@ -294,9 +307,13 @@ HB_FUNC( CURDIR )
    if( szDrive )
    {
       if( *szDrive >= 'A' && *szDrive <= 'Z' )
+      {
          iDrive = *szDrive - ( 'A' - 1 );
+      }
       else if( *szDrive >= 'a' && *szDrive <= 'z' )
+      {
          iDrive = *szDrive - ( 'a' - 1 );
+      }
    }
    hb_fsCurDirBuff( iDrive, szBuffer, sizeof( szBuffer ) );
 
@@ -318,9 +335,13 @@ HB_FUNC( HB_CURDRIVE )
       int iDrive = -1;
 
       if( *szDrive >= 'A' && *szDrive <= 'Z' )
+      {
          iDrive = *szDrive - 'A';
+      }
       else if( *szDrive >= 'a' && *szDrive <= 'z' )
+      {
          iDrive = *szDrive - 'a';
+      }
 
       if( iDrive >= 0 )
       {
@@ -330,7 +351,9 @@ HB_FUNC( HB_CURDRIVE )
                                                      HB_ERR_FUNCNAME, 0, EF_CANDEFAULT | EF_CANRETRY,
                                                      HB_ERR_ARGS_BASEPARAMS );
             if( uiAction != E_RETRY )
+            {
                break;
+            }
          }
       }
    }
@@ -345,13 +368,19 @@ HB_FUNC( HB_CWD )
    const char * szNewWD;
 
    if( hb_fsGetCWD( szBuffer, sizeof( szBuffer ) ) )
+   {
       hb_retc( szBuffer );
+   }
    else
+   {
       hb_retc_null();
+   }
 
    szNewWD = hb_parc( 1 );
    if( szNewWD )
+   {
       hb_fsSetCWD( szNewWD );
+   }
 
    hb_fsSetFError( hb_fsError() );
 }
@@ -361,9 +390,13 @@ HB_FUNC( HB_PROGNAME )
    char * pszBaseName = hb_cmdargProgName();
 
    if( pszBaseName )
+   {
       hb_retc_buffer( pszBaseName );
+   }
    else
+   {
       hb_retc_null();
+   }   
 }
 
 HB_FUNC( HB_DIRBASE )
@@ -443,16 +476,22 @@ HB_FUNC( HB_FSETDATETIME )
    long lDate = -1, lTime = -1;
 
    if( HB_ISTIMESTAMP( 2 ) )
+   {
       hb_partdt( &lDate, &lTime, 2 );
+   }
    else
    {
       if( HB_ISDATE( 2 ) )
+      {
          lDate = hb_pardl( 2 );
+      }
       if( HB_ISCHAR( 3 ) )
       {
          int iHour, iMinutes, iSeconds, iMSec;
          if( hb_timeStrGet( hb_parc( 3 ), &iHour, &iMinutes, &iSeconds, &iMSec ) )
+         {
             lTime = hb_timeEncode( iHour, iMinutes, iSeconds, iMSec );
+         }
       }
    }
 
@@ -475,12 +514,16 @@ HB_FUNC( HB_FGETDATETIME )
          char buf[ 13 ];
          hb_timeStr( buf, lMillisec );
          if( lMillisec % 1000 == 0 )
+         {
             buf[ 8 ] = '\0';
+         }
          hb_storc( buf, 3 );
          hb_stordl( lJulian, 2 );
       }
       else
+      {
          hb_stortdt( lJulian, lMillisec, 2 );
+      }
 
       hb_retl( HB_TRUE );
    }
@@ -492,7 +535,9 @@ HB_FUNC( HB_FGETDATETIME )
          hb_stordl( 0, 2 );
       }
       else
+      {
          hb_stortdt( 0, 0, 2 );
+      }
 
       hb_retl( HB_FALSE );
    }
@@ -508,7 +553,9 @@ HB_FUNC( HB_FSETDEVMODE )
       hb_fsSetFError( hb_fsError() );
    }
    else
+   {
       hb_fsSetFError( 6 );  /* ERROR_INVALID_HANDLE */
+   }
 
    hb_retni( iRet );
 }
@@ -528,8 +575,7 @@ HB_FUNC( HB_PREAD )
    char * buffer;
    HB_SIZE nSize;
 
-   if( hPipe != FS_ERROR && pBuffer && HB_ISBYREF( 2 ) &&
-       hb_itemGetWriteCL( pBuffer, &buffer, &nSize ) )
+   if( hPipe != FS_ERROR && pBuffer && HB_ISBYREF( 2 ) && hb_itemGetWriteCL( pBuffer, &buffer, &nSize ) )
    {
       HB_ERRCODE uiError = 0;
 
@@ -538,7 +584,9 @@ HB_FUNC( HB_PREAD )
          HB_ISIZ nToRead = hb_parns( 3 );
 
          if( nToRead >= 0 && static_cast< HB_SIZE >( nToRead ) < nSize )
+         {
             nSize = nToRead;
+         }
       }
 
       if( nSize > 0 )
@@ -548,13 +596,19 @@ HB_FUNC( HB_PREAD )
       }
 
       if( nSize == static_cast< HB_SIZE >( FS_ERROR ) )
+      {
          hb_retni( FS_ERROR );
+      }
       else
+      {
          hb_retns( nSize );
+      }
       hb_fsSetFError( uiError );
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }   
 }
 
 /* hb_PWrite( <nPipeHandle>, <cBuffer>, [<nBytes>], [<nTimeOut>] )
@@ -572,17 +626,25 @@ HB_FUNC( HB_PWRITE )
       {
          HB_SIZE nWrite = hb_parns( 3 );
          if( nWrite < nLen )
+         {
             nLen = nWrite;
+         }
       }
       nLen = hb_fsPipeWrite( hPipe, data, nLen, hb_parnint( 4 ) );
       hb_fsSetFError( hb_fsError() );
       if( nLen == static_cast< HB_SIZE >( FS_ERROR ) )
+      {
          hb_retni( FS_ERROR );
+      }
       else
+      {
          hb_retns( nLen );
+      }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( HB_OSERROR )

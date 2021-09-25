@@ -92,7 +92,9 @@ HB_FUNC( HB_HMAC_SHA224 )
       hb_retclen( hex, HB_SIZEOFARRAY( hex ) - 1 );
    }
    else
+   {
       hb_retclen( reinterpret_cast< char * >( mac ), sizeof( mac ) );
+   }
 }
 
 HB_FUNC( HB_HMAC_SHA256 )
@@ -139,7 +141,9 @@ HB_FUNC( HB_HMAC_SHA256 )
       hb_retclen( hex, HB_SIZEOFARRAY( hex ) - 1 );
    }
    else
+   {
       hb_retclen( reinterpret_cast< char * >( mac ), sizeof( mac ) );
+   }   
 }
 
 HB_FUNC( HB_HMAC_SHA384 )
@@ -186,7 +190,9 @@ HB_FUNC( HB_HMAC_SHA384 )
       hb_retclen( hex, HB_SIZEOFARRAY( hex ) - 1 );
    }
    else
+   {
       hb_retclen( reinterpret_cast< char * >( mac ), sizeof( mac ) );
+   }
 }
 
 HB_FUNC( HB_HMAC_SHA512 )
@@ -233,5 +239,7 @@ HB_FUNC( HB_HMAC_SHA512 )
       hb_retclen( hex, HB_SIZEOFARRAY( hex ) - 1 );
    }
    else
+   {
       hb_retclen( reinterpret_cast< char * >( mac ), sizeof( mac ) );
+   }
 }

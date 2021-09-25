@@ -79,7 +79,9 @@ HB_FUNC( SOUNDEX )
 
          /* Convert to uppercase: HB_TOUPPER() */
          if( cChar >= 'a' && cChar <= 'z' )
+         {
             cChar -= ( 'a' - 'A' );
+         }
 
          /* Check if IsAlpha() */
          if( cChar >= 'A' && cChar <= 'Z' )
@@ -89,9 +91,13 @@ HB_FUNC( SOUNDEX )
             char cCharConverted = ( ( cChar - 'A' ) > ( static_cast< int >( sizeof( s_szTable ) ) - 1 ) ) ? '9' : s_szTable[ cChar - 'A' ];
 
             if( nResultPos == 0 )
+            {
                szResult[ nResultPos++ ] = cChar;
+            }
             else if( cCharConverted != '0' && cCharConverted != cCharPrev )
+            {
                szResult[ nResultPos++ ] = cCharConverted;
+            }
 
             cCharPrev = cCharConverted;
          }

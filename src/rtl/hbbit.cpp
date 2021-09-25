@@ -77,7 +77,9 @@ HB_FUNC( HB_BITAND )
       {
          HB_MAXINT lNext;
          if( ! hb_numParam( ++i, &lNext ) )
+         {
             return;
+         }
          lValue &= lNext;
       }
       while( --iPCount > 0 );
@@ -96,7 +98,9 @@ HB_FUNC( HB_BITOR )
       {
          HB_MAXINT lNext;
          if( ! hb_numParam( ++i, &lNext ) )
+         {
             return;
+         }
          lValue |= lNext;
       }
       while( --iPCount > 0 );
@@ -115,7 +119,9 @@ HB_FUNC( HB_BITXOR )
       {
          HB_MAXINT lNext;
          if( ! hb_numParam( ++i, &lNext ) )
+         {
             return;
+         }
          lValue ^= lNext;
       }
       while( --iPCount > 0 );
@@ -128,7 +134,9 @@ HB_FUNC( HB_BITNOT )
    HB_MAXINT lValue;
 
    if( hb_numParam( 1, &lValue ) )
+   {
       hb_retnint( ~lValue );
+   }   
 }
 
 HB_FUNC( HB_BITTEST )
@@ -136,7 +144,9 @@ HB_FUNC( HB_BITTEST )
    HB_MAXINT lValue, lBit;
 
    if( hb_numParam( 1, &lValue ) && hb_numParam( 2, &lBit ) )
+   {
       hb_retl( ( lValue & ( static_cast< HB_MAXINT >( 1 ) << lBit ) ) != 0 );
+   }   
 }
 
 HB_FUNC( HB_BITSET )
@@ -144,7 +154,9 @@ HB_FUNC( HB_BITSET )
    HB_MAXINT lValue, lBit;
 
    if( hb_numParam( 1, &lValue ) && hb_numParam( 2, &lBit ) )
+   {
       hb_retnint( lValue | ( static_cast< HB_MAXINT >( 1 ) << lBit ) );
+   }   
 }
 
 HB_FUNC( HB_BITRESET )
@@ -152,7 +164,9 @@ HB_FUNC( HB_BITRESET )
    HB_MAXINT lValue, lBit;
 
    if( hb_numParam( 1, &lValue ) && hb_numParam( 2, &lBit ) )
+   {
       hb_retnint( lValue & ( ~( static_cast< HB_MAXINT >( 1 ) << lBit ) ) );
+   }   
 }
 
 HB_FUNC( HB_BITSHIFT )
@@ -162,8 +176,12 @@ HB_FUNC( HB_BITSHIFT )
    if( hb_numParam( 1, &lValue ) && hb_numParam( 2, &lBits ) )
    {
       if( lBits < 0 )
+      {
          hb_retnint( lValue >> -lBits );
+      }
       else
+      {
          hb_retnint( lValue << lBits );
+      }   
    }
 }

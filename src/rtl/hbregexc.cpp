@@ -131,7 +131,9 @@ PHB_REGEX hb_regexGet( PHB_ITEM pRegExItm, int iFlags )
       {
          pRegEx = ( PHB_REGEX ) hb_itemGetPtrGC( pRegExItm, &s_gcRegexFuncs );
          if( pRegEx )
+         {
             fArgError = HB_FALSE;
+         }
       }
       else if( HB_IS_STRING( pRegExItm ) )
       {
@@ -146,9 +148,13 @@ PHB_REGEX hb_regexGet( PHB_ITEM pRegExItm, int iFlags )
    }
 
    if( fArgError )
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, pRegExItm );
+   }
    else if( ! pRegEx ) /* hb_regexCompile() failed */
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 3015, nullptr, HB_ERR_FUNCNAME, 1, pRegExItm );
+   }
 
    return pRegEx;
 }

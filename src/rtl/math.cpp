@@ -89,8 +89,7 @@ static int hb_matherr( HB_MATH_EXCEPTION * pexc )
       return 1;
    }
 
-   if( mode == HB_MATH_ERRMODE_USER || mode == HB_MATH_ERRMODE_USERDEFAULT ||
-       mode == HB_MATH_ERRMODE_USERCDEFAULT )
+   if( mode == HB_MATH_ERRMODE_USER || mode == HB_MATH_ERRMODE_USERDEFAULT || mode == HB_MATH_ERRMODE_USERCDEFAULT )
    {
       PHB_ITEM pArg1, pArg2, pError;
       PHB_ITEM pMatherrResult;
@@ -322,11 +321,17 @@ HB_BOOL hb_mathGetError( HB_MATH_EXCEPTION * phb_exc, const char * szFunc,
       default:
          HB_NUMTYPE( v, dResult );
          if( ( v & _HB_NUM_NAN ) != 0 )
+         {
             errCode = EDOM;
+         }
          else if( ( v & ( _HB_NUM_NINF | _HB_NUM_PINF ) ) != 0 )
+         {
             errCode = ERANGE;
+         }
          else
+         {
             errCode = errno;
+         }   
    }
 
    /* map math error types */
@@ -364,7 +369,9 @@ HB_BOOL hb_mathGetError( HB_MATH_EXCEPTION * phb_exc, const char * szFunc,
    {
       HB_MATH_HANDLERPROC mathHandler = hb_mathGetHandler();
       if( mathHandler )
+      {
          ( *mathHandler )( phb_exc );
+      }   
    }
    return HB_TRUE;
 #else
@@ -432,7 +439,9 @@ HB_FUNC( HB_MATHERMODE )        /* ([<nNewMode>]) --> <nOldMode> */
 
    /* set new mode */
    if( HB_ISNUM( 1 ) )
+   {
       hb_mathSetErrMode( hb_parni( 1 ) );
+   }   
 }
 
 
@@ -641,22 +650,32 @@ HB_FUNC( EXP )
       if( hb_mathGetError( &hb_exc, "EXP", dArg, 0.0, dResult ) )
       {
          if( hb_exc.handled )
+         {
             hb_retndlen( hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec );
+         }
          else
          {
             /* math exception is up to the Harbour function, so do this as
                Clipper compatible as possible */
             if( hb_exc.type == HB_MATH_ERR_OVERFLOW )
+            {
                hb_retndlen( HUGE_VAL, -1, -1 );
+            }
             else
+            {
                hb_retnd( 0.0 );
+            }
          }
       }
       else
+      {
          hb_retnd( dResult );
+      }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 1096, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( LOG )
@@ -667,7 +686,9 @@ HB_FUNC( LOG )
       double dArg = hb_parnd( 1 );
 
       if( dArg <= 0 )
+      {
          hb_retndlen( -HUGE_VAL, -1, -1 );  /* return -infinity */
+      }
       else
       {
          double dResult;
@@ -676,7 +697,9 @@ HB_FUNC( LOG )
          if( hb_mathGetError( &hb_exc, "LOG", dArg, 0.0, dResult ) )
          {
             if( hb_exc.handled )
+            {
                hb_retndlen( hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec );
+            }
             else
             {
                /* math exception is up to the Harbour function, so do this as
@@ -695,11 +718,15 @@ HB_FUNC( LOG )
             }
          }
          else
+         {
             hb_retnd( dResult );
+         }
       }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 1095, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
 
 HB_FUNC( SQRT )
@@ -710,7 +737,9 @@ HB_FUNC( SQRT )
       double dArg = hb_parnd( 1 );
 
       if( dArg <= 0 )
+      {
          hb_retnd( 0.0 );
+      }
       else
       {
          double dResult;
@@ -719,16 +748,24 @@ HB_FUNC( SQRT )
          if( hb_mathGetError( &hb_exc, "SQRT", dArg, 0.0, dResult ) )
          {
             if( hb_exc.handled )
+            {
                hb_retndlen( hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec );
+            }
             else
+            {
                /* math exception is up to the Harbour function, so do this as
                   Clipper compatible as possible */
                hb_retnd( 0.0 );  /* return 0.0 on all errors (all (?) of type DOMAIN) */
+            }
          }
          else
+         {
             hb_retnd( dResult );
+         }
       }
    }
    else
+   {
       hb_errRT_BASE_SubstR( EG_ARG, 1097, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   }
 }
