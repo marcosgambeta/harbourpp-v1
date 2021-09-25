@@ -1894,8 +1894,7 @@ static int hb_socketSelectWRE( HB_SOCKET sd, HB_MAXINT timeout )
          iResult = 0;
       }   
    }
-   while( iResult == 0 && ( timeout = hb_timerTest( timeout, &timer ) ) != 0 &&
-          hb_vmRequestQuery() == 0 );
+   while( iResult == 0 && ( timeout = hb_timerTest( timeout, &timer ) ) != 0 && hb_vmRequestQuery() == 0 );
 
    if( iResult > 0 )
    {
@@ -2734,8 +2733,7 @@ long hb_socketSend( HB_SOCKET sd, const void * data, long len, int flags, HB_MAX
          iError = lSent > 0 ? 0 : HB_SOCK_GETERROR();
          hb_socketSetOsError( iError );
       }
-      while( lSent == -1 && HB_SOCK_IS_EINTR( iError ) &&
-             hb_vmRequestQuery() == 0 );
+      while( lSent == -1 && HB_SOCK_IS_EINTR( iError ) && hb_vmRequestQuery() == 0 );
    }
    hb_vmLock();
 
@@ -2774,8 +2772,7 @@ long hb_socketSendTo( HB_SOCKET sd, const void * data, long len, int flags,
          iError = lSent > 0 ? 0 : HB_SOCK_GETERROR();
          hb_socketSetOsError( iError );
       }
-      while( lSent == -1 && HB_SOCK_IS_EINTR( iError ) &&
-             hb_vmRequestQuery() == 0 );
+      while( lSent == -1 && HB_SOCK_IS_EINTR( iError ) && hb_vmRequestQuery() == 0 );
    }
    hb_vmLock();
 
@@ -2808,8 +2805,7 @@ long hb_socketRecv( HB_SOCKET sd, void * data, long len, int flags, HB_MAXINT ti
          iError = lReceived > 0 ? 0 : HB_SOCK_GETERROR();
          hb_socketSetOsError( iError );
       }
-      while( lReceived == -1 && HB_SOCK_IS_EINTR( iError ) &&
-             hb_vmRequestQuery() == 0 );
+      while( lReceived == -1 && HB_SOCK_IS_EINTR( iError ) && hb_vmRequestQuery() == 0 );
    }
    hb_vmLock();
 
@@ -2850,8 +2846,7 @@ long hb_socketRecvFrom( HB_SOCKET sd, void * data, long len, int flags, void ** 
          iError = lReceived > 0 ? 0 : HB_SOCK_GETERROR();
          hb_socketSetOsError( iError );
       }
-      while( lReceived == -1 && HB_SOCK_IS_EINTR( iError ) &&
-             hb_vmRequestQuery() == 0 );
+      while( lReceived == -1 && HB_SOCK_IS_EINTR( iError ) && hb_vmRequestQuery() == 0 );
 
       if( lReceived != -1 && pSockAddr && puiSockLen )
       {
@@ -3725,7 +3720,9 @@ PHB_ITEM hb_socketGetHosts( const char * szAddr, int af )
       if( he )
       {
          while( he->h_addr_list[ iCount ] )
+         {
             ++iCount;
+         }
       }
       if( iCount > 0 )
       {

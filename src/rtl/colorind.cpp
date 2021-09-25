@@ -70,16 +70,22 @@ HB_FUNC( HB_COLORINDEX )
 
          /* Skip the spaces after the comma */
          while( pszColor[ nColorPos ] == ' ' )
+         {
             nColorPos++;
-
+         }
+         
          /* Search for next comma or end of string */
          nColorLen = 0;
          while( pszColor[ nColorPos + nColorLen ] != '\0' && pszColor[ nColorPos + nColorLen ] != ',' )
+         {
             nColorLen++;
-
+         }
+         
          /* Skip the trailing spaces */
          while( nColorLen > 0 && pszColor[ nColorPos + nColorLen - 1 ] == ' ' )
+         {
             nColorLen--;
+         }
 
          /* Return the string */
          hb_retclen( pszColor + nColorPos, nColorLen );

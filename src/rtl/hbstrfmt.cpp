@@ -86,8 +86,7 @@ static void hb_itemHexStr( PHB_ITEM pItem, char * pStr, HB_BOOL fUpper )
    do
    {
       int iDigit = static_cast< int >( nValue & 0x0F );
-      pStr[ --iLen ] = static_cast< char >( iDigit + ( iDigit < 10 ? '0' :
-                                             ( fUpper ? 'A' : 'a' ) - 10 ) );
+      pStr[ --iLen ] = static_cast< char >( iDigit + ( iDigit < 10 ? '0' : ( fUpper ? 'A' : 'a' ) - 10 ) );
       nValue >>= 4;
    }
    while( iLen );
@@ -134,7 +133,9 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
       /* parse parameter number */
       iParamNo = 0;
       while( HB_ISDIGIT( *pFmt ) )
+      {
          iParamNo = iParamNo * 10 + *pFmt++ - '0';
+      }
 
       if( iParamNo > 0 && *pFmt == '$' )
       {
@@ -173,7 +174,9 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
       {
          iWidth = 0;
          while( HB_ISDIGIT( *pFmt ) )
+         {
             iWidth = iWidth * 10 + *pFmt++ - '0';
+         }
       }
 
       /* Parse decimals */
@@ -184,7 +187,9 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
          if( HB_ISDIGIT( *pFmt ) )
          {
             while( HB_ISDIGIT( *pFmt ) )
+            {
                iDec = iDec * 10 + *pFmt++ - '0';
+            }
          }
       }
 
@@ -217,7 +222,9 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
             if( iWidth > 1 )
             {
                for( i = 1; i < iWidth; i++ )
+               {
                   bufadd( &buffer, " ", 1 );
+               }
             }
             if( ! fLeftAlign )
             {
@@ -249,7 +256,9 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
                }
 
                while( *pStr2 == ' ' )
+               {
                   pStr2++;
+               }
                iSize = static_cast< int >( strlen( pStr2 ) );
                if( *pStr2 == '-' )
                {
@@ -306,7 +315,9 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
                }
 
                for( i = iSize; i < iDec; i++ )
+               {
                   bufadd( &buffer, "0", 1 );
+               }
 
                bufadd( &buffer, pStr2, static_cast< HB_SIZE >( iSize ) );
                if( iDec > iSize )
@@ -314,7 +325,9 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
                   iSize = iDec;
                }
                for( i = iSize + iExtra; i < iWidth; i++ )
+               {
                   bufadd( &buffer, " ", 1 );
+               }
             }
             else
             {
@@ -336,14 +349,18 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
                   }
 
                   for( i = iSize + iExtra; i < iWidth; i++ )
+                  {
                      bufadd( &buffer, "0", 1 );
+                  }
 
                   bufadd( &buffer, pStr2, strlen( pStr2 ) );
                }
                else
                {
                   for( i = ( iSize > iDec ? iSize : iDec ) + iExtra; i < iWidth; i++ )
+                  {
                      bufadd( &buffer, " ", 1 );
+                  }
 
                   /* ForceSign has priority over SpaceSign */
                   if( fSign )
@@ -360,7 +377,9 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
                   }
 
                   for( i = iSize; i < iDec; i++ )
+                  {
                      bufadd( &buffer, "0", 1 );
+                  }
 
                   bufadd( &buffer, pStr2, static_cast< HB_SIZE >( iSize ) );
                }
@@ -412,7 +431,9 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
                   hb_itemStrBuf( pStr, pItem, 255, iD );
                }
                while( *pStr2 == ' ' )
+               {
                   pStr2++;
+               }
                iSize = static_cast< int >( strlen( pStr2 ) );
             }
             else
@@ -447,7 +468,9 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
                }
                bufadd( &buffer, pStr2, static_cast< HB_SIZE >( iSize ) );
                for( i = iSize + iExtra; i < iWidth; i++ )
+               {
                   bufadd( &buffer, " ", 1 );
+               }
             }
             else
             {
@@ -474,14 +497,18 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
                      }
                   }
                   for( i = iSize + iExtra; i < iWidth; i++ )
+                  {
                      bufadd( &buffer, "0", 1 );
+                  }
 
                   bufadd( &buffer, pStr2, strlen( pStr2 ) );
                }
                else
                {
                   for( i = iSize + iExtra; i < iWidth; i++ )
+                  {
                      bufadd( &buffer, " ", 1 );
+                  }
 
                   if( *pStr2 != '-' )
                   {
@@ -529,7 +556,9 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
             if( iWidth > 1 )
             {
                for( i = static_cast< int >( nSize ); i < iWidth; i++ )
+               {
                   bufadd( &buffer, " ", 1 );
+               }
             }
 
             if( ! fLeftAlign )
@@ -567,7 +596,9 @@ HB_FUNC( HB_STRFORMAT )
       {
          pItemArray = static_cast< PHB_ITEM * >( hb_xgrab( ( iParams - 1 ) * sizeof( PHB_ITEM ) ) );
          for( int i = 1; i < iParams; i++ )
+         {
             pItemArray[ i - 1 ] = hb_param( i + 1, HB_IT_ANY );
+         }
       }
 
       hb_itemReturnRelease( hb_strFormat( nullptr, pFormat, iParams - 1, pItemArray ) );

@@ -63,15 +63,19 @@ const char * hb_gt_szCharMapFileDefault = "/etc/harbour/hb-charmap.def";
 static void chrmap_init( int * piTransTbl )
 {
    for( int i = 0; i < 256; ++i )
+   {
       piTransTbl[ i ] = HB_CHRMAP( i < 128 ? 1 : 0, i );
-
+   }
+   
    piTransTbl[ 155 ] = HB_CHRMAP( 1, '.' );
 }
 
 static void chrmap_dotctrl( int * piTransTbl )
 {
    for( int i = 0; i < 32; ++i )
+   {
       piTransTbl[ i ] = piTransTbl[ i + 128 ] = HB_CHRMAP( 1, '.' );
+   }
 }
 
 static void chrmap_ascictrl( int * piTransTbl )
@@ -155,7 +159,9 @@ static void chrmap_acscbox( int * piTransTbl )
 static void skip_blank( char ** buf )
 {
    while( **buf != '\0' && **buf == ' ' )
+   {
       ++( *buf );
+   }
 }
 
 static int get_val( char ** buf )
@@ -183,7 +189,9 @@ static int get_val( char ** buf )
    {
       n = 0;
       for(; ( **buf >= '0' && **buf <= '9' ); ++( *buf ) )
+      {
          n = n * 10 + ( **buf - '0' );
+      }
    }
    return n > 0xff ? -1 : n;
 }
@@ -229,7 +237,9 @@ static int parse_line( char * buf, int * from, int * to, char * op, int * val, i
       ++s;
       s2 = buf;
       while( *s != '\0' && *s != ' ' )
+      {
          *s2++ = *s++;
+      }
       *s2 = '\0';
       ret = strlen( buf ) > 0 ? 2 : -1;
    }
@@ -306,16 +316,16 @@ static int chrmap_parse( FILE * fp, const char * pszTerm, int * nTransTbl, const
             {
                *buf = '|';
                s = buf;
-               while( *s != '\0' && *s != ' ' && *s != '\t' &&
-                      *s != '\n' && *s != '\r' )
+               while( *s != '\0' && *s != ' ' && *s != '\t' && *s != '\n' && *s != '\r' )
+               {
                   ++s;
+               }
                *s = '\0';
                s = buf;
                i = static_cast< int >( strlen( pszTerm ) );
                while( isTerm == 0 && ( s = strstr( s + 1, pszTerm ) ) != nullptr )
                {
-                  if( *( s - 1 ) == '|' &&
-                      ( s[ i ] == '|' || s[ i ] == '\0' ) )
+                  if( *( s - 1 ) == '|' && ( s[ i ] == '|' || s[ i ] == '\0' ) )
                   {
                      isTerm = 1;
                   }
@@ -481,7 +491,7 @@ int hb_gt_chrmapinit( int * piTransTbl, const char * pszTerm, HB_BOOL fSetACSC )
       else
       {
          chrmap_ascictrl( piTransTbl );
-      }   
+      }
    }
 
    return nRet;
@@ -499,7 +509,9 @@ int main( int argc, char ** argv )
    }
 
    for( int i = 0; i < 256; ++i )
+   {
       printf( "%3d -> %3d : %d\n", i, piTransTbl[ i ] & 0xff, piTransTbl[ i ] >> 16 );
+   }
 
    return 0;
 }

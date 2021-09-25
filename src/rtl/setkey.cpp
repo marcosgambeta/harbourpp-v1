@@ -110,10 +110,10 @@ static PHB_SETKEY sk_findkey( int iKeyCode, PHB_SETKEY sk_list, PHB_SETKEY * sk_
    PHB_SETKEY sk_list_tmp;
 
    *sk_list_end = nullptr;
-   for( sk_list_tmp = sk_list;
-        sk_list_tmp && sk_list_tmp->iKeyCode != iKeyCode;
-        sk_list_tmp = sk_list_tmp->next )
+   for( sk_list_tmp = sk_list; sk_list_tmp && sk_list_tmp->iKeyCode != iKeyCode; sk_list_tmp = sk_list_tmp->next )
+   {
       *sk_list_end = sk_list_tmp;
+   }
 
    return sk_list_tmp;
 }
@@ -283,7 +283,9 @@ HB_FUNC( HB_SETKEYARRAY )
       HB_SIZE nPos;
 
       for( nPos = 1; nPos <= nLen; nPos++ )
+      {
          sk_add( &sk_data->sk_list, HB_FALSE, hb_arrayGetNI( pKeyCodeArray, nPos ), pAction, pIsActive );
+      }
    }
 }
 
@@ -321,17 +323,15 @@ HB_FUNC( HB_SETKEYSAVE )
    /* build an multi-dimensional array from existing hot-keys, and return it */
 
    /* count the number of items in the list */
-   for( nItemCount = 0, sk_list_tmp = sk_data->sk_list;
-        sk_list_tmp;
-        nItemCount++, sk_list_tmp = sk_list_tmp->next )
+   for( nItemCount = 0, sk_list_tmp = sk_data->sk_list; sk_list_tmp; nItemCount++, sk_list_tmp = sk_list_tmp->next )
+   {
       ;
+   }
 
    pKeys = hb_itemArrayNew( nItemCount );
    pKeyElements = hb_itemNew( nullptr );
 
-   for( nItem = 1, sk_list_tmp = sk_data->sk_list;
-        nItem <= nItemCount;
-        nItem++, sk_list_tmp = sk_list_tmp->next )
+   for( nItem = 1, sk_list_tmp = sk_data->sk_list; nItem <= nItemCount; nItem++, sk_list_tmp = sk_list_tmp->next )
    {
       hb_arrayNew( pKeyElements, 3 );
       hb_arraySetNI( pKeyElements, 1, sk_list_tmp->iKeyCode );
@@ -399,7 +399,9 @@ HB_FUNC( HB_SETKEYCHECK )
             hb_vmPushEvalSym();
             hb_vmPush( sk_list_tmp->pAction );
             for( uiParam = 2; uiParam <= uiPCount; ++uiParam )
+            {
                hb_vmPush( hb_stackItemFromBase( uiParam ) );
+            }
             hb_vmPushInteger( iKeyCode );
             hb_vmSend( uiPCount );
 

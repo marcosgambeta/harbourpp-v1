@@ -84,7 +84,9 @@ HB_FUNC( STRZERO )
             HB_SIZE nPos = 0;
 
             while( szResult[ nPos ] != '\0' && szResult[ nPos ] != '-' )
+            {
                nPos++;
+            }
 
             if( szResult[ nPos ] == '-' )
             {
@@ -94,7 +96,9 @@ HB_FUNC( STRZERO )
 
                nPos = 0;
                while( szResult[ nPos ] != '\0' && szResult[ nPos ] == ' ' )
+               {
                   szResult[ nPos++ ] = '0';
+               }
 
                szResult[ 0 ] = '-';
             }
@@ -104,7 +108,9 @@ HB_FUNC( STRZERO )
 
                nPos = 0;
                while( szResult[ nPos ] != '\0' && szResult[ nPos ] == ' ' )
+               {
                   szResult[ nPos++ ] = '0';
+               }   
             }
 
             hb_retc_buffer( szResult );

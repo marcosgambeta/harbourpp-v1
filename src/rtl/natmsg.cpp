@@ -86,7 +86,9 @@ HB_FUNC( __NATISAFFIRM )
       HB_SIZE nStr = 0;
 
       while( szYesNo[ nStr ] && szYesNo[ nStr ] != '/' )
+      {
          ++nStr;
+      }
 
       if( nStr && nLen >= nStr )
       {
@@ -115,10 +117,12 @@ HB_FUNC( __NATISNEGATIVE )
       HB_SIZE nStr;
 
       while( *szYesNo )
+      {
          if( *szYesNo++ == '/' )
          {
             break;
          }
+      }
       nStr = strlen( szYesNo );
 
       if( nStr && nLen >= nStr )
@@ -151,7 +155,7 @@ HB_FUNC( __NATMSG )
    else
    {
       hb_retc_null();
-   }   
+   }
 }
 
 HB_FUNC( __NATMSGVER )

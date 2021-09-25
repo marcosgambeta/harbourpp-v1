@@ -132,7 +132,9 @@ static char * hb_buildArgsOS2( const char *pszFileName, APIRET * ret )
    void * pMem;
 
    while( HB_ISSPACE( *pszFileName ) )
+   {
       ++pszFileName;
+   }
 
    pszFileName = hb_osEncodeCP( pszFileName, &pszFree, nullptr );
 
@@ -158,7 +160,9 @@ static char * hb_buildArgsOS2( const char *pszFileName, APIRET * ret )
    szFileBuf[ nLen ] = '\0';
 
    while( HB_ISSPACE( *pszFileName ) )
+   {
       ++pszFileName;
+   }
    nLen2 = strlen( pszFileName );
 
    pFilepath = hb_fsFNameSplit( szFileBuf );
@@ -212,8 +216,10 @@ static void hb_getCommand( const char * pszFileName,
    char cQuote = 0;
 
    while( HB_ISSPACE( *pszFileName ) )
+   {
       ++pszFileName;
-
+   }
+   
    params = nullptr;
    src = pszFileName;
    while( *src )
@@ -232,7 +238,9 @@ static void hb_getCommand( const char * pszFileName,
          {
             params = src;
             while( HB_ISSPACE( *params ) )
+            {
                ++params;
+            }
             if( *params == 0 )
             {
                params = nullptr;
@@ -260,7 +268,9 @@ static char ** hb_buildArgs( const char *pszFileName )
    int argc = 0;
 
    while( HB_ISSPACE( *pszFileName ) )
+   {
       ++pszFileName;
+   }
 
    pszFileName = hb_osEncodeCP( pszFileName, &pszFree, nullptr );
    dst = pszFree ? pszFree : hb_strdup( pszFileName );
@@ -295,7 +305,9 @@ static char ** hb_buildArgs( const char *pszFileName )
          else if( HB_ISSPACE( *src ) )
          {
             while( HB_ISSPACE( src[ 1 ] ) )
+            {
                ++src;
+            }
             if( src[ 1 ] )
             {
                ++argc;
@@ -347,7 +359,9 @@ static char ** hb_buildArgs( const char *pszFileName )
          {
             *dst++ = '\0';
             while( HB_ISSPACE( src[ 1 ] ) )
+            {
                ++src;
+            }
             if( src[ 1 ] )
             {
                argv[ ++argc ] = dst;
@@ -459,7 +473,9 @@ static int hb_fsProcessExec( const char * pszFileName, HB_FHANDLE hStdin, HB_FHA
                iMaxFD = 1024;
             }
             for( int i = 3; i < iMaxFD; ++i )
+            {
                hb_fsClose( i );
+            }
          }
          /* reset extended process attributes */
          ( void ) setuid( getuid() );
@@ -949,7 +965,9 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
                iMaxFD = 1024;
             }
             for( int i = 3; i < iMaxFD; ++i )
+            {
                hb_fsClose( i );
+            }
          }
 
          /* reset extended process attributes */

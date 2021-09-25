@@ -648,7 +648,9 @@ HB_FUNC( HB_TSTOSTR )
          {
             int i = 23;
             while( szBuffer[ i - 1 ] == '0' )
+            {
                --i;
+            }
             if( szBuffer[ i - 1 ] == '.' )
             {
                --i;

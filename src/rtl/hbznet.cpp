@@ -271,7 +271,9 @@ long hb_znetRead( PHB_ZNETSTREAM pStream, HB_SOCKET sd, void * buffer, long len,
                }
                /* decrypt the buffer */
                for( l = 0; l < rec; l += 8 )
+               {
                   hb_znetDecrypt( pStream, pStream->rd.next_in + pStream->rd.avail_in + l );
+               }
                pStream->crypt_in -= rec;
                if( static_cast< uInt >( rec ) > pStream->crypt_size )
                {
@@ -336,7 +338,9 @@ static long hb_znetStreamWrite( PHB_ZNETSTREAM pStream, HB_SOCKET sd, HB_MAXINT 
             }
             /* encrypt the buffer */
             for( tosnd = 0; tosnd < rest; tosnd += 8 )
+            {
                hb_znetEncrypt( pStream, pStream->crypt_out + tosnd );
+            }
             rest = 0;
             pStream->crypt_out = pStream->wr.next_out;
             pStream->wr.next_out += 2;

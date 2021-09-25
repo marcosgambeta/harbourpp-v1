@@ -493,7 +493,9 @@ HB_FUNC( MLCOUNT )
    if( hb_mlInit( &MLC, 0 ) )
    {
       while( hb_mlGetLine( &MLC ) )
+      {
          ++nLines;
+      }
       hb_mlExit( &MLC );
    }
    hb_retns( nLines );

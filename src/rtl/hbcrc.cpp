@@ -217,7 +217,9 @@ HB_MAXUINT hb_crcct( HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT p
       int bits = 0;
 
       while( revp >>= 1 )
+      {
          ++bits;
+      }
       mask = static_cast< HB_MAXINT >( 1 ) << ( bits - 1 );
       bits -= 8;
       if( bits < 0 )

@@ -64,7 +64,9 @@ HB_FUNC( HB_STRISUTF8 )
             int i = 0;
 
             while( ( c <<= 1 ) & 0x80  )
+            {
                ++i;
+            }
             if( i == 0 || static_cast< HB_SIZE >( i ) >= nLen )
             {
                break;

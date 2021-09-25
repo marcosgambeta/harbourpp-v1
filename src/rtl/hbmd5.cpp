@@ -142,7 +142,9 @@ static void hb_md5go( MD5_BUF * md5 )
 
    /* fill buffer */
    for( i = 0, ptr = md5->buf; i < 16; i++, ptr += 4 )
+   {
       X[ i ] = HB_GET_LE_UINT32( ptr );
+   }
 
    /* process buffer */
    PF1( 0, 1, 2, 3,  0,  7,  0 );
@@ -233,7 +235,9 @@ static void hb_md5val( HB_U32 accum[], char * md5val )
    for( i = 0; i < 4; i++ )
    {
       for( n = 0; n < 4; n++ )
+      {
          *md5val++ = static_cast< char >( ( accum[ i ] >> ( n << 3 ) ) & 0xFF );
+      }
    }
 }
 
@@ -321,12 +325,16 @@ void hb_hmac_md5( const void * key, HB_SIZE nKeyLen,
    }
 
    for( i = 0; i < static_cast< int >( sizeof( init_block ) ); ++i )
+   {
       init_block[ i ] ^= IPAD;
+   }
 
    hb_md5_count( message, nMsgLen, digest, init_block );
 
    for( i = 0; i < static_cast< int >( sizeof( init_block ) ); ++i )
+   {
       init_block[ i ] ^= IPAD ^ OPAD;
+   }
 
    hb_md5_count( digest, 16, digest, init_block );
 }

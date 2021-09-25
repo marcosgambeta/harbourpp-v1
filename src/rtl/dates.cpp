@@ -129,7 +129,9 @@ char * hb_dateFormat( const char * szDate, char * szFormattedDate, const char * 
                         digit_count--;
                      }
                      while( digit_count-- > 0 && format_count < size )
+                     {
                         szFormattedDate[ format_count++ ] = static_cast< char >( digit );
+                     }
                }
                used_d = HB_TRUE;
                break;
@@ -171,7 +173,9 @@ char * hb_dateFormat( const char * szDate, char * szFormattedDate, const char * 
                         digit_count--;
                      }
                      while( digit_count-- > 0 && format_count < size )
+                     {
                         szFormattedDate[ format_count++ ] = static_cast< char >( digit );
+                     }   
                }
                used_m = HB_TRUE;
                break;
@@ -207,14 +211,18 @@ char * hb_dateFormat( const char * szDate, char * szFormattedDate, const char * 
                         digit_count--;
                      }
                      while( digit_count-- > 0 && format_count < size )
+                     {
                         szFormattedDate[ format_count++ ] = static_cast< char >( digit );
+                     }   
                }
                used_y = HB_TRUE;
                break;
 
             default:
                while( digit_count-- > 0 && format_count < size )
+               {
                   szFormattedDate[ format_count++ ] = static_cast< char >( digit );
+               }   
          }
       }
    }
@@ -441,7 +449,9 @@ char * hb_timeFormat( char * szBuffer, const char * szTimeFormat, long lMilliSec
       int ch = HB_TOUPPER( szTimeFormat[ i ] );
       ++i;
       while( ch == HB_TOUPPER( szTimeFormat[ i ] ) && i < size )
+      {
          ++i;
+      }
       count += i;
       switch( ch )
       {
@@ -517,7 +527,9 @@ char * hb_timeFormat( char * szBuffer, const char * szTimeFormat, long lMilliSec
          szTimeBuffer += skip;
       }
       while( count-- )
+      {
          *szTimeBuffer++ = static_cast< char >( ch );
+      }   
    }
 
    *szTimeBuffer = '\0';
@@ -596,7 +608,9 @@ long hb_timeUnformat( const char * szTime, const char * szTimeFormat )
                while( szTime[ count ] && ! HB_ISDIGIT( szTime[ count ] ) &&
                       szTime[ count ] != 'P' && szTime[ count ] != 'p' &&
                       szTime[ count ] != 'A' && szTime[ count ] != 'a' )
+               {
                   ++count;
+               }
                if     ( szTime[ count ] == 'P' || szTime[ count ] == 'p' )
                {
                   iPM = 1;
@@ -614,7 +628,9 @@ long hb_timeUnformat( const char * szTime, const char * szTimeFormat )
       {
          *pValue = 0;
          while( szTime[ count ] && ! HB_ISDIGIT( szTime[ count ] ) )
+         {
             ++count;
+         }
          while( HB_ISDIGIT( szTime[ count ] ) )
          {
             *pValue = *pValue * 10 + ( szTime[ count ] - '0' );
@@ -655,7 +671,9 @@ long hb_timeUnformat( const char * szTime, const char * szTimeFormat )
       else
       {
          while( prec++ < 3 )
+         {
             iMSec *= 10;
+         }
       }
    }
    if( iPM > 0 )

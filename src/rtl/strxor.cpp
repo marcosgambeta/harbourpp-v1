@@ -99,7 +99,9 @@ HB_FUNC( HB_STRXOR )
             pRet = static_cast< char * >( hb_xgrab( nLen1 + 1 ) );
             memcpy( pRet, pStr1, nLen1 + 1 );
             for( n = 0; n < nLen1; n++ )
+            {
                pRet[ n ] ^= bChar;
+            }
 
             hb_retclen_buffer( pRet, nLen1 );
          }

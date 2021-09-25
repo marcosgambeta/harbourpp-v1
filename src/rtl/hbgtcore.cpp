@@ -154,14 +154,14 @@ static void * hb_gt_def_New( PHB_GT pGT )
    HB_GTSELF_GETSIZE( pGT, &pGT->iHeight, &pGT->iWidth );
    nSize = static_cast< HB_SIZE >( pGT->iHeight ) * pGT->iWidth;
 
-   pGT->screenBuffer =
-            static_cast< PHB_SCREENCELL >( hb_xgrab( sizeof( HB_SCREENCELL ) * nSize ) );
-   pGT->prevBuffer =
-            static_cast< PHB_SCREENCELL >( hb_xgrabz( sizeof( HB_SCREENCELL ) * nSize ) );
+   pGT->screenBuffer = static_cast< PHB_SCREENCELL >( hb_xgrab( sizeof( HB_SCREENCELL ) * nSize ) );
+   pGT->prevBuffer = static_cast< PHB_SCREENCELL >( hb_xgrabz( sizeof( HB_SCREENCELL ) * nSize ) );
    pGT->pLines = static_cast< HB_BOOL * >( hb_xgrab( sizeof( HB_BOOL ) * pGT->iHeight ) );
 
    for( i = 0; i < pGT->iHeight; ++i )
+   {
       pGT->pLines[ i ] = HB_TRUE;
+   }
 
    usChar = HB_GTSELF_GETCLEARCHAR( pGT );
    iColor = HB_GTSELF_GETCLEARCOLOR( pGT );
@@ -513,7 +513,9 @@ static const char * hb_gt_def_ColorDecode( const char * szColorString, int * piC
             {
                int iColor = c - '0';
                while( *szColorString >= '0' && *szColorString <= '9' )
+               {
                   iColor = iColor * 10 + ( *szColorString++ - '0' );
+               }
                iColor &= 0x0f;
                if( bFore )
                {
@@ -961,7 +963,9 @@ static int hb_gt_def_PutText( PHB_GT pGT, int iRow, int iCol, int iColor, const 
       if( ! HB_GTSELF_PUTCHAR( pGT, iRow, iCol++, iColor, 0, wc ) )
       {
          while( HB_CDPCHAR_GET( cdp, szText, nLen, &nIndex, &wc ) )
+         {
             ++iCol;
+         }
          break;
       }
    }
@@ -1759,9 +1763,13 @@ static void hb_gt_def_BoxW( PHB_GT pGT, int iTop, int iLeft, int iBottom, int iR
       if( szFrame && *szFrame )
       {
          for( i = 0; *szFrame && i < 9; ++i )
+         {
             wcPadCh = szBoxW[ i ] = *szFrame++;
+         }
          while( i < 8 )
+         {
             szBoxW[ i++ ] = wcPadCh;
+         }
       }
       else
       {
@@ -1852,7 +1860,9 @@ static void hb_gt_def_Box( PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRi
       HB_SIZE nLen = strlen( szFrame ), nIndex = 0, nPos = 0;
 
       while( nPos < 9 && HB_CDPCHAR_GET( cdp, szFrame, nLen, &nIndex, &wc ) )
+      {
          szFrameW[ nPos++ ] = wc;
+      }
 
       szFrameW[ nPos ] = 0;
 
@@ -2479,7 +2489,9 @@ static int hb_gt_def_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, in
                iMnuCol += static_cast< int >( nLen ) + 4;
             }
             while( HB_GTSELF_DISPCOUNT( pGT ) )
+            {
                HB_GTSELF_DISPEND( pGT );
+            }
             HB_GTSELF_REFRESH( pGT );
 
             iKey = fKeyBoard ? HB_GTSELF_INKEYGET( pGT, HB_TRUE, dDelay, INKEY_ALL ) : 0;
@@ -2560,7 +2572,9 @@ static int hb_gt_def_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, in
          HB_GTSELF_SETCURSORSTYLE( pGT, iStyle );
          HB_GTSELF_REFRESH( pGT );
          while( HB_GTSELF_DISPCOUNT( pGT ) < iDspCount )
+         {
             HB_GTSELF_DISPBEGIN( pGT );
+         }   
       }
       else
       {
@@ -2694,7 +2708,9 @@ static HB_BOOL hb_gt_def_Resize( PHB_GT pGT, int iRows, int iCols )
          memset( pGT->screenBuffer, 0, sizeof( HB_SCREENCELL ) * nLen );
          memset( pGT->prevBuffer, 0, sizeof( HB_SCREENCELL ) * nLen );
          for( i = 0; i < iRows; ++i )
+         {
             pGT->pLines[ i ] = HB_TRUE;
+         }
          for( nIndex = 0; nIndex < nLen; ++nIndex )
          {
             pGT->screenBuffer[ nIndex ].c.usChar = HB_GTSELF_GETCLEARCHAR( pGT );
@@ -2743,7 +2759,9 @@ static void hb_gt_def_GetSize( PHB_GT pGT, int * piRows, int  * piCols )
 static void hb_gt_def_SemiCold( PHB_GT pGT )
 {
    for( int i = 0; i < pGT->iHeight; ++i )
+   {
       pGT->pLines[ i ] = HB_FALSE;
+   }
    pGT->fRefresh = HB_FALSE;
 }
 
@@ -4207,7 +4225,9 @@ void hb_gtRelease( void * hGT )
       if( --pGT->iUsed == 0 )
       {
          while( HB_GTSELF_DISPCOUNT( pGT ) )
+         {
             HB_GTSELF_DISPEND( pGT );
+         }
          HB_GTSELF_FLUSH( pGT );
          HB_GTSELF_EXIT( pGT );
       }

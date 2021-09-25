@@ -58,7 +58,9 @@ void hb_strDescend( char * szStringTo, const char * szStringFrom, HB_SIZE nLen )
    else
    {
       for(; nLen--; szStringTo++, szStringFrom++ )
+      {
          *szStringTo = static_cast< char >( 256 - *szStringFrom );
+      }   
    }
 }
 

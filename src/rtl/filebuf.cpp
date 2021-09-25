@@ -197,8 +197,7 @@ static HB_UINT hb_fileFindOffset( PHB_FILE pFile, HB_FOFFSET nOffset )
 
    while( uiFirst < uiLast )
    {
-      HB_FOFFSET nEnd = pFile->pLocks[ uiMiddle ].start +
-                        pFile->pLocks[ uiMiddle ].len;
+      HB_FOFFSET nEnd = pFile->pLocks[ uiMiddle ].start + pFile->pLocks[ uiMiddle ].len;
       if( nEnd > 0 && nEnd <= nOffset )
       {
          uiFirst = uiMiddle + 1;

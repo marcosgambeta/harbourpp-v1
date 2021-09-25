@@ -57,7 +57,9 @@ static void hb_md5_init_seed( char * vect, const char * pszKey, int iLen )
 static void hb_md5_next_seed( char * vect, const char * pszKey, int iLen )
 {
    for( int i = 0; i < 16; ++i )
+   {
       vect[ i ] ^= pszKey[ i % iLen ];
+   }
    hb_md5( vect, 16, vect );
 }
 

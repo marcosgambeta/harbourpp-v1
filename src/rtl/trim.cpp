@@ -71,12 +71,16 @@ HB_SIZE hb_strRTrimLen( const char * szText, HB_SIZE nLen, HB_BOOL bAnySpace )
    if( bAnySpace )
    {
       while( nLen && HB_ISSPACE( szText[ nLen - 1 ] ) )
+      {
          nLen--;
+      }
    }
    else
    {
       while( nLen && szText[ nLen - 1 ] == ' ' )
+      {
          nLen--;
+      }
    }
 
    return nLen;

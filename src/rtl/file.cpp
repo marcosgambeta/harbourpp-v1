@@ -72,7 +72,9 @@ HB_BOOL hb_fsIsDirectory( const char * pszFileName )
 
    iLen = static_cast< int >( strlen( pszFileName ) );
    while( iLen && strchr( HB_OS_PATH_DELIM_CHR_LIST, pszFileName[ iLen - 1 ] ) )
+   {
       --iLen;
+   }
 
    if( pszFileName[ iLen ] )
    {

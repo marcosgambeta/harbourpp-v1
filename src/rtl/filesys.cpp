@@ -1247,7 +1247,9 @@ HB_FHANDLE hb_fsPOpen( const char * pszFileName, const char * pszMode )
                   iMaxFD = 1024;
                }
                for( hNullHandle = 3; hNullHandle < iMaxFD; ++hNullHandle )
+               {
                   hb_fsClose( hNullHandle );
+               }
 
                pid = fork();
                if( pid == 0 )
@@ -1597,9 +1599,7 @@ HB_SIZE hb_fsPipeIsData( HB_FHANDLE hPipeHandle, HB_SIZE nBufferSize, HB_MAXINT 
       hb_fsSetError( ( HB_ERRCODE ) ret );
       fResult = ret == NO_ERROR && ( avail.cbpipe != 0 || ulState == NP_STATE_CONNECTED );
    }
-   while( fResult && avail.cbpipe == 0 &&
-          ( nTimeOut = hb_timerTest( nTimeOut, &timer ) ) != 0 &&
-          hb_vmRequestQuery() == 0 );
+   while( fResult && avail.cbpipe == 0 && ( nTimeOut = hb_timerTest( nTimeOut, &timer ) ) != 0 && hb_vmRequestQuery() == 0 );
 
    if( ! fResult )
    {

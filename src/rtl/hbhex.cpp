@@ -56,7 +56,9 @@ HB_FUNC( HB_HEXTONUM )
       HB_MAXUINT nNum = 0;
 
       while( *szHex == ' ' )
+      {
          szHex++;
+      }
       while( *szHex )
       {
          int iDigit;

@@ -132,7 +132,9 @@ static int hb_regexec( PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen,
       szString = szBuffer;
    }
    for( i = 0; i < iMatches; i++ )
+   {
       HB_REGMATCH_EO( aMatches, i ) = HB_REGMATCH_UNSET;
+   }
    iResult = regexec( &pRegEx->reg, szString, iMatches, aMatches, pRegEx->iEFlags );
    if( iResult == 0 )
    {

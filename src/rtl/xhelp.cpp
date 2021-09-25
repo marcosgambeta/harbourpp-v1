@@ -69,7 +69,9 @@ HB_FUNC( __XHELP )
        * used instead of hb_param() [druzus]
        */
       for( int iParam = 1; iParam <= iPCount; iParam++ )
+      {
          hb_vmPush( hb_stackItemFromBase( iParam ) );
+      }
 
       hb_vmProc( static_cast< HB_USHORT >( iPCount ) );
       /* NOTE: Leave the return value as it is. */

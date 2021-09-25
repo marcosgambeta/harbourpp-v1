@@ -292,7 +292,9 @@ static int hb_comGetPortNum( const char * pszName )
    {
       pszName += iLen;
       while( HB_ISDIGIT( *pszName ) )
+      {
          iPort = iPort * 10 + ( *pszName++ - '0' );
+      }
 
 #     if ! defined( HB_OS_HPUX ) && \
          ! defined( HB_OS_AIX ) && \
@@ -318,7 +320,9 @@ static int hb_comGetPortNum( const char * pszName )
    {
       pszName += 3;
       while( HB_ISDIGIT( *pszName ) )
+      {
          iPort = iPort * ( 10 + *pszName++ - '0' );
+      }
       if( *pszName != '\0' )
       {
          iPort = 0;

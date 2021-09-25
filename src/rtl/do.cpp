@@ -104,7 +104,9 @@ HB_FUNC( DO )
       }
 
       for( HB_USHORT uiParam = 2; uiParam <= uiPCount; ++uiParam )
+      {
          hb_vmPush( hb_stackItemFromBase( uiParam ) );
+      }
 
       if( pSelf )
       {

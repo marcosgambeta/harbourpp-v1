@@ -199,7 +199,9 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx,
          unsigned char uch = szString[ nPos ];
          HB_SIZE nPos2 = nPos;
          while( uch >= ' ' && uch != '\\' && uch != '\"' )
+         {
             uch = szString[ ++nPos2 ];
+         }
          if( nPos2 > nPos )
          {
             _hb_jsonCtxAdd( pCtx, szString + nPos, nPos2 - nPos );
@@ -255,7 +257,9 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx,
          nVal = -nVal;
       }
       do
+      {
          buf[ sizeof( buf ) - ++i ] = ( nVal % 10 ) + '0';
+      }
       while( ( nVal /= 10 ) != 0 );
       if( fNeg )
       {
@@ -421,7 +425,9 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx,
 static const char * _skipws( const char * szSource )
 {
    while( *szSource == ' ' || *szSource == '\t' || *szSource == '\n' || *szSource == '\r' )
+   {
       szSource++;
+   }
    return szSource;
 }
 

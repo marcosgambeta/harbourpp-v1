@@ -139,7 +139,9 @@ static HB_BOOL fsGetTempDirByCase( char * pszName, const char * pszTempDir, HB_B
       /* convert '/' to '\' */
       char * pszDelim = pszName;
       while( ( pszDelim = strchr( pszDelim, '/' ) ) != nullptr )
+      {
          *pszDelim = '\\';
+      }   
 #  endif
       if( ! hb_fsDirExists( pszTempDir ) )
       {
@@ -321,7 +323,9 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
          /* convert '/' to '\' */
          char * pszDelim = pTmpBuffer;
          while( ( pszDelim = strchr( pszDelim, '/' ) ) != nullptr )
+         {
             *pszDelim = '\\';
+         }
 #  endif
          hb_osStrDecode2( pTmpBuffer, pszBuffer, HB_PATH_MAX - 1 );
       }

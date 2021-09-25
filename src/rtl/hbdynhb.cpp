@@ -111,7 +111,9 @@ HB_FUNC( HB_DYNCALL )
                piArgFlags = static_cast< int * >( hb_xgrab( sizeof( int ) * nArgCount ) );
 
                for( HB_SIZE nPos = 0; nPos < nArgCount; ++nPos )
+               {
                   piArgFlags[ nPos ] = ( ( nPos + nBasePos ) <= nLen && HB_IS_NUMERIC( hb_arrayGetItemPtr( pParam, nPos + nBasePos ) ) ) ? hb_arrayGetNI( pParam, nPos + nBasePos ) : HB_DYN_CTYPE_DEFAULT;
+               }
             }
          }
       }

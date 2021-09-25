@@ -307,7 +307,9 @@ HB_FUNC( TRANSFORM )
                else
                {
                   while( HB_CDPCHAR_GET( cdp, szExp, nExpLen, &nExpPos, &wcExp ) )
+                  {
                      HB_CDPCHAR_PUT( cdp, szResult, nSize, &nResultPos, wcExp );
+                  }
                }
             }
 
@@ -316,7 +318,9 @@ HB_FUNC( TRANSFORM )
             {
                /* Export remainder */
                while( nPicPos++ < nPicLen && nResultPos < nSize )
-                     szResult[ nResultPos++ ] = ' ';
+               {
+                  szResult[ nResultPos++ ] = ' ';
+               }
             }
          }
          else
@@ -515,7 +519,9 @@ HB_FUNC( TRANSFORM )
          if( uiPicFlags & PF_PADL )
          {
             for( i = 0; szResult[ i ] == ' '; i++ )
+            {
                szResult[ i ] = cParamL;
+            }
 
             /* please test it with FoxPro and Xbase++ to check
              * if they made the same [druzus]
@@ -608,7 +614,9 @@ HB_FUNC( TRANSFORM )
                   }
                }
                while( static_cast< HB_SIZE >( iCount ) + 1 < i && szResult[ iCount + 1 ] == ' ' )
+               {
                   ++iCount;
+               }
 
 #ifndef HB_CLP_STRICT
                /* This is not Clipper compatible */
@@ -1001,7 +1009,9 @@ HB_FUNC( TRANSFORM )
             HB_SIZE nFirstChar = nOffset;
 
             while( nFirstChar < nResultPos && szResult[ nFirstChar ] == ' ' )
+            {
                nFirstChar++;
+            }
 
             if( nFirstChar > nOffset && nFirstChar < nResultPos )
             {

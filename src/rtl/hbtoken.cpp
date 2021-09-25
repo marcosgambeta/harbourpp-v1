@@ -95,7 +95,9 @@ static HB_SIZE hb_tokenCount( const char * szLine, HB_SIZE nLen,
          if( ( iFlags & _HB_TOK_ISDELIM ) == 0 )
          {
             while( nPos + 1 < nLen && szLine[ nPos + 1 ] == szDelim[ 0 ] )
+            {
                ++nPos;
+            }
          }
          nPos += nDelim - 1;
       }
@@ -150,7 +152,9 @@ static const char * hb_tokenGet( const char * szLine, HB_SIZE nLen, const char *
          if( ( iFlags & _HB_TOK_ISDELIM ) == 0 )
          {
             while( nPos + 1 < nLen && szLine[ nPos + 1 ] == szDelim[ 0 ] )
+            {
                ++nPos;
+            }
          }
          nPos += nDelim - 1;
          nStart = nPos + 1;
@@ -208,7 +212,9 @@ static PHB_ITEM hb_tokenArray( const char * szLine, HB_SIZE nLen, const char * s
             if( ( iFlags & _HB_TOK_ISDELIM ) == 0 )
             {
                while( nPos + 1 < nLen && szLine[ nPos + 1 ] == szDelim[ 0 ] )
+               {
                   ++nPos;
+               }
             }
             nPos += nDelim - 1;
             nStart = nPos + 1;
@@ -265,7 +271,9 @@ static HB_BOOL hb_tokenParam( int iParam, HB_SIZE nSkip, const char ** pszLine, 
             --nLen;
          }
          while( nLen && szLine[ nLen - 1 ] == szDelim[ 0 ] )
+         {
             --nLen;
+         }
       }
       if( hb_parl( iParam + 1 ) )
       {

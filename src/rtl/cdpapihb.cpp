@@ -161,7 +161,9 @@ HB_FUNC( HB_CDPLIST )
 
    nPos = 0;
    while( list[ nPos ] )
+   {
       ++nPos;
+   }
 
    hb_reta( nPos );
 

@@ -128,8 +128,10 @@ static _HB_INLINE_ HB_U8 arc4_getbyte( void );
 static _HB_INLINE_ void arc4_init( void )
 {
    for( int n = 0; n < 256; ++n )
+   {
       rs.s[ n ] = ( HB_U8 ) n;
-
+   }
+   
    rs.i = rs.j = 0;
 }
 
@@ -237,7 +239,9 @@ static int arc4_seed_sysctl_linux( void )
 
    /* make sure that the buffer actually got set. */
    for( unsigned int i = 0, any_set = 0; i < sizeof( buf ); ++i )
+   {
       any_set |= buf[ i ];
+   }
 
    if( ! any_set )
    {
@@ -284,19 +288,21 @@ static int arc4_seed_sysctl_bsd( void )
          if( sysctl( mib, 2, &buf[ len ], &n, nullptr, 0 ) == -1 )
          {
             return -1;
-         }   
+         }
       }
    }
 
    /* make sure that the buffer actually got set. */
    for( int i = any_set = 0; i < static_cast< int >( sizeof( buf ) ); ++i )
+   {
       any_set |= buf[ i ];
+   }
 
    if( ! any_set )
    {
       return -1;
    }
-   
+
    arc4_addrandom( buf, sizeof( buf ) );
    memset( buf, 0, sizeof( buf ) );
 
@@ -448,7 +454,9 @@ static int arc4_seed_rand( void )
    srand( static_cast< unsigned >( hb_dateMilliSeconds() ) );
 
    for( HB_SIZE i = 0; i < sizeof( buf ); i++ )
+   {
       buf[ i ] = ( HB_U8 ) ( rand() % 256 );  /* not biased */
+   }
 
    arc4_addrandom( buf, sizeof( buf ) );
    memset( buf, 0, sizeof( buf ) );
@@ -548,8 +556,10 @@ static void arc4_stir( void )
     * We add another sect to the cargo cult, and choose 12*256.
     */
    for( int i = 0; i < 12 * 256; i++ )
+   {
       ( void ) arc4_getbyte();
-
+   }
+   
    arc4_count = BYTES_BEFORE_RESEED;
 }
 

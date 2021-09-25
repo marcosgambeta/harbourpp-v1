@@ -343,7 +343,9 @@ void hb_langReleaseAll( void )
    HB_TRACE( HB_TR_DEBUG, ( "hb_langReleaseAll()" ) );
 
    for( int iPos = 0; iPos < HB_LANG_MAX_; iPos++ )
+   {
       hb_langRelease( &s_langList[ iPos ] );
+   }
 }
 
 HB_BOOL hb_langRegister( PHB_LANG lang )
@@ -481,7 +483,7 @@ const char * hb_langDGetItem( int iIndex )
    else
    {
       return nullptr;
-   }   
+   }
 }
 
 /* Harbour interface */

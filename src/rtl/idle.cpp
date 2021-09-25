@@ -143,8 +143,7 @@ void hb_idleSleep( double dSeconds )
       {
          hb_idleState();
       }
-      while( ( timeout = hb_timerTest( timeout, &timer ) ) != 0 &&
-             hb_vmRequestQuery() == 0 );
+      while( ( timeout = hb_timerTest( timeout, &timer ) ) != 0 && hb_vmRequestQuery() == 0 );
 
       hb_idleReset();
    }

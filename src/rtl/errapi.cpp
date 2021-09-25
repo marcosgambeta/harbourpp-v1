@@ -961,7 +961,9 @@ PHB_ITEM hb_errPutArgs( PHB_ITEM pError, HB_ULONG ulArgCount, ... )
 
    va_start( va, ulArgCount );
    for( HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
+   {
       hb_itemArrayPut( pArray, ulArgPos, va_arg( va, PHB_ITEM ) );
+   }
    va_end( va );
 
    /* Assign the new array to the object data item. */

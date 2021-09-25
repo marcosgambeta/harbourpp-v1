@@ -581,7 +581,9 @@ static HB_SIZE hb_itemSerialSize( PHB_ITEM pItem, int iFlags, PHB_CODEPAGE cdpIn
          {
             u = nLen;
             while( u && szVal[ u - 1 ] == ' ' )
+            {
                --u;
+            }
             u = nLen - u;
             nLen = hb_cdpnDupLen( szVal, nLen, cdpIn, cdpOut );
             if( nLen <= 255 )
@@ -632,13 +634,14 @@ static HB_SIZE hb_itemSerialSize( PHB_ITEM pItem, int iFlags, PHB_CODEPAGE cdpIn
                nSize += 5;
             }
             for( u = 1; u <= nLen; u++ )
+            {
                nSize += hb_itemSerialSize( hb_arrayGetItemPtr( pItem, u ), iFlags, cdpIn, cdpOut, pRefList, nOffset + nSize );
+            }
          }
          break;
 
       case HB_IT_HASH:
-         if( ( iFlags & HB_SERIALIZE_IGNOREREF ) == 0 && hb_hashRefs( pItem ) > 1 &&
-             hb_itemSerialValueRef( pRefList, hb_hashId( pItem ), nOffset ) )
+         if( ( iFlags & HB_SERIALIZE_IGNOREREF ) == 0 && hb_hashRefs( pItem ) > 1 && hb_itemSerialValueRef( pRefList, hb_hashId( pItem ), nOffset ) )
          {
             nSize = 5;
          }
@@ -849,7 +852,9 @@ static HB_SIZE hb_serializeItem( PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cd
          {
             HB_SIZE nSize = n = nLen;
             while( n && szVal[ n - 1 ] == ' ' )
+            {
                --n;
+            }
             n = nLen - n;
             nLen = hb_cdpnDupLen( szVal, nLen, cdpIn, cdpOut );
             if( nLen <= 255 )
@@ -957,7 +962,9 @@ static HB_SIZE hb_serializeItem( PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cd
                nOffset += 4;
             }
             for( n = 1; n <= nLen; n++ )
+            {
                nOffset = hb_serializeItem( hb_arrayGetItemPtr( pItem, n ), iFlags, cdpIn, cdpOut, pBuffer, nOffset, pRefList );
+            }
          }
          break;
 
@@ -1399,7 +1406,9 @@ static HB_SIZE hb_deserializeArray( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODE
    hb_arrayNew( pItem, nLen );
 
    for( HB_SIZE u = 1; u <= nLen; u++ )
+   {
       nOffset = hb_deserializeItem( hb_arrayGetItemPtr( pItem, u ), cdpIn, cdpOut, pBuffer, nOffset, pRefList );
+   }
 
    return nOffset;
 }
