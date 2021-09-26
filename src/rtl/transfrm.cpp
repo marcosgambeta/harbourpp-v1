@@ -579,7 +579,7 @@ HB_FUNC( TRANSFORM )
                }
                else if( cPic == ',' && i && iCount < iWidth )
                {
-                  if( HB_ISDIGIT( ( HB_UCHAR ) szResult[ i - 1 ] ) )
+                  if( HB_ISDIGIT( static_cast< HB_UCHAR >( szResult[ i - 1 ] ) ) )
                   {
                      szResult[ i ] = ( uiPicFlags & PF_EXCHANG ) ? '.' : ',';
                   }

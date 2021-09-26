@@ -81,7 +81,7 @@ static int hb_matherr( HB_MATH_EXCEPTION * pexc )
    int mode = hb_mathGetErrMode();
    int iRet = 1;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_matherr(%p)", ( void * ) pexc ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_matherr(%p)", static_cast< void * >( pexc ) ) );
 
    if( pexc == nullptr || pexc->handled != 0 )
    {
@@ -163,7 +163,7 @@ static int hb_matherr( HB_MATH_EXCEPTION * pexc )
 
 static void hb_mathErrDataInit( void * Cargo )
 {
-   PHB_MATHERRDATA pMathErr = ( PHB_MATHERRDATA ) Cargo;
+   PHB_MATHERRDATA pMathErr = static_cast< PHB_MATHERRDATA >( Cargo );
 
    pMathErr->mode = HB_MATH_ERRMODE_DEFAULT;
 
@@ -184,16 +184,14 @@ static void hb_mathErrDataInit( void * Cargo )
 
 static void hb_mathErrDataRelease( void * Cargo )
 {
-   PHB_MATHERRDATA pMathErr = ( PHB_MATHERRDATA ) Cargo;
+   PHB_MATHERRDATA pMathErr = static_cast< PHB_MATHERRDATA >( Cargo );
 
    hb_itemRelease( pMathErr->block );
 }
 
-static HB_TSD_NEW( s_mathErrData, sizeof( HB_MATHERRDATA ),
-                   hb_mathErrDataInit, hb_mathErrDataRelease );
+static HB_TSD_NEW( s_mathErrData, sizeof( HB_MATHERRDATA ), hb_mathErrDataInit, hb_mathErrDataRelease );
 
-#define hb_mathErrData()  ( ( PHB_MATHERRDATA ) hb_stackGetTSD( &s_mathErrData ) )
-
+#define hb_mathErrData()  ( static_cast< PHB_MATHERRDATA >( hb_stackGetTSD( &s_mathErrData ) ) )
 
 /* Harbour Math functions Part I:
  * handling math errors, C math lib redirection
@@ -202,7 +200,7 @@ static HB_TSD_NEW( s_mathErrData, sizeof( HB_MATHERRDATA ),
 /* reset math error information */
 void hb_mathResetError( HB_MATH_EXCEPTION * phb_exc )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_mathResetError(%p)", ( void * ) phb_exc ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_mathResetError(%p)", static_cast< void * >( phb_exc ) ) );
 
    HB_SYMBOL_UNUSED( phb_exc );
 
@@ -233,7 +231,7 @@ int matherr( struct exception * err )
    HB_MATH_HANDLERPROC mathHandler;
    HB_MATH_EXCEPTION * pExc;
 
-   HB_TRACE( HB_TR_DEBUG, ( "matherr(%p)", ( void * ) err ) );
+   HB_TRACE( HB_TR_DEBUG, ( "matherr(%p)", static_cast< void * >( err ) ) );
 
    pExc = &hb_mathErrData()->exception;
 
@@ -297,14 +295,13 @@ int matherr( struct exception * err )
 }
 #endif
 
-HB_BOOL hb_mathGetError( HB_MATH_EXCEPTION * phb_exc, const char * szFunc,
-                         double arg1, double arg2, double dResult )
+HB_BOOL hb_mathGetError( HB_MATH_EXCEPTION * phb_exc, const char * szFunc, double arg1, double arg2, double dResult )
 {
 #if defined( HB_MATH_ERRNO )
 
    int errCode, v;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_mathGetError(%p,%s,%lf,%lf,%lf)", ( void * ) phb_exc, szFunc, arg1, arg2, dResult ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_mathGetError(%p,%s,%lf,%lf,%lf)", static_cast< void * >( phb_exc ), szFunc, arg1, arg2, dResult ) );
 
    switch( errno )
    {
@@ -331,7 +328,7 @@ HB_BOOL hb_mathGetError( HB_MATH_EXCEPTION * phb_exc, const char * szFunc,
          else
          {
             errCode = errno;
-         }   
+         }
    }
 
    /* map math error types */
@@ -371,11 +368,11 @@ HB_BOOL hb_mathGetError( HB_MATH_EXCEPTION * phb_exc, const char * szFunc,
       if( mathHandler )
       {
          ( *mathHandler )( phb_exc );
-      }   
+      }
    }
    return HB_TRUE;
 #else
-   HB_TRACE( HB_TR_DEBUG, ( "hb_mathGetError(%p,%s,%lf,%lf,%lf)", ( void * ) phb_exc, szFunc, arg1, arg2, dResult ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_mathGetError(%p,%s,%lf,%lf,%lf)", static_cast< void * >( phb_exc ), szFunc, arg1, arg2, dResult ) );
 
    HB_SYMBOL_UNUSED( dResult );
    HB_SYMBOL_UNUSED( arg1 );
@@ -396,7 +393,6 @@ HB_BOOL hb_mathGetError( HB_MATH_EXCEPTION * phb_exc, const char * szFunc,
 
 #endif
 }
-
 
 /* Harbour Math functions Part II:
  * handling math errors, Harbour default handling routine
@@ -441,9 +437,8 @@ HB_FUNC( HB_MATHERMODE )        /* ([<nNewMode>]) --> <nOldMode> */
    if( HB_ISNUM( 1 ) )
    {
       hb_mathSetErrMode( hb_parni( 1 ) );
-   }   
+   }
 }
-
 
 /* Harbour Math functions Part III:
  * (de)installing and (de)activating custom math error handlers
@@ -456,7 +451,7 @@ HB_MATH_HANDLERPROC hb_mathSetHandler( HB_MATH_HANDLERPROC handlerproc )
    HB_MATH_HANDLERPROC oldHandlerProc;
    PHB_MATHERRDATA pMathErr;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_mathSetHandler (%p)", ( void * ) handlerproc ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_mathSetHandler (%p)", static_cast< void * >( handlerproc ) ) );
 
    pMathErr = hb_mathErrData();
    oldHandlerProc = pMathErr->handler;

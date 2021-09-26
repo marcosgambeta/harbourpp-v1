@@ -88,9 +88,9 @@
    static const int  s_iCrLfLen = 2;
 #endif
 
-static HB_FHANDLE s_hFilenoStdin  = ( HB_FHANDLE ) HB_STDIN_HANDLE;
-static HB_FHANDLE s_hFilenoStdout = ( HB_FHANDLE ) HB_STDOUT_HANDLE;
-static HB_FHANDLE s_hFilenoStderr = ( HB_FHANDLE ) HB_STDERR_HANDLE;
+static HB_FHANDLE s_hFilenoStdin  = static_cast< HB_FHANDLE >( HB_STDIN_HANDLE );
+static HB_FHANDLE s_hFilenoStdout = static_cast< HB_FHANDLE >( HB_STDOUT_HANDLE );
+static HB_FHANDLE s_hFilenoStderr = static_cast< HB_FHANDLE >( HB_STDERR_HANDLE );
 
 typedef struct
 {
@@ -102,7 +102,7 @@ static HB_TSD_NEW( s_prnPos, sizeof( HB_PRNPOS ), nullptr, nullptr );
 
 static PHB_PRNPOS hb_prnPos( void )
 {
-   return ( PHB_PRNPOS ) hb_stackGetTSD( &s_prnPos );
+   return static_cast< PHB_PRNPOS >( hb_stackGetTSD( &s_prnPos ) );
 }
 
 void hb_conInit( void )
@@ -137,7 +137,7 @@ void hb_conInit( void )
 #ifdef HB_CLP_STRICT
       else if( iStderr > 0 ) /* //STDERR:x */
       {
-         s_hFilenoStderr = ( HB_FHANDLE ) iStderr;
+         s_hFilenoStderr = static_cast< HB_FHANDLE >( iStderr );
       }
 #endif
    }
@@ -737,15 +737,15 @@ HB_FUNC( HB_DISPOUTATBOX )
 
 HB_FUNC( HB_GETSTDIN ) /* Return handle for STDIN */
 {
-   hb_retnint( ( HB_NHANDLE ) s_hFilenoStdin );
+   hb_retnint( static_cast< HB_NHANDLE >( s_hFilenoStdin ) );
 }
 
 HB_FUNC( HB_GETSTDOUT ) /* Return handle for STDOUT */
 {
-   hb_retnint( ( HB_NHANDLE ) s_hFilenoStdout );
+   hb_retnint( static_cast< HB_NHANDLE >( s_hFilenoStdout ) );
 }
 
 HB_FUNC( HB_GETSTDERR ) /* Return handle for STDERR */
 {
-   hb_retnint( ( HB_NHANDLE ) s_hFilenoStderr );
+   hb_retnint( static_cast< HB_NHANDLE >( s_hFilenoStderr ) );
 }

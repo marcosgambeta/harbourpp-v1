@@ -138,22 +138,16 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
                {
                   case HB_DISK_AVAIL:
                   case HB_DISK_FREE:
-                     dSpace = static_cast< double >( dwNumberOfFreeClusters ) *
-                              static_cast< double >( dwSectorsPerCluster ) *
-                              static_cast< double >( dwBytesPerSector );
+                     dSpace = static_cast< double >( dwNumberOfFreeClusters ) * static_cast< double >( dwSectorsPerCluster ) * static_cast< double >( dwBytesPerSector );
                      break;
 
                   case HB_DISK_USED:
                   case HB_DISK_TOTAL:
-                     dSpace = static_cast< double >( dwTotalNumberOfClusters ) *
-                              static_cast< double >( dwSectorsPerCluster ) *
-                              static_cast< double >( dwBytesPerSector );
+                     dSpace = static_cast< double >( dwTotalNumberOfClusters ) * static_cast< double >( dwSectorsPerCluster ) * static_cast< double >( dwBytesPerSector );
 
                      if( uiType == HB_DISK_USED )
                      {
-                        dSpace -= static_cast< double >( dwNumberOfFreeClusters ) *
-                                  static_cast< double >( dwSectorsPerCluster ) *
-                                  static_cast< double >( dwBytesPerSector );
+                        dSpace -= static_cast< double >( dwNumberOfFreeClusters ) * static_cast< double >( dwSectorsPerCluster ) * static_cast< double >( dwBytesPerSector );
                      }
                      break;
                }
@@ -164,27 +158,27 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
          {
 #if defined( _MSC_VER ) || defined( __LCC__ ) || ( defined( __GNUC__ ) && ! defined( __RSXNT__ ) )
 
-#  define HB_GET_LARGE_UINT( v )  ( ( double ) (v).LowPart + ( double ) (v).HighPart * ( ( static_cast< double >( 0xFFFFFFFF ) ) + 1 ) )
+#  define HB_GET_LARGE_UINT( v )  ( static_cast< double >( (v).LowPart ) + static_cast< double >( (v).HighPart ) * ( ( static_cast< double >( 0xFFFFFFFF ) ) + 1 ) )
 
 #else
    /* NOTE: Borland doesn't seem to deal with the un-named
             struct that is part of ULARGE_INTEGER
             [pt] */
-#  define HB_GET_LARGE_UINT( v )  ( ( double ) (v).u.LowPart + ( double ) (v).u.HighPart * ( ( static_cast< double >( 0xFFFFFFFF ) ) + 1 ) )
+#  define HB_GET_LARGE_UINT( v )  ( static_cast< double >( (v).u.LowPart ) + static_cast< double >( (v).u.HighPart ) * ( ( static_cast< double >( 0xFFFFFFFF ) ) + 1 ) )
 #endif
 
             ULARGE_INTEGER i64FreeBytesToCaller, i64TotalBytes, i64FreeBytes;
 
 #if ! defined( HB_OS_WIN_CE ) && ! defined( HB_OS_WIN_64 )
             fResult = s_pGetDiskFreeSpaceEx( lpPath,
-                                             ( PULARGE_INTEGER ) &i64FreeBytesToCaller,
-                                             ( PULARGE_INTEGER ) &i64TotalBytes,
-                                             ( PULARGE_INTEGER ) &i64FreeBytes );
+                                             static_cast< PULARGE_INTEGER >( &i64FreeBytesToCaller ),
+                                             static_cast< PULARGE_INTEGER >( &i64TotalBytes ),
+                                             static_cast< PULARGE_INTEGER >( &i64FreeBytes ) );
 #else
             fResult = GetDiskFreeSpaceEx( lpPath,
-                                          ( PULARGE_INTEGER ) &i64FreeBytesToCaller,
-                                          ( PULARGE_INTEGER ) &i64TotalBytes,
-                                          ( PULARGE_INTEGER ) &i64FreeBytes );
+                                          static_cast< PULARGE_INTEGER >( &i64FreeBytesToCaller ),
+                                          static_cast< PULARGE_INTEGER >( &i64TotalBytes ),
+                                          static_cast< PULARGE_INTEGER >( &i64FreeBytes ) );
 #endif
             hb_fsSetIOError( fResult, 0 );
 

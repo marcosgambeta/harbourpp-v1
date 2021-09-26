@@ -56,9 +56,7 @@
 #define _HB_TOK_EOL_DELIM        0x10
 #define _HB_TOK_STRIP_QUOTE      0x20
 
-static HB_SIZE hb_tokenCount( const char * szLine, HB_SIZE nLen,
-                              const char * szDelim, HB_SIZE nDelim,
-                              int iFlags )
+static HB_SIZE hb_tokenCount( const char * szLine, HB_SIZE nLen, const char * szDelim, HB_SIZE nDelim, int iFlags )
 {
    HB_SIZE nPos = 0, nTokens = 1;
    char cQuote = 0;

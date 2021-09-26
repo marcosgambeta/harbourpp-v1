@@ -70,10 +70,7 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest )
 
    do
    {
-      pSource = hb_fileExtOpen( pszSource, nullptr,
-                                FO_READ | FO_SHARED | FO_PRIVATE |
-                                FXO_DEFAULTS | FXO_SHARELOCK,
-                                nullptr, pError );
+      pSource = hb_fileExtOpen( pszSource, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_DEFAULTS | FXO_SHARELOCK, nullptr, pError );
       if( pSource == nullptr )
       {
          pError = hb_errRT_FileError( pError, nullptr, EG_OPEN, 2012, pszSource );
@@ -97,10 +94,7 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest )
 
       do
       {
-         pDest = hb_fileExtOpen( pszDest, nullptr,
-                                 FO_READWRITE | FO_EXCLUSIVE | FO_PRIVATE |
-                                 FXO_TRUNCATE | FXO_DEFAULTS | FXO_SHARELOCK,
-                                 nullptr, pError );
+         pDest = hb_fileExtOpen( pszDest, nullptr, FO_READWRITE | FO_EXCLUSIVE | FO_PRIVATE | FXO_TRUNCATE | FXO_DEFAULTS | FXO_SHARELOCK, nullptr, pError );
          if( pDest == nullptr )
          {
             pError = hb_errRT_FileError( pError, nullptr, EG_CREATE, 2012, pszDest );

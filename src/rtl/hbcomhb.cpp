@@ -79,7 +79,6 @@
 #include "hbvm.h"
 #include "hbapicom.h"
 
-
 HB_FUNC( HB_COMCLOSE )
 {
    hb_retl( hb_comClose( hb_parni( 1 ) ) == 0 );
@@ -147,11 +146,9 @@ HB_FUNC( HB_COMFINDPORT )
    hb_retni( hb_comFindPort( hb_parc( 1 ), hb_parl( 2 ) ) );
 }
 
-
 HB_FUNC( HB_COMINIT )
 {
-   hb_retl( hb_comInit( hb_parni( 1 ), hb_parni( 2 ), HB_ISCHAR( 3 ) ? hb_parc( 3 )[ 0 ] : 0,
-                        hb_parni( 4 ), hb_parni( 5 ) ) == 0 );
+   hb_retl( hb_comInit( hb_parni( 1 ), hb_parni( 2 ), HB_ISCHAR( 3 ) ? hb_parc( 3 )[ 0 ] : 0, hb_parni( 4 ), hb_parni( 5 ) ) == 0 );
 }
 
 HB_FUNC( HB_COMINPUTCOUNT )
@@ -245,7 +242,7 @@ HB_FUNC( HB_COMRECV )
    else
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_COMSEND )

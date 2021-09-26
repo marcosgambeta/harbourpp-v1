@@ -143,13 +143,12 @@ static const HB_U16 crc16_tab[] =
    0x8201, 0x42C0, 0x4380, 0x8341, 0x4100, 0x81C1, 0x8081, 0x4040
 };
 
-
 HB_U32 hb_crc32( HB_U32 crc, const void * buf, HB_SIZE len )
 {
    crc ^= 0xffffffffL;
    if( buf && len )
    {
-      const unsigned char * ucbuf = ( const unsigned char * ) buf;
+      const unsigned char * ucbuf = static_cast< const unsigned char * >( buf );
       do
       {
          crc = crc32_tab[ ( crc ^ *ucbuf++ ) & 0xFF ] ^ ( crc >> 8 );
@@ -164,7 +163,7 @@ HB_U16 hb_crc16( HB_U16 crc, const void * buf, HB_SIZE len )
    crc ^= 0xffff;
    if( buf && len )
    {
-      const unsigned char * ucbuf = ( const unsigned char * ) buf;
+      const unsigned char * ucbuf = static_cast< const unsigned char * >( buf );
       do
       {
          crc = crc16_tab[ ( crc ^ *ucbuf++ ) & 0xFF ] ^ ( crc >> 8 );
@@ -178,7 +177,7 @@ HB_MAXUINT hb_crc( HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT pol
 {
    if( buf && len )
    {
-      const unsigned char * ucbuf = ( const unsigned char * ) buf;
+      const unsigned char * ucbuf = static_cast< const unsigned char * >( buf );
       HB_MAXUINT mask = 1, revp = 0;
 
       while( poly > 1 )
@@ -212,7 +211,7 @@ HB_MAXUINT hb_crcct( HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT p
 {
    if( buf && len )
    {
-      const unsigned char * ucbuf = ( const unsigned char * ) buf;
+      const unsigned char * ucbuf = static_cast< const unsigned char * >( buf );
       HB_MAXUINT mask, revp = poly;
       int bits = 0;
 
@@ -266,12 +265,12 @@ HB_FUNC( HB_CRC32 )
 
    if( szString )
    {
-      hb_retnint( hb_crc32( ( HB_U32 ) hb_parnl( 2 ), szString, hb_parclen( 1 ) ) );
+      hb_retnint( hb_crc32( static_cast< HB_U32 >( hb_parnl( 2 ) ), szString, hb_parclen( 1 ) ) );
    }
    else
    {
       hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_CRC16 )
@@ -280,12 +279,12 @@ HB_FUNC( HB_CRC16 )
 
    if( szString )
    {
-      hb_retnint( hb_crc16( ( HB_U16 ) hb_parnl( 2 ), szString, hb_parclen( 1 ) ) );
+      hb_retnint( hb_crc16( static_cast< HB_U16 >( hb_parnl( 2 ) ), szString, hb_parclen( 1 ) ) );
    }
    else
    {
       hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_CRC )
@@ -304,7 +303,7 @@ HB_FUNC( HB_CRC )
    else
    {
       hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_CRCCT )

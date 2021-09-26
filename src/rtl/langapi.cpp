@@ -262,7 +262,6 @@ static PHB_LANG_BASE hb_langFindBase( const char * pszID )
    return pBase;
 }
 
-
 static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut )
 {
    PHB_LANG_BASE pBase;
@@ -329,8 +328,8 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
    pBase = hb_langFindBase( szNewId );
    if( pBase && pBase->lang == nullptr )
    {
-      pBase->lang   = ( PHB_LANG ) buffer;
-      pBase->buffer = ( void * ) buffer;
+      pBase->lang   = reinterpret_cast< PHB_LANG >( buffer );
+      pBase->buffer = static_cast< void * >( buffer );
       return HB_TRUE;
    }
 
@@ -350,7 +349,7 @@ void hb_langReleaseAll( void )
 
 HB_BOOL hb_langRegister( PHB_LANG lang )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_langRegister(%p)", ( const void * ) lang ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_langRegister(%p)", static_cast< const void * >( lang ) ) );
 
    if( lang )
    {
@@ -381,7 +380,7 @@ PHB_LANG hb_langSelect( PHB_LANG lang )
 {
    PHB_LANG langOld;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_langSelect(%p)", ( const void * ) lang ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_langSelect(%p)", static_cast< const void * >( lang ) ) );
 
    langOld = hb_vmLang();
    if( lang )
@@ -456,7 +455,7 @@ char * hb_langName( const char * pszID )
    {
       pszName = hb_strdup( "Harbour Language: (not installed)" );
    }
-   
+
    return pszName;
 }
 

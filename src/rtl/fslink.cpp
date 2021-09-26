@@ -77,7 +77,7 @@ HB_BOOL hb_fsLink( const char * pszExisting, const char * pszNewFile )
             HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
             if( hModule )
             {
-               s_pCreateHardLink = ( _HB_CREATEHARDLINK ) HB_WINAPI_GETPROCADDRESST( hModule, "CreateHardLink" );
+               s_pCreateHardLink = reinterpret_cast< _HB_CREATEHARDLINK >( HB_WINAPI_GETPROCADDRESST( hModule, "CreateHardLink" ) );
             }
          }
 
@@ -168,8 +168,7 @@ HB_BOOL hb_fsLinkSym( const char * pszTarget, const char * pszNewFile )
             HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
             if( hModule )
             {
-               s_pCreateSymbolicLink = ( _HB_CREATESYMBOLICLINK )
-                  HB_WINAPI_GETPROCADDRESST( hModule, "CreateSymbolicLink" );
+               s_pCreateSymbolicLink = reinterpret_cast< _HB_CREATESYMBOLICLINK >( HB_WINAPI_GETPROCADDRESST( hModule, "CreateSymbolicLink" ) );
             }
          }
 
@@ -184,8 +183,7 @@ HB_BOOL hb_fsLinkSym( const char * pszTarget, const char * pszNewFile )
             lpTargetFileName = HB_FSNAMECONV( pszTarget, &lpTargetFileNameFree );
 
             dwAttr = GetFileAttributes( lpTargetFileName );
-            fDir = ( dwAttr != INVALID_FILE_ATTRIBUTES ) &&
-                   ( dwAttr & FILE_ATTRIBUTE_DIRECTORY );
+            fDir = ( dwAttr != INVALID_FILE_ATTRIBUTES ) && ( dwAttr & FILE_ATTRIBUTE_DIRECTORY );
 
             fResult = s_pCreateSymbolicLink( lpSymlinkFileName, lpTargetFileName, fDir ? SYMBOLIC_LINK_FLAG_DIRECTORY : 0 ) != 0;
             hb_fsSetIOError( fResult, 0 );
@@ -282,7 +280,7 @@ char * hb_fsLinkRead( const char * pszFile )
             HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
             if( hModule )
             {
-               s_pGetFinalPathNameByHandle = ( _HB_GETFINALPATHNAMEBYHANDLE ) HB_WINAPI_GETPROCADDRESST( hModule, "GetFinalPathNameByHandle" );
+               s_pGetFinalPathNameByHandle = reinterpret_cast< _HB_GETFINALPATHNAMEBYHANDLE >( HB_WINAPI_GETPROCADDRESST( hModule, "GetFinalPathNameByHandle" ) );
             }
          }
 
@@ -297,8 +295,7 @@ char * hb_fsLinkRead( const char * pszFile )
             lpFileName = HB_FSNAMECONV( pszFile, &lpFileNameFree );
 
             dwAttr = GetFileAttributes( lpFileName );
-            fDir = ( dwAttr != INVALID_FILE_ATTRIBUTES ) &&
-                   ( dwAttr & FILE_ATTRIBUTE_DIRECTORY );
+            fDir = ( dwAttr != INVALID_FILE_ATTRIBUTES ) && ( dwAttr & FILE_ATTRIBUTE_DIRECTORY );
 
             hFile = CreateFile( lpFileName,
                                 GENERIC_READ,
@@ -352,8 +349,8 @@ char * hb_fsLinkRead( const char * pszFile )
 
          pszLink = static_cast< char * >( hb_xgrab( HB_PATH_MAX + 1 ) );
          size = readlink( pszFile, pszLink, HB_PATH_MAX );
-         hb_fsSetIOError( size != ( size_t ) -1, 0 );
-         if( size == ( size_t ) -1 )
+         hb_fsSetIOError( size != static_cast< size_t >( -1 ), 0 );
+         if( size == static_cast< size_t >( -1 ) )
          {
             hb_xfree( pszLink );
             pszLink = nullptr;
@@ -368,7 +365,7 @@ char * hb_fsLinkRead( const char * pszFile )
          if( pszFileFree )
          {
             hb_xfree( pszFileFree );
-         }   
+         }
       }
 #else
       {

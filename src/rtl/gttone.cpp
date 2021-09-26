@@ -64,10 +64,7 @@
 
 #undef HB_HAS_WIN9X_TONE
 
-#if defined( HB_CPU_X86 ) && \
-    ( ( defined( _MSC_VER ) && _MSC_VER < 1900 ) || \
-      defined( __BORLANDC__ ) || defined( __WATCOMC__ ) || \
-      defined( __MINGW32__ ) )
+#if defined( HB_CPU_X86 ) && ( ( defined( _MSC_VER ) && _MSC_VER < 1900 ) || defined( __BORLANDC__ ) || defined( __WATCOMC__ ) || defined( __MINGW32__ ) )
 
 #define HB_HAS_WIN9X_TONE
 
@@ -178,7 +175,7 @@ static void hb_gt_w9xTone( double dFreq, double dDurat )
       {
          uLSB = lAdjFreq % 256;
       }
-      
+
       if( static_cast< long >( lAdjFreq ) < 0 )
       {
          uMSB = lAdjFreq + 65536;
@@ -187,7 +184,7 @@ static void hb_gt_w9xTone( double dFreq, double dDurat )
       {
          uMSB = lAdjFreq / 256;
       }
-      
+
       /* set the frequency ( LSB, MSB ) */
 
       hb_Outp9x( 66, static_cast< unsigned short int >( uLSB ) );
@@ -212,7 +209,7 @@ static void hb_gt_w9xTone( double dFreq, double dDurat )
    else
    {
       hb_idleSleep( dDurat );
-   }   
+   }
 }
 
 #endif
@@ -232,7 +229,7 @@ static void hb_gt_wNtTone( double dFreq, double dDurat )
    else
    {
       hb_idleSleep( dDurat );
-   }   
+   }
 }
 
 /* dDuration is in 'Ticks' (18.2 per second) */

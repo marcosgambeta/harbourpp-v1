@@ -129,9 +129,9 @@ static _HB_INLINE_ void arc4_init( void )
 {
    for( int n = 0; n < 256; ++n )
    {
-      rs.s[ n ] = ( HB_U8 ) n;
+      rs.s[ n ] = static_cast< HB_U8 >( n );
    }
-   
+
    rs.i = rs.j = 0;
 }
 
@@ -167,7 +167,7 @@ static HB_ISIZ read_all( int fd, HB_U8 * buf, size_t count )
       {
          break;
       }
-      
+
       numread += result;
    }
 
@@ -191,14 +191,14 @@ static int arc4_seed_win( void )
    {
       return -1;
    }
-   
+
    s_provider_set = 1;
 
    if( ! CryptGenRandom( s_provider, sizeof( buf ), buf ) )
    {
       return -1;
    }
-   
+
    arc4_addrandom( buf, sizeof( buf ) );
    memset( buf, 0, sizeof( buf ) );
 
@@ -208,8 +208,7 @@ static int arc4_seed_win( void )
 
 #if defined( HAVE_SYS_SYSCTL_H )
 
-#if defined( HAVE_DECL_CTL_KERN ) && defined( HAVE_DECL_KERN_RANDOM ) && \
-   defined( HAVE_DECL_RANDOM_UUID )
+#if defined( HAVE_DECL_CTL_KERN ) && defined( HAVE_DECL_KERN_RANDOM ) && defined( HAVE_DECL_RANDOM_UUID )
 
 #define TRY_SEED_SYSCTL_LINUX
 static int arc4_seed_sysctl_linux( void )
@@ -234,7 +233,7 @@ static int arc4_seed_sysctl_linux( void )
       if( sysctl( mib, 3, &buf[ len ], &n, nullptr, 0 ) != 0 )
       {
          return -1;
-      }   
+      }
    }
 
    /* make sure that the buffer actually got set. */
@@ -247,7 +246,7 @@ static int arc4_seed_sysctl_linux( void )
    {
       return -1;
    }
-   
+
    arc4_addrandom( buf, sizeof( buf ) );
    memset( buf, 0, sizeof( buf ) );
 
@@ -360,7 +359,7 @@ static int arc4_seed_proc_sys_kernel_random_uuid( void )
       {
          return -1;
       }
-      
+
       n = read( fd, buf, sizeof( buf ) );
       close( fd );
 
@@ -368,7 +367,7 @@ static int arc4_seed_proc_sys_kernel_random_uuid( void )
       {
          return -1;
       }
-      
+
       memset( entropy, 0, sizeof( entropy ) );
       for( i = nybbles = 0; i < n; ++i )
       {
@@ -392,7 +391,7 @@ static int arc4_seed_proc_sys_kernel_random_uuid( void )
       {
          return -1;
       }
-      
+
       arc4_addrandom( entropy, nybbles / 2 );
       bytes += nybbles / 2;
    }
@@ -410,12 +409,7 @@ static int arc4_seed_proc_sys_kernel_random_uuid( void )
 static int arc4_seed_urandom( void )
 {
    /* This is adapted from Tor's crypto_seed_rng() */
-   static const char * filenames[] = {
-      "/dev/srandom",
-      "/dev/urandom",
-      "/dev/random",
-      nullptr
-   };
+   static const char * filenames[] = { "/dev/srandom", "/dev/urandom", "/dev/random", nullptr };
 
    for( int i = 0; filenames[ i ]; ++i )
    {
@@ -428,7 +422,7 @@ static int arc4_seed_urandom( void )
       {
          continue;
       }
-      
+
       n = read_all( fd, buf, sizeof( buf ) );
       close( fd );
 
@@ -436,7 +430,7 @@ static int arc4_seed_urandom( void )
       {
          return -1;
       }
-      
+
       arc4_addrandom( buf, sizeof( buf ) );
       memset( buf, 0, sizeof( buf ) );
 
@@ -455,7 +449,7 @@ static int arc4_seed_rand( void )
 
    for( HB_SIZE i = 0; i < sizeof( buf ); i++ )
    {
-      buf[ i ] = ( HB_U8 ) ( rand() % 256 );  /* not biased */
+      buf[ i ] = static_cast< HB_U8 >( rand() % 256 );  /* not biased */
    }
 
    arc4_addrandom( buf, sizeof( buf ) );
@@ -478,21 +472,21 @@ static void arc4_seed( void )
    if( arc4_seed_win() == 0 )
    {
       ok = 1;
-   }   
+   }
 #endif
 
 #if defined( TRY_SEED_URANDOM )
    if( arc4_seed_urandom() == 0 )
    {
       ok = 1;
-   }   
+   }
 #endif
 
 #if defined( TRY_SEED_PROC_SYS_KERNEL_RANDOM_UUID )
    if( arc4_seed_proc_sys_kernel_random_uuid() == 0 )
    {
       ok = 1;
-   }   
+   }
 #endif
 
 #if defined( TRY_SEED_SYSCTL_LINUX )
@@ -504,14 +498,14 @@ static void arc4_seed( void )
    if( ! ok && arc4_seed_sysctl_linux() == 0 )
    {
       ok = 1;
-   }   
+   }
 #endif
 
 #if defined( TRY_SEED_SYSCTL_BSD )
    if( arc4_seed_sysctl_bsd() == 0 )
    {
       ok = 1;
-   }   
+   }
 #endif
 
    /*
@@ -524,7 +518,7 @@ static void arc4_seed( void )
    if( ! ok )
    {
       arc4_seed_rand();
-   }   
+   }
 }
 
 static void arc4_stir( void )
@@ -559,7 +553,7 @@ static void arc4_stir( void )
    {
       ( void ) arc4_getbyte();
    }
-   
+
    arc4_count = BYTES_BEFORE_RESEED;
 }
 
@@ -569,7 +563,7 @@ static void arc4_stir_if_needed( void )
    if( arc4_count <= 0 || ! rs_initialized )
    {
       arc4_stir();
-   }   
+   }
 #else
    pid_t pid = getpid();
 
@@ -626,7 +620,7 @@ void arc4random_addrandom( const unsigned char * dat, int datlen )
    {
       arc4_stir();
    }
-   
+
    for( int j = 0; j < datlen; j += 256 )
    {
       /*
@@ -658,7 +652,7 @@ HB_U32 hb_arc4random( void )
 
 void hb_arc4random_buf( void * _buf, HB_SIZE n )
 {
-   HB_U8 * buf = ( HB_U8 * ) _buf;
+   HB_U8 * buf = static_cast< HB_U8 * >( _buf );
 
    ARC4_LOCK();
 
@@ -670,7 +664,7 @@ void hb_arc4random_buf( void * _buf, HB_SIZE n )
       {
          arc4_stir();
       }
-      
+
       buf[ n ] = arc4_getbyte();
    }
 
@@ -694,7 +688,7 @@ HB_U32 hb_arc4random_uniform( HB_U32 upper_bound )
    if( upper_bound < 2 )
    {
       return 0;
-   }   
+   }
 
 #if ( HB_U32_MAX > 0xffffffffUL )
    min = 0x100000000UL % upper_bound;
@@ -724,7 +718,7 @@ HB_U32 hb_arc4random_uniform( HB_U32 upper_bound )
       if( r >= min )
       {
          break;
-      }   
+      }
    }
 
    return r % upper_bound;

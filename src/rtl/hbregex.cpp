@@ -102,8 +102,7 @@ static int hb_regcomp( PHB_REGEX pRegEx, const char * szRegEx )
 #endif
 }
 
-static int hb_regexec( PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen,
-                       int iMatches, HB_REGMATCH * aMatches )
+static int hb_regexec( PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen, int iMatches, HB_REGMATCH * aMatches )
 {
 #if defined( HB_HAS_PCRE )
    int iResult, i;
@@ -164,7 +163,6 @@ static int hb_regexec( PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen,
    return -1;
 #endif
 }
-
 
 HB_FUNC( HB_REGEXCOMP )
 {
@@ -261,7 +259,7 @@ HB_FUNC( HB_ATX )
    else
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3013, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 static HB_BOOL hb_regex( int iRequest )
@@ -308,7 +306,7 @@ static HB_BOOL hb_regex( int iRequest )
                else
                {
                   hb_arraySetCL( pRetArray, i + 1, nullptr, 0 );
-               }   
+               }
             }
             hb_itemReturnRelease( pRetArray );
             fResult = HB_TRUE;
@@ -357,8 +355,7 @@ static HB_BOOL hb_regex( int iRequest )
 
             for( i = 0; i < iMatches; i++ )
             {
-               int iSO = HB_REGMATCH_SO( aMatches, i ),
-                   iEO = HB_REGMATCH_EO( aMatches, i );
+               int iSO = HB_REGMATCH_SO( aMatches, i ), iEO = HB_REGMATCH_EO( aMatches, i );
                pMatch = hb_arrayGetItemPtr( pRetArray, i + 1 );
                hb_arrayNew( pMatch, 3 );
                if( iEO != -1 )
@@ -433,7 +430,7 @@ static HB_BOOL hb_regex( int iRequest )
                         else
                         {
                            hb_itemPutC( pMatch, nullptr );
-                        }   
+                        }
                      }
                   }
                   hb_arrayAddForward( pRetArray, pAtxArray );

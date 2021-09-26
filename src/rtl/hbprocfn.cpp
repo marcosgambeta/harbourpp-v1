@@ -74,31 +74,30 @@ HB_FUNC( HB_PROCESSOPEN )
       phStdOut = pStdOut ? &hStdOut : nullptr;
       phStdErr = pStdErr ? ( pStdOut == pStdErr ? phStdOut : &hStdErr ) : nullptr;
 
-      hProcess = hb_fsProcessOpen( szName, phStdIn, phStdOut, phStdErr,
-                                   fDetach, &ulPID );
+      hProcess = hb_fsProcessOpen( szName, phStdIn, phStdOut, phStdErr, fDetach, &ulPID );
       hb_fsSetFError( hb_fsError() );
       if( hProcess != FS_ERROR )
       {
          if( phStdIn )
          {
-            hb_stornint( ( HB_NHANDLE ) *phStdIn, 2 );
+            hb_stornint( static_cast< HB_NHANDLE >( *phStdIn ), 2 );
          }
          if( phStdOut )
          {
-            hb_stornint( ( HB_NHANDLE ) *phStdOut, 3 );
+            hb_stornint( static_cast< HB_NHANDLE >( *phStdOut ), 3 );
          }
          if( phStdErr && phStdOut != phStdErr )
          {
-            hb_stornint( ( HB_NHANDLE ) *phStdErr, 4 );
+            hb_stornint( static_cast< HB_NHANDLE >( *phStdErr ), 4 );
          }
          hb_stornint( ulPID, 6 );
       }
-      hb_retnint( ( HB_NHANDLE ) hProcess );
+      hb_retnint( static_cast< HB_NHANDLE >( hProcess ) );
    }
    else
    {
       hb_errRT_BASE_SubstR( EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_PROCESSVALUE )
@@ -114,7 +113,7 @@ HB_FUNC( HB_PROCESSVALUE )
    else
    {
       hb_errRT_BASE_SubstR( EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_PROCESSCLOSE )
@@ -130,7 +129,7 @@ HB_FUNC( HB_PROCESSCLOSE )
    else
    {
       hb_errRT_BASE_SubstR( EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 /* hb_processRun( <cCommand>, [ <cStdIn> ], [ @<cStdOut> ], [ @<cStdErr> ], ;
@@ -159,8 +158,7 @@ HB_FUNC( HB_PROCESSRUN )
       pStdOutPtr = pStdOut ? &pStdOutBuf : nullptr;
       pStdErrPtr = pStdErr ? ( pStdOut == pStdErr ? pStdOutPtr : &pStdErrBuf ) : nullptr;
 
-      iResult = hb_fsProcessRun( szName, szStdIn, hb_parclen( 2 ), pStdOutPtr, &nStdOut, pStdErrPtr, &nStdErr,
-                                 fDetach );
+      iResult = hb_fsProcessRun( szName, szStdIn, hb_parclen( 2 ), pStdOutPtr, &nStdOut, pStdErrPtr, &nStdErr, fDetach );
       hb_fsSetFError( hb_fsError() );
 
       if( pStdOutBuf )
@@ -192,5 +190,5 @@ HB_FUNC( HB_PROCESSRUN )
    else
    {
       hb_errRT_BASE_SubstR( EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }

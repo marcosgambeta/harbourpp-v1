@@ -65,7 +65,7 @@ typedef struct
 
 static void hb_idleDataRelease( void * Cargo )
 {
-   PHB_IDLEDATA pIdleData = ( PHB_IDLEDATA ) Cargo;
+   PHB_IDLEDATA pIdleData = static_cast< PHB_IDLEDATA >( Cargo );
 
    if( pIdleData->pIdleTasks )
    {
@@ -90,7 +90,7 @@ void hb_releaseCPU( void )
 /* performs all tasks defined for idle state */
 void hb_idleState( void )
 {
-   PHB_IDLEDATA pIdleData = ( PHB_IDLEDATA ) hb_stackGetTSD( &s_idleData );
+   PHB_IDLEDATA pIdleData = static_cast< PHB_IDLEDATA >( hb_stackGetTSD( &s_idleData ) );
 
    if( ! pIdleData->fIamIdle )
    {
@@ -122,13 +122,13 @@ void hb_idleState( void )
 
 void hb_idleReset( void )
 {
-   PHB_IDLEDATA pIdleData = ( PHB_IDLEDATA ) hb_stackGetTSD( &s_idleData );
+   PHB_IDLEDATA pIdleData = static_cast< PHB_IDLEDATA >( hb_stackGetTSD( &s_idleData ) );
 
    if( pIdleData->iIdleTask == pIdleData->iIdleMaxTask && ! hb_setGetIdleRepeat() )
    {
       pIdleData->iIdleTask = 0;
    }
-   
+
    pIdleData->fCollectGarbage = HB_TRUE;
 }
 
@@ -152,7 +152,7 @@ void hb_idleSleep( double dSeconds )
 /* signal that the user code is in idle state */
 HB_FUNC( HB_IDLESTATE )
 {
-   PHB_IDLEDATA pIdleData = ( PHB_IDLEDATA ) hb_stackGetTSD( &s_idleData );
+   PHB_IDLEDATA pIdleData = static_cast< PHB_IDLEDATA >( hb_stackGetTSD( &s_idleData ) );
 
    pIdleData->fCollectGarbage = HB_TRUE;
    hb_idleState();
@@ -177,7 +177,7 @@ HB_FUNC( HB_IDLEADD )
 
    if( pBlock )
    {
-      PHB_IDLEDATA pIdleData = ( PHB_IDLEDATA ) hb_stackGetTSD( &s_idleData );
+      PHB_IDLEDATA pIdleData = static_cast< PHB_IDLEDATA >( hb_stackGetTSD( &s_idleData ) );
 
       ++pIdleData->iIdleMaxTask;
 
@@ -196,14 +196,14 @@ HB_FUNC( HB_IDLEADD )
 
       /* return a pointer as a handle to this idle task
        */
-      hb_retptr( ( void * ) hb_codeblockId( pBlock ) );    /* TODO: access to pointers from Harbour code */
+      hb_retptr( static_cast< void * >( hb_codeblockId( pBlock ) ) );    /* TODO: access to pointers from Harbour code */
    }
 }
 
 /* Delete a task with given handle and return a codeblock with this task */
 HB_FUNC( HB_IDLEDEL )
 {
-   PHB_IDLEDATA pIdleData = ( PHB_IDLEDATA ) hb_stackTestTSD( &s_idleData );
+   PHB_IDLEDATA pIdleData = static_cast< PHB_IDLEDATA >( hb_stackTestTSD( &s_idleData ) );
    void * pID = hb_parptr( 1 );
 
    if( pID && pIdleData && pIdleData->pIdleTasks )
@@ -224,8 +224,7 @@ HB_FUNC( HB_IDLEDEL )
             {
                if( iTask != pIdleData->iIdleMaxTask )
                {
-                  memmove( &pIdleData->pIdleTasks[ iTask ], &pIdleData->pIdleTasks[ iTask + 1 ],
-                           sizeof( PHB_ITEM ) * ( pIdleData->iIdleMaxTask - iTask ) );
+                  memmove( &pIdleData->pIdleTasks[ iTask ], &pIdleData->pIdleTasks[ iTask + 1 ], sizeof( PHB_ITEM ) * ( pIdleData->iIdleMaxTask - iTask ) );
                }
                pIdleData->pIdleTasks = static_cast< PHB_ITEM * >( hb_xrealloc( pIdleData->pIdleTasks, sizeof( PHB_ITEM ) * pIdleData->iIdleMaxTask ) );
                if( pIdleData->iIdleTask >= pIdleData->iIdleMaxTask )

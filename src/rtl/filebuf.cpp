@@ -151,8 +151,7 @@ static PHB_FILE hb_fileFind( HB_ULONG device, HB_ULONG inode )
    return nullptr;
 }
 
-static PHB_FILE hb_fileNew( HB_FHANDLE hFile, HB_BOOL fShared, int iMode,
-                            HB_ULONG device, HB_ULONG inode, HB_BOOL fBind )
+static PHB_FILE hb_fileNew( HB_FHANDLE hFile, HB_BOOL fShared, int iMode, HB_ULONG device, HB_ULONG inode, HB_BOOL fBind )
 {
    PHB_FILE pFile = hb_fileFind( device, inode );
 
@@ -355,7 +354,6 @@ static HB_BOOL hb_fileTestLock( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nL
    return HB_FALSE;
 }
 
-
 /*
  * file methods
  */
@@ -480,8 +478,7 @@ static char * s_fileLinkRead( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
 }
 
 static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, const char * pDefExt,
-                               HB_FATTR nExFlags, const char * pPaths,
-                               PHB_ITEM pError )
+                               HB_FATTR nExFlags, const char * pPaths, PHB_ITEM pError )
 {
    PHB_FILE pFile = nullptr;
 #if defined( HB_OS_UNIX )
@@ -519,11 +516,11 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
          else
          {
             nExFlags ^= FXO_SHARELOCK;
-         }   
+         }
       }
       else if( iMode == FO_READ && ! fShared )
       {
-         nExFlags &= ~ ( HB_FATTR ) ( FO_DENYREAD | FO_DENYWRITE | FO_EXCLUSIVE );
+         nExFlags &= ~ static_cast< HB_FATTR >( FO_DENYREAD | FO_DENYWRITE | FO_EXCLUSIVE );
          fShared = HB_TRUE;
       }
    }
@@ -575,7 +572,7 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
    if( fResult && pFile == nullptr )
 #endif /* HB_OS_UNIX */
    {
-      HB_FHANDLE hFile = hb_fsExtOpen( pszFile, nullptr, nExFlags & ~ ( HB_FATTR ) ( FXO_DEFAULTS | FXO_COPYNAME ), nullptr, nullptr );
+      HB_FHANDLE hFile = hb_fsExtOpen( pszFile, nullptr, nExFlags & ~ static_cast< HB_FATTR >( FXO_DEFAULTS | FXO_COPYNAME ), nullptr, nullptr );
       if( hFile != FS_ERROR )
       {
          HB_ULONG device = 0, inode = 0;
@@ -760,7 +757,7 @@ static HB_BOOL s_fileLock( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, i
       else
       {
          hb_fsSetError( fResult ? 0 : 33 );
-      }   
+      }
    }
    else
    {
@@ -945,7 +942,6 @@ static const HB_FILE_FUNCS * s_fileMethods( void )
    return &s_fileFuncs;
 }
 
-
 #if defined( HB_OS_UNIX )
 
 typedef struct
@@ -956,7 +952,7 @@ typedef struct
 }
 HB_FILEPOS, * PHB_FILEPOS;
 
-#define _PHB_FILEPOS  ( ( PHB_FILEPOS ) pFilePos )
+#define _PHB_FILEPOS  ( static_cast< PHB_FILEPOS >( pFilePos ) )
 #define _PHB_FILE     _PHB_FILEPOS->pFile
 
 static void s_fileposClose( PHB_FILE pFilePos )
@@ -1565,7 +1561,7 @@ HB_BOOL hb_fileDetach( PHB_FILE pFile )
 #if defined( HB_OS_UNIX )
       else if( pFile->pFuncs == s_fileposMethods() )
       {
-         PHB_FILEPOS pFilePos = ( PHB_FILEPOS ) pFile;
+         PHB_FILEPOS pFilePos = static_cast< PHB_FILEPOS >( pFile );
 
          pFilePos->pFile->hFile = FS_ERROR;
          s_fileposClose( pFile );

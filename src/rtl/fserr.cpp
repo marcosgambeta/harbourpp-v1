@@ -134,7 +134,7 @@ static HB_ERRCODE hb_WinToDosError( DWORD dwError )
       case ERROR_INVALID_HANDLE:          return 6;
    }
 
-   return ( HB_ERRCODE ) dwError;
+   return static_cast< HB_ERRCODE >( dwError );
 }
 
 #endif
@@ -200,7 +200,7 @@ void  hb_fsSetIOError( HB_BOOL fResult, HB_USHORT uiOperation )
    {
 #if defined( HB_OS_WIN )
       DWORD dwLastError = GetLastError();
-      uiOsErrorLast = ( HB_ERRCODE ) dwLastError;
+      uiOsErrorLast = static_cast< HB_ERRCODE >( dwLastError );
       uiErrorLast = hb_WinToDosError( dwLastError );
 #else
       int iErrCode = errno;

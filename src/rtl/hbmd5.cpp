@@ -243,7 +243,7 @@ static void hb_md5val( HB_U32 accum[], char * md5val )
 
 static void hb_md5_count( const void * data, HB_SIZE nLen, char * digest, const void * init_block )
 {
-   const unsigned char * ucdata = ( const unsigned char * ) data;
+   const unsigned char * ucdata = static_cast< const unsigned char * >( data );
    HB_UCHAR buf[ 128 ];
    MD5_BUF md5;
    HB_ISIZ i, n;
@@ -283,11 +283,11 @@ static void hb_md5_count( const void * data, HB_SIZE nLen, char * digest, const 
       memcpy( md5.buf, buf, 64 );
       hb_md5go( &md5 );
    }
-   buf[ i++ ] = ( HB_UCHAR ) ( ( nLen << 3 ) & 0xF8 );
+   buf[ i++ ] = static_cast< HB_UCHAR >( ( nLen << 3 ) & 0xF8 );
    nLen >>= 5;
    for( n = 7; n; --n )
    {
-      buf[ i++ ] = ( HB_UCHAR ) ( nLen & 0xFF );
+      buf[ i++ ] = static_cast< HB_UCHAR >( nLen & 0xFF );
       nLen >>= 8;
    }
    memcpy( md5.buf, buf + i - 64, 64 );
@@ -308,8 +308,7 @@ void hb_md5( const void * data, HB_SIZE nLen, char * digest )
    hb_md5_count( data, nLen, digest, nullptr );
 }
 
-void hb_hmac_md5( const void * key, HB_SIZE nKeyLen,
-                  const void * message, HB_SIZE nMsgLen, char * digest )
+void hb_hmac_md5( const void * key, HB_SIZE nKeyLen, const void * message, HB_SIZE nMsgLen, char * digest )
 {
    char init_block[ 64 ];
    int i;
@@ -347,10 +346,7 @@ void hb_hmac_md5( const void * key, HB_SIZE nKeyLen,
  */
 HB_BOOL hb_md5file( const char * pszFileName, char * digest )
 {
-   PHB_FILE pFile = hb_fileExtOpen( pszFileName, nullptr,
-                                    FO_READ | FO_SHARED | FO_PRIVATE |
-                                    FXO_SHARELOCK | FXO_NOSEEKPOS,
-                                    nullptr, nullptr );
+   PHB_FILE pFile = hb_fileExtOpen( pszFileName, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_SHARELOCK | FXO_NOSEEKPOS, nullptr, nullptr );
    if( pFile != nullptr )
    {
       MD5_BUF md5;
@@ -403,11 +399,11 @@ HB_BOOL hb_md5file( const char * pszFileName, char * digest )
          memcpy( md5.buf, buf, 64 );
          hb_md5go( &md5 );
       }
-      buf[ i++ ] = ( HB_UCHAR ) ( ( flen << 3 ) & 0xF8 );
+      buf[ i++ ] = static_cast< HB_UCHAR >( ( flen << 3 ) & 0xF8 );
       flen >>= 5;
       for( n = 7; n; --n )
       {
-         buf[ i++ ] = ( HB_UCHAR ) ( flen & 0xFF );
+         buf[ i++ ] = static_cast< HB_UCHAR >( flen & 0xFF );
          flen >>= 8;
       }
       memcpy( md5.buf, buf + i - 64, 64 );
@@ -486,8 +482,7 @@ HB_FUNC( HB_HMAC_MD5 )
 {
    char dststr[ 16 ];
 
-   hb_hmac_md5( hb_parcx( 2 ), hb_parclen( 2 ),
-                hb_parcx( 1 ), hb_parclen( 1 ), dststr );
+   hb_hmac_md5( hb_parcx( 2 ), hb_parclen( 2 ), hb_parcx( 1 ), hb_parclen( 1 ), dststr );
 
    if( ! hb_parl( 3 ) )
    {

@@ -148,7 +148,7 @@ HB_BOOL hb_gt_winapi_setClipboardRaw( HB_UINT uFormat, void * pData, HB_SIZE nSi
       {
          fResult = HB_TRUE;
       }
-      
+
       CloseClipboard();
    }
    return fResult;
@@ -172,7 +172,7 @@ HB_BOOL hb_gt_winapi_setClipboard( HB_UINT uFormat, PHB_ITEM pItem )
       {
          nSize = hb_itemCopyStr( pItem, hb_setGetOSCP(), nullptr, 0 );
       }
-      
+
       if( nSize )
       {
          /* Allocate a global memory object for the text. */
@@ -186,7 +186,7 @@ HB_BOOL hb_gt_winapi_setClipboard( HB_UINT uFormat, PHB_ITEM pItem )
             {
                if( uFormat == CF_UNICODETEXT )
                {
-                  hb_itemCopyStrU16( pItem, HB_CDP_ENDIAN_NATIVE, ( wchar_t * ) lpMem, nSize + 1 );
+                  hb_itemCopyStrU16( pItem, HB_CDP_ENDIAN_NATIVE, static_cast< wchar_t * >( lpMem ), nSize + 1 );
                }
                else
                {
@@ -206,7 +206,7 @@ HB_BOOL hb_gt_winapi_setClipboard( HB_UINT uFormat, PHB_ITEM pItem )
       {
          fResult = HB_TRUE;
       }
-      
+
       CloseClipboard();
    }
    return fResult;
@@ -229,10 +229,10 @@ HB_BOOL hb_gt_winapi_getClipboard( HB_UINT uFormat, PHB_ITEM pItem )
             switch( uFormat )
             {
                case CF_UNICODETEXT:
-                  nSize = hb_wstrnlen( ( const wchar_t * ) lpMem, nSize >> 1 );
+                  nSize = hb_wstrnlen( static_cast< const wchar_t * >( lpMem ), nSize >> 1 );
                   if( nSize )
                   {
-                     hb_itemPutStrLenU16( pItem, HB_CDP_ENDIAN_NATIVE, ( const wchar_t * ) lpMem, nSize );
+                     hb_itemPutStrLenU16( pItem, HB_CDP_ENDIAN_NATIVE, static_cast< const wchar_t * >( lpMem ), nSize );
                   }
                   break;
                case CF_OEMTEXT:

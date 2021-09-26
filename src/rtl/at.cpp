@@ -101,7 +101,7 @@ HB_FUNC( HB_AT )
                if( nTo > nTextLength )
                {
                   nTo = nTextLength;
-               }   
+               }
             }
          }
          else
@@ -111,8 +111,7 @@ HB_FUNC( HB_AT )
 
          if( nTo > 0 )
          {
-            nPos = hb_strAt( hb_itemGetCPtr( pSub ), hb_itemGetCLen( pSub ),
-                             pszText, nTo );
+            nPos = hb_strAt( hb_itemGetCPtr( pSub ), hb_itemGetCLen( pSub ), pszText, nTo );
             if( nPos > 0 )
             {
                if( HB_CDP_ISCHARIDX( cdp ) )

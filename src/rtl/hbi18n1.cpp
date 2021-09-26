@@ -213,8 +213,7 @@ static long hb_i18n_pluralindex( int iForm, PHB_ITEM pNum )
       case HB_I18N_PLURAL_PL:
          n10  = fmod( n, 10.0 );
          n100 = fmod( n, 100.0 );
-         return n == 1 ? 1 : ( n10 >= 2 && n10 <= 4 &&
-                               ( n100 < 10 || n100 >= 20 ) ? 2 : 3 );
+         return n == 1 ? 1 : ( n10 >= 2 && n10 <= 4 && ( n100 < 10 || n100 >= 20 ) ? 2 : 3 );
 
       case HB_I18N_PLURAL_RO:
          n100 = fmod( n, 100.0 );
@@ -352,7 +351,7 @@ void * hb_i18n_alloc( void * cargo )
 {
    if( cargo )
    {
-      hb_atomic_inc( &( ( PHB_I18N_TRANS ) cargo )->iUsers );
+      hb_atomic_inc( &( static_cast< PHB_I18N_TRANS >( cargo ) )->iUsers );
    }
    return cargo;
 }
@@ -362,7 +361,7 @@ void hb_i18n_release( void * cargo )
 {
    if( cargo )
    {
-      PHB_I18N_TRANS pI18N = ( PHB_I18N_TRANS ) cargo;
+      PHB_I18N_TRANS pI18N = static_cast< PHB_I18N_TRANS >( cargo );
 
       if( hb_atomic_dec( &pI18N->iUsers ) )
       {
@@ -544,11 +543,11 @@ static PHB_I18N_TRANS hb_i18n_deserialize( PHB_ITEM pItem )
 
 static HB_GARBAGE_FUNC( hb_i18n_destructor )
 {
-   PHB_I18N_TRANS * pI18NHolder = ( PHB_I18N_TRANS * ) Cargo;
+   PHB_I18N_TRANS * pI18NHolder = static_cast< PHB_I18N_TRANS * >( Cargo );
 
    if( *pI18NHolder )
    {
-      hb_i18n_release( ( void * ) *pI18NHolder );
+      hb_i18n_release( static_cast< void * >( *pI18NHolder ) );
       *pI18NHolder = nullptr;
    }
 }
@@ -561,7 +560,7 @@ static const HB_GC_FUNCS s_gcI18NFuncs =
 
 static PHB_I18N_TRANS hb_i18n_param( int * piParam, HB_BOOL fActive )
 {
-   PHB_I18N_TRANS * pI18NHolder = ( PHB_I18N_TRANS * ) hb_parptrGC( &s_gcI18NFuncs, *piParam );
+   PHB_I18N_TRANS * pI18NHolder = static_cast< PHB_I18N_TRANS * >( hb_parptrGC( &s_gcI18NFuncs, *piParam ) );
 
    if( pI18NHolder )
    {
@@ -581,7 +580,7 @@ static PHB_ITEM hb_i18n_newitem( PHB_I18N_TRANS pI18N )
    {
       pI18N = hb_i18n_new();
    }
-   pI18NHolder = ( PHB_I18N_TRANS * ) hb_gcAllocate( sizeof( PHB_I18N_TRANS ), &s_gcI18NFuncs );
+   pI18NHolder = static_cast< PHB_I18N_TRANS * >( hb_gcAllocate( sizeof( PHB_I18N_TRANS ), &s_gcI18NFuncs ) );
    *pI18NHolder = pI18N;
 
    return hb_itemPutPtrGC( pItem, pI18NHolder );
@@ -969,7 +968,6 @@ PHB_ITEM hb_i18n_ngettext( PHB_ITEM pNum, PHB_ITEM pMsgID, PHB_ITEM pContext )
 
    return pMsgID;
 }
-
 
 /*
  * base .prg i18n functions

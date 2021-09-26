@@ -70,14 +70,11 @@
    #include "hbwinuni.h"
 #endif
 
-#if ( defined( HB_OS_LINUX ) && ( ! defined( __WATCOMC__ ) || __WATCOMC__ >= 1280 ) ) || \
-    defined( HB_OS_BSD ) || defined( HB_OS_DARWIN ) || defined( HB_OS_SUNOS )
+#if ( defined( HB_OS_LINUX ) && ( ! defined( __WATCOMC__ ) || __WATCOMC__ >= 1280 ) ) || defined( HB_OS_BSD ) || defined( HB_OS_DARWIN ) || defined( HB_OS_SUNOS )
 #  define HB_HAS_MKSTEMP
 #  if ( defined( HB_OS_BSD ) && ! defined( __NetBSD__ ) ) || defined( HB_OS_DARWIN )
 #     define HB_HAS_MKSTEMPS
-#  elif defined( HB_OS_LINUX ) && \
-        ( defined( _BSD_SOURCE ) || defined( _SVID_SOURCE ) ) && \
-        defined( __GLIBC_PREREQ )
+#  elif defined( HB_OS_LINUX ) && ( defined( _BSD_SOURCE ) || defined( _SVID_SOURCE ) ) && defined( __GLIBC_PREREQ )
 #     if __GLIBC_PREREQ( 2, 12 )
 #        define HB_HAS_MKSTEMPS
 #     endif
@@ -141,12 +138,12 @@ static HB_BOOL fsGetTempDirByCase( char * pszName, const char * pszTempDir, HB_B
       while( ( pszDelim = strchr( pszDelim, '/' ) ) != nullptr )
       {
          *pszDelim = '\\';
-      }   
+      }
 #  endif
       if( ! hb_fsDirExists( pszTempDir ) )
       {
          fOK = HB_FALSE;
-      }   
+      }
    }
 
    return fOK;
@@ -207,19 +204,19 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
          {
             hb_strncat( pszName, pszExt, HB_PATH_MAX - 1 );
 #if defined( HB_USE_LARGEFILE64 )
-            fd = ( HB_FHANDLE ) mkstemps64( pszName, static_cast< int >( strlen( pszExt ) ) );
+            fd = static_cast< HB_FHANDLE >( mkstemps64( pszName, static_cast< int >( strlen( pszExt ) ) ) );
 #else
-            fd = ( HB_FHANDLE ) mkstemps( pszName, static_cast< int >( strlen( pszExt ) ) );
+            fd = static_cast< HB_FHANDLE >( mkstemps( pszName, static_cast< int >( strlen( pszExt ) ) ) );
 #endif
          }
          else
 #endif
 #if defined( HB_USE_LARGEFILE64 )
-            fd = ( HB_FHANDLE ) mkstemp64( pszName );
+            fd = static_cast< HB_FHANDLE >( mkstemp64( pszName ) );
 #else
-            fd = ( HB_FHANDLE ) mkstemp( pszName );
+            fd = static_cast< HB_FHANDLE >( mkstemp( pszName ) );
 #endif
-         hb_fsSetIOError( fd != ( HB_FHANDLE ) -1, 0 );
+         hb_fsSetIOError( fd != static_cast< HB_FHANDLE >( -1 ), 0 );
          hb_vmLock();
       }
       else
@@ -243,7 +240,7 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
          fd = hb_fsCreateEx( pszName, ulAttr, FO_EXCLUSIVE | FO_EXCL );
       }
 
-      if( fd != ( HB_FHANDLE ) FS_ERROR )
+      if( fd != static_cast< HB_FHANDLE >( FS_ERROR ) )
       {
          break;
       }
@@ -389,7 +386,7 @@ HB_FHANDLE hb_fsCreateTemp( const char * pszDir, const char * pszPrefix, HB_FATT
 /* NOTE: pszTempDir must be at least HB_PATH_MAX long. */
 HB_ERRCODE hb_fsTempDir( char * pszTempDir )
 {
-   HB_ERRCODE nResult = ( HB_ERRCODE ) FS_ERROR;
+   HB_ERRCODE nResult = static_cast< HB_ERRCODE >( FS_ERROR );
 
    pszTempDir[ 0 ] = '\0';
 
@@ -489,7 +486,7 @@ HB_FUNC( HB_FTEMPCREATE )
 {
    char szName[ HB_PATH_MAX ];
 
-   hb_retnint( ( HB_NHANDLE ) hb_fsCreateTemp( hb_parc( 1 ), hb_parc( 2 ), ( HB_FATTR ) hb_parnldef( 3, FC_NORMAL ), szName ) );
+   hb_retnint( static_cast< HB_NHANDLE >( hb_fsCreateTemp( hb_parc( 1 ), hb_parc( 2 ), static_cast< HB_FATTR >( hb_parnldef( 3, FC_NORMAL ) ), szName ) ) );
 
    hb_storc( szName, 4 );
 }
@@ -498,7 +495,7 @@ HB_FUNC( HB_FTEMPCREATEEX )
 {
    char szName[ HB_PATH_MAX ];
 
-   hb_retnint( ( HB_NHANDLE ) hb_fsCreateTempEx( szName, hb_parc( 2 ), hb_parc( 3 ), hb_parc( 4 ), ( HB_FATTR ) hb_parnldef( 5, FC_NORMAL ) ) );
+   hb_retnint( static_cast< HB_NHANDLE >( hb_fsCreateTempEx( szName, hb_parc( 2 ), hb_parc( 3 ), hb_parc( 4 ), static_cast< HB_FATTR >( hb_parnldef( 5, FC_NORMAL ) ) ) ) );
 
    hb_storc( szName, 1 );
 }
@@ -507,7 +504,7 @@ HB_FUNC( HB_DIRTEMP )
 {
    char szTempDir[ HB_PATH_MAX ];
 
-   if( hb_fsTempDir( szTempDir ) != ( HB_ERRCODE ) FS_ERROR )
+   if( hb_fsTempDir( szTempDir ) != static_cast< HB_ERRCODE >( FS_ERROR ) )
    {
       hb_retc( szTempDir );
    }

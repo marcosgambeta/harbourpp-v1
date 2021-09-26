@@ -65,8 +65,7 @@ static void hb_inkeySetTextKeys( const char * pszText, HB_SIZE nSize, HB_BOOL fI
       HB_WCHAR buffer[ 32 ], * keys;
       HB_SIZE n = 0;
 
-      keys = nSize <= HB_SIZEOFARRAY( buffer ) ? buffer :
-                        static_cast< HB_WCHAR * >( hb_xgrab( nSize * sizeof( HB_WCHAR ) ) );
+      keys = nSize <= HB_SIZEOFARRAY( buffer ) ? buffer : static_cast< HB_WCHAR * >( hb_xgrab( nSize * sizeof( HB_WCHAR ) ) );
       while( HB_CDPCHAR_GET( cdp, pszText, nSize, &nIndex, &wc ) )
       {
          keys[ n++ ] = wc;
@@ -80,7 +79,7 @@ static void hb_inkeySetTextKeys( const char * pszText, HB_SIZE nSize, HB_BOOL fI
       if( nSize > HB_SIZEOFARRAY( buffer ) )
       {
          hb_xfree( keys );
-      }   
+      }
    }
    else
    {
@@ -96,8 +95,7 @@ HB_FUNC( INKEY )
 {
    int iPCount = hb_pcount();
 
-   hb_retni( hb_inkey( iPCount == 1 || ( iPCount > 1 && HB_ISNUM( 1 ) ),
-                       hb_parnd( 1 ), hb_parnidef( 2, hb_setGetEventMask() ) ) );
+   hb_retni( hb_inkey( iPCount == 1 || ( iPCount > 1 && HB_ISNUM( 1 ) ), hb_parnd( 1 ), hb_parnidef( 2, hb_setGetEventMask() ) ) );
 }
 
 HB_FUNC( __KEYBOARD )
@@ -108,7 +106,7 @@ HB_FUNC( __KEYBOARD )
    if( HB_ISCHAR( 1 ) )
    {
       hb_inkeySetText( hb_parc( 1 ), hb_parclen( 1 ), HB_FALSE );
-   }   
+   }
 }
 
 HB_FUNC( HB_KEYCLEAR )
@@ -203,7 +201,7 @@ HB_FUNC( HB_KEYSETLAST )
    if( HB_ISNUM( 1 ) )
    {
       hb_retni( hb_inkeySetLast( hb_parni( 1 ) ) );
-   }   
+   }
 }
 
 #if defined( HB_LEGACY_LEVEL5 )

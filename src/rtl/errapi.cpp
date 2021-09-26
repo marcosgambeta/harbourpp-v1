@@ -77,9 +77,7 @@
 
 #define HB_TERROR_IVARCOUNT    12
 
-
 HB_FUNC_EXTERN( ERRORNEW );
-
 
 static PHB_ITEM s_pError = nullptr;
 
@@ -95,13 +93,12 @@ typedef struct
 
 static void hb_errorDataRelease( void * Cargo )
 {
-   PHB_ERRDATA pErrData = ( PHB_ERRDATA ) Cargo;
+   PHB_ERRDATA pErrData = static_cast< PHB_ERRDATA >( Cargo );
 
    hb_itemRelease( pErrData->errorBlock );
 }
 
 static HB_TSD_NEW( s_errData, sizeof( HB_ERRDATA ), nullptr, hb_errorDataRelease );
-
 
 static HB_BOOL hb_errGetNumCode( int * piValue, const char * szOperation )
 {
@@ -132,7 +129,6 @@ static HB_BOOL hb_errGetNumCode( int * piValue, const char * szOperation )
    return HB_TRUE;
 }
 
-
 HB_FUNC_STATIC( CARGO )
 {
    hb_itemReturn( hb_errGetCargo( hb_stackSelfItem() ) );
@@ -150,7 +146,6 @@ HB_FUNC_STATIC( _CARGO )
    hb_itemReturn( pItem );
 }
 
-
 HB_FUNC_STATIC( ARGS )
 {
    hb_itemReturn( hb_errGetArgs( hb_stackSelfItem() ) );
@@ -167,7 +162,6 @@ HB_FUNC_STATIC( _ARGS )
 
    hb_itemReturn( pItem );
 }
-
 
 HB_FUNC_STATIC( CANDEFAULT )
 {
@@ -194,7 +188,6 @@ HB_FUNC_STATIC( _CANDEFAULT )
    }
 }
 
-
 HB_FUNC_STATIC( CANRETRY )
 {
    hb_retl( ( hb_errGetFlags( hb_stackSelfItem() ) & EF_CANRETRY ) != 0 );
@@ -219,7 +212,6 @@ HB_FUNC_STATIC( _CANRETRY )
       hb_retl( fCan );
    }
 }
-
 
 HB_FUNC_STATIC( CANSUBST )
 {
@@ -246,7 +238,6 @@ HB_FUNC_STATIC( _CANSUBST )
    }
 }
 
-
 HB_FUNC_STATIC( DESCRIPTION )
 {
    hb_retc( hb_errGetDescription( hb_stackSelfItem() ) );
@@ -263,7 +254,6 @@ HB_FUNC_STATIC( _DESCRIPTION )
 
    hb_itemReturn( pItem );
 }
-
 
 HB_FUNC_STATIC( FILENAME )
 {
@@ -282,7 +272,6 @@ HB_FUNC_STATIC( _FILENAME )
    hb_itemReturn( pItem );
 }
 
-
 HB_FUNC_STATIC( OPERATION )
 {
    hb_retc( hb_errGetOperation( hb_stackSelfItem() ) );
@@ -299,7 +288,6 @@ HB_FUNC_STATIC( _OPERATION )
 
    hb_itemReturn( pItem );
 }
-
 
 HB_FUNC_STATIC( SUBSYSTEM )
 {
@@ -318,7 +306,6 @@ HB_FUNC_STATIC( _SUBSYSTEM )
    hb_itemReturn( pItem );
 }
 
-
 HB_FUNC_STATIC( GENCODE )
 {
    hb_retni( hb_errGetGenCode( hb_stackSelfItem() ) );
@@ -330,13 +317,12 @@ HB_FUNC_STATIC( _GENCODE )
 
    if( hb_errGetNumCode( &iValue, "GENCODE" ) )
    {
-      hb_errPutGenCode( hb_stackSelfItem(), ( HB_ERRCODE ) iValue );
+      hb_errPutGenCode( hb_stackSelfItem(), static_cast< HB_ERRCODE >( iValue ) );
       hb_errPutDescription( hb_stackSelfItem(), hb_langDGetErrorDesc( iValue ) );
    }
 
    hb_retni( iValue );
 }
-
 
 HB_FUNC_STATIC( OSCODE )
 {
@@ -349,12 +335,11 @@ HB_FUNC_STATIC( _OSCODE )
 
    if( hb_errGetNumCode( &iValue, "OSCODE" ) )
    {
-      hb_errPutOsCode( hb_stackSelfItem(), ( HB_ERRCODE ) iValue );
+      hb_errPutOsCode( hb_stackSelfItem(), static_cast< HB_ERRCODE >( iValue ) );
    }
 
    hb_retni( iValue );
 }
-
 
 HB_FUNC_STATIC( SUBCODE )
 {
@@ -367,12 +352,11 @@ HB_FUNC_STATIC( _SUBCODE )
 
    if( hb_errGetNumCode( &iValue, "SUBCODE" ) )
    {
-      hb_errPutSubCode( hb_stackSelfItem(), ( HB_ERRCODE ) iValue );
+      hb_errPutSubCode( hb_stackSelfItem(), static_cast< HB_ERRCODE >( iValue ) );
    }
 
    hb_retni( iValue );
 }
-
 
 HB_FUNC_STATIC( SEVERITY )
 {
@@ -391,7 +375,6 @@ HB_FUNC_STATIC( _SEVERITY )
    hb_retni( iValue );
 }
 
-
 HB_FUNC_STATIC( TRIES )
 {
    hb_retni( hb_errGetTries( hb_stackSelfItem() ) );
@@ -408,7 +391,6 @@ HB_FUNC_STATIC( _TRIES )
 
    hb_retni( iValue );
 }
-
 
 static HB_USHORT hb_errClassCreate( void )
 {
@@ -473,7 +455,7 @@ HB_FUNC( ERRORBLOCK )
 
 PHB_ITEM hb_errorBlock( void )
 {
-   PHB_ERRDATA pErrData = ( PHB_ERRDATA ) hb_stackGetTSD( &s_errData );
+   PHB_ERRDATA pErrData = static_cast< PHB_ERRDATA >( hb_stackGetTSD( &s_errData ) );
 
    if( ! pErrData->errorBlock )
    {
@@ -488,7 +470,7 @@ PHB_ITEM hb_errorBlock( void )
  */
 PHB_ERROR_INFO hb_errorHandler( PHB_ERROR_INFO pNewHandler )
 {
-   PHB_ERRDATA pErrData = ( PHB_ERRDATA ) hb_stackGetTSD( &s_errData );
+   PHB_ERRDATA pErrData = static_cast< PHB_ERRDATA >( hb_stackGetTSD( &s_errData ) );
    PHB_ERROR_INFO pOld = pErrData->errorHandler;
 
    if( pNewHandler )
@@ -502,7 +484,7 @@ PHB_ERROR_INFO hb_errorHandler( PHB_ERROR_INFO pNewHandler )
 
 HB_FUNC( DOSERROR )
 {
-   PHB_ERRDATA pErrData = ( PHB_ERRDATA ) hb_stackGetTSD( &s_errData );
+   PHB_ERRDATA pErrData = static_cast< PHB_ERRDATA >( hb_stackGetTSD( &s_errData ) );
 
    hb_retni( pErrData->uiErrorDOS );
 
@@ -553,7 +535,7 @@ HB_USHORT hb_errLaunch( PHB_ITEM pError )
 
    if( pError )
    {
-      PHB_ERRDATA pErrData = ( PHB_ERRDATA ) hb_stackGetTSD( &s_errData );
+      PHB_ERRDATA pErrData = static_cast< PHB_ERRDATA >( hb_stackGetTSD( &s_errData ) );
       HB_USHORT uiFlags = hb_errGetFlags( pError );
       PHB_ITEM pResult;
 
@@ -633,7 +615,6 @@ HB_USHORT hb_errLaunch( PHB_ITEM pError )
          {
             hb_errInternal( HB_EI_ERRRECFAILURE, nullptr, nullptr, nullptr );
          }
-
       }
       else
       {
@@ -667,7 +648,7 @@ PHB_ITEM hb_errLaunchSubst( PHB_ITEM pError )
 
    if( pError )
    {
-      PHB_ERRDATA pErrData = ( PHB_ERRDATA ) hb_stackGetTSD( &s_errData );
+      PHB_ERRDATA pErrData = static_cast< PHB_ERRDATA >( hb_stackGetTSD( &s_errData ) );
       HB_USHORT uiFlags = hb_errGetFlags( pError );
 
       /* Check if we have a valid error handler */
@@ -675,13 +656,13 @@ PHB_ITEM hb_errLaunchSubst( PHB_ITEM pError )
       {
          hb_errInternal( HB_EI_ERRNOBLOCK, nullptr, nullptr, nullptr );
       }
-      
+
       /* Check if the error launcher was called too many times recursively */
       if( pErrData->iLaunchCount == HB_ERROR_LAUNCH_MAX )
       {
          hb_errInternal( HB_EI_ERRTOOMANY, nullptr, nullptr, nullptr );
       }
-      
+
       /* Launch the error handler: "xResult := Eval( ErrorBlock(), oError )" */
       pErrData->iLaunchCount++;
 
@@ -693,7 +674,7 @@ PHB_ITEM hb_errLaunchSubst( PHB_ITEM pError )
       {
          hb_errPutTries( pError, static_cast< HB_USHORT >( hb_errGetTries( pError ) + 1 ) );
       }
-      
+
       if( pErrData->errorHandler )
       {
          /* there is a low-level error handler defined - use it instead
@@ -1052,9 +1033,7 @@ PHB_ITEM hb_errRT_SubstParams( const char * szSubSystem, HB_ERRCODE errGenCode, 
    return pRetVal;
 }
 
-PHB_ITEM hb_errRT_FileError( PHB_ITEM pError, const char * szSubSystem,
-                             HB_ERRCODE errGenCode, HB_ERRCODE errSubCode,
-                             const char * szFileName )
+PHB_ITEM hb_errRT_FileError( PHB_ITEM pError, const char * szSubSystem, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char * szFileName )
 {
    if( ! pError )
    {
@@ -1074,8 +1053,8 @@ PHB_ITEM hb_errRT_FileError( PHB_ITEM pError, const char * szSubSystem,
 
 HB_FUNC( __ERRRT_BASE )
 {
-   hb_errRT_BASE( ( HB_ERRCODE ) hb_parni( 1 ),
-                  ( HB_ERRCODE ) hb_parni( 2 ),
+   hb_errRT_BASE( static_cast< HB_ERRCODE >( hb_parni( 1 ) ),
+                  static_cast< HB_ERRCODE >( hb_parni( 2 ) ),
                   hb_parc( 3 ),
                   hb_parc( 4 ),
                   ( hb_pcount() > 5 && hb_parnl( 5 ) > 0 ? 1 : 0 ),
@@ -1084,8 +1063,8 @@ HB_FUNC( __ERRRT_BASE )
 
 HB_FUNC( __ERRRT_SBASE )
 {
-   hb_errRT_BASE_SubstR( ( HB_ERRCODE ) hb_parni( 1 ),
-                         ( HB_ERRCODE ) hb_parni( 2 ),
+   hb_errRT_BASE_SubstR( static_cast< HB_ERRCODE >( hb_parni( 1 ) ),
+                         static_cast< HB_ERRCODE >( hb_parni( 2 ) ),
                          hb_parc( 3 ),
                          hb_parc( 4 ),
                          ( hb_pcount() > 5 && hb_parnl( 5 ) > 0 ? 1 : 0 ),

@@ -66,8 +66,7 @@ HB_FUNC( HB_RUN )
       if( hb_gtSuspend() == HB_SUCCESS )
       {
 #if defined( HB_OS_WIN_CE )
-         iResult = hb_fsProcessRun( pszCommand,
-                                    nullptr, 0, nullptr, nullptr, nullptr, nullptr, HB_FALSE );
+         iResult = hb_fsProcessRun( pszCommand, nullptr, 0, nullptr, nullptr, nullptr, nullptr, HB_FALSE );
 #elif defined( HB_OS_WIN )
          LPTSTR lpCommand = HB_CHARDUP( pszCommand );
          iResult = HB_WINAPI_SYSTEM( lpCommand );
@@ -90,5 +89,5 @@ HB_FUNC( HB_RUN )
    else
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }

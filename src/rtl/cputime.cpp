@@ -100,7 +100,7 @@ double hb_secondsCPU( int n )
    {
       n = 3;
    }
-   
+
 #if defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS )
    {
       struct tms tm;
@@ -157,10 +157,10 @@ double hb_secondsCPU( int n )
 
    if( s_timer_interval == 0 )
    {
-      DosQuerySysInfo( QSV_TIMER_INTERVAL, QSV_TIMER_INTERVAL, ( PVOID ) &s_timer_interval, sizeof( ULONG ) );
+      DosQuerySysInfo( QSV_TIMER_INTERVAL, QSV_TIMER_INTERVAL, static_cast< PVOID >( &s_timer_interval ), sizeof( ULONG ) );
    }
 
-   pBuf = ( QSGREC ** ) hb_xalloc( BUFSIZE );
+   pBuf = static_cast< QSGREC ** >( hb_xalloc( BUFSIZE ) );
 
    if( pBuf )
    {
@@ -173,7 +173,7 @@ double hb_secondsCPU( int n )
       if( rc == NO_ERROR )
       {
          QSGREC * pGrec = *pBuf;
-         QSPREC * pPrec = ( QSPREC * ) ( static_cast< ULONG >( pGrec ) + sizeof( QSGREC ) );
+         QSPREC * pPrec = static_cast< QSPREC * >( static_cast< ULONG >( pGrec ) + sizeof( QSGREC ) );
          QSTREC * pTrec = pPrec->pThrdRec;
 
          for( int i = 0; i < pPrec->cTCB; i++, pTrec++ )

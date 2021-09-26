@@ -57,7 +57,7 @@
 
 #include "hbiousr.ch"
 
-#define HB_FILE_ERR_UNSUPPORTED  ( ( HB_ERRCODE ) FS_ERROR )
+#define HB_FILE_ERR_UNSUPPORTED  ( static_cast< HB_ERRCODE >( FS_ERROR ) )
 
 typedef struct _HB_IOUSR
 {
@@ -82,13 +82,11 @@ static HB_CRITICAL_NEW( s_iousrMtx );
 static int s_iCount = 0;
 static PHB_IOUSR s_ioUsrs[ HB_FILE_TYPE_MAX ];
 
-static void s_errRT_IOUSR( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode,
-                           const char * szDescription )
+static void s_errRT_IOUSR( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char * szDescription )
 {
    PHB_ITEM pError, pArray;
 
-   pError = hb_errRT_New( ES_ERROR, "IOUSR", errGenCode, errSubCode,
-                          szDescription, HB_ERR_FUNCNAME, 0, EF_NONE );
+   pError = hb_errRT_New( ES_ERROR, "IOUSR", errGenCode, errSubCode, szDescription, HB_ERR_FUNCNAME, 0, EF_NONE );
    pArray = hb_arrayBaseParams();
    if( pArray )
    {
@@ -156,7 +154,7 @@ static PHB_IOUSR s_iousrAddNew( const char * pszPrefix )
 
 #define s_hasMethod( pIO, iMethod ) ( ( pIO )->prg_funcs[ ( iMethod ) - 1 ] != nullptr )
 
-#define s_getUsrIO( p )       ( ( PHB_IOUSR ) HB_UNCONST( p ) )
+#define s_getUsrIO( p )       ( static_cast< PHB_IOUSR >( HB_UNCONST( p ) ) )
 
 static void s_pushMethod( PHB_IOUSR pIO, int iMethod )
 {
@@ -181,7 +179,7 @@ static HB_BOOL s_fileAccept( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
       else if( pIO->prefix_len > 0 )
       {
          fResult = HB_TRUE;
-      }   
+      }
    }
 
    return fResult;
@@ -350,7 +348,7 @@ static HB_BOOL s_fileAttrGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, H
    fResult = hb_parl( -1 );
    if( fResult )
    {
-      *pnAttr = ( HB_FATTR ) hb_itemGetNL( hb_stackItemFromBase( iOffset ) );
+      *pnAttr = static_cast< HB_FATTR >( hb_itemGetNL( hb_stackItemFromBase( iOffset ) ) );
    }
    hb_stackPop();
 
@@ -406,9 +404,7 @@ static char * s_fileLinkRead( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
    return pszLink != nullptr ? hb_strdup( pszLink ) : nullptr;
 }
 
-static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
-                            const char * pszDefExt, HB_FATTR nExFlags,
-                            const char * pPaths, PHB_ITEM pError )
+static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName, const char * pszDefExt, HB_FATTR nExFlags, const char * pPaths, PHB_ITEM pError )
 {
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
    PHB_FILE pFile = nullptr;
@@ -449,7 +445,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
    {
       pFile = s_fileNew( pIO, hb_itemNew( pFileItm ) );
    }
-   
+
    return pFile;
 }
 
@@ -462,8 +458,7 @@ static void s_fileClose( PHB_FILE pFile )
    hb_vmDo( 1 );
 }
 
-static HB_BOOL s_fileLock( PHB_FILE pFile, HB_FOFFSET nStart,
-                           HB_FOFFSET nLen, int iType )
+static HB_BOOL s_fileLock( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType )
 {
    PHB_IOUSR pIO = s_getUsrIO( pFile->pFuncs );
 
@@ -477,8 +472,7 @@ static HB_BOOL s_fileLock( PHB_FILE pFile, HB_FOFFSET nStart,
    return hb_parl( -1 );
 }
 
-static int s_fileLockTest( PHB_FILE pFile, HB_FOFFSET nStart,
-                           HB_FOFFSET nLen, int iType )
+static int s_fileLockTest( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType )
 {
    PHB_IOUSR pIO = s_getUsrIO( pFile->pFuncs );
 
@@ -492,8 +486,7 @@ static int s_fileLockTest( PHB_FILE pFile, HB_FOFFSET nStart,
    return hb_parni( -1 );
 }
 
-static HB_SIZE s_fileRead( PHB_FILE pFile, void * data,
-                           HB_SIZE nSize, HB_MAXINT timeout )
+static HB_SIZE s_fileRead( PHB_FILE pFile, void * data, HB_SIZE nSize, HB_MAXINT timeout )
 {
    PHB_IOUSR pIO = s_getUsrIO( pFile->pFuncs );
    HB_SIZE nResult;
@@ -525,8 +518,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * data,
    return nResult;
 }
 
-static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * data,
-                            HB_SIZE nSize, HB_MAXINT timeout )
+static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * data, HB_SIZE nSize, HB_MAXINT timeout )
 {
    PHB_IOUSR pIO = s_getUsrIO( pFile->pFuncs );
 
@@ -540,8 +532,7 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * data,
    return hb_parns( -1 );
 }
 
-static HB_SIZE s_fileReadAt( PHB_FILE pFile, void * buffer,
-                             HB_SIZE nSize, HB_FOFFSET nOffset )
+static HB_SIZE s_fileReadAt( PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_FOFFSET nOffset )
 {
    PHB_IOUSR pIO = s_getUsrIO( pFile->pFuncs );
    HB_SIZE nResult;
@@ -573,8 +564,7 @@ static HB_SIZE s_fileReadAt( PHB_FILE pFile, void * buffer,
    return nResult;
 }
 
-static HB_SIZE s_fileWriteAt( PHB_FILE pFile, const void * buffer,
-                              HB_SIZE nSize, HB_FOFFSET nOffset )
+static HB_SIZE s_fileWriteAt( PHB_FILE pFile, const void * buffer, HB_SIZE nSize, HB_FOFFSET nOffset )
 {
    PHB_IOUSR pIO = s_getUsrIO( pFile->pFuncs );
 
@@ -600,8 +590,7 @@ static HB_BOOL s_fileTruncAt( PHB_FILE pFile, HB_FOFFSET nOffset )
    return hb_parl( -1 );
 }
 
-static HB_FOFFSET s_fileSeek( PHB_FILE pFile, HB_FOFFSET nOffset,
-                              HB_USHORT uiFlags )
+static HB_FOFFSET s_fileSeek( PHB_FILE pFile, HB_FOFFSET nOffset, HB_USHORT uiFlags )
 {
    PHB_IOUSR pIO = s_getUsrIO( pFile->pFuncs );
 
@@ -679,7 +668,7 @@ static HB_FHANDLE s_fileHandle( PHB_FILE pFile )
    hb_vmPush( pFile->pFileItm );
    hb_vmDo( 1 );
 
-   return ( HB_FHANDLE ) hb_parns( -1 );
+   return static_cast< HB_FHANDLE >( hb_parns( -1 ) );
 }
 
 static const HB_FILE_FUNCS s_fileFuncs =
@@ -799,10 +788,10 @@ HB_FUNC( IOUSR_SETERROR )
 
    if( HB_ISNUM( 1 ) )
    {
-      HB_ERRCODE errCodeNew = ( HB_ERRCODE ) hb_parni( 1 );
+      HB_ERRCODE errCodeNew = static_cast< HB_ERRCODE >( hb_parni( 1 ) );
       if( errCodeNew != 0 )
       {
-         errCodeNew += ( HB_ERRCODE ) hb_parni( 2 );
+         errCodeNew += static_cast< HB_ERRCODE >( hb_parni( 2 ) );
       }
       hb_fsSetError( errCodeNew );
    }

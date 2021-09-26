@@ -44,7 +44,6 @@
  *
  */
 
-
 #include "hbapi.h"
 #include "hbapiitm.h"
 #include "hbbfish.h"
@@ -53,12 +52,12 @@ static const HB_BLOWFISH * hb_bf_keyparam( void )
 {
    if( hb_parclen( 1 ) == sizeof( HB_BLOWFISH ) )
    {
-      return ( const HB_BLOWFISH * ) hb_parc( 1 );
+      return reinterpret_cast< const HB_BLOWFISH * >( hb_parc( 1 ) );
    }
    else
    {
       return nullptr;
-   }   
+   }
 }
 
 /* hb_blowfishKey( <cPasswd> ) --> <cBfKey>
@@ -100,8 +99,7 @@ HB_FUNC( HB_BLOWFISHENCRYPT )
          /* In raw mode passed string is padded to 8 bytes with '\0'
           * otherwise ANSI X.923 padding is used
           */
-         nSize = ( fRaw ? ( ( nLen + 7 ) >> 3 ) :
-                          ( ( nLen >> 3 ) + 1 ) ) << 3;
+         nSize = ( fRaw ? ( ( nLen + 7 ) >> 3 ) : ( ( nLen >> 3 ) + 1 ) ) << 3;
          pszData = static_cast< char * >( hb_xgrab( nSize + 1 ) );
          memcpy( pszData, hb_itemGetCPtr( pData ), nLen );
          memset( pszData + nLen, '\0', nSize - nLen );
@@ -123,7 +121,7 @@ HB_FUNC( HB_BLOWFISHENCRYPT )
       else
       {
          hb_retc_null();
-      }   
+      }
    }
 }
 
@@ -172,12 +170,12 @@ HB_FUNC( HB_BLOWFISHDECRYPT )
          else
          {
             hb_xfree( pszData );
-         }   
+         }
       }
       else if( nSize == 0 )
       {
          hb_retc_null();
-      }   
+      }
    }
 }
 
@@ -195,7 +193,7 @@ static void hb_bf_initvect( HB_BYTE * vect )
       if( iLen > 0 )
       {
          vect[ i ] ^= static_cast< HB_BYTE >( pszVect[ i % iLen ] );
-      }   
+      }
    }
 }
 
@@ -246,7 +244,7 @@ HB_FUNC( HB_BLOWFISHENCRYPT_CFB )
       else
       {
          hb_retc_null();
-      }   
+      }
    }
 }
 
@@ -287,6 +285,6 @@ HB_FUNC( HB_BLOWFISHDECRYPT_CFB )
       else
       {
          hb_retc_null();
-      }   
+      }
    }
 }

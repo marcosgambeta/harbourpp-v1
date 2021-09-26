@@ -141,8 +141,7 @@ static void _hb_jsonCtxAddIndent( PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nLevel )
    }
 }
 
-static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx,
-                            HB_SIZE nLevel, HB_BOOL fEOL, PHB_CODEPAGE cdp )
+static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nLevel, HB_BOOL fEOL, PHB_CODEPAGE cdp )
 {
    /* Protection against recursive structures */
    if( ( HB_IS_ARRAY( pValue ) || HB_IS_HASH( pValue ) ) && hb_itemSize( pValue ) > 0 )
@@ -513,7 +512,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
             }
             szSource++;
          }
-         else if( *( const unsigned char * ) szSource >= ' ' )
+         else if( *reinterpret_cast< const unsigned char * >( szSource ) >= ' ' )
          {
             *szHead++ = *szSource++;
          }

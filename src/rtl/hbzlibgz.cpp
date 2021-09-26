@@ -52,8 +52,7 @@
 
 #include <zlib.h>
 
-#if ! defined( HB_NO_GZLIB ) && \
-    defined( HB_OS_WIN_CE ) && defined( _MSC_VER ) && ZLIB_VERNUM >= 0x1240
+#if ! defined( HB_NO_GZLIB ) && defined( HB_OS_WIN_CE ) && defined( _MSC_VER ) && ZLIB_VERNUM >= 0x1240
    #define HB_NO_GZLIB
 #endif
 
@@ -80,7 +79,7 @@ static const HB_GC_FUNCS s_gcGZFuncs =
 
 static gzFile hb_gzParam( int iParam )
 {
-   gzFile * gzHolder = ( gzFile * ) hb_parptrGC( &s_gcGZFuncs, iParam );
+   gzFile * gzHolder = static_cast< gzFile * >( hb_parptrGC( &s_gcGZFuncs, iParam ) );
 
    if( gzHolder && *gzHolder )
    {
@@ -118,7 +117,7 @@ HB_FUNC( HB_GZOPEN )
 
       if( gz )
       {
-         gzFile * gzHolder = ( gzFile * ) hb_gcAllocate( sizeof( gzFile ), &s_gcGZFuncs );
+         gzFile * gzHolder = static_cast< gzFile * >( hb_gcAllocate( sizeof( gzFile ), &s_gcGZFuncs ) );
          *gzHolder = gz;
          hb_retptrGC( gzHolder );
       }
@@ -126,7 +125,7 @@ HB_FUNC( HB_GZOPEN )
    else
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 #endif
 }
 
@@ -148,7 +147,7 @@ HB_FUNC( HB_GZDOPEN )
 
       if( gz )
       {
-         gzFile * gzHolder = ( gzFile * ) hb_gcAllocate( sizeof( gzFile ), &s_gcGZFuncs );
+         gzFile * gzHolder = static_cast< gzFile * >( hb_gcAllocate( sizeof( gzFile ), &s_gcGZFuncs ) );
          *gzHolder = gz;
          hb_retptrGC( gzHolder );
       }
@@ -156,7 +155,7 @@ HB_FUNC( HB_GZDOPEN )
    else
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 #endif
 }
 
@@ -166,7 +165,7 @@ HB_FUNC( HB_GZDOPEN )
 HB_FUNC( HB_GZCLOSE )
 {
 #ifndef HB_NO_GZLIB
-   gzFile * gzHolder = ( gzFile * ) hb_parptrGC( &s_gcGZFuncs, 1 );
+   gzFile * gzHolder = static_cast< gzFile * >( hb_parptrGC( &s_gcGZFuncs, 1 ) );
 
    if( gzHolder )
    {
@@ -200,12 +199,12 @@ HB_FUNC( HB_GZSETPARAMS )
       if( gz )
       {
          hb_retni( gzsetparams( gz, hb_parni( 2 ), hb_parni( 3 ) ) );
-      }   
+      }
    }
    else
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 #endif
 }
 
@@ -232,7 +231,7 @@ HB_FUNC( HB_GZREAD )
             if( nLim < nLen )
             {
                nLen = nLim;
-            }   
+            }
          }
 
          hb_vmUnlock();
@@ -276,7 +275,7 @@ HB_FUNC( HB_GZWRITE )
    else
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 #endif
 }
 

@@ -61,8 +61,7 @@ HB_FUNC( HB_UCHAR )
       char szChar[ HB_MAX_CHAR_LEN ];
       HB_SIZE nLen;
 
-      nLen = hb_cdpTextPutU16( hb_vmCDP(), szChar, sizeof( szChar ),
-                                           ( HB_WCHAR ) hb_parni( 1 ) );
+      nLen = hb_cdpTextPutU16( hb_vmCDP(), szChar, sizeof( szChar ), static_cast< HB_WCHAR >( hb_parni( 1 ) ) );
       hb_retclen( szChar, nLen );
    }
    else
@@ -114,7 +113,7 @@ HB_FUNC( HB_BCODE )
 
    if( szText )
    {
-      hb_retni( ( HB_UCHAR ) szText[ 0 ] );
+      hb_retni( static_cast< HB_UCHAR >( szText[ 0 ] ) );
    }
    else
    {
@@ -200,8 +199,7 @@ HB_FUNC( HB_BPEEK )
    {
       HB_SIZE nPos = hb_parns( 2 );
 
-      hb_retni( ( nPos > 0 && nPos <= hb_itemGetCLen( pText ) ) ?
-                ( HB_UCHAR ) hb_itemGetCPtr( pText )[ nPos - 1 ] : 0 );
+      hb_retni( ( nPos > 0 && nPos <= hb_itemGetCLen( pText ) ) ? static_cast< HB_UCHAR >( hb_itemGetCPtr( pText )[ nPos - 1 ] ) : 0 );
    }
    else
    {
@@ -231,7 +229,7 @@ HB_FUNC( HB_UPOKE )
             char szChar[ HB_MAX_CHAR_LEN ], * pszText;
             HB_SIZE nChar, nOldChar;
 
-            nChar = hb_cdpTextPutU16( cdp, szChar, sizeof( szChar ), ( HB_WCHAR ) hb_parni( 3 ) );
+            nChar = hb_cdpTextPutU16( cdp, szChar, sizeof( szChar ), static_cast< HB_WCHAR >( hb_parni( 3 ) ) );
             nOldChar = hb_cdpTextPos( cdp, szText + nPos, nLen - nPos, 1 );
             if( nChar == nOldChar )
             {

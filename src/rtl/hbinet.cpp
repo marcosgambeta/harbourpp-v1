@@ -85,13 +85,13 @@ typedef struct
 
 #define HB_INET_INITIALIZE()  if( s_initialize ) hb_inetAutoInit()
 
-#define HB_PARSOCKET( n )     ( ( PHB_SOCKET_STRUCT ) hb_parptrGC( &s_gcInetFuncs, n ) )
+#define HB_PARSOCKET( n )     ( static_cast< PHB_SOCKET_STRUCT >( hb_parptrGC( &s_gcInetFuncs, n ) ) )
 
 #define HB_SOCKET_INIT( s, p ) \
    do \
    { \
       HB_INET_INITIALIZE(); \
-      s = ( PHB_SOCKET_STRUCT ) hb_gcAllocate( sizeof( *s ), &s_gcInetFuncs ); \
+      s = static_cast< PHB_SOCKET_STRUCT >( hb_gcAllocate( sizeof( *s ), &s_gcInetFuncs ) ); \
       memset( s, 0, sizeof( *s ) ); \
       s->sd         = HB_NO_SOCKET; \
       s->readahead  = HB_INET_BUFFER_LEN; \
@@ -196,7 +196,7 @@ static int hb_inetCloseSocket( PHB_SOCKET_STRUCT socket, HB_BOOL fShutDown )
 
 static HB_GARBAGE_FUNC( hb_inetSocketFinalize )
 {
-   PHB_SOCKET_STRUCT socket = ( PHB_SOCKET_STRUCT ) Cargo;
+   PHB_SOCKET_STRUCT socket = static_cast< PHB_SOCKET_STRUCT >( Cargo );
 
    if( socket->sd != HB_NO_SOCKET )
    {
@@ -226,7 +226,7 @@ static HB_GARBAGE_FUNC( hb_inetSocketFinalize )
 
 static HB_GARBAGE_FUNC( hb_inetSocketMark )
 {
-   PHB_SOCKET_STRUCT socket = ( PHB_SOCKET_STRUCT ) Cargo;
+   PHB_SOCKET_STRUCT socket = static_cast< PHB_SOCKET_STRUCT >( Cargo );
 
    if( socket->pPeriodicBlock )
    {
@@ -258,7 +258,7 @@ static void hb_inetAutoInit( void )
 
 HB_SOCKET hb_znetInetFD( PHB_ITEM pItem, HB_BOOL fError )
 {
-   PHB_SOCKET_STRUCT socket = ( PHB_SOCKET_STRUCT ) hb_itemGetPtrGC( pItem, &s_gcInetFuncs );
+   PHB_SOCKET_STRUCT socket = static_cast< PHB_SOCKET_STRUCT >( hb_itemGetPtrGC( pItem, &s_gcInetFuncs ) );
 
    if( socket )
    {
@@ -274,7 +274,7 @@ HB_SOCKET hb_znetInetFD( PHB_ITEM pItem, HB_BOOL fError )
 
 HB_MAXINT hb_znetInetTimeout( PHB_ITEM pItem, HB_BOOL fError )
 {
-   PHB_SOCKET_STRUCT socket = ( PHB_SOCKET_STRUCT ) hb_itemGetPtrGC( pItem, &s_gcInetFuncs );
+   PHB_SOCKET_STRUCT socket = static_cast< PHB_SOCKET_STRUCT >( hb_itemGetPtrGC( pItem, &s_gcInetFuncs ) );
 
    if( socket )
    {
@@ -296,7 +296,7 @@ HB_BOOL hb_znetInetInitialize( PHB_ITEM pItem, PHB_ZNETSTREAM pStream,
                                HB_INET_ERFUNC errorFunc,
                                HB_INET_ESFUNC errstrFunc )
 {
-   PHB_SOCKET_STRUCT socket = ( PHB_SOCKET_STRUCT ) hb_itemGetPtrGC( pItem, &s_gcInetFuncs );
+   PHB_SOCKET_STRUCT socket = static_cast< PHB_SOCKET_STRUCT >( hb_itemGetPtrGC( pItem, &s_gcInetFuncs ) );
 
    if( socket )
    {
@@ -896,12 +896,10 @@ HB_FUNC( HB_INETRECV )
    s_inetRecvInternal( 0 );
 }
 
-
 HB_FUNC( HB_INETRECVALL )
 {
    s_inetRecvInternal( 1 );
 }
-
 
 static void s_inetRecvPattern( const char * const * patterns, int * patternsizes, int iPatternsCount, int iParam )
 {
@@ -1097,7 +1095,6 @@ HB_FUNC( HB_INETRECVENDBLOCK )
    }
 }
 
-
 HB_FUNC( HB_INETDATAREADY )
 {
    PHB_SOCKET_STRUCT socket = HB_PARSOCKET( 1 );
@@ -1147,7 +1144,6 @@ HB_FUNC( HB_INETDATAREADY )
       hb_retni( iVal );
    }
 }
-
 
 static void s_inetSendInternal( HB_BOOL lAll )
 {
@@ -1233,7 +1229,6 @@ HB_FUNC( HB_INETSENDALL )
    s_inetSendInternal( HB_TRUE );
 }
 
-
 /* Name resolution interface functions */
 
 HB_FUNC( HB_INETGETHOSTS )
@@ -1285,7 +1280,6 @@ HB_FUNC( HB_INETGETALIAS )
       hb_inetErrRT();
    }
 }
-
 
 /* Interface information function */
 

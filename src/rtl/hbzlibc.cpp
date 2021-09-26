@@ -88,8 +88,7 @@ static HB_ZLIB_UNSIZE s_uncompressedSize = s_zlibUncompressedSize;
 static HB_ZLIB_COMPRS s_compress         = s_zlibCompress;
 static HB_ZLIB_UNCMPS s_uncompress       = s_zlibUncompress;
 
-void hb_zlibInit( HB_ZLIB_CBOUND pBound, HB_ZLIB_UNSIZE pUnSize,
-                  HB_ZLIB_COMPRS pCompress, HB_ZLIB_UNCMPS pUncompress )
+void hb_zlibInit( HB_ZLIB_CBOUND pBound, HB_ZLIB_UNSIZE pUnSize, HB_ZLIB_COMPRS pCompress, HB_ZLIB_UNCMPS pUncompress )
 {
    s_compressBound    = pBound;
    s_uncompressedSize = pUnSize;

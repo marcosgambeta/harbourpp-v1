@@ -60,7 +60,7 @@ static HB_SIZE utf8pos( const char * szUTF8, HB_SIZE nLen, HB_SIZE nUTF8Pos )
 
       for( n1 = n2 = 0; n1 < nLen; )
       {
-         if( hb_cdpUTF8ToU16NextChar( ( HB_UCHAR ) szUTF8[ n1 ], &n, &uc ) )
+         if( hb_cdpUTF8ToU16NextChar( static_cast< HB_UCHAR >( szUTF8[ n1 ] ), &n, &uc ) )
          {
             ++n1;
          }
@@ -101,7 +101,7 @@ HB_FUNC( HB_CDPEXISTS )
    else
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_CDPUNIID )
@@ -138,7 +138,7 @@ HB_FUNC( HB_CDPISCHARIDX )
          else
          {
             cdp->type &= ~HB_CDP_TYPE_CHARIDX;
-         }   
+         }
       }
    }
    hb_retl( fResult );
@@ -174,7 +174,7 @@ HB_FUNC( HB_CDPLIST )
       ++nPos;
    }
 
-   hb_xfree( ( void * ) list );
+   hb_xfree( static_cast< void * >( list ) );
 }
 
 /* NOTE: CA-Cl*pper 5.2e Intl. will return: "NATSORT v1.2i x14 19/Mar/93" */
@@ -218,7 +218,7 @@ HB_FUNC( HB_UTF8CHR )
       char utf8Char[ HB_MAX_CHAR_LEN ];
       int iLen;
 
-      iLen = hb_cdpU16CharToUTF8( utf8Char, ( HB_WCHAR ) hb_parni( 1 ) );
+      iLen = hb_cdpU16CharToUTF8( utf8Char, static_cast< HB_WCHAR >( hb_parni( 1 ) ) );
       hb_retclen( utf8Char, iLen );
    }
    else
@@ -255,7 +255,7 @@ HB_FUNC( HB_UTF8ASC )
    else
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 HB_FUNC( HB_STRTOUTF8 )
@@ -291,7 +291,7 @@ HB_FUNC( HB_STRTOUTF8 )
    else
    {
       hb_retc_null();
-   }   
+   }
 }
 
 HB_FUNC( HB_UTF8TOSTR )
@@ -332,7 +332,7 @@ HB_FUNC( HB_UTF8TOSTR )
       else
       {
          hb_retc_null();
-      }   
+      }
    }
    else
    {
@@ -547,7 +547,7 @@ HB_FUNC( HB_UTF8POKE )
          int n, n2;
 
          --nPos;
-         uc = ( HB_WCHAR ) hb_parni( 3 );
+         uc = static_cast< HB_WCHAR >( hb_parni( 3 ) );
          n = hb_cdpUTF8CharSize( uc );
          n2 = 0;
          hb_cdpUTF8ToU16NextChar( szString[ nPos ], &n2, &uc2 );

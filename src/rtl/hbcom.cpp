@@ -50,8 +50,7 @@
 
 #include "hbapi.h"
 
-#if defined( HB_OS_UNIX ) && ( ! defined( __WATCOMC__ ) || __WATCOMC__ > 1290 ) && \
-    ! defined( HB_OS_SYMBIAN ) /* || defined( __DJGPP__ ) */
+#if defined( HB_OS_UNIX ) && ( ! defined( __WATCOMC__ ) || __WATCOMC__ > 1290 ) && ! defined( HB_OS_SYMBIAN ) /* || defined( __DJGPP__ ) */
 #  if defined( HB_OS_VXWORKS )
 #     if ! defined( HB_HAS_SIOLIB )
 #        define HB_HAS_SIOLIB
@@ -71,7 +70,6 @@
 #  define HB_HAS_DOSSRL
 #endif
 
-
 #if defined( HB_HAS_TERMIOS )
 #  include <termios.h>
 #  include <fcntl.h>
@@ -81,8 +79,7 @@
 #  if defined( HB_OS_UNIX )
 #     include <sys/time.h>
 #     include <sys/types.h>
-#     if ! defined( HB_HAS_POLL ) && ! defined( HB_NO_POLL ) && \
-         defined( _POSIX_C_SOURCE ) && _POSIX_C_SOURCE >= 200112L
+#     if ! defined( HB_HAS_POLL ) && ! defined( HB_NO_POLL ) && defined( _POSIX_C_SOURCE ) && _POSIX_C_SOURCE >= 200112L
          /* use poll() instead of select() to avoid FD_SETSIZE (1024 in Linux)
             file handle limit */
 #        define HB_HAS_POLL
@@ -194,7 +191,7 @@ static PHB_COM hb_comGetPort( int iPort, int iStatus )
       else
       {
          hb_comSetComError( pCom, HB_COM_ERR_CLOSED );
-      }   
+      }
    }
    return nullptr;
 }
@@ -233,7 +230,7 @@ static const char * hb_comGetNameRaw( PHB_COM pCom, char * buffer, int size )
       else
       {
          hb_snprintf( buffer, size, "COM%d", pCom->port );
-      }   
+      }
 #endif
       name = buffer;
    }
@@ -448,7 +445,7 @@ const char * hb_comGetDevice( int iPort, char * buffer, int size )
       else
       {
          pszName = pCom->name;
-      }   
+      }
    }
 
    return pszName;
@@ -833,7 +830,7 @@ int hb_comOutputCount( int iPort )
    {
       iCount = -1;
    }
-   
+
    return iCount;
 }
 
@@ -1284,7 +1281,7 @@ int hb_comFlowSet( int iPort, int iFlow )
       {
          iResult = 0;
       }
-      
+
       if( iFlow & HB_COM_FL_ION )
       {
          if( tcflow( pCom->fd, TCION ) == -1 )
@@ -1815,13 +1812,13 @@ int hb_comInputCount( int iPort )
       else
       {
          hb_comSetOsError( pCom, HB_TRUE );
-      }   
+      }
    }
    else
    {
       iCount = -1;
    }
-   
+
    return iCount;
 }
 
@@ -1842,13 +1839,13 @@ int hb_comOutputCount( int iPort )
       else
       {
          hb_comSetOsError( pCom, HB_TRUE );
-      }   
+      }
    }
    else
    {
       iCount = -1;
    }
-   
+
    return iCount;
 }
 
@@ -2150,7 +2147,7 @@ int hb_comFlowSet( int iPort, int iFlow )
          else
          {
             fNotSup = TRUE;
-         }   
+         }
       }
       else if( iFlow & HB_COM_FL_DTRDSR )
       {
@@ -2179,7 +2176,7 @@ int hb_comFlowSet( int iPort, int iFlow )
       else
       {
          hb_comSetOsError( pCom, ! fResult );
-      }   
+      }
    }
 
    return fResult ? 0 : -1;
@@ -2388,13 +2385,13 @@ long hb_comSend( int iPort, const void * data, long len, HB_MAXINT timeout )
          else
          {
             hb_comSetOsError( pCom, ! fResult );
-         }   
+         }
       }
       else
       {
          hb_comSetOsError( pCom, HB_TRUE );
       }
-      
+
       hb_vmLock();
    }
 
@@ -2523,9 +2520,9 @@ int hb_comInit( int iPort, int iBaud, int iParity, int iSize, int iStop )
             dcb.fAbortOnError = 0;
           /*dcb.XonLim*/
           /*dcb.XoffLim*/
-            dcb.ByteSize = ( BYTE ) iSize;
-            dcb.Parity = ( BYTE ) iParity;
-            dcb.StopBits = ( BYTE ) iStop;
+            dcb.ByteSize = static_cast< BYTE >( iSize );
+            dcb.Parity = static_cast< BYTE >( iParity );
+            dcb.StopBits = static_cast< BYTE >( iStop );
           /*dcb.XonChar*/
           /*dcb.XoffChar*/
             dcb.ErrorChar = '?';
@@ -2543,12 +2540,12 @@ int hb_comInit( int iPort, int iBaud, int iParity, int iSize, int iStop )
          else
          {
             hb_comSetComError( pCom, HB_COM_ERR_PARAMVALUE );
-         }   
+         }
       }
       else
       {
          hb_comSetOsError( pCom, ! fResult );
-      }   
+      }
    }
 
    return fResult ? 0 : -1;
@@ -3025,7 +3022,7 @@ int hb_comFlowControl( int iPort, int *piFlow, int iFlow )
             {
                dcb.fbCtlHndShake &= ~MODE_DSR_HANDSHAKE;
             }
-            
+
             if( iFlow & HB_COM_FLOW_DCD )
             {
                dcb.fbCtlHndShake |= MODE_DCD_HANDSHAKE;
@@ -3173,7 +3170,7 @@ int hb_comErrorChar( int iPort, int iChar )
          if( iChar >= 0 )
          {
             dcb.fbFlowReplace |= MODE_ERROR_CHAR;
-            dcb.bErrorReplacementChar = ( BYTE ) iChar;
+            dcb.bErrorReplacementChar = static_cast< BYTE >( iChar );
          }
          else
          {
@@ -3300,7 +3297,7 @@ long hb_comSend( int iPort, const void * data, long len, HB_MAXINT timeout )
       {
          ULONG ulWritten = 0;
 
-         rc = DosWrite( pCom->hFile, ( void * ) data, len, &ulWritten );
+         rc = DosWrite( pCom->hFile, static_cast< void * >( data ), len, &ulWritten );
          if( rc == NO_ERROR )
          {
             lSent = static_cast< long >( ulWritten );
@@ -4609,7 +4606,7 @@ long hb_comSend( int iPort, const void * data, long len, HB_MAXINT timeout )
          else
          {
             break;
-         }   
+         }
       }
 
       hb_vmLock();
@@ -4737,7 +4734,7 @@ int hb_comInit( int iPort, int iBaud, int iParity, int iSize, int iStop )
       else
       {
          hb_comSetComError( pCom, HB_COM_ERR_PARAMVALUE );
-      }   
+      }
    }
 
    return iResult;
@@ -5071,7 +5068,6 @@ int hb_comOpen( int iPort )
 }
 
 #endif
-
 
 static int s_iComInit = 0;
 

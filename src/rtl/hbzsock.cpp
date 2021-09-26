@@ -67,7 +67,7 @@
 #  define HB_ZSOCK_MEM_LEVEL  MAX_MEM_LEVEL
 #endif
 
-#define HB_ZSOCK_GET( p )     ( ( PHB_SOCKEX_Z ) p->cargo )
+#define HB_ZSOCK_GET( p )     ( static_cast< PHB_SOCKEX_Z >( p->cargo ) )
 
 typedef struct
 {
@@ -122,7 +122,7 @@ static long s_zsock_write( PHB_SOCKEX_Z pZ, HB_MAXINT timeout )
       if( timeout > 0 )
       {
          timeout = 0;
-      }   
+      }
    }
 
    if( lSent > 0 )
@@ -155,7 +155,7 @@ static int s_zsock_inbuffer( PHB_SOCKEX pSock )
          pSock->buffer = static_cast< HB_BYTE * >( hb_xgrab( pSock->readahead ) );
       }
 
-      pZ->z_read.next_out  = ( Bytef * ) pSock->buffer;
+      pZ->z_read.next_out  = static_cast< Bytef * >( pSock->buffer );
       pZ->z_read.avail_out = static_cast< uInt >( pSock->readahead );
 
       err = inflate( &pZ->z_read, Z_SYNC_FLUSH );
@@ -167,7 +167,6 @@ static int s_zsock_inbuffer( PHB_SOCKEX pSock )
    }
    return pSock->inbuffer > 0 ? 1 : 0;
 }
-
 
 /* socket filter */
 
@@ -194,7 +193,7 @@ static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT tim
    {
       int err = Z_OK;
 
-      pZ->z_read.next_out  = ( Bytef * ) data;
+      pZ->z_read.next_out  = static_cast< Bytef * >( data );
       pZ->z_read.avail_out = static_cast< uInt >( len );
       pZ->z_read.total_out = 0;
 
@@ -207,7 +206,7 @@ static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT tim
             {
                break;
             }
-            pZ->z_read.next_in = ( Bytef * ) pZ->rdbuf;
+            pZ->z_read.next_in = static_cast< Bytef * >( pZ->rdbuf );
             pZ->z_read.avail_in = static_cast< uInt >( lRecv );
          }
          else if( err != Z_OK )
@@ -229,7 +228,7 @@ static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT tim
    else
    {
       return hb_sockexRead( pZ->sock, data, len, timeout );
-   }   
+   }
 }
 
 static long s_sockexWrite( PHB_SOCKEX pSock, const void * data, long len, HB_MAXINT timeout )
@@ -240,7 +239,7 @@ static long s_sockexWrite( PHB_SOCKEX pSock, const void * data, long len, HB_MAX
    {
       long lWritten = 0;
 
-      pZ->z_write.next_in  = ( Bytef * ) HB_UNCONST( data );
+      pZ->z_write.next_in  = static_cast< Bytef * >( HB_UNCONST( data ) );
       pZ->z_write.avail_in = static_cast< uInt >( len );
 
       while( pZ->z_write.avail_in )
@@ -273,7 +272,7 @@ static long s_sockexWrite( PHB_SOCKEX pSock, const void * data, long len, HB_MAX
    else
    {
       return hb_sockexWrite( pZ->sock, data, len, timeout );
-   }   
+   }
 }
 
 static long s_sockexFlush( PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync )
@@ -318,8 +317,7 @@ static long s_sockexFlush( PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync )
 
 static int s_sockexCanRead( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout )
 {
-   return s_zsock_inbuffer( pSock ) ? 1 :
-          hb_sockexCanRead( HB_ZSOCK_GET( pSock )->sock, fBuffer, timeout );
+   return s_zsock_inbuffer( pSock ) ? 1 : hb_sockexCanRead( HB_ZSOCK_GET( pSock )->sock, fBuffer, timeout );
 }
 
 static int s_sockexCanWrite( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout )
@@ -523,7 +521,7 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
          pSockNew->fRedirAll = HB_TRUE;
          pSockNew->pFilter = &s_sockFilter;
 
-         pSockNew->cargo = ( void * ) pZ;
+         pSockNew->cargo = static_cast< void * >( pZ );
          pZ->z_read.zalloc = s_zsock_zalloc;
          pZ->z_read.zfree  = s_zsock_zfree;
          pZ->z_read.opaque = Z_NULL;
@@ -563,7 +561,7 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
             else
             {
                level = HB_ZLIB_COMPRESSION_DISABLE;
-            }   
+            }
          }
 
          if( fCompressOut && level != HB_ZLIB_COMPRESSION_DISABLE )
@@ -575,13 +573,13 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
             {
                pZ->fCompressOut = HB_TRUE;
                pZ->wrbuf = static_cast< HB_BYTE * >( hb_xgrab( HB_ZSOCK_WRBUFSIZE ) );
-               pZ->z_write.next_out  = ( Bytef * ) pZ->wrbuf;
+               pZ->z_write.next_out  = static_cast< Bytef * >( pZ->wrbuf );
                pZ->z_write.avail_out = HB_ZSOCK_WRBUFSIZE;
             }
             else
             {
                level = HB_ZLIB_COMPRESSION_DISABLE;
-            }   
+            }
          }
 
          if( level != HB_ZLIB_COMPRESSION_DISABLE )
@@ -618,7 +616,6 @@ HB_FUNC( HB_SOCKETNEWZSOCK )
       }
    }
 }
-
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_zsock_init_ )
    hb_sockexRegister( &s_sockFilter );
