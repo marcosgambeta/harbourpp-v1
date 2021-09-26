@@ -54,13 +54,11 @@
 HB_FUNC( HB_STRREPLACE )
 {
    PHB_ITEM pText = hb_param( 1, HB_IT_STRING );
-   PHB_ITEM pSrc = hb_param( 2, HB_IT_STRING | HB_IT_ARRAY |
-                                ( HB_ISNIL( 3 ) ? HB_IT_HASH : 0 ) );
+   PHB_ITEM pSrc = hb_param( 2, HB_IT_STRING | HB_IT_ARRAY | ( HB_ISNIL( 3 ) ? HB_IT_HASH : 0 ) );
 
    if( pText && pSrc )
    {
-      HB_SIZE nText = hb_itemGetCLen( pText ),
-              nSrc = hb_itemSize( pSrc );
+      HB_SIZE nText = hb_itemGetCLen( pText ), nSrc = hb_itemSize( pSrc );
 
       if( nText > 0 && nSrc > 0 )
       {

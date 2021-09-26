@@ -83,9 +83,7 @@
 
 #endif
 
-#if ! defined( MAXGETHOSTNAME ) && ( defined( HB_OS_UNIX ) || \
-      ( ( defined( HB_OS_OS2 ) || defined( HB_OS_DOS ) ) && \
-        defined( __GNUC__ ) ) )
+#if ! defined( MAXGETHOSTNAME ) && ( defined( HB_OS_UNIX ) || ( ( defined( HB_OS_OS2 ) || defined( HB_OS_DOS ) ) && defined( __GNUC__ ) ) )
    #define MAXGETHOSTNAME 256      /* should be enough for a host name */
 #endif
 
@@ -140,8 +138,7 @@ char * hb_netname( void )
       }
 #  endif
 
-#elif ( defined( HB_OS_UNIX ) && ! defined( __WATCOMC__ ) ) || \
-      ( defined( HB_OS_OS2 ) && defined( __GNUC__ ) )
+#elif ( defined( HB_OS_UNIX ) && ! defined( __WATCOMC__ ) ) || ( defined( HB_OS_OS2 ) && defined( __GNUC__ ) )
 
    char szValue[ MAXGETHOSTNAME + 1 ];
    szValue[ 0 ] = szValue[ MAXGETHOSTNAME ] = '\0';

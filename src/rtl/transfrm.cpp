@@ -224,8 +224,7 @@ HB_FUNC( TRANSFORM )
                   {
                      /* Upper */
                      case '!':
-                        HB_CDPCHAR_PUT( cdp, szResult, nSize, &nResultPos,
-                                        hb_cdpUpperWC( cdp, wcExp ) );
+                        HB_CDPCHAR_PUT( cdp, szResult, nSize, &nResultPos, hb_cdpUpperWC( cdp, wcExp ) );
                         break;
 
                      /* Out the character */
@@ -239,18 +238,13 @@ HB_FUNC( TRANSFORM )
                      case 'N':
                      case 'x':
                      case 'X':
-                        HB_CDPCHAR_PUT( cdp, szResult, nSize, &nResultPos,
-                                        ( uiPicFlags & PF_UPPER ) ? hb_cdpUpperWC( cdp, wcExp ) : wcExp );
+                        HB_CDPCHAR_PUT( cdp, szResult, nSize, &nResultPos, ( uiPicFlags & PF_UPPER ) ? hb_cdpUpperWC( cdp, wcExp ) : wcExp );
                         break;
 
                      /* Logical */
                      case 'y':
                      case 'Y':
-                        HB_CDPCHAR_PUT( cdp, szResult, nSize, &nResultPos,
-                                             ( wcExp == 't' ||
-                                               wcExp == 'T' ||
-                                               wcExp == 'y' ||
-                                               wcExp == 'Y' ) ? 'Y' : 'N' );
+                        HB_CDPCHAR_PUT( cdp, szResult, nSize, &nResultPos, ( wcExp == 't' || wcExp == 'T' || wcExp == 'y' || wcExp == 'Y' ) ? 'Y' : 'N' );
                         break;
 
                      /* Other choices */
@@ -704,8 +698,7 @@ HB_FUNC( TRANSFORM )
              * compatible but it tries to respect user date format
              * [druzus]
              */
-            const char * szBritish = hb_setGetCentury() ?
-                                     "DDMMYYYY" : "DDMMYY";
+            const char * szBritish = hb_setGetCentury() ? "DDMMYYYY" : "DDMMYY";
             char cLast = 'x';
 
             for( nFor = 0; nFor < 10; nFor++ )
@@ -816,8 +809,7 @@ HB_FUNC( TRANSFORM )
              * compatible but it tries to respect user date format
              * [druzus]
              */
-            const char * szBritish = hb_setGetCentury() ?
-                                     "DDMMYYYY" : "DDMMYY";
+            const char * szBritish = hb_setGetCentury() ? "DDMMYYYY" : "DDMMYY";
             char cLast = 'x';
 
             for( nFor = 0; nFor < 10; nFor++ )

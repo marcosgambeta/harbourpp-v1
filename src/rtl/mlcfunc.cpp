@@ -78,7 +78,6 @@ typedef struct
 }
 HB_MLC_INFO, * PHB_MLC_INFO;
 
-
 static void hb_mlGetEOLs( PHB_MLC_INFO pMLC, int iParam )
 {
    int iEOLs = 0;
@@ -345,7 +344,6 @@ static HB_SIZE hb_mlGetLine( PHB_MLC_INFO pMLC )
 
    return HB_TRUE;
 }
-
 
 /* MemoLine( <cString>, [ <nLineLength>=79 ],
  *           [ <nLineNumber>=1 ],

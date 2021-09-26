@@ -81,20 +81,17 @@ static void hb_trace_message( char * buffer, HB_SIZE nSize, int iParam, int iCou
 
 HB_FUNC( HB_TRACESTATE )
 {
-   hb_retl( hb_tracestate( HB_ISLOG( 1 ) ? hb_parl( 1 ) :
-                                           hb_parnidef( 1, -1 ) ) );
+   hb_retl( hb_tracestate( HB_ISLOG( 1 ) ? hb_parl( 1 ) : hb_parnidef( 1, -1 ) ) );
 }
 
 HB_FUNC( HB_TRACESYSOUT )
 {
-   hb_retl( hb_tracesysout( HB_ISLOG( 1 ) ? hb_parl( 1 ) :
-                                            hb_parnidef( 1, -1 ) ) );
+   hb_retl( hb_tracesysout( HB_ISLOG( 1 ) ? hb_parl( 1 ) : hb_parnidef( 1, -1 ) ) );
 }
 
 HB_FUNC( HB_TRACEFLUSH )
 {
-   hb_retl( hb_traceflush( HB_ISLOG( 1 ) ? hb_parl( 1 ) :
-                                           hb_parnidef( 1, -1 ) ) );
+   hb_retl( hb_traceflush( HB_ISLOG( 1 ) ? hb_parl( 1 ) : hb_parnidef( 1, -1 ) ) );
 }
 
 HB_FUNC( HB_TRACEMODE )
@@ -120,7 +117,9 @@ HB_FUNC( HB_TRACELOGLEVEL )
    {
       int iLevel = hb_parni( 1 );
       if( iLevel >= HB_TR_ALWAYS && iLevel < HB_TR_LAST )
+      {
          s_traceLogLevel = iLevel;
+      }
    }
    hb_retni( iOldLevel );
 }

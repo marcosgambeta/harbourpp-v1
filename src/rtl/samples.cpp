@@ -52,7 +52,7 @@ static char * hb_SecToTimeStr( char * pszTime, long lTime )
 {
    int iValue;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_SecToTimeStr(%p, %ld)", ( void * ) pszTime, lTime ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_SecToTimeStr(%p, %ld)", static_cast< void * >( pszTime ), lTime ) );
 
    iValue = static_cast< int >( ( lTime / 3600 ) % 24 );
    pszTime[ 0 ] = static_cast< char >( iValue / 10 ) + '0';

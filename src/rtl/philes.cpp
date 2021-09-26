@@ -59,7 +59,7 @@ HB_FUNC( FOPEN )
 
    if( szFile )
    {
-      hb_retnint( ( HB_NHANDLE ) hb_fsOpen( szFile, static_cast< HB_USHORT >( hb_parnidef( 2, FO_READ | FO_COMPAT ) ) ) );
+      hb_retnint( static_cast< HB_NHANDLE >( hb_fsOpen( szFile, static_cast< HB_USHORT >( hb_parnidef( 2, FO_READ | FO_COMPAT ) ) ) ) );
       hb_fsSetFError( hb_fsError() );
    }
    else
@@ -76,7 +76,7 @@ HB_FUNC( FCREATE )
 
    if( szFile )
    {
-      hb_retnint( ( HB_NHANDLE ) hb_fsCreate( szFile, hb_parnidef( 2, FC_NORMAL ) ) );
+      hb_retnint( static_cast< HB_NHANDLE >( hb_fsCreate( szFile, hb_parnidef( 2, FC_NORMAL ) ) ) );
       hb_fsSetFError( hb_fsError() );
    }
    else
@@ -92,7 +92,7 @@ HB_FUNC( HB_FCREATE )
 
    if( szFile )
    {
-      hb_retnint( ( HB_NHANDLE ) hb_fsCreateEx( szFile, hb_parnidef( 2, FC_NORMAL ), static_cast< HB_USHORT >( hb_parnidef( 3, FO_COMPAT ) ) ) );
+      hb_retnint( static_cast< HB_NHANDLE >( hb_fsCreateEx( szFile, hb_parnidef( 2, FC_NORMAL ), static_cast< HB_USHORT >( hb_parnidef( 3, FO_COMPAT ) ) ) ) );
       hb_fsSetFError( hb_fsError() );
    }
    else
@@ -128,7 +128,7 @@ HB_FUNC( FREAD )
       else
       {
          nRead = 0;
-      }   
+      }
    }
 
    hb_retns( nRead );
@@ -204,8 +204,7 @@ HB_FUNC( FERASE )
 HB_FUNC( FRENAME )
 {
    HB_ERRCODE uiError = 2;
-   const char * szFileOld = hb_parc( 1 ),
-              * szFileNew = hb_parc( 2 );
+   const char * szFileOld = hb_parc( 1 ), * szFileNew = hb_parc( 2 );
 
    if( szFileOld && szFileNew )
    {
@@ -232,7 +231,7 @@ HB_FUNC( FSEEK )
    {
       hb_retni( 0 );
    }
-   
+
    hb_fsSetFError( uiError );
 }
 
@@ -260,7 +259,7 @@ HB_FUNC( FREADSTR )
       else
       {
          hb_retc_null();
-      }   
+      }
    }
    else
    {
@@ -396,7 +395,7 @@ HB_FUNC( HB_PROGNAME )
    else
    {
       hb_retc_null();
-   }   
+   }
 }
 
 HB_FUNC( HB_DIRBASE )
@@ -608,7 +607,7 @@ HB_FUNC( HB_PREAD )
    else
    {
       hb_errRT_BASE_SubstR( EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+   }
 }
 
 /* hb_PWrite( <nPipeHandle>, <cBuffer>, [<nBytes>], [<nTimeOut>] )

@@ -62,19 +62,19 @@ typedef struct
 
 static void hb_xSaveRestRelease( void * cargo )
 {
-   PHB_SCRDATA pScrData = ( PHB_SCRDATA ) cargo;
+   PHB_SCRDATA pScrData = static_cast< PHB_SCRDATA >( cargo );
 
    if( pScrData->buffer )
    {
       hb_xfree( pScrData->buffer );
-   }   
+   }
 }
 
 static HB_TSD_NEW( s_scrData, sizeof( HB_SCRDATA ), nullptr, hb_xSaveRestRelease );
 
 HB_FUNC( __XSAVESCREEN )
 {
-   PHB_SCRDATA pScrData = ( PHB_SCRDATA ) hb_stackGetTSD( &s_scrData );
+   PHB_SCRDATA pScrData = static_cast< PHB_SCRDATA >( hb_stackGetTSD( &s_scrData ) );
    HB_SIZE nSize;
 
    hb_gtGetPos( &pScrData->row, &pScrData->col );
@@ -96,7 +96,7 @@ HB_FUNC( __XSAVESCREEN )
 
 HB_FUNC( __XRESTSCREEN )
 {
-   PHB_SCRDATA pScrData = ( PHB_SCRDATA ) hb_stackTestTSD( &s_scrData );
+   PHB_SCRDATA pScrData = static_cast< PHB_SCRDATA >( hb_stackTestTSD( &s_scrData ) );
 
    if( pScrData && pScrData->buffer )
    {
