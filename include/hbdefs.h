@@ -56,8 +56,7 @@
 #include "hbsetup.h"
 #include "hbver.h"
 
-#if defined( __LCC__ ) || \
-    defined( __MINGW32__ ) || defined( __DMC__ ) || defined( __TINYC__ ) || \
+#if defined( __MINGW32__ ) || defined( __DMC__ ) || \
     ( defined( _MSC_VER ) && _MSC_VER >= 1600 ) || \
     ( defined( __BORLANDC__ ) && __BORLANDC__ >= 0x0582 ) || \
     ( defined( __WATCOMC__ ) && __WATCOMC__ >= 1270 ) || \
@@ -839,8 +838,7 @@ typedef HB_U32 HB_FATTR;
 /* Macros to store/retrieve integer and double values at/from byte address */
 #if defined( __GNUC__ ) || ( defined( _MSC_VER ) && ( _MSC_VER >= 1400 ) )
 
-#  if ( __GNUC__ > 4 || ( __GNUC__ == 4 && __GNUC_MINOR__ >= 3 ) ) && \
-      ! defined( __ICC ) && ! defined( __OPENCC__ ) && ! defined( __PCC__ )
+#  if ( __GNUC__ > 4 || ( __GNUC__ == 4 && __GNUC_MINOR__ >= 3 ) ) && ! defined( __ICC ) && ! defined( __OPENCC__ )
 #     define HB_BUILTIN_BSWAP32( n )   __builtin_bswap32( n )
 #     define HB_BUILTIN_BSWAP64( n )   __builtin_bswap64( n )
 #  elif defined( _MSC_VER )

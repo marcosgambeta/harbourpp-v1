@@ -46,7 +46,7 @@
 
 #include "hbsocket.h"
 
-#if ( defined( HB_OS_DOS ) && ! defined( HB_HAS_WATT ) ) || defined( HB_OS_SYMBIAN ) || defined( __TINYC__ )
+#if ( defined( HB_OS_DOS ) && ! defined( HB_HAS_WATT ) ) || defined( HB_OS_SYMBIAN )
 #  if ! defined( HB_SOCKET_OFF )
 #     define HB_SOCKET_OFF
 #  endif
@@ -170,8 +170,6 @@
 #     define HB_HAS_SOCKADDR_STORAGE
 /* #     define HB_HAS_INET6 */
 #  elif defined( __MINGW32__ )
-#     define HB_HAS_SOCKADDR_STORAGE
-#  elif defined( __POCC__ ) && ! defined( __XCC__ )
 #     define HB_HAS_SOCKADDR_STORAGE
 #  elif defined( _MSC_VER )
 #     if _MSC_VER >= 1800 && ! defined( HB_WINSOCK_USE_OLDFUNC )
@@ -298,15 +296,6 @@
       struct in_addr imr_multiaddr;    /* IP multicast address of group */
       struct in_addr imr_interface;    /* Local IP address of interface */
    };
-#endif
-
-#if defined( __POCC__ ) && ( __POCC__ >= 500 ) && defined( HB_OS_WIN_64 )
-   /* FIXME: Bad workaround for the '__WSAFDIsSet unresolved' problem
-             in Pelles C 5.00.13 AMD64 mode, to make final executables
-             link at all. Some hbsocket.c features (or the whole module)
-             won't properly work though. [vszakats] */
-   #undef FD_ISSET
-   #define FD_ISSET( s, f ) ( 0 )
 #endif
 
 #if defined( HB_OS_WIN )

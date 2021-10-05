@@ -107,35 +107,8 @@ HB_EXTERN_BEGIN
    WINBASEAPI int WINAPI MulDiv( int nNumber, int nNumerator, int nDenominator );
 #endif
 
-#if defined( __POCC__ ) || ( defined( _MSC_VER ) && ( _MSC_VER <= 1500 ) )
+#if ( defined( _MSC_VER ) && ( _MSC_VER <= 1500 ) )
    void abort( void );
-#endif
-
-#if defined( __POCC__ ) || defined( __XCC__ )
-   #ifndef GlobalAlloc
-   #define GlobalAlloc(flags, cb)      LocalAlloc(flags, cb)
-   #endif
-   #ifndef GlobalLock
-   #define GlobalLock(lp)              LocalLock(lp)
-   #endif
-   #ifndef GlobalUnlock
-   #define GlobalUnlock(lp)            LocalUnlock(lp)
-   #endif
-   #ifndef GlobalSize
-   #define GlobalSize(lp)              LocalSize(lp)
-   #endif
-   #ifndef GlobalFree
-   #define GlobalFree(h)               LocalFree(h)
-   #endif
-   #ifndef GlobalReAlloc
-   #define GlobalReAlloc(h, cb, flags) LocalReAlloc(h, cb, flags)
-   #endif
-   #ifndef GlobalHandle
-   #define GlobalHandle(lp)            LocalHandle(lp)
-   #endif
-   #ifndef GlobalFlags
-   #define GlobalFlags(lp)             LocalFlags(lp)
-   #endif
 #endif
 
 #if ! defined( GetEnvironmentVariable )

@@ -112,11 +112,10 @@
 #if ( defined( __BORLANDC__ ) && __BORLANDC__ < 0x0582 ) || \
     ( defined( __WATCOMC__ ) && __WATCOMC__ < 1270 ) || \
     defined( HB_OS_QNX ) || defined( HB_OS_SYMBIAN ) || \
-    defined( __DCC__ ) || defined( __TINYC__ ) || \
+    defined( __DCC__ ) || \
     ( defined( __DJGPP__ ) && \
       ( __DJGPP__ < 2 || ( __DJGPP__ == 2 && __DJGPP_MINOR__ <= 3 ) ) ) || \
-    ( defined( _MSC_VER ) && \
-      !( defined( __LCC__ ) || defined( __POCC__ ) || defined( __XCC__ ) ) )
+    ( defined( _MSC_VER ) )
    /* TODO: add other C compilers which does not support [u]intmax_t
     *       definitions (check C compiler version number).
     *       If compiler supports stdint.h then it should be added
@@ -168,10 +167,8 @@
          defined( __WATCOMC__ ) || defined( __MINGW32CE__ ) || defined( HB_OS_CYGWIN ) || \
          defined( HB_OS_BEOS ) || defined( HB_OS_SYMBIAN ) || \
          defined( __OpenBSD__ ) || defined( __NetBSD__ ) || defined( __DragonFly__ ) || \
-         defined( __TINYC__ ) || \
          ( defined( __FreeBSD_version ) && __FreeBSD_version < 603000 ) || \
-         defined( HB_OS_ANDROID ) || \
-         ( defined( HB_OS_WIN_CE ) && defined( __POCC__ ) ) || defined( HB_OS_MINIX )
+         defined( HB_OS_ANDROID ) || defined( HB_OS_MINIX )
 #        define _HB_WRAP_MODFL_
 #        define _MODFD( x, p )   _hb_modfl( x, p )
 #     else
@@ -1414,7 +1411,7 @@ int hb_vsnprintf( char * buffer, size_t nSize, const char * format, va_list argl
    #define _HB_SNPRINTF_ADD_EOS
 #elif defined( _MSC_VER ) && _MSC_VER >= 1400
    result = _vsnprintf_s( buffer, nSize, _TRUNCATE, format, arglist );
-#elif ( defined( _MSC_VER ) || defined( __DMC__ ) ) && ! defined( __XCC__ )
+#elif ( defined( _MSC_VER ) || defined( __DMC__ ) )
    result = _vsnprintf( buffer, nSize, format, arglist );
    #define _HB_SNPRINTF_ADD_EOS
 #elif defined( __WATCOMC__ ) && __WATCOMC__ < 1200

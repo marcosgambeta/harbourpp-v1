@@ -61,7 +61,7 @@
     ( defined( __WATCOMC__ ) || defined( _MSC_VER ) || \
       defined( __MINGW32__ ) || defined( __BORLANDC__ ) || \
       defined( __DMC__ ) ) && \
-    ! defined( __MINGW32CE__ ) && ! defined( __POCC__ ) && ! defined( __XCC__ )
+    ! defined( __MINGW32CE__ )
    #define HB_USE_FSOPEN
    #include <share.h>
    #if ! defined( SH_DENYNO ) && defined( _SH_DENYNO )
@@ -75,7 +75,7 @@ FILE * hb_fopen( const char * path, const char * mode )
 {
    FILE * file;
 
-#if defined( HB_OS_WIN ) && defined( UNICODE ) && ! defined( __XCC__ )
+#if defined( HB_OS_WIN ) && defined( UNICODE )
    LPCTSTR lpPath, lpMode;
    LPTSTR lpFreeP, lpFreeM;
 
@@ -119,28 +119,3 @@ FILE * hb_fopen( const char * path, const char * mode )
 
    return file;
 }
-
-#if defined( __XCC__ )
-#include "hb_io.h"
-int __cdecl _wopen( const wchar_t * path, int flags, int mode )
-{
-   char * pszPath = hb_osStrU16Decode( path );
-   int iResult;
-
-   iResult = _open( pszPath, flags, mode );
-   hb_xfree( pszPath );
-
-   return iResult;
-}
-
-int __cdecl _wsystem( const wchar_t * cmd )
-{
-   char * pszCmd = hb_osStrU16Decode( cmd );
-   int iResult;
-
-   iResult = system( pszCmd );
-   hb_xfree( pszCmd );
-
-   return iResult;
-}
-#endif

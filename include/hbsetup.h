@@ -571,7 +571,6 @@
 #  endif
 #  if ( ( __GNUC__ > 4 ) || ( __GNUC__ == 4 && __GNUC_MINOR__ >= 1 ) ) && \
       ! defined( __ICC ) && ! defined( __clang__ ) && \
-      ! defined( __PCC__ ) && \
       ! defined( HB_OS_ANDROID ) && \
       ! defined( HB_NO_FLATTEN )
    #define HB_FLATTEN_ATTR \
@@ -610,9 +609,7 @@
 
 #if defined( __GNUC__ ) || defined( __SUNPRO_C )
    #define _HB_INLINE_  __inline__
-#elif defined( __BORLANDC__ ) || defined( _MSC_VER ) || \
-      defined( __WATCOMC__ ) || defined( __POCC__ ) || defined( __XCC__ ) || \
-      defined( __LCC__ ) || defined( __DMC__ )
+#elif defined( __BORLANDC__ ) || defined( _MSC_VER ) || defined( __WATCOMC__ ) || defined( __DMC__ )
    #define _HB_INLINE_  __inline
 #else /* __cplusplus */
    #define _HB_INLINE_  inline
@@ -621,8 +618,7 @@
 #if defined( __GNUC__ ) && \
     ( ( __GNUC__ > 3 ) || ( ( __GNUC__ == 3 ) && ( __GNUC_MINOR__ >= 2 ) ) )
    #define HB_FORCEINLINE     __inline__ __attribute__((always_inline))
-#elif ( defined( _MSC_VER ) && ( _MSC_VER >= 1200 ) ) || \
-      ( defined( __POCC__ ) && ( __POCC__ >= 300 ) )
+#elif ( defined( _MSC_VER ) && ( _MSC_VER >= 1200 ) )
    #define HB_FORCEINLINE     __forceinline
 #elif defined( FORCEINLINE )
    #define HB_FORCEINLINE     FORCEINLINE

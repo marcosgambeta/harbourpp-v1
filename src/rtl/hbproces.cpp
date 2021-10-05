@@ -507,7 +507,7 @@ static int hb_fsProcessExec( const char * pszFileName, HB_FHANDLE hStdin, HB_FHA
       }
    }
 #else
-#  if defined( _MSC_VER ) || defined( __LCC__ ) || defined( __XCC__ ) || defined( __POCC__ )
+#  if defined( _MSC_VER )
       iResult = _spawnvp( _P_WAIT, argv[ 0 ], argv );
 #  elif defined( __MINGW32__ ) || defined( __WATCOMC__ )
       iResult = spawnvp( P_WAIT, argv[ 0 ], static_cast< const char * const * >( argv ) );
@@ -1034,7 +1034,7 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
 
       argv = hb_buildArgs( pszFileName );
 
-#if defined( _MSC_VER ) || defined( __LCC__ ) || defined( __XCC__ ) || defined( __POCC__ )
+#if defined( _MSC_VER )
       pid = _spawnvp( _P_NOWAIT, argv[ 0 ], argv );
 #elif defined( __MINGW32__ ) || defined( __WATCOMC__ )
       pid = spawnvp( P_NOWAIT, argv[ 0 ], static_cast< const char * const * >( argv ) );

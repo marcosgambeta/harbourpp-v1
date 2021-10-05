@@ -108,9 +108,7 @@
    #include <sys/stat.h>
    #include <fcntl.h>
    #include <process.h>
-   #if ! defined( __POCC__ ) && ! defined( __XCC__ )
-      #include <share.h>
-   #endif
+   #include <share.h>
    #include <direct.h>
    #if defined( __BORLANDC__ )
       #include <dir.h>
@@ -171,7 +169,7 @@
    #if defined( HB_OS_WIN_CE )
       #include "hbwince.h"
    #endif
-   #if ! defined( INVALID_SET_FILE_POINTER ) && ( defined( __DMC__ ) || defined( _MSC_VER ) || defined( __LCC__ ) )
+   #if ! defined( INVALID_SET_FILE_POINTER ) && ( defined( __DMC__ ) || defined( _MSC_VER ) )
       #define INVALID_SET_FILE_POINTER ( static_cast< DWORD >( -1 ) )
    #endif
    #if ! defined( INVALID_FILE_ATTRIBUTES )

@@ -53,7 +53,7 @@
 
 #if defined( HB_OS_WIN )
 
-#if defined( HB_OS_WIN_CE ) && ( defined( _MSC_VER ) || defined( __POCC__ ) )
+#if defined( HB_OS_WIN_CE ) && defined( _MSC_VER )
 BOOL WINAPI HB_DLL_ENTRY_POINT( HANDLE hInstance, DWORD fdwReason, PVOID pvReserved )
 #else
 BOOL WINAPI HB_DLL_ENTRY_POINT( HINSTANCE hInstance, DWORD fdwReason, PVOID pvReserved )

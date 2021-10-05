@@ -180,10 +180,7 @@ HB_EXTERN_BEGIN
    typedef CRITICAL_SECTION   HB_RAWCRITICAL_T;
    typedef HANDLE             HB_OSCOND_T;
 
-#  if defined( HB_OS_WIN_CE ) && \
-      ( ( defined( __MINGW32CE__ ) && ! defined( __MSVCRT__ ) ) || \
-          defined( __POCC__ ) ) || \
-        ( defined( _MSC_VER ) && ( _MSC_VER <= 1500 ) )
+#  if defined( HB_OS_WIN_CE ) && ( ( defined( __MINGW32CE__ ) && ! defined( __MSVCRT__ ) ) ) || ( defined( _MSC_VER ) && ( _MSC_VER <= 1500 ) )
 #     define HB_THREAD_RAWWINAPI
 #  endif
 
@@ -447,7 +444,7 @@ extern HB_BOOL hb_threadMutexSyncWait( PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, P
    /* enable native compiler TLS support by default for this compilers
     * which are known that it will work correctly
     */
-#  if ( defined( _MSC_VER ) && ( _MSC_VER > 1500 ) ) && ! defined( __POCC__ ) && ! defined( __XCC__ )
+#  if ( defined( _MSC_VER ) && ( _MSC_VER > 1500 ) )
 #     define HB_USE_TLS
 #  elif defined( __GNUC__ ) && __GNUC__ >= 3 && \
         defined( __GLIBC__ ) && defined( __GLIBC_MINOR__ ) && \

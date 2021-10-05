@@ -292,7 +292,7 @@ static int     s_iWine     = 0;
 
 #if ! defined( HB_OS_WIN_CE )
 
-#if ( defined( _MSC_VER ) && _MSC_VER < 1300 ) && ! defined( __POCC__ )
+#if ( defined( _MSC_VER ) && _MSC_VER < 1300 )
 
    typedef struct _OSVERSIONINFOEXW
    {
@@ -970,27 +970,6 @@ char * hb_verCompiler( void )
    iVerMinor = iVerMajor % 100;
    iVerPatch = 0;
 
-#elif defined( __POCC__ )
-
-   pszName = "Pelles ISO C Compiler";
-   iVerMajor = __POCC__ / 100;
-   iVerMinor = __POCC__ % 100;
-   iVerPatch = 0;
-
-#elif defined( __XCC__ )
-
-   pszName = "Pelles ISO C Compiler (XCC)";
-   iVerMajor = __XCC__ / 100;
-   iVerMinor = __XCC__ % 100;
-   iVerPatch = 0;
-
-#elif defined( __LCC__ )
-
-   pszName = "Logiciels/Informatique lcc-win32";
-   iVerMajor = 0 /* __LCC__ / 100 */;
-   iVerMinor = 0 /* __LCC__ % 100 */;
-   iVerPatch = 0;
-
 #elif defined( __DMC__ )
 
    pszName = __DMC_VERSION_STRING__;
@@ -1198,27 +1177,6 @@ char * hb_verCompiler( void )
    iVerPatch = ( __VERSION_NUMBER__ / 10 ) % 10;
    iVerMicro = __VERSION_NUMBER__ % 10;
    iElements = 4;
-
-#elif defined( __TINYC__ )
-
-   pszName = "Tiny C Compiler";
-
-   iVerMajor = __TINYC__ / 100;
-   iVerMinor = ( __TINYC__ % 100 ) / 10;
-   iVerPatch = ( __TINYC__ % 100 ) % 10;
-
-#elif defined( __PCC__ )
-
-   pszName = "Portable C Compiler";
-
-   iVerMajor = __PCC__;
-   iVerMinor = __PCC_MINOR__;
-   iVerPatch = __PCC_MINORMINOR__;
-
-   #if defined( __GNUC__ )
-      hb_snprintf( szSub, sizeof( szSub ), " (GCC %d.%d.%d emul.)",
-                   __GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__ );
-   #endif
 
 #elif defined( __GNUC__ )
 

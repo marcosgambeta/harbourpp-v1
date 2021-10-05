@@ -52,12 +52,6 @@
 #if defined( HB_OS_WIN_CE )
    /* For Arc() */
    #include "hbwince.h"
-
-   #if defined( __POCC__ )
-      #ifndef FONTENUMPROC
-      #define FONTENUMPROC  FONTENUMPROCW
-      #endif
-   #endif
 #else
    #include <winspool.h>
 #endif

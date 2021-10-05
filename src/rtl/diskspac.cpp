@@ -109,7 +109,7 @@ HB_FUNC( DISKSPACE )
    }
 #elif defined( HB_OS_WIN )
    {
-#if defined( _MSC_VER ) || defined( __LCC__ ) || ( defined( __GNUC__ ) && ! defined( __RSXNT__ ) )
+#if defined( _MSC_VER ) || ( defined( __GNUC__ ) && ! defined( __RSXNT__ ) )
 
 #  define HB_GET_LARGE_UINT( v )  ( static_cast< double >( (v).LowPart ) + static_cast< double >( (v).HighPart ) * ( ( static_cast< double >( 0xFFFFFFFF ) ) + 1 ) )
 

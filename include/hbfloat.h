@@ -62,10 +62,6 @@
 #  define __C99FEATURES__
 #endif
 
-#if defined( __TINYC__ )
-   #define __NO_ISOCEXT
-#endif
-
 #include "hbapi.h"
 
 #if defined( __DJGPP__ )
@@ -190,14 +186,13 @@
 #else
 
 #  if defined( __RSXNT__ ) || defined( __EMX__ ) || \
-      defined( __XCC__ ) || defined( __POCC__ ) || \
       defined( __MINGW32__ ) || defined( HB_OS_HPUX ) || defined( HB_OS_MINIX )
 #     define hb_isfinite( d )       isfinite( d )
 #  elif defined( _MSC_VER )
 #     define hb_isfinite( d )       _finite( ( double ) d )
 #  elif defined( __BORLANDC__ ) || defined( __WATCOMC__ )
 #     define hb_isfinite( d )       _finite( d )
-#  elif defined( __GNUC__ ) || defined( __DJGPP__ ) || defined( __LCC__ ) || \
+#  elif defined( __GNUC__ ) || defined( __DJGPP__ ) || \
       defined( HB_OS_SUNOS )
 #     define hb_isfinite( d )       finite( d )
 #  endif
@@ -218,14 +213,6 @@
 
 #if ! defined( HB_NUMTYPEL )
 #  define HB_NUMTYPEL( v, d ) HB_NUMTYPE( v, d )
-#endif
-
-
-/* NOTE: Workaround for Pelles C 5.00 not having an 'inf' (HUGE_VAL)
-         in '-Tarm-coff' mode. [vszakats] */
-#if defined( __POCC__ ) && defined( HB_OS_WIN_CE )
-   #undef HUGE_VAL
-   #define HUGE_VAL   ( 1.0 / ( 1.0, 0.0 ) )
 #endif
 
 #endif /* HB_FLOAT_H_ */

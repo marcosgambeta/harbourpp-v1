@@ -158,10 +158,6 @@
 #     pragma warn -prc
 #     pragma warn -rch
 #     pragma warn -inl
-#  elif defined( HB_OS_WIN_CE ) && defined( __POCC__ )
-#     define ABORT  TerminateProcess( GetCurrentProcess(), 0 )
-#  elif defined( __POCC__ ) && ! defined( InterlockedCompareExchangePointer )
-#     define InterlockedCompareExchangePointer
 #  elif defined( __WATCOMC__ )
 #     if defined( __cplusplus )
 #        pragma warning 13 9

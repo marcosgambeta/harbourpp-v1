@@ -53,8 +53,7 @@
 #ifndef HB_OLE_H_
 #define HB_OLE_H_
 
-#if defined( _MSC_VER ) && ! defined( HB_OS_WIN_64 ) && \
-   ! defined( __LCC__ ) && ! defined( __POCC__ ) && ! defined( __XCC__ )
+#if defined( _MSC_VER ) && ! defined( HB_OS_WIN_64 )
 
 #ifndef CINTERFACE
 #define CINTERFACE              1

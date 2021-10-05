@@ -787,7 +787,7 @@ STDAPI DllRegisterServer( void )
    return hr;
 }
 
-#if defined( HB_OS_WIN_CE ) && ( defined( _MSC_VER ) || defined( __POCC__ ) )
+#if defined( HB_OS_WIN_CE ) && defined( _MSC_VER )
 BOOL WINAPI DllMain( HANDLE hInstance, DWORD dwReason, PVOID pvReserved )
 #else
 BOOL WINAPI DllMain( HINSTANCE hInstance, DWORD dwReason, PVOID pvReserved )

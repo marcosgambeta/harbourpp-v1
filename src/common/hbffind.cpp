@@ -687,15 +687,8 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
                ffind->size = 0;
             else
             {
-#if defined( __XCC__ ) || ( defined( __POCC__ ) && __POCC__ >= 500 )
-               /* NOTE: Pelles C 5.00.1 will go into an infinite loop if we don't
-                        split this into two operations. [vszakats] */
-               ffind->size  = static_cast< HB_FOFFSET >( info->pFindFileData.nFileSizeLow );
-               ffind->size += static_cast< HB_FOFFSET >( info->pFindFileData.nFileSizeHigh ) << 32;
-#else
                ffind->size = static_cast< HB_FOFFSET >( info->pFindFileData.nFileSizeLow ) +
                            ( static_cast< HB_FOFFSET >( info->pFindFileData.nFileSizeHigh ) << 32 );
-#endif
             }
 
             raw_attr = ( HB_FATTR ) info->pFindFileData.dwFileAttributes;

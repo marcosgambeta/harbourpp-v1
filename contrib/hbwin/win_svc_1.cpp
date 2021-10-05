@@ -51,10 +51,6 @@
 
 #if ! defined( HB_OS_WIN_CE )
 
-#if defined( __POCC__ ) || defined( __XCC__ )
-   #include <winsvc.h>   /* it's disabled by WIN32_LEAN_AND_MEAN */
-#endif
-
 static SERVICE_STATUS        s_ServiceStatus;
 static SERVICE_STATUS_HANDLE s_hStatus;
 static PHB_ITEM              s_pHarbourEntryFunc = nullptr;
