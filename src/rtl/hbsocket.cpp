@@ -3445,7 +3445,7 @@ HB_BOOL hb_socketResolveInetAddr( void ** pSockAddr, unsigned * puiLen, const ch
          if( static_cast< int >( res->ai_addrlen ) >= static_cast< int >( sizeof( struct sockaddr_in ) ) &&
              hb_socketGetAddrFamily( res->ai_addr, static_cast< unsigned >( res->ai_addrlen ) ) == AF_INET )
          {
-            sa.sin_addr.s_addr = ( static_cast< struct sockaddr_in * >( res->ai_addr ) )->sin_addr.s_addr;
+            sa.sin_addr.s_addr = ( reinterpret_cast< struct sockaddr_in * >( res->ai_addr ) )->sin_addr.s_addr;
             fTrans = HB_TRUE;
          }
          freeaddrinfo( res );
