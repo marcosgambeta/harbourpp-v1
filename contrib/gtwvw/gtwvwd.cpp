@@ -6917,7 +6917,7 @@ IPicture * hb_gt_wvwLoadPicture( const char * image )
             {
                CreateStreamOnHGlobal( hGlobal, TRUE, &iStream );
 
-               OleLoadPicture( iStream, nFileSize, TRUE, static_cast< REFIID >( IID_IPicture ), &iPicture ); /* &IID_IPicture -> IID_IPicture */
+               OleLoadPicture( iStream, nFileSize, TRUE, IID_IPicture, reinterpret_cast< LPVOID * >( &iPicture ) ); /* &IID_IPicture -> IID_IPicture */
 
             }
             GlobalFree( hGlobal );

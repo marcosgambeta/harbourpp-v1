@@ -93,7 +93,9 @@
 #include "hbstack.h"
 #include "hbwinuni.h"
 
+#if 0
 #include "hbole.h"
+#endif
 
 #include <windows.h>
 #include <stdlib.h>
