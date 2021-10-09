@@ -250,7 +250,7 @@ static HB_ERRCODE odbcConnect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
 
          if( SQL_SUCCEEDED( SQLDriverConnect( hConnect,
                                               nullptr,
-                                              ( SQLTCHAR * ) HB_UNCONST( pchConStr ),
+                                              ( SQLTCHAR * ) const_cast< O_HB_CHAR *>( pchConStr ),
                                               ( SQLSMALLINT ) nConnLen,
                                               cBuffer,
                                               HB_SIZEOFARRAY( cBuffer ),
@@ -341,7 +341,7 @@ static HB_ERRCODE odbcExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
 
    pchStatement = O_HB_ITEMGETSTR( pItem, &hStatement, &nStatementLen );
    result = SQLExecDirect( hStmt,
-                           ( SQLTCHAR * ) HB_UNCONST( pchStatement ),
+                           ( SQLTCHAR * ) const_cast< O_HB_CHAR *>( pchStatement ),
                            ( SQLINTEGER ) nStatementLen );
    hb_strfree( hStatement );
 
@@ -404,7 +404,7 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
 
    pchQuery = O_HB_CHARDUP( pArea->szQuery );
    result = SQLExecDirect( hStmt,
-                           ( SQLTCHAR * ) HB_UNCONST( pchQuery ),
+                           ( SQLTCHAR * ) const_cast< O_HB_CHAR *>( pchQuery ),
                            ( SQLINTEGER ) O_HB_STRLEN( pchQuery ) );
    hb_xfree( pchQuery );
 

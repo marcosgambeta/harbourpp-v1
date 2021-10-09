@@ -4423,7 +4423,7 @@ static void hb_gt_xwc_SetSelection( PXWND_DEF wnd, const char * szData, HB_SIZE 
          wnd->ClipboardData[ nSize ] = '\0';
       }
       else
-         wnd->ClipboardData = ( unsigned char * ) HB_UNCONST( szData );
+         wnd->ClipboardData = ( unsigned char * ) const_cast< char * >( szData );
 
       XSetSelectionOwner( wnd->dpy, s_atomPrimary, wnd->window, wnd->ClipboardTime );
       if( XGetSelectionOwner( wnd->dpy, s_atomPrimary ) == wnd->window )

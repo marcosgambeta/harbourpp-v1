@@ -1181,7 +1181,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
 
    /* Test key expression */
    bValidExpr = 0;
-   AdsIsExprValid( pArea->adsarea.hTable, static_cast< UNSIGNED8 * >( HB_UNCONST( hb_itemGetCPtr( pOrderInfo->abExpr ) ) ), &bValidExpr );
+   AdsIsExprValid( pArea->adsarea.hTable, static_cast< UNSIGNED8 * >( const_cast< char *>( hb_itemGetCPtr( pOrderInfo->abExpr ) ) ), &bValidExpr );
    bKeyADS = bValidExpr;
 
    if( pArea->adsarea.area.lpdbOrdCondInfo )

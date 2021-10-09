@@ -642,7 +642,7 @@ HB_FUNC( BIO_NEW_MEM_BUF )
       HB_SIZE nLen;
       const char * pszBuffer = hb_itemGetCRef( pBuffer, &hStrRef, &nLen );
 
-      hb_BIO_ret( BIO_new_mem_buf( HB_UNCONST( pszBuffer ), static_cast< int >( nLen ) ), hStrRef );
+      hb_BIO_ret( BIO_new_mem_buf( const_cast< char * >( pszBuffer ), static_cast< int >( nLen ) ), hStrRef );
    }
    else
    {
@@ -780,7 +780,7 @@ HB_FUNC( BIO_NEW_CONNECT )
       hb_BIO_ret( BIO_new_connect( hb_parc( 1 ) ), nullptr );
 #else
       /* NOTE: Discarding 'const', OpenSSL will strdup() */
-      hb_BIO_ret( BIO_new_connect( static_cast< char * >( HB_UNCONST( hb_parc( 1 ) ) ) ), nullptr );
+      hb_BIO_ret( BIO_new_connect( const_cast< char * >( hb_parc( 1 ) ) ), nullptr );
 #endif
    }
    else
@@ -797,7 +797,7 @@ HB_FUNC( BIO_NEW_ACCEPT )
       hb_BIO_ret( BIO_new_accept( hb_parc( 1 ) ), nullptr );
 #else
       /* NOTE: Discarding 'const', OpenSSL will strdup() */
-      hb_BIO_ret( BIO_new_accept( static_cast< char * >( HB_UNCONST( hb_parc( 1 ) ) ) ), nullptr );
+      hb_BIO_ret( BIO_new_accept( const_cast< char * >( hb_parc( 1 ) ) ), nullptr );
 #endif
    }
    else
@@ -812,7 +812,7 @@ HB_FUNC( BIO_SET_CONN_HOSTNAME )
 
    if( bio && HB_ISCHAR( 2 ) )
    {
-      hb_retnl( BIO_set_conn_hostname( bio, HB_UNCONST( hb_parc( 2 ) ) ) );
+      hb_retnl( BIO_set_conn_hostname( bio, const_cast< char * >( hb_parc( 2 ) ) ) );
    }
    else
    {
@@ -826,7 +826,7 @@ HB_FUNC( BIO_SET_CONN_PORT )
 
    if( bio && HB_ISCHAR( 2 ) )
    {
-      hb_retnl( BIO_set_conn_port( bio, HB_UNCONST( hb_parc( 2 ) ) ) );
+      hb_retnl( BIO_set_conn_port( bio, const_cast< char * >( hb_parc( 2 ) ) ) );
    }
    else
    {
@@ -861,7 +861,7 @@ HB_FUNC( BIO_SET_CONN_IP )
 #else
       if( hb_parclen( 2 ) == 4 )
       {
-         hb_retnl( BIO_set_conn_ip( bio, HB_UNCONST( hb_parc( 2 ) ) ) );
+         hb_retnl( BIO_set_conn_ip( bio, const_cast< char * >( hb_parc( 2 ) ) ) );
       }
       else
       {

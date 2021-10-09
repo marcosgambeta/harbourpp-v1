@@ -5149,7 +5149,7 @@ HB_FHANDLE hb_fsExtOpen( const char * pszFileName, const char * pDefExt, HB_FATT
 
    if( nExFlags & FXO_COPYNAME && hFile != FS_ERROR )
    {
-      hb_strncpy( static_cast< char * >( HB_UNCONST( pszFileName ) ), szPath, HB_PATH_MAX - 1 );
+      hb_strncpy( const_cast< char * >( pszFileName ), szPath, HB_PATH_MAX - 1 );
    }
 
    if( szFree )
@@ -5259,7 +5259,7 @@ const char * hb_fsNameConv( const char * pszFileName, char ** pszFree )
 
       if( cDirSep != HB_OS_PATH_DELIM_CHR )
       {
-         char * p = static_cast< char * >( HB_UNCONST( pszFileName ) );
+         char * p = const_cast< char * >( pszFileName );
          while( *p )
          {
             if( *p == cDirSep )
@@ -5328,7 +5328,7 @@ const char * hb_fsNameConv( const char * pszFileName, char ** pszFree )
          }
       }
 
-      hb_fsFNameMerge( static_cast< char * >( HB_UNCONST( pszFileName ) ), pFileName );
+      hb_fsFNameMerge( const_cast< char * >( pszFileName ), pFileName );
       hb_xfree( pFileName );
       if( pszPath )
       {
@@ -5350,7 +5350,7 @@ const char * hb_fsNameConv( const char * pszFileName, char ** pszFree )
          pszFileName = hb_osEncodeCP( pszFileName, pszFree, &nLen );
          if( pszFree == nullptr && pszFileName != pszPrev )
          {
-            hb_strncpy( static_cast< char * >( HB_UNCONST( pszPrev ) ), pszFileName, HB_PATH_MAX - 1 );
+            hb_strncpy( const_cast< char * >( pszPrev ), pszFileName, HB_PATH_MAX - 1 );
             hb_xfree( HB_UNCONST( pszFileName ) );
             pszFileName = pszPrev;
          }

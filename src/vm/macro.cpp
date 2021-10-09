@@ -273,7 +273,7 @@ static char * hb_macroTextSubst( const char * szString, HB_SIZE * pnStringLen )
    pHead = static_cast< char * >( const_cast< void * >( memchr( szString, '&', *pnStringLen ) ) );
    if( pHead == nullptr )
    {
-      return static_cast< char * >( HB_UNCONST( szString ) );  /* no more processing is required */
+      return const_cast< char * >( szString );  /* no more processing is required */
    }
 
    /* initial length of the string and the result buffer (it can contain null bytes) */
@@ -721,7 +721,7 @@ char * hb_macroExpandString( const char * szString, HB_SIZE nLength, HB_BOOL * p
    }
    else
    {
-      szResultString = static_cast< char * >( HB_UNCONST( szString ) );
+      szResultString = const_cast< char * >( szString );
    }
    *pfNewString = ( szString != szResultString );
    return szResultString;

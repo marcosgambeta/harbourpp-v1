@@ -1309,7 +1309,7 @@ static char * tiGetS( const char * capname )
 {
    char * ptr;
 
-   ptr = tigetstr( static_cast< char * >( HB_UNCONST( capname ) ) );
+   ptr = tigetstr( const_cast< char * >( capname ) );
    if( ptr )
    {
       if( ptr == static_cast< char * >( -1 ) )

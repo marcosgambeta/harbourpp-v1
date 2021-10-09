@@ -133,7 +133,7 @@ static void hb_PEM_read_bio( PEM_READ_BIO * func, HB_PEM_TYPES type )
       else
       {
          cb = nullptr;
-         cargo = HB_UNCONST( hb_parc( 2 ) );  /* NOTE: Discarding 'const' qualifier, OpenSSL will memcpy() it */
+         cargo = const_cast< char * >( hb_parc( 2 ) );  /* NOTE: Discarding 'const' qualifier, OpenSSL will memcpy() it */
       }
 
       result = ( *func )( bio, nullptr, cb, cargo );

@@ -239,7 +239,7 @@ static long s_sockexWrite( PHB_SOCKEX pSock, const void * data, long len, HB_MAX
    {
       long lWritten = 0;
 
-      pZ->z_write.next_in  = static_cast< Bytef * >( HB_UNCONST( data ) );
+      pZ->z_write.next_in  = static_cast< Bytef * >( const_cast< void *>( data ) );
       pZ->z_write.avail_in = static_cast< uInt >( len );
 
       while( pZ->z_write.avail_in )

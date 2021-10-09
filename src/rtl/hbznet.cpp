@@ -445,7 +445,7 @@ long hb_znetWrite( PHB_ZNETSTREAM pStream, HB_SOCKET sd, const void * buffer, lo
 {
    long snd = 0;
 
-   pStream->wr.next_in = static_cast< Bytef * >( HB_UNCONST( buffer ) );
+   pStream->wr.next_in = static_cast< Bytef * >( const_cast< void *>( buffer ) );
    pStream->wr.avail_in = static_cast< uInt >( len );
    pStream->err = Z_OK;
 

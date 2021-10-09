@@ -231,7 +231,7 @@ HB_WCHAR * hb_wstrunshare( void ** phStr, const HB_WCHAR * pStr, HB_SIZE nLen )
       return pszDest;
    }
 
-   return static_cast< HB_WCHAR * >( HB_UNCONST( pStr ) );
+   return const_cast< HB_WCHAR * >( pStr );
 }
 
 char * hb_strunshare( void ** phStr, const char * pStr, HB_SIZE nLen )
@@ -257,7 +257,7 @@ char * hb_strunshare( void ** phStr, const char * pStr, HB_SIZE nLen )
       return pszDest;
    }
 
-   return static_cast< char * >( HB_UNCONST( pStr ) );
+   return const_cast< char * >( pStr );
 }
 
 const char * hb_strnull( const char * str )

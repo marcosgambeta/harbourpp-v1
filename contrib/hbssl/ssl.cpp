@@ -1023,7 +1023,7 @@ HB_FUNC( SSL_SET_TLSEXT_HOST_NAME )
 
       if( ssl )
       {
-         hb_retni( SSL_set_tlsext_host_name( ssl, HB_UNCONST( hb_parc( 2 ) ) ) );
+         hb_retni( SSL_set_tlsext_host_name( ssl, const_cast< char * >( hb_parc( 2 ) ) ) );
       }
 #endif
    }
@@ -1941,7 +1941,7 @@ HB_FUNC( SSL_USE_RSAPRIVATEKEY_ASN1 )
          /* 'const' not used in 2nd param because ssh.h misses it, too.
              Bug reported: #1988 [Fixed in 1.1.0 after submitting patch]
              [vszakats] */
-         hb_retni( SSL_use_RSAPrivateKey_ASN1( ssl, static_cast< unsigned char * >( HB_UNCONST( hb_parc( 2 ) ) ), static_cast< int >( hb_parclen( 2 ) ) ) );
+         hb_retni( SSL_use_RSAPrivateKey_ASN1( ssl, static_cast< unsigned char * >( const_cast< char * >( hb_parc( 2 ) ) ), static_cast< int >( hb_parclen( 2 ) ) ) );
 #endif
       }
    }

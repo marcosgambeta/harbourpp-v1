@@ -272,7 +272,7 @@ PHB_ITEM hb_itemPutC( PHB_ITEM pItem, const char * szText )
    }
 
    pItem->type = HB_IT_STRING;
-   pItem->item.asString.value     = static_cast< char * >( HB_UNCONST( szText ) );
+   pItem->item.asString.value     = const_cast< char * >( szText );
    pItem->item.asString.length    = nLen;
    pItem->item.asString.allocated = nAlloc;
 
@@ -376,7 +376,7 @@ PHB_ITEM hb_itemPutCLConst( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
    }
    else if( szText[ nLen ] == '\0' )
    {
-      pItem->item.asString.value = static_cast< char * >( HB_UNCONST( szText ) );
+      pItem->item.asString.value = const_cast< char * >( szText );
    }
    else
    {
@@ -3255,7 +3255,7 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
    {
       case HB_IT_STRING:
       case HB_IT_MEMO:
-         buffer = static_cast< char * >( HB_UNCONST( hb_itemGetCPtr( pItem ) ) );
+         buffer = const_cast< char * >( hb_itemGetCPtr( pItem ) );
          * nLen = hb_itemGetCLen( pItem );
          * bFreeReq = HB_FALSE;
          break;

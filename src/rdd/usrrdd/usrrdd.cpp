@@ -1522,7 +1522,7 @@ static HB_ERRCODE hb_usrGetRec( AREAP pArea, HB_BYTE ** pBuffer )
    pItem = hb_stackItemFromBase( nOffset );
    if( HB_IS_STRING( pItem ) )
    {
-      *pBuffer = static_cast< HB_BYTE * >( HB_UNCONST( hb_itemGetCPtr( pItem ) ) );
+      *pBuffer = reinterpret_cast< HB_BYTE * >( const_cast< char *>( hb_itemGetCPtr( pItem ) ) );
    }
    else
    {

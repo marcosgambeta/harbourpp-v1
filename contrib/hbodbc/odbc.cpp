@@ -1107,7 +1107,7 @@ HB_FUNC( SQLSETCONNECTATTR )  /* hDbc, nOption, uOption */
 #if ODBCVER >= 0x0300
       hb_retni( SQLSetConnectAttr( hDbc,
                                    static_cast< SQLINTEGER >( hb_parnl( 2 ) ),
-                                   HB_ISCHAR( 3 ) ? static_cast< SQLPOINTER >( HB_UNCONST( hb_parc( 3 ) ) ) :
+                                   HB_ISCHAR( 3 ) ? static_cast< SQLPOINTER >( const_cast< char *>( hb_parc( 3 ) ) ) :
                                                     reinterpret_cast< SQLPOINTER >( static_cast< HB_PTRUINT >( hb_parnint( 3 ) ) ),
                                    HB_ISCHAR( 3 ) ? static_cast< SQLINTEGER >( hb_parclen( 3 ) ) :
                                                     static_cast< SQLINTEGER >( SQL_IS_INTEGER ) ) );
@@ -1133,7 +1133,7 @@ HB_FUNC( SQLSETSTMTATTR )  /* hStmt, nOption, uOption --> nRetCode */
 #if ODBCVER >= 0x0300
       hb_retni( SQLSetStmtAttr( hStmt,
                                 static_cast< SQLINTEGER >( hb_parnl( 2 ) ),
-                                HB_ISCHAR( 3 ) ? static_cast< SQLPOINTER >( HB_UNCONST( hb_parc( 3 ) ) ) :
+                                HB_ISCHAR( 3 ) ? static_cast< SQLPOINTER >( const_cast< char *>( hb_parc( 3 ) ) ) :
                                                  reinterpret_cast< SQLPOINTER >( static_cast< HB_PTRUINT >( hb_parnint( 3 ) ) ),
                                 HB_ISCHAR( 3 ) ? static_cast< SQLINTEGER >( hb_parclen( 3 ) ) :
                                                  static_cast< SQLINTEGER >( SQL_IS_INTEGER ) ) );

@@ -2585,7 +2585,7 @@ const char * hb_cdpnDup3( const char * pSrc, HB_SIZE nSrc, char * pDst, HB_SIZE 
          pDst = *pFree;
          if( pDst == nullptr && *pnSize > 0 )
          {
-            pDst = static_cast< char * >( HB_UNCONST( pSrc ) );
+            pDst = const_cast< char * >( pSrc );
          }
       }
 

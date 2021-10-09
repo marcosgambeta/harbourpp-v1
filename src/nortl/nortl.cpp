@@ -521,7 +521,7 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
 
       if( s_cDirSep != HB_OS_PATH_DELIM_CHR )
       {
-         char * p = static_cast< char * >( HB_UNCONST( szFileName ) );
+         char * p = const_cast< char * >(  szFileName );
          while( *p )
          {
             if( *p == s_cDirSep )
@@ -588,7 +588,7 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
             hb_strupr( static_cast< char * >( HB_UNCONST( pFileName->szPath ) ) );
       }
 
-      hb_fsFNameMerge( static_cast< char * >( HB_UNCONST( szFileName ) ), pFileName );
+      hb_fsFNameMerge( const_cast< char * >( szFileName ), pFileName );
       hb_xfree( pFileName );
    }
    else if( pszFree )
@@ -613,7 +613,7 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
 
       if( s_cDirSep != HB_OS_PATH_DELIM_CHR )
       {
-         char * p = static_cast< char * >( HB_UNCONST( szFileName ) );
+         char * p = const_cast< char * >( szFileName );
          while( *p )
          {
             if( *p == s_cDirSep )

@@ -1411,7 +1411,7 @@ HB_FUNC( GDIMAGESTRING ) /* void gdImageChar(gdImagePtr im, gdFontPtr font, int 
       int color = hb_parni( 6 );
 
       /* Write string */
-      gdImageString( im, font, x, y, ( unsigned char * ) HB_UNCONST( hb_parc( 5 ) ), color );
+      gdImageString( im, font, x, y, ( unsigned char * ) const_cast< char *>( hb_parc( 5 ) ), color );
    }
    else
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -1436,7 +1436,7 @@ HB_FUNC( GDIMAGESTRINGUP ) /* void gdImageCharUp(gdImagePtr im, gdFontPtr font, 
       int color = hb_parni( 6 );
 
       /* Write string */
-      gdImageStringUp( im, font, x, y, ( unsigned char * ) HB_UNCONST( hb_parc( 5 ) ), color );
+      gdImageStringUp( im, font, x, y, ( unsigned char * ) const_cast< char *>( hb_parc( 5 ) ), color );
    }
    else
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -1516,8 +1516,8 @@ HB_FUNC( GDIMAGESTRINGFTEX )
       }
 
       /* Write string */
-      err = gdImageStringFTEx( im, &aRect[ 0 ], fgcolor, static_cast< char * >( HB_UNCONST( fontname ) ),
-                               ptsize, angle, x, y, static_cast< char * >( HB_UNCONST( string ) ),
+      err = gdImageStringFTEx( im, &aRect[ 0 ], fgcolor, const_cast< char * >( fontname ),
+                               ptsize, angle, x, y, const_cast< char * >( string ),
                                ( flags != 0 ? &extra : nullptr ) );
       if( ! err )
       {
@@ -1563,9 +1563,9 @@ HB_FUNC( GDIMAGESTRINGFTCIRCLE ) /* char *gdImageStringFTCircle(gdImagePtr im, i
 
       /* Write string */
       hb_retc( gdImageStringFTCircle( im, cx, cy, radius, textRadius, fillPortion,
-                                      static_cast< char * >( HB_UNCONST( fontname ) ), points,
-                                      static_cast< char * >( HB_UNCONST( top ) ),
-                                      static_cast< char * >( HB_UNCONST( bottom ) ), fgcolor ) );
+                                      const_cast< char * >( fontname ), points,
+                                      const_cast< char * >( top ),
+                                      const_cast< char * >( bottom ), fgcolor ) );
    }
    else
       hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );

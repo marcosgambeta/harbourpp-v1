@@ -53,7 +53,7 @@ const char * hb_compIdentifierNew( HB_COMP_DECL, const char * szName, int iType 
    }
    else if( iType == HB_IDENT_FREE )
    {
-      hb_xfree( HB_UNCONST( szName ) );
+      hb_xfree( const_cast< char *>( szName ) );
    }
 
    return szIdent;

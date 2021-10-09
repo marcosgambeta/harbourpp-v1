@@ -217,7 +217,7 @@ static PHB_LZSSX_COMPR hb_LZSSxInit( PHB_FILE pInput, const HB_BYTE * pSrcBuf, H
    }
 
    pCompr->pInput      = pInput;
-   pCompr->inBuffer    = static_cast< HB_BYTE * >( HB_UNCONST( pSrcBuf ) );
+   pCompr->inBuffer    = const_cast< HB_BYTE * >( pSrcBuf );
    pCompr->inBuffSize  = nSrcBuf;
    pCompr->inBuffPos   = 0;
    pCompr->inBuffRead  = ( pInput == nullptr ) ? nSrcBuf : 0;

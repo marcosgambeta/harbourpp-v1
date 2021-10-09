@@ -595,7 +595,7 @@ HB_FUNC( EVP_CIPHER_CTX_CTRL )
          /* NOTE: 4th param doesn't have a 'const' qualifier. This is a setter
                   function, so even if we do a copy, what sort of allocation
                   routine to use? [vszakats] */
-         hb_retni( EVP_CIPHER_CTX_ctrl( ctx, hb_parni( 2 ), hb_parni( 3 ), static_cast< void * >( HB_UNCONST( hb_parc( 4 ) ) ) ) );
+         hb_retni( EVP_CIPHER_CTX_ctrl( ctx, hb_parni( 2 ), hb_parni( 3 ), static_cast< void * >( const_cast< char * >( hb_parc( 4 ) ) ) ) );
       }
    }
    else
