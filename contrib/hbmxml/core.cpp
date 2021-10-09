@@ -1629,7 +1629,7 @@ HB_FUNC( MXMLGETCUSTOM )
 
    if( node )
    {
-      PHB_ITEM pItem = static_cast< PHB_ITEM >( HB_UNCONST( mxmlGetCustom( node ) ) );
+      PHB_ITEM pItem = static_cast< PHB_ITEM >( const_cast< void * >( mxmlGetCustom( node ) ) );
 
       if( pItem )
          hb_itemReturn( pItem );

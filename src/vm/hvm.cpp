@@ -7381,7 +7381,7 @@ void hb_vmPushStringPcode( const char * szText, HB_SIZE nLength )
    pItem->type = HB_IT_STRING;
    pItem->item.asString.allocated = 0;
    pItem->item.asString.length = nLength;
-   pItem->item.asString.value = static_cast< char * >( HB_UNCONST( ( nLength <= 1 ? hb_szAscii[ static_cast< unsigned char >( szText[ 0 ] ) ] : szText ) ) );
+   pItem->item.asString.value = const_cast< char * >( ( nLength <= 1 ? hb_szAscii[ static_cast< unsigned char >( szText[ 0 ] ) ] : szText ) );
 }
 
 void hb_vmPushSymbol( PHB_SYMB pSym )

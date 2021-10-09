@@ -547,7 +547,7 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
                ++pFileName->szName;
                --nLen;
             }
-            ( static_cast< char * >( HB_UNCONST( pFileName->szName ) ) )[ nLen ] = '\0';
+            ( const_cast< char * >( pFileName->szName ) )[ nLen ] = '\0';
          }
          if( pFileName->szExtension )
          {
@@ -559,7 +559,7 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
                ++pFileName->szExtension;
                --nLen;
             }
-            ( static_cast< char * >( HB_UNCONST( pFileName->szExtension ) ) )[ nLen ] = '\0';
+            ( const_cast< char * >( pFileName->szExtension ) )[ nLen ] = '\0';
          }
       }
 
@@ -567,25 +567,25 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
       if( s_iFileCase == HB_SET_CASE_LOWER )
       {
          if( pFileName->szName )
-            hb_strlow( static_cast< char * >( HB_UNCONST( pFileName->szName ) ) );
+            hb_strlow( const_cast< char * >( pFileName->szName ) );
          if( pFileName->szExtension )
-            hb_strlow( static_cast< char * >( HB_UNCONST( pFileName->szExtension ) ) );
+            hb_strlow( const_cast< char * >( pFileName->szExtension ) );
       }
       else if( s_iFileCase == HB_SET_CASE_UPPER )
       {
          if( pFileName->szName )
-            hb_strupr( static_cast< char * >( HB_UNCONST( pFileName->szName ) ) );
+            hb_strupr( const_cast< char * >( pFileName->szName ) );
          if( pFileName->szExtension )
-            hb_strupr( static_cast< char * >( HB_UNCONST( pFileName->szExtension ) ) );
+            hb_strupr( const_cast< char * >( pFileName->szExtension ) );
       }
 
       /* DIRCASE */
       if( pFileName->szPath )
       {
          if( s_iDirCase == HB_SET_CASE_LOWER )
-            hb_strlow( static_cast< char * >( HB_UNCONST( pFileName->szPath ) ) );
+            hb_strlow( const_cast< char * >( pFileName->szPath ) );
          else if( s_iDirCase == HB_SET_CASE_UPPER )
-            hb_strupr( static_cast< char * >( HB_UNCONST( pFileName->szPath ) ) );
+            hb_strupr( const_cast< char * >( pFileName->szPath ) );
       }
 
       hb_fsFNameMerge( const_cast< char * >( szFileName ), pFileName );

@@ -359,7 +359,7 @@ char * hb_fsLinkRead( const char * pszFile )
          {
             pszLink[ size ] = '\0';
             /* Convert from OS codepage */
-            pszLink = static_cast< char * >( HB_UNCONST( hb_osDecodeCP( pszLink, nullptr, nullptr ) ) );
+            pszLink = const_cast< char * >( hb_osDecodeCP( pszLink, nullptr, nullptr ) );
          }
 
          if( pszFileFree )

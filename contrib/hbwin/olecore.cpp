@@ -1859,7 +1859,7 @@ static HRESULT GetNamedParams( IDispatch * pDisp, OLECHAR * szMethodName, PHB_IT
       PHB_ITEM pKey = hb_hashGetKeyAt( pHash, nPos );
       if( HB_IS_STRING( pKey ) )
       {
-         pNames[ iArgs + 1 ] = static_cast< HB_WCHAR * >( HB_UNCONST( hb_itemGetStrU16( pKey, HB_CDP_ENDIAN_NATIVE, &phStrings[ iArgs ], nullptr ) ) );
+         pNames[ iArgs + 1 ] = const_cast< HB_WCHAR * >( hb_itemGetStrU16( pKey, HB_CDP_ENDIAN_NATIVE, &phStrings[ iArgs ], nullptr ) );
          if( pNames[ iArgs + 1 ] != nullptr )
          {
             pArgs[ iArgs ] = hb_hashGetValueAt( pHash, nPos );

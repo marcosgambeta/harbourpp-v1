@@ -99,10 +99,10 @@ static void adsSetListener_callback( HB_set_enum setting, HB_set_listener_enum w
       switch( setting )
       {
          case HB_SET_DATEFORMAT:
-            AdsSetDateFormat( static_cast< UNSIGNED8 * >( HB_UNCONST( hb_setGetCPtr( HB_SET_DATEFORMAT ) ) ) );
+            AdsSetDateFormat( static_cast< UNSIGNED8 * >( const_cast< char *>( hb_setGetCPtr( HB_SET_DATEFORMAT ) ) ) );
             break;
          case HB_SET_DEFAULT:
-            AdsSetDefault( static_cast< UNSIGNED8 * >( HB_UNCONST( hb_setGetCPtr( HB_SET_DEFAULT ) ) ) );
+            AdsSetDefault( static_cast< UNSIGNED8 * >( const_cast< char *>( hb_setGetCPtr( HB_SET_DEFAULT ) ) ) );
             break;
          case HB_SET_DELETED:
             AdsShowDeleted( static_cast< UNSIGNED16 >( ! hb_setGetL( HB_SET_DELETED ) ) );
@@ -114,7 +114,7 @@ static void adsSetListener_callback( HB_set_enum setting, HB_set_listener_enum w
             AdsSetExact( static_cast< UNSIGNED16 >( hb_setGetL( HB_SET_EXACT ) ) );
             break;
          case HB_SET_PATH:
-            AdsSetSearchPath( static_cast< UNSIGNED8 * >( HB_UNCONST( hb_setGetCPtr( HB_SET_PATH ) ) ) );
+            AdsSetSearchPath( static_cast< UNSIGNED8 * >( const_cast< char *>( hb_setGetCPtr( HB_SET_PATH ) ) ) );
             break;
          case HB_SET_DECIMALS:
             AdsSetDecimals( static_cast< UNSIGNED16 >( hb_setGetNI( HB_SET_DECIMALS ) ) );
@@ -140,12 +140,12 @@ static void adsSetSend( void )
 {
    HB_TRACE( HB_TR_DEBUG, ( "adsSetSend()" ) );
 
-   AdsSetDateFormat( static_cast< UNSIGNED8 * >( HB_UNCONST( hb_setGetCPtr( HB_SET_DATEFORMAT ) ) ) );
-   AdsSetDefault( static_cast< UNSIGNED8 * >( HB_UNCONST( hb_setGetCPtr( HB_SET_DEFAULT ) ) ) );
+   AdsSetDateFormat( static_cast< UNSIGNED8 * >( const_cast< char *>( hb_setGetCPtr( HB_SET_DATEFORMAT ) ) ) );
+   AdsSetDefault( static_cast< UNSIGNED8 * >( const_cast< char *>( hb_setGetCPtr( HB_SET_DEFAULT ) ) ) );
    AdsShowDeleted( static_cast< UNSIGNED16 >( ! hb_setGetL( HB_SET_DELETED ) ) );
    AdsSetEpoch( static_cast< UNSIGNED16 >( hb_setGetNI( HB_SET_EPOCH ) ) );
    AdsSetExact( static_cast< UNSIGNED16 >( hb_setGetL( HB_SET_EXACT ) ) );
-   AdsSetSearchPath( static_cast< UNSIGNED8 * >( HB_UNCONST( hb_setGetCPtr( HB_SET_PATH ) ) ) );
+   AdsSetSearchPath( static_cast< UNSIGNED8 * >( const_cast< char *>( hb_setGetCPtr( HB_SET_PATH ) ) ) );
    AdsSetDecimals( static_cast< UNSIGNED16 >( hb_setGetNI( HB_SET_DECIMALS ) ) );
 }
 

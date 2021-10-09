@@ -5805,7 +5805,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                }
                if( pFreeImage != nullptr )
                   xImage = XCreateImage( wnd->dpy, DefaultVisual( wnd->dpy, DefaultScreen( wnd->dpy ) ),
-                                         iDepth, ZPixmap, 0, static_cast< char * >( HB_UNCONST( pFreeImage ) ),
+                                         iDepth, ZPixmap, 0, const_cast< char * >( pFreeImage ),
                                          iWidth, iHeight, iPad, 0 );
                HB_XWC_XLIB_UNLOCK( wnd->dpy );
             }

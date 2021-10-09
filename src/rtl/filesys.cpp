@@ -5280,14 +5280,14 @@ const char * hb_fsNameConv( const char * pszFileName, char ** pszFree )
             nLen = strlen( pFileName->szName );
             nLen = hb_strRTrimLen( pFileName->szName, nLen, HB_FALSE );
             pFileName->szName = hb_strLTrim( pFileName->szName, &nLen );
-            ( static_cast< char * >( HB_UNCONST( pFileName->szName ) ) )[ nLen ] = '\0';
+            ( const_cast< char * >( pFileName->szName ) )[ nLen ] = '\0';
          }
          if( pFileName->szExtension )
          {
             nLen = strlen( pFileName->szExtension );
             nLen = hb_strRTrimLen( pFileName->szExtension, nLen, HB_FALSE );
             pFileName->szExtension = hb_strLTrim( pFileName->szExtension, &nLen );
-            ( static_cast< char * >( HB_UNCONST( pFileName->szExtension ) ) )[ nLen ] = '\0';
+            ( const_cast< char * >( pFileName->szExtension ) )[ nLen ] = '\0';
          }
       }
 

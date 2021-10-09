@@ -888,7 +888,7 @@ HB_FUNC( HB_CMDLINE )
          *--ptr = '\0';
 
          /* Convert from OS codepage */
-         hb_retc_buffer( static_cast< char * >( HB_UNCONST( hb_osDecodeCP( pszBuffer, nullptr, nullptr ) ) ) );
+         hb_retc_buffer( const_cast< char * >( hb_osDecodeCP( pszBuffer, nullptr, nullptr ) ) );
       }
    }
    else

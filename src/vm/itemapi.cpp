@@ -289,7 +289,7 @@ PHB_ITEM hb_itemPutCL( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
    if( nLen <= 1 )
    {
       nAlloc = 0;
-      szValue = static_cast< char * >( HB_UNCONST( hb_szAscii[ nLen ? static_cast< unsigned char >( szText[ 0 ] ) : 0 ] ) );
+      szValue = const_cast< char * >( hb_szAscii[ nLen ? static_cast< unsigned char >( szText[ 0 ] ) : 0 ] );
    }
    else
    {
@@ -345,7 +345,7 @@ PHB_ITEM hb_itemPutCConst( PHB_ITEM pItem, const char * szText )
    pItem->type = HB_IT_STRING;
    pItem->item.asString.length = nLen;
    pItem->item.asString.allocated = 0;
-   pItem->item.asString.value = static_cast< char * >( HB_UNCONST( ( nLen > 1 ? szText : hb_szAscii[ nLen ? static_cast< unsigned char >( szText[ 0 ] ) : 0 ] ) ) );
+   pItem->item.asString.value = const_cast< char * >( ( nLen > 1 ? szText : hb_szAscii[ nLen ? static_cast< unsigned char >( szText[ 0 ] ) : 0 ] ) );
 
    return pItem;
 }
@@ -372,7 +372,7 @@ PHB_ITEM hb_itemPutCLConst( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
 
    if( nLen <= 1 )
    {
-      pItem->item.asString.value = static_cast< char * >( HB_UNCONST( hb_szAscii[ nLen ? static_cast< unsigned char >( szText[ 0 ] ) : 0 ] ) );
+      pItem->item.asString.value = const_cast< char * >( hb_szAscii[ nLen ? static_cast< unsigned char >( szText[ 0 ] ) : 0 ] );
    }
    else if( szText[ nLen ] == '\0' )
    {
@@ -411,7 +411,7 @@ PHB_ITEM hb_itemPutCPtr( PHB_ITEM pItem, char * szText )
    if( nLen <= 1 )
    {
       pItem->item.asString.allocated = 0;
-      pItem->item.asString.value = static_cast< char * >( HB_UNCONST( hb_szAscii[ nLen ? static_cast< unsigned char >( szText[ 0 ] ) : 0 ] ) );
+      pItem->item.asString.value = const_cast< char * >( hb_szAscii[ nLen ? static_cast< unsigned char >( szText[ 0 ] ) : 0 ] );
       if( szText )
       {
          hb_xfree( szText );
@@ -447,7 +447,7 @@ PHB_ITEM hb_itemPutCLPtr( PHB_ITEM pItem, char * szText, HB_SIZE nLen )
    if( nLen <= 1 )
    {
       pItem->item.asString.allocated = 0;
-      pItem->item.asString.value = static_cast< char * >( HB_UNCONST( hb_szAscii[ nLen ? static_cast< unsigned char >( szText[ 0 ] ) : 0 ] ) );
+      pItem->item.asString.value = const_cast< char * >( hb_szAscii[ nLen ? static_cast< unsigned char >( szText[ 0 ] ) : 0 ] );
       hb_xfree( szText );
    }
    else
