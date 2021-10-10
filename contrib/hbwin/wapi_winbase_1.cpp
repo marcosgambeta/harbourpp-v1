@@ -332,10 +332,7 @@ HB_FUNC( WAPI_GETLONGPATHNAME )
 
    if( ! s_getPathNameAddr )
    {
-      s_getPathNameAddr =
-         reinterpret_cast< _HB_GETPATHNAME >(
-            HB_WINAPI_GETPROCADDRESST( GetModuleHandle( HB_WINAPI_KERNEL32_DLL() ),
-                                       "GetLongPathName" ) );
+      s_getPathNameAddr = reinterpret_cast< _HB_GETPATHNAME >( HB_WINAPI_GETPROCADDRESST( GetModuleHandle( HB_WINAPI_KERNEL32_DLL() ), "GetLongPathName" ) );
 
       if( ! s_getPathNameAddr )
       {

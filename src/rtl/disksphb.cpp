@@ -113,7 +113,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
             HMODULE hModule = GetModuleHandle( HB_WINAPI_KERNEL32_DLL() );
             if( hModule )
             {
-               s_pGetDiskFreeSpaceEx = ( P_GDFSE ) HB_WINAPI_GETPROCADDRESST( hModule, "GetDiskFreeSpaceEx" );
+               s_pGetDiskFreeSpaceEx = reinterpret_cast< P_GDFSE >( HB_WINAPI_GETPROCADDRESST( hModule, "GetDiskFreeSpaceEx" ) );
             }
             s_fInit = HB_TRUE;
          }

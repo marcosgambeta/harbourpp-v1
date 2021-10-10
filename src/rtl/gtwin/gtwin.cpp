@@ -611,8 +611,8 @@ static HB_BOOL hb_gt_win_SetPalette_Vista( HB_BOOL bSet, COLORREF * colors )
       HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
       if( hModule )
       {
-         s_pGetConsoleScreenBufferInfoEx = ( P_GETCONSOLESCREENBUFFERINFOEX ) HB_WINAPI_GETPROCADDRESS( hModule, "GetConsoleScreenBufferInfoEx" );
-         s_pSetConsoleScreenBufferInfoEx = ( P_SETCONSOLESCREENBUFFERINFOEX ) HB_WINAPI_GETPROCADDRESS( hModule, "SetConsoleScreenBufferInfoEx" );
+         s_pGetConsoleScreenBufferInfoEx = reinterpret_cast< P_GETCONSOLESCREENBUFFERINFOEX >( HB_WINAPI_GETPROCADDRESS( hModule, "GetConsoleScreenBufferInfoEx" ) );
+         s_pSetConsoleScreenBufferInfoEx = reinterpret_cast< P_SETCONSOLESCREENBUFFERINFOEX >( HB_WINAPI_GETPROCADDRESS( hModule, "SetConsoleScreenBufferInfoEx" ) );
       }
       s_fChecked = HB_TRUE;
    }
@@ -706,7 +706,7 @@ static HWND hb_getConsoleWindowHandle( void )
       HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
       if( hModule )
       {
-         s_pGetConsoleWindow = ( P_GETCONSOLEWINDOW ) HB_WINAPI_GETPROCADDRESS( hModule, "GetConsoleWindow" );
+         s_pGetConsoleWindow = reinterpret_cast< P_GETCONSOLEWINDOW >( HB_WINAPI_GETPROCADDRESS( hModule, "GetConsoleWindow" ) );
       }
       s_fChecked = HB_TRUE;
    }
@@ -793,7 +793,7 @@ static HB_BOOL hb_gt_win_SetCloseButton( HB_BOOL bSet, HB_BOOL bClosable )
                HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
                if( hModule )
                {
-                  s_pSetConsoleMenuClose = ( P_SETCONSOLEMENUCLOSE ) HB_WINAPI_GETPROCADDRESS( hModule, "SetConsoleMenuClose" );
+                  s_pSetConsoleMenuClose = reinterpret_cast< P_SETCONSOLEMENUCLOSE >( HB_WINAPI_GETPROCADDRESS( hModule, "SetConsoleMenuClose" ) );
                }
                s_fChecked = HB_TRUE;
             }
@@ -2019,7 +2019,7 @@ static HB_BOOL hb_gt_win_IsFullScreen( void )
 
    if( hModule )
    {
-      pGetConsoleDisplayMode = ( P_GCDM ) HB_WINAPI_GETPROCADDRESS( hModule, "GetConsoleDisplayMode" );
+      pGetConsoleDisplayMode = reinterpret_cast< P_GCDM >( HB_WINAPI_GETPROCADDRESS( hModule, "GetConsoleDisplayMode" ) );
    }
    else
    {
@@ -2048,7 +2048,7 @@ static HB_BOOL hb_gt_win_FullScreen( HB_BOOL bFullScreen )
 
    if( hModule )
    {
-      pSetConsoleDisplayMode = ( P_SCDM ) HB_WINAPI_GETPROCADDRESS( hModule, "SetConsoleDisplayMode" );
+      pSetConsoleDisplayMode = reinterpret_cast< P_SCDM >( HB_WINAPI_GETPROCADDRESS( hModule, "SetConsoleDisplayMode" ) );
    }
    else
    {

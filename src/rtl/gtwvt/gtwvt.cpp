@@ -3589,8 +3589,8 @@ static HB_BOOL hb_gt_wvt_FullScreen( PHB_GT pGT )
 
       if( hModule )
       {
-         pMonitorFromWindow = static_cast< P_MFW >( HB_WINAPI_GETPROCADDRESS( hModule, "MonitorFromWindow" ) );
-         pGetMonitorInfo = static_cast< P_GMI >( HB_WINAPI_GETPROCADDRESS( hModule, "GetMonitorInfo" ) );
+         pMonitorFromWindow = reinterpret_cast< P_MFW >( HB_WINAPI_GETPROCADDRESS( hModule, "MonitorFromWindow" ) );
+         pGetMonitorInfo = reinterpret_cast< P_GMI >( HB_WINAPI_GETPROCADDRESS( hModule, "GetMonitorInfo" ) );
       }
       else
       {
