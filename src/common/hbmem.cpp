@@ -67,8 +67,8 @@ void * hb_xmemcpy( void * pDestArg, const void * pSourceArg, HB_SIZE nLen )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_xmemcpy(%p, %p, %" HB_PFS "u)", pDestArg, pSourceArg, nLen ) );
 
-   pDest = ( HB_BYTE * ) pDestArg;
-   pSource = ( const HB_BYTE * ) pSourceArg;
+   pDest = static_cast< HB_BYTE * >( pDestArg );
+   pSource = static_cast< const HB_BYTE * >( pSourceArg );
    nRemaining = nLen;
 
    while( nRemaining )

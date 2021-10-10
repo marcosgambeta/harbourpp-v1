@@ -69,8 +69,6 @@
    #endif
 #endif
 
-
-
 FILE * hb_fopen( const char * path, const char * mode )
 {
    FILE * file;
@@ -87,16 +85,22 @@ FILE * hb_fopen( const char * path, const char * mode )
       file = _wfsopen( lpPath, lpMode, SH_DENYNO );
    #elif defined( _MSC_VER ) && _MSC_VER >= 1400 && ! defined( _CRT_SECURE_NO_WARNINGS )
       if( _wfopen_s( &file, lpPath, lpMode ) != 0 )
+      {
          file = nullptr;
+      }
    #else
       file = _wfopen( lpPath, lpMode );
    #endif
    hb_vmLock();
 
    if( lpFreeP )
+   {
       hb_xfree( lpFreeP );
+   }
    if( lpFreeM )
+   {
       hb_xfree( lpFreeM );
+   }
 #else
    char * pszFree = nullptr;
 
@@ -107,14 +111,18 @@ FILE * hb_fopen( const char * path, const char * mode )
       file = _fsopen( path, mode, SH_DENYNO );
    #elif defined( _MSC_VER ) && _MSC_VER >= 1400 && ! defined( _CRT_SECURE_NO_WARNINGS )
       if( fopen_s( &file, path, mode ) != 0 )
+      {
          file = nullptr;
+      }
    #else
       file = fopen( path, mode );
    #endif
    hb_vmLock();
 
    if( pszFree )
+   {
       hb_xfree( pszFree );
+   }
 #endif
 
    return file;

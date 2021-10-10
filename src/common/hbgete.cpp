@@ -93,9 +93,13 @@ char * hb_getenv( const char * szName )
 
       szName = hb_osEncodeCP( szName, &pszNameFree, nullptr );
       if( DosScanEnv( ( PCSZ ) szName, &EnvValue ) == NO_ERROR )
+      {
          pszBuffer = hb_osStrDecode( static_cast< char * >( EnvValue ) );
+      }
       if( pszNameFree )
+      {
          hb_xfree( pszNameFree );
+      }
    }
 #else
    {
@@ -104,16 +108,19 @@ char * hb_getenv( const char * szName )
       szName = hb_osEncodeCP( szName, &pszNameFree, nullptr );
       pszTemp = getenv( szName );
       if( pszNameFree )
+      {
          hb_xfree( pszNameFree );
+      }
 
       if( pszTemp != nullptr )
+      {
          pszBuffer = hb_osStrDecode( pszTemp );
+      }
    }
 #endif
 
    return pszBuffer;
 }
-
 
 HB_BOOL hb_getenv_buffer( const char * szName, char * szBuffer, int nSize )
 {
@@ -124,9 +131,13 @@ HB_BOOL hb_getenv_buffer( const char * szName, char * szBuffer, int nSize )
       LPTSTR lpName = HB_CHARDUP( szName ), lpBuffer;
 
       if( szBuffer != nullptr || nSize > 0 )
+      {
          lpBuffer = static_cast< LPTSTR >( hb_xgrab( nSize * sizeof( TCHAR ) ) );
+      }
       else
+      {
          lpBuffer = nullptr;
+      }
 
       fRetVal = GetEnvironmentVariable( lpName, lpBuffer, nSize ) != 0;
 
@@ -147,12 +158,16 @@ HB_BOOL hb_getenv_buffer( const char * szName, char * szBuffer, int nSize )
       char * pszNameFree = nullptr;
 
       szName = hb_osEncodeCP( szName, &pszNameFree, nullptr );
-      fRetVal = DosScanEnv( ( PCSZ ) szName, &EnvValue ) == NO_ERROR;
+      fRetVal = DosScanEnv( static_cast< PCSZ >( szName ), &EnvValue ) == NO_ERROR;
       if( pszNameFree )
+      {
          hb_xfree( pszNameFree );
+      }
 
       if( fRetVal && szBuffer != nullptr && nSize != 0 )
+      {
          hb_osStrDecode2( static_cast< char * >( EnvValue ), szBuffer, nSize - 1 );
+      }
    }
 #else
    {
@@ -161,21 +176,29 @@ HB_BOOL hb_getenv_buffer( const char * szName, char * szBuffer, int nSize )
       szName = hb_osEncodeCP( szName, &pszNameFree, nullptr );
       pszTemp = getenv( szName );
       if( pszNameFree )
+      {
          hb_xfree( pszNameFree );
+      }
 
       if( pszTemp != nullptr )
       {
          fRetVal = HB_TRUE;
          if( szBuffer != nullptr && nSize != 0 )
+         {
             hb_osStrDecode2( pszTemp, szBuffer, nSize - 1 );
+         }
       }
       else
+      {
          fRetVal = HB_FALSE;
+      }
    }
 #endif
 
    if( ! fRetVal && szBuffer != nullptr && nSize != 0 )
+   {
       szBuffer[ 0 ] = '\0';
+   }
 
    return fRetVal;
 }
@@ -186,7 +209,9 @@ HB_BOOL hb_getenv_buffer( const char * szName, char * szBuffer, int nSize )
 HB_BOOL hb_setenv( const char * szName, const char * szValue )
 {
    if( szName == nullptr )
+   {
       return HB_FALSE;
+   }
 
 #if defined( HB_OS_WIN )
    {
@@ -194,7 +219,9 @@ HB_BOOL hb_setenv( const char * szName, const char * szValue )
       LPTSTR lpValue = szValue ? HB_CHARDUP( szValue ) : nullptr;
       HB_BOOL fResult = ( SetEnvironmentVariable( lpName, lpValue ) != 0 );
       if( lpValue )
+      {
          hb_xfree( lpValue );
+      }
       hb_xfree( lpName );
       return fResult;
    }
@@ -216,7 +243,9 @@ HB_BOOL hb_setenv( const char * szName, const char * szValue )
          szValue = hb_osEncodeCP( szValue, &pszValueFree, nullptr );
          fResult = setenv( szName, szValue, 1 ) == 0;
          if( pszValueFree )
+         {
             hb_xfree( pszValueFree );
+         }
       }
       else
       {
@@ -225,9 +254,13 @@ HB_BOOL hb_setenv( const char * szName, const char * szValue )
       defined( __WATCOMC__ )
          szValue = getenv( szName );
          if( szValue && *szValue )
+         {
             fResult = setenv( szName, "", 1 ) == 0;
+         }
          else
+         {
             fResult = HB_TRUE;
+         }
 #  elif defined( __OpenBSD__ ) || defined( HB_OS_QNX ) || \
         ( defined( __FreeBSD_version ) && __FreeBSD_version < 700050 ) || \
         ( defined( HB_OS_DARWIN ) && !( defined( __DARWIN_UNIX03 ) && __DARWIN_UNIX03 ) )
@@ -239,7 +272,9 @@ HB_BOOL hb_setenv( const char * szName, const char * szValue )
       }
 
       if( pszNameFree )
+      {
          hb_xfree( pszNameFree );
+      }
 
       return fResult;
    }

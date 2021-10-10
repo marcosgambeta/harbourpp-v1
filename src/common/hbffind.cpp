@@ -352,7 +352,7 @@ HB_FATTR hb_fsAttrEncode( const char * szAttr )
    char ch;
    HB_FATTR nAttr = 0;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsAttrEncode(%p)", ( const void * ) szAttr ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_fsAttrEncode(%p)", static_cast< const void * >( szAttr ) ) );
 
    while( ( ch = static_cast< char >( HB_TOUPPER( *pos ) ) ) != '\0' )
    {
@@ -382,7 +382,7 @@ char * hb_fsAttrDecode( HB_FATTR nAttr, char * szAttr )
 {
    char * ptr = szAttr;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsAttrDecode(%u, %p)", nAttr, ( void * ) szAttr ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_fsAttrDecode(%u, %p)", nAttr, static_cast< void * >( szAttr ) ) );
 
    /* Using the same order as CA-Cl*pper did: RHSVDA. */
    if( nAttr & HB_FA_READONLY   ) *ptr++ = 'R';
@@ -430,7 +430,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
 #if defined( HB_OS_DOS )
 
    {
-      PHB_FFIND_INFO info = ( PHB_FFIND_INFO ) ffind->info;
+      PHB_FFIND_INFO info = static_cast< PHB_FFIND_INFO >( ffind->info );
 
       /* Handling HB_FA_LABEL doesn't need any special tricks
          under the MS-DOS platform. */
@@ -494,7 +494,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
    {
       #define HB_OS2_DIRCNT   16
 
-      PHB_FFIND_INFO info = ( PHB_FFIND_INFO ) ffind->info;
+      PHB_FFIND_INFO info = static_cast< PHB_FFIND_INFO >( ffind->info );
       APIRET ret = NO_ERROR;
 
       /* TODO: HB_FA_LABEL handling */
@@ -507,19 +507,22 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
 
          info->findSize = sizeof( FILEFINDBUF3L );
          if( info->findSize & 0x07 )
+         {
             info->findSize += 0x08 - ( info->findSize & 0x07 );
+         }
          info->findSize *= HB_OS2_DIRCNT;
          if( info->findSize > 0xF000 )
+         {
             info->findSize = 0xF000;
+         }
          info->findInitCnt = ! info->isWSeB ? info->findSize / 32 : HB_OS2_DIRCNT;
 
          info->hFindFile = HDIR_CREATE;
          info->findCount = info->findInitCnt;
-         ret = DosAllocMem( &info->entry, info->findSize,
-                            PAG_COMMIT | PAG_READ | PAG_WRITE | OBJ_TILE );
+         ret = DosAllocMem( &info->entry, info->findSize, PAG_COMMIT | PAG_READ | PAG_WRITE | OBJ_TILE );
          if( ret == NO_ERROR )
          {
-            ret = DosFindFirst( ( PCSZ ) ffind->pszFileMask,
+            ret = DosFindFirst( static_cast< PCSZ >( ffind->pszFileMask ),
                                 &info->hFindFile,
                                 static_cast< ULONG >( hb_fsAttrToRaw( ffind->attrmask ) ),
                                 info->entry,
@@ -528,7 +531,9 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
                                 FIL_STANDARDL );
             bFound = ret == NO_ERROR && info->findCount > 0;
             if( bFound )
+            {
                info->next = info->entry;
+            }
          }
          else
          {
@@ -539,16 +544,17 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
       else if( info->findCount == 0 )
       {
          info->findCount = info->findInitCnt;
-         ret = DosFindNext( info->hFindFile,
-                            info->entry,
-                            info->findSize,
-                            &info->findCount );
+         ret = DosFindNext( info->hFindFile, info->entry, info->findSize, &info->findCount );
          bFound = ret == NO_ERROR && info->findCount > 0;
          if( bFound )
+         {
             info->next = info->entry;
+         }
       }
       else
+      {
          bFound = HB_TRUE;
+      }
 
       if( bFound )
       {
@@ -556,7 +562,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
 
          if( info->isWSeB )
          {
-            PFILEFINDBUF3L pFFB = ( PFILEFINDBUF3L ) info->next;
+            PFILEFINDBUF3L pFFB = static_cast< PFILEFINDBUF3L >( info->next );
 
             hb_strncpy( ffind->szName, pFFB->achName, sizeof( ffind->szName ) - 1 );
             ffind->size = static_cast< HB_FOFFSET >( pFFB->cbFile );
@@ -574,7 +580,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
          }
          else
          {
-            PFILEFINDBUF3 pFFB = ( PFILEFINDBUF3 ) info->next;
+            PFILEFINDBUF3 pFFB = static_cast< PFILEFINDBUF3 >( info->next );
 
             hb_strncpy( ffind->szName, pFFB->achName, sizeof( ffind->szName ) - 1 );
             ffind->size = static_cast< HB_FOFFSET >( pFFB->cbFile );
@@ -597,16 +603,18 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
             info->findCount--;
          }
          else
+         {
             info->findCount = 0;
+         }
       }
 
-      hb_fsSetError( ( HB_ERRCODE ) ret );
+      hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
    }
 
 #elif defined( HB_OS_WIN )
 
    {
-      PHB_FFIND_INFO info = ( PHB_FFIND_INFO ) ffind->info;
+      PHB_FFIND_INFO info = static_cast< PHB_FFIND_INFO >( ffind->info );
 
       bFound = HB_FALSE;
 
@@ -623,16 +631,18 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
          {
             PHB_FNAME pFileName = hb_fsFNameSplit( ffind->pszFileMask );
             if( pFileName->szName && pFileName->szName[ 0 ] )
+            {
                mask = hb_strdup( pFileName->szName );
+            }
             if( pFileName->szPath && pFileName->szPath[ 0 ] &&
                 ( pFileName->szPath[ 1 ] ||
                   pFileName->szPath[ 0 ] != HB_OS_PATH_DELIM_CHR ) )
+            {
                lpFileMask = HB_CHARDUP( pFileName->szPath );
+            }
             hb_xfree( pFileName );
          }
-         bFound = GetVolumeInformation( lpFileMask, lpVolName,
-                                        HB_SIZEOFARRAY( lpVolName ),
-                                        nullptr, nullptr, nullptr, nullptr, 0 ) != 0;
+         bFound = GetVolumeInformation( lpFileMask, lpVolName, HB_SIZEOFARRAY( lpVolName ), nullptr, nullptr, nullptr, nullptr, 0 ) != 0;
          if( bFound )
          {
             HB_OSSTRDUP2( lpVolName, ffind->szName, sizeof( ffind->szName ) - 1 );
@@ -643,15 +653,17 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
             }
          }
          if( lpFileMask )
+         {
             hb_xfree( lpFileMask );
+         }
          if( mask )
+         {
             hb_xfree( mask );
+         }
       }
 #endif
 
-      if( ! bFound &&
-          ( ffind->attrmask & ( HB_FA_LABEL | HB_FA_HIDDEN | HB_FA_SYSTEM |
-                                HB_FA_DIRECTORY ) ) != HB_FA_LABEL )
+      if( ! bFound && ( ffind->attrmask & ( HB_FA_LABEL | HB_FA_HIDDEN | HB_FA_SYSTEM | HB_FA_DIRECTORY ) ) != HB_FA_LABEL )
       {
          if( ffind->bFirst )
          {
@@ -662,7 +674,9 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
             hb_xfree( lpFileMask );
 
             if( ( info->hFindFile != INVALID_HANDLE_VALUE ) && _HB_WIN_MATCH() )
+            {
                bFound = HB_TRUE;
+            }
          }
 
          if( ! bFound && info->hFindFile != INVALID_HANDLE_VALUE )
@@ -684,14 +698,15 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
             HB_OSSTRDUP2( info->pFindFileData.cFileName, ffind->szName, sizeof( ffind->szName ) - 1 );
 
             if( info->pFindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY )
+            {
                ffind->size = 0;
+            }
             else
             {
-               ffind->size = static_cast< HB_FOFFSET >( info->pFindFileData.nFileSizeLow ) +
-                           ( static_cast< HB_FOFFSET >( info->pFindFileData.nFileSizeHigh ) << 32 );
+               ffind->size = static_cast< HB_FOFFSET >( info->pFindFileData.nFileSizeLow ) + ( static_cast< HB_FOFFSET >( info->pFindFileData.nFileSizeHigh ) << 32 );
             }
 
-            raw_attr = ( HB_FATTR ) info->pFindFileData.dwFileAttributes;
+            raw_attr = static_cast< HB_FATTR >( info->pFindFileData.dwFileAttributes );
 
             /* NOTE: One of these may fail when searching on an UNC path, I
                      don't know yet what's the reason. [vszakats] */
@@ -700,8 +715,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
                FILETIME ft;
                SYSTEMTIME time;
 
-               if( FileTimeToLocalFileTime( &info->pFindFileData.ftLastWriteTime, &ft ) &&
-                   FileTimeToSystemTime( &ft, &time ) )
+               if( FileTimeToLocalFileTime( &info->pFindFileData.ftLastWriteTime, &ft ) && FileTimeToSystemTime( &ft, &time ) )
                {
                   iYear  = time.wYear;
                   iMonth = time.wMonth;
@@ -720,7 +734,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
 #elif defined( HB_OS_UNIX )
 
    {
-      PHB_FFIND_INFO info = ( PHB_FFIND_INFO ) ffind->info;
+      PHB_FFIND_INFO info = static_cast< PHB_FFIND_INFO >( ffind->info );
 
       char dirname[ HB_PATH_MAX ];
 
@@ -749,7 +763,9 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
             dirname[ 2 ] = '\0';
          }
          if( info->pattern[ 0 ] == '.' )
+         {
             ffind->attrmask |= HB_FA_HIDDEN;
+         }
 
          #if 0
          tzset();
@@ -786,7 +802,9 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
                if( S_ISLNK( sStat.st_mode ) && ( ffind->attrmask & HB_FA_LINK ) == 0 )
                {
                   if( stat64( dirname, &sStatL ) == 0 )
+                  {
                      memcpy( &sStat, &sStatL, sizeof( sStat ) );
+                  }
                   nAttr |= HB_FA_LINK;
                }
 #else
@@ -796,15 +814,18 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
                if( S_ISLNK( sStat.st_mode ) && ( ffind->attrmask & HB_FA_LINK ) == 0 )
                {
                   if( stat( dirname, &sStatL ) == 0 )
+                  {
                      memcpy( &sStat, &sStatL, sizeof( sStat ) );
+                  }
                   nAttr |= HB_FA_LINK;
                }
 #endif
                if( info->entry->d_name[ 0 ] == '.' )
                {
-                  if( info->entry->d_name[ 1 ] &&
-                      ( info->entry->d_name[ 1 ] != '.' || info->entry->d_name[ 2 ] ) )
+                  if( info->entry->d_name[ 1 ] && ( info->entry->d_name[ 1 ] != '.' || info->entry->d_name[ 2 ] ) )
+                  {
                      nAttr |= HB_FA_HIDDEN;
+                  }
                }
                hb_strncpy( ffind->szName, info->entry->d_name, sizeof( ffind->szName ) - 1 );
                ffind->size = sStat.st_size;
@@ -840,7 +861,9 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
 #  endif
             }
             else
+            {
                bFound = HB_FALSE;
+            }
          }
       }
       hb_fsSetIOError( bFound, 0 );
@@ -926,7 +949,9 @@ PHB_FFIND hb_fsFindFirst( const char * pszFileMask, HB_FATTR attrmask )
    /* Find first/next matching file */
 
    if( hb_fsFindNext( ffind ) )
+   {
       return ffind;
+   }
 
    /* If no file found at all, free stuff allocated so far and return nullptr. */
 
@@ -961,13 +986,15 @@ void hb_fsFindClose( PHB_FFIND ffind )
    if( ffind )
    {
       if( ffind->pszFree )
+      {
          hb_xfree( ffind->pszFree );
+      }
 
       /* Do platform dependent cleanup */
 
       if( ffind->info )
       {
-         PHB_FFIND_INFO info = ( PHB_FFIND_INFO ) ffind->info;
+         PHB_FFIND_INFO info = static_cast< PHB_FFIND_INFO >( ffind->info );
 
          if( ! ffind->bFirst )
          {
@@ -984,19 +1011,27 @@ void hb_fsFindClose( PHB_FFIND ffind )
 #elif defined( HB_OS_OS2 )
 
             if( info->hFindFile != HDIR_CREATE )
+            {
                DosFindClose( info->hFindFile );
+            }
             if( info->entry )
+            {
                DosFreeMem( info->entry );
+            }
 
 #elif defined( HB_OS_WIN )
 
             if( info->hFindFile != INVALID_HANDLE_VALUE )
+            {
                FindClose( info->hFindFile );
+            }
 
 #elif defined( HB_OS_UNIX )
 
             if( info->dir )
+            {
                closedir( info->dir );
+            }
 
 #else
             {

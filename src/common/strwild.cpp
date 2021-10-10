@@ -53,14 +53,11 @@
 
 #define HB_MAX_WILDPATTERN  256
 
-static HB_BOOL hb_strMatchWildRaw( const char * szString, const char * szPattern,
-                                   HB_BOOL fExact, HB_BOOL fCase, HB_BOOL fFile )
+static HB_BOOL hb_strMatchWildRaw( const char * szString, const char * szPattern, HB_BOOL fExact, HB_BOOL fCase, HB_BOOL fFile )
 {
    HB_BOOL fMatch = HB_TRUE, fAny = HB_FALSE;
-   HB_SIZE pnBufPosP[ HB_MAX_WILDPATTERN ], pnBufPosV[ HB_MAX_WILDPATTERN ],
-           nBufSize = HB_MAX_WILDPATTERN;
-   HB_SIZE * nAnyPosP = pnBufPosP, * nAnyPosV = pnBufPosV,
-           nSize, nLen, nAny, nPosP, nPosV;
+   HB_SIZE pnBufPosP[ HB_MAX_WILDPATTERN ], pnBufPosV[ HB_MAX_WILDPATTERN ], nBufSize = HB_MAX_WILDPATTERN;
+   HB_SIZE * nAnyPosP = pnBufPosP, * nAnyPosV = pnBufPosV, nSize, nLen, nAny, nPosP, nPosV;
 
    nPosP = nPosV = nAny = 0;
    nLen = strlen( szString );
@@ -135,15 +132,11 @@ static HB_BOOL hb_strMatchWildRaw( const char * szString, const char * szPattern
    return fMatch;
 }
 
-static HB_BOOL hb_strMatchWildCDP( const char * szString, const char * szPattern,
-                                   HB_BOOL fExact, HB_BOOL fCase, HB_BOOL fFile,
-                                   PHB_CODEPAGE cdp )
+static HB_BOOL hb_strMatchWildCDP( const char * szString, const char * szPattern, HB_BOOL fExact, HB_BOOL fCase, HB_BOOL fFile, PHB_CODEPAGE cdp )
 {
    HB_BOOL fMatch = HB_TRUE, fAny = HB_FALSE;
-   HB_SIZE pnBufPosP[ HB_MAX_WILDPATTERN ], pnBufPosV[ HB_MAX_WILDPATTERN ],
-           nBufSize = HB_MAX_WILDPATTERN;
-   HB_SIZE * nAnyPosP = pnBufPosP, * nAnyPosV = pnBufPosV,
-           nSize, nLen, nAny, nPosP, nPosV;
+   HB_SIZE pnBufPosP[ HB_MAX_WILDPATTERN ], pnBufPosV[ HB_MAX_WILDPATTERN ], nBufSize = HB_MAX_WILDPATTERN;
+   HB_SIZE * nAnyPosP = pnBufPosP, * nAnyPosV = pnBufPosV, nSize, nLen, nAny, nPosP, nPosV;
 
    nPosP = nPosV = nAny = 0;
    nLen = strlen( szString );
@@ -168,8 +161,7 @@ static HB_BOOL hb_strMatchWildCDP( const char * szString, const char * szPattern
          }
          else if( fCase )
          {
-            if( ! hb_cdpCharCaseEq( cdp, szString, nLen, &nPosV,
-                                    szPattern, nSize, &nPosP ) )
+            if( ! hb_cdpCharCaseEq( cdp, szString, nLen, &nPosV, szPattern, nSize, &nPosP ) )
             {
                nPosV = nPV;
                nPosP = nPP;
@@ -177,8 +169,7 @@ static HB_BOOL hb_strMatchWildCDP( const char * szString, const char * szPattern
          }
          else
          {
-            if( ! hb_cdpCharEq( cdp, szString, nLen, &nPosV,
-                                szPattern, nSize, &nPosP ) )
+            if( ! hb_cdpCharEq( cdp, szString, nLen, &nPosV, szPattern, nSize, &nPosP ) )
             {
                nPosV = nPV;
                nPosP = nPP;
@@ -249,9 +240,13 @@ HB_BOOL hb_strMatchWild( const char * szString, const char * szPattern )
    PHB_CODEPAGE cdp = hb_vmCDP();
 
    if( cdp && HB_CDP_ISCHARIDX( cdp ) )
+   {
       return hb_strMatchWildCDP( szString, szPattern, HB_FALSE, HB_FALSE, HB_FALSE, cdp );
+   }
    else
+   {
       return hb_strMatchWildRaw( szString, szPattern, HB_FALSE, HB_FALSE, HB_FALSE );
+   }
 }
 
 HB_BOOL hb_strMatchWildExact( const char * szString, const char * szPattern )
@@ -259,9 +254,13 @@ HB_BOOL hb_strMatchWildExact( const char * szString, const char * szPattern )
    PHB_CODEPAGE cdp = hb_vmCDP();
 
    if( cdp && HB_CDP_ISCHARIDX( cdp ) )
+   {
       return hb_strMatchWildCDP( szString, szPattern, HB_TRUE, HB_FALSE, HB_FALSE, cdp );
+   }
    else
+   {
       return hb_strMatchWildRaw( szString, szPattern, HB_TRUE, HB_FALSE, HB_FALSE );
+   }
 }
 
 HB_BOOL hb_strMatchCaseWildExact( const char * szString, const char * szPattern )
@@ -269,9 +268,13 @@ HB_BOOL hb_strMatchCaseWildExact( const char * szString, const char * szPattern 
    PHB_CODEPAGE cdp = hb_vmCDP();
 
    if( cdp && HB_CDP_ISCHARIDX( cdp ) )
+   {
       return hb_strMatchWildCDP( szString, szPattern, HB_TRUE, HB_TRUE, HB_FALSE, cdp );
+   }
    else
+   {
       return hb_strMatchWildRaw( szString, szPattern, HB_TRUE, HB_TRUE, HB_FALSE );
+   }
 }
 
 HB_BOOL hb_strMatchFile( const char * szString, const char * szPattern )
@@ -286,9 +289,13 @@ HB_BOOL hb_strMatchFile( const char * szString, const char * szPattern )
    PHB_CODEPAGE cdp = hb_vmCDP();
 
    if( cdp && HB_CDP_ISCHARIDX( cdp ) )
+   {
       return hb_strMatchWildCDP( szString, szPattern, HB_TRUE, HB_TRUE, HB_TRUE, cdp );
+   }
    else
+   {
       return hb_strMatchWildRaw( szString, szPattern, HB_TRUE, HB_TRUE, HB_TRUE );
+   }
 #else
    return hb_strMatchCaseWildExact( szString, szPattern );
 #endif

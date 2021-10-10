@@ -159,21 +159,29 @@ const char * hb_compGetFuncID( const char * szFuncName, HB_FUNC_ID * pFunID, int
       uiMiddle = ( uiFirst + uiLast ) >> 1;
       i = strcmp( szFuncName, s_funcId[ uiMiddle ].szFuncName );
       if( i <= 0 )
+      {
          uiLast = uiMiddle;
+      }
       else
+      {
          uiFirst = uiMiddle + 1;
+      }
    }
    while( uiFirst < uiLast );
 
    if( uiFirst != uiMiddle )
+   {
       i = strcmp( szFuncName, s_funcId[ uiFirst ].szFuncName );
+   }
 
    if( i < 0 && s_funcId[ uiFirst ].iMinLen )
    {
       int iLen = static_cast< int >( strlen( szFuncName ) );
 
       if( iLen >= s_funcId[ uiFirst ].iMinLen )
+      {
          i = strncmp( szFuncName, s_funcId[ uiFirst ].szFuncName, iLen );
+      }
    }
 
    if( i == 0 )
@@ -196,11 +204,17 @@ const char * hb_compGetFuncID( const char * szFuncName, HB_FUNC_ID * pFunID, int
       {
          szName += 8;
          if( strncmp( szName, "STRICT_", 7 ) == 0 )
+         {
             *pFunID = i ? HB_F_I18N_NGETTEXT_STRICT : HB_F_I18N_GETTEXT_STRICT;
+         }
          else if( strncmp( szName, "NOOP_", 5 ) == 0 )
+         {
             *pFunID = i ? HB_F_I18N_NGETTEXT_NOOP : HB_F_I18N_GETTEXT_NOOP;
+         }
          else
+         {
             *pFunID = i ? HB_F_I18N_NGETTEXT :  HB_F_I18N_GETTEXT;
+         }
       }
    }
 

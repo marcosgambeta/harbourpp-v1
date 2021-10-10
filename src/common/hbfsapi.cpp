@@ -101,7 +101,9 @@ void hb_fsAddSearchPath( const char * szPath, HB_PATHNAMES ** pSearchList )
    HB_BOOL fFree = HB_TRUE;
 
    while( *pSearchList )
+   {
       pSearchList = &( *pSearchList )->pNext;
+   }
 
    pPath = hb_strdup( szPath );
    while( ( pDelim = strchr( pPath, HB_OS_PATH_LIST_SEP_CHR ) ) != nullptr )
@@ -134,7 +136,9 @@ void hb_fsFreeSearchPath( HB_PATHNAMES * pSearchList )
    while( pSearchList )
    {
       if( pSearchList->fFree )
+      {
          hb_xfree( pSearchList->szPath );
+      }
       pNext = pSearchList->pNext;
       hb_xfree( pSearchList );
       pSearchList = pNext;
@@ -173,8 +177,7 @@ PHB_FNAME hb_fsFNameSplit( const char * pszFileName )
 
       while( --iPos >= 0 )
       {
-         if( pszFileName[ iPos ] == cDirSep ||
-             strchr( HB_OS_PATH_DELIM_CHR_LIST, pszFileName[ iPos ] ) )
+         if( pszFileName[ iPos ] == cDirSep || strchr( HB_OS_PATH_DELIM_CHR_LIST, pszFileName[ iPos ] ) )
          {
             pFileName->szPath = pszPos;
             hb_strncpy( pszPos, pszFileName, iPos + 1 );
@@ -243,7 +246,7 @@ PHB_FNAME hb_fsFNameSplit( const char * pszFileName )
 /* This function joins path, name and extension into a string with a filename */
 char * hb_fsFNameMerge( char * pszFileName, PHB_FNAME pFileName )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsFNameMerge(%p, %p)", ( void * ) pszFileName, ( void * ) pFileName ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_fsFNameMerge(%p, %p)", static_cast< void * >( pszFileName ), static_cast< void * >( pFileName ) ) );
 
    if( pszFileName && pFileName )
    {
@@ -258,13 +261,16 @@ char * hb_fsFNameMerge( char * pszFileName, PHB_FNAME pFileName )
 
       /* Strip preceding path separators from the filename */
       pszName = pFileName->szName;
-      if( pszName && pszName[ 0 ] != '\0' && ( pszName[ 0 ] == cDirSep ||
-          strchr( HB_OS_PATH_DELIM_CHR_LIST, pszName[ 0 ] ) != nullptr ) )
+      if( pszName && pszName[ 0 ] != '\0' && ( pszName[ 0 ] == cDirSep || strchr( HB_OS_PATH_DELIM_CHR_LIST, pszName[ 0 ] ) != nullptr ) )
+      {
          pszName++;
+      }
 
       /* Add path if specified */
       if( pFileName->szPath )
+      {
          hb_strncat( pszFileName, pFileName->szPath, HB_PATH_MAX - 1 - 1 );
+      }
 
       /* If we have a path, append a path separator to the path if there
          was none. */
@@ -272,8 +278,7 @@ char * hb_fsFNameMerge( char * pszFileName, PHB_FNAME pFileName )
       {
          int iLen = static_cast< int >( strlen( pszFileName ) ) - 1;
 
-         if( iLen < HB_PATH_MAX - 1 - 2 && pszFileName[ iLen ] != cDirSep &&
-             strchr( HB_OS_PATH_DELIM_CHR_LIST, pszFileName[ iLen ] ) == nullptr )
+         if( iLen < HB_PATH_MAX - 1 - 2 && pszFileName[ iLen ] != cDirSep && strchr( HB_OS_PATH_DELIM_CHR_LIST, pszFileName[ iLen ] ) == nullptr )
          {
             pszFileName[ iLen + 1 ] = HB_OS_PATH_DELIM_CHR;
             pszFileName[ iLen + 2 ] = '\0';
@@ -282,15 +287,18 @@ char * hb_fsFNameMerge( char * pszFileName, PHB_FNAME pFileName )
 
       /* Add filename (without extension) if specified */
       if( pszName )
+      {
          hb_strncat( pszFileName, pszName, HB_PATH_MAX - 1 - 1 );
+      }
 
       /* Add extension if specified */
       if( pFileName->szExtension )
       {
          /* Add a dot if the extension doesn't have it */
-         if( pFileName->szExtension[ 0 ] != '\0' &&
-             pFileName->szExtension[ 0 ] != '.' )
+         if( pFileName->szExtension[ 0 ] != '\0' && pFileName->szExtension[ 0 ] != '.' )
+         {
             hb_strncat( pszFileName, ".", HB_PATH_MAX - 1 - 1 );
+         }
 
          hb_strncat( pszFileName, pFileName->szExtension, HB_PATH_MAX - 1 - 1 );
       }
@@ -334,26 +342,32 @@ HB_BOOL hb_isWSeB( void )
 
       /* what is the suggested form? [druzus] */
 #if 1
-      ret = DosQueryModuleHandle( ( PCSZ ) "DOSCALLS", &hModule );
+      ret = DosQueryModuleHandle( static_cast< PCSZ >( "DOSCALLS" ), &hModule );
 #else
-      ret = DosLoadModule( nullptr, 0, ( PCSZ ) "DOSCALL1", &hModule );
+      ret = DosLoadModule( nullptr, 0, static_cast< PCSZ >( "DOSCALL1" ), &hModule );
 #endif
       if( ret == NO_ERROR )
-         ret = DosQueryProcAddr( hModule, 981, nullptr, ( PFN * ) ( void * ) &s_DosOpenL );
+      {
+         ret = DosQueryProcAddr( hModule, 981, nullptr, static_cast< PFN * >( static_cast< void * >( &s_DosOpenL ) ) );
+      }
       if( ret == NO_ERROR )
-         ret = DosQueryProcAddr( hModule, 986, nullptr, ( PFN * ) ( void * ) &s_DosSetFileLocksL );
+      {
+         ret = DosQueryProcAddr( hModule, 986, nullptr, static_cast< PFN * >( static_cast< void * >( &s_DosSetFileLocksL ) ) );
+      }
       if( ret == NO_ERROR )
-         ret = DosQueryProcAddr( hModule, 988, nullptr, ( PFN * ) ( void * ) &s_DosSetFilePtrL );
+      {
+         ret = DosQueryProcAddr( hModule, 988, nullptr, static_cast< PFN * >( static_cast< void * >( &s_DosSetFilePtrL ) ) );
+      }
       if( ret == NO_ERROR )
-         ret = DosQueryProcAddr( hModule, 989, nullptr, ( PFN * ) ( void * ) &s_DosSetFileSizeL );
+      {
+         ret = DosQueryProcAddr( hModule, 989, nullptr, static_cast< PFN * >( static_cast< void * >( &s_DosSetFileSizeL ) ) );
+      }
       s_iWSeB = ret == NO_ERROR;
    }
    return s_iWSeB;
 }
 
-HB_ULONG hb_fsOS2DosOpen( const char * pszFileName,
-                          HB_FHANDLE * pHFile, HB_ULONG * pulAction,
-                          HB_ULONG nInitSize, HB_ULONG ulAttribute,
+HB_ULONG hb_fsOS2DosOpen( const char * pszFileName, HB_FHANDLE * pHFile, HB_ULONG * pulAction, HB_ULONG nInitSize, HB_ULONG ulAttribute,
                           HB_ULONG fsOpenFlags, HB_ULONG fsOpenMode )
 {
    ULONG cbMaxFH = 20;
@@ -362,8 +376,7 @@ HB_ULONG hb_fsOS2DosOpen( const char * pszFileName,
 
    for( ;; )
    {
-      ret = DosOpen( ( PSZ ) pszFileName, &hFile, pulAction, nInitSize,
-                     ulAttribute, fsOpenFlags, fsOpenMode, nullptr );
+      ret = DosOpen( static_cast< PSZ >( pszFileName ), &hFile, pulAction, nInitSize, ulAttribute, fsOpenFlags, fsOpenMode, nullptr );
       if( ret == ERROR_TOO_MANY_OPEN_FILES )
       {
          LONG  cbReqCount = 64;
@@ -381,17 +394,17 @@ HB_ULONG hb_fsOS2DosOpen( const char * pszFileName,
    /* Hack to make error reporting more DOS compatible, anyhow I'm
       not sure it's good idea to have it [druzus] */
    if( ret == ERROR_OPEN_FAILED )
+   {
       ret = ERROR_FILE_NOT_FOUND;
+   }
 
-   *pHFile = ret == NO_ERROR ? ( HB_FHANDLE ) hFile : FS_ERROR;
+   *pHFile = ret == NO_ERROR ? static_cast< HB_FHANDLE >( hFile ) : FS_ERROR;
 
    return ret;
 }
 
-HB_ULONG hb_fsOS2DosOpenL( const char * pszFileName,
-                           HB_FHANDLE * pHFile, HB_ULONG * pulAction,
-                           HB_FOFFSET nInitSize, HB_ULONG ulAttribute,
-                           HB_ULONG fsOpenFlags, HB_ULONG fsOpenMode )
+HB_ULONG hb_fsOS2DosOpenL( const char * pszFileName, HB_FHANDLE * pHFile, HB_ULONG * pulAction,
+                           HB_FOFFSET nInitSize, HB_ULONG ulAttribute, HB_ULONG fsOpenFlags, HB_ULONG fsOpenMode )
 {
    ULONG cbMaxFH = 20;
    char * pszFree;
@@ -402,17 +415,17 @@ HB_ULONG hb_fsOS2DosOpenL( const char * pszFileName,
    for( ;; )
    {
       if( hb_isWSeB() )
+      {
          /* if other process open file using DosOpen() then it will block
             long file support for us, we can block other processes against
             using DosOpen() by setting OPEN_SHARE_DENYLEGACY in fsOpenMode.
             Is it good idea? [druzus] */
-         ret = s_DosOpenL( ( PSZ ) pszFileName, &hFile, pulAction,
-                           ( LONGLONG ) nInitSize, ulAttribute,
-                           fsOpenFlags, fsOpenMode, nullptr );
+         ret = s_DosOpenL( static_cast< PSZ >( pszFileName ), &hFile, pulAction, static_cast< LONGLONG >( nInitSize ), ulAttribute, fsOpenFlags, fsOpenMode, nullptr );
+      }
       else
-         ret = DosOpen( ( PSZ ) pszFileName, &hFile, pulAction,
-                        static_cast< ULONG >( nInitSize ), ulAttribute,
-                        fsOpenFlags, fsOpenMode, nullptr );
+      {
+         ret = DosOpen( static_cast< PSZ >( pszFileName ), &hFile, pulAction, static_cast< ULONG >( nInitSize ), ulAttribute, fsOpenFlags, fsOpenMode, nullptr );
+      }
       if( ret == ERROR_TOO_MANY_OPEN_FILES )
       {
          LONG  cbReqCount = 64;
@@ -430,31 +443,33 @@ HB_ULONG hb_fsOS2DosOpenL( const char * pszFileName,
    /* Hack to make error reporting more DOS compatible, anyhow I'm
       not sure it's good idea to have it [druzus] */
    if( ret == ERROR_OPEN_FAILED )
+   {
       ret = ERROR_FILE_NOT_FOUND;
+   }
 
-   hb_fsSetError( ( HB_ERRCODE ) ret );
+   hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
    if( pszFree )
+   {
       hb_xfree( pszFree );
+   }
 
-   *pHFile = ret == NO_ERROR ? ( HB_FHANDLE ) hFile : FS_ERROR;
+   *pHFile = ret == NO_ERROR ? static_cast< HB_FHANDLE >( hFile ) : FS_ERROR;
 
    return ret;
 }
 
-HB_ULONG hb_fsOS2DosSetFileLocksL( HB_FHANDLE hFile,
-                                   void * pflUnlock, void * pflLock,
-                                   HB_ULONG timeout, HB_ULONG flags )
+HB_ULONG hb_fsOS2DosSetFileLocksL( HB_FHANDLE hFile, void * pflUnlock, void * pflLock, HB_ULONG timeout, HB_ULONG flags )
 {
    APIRET ret;
 
    if( hb_isWSeB() )
-      ret = s_DosSetFileLocksL( static_cast< HFILE >( hFile ), ( PFILELOCKL ) pflUnlock,
-                                ( PFILELOCKL ) pflLock, timeout, flags );
+   {
+      ret = s_DosSetFileLocksL( static_cast< HFILE >( hFile ), static_cast< PFILELOCKL >( pflUnlock ), static_cast< PFILELOCKL >( pflLock ), timeout, flags );
+   }
    else
    {
       FILELOCK flUnlock, flLock;
-      PFILELOCKL pflU = ( PFILELOCKL ) pflUnlock,
-                 pflL = ( PFILELOCKL ) pflLock;
+      PFILELOCKL pflU = static_cast< PFILELOCKL >( pflUnlock ), pflL = static_cast< PFILELOCKL >( pflLock );
 
       flUnlock.lOffset = static_cast< LONG >( pflU->lOffset );
       flUnlock.lRange  = static_cast< LONG >( pflU->lRange );
@@ -463,20 +478,19 @@ HB_ULONG hb_fsOS2DosSetFileLocksL( HB_FHANDLE hFile,
 
       ret = DosSetFileLocks( static_cast< HFILE >( hFile ), &flUnlock, &flLock, timeout, flags );
    }
-   hb_fsSetError( ( HB_ERRCODE ) ret );
+   hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
 
    return ret;
 }
 
-HB_ULONG hb_fsOS2DosSetFilePtrL( HB_FHANDLE hFile, HB_FOFFSET nPos,
-                                 HB_ULONG method, HB_FOFFSET * pnCurPos )
+HB_ULONG hb_fsOS2DosSetFilePtrL( HB_FHANDLE hFile, HB_FOFFSET nPos, HB_ULONG method, HB_FOFFSET * pnCurPos )
 {
    APIRET ret;
 
    if( hb_isWSeB() )
    {
       LONGLONG llCurPos = 0;
-      ret = s_DosSetFilePtrL( static_cast< HFILE >( hFile ), ( LONGLONG ) nPos, method, &llCurPos );
+      ret = s_DosSetFilePtrL( static_cast< HFILE >( hFile ), static_cast< LONGLONG >( nPos ), method, &llCurPos );
       *pnCurPos = static_cast< HB_FOFFSET >( llCurPos );
    }
    else
@@ -485,7 +499,7 @@ HB_ULONG hb_fsOS2DosSetFilePtrL( HB_FHANDLE hFile, HB_FOFFSET nPos,
       ret = DosSetFilePtr( static_cast< HFILE >( hFile ), static_cast< LONG >( nPos ), method, &ulCurPos );
       *pnCurPos = static_cast< HB_FOFFSET >( ulCurPos );
    }
-   hb_fsSetError( ( HB_ERRCODE ) ret );
+   hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
 
    return ret;
 }
@@ -495,18 +509,20 @@ HB_ULONG hb_fsOS2DosSetFileSizeL( HB_FHANDLE hFile, HB_FOFFSET nSize )
    APIRET ret;
 
    if( hb_isWSeB() )
-      ret = s_DosSetFileSizeL( static_cast< HFILE >( hFile ), ( LONGLONG ) nSize );
+   {
+      ret = s_DosSetFileSizeL( static_cast< HFILE >( hFile ), static_cast< LONGLONG >( nSize ) );
+   }
    else
+   {
       ret = DosSetFileSize( static_cast< HFILE >( hFile ), static_cast< ULONG >( nSize ) );
+   }
 
-   hb_fsSetError( ( HB_ERRCODE ) ret );
+   hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
 
    return ret;
 }
 
-HB_BOOL hb_fsOS2QueryPathInfo( const char * pszPathName,
-                               HB_FOFFSET * pnSize, HB_FATTR * pnAttr,
-                               long * plJulian, long * plMillisec )
+HB_BOOL hb_fsOS2QueryPathInfo( const char * pszPathName, HB_FOFFSET * pnSize, HB_FATTR * pnAttr, long * plJulian, long * plMillisec )
 {
    HDIR hdirFindHandle = HDIR_CREATE;
    HB_FILEFINDBUF3L findBuffer;
@@ -516,48 +532,60 @@ HB_BOOL hb_fsOS2QueryPathInfo( const char * pszPathName,
    HB_BOOL fIsWSeB = hb_isWSeB();
 
    pszPathName = hb_fsNameConv( pszPathName, &pszFree );
-   ret = DosFindFirst( ( PCSZ ) pszPathName, &hdirFindHandle,
+   ret = DosFindFirst( static_cast< PCSZ >( pszPathName ), &hdirFindHandle,
                        FILE_ARCHIVED | FILE_DIRECTORY |
                        FILE_SYSTEM | FILE_HIDDEN | FILE_READONLY,
                        &findBuffer, sizeof( findBuffer ), &ulFindCount,
                        fIsWSeB ? FIL_STANDARDL : FIL_STANDARD );
-   hb_fsSetError( ( HB_ERRCODE ) ret );
+   hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
    if( hdirFindHandle != HDIR_CREATE )
+   {
       DosFindClose( hdirFindHandle );
+   }
    if( pszFree )
+   {
       hb_xfree( pszFree );
+   }
 
    if( ret == NO_ERROR )
    {
       if( fIsWSeB )
       {
          if( pnSize )
+         {
             *pnSize = static_cast< HB_FOFFSET >( findBuffer.ffbl.cbFile );
+         }
          if( pnAttr )
-            *pnAttr = hb_fsAttrFromRaw( ( HB_FATTR ) findBuffer.ffbl.attrFile );
+         {
+            *pnAttr = hb_fsAttrFromRaw( static_cast< HB_FATTR >( findBuffer.ffbl.attrFile ) );
+         }
          if( plJulian )
-            *plJulian = hb_dateEncode( findBuffer.ffbl.fdateLastWrite.year + 1980,
-                                       findBuffer.ffbl.fdateLastWrite.month,
-                                       findBuffer.ffbl.fdateLastWrite.day );
+         {
+            *plJulian = hb_dateEncode( findBuffer.ffbl.fdateLastWrite.year + 1980, findBuffer.ffbl.fdateLastWrite.month, findBuffer.ffbl.fdateLastWrite.day );
+         }
          if( plMillisec )
-            *plMillisec = hb_timeEncode( findBuffer.ffbl.ftimeLastWrite.hours,
-                                         findBuffer.ffbl.ftimeLastWrite.minutes,
-                                         findBuffer.ffbl.ftimeLastWrite.twosecs * 2, 0 );
+         {
+            *plMillisec = hb_timeEncode( findBuffer.ffbl.ftimeLastWrite.hours, findBuffer.ffbl.ftimeLastWrite.minutes, findBuffer.ffbl.ftimeLastWrite.twosecs * 2, 0 );
+         }
       }
       else
       {
          if( pnSize )
+         {
             *pnSize = static_cast< HB_FOFFSET >( findBuffer.ffb.cbFile );
+         }
          if( pnAttr )
-            *pnAttr = hb_fsAttrFromRaw( ( HB_FATTR ) findBuffer.ffb.attrFile );
+         {
+            *pnAttr = hb_fsAttrFromRaw( static_cast< HB_FATTR >( findBuffer.ffb.attrFile ) );
+         }
          if( plJulian )
-            *plJulian = hb_dateEncode( findBuffer.ffb.fdateLastWrite.year + 1980,
-                                       findBuffer.ffb.fdateLastWrite.month,
-                                       findBuffer.ffb.fdateLastWrite.day );
+         {
+            *plJulian = hb_dateEncode( findBuffer.ffb.fdateLastWrite.year + 1980, findBuffer.ffb.fdateLastWrite.month, findBuffer.ffb.fdateLastWrite.day );
+         }
          if( plMillisec )
-            *plMillisec = hb_timeEncode( findBuffer.ffb.ftimeLastWrite.hours,
-                                         findBuffer.ffb.ftimeLastWrite.minutes,
-                                         findBuffer.ffb.ftimeLastWrite.twosecs * 2, 0 );
+         {
+            *plMillisec = hb_timeEncode( findBuffer.ffb.ftimeLastWrite.hours, findBuffer.ffb.ftimeLastWrite.minutes, findBuffer.ffb.ftimeLastWrite.twosecs * 2, 0 );
+         }
       }
       return HB_TRUE;
    }
@@ -569,7 +597,7 @@ HB_BOOL hb_fsNameExists( const char * pszFileName )
 {
    HB_BOOL fExist = HB_FALSE;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsNameExists(%p)", ( const void * ) pszFileName ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_fsNameExists(%p)", static_cast< const void * >( pszFileName ) ) );
 
    if( pszFileName != nullptr )
    {
@@ -580,7 +608,9 @@ HB_BOOL hb_fsNameExists( const char * pszFileName )
       fExist = ( GetFileAttributes( lpFileName ) != INVALID_FILE_ATTRIBUTES );
 
       if( lpFree )
+      {
          hb_xfree( lpFree );
+      }
 #elif defined( HB_OS_OS2 )
       fExist = hb_fsOS2QueryPathInfo( pszFileName, nullptr, nullptr, nullptr, nullptr );
 #else
@@ -610,7 +640,9 @@ HB_BOOL hb_fsNameExists( const char * pszFileName )
       }
 
       if( pszFree )
+      {
          hb_xfree( pszFree );
+      }
 #endif
    }
 
@@ -621,7 +653,7 @@ HB_BOOL hb_fsFileExists( const char * pszFileName )
 {
    HB_BOOL fExist = HB_FALSE;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsFileExists(%p)", ( const void * ) pszFileName ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_fsFileExists(%p)", static_cast< const void * >( pszFileName ) ) );
 
    if( pszFileName != nullptr )
    {
@@ -631,16 +663,15 @@ HB_BOOL hb_fsFileExists( const char * pszFileName )
       DWORD dwAttr;
 
       dwAttr = GetFileAttributes( lpFileName );
-      fExist = ( dwAttr != INVALID_FILE_ATTRIBUTES ) &&
-               ( dwAttr & ( FILE_ATTRIBUTE_DIRECTORY |
-                            FILE_ATTRIBUTE_DEVICE ) ) == 0;
+      fExist = ( dwAttr != INVALID_FILE_ATTRIBUTES ) && ( dwAttr & ( FILE_ATTRIBUTE_DIRECTORY | FILE_ATTRIBUTE_DEVICE ) ) == 0;
 
       if( lpFree )
+      {
          hb_xfree( lpFree );
+      }
 #elif defined( HB_OS_OS2 )
       HB_FATTR nAttr;
-      fExist = hb_fsOS2QueryPathInfo( pszFileName, nullptr, &nAttr, nullptr, nullptr ) &&
-               ( nAttr & HB_FA_DIRECTORY ) == 0;
+      fExist = hb_fsOS2QueryPathInfo( pszFileName, nullptr, &nAttr, nullptr, nullptr ) && ( nAttr & HB_FA_DIRECTORY ) == 0;
 #else
       char * pszFree = nullptr;
 
@@ -653,18 +684,15 @@ HB_BOOL hb_fsFileExists( const char * pszFileName )
          fExist = iAttr != -1 && ( iAttr & 0x10 ) == 0;
 #     else
          unsigned int iAttr = 0;
-         fExist = _dos_getfileattr( pszFileName, &iAttr ) == 0 &&
-                  ( iAttr & 0x10 ) == 0;
+         fExist = _dos_getfileattr( pszFileName, &iAttr ) == 0 && ( iAttr & 0x10 ) == 0;
 #     endif
 #  elif defined( HB_OS_UNIX )
 #     if defined( HB_USE_LARGEFILE64 )
          struct stat64 statbuf;
-         fExist = stat64( pszFileName, &statbuf ) == 0 &&
-                  S_ISREG( statbuf.st_mode );
+         fExist = stat64( pszFileName, &statbuf ) == 0 && S_ISREG( statbuf.st_mode );
 #     else
          struct stat statbuf;
-         fExist = stat( pszFileName, &statbuf ) == 0 &&
-                  S_ISREG( statbuf.st_mode );
+         fExist = stat( pszFileName, &statbuf ) == 0 && S_ISREG( statbuf.st_mode );
 #     endif
 #  else
          int iTODO; /* To force warning */
@@ -672,7 +700,9 @@ HB_BOOL hb_fsFileExists( const char * pszFileName )
       }
 
       if( pszFree )
+      {
          hb_xfree( pszFree );
+      }
 #endif
    }
 
@@ -683,7 +713,7 @@ HB_BOOL hb_fsDirExists( const char * pszDirName )
 {
    HB_BOOL fExist = HB_FALSE;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsDirExists(%p)", ( const void * ) pszDirName ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_fsDirExists(%p)", static_cast< const void * >( pszDirName ) ) );
 
    if( pszDirName != nullptr )
    {
@@ -693,15 +723,15 @@ HB_BOOL hb_fsDirExists( const char * pszDirName )
       DWORD dwAttr;
 
       dwAttr = GetFileAttributes( lpDirName );
-      fExist = ( dwAttr != INVALID_FILE_ATTRIBUTES ) &&
-               ( dwAttr & FILE_ATTRIBUTE_DIRECTORY );
+      fExist = ( dwAttr != INVALID_FILE_ATTRIBUTES ) && ( dwAttr & FILE_ATTRIBUTE_DIRECTORY );
 
       if( lpFree )
+      {
          hb_xfree( lpFree );
+      }
 #elif defined( HB_OS_OS2 )
       HB_FATTR nAttr;
-      fExist = hb_fsOS2QueryPathInfo( pszDirName, nullptr, &nAttr, nullptr, nullptr ) &&
-               ( nAttr & HB_FA_DIRECTORY ) != 0;
+      fExist = hb_fsOS2QueryPathInfo( pszDirName, nullptr, &nAttr, nullptr, nullptr ) && ( nAttr & HB_FA_DIRECTORY ) != 0;
 #else
       char * pszFree = nullptr;
 
@@ -714,18 +744,15 @@ HB_BOOL hb_fsDirExists( const char * pszDirName )
          fExist = iAttr != -1 && ( iAttr & 0x10 ) != 0;
 #     else
          unsigned int iAttr = 0;
-         fExist = _dos_getfileattr( pszDirName, &iAttr ) == 0 &&
-                  ( iAttr & 0x10 ) != 0;
+         fExist = _dos_getfileattr( pszDirName, &iAttr ) == 0 && ( iAttr & 0x10 ) != 0;
 #     endif
 #  elif defined( HB_OS_UNIX )
 #     if defined( HB_USE_LARGEFILE64 )
          struct stat64 statbuf;
-         fExist = stat64( pszDirName, &statbuf ) == 0 &&
-                  S_ISDIR( statbuf.st_mode );
+         fExist = stat64( pszDirName, &statbuf ) == 0 && S_ISDIR( statbuf.st_mode );
 #     else
          struct stat statbuf;
-         fExist = stat( pszDirName, &statbuf ) == 0 &&
-                  S_ISDIR( statbuf.st_mode );
+         fExist = stat( pszDirName, &statbuf ) == 0 && S_ISDIR( statbuf.st_mode );
 #     endif
 #  else
          int iTODO; /* To force warning */
@@ -733,7 +760,9 @@ HB_BOOL hb_fsDirExists( const char * pszDirName )
       }
 
       if( pszFree )
+      {
          hb_xfree( pszFree );
+      }
 #endif
    }
 

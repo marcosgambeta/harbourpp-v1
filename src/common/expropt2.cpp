@@ -60,9 +60,7 @@ static HB_BOOL hb_compExprHasMacro( const char * szText, HB_SIZE nLen, HB_COMP_D
    {
       if( *szText++ == '&' )
       {
-         if( ! HB_SUPPORT_HARBOUR || ( nLen && ( *szText == '_' ||
-             ( *szText >= 'A' && *szText <= 'Z' ) ||
-             ( *szText >= 'a' && *szText <= 'z' ) ) ) )
+         if( ! HB_SUPPORT_HARBOUR || ( nLen && ( *szText == '_' || ( *szText >= 'A' && *szText <= 'Z' ) || ( *szText >= 'a' && *szText <= 'z' ) ) ) )
          {
             return HB_TRUE;
          }
@@ -76,8 +74,7 @@ static PHB_EXPR hb_compExprReducePlusStrings( PHB_EXPR pLeft, PHB_EXPR pRight, H
    if( pLeft->value.asString.dealloc )
    {
       pLeft->value.asString.string = static_cast< char * >( hb_xrealloc( pLeft->value.asString.string, pLeft->nLength + pRight->nLength + 1 ) );
-      memcpy( pLeft->value.asString.string + pLeft->nLength,
-              pRight->value.asString.string, pRight->nLength );
+      memcpy( pLeft->value.asString.string + pLeft->nLength, pRight->value.asString.string, pRight->nLength );
       pLeft->nLength += pRight->nLength;
       pLeft->value.asString.string[ pLeft->nLength ] = '\0';
    }
@@ -102,15 +99,15 @@ static PHB_EXPR hb_compExprReduceMinusStrings( PHB_EXPR pLeft, PHB_EXPR pRight, 
    HB_SIZE nLen = pLeft->nLength;
 
    while( nLen && szText[ nLen - 1 ] == ' ' )
+   {
       --nLen;
+   }
 
    if( pLeft->value.asString.dealloc )
    {
       pLeft->value.asString.string = static_cast< char * >( hb_xrealloc( pLeft->value.asString.string, pLeft->nLength + pRight->nLength + 1 ) );
-      memcpy( pLeft->value.asString.string + nLen,
-              pRight->value.asString.string, pRight->nLength );
-      memset( pLeft->value.asString.string + nLen + pRight->nLength, ' ',
-              pLeft->nLength - nLen );
+      memcpy( pLeft->value.asString.string + nLen, pRight->value.asString.string, pRight->nLength );
+      memset( pLeft->value.asString.string + nLen + pRight->nLength, ' ', pLeft->nLength - nLen );
       pLeft->nLength += pRight->nLength;
       pLeft->value.asString.string[ pLeft->nLength ] = '\0';
    }
@@ -158,14 +155,10 @@ PHB_EXPR hb_compExprReduceMod( PHB_EXPR pSelf, HB_COMP_DECL )
          default:
             if( HB_SUPPORT_HARBOUR )
             {
-               double dDivisor = pRight->value.asNum.NumType == HB_ET_LONG ?
-                                 static_cast< double >( pRight->value.asNum.val.l ) :
-                                 pRight->value.asNum.val.d;
+               double dDivisor = pRight->value.asNum.NumType == HB_ET_LONG ? static_cast< double >( pRight->value.asNum.val.l ) : pRight->value.asNum.val.d;
                if( dDivisor )
                {
-                  double dValue = pLeft->value.asNum.NumType == HB_ET_LONG ?
-                                  static_cast< double >( pLeft->value.asNum.val.l ) :
-                                  pLeft->value.asNum.val.d;
+                  double dValue = pLeft->value.asNum.NumType == HB_ET_LONG ? static_cast< double >( pLeft->value.asNum.val.l ) : pLeft->value.asNum.val.d;
                   pSelf->value.asNum.val.d = fmod( dValue, dDivisor );
                   pSelf->value.asNum.bWidth = HB_DEFAULT_WIDTH;
                   pSelf->value.asNum.bDec = HB_DEFAULT_DECIMALS;
@@ -313,7 +306,7 @@ PHB_EXPR hb_compExprReduceMult( PHB_EXPR pSelf, HB_COMP_DECL )
 
             pSelf->value.asNum.val.d   = pLeft->value.asNum.val.d * pRight->value.asNum.val.d;
             pSelf->value.asNum.bWidth  = HB_DEFAULT_WIDTH;
-            pSelf->value.asNum.bDec    = ( HB_UCHAR ) HB_MIN( pLeft->value.asNum.bDec + pRight->value.asNum.bDec, HB_DEFAULT_DECIMALS );
+            pSelf->value.asNum.bDec    = static_cast< HB_UCHAR >( HB_MIN( pLeft->value.asNum.bDec + pRight->value.asNum.bDec, HB_DEFAULT_DECIMALS ) );
             pSelf->value.asNum.NumType = HB_ET_DOUBLE;
             break;
 
@@ -359,22 +352,22 @@ PHB_EXPR hb_compExprReducePower( PHB_EXPR pSelf, HB_COMP_DECL )
       switch( bType )
       {
          case HB_ET_LONG:
-            pSelf->value.asNum.val.d = pow( static_cast< double >( pLeft->value.asNum.val.l ),
-                                            static_cast< double >( pRight->value.asNum.val.l ) );
+            pSelf->value.asNum.val.d = pow( static_cast< double >( pLeft->value.asNum.val.l ), static_cast< double >( pRight->value.asNum.val.l ) );
             break;
 
          case HB_ET_DOUBLE:
-            pSelf->value.asNum.val.d = pow( pLeft->value.asNum.val.d,
-                                            pRight->value.asNum.val.d );
+            pSelf->value.asNum.val.d = pow( pLeft->value.asNum.val.d, pRight->value.asNum.val.d );
             break;
 
          default:
             if( pLeft->value.asNum.NumType == HB_ET_DOUBLE )
-               pSelf->value.asNum.val.d = pow( pLeft->value.asNum.val.d,
-                                               static_cast< double >( pRight->value.asNum.val.l ) );
+            {
+               pSelf->value.asNum.val.d = pow( pLeft->value.asNum.val.d, static_cast< double >( pRight->value.asNum.val.l ) );
+            }
             else
-               pSelf->value.asNum.val.d = pow( static_cast< double >( pLeft->value.asNum.val.l ),
-                                               pRight->value.asNum.val.d );
+            {
+               pSelf->value.asNum.val.d = pow( static_cast< double >( pLeft->value.asNum.val.l ), pRight->value.asNum.val.d );
+            }
             break;
       }
       pSelf->value.asNum.bWidth = HB_DEFAULT_WIDTH;
@@ -489,9 +482,13 @@ PHB_EXPR hb_compExprReduceMinus( PHB_EXPR pSelf, HB_COMP_DECL )
             pSelf->value.asNum.val.d = pLeft->value.asNum.val.d - pRight->value.asNum.val.d;
             pSelf->value.asNum.bWidth = HB_DEFAULT_WIDTH;
             if( pLeft->value.asNum.bDec < pRight->value.asNum.bDec )
+            {
                pSelf->value.asNum.bDec = pRight->value.asNum.bDec;
+            }
             else
+            {
                pSelf->value.asNum.bDec = pLeft->value.asNum.bDec;
+            }
             pSelf->value.asNum.NumType = HB_ET_DOUBLE;
 
             break;
@@ -519,8 +516,7 @@ PHB_EXPR hb_compExprReduceMinus( PHB_EXPR pSelf, HB_COMP_DECL )
    else if( ( pLeft->ExprType == HB_ET_DATE || pLeft->ExprType == HB_ET_TIMESTAMP ) &&
             ( pRight->ExprType == HB_ET_DATE || pRight->ExprType == HB_ET_TIMESTAMP ) )
    {
-      long lTime = pLeft->value.asDate.lTime - pRight->value.asDate.lTime,
-           lDate = pLeft->value.asDate.lDate - pRight->value.asDate.lDate;
+      long lTime = pLeft->value.asDate.lTime - pRight->value.asDate.lTime, lDate = pLeft->value.asDate.lDate - pRight->value.asDate.lDate;
       if( lTime == 0 )
       {
          pSelf->value.asNum.val.l = lDate;
@@ -542,9 +538,13 @@ PHB_EXPR hb_compExprReduceMinus( PHB_EXPR pSelf, HB_COMP_DECL )
    else if( pLeft->ExprType == HB_ET_DATE && pRight->ExprType == HB_ET_NUMERIC )
    {
       if( pRight->value.asNum.NumType == HB_ET_LONG )
+      {
          pSelf->value.asDate.lDate =  pLeft->value.asDate.lDate - static_cast< long >( pRight->value.asNum.val.l );
+      }
       else
+      {
          pSelf->value.asDate.lDate = pLeft->value.asDate.lDate - HB_CAST_LONG( pRight->value.asNum.val.d );
+      }
       pSelf->value.asDate.lTime = 0;
       pSelf->ExprType = HB_ET_DATE;
       pSelf->ValType  = HB_EV_DATE;
@@ -554,10 +554,13 @@ PHB_EXPR hb_compExprReduceMinus( PHB_EXPR pSelf, HB_COMP_DECL )
    else if( pLeft->ExprType == HB_ET_TIMESTAMP && pRight->ExprType == HB_ET_NUMERIC )
    {
       if( pRight->value.asNum.NumType == HB_ET_LONG )
-         hb_compExprReduceTimeStampPut( pSelf, pLeft->value.asDate.lDate - static_cast< long >( pRight->value.asNum.val.l ),
-                                        pLeft->value.asDate.lTime );
+      {
+         hb_compExprReduceTimeStampPut( pSelf, pLeft->value.asDate.lDate - static_cast< long >( pRight->value.asNum.val.l ), pLeft->value.asDate.lTime );
+      }
       else
+      {
          hb_compExprReduceTimeStampAdd( pSelf, pLeft, -pRight->value.asNum.val.d );
+      }
       HB_COMP_EXPR_FREE( pLeft );
       HB_COMP_EXPR_FREE( pRight );
    }
@@ -588,15 +591,15 @@ PHB_EXPR hb_compExprReduceMinus( PHB_EXPR pSelf, HB_COMP_DECL )
             char *  szText = pLeft->value.asString.string;
             HB_SIZE nLen   = pLeft->nLength;
             while( nLen && szText[ nLen - 1 ] == ' ' )
+            {
                --nLen;
+            }
             while( nLen-- )
             {
                if( *szText++ == '&' )
                {
                   char ch = nLen ? *szText : *pRight->value.asString.string;
-                  if( ( ch >= 'A' && ch <= 'Z' ) ||
-                      ( ch >= 'a' && ch <= 'z' ) || ch == '_' ||
-                      ! HB_SUPPORT_HARBOUR )
+                  if( ( ch >= 'A' && ch <= 'Z' ) || ( ch >= 'a' && ch <= 'z' ) || ch == '_' || ! HB_SUPPORT_HARBOUR )
                   {
                      fReduce = HB_FALSE;
                      break;
@@ -629,15 +632,25 @@ static HB_BOOL hb_compExprReducePlusNums( PHB_EXPR pSelf, PHB_EXPR pAdd )
    pRight = pSelf->value.asOperator.pRight;
 
    if( pLeft->ExprType == HB_ET_NUMERIC )
+   {
       pNum = pLeft;
+   }
    else if( pRight->ExprType == HB_ET_NUMERIC )
+   {
       pNum = pRight;
+   }
    else if( pLeft->ExprType == HB_EO_PLUS )
+   {
       return hb_compExprReducePlusNums( pLeft, pAdd );
+   }
    else if( pRight->ExprType == HB_EO_PLUS )
+   {
       return hb_compExprReducePlusNums( pRight, pAdd );
+   }
    else
+   {
       return HB_FALSE;
+   }
 
    switch( pNum->value.asNum.NumType & pAdd->value.asNum.NumType )
    {
@@ -645,7 +658,9 @@ static HB_BOOL hb_compExprReducePlusNums( PHB_EXPR pSelf, PHB_EXPR pAdd )
       {
          HB_MAXDBL dVal = static_cast< HB_MAXDBL >( pNum->value.asNum.val.l ) + static_cast< HB_MAXDBL >( pAdd->value.asNum.val.l );
          if( HB_DBL_LIM_LONG( dVal ) )
+         {
             pNum->value.asNum.val.l += pAdd->value.asNum.val.l;
+         }
          else
          {
             pNum->value.asNum.val.d = static_cast< double >( dVal );
@@ -660,12 +675,16 @@ static HB_BOOL hb_compExprReducePlusNums( PHB_EXPR pSelf, PHB_EXPR pAdd )
          pNum->value.asNum.val.d += pAdd->value.asNum.val.d;
          pNum->value.asNum.bWidth = HB_DEFAULT_WIDTH;
          if( pNum->value.asNum.bDec < pAdd->value.asNum.bDec )
+         {
             pNum->value.asNum.bDec = pAdd->value.asNum.bDec;
+         }
          break;
 
       default:
          if( pNum->value.asNum.NumType == HB_ET_DOUBLE )
+         {
             pNum->value.asNum.val.d += static_cast< double >( pAdd->value.asNum.val.l );
+         }
          else
          {
             pNum->value.asNum.val.d = static_cast< double >( pNum->value.asNum.val.l ) + pAdd->value.asNum.val.d;
@@ -717,9 +736,13 @@ PHB_EXPR hb_compExprReducePlus( PHB_EXPR pSelf, HB_COMP_DECL )
                pSelf->value.asNum.val.d = pLeft->value.asNum.val.d + pRight->value.asNum.val.d;
                pSelf->value.asNum.bWidth = HB_DEFAULT_WIDTH;
                if( pLeft->value.asNum.bDec < pRight->value.asNum.bDec )
+               {
                   pSelf->value.asNum.bDec = pRight->value.asNum.bDec;
+               }
                else
+               {
                   pSelf->value.asNum.bDec = pLeft->value.asNum.bDec;
+               }
                pSelf->value.asNum.NumType = HB_ET_DOUBLE;
                break;
 
@@ -745,9 +768,13 @@ PHB_EXPR hb_compExprReducePlus( PHB_EXPR pSelf, HB_COMP_DECL )
       else if( pRight->ExprType == HB_ET_DATE )
       {
          if( pLeft->value.asNum.NumType == HB_ET_LONG )
+         {
             pSelf->value.asDate.lDate = pRight->value.asDate.lDate + static_cast< long >( pLeft->value.asNum.val.l );
+         }
          else
+         {
             pSelf->value.asDate.lDate = pRight->value.asDate.lDate + HB_CAST_LONG( pLeft->value.asNum.val.d );
+         }
          pSelf->value.asDate.lTime = 0;
          pSelf->ExprType = HB_ET_DATE;
          pSelf->ValType  = HB_EV_DATE;
@@ -757,17 +784,17 @@ PHB_EXPR hb_compExprReducePlus( PHB_EXPR pSelf, HB_COMP_DECL )
       else if( pRight->ExprType == HB_ET_TIMESTAMP )
       {
          if( pLeft->value.asNum.NumType == HB_ET_LONG )
-            hb_compExprReduceTimeStampPut( pSelf, pRight->value.asDate.lDate + static_cast< long >( pLeft->value.asNum.val.l ),
-                                           pRight->value.asDate.lTime );
+         {
+            hb_compExprReduceTimeStampPut( pSelf, pRight->value.asDate.lDate + static_cast< long >( pLeft->value.asNum.val.l ), pRight->value.asDate.lTime );
+         }
          else
+         {
             hb_compExprReduceTimeStampAdd( pSelf, pRight, pLeft->value.asNum.val.d );
+         }
          HB_COMP_EXPR_FREE( pLeft );
          HB_COMP_EXPR_FREE( pRight );
       }
-      else if( HB_SUPPORT_EXTOPT &&
-               ( pLeft->value.asNum.NumType == HB_ET_LONG ?
-                 pLeft->value.asNum.val.l == 0 :
-                 pLeft->value.asNum.val.d == 0 ) )
+      else if( HB_SUPPORT_EXTOPT && ( pLeft->value.asNum.NumType == HB_ET_LONG ? pLeft->value.asNum.val.l == 0 : pLeft->value.asNum.val.d == 0 ) )
       {
          /* NOTE: This will not generate a runtime error if incompatible
           * data type is used
@@ -798,9 +825,13 @@ PHB_EXPR hb_compExprReducePlus( PHB_EXPR pSelf, HB_COMP_DECL )
       if( pLeft->ExprType == HB_ET_DATE )
       {
          if( pRight->value.asNum.NumType == HB_ET_LONG )
+         {
             pSelf->value.asDate.lDate = pLeft->value.asDate.lDate + static_cast< long >( pRight->value.asNum.val.l );
+         }
          else
+         {
             pSelf->value.asDate.lDate = pLeft->value.asDate.lDate + HB_CAST_LONG( pRight->value.asNum.val.d );
+         }
          pSelf->value.asDate.lTime = 0;
          pSelf->ExprType = HB_ET_DATE;
          pSelf->ValType  = HB_EV_DATE;
@@ -810,17 +841,17 @@ PHB_EXPR hb_compExprReducePlus( PHB_EXPR pSelf, HB_COMP_DECL )
       else if( pLeft->ExprType == HB_ET_TIMESTAMP )
       {
          if( pRight->value.asNum.NumType == HB_ET_LONG )
-            hb_compExprReduceTimeStampPut( pSelf, pLeft->value.asDate.lDate + static_cast< long >( pRight->value.asNum.val.l ),
-                                           pLeft->value.asDate.lTime );
+         {
+            hb_compExprReduceTimeStampPut( pSelf, pLeft->value.asDate.lDate + static_cast< long >( pRight->value.asNum.val.l ), pLeft->value.asDate.lTime );
+         }
          else
+         {
             hb_compExprReduceTimeStampAdd( pSelf, pLeft, pRight->value.asNum.val.d );
+         }
          HB_COMP_EXPR_FREE( pLeft );
          HB_COMP_EXPR_FREE( pRight );
       }
-      else if( HB_SUPPORT_EXTOPT &&
-               ( pRight->value.asNum.NumType == HB_ET_LONG ?
-                 pRight->value.asNum.val.l == 0 :
-                 pRight->value.asNum.val.d == 0 ) )
+      else if( HB_SUPPORT_EXTOPT && ( pRight->value.asNum.NumType == HB_ET_LONG ? pRight->value.asNum.val.l == 0 : pRight->value.asNum.val.d == 0 ) )
       {
          /* NOTE: This will not generate a runtime error if incompatible
           * data type is used
@@ -846,14 +877,11 @@ PHB_EXPR hb_compExprReducePlus( PHB_EXPR pSelf, HB_COMP_DECL )
           */
       }
    }
-   else if( ( pLeft->ExprType == HB_ET_DATE || pLeft->ExprType == HB_ET_TIMESTAMP ) &&
-            ( pRight->ExprType == HB_ET_DATE || pRight->ExprType == HB_ET_TIMESTAMP ) )
+   else if( ( pLeft->ExprType == HB_ET_DATE || pLeft->ExprType == HB_ET_TIMESTAMP ) && ( pRight->ExprType == HB_ET_DATE || pRight->ExprType == HB_ET_TIMESTAMP ) )
    {
       if( pLeft->ExprType == HB_ET_TIMESTAMP || pRight->ExprType == HB_ET_TIMESTAMP )
       {
-         hb_compExprReduceTimeStampPut( pSelf,
-                           pLeft->value.asDate.lDate + pRight->value.asDate.lDate,
-                           pLeft->value.asDate.lTime + pRight->value.asDate.lTime );
+         hb_compExprReduceTimeStampPut( pSelf, pLeft->value.asDate.lDate + pRight->value.asDate.lDate, pLeft->value.asDate.lTime + pRight->value.asDate.lTime );
       }
       else
       {
@@ -898,9 +926,7 @@ PHB_EXPR hb_compExprReducePlus( PHB_EXPR pSelf, HB_COMP_DECL )
                if( *szText++ == '&' )
                {
                   char ch = nLen ? *szText : *pRight->value.asString.string;
-                  if( ( ch >= 'A' && ch <= 'Z' ) ||
-                      ( ch >= 'a' && ch <= 'z' ) || ch == '_' ||
-                      ! HB_SUPPORT_HARBOUR )
+                  if( ( ch >= 'A' && ch <= 'Z' ) || ( ch >= 'a' && ch <= 'z' ) || ch == '_' || ! HB_SUPPORT_HARBOUR )
                   {
                      fReduce = HB_FALSE;
                      break;
@@ -971,7 +997,6 @@ PHB_EXPR hb_compExprReduceNegate( PHB_EXPR pSelf, HB_COMP_DECL )
    return pSelf;
 }
 
-
 PHB_EXPR hb_compExprReduceIN( PHB_EXPR pSelf, HB_COMP_DECL )
 {
    PHB_EXPR pLeft, pRight;
@@ -989,10 +1014,8 @@ PHB_EXPR hb_compExprReduceIN( PHB_EXPR pSelf, HB_COMP_DECL )
        *       have macro operator '&'
        */
       if( ! HB_SUPPORT_MACROTEXT ||
-          ( ! hb_compExprHasMacro( pLeft->value.asString.string,
-                                   pLeft->nLength, HB_COMP_PARAM ) &&
-            ! hb_compExprHasMacro( pRight->value.asString.string,
-                                   pRight->nLength, HB_COMP_PARAM ) ) )
+          ( ! hb_compExprHasMacro( pLeft->value.asString.string, pLeft->nLength, HB_COMP_PARAM ) &&
+            ! hb_compExprHasMacro( pRight->value.asString.string, pRight->nLength, HB_COMP_PARAM ) ) )
       {
          HB_BOOL bResult;
 
@@ -1006,11 +1029,13 @@ PHB_EXPR hb_compExprReduceIN( PHB_EXPR pSelf, HB_COMP_DECL )
           *       [druzus]
           */
          if( pLeft->nLength == 0 )
-            bResult = HB_COMP_PARAM->mode == HB_MODE_COMPILER &&
-                      ! HB_SUPPORT_HARBOUR;
+         {
+            bResult = HB_COMP_PARAM->mode == HB_MODE_COMPILER && ! HB_SUPPORT_HARBOUR;
+         }
          else
-            bResult = ( hb_strAt( pLeft->value.asString.string, pLeft->nLength,
-                                  pRight->value.asString.string, pRight->nLength ) != 0 );
+         {
+            bResult = ( hb_strAt( pLeft->value.asString.string, pLeft->nLength, pRight->value.asString.string, pRight->nLength ) != 0 );
+         }
 
          HB_COMP_EXPR_FREE( pLeft );
          HB_COMP_EXPR_FREE( pRight );
@@ -1083,9 +1108,13 @@ PHB_EXPR hb_compExprReduceNE( PHB_EXPR pSelf, HB_COMP_DECL )
                   break;
                default:
                   if( pLeft->value.asNum.NumType == HB_ET_LONG )
+                  {
                      bResult = ( pLeft->value.asNum.val.l != pRight->value.asNum.val.d );
+                  }
                   else
+                  {
                      bResult = ( pLeft->value.asNum.val.d != pRight->value.asNum.val.l );
+                  }
                   break;
             }
             HB_COMP_EXPR_FREE( pLeft );
@@ -1099,8 +1128,7 @@ PHB_EXPR hb_compExprReduceNE( PHB_EXPR pSelf, HB_COMP_DECL )
          case HB_ET_DATE:
          case HB_ET_TIMESTAMP:
          {
-            HB_BOOL bResult = pLeft->value.asDate.lDate != pRight->value.asDate.lDate ||
-                              pLeft->value.asDate.lTime != pRight->value.asDate.lTime;
+            HB_BOOL bResult = pLeft->value.asDate.lDate != pRight->value.asDate.lDate || pLeft->value.asDate.lTime != pRight->value.asDate.lTime;
             HB_COMP_EXPR_FREE( pLeft );
             HB_COMP_EXPR_FREE( pRight );
             pSelf->ExprType        = HB_ET_LOGICAL;
@@ -1118,10 +1146,7 @@ PHB_EXPR hb_compExprReduceNE( PHB_EXPR pSelf, HB_COMP_DECL )
             break;
       }
    }
-   else if( ( pLeft->ExprType == HB_ET_TIMESTAMP &&
-              pRight->ExprType == HB_ET_DATE ) ||
-            ( pLeft->ExprType == HB_ET_DATE &&
-              pRight->ExprType == HB_ET_TIMESTAMP ) )
+   else if( ( pLeft->ExprType == HB_ET_TIMESTAMP && pRight->ExprType == HB_ET_DATE ) || ( pLeft->ExprType == HB_ET_DATE && pRight->ExprType == HB_ET_TIMESTAMP ) )
    {
       pSelf->value.asLogical = pLeft->value.asDate.lDate != pRight->value.asDate.lDate;
       pSelf->ExprType        = HB_ET_LOGICAL;
@@ -1129,9 +1154,7 @@ PHB_EXPR hb_compExprReduceNE( PHB_EXPR pSelf, HB_COMP_DECL )
       HB_COMP_EXPR_FREE( pLeft );
       HB_COMP_EXPR_FREE( pRight );
    }
-   else if( HB_SUPPORT_EXTOPT &&
-            ( pLeft->ExprType == HB_ET_LOGICAL ||
-              pRight->ExprType == HB_ET_LOGICAL ) )
+   else if( HB_SUPPORT_EXTOPT && ( pLeft->ExprType == HB_ET_LOGICAL || pRight->ExprType == HB_ET_LOGICAL ) )
    {
       /* NOTE: This will not generate a runtime error if incompatible
        * data type is used
@@ -1208,6 +1231,7 @@ PHB_EXPR hb_compExprReduceGE( PHB_EXPR pSelf, HB_COMP_DECL )
    pRight = pSelf->value.asOperator.pRight;
 
    if( pLeft->ExprType == pRight->ExprType )
+   {
       switch( pLeft->ExprType )
       {
          case HB_ET_LOGICAL:
@@ -1240,9 +1264,13 @@ PHB_EXPR hb_compExprReduceGE( PHB_EXPR pSelf, HB_COMP_DECL )
                   break;
                default:
                   if( pLeft->value.asNum.NumType == HB_ET_LONG )
+                  {
                      bResult = ( pLeft->value.asNum.val.l >= pRight->value.asNum.val.d );
+                  }
                   else
+                  {
                      bResult = ( pLeft->value.asNum.val.d >= pRight->value.asNum.val.l );
+                  }
                   break;
             }
             HB_COMP_EXPR_FREE( pLeft );
@@ -1268,10 +1296,9 @@ PHB_EXPR hb_compExprReduceGE( PHB_EXPR pSelf, HB_COMP_DECL )
          break;
 
       }
-   else if( ( pLeft->ExprType == HB_ET_TIMESTAMP &&
-              pRight->ExprType == HB_ET_DATE ) ||
-            ( pLeft->ExprType == HB_ET_DATE &&
-              pRight->ExprType == HB_ET_TIMESTAMP ) )
+   }
+   else if( ( pLeft->ExprType == HB_ET_TIMESTAMP && pRight->ExprType == HB_ET_DATE ) ||
+            ( pLeft->ExprType == HB_ET_DATE && pRight->ExprType == HB_ET_TIMESTAMP ) )
    {
       pSelf->value.asLogical = pLeft->value.asDate.lDate >= pRight->value.asDate.lDate;
       pSelf->ExprType        = HB_ET_LOGICAL;
@@ -1295,6 +1322,7 @@ PHB_EXPR hb_compExprReduceLE( PHB_EXPR pSelf, HB_COMP_DECL )
    pRight = pSelf->value.asOperator.pRight;
 
    if( pLeft->ExprType == pRight->ExprType )
+   {
       switch( pLeft->ExprType )
       {
          case HB_ET_LOGICAL:
@@ -1327,9 +1355,13 @@ PHB_EXPR hb_compExprReduceLE( PHB_EXPR pSelf, HB_COMP_DECL )
                   break;
                default:
                   if( pLeft->value.asNum.NumType == HB_ET_LONG )
+                  {
                      bResult = ( pLeft->value.asNum.val.l <= pRight->value.asNum.val.d );
+                  }
                   else
+                  {
                      bResult = ( pLeft->value.asNum.val.d <= pRight->value.asNum.val.l );
+                  }
                   break;
             }
             HB_COMP_EXPR_FREE( pLeft );
@@ -1355,10 +1387,9 @@ PHB_EXPR hb_compExprReduceLE( PHB_EXPR pSelf, HB_COMP_DECL )
          break;
 
       }
-   else if( ( pLeft->ExprType == HB_ET_TIMESTAMP &&
-              pRight->ExprType == HB_ET_DATE ) ||
-            ( pLeft->ExprType == HB_ET_DATE &&
-              pRight->ExprType == HB_ET_TIMESTAMP ) )
+   }
+   else if( ( pLeft->ExprType == HB_ET_TIMESTAMP && pRight->ExprType == HB_ET_DATE ) ||
+            ( pLeft->ExprType == HB_ET_DATE && pRight->ExprType == HB_ET_TIMESTAMP ) )
    {
       pSelf->value.asLogical = pLeft->value.asDate.lDate <= pRight->value.asDate.lDate;
       pSelf->ExprType        = HB_ET_LOGICAL;
@@ -1382,6 +1413,7 @@ PHB_EXPR hb_compExprReduceGT( PHB_EXPR pSelf, HB_COMP_DECL )
    pRight = pSelf->value.asOperator.pRight;
 
    if( pLeft->ExprType == pRight->ExprType )
+   {
       switch( pLeft->ExprType )
       {
          case HB_ET_LOGICAL:
@@ -1414,9 +1446,13 @@ PHB_EXPR hb_compExprReduceGT( PHB_EXPR pSelf, HB_COMP_DECL )
                   break;
                default:
                   if( pLeft->value.asNum.NumType == HB_ET_LONG )
+                  {
                      bResult = ( pLeft->value.asNum.val.l > pRight->value.asNum.val.d );
+                  }
                   else
+                  {
                      bResult = ( pLeft->value.asNum.val.d > pRight->value.asNum.val.l );
+                  }
                   break;
             }
             HB_COMP_EXPR_FREE( pLeft );
@@ -1442,10 +1478,9 @@ PHB_EXPR hb_compExprReduceGT( PHB_EXPR pSelf, HB_COMP_DECL )
          break;
 
       }
-   else if( ( pLeft->ExprType == HB_ET_TIMESTAMP &&
-              pRight->ExprType == HB_ET_DATE ) ||
-            ( pLeft->ExprType == HB_ET_DATE &&
-              pRight->ExprType == HB_ET_TIMESTAMP ) )
+   }
+   else if( ( pLeft->ExprType == HB_ET_TIMESTAMP && pRight->ExprType == HB_ET_DATE ) ||
+            ( pLeft->ExprType == HB_ET_DATE && pRight->ExprType == HB_ET_TIMESTAMP ) )
    {
       pSelf->value.asLogical = pLeft->value.asDate.lDate > pRight->value.asDate.lDate;
       pSelf->ExprType        = HB_ET_LOGICAL;
@@ -1469,6 +1504,7 @@ PHB_EXPR hb_compExprReduceLT( PHB_EXPR pSelf, HB_COMP_DECL )
    pRight = pSelf->value.asOperator.pRight;
 
    if( pLeft->ExprType == pRight->ExprType )
+   {
       switch( pLeft->ExprType )
       {
          case HB_ET_LOGICAL:
@@ -1501,9 +1537,13 @@ PHB_EXPR hb_compExprReduceLT( PHB_EXPR pSelf, HB_COMP_DECL )
                   break;
                default:
                   if( pLeft->value.asNum.NumType == HB_ET_LONG )
+                  {
                      bResult = ( pLeft->value.asNum.val.l < pRight->value.asNum.val.d );
+                  }
                   else
+                  {
                      bResult = ( pLeft->value.asNum.val.d < pRight->value.asNum.val.l );
+                  }
                   break;
             }
             HB_COMP_EXPR_FREE( pLeft );
@@ -1529,10 +1569,9 @@ PHB_EXPR hb_compExprReduceLT( PHB_EXPR pSelf, HB_COMP_DECL )
          break;
 
       }
-   else if( ( pLeft->ExprType == HB_ET_TIMESTAMP &&
-              pRight->ExprType == HB_ET_DATE ) ||
-            ( pLeft->ExprType == HB_ET_DATE &&
-              pRight->ExprType == HB_ET_TIMESTAMP ) )
+   }
+   else if( ( pLeft->ExprType == HB_ET_TIMESTAMP && pRight->ExprType == HB_ET_DATE ) ||
+            ( pLeft->ExprType == HB_ET_DATE && pRight->ExprType == HB_ET_TIMESTAMP ) )
    {
       pSelf->value.asLogical = pLeft->value.asDate.lDate < pRight->value.asDate.lDate;
       pSelf->ExprType        = HB_ET_LOGICAL;
@@ -1583,15 +1622,10 @@ PHB_EXPR hb_compExprReduceEQ( PHB_EXPR pSelf, HB_COMP_DECL )
             if( ( pLeft->nLength | pRight->nLength ) == 0 ||
                 ( pSelf->ExprType == HB_EO_EQ &&
                   ( ! HB_SUPPORT_MACROTEXT ||
-                    ( ! hb_compExprHasMacro( pLeft->value.asString.string,
-                                             pLeft->nLength, HB_COMP_PARAM ) &&
-                      ! hb_compExprHasMacro( pRight->value.asString.string,
-                                             pRight->nLength, HB_COMP_PARAM ) ) ) ) )
+                    ( ! hb_compExprHasMacro( pLeft->value.asString.string, pLeft->nLength, HB_COMP_PARAM ) &&
+                      ! hb_compExprHasMacro( pRight->value.asString.string, pRight->nLength, HB_COMP_PARAM ) ) ) ) )
             {
-               HB_BOOL bResult = pLeft->nLength == pRight->nLength &&
-                                 memcmp( pLeft->value.asString.string,
-                                         pRight->value.asString.string,
-                                         pLeft->nLength ) == 0;
+               HB_BOOL bResult = pLeft->nLength == pRight->nLength && memcmp( pLeft->value.asString.string, pRight->value.asString.string, pLeft->nLength ) == 0;
                HB_COMP_EXPR_FREE( pLeft );
                HB_COMP_EXPR_FREE( pRight );
                pSelf->ExprType        = HB_ET_LOGICAL;
@@ -1614,9 +1648,13 @@ PHB_EXPR hb_compExprReduceEQ( PHB_EXPR pSelf, HB_COMP_DECL )
                   break;
                default:
                   if( pLeft->value.asNum.NumType == HB_ET_LONG )
+                  {
                      bResult = ( pLeft->value.asNum.val.l == pRight->value.asNum.val.d );
+                  }
                   else
+                  {
                      bResult = ( pLeft->value.asNum.val.d == pRight->value.asNum.val.l );
+                  }
                   break;
             }
             HB_COMP_EXPR_FREE( pLeft );
@@ -1649,22 +1687,17 @@ PHB_EXPR hb_compExprReduceEQ( PHB_EXPR pSelf, HB_COMP_DECL )
             break;
       }
    }
-   else if( ( pLeft->ExprType == HB_ET_TIMESTAMP &&
-              pRight->ExprType == HB_ET_DATE ) ||
-            ( pLeft->ExprType == HB_ET_DATE &&
-              pRight->ExprType == HB_ET_TIMESTAMP ) )
+   else if( ( pLeft->ExprType == HB_ET_TIMESTAMP && pRight->ExprType == HB_ET_DATE ) ||
+            ( pLeft->ExprType == HB_ET_DATE && pRight->ExprType == HB_ET_TIMESTAMP ) )
    {
       pSelf->value.asLogical = pLeft->value.asDate.lDate == pRight->value.asDate.lDate &&
-                               ( pLeft->value.asDate.lTime == pRight->value.asDate.lTime ||
-                                 pSelf->ExprType != HB_EO_EQ );
+                               ( pLeft->value.asDate.lTime == pRight->value.asDate.lTime || pSelf->ExprType != HB_EO_EQ );
       pSelf->ExprType = HB_ET_LOGICAL;
       pSelf->ValType  = HB_EV_LOGICAL;
       HB_COMP_EXPR_FREE( pLeft );
       HB_COMP_EXPR_FREE( pRight );
    }
-   else if( HB_SUPPORT_EXTOPT &&
-            ( pLeft->ExprType == HB_ET_LOGICAL ||
-              pRight->ExprType == HB_ET_LOGICAL ) )
+   else if( HB_SUPPORT_EXTOPT && ( pLeft->ExprType == HB_ET_LOGICAL || pRight->ExprType == HB_ET_LOGICAL ) )
    {
       /* NOTE: This will not generate a runtime error if incompatible
        * data type is used
@@ -1751,8 +1784,7 @@ PHB_EXPR hb_compExprReduceAnd( PHB_EXPR pSelf, HB_COMP_DECL )
       pSelf->ValType         = HB_EV_LOGICAL;
       pSelf->value.asLogical = bResult;
    }
-   else if( pLeft->ExprType == HB_ET_LOGICAL &&
-            HB_COMP_ISSUPPORTED( HB_COMPFLAG_SHORTCUTS ) )
+   else if( pLeft->ExprType == HB_ET_LOGICAL && HB_COMP_ISSUPPORTED( HB_COMPFLAG_SHORTCUTS ) )
    {
       if( pLeft->value.asLogical )
       {
@@ -1819,8 +1851,7 @@ PHB_EXPR hb_compExprReduceOr( PHB_EXPR pSelf, HB_COMP_DECL )
       pSelf->ValType         = HB_EV_LOGICAL;
       pSelf->value.asLogical = bResult;
    }
-   else if( pLeft->ExprType == HB_ET_LOGICAL &&
-            HB_COMP_ISSUPPORTED( HB_COMPFLAG_SHORTCUTS ) )
+   else if( pLeft->ExprType == HB_ET_LOGICAL && HB_COMP_ISSUPPORTED( HB_COMPFLAG_SHORTCUTS ) )
    {
       if( pLeft->value.asLogical )
       {
@@ -1980,8 +2011,7 @@ HB_BOOL hb_compExprReduceAT( PHB_EXPR pSelf, HB_COMP_DECL )
    PHB_EXPR pSub   = pParms->value.asList.pExprList;
    PHB_EXPR pText  = pSub->pNext;
 
-   if( pSub->ExprType == HB_ET_STRING && pText->ExprType == HB_ET_STRING &&
-       ! HB_SUPPORT_USERCP )
+   if( pSub->ExprType == HB_ET_STRING && pText->ExprType == HB_ET_STRING && ! HB_SUPPORT_USERCP )
    {
       PHB_EXPR pReduced;
 
@@ -1995,14 +2025,11 @@ HB_BOOL hb_compExprReduceAT( PHB_EXPR pSelf, HB_COMP_DECL )
        */
       if( pSub->nLength == 0 )
       {
-         pReduced = hb_compExprNewLong( ( HB_COMP_PARAM->mode == HB_MODE_COMPILER &&
-                                          ! HB_SUPPORT_HARBOUR ) ? 1 : 0, HB_COMP_PARAM );
+         pReduced = hb_compExprNewLong( ( HB_COMP_PARAM->mode == HB_MODE_COMPILER && ! HB_SUPPORT_HARBOUR ) ? 1 : 0, HB_COMP_PARAM );
       }
       else
       {
-         pReduced = hb_compExprNewLong( hb_strAt( pSub->value.asString.string,
-                               pSub->nLength, pText->value.asString.string,
-                               pText->nLength ), HB_COMP_PARAM );
+         pReduced = hb_compExprNewLong( hb_strAt( pSub->value.asString.string, pSub->nLength, pText->value.asString.string, pText->nLength ), HB_COMP_PARAM );
       }
 
       HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
@@ -2013,7 +2040,9 @@ HB_BOOL hb_compExprReduceAT( PHB_EXPR pSelf, HB_COMP_DECL )
       return HB_TRUE;
    }
    else
+   {
       return HB_FALSE;
+   }
 }
 
 HB_BOOL hb_compExprReduceCHR( PHB_EXPR pSelf, HB_COMP_DECL )
@@ -2026,13 +2055,13 @@ HB_BOOL hb_compExprReduceCHR( PHB_EXPR pSelf, HB_COMP_DECL )
    {
       if( HB_SUPPORT_USERCP )
       {
-         int iVal = pArg->value.asNum.NumType == HB_ET_LONG ?
-                    static_cast< int >( pArg->value.asNum.val.l ) :
-                    static_cast< int >( pArg->value.asNum.val.d );
+         int iVal = pArg->value.asNum.NumType == HB_ET_LONG ? static_cast< int >( pArg->value.asNum.val.l ) : static_cast< int >( pArg->value.asNum.val.d );
          fDoOpt = iVal >= 0 && iVal <= 127;
       }
       else
+      {
          fDoOpt = HB_TRUE;
+      }
    }
 
    /* try to change it into a string */
@@ -2055,10 +2084,8 @@ HB_BOOL hb_compExprReduceCHR( PHB_EXPR pSelf, HB_COMP_DECL )
       pExpr->ValType = HB_EV_STRING;
       if( pArg->value.asNum.NumType == HB_ET_LONG )
       {
-         if( HB_COMP_PARAM->mode == HB_MODE_COMPILER &&
-             ! HB_SUPPORT_HARBOUR &&
-             ( pArg->value.asNum.val.l & 0xff ) == 0 &&
-               pArg->value.asNum.val.l != 0 )
+         if( HB_COMP_PARAM->mode == HB_MODE_COMPILER && ! HB_SUPPORT_HARBOUR &&
+             ( pArg->value.asNum.val.l & 0xff ) == 0 && pArg->value.asNum.val.l != 0 )
          {
             pExpr->value.asString.string = const_cast< char * >( "" );
             pExpr->value.asString.dealloc = HB_FALSE;
@@ -2121,12 +2148,9 @@ HB_BOOL hb_compExprReduceLEN( PHB_EXPR pSelf, HB_COMP_DECL )
    PHB_EXPR pArg = pParms->value.asList.pExprList;
 
    /* FIXME: do not optimize when array/hash args have user expressions */
-   if( ( pArg->ExprType == HB_ET_STRING && ! HB_SUPPORT_USERCP ) ||
-       pArg->ExprType == HB_ET_ARRAY ||
-       pArg->ExprType == HB_ET_HASH )
+   if( ( pArg->ExprType == HB_ET_STRING && ! HB_SUPPORT_USERCP ) || pArg->ExprType == HB_ET_ARRAY || pArg->ExprType == HB_ET_HASH )
    {
-      PHB_EXPR pExpr = hb_compExprNewLong( pArg->ExprType == HB_ET_HASH ?
-                          pArg->nLength >> 1 : pArg->nLength, HB_COMP_PARAM );
+      PHB_EXPR pExpr = hb_compExprNewLong( pArg->ExprType == HB_ET_HASH ? pArg->nLength >> 1 : pArg->nLength, HB_COMP_PARAM );
 
       HB_COMP_EXPR_FREE( pParms );
       HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
@@ -2157,9 +2181,13 @@ HB_BOOL hb_compExprReduceEMPTY( PHB_EXPR pSelf, HB_COMP_DECL )
 
       case HB_ET_NUMERIC:
          if( pArg->value.asNum.NumType == HB_ET_DOUBLE )
+         {
             fResult = pArg->value.asNum.val.d == 0.0;
+         }
          else
+         {
             fResult = pArg->value.asNum.val.l == 0;
+         }
          break;
 
       case HB_ET_LOGICAL:
@@ -2175,8 +2203,7 @@ HB_BOOL hb_compExprReduceEMPTY( PHB_EXPR pSelf, HB_COMP_DECL )
          break;
 
       case HB_ET_TIMESTAMP:
-         fResult = pArg->value.asDate.lDate == 0 &&
-                   pArg->value.asDate.lTime == 0;
+         fResult = pArg->value.asDate.lDate == 0 && pArg->value.asDate.lTime == 0;
          break;
 
       case HB_ET_CODEBLOCK:
@@ -2205,12 +2232,9 @@ HB_BOOL hb_compExprReduceASC( PHB_EXPR pSelf, HB_COMP_DECL )
    PHB_EXPR pParms = pSelf->value.asFunCall.pParms;
    PHB_EXPR pArg = pParms->value.asList.pExprList;
 
-   if( pArg->ExprType == HB_ET_STRING &&
-       ( ! HB_SUPPORT_USERCP ||
-         ( HB_UCHAR ) pArg->value.asString.string[ 0 ] <= 127 ) )
+   if( pArg->ExprType == HB_ET_STRING && ( ! HB_SUPPORT_USERCP || ( HB_UCHAR ) pArg->value.asString.string[ 0 ] <= 127 ) )
    {
-      PHB_EXPR pExpr = hb_compExprNewLong(
-         ( HB_UCHAR ) pArg->value.asString.string[ 0 ], HB_COMP_PARAM );
+      PHB_EXPR pExpr = hb_compExprNewLong( static_cast< HB_UCHAR >( pArg->value.asString.string[ 0 ] ), HB_COMP_PARAM );
 
       HB_COMP_EXPR_FREE( pParms );
       HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
@@ -2228,8 +2252,7 @@ HB_BOOL hb_compExprReduceBCODE( PHB_EXPR pSelf, HB_COMP_DECL )
 
    if( pArg->ExprType == HB_ET_STRING )
    {
-      PHB_EXPR pExpr = hb_compExprNewLong(
-         ( HB_UCHAR ) pArg->value.asString.string[ 0 ], HB_COMP_PARAM );
+      PHB_EXPR pExpr = hb_compExprNewLong( static_cast< HB_UCHAR >( pArg->value.asString.string[ 0 ] ), HB_COMP_PARAM );
 
       HB_COMP_EXPR_FREE( pParms );
       HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
@@ -2250,16 +2273,20 @@ HB_BOOL hb_compExprReduceINT( PHB_EXPR pSelf, HB_COMP_DECL )
       PHB_EXPR pExpr;
 
       if( pArg->value.asNum.NumType == HB_ET_LONG )
+      {
          pExpr = hb_compExprNewLong( pArg->value.asNum.val.l, HB_COMP_PARAM );
+      }
       else
       {
          HB_MAXDBL dVal = static_cast< HB_MAXDBL >( pArg->value.asNum.val.d );
          if( HB_DBL_LIM_LONG( dVal ) )
+         {
             pExpr = hb_compExprNewLong( static_cast< HB_MAXINT >( pArg->value.asNum.val.d ), HB_COMP_PARAM );
+         }
          else
-            pExpr = hb_compExprNewDouble( pArg->value.asNum.val.d,
-                                          pArg->value.asNum.bWidth, 0,
-                                          HB_COMP_PARAM );
+         {
+            pExpr = hb_compExprNewDouble( pArg->value.asNum.val.d, pArg->value.asNum.bWidth, 0, HB_COMP_PARAM );
+         }
       }
       HB_COMP_EXPR_FREE( pParms );
       HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
@@ -2291,7 +2318,9 @@ HB_BOOL hb_compExprReduceSTOT( PHB_EXPR pSelf, HB_USHORT usCount, HB_COMP_DECL )
    if( pExpr )
    {
       if( pSelf->value.asFunCall.pParms )
+      {
          HB_COMP_EXPR_FREE( pParms );
+      }
       HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
       memcpy( pSelf, pExpr, sizeof( HB_EXPR ) );
       HB_COMP_EXPR_CLEAR( pExpr );
@@ -2311,18 +2340,17 @@ HB_BOOL hb_compExprReduceSTOD( PHB_EXPR pSelf, HB_USHORT usCount, HB_COMP_DECL )
    {
       pExpr = hb_compExprNewDate( 0, HB_COMP_PARAM );
    }
-   else if( pArg && pArg->ExprType == HB_ET_STRING &&
-            ( pArg->nLength >= 7 || pArg->nLength == 0 ) )
+   else if( pArg && pArg->ExprType == HB_ET_STRING && ( pArg->nLength >= 7 || pArg->nLength == 0 ) )
    {
-      pExpr = hb_compExprNewDate( pArg->nLength == 0 ? 0 :
-                                  hb_dateEncStr( pArg->value.asString.string ),
-                                  HB_COMP_PARAM );
+      pExpr = hb_compExprNewDate( pArg->nLength == 0 ? 0 : hb_dateEncStr( pArg->value.asString.string ), HB_COMP_PARAM );
    }
 
    if( pExpr )
    {
       if( pSelf->value.asFunCall.pParms )
+      {
          HB_COMP_EXPR_FREE( pParms );
+      }
       HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
       memcpy( pSelf, pExpr, sizeof( HB_EXPR ) );
       HB_COMP_EXPR_CLEAR( pExpr );
@@ -2342,8 +2370,7 @@ HB_BOOL hb_compExprReduceDTOS( PHB_EXPR pSelf, HB_COMP_DECL )
       char szBuffer[ 9 ], * szDate;
       PHB_EXPR pExpr;
 
-      szDate = static_cast< char * >( memcpy( hb_xgrab( 9 ),
-            hb_dateDecStr( szBuffer, static_cast< long >( pArg->value.asDate.lDate ) ), 9 ) );
+      szDate = static_cast< char * >( memcpy( hb_xgrab( 9 ), hb_dateDecStr( szBuffer, static_cast< long >( pArg->value.asDate.lDate ) ), 9 ) );
       pExpr = hb_compExprNewString( szDate, 8, HB_TRUE, HB_COMP_PARAM );
 
       HB_COMP_EXPR_FREE( pParms );
@@ -2392,10 +2419,13 @@ HB_BOOL hb_compExprReduceUPPER( PHB_EXPR pSelf, HB_COMP_DECL )
          {
             char c = *szValue++;
             if( c >= 'a' && c <= 'z' )
+            {
                fLower = HB_TRUE;
-            else if( ! ( ( c >= 'A' && c <= 'Z' ) ||
-                         ( c >= '0' && c <= '9' ) || c == ' ' ) )
+            }
+            else if( ! ( ( c >= 'A' && c <= 'Z' ) || ( c >= '0' && c <= '9' ) || c == ' ' ) )
+            {
                break;
+            }
          }
          while( --nLen );
       }
@@ -2410,8 +2440,7 @@ HB_BOOL hb_compExprReduceUPPER( PHB_EXPR pSelf, HB_COMP_DECL )
          {
             if( pArg->nLength == 1 )
             {
-               szValue = const_cast< char * >( hb_szAscii[ HB_TOUPPER( static_cast< unsigned char >(
-                                                   pArg->value.asString.string[ 0 ] ) ) ] );
+               szValue = const_cast< char * >( hb_szAscii[ HB_TOUPPER( static_cast< unsigned char >( pArg->value.asString.string[ 0 ] ) ) ] );
                fDealloc = HB_FALSE;
             }
             else
@@ -2477,28 +2506,27 @@ HB_BOOL hb_compExprReduceMIN( PHB_EXPR pSelf, HB_COMP_DECL )
          switch( bType )
          {
             case HB_ET_LONG:
-               pExpr = pFirst->value.asNum.val.l <= pNext->value.asNum.val.l ?
-                       pFirst : pNext;
+               pExpr = pFirst->value.asNum.val.l <= pNext->value.asNum.val.l ? pFirst : pNext;
                break;
 
             case HB_ET_DOUBLE:
-               pExpr = pFirst->value.asNum.val.d <= pNext->value.asNum.val.d ?
-                       pFirst : pNext;
+               pExpr = pFirst->value.asNum.val.d <= pNext->value.asNum.val.d ? pFirst : pNext;
                break;
 
             default:
                if( pFirst->value.asNum.NumType == HB_ET_DOUBLE )
-                  pExpr = ( pFirst->value.asNum.val.d <= static_cast< double >( pNext->value.asNum.val.l ) ) ?
-                          pFirst : pNext;
+               {
+                  pExpr = ( pFirst->value.asNum.val.d <= static_cast< double >( pNext->value.asNum.val.l ) ) ? pFirst : pNext;
+               }
                else
-                  pExpr = ( static_cast< double >( pFirst->value.asNum.val.l ) <= pNext->value.asNum.val.d ) ?
-                          pFirst : pNext;
+               {
+                  pExpr = ( static_cast< double >( pFirst->value.asNum.val.l ) <= pNext->value.asNum.val.d ) ? pFirst : pNext;
+               }
          }
       }
       else if( pFirst->ExprType == HB_ET_DATE )
       {
-         pExpr = pFirst->value.asDate.lDate <= pNext->value.asDate.lDate ?
-                 pFirst : pNext;
+         pExpr = pFirst->value.asDate.lDate <= pNext->value.asDate.lDate ? pFirst : pNext;
       }
       else if( pFirst->ExprType == HB_ET_TIMESTAMP )
       {
@@ -2514,13 +2542,11 @@ HB_BOOL hb_compExprReduceMIN( PHB_EXPR pSelf, HB_COMP_DECL )
    }
    else if( pFirst->ExprType == HB_ET_DATE && pNext->ExprType == HB_ET_TIMESTAMP )
    {
-      pExpr = pFirst->value.asDate.lDate <= pNext->value.asDate.lDate ?
-              pFirst : pNext;
+      pExpr = pFirst->value.asDate.lDate <= pNext->value.asDate.lDate ? pFirst : pNext;
    }
    else if( pFirst->ExprType == HB_ET_TIMESTAMP && pNext->ExprType == HB_ET_DATE )
    {
-      pExpr = pFirst->value.asDate.lDate < pNext->value.asDate.lDate ?
-              pFirst : pNext;
+      pExpr = pFirst->value.asDate.lDate < pNext->value.asDate.lDate ? pFirst : pNext;
    }
 
    if( pExpr )
@@ -2563,28 +2589,27 @@ HB_BOOL hb_compExprReduceMAX( PHB_EXPR pSelf, HB_COMP_DECL )
          switch( bType )
          {
             case HB_ET_LONG:
-               pExpr = pFirst->value.asNum.val.l >= pNext->value.asNum.val.l ?
-                       pFirst : pNext;
+               pExpr = pFirst->value.asNum.val.l >= pNext->value.asNum.val.l ? pFirst : pNext;
                break;
 
             case HB_ET_DOUBLE:
-               pExpr = pFirst->value.asNum.val.d >= pNext->value.asNum.val.d ?
-                       pFirst : pNext;
+               pExpr = pFirst->value.asNum.val.d >= pNext->value.asNum.val.d ? pFirst : pNext;
                break;
 
             default:
                if( pFirst->value.asNum.NumType == HB_ET_DOUBLE )
-                  pExpr = ( pFirst->value.asNum.val.d >= static_cast< double >( pNext->value.asNum.val.l ) ) ?
-                          pFirst : pNext;
+               {
+                  pExpr = ( pFirst->value.asNum.val.d >= static_cast< double >( pNext->value.asNum.val.l ) ) ? pFirst : pNext;
+               }
                else
-                  pExpr = ( static_cast< double >( pFirst->value.asNum.val.l ) >= pNext->value.asNum.val.d ) ?
-                          pFirst : pNext;
+               {
+                  pExpr = ( static_cast< double >( pFirst->value.asNum.val.l ) >= pNext->value.asNum.val.d ) ? pFirst : pNext;
+               }
          }
       }
       else if( pFirst->ExprType == HB_ET_DATE )
       {
-         pExpr = pFirst->value.asDate.lDate >= pNext->value.asDate.lDate ?
-                 pFirst : pNext;
+         pExpr = pFirst->value.asDate.lDate >= pNext->value.asDate.lDate ? pFirst : pNext;
       }
       else if( pFirst->ExprType == HB_ET_TIMESTAMP )
       {
@@ -2601,13 +2626,11 @@ HB_BOOL hb_compExprReduceMAX( PHB_EXPR pSelf, HB_COMP_DECL )
    }
    else if( pFirst->ExprType == HB_ET_DATE && pNext->ExprType == HB_ET_TIMESTAMP )
    {
-      pExpr = pFirst->value.asDate.lDate >= pNext->value.asDate.lDate ?
-              pFirst : pNext;
+      pExpr = pFirst->value.asDate.lDate >= pNext->value.asDate.lDate ? pFirst : pNext;
    }
    else if( pFirst->ExprType == HB_ET_TIMESTAMP && pNext->ExprType == HB_ET_DATE )
    {
-      pExpr = pFirst->value.asDate.lDate > pNext->value.asDate.lDate ?
-              pFirst : pNext;
+      pExpr = pFirst->value.asDate.lDate > pNext->value.asDate.lDate ? pFirst : pNext;
    }
 
    if( pExpr )
@@ -2636,8 +2659,7 @@ HB_BOOL hb_compExprReduceMAX( PHB_EXPR pSelf, HB_COMP_DECL )
 HB_BOOL hb_compExprReduceBitFunc( PHB_EXPR pSelf, HB_MAXINT nResult, HB_BOOL fBool, HB_COMP_DECL )
 {
    PHB_EXPR pParms = pSelf->value.asFunCall.pParms;
-   PHB_EXPR pExpr = fBool ? hb_compExprNewLogical( nResult != 0, HB_COMP_PARAM ) :
-                            hb_compExprNewLong( nResult, HB_COMP_PARAM );
+   PHB_EXPR pExpr = fBool ? hb_compExprNewLogical( nResult != 0, HB_COMP_PARAM ) : hb_compExprNewLong( nResult, HB_COMP_PARAM );
 
    HB_COMP_EXPR_FREE( pParms );
    HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );

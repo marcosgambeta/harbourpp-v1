@@ -55,7 +55,9 @@ static HB_SIZE hb_wcnlen( const wchar_t * szText, HB_SIZE nCount )
    HB_SIZE nLen = 0;
 
    while( nCount-- && szText[ nLen ] )
+   {
       ++nLen;
+   }
 
    return nLen;
 }

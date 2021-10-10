@@ -70,18 +70,22 @@ DWORD WINAPI GetEnvironmentVariableW( LPCWSTR name, LPWSTR value, DWORD size )
    if( lret != ERROR_SUCCESS )
    {
       if( value && size )
+      {
          value[ 0 ] = '\0';
+      }
       return 0;
    }
 
    result = size * sizeof( TCHAR );
-   lret = RegQueryValueExW( hk, name, nullptr, &dwType, ( LPBYTE ) value, &result );
+   lret = RegQueryValueExW( hk, name, nullptr, &dwType, static_cast< LPBYTE >( value ), &result );
    RegCloseKey( hk );
 
    if( lret != ERROR_SUCCESS )
    {
       if( value && size )
+      {
          value[ 0 ] = '\0';
+      }
       return value ? 0 : result;
    }
 
@@ -101,7 +105,9 @@ BOOL WINAPI SetEnvironmentVariableW( LPCWSTR name, LPCWSTR value )
 BOOL WINAPI GetUserNameW( LPWSTR buffer, LPDWORD len )
 {
    if( len && buffer )
+   {
       buffer[ 0 ] = '\0';
+   }
 
    return FALSE;
 }
@@ -109,7 +115,9 @@ BOOL WINAPI GetUserNameW( LPWSTR buffer, LPDWORD len )
 BOOL WINAPI GetComputerNameW( LPWSTR buffer, LPDWORD len )
 {
    if( len && buffer )
+   {
       buffer[ 0 ] = '\0';
+   }
 
    return FALSE;
 }
@@ -117,7 +125,9 @@ BOOL WINAPI GetComputerNameW( LPWSTR buffer, LPDWORD len )
 DWORD WINAPI GetCurrentDirectoryW( DWORD len, LPWSTR buffer )
 {
    if( len && buffer )
+   {
       buffer[ 0 ] = '\0';
+   }
 
    return 0;
 }
@@ -129,9 +139,7 @@ BOOL WINAPI SetCurrentDirectoryW( LPCWSTR dirname )
    return FALSE;
 }
 
-BOOL WINAPI LockFile( HANDLE hFile,
-                      DWORD dwFileOffsetLow, DWORD dwFileOffsetHigh,
-                      DWORD nNumberOfBytesToLockLow, DWORD nNumberOfBytesToLockHigh )
+BOOL WINAPI LockFile( HANDLE hFile, DWORD dwFileOffsetLow, DWORD dwFileOffsetHigh, DWORD nNumberOfBytesToLockLow, DWORD nNumberOfBytesToLockHigh )
 {
    HB_SYMBOL_UNUSED( hFile );
    HB_SYMBOL_UNUSED( dwFileOffsetLow );
@@ -142,9 +150,7 @@ BOOL WINAPI LockFile( HANDLE hFile,
    return TRUE;
 }
 
-BOOL WINAPI UnlockFile( HANDLE hFile,
-                        DWORD dwFileOffsetLow, DWORD dwFileOffsetHigh,
-                        DWORD nNumberOfBytesToUnlockLow, DWORD nNumberOfBytesToUnlockHigh )
+BOOL WINAPI UnlockFile( HANDLE hFile, DWORD dwFileOffsetLow, DWORD dwFileOffsetHigh, DWORD nNumberOfBytesToUnlockLow, DWORD nNumberOfBytesToUnlockHigh )
 {
    HB_SYMBOL_UNUSED( hFile );
    HB_SYMBOL_UNUSED( dwFileOffsetLow );
@@ -157,10 +163,7 @@ BOOL WINAPI UnlockFile( HANDLE hFile,
 
 /* LockFileEx() and UnlockFileEx() functions are present in COREDLL6
  */
-BOOL WINAPI LockFileEx( HANDLE hFile,
-                        DWORD dwFlags, DWORD dwReserved,
-                        DWORD nNumberOfBytesToLockLow,
-                        DWORD nNumberOfBytesToLockHigh, LPOVERLAPPED lpOverlapped )
+BOOL WINAPI LockFileEx( HANDLE hFile, DWORD dwFlags, DWORD dwReserved, DWORD nNumberOfBytesToLockLow, DWORD nNumberOfBytesToLockHigh, LPOVERLAPPED lpOverlapped )
 {
    HB_SYMBOL_UNUSED( hFile );
    HB_SYMBOL_UNUSED( dwFlags );
@@ -172,9 +175,7 @@ BOOL WINAPI LockFileEx( HANDLE hFile,
    return TRUE;
 }
 
-BOOL WINAPI UnlockFileEx( HANDLE hFile, DWORD dwReserved,
-                          DWORD nNumberOfBytesToUnlockLow,
-                          DWORD nNumberOfBytesToUnlockHigh, LPOVERLAPPED lpOverlapped )
+BOOL WINAPI UnlockFileEx( HANDLE hFile, DWORD dwReserved, DWORD nNumberOfBytesToUnlockLow, DWORD nNumberOfBytesToUnlockHigh, LPOVERLAPPED lpOverlapped )
 {
    HB_SYMBOL_UNUSED( hFile );
    HB_SYMBOL_UNUSED( dwReserved );
@@ -246,7 +247,9 @@ int WINAPI MulDiv( int nNumber, int nNumerator, int nDenominator )
    {
       HB_MAXINT llResult = static_cast< HB_MAXINT >( nNumber ) * nNumerator / nDenominator;
       if( HB_LIM_INT32( llResult ) )
+      {
          return static_cast< int >( llResult );
+      }
    }
    return -1;
 }

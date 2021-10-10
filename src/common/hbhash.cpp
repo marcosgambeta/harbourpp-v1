@@ -61,7 +61,9 @@ static PHB_HASH_ITEM hb_hashItemNew( HB_SIZE nKey, const void * pKey, const void
 static void hb_hashItemDelete( PHB_HASH_TABLE pTable, PHB_HASH_ITEM pItem )
 {
    if( pTable->pDeleteItemFunc )
+   {
       ( pTable->pDeleteItemFunc )( pTable, pItem->KeyPtr, pItem->ValPtr );
+   }
    hb_xfree( pItem );
 }
 
@@ -75,10 +77,7 @@ static void hb_hashItemDelete( PHB_HASH_TABLE pTable, PHB_HASH_ITEM pItem )
  *       (first and second are values to compare, function have to return
  *        zero if values match or nonzero if they don't match)
  */
-PHB_HASH_TABLE hb_hashTableCreate( HB_SIZE nSize,
-                                   PHB_HASH_FUNC pHashFunc,
-                                   PHB_HASH_FUNC pDelete,
-                                   PHB_HASH_FUNC pComp )
+PHB_HASH_TABLE hb_hashTableCreate( HB_SIZE nSize, PHB_HASH_FUNC pHashFunc, PHB_HASH_FUNC pDelete, PHB_HASH_FUNC pComp )
 {
    PHB_HASH_TABLE pTable = static_cast< PHB_HASH_TABLE >( hb_xgrab( sizeof( HB_HASH_TABLE ) ) );
 
@@ -124,11 +123,10 @@ PHB_HASH_TABLE hb_hashTableResize( PHB_HASH_TABLE pTable, HB_SIZE nNewSize )
    HB_SIZE nSize = 0;
 
    if( nNewSize == 0 )
+   {
       nNewSize = 2 * pTable->nTableSize + 1;
-   pNew = hb_hashTableCreate( nNewSize,
-                              pTable->pKeyFunc,
-                              pTable->pDeleteItemFunc,
-                              pTable->pCompFunc );
+   }
+   pNew = hb_hashTableCreate( nNewSize, pTable->pKeyFunc, pTable->pDeleteItemFunc, pTable->pCompFunc );
 
    while( nSize < pTable->nTableSize )
    {
@@ -148,7 +146,9 @@ PHB_HASH_TABLE hb_hashTableResize( PHB_HASH_TABLE pTable, HB_SIZE nNewSize )
             if( pNewItem )
             {
                while( pNewItem->next )
+               {
                   pNewItem = pNewItem->next;
+               }
                pNewItem->next = pItem;
             }
             else
@@ -181,7 +181,9 @@ HB_BOOL hb_hashTableAdd( PHB_HASH_TABLE pTable, const void * pKey, const void * 
    if( pItem )
    {
       while( pItem->next )
+      {
          pItem = pItem->next;
+      }
       pItem->next = hb_hashItemNew( nKey, pKey, pValue );
    }
    else
@@ -207,10 +209,14 @@ const void * hb_hashTableFind( PHB_HASH_TABLE pTable, const void * pKey )
    if( pItem )
    {
       while( pItem && ( ( pTable->pCompFunc )( pTable, pItem->KeyPtr, pKey ) != 0 ) )
+      {
          pItem = pItem->next;
+      }
 
       if( pItem )
+      {
          pFound = pItem->ValPtr;
+      }
    }
 
    return pFound;
@@ -229,7 +235,9 @@ HB_BOOL hb_hashTableDel( PHB_HASH_TABLE pTable, const void * pKey )
 
    nKey = ( pTable->pKeyFunc )( pTable, pKey, nullptr );
    if( nKey > pTable->nTableSize )
+   {
       return HB_FALSE;
+   }
 
    pItem = pTable->pItems[ nKey ];
    while( pItem && ! bFound )
