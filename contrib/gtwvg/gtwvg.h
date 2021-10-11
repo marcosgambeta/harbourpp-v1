@@ -216,22 +216,6 @@ HB_EXTERN_BEGIN
 
 /*-*/
 
-typedef BOOL ( WINAPI * wvtGradientFill )     (
-                      HDC        hdc,
-                      PTRIVERTEX pVertex,
-                      ULONG      dwNumVertex,
-                      PVOID      pMesh,
-                      ULONG      dwNumMesh,
-                      ULONG      dwMode      );
-
-typedef BOOL ( WINAPI * wvtSetLayeredWindowAttributes )(
-                      HWND       hwnd,
-                      COLORREF   crKey,
-                      BYTE       bAlpha,
-                      DWORD      dwFlags     );
-
-/*-*/
-
 typedef struct
 {
    int            iTop;
@@ -311,10 +295,6 @@ typedef struct
 #endif
    HFONT     hUserFonts[ 50 ];              /* User defined font handles */
    HPEN      hUserPens[ 50 ];               /* User defined pens */
-   HINSTANCE hMSImg32;                      /* Handle to the loaded library msimg32.dll */
-   wvtGradientFill pfnGF;                   /* Pointer to Address of the GradientFill function in MSImg32.dll */
-   HINSTANCE hUser32;                       /* Handle to the loaded library user32.dll */
-   wvtSetLayeredWindowAttributes pfnLayered;/* Pointer to set Windows attribute - transparency. */
 
 } HB_GUIDATA, * PHB_GUIDATA;
 

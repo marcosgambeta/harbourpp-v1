@@ -1247,41 +1247,38 @@ HB_FUNC( WVG_SHADEDRECT )
 {
    PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
 
-   if( pWVT->pGUI->hMSImg32 )
-   {
-      HB_GOBJS * gObj = hb_wvg_ObjectNew( pWVT );
+   HB_GOBJS * gObj = hb_wvg_ObjectNew( pWVT );
 
-      gObj->iObjType = GOBJ_OBJTYPE_SHADEDRECT;
+   gObj->iObjType = GOBJ_OBJTYPE_SHADEDRECT;
 
-      gObj->iTop    = hb_parni( 1 );
-      gObj->iLeft   = hb_parni( 2 );
-      gObj->iBottom = hb_parni( 3 );
-      gObj->iRight  = hb_parni( 4 );
+   gObj->iTop    = hb_parni( 1 );
+   gObj->iLeft   = hb_parni( 2 );
+   gObj->iBottom = hb_parni( 3 );
+   gObj->iRight  = hb_parni( 4 );
 
-      gObj->aOffset.iTop    = hb_parvni( 5, 1 );
-      gObj->aOffset.iLeft   = hb_parvni( 5, 2 );
-      gObj->aOffset.iBottom = hb_parvni( 5, 3 );
-      gObj->aOffset.iRight  = hb_parvni( 5, 4 );
+   gObj->aOffset.iTop    = hb_parvni( 5, 1 );
+   gObj->aOffset.iLeft   = hb_parvni( 5, 2 );
+   gObj->aOffset.iBottom = hb_parvni( 5, 3 );
+   gObj->aOffset.iRight  = hb_parvni( 5, 4 );
 
-      gObj->iData = hb_parnidef( 6, GRADIENT_FILL_RECT_H );
+   gObj->iData = hb_parnidef( 6, GRADIENT_FILL_RECT_H );
 
-      gObj->vert[ 0 ].x     = 0;
-      gObj->vert[ 0 ].y     = 0;
-      gObj->vert[ 0 ].Red   = static_cast< COLOR16 >( hb_parvni( 7, 1 ) );
-      gObj->vert[ 0 ].Green = static_cast< COLOR16 >( hb_parvni( 7, 2 ) );
-      gObj->vert[ 0 ].Blue  = static_cast< COLOR16 >( hb_parvni( 7, 3 ) );
-      gObj->vert[ 0 ].Alpha = static_cast< COLOR16 >( hb_parvni( 7, 4 ) );
+   gObj->vert[ 0 ].x     = 0;
+   gObj->vert[ 0 ].y     = 0;
+   gObj->vert[ 0 ].Red   = static_cast< COLOR16 >( hb_parvni( 7, 1 ) );
+   gObj->vert[ 0 ].Green = static_cast< COLOR16 >( hb_parvni( 7, 2 ) );
+   gObj->vert[ 0 ].Blue  = static_cast< COLOR16 >( hb_parvni( 7, 3 ) );
+   gObj->vert[ 0 ].Alpha = static_cast< COLOR16 >( hb_parvni( 7, 4 ) );
 
-      gObj->vert[ 1 ].x     = 0;
-      gObj->vert[ 1 ].y     = 0;
-      gObj->vert[ 1 ].Red   = static_cast< COLOR16 >( hb_parvni( 8, 1 ) );
-      gObj->vert[ 1 ].Green = static_cast< COLOR16 >( hb_parvni( 8, 2 ) );
-      gObj->vert[ 1 ].Blue  = static_cast< COLOR16 >( hb_parvni( 8, 3 ) );
-      gObj->vert[ 1 ].Alpha = static_cast< COLOR16 >( hb_parvni( 8, 4 ) );
+   gObj->vert[ 1 ].x     = 0;
+   gObj->vert[ 1 ].y     = 0;
+   gObj->vert[ 1 ].Red   = static_cast< COLOR16 >( hb_parvni( 8, 1 ) );
+   gObj->vert[ 1 ].Green = static_cast< COLOR16 >( hb_parvni( 8, 2 ) );
+   gObj->vert[ 1 ].Blue  = static_cast< COLOR16 >( hb_parvni( 8, 3 ) );
+   gObj->vert[ 1 ].Alpha = static_cast< COLOR16 >( hb_parvni( 8, 4 ) );
 
-      gObj->gObjNext = pWVT->gObjs;
-      pWVT->gObjs    = gObj;
-   }
+   gObj->gObjNext = pWVT->gObjs;
+   pWVT->gObjs    = gObj;
 }
 
 static void hb_wvg_ShadedRect( PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, int iRight, int iBottom )
@@ -1298,7 +1295,7 @@ static void hb_wvg_ShadedRect( PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iT
    gObj->vert[ 1 ].x = iRight;
    gObj->vert[ 1 ].y = iBottom;
 
-   bGF = ( HB_BOOL ) pWVT->pGUI->pfnGF( pWVT->hGuiDC, gObj->vert, 2, &gRect, 1, gObj->iData );
+   bGF = static_cast< HB_BOOL >( GradientFill( pWVT->hGuiDC, gObj->vert, 2, &gRect, 1, gObj->iData ) );
 
    HB_SYMBOL_UNUSED( bGF );
 }

@@ -2562,43 +2562,41 @@ HB_FUNC( WVT_DRAWSHADEDRECT )
 
    HB_BOOL bGF = HB_FALSE;
 
-   if( _s->pGUI->hMSImg32 )
+   TRIVERTEX     vert[ 2 ];
+   GRADIENT_RECT gRect = { 0, 0 };
+
+   int iTop    = ( _s->PTEXTSIZE.y * hb_parni( 1 ) ) + hb_parvni( 5, 1 );
+   int iLeft   = ( _s->PTEXTSIZE.x * hb_parni( 2 ) ) + hb_parvni( 5, 2 );
+   int iBottom = ( _s->PTEXTSIZE.y * ( hb_parni( 3 ) + 1 ) ) - 1 + hb_parvni( 5, 3 );
+   int iRight  = ( _s->PTEXTSIZE.x * ( hb_parni( 4 ) + 1 ) ) - 1 + hb_parvni( 5, 4 );
+
+   int iMode = hb_parnidef( 6, GRADIENT_FILL_RECT_H );
+
+   vert[ 0 ].x     = iLeft;
+   vert[ 0 ].y     = iTop;
+   vert[ 0 ].Red   = static_cast< COLOR16 >( hb_parvni( 7, 1 ) );
+   vert[ 0 ].Green = static_cast< COLOR16 >( hb_parvni( 7, 2 ) );
+   vert[ 0 ].Blue  = static_cast< COLOR16 >( hb_parvni( 7, 3 ) );
+   vert[ 0 ].Alpha = static_cast< COLOR16 >( hb_parvni( 7, 4 ) );
+
+   vert[ 1 ].x     = iRight;
+   vert[ 1 ].y     = iBottom;
+   vert[ 1 ].Red   = static_cast< COLOR16 >( hb_parvni( 8, 1 ) );
+   vert[ 1 ].Green = static_cast< COLOR16 >( hb_parvni( 8, 2 ) );
+   vert[ 1 ].Blue  = static_cast< COLOR16 >( hb_parvni( 8, 3 ) );
+   vert[ 1 ].Alpha = static_cast< COLOR16 >( hb_parvni( 8, 4 ) );
+
+   gRect.UpperLeft  = 0;
+   gRect.LowerRight = 1;
+
+   bGF = static_cast< HB_BOOL >( GradientFill( _s->hdc, vert, 2, &gRect, 1, iMode ) );
+   #if defined( __SETGUI__ )
+   if( _s->bGui )
    {
-      TRIVERTEX     vert[ 2 ];
-      GRADIENT_RECT gRect = { 0, 0 };
-
-      int iTop    = ( _s->PTEXTSIZE.y * hb_parni( 1 ) ) + hb_parvni( 5, 1 );
-      int iLeft   = ( _s->PTEXTSIZE.x * hb_parni( 2 ) ) + hb_parvni( 5, 2 );
-      int iBottom = ( _s->PTEXTSIZE.y * ( hb_parni( 3 ) + 1 ) ) - 1 + hb_parvni( 5, 3 );
-      int iRight  = ( _s->PTEXTSIZE.x * ( hb_parni( 4 ) + 1 ) ) - 1 + hb_parvni( 5, 4 );
-
-      int iMode = hb_parnidef( 6, GRADIENT_FILL_RECT_H );
-
-      vert[ 0 ].x     = iLeft;
-      vert[ 0 ].y     = iTop;
-      vert[ 0 ].Red   = static_cast< COLOR16 >( hb_parvni( 7, 1 ) );
-      vert[ 0 ].Green = static_cast< COLOR16 >( hb_parvni( 7, 2 ) );
-      vert[ 0 ].Blue  = static_cast< COLOR16 >( hb_parvni( 7, 3 ) );
-      vert[ 0 ].Alpha = static_cast< COLOR16 >( hb_parvni( 7, 4 ) );
-
-      vert[ 1 ].x     = iRight;
-      vert[ 1 ].y     = iBottom;
-      vert[ 1 ].Red   = static_cast< COLOR16 >( hb_parvni( 8, 1 ) );
-      vert[ 1 ].Green = static_cast< COLOR16 >( hb_parvni( 8, 2 ) );
-      vert[ 1 ].Blue  = static_cast< COLOR16 >( hb_parvni( 8, 3 ) );
-      vert[ 1 ].Alpha = static_cast< COLOR16 >( hb_parvni( 8, 4 ) );
-
-      gRect.UpperLeft  = 0;
-      gRect.LowerRight = 1;
-
-      bGF = static_cast< HB_BOOL >( _s->pGUI->pfnGF( _s->hdc, vert, 2, &gRect, 1, iMode ) );
-      #if defined( __SETGUI__ )
-      if( _s->bGui )
-      {
-         bGF = static_cast< HB_BOOL >( _s->pGUI->pfnGF( _s->hGuiDC, vert, 2, &gRect, 1, iMode ) );
-      }
-      #endif
+      bGF = static_cast< HB_BOOL >( GradientFill( _s->hGuiDC, vert, 2, &gRect, 1, iMode ) );
    }
+   #endif
+
    hb_retl( bGF );
 }
 /*#endif*/

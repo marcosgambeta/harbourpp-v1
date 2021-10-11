@@ -65,7 +65,6 @@
 #include "hbwinole.h"
 #include "gtwvg.h"
 
-
 #ifndef WS_EX_COMPOSITED
 #define WS_EX_COMPOSITED  0x02000000
 #endif
@@ -557,7 +556,9 @@ static HFONT hb_gt_wvt_GetFont( LPCTSTR lpFace, int iHeight, int iWidth, int iWe
       return CreateFontIndirect( &logfont );
    }
    else
+   {
       return static_cast< HFONT >( GetStockObject( OEM_FIXED_FONT /* SYSTEM_FIXED_FONT */ ) );
+   }
 }
 
 static POINT hb_gt_wvt_GetXYFromColRow( PHB_GTWVT pWVT, int col, int row )
@@ -781,7 +782,6 @@ static void hb_gt_wvt_SetCloseButton( PHB_GTWVT pWVT )
       EnableMenuItem( hSysMenu, SC_CLOSE, MF_BYCOMMAND | ( pWVT->CloseMode < 2 ? MF_ENABLED : MF_GRAYED ) );
    }
 }
-
 
 static void hb_gt_wvt_Composited( PHB_GTWVT pWVT, HB_BOOL fEnable )
 {
@@ -1051,6 +1051,7 @@ static HB_BOOL hb_gt_wvt_FitSizeRows( PHB_GTWVT pWVT )
       pWVT->bResizing = HB_FALSE;
       InvalidateRect( pWVT->hWnd, nullptr, HB_FALSE );
    }
+
    return bSizeChanged;
 }
 
@@ -2940,8 +2941,6 @@ static void hb_gt_wvt_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    /* hb_gt_wvt_CreateConsoleWindow( pWVT ); */
 }
 
-/* --- */
-
 static void hb_gt_wvt_Exit( PHB_GT pGT )
 {
    PHB_GTWVT pWVT;
@@ -2970,8 +2969,6 @@ static void hb_gt_wvt_Exit( PHB_GT pGT )
       hb_gt_wvt_Free( pWVT );
    }
 }
-
-/* --- */
 
 static HB_BOOL hb_gt_wvt_SetMode( PHB_GT pGT, int iRow, int iCol )
 {
@@ -3013,8 +3010,6 @@ static HB_BOOL hb_gt_wvt_SetMode( PHB_GT pGT, int iRow, int iCol )
    return fResult;
 }
 
-/* --- */
-
 static HB_BOOL hb_gt_wvt_PutChar( PHB_GT pGT, int iRow, int iCol, int iColor, HB_BYTE bAttr, HB_USHORT usChar )
 {
    if( HB_GTSUPER_PUTCHAR( pGT, iRow, iCol, iColor, bAttr, usChar ) )
@@ -3037,8 +3032,6 @@ static HB_BOOL hb_gt_wvt_PutChar( PHB_GT pGT, int iRow, int iCol, int iColor, HB
    }
 }
 
-/* --- */
-
 static const char * hb_gt_wvt_Version( PHB_GT pGT, int iType )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvt_Version(%p,%d)", static_cast< void * >( pGT ), iType ) );
@@ -3052,8 +3045,6 @@ static const char * hb_gt_wvt_Version( PHB_GT pGT, int iType )
 
    return "Harbour Terminal: Windows GUI console (WVG)";
 }
-
-/* --- */
 
 static int hb_gt_wvt_ReadKey( PHB_GT pGT, int iEventMask )
 {
@@ -3133,8 +3124,6 @@ static int hb_gt_wvt_mouse_CountButton( PHB_GT pGT )
 
    return GetSystemMetrics( SM_CMOUSEBUTTONS );
 }
-
-/* --- */
 
 static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 {
@@ -4168,12 +4157,9 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                if( pWVT->hWnd )
                {
 #if ( _WIN32_WINNT >= 0x0500 ) && ! defined( HB_OS_WIN_CE )
-                  if( s_guiData->pfnLayered )
-                  {
-                     SetWindowLongPtr( pWVT->hWnd, GWL_EXSTYLE, GetWindowLongPtr( pWVT->hWnd, GWL_EXSTYLE ) | WS_EX_LAYERED );
+                  SetWindowLongPtr( pWVT->hWnd, GWL_EXSTYLE, GetWindowLongPtr( pWVT->hWnd, GWL_EXSTYLE ) | WS_EX_LAYERED );
 
-                     s_guiData->pfnLayered( pWVT->hWnd, RGB( 255, 255, 255 ), static_cast< BYTE >( hb_itemGetNI( pInfo->pNewVal2 ) ), /* LWA_COLORKEY | */ LWA_ALPHA );
-                  }
+                  SetLayeredWindowAttributes( pWVT->hWnd, RGB( 255, 255, 255 ), static_cast< BYTE >( hb_itemGetNI( pInfo->pNewVal2 ) ), /* LWA_COLORKEY | */ LWA_ALPHA );
 #endif
                }
                break;
@@ -4484,8 +4470,6 @@ static void hb_gt_wvt_gfx_Text( PHB_GT pGT, int iTop, int iLeft, const char *cBu
 }
 #endif
 
-/* --- */
-
 static void hb_gt_wvt_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 {
    PHB_GTWVT pWVT;
@@ -4511,8 +4495,6 @@ static void hb_gt_wvt_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
          pWVT->fInit = HB_TRUE;
    }
 }
-
-/* --- */
 
 static void hb_gt_wvt_Refresh( PHB_GT pGT )
 {
@@ -4559,8 +4541,6 @@ static void hb_gt_wvt_Refresh( PHB_GT pGT )
    }
 }
 
-/* --- */
-
 static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_FuncInit(%p)", static_cast< void * >( pFuncTable ) ) );
@@ -4588,18 +4568,12 @@ static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
    return HB_TRUE;
 }
 
-/* --- */
-
 #include "hbgtreg.h"
-
-/* --- */
 
 /* WVT specific functions */
 
 static void hb_wvt_gtLoadGuiData( void )
 {
-   HINSTANCE h;
-
    s_guiData = static_cast< PHB_GUIDATA >( hb_xgrab( sizeof( HB_GUIDATA ) ) );
    memset( s_guiData, 0, sizeof( HB_GUIDATA ) );
 
@@ -4617,27 +4591,6 @@ static void hb_wvt_gtLoadGuiData( void )
 #endif
    s_guiData->solidBrush     = CreateSolidBrush( RGB( 0,0,0 ) );
    s_guiData->whiteBrush     = CreateSolidBrush( RGB( 198,198,198 ) );
-
-   h = LoadLibrary( TEXT( "msimg32.dll" ) );
-   if( h )
-   {
-      /* workaround for wrong declarations in some old C compilers */
-      s_guiData->pfnGF = reinterpret_cast< wvtGradientFill >( HB_WINAPI_GETPROCADDRESS( h, "GradientFill" ) );
-      if( s_guiData->pfnGF )
-      {
-         s_guiData->hMSImg32 = h;
-      }
-   }
-
-   h = GetModuleHandle( TEXT( "user32.dll" ) );
-   if( h )
-   {
-      s_guiData->pfnLayered = reinterpret_cast< wvtSetLayeredWindowAttributes >( HB_WINAPI_GETPROCADDRESS( h, "SetLayeredWindowAttributes" ) );
-      if( s_guiData->pfnLayered )
-      {
-         s_guiData->hUser32 = h;
-      }
-   }
 }
 
 static void hb_wvt_gtReleaseGuiData( void )
@@ -4654,16 +4607,6 @@ static void hb_wvt_gtReleaseGuiData( void )
    DeleteObject( ( HBRUSH ) s_guiData->solidBrush    );
    DeleteObject( ( HBRUSH ) s_guiData->whiteBrush    );
 
-   if( s_guiData->hMSImg32 )
-   {
-      FreeLibrary( s_guiData->hMSImg32 );
-      s_guiData->hMSImg32 = nullptr;
-   }
-   if( s_guiData->hUser32 )
-   {
-      FreeLibrary( s_guiData->hUser32 );
-      s_guiData->hUser32 = nullptr;
-   }
 #if ! defined( HB_OS_WIN_CE )
    for( i = 0; i < WVT_PICTURES_MAX; i++ )
    {

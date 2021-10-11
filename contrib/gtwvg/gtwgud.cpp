@@ -1998,12 +1998,9 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                if( pWVT->hWnd )
                {
 #if ( _WIN32_WINNT >= 0x0500 )
-                  if( pWVT->pfnLayered )
-                  {
-                     SetWindowLong( pWVT->hWnd, GWL_EXSTYLE, GetWindowLong( pWVT->hWnd, GWL_EXSTYLE ) | WS_EX_LAYERED );
+                  SetWindowLong( pWVT->hWnd, GWL_EXSTYLE, GetWindowLong( pWVT->hWnd, GWL_EXSTYLE ) | WS_EX_LAYERED );
 
-                     pWVT->pfnLayered( pWVT->hWnd, RGB( 255, 255, 255 ), static_cast< BYTE >( hb_itemGetNI( pInfo->pNewVal2 ) ), /* LWA_COLORKEY | */ LWA_ALPHA );
-                  }
+                  SetLayeredWindowAttributes( pWVT->hWnd, RGB( 255, 255, 255 ), static_cast< BYTE >( hb_itemGetNI( pInfo->pNewVal2 ) ), /* LWA_COLORKEY | */ LWA_ALPHA );
 #endif
                }
                break;
