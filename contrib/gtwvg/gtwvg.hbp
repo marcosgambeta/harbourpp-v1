@@ -10,45 +10,47 @@
 
 hbwin.hbc
 
+-i.
+
 # Optimize build time and make sure we build even with this option
 -cflag=-DWIN32_LEAN_AND_MEAN
 
-gtwvgd.cpp
-gtwgud.cpp
+src\gtwvgd.cpp
+src\gtwgud.cpp
 
-wvgcore.cpp
-wvgcuig.cpp
-wvgutils.cpp
-wvgwin.cpp
-wvgwing.cpp
+src\wvgcore.cpp
+src\wvgcuig.cpp
+src\wvgutils.cpp
+src\wvgwin.cpp
+src\wvgwing.cpp
 
 ${hb_name}.hbx
 
-3state.prg
-activex.prg
-bitmap.prg
-checkbox.prg
-class.prg
-combobox.prg
-crt.prg
-dataref.prg
-dialog.prg
-drawarea.prg
-genrc.prg
-htmlview.prg
-listbox.prg
-menubar.prg
-mle.prg
-paint.prg
-parthdlr.prg
-pushbut.prg
-radiobut.prg
-scrollbr.prg
-sle.prg
-statbar.prg
-static.prg
-syswnd.prg
-tabpage.prg
-toolbar.prg
-treeview.prg
-wnd.prg
+src\3state.prg
+src\activex.prg
+src\bitmap.prg
+src\checkbox.prg
+src\class.prg
+src\combobox.prg
+src\crt.prg
+src\dataref.prg
+src\dialog.prg
+src\drawarea.prg
+src\genrc.prg
+src\htmlview.prg
+src\listbox.prg
+src\menubar.prg
+src\mle.prg
+src\paint.prg
+src\parthdlr.prg
+src\pushbut.prg
+src\radiobut.prg
+src\scrollbr.prg
+src\sle.prg
+src\statbar.prg
+src\static.prg
+src\syswnd.prg
+src\tabpage.prg
+src\toolbar.prg
+src\treeview.prg
+src\wnd.prg
