@@ -22,5 +22,7 @@
 
 ${hb_name}.hbx
 
-gtallegd.cpp
-ssf.cpp
+-i.
+
+src\gtallegd.cpp
+src\ssf.cpp
