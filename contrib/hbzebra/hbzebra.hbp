@@ -7,19 +7,21 @@
 
 ${hb_name}.hbx
 
+-i.
+
 # Core
-core.cpp
-coredraw.cpp
+src\core.cpp
+src\coredraw.cpp
 
 # Barcodes
-codabar.cpp
-code11.cpp
-code128.cpp
-code39.cpp
-code93.cpp
-eanupc.cpp
-itf.cpp
-msi.cpp
-pdf417.cpp
-datamtrx.cpp
-qrcode.cpp
+src\codabar.cpp
+src\code11.cpp
+src\code128.cpp
+src\code39.cpp
+src\code93.cpp
+src\eanupc.cpp
+src\itf.cpp
+src\msi.cpp
+src\pdf417.cpp
+src\datamtrx.cpp
+src\qrcode.cpp
