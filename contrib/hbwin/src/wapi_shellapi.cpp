@@ -85,7 +85,8 @@ HB_FUNC( WAPI_SHELLEXECUTE_WAIT )
    void * hDirectory;
    BOOL retVal;
    MSG msg;
-   SHELLEXECUTEINFO ShExecInfo = {0};
+   SHELLEXECUTEINFO ShExecInfo;
+   memset( &ShExecInfo, 0, sizeof( ShExecInfo ) );
    ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
    ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
    ShExecInfo.hwnd = static_cast< HWND >( hb_parptr( 1 ) );
