@@ -1,5 +1,5 @@
 /*
- * Xbase++ Compatible xbpPartHandler Class
+ * Xbase++ xbpToolBar Compatible Class
  *
  * Copyright 2008-2012 Pritpal Bedi <bedipritpal@hotmail.com>
  *
@@ -56,107 +56,41 @@
 #include "wvtwin.ch"
 #include "wvgparts.ch"
 
-CREATE CLASS WvgSysWindow INHERIT WvgPartHandler
+/* WvgToolBarButton() Class compatible with XbpToolbarButton() */
+CREATE CLASS WvgToolBarButton
 
-   METHOD new( oParent, oOwner, aPos )
-   METHOD create( oParent, oOwner, aPos )
-   METHOD configure()
-   METHOD destroy()
+   VAR    enabled                               INIT .T.
+   VAR    index                                 INIT 0
+   VAR    key                                   INIT ""
+   VAR    style                                 INIT WVGTOOLBAR_BUTTON_DEFAULT
+   VAR    caption                               INIT ""
+   VAR    image                                 INIT NIL
+   VAR    disabledImage                         INIT NIL
+   VAR    hotImage                              INIT NIL
+   VAR    mixedState                            INIT .F.
+   VAR    pressed                               INIT .F.
+   VAR    visible                               INIT .T.
+   VAR    left                                  INIT 0
+   VAR    bottom                                INIT 0
+   VAR    top                                   INIT 0
+   VAR    width                                 INIT 0
+   VAR    height                                INIT 0
+   VAR    description                           INIT ""
+   VAR    tooltipText                           INIT ""
+   VAR    command                               INIT 0
 
-   METHOD disable()
-   METHOD enable()
-   METHOD hide()
-   METHOD show()
-   METHOD SetPos( aPos )
-
-   METHOD currentPos()
-   METHOD currentSize()
-
-   VAR    aPos                                  INIT { 0, 0 }
-
-   VAR    hWnd                                  PROTECTED
-   VAR    nOldProc                              PROTECTED
-   VAR    nWndProc                              PROTECTED
-
-
-   VAR    sl_helpRequest
-   ACCESS helpRequest                           INLINE ::sl_helpRequest
-   ASSIGN helpRequest( bBlock )                 INLINE ::sl_helpRequest := bBlock
-
-   VAR    sl_move
-   ACCESS move                                  INLINE ::sl_move
-   ASSIGN move( bBlock )                        INLINE ::sl_move := bBlock
-
-   VAR    sl_quit
-   ACCESS quit                                  INLINE ::sl_quit
-   ASSIGN quit( bBlock )                        INLINE ::sl_quit := bBlock
+   METHOD new( cCaption, nStyle, cKey )
 
 ENDCLASS
 
-METHOD WvgSysWindow:new( oParent, oOwner, aPos )
+METHOD WvgToolBarButton:new( cCaption, nStyle, cKey )
 
-   __defaultNIL( @oParent, ::oParent )
-   __defaultNIL( @oOwner, ::oOwner )
-   __defaultNIL( @aPos, ::aPos )
+   __defaultNIL( @cCaption, ::caption )
+   __defaultNIL( @nStyle, ::style )
+   __defaultNIL( @cKey, ::key )
 
-   ::oParent := oParent
-   ::oOwner  := oOwner
-   ::aPos    := aPos
-
-   ::WvgPartHandler:new( oParent, oOwner )
+   ::caption        := cCaption
+   ::style          := nStyle
+   ::key            := cKey
 
    RETURN Self
-
-METHOD WvgSysWindow:create( oParent, oOwner, aPos )
-
-   __defaultNIL( @oParent, ::oParent )
-   __defaultNIL( @oOwner, ::oOwner )
-   __defaultNIL( @aPos, ::aPos )
-
-   ::oParent := oParent
-   ::oOwner  := oOwner
-   ::aPos    := aPos
-
-   ::WvgPartHandler:create( oParent, oOwner )
-
-   RETURN Self
-
-METHOD WvgSysWindow:configure()
-   RETURN Self
-
-METHOD WvgSysWindow:destroy()
-   RETURN Self
-
-METHOD WvgSysWindow:disable()
-   RETURN Self
-
-METHOD WvgSysWindow:enable()
-   RETURN Self
-
-METHOD WvgSysWindow:hide()
-   RETURN Self
-
-METHOD WvgSysWindow:show()
-   RETURN Self
-
-METHOD WvgSysWindow:SetPos( aPos )
-
-   wvg_SetWindowPosition( ::hWnd, aPos[ 1 ], aPos[ 2 ], .F. )
-
-   RETURN Self
-
-METHOD WvgSysWindow:currentPos()
-
-   LOCAL aRect
-
-   aRect := wvg_GetWindowRect( ::hWnd )
-
-   RETURN { aRect[ 1 ], aRect[ 2 ] }
-
-METHOD WvgSysWindow:currentSize()
-
-   LOCAL aRect
-
-   aRect := wvg_GetClientRect( ::hWnd )
-
-   RETURN { aRect[ 3 ] - aRect[ 1 ], aRect[ 4 ] - aRect[ 2 ] }

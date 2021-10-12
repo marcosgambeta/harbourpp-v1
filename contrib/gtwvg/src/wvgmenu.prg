@@ -1,5 +1,5 @@
 /*
- * Xbase++ Compatible xbpPartHandler Class
+ * Xbase++ Compatible xbpMenuBar Class
  *
  * Copyright 2008-2012 Pritpal Bedi <bedipritpal@hotmail.com>
  *
@@ -56,107 +56,66 @@
 #include "wvtwin.ch"
 #include "wvgparts.ch"
 
-CREATE CLASS WvgSysWindow INHERIT WvgPartHandler
+/* Xbase++ compatible xbpMenu class */
+CREATE CLASS WvgMenu INHERIT WvgMenuBar
 
-   METHOD new( oParent, oOwner, aPos )
-   METHOD create( oParent, oOwner, aPos )
-   METHOD configure()
-   METHOD destroy()
+   VAR    title                                 INIT ""
 
-   METHOD disable()
-   METHOD enable()
-   METHOD hide()
-   METHOD show()
-   METHOD SetPos( aPos )
+   METHOD new( oParent, aPresParams, lVisible )
+   METHOD create( oParent, aPresParams, lVisible )
 
-   METHOD currentPos()
-   METHOD currentSize()
-
-   VAR    aPos                                  INIT { 0, 0 }
-
-   VAR    hWnd                                  PROTECTED
-   VAR    nOldProc                              PROTECTED
-   VAR    nWndProc                              PROTECTED
-
-
-   VAR    sl_helpRequest
-   ACCESS helpRequest                           INLINE ::sl_helpRequest
-   ASSIGN helpRequest( bBlock )                 INLINE ::sl_helpRequest := bBlock
-
-   VAR    sl_move
-   ACCESS move                                  INLINE ::sl_move
-   ASSIGN move( bBlock )                        INLINE ::sl_move := bBlock
-
-   VAR    sl_quit
-   ACCESS quit                                  INLINE ::sl_quit
-   ASSIGN quit( bBlock )                        INLINE ::sl_quit := bBlock
+   METHOD getTitle()
+   METHOD setTitle( cTitle )
+   METHOD Popup( oXbp, aPos, nDefaultItem, nControl )
 
 ENDCLASS
 
-METHOD WvgSysWindow:new( oParent, oOwner, aPos )
+METHOD WvgMenu:new( oParent, aPresParams, lVisible )
 
    __defaultNIL( @oParent, ::oParent )
-   __defaultNIL( @oOwner, ::oOwner )
-   __defaultNIL( @aPos, ::aPos )
+   __defaultNIL( @aPresParams, ::aPresParams )
+   __defaultNIL( @lVisible, ::visible )
 
-   ::oParent := oParent
-   ::oOwner  := oOwner
-   ::aPos    := aPos
-
-   ::WvgPartHandler:new( oParent, oOwner )
+   ::oParent     := oParent
+   ::aPresParams := aPresParams
+   ::visible     := lVisible
 
    RETURN Self
 
-METHOD WvgSysWindow:create( oParent, oOwner, aPos )
+METHOD WvgMenu:create( oParent, aPresParams, lVisible )
 
    __defaultNIL( @oParent, ::oParent )
-   __defaultNIL( @oOwner, ::oOwner )
-   __defaultNIL( @aPos, ::aPos )
+   __defaultNIL( @aPresParams, ::aPresParams )
+   __defaultNIL( @lVisible, ::visible )
 
-   ::oParent := oParent
-   ::oOwner  := oOwner
-   ::aPos    := aPos
+   ::oParent     := oParent
+   ::aPresParams := aPresParams
+   ::visible     := lVisible
 
-   ::WvgPartHandler:create( oParent, oOwner )
+   ::className := "POPUPMENU"
 
-   RETURN Self
-
-METHOD WvgSysWindow:configure()
-   RETURN Self
-
-METHOD WvgSysWindow:destroy()
-   RETURN Self
-
-METHOD WvgSysWindow:disable()
-   RETURN Self
-
-METHOD WvgSysWindow:enable()
-   RETURN Self
-
-METHOD WvgSysWindow:hide()
-   RETURN Self
-
-METHOD WvgSysWindow:show()
-   RETURN Self
-
-METHOD WvgSysWindow:SetPos( aPos )
-
-   wvg_SetWindowPosition( ::hWnd, aPos[ 1 ], aPos[ 2 ], .F. )
+   ::hMenu := wvg_CreatePopupMenu()
 
    RETURN Self
 
-METHOD WvgSysWindow:currentPos()
+METHOD WvgMenu:getTitle()
+   RETURN ::title
 
-   LOCAL aRect
+METHOD WvgMenu:setTitle( cTitle )
+   RETURN ::title := cTitle
 
-   aRect := wvg_GetWindowRect( ::hWnd )
+METHOD WvgMenu:Popup( oXbp, aPos, nDefaultItem, nControl )
 
-   RETURN { aRect[ 1 ], aRect[ 2 ] }
+   LOCAL nCmd, aMenuItem
 
-METHOD WvgSysWindow:currentSize()
+   HB_SYMBOL_UNUSED( nDefaultItem )
+   HB_SYMBOL_UNUSED( nControl )
 
-   LOCAL aRect
+   nCmd := wvg_TrackPopupMenu( ::hMenu, TPM_LEFTALIGN + TPM_TOPALIGN + TPM_RETURNCMD, aPos[ 1 ], aPos[ 2 ], oXbp:hWnd )
 
-   aRect := wvg_GetClientRect( ::hWnd )
+   aMenuItem := ::findMenuItemById( nCmd )
+   IF HB_ISARRAY( aMenuItem ) .AND. HB_ISBLOCK( aMenuItem[ 2 ] )
+      Eval( aMenuItem[ 2 ], aMenuItem[ 1 ], , aMenuItem[ 4 ] )
+   ENDIF
 
-   RETURN { aRect[ 3 ] - aRect[ 1 ], aRect[ 4 ] - aRect[ 2 ] }
+   RETURN 0

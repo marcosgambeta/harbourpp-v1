@@ -39,8 +39,11 @@ src\wvgcrt.prg
 src\wvgdataref.prg
 src\wvgdialog.prg
 src\wvgdrawingarea.prg
+src\wvgfont.prg
+src\wvgfontdialog.prg
 src\wvghtmlviewer.prg
 src\wvglistbox.prg
+src\wvgmenu.prg
 src\wvgmenubar.prg
 src\wvgmle.prg
 src\wvgparthandler.prg
@@ -48,10 +51,13 @@ src\wvgpushbutton.prg
 src\wvgradiobutton.prg
 src\wvgscrollbar.prg
 src\wvgsle.prg
-src\wvgstatusbar.prg
 src\wvgstatic.prg
+src\wvgstatusbar.prg
+src\wvgstatusbarpanel.prg
 src\wvgsyswindow.prg
 src\wvgtabpage.prg
 src\wvgtoolbar.prg
+src\wvgtoolbarbutton.prg
 src\wvgtreeview.prg
+src\wvgtreeviewitem.prg
 src\wvgwindow.prg

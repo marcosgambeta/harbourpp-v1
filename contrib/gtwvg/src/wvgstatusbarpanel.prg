@@ -1,5 +1,5 @@
 /*
- * Xbase++ Compatible xbpPartHandler Class
+ * Xbase++ xbpStatusBar Compatible Class
  *
  * Copyright 2008-2012 Pritpal Bedi <bedipritpal@hotmail.com>
  *
@@ -56,107 +56,53 @@
 #include "wvtwin.ch"
 #include "wvgparts.ch"
 
-CREATE CLASS WvgSysWindow INHERIT WvgPartHandler
+/* WvgToolBarButton() Class compatible with XbpToolbarButton() */
+CREATE CLASS WvgStatusBarPanel
 
-   METHOD new( oParent, oOwner, aPos )
-   METHOD create( oParent, oOwner, aPos )
-   METHOD configure()
-   METHOD destroy()
+   VAR    alignment                             INIT WVGALIGN_LEFT
+   VAR    autosize                              INIT WVGSTATUSBAR_AUTOSIZE_NONE
+   VAR    bevel                                 INIT WVGSTATUSBAR_BEVEL_INSET
+   VAR    enabled                               INIT .T.
+   VAR    index                                 INIT 0
+   VAR    key                                   INIT ""
+   VAR    style                                 INIT WVGSTATUSBAR_PANEL_TEXT
+   VAR    sl_caption                            INIT ""
+   VAR    image                                 INIT NIL
+   VAR    tooltipText                           INIT ""
+   VAR    visible                               INIT .T.
+   VAR    left                                  INIT 0
+   VAR    width                                 INIT 0
+   VAR    minWidth                              INIT 0
 
-   METHOD disable()
-   METHOD enable()
-   METHOD hide()
-   METHOD show()
-   METHOD SetPos( aPos )
+   METHOD new( cCaption, nStyle, cKey )
+   METHOD caption( cCaption )                   SETGET
 
-   METHOD currentPos()
-   METHOD currentSize()
-
-   VAR    aPos                                  INIT { 0, 0 }
-
-   VAR    hWnd                                  PROTECTED
-   VAR    nOldProc                              PROTECTED
-   VAR    nWndProc                              PROTECTED
-
-
-   VAR    sl_helpRequest
-   ACCESS helpRequest                           INLINE ::sl_helpRequest
-   ASSIGN helpRequest( bBlock )                 INLINE ::sl_helpRequest := bBlock
-
-   VAR    sl_move
-   ACCESS move                                  INLINE ::sl_move
-   ASSIGN move( bBlock )                        INLINE ::sl_move := bBlock
-
-   VAR    sl_quit
-   ACCESS quit                                  INLINE ::sl_quit
-   ASSIGN quit( bBlock )                        INLINE ::sl_quit := bBlock
+   VAR    oParent
 
 ENDCLASS
 
-METHOD WvgSysWindow:new( oParent, oOwner, aPos )
+METHOD WvgStatusBarPanel:new( cCaption, nStyle, cKey )
 
-   __defaultNIL( @oParent, ::oParent )
-   __defaultNIL( @oOwner, ::oOwner )
-   __defaultNIL( @aPos, ::aPos )
+   __defaultNIL( @cCaption, ::sl_caption )
+   __defaultNIL( @nStyle, ::style )
+   __defaultNIL( @cKey, ::key )
 
-   ::oParent := oParent
-   ::oOwner  := oOwner
-   ::aPos    := aPos
-
-   ::WvgPartHandler:new( oParent, oOwner )
+   ::sl_caption     := cCaption
+   ::style          := nStyle
+   ::key            := cKey
 
    RETURN Self
 
-METHOD WvgSysWindow:create( oParent, oOwner, aPos )
+METHOD WvgStatusBarPanel:caption( cCaption )
 
-   __defaultNIL( @oParent, ::oParent )
-   __defaultNIL( @oOwner, ::oOwner )
-   __defaultNIL( @aPos, ::aPos )
+   IF cCaption == NIL
+      RETURN ::sl_caption
+   ELSE
+      __defaultNIL( @cCaption, ::sl_caption )
 
-   ::oParent := oParent
-   ::oOwner  := oOwner
-   ::aPos    := aPos
+      ::sl_caption := cCaption
 
-   ::WvgPartHandler:create( oParent, oOwner )
-
-   RETURN Self
-
-METHOD WvgSysWindow:configure()
-   RETURN Self
-
-METHOD WvgSysWindow:destroy()
-   RETURN Self
-
-METHOD WvgSysWindow:disable()
-   RETURN Self
-
-METHOD WvgSysWindow:enable()
-   RETURN Self
-
-METHOD WvgSysWindow:hide()
-   RETURN Self
-
-METHOD WvgSysWindow:show()
-   RETURN Self
-
-METHOD WvgSysWindow:SetPos( aPos )
-
-   wvg_SetWindowPosition( ::hWnd, aPos[ 1 ], aPos[ 2 ], .F. )
+      wvg_StatusBarSetText( ::oParent:hWnd, ::index, cCaption )
+   ENDIF
 
    RETURN Self
-
-METHOD WvgSysWindow:currentPos()
-
-   LOCAL aRect
-
-   aRect := wvg_GetWindowRect( ::hWnd )
-
-   RETURN { aRect[ 1 ], aRect[ 2 ] }
-
-METHOD WvgSysWindow:currentSize()
-
-   LOCAL aRect
-
-   aRect := wvg_GetClientRect( ::hWnd )
-
-   RETURN { aRect[ 3 ] - aRect[ 1 ], aRect[ 4 ] - aRect[ 2 ] }
