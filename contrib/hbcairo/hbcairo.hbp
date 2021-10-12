@@ -18,15 +18,17 @@
 
 ${hb_name}.hbx
 
-context.cpp
-core.cpp
-image.cpp
-paths.cpp
-pattern.cpp
-pdf.cpp
-png.cpp
-ps.cpp
-surface.cpp
-text.cpp
-transfor.cpp
-util.cpp
+-i.
+
+src\context.cpp
+src\core.cpp
+src\image.cpp
+src\paths.cpp
+src\pattern.cpp
+src\pdf.cpp
+src\png.cpp
+src\ps.cpp
+src\surface.cpp
+src\text.cpp
+src\transfor.cpp
+src\util.cpp
