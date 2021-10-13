@@ -9,9 +9,9 @@ ${hb_name}.hbx
 
 -i.
 
-amfenc.cpp
-amfdec.cpp
-amfstdio.cpp
-hbcls.cpp
+src\amfenc.cpp
+src\amfdec.cpp
+src\amfstdio.cpp
+src\hbcls.cpp
 
-hbamfobj.prg
+src\hbamfobj.prg
