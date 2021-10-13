@@ -454,7 +454,7 @@ SLJIT_API_FUNC_ATTRIBUTE void* sljit_generate_code(struct sljit_compiler *compil
 #endif
 
 #if (defined SLJIT_CONFIG_MIPS_32 && SLJIT_CONFIG_MIPS_32)
-#include "sjmips32.c"
+#include "sljitNativeMIPS_32.c"
 #else
 #include "sljitNativeMIPS_64.c"
 #endif

@@ -56,7 +56,7 @@ global variables are not used. */
 #include "config.h"
 #endif
 
-#include "pcreinal.h"
+#include "pcre_internal.h"
 
 #if defined _MSC_VER || defined  __SYMBIAN32__
 static void* LocalPcreMalloc(size_t aSize)

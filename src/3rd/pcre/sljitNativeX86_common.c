@@ -639,9 +639,9 @@ static void SLJIT_CALL sljit_grow_stack(sljit_sw local_size)
 #endif
 
 #if (defined SLJIT_CONFIG_X86_32 && SLJIT_CONFIG_X86_32)
-#include "sjx8632.c"
+#include "sljitNativeX86_32.c"
 #else
-#include "sjx8664.c"
+#include "sljitNativeX86_64.c"
 #endif
 
 static sljit_si emit_mov(struct sljit_compiler *compiler,

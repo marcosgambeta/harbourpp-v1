@@ -24,7 +24,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "sjlir.h"
+#include "sljitLir.h"
 
 #define CHECK_ERROR() \
 	do { \
@@ -260,12 +260,12 @@
 #endif /* !(defined SLJIT_CONFIG_UNSUPPORTED && SLJIT_CONFIG_UNSUPPORTED) */
 
 /* Utils can still be used even if SLJIT_CONFIG_UNSUPPORTED is set. */
-#include "sjutils.c"
+#include "sljitUtils.c"
 
 #if !(defined SLJIT_CONFIG_UNSUPPORTED && SLJIT_CONFIG_UNSUPPORTED)
 
 #if (defined SLJIT_EXECUTABLE_ALLOCATOR && SLJIT_EXECUTABLE_ALLOCATOR)
-#include "sjexeca.c"
+#include "sljitExecAllocator.c"
 #endif
 
 #if (defined SLJIT_SSE2_AUTO && SLJIT_SSE2_AUTO) && !(defined SLJIT_SSE2 && SLJIT_SSE2)
@@ -1336,21 +1336,21 @@ static SLJIT_INLINE sljit_si emit_mov_before_return(struct sljit_compiler *compi
 #define SLJIT_CPUINFO SLJIT_CPUINFO_PART1 SLJIT_CPUINFO_PART2 SLJIT_CPUINFO_PART3
 
 #if (defined SLJIT_CONFIG_X86_32 && SLJIT_CONFIG_X86_32)
-#	include "sjx86c.c"
+#	include "sljitNativeX86_common.c"
 #elif (defined SLJIT_CONFIG_X86_64 && SLJIT_CONFIG_X86_64)
-#	include "sjx86c.c"
+#	include "sljitNativeX86_common.c"
 #elif (defined SLJIT_CONFIG_ARM_V5 && SLJIT_CONFIG_ARM_V5)
-#	include "sjarmv5.c"
+#	include "sljitNativeARM_v5.c"
 #elif (defined SLJIT_CONFIG_ARM_V7 && SLJIT_CONFIG_ARM_V7)
-#	include "sjarmv5.c"
+#	include "sljitNativeARM_v5.c"
 #elif (defined SLJIT_CONFIG_ARM_THUMB2 && SLJIT_CONFIG_ARM_THUMB2)
-#	include "sjarmth2.c"
+#	include "sljitNativeARM_Thumb2.c"
 #elif (defined SLJIT_CONFIG_PPC_32 && SLJIT_CONFIG_PPC_32)
-#	include "sjppcc.c"
+#	include "sljitNativePPC_common.c"
 #elif (defined SLJIT_CONFIG_PPC_64 && SLJIT_CONFIG_PPC_64)
-#	include "sjppcc.c"
+#	include "sljitNativePPC_common.c"
 #elif (defined SLJIT_CONFIG_MIPS_32 && SLJIT_CONFIG_MIPS_32)
-#	include "sjmipsc.c"
+#	include "sljitNativeMIPS_common.c"
 #elif (defined SLJIT_CONFIG_SPARC_32 && SLJIT_CONFIG_SPARC_32)
 #	include "sljitNativeSPARC_common.c"
 #elif (defined SLJIT_CONFIG_TILEGX && SLJIT_CONFIG_TILEGX)

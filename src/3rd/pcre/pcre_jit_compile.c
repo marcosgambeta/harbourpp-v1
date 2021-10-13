@@ -44,7 +44,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "config.h"
 #endif
 
-#include "pcreinal.h"
+#include "pcre_internal.h"
 
 #if defined SUPPORT_JIT
 
@@ -59,7 +59,7 @@ system files. */
 #define SLJIT_VERBOSE 0
 #define SLJIT_DEBUG 0
 
-#include "sjlir.c"
+#include "sljitLir.c"
 
 #if defined SLJIT_CONFIG_UNSUPPORTED && SLJIT_CONFIG_UNSUPPORTED
 #error Unsupported architecture

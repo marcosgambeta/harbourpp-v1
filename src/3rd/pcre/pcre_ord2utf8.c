@@ -47,7 +47,7 @@ character value into a UTF8 string. */
 
 #define COMPILE_PCRE8
 
-#include "pcreinal.h"
+#include "pcre_internal.h"
 
 /*************************************************
 *       Convert character value to UTF-8         *

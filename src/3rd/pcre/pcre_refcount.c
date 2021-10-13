@@ -48,7 +48,7 @@ shared by different users. */
 #include "config.h"
 #endif
 
-#include "pcreinal.h"
+#include "pcre_internal.h"
 
 
 /*************************************************

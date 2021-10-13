@@ -473,9 +473,9 @@ ALT_FORM1		0x010000
 ALT_FORM6		0x200000 */
 
 #if (defined SLJIT_CONFIG_PPC_32 && SLJIT_CONFIG_PPC_32)
-#include "sjppc32.c"
+#include "sljitNativePPC_32.c"
 #else
-#include "sjppc64.c"
+#include "sljitNativePPC_64.c"
 #endif
 
 #if (defined SLJIT_CONFIG_PPC_32 && SLJIT_CONFIG_PPC_32)
