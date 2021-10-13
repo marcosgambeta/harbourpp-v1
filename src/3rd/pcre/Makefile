@@ -7,26 +7,26 @@ HB_BUILD_MODE := c
 HB_USER_CFLAGS :=
 
 C_SOURCES := \
-   chartabs.c \
-   pcrebyte.c \
-   pcrecomp.c \
-   pcreconf.c \
-   pcredfa.c \
-   pcreexec.c \
-   pcrefinf.c \
-   pcreget.c \
-   pcreglob.c \
-   pcrejitc.c \
-   pcremktb.c \
-   pcrenewl.c \
-   pcreoutf.c \
-   pcrerefc.c \
-   pcrestud.c \
-   pcretabs.c \
-   pcreucd.c \
-   pcrever.c \
-   pcrevutf.c \
-   pcrexcls.c \
+   pcre_chartables.c \
+   pcre_byte_order.c \
+   pcre_compile.c \
+   pcre_config.c \
+   pcre_dfa_exec.c \
+   pcre_exec.c \
+   pcre_fullinfo.c \
+   pcre_get.c \
+   pcre_globals.c \
+   pcre_jit_compile.c \
+   pcre_maketables.c \
+   pcre_newline.c \
+   pcre_ord2utf8.c \
+   pcre_refcount.c \
+   pcre_study.c \
+   pcre_tables.c \
+   pcre_ucd.c \
+   pcre_version.c \
+   pcre_valid_utf8.c \
+   pcre_xclass.c \
 
 LIBNAME := hbpcre
 
