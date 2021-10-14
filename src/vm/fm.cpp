@@ -233,16 +233,16 @@
 #  undef HB_FM_DLMT_ALLOC
 #  if defined( HB_FM_WIN_ALLOC ) && defined( HB_OS_WIN )
 #     if defined( HB_FM_LOCALALLOC )
-#        define malloc( n )      ( void * ) LocalAlloc( LMEM_FIXED, ( n ) )
-#        define realloc( p, n )  ( void * ) LocalReAlloc( ( HLOCAL ) ( p ), ( n ), LMEM_MOVEABLE )
+#        define malloc( n )      static_cast< void * >( LocalAlloc( LMEM_FIXED, ( n ) ) )
+#        define realloc( p, n )  static_cast< void * >( LocalReAlloc( ( HLOCAL ) ( p ), ( n ), LMEM_MOVEABLE ) )
 #        define free( p )        LocalFree( ( HLOCAL ) ( p ) )
 #     else
          static HANDLE s_hProcessHeap = nullptr;
 #        define HB_FM_NEED_INIT
 #        define HB_FM_HEAP_INIT
-#        define malloc( n )      ( void * ) HeapAlloc( s_hProcessHeap, 0, ( n ) )
-#        define realloc( p, n )  ( void * ) HeapReAlloc( s_hProcessHeap, 0, ( void * ) ( p ), ( n ) )
-#        define free( p )        HeapFree( s_hProcessHeap, 0, ( void * ) ( p ) )
+#        define malloc( n )      static_cast< void * >( HeapAlloc( s_hProcessHeap, 0, ( n ) ) )
+#        define realloc( p, n )  static_cast< void * >( HeapReAlloc( s_hProcessHeap, 0, static_cast< void * >( p ), ( n ) ) )
+#        define free( p )        HeapFree( s_hProcessHeap, 0, static_cast< void * >( p ) )
 #     endif
 #  endif
 #endif

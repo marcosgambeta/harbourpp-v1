@@ -428,7 +428,7 @@ HB_FUNC( XDL_DIFF )
       {
          PHB_ITEM pCallback = hb_param( 5, HB_IT_BLOCK | HB_IT_SYMBOL );
 
-         ecb.priv = ( void * ) pCallback;
+         ecb.priv = static_cast< void * >( pCallback );
          ecb.outf = xdlt_outb;
 
          hb_retni( xdl_diff( phb_mmf1->mmf, phb_mmf2->mmf, &xpp, &xecfg, &ecb ) );
@@ -500,7 +500,7 @@ HB_FUNC( XDL_BDIFF )
       {
          PHB_ITEM pCallback = hb_param( 4, HB_IT_BLOCK | HB_IT_SYMBOL );
 
-         ecb.priv = ( void * ) pCallback;
+         ecb.priv = static_cast< void * >( pCallback );
          ecb.outf = xdlt_outb;
 
          hb_retni( xdl_bdiff( phb_mmf1->mmf, phb_mmf2->mmf, &bdp, &ecb ) );
@@ -538,7 +538,7 @@ HB_FUNC( XDL_RABDIFF )
       {
          PHB_ITEM pCallback = hb_param( 3, HB_IT_BLOCK | HB_IT_SYMBOL );
 
-         ecb.priv = ( void * ) pCallback;
+         ecb.priv = static_cast< void * >( pCallback );
          ecb.outf = xdlt_outb;
 
          hb_retni( xdl_rabdiff( phb_mmf1->mmf, phb_mmf2->mmf, &ecb ) );
@@ -572,7 +572,7 @@ HB_FUNC( XDL_BPATCH )
       {
          PHB_ITEM pCallback = hb_param( 3, HB_IT_BLOCK | HB_IT_SYMBOL );
 
-         ecb.priv = ( void * ) pCallback;
+         ecb.priv = static_cast< void * >( pCallback );
          ecb.outf = xdlt_outb;
 
          hb_retni( xdl_bpatch( phb_mmf1->mmf, phb_mmf2->mmf, &ecb ) );

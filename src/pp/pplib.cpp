@@ -57,7 +57,7 @@ static void hb_pp_ErrorMessage( void * cargo, const char * const szMsgTable[],
                                 char cPrefix, int iCode,
                                 const char * szParam1, const char * szParam2 )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_pp_ErrorGen(%p, %p, %c, %d, %s, %s)", cargo, ( const void * ) szMsgTable, cPrefix, iCode, szParam1, szParam2 ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_pp_ErrorGen(%p, %p, %c, %d, %s, %s)", cargo, static_cast< const void * >( szMsgTable ), cPrefix, iCode, szParam1, szParam2 ) );
 
    HB_SYMBOL_UNUSED( cargo );
 
@@ -165,7 +165,7 @@ HB_FUNC( __PP_INIT )
       pStatePtr = ( PHB_PP_STATE * ) hb_gcAllocate( sizeof( PHB_PP_STATE ),
                                                     &s_gcPPFuncs );
       *pStatePtr = pState;
-      ppItem = hb_itemPutPtrGC( nullptr, ( void * ) pStatePtr );
+      ppItem = hb_itemPutPtrGC( nullptr, static_cast< void * >( pStatePtr ) );
 
       hb_pp_init( pState, HB_TRUE, HB_FALSE, 0, nullptr, nullptr, nullptr,
                   hb_pp_ErrorMessage, hb_pp_Disp, nullptr, nullptr,

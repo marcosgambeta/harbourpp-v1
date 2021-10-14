@@ -469,7 +469,7 @@ static void hb_itemSerialTypedSet( PHB_REF_LIST pRefList, PHB_ITEM pItem, int iT
       {
          if( static_cast< HB_SIZE >( ++pRef->iRefs ) == pRef->nOffset )
          {
-            pRef->value = ( void * ) pItem;
+            pRef->value = static_cast< void * >( pItem );
          }
       }
    }

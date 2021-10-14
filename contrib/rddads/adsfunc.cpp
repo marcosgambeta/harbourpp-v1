@@ -2236,7 +2236,7 @@ HB_FUNC( ADSDDGETDATABASEPROPERTY )
          char sBuffer[ ADS_MAX_PARAMDEF_LEN ];
          UNSIGNED16 ulLength = sizeof( sBuffer );
 
-         if( AdsDDGetDatabaseProperty( hConnect, ulProperty, ( VOID * ) sBuffer, &ulLength ) != AE_SUCCESS )
+         if( AdsDDGetDatabaseProperty( hConnect, ulProperty, static_cast< VOID * >( sBuffer ), &ulLength ) != AE_SUCCESS )
          {
             /* TODO: Better error handling. */
             sBuffer[ 0 ] = '\0';

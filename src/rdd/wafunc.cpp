@@ -145,7 +145,7 @@ void * hb_rddNewAreaNode( LPRDDNODE pRddNode, HB_USHORT uiRddID )
       return nullptr;
    }
 
-   return ( void * ) pArea;
+   return static_cast< void * >( pArea );
 }
 
 HB_ERRCODE hb_rddGetTempAlias( char * szAliasTmp )

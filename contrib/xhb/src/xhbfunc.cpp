@@ -80,7 +80,7 @@ HB_FUNC( HB_STRING2POINTER )
    PHB_ITEM pString = hb_param( 1, HB_IT_STRING );
 
    if( pString )
-      hb_retptr( ( void * ) hb_itemGetCPtr( pString ) );
+      hb_retptr( static_cast< void * >( hb_itemGetCPtr( pString ) ) );
    else
       hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError( 1 ) );
 }

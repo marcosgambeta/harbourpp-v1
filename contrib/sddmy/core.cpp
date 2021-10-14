@@ -426,7 +426,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
 
    for( ulIndex = 1; ulIndex <= pArea->ulRecCount; ulIndex++ )
    {
-      *pRow++ = ( void * ) mysql_row_tell( pSDDData->pResult );
+      *pRow++ = static_cast< void * >( mysql_row_tell( pSDDData->pResult ) );
       mysql_fetch_row( pSDDData->pResult );
    }
    pArea->fFetched = HB_TRUE;

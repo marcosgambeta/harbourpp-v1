@@ -198,7 +198,7 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
             hb_arraySetNI( pRet, HB_SERVICE_OSSUBSIG, info->si_code );
             #if ! defined( HB_OS_VXWORKS )
             hb_arraySetNI( pRet, HB_SERVICE_OSERROR, info->si_errno );
-            hb_arraySetPtr( pRet, HB_SERVICE_ADDRESS, ( void * ) info->si_addr );
+            hb_arraySetPtr( pRet, HB_SERVICE_ADDRESS, static_cast< void * >( info->si_addr ) );
             hb_arraySetNI( pRet, HB_SERVICE_PROCESS, info->si_pid );
             hb_arraySetNI( pRet, HB_SERVICE_UID, info->si_uid );
             #endif
@@ -454,7 +454,7 @@ static LONG s_signalHandler( int type, int sig, PEXCEPTION_RECORD exc )
          hb_arraySetNI( pRet, HB_SERVICE_OSERROR, GetLastError() );
 
          if( type == 0 ) /* exception */
-            hb_arraySetPtr( pRet, HB_SERVICE_ADDRESS, ( void * ) exc->ExceptionAddress );
+            hb_arraySetPtr( pRet, HB_SERVICE_ADDRESS, static_cast< void * >( exc->ExceptionAddress ) );
          else
             hb_arraySetPtr( pRet, HB_SERVICE_ADDRESS, nullptr );
 
@@ -540,7 +540,7 @@ BOOL WINAPI s_ConsoleHandlerRoutine( DWORD dwCtrlType )
    {
       pStack       = hb_threadCreateStack( GetCurrentThreadId() );
       pStack->th_h = GetCurrentThread();
-      TlsSetValue( hb_dwCurrentStack, ( void * ) pStack );
+      TlsSetValue( hb_dwCurrentStack, static_cast< void * >( pStack ) );
    }
 #endif
 
@@ -755,7 +755,7 @@ HB_FUNC( HB_STARTSERVICE )
    #ifdef HB_THREAD_TLS_KEYWORD
          hb_thread_stack = &hb_stackMT;
    #else
-         pthread_setspecific( hb_pkCurrentStack, ( void * ) &hb_stackMT );
+         pthread_setspecific( hb_pkCurrentStack, static_cast< void * >( &hb_stackMT ) );
    #endif
 #endif
       }

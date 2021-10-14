@@ -933,7 +933,7 @@ int hb_taskLock( void ** pMutexPtr, unsigned long ulMilliSec )
 
    if( *pMutexPtr == nullptr )
    {
-      *pMutexPtr = ( void * ) hb_taskMutexNew();
+      *pMutexPtr = static_cast< void * >( hb_taskMutexNew() );
    }
 
    pMutex = static_cast< PHB_TASKMTX >( *pMutexPtr );

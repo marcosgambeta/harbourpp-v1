@@ -59,7 +59,7 @@ static char * hb_fsReadLine( HB_FHANDLE hFileHandle, HB_ISIZ * plBuffLen, const 
    HB_ISIZ nRead = 0, nOffset, nSize;
    char *  pBuff;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsReadLine(%p, %" HB_PFS "d, %p, %p, %" HB_PFS "d, %p, %p)", ( void * ) static_cast< HB_PTRUINT >( hFileHandle ), *plBuffLen, pTerm, pnTermSizes, nTerms, pbFound, pbEOF ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_fsReadLine(%p, %" HB_PFS "d, %p, %p, %" HB_PFS "d, %p, %p)", static_cast< void * >( static_cast< HB_PTRUINT >( hFileHandle ) ), *plBuffLen, pTerm, pnTermSizes, nTerms, pbFound, pbEOF ) );
 
    *pbFound = HB_FALSE;
    *pbEOF   = HB_FALSE;
@@ -228,6 +228,6 @@ HB_FUNC( HB_FREADLINE )
    if( ! hb_storclen_buffer( pBuffer, nSize, 2 ) )
       hb_xfree( pBuffer );
    hb_retns( bEOF ? -1 : 0 );
-   hb_xfree( ( void * ) Term );
+   hb_xfree( static_cast< void * >( Term ) );
    hb_xfree( pnTermSizes );
 }

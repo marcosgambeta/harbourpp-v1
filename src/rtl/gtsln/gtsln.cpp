@@ -552,7 +552,7 @@ static void hb_gt_sln_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 {
    HB_BOOL gt_Inited = HB_FALSE;
 
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Init(%p,%p,%p,%p)", ( void * ) pGT, ( void * ) static_cast< HB_PTRUINT >( hFilenoStdin ), ( void * ) static_cast< HB_PTRUINT >( hFilenoStdout ), ( void * ) static_cast< HB_PTRUINT >( hFilenoStderr ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Init(%p,%p,%p,%p)", static_cast< void * >( pGT ), static_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdin ) ), static_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdout ) ), static_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStderr ) ) ) );
 
    /* stdin && stdout && stderr */
    s_hStdIn  = hFilenoStdin;
@@ -695,7 +695,7 @@ static void hb_gt_sln_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
 static void hb_gt_sln_Exit( PHB_GT pGT )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Exit(%p)", ( void * ) pGT ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Exit(%p)", static_cast< void * >( pGT ) ) );
 
    /* restore a standard bell frequency and duration */
    if( hb_sln_UnderLinuxConsole )
@@ -723,7 +723,7 @@ static void hb_gt_sln_Exit( PHB_GT pGT )
 
 static HB_BOOL hb_gt_sln_SetMode( PHB_GT pGT, int iRows, int iCols )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_SetMode(%p,%d,%d)", ( void * ) pGT, iRows, iCols ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_SetMode(%p,%d,%d)", static_cast< void * >( pGT ), iRows, iCols ) );
 
    HB_SYMBOL_UNUSED( pGT );
    HB_SYMBOL_UNUSED( iRows );
@@ -737,7 +737,7 @@ static HB_BOOL hb_gt_sln_SetMode( PHB_GT pGT, int iRows, int iCols )
 
 static HB_BOOL hb_gt_sln_IsColor( PHB_GT pGT )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_IsColor(%p)", ( void * ) pGT ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_IsColor(%p)", static_cast< void * >( pGT ) ) );
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -748,7 +748,7 @@ static HB_BOOL hb_gt_sln_IsColor( PHB_GT pGT )
 
 static void hb_gt_sln_SetBlink( PHB_GT pGT, HB_BOOL fBlink )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_SetBlink(%p,%d)", ( void * ) pGT, static_cast< int >( fBlink ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_SetBlink(%p,%d)", static_cast< void * >( pGT ), static_cast< int >( fBlink ) ) );
 
    /*
     * We cannot switch remote terminal between blinking and highlight mode
@@ -771,7 +771,7 @@ static void hb_gt_sln_SetBlink( PHB_GT pGT, HB_BOOL fBlink )
 
 static void hb_gt_sln_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Tone(%p,%lf,%lf)", ( void * ) pGT, dFrequency, dDuration ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Tone(%p,%lf,%lf)", static_cast< void * >( pGT ), dFrequency, dDuration ) );
 
    /* TODO: Implement this for other consoles than linux ? */
 
@@ -804,7 +804,7 @@ static void hb_gt_sln_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 
 static const char * hb_gt_sln_Version( PHB_GT pGT, int iType )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Version(%p)", ( void * ) pGT ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Version(%p)", static_cast< void * >( pGT ) ) );
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -882,7 +882,7 @@ static HB_BOOL hb_gt_sln_PostExt( PHB_GT pGT )
 
 static HB_BOOL hb_gt_sln_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Info(%p,%d,%p)", ( void * ) pGT, iType, ( void * ) pInfo ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Info(%p,%d,%p)", static_cast< void * >( pGT ), iType, static_cast< void * >( pInfo ) ) );
 
    switch( iType )
    {
@@ -939,7 +939,7 @@ static HB_BOOL hb_gt_sln_SetKeyCP( PHB_GT pGT, const char * pszTermCDP, const ch
 
 static void hb_gt_sln_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Redraw(%p,%d,%d,%d)", ( void * ) pGT, iRow, iCol, iSize ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Redraw(%p,%d,%d,%d)", static_cast< void * >( pGT ), iRow, iCol, iSize ) );
 
    if( s_fActive )
    {
@@ -988,7 +988,7 @@ static void hb_gt_sln_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 
 static void hb_gt_sln_Refresh( PHB_GT pGT )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Refresh(%p)", ( void * ) pGT ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Refresh(%p)", static_cast< void * >( pGT ) ) );
 
    HB_GTSUPER_REFRESH( pGT );
    if( s_fActive )
@@ -1009,7 +1009,7 @@ static void hb_gt_sln_Refresh( PHB_GT pGT )
 
 static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_FuncInit(%p)", ( void * ) pFuncTable ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_FuncInit(%p)", static_cast< void * >( pFuncTable ) ) );
 
    pFuncTable->Init                       = hb_gt_sln_Init;
    pFuncTable->Exit                       = hb_gt_sln_Exit;

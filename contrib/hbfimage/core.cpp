@@ -163,7 +163,7 @@ static void hb_FIBITMAP_ret( FIBITMAP * dib, HB_BOOL fFree )
 
    *ptr = PHB_FIBITMAP_create( dib, fFree );
 
-   hb_retptrGC( ( void * ) ptr );
+   hb_retptrGC( static_cast< void * >( ptr ) );
 }
 
 /* FIMULTIBITMAP GC handler */

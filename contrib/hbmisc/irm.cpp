@@ -236,8 +236,8 @@ PHB_IRMMAP hb_irmExecute( PHB_ITEM pItem )
             dboi.atomBagName = hb_arrayGetItemPtr( pItem, 3 );
             dboi.itmResult   = hb_itemNew( nullptr );
             dboi.itmNewVal   = hb_itemArrayNew( DBRMI_SIZE );
-            hb_arraySetPtr( dboi.itmNewVal, DBRMI_FUNCTION, ( void * ) hb_irmMapMarkCallback );
-            hb_arraySetPtr( dboi.itmNewVal, DBRMI_PARAM, ( void * ) pMap );
+            hb_arraySetPtr( dboi.itmNewVal, DBRMI_FUNCTION, reinterpret_cast< void * >( hb_irmMapMarkCallback ) );
+            hb_arraySetPtr( dboi.itmNewVal, DBRMI_PARAM, static_cast< void * >( pMap ) );
             if( ! strcmp( szOper, "=" ) )
             {
                hb_arraySet( dboi.itmNewVal, DBRMI_LOVAL, hb_arrayGetItemPtr( pItem, 4 ) );

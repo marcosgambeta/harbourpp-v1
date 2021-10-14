@@ -709,7 +709,7 @@ static const HB_GC_FUNCS s_gcEXPATFuncs =
 
 static PHB_EXPAT PHB_EXPAT_par( int iParam )
 {
-   void ** ph = ( void ** ) hb_parptrGC( &s_gcEXPATFuncs, iParam );
+   void ** ph = static_cast< void ** >( hb_parptrGC( &s_gcEXPATFuncs, iParam ) );
 
    return ph ? ( PHB_EXPAT ) *ph : nullptr;
 }
@@ -734,7 +734,7 @@ static void hb_expat_setvar( PHB_EXPAT hb_expat, int iHandler, PHB_ITEM pBlock )
 
 HB_FUNC( XML_PARSERCREATE )
 {
-   void ** ph = ( void ** ) hb_gcAllocate( sizeof( PHB_EXPAT ), &s_gcEXPATFuncs );
+   void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof( PHB_EXPAT ), &s_gcEXPATFuncs ) );
 
    XML_Parser parser;
    XML_Memory_Handling_Suite ms;

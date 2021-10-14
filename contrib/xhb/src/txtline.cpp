@@ -57,8 +57,8 @@ static void hb_readLine( const char * szText, HB_SIZE nTextLen, HB_SIZE nLineLen
    HB_BOOL bBreak = HB_FALSE;
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_readLine(%p, %" HB_PFS "u, %" HB_PFS "u, %" HB_PFS "u, %d, %p, %p, %" HB_PFS "u, %p, %p, %p, %p)",
-             ( const void * ) szText, nTextLen, nLineLen, nTabLen, bWrap, ( const void * ) pTerm,
-             ( void * ) pnTermSizes, nTerms, ( void * ) pbFound, ( void * ) pbEOF, ( void * ) pnEnd, ( void * ) pnEndOffset ) );
+             static_cast< const void * >( szText ), nTextLen, nLineLen, nTabLen, bWrap, static_cast< const void * >( pTerm ),
+             static_cast< void * >( pnTermSizes ), nTerms, static_cast< void * >( pbFound ), static_cast< void * >( pbEOF ), static_cast< void * >( pnEnd ), static_cast< void * >( pnEndOffset ) ) );
 
    *pbFound     = HB_FALSE;
    *pbEOF       = HB_FALSE;
@@ -293,6 +293,6 @@ HB_FUNC( HB_READLINE )
    if( bAlloc_Term1 )
       hb_itemRelease( pTerm1 );
 
-   hb_xfree( ( void * ) pTerm );
+   hb_xfree( static_cast< void * >( pTerm ) );
    hb_xfree( pnTermSizes );
 }

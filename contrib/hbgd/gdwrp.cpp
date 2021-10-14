@@ -127,7 +127,7 @@ static void hb_retGdImage( gdImagePtr im )
 
    *ptr = im;
 
-   hb_retptrGC( ( void * ) ptr );
+   hb_retptrGC( static_cast< void * >( ptr ) );
 }
 
 #if 0
@@ -139,7 +139,7 @@ static PHB_ITEM hb_gdImageItemNew( gdImagePtr im )
 
    *ptr = im;
 
-   return hb_itemPutPtrGC( nullptr, ( void * ) ptr );
+   return hb_itemPutPtrGC( nullptr, static_cast< void * >( ptr ) );
 }
 #endif
 
@@ -193,7 +193,7 @@ static void hb_retGdFont( gdFontPtr font )
 
    *ptr = font;
 
-   hb_retptrGC( ( void * ) ptr );
+   hb_retptrGC( static_cast< void * >( ptr ) );
 }
 
 #if 0
@@ -205,7 +205,7 @@ static PHB_ITEM hb_gdFontItemNew( gdFontPtr font )
 
    *ptr = font;
 
-   return hb_itemPutPtrGC( nullptr, ( void * ) ptr );
+   return hb_itemPutPtrGC( nullptr, static_cast< void * >( ptr ) );
 }
 #endif
 
