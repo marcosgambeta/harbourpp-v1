@@ -56,10 +56,9 @@ static HB_CDP_GET_FUNC( BIG5_get )
    {
       HB_UCHAR uc = pSrc[ ( *pnIndex )++ ];
 
-      if( uc >= ( HB_BIG5_FIRST >> 8 ) && uc <= ( HB_BIG5_LAST >> 8 ) &&
-          *pnIndex < nLen )
+      if( uc >= ( HB_BIG5_FIRST >> 8 ) && uc <= ( HB_BIG5_LAST >> 8 ) && *pnIndex < nLen )
       {
-         *wc = s_big5_to_ucs16( ( static_cast< int >( uc ) << 8 ) | ( HB_UCHAR ) pSrc[ *pnIndex ] );
+         *wc = s_big5_to_ucs16( ( static_cast< int >( uc ) << 8 ) | static_cast< HB_UCHAR >( pSrc[ *pnIndex ] ) );
          if( *wc )
          {
             ( *pnIndex )++;
@@ -68,7 +67,9 @@ static HB_CDP_GET_FUNC( BIG5_get )
       }
       *wc = cdp->uniTable->uniCodes[ uc ];
       if( *wc == 0 )
+      {
          *wc = uc;
+      }
       return HB_TRUE;
    }
    return HB_FALSE;
@@ -92,13 +93,18 @@ static HB_CDP_PUT_FUNC( BIG5_put )
       else
       {
          if( cdp->uniTable->uniTrans == nullptr )
+         {
             hb_cdpBuildTransTable( cdp->uniTable );
+         }
 
-         if( wc <= cdp->uniTable->wcMax &&
-             cdp->uniTable->uniTrans[ wc ] )
+         if( wc <= cdp->uniTable->wcMax && cdp->uniTable->uniTrans[ wc ] )
+         {
             pDst[ ( *pnIndex )++ ] = cdp->uniTable->uniTrans[ wc ];
+         }
          else
-            pDst[ ( *pnIndex )++ ] = wc >= 0x100 ? '?' : ( HB_UCHAR ) wc;
+         {
+            pDst[ ( *pnIndex )++ ] = wc >= 0x100 ? '?' : static_cast< HB_UCHAR >( wc );
+         }
          return HB_TRUE;
       }
    }
@@ -117,26 +123,33 @@ static HB_CDP_LEN_FUNC( BIG5_len )
 static void hb_cp_init( PHB_CODEPAGE cdp )
 {
    HB_UCHAR * flags, * upper, * lower;
-   int i;
 
    cdp->buffer = static_cast< HB_UCHAR * >( hb_xgrab( 0x300 ) );
-   cdp->flags = flags = ( HB_UCHAR * ) cdp->buffer;
-   cdp->upper = upper = ( HB_UCHAR * ) cdp->buffer + 0x100;
-   cdp->lower = lower = ( HB_UCHAR * ) cdp->buffer + 0x200;
+   cdp->flags = flags = static_cast< HB_UCHAR * >( cdp->buffer );
+   cdp->upper = upper = static_cast< HB_UCHAR * >( cdp->buffer ) + 0x100;
+   cdp->lower = lower = static_cast< HB_UCHAR * >( cdp->buffer ) + 0x200;
 
-   for( i = 0; i < 0x100; ++i )
+   for( int i = 0; i < 0x100; ++i )
    {
       flags[ i ] = 0;
       if( HB_ISDIGIT( i ) )
+      {
          flags[ i ] |= HB_CDP_DIGIT;
+      }
       if( HB_ISALPHA( i ) )
+      {
          flags[ i ] |= HB_CDP_ALPHA;
+      }
       if( HB_ISUPPER( i ) )
+      {
          flags[ i ] |= HB_CDP_UPPER;
+      }
       if( HB_ISLOWER( i ) )
+      {
          flags[ i ] |= HB_CDP_LOWER;
-      upper[ i ] = ( HB_UCHAR ) HB_TOUPPER( i );
-      lower[ i ] = ( HB_UCHAR ) HB_TOLOWER( i );
+      }
+      upper[ i ] = static_cast< HB_UCHAR >( HB_TOUPPER( i ) );
+      lower[ i ] = static_cast< HB_UCHAR >( HB_TOLOWER( i ) );
    }
 
 #if 0
@@ -147,8 +160,7 @@ static void hb_cp_init( PHB_CODEPAGE cdp )
       {
          if( i != s_ucs16_to_big5( wc ) )
          {
-            printf( "irreversible translation: (BIG5)%04X -> U+%04X -> (BIG5)%04X\r\n",
-                    i, wc, s_ucs16_to_big5( wc ) );
+            printf( "irreversible translation: (BIG5)%04X -> U+%04X -> (BIG5)%04X\r\n", i, wc, s_ucs16_to_big5( wc ) );
             fflush(stdout);
          }
       }
@@ -166,16 +178,16 @@ static void hb_cp_init( PHB_CODEPAGE cdp )
 #define HB_CP_PUT_FUNC        BIG5_put
 #define HB_CP_LEN_FUNC        BIG5_len
 
-#define HB_CP_FLAGS_FUNC      NULL
-#define HB_CP_UPPER_FUNC      NULL
-#define HB_CP_LOWER_FUNC      NULL
+#define HB_CP_FLAGS_FUNC      nullptr
+#define HB_CP_UPPER_FUNC      nullptr
+#define HB_CP_LOWER_FUNC      nullptr
 
-#define HB_CP_CMP_FUNC        NULL
+#define HB_CP_CMP_FUNC        nullptr
 
-#define s_flags               NULL
-#define s_upper               NULL
-#define s_lower               NULL
-#define s_sort                NULL
+#define s_flags               nullptr
+#define s_upper               nullptr
+#define s_lower               nullptr
+#define s_sort                nullptr
 
 #define HB_CP_INIT hb_cp_init
 

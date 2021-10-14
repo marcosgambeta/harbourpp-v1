@@ -65,8 +65,10 @@ static HB_CDP_GET_FUNC( UTF8_get )
    *wc = 0;
    while( nIndex < nLen )
    {
-      if( hb_cdpUTF8ToU16NextChar( ( HB_UCHAR ) pSrc[ nIndex ], &n, wc ) )
+      if( hb_cdpUTF8ToU16NextChar( static_cast< HB_UCHAR >( pSrc[ nIndex ] ), &n, wc ) )
+      {
          ++nIndex;
+      }
       if( n == 0 )
       {
          *pnIndex = nIndex;
@@ -145,7 +147,9 @@ static HB_CDP_CMP_FUNC( UTF8_cmp )
       if( ! HB_CDPCHAR_GET( cdp, szSecond, nLenSecond, &nPos2, &wc2 ) )
       {
          if( fExact && HB_CDPCHAR_GET( cdp, szFirst, nLenFirst, &nPos1, &wc1 ) )
+         {
             iRet = 1;
+         }
          break;
       }
       if( ! HB_CDPCHAR_GET( cdp, szFirst, nLenFirst, &nPos1, &wc1 ) )
@@ -174,14 +178,22 @@ static HB_CDP_CMP_FUNC( UTF8_cmp )
    if( iRet == 0 )
    {
       if( nLenSecond > nLenFirst )
+      {
          iRet = -1;
+      }
       else if( fExact && nLenSecond < nLenFirst )
+      {
          iRet = 1;
+      }
    }
    else if( iRet > 0 )
+   {
       iRet = 1;
+   }
    else
+   {
       iRet = -1;
+   }
 #endif
 
    return iRet;
@@ -201,7 +213,9 @@ static HB_CDP_CMP_FUNC( UTF8_cmpi )
       if( ! HB_CDPCHAR_GET( cdp, szSecond, nLenSecond, &nPos2, &wc2 ) )
       {
          if( fExact && HB_CDPCHAR_GET( cdp, szFirst, nLenFirst, &nPos1, &wc1 ) )
+         {
             iRet = 1;
+         }
          break;
       }
       if( ! HB_CDPCHAR_GET( cdp, szFirst, nLenFirst, &nPos1, &wc1 ) )
@@ -211,8 +225,7 @@ static HB_CDP_CMP_FUNC( UTF8_cmpi )
       }
       if( wc1 != wc2 )
       {
-         HB_USHORT us1 = s_uniSort[ HB_CDPCHAR_UPPER( cdp, wc1 ) ],
-                   us2 = s_uniSort[ HB_CDPCHAR_UPPER( cdp, wc2 ) ];
+         HB_USHORT us1 = s_uniSort[ HB_CDPCHAR_UPPER( cdp, wc1 ) ], us2 = s_uniSort[ HB_CDPCHAR_UPPER( cdp, wc2 ) ];
          if( us1 != us2 )
          {
             iRet = us1 < us2 ? -1 : 1;
@@ -227,8 +240,7 @@ static HB_CDP_CMP_FUNC( UTF8_cmpi )
 
    while( nLen-- )
    {
-      HB_UCHAR u1 = cdp->upper[ ( HB_UCHAR ) *szFirst++ ],
-               u2 = cdp->upper[ ( HB_UCHAR ) *szSecond++ ];
+      HB_UCHAR u1 = cdp->upper[ ( HB_UCHAR ) *szFirst++ ], u2 = cdp->upper[ ( HB_UCHAR ) *szSecond++ ];
       if( u1 != u2 )
       {
          iRet = ( u1 < u2 ) ? -1 : 1;
@@ -239,9 +251,13 @@ static HB_CDP_CMP_FUNC( UTF8_cmpi )
    if( iRet == 0 )
    {
       if( nLenSecond > nLenFirst )
+      {
          iRet = -1;
+      }
       else if( fExact && nLenSecond < nLenFirst )
+      {
          iRet = 1;
+      }
    }
 #endif
 
@@ -252,26 +268,33 @@ static HB_CDP_CMP_FUNC( UTF8_cmpi )
 static void hb_cp_init( PHB_CODEPAGE cdp )
 {
    HB_UCHAR * flags, * upper, * lower;
-   int i;
 
    cdp->buffer = static_cast< HB_UCHAR * >( hb_xgrab( 0x300 ) );
-   cdp->flags = flags = ( HB_UCHAR * ) cdp->buffer;
-   cdp->upper = upper = ( HB_UCHAR * ) cdp->buffer + 0x100;
-   cdp->lower = lower = ( HB_UCHAR * ) cdp->buffer + 0x200;
+   cdp->flags = flags = static_cast< HB_UCHAR * >( cdp->buffer );
+   cdp->upper = upper = static_cast< HB_UCHAR * >( cdp->buffer ) + 0x100;
+   cdp->lower = lower = static_cast< HB_UCHAR * >( cdp->buffer ) + 0x200;
 
-   for( i = 0; i < 0x100; ++i )
+   for( int i = 0; i < 0x100; ++i )
    {
       flags[ i ] = 0;
       if( HB_ISDIGIT( i ) )
+      {
          flags[ i ] |= HB_CDP_DIGIT;
+      }
       if( HB_ISALPHA( i ) )
+      {
          flags[ i ] |= HB_CDP_ALPHA;
+      }
       if( HB_ISUPPER( i ) )
+      {
          flags[ i ] |= HB_CDP_UPPER;
+      }
       if( HB_ISLOWER( i ) )
+      {
          flags[ i ] |= HB_CDP_LOWER;
-      upper[ i ] = ( HB_UCHAR ) HB_TOUPPER( i );
-      lower[ i ] = ( HB_UCHAR ) HB_TOLOWER( i );
+      }
+      upper[ i ] = static_cast< HB_UCHAR >( HB_TOUPPER( i ) );
+      lower[ i ] = static_cast< HB_UCHAR >( HB_TOLOWER( i ) );
    }
 }
 
@@ -299,10 +322,10 @@ static void hb_cp_init( PHB_CODEPAGE cdp )
 #define HB_CP_CMP_FUNC        UTF8_cmp
 #define HB_CP_CMPI_FUNC       UTF8_cmpi
 
-#define s_flags               NULL
-#define s_upper               NULL
-#define s_lower               NULL
-#define s_sort                NULL
+#define s_flags               nullptr
+#define s_upper               nullptr
+#define s_lower               nullptr
+#define s_sort                nullptr
 
 #define HB_CP_INIT hb_cp_init
 

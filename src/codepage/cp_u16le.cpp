@@ -58,7 +58,9 @@ static HB_CDP_GET_FUNC( UTF16LE_get )
       return HB_TRUE;
    }
    else
+   {
       *wc = 0;
+   }
    return HB_FALSE;
 }
 
@@ -86,26 +88,33 @@ static HB_CDP_LEN_FUNC( UTF16LE_len )
 static void hb_cp_init( PHB_CODEPAGE cdp )
 {
    HB_UCHAR * flags, * upper, * lower;
-   int i;
 
    cdp->buffer = static_cast< HB_UCHAR * >( hb_xgrab( 0x300 ) );
-   cdp->flags = flags = ( HB_UCHAR * ) cdp->buffer;
-   cdp->upper = upper = ( HB_UCHAR * ) cdp->buffer + 0x100;
-   cdp->lower = lower = ( HB_UCHAR * ) cdp->buffer + 0x200;
+   cdp->flags = flags = static_cast< HB_UCHAR * >( cdp->buffer );
+   cdp->upper = upper = static_cast< HB_UCHAR * >( cdp->buffer ) + 0x100;
+   cdp->lower = lower = static_cast< HB_UCHAR * >( cdp->buffer ) + 0x200;
 
-   for( i = 0; i < 0x100; ++i )
+   for( int i = 0; i < 0x100; ++i )
    {
       flags[ i ] = 0;
       if( HB_ISDIGIT( i ) )
+      {
          flags[ i ] |= HB_CDP_DIGIT;
+      }
       if( HB_ISALPHA( i ) )
+      {
          flags[ i ] |= HB_CDP_ALPHA;
+      }
       if( HB_ISUPPER( i ) )
+      {
          flags[ i ] |= HB_CDP_UPPER;
+      }
       if( HB_ISLOWER( i ) )
+      {
          flags[ i ] |= HB_CDP_LOWER;
-      upper[ i ] = ( HB_UCHAR ) HB_TOUPPER( i );
-      lower[ i ] = ( HB_UCHAR ) HB_TOLOWER( i );
+      }
+      upper[ i ] = static_cast< HB_UCHAR >( HB_TOUPPER( i ) );
+      lower[ i ] = static_cast< HB_UCHAR >( HB_TOLOWER( i ) );
    }
 }
 
@@ -119,16 +128,16 @@ static void hb_cp_init( PHB_CODEPAGE cdp )
 #define HB_CP_PUT_FUNC        UTF16LE_put
 #define HB_CP_LEN_FUNC        UTF16LE_len
 
-#define HB_CP_FLAGS_FUNC      NULL
-#define HB_CP_UPPER_FUNC      NULL
-#define HB_CP_LOWER_FUNC      NULL
+#define HB_CP_FLAGS_FUNC      nullptr
+#define HB_CP_UPPER_FUNC      nullptr
+#define HB_CP_LOWER_FUNC      nullptr
 
-#define HB_CP_CMP_FUNC        NULL
+#define HB_CP_CMP_FUNC        nullptr
 
-#define s_flags               NULL
-#define s_upper               NULL
-#define s_lower               NULL
-#define s_sort                NULL
+#define s_flags               nullptr
+#define s_upper               nullptr
+#define s_lower               nullptr
+#define s_sort                nullptr
 
 #define HB_CP_INIT hb_cp_init
 
