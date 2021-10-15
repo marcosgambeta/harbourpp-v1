@@ -1,7 +1,6 @@
 -stop{hbdyn}
 
-# pocc64 version 6.0 is OK, version 5.0 is not (->internal error).
--stop{pocc64|(wce&!mingwarm)}
+-stop{(wce&!mingwarm)}
 
 -hblib
 -inc
@@ -30,7 +29,6 @@
 -depincpathlocal=zlib:../../../../src/3rd/zlib
 
 -cflag=-DHPDF_DLL_MAKE_CDECL{allwin&hbdyn}
--cflag=-DPNG_ALLOCATED{allpocc}
 -cflag=-U__COREDLL__{mingwarm}
 
 _hbhbpdf.c

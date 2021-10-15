@@ -1,6 +1,6 @@
 -stop{hbdyn}
 
--stop{wce|pocc64}
+-stop{wce}
 
 -hblib
 -inc

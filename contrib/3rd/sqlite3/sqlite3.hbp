@@ -1,6 +1,5 @@
 -stop{hbdyn}
 
--stop{poccarm}
 # NOTE: old msvcarm can't cope with some PP directives. [vszakats]
 -stop{msvcarm&(HB_COMP_VER='1200')&!(HB_COMP_VER='1300')&!(HB_COMP_VER='1310')}
 # NOTE: dos based watcom runs out of memory. [vszakats]

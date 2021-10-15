@@ -8,7 +8,7 @@
 # Tone down warnings for both Qt4, Qt5 and Qt6
 -warn=low{allclang}
 
--stop{dos|watcom|bcc|pocc|pocc64|poccarm|msvcia64|pcc|(hbdyn&android)}
+-stop{dos|watcom|bcc|msvcia64|pcc|(hbdyn&android)}
 
 -pic
 
