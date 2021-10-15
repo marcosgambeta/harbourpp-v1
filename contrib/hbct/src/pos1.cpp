@@ -91,7 +91,7 @@ static void do_pos1( int iSwitch )
          iParamShift += 2;
       }
 
-      pcString = ( const unsigned char * ) hb_parc( iParamShift + 1 );
+      pcString = reinterpret_cast< const unsigned char * >( hb_parc( iParamShift + 1 ) );
       sStrLen = hb_parclen( iParamShift + 1 );
 
       iMode = hb_parldef( iParamShift + 2, 0 );
@@ -104,11 +104,11 @@ static void do_pos1( int iSwitch )
          switch( iSwitch )
          {
             case DO_POS1_POSALPHA:
-               iDoRet = hb_charIsAlpha( ( HB_UCHAR ) *puc );
+               iDoRet = hb_charIsAlpha( static_cast< HB_UCHAR >( *puc ) );
                break;
 
             case DO_POS1_POSLOWER:
-               iDoRet = hb_charIsLower( ( HB_UCHAR ) *puc );
+               iDoRet = hb_charIsLower( static_cast< HB_UCHAR >( *puc ) );
                break;
 
             case DO_POS1_POSRANGE:
@@ -116,7 +116,7 @@ static void do_pos1( int iSwitch )
                break;
 
             case DO_POS1_POSUPPER:
-               iDoRet = hb_charIsUpper( ( HB_UCHAR ) *puc );
+               iDoRet = hb_charIsUpper( static_cast< HB_UCHAR >( *puc ) );
                break;
          }
 

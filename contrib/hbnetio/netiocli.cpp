@@ -439,7 +439,7 @@ static HB_BOOL s_fileSendMsg( PHB_CONCLI conn, HB_BYTE * msgbuf,
             {
                if( iResult == NETIO_ERROR )
                {
-                  conn->errcode = ( HB_ERRCODE ) HB_GET_LE_UINT32( &msgbuf[ 4 ] );
+                  conn->errcode = static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 4 ] ) );
                   hb_fsSetError( conn->errcode );
                }
                else if( iResult != iMsg )
@@ -495,7 +495,7 @@ static HB_BOOL s_fileProcessData( PHB_CONCLI conn )
          }
          else if( iMsg == NETIO_ERROR )
          {
-            conn->errcode = ( HB_ERRCODE ) HB_GET_LE_UINT32( &msgbuf[ 4 ] );
+            conn->errcode = static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 4 ] ) );
             hb_fsSetError( conn->errcode );
          }
          else if( iMsg != NETIO_SYNC )
@@ -1712,7 +1712,7 @@ static double s_fileDirSpace( PHB_FILE_FUNCS pFuncs, const char * pszDirName, HB
          if( s_fileSendMsg( conn, msgbuf, pszDirName, len, HB_TRUE, HB_FALSE ) )
          {
             dResult = static_cast< double >( HB_GET_LE_UINT64( &msgbuf[ 4 ] ) );
-            hb_fsSetError( ( HB_ERRCODE ) HB_GET_LE_UINT32( &msgbuf[ 12 ] ) );
+            hb_fsSetError( static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 12 ] ) ) );
          }
          s_fileConUnlock( conn );
       }
@@ -1754,7 +1754,7 @@ static PHB_ITEM s_fileDirectory( PHB_FILE_FUNCS pFuncs, const char * pszDirSpec,
          memset( msgbuf + 8, '\0', sizeof( msgbuf ) - 8 );
          if( s_fileSendMsg( conn, msgbuf, pBuffer, len1 + len2, HB_TRUE, HB_FALSE ) )
          {
-            HB_ERRCODE errCode = ( HB_ERRCODE ) HB_GET_LE_UINT32( &msgbuf[ 8 ] );
+            HB_ERRCODE errCode = static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 8 ] ) );
             HB_SIZE nResult = HB_GET_LE_UINT32( &msgbuf[ 4 ] ), nRecv = 0;
 
             if( nResult > 0 )
@@ -2160,7 +2160,7 @@ static char * s_fileLinkRead( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
          if( s_fileSendMsg( conn, msgbuf, pszFileName, len, HB_TRUE, HB_FALSE ) )
          {
             HB_SIZE nResult = HB_GET_LE_UINT32( &msgbuf[ 4 ] ), nRecv = 0;
-            HB_ERRCODE errCode = ( HB_ERRCODE ) HB_GET_LE_UINT32( &msgbuf[ 8 ] );
+            HB_ERRCODE errCode = static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 8 ] ) );
 
             if( nResult > 0 )
             {
@@ -2250,7 +2250,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName,
       if( pFile == nullptr )
       {
          hb_errPutOsCode( pError, hb_fsError() );
-         hb_errPutGenCode( pError, ( HB_ERRCODE ) ( ( nExFlags & FXO_TRUNCATE ) ? EG_CREATE : EG_OPEN ) );
+         hb_errPutGenCode( pError, static_cast< HB_ERRCODE >( ( nExFlags & FXO_TRUNCATE ) ? EG_CREATE : EG_OPEN ) );
       }
    }
 
@@ -2343,7 +2343,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * data, HB_SIZE nSize,
 
       if( s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, HB_TRUE, HB_FALSE ) )
       {
-         HB_ERRCODE errCode = ( HB_ERRCODE ) HB_GET_LE_UINT32( &msgbuf[ 8 ] );
+         HB_ERRCODE errCode = static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 8 ] ) );
          nResult = HB_GET_LE_UINT32( &msgbuf[ 4 ] );
          if( nResult > 0 && nResult != static_cast< HB_SIZE >( FS_ERROR ) )
          {
@@ -2386,7 +2386,7 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * data, HB_SIZE nSize,
       if( s_fileSendMsg( pFile->conn, msgbuf, data, static_cast< long >( nSize ), HB_TRUE, HB_FALSE ) )
       {
          nResult = HB_GET_LE_UINT32( &msgbuf[ 4 ] );
-         hb_fsSetError( ( HB_ERRCODE ) HB_GET_LE_UINT32( &msgbuf[ 8 ] ) );
+         hb_fsSetError( static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 8 ] ) ) );
       }
       s_fileConUnlock( pFile->conn );
    }
@@ -2411,7 +2411,7 @@ static HB_SIZE s_fileReadAt( PHB_FILE pFile, void * data, HB_SIZE nSize,
 
       if( s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, HB_TRUE, HB_FALSE ) )
       {
-         HB_ERRCODE errCode = ( HB_ERRCODE ) HB_GET_LE_UINT32( &msgbuf[ 8 ] );
+         HB_ERRCODE errCode = static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 8 ] ) );
          nResult = HB_GET_LE_UINT32( &msgbuf[ 4 ] );
          if( nResult > 0 && nResult != static_cast< HB_SIZE >( FS_ERROR ) )
          {
@@ -2454,7 +2454,7 @@ static HB_SIZE s_fileWriteAt( PHB_FILE pFile, const void * data, HB_SIZE nSize,
       if( s_fileSendMsg( pFile->conn, msgbuf, data, static_cast< long >( nSize ), HB_TRUE, HB_FALSE ) )
       {
          nResult = HB_GET_LE_UINT32( &msgbuf[ 4 ] );
-         hb_fsSetError( ( HB_ERRCODE ) HB_GET_LE_UINT32( &msgbuf[ 8 ] ) );
+         hb_fsSetError( static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 8 ] ) ) );
       }
       s_fileConUnlock( pFile->conn );
    }
@@ -2499,7 +2499,7 @@ static HB_FOFFSET s_fileSeek( PHB_FILE pFile, HB_FOFFSET llOffset, HB_USHORT uiF
       if( s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, HB_TRUE, HB_FALSE ) )
       {
          llResult = HB_GET_LE_UINT64( &msgbuf[ 4 ] );
-         hb_fsSetError( ( HB_ERRCODE ) HB_GET_LE_UINT32( &msgbuf[ 12 ] ) );
+         hb_fsSetError( static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 12 ] ) ) );
       }
       s_fileConUnlock( pFile->conn );
    }
@@ -2522,7 +2522,7 @@ static HB_FOFFSET s_fileSize( PHB_FILE pFile )
       if( s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, HB_TRUE, HB_FALSE ) )
       {
          llOffset = HB_GET_LE_UINT64( &msgbuf[ 4 ] );
-         hb_fsSetError( ( HB_ERRCODE ) HB_GET_LE_UINT32( &msgbuf[ 12 ] ) );
+         hb_fsSetError( static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 12 ] ) ) );
       }
       s_fileConUnlock( pFile->conn );
    }
@@ -2545,7 +2545,7 @@ static HB_BOOL s_fileEof( PHB_FILE pFile )
       if( s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, HB_TRUE, HB_FALSE ) )
       {
          fEof = HB_GET_LE_UINT16( &msgbuf[ 4 ] ) != 0;
-         hb_fsSetError( ( HB_ERRCODE ) HB_GET_LE_UINT32( &msgbuf[ 8 ] ) );
+         hb_fsSetError( static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 8 ] ) ) );
       }
       s_fileConUnlock( pFile->conn );
    }
@@ -2597,7 +2597,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
 
       if( s_fileSendMsg( pFile->conn, msgbuf, itmData, static_cast< long >( itmSize ), HB_TRUE, HB_FALSE ) )
       {
-         HB_ERRCODE errCode = ( HB_ERRCODE ) HB_GET_LE_UINT32( &msgbuf[ 12 ] );
+         HB_ERRCODE errCode = static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 12 ] ) );
          HB_SIZE nResult = HB_GET_LE_UINT32( &msgbuf[ 4 ] ), nRecv = 0;
 
          fResult = HB_GET_LE_UINT32( &msgbuf[ 8 ] ) != 0;

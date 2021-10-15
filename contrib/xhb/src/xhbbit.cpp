@@ -167,15 +167,15 @@ static void s_xhb_bitOper( int iOper )
          {
             case XHB_AND:
                while( nLen2 )
-                  iVal &= ( HB_UCHAR ) pStr[ --nLen2 ];
+                  iVal &= static_cast< HB_UCHAR >( pStr[ --nLen2 ] );
                break;
             case XHB_OR:
                while( nLen2 )
-                  iVal |= ( HB_UCHAR ) pStr[ --nLen2 ];
+                  iVal |= static_cast< HB_UCHAR >( pStr[ --nLen2 ] );
                break;
             default: /* XHB_XOR */
                while( nLen2 )
-                  iVal ^= ( HB_UCHAR ) pStr[ --nLen2 ];
+                  iVal ^= static_cast< HB_UCHAR >( pStr[ --nLen2 ] );
                break;
          }
          hb_retni( iVal );

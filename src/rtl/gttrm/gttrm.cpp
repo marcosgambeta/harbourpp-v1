@@ -1375,14 +1375,14 @@ again:
       {
          HB_WCHAR wc = 0;
          n = i = 0;
-         if( hb_cdpUTF8ToU16NextChar( ( HB_UCHAR ) nKey, &n, &wc ) )
+         if( hb_cdpUTF8ToU16NextChar( static_cast< HB_UCHAR >( nKey ), &n, &wc ) )
          {
             while( n > 0 )
             {
                ch = test_bufch( pTerm, i++, pTerm->esc_delay );
                if( ch < 0 || ch > 255 )
                   break;
-               if( ! hb_cdpUTF8ToU16NextChar( ( HB_UCHAR ) ch, &n, &wc ) )
+               if( ! hb_cdpUTF8ToU16NextChar( static_cast< HB_UCHAR >( ch ), &n, &wc ) )
                   n = -1;
             }
             if( n == 0 )
@@ -1397,7 +1397,7 @@ again:
       {
          HB_USHORT uc = 0;
          n = i = 0;
-         if( hb_cdpGetFromUTF8( pTerm->cdpIn, ( HB_UCHAR ) nKey, &n, &uc ) )
+         if( hb_cdpGetFromUTF8( pTerm->cdpIn, static_cast< HB_UCHAR >( nKey ), &n, &uc ) )
          {
             while( n > 0 )
             {
@@ -2203,7 +2203,7 @@ static int hb_gt_trm_AnsiGetAcsc( PHB_GTTRM pTerm, unsigned char c )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_trm_AnsiGetAcsc(%p,%d)", static_cast< void * >( pTerm ), c ) );
 
-   for( ptr = ( const unsigned char * ) pTerm->szAcsc; *ptr && *( ptr + 1 ); ptr += 2 )
+   for( ptr = static_cast< const unsigned char * >( pTerm->szAcsc ); *ptr && *( ptr + 1 ); ptr += 2 )
    {
       if( *ptr == c )
          return *( ptr + 1 ) | HB_GTTRM_ATTR_ACSC;

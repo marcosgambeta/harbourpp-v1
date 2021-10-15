@@ -2232,7 +2232,7 @@ HB_BOOL hb_compExprReduceASC( PHB_EXPR pSelf, HB_COMP_DECL )
    PHB_EXPR pParms = pSelf->value.asFunCall.pParms;
    PHB_EXPR pArg = pParms->value.asList.pExprList;
 
-   if( pArg->ExprType == HB_ET_STRING && ( ! HB_SUPPORT_USERCP || ( HB_UCHAR ) pArg->value.asString.string[ 0 ] <= 127 ) )
+   if( pArg->ExprType == HB_ET_STRING && ( ! HB_SUPPORT_USERCP || static_cast< HB_UCHAR >( pArg->value.asString.string[ 0 ] ) <= 127 ) )
    {
       PHB_EXPR pExpr = hb_compExprNewLong( static_cast< HB_UCHAR >( pArg->value.asString.string[ 0 ] ), HB_COMP_PARAM );
 

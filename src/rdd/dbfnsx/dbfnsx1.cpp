@@ -364,7 +364,7 @@ static HB_USHORT hb_nsxLeafPutKey( LPTAGINFO pTag, LPPAGEINFO pPage, HB_USHORT u
    switch( ucSize )
    {
       case 1:
-         *ptr++ = ( HB_UCHAR ) ulRecNo;
+         *ptr++ = static_cast< HB_UCHAR >( ulRecNo );
          break;
       case 2:
          HB_PUT_LE_UINT16( ptr, ulRecNo );
@@ -5176,7 +5176,7 @@ static HB_BOOL hb_nsxOrdSkipWild( LPTAGINFO pTag, HB_BOOL fForward, PHB_ITEM pWi
                   break;
                }
             }
-            if( iFixed && hb_nsxValCompare( pTag, ( const HB_UCHAR * ) szPattern, iFixed, pTag->CurKeyInfo->val, iFixed, NSX_CMP_PREFIX ) == iStop )
+            if( iFixed && hb_nsxValCompare( pTag, reinterpret_cast< const HB_UCHAR * >( szPattern ), iFixed, pTag->CurKeyInfo->val, iFixed, NSX_CMP_PREFIX ) == iStop )
             {
                break;
             }

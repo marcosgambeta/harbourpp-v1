@@ -2784,7 +2784,7 @@ int hb_itemStrCmp( PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact )
          {
             if( *szFirst != *szSecond )
             {
-               iRet = ( ( HB_UCHAR ) *szFirst < ( HB_UCHAR ) *szSecond ) ? -1 : 1;
+               iRet = ( static_cast< HB_UCHAR >( *szFirst ) < static_cast< HB_UCHAR >( *szSecond ) ) ? -1 : 1;
                break;
             }
             szFirst++;

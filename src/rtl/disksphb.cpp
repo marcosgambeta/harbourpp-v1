@@ -277,7 +277,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
             }
          }
 
-         hb_fsSetError( ( HB_ERRCODE ) rc );
+         hb_fsSetError( static_cast< HB_ERRCODE >( rc ) );
 
          if( rc == NO_ERROR )
          {

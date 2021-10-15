@@ -203,7 +203,7 @@ static char * ocilibGetError( HB_ERRCODE * pErrCode )
    }
 
    if( pErrCode )
-      *pErrCode = ( HB_ERRCODE ) iNativeErr;
+      *pErrCode = static_cast< HB_ERRCODE >( iNativeErr );
 
    return szRet;
 }
@@ -411,7 +411,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
             HB_TRACE( HB_TR_ALWAYS, ( "new sql type=%d", uiDataType ) );
 #endif
             bError  = HB_TRUE;
-            errCode = ( HB_ERRCODE ) uiDataType;
+            errCode = static_cast< HB_ERRCODE >( uiDataType );
             break;
       }
 

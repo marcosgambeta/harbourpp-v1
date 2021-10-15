@@ -118,14 +118,14 @@
 #endif
 
 #if defined( __WATCOMC__ ) && defined( __386__ )
-   #define HB_PEEK_BYTE( s, o )     ( *( ( HB_UCHAR * ) ( ( ( s ) << 4 ) | ( o ) ) ) )
-   #define HB_POKE_BYTE( s, o, b )  ( *( ( HB_UCHAR * ) ( ( ( s ) << 4 ) | ( o ) ) ) = ( HB_UCHAR ) ( b ) )
+   #define HB_PEEK_BYTE( s, o )     ( *( static_cast< HB_UCHAR * >( ( ( s ) << 4 ) | ( o ) ) ) )
+   #define HB_POKE_BYTE( s, o, b )  ( *( static_cast< HB_UCHAR * >( ( ( s ) << 4 ) | ( o ) ) ) = static_cast< HB_UCHAR >( b ) )
 #elif defined( __DJGPP__ )
    #define HB_PEEK_BYTE( s, o )     _farpeekb( ( s ), ( o ) )
    #define HB_POKE_BYTE( s, o, b )  _farpokeb( ( s ), ( o ), ( b ) )
 #else
    #define HB_PEEK_BYTE( s, o )     ( *( ( HB_UCHAR FAR * ) MK_FP( ( s ), ( o ) ) ) )
-   #define HB_POKE_BYTE( s, o, b )  ( *( ( HB_UCHAR FAR * ) MK_FP( ( s ), ( o ) ) ) = ( HB_UCHAR ) ( b ) )
+   #define HB_POKE_BYTE( s, o, b )  ( *( ( HB_UCHAR FAR * ) MK_FP( ( s ), ( o ) ) ) = static_cast< HB_UCHAR >( b ) )
 #endif
 
 static int s_GtId;

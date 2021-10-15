@@ -1161,7 +1161,7 @@ static HB_GENC_FUNC( hb_p_pushdouble )
    fprintf( cargo->yyc, "\thb_xvmPushDouble( * ( double * ) " );
    {
       double d = HB_PCODE_MKDOUBLE( &pFunc->pCode[ nPCodePos + 1 ] );
-      hb_compGenCString( cargo->yyc, ( const HB_BYTE * ) &d, sizeof( double ) );
+      hb_compGenCString( cargo->yyc, reinterpret_cast< const HB_BYTE * >( &d ), sizeof( double ) );
    }
    fprintf( cargo->yyc, ", %u, %u );\n",
             pFunc->pCode[ nPCodePos + 1 + sizeof( double ) ],
@@ -2408,7 +2408,7 @@ void hb_compGenCRealCode( HB_COMP_DECL, PHB_HFUNC pFunc, FILE * yyc )
    label_info.fCondJump = HB_FALSE;
    label_info.fEndRequest = HB_FALSE;
    label_info.iNestedBlock = 0;
-   label_info.pFuncTable = ( const PHB_PCODE_FUNC * ) pFuncTable;
+   label_info.pFuncTable = reinterpret_cast< const PHB_PCODE_FUNC * >( pFuncTable );
    if( pFunc->nPCodePos == 0 )
    {
       label_info.pnLabels = nullptr;
@@ -2426,7 +2426,7 @@ void hb_compGenCRealCode( HB_COMP_DECL, PHB_HFUNC pFunc, FILE * yyc )
    }
    fprintf( yyc, "   do {\n" );
 
-   hb_compPCodeEval( pFunc, ( const PHB_PCODE_FUNC * ) pFuncTable, static_cast< void * >( &label_info ) );
+   hb_compPCodeEval( pFunc, reinterpret_cast< const PHB_PCODE_FUNC * >( pFuncTable ), static_cast< void * >( &label_info ) );
 
    fprintf( yyc, "   } while( 0 );\n" );
    if( label_info.fEndRequest )

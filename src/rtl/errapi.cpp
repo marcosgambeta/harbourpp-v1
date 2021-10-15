@@ -795,7 +795,7 @@ HB_ERRCODE hb_errGetGenCode( PHB_ITEM pError )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_errGetGenCode(%p)", pError ) );
 
-   return ( HB_ERRCODE ) hb_arrayGetNI( pError, HB_TERROR_GENCODE );
+   return static_cast< HB_ERRCODE >( hb_arrayGetNI( pError, HB_TERROR_GENCODE ) );
 }
 
 PHB_ITEM hb_errPutGenCode( PHB_ITEM pError, HB_ERRCODE errGenCode )
@@ -836,7 +836,7 @@ HB_ERRCODE hb_errGetOsCode( PHB_ITEM pError )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_errGetOsCode(%p)", pError ) );
 
-   return ( HB_ERRCODE ) hb_arrayGetNI( pError, HB_TERROR_OSCODE );
+   return static_cast< HB_ERRCODE >( hb_arrayGetNI( pError, HB_TERROR_OSCODE ) );
 }
 
 PHB_ITEM hb_errPutOsCode( PHB_ITEM pError, HB_ERRCODE errOsCode )
@@ -868,7 +868,7 @@ HB_ERRCODE hb_errGetSubCode( PHB_ITEM pError )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_errGetSubCode(%p)", pError ) );
 
-   return ( HB_ERRCODE ) hb_arrayGetNI( pError, HB_TERROR_SUBCODE );
+   return static_cast< HB_ERRCODE >( hb_arrayGetNI( pError, HB_TERROR_SUBCODE ) );
 }
 
 PHB_ITEM hb_errPutSubCode( PHB_ITEM pError, HB_ERRCODE errSubCode )

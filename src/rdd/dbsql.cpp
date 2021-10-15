@@ -155,7 +155,7 @@ static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const 
             {
                hb_addToFBuffer( pFileBuf, *szEsc );
             }
-            if( ( HB_UCHAR ) *szVal >= 32 )
+            if( static_cast< HB_UCHAR >( *szVal ) >= 32 )
             {
                hb_addToFBuffer( pFileBuf, *szVal );
             }

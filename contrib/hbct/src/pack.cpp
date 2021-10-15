@@ -49,7 +49,7 @@
 HB_FUNC( CHARPACK )
 {
    HB_SIZE len = hb_parclen( 1 );
-   const HB_UCHAR * in = ( const HB_UCHAR * ) hb_parcx( 1 );
+   const HB_UCHAR * in = reinterpret_cast< const HB_UCHAR * >( hb_parcx( 1 ) );
 
    if( hb_parni( 2 ) == 0 )
    {
@@ -67,7 +67,7 @@ HB_FUNC( CHARPACK )
          while( n_count < n_max && in[ n_in + n_count ] == c )
             n_count++;
          out[ n_out++ ] = 0;
-         out[ n_out++ ] = ( HB_UCHAR ) n_count;
+         out[ n_out++ ] = static_cast< HB_UCHAR >( n_count );
          out[ n_out++ ] = c;
          n_in += n_count;
       }
@@ -96,7 +96,7 @@ static HB_UCHAR * buf_append( HB_UCHAR * buf, HB_SIZE * buf_size, HB_SIZE count,
 HB_FUNC( CHARUNPACK )
 {
    HB_SIZE len = hb_parclen( 1 );
-   const HB_UCHAR * in = ( const HB_UCHAR * ) hb_parcx( 1 );
+   const HB_UCHAR * in = reinterpret_cast< const HB_UCHAR * >( hb_parcx( 1 ) );
 
    if( hb_parni( 2 ) == 0 )
    {

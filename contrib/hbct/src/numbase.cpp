@@ -72,7 +72,7 @@ HB_FUNC( CTON )
 
       for( ;; )
       {
-         int iDigit = ( HB_UCHAR ) *szNumber++;
+         int iDigit = static_cast< HB_UCHAR >( *szNumber++ );
          if( iDigit >= '0' && iDigit <= '9' )
             iDigit -= '0';
          else if( iDigit >= 'A' && iDigit <= 'Z' )

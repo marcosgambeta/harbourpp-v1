@@ -116,7 +116,7 @@ HB_FUNC( SCREENMIX )
                i = iCol;
             }
             else if( HB_CDPCHAR_GET( cdp, szText, nLen, &nIndex, &wc ) )
-               hb_gtPutChar( iRow, i++, ( HB_UCHAR ) szAttr[ ul ], 0, wc );
+               hb_gtPutChar( iRow, i++, static_cast< HB_UCHAR >( szAttr[ ul ] ), 0, wc );
             else
                break;
             if( ++ul == nAttr )
@@ -217,7 +217,7 @@ static int hb_ctGetClearChar( int iParam )
    if( HB_ISNUM( iParam ) )
       iChar = hb_parni( iParam );
    else if( HB_ISCHAR( iParam ) )
-      iChar = ( HB_UCHAR ) hb_parc( iParam )[ 0 ];
+      iChar = static_cast< HB_UCHAR >( hb_parc( iParam )[ 0 ] );
    else
       iChar = static_cast< int >( hb_gtGetClearChar() );
 
@@ -303,14 +303,14 @@ HB_FUNC( UNTEXTWIN )
       if( HB_ISNUM( 6 ) )
          usInit = static_cast< HB_USHORT >( hb_parni( 6 ) );
       else if( hb_parclen( 6 ) > 0 )
-         usInit = ( HB_UCHAR ) hb_parc( 6 )[ 0 ];
+         usInit = static_cast< HB_UCHAR >( hb_parc( 6 )[ 0 ] );
       else
          usInit = 176;
 
       if( HB_ISNUM( 7 ) )
          usEnd = static_cast< HB_USHORT >( hb_parni( 7 ) );
       else if( hb_parclen( 7 ) > 0 )
-         usEnd = ( HB_UCHAR ) hb_parc( 7 )[ 0 ];
+         usEnd = static_cast< HB_UCHAR >( hb_parc( 7 )[ 0 ] );
       else
          usEnd = 223;
 
@@ -352,7 +352,7 @@ HB_FUNC( CHARWIN )
       if( HB_ISNUM( 6 ) )
          usOldChar = static_cast< HB_USHORT >( hb_parni( 6 ) );
       else if( hb_parclen( 6 ) > 0 )
-         usOldChar = ( HB_UCHAR ) hb_parc( 6 )[ 0 ];
+         usOldChar = static_cast< HB_UCHAR >( hb_parc( 6 )[ 0 ] );
       else
          fAll = HB_TRUE;
 

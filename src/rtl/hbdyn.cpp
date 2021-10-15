@@ -777,11 +777,11 @@ static PHB_ITEM hb_u32ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
             case HB_DYN_ENC_UTF16:
                if( nLen == -1 )
                {
-                  hb_itemPutStrU16( pItem, HB_CDP_ENDIAN_NATIVE, ( const HB_WCHAR * ) value.t.n32 );
+                  hb_itemPutStrU16( pItem, HB_CDP_ENDIAN_NATIVE, reinterpret_cast< const HB_WCHAR * >( value.t.n32 ) );
                }
                else
                {
-                  hb_itemPutStrLenU16( pItem, HB_CDP_ENDIAN_NATIVE, ( const HB_WCHAR * ) value.t.n32, nLen );
+                  hb_itemPutStrLenU16( pItem, HB_CDP_ENDIAN_NATIVE, reinterpret_cast< const HB_WCHAR * >( value.t.n32 ), nLen );
                }
                break;
             default:

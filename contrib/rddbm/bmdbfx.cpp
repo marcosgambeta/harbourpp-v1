@@ -728,11 +728,11 @@ static void hb_bmGetFuncTable( const char * szSuper )
    RDDFUNCS * pTable, * pSuperTable;
    HB_USHORT * puiCount, uiRddId, * puiSuperRddId;
 
-   puiCount = ( HB_USHORT * ) hb_parptr( 1 );
-   pTable = ( RDDFUNCS * ) hb_parptr( 2 );
-   pSuperTable = ( RDDFUNCS * ) hb_parptr( 3 );
+   puiCount = static_cast< HB_USHORT * >( hb_parptr( 1 ) );
+   pTable = static_cast< RDDFUNCS * >( hb_parptr( 2 ) );
+   pSuperTable = static_cast< RDDFUNCS * >( hb_parptr( 3 ) );
    uiRddId = static_cast< HB_USHORT >( hb_parni( 4 ) );
-   puiSuperRddId = ( HB_USHORT * ) hb_parptr( 5 );
+   puiSuperRddId = static_cast< HB_USHORT * >( hb_parptr( 5 ) );
 
    HB_TRACE( HB_TR_DEBUG, ( "BM%s_GETFUNCTABLE(%p, %p, %p, %hu, %p)", szSuper, static_cast< void * >( puiCount ), pTable, pSuperTable, uiRddId, puiSuperRddId ) );
 

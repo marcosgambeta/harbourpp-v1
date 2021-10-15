@@ -545,7 +545,7 @@ static int hb_fsProcessExec( const char * pszFileName, HB_FHANDLE hStdin, HB_FHA
    HB_SYMBOL_UNUSED( hStdout );
    HB_SYMBOL_UNUSED( hStderr );
 
-   hb_fsSetError( ( HB_ERRCODE ) FS_ERROR );
+   hb_fsSetError( static_cast< HB_ERRCODE >( FS_ERROR ) );
 }
 #endif
 
@@ -1813,7 +1813,7 @@ int hb_fsProcessRun( const char * pszFileName,
 
             iResult = poll( fds, nfds, -1 );
             hb_fsSetIOError( iResult >= 0, 0 );
-            if( iResult == -1 && hb_fsOsError() == ( HB_ERRCODE ) EINTR && hb_vmRequestQuery() == 0 )
+            if( iResult == -1 && hb_fsOsError() == static_cast< HB_ERRCODE >( EINTR ) && hb_vmRequestQuery() == 0 )
             {
                continue;
             }

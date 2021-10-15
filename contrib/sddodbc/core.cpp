@@ -210,7 +210,7 @@ static char * odbcGetError( SQLHENV hEnv, SQLHDBC hConn, SQLHSTMT hStmt, HB_ERRC
       szRet = hb_strdup( "HY000 Could not get the error message" );
 
    if( pErrCode )
-      *pErrCode = ( HB_ERRCODE ) iNativeErr;
+      *pErrCode = static_cast< HB_ERRCODE >( iNativeErr );
    return szRet;
 }
 
@@ -565,7 +565,7 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
             HB_TRACE( HB_TR_ALWAYS, ( "new sql type=%d", iDataType ) );
 #endif
             bError  = HB_TRUE;
-            errCode = ( HB_ERRCODE ) iDataType;
+            errCode = static_cast< HB_ERRCODE >( iDataType );
             break;
       }
 

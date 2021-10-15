@@ -428,7 +428,7 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
       HB_WCHAR wc = 0;
       int n = 0;
 
-      if( hb_cdpUTF8ToU16NextChar( ( HB_UCHAR ) ch, &n, &wc ) )
+      if( hb_cdpUTF8ToU16NextChar( static_cast< HB_UCHAR >( ch ), &n, &wc ) )
       {
          unsigned int buf[ 10 ], i = 0;
 
@@ -438,7 +438,7 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
                                      -HB_MAX( hb_sln_escDelay, 0 ) ) == 0 )
                break;
             buf[ i++ ] = SLang_getkey();
-            if( ! hb_cdpUTF8ToU16NextChar( ( HB_UCHAR ) buf[ i - 1 ], &n, &wc ) )
+            if( ! hb_cdpUTF8ToU16NextChar( static_cast< HB_UCHAR >( buf[ i - 1 ] ), &n, &wc ) )
                n = -1;
          }
          if( n == 0 )

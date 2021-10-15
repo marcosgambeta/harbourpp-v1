@@ -55,10 +55,10 @@ HB_FUNC( CRYPT )
 
    if( nCryptLen >= 2 )
    {
-      const HB_BYTE * pbyCrypt = ( const HB_BYTE * ) hb_parc( 2 );
+      const HB_BYTE * pbyCrypt = reinterpret_cast< const HB_BYTE * >( hb_parc( 2 ) );
       HB_SIZE nCryptPos = 0;
 
-      const HB_BYTE * pbyString = ( const HB_BYTE * ) hb_parc( 1 );
+      const HB_BYTE * pbyString = reinterpret_cast< const HB_BYTE * >( hb_parc( 1 ) );
       HB_SIZE nStringLen = hb_parclen( 1 );
       HB_SIZE nStringPos;
 

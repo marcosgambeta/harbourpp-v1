@@ -311,7 +311,7 @@
       ( ret ) = ( exp ); \
       hb_fsSetIOError( ( ret ) != -1, 0 ); \
    } \
-   while( ( ret ) == -1 && hb_fsOsError() == ( HB_ERRCODE ) EINTR && hb_vmRequestQuery() == 0 )
+   while( ( ret ) == -1 && hb_fsOsError() == static_cast< HB_ERRCODE >( EINTR ) && hb_vmRequestQuery() == 0 )
 #else
 #  define HB_FAILURE_RETRY( ret, exp ) \
    do \
@@ -804,7 +804,7 @@ static int hb_fsCanAccess( HB_FHANDLE hFile, HB_MAXINT nTimeOut, HB_BOOL fRead )
          }
          iResult = 0;
       }
-      else if( iResult == -1 && hb_fsOsError() == ( HB_ERRCODE ) EINTR )
+      else if( iResult == -1 && hb_fsOsError() == static_cast< HB_ERRCODE >( EINTR ) )
       {
          iResult = 0;
          fLast = HB_FALSE;
@@ -4841,7 +4841,7 @@ int hb_fsCurDrv( void )
 #else
 
    iDrive = 0;
-   hb_fsSetError( ( HB_ERRCODE ) FS_ERROR );
+   hb_fsSetError( static_cast< HB_ERRCODE >( FS_ERROR ) );
 
 #endif
 

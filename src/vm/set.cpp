@@ -114,15 +114,15 @@ static HB_BOOL set_logical( PHB_ITEM pItem, HB_BOOL bDefault )
          HB_SIZE nLen = hb_itemGetCLen( pItem );
 
          if( nLen >= 2
-             && ( ( HB_UCHAR ) szString[ 0 ] == 'O' || ( HB_UCHAR ) szString[ 0 ] == 'o' )
-             && ( ( HB_UCHAR ) szString[ 1 ] == 'N' || ( HB_UCHAR ) szString[ 1 ] == 'n' ) )
+             && ( static_cast< HB_UCHAR >( szString[ 0 ] ) == 'O' || static_cast< HB_UCHAR >( szString[ 0 ] ) == 'o' )
+             && ( static_cast< HB_UCHAR >( szString[ 1 ] ) == 'N' || static_cast< HB_UCHAR >( szString[ 1 ] ) == 'n' ) )
          {
             bLogical = HB_TRUE;
          }
          else if( nLen >= 3
-                  && ( ( HB_UCHAR ) szString[ 0 ] == 'O' || ( HB_UCHAR ) szString[ 0 ] == 'o' )
-                  && ( ( HB_UCHAR ) szString[ 1 ] == 'F' || ( HB_UCHAR ) szString[ 1 ] == 'f' )
-                  && ( ( HB_UCHAR ) szString[ 2 ] == 'F' || ( HB_UCHAR ) szString[ 2 ] == 'f' ) )
+                  && ( static_cast< HB_UCHAR >( szString[ 0 ] ) == 'O' || static_cast< HB_UCHAR >( szString[ 0 ] ) == 'o' )
+                  && ( static_cast< HB_UCHAR >( szString[ 1 ] ) == 'F' || static_cast< HB_UCHAR >( szString[ 1 ] ) == 'f' )
+                  && ( static_cast< HB_UCHAR >( szString[ 2 ] ) == 'F' || static_cast< HB_UCHAR >( szString[ 2 ] ) == 'f' ) )
          {
             bLogical = HB_FALSE;
          }

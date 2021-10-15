@@ -2097,10 +2097,10 @@ HB_FUNC_STATIC( SQLMIX_GETFUNCTABLE )
    RDDFUNCS *  pTable;
    HB_USHORT * puiCount, * puiSuperRddId, uiRddId;
 
-   puiCount      = ( HB_USHORT * ) hb_parptr( 1 );
-   pTable        = ( RDDFUNCS * ) hb_parptr( 2 );
+   puiCount      = static_cast< HB_USHORT * >( hb_parptr( 1 ) );
+   pTable        = static_cast< RDDFUNCS * >( hb_parptr( 2 ) );
    uiRddId       = static_cast< HB_USHORT >( hb_parni( 4 ) );
-   puiSuperRddId = ( HB_USHORT * ) hb_parptr( 5 );
+   puiSuperRddId = static_cast< HB_USHORT * >( hb_parptr( 5 ) );
 
    if( pTable )
    {

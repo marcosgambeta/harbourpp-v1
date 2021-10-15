@@ -113,7 +113,7 @@ static HB_ERRCODE hb_errnoToDosError( int ErrCode )
          return 33;  /* Lock violation */
    }
 
-   return ( HB_ERRCODE ) ErrCode;
+   return static_cast< HB_ERRCODE >( ErrCode );
 }
 
 #else

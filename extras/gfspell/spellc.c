@@ -785,15 +785,15 @@ HB_FUNC( BIT )
       hb_itemGetWriteCL( hb_param( 1, HB_IT_STRING ), &ptr, &nLen );
       ptr += loc;
       loc  = offset % 8;
-      res  = ( HB_UCHAR ) *ptr << loc & 0x80;
+      res  = static_cast< HB_UCHAR >( *ptr ) << loc & 0x80;
 
       if( hb_pcount() > 2 )
       {
-         mask = ( HB_UCHAR ) 0x80 >> loc;
+         mask = static_cast< HB_UCHAR >( 0x80 ) >> loc;
          if( hb_parl( 3 ) )
-            *ptr = ( HB_UCHAR ) *ptr | mask;
+            *ptr = static_cast< HB_UCHAR >( *ptr ) | mask;
          else
-            *ptr = ( HB_UCHAR ) *ptr & ~mask;
+            *ptr = static_cast< HB_UCHAR >( *ptr ) & ~mask;
       }
    }
 

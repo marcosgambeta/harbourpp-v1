@@ -338,7 +338,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
 #endif
          default:
             bError  = HB_TRUE;
-            errCode = ( HB_ERRCODE ) pMyField->type;
+            errCode = static_cast< HB_ERRCODE >( pMyField->type );
             break;
       }
 

@@ -1888,7 +1888,7 @@ static HB_BOOL hb_ctw_gt_GetScrUC( PHB_GT pGT, int iRow, int iCol,
                if( pGT->cdpHost && pGT->cdpTerm != pGT->cdpHost )
                   uc = hb_cdpGetUC( pGT->cdpHost, usChar, 0 );
                if( uc == 0 )
-                  uc = hb_cdpGetUC( hb_vmCDP(), usChar, usChar < 32 ? ( HB_UCHAR ) usChar : '?' );
+                  uc = hb_cdpGetUC( hb_vmCDP(), usChar, usChar < 32 ? static_cast< HB_UCHAR >( usChar ) : '?' );
             }
          }
       }

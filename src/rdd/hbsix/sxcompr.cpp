@@ -148,9 +148,9 @@
 /* create compressed item from match position and length */
 #define LZSS_ITEM( o, l )    ( ( ( o ) << LENGTHBITS ) | ( ( l ) - MINLENGTH ) )
 /* create low byte of compressed item */
-#define LZSS_ITMLO( o, l )   ( ( HB_UCHAR ) ( o ) )
+#define LZSS_ITMLO( o, l )   ( static_cast< HB_UCHAR >( o ) )
 /* create high byte of compressed item */
-#define LZSS_ITMHI( o, l )   ( ( HB_UCHAR ) ( ( ( ( o ) >> ( 8 - LENGTHBITS ) ) & ~MATCHMASK ) | ( ( l ) - MINLENGTH ) ) )
+#define LZSS_ITMHI( o, l )   ( static_cast< HB_UCHAR >( ( ( ( o ) >> ( 8 - LENGTHBITS ) ) & ~MATCHMASK ) | ( ( l ) - MINLENGTH ) ) )
 /* maximum size of item set: byte with item type bits plus 8 items */
 #define ITEMSETSIZE    ( ( ITEMBITS << 3 ) + 1 )
 
@@ -304,7 +304,7 @@ static int hb_LZSSxRead( PHB_LZSSX_COMPR pCompr )
       pCompr->inBuffPos = 0;
       if( pCompr->inBuffPos < pCompr->inBuffRead )
       {
-         return ( HB_UCHAR ) pCompr->inBuffer[ pCompr->inBuffPos++ ];
+         return static_cast< HB_UCHAR >( pCompr->inBuffer[ pCompr->inBuffPos++ ] );
       }
    }
    return -1;
@@ -527,7 +527,7 @@ static HB_SIZE hb_LZSSxEncode( PHB_LZSSX_COMPR pCompr )
       {
          break;
       }
-      pCompr->ring_buffer[ r + len ] = ( HB_UCHAR ) c;
+      pCompr->ring_buffer[ r + len ] = static_cast< HB_UCHAR >( c );
    }
    if( len == 0 )
    {

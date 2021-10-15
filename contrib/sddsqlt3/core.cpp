@@ -176,7 +176,7 @@ static char * sqlite3GetError( sqlite3 * pDb, HB_ERRCODE * pErrCode )
    }
 
    if( pErrCode )
-      *pErrCode = ( HB_ERRCODE ) iNativeErr;
+      *pErrCode = static_cast< HB_ERRCODE >( iNativeErr );
 
    return szRet;
 }

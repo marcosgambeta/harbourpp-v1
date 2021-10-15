@@ -839,7 +839,7 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
             return IDENTIFIER;
          }
          pLex->iState = OPERATOR;
-         return ( HB_UCHAR ) pToken->value[ 0 ];
+         return static_cast< HB_UCHAR >( pToken->value[ 0 ] );
 
       case HB_PP_TOKEN_EQ:
          if( HB_SUPPORT_HARBOUR && pToken->pNext && pToken->pNext->spaces == 0 &&

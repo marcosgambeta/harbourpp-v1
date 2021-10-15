@@ -468,7 +468,7 @@ static PHB_PP_TOKEN hb_pp_tokenNew( const char * value, HB_SIZE nLen,
    {
       if( nLen <= 1 )
       {
-         pToken->value = hb_szAscii[ nLen ? ( HB_UCHAR ) value[ 0 ] : 0 ];
+         pToken->value = hb_szAscii[ nLen ? static_cast< HB_UCHAR >( value[ 0 ] ) : 0 ];
          type |= HB_PP_TOKEN_STATIC;
       }
       else
@@ -498,7 +498,7 @@ static void hb_pp_tokenSetValue( PHB_PP_TOKEN pToken,
       hb_xfree( HB_UNCONST( pToken->value ) );
    if( nLen <= 1 )
    {
-      pToken->value = hb_szAscii[ nLen ? ( HB_UCHAR ) value[ 0 ] : 0 ];
+      pToken->value = hb_szAscii[ nLen ? static_cast< HB_UCHAR >( value[ 0 ] ) : 0 ];
       pToken->type |= HB_PP_TOKEN_STATIC;
    }
    else
@@ -667,7 +667,7 @@ static void hb_pp_readLine( PHB_PP_STATE pState )
       {
          if( pState->pFile->nLineBufLen )
          {
-            ch = ( HB_UCHAR ) pState->pFile->pLineBuf[ 0 ];
+            ch = static_cast< HB_UCHAR >( pState->pFile->pLineBuf[ 0 ] );
             pState->pFile->pLineBuf++;
             pState->pFile->nLineBufLen--;
          }
@@ -1967,7 +1967,7 @@ static PHB_PP_FILE hb_pp_FileNew( PHB_PP_STATE pState, const char * szFileName,
             if( pFileName->szPath )
                file_in = hb_fopen( szFileName, fBinary ? "rb" : "r" );
             if( ! file_in && ( ! pFileName->szPath || ( ! pFileName->szDrive &&
-                ! strchr( HB_OS_PATH_DELIM_CHR_LIST, ( HB_UCHAR ) pFileName->szPath[ 0 ] ) ) ) )
+                ! strchr( HB_OS_PATH_DELIM_CHR_LIST, static_cast< HB_UCHAR >( pFileName->szPath[ 0 ] ) ) ) ) )
             {
                char * szFirstFName = nullptr;
                pFile = pState->pFile;
@@ -6227,7 +6227,7 @@ void hb_pp_tokenUpper( PHB_PP_TOKEN pToken )
 
       if( pToken->len <= 1 )
       {
-         HB_UCHAR ucVal = pToken->len ? ( HB_UCHAR ) pToken->value[ 1 ] : 0;
+         HB_UCHAR ucVal = pToken->len ? static_cast< HB_UCHAR >( pToken->value[ 1 ] ) : 0;
          if( HB_PP_TOKEN_ALLOC( pToken->type ) )
          {
             hb_xfree( HB_UNCONST( pToken->value ) );
@@ -6267,7 +6267,7 @@ void hb_pp_tokenUpper( PHB_PP_TOKEN pToken )
 
    if( pToken->len <= 1 )
    {
-      HB_UCHAR ucVal = ( HB_UCHAR ) HB_PP_UPPER( pToken->value[ 0 ] );
+      HB_UCHAR ucVal = static_cast< HB_UCHAR >( HB_PP_UPPER( pToken->value[ 0 ] ) );
       if( HB_PP_TOKEN_ALLOC( pToken->type ) )
       {
          hb_xfree( HB_UNCONST( pToken->value ) );

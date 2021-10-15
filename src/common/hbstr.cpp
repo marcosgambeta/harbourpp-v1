@@ -1186,7 +1186,7 @@ char * hb_strncpyUpperTrim( char * pDest, const char * pSource, HB_SIZE nLen )
       nSLen--;
    }
 
-   while( nLen && nSLen && ( *pDest++ = static_cast< char >( HB_TOUPPER( ( HB_UCHAR ) *pSource ) ) ) != '\0' )
+   while( nLen && nSLen && ( *pDest++ = static_cast< char >( HB_TOUPPER( static_cast< HB_UCHAR >( *pSource ) ) ) ) != '\0' )
    {
       nSLen--;
       nLen--;

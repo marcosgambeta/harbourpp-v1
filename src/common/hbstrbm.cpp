@@ -62,7 +62,7 @@ static void preBmBc( const char * needle, HB_ISIZ m, HB_ISIZ bmBc[] )
    }
    for( i = 0; i < m - 1; ++i )
    {
-      bmBc[ ( HB_UCHAR ) needle[ i ] ] = m - i - 1;
+      bmBc[ static_cast< HB_UCHAR >( needle[ i ] ) ] = m - i - 1;
    }
 }
 

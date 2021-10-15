@@ -630,7 +630,7 @@ void hb_compVariableAdd( HB_COMP_DECL, const char * szVarName, PHB_VARTYPE pVarT
             if( HB_COMP_PARAM->fDebugInfo )
             {
                hb_compGenPCode3( HB_P_LOCALNAME, HB_LOBYTE( wLocal ), HB_HIBYTE( wLocal ), HB_COMP_PARAM );
-               hb_compGenPCodeN( ( const HB_BYTE * ) szVarName, strlen( szVarName ) + 1, HB_COMP_PARAM );
+               hb_compGenPCodeN( reinterpret_cast< const HB_BYTE * >( szVarName ), strlen( szVarName ) + 1, HB_COMP_PARAM );
             }
             break;
          }
@@ -2762,7 +2762,7 @@ void hb_compLinePushIfDebugger( HB_COMP_DECL )
 void hb_compGenModuleName( HB_COMP_DECL, const char * szFunName )
 {
    hb_compGenPCode1( HB_P_MODULENAME, HB_COMP_PARAM );
-   hb_compGenPCodeN( ( const HB_BYTE * ) HB_COMP_PARAM->currModule, strlen( HB_COMP_PARAM->currModule ), HB_COMP_PARAM );
+   hb_compGenPCodeN( reinterpret_cast< const HB_BYTE * >( HB_COMP_PARAM->currModule ), strlen( HB_COMP_PARAM->currModule ), HB_COMP_PARAM );
    hb_compGenPCode1( ':', HB_COMP_PARAM );
    if( szFunName && *szFunName )
    {
@@ -4060,7 +4060,7 @@ void hb_compCodeBlockEnd( HB_COMP_DECL )
       while( wLocalsCnt-- )
       {
          hb_compGenPCode3( HB_P_LOCALNAME, HB_LOBYTE( iLocalPos ), HB_HIBYTE( iLocalPos ), HB_COMP_PARAM );
-         hb_compGenPCodeN( ( const HB_BYTE * ) pVar->szName, strlen( pVar->szName ) + 1, HB_COMP_PARAM );
+         hb_compGenPCodeN( reinterpret_cast< const HB_BYTE * >( pVar->szName ), strlen( pVar->szName ) + 1, HB_COMP_PARAM );
          iLocalPos--;
          pVar = pVar->pNext;
       }

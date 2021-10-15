@@ -176,7 +176,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
       if( pFile == nullptr )
       {
          hb_errPutOsCode( pError, errcode );
-         hb_errPutGenCode( pError, ( HB_ERRCODE ) EG_OPEN );
+         hb_errPutGenCode( pError, static_cast< HB_ERRCODE >( EG_OPEN ) );
       }
    }
 

@@ -65,7 +65,7 @@ void ct_charlist( int iMode )
          asCharCnt[ sCnt ] = 0;
 
       for( sCnt = 0; sCnt < sStrLen; ++sCnt )
-         asCharCnt[ ( HB_UCHAR ) pcString[ sCnt ] ]++;
+         asCharCnt[ static_cast< HB_UCHAR >( pcString[ sCnt ] ) ]++;
 
       for( sCnt = 0; sCnt < HB_SIZEOFARRAY( asCharCnt ); ++sCnt )
          hb_arraySetNS( pArray, sCnt + 1, asCharCnt[ sCnt ] );
@@ -85,7 +85,7 @@ void ct_charlist( int iMode )
 
          for( sCnt = 0; sCnt < sStrLen; ++sCnt )
          {
-            HB_UCHAR uc = ( HB_UCHAR ) pcString[ sCnt ];
+            HB_UCHAR uc = static_cast< HB_UCHAR >( pcString[ sCnt ] );
 
             if( acMark[ uc ] == 0 )
             {
@@ -99,12 +99,12 @@ void ct_charlist( int iMode )
          char cScan = iMode == CT_CHARLIST_CHARSLIST ? 1 : 0;
 
          for( sCnt = 0; sCnt < sStrLen; ++sCnt )
-            acCharCnt[ ( HB_UCHAR ) pcString[ sCnt ] ] = 1;
+            acCharCnt[ static_cast< HB_UCHAR >( pcString[ sCnt ] ) ] = 1;
 
          for( sCnt = 0; sCnt < HB_SIZEOFARRAY( acCharCnt ); ++sCnt )
          {
             if( acCharCnt[ sCnt ] == cScan )
-               acCharCnt[ sRetStrLen++ ] = ( HB_UCHAR ) sCnt;
+               acCharCnt[ sRetStrLen++ ] = static_cast< HB_UCHAR >( sCnt );
          }
       }
       hb_retclen( acCharCnt, sRetStrLen );

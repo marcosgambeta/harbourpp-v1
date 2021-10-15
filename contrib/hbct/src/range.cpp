@@ -61,12 +61,12 @@ HB_FUNC( RANGEREM )
       int iMode;
 
       if( HB_ISCHAR( 1 ) )
-         ucChar1 = *( ( const unsigned char * ) hb_parc( 1 ) );
+         ucChar1 = *( reinterpret_cast< const unsigned char * >( hb_parc( 1 ) ) );
       else
          ucChar1 = static_cast< unsigned char >( hb_parni( 1 ) % 256 );
 
       if( HB_ISCHAR( 2 ) )
-         ucChar2 = *( ( const unsigned char * ) hb_parc( 2 ) );
+         ucChar2 = *( reinterpret_cast< const unsigned char * >( hb_parc( 2 ) ) );
       else
          ucChar2 = static_cast< unsigned char >( hb_parni( 2 ) % 256 );
 
@@ -74,7 +74,7 @@ HB_FUNC( RANGEREM )
 
       pcRet = static_cast< char * >( hb_xgrab( sStrLen + 1 ) );
       sRetIndex = 0;
-      for( pc = ( const unsigned char * ) pcString; pc < ( const unsigned char * ) pcString + sStrLen; pc++ )
+      for( pc = reinterpret_cast< const unsigned char * >( pcString ); pc < reinterpret_cast< const unsigned char * >( pcString ) + sStrLen; pc++ )
       {
          int iBool = ( ( *pc ) >= ucChar1 );
 
@@ -129,17 +129,17 @@ HB_FUNC( RANGEREPL )
       int iMode;
 
       if( HB_ISCHAR( 1 ) )
-         ucChar1 = *( ( const unsigned char * ) hb_parc( 1 ) );
+         ucChar1 = *( reinterpret_cast< const unsigned char * >( hb_parc( 1 ) ) );
       else
          ucChar1 = static_cast< unsigned char >( hb_parni( 1 ) % 256 );
 
       if( HB_ISCHAR( 2 ) )
-         ucChar2 = *( ( const unsigned char * ) hb_parc( 2 ) );
+         ucChar2 = *( reinterpret_cast< const unsigned char * >( hb_parc( 2 ) ) );
       else
          ucChar2 = static_cast< unsigned char >( hb_parni( 2 ) % 256 );
 
       if( HB_ISCHAR( 4 ) )
-         ucReplace = *( ( const unsigned char * ) hb_parc( 4 ) );
+         ucReplace = *( reinterpret_cast< const unsigned char * >( hb_parc( 4 ) ) );
       else
          ucReplace = static_cast< unsigned char >( hb_parni( 4 ) % 256 );
 
@@ -147,7 +147,7 @@ HB_FUNC( RANGEREPL )
 
       pcRet = static_cast< char * >( hb_xgrab( sStrLen + 1 ) );
       sRetIndex = 0;
-      for( pc = ( const unsigned char * ) pcString; pc < ( const unsigned char * ) pcString + sStrLen; pc++ )
+      for( pc = reinterpret_cast< const unsigned char * >( pcString ); pc < reinterpret_cast< const unsigned char * >( pcString ) + sStrLen; pc++ )
       {
          int iBool = ( ( *pc ) >= ucChar1 );
 
