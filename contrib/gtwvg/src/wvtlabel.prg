@@ -77,54 +77,138 @@
 #define OBJ_CHILD_DATABLOCK       3
 #define OBJ_CHILD_REFRESHBLOCK    4
 
-/* TBrowseWvg From TBrowse */
-#define _TBCI_COLOBJECT       1   /* column object                          */
-#define _TBCI_COLWIDTH        2   /* width of the column                    */
-#define _TBCI_COLPOS          3   /* column position on screen              */
-#define _TBCI_CELLWIDTH       4   /* width of the cell                      */
-#define _TBCI_CELLPOS         5   /* cell position in column                */
-#define _TBCI_COLSEP          6   /* column separator                       */
-#define _TBCI_SEPWIDTH        7   /* width of the separator                 */
-#define _TBCI_HEADING         8   /* column heading                         */
-#define _TBCI_FOOTING         9   /* column footing                         */
-#define _TBCI_HEADSEP         10  /* heading separator                      */
-#define _TBCI_FOOTSEP         11  /* footing separator                      */
-#define _TBCI_DEFCOLOR        12  /* default color                          */
-#define _TBCI_FROZENSPACE     13  /* space after frozen columns             */
-#define _TBCI_LASTSPACE       14  /* space after last visible column        */
-#define _TBCI_SIZE            14  /* size of array with TBrowse column data */
+/* Class WvtLabel */
+CREATE CLASS WvtLabel INHERIT WvtObject
 
-CREATE CLASS TBrowseWvg INHERIT TBrowse
+   ACCESS TEXT                                    INLINE iif( ::cText == NIL, "", ::cText )
+   ASSIGN TEXT( cTxt )                            INLINE ::cText := iif( cTxt == NIL, "", cTxt )
 
-   VAR    aColumnsSep                             INIT {}
-
-   METHOD SetVisible()
+   METHOD New( oParent, nID, nTop, nLeft, nBottom, nRight )
+   METHOD create( lConfg )
+   METHOD Configure()
+   METHOD Refresh()
+   METHOD HoverOn()
+   METHOD HoverOff()
+   METHOD SetText( ctxt )
+   METHOD SetTextColor( nRGB )
+   METHOD SetBackColor( nRGB )
 
 ENDCLASS
 
-METHOD TBrowseWvg:SetVisible()
+METHOD WvtLabel:New( oParent, nID, nTop, nLeft, nBottom, nRight )
 
-   LOCAL lFirst, aCol, nColPos
+   ::Super:New( oParent, DLG_OBJ_LABEL, nID, nTop, nLeft, nBottom, nRight )
 
-   ::Super:SetVisible()
-   ::aColumnsSep := {}
+   RETURN Self
 
-   lFirst := .T.
-   FOR EACH aCol IN ::aColData
-      IF aCol[ _TBCI_COLPOS ] != NIL
-         IF lFirst
-            lFirst := .F.
+METHOD WvtLabel:Create( lConfg )
 
-         ELSE
-            nColPos := aCol[ _TBCI_COLPOS ]
+   __defaultNIL( @lConfg, .F. )
 
-            IF aCol[ _TBCI_SEPWIDTH ] > 0
-               nColPos += Int( aCol[ _TBCI_SEPWIDTH ] / 2 )
-            ENDIF
+   __defaultNIL( @::nBottom, ::nTop )
+   __defaultNIL( @::nRight, ::nLeft + Len( ::Text ) )
+   __defaultNIL( @::nTextColor, RGB( 0, 0, 0 ) )
 
-            AAdd( ::aColumnsSep, nColPos )
-         ENDIF
+   ::nTextColorHoverOff := ::nTextColor
+   ::nBackColorHoverOff := ::nBackColor
+
+   ::hFont := wvt_CreateFont( ::cFont, ::nFontHeight, ::nFontWidth, ::nFontWeight, ::lItalic, ;
+      ::lUnderline, ::lStrikeout, ::nCharSet, ::nFontQuality, ::nAngle )
+   IF ::hFont != 0
+      IF ! lConfg
+         ::bPaint := {|| wvt_DrawLabelObj( ::nTop, ::nLeft, ::nBottom, ::nRight, ;
+            ::Text, ::nAlignHorz, ::nAlignVert, ::nTextColor, ::nBackColor, ::hFont ) }
+         AAdd( ::aPaint, { ::bPaint, { WVT_BLOCK_LABEL, ::nTop, ::nLeft, ::nBottom, ::nRight } } )
       ENDIF
-   NEXT
+   ENDIF
+
+   ::Super:Create()
+
+   RETURN Self
+
+METHOD WvtLabel:Refresh()
+
+   Eval( ::bPaint )
+
+   RETURN Self
+
+METHOD WvtLabel:SetText( cTxt )
+
+   IF HB_ISSTRING( cTxt )
+      ::Text := cTxt
+      ::Refresh()
+   ENDIF
+
+   RETURN Self
+
+METHOD WvtLabel:SetTextColor( nRGB )
+
+   IF HB_ISNUMERIC( nRGB )
+      ::nTextColor := nRGB
+      ::nTextColorHoverOff := nRGB
+      ::Refresh()
+   ENDIF
+
+   RETURN Self
+
+METHOD WvtLabel:SetBackColor( nRGB )
+
+   IF HB_ISNUMERIC( nRGB )
+      ::nBackColor := nRGB
+      ::nBackColorHoverOff := nRGB
+      ::Refresh()
+   ENDIF
+
+   RETURN Self
+
+METHOD WvtLabel:Configure()
+
+   ::nTextColorHoverOff := ::nTextColor
+   ::nBackColorHoverOff := ::nBackColor
+
+   IF ::hFont != 0
+      wvg_DeleteObject( ::hFont )
+   ENDIF
+
+   ::hFont := wvt_CreateFont( ::cFont, ::nFontHeight, ::nFontWidth, ::nFontWeight, ::lItalic, ;
+      ::lUnderline, ::lStrikeout, ::nCharSet, ::nFontQuality, ::nAngle )
+
+   RETURN Self
+
+METHOD WvtLabel:HoverOn()
+
+   LOCAL lOn := .F.
+
+   IF ::nTextColorHoverOn != NIL
+      lOn := .T.
+      ::nTextColor := ::nTextColorHoverOn
+   ENDIF
+   IF ::nBackColorHoverOn != NIL
+      lOn := .T.
+      ::nBackColor := ::nBackColorHoverOn
+   ENDIF
+
+   IF lOn
+      ::Refresh()
+   ENDIF
+
+   RETURN Self
+
+METHOD WvtLabel:HoverOff()
+
+   LOCAL lOn := .F.
+
+   IF ::nTextColorHoverOn != NIL
+      lOn := .T.
+      ::nTextColor := ::nTextColorHoverOff
+   ENDIF
+   IF ::nBackColorHoverOn != NIL
+      lOn := .T.
+      ::nBackColor := ::nBackColorHoverOff
+   ENDIF
+
+   IF lOn
+      ::Refresh()
+   ENDIF
 
    RETURN Self

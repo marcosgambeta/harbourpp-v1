@@ -77,54 +77,90 @@
 #define OBJ_CHILD_DATABLOCK       3
 #define OBJ_CHILD_REFRESHBLOCK    4
 
-/* TBrowseWvg From TBrowse */
-#define _TBCI_COLOBJECT       1   /* column object                          */
-#define _TBCI_COLWIDTH        2   /* width of the column                    */
-#define _TBCI_COLPOS          3   /* column position on screen              */
-#define _TBCI_CELLWIDTH       4   /* width of the cell                      */
-#define _TBCI_CELLPOS         5   /* cell position in column                */
-#define _TBCI_COLSEP          6   /* column separator                       */
-#define _TBCI_SEPWIDTH        7   /* width of the separator                 */
-#define _TBCI_HEADING         8   /* column heading                         */
-#define _TBCI_FOOTING         9   /* column footing                         */
-#define _TBCI_HEADSEP         10  /* heading separator                      */
-#define _TBCI_FOOTSEP         11  /* footing separator                      */
-#define _TBCI_DEFCOLOR        12  /* default color                          */
-#define _TBCI_FROZENSPACE     13  /* space after frozen columns             */
-#define _TBCI_LASTSPACE       14  /* space after last visible column        */
-#define _TBCI_SIZE            14  /* size of array with TBrowse column data */
+/* Class WvtProgressBar */
+CREATE CLASS WvtProgressBar INHERIT WvtObject
 
-CREATE CLASS TBrowseWvg INHERIT TBrowse
+   VAR    cImage
+   VAR    nDirection                              INIT 0      /* 0-Left-Right,Top-Bottom  1-Right-Left,Bottom-Top */
+   VAR    nStyle                                  INIT 0
+   VAR    lVertical                               INIT .F.
+   VAR    lActive                                 INIT .F.
 
-   VAR    aColumnsSep                             INIT {}
+   VAR    nBarColor                               INIT RGB( 0, 0, 128 )
+   VAR    nCurrent                                INIT 0
+   VAR    nTotal                                  INIT 1
+   VAR    nPercent                                INIT 0
+   VAR    cBackColor                              INIT "W/W"
 
-   METHOD SetVisible()
+   VAR    cScreen
+
+   METHOD New( oParent, nID, nTop, nLeft, nBottom, nRight )
+   METHOD create()
+   METHOD display( nCurrent, nTotal )
+   METHOD Activate()
+   METHOD DeActivate()
 
 ENDCLASS
 
-METHOD TBrowseWvg:SetVisible()
+METHOD WvtProgressBar:New( oParent, nID, nTop, nLeft, nBottom, nRight )
 
-   LOCAL lFirst, aCol, nColPos
+   ::Super:New( oParent, DLG_OBJ_PROGRESSBAR, nID, nTop, nLeft, nBottom, nRight )
 
-   ::Super:SetVisible()
-   ::aColumnsSep := {}
+   RETURN Self
 
-   lFirst := .T.
-   FOR EACH aCol IN ::aColData
-      IF aCol[ _TBCI_COLPOS ] != NIL
-         IF lFirst
-            lFirst := .F.
+METHOD WvtProgressBar:Create()
 
-         ELSE
-            nColPos := aCol[ _TBCI_COLPOS ]
+   __defaultNIL( @::nTop, 0 )
+   __defaultNIL( @::nLeft, 0 )
+   __defaultNIL( @::nBottom, iif( ::lVertical, ::nTop + 9, ::nTop ) )
+   __defaultNIL( @::nRight, iif( ::lVertical, ::nLeft + 1, ::nLeft + 19 ) )
+   __defaultNIL( @::nTextColor, RGB( 255, 255, 255 ) )
+   __defaultNIL( @::nBackColor, RGB( 198, 198, 198 ) )
 
-            IF aCol[ _TBCI_SEPWIDTH ] > 0
-               nColPos += Int( aCol[ _TBCI_SEPWIDTH ] / 2 )
-            ENDIF
+   ::bPaint := {|| ::Display() }
+   AAdd( ::aPaint, { ::bPaint, { WVT_BLOCK_LABEL, ::nTop, ::nLeft, ::nBottom, ::nRight } } )
 
-            AAdd( ::aColumnsSep, nColPos )
-         ENDIF
-      ENDIF
-   NEXT
+   ::Super:Create()
+
+   RETURN Self
+
+METHOD WvtProgressBar:Display( nCurrent, nTotal )
+
+   IF ! ::lActive
+      RETURN Self
+   ENDIF
+
+   __defaultNIL( @nCurrent, ::nCurrent )
+   __defaultNIL( @nTotal, ::nTotal )
+
+   ::nCurrent := nCurrent
+   ::nTotal   := nTotal
+
+   IF ::nCurrent > ::nTotal
+      ::nCurrent := ::nTotal
+   ENDIF
+
+   ::nPercent := Int( ::nCurrent / ::nTotal * 100 )
+
+   wvt_DrawProgressBar( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlTLBR, ::nPercent, ;
+      ::nBackColor, ::nBarColor, ::cImage, ::lVertical, ::nDirection )
+
+   RETURN Self
+
+METHOD WvtProgressBar:Activate()
+
+   ::cScreen := SaveScreen( ::nTop, ::nLeft, ::nBottom, ::nRight )
+   hb_DispBox( ::nTop, ::nLeft, ::nBottom, ::nRight, "         ", ::cBackColor )
+   ::lActive := .T.
+
+   RETURN Self
+
+METHOD WvtProgressBar:DeActivate()
+
+   ::lActive  := .F.
+   ::nCurrent := 0
+   ::nTotal   := 1
+   RestScreen( ::nTop, ::nLeft, ::nBottom, ::nRight, ::cScreen )
+   ::cScreen := NIL
 
    RETURN Self

@@ -77,54 +77,31 @@
 #define OBJ_CHILD_DATABLOCK       3
 #define OBJ_CHILD_REFRESHBLOCK    4
 
-/* TBrowseWvg From TBrowse */
-#define _TBCI_COLOBJECT       1   /* column object                          */
-#define _TBCI_COLWIDTH        2   /* width of the column                    */
-#define _TBCI_COLPOS          3   /* column position on screen              */
-#define _TBCI_CELLWIDTH       4   /* width of the cell                      */
-#define _TBCI_CELLPOS         5   /* cell position in column                */
-#define _TBCI_COLSEP          6   /* column separator                       */
-#define _TBCI_SEPWIDTH        7   /* width of the separator                 */
-#define _TBCI_HEADING         8   /* column heading                         */
-#define _TBCI_FOOTING         9   /* column footing                         */
-#define _TBCI_HEADSEP         10  /* heading separator                      */
-#define _TBCI_FOOTSEP         11  /* footing separator                      */
-#define _TBCI_DEFCOLOR        12  /* default color                          */
-#define _TBCI_FROZENSPACE     13  /* space after frozen columns             */
-#define _TBCI_LASTSPACE       14  /* space after last visible column        */
-#define _TBCI_SIZE            14  /* size of array with TBrowse column data */
+/* Class WvtPanel */
+CREATE CLASS WvtPanel INHERIT WvtObject
 
-CREATE CLASS TBrowseWvg INHERIT TBrowse
+   VAR    cColor
+   VAR    cTxt
+   VAR    cIconFile
 
-   VAR    aColumnsSep                             INIT {}
+   ACCESS TEXT                                    INLINE ::cTxt
+   ASSIGN TEXT( cText )                           INLINE ::cTxt := PadR( cText, ::nRight - ::nLeft - 2 )
 
-   METHOD SetVisible()
+   METHOD New( oParent, nId, nTop, nLeft )
+   METHOD Refresh()
 
 ENDCLASS
 
-METHOD TBrowseWvg:SetVisible()
+METHOD WvtPanel:New( oParent, nId, nTop, nLeft )
 
-   LOCAL lFirst, aCol, nColPos
+   ::Super:New( oParent, DLG_OBJ_PANEL, nId, nTop, nLeft, nTop )
 
-   ::Super:SetVisible()
-   ::aColumnsSep := {}
+   RETURN Self
 
-   lFirst := .T.
-   FOR EACH aCol IN ::aColData
-      IF aCol[ _TBCI_COLPOS ] != NIL
-         IF lFirst
-            lFirst := .F.
+METHOD WvtPanel:Refresh()
 
-         ELSE
-            nColPos := aCol[ _TBCI_COLPOS ]
-
-            IF aCol[ _TBCI_SEPWIDTH ] > 0
-               nColPos += Int( aCol[ _TBCI_SEPWIDTH ] / 2 )
-            ENDIF
-
-            AAdd( ::aColumnsSep, nColPos )
-         ENDIF
-      ENDIF
-   NEXT
+   IF ::Text != NIL
+      hb_DispOutAt( ::nTop, ::nLeft + 1, ::Text, ::cColor )
+   ENDIF
 
    RETURN Self

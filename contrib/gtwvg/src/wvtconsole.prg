@@ -77,54 +77,47 @@
 #define OBJ_CHILD_DATABLOCK       3
 #define OBJ_CHILD_REFRESHBLOCK    4
 
-/* TBrowseWvg From TBrowse */
-#define _TBCI_COLOBJECT       1   /* column object                          */
-#define _TBCI_COLWIDTH        2   /* width of the column                    */
-#define _TBCI_COLPOS          3   /* column position on screen              */
-#define _TBCI_CELLWIDTH       4   /* width of the cell                      */
-#define _TBCI_CELLPOS         5   /* cell position in column                */
-#define _TBCI_COLSEP          6   /* column separator                       */
-#define _TBCI_SEPWIDTH        7   /* width of the separator                 */
-#define _TBCI_HEADING         8   /* column heading                         */
-#define _TBCI_FOOTING         9   /* column footing                         */
-#define _TBCI_HEADSEP         10  /* heading separator                      */
-#define _TBCI_FOOTSEP         11  /* footing separator                      */
-#define _TBCI_DEFCOLOR        12  /* default color                          */
-#define _TBCI_FROZENSPACE     13  /* space after frozen columns             */
-#define _TBCI_LASTSPACE       14  /* space after last visible column        */
-#define _TBCI_SIZE            14  /* size of array with TBrowse column data */
+/* Class WvtConsole */
+CREATE CLASS WvtConsole INHERIT WvtObject
 
-CREATE CLASS TBrowseWvg INHERIT TBrowse
-
-   VAR    aColumnsSep                             INIT {}
-
-   METHOD SetVisible()
+   METHOD New( oParent )
+   METHOD Say( nRow, nCol, xExp, cColor )
+   METHOD Box( nRow, nCol, n2Row, n2Col, cBoxChars, cColor )
 
 ENDCLASS
 
-METHOD TBrowseWvg:SetVisible()
+METHOD WvtConsole:New( oParent )
 
-   LOCAL lFirst, aCol, nColPos
+   ::Super:New( oParent, DLG_OBJ_CONSOLE, , -1, -1, -1, -1 )
 
-   ::Super:SetVisible()
-   ::aColumnsSep := {}
+   RETURN Self
 
-   lFirst := .T.
-   FOR EACH aCol IN ::aColData
-      IF aCol[ _TBCI_COLPOS ] != NIL
-         IF lFirst
-            lFirst := .F.
+METHOD WvtConsole:Say( nRow, nCol, xExp, cColor )
 
-         ELSE
-            nColPos := aCol[ _TBCI_COLPOS ]
+   LOCAL nCRow, nCCol, nCursor
 
-            IF aCol[ _TBCI_SEPWIDTH ] > 0
-               nColPos += Int( aCol[ _TBCI_SEPWIDTH ] / 2 )
-            ENDIF
+   IF nRow >= 0 .AND. nCol >= 0 .AND. xExp != NIL
+      nCursor := SetCursor( SC_NONE )
+      nCRow   := Row()
+      nCCol   := Col()
+      hb_DispOutAt( nRow, nCol, xExp, cColor )
+      SetPos( nCRow, nCCol )
+      SetCursor( nCursor )
+   ENDIF
 
-            AAdd( ::aColumnsSep, nColPos )
-         ENDIF
-      ENDIF
-   NEXT
+   RETURN Self
+
+METHOD WvtConsole:Box( nRow, nCol, n2Row, n2Col, cBoxChars, cColor )
+
+   LOCAL nCRow, nCCol, nCursor
+
+   IF nRow >= 0 .AND. nCol >= 0
+      nCursor := SetCursor( SC_NONE )
+      nCRow   := Row()
+      nCCol   := Col()
+      hb_DispBox( nRow, nCol, n2Row, n2Col, cBoxChars, cColor )
+      SetPos( nCRow, nCCol )
+      SetCursor( nCursor )
+   ENDIF
 
    RETURN Self

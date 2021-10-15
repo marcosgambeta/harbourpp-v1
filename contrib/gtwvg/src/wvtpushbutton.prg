@@ -77,54 +77,60 @@
 #define OBJ_CHILD_DATABLOCK       3
 #define OBJ_CHILD_REFRESHBLOCK    4
 
-/* TBrowseWvg From TBrowse */
-#define _TBCI_COLOBJECT       1   /* column object                          */
-#define _TBCI_COLWIDTH        2   /* width of the column                    */
-#define _TBCI_COLPOS          3   /* column position on screen              */
-#define _TBCI_CELLWIDTH       4   /* width of the cell                      */
-#define _TBCI_CELLPOS         5   /* cell position in column                */
-#define _TBCI_COLSEP          6   /* column separator                       */
-#define _TBCI_SEPWIDTH        7   /* width of the separator                 */
-#define _TBCI_HEADING         8   /* column heading                         */
-#define _TBCI_FOOTING         9   /* column footing                         */
-#define _TBCI_HEADSEP         10  /* heading separator                      */
-#define _TBCI_FOOTSEP         11  /* footing separator                      */
-#define _TBCI_DEFCOLOR        12  /* default color                          */
-#define _TBCI_FROZENSPACE     13  /* space after frozen columns             */
-#define _TBCI_LASTSPACE       14  /* space after last visible column        */
-#define _TBCI_SIZE            14  /* size of array with TBrowse column data */
+/* Class WvtPushButton */
+CREATE CLASS WvtPushButton INHERIT WvtObject
 
-CREATE CLASS TBrowseWvg INHERIT TBrowse
+   VAR    cCaption
+   VAR    cFileImage
 
-   VAR    aColumnsSep                             INIT {}
+   ACCESS block                                   INLINE ::bOnLeftUp
+   ASSIGN block( bBlock )                         INLINE ::bOnLeftUp := bBlock
 
-   METHOD SetVisible()
+   METHOD New( oParent, nID, nTop, nLeft, nBottom, nRight )
+   METHOD create()
+   METHOD LeftDown()
+   METHOD LeftUp()
+   METHOD PaintButton()
 
 ENDCLASS
 
-METHOD TBrowseWvg:SetVisible()
+METHOD WvtPushButton:New( oParent, nID, nTop, nLeft, nBottom, nRight )
 
-   LOCAL lFirst, aCol, nColPos
-
-   ::Super:SetVisible()
-   ::aColumnsSep := {}
-
-   lFirst := .T.
-   FOR EACH aCol IN ::aColData
-      IF aCol[ _TBCI_COLPOS ] != NIL
-         IF lFirst
-            lFirst := .F.
-
-         ELSE
-            nColPos := aCol[ _TBCI_COLPOS ]
-
-            IF aCol[ _TBCI_SEPWIDTH ] > 0
-               nColPos += Int( aCol[ _TBCI_SEPWIDTH ] / 2 )
-            ENDIF
-
-            AAdd( ::aColumnsSep, nColPos )
-         ENDIF
-      ENDIF
-   NEXT
+   ::Super:New( oParent, DLG_OBJ_PUSHBUTTON, nID, nTop, nLeft, nBottom, nRight )
 
    RETURN Self
+
+METHOD WvtPushButton:Create()
+
+   ::bPaint := {|| ::PaintButton() }
+
+   AAdd( ::aPaint, { ::bPaint, ;
+      { WVT_BLOCK_BUTTON, ::nTop, ::nLeft, ::nBottom, ::nRight } } )
+
+   ::Super:Create()
+
+   RETURN Self
+
+METHOD WvtPushButton:PaintButton()
+
+   IF ::cCaption == NIL
+      wvt_DrawImage( ::nTop, ::nLeft, ::nBottom, ::nRight, ::cFileImage, { 4, 4, -4, -4 } )
+   ELSE
+      wvt_DrawButton( ::nTop, ::nLeft, ::nBottom, ::nRight, ::cCaption, , 4 )
+   ENDIF
+   wvt_DrawToolButtonState( ::nTop, ::nLeft, ::nBottom, ::nRight, { 0, 0, 0, 0 }, 1 )
+
+   RETURN Self
+
+METHOD WvtPushButton:LeftDown()
+
+   wvt_DrawToolButtonState( ::nTop, ::nLeft, ::nBottom, ::nRight, { 0, 0, 0, 0 }, 2 )
+
+   RETURN .T.
+
+METHOD WvtPushButton:LeftUp()
+
+   wvt_DrawToolButtonState( ::nTop, ::nLeft, ::nBottom, ::nRight, { 0, 0, 0, 0 }, 1 )
+   ::Eval( ::bOnLeftUp )
+
+   RETURN .T.

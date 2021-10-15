@@ -77,54 +77,129 @@
 #define OBJ_CHILD_DATABLOCK       3
 #define OBJ_CHILD_REFRESHBLOCK    4
 
-/* TBrowseWvg From TBrowse */
-#define _TBCI_COLOBJECT       1   /* column object                          */
-#define _TBCI_COLWIDTH        2   /* width of the column                    */
-#define _TBCI_COLPOS          3   /* column position on screen              */
-#define _TBCI_CELLWIDTH       4   /* width of the cell                      */
-#define _TBCI_CELLPOS         5   /* cell position in column                */
-#define _TBCI_COLSEP          6   /* column separator                       */
-#define _TBCI_SEPWIDTH        7   /* width of the separator                 */
-#define _TBCI_HEADING         8   /* column heading                         */
-#define _TBCI_FOOTING         9   /* column footing                         */
-#define _TBCI_HEADSEP         10  /* heading separator                      */
-#define _TBCI_FOOTSEP         11  /* footing separator                      */
-#define _TBCI_DEFCOLOR        12  /* default color                          */
-#define _TBCI_FROZENSPACE     13  /* space after frozen columns             */
-#define _TBCI_LASTSPACE       14  /* space after last visible column        */
-#define _TBCI_SIZE            14  /* size of array with TBrowse column data */
+/* Class WvtStatic */
+CREATE CLASS WvtStatic INHERIT WvtObject
 
-CREATE CLASS TBrowseWvg INHERIT TBrowse
+   VAR    nStatic
+   VAR    nOrient
+   VAR    nFormat
+   VAR    nAlign
+   VAR    nStyle
+   VAR    nThick
+   VAR    nColor
 
-   VAR    aColumnsSep                             INIT {}
+   VAR    nfTop
+   VAR    nfLeft
+   VAR    nfBottom
+   VAR    nfRight
 
-   METHOD SetVisible()
+   VAR    nHorzVert                               INIT 0
+   VAR    aRGBb
+   VAR    aRGBe
+
+   VAR    aPxlOffSet                              INIT {}
+
+   METHOD New( oParent, nID, nTop, nLeft, nBottom, nRight )
+   METHOD create()
+   METHOD Refresh()
+   METHOD HoverOn()
+   METHOD HoverOff()
 
 ENDCLASS
 
-METHOD TBrowseWvg:SetVisible()
+METHOD WvtStatic:New( oParent, nID, nTop, nLeft, nBottom, nRight )
 
-   LOCAL lFirst, aCol, nColPos
+   ::Super:New( oParent, DLG_OBJ_STATIC, nID, nTop, nLeft, nBottom, nRight )
 
-   ::Super:SetVisible()
-   ::aColumnsSep := {}
+   RETURN Self
 
-   lFirst := .T.
-   FOR EACH aCol IN ::aColData
-      IF aCol[ _TBCI_COLPOS ] != NIL
-         IF lFirst
-            lFirst := .F.
+METHOD WvtStatic:Create()
 
-         ELSE
-            nColPos := aCol[ _TBCI_COLPOS ]
+   LOCAL lInside := .F.
 
-            IF aCol[ _TBCI_SEPWIDTH ] > 0
-               nColPos += Int( aCol[ _TBCI_SEPWIDTH ] / 2 )
-            ENDIF
+   SWITCH ::nStatic
 
-            AAdd( ::aColumnsSep, nColPos )
-         ENDIF
-      ENDIF
-   NEXT
+   CASE WVT_STATIC_LINE
+      lInside := .T.
+      ::bPaint  := {|| wvt_DrawLine( ::nTop, ::nLeft, ::nBottom, ::nRight, ;
+         ::nOrient, ::nFormat, ::nAlign, ::nStyle, ::nThick, ::nColor ) }
+      EXIT
+
+   CASE WVT_STATIC_BOXRAISED
+      ::bPaint := {|| wvt_DrawBoxRaised( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet ) }
+      EXIT
+
+   CASE WVT_STATIC_BOXRECESSED
+      ::bPaint := {|| wvt_DrawBoxRecessed( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet ) }
+      EXIT
+
+   CASE WVT_STATIC_BOXGROUP
+      ::bPaint := {|| wvt_DrawBoxGroup( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet ) }
+      EXIT
+
+   CASE WVT_STATIC_BOXGROUPRAISED
+      ::bPaint := {|| wvt_DrawBoxGroupRaised( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet ) }
+      EXIT
+
+   CASE WVT_STATIC_OUTLINE
+      ::bPaint := {|| wvt_DrawOutline( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet ) }
+      EXIT
+
+   CASE WVT_STATIC_RECTANGLE
+      lInside := .T.
+      ::bPaint := {|| wvt_DrawRectangle( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet ) }
+      EXIT
+
+   CASE WVT_STATIC_ROUNDRECT
+      lInside := .T.
+      ::bPaint := {|| wvt_DrawRoundRect( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet ) }
+      EXIT
+
+   CASE WVT_STATIC_FOCUSRECT
+      lInside := .T.
+      ::bPaint := {|| wvt_DrawFocusRect( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet ) }
+      EXIT
+
+   CASE WVT_STATIC_ELLIPSE
+      lInside := .T.
+      ::bPaint := {|| wvt_DrawEllipse( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet ) }
+      EXIT
+
+   CASE WVT_STATIC_SHADEDRECT
+      lInside := .T.
+      ::bPaint := {|| wvt_DrawShadedRect( ::nTop, ::nLeft, ::nBottom, ::nRight, ;
+         ::aPxlOffSet, ::nHorzVert, ::aRGBb, ::aRGBe ) }
+      EXIT
+
+   ENDSWITCH
+
+   IF lInside
+      ::nfTop    := ::nTop
+      ::nfLeft   := ::nLeft
+      ::nfBottom := ::nBottom
+      ::nfRight  := ::nRight
+   ELSE
+      ::nfTop    := ::nTop    - 1
+      ::nfLeft   := ::nLeft   - 1
+      ::nfBottom := ::nBottom + 1
+      ::nfRight  := ::nRight  + 1
+   ENDIF
+
+   AAdd( ::aPaint, { ::bPaint, ;
+      { WVT_BLOCK_STATIC, ::nfTop, ::nfLeft, ::nfBottom, ::nfRight } } )
+
+   ::Super:Create()
+
+   RETURN Self
+
+METHOD WvtStatic:HoverOn()
+   RETURN Self
+
+METHOD WvtStatic:HoverOff()
+   RETURN Self
+
+METHOD WvtStatic:Refresh()
+
+   Eval( ::bPaint )
 
    RETURN Self

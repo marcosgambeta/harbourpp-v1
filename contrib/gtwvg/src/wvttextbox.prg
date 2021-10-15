@@ -77,54 +77,79 @@
 #define OBJ_CHILD_DATABLOCK       3
 #define OBJ_CHILD_REFRESHBLOCK    4
 
-/* TBrowseWvg From TBrowse */
-#define _TBCI_COLOBJECT       1   /* column object                          */
-#define _TBCI_COLWIDTH        2   /* width of the column                    */
-#define _TBCI_COLPOS          3   /* column position on screen              */
-#define _TBCI_CELLWIDTH       4   /* width of the cell                      */
-#define _TBCI_CELLPOS         5   /* cell position in column                */
-#define _TBCI_COLSEP          6   /* column separator                       */
-#define _TBCI_SEPWIDTH        7   /* width of the separator                 */
-#define _TBCI_HEADING         8   /* column heading                         */
-#define _TBCI_FOOTING         9   /* column footing                         */
-#define _TBCI_HEADSEP         10  /* heading separator                      */
-#define _TBCI_FOOTSEP         11  /* footing separator                      */
-#define _TBCI_DEFCOLOR        12  /* default color                          */
-#define _TBCI_FROZENSPACE     13  /* space after frozen columns             */
-#define _TBCI_LASTSPACE       14  /* space after last visible column        */
-#define _TBCI_SIZE            14  /* size of array with TBrowse column data */
+/* Class WvtTextBox */
+CREATE CLASS WvtTextBox INHERIT WvtObject
 
-CREATE CLASS TBrowseWvg INHERIT TBrowse
+   VAR    cText                                   INIT ""
 
-   VAR    aColumnsSep                             INIT {}
-
-   METHOD SetVisible()
+   METHOD New( oParent, nID, nTop, nLeft, nBottom, nRight )
+   METHOD create()
+   METHOD Configure()
+   METHOD Refresh()
+   METHOD SetText( cText )
+   METHOD HoverOn()
+   METHOD HoverOff()
 
 ENDCLASS
 
-METHOD TBrowseWvg:SetVisible()
+METHOD WvtTextBox:New( oParent, nID, nTop, nLeft, nBottom, nRight )
 
-   LOCAL lFirst, aCol, nColPos
+   ::Super:New( oParent, DLG_OBJ_TEXTBOX, nID, nTop, nLeft, nBottom, nRight )
 
-   ::Super:SetVisible()
-   ::aColumnsSep := {}
+   RETURN Self
 
-   lFirst := .T.
-   FOR EACH aCol IN ::aColData
-      IF aCol[ _TBCI_COLPOS ] != NIL
-         IF lFirst
-            lFirst := .F.
+METHOD WvtTextBox:Create()
 
-         ELSE
-            nColPos := aCol[ _TBCI_COLPOS ]
+   ::nTextColorHoverOff := ::nTextColor
 
-            IF aCol[ _TBCI_SEPWIDTH ] > 0
-               nColPos += Int( aCol[ _TBCI_SEPWIDTH ] / 2 )
-            ENDIF
+   ::hFont := wvt_CreateFont( ::cFont, ::nFontHeight, ::nFontWidth, ;
+      ::nFontWeight, ::lItalic, ::lUnderline, ::lStrikeout, ;
+      ::nCharSet, ::nFontQuality, 0 )
 
-            AAdd( ::aColumnsSep, nColPos )
-         ENDIF
-      ENDIF
-   NEXT
+   IF ::hFont != 0
+      ::bPaint := {|| wvt_DrawTextBox( ::nTop, ::nLeft, ::nBottom, ::nRight, ;
+         ::aPxlTLBR, ::cText, ::nAlignHorz, ::nAlignVert, ;
+         ::nTextColor, ::nBackColor, ::nBackMode, ::hFont ) }
+
+      AAdd( ::aPaint, { ::bPaint, { WVT_BLOCK_LABEL, ::nTop, ::nLeft, ::nBottom, ::nRight } } )
+   ENDIF
+
+   ::Super:Create()
+
+   RETURN Self
+
+METHOD WvtTextBox:Refresh()
+
+   Eval( ::bPaint )
+
+   RETURN Self
+
+METHOD WvtTextBox:Configure()
+   RETURN Self
+
+METHOD WvtTextBox:SetText( cText )
+
+   IF cText != NIL
+      ::cText := cText
+      ::Refresh()
+   ENDIF
+
+   RETURN Self
+
+METHOD WvtTextBox:HoverOn( /* cText */ )
+
+   IF ::nTextColorHoverOn != NIL
+      ::nTextColor := ::nTextColorHoverOn
+      ::Refresh()
+   ENDIF
+
+   RETURN Self
+
+METHOD WvtTextBox:HoverOff( /* cText */ )
+
+   IF ::nTextColorHoverOn != NIL
+      ::nTextColor := ::nTextColorHoverOff
+      ::Refresh()
+   ENDIF
 
    RETURN Self

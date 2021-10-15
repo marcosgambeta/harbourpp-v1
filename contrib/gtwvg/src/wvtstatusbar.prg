@@ -77,54 +77,134 @@
 #define OBJ_CHILD_DATABLOCK       3
 #define OBJ_CHILD_REFRESHBLOCK    4
 
-/* TBrowseWvg From TBrowse */
-#define _TBCI_COLOBJECT       1   /* column object                          */
-#define _TBCI_COLWIDTH        2   /* width of the column                    */
-#define _TBCI_COLPOS          3   /* column position on screen              */
-#define _TBCI_CELLWIDTH       4   /* width of the cell                      */
-#define _TBCI_CELLPOS         5   /* cell position in column                */
-#define _TBCI_COLSEP          6   /* column separator                       */
-#define _TBCI_SEPWIDTH        7   /* width of the separator                 */
-#define _TBCI_HEADING         8   /* column heading                         */
-#define _TBCI_FOOTING         9   /* column footing                         */
-#define _TBCI_HEADSEP         10  /* heading separator                      */
-#define _TBCI_FOOTSEP         11  /* footing separator                      */
-#define _TBCI_DEFCOLOR        12  /* default color                          */
-#define _TBCI_FROZENSPACE     13  /* space after frozen columns             */
-#define _TBCI_LASTSPACE       14  /* space after last visible column        */
-#define _TBCI_SIZE            14  /* size of array with TBrowse column data */
+/* WvtStatusBar */
+CREATE CLASS WvtStatusBar INHERIT WvtObject
 
-CREATE CLASS TBrowseWvg INHERIT TBrowse
+   VAR    aPanels
+   VAR    cColor
 
-   VAR    aColumnsSep                             INIT {}
-
-   METHOD SetVisible()
+   METHOD New( oParent, nID, nTop, nLeft, nBottom, nRight )
+   METHOD create()
+   METHOD SetPanels( aPanels )
+   METHOD SetText( nPanel, cText, cColor )
+   METHOD SetIcon( nPanel, cIconFile )
+   METHOD Update( nPanel, cText, cColor )
+   METHOD PaintBlock()
+   METHOD Refresh()
 
 ENDCLASS
 
-METHOD TBrowseWvg:SetVisible()
+METHOD WvtStatusBar:New( oParent, nID, nTop, nLeft, nBottom, nRight )
 
-   LOCAL lFirst, aCol, nColPos
+   __defaultNIL( @nTop, oParent:MaxRow() )
+   __defaultNIL( @nLeft, 0 )
+   __defaultNIL( @nBottom, oParent:MaxRow() )
+   __defaultNIL( @nRight, oParent:MaxCol() )
 
-   ::Super:SetVisible()
-   ::aColumnsSep := {}
+   ::Super:New( oParent, DLG_OBJ_STATUSBAR, nID, nTop, nLeft, nBottom, nRight )
 
-   lFirst := .T.
-   FOR EACH aCol IN ::aColData
-      IF aCol[ _TBCI_COLPOS ] != NIL
-         IF lFirst
-            lFirst := .F.
+   ::cColor  := "N/W"
 
-         ELSE
-            nColPos := aCol[ _TBCI_COLPOS ]
+   RETURN Self
 
-            IF aCol[ _TBCI_SEPWIDTH ] > 0
-               nColPos += Int( aCol[ _TBCI_SEPWIDTH ] / 2 )
-            ENDIF
+METHOD WvtStatusBar:Create()
 
-            AAdd( ::aColumnsSep, nColPos )
+   ::Refresh()
+   ::PaintBlock( DLG_OBJ_STATUSBAR, Self )
+
+   ::Super:Create()
+
+   RETURN Self
+
+METHOD WvtStatusBar:PaintBlock()
+
+   LOCAL a_ := {}, nPanels
+
+   AEval( ::aPanels, {| o | AAdd( a_, o:nTop ), AAdd( a_, o:nLeft ), ;
+      AAdd( a_, o:nBottom ), AAdd( a_, o:nRight ) } )
+
+   a_[ Len( a_ ) ]++
+   nPanels := Len( ::aPanels )
+
+   ::bPaint  := {|| wvt_DrawStatusBar( nPanels, a_ ) }
+   AAdd( ::aPaint, { ::bPaint, ;
+      { WVT_BLOCK_STATUSBAR, ::nTop, ::nLeft, ::nBottom, ::nRight } } )
+
+   RETURN Self
+
+METHOD WvtStatusBar:SetPanels( aPanels )
+
+   LOCAL i, oPanel, nID
+   LOCAL nLastCol := ::oParent:MaxCol()
+
+   nID := 200000
+
+   ::aPanels := {}
+
+   oPanel := WvtPanel():New( ::oParent, ++nID, ::nTop, 0 )
+
+   AAdd( ::aPanels, oPanel )
+
+   IF aPanels != NIL
+      FOR i := 1 TO Len( aPanels )
+         IF ::oParent:MaxCol() > aPanels[ i ]
+            oPanel := WvtPanel():New( ::oParent, ++nID, ::nTop, aPanels[ i ] )
+            AAdd( ::aPanels, oPanel )
          ENDIF
-      ENDIF
+      NEXT
+   ENDIF
+
+   ATail( ::aPanels ):nRight := nLastCol
+
+   FOR i := Len( ::aPanels ) - 1 TO 1 STEP -1
+      oPanel        := ::aPanels[ i ]
+      oPanel:nRight := ::aPanels[ i + 1 ]:nLeft
+      oPanel:cColor := ::cColor
    NEXT
 
    RETURN Self
+
+METHOD WvtStatusBar:Update( nPanel, cText, cColor )
+
+   LOCAL oPanel
+
+   IF nPanel > 0 .AND. nPanel <= Len( ::aPanels )
+      oPanel        := ::aPanels[ nPanel ]
+      oPanel:Text   := cText
+      oPanel:cColor := iif( cColor == NIL, "N/W", cColor )
+      oPanel:Refresh()
+   ENDIF
+
+   RETURN Self
+
+METHOD WvtStatusBar:SetText( nPanel, cText, cColor )
+
+   LOCAL oPanel
+
+   __defaultNIL( @cColor, ::cColor )
+
+   IF nPanel > 0 .AND. nPanel <= Len( ::aPanels )
+      oPanel        := ::aPanels[ nPanel ]
+      oPanel:Text   := cText
+      oPanel:cColor := cColor
+   ENDIF
+
+   RETURN Self
+
+METHOD WvtStatusBar:SetIcon( nPanel, cIconFile )
+
+   IF nPanel > 0 .AND. nPanel <= Len( ::aPanels )
+      ::aPanels[ nPanel ]:cIconFile := cIconFile
+   ENDIF
+
+   RETURN Self
+
+METHOD WvtStatusBar:Refresh()
+
+   LOCAL i
+
+   FOR i := 1 TO Len( ::aPanels )
+      ::aPanels[ i ]:Refresh()
+   NEXT
+
+   RETURN NIL

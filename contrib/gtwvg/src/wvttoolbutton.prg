@@ -77,54 +77,100 @@
 #define OBJ_CHILD_DATABLOCK       3
 #define OBJ_CHILD_REFRESHBLOCK    4
 
-/* TBrowseWvg From TBrowse */
-#define _TBCI_COLOBJECT       1   /* column object                          */
-#define _TBCI_COLWIDTH        2   /* width of the column                    */
-#define _TBCI_COLPOS          3   /* column position on screen              */
-#define _TBCI_CELLWIDTH       4   /* width of the cell                      */
-#define _TBCI_CELLPOS         5   /* cell position in column                */
-#define _TBCI_COLSEP          6   /* column separator                       */
-#define _TBCI_SEPWIDTH        7   /* width of the separator                 */
-#define _TBCI_HEADING         8   /* column heading                         */
-#define _TBCI_FOOTING         9   /* column footing                         */
-#define _TBCI_HEADSEP         10  /* heading separator                      */
-#define _TBCI_FOOTSEP         11  /* footing separator                      */
-#define _TBCI_DEFCOLOR        12  /* default color                          */
-#define _TBCI_FROZENSPACE     13  /* space after frozen columns             */
-#define _TBCI_LASTSPACE       14  /* space after last visible column        */
-#define _TBCI_SIZE            14  /* size of array with TBrowse column data */
+/* Class WvtToolButton */
+CREATE CLASS WvtToolButton INHERIT WvtObject
 
-CREATE CLASS TBrowseWvg INHERIT TBrowse
+   VAR    cFileImage
+   VAR    nCurState             INIT 0
+   VAR    nBtnType              INIT TLB_BUTTON_TYPE_IMAGE
+   VAR    aPxlOffSet            INIT { 0, -1, -3, 1 }
 
-   VAR    aColumnsSep                             INIT {}
-
-   METHOD SetVisible()
+   METHOD New( oParent )
+   METHOD create()
+   METHOD Refresh()
+   METHOD LeftDown()
+   METHOD LeftUp()
+   METHOD HoverOn()
+   METHOD HoverOff()
+   METHOD PaintButton()
 
 ENDCLASS
 
-METHOD TBrowseWvg:SetVisible()
+METHOD WvtToolButton:New( oParent )
 
-   LOCAL lFirst, aCol, nColPos
+   ::Super:New( oParent, DLG_OBJ_BUTTON )
 
-   ::Super:SetVisible()
-   ::aColumnsSep := {}
+   RETURN Self
 
-   lFirst := .T.
-   FOR EACH aCol IN ::aColData
-      IF aCol[ _TBCI_COLPOS ] != NIL
-         IF lFirst
-            lFirst := .F.
+METHOD WvtToolButton:Create()
 
-         ELSE
-            nColPos := aCol[ _TBCI_COLPOS ]
+   ::bPaint := {|| ::PaintButton() }
+   AAdd( ::aPaint, { ::bPaint, ;
+      { WVT_BLOCK_BUTTON, ::nTop, ::nLeft, ::nBottom, ::nRight } } )
 
-            IF aCol[ _TBCI_SEPWIDTH ] > 0
-               nColPos += Int( aCol[ _TBCI_SEPWIDTH ] / 2 )
-            ENDIF
+   ::Super:Create()
 
-            AAdd( ::aColumnsSep, nColPos )
-         ENDIF
+   RETURN Self
+
+METHOD WvtToolButton:Refresh()
+
+   IF ::lActive
+      Eval( ::bPaint )
+   ENDIF
+
+   RETURN Self
+
+METHOD WvtToolButton:PaintButton()
+
+   IF ::lActive
+      IF ::nBtnType == TLB_BUTTON_TYPE_IMAGE
+         wvt_DrawImage( ::nTop, ::nLeft, ::nBottom, ::nRight, ::cFileImage, { 4, 4, -6, -4 } )
+      ELSE
+         wvt_DrawLine( ::nTop, ::nLeft, ::nBottom, ::nRight, 1, 1, , , , ::oParent:nRGBSep )
       ENDIF
-   NEXT
+   ENDIF
+
+   RETURN Self
+
+METHOD WvtToolButton:LeftDown()
+
+   LOCAL lRet := .F.
+
+   IF ::lActive .AND. ::nBtnType == TLB_BUTTON_TYPE_IMAGE
+      wvt_DrawToolButtonState( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet, 2 )
+      lRet := .T.
+   ENDIF
+
+   RETURN lRet
+
+METHOD WvtToolButton:LeftUp()
+
+   LOCAL lRet := .F.
+
+   IF ::lActive .AND. ::nBtnType == TLB_BUTTON_TYPE_IMAGE
+      wvt_DrawToolButtonState( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet, 1 )
+      Eval( ::bOnLeftUp )
+      lRet := .T.
+   ENDIF
+
+   RETURN lRet
+
+METHOD WvtToolButton:HoverOn()
+
+   ::oParent:HoverOn()
+
+   IF ::lActive .AND. ::nBtnType == TLB_BUTTON_TYPE_IMAGE
+      wvt_DrawToolButtonState( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet, 1 )
+   ENDIF
+
+   RETURN Self
+
+METHOD WvtToolButton:HoverOff()
+
+   ::oParent:HoverOff()
+
+   IF ::lActive .AND. ::nBtnType == TLB_BUTTON_TYPE_IMAGE
+      wvt_DrawToolButtonState( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet, 0 )
+   ENDIF
 
    RETURN Self
