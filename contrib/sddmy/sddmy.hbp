@@ -18,4 +18,4 @@ rddsql.hbc
 
 ${hb_name}.hbx
 
-core.cpp
+src\core.cpp
