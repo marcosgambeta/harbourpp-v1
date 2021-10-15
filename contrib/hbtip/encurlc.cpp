@@ -104,8 +104,7 @@ HB_FUNC( TIP_URLENCODE )
          hb_retc_null();
    }
    else
-      hb_errRT_BASE( EG_ARG, 3012, nullptr,
-                     HB_ERR_FUNCNAME, 1, hb_paramError( 1 ) );
+      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError( 1 ) );
 }
 
 HB_FUNC( TIP_URLDECODE )
@@ -153,6 +152,5 @@ HB_FUNC( TIP_URLDECODE )
          hb_retc_null();
    }
    else
-      hb_errRT_BASE( EG_ARG, 3012, nullptr,
-                     HB_ERR_FUNCNAME, 1, hb_paramError( 1 ) );
+      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError( 1 ) );
 }
