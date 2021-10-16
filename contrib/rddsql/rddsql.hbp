@@ -7,5 +7,7 @@
 
 -hbx=
 
+-i.
+
 src\sqlbase.cpp
 src\sqlmix.cpp
