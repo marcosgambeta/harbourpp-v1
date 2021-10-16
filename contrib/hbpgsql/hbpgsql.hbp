@@ -22,7 +22,9 @@
 
 ${hb_name}.hbx
 
-postgres.cpp
-rddcopy.cpp
+-i.
 
-tpostgre.prg
+src\postgres.cpp
+src\rddcopy.cpp
+
+src\tpostgre.prg
