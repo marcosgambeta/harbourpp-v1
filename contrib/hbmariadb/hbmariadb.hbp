@@ -16,7 +16,9 @@
 
 ${hb_name}.hbx
 
-mariadb.cpp
+-i.
 
-tmariadb.prg
-tsqlbrw.prg
+src\mariadb.cpp
+
+src\tmariadb.prg
+src\tsqlbrw.prg
