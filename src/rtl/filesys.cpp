@@ -103,7 +103,7 @@
 #  include <errno.h>
 #endif
 
-#if ( defined( __DMC__ ) || defined( __BORLANDC__ ) || defined( __IBMCPP__ ) || defined( _MSC_VER ) || \
+#if ( defined( __BORLANDC__ ) || defined( __IBMCPP__ ) || defined( _MSC_VER ) || \
       defined( __MINGW32__ ) || defined( __WATCOMC__ ) ) && ! defined( HB_OS_UNIX ) && ! defined( HB_OS_WIN_CE )
    #include <sys/stat.h>
    #include <fcntl.h>
@@ -117,7 +117,7 @@
       #include <dos.h>
    #endif
 
-   #if defined( _MSC_VER ) || defined( __MINGW32__ ) || defined( __DMC__ )
+   #if defined( _MSC_VER ) || defined( __MINGW32__ )
       #include <sys/locking.h>
       #define ftruncate _chsize
       #if defined( __MINGW32__ ) && ! defined( _LK_UNLCK )
@@ -169,7 +169,7 @@
    #if defined( HB_OS_WIN_CE )
       #include "hbwince.h"
    #endif
-   #if ! defined( INVALID_SET_FILE_POINTER ) && ( defined( __DMC__ ) || defined( _MSC_VER ) )
+   #if ! defined( INVALID_SET_FILE_POINTER ) && ( defined( _MSC_VER ) )
       #define INVALID_SET_FILE_POINTER ( static_cast< DWORD >( -1 ) )
    #endif
    #if ! defined( INVALID_FILE_ATTRIBUTES )
@@ -282,7 +282,7 @@
 #endif
 
 
-#if defined( __DMC__ ) || defined( _MSC_VER ) || defined( __MINGW32__ ) || defined( __IBMCPP__ ) || defined( __WATCOMC__ ) || defined( HB_OS_OS2 )
+#if defined( _MSC_VER ) || defined( __MINGW32__ ) || defined( __IBMCPP__ ) || defined( __WATCOMC__ ) || defined( HB_OS_OS2 )
 /* These compilers use sopen() rather than open(), because their
    versions of open() do not support combined O_ and SH_ flags */
    #define HB_FS_SOPEN
@@ -681,7 +681,7 @@ static void convert_open_flags( HB_BOOL fCreate, HB_FATTR nAttr, HB_USHORT uiFla
    }
 
    /* shared flags (HB_FS_SOPEN) */
-#if defined( _MSC_VER ) || defined( __DMC__ )
+#if defined( _MSC_VER )
    if( ( uiFlags & FO_DENYREAD ) == FO_DENYREAD )
    {
       *share = _SH_DENYRD;
@@ -3494,7 +3494,7 @@ HB_BOOL hb_fsLock( HB_FHANDLE hFileHandle, HB_ULONG ulStart, HB_ULONG ulLength, 
       }
       fResult = ret == NO_ERROR;
    }
-#elif defined( _MSC_VER ) || defined( __DMC__ )
+#elif defined( _MSC_VER )
    {
       HB_ULONG ulOldPos;
 

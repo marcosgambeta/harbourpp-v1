@@ -593,7 +593,7 @@ HB_FUNC( WVT_SETPOINTER )
          break;
    }
 
-#if ! defined( HB_ARCH_64BIT ) && ( defined( __WATCOMC__ ) || defined( __DMC__ ) || ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 || defined( HB_OS_WIN_CE ) ) ) )
+#if ! defined( HB_ARCH_64BIT ) && ( defined( __WATCOMC__ ) || ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 || defined( HB_OS_WIN_CE ) ) ) )
    SetClassLong( _s->hWnd, GCLP_HCURSOR, static_cast< DWORD >( hCursor ) );
 #else
    SetClassLongPtr( _s->hWnd, GCLP_HCURSOR, reinterpret_cast< LONG_PTR >( hCursor ) );

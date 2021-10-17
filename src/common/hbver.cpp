@@ -1061,13 +1061,6 @@ char * hb_verCompiler( void )
    iVerMinor = iVerMajor % 100;
    iVerPatch = 0;
 
-#elif defined( __DMC__ )
-
-   pszName = __DMC_VERSION_STRING__;
-   iVerMajor = 0;
-   iVerMinor = 0;
-   iVerPatch = 0;
-
 #elif defined( __INTEL_COMPILER )
 
    pszName = "Intel(R) C";

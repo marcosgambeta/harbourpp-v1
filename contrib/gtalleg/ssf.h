@@ -70,8 +70,6 @@
    #if defined( __CYGWIN__ )
       #define SCAN_DEPEND
    #endif
-#elif defined( __DMC__ )
-   #define ALLEGRO_DMC
 #elif defined( __DJGPP__ )
    #define ALLEGRO_DJGPP
 #elif defined( __WATCOMC__ )

@@ -859,7 +859,7 @@ HB_FUNC( WVG_SETWNDPROC )
    WNDPROC wndProc = reinterpret_cast< WNDPROC >(static_cast< HB_PTRUINT >( hb_parnint( 2 ) ) );
    WNDPROC oldProc;
 
-#if ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 || defined( HB_OS_WIN_CE ) ) || defined( __DMC__ ) ) && ! defined( HB_ARCH_64BIT )
+#if ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 || defined( HB_OS_WIN_CE ) ) ) && ! defined( HB_ARCH_64BIT )
    oldProc = static_cast< WNDPROC >( SetWindowLong( hWnd, GWL_WNDPROC, static_cast< long >( wndProc ) ) );
 #else
    oldProc = reinterpret_cast< WNDPROC >( SetWindowLongPtr( hWnd, GWLP_WNDPROC, reinterpret_cast< HB_PTRUINT >( wndProc ) ) );

@@ -173,7 +173,7 @@ static HB_ISIZ read_all( int fd, HB_U8 * buf, size_t count )
 }
 #endif /* HB_OS_UNIX */
 
-#if defined( HB_OS_WIN ) && ! defined( __DMC__ )
+#if defined( HB_OS_WIN )
 
 #define TRY_SEED_MS_CRYPTOAPI
 static int arc4_seed_win( void )

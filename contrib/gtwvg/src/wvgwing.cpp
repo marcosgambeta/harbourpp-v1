@@ -1031,7 +1031,7 @@ HB_FUNC( WVG_HEIGHTTOPOINTSIZE )
 HB_FUNC( WVG_SETCURRENTBRUSH )
 {
 #if ! defined( HB_OS_WIN_CE )
-#if ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 || defined( HB_OS_WIN_CE ) ) || defined( __DMC__ ) ) && ! defined( HB_ARCH_64BIT )
+#if ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 || defined( HB_OS_WIN_CE ) ) ) && ! defined( HB_ARCH_64BIT )
    SetClassLong( wvg_parhwnd( 1 ), GCL_HBRBACKGROUND, static_cast< DWORD >( hb_parnint( 2 ) ) );
 #else
    SetClassLongPtr( wvg_parhwnd( 1 ), GCLP_HBRBACKGROUND, static_cast< LONG_PTR >( hb_parnint( 2 ) ) );
@@ -1196,7 +1196,7 @@ HB_FUNC( WVG_SETWINDOWPROCBLOCK )
 
    SetProp( hWnd, TEXT( "BLOCKCALLBACK" ), pBlock );
 
-#if ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 || defined( HB_OS_WIN_CE ) ) || defined( __DMC__ ) ) && ! defined( HB_ARCH_64BIT )
+#if ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 || defined( HB_OS_WIN_CE ) ) ) && ! defined( HB_ARCH_64BIT )
    oldProc = static_cast< WNDPROC >( SetWindowLong( hWnd, GWL_WNDPROC, static_cast< long >( ControlWindowProcedure ) ) );
 #else
    oldProc = reinterpret_cast< WNDPROC >( SetWindowLongPtr( hWnd, GWLP_WNDPROC, reinterpret_cast< HB_PTRUINT >( ControlWindowProcedure ) ) );

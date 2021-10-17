@@ -106,13 +106,13 @@
 #include <commctrl.h>
 #include <commdlg.h>
 
-#if defined( __MINGW32__ ) || defined( __WATCOMC__ ) || defined( _MSC_VER ) || defined( __DMC__ )
+#if defined( __MINGW32__ ) || defined( __WATCOMC__ ) || defined( _MSC_VER )
    #include <unknwn.h>
    #include <ole2.h>
    #include <ocidl.h>
    #include <olectl.h>
 
-   #if defined( _MSC_VER ) || defined( __DMC__ )
+   #if defined( _MSC_VER )
       #include <conio.h>
 
       #if ! defined( _MSC_VER )
@@ -126,8 +126,7 @@
    #include <olectl.h>
 #endif
 
-#if ( ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 || defined( HB_OS_WIN_CE ) ) ) || \
-   defined( __DMC__ ) ) && ! defined( HB_ARCH_64BIT )
+#if ( ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 || defined( HB_OS_WIN_CE ) ) ) ) && ! defined( HB_ARCH_64BIT )
 #  ifndef GetWindowLongPtr
 #     define GetWindowLongPtr     GetWindowLong
 #  endif
@@ -139,7 +138,7 @@
 #  endif
 #endif
 
-#if ( defined( __MSC6__ ) || defined( __DMC__ ) )
+#if ( defined( __MSC6__ ) )
    #define LONG_PTR               LONG
 #endif
 
@@ -251,65 +250,6 @@
 #define BRIGHT_MAGENTA            RGB( 0xFF, 0x60, 0xFF )
 #define YELLOW                    RGB( 0xFF, 0xFF, 0x00 )
 #define BRIGHT_WHITE              RGB( 0xFF, 0xFF, 0xFF )
-
-#if defined( __DMC__ )
-
-   #define SBT_TOOLTIPS           0x0800
-   #define SB_SETICON             ( WM_USER + 15 )
-   #define SB_SETTIPTEXT          ( WM_USER + 17 )
-   #define SB_GETTIPTEXT          ( WM_USER + 18 )
-   #define TBSTYLE_FLAT           0x0800
-   #define TBSTYLE_LIST           0x1000
-   #define BTNS_WHOLEDROPDOWN     0x0080
-   #define TBSTYLE_CUSTOMERASE    0x2000
-   #define IDB_HIST_SMALL_COLOR   8
-   #define IDB_HIST_LARGE_COLOR   9
-   #define TB_SETMAXTEXTROWS      ( WM_USER + 60 )
-   #define PBS_VERTICAL           0x04
-   #define PBS_SMOOTH             0x01
-   #define CCM_FIRST              0x2000
-   #define CCM_SETBKCOLOR         ( CCM_FIRST + 1 )
-   #define PBM_SETBKCOLOR         CCM_SETBKCOLOR
-   #define PBM_SETBARCOLOR        ( WM_USER + 9 )
-   #define PBM_GETRANGE           ( WM_USER + 7 )
-   #define PBM_GETPOS             ( WM_USER + 8 )
-
-using UINT_PTR = DWORD; // typedef DWORD UINT_PTR;
-
-typedef struct
-{
-   int iLow;
-   int iHigh;
-} PBRANGE, * PPBRANGE;
-
-   #define ICC_BAR_CLASSES  0x00000004
-
-using COLOR16 = USHORT; // typedef USHORT COLOR16;
-
-typedef struct _TRIVERTEX
-{
-   LONG    x;
-   LONG    y;
-   COLOR16 Red;
-   COLOR16 Green;
-   COLOR16 Blue;
-   COLOR16 Alpha;
-} TRIVERTEX, * PTRIVERTEX, * LPTRIVERTEX;
-
-typedef struct tagINITCOMMONCONTROLSEX
-{
-   DWORD dwSize;
-   DWORD dwICC;
-} INITCOMMONCONTROLSEX, * LPINITCOMMONCONTROLSEX;
-
-WINCOMMCTRLAPI BOOL WINAPI InitCommonControlsEx( LPINITCOMMONCONTROLSEX );
-
-typedef struct _GRADIENT_RECT
-{
-   ULONG UpperLeft;
-   ULONG LowerRight;
-} GRADIENT_RECT, * PGRADIENT_RECT, * LPGRADIENT_RECT;
-#endif
 
 #define WM_MY_UPDATE_CARET  ( WM_USER + 0x0101 )
 
