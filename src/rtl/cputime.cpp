@@ -60,9 +60,6 @@
    #include <os2.h>
    #define BUFSIZE  16 * 1024
    #include <unistd.h>
-   #if defined( __WATCOMC__ )
-      #include <process.h>
-   #endif
 #elif defined( HB_OS_WIN )
    #include <windows.h>
    #if defined( HB_OS_WIN_CE )

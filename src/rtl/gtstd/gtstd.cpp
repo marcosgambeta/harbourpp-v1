@@ -77,7 +77,7 @@
 #  if defined( HB_OS_WIN )
 #     include <windows.h>
 #  endif
-#  if ( defined( _MSC_VER ) || defined( __WATCOMC__ ) ) && ! defined( HB_OS_WIN_CE )
+#  if ( defined( _MSC_VER ) ) && ! defined( HB_OS_WIN_CE )
 #     include <conio.h>
 #  endif
 #endif
@@ -402,29 +402,6 @@ static int hb_gt_std_ReadKey( PHB_GT pGT, int iEventMask )
             ReadConsoleInput( ( HANDLE ) hb_fsGetOsHandle( pGTSTD->hStdin ), &ir, 1, &dwEvents );
       }
 #endif
-   }
-#elif defined( __WATCOMC__ )
-   if( pGTSTD->fStdinConsole )
-   {
-      if( kbhit() )
-      {
-         ch = getch();
-         if( ch == 0 && kbhit() )
-         {
-            /* It was a function key lead-in code, so read the actual
-               function key and then offset it by 256 */
-            ch = getch();
-            if( ch != -1 )
-               ch += 256;
-         }
-         ch = hb_gt_dos_keyCodeTranslate( ch, 0, HB_GTSELF_CPIN( pGT ) );
-      }
-   }
-   else if( ! eof( pGTSTD->hStdin ) )
-   {
-      HB_BYTE bChar;
-      if( read( pGTSTD->hStdin, &bChar, 1 ) == 1 )
-         ch = bChar;
    }
 #else
    {

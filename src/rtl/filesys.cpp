@@ -104,7 +104,7 @@
 #endif
 
 #if ( defined( __BORLANDC__ ) || defined( __IBMCPP__ ) || defined( _MSC_VER ) || \
-      defined( __MINGW32__ ) || defined( __WATCOMC__ ) ) && ! defined( HB_OS_UNIX ) && ! defined( HB_OS_WIN_CE )
+      defined( __MINGW32__ ) ) && ! defined( HB_OS_UNIX ) && ! defined( HB_OS_WIN_CE )
    #include <sys/stat.h>
    #include <fcntl.h>
    #include <process.h>
@@ -112,8 +112,6 @@
    #include <direct.h>
    #if defined( __BORLANDC__ )
       #include <dir.h>
-      #include <dos.h>
-   #elif defined( __WATCOMC__ )
       #include <dos.h>
    #endif
 
@@ -240,18 +238,6 @@
    #define HB_FS_GETDRIVE(n)  do { n = getdisk(); } while( 0 )
    #define HB_FS_SETDRIVE(n)  setdisk( n )
 
-#elif defined( __WATCOMC__ )
-   /* 1 based version */
-
-   #define HB_FS_GETDRIVE(n)  do { \
-                                 unsigned _u = 0; \
-                                 _dos_getdrive( &_u ); n = _u - 1; \
-                              } while( 0 )
-   #define HB_FS_SETDRIVE(n)  do { \
-                                 unsigned int _u = 0; \
-                                 _dos_setdrive( ( n ) + 1, &_u ); \
-                              } while( 0 )
-
 #else /* _MSC_VER */
    /* 1 based version */
 
@@ -282,7 +268,7 @@
 #endif
 
 
-#if defined( _MSC_VER ) || defined( __MINGW32__ ) || defined( __IBMCPP__ ) || defined( __WATCOMC__ ) || defined( HB_OS_OS2 )
+#if defined( _MSC_VER ) || defined( __MINGW32__ ) || defined( __IBMCPP__ ) || defined( HB_OS_OS2 )
 /* These compilers use sopen() rather than open(), because their
    versions of open() do not support combined O_ and SH_ flags */
    #define HB_FS_SOPEN
@@ -1252,11 +1238,7 @@ HB_FHANDLE hb_fsPOpen( const char * pszFileName, const char * pszMode )
 
                   if( setuid( getuid() ) == -1 ) {}
                   if( setgid( getgid() ) == -1 ) {}
-#if defined( __WATCOMC__ )
-                  HB_FAILURE_RETRY( iResult, execv( "/bin/sh", argv ) );
-#else
                   HB_FAILURE_RETRY( iResult, execv( "/bin/sh", static_cast< char ** >( HB_UNCONST( argv ) ) ) );
-#endif
                }
                _exit( pid > 0 ? EXIT_SUCCESS : EXIT_FAILURE );
             }
@@ -3374,10 +3356,6 @@ void hb_fsCommit( HB_FHANDLE hFileHandle )
       HB_FAILURE_RETRY( iResult, fsync( hFileHandle ) );
 #  endif
 }
-#elif defined( __WATCOMC__ )
-
-   hb_fsSetIOError( fsync( hFileHandle ) == 0, 0 );
-
 #else
 
    /* NOTE: close() functions releases all locks regardless if it is an
@@ -4233,7 +4211,7 @@ HB_BOOL hb_fsMkDir( const char * pszDirName )
 
       hb_vmUnlock();
 
-#  if ! defined( HB_OS_UNIX ) && ( defined( __WATCOMC__ ) || defined( __BORLANDC__ ) || defined( __IBMCPP__ ) || defined( __MINGW32__ ) )
+#  if ! defined( HB_OS_UNIX ) && ( defined( __BORLANDC__ ) || defined( __IBMCPP__ ) || defined( __MINGW32__ ) )
       fResult = ( mkdir( pszDirName ) == 0 );
 #  else
       fResult = ( mkdir( pszDirName, S_IRWXU | S_IRWXG | S_IRWXO ) == 0 );

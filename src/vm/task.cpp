@@ -103,11 +103,6 @@
 #        define HB_TASK_STACK_INIT( jmp, sp )      \
                   do { (jmp)[7] = (unsigned) (sp); } while( 0 )
 #     endif
-#  elif defined( __WATCOMC__ )
-#     if defined( __386__ )
-#        define HB_TASK_STACK_INIT( jmp, sp )      \
-                  do { (jmp)[7] = (unsigned int) (sp); } while( 0 )
-#     endif
 #  endif
 
 #  ifndef HB_TASK_STACK_INIT

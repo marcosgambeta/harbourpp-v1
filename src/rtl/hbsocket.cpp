@@ -162,14 +162,7 @@
 #     define HB_HAS_SOCKADDR_SA_LEN
 #  endif
 #elif defined( HB_OS_WIN )
-#  if defined( __WATCOMC__ )
-#     if ( NTDDI_VERSION >= 0x06000000 ) && ! defined( HB_WINSOCK_USE_OLDFUNC )
-#        define HB_HAS_INET_PTON
-#        define HB_HAS_INET_NTOP
-#     endif
-#     define HB_HAS_SOCKADDR_STORAGE
-/* #     define HB_HAS_INET6 */
-#  elif defined( __MINGW32__ )
+#  if defined( __MINGW32__ )
 #     define HB_HAS_SOCKADDR_STORAGE
 #  elif defined( _MSC_VER )
 #     if _MSC_VER >= 1800 && ! defined( HB_WINSOCK_USE_OLDFUNC )
@@ -185,17 +178,11 @@
 #  define HB_HAS_GETHOSTBYADDR
 #  define hb_socketSetResolveError( err ) hb_socketSetOsError( err )
 #elif defined( HB_OS_OS2 )
-#  if defined( __WATCOMC__ )
+#  if ! defined( TCPV40HDRS )
+#     define HB_HAS_INET_ATON
 #     define HB_HAS_INET_PTON
 #     define HB_HAS_INET_NTOP
 #     define HB_HAS_SOCKADDR_SA_LEN
-#  else
-#     if ! defined( TCPV40HDRS )
-#        define HB_HAS_INET_ATON
-#        define HB_HAS_INET_PTON
-#        define HB_HAS_INET_NTOP
-#        define HB_HAS_SOCKADDR_SA_LEN
-#     endif
 #  endif
 #  define HB_HAS_GETHOSTBYADDR
 #elif defined( HB_OS_DOS )
@@ -221,16 +208,8 @@
 #else
 #  include <errno.h>
 #  if defined( HB_OS_DOS )
-#     if defined( __WATCOMC__ )
-         /* workaround for declaration conflicts in tcp.h */
-#        define _GETOPT_H
-#     endif
 #     include <tcp.h>
 #  elif defined( HB_OS_OS2 )
-#     if defined( __WATCOMC__ )
-#        include <types.h>
-#        include <nerrno.h>
-#     endif
 #     include <sys/socket.h>
 #     include <sys/select.h>
 #     include <arpa/inet.h>
@@ -805,17 +784,6 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
 #  define HB_SOCK_GETHERROR()             WSAGetLastError()
 #  define HB_SOCK_IS_EINTR( err )         ( (err) == WSAEINTR )
 #  define HB_SOCK_IS_EINPROGRES( err )    ( (err) == WSAEWOULDBLOCK )
-#elif defined( HB_OS_OS2 ) && defined( __WATCOMC__ )
-#  define HB_SOCK_GETERROR()              sock_errno()
-#  define HB_SOCK_GETHERROR()             h_errno
-#  define HB_SOCK_IS_EINTR( err )         ( (err) == EINTR )
-#  define HB_SOCK_IS_EINPROGRES( err )    ( (err) == EINPROGRESS )
-#elif defined( HB_OS_LINUX ) && defined( __WATCOMC__ ) && ( __WATCOMC__ <= 1290 )
-   /* h_errno is still not supported by Linux OpenWatcom port :-( */
-#  define HB_SOCK_GETERROR()              errno
-#  define HB_SOCK_GETHERROR()             errno
-#  define HB_SOCK_IS_EINTR( err )         ( (err) == EINTR )
-#  define HB_SOCK_IS_EINPROGRES( err )    ( (err) == EINPROGRESS )
 #else
 #  define HB_SOCK_GETERROR()              errno
 #  define HB_SOCK_GETHERROR()             h_errno
@@ -2382,11 +2350,6 @@ int hb_socketGetPeerName( HB_SOCKET sd, void ** pSockAddr, unsigned * puiLen )
 {
    int ret;
 
-#if defined( HB_OS_LINUX ) && defined( __WATCOMC__ ) && ( __WATCOMC__ <= 1290 )
-   /* it's still not supported by Linux OpenWatcom port :-( */
-   ret = -1;
-   hb_socketSetError( HB_SOCKET_ERR_NOSUPPORT );
-#else
    HB_SOCKADDR_STORAGE st;
    socklen_t len = sizeof( st );
 
@@ -2398,7 +2361,6 @@ int hb_socketGetPeerName( HB_SOCKET sd, void ** pSockAddr, unsigned * puiLen )
       *puiLen = static_cast< unsigned >( len );
    }
    else
-#endif
    {
       *pSockAddr = nullptr;
       *puiLen = 0;
@@ -2498,11 +2460,6 @@ int hb_socketShutdown( HB_SOCKET sd, int iMode )
    {
       iMode = SO_RCV_SHUTDOWN | SO_SND_SHUTDOWN;
    }
-#elif defined( __WATCOMC__ )
-   if( iMode == HB_SOCKET_SHUT_RD || iMode == HB_SOCKET_SHUT_WR || iMode == HB_SOCKET_SHUT_RDWR )
-   {
-      ;
-   }
 #else
    if( iMode == HB_SOCKET_SHUT_RD )
    {
@@ -2523,19 +2480,10 @@ int hb_socketShutdown( HB_SOCKET sd, int iMode )
       return -1;
    }
 
-#if defined( HB_OS_LINUX ) && defined( __WATCOMC__ ) && ( __WATCOMC__ <= 1290 )
-{
-   int iTODO;
-   /* it's still not supported by Linux OpenWatcom port :-( */
-   ret = -1;
-   hb_socketSetError( HB_SOCKET_ERR_NOSUPPORT );
-}
-#else
    hb_vmUnlock();
    ret = shutdown( sd, iMode );
    hb_socketSetOsError( ret == 0 ? 0 : HB_SOCK_GETERROR() );
    hb_vmLock();
-#endif
    return ret;
 }
 
@@ -2543,11 +2491,7 @@ int hb_socketBind( HB_SOCKET sd, const void * pSockAddr, unsigned uiLen )
 {
    int ret;
 
-#if defined( HB_OS_LINUX ) && defined( __WATCOMC__ ) && ( __WATCOMC__ <= 1290 )
-   ret = bind( sd, static_cast< struct sockaddr * >( pSockAddr ), static_cast< socklen_t >( uiLen ) );
-#else
    ret = bind( sd, static_cast< const struct sockaddr * >( pSockAddr ), static_cast< socklen_t >( uiLen ) );
-#endif
    hb_socketSetOsError( ret == 0 ? 0 : HB_SOCK_GETERROR() );
 
    return ret;

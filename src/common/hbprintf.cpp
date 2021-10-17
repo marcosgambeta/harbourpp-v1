@@ -107,7 +107,6 @@
 /* few macros for some platform dependent floating point functions/macros */
 
 #if ( defined( __BORLANDC__ ) && __BORLANDC__ < 0x0582 ) || \
-    ( defined( __WATCOMC__ ) && __WATCOMC__ < 1270 ) || \
     defined( HB_OS_QNX ) || defined( HB_OS_SYMBIAN ) || \
     defined( __DCC__ ) || \
     ( defined( __DJGPP__ ) && \
@@ -159,7 +158,7 @@
 #     define _x_long_dbl      long double
 #     define _FL_FIX          0.0078125L
 #     if defined( HB_NO_MODFL ) || \
-         defined( __WATCOMC__ ) || defined( __MINGW32CE__ ) || defined( HB_OS_CYGWIN ) || \
+         defined( __MINGW32CE__ ) || defined( HB_OS_CYGWIN ) || \
          defined( HB_OS_BEOS ) || defined( HB_OS_SYMBIAN ) || \
          defined( __OpenBSD__ ) || defined( __NetBSD__ ) || defined( __DragonFly__ ) || \
          ( defined( __FreeBSD_version ) && __FreeBSD_version < 603000 ) || \
@@ -1587,8 +1586,6 @@ int hb_vsnprintf( char * buffer, size_t nSize, const char * format, va_list argl
 #elif defined( _MSC_VER )
    result = _vsnprintf( buffer, nSize, format, arglist );
    #define _HB_SNPRINTF_ADD_EOS
-#elif defined( __WATCOMC__ ) && __WATCOMC__ < 1200
-   result = _vbprintf( buffer, nSize, format, arglist );
 #else
    result = vsnprintf( buffer, nSize, format, arglist );
 #endif

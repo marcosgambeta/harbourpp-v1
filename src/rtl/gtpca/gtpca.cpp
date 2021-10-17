@@ -84,7 +84,7 @@
 #  if defined( HB_OS_WIN )
 #     include <windows.h>
 #  endif
-#  if ( defined( _MSC_VER ) || defined( __WATCOMC__ ) ) && ! defined( HB_OS_WIN_CE )
+#  if ( defined( _MSC_VER ) ) && ! defined( HB_OS_WIN_CE )
 #     include <conio.h>
 #  endif
 #endif
@@ -655,29 +655,6 @@ static int hb_gt_pca_ReadKey( PHB_GT pGT, int iEventMask )
    {
       HB_BYTE bChar;
       if( hb_fsRead( s_hFilenoStdin, &bChar, 1 ) == 1 )
-         ch = bChar;
-   }
-#elif defined( __WATCOMC__ )
-   if( s_bStdinConsole )
-   {
-      if( kbhit() )
-      {
-         ch = getch();
-         if( ch == 0 && kbhit() )
-         {
-            /* It was a function key lead-in code, so read the actual
-               function key and then offset it by 256 */
-            ch = getch();
-            if( ch != -1 )
-               ch += 256;
-         }
-         ch = hb_gt_dos_keyCodeTranslate( ch, 0, HB_GTSELF_CPIN( pGT ) );
-      }
-   }
-   else if( ! eof( s_hFilenoStdin ) )
-   {
-      HB_BYTE bChar;
-      if( read( s_hFilenoStdin, &bChar, 1 ) == 1 )
          ch = bChar;
    }
 #else

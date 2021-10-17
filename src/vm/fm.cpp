@@ -104,7 +104,6 @@
        */
 #     define HB_FM_STD_ALLOC
 #  elif defined( _MSC_VER ) || defined( __BORLANDC__ ) || defined( __MINGW32__ ) || \
-        ( defined( __WATCOMC__ ) && defined( HB_OS_WIN ) ) || \
         defined( HB_OS_OS2 ) || \
         ( defined( HB_FM_DLMT_ALLOC ) && defined( HB_MT_VM ) )
 #     define HB_FM_DL_ALLOC
@@ -158,18 +157,6 @@
 #     pragma warn -prc
 #     pragma warn -rch
 #     pragma warn -inl
-#  elif defined( __WATCOMC__ )
-#     if defined( __cplusplus )
-#        pragma warning 13 9
-#        pragma warning 367 9
-#        pragma warning 368 9
-#        pragma warning 887 9
-#     else
-#        pragma disable_message ( 201 )
-#     endif
-#     if ! defined( USE_DL_PREFIX ) && ! defined( HB_FM_DLMT_ALLOC )
-#        define USE_DL_PREFIX
-#     endif
 #  elif defined( _MSC_VER )
 #     if ! defined( USE_DL_PREFIX ) && ! defined( HB_FM_DLMT_ALLOC )
 #        define USE_DL_PREFIX
@@ -208,15 +195,6 @@
 #     pragma warn +prc
 #     pragma warn +rch
 #     pragma warn +inl
-#  elif defined( __WATCOMC__ )
-#     if defined( __cplusplus )
-#        pragma warning 13 2
-#        pragma warning 367 2
-#        pragma warning 368 2
-#        pragma warning 887 2
-#     else
-#        pragma enable_message ( 201 )
-#     endif
 #  elif defined( _MSC_VER )
 #     pragma warning( pop )
 #  endif
@@ -474,10 +452,6 @@ static void hb_mspace_cleanup( void )
 
 #elif defined( HB_FM_DL_ALLOC ) && defined( USE_DL_PREFIX )
 
-#if defined( __WATCOMC__ ) && defined( __cplusplus )
-#  pragma warning 367 9
-#endif
-
 static void dlmalloc_destroy( void )
 {
    if( ok_magic( gm ) )
@@ -496,10 +470,6 @@ static void dlmalloc_destroy( void )
       }
    }
 }
-
-#if defined( __WATCOMC__ ) && defined( __cplusplus )
-#  pragma warning 367 2
-#endif
 
 #endif
 

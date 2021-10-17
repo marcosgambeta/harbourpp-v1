@@ -86,7 +86,7 @@
 
 #include <wincon.h>
 
-#if defined( _MSC_VER ) || defined( __WATCOMC__ )
+#if defined( _MSC_VER )
 #  include <conio.h>
 #endif
 

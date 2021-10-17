@@ -227,7 +227,7 @@ HB_BOOL hb_setenv( const char * szName, const char * szValue )
    }
 #elif defined( _BSD_SOURCE ) || _POSIX_C_SOURCE >= 200112L || \
    _XOPEN_SOURCE >= 600 || \
-   defined( __WATCOMC__ ) || defined( __DJGPP__ ) || \
+   defined( __DJGPP__ ) || \
    defined( HB_OS_SUNOS ) || defined( HB_OS_BSD ) || \
    defined( HB_OS_DARWIN ) || defined( HB_OS_BEOS ) || \
    defined( HB_OS_QNX ) || defined( HB_OS_VXWORKS ) || \
@@ -249,9 +249,7 @@ HB_BOOL hb_setenv( const char * szName, const char * szValue )
       }
       else
       {
-#  if ( defined( __DJGPP__ ) && \
-        ( __DJGPP__ < 2 || ( __DJGPP__ == 2 && __DJGPP_MINOR__ < 4 ) ) ) || \
-      defined( __WATCOMC__ )
+#  if ( defined( __DJGPP__ ) && ( __DJGPP__ < 2 || ( __DJGPP__ == 2 && __DJGPP_MINOR__ < 4 ) ) )
          szValue = getenv( szName );
          if( szValue && *szValue )
          {

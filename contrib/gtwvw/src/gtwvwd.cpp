@@ -76,10 +76,6 @@
 
 #include "hbgtwvw.h"
 
-#if defined( __WATCOMC__ )
-   #include <conio.h>
-#endif
-
 #include "hbgfxdef.ch"
 #define     SubclassWindow( hwnd, lpfn ) ( reinterpret_cast< WNDPROC >( SetWindowLongPtr( ( hwnd ), GWLP_WNDPROC, reinterpret_cast< LPARAM >( static_cast< WNDPROC >( lpfn ) ) ) ) )
 

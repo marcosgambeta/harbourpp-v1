@@ -132,7 +132,7 @@ static S_TUPLE s_sigTable[] =
    { 0,       0, 0                   }
 };
 
-#if defined( HB_OS_OS2_GCC ) || defined( __WATCOMC__ )
+#if defined( HB_OS_OS2_GCC )
 static void s_signalHandler( int sig )
 #else
 static void s_signalHandler( int sig, siginfo_t * info, void * v )
@@ -141,7 +141,7 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
    HB_UINT  uiSig;
    HB_SIZE  nPos;
 
-   #if ! ( defined( HB_OS_OS2_GCC ) || defined( __WATCOMC__ ) )
+   #if ! ( defined( HB_OS_OS2_GCC ) )
    HB_SYMBOL_UNUSED( v );
    #endif
 
@@ -182,7 +182,7 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
          /* the third parameter is an array: */
 
          pRet = hb_arrayGetItemPtr( pExecArray, 3 );
-         #if defined( HB_OS_OS2_GCC ) || defined( __WATCOMC__ )
+         #if defined( HB_OS_OS2_GCC )
          hb_arrayNew( pRet, 1 );
          #elif defined( HB_OS_BSD )
          hb_arrayNew( pRet, info ? 6 : 1 );
@@ -190,7 +190,7 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
          hb_arrayNew( pRet, 6 );
          #endif
          hb_arraySetNI( pRet, HB_SERVICE_OSSIGNAL, sig );
-         #if ! ( defined( HB_OS_OS2_GCC ) || defined( __WATCOMC__ ) )
+         #if ! ( defined( HB_OS_OS2_GCC ) )
          #if defined( HB_OS_BSD )
          if( info )
          #endif
@@ -592,7 +592,7 @@ static void s_serviceSetHBSig( void )
       fields */
    memset( &act, 0, sizeof( act ) );
 
-   #if defined( HB_OS_OS2_GCC ) || defined( __WATCOMC__ )
+   #if defined( HB_OS_OS2_GCC )
    act.sa_handler = s_signalHandler;
    #else
    /* using more descriptive sa_action instead of sa_handler */

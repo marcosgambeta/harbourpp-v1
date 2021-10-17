@@ -72,8 +72,6 @@
    #endif
 #elif defined( __DJGPP__ )
    #define ALLEGRO_DJGPP
-#elif defined( __WATCOMC__ )
-   #define ALLEGRO_WATCOM
 #elif defined( HB_OS_DARWIN )
    #define ALLEGRO_MACOSX
 #endif

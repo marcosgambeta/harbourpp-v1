@@ -74,28 +74,10 @@
 #endif
    #include <time.h>
 
-#if defined( __WATCOMC__ )
-   typedef struct
-   {
-      struct find_t    entry;
-   } HB_FFIND_INFO, * PHB_FFIND_INFO;
-
-   #define FA_ARCH    _A_ARCH
-   #define FA_DIREC   _A_SUBDIR
-   #define FA_HIDDEN  _A_HIDDEN
-   #define FA_RDONLY  _A_RDONLY
-   #define FA_LABEL   _A_VOLID
-   #define FA_SYSTEM  _A_SYSTEM
-
-   #define ff_name    name
-   #define ff_fsize   size
-   #define ff_attrib  attrib
-#else
    typedef struct
    {
       struct ffblk    entry;
    } HB_FFIND_INFO, * PHB_FFIND_INFO;
-#endif
 
 #elif defined( HB_OS_OS2 )
 
@@ -431,19 +413,11 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
          tzset();
          #endif
 
-#if defined( __WATCOMC__ )
-         bFound = ( _dos_findfirst( ffind->pszFileMask, static_cast< HB_USHORT >( hb_fsAttrToRaw( ffind->attrmask ) ), &info->entry ) == 0 );
-#else
          bFound = ( findfirst( ffind->pszFileMask, &info->entry, static_cast< HB_USHORT >( hb_fsAttrToRaw( ffind->attrmask ) ) ) == 0 );
-#endif
       }
       else
       {
-#if defined( __WATCOMC__ )
-         bFound = ( _dos_findnext( &info->entry ) == 0 );
-#else
          bFound = ( findnext( &info->entry ) == 0 );
-#endif
       }
 
       /* Fill Harbour found file info */
@@ -990,9 +964,7 @@ void hb_fsFindClose( PHB_FFIND ffind )
 
 #if defined( HB_OS_DOS )
 
-#  if defined( __WATCOMC__ )
-            _dos_findclose( &info->entry );
-#  elif ! defined( __DJGPP__ ) && ! defined( __BORLANDC__ )
+#  if ! defined( __DJGPP__ ) && ! defined( __BORLANDC__ )
             findclose( &info->entry );
 #  endif
 

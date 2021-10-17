@@ -96,7 +96,7 @@
    #include <sys/exceptn.h>
    #include <sys/farptr.h>
    #include <dpmi.h>
-#elif defined( _MSC_VER ) || defined( __WATCOMC__ )
+#elif defined( _MSC_VER )
    #include <signal.h>
 #endif
 
@@ -117,10 +117,7 @@
    static unsigned char FAR * s_pScreenAddress;
 #endif
 
-#if defined( __WATCOMC__ ) && defined( __386__ )
-   #define HB_PEEK_BYTE( s, o )     ( *( static_cast< HB_UCHAR * >( ( ( s ) << 4 ) | ( o ) ) ) )
-   #define HB_POKE_BYTE( s, o, b )  ( *( static_cast< HB_UCHAR * >( ( ( s ) << 4 ) | ( o ) ) ) = static_cast< HB_UCHAR >( b ) )
-#elif defined( __DJGPP__ )
+#if defined( __DJGPP__ )
    #define HB_PEEK_BYTE( s, o )     _farpeekb( ( s ), ( o ) )
    #define HB_POKE_BYTE( s, o, b )  _farpokeb( ( s ), ( o ), ( b ) )
 #else
@@ -155,7 +152,7 @@ static int kbhit( void )
 #endif
 
 #if ! defined( __DJGPP__ ) && ! defined( __RSX32__ )
-#if defined( __WATCOMC__ ) || defined( _MSC_VER )
+#if defined( _MSC_VER )
 static void hb_gt_dos_CtrlBreak_Handler( int iSignal )
 {
    /* Ctrl-Break was pressed */
@@ -163,11 +160,7 @@ static void hb_gt_dos_CtrlBreak_Handler( int iSignal )
     */
    s_bBreak = HB_TRUE;
 
-#if defined( __WATCOMC__ )
-   signal( iSignal, hb_gt_dos_CtrlBreak_Handler );
-#else
    HB_SYMBOL_UNUSED( iSignal );
-#endif
 }
 #else
 static int s_iOldCtrlBreak = 0;
@@ -183,10 +176,7 @@ static void hb_gt_dos_CtrlBrkRestore( void )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_CtrlBrkRestore()" ) );
 
-#if defined( __WATCOMC__ )
-   signal( SIGINT, SIG_DFL );
-   signal( SIGBREAK, SIG_DFL );
-#elif defined( _MSC_VER )
+#if defined( _MSC_VER )
    signal( SIGINT, SIG_DFL );
 #else
    setcbrk( s_iOldCtrlBreak );
@@ -263,17 +253,10 @@ static HB_BYTE FAR * hb_gt_dos_ScreenAddress( PHB_GT pGT )
 
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_ScreenAddress(%p)", static_cast< void * >( pGT ) ) );
 
-   #if defined( __WATCOMC__ ) && defined( __386__ )
    if( HB_GTSELF_ISCOLOR( pGT ) )
-      ptr = ( HB_BYTE * ) ( 0xB800 << 4 );
+      ptr = ( HB_BYTE FAR * ) MK_FP( 0xB800, 0x0000 );
    else
-      ptr = ( HB_BYTE * ) ( 0xB000 << 4 );
-   #else
-      if( HB_GTSELF_ISCOLOR( pGT ) )
-         ptr = ( HB_BYTE FAR * ) MK_FP( 0xB800, 0x0000 );
-      else
-         ptr = ( HB_BYTE FAR * ) MK_FP( 0xB000, 0x0000 );
-   #endif
+      ptr = ( HB_BYTE FAR * ) MK_FP( 0xB000, 0x0000 );
 
    return ptr;
 }
@@ -821,13 +804,6 @@ static void hb_gt_dos_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
    /* TODO */
 
-#elif defined( __WATCOMC__ )
-
-   break_off();
-   signal( SIGINT, hb_gt_dos_CtrlBreak_Handler );
-   signal( SIGBREAK, hb_gt_dos_CtrlBreak_Handler );
-   atexit( hb_gt_dos_CtrlBrkRestore );
-
 #elif defined( _MSC_VER )
 
    signal( SIGINT, hb_gt_dos_CtrlBreak_Handler );
@@ -975,7 +951,7 @@ static void hb_gt_dos_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 
    dFrequency = HB_MIN( HB_MAX( 0.0, dFrequency ), 32767.0 );
 
-#if defined( __BORLANDC__ ) || defined( __WATCOMC__ )
+#if defined( __BORLANDC__ )
    sound( static_cast< unsigned >( dFrequency ) );
 #elif defined( __DJGPP__ )
    sound( static_cast< int >( dFrequency ) );
@@ -986,7 +962,7 @@ static void hb_gt_dos_Tone( PHB_GT pGT, double dFrequency, double dDuration )
    /* convert Clipper (DOS) timer tick units to seconds ( x / 18.2 ) */
    hb_gtSleep( pGT, dDuration / 18.2 );
 
-#if defined( __BORLANDC__ ) || defined( __WATCOMC__ )
+#if defined( __BORLANDC__ )
    nosound();
 #elif defined( __DJGPP__ )
    sound( 0 );
@@ -1008,12 +984,7 @@ static const char * hb_gt_dos_Version( PHB_GT pGT, int iType )
 /* some definitions */
 #define INT_VIDEO    0x10
 
-#if defined( __WATCOMC__ )
-   #define outportb  outp      /* Use correct function name */
-   #define outportw  outpw     /* Use correct function name */
-   #define inportw   inpw      /* Use correct function name */
-   #define inportb   inp       /* Use correct function name */
-#elif defined( __RSX32__ )
+#if defined( __RSX32__ )
    #define inportb( p )      0 /* Return 0 */
    #define outportw( p, w )    /* Do nothing */
    #define outportb( p, b )    /* Do nothing */

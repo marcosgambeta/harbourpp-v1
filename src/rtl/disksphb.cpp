@@ -53,7 +53,7 @@
    #include <sys/mount.h>
 #elif defined( HB_OS_ANDROID )
    #include <sys/statfs.h>
-#elif defined( HB_OS_UNIX ) && !( defined( __WATCOMC__ ) || defined( __CEGCC__ ) )
+#elif defined( HB_OS_UNIX ) && !( defined( __CEGCC__ ) )
    #if defined( HB_OS_VXWORKS ) || defined( HB_OS_SYMBIAN )
       #include <sys/stat.h>
    #else
@@ -303,7 +303,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
 #endif
    }
 
-#elif defined( HB_OS_UNIX ) && !( defined( __WATCOMC__ ) || defined( __CEGCC__ ) || defined( HB_OS_SYMBIAN ) )
+#elif defined( HB_OS_UNIX ) && !( defined( __CEGCC__ ) || defined( HB_OS_SYMBIAN ) )
    {
 #if defined( HB_OS_DARWIN ) || defined( HB_OS_ANDROID ) || defined( HB_OS_VXWORKS )
       struct statfs sf;

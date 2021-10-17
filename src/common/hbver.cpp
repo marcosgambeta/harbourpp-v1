@@ -1231,27 +1231,6 @@ char * hb_verCompiler( void )
    iVerMinor = __MPW__ % 100;
    iVerPatch = 0;
 
-#elif defined( __WATCOMC__ )
-
-   #if __WATCOMC__ < 1200
-      pszName = "Watcom C";
-   #else
-      pszName = "Open Watcom C";
-   #endif
-
-   #if defined( __cplusplus )
-      hb_strncpy( szSub, "++", sizeof( szSub ) - 1 );
-   #endif
-
-   iVerMajor = __WATCOMC__ / 100;
-   iVerMinor = __WATCOMC__ % 100;
-
-   #if defined( __WATCOM_REVISION__ )
-      iVerPatch = __WATCOM_REVISION__;
-   #else
-      iVerPatch = 0;
-   #endif
-
 #elif defined( __DCC__ )
 
    pszName = "Wind River Compiler (diab)";

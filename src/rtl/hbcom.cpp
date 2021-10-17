@@ -1130,10 +1130,6 @@ int hb_comSendBreak( int iPort, int iDurationInMilliSecs )
     * value for this switch on given OS and define it only for given
     * compiler and OS
     */
-   #if defined( HB_OS_LINUX ) && defined( __WATCOMC__ )
-      #define _HB_OCRTSCTS    020000000000
-      #define _HB_ICRTSCTS    020000000000
-   #endif
 #endif
 
 int hb_comFlowControl( int iPort, int * piFlow, int iFlow )

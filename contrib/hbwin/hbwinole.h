@@ -113,8 +113,7 @@
 #endif
 
 /* macros used to hide type of interface: C or C++ */
-#if defined( __cplusplus ) && ! defined( CINTERFACE ) && \
-   ( defined( __BORLANDC__ ) || defined( _MSC_VER ) || defined( __MINGW32__ ) || ( defined( __WATCOMC__ ) && ( __WATCOMC__ >= 1270 ) ) )
+#if defined( __cplusplus ) && ! defined( CINTERFACE ) && ( defined( __BORLANDC__ ) || defined( _MSC_VER ) || defined( __MINGW32__ ) )
 #  define HB_ID_REF( id )     ( id )
 #  define HB_VTBL( pSelf )    ( pSelf )
 #  define HB_THIS( pSelf )

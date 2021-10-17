@@ -148,7 +148,7 @@ HB_FUNC( DRIVETYPE )
 HB_FUNC( NUMDISKL )
 {
 #if defined( HB_OS_DOS )
-#if defined( __DJGPP__ ) || defined( __WATCOMC__ )
+#if defined( __DJGPP__ )
    unsigned cur_drive, n_drives;
 
    _dos_getdrive( &cur_drive );

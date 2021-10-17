@@ -106,7 +106,7 @@
 #include <commctrl.h>
 #include <commdlg.h>
 
-#if defined( __MINGW32__ ) || defined( __WATCOMC__ ) || defined( _MSC_VER )
+#if defined( __MINGW32__ ) || defined( _MSC_VER )
    #include <unknwn.h>
    #include <ole2.h>
    #include <ocidl.h>

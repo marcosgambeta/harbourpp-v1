@@ -67,10 +67,6 @@ char ** __crt0_glob_function( char * _arg )
 }
 #endif
 
-#if defined( __WATCOMC__ ) && ( defined( HB_OS_LINUX ) || defined( HB_OS_OS2 ) || defined( HB_OS_WIN ) )
-void hb_forceLinkMainStd( void ) {}
-#endif
-
 HB_EXTERN_END
 
 int main( int argc, char * argv[] )

@@ -56,11 +56,11 @@
    #define HB_OLE_NO_LL
 #endif
 
-#if ( defined( __WATCOMC__ ) && ( __WATCOMC__ < 1280 ) ) || defined( __MINGW32__ )  || ( defined( _MSC_VER ) && ( _MSC_VER <= 1500 ) )
+#if defined( __MINGW32__ )  || ( defined( _MSC_VER ) && ( _MSC_VER <= 1500 ) )
    #define HB_OLE_NO_LLREF
 #endif
 
-#if ! defined( HB_OLE_NO_SAFEARRAYGETVARTYPE ) && ( defined(  __MINGW32CE__ ) || ( defined( __WATCOMC__ ) && ( __WATCOMC__ < 1270 ) ) )
+#if ! defined( HB_OLE_NO_SAFEARRAYGETVARTYPE ) && ( defined(  __MINGW32CE__ ) )
    #define HB_OLE_NO_SAFEARRAYGETVARTYPE
 #endif
 
