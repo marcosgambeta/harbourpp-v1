@@ -79,10 +79,8 @@ HB_FUNC( CHARRELA )
          try a search algorithm alternating between both strings */
       while( sOffset1 < sStrLen1 && sOffset2 < sStrLen2 )
       {
-         pc1 = ct_at_exact_forward( pcStringToMatch1, sStrToMatchLen1,
-                                    pcString1 + sOffset1, sStrLen1 - sOffset1, &sMatchStrLen );
-         pc2 = ct_at_exact_forward( pcStringToMatch2, sStrToMatchLen2,
-                                    pcString2 + sOffset2, sStrLen2 - sOffset2, &sMatchStrLen );
+         pc1 = ct_at_exact_forward( pcStringToMatch1, sStrToMatchLen1, pcString1 + sOffset1, sStrLen1 - sOffset1, &sMatchStrLen );
+         pc2 = ct_at_exact_forward( pcStringToMatch2, sStrToMatchLen2, pcString2 + sOffset2, sStrLen2 - sOffset2, &sMatchStrLen );
          if( pc1 != nullptr && pc2 != nullptr )
          {
             if( pc1 - pcString1 == pc2 - pcString2 )
@@ -166,12 +164,8 @@ HB_FUNC( CHARRELREP )
          try a search algorithm alternating between both strings */
       while( sOffset1 < sStrLen1 && sOffset2 < sStrLen2 )
       {
-         pc1 = ct_at_exact_forward( pcStringToMatch1, sStrToMatchLen1,
-                                    pcString1 + sOffset1, sStrLen1 - sOffset1,
-                                    &sMatchStrLen );
-         pc2 = ct_at_exact_forward( pcStringToMatch2, sStrToMatchLen2,
-                                    pcString2 + sOffset2, sStrLen2 - sOffset2,
-                                    &sMatchStrLen );
+         pc1 = ct_at_exact_forward( pcStringToMatch1, sStrToMatchLen1, pcString1 + sOffset1, sStrLen1 - sOffset1, &sMatchStrLen );
+         pc2 = ct_at_exact_forward( pcStringToMatch2, sStrToMatchLen2, pcString2 + sOffset2, sStrLen2 - sOffset2, &sMatchStrLen );
          if( pc1 != nullptr && pc2 != nullptr )
          {
             if( pc1 - pcString1 == pc2 - pcString2 )

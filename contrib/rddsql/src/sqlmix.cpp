@@ -385,8 +385,10 @@ static int hb_mixTagFindKey( PMIXTAG pTag, PMIXKEY pKey, unsigned int uiLen, PMI
       /* unsuccessful find always finds position in leaf */
 
       while( pNode->Parent && pNode->Parent->Child[ pNode->Parent->KeyCount ] == pNode )
+      {
          pNode = pNode->Parent;
-
+      }
+      
       if( pNode->Parent )
       {
          for( ui = 0; ui < pNode->Parent->KeyCount; ui++ )
@@ -720,8 +722,10 @@ static void hb_mixTagDelKeyPos( PMIXTAG pTag, PMIXNODE pNode, unsigned int uiPos
 
       pLeaf = pNode->Child[ uiPos + 1 ];
       while( ! pLeaf->Leaf )
+      {
          pLeaf = pLeaf->Child[ 0 ];
-
+      }
+      
       MIX_COPY_KEYS_EXTERNAL( pTag, pNode, uiPos, pLeaf, 0, 1 );
       hb_mixTagDelKeyNode( pTag, pLeaf, 0 );
       hb_mixTagNodeAdjust( pTag, pLeaf );
@@ -910,8 +914,10 @@ static void hb_mixTagGoTop( PMIXTAG pTag )
 
    pNode = pTag->Root;
    while( ! pNode->Leaf )
+   {
       pNode = pNode->Child[ 0 ];
-
+   }
+   
    if( ! pNode->KeyCount )
    {
       pTag->fEof = HB_TRUE;
@@ -930,8 +936,10 @@ static void hb_mixTagGoBottom( PMIXTAG pTag )
 
    pNode = pTag->Root;
    while( ! pNode->Leaf )
+   {
       pNode = pNode->Child[ pNode->KeyCount ];
-
+   }
+   
    if( ! pNode->KeyCount )
    {
       pTag->fEof = HB_TRUE;
@@ -993,8 +1001,10 @@ static void hb_mixTagSkip( PMIXTAG pTag, HB_LONG lSkip )
          {
             pNode = pNode->Child[ uiPos + 1 ];
             while( ! pNode->Leaf )
+            {
                pNode = pNode->Child[ 0 ];
-
+            }
+            
             uiPos = 0;
             lSkip--;
          }
@@ -1091,7 +1101,9 @@ static PMIXTAG hb_mixFindTag( SQLMIXAREAP pArea, PHB_ITEM pOrder )
 
       pTag = pArea->pTagList;
       while( pTag && iOrder != ++iCurr )
+      {
          pTag = pTag->pNext;
+      }   
    }
    else
    {
@@ -1100,7 +1112,9 @@ static PMIXTAG hb_mixFindTag( SQLMIXAREAP pArea, PHB_ITEM pOrder )
       hb_strncpyUpperTrim( szTag, hb_itemGetCPtr( pOrder ), MIX_MAXTAGNAMELEN );
       pTag = pArea->pTagList;
       while( pTag && hb_stricmp( szTag, pTag->szName ) )
+      {
          pTag = pTag->pNext;
+      }   
    }
    return pTag;
 }
@@ -1693,7 +1707,9 @@ static HB_ERRCODE sqlmixOrderCreate( SQLMIXAREAP pArea, LPDBORDERCREATEINFO pOrd
    {
       pTag = pArea->pTagList;
       while( pTag->pNext )
+      {
          pTag = pTag->pNext;
+      }
 
       pTag->pNext = pTagNew;
    }

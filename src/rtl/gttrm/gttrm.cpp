@@ -461,7 +461,9 @@ static void sig_handler( int iSigNo )
    {
       case SIGCHLD:
          while( ( pid = waitpid( -1, &status, WNOHANG ) ) > 0 )
+         {
             ;
+         }
          break;
       case SIGWINCH:
          s_WinSizeChangeFlag = HB_TRUE;
@@ -975,9 +977,14 @@ static void flush_gpmevt( PHB_GTTRM pTerm )
    if( gpm_fd >= 0 )
    {
       while( hb_fsCanRead( gpm_fd, 0 ) > 0 )
+      {
          set_gpmevt( gpm_fd, O_RDONLY, static_cast< void * >( pTerm ) );
+      }
 
-      while( getMouseKey( &pTerm->mLastEvt ) ) ;
+      while( getMouseKey( &pTerm->mLastEvt ) )
+      {
+         ;
+      }   
    }
 }
 #endif
@@ -1183,8 +1190,7 @@ static int get_inch( PHB_GTTRM pTerm, HB_MAXINT timeout )
       else
          lRead = 1;
    }
-   while( nRet == 0 && lRead == 0 &&
-          ( timeout = hb_timerTest( timeout, &timer ) ) != 0 );
+   while( nRet == 0 && lRead == 0 && ( timeout = hb_timerTest( timeout, &timer ) ) != 0 );
 
    for( i = n = nchk; i < pTerm->efds_no; i++ )
    {
@@ -1994,7 +2000,9 @@ static HB_BOOL hb_gt_trm_AnsiGetCursorPos( PHB_GTTRM pTerm, int * iRow, int * iC
       {
          /* looking for cursor position in "\033[%d;%dR" */
          while( j < n && rdbuf[ j ] != '\033' )
+         {
             ++j;
+         }
          if( n - j >= 6 )
          {
             i = j + 1;
@@ -2003,13 +2011,17 @@ static HB_BOOL hb_gt_trm_AnsiGetCursorPos( PHB_GTTRM pTerm, int * iRow, int * iC
                y = 0;
                d = ++i;
                while( i < n && rdbuf[ i ] >= '0' && rdbuf[ i ] <= '9' )
+               {
                   y = y * 10 + ( rdbuf[ i++ ] - '0' );
+               }
                if( i < n && i > d && rdbuf[ i ] == ';' )
                {
                   x = 0;
                   d = ++i;
                   while( i < n && rdbuf[ i ] >= '0' && rdbuf[ i ] <= '9' )
+                  {
                      x = x * 10 + ( rdbuf[ i++ ] - '0' );
+                  }
                   if( i < n && i > d && rdbuf[ i ] == 'R' )
                   {
                      if( szPost )

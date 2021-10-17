@@ -147,7 +147,9 @@ static HB_BOOL exportBufSqlVar( pgCopyContext * context, PHB_ITEM pValue, const 
          if( context->str_trim )
          {
             while( nLen && HB_ISSPACE( szVal[ nLen - 1 ] ) )
+            {
                nLen--;
+            }   
          }
 
          while( *szVal && nCnt++ < nLen )
@@ -366,8 +368,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
       hb_xfree( szInit );
       HB_VM_LOCK();
 
-      while( ! bFail && ( nCount == 0 || uiRecCount < nCount ) &&
-             ( ! pWhile || hb_itemGetL( hb_vmEvalBlock( pWhile ) ) ) )
+      while( ! bFail && ( nCount == 0 || uiRecCount < nCount ) && ( ! pWhile || hb_itemGetL( hb_vmEvalBlock( pWhile ) ) ) )
       {
 
          if( SELF_EOF( pArea, &bEof ) != HB_SUCCESS )

@@ -349,8 +349,10 @@ static HB_ISIZ GoToLine( PHB_EDITOR pEd, HB_ISIZ linia )
    i = 0;
    p = pEd->begin;
    while( ( ++i <= linia ) && ( p = strchr( p, '\n' ) ) != 0 )
+   {
       p += 2;
-
+   }
+   
    if( i > linia )
       return p - pEd->begin - 1;
    else
@@ -1654,11 +1656,11 @@ static void DelChar( PHB_EDITOR pEd )
       if( pEd->escape )
       {
          while( pEd->begin[ pEd->current_line + ccc ] == pEd->escape )
+         {
             ccc += 2;
+         }
       }
-      MoveText( pEd, pEd->current_line + ccc + 1,
-                pEd->current_line + ccc,
-                ( pEd->buffer_size - ( pEd->current_line + ccc + 1 ) ) );
+      MoveText( pEd, pEd->current_line + ccc + 1, pEd->current_line + ccc, ( pEd->buffer_size - ( pEd->current_line + ccc + 1 ) ) );
 
       pEd->fStable     = HB_FALSE;
       pEd->next_stabil = pEd->current_line;

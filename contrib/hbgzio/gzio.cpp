@@ -103,8 +103,7 @@ static HB_SIZE s_gzip_write( PHB_FILE pFile, HB_MAXINT nTimeout )
 
    while( nWritten < nSize )
    {
-      HB_SIZE nWr = _PHB_FILE->pFuncs->Write( _PHB_FILE, pFile->buffer + nWritten,
-                                              nSize - nWritten, nTimeout );
+      HB_SIZE nWr = _PHB_FILE->pFuncs->Write( _PHB_FILE, pFile->buffer + nWritten, nSize - nWritten, nTimeout );
       if( nWr == static_cast< HB_SIZE >( -1 ) )
          return nWr;
       else if( nWr == 0 )
@@ -418,8 +417,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize,
       {
          if( err == Z_BUF_ERROR && pFile->gz.avail_in == 0 )
          {
-            nResult = _PHB_FILE->pFuncs->Read( _PHB_FILE, pFile->buffer,
-                                               HB_GZIP_BUFSIZE, nTimeout );
+            nResult = _PHB_FILE->pFuncs->Read( _PHB_FILE, pFile->buffer, HB_GZIP_BUFSIZE, nTimeout );
             if( nResult == 0 || nResult == static_cast< HB_SIZE >( - 1 ) )
                break;
             pFile->gz.next_in = ( Bytef * ) pFile->buffer;

@@ -2531,7 +2531,9 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          dVal = hb_strVal( pszVal, pField->uiLen );
          nLen = pField->uiLen;
          while( --nLen && HB_ISDIGIT( pszVal[ nLen ] ) )
+         {
             ;
+         }
          if( nLen && ( pszVal[ nLen ] == '+' || pszVal[ nLen ] == '-' ) && ( pszVal[ nLen - 1 ] == 'e' || pszVal[ nLen - 1 ] == 'E' ) )
          {
             HB_USHORT uiLen = static_cast< HB_USHORT >( nLen );
@@ -4707,10 +4709,8 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
          errOsCode = hb_fsError();
          errCode = HB_FAILURE;
       }
-      while( hb_dbfErrorRT( pArea, errOsCode == 0 ? EG_CORRUPTION : EG_READ,
-                                   errOsCode == 0 ? EDBF_CORRUPT : EDBF_READ,
-                            pArea->szDataFileName, errOsCode,
-                            EF_CANRETRY | EF_CANDEFAULT, &pError ) == E_RETRY );
+      while( hb_dbfErrorRT( pArea, errOsCode == 0 ? EG_CORRUPTION : EG_READ, errOsCode == 0 ? EDBF_CORRUPT : EDBF_READ,
+                            pArea->szDataFileName, errOsCode, EF_CANRETRY | EF_CANDEFAULT, &pError ) == E_RETRY );
       if( pError )
       {
          hb_itemRelease( pError );
@@ -6891,9 +6891,7 @@ static HB_ERRCODE hb_dbfReadDBHeader( DBFAREAP pArea )
             break;
       }
    }
-   while( hb_dbfErrorRT( pArea, hb_dbfGetEGcode( errCode ), errCode,
-                         pArea->szDataFileName, hb_fsError(),
-                         EF_CANRETRY | EF_CANDEFAULT, &pError ) == E_RETRY );
+   while( hb_dbfErrorRT( pArea, hb_dbfGetEGcode( errCode ), errCode, pArea->szDataFileName, hb_fsError(), EF_CANRETRY | EF_CANDEFAULT, &pError ) == E_RETRY );
    if( pError )
    {
       hb_itemRelease( pError );

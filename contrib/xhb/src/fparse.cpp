@@ -253,8 +253,10 @@ static char ** hb_tokensplit( const char * string, HB_BYTE delimiter, int iCharC
       if( static_cast< HB_BYTE >( *string ) == delimiter )
       {
          while( static_cast< HB_BYTE >( *string ) == delimiter )
+         {
             string++;
-
+         }
+         
          if( bufptr > buffer )
          {
             word_count++;

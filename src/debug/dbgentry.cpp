@@ -1230,15 +1230,19 @@ static PHB_ITEM hb_dbgEvalMakeBlock( HB_WATCHPOINT * watch )
          char * szWord;
 
          while( c && HB_ISNEXTIDCHAR( c ) )
+         {
             c = watch->szExpr[ ++j ];
-
+         }
+         
          nLen = j - i;
          i = j;
          if( c )
          {
             while( watch->szExpr[ i ] == ' ' )
+            {
                i++;
-
+            }
+            
             if( watch->szExpr[ i ] == '(' ||
                 ( nLen == 1 && i == j && watch->szExpr[ i ] == '"' ) )
                continue;
@@ -1248,8 +1252,10 @@ static PHB_ITEM hb_dbgEvalMakeBlock( HB_WATCHPOINT * watch )
                i += 2;
 
                while( ( c = watch->szExpr[ i ] ) != '\0' && HB_ISNEXTIDCHAR( c ) )
+               {
                   i++;
-
+               }
+               
                continue;
             }
          }
@@ -1299,8 +1305,10 @@ static PHB_ITEM hb_dbgEvalMakeBlock( HB_WATCHPOINT * watch )
          i++;
 
          while( watch->szExpr[ i ] && HB_ISNEXTIDCHAR( watch->szExpr[ i ] ) )
+         {
             i++;
-
+         }
+         
          bAfterId = HB_TRUE;
          continue;
       }
@@ -1315,8 +1323,10 @@ static PHB_ITEM hb_dbgEvalMakeBlock( HB_WATCHPOINT * watch )
          i++;
 
          while( watch->szExpr[ i ] && watch->szExpr[ i ] != c )
+         {
             i++;
-
+         }
+         
          if( watch->szExpr[ i ] )
             i++;
 
@@ -1331,8 +1341,10 @@ static PHB_ITEM hb_dbgEvalMakeBlock( HB_WATCHPOINT * watch )
          else
          {
             while( watch->szExpr[ i ] && watch->szExpr[ i ] != ']' )
+            {
                i++;
-
+            }
+            
             if( watch->szExpr[ i ] )
                i++;
 

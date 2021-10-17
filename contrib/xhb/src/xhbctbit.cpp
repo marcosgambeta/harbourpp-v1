@@ -52,8 +52,10 @@ static HB_ULONG hb_hextonum( const char * cHex )
    char     c;
 
    while( *cHex == ' ' )
+   {
       cHex++;
-
+   }
+   
    while( ( c = *cHex++ ) != 0 )
    {
       ulNum <<= 4;

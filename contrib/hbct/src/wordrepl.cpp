@@ -82,8 +82,7 @@ HB_FUNC( WORDREPL )
             sReplIndex = ( sReplaceLen & 0xFFFFFFFE );
 
          pc = pcString;
-         while( ( pc = ct_at_exact_forward( pc, sStrLen - ( pc - pcString ),
-                                            pcSearch + sIndex, 2, &sMatchStrLen ) ) != nullptr )
+         while( ( pc = ct_at_exact_forward( pc, sStrLen - ( pc - pcString ), pcSearch + sIndex, 2, &sMatchStrLen ) ) != nullptr )
          {
             if( iMode )
             {

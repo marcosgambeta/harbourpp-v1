@@ -101,7 +101,9 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
       int iValue = 0;
 
       while( HB_ISDIGIT( * ptr ) )
+      {
          iValue = iValue * 10 + ( * ptr++ - '0' );
+      }
       if( * ptr == ':' )
       {
          pszCommand = ptr + 1;
@@ -109,8 +111,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
       }
    }
 
-   pFile = hb_fileProcessOpen( pszCommand, nExFlags & ( FO_READ | FO_WRITE | FO_READWRITE ),
-                               timeout, HB_FALSE );
+   pFile = hb_fileProcessOpen( pszCommand, nExFlags & ( FO_READ | FO_WRITE | FO_READWRITE ), timeout, HB_FALSE );
    if( pError )
    {
       hb_errPutFileName( pError, pszName );

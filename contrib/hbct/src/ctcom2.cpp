@@ -107,7 +107,9 @@ static char s_xmoblock_sum( const char * szData, HB_SIZE nLen )
    unsigned char uc = 0;
 
    while( nLen-- )
+   {
       uc += ( unsigned char ) *szData++;
+   }
    return static_cast< char >( uc );
 }
 

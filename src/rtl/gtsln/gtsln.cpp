@@ -497,7 +497,9 @@ static int hb_sln_isUTF8( int iStdOut, int iStdIn )
          {
             /* looking for cursor position in "\033[%d;%dR" */
             while( j < n && rdbuf[ j ] != '\033' )
+            {
                ++j;
+            }
             if( n - j >= 6 )
             {
                i = j + 1;
@@ -506,13 +508,17 @@ static int hb_sln_isUTF8( int iStdOut, int iStdIn )
                   y = 0;
                   d = ++i;
                   while( i < n && rdbuf[ i ] >= '0' && rdbuf[ i ] <= '9' )
+                  {
                      y = y * 10 + ( rdbuf[ i++ ] - '0' );
+                  }
                   if( i < n && i > d && rdbuf[ i ] == ';' )
                   {
                      x = 0;
                      d = ++i;
                      while( i < n && rdbuf[ i ] >= '0' && rdbuf[ i ] <= '9' )
+                     {
                         x = x * 10 + ( rdbuf[ i++ ] - '0' );
+                     }
                      if( i < n && i > d && rdbuf[ i ] == 'R' )
                      {
                         return x == 2 ? 1 : 0;

@@ -787,7 +787,9 @@ static HB_BOOL hb_pp_hasCommand( char * pBuffer, HB_SIZE nLen, HB_SIZE * pnAt, i
       char * cmd = va_arg( va, char * );
       nl = strlen( cmd );
       while( n < nLen && HB_PP_ISBLANK( pBuffer[ n ] ) )
+      {
          ++n;
+      }
       if( n + nl > nLen || hb_strnicmp( cmd, pBuffer + n, nl ) != 0 )
          break;
       n += nl;
@@ -802,8 +804,10 @@ static HB_BOOL hb_pp_hasCommand( char * pBuffer, HB_SIZE nLen, HB_SIZE * pnAt, i
    if( i == iCmds )
    {
       while( n < nLen && HB_PP_ISBLANK( pBuffer[ n ] ) )
+      {
          ++n;
-
+      }
+      
       if( n + 1 < nLen &&
           ( pBuffer[ n ] == '/' || pBuffer[ n ] == '&' ) &&
           pBuffer[ n ] == pBuffer[ n + 1 ] )
@@ -1129,7 +1133,9 @@ static void hb_pp_getLine( PHB_PP_STATE pState )
                {
                   u = 1;
                   while( n > u && pBuffer[ n - u ] == ' ' )
+                  {
                      ++u;
+                  }
                   if( n >= u && pBuffer[ n - u ] == ';' )
                   {
                      n -= u;
@@ -1172,9 +1178,10 @@ static void hb_pp_getLine( PHB_PP_STATE pState )
          {
             ++n;
             while( ++n < nLen && pBuffer[ n ] != '"' )
+            {
                ;
-            hb_pp_tokenAddNext( pState, pBuffer + 2, n - 2,
-                                HB_PP_TOKEN_TIMESTAMP );
+            }
+            hb_pp_tokenAddNext( pState, pBuffer + 2, n - 2, HB_PP_TOKEN_TIMESTAMP );
             if( n == nLen )
             {
                HB_SIZE nSkip = pBuffer - hb_membufPtr( pState->pBuffer ) + 1;
@@ -1189,9 +1196,10 @@ static void hb_pp_getLine( PHB_PP_STATE pState )
          {
             ++n;
             while( ++n < nLen && pBuffer[ n ] != '"' )
+            {
                ;
-            hb_pp_tokenAddNext( pState, pBuffer + 2, n - 2,
-                                HB_PP_TOKEN_DATE );
+            }
+            hb_pp_tokenAddNext( pState, pBuffer + 2, n - 2, HB_PP_TOKEN_DATE );
             if( n == nLen )
             {
                HB_SIZE nSkip = pBuffer - hb_membufPtr( pState->pBuffer ) + 1;
@@ -1208,14 +1216,18 @@ static void hb_pp_getLine( PHB_PP_STATE pState )
             if( ch == '`' )
                ch = '\'';
             while( ++n < nLen && pBuffer[ n ] != ch )
+            {
                ;
+            }
             if( pState->fMultiLineStr )
             {
                while( n == nLen )
                {
                   HB_SIZE u = 1;
                   while( n > u && pBuffer[ n - u ] == ' ' )
+                  {
                      ++u;
+                  }
                   if( n >= u && pBuffer[ n - u ] == ';' )
                   {
                      n -= u;
@@ -1227,7 +1239,9 @@ static void hb_pp_getLine( PHB_PP_STATE pState )
                      pBuffer = hb_membufPtr( pState->pBuffer ) + u - n;
                      --n;
                      while( ++n < nLen && pBuffer[ n ] != ch )
+                     {
                         ;
+                     }
                   }
                   else
                   {
@@ -1304,7 +1318,9 @@ static void hb_pp_getLine( PHB_PP_STATE pState )
          else if( HB_PP_ISFIRSTIDCHAR( ch ) )
          {
             while( ++n < nLen && HB_PP_ISNEXTIDCHAR( pBuffer[ n ] ) )
+            {
                ;
+            }
 
             /*
              * In Clipper note can be used only as 1st token and after
@@ -1330,14 +1346,17 @@ static void hb_pp_getLine( PHB_PP_STATE pState )
                    * token in Clipper and this fact is important in later
                    * preprocessing so we have to replicate it
                    */
-                  while( nLen - n > 1 && pBuffer[ n ] == '&' &&
-                         HB_PP_ISFIRSTIDCHAR( pBuffer[ n + 1 ] ) )
+                  while( nLen - n > 1 && pBuffer[ n ] == '&' && HB_PP_ISFIRSTIDCHAR( pBuffer[ n + 1 ] ) )
                   {
                      while( ++n < nLen && HB_PP_ISNEXTIDCHAR( pBuffer[ n ] ) )
+                     {
                         ;
+                     }
                      if( n < nLen && pBuffer[ n ] == '.' )
                         while( ++n < nLen && HB_PP_ISNEXTIDCHAR( pBuffer[ n ] ) )
+                        {
                            ;
+                        }
                   }
                   if( n < nLen && pBuffer[ n ] == '&' )
                      ++n;
@@ -1364,7 +1383,9 @@ static void hb_pp_getLine( PHB_PP_STATE pState )
          else if( HB_PP_ISTEXTCHAR( ch ) )
          {
             while( ++n < nLen && HB_PP_ISTEXTCHAR( pBuffer[ n ] ) )
+            {
                ;
+            }
 
             hb_pp_tokenAddNext( pState, pBuffer, n, HB_PP_TOKEN_TEXT );
          }
@@ -1384,7 +1405,9 @@ static void hb_pp_getLine( PHB_PP_STATE pState )
             {
                n = 2;
                while( ++n < nLen && HB_PP_ISHEX( pBuffer[ n ] ) )
+               {
                   ;
+               }
 
                /* (LEX: mark token as hex?) */
                hb_pp_tokenAddNext( pState, pBuffer, n, HB_PP_TOKEN_NUMBER );
@@ -1395,20 +1418,25 @@ static void hb_pp_getLine( PHB_PP_STATE pState )
             {
                n = 2;
                while( ++n < nLen && HB_PP_ISDIGIT( pBuffer[ n ] ) )
+               {
                   ;
+               }
 
                hb_pp_tokenAddNext( pState, pBuffer, n, HB_PP_TOKEN_DATE );
             }
             else
             {
                while( ++n < nLen && HB_PP_ISDIGIT( pBuffer[ n ] ) )
+               {
                   ;
-               if( nLen - n > 1 && pBuffer[ n ] == '.' &&
-                                     HB_PP_ISDIGIT( pBuffer[ n + 1 ] ) )
+               }
+               if( nLen - n > 1 && pBuffer[ n ] == '.' && HB_PP_ISDIGIT( pBuffer[ n + 1 ] ) )
                {
                   ++n;
                   while( ++n < nLen && HB_PP_ISDIGIT( pBuffer[ n ] ) )
+                  {
                      ;
+                  }
                }
                hb_pp_tokenAddNext( pState, pBuffer, n, HB_PP_TOKEN_NUMBER );
             }
@@ -1416,7 +1444,9 @@ static void hb_pp_getLine( PHB_PP_STATE pState )
          else if( ch == '.' && nLen > 1 && HB_PP_ISDIGIT( pBuffer[ 1 ] ) )
          {
             while( ++n < nLen && HB_PP_ISDIGIT( pBuffer[ n ] ) )
+            {
                ;
+            }
 
             hb_pp_tokenAddNext( pState, pBuffer, n, HB_PP_TOKEN_NUMBER );
          }
@@ -1436,15 +1466,18 @@ static void hb_pp_getLine( PHB_PP_STATE pState )
              * and this fact is important in later preprocessing so we have
              * to replicate it
              */
-            while( nLen - n > 1 && pBuffer[ n ] == '&' &&
-                   HB_PP_ISFIRSTIDCHAR( pBuffer[ n + 1 ] ) )
+            while( nLen - n > 1 && pBuffer[ n ] == '&' && HB_PP_ISFIRSTIDCHAR( pBuffer[ n + 1 ] ) )
             {
                ++iParts;
                while( ++n < nLen && HB_PP_ISNEXTIDCHAR( pBuffer[ n ] ) )
+               {
                   ;
+               }
                if( n < nLen && pBuffer[ n ] == '.' )
                   while( ++n < nLen && HB_PP_ISNEXTIDCHAR( pBuffer[ n ] ) )
+                  {
                      ++iParts;
+                  }
             }
             if( n < nLen && pBuffer[ n ] == '&' )
             {
@@ -1528,8 +1561,7 @@ static void hb_pp_getLine( PHB_PP_STATE pState )
          }
       }
    }
-   while( ( pState->pFile->pLineBuf ? pState->pFile->nLineBufLen != 0 :
-                                      ! pState->pFile->fEof ) &&
+   while( ( pState->pFile->pLineBuf ? pState->pFile->nLineBufLen != 0 : ! pState->pFile->fEof ) &&
           ( pState->fCanNextLine || pState->iNestedBlock ||
             ( pState->iStreamDump && pState->iStreamDump != HB_PP_STREAM_CLIPPER ) ) );
 
@@ -1539,8 +1571,7 @@ static void hb_pp_getLine( PHB_PP_STATE pState )
          hb_pp_error( pState, 'E', HB_PP_ERR_UNTERMINATED_COMMENT, nullptr );
       else if( pState->iStreamDump == HB_PP_STREAM_DUMP_C )
          hb_pp_dumpEnd( pState );
-      else if( pState->pFile->pLineBuf ? ! pState->pFile->nLineBufLen :
-                                         pState->pFile->fEof )
+      else if( pState->pFile->pLineBuf ? ! pState->pFile->nLineBufLen : pState->pFile->fEof )
          hb_pp_error( pState, 'E', HB_PP_ERR_MISSING_ENDTEXT, nullptr );
    }
 
@@ -1768,7 +1799,9 @@ static HB_BOOL hb_pp_patternAddResult( PHB_PP_RULE pRule, HB_USHORT marker,
       pResult->pNext = nullptr;
       pResultPtr = &pMarker->pResult;
       while( *pResultPtr )
+      {
          pResultPtr = &( *pResultPtr )->pNext;
+      }
       *pResultPtr = pResult;
       return HB_TRUE;
    }
@@ -1875,8 +1908,10 @@ static PHB_PP_RULE hb_pp_defineFind( PHB_PP_STATE pState, PHB_PP_TOKEN pToken )
             it will increase the speed when there is a lot of #define values */
 
    while( pRule && ! hb_pp_tokenEqual( pToken, pRule->pMatch, HB_PP_CMP_CASE ) )
+   {
       pRule = pRule->pPrev;
-
+   }
+   
    return pRule;
 }
 
@@ -2180,14 +2215,14 @@ static PHB_PP_TOKEN hb_pp_streamFuncGet( PHB_PP_TOKEN pToken, PHB_PP_TOKEN * pFu
 {
    hb_pp_tokenListFree( pFuncPtr );
 
-   if( pToken && HB_PP_TOKEN_TYPE( pToken->type ) == HB_PP_TOKEN_PIPE &&
-       ! HB_PP_TOKEN_ISEOC( pToken->pNext ) )
+   if( pToken && HB_PP_TOKEN_TYPE( pToken->type ) == HB_PP_TOKEN_PIPE && ! HB_PP_TOKEN_ISEOC( pToken->pNext ) )
    {
       PHB_PP_TOKEN * pStartPtr, * pEndPtr, pStart, pNext;
       pStartPtr = pEndPtr = &pToken->pNext;
-      while( ! HB_PP_TOKEN_ISEOC( *pEndPtr ) &&
-             HB_PP_TOKEN_TYPE( ( *pEndPtr )->type ) != HB_PP_TOKEN_PIPE )
+      while( ! HB_PP_TOKEN_ISEOC( *pEndPtr ) && HB_PP_TOKEN_TYPE( ( *pEndPtr )->type ) != HB_PP_TOKEN_PIPE )
+      {
          pEndPtr = &( *pEndPtr )->pNext;
+      }
 
       pToken = *pEndPtr;
       *pEndPtr = nullptr;
@@ -2285,7 +2320,9 @@ static void hb_pp_pragmaStreamFile( PHB_PP_STATE pState, const char * szFileName
           */
          pState->pNextTokenPtr = &pState->pFile->pTokenList;
          while( ! HB_PP_TOKEN_ISEOS( *pState->pNextTokenPtr ) )
+         {
             pState->pNextTokenPtr = &( *pState->pNextTokenPtr )->pNext;
+         }
          if( *pState->pNextTokenPtr == nullptr )
          {
             hb_pp_tokenAdd( &pState->pNextTokenPtr, "\n", 1, 0, HB_PP_TOKEN_EOL | HB_PP_TOKEN_STATIC );
@@ -3067,8 +3104,7 @@ static HB_BOOL hb_pp_matchMarkerNew( PHB_PP_TOKEN * pTokenPtr,
       PHB_PP_MARKERLST pMrkLst = *pMarkerListPtr, pMrkPrev = nullptr;
       PHB_PP_MARKERPTR pMrkPtr;
 
-      while( pMrkLst && ! hb_pp_tokenEqual( pMrkLst->pMatchMarkers->pToken,
-                                            pMarkerId, HB_PP_CMP_CASE ) )
+      while( pMrkLst && ! hb_pp_tokenEqual( pMrkLst->pMatchMarkers->pToken, pMarkerId, HB_PP_CMP_CASE ) )
       {
          pMrkPrev = pMrkLst;
          pMrkLst = pMrkLst->pNext;
@@ -3110,7 +3146,9 @@ static HB_BOOL hb_pp_matchHasKeywords( PHB_PP_TOKEN pToken )
       optional markers which have keywords on deeper levels are not
       recognized. Exactly the same makes Clipper PP */
    while( HB_PP_TOKEN_ISMATCH( pToken ) )
+   {
       pToken = pToken->pNext;
+   }
    return pToken != nullptr;
 }
 
@@ -3321,8 +3359,7 @@ static HB_BOOL hb_pp_resultMarkerNew( PHB_PP_STATE pState,
    {
       PHB_PP_MARKERLST pMrkLst = *pMarkerListPtr;
 
-      while( pMrkLst && ! hb_pp_tokenEqual( pMrkLst->pMatchMarkers->pToken,
-                                            pMarkerId, HB_PP_CMP_CASE ) )
+      while( pMrkLst && ! hb_pp_tokenEqual( pMrkLst->pMatchMarkers->pToken, pMarkerId, HB_PP_CMP_CASE ) )
       {
          pMrkLst = pMrkLst->pNext;
       }
@@ -3373,8 +3410,7 @@ static void hb_pp_directiveDel( PHB_PP_STATE pState, PHB_PP_TOKEN pMatch,
                                 HB_USHORT markers, PHB_PP_MARKER pMarkers,
                                 HB_USHORT mode, HB_BOOL fCommand )
 {
-   PHB_PP_RULE pRule, * pRulePtr = fCommand ? &pState->pCommands :
-                                              &pState->pTranslations;
+   PHB_PP_RULE pRule, * pRulePtr = fCommand ? &pState->pCommands : &pState->pTranslations;
 
    while( *pRulePtr )
    {
@@ -3993,8 +4029,10 @@ static HB_BOOL hb_pp_patternMatch( PHB_PP_TOKEN pMatch, PHB_PP_TOKEN * pTokenPtr
          PHB_PP_TOKEN pOptional = pMatch, pLast, pNewStop = pMatch->pNext;
 
          while( pNewStop && HB_PP_TOKEN_TYPE( pNewStop->type ) == HB_PP_MMARKER_OPTIONAL )
+         {
             pNewStop = pNewStop->pNext;
-
+         }
+         
          do
          {
             pLast = pOptional;
@@ -4012,8 +4050,7 @@ static HB_BOOL hb_pp_patternMatch( PHB_PP_TOKEN pMatch, PHB_PP_TOKEN * pTokenPtr
             else
                pOptional = pOptional->pNext;
          }
-         while( pOptional && HB_PP_TOKEN_TYPE( pOptional->type ) == HB_PP_MMARKER_OPTIONAL &&
-                ! HB_PP_TOKEN_ISEOS( pToken ) );
+         while( pOptional && HB_PP_TOKEN_TYPE( pOptional->type ) == HB_PP_MMARKER_OPTIONAL && ! HB_PP_TOKEN_ISEOS( pToken ) );
          pMatch = pLast;
       }
       else
@@ -4040,7 +4077,9 @@ static HB_BOOL hb_pp_patternMatch( PHB_PP_TOKEN pMatch, PHB_PP_TOKEN * pTokenPtr
    if( ! fOverflow )
    {
       while( pMatch && HB_PP_TOKEN_TYPE( pMatch->type ) == HB_PP_MMARKER_OPTIONAL )
+      {
          pMatch = pMatch->pNext;
+      }
       if( pMatch == nullptr )
       {
          *pTokenPtr = pToken;
@@ -4086,7 +4125,9 @@ static PHB_PP_RESULT hb_pp_matchResultGet( PHB_PP_RULE pRule, HB_USHORT usMatch,
    {
       pMarkerResult = pMarker->pResult;
       while( usMatch-- )
+      {
          pMarkerResult = pMarkerResult->pNext;
+      }   
    }
    else
       pMarkerResult = nullptr;
@@ -4625,8 +4666,7 @@ static HB_BOOL hb_pp_processCommand( PHB_PP_STATE pState, PHB_PP_TOKEN * pFirstP
    HB_BOOL fSubst = HB_FALSE, fRepeat = HB_TRUE;
    int iCycle = 0;
 
-   while( fRepeat && ! HB_PP_TOKEN_ISEOC( *pFirstPtr ) &&
-          ( pState->pMap[ HB_PP_HASHID( *pFirstPtr ) ] & HB_PP_COMMAND ) )
+   while( fRepeat && ! HB_PP_TOKEN_ISEOC( *pFirstPtr ) && ( pState->pMap[ HB_PP_HASHID( *pFirstPtr ) ] & HB_PP_COMMAND ) )
    {
       fRepeat = HB_FALSE;
       pRule = pState->pCommands;
@@ -4979,8 +5019,7 @@ static PHB_PP_TOKEN hb_pp_calcValue( PHB_PP_TOKEN pToken, int iPrecedense,
    else
       *pfError = HB_TRUE;
 
-   while( ! ( *pfError || HB_PP_TOKEN_ISEOC( pToken ) ||
-              HB_PP_TOKEN_TYPE( pToken->type ) == HB_PP_TOKEN_RIGHT_PB ) )
+   while( ! ( *pfError || HB_PP_TOKEN_ISEOC( pToken ) || HB_PP_TOKEN_TYPE( pToken->type ) == HB_PP_TOKEN_RIGHT_PB ) )
    {
       int iNextOper, iNextPrec;
       PHB_PP_TOKEN pNext;
@@ -5189,8 +5228,7 @@ static void hb_pp_preprocessToken( PHB_PP_STATE pState )
    {
       if( ! pState->pFile->pTokenList )
       {
-         while( pState->pFile->pLineBuf ? pState->pFile->nLineBufLen != 0 :
-                                          ! pState->pFile->fEof )
+         while( pState->pFile->pLineBuf ? pState->pFile->nLineBufLen != 0 : ! pState->pFile->fEof )
          {
             hb_pp_getLine( pState );
             if( pState->pFile->pTokenList /* || pState->fError */ )
@@ -5297,8 +5335,7 @@ static void hb_pp_preprocessToken( PHB_PP_STATE pState )
             {
                pToken = pToken->pNext;
                hb_membufFlush( pState->pBuffer );
-               while( ! HB_PP_TOKEN_ISEOC( pToken ) &&
-                      HB_PP_TOKEN_TYPE( pToken->type ) != HB_PP_TOKEN_GT )
+               while( ! HB_PP_TOKEN_ISEOC( pToken ) && HB_PP_TOKEN_TYPE( pToken->type ) != HB_PP_TOKEN_GT )
                {
                   hb_membufAddData( pState->pBuffer, pToken->value, pToken->len );
                   pToken = pToken->pNext;
@@ -5426,8 +5463,7 @@ static void hb_pp_preprocessToken( PHB_PP_STATE pState )
          HB_BOOL fDirective = HB_FALSE;
 
          pState->iCycle = 0;
-         while( ! HB_PP_TOKEN_ISEOC( pState->pFile->pTokenList ) &&
-                pState->iCycle <= pState->iMaxCycles )
+         while( ! HB_PP_TOKEN_ISEOC( pState->pFile->pTokenList ) && pState->iCycle <= pState->iMaxCycles )
          {
             if( HB_PP_TOKEN_ISDIRECTIVE( pState->pFile->pTokenList ) )
             {
@@ -5516,9 +5552,7 @@ PHB_PP_TOKEN hb_pp_tokenGet( PHB_PP_STATE pState )
          if( ! pState->pTokenOut )
             break;
       }
-      while( pState->pTokenOut &&
-             HB_PP_TOKEN_TYPE( pState->pTokenOut->type ) ==
-                                                   HB_PP_RMARKER_REFERENCE )
+      while( pState->pTokenOut && HB_PP_TOKEN_TYPE( pState->pTokenOut->type ) == HB_PP_RMARKER_REFERENCE )
       {
          PHB_PP_TOKEN pToken = pState->pTokenOut;
          pState->pTokenOut = pToken->pNext;

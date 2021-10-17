@@ -101,8 +101,7 @@ static HB_SIZE s_bz2_write( PHB_FILE pFile, HB_MAXINT nTimeout )
 
    while( nWritten < nSize )
    {
-      HB_SIZE nWr = _PHB_FILE->pFuncs->Write( _PHB_FILE, pFile->buffer + nWritten,
-                                              nSize - nWritten, nTimeout );
+      HB_SIZE nWr = _PHB_FILE->pFuncs->Write( _PHB_FILE, pFile->buffer + nWritten, nSize - nWritten, nTimeout );
       if( nWr == static_cast< HB_SIZE >( -1 ) )
          return nWr;
       else if( nWr == 0 )

@@ -313,7 +313,9 @@ HB_FUNC( SQL_SPRINTF )
                      cIntMod = static_cast< char * >( hb_xgrab( ulItmFrm + sizeof( char ) ) );
 
                   while( *c++ && *c != '}' )
+                  {
                      cIntMod[ s++ ] = *c;
+                  }
                   --i;
                   cIntMod[ s ] = '\0';
                   if( *( c - 1 ) == '\0' )

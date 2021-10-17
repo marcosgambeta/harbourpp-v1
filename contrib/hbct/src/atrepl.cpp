@@ -119,13 +119,11 @@ HB_FUNC( ATREPL )
             switch( iAtLike )
             {
                case CT_SETATLIKE_EXACT:
-                  pc = const_cast< char * >( ct_at_exact_forward( pcRetSubStr, sRetSubStrLen, pcStringToMatch,
-                                                                   nStrToMatchLen, &nMatchStrLen ) );
+                  pc = const_cast< char * >( ct_at_exact_forward( pcRetSubStr, sRetSubStrLen, pcStringToMatch, nStrToMatchLen, &nMatchStrLen ) );
                   break;
 
                case CT_SETATLIKE_WILDCARD:
-                  pc = const_cast< char * >( ct_at_wildcard_forward( pcRetSubStr, sRetSubStrLen, pcStringToMatch,
-                                                                      nStrToMatchLen, cAtLike, &nMatchStrLen ) );
+                  pc = const_cast< char * >( ct_at_wildcard_forward( pcRetSubStr, sRetSubStrLen, pcStringToMatch, nStrToMatchLen, cAtLike, &nMatchStrLen ) );
                   break;
 
                default:

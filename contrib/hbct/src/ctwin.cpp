@@ -424,9 +424,7 @@ static int hb_ctw_SelectWindow( PHB_GTCTW pCTW, int iWindow, HB_BOOL fToTop )
             if( pCTW->windowStack[ i ] == iWindow )
             {
                int iPos = i;
-               while( i < pCTW->iOpenWindows - 1 &&
-                      pCTW->windows[ pCTW->windowStack[ i + 1 ] ]->iLevel <=
-                      pCTW->windows[ iWindow ]->iLevel )
+               while( i < pCTW->iOpenWindows - 1 && pCTW->windows[ pCTW->windowStack[ i + 1 ] ]->iLevel <= pCTW->windows[ iWindow ]->iLevel )
                {
                   pCTW->windowStack[ i ] = pCTW->windowStack[ i + 1 ];
                   ++i;
@@ -473,7 +471,9 @@ static int hb_ctw_ChangeWindowHandle( PHB_GTCTW pCTW, int iNewWindow )
          {
             i = pCTW->iMaxWindow;
             while( iNewWindow > pCTW->iMaxWindow )
+            {
                pCTW->iMaxWindow += HB_CTWIN_ALLOC;
+            }
             pCTW->windows = static_cast< PHB_CT_WND * >( hb_xrealloc( pCTW->windows, ( pCTW->iMaxWindow + 1 ) * sizeof( PHB_CT_WND ) ) );
             pCTW->windowStack = static_cast< int * >( hb_xrealloc( pCTW->windowStack, pCTW->iMaxWindow * sizeof( int ) ) );
             do
@@ -489,7 +489,9 @@ static int hb_ctw_ChangeWindowHandle( PHB_GTCTW pCTW, int iNewWindow )
 
          i = pCTW->iOpenWindows - 1;
          while( i >= 0 && pCTW->windowStack[ i ] != iWindow )
+         {
             --i;
+         }
          if( i >= 0 )
          {
             pCTW->windowStack[ i ] = iNewWindow;
@@ -567,14 +569,15 @@ static int hb_ctw_SetWindowLevel( PHB_GTCTW pCTW, int iWindow, int iLevel )
          if( i > 0 )
          {
             while( i >= 0 && pCTW->windowStack[ i ] != iWindow )
+            {
                --i;
+            }
             if( i >= 0 )
             {
                int iPos = i;
                if( fToTop )
                {
-                  while( i < pCTW->iOpenWindows - 1 && pWnd->iLevel >=
-                         pCTW->windows[ pCTW->windowStack[ i + 1 ] ]->iLevel )
+                  while( i < pCTW->iOpenWindows - 1 && pWnd->iLevel >= pCTW->windows[ pCTW->windowStack[ i + 1 ] ]->iLevel )
                   {
                      pCTW->windowStack[ i ] = pCTW->windowStack[ i + 1 ];
                      ++i;
@@ -583,8 +586,7 @@ static int hb_ctw_SetWindowLevel( PHB_GTCTW pCTW, int iWindow, int iLevel )
                }
                else
                {
-                  while( i > 0 && pWnd->iLevel <=
-                         pCTW->windows[ pCTW->windowStack[ i - 1 ] ]->iLevel )
+                  while( i > 0 && pWnd->iLevel <= pCTW->windows[ pCTW->windowStack[ i - 1 ] ]->iLevel )
                   {
                      pCTW->windowStack[ i ] = pCTW->windowStack[ i - 1 ];
                      --i;
@@ -772,8 +774,7 @@ static int hb_ctw_CreateWindow( PHB_GTCTW pCTW, int iTop, int iLeft, int iBottom
    pCTW->windows[ pWnd->iHandle ] = pWnd;
    /* update window level */
    iTmp = pCTW->iOpenWindows++;
-   while( iTmp > 0 && pCTW->windows[ pCTW->windowStack[ iTmp - 1 ] ]->iLevel >
-                      pWnd->iLevel )
+   while( iTmp > 0 && pCTW->windows[ pCTW->windowStack[ iTmp - 1 ] ]->iLevel > pWnd->iLevel )
    {
       pCTW->windowStack[ iTmp ] = pCTW->windowStack[ iTmp - 1 ];
       --iTmp;
@@ -2243,7 +2244,9 @@ static int hb_ctw_gt_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions,
                iMnuCol += static_cast< int >( nLen ) + 3;
             }
             while( HB_GTSELF_DISPCOUNT( pGT ) )
+            {
                HB_GTSELF_DISPEND( pGT );
+            }
             HB_GTSELF_REFRESH( pGT );
 
             iKey = HB_GTSELF_INKEYGET( pGT, HB_TRUE, dDelay, INKEY_ALL );
@@ -2313,8 +2316,10 @@ static int hb_ctw_gt_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions,
          HB_GTSELF_REFRESH( pGT );
 
          while( HB_GTSELF_DISPCOUNT( pGT ) < iDspCount )
+         {
             HB_GTSELF_DISPBEGIN( pGT );
-
+         }
+         
          return iRet;
       }
    }

@@ -106,8 +106,7 @@ PHB_DEBUGINFO hb_compGetDebugInfo( HB_COMP_DECL )
                   while( pInfo != nullptr )
                   {
                      if( strncmp( pszModuleName, pInfo->pszModuleName, i ) == 0 &&
-                         ( pInfo->pszModuleName[ i ] == '\0' ||
-                           pInfo->pszModuleName[ i ] == ':' ) )
+                         ( pInfo->pszModuleName[ i ] == '\0' || pInfo->pszModuleName[ i ] == ':' ) )
                      {
                         break;
                      }

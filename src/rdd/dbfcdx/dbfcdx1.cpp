@@ -4222,10 +4222,8 @@ static void hb_cdxSetCurKey( LPCDXPAGE pPage )
       pPage = pPage->Child;
    }
 
-   pPage->TagParent->CurKey = hb_cdxKeyPut( pPage->TagParent->CurKey,
-                                 hb_cdxPageGetKeyVal( pPage, pPage->iCurKey ),
-                                 pPage->TagParent->uiLen,
-                                 hb_cdxPageGetKeyRec( pPage, pPage->iCurKey ) );
+   pPage->TagParent->CurKey = hb_cdxKeyPut( pPage->TagParent->CurKey, hb_cdxPageGetKeyVal( pPage, pPage->iCurKey ),
+                                 pPage->TagParent->uiLen, hb_cdxPageGetKeyRec( pPage, pPage->iCurKey ) );
 }
 
 /*

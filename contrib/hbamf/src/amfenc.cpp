@@ -63,8 +63,10 @@ static HB_ISIZ bufferGrow( amfContext * context, HB_ISIZ len )
    HB_ISIZ current_len = context->length;
 
    while( new_len > current_len )
+   {
       current_len *= 2;
-
+   }
+   
    if( current_len != context->length )
    {
       context->cBuf = static_cast< char * >( hb_xrealloc( context->cBuf, sizeof( char ) * current_len ) );
@@ -1202,8 +1204,7 @@ HB_FUNC( AMF3_FROMWA )
       else
       {
          uiRecCount = 0;
-         while( ( nCount == 0 || uiRecCount < nCount ) &&
-                ( ! pWhile || hb_itemGetL( hb_vmEvalBlock( pWhile ) ) ) )
+         while( ( nCount == 0 || uiRecCount < nCount ) && ( ! pWhile || hb_itemGetL( hb_vmEvalBlock( pWhile ) ) ) )
          {
             if( SELF_EOF( pArea, &bEof ) != HB_SUCCESS )
                break;
@@ -1304,8 +1305,7 @@ HB_FUNC( AMF3_FROMWA )
       }
 
       uiRecCount = 0;
-      while( ( nCount == 0 || uiRecCount <= nCount ) &&
-             ( ! pWhile || hb_itemGetL( hb_vmEvalBlock( pWhile ) ) ) )
+      while( ( nCount == 0 || uiRecCount <= nCount ) && ( ! pWhile || hb_itemGetL( hb_vmEvalBlock( pWhile ) ) ) )
       {
          if( SELF_EOF( pArea, &bEof ) != HB_SUCCESS )
             break;

@@ -96,13 +96,17 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
       nLen = ptr - pszHost;
       ++ptr;
       while( HB_ISDIGIT( * ptr ) )
+      {
          iPort = iPort * 10 + ( * ptr++ - '0' );
-
+      }
+      
       if( * ptr == ':' )
       {
          ++ptr;
          while( HB_ISDIGIT( * ptr ) )
+         {
             timeout = HB_MAX( timeout, 0 ) * 10 + ( * ptr++ - '0' );
+         }   
       }
 
       if( * ptr != 0 && * ptr != ':' )

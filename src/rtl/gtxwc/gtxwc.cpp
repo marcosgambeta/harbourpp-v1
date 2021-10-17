@@ -3962,7 +3962,9 @@ static void hb_gt_xwc_InvalidateFull( PXWND_DEF wnd )
    HB_SIZE nSize = wnd->cols * wnd->rows;
 
    while( nSize-- )
+   {
       wnd->pCurrScr[ nSize ] = 0xFFFFFFFF;
+   }
 
    hb_gt_xwc_InvalidateChar( wnd, 0, 0, wnd->cols - 1, wnd->rows - 1 );
 }

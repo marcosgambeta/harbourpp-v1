@@ -58,7 +58,9 @@ HB_BOOL ct_numParam( int iParam, HB_MAXINT * plNum )
    {
       *plNum = 0;
       while( *szHex == ' ' )
+      {
          szHex++;
+      }
       while( *szHex )
       {
          char c = *szHex++;
@@ -97,8 +99,10 @@ HB_FUNC( NUMAND )
       int i = 1;
 
       while( --iPCount && ct_numParam( ++i, &lNext ) )
+      {
          lValue &= lNext;
-
+      }
+      
       if( iPCount )
          lValue = -1;
    }
@@ -115,8 +119,10 @@ HB_FUNC( NUMOR )
       int i = 1;
 
       while( --iPCount && ct_numParam( ++i, &lNext ) )
+      {
          lValue |= lNext;
-
+      }
+      
       if( iPCount )
          lValue = -1;
    }
@@ -133,7 +139,9 @@ HB_FUNC( NUMXOR )
       int i = 1;
 
       while( --iPCount && ct_numParam( ++i, &lNext ) )
+      {
          lValue ^= lNext;
+      }
 
       if( iPCount )
          lValue = -1;

@@ -136,13 +136,11 @@ static void do_atnum( int iSwitch )
             switch( iAtLike )
             {
                case CT_SETATLIKE_EXACT:
-                  pc = ct_at_exact_forward( pcSubStr, sSubStrLen, pcStringToMatch,
-                                            sStrToMatchLen, &sMatchStrLen );
+                  pc = ct_at_exact_forward( pcSubStr, sSubStrLen, pcStringToMatch, sStrToMatchLen, &sMatchStrLen );
                   break;
 
                case CT_SETATLIKE_WILDCARD:
-                  pc = ct_at_wildcard_forward( pcSubStr, sSubStrLen, pcStringToMatch,
-                                               sStrToMatchLen, cAtLike, &sMatchStrLen );
+                  pc = ct_at_wildcard_forward( pcSubStr, sSubStrLen, pcStringToMatch, sStrToMatchLen, cAtLike, &sMatchStrLen );
                   break;
 
                default:

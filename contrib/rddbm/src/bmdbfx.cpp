@@ -142,8 +142,7 @@ HB_FUNC( BM_DBSEEKWILD )
                   if( errCode != HB_SUCCESS )
                      break;
                   hb_arrayAddForward( pArray, OrderInfo.itmResult );
-                  errCode = SELF_ORDINFO( pArea, fBack ? DBOI_SKIPWILDBACK :
-                                                         DBOI_SKIPWILD, &OrderInfo );
+                  errCode = SELF_ORDINFO( pArea, fBack ? DBOI_SKIPWILDBACK : DBOI_SKIPWILD, &OrderInfo );
                   if( errCode == HB_SUCCESS )
                      fFound = hb_itemGetL( OrderInfo.itmResult );
                   else

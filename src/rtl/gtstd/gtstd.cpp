@@ -138,7 +138,10 @@ static void sig_handler( int iSigNo )
       {
          int e = errno, stat;
          pid_t pid;
-         while( ( pid = waitpid( -1, &stat, WNOHANG ) ) > 0 );
+         while( ( pid = waitpid( -1, &stat, WNOHANG ) ) > 0 )
+         {
+            ;
+         }
          errno = e;
          break;
       }
@@ -312,7 +315,9 @@ static void hb_gt_std_Exit( PHB_GT pGT )
       }
 
       while( ++pGTSTD->iRow <= iRow )
+      {
          hb_gt_std_newLine( pGTSTD );
+      }   
 
 #if defined( HB_HAS_TERMIOS )
       if( pGTSTD->fRestTTY )
@@ -642,8 +647,7 @@ static void hb_gt_std_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 
    iMin = iLineFeed > 0 || pGTSTD->iLastCol <= iCol ? 0 : pGTSTD->iLastCol - iCol;
 
-   while( iSize > iMin &&
-          HB_GTSELF_GETSCRCHAR( pGT, iRow, iCol + iSize - 1, &iColor, &bAttr, &usChar ) )
+   while( iSize > iMin && HB_GTSELF_GETSCRCHAR( pGT, iRow, iCol + iSize - 1, &iColor, &bAttr, &usChar ) )
    {
       if( usChar != ' ' )
          break;

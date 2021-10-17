@@ -85,7 +85,9 @@ HB_FUNC( TABEXPAND )
          pcNewLine = hb_conNewLine();
          sNewLineLen = 0;
          while( *( pcNewLine + sNewLineLen ) != 0x00 )
+         {
             sNewLineLen++;
+         }   
       }
       if( sNewLineLen > 0 )
          cCR = *( pcNewLine );

@@ -226,9 +226,10 @@ HB_FUNC( WBOX )
       HB_SIZE nLen = hb_parclen( 1 ), nIndex = 0, nSize = 0;
       PHB_CODEPAGE cdp = hb_gtBoxCP();
 
-      while( nSize < HB_SIZEOFARRAY( szBoxBuf ) - 1 &&
-             HB_CDPCHAR_GET( cdp, pszBoxFrame, nLen, &nIndex, &wc ) )
+      while( nSize < HB_SIZEOFARRAY( szBoxBuf ) - 1 && HB_CDPCHAR_GET( cdp, pszBoxFrame, nLen, &nIndex, &wc ) )
+      {
          szBoxBuf[ nSize++ ] = wc;
+      }
       szBoxBuf[ nSize ] = 0;
    }
    else

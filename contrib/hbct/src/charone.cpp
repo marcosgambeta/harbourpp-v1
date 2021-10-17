@@ -145,10 +145,7 @@ static void do_charone( int iSwitch )
                      const char * pStart = pcDeleteSet;
                      HB_SIZE sLen = sDeleteSetLen;
 
-                     while( sLen >= 2 &&
-                            ( pc = ct_at_exact_forward( pStart, sLen, pcSub,
-                                                        2, nullptr ) ) != 0 &&
-                            ( pc - pcDeleteSet ) % 2 == 1 )
+                     while( sLen >= 2 && ( pc = ct_at_exact_forward( pStart, sLen, pcSub, 2, nullptr ) ) != 0 && ( pc - pcDeleteSet ) % 2 == 1 )
                      {
                         pStart = pc + 1;
                         sLen = sDeleteSetLen - ( pStart - pcDeleteSet );

@@ -77,7 +77,9 @@ HB_FUNC( CHARSPREAD )
             {
                nTokens++;
                while( nPos + 1 < nLen && szText[ nPos + 1 ] == cDelim )
+               {
                   ++nPos;
+               }   
             }
          }
 
@@ -103,7 +105,9 @@ HB_FUNC( CHARSPREAD )
                   HB_ISIZ i;
 
                   while( nPos + 1 < nLen && szText[ nPos + 1 ] == cDelim )
+                  {
                      szDest[ nDst++ ] = szText[ ++nPos ];
+                  }
                   i = iRepl;
                   if( iFirst )
                   {
@@ -113,7 +117,9 @@ HB_FUNC( CHARSPREAD )
                   else if( nTokens <= iRest )
                      ++i;
                   while( --i >= 0 )
+                  {
                      szDest[ nDst++ ] = cDelim;
+                  }
                   nTokens--;
                }
             }

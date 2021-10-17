@@ -116,8 +116,7 @@ static PHB_FFIND _hb_fileStart( HB_BOOL fNext, HB_BOOL fAny )
          ulAttr = ( HB_FATTR ) hb_parnldef( 2, fAny ? HB_FA_ANY : HB_FA_ALL );
          pFFData->ulAttr = hb_parl( 3 ) ? ulAttr : 0;
          pFFData->ffind  = hb_fsFindFirst( szFile, ulAttr );
-         while( pFFData->ffind && pFFData->ulAttr &&
-                HB_FF_ATTR( pFFData->ffind ) != pFFData->ulAttr )
+         while( pFFData->ffind && pFFData->ulAttr && HB_FF_ATTR( pFFData->ffind ) != pFFData->ulAttr )
          {
             if( ! hb_fsFindNext( pFFData->ffind ) )
             {
@@ -279,8 +278,7 @@ HB_FUNC( FILEDELETE )
 
 HB_FUNC( FILEMOVE )
 {
-   hb_retnint( hb_fsRename( hb_parcx( 1 ),
-                            hb_parcx( 2 ) ) ? 0 : -static_cast< HB_MAXINT >( hb_fsOsError() ) );
+   hb_retnint( hb_fsRename( hb_parcx( 1 ), hb_parcx( 2 ) ) ? 0 : -static_cast< HB_MAXINT >( hb_fsOsError() ) );
 }
 
 HB_FUNC_TRANSLATE( RENAMEFILE, FILEMOVE )

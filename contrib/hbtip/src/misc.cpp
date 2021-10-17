@@ -106,8 +106,10 @@ HB_FUNC( TIP_HTMLSPECIALCHARS )
          HB_ISIZ      nPosRet = 0;
 
          while( nLen && HB_ISSPACE( pszData[ nLen - 1 ] ) )
+         {
             nLen--;
-
+         }
+         
          /* Giving maximum final length possible */
          pszRet = static_cast< char * >( hb_xgrab( nLen * 6 + 1 ) );
 
@@ -209,8 +211,10 @@ HB_FUNC( TIP_JSONSPECIALCHARS )
          HB_ISIZ      nPosRet = 0;
 
          while( nLen && HB_ISSPACE( pszData[ nLen - 1 ] ) )
+         {
             nLen--;
-
+         }
+         
          /* Giving maximum final length possible */
          pszRet = static_cast< char * >( hb_xgrab( nLen * 2 + 1 ) );
 

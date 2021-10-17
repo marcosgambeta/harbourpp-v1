@@ -595,7 +595,9 @@ static void s_fileConRegister( PHB_CONCLI conn )
    HB_NETIO_LOCK();
    connPtr = &s_connections;
    while( *connPtr )
+   {
       connPtr = &( *connPtr )->next;
+   }
    *connPtr = conn;
    HB_NETIO_UNLOCK();
 }
@@ -805,8 +807,7 @@ static const char * s_fileDecode( const char * pszFileName,
                char port_buf[ 10 ], c;
 
                iLen = 0;
-               while( HB_ISDIGIT( pszFileName[ iLen ] ) &&
-                      iLen < ( int ) sizeof( port_buf ) - 1 )
+               while( HB_ISDIGIT( pszFileName[ iLen ] ) && iLen < ( int ) sizeof( port_buf ) - 1 )
                {
                   port_buf[ iLen ] = pszFileName[ iLen ];
                   ++iLen;
@@ -832,9 +833,10 @@ static const char * s_fileDecode( const char * pszFileName,
                   {
                      ++pszFileName;
                      iLen = 0;
-                     while( pszFileName[ iLen ] &&
-                            pszFileName[ iLen ] != ':' )
+                     while( pszFileName[ iLen ] && pszFileName[ iLen ] != ':' )
+                     {
                         ++iLen;
+                     }
                      if( pszFileName[ iLen ] == ':' )
                      {
                         if( pPasswd )

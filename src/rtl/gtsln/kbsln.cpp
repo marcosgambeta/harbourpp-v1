@@ -434,8 +434,7 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
 
          while( n > 0 )
          {
-            if( SLang_input_pending( hb_sln_escDelay == 0 ? -100 :
-                                     -HB_MAX( hb_sln_escDelay, 0 ) ) == 0 )
+            if( SLang_input_pending( hb_sln_escDelay == 0 ? -100 : -HB_MAX( hb_sln_escDelay, 0 ) ) == 0 )
                break;
             buf[ i++ ] = SLang_getkey();
             if( ! hb_cdpUTF8ToU16NextChar( static_cast< HB_UCHAR >( buf[ i - 1 ] ), &n, &wc ) )
@@ -445,7 +444,9 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
             return HB_INKEY_NEW_UNICODE( wc );
          else
             while( i > 0 )
+            {
                SLang_ungetkey( buf[ --i ] );
+            }   
       }
    }
 #endif

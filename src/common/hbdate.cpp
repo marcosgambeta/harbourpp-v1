@@ -627,8 +627,10 @@ void hb_timeStrRawGet( const char * szTime, int * piHour, int * piMinutes, int *
       int iLen = 0;
 
       while( iLen < 10 && HB_ISDIGIT( szTime[ iLen ] ) )
+      {
          ++iLen;
-
+      }
+      
       if( iLen >= 2 && ( ( iLen & 1 ) == 0 || iLen == 7 || iLen == 9 ) )
       {
          *piHour = ( szTime[ 0 ] - '0' ) * 10 + ( szTime[ 1 ] - '0' );

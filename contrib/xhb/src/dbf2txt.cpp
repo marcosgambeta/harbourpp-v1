@@ -64,8 +64,10 @@ static char * hb_strescape( const char * szInput, HB_ISIZ nLen, const char * cDe
    szReturn = szEscape = static_cast< char * >( hb_xgrab( nLen * 2 + 4 ) );
 
    while( nLen && HB_ISSPACE( szInput[ nLen - 1 ] ) )
+   {
       nLen--;
-
+   }
+   
    szChr = szInput;
 
    while( *szChr && nCnt++ < nLen )
@@ -202,8 +204,7 @@ HB_FUNC( DBF2TEXT )
 
    SELF_FIELDCOUNT( pArea, &uiFields );
 
-   while( ( nCount == -1 || nCount > 0 ) &&
-          ( ! pWhile || hb_itemGetL( hb_vmEvalBlock( pWhile ) ) ) )
+   while( ( nCount == -1 || nCount > 0 ) && ( ! pWhile || hb_itemGetL( hb_vmEvalBlock( pWhile ) ) ) )
    {
       /* WHILE ! Bof() .AND. ! Eof() */
       SELF_EOF( pArea, &bEof );

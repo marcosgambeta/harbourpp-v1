@@ -4922,10 +4922,7 @@ static HB_BOOL hb_nsxOrdSkipUnique( LPTAGINFO pTag, HB_LONG lToSkip )
             }
             fOut = pTag->TagEOF || pTag->TagBOF;
          }
-         while( ! fOut && hb_nsxValCompare( pTag,
-                                            pTag->CurKeyInfo->val, pTag->KeyLength,
-                                            keyVal, pTag->KeyLength,
-                                            NSX_CMP_EXACT ) == 0 );
+         while( ! fOut && hb_nsxValCompare( pTag, pTag->CurKeyInfo->val, pTag->KeyLength, keyVal, pTag->KeyLength, NSX_CMP_EXACT ) == 0 );
       }
       else if( ! fForward && ! pArea->dbfarea.fPositioned )
       {

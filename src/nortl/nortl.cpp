@@ -541,7 +541,9 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
          {
             nLen = strlen( pFileName->szName );
             while( nLen && pFileName->szName[ nLen - 1 ] == ' ' )
+            {
                --nLen;
+            }
             while( nLen && pFileName->szName[ 0 ] == ' ' )
             {
                ++pFileName->szName;
@@ -553,7 +555,9 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
          {
             nLen = strlen( pFileName->szExtension );
             while( nLen && pFileName->szExtension[ nLen - 1 ] == ' ' )
+            {
                --nLen;
+            }
             while( nLen && pFileName->szExtension[ 0 ] == ' ' )
             {
                ++pFileName->szExtension;
@@ -633,7 +637,9 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
          {
             nLen = strlen( pFileName->szName );
             while( nLen && pFileName->szName[ nLen - 1 ] == ' ' )
+            {
                --nLen;
+            }
             while( nLen && pFileName->szName[ 0 ] == ' ' )
             {
                ++pFileName->szName;
@@ -645,7 +651,9 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
          {
             nLen = strlen( pFileName->szExtension );
             while( nLen && pFileName->szExtension[ nLen - 1 ] == ' ' )
+            {
                --nLen;
+            }
             while( nLen && pFileName->szExtension[ 0 ] == ' ' )
             {
                ++pFileName->szExtension;

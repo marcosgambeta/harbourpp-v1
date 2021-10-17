@@ -143,7 +143,9 @@ static const char * s_consrvFilePath( char * pszFileName, PHB_CONSRV conn, HB_BO
    if( conn->rootPathLen )
    {
       while( s_isDirSep( pszFileName[ 0 ] ) )
+      {
          ++pszFileName;
+      }   
    }
 
    while( pszFileName[ iPos ] && iLevel >= 0 )
@@ -1774,8 +1776,7 @@ HB_FUNC( NETIO_SRVSTATUS )
          {
             if( stream->id == iStreamID )
             {
-               iStatus = stream->type == NETIO_SRVDATA ?
-                         NETIO_SRVSTAT_DATASTREAM : NETIO_SRVSTAT_ITEMSTREAM;
+               iStatus = stream->type == NETIO_SRVDATA ? NETIO_SRVSTAT_DATASTREAM : NETIO_SRVSTAT_ITEMSTREAM;
                break;
             }
             stream = stream->next;

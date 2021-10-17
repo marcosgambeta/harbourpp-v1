@@ -233,7 +233,10 @@ static void sig_handler( int signo )
       {
          int status;
          pid_t pid;
-         while( ( pid = waitpid( -1, &status, WNOHANG ) ) > 0 ) ;
+         while( ( pid = waitpid( -1, &status, WNOHANG ) ) > 0 )
+         {
+            ;
+         }
          break;
       }
       case SIGWINCH:
@@ -286,7 +289,10 @@ static void sig_handler( int signo )
          int status;
          pid_t pid;
          pszSig = "SIGCHLD";
-         while( ( pid = waitpid( -1, &status, WNOHANG ) ) > 0 ) ;
+         while( ( pid = waitpid( -1, &status, WNOHANG ) ) > 0 )
+         {
+            ;
+         }
          break;
       }
       case SIGWINCH:
@@ -685,9 +691,14 @@ static void flush_gpmevt( mouseEvent * mEvt )
    if( gpm_fd >= 0 )
    {
       while( hb_fsCanRead( gpm_fd, 0 ) > 0 )
+      {
          set_gpmevt( gpm_fd, O_RDONLY, static_cast< void * >( mEvt ) );
+      }
 
-      while( getMouseKey( mEvt ) ) ;
+      while( getMouseKey( mEvt ) )
+      {
+         ;
+      }
    }
 }
 #endif
@@ -893,8 +904,7 @@ static int get_inch( InOutBase * ioBase, HB_MAXINT timeout )
       else
          lRead = 1;
    }
-   while( nRet == 0 && lRead == 0 &&
-          ( timeout = hb_timerTest( timeout, &timer ) ) != 0 );
+   while( nRet == 0 && lRead == 0 && ( timeout = hb_timerTest( timeout, &timer ) ) != 0 );
 
    for( i = n = nchk; i < ioBase->efds_no; i++ )
    {

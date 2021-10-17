@@ -113,7 +113,9 @@ HB_FUNC( ENVPARAM )
       for( lpEnv = lpEnviron; *lpEnv; lpEnv++ )
       {
          while( *++lpEnv )
+         {
             ++nSize;
+         }
          nSize += 3;
       }
       if( nSize > 0 )

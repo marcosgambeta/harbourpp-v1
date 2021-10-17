@@ -71,8 +71,10 @@ static int s_fileGetValue( const char * pszName, int * piLen )
    int iLen = 0, iValue = 0;
 
    while( HB_ISDIGIT( pszName[ iLen ] ) )
+   {
       iValue = iValue * 10 + ( pszName[ iLen++ ] - '0' );
-
+   }
+   
    *piLen = iLen;
    return iValue;
 }
@@ -104,7 +106,9 @@ static int s_filePortParams( const char * pszName, HB_MAXINT * pTimeout,
    else
    {
       while( HB_ISDIGIT( *pszName ) )
+      {
          iPort = iPort * 10 + ( *pszName++ - '0' );
+      }   
    }
 
    while( iPort > 0 && *pszName )
@@ -240,7 +244,9 @@ static HB_BOOL s_fileAccept( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
       {
          pszFileName += 4;
          while( HB_ISDIGIT( *pszFileName ) )
+         {
             ++pszFileName;
+         }
          return *pszFileName == ':';
       }
    }

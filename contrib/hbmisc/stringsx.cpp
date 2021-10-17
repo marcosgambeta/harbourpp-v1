@@ -28,7 +28,9 @@ static const char * hb_strtoken( const char * szText,
       else
       {
          while( nStart < nText && szText[ nStart ] == cDelimiter )
+         {
             nStart++;
+         }   
       }
 
       if( nStart < nText && szText[ nStart ] != cDelimiter )
@@ -36,7 +38,9 @@ static const char * hb_strtoken( const char * szText,
          nEnd = nStart + 1;
 
          while( nEnd < nText && szText[ nEnd ] != cDelimiter )
+         {
             nEnd++;
+         }   
       }
       else
          nEnd = nStart;

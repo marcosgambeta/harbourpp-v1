@@ -65,7 +65,9 @@ HB_FUNC( CHARPACK )
          HB_UCHAR c = in[ n_in ];
 
          while( n_count < n_max && in[ n_in + n_count ] == c )
+         {
             n_count++;
+         }
          out[ n_out++ ] = 0;
          out[ n_out++ ] = static_cast< HB_UCHAR >( n_count );
          out[ n_out++ ] = c;

@@ -261,8 +261,10 @@ static int hb_pp_preprocesfile( PHB_PP_STATE pState, const char * szRuleFile, co
    HB_SIZE nLen;
 
    while( hb_pp_nextLine( pState, &nLen ) != nullptr && nLen )
+   {
       ;
-
+   }
+   
    if( szRuleFile )
    {
       FILE * foutr;
@@ -558,7 +560,9 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
                hb_strncpy( szLog, szLine, sizeof( szLog ) - 1 );
                iLen = static_cast< int >( strlen( szLog ) );
                while( iLen-- && HB_ISSPACE( szLog[ iLen ] ) )
+               {
                   szLog[ iLen ] = '\0';
+               }   
             }
          }
       }

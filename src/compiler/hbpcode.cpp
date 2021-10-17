@@ -77,8 +77,10 @@ static HB_PSIZE_FUNC( hb_p_localname )
    HB_SYMBOL_UNUSED( cargo );
    nPCodePos += 3;
    while( pFunc->pCode[ nPCodePos++ ] )
+   {
       ;
-
+   }
+   
    return nPCodePos - nStart;
 }
 
@@ -88,9 +90,11 @@ static HB_PSIZE_FUNC( hb_p_modulename )
 
    HB_SYMBOL_UNUSED( cargo );
    nPCodePos++;
-   while( pFunc->pCode[ nPCodePos++ ])
+   while( pFunc->pCode[ nPCodePos++ ] )
+   {
       ;
-
+   }
+   
    return nPCodePos - nStart;
 }
 
@@ -101,8 +105,10 @@ static HB_PSIZE_FUNC( hb_p_staticname )
    HB_SYMBOL_UNUSED( cargo );
    nPCodePos += 4;
    while( pFunc->pCode[ nPCodePos++ ] )
+   {
       ;
-
+   }
+   
    return nPCodePos - nStart;
 }
 

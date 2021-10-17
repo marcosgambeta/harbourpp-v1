@@ -154,7 +154,9 @@ HB_FUNC( NTOC )
             char cPad = szPad ? szPad[ 0 ] : static_cast< char >( hb_parnidef( 4, ' ' ) );
 
             while( i > 0 )
+            {
                szBuffer[ --i ] = cPad;
+            }   
          }
          pszResult = &szBuffer[ i ];
       }

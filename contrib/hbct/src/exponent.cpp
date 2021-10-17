@@ -87,12 +87,16 @@ HB_FUNC( MANTISSA )
    if( fabs( dValue ) < 1.0 )
    {
       while( fabs( dValue ) < 1.0 )
+      {
          dValue *= 2.0;
+      }   
    }
    else if( fabs( dValue ) >= 2.0 )
    {
       while( fabs( dValue ) >= 2.0 )
+      {
          dValue /= 2.0;
+      }   
    }
    hb_retnd( dValue );
 
