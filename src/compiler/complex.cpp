@@ -278,7 +278,7 @@ static const char * hb_comp_tokenIdentifer( HB_COMP_DECL, PHB_PP_TOKEN pToken )
 static const char * hb_comp_tokenString( YYSTYPE * yylval_ptr, HB_COMP_DECL, PHB_PP_TOKEN pToken )
 {
    yylval_ptr->valChar.length = pToken->len;
-   yylval_ptr->valChar.string = static_cast< char * >( HB_UNCONST( pToken->value ) );
+   yylval_ptr->valChar.string = const_cast< char * >( pToken->value );
    yylval_ptr->valChar.dealloc = HB_FALSE;
    if( HB_PP_TOKEN_ALLOC( pToken->type ) )
    {
@@ -287,7 +287,7 @@ static const char * hb_comp_tokenString( YYSTYPE * yylval_ptr, HB_COMP_DECL, PHB
                yylval_ptr->valChar.dealloc ? HB_IDENT_COPY : HB_IDENT_FREE );
       if( ! yylval_ptr->valChar.dealloc )
       {
-         yylval_ptr->valChar.string = static_cast< char * >( HB_UNCONST( pToken->value ) );
+         yylval_ptr->valChar.string = const_cast< char * >( pToken->value );
       }
       pToken->type |= HB_PP_TOKEN_STATIC;
    }
