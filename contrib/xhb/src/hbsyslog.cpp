@@ -56,7 +56,6 @@
 static HANDLE s_RegHandle;
 
 #elif defined( HB_OS_UNIX ) && \
-   ! defined( __WATCOMC__ ) && \
    ! defined( HB_OS_VXWORKS ) && \
    ! defined( HB_OS_SYMBIAN )
 
@@ -87,7 +86,7 @@ HB_FUNC( HB_SYSLOGOPEN )
    hb_retl( HB_FALSE );
 #  endif
 
-#elif defined( HB_OS_UNIX ) && ! defined( __WATCOMC__ ) && ! defined( HB_OS_VXWORKS )
+#elif defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS )
    openlog( hb_parcx( 1 ), LOG_NDELAY | LOG_NOWAIT | LOG_PID, LOG_USER );
    hb_retl( HB_TRUE );
 #else
@@ -113,7 +112,7 @@ HB_FUNC( HB_SYSLOGCLOSE )
    hb_retl( HB_FALSE );
 #  endif
 
-#elif defined( HB_OS_UNIX ) && ! defined( __WATCOMC__ ) && ! defined( HB_OS_VXWORKS )
+#elif defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS )
    closelog();
    hb_retl( HB_TRUE );
 #else
@@ -160,7 +159,6 @@ HB_FUNC( HB_SYSLOGMESSAGE )
 #  endif
 
 #elif defined( HB_OS_UNIX ) && \
-   ! defined( __WATCOMC__ ) && \
    ! defined( HB_OS_VXWORKS ) && \
    ! defined( HB_OS_SYMBIAN )
 

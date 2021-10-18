@@ -52,8 +52,7 @@
 
 #if defined( HB_TASK_THREAD )
    /* Harbour tasks explicitly requested */
-#elif ( defined( HB_OS_LINUX ) && defined( __WATCOMC__ ) ) || \
-      defined( HB_OS_DOS ) || defined( HB_OS_MINIX )
+#elif defined( HB_OS_DOS ) || defined( HB_OS_MINIX )
 #  define HB_TASK_THREAD
 #elif defined( HB_OS_LINUX ) || defined( HB_OS_DARWIN ) || \
       defined( HB_OS_SUNOS ) || defined( HB_OS_HPUX ) || \
@@ -74,9 +73,6 @@
 #  endif
 #elif defined( HB_OS_OS2 )
 #  include <os2.h>
-#  if defined( __WATCOMC__ )
-#     include <process.h>
-#  endif
 #endif
 
 HB_EXTERN_BEGIN
@@ -459,7 +455,7 @@ extern HB_BOOL hb_threadMutexSyncWait( PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, P
 #ifdef HB_USE_TLS
 #  if ( defined( __GNUC__ ) && __GNUC__ >= 3 ) || defined( __BORLANDC__ )
 #     define HB_TLS_ATTR      __thread
-#  elif defined( _MSC_VER ) || defined( __WATCOMC__ )
+#  elif defined( _MSC_VER )
 #     define HB_TLS_ATTR      __declspec( thread )
 #  else
 #     undef HB_USE_TLS

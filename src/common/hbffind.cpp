@@ -69,9 +69,7 @@
       #include <sys/stat.h>
    #endif
    #include <dos.h>
-#if ! defined( __WATCOMC__ )
    #include <dir.h>
-#endif
    #include <time.h>
 
    typedef struct

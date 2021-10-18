@@ -52,12 +52,7 @@
 
 HB_EXTERN_BEGIN
 
-#if defined( __WATCOMC__ )
-   #define HB_MATH_HANDLER
-   #if __WATCOMC__ > 1000  /* && defined( __cplusplus ) */
-      #define exception _exception
-   #endif
-#elif defined( __BORLANDC__ )
+#if defined( __BORLANDC__ )
    #if ( __BORLANDC__ == 0x530 ) && defined( __cplusplus )
       /* NOTE: There seem to be a bug in Borland C++ 5.3 C++ mode which prevents
                the redefinition of matherr, because nor "_exception" neither

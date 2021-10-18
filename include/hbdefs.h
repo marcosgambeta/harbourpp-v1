@@ -59,7 +59,6 @@
 #if defined( __MINGW32__ ) || \
     ( defined( _MSC_VER ) && _MSC_VER >= 1600 ) || \
     ( defined( __BORLANDC__ ) && __BORLANDC__ >= 0x0582 ) || \
-    ( defined( __WATCOMC__ ) && __WATCOMC__ >= 1270 ) || \
     ( ( defined( __GNUC__ ) || defined( __SUNPRO_C ) || defined( __SUNPRO_CC ) ) && \
       ( defined( _ISOC99_SOURCE ) || defined( _STDC_C99 ) || \
         ( defined( __STDC_VERSION__ ) && __STDC_VERSION__ >= 199901L ) || \
@@ -110,11 +109,7 @@
 
 #if defined( HB_OS_DOS )
 
-   #if defined( __WATCOMC__ ) && defined( __386__ ) && ! defined( __WINDOWS_386__ )
-      #define HB_DOS_INT86 int386
-      #define HB_DOS_INT86X int386x
-      #define HB_XREGS w
-   #elif defined( __RSX32__ )
+   #if defined( __RSX32__ )
       #define HB_DOS_INT86 _int86
       #define HB_DOS_INT86X _int86x
       #define HB_XREGS x
@@ -1496,11 +1491,11 @@ typedef HB_U32 HB_FATTR;
  * starting procedure (due to unknown order of static data initialization)
  */
 #define HB_START_PROCEDURE "MAIN"
-#if defined( __WATCOMC__ ) || ( defined( __GNUC__ ) && ! defined( __DJGPP__ ) && ! defined( HB_OS_OS2_GCC ) )
+#if ( defined( __GNUC__ ) && ! defined( __DJGPP__ ) && ! defined( HB_OS_OS2_GCC ) )
    #define HB_START_PROC_STRICT
 #endif
 
-#if defined( __WATCOMC__ ) || defined( _MSC_VER )
+#if defined( _MSC_VER )
    #define HB_DLL_ENTRY_POINT    DllMain
 #else
    #define HB_DLL_ENTRY_POINT    DllEntryPoint
@@ -1520,8 +1515,6 @@ typedef HB_U32 HB_FATTR;
 #elif defined( __GNUC__ ) && defined( HB_OS_LINUX ) && __GNUC__ >= 3
    #define HB_EXPORT_ATTR     __attribute__ ((visibility ("default")))
 #elif defined( __BORLANDC__ )
-   #define HB_EXPORT_ATTR     __declspec( dllexport )
-#elif defined( __WATCOMC__ )
    #define HB_EXPORT_ATTR     __declspec( dllexport )
 #elif defined( ASANLM ) || defined( ASANT )
    #define HB_EXPORT_ATTR
@@ -1549,8 +1542,6 @@ typedef HB_U32 HB_FATTR;
 #elif defined( __GNUC__ ) && defined( HB_OS_WIN )
    #define HB_IMPORT_ATTR     __attribute__ (( dllimport ))
 #elif defined( __BORLANDC__ )
-   #define HB_IMPORT_ATTR     __declspec( dllimport )
-#elif defined( __WATCOMC__ )
    #define HB_IMPORT_ATTR     __declspec( dllimport )
 #elif defined( ASANLM ) || defined( ASANT )
    #define HB_IMPORT_ATTR

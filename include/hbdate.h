@@ -161,16 +161,6 @@ HB_EXTERN_END
         defined( HB_OS_ANDROID ) ) && \
       ! defined( HB_OS_DARWIN_5 )
 #     define HB_HAS_LOCALTIME_R
-#  elif defined( __WATCOMC__ )
-#     if defined( __STDC_WANT_LIB_EXT1__ ) && __STDC_WANT_LIB_EXT1__ == 1
-#        define HB_HAS_LOCALTIME_R
-#        define localtime_r   localtime_s
-#        define gmtime_r      gmtime_s
-#     elif ! defined( NO_EXT_KEYS )
-#        define HB_HAS_LOCALTIME_R
-#        define localtime_r   _localtime
-#        define gmtime_r      _gmtime
-#     endif
 #  endif
 #endif
 

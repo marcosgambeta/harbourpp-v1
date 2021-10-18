@@ -147,7 +147,7 @@ HB_FUNC( SETTIME )
       st.wSecond       = static_cast< WORD >( iTime[ 2 ] );
       st.wMilliseconds = static_cast< WORD >( iTime[ 3 ] ) * 10;
       fResult = SetLocalTime( &st );
-#elif defined( HB_OS_LINUX ) && ! defined( HB_OS_ANDROID ) && ! defined( __WATCOMC__ )
+#elif defined( HB_OS_LINUX ) && ! defined( HB_OS_ANDROID )
       /* stime() exists only in SVr4, SVID, X/OPEN and Linux */
       HB_ULONG lNewTime;
       time_t   tm;
@@ -182,7 +182,7 @@ HB_FUNC( SETDATE )
          st.wDay       = static_cast< WORD >( iDay );
          st.wDayOfWeek = static_cast< WORD >( hb_dateJulianDOW( lDate ) );
          fResult       = SetLocalTime( &st );
-#elif defined( HB_OS_LINUX ) && ! defined( HB_OS_ANDROID ) && ! defined( __WATCOMC__ )
+#elif defined( HB_OS_LINUX ) && ! defined( HB_OS_ANDROID )
          /* stime() exists only in SVr4, SVID, X/OPEN and Linux */
          long   lNewDate;
          time_t tm;

@@ -67,7 +67,7 @@
 #endif
 
 #if ! defined( HB_HAS_UCONTEXT )
-#  if ( defined( HB_OS_LINUX ) && ! defined( __WATCOMC__ ) ) || defined( HB_OS_MINIX )
+#  if defined( HB_OS_LINUX ) || defined( HB_OS_MINIX )
 #     define HB_HAS_UCONTEXT
 #  endif
 #endif

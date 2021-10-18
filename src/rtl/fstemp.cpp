@@ -70,7 +70,7 @@
    #include "hbwinuni.h"
 #endif
 
-#if ( defined( HB_OS_LINUX ) && ( ! defined( __WATCOMC__ ) || __WATCOMC__ >= 1280 ) ) || defined( HB_OS_BSD ) || defined( HB_OS_DARWIN ) || defined( HB_OS_SUNOS )
+#if defined( HB_OS_LINUX ) || defined( HB_OS_BSD ) || defined( HB_OS_DARWIN ) || defined( HB_OS_SUNOS )
 #  define HB_HAS_MKSTEMP
 #  if ( defined( HB_OS_BSD ) && ! defined( __NetBSD__ ) ) || defined( HB_OS_DARWIN )
 #     define HB_HAS_MKSTEMPS
@@ -89,7 +89,7 @@
        * functions on 32-bit machines.
        */
       #define HB_USE_LARGEFILE64
-   #elif defined( HB_OS_UNIX ) && defined( O_LARGEFILE ) && ! defined( __WATCOMC__ )
+   #elif defined( HB_OS_UNIX ) && defined( O_LARGEFILE )
       #define HB_USE_LARGEFILE64
    #endif
 #endif

@@ -59,7 +59,7 @@
 #if defined( __SVR4 )
 #  include <thread.h>
 #endif
-#if defined( HB_OS_UNIX ) && !( defined( __WATCOMC__ ) || defined( HB_OS_MINIX ) )
+#if defined( HB_OS_UNIX ) && !( defined( HB_OS_MINIX ) )
 #  include <sched.h>
 #endif
 
@@ -297,68 +297,6 @@ HB_EXTERN_BEGIN
          /* TODO: */
 
 #     endif
-
-#  endif    /* x86 */
-
-#elif defined( __WATCOMC__ )
-
-#  if defined( HB_CPU_X86 ) || defined( HB_CPU_X86_64 )
-
-#     if HB_COUNTER_SIZE == 4
-
-         void hb_atomic_inc32( volatile int * p );
-         #pragma aux hb_atomic_inc32 = \
-               "lock inc dword ptr [eax]" \
-               parm [ eax ] modify exact [] ;
-
-         unsigned char hb_atomic_dec32( volatile int * p );
-         #pragma aux hb_atomic_dec32 = \
-               "lock dec dword ptr [eax]", \
-               "setne al" \
-               parm [ eax ] value [ al ] modify exact [ al ] ;
-
-#        define HB_ATOM_INC( p )    ( hb_atomic_inc32( ( volatile int * ) (p) ) )
-#        define HB_ATOM_DEC( p )    ( hb_atomic_dec32( ( volatile int * ) (p) ) )
-#        define HB_ATOM_GET( p )    (*(int volatile *)(p))
-#        define HB_ATOM_SET( p, n ) do { *((int volatile *)(p)) = (n); } while(0)
-
-#     elif HB_COUNTER_SIZE == 8
-
-         /* TODO: */
-
-#     endif
-
-      int hb_spinlock_trylock( volatile int * p );
-      #pragma aux hb_spinlock_trylock = \
-            "mov eax, 1", \
-            "xchg eax, dword ptr [edx]" \
-            parm [ edx ] value [ eax ] modify exact [ eax ] ;
-
-      static __inline void hb_spinlock_acquire( volatile int * l )
-      {
-         for( ;; )
-         {
-            if( ! hb_spinlock_trylock( l ) )
-               return;
-
-            #ifdef HB_SPINLOCK_REPEAT
-               if( ! hb_spinlock_trylock( l ) )
-                  return;
-            #endif
-            HB_SCHED_YIELD();
-         }
-      }
-
-      static __inline void hb_spinlock_release( volatile int * l )
-      {
-         *l = 0;
-      }
-
-#     define HB_SPINLOCK_T          volatile int
-#     define HB_SPINLOCK_INIT       0
-#     define HB_SPINLOCK_TRY(l)     (hb_spinlock_trylock(l)==0)
-#     define HB_SPINLOCK_RELEASE(l) hb_spinlock_release(l)
-#     define HB_SPINLOCK_ACQUIRE(l) hb_spinlock_acquire(l)
 
 #  endif    /* x86 */
 

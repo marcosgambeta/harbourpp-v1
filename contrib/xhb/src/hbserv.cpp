@@ -912,7 +912,7 @@ HB_FUNC( HB_SIGNALDESC )
    {
       case SIGSEGV: switch( iSubSig )
          {
-         #if ! defined( HB_OS_BSD ) && ! defined( HB_OS_OS2_GCC ) && ! defined( __WATCOMC__ )
+         #if ! defined( HB_OS_BSD ) && ! defined( HB_OS_OS2_GCC )
             case SEGV_MAPERR: hb_retc_const( "Segmentation fault: address not mapped to object" ); return;
             case SEGV_ACCERR: hb_retc_const( "Segmentation fault: invalid permissions for mapped object" ); return;
          #endif
@@ -921,7 +921,7 @@ HB_FUNC( HB_SIGNALDESC )
 
       case SIGILL: switch( iSubSig )
          {
-         #if ! defined( HB_OS_BSD ) && ! defined( HB_OS_OS2_GCC ) && ! defined( __WATCOMC__ )
+         #if ! defined( HB_OS_BSD ) && ! defined( HB_OS_OS2_GCC )
             case ILL_ILLOPC: hb_retc_const( "Illegal operation: illegal opcode" ); return;
             case ILL_ILLOPN: hb_retc_const( "Illegal operation: illegal operand" ); return;
             case ILL_ILLADR: hb_retc_const( "Illegal operation: illegal addressing mode" ); return;
@@ -936,7 +936,7 @@ HB_FUNC( HB_SIGNALDESC )
 
       case SIGFPE: switch( iSubSig )
          {
-         #if ! defined( HB_OS_OS2_GCC ) && ! defined( __WATCOMC__ )
+         #if ! defined( HB_OS_OS2_GCC )
          #if ! defined( HB_OS_DARWIN )
             case FPE_INTDIV: hb_retc_const( "Floating point: integer divide by zero" ); return;
             case FPE_INTOVF: hb_retc_const( "Floating point: integer overflow" ); return;

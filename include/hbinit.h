@@ -265,52 +265,6 @@ extern HB_EXPORT PHB_SYMB hb_vmProcessSymbols( PHB_SYMB pSymbols, HB_USHORT uiSy
     *  See the C output of a generated .prg for example
     */
 
-#elif defined( __WATCOMC__ )
-
-   #if defined( HB_PRAGMA_STARTUP )
-      #error Wrong macros set for startup code - clean your make/env settings.
-   #endif
-
-   #define HB_INIT_SYMBOLS_BEGIN( func ) \
-      static HB_SYMB symbols_table[] = {
-
-   #define HB_INIT_SYMBOLS_EX_END( func, module, id, vpcode ) \
-      }; \
-      static PHB_SYMB symbols = symbols_table; \
-      static void func( void ) \
-      { \
-         symbols = hb_vmProcessSymbols( symbols_table, static_cast< HB_USHORT >( HB_INIT_SYMBOLS_COUNT ), (module), (id), (vpcode) ); \
-      }
-
-   #define HB_CALL_ON_STARTUP_BEGIN( func ) \
-      static void func( void ) \
-      {
-
-   #define HB_CALL_ON_STARTUP_END( func ) \
-      }
-
-   #define HB_DATASEG_STARTUP
-   #define HB_STARTUP_SEGMENT          "XI"
-
-   #define HB_WATCOM_STARTUP_ID        0x00
-   #define HB_WATCOM_STARTUP_PRIORITY  0x40  /* default "program" priority */
-
-   #pragma pack( __push, 1 )
-   struct _s_init_info_
-   {
-      unsigned char     id;
-      unsigned char     priority;
-      void ( * func ) ( void );
-   };
-   #pragma pack( __pop )
-
-
-   #define HB_DATASEG_FUNC( func )     HB_DATASEG_FUNC_( func )
-
-   #define HB_DATASEG_FUNC_( func ) \
-         static struct _s_init_info_ _s_init_info_##func = \
-                  { HB_WATCOM_STARTUP_ID, HB_WATCOM_STARTUP_PRIORITY, func };
-
 #else
    #error Unknown initialization method.
 #endif

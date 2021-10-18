@@ -69,7 +69,7 @@
    /* _LIB_VERSION_TYPE _LIB_VERSION = _XOPEN_; */
 #else
 #  include <math.h>
-#  if defined( __BORLANDC__ ) || defined( __WATCOMC__ ) || defined( _MSC_VER ) || defined( HB_OS_MINIX )
+#  if defined( __BORLANDC__ ) || defined( _MSC_VER ) || defined( HB_OS_MINIX )
 #     include <float.h>
 #  elif defined( HB_OS_SUNOS )
 #     include <ieeefp.h>    /* for finite() */
@@ -190,7 +190,7 @@
 #     define hb_isfinite( d )       isfinite( d )
 #  elif defined( _MSC_VER )
 #     define hb_isfinite( d )       _finite( ( double ) d )
-#  elif defined( __BORLANDC__ ) || defined( __WATCOMC__ )
+#  elif defined( __BORLANDC__ )
 #     define hb_isfinite( d )       _finite( d )
 #  elif defined( __GNUC__ ) || defined( __DJGPP__ ) || \
       defined( HB_OS_SUNOS )

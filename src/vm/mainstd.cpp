@@ -47,8 +47,6 @@
 #include "hbapi.h"
 #include "hbvm.h"
 
-#if ! ( defined( HB_DYNLIB ) && defined( __WATCOMC__ ) )
-
 HB_EXTERN_BEGIN
 #if defined( __MINGW32__ )
 int _CRT_glob = 0;
@@ -86,5 +84,3 @@ int main( int argc, char * argv[] )
    hb_vmInit( HB_TRUE );
    return hb_vmQuit();
 }
-
-#endif

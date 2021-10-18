@@ -900,7 +900,9 @@ HB_FUNC( HB_CMDLINE )
 /* Check for command-line internal arguments */
 void hb_cmdargProcess( void )
 {
+#if 0
    int iHandles;
+#endif
 
    if( hb_cmdargCheck( "INFO" ) )
    {
@@ -935,25 +937,15 @@ void hb_cmdargProcess( void )
       hb_verBuildInfo();
    }
 
+#if 0
    iHandles = hb_cmdargNum( "F" );
    if( iHandles > 20 )
    {
-      #if defined( __WATCOMC__ )
-         #if defined( HB_OS_OS2 )
-            DosSetMaxFH( iHandles );
-         #elif defined( HB_OS_DOS )
-            _grow_handles( iHandles );
-         #endif
-      #endif
    }
    else if( iHandles < 0 )
    {
-      #if defined( __WATCOMC__ )
-         #if defined( HB_OS_OS2 )
-            DosSetMaxFH( 256 );
-         #endif
-      #endif
    }
+#endif
 }
 
 /* Source repository revision number */

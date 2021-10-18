@@ -119,21 +119,19 @@
 
 #if defined( HB_OS_UNIX )
 #  define HB_HAS_UNIX
-#  if ! defined( __WATCOMC__ )
-#     define HB_HAS_INET_ATON
-#     define HB_HAS_INET_PTON
-#     define HB_HAS_INET_NTOP
-#     define HB_HAS_SOCKADDR_STORAGE
-#     define HB_HAS_ADDRINFO
-#     define HB_HAS_NAMEINFO
-#     define HB_HAS_GETHOSTBYADDR
-#     if ! defined( HB_HAS_POLL ) && ! defined( HB_NO_POLL ) && defined( _POSIX_C_SOURCE ) && _POSIX_C_SOURCE >= 200112L
-         /* use poll() instead of select() to avoid FD_SETSIZE (1024 in Linux)
-            file handle limit */
-#        define HB_HAS_POLL
-#     endif
+#  define HB_HAS_INET_ATON
+#  define HB_HAS_INET_PTON
+#  define HB_HAS_INET_NTOP
+#  define HB_HAS_SOCKADDR_STORAGE
+#  define HB_HAS_ADDRINFO
+#  define HB_HAS_NAMEINFO
+#  define HB_HAS_GETHOSTBYADDR
+#  if ! defined( HB_HAS_POLL ) && ! defined( HB_NO_POLL ) && defined( _POSIX_C_SOURCE ) && _POSIX_C_SOURCE >= 200112L
+      /* use poll() instead of select() to avoid FD_SETSIZE (1024 in Linux)
+         file handle limit */
+#     define HB_HAS_POLL
 #  endif
-#  if ! defined( __WATCOMC__ ) && ! defined( HB_OS_BEOS ) && ! defined( HB_OS_MINIX )
+#  if ! defined( HB_OS_BEOS ) && ! defined( HB_OS_MINIX )
 #     define HB_HAS_INET6
 #     if ! defined( HB_OS_VXWORKS )
 #        define HB_HAS_INET6_ADDR_CONST
@@ -214,9 +212,7 @@
 #     include <sys/select.h>
 #     include <arpa/inet.h>
 #  endif
-#  if ! ( defined( HB_OS_DOS ) && defined( __WATCOMC__ ) )
-#     include <sys/time.h>
-#  endif
+#  include <sys/time.h>
 #  include <sys/types.h>
 #  include <sys/socket.h>
 #  include <sys/ioctl.h>
@@ -241,9 +237,7 @@
 #     include <poll.h>
 #  endif
 #  include <netinet/tcp.h>
-#  if ! ( defined( HB_OS_LINUX ) && defined( __WATCOMC__ ) )
-#     include <net/if.h>
-#  endif
+#  include <net/if.h>
 #  include <unistd.h>
 #  include <fcntl.h>
 #  if defined( HB_OS_DOS )
@@ -263,16 +257,6 @@
 #  define SHUT_RD       0
 #  define SHUT_WR       1
 #  define SHUT_RDWR     2
-#endif
-
-#if defined( __WATCOMC__ ) && defined( HB_OS_LINUX ) && ! defined( IP_ADD_MEMBERSHIP )
-   /* it's missed in OpenWatcom 1.8 Linux header files :-( */
-#  define IP_ADD_MEMBERSHIP   35
-   struct ip_mreq
-   {
-      struct in_addr imr_multiaddr;    /* IP multicast address of group */
-      struct in_addr imr_interface;    /* Local IP address of interface */
-   };
 #endif
 
 #if defined( HB_OS_WIN )
@@ -3766,7 +3750,7 @@ char * hb_socketGetHostName( const void * pSockAddr, unsigned len )
 /*
  * IFACEs
  */
-#if defined( HB_OS_WIN ) || ( defined( SIOCGIFCONF ) && !( defined( HB_OS_LINUX ) && defined( __WATCOMC__ ) ) )
+#if defined( HB_OS_WIN ) || defined( SIOCGIFCONF )
 static void hb_socketArraySetInetAddr( PHB_ITEM pItem, HB_SIZE nPos, const void * pSockAddr, unsigned len )
 {
    char * szAddr = hb_socketAddrGetName( pSockAddr, len );
@@ -3838,7 +3822,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
  *       new systems using 'struct lifreq' with SIOCGLIF* ioctls instead
  *       of 'struct ifreq' and SIOCGIF*
  */
-#if defined( SIOCGIFCONF ) && !( defined( HB_OS_LINUX ) && defined( __WATCOMC__ ) )
+#if defined( SIOCGIFCONF )
    HB_SOCKET sd;
 
    sd = hb_socketOpen( af ? af : HB_SOCKET_AF_INET, HB_SOCKET_PT_DGRAM, 0 );

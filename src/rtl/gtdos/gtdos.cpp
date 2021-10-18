@@ -103,7 +103,7 @@
 /* For screen support */
 #if defined( __POWERC ) || ( defined( __TURBOC__ ) && ! defined( __BORLANDC__ ) ) || ( defined( __ZTC__ ) && ! defined( __SC__ ) )
    #define FAR  far
-#elif defined( HB_OS_DOS ) && ! defined( __DJGPP__ ) && ! defined( __RSX32__ ) && ! defined( __WATCOMC__ )
+#elif defined( HB_OS_DOS ) && ! defined( __DJGPP__ ) && ! defined( __RSX32__ )
    #define FAR  _far
 #else
    #define FAR
@@ -884,7 +884,7 @@ static int hb_gt_dos_ReadKey( PHB_GT pGT, int iEventMask )
          if( iKey != -1 )
             iKey += 256;
       }
-#if ! ( defined( __WATCOMC__ ) || defined( __BORLANDC__ ) )
+#if ! defined( __BORLANDC__ )
       /* Watcom and Borland C use only 0x00 to indicate extended keycode
          and do not use 224 (0xE0) */
       else if( iKey == 224 && kbhit() )

@@ -94,7 +94,7 @@
 #include <termios.h>
 #include <fcntl.h>
 #include <time.h>
-#if ( defined( HB_OS_LINUX ) || defined( HB_OS_BSD ) || defined( HB_OS_MINIX ) ) && ! defined( __WATCOMC__ )
+#if ( defined( HB_OS_LINUX ) || defined( HB_OS_BSD ) || defined( HB_OS_MINIX ) )
 #  if defined( HB_OS_LINUX )
 #     include <pty.h>         /* for openpty and forkpty */
 #     include <utmp.h>        /* for login_tty */

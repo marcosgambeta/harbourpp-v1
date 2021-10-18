@@ -50,7 +50,7 @@
 
 #include "hbapi.h"
 
-#if defined( HB_OS_UNIX ) && ( ! defined( __WATCOMC__ ) || __WATCOMC__ > 1290 ) && ! defined( HB_OS_SYMBIAN ) /* || defined( __DJGPP__ ) */
+#if defined( HB_OS_UNIX ) && ! defined( HB_OS_SYMBIAN ) /* || defined( __DJGPP__ ) */
 #  if defined( HB_OS_VXWORKS )
 #     if ! defined( HB_HAS_SIOLIB )
 #        define HB_HAS_SIOLIB
@@ -107,8 +107,6 @@
 #  define INCL_DOSDEVICES
 #  define INCL_DOSDEVIOCTL
 #  include <os2.h>
-#elif defined( HB_OS_LINUX ) && defined( __WATCOMC__ ) && ( __WATCOMC__ <= 1290 )
-#  include <unistd.h>
 #endif
 
 #include "hbapifs.h"

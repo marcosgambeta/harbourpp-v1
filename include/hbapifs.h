@@ -230,7 +230,7 @@ extern HB_EXPORT int        hb_fsCanWrite    ( HB_FHANDLE hFileHandle, HB_MAXINT
 #  if defined( HB_USE_BSDLOCKS_OFF )
 #     undef HB_USE_BSDLOCKS
 #  elif defined( HB_OS_LINUX ) && \
-        ! defined( __WATCOMC__ ) && ! defined( HB_USE_BSDLOCKS )
+         ! defined( HB_USE_BSDLOCKS )
       /* default usage of BSD locks in *BSD systems for emulating
        * MS-DOS/Windows DENY_* flags has been disabled because tests
        * on FreeBSD 6.2 and macOS shows that this implementation

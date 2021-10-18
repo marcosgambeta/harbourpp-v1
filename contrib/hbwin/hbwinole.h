@@ -70,7 +70,7 @@
 /* This code uses named union so this declaration is necessary for
  * compilers where nameless unions are default
  */
-#if defined( __BORLANDC__ ) || ( defined( __WATCOMC__ ) && ! defined( __cplusplus ) )
+#if defined( __BORLANDC__ )
 #     if ! defined( NONAMELESSUNION )
 #        define NONAMELESSUNION
 #     endif

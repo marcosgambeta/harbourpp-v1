@@ -197,7 +197,7 @@
        * functions on 32-bit machines.
        */
       #define HB_USE_LARGEFILE64
-   #elif defined( HB_OS_UNIX ) && defined( O_LARGEFILE ) && ! defined( __WATCOMC__ )
+   #elif defined( HB_OS_UNIX ) && defined( O_LARGEFILE )
       #define HB_USE_LARGEFILE64
    #endif
 #endif
@@ -2411,7 +2411,7 @@ HB_BOOL hb_fsSetFileTime( const char * pszFileName, long lJulian, long lMillisec
 
       if( lJulian <= 0 && lMillisec < 0 )
       {
-#  if defined( HB_OS_LINUX ) && ! defined( __WATCOMC__ )
+#  if defined( HB_OS_LINUX )
          fResult = utimes( pszFileName, nullptr ) == 0;
 #  else
          fResult = utime( pszFileName, nullptr ) == 0;
@@ -2451,7 +2451,7 @@ HB_BOOL hb_fsSetFileTime( const char * pszFileName, long lJulian, long lMillisec
          }
          new_value.tm_isdst = -1;
 
-#  if defined( HB_OS_LINUX ) && ! defined( __WATCOMC__ )
+#  if defined( HB_OS_LINUX )
          {
             struct timeval times[ 2 ];
             times[ 0 ].tv_sec = times[ 1 ].tv_sec = mktime( &new_value );
@@ -2991,7 +2991,7 @@ HB_SIZE hb_fsReadAt( HB_FHANDLE hFileHandle, void * pBuff, HB_SIZE nCount, HB_FO
 
    hb_vmUnlock();
 
-#if defined( HB_OS_UNIX ) && ! defined( __WATCOMC__ ) && ! defined( HB_OS_VXWORKS ) && ! defined( HB_OS_SYMBIAN )
+#if defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS ) && ! defined( HB_OS_SYMBIAN )
    {
       long lRead;
 #  if defined( HB_USE_LARGEFILE64 )
@@ -3134,7 +3134,7 @@ HB_SIZE hb_fsWriteAt( HB_FHANDLE hFileHandle, const void * pBuff, HB_SIZE nCount
 
    hb_vmUnlock();
 
-#if defined( HB_OS_UNIX ) && ! defined( __WATCOMC__ ) && ! defined( HB_OS_VXWORKS ) && ! defined( HB_OS_SYMBIAN )
+#if defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS ) && ! defined( HB_OS_SYMBIAN )
    {
       long lWritten;
 #  if defined( HB_USE_LARGEFILE64 )

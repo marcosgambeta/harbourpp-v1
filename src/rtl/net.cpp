@@ -74,7 +74,7 @@
       #define gethostname __gethostname
    #endif
 
-#elif defined( HB_OS_UNIX ) && ! defined( __WATCOMC__ )
+#elif defined( HB_OS_UNIX )
 
    #if defined( HB_OS_VXWORKS )
       #include <hostLib.h>
@@ -138,7 +138,7 @@ char * hb_netname( void )
       }
 #  endif
 
-#elif ( defined( HB_OS_UNIX ) && ! defined( __WATCOMC__ ) ) || ( defined( HB_OS_OS2 ) && defined( __GNUC__ ) )
+#elif ( defined( HB_OS_UNIX ) ) || ( defined( HB_OS_OS2 ) && defined( __GNUC__ ) )
 
    char szValue[ MAXGETHOSTNAME + 1 ];
    szValue[ 0 ] = szValue[ MAXGETHOSTNAME ] = '\0';

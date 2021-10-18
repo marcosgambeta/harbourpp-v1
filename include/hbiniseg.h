@@ -48,9 +48,7 @@
 
 #if defined( HB_DATASEG_STARTUP )
 
-   #if defined( __WATCOMC__ )
-      #pragma off (unreferenced)    /* disable unused variable warnings */
-   #elif defined( _MSC_VER ) && defined( HB_OS_WIN_64 )
+   #if defined( _MSC_VER ) && defined( HB_OS_WIN_64 )
       #pragma section( HB_STARTUP_SEGMENT, long, read )
    #endif
 
@@ -60,9 +58,5 @@
    #undef HB_DATASEG_BODY
 
    #pragma data_seg()
-
-   #if defined( __WATCOMC__ )
-      #pragma on (unreferenced)     /* reenable unused variable warnings */
-   #endif
 
 #endif

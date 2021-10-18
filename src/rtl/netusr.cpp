@@ -68,7 +68,7 @@
       #include <emx/syscalls.h>
    #endif
 
-#elif defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS ) && ! defined( __WATCOMC__ )
+#elif defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS )
 
    #include <pwd.h>
    #include <sys/types.h>
@@ -94,7 +94,7 @@ char * hb_username( void )
       return HB_OSSTRDUP( lpValue );
    }
 
-#elif ( defined( HB_OS_OS2 ) && defined( __GNUC__ ) ) || ( defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS ) && ! defined( __WATCOMC__ ) )
+#elif ( defined( HB_OS_OS2 ) && defined( __GNUC__ ) ) || ( defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS ) )
 
    struct passwd * pwd = getpwuid( getuid() );
    if( pwd && pwd->pw_name )

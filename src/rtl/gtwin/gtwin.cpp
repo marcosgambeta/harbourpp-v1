@@ -94,24 +94,22 @@
 #  define HB_GTWIN_USE_SETCONSOLEMENUCLOSE  /* Enable undocumented Windows API function call */
 #endif
 
-#if ! defined( __WATCOMC__ ) || ( __WATCOMC__ < 1280 )
-   typedef struct _HB_CONSOLE_SCREEN_BUFFER_INFOEX
-   {
-      ULONG cbSize;
-      COORD dwSize;
-      COORD dwCursorPosition;
-      WORD wAttributes;
-      SMALL_RECT srWindow;
-      COORD dwMaximumWindowSize;
-      WORD wPopupAttributes;
-      BOOL bFullscreenSupported;
-      COLORREF ColorTable[ 16 ];
-   } HB_CONSOLE_SCREEN_BUFFER_INFOEX, * HB_PCONSOLE_SCREEN_BUFFER_INFOEX;
-   #undef CONSOLE_SCREEN_BUFFER_INFOEX
-   #undef PCONSOLE_SCREEN_BUFFER_INFOEX
-   #define CONSOLE_SCREEN_BUFFER_INFOEX  HB_CONSOLE_SCREEN_BUFFER_INFOEX
-   #define PCONSOLE_SCREEN_BUFFER_INFOEX HB_PCONSOLE_SCREEN_BUFFER_INFOEX
-#endif
+typedef struct _HB_CONSOLE_SCREEN_BUFFER_INFOEX
+{
+   ULONG cbSize;
+   COORD dwSize;
+   COORD dwCursorPosition;
+   WORD wAttributes;
+   SMALL_RECT srWindow;
+   COORD dwMaximumWindowSize;
+   WORD wPopupAttributes;
+   BOOL bFullscreenSupported;
+   COLORREF ColorTable[ 16 ];
+} HB_CONSOLE_SCREEN_BUFFER_INFOEX, * HB_PCONSOLE_SCREEN_BUFFER_INFOEX;
+#undef CONSOLE_SCREEN_BUFFER_INFOEX
+#undef PCONSOLE_SCREEN_BUFFER_INFOEX
+#define CONSOLE_SCREEN_BUFFER_INFOEX  HB_CONSOLE_SCREEN_BUFFER_INFOEX
+#define PCONSOLE_SCREEN_BUFFER_INFOEX HB_PCONSOLE_SCREEN_BUFFER_INFOEX
 #if ! defined( HB_GTWIN_USE_PCONSOLEINFOEX )
 #  define HB_GTWIN_USE_PCONSOLEINFOEX
 #endif

@@ -296,22 +296,6 @@
  * Ref: http://nadeausoftware.com/articles/2012/01/c_c_tip_how_use_compiler_predefined_macros_detect_operating_system
  */
 
-#if defined( __WATCOMC__ )
-   #if defined( __OS2__ )
-      #define HB_OS_OS2
-   #elif defined( __NT__ ) || defined( __WINDOWS_386__ ) || defined( __WINDOWS__ )
-      #define HB_OS_WIN
-   #elif defined( __LINUX__ )
-      #define HB_OS_LINUX
-   #elif defined( __386__ )
-      #define HB_OS_DOS
-      #define HB_OS_DOS_32
-   #else
-      #define HB_OS_DOS
-      #define HB_OS_DOS_16
-   #endif
-#endif
-
 #ifndef HB_OS_DOS
    #if defined( DOS ) || defined( _QC ) || defined( __DOS__ ) || defined( MSDOS ) || defined( __MSDOS__ ) || defined( __RSX32__ )
       #define HB_OS_DOS
@@ -609,7 +593,7 @@
 
 #if defined( __GNUC__ ) || defined( __SUNPRO_C )
    #define _HB_INLINE_  __inline__
-#elif defined( __BORLANDC__ ) || defined( _MSC_VER ) || defined( __WATCOMC__ )
+#elif defined( __BORLANDC__ ) || defined( _MSC_VER )
    #define _HB_INLINE_  __inline
 #else /* __cplusplus */
    #define _HB_INLINE_  inline

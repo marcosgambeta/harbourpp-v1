@@ -49,7 +49,7 @@
 
 /* XXX: Check and possibly extend this to other Unix-like platforms */
 #if ( defined( HB_OS_BSD ) && ! defined( HB_OS_DARWIN ) ) || \
-   ( defined( HB_OS_LINUX ) && ! defined ( HB_OS_ANDROID ) && ! defined ( __WATCOMC__ ) )
+   ( defined( HB_OS_LINUX ) && ! defined( HB_OS_ANDROID ) )
    /*
     * sysctl() on Linux has fallen into depreciation. Newer generations
     * of runtime C libraries, like musl, doesn't even expose it. Here we
@@ -70,9 +70,7 @@
 #elif defined( HB_OS_DOS ) || defined( HB_OS_OS2 )
 #  include <sys/types.h>
 #else
-#  if ! defined( __WATCOMC__ )
-#     include <sys/param.h>
-#  endif
+#  include <sys/param.h>
 #  include <sys/time.h>
 #  include <sys/types.h>
 #  ifdef HAVE_SYS_SYSCTL_H

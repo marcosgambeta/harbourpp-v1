@@ -63,19 +63,12 @@
 #  endif
 #elif defined( HB_OS_OS2 )
 #  include <os2.h>
-#elif defined( HB_OS_DOS ) && defined( __WATCOMC__ ) && !defined( HB_CAUSEWAY_DLL )
-   /* it's broken in recent OpenWatcom builds so enable it
-      for tests only in harbour.dll [druzus] */
-#  if defined( HB_DYNLIB )
-#     define HB_CAUSEWAY_DLL
-#  include <cwdllfnc.h>
-#  endif
 #endif
 
 /* NOTE: VxWorks supports dlopen() functionality only in shared
          executables. [vszakats] */
 #if ! defined( HB_HAS_DLFCN ) && \
-    ( ( defined( HB_OS_LINUX ) && ! defined( __WATCOMC__ ) ) || \
+    ( ( defined( HB_OS_LINUX ) ) || \
       defined( HB_OS_SUNOS ) || defined( HB_OS_DARWIN ) || \
       defined( HB_OS_BSD ) || defined( HB_OS_BEOS ) || \
       defined( HB_OS_QNX ) || defined( HB_OS_CYGWIN )  || \
