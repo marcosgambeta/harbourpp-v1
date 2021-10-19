@@ -13,4 +13,6 @@
 
 hbcurl.hbx
 
-core.cpp
+-i.
+
+src\core.cpp
