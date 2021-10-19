@@ -7,24 +7,24 @@
 
 ${hb_name}.hbx
 
-bbabble.cpp
-dates.cpp
-ffind.cpp
-hb_f.cpp
-hbeditc.cpp
-irm.cpp
-spd.cpp
-strfmt.cpp
-stringsx.cpp
+src\bbabble.cpp
+src\dates.cpp
+src\ffind.cpp
+src\hb_f.cpp
+src\hbeditc.cpp
+src\irm.cpp
+src\spd.cpp
+src\strfmt.cpp
+src\stringsx.cpp
 
-calldll.prg
-fcomma.prg
-fileread.prg
-hbedit.prg
-nconvert.prg
-numtxthu.prg
-numtxten.prg
-numtxtru.prg
-stringp.prg
-twirler.prg
-udpds.prg
+src\calldll.prg
+src\fcomma.prg
+src\fileread.prg
+src\hbedit.prg
+src\nconvert.prg
+src\numtxthu.prg
+src\numtxten.prg
+src\numtxtru.prg
+src\stringp.prg
+src\twirler.prg
+src\udpds.prg
