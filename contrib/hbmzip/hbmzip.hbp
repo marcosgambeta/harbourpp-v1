@@ -29,7 +29,9 @@
 
 ${hb_name}.hbx
 
-mzip.cpp
-mziperr.prg
+-i.
+
+src\mzip.cpp
+src\mziperr.prg
 
 3rd/minizip/minizip.hbc{HBMK_HAS_MINIZIP_LOCAL}
