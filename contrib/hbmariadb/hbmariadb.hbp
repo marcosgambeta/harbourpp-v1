@@ -5,7 +5,7 @@
 
 -w3 -es2
 
--depkeyhead=mariadb:mysql.h
+-depkeyhead=mariadb:mysql/mysql.h
 -depcontrol=mariadb:no{HB_BUILD_3RDEXT='no'}
 -depcontrol=mariadb:${HB_WITH_MARIADB}
 -depincpath=mariadb:/usr/include/mysql
@@ -17,6 +17,7 @@
 ${hb_name}.hbx
 
 -i.
+{allwin}-i${HB_WITH_MARIADB}/mysql
 
 src\mariadb.cpp
 
