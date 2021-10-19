@@ -7,10 +7,12 @@
 
 ${hb_name}.hbx
 
-dll.prg
-misc.prg
-occurs.prg
+-i.
 
-dbfunc.cpp
-miscfunc.cpp
-relfunc.cpp
+src\dll.prg
+src\misc.prg
+src\occurs.prg
+
+src\dbfunc.cpp
+src\miscfunc.cpp
+src\relfunc.cpp
