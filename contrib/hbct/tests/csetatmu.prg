@@ -45,7 +45,7 @@
  *
  */
 
-#ifdef __HARBOUR__
+#ifdef __HARBOURPP__
 #require "hbct"
 #endif
 

@@ -45,7 +45,7 @@
  *
  */
 
-#ifdef __HARBOUR__
+#ifdef __HARBOURPP__
 #require "hbct"
 #else
 #define hb_ntos( n ) LTrim( Str( n ) )
