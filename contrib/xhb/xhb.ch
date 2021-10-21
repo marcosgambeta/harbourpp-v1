@@ -49,7 +49,7 @@
 
 #include "hbcompat.ch"
 
-#ifdef __HARBOUR__
+#ifdef __HARBOURPP__
 
 #ifndef __XHARBOUR__
    #pragma -ks+
@@ -84,6 +84,6 @@
 
 #endif
 
-#endif /* __HARBOUR__ */
+#endif /* __HARBOURPP__ */
 
 #endif /* XHB__CH_ */

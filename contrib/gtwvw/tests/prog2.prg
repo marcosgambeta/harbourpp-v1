@@ -12,7 +12,7 @@
 #include "inkey.ch"
 #include "setcurs.ch"
 
-#ifdef __HARBOUR__
+#ifdef __HARBOURPP__
 #define __GTWVW__
 #endif
 

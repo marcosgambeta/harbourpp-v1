@@ -51,7 +51,7 @@
 /* Translations for Harbour programs compiled with Xbase++ compiler */
 
 #else
-#ifdef __HARBOUR__
+#ifdef __HARBOURPP__
 
 /* Translations for Xbase++ programs compiled with Harbour compiler */
 

@@ -1,6 +1,6 @@
 #require "hbnf"
 
-#ifndef __HARBOUR__
+#ifndef __HARBOURPP__
 #define hb_ntos( n ) LTrim( Str( n ) )
 #endif
 

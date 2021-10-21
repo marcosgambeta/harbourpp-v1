@@ -52,7 +52,7 @@
 #ifndef XHB_CLS__CH_
 #define XHB_CLS__CH_
 
-#ifdef __HARBOUR__
+#ifdef __HARBOURPP__
 
 #ifndef __XHARBOUR__
 
@@ -113,6 +113,6 @@
 
 #endif /* __XHARBOUR__ */
 
-#endif /* __HARBOUR__ */
+#endif /* __HARBOURPP__ */
 
 #endif /* XHB_CLS__CH_ */

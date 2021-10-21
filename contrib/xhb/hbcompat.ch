@@ -44,7 +44,7 @@
  *
  */
 
-#ifdef __HARBOUR__
+#ifdef __HARBOURPP__
 
 #include "hbgtinfo.ch"
 #include "hbgfx.ch"
@@ -560,4 +560,4 @@
 
 #endif
 
-#endif /* __HARBOUR__ */
+#endif /* __HARBOURPP__ */
