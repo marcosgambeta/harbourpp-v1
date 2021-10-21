@@ -144,13 +144,7 @@ HB_EXTERN_BEGIN
 /*-*/
 
 #if defined( __BORLANDC__ ) && ( __BORLANDC__ == 0x0550 )
-   #ifdef __cplusplus
-      extern "C" { STDAPI OleLoadPicture( LPSTREAM, LONG, BOOL, REFIID, PVOID * ); }
-   #else
-      #if ! defined( HB_OS_WIN_CE )
-         STDAPI OleLoadPicture( LPSTREAM, LONG, BOOL, REFIID, PVOID * );
-      #endif
-   #endif
+   extern "C" { STDAPI OleLoadPicture( LPSTREAM, LONG, BOOL, REFIID, PVOID * ); }
 #endif
 
 /*-*/
