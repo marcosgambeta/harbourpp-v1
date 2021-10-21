@@ -151,7 +151,7 @@ HB_EXTERN_BEGIN
 
 /*-*/
 
-typedef struct
+struct HB_GT_PARAMS
 {
    DWORD     exStyle;
    DWORD     style;
@@ -164,9 +164,11 @@ typedef struct
    HB_BOOL   bRowCols;
    HB_BOOL   bConfigured;
    int       iWndType;
-} HB_GT_PARAMS, * PHB_GT_PARAMS;
+};
 
-typedef struct
+using PHB_GT_PARAMS = HB_GT_PARAMS *;
+
+struct HB_GTWVT
 {
    PHB_GT   pGT;                            /* core GT pointer */
    int      iHandle;                        /* window number */
@@ -246,7 +248,9 @@ typedef struct
    int       width;
    int       height;
 
-} HB_GTWVT, * PHB_GTWVT;
+};
+
+using PHB_GTWVT = HB_GTWVT *;
 
 /*-*/
 
@@ -272,7 +276,7 @@ typedef struct
 
 /*-*/
 
-typedef enum
+enum HB_gt_object_enum
 {
    GTO_POINT          = 0,
    GTO_LINE           = 1,
@@ -282,11 +286,11 @@ typedef enum
    GTO_DISK           = 7,
    /* TODO: add other types */
    GTO_TEXT           = 100,
-} HB_gt_object_enum;
+};
 
 /* Event subsystem */
 
-typedef enum
+enum HB_gt_event_enum
 {
    GTEVENT_RESIZE     = 0,
    GTEVENT_CLOSE      = 1,
@@ -296,7 +300,7 @@ typedef enum
    GTEVENT_MAXIMIZE   = 5,
    GTEVENT_DEICONIZE  = 6,
    GTEVENT_SHUTDOWN   = 7
-} HB_gt_event_enum;
+};
 
 /*-*/
 
