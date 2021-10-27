@@ -44,11 +44,10 @@
  *
  */
 
+#include <array>
 #include "hbapicdp.h"
 
-#define NUMBER_OF_CHARS    256
-
-static const HB_WCHAR s_uniCodes[ NUMBER_OF_CHARS ] =
+static const std::array< HB_WCHAR, 256 > s_uniCodes =
 {
    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
@@ -84,4 +83,4 @@ static const HB_WCHAR s_uniCodes[ NUMBER_OF_CHARS ] =
    0x0159, 0x016F, 0x00FA, 0x0171, 0x00FC, 0x00FD, 0x0163, 0x02D9
 };
 
-HB_UNITABLE hb_uniTbl_8859_2 = { HB_CPID_8859_2, s_uniCodes, nullptr, 0 };
+HB_UNITABLE hb_uniTbl_8859_2 = { HB_CPID_8859_2, s_uniCodes.data(), nullptr, 0 };

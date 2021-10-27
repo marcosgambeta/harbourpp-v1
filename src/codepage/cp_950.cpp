@@ -46,7 +46,6 @@
 
 #include "hbapi.h"
 #include "hbapicdp.h"
-
 #include "cp950.cpp"
 
 static HB_CDP_GET_FUNC( CP950_get )
@@ -122,7 +121,9 @@ static HB_CDP_LEN_FUNC( CP950_len )
 
 static void hb_cp_init( PHB_CODEPAGE cdp )
 {
-   HB_UCHAR * flags, * upper, * lower;
+   HB_UCHAR * flags;
+   HB_UCHAR * upper;
+   HB_UCHAR * lower;
 
    cdp->buffer = static_cast< HB_UCHAR * >( hb_xgrab( 0x300 ) );
    cdp->flags = flags = static_cast< HB_UCHAR * >( cdp->buffer );
@@ -184,10 +185,10 @@ static void hb_cp_init( PHB_CODEPAGE cdp )
 
 #define HB_CP_CMP_FUNC        nullptr
 
-#define s_flags               nullptr
-#define s_upper               nullptr
-#define s_lower               nullptr
-#define s_sort                nullptr
+#define S_FLAGS               nullptr
+#define S_UPPER               nullptr
+#define S_LOWER               nullptr
+#define S_SORT                nullptr
 
 #define HB_CP_INIT hb_cp_init
 
