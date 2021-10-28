@@ -117,7 +117,9 @@ unsigned short ssfDrawChar( AL_BITMAP * dst, ssfFont * sfont, char c, int x, int
             thick = static_cast< int >( fScale * charFrame.thick );
 
             if( thick == 0 )
+            {
                thick++;
+            }
 
             for( j = 0; j < thick; j++ )
             {
@@ -156,7 +158,9 @@ unsigned short ssfDrawChar( AL_BITMAP * dst, ssfFont * sfont, char c, int x, int
             thick = static_cast< int >( fScale * charFrame.thick );
 
             if( thick == 0 )
+            {
                thick++;
+            }
 
             for( j = 0; j < thick; j++ )
             {
