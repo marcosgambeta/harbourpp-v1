@@ -4636,10 +4636,10 @@ static HB_BOOL hb_ntxOrdSkipUnique( LPTAGINFO pTag, HB_LONG lToSkip )
  */
 static HB_BOOL hb_ntxOrdSkipEval( LPTAGINFO pTag, HB_BOOL fForward, PHB_ITEM pEval )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_ntxOrdSkipEval(%p, %d, %p)", static_cast< void * >( pTag ), fForward, static_cast< void * >( pEval ) ) );
+
    NTXAREAP pArea = pTag->pIndex->pArea;
    HB_BOOL fFound = HB_FALSE;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_ntxOrdSkipEval(%p, %d, %p)", static_cast< void * >( pTag ), fForward, static_cast< void * >( pEval ) ) );
 
    if( ( hb_itemType( pEval ) & HB_IT_BLOCK ) == 0 )
    {
@@ -4734,13 +4734,13 @@ static HB_BOOL hb_ntxOrdSkipEval( LPTAGINFO pTag, HB_BOOL fForward, PHB_ITEM pEv
  */
 static HB_BOOL hb_ntxOrdSkipWild( LPTAGINFO pTag, HB_BOOL fForward, PHB_ITEM pWildItm )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_ntxOrdSkipWild(%p, %d, %p)", static_cast< void * >( pTag ), fForward, static_cast< void * >( pWildItm ) ) );
+
    NTXAREAP pArea = pTag->pIndex->pArea;
    const char * szPattern;
    char * szFree = nullptr;
    HB_BOOL fFound = HB_FALSE;
    int iFixed = 0;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_ntxOrdSkipWild(%p, %d, %p)", static_cast< void * >( pTag ), fForward, static_cast< void * >( pWildItm ) ) );
 
    szPattern = hb_itemGetCPtr( pWildItm );
 
@@ -4898,11 +4898,11 @@ static HB_BOOL hb_ntxRegexMatch( LPTAGINFO pTag, PHB_REGEX pRegEx, const char * 
  */
 static HB_BOOL hb_ntxOrdSkipRegEx( LPTAGINFO pTag, HB_BOOL fForward, PHB_ITEM pRegExItm )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_ntxOrdSkipRegEx(%p, %d, %p)", static_cast< void * >( pTag ), fForward, static_cast< void * >( pRegExItm ) ) );
+
    NTXAREAP pArea = pTag->pIndex->pArea;
    HB_BOOL fFound = HB_FALSE;
    PHB_REGEX pRegEx;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_ntxOrdSkipRegEx(%p, %d, %p)", static_cast< void * >( pTag ), fForward, static_cast< void * >( pRegExItm ) ) );
 
    if( pTag->KeyType != 'C' || ( pRegEx = hb_regexGet( pRegExItm, 0 ) ) == nullptr )
    {
@@ -6283,9 +6283,9 @@ static HB_ERRCODE hb_ntxReIndex( LPNTXINDEX pIndex )
 
 static HB_ERRCODE hb_ntxGoBottom( NTXAREAP pArea )
 {
-   HB_ERRCODE retval;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_ntxGoBottom(%p)", static_cast< void * >( pArea ) ) );
+
+   HB_ERRCODE retval;
 
    if( SELF_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -6335,9 +6335,9 @@ static HB_ERRCODE hb_ntxGoBottom( NTXAREAP pArea )
 
 static HB_ERRCODE hb_ntxGoTop( NTXAREAP pArea )
 {
-   HB_ERRCODE retval;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_ntxGoTop(%p)", static_cast< void * >( pArea ) ) );
+
+   HB_ERRCODE retval;
 
    if( SELF_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -6489,10 +6489,10 @@ static HB_ERRCODE hb_ntxSeek( NTXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pItem,
 
 static HB_ERRCODE hb_ntxSkipRaw( NTXAREAP pArea, HB_LONG lToSkip )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_ntxSkipRaw(%p, %ld)", static_cast< void * >( pArea ), lToSkip ) );
+
    HB_ERRCODE retval;
    HB_BOOL fOut = HB_FALSE, fForward;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_ntxSkipRaw(%p, %ld)", static_cast< void * >( pArea ), lToSkip ) );
 
    if( SELF_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -6579,9 +6579,9 @@ static HB_ERRCODE hb_ntxSkipRaw( NTXAREAP pArea, HB_LONG lToSkip )
  */
 static HB_ERRCODE hb_ntxFlush( NTXAREAP pArea )
 {
-   HB_ERRCODE errCode;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_ntxFlush(%p)", static_cast< void * >( pArea ) ) );
+
+   HB_ERRCODE errCode;
 
    errCode = SELF_GOCOLD( &pArea->dbfarea.area );
    if( errCode == HB_SUCCESS )
@@ -6615,10 +6615,10 @@ static HB_ERRCODE hb_ntxFlush( NTXAREAP pArea )
  */
 static HB_ERRCODE hb_ntxGoCold( NTXAREAP pArea )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_ntxGoCold(%p)", static_cast< void * >( pArea ) ) );
+
    HB_BOOL fRecordChanged = pArea->dbfarea.fRecordChanged;
    HB_BOOL fAppend = pArea->dbfarea.fAppend;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_ntxGoCold(%p)", static_cast< void * >( pArea ) ) );
 
    if( SUPER_GOCOLD( &pArea->dbfarea.area ) == HB_SUCCESS )
    {
@@ -6759,9 +6759,9 @@ static HB_ERRCODE hb_ntxGoCold( NTXAREAP pArea )
  */
 static HB_ERRCODE hb_ntxGoHot( NTXAREAP pArea )
 {
-   HB_ERRCODE errCode;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_ntxGoHot(%p)", static_cast< void * >( pArea ) ) );
+
+   HB_ERRCODE errCode;
 
    errCode = SUPER_GOHOT( &pArea->dbfarea.area );
    if( errCode == HB_SUCCESS )
@@ -6808,9 +6808,9 @@ static HB_ERRCODE hb_ntxGoHot( NTXAREAP pArea )
  */
 static HB_ERRCODE hb_ntxClose( NTXAREAP pArea )
 {
-   HB_ERRCODE errCode;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_ntxClose(%p)", static_cast< void * >( pArea ) ) );
+
+   HB_ERRCODE errCode;
 
    if( SELF_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -6866,9 +6866,9 @@ static HB_ERRCODE hb_ntxStructSize( NTXAREAP pArea, HB_USHORT * uiSize )
  */
 static HB_ERRCODE hb_ntxOpen( NTXAREAP pArea, LPDBOPENINFO pOpenInfo )
 {
-   HB_ERRCODE errCode;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_ntxOpen(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOpenInfo ) ) );
+
+   HB_ERRCODE errCode;
 
    errCode = SUPER_OPEN( &pArea->dbfarea.area, pOpenInfo );
 
@@ -6918,9 +6918,9 @@ static HB_ERRCODE hb_ntxOpen( NTXAREAP pArea, LPDBOPENINFO pOpenInfo )
 
 static HB_ERRCODE hb_ntxPack( NTXAREAP pArea )
 {
-   HB_ERRCODE errCode;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_ntxPack(%p)", static_cast< void * >( pArea ) ) );
+
+   HB_ERRCODE errCode;
 
    errCode = SUPER_PACK( &pArea->dbfarea.area );
    if( errCode == HB_SUCCESS )
@@ -6938,9 +6938,9 @@ static HB_ERRCODE hb_ntxPack( NTXAREAP pArea )
 
 static HB_ERRCODE hb_ntxZap( NTXAREAP pArea )
 {
-   HB_ERRCODE errCode;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_ntxZap(%p)", static_cast< void * >( pArea ) ) );
+
+   HB_ERRCODE errCode;
 
    errCode = SUPER_ZAP( &pArea->dbfarea.area );
    if( errCode == HB_SUCCESS )
@@ -6966,6 +6966,8 @@ static HB_ERRCODE hb_ntxZap( NTXAREAP pArea )
 
 static HB_ERRCODE hb_ntxOrderCreate( NTXAREAP pArea, LPDBORDERCREATEINFO pOrderInfo )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_ntxOrderCreate(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
+
    PHB_ITEM pResult, pKeyExp, pForExp = nullptr;
    int iLen, iDec, iTag, i;
    char szFileName[ HB_PATH_MAX ], szTagName[ NTX_MAX_TAGNAME + 1 ];
@@ -6979,8 +6981,6 @@ static HB_ERRCODE hb_ntxOrderCreate( NTXAREAP pArea, LPDBORDERCREATEINFO pOrderI
            fAscend = HB_TRUE, fCustom = HB_FALSE, fTemporary = HB_FALSE,
            fExclusive = HB_FALSE;
    HB_BYTE bType;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_ntxOrderCreate(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
 
    errCode = SELF_GOCOLD( &pArea->dbfarea.area );
    if( errCode != HB_SUCCESS )
@@ -7453,9 +7453,9 @@ static HB_ERRCODE hb_ntxOrderCreate( NTXAREAP pArea, LPDBORDERCREATEINFO pOrderI
 
 static HB_ERRCODE hb_ntxOrderDestroy( NTXAREAP pArea, LPDBORDERINFO pOrderInfo )
 {
-   HB_ERRCODE errCode;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_ntxOrderDestroy(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
+
+   HB_ERRCODE errCode;
 
    errCode = SELF_GOCOLD( &pArea->dbfarea.area );
    if( errCode != HB_SUCCESS )
@@ -7531,9 +7531,9 @@ static HB_ERRCODE hb_ntxOrderDestroy( NTXAREAP pArea, LPDBORDERINFO pOrderInfo )
 
 static HB_ERRCODE hb_ntxOrderInfo( NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO pInfo )
 {
-   LPTAGINFO pTag;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_ntxOrderInfo(%p, %hu, %p)", static_cast< void * >( pArea ), uiIndex, static_cast< void * >( pInfo ) ) );
+
+   LPTAGINFO pTag;
 
    switch( uiIndex )
    {
@@ -8260,13 +8260,13 @@ static HB_ERRCODE hb_ntxOrderInfo( NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
 
 static HB_ERRCODE hb_ntxOrderListAdd( NTXAREAP pArea, LPDBORDERINFO pOrderInfo )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_ntxOrderListAdd(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
+
    PHB_FILE pFile;
    char szFileName[ HB_PATH_MAX ], szTagName[ NTX_MAX_TAGNAME + 1 ];
    LPNTXINDEX pIndex;
    HB_ERRCODE errCode;
    HB_BOOL fProd;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_ntxOrderListAdd(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
 
    errCode = SELF_GOCOLD( &pArea->dbfarea.area );
    if( errCode != HB_SUCCESS )
@@ -8369,9 +8369,9 @@ static HB_ERRCODE hb_ntxOrderListAdd( NTXAREAP pArea, LPDBORDERINFO pOrderInfo )
 
 static HB_ERRCODE hb_ntxOrderListClear( NTXAREAP pArea )
 {
-   LPNTXINDEX * pIndexPtr, pIndex;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_ntxOrderListClear(%p)", static_cast< void * >( pArea ) ) );
+
+   LPNTXINDEX * pIndexPtr, pIndex;
 
    if( SELF_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -8400,12 +8400,12 @@ static HB_ERRCODE hb_ntxOrderListClear( NTXAREAP pArea )
 
 static HB_ERRCODE hb_ntxOrderListDelete( NTXAREAP pArea, LPDBORDERINFO pOrderInfo )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_ntxOrderListDelete(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
+
    char szTagName[ NTX_MAX_TAGNAME + 1 ];
    char szFileName[ HB_PATH_MAX ];
    LPNTXINDEX pIndex;
    HB_BOOL fProd;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_ntxOrderListDelete(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
 
    if( SELF_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -8463,11 +8463,11 @@ static HB_ERRCODE hb_ntxOrderListFocus( NTXAREAP pArea, LPDBORDERINFO pOrderInfo
 
 static HB_ERRCODE hb_ntxOrderListRebuild( NTXAREAP pArea )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_ntxOrderListRebuild(%p)", static_cast< void * >( pArea ) ) );
+
    LPTAGINFO pCurrTag;
    LPNTXINDEX pIndex;
    HB_ERRCODE errCode;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_ntxOrderListRebuild(%p)", static_cast< void * >( pArea ) ) );
 
    errCode = SELF_GOCOLD( &pArea->dbfarea.area );
    if( errCode != HB_SUCCESS )
@@ -8554,9 +8554,9 @@ static HB_ERRCODE hb_ntxCountScope( NTXAREAP pArea, void * pPtr, HB_LONG * plRec
 
 static HB_ERRCODE hb_ntxRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem )
 {
-   LPDBFDATA pData;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_ntxRddInfo(%p, %hu, %lu, %p)", static_cast< void * >( pRDD ), uiIndex, ulConnect, static_cast< void * >( pItem ) ) );
+
+   LPDBFDATA pData;
 
    pData = DBFNODE_DATA( pRDD );
 

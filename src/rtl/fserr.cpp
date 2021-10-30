@@ -174,9 +174,9 @@ void hb_fsSetFError( HB_ERRCODE uiError )
 /* set DOS error code for last operation */
 void  hb_fsSetError( HB_ERRCODE uiError )
 {
-   PHB_IOERRORS pIOErrors;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsSetError(%u)", uiError ) );
+
+   PHB_IOERRORS pIOErrors;
 
    pIOErrors = hb_stackIOErrors();
    /* TODO: untranslate uiError into errno */

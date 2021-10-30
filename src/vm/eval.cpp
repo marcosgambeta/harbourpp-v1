@@ -101,9 +101,9 @@ HB_BOOL hb_evalPutParam( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
 
 PHB_ITEM hb_evalLaunch( PHB_EVALINFO pEvalInfo )
 {
-   PHB_ITEM pResult = nullptr;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_evalLaunch(%p)", static_cast< void * >( pEvalInfo ) ) );
+
+   PHB_ITEM pResult = nullptr;
 
    if( pEvalInfo )
    {
@@ -200,9 +200,9 @@ HB_BOOL hb_evalRelease( PHB_EVALINFO pEvalInfo )
 
 PHB_ITEM hb_itemDo( PHB_ITEM pItem, HB_ULONG ulPCount, ... )
 {
-   PHB_ITEM pResult = nullptr;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemDo(%p, %lu, ...)", static_cast< void * >( pItem ), ulPCount ) );
+
+   PHB_ITEM pResult = nullptr;
 
    if( pItem )
    {
@@ -279,9 +279,9 @@ PHB_ITEM hb_itemDo( PHB_ITEM pItem, HB_ULONG ulPCount, ... )
 
 PHB_ITEM hb_itemDoC( const char * szFunc, HB_ULONG ulPCount, ... )
 {
-   PHB_ITEM pResult = nullptr;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemDoC(%s, %lu, ...)", szFunc, ulPCount ) );
+
+   PHB_ITEM pResult = nullptr;
 
    if( szFunc )
    {

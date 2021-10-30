@@ -209,10 +209,10 @@ static const HB_KEY_VALUE s_transKeyStd[] = {
 
 int hb_inkey( HB_BOOL fWait, double dSeconds, int iEventMask )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_inkey(%d, %f, %d)", static_cast< int >( fWait ), dSeconds, iEventMask ) );
+
    int iKey = 0;
    PHB_GT pGT;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_inkey(%d, %f, %d)", static_cast< int >( fWait ), dSeconds, iEventMask ) );
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -225,9 +225,9 @@ int hb_inkey( HB_BOOL fWait, double dSeconds, int iEventMask )
 
 void hb_inkeyPut( int iKey )
 {
-   PHB_GT pGT;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyPut(%d)", iKey ) );
+
+   PHB_GT pGT;
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -239,9 +239,9 @@ void hb_inkeyPut( int iKey )
 
 void hb_inkeyIns( int iKey )
 {
-   PHB_GT pGT;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyIns(%d)", iKey ) );
+
+   PHB_GT pGT;
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -253,10 +253,10 @@ void hb_inkeyIns( int iKey )
 
 int hb_inkeyLast( int iEventMask )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyLast(%d)", iEventMask ) );
+
    int iKey = 0;
    PHB_GT pGT;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyLast(%d)", iEventMask ) );
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -269,10 +269,10 @@ int hb_inkeyLast( int iEventMask )
 
 int hb_inkeyNext( int iEventMask )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyNext(%d)", iEventMask ) );
+
    int iKey = 0;
    PHB_GT pGT;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyNext(%d)", iEventMask ) );
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -285,9 +285,9 @@ int hb_inkeyNext( int iEventMask )
 
 void hb_inkeyPoll( void )
 {
-   PHB_GT pGT;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyPoll()" ) );
+
+   PHB_GT pGT;
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -299,10 +299,10 @@ void hb_inkeyPoll( void )
 
 int hb_inkeySetLast( int iKey )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_inkeySetLast(%d)", iKey ) );
+
    int iLast = 0;
    PHB_GT pGT;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_inkeySetLast(%d)", iKey ) );
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -315,9 +315,9 @@ int hb_inkeySetLast( int iKey )
 
 void hb_inkeySetText( const char * szText, HB_SIZE nLen, HB_BOOL fEol )
 {
-   PHB_GT pGT;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_inkeySetText(%s,%" HB_PFS "u, %d)", szText, nLen, fEol ) );
+
+   PHB_GT pGT;
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -329,9 +329,9 @@ void hb_inkeySetText( const char * szText, HB_SIZE nLen, HB_BOOL fEol )
 
 void hb_inkeyReset( void )
 {
-   PHB_GT pGT;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyReset()" ) );
+
+   PHB_GT pGT;
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -406,9 +406,9 @@ static int s_inkeyTransChar( int iKey, int iFlags, const HB_KEY_VALUE * pKeyVal 
 
 HB_SIZE hb_inkeyKeyString( int iKey, char * buffer, HB_SIZE nSize )
 {
-   HB_SIZE nLen = 0;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyKeyString(%d,%p, %" HB_PFS "u)", iKey, static_cast< void * >( buffer ), nSize ) );
+
+   HB_SIZE nLen = 0;
 
    if( HB_INKEY_ISUNICODE( iKey ) )
    {
@@ -508,9 +508,9 @@ int hb_inkeyKeyStd( int iKey )
 
 int hb_inkeyKeyMod( int iKey )
 {
-   int iFlags = 0;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyKeyMod(%d)", iKey ) );
+
+   int iFlags = 0;
 
    if( HB_INKEY_ISEXT( iKey ) && ! HB_INKEY_ISMOUSEPOS( iKey ) )
    {
@@ -522,9 +522,9 @@ int hb_inkeyKeyMod( int iKey )
 
 int hb_inkeyKeyVal( int iKey )
 {
-   int iValue = 0;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyKeyVal(%d)", iKey ) );
+
+   int iValue = 0;
 
    if( HB_INKEY_ISEXT( iKey ) && ! HB_INKEY_ISMOUSEPOS( iKey ) )
    {
@@ -536,9 +536,9 @@ int hb_inkeyKeyVal( int iKey )
 
 int hb_inkeyKeyExt( int iKey )
 {
-   int iValue = 0;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyKeyVal(%d)", iKey ) );
+
+   int iValue = 0;
 
    if( HB_INKEY_ISKEY( iKey ) )
    {

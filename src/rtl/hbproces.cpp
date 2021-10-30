@@ -386,9 +386,9 @@ static void hb_freeArgs( char ** argv )
 #if defined( HB_PROCESS_USEFILES )
 static int hb_fsProcessExec( const char * pszFileName, HB_FHANDLE hStdin, HB_FHANDLE hStdout, HB_FHANDLE hStderr )
 {
-   int iResult = FS_ERROR;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsProcessExec(%s, %p, %p, %p)", pszFileName, reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hStdin ) ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hStdout ) ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hStderr ) ) ) );
+
+   int iResult = FS_ERROR;
 
 #if defined( HB_OS_WIN_CE )
 {
@@ -555,13 +555,13 @@ static int hb_fsProcessExec( const char * pszFileName, HB_FHANDLE hStdin, HB_FHA
 
 HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_FHANDLE * phStdout, HB_FHANDLE * phStderr, HB_BOOL fDetach, HB_ULONG * pulPID )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_fsProcessOpen(%s, %p, %p, %p, %d, %p)", pszFileName, static_cast< void * >( phStdin ), static_cast< void * >( phStdout ), static_cast< void * >( phStderr ), fDetach, static_cast< void * >( pulPID ) ) );
+
    HB_FHANDLE hPipeIn [ 2 ] = { FS_ERROR, FS_ERROR },
               hPipeOut[ 2 ] = { FS_ERROR, FS_ERROR },
               hPipeErr[ 2 ] = { FS_ERROR, FS_ERROR };
    HB_FHANDLE hResult = FS_ERROR;
    HB_BOOL fError = HB_FALSE;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsProcessOpen(%s, %p, %p, %p, %d, %p)", pszFileName, static_cast< void * >( phStdin ), static_cast< void * >( phStdout ), static_cast< void * >( phStderr ), fDetach, static_cast< void * >( pulPID ) ) );
 
    if( phStdin != nullptr )
    {
@@ -1122,9 +1122,9 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
 
 int hb_fsProcessValue( HB_FHANDLE hProcess, HB_BOOL fWait )
 {
-   int iRetStatus = -1;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsProcessValue(%p, %d)", reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hProcess ) ), fWait ) );
+
+   int iRetStatus = -1;
 
 #if defined( HB_OS_WIN )
 {
@@ -1229,9 +1229,9 @@ int hb_fsProcessValue( HB_FHANDLE hProcess, HB_BOOL fWait )
  */
 HB_BOOL hb_fsProcessClose( HB_FHANDLE hProcess, HB_BOOL fGentle )
 {
-   HB_BOOL fResult = HB_FALSE;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsProcessClose(%p, %d)", reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hProcess ) ), fGentle ) );
+
+   HB_BOOL fResult = HB_FALSE;
 
 #if defined( HB_OS_WIN )
 {
@@ -1300,12 +1300,12 @@ int hb_fsProcessRun( const char * pszFileName,
                      char ** pStdErrPtr, HB_SIZE * pulStdErr,
                      HB_BOOL fDetach )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_fsProcessRun(%s, %p, %" HB_PFS "u, %p, %p, %p, %p, %d)", pszFileName, static_cast< const void * >( pStdInBuf ), nStdInLen, static_cast< void * >( pStdOutPtr ), static_cast< void * >( pulStdOut ), static_cast< void * >( pStdErrPtr ), static_cast< void * >( pulStdErr ), fDetach ) );
+
    HB_FHANDLE hStdin, hStdout, hStderr, *phStdin, *phStdout, *phStderr;
    char * pOutBuf, *pErrBuf;
    HB_SIZE nOutSize, nErrSize, nOutBuf, nErrBuf;
    int iResult;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsProcessRun(%s, %p, %" HB_PFS "u, %p, %p, %p, %p, %d)", pszFileName, static_cast< const void * >( pStdInBuf ), nStdInLen, static_cast< void * >( pStdOutPtr ), static_cast< void * >( pulStdOut ), static_cast< void * >( pStdErrPtr ), static_cast< void * >( pulStdErr ), fDetach ) );
 
    nOutBuf = nErrBuf = nOutSize = nErrSize = 0;
    pOutBuf = pErrBuf = nullptr;

@@ -235,9 +235,9 @@ static void hb_gt_pca_AnsiSetAutoMargin( int iAM )
 
 static void hb_gt_pca_AnsiGetCurPos( int * iRow, int * iCol )
 {
-   static HB_BOOL s_fIsAnswer = HB_TRUE;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_pca_AnsiGetCurPos(%p, %p)", static_cast< void * >( iRow ), static_cast< void * >( iCol ) ) );
+
+   static HB_BOOL s_fIsAnswer = HB_TRUE;
 
    if( s_fIsAnswer && s_bStdinConsole && s_bStdoutConsole )
    {
@@ -459,9 +459,9 @@ static void hb_gt_pca_AnsiPutStr( int iRow, int iCol, int iColor, const char * s
 
 static void hb_gt_pca_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr )
 {
-   int iRows = 25, iCols = 80;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_pca_Init(%p,%p,%p,%p)", static_cast< void * >( pGT ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdin ) ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdout ) ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStderr ) ) ) );
+
+   int iRows = 25, iCols = 80;
 
    s_hFilenoStdin  = hFilenoStdin;
    s_hFilenoStdout = hFilenoStdout;
@@ -597,9 +597,9 @@ static void hb_gt_pca_Exit( PHB_GT pGT )
 
 static int hb_gt_pca_ReadKey( PHB_GT pGT, int iEventMask )
 {
-   int ch = 0;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_pca_ReadKey(%p,%d)", static_cast< void * >( pGT ), iEventMask ) );
+
+   int ch = 0;
 
    HB_SYMBOL_UNUSED( pGT );
    HB_SYMBOL_UNUSED( iEventMask );
@@ -675,10 +675,10 @@ static int hb_gt_pca_ReadKey( PHB_GT pGT, int iEventMask )
 
 static void hb_gt_pca_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_pca_Tone(%p, %lf, %lf)", static_cast< void * >( pGT ), dFrequency, dDuration ) );
+
    static double s_dLastSeconds = 0;
    double dCurrentSeconds;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_pca_Tone(%p, %lf, %lf)", static_cast< void * >( pGT ), dFrequency, dDuration ) );
 
    /* Output an ASCII BEL character to cause a sound */
    /* but throttle to max once per second, in case of sound */
@@ -769,12 +769,12 @@ static HB_BOOL hb_gt_pca_SetDispCP( PHB_GT pGT, const char * pszTermCDP, const c
 
 static void hb_gt_pca_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_pca_Redraw(%p,%d,%d,%d)", static_cast< void * >( pGT ), iRow, iCol, iSize ) );
+
    int iColor;
    HB_BYTE bAttr;
    HB_USHORT usChar;
    int iLen = 0, iColor2 = 0;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_pca_Redraw(%p,%d,%d,%d)", static_cast< void * >( pGT ), iRow, iCol, iSize ) );
 
    while( iSize-- )
    {
@@ -823,9 +823,9 @@ static void hb_gt_pca_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 
 static void hb_gt_pca_Refresh( PHB_GT pGT )
 {
-   int iWidth, iHeight, iRow, iCol, iStyle;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_pca_Refresh(%p)", static_cast< void * >( pGT ) ) );
+
+   int iWidth, iHeight, iRow, iCol, iStyle;
 
    HB_GTSELF_GETSIZE( pGT, &iHeight, &iWidth );
 

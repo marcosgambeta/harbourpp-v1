@@ -329,9 +329,9 @@ HB_BOOL hb_xtraced( void )
          Don't allocate memory from this function. [vszakats] */
 void hb_errInternal( HB_ERRCODE errCode, const char * szText, const char * szPar1, const char * szPar2 )
 {
-   char buffer[ 1024 ];
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_errInternal(%d, %s, %s, %s)", errCode, szText, szPar1, szPar2 ) );
+
+   char buffer[ 1024 ];
 
    hb_conOutErr( hb_conNewLine(), 0 );
    hb_snprintf( buffer, sizeof( buffer ), "Unrecoverable error %d: ", errCode );

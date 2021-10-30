@@ -148,10 +148,10 @@ static const HB_GC_FUNCS s_gcArrayFuncs =
 
 HB_BOOL hb_arrayNew( PHB_ITEM pItem, HB_SIZE nLen ) /* creates a new array */
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_arrayNew(%p, %" HB_PFS "u)", static_cast< void * >( pItem ), nLen ) );
+
    PHB_BASEARRAY pBaseArray;
    PHB_ITEM pItems;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_arrayNew(%p, %" HB_PFS "u)", static_cast< void * >( pItem ), nLen ) );
 
    if( HB_IS_COMPLEX( pItem ) )
    {
@@ -1732,10 +1732,10 @@ HB_BOOL hb_arrayCopy( PHB_ITEM pSrcArray, PHB_ITEM pDstArray, HB_SIZE * pnStart,
 
 static void hb_arrayCloneBody( PHB_ITEM pDest, PHB_ITEM pArray, PHB_NESTED_CLONED pClonedList )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_arrayCloneBody(%p, %p, %p)", static_cast< void * >( pDest ), static_cast< void * >( pArray ), static_cast< void * >( pClonedList ) ) );
+
    PHB_ITEM pSrcItem, pDstItem;
    HB_SIZE nLen;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_arrayCloneBody(%p, %p, %p)", static_cast< void * >( pDest ), static_cast< void * >( pArray ), static_cast< void * >( pClonedList ) ) );
 
    nLen = pArray->item.asArray.value->nLen;
    hb_arrayNew( pDest, nLen );
@@ -1864,10 +1864,10 @@ PHB_ITEM hb_arrayClone( PHB_ITEM pArray )
 
 PHB_ITEM hb_arrayFromStack( HB_USHORT uiLen )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_arrayFromStack(%hu)", uiLen ) );
+
    HB_STACK_TLS_PRELOAD
    PHB_ITEM pArray = hb_itemNew( nullptr );
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_arrayFromStack(%hu)", uiLen ) );
 
    hb_arrayNew( pArray, uiLen );
 
@@ -1881,12 +1881,12 @@ PHB_ITEM hb_arrayFromStack( HB_USHORT uiLen )
 
 PHB_ITEM hb_arrayFromParams( int iLevel )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_arrayFromParams(%d)", iLevel ) );
+
    HB_STACK_TLS_PRELOAD
    PHB_ITEM pArray;
    HB_USHORT uiPCount;
    HB_ISIZ nBaseOffset;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_arrayFromParams(%d)", iLevel ) );
 
    nBaseOffset = hb_stackBaseProcOffset( iLevel );
    if( nBaseOffset > 0 )
@@ -1909,11 +1909,11 @@ PHB_ITEM hb_arrayFromParams( int iLevel )
 
 PHB_ITEM hb_arrayBaseParams( void )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_arrayBaseParams()" ) );
+
    HB_STACK_TLS_PRELOAD
    PHB_ITEM pArray;
    HB_USHORT uiPCount;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_arrayBaseParams()" ) );
 
    pArray = hb_itemNew( nullptr );
    uiPCount = hb_stackBaseItem()->item.asSymbol.paramcnt;
@@ -1930,11 +1930,11 @@ PHB_ITEM hb_arrayBaseParams( void )
 
 PHB_ITEM hb_arraySelfParams( void )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_arraySelfParams()" ) );
+
    HB_STACK_TLS_PRELOAD
    PHB_ITEM pArray;
    HB_USHORT uiPCount;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_arraySelfParams()" ) );
 
    pArray = hb_itemNew( nullptr );
    uiPCount = hb_stackBaseItem()->item.asSymbol.paramcnt;

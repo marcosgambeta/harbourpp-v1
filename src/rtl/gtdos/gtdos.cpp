@@ -249,9 +249,9 @@ static void hb_gt_dos_GetScreenSize( int * piRows, int * piCols )
 #if ! defined( __DJGPP__ )
 static HB_BYTE FAR * hb_gt_dos_ScreenAddress( PHB_GT pGT )
 {
-   HB_BYTE FAR * ptr;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_ScreenAddress(%p)", static_cast< void * >( pGT ) ) );
+
+   HB_BYTE FAR * ptr;
 
    if( HB_GTSELF_ISCOLOR( pGT ) )
       ptr = ( HB_BYTE FAR * ) MK_FP( 0xB800, 0x0000 );
@@ -271,6 +271,8 @@ HB_BYTE FAR * hb_gt_dos_ScreenPtr( int iRow, int iCol )
 
 static void hb_gt_dos_GetScreenContents( PHB_GT pGT )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_GetScreenContents(%p)", static_cast< void * >( pGT ) ) );
+
    PHB_CODEPAGE cdp;
    int iRow, iCol;
    HB_BYTE bAttr, bChar, bxAttr;
@@ -279,8 +281,6 @@ static void hb_gt_dos_GetScreenContents( PHB_GT pGT )
 #if ! defined( __DJGPP__ )
    HB_BYTE * pScreenPtr = s_pScreenAddress;
 #endif
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_GetScreenContents(%p)", static_cast< void * >( pGT ) ) );
 
    bxAttr = 0;
    cdp = HB_GTSELF_CPTERM( pGT );
@@ -322,9 +322,9 @@ static void hb_gt_dos_GetScreenContents( PHB_GT pGT )
 
 static void hb_gt_dos_GetCursorPosition( int * piRow, int * piCol )
 {
-   union REGS regs;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_GetCursorPosition(%p, %p)", static_cast< void * >( piRow ), static_cast< void * >( piCol ) ) );
+
+   union REGS regs;
 
    regs.h.ah = 0x03;
    regs.h.bh = 0;
@@ -335,9 +335,9 @@ static void hb_gt_dos_GetCursorPosition( int * piRow, int * piCol )
 
 static void hb_gt_dos_SetCursorPosition( int iRow, int iCol )
 {
-   union REGS regs;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_SetCursorPosition(%d, %d)", iRow, iCol ) );
+
+   union REGS regs;
 
    if( s_iCurRow != iRow || s_iCurCol != iCol )
    {
@@ -353,9 +353,9 @@ static void hb_gt_dos_SetCursorPosition( int iRow, int iCol )
 
 static void hb_gt_dos_SetCursorSize( unsigned char start, unsigned char end )
 {
-   union REGS regs;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_SetCursorSize(%d, %d)", static_cast< int >( start ), static_cast< int >( end ) ) );
+
+   union REGS regs;
 
    regs.h.ah = 0x01;
    regs.h.ch = start;
@@ -365,9 +365,9 @@ static void hb_gt_dos_SetCursorSize( unsigned char start, unsigned char end )
 
 static void hb_gt_dos_GetCursorSize( unsigned char * start, unsigned char * end )
 {
-   union REGS regs;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_GetCursorSize(%p, %p)", static_cast< void * >( start ), static_cast< void * >( end ) ) );
+
+   union REGS regs;
 
    regs.h.ah = 0x03;
    regs.h.bh = 0;
@@ -378,10 +378,10 @@ static void hb_gt_dos_GetCursorSize( unsigned char * start, unsigned char * end 
 
 static int hb_gt_dos_GetCursorStyle( void )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_GetCursorStyle()" ) );
+
    unsigned char start, end;
    int iStyle;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_GetCursorStyle()" ) );
 
    hb_gt_dos_GetCursorSize( &start, &end );
 
@@ -842,9 +842,9 @@ static void hb_gt_dos_Exit( PHB_GT pGT )
 
 static int hb_gt_dos_ReadKey( PHB_GT pGT, int iEventMask )
 {
-   int iKey = 0, iFlags = 0;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_ReadKey(%p,%d)", static_cast< void * >( pGT ), iEventMask ) );
+
+   int iKey = 0, iFlags = 0;
 
 #if defined( __DJGPP__ )
    /* Check to see if Ctrl+Break has been detected */
@@ -930,9 +930,9 @@ static HB_BOOL hb_gt_dos_GetBlink( PHB_GT pGT )
 
 static void hb_gt_dos_SetBlink( PHB_GT pGT, HB_BOOL fBlink )
 {
-   union REGS regs;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_SetBlink(%p,%d)", static_cast< void * >( pGT ), static_cast< int >( fBlink ) ) );
+
+   union REGS regs;
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -1145,10 +1145,10 @@ static HB_USHORT hb_gt_dos_GetDisplay( void )
 
 static HB_BOOL hb_gt_dos_SetMode( PHB_GT pGT, int iRows, int iCols )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_SetMode(%p,%d,%d)", static_cast< void * >( pGT ), iRows, iCols ) );
+
    /* HB_GTSELF_ISCOLOR( pGT ) test for color card, we need to know if it is a VGA board...*/
    HB_BOOL bIsVGA, bIsVesa, bSuccess;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_SetMode(%p,%d,%d)", static_cast< void * >( pGT ), iRows, iCols ) );
 
    bIsVGA = ( hb_gt_dos_GetDisplay() == 8 );
    bIsVesa = HB_FALSE;
@@ -1253,6 +1253,8 @@ static HB_BOOL hb_gt_dos_Resume( PHB_GT pGT )
 
 static void hb_gt_dos_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_Redraw(%p,%d,%d,%d)", static_cast< void * >( pGT ), iRow, iCol, iSize ) );
+
 #if ! defined( __DJGPP__ )
    HB_USHORT FAR * pScreenPtr = ( HB_USHORT FAR * ) hb_gt_dos_ScreenPtr( iRow, iCol );
 #endif
@@ -1260,8 +1262,6 @@ static void hb_gt_dos_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
    HB_BYTE bAttr;
    HB_UCHAR uc;
    int iLen = 0;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_Redraw(%p,%d,%d,%d)", static_cast< void * >( pGT ), iRow, iCol, iSize ) );
 
    while( iLen < iSize )
    {
@@ -1285,9 +1285,9 @@ static void hb_gt_dos_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 
 static void hb_gt_dos_Refresh( PHB_GT pGT )
 {
-   int iRow, iCol, iStyle;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_Refresh(%p)", static_cast< void * >( pGT ) ) );
+
+   int iRow, iCol, iStyle;
 
    HB_GTSUPER_REFRESH( pGT );
 

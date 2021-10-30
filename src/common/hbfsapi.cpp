@@ -148,11 +148,10 @@ void hb_fsFreeSearchPath( HB_PATHNAMES * pSearchList )
 /* Split given filename into path, name and extension, plus determine drive */
 PHB_FNAME hb_fsFNameSplit( const char * pszFileName )
 {
-   PHB_FNAME pFileName;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsFNameSplit(%s)", pszFileName ) );
-
    HB_TRACE( HB_TR_INFO, ( "hb_fsFNameSplit: Filename: |%s|", pszFileName ) );
+
+   PHB_FNAME pFileName;
 
    /* Grab memory, set defaults */
    pFileName = static_cast< PHB_FNAME >( hb_xgrab( sizeof( HB_FNAME ) ) );
@@ -595,9 +594,9 @@ HB_BOOL hb_fsOS2QueryPathInfo( const char * pszPathName, HB_FOFFSET * pnSize, HB
 
 HB_BOOL hb_fsNameExists( const char * pszFileName )
 {
-   HB_BOOL fExist = HB_FALSE;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsNameExists(%p)", static_cast< const void * >( pszFileName ) ) );
+
+   HB_BOOL fExist = HB_FALSE;
 
    if( pszFileName != nullptr )
    {
@@ -651,9 +650,9 @@ HB_BOOL hb_fsNameExists( const char * pszFileName )
 
 HB_BOOL hb_fsFileExists( const char * pszFileName )
 {
-   HB_BOOL fExist = HB_FALSE;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsFileExists(%p)", static_cast< const void * >( pszFileName ) ) );
+
+   HB_BOOL fExist = HB_FALSE;
 
    if( pszFileName != nullptr )
    {
@@ -711,9 +710,9 @@ HB_BOOL hb_fsFileExists( const char * pszFileName )
 
 HB_BOOL hb_fsDirExists( const char * pszDirName )
 {
-   HB_BOOL fExist = HB_FALSE;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsDirExists(%p)", static_cast< const void * >( pszDirName ) ) );
+
+   HB_BOOL fExist = HB_FALSE;
 
    if( pszDirName != nullptr )
    {

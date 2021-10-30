@@ -56,14 +56,14 @@
 
 void hb_errInternalRaw( HB_ERRCODE errCode, const char * szText, const char * szPar1, const char * szPar2 )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_errInternal(%d, %s, %s, %s)", errCode, szText, szPar1, szPar2 ) );
+
    char buffer[ 8192 ];
    char file[ HB_PATH_MAX ];
    const char * szFile;
    HB_BOOL fStack, fLang;
    HB_USHORT uiLine;
    FILE * hLog;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_errInternal(%d, %s, %s, %s)", errCode, szText, szPar1, szPar2 ) );
 
    if( szPar1 == nullptr )
    {

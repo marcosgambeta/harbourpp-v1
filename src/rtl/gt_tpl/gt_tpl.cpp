@@ -114,11 +114,11 @@ static HB_BOOL hb_gt_tpl_SetMode( PHB_GT pGT, int iRows, int iCols )
 
 static void hb_gt_tpl_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_tpl_Redraw(%p,%d,%d,%d)", static_cast< void * >( pGT ), iRow, iCol, iSize ) );
+
    int iColor;
    HB_BYTE bAttr;
    HB_USHORT usChar;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_tpl_Redraw(%p,%d,%d,%d)", static_cast< void * >( pGT ), iRow, iCol, iSize ) );
 
    while( iSize-- )
    {
@@ -131,9 +131,9 @@ static void hb_gt_tpl_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 
 static void hb_gt_tpl_Refresh( PHB_GT pGT )
 {
-   int iRow, iCol, iStyle;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_tpl_Refresh(%p)", static_cast< void * >( pGT ) ) );
+
+   int iRow, iCol, iStyle;
 
    HB_GTSUPER_REFRESH( pGT );
    HB_GTSELF_GETSCRCURSOR( pGT, &iRow, &iCol, &iStyle );

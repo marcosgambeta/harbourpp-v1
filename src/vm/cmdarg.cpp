@@ -530,12 +530,12 @@ HB_BOOL hb_cmdargIsInternal( const char * szArg, int * piLen )
 
 static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargGet(%s, %d)", pszName, static_cast< int >( bRetValue ) ) );
+
    char * pszRetVal = nullptr;
    char * pszEnvVar;
    int i;
    int iPrefixLen;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargGet(%s, %d)", pszName, static_cast< int >( bRetValue ) ) );
 
    /* Check the command-line first */
 
@@ -675,9 +675,9 @@ char * hb_cmdargString( const char * pszName )
 
 int hb_cmdargNum( const char * pszName )
 {
-   char * pszValue;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargNum(%s)", pszName ) );
+
+   char * pszValue;
 
    pszValue = hb_cmdargGet( pszName, HB_TRUE );
    if( pszValue )

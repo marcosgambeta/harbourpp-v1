@@ -79,9 +79,9 @@ typedef struct _HB_BASEHASH
 /* This releases hash when called from the garbage collector */
 static HB_GARBAGE_FUNC( hb_hashGarbageRelease )
 {
-   PHB_BASEHASH pBaseHash = static_cast< PHB_BASEHASH >( Cargo );
-
    HB_TRACE( HB_TR_INFO, ( "hb_hashGarbageRelease(%p)", static_cast< void * >( pBaseHash ) ) );
+
+   PHB_BASEHASH pBaseHash = static_cast< PHB_BASEHASH >( Cargo );
 
    if( pBaseHash->nSize > 0 )
    {
@@ -140,9 +140,9 @@ static HB_GARBAGE_FUNC( hb_hashGarbageRelease )
 
 static HB_GARBAGE_FUNC( hb_hashGarbageMark )
 {
-   PHB_BASEHASH pBaseHash = static_cast< PHB_BASEHASH >( Cargo );
-
    HB_TRACE( HB_TR_INFO, ( "hb_hashMarkGarbage(%p)", static_cast< void * >( pBaseHash ) ) );
+
+   PHB_BASEHASH pBaseHash = static_cast< PHB_BASEHASH >( Cargo );
 
    if( pBaseHash->nLen > 0 )
    {
@@ -616,9 +616,9 @@ static void hb_hashDelPair( PHB_BASEHASH pBaseHash, HB_SIZE nPos )
 
 PHB_ITEM hb_hashNew( PHB_ITEM pItem )
 {
-   PHB_BASEHASH pBaseHash;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_hashNew(%p)", static_cast< void * >( pItem ) ) );
+
+   PHB_BASEHASH pBaseHash;
 
    if( pItem == nullptr )
    {
@@ -743,9 +743,9 @@ PHB_ITEM hb_hashGetCItemPtr( PHB_ITEM pHash, const char * pszKey )
 
 HB_SIZE hb_hashGetCItemPos( PHB_ITEM pHash, const char * pszKey )
 {
-   HB_SIZE nPos = 0;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_hashGetCItemPos(%p,%s)", static_cast< void * >( pHash ), pszKey ) );
+
+   HB_SIZE nPos = 0;
 
    if( HB_IS_HASH( pHash ) )
    {

@@ -403,6 +403,8 @@ static HB_SYMCNT hb_clsBucketPos( PHB_DYNS pMsg, HB_SYMCNT uiMask )
  */
 static HB_BOOL hb_clsDictRealloc( PCLASS pClass )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_clsDictRealloc(%p)", static_cast< void * >( pClass ) ) );
+
    HB_SIZE nNewHashKey, nLimit, n;
 
 #ifdef HB_MSG_POOL
@@ -410,8 +412,6 @@ static HB_BOOL hb_clsDictRealloc( PCLASS pClass )
 #else
    PMETHOD pNewMethods;
 #endif
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsDictRealloc(%p)", static_cast< void * >( pClass ) ) );
 
    nNewHashKey = static_cast< HB_SIZE >( pClass->uiHashKey ) + 1;
    nLimit = nNewHashKey << BUCKETBITS;
@@ -505,9 +505,9 @@ static HB_BOOL hb_clsDictRealloc( PCLASS pClass )
 
 static void hb_clsDictInit( PCLASS pClass, HB_SYMCNT uiHashKey )
 {
-   HB_SIZE nSize;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsDictInit(%p,%hu)", static_cast< void * >( pClass ), uiHashKey ) );
+
+   HB_SIZE nSize;
 
    pClass->uiHashKey = uiHashKey;
 #ifdef HB_MSG_POOL
@@ -524,11 +524,11 @@ static void hb_clsDictInit( PCLASS pClass, HB_SYMCNT uiHashKey )
 
 static PMETHOD hb_clsFindMsg( PCLASS pClass, PHB_DYNS pMsg )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_clsFindMsg(%p,%p)", static_cast< void * >( pClass ), static_cast< void * >( pMsg ) ) );
+
 #ifdef HB_MSG_POOL
 
    HB_SYMCNT uiBucket, * puiMsgIdx;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsFindMsg(%p,%p)", static_cast< void * >( pClass ), static_cast< void * >( pMsg ) ) );
 
    puiMsgIdx = pClass->puiMsgIdx + hb_clsBucketPos( pMsg, pClass->uiHashKey );
    uiBucket = BUCKETSIZE;
@@ -549,8 +549,6 @@ static PMETHOD hb_clsFindMsg( PCLASS pClass, PHB_DYNS pMsg )
 
    PMETHOD pMethod;
    HB_SYMCNT uiBucket;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsFindMsg(%p,%p)", static_cast< void * >( pClass ), static_cast< void * >( pMsg ) ) );
 
    pMethod = pClass->pMethods + hb_clsBucketPos( pMsg, pClass->uiHashKey );
    uiBucket = BUCKETSIZE;
@@ -642,11 +640,11 @@ static HB_BOOL hb_clsCanClearMethod( PMETHOD pMethod, HB_BOOL fError )
 
 static void hb_clsFreeMsg( PCLASS pClass, PHB_DYNS pMsg )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_clsFreeMsg(%p,%p)", static_cast< void * >( pClass ), static_cast< void * >( pMsg ) ) );
+
 #ifdef HB_MSG_POOL
 
    HB_SYMCNT uiBucket, * puiMsgIdx;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsFreeMsg(%p,%p)", static_cast< void * >( pClass ), static_cast< void * >( pMsg ) ) );
 
    puiMsgIdx = pClass->puiMsgIdx + hb_clsBucketPos( pMsg, pClass->uiHashKey );
    uiBucket = BUCKETSIZE;
@@ -671,8 +669,6 @@ static void hb_clsFreeMsg( PCLASS pClass, PHB_DYNS pMsg )
 
    PMETHOD pMethod;
    HB_SYMCNT uiBucket;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsFreeMsg(%p,%p)", static_cast< void * >( pClass ), static_cast< void * >( pMsg ) ) );
 
    pMethod = pClass->pMethods + hb_clsBucketPos( pMsg, pClass->uiHashKey );
    uiBucket = BUCKETSIZE;
@@ -771,9 +767,9 @@ static HB_USHORT hb_clsParentInstanceOffset( PCLASS pClass, HB_USHORT uiParentCl
 
 static HB_USHORT hb_clsAddInitValue( PCLASS pClass, PHB_ITEM pItem, HB_USHORT uiType, HB_USHORT uiData, HB_USHORT uiOffset, HB_USHORT uiSprClass )
 {
-   PINITDATA pInitData;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsAddInitValue(%p,%p,%hu,%hu,%hu,%hu)", static_cast< void * >( pClass ), static_cast< void * >( pItem ), uiType, uiData, uiOffset, uiSprClass ) );
+
+   PINITDATA pInitData;
 
    if( ! pItem || HB_IS_NIL( pItem ) )
    {
@@ -818,9 +814,9 @@ static HB_USHORT hb_clsAddInitValue( PCLASS pClass, PHB_ITEM pItem, HB_USHORT ui
 
 static HB_USHORT hb_clsFindRealClassDataOffset( PMETHOD pMethod )
 {
-   PMETHOD pRealMth;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsFindRealClassDataOffset(%p)", static_cast< void * >( pMethod ) ) );
+
+   PMETHOD pRealMth;
 
    pRealMth = hb_clsFindMsg( s_pClasses[ pMethod->uiSprClass ], pMethod->pMessage );
    if( pRealMth && pRealMth->uiSprClass == pMethod->uiSprClass && ( pRealMth->pFuncSym == &s___msgSetClsData || pRealMth->pFuncSym == &s___msgGetClsData ) )
@@ -832,9 +828,9 @@ static HB_USHORT hb_clsFindRealClassDataOffset( PMETHOD pMethod )
 
 static HB_USHORT hb_clsFindClassDataOffset( PCLASS pClass, PMETHOD pNewMethod )
 {
-   HB_USHORT uiData;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsFindClassDataOffset(%p,%p)", static_cast< void * >( pClass ), static_cast< void * >( pNewMethod ) ) );
+
+   HB_USHORT uiData;
 
    uiData = hb_clsFindRealClassDataOffset( pNewMethod );
    if( uiData )
@@ -859,9 +855,9 @@ static HB_USHORT hb_clsFindClassDataOffset( PCLASS pClass, PMETHOD pNewMethod )
 
 static HB_BOOL hb_clsUpdateHiddenMessages( PMETHOD pSrcMethod, PMETHOD pDstMethod, PCLASS pDstClass )
 {
-   PMETHOD pNewMethod = pSrcMethod;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsUpdateHiddenMessages(%p,%p,%p)", static_cast< void * >( pSrcMethod ), static_cast< void * >( pDstMethod ), static_cast< void * >( pDstClass ) ) );
+
+   PMETHOD pNewMethod = pSrcMethod;
 
    if( ! pDstMethod->pMessage ||
        ( hb_clsCanClearMethod( pDstMethod, HB_FALSE ) && pDstMethod->uiPrevCls != pDstMethod->uiSprClass &&
@@ -931,10 +927,10 @@ static void hb_clsAddSuperClass( PCLASS pClass, HB_USHORT uiSuperCls, HB_USHORT 
 
 static void hb_clsDefineSuperClass( PCLASS pClass, HB_USHORT uiSuperCls, HB_BOOL fNew )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_clsDefineSuperClass(%p,%hu,%d)", static_cast< void * >( pClass ), uiSuperCls, fNew ) );
+
    PMETHOD pMethod;
    PCLASS pSprCls;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsDefineSuperClass(%p,%hu,%d)", static_cast< void * >( pClass ), uiSuperCls, fNew ) );
 
    pSprCls = s_pClasses[ uiSuperCls ];
 
@@ -979,10 +975,10 @@ static void hb_clsDefineSuperClass( PCLASS pClass, HB_USHORT uiSuperCls, HB_BOOL
 
 static void hb_clsCopyClass( PCLASS pClsDst, PCLASS pClsSrc )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_clsCopyClass(%p,%p)", static_cast< void * >( pClsDst ), static_cast< void * >( pClsSrc ) ) );
+
    PMETHOD pMethod;
    HB_SIZE nLimit;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsCopyClass(%p,%p)", static_cast< void * >( pClsDst ), static_cast< void * >( pClsSrc ) ) );
 
    hb_clsDictInit( pClsDst, pClsSrc->uiHashKey );
    pClsDst->fHasOnError = pClsSrc->fHasOnError;
@@ -1099,10 +1095,10 @@ static void hb_clsAddFriendSymbol( PCLASS pClass, PHB_SYMB pSym )
 /* initialize Classy/OO system at HVM startup */
 void hb_clsInit( void )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_clsInit()" ) );
+
    PHB_SYMB pOpSym;
    HB_USHORT uiOperator;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsInit()" ) );
 
    for( uiOperator = 0, pOpSym = s_opSymbols; uiOperator <= HB_OO_MAX_OPERATOR; ++uiOperator, ++pOpSym )
    {
@@ -1149,6 +1145,8 @@ void hb_clsInit( void )
 /* initialize Classy/OO system .prg functions */
 void hb_clsDoInit( void )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_clsDoInit()" ) );
+
    static const char * s_pszFuncNames[] = { "HBARRAY", "HBBLOCK", "HBCHARACTER", "HBDATE", "HBTIMESTAMP", "HBHASH",
                                             "HBLOGICAL", "HBNIL", "HBNUMERIC", "HBSYMBOL", "HBPOINTER", "HBOBJECT" };
    static HB_USHORT * s_puiHandles[] = { &s_uiArrayClass, &s_uiBlockClass, &s_uiCharacterClass, &s_uiDateClass, &s_uiTimeStampClass,
@@ -1156,8 +1154,6 @@ void hb_clsDoInit( void )
                                          &s_uiPointerClass, &s_uiObjectClass };
 
    HB_STACK_TLS_PRELOAD
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsDoInit()" ) );
 
    for( int i = 0; i < static_cast< int >( HB_SIZEOFARRAY( s_puiHandles ) ); ++i )
    {
@@ -1279,14 +1275,14 @@ void hb_clsReleaseAll( void )
  */
 void hb_clsIsClassRef( void )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_clsIsClassRef()" ) );
+
    /* All internal items are allocated with hb_itemNew()
     * GC knows them and scan itself so it's not necessary
     * to repeat scanning here [druzus].
     */
 #if 0
    HB_USHORT uiClass = s_uiClasses;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsIsClassRef()" ) );
 
    while( uiClass )
    {
@@ -1649,9 +1645,9 @@ PHB_SYMB hb_clsMethodSym( PHB_ITEM pBaseSymbol )
  */
 const char * hb_objGetRealClsName( PHB_ITEM pObject, const char * szName )
 {
-   HB_USHORT uiClass;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_objGetrealClsName(%p,%s)", static_cast< void * >( pObject ), szName ) );
+
+   HB_USHORT uiClass;
 
    uiClass = hb_objGetClassH( pObject );
    if( uiClass && uiClass <= s_uiClasses )
@@ -1884,11 +1880,11 @@ static void hb_clsMakeSuperObject( PHB_ITEM pDest, PHB_ITEM pObject, HB_USHORT u
  */
 PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pStack )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_objGetMethod(%p, %p, %p)", static_cast< void * >( pObject ), static_cast< void * >( pMessage ), static_cast< void * >( pStack ) ) );
+
    HB_STACK_TLS_PRELOAD
    PCLASS pClass = nullptr;
    PHB_DYNS pMsg;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_objGetMethod(%p, %p, %p)", static_cast< void * >( pObject ), static_cast< void * >( pMessage ), static_cast< void * >( pStack ) ) );
 
    pMsg = pMessage->pDynSym;
 
@@ -2556,9 +2552,9 @@ void hb_objDestructorCall( PHB_ITEM pObject )
 /* Check if object has a given operator */
 HB_BOOL hb_objHasOperator( PHB_ITEM pObject, HB_USHORT uiOperator )
 {
-   HB_USHORT uiClass;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_objHasOperator(%p,%hu)", static_cast< void * >( pObject ), uiOperator ) );
+
+   HB_USHORT uiClass;
 
    uiClass = hb_objGetClassH( pObject );
    if( uiClass && uiClass <= s_uiClasses )
@@ -2622,9 +2618,9 @@ HB_BOOL hb_objHasMessage( PHB_ITEM pObject, PHB_DYNS pMessage )
  */
 HB_BOOL hb_objHasMsg( PHB_ITEM pObject, const char * szString )
 {
-   PHB_DYNS pDynSym;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_objHasMsg(%p, %s)", static_cast< void * >( pObject ), szString ) );
+
+   PHB_DYNS pDynSym;
 
    pDynSym = hb_dynsymFindName( szString );
    if( pDynSym )

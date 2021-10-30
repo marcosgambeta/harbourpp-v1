@@ -104,9 +104,9 @@ HB_ERRCODE hb_rddVerifyAliasName( const char * szAlias )
  */
 void * hb_rddNewAreaNode( LPRDDNODE pRddNode, HB_USHORT uiRddID )
 {
-   AREAP pArea;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddNewAreaNode(%p,%hu)", static_cast< void * >( pRddNode ), uiRddID ) );
+
+   AREAP pArea;
 
    if( pRddNode->uiAreaSize == 0 ) /* Calculate the size of WorkArea */
    {
@@ -169,9 +169,9 @@ HB_ERRCODE hb_rddGetTempAlias( char * szAliasTmp )
  */
 void * hb_rddAllocWorkAreaAlias( const char * szAlias, int iArea )
 {
-   int iDummyArea;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddAllocWorkAreaAlias(%s, %d)", szAlias, iArea ) );
+
+   int iDummyArea;
 
    /* Verify if the alias name is valid symbol */
    if( hb_rddVerifyAliasName( szAlias ) != HB_SUCCESS )
@@ -330,10 +330,10 @@ HB_USHORT hb_rddFieldExpIndex( AREAP pArea, const char * szField )
  */
 HB_ERRCODE hb_rddGetAliasNumber( const char * szAlias, int * iArea )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_rddGetAliasNumber(%s, %p)", szAlias, static_cast< void * >( iArea ) ) );
+
    HB_BOOL fOneLetter;
    char c;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_rddGetAliasNumber(%s, %p)", szAlias, static_cast< void * >( iArea ) ) );
 
    while( *szAlias == ' ' )
    {
@@ -379,12 +379,12 @@ HB_ERRCODE hb_rddGetAliasNumber( const char * szAlias, int * iArea )
  */
 HB_ERRCODE hb_rddSelectWorkAreaSymbol( PHB_SYMB pSymAlias )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_rddSelectWorkAreaSymbol(%p)", static_cast< void * >( pSymAlias ) ) );
+
    PHB_ITEM pError;
    HB_ERRCODE errCode;
    const char * szName;
    int iArea;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_rddSelectWorkAreaSymbol(%p)", static_cast< void * >( pSymAlias ) ) );
 
    iArea = static_cast< int >( hb_dynsymAreaHandle( pSymAlias->pDynSym ) );
    if( iArea )
@@ -447,10 +447,10 @@ HB_ERRCODE hb_rddSelectWorkAreaSymbol( PHB_SYMB pSymAlias )
  */
 HB_ERRCODE hb_rddSelectWorkAreaAlias( const char * szAlias )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_rddSelectWorkAreaAlias(%s)", szAlias ) );
+
    HB_ERRCODE errCode;
    int iArea;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_rddSelectWorkAreaAlias(%s)", szAlias ) );
 
    errCode = hb_rddGetAliasNumber( szAlias, &iArea );
 
@@ -495,9 +495,9 @@ HB_ERRCODE hb_rddSelectWorkAreaAlias( const char * szAlias )
  */
 HB_ERRCODE hb_rddFieldGet( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
 {
-   AREAP pArea;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddFieldGet(%p, %p)", static_cast< void * >( pItem ), static_cast< void * >( pFieldSymbol ) ) );
+
+   AREAP pArea;
 
    pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
    if( pArea )
@@ -524,9 +524,9 @@ HB_ERRCODE hb_rddFieldGet( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
  */
 HB_ERRCODE hb_rddFieldPut( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
 {
-   AREAP pArea;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddFieldPut(%p, %p)", static_cast< void * >( pItem ), static_cast< void * >( pFieldSymbol ) ) );
+
+   AREAP pArea;
 
    pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
    if( pArea )
@@ -553,9 +553,9 @@ HB_ERRCODE hb_rddFieldPut( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
  */
 HB_ERRCODE hb_rddGetFieldValue( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
 {
-   HB_ERRCODE errCode;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddGetFieldValue(%p, %p)", static_cast< void * >( pItem ), static_cast< void * >( pFieldSymbol ) ) );
+
+   HB_ERRCODE errCode;
 
    errCode = hb_rddFieldGet( pItem, pFieldSymbol );
 
@@ -590,9 +590,9 @@ HB_ERRCODE hb_rddGetFieldValue( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
  */
 HB_ERRCODE hb_rddPutFieldValue( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
 {
-   HB_ERRCODE errCode;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddPutFieldValue(%p, %p)", static_cast< void * >( pItem ), static_cast< void * >( pFieldSymbol ) ) );
+
+   HB_ERRCODE errCode;
 
    errCode = hb_rddFieldPut( pItem, pFieldSymbol );
 
@@ -1353,9 +1353,9 @@ static HB_ERRCODE hb_rddCloseParentRel( AREAP pArea, void * pChildArea )
 /* close all parent relations */
 HB_ERRCODE hb_rddCloseAllParentRelations( AREAP pArea )
 {
-   HB_ERRCODE errCode = HB_SUCCESS;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddCloseAllParentRelations(%p)", static_cast< void * >( pArea ) ) );
+
+   HB_ERRCODE errCode = HB_SUCCESS;
 
    if( pArea->uiParents > 0 )
    {
@@ -1386,10 +1386,10 @@ static HB_ERRCODE hb_rddEvalWABlock( AREAP pArea, void * pBlock )
 
 HB_ERRCODE hb_rddEvalWA( PHB_ITEM pBlock )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_rddEvalWA(%p)", static_cast< void * >( pBlock ) ) );
+
    HB_ERRCODE errCode;
    HB_USHORT uiArea;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_rddEvalWA(%p)", static_cast< void * >( pBlock ) ) );
 
    uiArea = static_cast< HB_AREANO >( hb_rddGetCurrentWorkAreaNumber() );
    errCode = hb_rddIterateWorkAreas( hb_rddEvalWABlock, pBlock );

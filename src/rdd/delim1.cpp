@@ -175,12 +175,12 @@ static void hb_delimClearRecordBuffer( DELIMAREAP pArea )
 
 static HB_SIZE hb_delimEncodeBuffer( DELIMAREAP pArea )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_delimEncodeBuffer(%p)", static_cast< void * >( pArea ) ) );
+
    HB_SIZE nSize;
    HB_USHORT uiLen;
    LPFIELD pField;
    HB_BYTE * pBuffer;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimEncodeBuffer(%p)", static_cast< void * >( pArea ) ) );
 
    /* mark the read buffer as empty */
    pArea->nBufferRead = pArea->nBufferIndex = 0;
@@ -351,9 +351,9 @@ static int hb_delimNextChar( DELIMAREAP pArea )
  */
 static HB_ERRCODE hb_delimReadRecord( DELIMAREAP pArea )
 {
-   int ch = 0;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimReadRecord(%p)", static_cast< void * >( pArea ) ) );
+
+   int ch = 0;
 
    pArea->area.fEof = HB_TRUE;
 
@@ -643,10 +643,10 @@ static HB_ERRCODE hb_delimRecNo( DELIMAREAP pArea, HB_ULONG * pulRecNo )
  */
 static HB_ERRCODE hb_delimRecId( DELIMAREAP pArea, PHB_ITEM pRecNo )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_delimRecId(%p,%p)", static_cast< void * >( pArea ), static_cast< void * >( pRecNo ) ) );
+
    HB_ERRCODE errCode;
    HB_ULONG ulRecNo;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimRecId(%p,%p)", static_cast< void * >( pArea ), static_cast< void * >( pRecNo ) ) );
 
    errCode = SELF_RECNO( &pArea->area, &ulRecNo );
 
@@ -734,9 +734,9 @@ static HB_ERRCODE hb_delimRecall( DELIMAREAP pArea )
  */
 static HB_ERRCODE hb_delimGetValue( DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
 {
-   LPFIELD pField;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimGetValue(%p, %hu, %p)", static_cast< void * >( pArea ), uiIndex, static_cast< void * >( pItem ) ) );
+
+   LPFIELD pField;
 
    if( --uiIndex >= pArea->area.uiFieldCount )
    {
@@ -845,12 +845,12 @@ static HB_ERRCODE hb_delimGetValue( DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITE
  */
 static HB_ERRCODE hb_delimPutValue( DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_delimPutValue(%p,%hu,%p)", static_cast< void * >( pArea ), uiIndex, static_cast< void * >( pItem ) ) );
+
    char szBuffer[ 256 ];
    HB_ERRCODE errCode;
    LPFIELD pField;
    HB_SIZE nSize;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimPutValue(%p,%hu,%p)", static_cast< void * >( pArea ), uiIndex, static_cast< void * >( pItem ) ) );
 
    if( ! pArea->fPositioned )
    {
@@ -1102,9 +1102,9 @@ static HB_ERRCODE hb_delimGoHot( DELIMAREAP pArea )
  */
 static HB_ERRCODE hb_delimFlush( DELIMAREAP pArea )
 {
-   HB_ERRCODE errCode;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimFlush(%p)", static_cast< void * >( pArea ) ) );
+
+   HB_ERRCODE errCode;
 
    errCode = SELF_GOCOLD( &pArea->area );
 
@@ -1263,9 +1263,9 @@ static HB_ERRCODE hb_delimInfo( DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
  */
 static HB_ERRCODE hb_delimAddField( DELIMAREAP pArea, LPDBFIELDINFO pFieldInfo )
 {
-   HB_USHORT uiDelim = 0;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimAddField(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pFieldInfo ) ) );
+
+   HB_USHORT uiDelim = 0;
 
    switch( pFieldInfo->uiType )
    {
@@ -1499,13 +1499,13 @@ static HB_ERRCODE hb_delimClose( DELIMAREAP pArea )
  */
 static HB_ERRCODE hb_delimCreate( DELIMAREAP pArea, LPDBOPENINFO pCreateInfo )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_delimCreate(%p,%p)", static_cast< void * >( pArea ), static_cast< void * >( pCreateInfo ) ) );
+
    PHB_ITEM pError = nullptr;
    HB_ERRCODE errCode;
    HB_BOOL fRetry;
    PHB_FNAME pFileName;
    char szFileName[ HB_PATH_MAX ];
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimCreate(%p,%p)", static_cast< void * >( pArea ), static_cast< void * >( pCreateInfo ) ) );
 
    pArea->fShared = HB_FALSE;    /* pCreateInfo->fShared; */
    pArea->fReadonly = HB_FALSE;  /* pCreateInfo->fReadonly */
@@ -1611,6 +1611,8 @@ static HB_ERRCODE hb_delimCreate( DELIMAREAP pArea, LPDBOPENINFO pCreateInfo )
  */
 static HB_ERRCODE hb_delimOpen( DELIMAREAP pArea, LPDBOPENINFO pOpenInfo )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_delimOpen(%p,%p)", static_cast< void * >( pArea ), static_cast< void * >( pOpenInfo ) ) );
+
    PHB_ITEM pError = nullptr;
    PHB_FNAME pFileName;
    HB_ERRCODE errCode;
@@ -1618,8 +1620,6 @@ static HB_ERRCODE hb_delimOpen( DELIMAREAP pArea, LPDBOPENINFO pOpenInfo )
    HB_BOOL fRetry;
    char szFileName[ HB_PATH_MAX ];
    char szAlias[ HB_RDD_MAX_ALIAS_LEN + 1 ];
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimOpen(%p,%p)", static_cast< void * >( pArea ), static_cast< void * >( pOpenInfo ) ) );
 
    pArea->fShared = HB_TRUE;     /* pOpenInfo->fShared; */
    pArea->fReadonly = HB_TRUE;   /* pOpenInfo->fReadonly; */
@@ -1726,9 +1726,9 @@ static HB_ERRCODE hb_delimOpen( DELIMAREAP pArea, LPDBOPENINFO pOpenInfo )
  */
 static HB_ERRCODE hb_delimInit( LPRDDNODE pRDD )
 {
-   PHB_TSD pTSD;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimInit(%p)", static_cast< void * >( pRDD ) ) );
+
+   PHB_TSD pTSD;
 
    pTSD = static_cast< PHB_TSD >( hb_xgrab( sizeof( HB_TSD ) ) );
    HB_TSD_INIT( pTSD, sizeof( DELIMDATA ), nullptr, nullptr );

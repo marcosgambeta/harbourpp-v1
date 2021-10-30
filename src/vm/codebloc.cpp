@@ -60,9 +60,9 @@ static const HB_BYTE s_pCode[ 2 ] = { HB_P_PUSHNIL, HB_P_ENDBLOCK };
 /* Release all allocated memory when called from the garbage collector */
 static HB_GARBAGE_FUNC( hb_codeblockGarbageDelete )
 {
-   PHB_CODEBLOCK pCBlock = static_cast< PHB_CODEBLOCK >( Cargo );
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockGarbageDelete(%p)", Cargo ) );
+
+   PHB_CODEBLOCK pCBlock = static_cast< PHB_CODEBLOCK >( Cargo );
 
    /* free space allocated for pcodes - if it was a macro-compiled codeblock */
    if( pCBlock->pCode && pCBlock->dynBuffer )
@@ -90,9 +90,9 @@ static HB_GARBAGE_FUNC( hb_codeblockGarbageDelete )
 
 static HB_GARBAGE_FUNC( hb_codeblockGarbageMark )
 {
-   PHB_CODEBLOCK pCBlock = static_cast< PHB_CODEBLOCK >( Cargo );
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockGarbageMark(%p)", Cargo ) );
+
+   PHB_CODEBLOCK pCBlock = static_cast< PHB_CODEBLOCK >( Cargo );
 
    if( pCBlock->uiLocals )
    {
@@ -124,12 +124,12 @@ static const HB_GC_FUNCS s_gcCodeblockFuncs =
  */
 PHB_CODEBLOCK hb_codeblockNew( const HB_BYTE * pBuffer, HB_USHORT uiLocals, const HB_BYTE * pLocalPosTable, PHB_SYMB pSymbols, HB_SIZE nLen )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockNew(%p, %hu, %p, %p, %" HB_PFS "u)", static_cast< const void * >( pBuffer ), uiLocals, static_cast< const void * >( pLocalPosTable ), static_cast< void * >( pSymbols ), nLen ) );
+
    HB_STACK_TLS_PRELOAD
    PHB_CODEBLOCK pCBlock;
    PHB_ITEM pLocals, pBase;
    const HB_BYTE * pCode;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockNew(%p, %hu, %p, %p, %" HB_PFS "u)", static_cast< const void * >( pBuffer ), uiLocals, static_cast< const void * >( pLocalPosTable ), static_cast< void * >( pSymbols ), nLen ) );
 
    /* Allocate memory for code block body and detach items hb_gcAllocRaw()
     * to be safe for automatic GC activation in hb_xgrab() without
@@ -233,12 +233,12 @@ PHB_CODEBLOCK hb_codeblockNew( const HB_BYTE * pBuffer, HB_USHORT uiLocals, cons
 
 PHB_CODEBLOCK hb_codeblockMacroNew( const HB_BYTE * pBuffer, HB_SIZE nLen )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockMacroNew(%p, %" HB_PFS "u)", static_cast< const void * >( pBuffer ), nLen ) );
+
    HB_STACK_TLS_PRELOAD
    PHB_CODEBLOCK pCBlock;
    PHB_ITEM pBase;
    HB_BYTE * pCode;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockMacroNew(%p, %" HB_PFS "u)", static_cast< const void * >( pBuffer ), nLen ) );
 
    /* The codeblock pcode is stored in dynamically allocated memory that
     * can be deallocated after creation of a codeblock. We have to duplicate
@@ -269,9 +269,9 @@ PHB_CODEBLOCK hb_codeblockMacroNew( const HB_BYTE * pBuffer, HB_SIZE nLen )
 /* Get local variable referenced in a codeblock */
 PHB_ITEM hb_codeblockGetVar( PHB_ITEM pItem, int iItemPos )
 {
-   PHB_CODEBLOCK pCBlock = pItem->item.asBlock.value;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockGetVar(%p, %d)", static_cast< void * >( pItem ), iItemPos ) );
+
+   PHB_CODEBLOCK pCBlock = pItem->item.asBlock.value;
 
    /* local variables accessed in a codeblock are always stored as reference */
    return hb_itemUnRef( pCBlock->pLocals - iItemPos );

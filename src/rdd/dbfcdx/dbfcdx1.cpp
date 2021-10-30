@@ -812,11 +812,11 @@ static HB_BOOL hb_cdxBottomScope( LPCDXTAG pTag )
  */
 static void hb_cdxTagClearScope( LPCDXTAG pTag, HB_USHORT nScope )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxTagClearScope(%p, %hu)", static_cast< void * >( pTag ), nScope ) );
+
    CDXAREAP pArea = pTag->pIndex->pArea;
    LPCDXKEY * pScopeKey;
    PHB_ITEM * pScope;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxTagClearScope(%p, %hu)", static_cast< void * >( pTag ), nScope ) );
 
    /* resolve any pending scope relations first */
    if( pArea->dbfarea.lpdbPendingRel && pArea->dbfarea.lpdbPendingRel->isScoped )
@@ -5815,10 +5815,10 @@ static HB_BOOL hb_cdxCurKeyRefresh( CDXAREAP pArea, LPCDXTAG pTag )
  */
 static HB_ERRCODE hb_cdxDBOISkipUnique( CDXAREAP pArea, LPCDXTAG pTag, HB_LONG lToSkip )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxDBOISkipUnique(%p, %p, %ld)", static_cast< void * >( pArea ), static_cast< void * >( pTag ), lToSkip ) );
+
    HB_ERRCODE retval;
    HB_BOOL fForward;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxDBOISkipUnique(%p, %p, %ld)", static_cast< void * >( pArea ), static_cast< void * >( pTag ), lToSkip ) );
 
    if( FAST_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -5947,9 +5947,9 @@ static HB_ERRCODE hb_cdxDBOISkipUnique( CDXAREAP pArea, LPCDXTAG pTag, HB_LONG l
  */
 static HB_BOOL hb_cdxDBOISkipEval( CDXAREAP pArea, LPCDXTAG pTag, HB_BOOL fForward, PHB_ITEM pEval )
 {
-   HB_BOOL fFound = HB_FALSE, fFirst = HB_TRUE;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxDBOISkipEval(%p, %p, %i, %p)", static_cast< void * >( pArea ), static_cast< void * >( pTag ), fForward, static_cast< void * >( pEval ) ) );
+
+   HB_BOOL fFound = HB_FALSE, fFirst = HB_TRUE;
 
    if( FAST_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -6060,12 +6060,12 @@ static HB_BOOL hb_cdxDBOISkipEval( CDXAREAP pArea, LPCDXTAG pTag, HB_BOOL fForwa
  */
 static HB_BOOL hb_cdxDBOISkipWild( CDXAREAP pArea, LPCDXTAG pTag, HB_BOOL fForward, PHB_ITEM pWildItm )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxDBOISkipWild(%p, %p, %i, %p)", static_cast< void * >( pArea ), static_cast< void * >( pTag ), fForward, static_cast< void * >( pWildItm ) ) );
+
    HB_BOOL fFound = HB_FALSE, fFirst = HB_TRUE;
    const char * szPattern;
    char * szFree = nullptr;
    int iFixed = 0, iStop;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxDBOISkipWild(%p, %p, %i, %p)", static_cast< void * >( pArea ), static_cast< void * >( pTag ), fForward, static_cast< void * >( pWildItm ) ) );
 
    if( FAST_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -6250,10 +6250,10 @@ static HB_BOOL hb_cdxRegexMatch( CDXAREAP pArea, PHB_REGEX pRegEx, LPCDXKEY pKey
  */
 static HB_BOOL hb_cdxDBOISkipRegEx( CDXAREAP pArea, LPCDXTAG pTag, HB_BOOL fForward, PHB_ITEM pRegExItm )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxDBOISkipRegEx(%p, %p, %i, %p)", static_cast< void * >( pArea ), static_cast< void * >( pTag ), fForward, static_cast< void * >( pRegExItm ) ) );
+
    HB_BOOL fFound = HB_FALSE, fFirst = HB_TRUE;
    PHB_REGEX pRegEx;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxDBOISkipRegEx(%p, %p, %i, %p)", static_cast< void * >( pArea ), static_cast< void * >( pTag ), fForward, static_cast< void * >( pRegExItm ) ) );
 
    if( FAST_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -7209,10 +7209,10 @@ static void hb_cdxClearPosInfo( CDXAREAP pArea )
 /* ( DBENTRYP_V )     hb_cdxGoBottom */
 static HB_ERRCODE hb_cdxGoBottom( CDXAREAP pArea )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxGoBottom(%p)", static_cast< void * >( pArea ) ) );
+
    LPCDXTAG pTag;
    HB_ERRCODE retval;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxGoBottom(%p)", static_cast< void * >( pArea ) ) );
 
    if( FAST_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -7261,10 +7261,10 @@ static HB_ERRCODE hb_cdxGoBottom( CDXAREAP pArea )
 /* ( DBENTRYP_V )     hb_cdxGoTop */
 static HB_ERRCODE hb_cdxGoTop( CDXAREAP pArea )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxGoTop(%p)", static_cast< void * >( pArea ) ) );
+
    LPCDXTAG pTag;
    HB_ERRCODE retval;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxGoTop(%p)", static_cast< void * >( pArea ) ) );
 
    if( FAST_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -7310,9 +7310,9 @@ static HB_ERRCODE hb_cdxGoTop( CDXAREAP pArea )
 /* ( DBENTRYP_BIB )   hb_cdxSeek */
 static HB_ERRCODE hb_cdxSeek( CDXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pKeyItm, HB_BOOL fFindLast )
 {
-   LPCDXTAG pTag;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxSeek(%p, %d, %p, %d)", static_cast< void * >( pArea ), fSoftSeek, static_cast< void * >( pKeyItm ), fFindLast ) );
+
+   LPCDXTAG pTag;
 
    if( FAST_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -7406,10 +7406,10 @@ static HB_ERRCODE hb_cdxSeek( CDXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pKeyIt
 /* ( DBENTRYP_L )     hb_cdxSkip        : nullptr */
 static HB_ERRCODE hb_cdxSkip( CDXAREAP pArea, HB_LONG lToSkip )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxSkip(%p, %ld)", static_cast< void * >( pArea ), lToSkip ) );
+
    LPCDXTAG pTag;
    HB_ULONG ulPos, ulRec;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxSkip(%p, %ld)", static_cast< void * >( pArea ), lToSkip ) );
 
    if( pArea->dbfarea.lpdbPendingRel )
    {
@@ -7477,11 +7477,11 @@ static HB_ERRCODE hb_cdxSkip( CDXAREAP pArea, HB_LONG lToSkip )
 /* ( DBENTRYP_L )     hb_cdxSkipRaw */
 static HB_ERRCODE hb_cdxSkipRaw( CDXAREAP pArea, HB_LONG lToSkip )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxSkipRaw(%p, %ld)", static_cast< void * >( pArea ), lToSkip ) );
+
    LPCDXTAG pTag;
    HB_ERRCODE retval;
    HB_BOOL fOut = HB_FALSE, fForward;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxSkipRaw(%p, %ld)", static_cast< void * >( pArea ), lToSkip ) );
 
    if( FAST_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -7597,10 +7597,10 @@ static HB_ERRCODE hb_cdxSkipRaw( CDXAREAP pArea, HB_LONG lToSkip )
  */
 static HB_ERRCODE hb_cdxFlush( CDXAREAP pArea )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxFlush(%p)", static_cast< void * >( pArea ) ) );
+
    LPCDXINDEX pIndex;
    HB_ERRCODE errCode;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxFlush(%p)", static_cast< void * >( pArea ) ) );
 
    if( SELF_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -7636,10 +7636,10 @@ static HB_ERRCODE hb_cdxFlush( CDXAREAP pArea )
  */
 static HB_ERRCODE hb_cdxGoCold( CDXAREAP pArea )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxGoCold(%p)", static_cast< void * >( pArea ) ) );
+
    HB_BOOL fRecordChanged = pArea->dbfarea.fRecordChanged;
    HB_BOOL fAppend = pArea->dbfarea.fAppend;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxGoCold(%p)", static_cast< void * >( pArea ) ) );
 
    if( SUPER_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -7841,9 +7841,9 @@ static HB_ERRCODE hb_cdxGoHot( CDXAREAP pArea )
  */
 static HB_ERRCODE hb_cdxClose( CDXAREAP pArea )
 {
-   HB_ERRCODE errCode;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxClose(%p)", static_cast< void * >( pArea ) ) );
+
+   HB_ERRCODE errCode;
 
    if( SELF_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -7897,9 +7897,9 @@ static HB_ERRCODE hb_cdxClose( CDXAREAP pArea )
  */
 static HB_ERRCODE hb_cdxOpen( CDXAREAP pArea, LPDBOPENINFO pOpenInfo )
 {
-   HB_ERRCODE errCode = HB_SUCCESS;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxOpen(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOpenInfo ) ) );
+
+   HB_ERRCODE errCode = HB_SUCCESS;
 
    if( ! pArea->dbfarea.bLockType )
    {
@@ -8045,6 +8045,8 @@ static HB_ERRCODE hb_cdxZap( CDXAREAP pArea )
 /* ( DBENTRYP_VOI )   hb_cdxOrderListAdd */
 static HB_ERRCODE hb_cdxOrderListAdd( CDXAREAP pArea, LPDBORDERINFO pOrderInfo )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxOrderListAdd(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
+
    HB_FATTR nFlags;
    PHB_FILE pFile;
    char szBaseName[ CDX_MAXTAGNAMELEN + 1 ];
@@ -8052,8 +8054,6 @@ static HB_ERRCODE hb_cdxOrderListAdd( CDXAREAP pArea, LPDBORDERINFO pOrderInfo )
    LPCDXINDEX pIndex, * pIndexPtr;
    HB_BOOL fProd, bRetry;
    PHB_ITEM pError = nullptr;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxOrderListAdd(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
 
    if( FAST_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -8181,12 +8181,12 @@ static HB_ERRCODE hb_cdxOrderListClear( CDXAREAP pArea )
 /* ( DBENTRYP_VOI )   hb_cdxOrderListDelete */
 static HB_ERRCODE hb_cdxOrderListDelete( CDXAREAP pArea, LPDBORDERINFO pOrderInfo )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxOrderListDelete(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
+
    char szTagName[ CDX_MAXTAGNAMELEN + 1 ];
    char szFileName[ HB_PATH_MAX ];
    LPCDXINDEX pIndex, * pIndexPtr;
    HB_BOOL fProd;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxOrderListDelete(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
 
    if( FAST_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -8229,9 +8229,9 @@ static HB_ERRCODE hb_cdxOrderListDelete( CDXAREAP pArea, LPDBORDERINFO pOrderInf
 /* ( DBENTRYP_VOI )   hb_cdxOrderListFocus */
 static HB_ERRCODE hb_cdxOrderListFocus( CDXAREAP pArea, LPDBORDERINFO pOrderInfo )
 {
-   LPCDXTAG pTag;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxOrderListFocus(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
+
+   LPCDXTAG pTag;
 
    if( FAST_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -8260,10 +8260,10 @@ static HB_ERRCODE hb_cdxOrderListFocus( CDXAREAP pArea, LPDBORDERINFO pOrderInfo
 /* ( DBENTRYP_V )     hb_cdxOrderListRebuild */
 static HB_ERRCODE hb_cdxOrderListRebuild( CDXAREAP pArea )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxPack(%p)", static_cast< void * >( pArea ) ) );
+
    LPCDXINDEX pIndex, * pIndexPtr;
    HB_USHORT uiPrevTag;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxPack(%p)", static_cast< void * >( pArea ) ) );
 
    if( FAST_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -8316,6 +8316,8 @@ static HB_ERRCODE hb_cdxOrderListRebuild( CDXAREAP pArea )
  */
 static HB_ERRCODE hb_cdxOrderCreate( CDXAREAP pArea, LPDBORDERCREATEINFO pOrderInfo )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxOrderCreate(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
+
    HB_ULONG ulRecNo;
    HB_BOOL fNewFile, fOpenedIndex, fProd, fAscend = HB_TRUE, fNoCase = HB_FALSE,
         fCustom = HB_FALSE, fTemporary = HB_FALSE, fExclusive = HB_FALSE;
@@ -8327,8 +8329,6 @@ static HB_ERRCODE hb_cdxOrderCreate( CDXAREAP pArea, LPDBORDERCREATEINFO pOrderI
    LPCDXTAG pTag;
    HB_USHORT uiLen;
    HB_BYTE bType;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxOrderCreate(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
 
    if( SELF_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -8720,11 +8720,11 @@ static HB_ERRCODE hb_cdxOrderCreate( CDXAREAP pArea, LPDBORDERCREATEINFO pOrderI
 /* ( DBENTRYP_VOI )   hb_cdxOrderDestroy */
 static HB_ERRCODE hb_cdxOrderDestroy( CDXAREAP pArea, LPDBORDERINFO pOrderInfo )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxOrderDestroy(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
+
    LPCDXINDEX pIndex, pIndexTmp;
    LPCDXTAG pTag;
    HB_USHORT uiTag;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxOrderDestroy(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
 
    if( FAST_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -8802,10 +8802,10 @@ static HB_ERRCODE hb_cdxOrderDestroy( CDXAREAP pArea, LPDBORDERINFO pOrderInfo )
  */
 static HB_ERRCODE hb_cdxOrderInfo( CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO pInfo )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxOrderInfo(%p, %hu, %p)", static_cast< void * >( pArea ), uiIndex, static_cast< void * >( pInfo ) ) );
+
    LPCDXTAG pTag;
    HB_USHORT uiTag = 0;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cdxOrderInfo(%p, %hu, %p)", static_cast< void * >( pArea ), uiIndex, static_cast< void * >( pInfo ) ) );
 
    switch( uiIndex )
    {
@@ -9713,9 +9713,9 @@ static HB_ERRCODE hb_cdxSetFilter( CDXAREAP pArea, LPDBFILTERINFO pFilterInfo )
  */
 static HB_ERRCODE hb_cdxRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem )
 {
-   LPDBFDATA pData;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxRddInfo(%p, %hu, %lu, %p)", static_cast< void * >( pRDD ), uiIndex, ulConnect, static_cast< void * >( pItem ) ) );
+
+   LPDBFDATA pData;
 
    pData = DBFNODE_DATA( pRDD );
 
@@ -10976,6 +10976,8 @@ static const RDDFUNCS cdxTable =
 
 HB_FUNC_STATIC( _GETFUNCTABLE )
 {
+   HB_TRACE( HB_TR_DEBUG, ( HB_CDXRDD "_GETFUNCTABLE(%p, %p)", static_cast< void * >( puiCount ), static_cast< void * >( pTable ) ) );
+
    RDDFUNCS * pTable;
    HB_USHORT * puiCount, uiRddId, * puiSuperRddId;
 
@@ -10983,8 +10985,6 @@ HB_FUNC_STATIC( _GETFUNCTABLE )
    pTable = static_cast< RDDFUNCS * >( hb_parptr( 2 ) );
    uiRddId = static_cast< HB_USHORT >( hb_parni( 4 ) );
    puiSuperRddId = static_cast< HB_USHORT * >( hb_parptr( 5 ) );
-
-   HB_TRACE( HB_TR_DEBUG, ( HB_CDXRDD "_GETFUNCTABLE(%p, %p)", static_cast< void * >( puiCount ), static_cast< void * >( pTable ) ) );
 
    if( pTable )
    {

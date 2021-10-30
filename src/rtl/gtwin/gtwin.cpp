@@ -330,9 +330,9 @@ static void hb_gt_win_xSetCursorPos( void )
 
 static void hb_gt_win_xSetCursorStyle( void )
 {
-   CONSOLE_CURSOR_INFO cci;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_xSetCursorStyle()" ) );
+
+   CONSOLE_CURSOR_INFO cci;
 
    switch( s_iCursorStyle )
    {
@@ -441,9 +441,9 @@ static void hb_gt_win_xUpdtSet( int iTop, int iLeft, int iBottom, int iRight )
 
 static BOOL WINAPI hb_gt_win_CtrlHandler( DWORD dwCtrlType )
 {
-   BOOL bHandled;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_CtrlHandler(%lu)", static_cast< HB_ULONG >( dwCtrlType ) ) );
+
+   BOOL bHandled;
 
    switch( dwCtrlType )
    {
@@ -477,14 +477,14 @@ static BOOL WINAPI hb_gt_win_CtrlHandler( DWORD dwCtrlType )
 
 static void hb_gt_win_xGetScreenContents( PHB_GT pGT, SMALL_RECT * psrWin )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_xGetScreenContents(%p,%p)", static_cast< void * >( pGT ), static_cast< void * >( psrWin ) ) );
+
    int iCol;
 
 #if ! defined( UNICODE )
    PHB_CODEPAGE cdp;
    HB_BYTE bxAttr;
 #endif
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_xGetScreenContents(%p,%p)", static_cast< void * >( pGT ), static_cast< void * >( psrWin ) ) );
 
 #if ! defined( UNICODE )
    bxAttr = 0;
@@ -981,9 +981,9 @@ static void hb_gt_win_Exit( PHB_GT pGT )
 
 static HB_BOOL hb_gt_win_SetMode( PHB_GT pGT, int iRows, int iCols )
 {
-   HB_BOOL fRet = HB_FALSE;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_SetMode(%p,%d,%d)", static_cast< void * >( pGT ), iRows, iCols ) );
+
+   HB_BOOL fRet = HB_FALSE;
 
    if( s_HOutput != INVALID_HANDLE_VALUE && iRows > 0 && iCols > 0 )
    {
@@ -1299,9 +1299,9 @@ static int SpecialHandling( WORD wScan, int iKey, HB_BOOL fShifted )
 
 static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
 {
-   int iKey = 0;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_ReadKey(%p,%d)", static_cast< void * >( pGT ), iEventMask ) );
+
+   int iKey = 0;
 
    HB_SYMBOL_UNUSED( iEventMask );
 

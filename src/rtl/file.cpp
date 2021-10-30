@@ -49,9 +49,9 @@
 
 HB_BOOL hb_fsFile( const char * pszFileName )
 {
-   PHB_FFIND ffind;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsFile(%s)", pszFileName ) );
+
+   PHB_FFIND ffind;
 
    if( ( ffind = hb_fsFindFirst( pszFileName, HB_FA_ALL ) ) != nullptr )
    {
@@ -64,11 +64,11 @@ HB_BOOL hb_fsFile( const char * pszFileName )
 
 HB_BOOL hb_fsIsDirectory( const char * pszFileName )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_fsIsDirectory(%s)", pszFileName ) );
+
    HB_BOOL bResult = HB_FALSE;
    char * pszFree = nullptr;
    int iLen;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsIsDirectory(%s)", pszFileName ) );
 
    iLen = static_cast< int >( strlen( pszFileName ) );
    while( iLen && strchr( HB_OS_PATH_DELIM_CHR_LIST, pszFileName[ iLen - 1 ] ) )

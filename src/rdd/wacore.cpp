@@ -178,10 +178,10 @@ static void hb_waNodeDelete( PHB_STACKRDD pRddInfo )
  */
 HB_ERRCODE hb_rddSelectFirstAvailable( void )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_rddSelectFirstAvailable()" ) );
+
    PHB_STACKRDD pRddInfo;
    HB_USHORT uiArea;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_rddSelectFirstAvailable()" ) );
 
    pRddInfo = hb_stackRDD();
 
@@ -207,12 +207,12 @@ HB_ERRCODE hb_rddSelectFirstAvailable( void )
  */
 HB_USHORT hb_rddInsertAreaNode( const char * szDriver )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_rddInsertAreaNode(%s)", szDriver ) );
+
    PHB_STACKRDD pRddInfo;
    LPRDDNODE pRddNode;
    HB_USHORT uiRddID;
    AREAP pArea;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_rddInsertAreaNode(%s)", szDriver ) );
 
    pRddInfo = hb_stackRDD();
    if( pRddInfo->uiCurrArea && pRddInfo->pCurrArea )
@@ -251,10 +251,10 @@ HB_USHORT hb_rddInsertAreaNode( const char * szDriver )
  */
 void hb_rddReleaseCurrentArea( void )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_rddReleaseCurrentArea()" ) );
+
    PHB_STACKRDD pRddInfo;
    AREAP pArea;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_rddReleaseCurrentArea()" ) );
 
    pRddInfo = hb_stackRDD();
    pArea = static_cast< AREAP >( pRddInfo->pCurrArea );
@@ -278,9 +278,9 @@ void hb_rddReleaseCurrentArea( void )
  */
 void hb_rddCloseAll( void )
 {
-   PHB_STACKRDD pRddInfo;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddCloseAll()" ) );
+
+   PHB_STACKRDD pRddInfo;
 
    pRddInfo = hb_stackRDD();
    if( pRddInfo->uiWaMax > 0 )
@@ -357,10 +357,10 @@ void hb_rddUnLockAll( void )
  */
 HB_ERRCODE hb_rddIterateWorkAreas( WACALLBACK pCallBack, void * cargo )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_rddIterateWorkAreas(%p, %p)", static_cast< void * >( pCallBack ), cargo ) );
+
    PHB_STACKRDD pRddInfo;
    HB_ERRCODE errCode = HB_SUCCESS;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_rddIterateWorkAreas(%p, %p)", static_cast< void * >( pCallBack ), cargo ) );
 
    pRddInfo = hb_stackRDD();
    for( HB_USHORT uiIndex = 1; uiIndex < pRddInfo->uiWaMax; uiIndex++ )
@@ -394,9 +394,9 @@ void hb_rddSetNetErr( HB_BOOL fNetErr )
  */
 const char * hb_rddDefaultDrv( const char * szDriver )
 {
-   PHB_STACKRDD pRddInfo;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddDefaultDrv(%s)", szDriver ) );
+
+   PHB_STACKRDD pRddInfo;
 
    pRddInfo = hb_stackRDD();
 
@@ -437,9 +437,9 @@ const char * hb_rddDefaultDrv( const char * szDriver )
  */
 const char * hb_rddFindDrv( const char * szDriver, const char * szFileName )
 {
-   LPRDDNODE pRddNode = nullptr;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddFindDrv(%s, %s)", szDriver, szFileName ) );
+
+   LPRDDNODE pRddNode = nullptr;
 
    if( szDriver && *szDriver )
    {
@@ -484,9 +484,9 @@ const char * hb_rddFindDrv( const char * szDriver, const char * szFileName )
  */
 void * hb_rddGetWorkAreaPointer( int iArea )
 {
-   PHB_STACKRDD pRddInfo;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddGetWorkAreaPointer(%d)", iArea ) );
+
+   PHB_STACKRDD pRddInfo;
 
    pRddInfo = hb_stackRDD();
 
@@ -529,9 +529,9 @@ int hb_rddGetCurrentWorkAreaNumber( void )
  */
 HB_ERRCODE hb_rddSelectWorkAreaNumber( int iArea )
 {
-   PHB_STACKRDD pRddInfo;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddSelectWorkAreaNumber(%d)", iArea ) );
+
+   PHB_STACKRDD pRddInfo;
 
    pRddInfo = hb_stackRDD();
    if( iArea < 1 || iArea > HB_RDD_MAX_AREA_NUM )
@@ -605,12 +605,12 @@ void hb_rddCloseDetachedAreas( void )
 
 HB_ERRCODE hb_rddDetachArea( AREAP pArea, PHB_ITEM pCargo )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_rddDetachArea(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pCargo ) ) );
+
    AREAP * pHolder;
    PHB_ITEM pDetachedArea;
    HB_SIZE nPos;
    int iArea;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_rddDetachArea(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pCargo ) ) );
 
    /* save current WA number */
    iArea = hb_rddGetCurrentWorkAreaNumber();
@@ -788,9 +788,9 @@ AREAP hb_rddRequestArea( const char * szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea
 
 PHB_ITEM hb_rddDetachedList( void )
 {
-   PHB_ITEM pArray;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddDetachedList()" ) );
+
+   PHB_ITEM pArray;
 
    pArray = hb_itemArrayNew( 0 );
    /* protect by critical section access to s_pDetachedAreas array */

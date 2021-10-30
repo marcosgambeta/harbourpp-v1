@@ -483,9 +483,9 @@ static void s_hb_winVerInit( void )
 
 char * hb_verPlatform( void )
 {
-   char * pszPlatform;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_verPlatform()" ) );
+
+   char * pszPlatform;
 
    pszPlatform = static_cast< char * >( hb_xgrab( PLATFORM_BUF_SIZE + 1 ) );
 
@@ -1026,6 +1026,8 @@ HB_BOOL hb_iswince( void )
 
 char * hb_verCompiler( void )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_verCompiler()" ) );
+
    char * pszCompiler;
    const char * pszName;
    char szSub[ 64 ];
@@ -1034,8 +1036,6 @@ char * hb_verCompiler( void )
    int iVerPatch;
    int iVerMicro = 0;
    int iElements = 0;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_verCompiler()" ) );
 
    pszCompiler = static_cast< char * >( hb_xgrab( COMPILER_BUF_SIZE ) );
    szSub[ 0 ] = '\0';
@@ -1368,9 +1368,9 @@ char * hb_verCompiler( void )
 
 char * hb_verHarbour( void )
 {
-   char * pszVersion;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_verHarbour()" ) );
+
+   char * pszVersion;
 
    pszVersion = static_cast< char * >( hb_xgrab( 80 ) );
    hb_snprintf( pszVersion, 80, "Harbour++ %d.%d.%d%s (r%d)", HB_VER_MAJOR, HB_VER_MINOR, HB_VER_RELEASE, HB_VER_STATUS, hb_verRevision() );
@@ -1380,9 +1380,9 @@ char * hb_verHarbour( void )
 
 char * hb_verPCode( void )
 {
-   char * pszPCode;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_verPCode()" ) );
+
+   char * pszPCode;
 
    pszPCode = static_cast< char * >( hb_xgrab( 24 ) );
    hb_snprintf( pszPCode, 24, "PCode version: %d.%d", HB_PCODE_VER >> 8, HB_PCODE_VER & 0xFF );
@@ -1392,9 +1392,9 @@ char * hb_verPCode( void )
 
 char * hb_verBuildDate( void )
 {
-   char * pszDate;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_verBuildDate()" ) );
+
+   char * pszDate;
 
    pszDate = static_cast< char * >( hb_xgrab( 64 ) );
    hb_snprintf( pszDate, 64, "%s %s", __DATE__, __TIME__ );

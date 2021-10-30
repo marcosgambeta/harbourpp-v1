@@ -241,9 +241,9 @@ void hb_conOutErr( const char * szStr, HB_SIZE nLen )
 /* Output an item to the screen and/or printer and/or alternate */
 void hb_conOutAlt( const char * szStr, HB_SIZE nLen )
 {
-   PHB_FILE pFile;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_conOutAlt(%s, %" HB_PFS "u)", szStr, nLen ) );
+
+   PHB_FILE pFile;
 
    if( hb_setGetConsole() )
    {
@@ -273,9 +273,9 @@ void hb_conOutAlt( const char * szStr, HB_SIZE nLen )
 /* Output an item to the screen and/or printer */
 static void hb_conOutDev( const char * szStr, HB_SIZE nLen )
 {
-   PHB_FILE pFile;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_conOutDev(%s, %" HB_PFS "u)", szStr, nLen ) );
+
+   PHB_FILE pFile;
 
    if( ( pFile = hb_setGetPrinterHandle( HB_SET_PRN_DEV ) ) != nullptr )
    {
@@ -443,9 +443,9 @@ HB_FUNC( PCOL ) /* Returns the current printer row position */
 
 static void hb_conDevPos( int iRow, int iCol )
 {
-   PHB_FILE pFile;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_conDevPos(%d, %d)", iRow, iCol ) );
+
+   PHB_FILE pFile;
 
    /* Position printer if SET DEVICE TO PRINTER and valid printer file
       otherwise position console */

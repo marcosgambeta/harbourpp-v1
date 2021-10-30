@@ -56,10 +56,10 @@
 
 HB_BOOL hb_mouseIsPresent( void )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseIsPresent()" ) );
+
    HB_BOOL fPresent = HB_FALSE;
    PHB_GT pGT;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseIsPresent()" ) );
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -72,10 +72,10 @@ HB_BOOL hb_mouseIsPresent( void )
 
 HB_BOOL hb_mouseGetCursor( void )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseGetCursor()" ) );
+
    HB_BOOL fVisible = HB_FALSE;
    PHB_GT pGT;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseGetCursor()" ) );
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -88,9 +88,9 @@ HB_BOOL hb_mouseGetCursor( void )
 
 void hb_mouseSetCursor( HB_BOOL fVisible )
 {
-   PHB_GT pGT;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseSetCursor(%d)", static_cast< int >( fVisible ) ) );
+
+   PHB_GT pGT;
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -102,10 +102,10 @@ void hb_mouseSetCursor( HB_BOOL fVisible )
 
 int hb_mouseCol( void )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseCol()" ) );
+
    int iCol = 0;
    PHB_GT pGT;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseCol()" ) );
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -118,10 +118,10 @@ int hb_mouseCol( void )
 
 int hb_mouseRow( void )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseRow()" ) );
+
    int iRow = 0;
    PHB_GT pGT;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseRow()" ) );
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -134,9 +134,9 @@ int hb_mouseRow( void )
 
 void hb_mouseGetPos( int * piRow, int * piCol )
 {
-   PHB_GT pGT;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseGetPos(%p, %p)", static_cast< void * >( piRow ), static_cast< void * >( piCol ) ) );
+
+   PHB_GT pGT;
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -148,9 +148,9 @@ void hb_mouseGetPos( int * piRow, int * piCol )
 
 void hb_mouseSetPos( int iRow, int iCol )
 {
-   PHB_GT pGT;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseSetPos(%d, %d)", iRow, iCol ) );
+
+   PHB_GT pGT;
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -162,9 +162,9 @@ void hb_mouseSetPos( int iRow, int iCol )
 
 void hb_mouseSetBounds( int iTop, int iLeft, int iBottom, int iRight )
 {
-   PHB_GT pGT;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseSetBounds(%d, %d, %d, %d)", iTop, iLeft, iBottom, iRight ) );
+
+   PHB_GT pGT;
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -176,9 +176,9 @@ void hb_mouseSetBounds( int iTop, int iLeft, int iBottom, int iRight )
 
 void hb_mouseGetBounds( int * piTop, int * piLeft, int * piBottom, int * piRight )
 {
-   PHB_GT pGT;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseGetBounds(%p, %p, %p, %p)", static_cast< void * >( piTop ), static_cast< void * >( piLeft ), static_cast< void * >( piBottom ), static_cast< void * >( piRight ) ) );
+
+   PHB_GT pGT;
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -190,10 +190,10 @@ void hb_mouseGetBounds( int * piTop, int * piLeft, int * piBottom, int * piRight
 
 int hb_mouseStorageSize( void )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseStorageSize()" ) );
+
    int iSize = 0;
    PHB_GT pGT;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseStorageSize()" ) );
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -206,9 +206,9 @@ int hb_mouseStorageSize( void )
 
 void hb_mouseSaveState( void * pBuffer )
 {
-   PHB_GT pGT;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseSaveState(%p)", pBuffer ) );
+
+   PHB_GT pGT;
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -220,9 +220,9 @@ void hb_mouseSaveState( void * pBuffer )
 
 void hb_mouseRestoreState( const void * pBuffer )
 {
-   PHB_GT pGT;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseRestoreState(%p)", pBuffer ) );
+
+   PHB_GT pGT;
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -234,10 +234,10 @@ void hb_mouseRestoreState( const void * pBuffer )
 
 int hb_mouseGetDoubleClickSpeed( void )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseGetDoubleClickSpeed()" ) );
+
    int iSpeed = 0;
    PHB_GT pGT;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseGetDoubleClickSpeed()" ) );
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -250,9 +250,9 @@ int hb_mouseGetDoubleClickSpeed( void )
 
 void hb_mouseSetDoubleClickSpeed( int iSpeed )
 {
-   PHB_GT pGT;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseSetDoubleClickSpeed(%d)", iSpeed ) );
+
+   PHB_GT pGT;
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -264,10 +264,10 @@ void hb_mouseSetDoubleClickSpeed( int iSpeed )
 
 int hb_mouseCountButton( void )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseCountButton()" ) );
+
    int iButtons = 0;
    PHB_GT pGT;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseCountButton()" ) );
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -280,10 +280,10 @@ int hb_mouseCountButton( void )
 
 HB_BOOL hb_mouseButtonState( int iButton )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseButtonState(%d)", iButton ) );
+
    HB_BOOL fPressed = HB_FALSE;
    PHB_GT pGT;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseButtonState(%d)", iButton ) );
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -296,10 +296,10 @@ HB_BOOL hb_mouseButtonState( int iButton )
 
 HB_BOOL hb_mouseButtonPressed( int iButton, int * piRow, int * piCol )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseButtonPressed(%d,%p,%p)", iButton, static_cast< void * >( piRow ), static_cast< void * >( piCol ) ) );
+
    HB_BOOL fPressed = HB_FALSE;
    PHB_GT pGT;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseButtonPressed(%d,%p,%p)", iButton, static_cast< void * >( piRow ), static_cast< void * >( piCol ) ) );
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -312,10 +312,10 @@ HB_BOOL hb_mouseButtonPressed( int iButton, int * piRow, int * piCol )
 
 HB_BOOL hb_mouseButtonReleased( int iButton, int * piRow, int * piCol )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseButtonReleased(%d,%p,%p)", iButton, static_cast< void * >( piRow ), static_cast< void * >( piCol ) ) );
+
    HB_BOOL fReleased = HB_FALSE;
    PHB_GT pGT;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseButtonReleased(%d,%p,%p)", iButton, static_cast< void * >( piRow ), static_cast< void * >( piCol ) ) );
 
    pGT = hb_gt_Base();
    if( pGT )
@@ -328,10 +328,10 @@ HB_BOOL hb_mouseButtonReleased( int iButton, int * piRow, int * piCol )
 
 int hb_mouseReadKey( int iEventMask )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseReadKey(%d)", iEventMask ) );
+
    int iKey = 0;
    PHB_GT pGT;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseReadKey(%d)", iEventMask ) );
 
    pGT = hb_gt_Base();
    if( pGT )

@@ -4977,10 +4977,10 @@ static HB_BOOL hb_nsxOrdSkipUnique( LPTAGINFO pTag, HB_LONG lToSkip )
  */
 static HB_BOOL hb_nsxOrdSkipEval( LPTAGINFO pTag, HB_BOOL fForward, PHB_ITEM pEval )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_nsxOrdSkipEval(%p, %d, %p)", static_cast< void * >( pTag ), fForward, static_cast< void * >( pEval ) ) );
+
    NSXAREAP pArea = pTag->pIndex->pArea;
    HB_BOOL fFound = HB_FALSE;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_nsxOrdSkipEval(%p, %d, %p)", static_cast< void * >( pTag ), fForward, static_cast< void * >( pEval ) ) );
 
    if( ( hb_itemType( pEval ) & HB_IT_BLOCK ) == 0 )
    {
@@ -5075,13 +5075,13 @@ static HB_BOOL hb_nsxOrdSkipEval( LPTAGINFO pTag, HB_BOOL fForward, PHB_ITEM pEv
  */
 static HB_BOOL hb_nsxOrdSkipWild( LPTAGINFO pTag, HB_BOOL fForward, PHB_ITEM pWildItm )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_nsxOrdSkipWild(%p, %d, %p)", static_cast< void * >( pTag ), fForward, static_cast< void * >( pWildItm ) ) );
+
    NSXAREAP pArea = pTag->pIndex->pArea;
    const char *szPattern;
    char *szFree = nullptr;
    HB_BOOL fFound = HB_FALSE;
    int iFixed = 0;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_nsxOrdSkipWild(%p, %d, %p)", static_cast< void * >( pTag ), fForward, static_cast< void * >( pWildItm ) ) );
 
    szPattern = hb_itemGetCPtr( pWildItm );
 
@@ -5241,11 +5241,11 @@ static HB_BOOL hb_nsxRegexMatch( LPTAGINFO pTag, PHB_REGEX pRegEx, const char * 
  */
 static HB_BOOL hb_nsxOrdSkipRegEx( LPTAGINFO pTag, HB_BOOL fForward, PHB_ITEM pRegExItm )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_nsxOrdSkipRegEx(%p, %d, %p)", static_cast< void * >( pTag ), fForward, static_cast< void * >( pRegExItm ) ) );
+
    NSXAREAP pArea = pTag->pIndex->pArea;
    HB_BOOL fFound = HB_FALSE;
    PHB_REGEX pRegEx;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_nsxOrdSkipRegEx(%p, %d, %p)", static_cast< void * >( pTag ), fForward, static_cast< void * >( pRegExItm ) ) );
 
    if( pTag->KeyType != 'C' || ( pRegEx = hb_regexGet( pRegExItm, 0 ) ) == nullptr )
    {
@@ -6757,9 +6757,9 @@ static HB_ERRCODE hb_nsxReIndex( LPNSXINDEX pIndex )
 
 static HB_ERRCODE hb_nsxGoBottom( NSXAREAP pArea )
 {
-   HB_ERRCODE retval;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_nsxGoBottom(%p)", static_cast< void * >( pArea ) ) );
+
+   HB_ERRCODE retval;
 
    if( SELF_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -6806,9 +6806,9 @@ static HB_ERRCODE hb_nsxGoBottom( NSXAREAP pArea )
 
 static HB_ERRCODE hb_nsxTop( NSXAREAP pArea )
 {
-   HB_ERRCODE retval;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_nsxTop(%p)", static_cast< void * >( pArea ) ) );
+
+   HB_ERRCODE retval;
 
    if( SELF_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -6958,10 +6958,10 @@ static HB_ERRCODE hb_nsxSeek( NSXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pItem,
 
 static HB_ERRCODE hb_nsxSkipRaw( NSXAREAP pArea, HB_LONG lToSkip )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_nsxSkipRaw(%p, %ld)", static_cast< void * >( pArea ), lToSkip ) );
+
    HB_ERRCODE retval;
    HB_BOOL fOut = HB_FALSE, fForward;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_nsxSkipRaw(%p, %ld)", static_cast< void * >( pArea ), lToSkip ) );
 
    if( SELF_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -7038,9 +7038,9 @@ static HB_ERRCODE hb_nsxSkipRaw( NSXAREAP pArea, HB_LONG lToSkip )
  */
 static HB_ERRCODE hb_nsxFlush( NSXAREAP pArea )
 {
-   HB_ERRCODE errCode;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_nsxFlush(%p)", static_cast< void * >( pArea ) ) );
+
+   HB_ERRCODE errCode;
 
    errCode = SELF_GOCOLD( &pArea->dbfarea.area );
    if( errCode == HB_SUCCESS )
@@ -7070,10 +7070,10 @@ static HB_ERRCODE hb_nsxFlush( NSXAREAP pArea )
  */
 static HB_ERRCODE hb_nsxGoCold( NSXAREAP pArea )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_nsxGoCold(%p)", static_cast< void * >( pArea ) ) );
+
    HB_BOOL fRecordChanged = pArea->dbfarea.fRecordChanged;
    HB_BOOL fAppend = pArea->dbfarea.fAppend;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_nsxGoCold(%p)", static_cast< void * >( pArea ) ) );
 
    if( SUPER_GOCOLD( &pArea->dbfarea.area ) == HB_SUCCESS )
    {
@@ -7209,9 +7209,9 @@ static HB_ERRCODE hb_nsxGoCold( NSXAREAP pArea )
  */
 static HB_ERRCODE hb_nsxGoHot( NSXAREAP pArea )
 {
-   HB_ERRCODE errCode;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_nsxGoHot(%p)", static_cast< void * >( pArea ) ) );
+
+   HB_ERRCODE errCode;
 
    errCode = SUPER_GOHOT( &pArea->dbfarea.area );
    if( errCode == HB_SUCCESS )
@@ -7248,9 +7248,9 @@ static HB_ERRCODE hb_nsxGoHot( NSXAREAP pArea )
  */
 static HB_ERRCODE hb_nsxClose( NSXAREAP pArea )
 {
-   HB_ERRCODE errCode;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_nsxClose(%p)", static_cast< void * >( pArea ) ) );
+
+   HB_ERRCODE errCode;
 
    if( SELF_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -7298,9 +7298,9 @@ static HB_ERRCODE hb_nsxStructSize( NSXAREAP pArea, HB_USHORT * uiSize )
  */
 static HB_ERRCODE hb_nsxOpen( NSXAREAP pArea, LPDBOPENINFO pOpenInfo )
 {
-   HB_ERRCODE errCode;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_nsxOpen(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOpenInfo ) ) );
+
+   HB_ERRCODE errCode;
 
    if( ! pArea->dbfarea.bLockType )
    {
@@ -7361,9 +7361,9 @@ static HB_ERRCODE hb_nsxOpen( NSXAREAP pArea, LPDBOPENINFO pOpenInfo )
 
 static HB_ERRCODE hb_nsxPack( NSXAREAP pArea )
 {
-   HB_ERRCODE errCode;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_nsxPack(%p)", static_cast< void * >( pArea ) ) );
+
+   HB_ERRCODE errCode;
 
    errCode = SUPER_PACK( &pArea->dbfarea.area );
    if( errCode == HB_SUCCESS )
@@ -7376,9 +7376,9 @@ static HB_ERRCODE hb_nsxPack( NSXAREAP pArea )
 
 static HB_ERRCODE hb_nsxZap( NSXAREAP pArea )
 {
-   HB_ERRCODE errCode;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_nsxZap(%p)", static_cast< void * >( pArea ) ) );
+
+   HB_ERRCODE errCode;
 
    errCode = SUPER_ZAP( &pArea->dbfarea.area );
    if( errCode == HB_SUCCESS )
@@ -7391,6 +7391,8 @@ static HB_ERRCODE hb_nsxZap( NSXAREAP pArea )
 
 static HB_ERRCODE hb_nsxOrderCreate( NSXAREAP pArea, LPDBORDERCREATEINFO pOrderInfo )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_nsxOrderCreate(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
+
    PHB_ITEM pResult, pKeyExp, pForExp = nullptr;
    int iLen, iTag;
    char szFileName[ HB_PATH_MAX ], szTagName[ NSX_TAGNAME + 1 ];
@@ -7402,8 +7404,6 @@ static HB_ERRCODE hb_nsxOrderCreate( NSXAREAP pArea, LPDBORDERCREATEINFO pOrderI
    HB_BOOL fNewFile, fProd, fLocked = HB_FALSE, fAscend = HB_TRUE, fCustom = HB_FALSE,
         fTemporary = HB_FALSE, fExclusive = HB_FALSE;
    HB_BYTE bType, bTrail;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_nsxOrderCreate(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
 
    errCode = SELF_GOCOLD( &pArea->dbfarea.area );
    if( errCode != HB_SUCCESS )
@@ -7817,9 +7817,9 @@ static HB_ERRCODE hb_nsxOrderCreate( NSXAREAP pArea, LPDBORDERCREATEINFO pOrderI
 
 static HB_ERRCODE hb_nsxOrderDestroy( NSXAREAP pArea, LPDBORDERINFO pOrderInfo )
 {
-   HB_ERRCODE errCode;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_nsxOrderDestroy(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
+
+   HB_ERRCODE errCode;
 
    errCode = SELF_GOCOLD( &pArea->dbfarea.area );
    if( errCode != HB_SUCCESS )
@@ -7893,9 +7893,9 @@ static HB_ERRCODE hb_nsxOrderDestroy( NSXAREAP pArea, LPDBORDERINFO pOrderInfo )
 
 static HB_ERRCODE hb_nsxOrderInfo( NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO pInfo )
 {
-   LPTAGINFO pTag;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_nsxOrderInfo(%p, %hu, %p)", static_cast< void * >( pArea ), uiIndex, static_cast< void * >( pInfo ) ) );
+
+   LPTAGINFO pTag;
 
    switch( uiIndex )
    {
@@ -8630,13 +8630,13 @@ static HB_ERRCODE hb_nsxCountScope( NSXAREAP pArea, void * pPtr, HB_LONG * plRec
 
 static HB_ERRCODE hb_nsxOrderListAdd( NSXAREAP pArea, LPDBORDERINFO pOrderInfo )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_nsxOrderListAdd(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
+
    PHB_FILE pFile;
    char szFileName[ HB_PATH_MAX ];
    LPNSXINDEX pIndex;
    HB_ERRCODE errCode;
    HB_BOOL fProd;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_nsxOrderListAdd(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
 
    errCode = SELF_GOCOLD( &pArea->dbfarea.area );
    if( errCode != HB_SUCCESS )
@@ -8731,9 +8731,9 @@ static HB_ERRCODE hb_nsxOrderListAdd( NSXAREAP pArea, LPDBORDERINFO pOrderInfo )
 
 static HB_ERRCODE hb_nsxOrderListClear( NSXAREAP pArea )
 {
-   LPNSXINDEX * pIndexPtr, pIndex;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_nsxOrderListClear(%p)", static_cast< void * >( pArea ) ) );
+
+   LPNSXINDEX * pIndexPtr, pIndex;
 
    if( SELF_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -8760,12 +8760,12 @@ static HB_ERRCODE hb_nsxOrderListClear( NSXAREAP pArea )
 
 static HB_ERRCODE hb_nsxOrderListDelete( NSXAREAP pArea, LPDBORDERINFO pOrderInfo )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_nsxOrderListDelete(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
+
    char szTagName[ NSX_TAGNAME + 1 ];
    char szFileName[ HB_PATH_MAX ];
    LPNSXINDEX pIndex;
    HB_BOOL fProd;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_nsxOrderListDelete(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
 
    if( SELF_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -8823,11 +8823,11 @@ static HB_ERRCODE hb_nsxOrderListFocus( NSXAREAP pArea, LPDBORDERINFO pOrderInfo
 
 static HB_ERRCODE hb_nsxOrderListRebuild( NSXAREAP pArea )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_nsxOrderListRebuild(%p)", static_cast< void * >( pArea ) ) );
+
    LPTAGINFO pCurrTag;
    LPNSXINDEX pIndex;
    HB_ERRCODE errCode;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_nsxOrderListRebuild(%p)", static_cast< void * >( pArea ) ) );
 
    errCode = SELF_GOCOLD( &pArea->dbfarea.area );
    if( errCode != HB_SUCCESS )
@@ -8872,9 +8872,9 @@ static HB_ERRCODE hb_nsxOrderListRebuild( NSXAREAP pArea )
 
 static HB_ERRCODE hb_nsxRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem )
 {
-   LPDBFDATA pData;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_nsxRddInfo(%p, %hu, %lu, %p)", static_cast< void * >( pRDD ), uiIndex, ulConnect, static_cast< void * >( pItem ) ) );
+
+   LPDBFDATA pData;
 
    pData = DBFNODE_DATA( pRDD );
 

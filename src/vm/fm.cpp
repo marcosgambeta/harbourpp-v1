@@ -1382,9 +1382,9 @@ void hb_xexit( void ) /* Deinitialize fixed memory subsystem */
 
 HB_SIZE hb_xquery( int iMode )
 {
-   HB_SIZE nResult;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_xquery(%d)", iMode ) );
+
+   HB_SIZE nResult;
 
    /* TODO: Return the correct values instead of 9999 [vszakats] */
 

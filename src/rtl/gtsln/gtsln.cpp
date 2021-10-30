@@ -556,9 +556,9 @@ static int hb_sln_isUTF8( int iStdOut, int iStdIn )
 /* I think this function should not be void. It should be HB_BOOL */
 static void hb_gt_sln_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr )
 {
-   HB_BOOL gt_Inited = HB_FALSE;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Init(%p,%p,%p,%p)", static_cast< void * >( pGT ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdin ) ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdout ) ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStderr ) ) ) );
+
+   HB_BOOL gt_Inited = HB_FALSE;
 
    /* stdin && stdout && stderr */
    s_hStdIn  = hFilenoStdin;

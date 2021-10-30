@@ -159,9 +159,9 @@
 
 HB_FATTR hb_fsAttrFromRaw( HB_FATTR raw_attr )
 {
-   HB_FATTR nAttr;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsAttrFromRaw(%u)", raw_attr ) );
+
+   HB_FATTR nAttr;
 
 #if defined( HB_OS_DOS )
 
@@ -243,9 +243,9 @@ HB_FATTR hb_fsAttrFromRaw( HB_FATTR raw_attr )
 
 HB_FATTR hb_fsAttrToRaw( HB_FATTR nAttr )
 {
-   HB_FATTR raw_attr;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsAttrToRaw(%u)", nAttr ) );
+
+   HB_FATTR raw_attr;
 
 #if defined( HB_OS_DOS )
 
@@ -316,11 +316,11 @@ HB_FATTR hb_fsAttrToRaw( HB_FATTR nAttr )
 
 HB_FATTR hb_fsAttrEncode( const char * szAttr )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_fsAttrEncode(%p)", static_cast< const void * >( szAttr ) ) );
+
    const char * pos = szAttr;
    char ch;
    HB_FATTR nAttr = 0;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsAttrEncode(%p)", static_cast< const void * >( szAttr ) ) );
 
    while( ( ch = static_cast< char >( HB_TOUPPER( *pos ) ) ) != '\0' )
    {
@@ -348,9 +348,9 @@ HB_FATTR hb_fsAttrEncode( const char * szAttr )
 
 char * hb_fsAttrDecode( HB_FATTR nAttr, char * szAttr )
 {
-   char * ptr = szAttr;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsAttrDecode(%u, %p)", nAttr, static_cast< void * >( szAttr ) ) );
+
+   char * ptr = szAttr;
 
    /* Using the same order as CA-Cl*pper did: RHSVDA. */
    if( nAttr & HB_FA_READONLY   ) *ptr++ = 'R';

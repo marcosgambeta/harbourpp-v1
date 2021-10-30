@@ -74,9 +74,9 @@
 
 static int hb_Inp9x( unsigned short int usPort )
 {
-   unsigned short int usVal;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_Inp9x(%hu)", usPort ) );
+
+   unsigned short int usVal;
 
    #if ( defined( __BORLANDC__ ) && ! defined( __clang__ ) )
 
@@ -141,10 +141,10 @@ static int hb_Outp9x( unsigned short int usPort, unsigned short int usVal )
 /* dDurat is in seconds */
 static void hb_gt_w9xTone( double dFreq, double dDurat )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_w9xtone(%lf, %lf)", dFreq, dDurat ) );
+
    int uLSB, uMSB;
    unsigned long lAdjFreq;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_w9xtone(%lf, %lf)", dFreq, dDurat ) );
 
    /* sync with internal clock with very small time period */
    hb_idleSleep( 0.01 );

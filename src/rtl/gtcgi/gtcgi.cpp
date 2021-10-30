@@ -102,9 +102,9 @@ static void hb_gt_cgi_newLine( PHB_GTCGI pGTCGI )
 
 static void hb_gt_cgi_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr )
 {
-   PHB_GTCGI pGTCGI;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Init(%p,%p,%p,%p)", static_cast< void * >( pGT ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdin ) ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdout ) ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStderr ) ) ) );
+
+   PHB_GTCGI pGTCGI;
 
    HB_GTLOCAL( pGT ) = pGTCGI = static_cast< PHB_GTCGI >( hb_xgrabz( sizeof( HB_GTCGI ) ) );
 
@@ -121,9 +121,9 @@ static void hb_gt_cgi_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
 static void hb_gt_cgi_Exit( PHB_GT pGT )
 {
-   PHB_GTCGI pGTCGI;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Exit(%p)", static_cast< void * >( pGT ) ) );
+
+   PHB_GTCGI pGTCGI;
 
    HB_GTSELF_REFRESH( pGT );
 
@@ -174,10 +174,10 @@ static HB_BOOL hb_gt_cgi_IsColor( PHB_GT pGT )
 
 static void hb_gt_cgi_Bell( PHB_GT pGT )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Bell(%p)", static_cast< void * >( pGT ) ) );
+
    static const char s_szBell[] = { HB_CHAR_BEL, 0 };
    PHB_GTCGI pGTCGI;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Bell(%p)", static_cast< void * >( pGT ) ) );
 
    pGTCGI = HB_GTCGI_GET( pGT );
 
@@ -200,9 +200,9 @@ static const char * hb_gt_cgi_Version( PHB_GT pGT, int iType )
 
 static void hb_gt_cgi_Scroll( PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, int iColor, HB_USHORT usChar, int iRows, int iCols )
 {
-   int iHeight, iWidth;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Scroll(%p,%d,%d,%d,%d,%d,%d,%d,%d)", static_cast< void * >( pGT ), iTop, iLeft, iBottom, iRight, iColor, usChar, iRows, iCols ) );
+
+   int iHeight, iWidth;
 
    /* Provide some basic scroll support for full screen */
    HB_GTSELF_GETSIZE( pGT, &iHeight, &iWidth );
@@ -346,13 +346,13 @@ static void hb_gt_cgi_WriteAtW( PHB_GT pGT, int iRow, int iCol, const HB_WCHAR *
 
 static void hb_gt_cgi_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Redraw(%p,%d,%d,%d)", static_cast< void * >( pGT ), iRow, iCol, iSize ) );
+
    int iColor;
    HB_BYTE bAttr;
    HB_USHORT usChar;
    int iLineFeed, iHeight, iWidth, iLen;
    PHB_GTCGI pGTCGI;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Redraw(%p,%d,%d,%d)", static_cast< void * >( pGT ), iRow, iCol, iSize ) );
 
    pGTCGI = HB_GTCGI_GET( pGT );
    HB_GTSELF_GETSIZE( pGT, &iHeight, &iWidth );
@@ -420,10 +420,10 @@ static void hb_gt_cgi_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 
 static void hb_gt_cgi_Refresh( PHB_GT pGT )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Refresh(%p)", static_cast< void * >( pGT ) ) );
+
    int iHeight, iWidth;
    PHB_GTCGI pGTCGI;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Refresh(%p)", static_cast< void * >( pGT ) ) );
 
    pGTCGI = HB_GTCGI_GET( pGT );
    HB_GTSELF_GETSIZE( pGT, &iHeight, &iWidth );

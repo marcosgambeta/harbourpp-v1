@@ -209,9 +209,9 @@ static void hb_stack_destroy_TSD( PHB_STACK pStack )
 
 static void hb_stack_free( PHB_STACK pStack )
 {
-   HB_ISIZ n;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_stack_free(%p)", static_cast< void * >( pStack ) ) );
+
+   HB_ISIZ n;
 
    hb_stack_destroy_TSD( pStack );
 
@@ -247,18 +247,18 @@ static void hb_stack_free( PHB_STACK pStack )
 
 void hb_stackDestroyTSD( void )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackDestroyTSD()" ) );
+
+   HB_STACK_TLS_PRELOAD
 
    hb_stack_destroy_TSD( &hb_stack );
 }
 
 void * hb_stackGetTSD( PHB_TSD pTSD )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackGetTSD(%p)", static_cast< void * >( pTSD ) ) );
+
+   HB_STACK_TLS_PRELOAD
 
 #if defined( HB_MT_VM )
    if( pTSD->iHandle == 0 || pTSD->iHandle > hb_stack.iTSD || hb_stack.pTSD[ pTSD->iHandle ].pTSD == nullptr )
@@ -307,9 +307,9 @@ void * hb_stackGetTSD( PHB_TSD pTSD )
 
 void * hb_stackTestTSD( PHB_TSD pTSD )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackTestTSD(%p)", static_cast< void * >( pTSD ) ) );
+
+   HB_STACK_TLS_PRELOAD
 
 #if defined( HB_MT_VM )
    return ( pTSD->iHandle && pTSD->iHandle <= hb_stack.iTSD ) ? hb_stack.pTSD[ pTSD->iHandle ].value : nullptr;
@@ -320,9 +320,9 @@ void * hb_stackTestTSD( PHB_TSD pTSD )
 
 void hb_stackReleaseTSD( PHB_TSD pTSD )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackReleaseTSD(%p)", static_cast< void * >( pTSD ) ) );
+
+   HB_STACK_TLS_PRELOAD
 
    if( pTSD->iHandle && pTSD->iHandle <= hb_stack.iTSD && hb_stack.pTSD[ pTSD->iHandle ].value )
    {
@@ -357,9 +357,9 @@ void hb_stackInit( void )
 
 void hb_stackFree( void )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackFree()" ) );
+
+   HB_STACK_TLS_PRELOAD
 
    hb_stack_free( &hb_stack );
    hb_xexit_thread();
@@ -373,9 +373,9 @@ void hb_stackFree( void )
 #undef hb_stackList
 void * hb_stackList( void )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackList()" ) );
+
+   HB_STACK_TLS_PRELOAD
 
    return hb_stack.pStackLst;
 }
@@ -383,9 +383,9 @@ void * hb_stackList( void )
 #undef hb_stackListSet
 void hb_stackListSet( void * pStackLst )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackListSet(%p)", pStackLst ) );
+
+   HB_STACK_TLS_PRELOAD
 
    hb_stack.pStackLst = pStackLst;
 }
@@ -399,19 +399,19 @@ void hb_stackIdSetActionRequest( void * pStackId, HB_USHORT uiAction )
 #undef hb_stackDynHandlesCount
 HB_SYMCNT hb_stackDynHandlesCount( void )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackDynHandlesCount()" ) );
+
+   HB_STACK_TLS_PRELOAD
 
    return hb_stack.uiDynH;
 }
 
 PHB_DYN_HANDLES hb_stackGetDynHandle( PHB_DYNS pDynSym )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_stackGetDynHandle()" ) );
+
    HB_STACK_TLS_PRELOAD
    HB_SYMCNT uiDynSym;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_stackGetDynHandle()" ) );
 
    uiDynSym = pDynSym->uiSymNum;
    if( uiDynSym > hb_stack.uiDynH )
@@ -426,10 +426,10 @@ PHB_DYN_HANDLES hb_stackGetDynHandle( PHB_DYNS pDynSym )
 
 void hb_stackClearMemvars( HB_SYMCNT uiExcept )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_stackClearMemvars(%d)", uiExcept ) );
+
    HB_STACK_TLS_PRELOAD
    HB_SYMCNT uiDynSym;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_stackClearMemvars(%d)", uiExcept ) );
 
    uiDynSym = hb_stack.uiDynH;
    while( uiDynSym > 0 )
@@ -486,9 +486,9 @@ int hb_stackLockCount( void )
 #undef hb_stackKeyPolls
 int * hb_stackKeyPolls( void )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackKeyPolls()" ) );
+
+   HB_STACK_TLS_PRELOAD
 
    return &hb_stack.iKeyPoll;
 }
@@ -496,9 +496,9 @@ int * hb_stackKeyPolls( void )
 #undef hb_stackDebugRequest
 HB_BOOL * hb_stackDebugRequest( void )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackDebugRequest()" ) );
+
+   HB_STACK_TLS_PRELOAD
 
    return &hb_stack.fDebugRequest;
 }
@@ -506,9 +506,9 @@ HB_BOOL * hb_stackDebugRequest( void )
 #undef hb_stackDebugInfo
 void ** hb_stackDebugInfo( void )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackDebugInfo()" ) );
+
+   HB_STACK_TLS_PRELOAD
 
    return &hb_stack.pDebugInfo;
 }
@@ -516,9 +516,9 @@ void ** hb_stackDebugInfo( void )
 #undef hb_stackGetPrivateStack
 PHB_PRIVATE_STACK hb_stackGetPrivateStack( void )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackGetPrivateStack()" ) );
+
+   HB_STACK_TLS_PRELOAD
 
    return &hb_stack.privates;
 }
@@ -526,9 +526,9 @@ PHB_PRIVATE_STACK hb_stackGetPrivateStack( void )
 #undef hb_stackSetStruct
 PHB_SET_STRUCT hb_stackSetStruct( void )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackSetStruct()" ) );
+
+   HB_STACK_TLS_PRELOAD
 
    return &hb_stack.set;
 }
@@ -559,9 +559,9 @@ void * hb_stackId( void )
 #undef hb_stackPop
 void hb_stackPop( void )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackPop()" ) );
+
+   HB_STACK_TLS_PRELOAD
 
    if( --hb_stack.pPos <= hb_stack.pBase )
    {
@@ -577,9 +577,9 @@ void hb_stackPop( void )
 #undef hb_stackPopReturn
 void hb_stackPopReturn( void )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackPopReturn()" ) );
+
+   HB_STACK_TLS_PRELOAD
 
    if( HB_IS_COMPLEX( &hb_stack.Return ) )
    {
@@ -597,9 +597,9 @@ void hb_stackPopReturn( void )
 #undef hb_stackDec
 void hb_stackDec( void )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackDec()" ) );
+
+   HB_STACK_TLS_PRELOAD
 
    if( --hb_stack.pPos <= hb_stack.pBase )
    {
@@ -610,9 +610,9 @@ void hb_stackDec( void )
 #undef hb_stackDecrease
 void hb_stackDecrease( HB_SIZE nItems )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackDecrease()" ) );
+
+   HB_STACK_TLS_PRELOAD
 
    if( ( hb_stack.pPos -= nItems ) <= hb_stack.pBase )
    {
@@ -623,9 +623,9 @@ void hb_stackDecrease( HB_SIZE nItems )
 #undef hb_stackPush
 void hb_stackPush( void )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackPush()" ) );
+
+   HB_STACK_TLS_PRELOAD
 
    /* enough room for another item ? */
    if( ++hb_stack.pPos == hb_stack.pEnd )
@@ -637,9 +637,9 @@ void hb_stackPush( void )
 #undef hb_stackAllocItem
 PHB_ITEM hb_stackAllocItem( void )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackAllocItem()" ) );
+
+   HB_STACK_TLS_PRELOAD
 
    if( ++hb_stack.pPos == hb_stack.pEnd )
    {
@@ -654,9 +654,9 @@ PHB_ITEM hb_stackAllocItem( void )
 #undef hb_stackPushReturn
 void hb_stackPushReturn( void )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackPushReturn()" ) );
+
+   HB_STACK_TLS_PRELOAD
 
    hb_itemRawMove( *hb_stack.pPos, &hb_stack.Return );
 
@@ -669,12 +669,12 @@ void hb_stackPushReturn( void )
 
 void hb_stackIncrease( void )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_stackIncrease()" ) );
+
    HB_STACK_TLS_PRELOAD
    HB_ISIZ nBaseIndex;   /* index of stack base */
    HB_ISIZ nCurrIndex;   /* index of current top item */
    HB_ISIZ nEndIndex;    /* index of current top item */
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_stackIncrease()" ) );
 
    nBaseIndex = hb_stack.pBase - hb_stack.pItems;
    nCurrIndex = hb_stack.pPos - hb_stack.pItems;
@@ -716,11 +716,11 @@ void hb_stackRemove( HB_ISIZ nUntilPos )
 
 static void hb_stackDispLocal( void )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_stackDispLocal()" ) );
+
    char buffer[ 1024 ];
    HB_STACK_TLS_PRELOAD
    PHB_ITEM * pBase;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_stackDispLocal()" ) );
 
    hb_conOutErr( hb_conNewLine(), 0 );
    hb_snprintf( buffer, sizeof( buffer ), HB_I_( "Virtual Machine Stack Dump at %s(%i):" ),
@@ -975,9 +975,9 @@ PHB_ITEM hb_stackSelfItem( void )
 #undef hb_stackReturnItem
 PHB_ITEM hb_stackReturnItem( void )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackReturnItem()" ) );
+
+   HB_STACK_TLS_PRELOAD
 
    return &hb_stack.Return;
 }
@@ -1210,10 +1210,10 @@ PHB_ITEM ** hb_stackItemBasePtr( void )
 
 void hb_stackClearMemvarsBase( void )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_stackClearMemvarsBase()" ) );
+
    HB_STACK_TLS_PRELOAD
    PHB_ITEM pBase;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_stackClearMemvarsBase()" ) );
 
    pBase = *hb_stack.pBase;
 
@@ -1309,12 +1309,12 @@ void hb_stackBaseProcInfo( char * szProcName, HB_USHORT * puiProcLine )
 
 void hb_stackDispCall( void )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_stackDispCall()" ) );
+
    char buffer[ HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5 + 10 ]; /* additional 10 bytes for line info (%hu) overhead */
    char file[ HB_PATH_MAX ];
    HB_USHORT uiLine;
    int iLevel;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_stackDispCall()" ) );
 
    iLevel = 0;
 
@@ -1410,10 +1410,10 @@ static void hb_stackIsTsdRef( PHB_STACK pStack, PHB_TSD_FUNC pCleanFunc )
  */
 void hb_stackIsStackRef( void * pStackId, PHB_TSD_FUNC pCleanFunc )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_stackIsStackRef()" ) );
+
    PHB_STACK pStack;
    HB_ISIZ nCount;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_stackIsStackRef()" ) );
 
    pStack = static_cast< PHB_STACK >( pStackId );
    nCount = pStack->pPos - pStack->pItems;

@@ -162,9 +162,9 @@ HB_BOOL hb_itemParamStoreRelease( HB_USHORT uiParam, PHB_ITEM pItem )
 
 HB_USHORT hb_itemPCount( void )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemPCount()" ) );
+
+   HB_STACK_TLS_PRELOAD
 
    return static_cast< HB_USHORT >( hb_pcount() );
 }
@@ -186,9 +186,9 @@ HB_BOOL hb_itemRelease( PHB_ITEM pItem )
 
 PHB_ITEM hb_itemArrayNew( HB_SIZE nLen )
 {
-   PHB_ITEM pItem;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemArrayNew(%" HB_PFS "u)", nLen ) );
+
+   PHB_ITEM pItem;
 
    pItem = hb_itemNew( nullptr );
 
@@ -199,9 +199,9 @@ PHB_ITEM hb_itemArrayNew( HB_SIZE nLen )
 
 PHB_ITEM hb_itemArrayGet( PHB_ITEM pArray, HB_SIZE nIndex )
 {
-   PHB_ITEM pItem;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemArrayGet(%p, %" HB_PFS "u)", static_cast< void * >( pArray ), nIndex ) );
+
+   PHB_ITEM pItem;
 
    pItem = hb_itemNew( nullptr );
 
@@ -243,9 +243,9 @@ PHB_ITEM hb_itemPutNil( PHB_ITEM pItem )
 
 PHB_ITEM hb_itemPutC( PHB_ITEM pItem, const char * szText )
 {
-   HB_SIZE nLen, nAlloc;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutC(%p, %s)", static_cast< void * >( pItem ), szText ) );
+
+   HB_SIZE nLen, nAlloc;
 
    nLen = szText ? strlen( szText ) : 0;
    if( nLen <= 1 )
@@ -281,10 +281,10 @@ PHB_ITEM hb_itemPutC( PHB_ITEM pItem, const char * szText )
 
 PHB_ITEM hb_itemPutCL( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutCL(%p, %.*s, %" HB_PFS "u)", static_cast< void * >( pItem ), static_cast< int >( nLen ), szText, nLen ) );
+
    HB_SIZE nAlloc;
    char * szValue;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutCL(%p, %.*s, %" HB_PFS "u)", static_cast< void * >( pItem ), static_cast< int >( nLen ), szText, nLen ) );
 
    if( nLen <= 1 )
    {
@@ -324,9 +324,9 @@ PHB_ITEM hb_itemPutCL( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
 
 PHB_ITEM hb_itemPutCConst( PHB_ITEM pItem, const char * szText )
 {
-   HB_SIZE nLen;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutCConst(%p, %s)", static_cast< void * >( pItem ), szText ) );
+
+   HB_SIZE nLen;
 
    if( pItem )
    {
@@ -388,9 +388,9 @@ PHB_ITEM hb_itemPutCLConst( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
 
 PHB_ITEM hb_itemPutCPtr( PHB_ITEM pItem, char * szText )
 {
-   HB_SIZE nLen;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutCPtr(%p, %s)", static_cast< void * >( pItem ), szText ) );
+
+   HB_SIZE nLen;
 
    if( pItem )
    {
@@ -1054,9 +1054,9 @@ PHB_ITEM hb_itemPutTS( PHB_ITEM pItem, const char * szDateTime )
 
 PHB_ITEM hb_itemPutTD( PHB_ITEM pItem, double dTimeStamp )
 {
-   long lJulian, lMilliSec;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutTD(%p, %lf)", static_cast< void * >( pItem ), dTimeStamp ) );
+
+   long lJulian, lMilliSec;
 
    if( pItem )
    {
@@ -1125,9 +1125,9 @@ PHB_ITEM hb_itemPutL( PHB_ITEM pItem, HB_BOOL bValue )
 
 PHB_ITEM hb_itemPutND( PHB_ITEM pItem, double dNumber )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutND(%p, %lf)", static_cast< void * >( pItem ), dNumber ) );
+
+   HB_STACK_TLS_PRELOAD
 
    if( pItem )
    {
@@ -1882,9 +1882,9 @@ void hb_itemInit( PHB_ITEM pItem )
 
 void hb_itemClear( PHB_ITEM pItem )
 {
-   HB_TYPE type;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemClear(%p)", static_cast< void * >( pItem ) ) );
+
+   HB_TYPE type;
 
    type = HB_ITEM_TYPERAW( pItem );
    pItem->type = HB_IT_NIL;
@@ -2204,9 +2204,9 @@ void hb_itemMoveFromRef( PHB_ITEM pDest, PHB_ITEM pSource )
 
 void hb_itemSwap( PHB_ITEM pItem1, PHB_ITEM pItem2 )
 {
-   HB_ITEM temp;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemSwap(%p, %p)", static_cast< void * >( pItem1 ), static_cast< void * >( pItem2 ) ) );
+
+   HB_ITEM temp;
 
    /*
     * It's safe to use this version because our GC cannot be
@@ -2400,9 +2400,9 @@ PHB_ITEM hb_itemUnRefWrite( PHB_ITEM pItem, PHB_ITEM pSource )
  */
 PHB_ITEM hb_itemUnRefRefer( PHB_ITEM pItem )
 {
-   PHB_ITEM pLast;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemUnRefRefer(%p)", static_cast< void * >( pItem ) ) );
+
+   PHB_ITEM pLast;
 
    do
    {
@@ -2733,6 +2733,8 @@ HB_BOOL hb_itemCompare( PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, i
 /* Check whether two strings are equal (0), smaller (-1), or greater (1) */
 int hb_itemStrCmp( PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_itemStrCmp(%p, %p, %d)", static_cast< void * >( pFirst ), static_cast< void * >( pSecond ), static_cast< int >( bForceExact ) ) );
+
    HB_STACK_TLS_PRELOAD
    const char * szFirst;
    const char * szSecond;
@@ -2740,8 +2742,6 @@ int hb_itemStrCmp( PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact )
    HB_SIZE nLenSecond;
    HB_SIZE nMinLen;
    int iRet = 0; /* Current status */
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_itemStrCmp(%p, %p, %d)", static_cast< void * >( pFirst ), static_cast< void * >( pSecond ), static_cast< int >( bForceExact ) ) );
 
    szFirst = pFirst->item.asString.value;
    szSecond = pSecond->item.asString.value;
@@ -2830,6 +2830,8 @@ int hb_itemStrCmp( PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact )
 /* Check whether two strings are equal (0), smaller (-1), or greater (1), ignore case */
 int hb_itemStrICmp( PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_itemStrICmp(%p, %p, %d)", static_cast< void * >( pFirst ), static_cast< void * >( pSecond ), static_cast< int >( bForceExact ) ) );
+
    HB_STACK_TLS_PRELOAD
    const char * szFirst;
    const char * szSecond;
@@ -2837,8 +2839,6 @@ int hb_itemStrICmp( PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact )
    HB_SIZE nLenSecond;
    HB_SIZE nMinLen;
    int iRet = 0; /* Current status */
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_itemStrICmp(%p, %p, %d)", static_cast< void * >( pFirst ), static_cast< void * >( pSecond ), static_cast< int >( bForceExact ) ) );
 
    szFirst = pFirst->item.asString.value;
    szSecond = pSecond->item.asString.value;
@@ -3179,9 +3179,9 @@ HB_BOOL hb_itemStrBuf( char * szResult, PHB_ITEM pNumber, int iSize, int iDec )
  */
 char * hb_itemStr( PHB_ITEM pNumber, PHB_ITEM pWidth, PHB_ITEM pDec )
 {
-   char * szResult = nullptr;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemStr(%p, %p, %p)", static_cast< void * >( pNumber ), static_cast< void * >( pWidth ), static_cast< void * >( pDec ) ) );
+
+   char * szResult = nullptr;
 
    if( pNumber )
    {
@@ -3247,9 +3247,9 @@ char * hb_itemStr( PHB_ITEM pNumber, PHB_ITEM pWidth, PHB_ITEM pDec )
 
 char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
 {
-   char * buffer;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemString(%p, %p, %p)", static_cast< void * >( pItem ), static_cast< void * >( nLen ), static_cast< void * >( bFreeReq ) ) );
+
+   char * buffer;
 
    switch( HB_ITEM_TYPE( pItem ) )
    {
@@ -3426,12 +3426,12 @@ char * hb_itemPadConv( PHB_ITEM pItem, HB_SIZE * pnSize, HB_BOOL * bFreeReq )
 
 PHB_ITEM hb_itemValToStr( PHB_ITEM pItem )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_itemValToStr(%p)", static_cast< void * >( pItem ) ) );
+
    PHB_ITEM pResult;
    char * buffer;
    HB_SIZE nLen;
    HB_BOOL bFreeReq;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_itemValToStr(%p)", static_cast< void * >( pItem ) ) );
 
    buffer = hb_itemString( pItem, &nLen, &bFreeReq );
    if( bFreeReq )

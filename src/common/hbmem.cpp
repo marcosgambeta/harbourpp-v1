@@ -60,12 +60,12 @@
 #ifndef hb_xmemcpy
 void * hb_xmemcpy( void * pDestArg, const void * pSourceArg, HB_SIZE nLen )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_xmemcpy(%p, %p, %" HB_PFS "u)", pDestArg, pSourceArg, nLen ) );
+
    HB_BYTE * pDest;
    const HB_BYTE * pSource;
    HB_SIZE nRemaining;
    int iCopySize;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_xmemcpy(%p, %p, %" HB_PFS "u)", pDestArg, pSourceArg, nLen ) );
 
    pDest = static_cast< HB_BYTE * >( pDestArg );
    pSource = static_cast< const HB_BYTE * >( pSourceArg );
@@ -96,11 +96,11 @@ void * hb_xmemcpy( void * pDestArg, const void * pSourceArg, HB_SIZE nLen )
 #ifndef hb_xmemset
 void * hb_xmemset( void * pDestArg, int iFill, HB_SIZE nLen )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_xmemset(%p, %d, %" HB_PFS "u)", pDestArg, iFill, nLen ) );
+
    HB_BYTE * pDest;
    HB_SIZE nRemaining;
    int iSetSize;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_xmemset(%p, %d, %" HB_PFS "u)", pDestArg, iFill, nLen ) );
 
    pDest = ( HB_BYTE * ) pDestArg;
    nRemaining = nLen;

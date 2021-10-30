@@ -93,10 +93,10 @@ static HB_SIZE hb_hrbCheckSig( const char * szBody, HB_SIZE nBodySize )
 
 static int hb_hrbReadHead( const char * szBody, HB_SIZE nBodySize, HB_SIZE * pnBodyOffset )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_hrbReadHead(%p,%" HB_PFS "u,%p)", static_cast< const void * >( szBody ), nBodySize, static_cast< void * >( pnBodyOffset ) ) );
+
    const char * pVersion;
    HB_SIZE nSigSize;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_hrbReadHead(%p,%" HB_PFS "u,%p)", static_cast< const void * >( szBody ), nBodySize, static_cast< void * >( pnBodyOffset ) ) );
 
    nSigSize = hb_hrbCheckSig( szBody, nBodySize );
 
@@ -133,9 +133,9 @@ static HB_BOOL hb_hrbReadValue( const char * szBody, HB_SIZE nBodySize, HB_SIZE 
    Read the next (zero terminated) identifier */
 static char * hb_hrbReadId( const char * szBody, HB_SIZE nBodySize, HB_SIZE * pnBodyOffset )
 {
-   const char * szIdx;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_hrbReadId(%p,%" HB_PFS "u,%p)", static_cast< const void * >( szBody ), nBodySize, static_cast< void * >( pnBodyOffset ) ) );
+
+   const char * szIdx;
 
    szIdx = &szBody[ *pnBodyOffset ];
 

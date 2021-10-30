@@ -404,9 +404,9 @@ static int hb_gt_os2_mouse_CountButton( PHB_GT pGT )
 
 static void hb_gt_os2_GetCursorPosition( int * piRow, int * piCol )
 {
-   USHORT y, x;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_os2_GetCursorPosition(%p, %p)", static_cast< void * >( piRow ), static_cast< void * >( piCol ) ) );
+
+   USHORT y, x;
 
    VioGetCurPos( &y, &x, 0 );
 
@@ -428,9 +428,9 @@ static void hb_gt_os2_SetCursorPosition( int iRow, int iCol )
 
 static void hb_gt_os2_SetCursorSize( char start, char end, int visible )
 {
-   VIOCURSORINFO vi;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_os2_SetCursorSize(%d, %d, %d)", static_cast< int >( start ), static_cast< int >( end ), visible ) );
+
+   VIOCURSORINFO vi;
 
    vi.yStart = start;
    vi.cEnd = end;
@@ -448,10 +448,10 @@ static unsigned char hb_gt_os2_GetCharHeight()
 
 static int hb_gt_os2_GetCursorStyle( void )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_os2_GetCursorStyle()" ) );
+
    int iStyle;
    VIOCURSORINFO vi;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_os2_GetCursorStyle()" ) );
 
    VioGetCurType( &vi, 0 );
 
@@ -523,11 +523,11 @@ static void hb_gt_os2_SetCursorStyle( int iStyle )
 
 static void hb_gt_os2_GetScreenContents( PHB_GT pGT )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_os2_GetScreenContents(%p)", static_cast< void * >( pGT ) ) );
+
    PHB_CODEPAGE cdp;
    char * pBufPtr;
    HB_BYTE bxAttr;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_os2_GetScreenContents(%p)", static_cast< void * >( pGT ) ) );
 
    bxAttr = 0;
    cdp = HB_GTSELF_CPTERM( pGT );
@@ -643,9 +643,9 @@ static void hb_gt_os2_Exit( PHB_GT pGT )
 
 static int hb_gt_os2_ReadKey( PHB_GT pGT, int iEventMask )
 {
-   int iKey = 0, iFlags = 0;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_os2_ReadKey(%p,%d)", static_cast< void * >( pGT ), iEventMask ) );
+
+   int iKey = 0, iFlags = 0;
 
    /* zero out keyboard event record */
    memset( s_key, 0, sizeof( *s_key ) );
@@ -709,9 +709,9 @@ static HB_BOOL hb_gt_os2_IsColor( PHB_GT pGT )
 
 static HB_BOOL hb_gt_os2_GetBlink( PHB_GT pGT )
 {
-   VIOINTENSITY vi;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_os2_GetBlink(%p)", static_cast< void * >( pGT ) ) );
+
+   VIOINTENSITY vi;
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -724,9 +724,9 @@ static HB_BOOL hb_gt_os2_GetBlink( PHB_GT pGT )
 
 static void hb_gt_os2_SetBlink( PHB_GT pGT, HB_BOOL fBlink )
 {
-   VIOINTENSITY vi;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_os2_SetBlink(%p,%d)", static_cast< void * >( pGT ), static_cast< int >( fBlink ) ) );
+
+   VIOINTENSITY vi;
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -738,9 +738,9 @@ static void hb_gt_os2_SetBlink( PHB_GT pGT, HB_BOOL fBlink )
 
 static void hb_gt_os2_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 {
-   ULONG ulDuration;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_os2_Tone(%p,%lf,%lf)", static_cast< void * >( pGT ), dFrequency, dDuration ) );
+
+   ULONG ulDuration;
 
    /* The conversion from Clipper timer tick units to
       milliseconds is * 1000.0 / 18.2. */
@@ -796,9 +796,9 @@ static HB_BOOL hb_gt_os2_Resize( PHB_GT pGT, int iRows, int iCols )
 
 static HB_BOOL hb_gt_os2_SetMode( PHB_GT pGT, int iRows, int iCols )
 {
-   HB_BOOL fResult = HB_FALSE;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_os2_SetMode(%p,%d,%d)", static_cast< void * >( pGT ), iRows, iCols ) );
+
+   HB_BOOL fResult = HB_FALSE;
 
    if( iRows > 0 && iCols > 0 )
    {
@@ -856,13 +856,13 @@ static HB_BOOL hb_gt_os2_Resume( PHB_GT pGT )
 
 static void hb_gt_os2_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_os2_Redraw(%p,%d,%d,%d)", static_cast< void * >( pGT ), iRow, iCol, iSize ) );
+
    char * pBufPtr = s_sLineBuf;
    int iColor;
    HB_BYTE bAttr;
    HB_UCHAR uc;
    int iLen = 0;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_os2_Redraw(%p,%d,%d,%d)", static_cast< void * >( pGT ), iRow, iCol, iSize ) );
 
    while( iLen < iSize )
    {
@@ -879,9 +879,9 @@ static void hb_gt_os2_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 
 static void hb_gt_os2_Refresh( PHB_GT pGT )
 {
-   int iRow, iCol, iStyle;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_os2_Refresh(%p)", static_cast< void * >( pGT ) ) );
+
+   int iRow, iCol, iStyle;
 
    HB_GTSUPER_REFRESH( pGT );
 

@@ -198,9 +198,9 @@ static void hb_gt_std_newLine( PHB_GTSTD pGTSTD )
 
 static void hb_gt_std_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr )
 {
-   PHB_GTSTD pGTSTD;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Init(%p,%p,%p,%p)", static_cast< void * >( pGT ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdin ) ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdout ) ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStderr ) ) ) );
+
+   PHB_GTSTD pGTSTD;
 
    HB_GTLOCAL( pGT ) = pGTSTD = static_cast< PHB_GTSTD >( hb_xgrabz( sizeof( HB_GTSTD ) ) );
 
@@ -293,10 +293,10 @@ static void hb_gt_std_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
 static void hb_gt_std_Exit( PHB_GT pGT )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Exit(%p)", static_cast< void * >( pGT ) ) );
+
    PHB_GTSTD pGTSTD;
    int iRow, iCol;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Exit(%p)", static_cast< void * >( pGT ) ) );
 
    HB_GTSELF_REFRESH( pGT );
    HB_GTSELF_GETPOS( pGT, &iRow, &iCol );
@@ -335,10 +335,10 @@ static void hb_gt_std_Exit( PHB_GT pGT )
 
 static int hb_gt_std_ReadKey( PHB_GT pGT, int iEventMask )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_ReadKey(%p,%d)", static_cast< void * >( pGT ), iEventMask ) );
+
    PHB_GTSTD pGTSTD;
    int ch = 0;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_ReadKey(%p,%d)", static_cast< void * >( pGT ), iEventMask ) );
 
    HB_SYMBOL_UNUSED( iEventMask );
 
@@ -439,10 +439,10 @@ static HB_BOOL hb_gt_std_IsColor( PHB_GT pGT )
 
 static void hb_gt_std_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Tone(%p,%lf,%lf)", static_cast< void * >( pGT ), dFrequency, dDuration ) );
+
    double dCurrentSeconds;
    PHB_GTSTD pGTSTD;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Tone(%p,%lf,%lf)", static_cast< void * >( pGT ), dFrequency, dDuration ) );
 
    pGTSTD = HB_GTSTD_GET( pGT );
 
@@ -517,9 +517,9 @@ static HB_BOOL hb_gt_std_Resume( PHB_GT pGT )
 static void hb_gt_std_Scroll( PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight,
                               int iColor, HB_USHORT usChar, int iRows, int iCols )
 {
-   int iHeight, iWidth;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Scroll(%p,%d,%d,%d,%d,%d,%d,%d,%d)", static_cast< void * >( pGT ), iTop, iLeft, iBottom, iRight, iColor, usChar, iRows, iCols ) );
+
+   int iHeight, iWidth;
 
    /* Provide some basic scroll support for full screen */
    HB_GTSELF_GETSIZE( pGT, &iHeight, &iWidth );
@@ -584,13 +584,13 @@ static void hb_gt_std_DispLine( PHB_GT pGT, int iRow, int iFrom, int iSize )
 
 static void hb_gt_std_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Redraw(%p,%d,%d,%d)", static_cast< void * >( pGT ), iRow, iCol, iSize ) );
+
    int iColor;
    HB_BYTE bAttr;
    HB_USHORT usChar;
    int iLineFeed, iBackSpace, iMin;
    PHB_GTSTD pGTSTD;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Redraw(%p,%d,%d,%d)", static_cast< void * >( pGT ), iRow, iCol, iSize ) );
 
    iLineFeed = iBackSpace = 0;
    pGTSTD = HB_GTSTD_GET( pGT );
@@ -670,10 +670,10 @@ static void hb_gt_std_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 
 static void hb_gt_std_Refresh( PHB_GT pGT )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Refresh(%p)", static_cast< void * >( pGT ) ) );
+
    int iHeight, iSize;
    PHB_GTSTD pGTSTD;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Refresh(%p)", static_cast< void * >( pGT ) ) );
 
    pGTSTD = HB_GTSTD_GET( pGT );
    HB_GTSELF_GETSIZE( pGT, &iHeight, &pGTSTD->iWidth );

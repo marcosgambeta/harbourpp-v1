@@ -109,9 +109,9 @@ static void hb_sdfClearRecordBuffer( SDFAREAP pArea )
 
 static HB_ERRCODE hb_sdfReadRecord( SDFAREAP pArea )
 {
-   HB_SIZE nRead;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_sdfReadRecord(%p)", static_cast< void * >( pArea ) ) );
+
+   HB_SIZE nRead;
 
    pArea->area.fEof = HB_TRUE;
 
@@ -344,10 +344,10 @@ static HB_ERRCODE hb_sdfRecNo( SDFAREAP pArea, HB_ULONG * pulRecNo )
  */
 static HB_ERRCODE hb_sdfRecId( SDFAREAP pArea, PHB_ITEM pRecNo )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_sdfRecId(%p,%p)", static_cast< void * >( pArea ), static_cast< void * >( pRecNo ) ) );
+
    HB_ERRCODE errCode;
    HB_ULONG ulRecNo;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_sdfRecId(%p,%p)", static_cast< void * >( pArea ), static_cast< void * >( pRecNo ) ) );
 
    errCode = SELF_RECNO( &pArea->area, &ulRecNo );
 
@@ -435,9 +435,9 @@ static HB_ERRCODE hb_sdfRecall( SDFAREAP pArea )
  */
 static HB_ERRCODE hb_sdfGetValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
 {
-   LPFIELD pField;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_sdfGetValue(%p, %hu, %p)", static_cast< void * >( pArea ), uiIndex, static_cast< void * >( pItem ) ) );
+
+   LPFIELD pField;
 
    if( --uiIndex >= pArea->area.uiFieldCount )
    {
@@ -544,11 +544,11 @@ static HB_ERRCODE hb_sdfGetValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
  */
 static HB_ERRCODE hb_sdfPutValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_sdfPutValue(%p,%hu,%p)", static_cast< void * >( pArea ), uiIndex, static_cast< void * >( pItem ) ) );
+
    HB_ERRCODE errCode;
    LPFIELD pField;
    HB_SIZE nSize;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_sdfPutValue(%p,%hu,%p)", static_cast< void * >( pArea ), uiIndex, static_cast< void * >( pItem ) ) );
 
    if( ! pArea->fPositioned )
    {
@@ -811,9 +811,9 @@ static HB_ERRCODE hb_sdfGoHot( SDFAREAP pArea )
  */
 static HB_ERRCODE hb_sdfFlush( SDFAREAP pArea )
 {
-   HB_ERRCODE errCode;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_sdfFlush(%p)", static_cast< void * >( pArea ) ) );
+
+   HB_ERRCODE errCode;
 
    errCode = SELF_GOCOLD( &pArea->area );
 
@@ -1118,13 +1118,13 @@ static HB_ERRCODE hb_sdfClose( SDFAREAP pArea )
  */
 static HB_ERRCODE hb_sdfCreate( SDFAREAP pArea, LPDBOPENINFO pCreateInfo )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_sdfCreate(%p,%p)", static_cast< void * >( pArea ), static_cast< void * >( pCreateInfo ) ) );
+
    PHB_ITEM pError = nullptr;
    HB_ERRCODE errCode;
    HB_BOOL fRetry;
    PHB_FNAME pFileName;
    char szFileName[ HB_PATH_MAX ];
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_sdfCreate(%p,%p)", static_cast< void * >( pArea ), static_cast< void * >( pCreateInfo ) ) );
 
    pArea->fShared = HB_FALSE;    /* pCreateInfo->fShared; */
    pArea->fReadonly = HB_FALSE;  /* pCreateInfo->fReadonly */
@@ -1218,6 +1218,8 @@ static HB_ERRCODE hb_sdfCreate( SDFAREAP pArea, LPDBOPENINFO pCreateInfo )
  */
 static HB_ERRCODE hb_sdfOpen( SDFAREAP pArea, LPDBOPENINFO pOpenInfo )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_sdfOpen(%p,%p)", static_cast< void * >( pArea ), static_cast< void * >( pOpenInfo ) ) );
+
    PHB_ITEM pError = nullptr;
    PHB_FNAME pFileName;
    HB_ERRCODE errCode;
@@ -1225,8 +1227,6 @@ static HB_ERRCODE hb_sdfOpen( SDFAREAP pArea, LPDBOPENINFO pOpenInfo )
    HB_BOOL fRetry;
    char szFileName[ HB_PATH_MAX ];
    char szAlias[ HB_RDD_MAX_ALIAS_LEN + 1 ];
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_sdfOpen(%p,%p)", static_cast< void * >( pArea ), static_cast< void * >( pOpenInfo ) ) );
 
    pArea->fShared = HB_TRUE;     /* pOpenInfo->fShared; */
    pArea->fReadonly = HB_TRUE;   /* pOpenInfo->fReadonly; */

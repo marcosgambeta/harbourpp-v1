@@ -529,9 +529,9 @@ PHB_ITEM hb_errNew( void )
 
 HB_USHORT hb_errLaunch( PHB_ITEM pError )
 {
-   HB_USHORT uiAction = E_DEFAULT; /* Needed to avoid GCC -O2 warning */
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_errLaunch(%p)", pError ) );
+
+   HB_USHORT uiAction = E_DEFAULT; /* Needed to avoid GCC -O2 warning */
 
    if( pError )
    {
@@ -642,9 +642,9 @@ HB_USHORT hb_errLaunch( PHB_ITEM pError )
 
 PHB_ITEM hb_errLaunchSubst( PHB_ITEM pError )
 {
-   PHB_ITEM pResult;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_errLaunchSubst(%p)", pError ) );
+
+   PHB_ITEM pResult;
 
    if( pError )
    {
@@ -931,10 +931,10 @@ PHB_ITEM hb_errPutFlags( PHB_ITEM pError, HB_USHORT uiFlags )
 
 PHB_ITEM hb_errPutArgs( PHB_ITEM pError, HB_ULONG ulArgCount, ... )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_errPutArgs(%p, %lu, ...)", pError, ulArgCount ) );
+
    PHB_ITEM pArray;
    va_list va;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_errPutArgs(%p, %lu, ...)", pError, ulArgCount ) );
 
    pArray = hb_itemArrayNew( ulArgCount );
 
@@ -1008,11 +1008,11 @@ PHB_ITEM hb_errRT_New_Subst(
 
 PHB_ITEM hb_errRT_SubstParams( const char * szSubSystem, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char * szDescription, const char * szOperation )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_errRT_SubstParams()" ) );
+
    PHB_ITEM pRetVal;
    PHB_ITEM pError;
    PHB_ITEM pArray;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_errRT_SubstParams()" ) );
 
    pError = hb_errRT_New_Subst( ES_ERROR, szSubSystem ? szSubSystem : HB_ERR_SS_BASE,
                errGenCode, errSubCode, szDescription, szOperation, 0, EF_NONE );

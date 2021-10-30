@@ -95,9 +95,9 @@ static void hb_compExprDealloc( HB_COMP_DECL, PHB_EXPR pExpr )
 
 static PHB_EXPR hb_compExprNew( HB_COMP_DECL, HB_EXPRTYPE iType )
 {
-   PHB_EXPR pExpr;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_compExprNew(%p,%i)", static_cast< void * >( HB_COMP_PARAM ), iType ) );
+
+   PHB_EXPR pExpr;
 
    pExpr = hb_compExprAlloc( HB_COMP_PARAM );
    pExpr->ExprType = iType;

@@ -53,9 +53,9 @@ static const HB_WCHAR s_szConstStr[ 1 ] = { 0 };
 
 HB_SIZE hb_wstrlen( const HB_WCHAR * szText )
 {
-   HB_SIZE nLen = 0;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_wstrlen(%p)", static_cast< const void * >( szText ) ) );
+
+   HB_SIZE nLen = 0;
 
    if( szText )
    {
@@ -70,9 +70,9 @@ HB_SIZE hb_wstrlen( const HB_WCHAR * szText )
 
 HB_SIZE hb_wstrnlen( const HB_WCHAR * szText, HB_SIZE nCount )
 {
-   HB_SIZE nLen = 0;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_wstrnlen(%p,%" HB_PFS "u)", static_cast< const void * >( szText ), nCount ) );
+
+   HB_SIZE nLen = 0;
 
    if( szText )
    {
@@ -87,9 +87,9 @@ HB_SIZE hb_wstrnlen( const HB_WCHAR * szText, HB_SIZE nCount )
 
 int hb_wstrcmp( const HB_WCHAR * s1, const HB_WCHAR * s2 )
 {
-   int rc = 0;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_wstrcmp(%p, %p)", static_cast< const void * >( s1 ), static_cast< const void * >( s2 ) ) );
+
+   int rc = 0;
 
    for( ;; )
    {
@@ -112,9 +112,9 @@ int hb_wstrcmp( const HB_WCHAR * s1, const HB_WCHAR * s2 )
 
 int hb_wstrncmp( const HB_WCHAR * s1, const HB_WCHAR * s2, HB_SIZE nCount )
 {
-   int rc = 0;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_wstrncmp(%p, %p, %" HB_PFS "u)", static_cast< const void * >( s1 ), static_cast< const void * >( s2 ), nCount ) );
+
+   int rc = 0;
 
    while( nCount-- )
    {
@@ -137,9 +137,9 @@ int hb_wstrncmp( const HB_WCHAR * s1, const HB_WCHAR * s2, HB_SIZE nCount )
 
 HB_WCHAR * hb_wstrncpy( HB_WCHAR * pDest, const HB_WCHAR * pSource, HB_SIZE nLen )
 {
-   HB_WCHAR * pBuf = pDest;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_wstrncpy(%p, %p, %" HB_PFS "u)", static_cast< void * >( pDest ), static_cast< const void * >( pSource ), nLen ) );
+
+   HB_WCHAR * pBuf = pDest;
 
    pDest[ nLen ] = '\0';
 
@@ -153,9 +153,9 @@ HB_WCHAR * hb_wstrncpy( HB_WCHAR * pDest, const HB_WCHAR * pSource, HB_SIZE nLen
 
 HB_WCHAR * hb_wstrncat( HB_WCHAR * pDest, const HB_WCHAR * pSource, HB_SIZE nLen )
 {
-   HB_WCHAR * pBuf = pDest;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_strncat(%p, %p, %" HB_PFS "u)", static_cast< void * >( pDest ), static_cast< const void * >( pSource ), nLen ) );
+
+   HB_WCHAR * pBuf = pDest;
 
    pDest[ nLen ] = '\0';
 
@@ -175,10 +175,10 @@ HB_WCHAR * hb_wstrncat( HB_WCHAR * pDest, const HB_WCHAR * pSource, HB_SIZE nLen
 
 HB_WCHAR * hb_wstrdup( const HB_WCHAR * szText )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_wstrdup(%p)", static_cast< const void * >( szText ) ) );
+
    HB_WCHAR * pszDest;
    HB_SIZE nSize;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_wstrdup(%p)", static_cast< const void * >( szText ) ) );
 
    nSize = ( hb_wstrlen( szText ) + 1 ) * sizeof( HB_WCHAR );
    pszDest = static_cast< HB_WCHAR * >( hb_xgrab( nSize ) );
@@ -190,10 +190,10 @@ HB_WCHAR * hb_wstrdup( const HB_WCHAR * szText )
 
 HB_WCHAR * hb_wstrndup( const HB_WCHAR * szText, HB_SIZE nLen )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_wstrndup(%p,%" HB_PFS "u)", static_cast< const void * >( szText ), nLen ) );
+
    HB_WCHAR * pszDest;
    HB_SIZE nSize;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_wstrndup(%p,%" HB_PFS "u)", static_cast< const void * >( szText ), nLen ) );
 
    nSize = hb_wstrlen( szText );
    if( nSize < nLen )
@@ -489,9 +489,9 @@ HB_SIZE hb_itemCopyStrU16( PHB_ITEM pItem, int iEndian, HB_WCHAR * pStrBuffer, H
 
 PHB_ITEM hb_itemPutStrLen( PHB_ITEM pItem, void * cdp, const char * pStr, HB_SIZE nLen )
 {
-   char * pszText;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutStrLen(%p,%p,%p,%" HB_PFS "u)", static_cast< void * >( pItem ), cdp, static_cast< const void * >( pStr ), nLen ) );
+
+   char * pszText;
 
    if( nLen == 0 )
    {
@@ -505,11 +505,11 @@ PHB_ITEM hb_itemPutStrLen( PHB_ITEM pItem, void * cdp, const char * pStr, HB_SIZ
 
 PHB_ITEM hb_itemPutStrLenUTF8( PHB_ITEM pItem, const char * pStr, HB_SIZE nLen )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutStrLenUTF8(%p,%p,%" HB_PFS "u)", static_cast< void * >( pItem ), static_cast< const void * >( pStr ), nLen ) );
+
    PHB_CODEPAGE cdp;
    char * pszDest;
    HB_SIZE nDest;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutStrLenUTF8(%p,%p,%" HB_PFS "u)", static_cast< void * >( pItem ), static_cast< const void * >( pStr ), nLen ) );
 
    if( nLen == 0 )
    {
@@ -526,11 +526,11 @@ PHB_ITEM hb_itemPutStrLenUTF8( PHB_ITEM pItem, const char * pStr, HB_SIZE nLen )
 
 PHB_ITEM hb_itemPutStrLenU16( PHB_ITEM pItem, int iEndian, const HB_WCHAR * pStr, HB_SIZE nLen )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutStrLenU16(%p,%d,%p,%" HB_PFS "u)", static_cast< void * >( pItem ), iEndian, static_cast< const void * >( pStr ), nLen ) );
+
    PHB_CODEPAGE cdp;
    char * pszDest;
    HB_SIZE nDest;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutStrLenU16(%p,%d,%p,%" HB_PFS "u)", static_cast< void * >( pItem ), iEndian, static_cast< const void * >( pStr ), nLen ) );
 
    if( nLen == 0 )
    {
@@ -547,10 +547,10 @@ PHB_ITEM hb_itemPutStrLenU16( PHB_ITEM pItem, int iEndian, const HB_WCHAR * pStr
 
 PHB_ITEM hb_itemPutStr( PHB_ITEM pItem, void * cdp, const char * pStr )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutStr(%p,%p,%p)", static_cast< void * >( pItem ), cdp, static_cast< const void * >( pStr ) ) );
+
    char * pszText;
    HB_SIZE nLen;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutStr(%p,%p,%p)", static_cast< void * >( pItem ), cdp, static_cast< const void * >( pStr ) ) );
 
    if( pStr == nullptr )
    {
@@ -565,11 +565,11 @@ PHB_ITEM hb_itemPutStr( PHB_ITEM pItem, void * cdp, const char * pStr )
 
 PHB_ITEM hb_itemPutStrUTF8( PHB_ITEM pItem, const char * pStr )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutStrUTF8(%p,%p)", static_cast< void * >( pItem ), static_cast< const void * >( pStr ) ) );
+
    PHB_CODEPAGE cdp;
    char * pszDest;
    HB_SIZE nDest, nLen;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutStrUTF8(%p,%p)", static_cast< void * >( pItem ), static_cast< const void * >( pStr ) ) );
 
    if( pStr == nullptr )
    {
@@ -587,11 +587,11 @@ PHB_ITEM hb_itemPutStrUTF8( PHB_ITEM pItem, const char * pStr )
 
 PHB_ITEM hb_itemPutStrU16( PHB_ITEM pItem, int iEndian, const HB_WCHAR * pStr )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutStrU16(%p,%d,%p)", static_cast< void * >( pItem ), iEndian, static_cast< const void * >( pStr ) ) );
+
    PHB_CODEPAGE cdp;
    char * pszDest;
    HB_SIZE nDest, nLen;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutStrU16(%p,%d,%p)", static_cast< void * >( pItem ), iEndian, static_cast< const void * >( pStr ) ) );
 
    if( pStr == nullptr )
    {
@@ -750,9 +750,9 @@ HB_BOOL hb_arraySetStrU16( PHB_ITEM pArray, HB_SIZE nIndex, int iEndian, const H
 
 const char * hb_parstr( int iParam, void * cdp, void ** phString, HB_SIZE * pnLen )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_parstr(%d,%p,%p,%p)", iParam, cdp, static_cast< void * >( phString ), static_cast< void * >( pnLen ) ) );
+
+   HB_STACK_TLS_PRELOAD
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
@@ -777,9 +777,9 @@ const char * hb_parstr( int iParam, void * cdp, void ** phString, HB_SIZE * pnLe
 
 const char * hb_parstr_utf8( int iParam, void ** phString, HB_SIZE * pnLen )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_parstr_utf8(%d,%p,%p)", iParam, static_cast< void * >( phString ), static_cast< void * >( pnLen ) ) );
+
+   HB_STACK_TLS_PRELOAD
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
@@ -804,9 +804,9 @@ const char * hb_parstr_utf8( int iParam, void ** phString, HB_SIZE * pnLen )
 
 const HB_WCHAR * hb_parstr_u16( int iParam, int iEndian, void ** phString, HB_SIZE * pnLen )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_parstr_u16(%d,%d,%p,%p)", iParam, iEndian, static_cast< void * >( phString ), static_cast< void * >( pnLen ) ) );
+
+   HB_STACK_TLS_PRELOAD
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
@@ -831,9 +831,9 @@ const HB_WCHAR * hb_parstr_u16( int iParam, int iEndian, void ** phString, HB_SI
 
 const char * hb_parastr( int iParam, HB_SIZE nIndex, void * cdp, void ** phString, HB_SIZE * pnLen )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_parastr(%d,%" HB_PFS "u,%p,%p,%p)", iParam, nIndex, cdp, static_cast< void * >( phString ), static_cast< void * >( pnLen ) ) );
+
+   HB_STACK_TLS_PRELOAD
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
@@ -863,9 +863,9 @@ const char * hb_parastr( int iParam, HB_SIZE nIndex, void * cdp, void ** phStrin
 
 const char * hb_parastr_utf8( int iParam, HB_SIZE nIndex, void ** phString, HB_SIZE * pnLen )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_parastr_utf8(%d,%" HB_PFS "u,%p,%p)", iParam, nIndex, static_cast< void * >( phString ), static_cast< void * >( pnLen ) ) );
+
+   HB_STACK_TLS_PRELOAD
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
@@ -897,9 +897,9 @@ const char * hb_parastr_utf8( int iParam, HB_SIZE nIndex, void ** phString, HB_S
 
 const HB_WCHAR * hb_parastr_u16( int iParam, HB_SIZE nIndex, int iEndian, void ** phString, HB_SIZE * pnLen )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_parastr_u16(%d,%" HB_PFS "u,%d,%p,%p)", iParam, nIndex, iEndian, static_cast< void * >( phString ), static_cast< void * >( pnLen ) ) );
+
+   HB_STACK_TLS_PRELOAD
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
@@ -929,63 +929,63 @@ const HB_WCHAR * hb_parastr_u16( int iParam, HB_SIZE nIndex, int iEndian, void *
 
 void hb_retstr( void * cdp, const char * szText )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_retstr(%p,%s)", cdp, szText ) );
+
+   HB_STACK_TLS_PRELOAD
 
    hb_itemPutStrLen( hb_stackReturnItem(), cdp, szText, szText ? strlen( szText ) : 0 );
 }
 
 void hb_retstr_utf8( const char * szText )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_retstr_utf8(%s)", szText ) );
+
+   HB_STACK_TLS_PRELOAD
 
    hb_itemPutStrLenUTF8( hb_stackReturnItem(), szText, szText ? strlen( szText ) : 0 );
 }
 
 void hb_retstr_u16( int iEndian, const HB_WCHAR * szText )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_retstr_u16(%d,%p)", iEndian, static_cast< const void * >( szText ) ) );
+
+   HB_STACK_TLS_PRELOAD
 
    hb_itemPutStrLenU16( hb_stackReturnItem(), iEndian, szText, hb_wstrlen( szText ) );
 }
 
 void hb_retstrlen( void * cdp, const char * szText, HB_SIZE nLen )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_retstrlen(%p,%s,%" HB_PFS "u)", cdp, szText, nLen ) );
+
+   HB_STACK_TLS_PRELOAD
 
    hb_itemPutStrLen( hb_stackReturnItem(), cdp, szText, nLen );
 }
 
 void hb_retstrlen_utf8( const char * szText, HB_SIZE nLen )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_retstrlen_utf8(%s,%" HB_PFS "u)", szText, nLen ) );
+
+   HB_STACK_TLS_PRELOAD
 
    hb_itemPutStrLenUTF8( hb_stackReturnItem(), szText, nLen );
 }
 
 void hb_retstrlen_u16( int iEndian, const HB_WCHAR * szText, HB_SIZE nLen )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_retstrlen_u16(%d,%p,%" HB_PFS "u)", iEndian, static_cast< const void * >( szText ), nLen ) );
+
+   HB_STACK_TLS_PRELOAD
 
    hb_itemPutStrLenU16( hb_stackReturnItem(), iEndian, szText, nLen );
 }
 
 int hb_storstr( void * cdp, const char * szText, int iParam )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_storstr(%p,%s,%d)", cdp, szText, iParam ) );
+
+   HB_STACK_TLS_PRELOAD
 
    if( iParam == -1 )
    {
@@ -1008,9 +1008,9 @@ int hb_storstr( void * cdp, const char * szText, int iParam )
 
 int hb_storstr_utf8( const char * szText, int iParam )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_storstr_utf8(%s,%d)", szText, iParam ) );
+
+   HB_STACK_TLS_PRELOAD
 
    if( iParam == -1 )
    {
@@ -1033,9 +1033,9 @@ int hb_storstr_utf8( const char * szText, int iParam )
 
 int hb_storstr_u16( int iEndian, const HB_WCHAR * szText, int iParam )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_storstr_u16(%d,%p,%d)", iEndian, static_cast< const void * >( szText ), iParam ) );
+
+   HB_STACK_TLS_PRELOAD
 
    if( iParam == -1 )
    {
@@ -1058,9 +1058,9 @@ int hb_storstr_u16( int iEndian, const HB_WCHAR * szText, int iParam )
 
 int hb_storstrlen( void * cdp, const char * szText, HB_SIZE nLen, int iParam )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_storstrlen(%p,%s,%" HB_PFS "u,%d)", cdp, szText, nLen, iParam ) );
+
+   HB_STACK_TLS_PRELOAD
 
    if( iParam == -1 )
    {
@@ -1083,9 +1083,9 @@ int hb_storstrlen( void * cdp, const char * szText, HB_SIZE nLen, int iParam )
 
 int hb_storstrlen_utf8( const char * szText, HB_SIZE nLen, int iParam )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_storstrlen_utf8(%s,%" HB_PFS "u,%d)", szText, nLen, iParam ) );
+
+   HB_STACK_TLS_PRELOAD
 
    if( iParam == -1 )
    {
@@ -1108,9 +1108,9 @@ int hb_storstrlen_utf8( const char * szText, HB_SIZE nLen, int iParam )
 
 int hb_storstrlen_u16( int iEndian, const HB_WCHAR * szText, HB_SIZE nLen, int iParam )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_storstrlen_u16(%d,%p,%" HB_PFS "u,%d)", iEndian, static_cast< const void * >( szText ), nLen, iParam ) );
+
+   HB_STACK_TLS_PRELOAD
 
    if( iParam == -1 )
    {

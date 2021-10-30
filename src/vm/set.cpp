@@ -76,9 +76,9 @@ typedef struct
 
 static char set_char( PHB_ITEM pItem, char oldChar )
 {
-   char newChar = oldChar;
-
    HB_TRACE( HB_TR_DEBUG, ( "set_char(%p, %c)", static_cast< void * >( pItem ), oldChar ) );
+
+   char newChar = oldChar;
 
    if( HB_IS_STRING( pItem ) )
    {
@@ -98,9 +98,9 @@ static char set_char( PHB_ITEM pItem, char oldChar )
  */
 static HB_BOOL set_logical( PHB_ITEM pItem, HB_BOOL bDefault )
 {
-   HB_BOOL bLogical = bDefault;
-
    HB_TRACE( HB_TR_DEBUG, ( "set_logical(%p)", static_cast< void * >( pItem ) ) );
+
+   HB_BOOL bLogical = bDefault;
 
    if( pItem )
    {
@@ -141,9 +141,9 @@ static int set_number( PHB_ITEM pItem, int iOldValue )
 
 static char * set_string( PHB_ITEM pItem, char * szOldString )
 {
-   char * szString;
-
    HB_TRACE( HB_TR_DEBUG, ( "set_string(%p, %s)", static_cast< void * >( pItem ), szOldString ) );
+
+   char * szString;
 
    if( HB_IS_STRING( pItem ) || HB_IS_NIL( pItem ) )
    {
@@ -164,9 +164,9 @@ static char * set_string( PHB_ITEM pItem, char * szOldString )
 
 static void close_handle( PHB_SET_STRUCT pSet, HB_set_enum set_specifier )
 {
-   PHB_FILE * handle_ptr;
-
    HB_TRACE( HB_TR_DEBUG, ( "close_handle(%p, %d)", static_cast< void * >( pSet ), static_cast< int >( set_specifier ) ) );
+
+   PHB_FILE * handle_ptr;
 
    switch( set_specifier )
    {
@@ -281,6 +281,8 @@ static const char * is_devicename( const char * szFileName )
 
 static void open_handle( PHB_SET_STRUCT pSet, const char * file_name, HB_BOOL fAppend, HB_set_enum set_specifier )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "open_handle(%p, %s, %d, %d)", static_cast< void * >( pSet ), file_name, static_cast< int >( fAppend ), static_cast< int >( set_specifier ) ) );
+
    HB_STACK_TLS_PRELOAD
    PHB_ITEM pError = nullptr;
    PHB_FILE handle, * handle_ptr;
@@ -289,8 +291,6 @@ static void open_handle( PHB_SET_STRUCT pSet, const char * file_name, HB_BOOL fA
    char * szFileName = nullptr;
    char ** set_value;
    HB_BOOL fPipe = HB_FALSE, fStripEof;
-
-   HB_TRACE( HB_TR_DEBUG, ( "open_handle(%p, %s, %d, %d)", static_cast< void * >( pSet ), file_name, static_cast< int >( fAppend ), static_cast< int >( set_specifier ) ) );
 
    switch( set_specifier )
    {

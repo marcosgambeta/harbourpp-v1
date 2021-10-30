@@ -155,9 +155,9 @@ void hb_macroDelete( PHB_MACRO pMacro )
  */
 static HB_BOOL hb_macroCheckParam( PHB_ITEM pItem )
 {
-   HB_BOOL bValid = HB_TRUE;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroCheckParam(%p)", static_cast< void * >( pItem ) ) );
+
+   HB_BOOL bValid = HB_TRUE;
 
    if( ! HB_IS_STRING( pItem ) )
    {
@@ -209,9 +209,9 @@ void hb_macroRun( PHB_MACRO pMacro )
 
 static void hb_macroSyntaxError( PHB_MACRO pMacro )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroSyntaxError(%p)", static_cast< void * >( pMacro ) ) );
+
+   HB_STACK_TLS_PRELOAD
 
    if( pMacro && pMacro->pError )
    {
@@ -261,14 +261,14 @@ static void hb_macroSyntaxError( PHB_MACRO pMacro )
  */
 static char * hb_macroTextSubst( const char * szString, HB_SIZE * pnStringLen )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_macroTextSubst(%s, %" HB_PFS "u)", szString, *pnStringLen ) );
+
    char * szResult;
    HB_SIZE nResStrLen;
    HB_SIZE nResBufLen;
    HB_SIZE nCharsLeft;
    char * pHead;
    char * pTail;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_macroTextSubst(%s, %" HB_PFS "u)", szString, *pnStringLen ) );
 
    pHead = static_cast< char * >( const_cast< void * >( memchr( szString, '&', *pnStringLen ) ) );
    if( pHead == nullptr )
@@ -417,9 +417,9 @@ static char * hb_macroTextSubst( const char * szString, HB_SIZE * pnStringLen )
 
 void hb_macroGetValue( PHB_ITEM pItem, int iContext, int flags )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroGetValue(%p)", static_cast< void * >( pItem ) ) );
+
+   HB_STACK_TLS_PRELOAD
 
    if( hb_macroCheckParam( pItem ) )
    {
@@ -511,9 +511,9 @@ void hb_macroGetValue( PHB_ITEM pItem, int iContext, int flags )
  */
 void hb_macroSetValue( PHB_ITEM pItem, int flags )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroSetValue(%p)", static_cast< void * >( pItem ) ) );
+
+   HB_STACK_TLS_PRELOAD
 
    if( hb_macroCheckParam( pItem ) )
    {
@@ -556,9 +556,9 @@ void hb_macroSetValue( PHB_ITEM pItem, int flags )
  */
 void hb_macroPushReference( PHB_ITEM pItem )
 {
-   HB_STACK_TLS_PRELOAD
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroPushReference(%p)", static_cast< void * >( pItem ) ) );
+
+   HB_STACK_TLS_PRELOAD
 
    if( hb_macroCheckParam( pItem ) )
    {
@@ -711,9 +711,9 @@ void hb_macroPushAliasedValue( PHB_ITEM pAlias, PHB_ITEM pVar, int flags )
  */
 char * hb_macroExpandString( const char * szString, HB_SIZE nLength, HB_BOOL * pfNewString )
 {
-   char * szResultString;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroExpandString(%s,%" HB_PFS "u,%p)", szString, nLength, static_cast< void * >( pfNewString ) ) );
+
+   char * szResultString;
 
    if( szString )
    {
@@ -729,9 +729,9 @@ char * hb_macroExpandString( const char * szString, HB_SIZE nLength, HB_BOOL * p
 
 char * hb_macroTextSymbol( const char * szString, HB_SIZE nLength, HB_BOOL * pfNewString )
 {
-   char * szResult = nullptr;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroTextSymbol(%s,%" HB_PFS "u,%p)", szString, nLength, static_cast< void * >( pfNewString ) ) );
+
+   char * szResult = nullptr;
 
    if( szString )
    {
@@ -808,10 +808,10 @@ char * hb_macroTextSymbol( const char * szString, HB_SIZE nLength, HB_BOOL * pfN
  */
 PHB_MACRO hb_macroCompile( const char * szString )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_macroCompile(%s)", szString ) );
+
    PHB_MACRO pMacro;
    int iStatus;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_macroCompile(%s)", szString ) );
 
    pMacro = static_cast< PHB_MACRO >( hb_xgrab( sizeof( HB_MACRO ) ) );
    pMacro->mode      = HB_MODE_MACRO;
@@ -1043,8 +1043,9 @@ HB_FUNC( FIELDWBLOCK )
  */
 void hb_macroPushSymbol( PHB_ITEM pItem )
 {
-   HB_STACK_TLS_PRELOAD
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroPushSymbol(%p)", static_cast< void * >( pItem ) ) );
+
+   HB_STACK_TLS_PRELOAD
 
    if( hb_macroCheckParam( pItem ) )
    {
@@ -1113,10 +1114,10 @@ void hb_macroTextValue( PHB_ITEM pItem )
 
 const char * hb_macroGetType( PHB_ITEM pItem )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_macroGetType(%p)", static_cast< void * >( pItem ) ) );
+
    HB_STACK_TLS_PRELOAD
    const char * szType;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_macroGetType(%p)", static_cast< void * >( pItem ) ) );
 
    if( hb_macroCheckParam( pItem ) )
    {
@@ -1575,10 +1576,10 @@ void hb_macroGenMessage( const char * szMsgName, HB_BOOL bIsObject, HB_COMP_DECL
 /* generates an underscore-symbol name for a data assignment */
 void hb_macroGenMessageData( const char * szMsg, HB_BOOL bIsObject, HB_COMP_DECL )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_macroGenMessageData(%s)", szMsg ) );
+
    char szResult[ HB_SYMBOL_NAME_LEN + 1 ];
    int iLen;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_macroGenMessageData(%s)", szMsg ) );
 
    iLen = static_cast< int >( strlen( szMsg ) );
    if( iLen > HB_SYMBOL_NAME_LEN - 1 )
@@ -1901,9 +1902,9 @@ void hb_macroError( int iError, HB_COMP_DECL )
 /* Start a new pcode buffer for a codeblock */
 void hb_macroCodeBlockStart( HB_COMP_DECL )
 {
-   PHB_PCODE_INFO pCB;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroCodeBlockStart(%p)", static_cast< void * >( HB_COMP_PARAM ) ) );
+
+   PHB_PCODE_INFO pCB;
 
    pCB = static_cast< PHB_PCODE_INFO >( hb_xgrab( sizeof( HB_PCODE_INFO ) ) );
 
@@ -1921,12 +1922,12 @@ void hb_macroCodeBlockStart( HB_COMP_DECL )
 
 void hb_macroCodeBlockEnd( HB_COMP_DECL )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_macroCodeBlockEnd(%p)", static_cast< void * >( HB_COMP_PARAM ) ) );
+
    PHB_PCODE_INFO pCodeblock;   /* pointer to the current codeblock */
    HB_SIZE nSize;
    HB_USHORT usParms = 0;   /* number of codeblock parameters */
    PHB_CBVAR pVar;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_macroCodeBlockEnd(%p)", static_cast< void * >( HB_COMP_PARAM ) ) );
 
    /* a currently processed codeblock */
    pCodeblock = HB_PCODE_DATA;

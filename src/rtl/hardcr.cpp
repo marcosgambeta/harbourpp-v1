@@ -50,10 +50,10 @@
 
 static char * hb_strHardCR( char * pszString, HB_SIZE nStringLen )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_strHardCR(%s, %" HB_PFS "u)", pszString, nStringLen ) );
+
    HB_SIZE nStringPos;
    PHB_CODEPAGE cdp;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strHardCR(%s, %" HB_PFS "u)", pszString, nStringLen ) );
 
    cdp = hb_vmCDP();
    if( HB_CDP_ISCUSTOM( cdp ) )

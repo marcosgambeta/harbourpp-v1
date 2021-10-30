@@ -169,9 +169,9 @@ HB_FUNC( __DBGVMSTKGLIST )
  */
 static HB_ISIZ hb_stackLen( int iLevel )
 {
-   HB_ISIZ nBaseOffset, nPrevOffset, nLen;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackLen()" ) );
+
+   HB_ISIZ nBaseOffset, nPrevOffset, nLen;
 
    nBaseOffset = hb_stackBaseOffset();
    while( --iLevel > 0 && nBaseOffset > 1 )

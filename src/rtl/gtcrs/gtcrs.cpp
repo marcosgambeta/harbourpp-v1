@@ -2631,9 +2631,9 @@ static void hb_gt_crs_mouse_SetPos( PHB_GT pGT, int iRow, int iCol )
 
 static HB_BOOL hb_gt_crs_mouse_ButtonState( PHB_GT pGT, int iButton )
 {
-   HB_BOOL ret = HB_FALSE;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_mouse_ButtonState(%p,%i)", static_cast< void * >( pGT ), iButton ) );
+
+   HB_BOOL ret = HB_FALSE;
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -2679,9 +2679,9 @@ static void hb_gt_crs_mouse_SetDoubleClickSpeed( PHB_GT pGT, int iSpeed )
 
 static int hb_gt_crs_ReadKey( PHB_GT pGT, int iEventMask )
 {
-   int iKey;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_ReadKey(%p,%d)", static_cast< void * >( pGT ), iEventMask ) );
+
+   int iKey;
 
    HB_SYMBOL_UNUSED( iEventMask );
 

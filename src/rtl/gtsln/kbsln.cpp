@@ -303,12 +303,12 @@ int hb_sln_Init_Terminal( int phase )
 
 int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_ReadKey(%p,%d)", static_cast< void * >( pGT ), static_cast< int >( iEventMask ) ) );
+
    static int InDeadState = HB_FALSE;
    unsigned int ch, tmp, kbdflags;
    HB_BOOL fInput;
    int iKey;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_ReadKey(%p,%d)", static_cast< void * >( pGT ), static_cast< int >( iEventMask ) ) );
 
    /* user AbortKey break */
    if( SLKeyBoard_Quit == 1 )

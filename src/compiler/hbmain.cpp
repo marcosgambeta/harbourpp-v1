@@ -45,12 +45,12 @@ int hb_compMainExt( int argc, const char * const argv[],
                     void * cargo, PHB_PP_OPEN_FUNC pOpenFunc,
                                   PHB_PP_MSG_FUNC pMsgFunc )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_compMain()" ) );
+
    HB_COMP_DECL;
    int iStatus = EXIT_SUCCESS, iFileCount = 0;
    int iFileCase, iDirCase, iDirSep;
    HB_BOOL fTrimFN;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_compMain()" ) );
 
    iFileCase = hb_setGetFileCase();
    iDirCase = hb_setGetDirCase();
@@ -4575,14 +4575,14 @@ static void hb_compRestoreSwitches( HB_COMP_DECL, PHB_COMP_SWITCHES pSwitches )
 
 static int hb_compCompile( HB_COMP_DECL, const char * szPrg, const char * szBuffer, int iStartLine )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_compCompile(%s,%p,%d)", szPrg, static_cast< const void * >( szBuffer ), iStartLine ) );
+
    char buffer[ HB_PATH_MAX * 2 + 80 ];
    HB_COMP_SWITCHES switches;
    int iStatus = EXIT_SUCCESS;
    PHB_FNAME pFileName = nullptr;
    PHB_MODULE pModule;
    HB_BOOL fGenCode = HB_TRUE;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_compCompile(%s,%p,%d)", szPrg, static_cast< const void * >( szBuffer ), iStartLine ) );
 
    hb_compSaveSwitches( HB_COMP_PARAM, &switches );
    /* Initialize support variables */

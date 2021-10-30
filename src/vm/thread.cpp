@@ -241,6 +241,8 @@ void hb_threadExit( void )
 
 void hb_threadReleaseCPU( void )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_threadReleaseCPU()" ) );
+
    /*
     * The following code is modified:
     *       hb_ReleaseCPU()
@@ -248,8 +250,6 @@ void hb_threadReleaseCPU( void )
     *       Copyright 1999 David G. Holm <dholm@jsd-llc.com>
     * and then updated by few Harbour developers
     */
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_threadReleaseCPU()" ) );
 
    hb_vmUnlock();
 

@@ -1102,9 +1102,9 @@ static HB_BOOL hb_dbgEqual( PHB_ITEM pItem1, PHB_ITEM pItem2 )
 
 static PHB_ITEM hb_dbgEval( HB_DEBUGINFO * info, HB_WATCHPOINT * watch, HB_BOOL * valid )
 {
-   PHB_ITEM xResult = nullptr;
-
    HB_TRACE( HB_TR_DEBUG, ( "expr %s", watch->szExpr ) );
+
+   PHB_ITEM xResult = nullptr;
 
    /* Check if we have a cached pBlock */
    if( ! watch->pBlock )
