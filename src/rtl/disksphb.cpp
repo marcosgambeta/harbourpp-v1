@@ -65,10 +65,6 @@
    #if defined( HB_OS_WIN_CE )
       #include "hbwince.h"
    #endif
-#elif defined( HB_OS_OS2 )
-   #define INCL_BASE
-   #define INCL_DOSERRORS
-   #include <os2.h>
 #elif defined( HB_OS_DOS )
    #include <dos.h>
 #endif
@@ -211,7 +207,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
          hb_xfree( lpFree );
       }
    }
-#elif defined( HB_OS_DOS ) || defined( HB_OS_OS2 )
+#elif defined( HB_OS_DOS )
    {
       HB_USHORT uiDrive;
 
@@ -221,7 +217,6 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
                   pszPath[ 0 ] - 'A' + 1 :
                 ( pszPath[ 0 ] >= 'a' && pszPath[ 0 ] <= 'z' ?
                   pszPath[ 0 ] - 'a' + 1 : 0 ) );
-#if defined( HB_OS_DOS )
       for( ;; )
       {
          union REGS regs;
@@ -264,45 +259,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
          }
          break;
       }
-#else /* HB_OS_OS2 */
-      {
-         struct _FSALLOCATE fsa;
-         APIRET rc;
-         /* Query level 1 info from filesystem */
-         while( ( rc = DosQueryFSInfo( uiDrive, 1, &fsa, sizeof( fsa ) ) ) != NO_ERROR )
-         {
-            if( hb_errRT_BASE_Ext1( EG_OPEN, 2018, nullptr, nullptr, 0, ( EF_CANDEFAULT | EF_CANRETRY ), HB_ERR_ARGS_BASEPARAMS ) != E_RETRY )
-            {
-               break;
-            }
-         }
-
-         hb_fsSetError( static_cast< HB_ERRCODE >( rc ) );
-
-         if( rc == NO_ERROR )
-         {
-            switch( uiType )
-            {
-               case HB_DISK_AVAIL:
-               case HB_DISK_FREE:
-                  dSpace = static_cast< double >( fsa.cUnitAvail ) * static_cast< double >( fsa.cSectorUnit ) * static_cast< double >( fsa.cbSector );
-                  break;
-
-               case HB_DISK_USED:
-               case HB_DISK_TOTAL:
-                  dSpace = static_cast< double >( fsa.cUnit ) * static_cast< double >( fsa.cSectorUnit ) * static_cast< double >( fsa.cbSector );
-
-                  if( uiType == HB_DISK_USED )
-                  {
-                     dSpace -= static_cast< double >( fsa.cUnitAvail ) * static_cast< double >( fsa.cSectorUnit ) * static_cast< double >( fsa.cbSector );
-                  }
-                  break;
-            }
-         }
-      }
-#endif
    }
-
 #elif defined( HB_OS_UNIX ) && !( defined( __CEGCC__ ) || defined( HB_OS_SYMBIAN ) )
    {
 #if defined( HB_OS_DARWIN ) || defined( HB_OS_ANDROID ) || defined( HB_OS_VXWORKS )

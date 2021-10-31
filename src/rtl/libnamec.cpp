@@ -48,7 +48,7 @@
 
 HB_FUNC( HB_LIBEXT )
 {
-#if defined( HB_OS_WIN ) || defined( HB_OS_OS2 ) || defined( HB_OS_SYMBIAN )
+#if defined( HB_OS_WIN ) || defined( HB_OS_SYMBIAN )
    hb_retc_const( ".dll" );
 #elif defined( HB_OS_DOS )
    hb_retc_null();

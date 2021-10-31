@@ -104,7 +104,6 @@
        */
 #     define HB_FM_STD_ALLOC
 #  elif defined( _MSC_VER ) || defined( __BORLANDC__ ) || defined( __MINGW32__ ) || \
-        defined( HB_OS_OS2 ) || \
         ( defined( HB_FM_DLMT_ALLOC ) && defined( HB_MT_VM ) )
 #     define HB_FM_DL_ALLOC
 #  else
@@ -1397,19 +1396,6 @@ HB_SIZE hb_xquery( int iMode )
             GlobalMemoryStatus( &memorystatus );
             nResult = memorystatus.dwAvailPhys / 1024;
          }
-#elif defined( HB_OS_OS2 )
-         {
-            ULONG ulSysInfo = 0;
-
-            if( DosQuerySysInfo( QSV_TOTAVAILMEM, QSV_TOTAVAILMEM, &ulSysInfo, sizeof( ULONG ) ) != NO_ERROR )
-            {
-               nResult = 0;
-            }
-            else
-            {
-               nResult = ulSysInfo / 1024;
-            }
-         }
 #else
          nResult = 9999;
 #endif
@@ -1421,19 +1407,6 @@ HB_SIZE hb_xquery( int iMode )
             MEMORYSTATUS memorystatus;
             GlobalMemoryStatus( &memorystatus );
             nResult = HB_MIN( memorystatus.dwAvailPhys, ULONG_MAX ) / 1024;
-         }
-#elif defined( HB_OS_OS2 )
-         {
-            ULONG ulSysInfo = 0;
-
-            if( DosQuerySysInfo( QSV_TOTAVAILMEM, QSV_TOTAVAILMEM, &ulSysInfo, sizeof( ULONG ) ) != NO_ERROR )
-            {
-               nResult = 0;
-            }
-            else
-            {
-               nResult = HB_MIN( ulSysInfo, ULONG_MAX ) / 1024;
-            }
          }
 #else
          nResult = 9999;
@@ -1447,19 +1420,6 @@ HB_SIZE hb_xquery( int iMode )
             GlobalMemoryStatus( &memorystatus );
             nResult = memorystatus.dwAvailPhys / 1024;
          }
-#elif defined( HB_OS_OS2 )
-         {
-            ULONG ulSysInfo = 0;
-
-            if( DosQuerySysInfo( QSV_TOTAVAILMEM, QSV_TOTAVAILMEM, &ulSysInfo, sizeof( ULONG ) ) != NO_ERROR )
-            {
-               nResult = 0;
-            }
-            else
-            {
-               nResult = ulSysInfo / 1024;
-            }
-         }
 #else
          nResult = 9999;
 #endif
@@ -1472,26 +1432,13 @@ HB_SIZE hb_xquery( int iMode )
             GlobalMemoryStatus( &memorystatus );
             nResult = memorystatus.dwAvailVirtual / 1024;
          }
-#elif defined( HB_OS_OS2 )
-         {
-            ULONG ulSysInfo = 0;
-
-            if( DosQuerySysInfo( QSV_TOTAVAILMEM, QSV_TOTAVAILMEM, &ulSysInfo, sizeof( ULONG ) ) != NO_ERROR )
-            {
-               nResult = 0;
-            }
-            else
-            {
-               nResult = ulSysInfo / 1024;
-            }
-         }
 #else
          nResult = 9999;
 #endif
          break;
 
       case HB_MEM_EMS:        /* UNDOCUMENTED! (Free Expanded Memory [KB]) (?) */
-#if defined( HB_OS_WIN ) || defined( HB_OS_OS2 )
+#if defined( HB_OS_WIN )
          nResult = 0;
 #else
          nResult = 9999;
@@ -1504,19 +1451,6 @@ HB_SIZE hb_xquery( int iMode )
             MEMORYSTATUS memorystatus;
             GlobalMemoryStatus( &memorystatus );
             nResult = memorystatus.dwTotalPhys / 1024;
-         }
-#elif defined( HB_OS_OS2 )
-         {
-            ULONG ulSysInfo = 0;
-
-            if( DosQuerySysInfo( QSV_MAXPRMEM, QSV_MAXPRMEM, &ulSysInfo, sizeof( ULONG ) ) != NO_ERROR )
-            {
-               nResult = 0;
-            }
-            else
-            {
-               nResult = ulSysInfo / 1024;
-            }
          }
 #elif defined( HB_OS_DOS )
          {
@@ -1531,7 +1465,7 @@ HB_SIZE hb_xquery( int iMode )
          break;
 
       case HB_MEM_FMSEGS:     /* UNDOCUMENTED! (Segments in Fixed Memory/Heap) (?) */
-#if defined( HB_OS_WIN ) || defined( HB_OS_OS2 )
+#if defined( HB_OS_WIN )
          nResult = 1;
 #else
          nResult = 9999;
@@ -1545,20 +1479,13 @@ HB_SIZE hb_xquery( int iMode )
             GlobalMemoryStatus( &memorystatus );
             nResult = memorystatus.dwAvailPageFile / 1024;
          }
-#elif defined( HB_OS_OS2 )
-         {
-            /* NOTE: There is no way to know how much a swap file can grow on an
-                     OS/2 system. I think we should return free space on DASD
-                     media which contains swap file [maurilio.longo] */
-            nResult = 9999;
-         }
 #else
          nResult = 9999;
 #endif
          break;
 
       case HB_MEM_CONV:       /* UNDOCUMENTED! (Free Conventional [KB]) */
-#if defined( HB_OS_WIN ) || defined( HB_OS_OS2 )
+#if defined( HB_OS_WIN )
          nResult = 0;
 #else
          nResult = 9999;

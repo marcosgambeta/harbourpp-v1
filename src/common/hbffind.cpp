@@ -77,29 +77,6 @@
       struct ffblk    entry;
    } HB_FFIND_INFO, * PHB_FFIND_INFO;
 
-#elif defined( HB_OS_OS2 )
-
-   #define INCL_DOSFILEMGR
-   #define INCL_DOSERRORS
-   #define INCL_LONGLONG
-
-   #include <os2.h>
-
-   #include <sys/types.h>
-   #include <sys/stat.h>
-   #include <time.h>
-
-   typedef struct
-   {
-      HDIR     hFindFile;
-      PVOID    entry;
-      PVOID    next;
-      ULONG    findSize;
-      ULONG    findCount;
-      ULONG    findInitCnt;
-      HB_BOOL  isWSeB;
-   } HB_FFIND_INFO, * PHB_FFIND_INFO;
-
 #elif defined( HB_OS_WIN )
 
    #include <windows.h>
@@ -172,15 +149,6 @@ HB_FATTR hb_fsAttrFromRaw( HB_FATTR raw_attr )
    if( raw_attr & FA_RDONLY ) nAttr |= HB_FA_READONLY;
    if( raw_attr & FA_LABEL )  nAttr |= HB_FA_LABEL;
    if( raw_attr & FA_SYSTEM ) nAttr |= HB_FA_SYSTEM;
-
-#elif defined( HB_OS_OS2 )
-
-   nAttr = 0;
-   if( raw_attr & FILE_ARCHIVED )  nAttr |= HB_FA_ARCHIVE;
-   if( raw_attr & FILE_DIRECTORY ) nAttr |= HB_FA_DIRECTORY;
-   if( raw_attr & FILE_HIDDEN )    nAttr |= HB_FA_HIDDEN;
-   if( raw_attr & FILE_READONLY )  nAttr |= HB_FA_READONLY;
-   if( raw_attr & FILE_SYSTEM )    nAttr |= HB_FA_SYSTEM;
 
 #elif defined( HB_OS_WIN )
 
@@ -256,15 +224,6 @@ HB_FATTR hb_fsAttrToRaw( HB_FATTR nAttr )
    if( nAttr & HB_FA_READONLY )  raw_attr |= FA_RDONLY;
    if( nAttr & HB_FA_LABEL )     raw_attr |= FA_LABEL;
    if( nAttr & HB_FA_SYSTEM )    raw_attr |= FA_SYSTEM;
-
-#elif defined( HB_OS_OS2 )
-
-   raw_attr = 0;
-   if( nAttr & HB_FA_ARCHIVE )   raw_attr |= FILE_ARCHIVED;
-   if( nAttr & HB_FA_DIRECTORY ) raw_attr |= FILE_DIRECTORY;
-   if( nAttr & HB_FA_HIDDEN )    raw_attr |= FILE_HIDDEN;
-   if( nAttr & HB_FA_READONLY )  raw_attr |= FILE_READONLY;
-   if( nAttr & HB_FA_SYSTEM )    raw_attr |= FILE_SYSTEM;
 
 #elif defined( HB_OS_WIN )
 
@@ -447,128 +406,6 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
          }
       }
       hb_fsSetIOError( bFound, 0 );
-   }
-
-#elif defined( HB_OS_OS2 )
-
-   {
-      #define HB_OS2_DIRCNT   16
-
-      PHB_FFIND_INFO info = static_cast< PHB_FFIND_INFO >( ffind->info );
-      APIRET ret = NO_ERROR;
-
-      /* TODO: HB_FA_LABEL handling */
-
-      if( ffind->bFirst )
-      {
-         ffind->bFirst = HB_FALSE;
-
-         info->isWSeB = hb_isWSeB();
-
-         info->findSize = sizeof( FILEFINDBUF3L );
-         if( info->findSize & 0x07 )
-         {
-            info->findSize += 0x08 - ( info->findSize & 0x07 );
-         }
-         info->findSize *= HB_OS2_DIRCNT;
-         if( info->findSize > 0xF000 )
-         {
-            info->findSize = 0xF000;
-         }
-         info->findInitCnt = ! info->isWSeB ? info->findSize / 32 : HB_OS2_DIRCNT;
-
-         info->hFindFile = HDIR_CREATE;
-         info->findCount = info->findInitCnt;
-         ret = DosAllocMem( &info->entry, info->findSize, PAG_COMMIT | PAG_READ | PAG_WRITE | OBJ_TILE );
-         if( ret == NO_ERROR )
-         {
-            ret = DosFindFirst( static_cast< PCSZ >( ffind->pszFileMask ),
-                                &info->hFindFile,
-                                static_cast< ULONG >( hb_fsAttrToRaw( ffind->attrmask ) ),
-                                info->entry,
-                                info->findSize,
-                                &info->findCount,
-                                FIL_STANDARDL );
-            bFound = ret == NO_ERROR && info->findCount > 0;
-            if( bFound )
-            {
-               info->next = info->entry;
-            }
-         }
-         else
-         {
-            info->entry = nullptr;
-            bFound = HB_FALSE;
-         }
-      }
-      else if( info->findCount == 0 )
-      {
-         info->findCount = info->findInitCnt;
-         ret = DosFindNext( info->hFindFile, info->entry, info->findSize, &info->findCount );
-         bFound = ret == NO_ERROR && info->findCount > 0;
-         if( bFound )
-         {
-            info->next = info->entry;
-         }
-      }
-      else
-      {
-         bFound = HB_TRUE;
-      }
-
-      if( bFound )
-      {
-         ULONG oNextEntryOffset;
-
-         if( info->isWSeB )
-         {
-            PFILEFINDBUF3L pFFB = static_cast< PFILEFINDBUF3L >( info->next );
-
-            hb_strncpy( ffind->szName, pFFB->achName, sizeof( ffind->szName ) - 1 );
-            ffind->size = static_cast< HB_FOFFSET >( pFFB->cbFile );
-            raw_attr = pFFB->attrFile;
-
-            iYear  = pFFB->fdateLastWrite.year + 1980;
-            iMonth = pFFB->fdateLastWrite.month;
-            iDay   = pFFB->fdateLastWrite.day;
-
-            iHour = pFFB->ftimeLastWrite.hours;
-            iMin  = pFFB->ftimeLastWrite.minutes;
-            iSec  = pFFB->ftimeLastWrite.twosecs * 2;
-
-            oNextEntryOffset = pFFB->oNextEntryOffset;
-         }
-         else
-         {
-            PFILEFINDBUF3 pFFB = static_cast< PFILEFINDBUF3 >( info->next );
-
-            hb_strncpy( ffind->szName, pFFB->achName, sizeof( ffind->szName ) - 1 );
-            ffind->size = static_cast< HB_FOFFSET >( pFFB->cbFile );
-            raw_attr = pFFB->attrFile;
-
-            iYear  = pFFB->fdateLastWrite.year + 1980;
-            iMonth = pFFB->fdateLastWrite.month;
-            iDay   = pFFB->fdateLastWrite.day;
-
-            iHour = pFFB->ftimeLastWrite.hours;
-            iMin  = pFFB->ftimeLastWrite.minutes;
-            iSec  = pFFB->ftimeLastWrite.twosecs * 2;
-
-            oNextEntryOffset = pFFB->oNextEntryOffset;
-         }
-
-         if( oNextEntryOffset > 0 )
-         {
-            info->next = static_cast< char * >( info->next ) + oNextEntryOffset;
-            info->findCount--;
-         }
-         else
-         {
-            info->findCount = 0;
-         }
-      }
-
-      hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
    }
 
 #elif defined( HB_OS_WIN )
@@ -965,17 +802,6 @@ void hb_fsFindClose( PHB_FFIND ffind )
 #  if ! defined( __DJGPP__ ) && ! defined( __BORLANDC__ )
             findclose( &info->entry );
 #  endif
-
-#elif defined( HB_OS_OS2 )
-
-            if( info->hFindFile != HDIR_CREATE )
-            {
-               DosFindClose( info->hFindFile );
-            }
-            if( info->entry )
-            {
-               DosFreeMem( info->entry );
-            }
 
 #elif defined( HB_OS_WIN )
 

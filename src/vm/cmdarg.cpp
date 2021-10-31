@@ -59,10 +59,6 @@
 #include "hbstack.h"
 #include "hbverbld.h"
 
-#if defined( HB_OS_OS2 )
-   #include <os2.h>
-#endif
-
 /* Command-line argument management */
 static int     s_argc = 0;
 static char ** s_argv = nullptr;
@@ -374,22 +370,6 @@ void hb_cmdargUpdate( void )
 #if ! defined( HB_OS_WIN )
    if( s_argc > 0 )
    {
-#  if defined( HB_OS_OS2 )
-      {
-         PPIB ppib = nullptr;
-         APIRET ulrc;
-
-         ulrc = DosGetInfoBlocks( nullptr, &ppib );
-         if( ulrc == NO_ERROR )
-         {
-            ulrc = DosQueryModuleName( ppib->pib_hmte, HB_SIZEOFARRAY( s_szAppName ), s_szAppName );
-            if( ulrc == NO_ERROR )
-            {
-               s_argv[ 0 ] = s_szAppName;
-            }
-         }
-      }
-#  else
       /* NOTE: try to create absolute path from s_argv[ 0 ] if necessary */
       {
          PHB_FNAME pFName = hb_fsFNameSplit( s_argv[ 0 ] );
@@ -466,7 +446,6 @@ void hb_cmdargUpdate( void )
          }
          hb_xfree( pFName );
       }
-#  endif
    }
 #endif
 }

@@ -198,7 +198,7 @@ static const char * is_devicename( const char * szFileName )
 {
    if( szFileName && *szFileName )
    {
-#if defined( HB_OS_OS2 ) || defined( HB_OS_WIN ) || defined( HB_OS_DOS )
+#if defined( HB_OS_WIN ) || defined( HB_OS_DOS )
       const char * szDevices[] =
             { "NUL", "PRN", "CON",
               "LPT1", "LPT2", "LPT3",
@@ -574,7 +574,7 @@ static char * hb_set_PRINTFILE_default( void )
    return hb_strdup( "|lpr" );
 #elif defined( HB_OS_DOS )
    return hb_strdup( "PRN" );
-#elif defined( HB_OS_WIN ) || defined( HB_OS_OS2 )
+#elif defined( HB_OS_WIN )
    return hb_strdup( "LPT1" );
 #else
    return hb_strdup( "PRN" ); /* FIXME */

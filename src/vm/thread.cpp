@@ -264,16 +264,6 @@ void hb_threadReleaseCPU( void )
    /* Forfeit the remainder of the current time slice. */
    Sleep( 20 );
 
-#elif defined( HB_OS_OS2 )
-
-   /* 2000-11-23 - maurilio.longo@libero.it
-      Minimum time slice under OS/2 is 32 milliseconds, passed 1 will be rounded to 32 and
-      will give a chance to threads of lower priority to get executed.
-      Passing 0 causes current thread to give up its time slice only if there are threads of
-      equal priority waiting to be dispatched. Note: certain versions of OS/2 kernel have a
-      bug which causes DosSleep(0) not to work as expected.  */
-   DosSleep( 1 ); /* Duration is in milliseconds */
-
 #elif defined( HB_OS_DOS )
 
    /* NOTE: there is a bug under NT 4 and 2000 -  if the app is running
@@ -339,10 +329,7 @@ static PHB_WAIT_LIST _hb_thread_wait_list( void )
 
 static void _hb_thread_wait_add( HB_COND_T * cond, PHB_WAIT_LIST pWaiting )
 {
-#if defined( HB_OS_OS2 )
-   HB_ULONG ulPostCount = 0;
-   DosResetEventSem( pWaiting->cond, &ulPostCount );
-#elif defined( HB_OS_WIN )
+#if defined( HB_OS_WIN )
    /* It's not necessary because we have workaround for possible race
     * condition inside _hb_thread_cond_wait() function
     */
@@ -387,9 +374,7 @@ static HB_BOOL _hb_thread_cond_signal( HB_COND_T * cond )
       {
          if( ! pWaiting->signaled )
          {
-#if defined( HB_OS_OS2 )
-            DosPostEventSem( pWaiting->cond );
-#elif defined( HB_OS_WIN )
+#if defined( HB_OS_WIN )
             ReleaseSemaphore( pWaiting->cond, 1, nullptr );
 #endif
             pWaiting->signaled = HB_TRUE;
@@ -413,9 +398,7 @@ static HB_BOOL _hb_thread_cond_broadcast( HB_COND_T * cond )
       {
          if( ! pWaiting->signaled )
          {
-#if defined( HB_OS_OS2 )
-            DosPostEventSem( pWaiting->cond );
-#elif defined( HB_OS_WIN )
+#if defined( HB_OS_WIN )
             ReleaseSemaphore( pWaiting->cond, 1, nullptr );
 #endif
             pWaiting->signaled = HB_TRUE;
@@ -437,11 +420,7 @@ static HB_BOOL _hb_thread_cond_wait( HB_COND_T * cond, HB_RAWCRITICAL_T * critic
    {
       _hb_thread_wait_add( cond, pWaiting );
 
-#if defined( HB_OS_OS2 )
-      DosReleaseMutexSem( *critical );
-      fResult = DosWaitEventSem( pWaiting->cond, ulMillisec ) == NO_ERROR;
-      DosRequestMutexSem( *critical, SEM_INDEFINITE_WAIT );
-#elif defined( HB_OS_WIN )
+#if defined( HB_OS_WIN )
       LeaveCriticalSection( critical );
       fResult = WaitForSingleObject( pWaiting->cond, ulMillisec ) == WAIT_OBJECT_0;
       EnterCriticalSection( critical );
@@ -457,43 +436,6 @@ static HB_BOOL _hb_thread_cond_wait( HB_COND_T * cond, HB_RAWCRITICAL_T * critic
 
    return fResult;
 }
-#endif
-
-#if defined( HB_OS_OS2 )
-#if 0
-   ULONG _hb_gettid( void )
-   {
-      ULONG tid = 0;
-      PTIB  ptib = nullptr;
-
-      if( DosGetInfoBlocks( &ptib, nullptr ) == NO_ERROR )
-      {
-         tid = ptib->tib_ptib2->tib2_ultid;
-      }
-
-      return tid;
-   }
-#else
-   ULONG _hb_gettid( void )
-   {
-      static PULONG s_pThID = nullptr;
-
-      if( ! s_pThID )
-      {
-         DosAllocThreadLocalMemory( 1, &s_pThID );
-         *s_pThID = 0;
-      }
-      if( ! *s_pThID )
-      {
-         PTIB  ptib = nullptr;
-         if( DosGetInfoBlocks( &ptib, nullptr ) == NO_ERROR )
-         {
-            *s_pThID = ptib->tib_ptib2->tib2_ultid;
-         }
-      }
-      return *s_pThID;
-   }
-#endif
 #endif
 
 /*
@@ -870,9 +812,6 @@ HB_THREAD_HANDLE hb_threadCreate( HB_THREAD_ID * th_id, PHB_THREAD_STARTFUNC sta
    {
       *th_id = static_cast< HB_THREAD_ID >( 0 );
    }
-#elif defined( HB_OS_OS2 )
-   *th_id = _beginthread( start_func, nullptr, 128 * 1024, Cargo );
-   th_h = *th_id;
 #else
    { int iTODO_MT; }
    *th_id = static_cast< HB_THREAD_ID >( 0 );
@@ -898,13 +837,6 @@ HB_BOOL hb_threadJoin( HB_THREAD_HANDLE th_h )
       return HB_TRUE;
    }
    return HB_FALSE;
-#elif defined( HB_OS_OS2 )
-   APIRET rc = DosWaitThread( &th_h, DCWW_WAIT );
-   /* FIXME: ERROR_INVALID_THREADID is a hack for failing DosWaitThread()
-    *        when thread terminates before DosWaitThread() call.
-    *        OS2 users please check and fix this code if possible.
-    */
-   return rc == NO_ERROR || rc == ERROR_INVALID_THREADID;
 #else
    { int iTODO_MT; }
    return HB_FALSE;
@@ -923,9 +855,6 @@ HB_BOOL hb_threadDetach( HB_THREAD_HANDLE th_h )
    return pthread_detach( th_h ) == 0;
 #elif defined( HB_OS_WIN )
    return CloseHandle( th_h ) != 0;
-#elif defined( HB_OS_OS2 )
-   APIRET rc = DosWaitThread( &th_h, DCWW_NOWAIT );
-   return rc == NO_ERROR || rc == ERROR_INVALID_THREADID;
 #else
    { int iTODO_MT; }
    return HB_FALSE;
@@ -993,10 +922,7 @@ static HB_GARBAGE_FUNC( hb_threadDestructor )
 #if defined( HB_COND_HARBOUR_SUPPORT )
    if( pThread->pWaitList.cond )
    {
-#  if defined( HB_OS_OS2 )
-      DosCloseEventSem( pThread->pWaitList.cond );
-      pThread->pWaitList.cond = ( HEV ) 0;
-#  elif defined( HB_OS_WIN )
+#  if defined( HB_OS_WIN )
       CloseHandle( pThread->pWaitList.cond );
       pThread->pWaitList.cond = ( HANDLE ) 0;
 #  endif
@@ -1134,9 +1060,7 @@ PHB_THREADSTATE hb_threadStateNew( void )
    pThread->hGT     = hb_gtAlloc( nullptr );
 
 #if defined( HB_COND_HARBOUR_SUPPORT )
-#  if defined( HB_OS_OS2 )
-      DosCreateEventSem( nullptr, &pThread->pWaitList.cond, 0L, HB_FALSE );
-#  elif defined( HB_OS_WIN )
+#  if defined( HB_OS_WIN )
       pThread->pWaitList.cond = CreateSemaphore( nullptr, 0, 1, nullptr );
 #  endif
 #endif

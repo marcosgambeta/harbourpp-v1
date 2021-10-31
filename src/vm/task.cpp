@@ -237,8 +237,6 @@ static void hb_taskFreeze( HB_MAXINT wakeup )
       usleep( wakeup * 1000 );
 #  elif defined( HB_OS_WIN )
       Sleep( wakeup );
-#  elif defined( HB_OS_OS2 )
-      DosSleep( wakeup );     /* Duration is in milliseconds */
 #  elif defined( HB_OS_UNIX )
       struct timeval tv;
       tv.tv_sec = wakeup / 1000;

@@ -61,8 +61,6 @@
 #  if defined( HB_OS_WIN_CE )
 #     include "hbwince.h"
 #  endif
-#elif defined( HB_OS_OS2 )
-#  include <os2.h>
 #endif
 
 /* NOTE: VxWorks supports dlopen() functionality only in shared
@@ -123,15 +121,6 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
 
             hb_strfree( hFileName );
          }
-#elif defined( HB_OS_OS2 )
-         {
-            HB_UCHAR LoadError[ 256 ] = "";  /* Area for load failure information */
-            HMODULE hDynModule;
-            if( DosLoadModule( static_cast< PSZ >( LoadError ), sizeof( LoadError ), static_cast< PCSZ >( hb_itemGetCPtr( pLibName ) ), &hDynModule ) == NO_ERROR )
-            {
-               hDynLib = static_cast< void * >( hDynModule );
-            }
-         }
 #elif defined( HB_HAS_DLFCN )
          hDynLib = static_cast< void * >( dlopen( hb_itemGetCPtr( pLibName ), RTLD_LAZY | RTLD_GLOBAL ) );
 
@@ -182,8 +171,6 @@ HB_BOOL hb_libFree( PHB_ITEM pDynLib )
          hb_vmExitSymbolGroup( hDynLib );
 #if defined( HB_OS_WIN )
          fResult = FreeLibrary( static_cast< HMODULE >( hDynLib ) );
-#elif defined( HB_OS_OS2 )
-         fResult = DosFreeModule( static_cast< HMODULE >( hDynLib ) ) == NO_ERROR;
 #elif defined( HB_HAS_DLFCN )
          fResult = dlclose( hDynLib ) == 0;
 #elif defined( HB_CAUSEWAY_DLL )
@@ -217,12 +204,6 @@ void * hb_libSymAddr( PHB_ITEM pDynLib, const char * pszSymbol )
       return hFuncAddr;
 #elif defined( HB_OS_WIN )
       return reinterpret_cast< void * >( GetProcAddress( static_cast< HMODULE >( hDynLib ), pszSymbol ) );
-#elif defined( HB_OS_OS2 )
-      PFN pProcAddr = nullptr;
-      if( DosQueryProcAddr( static_cast< HMODULE >( hDynLib ), 0, static_cast< PCSZ >( pszSymbol ), &pProcAddr ) == NO_ERROR )
-      {
-         return static_cast< void * >( pProcAddr );
-      }
 #elif defined( HB_HAS_DLFCN )
       return dlsym( hDynLib, pszSymbol );
 #elif defined( HB_CAUSEWAY_DLL )

@@ -60,8 +60,6 @@
    HB_GT_REQUEST( WIN )
 #elif defined( HB_OS_DOS )
    HB_GT_REQUEST( DOS )
-#elif defined( HB_OS_OS2 )
-   HB_GT_REQUEST( OS2 )
 #elif defined( HB_OS_VXWORKS ) || defined( HB_OS_SYMBIAN )
    HB_GT_REQUEST( STD )
 #elif defined( HB_OS_UNIX )

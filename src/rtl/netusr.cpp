@@ -54,20 +54,6 @@
       #include "hbwince.h"
    #endif
 
-#elif defined( HB_OS_OS2 ) && defined( __GNUC__ )
-
-   #include "hb_io.h"
-
-   /* 2004-03-25 - <maurilio.longo@libero.it>
-      not needed anymore as of GCC 3.2.2 */
-
-   #include <pwd.h>
-   #include <sys/types.h>
-
-   #if defined( __EMX__ ) && __GNUC__ * 1000 + __GNUC_MINOR__ < 3002
-      #include <emx/syscalls.h>
-   #endif
-
 #elif defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS )
 
    #include <pwd.h>
@@ -94,7 +80,7 @@ char * hb_username( void )
       return HB_OSSTRDUP( lpValue );
    }
 
-#elif ( defined( HB_OS_OS2 ) && defined( __GNUC__ ) ) || ( defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS ) )
+#elif ( defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS ) )
 
    struct passwd * pwd = getpwuid( getuid() );
    if( pwd && pwd->pw_name )

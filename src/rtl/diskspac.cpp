@@ -71,10 +71,6 @@
 #  if defined( HB_OS_WIN_CE )
 #     include "hbwince.h"
 #  endif
-#elif defined( HB_OS_OS2 )
-#  define INCL_BASE
-#  define INCL_DOSERRORS
-#  include <os2.h>
 #elif defined( HB_OS_DOS )
 #  include <dos.h>
 #endif
@@ -198,18 +194,6 @@ HB_FUNC( DISKSPACE )
       else
       {
          bError = HB_TRUE;
-      }
-   }
-#elif defined( HB_OS_OS2 )
-   {
-      USHORT uiDrive = hb_parni( 1 ); /* defaults to 0 */
-      struct _FSALLOCATE fsa;
-
-      /* Query level 1 info from filesystem */
-      bError = DosQueryFSInfo( uiDrive, 1, &fsa, sizeof( fsa ) ) != 0;
-      if( ! bError )
-      {
-         dSpace = static_cast< double >( fsa.cUnitAvail ) * static_cast< double >( fsa.cSectorUnit ) * static_cast< double >( fsa.cbSector );
       }
    }
 #elif defined( HB_OS_UNIX )

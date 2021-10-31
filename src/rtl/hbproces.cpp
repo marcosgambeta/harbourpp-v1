@@ -67,17 +67,6 @@
 #  if defined( HB_HAS_POLL )
 #     include <poll.h>
 #  endif
-#elif defined( HB_OS_OS2 )
-#  define INCL_DOSERRORS
-#  define INCL_DOSPROCESS
-#  include <os2.h>
-#  include <io.h>
-#  include <process.h>
-#  include <fcntl.h>
-#  if defined( HB_OS_OS2 ) && defined( __GNUC__ )
-#    include <sys/wait.h>
-#  endif
-#  include "hbgtcore.h"
 #elif defined( HB_OS_DOS )
 #  include <process.h>
 #  include <fcntl.h>
@@ -117,91 +106,6 @@
       hb_fsSetIOError( ( ret ) != -1, 0 ); \
    } \
    while( 0 )
-#endif
-
-#if defined( HB_OS_OS2 )
-
-static char * hb_buildArgsOS2( const char *pszFileName, APIRET * ret )
-{
-   PHB_FNAME pFilepath;
-   char szFileBuf[ HB_PATH_MAX ];
-   char * pArgs = nullptr, * pszFree = nullptr, cQuote = 0, c;
-   HB_SIZE nLen = 0, nLen2;
-   void * pMem;
-
-   while( HB_ISSPACE( *pszFileName ) )
-   {
-      ++pszFileName;
-   }
-
-   pszFileName = hb_osEncodeCP( pszFileName, &pszFree, nullptr );
-
-   while( ( c = *pszFileName ) != '\0' )
-   {
-      ++pszFileName;
-      if( c == '"' )
-      {
-         cQuote = cQuote ? 0 : c;
-      }
-      else
-      {
-         if( cQuote == 0 && HB_ISSPACE( c ) )
-         {
-            break;
-         }
-         if( nLen < sizeof( szFileBuf ) - 1 )
-         {
-            szFileBuf[ nLen++ ] = c;
-         }
-      }
-   }
-   szFileBuf[ nLen ] = '\0';
-
-   while( HB_ISSPACE( *pszFileName ) )
-   {
-      ++pszFileName;
-   }
-   nLen2 = strlen( pszFileName );
-
-   pFilepath = hb_fsFNameSplit( szFileBuf );
-   if( pFilepath->szPath && ! pFilepath->szExtension )
-   {
-      pFilepath->szExtension = ".com";
-      if( ! hb_fsFileExists( hb_fsFNameMerge( szFileBuf, pFilepath ) ) )
-      {
-         pFilepath->szExtension = ".exe";
-         if( ! hb_fsFileExists( hb_fsFNameMerge( szFileBuf, pFilepath ) ) )
-         {
-            pFilepath->szExtension = nullptr;
-            hb_fsFNameMerge( szFileBuf, pFilepath );
-         }
-      }
-      nLen = strlen( szFileBuf );
-   }
-   hb_xfree( pFilepath );
-
-   *ret = DosAllocMem( &pMem, nLen + nLen2 + 3, PAG_COMMIT | PAG_READ | PAG_WRITE | OBJ_TILE );
-   if( *ret == NO_ERROR )
-   {
-      pArgs = static_cast< char * >( pMem );
-      memcpy( pArgs, szFileBuf, nLen + 1 );
-      memcpy( pArgs + nLen + 1, pszFileName, nLen2 + 1 );
-      pArgs[ nLen + nLen2 + 2 ] = '\0';
-   }
-
-   if( pszFree )
-   {
-      hb_xfree( pszFree );
-   }
-
-   return pArgs;
-}
-
-static void hb_freeArgsOS2( char * pArgs )
-{
-   DosFreeMem( pArgs );
-}
-
 #endif
 
 #if defined( HB_OS_WIN_CE ) && defined( HB_PROCESS_USEFILES )
@@ -428,7 +332,7 @@ static int hb_fsProcessExec( const char * pszFileName, HB_FHANDLE hStdin, HB_FHA
       hb_xfree( lpParams );
    }
 }
-#elif defined( HB_OS_DOS ) || defined( HB_OS_WIN ) || defined( HB_OS_OS2 ) || defined( HB_OS_UNIX )
+#elif defined( HB_OS_DOS ) || defined( HB_OS_WIN ) || defined( HB_OS_UNIX )
 {
    int iStdIn, iStdOut, iStdErr;
    char ** argv;
@@ -670,210 +574,6 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
          hResult = reinterpret_cast< HB_FHANDLE >( pi.hProcess );
       }
 
-#elif defined( HB_OS_OS2 )
-
-      HFILE hNull = static_cast< HFILE >( FS_ERROR );
-      ULONG ulState = 0;
-      APIRET ret = NO_ERROR;
-      PID pid = static_cast< PID >( -1 );
-      PHB_GT pGT;
-
-      if( fDetach && ( ! phStdin || ! phStdout || ! phStderr ) )
-      {
-         HB_FHANDLE hFile;
-
-         ret = hb_fsOS2DosOpen( "NUL:", &hFile, &ulState, 0, FILE_NORMAL, OPEN_ACCESS_READWRITE, OPEN_ACTION_OPEN_IF_EXISTS );
-         if( ret == NO_ERROR )
-         {
-            hNull = static_cast< HFILE >( hFile );
-         }
-      }
-
-      if( ret == NO_ERROR && phStdin != nullptr )
-      {
-         ret = DosQueryFHState( hPipeIn[ 1 ], &ulState );
-         if( ret == NO_ERROR && ( ulState & OPEN_FLAGS_NOINHERIT ) == 0 )
-         {
-            ret = DosSetFHState( hPipeIn[ 1 ], ( ulState & 0xFF00 ) | OPEN_FLAGS_NOINHERIT );
-         }
-      }
-      if( ret == NO_ERROR && phStdout != nullptr )
-      {
-         ret = DosQueryFHState( hPipeOut[ 0 ], &ulState );
-         if( ret == NO_ERROR && ( ulState & OPEN_FLAGS_NOINHERIT ) == 0 )
-         {
-            ret = DosSetFHState( hPipeOut[ 0 ], ( ulState & 0xFF00 ) | OPEN_FLAGS_NOINHERIT );
-         }
-      }
-      if( ret == NO_ERROR && phStderr != nullptr && phStdout != phStderr )
-      {
-         ret = DosQueryFHState( hPipeErr[ 0 ], &ulState );
-         if( ret == NO_ERROR && ( ulState & OPEN_FLAGS_NOINHERIT ) == 0 )
-         {
-            ret = DosSetFHState( hPipeErr[ 0 ], ( ulState & 0xFF00 ) | OPEN_FLAGS_NOINHERIT );
-         }
-      }
-
-      if( ret == NO_ERROR && ( pGT = hb_gt_Base() ) != nullptr )
-      {
-         ULONG ulStateIn, ulStateOut, ulStateErr;
-         HFILE hStdIn, hStdErr, hStdOut, hDup;
-
-         ulStateIn = ulStateOut = ulStateErr = OPEN_FLAGS_NOINHERIT;
-         hStdIn  = hStdErr = hStdOut = static_cast< HFILE >( FS_ERROR );
-
-         if( ret == NO_ERROR && ( phStdin != nullptr || fDetach ) )
-         {
-            hDup = 0;
-            ret = DosDupHandle( hDup, &hStdIn );
-            if( ret == NO_ERROR )
-            {
-               ret = DosQueryFHState( hStdIn, &ulStateIn );
-               if( ret == NO_ERROR && ( ulStateIn & OPEN_FLAGS_NOINHERIT ) == 0 )
-               {
-                  ret = DosSetFHState( hStdIn, ( ulStateIn & 0xFF00 ) | OPEN_FLAGS_NOINHERIT );
-               }
-               if( ret == NO_ERROR )
-               {
-                  ret = DosDupHandle( phStdin != nullptr ? static_cast< HFILE >( hPipeIn[ 0 ] ) : hNull, &hDup );
-               }
-            }
-         }
-
-         if( ret == NO_ERROR && ( phStdout != nullptr || fDetach ) )
-         {
-            hDup = 1;
-            ret = DosDupHandle( hDup, &hStdOut );
-            if( ret == NO_ERROR )
-            {
-               ret = DosQueryFHState( hStdOut, &ulStateOut );
-               if( ret == NO_ERROR && ( ulStateOut & OPEN_FLAGS_NOINHERIT ) == 0 )
-               {
-                  ret = DosSetFHState( hStdOut, ( ulStateOut & 0xFF00 ) | OPEN_FLAGS_NOINHERIT );
-               }
-               if( ret == NO_ERROR )
-               {
-                  ret = DosDupHandle( phStdout != nullptr ? static_cast< HFILE >( hPipeOut[ 1 ] ) : hNull, &hDup );
-               }
-            }
-         }
-
-         if( ret == NO_ERROR && ( phStderr != nullptr || fDetach ) )
-         {
-            hDup = 2;
-            ret = DosDupHandle( hDup, &hStdErr );
-            if( ret == NO_ERROR )
-            {
-               ret = DosQueryFHState( hStdErr, &ulStateErr );
-               if( ret == NO_ERROR && ( ulStateErr & OPEN_FLAGS_NOINHERIT ) == 0 )
-               {
-                  ret = DosSetFHState( hStdErr, ( ulStateErr & 0xFF00 ) | OPEN_FLAGS_NOINHERIT );
-               }
-               if( ret == NO_ERROR )
-               {
-                  ret = DosDupHandle( phStderr != nullptr ? static_cast< HFILE >( hPipeErr[ 1 ] ) : hNull, &hDup );
-               }
-            }
-         }
-
-         if( ret == NO_ERROR )
-         {
-            char * pArgs = hb_buildArgsOS2( pszFileName, &ret );
-            char uchLoadError[ CCHMAXPATH ] = { 0 };
-            RESULTCODES ChildRC = { 0, 0 };
-
-            if( pArgs )
-            {
-               ret = DosExecPgm( uchLoadError, sizeof( uchLoadError ),
-                                 fDetach ? EXEC_BACKGROUND : EXEC_ASYNCRESULT,
-                                 static_cast< PCSZ >( pArgs ), nullptr /* env */,
-                                 &ChildRC,
-                                 static_cast< PCSZ >( pArgs ) );
-               if( ret == NO_ERROR )
-               {
-                  pid = ChildRC.codeTerminate;
-               }
-               hb_freeArgsOS2( pArgs );
-            }
-         }
-
-         if( hNull != static_cast< HFILE >( FS_ERROR ) )
-         {
-            DosClose( hNull );
-         }
-
-         if( hStdIn != static_cast< HFILE >( FS_ERROR ) )
-         {
-            hDup = 0;
-            DosDupHandle( hStdIn, &hDup );
-            DosClose( hStdIn );
-            if( ( ulStateIn & OPEN_FLAGS_NOINHERIT ) == 0 )
-            {
-               DosSetFHState( hDup, ulStateIn & 0xFF00 );
-            }
-         }
-         if( hStdOut != static_cast< HFILE >( FS_ERROR ) )
-         {
-            hDup = 1;
-            DosDupHandle( hStdOut, &hDup );
-            DosClose( hStdOut );
-            if( ( ulStateOut & OPEN_FLAGS_NOINHERIT ) == 0 )
-            {
-               DosSetFHState( hDup, ulStateOut & 0xFF00 );
-            }
-         }
-         if( hStdErr != static_cast< HFILE >( FS_ERROR ) )
-         {
-            hDup = 2;
-            DosDupHandle( hStdErr, &hDup );
-            DosClose( hStdErr );
-            if( ( ulStateErr & OPEN_FLAGS_NOINHERIT ) == 0 )
-            {
-               DosSetFHState( hDup, ulStateErr & 0xFF00 );
-            }
-         }
-
-         hb_gt_BaseFree( pGT );
-      }
-      else
-      {
-         if( hNull != static_cast< HFILE >( FS_ERROR ) )
-         {
-            DosClose( hNull );
-         }
-         if( ret == NO_ERROR )
-         {
-            ret = static_cast< APIRET >( FS_ERROR );
-         }
-      }
-
-      fError = ret != NO_ERROR;
-      if( ! fError )
-      {
-         if( phStdin != nullptr )
-         {
-            *phStdin = static_cast< HB_FHANDLE >( hPipeIn[ 1 ] );
-            hPipeIn[ 1 ] = FS_ERROR;
-         }
-         if( phStdout != nullptr )
-         {
-            *phStdout = static_cast< HB_FHANDLE >( hPipeOut[ 0 ] );
-            hPipeOut[ 0 ] = FS_ERROR;
-         }
-         if( phStderr != nullptr )
-         {
-            *phStderr = static_cast< HB_FHANDLE >( hPipeErr[ 0 ] );
-            hPipeErr[ 0 ] = FS_ERROR;
-         }
-         if( pulPID )
-         {
-            *pulPID = pid;
-         }
-         hResult = static_cast< HB_FHANDLE >( pid );
-      }
-
-      hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-
 #elif defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS ) && ! defined( HB_OS_SYMBIAN )
 
       char ** argv = hb_buildArgs( pszFileName );
@@ -982,7 +682,7 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
 
       hb_freeArgs( argv );
 
-#elif defined( HB_OS_OS2 ) || defined( HB_OS_WIN )
+#elif defined( HB_OS_WIN )
 
       int hStdIn, hStdOut, hStdErr;
       char ** argv;
@@ -1153,33 +853,6 @@ int hb_fsProcessValue( HB_FHANDLE hProcess, HB_BOOL fWait )
       hb_fsSetError( static_cast< HB_ERRCODE >( FS_ERROR ) );
    }
 }
-#elif defined( HB_OS_OS2 )
-{
-   PID pid = static_cast< PID >( hProcess );
-
-   if( pid > 0 )
-   {
-      RESULTCODES resultCodes = { 0, 0 };
-      APIRET ret;
-
-      hb_vmUnlock();
-      ret = DosWaitChild( DCWA_PROCESS, fWait ? DCWW_WAIT : DCWW_NOWAIT, &resultCodes, &pid, pid );
-      hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-      if( ret == NO_ERROR )
-      {
-         iRetStatus = resultCodes.codeResult;
-      }
-      else
-      {
-         iRetStatus = -2;
-      }
-      hb_vmLock();
-   }
-   else
-   {
-      hb_fsSetError( static_cast< HB_ERRCODE >( FS_ERROR ) );
-   }
-}
 #elif defined( HB_OS_UNIX )
 {
    int iStatus;
@@ -1245,22 +918,6 @@ HB_BOOL hb_fsProcessClose( HB_FHANDLE hProcess, HB_BOOL fGentle )
       #if 0
       CloseHandle( hProc );
       #endif
-   }
-   else
-   {
-      hb_fsSetError( static_cast< HB_ERRCODE >( FS_ERROR ) );
-   }
-}
-#elif defined( HB_OS_OS2 )
-{
-   PID pid = static_cast< PID >( hProcess );
-
-   if( pid > 0 )
-   {
-      APIRET ret = DosKillProcess( fGentle ? DKP_PROCESS : DKP_PROCESSTREE, pid );
-
-      fResult = ret == NO_ERROR;
-      hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
    }
    else
    {
@@ -1600,7 +1257,7 @@ int hb_fsProcessRun( const char * pszFileName,
 
       CloseHandle( reinterpret_cast< HANDLE >( hb_fsGetOsHandle( hProcess ) ) );
 
-#elif defined( HB_OS_OS2 ) || defined( HB_OS_WIN )
+#elif defined( HB_OS_WIN )
 
       HB_MAXINT nTimeOut = 0;
       int iPipeCount = 0;

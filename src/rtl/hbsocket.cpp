@@ -175,14 +175,6 @@
 #  define HB_IS_INET_NTOA_MT_SAFE
 #  define HB_HAS_GETHOSTBYADDR
 #  define hb_socketSetResolveError( err ) hb_socketSetOsError( err )
-#elif defined( HB_OS_OS2 )
-#  if ! defined( TCPV40HDRS )
-#     define HB_HAS_INET_ATON
-#     define HB_HAS_INET_PTON
-#     define HB_HAS_INET_NTOP
-#     define HB_HAS_SOCKADDR_SA_LEN
-#  endif
-#  define HB_HAS_GETHOSTBYADDR
 #elif defined( HB_OS_DOS )
 #  define HB_HAS_INET_ATON
 #  define HB_HAS_INET_PTON
@@ -207,10 +199,6 @@
 #  include <errno.h>
 #  if defined( HB_OS_DOS )
 #     include <tcp.h>
-#  elif defined( HB_OS_OS2 )
-#     include <sys/socket.h>
-#     include <sys/select.h>
-#     include <arpa/inet.h>
 #  endif
 #  include <sys/time.h>
 #  include <sys/types.h>
@@ -245,7 +233,7 @@
 #  endif
 #endif
 
-#if defined( HB_OS_OS2 ) || defined( HB_OS_WIN ) || defined( HB_OS_DOS ) || defined( HB_OS_VXWORKS )
+#if defined( HB_OS_WIN ) || defined( HB_OS_DOS ) || defined( HB_OS_VXWORKS )
 #  define socklen_t int
 #endif
 
@@ -2431,19 +2419,6 @@ int hb_socketShutdown( HB_SOCKET sd, int iMode )
    {
       iMode = SD_BOTH;
    }
-#elif defined( HB_OS_OS2 )
-   if( iMode == HB_SOCKET_SHUT_RD )
-   {
-      iMode = SO_RCV_SHUTDOWN;
-   }
-   else if( iMode == HB_SOCKET_SHUT_WR )
-   {
-      iMode = SO_SND_SHUTDOWN;
-   }
-   else if( iMode == HB_SOCKET_SHUT_RDWR )
-   {
-      iMode = SO_RCV_SHUTDOWN | SO_SND_SHUTDOWN;
-   }
 #else
    if( iMode == HB_SOCKET_SHUT_RD )
    {
@@ -2807,14 +2782,6 @@ int hb_socketSetBlockingIO( HB_SOCKET sd, HB_BOOL fBlocking )
       }
    }
    hb_socketSetOsError( ret != -1 ? 0 : HB_SOCK_GETERROR() );
-#elif defined( HB_OS_OS2 )
-   unsigned long mode = fBlocking ? 0 : 1;
-   ret = ioctl( sd, FIONBIO, static_cast< char * >( &mode ) );
-   hb_socketSetOsError( ret != -1 ? 0 : HB_SOCK_GETERROR() );
-   if( ret == 0 )
-   {
-      ret = 1;
-   }
 #else
    int iTODO;
    HB_SYMBOL_UNUSED( sd );
@@ -3587,7 +3554,7 @@ PHB_ITEM hb_socketGetHosts( const char * szAddr, int af )
       /* gethostbyname() in Windows and OS/2 does not accept direct IP
        * addresses
        */
-#if ( defined( HB_OS_WIN ) || defined( HB_OS_OS2 ) ) && defined( HB_HAS_GETHOSTBYADDR )
+#if ( defined( HB_OS_WIN ) ) && defined( HB_HAS_GETHOSTBYADDR )
       {
          struct in_addr sia;
 

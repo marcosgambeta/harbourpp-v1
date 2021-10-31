@@ -55,10 +55,6 @@
    #if defined( HB_OS_WIN_CE )
       #include "hbwince.h"
    #endif
-#elif defined( HB_OS_OS2 )
-   #define INCL_DOSMISC
-   #define INCL_ERRORS
-   #include <os2.h>
 #elif defined( __FreeBSD__ )
    #include <sys/param.h>
 #endif
@@ -85,21 +81,6 @@ char * hb_getenv( const char * szName )
          hb_xfree( lpBuffer );
       }
       hb_xfree( lpName );
-   }
-#elif defined( HB_OS_OS2 )
-   {
-      PSZ EnvValue = ( PSZ ) "";
-      char * pszNameFree = nullptr;
-
-      szName = hb_osEncodeCP( szName, &pszNameFree, nullptr );
-      if( DosScanEnv( ( PCSZ ) szName, &EnvValue ) == NO_ERROR )
-      {
-         pszBuffer = hb_osStrDecode( static_cast< char * >( EnvValue ) );
-      }
-      if( pszNameFree )
-      {
-         hb_xfree( pszNameFree );
-      }
    }
 #else
    {
@@ -151,23 +132,6 @@ HB_BOOL hb_getenv_buffer( const char * szName, char * szBuffer, int nSize )
          hb_xfree( lpBuffer );
       }
       hb_xfree( lpName );
-   }
-#elif defined( HB_OS_OS2 )
-   {
-      PSZ EnvValue = ( PSZ ) "";
-      char * pszNameFree = nullptr;
-
-      szName = hb_osEncodeCP( szName, &pszNameFree, nullptr );
-      fRetVal = DosScanEnv( static_cast< PCSZ >( szName ), &EnvValue ) == NO_ERROR;
-      if( pszNameFree )
-      {
-         hb_xfree( pszNameFree );
-      }
-
-      if( fRetVal && szBuffer != nullptr && nSize != 0 )
-      {
-         hb_osStrDecode2( static_cast< char * >( EnvValue ), szBuffer, nSize - 1 );
-      }
    }
 #else
    {

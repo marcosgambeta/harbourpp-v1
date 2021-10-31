@@ -62,18 +62,6 @@
       #include <sys/param.h>
    #endif
 
-#elif defined( HB_OS_OS2 ) && defined( __GNUC__ )
-
-   #include "hb_io.h"
-
-   /* 2004-03-25 - <maurilio.longo@libero.it>
-      not needed anymore as of GCC 3.2.2 */
-
-   #if defined( __EMX__ ) && __GNUC__ * 1000 + __GNUC_MINOR__ < 3002
-      #include <emx/syscalls.h>
-      #define gethostname __gethostname
-   #endif
-
 #elif defined( HB_OS_UNIX )
 
    #if defined( HB_OS_VXWORKS )
@@ -83,7 +71,7 @@
 
 #endif
 
-#if ! defined( MAXGETHOSTNAME ) && ( defined( HB_OS_UNIX ) || ( ( defined( HB_OS_OS2 ) || defined( HB_OS_DOS ) ) && defined( __GNUC__ ) ) )
+#if ! defined( MAXGETHOSTNAME ) && ( defined( HB_OS_UNIX ) || ( ( defined( HB_OS_DOS ) ) && defined( __GNUC__ ) ) )
    #define MAXGETHOSTNAME 256      /* should be enough for a host name */
 #endif
 
@@ -138,7 +126,7 @@ char * hb_netname( void )
       }
 #  endif
 
-#elif ( defined( HB_OS_UNIX ) ) || ( defined( HB_OS_OS2 ) && defined( __GNUC__ ) )
+#elif ( defined( HB_OS_UNIX ) )
 
    char szValue[ MAXGETHOSTNAME + 1 ];
    szValue[ 0 ] = szValue[ MAXGETHOSTNAME ] = '\0';

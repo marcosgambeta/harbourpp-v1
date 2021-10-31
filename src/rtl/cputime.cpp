@@ -53,14 +53,7 @@
    #endif
    #include <unistd.h>
 #endif
-#if defined( HB_OS_OS2 )
-   #define INCL_DOS
-   #define INCL_DOSPROFILE
-   #define INCL_ERRORS
-   #include <os2.h>
-   #define BUFSIZE  16 * 1024
-   #include <unistd.h>
-#elif defined( HB_OS_WIN )
+#if defined( HB_OS_WIN )
    #include <windows.h>
    #if defined( HB_OS_WIN_CE )
       #include "hbwince.h"
@@ -85,12 +78,6 @@ double hb_secondsCPU( int n )
 
 #if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE ) && ! defined( HB_OS_UNIX )
    FILETIME Create, Exit, Kernel, User;
-#endif
-
-#if defined( HB_OS_OS2 )
-   static ULONG s_timer_interval = 0;
-
-   QSGREC ** pBuf;
 #endif
 
    if( ( n < 1 || n > 3 ) && ( n < 11 || n > 13 ) )
@@ -150,49 +137,6 @@ double hb_secondsCPU( int n )
       d /= 10000000.0;
    }
    else
-#elif defined( HB_OS_OS2 )
-
-   if( s_timer_interval == 0 )
-   {
-      DosQuerySysInfo( QSV_TIMER_INTERVAL, QSV_TIMER_INTERVAL, static_cast< PVOID >( &s_timer_interval ), sizeof( ULONG ) );
-   }
-
-   pBuf = static_cast< QSGREC ** >( hb_xalloc( BUFSIZE ) );
-
-   if( pBuf )
-   {
-#if defined( __GNUC__ )
-      APIRET rc = DosQuerySysState( QS_PROCESS, 0L, _getpid(), 0L, pBuf, BUFSIZE );
-#else
-      APIRET rc = DosQuerySysState( QS_PROCESS, 0L, getpid(), 0L, pBuf, BUFSIZE );
-#endif
-
-      if( rc == NO_ERROR )
-      {
-         QSGREC * pGrec = *pBuf;
-         QSPREC * pPrec = static_cast< QSPREC * >( static_cast< ULONG >( pGrec ) + sizeof( QSGREC ) );
-         QSTREC * pTrec = pPrec->pThrdRec;
-
-         for( int i = 0; i < pPrec->cTCB; i++, pTrec++ )
-         {
-            if( n & 1 )
-            {
-               d += pTrec->usertime;
-            }
-
-            if( n & 2 )
-            {
-               d += pTrec->systime;
-            }
-         }
-
-         d = d * 10.0 / s_timer_interval;
-      }
-
-      hb_xfree( pBuf );
-   }
-   else
-
 #endif
    {
       /* TODO: this code is only for DOS and other platforms which cannot

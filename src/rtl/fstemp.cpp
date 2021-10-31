@@ -132,7 +132,7 @@ static HB_BOOL fsGetTempDirByCase( char * pszName, const char * pszTempDir, HB_B
 
    if( fOK )
    {
-#  if defined( __DJGPP__ ) || defined( HB_OS_OS2 )
+#  if defined( __DJGPP__ )
       /* convert '/' to '\' */
       char * pszDelim = pszName;
       while( ( pszDelim = strchr( pszDelim, '/' ) ) != nullptr )
@@ -316,7 +316,7 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
 
       if( fResult )
       {
-#  if defined( __DJGPP__ ) || defined( HB_OS_OS2 )
+#  if defined( __DJGPP__ )
          /* convert '/' to '\' */
          char * pszDelim = pTmpBuffer;
          while( ( pszDelim = strchr( pszDelim, '/' ) ) != nullptr )
@@ -427,37 +427,21 @@ HB_ERRCODE hb_fsTempDir( char * pszTempDir )
    }
 #else
    {
-#if ! defined( HB_OS_OS2 )
-      char szBuffer[ L_tmpnam ];
+      static const char * env_tmp[] = { "TEMP", "TMP", "TMPDIR", nullptr };
 
-      if( tmpnam( szBuffer ) != nullptr )
+      const char ** tmp = env_tmp;
+
+      while( *tmp && nResult != 0 )
       {
-         PHB_FNAME pTempName = hb_fsFNameSplit( szBuffer );
-         if( fsGetTempDirByCase( pszTempDir, pTempName->szPath, HB_TRUE ) )
+         char * pszTempDirEnv = hb_getenv( *tmp++ );
+
+         if( pszTempDirEnv )
          {
-            nResult = 0;
-         }
-         hb_xfree( pTempName );
-      }
-      if( nResult != 0 )
-#endif
-      {
-         static const char * env_tmp[] = { "TEMP", "TMP", "TMPDIR", nullptr };
-
-         const char ** tmp = env_tmp;
-
-         while( *tmp && nResult != 0 )
-         {
-            char * pszTempDirEnv = hb_getenv( *tmp++ );
-
-            if( pszTempDirEnv )
+            if( fsGetTempDirByCase( pszTempDir, pszTempDirEnv, HB_FALSE ) )
             {
-               if( fsGetTempDirByCase( pszTempDir, pszTempDirEnv, HB_FALSE ) )
-               {
-                  nResult = 0;
-               }
-               hb_xfree( pszTempDirEnv );
+               nResult = 0;
             }
+            hb_xfree( pszTempDirEnv );
          }
       }
    }

@@ -285,7 +285,7 @@ HB_BOOL hb_strMatchFile( const char * szString, const char * szPattern )
 #  else
    return fnmatch( szPattern, szString, FNM_PATHNAME ) == 0;
 #  endif
-#elif defined( HB_OS_DOS ) || defined( HB_OS_WIN ) || defined( HB_OS_OS2 )
+#elif defined( HB_OS_DOS ) || defined( HB_OS_WIN )
    PHB_CODEPAGE cdp = hb_vmCDP();
 
    if( cdp && HB_CDP_ISCHARIDX( cdp ) )

@@ -900,7 +900,7 @@ static PHB_ITEM hb_u32ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
    } while( 0 )
 
 
-#if defined( HB_OS_WIN ) || defined( HB_OS_OS2 )
+#if defined( HB_OS_WIN )
    #define HB_CDECL  __cdecl
 #else
    #define HB_CDECL
@@ -919,15 +919,6 @@ HB_DYN_CTYPE_DECL( HB_U32, __stdcall, FX86_S32 );
 HB_DYN_CTYPE_DECL( HB_U64, __stdcall, FX86_S64 );
 HB_DYN_CTYPE_DECL( double, __stdcall, FX86_SDB );
 HB_DYN_CTYPE_DECL( float,  __stdcall, FX86_SFL );
-
-#endif
-
-#if defined( HB_OS_OS2 )
-
-HB_DYN_CTYPE_DECL( HB_U32, _System, FX86_O32 );
-HB_DYN_CTYPE_DECL( HB_U64, _System, FX86_O64 );
-HB_DYN_CTYPE_DECL( double, _System, FX86_ODB );
-HB_DYN_CTYPE_DECL( float,  _System, FX86_OFL );
 
 #endif
 
@@ -1163,25 +1154,6 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
                      break;
                   case _RETTYPERAW_FLOAT:
                      HB_DYN_FUN_CALL( iParamsRaw, nFL, FX86_SFL );
-                     break;
-               }
-               break;
-#endif
-#if defined( HB_OS_OS2 )
-            case HB_DYN_CALLCONV_SYSCALL:
-               switch( iRetTypeRaw )
-               {
-                  case _RETTYPERAW_INT32:
-                     HB_DYN_FUN_CALL( iParamsRaw, n32, FX86_O32 );
-                     break;
-                  case _RETTYPERAW_INT64:
-                     HB_DYN_FUN_CALL( iParamsRaw, n64, FX86_O64 );
-                     break;
-                  case _RETTYPERAW_DOUBLE:
-                     HB_DYN_FUN_CALL( iParamsRaw, nDB, FX86_ODB );
-                     break;
-                  case _RETTYPERAW_FLOAT:
-                     HB_DYN_FUN_CALL( iParamsRaw, nFL, FX86_OFL );
                      break;
                }
                break;

@@ -107,9 +107,6 @@
    #define SM_SERVERR2  89
    #endif
 
-#elif defined( HB_OS_OS2 )
-   #define INCL_DOSMISC
-   #include <os2.h>
 #elif defined( HB_OS_DOS )
    #include <dos.h>
 #elif defined( HB_OS_UNIX ) && ! defined( __CEGCC__ )
@@ -258,8 +255,6 @@ const char * hb_verPlatformMacro( void )
    return "WINDOWS";          /* TODO: Change this to WIN for consistency? */
 #elif defined( HB_OS_DOS )
    return "DOS";
-#elif defined( HB_OS_OS2 )
-   return "OS2";
 #elif defined( HB_OS_LINUX )
    return "LINUX";
 #elif defined( HB_OS_DARWIN )
@@ -555,28 +550,6 @@ char * hb_verPlatform( void )
 
             hb_strncat( pszPlatform, szHost, PLATFORM_BUF_SIZE );
          }
-      }
-   }
-
-#elif defined( HB_OS_OS2 )
-
-   {
-      unsigned long aulQSV[ QSV_MAX ] = { 0 };
-      APIRET rc = DosQuerySysInfo( 1L, QSV_MAX, static_cast< void * >( aulQSV ), sizeof( ULONG ) * QSV_MAX );
-
-      if( rc == 0 )
-      {
-         /* is this OS/2 2.x ? */
-         if( aulQSV[ QSV_VERSION_MINOR - 1 ] < 30 )
-         {
-            hb_snprintf( pszPlatform, PLATFORM_BUF_SIZE + 1, "OS/2 %ld.%02ld", aulQSV[ QSV_VERSION_MAJOR - 1 ] / 10, aulQSV[ QSV_VERSION_MINOR - 1 ] );
-         }
-         else
-            hb_snprintf( pszPlatform, PLATFORM_BUF_SIZE + 1, "OS/2 %2.2f", static_cast< float >( aulQSV[ QSV_VERSION_MINOR - 1 ] ) / 10 );
-      }
-      else
-      {
-         hb_snprintf( pszPlatform, PLATFORM_BUF_SIZE + 1, "OS/2" );
       }
    }
 

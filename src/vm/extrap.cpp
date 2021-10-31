@@ -72,10 +72,6 @@
 #  ifndef TH32CS_SNAPMODULE32
 #     define TH32CS_SNAPMODULE32  0
 #  endif
-#elif defined( HB_OS_OS2 )
-#  define INCL_DOSEXCEPTIONS
-#  define INCL_ERRORS
-#  include <os2.h>
 #endif
 
 #if defined( HB_SIGNAL_EXCEPTION_HANDLER )
@@ -469,52 +465,6 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
    return hb_cmdargCheck( "BATCH" ) ? EXCEPTION_EXECUTE_HANDLER : EXCEPTION_CONTINUE_SEARCH;
 }
 
-#elif defined( HB_OS_OS2 )
-
-static EXCEPTIONREGISTRATIONRECORD s_regRec; /* Exception Registration Record */
-
-static ULONG _System hb_os2ExceptionHandler( PEXCEPTIONREPORTRECORD pExceptionInfo, PEXCEPTIONREGISTRATIONRECORD p2, PCONTEXTRECORD pCtx, PVOID pv )
-{
-   HB_SYMBOL_UNUSED( p2 );
-   HB_SYMBOL_UNUSED( pv );
-
-   /* Don't print stack trace if inside unwind, normal process termination or process killed or
-      during debugging */
-   if( pExceptionInfo->ExceptionNum != XCPT_UNWIND && pExceptionInfo->ExceptionNum < XCPT_BREAKPOINT )
-   {
-      char buffer[ HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5 ];
-      char file[ HB_PATH_MAX ];
-      HB_USHORT uiLine;
-      int iLevel = 0;
-
-      fprintf( stderr, HB_I_("\nException %lx at address %p \n"), pExceptionInfo->ExceptionNum, pExceptionInfo->ExceptionAddress );
-
-      fprintf( stderr,
-         "\n"
-         "    Exception Code:%08X\n"
-         "    Exception Address:%08X\n"
-         "    EAX:%08X  EBX:%08X  ECX:%08X  EDX:%08X\n"
-         "    ESI:%08X  EDI:%08X  EBP:%08X\n"
-         "    CS:EIP:%04X:%08X  SS:ESP:%04X:%08X\n"
-         "    DS:%04X  ES:%04X  FS:%04X  GS:%04X\n"
-         "    Flags:%08X\n",
-         static_cast< HB_U32 >( pExceptionInfo->ExceptionNum ),
-         static_cast< HB_U32 >( pExceptionInfo->ExceptionAddress ),
-         static_cast< HB_U32 >( pCtx->ctx_RegEax ), static_cast< HB_U32 >( pCtx->ctx_RegEbx ), static_cast< HB_U32 >( pCtx->ctx_RegEcx ), static_cast< HB_U32 >( pCtx->ctx_RegEdx ),
-         static_cast< HB_U32 >( pCtx->ctx_RegEsi ), static_cast< HB_U32 >( pCtx->ctx_RegEdi ), static_cast< HB_U32 >( pCtx->ctx_RegEbp ),
-         static_cast< HB_U32 >( pCtx->ctx_SegCs ), static_cast< HB_U32 >( pCtx->ctx_RegEip ), static_cast< HB_U32 >( pCtx->ctx_SegSs ), static_cast< HB_U32 >( pCtx->ctx_RegEsp ),
-         static_cast< HB_U32 >( pCtx->ctx_SegDs ), static_cast< HB_U32 >( pCtx->ctx_SegEs ), static_cast<( HB_U32 >( pCtx->ctx_SegFs ), static_cast< HB_U32 >( pCtx->ctx_SegGs ),
-         static_cast< HB_U32 >( pCtx->ctx_EFlags ) );
-
-      while( hb_procinfo( iLevel++, buffer, &uiLine, file ) )
-      {
-         fprintf( stderr, HB_I_( "Called from %s(%hu)%s%s\n" ), buffer, uiLine, *file ? HB_I_( " in " ) : "", file );
-      }
-   }
-
-   return hb_cmdargCheck( "BATCH" ) ? XCPT_CONTINUE_STOP : XCPT_CONTINUE_SEARCH /* Exception not resolved... */;
-}
-
 #elif defined( HB_SIGNAL_EXCEPTION_HANDLER )
 
 static void hb_signalExceptionHandler( int sig, siginfo_t * si, void * ucp )
@@ -566,18 +516,6 @@ void hb_vmSetExceptionHandler( void )
       LPTOP_LEVEL_EXCEPTION_FILTER ef = SetUnhandledExceptionFilter( hb_winExceptionHandler );
       HB_SYMBOL_UNUSED( ef );
    }
-#elif defined( HB_OS_OS2 ) /* Add OS2TermHandler to this thread's chain of exception handlers */
-   {
-      APIRET rc;                             /* Return code                   */
-
-      memset( &s_regRec, 0, sizeof( s_regRec ) );
-      s_regRec.ExceptionHandler = static_cast< ERR >( hb_os2ExceptionHandler );
-      rc = DosSetExceptionHandler( &s_regRec );
-      if( rc != NO_ERROR )
-      {
-         hb_errInternal( HB_EI_ERRUNRECOV, "Could not setup exception handler (DosSetExceptionHandler())", nullptr, nullptr );
-      }
-   }
 #elif defined( HB_SIGNAL_EXCEPTION_HANDLER )
    {
       stack_t ss;
@@ -606,15 +544,7 @@ void hb_vmSetExceptionHandler( void )
 
 void hb_vmUnsetExceptionHandler( void )
 {
-#if defined( HB_OS_OS2 ) /* Add OS2TermHandler to this thread's chain of exception handlers */
-   {
-      APIRET rc;                             /* Return code                   */
-
-      /* I don't do any check on return code since Harbour is exiting in any case */
-      rc = DosUnsetExceptionHandler( &s_regRec );
-      HB_SYMBOL_UNUSED( rc );
-   }
-#elif defined( HB_SIGNAL_EXCEPTION_HANDLER )
+#if defined( HB_SIGNAL_EXCEPTION_HANDLER )
    {
       /* we are using static buffer for alternative stack so we do not
        * have to deallocate it to free the memory on application exit
