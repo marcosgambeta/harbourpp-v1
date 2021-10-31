@@ -59,9 +59,6 @@
 
    #include <windows.h>
    #include "hbwinuni.h"
-   #if defined( HB_OS_WIN_CE )
-      #include "hbwince.h"
-   #endif
 
    #ifndef VER_PLATFORM_WIN32_WINDOWS
    #define VER_PLATFORM_WIN32_WINDOWS  1
@@ -249,9 +246,7 @@ int hb_verHostBitWidth( void )
 /* NOTE: As it appears in __PLATFORM__* macro */
 const char * hb_verPlatformMacro( void )
 {
-#if   defined( HB_OS_WIN_CE ) /* Must precede HB_OS_WIN */
-   return "WINCE";            /* TODO: Change this to WCE for consistency? */
-#elif defined( HB_OS_WIN )
+#if defined( HB_OS_WIN )
    return "WINDOWS";          /* TODO: Change this to WIN for consistency? */
 #elif defined( HB_OS_DOS )
    return "DOS";
@@ -292,8 +287,6 @@ static HB_BOOL s_fWin2K    = HB_FALSE;
 static int     s_iWinNT    = 0;
 static int     s_iWin9x    = 0;
 static int     s_iWine     = 0;
-
-#if ! defined( HB_OS_WIN_CE )
 
 #if ( defined( _MSC_VER ) && _MSC_VER < 1300 )
 
@@ -336,11 +329,8 @@ static HB_BOOL s_hb_winVerifyVersionInit( void )
    return s_pVerifyVersionInfo && s_pVerSetConditionMask;
 }
 
-#endif
-
 static void s_hb_winVerInit( void )
 {
-#if ! defined( HB_OS_WIN_CE )
    s_fWin10    = hb_iswinver( 10, 0, 0, HB_TRUE );
    s_fWin81    = hb_iswinver( 6, 3, 0, HB_TRUE );
    s_fWin8     = hb_iswinver( 6, 2, 0, HB_TRUE );
@@ -407,7 +397,6 @@ static void s_hb_winVerInit( void )
    {
       s_iWinNT = 5;
    }
-#endif
 
    s_fWinVerInit = HB_TRUE;
 }
@@ -560,11 +549,6 @@ char * hb_verPlatform( void )
 
       memset( &osvi, 0, sizeof( osvi ) );
 
-#if defined( HB_OS_WIN_CE )
-      pszName = " CE";
-      osvi.dwOSVersionInfoSize = sizeof( osvi );
-      GetVersionEx( &osvi );
-#else
       /* Detection of legacy Windows versions */
       switch( hb_iswin9x() )
       {
@@ -584,13 +568,9 @@ char * hb_verPlatform( void )
             pszName = " ME";
             break;
       }
-#endif
 
       if( pszName[ 0 ] == '\0' )
       {
-#if defined( HB_OS_WIN_CE )
-         pszName = " CE";
-#else
          if( hb_iswinver( 11, 0, 0, HB_TRUE ) )
          {
             osvi.dwMajorVersion = 11;
@@ -698,7 +678,6 @@ char * hb_verPlatform( void )
          {
             pszName = " NT";
          }
-#endif
       }
 
       hb_snprintf( pszPlatform, PLATFORM_BUF_SIZE + 1, "Windows%s%s %lu.%lu", pszName, s_iWine ? " (Wine)" : "", osvi.dwMajorVersion, osvi.dwMinorVersion );
@@ -720,31 +699,6 @@ char * hb_verPlatform( void )
             }
          }
       }
-#if defined( HB_OS_WIN_CE )
-      else
-      {
-         /* Also for Win9x and NT, but GetVersionEx() is deprecated
-            so we avoid it. */
-         if( osvi.szCSDVersion[ 0 ] != TEXT( '\0' ) )
-         {
-            char * pszCSDVersion = HB_OSSTRDUP( osvi.szCSDVersion );
-            int i;
-
-            /* Skip the leading spaces (Win95B, Win98) */
-            for( i = 0; pszCSDVersion[ i ] != '\0' && HB_ISSPACE( static_cast< int >( pszCSDVersion[ i ] ) ); i++ )
-            {
-               ;
-            }
-
-            if( pszCSDVersion[ i ] != '\0' )
-            {
-               hb_strncat( pszPlatform, " ", PLATFORM_BUF_SIZE );
-               hb_strncat( pszPlatform, pszCSDVersion + i, PLATFORM_BUF_SIZE );
-            }
-            hb_xfree( pszCSDVersion );
-         }
-      }
-#endif
    }
 
 #elif defined( __CEGCC__ )
@@ -777,7 +731,7 @@ char * hb_verPlatform( void )
 
 HB_BOOL hb_iswinver( int iMajor, int iMinor, int iType, HB_BOOL fOrUpper )
 {
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
    if( s_hb_winVerifyVersionInit() )
    {
       OSVERSIONINFOEXW ver;
@@ -831,7 +785,7 @@ HB_BOOL hb_iswinver( int iMajor, int iMinor, int iType, HB_BOOL fOrUpper )
 
 HB_BOOL hb_iswinsp( int iServicePackMajor, HB_BOOL fOrUpper )
 {
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
    if( s_hb_winVerifyVersionInit() )
    {
       OSVERSIONINFOEXW ver;
@@ -984,11 +938,7 @@ int hb_iswin9x( void )
 
 HB_BOOL hb_iswince( void )
 {
-#if defined( HB_OS_WIN_CE )
-   return HB_TRUE;
-#else
    return HB_FALSE;
-#endif
 }
 
 /* NOTE: The caller must free the returned buffer. [vszakats] */

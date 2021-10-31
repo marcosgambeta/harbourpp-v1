@@ -52,10 +52,6 @@
 
 #include <zlib.h>
 
-#if ! defined( HB_NO_GZLIB ) && defined( HB_OS_WIN_CE ) && defined( _MSC_VER ) && ZLIB_VERNUM >= 0x1240
-   #define HB_NO_GZLIB
-#endif
-
 #ifndef HB_NO_GZLIB
 /* GZIP stream destructor */
 static HB_GARBAGE_FUNC( hb_gz_Destructor )

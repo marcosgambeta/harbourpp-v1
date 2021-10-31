@@ -58,9 +58,6 @@
 #if defined( HB_OS_WIN )
 
 #include <windows.h>
-#if defined( HB_OS_WIN_CE )
-   #include "hbwince.h"
-#endif
 
 #undef HB_HAS_WIN9X_TONE
 

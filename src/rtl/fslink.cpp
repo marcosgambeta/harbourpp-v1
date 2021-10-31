@@ -48,7 +48,7 @@
 #include "hbapifs.h"
 #include "hbvm.h"
 
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
    #include <windows.h>
    #if ! defined( INVALID_FILE_ATTRIBUTES )
       #define INVALID_FILE_ATTRIBUTES  ( static_cast< DWORD >( -1 ) )
@@ -66,7 +66,7 @@ HB_BOOL hb_fsLink( const char * pszExisting, const char * pszNewFile )
    {
       hb_vmUnlock();
 
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
       {
          typedef BOOL ( WINAPI * _HB_CREATEHARDLINK )( LPCTSTR, LPCTSTR, LPSECURITY_ATTRIBUTES );
 
@@ -153,7 +153,7 @@ HB_BOOL hb_fsLinkSym( const char * pszTarget, const char * pszNewFile )
    {
       hb_vmUnlock();
 
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
       {
          typedef BOOL ( WINAPI * _HB_CREATESYMBOLICLINK )( LPCTSTR, LPCTSTR, DWORD );
 
@@ -250,7 +250,7 @@ char * hb_fsLinkRead( const char * pszFile )
    {
       hb_vmUnlock();
 
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
       {
          typedef DWORD ( WINAPI * _HB_GETFINALPATHNAMEBYHANDLE )( HANDLE, LPTSTR, DWORD, DWORD );
 

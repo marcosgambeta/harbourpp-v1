@@ -91,7 +91,7 @@ static HB_CRITICAL_NEW( s_wvtMtx );
 #define HB_WVT_UNLOCK()    hb_threadLeaveCriticalSection( &s_wvtMtx )
 
 
-#if ( ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 || defined( HB_OS_WIN_CE ) ) ) ) && ! defined( HB_ARCH_64BIT )
+#if ( ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 ) ) ) && ! defined( HB_ARCH_64BIT )
 #  ifndef GetWindowLongPtr
 #     define GetWindowLongPtr   GetWindowLong
 #  endif
@@ -1816,11 +1816,7 @@ static void hb_gt_wvt_FitRows( PHB_GTWVT pWVT )
    int maxWidth;
    int maxHeight;
 
-#if defined( HB_OS_WIN_CE )
-   pWVT->bMaximized = HB_FALSE;
-#else
    pWVT->bMaximized = IsZoomed( pWVT->hWnd );
-#endif
 
    GetClientRect( pWVT->hWnd, &ci );
    maxWidth = ci.right;
@@ -1848,11 +1844,7 @@ static void hb_gt_wvt_FitSize( PHB_GTWVT pWVT )
    int left;
    int top;
 
-#if defined( HB_OS_WIN_CE )
-   pWVT->bMaximized = HB_FALSE;
-#else
    pWVT->bMaximized = IsZoomed( pWVT->hWnd );
-#endif
 
    GetClientRect( pWVT->hWnd, &ci );
    GetWindowRect( pWVT->hWnd, &wi );
@@ -1938,11 +1930,7 @@ static void hb_gt_wvt_FitSize( PHB_GTWVT pWVT )
                hb_gt_wvt_ResetBoxCharBitmaps( pWVT );
 #endif
 
-#if defined( HB_OS_WIN_CE )
-               pWVT->FixedFont = HB_FALSE;
-#else
                pWVT->FixedFont = ! pWVT->Win9X && pWVT->fontWidth >= 0 && ( tm.tmPitchAndFamily & TMPF_FIXED_PITCH ) == 0 && ( pWVT->PTEXTSIZE.x == tm.tmMaxCharWidth );
-#endif
                for( n = 0; n < pWVT->COLS; n++ )
                {
                   pWVT->FixedSize[ n ] = pWVT->PTEXTSIZE.x;
@@ -2098,11 +2086,7 @@ static void hb_gt_wvt_ResetWindowSize( PHB_GTWVT pWVT, HFONT hFont )
    hb_gt_wvt_ResetBoxCharBitmaps( pWVT );
 #endif
 
-#if defined( HB_OS_WIN_CE )
-   pWVT->FixedFont = HB_FALSE;
-#else
    pWVT->FixedFont = ! pWVT->Win9X && pWVT->fontWidth >= 0 && ( tm.tmPitchAndFamily & TMPF_FIXED_PITCH ) == 0 && ( pWVT->PTEXTSIZE.x == tm.tmMaxCharWidth );
-#endif
 
    /* pWVT->FixedSize[] is used by ExtTextOut() to emulate
       fixed font when a proportional font is used */
@@ -2179,14 +2163,12 @@ static void hb_gt_wvt_ResetWindowSize( PHB_GTWVT pWVT, HFONT hFont )
             SetWindowPos( pWVT->hWnd, nullptr, wi.left, wi.top, width, height, SWP_NOSIZE | SWP_NOZORDER );
          }
       }
-#if ! defined( HB_OS_WIN_CE )
       /* This code creates infinite recursive calls in WinCE */
       else
       {
          /* Will resize window without moving left/top origin */
          SetWindowPos( pWVT->hWnd, nullptr, wi.left, wi.top, width, height, SWP_NOZORDER );
       }
-#endif
    }
 
    HB_GTSELF_EXPOSEAREA( pWVT->pGT, 0, 0, pWVT->ROWS, pWVT->COLS );
@@ -2345,10 +2327,6 @@ static int hb_gt_wvt_UpdateKeyFlags( int iFlags )
 
 static void hb_gt_wvt_Composited( PHB_GTWVT pWVT, HB_BOOL fEnable )
 {
-#if defined( HB_OS_WIN_CE )
-   HB_SYMBOL_UNUSED( pWVT );
-   HB_SYMBOL_UNUSED( fEnable );
-#else
    if( hb_iswinvista() && ! GetSystemMetrics( SM_REMOTESESSION ) )
    {
       pWVT->bComposited = fEnable;
@@ -2361,7 +2339,6 @@ static void hb_gt_wvt_Composited( PHB_GTWVT pWVT, HB_BOOL fEnable )
          SetWindowLongPtr( pWVT->hWnd, GWL_EXSTYLE, GetWindowLongPtr( pWVT->hWnd, GWL_EXSTYLE ) & ~WS_EX_COMPOSITED );
       }
    }
-#endif
 }
 
 static void hb_gt_wvt_SetCloseButton( PHB_GTWVT pWVT )
@@ -2566,7 +2543,6 @@ static void hb_gt_wvt_MouseEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
                 rect.right  != pWVT->sRectOld.right  ||
                 rect.bottom != pWVT->sRectOld.bottom )
             {
-#if ! defined( HB_OS_WIN_CE )  /* WinCE does not support InvertRgn */
                /* Concept forwarded by Andy Wos - thanks. */
                HRGN rgn1 = CreateRectRgn( pWVT->sRectOld.left, pWVT->sRectOld.top, pWVT->sRectOld.right, pWVT->sRectOld.bottom );
                HRGN rgn2 = CreateRectRgn( rect.left, rect.top, rect.right, rect.bottom );
@@ -2582,12 +2558,7 @@ static void hb_gt_wvt_MouseEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
                DeleteObject( rgn1 );
                DeleteObject( rgn2 );
                DeleteObject( rgn3 );
-#else
-               HDC hdc = GetDC( pWVT->hWnd );
-               InvertRect( hdc, &pWVT->sRectOld );
-               InvertRect( hdc, &rect );
-               ReleaseDC( pWVT->hWnd, hdc );
-#endif
+ 
                pWVT->sRectOld.left   = rect.left;
                pWVT->sRectOld.top    = rect.top;
                pWVT->sRectOld.right  = rect.right;
@@ -4287,11 +4258,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             void * hIconName;
 
             if( iType == HB_GTI_ICONFILE )
-#if defined( HB_OS_WIN_CE )
-               hIcon = hIconToFree = static_cast< HICON >( LoadImage( static_cast< HINSTANCE >( nullptr ), HB_ITEMGETSTR( pInfo->pNewVal, &hIconName, nullptr ), IMAGE_ICON, 0, 0, LR_LOADFROMFILE ) );
-#else
                hIcon = hIconToFree = static_cast< HICON >( LoadImage( static_cast< HINSTANCE >( nullptr ), HB_ITEMGETSTR( pInfo->pNewVal, &hIconName, nullptr ), IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_DEFAULTSIZE ) );
-#endif
             else
             {
                hIcon = LoadIcon( pWVT->hInstance, HB_ITEMGETSTR( pInfo->pNewVal, &hIconName, nullptr ) );
@@ -4503,12 +4470,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                   pWVT->bSelectCopy = HB_TRUE;
                   if( hSysMenu )
                   {
-#if defined( HB_OS_WIN_CE )  /* WinCE does not support ModifyMenu */
-                     DeleteMenu( hSysMenu, SYS_EV_MARK, MF_BYCOMMAND );
-                     AppendMenu( hSysMenu, MF_STRING, SYS_EV_MARK, pWVT->lpSelectCopy );
-#else
                      ModifyMenu( hSysMenu, SYS_EV_MARK, MF_BYCOMMAND | MF_STRING | MF_ENABLED, SYS_EV_MARK, pWVT->lpSelectCopy );
-#endif
                   }
                }
             }

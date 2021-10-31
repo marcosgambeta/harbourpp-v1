@@ -272,9 +272,7 @@ static int hb_pp_preprocesfile( PHB_PP_STATE pState, const char * szRuleFile, co
       foutr = hb_fopen( szRuleFile, "w" );
       if( ! foutr )
       {
-#if ! defined( HB_OS_WIN_CE )
          perror( szRuleFile );
-#endif
          iResult = 1;
       }
       else
@@ -333,9 +331,7 @@ static int hb_pp_generateVerInfo( char * szVerFile,
    fout = hb_fopen( szVerFile, "w" );
    if( ! fout )
    {
-#if ! defined( HB_OS_WIN_CE )
       perror( szVerFile );
-#endif
       iResult = 1;
    }
    else
@@ -502,11 +498,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
    {
       if( iQuiet < 2 )
       {
-#if ! defined( HB_OS_WIN_CE )
          perror( pszFileName );
-#else
-         fprintf( stderr, "Cannot open the %s file.\n", pszFileName );
-#endif
       }
       iResult = 1;
    }
@@ -862,7 +854,3 @@ int main( int argc, char * argv[] )
 
    return iResult;
 }
-
-#if defined( HB_OS_WIN_CE ) && ! defined( __CEGCC__ )
-#  include "hbwmain.cpp"
-#endif

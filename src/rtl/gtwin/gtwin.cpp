@@ -80,9 +80,6 @@
 #define _WIN32_WINNT  0x0600 /* for hb_gt_win_SetPalette_Vista() */
 
 #include <windows.h>
-#if defined( HB_OS_WIN_CE )
-#  include "hbwince.h"
-#endif
 
 #include <wincon.h>
 

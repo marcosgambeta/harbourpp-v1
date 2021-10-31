@@ -70,7 +70,7 @@ HB_FUNC( __WAPI_GETOEMCP )
 
 HB_FUNC( __WAPI_GETCONSOLEOUTPUTCP )
 {
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
    hb_retnl( GetConsoleOutputCP() );
 #else
    hb_retnl( 0 );

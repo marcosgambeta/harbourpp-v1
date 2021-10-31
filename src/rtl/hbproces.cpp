@@ -79,13 +79,10 @@
 #elif defined( HB_OS_WIN )
 #  include <windows.h>
 #  include "hbwinuni.h"
-#  if defined( HB_OS_WIN_CE )
-#     include "hbwince.h"
-#  endif
 #endif
 
 #ifndef HB_PROCESS_USEFILES
-#  if defined( HB_OS_DOS ) || defined( HB_OS_WIN_CE )
+#  if defined( HB_OS_DOS )
 #    define HB_PROCESS_USEFILES
 #  endif
 #endif
@@ -108,54 +105,7 @@
    while( 0 )
 #endif
 
-#if defined( HB_OS_WIN_CE ) && defined( HB_PROCESS_USEFILES )
-
-static void hb_getCommand( const char * pszFileName, LPTSTR * lpAppName, LPTSTR * lpParams )
-{
-   const char * src, * params;
-   char cQuote = 0;
-
-   while( HB_ISSPACE( *pszFileName ) )
-   {
-      ++pszFileName;
-   }
-
-   params = nullptr;
-   src = pszFileName;
-   while( *src )
-   {
-      if( *src == cQuote )
-      {
-         cQuote = 0;
-      }
-      else if( cQuote == 0 )
-      {
-         if( *src == '"' )
-         {
-            cQuote = *src;
-         }
-         else if( HB_ISSPACE( *src ) )
-         {
-            params = src;
-            while( HB_ISSPACE( *params ) )
-            {
-               ++params;
-            }
-            if( *params == 0 )
-            {
-               params = nullptr;
-            }
-            break;
-         }
-      }
-      ++src;
-   }
-
-   *lpParams = params ? HB_CHARDUP( params ) : nullptr;
-   *lpAppName = HB_CHARDUPN( pszFileName, src - pszFileName );
-}
-
-#elif defined( HB_PROCESS_USEFILES ) || defined( HB_OS_UNIX )
+#if defined( HB_PROCESS_USEFILES ) || defined( HB_OS_UNIX )
 
 /* convert command to argument list using standard Bourne shell encoding:
  * "" and '' can be used to group parameters with blank characters,
@@ -294,45 +244,7 @@ static int hb_fsProcessExec( const char * pszFileName, HB_FHANDLE hStdin, HB_FHA
 
    int iResult = FS_ERROR;
 
-#if defined( HB_OS_WIN_CE )
-{
-   LPTSTR lpAppName, lpParams;
-   HB_BOOL fError;
-
-   HB_SYMBOL_UNUSED( hStdin );
-   HB_SYMBOL_UNUSED( hStdout );
-   HB_SYMBOL_UNUSED( hStderr );
-
-   hb_getCommand( pszFileName, &lpAppName, &lpParams );
-
-   hb_vmUnlock();
-   fError = ! CreateProcess( lpAppName,      /* lpAppName */
-                             lpParams,       /* lpCommandLine */
-                             nullptr,           /* lpProcessAttr */
-                             nullptr,           /* lpThreadAttr */
-                             FALSE,          /* bInheritHandles */
-                             0,              /* dwCreationFlags */
-                             nullptr,           /* lpEnvironment */
-                             nullptr,           /* lpCurrentDirectory */
-                             nullptr,           /* lpStartupInfo */
-                             nullptr );         /* lpProcessInformation */
-   hb_fsSetIOError( ! fError, 0 );
-   if( ! fError )
-   {
-      iResult = 0;
-   }
-   hb_vmLock();
-
-   if( lpAppName )
-   {
-      hb_xfree( lpAppName );
-   }
-   if( lpParams )
-   {
-      hb_xfree( lpParams );
-   }
-}
-#elif defined( HB_OS_DOS ) || defined( HB_OS_WIN ) || defined( HB_OS_UNIX )
+#if defined( HB_OS_DOS ) || defined( HB_OS_WIN ) || defined( HB_OS_UNIX )
 {
    int iStdIn, iStdOut, iStdErr;
    char ** argv;
@@ -497,7 +409,6 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
       DWORD dwFlags = 0;
       LPTSTR lpCommand = HB_CHARDUP( pszFileName );
 
-#  if ! defined( HB_OS_WIN_CE )
       if( phStdin != nullptr )
       {
          SetHandleInformation( reinterpret_cast< HANDLE >( hb_fsGetOsHandle( hPipeIn [ 1 ] ) ), HANDLE_FLAG_INHERIT, 0 );
@@ -510,7 +421,6 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
       {
          SetHandleInformation( reinterpret_cast< HANDLE >( hb_fsGetOsHandle( hPipeErr[ 0 ] ) ), HANDLE_FLAG_INHERIT, 0 );
       }
-#  endif
 
       memset( &pi, 0, sizeof( pi ) );
       memset( &si, 0, sizeof( si ) );
@@ -974,9 +884,7 @@ int hb_fsProcessRun( const char * pszFileName,
 #if defined( HB_PROCESS_USEFILES )
 {
 
-#if defined( HB_OS_WIN_CE )
-#  define _HB_NULLHANDLE()    FS_ERROR
-#elif defined( HB_OS_UNIX )
+#if defined( HB_OS_UNIX )
 #  define _HB_NULLHANDLE()    open( "/dev/null", O_RDWR )
 #else
 #  define _HB_NULLHANDLE()    open( "NUL:", O_RDWR )

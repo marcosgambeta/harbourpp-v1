@@ -53,9 +53,6 @@
 #if defined( HB_OS_WIN )
    #include <windows.h>
    /* For Global*() */
-   #if defined( HB_OS_WIN_CE )
-      #include "hbwince.h"
-   #endif
 
    #if defined( __CYGWIN__ )
       #include <wchar.h>

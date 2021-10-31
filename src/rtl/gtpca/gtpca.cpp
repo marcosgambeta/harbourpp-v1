@@ -84,7 +84,7 @@
 #  if defined( HB_OS_WIN )
 #     include <windows.h>
 #  endif
-#  if ( defined( _MSC_VER ) ) && ! defined( HB_OS_WIN_CE )
+#  if ( defined( _MSC_VER ) )
 #     include <conio.h>
 #  endif
 #endif
@@ -626,7 +626,7 @@ static int hb_gt_pca_ReadKey( PHB_GT pGT, int iEventMask )
       if( hb_fsRead( s_hFilenoStdin, &bChar, 1 ) == 1 )
          ch = bChar;
    }
-#elif defined( _MSC_VER ) && ! defined( HB_OS_WIN_CE )
+#elif defined( _MSC_VER )
    if( s_bStdinConsole )
    {
       if( _kbhit() )

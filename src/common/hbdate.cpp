@@ -61,9 +61,6 @@
 #elif defined( HB_OS_WIN )
 #  include <windows.h>
 #  include "hbwinuni.h"
-#  if defined( HB_OS_WIN_CE )
-#    include "hbwince.h"
-#  endif
 #else
 #  include <sys/timeb.h>
 #  if defined( _MSC_VER )

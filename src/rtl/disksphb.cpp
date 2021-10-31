@@ -62,9 +62,6 @@
 #elif defined( HB_OS_WIN )
    #include <windows.h>
    #include "hbwinuni.h"
-   #if defined( HB_OS_WIN_CE )
-      #include "hbwince.h"
-   #endif
 #elif defined( HB_OS_DOS )
    #include <dos.h>
 #endif
@@ -97,7 +94,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
          UINT uiErrMode = SetErrorMode( SEM_FAILCRITICALERRORS );
          HB_BOOL fResult;
 
-#if ! defined( HB_OS_WIN_CE ) && ! defined( HB_OS_WIN_64 )
+#if ! defined( HB_OS_WIN_64 )
          /* NOTE: We need to call this function dynamically to maintain support
                   Win95 first edition. It was introduced in Win95B (aka OSR2) [vszakats] */
          typedef BOOL ( WINAPI * P_GDFSE )( LPCTSTR, PULARGE_INTEGER, PULARGE_INTEGER, PULARGE_INTEGER );
@@ -165,7 +162,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
 
             ULARGE_INTEGER i64FreeBytesToCaller, i64TotalBytes, i64FreeBytes;
 
-#if ! defined( HB_OS_WIN_CE ) && ! defined( HB_OS_WIN_64 )
+#if ! defined( HB_OS_WIN_64 )
             fResult = s_pGetDiskFreeSpaceEx( lpPath,
                                              static_cast< PULARGE_INTEGER >( &i64FreeBytesToCaller ),
                                              static_cast< PULARGE_INTEGER >( &i64TotalBytes ),

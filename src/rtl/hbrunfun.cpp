@@ -65,9 +65,7 @@ HB_FUNC( HB_RUN )
 
       if( hb_gtSuspend() == HB_SUCCESS )
       {
-#if defined( HB_OS_WIN_CE )
-         iResult = hb_fsProcessRun( pszCommand, nullptr, 0, nullptr, nullptr, nullptr, nullptr, HB_FALSE );
-#elif defined( HB_OS_WIN )
+#if defined( HB_OS_WIN )
          LPTSTR lpCommand = HB_CHARDUP( pszCommand );
          iResult = HB_WINAPI_SYSTEM( lpCommand );
          hb_xfree( lpCommand );

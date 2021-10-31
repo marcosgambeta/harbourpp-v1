@@ -52,9 +52,6 @@
 
 #if defined( HB_OS_WIN )
    #include <windows.h>
-   #if defined( HB_OS_WIN_CE )
-      #include "hbwince.h"
-   #endif
 #endif
 
 #define HB_DLL_PREF      TEXT( "harbour" )
@@ -63,17 +60,7 @@
 
 #define HB_DLL_NAME      HB_DLL_PREF HB_DLL_EXT
 
-#if   defined( HB_OS_WIN_CE ) && defined( HB_CPU_ARM )
-   #define HB_DLL_NAME2  HB_DLL_PREF HB_DLL_VER TEXT( "-wce-arm" ) HB_DLL_EXT
-#elif defined( HB_OS_WIN_CE ) && defined( HB_CPU_MIPS )
-   #define HB_DLL_NAME2  HB_DLL_PREF HB_DLL_VER TEXT( "-wce-mips" ) HB_DLL_EXT
-#elif defined( HB_OS_WIN_CE ) && defined( HB_CPU_SH )
-   #define HB_DLL_NAME2  HB_DLL_PREF HB_DLL_VER TEXT( "-wce-sh" ) HB_DLL_EXT
-#elif defined( HB_OS_WIN_CE ) && defined( HB_CPU_X86 )
-   #define HB_DLL_NAME2  HB_DLL_PREF HB_DLL_VER TEXT( "-wce-x86" ) HB_DLL_EXT
-#elif defined( HB_OS_WIN_CE )
-   #define HB_DLL_NAME2  HB_DLL_PREF HB_DLL_VER TEXT( "-wce" ) HB_DLL_EXT
-#elif defined( __BORLANDC__ )
+#if defined( __BORLANDC__ )
    #define HB_DLL_NAME2  HB_DLL_PREF HB_DLL_VER TEXT( "-bcc" ) HB_DLL_EXT
 #elif defined( HB_OS_WIN_64 ) && defined( HB_CPU_X86_64 )
    #define HB_DLL_NAME2  HB_DLL_PREF HB_DLL_VER TEXT( "-x64" ) HB_DLL_EXT
@@ -134,13 +121,8 @@ PHB_FUNC hb_dllGetProcAddress( const char * szProcName )
 
          do
          {
-#if defined( HB_OS_WIN_CE )
-            LPCTSTR s_lpGetProcAddr = TEXT( "_dll_hb_vmProcAddress" );
-            s_pProcGet = ( HB_PROC_GET ) GetProcAddress( s_hModule, s_lpGetProcAddr + i );
-#else
             static const char * s_szGetProcAddr = "_dll_hb_vmProcAddress";
             s_pProcGet = ( HB_PROC_GET ) GetProcAddress( s_hModule, s_szGetProcAddr + i );
-#endif
          }
          while( s_pProcGet == nullptr && ( i -= i == 4 ? 3 : 1 ) >= 0 );
          if( s_pProcGet == nullptr )
@@ -152,11 +134,7 @@ PHB_FUNC hb_dllGetProcAddress( const char * szProcName )
 }
 
 
-#if defined( HB_OS_WIN_CE ) && defined( _MSC_VER )
-BOOL WINAPI HB_DLL_ENTRY_POINT( HANDLE hInstance, DWORD dwReason, PVOID pvReserved )
-#else
 BOOL WINAPI HB_DLL_ENTRY_POINT( HINSTANCE hInstance, DWORD dwReason, PVOID pvReserved )
-#endif
 {
    HB_TRACE( HB_TR_DEBUG, ( "DllEntryPoint(%p, %lu, %p)", hInstance, dwReason, pvReserved ) );
 

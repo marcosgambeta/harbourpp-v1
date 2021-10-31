@@ -77,7 +77,7 @@
 #  if defined( HB_OS_WIN )
 #     include <windows.h>
 #  endif
-#  if ( defined( _MSC_VER ) ) && ! defined( HB_OS_WIN_CE )
+#  if ( defined( _MSC_VER ) )
 #     include <conio.h>
 #  endif
 #endif
@@ -280,7 +280,7 @@ static void hb_gt_std_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
       }
    }
 #endif
-#elif defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#elif defined( HB_OS_WIN )
    if( pGTSTD->fStdinConsole )
    {
       SetConsoleMode( ( HANDLE ) hb_fsGetOsHandle( pGTSTD->hStdin ), 0x0000 );
@@ -351,7 +351,7 @@ static int hb_gt_std_ReadKey( PHB_GT pGT, int iEventMask )
       if( hb_fsRead( pGTSTD->hStdin, &bChar, 1 ) == 1 )
          ch = bChar;
    }
-#elif defined( _MSC_VER ) && ! defined( HB_OS_WIN_CE )
+#elif defined( _MSC_VER )
    if( pGTSTD->fStdinConsole )
    {
       if( _kbhit() )
@@ -383,11 +383,6 @@ static int hb_gt_std_ReadKey( PHB_GT pGT, int iEventMask )
    }
    else if( WaitForSingleObject( ( HANDLE ) hb_fsGetOsHandle( pGTSTD->hStdin ), 0 ) == WAIT_OBJECT_0 )
    {
-#if defined( HB_OS_WIN_CE )
-      HB_BYTE bChar;
-      if( hb_fsRead( pGTSTD->hStdin, &bChar, 1 ) == 1 )
-         ch = bChar;
-#else
       INPUT_RECORD  ir;
       DWORD         dwEvents;
       while( PeekConsoleInput( ( HANDLE ) hb_fsGetOsHandle( pGTSTD->hStdin ), &ir, 1, &dwEvents ) && dwEvents == 1 )
@@ -401,7 +396,6 @@ static int hb_gt_std_ReadKey( PHB_GT pGT, int iEventMask )
          else /* Remove from the input queue */
             ReadConsoleInput( ( HANDLE ) hb_fsGetOsHandle( pGTSTD->hStdin ), &ir, 1, &dwEvents );
       }
-#endif
    }
 #else
    {

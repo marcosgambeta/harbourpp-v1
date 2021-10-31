@@ -63,9 +63,6 @@
 
 #if defined( HB_OS_WIN )
    #include <windows.h>
-   #if defined( HB_OS_WIN_CE )
-      #include "hbwince.h"
-   #endif
 #endif
 
 /* NOTE: Some C compilers like Borland C optimize the call of small static buffers

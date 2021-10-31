@@ -5722,10 +5722,6 @@ void hb_pp_initDynDefines( PHB_PP_STATE pState, HB_BOOL fArchDefs )
       hb_snprintf( szDefine, sizeof( szDefine ), s_szPlatform, "UNIX" );
       hb_pp_addDefine( pState, szDefine, nullptr );
 #endif
-#if defined( HB_OS_WIN_CE )
-      hb_snprintf( szDefine, sizeof( szDefine ), s_szPlatform, "WINDOWS" );
-      hb_pp_addDefine( pState, szDefine, nullptr );
-#endif
 
       hb_snprintf( szResult, sizeof( szResult ), "%d", static_cast< int >( sizeof( void * ) ) );
 #if defined( HB_ARCH_16BIT )

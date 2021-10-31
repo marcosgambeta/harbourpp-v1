@@ -51,9 +51,6 @@
 
    #include <windows.h>
    #include "hbwinuni.h"
-   #if defined( HB_OS_WIN_CE )
-      #include "hbwince.h"
-   #endif
 
 #elif defined( HB_OS_DOS )
 

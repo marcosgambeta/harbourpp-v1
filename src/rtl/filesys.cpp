@@ -104,7 +104,7 @@
 #endif
 
 #if ( defined( __BORLANDC__ ) || defined( __IBMCPP__ ) || defined( _MSC_VER ) || \
-      defined( __MINGW32__ ) ) && ! defined( HB_OS_UNIX ) && ! defined( HB_OS_WIN_CE )
+      defined( __MINGW32__ ) ) && ! defined( HB_OS_UNIX )
    #include <sys/stat.h>
    #include <fcntl.h>
    #include <process.h>
@@ -152,9 +152,6 @@
 #elif defined( HB_OS_WIN )
    #include <windows.h>
    #include "hbwinuni.h"
-   #if defined( HB_OS_WIN_CE )
-      #include "hbwince.h"
-   #endif
    #if ! defined( INVALID_SET_FILE_POINTER ) && ( defined( _MSC_VER ) )
       #define INVALID_SET_FILE_POINTER ( static_cast< DWORD >( -1 ) )
    #endif
@@ -1159,7 +1156,7 @@ HB_BOOL hb_fsPipeCreate( HB_FHANDLE hPipe[ 2 ] )
 
    HB_BOOL fResult;
 
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
 {
    SECURITY_ATTRIBUTES sa;
    HANDLE hPipeRd, hPipeWr;
@@ -1220,7 +1217,7 @@ int hb_fsIsPipeOrSock( HB_FHANDLE hPipeHandle )
    hb_fsSetIOError( ret == 0, 0 );
    return ret == 0 && ( S_ISFIFO( statbuf.st_mode ) || S_ISSOCK( statbuf.st_mode ) ) ? 1 : 0;
 }
-#elif defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#elif defined( HB_OS_WIN )
 {
    DWORD type = GetFileType( reinterpret_cast< HANDLE >( hb_fsGetOsHandle( hPipeHandle ) ) );
    hb_fsSetIOError( type != FILE_TYPE_UNKNOWN || GetLastError() == NO_ERROR, 0 );
@@ -1240,7 +1237,7 @@ HB_BOOL hb_fsPipeUnblock( HB_FHANDLE hPipeHandle )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsPipeUnblock(%p)", reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hPipeHandle ) ) ) );
 
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
    {
       DWORD dwMode = PIPE_NOWAIT;
       HB_BOOL fResult;
@@ -1281,7 +1278,7 @@ HB_SIZE hb_fsPipeIsData( HB_FHANDLE hPipeHandle, HB_SIZE nBufferSize, HB_MAXINT 
 
    hb_vmUnlock();
 
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
 {
    HB_MAXUINT timer = hb_timerInit( nTimeOut );
    HB_BOOL fResult = HB_FALSE;
@@ -1371,7 +1368,7 @@ HB_SIZE hb_fsPipeWrite( HB_FHANDLE hPipeHandle, const void * buffer, HB_SIZE nSi
 
    hb_vmUnlock();
 
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
 {
    HANDLE hPipe = reinterpret_cast< HANDLE >( hb_fsGetOsHandle( hPipeHandle ) );
    DWORD dwMode = 0;
@@ -4010,7 +4007,7 @@ HB_ERRCODE hb_fsIsDrv( int iDrive )
    HB_ERRCODE nResult;
 
    if( iDrive >= 0 )
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
    {
       hb_vmUnlock();
       nResult = ( ( GetLogicalDrives() >> iDrive ) & 1 ) ? 0 : static_cast< HB_ERRCODE >( F_ERROR );

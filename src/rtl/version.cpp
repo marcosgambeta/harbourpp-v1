@@ -158,9 +158,7 @@ HB_FUNC( HB_VERSION )
          break;
 
       case HB_VERSION_PLATFORM:
-      #if defined( HB_OS_WIN_CE ) /* NOTE: Must precede HB_OS_WIN */
-         hb_retc_const( "WCE" );
-      #elif defined( HB_OS_WIN )
+      #if defined( HB_OS_WIN )
          hb_retc_const( "WIN" );
       #else
          hb_retc_const( hb_verPlatformMacro() );

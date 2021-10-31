@@ -65,9 +65,6 @@
 #  include <windows.h>
 #  include <tlhelp32.h>
 #  include "hbwinuni.h"
-#  if defined( HB_OS_WIN_CE )
-#     include "hbwince.h"
-#  endif
    /* BCC and MinGW doesn't seem to #define this */
 #  ifndef TH32CS_SNAPMODULE32
 #     define TH32CS_SNAPMODULE32  0
@@ -170,112 +167,6 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
          pCtx->IntT20, pCtx->IntT21, pCtx->IntT22,
          pCtx->IntGp , pCtx->IntV0 , pCtx->IntSp , pCtx->IntTeb,
          pCtx->IntNats );
-   }
-#elif defined( HB_OS_WIN_CE ) && defined( HB_CPU_ARM )
-   {
-      PCONTEXT pCtx = pExceptionInfo->ContextRecord;
-
-      hb_snprintf( errmsg, errmsglen,
-         "\n\n"
-         "    Exception Code:%08X\n"
-         "    Exception Address:%08X\n"
-         "    R0 :%08X  R1 :%08X  R2 :%08X  R3 :%08X\n"
-         "    R4 :%08X  R5 :%08X  R6 :%08X  R7 :%08X\n"
-         "    R8 :%08X  R9 :%08X  R10:%08X  R11:%08X\n"
-         "    R12:%08X\n"
-         "    SP :%08X  LR :%08X  PC :%08X\n"
-         "    Flags:%08X\n",
-         static_cast< HB_U32 >( pExceptionInfo->ExceptionRecord->ExceptionCode ),
-         static_cast< HB_U32 >( pExceptionInfo->ExceptionRecord->ExceptionAddress ),
-         static_cast< HB_U32 >( pCtx->R0 ), static_cast< HB_U32 >( pCtx->R1 ), static_cast< HB_U32 >( pCtx->R2 ), static_cast< HB_U32 >( pCtx->R3 ),
-         static_cast< HB_U32 >( pCtx->R4 ), static_cast< HB_U32 >( pCtx->R5 ), static_cast< HB_U32 >( pCtx->R6 ), static_cast< HB_U32 >( pCtx->R7 ),
-         static_cast< HB_U32 >( pCtx->R8 ), static_cast< HB_U32 >( pCtx->R9 ), static_cast< HB_U32 >( pCtx->R10 ), static_cast< HB_U32 >( pCtx->R11 ),
-         static_cast< HB_U32 >( pCtx->R12 ),
-         static_cast< HB_U32 >( pCtx->Sp ), static_cast< HB_U32 >( pCtx->Lr ), static_cast< HB_U32 >( pCtx->Pc ),
-         static_cast< HB_U32 >( pCtx->Psr ) );
-   }
-#elif defined( HB_OS_WIN_CE ) && defined( HB_CPU_MIPS ) && defined( HB_ARCH_32BIT )
-   {
-      PCONTEXT pCtx = pExceptionInfo->ContextRecord;
-
-      hb_snprintf( errmsg, errmsglen,
-         "\n\n"
-         "    Exception Code:%08X\n"
-         "    Exception Address:%08X\n"
-         "    IZe:%08X  IAt:%08X  ILo:%08X  IHi:%08X\n"
-         "    IA0:%08X  IA1:%08X  IA2:%08X  IA3:%08X\n"
-         "    IT0:%08X  IT1:%08X  IT2:%08X  IT3:%08X\n"
-         "    IT4:%08X  IT5:%08X  IT6:%08X  IT7:%08X\n"
-         "    IT8:%08X  IT9:%08X  IV0:%08X  IV1:%08X\n"
-         "    IS0:%08X  IS1:%08X  IS2:%08X  IS3:%08X\n"
-         "    IS4:%08X  IS5:%08X  IS6:%08X  IS7:%08X\n"
-         "    IS8:%08X  IK0:%08X  IK1:%08X\n"
-         "    IGp:%08X  ISp:%08X  IRa:%08X\n"
-         "    Fsr:%08X  Fir:%08X  Psr:%08X\n",
-         static_cast< HB_U32 >( pExceptionInfo->ExceptionRecord->ExceptionCode ),
-         static_cast< HB_U32 >( pExceptionInfo->ExceptionRecord->ExceptionAddress ),
-         static_cast< HB_U32 >( pCtx->IntZero ), static_cast< HB_U32 >( pCtx->IntAt ), static_cast< HB_U32 >( pCtx->IntLo ), static_cast< HB_U32 >( pCtx->IntHi ),
-         static_cast< HB_U32 >( pCtx->IntA0 ), static_cast< HB_U32 >( pCtx->IntA1 ), static_cast< HB_U32 >( pCtx->IntA2 ), static_cast< HB_U32 >( pCtx->IntA3 ),
-         static_cast< HB_U32 >( pCtx->IntT0 ), static_cast< HB_U32 >( pCtx->IntT1 ), static_cast< HB_U32 >( pCtx->IntT2 ), static_cast< HB_U32 >( pCtx->IntT3 ),
-         static_cast< HB_U32 >( pCtx->IntT4 ), static_cast< HB_U32 >( pCtx->IntT5 ), static_cast< HB_U32 >( pCtx->IntT6 ), static_cast< HB_U32 >( pCtx->IntT7 ),
-         static_cast< HB_U32 >( pCtx->IntT8 ), static_cast< HB_U32 >( pCtx->IntT9 ), static_cast< HB_U32 >( pCtx->IntV0 ), static_cast< HB_U32 >( pCtx->IntV1 ),
-         static_cast< HB_U32 >( pCtx->IntS0 ), static_cast< HB_U32 >( pCtx->IntS1 ), static_cast< HB_U32 >( pCtx->IntS2 ), static_cast<( HB_U32 >( pCtx->IntS3 ),
-         static_cast< HB_U32 >( pCtx->IntS4 ), static_cast< HB_U32 >( pCtx->IntS5 ), static_cast< HB_U32 >( pCtx->IntS6 ), static_cast< HB_U32 >( pCtx->IntS7 ),
-         static_cast< HB_U32 >( pCtx->IntS8 ), static_cast< HB_U32 >( pCtx->IntK0 ), static_cast< HB_U32 >( pCtx->IntK1 ),
-         static_cast< HB_U32 >( pCtx->IntGp ), static_cast< HB_U32 >( pCtx->IntSp ), static_cast< HB_U32 >( pCtx->IntRa ),
-         static_cast< HB_U32 >( pCtx->Fsr ), static_cast< HB_U32 >( pCtx->Fir ), static_cast< HB_U32 >( pCtx->Psr ) );
-   }
-#elif defined( HB_OS_WIN_CE ) && defined( HB_CPU_MIPS ) && defined( HB_ARCH_64BIT ) /* Such platform doesn't currently exist [2010]. */
-   {
-      PCONTEXT pCtx = pExceptionInfo->ContextRecord;
-
-      hb_snprintf( errmsg, errmsglen,
-         "\n\n"
-         "    Exception Code:%08X\n"
-         "    Exception Address:%016" PFLL "X\n"
-         "    IZe:%016" PFLL "X  IAt:%016" PFLL "X  ILo:%016" PFLL "X  IHi:%016" PFLL "X\n"
-         "    IA0:%016" PFLL "X  IA1:%016" PFLL "X  IA2:%016" PFLL "X  IA3:%016" PFLL "X\n"
-         "    IT0:%016" PFLL "X  IT1:%016" PFLL "X  IT2:%016" PFLL "X  IT3:%016" PFLL "X\n"
-         "    IT4:%016" PFLL "X  IT5:%016" PFLL "X  IT6:%016" PFLL "X  IT7:%016" PFLL "X\n"
-         "    IT8:%016" PFLL "X  IT9:%016" PFLL "X  IV0:%016" PFLL "X  IV1:%016" PFLL "X\n"
-         "    IS0:%016" PFLL "X  IS1:%016" PFLL "X  IS2:%016" PFLL "X  IS3:%016" PFLL "X\n"
-         "    IS4:%016" PFLL "X  IS5:%016" PFLL "X  IS6:%016" PFLL "X  IS7:%016" PFLL "X\n"
-         "    IS8:%016" PFLL "X  IK0:%016" PFLL "X  IK1:%016" PFLL "X\n"
-         "    IGp:%016" PFLL "X  ISp:%016" PFLL "X  IRa:%016" PFLL "X\n"
-         "    Fsr:%016" PFLL "X  Fir:%016" PFLL "X  Psr:%016" PFLL "X\n",
-         static_cast< HB_U32 >( pExceptionInfo->ExceptionRecord->ExceptionCode ),
-         pExceptionInfo->ExceptionRecord->ExceptionAddress,
-         pCtx->IntZero, pCtx->IntAt, pCtx->IntLo, pCtx->IntHi,
-         pCtx->IntA0, pCtx->IntA1, pCtx->IntA2, pCtx->IntA3,
-         pCtx->IntT0, pCtx->IntT1, pCtx->IntT2, pCtx->IntT3,
-         pCtx->IntT4, pCtx->IntT5, pCtx->IntT6, pCtx->IntT7,
-         pCtx->IntT8, pCtx->IntT9, pCtx->IntV0, pCtx->IntV1,
-         pCtx->IntS0, pCtx->IntS1, pCtx->IntS2, pCtx->IntS3,
-         pCtx->IntS4, pCtx->IntS5, pCtx->IntS6, pCtx->IntS7,
-         pCtx->IntS8, pCtx->IntK0, pCtx->IntK1,
-         pCtx->IntGp, pCtx->IntSp, pCtx->IntRa,
-         pCtx->Fsr  , pCtx->Fir  , pCtx->Psr );
-   }
-#elif defined( HB_OS_WIN_CE ) && defined( HB_CPU_SH )
-   {
-      PCONTEXT pCtx = pExceptionInfo->ContextRecord;
-
-      hb_snprintf( errmsg, errmsglen,
-         "\n\n"
-         "    Exception Code:%08X\n"
-         "    Exception Address:%08X\n"
-         "    R0 :%08X  R1 :%08X  R2 :%08X  R3 :%08X\n"
-         "    R4 :%08X  R5 :%08X  R6 :%08X  R7 :%08X\n"
-         "    R8 :%08X  R9 :%08X  R10:%08X  R11:%08X\n"
-         "    R12:%08X  R13:%08X  R14:%08X  R15:%08X\n"
-         "    PR :%08X MACH:%08X MACL:%08X  GBR:%08X\n",
-         static_cast< HB_U32 >( pExceptionInfo->ExceptionRecord->ExceptionCode ),
-         static_cast< HB_U32 >( pExceptionInfo->ExceptionRecord->ExceptionAddress ),
-         static_cast< HB_U32 >( pCtx->R0 ), static_cast< HB_U32 >( pCtx->R1 ), static_cast< HB_U32 >( pCtx->R2 ), static_cast< HB_U32 >( pCtx->R3 ),
-         static_cast< HB_U32 >( pCtx->R4 ), static_cast< HB_U32 >( pCtx->R5 ), static_cast< HB_U32 >( pCtx->R6 ), static_cast< HB_U32 >( pCtx->R7 ),
-         static_cast< HB_U32 >( pCtx->R8 ), static_cast< HB_U32 >( pCtx->R9 ), static_cast< HB_U32 >( pCtx->R10 ), static_cast< HB_U32 >( pCtx->R11 ),
-         static_cast< HB_U32 >( pCtx->R12 ), static_cast< HB_U32 >( pCtx->R13 ), static_cast< HB_U32 >( pCtx->R14 ), static_cast< HB_U32 >( pCtx->R15 ),
-         static_cast< HB_U32 >( pCtx->PR ), static_cast< HB_U32 >( pCtx->MACH ), static_cast< HB_U32 >( pCtx->MACL ), static_cast< HB_U32 >( pCtx->GBR ) );
    }
 #elif defined( HB_CPU_X86 )
    {
@@ -389,20 +280,16 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
 #endif
 
    {
-#if defined( HB_OS_WIN_CE )
-      HMODULE hToolhelp = GetModuleHandle( TEXT( "toolhelp.dll" ) );
-#else
       /* NOTE: Several non-MS sources say that Win9x has these functions
                in tlhelp32.dll. Testing shows though, that in Win95, Win95b
                and Win98 they are in kernel32.dll, and tlhelp32.dll doesn't
                exist. [vszakats] */
       HMODULE hToolhelp = GetModuleHandle( TEXT( "kernel32.dll" ) );
-#endif
 
       if( hToolhelp )
       {
          /* NOTE: Hack to force the ASCII versions of these types. [vszakats] */
-         #if ! defined( HB_OS_WIN_CE ) && defined( UNICODE )
+         #if defined( UNICODE )
             #undef MODULEENTRY32
             #undef LPMODULEENTRY32
          #endif
@@ -441,11 +328,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
                      hb_snprintf( buf, sizeof( buf ), "%016" PFLL "X %016" PFLL "X %s\n", reinterpret_cast< HB_PTRUINT >( me32.modBaseAddr ), static_cast< HB_PTRUINT >( me32.modBaseSize ), me32.szExePath );
 #else
                      char szBuffer[ MAX_PATH ];
-                     #if defined( HB_OS_WIN_CE )
-                        hb_wcntombcpy( szBuffer, me32.szExePath, HB_SIZEOFARRAY( szBuffer ) - 1 );
-                     #else
-                        hb_strncpy( szBuffer, me32.szExePath, HB_SIZEOFARRAY( szBuffer ) - 1 );
-                     #endif
+                     hb_strncpy( szBuffer, me32.szExePath, HB_SIZEOFARRAY( szBuffer ) - 1 );
                      hb_snprintf( buf, sizeof( buf ), "%08lX %08lX %s\n", reinterpret_cast< HB_PTRUINT >( me32.modBaseAddr ), static_cast< HB_PTRUINT >( me32.modBaseSize ), szBuffer );
 #endif
                      hb_strncat( errmsg, buf, errmsglen );
@@ -511,7 +394,7 @@ static void hb_signalExceptionHandler( int sig, siginfo_t * si, void * ucp )
 
 void hb_vmSetExceptionHandler( void )
 {
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
    {
       LPTOP_LEVEL_EXCEPTION_FILTER ef = SetUnhandledExceptionFilter( hb_winExceptionHandler );
       HB_SYMBOL_UNUSED( ef );

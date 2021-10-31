@@ -58,9 +58,6 @@
 
 #if defined( HB_OS_WIN )
 #  include <windows.h>
-#  if defined( HB_OS_WIN_CE )
-#     include "hbwince.h"
-#  endif
 #endif
 
 /* NOTE: VxWorks supports dlopen() functionality only in shared
@@ -197,12 +194,7 @@ void * hb_libSymAddr( PHB_ITEM pDynLib, const char * pszSymbol )
 
    if( hDynLib )
    {
-#if defined( HB_OS_WIN_CE )
-      LPTSTR lpSymbol = hb_mbtowc( pszSymbol );
-      void * hFuncAddr = static_cast< void * >( GetProcAddress( ( HMODULE ) hDynLib, lpSymbol ) );
-      hb_xfree( lpSymbol );
-      return hFuncAddr;
-#elif defined( HB_OS_WIN )
+#if defined( HB_OS_WIN )
       return reinterpret_cast< void * >( GetProcAddress( static_cast< HMODULE >( hDynLib ), pszSymbol ) );
 #elif defined( HB_HAS_DLFCN )
       return dlsym( hDynLib, pszSymbol );

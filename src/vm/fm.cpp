@@ -98,12 +98,7 @@
 #elif defined( HB_FM_WIN_ALLOC )
 #  undef HB_FM_DL_ALLOC
 #elif ! defined( HB_FM_DL_ALLOC ) && ! defined( HB_FM_WIN_ALLOC )
-#  if defined( HB_OS_WIN_CE )
-      /* In WinCE builds DLMALLOC creates problems when allocated
-       * memory is used in file IO operations.
-       */
-#     define HB_FM_STD_ALLOC
-#  elif defined( _MSC_VER ) || defined( __BORLANDC__ ) || defined( __MINGW32__ ) || \
+#  if defined( _MSC_VER ) || defined( __BORLANDC__ ) || defined( __MINGW32__ ) || \
         ( defined( HB_FM_DLMT_ALLOC ) && defined( HB_MT_VM ) )
 #     define HB_FM_DL_ALLOC
 #  else
@@ -122,9 +117,7 @@
 #if defined( HB_FM_DL_ALLOC )
 #  if ! defined( HB_FM_DLMT_ALLOC ) && ! defined( HB_FM_DLMT_ALLOC_OFF ) && \
       defined( HB_MT_VM )
-#     if ! ( defined( HB_OS_WIN_CE ) && ( defined( _MSC_VER ) && ( _MSC_VER <= 1500 ) ) )
-#        define HB_FM_DLMT_ALLOC
-#     endif
+#     define HB_FM_DLMT_ALLOC
 #  endif
 /* #  define NO_MALLINFO 1 */
 /* #  define INSECURE */
@@ -159,10 +152,6 @@
 #  elif defined( _MSC_VER )
 #     if ! defined( USE_DL_PREFIX ) && ! defined( HB_FM_DLMT_ALLOC )
 #        define USE_DL_PREFIX
-#     endif
-#     if defined( HB_OS_WIN_CE )
-#        define ABORT  TerminateProcess( GetCurrentProcess(), 0 )
-#        define LACKS_FCNTL_H
 #     endif
 #     pragma warning( push )
 #     pragma warning( disable : 4702 )

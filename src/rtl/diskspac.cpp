@@ -68,9 +68,6 @@
 #elif defined( HB_OS_WIN )
 #  include <windows.h>
 #  include "hbwinuni.h"
-#  if defined( HB_OS_WIN_CE )
-#     include "hbwince.h"
-#  endif
 #elif defined( HB_OS_DOS )
 #  include <dos.h>
 #endif
@@ -134,17 +131,6 @@ HB_FUNC( DISKSPACE )
          lpPath[ 2 ] = TEXT( '\\' );
          lpPath[ 3 ] = TEXT( '\0' );
 
-#if defined( HB_OS_WIN_CE )
-
-         bError = ! GetDiskFreeSpaceEx( lpPath,
-                                        static_cast< PULARGE_INTEGER >( &i64FreeBytesToCaller ),
-                                        static_cast< PULARGE_INTEGER >( &i64TotalBytes ),
-                                        static_cast< PULARGE_INTEGER >( &i64FreeBytes ) );
-         if( ! bError )
-         {
-            dSpace = HB_GET_LARGE_UINT( i64FreeBytesToCaller );
-         }
-#else
          /* NOTE: We need to call this function dynamically to maintain support
                   Win95 first edition. It was introduced in Win95B (aka OSR2) [vszakats] */
          {
@@ -188,7 +174,6 @@ HB_FUNC( DISKSPACE )
                }
             }
          }
-#endif
          SetErrorMode( uiErrMode );
       }
       else

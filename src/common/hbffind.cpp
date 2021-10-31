@@ -415,7 +415,6 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
 
       bFound = HB_FALSE;
 
-#if ! defined( HB_OS_WIN_CE )
       if( ( ffind->attrmask & HB_FA_LABEL ) != 0 && ! info->fLabelDone )
       {
          TCHAR lpVolName[ HB_PATH_MAX ];
@@ -458,7 +457,6 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
             hb_xfree( mask );
          }
       }
-#endif
 
       if( ! bFound && ( ffind->attrmask & ( HB_FA_LABEL | HB_FA_HIDDEN | HB_FA_SYSTEM | HB_FA_DIRECTORY ) ) != HB_FA_LABEL )
       {
