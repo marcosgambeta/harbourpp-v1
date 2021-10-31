@@ -149,18 +149,6 @@
    #include <dos.h>
    #include <time.h>
    #include <utime.h>
-#elif defined( HB_OS_OS2 )
-   #define INCL_BASE
-   #define INCL_DOSFILEMGR
-   #define INCL_DOSERRORS
-   #define INCL_DOSDATETIME
-   #define INCL_LONGLONG
-   #include <os2.h>
-   #include <time.h>
-   #include <share.h>
-   #ifndef SH_COMPAT
-      #define SH_COMPAT  0x0000
-   #endif
 #elif defined( HB_OS_WIN )
    #include <windows.h>
    #include "hbwinuni.h"
@@ -217,17 +205,7 @@
                       to refer to current disk
  */
 
-#if defined( HB_OS_OS2 )
-   /* 1 based version */
-
-   #define HB_FS_GETDRIVE(n)  do { \
-                                    ULONG ulDrive, ulLogical; \
-                                    DosQueryCurrentDisk( &ulDrive, &ulLogical ); \
-                                    ( n ) = static_cast< int >( ulDrive ) - 1; \
-                              } while( 0 )
-   #define HB_FS_SETDRIVE(n)  do { DosSetDefaultDisk( ( n ) + 1 ); } while( 0 )
-
-#elif defined( HB_OS_WIN )
+#if defined( HB_OS_WIN )
 
    #define HB_FS_GETDRIVE(n)  do { n = fs_win_get_drive(); } while( 0 )
    #define HB_FS_SETDRIVE(n)  fs_win_set_drive( n )
@@ -268,7 +246,7 @@
 #endif
 
 
-#if defined( _MSC_VER ) || defined( __MINGW32__ ) || defined( __IBMCPP__ ) || defined( HB_OS_OS2 )
+#if defined( _MSC_VER ) || defined( __MINGW32__ ) || defined( __IBMCPP__ )
 /* These compilers use sopen() rather than open(), because their
    versions of open() do not support combined O_ and SH_ flags */
    #define HB_FS_SOPEN
@@ -471,104 +449,6 @@ static void convert_open_flags( HB_BOOL fCreate, HB_FATTR nAttr, HB_USHORT uiFla
       if( nAttr & FC_SYSTEM )
       {
          *dwAttr |= FILE_ATTRIBUTE_SYSTEM;
-      }
-   }
-}
-
-#elif defined( HB_OS_OS2 )
-static void convert_open_flags( HB_BOOL fCreate, HB_FATTR nAttr, HB_USHORT uiFlags, PULONG pulAttr, PULONG fsOpenFlags, PULONG fsOpenMode )
-{
-   /* DosOpen() parameters */
-
-   if( fCreate )
-   {
-      *fsOpenFlags = OPEN_ACTION_CREATE_IF_NEW | ( uiFlags & FO_EXCL ? OPEN_ACTION_FAIL_IF_EXISTS : OPEN_ACTION_REPLACE_IF_EXISTS );
-      *fsOpenMode = OPEN_ACCESS_READWRITE;
-   }
-   else
-   {
-      if( uiFlags & FO_CREAT )
-      {
-         if( uiFlags & FO_EXCL )
-         {
-            *fsOpenFlags = OPEN_ACTION_CREATE_IF_NEW | OPEN_ACTION_FAIL_IF_EXISTS;
-         }
-         else if( uiFlags & FO_TRUNC )
-         {
-            *fsOpenFlags = OPEN_ACTION_CREATE_IF_NEW | OPEN_ACTION_REPLACE_IF_EXISTS;
-         }
-         else
-         {
-            *fsOpenFlags = OPEN_ACTION_CREATE_IF_NEW | OPEN_ACTION_OPEN_IF_EXISTS;
-         }
-      }
-      else if( uiFlags & FO_TRUNC )
-      {
-         *fsOpenFlags = OPEN_ACTION_FAIL_IF_NEW | OPEN_ACTION_REPLACE_IF_EXISTS;
-      }
-      else
-      {
-         *fsOpenFlags = OPEN_ACTION_FAIL_IF_NEW | OPEN_ACTION_OPEN_IF_EXISTS;
-      }
-
-      switch( uiFlags & ( FO_READ | FO_WRITE | FO_READWRITE ) )
-      {
-         case FO_READWRITE:
-            *fsOpenMode = OPEN_ACCESS_READWRITE;
-            break;
-         case FO_WRITE:
-            *fsOpenMode = OPEN_ACCESS_WRITEONLY;
-            break;
-         case FO_READ:
-         default:
-            *fsOpenMode = OPEN_ACCESS_READONLY;
-            break;
-      }
-   }
-
-   /* shared flags */
-   switch( uiFlags & ( FO_DENYREAD | FO_DENYWRITE | FO_EXCLUSIVE | FO_DENYNONE ) )
-   {
-      case FO_DENYREAD:
-         *fsOpenMode |= OPEN_SHARE_DENYREAD;
-         break;
-      case FO_DENYWRITE:
-         *fsOpenMode |= OPEN_SHARE_DENYWRITE;
-         break;
-      case FO_EXCLUSIVE:
-         *fsOpenMode |= OPEN_SHARE_DENYREADWRITE;
-         break;
-      default:
-         *fsOpenMode |= OPEN_SHARE_DENYNONE;
-         break;
-   }
-
-   /* inheritance flag, when set file handle is not inherited
-      by a process created from a call to DosExecPgm [druzus] */
-   if( uiFlags & 0x80 )
-   {
-      *fsOpenMode |= OPEN_FLAGS_NOINHERIT;
-   }
-
-   /* file attributes flags */
-   if( nAttr == FC_NORMAL )
-   {
-      *pulAttr = FILE_NORMAL;
-   }
-   else
-   {
-      *pulAttr = FILE_ARCHIVED;
-      if( nAttr & FC_READONLY )
-      {
-         *pulAttr |= FILE_READONLY;
-      }
-      if( nAttr & FC_HIDDEN )
-      {
-         *pulAttr |= FILE_HIDDEN;
-      }
-      if( nAttr & FC_SYSTEM )
-      {
-         *pulAttr |= FILE_SYSTEM;
       }
    }
 }
@@ -1273,23 +1153,6 @@ HB_FHANDLE hb_fsPOpen( const char * pszFileName, const char * pszMode )
    return hFileHandle;
 }
 
-#if defined( HB_OS_OS2 )
-#  if ! defined( HB_OS2_NONAMEDPIPES ) && ! defined( HB_OS2_USENAMEDPIPES )
-
-/* In OS/2 anonymous pipes are not simulated by named pipes and
-   unlike in MS-Windows functions for named pipes cannot be used
-   with anonymous ones. Read/Write operations from/to anonymous
-   pipes are always blocking on OS/2. For unblocking access we
-   have to emulate anonymous pipe using named one [druzus] */
-#     define HB_OS2_USENAMEDPIPES
-
-#  endif
-
-/* the size of system IO buffers in OS/2 pipes */
-#  define HB_OS2_PIPEBUFSIZE        4096
-
-#endif
-
 HB_BOOL hb_fsPipeCreate( HB_FHANDLE hPipe[ 2 ] )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsPipeCreate(%p)", static_cast< void * >( hPipe ) ) );
@@ -1316,79 +1179,6 @@ HB_BOOL hb_fsPipeCreate( HB_FHANDLE hPipe[ 2 ] )
       hPipe[ 0 ] = hPipe[ 1 ] = FS_ERROR;
    }
    hb_fsSetIOError( fResult, 0 );
-}
-#elif defined( HB_OS_OS2 )
-{
-   HPIPE hPipeRd = 0;
-   HPIPE hPipeWr = 0;
-   APIRET ret;
-
-#  if ! defined( HB_OS2_USENAMEDPIPES )
-
-   /* create anonymous pipe */
-   ret = DosCreatePipe( &hPipeRd, &hPipeWr, HB_OS2_PIPEBUFSIZE );
-
-#  else
-
-   /* emulate anonymous pipe using named one */
-   ULONG ulOpenMode = NP_INHERIT | NP_ACCESS_DUPLEX;
-   ULONG ulPipeMode = NP_NOWAIT | NP_TYPE_BYTE | NP_READMODE_BYTE | 1 /*instance*/;
-   ULONG ulPid;
-   PPIB ppib = nullptr;
-
-   ret = DosGetInfoBlocks( nullptr, &ppib );
-   ulPid = ret == NO_ERROR ? ppib->pib_ulpid : 0;
-
-   while( ret == NO_ERROR )
-   {
-      static unsigned long s_ulPipeCnt = 0;
-      char szPipeName[ 24 ];
-
-      hb_snprintf( szPipeName, sizeof( szPipeName ), "\\PIPE\\%08lX.%03lX", ++s_ulPipeCnt, ulPid & 0xFFFL );
-
-      /* create the read end of the named pipe. */
-      ret = DosCreateNPipe( static_cast< PSZ >( szPipeName ), &hPipeRd, ulOpenMode, ulPipeMode, HB_OS2_PIPEBUFSIZE, HB_OS2_PIPEBUFSIZE, NP_DEFAULT_WAIT );
-      if( ret == NO_ERROR )
-      {
-         ret = DosConnectNPipe( hPipeRd );
-         if( ret == NO_ERROR || ret == ERROR_PIPE_NOT_CONNECTED )
-         {
-            /* open the write end of then named pipe */
-            ULONG ulAction = 0;
-            HB_FHANDLE hFile;
-
-            ret = hb_fsOS2DosOpen( szPipeName, &hFile, &ulAction, 0,
-                                   FILE_NORMAL,
-                                   OPEN_ACTION_FAIL_IF_NEW | OPEN_ACTION_OPEN_IF_EXISTS,
-                                   OPEN_ACCESS_WRITEONLY | OPEN_SHARE_DENYNONE | OPEN_FLAGS_FAIL_ON_ERROR );
-            if( ret == NO_ERROR )
-            {
-               hPipeWr = static_cast< HFILE >( hFile );
-               break;
-            }
-         }
-         DosClose( hPipeRd );
-      }
-      if( ret == ERROR_PIPE_BUSY || ret == ERROR_ACCESS_DENIED )
-      {
-         ret = NO_ERROR;
-      }
-   }
-
-#  endif
-
-   hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-   fResult = ret == NO_ERROR;
-   if( fResult )
-   {
-      DosSetNPHState( hPipeRd, NP_WAIT | NP_READMODE_BYTE );
-      hPipe[ 0 ] = static_cast< HB_FHANDLE >( hPipeRd );
-      hPipe[ 1 ] = static_cast< HB_FHANDLE >( hPipeWr );
-   }
-   else
-   {
-      hPipe[ 0 ] = hPipe[ 1 ] = FS_ERROR;
-   }
 }
 #elif defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS ) && ! defined( HB_OS_SYMBIAN )
 {
@@ -1436,13 +1226,6 @@ int hb_fsIsPipeOrSock( HB_FHANDLE hPipeHandle )
    hb_fsSetIOError( type != FILE_TYPE_UNKNOWN || GetLastError() == NO_ERROR, 0 );
    return type == FILE_TYPE_PIPE ? 1 : 0;
 }
-#elif defined( HB_OS_OS2 )
-{
-   ULONG type = 0, attr = 0;
-   APIRET ret = DosQueryHType( static_cast< HFILE >( hPipeHandle ), &type, &attr );
-   hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-   return ret == NO_ERROR && ( type & 0xFF ) == FHT_PIPE ? 1 : 0;
-}
 #else
 #  if ! defined( HB_OS_DOS )
       int iTODO; /* TODO: for given platform */
@@ -1465,12 +1248,6 @@ HB_BOOL hb_fsPipeUnblock( HB_FHANDLE hPipeHandle )
       fResult = SetNamedPipeHandleState( reinterpret_cast< HANDLE >( hb_fsGetOsHandle( hPipeHandle ) ), &dwMode, nullptr, nullptr ) != 0;
       hb_fsSetIOError( fResult, 0 );
       return fResult;
-   }
-#elif defined( HB_OS_OS2 )
-   {
-      APIRET ret = DosSetNPHState( static_cast< HPIPE >( hPipeHandle ), NP_NOWAIT );
-      hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-      return ret == NO_ERROR;
    }
 #elif defined( HB_OS_UNIX ) && ! defined( HB_OS_MINIX )
    {
@@ -1536,51 +1313,6 @@ HB_SIZE hb_fsPipeIsData( HB_FHANDLE hPipeHandle, HB_SIZE nBufferSize, HB_MAXINT 
    {
       nToRead = ( static_cast< HB_SIZE >( dwAvail ) < nBufferSize ) ? dwAvail : nBufferSize;
    }
-}
-#elif defined( HB_OS_OS2 )
-{
-
-#  if ! defined( HB_OS2_USENAMEDPIPES )
-
-   HB_SYMBOL_UNUSED( hPipeHandle );
-   HB_SYMBOL_UNUSED( nTimeOut );
-   hb_fsSetError( static_cast< HB_ERRCODE >( FS_ERROR ) );
-
-   nToRead += nBufferSize;
-
-#  else
-
-   HB_MAXUINT timer = hb_timerInit( nTimeOut );
-   HB_BOOL fResult = HB_FALSE;
-   AVAILDATA avail;
-
-   do
-   {
-      ULONG ulState = 0, cbActual = 0;
-      APIRET ret;
-
-      if( fResult )
-      {
-         hb_releaseCPU();
-      }
-
-      avail.cbpipe = 0;
-      avail.cbmessage = 0;
-      ret = DosPeekNPipe( static_cast< HPIPE >( hPipeHandle ), nullptr, 0, &cbActual, &avail, &ulState );
-      hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-      fResult = ret == NO_ERROR && ( avail.cbpipe != 0 || ulState == NP_STATE_CONNECTED );
-   }
-   while( fResult && avail.cbpipe == 0 && ( nTimeOut = hb_timerTest( nTimeOut, &timer ) ) != 0 && hb_vmRequestQuery() == 0 );
-
-   if( ! fResult )
-   {
-      nToRead = static_cast< HB_SIZE >( FS_ERROR );
-   }
-   else if( avail.cbpipe > 0 )
-   {
-      nToRead = ( static_cast< HB_SIZE >( avail.cbpipe ) < nBufferSize ) ? avail.cbpipe : nBufferSize;
-   }
-#  endif
 }
 #elif defined( HB_OS_UNIX )
 {
@@ -1697,58 +1429,6 @@ HB_SIZE hb_fsPipeWrite( HB_FHANDLE hPipeHandle, const void * buffer, HB_SIZE nSi
       nWritten = static_cast< HB_SIZE >( FS_ERROR );
    }
 }
-#elif defined( HB_OS_OS2 )
-{
-#  if ! defined( HB_OS2_USENAMEDPIPES )
-
-   HB_SYMBOL_UNUSED( nTimeOut );
-   nWritten = hb_fsWriteLarge( hPipeHandle, buffer, nSize );
-
-#  else
-
-   ULONG state = 0;
-   APIRET ret;
-
-   ret = DosQueryNPHState( static_cast< HPIPE >( hPipeHandle ), &state );
-   if( ret == NO_ERROR )
-   {
-      HB_MAXUINT timer = hb_timerInit( nTimeOut );
-      HB_BOOL fResult = HB_FALSE;
-
-      if( ( state & NP_NOWAIT ) == 0 )
-      {
-         DosSetNPHState( static_cast< HPIPE >( hPipeHandle ), NP_NOWAIT );
-      }
-
-      nWritten = 0;
-      do
-      {
-         ULONG cbActual = static_cast< ULONG >( nSize - nWritten );
-
-         if( fResult )
-         {
-            hb_releaseCPU();
-         }
-
-         ret = DosWrite( static_cast< HPIPE >( hPipeHandle ), static_cast< PSZ >( buffer ) + nWritten, cbActual, &cbActual );
-         hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-         fResult = ret == NO_ERROR;
-         nWritten = fResult ? static_cast< HB_SIZE >( cbActual ) : static_cast< HB_SIZE >( FS_ERROR );
-      }
-      while( fResult && nWritten == 0 && ( nTimeOut = hb_timerTest( nTimeOut, &timer ) ) != 0 && hb_vmRequestQuery() == 0 );
-
-      if( ( state & NP_NOWAIT ) == 0 )
-      {
-         DosSetNPHState( static_cast< HPIPE >( hPipeHandle ), NP_WAIT );
-      }
-   }
-   else
-   {
-      hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-      nWritten = static_cast< HB_SIZE >( FS_ERROR );
-   }
-#  endif
-}
 #elif defined( HB_OS_UNIX )
 {
    int iResult = hb_fsCanWrite( hPipeHandle, nTimeOut );
@@ -1849,15 +1529,6 @@ HB_FHANDLE hb_fsOpenEx( const char * pszFileName, HB_USHORT uiFlags, HB_FATTR nA
 
       hFileHandle = reinterpret_cast< HB_FHANDLE >( hFile );
    }
-#elif defined( HB_OS_OS2 )
-   {
-      ULONG ulAction = 0, ulAttribute, fsOpenFlags, fsOpenMode;
-
-      convert_open_flags( HB_FALSE, nAttr, uiFlags, &ulAttribute, &fsOpenFlags, &fsOpenMode );
-      hb_vmUnlock();
-      hb_fsOS2DosOpenL( pszFileName, &hFileHandle, &ulAction, 0, ulAttribute, fsOpenFlags, fsOpenMode );
-      hb_vmLock();
-   }
 #else
    {
       char * pszFree;
@@ -1931,8 +1602,6 @@ void hb_fsCloseRaw( HB_FHANDLE hFileHandle )
    hb_vmUnlock();
 #if defined( HB_OS_WIN )
    CloseHandle( DosToWinHandle( hFileHandle ) );
-#elif defined( HB_OS_OS2 )
-   DosClose( hFileHandle );
 #else
    {
 #  if defined( EINTR )
@@ -1961,12 +1630,6 @@ void hb_fsClose( HB_FHANDLE hFileHandle )
    hb_vmUnlock();
 #if defined( HB_OS_WIN )
    hb_fsSetIOError( CloseHandle( DosToWinHandle( hFileHandle ) ) != 0, 0 );
-#elif defined( HB_OS_OS2 )
-   {
-      APIRET ret = DosClose( hFileHandle );
-
-      hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-   }
 #else
    {
       int ret;
@@ -2145,10 +1808,6 @@ HB_BOOL hb_fsGetFileTime( const char * pszFileName, long * plJulian, long * plMi
          }
       }
    }
-#elif defined( HB_OS_OS2 )
-
-   fResult = hb_fsOS2QueryPathInfo( pszFileName, nullptr, nullptr, plJulian, plMillisec );
-
 #elif defined( HB_OS_UNIX ) || defined( HB_OS_DOS ) || defined( __GNUC__ )
    {
       char * pszFree;
@@ -2232,10 +1891,6 @@ HB_BOOL hb_fsGetAttr( const char * pszFileName, HB_FATTR * pnAttr )
          hb_xfree( lpFree );
       }
    }
-#elif defined( HB_OS_OS2 )
-
-   fResult = hb_fsOS2QueryPathInfo( pszFileName, nullptr, pnAttr, nullptr, nullptr );
-
 #else
    {
       char * pszFree;
@@ -2349,58 +2004,6 @@ HB_BOOL hb_fsSetFileTime( const char * pszFileName, long lJulian, long lMillisec
 
          hb_fsSetIOError( fResult, 0 );
          hb_fsClose( hFile );
-      }
-   }
-#elif defined( HB_OS_OS2 )
-   {
-      FILESTATUS3 fs3;
-      APIRET ret;
-      char * pszFree;
-
-      pszFileName = hb_fsNameConv( pszFileName, &pszFree );
-
-      ret = DosQueryPathInfo( static_cast< PCSZ >( pszFileName ), FIL_STANDARD, &fs3, sizeof( fs3 ) );
-      if( ret == NO_ERROR )
-      {
-         FDATE fdate;
-         FTIME ftime;
-
-         if( lJulian <= 0 || lMillisec < 0 )
-         {
-            DATETIME dt;
-
-            DosGetDateTime( &dt );
-
-            if( lJulian <= 0 )
-            {
-               iYear = dt.year;
-               iMonth = dt.month;
-               iDay = dt.day;
-            }
-            if( lMillisec < 0 )
-            {
-               iHour = dt.hours;
-               iMinute = dt.minutes;
-               iSecond = dt.seconds;
-            }
-         }
-
-         fdate.year = iYear - 1980;
-         fdate.month = iMonth;
-         fdate.day = iDay;
-         ftime.hours = iHour;
-         ftime.minutes = iMinute;
-         ftime.twosecs = iSecond / 2;
-
-         fs3.fdateCreation = fs3.fdateLastAccess = fs3.fdateLastWrite = fdate;
-         fs3.ftimeCreation = fs3.ftimeLastAccess = fs3.ftimeLastWrite = ftime;
-         ret = DosSetPathInfo( static_cast< PCSZ >( pszFileName ), FIL_STANDARD, &fs3, sizeof( fs3 ), DSPI_WRTTHRU );
-      }
-      hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-      fResult = ret == NO_ERROR;
-      if( pszFree )
-      {
-         hb_xfree( pszFree );
       }
    }
 #elif defined( HB_OS_UNIX ) || defined( HB_OS_DOS )
@@ -2536,39 +2139,7 @@ HB_BOOL hb_fsSetAttr( const char * pszFileName, HB_FATTR nAttr )
 
       pszFileName = hb_fsNameConv( pszFileName, &pszFree );
 
-#  if defined( HB_OS_OS2 )
-      {
-         FILESTATUS3 fs3;
-         APIRET ret;
-         ULONG ulOsAttr = FILE_NORMAL;
-
-         if( nAttr & HB_FA_READONLY )
-         {
-            ulOsAttr |= FILE_READONLY;
-         }
-         if( nAttr & HB_FA_HIDDEN )
-         {
-            ulOsAttr |= FILE_HIDDEN;
-         }
-         if( nAttr & HB_FA_SYSTEM )
-         {
-            ulOsAttr |= FILE_SYSTEM;
-         }
-         if( nAttr & HB_FA_ARCHIVE )
-         {
-            ulOsAttr |= FILE_ARCHIVED;
-         }
-
-         ret = DosQueryPathInfo( static_cast< PCSZ >( pszFileName ), FIL_STANDARD, &fs3, sizeof( fs3 ) );
-         if( ret == NO_ERROR )
-         {
-            fs3.attrFile = ulOsAttr;
-            ret = DosSetPathInfo( static_cast< PCSZ >( pszFileName ), FIL_STANDARD, &fs3, sizeof( fs3 ), DSPI_WRTTHRU );
-         }
-         hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-         fResult = ret == NO_ERROR;
-      }
-#  elif defined( HB_OS_DOS )
+#  if defined( HB_OS_DOS )
 
       nAttr &= ~( HB_FA_ARCHIVE | HB_FA_HIDDEN | HB_FA_READONLY | HB_FA_SYSTEM );
 #     if defined( __DJGPP__ ) || defined( __BORLANDC__ )
@@ -2638,15 +2209,6 @@ HB_USHORT hb_fsRead( HB_FHANDLE hFileHandle, void * pBuff, HB_USHORT uiCount )
 
       uiRead = bResult ? static_cast< HB_USHORT >( dwRead ) : 0;
    }
-#elif defined( HB_OS_OS2 )
-   {
-      ULONG ulRead = 0;
-      APIRET ret;
-
-      ret = DosRead( hFileHandle, pBuff, uiCount, &ulRead );
-      hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-      uiRead = ret == NO_ERROR ? static_cast< HB_USHORT >( ulRead ) : 0;
-   }
 #else
    {
       long lRead;
@@ -2684,27 +2246,6 @@ HB_USHORT hb_fsWrite( HB_FHANDLE hFileHandle, const void * pBuff, HB_USHORT uiCo
       }
       hb_fsSetIOError( bResult != 0, 0 );
 
-   }
-#elif defined( HB_OS_OS2 )
-   {
-      APIRET ret;
-
-      if( uiCount )
-      {
-         ULONG ulWritten = 0;
-         ret = DosWrite( hFileHandle, static_cast< void * >( pBuff ), uiCount, &ulWritten );
-         hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-         uiWritten = ret == NO_ERROR ? static_cast< HB_USHORT >( ulWritten ) : 0;
-      }
-      else
-      {
-         HB_FOFFSET nPos;
-         ret = hb_fsOS2DosSetFilePtrL( hFileHandle, 0, SEEK_CUR, &nPos );
-         if( ret == NO_ERROR )
-         {
-            ret = hb_fsOS2DosSetFileSizeL( hFileHandle, nPos );
-         }
-      }
    }
 #else
    if( uiCount )
@@ -2783,15 +2324,6 @@ HB_SIZE hb_fsReadLarge( HB_FHANDLE hFileHandle, void * pBuff, HB_SIZE nCount )
       nRead = bResult ? static_cast< HB_SIZE >( dwRead ) : 0;
 #  endif
       hb_fsSetIOError( bResult != 0, 0 );
-   }
-#elif defined( HB_OS_OS2 )
-   {
-      ULONG ulRead = 0;
-      APIRET ret;
-
-      ret = DosRead( hFileHandle, pBuff, nCount, &ulRead );
-      hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-      nRead = ret == NO_ERROR ? static_cast< HB_SIZE >( ulRead ) : 0;
    }
 #elif defined( HB_FS_IO_16BIT )
    {
@@ -2904,27 +2436,6 @@ HB_SIZE hb_fsWriteLarge( HB_FHANDLE hFileHandle, const void * pBuff, HB_SIZE nCo
       hb_fsSetIOError( SetEndOfFile( DosToWinHandle( hFileHandle ) ) != 0, 0 );
    }
 
-#elif defined( HB_OS_OS2 )
-   {
-      APIRET ret;
-
-      if( nCount )
-      {
-         ULONG ulWritten = 0;
-         ret = DosWrite( hFileHandle, static_cast< void * >( pBuff ), nCount, &ulWritten );
-         hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-         nWritten = ret == NO_ERROR ? static_cast< HB_SIZE >( ulWritten ) : 0;
-      }
-      else
-      {
-         HB_FOFFSET nPos;
-         ret = hb_fsOS2DosSetFilePtrL( hFileHandle, 0, SEEK_CUR, &nPos );
-         if( ret == NO_ERROR )
-         {
-            ret = hb_fsOS2DosSetFileSizeL( hFileHandle, nPos );
-         }
-      }
-   }
 #else
 
    if( nCount )
@@ -3075,22 +2586,8 @@ HB_SIZE hb_fsReadAt( HB_FHANDLE hFileHandle, void * pBuff, HB_SIZE nCount, HB_FO
 #  endif /* HB_WIN_IOREAD_LIMIT */
 
 /* FIXME: below are not atom operations. It has to be fixed for RDD
- *        file access with shared file handles in aliased work areas
+ *        file access with shared file handles in aliased work areas. TOCHECK: OS/2 ?
  */
-#elif defined( HB_OS_OS2 )
-   {
-      ULONG ulRead = 0;
-      HB_FOFFSET nPos;
-      APIRET ret;
-
-      ret = hb_fsOS2DosSetFilePtrL( hFileHandle, nOffset, SEEK_SET, &nPos );
-      if( ret == NO_ERROR )
-      {
-         ret = DosRead( hFileHandle, pBuff, nCount, &ulRead );
-      }
-      hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-      nRead = ret == NO_ERROR ? ulRead : 0;
-   }
 #elif defined( HB_FS_IO_16BIT )
    if( hb_fsSeekLarge( hFileHandle, nOffset, FS_SET ) == nOffset )
    {
@@ -3218,22 +2715,8 @@ HB_SIZE hb_fsWriteAt( HB_FHANDLE hFileHandle, const void * pBuff, HB_SIZE nCount
 #  endif /* HB_WIN_IOWRITE_LIMIT */
 
 /* FIXME: below are not atom operations. It has to be fixed for RDD
- *        file access with shared file handles in aliased work areas
+ *        file access with shared file handles in aliased work areas. TOCHECK: OS/2 ?
  */
-#elif defined( HB_OS_OS2 )
-   {
-      ULONG ulWritten = 0;
-      HB_FOFFSET nPos;
-      APIRET ret;
-
-      ret = hb_fsOS2DosSetFilePtrL( hFileHandle, nOffset, SEEK_SET, &nPos );
-      if( ret == NO_ERROR )
-      {
-         ret = DosWrite( hFileHandle, static_cast< void * >( pBuff ), nCount, &ulWritten );
-      }
-      hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-      nWritten = ret == NO_ERROR ? ulWritten : 0;
-   }
 #elif defined( HB_FS_IO_16BIT )
    if( hb_fsSeekLarge( hFileHandle, nOffset, FS_SET ) == nOffset )
    {
@@ -3298,13 +2781,6 @@ HB_BOOL hb_fsTruncAt( HB_FHANDLE hFileHandle, HB_FOFFSET nOffset )
 
       hb_fsSetIOError( fResult, 0 );
    }
-#elif defined( HB_OS_OS2 )
-   {
-      APIRET ret;
-
-      ret = hb_fsOS2DosSetFileSizeL( hFileHandle, nOffset );
-      fResult = ret == NO_ERROR;
-   }
 #else
    {
       int iResult;
@@ -3331,10 +2807,6 @@ void hb_fsCommit( HB_FHANDLE hFileHandle )
 #if defined( HB_OS_WIN )
 
    hb_fsSetIOError( FlushFileBuffers( DosToWinHandle( hFileHandle ) ) != 0, 0 );
-
-#elif defined( HB_OS_OS2 )
-
-   hb_fsSetError( static_cast< HB_ERRCODE >( DosResetBuffer( hFileHandle ) ) );
 
 #elif defined( HB_OS_UNIX )
 {
@@ -3437,41 +2909,6 @@ HB_BOOL hb_fsLock( HB_FHANDLE hFileHandle, HB_ULONG ulStart, HB_ULONG ulLength, 
          fResult = HB_FALSE;
    }
    hb_fsSetIOError( fResult, 0 );
-#elif defined( HB_OS_OS2 )
-   {
-      struct _FILELOCKL fl, ful;
-      APIRET ret;
-
-      switch( uiMode & FL_MASK )
-      {
-         case FL_LOCK:
-
-            fl.lOffset = ulStart;
-            fl.lRange = ulLength;
-            ful.lOffset = 0;
-            ful.lRange = 0;
-
-            /* lock region, 2 seconds timeout, exclusive access - no atomic */
-            ret = hb_fsOS2DosSetFileLocksL( hFileHandle, &ful, &fl, 2000L, 0L );
-            break;
-
-         case FL_UNLOCK:
-
-            fl.lOffset = 0;
-            fl.lRange = 0;
-            ful.lOffset = ulStart;
-            ful.lRange = ulLength;
-
-            /* unlock region, 2 seconds timeout, exclusive access - no atomic */
-            ret = hb_fsOS2DosSetFileLocksL( hFileHandle, &ful, &fl, 2000L, 0L );
-            break;
-
-         default:
-            ret = ERROR_INVALID_DATA;
-         hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-      }
-      fResult = ret == NO_ERROR;
-   }
 #elif defined( _MSC_VER )
    {
       HB_ULONG ulOldPos;
@@ -3639,41 +3076,6 @@ HB_BOOL hb_fsLockLarge( HB_FHANDLE hFileHandle, HB_FOFFSET nStart, HB_FOFFSET nL
       hb_fsSetIOError( fResult, 0 );
       hb_vmLock();
    }
-#elif defined( HB_OS_OS2 )
-   {
-      struct _FILELOCKL fl, ful;
-      APIRET ret;
-
-      switch( uiMode & FL_MASK )
-      {
-         case FL_LOCK:
-
-            fl.lOffset = nStart;
-            fl.lRange = nLength;
-            ful.lOffset = 0;
-            ful.lRange = 0;
-
-            /* lock region, 2 seconds timeout, exclusive access - no atomic */
-            ret = hb_fsOS2DosSetFileLocksL( hFileHandle, &ful, &fl, 2000L, 0L );
-            break;
-
-         case FL_UNLOCK:
-
-            fl.lOffset = 0;
-            fl.lRange = 0;
-            ful.lOffset = nStart;
-            ful.lRange = nLength;
-
-            /* unlock region, 2 seconds timeout, exclusive access - no atomic */
-            ret = hb_fsOS2DosSetFileLocksL( hFileHandle, &ful, &fl, 2000L, 0L );
-            break;
-
-         default:
-            ret = ERROR_INVALID_DATA;
-            hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-      }
-      fResult = ret == NO_ERROR;
-   }
 #elif defined( HB_USE_LARGEFILE64 )
    {
       struct flock64 lock_info;
@@ -3799,29 +3201,6 @@ HB_ULONG hb_fsSeek( HB_FHANDLE hFileHandle, HB_LONG lOffset, HB_USHORT uiFlags )
          ulPos = 0;
       }
    }
-#elif defined( HB_OS_OS2 )
-   {
-      APIRET ret;
-
-      /* This DOS hack creates 2 GiB file size limit, Druzus */
-      if( lOffset < 0 && nFlags == SEEK_SET )
-      {
-         ret = 25; /* 'Seek Error' */
-      }
-      else
-      {
-         ret = DosSetFilePtr( hFileHandle, lOffset, nFlags, &ulPos );
-      }
-      hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-
-      if( ret != NO_ERROR )
-      {
-         if( DosSetFilePtr( hFileHandle, 0, SEEK_CUR, &ulPos ) != NO_ERROR )
-         {
-            ulPos = 0;
-         }
-      }
-   }
 #else
    /* This DOS hack creates 2 GiB file size limit, Druzus */
    if( lOffset < 0 && nFlags == SEEK_SET )
@@ -3907,32 +3286,6 @@ HB_FOFFSET hb_fsSeekLarge( HB_FHANDLE hFileHandle, HB_FOFFSET nOffset, HB_USHORT
             nPos = ( static_cast< HB_FOFFSET >( ulOffsetHigh ) << 32 ) | ulOffsetLow;
          }
       }
-      hb_vmLock();
-   }
-#elif defined( HB_OS_OS2 )
-   {
-      HB_USHORT nFlags = convert_seek_flags( uiFlags );
-      APIRET ret;
-
-      hb_vmUnlock();
-      nPos = 0;
-      if( nOffset < 0 && nFlags == SEEK_SET )
-      {
-         ret = 25; /* 'Seek Error' */
-      }
-      else
-      {
-         ret = hb_fsOS2DosSetFilePtrL( hFileHandle, nOffset, nFlags, &nPos );
-      }
-
-      if( ret != NO_ERROR )
-      {
-         if( hb_fsOS2DosSetFilePtrL( hFileHandle, 0, SEEK_CUR, &nPos ) != NO_ERROR )
-         {
-            nPos = 0;
-         }
-      }
-      hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
       hb_vmLock();
    }
 #elif defined( HB_USE_LARGEFILE64 )
@@ -4032,26 +3385,6 @@ HB_BOOL hb_fsDelete( const char * pszFileName )
          hb_xfree( lpFree );
       }
    }
-#elif defined( HB_OS_OS2 )
-   {
-      char * pszFree;
-      APIRET ret;
-
-      pszFileName = hb_fsNameConv( pszFileName, &pszFree );
-
-      hb_vmUnlock();
-
-      ret = DosDelete( static_cast< PCSZ >( pszFileName ) );
-      fResult = ret == NO_ERROR;
-      hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-
-      hb_vmLock();
-
-      if( pszFree )
-      {
-         hb_xfree( pszFree );
-      }
-   }
 #else
    {
       char * pszFree;
@@ -4105,31 +3438,6 @@ HB_BOOL hb_fsRename( const char * pOldName, const char * pNewName )
          hb_xfree( lpNewFree );
       }
    }
-#elif defined( HB_OS_OS2 )
-   {
-      char * pszFreeOld, * pszFreeNew;
-      APIRET ret;
-
-      pOldName = hb_fsNameConv( pOldName, &pszFreeOld );
-      pNewName = hb_fsNameConv( pNewName, &pszFreeNew );
-
-      hb_vmUnlock();
-
-      ret = DosMove( static_cast< PCSZ >( pOldName ), static_cast< PCSZ >( pNewName ) );
-      fResult = ret == NO_ERROR;
-      hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-
-      hb_vmLock();
-
-      if( pszFreeOld )
-      {
-         hb_xfree( pszFreeOld );
-      }
-      if( pszFreeNew )
-      {
-         hb_xfree( pszFreeNew );
-      }
-   }
 #else
    {
       char * pszFreeOld, * pszFreeNew;
@@ -4181,26 +3489,6 @@ HB_BOOL hb_fsMkDir( const char * pszDirName )
       if( lpFree )
       {
          hb_xfree( lpFree );
-      }
-   }
-#elif defined( HB_OS_OS2 )
-   {
-      char * pszFree;
-      APIRET ret;
-
-      pszDirName = hb_fsNameConv( pszDirName, &pszFree );
-
-      hb_vmUnlock();
-
-      ret = DosCreateDir( static_cast< PCSZ >( pszDirName ), nullptr );
-      fResult = ret == NO_ERROR;
-      hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-
-      hb_vmLock();
-
-      if( pszFree )
-      {
-         hb_xfree( pszFree );
       }
    }
 #else
@@ -4258,26 +3546,6 @@ HB_BOOL hb_fsChDir( const char * pszDirName )
          hb_xfree( lpFree );
       }
    }
-#elif defined( HB_OS_OS2 )
-   {
-      char * pszFree;
-      APIRET ret;
-
-      pszDirName = hb_fsNameConv( pszDirName, &pszFree );
-
-      hb_vmUnlock();
-
-      ret = DosSetCurrentDir( ( PCSZ ) pszDirName );
-      fResult = ret == NO_ERROR;
-      hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-
-      hb_vmLock();
-
-      if( pszFree )
-      {
-         hb_xfree( pszFree );
-      }
-   }
 #else
    {
       char * pszFree;
@@ -4324,26 +3592,6 @@ HB_BOOL hb_fsRmDir( const char * pszDirName )
       if( lpFree )
       {
          hb_xfree( lpFree );
-      }
-   }
-#elif defined( HB_OS_OS2 )
-   {
-      char * pszFree;
-      APIRET ret;
-
-      pszDirName = hb_fsNameConv( pszDirName, &pszFree );
-
-      hb_vmUnlock();
-
-      ret = DosDeleteDir( static_cast< PCSZ >( pszDirName ) );
-      fResult = ret == NO_ERROR;
-      hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-
-      hb_vmLock();
-
-      if( pszFree )
-      {
-         hb_xfree( pszFree );
       }
    }
 #else
@@ -4401,7 +3649,7 @@ HB_ERRCODE hb_fsCurDirBuff( int iDrive, char * pszBuffer, HB_SIZE nSize )
     * It will allow us to add drive emulation in hb_fsCurDrv()/hb_fsChDrv()
     * and hb_fsNameConv()
     */
-#if defined( HB_OS_WIN ) || ! ( defined( HB_OS_OS2 ) || defined( __MINGW32__ ) )
+#if defined( HB_OS_WIN ) || ! ( defined( __MINGW32__ ) )
    if( iDrive > 0 )
    {
       iCurDrv = hb_fsCurDrv() + 1;
@@ -4424,18 +3672,6 @@ HB_ERRCODE hb_fsCurDirBuff( int iDrive, char * pszBuffer, HB_SIZE nSize )
       HB_OSSTRDUP2( lpBuffer, pszBuffer, nSize - 1 );
       hb_xfree( lpBuffer );
    }
-#elif defined( HB_OS_OS2 )
-
-   if( iDrive >= 0 )
-   {
-      ULONG ulLen = static_cast< ULONG >( nSize );
-      hb_fsSetError( static_cast< HB_ERRCODE >( DosQueryCurrentDir( iDrive, static_cast< PBYTE >( pszBuffer ), &ulLen ) ) );
-   }
-   else
-   {
-      hb_fsSetError( static_cast< HB_ERRCODE >( FS_ERROR ) );
-   }
-
 #elif defined( __MINGW32__ )
 
    if( iDrive >= 0 )
@@ -4474,7 +3710,7 @@ HB_ERRCODE hb_fsCurDirBuff( int iDrive, char * pszBuffer, HB_SIZE nSize )
       /* NOTE: A trailing underscore is not returned on this platform,
                so we don't need to strip it. [vszakats] */
 
-#if defined( __DJGPP__ ) || defined( HB_OS_OS2 )
+#if defined( __DJGPP__ )
       /* convert '/' to '\' */
       nLen = 0;
       while( pszBuffer[ nLen ] != 0 )
@@ -4560,27 +3796,6 @@ HB_BOOL hb_fsGetCWD( char * pszBuffer, HB_SIZE nSize )
       lpBuffer[ dwSize - 1 ] = TEXT( '\0' );
       HB_OSSTRDUP2( lpBuffer, pszBuffer, nSize - 1 );
       hb_xfree( lpBuffer );
-   }
-#elif defined( HB_OS_OS2 )
-   {
-      ULONG ulDrive = 0, ulLogical;
-      APIRET ret;
-
-      ret = DosQueryCurrentDisk( &ulDrive, &ulLogical );
-      if( ret == NO_ERROR )
-      {
-         ULONG ulLen = static_cast< ULONG >( nSize ) - 3;
-         pszBuffer[ 0 ] = static_cast< char >( ulDrive + ( 'A' - 1 ) );
-         pszBuffer[ 1 ] = HB_OS_DRIVE_DELIM_CHR;
-         pszBuffer[ 2 ] = HB_OS_PATH_DELIM_CHR;
-         ret = DosQueryCurrentDir( 0, static_cast< PBYTE >( pszBuffer ) + 3, &ulLen );
-      }
-      hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-      fResult = ret == NO_ERROR;
-      if( ! fResult )
-      {
-         pszBuffer[ 0 ] = '\0';
-      }
    }
 #else
 
@@ -4668,46 +3883,6 @@ HB_BOOL hb_fsSetCWD( const char * pszDirName )
       if( lpFree )
       {
          hb_xfree( lpFree );
-      }
-   }
-#elif defined( HB_OS_OS2 )
-   {
-      char * pszFree;
-      APIRET ret;
-
-      pszDirName = hb_fsNameConv( pszDirName, &pszFree );
-
-      hb_vmUnlock();
-
-      ret = DosSetCurrentDir( static_cast< PCSZ >( pszDirName ) );
-      if( ret == NO_ERROR && pszDirName[ 0 ] != 0 && pszDirName[ 1 ] == HB_OS_DRIVE_DELIM_CHR )
-      {
-         int iDrive = pszDirName[ 0 ];
-
-         if( iDrive >= 'A' && iDrive <= 'Z' )
-         {
-            iDrive -= 'A';
-         }
-         else if( iDrive >= 'a' && iDrive <= 'z' )
-         {
-            iDrive -= 'a';
-         }
-         else
-            iDrive = 0;
-
-         if( iDrive )
-         {
-            ret = DosSetDefaultDisk( iDrive );
-         }
-      }
-      fResult = ret == NO_ERROR;
-      hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-
-      hb_vmLock();
-
-      if( pszFree )
-      {
-         hb_xfree( pszFree );
       }
    }
 #else
@@ -4842,17 +4017,6 @@ HB_ERRCODE hb_fsIsDrv( int iDrive )
       hb_vmLock();
       hb_fsSetError( 0 );
    }
-#elif defined( HB_OS_OS2 )
-   {
-      ULONG ulDrive, ulLogical;
-      APIRET ret;
-
-      hb_vmUnlock();
-      ret = DosQueryCurrentDisk( &ulDrive, &ulLogical );
-      hb_vmLock();
-      nResult = ret == NO_ERROR && ( ( ulLogical >> iDrive ) & 1 ) ? 0 : static_cast< HB_ERRCODE >( F_ERROR );
-      hb_fsSetError( 0 );
-   }
 #elif defined( HB_OS_HAS_DRIVE_LETTER )
    {
       int iSave, iNewDrive;
@@ -4897,13 +4061,6 @@ HB_BOOL hb_fsIsDevice( HB_FHANDLE hFileHandle )
    fResult = GetFileType( DosToWinHandle( hFileHandle ) ) == FILE_TYPE_CHAR;
    hb_fsSetIOError( fResult, 0 );
 
-#elif defined( HB_OS_OS2 )
-{
-   ULONG type = 0, attr = 0;
-   APIRET ret = DosQueryHType( static_cast< HFILE >( hFileHandle ), &type, &attr );
-   hb_fsSetError( static_cast< HB_ERRCODE >( ret ) );
-   fResult = ret == NO_ERROR && ( type & 0xFF ) == FHT_CHRDEV;
-}
 #else
 
 #  if defined( _MSC_VER ) || defined( __MINGW32__ )
