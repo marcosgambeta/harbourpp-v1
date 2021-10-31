@@ -358,7 +358,7 @@ static int hb_fsProcessExec( const char * pszFileName, HB_FHANDLE hStdin, HB_FHA
       iStdErr = dup( 2 );
       dup2( hStderr, 2 );
    }
-#if defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS ) && ! defined( HB_OS_SYMBIAN )
+#if defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS )
    {
       pid_t pid = fork();
       if( pid == 0 )
@@ -574,7 +574,7 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
          hResult = reinterpret_cast< HB_FHANDLE >( pi.hProcess );
       }
 
-#elif defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS ) && ! defined( HB_OS_SYMBIAN )
+#elif defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS )
 
       char ** argv = hb_buildArgs( pszFileName );
       pid_t pid = fork();
@@ -924,7 +924,7 @@ HB_BOOL hb_fsProcessClose( HB_FHANDLE hProcess, HB_BOOL fGentle )
       hb_fsSetError( static_cast< HB_ERRCODE >( FS_ERROR ) );
    }
 }
-#elif defined( HB_OS_UNIX ) && ! defined( HB_OS_SYMBIAN )
+#elif defined( HB_OS_UNIX )
 {
    pid_t pid = static_cast< pid_t >( hProcess );
    if( pid > 0 )
@@ -1406,7 +1406,7 @@ int hb_fsProcessRun( const char * pszFileName,
 
       iResult = hb_fsProcessValue( hProcess, HB_TRUE );
 
-#elif defined( HB_OS_UNIX ) && ! defined( HB_OS_SYMBIAN )
+#elif defined( HB_OS_UNIX )
 
       if( nStdInLen == 0 && hStdin != FS_ERROR )
       {

@@ -684,7 +684,7 @@ static int hb_fsCanAccess( HB_FHANDLE hFile, HB_MAXINT nTimeOut, HB_BOOL fRead )
       break;
    }
 }
-#elif ! defined( HB_OS_SYMBIAN ) /* ! HB_HAS_POLL */
+#else /* ! HB_HAS_POLL */
 {
 #  if ! defined( HB_HAS_SELECT_TIMER )
    HB_MAXUINT timer = hb_timerInit( nTimeOut );
@@ -742,15 +742,15 @@ static int hb_fsCanAccess( HB_FHANDLE hFile, HB_MAXINT nTimeOut, HB_BOOL fRead )
 #  endif
    }
 }
-#else
-{
-   int iTODO; /* TODO: for given platform */
-
-   HB_SYMBOL_UNUSED( hFile );
-   HB_SYMBOL_UNUSED( nTimeOut );
-   HB_SYMBOL_UNUSED( fRead );
-   iResult = -1;
-}
+//#else
+//{
+//   int iTODO; /* TODO: for given platform */
+//
+//   HB_SYMBOL_UNUSED( hFile );
+//   HB_SYMBOL_UNUSED( nTimeOut );
+//   HB_SYMBOL_UNUSED( fRead );
+//   iResult = -1;
+//}
 #endif /* ! HB_HAS_POLL */
 
    hb_vmLock();
@@ -863,7 +863,7 @@ int hb_fsPoll( PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut )
       hb_xfree( pFree );
    }
 }
-#elif ! defined( HB_OS_SYMBIAN ) /* ! HB_HAS_POLL */
+#else /* ! HB_HAS_POLL */
 {
 #  if ! defined( HB_HAS_SELECT_TIMER )
    HB_MAXUINT timer = hb_timerInit( nTimeOut );
@@ -979,15 +979,15 @@ int hb_fsPoll( PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut )
       }
    }
 }
-#else
-{
-   int iTODO; /* TODO: for given platform */
-
-   HB_SYMBOL_UNUSED( pPollSet );
-   HB_SYMBOL_UNUSED( iCount );
-   HB_SYMBOL_UNUSED( nTimeOut );
-   iResult = -1;
-}
+//#else
+//{
+//   int iTODO; /* TODO: for given platform */
+//
+//   HB_SYMBOL_UNUSED( pPollSet );
+//   HB_SYMBOL_UNUSED( iCount );
+//   HB_SYMBOL_UNUSED( nTimeOut );
+//   iResult = -1;
+//}
 #endif /* ! HB_HAS_POLL */
 
    hb_vmLock();
@@ -1002,7 +1002,7 @@ HB_FHANDLE hb_fsPOpen( const char * pszFileName, const char * pszMode )
 
    HB_FHANDLE hFileHandle = FS_ERROR;
 
-#if defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS ) && ! defined( HB_OS_SYMBIAN )
+#if defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS )
    {
       HB_FHANDLE hPipeHandle[ 2 ];
       pid_t pid;
@@ -1180,7 +1180,7 @@ HB_BOOL hb_fsPipeCreate( HB_FHANDLE hPipe[ 2 ] )
    }
    hb_fsSetIOError( fResult, 0 );
 }
-#elif defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS ) && ! defined( HB_OS_SYMBIAN )
+#elif defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS )
 {
    fResult = pipe( hPipe ) == 0;
    if( ! fResult )
@@ -2502,7 +2502,7 @@ HB_SIZE hb_fsReadAt( HB_FHANDLE hFileHandle, void * pBuff, HB_SIZE nCount, HB_FO
 
    hb_vmUnlock();
 
-#if defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS ) && ! defined( HB_OS_SYMBIAN )
+#if defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS )
    {
       long lRead;
 #  if defined( HB_USE_LARGEFILE64 )
@@ -2631,7 +2631,7 @@ HB_SIZE hb_fsWriteAt( HB_FHANDLE hFileHandle, const void * pBuff, HB_SIZE nCount
 
    hb_vmUnlock();
 
-#if defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS ) && ! defined( HB_OS_SYMBIAN )
+#if defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS )
    {
       long lWritten;
 #  if defined( HB_USE_LARGEFILE64 )
