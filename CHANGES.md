@@ -7,5 +7,6 @@
 . Alterações no estilo e formatação do código-fonte  
 . Remoção de código relacionado com compiladores obsoletos  
 . Biblioteca SQLite atualizada para a versão 3.36.0  
+. Suporte para OS/2 descontinuado  
 
 Este documento é um trabalho em progresso.
