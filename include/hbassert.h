@@ -49,7 +49,7 @@
 
 #include "hbapi.h"
 
-#if ( defined( HB_OS_WIN_CE ) && defined( _MSC_VER ) ) || ! defined( HB_TR_LEVEL_DEBUG )
+#if ! defined( HB_TR_LEVEL_DEBUG )
    #ifndef assert
       #define assert( exp )   ( ( void ) 0 )
    #endif

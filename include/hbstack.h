@@ -197,7 +197,7 @@ typedef struct
             extern HB_TLS_KEY hb_stack_key;
 #        endif
 #        if defined( __BORLANDC__ ) && defined( HB_STACK_PRELOAD ) && \
-            ! defined( HB_OS_WIN_64 ) && ! defined( HB_OS_WIN_CE ) && \
+            ! defined( HB_OS_WIN_64 ) && \
             defined( HB_ASM_TLS )
 #           if defined( _HB_STACK_LOCAL_MACROS_ )
                static HB_TLS_KEY hb_stack_key;
@@ -215,7 +215,7 @@ typedef struct
             }
 #           define hb_stack_ptr_get()    hb_stack_ptr_from_tls()
 #        elif defined( __MINGW32__ ) && defined( HB_ASM_TLS ) && \
-              ! defined( HB_OS_WIN_64 ) && ! defined( HB_OS_WIN_CE )
+              ! defined( HB_OS_WIN_64 ) 
 #           if defined( _HB_STACK_LOCAL_MACROS_ )
                static HB_TLS_KEY hb_stack_key;
 #           endif

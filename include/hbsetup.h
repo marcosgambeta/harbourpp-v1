@@ -324,13 +324,6 @@
    #endif
 #endif
 
-/* Sub-option inside HB_OS_WIN */
-#ifndef HB_OS_WIN_CE
-   #if defined( UNDER_CE ) || defined( __CEGCC__ ) || defined( __MINGW32CE__ )
-      #define HB_OS_WIN_CE
-   #endif
-#endif
-
 #ifndef HB_OS_LINUX
    #if defined( linux ) || defined( __linux ) || defined( __linux__ ) || defined( __gnu_linux__ )
       #define HB_OS_LINUX
@@ -462,11 +455,7 @@
    #define HB_OS_PATH_DELIM_CHR_LIST    "\\/:"
    #define HB_OS_ALLFILE_MASK           "*.*"
    #define HB_OS_DRIVE_DELIM_CHR        ':'
-   #if defined( HB_OS_WIN_CE )
-      #undef  HB_OS_HAS_DRIVE_LETTER
-   #else
-      #define HB_OS_HAS_DRIVE_LETTER
-   #endif
+   #define HB_OS_HAS_DRIVE_LETTER
    #define HB_OS_EOL_LEN                2  /* # of bytes in End of Line marker */
    #define HB_OS_OPT_DELIM_LIST         "/-"
    #define HB_ISOPTSEP( c )             ( ( c ) == '-' || ( c ) == '/' )

@@ -46,11 +46,7 @@
 
 #include <windows.h>
 
-#if defined( HB_OS_WIN_CE )
-#  define HB_LPSTR  LPWSTR
-#else
-#  define HB_LPSTR  LPSTR
-#endif
+#define HB_LPSTR  LPSTR
 
 int WINAPI WinMain( HINSTANCE hInstance,      /* handle to current instance */
                     HINSTANCE hPrevInstance,  /* handle to previous instance */
@@ -81,19 +77,12 @@ int WINAPI WinMain( HINSTANCE hInstance,      /* handle to current instance */
    LPSTR pArgs, pArg, pDst, pSrc;
    HB_BOOL fQuoted;
    HANDLE hHeap;
-#  if defined( HB_OS_WIN_CE )
-   LPSTR pFree;
-#  endif
 
    argv[ argc++ ] = const_cast< char * >( "" );
 
    pArg = NULL;
 
-#  if defined( HB_OS_WIN_CE )
-   pSrc = pFree = hb_wctomb( lpCmdLine ); /* No HVM stack */
-#  else
    pSrc = lpCmdLine;
-#  endif
    hHeap = GetProcessHeap();
    pDst = pArgs = ( LPSTR ) HeapAlloc( hHeap, 0, strlen( pSrc ) + 1 );
    fQuoted = HB_FALSE;
@@ -128,10 +117,6 @@ int WINAPI WinMain( HINSTANCE hInstance,      /* handle to current instance */
       *pDst = '\0';
       argv[ argc++ ] = pArg;
    }
-
-#  if defined( HB_OS_WIN_CE )
-   hb_xfree( pFree );
-#  endif
 
    HB_SYMBOL_UNUSED( hInstance );
    HB_SYMBOL_UNUSED( hPrevInstance );

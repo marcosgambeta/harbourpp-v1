@@ -68,9 +68,7 @@
 #  endif
 #elif defined( HB_OS_WIN )
 #  include <windows.h>
-#  if ! defined( HB_OS_WIN_CE )
-#    include <process.h>
-#  endif
+#  include <process.h>
 #endif
 
 HB_EXTERN_BEGIN
@@ -174,7 +172,7 @@ HB_EXTERN_BEGIN
    typedef CRITICAL_SECTION   HB_RAWCRITICAL_T;
    typedef HANDLE             HB_OSCOND_T;
 
-#  if defined( HB_OS_WIN_CE ) && ( ( defined( __MINGW32CE__ ) && ! defined( __MSVCRT__ ) ) ) || ( defined( _MSC_VER ) && ( _MSC_VER <= 1500 ) )
+#  if ( defined( _MSC_VER ) && ( _MSC_VER <= 1500 ) )
 #     define HB_THREAD_RAWWINAPI
 #  endif
 
