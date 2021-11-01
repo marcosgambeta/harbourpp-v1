@@ -310,11 +310,6 @@
 #if defined( __EMX__ ) && ! defined( __RSXNT__ )
    #define HB_OS_OS2_GCC
 #endif
-#ifndef HB_OS_OS2
-   #if defined( OS2 ) || defined( __OS2__ ) || defined( OS_2 ) || defined( HB_OS_OS2_GCC )
-      #define HB_OS_OS2
-   #endif
-#endif
 
 #ifndef HB_OS_WIN
    #if defined( WINNT ) || defined( _Windows ) || defined( __NT__ ) || defined( _WIN32 ) || defined( _WINDOWS_ ) || defined( __WINDOWS_386__ ) || defined( __WIN32__ )

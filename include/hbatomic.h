@@ -71,8 +71,6 @@ HB_EXTERN_BEGIN
 #  define HB_SCHED_YIELD()    hb_taskYield()
 #elif defined( HB_OS_WIN )
 #  define HB_SCHED_YIELD()    Sleep( 0 )
-#elif defined( HB_OS_OS2 )
-#  define HB_SCHED_YIELD()    DosSleep( 0 )
 #elif defined( HB_OS_SUNOS ) || defined( __SVR4 )
 #  define HB_SCHED_YIELD()    thr_yield()
 #elif defined( HB_OS_UNIX )
@@ -87,10 +85,6 @@ HB_EXTERN_BEGIN
 
 #  if defined( HB_USE_GCCATOMIC_OFF )
 #     undef HB_USE_GCCATOMIC
-#  elif defined( HB_OS_OS2 ) && \
-        ( __GNUC__ < 4 || ( __GNUC__ == 4 && __GNUC_MINOR__ <= 5 ) )
-      /* allow users to enable it manually by HB_USE_GCCATOMIC macro */
-      /* #undef HB_USE_GCCATOMIC */
 #  elif ( __GNUC__ > 4 || ( __GNUC__ == 4 && __GNUC_MINOR__ >= 1 ) ) && \
         ! defined( __MINGW32CE__ ) && ! defined( HB_USE_GCCATOMIC )
 #     define HB_USE_GCCATOMIC

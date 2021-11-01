@@ -71,8 +71,6 @@
 #  if ! defined( HB_OS_WIN_CE )
 #    include <process.h>
 #  endif
-#elif defined( HB_OS_OS2 )
-#  include <os2.h>
 #endif
 
 HB_EXTERN_BEGIN
@@ -204,49 +202,6 @@ HB_EXTERN_BEGIN
 #  define HB_CRITICAL_NEED_INIT
 
 #  define HB_THREAD_INFINITE_WAIT   INFINITE
-
-#elif defined( HB_OS_OS2 )
-
-   /* In OS2 thread ID is continuous integer number so we can use it directly
-    * anyhow I'd prefer to not make such strict binding to OS values because
-    * it may cause troubles when code will be ported to other platforms.
-    */
-   #if 0
-   typedef TID                HB_THREAD_NO;
-   #endif
-   typedef HB_MAXINT          HB_THREAD_NO;
-   typedef TID                HB_THREAD_ID;
-   typedef TID                HB_THREAD_HANDLE;
-   typedef HMTX               HB_RAWCRITICAL_T;
-   typedef HEV                HB_OSCOND_T;
-
-   extern ULONG _hb_gettid( void );
-
-#  define HB_THREAD_STARTFUNC( func )     void func( void * Cargo )
-#  define HB_THREAD_END                   _endthread(); return;
-#  define HB_THREAD_RAWEND                return;
-
-#  if defined( __GNUC__ ) && 0
-#     define HB_THREAD_SELF()    ( ( TID ) _gettid() )
-#  else
-#     define HB_THREAD_SELF()    ( ( TID ) _hb_gettid() )
-#  endif
-
-#  define HB_CRITICAL_INIT(v)       DosCreateMutexSem( NULL, &(v), 0L, FALSE )
-#  define HB_CRITICAL_DESTROY(v)    DosCloseMutexSem( v )
-#  define HB_CRITICAL_LOCK(v)       DosRequestMutexSem( (v), SEM_INDEFINITE_WAIT )
-#  define HB_CRITICAL_UNLOCK(v)     DosReleaseMutexSem( v )
-
-#  undef  HB_COND_OS_SUPPORT
-#  undef  HB_COND_NEED_INIT
-#  define HB_COND_HARBOUR_SUPPORT
-#  define HB_CRITICAL_NEED_INIT
-
-#  define HB_THREAD_INFINITE_WAIT   SEM_INDEFINITE_WAIT
-
-#  ifndef SEM_INDEFINITE_WAIT
-#     define SEM_INDEFINITE_WAIT    ( static_cast< HB_ULONG >( -1 ) )
-#  endif
 
 #else
 
@@ -479,11 +434,6 @@ extern HB_BOOL hb_threadMutexSyncWait( PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, P
 #     define hb_tls_init(k)   do { k = TlsAlloc(); } while( 0 )
 #     define hb_tls_set(k,v)  TlsSetValue( k, ( void * ) (v) )
 #     define hb_tls_get(k)    TlsGetValue( k )
-#  elif defined( HB_OS_OS2 )
-#     define HB_TLS_KEY       PULONG
-#     define hb_tls_init(k)   DosAllocThreadLocalMemory( 1, &k )
-#     define hb_tls_set(k,v)  do { *k = ( ULONG ) (v); } while( 0 )
-#     define hb_tls_get(k)    ( *k )
 #  endif
 #endif /* ! HB_USE_TLS */
 
