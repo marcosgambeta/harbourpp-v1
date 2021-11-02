@@ -67,7 +67,7 @@
    ! defined( HB_OS_DARWIN_5 ) && \
    ! ( defined( HB_OS_WIN_CE ) && ( ( defined( _MSC_VER ) && ( _MSC_VER <= 1500 ) ) ) ) && \
    ! defined( HB_OS_WIN_64 ) && \
-   ( ! defined( HB_OS_OS2 ) || defined( HB_OS_OS2_GCC ) ) && \
+   ( defined( HB_OS_OS2_GCC ) ) && \
    ! defined( __HAIKU__ )
 /* TODO: Haiku will supposedly do this later on, read /boot/develop/headers/posix/signal.h */
 
@@ -255,7 +255,7 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
 /* 2003 - <maurilio.longo@libero.it>
    to fix as soon as thread support is ready on OS/2
  */
-#if defined( HB_THREAD_SUPPORT ) && ! defined( HB_OS_OS2 )
+#if defined( HB_THREAD_SUPPORT )
 static void * s_signalListener( void * my_stack )
 {
    static HB_BOOL bFirst = HB_TRUE;
@@ -570,7 +570,7 @@ static void s_serviceSetHBSig( void )
 #if defined( HB_OS_UNIX ) || defined( HB_OS_OS2_GCC )
    struct sigaction act;
 
-#if defined( HB_THREAD_SUPPORT ) && ! defined( HB_OS_OS2 )
+#if defined( HB_THREAD_SUPPORT )
    sigset_t blockall;
    /* set signal mask */
    sigemptyset( &blockall );

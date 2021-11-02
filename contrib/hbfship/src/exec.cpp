@@ -54,7 +54,7 @@
 #  include <unistd.h>
 #elif defined( HB_OS_WIN )
 #  include <windows.h>
-#elif defined( HB_OS_OS2 ) || defined( HB_OS_DOS )
+#elif defined( HB_OS_DOS )
 #  include <process.h>
 #endif
 
@@ -91,8 +91,6 @@ HB_FUNC( EXECPIDNUM )
    hb_retni( 0 );
 #elif defined( HB_OS_WIN )
    hb_retnint( GetCurrentProcessId() );
-#elif ( defined( HB_OS_OS2 ) && defined( __GNUC__ ) )
-   hb_retnint( _getpid() );
 #else
    hb_retnint( getpid() );
 #endif

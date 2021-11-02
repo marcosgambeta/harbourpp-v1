@@ -61,10 +61,6 @@
 #     define environ _environ
       extern char ** _environ;
 #  endif
-#elif defined( HB_OS_OS2 )
-#  if ! defined( __WATCOMC__ )
-      extern char ** environ;
-#  endif
 #elif defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
 #  include "hbwinuni.h"
 #  include <windows.h>
@@ -73,7 +69,7 @@
 HB_FUNC( ENVPARAM )
 {
 #if ( defined( HB_OS_UNIX ) && ! defined( HB_OS_IOS ) ) || \
-    defined( HB_OS_DOS ) || defined( HB_OS_OS2 )
+    defined( HB_OS_DOS )
    char * const * pEnviron = environ, * const * pEnv;
    char * pResult = nullptr, * pDst;
 

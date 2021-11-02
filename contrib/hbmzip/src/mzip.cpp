@@ -85,10 +85,6 @@
       #define INVALID_FILE_ATTRIBUTES  ( static_cast< DWORD >( -1 ) )
    #endif
    #include "hbwinuni.h"
-#elif defined( HB_OS_OS2 )
-   #define INCL_DOSFILEMGR
-   #define INCL_ERRORS
-   #include <os2.h>
 #endif
 
 #if ! defined( HB_USE_LARGEFILE64 ) && defined( HB_OS_UNIX )
@@ -845,56 +841,6 @@ static int hb_zipStoreFile( zipFile hZip, int iParamFileName, int iParamZipName,
       }
    }
    else
-#elif defined( HB_OS_OS2 )
-   if( hb_fileIsLocalName( szFileName ) )
-   {
-      FILESTATUS3 fs3;
-      APIRET      ulrc;
-      char *      pszFree;
-
-      ulrc = DosQueryPathInfo( static_cast< PCSZ >( hb_fsNameConv( szFileName, &pszFree ) ), FIL_STANDARD, &fs3, sizeof( fs3 ) );
-
-      if( pszFree )
-      {
-         hb_xfree( pszFree );
-      }
-
-      if( ulrc == NO_ERROR )
-      {
-         if( fs3.attrFile & FILE_READONLY )
-         {
-            ulExtAttr |= HB_FA_READONLY;
-         }
-         if( fs3.attrFile & FILE_HIDDEN )
-         {
-            ulExtAttr |= HB_FA_HIDDEN;
-         }
-         if( fs3.attrFile & FILE_SYSTEM )
-         {
-            ulExtAttr |= HB_FA_SYSTEM;
-         }
-         if( fs3.attrFile & FILE_DIRECTORY )
-         {
-            ulExtAttr |= HB_FA_DIRECTORY;
-         }
-         if( fs3.attrFile & FILE_ARCHIVED )
-         {
-            ulExtAttr |= HB_FA_ARCHIVE;
-         }
-
-         zfi.tmz_date.tm_sec  = fs3.ftimeLastWrite.twosecs * 2;
-         zfi.tmz_date.tm_min  = fs3.ftimeLastWrite.minutes;
-         zfi.tmz_date.tm_hour = fs3.ftimeLastWrite.hours;
-         zfi.tmz_date.tm_mday = fs3.fdateLastWrite.day;
-         zfi.tmz_date.tm_mon  = fs3.fdateLastWrite.month;
-         zfi.tmz_date.tm_year = fs3.fdateLastWrite.year + 1980;
-      }
-      else
-      {
-         fError = HB_TRUE;
-      }
-   }
-   else
 #elif defined( HB_OS_UNIX )
    if( hb_fileIsLocalName( szFileName ) )
    {
@@ -1407,61 +1353,6 @@ static int hb_unzipExtractCurrentFile( unzFile hUnzip, const char * szFileName, 
       if( lpFileNameFree )
       {
          hb_xfree( lpFileNameFree );
-      }
-   }
-   else
-#elif defined( HB_OS_OS2 )
-   if( hb_fileIsLocalName( szName ) )
-   {
-      FILESTATUS3 fs3;
-      APIRET      ulrc;
-      HB_FATTR    ulAttr = FILE_NORMAL;
-      int         iAttr  = ufi.external_fa & 0xFF;
-
-      char *       pszFree;
-      const char * szNameOS = hb_fsNameConv( szName, &pszFree );
-
-      if( iAttr & HB_FA_READONLY )
-      {
-         ulAttr |= FILE_READONLY;
-      }
-      if( iAttr & HB_FA_HIDDEN )
-      {
-         ulAttr |= FILE_HIDDEN;
-      }
-      if( iAttr & HB_FA_SYSTEM )
-      {
-         ulAttr |= FILE_SYSTEM;
-      }
-      if( iAttr & HB_FA_ARCHIVE )
-      {
-         ulAttr |= FILE_ARCHIVED;
-      }
-
-      ulrc = DosQueryPathInfo( static_cast< PCSZ >( szNameOS ), FIL_STANDARD, &fs3, sizeof( fs3 ) );
-
-      if( ulrc == NO_ERROR )
-      {
-         FDATE fdate;
-         FTIME ftime;
-
-         fdate.year    = ufi.tmu_date.tm_year - 1980;
-         fdate.month   = ufi.tmu_date.tm_mon;
-         fdate.day     = ufi.tmu_date.tm_mday;
-         ftime.hours   = ufi.tmu_date.tm_hour;
-         ftime.minutes = ufi.tmu_date.tm_min;
-         ftime.twosecs = ufi.tmu_date.tm_sec / 2;
-
-         fs3.attrFile = ulAttr;
-
-         fs3.fdateCreation = fs3.fdateLastAccess = fs3.fdateLastWrite = fdate;
-         fs3.ftimeCreation = fs3.ftimeLastAccess = fs3.ftimeLastWrite = ftime;
-         ulrc = DosSetPathInfo( static_cast< PCSZ >( szNameOS ), FIL_STANDARD, &fs3, sizeof( fs3 ), DSPI_WRTTHRU );
-      }
-
-      if( pszFree )
-      {
-         hb_xfree( pszFree );
       }
    }
    else
