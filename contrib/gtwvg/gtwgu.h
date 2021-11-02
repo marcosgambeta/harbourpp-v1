@@ -65,11 +65,9 @@
 #include <windows.h>
 #include <winuser.h>
 #include <commctrl.h>
-#if ! defined( HB_OS_WIN_CE )
-   #include <ole2.h>
-   #include <olectl.h>
-   #include <ocidl.h>
-#endif
+#include <ole2.h>
+#include <olectl.h>
+#include <ocidl.h>
 #include <commdlg.h>
 #include <shellapi.h>
 
@@ -88,10 +86,6 @@
 
 #include "hbgtwvg.ch"
 
-#if defined( HB_OS_WIN_CE )
-   #include "hbwince.h"
-#endif
-
 HB_EXTERN_BEGIN
 
 /*-*/
@@ -101,17 +95,10 @@ HB_EXTERN_BEGIN
 #define WVT_MAX_ROWS                256
 #define WVT_MAX_COLS                512
 #define WVT_MAX_WINDOWS             256
-#if defined( HB_OS_WIN_CE )
-#  define WVT_DEFAULT_ROWS          15
-#  define WVT_DEFAULT_COLS          50
-#  define WVT_DEFAULT_FONT_HEIGHT   12
-#  define WVT_DEFAULT_FONT_WIDTH    8
-#else
-#  define WVT_DEFAULT_ROWS          25
-#  define WVT_DEFAULT_COLS          80
-#  define WVT_DEFAULT_FONT_HEIGHT   16
-#  define WVT_DEFAULT_FONT_WIDTH    8
-#endif
+#define WVT_DEFAULT_ROWS          25
+#define WVT_DEFAULT_COLS          80
+#define WVT_DEFAULT_FONT_HEIGHT   16
+#define WVT_DEFAULT_FONT_WIDTH    8
 #define WVT_DEFAULT_FONT_NAME       "Courier New"
 
 #define BLACK                       RGB( 0x0 ,0x0 ,0x0  )

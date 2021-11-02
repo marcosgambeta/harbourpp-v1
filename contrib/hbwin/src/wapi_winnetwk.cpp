@@ -45,14 +45,10 @@
  */
 
 #include "hbwapi.h"
-
-#if ! defined( HB_OS_WIN_CE )
-#  include <winnetwk.h>
-#endif
+#include <winnetwk.h>
 
 HB_FUNC( WAPI_WNETGETLASTERROR )
 {
-#if ! defined( HB_OS_WIN_CE )
    DWORD dwLastError = 0;
    TCHAR lpDescription[ 256 ];
    TCHAR lpProvider[ 256 ];
@@ -62,10 +58,4 @@ HB_FUNC( WAPI_WNETGETLASTERROR )
    hb_stornl( static_cast< long >( dwLastError ), 1 );
    HB_STORSTR( lpDescription, 2 );
    HB_STORSTR( lpProvider, 3 );
-#else
-   hb_retnl( 0 );
-   hb_stornl( 0, 1 );
-   hb_storc( nullptr, 2 );
-   hb_storc( nullptr, 3 );
-#endif
 }

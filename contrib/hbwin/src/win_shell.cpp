@@ -85,7 +85,6 @@
                         [<cInfo>], [<nInfoTimeOut>], [<cInfoTitle>], [<nInfoFlags>] ) --> <lOK> */
 HB_FUNC( WIN_SHELLNOTIFYICON )
 {
-#if ! defined( HB_OS_WIN_CE )
    NOTIFYICONDATA tnid;
 
    memset( &tnid, 0, sizeof( tnid ) );
@@ -124,17 +123,12 @@ HB_FUNC( WIN_SHELLNOTIFYICON )
    #endif
 
    hbwapi_ret_L( Shell_NotifyIcon( HB_ISLOG( 6 ) ? ( hb_parl( 6 ) ? NIM_ADD : NIM_DELETE ) : NIM_MODIFY, &tnid ) );
-#else
-   hb_retl( HB_FALSE );
-#endif
 }
 
 /* Details:
       https://msdn.microsoft.com/library/bb762164
       https://msdn.microsoft.com/library/bb759795
  */
-
-#if ! defined( HB_OS_WIN_CE )
 
 #if defined( __MINGW32__ )
 #  include <_mingw.h>
@@ -215,8 +209,6 @@ static LPTSTR s_StringList( int iParam )
    return lpStr;
 }
 
-#endif
-
 /* win_SHFileOperation( [<hWnd>], [<nFunction>], [<cFrom>|<aFrom>], [<cTo>|<aTo>],
                         [<nFlags>], [<@lAnyOperationAborted>],
                         [<aNameMappings>], [<cProgressTitle>] ) -> <nResult> */
@@ -224,9 +216,6 @@ HB_FUNC( WIN_SHFILEOPERATION )
 {
    int iRetVal;
 
-#if defined( HB_OS_WIN_CE )
-   iRetVal = -1;
-#else
    SHFILEOPSTRUCT fop;
 
    void * hProgressTitle;
@@ -303,6 +292,5 @@ HB_FUNC( WIN_SHFILEOPERATION )
          hb_arraySize( pArray, 0 );
       }
    }
-#endif
    hb_retni( iRetVal );
 }

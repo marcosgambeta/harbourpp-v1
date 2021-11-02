@@ -57,10 +57,8 @@ static HKEY hb_regkeyconv( HB_PTRUINT nKey )
       case 0:
       case 2:
          return static_cast< HKEY >( HKEY_CURRENT_USER );
-#if ! defined( HB_OS_WIN_CE )
       case 3:
          return static_cast< HKEY >( HKEY_CURRENT_CONFIG );
-#endif
       case 4:
          return static_cast< HKEY >( HKEY_LOCAL_MACHINE );
       case 5:

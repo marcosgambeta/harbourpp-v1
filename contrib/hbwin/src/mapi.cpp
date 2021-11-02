@@ -51,16 +51,11 @@
 #  define HB_UNICODE_ORI
 #endif
 
-#if ! defined( HB_OS_WIN_CE )
-#  if defined( UNICODE )
-#     undef UNICODE
-#  endif
+#if defined( UNICODE )
+#   undef UNICODE
 #endif
 
 #include "hbwapi.h"
-#if defined( HB_OS_WIN_CE )
-#  include "hbwince.h"
-#endif
 
 #include <mapi.h>
 

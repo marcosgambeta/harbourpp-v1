@@ -173,7 +173,6 @@ static BITMAPINFO * PackedDibLoad( LPCTSTR szFileName )
    return pbmi;
 }
 
-#if ! defined( HB_OS_WIN_CE )
 static int PackedDibGetWidth( BITMAPINFO * pPackedDib )
 {
    if( pPackedDib->bmiHeader.biSize == sizeof( BITMAPCOREHEADER ) )
@@ -185,9 +184,7 @@ static int PackedDibGetWidth( BITMAPINFO * pPackedDib )
       return pPackedDib->bmiHeader.biWidth;
    }
 }
-#endif
 
-#if ! defined( HB_OS_WIN_CE )
 static int PackedDibGetHeight( BITMAPINFO * pPackedDib )
 {
    if( pPackedDib->bmiHeader.biSize == sizeof( BITMAPCOREHEADER ) )
@@ -199,9 +196,7 @@ static int PackedDibGetHeight( BITMAPINFO * pPackedDib )
       return abs( pPackedDib->bmiHeader.biHeight );
    }
 }
-#endif
 
-#if ! defined( HB_OS_WIN_CE )
 static int PackedDibGetBitCount( BITMAPINFO * pPackedDib )
 {
    if( pPackedDib->bmiHeader.biSize == sizeof( BITMAPCOREHEADER ) )
@@ -213,9 +208,7 @@ static int PackedDibGetBitCount( BITMAPINFO * pPackedDib )
       return pPackedDib->bmiHeader.biBitCount;
    }
 }
-#endif
 
-#if ! defined( HB_OS_WIN_CE )
 static int PackedDibGetInfoHeaderSize( BITMAPINFO * pPackedDib )
 {
    if( pPackedDib->bmiHeader.biSize == sizeof( BITMAPCOREHEADER ) )
@@ -232,9 +225,7 @@ static int PackedDibGetInfoHeaderSize( BITMAPINFO * pPackedDib )
       return pPackedDib->bmiHeader.biSize;
    }
 }
-#endif
 
-#if ! defined( HB_OS_WIN_CE )
 static int PackedDibGetColorsUsed( BITMAPINFO * pPackedDib )
 {
    if( pPackedDib->bmiHeader.biSize == sizeof( BITMAPCOREHEADER ) )
@@ -246,9 +237,7 @@ static int PackedDibGetColorsUsed( BITMAPINFO * pPackedDib )
       return pPackedDib->bmiHeader.biClrUsed;
    }
 }
-#endif
 
-#if ! defined( HB_OS_WIN_CE )
 static int PackedDibGetNumColors( BITMAPINFO * pPackedDib )
 {
    int iNumColors;
@@ -262,9 +251,7 @@ static int PackedDibGetNumColors( BITMAPINFO * pPackedDib )
 
    return iNumColors;
 }
-#endif
 
-#if ! defined( HB_OS_WIN_CE )
 static int PackedDibGetColorTableSize( BITMAPINFO * pPackedDib )
 {
    if( pPackedDib->bmiHeader.biSize == sizeof( BITMAPCOREHEADER ) )
@@ -276,14 +263,12 @@ static int PackedDibGetColorTableSize( BITMAPINFO * pPackedDib )
       return PackedDibGetNumColors( pPackedDib ) * sizeof( RGBQUAD );
    }
 }
-#endif
 
-#if ! defined( HB_OS_WIN_CE )
 static BYTE * PackedDibGetBitsPtr( BITMAPINFO * pPackedDib )
 {
    return ( reinterpret_cast< BYTE * >( pPackedDib ) ) + PackedDibGetInfoHeaderSize( pPackedDib ) + PackedDibGetColorTableSize( pPackedDib );
 }
-#endif
+
 static HBITMAP hPrepareBitmap( LPCTSTR szBitmap, UINT uiBitmap,
                                int iExpWidth, int iExpHeight,
                                HB_BOOL bMap3Dcolors,
@@ -314,7 +299,6 @@ static HBITMAP hPrepareBitmap( LPCTSTR szBitmap, UINT uiBitmap,
 
                   if( ! bMap3Dcolors )
                   {
-#if ! defined( HB_OS_WIN_CE )
                      hBitmap = CreateDIBitmap( hdc,
                                                reinterpret_cast< PBITMAPINFOHEADER >( pPackedDib ),
                                                CBM_INIT,
@@ -328,9 +312,6 @@ static HBITMAP hPrepareBitmap( LPCTSTR szBitmap, UINT uiBitmap,
 
                      iWidth  = PackedDibGetWidth( pPackedDib );
                      iHeight = PackedDibGetHeight( pPackedDib );
-#else
-                     return nullptr;
-#endif
                   }
                   else
                   {
@@ -853,7 +834,6 @@ BOOL CALLBACK WvgDialogProcChooseFont( HWND hwnd, UINT msg, WPARAM wParam, LPARA
  */
 HB_FUNC( WVG_CHOOSEFONT )
 {
-#if ! defined( HB_OS_WIN_CE )
    CHOOSEFONT cf;    /* = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }; */
    LOGFONT    lf;    /* = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0 }; */
    DWORD      Flags;
@@ -936,12 +916,10 @@ HB_FUNC( WVG_CHOOSEFONT )
       hb_itemReturnRelease( aFont );
       hb_itemRelease( aInfo );
    }
-#endif
 }
 
 HB_FUNC( WVG_CHOOSEFONT_GETLOGFONT )
 {
-#if ! defined( HB_OS_WIN_CE )
    LOGFONT  lf;
    PHB_ITEM aFont;
 
@@ -952,7 +930,6 @@ HB_FUNC( WVG_CHOOSEFONT_GETLOGFONT )
    aFont = wvg_logfontTOarray( &lf, HB_FALSE );
 
    hb_itemReturnRelease( aFont );
-#endif
 }
 
 HB_FUNC( WVG_FONTCREATE )
@@ -1030,12 +1007,10 @@ HB_FUNC( WVG_HEIGHTTOPOINTSIZE )
 
 HB_FUNC( WVG_SETCURRENTBRUSH )
 {
-#if ! defined( HB_OS_WIN_CE )
-#if ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 || defined( HB_OS_WIN_CE ) ) ) && ! defined( HB_ARCH_64BIT )
+#if ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 ) ) && ! defined( HB_ARCH_64BIT )
    SetClassLong( wvg_parhwnd( 1 ), GCL_HBRBACKGROUND, static_cast< DWORD >( hb_parnint( 2 ) ) );
 #else
    SetClassLongPtr( wvg_parhwnd( 1 ), GCLP_HBRBACKGROUND, static_cast< LONG_PTR >( hb_parnint( 2 ) ) );
-#endif
 #endif
 }
 
@@ -1076,9 +1051,7 @@ HB_FUNC( WVG_ADDTOOLBARBUTTON )
 
          /* FIXME: Convertion of LRESULT to HB_BOOL */
          bSuccess = static_cast< HB_BOOL >( SendMessage( hWndTB, TB_ADDBUTTONS, static_cast< WPARAM >( 1 ), reinterpret_cast< LPARAM >( static_cast< LPTBBUTTON >( &tbb ) ) ) );
-#if ! defined( HB_OS_WIN_CE )
          SendMessage( hWndTB, TB_SETPADDING, static_cast< WPARAM >( 0 ), static_cast< LPARAM >( MAKELPARAM( 10, 10 ) ) );
-#endif
          hb_retl( bSuccess );
          return;
       }
@@ -1147,7 +1120,6 @@ HB_FUNC( WVG_FILLRECT )
 
 HB_FUNC( WVG_BEGINMOUSETRACKING )
 {
-#if ! defined( HB_OS_WIN_CE )
    TRACKMOUSEEVENT tmi;
 
    tmi.cbSize      = sizeof( TRACKMOUSEEVENT );
@@ -1155,9 +1127,6 @@ HB_FUNC( WVG_BEGINMOUSETRACKING )
    tmi.hwndTrack   = hbwapi_par_raw_HWND( 1 );
    tmi.dwHoverTime = 1;
    hbwapi_ret_L( _TrackMouseEvent( &tmi ) );
-#else
-   hbwapi_ret_L( FALSE );
-#endif
 }
 
 LRESULT CALLBACK ControlWindowProcedure( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam )
@@ -1196,7 +1165,7 @@ HB_FUNC( WVG_SETWINDOWPROCBLOCK )
 
    SetProp( hWnd, TEXT( "BLOCKCALLBACK" ), pBlock );
 
-#if ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 || defined( HB_OS_WIN_CE ) ) ) && ! defined( HB_ARCH_64BIT )
+#if ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 ) ) && ! defined( HB_ARCH_64BIT )
    oldProc = static_cast< WNDPROC >( SetWindowLong( hWnd, GWL_WNDPROC, static_cast< long >( ControlWindowProcedure ) ) );
 #else
    oldProc = reinterpret_cast< WNDPROC >( SetWindowLongPtr( hWnd, GWLP_WNDPROC, reinterpret_cast< HB_PTRUINT >( ControlWindowProcedure ) ) );

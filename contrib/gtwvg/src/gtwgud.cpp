@@ -959,20 +959,16 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc( HWND hWnd, UINT message, WPARAM wPara
             SendMessage( hWnd, WM_SIZE, 0, 0 );
             return 0;
          }
-#if ! defined( HB_OS_WIN_CE )
          case WM_SIZING:
-#endif
          case WM_SIZE:
             return hb_gt_wvt_SizeChanged( pWVT );
          case WM_SYSCOMMAND:
-#if ! defined( HB_OS_WIN_CE )
             switch( wParam )
             {
                case SC_MAXIMIZE:
                   /* TODO */
                   break;
             }
-#endif
             break;
          case WM_TIMER:
          {
@@ -1000,7 +996,6 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc( HWND hWnd, UINT message, WPARAM wPara
          case WM_EXITMENULOOP:
             hb_gt_wvt_FireMenuEvent( pWVT, 2, static_cast< int >( wParam ) );
             return 0;
-#if ! defined( HB_OS_WIN_CE )
          case WM_MOUSEHOVER:
          {
             PHB_ITEM pEvParams = hb_itemNew( nullptr );
@@ -1027,7 +1022,6 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc( HWND hWnd, UINT message, WPARAM wPara
             pWVT->bTracking = HB_FALSE;
             break;
          }
-#endif
          case WM_COMMAND:
             if( static_cast< int >( lParam ) == 0 )
             {
@@ -1667,7 +1661,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                pWVT->bResizable = bNewValue;
                if( pWVT->hWnd )
                {
-#if ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 || defined( HB_OS_WIN_CE ) ) ) && ! defined( HB_ARCH_64BIT )
+#if ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 ) ) && ! defined( HB_ARCH_64BIT )
                   LONG style;
 #else
                   LONG_PTR style;
@@ -1681,13 +1675,10 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                      style = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_BORDER;
                   }
 
-#if ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 || defined( HB_OS_WIN_CE ) ) ) && ! defined( HB_ARCH_64BIT )
+#if ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 ) ) && ! defined( HB_ARCH_64BIT )
                   SetWindowLong( pWVT->hWnd, GWL_STYLE, style );
 #else
                   SetWindowLongPtr( pWVT->hWnd, GWL_STYLE, style );
-#endif
-#if defined( HB_OS_WIN_CE ) && ! defined( __MINGW32CE__ )
-   #define SWP_DEFERERASE  0
 #endif
                   SetWindowPos( pWVT->hWnd, nullptr, 0, 0, 0, 0, SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_DEFERERASE );
                   ShowWindow( pWVT->hWnd, SW_HIDE );
@@ -1965,17 +1956,13 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                      }
 
                      case HB_GTS_WS_MINIMIZED:
-#if ! defined( HB_OS_WIN_CE )
                         SendNotifyMessage( pWVT->hWnd, WM_SYSCOMMAND, SC_MINIMIZE, 0 );
-#endif
                         break;
 
                      case HB_GTS_WS_MAXIMIZED:
                         if( pWVT->bResizable )
                         {
-#if ! defined( HB_OS_WIN_CE )
                            SendNotifyMessage( pWVT->hWnd, WM_SYSCOMMAND, SC_MAXIMIZE, 0 );
-#endif
                         }
                         else
                         {

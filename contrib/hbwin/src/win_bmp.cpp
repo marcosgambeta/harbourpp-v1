@@ -235,9 +235,7 @@ HB_FUNC( WIN_DRAWBITMAP )
 
       if( pbmi && pBits )
       {
-#if ! defined( HB_OS_WIN_CE )
          SetStretchBltMode( hDC, COLORONCOLOR );
-#endif
          hb_retl( StretchDIBits( hDC, hb_parni( 3 ), hb_parni( 4 ), hb_parni( 5 ), hb_parni( 6 ),
                                  0, 0, iWidth, iHeight, pBits, pbmi,
                                  DIB_RGB_COLORS, SRCCOPY ) != static_cast< int >( GDI_ERROR ) );

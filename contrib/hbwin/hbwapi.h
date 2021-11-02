@@ -105,7 +105,7 @@
 #define hbwapi_ret_LRESULT( hr )            ( hb_retnint( hr ) )
 #define hbwapi_ret_COLORREF( cr )           ( hb_retnint( cr ) )
 
-#if ( ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 || defined( HB_OS_WIN_CE ) ) ) ) && ! defined( HB_ARCH_64BIT )
+#if ( ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 ) ) ) && ! defined( HB_ARCH_64BIT )
 #  ifndef GetWindowLongPtr
 #     define GetWindowLongPtr  GetWindowLong
 #  endif

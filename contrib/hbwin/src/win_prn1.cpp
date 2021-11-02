@@ -48,13 +48,7 @@
 #include "hbwapi.h"
 #include "hbapifs.h"
 #include "hbapiitm.h"
-
-#if defined( HB_OS_WIN_CE )
-   /* For Arc() */
-   #include "hbwince.h"
-#else
-   #include <winspool.h>
-#endif
+#include <winspool.h>
 
 HB_FUNC( WIN_CREATEDC )
 {
@@ -276,13 +270,9 @@ HB_FUNC( WIN_GETDEVICECAPS )
 
 HB_FUNC( WIN_SETMAPMODE )
 {
-#if ! defined( HB_OS_WIN_CE )
    HDC hDC = hbwapi_par_HDC( 1 );
 
    hb_retni( hDC && HB_ISNUM( 2 ) ? SetMapMode( hDC, hb_parni( 2 ) ) : 0 );
-#else
-   hb_retni( 0 );
-#endif
 }
 
 HB_FUNC( WIN_CREATEFONT )
@@ -334,11 +324,7 @@ HB_FUNC( WIN_CREATEFONT )
       lf.lfUnderline      = static_cast< BYTE >( hb_parl( 7 ) );
       lf.lfStrikeOut      = static_cast< BYTE >( 0 );
       lf.lfCharSet        = static_cast< BYTE >( hb_parnl( 9 ) );
-#if defined( HB_OS_WIN_CE )
-      lf.lfOutPrecision   = static_cast< BYTE >( OUT_DEFAULT_PRECIS );
-#else
       lf.lfOutPrecision   = static_cast< BYTE >( OUT_DEVICE_PRECIS );
-#endif
       lf.lfClipPrecision  = static_cast< BYTE >( CLIP_DEFAULT_PRECIS );
       lf.lfQuality        = static_cast< BYTE >( DRAFT_QUALITY );
       lf.lfPitchAndFamily = static_cast< BYTE >( DEFAULT_PITCH | FF_DONTCARE );
@@ -399,7 +385,6 @@ HB_FUNC( WIN_SETDOCUMENTPROPERTIES )
 {
    HB_BOOL bResult = HB_FALSE;
 
-#if ! defined( HB_OS_WIN_CE )
    HDC hDC = hbwapi_par_HDC( 1 );
 
    if( hDC )
@@ -501,7 +486,6 @@ HB_FUNC( WIN_SETDOCUMENTPROPERTIES )
 
       hb_strfree( hDeviceName );
    }
-#endif
 
    hb_retl( bResult );
 }
@@ -510,7 +494,6 @@ HB_FUNC( WIN_GETDOCUMENTPROPERTIES )
 {
    HB_BOOL bResult = HB_FALSE;
 
-#if ! defined( HB_OS_WIN_CE )
    HANDLE hPrinter;
    void * hDeviceName;
    LPCTSTR lpDeviceName = HB_PARSTR( 1, &hDeviceName, nullptr );
@@ -543,7 +526,6 @@ HB_FUNC( WIN_GETDOCUMENTPROPERTIES )
    }
 
    hb_strfree( hDeviceName );
-#endif
 
    hb_retl( bResult );
 }
@@ -587,7 +569,6 @@ HB_FUNC( WIN_ENUMFONTS )
 HB_FUNC( WIN_ENUMFONTFAMILIES )
 {
    PHB_ITEM pArray = hb_itemArrayNew( 0 );
-#if ! defined( HB_OS_WIN_CE )
    HDC hDC = hbwapi_par_HDC( 1 );
    HB_BOOL fNullDC = ( ! hDC );
    LOGFONT Logfont;
@@ -613,7 +594,6 @@ HB_FUNC( WIN_ENUMFONTFAMILIES )
    {
       ReleaseDC( nullptr, hDC );
    }
-#endif
 
    hb_itemReturnRelease( pArray );
 }

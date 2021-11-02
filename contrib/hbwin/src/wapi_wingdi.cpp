@@ -53,11 +53,7 @@
 #include "hbapierr.h"
 
 /* For Arc() */
-#if defined( HB_OS_WIN_CE )
-   #include "hbwince.h"
-#else
-   #include <winspool.h>
-#endif
+#include <winspool.h>
 
 static void s_hb_hashSetCItemNL( PHB_ITEM pHash, const char * pszKey, long v )
 {
@@ -288,7 +284,6 @@ void hbwapi_strfree_DOCINFO( void ** h )
 
 HB_FUNC( __WAPI_DEVMODE_NEW )
 {
-#if ! defined( HB_OS_WIN_CE )
    HANDLE hPrinter;
    void * hDeviceName;
    LPCTSTR lpDeviceName = HB_PARSTR( 1, &hDeviceName, nullptr );
@@ -317,14 +312,10 @@ HB_FUNC( __WAPI_DEVMODE_NEW )
    }
 
    hb_strfree( hDeviceName );
-#else
-   hb_retptr( nullptr );
-#endif
 }
 
 HB_FUNC( __WAPI_DEVMODE_SET )
 {
-#if ! defined( HB_OS_WIN_CE )
    PDEVMODE pDevMode = hbwapi_par_PDEVMODE( 1 );
    PHB_ITEM pStru = hb_param( 2, HB_IT_ANY );
 
@@ -355,12 +346,10 @@ HB_FUNC( __WAPI_DEVMODE_SET )
    {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
-#endif
 }
 
 HB_FUNC( __WAPI_DEVMODE_GET )
 {
-#if ! defined( HB_OS_WIN_CE )
    PDEVMODE pDevMode = hbwapi_par_PDEVMODE( 1 );
    PHB_ITEM pStru = hb_param( 2, HB_IT_ANY );
 
@@ -380,7 +369,6 @@ HB_FUNC( __WAPI_DEVMODE_GET )
    {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
-#endif
 }
 
 HB_FUNC( WAPI_CREATEDC )
@@ -401,7 +389,6 @@ HB_FUNC( WAPI_CREATEDC )
 
 HB_FUNC( WAPI_RESETDC )
 {
-#if ! defined( HB_OS_WIN_CE )
    HDC hDC = hbwapi_par_HDC( 1 );
    PDEVMODE pDEVMODE = hbwapi_par_PDEVMODE( 2 );
 
@@ -413,9 +400,6 @@ HB_FUNC( WAPI_RESETDC )
    {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
-#else
-   hb_retl( HB_FALSE );
-#endif
 }
 
 HB_FUNC( WAPI_STARTDOC )
@@ -536,7 +520,6 @@ HB_FUNC( WAPI_GETDEVICECAPS )
 
 HB_FUNC( WAPI_SETMAPMODE )
 {
-#if ! defined( HB_OS_WIN_CE )
    HDC hDC = hbwapi_par_HDC( 1 );
 
    if( hDC )
@@ -547,14 +530,10 @@ HB_FUNC( WAPI_SETMAPMODE )
    {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
-#else
-   hb_retni( 0 );
-#endif
 }
 
 HB_FUNC( WAPI_GETMAPMODE )
 {
-#if ! defined( HB_OS_WIN_CE )
    HDC hDC = hbwapi_par_HDC( 1 );
 
    if( hDC )
@@ -565,9 +544,6 @@ HB_FUNC( WAPI_GETMAPMODE )
    {
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
-#else
-   hb_retni( 0 );
-#endif
 }
 
 HB_FUNC( WAPI_SETTEXTALIGN )
@@ -608,23 +584,11 @@ HB_FUNC( WAPI_TEXTOUT )
       HB_SIZE nDataLen;
       LPCTSTR lpData = HB_PARSTR( 4, &hData, &nDataLen );
 
-#if ! defined( HB_OS_WIN_CE )
       hb_retl( TextOut( hDC,
                         hb_parni( 2 ) /* iRow */,
                         hb_parni( 3 ) /* iCol */,
                         lpData,
                         static_cast< int >( nDataLen ) ) );
-#else
-      /* Emulating TextOut() using ExtTextOut(). [vszakats] */
-      hb_retl( ExtTextOut( hDC,
-                           hb_parni( 2 ) /* iRow */,
-                           hb_parni( 3 ) /* iCol */,
-                           0,
-                           nullptr,
-                           lpData,
-                           static_cast< UINT >( nDataLen ),
-                           nullptr ) );
-#endif
 
       hb_strfree( hData );
    }
@@ -779,25 +743,17 @@ HB_FUNC( WAPI_CREATESOLIDBRUSH )
 {
    HBRUSH h = CreateSolidBrush( static_cast< COLORREF >( hb_parnl( 1 ) ) /* crColor */ );
 
-#if defined( HB_OS_WIN_CE )
-   hbwapi_SetLastError( GetLastError() );
-#endif
    hbwapi_ret_HBRUSH( h );
 }
 
 HB_FUNC( WAPI_CREATEHATCHBRUSH )
 {
-#if ! defined( HB_OS_WIN_CE )
    hbwapi_ret_HBRUSH( CreateHatchBrush( hb_parni( 1 ) /* fnStyle */,
                                         static_cast< COLORREF >( hb_parnl( 2 ) ) /* crColor */ ) );
-#else
-   hb_retptr( nullptr );
-#endif
 }
 
 HB_FUNC( WAPI_CREATEFONT )
 {
-#if ! defined( HB_OS_WIN_CE )
    void * hFontFace;
 
    hbwapi_ret_HFONT( CreateFont( hb_parni( 1 ) /* nHeight */,
@@ -816,9 +772,6 @@ HB_FUNC( WAPI_CREATEFONT )
                                  HB_PARSTR( 14, &hFontFace, nullptr ) /* lpszFace */ ) );
 
    hb_strfree( hFontFace );
-#else
-   hb_retptr( nullptr );
-#endif
 }
 
 HB_FUNC( WAPI_CREATEFONTINDIRECT )

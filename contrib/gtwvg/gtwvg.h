@@ -79,16 +79,11 @@
 #include <windows.h>
 #include <winuser.h>
 #include <commctrl.h>
-#if ! defined( HB_OS_WIN_CE )
-   #include <ole2.h>
-   #include <olectl.h>
-   #include <ocidl.h>
-#endif
+#include <ole2.h>
+#include <olectl.h>
+#include <ocidl.h>
 #include <commdlg.h>
 #include <shellapi.h>
-#if defined( HB_OS_WIN_CE )
-   #include "hbwince.h"
-#endif
 
 HB_EXTERN_BEGIN
 
@@ -99,17 +94,10 @@ HB_EXTERN_BEGIN
 #define WVT_MAX_ROWS                256
 #define WVT_MAX_COLS               1024
 #define WVT_MAX_WINDOWS             256
-#if defined( HB_OS_WIN_CE )
-#  define WVT_DEFAULT_ROWS          15
-#  define WVT_DEFAULT_COLS          50
-#  define WVT_DEFAULT_FONT_HEIGHT   12
-#  define WVT_DEFAULT_FONT_WIDTH    8
-#else
-#  define WVT_DEFAULT_ROWS          25
-#  define WVT_DEFAULT_COLS          80
-#  define WVT_DEFAULT_FONT_HEIGHT   16
-#  define WVT_DEFAULT_FONT_WIDTH    10
-#endif
+#define WVT_DEFAULT_ROWS          25
+#define WVT_DEFAULT_COLS          80
+#define WVT_DEFAULT_FONT_HEIGHT   16
+#define WVT_DEFAULT_FONT_WIDTH    10
 #define WVT_DEFAULT_FONT_NAME       TEXT( "Courier New" )
 
 #define BLACK          RGB( 0x0 ,0x0 ,0x0  )
@@ -181,9 +169,7 @@ struct _tag_GOBJS
    HFONT          hFont;
    HPEN           hPen;
    HBRUSH         hBrush;
-#if ! defined( HB_OS_WIN_CE )
    IPicture     * pPicture;
-#endif
    HB_BOOL        bDestroyFont;
    HB_BOOL        bDestroyPen;
    HB_BOOL        bDestroyBrush;
@@ -226,9 +212,7 @@ struct HB_GUIDATA
    HBRUSH    diagonalBrush;                 /* Handle to diagonal brush to draw scrollbars */
    HBRUSH    solidBrush;                    /* Handle to solid brush */
    HBRUSH    whiteBrush;                    /* Wvt specific White colored brush */
-#if ! defined( HB_OS_WIN_CE )
    IPicture * pPicture[ 50 ];               /* Array to hold the Picture Streams to avoid recurring loading and unloading */
-#endif
    HFONT     hUserFonts[ 50 ];              /* User defined font handles */
    HPEN      hUserPens[ 50 ];               /* User defined pens */
 };
@@ -483,21 +467,11 @@ enum HB_gt_event_enum
 #  define SC_MAXIMIZE 0xF030
 #endif
 
-#if defined( HB_OS_WIN_CE ) && ! defined( __MINGW32CE__ )
-   BOOL SetMenu( HWND hWnd, HMENU hMenu );
-   HMENU GetMenu( HWND hWnd );
-
-   #define LR_LOADMAP3DCOLORS   0
-   #define SWP_NOREDRAW         0
-#endif
-
 extern HB_EXPORT POINT         hb_wvt_gtGetXYFromColRow( int col, int row );
-#if ! defined( HB_OS_WIN_CE )
 extern HB_EXPORT IPicture *    hb_wvt_gtLoadPicture( LPCTSTR image );
 extern HB_EXPORT IPicture *    hb_wvt_gtLoadPictureFromResource( LPCTSTR resource, LPCTSTR section );
 extern HB_EXPORT HB_BOOL       hb_wvt_gtRenderPicture( int x1, int y1, int wd, int ht, IPicture * iPicture, HB_BOOL bDoNotScale );
 extern HB_EXPORT HB_BOOL       hb_wvt_gtDestroyPicture( IPicture * iPicture );
-#endif
 extern HB_EXPORT HB_BOOL       hb_wvt_DrawImage( HDC hdc, int x1, int y1, int wd, int ht, LPCTSTR image, HB_BOOL bDoNotScale );
 extern HB_EXPORT void          hb_wvt_GetStringAttrib( int top, int left, int bottom, int right, HB_BYTE * sBuffer, HB_BYTE * sAttrib );
 extern HB_EXPORT void          hb_wvt_PutStringAttrib( int top, int left, int bottom, int right, HB_BYTE * sBuffer, HB_BYTE * sAttrib );

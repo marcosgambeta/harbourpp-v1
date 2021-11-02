@@ -94,7 +94,7 @@ HB_FUNC( DIRNAME )
 
 HB_FUNC( DRIVETYPE )
 {
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
    HB_SIZE nSize = hb_parclen( 1 ) + 2;  /* allow space for '\0' & ":\" */
    char * pszDrive = static_cast< char * >( hb_xgrab( nSize + 1 ) );
    LPCTSTR lpDrive;
@@ -187,7 +187,7 @@ HB_FUNC( VOLUME )
 {
    HB_BOOL bReturn = HB_FALSE;
 
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
    if( ! ct_getsafety() )
    {
       const char * pszRoot = nullptr;
@@ -235,7 +235,7 @@ HB_FUNC( VOLUME )
 
 HB_FUNC( VOLSERIAL )
 {
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
    DWORD dwSerial = 0;
    void * hDrive;
    HB_SIZE nLen;
@@ -263,7 +263,7 @@ HB_FUNC( TRUENAME )
 {
    if( HB_ISCHAR( 1 ) )
    {
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
       void * hFile;
       TCHAR buffer[ MAX_PATH + 1 ];
 

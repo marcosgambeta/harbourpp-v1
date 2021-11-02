@@ -262,7 +262,6 @@ HB_FUNC( WAPI_IMAGELIST_GETIMAGEINFO )
                                    COLORREF crMask, UINT uType, UINT uFlags ); */
 HB_FUNC( WAPI_IMAGELIST_LOADIMAGE )
 {
-#if ! defined( HB_OS_WIN_CE )
    LPCTSTR image;
 
    if( HB_ISCHAR( 2 ) )
@@ -281,9 +280,6 @@ HB_FUNC( WAPI_IMAGELIST_LOADIMAGE )
                                                hbwapi_par_COLORREF( 5 ),
                                                hbwapi_par_UINT( 6 ),
                                                hbwapi_par_UINT( 7 ) ) );
-#else
-   hbwapi_ret_raw_HANDLE( nullptr );
-#endif
 }
 
 /* HIMAGELIST ImageList_Merge( HIMAGELIST himl1, int i1, HIMAGELIST himl2, int i2, int dx, int dy ); */
@@ -579,20 +575,14 @@ HB_FUNC( WAPI_TABCTRL_SETPADDING )
 /* (HWND)SNDMSG((hwnd), TCM_GETTOOLTIPS, 0, 0) */
 HB_FUNC( WAPI_TABCTRL_GETTOOLTIPS )
 {
-#if ! defined( HB_OS_WIN_CE )
    hbwapi_ret_NINT( reinterpret_cast< HB_PTRUINT >( TabCtrl_GetToolTips( hbwapi_par_raw_HWND( 1 ) ) ) );
-#else
-   hbwapi_ret_NINT( -1 );
-#endif
 }
 
 /* TabCtrl_SetToolTips(hwnd, hwndTT) */
 /* (void)SNDMSG((hwnd), TCM_SETTOOLTIPS, (WPARAM)(hwndTT), 0) */
 HB_FUNC( WAPI_TABCTRL_SETTOOLTIPS )
 {
-#if ! defined( HB_OS_WIN_CE )
    TabCtrl_SetToolTips( hbwapi_par_raw_HWND( 1 ), hbwapi_par_raw_HWND( 2 ) );
-#endif
 }
 
 /* TabCtrl_GetCurFocus(hwnd) */
@@ -666,7 +656,7 @@ HB_FUNC( WAPI_TABCTRL_GETEXTENDEDSTYLE )
 /* (BOOL)SNDMSG((hwnd), TCM_SETUNICODEFORMAT, (WPARAM)(fUnicode), 0) */
 HB_FUNC( WAPI_TABCTRL_SETUNICODEFORMAT )
 {
-#if ( _WIN32_IE >= 0x0400 ) && ! defined( HB_OS_WIN_CE )
+#if ( _WIN32_IE >= 0x0400 )
    hbwapi_ret_L( TabCtrl_SetUnicodeFormat( hbwapi_par_raw_HWND( 1 ), hbwapi_par_BOOL( 2 ) ) );
 #else
    hbwapi_ret_L( FALSE );
@@ -677,7 +667,7 @@ HB_FUNC( WAPI_TABCTRL_SETUNICODEFORMAT )
 /* (BOOL)SNDMSG((hwnd), TCM_GETUNICODEFORMAT, 0, 0) */
 HB_FUNC( WAPI_TABCTRL_GETUNICODEFORMAT )
 {
-#if ( _WIN32_IE >= 0x0400 ) && ! defined( HB_OS_WIN_CE )
+#if ( _WIN32_IE >= 0x0400 )
    hbwapi_ret_L( TabCtrl_GetUnicodeFormat( hbwapi_par_raw_HWND( 1 ) ) );
 #else
    hbwapi_ret_L( FALSE );
@@ -752,7 +742,7 @@ HB_FUNC( WAPI_TREEVIEW_EXPAND )
 /* COLORREF TreeView_GetBkColor( HWND hwndTV ); */
 HB_FUNC( WAPI_TREEVIEW_GETBKCOLOR )
 {
-#if ! defined( HB_OS_WIN_CE ) && ! defined( __MINGW32__ ) && ! defined( __CYGWIN__ )
+#if ! defined( __MINGW32__ ) && ! defined( __CYGWIN__ )
    hbwapi_ret_COLORREF( TreeView_GetBkColor( hbwapi_par_raw_HWND( 1 ) ) );
 #else
    hbwapi_ret_COLORREF( 0 );
@@ -822,7 +812,7 @@ HB_FUNC( WAPI_TREEVIEW_GETINDENT )
 /* IE 4.0 COLORREF TreeView_GetInsertMarkColor( HWND hwndTV ); */
 HB_FUNC( WAPI_TREEVIEW_GETINSERTMARKCOLOR )
 {
-#if ( _WIN32_IE >= 0x0400 ) && ! defined( HB_OS_WIN_CE )
+#if ( _WIN32_IE >= 0x0400 )
    hbwapi_ret_COLORREF( TreeView_GetInsertMarkColor( hbwapi_par_raw_HWND( 1 ) ) );
 #else
    hbwapi_ret_COLORREF( 0 );
@@ -850,7 +840,7 @@ HB_FUNC( WAPI_TREEVIEW_GETITEM )
 /* IE 4.0 int TreeView_GetItemHeight( HWND hwndTV ); */
 HB_FUNC( WAPI_TREEVIEW_GETITEMHEIGHT )
 {
-#if ( _WIN32_IE >= 0x0400 ) && ! defined( HB_OS_WIN_CE )
+#if ( _WIN32_IE >= 0x0400 )
    hbwapi_ret_NI( TreeView_GetItemHeight( hbwapi_par_raw_HWND( 1 ) ) );
 #else
    hbwapi_ret_NI( 0 );
@@ -889,7 +879,7 @@ HB_FUNC( WAPI_TREEVIEW_GETITEMSTATE )
 /* IE 4.0 HTREEITEM TreeView_GetLastVisible( HWND hwndTV ); */
 HB_FUNC( WAPI_TREEVIEW_GETLASTVISIBLE )
 {
-#if ( _WIN32_IE >= 0x0400 ) && ! defined( HB_OS_WIN_CE )
+#if ( _WIN32_IE >= 0x0400 )
    hbwapi_ret_raw_HANDLE( TreeView_GetLastVisible( hbwapi_par_raw_HWND( 1 ) ) );
 #else
    hbwapi_ret_raw_HANDLE( nullptr );
@@ -959,7 +949,7 @@ HB_FUNC( WAPI_TREEVIEW_GETROOT )
 /* UINT TreeView_GetScrollTime( HWND hwndTV ); */
 HB_FUNC( WAPI_TREEVIEW_GETSCROLLTIME )
 {
-#if ! defined( HB_OS_WIN_CE ) && ! defined( __MINGW32__ ) && ! defined( __CYGWIN__ )
+#if ! defined( __MINGW32__ ) && ! defined( __CYGWIN__ )
    hbwapi_ret_UINT( TreeView_GetScrollTime( hbwapi_par_raw_HWND( 1 ) ) );
 #else
    hbwapi_ret_UINT( 0 );
@@ -975,7 +965,7 @@ HB_FUNC( WAPI_TREEVIEW_GETSELECTION )
 /* COLORREF TreeView_GetTextColor( HWND hwndTV ); */
 HB_FUNC( WAPI_TREEVIEW_GETTEXTCOLOR )
 {
-#if ( _WIN32_IE >= 0x0400 ) && ! defined( HB_OS_WIN_CE )
+#if ( _WIN32_IE >= 0x0400 )
    hbwapi_ret_COLORREF( TreeView_GetTextColor( hbwapi_par_raw_HWND( 1 ) ) );
 #else
    hbwapi_ret_COLORREF( 0 );
@@ -985,7 +975,7 @@ HB_FUNC( WAPI_TREEVIEW_GETTEXTCOLOR )
 /* HWND TreeView_GetToolTips( HWND hwndTV ); */
 HB_FUNC( WAPI_TREEVIEW_GETTOOLTIPS )
 {
-#if ( _WIN32_IE >= 0x0300 ) && ! defined( HB_OS_WIN_CE )
+#if ( _WIN32_IE >= 0x0300 )
    hbwapi_ret_raw_HANDLE( TreeView_GetToolTips( hbwapi_par_raw_HWND( 1 ) ) );
 #else
    hbwapi_ret_raw_HANDLE( nullptr );
@@ -995,7 +985,7 @@ HB_FUNC( WAPI_TREEVIEW_GETTOOLTIPS )
 /* BOOL TreeView_GetUnicodeFormat( HWND hwnd ); */
 HB_FUNC( WAPI_TREEVIEW_GETUNICODEFORMAT )
 {
-#if ! defined( HB_OS_WIN_CE ) && ! defined( __MINGW32__ ) && ! defined( __CYGWIN__ )
+#if ! defined( __MINGW32__ ) && ! defined( __CYGWIN__ )
    hbwapi_ret_L( TreeView_GetUnicodeFormat( hbwapi_par_raw_HWND( 1 ) ) );
 #else
    hbwapi_ret_L( FALSE );
@@ -1071,7 +1061,7 @@ HB_FUNC( WAPI_TREEVIEW_SETAUTOSCROLLINFO )
 /* COLORREF TreeView_SetBkColor( HWND hwndTV, COLORREF clrBk ); */
 HB_FUNC( WAPI_TREEVIEW_SETBKCOLOR )
 {
-#if ( _WIN32_IE >= 0x0400 ) && ! defined( HB_OS_WIN_CE )
+#if ( _WIN32_IE >= 0x0400 )
    hbwapi_ret_COLORREF( TreeView_SetBkColor( hbwapi_par_raw_HWND( 1 ), hbwapi_par_COLORREF( 2 ) ) );
 #else
    hbwapi_ret_COLORREF( 0 );
@@ -1113,7 +1103,7 @@ HB_FUNC( WAPI_TREEVIEW_SETINDENT )
 /* BOOL TreeView_SetInsertMark( HWND hwndTV, HTREEITEM htiInsert, BOOL fAfter ); */
 HB_FUNC( WAPI_TREEVIEW_SETINSERTMARK )
 {
-#if ( _WIN32_IE >= 0x0400 ) && ! defined( HB_OS_WIN_CE )
+#if ( _WIN32_IE >= 0x0400 )
    hbwapi_ret_L( TreeView_SetInsertMark( hbwapi_par_raw_HWND( 1 ), hbwapi_par_raw_HANDLE( 2 ), hbwapi_par_BOOL( 3 ) ) );
 #else
    hbwapi_ret_L( FALSE );
@@ -1123,7 +1113,7 @@ HB_FUNC( WAPI_TREEVIEW_SETINSERTMARK )
 /* COLORREF TreeView_SetInsertMarkColor( HWND hwndTV, COLORREF clrInsertMark ); */
 HB_FUNC( WAPI_TREEVIEW_SETINSERTMARKCOLOR )
 {
-#if ( _WIN32_IE >= 0x0400 ) && ! defined( HB_OS_WIN_CE )
+#if ( _WIN32_IE >= 0x0400 )
    hbwapi_ret_COLORREF( TreeView_SetInsertMarkColor( hbwapi_par_raw_HWND( 1 ), hbwapi_par_COLORREF( 2 ) ) );
 #else
    hbwapi_ret_COLORREF( 0 );
@@ -1141,7 +1131,7 @@ HB_FUNC( WAPI_TREEVIEW_SETITEM )
 /* int TreeView_SetItemHeight( HWND hwndTV, SHORT cyItem ); */
 HB_FUNC( WAPI_TREEVIEW_SETITEMHEIGHT )
 {
-#if ( _WIN32_IE >= 0x0400 ) && ! defined( HB_OS_WIN_CE )
+#if ( _WIN32_IE >= 0x0400 )
    hbwapi_ret_NI( TreeView_SetItemHeight( hbwapi_par_raw_HWND( 1 ), hbwapi_par_SHORT( 2 ) ) );
 #else
    hbwapi_ret_NI( 0 );
@@ -1173,7 +1163,7 @@ HB_FUNC( WAPI_TREEVIEW_SETLINECOLOR )
 /* UINT TreeView_SetScrollTime( HWND hwndTV, UINT uMaxScrollTime ); */
 HB_FUNC( WAPI_TREEVIEW_SETSCROLLTIME )
 {
-#if ! defined( HB_OS_WIN_CE ) && ! defined( __MINGW32__ ) && ! defined( __CYGWIN__ )
+#if ! defined( __MINGW32__ ) && ! defined( __CYGWIN__ )
    hbwapi_ret_UINT( TreeView_SetScrollTime( hbwapi_par_raw_HWND( 1 ), hbwapi_par_UINT( 2 ) ) );
 #else
    hbwapi_ret_UINT( 0 );
@@ -1183,7 +1173,7 @@ HB_FUNC( WAPI_TREEVIEW_SETSCROLLTIME )
 /* COLORREF TreeView_SetTextColor( HWND hwndTV, COLORREF clrText ); */
 HB_FUNC( WAPI_TREEVIEW_SETTEXTCOLOR )
 {
-#if ( _WIN32_IE >= 0x0400 ) && ! defined( HB_OS_WIN_CE )
+#if ( _WIN32_IE >= 0x0400 )
    hbwapi_ret_COLORREF( TreeView_SetTextColor( hbwapi_par_raw_HWND( 1 ), hbwapi_par_COLORREF( 2 ) ) );
 #else
    hbwapi_ret_COLORREF( 0 );
@@ -1193,7 +1183,7 @@ HB_FUNC( WAPI_TREEVIEW_SETTEXTCOLOR )
 /* HWND TreeView_SetToolTips( HWND hwndTV, HWND hwndTooltip ); */
 HB_FUNC( WAPI_TREEVIEW_SETTOOLTIPS )
 {
-#if ( _WIN32_IE >= 0x0300 ) && ! defined( HB_OS_WIN_CE )
+#if ( _WIN32_IE >= 0x0300 )
    hbwapi_ret_raw_HANDLE( TreeView_SetToolTips( hbwapi_par_raw_HWND( 1 ), hbwapi_par_raw_HWND( 2 ) ) );
 #else
    hbwapi_ret_raw_HANDLE( nullptr );
@@ -1203,7 +1193,7 @@ HB_FUNC( WAPI_TREEVIEW_SETTOOLTIPS )
 /* IE 4.0 BOOL TreeView_SetUnicodeFormat( HWND hwnd, BOOL fUnicode ); */
 HB_FUNC( WAPI_TREEVIEW_SETUNICODEFORMAT )
 {
-#if ! defined( HB_OS_WIN_CE ) && ! defined( __MINGW32__ ) && ! defined( __CYGWIN__ )
+#if ! defined( __MINGW32__ ) && ! defined( __CYGWIN__ )
    hbwapi_ret_L( TreeView_SetUnicodeFormat( hbwapi_par_raw_HWND( 1 ), hbwapi_par_BOOL( 2 ) ) );
 #else
    hbwapi_ret_L( FALSE );

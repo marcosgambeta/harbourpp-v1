@@ -92,7 +92,7 @@ static HB_CRITICAL_NEW( s_wvtMtx );
 #define HB_WVT_LOCK()      hb_threadEnterCriticalSection( &s_wvtMtx )
 #define HB_WVT_UNLOCK()    hb_threadLeaveCriticalSection( &s_wvtMtx )
 
-#if ( ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 || defined( HB_OS_WIN_CE ) ) ) ) && ! defined( HB_ARCH_64BIT )
+#if ( ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 ) ) ) && ! defined( HB_ARCH_64BIT )
    #ifndef GetWindowLongPtr
    #define GetWindowLongPtr  GetWindowLong
    #endif
@@ -337,7 +337,6 @@ static void hb_gt_wvt_Free( PHB_GTWVT pWVT )
          {
             hb_itemRelease( pWVT->gObjs->bBlock );
          }
-#if ! defined( HB_OS_WIN_CE )
           if( pWVT->gObjs->pPicture )
          {
             if( pWVT->gObjs->bDestroyPicture )
@@ -345,7 +344,6 @@ static void hb_gt_wvt_Free( PHB_GTWVT pWVT )
                HB_VTBL( pWVT->gObjs->pPicture )->Release( HB_THIS( pWVT->gObjs->pPicture ) );
             }
          }
-#endif
          hb_xfree( pWVT->gObjs );
          pWVT->gObjs = gObj;
       }
@@ -785,10 +783,6 @@ static void hb_gt_wvt_SetCloseButton( PHB_GTWVT pWVT )
 
 static void hb_gt_wvt_Composited( PHB_GTWVT pWVT, HB_BOOL fEnable )
 {
-#if defined( HB_OS_WIN_CE )
-   HB_SYMBOL_UNUSED( pWVT );
-   HB_SYMBOL_UNUSED( fEnable );
-#else
    if( hb_iswinvista() && ! GetSystemMetrics( SM_REMOTESESSION ) )
    {
       pWVT->bComposited = fEnable;
@@ -801,7 +795,6 @@ static void hb_gt_wvt_Composited( PHB_GTWVT pWVT, HB_BOOL fEnable )
          SetWindowLongPtr( pWVT->hWnd, GWL_EXSTYLE, GetWindowLongPtr( pWVT->hWnd, GWL_EXSTYLE ) & ~WS_EX_COMPOSITED );
       }
    }
-#endif
 }
 
 static HB_BOOL hb_gt_wvt_FitRows( PHB_GTWVT pWVT )
@@ -948,11 +941,7 @@ static HB_BOOL hb_gt_wvt_FitSize( PHB_GTWVT pWVT )
             pWVT->PTEXTSIZE.x = tm.tmAveCharWidth;
             pWVT->PTEXTSIZE.y = tm.tmHeight;
 
-#if defined( HB_OS_WIN_CE )
-            pWVT->FixedFont = HB_FALSE;
-#else
             pWVT->FixedFont = ! pWVT->Win9X && pWVT->fontWidth >= 0 && ( tm.tmPitchAndFamily & TMPF_FIXED_PITCH ) == 0 && ( pWVT->PTEXTSIZE.x == tm.tmMaxCharWidth );
-#endif
             for( int n = 0; n < pWVT->COLS; n++ )
             {
                pWVT->FixedSize[ n ] = pWVT->PTEXTSIZE.x;
@@ -1123,11 +1112,7 @@ static void hb_gt_wvt_ResetWindowSize( PHB_GTWVT pWVT )
    pWVT->PTEXTSIZE.x = pWVT->fontWidth < 0 ? -pWVT->fontWidth : tm.tmAveCharWidth;  /* For fixed FONT should == tm.tmMaxCharWidth */
    pWVT->PTEXTSIZE.y = tm.tmHeight;     /* but seems to be a problem on Win9X so */
                                         /* assume proportional fonts always for Win9X */
-#if defined( HB_OS_WIN_CE )
-   pWVT->FixedFont = HB_FALSE;
-#else
    pWVT->FixedFont = ! pWVT->Win9X && pWVT->fontWidth >= 0 && ( tm.tmPitchAndFamily & TMPF_FIXED_PITCH ) == 0 && ( pWVT->PTEXTSIZE.x == tm.tmMaxCharWidth );
-#endif
 
    /* pWVT->FixedSize[] is used by ExtTextOut() to emulate
       fixed font when a proportional font is used */
@@ -1463,7 +1448,6 @@ static void hb_gt_wvt_MouseEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
                 rect.right  != pWVT->sRectOld.right  ||
                 rect.bottom != pWVT->sRectOld.bottom )
             {
-#if ! defined( HB_OS_WIN_CE )  /* WinCE does not support InvertRgn */
                /* Concept forwarded by Andy Wos - thanks. */
                HRGN rgn1 = CreateRectRgn( pWVT->sRectOld.left, pWVT->sRectOld.top, pWVT->sRectOld.right, pWVT->sRectOld.bottom );
                HRGN rgn2 = CreateRectRgn( rect.left, rect.top, rect.right, rect.bottom );
@@ -1479,7 +1463,7 @@ static void hb_gt_wvt_MouseEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
                DeleteObject( rgn1 );
                DeleteObject( rgn2 );
                DeleteObject( rgn3 );
-#endif
+
                pWVT->sRectOld.left   = rect.left;
                pWVT->sRectOld.top    = rect.top;
                pWVT->sRectOld.right  = rect.right;
@@ -1505,14 +1489,12 @@ static void hb_gt_wvt_MouseEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
             }
             if( ! pWVT->bTracking )
             {
-#if ! defined( HB_OS_WIN_CE )
                TRACKMOUSEEVENT tmi;
                tmi.cbSize = sizeof( tmi );
                tmi.dwFlags = TME_LEAVE | TME_HOVER;
                tmi.hwndTrack = pWVT->hWnd;
                tmi.dwHoverTime = 1;
                pWVT->bTracking = _TrackMouseEvent( &tmi );
-#endif
             }
             break;
          }
@@ -2330,14 +2312,12 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc( HWND hWnd, UINT message, WPARAM wPara
             hb_gt_wvt_FitSizeRows( pWVT );
             return 0;
 
-#if ! defined( HB_OS_WIN_CE )
          case WM_NCLBUTTONDBLCLK:
             if( ! pWVT->bMaximized )
             {
                hb_gt_wvt_Maximize( pWVT );
             }
             return 0;
-#endif
 
          case WM_SYSCOMMAND:
             switch( wParam )
@@ -2410,7 +2390,6 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc( HWND hWnd, UINT message, WPARAM wPara
          case WM_EXITMENULOOP:
             hb_gt_wvt_FireMenuEvent( pWVT, 2, static_cast< int >( wParam ) );
             return 0;
-#if ! defined( HB_OS_WIN_CE )
          case WM_MOUSEHOVER:
          {
             PHB_ITEM pEvParams = hb_itemNew( nullptr );
@@ -2437,7 +2416,6 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc( HWND hWnd, UINT message, WPARAM wPara
             pWVT->bTracking = HB_FALSE;
             return DefWindowProc( hWnd, message, wParam, lParam );
          }
-#endif
          case WM_NOTIFY:
          {
             PHB_ITEM pEvParams = hb_itemNew( nullptr );
@@ -3747,12 +3725,10 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                   hb_strfree( pWVT->hSelectCopy );
                   pWVT->lpSelectCopy = HB_ITEMGETSTR( pInfo->pNewVal, &pWVT->hSelectCopy, nullptr );
                   pWVT->bSelectCopy = HB_TRUE;
-#if ! defined( HB_OS_WIN_CE )  /* WinCE does not support ModifyMenu */
                   if( hSysMenu )
                   {
                      ModifyMenu( hSysMenu, SYS_EV_MARK, MF_BYCOMMAND | MF_STRING | MF_ENABLED, SYS_EV_MARK, pWVT->lpSelectCopy );
                   }
-#endif
                }
             }
          }
@@ -4126,9 +4102,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                      }
 
                      case HB_GTS_WS_MINIMIZED:
-#if ! defined( HB_OS_WIN_CE )
                         SendNotifyMessage( pWVT->hWnd, WM_SYSCOMMAND, SC_MINIMIZE, 0 );
-#endif
                         break;
 
                      case HB_GTS_WS_MAXIMIZED:
@@ -4156,7 +4130,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             case HB_GTS_FACTOR:
                if( pWVT->hWnd )
                {
-#if ( _WIN32_WINNT >= 0x0500 ) && ! defined( HB_OS_WIN_CE )
+#if ( _WIN32_WINNT >= 0x0500 )
                   SetWindowLongPtr( pWVT->hWnd, GWL_EXSTYLE, GetWindowLongPtr( pWVT->hWnd, GWL_EXSTYLE ) | WS_EX_LAYERED );
 
                   SetLayeredWindowAttributes( pWVT->hWnd, RGB( 255, 255, 255 ), static_cast< BYTE >( hb_itemGetNI( pInfo->pNewVal2 ) ), /* LWA_COLORKEY | */ LWA_ALPHA );
@@ -4584,11 +4558,7 @@ static void hb_wvt_gtLoadGuiData( void )
    s_guiData->penGray        = CreatePen( PS_SOLID, 0, static_cast< COLORREF >( RGB( 198,198,198 ) ) );
    s_guiData->penNull        = CreatePen( PS_NULL , 0, static_cast< COLORREF >( RGB( 198,198,198 ) ) );
 
-#if ! defined( HB_OS_WIN_CE )
    s_guiData->diagonalBrush  = CreateHatchBrush( HS_DIAGCROSS, RGB( 210,210,210 ) );
-#else
-   s_guiData->diagonalBrush  = CreateSolidBrush( RGB( 210,210,210 ) );
-#endif
    s_guiData->solidBrush     = CreateSolidBrush( RGB( 0,0,0 ) );
    s_guiData->whiteBrush     = CreateSolidBrush( RGB( 198,198,198 ) );
 }
@@ -4607,7 +4577,6 @@ static void hb_wvt_gtReleaseGuiData( void )
    DeleteObject( ( HBRUSH ) s_guiData->solidBrush    );
    DeleteObject( ( HBRUSH ) s_guiData->whiteBrush    );
 
-#if ! defined( HB_OS_WIN_CE )
    for( i = 0; i < WVT_PICTURES_MAX; i++ )
    {
       if( s_guiData->pPicture[ i ] )
@@ -4616,7 +4585,6 @@ static void hb_wvt_gtReleaseGuiData( void )
          s_guiData->pPicture[ i ] = nullptr;
       }
    }
-#endif
    for( i = 0; i < WVT_FONTS_MAX; i++ )
    {
       if( s_guiData->hUserFonts[ i ] )
@@ -4648,7 +4616,6 @@ static void hb_wvt_gtCreateObjects( PHB_GTWVT pWVT )
 
    pWVT->currentPen         = CreatePen( PS_SOLID, 0, static_cast< COLORREF >( RGB( 0, 0, 0 ) ) );
 
-#if ! defined( HB_OS_WIN_CE )
    {
       LOGBRUSH lb;
       lb.lbStyle               = BS_NULL;
@@ -4656,9 +4623,6 @@ static void hb_wvt_gtCreateObjects( PHB_GTWVT pWVT )
       lb.lbHatch               = 0;
       pWVT->currentBrush       = CreateBrushIndirect( &lb );
    }
-#else
-   pWVT->currentBrush       = GetStockObject( NULL_BRUSH );
-#endif
    /* GUI members of global structure */
    pWVT->LastMenuEvent      = 0;
    pWVT->MenuKeyEvent       = 1024;
@@ -4701,13 +4665,11 @@ static void hb_wvt_gtCreateObjects( PHB_GTWVT pWVT )
 
 static void hb_wvt_gtExitGui( PHB_GTWVT pWVT )
 {
-#if ! defined( HB_OS_WIN_CE )
    HMENU hMenu = GetMenu( pWVT->hWnd );
    if( hMenu )
    {
       DestroyMenu( hMenu );
    }
-#endif
    for( int i = 0; i < WVT_DLGML_MAX; i++ )
    {
       if( pWVT->hDlgModeless[ i ] )

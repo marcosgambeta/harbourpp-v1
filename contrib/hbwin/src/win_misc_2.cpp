@@ -54,14 +54,12 @@ HB_FUNC( WIN_RUNDETACHED )
    HB_SIZE nLen;
    LPCTSTR lpCommandRO = HB_PARSTR( 2, &hCommandLine, &nLen );
 
-#if ! defined( HB_OS_WIN_CE )
    STARTUPINFO si;
    PROCESS_INFORMATION pi;
 
    memset( &si, 0, sizeof( si ) );
    si.cb = sizeof( si );
    memset( &pi, 0, sizeof( pi ) );
-#endif
 
    if( CreateProcess(
           HB_PARSTR( 1, &hCommandName, nullptr ),                  /* Command name */
@@ -69,31 +67,20 @@ HB_FUNC( WIN_RUNDETACHED )
           nullptr,                                                 /* Process handle not inheritable */
           nullptr,                                                 /* Thread handle not inheritable */
           FALSE,                                                /* Set handle inheritance to FALSE */
-#if ! defined( HB_OS_WIN_CE )
           hb_parl( 4 ) ? CREATE_NO_WINDOW : CREATE_NEW_CONSOLE, /* Creation flags */
-#else
-          CREATE_NEW_CONSOLE,                                   /* Creation flags */
-#endif
           nullptr,                                                 /* Use parent's environment block */
           nullptr,                                                 /* Use parent's starting directory */
-#if ! defined( HB_OS_WIN_CE )
           &si,                                                  /* Pointer to STARTUPINFO structure */
           &pi )                                                 /* Pointer to PROCESS_INFORMATION structure */
-#else
-          nullptr,                                                 /* Pointer to STARTUPINFO structure */
-          nullptr )                                                /* Pointer to PROCESS_INFORMATION structure */
-#endif
        )
    {
       hb_retl( HB_TRUE );
 
-#if ! defined( HB_OS_WIN_CE )
       hb_stornl( pi.dwProcessId, 3 );
 
       /* Close process and thread handles. */
       CloseHandle( pi.hProcess );
       CloseHandle( pi.hThread );
-#endif
    }
    else
    {

@@ -51,7 +51,6 @@ HB_FUNC( WIN_REPORTEVENT )
 {
    HB_BOOL bRetVal = HB_FALSE;
 
-#if ! defined( HB_OS_WIN_CE )
    HANDLE hEventLog;
 
    void * hServerName;
@@ -117,7 +116,6 @@ HB_FUNC( WIN_REPORTEVENT )
 
       DeregisterEventSource( hEventLog );
    }
-#endif
 
    hb_retl( bRetVal );
 }

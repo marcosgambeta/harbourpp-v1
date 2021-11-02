@@ -47,11 +47,6 @@
 #include "hbwin.h"
 #include "hbapiitm.h"
 
-#if defined( HB_OS_WIN_CE ) && ! defined( __MINGW32__ )
-#  include <simmgr.h>
-#  define __HB_COMPONENT_SUPPORTED__
-#endif
-
 HB_FUNC( WCE_SIMINITIALIZE ) /* hSim by reference, lNotifications */
 {
 #ifdef __HB_COMPONENT_SUPPORTED__

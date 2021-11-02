@@ -75,17 +75,8 @@ HB_FUNC( WAPI_WAITFORSINGLEOBJECTEX )
    DWORD dwResult;
    DWORD dwLastError;
 
-#if defined( HB_OS_WIN_CE )
-   /* WinCE (WinMobile6) does not support
-    * WaitFor{Single,Multiple}Object[Ex]() though it supports:
-    * MsgWaitFor{Single,Multiple}Object[Ex]()
-    */
-   dwResult = 0;
-   dwLastError = ERROR_INVALID_FUNCTION;
-#else
    dwResult = WaitForSingleObjectEx( hbwapi_par_raw_HANDLE( 1 ), static_cast< DWORD >( hb_parnl( 2 ) ), hb_parl( 3 ) );
    dwLastError = GetLastError();
-#endif
 
    hbwapi_SetLastError( dwLastError );
    hb_retnl( dwResult );
@@ -121,7 +112,6 @@ HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTS )
 
 HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTSEX )
 {
-#if ! defined( HB_OS_WIN_CE )
    PHB_ITEM pArray = hb_param( 2, HB_IT_ARRAY );
    DWORD nCount = pArray ? static_cast< DWORD >( hb_arrayLen( pArray ) ) : 0;
 
@@ -146,14 +136,6 @@ HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTSEX )
    {
       hb_errRT_BASE( EG_ARG, 1001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
-#else
-   /* WinCE (WinMobile6) does not support
-    * WaitFor{Single,Multiple}Object[Ex]() though it supports:
-    * MsgWaitFor{Single,Multiple}Object[Ex]()
-    */
-   hbwapi_SetLastError( ERROR_INVALID_FUNCTION );
-   hb_retnl( 0 );
-#endif
 }
 
 HB_FUNC( WAPI_SETPROCESSWORKINGSETSIZE )
@@ -161,17 +143,11 @@ HB_FUNC( WAPI_SETPROCESSWORKINGSETSIZE )
    BOOL bResult;
    DWORD dwLastError;
 
-#if defined( HB_OS_WIN_CE )
-   /* WinCE (till WinMobile6) does not support Working Set functions */
-   bResult = FALSE;
-   dwLastError = ERROR_INVALID_FUNCTION;
-#else
    bResult = SetProcessWorkingSetSize(
       hbwapi_par_raw_HANDLE( 1 ) /* hProcess */,
       static_cast< SIZE_T >( hb_parnint( 2 ) ) /* dwMinimumWorkingSetSize */,
       static_cast< SIZE_T >( hb_parnint( 3 ) ) /* dwMaximumWorkingSetSize */ );
    dwLastError = GetLastError();
-#endif
 
    hbwapi_SetLastError( dwLastError );
    hbwapi_ret_L( bResult );
@@ -187,11 +163,7 @@ HB_FUNC( WAPI_SETLASTERROR )
 
 HB_FUNC( WAPI_SETERRORMODE )
 {
-#if defined( HB_OS_WIN_CE )
-   hb_retni( 0 );
-#else
    hb_retni( SetErrorMode( static_cast< UINT >( hb_parni( 1 ) ) ) );
-#endif
 }
 
 HB_FUNC( WAPI_LOADLIBRARY )
@@ -217,20 +189,10 @@ HB_FUNC( WAPI_GETPROCADDRESS )
 {
    FARPROC pProc;
    DWORD dwLastError;
-#if defined( HB_OS_WIN_CE )
-   void * hProcName;
-   LPCTSTR lpProcName = HB_PARSTR( 2, &hProcName, nullptr );
-   pProc = GetProcAddress( static_cast< HMODULE >( hb_parptr( 1 ) ),
-                           lpProcName ? lpProcName :
-                           static_cast< LPCTSTR >( static_cast< HB_PTRUINT >( hb_parnint( 2 ) ) ) );
-   dwLastError = GetLastError();
-   hb_strfree( hProcName );
-#else
    pProc = GetProcAddress( static_cast< HMODULE >( hb_parptr( 1 ) ),
                            HB_ISCHAR( 2 ) ? hb_parc( 2 ) :
                            reinterpret_cast< LPCSTR >( static_cast< HB_PTRUINT >( hb_parnint( 2 ) ) ) );
    dwLastError = GetLastError();
-#endif
    hbwapi_SetLastError( dwLastError );
    hb_retptr( reinterpret_cast< void * >( reinterpret_cast< HB_PTRUINT >( pProc ) ) );
 }
@@ -251,10 +213,6 @@ HB_FUNC( WAPI_MULDIV )
 {
    hb_retni( MulDiv( hb_parni( 1 ), hb_parni( 2 ), hb_parni( 3 ) ) );
 }
-
-#if ! defined( HB_OS_WIN_CE )
-
-/* WinCE does not support GetShortPathName()/GetLongPathName() functions */
 
 typedef DWORD ( WINAPI * _HB_GETPATHNAME )( LPCTSTR, LPTSTR, DWORD );
 
@@ -310,24 +268,13 @@ static void s_getPathName( _HB_GETPATHNAME getPathName )
    hb_strfree( hLongPath );
 }
 
-#endif
-
 HB_FUNC( WAPI_GETSHORTPATHNAME )
 {
-#if ! defined( HB_OS_WIN_CE )
    s_getPathName( GetShortPathName );
-#else
-   {
-      HB_SIZE nSize = hb_parclen( 1 );
-      hb_storclen( hb_parc( 1 ), nSize, 2 );
-      hb_retns( nSize );
-   }
-#endif
 }
 
 HB_FUNC( WAPI_GETLONGPATHNAME )
 {
-#if ! defined( HB_OS_WIN_CE )
    static _HB_GETPATHNAME s_getPathNameAddr = nullptr;
 
    if( ! s_getPathNameAddr )
@@ -340,20 +287,10 @@ HB_FUNC( WAPI_GETLONGPATHNAME )
       }
    }
    s_getPathName( s_getPathNameAddr );
-#else
-   {
-      HB_SIZE nSize = hb_parclen( 1 );
-      hb_storclen( hb_parc( 1 ), nSize, 2 );
-      hb_retns( nSize );
-   }
-#endif
 }
 
 HB_FUNC( WAPI_GETSYSTEMDIRECTORY )
 {
-#if defined( HB_OS_WIN_CE )
-   hb_retc_const( "\\Windows" );
-#else
    UINT nLen = GetSystemDirectory( nullptr, 0 );
 
    if( nLen )
@@ -372,14 +309,10 @@ HB_FUNC( WAPI_GETSYSTEMDIRECTORY )
       hbwapi_SetLastError( GetLastError() );
       hb_retc_null();
    }
-#endif
 }
 
 HB_FUNC( WAPI_GETWINDOWSDIRECTORY )
 {
-#if defined( HB_OS_WIN_CE )
-   hb_retc_const( "\\Windows" );
-#else
    UINT nLen = GetWindowsDirectory( nullptr, 0 );
 
    if( nLen )
@@ -398,7 +331,6 @@ HB_FUNC( WAPI_GETWINDOWSDIRECTORY )
       hbwapi_SetLastError( GetLastError() );
       hb_retc_null();
    }
-#endif
 }
 
 HB_FUNC( WAPI_QUERYPERFORMANCECOUNTER )
@@ -432,7 +364,7 @@ HB_FUNC( WAPI_QUERYPERFORMANCEFREQUENCY )
 
 HB_FUNC( WAPI_GETVOLUMEINFORMATION )
 {
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
    BOOL bResult;
    DWORD dwSerialNumber, dwMaxFileNameLen, dwFileSystemFlags;
    DWORD dwVolNameSize, dwFSNameSize;

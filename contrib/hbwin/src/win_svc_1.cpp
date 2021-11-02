@@ -49,8 +49,6 @@
 #include "hbvm.h"
 #include "hbstack.h"
 
-#if ! defined( HB_OS_WIN_CE )
-
 static SERVICE_STATUS        s_ServiceStatus;
 static SERVICE_STATUS_HANDLE s_hStatus;
 static PHB_ITEM              s_pHarbourEntryFunc = nullptr;
@@ -161,64 +159,42 @@ static VOID WINAPI hbwin_SvcMainFunction( DWORD dwArgc, LPTSTR * lpszArgv )
    }
 }
 
-#endif
-
 HB_FUNC( WIN_SERVICEGETSTATUS )
 {
-#if ! defined( HB_OS_WIN_CE )
    hb_retnint( s_ServiceStatus.dwCurrentState );
-#else
-   hb_retnint( 0 );
-#endif
 }
 
 HB_FUNC( WIN_SERVICESETSTATUS )
 {
-#if ! defined( HB_OS_WIN_CE )
    HB_BOOL bRetVal;
    s_ServiceStatus.dwCurrentState = static_cast< DWORD >( hb_parnl( 1 ) );
    bRetVal = static_cast< HB_BOOL >( SetServiceStatus( s_hStatus, &s_ServiceStatus ) );
    hbwapi_SetLastError( GetLastError() );
    hb_retl( bRetVal );
-#else
-   hbwapi_SetLastError( ERROR_NOT_SUPPORTED );
-   hb_retl( HB_FALSE );
-#endif
 }
 
 HB_FUNC( WIN_SERVICESETEXITCODE )
 {
-#if ! defined( HB_OS_WIN_CE )
    HB_BOOL bRetVal;
    s_ServiceStatus.dwWin32ExitCode = static_cast< DWORD >( hb_parnl( 1 ) );
    bRetVal = static_cast< HB_BOOL >( SetServiceStatus( s_hStatus, &s_ServiceStatus ) );
    hbwapi_SetLastError( GetLastError() );
    hb_retl( bRetVal );
-#else
-   hbwapi_SetLastError( ERROR_NOT_SUPPORTED );
-   hb_retl( HB_FALSE );
-#endif
 }
 
 HB_FUNC( WIN_SERVICESTOP )
 {
-#if ! defined( HB_OS_WIN_CE )
    HB_BOOL bRetVal;
    s_ServiceStatus.dwCurrentState = SERVICE_STOPPED;
    bRetVal = static_cast< HB_BOOL >( SetServiceStatus( s_hStatus, &s_ServiceStatus ) );
    hbwapi_SetLastError( GetLastError() );
    hb_retl( bRetVal );
-#else
-   hbwapi_SetLastError( ERROR_NOT_SUPPORTED );
-   hb_retl( HB_FALSE );
-#endif
 }
 
 HB_FUNC( WIN_SERVICESTART )
 {
    HB_BOOL bRetVal;
 
-#if ! defined( HB_OS_WIN_CE )
    PHB_ITEM pEntryFunc;
 
    SERVICE_TABLE_ENTRY lpServiceTable[ 2 ];
@@ -259,9 +235,5 @@ HB_FUNC( WIN_SERVICESTART )
 
    bRetVal = static_cast< HB_BOOL >( StartServiceCtrlDispatcher( lpServiceTable ) );
    hbwapi_SetLastError( GetLastError() );
-#else
-   bRetVal = HB_FALSE;
-   hbwapi_SetLastError( ERROR_NOT_SUPPORTED );
-#endif
    hb_retl( bRetVal );
 }

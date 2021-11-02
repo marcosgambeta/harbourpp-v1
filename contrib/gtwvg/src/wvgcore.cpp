@@ -126,7 +126,6 @@ void hb_wvt_PutStringAttrib( int top, int left, int bottom, int right, HB_BYTE *
 /*
  *               Courtesy - Augusto Infante - Thanks
  */
-#if ! defined( HB_OS_WIN_CE )
 IPicture * hb_wvt_gtLoadPictureFromResource( LPCTSTR resource, LPCTSTR section )
 {
    HRSRC  res      = 0;
@@ -278,7 +277,6 @@ HB_BOOL hb_wvt_gtDestroyPicture( IPicture * iPicture )
 
    return bResult;
 }
-#endif /* #if ! defined( HB_OS_WIN_CE ) */
 
 POINT  hb_wvt_gtGetXYFromColRow( int col, int row )
 {
@@ -380,11 +378,7 @@ BOOL CALLBACK hb_wvt_gtDlgProcMLess( HWND hDlg, UINT message, WPARAM wParam, LPA
          }
          break;
 
-#if ! defined( HB_OS_WIN_CE )
       case WM_NCDESTROY:
-#else
-      case WM_DESTROY:
-#endif
          if( _s->pFunc[ iIndex ] != nullptr && _s->iType[ iIndex ] == 2 )
          {
             hb_itemRelease( static_cast< PHB_ITEM >( _s->pFunc[ iIndex ] ) );
@@ -491,11 +485,7 @@ BOOL CALLBACK hb_wvt_gtDlgProcModal( HWND hDlg, UINT message, WPARAM wParam, LPA
          }
          break;
 
-#if ! defined( HB_OS_WIN_CE )
       case WM_NCDESTROY:
-#else
-      case WM_DESTROY:
-#endif
          if( _s->pFuncModal[ iIndex ] != nullptr && _s->iTypeModal[ iIndex ] == 2 )
             hb_itemRelease( static_cast< PHB_ITEM >( _s->pFuncModal[ iIndex ] ) );
          _s->hDlgModal[ iIndex ]  = nullptr;
@@ -510,7 +500,6 @@ BOOL CALLBACK hb_wvt_gtDlgProcModal( HWND hDlg, UINT message, WPARAM wParam, LPA
 
 HB_BOOL hb_wvt_DrawImage( HDC hdc, int x, int y, int wd, int ht, LPCTSTR lpImage, HB_BOOL bDoNotScale )
 {
-#if ! defined( HB_OS_WIN_CE )
    HGLOBAL hGlobal;
    HANDLE  hFile;
    DWORD   nFileSize;
@@ -591,15 +580,6 @@ HB_BOOL hb_wvt_DrawImage( HDC hdc, int x, int y, int wd, int ht, LPCTSTR lpImage
       CloseHandle( hFile );
    }
    return bResult;
-#else
-   HB_SYMBOL_UNUSED( hdc );
-   HB_SYMBOL_UNUSED( x1 );
-   HB_SYMBOL_UNUSED( y1 );
-   HB_SYMBOL_UNUSED( wd );
-   HB_SYMBOL_UNUSED( ht );
-   HB_SYMBOL_UNUSED( image );
-   return HB_FALSE;
-#endif
 }
 
 static void hb_wvt_DrawBoxRaised( HDC hdc, int iTop, int iLeft, int iBottom, int iRight )
@@ -917,11 +897,7 @@ HB_FUNC( WVT_SETBRUSH )
    lb.lbStyle = hb_parnl( 1 );
    lb.lbColor = static_cast< COLORREF >( hb_parnldef( 2, RGB( 0, 0, 0 ) ) );
    lb.lbHatch = hb_parnl( 3 );
-#if ! defined( HB_OS_WIN_CE )
    hBrush = CreateBrushIndirect( &lb );
-#else
-   hBrush = CreateSolidBrush( lb.lbColor );
-#endif
    if( hBrush )
    {
       if( _s->currentBrush )
@@ -1037,7 +1013,6 @@ HB_FUNC( WVT_DRAWBOXGROUPRAISED )
 /* wvt_DrawImage( nTop, nLeft, nBottom, nRight, cImage/nPictureSlot, aPxlOff, lDoNotScale ) */
 HB_FUNC( WVT_DRAWIMAGE )
 {
-#if ! defined( HB_OS_WIN_CE )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
    POINT xy = { 0, 0 };
@@ -1070,9 +1045,6 @@ HB_FUNC( WVT_DRAWIMAGE )
    }
 
    hb_retl( HB_TRUE );
-#else
-   hb_retl( HB_FALSE );
-#endif
 }
 
 /*
@@ -1672,11 +1644,7 @@ HB_FUNC( WVT_DRAWBUTTON )
    lb.lbStyle = BS_SOLID;
    lb.lbColor = bkColor;
    lb.lbHatch = 0;
-#if ! defined( HB_OS_WIN_CE )
    hBrush = CreateBrushIndirect( &lb );
-#else
-   hBrush = CreateSolidBrush( lb.lbColor );
-#endif
    rc.left   = iLeft;
    rc.top    = iTop;
    rc.right  = iRight + 1;
@@ -1724,11 +1692,7 @@ HB_FUNC( WVT_DRAWBUTTON )
    {
       void *  hText;
       LPCTSTR text = HB_PARSTR( 5, &hText, nullptr );
-#if ! defined( HB_OS_WIN_CE )
       SelectObject( _s->hdc, GetStockObject( DEFAULT_GUI_FONT ) );
-#else
-      SelectObject( _s->hdc, GetStockObject( OEM_FIXED_FONT ) );
-#endif
       GetTextExtentPoint32( _s->hdc, text, lstrlen( text ), &sz );
 
       /* iTextWidth   = sz.cx; */
@@ -1760,11 +1724,7 @@ HB_FUNC( WVT_DRAWBUTTON )
       ExtTextOut( _s->hdc, xy.x, xy.y, 0, nullptr, text, lstrlen( text ), nullptr );
       if( _s->bGui )
       {
-#if ! defined( HB_OS_WIN_CE )
          SelectObject( _s->hGuiDC, GetStockObject( DEFAULT_GUI_FONT ) );
-#else
-         SelectObject( _s->hGuiDC, GetStockObject( OEM_FIXED_FONT ) );
-#endif
          SetTextAlign( _s->hGuiDC, iAlign );
          SetBkMode( _s->hGuiDC, TRANSPARENT );
          SetTextColor( _s->hGuiDC, textColor );
@@ -1780,7 +1740,6 @@ HB_FUNC( WVT_DRAWBUTTON )
 
    if( bImage )
    {
-#if ! defined( HB_OS_WIN_CE )
       int iImageWidth  = ( iRight - iLeft + 1 - 8 );
       int iImageHeight = ( iBottom - iTop + 1 - 8 - iTextHeight );
 
@@ -1800,7 +1759,6 @@ HB_FUNC( WVT_DRAWBUTTON )
             hb_strfree( hImage );
          }
       }
-#endif
    }
 
    hb_retl( HB_TRUE );
@@ -1876,7 +1834,6 @@ HB_FUNC( WVT_DRAWSTATUSBAR )
    nSlot <= 20  aAdj == { 0,0,-2,-2 } To Adjust the pixels for { Top,Left,Bottom,Right } */
 HB_FUNC( WVT_DRAWPICTURE )
 {
-#if ! defined( HB_OS_WIN_CE )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
    POINT xy = { 0, 0 };
@@ -1898,7 +1855,6 @@ HB_FUNC( WVT_DRAWPICTURE )
          hb_retl( hb_wvt_gtRenderPicture( iLeft, iTop, iRight - iLeft + 1, iBottom - iTop + 1, _s->pGUI->pPicture[ iSlot ], hb_parl( 7 ) ) );
       }
    }
-#endif
 }
 
 /*
@@ -1906,7 +1862,6 @@ HB_FUNC( WVT_DRAWPICTURE )
  */
 HB_FUNC( WVT_DRAWPICTUREEX )
 {
-#if ! defined( HB_OS_WIN_CE )
    POINT xy = { 0, 0 };
    int   iTop, iLeft, iBottom, iRight;
 
@@ -1922,7 +1877,6 @@ HB_FUNC( WVT_DRAWPICTUREEX )
 
       hb_retl( hb_wvt_gtRenderPicture( iLeft, iTop, iRight - iLeft + 1, iBottom - iTop + 1, reinterpret_cast< IPicture * >( static_cast< HB_PTRUINT >( hb_parnint( 5 ) ) ), hb_parl( 7 ) ) );
    }
-#endif
 }
 
 /*
@@ -2744,11 +2698,7 @@ HB_FUNC( WVT_DRAWPROGRESSBAR )
       lb.lbStyle = BS_SOLID;
       lb.lbColor = crBarColor;
       lb.lbHatch = 0;
-#if ! defined( HB_OS_WIN_CE )
       hBrush = CreateBrushIndirect( &lb );
-#else
-      hBrush = CreateSolidBrush( lb.lbColor );
-#endif
       rc.bottom++;
       rc.right++;
 
@@ -2797,7 +2747,6 @@ HB_FUNC( WVT_LOADPICTURE )
 {
    HB_BOOL bResult = HB_FALSE;
 
-#if ! defined( HB_OS_WIN_CE )
    PHB_GTWVT  _s = hb_wvt_gtGetWVT();
    void *     hImage;
    IPicture * iPicture = hb_wvt_gtLoadPicture( HB_PARSTR( 2, &hImage, nullptr ) );
@@ -2813,7 +2762,6 @@ HB_FUNC( WVT_LOADPICTURE )
       _s->pGUI->pPicture[ iSlot ] = iPicture;
       bResult = HB_TRUE;
    }
-#endif
    hb_retl( bResult );
 }
 
@@ -2826,7 +2774,6 @@ HB_FUNC( WVT_DESTROYPICTURE )
 /* wvt_LoadPictureEx( cFilePic ) */
 HB_FUNC( WVT_LOADPICTUREEX )
 {
-#if ! defined( HB_OS_WIN_CE )
    void *     hImage;
    IPicture * iPicture = hb_wvt_gtLoadPicture( HB_PARSTR( 1, &hImage, nullptr ) );
 
@@ -2835,14 +2782,12 @@ HB_FUNC( WVT_LOADPICTUREEX )
    {
       hb_retnint( reinterpret_cast< HB_PTRUINT >( iPicture ) );
    }
-#endif
 }
 
 HB_FUNC( WVT_LOADPICTUREFROMRESOURCE )
 {
    HB_BOOL bResult = HB_FALSE;
 
-#if ! defined( HB_OS_WIN_CE )
    PHB_GTWVT  _s = hb_wvt_gtGetWVT();
    void *     hResource;
    void *     hSection;
@@ -2860,13 +2805,11 @@ HB_FUNC( WVT_LOADPICTUREFROMRESOURCE )
       _s->pGUI->pPicture[ iSlot ] = iPicture;
       bResult = HB_TRUE;
    }
-#endif
    hb_retl( bResult );
 }
 
 HB_FUNC( WVT_LOADPICTUREFROMRESOURCEEX )
 {
-#if ! defined( HB_OS_WIN_CE )
    void *     hResource;
    void *     hSection;
    IPicture * iPicture = hb_wvt_gtLoadPictureFromResource( HB_PARSTR( 1, &hResource, nullptr ), HB_PARSTR( 2, &hSection, nullptr ) );
@@ -2877,7 +2820,6 @@ HB_FUNC( WVT_LOADPICTUREFROMRESOURCEEX )
    {
       hb_retnint( reinterpret_cast< HB_PTRUINT >( iPicture ) );
    }
-#endif
 }
 
 /* wvt_LoadFont( nSlotFont, cFontFace, nHeight, nWidth, nWeight, lItalic, lUnderline, lStrikeout,

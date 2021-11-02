@@ -46,16 +46,11 @@
 
 #include "hbapi.h"
 #include "hbwinuni.h"
-
 #include "hbwin.ch"
-
-#if ! defined( HB_OS_WIN_CE )
-#  include <rpc.h>
-#endif
+#include <rpc.h>
 
 HB_FUNC( WIN_UUIDCREATESTRING )
 {
-#if ! defined( HB_OS_WIN_CE )
    RPC_STATUS lRPCStatus = HB_RPC_S_ERROR;
 
    typedef RPC_STATUS ( RPC_ENTRY * _HB_UUIDCREATE )( UUID * );
@@ -102,10 +97,6 @@ HB_FUNC( WIN_UUIDCREATESTRING )
    {
       hb_retc_null();
    }
-#else
-   long lRPCStatus = HB_RPC_S_ERROR;
-   hb_retc_null();
-#endif
 
    hb_stornl( lRPCStatus, 1 );
 }

@@ -61,7 +61,7 @@
 #     define environ _environ
       extern char ** _environ;
 #  endif
-#elif defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#elif defined( HB_OS_WIN )
 #  include "hbwinuni.h"
 #  include <windows.h>
 #endif
@@ -99,7 +99,7 @@ HB_FUNC( ENVPARAM )
       hb_retc_buffer( const_cast< char * >( hb_osDecodeCP( pResult, nullptr, nullptr ) ) );
    else
       hb_retc_null();
-#elif defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#elif defined( HB_OS_WIN )
    LPTCH lpEnviron = GetEnvironmentStrings(), lpEnv;
    LPTSTR lpResult = nullptr;
    HB_SIZE nSize = 0;

@@ -89,7 +89,7 @@
    #include <winnetwk.h>
 #endif
 
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
 static HB_BOOL hb_IsNetShared( const char * szLocalDevice )
 {
    TCHAR lpRemoteDevice[ HB_PATH_MAX ];
@@ -111,7 +111,7 @@ static HB_BOOL hb_IsNetShared( const char * szLocalDevice )
 
 HB_FUNC( NETCANCEL )
 {
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
    void * hDevice;
 
    DWORD dwResult = WNetCancelConnection( HB_PARSTRDEF( 1, &hDevice, nullptr ), TRUE );  /* FALSE = fail if exist open files or print jobs. */
@@ -128,7 +128,7 @@ HB_FUNC( NETCANCEL )
 
 HB_FUNC( NETPRINTER )
 {
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
    const char * cPrn = hb_setGetCPtr( HB_SET_PRINTFILE );  /* query default local printer port. */
 
    if( ! cPrn || ! *cPrn || hb_stricmp( cPrn, "PRN" ) == 0 )
@@ -141,7 +141,7 @@ HB_FUNC( NETPRINTER )
 
 HB_FUNC( NETDISK )
 {
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
    const char * pszDrive = hb_parc( 1 );
 
    if( pszDrive )
@@ -161,7 +161,7 @@ HB_FUNC( NETDISK )
 
 HB_FUNC( NETREDIR )
 {
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
    void * hLocalDev;
    void * hSharedRes;
    void * hPassword;
@@ -182,7 +182,7 @@ HB_FUNC( NETREDIR )
 
 HB_FUNC( NETRMTNAME )
 {
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
    void * hLocalDev;
 
    TCHAR lpRemoteDevice[ 128 ];
@@ -208,7 +208,7 @@ HB_FUNC( NETRMTNAME )
 
 HB_FUNC( NETWORK )
 {
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
    DWORD dwResult;
    TCHAR lpProviderName[ 128 ];
    DWORD dwLen = HB_SIZEOFARRAY( lpProviderName );
@@ -231,7 +231,7 @@ HB_FUNC( NETWORK )
 
 HB_FUNC( NNETWORK )
 {
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#if defined( HB_OS_WIN )
    TCHAR lpProviderName[ 128 ];
    DWORD dwLen = HB_SIZEOFARRAY( lpProviderName );
 

@@ -48,7 +48,6 @@
 #include "hbwapi.h"
 #include "hbapierr.h"
 
-/* For: ( defined( HB_OS_WIN_CE ) && defined( _MSC_VER ) && ( _MSC_VER <= 1310 ) ) */
 #ifndef WS_OVERLAPPEDWINDOW
 #define WS_OVERLAPPEDWINDOW  ( WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX )
 #endif
@@ -69,20 +68,12 @@ HB_FUNC( WAPI_SETWINDOWPOS )
 
 HB_FUNC( WAPI_ISICONIC )
 {
-#if defined( HB_OS_WIN_CE )
-   hbwapi_ret_L( FALSE );
-#else
    hbwapi_ret_L( IsIconic( hbwapi_par_raw_HWND( 1 ) ) );
-#endif
 }
 
 HB_FUNC( WAPI_ISZOOMED )
 {
-#if defined( HB_OS_WIN_CE )
-   hbwapi_ret_L( FALSE );
-#else
    hbwapi_ret_L( IsZoomed( hbwapi_par_raw_HWND( 1 ) ) );
-#endif
 }
 
 HB_FUNC( WAPI_GETSYSTEMMETRICS )
@@ -210,13 +201,8 @@ HB_FUNC( WAPI_ENABLESCROLLBAR )
    BOOL bResult;
    DWORD dwLastError;
 
-#if defined( HB_OS_WIN_CE )
-   bResult = FALSE;
-   dwLastError = ERROR_INVALID_FUNCTION;
-#else
    bResult = EnableScrollBar( hbwapi_par_raw_HWND( 1 ), hbwapi_par_UINT( 2 ), hbwapi_par_UINT( 3 ) );
    dwLastError = GetLastError();
-#endif
 
    hbwapi_SetLastError( dwLastError );
    hbwapi_ret_L( bResult );
@@ -269,13 +255,8 @@ HB_FUNC( WAPI_GETSCROLLPOS )
    int iResult;
    DWORD dwLastError;
 
-#if defined( HB_OS_WIN_CE )
-   iResult = 0;
-   dwLastError = ERROR_INVALID_FUNCTION;
-#else
    iResult = GetScrollPos( hbwapi_par_raw_HWND( 1 ), hbwapi_par_INT( 2 ) );
    dwLastError = GetLastError();
-#endif
 
    hbwapi_SetLastError( dwLastError );
    hbwapi_ret_NI( iResult );
@@ -287,10 +268,6 @@ HB_FUNC( WAPI_GETSCROLLRANGE )
    BOOL bSuccess;
    DWORD dwLastError;
 
-#if defined( HB_OS_WIN_CE )
-   bSuccess = FALSE;
-   dwLastError = ERROR_INVALID_FUNCTION;
-#else
    {
       int minPos, maxPos;
 
@@ -301,7 +278,6 @@ HB_FUNC( WAPI_GETSCROLLRANGE )
       hb_storni( minPos, 3 );
       hb_storni( maxPos, 4 );
    }
-#endif
 
    hbwapi_SetLastError( dwLastError );
    hbwapi_ret_L( bSuccess );
@@ -367,15 +343,10 @@ HB_FUNC( WAPI_SHOWSCROLLBAR )
    BOOL bResult;
    DWORD dwLastError;
 
-#if defined( HB_OS_WIN_CE )
-   bResult = FALSE;
-   dwLastError = ERROR_INVALID_FUNCTION;
-#else
    bResult = ShowScrollBar( hbwapi_par_raw_HWND( 1 ),
                             hbwapi_par_INT( 2 ),
                             hbwapi_par_BOOL( 3 ) );
    dwLastError = GetLastError();
-#endif
 
    hbwapi_SetLastError( dwLastError );
    hbwapi_ret_L( bResult );
@@ -657,46 +628,27 @@ HB_FUNC( WAPI_SETMENUITEMINFO )
 
 HB_FUNC( WAPI_ISMENU )
 {
-#if defined( HB_OS_WIN_CE )
-   hbwapi_SetLastError( ERROR_INVALID_FUNCTION );
-   hbwapi_ret_L( FALSE );
-#else
    hbwapi_ret_L( IsMenu( hbwapi_par_raw_HMENU( 1 ) ) );
-#endif
 }
 
 HB_FUNC( WAPI_GETMENU )
 {
-#if defined( HB_OS_WIN_CE )
-   hbwapi_SetLastError( ERROR_INVALID_FUNCTION );
-   hbwapi_ret_raw_HMENU( nullptr );
-#else
    HWND hWnd = hbwapi_par_raw_HWND( 1 );
    HMENU hMenu = GetMenu( hWnd ? hWnd : GetActiveWindow() );
    hbwapi_SetLastError( GetLastError() );
    hbwapi_ret_raw_HMENU( hMenu );
-#endif
 }
 
 HB_FUNC( WAPI_SETMENU )
 {
-#if defined( HB_OS_WIN_CE )
-   hbwapi_SetLastError( ERROR_INVALID_FUNCTION );
-   hbwapi_ret_L( FALSE );
-#else
    HWND hWnd = hbwapi_par_raw_HWND( 1 );
    BOOL fResult = SetMenu( hWnd ? hWnd : GetActiveWindow(), hbwapi_par_raw_HMENU( 2 ) );
    hbwapi_SetLastError( GetLastError() );
    hbwapi_ret_L( fResult );
-#endif
 }
 
 HB_FUNC( WAPI_GETMENUSTATE )
 {
-#if defined( HB_OS_WIN_CE )
-   hbwapi_SetLastError( ERROR_INVALID_FUNCTION );
-   hbwapi_ret_NI( -1 );
-#else
    UINT uiResult;
 
    uiResult = GetMenuState( hbwapi_par_raw_HMENU( 1 ),
@@ -711,29 +663,19 @@ HB_FUNC( WAPI_GETMENUSTATE )
    {
       hbwapi_ret_UINT( uiResult );
    }
-#endif
 }
 
 HB_FUNC( WAPI_GETMENUITEMCOUNT )
 {
-#if defined( HB_OS_WIN_CE )
-   hbwapi_SetLastError( ERROR_INVALID_FUNCTION );
-   hbwapi_ret_NI( -1 );
-#else
    int iResult;
 
    iResult = GetMenuItemCount( hbwapi_par_raw_HMENU( 1 ) );
    hbwapi_SetLastError( GetLastError() );
    hbwapi_ret_NI( iResult );
-#endif
 }
 
 HB_FUNC( WAPI_GETMENUITEMID )
 {
-#if defined( HB_OS_WIN_CE )
-   hbwapi_SetLastError( ERROR_INVALID_FUNCTION );
-   hbwapi_ret_NI( -1 );
-#else
    UINT uiResult;
 
    uiResult = GetMenuItemID( hbwapi_par_raw_HMENU( 1 ), hbwapi_par_UINT( 2 ) );
@@ -746,29 +688,19 @@ HB_FUNC( WAPI_GETMENUITEMID )
    {
       hbwapi_ret_UINT( uiResult );
    }
-#endif
 }
 
 HB_FUNC( WAPI_SETMENUDEFAULTITEM )
 {
-#if defined( HB_OS_WIN_CE )
-   hbwapi_SetLastError( ERROR_INVALID_FUNCTION );
-   hbwapi_ret_L( FALSE );
-#else
    BOOL fResult;
 
    fResult = SetMenuDefaultItem( hbwapi_par_raw_HMENU( 1 ), hbwapi_par_UINT( 2 ), HB_ISNUM( 3 ) ? hbwapi_par_INT( 3 ) : hbwapi_par_BOOL( 3 ) );
    hbwapi_SetLastError( GetLastError() );
    hbwapi_ret_L( fResult );
-#endif
 }
 
 HB_FUNC( WAPI_GETMENUDEFAULTITEM )
 {
-#if defined( HB_OS_WIN_CE )
-   hbwapi_SetLastError( ERROR_INVALID_FUNCTION );
-   hbwapi_ret_NI( -1 );
-#else
    UINT uiResult;
 
    uiResult = GetMenuDefaultItem( hbwapi_par_raw_HMENU( 1 ), HB_ISNUM( 2 ) ? hbwapi_par_INT( 2 ) : hbwapi_par_BOOL( 2 ), hbwapi_par_UINT( 3 ) );
@@ -781,7 +713,6 @@ HB_FUNC( WAPI_GETMENUDEFAULTITEM )
    {
       hbwapi_ret_UINT( uiResult );
    }
-#endif
 }
 
 /* wapi_CreateAcceleratorTable( <aAccelTable> ) -> <hAccel> */

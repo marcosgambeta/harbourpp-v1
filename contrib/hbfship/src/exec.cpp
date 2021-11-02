@@ -87,9 +87,7 @@ HB_FUNC( EXECNAME )
 
 HB_FUNC( EXECPIDNUM )
 {
-#if defined( HB_OS_WIN_CE )
-   hb_retni( 0 );
-#elif defined( HB_OS_WIN )
+#if defined( HB_OS_WIN )
    hb_retnint( GetCurrentProcessId() );
 #else
    hb_retnint( getpid() );

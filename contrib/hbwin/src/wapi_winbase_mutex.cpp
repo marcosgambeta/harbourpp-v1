@@ -100,7 +100,6 @@ HB_FUNC( WAPI_CREATEMUTEX )
 /* HANDLE WINAPI OpenMutex( DWORD dwDesiredAccess, BOOL bInheritHandle, LPCTSTR lpName ) */
 HB_FUNC( WAPI_OPENMUTEX )
 {
-#if ! defined( HB_OS_WIN_CE )
    void * hName;
    HANDLE hMutex = OpenMutex( hb_parnl( 1 ), hb_parl( 2 ), HB_PARSTR( 3, &hName, nullptr ) );
 
@@ -108,10 +107,6 @@ HB_FUNC( WAPI_OPENMUTEX )
    hbwapi_mutex_ret( hMutex );
 
    hb_strfree( hName );
-#else
-   /* WinCE (WinMobile6) does not support OpenMutex() */
-   hb_retptr( nullptr );
-#endif
 }
 
 /* BOOL WINAPI ReleaseMutex( HANDLE hMutex ) */

@@ -145,7 +145,6 @@ HB_FUNC( WVG_CLEARGUIOBJECTS )
          {
             hb_itemRelease( pWVT->gObjs->bBlock );
          }
-#if ! defined( HB_OS_WIN_CE )
          if( pWVT->gObjs->pPicture )
          {
             if( pWVT->gObjs->bDestroyPicture )
@@ -153,7 +152,6 @@ HB_FUNC( WVG_CLEARGUIOBJECTS )
                HB_VTBL( pWVT->gObjs->pPicture )->Release( HB_THIS( pWVT->gObjs->pPicture ) );
             }
          }
-#endif
          hb_xfree( pWVT->gObjs );
          pWVT->gObjs = gObj;
       }
@@ -222,7 +220,6 @@ HB_FUNC( WVG_SETGOBJDATA )
                   }
                   gObj->lpText = HB_PARSTR( 3, &gObj->hText, nullptr );
                   break;
-#if ! defined( HB_OS_WIN_CE )
                case GOBJ_OBJDATA_PICTUREEX:
                   if( HB_ISNUM( 3 )  )
                   {
@@ -271,7 +268,6 @@ HB_FUNC( WVG_SETGOBJDATA )
                   }
                   break;
                }
-#endif
                case GOBJ_OBJDATA_HFONT:
                   if( gObj->hFont && gObj->bDestroyFont )
                   {
@@ -1372,7 +1368,6 @@ static void hb_wvg_TextBox( PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop,
 /* wvg_Picture( nTop, nLeft, nBottom, nRight, aPxlOff, nSlot, lDoNotScale ) --> NIL */
 HB_FUNC( WVG_PICTURE )
 {
-#if ! defined( HB_OS_WIN_CE )
    if( HB_ISNUM( 6 ) && hb_parni( 6 ) <= WVT_PICTURES_MAX )
    {
       PHB_GTWVT  pWVT = hb_wvt_gtGetWVT();
@@ -1401,14 +1396,10 @@ HB_FUNC( WVG_PICTURE )
    {
       hb_retni( 0 );
    }
-#else
-   hb_retni( 0 );
-#endif
 }
 
 HB_FUNC( WVG_PICTUREEX )
 {
-#if ! defined( HB_OS_WIN_CE )
    if( HB_ISNUM( 6 ) )
    {
       PHB_GTWVT  pWVT = hb_wvt_gtGetWVT();
@@ -1437,15 +1428,11 @@ HB_FUNC( WVG_PICTUREEX )
    {
       hb_retni( 0 );
    }
-#else
-   hb_retni( 0 );
-#endif
 }
 
 /* wvg_Image( nTop, nLeft, nBottom, nRight, aPxlOff, nImageSource, cImage/nPictureSlot, cSection, lDoNotScale ) */
 HB_FUNC( WVG_IMAGE )
 {
-#if ! defined( HB_OS_WIN_CE )
    PHB_GTWVT  pWVT     = hb_wvt_gtGetWVT();
    int        iSource  = hb_parni( 6 );
    IPicture * iPicture = nullptr;
@@ -1517,14 +1504,10 @@ HB_FUNC( WVG_IMAGE )
    {
       hb_retni( 0 );
    }
-#else
-   hb_retni( 0 );
-#endif
 }
 
 static void hb_wvg_RenderPicture( PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, int iRight, int iBottom )
 {
-#if ! defined( HB_OS_WIN_CE )
    LONG       lWidth, lHeight;
    int        xe, ye, x, y, wd, ht;
    HRGN       hrgn1;
@@ -1577,14 +1560,6 @@ static void hb_wvg_RenderPicture( PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int
       SelectClipRgn( hdc, nullptr );
       DeleteObject( hrgn1 );
    }
-#else
-   HB_SYMBOL_UNUSED( pWVT );
-   HB_SYMBOL_UNUSED( gObj );
-   HB_SYMBOL_UNUSED( iLeft );
-   HB_SYMBOL_UNUSED( iTop );
-   HB_SYMBOL_UNUSED( iRight );
-   HB_SYMBOL_UNUSED( iBottom );
-#endif
 }
 
 /* wvg_Object( nObj, bBlock )

@@ -40,7 +40,7 @@
 #     define environ _environ
       extern char ** _environ;
 #  endif
-#elif defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#elif defined( HB_OS_WIN )
 #  include "hbwinuni.h"
 #  include <windows.h>
 #endif
@@ -109,7 +109,7 @@ HB_FUNC( FT_GETE )
       /* return number of strings found */
       hb_retni( x );
    }
-#elif defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_CE )
+#elif defined( HB_OS_WIN )
    {
       LPTCH    lpEnviron = GetEnvironmentStrings(), lpEnv;
       LPTSTR   lpResult  = nullptr, lpDst;

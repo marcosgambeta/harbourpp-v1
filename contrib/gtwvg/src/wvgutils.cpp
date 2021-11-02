@@ -112,7 +112,6 @@ HB_FUNC( WVT_UTILS )
  */
 HB_FUNC( WVT_CHOOSEFONT )
 {
-#if ! defined( HB_OS_WIN_CE )
    PHB_GTWVT  _s = hb_wvt_gtGetWVT();
    CHOOSEFONT cf;    /* = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }; */
    LOGFONT    lf;    /* = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0 }; */
@@ -191,24 +190,6 @@ HB_FUNC( WVT_CHOOSEFONT )
 
       hb_itemReturnRelease( ary );
    }
-#else
-   {
-      PHB_ITEM ary = hb_itemNew( nullptr );
-      hb_arrayNew( ary, 9 );
-
-      HB_ARRAYSETSTR( ary, 1, nullptr );
-      hb_arraySetNI( ary, 2, 0 );
-      hb_arraySetNI( ary, 3, 0 );
-      hb_arraySetNI( ary, 4, 0 );
-      hb_arraySetNI( ary, 5, 0 );
-      hb_arraySetL( ary, 6, 0 );
-      hb_arraySetL( ary, 7, 0 );
-      hb_arraySetL( ary, 8, 0 );
-      hb_arraySetNI( ary, 9, 0 );
-
-      hb_itemReturnRelease( ary );
-   }
-#endif
 }
 
 /*
@@ -341,7 +322,6 @@ HB_FUNC( WVT_SETTOOLTIPTEXT )
 
 HB_FUNC( WVT_SETTOOLTIPMARGIN )
 {
-#if ! defined( HB_OS_WIN_CE )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
    RECT rc = { 0, 0, 0, 0 };
@@ -352,12 +332,10 @@ HB_FUNC( WVT_SETTOOLTIPMARGIN )
    rc.bottom = hb_parni( 3 );
 
    SendMessage( _s->hWndTT, TTM_SETMARGIN, 0, reinterpret_cast< LPARAM >( &rc ) );
-#endif
 }
 
 HB_FUNC( WVT_SETTOOLTIPWIDTH )
 {
-#if ! defined( HB_OS_WIN_CE )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
    int iTipWidth = static_cast< int >( SendMessage( _s->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0 ) );
@@ -368,14 +346,10 @@ HB_FUNC( WVT_SETTOOLTIPWIDTH )
    }
 
    hb_retni( iTipWidth );
-#else
-   hb_retni( 0 );
-#endif
 }
 
 HB_FUNC( WVT_SETTOOLTIPBKCOLOR )
 {
-#if ! defined( HB_OS_WIN_CE )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
    COLORREF cr = static_cast< COLORREF >( SendMessage( _s->hWndTT, TTM_GETTIPBKCOLOR, 0, 0 ) );
@@ -386,14 +360,10 @@ HB_FUNC( WVT_SETTOOLTIPBKCOLOR )
    }
 
    hb_retnl( static_cast< COLORREF >( cr ) );
-#else
-   hb_retnl( 0 );
-#endif
 }
 
 HB_FUNC( WVT_SETTOOLTIPTEXTCOLOR )
 {
-#if ! defined( HB_OS_WIN_CE )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
    COLORREF cr = static_cast< COLORREF >( SendMessage( _s->hWndTT, TTM_GETTIPTEXTCOLOR, 0, 0 ) );
@@ -404,16 +374,12 @@ HB_FUNC( WVT_SETTOOLTIPTEXTCOLOR )
    }
 
    hb_retnl( static_cast< COLORREF >( cr ) );
-#else
-   hb_retnl( 0 );
-#endif
 }
 
 #if _WIN32_IE > 0x400
 
 HB_FUNC( WVT_SETTOOLTIPTITLE )
 {
-#if ! defined( HB_OS_WIN_CE )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
    int iIcon;
@@ -431,42 +397,29 @@ HB_FUNC( WVT_SETTOOLTIPTITLE )
       SendMessage( _s->hWndTT, TTM_SETTITLE, static_cast< WPARAM >( iIcon ), reinterpret_cast< LPARAM >( HB_PARSTR( 2, &hText, nullptr ) ) );
       hb_strfree( hText );
    }
-#endif
 }
 
 #endif
 
 HB_FUNC( WVT_GETTOOLTIPWIDTH )
 {
-#if ! defined( HB_OS_WIN_CE )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
    hb_retni( static_cast< int >( SendMessage( _s->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0 ) ) );
-#else
-   hb_retni( 0 );
-#endif
 }
 
 HB_FUNC( WVT_GETTOOLTIPBKCOLOR )
 {
-#if ! defined( HB_OS_WIN_CE )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
    hb_retnl( static_cast< COLORREF >( SendMessage( _s->hWndTT, TTM_GETTIPBKCOLOR, 0, 0 ) ) );
-#else
-   hb_retnl( 0 );
-#endif
 }
 
 HB_FUNC( WVT_GETTOOLTIPTEXTCOLOR )
 {
-#if ! defined( HB_OS_WIN_CE )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
    hb_retnl( static_cast< COLORREF >( SendMessage( _s->hWndTT, TTM_GETTIPTEXTCOLOR, 0, 0 ) ) );
-#else
-   hb_retnl( 0 );
-#endif
 }
 
 HB_FUNC( WVT_SETGUI )
@@ -593,7 +546,7 @@ HB_FUNC( WVT_SETPOINTER )
          break;
    }
 
-#if ! defined( HB_ARCH_64BIT ) && ( defined( __WATCOMC__ ) || ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 || defined( HB_OS_WIN_CE ) ) ) )
+#if ! defined( HB_ARCH_64BIT ) && ( defined( __WATCOMC__ ) || ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 ) ) )
    SetClassLong( _s->hWnd, GCLP_HCURSOR, static_cast< DWORD >( hCursor ) );
 #else
    SetClassLongPtr( _s->hWnd, GCLP_HCURSOR, reinterpret_cast< LONG_PTR >( hCursor ) );

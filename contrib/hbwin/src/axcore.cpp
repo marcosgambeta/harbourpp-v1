@@ -49,9 +49,6 @@
 #include <olectl.h>
 
 #include "hbapistr.h"
-#if defined( HB_OS_WIN_CE )
-   #include "hbwince.h"
-#endif
 
 typedef BOOL      ( CALLBACK * PHB_AX_WININIT )( void );
 typedef HRESULT   ( CALLBACK * PHB_AX_GETCTRL )( HWND, IUnknown** );

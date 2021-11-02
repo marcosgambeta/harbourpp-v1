@@ -407,11 +407,7 @@ HB_FUNC( WVG_CREATEBRUSH )
    lb.lbStyle = hb_parni( 1 );
    lb.lbColor = static_cast< COLORREF >( hb_parnldef( 2, RGB( 0, 0, 0 ) ) );
    lb.lbHatch = hb_parni( 3 );
-#if ! defined( HB_OS_WIN_CE )
    hb_retnint( reinterpret_cast< HB_PTRUINT >( CreateBrushIndirect( &lb ) ) );
-#else
-   hb_retnint( reinterpret_cast< HB_PTRUINT >( CreateSolidBrush( lb.lbColor ) ) );
-#endif
 }
 
 /*
@@ -859,7 +855,7 @@ HB_FUNC( WVG_SETWNDPROC )
    WNDPROC wndProc = reinterpret_cast< WNDPROC >(static_cast< HB_PTRUINT >( hb_parnint( 2 ) ) );
    WNDPROC oldProc;
 
-#if ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 || defined( HB_OS_WIN_CE ) ) ) && ! defined( HB_ARCH_64BIT )
+#if ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 ) ) && ! defined( HB_ARCH_64BIT )
    oldProc = static_cast< WNDPROC >( SetWindowLong( hWnd, GWL_WNDPROC, static_cast< long >( wndProc ) ) );
 #else
    oldProc = reinterpret_cast< WNDPROC >( SetWindowLongPtr( hWnd, GWLP_WNDPROC, reinterpret_cast< HB_PTRUINT >( wndProc ) ) );
@@ -882,16 +878,12 @@ HB_FUNC( WVG_CALLWINDOWPROC )
 
 HB_FUNC( WVG_TREEVIEW_SETTEXTCOLOR )
 {
-#if ! defined( HB_OS_WIN_CE )
    hb_retl( TreeView_SetTextColor( wvg_parhwnd( 1 ), wvg_parcolor( 2 ) ) );
-#endif
 }
 
 HB_FUNC( WVG_TREEVIEW_SETBKCOLOR )
 {
-#if ! defined( HB_OS_WIN_CE )
    hb_retl( TreeView_SetBkColor( wvg_parhwnd( 1 ), wvg_parcolor( 2 ) ) );
-#endif
 }
 
 HB_FUNC( WVG_TREEVIEW_SETLINECOLOR )
@@ -948,20 +940,12 @@ HB_FUNC( WVG_BUTTON_GETCHECK )
 
 HB_FUNC( WVG_ISICONIC )
 {
-#if ! defined( HB_OS_WIN_CE )
    hb_retl( IsIconic( wvg_parhwnd( 1 ) ) );
-#else
-   hb_retl( HB_FALSE );
-#endif
 }
 
 HB_FUNC( WVG_ISZOOMED )
 {
-#if ! defined( HB_OS_WIN_CE )
    hb_retl( IsZoomed( wvg_parhwnd( 1 ) ) );
-#else
-   hb_retl( HB_TRUE );
-#endif
 }
 
 /*
@@ -1067,7 +1051,6 @@ HB_FUNC( WVG_SETLAYEREDWINDOWATTRIBUTES )
 
 HB_FUNC( WVG_SENDTOOLBARMESSAGE )
 {
-/* #if ! defined( HB_OS_WIN_CE ) */
    HWND hTB = hbwapi_par_raw_HWND( 1 );
    int  msg = hbwapi_par_INT( 2 );
 
@@ -1199,7 +1182,6 @@ HB_FUNC( WVG_SENDTOOLBARMESSAGE )
          break;
       #endif
 
-#if ! defined( HB_OS_WIN_CE )
       case TB_SETPADDING:
          SendMessage( hTB, TB_SETPADDING, static_cast< WPARAM >( 0 ), static_cast< LPARAM >( MAKELPARAM( hbwapi_par_INT( 2 ), hbwapi_par_INT( 3 ) ) ) );
          break;
@@ -1243,9 +1225,7 @@ HB_FUNC( WVG_SENDTOOLBARMESSAGE )
       case TB_SETANCHORHIGHLIGHT:
       case TB_SETUNICODEFORMAT:
          break;
-#endif
    }
-/* #endif */
 }
 
 HB_FUNC( WVG_SENDEDITCONTROLMESSAGE )

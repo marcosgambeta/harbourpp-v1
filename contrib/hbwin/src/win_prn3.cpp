@@ -45,14 +45,10 @@
  */
 
 #include "hbwapi.h"
-
-#if ! defined( HB_OS_WIN_CE )
-#  include <winspool.h>
-#endif
+#include <winspool.h>
 
 static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
 {
-#if ! defined( HB_OS_WIN_CE )
    BOOL bFlag;
    DWORD dwNeeded = 0;
    HANDLE hPrinter = nullptr;
@@ -229,10 +225,6 @@ static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
    }
 
    return HB_TRUE;
-#else
-   HB_SYMBOL_UNUSED( lpPrinterName );
-   return HB_FALSE;
-#endif
 }
 
 HB_FUNC( WIN_PRINTERSETDEFAULT )

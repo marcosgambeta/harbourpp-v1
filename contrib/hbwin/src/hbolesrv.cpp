@@ -787,11 +787,7 @@ STDAPI DllRegisterServer( void )
    return hr;
 }
 
-#if defined( HB_OS_WIN_CE ) && defined( _MSC_VER )
-BOOL WINAPI DllMain( HANDLE hInstance, DWORD dwReason, PVOID pvReserved )
-#else
 BOOL WINAPI DllMain( HINSTANCE hInstance, DWORD dwReason, PVOID pvReserved )
-#endif
 {
    static HB_BOOL s_fInit = HB_FALSE;
    BOOL fResult = TRUE;

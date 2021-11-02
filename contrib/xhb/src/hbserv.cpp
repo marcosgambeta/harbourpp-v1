@@ -57,15 +57,11 @@
 
 #if defined( HB_OS_WIN )
    #include <windows.h>
-   #if defined( HB_OS_WIN_CE )
-      #include "hbwince.h"
-   #endif
 #endif
 
 /* These targets cannot compile this module */
 #if ! defined( HB_OS_DOS ) && \
    ! defined( HB_OS_DARWIN_5 ) && \
-   ! ( defined( HB_OS_WIN_CE ) && ( ( defined( _MSC_VER ) && ( _MSC_VER <= 1500 ) ) ) ) && \
    ! defined( HB_OS_WIN_64 ) && \
    ( defined( HB_OS_OS2_GCC ) ) && \
    ! defined( __HAIKU__ )

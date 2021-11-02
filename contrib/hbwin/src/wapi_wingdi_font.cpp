@@ -76,14 +76,10 @@ int AddFontResourceExW( LPCWSTR name, DWORD fl, PVOID res );
 */
 HB_FUNC( WAPI_ADDFONTRESOURCEEX )
 {
-#if ! defined( HB_OS_WIN_CE )
    void * hFileName;
 
    hb_retni( AddFontResourceEx( HB_PARSTRDEF( 1, &hFileName, nullptr ), static_cast< DWORD >( hb_parnl( 2 ) ), nullptr ) );
    hb_strfree( hFileName );
-#else
-   hb_retni( 0 );
-#endif
 }
 
 /*
@@ -92,12 +88,8 @@ BOOL RemoveFontResourceExW( LPCWSTR name, DWORD fl, PVOID pdv );
 */
 HB_FUNC( WAPI_REMOVEFONTRESOURCEEX )
 {
-#if ! defined( HB_OS_WIN_CE )
    void * hFileName;
 
    hb_retni( RemoveFontResourceEx( HB_PARSTRDEF( 1, &hFileName, nullptr ), static_cast< DWORD >( hb_parnl( 2 ) ), nullptr ) );
    hb_strfree( hFileName );
-#else
-   hb_retni( 0 );
-#endif
 }

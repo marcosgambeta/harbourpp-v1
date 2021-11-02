@@ -45,17 +45,11 @@
  */
 
 #include "hbwapi.h"
-#if defined( HB_OS_WIN_CE )
-   #include "hbwince.h"
-#endif
 
 #include <shellapi.h>
 
 HB_FUNC( WAPI_SHELLEXECUTE )
 {
-#if defined( HB_OS_WIN_CE )
-   hb_retnint( -1 );
-#else
    void * hOperation;
    void * hFile;
    void * hParameters;
@@ -72,7 +66,6 @@ HB_FUNC( WAPI_SHELLEXECUTE )
    hb_strfree( hFile );
    hb_strfree( hParameters );
    hb_strfree( hDirectory );
-#endif
 }
 
 /* Code by Antonino Perricone */

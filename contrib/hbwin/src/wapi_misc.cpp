@@ -101,9 +101,6 @@ TCHAR * hbwapi_tstrncat( TCHAR * pDest, const TCHAR * pSource, HB_SIZE nLen )
 
 static TCHAR * hbwapi_FileNameAtSystemDir( const TCHAR * pFileName )
 {
-#if defined( HB_OS_WIN_CE )
-   return hbwapi_tstrdup( pFileName );
-#else
    UINT nLen = GetSystemDirectory( nullptr, 0 );
 
    if( nLen )
@@ -131,7 +128,6 @@ static TCHAR * hbwapi_FileNameAtSystemDir( const TCHAR * pFileName )
    {
       return hbwapi_tstrdup( pFileName );
    }
-#endif
 }
 
 #ifndef LOAD_LIBRARY_SEARCH_SYSTEM32

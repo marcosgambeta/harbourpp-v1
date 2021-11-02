@@ -50,8 +50,6 @@ HB_FUNC( WIN_SERVICEINSTALL )
 {
    HB_BOOL bRetVal = HB_FALSE;
 
-#if ! defined( HB_OS_WIN_CE )
-
    void * hPath;
    LPCTSTR lpPath = HB_PARSTR( 3, &hPath, nullptr );
 
@@ -124,9 +122,6 @@ HB_FUNC( WIN_SERVICEINSTALL )
    }
 
    hb_strfree( hPath );
-#else
-   hbwapi_SetLastError( ERROR_NOT_SUPPORTED );
-#endif
 
    hb_retl( bRetVal );
 }
@@ -135,7 +130,6 @@ HB_FUNC( WIN_SERVICEDELETE )
 {
    HB_BOOL bRetVal = HB_FALSE;
 
-#if ! defined( HB_OS_WIN_CE )
    SC_HANDLE schSCM = OpenSCManager( nullptr, nullptr, SC_MANAGER_ALL_ACCESS );
 
    if( schSCM )
@@ -179,9 +173,6 @@ HB_FUNC( WIN_SERVICEDELETE )
    {
       hbwapi_SetLastError( GetLastError() );
    }
-#else
-   hbwapi_SetLastError( ERROR_NOT_SUPPORTED );
-#endif
    hb_retl( bRetVal );
 }
 
@@ -189,7 +180,6 @@ HB_FUNC( WIN_SERVICECONTROL )
 {
    HB_BOOL bRetVal = HB_FALSE;
 
-#if ! defined( HB_OS_WIN_CE )
    SC_HANDLE schSCM = OpenSCManager( nullptr, nullptr, SC_MANAGER_ALL_ACCESS );
 
    if( schSCM )
@@ -222,9 +212,6 @@ HB_FUNC( WIN_SERVICECONTROL )
    {
       hbwapi_SetLastError( GetLastError() );
    }
-#else
-   hbwapi_SetLastError( ERROR_NOT_SUPPORTED );
-#endif
    hb_retl( bRetVal );
 }
 
@@ -232,7 +219,6 @@ HB_FUNC( WIN_SERVICERUN )
 {
    HB_BOOL bRetVal = HB_FALSE;
 
-#if ! defined( HB_OS_WIN_CE )
    SC_HANDLE schSCM = OpenSCManager( nullptr, nullptr, SC_MANAGER_ALL_ACCESS );
 
    if( schSCM )
@@ -296,8 +282,5 @@ HB_FUNC( WIN_SERVICERUN )
    {
       hbwapi_SetLastError( GetLastError() );
    }
-#else
-   hbwapi_SetLastError( ERROR_NOT_SUPPORTED );
-#endif
    hb_retl( bRetVal );
 }

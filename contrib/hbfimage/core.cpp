@@ -1607,7 +1607,6 @@ HB_FUNC( FI_WINCONVTODIB )
 #if defined( HB_OS_WIN )
    if( hb_FIBITMAP_is( 1 ) )
    {
-#if ! defined( HB_OS_WIN_CE )
       FIBITMAP * dib = hb_FIBITMAP_par( 1 );
       HDC hDC = GetDC( nullptr );
 
@@ -1620,7 +1619,6 @@ HB_FUNC( FI_WINCONVTODIB )
       {
          hb_retptr( bitmap );
       }
-#endif
    }
    else
    {
@@ -1636,7 +1634,6 @@ HB_FUNC( FI_WINCONVFROMDIB )
 #if defined( HB_OS_WIN )
    if( HB_ISPOINTER( 1 ) )
    {
-#if ! defined( HB_OS_WIN_CE )
       HBITMAP bitmap = static_cast< HBITMAP >( hb_parptr( 1 ) );
 
       if( bitmap )
@@ -1657,7 +1654,6 @@ HB_FUNC( FI_WINCONVFROMDIB )
             hb_FIBITMAP_ret( dib, HB_TRUE );
          }
       }
-#endif
    }
    else
    {
@@ -1683,9 +1679,7 @@ HB_FUNC( FI_WINDRAW )
       rcDest.right = hb_parni( 6 );
 
       /* run function */
-#if ! defined( HB_OS_WIN_CE )
       SetStretchBltMode( hDC, COLORONCOLOR );
-#endif
 
       /* return scanlines */
       hb_retni( StretchDIBits( hDC, rcDest.left, rcDest.top, rcDest.right - rcDest.left, rcDest.bottom - rcDest.top, 0, 0,

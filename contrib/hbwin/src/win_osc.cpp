@@ -184,11 +184,7 @@ HB_FUNC( WIN_OSVERSIONINFO )
    hb_arraySetNL( pArray, 1, iMajor );
    hb_arraySetNL( pArray, 2, iMinor );
    hb_arraySetNL( pArray, 3, 0 );
-#if defined( HB_OS_WIN_CE )
-   hb_arraySetNL( pArray, 4, VER_PLATFORM_WIN32_CE );
-#else
    hb_arraySetNL( pArray, 4, hb_iswinnt() ? VER_PLATFORM_WIN32_NT : VER_PLATFORM_WIN32_WINDOWS );
-#endif
    hb_arraySetC( pArray, 5, nullptr );
 
    if( hb_iswin2k() )

@@ -46,11 +46,6 @@
 
 #include "hbwin.h"
 
-#if defined( HB_OS_WIN_CE ) && ! defined( __MINGW32__ ) && ! ( ! defined( __cplusplus ) && ( defined( _MSC_VER ) && ( _MSC_VER <= 1310 ) ) )
-#  include <sms.h>
-#  define __HB_COMPONENT_SUPPORTED__
-#endif
-
 HB_FUNC( WCE_SMSSENDMESSAGE ) /* cMessage, cNumber */
 {
 #ifdef __HB_COMPONENT_SUPPORTED__

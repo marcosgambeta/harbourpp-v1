@@ -49,16 +49,11 @@
 #include "hbwapi.h"
 #include "hbapifs.h"
 #include "hbapiitm.h"
-
 #include "hbwin.ch"
-
-#if ! defined( HB_OS_WIN_CE )
-   #include <winspool.h>
-#endif
+#include <winspool.h>
 
 #define _ENUMPRN_FLAGS_  ( PRINTER_ENUM_LOCAL | PRINTER_ENUM_CONNECTIONS )
 
-#if ! defined( HB_OS_WIN_CE )
 static HB_BOOL hb_IsLegacyDevice( const char * pszPrinterName )
 {
    static const char * s_pszPrnDev[] = { "lpt1", "lpt2", "lpt3", "lpt4", "lpt5", "lpt6", "com1", "com2", "com3", "com4", nullptr };
@@ -73,13 +68,11 @@ static HB_BOOL hb_IsLegacyDevice( const char * pszPrinterName )
 
    return HB_FALSE;
 }
-#endif
 
 HB_FUNC( WIN_PRINTEREXISTS )
 {
    HB_BOOL bResult = HB_FALSE;
 
-#if ! defined( HB_OS_WIN_CE )
    if( HB_ISCHAR( 1 ) )
    {
       const char * pszPrinterName = hb_parc( 1 );
@@ -112,14 +105,12 @@ HB_FUNC( WIN_PRINTEREXISTS )
          }
       }
    }
-#endif
 
    hb_retl( bResult );
 }
 
 static void hb_GetDefaultPrinter( PHB_ITEM pPrinterName )
 {
-#if ! defined( HB_OS_WIN_CE )
    HB_BOOL bResult = HB_FALSE;
 
    hb_itemPutC( pPrinterName, nullptr );
@@ -195,9 +186,6 @@ static void hb_GetDefaultPrinter( PHB_ITEM pPrinterName )
          hb_xfree( pPrinterInfo );
       }
    }
-#else
-   hb_itemPutC( pPrinterName, nullptr );
-#endif
 }
 
 HB_FUNC( WIN_PRINTERGETDEFAULT )
@@ -209,7 +197,6 @@ HB_FUNC( WIN_PRINTERGETDEFAULT )
    hb_itemReturnRelease( pPrinterName );
 }
 
-#if ! defined( HB_OS_WIN_CE )
 static HB_BOOL hb_GetJobs( HANDLE hPrinter, JOB_INFO_2 ** ppJobInfo, DWORD * pdwJobs )
 {
    HB_BOOL bResult = HB_FALSE;
@@ -247,13 +234,11 @@ static HB_BOOL hb_GetJobs( HANDLE hPrinter, JOB_INFO_2 ** ppJobInfo, DWORD * pdw
 
    return bResult;
 }
-#endif
 
 HB_FUNC( WIN_PRINTERSTATUS )
 {
    long nStatus = HB_WIN_PRINTER_STATUS_ERROR;
 
-#if ! defined( HB_OS_WIN_CE )
    PHB_ITEM pPrinterName = hb_itemParam( 1 );
 
    if( hb_itemGetCLen( pPrinterName ) == 0 )
@@ -321,7 +306,6 @@ HB_FUNC( WIN_PRINTERSTATUS )
    }
 
    hb_itemRelease( pPrinterName );
-#endif
 
    hb_retnl( nStatus );
 }
@@ -331,7 +315,6 @@ HB_FUNC( WIN_PRINTERPORTTONAME )
    /* Set default return value */
    hb_retc_null();
 
-#if ! defined( HB_OS_WIN_CE )
    if( hb_parclen( 1 ) > 0 )
    {
       DWORD dwNeeded = 0, dwReturned = 0;
@@ -374,7 +357,6 @@ HB_FUNC( WIN_PRINTERPORTTONAME )
          hb_xfree( pPrinterEnumBak );
       }
    }
-#endif
 }
 
 #define HB_PRINT_BUFFER_SIZE  ( 32 * 1024 )
@@ -383,7 +365,6 @@ HB_FUNC( WIN_PRINTFILERAW )
 {
    HB_ISIZ nResult = -1;
 
-#if ! defined( HB_OS_WIN_CE )
    if( HB_ISCHAR( 1 ) && HB_ISCHAR( 2 ) )
    {
       const char * pszFileName = hb_parc( 2 );
@@ -470,7 +451,6 @@ HB_FUNC( WIN_PRINTFILERAW )
       }
       hb_strfree( hDeviceName );
    }
-#endif
 
    hb_retns( nResult );
 }
@@ -479,7 +459,6 @@ HB_FUNC( WIN_PRINTDATARAW )
 {
    HB_ISIZ nResult = -1;
 
-#if ! defined( HB_OS_WIN_CE )
    if( HB_ISCHAR( 1 ) && HB_ISCHAR( 2 ) )
    {
       HANDLE hPrinter;
@@ -541,7 +520,6 @@ HB_FUNC( WIN_PRINTDATARAW )
       }
       hb_strfree( hDeviceName );
    }
-#endif
 
    hb_retns( nResult );
 }
@@ -550,7 +528,6 @@ HB_FUNC( WIN_PRINTERLIST )
 {
    PHB_ITEM pPrinterArray = hb_itemArrayNew( 0 );
 
-#if ! defined( HB_OS_WIN_CE )
    HB_BOOL bPrinterNamesOnly = ! hb_parl( 1 );
    HB_BOOL bLocalPrintersOnly = hb_parl( 2 );
    DWORD dwNeeded = 0, dwReturned = 0;
@@ -632,7 +609,6 @@ HB_FUNC( WIN_PRINTERLIST )
       }
       hb_xfree( pPrinterEnumBak );
    }
-#endif
 
    hb_itemReturnRelease( pPrinterArray );
 }

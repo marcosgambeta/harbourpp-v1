@@ -95,11 +95,7 @@ static void hb_oleDataInit( void * cargo )
    pOleData->fNullDate = HB_FALSE;
    pOleData->fNil2Null = HB_FALSE;
 
-#if defined( HB_OS_WIN_CE )
-   if( CoInitializeEx( nullptr, COINIT_APARTMENTTHREADED ) == S_OK )
-#else
    if( OleInitialize( nullptr ) == S_OK )
-#endif
       pOleData->iInit = 1;
 }
 
@@ -109,11 +105,7 @@ static void hb_oleDataRelease( void * cargo )
 
    if( pOleData->iInit )
    {
-#if defined( HB_OS_WIN_CE )
-      CoUninitialize();
-#else
       OleUninitialize();
-#endif
    }
 }
 
@@ -2017,9 +2009,6 @@ HB_FUNC( __OLECREATEOBJECT ) /* ( cOleName | cCLSID  [, cIID ] ) */
 
 HB_FUNC( __OLEGETACTIVEOBJECT ) /* ( cOleName | cCLSID  [, cIID ] ) */
 {
-#if defined( HB_OS_WIN_CE )
-   hb_oleSetError( E_NOTIMPL );
-#else
    BSTR         wCLSID;
    IID          ClassID, iid = IID_IDispatch;
    IDispatch *  pDisp = nullptr;
@@ -2082,7 +2071,6 @@ HB_FUNC( __OLEGETACTIVEOBJECT ) /* ( cOleName | cCLSID  [, cIID ] ) */
    {
       hb_ret();
    }
-#endif
 }
 
 HB_FUNC( __OLEENUMCREATE ) /* ( __hObj ) */
