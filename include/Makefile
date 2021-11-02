@@ -74,7 +74,6 @@ C_HEADERS := \
    hbvmopt.h \
    hbvmpub.h \
    hbxvm.h \
-   hbwince.h \
    hbwinuni.h \
    hbzlib.h \
    hbznet.h \
