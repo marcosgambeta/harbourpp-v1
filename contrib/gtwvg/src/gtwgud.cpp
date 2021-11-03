@@ -209,20 +209,19 @@ static void hb_gt_wvt_Free( PHB_GTWVT pWVT )
       DestroyIcon( pWVT->hIcon );
    }
 
-   hb_xfree( pWVT );
+   delete pWVT;
 }
 
 static PHB_GTWVT hb_gt_wvt_New( PHB_GT pGT, HINSTANCE hInstance, int iCmdShow )
 {
    PHB_GTWVT pWVT;
 
-   pWVT = static_cast< PHB_GTWVT >( hb_xgrab( sizeof( HB_GTWVT ) ) );
-   memset( pWVT, 0, sizeof( HB_GTWVT ) );
+   pWVT = new HB_GTWVT();
    pWVT->pGT = pGT;
 
    if( ! hb_gt_wvt_Alloc( pWVT ) )
    {
-      hb_xfree( pWVT );
+      delete pWVT;
       return nullptr;
    }
 

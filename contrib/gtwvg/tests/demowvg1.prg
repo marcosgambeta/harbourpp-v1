@@ -8,12 +8,12 @@
 #include "hbgtinfo.ch"
 #include "hbver.ch"
 
-#define IMAGE_VOUCH                hb_DirBase() + "vouch1.bmp"
-#define IMAGE_BROWSE               hb_DirBase() + "v_browse.ico"
-#define IMAGE_VR                   hb_DirBase() + "vr_1.ico"
-#define IMAGE_NOTES                hb_DirBase() + "v_notes.ico"
-#define IMAGE_TOOLS                hb_DirBase() + "v_tools.ico"
-#define IMAGE_HELP                 hb_DirBase() + "v_notes.ico"
+#define IMAGE_VOUCH                hb_DirBase() + "resources\vouch1.bmp"
+#define IMAGE_BROWSE               hb_DirBase() + "resources\v_browse.ico"
+#define IMAGE_VR                   hb_DirBase() + "resources\vr_1.ico"
+#define IMAGE_NOTES                hb_DirBase() + "resources\v_notes.ico"
+#define IMAGE_TOOLS                hb_DirBase() + "resources\v_tools.ico"
+#define IMAGE_HELP                 hb_DirBase() + "resources\v_notes.ico"
 
 MEMVAR GetList
 
@@ -37,7 +37,7 @@ PROCEDURE Main()
    CLS
    wvt_ShowWindow( SW_RESTORE )
    Wvt_SetTitle( "Harbour's GTWVG Demo ( Simplified )" )
-   wvt_SetIcon( hb_DirBase() +  "vr_1.ico" )
+   wvt_SetIcon( hb_DirBase() +  "resources\vr_1.ico" )
 
    SetGT( 1, hb_gtSelect() )
 
@@ -163,7 +163,7 @@ STATIC PROCEDURE DoModalDialog()
    oCrt:resizable   := .F.
    oCrt:closable    := .F.
    oCrt:title       := "Modal Dialog!"
-   oCrt:icon        := hb_DirBase() + "vr_1.ico"
+   oCrt:icon        := hb_DirBase() + "resources\vr_1.ico"
 
    oCrt:Create()
    oCrt:show()

@@ -315,13 +315,13 @@ FUNCTION BuildWvgToolBar( oDA, nActiveX )
    // After setting properties, create toolbar.
    oTBar:create()
 
-   oTBar:addItem( "New"       , hb_DirBase() + "v_new.bmp"    )
-   oTBar:addItem( "Select"    , hb_DirBase() + "v_selct1.bmp" )
-   oTBar:addItem( "Calendar"  , hb_DirBase() + "v_calend.bmp" )
-   oTBar:addItem( "Tools"     , hb_DirBase() + "v_lock.bmp"   )
-   oTBar:addItem( "Index"     , hb_DirBase() + "v_index.bmp"  )
-   oTBar:addItem( "Show"      , hb_DirBase() + "v_clclt.bmp"  )
-   oTBar:addItem( "Hide"      , hb_DirBase() + "v_notes1.bmp" )
+   oTBar:addItem( "New"       , hb_DirBase() + "resources\v_new.bmp"    )
+   oTBar:addItem( "Select"    , hb_DirBase() + "resources\v_selct1.bmp" )
+   oTBar:addItem( "Calendar"  , hb_DirBase() + "resources\v_calend.bmp" )
+   oTBar:addItem( "Tools"     , hb_DirBase() + "resources\v_lock.bmp"   )
+   oTBar:addItem( "Index"     , hb_DirBase() + "resources\v_index.bmp"  )
+   oTBar:addItem( "Show"      , hb_DirBase() + "resources\v_clclt.bmp"  )
+   oTBar:addItem( "Hide"      , hb_DirBase() + "resources\v_notes1.bmp" )
 
    RETURN oTBar
 

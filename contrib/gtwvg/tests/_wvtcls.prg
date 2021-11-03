@@ -64,13 +64,13 @@ STATIC PROCEDURE MyDialogOne( oCrt )
    cTxt := cTxt + "Enjoy - Pritpal Bedi, INDIA"
 
    aImg_ := {}
-   AAdd( aImg_, GetResource( "v_lock.bmp"   ) )
-   AAdd( aImg_, GetResource( "v_new.bmp"    ) )
-   AAdd( aImg_, GetResource( "v_clclt.bmp"  ) )
-   AAdd( aImg_, GetResource( "v_calend.bmp" ) )
-   AAdd( aImg_, GetResource( "v_index.bmp"  ) )
-   AAdd( aImg_, GetResource( "v_notes1.bmp" ) )
-   AAdd( aImg_, GetResource( "v_selct1.bmp" ) )
+   AAdd( aImg_, GetResource( "resources\v_lock.bmp"   ) )
+   AAdd( aImg_, GetResource( "resources\v_new.bmp"    ) )
+   AAdd( aImg_, GetResource( "resources\v_clclt.bmp"  ) )
+   AAdd( aImg_, GetResource( "resources\v_calend.bmp" ) )
+   AAdd( aImg_, GetResource( "resources\v_index.bmp"  ) )
+   AAdd( aImg_, GetResource( "resources\v_notes1.bmp" ) )
+   AAdd( aImg_, GetResource( "resources\v_selct1.bmp" ) )
    ? "."
    wvt_ShowWindow( 1 )
    nWinRows  := 55
@@ -155,7 +155,7 @@ STATIC PROCEDURE MyDialogOne( oCrt )
    oPBar2:cBackColor := "W/N*"
    oPBar2:lVertical  := .T.
    oPBar2:nDirection := 0
-   oPBar2:cImage     := GetResource( "vouch1.bmp" )
+   oPBar2:cImage     := GetResource( "resources\vouch1.bmp" )
    oDlg:AddObject( oPBar2 )
 
    oPBar3 := WvtProgressBar():New( oDlg, , 26, 129, 36, 137 )
@@ -163,7 +163,7 @@ STATIC PROCEDURE MyDialogOne( oCrt )
    oPBar3:cBackColor := "W/N*"
    oPBar3:lVertical  := .T.
    oPBar3:nDirection := 1
-   oPBar3:cImage     := GetResource( "vouch1.bmp" )
+   oPBar3:cImage     := GetResource( "resources\vouch1.bmp" )
    oDlg:AddObject( oPBar3 )
 
    oBBox2 := WvtStatic():New( oDlg, , 9, oDlg:MaxCol() - 40, 18, oDlg:MaxCol() - 2 )
@@ -347,7 +347,7 @@ PROCEDURE DialogWvgClassesTwo()
    oPBar:nBarColor   := RGB( 0, 240, 240 )
    oPBar:cBackColor  := "W/N*"
    oPBar:nDirection  := 1
-   oPBar:cImage      := "vouch1.bmp"
+   oPBar:cImage      := "resources\vouch1.bmp"
    oDlg:AddObject( oPBar )
 
    oPBar1 := WvtProgressBar():New( oDlg, , 7, 10, 8, 80 )
@@ -361,7 +361,7 @@ PROCEDURE DialogWvgClassesTwo()
    oPBar2:cBackColor := "W/N*"
    oPBar2:lVertical  := .T.
    oPBar2:nDirection := 0
-   oPBar2:cImage     := "v_notes.ico"
+   oPBar2:cImage     := "resources\v_notes.ico"
    oDlg:AddObject( oPBar2 )
 
    oPBar3 := WvtProgressBar():New( oDlg, , 11, 77, 28, 80 )

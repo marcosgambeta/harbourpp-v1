@@ -12,7 +12,7 @@ FUNCTION MyAlert( cMsg, aOpt )
 
    oCrt := WvgCrt():New( , , { -1, -1 }, { 9, MaxCol() - 6 }, , .T. )
    oCrt:lModal := .T.
-   oCrt:icon   := "dia_excl.ico"
+   oCrt:icon   := "resources\dia_excl.ico"
    oCrt:create()
    oCrt:resizable := .T.
 
@@ -131,7 +131,7 @@ FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, aMessage_, nTop, nTime )
    NEXT
 
    // Create a new Window
-   B_CRT nTop, nLeft, nBottom - 1, nRight MODAL ICON "dia_excl.ico" TITLE "  " + cCaption INTO oCrt
+   B_CRT nTop, nLeft, nBottom - 1, nRight MODAL ICON "resources\dia_excl.ico" TITLE "  " + cCaption INTO oCrt
 
    nTop    := -1
    nLeft   := 0

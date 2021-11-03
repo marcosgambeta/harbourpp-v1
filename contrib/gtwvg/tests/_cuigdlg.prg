@@ -11,7 +11,7 @@ PROCEDURE ExecGCUI()
 
    IF hb_mtvm()
       hb_threadStart( {| oCrt | oCrt := WvgCrt():New( , , { 2, 4 }, { 20, 81 }, , .T. ), ;
-         oCrt:icon := GetResource( "dia_excl.ico" ), ;
+         oCrt:icon := GetResource( "resources\dia_excl.ico" ), ;
          oCrt:create(), ;
          GCUIConsole( oCrt ), ;
          oCrt:destroy() } )
@@ -79,7 +79,7 @@ PROCEDURE GCUIConsole( oCrt )
 
    hTxt := Wvg_TextBox( 3, 57, 16, 75, { 10, 10, -10, -10 }, "This is first TextBox Line!", 2, 2 )
 
-   Wvg_Image( 15, 36, 16, 42, { -3, -3, 3, 3 }, GOBJ_IMAGESOURCE_FILE, GetResource( "Vouch1.bmp" ) )
+   Wvg_Image( 15, 36, 16, 42, { -3, -3, 3, 3 }, GOBJ_IMAGESOURCE_FILE, GetResource( "resources\Vouch1.bmp" ) )
    Wvg_BoxRaised( 15, 36, 16, 42, { -2, -2, 2, 2 } )
 
    Wvg_ShadedRect( 1, 54, 18, 79, { -5, -5, 5, 5 }, 0, { 65000, 21000, 7000, 56000 }, { 255, 32255, 16000, 32500 } )

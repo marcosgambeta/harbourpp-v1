@@ -26,12 +26,12 @@
 REQUEST DBFCDX
 REQUEST DBFNTX
 
-#define IMAGE_VOUCH                hb_DirBase() + "vouch1.bmp"
-#define IMAGE_BROWSE               hb_DirBase() + "v_browse.ico"
-#define IMAGE_VR                   hb_DirBase() + "vr_1.ico"
-#define IMAGE_NOTES                hb_DirBase() + "v_notes.ico"
-#define IMAGE_TOOLS                hb_DirBase() + "v_tools.ico"
-#define IMAGE_HELP                 hb_DirBase() + "v_notes.ico"
+#define IMAGE_VOUCH                hb_DirBase() + "resources\vouch1.bmp"
+#define IMAGE_BROWSE               hb_DirBase() + "resources\v_browse.ico"
+#define IMAGE_VR                   hb_DirBase() + "resources\vr_1.ico"
+#define IMAGE_NOTES                hb_DirBase() + "resources\v_notes.ico"
+#define IMAGE_TOOLS                hb_DirBase() + "resources\v_tools.ico"
+#define IMAGE_HELP                 hb_DirBase() + "resources\v_notes.ico"
 
 #define OBJ_TYPE_BUTTON            1
 
@@ -124,7 +124,7 @@ PROCEDURE Main()
    /* Force mouse pointer right below the Harbour label */
    wvt_SetMousePos( 2, 40 )
 
-   AAdd( aBlocks, {|| wvt_SetIcon( GetResource( "vr_1.ico" ) ) } )
+   AAdd( aBlocks, {|| wvt_SetIcon( GetResource( "resources\vr_1.ico" ) ) } )
    AAdd( aBlocks, {|| Wvt_SetTitle( "Vouch" ) } )
    AAdd( aBlocks, {|| wvt_DrawLabel( 1, 40, cLabel, 6,, RGB( 255, 255, 255 ), RGB( 198, 198, 198 ), "Arial", 26, , , , , .T., .T. ) } )
    AAdd( aBlocks, {|| wvt_DrawBoxRaised( nTop, nLft, nBtm, nRgt ) } )
@@ -277,12 +277,12 @@ PROCEDURE WvtNextGets_X()
    AAdd( aBlocks, {|| wvt_DrawBoxGroupRaised( 5, 6, 19, 72 )  } )
    AAdd( aBlocks, {|| AEval( GetList, {| oGet | wvt_DrawBoxGet( oGet:Row, oGet:Col, Len( Transform( oGet:VarGet(), oGet:Picture ) ) ) } ) } )
 
-   AAdd( aBlocks, {|| wvt_DrawButton( 21,  6, 22,  9, "New", "vouch1.bmp" )                             } )
-   AAdd( aBlocks, {|| wvt_DrawButton( 21, 11, 22, 14, "Browse", "vouch1.bmp", 1, RGB( 255, 255, 255 ) )      } )
-   AAdd( aBlocks, {|| wvt_DrawButton( 21, 16, 22, 19, , "vouch1.bmp" )                                    } )
+   AAdd( aBlocks, {|| wvt_DrawButton( 21,  6, 22,  9, "New", "resources\vouch1.bmp" ) } )
+   AAdd( aBlocks, {|| wvt_DrawButton( 21, 11, 22, 14, "Browse", "resources\vouch1.bmp", 1, RGB( 255, 255, 255 ) ) } )
+   AAdd( aBlocks, {|| wvt_DrawButton( 21, 16, 22, 19, , "resources\vouch1.bmp" ) } )
    AAdd( aBlocks, {|| wvt_DrawButton( 21, 21, 22, 24, "Data",, 0, RGB( 100, 22, 241 ), RGB( 198, 198, 198 ) ) } )
-   AAdd( aBlocks, {|| wvt_DrawButton( 21, 26, 22, 29, "Flat", IMAGE_VR, 2 )                                 } )
-   AAdd( aBlocks, {|| wvt_DrawButton( 21, 31, 22, 34, "Outline", IMAGE_VR, 3 )                              } )
+   AAdd( aBlocks, {|| wvt_DrawButton( 21, 26, 22, 29, "Flat", IMAGE_VR, 2 ) } )
+   AAdd( aBlocks, {|| wvt_DrawButton( 21, 31, 22, 34, "Outline", IMAGE_VR, 3 ) } )
    AAdd( aBlocks, {|| wvt_DrawButton( 22, 36, 22, 41, "Data",, 0, RGB( 100, 22, 241 ), RGB( 198, 198, 198 ) ) } )
 
    aLastPaint := WvtSetBlocks( aBlocks )

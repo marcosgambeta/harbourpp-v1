@@ -34,7 +34,7 @@ PROCEDURE WvtMyBrowse()
    IF hb_mtvm()
       hb_threadStart( {| oCrt | oCrt := WvgCrt():new( , , { -1, -2 }, { 34, 69 }, , .T. ), ;
          oCrt:resizeMode := HB_GTI_RESIZEMODE_ROWS, ;
-         oCrt:icon := GetResource( "dia_excl.ico" ), ;
+         oCrt:icon := GetResource( "resources\dia_excl.ico" ), ;
          oCrt:create(), ;
          wvt_SetGUI( .T. ), ;
          ExecBrowser( oCrt ), ;
@@ -497,7 +497,7 @@ STATIC PROCEDURE BrwBuildButtons( oCrt, oBrw )
          oPB:pointerFocus := .F.
       ENDIF
       IF i == Len( aPmt )
-         oPB:caption := hb_DirBase() + "\" + "v_lock.bmp"
+         oPB:caption := hb_DirBase() + "\" + "resources\v_lock.bmp"
          oPB:create( , , { {|| -MaxRow() }, -nOff }, { -1, -aW[ i ] } )
       ELSE
          oPB:caption := aPmt[ i ]
@@ -580,13 +580,13 @@ STATIC FUNCTION BrwBuildToolBar( oCrt )
    // After setting properties, create toolbar.
    oTBar:create()
 
-   oTBar:addItem( "New"       , hb_DirBase() + "v_new.bmp"   , , , , , , nRGB )
-   oTBar:addItem( "Select"    , hb_DirBase() + "v_selct1.bmp", , , , , , nRGB )
-   oTBar:addItem( "Calendar"  , hb_DirBase() + "v_calend.bmp", , , , , , nRGB )
-   oTBar:addItem( "Tools"     , hb_DirBase() + "v_lock.bmp"  , , , , , , nRGB )
-   oTBar:addItem( "Index"     , hb_DirBase() + "v_index.bmp" , , , , , , nRGB )
-   oTBar:addItem( "Show"      , hb_DirBase() + "v_clclt.bmp" , , , , , , nRGB )
-   oTBar:addItem( "Hide"      , hb_DirBase() + "v_notes1.bmp", , , , , , nRGB )
+   oTBar:addItem( "New"       , hb_DirBase() + "resources\v_new.bmp"   , , , , , , nRGB )
+   oTBar:addItem( "Select"    , hb_DirBase() + "resources\v_selct1.bmp", , , , , , nRGB )
+   oTBar:addItem( "Calendar"  , hb_DirBase() + "resources\v_calend.bmp", , , , , , nRGB )
+   oTBar:addItem( "Tools"     , hb_DirBase() + "resources\v_lock.bmp"  , , , , , , nRGB )
+   oTBar:addItem( "Index"     , hb_DirBase() + "resources\v_index.bmp" , , , , , , nRGB )
+   oTBar:addItem( "Show"      , hb_DirBase() + "resources\v_clclt.bmp" , , , , , , nRGB )
+   oTBar:addItem( "Hide"      , hb_DirBase() + "resources\v_notes1.bmp", , , , , , nRGB )
 
    RETURN oTBar
 

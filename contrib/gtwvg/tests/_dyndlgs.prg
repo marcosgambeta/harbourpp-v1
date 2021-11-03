@@ -98,7 +98,7 @@ FUNCTION DynWinDialog( nInfo )
    lOnTop      := .F.
    cDlgProc    := "DynDlgProc"
 // bDlgProc    := {| a, b, c, d | DYNDLGPROC( a, b, c, d ) }
-   cDlgIcon    := "v_notes.ico"
+   cDlgIcon    := "resources\v_notes.ico"
 // nTimerTicks := 1000  // 1 second
 
    IF nInfo == 2
@@ -199,7 +199,7 @@ FUNCTION DynDlgProc( hDlg, nMsg, wParam, lParam )
       ENDIF
 
       IF Empty( SetIcons() )
-         SetIcons( wvg_LoadIcon( "vr_1.ico" ) )
+         SetIcons( wvg_LoadIcon( "resources\vr_1.ico" ) )
       ENDIF
       IF ! Empty( SetIcons() )
          wvg_SendMessage( wvg_GetDlgItem( hDlg, ID_ICO_VOUCH ), STM_SETIMAGE, IMAGE_ICON, SetIcons()[ 1 ] )
@@ -282,13 +282,13 @@ FUNCTION DlgSlideShow()
 
    LOCAL hDlg, aDlg, nStyle
 
-   t_aSlides := { "vouch1.bmp", "v_notes.ico", "2000.gif", "v_lock.bmp", "v_help.ico" }
+   t_aSlides := { "resources\vouch1.bmp", "resources\v_notes.ico", "2000.gif", "resources\v_lock.bmp", "resources\v_help.ico" }
 
    nStyle  := DS_SETFONT + WS_VISIBLE + WS_POPUP + WS_CAPTION + WS_SYSMENU + WS_THICKFRAME + WS_MINIMIZEBOX
 
    aDlg    := wvt_MakeDlgTemplate( 0, 0, 20, 40, {}, "Slide Show", nStyle )
 
-   hDlg    := wvt_CreateDialog( aDlg, .F., "DlgSlideShowProc", "vr_1.ico", 5000 )
+   hDlg    := wvt_CreateDialog( aDlg, .F., "DlgSlideShowProc", "resources\vr_1.ico", 5000 )
 
    RETURN hDlg
 
