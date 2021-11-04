@@ -64,9 +64,13 @@
 HB_FUNC( DIRMAKE )
 {
    if( hb_fsMkDir( hb_parcx( 1 ) ) )
+   {
       hb_retni( 0 );
+   }
    else
+   {
       hb_retnint( -static_cast< HB_MAXINT >( hb_fsOsError() ) );
+   }
 }
 
 HB_FUNC( DIRNAME )
@@ -82,9 +86,13 @@ HB_FUNC( DIRNAME )
        * to create drives after 'Z' letter.
        */
       if( uc >= 'A' && uc < 'A' + 32 )
+      {
          iDrive = uc - ( 'A' - 1 );
+      }
       else if( uc >= 'a' && uc < 'a' + 32 )
+      {
          iDrive = uc - ( 'a' - 1 );
+      }
    }
    pbyBuffer[ 0 ] = HB_OS_PATH_DELIM_CHR;
    hb_fsCurDirBuff( iDrive, pbyBuffer + 1, HB_PATH_MAX - 1 );
@@ -104,17 +112,23 @@ HB_FUNC( DRIVETYPE )
    hb_strncpy( pszDrive, hb_parcx( 1 ), nSize );
 
    if( strstr( pszDrive, ":" ) == nullptr )
+   {
       hb_strncat( pszDrive, ":", nSize );
+   }
 
    if( strstr( pszDrive, "\\" ) == nullptr )
+   {
       hb_strncat( pszDrive, "\\", nSize );
+   }
 
    lpDrive = HB_FSNAMECONV( pszDrive, &lpFree );
    hb_vmUnlock();
    uiType = GetDriveType( lpDrive );
    hb_vmLock();
    if( lpFree )
+   {
       hb_xfree( lpFree );
+   }
    hb_xfree( pszDrive );
 
    switch( uiType )
@@ -142,7 +156,6 @@ HB_FUNC( DRIVETYPE )
 #else
    hb_retni( 9 );
 #endif
-
 }
 
 HB_FUNC( NUMDISKL )
@@ -201,9 +214,13 @@ HB_FUNC( VOLUME )
          PHB_FNAME fname = hb_fsFNameSplit( hb_parc( 1 ) );
 
          if( fname->szPath )
+         {
             pszRoot = hb_strncpy( szRootBuf, fname->szPath, sizeof( szRootBuf ) - 1 );
+         }
          if( fname->szName )
+         {
             pszVolName = hb_strncpy( szVolNameBuf, fname->szName, sizeof( szVolNameBuf ) - 1 );
+         }
          hb_xfree( fname );
       }
 
@@ -213,9 +230,13 @@ HB_FUNC( VOLUME )
       bReturn = SetVolumeLabel( lpRoot, lpVolName ) != 0;
       hb_vmLock();
       if( lpRootFree )
+      {
          hb_xfree( lpRootFree );
+      }
       if( lpVolNameFree )
+      {
          hb_xfree( lpVolNameFree );
+      }
    }
 #endif
    hb_retl( bReturn );
@@ -249,9 +270,13 @@ HB_FUNC( VOLSERIAL )
                              nullptr,      /* FileSystemFlags */
                              nullptr,      /* FileSystemName */
                              0 ) )      /* FileSystemSize */
+   {
       hb_retnint( dwSerial );
+   }
    else
+   {
       hb_retni( -1 );
+   }
 
    hb_strfree( hDrive );
 #else
@@ -269,9 +294,7 @@ HB_FUNC( TRUENAME )
 
       buffer[ 0 ] = buffer[ MAX_PATH ] = TEXT( '\0' );
 
-      GetFullPathName( HB_PARSTR( 1, &hFile, nullptr ),
-                       HB_SIZEOFARRAY( buffer ) - 1,
-                       buffer, nullptr );
+      GetFullPathName( HB_PARSTR( 1, &hFile, nullptr ), HB_SIZEOFARRAY( buffer ) - 1, buffer, nullptr );
 
       HB_RETSTR( buffer );
       hb_strfree( hFile );
@@ -280,5 +303,7 @@ HB_FUNC( TRUENAME )
 #endif
    }
    else
+   {
       hb_retc_null();
+   }
 }

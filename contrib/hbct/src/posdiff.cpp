@@ -63,8 +63,10 @@ HB_FUNC( POSDIFF )
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
+         {
             ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_POSDIFF, nullptr,
                       HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+         }
 
          hb_retns( 0 );
          return;
@@ -85,9 +87,13 @@ HB_FUNC( POSDIFF )
       }
 
       if( sStrLen1 != sStrLen2 )
+      {
          hb_retns( ( sStrLen1 < sStrLen2 ? sStrLen1 : sStrLen2 ) + 1 );
+      }
       else
+      {
          hb_retns( 0 );
+      }
    }
    else
    {
@@ -95,16 +101,24 @@ HB_FUNC( POSDIFF )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_POSDIFF, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else if( HB_ISCHAR( 1 ) || HB_ISCHAR( 2 ) )
+      {
          hb_retns( 1 );
+      }
       else
+      {
          hb_retns( 0 );
+      }
    }
 }
 
@@ -121,17 +135,23 @@ HB_FUNC( POSEQUAL )
       HB_SIZE sCompare, sCompareCnt, sRet = 0;
 
       if( HB_ISNUM( 3 ) )
+      {
          sCompare = hb_parns( 3 );
+      }
       else
+      {
          sCompare = ( sStrLen1 < sStrLen2 ? sStrLen1 : sStrLen2 ) - sIgnore;
+      }
 
       if( sCompare == 0 || sIgnore > sStrLen1 || sIgnore > sStrLen2 )
       {
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
+         {
             ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_POSEQUAL, nullptr,
                       HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+         }
 
          hb_retns( 0 );
          return;
@@ -142,8 +162,10 @@ HB_FUNC( POSEQUAL )
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
+         {
             ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_POSEQUAL, nullptr,
                       HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+         }
 
          hb_retns( 0 );
          return;
@@ -159,7 +181,9 @@ HB_FUNC( POSEQUAL )
          {
             /* save possible return value */
             if( sCompareCnt == 0 )
+            {
                sRet = pc1 - pcString1 + 1;
+            }
 
             sCompareCnt++;
             if( sCompareCnt == sCompare )
@@ -184,13 +208,19 @@ HB_FUNC( POSEQUAL )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_POSEQUAL, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retns( 0 );
+      }
    }
 }

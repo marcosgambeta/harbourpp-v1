@@ -68,18 +68,28 @@ static void do_justify( int iSwitch )
       if( sStrLen == 0 )
       {
          if( iNoRet )
+         {
             hb_ret();
+         }
          else
+         {
             hb_retc_null();
+         }
          return;
       }
 
       if( hb_parclen( 2 ) > 0 )
+      {
          cJustChar = *( hb_parc( 2 ) );
+      }
       else if( HB_ISNUM( 2 ) )
+      {
          cJustChar = static_cast< char >( hb_parnl( 2 ) % 256 );
+      }
       else
+      {
          cJustChar = 0x20;
+      }
 
       pcRet = static_cast< char * >( hb_xgrab( sStrLen + 1 ) );
 
@@ -97,7 +107,9 @@ static void do_justify( int iSwitch )
             hb_xmemcpy( pcRet, pcString + sJustOffset, sStrLen - sJustOffset );
 
             for( pcw = pcRet + sStrLen - sJustOffset; pcw < pcRet + sStrLen; pcw++ )
+            {
                *pcw = cJustChar;
+            }
 
             break;
 
@@ -111,7 +123,9 @@ static void do_justify( int iSwitch )
             }
 
             for( pcw = pcRet; pcw < pcRet + sJustOffset; pcw++ )
+            {
                *pcw = cJustChar;
+            }
 
             hb_xmemcpy( pcRet + sJustOffset, pcString, sStrLen - sJustOffset );
             break;
@@ -125,7 +139,9 @@ static void do_justify( int iSwitch )
          hb_xfree( pcRet );
       }
       else
+      {
          hb_retclen_buffer( pcRet, sStrLen );
+      }
    }
    else
    {
@@ -133,18 +149,26 @@ static void do_justify( int iSwitch )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   iSwitch == DO_JUSTIFY_JUSTLEFT ?
                                   CT_ERROR_JUSTLEFT : CT_ERROR_JUSTRIGHT,
                                   nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else if( iNoRet )
+      {
          hb_ret();
+      }
       else
+      {
          hb_retc_null();
+      }
    }
 }
 

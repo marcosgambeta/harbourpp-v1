@@ -64,9 +64,13 @@ HB_FUNC( COM_DOSCON )
 
          hb_gtGetPos( &iRow, &iCol );
          if( HB_ISNUM( 2 ) )
+         {
             iRow = hb_parni( 1 );
+         }
          if( HB_ISNUM( 3 ) )
+         {
             iCol = hb_parni( 2 );
+         }
          hb_gtSetPos( iRow, iCol );
       }
       hb_gtWriteCon( hb_parc( 1 ), nLen );
@@ -86,7 +90,9 @@ HB_FUNC( COM_CRC )
       HB_MAXUINT nPolynomial = static_cast< HB_MAXUINT >( hb_parnint( 3 ) );
 
       if( nPolynomial == 0 )
+      {
          nPolynomial = 0x11021;  /* CRC_16_X25 */
+      }
 
       /* NOTE: warning this function is not bug compatible with CT3.
        *       It fixes few problems in original CT3 implementation
@@ -131,15 +137,21 @@ HB_FUNC( XMOBLOCK )
 
    iBlock &= 0xFF;
    if( nLen > nSize )
+   {
       nLen = nSize;
+   }
    pszBlock = static_cast< char * >( hb_xgrab( nSize + ( fCRC ? 6 : 5 ) ) );
    pszBlock[ 0 ] = nSize == 128 ? 1 : 2;
    pszBlock[ 1 ] = static_cast< char >( iBlock );
    pszBlock[ 2 ] = static_cast< char >( 0xFF - iBlock );
    if( szData )
+   {
       memcpy( pszBlock + 3, szData, nLen );
+   }
    if( nLen < nSize )
+   {
       memset( pszBlock + nLen + 3, 0, nSize - nLen );
+   }
    if( fCRC )
    {
       HB_U16 crc = ( HB_U16 ) hb_crcct( 0, pszBlock + 3, nSize, 0x11021 );
@@ -168,19 +180,23 @@ HB_FUNC( XMOCHECK )
       HB_SIZE nSize;
 
       if( *szBlock == 0x01 )
-         nSize = 128;
-      else if( *szBlock == 0x02 )
-         nSize = 1024;
-      else
-         nSize = nLen;
-      if( nLen == nSize + ( fCRC ? 5 : 4 ) &&
-          static_cast< unsigned char >( szBlock[ 1 ] ) +
-          static_cast< unsigned char >( szBlock[ 2 ] ) == 0xFF )
       {
-         if( fCRC ?
-             hb_crcct( 0, szBlock + 3, nSize + 2, 0x11021 ) == 0 :
-             s_xmoblock_sum( szBlock + 3, nSize ) == szBlock[ 3 + nSize ] )
+         nSize = 128;
+      }
+      else if( *szBlock == 0x02 )
+      {
+         nSize = 1024;
+      }
+      else
+      {
+         nSize = nLen;
+      }
+      if( nLen == nSize + ( fCRC ? 5 : 4 ) && static_cast< unsigned char >( szBlock[ 1 ] ) + static_cast< unsigned char >( szBlock[ 2 ] ) == 0xFF )
+      {
+         if( fCRC ? hb_crcct( 0, szBlock + 3, nSize + 2, 0x11021 ) == 0 : s_xmoblock_sum( szBlock + 3, nSize ) == szBlock[ 3 + nSize ] )
+         {
             iResult = static_cast< unsigned char >( szBlock[ 1 ] );
+         }
       }
    }
    hb_retni( iResult );
@@ -251,7 +267,9 @@ HB_FUNC( ZEROINSERT )
             }
             c <<= 1;
             if( uiVal & 0x8000 )
+            {
                c |= 1;
+            }
             if( --j == 0 )
             {
                pszDest[ nBits++ ] = c;
@@ -263,10 +281,14 @@ HB_FUNC( ZEROINSERT )
          hb_retclen_buffer( pszDest, nDest );
       }
       else
+      {
          hb_itemReturn( pString );
+      }
    }
    else
+   {
       hb_retc_null();
+   }
 }
 
 /* ZeroRemove( <cDataBlock> ) --> cString
@@ -316,7 +338,9 @@ HB_FUNC( ZEROREMOVE )
                   ucVal |= 1;
                }
                else
+               {
                   l = 0;
+               }
                if( --j == 0 )
                {
                   ucVal = 0;
@@ -348,8 +372,9 @@ HB_FUNC( ZEROREMOVE )
 #else
       if( ucVal != 0 || l == 5 )
 #endif
-
+      {
          hb_retc_null();
+      }
       else if( nBits )
       {
          char * pszDest = static_cast< char * >( hb_xgrab( nDest + 1 ) );
@@ -364,7 +389,9 @@ HB_FUNC( ZEROREMOVE )
             for( i = 0; i < 8; ++i )
             {
                if( l == 5 )
+               {
                   l = 0;
+               }
                else
                {
                   ucVal <<= 1;
@@ -374,7 +401,9 @@ HB_FUNC( ZEROREMOVE )
                      ucVal |= 1;
                   }
                   else
+                  {
                      l = 0;
+                  }
                   if( --j == 0 )
                   {
                      pszDest[ nDest++ ] = ucVal;
@@ -388,8 +417,12 @@ HB_FUNC( ZEROREMOVE )
          hb_retclen_buffer( pszDest, nDest );
       }
       else
+      {
          hb_itemReturn( pString );
+      }
    }
    else
+   {
       hb_retc_null();
+   }
 }

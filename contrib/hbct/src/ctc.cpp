@@ -56,15 +56,13 @@ HB_USHORT ct_error( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errS
                     const char * szDescription, const char * szOperation,
                     HB_ERRCODE errOsCode, HB_USHORT uiFlags, HB_ULONG ulArgCount, ... )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "ct_error(%hu, %d, %d, %s, %s, %d, %hu, %lu)", uiSeverity, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags, ulArgCount ) );
+
    HB_USHORT uiAction;
    PHB_ITEM pError;
 
    PHB_ITEM pArray;
    va_list va;
-   HB_ULONG ulArgPos;
-
-   HB_TRACE( HB_TR_DEBUG, ( "ct_error(%hu, %d, %d, %s, %s, %d, %hu, %lu)",
-                            uiSeverity, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags, ulArgCount ) );
 
    pError = hb_errRT_New( uiSeverity, CT_SUBSYSTEM, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags );
 
@@ -76,9 +74,13 @@ HB_USHORT ct_error( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errS
    else if( ulArgCount == HB_ERR_ARGS_BASEPARAMS )
    {
       if( hb_pcount() == 0 )
+      {
          pArray = nullptr;
+      }
       else
+      {
          pArray = hb_arrayBaseParams();
+      }
    }
    else if( ulArgCount == HB_ERR_ARGS_SELFPARAMS )
    {
@@ -89,7 +91,7 @@ HB_USHORT ct_error( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errS
       pArray = hb_itemArrayNew( ulArgCount );
 
       va_start( va, ulArgCount );
-      for( ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
+      for( HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
       {
          hb_itemArrayPut( pArray, ulArgPos, va_arg( va, PHB_ITEM ) );
       }
@@ -123,15 +125,13 @@ PHB_ITEM ct_error_subst( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE
                          const char * szDescription, const char * szOperation,
                          HB_ERRCODE errOsCode, HB_USHORT uiFlags, HB_ULONG ulArgCount, ... )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "ct_error_subst(%hu, %d, %d, %s, %s, %d, %hu, %lu)", uiSeverity, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags, ulArgCount ) );
+
    PHB_ITEM pRetVal;
    PHB_ITEM pError;
 
    PHB_ITEM pArray;
    va_list va;
-   HB_ULONG ulArgPos;
-
-   HB_TRACE( HB_TR_DEBUG, ( "ct_error_subst(%hu, %d, %d, %s, %s, %d, %hu, %lu)",
-                            uiSeverity, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags, ulArgCount ) );
 
    pError = hb_errRT_New_Subst( uiSeverity, CT_SUBSYSTEM, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags );
 
@@ -143,9 +143,13 @@ PHB_ITEM ct_error_subst( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE
    else if( ulArgCount == HB_ERR_ARGS_BASEPARAMS )
    {
       if( hb_pcount() == 0 )
+      {
          pArray = nullptr;
+      }
       else
+      {
          pArray = hb_arrayBaseParams();
+      }
    }
    else if( ulArgCount == HB_ERR_ARGS_SELFPARAMS )
    {
@@ -156,7 +160,7 @@ PHB_ITEM ct_error_subst( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE
       pArray = hb_itemArrayNew( ulArgCount );
 
       va_start( va, ulArgCount );
-      for( ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
+      for( HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
       {
          hb_itemArrayPut( pArray, ulArgPos, va_arg( va, PHB_ITEM ) );
       }
@@ -218,8 +222,10 @@ HB_FUNC( CSETARGERR )
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
+         {
             ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CSETARGERR,
                       nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+         }
       }
    }
    else if( hb_pcount() > 0 ) /* more than one param but not integer */
@@ -227,8 +233,10 @@ HB_FUNC( CSETARGERR )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CSETARGERR, nullptr,
                    HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+      }
    }
 }
 

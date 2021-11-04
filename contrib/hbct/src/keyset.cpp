@@ -65,15 +65,18 @@ static void SetGet( int iFlag )
 
    if( HB_ISLOG( 1 ) )
    {
-      gtInfo.pNewVal = hb_itemPutNI( gtInfo.pNewVal,
-         hb_parl( 1 ) ? ( iState | iFlag ) : ( iState & ~iFlag ) );
+      gtInfo.pNewVal = hb_itemPutNI( gtInfo.pNewVal, hb_parl( 1 ) ? ( iState | iFlag ) : ( iState & ~iFlag ) );
       hb_gtInfo( HB_GTI_KBDSHIFTS, &gtInfo );
    }
 
    if( gtInfo.pNewVal )
+   {
       hb_itemRelease( gtInfo.pNewVal );
+   }
    if( gtInfo.pResult )
+   {
       hb_itemRelease( gtInfo.pResult );
+   }
 
    hb_retl( ( iState & iFlag ) != 0 );
 }

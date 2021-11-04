@@ -71,7 +71,7 @@ typedef struct
 
 static void s_ct_date_init( void * cargo )
 {
-   PCT_DATE ct_date = ( PCT_DATE ) cargo;
+   PCT_DATE ct_date = static_cast< PCT_DATE >( cargo );
 
    ct_date->dTimeSet     = 0;
    ct_date->dTimeCounter = 0;
@@ -81,7 +81,7 @@ static HB_TSD_NEW( s_ct_date, sizeof( CT_DATE ), s_ct_date_init, nullptr );
 
 HB_FUNC( WAITPERIOD )
 {
-   PCT_DATE ct_date = ( PCT_DATE ) hb_stackGetTSD( &s_ct_date );
+   PCT_DATE ct_date = static_cast< PCT_DATE >( hb_stackGetTSD( &s_ct_date ) );
 
    double d = hb_dateSeconds();
 
@@ -92,7 +92,9 @@ HB_FUNC( WAITPERIOD )
    }
 
    if( d < ct_date->dTimeSet )
+   {
       d += 86400.0;
+   }
 
    hb_retl( d < ct_date->dTimeCounter );
 }
@@ -110,8 +112,7 @@ static HB_BOOL _hb_timeValid( const char * szTime, HB_SIZE nLen, int * piDecode 
       fValid = HB_TRUE;
       for( nPos = 0; fValid && nPos < nLen; ++nPos )
       {
-         fValid = nPos % 3 == 2 ? szTime[ nPos ] == ':' :
-                  ( szTime[ nPos ] >= '0' && szTime[ nPos ] <= '9' );
+         fValid = nPos % 3 == 2 ? szTime[ nPos ] == ':' : ( szTime[ nPos ] >= '0' && szTime[ nPos ] <= '9' );
       }
       for( nPos = 0, i = 0; fValid && nPos < nLen; nPos += 3, ++i )
       {
@@ -119,7 +120,9 @@ static HB_BOOL _hb_timeValid( const char * szTime, HB_SIZE nLen, int * piDecode 
          iVal   = 10 * ( szTime[ nPos ] - '0' ) + ( szTime[ nPos + 1 ] - '0' );
          fValid = iVal <= sc_iMax[ i ];
          if( piDecode )
+         {
             piDecode[ i ] = iVal;
+         }
       }
    }
 

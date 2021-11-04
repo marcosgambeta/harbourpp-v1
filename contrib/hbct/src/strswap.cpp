@@ -52,8 +52,7 @@ HB_FUNC( STRSWAP )
    HB_SIZE sStrLen1, sStrLen2;
 
    /* param check */
-   if( ( sStrLen1 = hb_parclen( 1 ) ) > 0 &&
-       ( sStrLen2 = hb_parclen( 2 ) ) > 0 )
+   if( ( sStrLen1 = hb_parclen( 1 ) ) > 0 && ( sStrLen2 = hb_parclen( 2 ) ) > 0 )
    {
       /* get parameters */
       const char * pcString1 = hb_parc( 1 );
@@ -82,10 +81,14 @@ HB_FUNC( STRSWAP )
             char cExchange = *( pcString1 + sIndex );
             *( pcRet1 + sIndex ) = *( pcString2 + sIndex );
             if( iChange2 )
+            {
                *( pcRet2 + sIndex ) = cExchange;
+            }
          }
          else if( iChange2 )
+         {
             *( pcRet2 + sIndex ) = *( pcString1 + sIndex );
+         }
       }
 
       /* strings */
@@ -109,13 +112,19 @@ HB_FUNC( STRSWAP )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_STRSWAP, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retc_null();
+      }
    }
 }

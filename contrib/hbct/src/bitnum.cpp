@@ -66,18 +66,28 @@ HB_BOOL ct_numParam( int iParam, HB_MAXINT * plNum )
          char c = *szHex++;
 
          if( c >= '0' && c <= '9' )
+         {
             c -= '0';
+         }
          else if( c >= 'A' && c <= 'F' )
+         {
             c -= 'A' - 10;
+         }
          else if( c >= 'a' && c <= 'f' )
+         {
             c -= 'a' - 10;
+         }
          else
+         {
             break;
+         }
          *plNum = ( *plNum << 4 ) | c;
          iParam = 0;
       }
       if( ! iParam )
+      {
          return HB_TRUE;
+      }
    }
    else if( HB_ISNUM( iParam ) )
    {
@@ -102,9 +112,11 @@ HB_FUNC( NUMAND )
       {
          lValue &= lNext;
       }
-      
+
       if( iPCount )
+      {
          lValue = -1;
+      }
    }
    hb_retnint( lValue );
 }
@@ -122,9 +134,11 @@ HB_FUNC( NUMOR )
       {
          lValue |= lNext;
       }
-      
+
       if( iPCount )
+      {
          lValue = -1;
+      }
    }
    hb_retnint( lValue );
 }
@@ -144,7 +158,9 @@ HB_FUNC( NUMXOR )
       }
 
       if( iPCount )
+      {
          lValue = -1;
+      }
    }
    hb_retnint( lValue );
 }
@@ -154,7 +170,9 @@ HB_FUNC( NUMNOT )
    HB_MAXINT lValue;
 
    if( ct_numParam( 1, &lValue ) )
+   {
       lValue = ( ~lValue ) & 0xffff;
+   }
 
    hb_retnint( lValue );
 }
@@ -164,7 +182,9 @@ HB_FUNC( NUMLOW )
    HB_MAXINT lValue;
 
    if( ct_numParam( 1, &lValue ) )
+   {
       lValue &= 0xff;
+   }
 
    hb_retnint( lValue );
 }
@@ -174,7 +194,9 @@ HB_FUNC( NUMHIGH )
    HB_MAXINT lValue;
 
    if( ct_numParam( 1, &lValue ) /* && lValue == lValue & 0xffff */  )
+   {
       lValue = ( lValue >> 8 ) & 0xff;
+   }
 
    hb_retnint( lValue );
 }
@@ -183,8 +205,7 @@ HB_FUNC( NUMROL )
 {
    HB_MAXINT lValue, lShift;
 
-   if( ct_numParam( 1, &lValue ) && lValue == ( lValue & 0xffff ) && ct_numParam( 2, &lShift )
-       && lShift == ( lShift & 0xffff ) )
+   if( ct_numParam( 1, &lValue ) && lValue == ( lValue & 0xffff ) && ct_numParam( 2, &lShift ) && lShift == ( lShift & 0xffff ) )
    {
       if( hb_parl( 3 ) )
       {
@@ -199,7 +220,9 @@ HB_FUNC( NUMROL )
       }
    }
    else
+   {
       lValue = -1;
+   }
 
    hb_retnint( lValue );
 }
@@ -217,7 +240,9 @@ HB_FUNC( NUMMIRR )
       {
          usResult <<= 1;
          if( lValue & 1 )
+         {
             usResult |= 1;
+         }
          lValue >>= 1;
       }
       while( --usBits );
@@ -225,7 +250,9 @@ HB_FUNC( NUMMIRR )
       lValue = usResult;
    }
    else
+   {
       lValue = -1;
+   }
 
    hb_retnint( lValue );
 }
@@ -243,12 +270,16 @@ HB_FUNC( CLEARBIT )
       {
          int iBit = hb_parni( ++i );
          if( iBit < 1 || iBit > 64 )
+         {
             break;
+         }
          lValue &= ~( ( static_cast< HB_MAXINT >( 1 ) ) << ( iBit - 1 ) );
       }
 
       if( iPCount )
+      {
          lValue = -1;
+      }
    }
 
    hb_retnint( lValue );
@@ -267,12 +298,16 @@ HB_FUNC( SETBIT )
       {
          int iBit = hb_parni( ++i );
          if( iBit < 1 || iBit > 64 )
+         {
             break;
+         }
          lValue |= ( static_cast< HB_MAXINT >( 1 ) ) << ( iBit - 1 );
       }
 
       if( iPCount )
+      {
          lValue = -1;
+      }
    }
 
    hb_retnint( lValue );
@@ -287,11 +322,15 @@ HB_FUNC( ISBIT )
       int iBit = hb_parni( 2 );
 
       if( iBit )
+      {
          --iBit;
+      }
       lValue &= ( static_cast< HB_MAXINT >( 1 ) ) << iBit;
    }
    else
+   {
       lValue = 0;
+   }
 
    hb_retl( lValue != 0 );
 }
@@ -305,12 +344,18 @@ HB_FUNC( INTNEG )
       HB_BOOL f32Bit = hb_parl( 2 );
 
       if( f32Bit )
-         hb_retnint( ( HB_I32 ) lValue );
+      {
+         hb_retnint( static_cast< HB_I32 >( lValue ) );
+      }
       else
-         hb_retnint( ( HB_I16 ) lValue );
+      {
+         hb_retnint( static_cast< HB_I16 >( lValue ) );
+      }
    }
    else
+   {
       hb_retni( 0 );
+   }
 }
 
 HB_FUNC( INTPOS )
@@ -322,14 +367,20 @@ HB_FUNC( INTPOS )
       HB_BOOL f32Bit = hb_parl( 2 );
 
       if( f32Bit )
+      {
 #ifndef HB_LONG_LONG_OFF
-         hb_retnint( ( HB_U32 ) lValue );
+         hb_retnint( static_cast< HB_U32 >( lValue ) );
 #else
-         hb_retnlen( ( HB_U32 ) lValue, 0, 0 );
+         hb_retnlen( static_cast< HB_U32 >( lValue ), 0, 0 );
 #endif
+      }
       else
-         hb_retnint( ( HB_U16 ) lValue );
+      {
+         hb_retnint( static_cast< HB_U16 >( lValue ) );
+      }
    }
    else
+   {
       hb_retni( 0 );
+   }
 }

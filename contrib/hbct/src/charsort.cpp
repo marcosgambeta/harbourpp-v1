@@ -112,22 +112,26 @@ HB_FUNC( CHARSORT )
       charsort->sElementPos = hb_parnsdef( 5, 0 );
 
       /* param check II */
-      if( sElementLen == 0 || charsort->sCompareLen > sElementLen ||
-          sIgnore + sElementLen > sStrLen ||
-          charsort->sElementPos + charsort->sCompareLen > sElementLen ||
-          sSortLen + sIgnore > sStrLen )
+      if( sElementLen == 0 || charsort->sCompareLen > sElementLen || sIgnore + sElementLen > sStrLen ||
+          charsort->sElementPos + charsort->sCompareLen > sElementLen || sSortLen + sIgnore > sStrLen )
       {
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
+         {
             ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CHARSORT,
                       nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT,
                       HB_ERR_ARGS_BASEPARAMS );
+         }
 
          if( iNoRet )
+         {
             hb_retl( HB_FALSE );
+         }
          else
+         {
             hb_retc_null();
+         }
          return;
       }
 
@@ -135,9 +139,13 @@ HB_FUNC( CHARSORT )
       hb_xmemcpy( pcRet, pcString, sStrLen );
 
       if( iDescend )
+      {
          qsort( pcRet + sIgnore, ( sSortLen / sElementLen ), sElementLen, _hb_do_sortdescend );
+      }
       else
+      {
          qsort( pcRet + sIgnore, ( sSortLen / sElementLen ), sElementLen, _hb_do_sortascend );
+      }
 
       /* return string */
       hb_storclen( pcRet, sStrLen, 1 );
@@ -148,7 +156,9 @@ HB_FUNC( CHARSORT )
          hb_xfree( pcRet );
       }
       else
+      {
          hb_retclen_buffer( pcRet, sStrLen );
+      }
    }
    else
    {
@@ -156,15 +166,23 @@ HB_FUNC( CHARSORT )
       int      iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_CHARSORT, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else if( iNoRet )
+      {
          hb_retl( HB_FALSE );
+      }
       else
+      {
          hb_retc_null();
+      }
    }
 }

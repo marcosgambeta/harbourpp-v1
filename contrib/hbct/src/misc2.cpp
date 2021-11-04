@@ -61,21 +61,30 @@ HB_FUNC( COMPLEMENT )
          {
             const char * szSrc = hb_itemGetCPtr( pItem );
             char * szBuffer = static_cast< char * >( hb_xgrab( nLen + 1 ) );
-            HB_SIZE nPos;
 
-            for( nPos = 0; nPos < nLen; nPos++ )
+            for( HB_SIZE nPos = 0; nPos < nLen; nPos++ )
+            {
                szBuffer[ nPos ] = ~szSrc[ nPos ];
+            }
             hb_retclen_buffer( szBuffer, nLen );
          }
          else
+         {
             hb_retc_null();
+         }
       }
       else if( HB_IS_DATE( pItem ) )
+      {
          hb_retdl( 4537847 - hb_itemGetDL( pItem ) );
+      }
       else if( HB_IS_TIMESTAMP( pItem ) )
+      {
          hb_rettd( 4537847.0 - hb_itemGetTD( pItem ) );
+      }
       else if( HB_IS_NUMINT( pItem ) )
+      {
          hb_retnint( -hb_itemGetNInt( pItem ) );
+      }
       else if( HB_IS_NUMERIC( pItem ) )
       {
          int iWidth, iDec;
@@ -86,12 +95,18 @@ HB_FUNC( COMPLEMENT )
          hb_retndlen( -dValue, iWidth, iDec );
       }
       else if( HB_IS_LOGICAL( pItem ) )
+      {
          hb_retl( ! hb_itemGetL( pItem ) );
+      }
       else
+      {
          hb_ret();
+      }
    }
    else
+   {
       hb_ret();
+   }
 }
 
 HB_FUNC( NUL )

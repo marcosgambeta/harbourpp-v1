@@ -83,11 +83,17 @@ HB_FUNC( VGAPALETTE )
 
    color_string = hb_parc( 1 );
    if( color_string )
+   {
       attr = hb_gtColorToN( color_string );
+   }
    else if( HB_ISNUM( 1 ) )
+   {
       attr = hb_parni( 1 );
+   }
    else
+   {
       attr = -1;
+   }
 
    if( attr < 0 || attr >= 16 )
    {
@@ -123,7 +129,9 @@ HB_FUNC( VGAPALETTE )
       outportb( 0x3C9, blue );
 
       if( iflag )
+      {
          __dpmi_get_and_enable_virtual_interrupt_state();
+      }
    }
    hb_retl( HB_TRUE );
 #else
@@ -155,9 +163,13 @@ HB_FUNC( VIDEOTYPE )
       r.x.ax = 0x1A00;
       __dpmi_int( 0x10, &r );
       if( r.h.al == 0x1A )
+      {
          hb_retni( VCARD_VGA );
+      }
       else
+      {
          hb_retni( VCARD_EGA );
+      }
    }
 #endif
 }
@@ -172,13 +184,21 @@ HB_FUNC( SETFONT )
    int height = 16;
 
    if( ! area )
+   {
       area = 1;
+   }
    if( HB_ISNUM( 3 ) )
+   {
       offset = hb_parni( 3 );
+   }
    if( HB_ISNUM( 4 ) )
+   {
       count = hb_parni( 4 );
+   }
    if( HB_ISLOG( 3 ) && hb_parl( 3 ) && count != 0 )
+   {
       height = len / count;
+   }
 
 #if defined( __DJGPP__ )
    #ifndef __tb_size

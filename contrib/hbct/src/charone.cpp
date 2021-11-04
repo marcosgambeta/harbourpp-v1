@@ -84,7 +84,6 @@ static void do_charone( int iSwitch )
          case DO_CHARONE_CHARONE:
             if( sStrLen > 1 )
             {
-               const char * pcSub;
                char * pcRet;
                HB_SIZE sRetStrLen = 0;
                char cCurrent = *pcString;
@@ -92,16 +91,14 @@ static void do_charone( int iSwitch )
                pcRet = static_cast< char * >( hb_xgrab( sStrLen ) );
                /* copy first char */
                pcRet[ sRetStrLen++ ] = cCurrent;
-               for( pcSub = pcString + 1; pcSub < pcString + sStrLen; pcSub++ )
+               for( const char * pcSub = pcString + 1; pcSub < pcString + sStrLen; pcSub++ )
                {
                   if( *pcSub != cCurrent )
                   {
                      cCurrent = *pcSub;
                      pcRet[ sRetStrLen++ ] = cCurrent;
                   }
-                  else if( pcDeleteSet != nullptr &&
-                           ! ct_at_exact_forward( pcDeleteSet, sDeleteSetLen,
-                                                  pcSub, 1, nullptr ) )
+                  else if( pcDeleteSet != nullptr && ! ct_at_exact_forward( pcDeleteSet, sDeleteSetLen, pcSub, 1, nullptr ) )
                   {
                      pcRet[ sRetStrLen++ ] = cCurrent;
                   }
@@ -119,7 +116,6 @@ static void do_charone( int iSwitch )
          case DO_CHARONE_WORDONE:
             if( sStrLen > 3 && ( pcDeleteSet == nullptr || sDeleteSetLen >= 2 ) )
             {
-               const char * pcSub;
                char * pcRet;
                HB_SIZE sRetStrLen = 0;
                char cCurrent1 = pcString[ 0 ];
@@ -130,7 +126,7 @@ static void do_charone( int iSwitch )
                pcRet[ sRetStrLen++ ] = cCurrent1;
                pcRet[ sRetStrLen++ ] = cCurrent2;
 
-               for( pcSub = pcString + 2; pcSub < pcString + sStrLen - 1; pcSub += 2 )
+               for( const char * pcSub = pcString + 2; pcSub < pcString + sStrLen - 1; pcSub += 2 )
                {
                   if( ! ( pcSub[ 0 ] == cCurrent1 && pcSub[ 1 ] == cCurrent2 ) )
                   {
@@ -160,7 +156,9 @@ static void do_charone( int iSwitch )
 
                /* copy last character if string length is odd */
                if( sStrLen & 1 )
+               {
                   pcRet[ sRetStrLen++ ] = pcString[ sStrLen - 1 ];
+               }
 
                hb_retclen( pcRet, sRetStrLen );
                hb_xfree( pcRet );
@@ -179,15 +177,21 @@ static void do_charone( int iSwitch )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   iSwitch == DO_CHARONE_CHARONE ?
                                   CT_ERROR_CHARONE : CT_ERROR_WORDONE,
                                   nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
                                   HB_ERR_ARGS_BASEPARAMS );
+      }
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retc_null();
+      }
    }
 }
 

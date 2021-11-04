@@ -58,12 +58,9 @@ HB_FUNC( CTOBIT )
 
       if( nPattern >= 1 && nPattern <= 16 )
       {
-         HB_SIZE n;
+         const char * pszString = hb_parc( 1 ), * pszPattern = hb_parc( 2 );
 
-         const char * pszString = hb_parc( 1 ),
-                    * pszPattern = hb_parc( 2 );
-
-         for( n = 0; n < nString; ++n )
+         for( HB_SIZE n = 0; n < nString; ++n )
          {
             char c = pszString[ n ];
             int i = 0;
@@ -80,7 +77,9 @@ HB_FUNC( CTOBIT )
          }
       }
       else
+      {
          iResult = -1;
+      }
    }
    hb_retni( iResult );
 }
@@ -98,7 +97,9 @@ HB_FUNC( BITTOC )
 
       iValue = hb_parnidef( 1, -1 );
       if( iValue > 0xFFFF || iValue < 0 )
+      {
          iValue = 0;
+      }
 
       if( hb_parl( 3 ) )
       {
@@ -124,5 +125,7 @@ HB_FUNC( BITTOC )
       hb_retclen( pszResult, iLen );
    }
    else
+   {
       hb_retc_null();
+   }
 }

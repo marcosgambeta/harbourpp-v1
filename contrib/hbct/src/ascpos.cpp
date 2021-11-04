@@ -63,18 +63,26 @@ static void do_ascpos( int iSwitch )
       HB_SIZE sPos = hb_parnsdef( 2, sStrSize );
 
       if( sPos == 0 || sPos > sStrSize )
+      {
          hb_retni( 0 );
+      }
       else
       {
          if( iSwitch == DO_ASCPOS_VALPOS )
          {
             if( HB_ISDIGIT( static_cast< HB_UCHAR >( pcString[ sPos - 1 ] ) ) )
+            {
                hb_retni( pcString[ sPos - 1 ] - '0' );
+            }
             else
+            {
                hb_retni( 0 );
+            }
          }
          else
+         {
             hb_retni( pcString[ sPos - 1 ] );
+         }
       }
    }
    else
@@ -83,16 +91,22 @@ static void do_ascpos( int iSwitch )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   iSwitch == DO_ASCPOS_VALPOS ?
                                   CT_ERROR_VALPOS : CT_ERROR_ASCPOS, nullptr,
                                   HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
                                   HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retni( 0 );
+      }
    }
 }
 

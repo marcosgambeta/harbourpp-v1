@@ -66,14 +66,20 @@ HB_FUNC( ADDASCII )
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
+         {
             ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_ADDASCII, nullptr,
                       HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+         }
 
          /* return string unchanged */
          if( iNoRet )
+         {
             hb_retl( HB_FALSE );
+         }
          else
+         {
             hb_retclen( pcSource, sLen );
+         }
 
          return;
       }
@@ -86,23 +92,27 @@ HB_FUNC( ADDASCII )
 
       if( iCarryOver )
       {
-         HB_SIZE sCurrent;
-
-         for( sCurrent = sPos; sCurrent > 0 && lValue != 0; sCurrent-- )
+         for( HB_SIZE sCurrent = sPos; sCurrent > 0 && lValue != 0; sCurrent-- )
          {
             HB_LONG lResult = static_cast< HB_LONG >( pcSource[ sCurrent - 1 ] ) + ( lValue % 256 );
 
             lValue /= 256;
             if( lResult > 255 )
+            {
                lValue++;
+            }
             else if( lResult < 0 )
+            {
                lValue--;
+            }
 
             pcResult[ sCurrent - 1 ] = static_cast< char >( lResult % 256 );
          }
       }
       else
+      {
          pcResult[ sPos - 1 ] = static_cast< char >( ( static_cast< HB_LONG >( pcResult[ sPos - 1 ] ) + lValue ) % 256 );
+      }
 
       hb_storclen( pcResult, sLen, 1 );
 
@@ -112,7 +122,9 @@ HB_FUNC( ADDASCII )
          hb_xfree( pcResult );
       }
       else
+      {
          hb_retclen_buffer( pcResult, sLen );
+      }
    }
    else
    {
@@ -120,14 +132,22 @@ HB_FUNC( ADDASCII )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_ADDASCII,
                                   nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else if( iNoRet )
+      {
          hb_retl( HB_FALSE );
+      }
       else
+      {
          hb_retc_null();
+      }
    }
 }

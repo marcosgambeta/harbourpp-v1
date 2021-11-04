@@ -103,7 +103,9 @@ static HB_BOOL hb_IsNetShared( const char * szLocalDevice )
    dwResult = WNetGetConnection( lpLocalDevice, lpRemoteDevice, &dwLen );
    hb_vmLock();
    if( lpFree )
+   {
       hb_xfree( lpFree );
+   }
 
    return dwResult == NO_ERROR;
 }
@@ -132,7 +134,9 @@ HB_FUNC( NETPRINTER )
    const char * cPrn = hb_setGetCPtr( HB_SET_PRINTFILE );  /* query default local printer port. */
 
    if( ! cPrn || ! *cPrn || hb_stricmp( cPrn, "PRN" ) == 0 )
+   {
       cPrn = "LPT1";
+   }
    hb_retl( hb_IsNetShared( cPrn ) );
 #else
    hb_retl( HB_FALSE );
@@ -193,12 +197,18 @@ HB_FUNC( NETRMTNAME )
    if( WNetGetConnection( lpLocalName, lpRemoteDevice, &dwSize ) == ERROR_MORE_DATA )
    {
       if( dwSize > 0 && dwSize <= dwLen && WNetGetConnection( lpLocalName, lpRemoteDevice, &dwSize ) == NO_ERROR )
+      {
          HB_RETSTRLEN( lpRemoteDevice, static_cast< HB_SIZE >( dwSize - 1 ) );
+      }
       else
+      {
          hb_retc_null();
+      }
    }
    else
+   {
       hb_retc_null();
+   }
 
    hb_strfree( hLocalDev );
 #else
@@ -220,7 +230,9 @@ HB_FUNC( NETWORK )
       dwResult = WNetGetProviderName( WNNC_NET_LANMAN, lpProviderName, &dwLen );
 
       if( dwResult != NO_ERROR )
+      {
          dwResult = WNetGetProviderName( WNNC_NET_NETWARE, lpProviderName, &dwLen );
+      }
    }
 
    hb_retl( dwResult == NO_ERROR );

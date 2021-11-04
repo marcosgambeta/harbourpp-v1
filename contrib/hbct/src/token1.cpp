@@ -56,8 +56,7 @@
 #include "hbstack.h"
 
 /* static const data */
-static const char * sc_pcSeparatorStr =
-   "\x00" "\x09" "\x0A" "\x0C" "\x1A" "\x20" "\x8A" "\x8C" ",.;:!\?/\\<>()#&%+-*";
+static const char * sc_pcSeparatorStr = "\x00" "\x09" "\x0A" "\x0C" "\x1A" "\x20" "\x8A" "\x8C" ",.;:!\?/\\<>()#&%+-*";
 static const HB_SIZE sc_sSeparatorStrLen = 26;
 
 /* static data */
@@ -71,7 +70,7 @@ typedef struct
 
 static void s_ct_token_init( void * cargo )
 {
-   PCT_TOKEN ct_token = ( PCT_TOKEN ) cargo;
+   PCT_TOKEN ct_token = static_cast< PCT_TOKEN >( cargo );
 
    ct_token->iPreSeparator  = -1;
    ct_token->iPostSeparator = -1;
@@ -89,7 +88,7 @@ static HB_TSD_NEW( s_ct_token, sizeof( CT_TOKEN ), s_ct_token_init, nullptr );
 /* helper function for the token function group I */
 static void do_token1( int iSwitch )
 {
-   PCT_TOKEN ct_token = ( PCT_TOKEN ) hb_stackGetTSD( &s_ct_token );
+   PCT_TOKEN ct_token = static_cast< PCT_TOKEN >( hb_stackGetTSD( &s_ct_token ) );
 
    int iParamCheck = 0;
    int iNoRef = ct_getref() && HB_ISBYREF( 1 );
@@ -125,7 +124,9 @@ static void do_token1( int iSwitch )
       /* separator string */
       sSeparatorStrLen = hb_parclen( 2 );
       if( sSeparatorStrLen != 0 )
+      {
          pcSeparatorStr = hb_parc( 2 );
+      }
       else
       {
          pcSeparatorStr = sc_pcSeparatorStr;
@@ -148,9 +149,13 @@ static void do_token1( int iSwitch )
       }
 
       if( nTokenCounter == 0 )
+      {
          nTokenCounter = HB_SIZE_MAX;
+      }
       if( nSkip == 0 )
+      {
          nSkip = HB_SIZE_MAX;
+      }
 
       /* prepare return value for TokenUpper()/TokenLower() */
       if( iSwitch == DO_TOKEN1_TOKENLOWER || iSwitch == DO_TOKEN1_TOKENUPPER )
@@ -158,9 +163,13 @@ static void do_token1( int iSwitch )
          if( sStrLen == 0 )
          {
             if( iNoRef )
+            {
                hb_retl( HB_FALSE );
+            }
             else
+            {
                hb_retc_null();
+            }
             return;
          }
          sRetStrLen = sStrLen;
@@ -186,15 +195,18 @@ static void do_token1( int iSwitch )
          {
             sSubStrLen -= ( pc - pcSubStr ) + 1;
             pcSubStr = pc + 1;
-            pc = ct_at_charset_forward( pcSubStr, sSubStrLen,
-                                        pcSeparatorStr, sSeparatorStrLen, &sMatchedPos );
+            pc = ct_at_charset_forward( pcSubStr, sSubStrLen, pcSeparatorStr, sSeparatorStrLen, &sMatchedPos );
             if( iSwitch == DO_TOKEN1_TOKEN )
             {
                ct_token->iPreSeparator = ct_token->iPostSeparator;
                if( sMatchedPos < sSeparatorStrLen )
+               {
                   ct_token->iPostSeparator = pcSeparatorStr[ sMatchedPos ];
+               }
                else
+               {
                   ct_token->iPostSeparator = -1;
+               }
             }
             nSkipCnt++;
          }
@@ -241,7 +253,9 @@ static void do_token1( int iSwitch )
                      hb_retl( HB_FALSE );
                   }
                   else
+                  {
                      hb_retclen_buffer( pcRet, sRetStrLen );
+                  }
                   break;
             }
             return;
@@ -255,15 +269,17 @@ static void do_token1( int iSwitch )
                break;
 
             case DO_TOKEN1_TOKENLOWER:
-               if( pcSubStr != pc )     /* letters can be tokenizers, too,
-                                           but they should not be lowercase'd */
+               if( pcSubStr != pc )     /* letters can be tokenizers, too, but they should not be lowercase'd */
+               {
                   *( pcRet + ( pcSubStr - pcString ) ) = static_cast< char >( hb_charLower( static_cast< HB_UCHAR >( *pcSubStr ) ) );
+               }
                break;
 
             case DO_TOKEN1_TOKENUPPER:
-               if( pcSubStr != pc )     /* letters can be tokenizers, too,
-                                           but they should not be uppercase'd */
+               if( pcSubStr != pc )     /* letters can be tokenizers, too, but they should not be uppercase'd */
+               {
                   *( pcRet + ( pcSubStr - pcString ) ) = static_cast< char >( hb_charUpper( static_cast< HB_UCHAR >( *pcSubStr ) ) );
+               }
                break;
 
             default:
@@ -288,10 +304,9 @@ static void do_token1( int iSwitch )
          {
             if( nSkip == HB_SIZE_MAX )
             {
-               const char * t;
                HB_BOOL bLast = HB_TRUE;
 
-               for( t = pc + 1; t < pcString + sStrLen; t++ )
+               for( const char * t = pc + 1; t < pcString + sStrLen; t++ )
                {
                   if( ! memchr( pcSeparatorStr, *t, sSeparatorStrLen ) )
                   {
@@ -300,10 +315,14 @@ static void do_token1( int iSwitch )
                   }
                }
                if( bLast )
+               {
                   break;
+               }
             }
             else if( pc + 1 == pcString + sStrLen )
+            {
                break;
+            }
          }
       }
 
@@ -313,11 +332,14 @@ static void do_token1( int iSwitch )
          {
             char cRet;
 
-            if( nTokenCounter == HB_SIZE_MAX ||
-                nToken == nTokenCounter )
+            if( nTokenCounter == HB_SIZE_MAX || nToken == nTokenCounter )
+            {
                hb_retclen( pcSubStr, pc - pcSubStr );
+            }
             else
+            {
                hb_retc_null();
+            }
 
             if( HB_ISBYREF( 5 ) ) /* HB_EXTENSION */
             {
@@ -336,11 +358,14 @@ static void do_token1( int iSwitch )
             break;
 
          case DO_TOKEN1_ATTOKEN:
-            if( nTokenCounter == HB_SIZE_MAX ||
-                nToken == nTokenCounter )
+            if( nTokenCounter == HB_SIZE_MAX || nToken == nTokenCounter )
+            {
                hb_retns( pcSubStr - pcString + 1 );
+            }
             else
+            {
                hb_retns( 0 );
+            }
             break;
 
          case DO_TOKEN1_TOKENLOWER:
@@ -353,7 +378,9 @@ static void do_token1( int iSwitch )
                hb_retl( HB_FALSE );
             }
             else
+            {
                hb_retclen_buffer( pcRet, sRetStrLen );
+            }
             break;
       }
    }
@@ -379,17 +406,25 @@ static void do_token1( int iSwitch )
             }
 
             if( iArgErrorMode != CT_ARGERR_IGNORE )
+            {
                pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                         CT_ERROR_TOKEN, nullptr, HB_ERR_FUNCNAME, 0,
                                         EF_CANSUBSTITUTE,
                                         HB_ERR_ARGS_BASEPARAMS );
+            }
 
             if( pSubst != nullptr )
+            {
                hb_itemReturnRelease( pSubst );
+            }
             else if( ! iNoRef )
+            {
                hb_retc_null();
+            }
             else
+            {
                hb_retl( HB_FALSE );
+            }
             break;
          }
          case DO_TOKEN1_TOKENLOWER:
@@ -399,19 +434,27 @@ static void do_token1( int iSwitch )
             int iArgErrorMode = ct_getargerrormode();
 
             if( iArgErrorMode != CT_ARGERR_IGNORE )
+            {
                pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                         iSwitch == DO_TOKEN1_TOKENLOWER ?
                                         CT_ERROR_TOKENLOWER : CT_ERROR_TOKENUPPER,
                                         nullptr, HB_ERR_FUNCNAME, 0,
                                         EF_CANSUBSTITUTE,
                                         HB_ERR_ARGS_BASEPARAMS );
+            }
 
             if( pSubst != nullptr )
+            {
                hb_itemReturnRelease( pSubst );
+            }
             else if( ! iNoRef )
+            {
                hb_retc_null();
+            }
             else
+            {
                hb_retl( HB_FALSE );
+            }
             break;
          }
          case DO_TOKEN1_NUMTOKEN:
@@ -421,16 +464,22 @@ static void do_token1( int iSwitch )
             int iArgErrorMode = ct_getargerrormode();
 
             if( iArgErrorMode != CT_ARGERR_IGNORE )
+            {
                pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                         iSwitch == DO_TOKEN1_NUMTOKEN ?
                                         CT_ERROR_NUMTOKEN : CT_ERROR_ATTOKEN,
                                         nullptr, HB_ERR_FUNCNAME, 0,
                                         EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+            }
 
             if( pSubst != nullptr )
+            {
                hb_itemReturnRelease( pSubst );
+            }
             else
+            {
                hb_retns( 0 );
+            }
             break;
          }
       }
@@ -464,7 +513,7 @@ HB_FUNC( TOKENUPPER )
 
 HB_FUNC( TOKENSEP )
 {
-   PCT_TOKEN ct_token = ( PCT_TOKEN ) hb_stackGetTSD( &s_ct_token );
+   PCT_TOKEN ct_token = static_cast< PCT_TOKEN >( hb_stackGetTSD( &s_ct_token ) );
 
    char cRet;
 
@@ -477,7 +526,9 @@ HB_FUNC( TOKENSEP )
          hb_retclen( &cRet, 1 );
       }
       else
+      {
          hb_retc_null();
+      }
    }
    else
    {
@@ -488,6 +539,8 @@ HB_FUNC( TOKENSEP )
          hb_retclen( &cRet, 1 );
       }
       else
+      {
          hb_retc_null();
+      }
    }
 }

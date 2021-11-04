@@ -78,7 +78,9 @@ HB_FUNC( FV )
          dResult = pow( dBase, dTime );
 
          if( hb_mathGetError( &hb_exc, "POW", dBase, dTime, dResult ) )
+         {
             dResult = hb_exc.handled ? hb_exc.retval : 0.0;
+         }
 
          dResult = dPayment * ( dResult - 1.0 ) / dRate;
       }
@@ -91,14 +93,20 @@ HB_FUNC( FV )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_FV, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retnd( 0.0 );
+      }
    }
 }
 
@@ -125,7 +133,9 @@ HB_FUNC( PV )
          dResult = pow( dBase, -dTime );
 
          if( hb_mathGetError( &hb_exc, "POW", dBase, -dTime, dResult ) )
+         {
             dResult = hb_exc.handled ? hb_exc.retval : 0.0;
+         }
 
          dResult = dPayment * ( 1.0 - dResult ) / dRate;
       }
@@ -138,14 +148,20 @@ HB_FUNC( PV )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_PV, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retnd( 0.0 );
+      }
    }
 }
 
@@ -172,7 +188,9 @@ HB_FUNC( PAYMENT )
          dResult = pow( dBase, -dTime );
 
          if( hb_mathGetError( &hb_exc, "POW", dBase, -dTime, dResult ) )
+         {
             dResult = hb_exc.handled ? hb_exc.retval : 0.0;
+         }
 
          dResult = dCapital * dRate / ( 1.0 - dResult );
       }
@@ -185,14 +203,20 @@ HB_FUNC( PAYMENT )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_PAYMENT, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retnd( 0.0 );
+      }
    }
 }
 
@@ -223,7 +247,9 @@ HB_FUNC( PERIODS )
          hb_mathResetError( &hb_exc );
          dResult = log( dBase );
          if( hb_mathGetError( &hb_exc, "LOG", dBase, 0.0, dResult ) )
+         {
             dResult = hb_exc.handled ? hb_exc.retval : 0.0;
+         }
 
          if( dResult )
          {
@@ -233,7 +259,9 @@ HB_FUNC( PERIODS )
             dResult2 = log( dBase );
 
             if( hb_mathGetError( &hb_exc, "LOG", dBase, 0.0, dResult2 ) )
+            {
                dResult2 = hb_exc.handled ? hb_exc.retval : 0.0;
+            }
 
             dResult = -dResult2 / dResult;
          }
@@ -247,14 +275,20 @@ HB_FUNC( PERIODS )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_PERIODS, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retnd( 0.0 );
+      }
    }
 }
 
@@ -299,10 +333,14 @@ HB_FUNC( RATE )
             dScale = dScale * 0.10;
 
             if( ( dAux - dPayment ) < dEpsilon )
+            {
                break;
+            }
          }
          else
+         {
             j += dScale;
+         }
       }
 
       hb_retnd( j * 0.000833333 );      /* return as mensual's rate */
@@ -313,13 +351,19 @@ HB_FUNC( RATE )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_RATE, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retnd( 0.0 );
+      }
    }
 }

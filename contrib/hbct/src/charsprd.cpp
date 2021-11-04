@@ -52,13 +52,17 @@ HB_FUNC( CHARSPREAD )
    HB_SIZE nLen = hb_parclen( 1 );
 
    if( nLen == 0 )
+   {
       hb_retc_null();
+   }
    else
    {
       HB_ISIZ nSize = hb_parns( 2 );
 
       if( nSize < 0 || static_cast< HB_SIZE >( nSize ) <= nLen )
+      {
          hb_itemReturn( hb_param( 1, HB_IT_ANY ) );
+      }
       else
       {
          const char * szText = hb_parc( 1 );
@@ -67,9 +71,13 @@ HB_FUNC( CHARSPREAD )
          HB_SIZE nPos;
 
          if( HB_ISCHAR( 3 ) )
+         {
             cDelim = hb_parc( 3 )[ 0 ];
+         }
          else if( HB_ISNUM( 3 ) )
+         {
             cDelim = static_cast< char >( hb_parni( 3 ) );
+         }
 
          for( nPos = 0; nPos < nLen; ++nPos )
          {
@@ -79,12 +87,14 @@ HB_FUNC( CHARSPREAD )
                while( nPos + 1 < nLen && szText[ nPos + 1 ] == cDelim )
                {
                   ++nPos;
-               }   
+               }
             }
          }
 
          if( nTokens == 0 )
+         {
             hb_itemReturn( hb_param( 1, HB_IT_ANY ) );
+         }
          else
          {
             HB_ISIZ iRepl, iRest, iFirst;
@@ -115,7 +125,9 @@ HB_FUNC( CHARSPREAD )
                      ++i;
                   }
                   else if( nTokens <= iRest )
+                  {
                      ++i;
+                  }
                   while( --i >= 0 )
                   {
                      szDest[ nDst++ ] = cDelim;

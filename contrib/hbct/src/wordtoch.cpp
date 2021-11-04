@@ -55,9 +55,7 @@ HB_FUNC( WORDTOCHAR )
    iMultiPass = ct_getatmupa();
 
    /* param check */
-   if( ( sSearchLen = hb_parclen( 1 ) ) / 2 > 0 &&
-       ( sStrLen = hb_parclen( 2 ) ) / 2 > 0 &&
-       ( sReplaceLen = hb_parclen( 3 ) ) > 0 )
+   if( ( sSearchLen = hb_parclen( 1 ) ) / 2 > 0 && ( sStrLen = hb_parclen( 2 ) ) / 2 > 0 && ( sReplaceLen = hb_parclen( 3 ) ) > 0 )
    {
       /* get parameters */
       const char * pcSearch = hb_parc( 1 );
@@ -83,19 +81,21 @@ HB_FUNC( WORDTOCHAR )
          *( pcRet + sRetIndex + 1 ) = *( pcString + sIndex + 1 );
 
          if( ! iNoReplace &&
-             ( ( pc = ct_at_exact_forward( pcSearch, sSearchLen,
-                                           pcRet + sRetIndex, 2,
-                                           &sMatchStrLen ) ) != nullptr ) &&
+             ( ( pc = ct_at_exact_forward( pcSearch, sSearchLen, pcRet + sRetIndex, 2, &sMatchStrLen ) ) != nullptr ) &&
              ( ( ( sReplIndex = ( pc - pcSearch ) ) & 1 ) != 1 ) )
          {
             sReplIndex /= 2;
             if( sReplIndex >= sReplaceLen )
+            {
                sReplIndex = sReplaceLen - 1;
+            }
 
             *( pcRet + sRetIndex ) = *( pcReplace + sReplIndex );
 
             if( ! iMultiPass )
+            {
                iNoReplace = 1;  /* just copy next char without searching & replacing */
+            }
          }
          else
          {
@@ -116,15 +116,23 @@ HB_FUNC( WORDTOCHAR )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_WORDTOCHAR, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else if( HB_ISCHAR( 2 ) )
+      {
          hb_retclen( hb_parc( 2 ), hb_parclen( 2 ) );
+      }
       else
+      {
          hb_retc_null();
+      }
    }
 }

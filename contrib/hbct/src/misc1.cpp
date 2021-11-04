@@ -71,8 +71,12 @@ HB_FUNC( XTOC )
          hb_retclen( buf, sizeof( buf ) );
       }
       else if( HB_IS_LOGICAL( pItem ) )
+      {
          hb_retclen( hb_itemGetL( pItem ) ? "T" : "F", 1 );
+      }
       else
+      {
          hb_itemReturn( pItem );
+      }
    }
 }

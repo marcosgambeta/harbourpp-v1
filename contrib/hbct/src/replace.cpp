@@ -76,23 +76,37 @@ static void do_replace( int iSwitch )
       if( sStrLen == 0 )
       {
          if( iNoRet )
+         {
             hb_ret();
+         }
          else
+         {
             hb_retc_null();
+         }
          return;
       }
 
       if( HB_ISNUM( 2 ) )
+      {
          cReplace = static_cast< char >( hb_parnl( 2 ) % 256 );
+      }
       else
+      {
          cReplace = *( static_cast< const char * >( hb_parc( 2 ) ) );
+      }
 
       if( hb_parclen( 3 ) > 0 )
+      {
          cSearch = *( static_cast< const char * >( hb_parc( 3 ) ) );
+      }
       else if( HB_ISNUM( 3 ) )
+      {
          cSearch = static_cast< char >( hb_parnl( 3 ) % 256 );
+      }
       else
+      {
          cSearch = 0x20;
+      }
 
       pcRet = static_cast< char * >( hb_xgrab( sStrLen + 1 ) );
       hb_xmemcpy( pcRet, pcString, sStrLen );
@@ -125,7 +139,9 @@ static void do_replace( int iSwitch )
          hb_ret();
       }
       else
+      {
          hb_retclen_buffer( pcRet, sStrLen );
+      }
    }
    else
    {
@@ -133,17 +149,25 @@ static void do_replace( int iSwitch )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   sulErrorSubcodes[ iSwitch ],
                                   nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else if( iNoRet )
+      {
          hb_ret();
+      }
       else
+      {
          hb_retc_null();
+      }
    }
 }
 

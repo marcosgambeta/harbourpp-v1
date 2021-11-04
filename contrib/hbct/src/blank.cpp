@@ -58,28 +58,42 @@ HB_FUNC( BLANK )
    if( ! pItem )
    {
       if( bRet )
+      {
          hb_retl( HB_FALSE );
+      }
    }
    else if( HB_IS_TIMESTAMP( pItem ) )
    {
       if( bRef )
+      {
          hb_stortdt( 0, 0, 1 );
+      }
       if( bRet )
+      {
          hb_rettdt( 0, 0 );
+      }
    }
    else if( HB_IS_DATE( pItem ) )
    {
       if( bRef )
+      {
          hb_stordl( 0, 1 );
+      }
       if( bRet )
+      {
          hb_retdl( 0 );
+      }
    }
    else if( HB_IS_NUMBER( pItem ) )
    {
       if( bRef )
+      {
          hb_stornl( 0, 1 );
+      }
       if( bRet )
+      {
          hb_retnl( 0 );
+      }
    }
    else if( HB_IS_STRING( pItem ) )
    {
@@ -91,41 +105,65 @@ HB_FUNC( BLANK )
          char * szResult = static_cast< char * >( hb_xgrab( nLen + 1 ) );
 
          if( nLen > 0 )
+         {
             hb_xmemset( szResult, ' ', nLen );
+         }
          if( bRef )
+         {
             hb_storclen( szResult, nLen, 1 );
+         }
          if( bRet )
+         {
             hb_retclen_buffer( szResult, nLen );
+         }
          else
+         {
             hb_xfree( szResult );
+         }
       }
       else
       {
          if( bRef )
+         {
             hb_storc( nullptr, 1 );
+         }
          if( bRet )
+         {
             hb_retc_null();
+         }
       }
    }
    else if( HB_IS_ARRAY( pItem ) )
    {
       if( bRef )
+      {
          hb_arraySize( pItem, 0 );
+      }
       if( bRet )
+      {
          hb_reta( 0 );
+      }
    }
    else if( HB_IS_LOGICAL( pItem ) )
    {
       if( bRef )
+      {
          hb_storl( HB_FALSE, 1 );
+      }
       if( bRet )
+      {
          hb_retl( HB_FALSE );
+      }
    }
    else
    {
       if( bRet )
+      {
          hb_retl( HB_FALSE );
+      }
    }
    if( ! bRet )
+   {
       hb_ret();
+   }
 }

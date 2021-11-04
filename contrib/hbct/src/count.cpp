@@ -64,11 +64,17 @@ static void do_count( int iSwitch )
       char cSearch;
 
       if( hb_parclen( 2 ) > 0 )
+      {
          cSearch = *( hb_parc( 2 ) );
+      }
       else if( HB_ISNUM( 2 ) )
+      {
          cSearch = static_cast< char >( hb_parnl( 2 ) % 256 );
+      }
       else
+      {
          cSearch = 0x20;
+      }
 
       sRetVal = 0;
 
@@ -101,16 +107,22 @@ static void do_count( int iSwitch )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   iSwitch == DO_COUNT_COUNTLEFT ?
                                   CT_ERROR_COUNTLEFT : CT_ERROR_COUNTRIGHT,
                                   nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
                                   HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retns( 0 );
+      }
    }
 }
 

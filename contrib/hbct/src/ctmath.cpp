@@ -85,14 +85,18 @@ HB_FUNC( SETPREC )
    int iPrec = hb_parni( 1 );
 
    if( iPrec >= 1 && iPrec <= 16 )
+   {
       ct_setprecision( iPrec );
+   }
    else
    {
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_SETPREC, nullptr,
                    HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+      }
    }
    hb_retc_null();
 }
@@ -105,7 +109,9 @@ HB_FUNC( GETPREC )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_GETPREC, nullptr,
                    HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+      }
    }
 }

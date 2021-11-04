@@ -60,7 +60,9 @@ HB_FUNC( BOM )
       lDate = hb_dateEncode( iYear, iMonth, iDay );
    }
    else
+   {
       lDate = hb_pardl( 1 );
+   }
 
    if( lDate != 0 )
    {
@@ -68,7 +70,9 @@ HB_FUNC( BOM )
       hb_retd( iYear, iMonth, 1 );
    }
    else
+   {
       hb_retdl( 0 );
+   }
 }
 
 HB_FUNC( EOM )
@@ -82,7 +86,9 @@ HB_FUNC( EOM )
       lDate = hb_dateEncode( iYear, iMonth, iDay );
    }
    else
+   {
       lDate = hb_pardl( 1 );
+   }
 
    if( lDate != 0 )
    {
@@ -96,7 +102,9 @@ HB_FUNC( EOM )
       hb_retdl( hb_dateEncode( iYear, iMonth, 1 ) - 1 );
    }
    else
+   {
       hb_retdl( 0 );
+   }
 }
 
 HB_FUNC( BOQ )
@@ -110,7 +118,9 @@ HB_FUNC( BOQ )
       lDate = hb_dateEncode( iYear, iMonth, iDay );
    }
    else
+   {
       lDate = hb_pardl( 1 );
+   }
 
    if( lDate != 0 )
    {
@@ -120,7 +130,9 @@ HB_FUNC( BOQ )
       hb_retd( iYear, iMonth, 1 );
    }
    else
+   {
       hb_retdl( 0 );
+   }
 }
 
 HB_FUNC( EOQ )
@@ -134,7 +146,9 @@ HB_FUNC( EOQ )
       lDate = hb_dateEncode( iYear, iMonth, iDay );
    }
    else
+   {
       lDate = hb_pardl( 1 );
+   }
 
    if( lDate != 0 )
    {
@@ -148,7 +162,9 @@ HB_FUNC( EOQ )
       hb_retdl( hb_dateEncode( iYear, iMonth, 1 ) - 1 );
    }
    else
+   {
       hb_retdl( 0 );
+   }
 }
 
 HB_FUNC( BOY )
@@ -162,7 +178,9 @@ HB_FUNC( BOY )
       lDate = hb_dateEncode( iYear, iMonth, iDay );
    }
    else
+   {
       lDate = hb_pardl( 1 );
+   }
 
    if( lDate != 0 )
    {
@@ -170,7 +188,9 @@ HB_FUNC( BOY )
       hb_retd( iYear, 1, 1 );
    }
    else
+   {
       hb_retdl( 0 );
+   }
 }
 
 HB_FUNC( EOY )
@@ -184,7 +204,9 @@ HB_FUNC( EOY )
       lDate = hb_dateEncode( iYear, iMonth, iDay );
    }
    else
+   {
       lDate = hb_pardl( 1 );
+   }
 
    if( lDate != 0 )
    {
@@ -192,20 +214,26 @@ HB_FUNC( EOY )
       hb_retdl( hb_dateEncode( iYear + 1, 1, 1 ) - 1 );
    }
    else
+   {
       hb_retdl( 0 );
+   }
 }
 
 static int hb_wom( int iYear, int iMonth, int iDay )
 {
-   int iWom;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_wom(%d, %d, %d)", iYear, iMonth, iDay ) );
+
+   int iWom;
 
    iWom = iDay + hb_dateDOW( iYear, iMonth, 1 ) - 1;
    if( iWom > 0 )
+   {
       return ( iWom - hb_dateDOW( iYear, iMonth, iDay ) ) / 7 + 1;
+   }
    else
+   {
       return 0;
+   }
 }
 
 HB_FUNC( WOM )
@@ -219,7 +247,9 @@ HB_FUNC( WOM )
       lDate = hb_dateEncode( iYear, iMonth, iDay );
    }
    else
+   {
       lDate = hb_pardl( 1 );
+   }
 
    if( lDate != 0 )
    {
@@ -227,5 +257,7 @@ HB_FUNC( WOM )
       hb_retni( hb_wom( iYear, iMonth, iDay ) );
    }
    else
+   {
       hb_retni( 0 );
+   }
 }

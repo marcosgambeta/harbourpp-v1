@@ -82,12 +82,18 @@ HB_FUNC( SIN )
       if( hb_mathGetError( &hb_exc, "SIN", dArg, 0.0, dResult ) )
       {
          if( hb_exc.handled )
+         {
             hb_retndlen( hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec );
+         }
          else
+         {
             hb_retndlen( HUGE_VAL, -1, -1 );
+         }
       }
       else
+      {
          hb_retnd( dResult );
+      }
    }
    else
    {
@@ -95,14 +101,20 @@ HB_FUNC( SIN )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_SIN, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retnd( 0.0 );
+      }
    }
 }
 
@@ -118,12 +130,18 @@ HB_FUNC( COS )
       if( hb_mathGetError( &hb_exc, "COS", dArg, 0.0, dResult ) )
       {
          if( hb_exc.handled )
+         {
             hb_retndlen( hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec );
+         }
          else
+         {
             hb_retndlen( HUGE_VAL, -1, -1 );
+         }
       }
       else
+      {
          hb_retnd( dResult );
+      }
    }
    else
    {
@@ -131,14 +149,20 @@ HB_FUNC( COS )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_COS, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retnd( 0.0 );
+      }
    }
 }
 
@@ -154,12 +178,18 @@ HB_FUNC( TAN )
       if( hb_mathGetError( &hb_exc, "TAN", dArg, 0.0, dResult ) )
       {
          if( hb_exc.handled )
+         {
             hb_retndlen( hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec );
+         }
          else
+         {
             hb_retndlen( HUGE_VAL, -1, -1 );
+         }
       }
       else
+      {
          hb_retnd( dResult );
+      }
    }
    else
    {
@@ -167,14 +197,20 @@ HB_FUNC( TAN )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_TAN, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retnd( 0.0 );
+      }
    }
 }
 
@@ -188,7 +224,9 @@ HB_FUNC( COT )
       hb_mathResetError( &hb_exc );
       dResult = tan( dArg );
       if( hb_mathGetError( &hb_exc, "TAN", dArg, 0.0, dResult ) )
+      {
          dResult = hb_exc.handled ? hb_exc.retval : 0.0;
+      }
 
       dResult = dResult ? 1 / dResult : HUGE_VAL;
       hb_retnd( dResult );
@@ -199,14 +237,20 @@ HB_FUNC( COT )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_COT, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retnd( 0.0 );
+      }
    }
 }
 
@@ -222,12 +266,18 @@ HB_FUNC( ASIN )
       if( hb_mathGetError( &hb_exc, "ASIN", dArg, 0.0, dResult ) )
       {
          if( hb_exc.handled )
+         {
             hb_retndlen( hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec );
+         }
          else
+         {
             hb_retndlen( HUGE_VAL, -1, -1 );
+         }
       }
       else
+      {
          hb_retnd( dResult );
+      }
    }
    else
    {
@@ -235,14 +285,20 @@ HB_FUNC( ASIN )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_ASIN, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retnd( 0.0 );
+      }
    }
 }
 
@@ -258,12 +314,18 @@ HB_FUNC( ACOS )
       if( hb_mathGetError( &hb_exc, "ACOS", dArg, 0.0, dResult ) )
       {
          if( hb_exc.handled )
+         {
             hb_retndlen( hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec );
+         }
          else
+         {
             hb_retndlen( HUGE_VAL, -1, -1 );
+         }
       }
       else
+      {
          hb_retnd( dResult );
+      }
    }
    else
    {
@@ -271,14 +333,20 @@ HB_FUNC( ACOS )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_ACOS, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retnd( 0.0 );
+      }
    }
 }
 
@@ -294,20 +362,28 @@ HB_FUNC( ATAN )
       if( hb_mathGetError( &hb_exc, "ATAN", dArg, 0.0, dResult ) )
       {
          if( hb_exc.handled )
+         {
             hb_retndlen( hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec );
+         }
          else
          {
             /* atan normally don't error, but it's save to return Pi()/2
                or -Pi()/2, respectively, as these
                are the boundary result values */
             if( dArg < 0.0 )
+            {
                hb_retnd( -CT_PI / 2.0 );
+            }
             else
+            {
                hb_retnd( CT_PI / 2.0 );
+            }
          }
       }
       else
+      {
          hb_retnd( dResult );
+      }
    }
    else
    {
@@ -315,14 +391,20 @@ HB_FUNC( ATAN )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_ATAN, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retnd( 0.0 );
+      }
    }
 }
 
@@ -340,7 +422,9 @@ HB_FUNC( ATN2 )
       if( hb_mathGetError( &hb_exc, "ATAN2", dY, dX, dResult ) )
       {
          if( hb_exc.handled )
+         {
             hb_retndlen( hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec );
+         }
          else
          {
             /* DOMAIN error: both arguments to atan2 have been 0 */
@@ -349,15 +433,23 @@ HB_FUNC( ATN2 )
                atn2 (-0.0, 0.0) == -PI
                atn2 (-0.0, -0.0) == -2*PI */
             if( dX >= 0.0 )
+            {
                hb_retnd( -CT_PI );
+            }
             else if( dY < 0.0 )
+            {
                hb_retnd( -2.0 * CT_PI );
+            }
             else
+            {
                hb_retnd( 0.0 );
+            }
          }
       }
       else
+      {
          hb_retnd( dResult );
+      }
    }
    else
    {
@@ -365,14 +457,20 @@ HB_FUNC( ATN2 )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_ATN2, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retnd( 0.0 );
+      }
    }
 }
 
@@ -388,19 +486,27 @@ HB_FUNC( SINH )
       if( hb_mathGetError( &hb_exc, "SINH", dArg, 0.0, dResult ) )
       {
          if( hb_exc.handled )
+         {
             hb_retndlen( hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec );
+         }
          else
          {
             /* OVERFLOW error: we have no CTIII behaviour to follow,
                so return +INF or -INF, respectively */
             if( dArg < 0.0 )
+            {
                hb_retndlen( -HUGE_VAL, -1, -1 );
+            }
             else
+            {
                hb_retndlen( HUGE_VAL, -1, -1 );
+            }
          }
       }
       else
+      {
          hb_retnd( dResult );
+      }
    }
    else
    {
@@ -408,14 +514,20 @@ HB_FUNC( SINH )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_SINH, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retnd( 0.0 );
+      }
    }
 }
 
@@ -431,14 +543,20 @@ HB_FUNC( COSH )
       if( hb_mathGetError( &hb_exc, "COSH", dArg, 0.0, dResult ) )
       {
          if( hb_exc.handled )
+         {
             hb_retndlen( hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec );
+         }
          else
+         {
             /* OVERFLOW error: we have no CTIII behaviour to follow,
                so return +INF */
             hb_retndlen( HUGE_VAL, -1, -1 );
+         }
       }
       else
+      {
          hb_retnd( dResult );
+      }
    }
    else
    {
@@ -446,14 +564,20 @@ HB_FUNC( COSH )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_COSH, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retnd( 0.0 );
+      }
    }
 }
 
@@ -469,19 +593,27 @@ HB_FUNC( TANH )
       if( hb_mathGetError( &hb_exc, "TANH", dArg, 0.0, dResult ) )
       {
          if( hb_exc.handled )
+         {
             hb_retndlen( hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec );
+         }
          else
          {
             /* normally, Tanh() doesn't give errors, but let's return -1 or +1,
                respectively, as these are the boundary result values */
             if( dArg < 0.0 )
+            {
                hb_retnd( -1.0 );
+            }
             else
+            {
                hb_retnd( 1.0 );
+            }
          }
       }
       else
+      {
          hb_retnd( dResult );
+      }
    }
    else
    {
@@ -489,14 +621,20 @@ HB_FUNC( TANH )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_TANH, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retnd( 0.0 );
+      }
    }
 }
 
@@ -515,14 +653,20 @@ HB_FUNC( RTOD )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_RTOD, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retnd( 0.0 );
+      }
    }
 }
 
@@ -541,13 +685,19 @@ HB_FUNC( DTOR )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_DTOR, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retnd( 0.0 );
+      }
    }
 }

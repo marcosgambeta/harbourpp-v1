@@ -67,12 +67,18 @@ HB_FUNC( FLOOR )
       if( hb_mathGetError( &hb_exc, "FLOOR", dArg, 0.0, dResult ) )
       {
          if( hb_exc.handled )
+         {
             hb_retndlen( hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec );
+         }
          else
+         {
             hb_retnlen( 0, 0, 0 );
+         }
       }
       else
+      {
          hb_retnlen( dResult, 0, 0 );
+      }
    }
    else
    {
@@ -80,14 +86,20 @@ HB_FUNC( FLOOR )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst =
             ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_FLOOR, nullptr, HB_ERR_FUNCNAME, 0,
                             EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retnd( 0.0 );
+      }
    }
 }
 
@@ -103,12 +115,18 @@ HB_FUNC( CEILING )
       if( hb_mathGetError( &hb_exc, "CEIL", dArg, 0.0, dResult ) )
       {
          if( hb_exc.handled )
+         {
             hb_retndlen( hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec );
+         }
          else
+         {
             hb_retnlen( 0, 0, 0 );
+         }
       }
       else
+      {
          hb_retnlen( dResult, 0, 0 );
+      }
    }
    else
    {
@@ -116,14 +134,20 @@ HB_FUNC( CEILING )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_CEILING, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retnd( 0.0 );
+      }
    }
 }
 
@@ -135,11 +159,17 @@ HB_FUNC( SIGN )
       int iResult;
 
       if( dInput == 0.00 )
+      {
          iResult = 0;
+      }
       else if( dInput > 0.00 )
+      {
          iResult = 1;
+      }
       else
+      {
          iResult = -1;
+      }
 
       hb_retni( iResult );
    }
@@ -149,14 +179,20 @@ HB_FUNC( SIGN )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_SIGN, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retni( 0 );
+      }
    }
 }
 
@@ -172,7 +208,9 @@ HB_FUNC( LOG10 )
       if( hb_mathGetError( &hb_exc, "LOG10", dArg, 0.0, dResult ) )
       {
          if( hb_exc.handled )
+         {
             hb_retndlen( hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec );
+         }
          else
          {
             /* math exception is up to the Harbour function, so do this as Clipper compatible as possible */
@@ -190,7 +228,9 @@ HB_FUNC( LOG10 )
          }
       }
       else
+      {
          hb_retnd( dResult );
+      }
    }
    else
    {
@@ -198,14 +238,20 @@ HB_FUNC( LOG10 )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_LOG10, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retni( 0 );
+      }
    }
 }
 
@@ -218,14 +264,17 @@ HB_FUNC( FACT )
       if( iInput >= 0 && iInput < 22 )
       {
          double dResult = 1.0;
-         int i;
 
-         for( i = 1; i <= iInput; i++ )
+         for( int i = 1; i <= iInput; i++ )
+         {
             dResult *= static_cast< double >( i );
+         }
          hb_retnd( dResult );
       }
       else
+      {
          hb_retnd( -1.0 );
+      }
    }
    else
    {
@@ -233,13 +282,19 @@ HB_FUNC( FACT )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_FACT, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retnd( 0.0 );
+      }
    }
 }

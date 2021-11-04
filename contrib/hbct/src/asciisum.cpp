@@ -53,11 +53,12 @@ HB_FUNC( ASCIISUM )
    {
       const char * pcString = hb_parc( 1 );
       HB_SIZE sStrSize = hb_parclen( 1 );
-      HB_SIZE sPos;
       HB_MAXUINT ulResult = 0;
 
-      for( sPos = 0; sPos < sStrSize; sPos++ )
+      for( HB_SIZE sPos = 0; sPos < sStrSize; sPos++ )
+      {
          ulResult += static_cast< HB_MAXUINT >( pcString[ sPos ] );
+      }
 
       hb_retnint( ulResult );
    }
@@ -67,13 +68,19 @@ HB_FUNC( ASCIISUM )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_ASCIISUM, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retnint( 0 );
+      }
    }
 }

@@ -72,11 +72,17 @@ static void do_remove( int iSwitch )
       char cSearch;
 
       if( hb_parclen( 2 ) > 0 )
+      {
          cSearch = *( hb_parc( 2 ) );
+      }
       else if( HB_ISNUM( 2 ) )
+      {
          cSearch = static_cast< char >( hb_parnl( 2 ) % 256 );
+      }
       else
+      {
          cSearch = 0x20;
+      }
 
       sRetLen = sStrLen;
       pcRet = pcString;
@@ -102,9 +108,13 @@ static void do_remove( int iSwitch )
       }
 
       if( sRetLen == 0 )
+      {
          hb_retc_null();
+      }
       else
+      {
          hb_retclen( pcRet, sRetLen );
+      }
    }
    else
    {
@@ -112,15 +122,21 @@ static void do_remove( int iSwitch )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   sulErrorSubcodes[ iSwitch ],
                                   nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retc_null();
+      }
    }
 }
 

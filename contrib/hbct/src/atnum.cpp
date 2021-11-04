@@ -81,8 +81,10 @@ static void do_atnum( int iSwitch )
                int iArgErrorMode = ct_getargerrormode();
 
                if( iArgErrorMode != CT_ARGERR_IGNORE )
+               {
                   ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_AFTERATNUM, nullptr,
                             HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+               }
 
                hb_retc_null();
                break;
@@ -93,8 +95,10 @@ static void do_atnum( int iSwitch )
                int iArgErrorMode = ct_getargerrormode();
 
                if( iArgErrorMode != CT_ARGERR_IGNORE )
+               {
                   ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_BEFORATNUM, nullptr,
                             HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+               }
 
                hb_retc_null();
                break;
@@ -105,8 +109,10 @@ static void do_atnum( int iSwitch )
                int iArgErrorMode = ct_getargerrormode();
 
                if( iArgErrorMode != CT_ARGERR_IGNORE )
+               {
                   ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_ATNUM, nullptr, HB_ERR_FUNCNAME, 0,
                             EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+               }
 
                hb_retns( 0 );
                break;
@@ -170,9 +176,13 @@ static void do_atnum( int iSwitch )
             nMatchCounter++;
 
             if( iMultiPass )
+            {
                pcSubStr = pc + 1;
+            }
             else
+            {
                pcSubStr = pc + sMatchStrLen;
+            }
             sSubStrLen = sStrLen - ( pcSubStr - pcString );
          }
       }
@@ -183,13 +193,11 @@ static void do_atnum( int iSwitch )
          switch( iAtLike )
          {
             case CT_SETATLIKE_EXACT:
-               pc = ct_at_exact_backward( pcString, sStrLen, pcStringToMatch,
-                                          sStrToMatchLen, &sMatchStrLen );
+               pc = ct_at_exact_backward( pcString, sStrLen, pcStringToMatch, sStrToMatchLen, &sMatchStrLen );
                break;
 
             case CT_SETATLIKE_WILDCARD:
-               pc = ct_at_wildcard_backward( pcString, sStrLen, pcStringToMatch,
-                                             sStrToMatchLen, cAtLike, &sMatchStrLen );
+               pc = ct_at_wildcard_backward( pcString, sStrLen, pcStringToMatch, sStrToMatchLen, cAtLike, &sMatchStrLen );
                break;
 
             default:
@@ -221,9 +229,13 @@ static void do_atnum( int iSwitch )
          case DO_ATNUM_AFTERATNUM:
             /* AFTERATNUM */
             if( pc + sMatchStrLen >= pcString + sStrLen )
+            {
                hb_retc_null();
+            }
             else
+            {
                hb_retclen( pc + sMatchStrLen, sStrLen - ( pc + sMatchStrLen - pcString ) );
+            }
             break;
 
          case DO_ATNUM_BEFORATNUM:
@@ -249,16 +261,22 @@ static void do_atnum( int iSwitch )
             int iArgErrorMode = ct_getargerrormode();
 
             if( iArgErrorMode != CT_ARGERR_IGNORE )
+            {
                pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                         iSwitch ==
                                         DO_ATNUM_AFTERATNUM ? CT_ERROR_AFTERATNUM :
                                         CT_ERROR_BEFORATNUM, nullptr, HB_ERR_FUNCNAME, 0,
                                         EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+            }
 
             if( pSubst != nullptr )
+            {
                hb_itemReturnRelease( pSubst );
+            }
             else
+            {
                hb_retc_null();
+            }
             break;
          }
          case DO_ATNUM_ATNUM:
@@ -268,14 +286,20 @@ static void do_atnum( int iSwitch )
             int iArgErrorMode = ct_getargerrormode();
 
             if( iArgErrorMode != CT_ARGERR_IGNORE )
+            {
                pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_ATNUM,
                                         nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
                                         HB_ERR_ARGS_BASEPARAMS );
+            }
 
             if( pSubst != nullptr )
+            {
                hb_itemReturnRelease( pSubst );
+            }
             else
+            {
                hb_retns( 0 );
+            }
             break;
          }
       }

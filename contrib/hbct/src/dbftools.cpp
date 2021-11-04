@@ -70,7 +70,9 @@ HB_FUNC( DBFSIZE )
             HB_ULONG ulRecSize, ulRecCount;
             ulRecSize = hb_itemGetNL( pSize );
             if( SELF_RECCOUNT( pArea, &ulRecCount ) == HB_SUCCESS )
+            {
                llSize += static_cast< HB_MAXINT >( ulRecCount ) * ulRecSize;
+            }
          }
       }
       hb_itemRelease( pSize );

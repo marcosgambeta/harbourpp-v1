@@ -92,13 +92,19 @@ HB_FUNC( CHARRELA )
             else
             {
                if( pc1 - pcString1 > pc2 - pcString2 )
+               {
                   sOffset1 = sOffset2 = pc1 - pcString1;
+               }
                else
+               {
                   sOffset1 = sOffset2 = pc2 - pcString2;
+               }
             }
          }
          else
+         {
             sOffset1 = sOffset2 = sStrLen1 < sStrLen2 ? sStrLen1 : sStrLen2;
+         }
       }
 
       hb_retns( 0 );
@@ -109,14 +115,20 @@ HB_FUNC( CHARRELA )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_CHARRELA, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retns( 0 );
+      }
    }
 }
 
@@ -124,8 +136,7 @@ HB_FUNC( CHARRELREP )
 {
    int iNoRet = ct_getref() && HB_ISBYREF( 4 );
 
-   if( HB_ISCHAR( 1 ) && HB_ISCHAR( 2 ) && HB_ISCHAR( 3 ) &&
-       HB_ISCHAR( 4 ) && HB_ISCHAR( 5 ) )
+   if( HB_ISCHAR( 1 ) && HB_ISCHAR( 2 ) && HB_ISCHAR( 3 ) && HB_ISCHAR( 4 ) && HB_ISCHAR( 5 ) )
    {
       const char * pcStringToMatch1 = hb_parc( 1 );
       HB_SIZE sStrToMatchLen1 = hb_parclen( 1 );
@@ -143,13 +154,16 @@ HB_FUNC( CHARRELREP )
       HB_SIZE sMatchStrLen;
 
       /* check for empty strings */
-      if( sStrToMatchLen1 == 0 ||
-          sStrToMatchLen2 == 0 || sReplaceLen == 0 || sStrLen2 == 0 )
+      if( sStrToMatchLen1 == 0 || sStrToMatchLen2 == 0 || sReplaceLen == 0 || sStrLen2 == 0 )
       {
          if( iNoRet )
+         {
             hb_ret();
+         }
          else
+         {
             hb_retclen( pcString2, sStrLen2 );
+         }
          return;
       }
 
@@ -171,9 +185,8 @@ HB_FUNC( CHARRELREP )
             if( pc1 - pcString1 == pc2 - pcString2 )
             {
                /* correlation found -> start replacement */
-               HB_SIZE sCurr;
 
-               for( sCurr = 1; sCurr <= sStrToMatchLen1; sCurr++ )
+               for( HB_SIZE sCurr = 1; sCurr <= sStrToMatchLen1; sCurr++ )
                {
                   /* check if pcString2 is long enough */
                   if( ( pc2 - pcString2 ) + sCurr >= sStrLen2 )
@@ -184,11 +197,9 @@ HB_FUNC( CHARRELREP )
                      sReplOffset = sReplaceLen < sCurr ? sReplaceLen : sCurr;
 
                      /* do the characters in pcString2 and pcStrToMatch2 match ? */
-                     if( *( pc2 + sCurr - 1 ) ==
-                         *( pcStringToMatch2 + sStr2Offset - 1 ) )
+                     if( *( pc2 + sCurr - 1 ) == *( pcStringToMatch2 + sStr2Offset - 1 ) )
                      {
-                        *( pcRet + ( pc2 - pcString2 ) + sCurr - 1 ) =
-                           *( pcReplace + sReplOffset - 1 );
+                        *( pcRet + ( pc2 - pcString2 ) + sCurr - 1 ) = *( pcReplace + sReplOffset - 1 );
                      }
                   }
                }
@@ -197,13 +208,19 @@ HB_FUNC( CHARRELREP )
             else
             {
                if( pc1 - pcString1 > pc2 - pcString2 )
+               {
                   sOffset1 = sOffset2 = pc1 - pcString1;
+               }
                else
+               {
                   sOffset1 = sOffset2 = pc2 - pcString2;
+               }
             }
          }
          else
+         {
             sOffset1 = sOffset2 = sStrLen1 < sStrLen2 ? sStrLen1 : sStrLen2;
+         }
       }
 
       hb_storclen( pcRet, sStrLen2, 4 );
@@ -214,7 +231,9 @@ HB_FUNC( CHARRELREP )
          hb_ret();
       }
       else
+      {
          hb_retclen_buffer( pcRet, sStrLen2 );
+      }
    }
    else
    {
@@ -222,15 +241,23 @@ HB_FUNC( CHARRELREP )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_CHARRELREP, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else if( iNoRet )
+      {
          hb_ret();
+      }
       else
+      {
          hb_retc_null();
+      }
    }
 }

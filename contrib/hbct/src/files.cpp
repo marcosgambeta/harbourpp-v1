@@ -81,19 +81,20 @@ typedef struct
 
 static void hb_fileFindRelease( void * cargo )
 {
-   PHB_FFDATA pFFData = ( PHB_FFDATA ) cargo;
+   PHB_FFDATA pFFData = static_cast< PHB_FFDATA >( cargo );
 
    if( pFFData->ffind )
+   {
       hb_fsFindClose( pFFData->ffind );
+   }
 }
 
 static HB_TSD_NEW( s_FFData, sizeof( HB_FFDATA ), nullptr, hb_fileFindRelease );
 
-#define HB_GET_FFDATA()  ( ( PHB_FFDATA ) hb_stackGetTSD( &s_FFData ) )
+#define HB_GET_FFDATA()  ( static_cast< PHB_FFDATA >( hb_stackGetTSD( &s_FFData ) ) )
 
 /* limit attributes to DOS ones for code portability */
 #define HB_FF_ATTR( ff ) ( ( ff )->attr & 0xFF )
-
 
 static PHB_FFIND _hb_fileStart( HB_BOOL fNext, HB_BOOL fAny )
 {
@@ -113,7 +114,7 @@ static PHB_FFIND _hb_fileStart( HB_BOOL fNext, HB_BOOL fAny )
       {
          HB_FATTR ulAttr;
 
-         ulAttr = ( HB_FATTR ) hb_parnldef( 2, fAny ? HB_FA_ANY : HB_FA_ALL );
+         ulAttr = static_cast< HB_FATTR >( hb_parnldef( 2, fAny ? HB_FA_ANY : HB_FA_ALL ) );
          pFFData->ulAttr = hb_parl( 3 ) ? ulAttr : 0;
          pFFData->ffind  = hb_fsFindFirst( szFile, ulAttr );
          while( pFFData->ffind && pFFData->ulAttr && HB_FF_ATTR( pFFData->ffind ) != pFFData->ulAttr )
@@ -183,9 +184,13 @@ HB_FUNC( SETFATTR )
    int iResult;
 
    if( hb_fsSetAttr( hb_parcx( 1 ), hb_parnldef( 2, HB_FA_ARCHIVE ) ) )
+   {
       iResult = 0;
+   }
    else
+   {
       iResult = -1;
+   }
 
    hb_retni( iResult );
 }
@@ -200,14 +205,18 @@ HB_FUNC( SETFDATI )
       long lJulian, lMillisec;
 
       if( HB_ISTIMESTAMP( 1 ) )
+      {
          hb_partdt( &lJulian, &lMillisec, 1 );
+      }
       else
       {
          PHB_ITEM pDate, pTime;
 
          pDate = hb_param( 2, HB_IT_DATE );
          if( pDate )
+         {
             pTime = hb_param( 3, HB_IT_STRING );
+         }
          else
          {
             pTime = hb_param( 2, HB_IT_STRING );
@@ -221,7 +230,9 @@ HB_FUNC( SETFDATI )
             lMillisec = hb_timeEncode( hour, minute, second, msec );
          }
          else
+         {
             lMillisec = -1;
+         }
       }
       fResult = hb_fsSetFileTime( szFile, lJulian, lMillisec );
    }
@@ -259,12 +270,18 @@ HB_FUNC( FILEDELETE )
             if( ffind->attr & HB_FA_READONLY )
             {
                if( nAttr & HB_FA_READONLY )
+               {
                   hb_fsSetAttr( szPath, ffind->attr & ~ ( HB_FATTR ) HB_FA_READONLY );
+               }
                else
+               {
                   continue;
+               }
             }
             if( hb_fsDelete( szPath ) )
+            {
                fResult = HB_TRUE;
+            }
          }
          while( hb_fsFindNext( ffind ) );
 

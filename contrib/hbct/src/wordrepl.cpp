@@ -56,8 +56,7 @@ HB_FUNC( WORDREPL )
    HB_SIZE sSearchLen, sReplaceLen;
 
    /* param check */
-   if( ( sSearchLen = hb_parclen( 1 ) ) / 2 > 0 && HB_ISCHAR( 2 ) &&
-       ( sReplaceLen = hb_parclen( 3 ) ) / 2 > 0 )
+   if( ( sSearchLen = hb_parclen( 1 ) ) / 2 > 0 && HB_ISCHAR( 2 ) && ( sReplaceLen = hb_parclen( 3 ) ) / 2 > 0 )
    {
       /* get parameters */
       const char * pcSearch = hb_parc( 1 );
@@ -66,12 +65,11 @@ HB_FUNC( WORDREPL )
       const char * pcReplace = hb_parc( 3 );
       int iMode = hb_parldef( 4, 0 );
       char * pcRet;
-      HB_SIZE sIndex;
 
       pcRet = static_cast< char * >( hb_xgrab( sStrLen + 1 ) );
       hb_xmemcpy( pcRet, pcString, sStrLen );
 
-      for( sIndex = 0; sIndex < ( sSearchLen & 0xFFFFFFFE ); sIndex += 2 )
+      for( HB_SIZE sIndex = 0; sIndex < ( sSearchLen & 0xFFFFFFFE ); sIndex += 2 )
       {
 
          HB_SIZE sMatchStrLen;
@@ -79,7 +77,9 @@ HB_FUNC( WORDREPL )
          HB_SIZE sReplIndex = sIndex;
 
          if( sReplIndex > ( sReplaceLen & 0xFFFFFFFE ) )
+         {
             sReplIndex = ( sReplaceLen & 0xFFFFFFFE );
+         }
 
          pc = pcString;
          while( ( pc = ct_at_exact_forward( pc, sStrLen - ( pc - pcString ), pcSearch + sIndex, 2, &sMatchStrLen ) ) != nullptr )
@@ -91,9 +91,13 @@ HB_FUNC( WORDREPL )
                *( pcRet + ( pc - pcString ) + 1 ) = *( pcReplace + sReplIndex + 1 );
 
                if( iMultiPass )
+               {
                   pc++;
+               }
                else
+               {
                   pc += 2;
+               }
             }
             else
             {
@@ -123,7 +127,9 @@ HB_FUNC( WORDREPL )
          hb_xfree( pcRet );
       }
       else
+      {
          hb_retclen_buffer( pcRet, sStrLen );
+      }
    }
    else
    {
@@ -131,17 +137,27 @@ HB_FUNC( WORDREPL )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_WORDREPL, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else if( iNoRet )
+      {
          hb_retl( HB_FALSE );
+      }
       else if( HB_ISCHAR( 2 ) )
+      {
          hb_retclen( hb_parc( 2 ), hb_parclen( 2 ) );
+      }
       else
+      {
          hb_retc_null();
+      }
    }
 }

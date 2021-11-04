@@ -62,27 +62,30 @@
 
 static HB_BOOL ct_isleap( int iYear )
 {
-   return iYear != 0 && ( iYear & 3 ) == 0 &&
-          ( iYear % 100 != 0 || iYear % 400 == 0 );
+   return iYear != 0 && ( iYear & 3 ) == 0 && ( iYear % 100 != 0 || iYear % 400 == 0 );
 }
 
 static int ct_daysinmonth( int iMonth, HB_BOOL bLeap )
 {
    if( iMonth == 2 )
+   {
       return bLeap ? 29 : 28;
+   }
    else if( iMonth == 4 || iMonth == 6 || iMonth == 9 || iMonth == 11 )
+   {
       return 30;
+   }
    else
+   {
       return 31;
+   }
 }
 
 static int ct_daystomonth( int iMonth, HB_BOOL bLeap )
 {
-   static const int sc_iMonths[] = {
-      0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 };
+   static const int sc_iMonths[] = { 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 };
 
-   return ( iMonth < 1 || iMonth > 12 ) ? 0 : sc_iMonths[ iMonth - 1 ] +
-          ( ( bLeap && iMonth > 2 ) ? 1 : 0 );
+   return ( iMonth < 1 || iMonth > 12 ) ? 0 : sc_iMonths[ iMonth - 1 ] + ( ( bLeap && iMonth > 2 ) ? 1 : 0 );
 }
 
 static int ct_doy( long lDate )
@@ -109,7 +112,9 @@ HB_FUNC( CTODOW )
       {
          const char * szDow = hb_langDGetItem( HB_LANG_ITEM_BASE_DAY + iDow - 1 );
          if( hb_cdpicmp( szDow, strlen( szDow ), szParam, nLen, cdp, HB_FALSE ) == 0 )
+         {
             break;
+         }
       }
    }
 
@@ -129,7 +134,9 @@ HB_FUNC( CTOMONTH )
       {
          const char * szMonth = hb_langDGetItem( HB_LANG_ITEM_BASE_MONTH + iMonth - 1 );
          if( hb_cdpicmp( szMonth, strlen( szMonth ), szParam, nLen, cdp, HB_FALSE ) == 0 )
+         {
             break;
+         }
       }
    }
 
@@ -142,12 +149,18 @@ HB_FUNC( DMY )
    HB_BOOL bMode = HB_FALSE;
 
    if( HB_ISDATETIME( 1 ) )
+   {
       hb_dateDecode( hb_pardl( 1 ), &iYear, &iMonth, &iDay );
+   }
    else
+   {
       hb_dateToday( &iYear, &iMonth, &iDay );
+   }
 
    if( HB_ISLOG( 2 ) )
+   {
       bMode = hb_parl( 2 );
+   }
 
    if( iMonth >= 1 && iMonth <= 12 )
    {
@@ -195,7 +208,9 @@ HB_FUNC( DMY )
       hb_xfree( szMDY );
    }
    else
+   {
       hb_retc_null();
+   }
 }
 
 HB_FUNC( MDY )
@@ -203,9 +218,13 @@ HB_FUNC( MDY )
    int iYear, iMonth, iDay;
 
    if( HB_ISDATETIME( 1 ) )
+   {
       hb_dateDecode( hb_pardl( 1 ), &iYear, &iMonth, &iDay );
+   }
    else
+   {
       hb_dateToday( &iYear, &iMonth, &iDay );
+   }
 
    if( iMonth >= 1 && iMonth <= 12 )
    {
@@ -243,7 +262,9 @@ HB_FUNC( MDY )
       hb_xfree( szMDY );
    }
    else
+   {
       hb_retc_null();
+   }
 }
 
 HB_FUNC( ADDMONTH )
@@ -266,9 +287,13 @@ HB_FUNC( ADDMONTH )
          hb_dateDecode( lJulian, &iYear, &iMonth, &iDay );
       }
       else if( HB_ISDATE( 1 ) )
+      {
          hb_dateDecode( hb_pardl( 1 ), &iYear, &iMonth, &iDay );
+      }
       else
+      {
          hb_dateToday( &iYear, &iMonth, &iDay );
+      }
       iNum = hb_parni( 2 );
    }
 
@@ -286,13 +311,19 @@ HB_FUNC( ADDMONTH )
 
    iDays = ct_daysinmonth( iMonth, ct_isleap( iYear ) );
    if( iDay > iDays )
+   {
       iDay = iDays;
+   }
 
    lJulian = hb_dateEncode( iYear, iMonth, iDay );
    if( fTimeStamp )
+   {
       hb_rettdt( lJulian, lMillisec );
+   }
    else
+   {
       hb_retdl( lJulian );
+   }
 }
 
 HB_FUNC( DOY )
@@ -300,7 +331,9 @@ HB_FUNC( DOY )
    long lDate;
 
    if( HB_ISDATETIME( 1 ) )
+   {
       lDate = hb_pardl( 1 );
+   }
    else
    {
       int iYear, iMonth, iDay;
@@ -317,9 +350,13 @@ HB_FUNC( ISLEAP )
    int iYear, iMonth, iDay;
 
    if( HB_ISDATETIME( 1 ) )
+   {
       hb_dateDecode( hb_pardl( 1 ), &iYear, &iMonth, &iDay );
+   }
    else
+   {
       hb_dateToday( &iYear, &iMonth, &iDay );
+   }
 
    hb_retl( ct_isleap( iYear ) );
 }
@@ -345,9 +382,13 @@ HB_FUNC( QUARTER )
    int iYear, iMonth, iDay;
 
    if( HB_ISDATETIME( 1 ) )
+   {
       hb_dateDecode( hb_pardl( 1 ), &iYear, &iMonth, &iDay );
+   }
    else
+   {
       hb_dateToday( &iYear, &iMonth, &iDay );
+   }
 
    hb_retni( ( iMonth + 2 ) / 3 );
 }
@@ -358,13 +399,19 @@ HB_FUNC( LASTDAYOM )
    int iYear, iMonth, iDay;
 
    if( HB_ISNUM( 1 ) )
+   {
       iMonth = hb_parni( 1 );
+   }
    else
    {
       if( HB_ISDATETIME( 1 ) )
+      {
          hb_dateDecode( hb_pardl( 1 ), &iYear, &iMonth, &iDay );
+      }
       else
+      {
          hb_dateToday( &iYear, &iMonth, &iDay );
+      }
 
       bLeap = ct_isleap( iYear );
    }
@@ -410,7 +457,9 @@ HB_FUNC( WEEK )
 
       iWeek = iDays / 7;
       if( iPart > 0 )
+      {
          iWeek++;
+      }
    }
    else
    {
@@ -418,9 +467,13 @@ HB_FUNC( WEEK )
 
       if( hb_setGetCPtr( HB_SET_DATEFORMAT ) && ( hb_setGetCPtr( HB_SET_DATEFORMAT )[ 0 ] == 'd' ||
                                                   hb_setGetCPtr( HB_SET_DATEFORMAT )[ 0 ] == 'D' ) )
+      {
          lDate2 = lDate + 3 - ( hb_dateDOW( iYear, iMonth, iDay ) + 5 ) % 7;
+      }
       else
+      {
          lDate2 = lDate + 4 - hb_dateDOW( iYear, iMonth, iDay );
+      }
 
       iWeek = ( ct_doy( lDate2 ) - 1 ) / 7 + 1;
    }

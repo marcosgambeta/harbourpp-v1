@@ -60,14 +60,20 @@ HB_FUNC( MAXLINE )
       {
          pBuffer = static_cast< char * >( const_cast< void * >( memchr( pcString, 13, nStrLen ) ) );
          if( ! pBuffer )
+         {
             pBuffer = pcString + nStrLen;
+         }
 
          if( pBuffer - pcString > nLength )
+         {
             nLength = pBuffer - pcString;
+         }
 
          pBuffer++;
          if( *pBuffer == 10 )
+         {
             pBuffer++;
+         }
          nStrLen -= pBuffer - pcString;
          pcString = pBuffer;
       }

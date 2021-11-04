@@ -53,9 +53,13 @@ HB_FUNC( NUMCOUNT )
    if( HB_ISNUM( 1 ) )
    {
       if( hb_parl( 2 ) )
+      {
          s_lCounter = hb_parnl( 1 );
+      }
       else
+      {
          s_lCounter += hb_parnl( 1 );
+      }
    }
 
    hb_retnl( s_lCounter );

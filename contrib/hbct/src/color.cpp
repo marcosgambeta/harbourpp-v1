@@ -57,14 +57,16 @@ HB_FUNC( INVERTATTR )
    {
       iAttr = hb_gtColorToN( hb_parc( 1 ) );
       if( iAttr == -1 )
+      {
          iAttr = 0;
+      }
    }
    else
+   {
       iAttr = hb_parni( 1 );
+   }
 
-   hb_retni( ( iAttr & 0x88 ) |
-             ( ( iAttr & 0x07 ) << 4 ) |
-             ( ( iAttr >> 4 ) & 0x07 ) );
+   hb_retni( ( iAttr & 0x88 ) | ( ( iAttr & 0x07 ) << 4 ) | ( ( iAttr >> 4 ) & 0x07 ) );
 }
 
 HB_FUNC( COLORTON )
@@ -75,7 +77,9 @@ HB_FUNC( COLORTON )
       hb_retni( iColor == -1 ? 0 : iColor );
    }
    else
+   {
       hb_retni( hb_parni( 1 ) );
+   }
 }
 
 HB_FUNC( NTOCOLOR )
@@ -87,13 +91,19 @@ HB_FUNC( NTOCOLOR )
       char szColorString[ 10 ];
 
       if( hb_parl( 2 ) )
+      {
          hb_gtColorsToString( &iColor, 1, szColorString, sizeof( szColorString ) );
+      }
       else
+      {
          hb_snprintf( szColorString, sizeof( szColorString ), "%02d/%02d", iColor & 0x0f, iColor >> 4 );
+      }
       hb_retc( szColorString );
    }
    else
+   {
       hb_retc_null();
+   }
 }
 
 HB_FUNC( ENHANCED )

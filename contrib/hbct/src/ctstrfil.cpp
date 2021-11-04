@@ -57,12 +57,14 @@ static HB_BOOL  s_bSafety   = HB_FALSE;
 void ct_setfcreate( HB_FATTR nFileAttr )
 {
    HB_TRACE( HB_TR_DEBUG, ( "ct_setfcreate(%u)", nFileAttr ) );
+
    s_nFileAttr = nFileAttr;
 }
 
 HB_FATTR ct_getfcreate( void )
 {
    HB_TRACE( HB_TR_DEBUG, ( "ct_getfcreate()" ) );
+
    return s_nFileAttr;
 }
 
@@ -71,18 +73,22 @@ HB_FUNC( SETFCREATE )
    hb_retnl( ct_getfcreate() );
 
    if( HB_ISNUM( 1 ) )
+   {
       ct_setfcreate( hb_parnl( 1 ) );
+   }
 }
 
 void ct_setsafety( HB_BOOL bSafety )
 {
    HB_TRACE( HB_TR_DEBUG, ( "ct_setsafety(%i)", bSafety ) );
+
    s_bSafety = bSafety;
 }
 
 HB_BOOL ct_getsafety( void )
 {
    HB_TRACE( HB_TR_DEBUG, ( "ct_getsafety()" ) );
+
    return s_bSafety;
 }
 
@@ -91,11 +97,12 @@ HB_FUNC( CSETSAFETY )
    hb_retl( ct_getsafety() );
 
    if( HB_ISLOG( 1 ) )
+   {
       ct_setsafety( hb_parl( 1 ) );
+   }
 }
 
-static HB_SIZE ct_StrFile( const char * pFileName, const char * pcStr, HB_SIZE nLen,
-                           HB_BOOL bOverwrite, HB_FOFFSET nOffset, HB_BOOL bTrunc )
+static HB_SIZE ct_StrFile( const char * pFileName, const char * pcStr, HB_SIZE nLen, HB_BOOL bOverwrite, HB_FOFFSET nOffset, HB_BOOL bTrunc )
 {
    HB_FHANDLE hFile;
    HB_BOOL bOpen = HB_FALSE;
@@ -108,20 +115,30 @@ static HB_SIZE ct_StrFile( const char * pFileName, const char * pcStr, HB_SIZE n
       bOpen = HB_TRUE;
    }
    else if( ! bFile || ! ct_getsafety() )
+   {
       hFile = hb_fsCreate( pFileName, ct_getfcreate() );
+   }
    else
+   {
       hFile = FS_ERROR;
+   }
 
    if( hFile != FS_ERROR )
    {
       if( nOffset )
+      {
          hb_fsSeekLarge( hFile, nOffset, FS_SET );
+      }
       else if( bOpen )
+      {
          hb_fsSeek( hFile, 0, FS_END );
+      }
 
       nWrite = hb_fsWriteLarge( hFile, pcStr, nLen );
       if( ( nWrite == nLen ) && bOpen && bTrunc )
+      {
          hb_fsWrite( hFile, nullptr, 0 );
+      }
 
       hb_fsClose( hFile );
    }
@@ -132,12 +149,12 @@ HB_FUNC( STRFILE )
 {
    if( HB_ISCHAR( 1 ) && HB_ISCHAR( 2 ) )
    {
-      hb_retns( ct_StrFile( hb_parc( 2 ), hb_parc( 1 ),
-                            hb_parclen( 1 ), hb_parl( 3 ),
-                            static_cast< HB_FOFFSET >( hb_parnint( 4 ) ), hb_parl( 5 ) ) );
+      hb_retns( ct_StrFile( hb_parc( 2 ), hb_parc( 1 ), hb_parclen( 1 ), hb_parl( 3 ), static_cast< HB_FOFFSET >( hb_parnint( 4 ) ), hb_parl( 5 ) ) );
    }
    else
+   {
       hb_retns( 0 );
+   }
 }
 
 HB_FUNC( FILESTR )
@@ -158,30 +175,42 @@ HB_FUNC( FILESTR )
          {
             nLength = hb_parns( 2 );
             if( nLength > static_cast< HB_ISIZ >( nFileSize - nPos ) )
+            {
                nLength = static_cast< HB_ISIZ >( nFileSize - nPos );
+            }
          }
          else
+         {
             nLength = static_cast< HB_ISIZ >( nFileSize - nPos );
+         }
 
          pcResult = static_cast< char * >( hb_xgrab( nLength + 1 ) );
          if( nLength > 0 )
+         {
             nLength = hb_fsReadLarge( hFile, pcResult, static_cast< HB_SIZE >( nLength ) );
+         }
 
          if( bCtrlZ )
          {
             pCtrlZ = static_cast< char * >( memchr( pcResult, 26, nLength ) );
             if( pCtrlZ )
+            {
                nLength = pCtrlZ - pcResult;
+            }
          }
 
          hb_fsClose( hFile );
          hb_retclen_buffer( pcResult, nLength );
       }
       else
+      {
          hb_retc_null();
+      }
    }
    else
+   {
       hb_retc_null();
+   }
 }
 
 HB_FUNC( SCREENFILE )
@@ -196,13 +225,13 @@ HB_FUNC( SCREENFILE )
 
       hb_gtSave( 0, 0, hb_gtMaxRow(), hb_gtMaxCol(), pBuffer );
 
-      hb_retns( ct_StrFile( hb_parc( 1 ), pBuffer,
-                            nSize, hb_parl( 2 ),
-                            static_cast< HB_FOFFSET >( hb_parnint( 3 ) ), hb_parl( 4 ) ) );
+      hb_retns( ct_StrFile( hb_parc( 1 ), pBuffer, nSize, hb_parl( 2 ), static_cast< HB_FOFFSET >( hb_parnint( 3 ) ), hb_parl( 4 ) ) );
       hb_xfree( pBuffer );
    }
    else
+   {
       hb_retns( 0 );
+   }
 }
 
 HB_FUNC( FILESCREEN )
@@ -218,7 +247,9 @@ HB_FUNC( FILESCREEN )
          HB_SIZE nLength;
 
          if( HB_ISNUM( 2 ) )
+         {
             hb_fsSeekLarge( hFile, static_cast< HB_FOFFSET >( hb_parnint( 2 ) ), FS_SET );
+         }
 
          hb_gtRectSize( 0, 0, hb_gtMaxRow(), hb_gtMaxCol(), &nSize );
          pBuffer = static_cast< char * >( hb_xgrab( nSize ) );
@@ -232,8 +263,12 @@ HB_FUNC( FILESCREEN )
          hb_retns( nLength );
       }
       else
+      {
          hb_retns( 0 );
+      }
    }
    else
+   {
       hb_retns( 0 );
+   }
 }

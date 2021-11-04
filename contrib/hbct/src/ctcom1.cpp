@@ -56,10 +56,14 @@ static int hb_ctComCharParam( int iParam )
    if( pszParam )
    {
       if( hb_parclen( iParam ) > 0 )
+      {
          return static_cast< unsigned char >( pszParam[ 0 ] );
+      }
    }
    else if( HB_ISNUM( iParam ) )
+   {
       return static_cast< unsigned char >( hb_parni( iParam ) );
+   }
 
    return -1;
 }
@@ -70,9 +74,13 @@ static void hb_ctComTestMSR( int iLine )
    int iMSR;
 
    if( hb_comMSR( hb_parni( 1 ), &iMSR ) != -1 )
+   {
       fResult = ( iMSR & iLine ) != 0;
+   }
    else
+   {
       fResult = HB_FALSE;
+   }
 
    hb_retl( fResult );
 }
@@ -142,9 +150,13 @@ HB_FUNC( COM_RTS )
    if( HB_ISLOG( 2 ) )
    {
       if( hb_parl( 2 ) )
+      {
          iSet = HB_COM_MCR_RTS;
+      }
       else
+      {
          iClr = HB_COM_MCR_RTS;
+      }
    }
    hb_comMCR( hb_parni( 1 ), &iMCR, iClr, iSet );
    hb_retl( ( iMCR & HB_COM_MCR_RTS ) != 0 );
@@ -159,9 +171,13 @@ HB_FUNC( COM_DTR )
    if( HB_ISLOG( 2 ) )
    {
       if( hb_parl( 2 ) )
+      {
          iSet = HB_COM_MCR_DTR;
+      }
       else
+      {
          iClr = HB_COM_MCR_DTR;
+      }
    }
    hb_comMCR( hb_parni( 1 ), &iMCR, iClr, iSet );
    hb_retl( ( iMCR & HB_COM_MCR_DTR ) != 0 );
@@ -179,10 +195,14 @@ HB_FUNC( COM_MCR )
       iSet = hb_parni( 2 ) & 0xff;
    }
    else
+   {
       iClr = iSet = 0;
+   }
 
    if( hb_comMCR( hb_parni( 1 ), &iMCR, iClr, iSet ) == -1 )
+   {
       iMCR = MCR_ERROR;
+   }
 
    hb_retni( iMCR );
 }
@@ -194,7 +214,9 @@ HB_FUNC( COM_MSR )
    int iMSR;
 
    if( hb_comMSR( hb_parni( 1 ), &iMSR ) == -1 )
+   {
       iMSR = MSR_ERROR;
+   }
 
    hb_retni( iMSR );
 }
@@ -206,7 +228,9 @@ HB_FUNC( COM_LSR )
    int iLSR;
 
    if( hb_comLSR( hb_parni( 1 ), &iLSR ) == -1 )
+   {
       iLSR = LSR_ERROR;
+   }
 
    hb_retni( iLSR );
 }
@@ -227,16 +251,16 @@ HB_FUNC( COM_HARD )
 
    if( hb_comFlowControl( iPort, &iFlow, -1 ) != -1 )
    {
-      iMask = hb_parl( 3 ) ? ( HB_COM_FLOW_IDTRDSR | HB_COM_FLOW_ODTRDSR ) :
-                             ( HB_COM_FLOW_IRTSCTS | HB_COM_FLOW_ORTSCTS );
+      iMask = hb_parl( 3 ) ? ( HB_COM_FLOW_IDTRDSR | HB_COM_FLOW_ODTRDSR ) : ( HB_COM_FLOW_IRTSCTS | HB_COM_FLOW_ORTSCTS );
       fResult = ( iFlow & iMask ) == iMask;
 
       if( HB_ISLOG( 2 ) )
       {
-         iFlow &= ~( HB_COM_FLOW_IDTRDSR | HB_COM_FLOW_ODTRDSR |
-                     HB_COM_FLOW_IRTSCTS | HB_COM_FLOW_ORTSCTS );
+         iFlow &= ~( HB_COM_FLOW_IDTRDSR | HB_COM_FLOW_ODTRDSR | HB_COM_FLOW_IRTSCTS | HB_COM_FLOW_ORTSCTS );
          if( hb_parl( 2 ) )
+         {
             iFlow |= iMask;
+         }
          hb_comFlowControl( iPort, nullptr, iFlow );
       }
    }
@@ -259,13 +283,19 @@ HB_FUNC( COM_SOFT )
       if( HB_ISLOG( 2 ) )
       {
          if( hb_parl( 2 ) )
+         {
             iFlow |= iMask;
+         }
          else
+         {
             iFlow &= ~iMask;
+         }
          hb_comFlowControl( iPort, nullptr, iFlow );
       }
       if( hb_pcount() > 2 )
+      {
          hb_comFlowChars( iPort, hb_ctComCharParam( 3 ), hb_ctComCharParam( 4 ) );
+      }
    }
    hb_retl( fResult );
 }
@@ -278,12 +308,15 @@ HB_FUNC( COM_SOFT_R )
    int iPort = hb_parni( 1 ), iMode;
 
    if( HB_ISLOG( 2 ) )
-      hb_comFlowSet( iPort, HB_COM_FL_SOFT |
-                            ( hb_parl( 2 ) ? HB_COM_FL_OOFF : HB_COM_FL_OON ) );
+   {
+      hb_comFlowSet( iPort, HB_COM_FL_SOFT | ( hb_parl( 2 ) ? HB_COM_FL_OOFF : HB_COM_FL_OON ) );
+   }
 
    iMode = hb_comOutputState( iPort );
    if( iMode > 0 )
+   {
       fResult = ( iMode & HB_COM_TX_XOFF ) != 0;
+   }
 
    hb_retl( fResult );
 }
@@ -296,7 +329,9 @@ HB_FUNC( COM_SOFT_S )
    int iMode = hb_comInputState( hb_parni( 1 ) );
 
    if( iMode > 0 )
+   {
       fResult = ( iMode & HB_COM_RX_XOFF ) != 0;
+   }
 
    hb_retl( fResult );
 }
@@ -324,13 +359,21 @@ HB_FUNC( COM_SMODE )
    if( iMode > 0 )
    {
       if( iMode & HB_COM_TX_EMPTY )
+      {
          iResult |= SMODE_EMPTY;
+      }
       if( iMode & HB_COM_TX_XOFF )
+      {
          iResult |= SMODE_SOFT;
+      }
       if( iMode & ( HB_COM_TX_CTS | HB_COM_TX_DSR | HB_COM_TX_DCD ) )
+      {
          iResult |= SMODE_HARD;
+      }
       if( iMode & HB_COM_TX_RFLUSH )
+      {
          iResult |= SMODE_RFLUSH;
+      }
    }
 
    hb_retni( iResult );
@@ -411,33 +454,49 @@ HB_FUNC( COM_READ )
    /* TODO: add support for <lNoDelete> */
 
    if( HB_ISNUM( 2 ) )
+   {
       lLen = hb_parnl( 2 );
+   }
    else
    {
       lLen = hb_comInputCount( iPort );
       if( lLen < static_cast< long >( sizeof( buffer ) >> 1 ) )
+      {
          lLen = sizeof( buffer );
+      }
       else
+      {
          lLen <<= 2;
+      }
    }
    if( lLen <= static_cast< long >( sizeof( buffer ) ) )
+   {
       data = buffer;
+   }
    else
+   {
       data = static_cast< char * >( hb_xgrab( lLen + 1 ) );
+   }
 
    lRecv = hb_comRecv( iPort, buffer, lLen, 0 );
    if( lRecv < 0 )
+   {
       lRecv = 0;
+   }
 
    if( data == buffer )
+   {
       hb_retclen( data, lRecv );
+   }
    else if( lLen > 16 && ( lLen >> 2 ) > lRecv )
    {
       hb_retclen( data, lRecv );
       hb_xfree( data );
    }
    else
+   {
       hb_retclen_buffer( data, lRecv );
+   }
 }
 
 /* com_Send( <nComPort>, <cString|nChar> ) --> <nNotSendLength>
@@ -451,7 +510,9 @@ HB_FUNC( COM_SEND )
    /* TODO: add automatic drain call for ports open without send buffer */
 
    if( data )
+   {
       lLen = static_cast< long >( hb_parclen( 2 ) );
+   }
    else if( HB_ISNUM( 2 ) )
    {
       buffer = static_cast< unsigned char >( hb_parni( 2 ) );
@@ -463,7 +524,9 @@ HB_FUNC( COM_SEND )
    {
       long lResult = hb_comSend( hb_parni( 1 ), data, lLen, 0 );
       if( lResult > 0 )
+      {
          lLen -= lResult;
+      }
    }
 
    hb_retnl( lLen );
@@ -514,5 +577,7 @@ HB_FUNC( COM_DEVNAME )
 
    hb_retc( hb_comGetDevice( iPort, buffer, sizeof( buffer ) ) );
    if( szDevName )
+   {
       hb_comSetDevice( iPort, szDevName );
+   }
 }

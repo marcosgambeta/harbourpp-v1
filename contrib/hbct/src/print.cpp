@@ -102,9 +102,13 @@ HB_FUNC( PRINTSEND )
       r.h.al = hb_parni( 1 );
       __dpmi_int( 0x17, &r );
       if( r.h.ah & 1 )
+      {
          hb_retni( 1 );
+      }
       else
+      {
          hb_retni( 0 );
+      }
    }
    else if( HB_ISCHAR( 1 ) )
    {
@@ -118,9 +122,13 @@ HB_FUNC( PRINTSEND )
          __dpmi_int( 0x17, &r );
       }
       if( r.h.ah & 1 )
+      {
          hb_retni( len - ( i - 1 ) );
+      }
       else
+      {
          hb_retni( 0 );
+      }
    }
 
 #elif defined( HB_OS_WIN )
@@ -143,7 +151,9 @@ HB_FUNC( PRINTSEND )
    }
 
    if( HB_ISNUM( 2 ) )
+   {
       szPort[ 3 ] = static_cast< char >( hb_parni( 2 ) ) + '0';
+   }
 
    if( nLen )
    {

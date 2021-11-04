@@ -54,7 +54,9 @@ HB_FUNC( EXPAND )
    {
       const char * szText = hb_parc( 1 );
       if( nLen == 1 )
+      {
          hb_retclen( szText, 1 );
+      }
       else
       {
          char * szDest, * szPtr, cRepl;
@@ -76,13 +78,21 @@ HB_FUNC( EXPAND )
          else
          {
             if( iRepl < 1 )
+            {
                iRepl = 1;
+            }
             if( HB_ISNUM( 3 ) )
+            {
                cRepl = static_cast< char >( hb_parni( 3 ) );
+            }
             else if( HB_ISCHAR( 3 ) )
+            {
                cRepl = hb_parc( 3 )[ 0 ];
+            }
             else
+            {
                cRepl = ' ';
+            }
          }
          nSize = ( nLen - 1 ) * ( iRepl + 1 ) + 1;
          szPtr = szDest = static_cast< char * >( hb_xgrab( nSize + 1 ) );
@@ -90,12 +100,16 @@ HB_FUNC( EXPAND )
          for( nPos = 1; nPos < nLen; ++nPos )
          {
             for( i = 0; i < iRepl; ++i )
+            {
                *szPtr++ = cRepl;
+            }
             *szPtr++ = szText[ nPos ];
          }
          hb_retclen_buffer( szDest, nSize );
       }
    }
    else
+   {
       hb_retc_null();
+   }
 }

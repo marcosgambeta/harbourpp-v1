@@ -51,13 +51,13 @@
 #  if defined( HB_OS_DARWIN )
 #     include <crt_externs.h>
 #     define environ  ( *_NSGetEnviron() )
-#  elif ! defined( __WATCOMC__ )
+#  else
       extern char ** environ;
 #  endif
 #elif defined( HB_OS_DOS )
 #  if defined( __DJGPP__ )
       extern char ** environ;
-#  elif ! defined( __WATCOMC__ )
+#  else
 #     define environ _environ
       extern char ** _environ;
 #  endif
@@ -68,8 +68,7 @@
 
 HB_FUNC( ENVPARAM )
 {
-#if ( defined( HB_OS_UNIX ) && ! defined( HB_OS_IOS ) ) || \
-    defined( HB_OS_DOS )
+#if ( defined( HB_OS_UNIX ) && ! defined( HB_OS_IOS ) ) || defined( HB_OS_DOS )
    char * const * pEnviron = environ, * const * pEnv;
    char * pResult = nullptr, * pDst;
 
@@ -78,7 +77,9 @@ HB_FUNC( ENVPARAM )
       HB_SIZE nSize = 0;
 
       for( pEnv = pEnviron; *pEnv; pEnv++ )
+      {
          nSize += strlen( *pEnv ) + 2;
+      }
 
       if( nSize > 0 )
       {
@@ -96,9 +97,13 @@ HB_FUNC( ENVPARAM )
    }
 
    if( pResult )
+   {
       hb_retc_buffer( const_cast< char * >( hb_osDecodeCP( pResult, nullptr, nullptr ) ) );
+   }
    else
+   {
       hb_retc_null();
+   }
 #elif defined( HB_OS_WIN )
    LPTCH lpEnviron = GetEnvironmentStrings(), lpEnv;
    LPTSTR lpResult = nullptr;
@@ -140,7 +145,9 @@ HB_FUNC( ENVPARAM )
       hb_xfree( lpResult );
    }
    else
+   {
       hb_retc_null();
+   }   
 #else
    hb_retc_null();
 #endif

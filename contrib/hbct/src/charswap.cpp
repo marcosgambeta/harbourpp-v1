@@ -73,9 +73,13 @@ static void do_charswap( int iSwitch )
       if( sStrLen == 0 )
       {
          if( iNoRet )
+         {
             hb_ret();
+         }
          else
+         {
             hb_retc_null();
+         }
          return;
       }
 
@@ -83,10 +87,14 @@ static void do_charswap( int iSwitch )
       {
          iShift = 4;
          if( hb_parl( 2 ) )
+         {
             iSwitch = DO_CHARSWAP_WORDSWAP_CHARSWAP;
+         }
       }
       else
+      {
          iShift = 2;
+      }
 
       pcRet = static_cast< char * >( hb_xgrab( sStrLen ) );
 
@@ -113,20 +121,30 @@ static void do_charswap( int iSwitch )
 
       /* copy rest of string */
       if( iSwitch == DO_CHARSWAP_WORDSWAP || iSwitch == DO_CHARSWAP_WORDSWAP_CHARSWAP )
+      {
          iMod = sStrLen % 4;
+      }
       else
+      {
          iMod = sStrLen % 2;
+      }
 
       for( pcSub = pcString + sStrLen - iMod; pcSub < pcString + sStrLen; pcSub++ )
+      {
          pcRet[ sRetIndex++ ] = *pcSub;
+      }
 
       /* return string */
       hb_storclen( pcRet, sRetIndex, 1 );
 
       if( iNoRet )
+      {
          hb_retl( HB_FALSE );
+      }
       else
+      {
          hb_retclen( pcRet, sRetIndex );
+      }
       hb_xfree( pcRet );
    }
    else
@@ -137,23 +155,33 @@ static void do_charswap( int iSwitch )
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
          if( iSwitch == DO_CHARSWAP_CHARSWAP )
+         {
             pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                      CT_ERROR_CHARSWAP,
                                      nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
                                      HB_ERR_ARGS_BASEPARAMS );
+         }
          else
+         {
             pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                      CT_ERROR_WORDSWAP,
                                      nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
                                      HB_ERR_ARGS_BASEPARAMS );
+         }
       }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else if( iNoRet )
+      {
          hb_retl( HB_FALSE );
+      }
       else
+      {
          hb_retc_null();
+      }
    }
 }
 

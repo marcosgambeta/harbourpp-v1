@@ -56,15 +56,17 @@ HB_FUNC( CHARMIX )
       const char * pcString2;
       char * pcResult;
       HB_SIZE sLen1 = hb_parclen( 1 );
-      HB_SIZE sLen2, sPos1, sPos2, sResultPos;
+      HB_SIZE sLen2, sPos2, sResultPos;
 
       if( sLen1 == 0 )
       {
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
+         {
             ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CHARMIX, nullptr, HB_ERR_FUNCNAME, 0,
                       EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+         }
 
          hb_retc_null();
          return;
@@ -79,9 +81,11 @@ HB_FUNC( CHARMIX )
             int iArgErrorMode = ct_getargerrormode();
 
             if( iArgErrorMode != CT_ARGERR_IGNORE )
+            {
                ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CHARMIX,
                          nullptr, HB_ERR_FUNCNAME, 0,
                          EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+            }
 
             hb_retclen( pcString1, sLen1 );
             return;
@@ -96,7 +100,7 @@ HB_FUNC( CHARMIX )
 
       pcResult = static_cast< char * >( hb_xgrab( sLen1 * 2 + 1 ) );
       sPos2 = sResultPos = 0;
-      for( sPos1 = 0; sPos1 < sLen1; )
+      for( HB_SIZE sPos1 = 0; sPos1 < sLen1; )
       {
          pcResult[ sResultPos++ ] = pcString1[ sPos1++ ];
          pcResult[ sResultPos++ ] = pcString2[ sPos2++ ];
@@ -111,13 +115,19 @@ HB_FUNC( CHARMIX )
       int iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_CHARMIX, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retc_null();
+      }
    }
 }

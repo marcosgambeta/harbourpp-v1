@@ -78,7 +78,9 @@ static void do_pos1( int iSwitch )
             return;
          }
          else
+         {
             ucChar1 = *( hb_parc( 1 ) );
+         }
 
          if( hb_parclen( 2 ) == 0 )
          {
@@ -86,7 +88,9 @@ static void do_pos1( int iSwitch )
             return;
          }
          else
+         {
             ucChar2 = *( hb_parc( 2 ) );
+         }
 
          iParamShift += 2;
       }
@@ -161,9 +165,13 @@ static void do_pos1( int iSwitch )
       }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retns( 0 );
+      }
    }
 }
 

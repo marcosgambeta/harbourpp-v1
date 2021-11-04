@@ -62,13 +62,19 @@ void ct_charlist( int iMode )
       PHB_ITEM pArray = hb_itemArrayNew( HB_SIZEOFARRAY( asCharCnt ) );
 
       for( sCnt = 0; sCnt < HB_SIZEOFARRAY( asCharCnt ); ++sCnt )
+      {
          asCharCnt[ sCnt ] = 0;
+      }
 
       for( sCnt = 0; sCnt < sStrLen; ++sCnt )
+      {
          asCharCnt[ static_cast< HB_UCHAR >( pcString[ sCnt ] ) ]++;
+      }
 
       for( sCnt = 0; sCnt < HB_SIZEOFARRAY( asCharCnt ); ++sCnt )
+      {
          hb_arraySetNS( pArray, sCnt + 1, asCharCnt[ sCnt ] );
+      }
 
       hb_itemReturnRelease( pArray );
    }
@@ -99,12 +105,16 @@ void ct_charlist( int iMode )
          char cScan = iMode == CT_CHARLIST_CHARSLIST ? 1 : 0;
 
          for( sCnt = 0; sCnt < sStrLen; ++sCnt )
+         {
             acCharCnt[ static_cast< HB_UCHAR >( pcString[ sCnt ] ) ] = 1;
+         }
 
          for( sCnt = 0; sCnt < HB_SIZEOFARRAY( acCharCnt ); ++sCnt )
          {
             if( acCharCnt[ sCnt ] == cScan )
+            {
                acCharCnt[ sRetStrLen++ ] = static_cast< HB_UCHAR >( sCnt );
+            }
          }
       }
       hb_retclen( acCharCnt, sRetStrLen );

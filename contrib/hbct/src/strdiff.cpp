@@ -53,7 +53,9 @@
 static int min3( int a, int b, int c )
 {
    if( a < b )
+   {
       return a < c ? a : c;
+   }
 
    return b < c ? b : c;
 }
@@ -102,8 +104,10 @@ HB_FUNC( STRDIFF )
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
+         {
             ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_STRDIFF, nullptr,
                       HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+         }
 
          hb_retni( -1 );
          return;
@@ -114,12 +118,13 @@ HB_FUNC( STRDIFF )
       iDelete = hb_parnidef( 4, 6 );
       iInsert = hb_parnidef( 5, 1 );
 
-      piPenalty = static_cast< int * >( hb_xgrab( ( sStrLen1 + 1 ) *
-                                      ( sStrLen2 + 1 ) * sizeof( int ) ) );
+      piPenalty = static_cast< int * >( hb_xgrab( ( sStrLen1 + 1 ) * ( sStrLen2 + 1 ) * sizeof( int ) ) );
 
       MATRIXELEMENT( 0, 0 ) = 0;
       for( sColCnt = 0; sColCnt <= sStrLen2 - 1; sColCnt++ )
+      {
          MATRIXELEMENT( 0, sColCnt + 1 ) = MATRIXELEMENT( 0, sColCnt ) + iInsert;
+      }
 
       for( sRowCnt = 0; sRowCnt <= sStrLen1 - 1; sRowCnt++ )
       {
@@ -128,13 +133,15 @@ HB_FUNC( STRDIFF )
          {
             int iReplaceCost;
 
-            if( pcStr1[ sRowCnt ] == pcStr2[ sColCnt ] ||
-                ( iAtLike == CT_SETATLIKE_WILDCARD &&
-                  ( pcStr1[ sRowCnt ] == cAtLike ||
-                    pcStr2[ sColCnt ] == cAtLike ) ) )
+            if( pcStr1[ sRowCnt ] == pcStr2[ sColCnt ] || ( iAtLike == CT_SETATLIKE_WILDCARD &&
+                  ( pcStr1[ sRowCnt ] == cAtLike || pcStr2[ sColCnt ] == cAtLike ) ) )
+            {
                iReplaceCost = 0;
+            }
             else
+            {
                iReplaceCost = iReplace;
+            }
 
             MATRIXELEMENT( sRowCnt + 1, sColCnt + 1 ) =
                min3( MATRIXELEMENT( sRowCnt, sColCnt ) + iReplaceCost,
@@ -152,13 +159,19 @@ HB_FUNC( STRDIFF )
       int      iArgErrorMode = ct_getargerrormode();
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
+      {
          pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
                                   CT_ERROR_STRDIFF, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+      }
 
       if( pSubst != nullptr )
+      {
          hb_itemReturnRelease( pSubst );
+      }
       else
+      {
          hb_retni( 0 );
+      }
    }
 }

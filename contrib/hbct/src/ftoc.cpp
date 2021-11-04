@@ -64,5 +64,7 @@ HB_FUNC( CTOF )
       hb_retnd( HB_GET_LE_DOUBLE( buf ) );
    }
    else
+   {
       hb_retnd( 0.0 );
+   }
 }
