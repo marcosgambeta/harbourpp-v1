@@ -403,7 +403,9 @@ static HB_SYMCNT hb_clsBucketPos( PHB_DYNS pMsg, HB_SYMCNT uiMask )
  */
 static HB_BOOL hb_clsDictRealloc( PCLASS pClass )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsDictRealloc(%p)", static_cast< void * >( pClass ) ) );
+#endif
 
    HB_SIZE nNewHashKey, nLimit, n;
 
@@ -505,7 +507,9 @@ static HB_BOOL hb_clsDictRealloc( PCLASS pClass )
 
 static void hb_clsDictInit( PCLASS pClass, HB_SYMCNT uiHashKey )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsDictInit(%p,%hu)", static_cast< void * >( pClass ), uiHashKey ) );
+#endif
 
    HB_SIZE nSize;
 
@@ -524,7 +528,9 @@ static void hb_clsDictInit( PCLASS pClass, HB_SYMCNT uiHashKey )
 
 static PMETHOD hb_clsFindMsg( PCLASS pClass, PHB_DYNS pMsg )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsFindMsg(%p,%p)", static_cast< void * >( pClass ), static_cast< void * >( pMsg ) ) );
+#endif
 
 #ifdef HB_MSG_POOL
 
@@ -570,7 +576,9 @@ static PMETHOD hb_clsFindMsg( PCLASS pClass, PHB_DYNS pMsg )
 
 static PMETHOD hb_clsAllocMsg( PCLASS pClass, PHB_DYNS pMsg )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsAllocMsg(%p,%p)", static_cast< void * >( pClass ), static_cast< void * >( pMsg ) ) );
+#endif
 
    do
    {
@@ -640,7 +648,9 @@ static HB_BOOL hb_clsCanClearMethod( PMETHOD pMethod, HB_BOOL fError )
 
 static void hb_clsFreeMsg( PCLASS pClass, PHB_DYNS pMsg )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsFreeMsg(%p,%p)", static_cast< void * >( pClass ), static_cast< void * >( pMsg ) ) );
+#endif
 
 #ifdef HB_MSG_POOL
 
@@ -767,7 +777,9 @@ static HB_USHORT hb_clsParentInstanceOffset( PCLASS pClass, HB_USHORT uiParentCl
 
 static HB_USHORT hb_clsAddInitValue( PCLASS pClass, PHB_ITEM pItem, HB_USHORT uiType, HB_USHORT uiData, HB_USHORT uiOffset, HB_USHORT uiSprClass )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsAddInitValue(%p,%p,%hu,%hu,%hu,%hu)", static_cast< void * >( pClass ), static_cast< void * >( pItem ), uiType, uiData, uiOffset, uiSprClass ) );
+#endif
 
    PINITDATA pInitData;
 
@@ -814,7 +826,9 @@ static HB_USHORT hb_clsAddInitValue( PCLASS pClass, PHB_ITEM pItem, HB_USHORT ui
 
 static HB_USHORT hb_clsFindRealClassDataOffset( PMETHOD pMethod )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsFindRealClassDataOffset(%p)", static_cast< void * >( pMethod ) ) );
+#endif
 
    PMETHOD pRealMth;
 
@@ -828,7 +842,9 @@ static HB_USHORT hb_clsFindRealClassDataOffset( PMETHOD pMethod )
 
 static HB_USHORT hb_clsFindClassDataOffset( PCLASS pClass, PMETHOD pNewMethod )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsFindClassDataOffset(%p,%p)", static_cast< void * >( pClass ), static_cast< void * >( pNewMethod ) ) );
+#endif
 
    HB_USHORT uiData;
 
@@ -855,7 +871,9 @@ static HB_USHORT hb_clsFindClassDataOffset( PCLASS pClass, PMETHOD pNewMethod )
 
 static HB_BOOL hb_clsUpdateHiddenMessages( PMETHOD pSrcMethod, PMETHOD pDstMethod, PCLASS pDstClass )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsUpdateHiddenMessages(%p,%p,%p)", static_cast< void * >( pSrcMethod ), static_cast< void * >( pDstMethod ), static_cast< void * >( pDstClass ) ) );
+#endif
 
    PMETHOD pNewMethod = pSrcMethod;
 
@@ -918,7 +936,9 @@ static HB_BOOL hb_clsUpdateHiddenMessages( PMETHOD pSrcMethod, PMETHOD pDstMetho
 
 static void hb_clsAddSuperClass( PCLASS pClass, HB_USHORT uiSuperCls, HB_USHORT uiOffset )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsAddSuperClass(%p,%hu,%hu)", static_cast< void * >( pClass ), uiSuperCls, uiOffset ) );
+#endif
 
    pClass->pSuperClasses = static_cast< PHB_CLSCAST >( hb_xrealloc( pClass->pSuperClasses, ( pClass->uiSuperClasses + 1 ) * sizeof( HB_CLSCAST ) ) );
    pClass->pSuperClasses[ pClass->uiSuperClasses ].uiClass = uiSuperCls;
@@ -927,7 +947,9 @@ static void hb_clsAddSuperClass( PCLASS pClass, HB_USHORT uiSuperCls, HB_USHORT 
 
 static void hb_clsDefineSuperClass( PCLASS pClass, HB_USHORT uiSuperCls, HB_BOOL fNew )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsDefineSuperClass(%p,%hu,%d)", static_cast< void * >( pClass ), uiSuperCls, fNew ) );
+#endif
 
    PMETHOD pMethod;
    PCLASS pSprCls;
@@ -975,7 +997,9 @@ static void hb_clsDefineSuperClass( PCLASS pClass, HB_USHORT uiSuperCls, HB_BOOL
 
 static void hb_clsCopyClass( PCLASS pClsDst, PCLASS pClsSrc )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsCopyClass(%p,%p)", static_cast< void * >( pClsDst ), static_cast< void * >( pClsSrc ) ) );
+#endif
 
    PMETHOD pMethod;
    HB_SIZE nLimit;
@@ -1054,7 +1078,9 @@ static void hb_clsCopyClass( PCLASS pClsDst, PCLASS pClsSrc )
 
 static HB_BOOL hb_clsIsFriendSymbol( PCLASS pClass, PHB_SYMB pSym )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsIsFriendSymbol(%p,%p)", static_cast< void * >( pClass ), static_cast< void * >( pSym ) ) );
+#endif
 
    if( pSym >= pClass->pFriendModule && pSym < pClass->pFriendModule + pClass->uiFriendModule )
    {
@@ -1074,7 +1100,9 @@ static HB_BOOL hb_clsIsFriendSymbol( PCLASS pClass, PHB_SYMB pSym )
 
 static void hb_clsAddFriendSymbol( PCLASS pClass, PHB_SYMB pSym )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsAddFriendSymbol(%p,%p)", static_cast< void * >( pClass ), static_cast< void * >( pSym ) ) );
+#endif
 
    if( ! hb_clsIsFriendSymbol( pClass, pSym ) )
    {
@@ -1095,7 +1123,9 @@ static void hb_clsAddFriendSymbol( PCLASS pClass, PHB_SYMB pSym )
 /* initialize Classy/OO system at HVM startup */
 void hb_clsInit( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsInit()" ) );
+#endif
 
    PHB_SYMB pOpSym;
    HB_USHORT uiOperator;
@@ -1145,7 +1175,9 @@ void hb_clsInit( void )
 /* initialize Classy/OO system .prg functions */
 void hb_clsDoInit( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsDoInit()" ) );
+#endif
 
    static const char * s_pszFuncNames[] = { "HBARRAY", "HBBLOCK", "HBCHARACTER", "HBDATE", "HBTIMESTAMP", "HBHASH",
                                             "HBLOGICAL", "HBNIL", "HBNUMERIC", "HBSYMBOL", "HBPOINTER", "HBOBJECT" };
@@ -1179,7 +1211,9 @@ void hb_clsDoInit( void )
  */
 static void hb_clsRelease( PCLASS pClass )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsRelease(%p)", static_cast< void * >( pClass ) ) );
+#endif
 
    if( pClass->uiInitDatas )
    {
@@ -1239,7 +1273,9 @@ static void hb_clsRelease( PCLASS pClass )
  */
 void hb_clsReleaseAll( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsReleaseAll()" ) );
+#endif
 
    if( s_uiClasses )
    {
@@ -1275,7 +1311,9 @@ void hb_clsReleaseAll( void )
  */
 void hb_clsIsClassRef( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsIsClassRef()" ) );
+#endif
 
    /* All internal items are allocated with hb_itemNew()
     * GC knows them and scan itself so it's not necessary
@@ -1375,7 +1413,9 @@ HB_USHORT hb_objSetClass( PHB_ITEM pItem, const char * szClass, const char * szF
 /* Get the class handle */
 static HB_USHORT hb_objGetClassH( PHB_ITEM pObject )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_objGetClassH(%p)", static_cast< void * >( pObject ) ) );
+#endif
 
    if( HB_IS_ARRAY( pObject ) )
    {
@@ -1436,7 +1476,9 @@ static HB_USHORT hb_objGetClassH( PHB_ITEM pObject )
 /* Get the class name of an object */
 const char * hb_objGetClsName( PHB_ITEM pObject )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_objGetClsName(%p)", static_cast< void * >( pObject ) ) );
+#endif
 
    if( HB_IS_ARRAY( pObject ) )
    {
@@ -1645,7 +1687,9 @@ PHB_SYMB hb_clsMethodSym( PHB_ITEM pBaseSymbol )
  */
 const char * hb_objGetRealClsName( PHB_ITEM pObject, const char * szName )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_objGetrealClsName(%p,%s)", static_cast< void * >( pObject ), szName ) );
+#endif
 
    HB_USHORT uiClass;
 
@@ -1861,7 +1905,9 @@ static PHB_SYMB hb_clsScalarMethod( PCLASS pClass, PHB_DYNS pMsg, PHB_STACK_STAT
 
 static void hb_clsMakeSuperObject( PHB_ITEM pDest, PHB_ITEM pObject, HB_USHORT uiSuperClass )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_clsMakeSuperObject(%p, %p, %hu)", static_cast< void * >( pDest ), static_cast< void * >( pObject ), uiSuperClass ) );
+#endif
 
    /* create a fake object array */
    hb_arrayNew( pDest, 1 );
@@ -1880,7 +1926,9 @@ static void hb_clsMakeSuperObject( PHB_ITEM pDest, PHB_ITEM pObject, HB_USHORT u
  */
 PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pStack )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_objGetMethod(%p, %p, %p)", static_cast< void * >( pObject ), static_cast< void * >( pMessage ), static_cast< void * >( pStack ) ) );
+#endif
 
    HB_STACK_TLS_PRELOAD
    PCLASS pClass = nullptr;
@@ -2552,7 +2600,9 @@ void hb_objDestructorCall( PHB_ITEM pObject )
 /* Check if object has a given operator */
 HB_BOOL hb_objHasOperator( PHB_ITEM pObject, HB_USHORT uiOperator )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_objHasOperator(%p,%hu)", static_cast< void * >( pObject ), uiOperator ) );
+#endif
 
    HB_USHORT uiClass;
 
@@ -2571,7 +2621,9 @@ HB_BOOL hb_objHasOperator( PHB_ITEM pObject, HB_USHORT uiOperator )
  */
 HB_BOOL hb_objOperatorCall( HB_USHORT uiOperator, PHB_ITEM pResult, PHB_ITEM pObject, PHB_ITEM pMsgArg1, PHB_ITEM pMsgArg2 )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_objOperatorCall(%hu,%p,%p,%p,%p)", uiOperator, static_cast< void * >( pResult ), static_cast< void * >( pObject ), static_cast< void * >( pMsgArg1 ), static_cast< void * >( pMsgArg2 ) ) );
+#endif
 
    if( hb_objHasOperator( pObject, uiOperator ) )
    {
@@ -2618,7 +2670,9 @@ HB_BOOL hb_objHasMessage( PHB_ITEM pObject, PHB_DYNS pMessage )
  */
 HB_BOOL hb_objHasMsg( PHB_ITEM pObject, const char * szString )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_objHasMsg(%p, %s)", static_cast< void * >( pObject ), szString ) );
+#endif
 
    PHB_DYNS pDynSym;
 
@@ -2781,7 +2835,9 @@ static PHB_SYMB hb_objGetFuncSym( PHB_ITEM pItem )
 /* clone object if user defined clone method or copy it */
 void hb_objCloneBody( PHB_ITEM pDest, PHB_ITEM pObject, PHB_NESTED_CLONED pClonedList )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_objCloneBody(%p,%p,%p)", static_cast< void * >( pDest ), static_cast< void * >( pObject ), static_cast< void * >( pClonedList ) ) );
+#endif
 
    HB_SYMBOL_UNUSED( pClonedList );
 
@@ -2793,7 +2849,9 @@ void hb_objCloneBody( PHB_ITEM pDest, PHB_ITEM pObject, PHB_NESTED_CLONED pClone
 /* clone object if user defined clone method or copy it */
 PHB_ITEM hb_objCloneTo( PHB_ITEM pDest, PHB_ITEM pObject )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_objCloneTo(%p,%p)", static_cast< void * >( pDest ), static_cast< void * >( pObject ) ) );
+#endif
 
    hb_objCloneBody( pDest, pObject, nullptr );
 

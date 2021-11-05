@@ -60,7 +60,9 @@ static const HB_BYTE s_pCode[ 2 ] = { HB_P_PUSHNIL, HB_P_ENDBLOCK };
 /* Release all allocated memory when called from the garbage collector */
 static HB_GARBAGE_FUNC( hb_codeblockGarbageDelete )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockGarbageDelete(%p)", Cargo ) );
+#endif
 
    PHB_CODEBLOCK pCBlock = static_cast< PHB_CODEBLOCK >( Cargo );
 
@@ -90,7 +92,9 @@ static HB_GARBAGE_FUNC( hb_codeblockGarbageDelete )
 
 static HB_GARBAGE_FUNC( hb_codeblockGarbageMark )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockGarbageMark(%p)", Cargo ) );
+#endif
 
    PHB_CODEBLOCK pCBlock = static_cast< PHB_CODEBLOCK >( Cargo );
 
@@ -124,7 +128,9 @@ static const HB_GC_FUNCS s_gcCodeblockFuncs =
  */
 PHB_CODEBLOCK hb_codeblockNew( const HB_BYTE * pBuffer, HB_USHORT uiLocals, const HB_BYTE * pLocalPosTable, PHB_SYMB pSymbols, HB_SIZE nLen )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockNew(%p, %hu, %p, %p, %" HB_PFS "u)", static_cast< const void * >( pBuffer ), uiLocals, static_cast< const void * >( pLocalPosTable ), static_cast< void * >( pSymbols ), nLen ) );
+#endif
 
    HB_STACK_TLS_PRELOAD
    PHB_CODEBLOCK pCBlock;
@@ -233,7 +239,9 @@ PHB_CODEBLOCK hb_codeblockNew( const HB_BYTE * pBuffer, HB_USHORT uiLocals, cons
 
 PHB_CODEBLOCK hb_codeblockMacroNew( const HB_BYTE * pBuffer, HB_SIZE nLen )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockMacroNew(%p, %" HB_PFS "u)", static_cast< const void * >( pBuffer ), nLen ) );
+#endif
 
    HB_STACK_TLS_PRELOAD
    PHB_CODEBLOCK pCBlock;
@@ -269,7 +277,9 @@ PHB_CODEBLOCK hb_codeblockMacroNew( const HB_BYTE * pBuffer, HB_SIZE nLen )
 /* Get local variable referenced in a codeblock */
 PHB_ITEM hb_codeblockGetVar( PHB_ITEM pItem, int iItemPos )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockGetVar(%p, %d)", static_cast< void * >( pItem ), iItemPos ) );
+#endif
 
    PHB_CODEBLOCK pCBlock = pItem->item.asBlock.value;
 
@@ -280,7 +290,9 @@ PHB_ITEM hb_codeblockGetVar( PHB_ITEM pItem, int iItemPos )
 /* Get local variable passed by reference */
 PHB_ITEM hb_codeblockGetRef( PHB_CODEBLOCK pCBlock, int iItemPos )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockGetRef(%p, %d)", static_cast< void * >( pCBlock ), iItemPos ) );
+#endif
 
    return pCBlock->pLocals - iItemPos;
 }

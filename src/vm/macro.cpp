@@ -105,7 +105,9 @@ static int s_macroFlags = HB_SM_DEFAULT;
  */
 static int hb_macroParse( PHB_MACRO pMacro )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroParse(%p)", static_cast< void * >( pMacro ) ) );
+#endif
 
    /* initialize the output (pcode) buffer - it will be filled by yacc */
    pMacro->pCodeInfo = &pMacro->pCodeInfoBuffer;
@@ -134,7 +136,9 @@ static int hb_macroParse( PHB_MACRO pMacro )
  */
 static void hb_macroClear( PHB_MACRO pMacro )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroClear(%p)", static_cast< void * >( pMacro ) ) );
+#endif
 
    hb_xfree( pMacro->pCodeInfo->pCode );
    if( pMacro->pError )
@@ -145,7 +149,9 @@ static void hb_macroClear( PHB_MACRO pMacro )
 
 void hb_macroDelete( PHB_MACRO pMacro )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroDelete(%p)", static_cast< void * >( pMacro ) ) );
+#endif
 
    hb_macroClear( pMacro );
    hb_xfree( pMacro );
@@ -155,7 +161,9 @@ void hb_macroDelete( PHB_MACRO pMacro )
  */
 static HB_BOOL hb_macroCheckParam( PHB_ITEM pItem )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroCheckParam(%p)", static_cast< void * >( pItem ) ) );
+#endif
 
    HB_BOOL bValid = HB_TRUE;
 
@@ -202,20 +210,26 @@ static HB_ERROR_HANDLE( hb_macroErrorType )
  */
 void hb_macroRun( PHB_MACRO pMacro )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroRun(%p)", static_cast< void * >( pMacro ) ) );
+#endif
 
    hb_vmExecute( pMacro->pCodeInfo->pCode, nullptr );
 }
 
 static void hb_macroSyntaxError( PHB_MACRO pMacro )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroSyntaxError(%p)", static_cast< void * >( pMacro ) ) );
+#endif
 
    HB_STACK_TLS_PRELOAD
 
    if( pMacro && pMacro->pError )
    {
+#if 0
       HB_TRACE( HB_TR_DEBUG, ( "hb_macroSyntaxError.(%s)", pMacro->string ) );
+#endif
 
       hb_stackPop();    /* remove compiled string */
 
@@ -261,7 +275,9 @@ static void hb_macroSyntaxError( PHB_MACRO pMacro )
  */
 static char * hb_macroTextSubst( const char * szString, HB_SIZE * pnStringLen )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroTextSubst(%s, %" HB_PFS "u)", szString, *pnStringLen ) );
+#endif
 
    char * szResult;
    HB_SIZE nResStrLen;
@@ -417,7 +433,9 @@ static char * hb_macroTextSubst( const char * szString, HB_SIZE * pnStringLen )
 
 void hb_macroGetValue( PHB_ITEM pItem, int iContext, int flags )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroGetValue(%p)", static_cast< void * >( pItem ) ) );
+#endif
 
    HB_STACK_TLS_PRELOAD
 
@@ -511,7 +529,9 @@ void hb_macroGetValue( PHB_ITEM pItem, int iContext, int flags )
  */
 void hb_macroSetValue( PHB_ITEM pItem, int flags )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroSetValue(%p)", static_cast< void * >( pItem ) ) );
+#endif
 
    HB_STACK_TLS_PRELOAD
 
@@ -556,7 +576,9 @@ void hb_macroSetValue( PHB_ITEM pItem, int flags )
  */
 void hb_macroPushReference( PHB_ITEM pItem )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroPushReference(%p)", static_cast< void * >( pItem ) ) );
+#endif
 
    HB_STACK_TLS_PRELOAD
 
@@ -687,7 +709,9 @@ static void hb_macroUseAliased( PHB_ITEM pAlias, PHB_ITEM pVar, int iFlag, int i
  */
 void hb_macroPopAliasedValue( PHB_ITEM pAlias, PHB_ITEM pVar, int flags )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroPopAliasedValue(%p, %p)", static_cast< void * >( pAlias ), static_cast< void * >( pVar ) ) );
+#endif
 
    hb_macroUseAliased( pAlias, pVar, HB_MACRO_GEN_POP, flags );
 }
@@ -699,7 +723,9 @@ void hb_macroPopAliasedValue( PHB_ITEM pAlias, PHB_ITEM pVar, int flags )
  */
 void hb_macroPushAliasedValue( PHB_ITEM pAlias, PHB_ITEM pVar, int flags )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroPushAliasedValue(%p, %p)", static_cast< void * >( pAlias ), static_cast< void * >( pVar ) ) );
+#endif
 
    hb_macroUseAliased( pAlias, pVar, HB_MACRO_GEN_PUSH, flags );
 }
@@ -711,7 +737,9 @@ void hb_macroPushAliasedValue( PHB_ITEM pAlias, PHB_ITEM pVar, int flags )
  */
 char * hb_macroExpandString( const char * szString, HB_SIZE nLength, HB_BOOL * pfNewString )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroExpandString(%s,%" HB_PFS "u,%p)", szString, nLength, static_cast< void * >( pfNewString ) ) );
+#endif
 
    char * szResultString;
 
@@ -729,7 +757,9 @@ char * hb_macroExpandString( const char * szString, HB_SIZE nLength, HB_BOOL * p
 
 char * hb_macroTextSymbol( const char * szString, HB_SIZE nLength, HB_BOOL * pfNewString )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroTextSymbol(%s,%" HB_PFS "u,%p)", szString, nLength, static_cast< void * >( pfNewString ) ) );
+#endif
 
    char * szResult = nullptr;
 
@@ -808,7 +838,9 @@ char * hb_macroTextSymbol( const char * szString, HB_SIZE nLength, HB_BOOL * pfN
  */
 PHB_MACRO hb_macroCompile( const char * szString )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroCompile(%s)", szString ) );
+#endif
 
    PHB_MACRO pMacro;
    int iStatus;
@@ -1043,7 +1075,9 @@ HB_FUNC( FIELDWBLOCK )
  */
 void hb_macroPushSymbol( PHB_ITEM pItem )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroPushSymbol(%p)", static_cast< void * >( pItem ) ) );
+#endif
 
    HB_STACK_TLS_PRELOAD
 
@@ -1089,7 +1123,9 @@ void hb_macroPushSymbol( PHB_ITEM pItem )
  */
 void hb_macroTextValue( PHB_ITEM pItem )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroTextValue(%p)", static_cast< void * >( pItem ) ) );
+#endif
 
    if( hb_macroCheckParam( pItem ) )
    {
@@ -1114,7 +1150,9 @@ void hb_macroTextValue( PHB_ITEM pItem )
 
 const char * hb_macroGetType( PHB_ITEM pItem )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroGetType(%p)", static_cast< void * >( pItem ) ) );
+#endif
 
    HB_STACK_TLS_PRELOAD
    const char * szType;
@@ -1576,7 +1614,9 @@ void hb_macroGenMessage( const char * szMsgName, HB_BOOL bIsObject, HB_COMP_DECL
 /* generates an underscore-symbol name for a data assignment */
 void hb_macroGenMessageData( const char * szMsg, HB_BOOL bIsObject, HB_COMP_DECL )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroGenMessageData(%s)", szMsg ) );
+#endif
 
    char szResult[ HB_SYMBOL_NAME_LEN + 1 ];
    int iLen;
@@ -1621,7 +1661,9 @@ void hb_macroGenPopMemvar( const char * szVarName, HB_COMP_DECL )
  */
 void hb_macroGenPopAliasedVar( const char * szVarName, HB_BOOL bPushAliasValue, const char * szAlias, HB_MAXINT nWorkarea, HB_COMP_DECL )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroGenPopAliasedVar(%s->%s)", szAlias, szVarName ) );
+#endif
 
    if( bPushAliasValue )
    {
@@ -1710,7 +1752,9 @@ void hb_macroGenPushMemvarRef( const char * szVarName, HB_COMP_DECL )
  */
 void hb_macroGenPushAliasedVar( const char * szVarName, HB_BOOL bPushAliasValue, const char * szAlias, HB_MAXINT nWorkarea, HB_COMP_DECL )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroGenPushAliasedVar(%s->%s)", szAlias, szVarName ) );
+#endif
 
    if( bPushAliasValue )
    {
@@ -1902,7 +1946,9 @@ void hb_macroError( int iError, HB_COMP_DECL )
 /* Start a new pcode buffer for a codeblock */
 void hb_macroCodeBlockStart( HB_COMP_DECL )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroCodeBlockStart(%p)", static_cast< void * >( HB_COMP_PARAM ) ) );
+#endif
 
    PHB_PCODE_INFO pCB;
 
@@ -1922,7 +1968,9 @@ void hb_macroCodeBlockStart( HB_COMP_DECL )
 
 void hb_macroCodeBlockEnd( HB_COMP_DECL )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroCodeBlockEnd(%p)", static_cast< void * >( HB_COMP_PARAM ) ) );
+#endif
 
    PHB_PCODE_INFO pCodeblock;   /* pointer to the current codeblock */
    HB_SIZE nSize;

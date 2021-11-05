@@ -86,7 +86,9 @@ static void hb_memvarCreateFromDynSymbol( PHB_DYNS pDynVar, int iScope, PHB_ITEM
 
 static PHB_ITEM hb_memvarValueNew( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarValueNew()" ) );
+#endif
 
    PHB_ITEM pMemvar;
 
@@ -102,7 +104,9 @@ static PHB_ITEM hb_memvarValueNew( void )
 #undef hb_memvarValueIncRef
 void hb_memvarValueIncRef( PHB_ITEM pMemvar )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarValueIncRef(%p)", static_cast< void * >( pMemvar ) ) );
+#endif
 
    hb_xRefInc( pMemvar );
 }
@@ -113,7 +117,9 @@ void hb_memvarValueIncRef( PHB_ITEM pMemvar )
  */
 void hb_memvarValueDecRef( PHB_ITEM pMemvar )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarValueDecRef(%p)", static_cast< void * >( pMemvar ) ) );
+#endif
 
    if( hb_xRefDec( pMemvar ) )
    {
@@ -130,7 +136,9 @@ void hb_memvarValueDecRef( PHB_ITEM pMemvar )
  */
 static void hb_memvarDetachDynSym( PHB_DYNS pDynSym, PHB_ITEM pPrevMemvar )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarDetachDynSym(%p,%p)", static_cast< void * >( pDynSym ), static_cast< void * >( pPrevMemvar ) ) );
+#endif
 
    PHB_ITEM pMemvar;
 
@@ -145,7 +153,9 @@ static void hb_memvarDetachDynSym( PHB_DYNS pDynSym, PHB_ITEM pPrevMemvar )
  */
 PHB_ITEM hb_memvarDetachLocal( PHB_ITEM pLocal )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarDetachLocal(%p)", static_cast< void * >( pLocal ) ) );
+#endif
 
    if( HB_IS_BYREF( pLocal ) )
    {
@@ -207,7 +217,9 @@ PHB_ITEM hb_memvarDetachLocal( PHB_ITEM pLocal )
  */
 static void hb_memvarAddPrivate( PHB_DYNS pDynSym, PHB_ITEM pValue )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarAddPrivate(%p,%p)", static_cast< void * >( pDynSym ), static_cast< void * >( pValue ) ) );
+#endif
 
    HB_STACK_TLS_PRELOAD
    PHB_PRIVATE_STACK pPrivateStack;
@@ -287,7 +299,9 @@ static void hb_memvarAddPrivate( PHB_DYNS pDynSym, PHB_ITEM pValue )
  */
 HB_SIZE hb_memvarGetPrivatesBase( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarGetPrivatesBase()" ) );
+#endif
 
    HB_STACK_TLS_PRELOAD
    HB_SIZE nBase;
@@ -302,7 +316,9 @@ HB_SIZE hb_memvarGetPrivatesBase( void )
  */
 void hb_memvarSetPrivatesBase( HB_SIZE nBase )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarSetPrivatesBase(%" HB_PFS "u)", nBase ) );
+#endif
 
    HB_STACK_TLS_PRELOAD
    PHB_PRIVATE_STACK pPrivateStack;
@@ -329,7 +345,9 @@ void hb_memvarSetPrivatesBase( HB_SIZE nBase )
  */
 void hb_memvarUpdatePrivatesBase( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarUpdatePrivatesBase()" ) );
+#endif
 
    HB_STACK_TLS_PRELOAD
 
@@ -341,7 +359,9 @@ void hb_memvarUpdatePrivatesBase( void )
  */
 static void hb_memvarResetPrivatesBase( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarResetPrivatesBase()" ) );
+#endif
 
    HB_STACK_TLS_PRELOAD
 
@@ -358,7 +378,9 @@ static void hb_memvarResetPrivatesBase( void )
  */
 void hb_memvarSetValue( PHB_SYMB pMemvarSymb, PHB_ITEM pItem )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarSetValue(%p, %p)", static_cast< void * >( pMemvarSymb ), static_cast< void * >( pItem ) ) );
+#endif
 
    PHB_DYNS pDyn;
 
@@ -392,7 +414,9 @@ void hb_memvarSetValue( PHB_SYMB pMemvarSymb, PHB_ITEM pItem )
 
 HB_ERRCODE hb_memvarGet( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarGet(%p, %p)", static_cast< void * >( pItem ), static_cast< void * >( pMemvarSymb ) ) );
+#endif
 
    PHB_DYNS pDyn;
    HB_ERRCODE errCode = HB_FAILURE;
@@ -431,7 +455,9 @@ HB_ERRCODE hb_memvarGet( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
 
 void hb_memvarGetValue( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarGetValue(%p, %p)", static_cast< void * >( pItem ), static_cast< void * >( pMemvarSymb ) ) );
+#endif
 
    if( hb_memvarGet( pItem, pMemvarSymb ) == HB_FAILURE )
    {
@@ -457,7 +483,9 @@ void hb_memvarGetValue( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
 
 void hb_memvarGetRefer( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarGetRefer(%p, %p)", static_cast< void * >( pItem ), static_cast< void * >( pMemvarSymb ) ) );
+#endif
 
    PHB_DYNS pDyn;
 
@@ -524,7 +552,9 @@ void hb_memvarGetRefer( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
 
 PHB_ITEM hb_memvarGetItem( PHB_SYMB pMemvarSymb )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarGetItem(%p)", static_cast< void * >( pMemvarSymb ) ) );
+#endif
 
    if( pMemvarSymb->pDynSym )
    {
@@ -549,14 +579,18 @@ PHB_ITEM hb_memvarGetItem( PHB_SYMB pMemvarSymb )
  */
 void hb_memvarNewParameter( PHB_SYMB pSymbol, PHB_ITEM pValue )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarNewParameter(%p, %p)", static_cast< void * >( pSymbol ), static_cast< void * >( pValue ) ) );
+#endif
 
    hb_memvarCreateFromDynSymbol( pSymbol->pDynSym, HB_VSCOMP_PRIVATE, pValue );
 }
 
 static PHB_DYNS hb_memvarFindSymbol( const char * szArg, HB_SIZE nLen )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarFindSymbol(%p,%" HB_PFS "u)", static_cast< const void * >( szArg ), nLen ) );
+#endif
 
    PHB_DYNS pDynSym = nullptr;
 
@@ -602,7 +636,9 @@ static PHB_DYNS hb_memvarFindSymbol( const char * szArg, HB_SIZE nLen )
 
 char * hb_memvarGetStrValuePtr( char * szVarName, HB_SIZE * pnLen )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarGetStrValuePtr(%s, %p)", szVarName, static_cast< void * >( pnLen ) ) );
+#endif
 
    PHB_DYNS pDynVar;
    char * szValue = nullptr;
@@ -651,7 +687,9 @@ char * hb_memvarGetStrValuePtr( char * szVarName, HB_SIZE * pnLen )
  */
 void hb_memvarCreateFromItem( PHB_ITEM pMemvar, int iScope, PHB_ITEM pValue )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarCreateFromItem(%p, %d, %p)", static_cast< void * >( pMemvar ), iScope, static_cast< void * >( pValue ) ) );
+#endif
 
    PHB_DYNS pDynVar = nullptr;
 
@@ -681,7 +719,9 @@ void hb_memvarCreateFromItem( PHB_ITEM pMemvar, int iScope, PHB_ITEM pValue )
 
 static void hb_memvarCreateFromDynSymbol( PHB_DYNS pDynVar, int iScope, PHB_ITEM pValue )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarCreateFromDynSymbol(%p, %d, %p)", static_cast< void * >( pDynVar ), iScope, static_cast< void * >( pValue ) ) );
+#endif
 
    if( iScope & HB_VSCOMP_PUBLIC )
    {
@@ -729,7 +769,9 @@ static void hb_memvarCreateFromDynSymbol( PHB_DYNS pDynVar, int iScope, PHB_ITEM
  */
 static void hb_memvarRelease( PHB_ITEM pMemvar )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarRelease(%p)", static_cast< void * >( pMemvar ) ) );
+#endif
 
    if( HB_IS_STRING( pMemvar ) )
    {
@@ -778,7 +820,9 @@ static void hb_memvarRelease( PHB_ITEM pMemvar )
  */
 static void hb_memvarReleaseWithMask( const char * szMask, HB_BOOL bInclude )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarReleaseWithMask(%s, %d)", szMask, static_cast< int >( bInclude ) ) );
+#endif
 
    HB_STACK_TLS_PRELOAD
    HB_SIZE nBase, nCount;
@@ -810,7 +854,9 @@ static void hb_memvarReleaseWithMask( const char * szMask, HB_BOOL bInclude )
  */
 static int hb_memvarScopeGet( PHB_DYNS pDynVar )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarScopeGet(%p)", static_cast< void * >( pDynVar ) ) );
+#endif
 
    if( hb_dynsymGetMemvar( pDynVar ) == 0 )
    {
@@ -843,7 +889,9 @@ static int hb_memvarScopeGet( PHB_DYNS pDynVar )
  */
 int hb_memvarScope( const char * szVarName, HB_SIZE nLength )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarScope(%s, %" HB_PFS "u)", szVarName, nLength ) );
+#endif
 
    PHB_DYNS pDynVar;
 
@@ -876,7 +924,9 @@ static HB_DYNS_FUNC( hb_memvarClear )
 /* Clear all memvar variables optionally without GetList PUBLIC variable */
 void hb_memvarsClear( HB_BOOL fAll )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarsClear(%d)", static_cast< int >( fAll ) ) );
+#endif
 
    HB_STACK_TLS_PRELOAD
    PHB_DYNS pGetList;
@@ -935,7 +985,9 @@ static HB_SIZE hb_memvarGetBaseOffset( int iProcLevel )
  */
 static HB_ISIZ hb_memvarCount( int iScope, int iLevel )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarCount(%d,%d)", iScope, iLevel ) );
+#endif
 
    if( iScope == HB_MV_PUBLIC )
    {
@@ -991,7 +1043,9 @@ static HB_DYNS_FUNC( hb_memvarFindPublicByPos )
  */
 static PHB_ITEM hb_memvarDebugVariable( int iScope, int iPos, const char ** pszName )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarDebugVariable(%d, %d, %p)", iScope, iPos, static_cast< const void * >( pszName ) ) );
+#endif
 
    PHB_ITEM pValue = nullptr;
 

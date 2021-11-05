@@ -401,7 +401,9 @@ static void hb_arraySortStart( PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZ
 
 HB_BOOL hb_arraySort( PHB_ITEM pArray, HB_SIZE * pnStart, HB_SIZE * pnCount, PHB_ITEM pBlock )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_arraySort(%p, %p, %p, %p)", static_cast< void * >( pArray ), static_cast< void * >( pnStart ), static_cast< void * >( pnCount ), static_cast< void * >( pBlock ) ) );
+#endif
 
    if( HB_IS_ARRAY( pArray ) )
    {

@@ -103,7 +103,9 @@
  */
 static void AddToArray( PHB_ITEM pItem, PHB_ITEM pReturn, HB_SIZE nPos )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "AddToArray(%p, %p, %" HB_PFS "u)", static_cast< void * >( pItem ), static_cast< void * >( pReturn ), nPos ) );
+#endif
 
    if( HB_IS_SYMBOL( pItem ) )                  /* Symbol is pushed as text */
    {
@@ -169,7 +171,9 @@ HB_FUNC( __DBGVMSTKGLIST )
  */
 static HB_ISIZ hb_stackLen( int iLevel )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackLen()" ) );
+#endif
 
    HB_ISIZ nBaseOffset, nPrevOffset, nLen;
 

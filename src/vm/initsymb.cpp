@@ -181,7 +181,9 @@ static HB_SYMB symbols[] = {
 
 void hb_vmSymbolInit_RT( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmSymbolInit_RT()" ) );
+#endif
 
    hb_vmProcessSymbols( symbols, HB_SIZEOFARRAY( symbols ), "", 0, 0 );
 }

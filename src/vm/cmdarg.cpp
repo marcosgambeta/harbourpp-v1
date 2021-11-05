@@ -314,7 +314,9 @@ HB_BOOL hb_winmainArgGet( void * phInstance, void * phPrevInstance, int * piCmdS
 
 void hb_cmdargInit( int argc, char * argv[] )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargInit(%d, %p)", argc, static_cast< void * >( argv ) ) );
+#endif
 
 #if defined( HB_OS_WIN )
    if( s_lpArgV )
@@ -365,7 +367,9 @@ static char * hb_cmdargDup( int argc )
 
 void hb_cmdargUpdate( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargUpdate()" ) );
+#endif
 
 #if ! defined( HB_OS_WIN )
    if( s_argc > 0 )
@@ -480,7 +484,9 @@ int hb_cmdargPushArgs( void )
 
 HB_BOOL hb_cmdargIsInternal( const char * szArg, int * piLen )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargIsInternal(%s, %p)", szArg, static_cast< void * >( piLen ) ) );
+#endif
 
    /* NOTE: Not checking for '--' here, as it would filter out
             valid command-line options used by applications. [vszakats] */
@@ -509,7 +515,9 @@ HB_BOOL hb_cmdargIsInternal( const char * szArg, int * piLen )
 
 static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargGet(%s, %d)", pszName, static_cast< int >( bRetValue ) ) );
+#endif
 
    char * pszRetVal = nullptr;
    char * pszEnvVar;
@@ -654,7 +662,9 @@ char * hb_cmdargString( const char * pszName )
 
 int hb_cmdargNum( const char * pszName )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargNum(%s)", pszName ) );
+#endif
 
    char * pszValue;
 

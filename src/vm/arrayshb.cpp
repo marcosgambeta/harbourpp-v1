@@ -55,7 +55,9 @@
  */
 static void hb_arrayNewRagged( PHB_ITEM pArray, int iDimension )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_arrayNewRagged(%p, %d)", pArray, iDimension ) );
+#endif
 
    HB_SIZE nElements;
 

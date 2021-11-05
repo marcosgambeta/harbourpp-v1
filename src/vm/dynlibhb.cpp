@@ -123,7 +123,9 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
 
          if( ! hDynLib )
          {
+#if 0
             HB_TRACE( HB_TR_DEBUG, ( "hb_libLoad(): dlopen(): %s", dlerror() ) );
+#endif
          }
 #elif defined( HB_CAUSEWAY_DLL )
          hDynLib = LoadLibrary( hb_itemGetCPtr( pLibName ) );

@@ -93,7 +93,9 @@ static HB_SIZE hb_hrbCheckSig( const char * szBody, HB_SIZE nBodySize )
 
 static int hb_hrbReadHead( const char * szBody, HB_SIZE nBodySize, HB_SIZE * pnBodyOffset )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_hrbReadHead(%p,%" HB_PFS "u,%p)", static_cast< const void * >( szBody ), nBodySize, static_cast< void * >( pnBodyOffset ) ) );
+#endif
 
    const char * pVersion;
    HB_SIZE nSigSize;
@@ -113,7 +115,9 @@ static int hb_hrbReadHead( const char * szBody, HB_SIZE nBodySize, HB_SIZE * pnB
 
 static HB_BOOL hb_hrbReadValue( const char * szBody, HB_SIZE nBodySize, HB_SIZE * pnBodyOffset, HB_ULONG * pulValue )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_hrbReadValue(%p,%" HB_PFS "u,%p,%p)", static_cast< const void * >( szBody ), nBodySize, static_cast< void * >( pnBodyOffset ), static_cast< void * >( pulValue ) ) );
+#endif
 
    if( *pnBodyOffset + 4 < nBodySize )
    {
@@ -133,7 +137,9 @@ static HB_BOOL hb_hrbReadValue( const char * szBody, HB_SIZE nBodySize, HB_SIZE 
    Read the next (zero terminated) identifier */
 static char * hb_hrbReadId( const char * szBody, HB_SIZE nBodySize, HB_SIZE * pnBodyOffset )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_hrbReadId(%p,%" HB_PFS "u,%p)", static_cast< const void * >( szBody ), nBodySize, static_cast< void * >( pnBodyOffset ) ) );
+#endif
 
    const char * szIdx;
 
@@ -153,7 +159,9 @@ static char * hb_hrbReadId( const char * szBody, HB_SIZE nBodySize, HB_SIZE * pn
 
 static HB_ULONG hb_hrbFindSymbol( const char * szName, PHB_DYNF pDynFunc, HB_ULONG ulLoaded )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_hrbFindSymbol(%s, %p, %lu)", szName, static_cast< void * >( pDynFunc ), ulLoaded ) );
+#endif
 
    for( HB_ULONG ulRet = 0; ulRet < ulLoaded; ++ulRet )
    {
