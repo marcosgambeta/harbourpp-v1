@@ -275,10 +275,10 @@ static void hb_gt_alleg_DoCursor( int iRow, int iCol, int iStyle )
 
 static void hb_gt_alleg_ScreenUpdate( PHB_GT pGT )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_ScreenUpdate(%p)", pGT ) );
+
    int     iRow, iCol, iStyle;
    HB_BOOL fPix, fCursor;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_ScreenUpdate(%p)", pGT ) );
 
    HB_GTSELF_GETSCRCURSOR( pGT, &iRow, &iCol, &iStyle );
    fPix = s_GFXUpd.iTop <= s_GFXUpd.iBottom && s_GFXUpd.iLeft <= s_GFXUpd.iRight;
@@ -310,11 +310,11 @@ static void hb_gt_alleg_ScreenUpdate( PHB_GT pGT )
 
 static HB_BOOL hb_gt_alleg_InitializeScreen( PHB_GT pGT, int iRows, int iCols, HB_BOOL lClearInit )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_InitializeScreen(%p,%d,%d,%d)", pGT, iRows, iCols, static_cast< int >( lClearInit ) ) );
+
    int       iRet  = 1, iWidth, iHeight; /* Don't remove iRet, ixFP and iyFP initializers! */
    short     ixFP  = 0, iyFP = 0;
    HB_BOOL   lMode = HB_FALSE, lPrev = s_fInit;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_InitializeScreen(%p,%d,%d,%d)", pGT, iRows, iCols, static_cast< int >( lClearInit ) ) );
 
    if( s_fGtError )
    {
@@ -541,9 +541,9 @@ static HB_BOOL hb_gt_alleg_InitializeScreen( PHB_GT pGT, int iRows, int iCols, H
 
 static void hb_gt_alleg_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr )
 {
-   int iRet;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_Init(%p,%p,%p,%p)", pGT, static_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdin ) ), static_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdout ) ), static_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStderr ) ) ) );
+
+   int iRet;
 
    ssfCreateThinFont( &s_ssfDefaultFont );
 
@@ -602,10 +602,10 @@ static HB_BOOL hb_gt_alleg_SetMode( PHB_GT pGT, int iRows, int iCols )
 
 static int hb_gt_alleg_ReadKey( PHB_GT pGT, int iEventMask )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_ReadKey(%p,%d)", pGT, iEventMask ) );
+
    int nKey = 0;
    int i, iMseCol, iMseRow;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_ReadKey(%p,%d)", pGT, iEventMask ) );
 
    HB_SYMBOL_UNUSED( iEventMask );
 
@@ -821,9 +821,9 @@ static void hb_gt_alleg_mouse_GetBounds( PHB_GT pGT, int * piTop, int * piLeft, 
 
 static HB_BOOL hb_gt_alleg_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 {
-   int iWidth, iHeight, iValue;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_Info(%p,%d,%p)", pGT, iType, pInfo ) );
+
+   int iWidth, iHeight, iValue;
 
    switch( iType )
    {
@@ -943,9 +943,9 @@ static HB_BOOL hb_gt_alleg_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
 static int hb_gt_alleg_gfx_Primitive( PHB_GT pGT, int iType, int iTop, int iLeft, int iBottom, int iRight, int iColor )
 {
-   int iRet = 1, iTmp;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_gfx_Primitive(%p,%d,%d,%d,%d,%d,%d)", pGT, iType, iTop, iLeft, iBottom, iRight, iColor ) );
+
+   int iRet = 1, iTmp;
 
    GT_SCREENINIT();
    HB_GTSELF_REFRESH( pGT );
@@ -1088,9 +1088,9 @@ static int hb_gt_alleg_gfx_Primitive( PHB_GT pGT, int iType, int iTop, int iLeft
 
 static void hb_gt_alleg_gfx_Text( PHB_GT pGT, int iTop, int iLeft, const char * cBuf, int iColor, int iSize, int iWidth )
 {
-   int iBottom, iRight;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_gfx_Text(%p,%d,%d,%s,%d,%d,%d)", pGT, iTop, iLeft, cBuf, iColor, iSize, iWidth ) );
+
+   int iBottom, iRight;
 
    HB_SYMBOL_UNUSED( iWidth );
 
@@ -1125,11 +1125,11 @@ static void hb_gt_alleg_gfx_Text( PHB_GT pGT, int iTop, int iLeft, const char * 
 
 static void hb_gt_alleg_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_Redraw(%p,%d,%d,%d)", pGT, iRow, iCol, iSize ) );
+
    int      iColor;
    HB_BYTE  bAttr;
    HB_UCHAR uc;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_Redraw(%p,%d,%d,%d)", pGT, iRow, iCol, iSize ) );
 
    if( s_fInit )
    {

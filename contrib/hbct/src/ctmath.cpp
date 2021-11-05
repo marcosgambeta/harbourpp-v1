@@ -54,12 +54,14 @@
 int ct_math_init( void )
 {
    HB_TRACE( HB_TR_DEBUG, ( "ct_math_init()" ) );
+
    return 1;
 }
 
 int ct_math_exit( void )
 {
    HB_TRACE( HB_TR_DEBUG, ( "ct_math_exit()" ) );
+
    return 1;
 }
 
@@ -71,12 +73,14 @@ static int s_iPrecision = 16; /* TODO: make this thread safe */
 void ct_setprecision( int iPrecision )
 {
    HB_TRACE( HB_TR_DEBUG, ( "ct_setprecision (%i)", iPrecision ) );
+
    s_iPrecision = iPrecision;
 }
 
 int ct_getprecision( void )
 {
    HB_TRACE( HB_TR_DEBUG, ( "ct_getprecision()" ) );
+
    return s_iPrecision;
 }
 

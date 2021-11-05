@@ -48,9 +48,9 @@
 
 HB_SIZE hbwapi_tstrlen( const TCHAR * pText )
 {
-   HB_SIZE nLen = 0;
-
    HB_TRACE( HB_TR_DEBUG, ( "hbwapi_tstrlen(%p)", static_cast< const void * >( pText ) ) );
+
+   HB_SIZE nLen = 0;
 
    while( pText[ nLen ] != TEXT( '\0' ) )
    {
@@ -63,10 +63,10 @@ HB_SIZE hbwapi_tstrlen( const TCHAR * pText )
 /* NOTE: Based on hb_strdup() */
 TCHAR * hbwapi_tstrdup( const TCHAR * pszText )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hbwapi_tstrdup(%p)", static_cast< const void * >( pszText ) ) );
+
    TCHAR * pszDup;
    HB_SIZE nLen;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hbwapi_tstrdup(%p)", static_cast< const void * >( pszText ) ) );
 
    nLen = ( hbwapi_tstrlen( pszText ) + 1 ) * sizeof( TCHAR );
 
@@ -79,9 +79,9 @@ TCHAR * hbwapi_tstrdup( const TCHAR * pszText )
 /* NOTE: Based on hb_strncat() */
 TCHAR * hbwapi_tstrncat( TCHAR * pDest, const TCHAR * pSource, HB_SIZE nLen )
 {
-   TCHAR * pBuf = pDest;
-
    HB_TRACE( HB_TR_DEBUG, ( "hbwapi_tstrncat(%p, %p, %" HB_PFS "u)", static_cast< void * >( pDest ), static_cast< const void * >( pSource ), nLen ) );
+
+   TCHAR * pBuf = pDest;
 
    pDest[ nLen ] = TEXT( '\0' );
 

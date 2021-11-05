@@ -192,12 +192,14 @@ static int s_iArgErrMode = CT_ARGERR_IGNORE;
 void ct_setargerrormode( int iMode )
 {
    HB_TRACE( HB_TR_DEBUG, ( "ct_setargerrormode(%i)", iMode ) );
+
    s_iArgErrMode = iMode;
 }
 
 int ct_getargerrormode( void )
 {
    HB_TRACE( HB_TR_DEBUG, ( "ct_getargerrormode()" ) );
+
    return s_iArgErrMode;
 }
 

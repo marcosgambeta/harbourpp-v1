@@ -75,10 +75,10 @@ static int hb_daysinmonth( int iYear, int iMonth )
 
 static int hb_doy( int iYear, int iMonth, int iDay )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_doy(%d, %d, %d)", iYear, iMonth, iDay ) );
+
    int i;
    int iDoy = 0;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_doy(%d, %d, %d)", iYear, iMonth, iDay ) );
 
    for( i = 1; i < iMonth; ++i )
       iDoy += hb_daysinmonth( iYear, i );
@@ -88,9 +88,9 @@ static int hb_doy( int iYear, int iMonth, int iDay )
 
 static int hb_woy( long lDate, HB_BOOL fISO )
 {
-   int iYear, iMonth, iDay;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_woy(%ld, %d)", lDate, static_cast< int >( fISO ) ) );
+
+   int iYear, iMonth, iDay;
 
    hb_dateDecode( lDate, &iYear, &iMonth, &iDay );
 

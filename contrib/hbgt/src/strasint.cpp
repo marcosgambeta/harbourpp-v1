@@ -11,11 +11,11 @@
 
 int _GT_Internal_StringAsInt( char * String, HB_ISIZ Start, HB_ISIZ End )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "_GT_Internal_StringAsInt(%s, %" HB_PFS "d, %" HB_PFS "d)", String, Start, End ) );
+
    int     Decimal = 1;
    int     Value   = 0;
    HB_ISIZ Digit;
-
-   HB_TRACE( HB_TR_DEBUG, ( "_GT_Internal_StringAsInt(%s, %" HB_PFS "d, %" HB_PFS "d)", String, Start, End ) );
 
    for( Digit = End; Digit >= Start; Digit-- )
    {

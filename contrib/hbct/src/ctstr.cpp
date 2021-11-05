@@ -118,8 +118,7 @@ const char * ct_at_exact_forward( const char * pcString, HB_SIZE sStrLen, const 
 /* search for exact substring in backward direction */
 const char * ct_at_exact_backward( const char * pcString, HB_SIZE sStrLen, const char * pcMatch, HB_SIZE sMatchLen, HB_SIZE * psMatchStrLen )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "ct_at_exact_backward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, %p)",
-                            pcString, sStrLen, pcMatch, sMatchLen, static_cast< void * >( psMatchStrLen ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "ct_at_exact_backward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, %p)", pcString, sStrLen, pcMatch, sMatchLen, static_cast< void * >( psMatchStrLen ) ) );
 
    HB_SIZE sIndex;
    const char * pcRet;
@@ -155,8 +154,7 @@ const char * ct_at_exact_backward( const char * pcString, HB_SIZE sStrLen, const
 /* search for substring using wildcard */
 const char * ct_at_wildcard_forward( const char * pcString, HB_SIZE sStrLen, const char * pcMatch, HB_SIZE sMatchLen, char cWildCard, HB_SIZE * psMatchStrLen )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "ct_at_wildcard_forward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, \'%c\', %p)",
-                            pcString, sStrLen, pcMatch, sMatchLen, cWildCard, static_cast< void * >( psMatchStrLen ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "ct_at_wildcard_forward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, \'%c\', %p)", pcString, sStrLen, pcMatch, sMatchLen, cWildCard, static_cast< void * >( psMatchStrLen ) ) );
 
    HB_SIZE sIndex;
    const char * pcRet, * pcStop;
@@ -194,8 +192,7 @@ const char * ct_at_wildcard_forward( const char * pcString, HB_SIZE sStrLen, con
 /* search for substring using wildcard in backward direction */
 const char * ct_at_wildcard_backward( const char * pcString, HB_SIZE sStrLen, const char * pcMatch, HB_SIZE sMatchLen, char cWildCard, HB_SIZE * psMatchStrLen )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "ct_at_wildcard_backward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, \'%c\', %p)",
-                            pcString, sStrLen, pcMatch, sMatchLen, cWildCard, static_cast< void * >( psMatchStrLen ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "ct_at_wildcard_backward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, \'%c\', %p)", pcString, sStrLen, pcMatch, sMatchLen, cWildCard, static_cast< void * >( psMatchStrLen ) ) );
 
    HB_SIZE sIndex;
    const char * pcRet;
@@ -233,8 +230,7 @@ const char * ct_at_wildcard_backward( const char * pcString, HB_SIZE sStrLen, co
 /* search for character from a set */
 const char * ct_at_charset_forward( const char * pcString, HB_SIZE sStrLen, const char * pcCharSet, HB_SIZE sCharSetLen, HB_SIZE * psMatchedCharPos )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "ct_at_charset_forward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, %p)",
-                            pcString, sStrLen, pcCharSet, sCharSetLen, static_cast< void * >( psMatchedCharPos ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "ct_at_charset_forward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, %p)", pcString, sStrLen, pcCharSet, sCharSetLen, static_cast< void * >( psMatchedCharPos ) ) );
 
    const char * pcRet, * pcSet, * pcStop1, * pcStop2;
 
@@ -268,8 +264,7 @@ const char * ct_at_charset_forward( const char * pcString, HB_SIZE sStrLen, cons
 /* search for character from a set in backward direction */
 const char * ct_at_charset_backward( const char * pcString, HB_SIZE sStrLen, const char * pcCharSet, HB_SIZE sCharSetLen, HB_SIZE * psMatchedCharPos )
 {
-   HB_TRACE( HB_TR_DEBUG, ( "ct_at_charset_backward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, %p)",
-                            pcString, sStrLen, pcCharSet, sCharSetLen, static_cast< void * >( psMatchedCharPos ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "ct_at_charset_backward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, %p)", pcString, sStrLen, pcCharSet, sCharSetLen, static_cast< void * >( psMatchedCharPos ) ) );
 
    const char * pcRet, * pcSet, * pcStop;
 

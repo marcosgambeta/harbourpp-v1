@@ -52,13 +52,13 @@
 
 static void hb_readLine( const char * szText, HB_SIZE nTextLen, HB_SIZE nLineLen, HB_SIZE nTabLen, HB_BOOL bWrap, const char ** pTerm, HB_SIZE * pnTermSizes, HB_SIZE nTerms, HB_BOOL * pbFound, HB_BOOL * pbEOF, HB_ISIZ * pnEnd, HB_SIZE * pnEndOffset )
 {
-   HB_SIZE nPosTerm, nPosition;
-   HB_SIZE nPos, nCurrCol, nLastBlk;
-   HB_BOOL bBreak = HB_FALSE;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_readLine(%p, %" HB_PFS "u, %" HB_PFS "u, %" HB_PFS "u, %d, %p, %p, %" HB_PFS "u, %p, %p, %p, %p)",
              static_cast< const void * >( szText ), nTextLen, nLineLen, nTabLen, bWrap, static_cast< const void * >( pTerm ),
              static_cast< void * >( pnTermSizes ), nTerms, static_cast< void * >( pbFound ), static_cast< void * >( pbEOF ), static_cast< void * >( pnEnd ), static_cast< void * >( pnEndOffset ) ) );
+
+   HB_SIZE nPosTerm, nPosition;
+   HB_SIZE nPos, nCurrCol, nLastBlk;
+   HB_BOOL bBreak = HB_FALSE;
 
    *pbFound     = HB_FALSE;
    *pbEOF       = HB_FALSE;

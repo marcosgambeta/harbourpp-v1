@@ -731,10 +731,11 @@ static int _pdf417_punctno( char ch  )
 
 static int _pdf417_encode_byte( const char * szCode, int iLen, int * pCW, int iPos )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "encode byte len=%d", iLen ) );
+
    HB_LONGLONG  ill;
    int  i;
 
-   HB_TRACE( HB_TR_DEBUG, ( "encode byte len=%d", iLen ) );
    if( iLen == 0 )
    {
       return iPos;
@@ -804,9 +805,10 @@ static int _pdf417_encode_byte( const char * szCode, int iLen, int * pCW, int iP
 
 static int _pdf417_encode_text_add( int * pCW, int iPos, int * i1, int * i2, int no )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "text halfcodeword %d", no ) );
+
    *i1 = *i2;
    *i2 = no;
-   HB_TRACE( HB_TR_DEBUG, ( "text halfcodeword %d", no ) );
    if( *i1 != -1 )
    {
       if( iPos >= MAX_CODEWORD_COUNT )
@@ -822,9 +824,10 @@ static int _pdf417_encode_text_add( int * pCW, int iPos, int * i1, int * i2, int
 
 static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iPos )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "encode text len=%d", iLen ) );
+
    int j, i1, i2, no, iSubMode;
 
-   HB_TRACE( HB_TR_DEBUG, ( "encode text len=%d", iLen ) );
    iSubMode = SUBMODE_UPPER;
    i1 = i2 = -1;
    for( int i = 0; i < iLen; i++ )
@@ -1097,13 +1100,14 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
 
 static int _pdf417_encode_numeric( const char * szCode, int iLen, int * pCW, int iPos )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "encode numeric len=%d", iLen ) );
+
    /* Some very long integer (147-bit) arithmetics should be implemented to encode
       digits in an effective way. I use more simple way and encode digits in groups
       not longer that 18 digits. 64-bit integer arithmetics do this job */
 
    int i, j;
 
-   HB_TRACE( HB_TR_DEBUG, ( "encode numeric len=%d", iLen ) );
    if( iLen == 0 )
    {
       return iPos;

@@ -1795,9 +1795,9 @@ static void hb_gt_qtc_InitMT();
 
 static void hb_gt_qtc_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr )
 {
-   PHB_GTQTC pQTC;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_Init(%p,%p,%p,%p)", pGT, static_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdin ) ), static_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdout ) ), static_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStderr ) ) ) );
+
+   PHB_GTQTC pQTC;
 
    if( ! s_qtapp )
    {
@@ -1845,9 +1845,9 @@ static void hb_gt_qtc_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
 static void hb_gt_qtc_Exit( PHB_GT pGT )
 {
-   PHB_GTQTC pQTC;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_Exit(%p)", static_cast< void * >( pGT ) ) );
+
+   PHB_GTQTC pQTC;
 
    pQTC = HB_GTQTC_GET( pGT );
    HB_GTSUPER_EXIT( pGT );
@@ -1862,9 +1862,9 @@ static void hb_gt_qtc_Exit( PHB_GT pGT )
 
 static void hb_gt_qtc_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 {
-   PHB_GTQTC pQTC;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_Redraw(%p,%d,%d,%d)", static_cast< void * >( pGT ), iRow, iCol, iSize ) );
+
+   PHB_GTQTC pQTC;
 
    pQTC = HB_GTQTC_GET( pGT );
    if( pQTC )
@@ -1882,9 +1882,9 @@ static void hb_gt_qtc_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 
 static void hb_gt_qtc_Refresh( PHB_GT pGT )
 {
-   PHB_GTQTC pQTC;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_Refresh(%p)", static_cast< void * >( pGT ) ) );
+
+   PHB_GTQTC pQTC;
 
    HB_GTSUPER_REFRESH( pGT );
 
@@ -1903,10 +1903,10 @@ static void hb_gt_qtc_Refresh( PHB_GT pGT )
 
 static HB_BOOL hb_gt_qtc_SetMode( PHB_GT pGT, int iRows, int iCols )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_SetMode(%p,%d,%d)", static_cast< void * >( pGT ), iRows, iCols ) );
+
    PHB_GTQTC pQTC;
    HB_BOOL fResult, fCenter;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_SetMode(%p,%d,%d)", static_cast< void * >( pGT ), iRows, iCols ) );
 
    pQTC = HB_GTQTC_GET( pGT );
    fCenter = iRows != pQTC->iRows || iCols != pQTC->iCols;
@@ -1947,9 +1947,9 @@ static const char * hb_gt_qtc_Version( PHB_GT pGT, int iType )
 
 static int hb_gt_qtc_ReadKey( PHB_GT pGT, int iEventMask )
 {
-   PHB_GTQTC pQTC;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_ReadKey(%p,%d)", static_cast< void * >( pGT ), iEventMask ) );
+
+   PHB_GTQTC pQTC;
 
    HB_SYMBOL_UNUSED( iEventMask );
 
@@ -2004,9 +2004,9 @@ static HB_BOOL hb_gt_qtc_mouse_IsPresent( PHB_GT pGT )
 
 static void hb_gt_qtc_mouse_GetPos( PHB_GT pGT, int * piRow, int * piCol )
 {
-   PHB_GTQTC pQTC;
-
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_mouse_GetPos(%p,%p,%p)", static_cast< void * >( pGT ), piRow, piCol ) );
+
+   PHB_GTQTC pQTC;
 
    pQTC = HB_GTQTC_GET( pGT );
    *piRow = pQTC->mouseRow;
@@ -2048,10 +2048,10 @@ static int hb_gt_qtc_mouse_CountButton( PHB_GT pGT )
 
 static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_Info(%p,%d,%p)", static_cast< void * >( pGT ), iType, static_cast< void * >( pInfo ) ) );
+
    PHB_GTQTC pQTC;
    int iVal;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_Info(%p,%d,%p)", static_cast< void * >( pGT ), iType, static_cast< void * >( pInfo ) ) );
 
    pQTC = HB_GTQTC_GET( pGT );
 
@@ -2681,10 +2681,10 @@ static HB_BOOL hb_gt_qtc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
 static int hb_gt_qtc_gfx_Primitive( PHB_GT pGT, int iType, int iTop, int iLeft, int iBottom, int iRight, int iColor )
 {
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_gfx_Primitive(%p,%d,%d,%d,%d,%d,%d)", static_cast< void * >( pGT ), iType, iTop, iLeft, iBottom, iRight, iColor ) );
+
    PHB_GTQTC pQTC;
    int iRet = 1;
-
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_qtc_gfx_Primitive(%p,%d,%d,%d,%d,%d,%d)", static_cast< void * >( pGT ), iType, iTop, iLeft, iBottom, iRight, iColor ) );
 
    pQTC = HB_GTQTC_GET( pGT );
 
