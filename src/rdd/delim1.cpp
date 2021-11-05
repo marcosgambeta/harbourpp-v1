@@ -175,7 +175,9 @@ static void hb_delimClearRecordBuffer( DELIMAREAP pArea )
 
 static HB_SIZE hb_delimEncodeBuffer( DELIMAREAP pArea )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimEncodeBuffer(%p)", static_cast< void * >( pArea ) ) );
+#endif
 
    HB_SIZE nSize;
    HB_USHORT uiLen;
@@ -351,7 +353,9 @@ static int hb_delimNextChar( DELIMAREAP pArea )
  */
 static HB_ERRCODE hb_delimReadRecord( DELIMAREAP pArea )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimReadRecord(%p)", static_cast< void * >( pArea ) ) );
+#endif
 
    int ch = 0;
 
@@ -489,7 +493,9 @@ static HB_ERRCODE hb_delimReadRecord( DELIMAREAP pArea )
 
 static HB_ERRCODE hb_delimNextRecord( DELIMAREAP pArea )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimNextRecord(%p)", static_cast< void * >( pArea ) ) );
+#endif
 
    if( pArea->fPositioned )
    {
@@ -508,7 +514,9 @@ static HB_ERRCODE hb_delimNextRecord( DELIMAREAP pArea )
  */
 static HB_ERRCODE hb_delimGoTo( DELIMAREAP pArea, HB_ULONG ulRecNo )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimGoTo(%p, %lu)", static_cast< void * >( pArea ), ulRecNo ) );
+#endif
 
 #ifndef HB_CLP_STRICT
    if( pArea->fReadonly && ulRecNo >= pArea->ulRecNo )
@@ -532,7 +540,9 @@ static HB_ERRCODE hb_delimGoTo( DELIMAREAP pArea, HB_ULONG ulRecNo )
  */
 static HB_ERRCODE hb_delimGoToId( DELIMAREAP pArea, PHB_ITEM pItem )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimGoToId(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pItem ) ) );
+#endif
 
 #ifndef HB_CLP_STRICT
    if( HB_IS_NUMERIC( pItem ) )
@@ -549,7 +559,9 @@ static HB_ERRCODE hb_delimGoToId( DELIMAREAP pArea, PHB_ITEM pItem )
  */
 static HB_ERRCODE hb_delimGoTop( DELIMAREAP pArea )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimGoTop(%p)", static_cast< void * >( pArea ) ) );
+#endif
 
    if( SELF_GOCOLD( &pArea->area ) != HB_SUCCESS )
    {
@@ -582,7 +594,9 @@ static HB_ERRCODE hb_delimGoTop( DELIMAREAP pArea )
  */
 static HB_ERRCODE hb_delimSkipRaw( DELIMAREAP pArea, HB_LONG lToSkip )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimSkipRaw(%p,%ld)", static_cast< void * >( pArea ), lToSkip ) );
+#endif
 
    if( SELF_GOCOLD( &pArea->area ) != HB_SUCCESS )
    {
@@ -605,7 +619,9 @@ static HB_ERRCODE hb_delimSkipRaw( DELIMAREAP pArea, HB_LONG lToSkip )
  */
 static HB_ERRCODE hb_delimDeleted( DELIMAREAP pArea, HB_BOOL * pDeleted )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimDeleted(%p,%p)", static_cast< void * >( pArea ), static_cast< void * >( pDeleted ) ) );
+#endif
 
    HB_SYMBOL_UNUSED( pArea );
 
@@ -619,7 +635,9 @@ static HB_ERRCODE hb_delimDeleted( DELIMAREAP pArea, HB_BOOL * pDeleted )
  */
 static HB_ERRCODE hb_delimRecCount( DELIMAREAP pArea, HB_ULONG * pRecCount )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimRecCount(%p,%p)", static_cast< void * >( pArea ), static_cast< void * >( pRecCount ) ) );
+#endif
 
    *pRecCount = pArea->ulRecCount;
 
@@ -631,7 +649,9 @@ static HB_ERRCODE hb_delimRecCount( DELIMAREAP pArea, HB_ULONG * pRecCount )
  */
 static HB_ERRCODE hb_delimRecNo( DELIMAREAP pArea, HB_ULONG * pulRecNo )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimRecNo(%p,%p)", static_cast< void * >( pArea ), static_cast< void * >( pulRecNo ) ) );
+#endif
 
    *pulRecNo = pArea->ulRecNo;
 
@@ -643,7 +663,9 @@ static HB_ERRCODE hb_delimRecNo( DELIMAREAP pArea, HB_ULONG * pulRecNo )
  */
 static HB_ERRCODE hb_delimRecId( DELIMAREAP pArea, PHB_ITEM pRecNo )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimRecId(%p,%p)", static_cast< void * >( pArea ), static_cast< void * >( pRecNo ) ) );
+#endif
 
    HB_ERRCODE errCode;
    HB_ULONG ulRecNo;
@@ -672,7 +694,9 @@ static HB_ERRCODE hb_delimRecId( DELIMAREAP pArea, PHB_ITEM pRecNo )
  */
 static HB_ERRCODE hb_delimAppend( DELIMAREAP pArea, HB_BOOL fUnLockAll )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimAppend(%p,%d)", static_cast< void * >( pArea ), static_cast< int >( fUnLockAll ) ) );
+#endif
 
    HB_SYMBOL_UNUSED( fUnLockAll );
 
@@ -699,7 +723,9 @@ static HB_ERRCODE hb_delimAppend( DELIMAREAP pArea, HB_BOOL fUnLockAll )
  */
 static HB_ERRCODE hb_delimDeleteRec( DELIMAREAP pArea )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimDeleteRec(%p)", static_cast< void * >( pArea ) ) );
+#endif
 
    HB_SYMBOL_UNUSED( pArea );
 
@@ -722,7 +748,9 @@ static HB_ERRCODE hb_delimDeleteRec( DELIMAREAP pArea )
  */
 static HB_ERRCODE hb_delimRecall( DELIMAREAP pArea )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimRecall(%p)", static_cast< void * >( pArea ) ) );
+#endif
 
    HB_SYMBOL_UNUSED( pArea );
 
@@ -734,7 +762,9 @@ static HB_ERRCODE hb_delimRecall( DELIMAREAP pArea )
  */
 static HB_ERRCODE hb_delimGetValue( DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimGetValue(%p, %hu, %p)", static_cast< void * >( pArea ), uiIndex, static_cast< void * >( pItem ) ) );
+#endif
 
    LPFIELD pField;
 
@@ -845,7 +875,9 @@ static HB_ERRCODE hb_delimGetValue( DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITE
  */
 static HB_ERRCODE hb_delimPutValue( DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimPutValue(%p,%hu,%p)", static_cast< void * >( pArea ), uiIndex, static_cast< void * >( pItem ) ) );
+#endif
 
    char szBuffer[ 256 ];
    HB_ERRCODE errCode;
@@ -986,7 +1018,9 @@ static HB_ERRCODE hb_delimPutValue( DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITE
  */
 static HB_ERRCODE hb_delimPutRec( DELIMAREAP pArea, HB_BYTE * pBuffer )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimPutRec(%p,%p)", static_cast< void * >( pArea ), static_cast< void * >( pBuffer ) ) );
+#endif
 
    if( ! pArea->fPositioned )
    {
@@ -1009,7 +1043,9 @@ static HB_ERRCODE hb_delimPutRec( DELIMAREAP pArea, HB_BYTE * pBuffer )
  */
 static HB_ERRCODE hb_delimGetRec( DELIMAREAP pArea, HB_BYTE ** pBufferPtr )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimGetRec(%p,%p)", static_cast< void * >( pArea ), static_cast< void * >( pBufferPtr ) ) );
+#endif
 
    *pBufferPtr = pArea->pRecord - 1;
 
@@ -1021,7 +1057,9 @@ static HB_ERRCODE hb_delimGetRec( DELIMAREAP pArea, HB_BYTE ** pBufferPtr )
  */
 static HB_ERRCODE hb_delimTrans( DELIMAREAP pArea, LPDBTRANSINFO pTransInfo )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimTrans(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pTransInfo ) ) );
+#endif
 
    if( pTransInfo->uiFlags & DBTF_MATCH )
    {
@@ -1060,7 +1098,9 @@ static HB_ERRCODE hb_delimTrans( DELIMAREAP pArea, LPDBTRANSINFO pTransInfo )
  */
 static HB_ERRCODE hb_delimGoCold( DELIMAREAP pArea )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimGoCold(%p)", static_cast< void * >( pArea ) ) );
+#endif
 
    if( pArea->fRecordChanged )
    {
@@ -1081,7 +1121,9 @@ static HB_ERRCODE hb_delimGoCold( DELIMAREAP pArea )
  */
 static HB_ERRCODE hb_delimGoHot( DELIMAREAP pArea )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimGoHot(%p)", static_cast< void * >( pArea ) ) );
+#endif
 
    if( pArea->fReadonly )
    {
@@ -1102,7 +1144,9 @@ static HB_ERRCODE hb_delimGoHot( DELIMAREAP pArea )
  */
 static HB_ERRCODE hb_delimFlush( DELIMAREAP pArea )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimFlush(%p)", static_cast< void * >( pArea ) ) );
+#endif
 
    HB_ERRCODE errCode;
 
@@ -1122,7 +1166,9 @@ static HB_ERRCODE hb_delimFlush( DELIMAREAP pArea )
  */
 static HB_ERRCODE hb_delimInfo( DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimInfo(%p,%hu,%p)", static_cast< void * >( pArea ), uiIndex, static_cast< void * >( pItem ) ) );
+#endif
 
    switch( uiIndex )
    {
@@ -1263,7 +1309,9 @@ static HB_ERRCODE hb_delimInfo( DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
  */
 static HB_ERRCODE hb_delimAddField( DELIMAREAP pArea, LPDBFIELDINFO pFieldInfo )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimAddField(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pFieldInfo ) ) );
+#endif
 
    HB_USHORT uiDelim = 0;
 
@@ -1387,7 +1435,9 @@ static HB_ERRCODE hb_delimAddField( DELIMAREAP pArea, LPDBFIELDINFO pFieldInfo )
  */
 static HB_ERRCODE hb_delimSetFieldExtent( DELIMAREAP pArea, HB_USHORT uiFieldExtent )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimSetFieldExtent(%p,%hu)", static_cast< void * >( pArea ), uiFieldExtent ) );
+#endif
 
    if( SUPER_SETFIELDEXTENT( &pArea->area, uiFieldExtent ) == HB_FAILURE )
    {
@@ -1408,7 +1458,9 @@ static HB_ERRCODE hb_delimSetFieldExtent( DELIMAREAP pArea, HB_USHORT uiFieldExt
  */
 static HB_ERRCODE hb_delimNewArea( DELIMAREAP pArea )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimNewArea(%p)", static_cast< void * >( pArea ) ) );
+#endif
 
    if( SUPER_NEW( &pArea->area ) == HB_FAILURE )
    {
@@ -1434,7 +1486,9 @@ static HB_ERRCODE hb_delimNewArea( DELIMAREAP pArea )
  */
 static HB_ERRCODE hb_delimStructSize( DELIMAREAP pArea, HB_USHORT * uiSize )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimStrucSize(%p,%p)", static_cast< void * >( pArea ), static_cast< void * >( uiSize ) ) );
+#endif
    HB_SYMBOL_UNUSED( pArea );
 
    *uiSize = sizeof( DELIMAREA );
@@ -1446,7 +1500,9 @@ static HB_ERRCODE hb_delimStructSize( DELIMAREAP pArea, HB_USHORT * uiSize )
  */
 static HB_ERRCODE hb_delimClose( DELIMAREAP pArea )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimClose(%p)", static_cast< void * >( pArea ) ) );
+#endif
 
    /* Update record and unlock records */
    if( pArea->pFile )
@@ -1499,7 +1555,9 @@ static HB_ERRCODE hb_delimClose( DELIMAREAP pArea )
  */
 static HB_ERRCODE hb_delimCreate( DELIMAREAP pArea, LPDBOPENINFO pCreateInfo )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimCreate(%p,%p)", static_cast< void * >( pArea ), static_cast< void * >( pCreateInfo ) ) );
+#endif
 
    PHB_ITEM pError = nullptr;
    HB_ERRCODE errCode;
@@ -1611,7 +1669,9 @@ static HB_ERRCODE hb_delimCreate( DELIMAREAP pArea, LPDBOPENINFO pCreateInfo )
  */
 static HB_ERRCODE hb_delimOpen( DELIMAREAP pArea, LPDBOPENINFO pOpenInfo )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimOpen(%p,%p)", static_cast< void * >( pArea ), static_cast< void * >( pOpenInfo ) ) );
+#endif
 
    PHB_ITEM pError = nullptr;
    PHB_FNAME pFileName;
@@ -1726,7 +1786,9 @@ static HB_ERRCODE hb_delimOpen( DELIMAREAP pArea, LPDBOPENINFO pOpenInfo )
  */
 static HB_ERRCODE hb_delimInit( LPRDDNODE pRDD )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimInit(%p)", static_cast< void * >( pRDD ) ) );
+#endif
 
    PHB_TSD pTSD;
 
@@ -1749,7 +1811,9 @@ static HB_ERRCODE hb_delimInit( LPRDDNODE pRDD )
  */
 static HB_ERRCODE hb_delimExit( LPRDDNODE pRDD )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimExit(%p)", static_cast< void * >( pRDD ) ) );
+#endif
 
    if( pRDD->lpvCargo )
    {
@@ -1773,7 +1837,9 @@ static HB_ERRCODE hb_delimExit( LPRDDNODE pRDD )
  */
 static HB_ERRCODE hb_delimRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimRddInfo(%p,%hu,%lu,%p)", static_cast< void * >( pRDD ), uiIndex, ulConnect, static_cast< void * >( pItem ) ) );
+#endif
 
    switch( uiIndex )
    {
@@ -1934,7 +2000,9 @@ HB_FUNC_STATIC( DELIM_GETFUNCTABLE )
    puiCount = static_cast< HB_USHORT * >( hb_parptr( 1 ) );
    pTable = static_cast< RDDFUNCS * >( hb_parptr( 2 ) );
 
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "DELIM_GETFUNCTABLE(%p, %p)", static_cast< void * >( puiCount ), static_cast< void * >( pTable ) ) );
+#endif
 
    if( pTable )
    {

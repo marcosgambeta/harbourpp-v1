@@ -81,7 +81,9 @@ static HB_GARBAGE_FUNC( hb_hashGarbageRelease )
 {
    PHB_BASEHASH pBaseHash = static_cast< PHB_BASEHASH >( Cargo );
 
+#if 0
    HB_TRACE( HB_TR_INFO, ( "hb_hashGarbageRelease(%p)", static_cast< void * >( pBaseHash ) ) );
+#endif
 
    if( pBaseHash->nSize > 0 )
    {
@@ -142,7 +144,9 @@ static HB_GARBAGE_FUNC( hb_hashGarbageMark )
 {
    PHB_BASEHASH pBaseHash = static_cast< PHB_BASEHASH >( Cargo );
 
+#if 0
    HB_TRACE( HB_TR_INFO, ( "hb_hashMarkGarbage(%p)", static_cast< void * >( pBaseHash ) ) );
+#endif
 
    if( pBaseHash->nLen > 0 )
    {

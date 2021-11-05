@@ -51,7 +51,9 @@
 
 static HB_SIZE hb_strMemotran( char * pszResult, const char * pszString, HB_SIZE nStringLen, char cHardCR, char cSoftCR )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_strMemotran(%p, %s, %" HB_PFS "u, %x, %x)", static_cast< void * >( pszResult ), pszString, nStringLen, cHardCR, cSoftCR ) );
+#endif
 
    HB_SIZE nStringPos = 0;
    HB_SIZE nResultPos = 0;

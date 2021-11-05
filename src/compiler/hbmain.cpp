@@ -45,7 +45,9 @@ int hb_compMainExt( int argc, const char * const argv[],
                     void * cargo, PHB_PP_OPEN_FUNC pOpenFunc,
                                   PHB_PP_MSG_FUNC pMsgFunc )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_compMain()" ) );
+#endif
 
    HB_COMP_DECL;
    int iStatus = EXIT_SUCCESS, iFileCount = 0;
@@ -137,7 +139,9 @@ int hb_compMainExt( int argc, const char * const argv[],
       /* Process all files passed via the command-line. */
       for( int i = 1; i < argc && ! HB_COMP_PARAM->fExit; i++ )
       {
+#if 0
          HB_TRACE( HB_TR_DEBUG, ( "main LOOP(%i,%s)", i, argv[ i ] ) );
+#endif
          if( ! HB_ISOPTSEP( argv[ i ][ 0 ] ) )
          {
             iFileCount++;
@@ -4219,7 +4223,9 @@ static void hb_compInitVars( HB_COMP_DECL )
 
 static void hb_compGenOutput( HB_COMP_DECL, int iLanguage )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_compGenOutput()" ) );
+#endif
 
    switch( iLanguage )
    {
@@ -4261,7 +4267,9 @@ static void hb_compPpoFile( HB_COMP_DECL, const char * szPrg, const char * szExt
 
 static void hb_compOutputFile( HB_COMP_DECL )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_compOutputFile()" ) );
+#endif
 
    HB_COMP_PARAM->pFileName->szPath = nullptr;
    HB_COMP_PARAM->pFileName->szExtension = nullptr;
@@ -4298,7 +4306,9 @@ static void hb_compAddInitFunc( HB_COMP_DECL, PHB_HFUNC pFunc )
 
 void hb_compModuleAdd( HB_COMP_DECL, const char * szModuleName, HB_BOOL fForce )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_compModuleAdd(%s,%d)", szModuleName, fForce ) );
+#endif
 
    if( ! HB_COMP_PARAM->fSingleModule || fForce )
    {
@@ -4575,7 +4585,9 @@ static void hb_compRestoreSwitches( HB_COMP_DECL, PHB_COMP_SWITCHES pSwitches )
 
 static int hb_compCompile( HB_COMP_DECL, const char * szPrg, const char * szBuffer, int iStartLine )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_compCompile(%s,%p,%d)", szPrg, static_cast< const void * >( szBuffer ), iStartLine ) );
+#endif
 
    char buffer[ HB_PATH_MAX * 2 + 80 ];
    HB_COMP_SWITCHES switches;

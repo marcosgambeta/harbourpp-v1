@@ -104,7 +104,9 @@ static PHB_PRNPOS hb_prnPos( void )
 
 void hb_conInit( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_conInit()" ) );
+#endif
 
 #if ! defined( HB_OS_WIN )
    /* On Windows file handles with numbers 0, 1, 2 are
@@ -162,7 +164,9 @@ void hb_conInit( void )
 
 void hb_conRelease( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_conRelease()" ) );
+#endif
 
    /*
     * Clipper does not restore screen size on exit so I removed the code with:
@@ -183,7 +187,9 @@ void hb_conRelease( void )
 
 const char * hb_conNewLine( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_conNewLine()" ) );
+#endif
 
    return s_szCrLf;
 }
@@ -206,7 +212,9 @@ HB_FUNC( HB_OSNEWLINE )
 /* Output an item to STDOUT */
 void hb_conOutStd( const char * szStr, HB_SIZE nLen )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_conOutStd(%s, %" HB_PFS "u)", szStr, nLen ) );
+#endif
 
    if( nLen == 0 )
    {
@@ -222,7 +230,9 @@ void hb_conOutStd( const char * szStr, HB_SIZE nLen )
 /* Output an item to STDERR */
 void hb_conOutErr( const char * szStr, HB_SIZE nLen )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_conOutErr(%s, %" HB_PFS "u)", szStr, nLen ) );
+#endif
 
    if( nLen == 0 )
    {
@@ -238,7 +248,9 @@ void hb_conOutErr( const char * szStr, HB_SIZE nLen )
 /* Output an item to the screen and/or printer and/or alternate */
 void hb_conOutAlt( const char * szStr, HB_SIZE nLen )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_conOutAlt(%s, %" HB_PFS "u)", szStr, nLen ) );
+#endif
 
    PHB_FILE pFile;
 
@@ -270,7 +282,9 @@ void hb_conOutAlt( const char * szStr, HB_SIZE nLen )
 /* Output an item to the screen and/or printer */
 static void hb_conOutDev( const char * szStr, HB_SIZE nLen )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_conOutDev(%s, %" HB_PFS "u)", szStr, nLen ) );
+#endif
 
    PHB_FILE pFile;
 
@@ -440,7 +454,9 @@ HB_FUNC( PCOL ) /* Returns the current printer row position */
 
 static void hb_conDevPos( int iRow, int iCol )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_conDevPos(%d, %d)", iRow, iCol ) );
+#endif
 
    PHB_FILE pFile;
 

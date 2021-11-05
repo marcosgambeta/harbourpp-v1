@@ -2218,7 +2218,9 @@ static HB_EXPR_FUNC( hb_compExprUseFunCall )
  */
 static HB_EXPR_FUNC( hb_compExprUseAliasVar )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_compExprUseAliasVar()" ) );
+#endif
 
    switch( iMessage )
    {

@@ -49,7 +49,9 @@
 
 int hb_conSetCursor( HB_BOOL bSetCursor, int iNewCursor )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_conSetCursor(%d, %d)", static_cast< int >( bSetCursor ), iNewCursor ) );
+#endif
 
    int iCursor;
 

@@ -560,7 +560,9 @@ void * hb_xalloc( HB_SIZE nSize )         /* allocates fixed memory, returns nul
 {
    PHB_MEMINFO pMem;
 
+#if 0
    HB_TRACE_FM( HB_TR_DEBUG, ( "hb_xalloc(%" HB_PFS "u)", nSize ) );
+#endif
 
    if( nSize == 0 )
    {
@@ -665,7 +667,9 @@ void * hb_xgrab( HB_SIZE nSize )         /* allocates fixed memory, exits on fai
 {
    PHB_MEMINFO pMem;
 
+#if 0
    HB_TRACE_FM( HB_TR_DEBUG, ( "hb_xgrab(%" HB_PFS "u)", nSize ) );
+#endif
 
    if( nSize == 0 )
    {
@@ -767,7 +771,9 @@ void * hb_xgrab( HB_SIZE nSize )         /* allocates fixed memory, exits on fai
 
 void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
 {
+#if 0
    HB_TRACE_FM( HB_TR_DEBUG, ( "hb_xrealloc(%p, %" HB_PFS "u)", pMem, nSize ) );
+#endif
 
 #if 0
    /* disabled to make hb_xrealloc() ANSI-C realloc() compatible */
@@ -941,7 +947,9 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
 
 void hb_xfree( void * pMem )            /* frees fixed memory */
 {
+#if 0
    HB_TRACE_FM( HB_TR_DEBUG, ( "hb_xfree(%p)", pMem ) );
+#endif
 
    if( pMem )
    {

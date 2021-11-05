@@ -51,7 +51,9 @@
 
 char * hb_dateFormat( const char * szDate, char * szFormattedDate, const char * szDateFormat )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_dateFormat(%s, %p, %s)", szDate, static_cast< void * >( szFormattedDate ), szDateFormat ) );
+#endif
 
    /*
     * NOTE: szFormattedDate must point to a buffer of at least 11 bytes.
@@ -254,7 +256,9 @@ char * hb_dateFormat( const char * szDate, char * szFormattedDate, const char * 
 
 static int hb_dateUnformatRaw( const char * szDate, const char * szDateFormat, long * plDate )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_dateUnformatRaw(%s, %s, %p)", szDate, szDateFormat, static_cast< void * >( plDate ) ) );
+#endif
 
    int d_value = 0, m_value = 0, y_value = 0;
    int iSize = 0;
@@ -388,7 +392,9 @@ static int hb_dateUnformatRaw( const char * szDate, const char * szDateFormat, l
 
 long hb_dateUnformat( const char * szDate, const char * szDateFormat )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_dateFormat(%s, %s)", szDate, szDateFormat ) );
+#endif
 
    long lDate;
 
@@ -409,7 +415,9 @@ long hb_dateUnformat( const char * szDate, const char * szDateFormat )
  */
 char * hb_timeFormat( char * szBuffer, const char * szTimeFormat, long lMilliSec )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_timeFormat(%p, %s, %ld)", static_cast< void * >( szBuffer ), szTimeFormat, lMilliSec ) );
+#endif
 
    char * szTimeBuffer;
    int iHour, iMinutes, iSeconds, iMSec, iPM, i12;
@@ -544,7 +552,9 @@ char * hb_timeFormat( char * szBuffer, const char * szTimeFormat, long lMilliSec
  */
 char * hb_timeStampFormat( char * szBuffer, const char * szDateFormat, const char * szTimeFormat, long lJulian, long lMilliSec )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_timeStampFormat(%p, %s, %s, %ld, %ld)", static_cast< void * >( szBuffer ), szDateFormat, szTimeFormat, lJulian, lMilliSec ) );
+#endif
 
    char szDate[ 9 ], * szTimeBuffer;
 
@@ -562,7 +572,9 @@ char * hb_timeStampFormat( char * szBuffer, const char * szDateFormat, const cha
 
 long hb_timeUnformat( const char * szTime, const char * szTimeFormat )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_timeUnformat(%s, %s)", szTime, szTimeFormat ) );
+#endif
 
    int iHour, iMinutes, iSeconds, iMSec, iPM;
    int size, i, count, prec, * pValue;
@@ -703,7 +715,9 @@ long hb_timeUnformat( const char * szTime, const char * szTimeFormat )
 
 void hb_timeStampUnformat( const char * szDateTime, const char * szDateFormat, const char * szTimeFormat, long * plJulian, long * plMilliSec )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_timeStampUnformat(%s, %s, %s, %p, %p)", szDateTime, szDateFormat, szTimeFormat, static_cast< void * >( plJulian ), static_cast< void * >( plMilliSec ) ) );
+#endif
 
    if( szDateTime )
    {

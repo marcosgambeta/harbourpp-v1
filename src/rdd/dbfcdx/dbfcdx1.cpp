@@ -812,7 +812,9 @@ static HB_BOOL hb_cdxBottomScope( LPCDXTAG pTag )
  */
 static void hb_cdxTagClearScope( LPCDXTAG pTag, HB_USHORT nScope )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxTagClearScope(%p, %hu)", static_cast< void * >( pTag ), nScope ) );
+#endif
 
    CDXAREAP pArea = pTag->pIndex->pArea;
    LPCDXKEY * pScopeKey;
@@ -5499,7 +5501,9 @@ static void hb_cdxCreateFName( CDXAREAP pArea, const char * szBagName, HB_BOOL *
  */
 static void hb_cdxOrdListClear( CDXAREAP pArea, HB_BOOL fAll, LPCDXINDEX pKeepInd )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxOrdListClear(%p, %d)", static_cast< void * >( pArea ), static_cast< int >( fAll ) ) );
+#endif
 
    if( pArea->lpIndexes )
    {
@@ -5815,7 +5819,9 @@ static HB_BOOL hb_cdxCurKeyRefresh( CDXAREAP pArea, LPCDXTAG pTag )
  */
 static HB_ERRCODE hb_cdxDBOISkipUnique( CDXAREAP pArea, LPCDXTAG pTag, HB_LONG lToSkip )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxDBOISkipUnique(%p, %p, %ld)", static_cast< void * >( pArea ), static_cast< void * >( pTag ), lToSkip ) );
+#endif
 
    HB_ERRCODE retval;
    HB_BOOL fForward;
@@ -5947,7 +5953,9 @@ static HB_ERRCODE hb_cdxDBOISkipUnique( CDXAREAP pArea, LPCDXTAG pTag, HB_LONG l
  */
 static HB_BOOL hb_cdxDBOISkipEval( CDXAREAP pArea, LPCDXTAG pTag, HB_BOOL fForward, PHB_ITEM pEval )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxDBOISkipEval(%p, %p, %i, %p)", static_cast< void * >( pArea ), static_cast< void * >( pTag ), fForward, static_cast< void * >( pEval ) ) );
+#endif
 
    HB_BOOL fFound = HB_FALSE, fFirst = HB_TRUE;
 
@@ -6060,7 +6068,9 @@ static HB_BOOL hb_cdxDBOISkipEval( CDXAREAP pArea, LPCDXTAG pTag, HB_BOOL fForwa
  */
 static HB_BOOL hb_cdxDBOISkipWild( CDXAREAP pArea, LPCDXTAG pTag, HB_BOOL fForward, PHB_ITEM pWildItm )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxDBOISkipWild(%p, %p, %i, %p)", static_cast< void * >( pArea ), static_cast< void * >( pTag ), fForward, static_cast< void * >( pWildItm ) ) );
+#endif
 
    HB_BOOL fFound = HB_FALSE, fFirst = HB_TRUE;
    const char * szPattern;
@@ -6250,7 +6260,9 @@ static HB_BOOL hb_cdxRegexMatch( CDXAREAP pArea, PHB_REGEX pRegEx, LPCDXKEY pKey
  */
 static HB_BOOL hb_cdxDBOISkipRegEx( CDXAREAP pArea, LPCDXTAG pTag, HB_BOOL fForward, PHB_ITEM pRegExItm )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxDBOISkipRegEx(%p, %p, %i, %p)", static_cast< void * >( pArea ), static_cast< void * >( pTag ), fForward, static_cast< void * >( pRegExItm ) ) );
+#endif
 
    HB_BOOL fFound = HB_FALSE, fFirst = HB_TRUE;
    PHB_REGEX pRegEx;
@@ -7209,7 +7221,9 @@ static void hb_cdxClearPosInfo( CDXAREAP pArea )
 /* ( DBENTRYP_V )     hb_cdxGoBottom */
 static HB_ERRCODE hb_cdxGoBottom( CDXAREAP pArea )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxGoBottom(%p)", static_cast< void * >( pArea ) ) );
+#endif
 
    LPCDXTAG pTag;
    HB_ERRCODE retval;
@@ -7261,7 +7275,9 @@ static HB_ERRCODE hb_cdxGoBottom( CDXAREAP pArea )
 /* ( DBENTRYP_V )     hb_cdxGoTop */
 static HB_ERRCODE hb_cdxGoTop( CDXAREAP pArea )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxGoTop(%p)", static_cast< void * >( pArea ) ) );
+#endif
 
    LPCDXTAG pTag;
    HB_ERRCODE retval;
@@ -7310,7 +7326,9 @@ static HB_ERRCODE hb_cdxGoTop( CDXAREAP pArea )
 /* ( DBENTRYP_BIB )   hb_cdxSeek */
 static HB_ERRCODE hb_cdxSeek( CDXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pKeyItm, HB_BOOL fFindLast )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxSeek(%p, %d, %p, %d)", static_cast< void * >( pArea ), fSoftSeek, static_cast< void * >( pKeyItm ), fFindLast ) );
+#endif
 
    LPCDXTAG pTag;
 
@@ -7406,7 +7424,9 @@ static HB_ERRCODE hb_cdxSeek( CDXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pKeyIt
 /* ( DBENTRYP_L )     hb_cdxSkip        : nullptr */
 static HB_ERRCODE hb_cdxSkip( CDXAREAP pArea, HB_LONG lToSkip )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxSkip(%p, %ld)", static_cast< void * >( pArea ), lToSkip ) );
+#endif
 
    LPCDXTAG pTag;
    HB_ULONG ulPos, ulRec;
@@ -7477,7 +7497,9 @@ static HB_ERRCODE hb_cdxSkip( CDXAREAP pArea, HB_LONG lToSkip )
 /* ( DBENTRYP_L )     hb_cdxSkipRaw */
 static HB_ERRCODE hb_cdxSkipRaw( CDXAREAP pArea, HB_LONG lToSkip )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxSkipRaw(%p, %ld)", static_cast< void * >( pArea ), lToSkip ) );
+#endif
 
    LPCDXTAG pTag;
    HB_ERRCODE retval;
@@ -7597,7 +7619,9 @@ static HB_ERRCODE hb_cdxSkipRaw( CDXAREAP pArea, HB_LONG lToSkip )
  */
 static HB_ERRCODE hb_cdxFlush( CDXAREAP pArea )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxFlush(%p)", static_cast< void * >( pArea ) ) );
+#endif
 
    LPCDXINDEX pIndex;
    HB_ERRCODE errCode;
@@ -7636,7 +7660,9 @@ static HB_ERRCODE hb_cdxFlush( CDXAREAP pArea )
  */
 static HB_ERRCODE hb_cdxGoCold( CDXAREAP pArea )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxGoCold(%p)", static_cast< void * >( pArea ) ) );
+#endif
 
    HB_BOOL fRecordChanged = pArea->dbfarea.fRecordChanged;
    HB_BOOL fAppend = pArea->dbfarea.fAppend;
@@ -7782,7 +7808,9 @@ static HB_ERRCODE hb_cdxGoCold( CDXAREAP pArea )
  */
 static HB_ERRCODE hb_cdxGoHot( CDXAREAP pArea )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxGoHot(%p)", static_cast< void * >( pArea ) ) );
+#endif
 
    if( pArea->dbfarea.fRecordChanged )
    {
@@ -7841,7 +7869,9 @@ static HB_ERRCODE hb_cdxGoHot( CDXAREAP pArea )
  */
 static HB_ERRCODE hb_cdxClose( CDXAREAP pArea )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxClose(%p)", static_cast< void * >( pArea ) ) );
+#endif
 
    HB_ERRCODE errCode;
 
@@ -7897,7 +7927,9 @@ static HB_ERRCODE hb_cdxClose( CDXAREAP pArea )
  */
 static HB_ERRCODE hb_cdxOpen( CDXAREAP pArea, LPDBOPENINFO pOpenInfo )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxOpen(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOpenInfo ) ) );
+#endif
 
    HB_ERRCODE errCode = HB_SUCCESS;
 
@@ -7975,7 +8007,9 @@ static HB_ERRCODE hb_cdxOpen( CDXAREAP pArea, LPDBOPENINFO pOpenInfo )
  */
 static HB_ERRCODE hb_cdxStructSize( CDXAREAP pArea, HB_USHORT * uiSize )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxStrucSize(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( uiSize ) ) );
+#endif
    HB_SYMBOL_UNUSED( pArea );
 
    *uiSize = sizeof( CDXAREA );
@@ -7989,7 +8023,9 @@ static HB_ERRCODE hb_cdxStructSize( CDXAREAP pArea, HB_USHORT * uiSize )
 /* ( DBENTRYP_V )     hb_cdxPack */
 static HB_ERRCODE hb_cdxPack( CDXAREAP pArea )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxPack(%p)", static_cast< void * >( pArea ) ) );
+#endif
 
    if( FAST_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -8014,7 +8050,9 @@ static HB_ERRCODE hb_cdxPack( CDXAREAP pArea )
 /* ( DBENTRYP_V )     hb_cdxZap */
 static HB_ERRCODE hb_cdxZap( CDXAREAP pArea )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "nb_cdxZap(%p)", static_cast< void * >( pArea ) ) );
+#endif
 
    if( FAST_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -8045,7 +8083,9 @@ static HB_ERRCODE hb_cdxZap( CDXAREAP pArea )
 /* ( DBENTRYP_VOI )   hb_cdxOrderListAdd */
 static HB_ERRCODE hb_cdxOrderListAdd( CDXAREAP pArea, LPDBORDERINFO pOrderInfo )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxOrderListAdd(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
+#endif
 
    HB_FATTR nFlags;
    PHB_FILE pFile;
@@ -8165,7 +8205,9 @@ static HB_ERRCODE hb_cdxOrderListAdd( CDXAREAP pArea, LPDBORDERINFO pOrderInfo )
  */
 static HB_ERRCODE hb_cdxOrderListClear( CDXAREAP pArea )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxOrderListClear(%p)", static_cast< void * >( pArea ) ) );
+#endif
 
    if( FAST_GOCOLD( &pArea->dbfarea.area ) == HB_FAILURE )
    {
@@ -8181,7 +8223,9 @@ static HB_ERRCODE hb_cdxOrderListClear( CDXAREAP pArea )
 /* ( DBENTRYP_VOI )   hb_cdxOrderListDelete */
 static HB_ERRCODE hb_cdxOrderListDelete( CDXAREAP pArea, LPDBORDERINFO pOrderInfo )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxOrderListDelete(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
+#endif
 
    char szTagName[ CDX_MAXTAGNAMELEN + 1 ];
    char szFileName[ HB_PATH_MAX ];
@@ -8229,7 +8273,9 @@ static HB_ERRCODE hb_cdxOrderListDelete( CDXAREAP pArea, LPDBORDERINFO pOrderInf
 /* ( DBENTRYP_VOI )   hb_cdxOrderListFocus */
 static HB_ERRCODE hb_cdxOrderListFocus( CDXAREAP pArea, LPDBORDERINFO pOrderInfo )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxOrderListFocus(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
+#endif
 
    LPCDXTAG pTag;
 
@@ -8260,7 +8306,9 @@ static HB_ERRCODE hb_cdxOrderListFocus( CDXAREAP pArea, LPDBORDERINFO pOrderInfo
 /* ( DBENTRYP_V )     hb_cdxOrderListRebuild */
 static HB_ERRCODE hb_cdxOrderListRebuild( CDXAREAP pArea )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxPack(%p)", static_cast< void * >( pArea ) ) );
+#endif
 
    LPCDXINDEX pIndex, * pIndexPtr;
    HB_USHORT uiPrevTag;
@@ -8316,7 +8364,9 @@ static HB_ERRCODE hb_cdxOrderListRebuild( CDXAREAP pArea )
  */
 static HB_ERRCODE hb_cdxOrderCreate( CDXAREAP pArea, LPDBORDERCREATEINFO pOrderInfo )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxOrderCreate(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
+#endif
 
    HB_ULONG ulRecNo;
    HB_BOOL fNewFile, fOpenedIndex, fProd, fAscend = HB_TRUE, fNoCase = HB_FALSE,
@@ -8720,7 +8770,9 @@ static HB_ERRCODE hb_cdxOrderCreate( CDXAREAP pArea, LPDBORDERCREATEINFO pOrderI
 /* ( DBENTRYP_VOI )   hb_cdxOrderDestroy */
 static HB_ERRCODE hb_cdxOrderDestroy( CDXAREAP pArea, LPDBORDERINFO pOrderInfo )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxOrderDestroy(%p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pOrderInfo ) ) );
+#endif
 
    LPCDXINDEX pIndex, pIndexTmp;
    LPCDXTAG pTag;
@@ -8802,7 +8854,9 @@ static HB_ERRCODE hb_cdxOrderDestroy( CDXAREAP pArea, LPDBORDERINFO pOrderInfo )
  */
 static HB_ERRCODE hb_cdxOrderInfo( CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO pInfo )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxOrderInfo(%p, %hu, %p)", static_cast< void * >( pArea ), uiIndex, static_cast< void * >( pInfo ) ) );
+#endif
 
    LPCDXTAG pTag;
    HB_USHORT uiTag = 0;
@@ -9663,7 +9717,9 @@ static HB_ERRCODE hb_cdxClearFilter( CDXAREAP pArea )
 /* ( DBENTRYP_VPLP )  hb_cdxCountScope */
 static HB_ERRCODE hb_cdxCountScope( CDXAREAP pArea, void * pPtr, HB_LONG * plRec )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxCountScope(%p, %p, %p)", static_cast< void * >( pArea ), static_cast< void * >( pPtr ), static_cast< void * >( plRec ) ) );
+#endif
 
    if( pPtr == nullptr )
    {
@@ -9713,7 +9769,9 @@ static HB_ERRCODE hb_cdxSetFilter( CDXAREAP pArea, LPDBFILTERINFO pFilterInfo )
  */
 static HB_ERRCODE hb_cdxRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxRddInfo(%p, %hu, %lu, %p)", static_cast< void * >( pRDD ), uiIndex, ulConnect, static_cast< void * >( pItem ) ) );
+#endif
 
    LPDBFDATA pData;
 
@@ -10976,8 +11034,6 @@ static const RDDFUNCS cdxTable =
 
 HB_FUNC_STATIC( _GETFUNCTABLE )
 {
-   HB_TRACE( HB_TR_DEBUG, ( HB_CDXRDD "_GETFUNCTABLE(%p, %p)", static_cast< void * >( puiCount ), static_cast< void * >( pTable ) ) );
-
    RDDFUNCS * pTable;
    HB_USHORT * puiCount, uiRddId, * puiSuperRddId;
 
@@ -10985,6 +11041,10 @@ HB_FUNC_STATIC( _GETFUNCTABLE )
    pTable = static_cast< RDDFUNCS * >( hb_parptr( 2 ) );
    uiRddId = static_cast< HB_USHORT >( hb_parni( 4 ) );
    puiSuperRddId = static_cast< HB_USHORT * >( hb_parptr( 5 ) );
+
+#if 0
+   HB_TRACE( HB_TR_DEBUG, ( HB_CDXRDD "_GETFUNCTABLE(%p, %p)", static_cast< void * >( puiCount ), static_cast< void * >( pTable ) ) );
+#endif
 
    if( pTable )
    {

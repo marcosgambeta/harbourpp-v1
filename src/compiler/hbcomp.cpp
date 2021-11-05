@@ -95,7 +95,9 @@ static void hb_compExprDealloc( HB_COMP_DECL, PHB_EXPR pExpr )
 
 static PHB_EXPR hb_compExprNew( HB_COMP_DECL, HB_EXPRTYPE iType )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_compExprNew(%p,%i)", static_cast< void * >( HB_COMP_PARAM ), iType ) );
+#endif
 
    PHB_EXPR pExpr;
 
@@ -118,7 +120,9 @@ static void hb_compExprClear( HB_COMP_DECL, PHB_EXPR pExpr )
  */
 static void hb_compExprFree( HB_COMP_DECL, PHB_EXPR pExpr )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_compExprFree()" ) );
+#endif
 
    HB_EXPR_USE( pExpr, HB_EA_DELETE );
    hb_compExprDealloc( HB_COMP_PARAM, pExpr );

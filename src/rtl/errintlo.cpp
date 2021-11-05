@@ -56,7 +56,9 @@
 
 void hb_errInternalRaw( HB_ERRCODE errCode, const char * szText, const char * szPar1, const char * szPar2 )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_errInternal(%d, %s, %s, %s)", errCode, szText, szPar1, szPar2 ) );
+#endif
 
    char buffer[ 8192 ];
    char file[ HB_PATH_MAX ];

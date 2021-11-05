@@ -112,7 +112,9 @@
 
 const char * hb_verCPU( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_verCPU()" ) );
+#endif
 
 #if   defined( HB_CPU_X86 )
    return "x86";
@@ -198,7 +200,9 @@ static HB_BOOL s_win_iswow64( void )
 
 const char * hb_verHostCPU( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_verHostCPU()" ) );
+#endif
 
    if( s_win_iswow64() )
    {
@@ -465,7 +469,9 @@ static void s_hb_winVerInit( void )
 
 char * hb_verPlatform( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_verPlatform()" ) );
+#endif
 
    char * pszPlatform;
 
@@ -947,7 +953,9 @@ HB_BOOL hb_iswince( void )
 
 char * hb_verCompiler( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_verCompiler()" ) );
+#endif
 
    char * pszCompiler;
    const char * pszName;
@@ -1289,7 +1297,9 @@ char * hb_verCompiler( void )
 
 char * hb_verHarbour( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_verHarbour()" ) );
+#endif
 
    char * pszVersion;
 
@@ -1301,7 +1311,9 @@ char * hb_verHarbour( void )
 
 char * hb_verPCode( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_verPCode()" ) );
+#endif
 
    char * pszPCode;
 
@@ -1313,7 +1325,9 @@ char * hb_verPCode( void )
 
 char * hb_verBuildDate( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_verBuildDate()" ) );
+#endif
 
    char * pszDate;
 

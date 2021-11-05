@@ -57,7 +57,9 @@ static void hb_pp_ErrorMessage( void * cargo, const char * const szMsgTable[],
                                 char cPrefix, int iCode,
                                 const char * szParam1, const char * szParam2 )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_pp_ErrorGen(%p, %p, %c, %d, %s, %s)", cargo, static_cast< const void * >( szMsgTable ), cPrefix, iCode, szParam1, szParam2 ) );
+#endif
 
    HB_SYMBOL_UNUSED( cargo );
 

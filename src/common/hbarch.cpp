@@ -67,7 +67,9 @@
 
 void hb_put_ieee754( HB_BYTE * ptr, double d )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_put_ieee754(%p, %f)", static_cast< void * >( ptr ), d ) );
+#endif
 
    int iExp, iSig;
 
@@ -110,7 +112,9 @@ void hb_put_ieee754( HB_BYTE * ptr, double d )
 
 double hb_get_ieee754( const HB_BYTE * ptr )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_get_ieee754(%p)", static_cast< const void * >( ptr ) ) );
+#endif
 
    int iExp, iSig;
 
@@ -152,7 +156,9 @@ double hb_get_ieee754( const HB_BYTE * ptr )
 
 void hb_put_ord_ieee754( HB_BYTE * ptr, double d )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_put_ord_ieee754(%p, %f)", static_cast< void * >( ptr ), d ) );
+#endif
 
    int iExp, iSig;
    HB_U32 l1, l2;
@@ -184,7 +190,9 @@ void hb_put_ord_ieee754( HB_BYTE * ptr, double d )
 
 double hb_get_ord_ieee754( const HB_BYTE * ptr )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_get_ord_ieee754(%p)", static_cast< const void * >( ptr ) ) );
+#endif
 
    int iExp, iSig;
    HB_U32 l1, l2;
@@ -217,7 +225,9 @@ double hb_get_ord_ieee754( const HB_BYTE * ptr )
  */
 double hb_get_rev_double( const HB_BYTE * ptr )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_get_rev_double(%p)", static_cast< const void * >( ptr ) ) );
+#endif
 
    {
 #if defined( __GNUC__ )
@@ -245,7 +255,9 @@ double hb_get_rev_double( const HB_BYTE * ptr )
 
 double hb_get_std_double( const HB_BYTE * ptr )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_get_std_double(%p)", static_cast< const void * >( ptr ) ) );
+#endif
 
    {
 #if defined( __GNUC__ )
@@ -281,7 +293,9 @@ double hb_get_std_double( const HB_BYTE * ptr )
  */
 double hb_get_le_uint64( const HB_BYTE * ptr )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_get_le_uint64(%p)", static_cast< const void * >( ptr ) ) );
+#endif
 
    HB_U32 l1, l2;
 
@@ -292,7 +306,9 @@ double hb_get_le_uint64( const HB_BYTE * ptr )
 
 double hb_get_le_int64( const HB_BYTE * ptr )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_get_le_int64(%p)", static_cast< const void * >( ptr ) ) );
+#endif
 
    HB_U32 l1;
    HB_I32 l2;
@@ -304,7 +320,9 @@ double hb_get_le_int64( const HB_BYTE * ptr )
 
 void hb_put_le_uint64( const HB_BYTE * ptr, double d )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_put_le_uint64(%p)", static_cast< const void * >( ptr ) ) );
+#endif
 
    HB_U32 l1, l2;
 

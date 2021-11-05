@@ -141,8 +141,12 @@ void hb_fsFreeSearchPath( HB_PATHNAMES * pSearchList )
 /* Split given filename into path, name and extension, plus determine drive */
 PHB_FNAME hb_fsFNameSplit( const char * pszFileName )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsFNameSplit(%s)", pszFileName ) );
+#endif
+#if 0
    HB_TRACE( HB_TR_INFO, ( "hb_fsFNameSplit: Filename: |%s|", pszFileName ) );
+#endif
 
    PHB_FNAME pFileName;
 
@@ -221,10 +225,12 @@ PHB_FNAME hb_fsFNameSplit( const char * pszFileName )
       }
    }
 
+#if 0
    HB_TRACE( HB_TR_INFO, ( "hb_fsFNameSplit:   szPath: |%s|", pFileName->szPath ) );
    HB_TRACE( HB_TR_INFO, ( "hb_fsFNameSplit:   szName: |%s|", pFileName->szName ) );
    HB_TRACE( HB_TR_INFO, ( "hb_fsFNameSplit:    szExt: |%s|", pFileName->szExtension ) );
    HB_TRACE( HB_TR_INFO, ( "hb_fsFNameSplit:  szDrive: |%s|", pFileName->szDrive ) );
+#endif
 
    return pFileName;
 }
@@ -238,7 +244,9 @@ PHB_FNAME hb_fsFNameSplit( const char * pszFileName )
 /* This function joins path, name and extension into a string with a filename */
 char * hb_fsFNameMerge( char * pszFileName, PHB_FNAME pFileName )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsFNameMerge(%p, %p)", static_cast< void * >( pszFileName ), static_cast< void * >( pFileName ) ) );
+#endif
 
    if( pszFileName && pFileName )
    {
@@ -295,10 +303,12 @@ char * hb_fsFNameMerge( char * pszFileName, PHB_FNAME pFileName )
          hb_strncat( pszFileName, pFileName->szExtension, HB_PATH_MAX - 1 - 1 );
       }
 
+#if 0
       HB_TRACE( HB_TR_INFO, ( "hb_fsFNameMerge:   szPath: |%s|", pFileName->szPath ) );
       HB_TRACE( HB_TR_INFO, ( "hb_fsFNameMerge:   szName: |%s|", pFileName->szName ) );
       HB_TRACE( HB_TR_INFO, ( "hb_fsFNameMerge:    szExt: |%s|", pFileName->szExtension ) );
       HB_TRACE( HB_TR_INFO, ( "hb_fsFNameMerge: Filename: |%s|", pszFileName ) );
+#endif
    }
 
    return pszFileName;
@@ -306,7 +316,9 @@ char * hb_fsFNameMerge( char * pszFileName, PHB_FNAME pFileName )
 
 HB_BOOL hb_fsNameExists( const char * pszFileName )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsNameExists(%p)", static_cast< const void * >( pszFileName ) ) );
+#endif
 
    HB_BOOL fExist = HB_FALSE;
 
@@ -360,7 +372,9 @@ HB_BOOL hb_fsNameExists( const char * pszFileName )
 
 HB_BOOL hb_fsFileExists( const char * pszFileName )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsFileExists(%p)", static_cast< const void * >( pszFileName ) ) );
+#endif
 
    HB_BOOL fExist = HB_FALSE;
 
@@ -417,7 +431,9 @@ HB_BOOL hb_fsFileExists( const char * pszFileName )
 
 HB_BOOL hb_fsDirExists( const char * pszDirName )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsDirExists(%p)", static_cast< const void * >( pszDirName ) ) );
+#endif
 
    HB_BOOL fExist = HB_FALSE;
 
@@ -474,7 +490,9 @@ HB_BOOL hb_fsDirExists( const char * pszDirName )
 
 HB_BOOL hb_fsMaxFilesError( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsMaxFilesError()" ) );
+#endif
 
 #if defined( HB_OS_WIN )
    return GetLastError() == ERROR_TOO_MANY_OPEN_FILES;

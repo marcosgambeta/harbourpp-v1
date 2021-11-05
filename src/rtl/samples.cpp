@@ -50,7 +50,9 @@
 
 static char * hb_SecToTimeStr( char * pszTime, long lTime )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_SecToTimeStr(%p, %ld)", static_cast< void * >( pszTime ), lTime ) );
+#endif
 
    int iValue;
 
@@ -72,7 +74,9 @@ static char * hb_SecToTimeStr( char * pszTime, long lTime )
 
 static long hb_TimeStrToSec( const char * pszTime )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_TimeStrToSec(%s)", pszTime ) );
+#endif
 
    HB_SIZE nLen;
    long lTime = 0;

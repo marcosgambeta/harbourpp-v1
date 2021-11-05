@@ -59,14 +59,18 @@
 
 const char * hb_dateCMonth( int iMonth )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_dateCMonth(%d)", iMonth ) );
+#endif
 
    return ( iMonth >= 1 && iMonth <= 12 ) ? hb_langDGetItem( HB_LANG_ITEM_BASE_MONTH + iMonth - 1 ) : s_nullStr;
 }
 
 const char * hb_dateCDOW( int iDay )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_dateCDOW(%d)", iDay ) );
+#endif
 
    return ( iDay >= 1 && iDay <= 7 ) ? hb_langDGetItem( HB_LANG_ITEM_BASE_DAY + iDay - 1 ) : s_nullStr;
 }

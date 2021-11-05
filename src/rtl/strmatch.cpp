@@ -49,7 +49,9 @@
 
 HB_BOOL hb_strMatchRegExp( const char * szString, const char * szPattern )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_strMatchRegExp(%s, %s)", szString, szPattern ) );
+#endif
 
    PHB_REGEX pRegEx;
 

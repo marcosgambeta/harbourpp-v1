@@ -472,7 +472,9 @@ static void hb_pp_fileIncluded( void * cargo, const char * szFileName )
 
 void hb_compInitPP( HB_COMP_DECL, PHB_PP_OPEN_FUNC pOpenFunc )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_compInitPP()" ) );
+#endif
 
    if( HB_COMP_PARAM->pLex->pPP )
    {

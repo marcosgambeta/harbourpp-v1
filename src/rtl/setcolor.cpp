@@ -50,7 +50,9 @@
 
 const char * hb_conSetColor( const char * szColor )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_conSetColor(%s)", szColor ) );
+#endif
 
    char * szOldColor;
 

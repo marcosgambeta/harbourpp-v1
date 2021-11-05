@@ -232,7 +232,9 @@ PHB_CODEBLOCK hb_codeblockNew( const HB_BYTE * pBuffer, HB_USHORT uiLocals, cons
    pCBlock->uiLocals  = uiLocals;
    pCBlock->pLocals   = pLocals;
 
+#if 0
    HB_TRACE( HB_TR_INFO, ( "codeblock created %p", static_cast< void * >( pCBlock ) ) );
+#endif
 
    return pCBlock;
 }
@@ -269,7 +271,9 @@ PHB_CODEBLOCK hb_codeblockMacroNew( const HB_BYTE * pBuffer, HB_SIZE nLen )
    pCBlock->uiLocals  = 0;
    pCBlock->pLocals   = nullptr;
 
+#if 0
    HB_TRACE( HB_TR_INFO, ( "codeblock created %p", static_cast< void * >( pCBlock ) ) );
+#endif
 
    return pCBlock;
 }

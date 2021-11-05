@@ -70,7 +70,9 @@
 
 static const char * hb_nationGetMsg( int iMsg )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_nationGetMsg(%u)", iMsg ) );
+#endif
 
    return ( iMsg >= 1 && iMsg <= 13 ) ? hb_langDGetItem( HB_LANG_ITEM_BASE_NATMSG + iMsg - 1 ) : "";
 }

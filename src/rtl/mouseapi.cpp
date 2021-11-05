@@ -56,7 +56,9 @@
 
 HB_BOOL hb_mouseIsPresent( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseIsPresent()" ) );
+#endif
 
    HB_BOOL fPresent = HB_FALSE;
    PHB_GT pGT;
@@ -72,7 +74,9 @@ HB_BOOL hb_mouseIsPresent( void )
 
 HB_BOOL hb_mouseGetCursor( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseGetCursor()" ) );
+#endif
 
    HB_BOOL fVisible = HB_FALSE;
    PHB_GT pGT;
@@ -88,7 +92,9 @@ HB_BOOL hb_mouseGetCursor( void )
 
 void hb_mouseSetCursor( HB_BOOL fVisible )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseSetCursor(%d)", static_cast< int >( fVisible ) ) );
+#endif
 
    PHB_GT pGT;
 
@@ -102,7 +108,9 @@ void hb_mouseSetCursor( HB_BOOL fVisible )
 
 int hb_mouseCol( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseCol()" ) );
+#endif
 
    int iCol = 0;
    PHB_GT pGT;
@@ -118,7 +126,9 @@ int hb_mouseCol( void )
 
 int hb_mouseRow( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseRow()" ) );
+#endif
 
    int iRow = 0;
    PHB_GT pGT;
@@ -134,7 +144,9 @@ int hb_mouseRow( void )
 
 void hb_mouseGetPos( int * piRow, int * piCol )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseGetPos(%p, %p)", static_cast< void * >( piRow ), static_cast< void * >( piCol ) ) );
+#endif
 
    PHB_GT pGT;
 
@@ -148,7 +160,9 @@ void hb_mouseGetPos( int * piRow, int * piCol )
 
 void hb_mouseSetPos( int iRow, int iCol )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseSetPos(%d, %d)", iRow, iCol ) );
+#endif
 
    PHB_GT pGT;
 
@@ -162,7 +176,9 @@ void hb_mouseSetPos( int iRow, int iCol )
 
 void hb_mouseSetBounds( int iTop, int iLeft, int iBottom, int iRight )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseSetBounds(%d, %d, %d, %d)", iTop, iLeft, iBottom, iRight ) );
+#endif
 
    PHB_GT pGT;
 
@@ -176,7 +192,9 @@ void hb_mouseSetBounds( int iTop, int iLeft, int iBottom, int iRight )
 
 void hb_mouseGetBounds( int * piTop, int * piLeft, int * piBottom, int * piRight )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseGetBounds(%p, %p, %p, %p)", static_cast< void * >( piTop ), static_cast< void * >( piLeft ), static_cast< void * >( piBottom ), static_cast< void * >( piRight ) ) );
+#endif
 
    PHB_GT pGT;
 
@@ -190,7 +208,9 @@ void hb_mouseGetBounds( int * piTop, int * piLeft, int * piBottom, int * piRight
 
 int hb_mouseStorageSize( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseStorageSize()" ) );
+#endif
 
    int iSize = 0;
    PHB_GT pGT;
@@ -206,7 +226,9 @@ int hb_mouseStorageSize( void )
 
 void hb_mouseSaveState( void * pBuffer )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseSaveState(%p)", pBuffer ) );
+#endif
 
    PHB_GT pGT;
 
@@ -220,7 +242,9 @@ void hb_mouseSaveState( void * pBuffer )
 
 void hb_mouseRestoreState( const void * pBuffer )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseRestoreState(%p)", pBuffer ) );
+#endif
 
    PHB_GT pGT;
 
@@ -234,7 +258,9 @@ void hb_mouseRestoreState( const void * pBuffer )
 
 int hb_mouseGetDoubleClickSpeed( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseGetDoubleClickSpeed()" ) );
+#endif
 
    int iSpeed = 0;
    PHB_GT pGT;
@@ -250,7 +276,9 @@ int hb_mouseGetDoubleClickSpeed( void )
 
 void hb_mouseSetDoubleClickSpeed( int iSpeed )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseSetDoubleClickSpeed(%d)", iSpeed ) );
+#endif
 
    PHB_GT pGT;
 
@@ -264,7 +292,9 @@ void hb_mouseSetDoubleClickSpeed( int iSpeed )
 
 int hb_mouseCountButton( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseCountButton()" ) );
+#endif
 
    int iButtons = 0;
    PHB_GT pGT;
@@ -280,7 +310,9 @@ int hb_mouseCountButton( void )
 
 HB_BOOL hb_mouseButtonState( int iButton )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseButtonState(%d)", iButton ) );
+#endif
 
    HB_BOOL fPressed = HB_FALSE;
    PHB_GT pGT;
@@ -296,7 +328,9 @@ HB_BOOL hb_mouseButtonState( int iButton )
 
 HB_BOOL hb_mouseButtonPressed( int iButton, int * piRow, int * piCol )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseButtonPressed(%d,%p,%p)", iButton, static_cast< void * >( piRow ), static_cast< void * >( piCol ) ) );
+#endif
 
    HB_BOOL fPressed = HB_FALSE;
    PHB_GT pGT;
@@ -312,7 +346,9 @@ HB_BOOL hb_mouseButtonPressed( int iButton, int * piRow, int * piCol )
 
 HB_BOOL hb_mouseButtonReleased( int iButton, int * piRow, int * piCol )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseButtonReleased(%d,%p,%p)", iButton, static_cast< void * >( piRow ), static_cast< void * >( piCol ) ) );
+#endif
 
    HB_BOOL fReleased = HB_FALSE;
    PHB_GT pGT;
@@ -328,7 +364,9 @@ HB_BOOL hb_mouseButtonReleased( int iButton, int * piRow, int * piCol )
 
 int hb_mouseReadKey( int iEventMask )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseReadKey(%d)", iEventMask ) );
+#endif
 
    int iKey = 0;
    PHB_GT pGT;
