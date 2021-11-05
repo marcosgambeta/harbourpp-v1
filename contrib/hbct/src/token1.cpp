@@ -61,12 +61,14 @@ static const HB_SIZE sc_sSeparatorStrLen = 26;
 
 /* static data */
 
-typedef struct
+struct CT_TOKEN
 {
    /* even if these are chars, variable must be int, since we need an extra -1 */
    int iPreSeparator;
    int iPostSeparator;
-} CT_TOKEN, * PCT_TOKEN;
+};
+
+using PCT_TOKEN = CT_TOKEN *;
 
 static void s_ct_token_init( void * cargo )
 {

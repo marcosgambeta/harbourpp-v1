@@ -73,11 +73,13 @@
 #  include <time.h>
 #endif
 
-typedef struct
+struct HB_FFDATA
 {
    PHB_FFIND ffind;
    HB_FATTR  ulAttr;
-} HB_FFDATA, * PHB_FFDATA;
+};
+
+using PHB_FFDATA = HB_FFDATA *;
 
 static void hb_fileFindRelease( void * cargo )
 {

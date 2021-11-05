@@ -62,12 +62,14 @@
 #endif
 #include <time.h>
 
-typedef struct
+struct CT_DATE
 {
    /* even if these are chars, variable must be int, since we need an extra -1 */
    double dTimeSet;
    double dTimeCounter;
-} CT_DATE, * PCT_DATE;
+};
+
+using PCT_DATE = CT_DATE *;
 
 static void s_ct_date_init( void * cargo )
 {

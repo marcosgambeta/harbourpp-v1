@@ -49,13 +49,15 @@
 
 #include "hbstack.h"
 
-typedef struct
+struct CT_STR
 {
    int  iRefSwitch;
    int  iAtMupaSwitch;
    int  iAtLikeMode;
    char cAtLikeChar;
-} CT_STR, * PCT_STR;
+};
+
+using PCT_STR = CT_STR *;
 
 static void s_ct_str_init( void * cargo )
 {

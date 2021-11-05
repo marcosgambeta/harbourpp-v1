@@ -51,11 +51,13 @@
 
 /* statics */
 
-typedef struct
+struct CT_CHARSORT
 {
    HB_SIZE sCompareLen;
    HB_SIZE sElementPos;
-} CT_CHARSORT, * PCT_CHARSORT;
+};
+
+using PCT_CHARSORT = CT_CHARSORT *;
 
 static HB_TSD_NEW( s_charsort, sizeof( CT_CHARSORT ), nullptr, nullptr );
 

@@ -79,13 +79,14 @@ static int s_GtId;
 
 #define HB_CTW_SHADOW_MASK  0x8000000
 
-typedef struct
+struct HB_CTWDATA
 {
    int iCurrWindow;
-}
-HB_CTWDATA, * PHB_CTWDATA;
+};
 
-typedef struct
+using PHB_CTWDATA = HB_CTWDATA *;
+
+struct HB_CT_WND
 {
    int iHandle;
 
@@ -121,9 +122,11 @@ typedef struct
 
    PHB_SCREENCELL screenBuffer;
 
-} HB_CT_WND, * PHB_CT_WND;
+};
 
-typedef struct
+using PHB_CT_WND = HB_CT_WND *;
+
+struct HB_GTCTW
 {
    PHB_GT      pGT;
    HB_GT_FUNCS SuperTable;
@@ -159,8 +162,9 @@ typedef struct
    int iMapHeight;
 
    int iLastKey;
+};
 
-} HB_GTCTW, * PHB_GTCTW;
+using PHB_GTCTW = HB_GTCTW *;
 
 static const HB_WCHAR sc_szFrameW[] = HB_B_SINGLE_W;
 
