@@ -103,22 +103,26 @@
 #include "hbthread.h"
 #include "hboo.ch"
 
-typedef struct
+struct HB_CLSCAST
 {
    HB_USHORT   uiClass;
    HB_USHORT   uiOffset;
-} HB_CLSCAST, * PHB_CLSCAST;
+};
 
-typedef struct
+using PHB_CLSCAST = HB_CLSCAST *;
+
+struct INITDATA
 {
    PHB_ITEM    pInitValue;       /* Init Value for data */
    HB_USHORT   uiType;           /* HB_OO_MSG_DATA, HB_OO_MSG_CLASSDATA or HB_OO_MSG_INITIALIZED */
    HB_USHORT   uiData;           /* Item position in instance area or class data */
    HB_USHORT   uiOffset;         /* Super cast instance area offset for HB_OO_MSG_DATA or real class item position */
    HB_USHORT   uiSprClass;       /* The real class where method were defined */
-} INITDATA, * PINITDATA;
+};
 
-typedef struct
+using PINITDATA = INITDATA *;
+
+struct METHOD
 {
    PHB_DYNS    pMessage;         /* Method symbolic name */
    PHB_DYNS    pAccMsg;          /* Corresponding access method symbolic name */
@@ -136,10 +140,12 @@ typedef struct
    HB_ULONG    ulTime;           /* profiler support */
    HB_ULONG    ulRecurse;        /* profiler support */
 #endif
-} METHOD, * PMETHOD;
+};
+
+using PMETHOD = METHOD *;
 
 #define HB_MSG_POOL
-typedef struct
+struct CLASS
 {
    char *      szName;           /* Class name */
    PHB_DYNS    pClassSym;        /* Class symbolic name */
@@ -171,7 +177,9 @@ typedef struct
    HB_USHORT   uiMethodCount;
    HB_SYMCNT * puiMsgIdx;
 #endif
-} CLASS, * PCLASS;
+};
+
+using PCLASS = CLASS *;
 
 #define BUCKETBITS      2
 #define BUCKETSIZE      ( 1 << BUCKETBITS )
@@ -5466,13 +5474,14 @@ HB_FUNC( __GETMSGPRF ) /* profiler: returns a method called and consumed times *
    hb_storvnl( 0, -1, 2 );
 }
 
-typedef struct
+struct HB_IVARINFO
 {
    PMETHOD   pMethod;
    HB_USHORT uiClass;
    HB_USHORT uiStatus;
-}
-HB_IVARINFO, * PHB_IVARINFO;
+};
+
+using PHB_IVARINFO = HB_IVARINFO *;
 
 static PHB_ITEM hb_objGetIVars( PHB_ITEM pObject, HB_USHORT uiScope, HB_BOOL fChanged )
 {

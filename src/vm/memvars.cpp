@@ -1494,13 +1494,13 @@ HB_FUNC( __MVPUT )
 #define HB_MEM_REC_LEN  32
 #define HB_MEM_NUM_LEN  8
 
-typedef struct
+struct MEMVARSAVE_CARGO
 {
    const char * pszMask;
    HB_BOOL      bIncludeMask;
    HB_BYTE *    buffer;
    PHB_FILE     fhnd;
-} MEMVARSAVE_CARGO;
+};
 
 /* saves a variable to a mem file already open */
 

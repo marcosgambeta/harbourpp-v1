@@ -111,7 +111,7 @@
 
 #endif
 
-typedef enum
+enum HB_TASKSTATE
 {
    TASK_INIT = 0,
    TASK_RUNNING,
@@ -119,13 +119,12 @@ typedef enum
    TASK_SUSPEND,
    TASK_DONE,
    TASK_ZOMBIE
-}
-HB_TASKSTATE;
+};
 
 struct _HB_TASKMTX;
 struct _HB_TASKCOND;
 
-typedef struct _HB_TASKINFO
+struct _HB_TASKINFO
 {
    int            id;
    HB_TASKSTATE   state;
@@ -162,25 +161,31 @@ typedef struct _HB_TASKINFO
 
    struct _HB_TASKINFO * pNext;
    struct _HB_TASKINFO * pPrev;
-}
-HB_TASKINFO, * PHB_TASKINFO;
+};
 
-typedef struct _HB_TASKMTX
+using HB_TASKINFO = _HB_TASKINFO;
+using PHB_TASKINFO = HB_TASKINFO *;
+
+struct _HB_TASKMTX
 {
    int            count;
    PHB_TASKINFO   task;
    PHB_TASKINFO   lockers;
    struct _HB_TASKMTX * next;
-}
-HB_TASKMTX, * PHB_TASKMTX;
+};
 
-typedef struct _HB_TASKCOND
+using HB_TASKMTX = _HB_TASKMTX;
+using PHB_TASKMTX = HB_TASKMTX *;
+
+struct _HB_TASKCOND
 {
    PHB_TASKINFO   waiters;
    PHB_TASKMTX    mutex;
    struct _HB_TASKCOND * next;
-}
-HB_TASKCOND, * PHB_TASKCOND;
+};
+
+using HB_TASKCOND = _HB_TASKCOND;
+using PHB_TASKCOND = HB_TASKCOND *;
 
 static PHB_TASKINFO s_taskSleep = nullptr;
 static PHB_TASKINFO s_taskList = nullptr;
@@ -197,7 +202,7 @@ static HB_MAXINT hb_taskTimeStop( unsigned long ulMilliSec )
    if( ulMilliSec == HB_TASK_INFINITE_WAIT )
    {
       return HB_TASK_INFINITE_DELAY;
-   }   
+   }
    else
    {
 #if defined( __DJGPP__ )

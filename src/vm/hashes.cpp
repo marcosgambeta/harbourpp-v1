@@ -60,13 +60,16 @@
 #define HB_HASH_ITEM_ALLOC    16
 
 /* internal structures for hashes */
-typedef struct _HB_HASHPAIR
+struct _HB_HASHPAIR
 {
    HB_ITEM key;
    HB_ITEM value;
-} HB_HASHPAIR, * PHB_HASHPAIR;
+};
 
-typedef struct _HB_BASEHASH
+using HB_HASHPAIR = _HB_HASHPAIR;
+using PHB_HASHPAIR = HB_HASHPAIR *;
+
+struct _HB_BASEHASH
 {
    PHB_HASHPAIR pPairs;       /* pointer to the array of key/value pairs */
    PHB_ITEM     pDefault;     /* default autoadd value */
@@ -74,7 +77,10 @@ typedef struct _HB_BASEHASH
    HB_SIZE      nSize;        /* size of allocated pair array */
    HB_SIZE      nLen;         /* number of used items in pair array */
    int          iFlags;       /* hash item flags */
-} HB_BASEHASH, * PHB_BASEHASH;
+};
+
+using HB_BASEHASH = _HB_BASEHASH;
+using PHB_BASEHASH = HB_BASEHASH *;
 
 /* This releases hash when called from the garbage collector */
 static HB_GARBAGE_FUNC( hb_hashGarbageRelease )

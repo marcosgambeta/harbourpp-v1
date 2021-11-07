@@ -60,19 +60,24 @@
 #include "hbstack.h"
 #include "hbvm.h"
 
-typedef struct HB_SET_LISTENER_
+struct HB_SET_LISTENER_
 {
    int listener;
    HB_SET_LISTENER_CALLBACK * callback;
    struct HB_SET_LISTENER_ * next;
-} HB_SET_LISTENER, * PHB_SET_LISTENER;
+};
 
-typedef struct
+using HB_SET_LISTENER = HB_SET_LISTENER_;
+using PHB_SET_LISTENER = HB_SET_LISTENER *;
+
+struct HB_SET_LISTENER_LST
 {
    PHB_SET_LISTENER  first;
    PHB_SET_LISTENER  last;
    int               counter;
-} HB_SET_LISTENER_LST, * PHB_SET_LISTENER_LST;
+};
+
+using PHB_SET_LISTENER_LST = HB_SET_LISTENER_LST *;
 
 static char set_char( PHB_ITEM pItem, char oldChar )
 {

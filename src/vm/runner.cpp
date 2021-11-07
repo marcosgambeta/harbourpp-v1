@@ -58,14 +58,16 @@
 #include "hb_io.h"
 #include "hbhrb.ch"
 
-typedef struct
+struct HB_DYNF
 {
    char *        szName;                        /* Name of the function */
    HB_PCODEFUNC  pcodeFunc;                     /* Dynamic function info */
    HB_BYTE *     pCode;                         /* P-code */
-} HB_DYNF, * PHB_DYNF;
+};
 
-typedef struct
+using PHB_DYNF = HB_DYNF *;
+
+struct HRB_BODY
 {
    HB_ULONG    ulSymbols;                       /* Number of symbols */
    HB_ULONG    ulFuncs;                         /* Number of functions */
@@ -75,10 +77,11 @@ typedef struct
    PHB_SYMB    pSymRead;                        /* Symbols read */
    PHB_DYNF    pDynFunc;                        /* Functions read */
    PHB_SYMBOLS pModuleSymbols;
-} HRB_BODY, * PHRB_BODY;
+};
+
+using PHRB_BODY = HRB_BODY *;
 
 static const char s_szHead[ 4 ] = { '\xC0', 'H', 'R', 'B' };
-
 
 #define SYM_NOLINK     0            /* symbol does not have to be linked */
 #define SYM_FUNC       1            /* function defined in this module */

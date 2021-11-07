@@ -1733,7 +1733,7 @@ HB_FUNC( HB_THREADONCEINIT )
 
 /* II. MUTEXES */
 
-typedef struct _HB_MUTEX
+struct _HB_MUTEX
 {
    int                lock_count;
    int                lockers;
@@ -1746,8 +1746,10 @@ typedef struct _HB_MUTEX
    HB_RAWCOND_T       cond_w;
    struct _HB_MUTEX * pNext;
    struct _HB_MUTEX * pPrev;
-}
-HB_MUTEX, * PHB_MUTEX;
+};
+
+using HB_MUTEX = _HB_MUTEX;
+using PHB_MUTEX = HB_MUTEX *;
 
 static PHB_MUTEX s_pMutexList = nullptr;
 

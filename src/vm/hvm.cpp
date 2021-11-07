@@ -4978,12 +4978,14 @@ void hb_vmEnumRelease( PHB_ITEM pBase, PHB_ITEM pValue )
 /*
  * extended reference used as enumerator destructor
  */
-typedef struct
+struct HB_ENUMREF
 {
    HB_ITEM basevalue;
    HB_ITEM oldvalue;
    HB_ITEM enumref;
-} HB_ENUMREF, * PHB_ENUMREF;
+};
+
+using PHB_ENUMREF = HB_ENUMREF *;
 
 static PHB_ITEM hb_vmEnumRefRead( PHB_ITEM pRefer )
 {
@@ -7157,11 +7159,13 @@ static void hb_vmStatics( PHB_SYMB pSym, HB_USHORT uiStatics ) /* initializes th
 /*
  * extended thread static variable reference structure
  */
-typedef struct
+struct HB_TSVREF
 {
    HB_ITEM source;
    HB_TSD  threadData;
-} HB_TSVREF, * PHB_TSVREF;
+};
+
+using PHB_TSVREF = HB_TSVREF *;
 
 /*
  * extended thread static variable reference functions
@@ -9131,11 +9135,13 @@ static const HB_EXTREF s_ItmExtRawRef = {
    hb_vmItemRawRefDummy
 };
 
-typedef struct
+struct HB_ITMREF
 {
    HB_ITEM  memvar;
    PHB_ITEM value;
-} HB_ITMREF, * PHB_ITMREF;
+};
+
+using PHB_ITMREF = HB_ITMREF *;
 
 static PHB_ITEM hb_vmItemRefRead( PHB_ITEM pRefer )
 {
@@ -9236,13 +9242,15 @@ void hb_vmPushItemRef( PHB_ITEM pItem )
 /*
  * extended message reference structure
  */
-typedef struct
+struct HB_MSGREF
 {
    PHB_DYNS access;
    PHB_DYNS assign;
    HB_ITEM  object;
    HB_ITEM  value;
-} HB_MSGREF, * PHB_MSGREF;
+};
+
+using PHB_MSGREF = HB_MSGREF *;
 
 /*
  * extended message reference functions
@@ -9414,12 +9422,14 @@ HB_BOOL hb_vmMsgReference( PHB_ITEM pObject, PHB_DYNS pMessage, PHB_DYNS pAccMsg
 /*
  * extended object index reference structure
  */
-typedef struct
+struct HB_MSGIDXREF
 {
    HB_ITEM object;
    HB_ITEM value;
    HB_ITEM index;
-} HB_MSGIDXREF, * PHB_MSGIDXREF;
+};
+
+using PHB_MSGIDXREF = HB_MSGIDXREF *;
 
 /*
  * extended object index reference functions

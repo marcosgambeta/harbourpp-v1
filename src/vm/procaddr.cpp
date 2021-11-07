@@ -49,12 +49,11 @@
 
 PHB_FUNC hb_vmProcAddress( const char * szFuncName )
 {
-   typedef struct
+   struct HB_FUNC_REF_ADDR
    {
       const char * szFuncName;
       PHB_FUNC     pFuncAddr;
-   }
-   HB_FUNC_REF_ADDR;
+   };
 
    /* NOTE: this table must be well sorted by function names */
    static const HB_FUNC_REF_ADDR s_funcTable[] =

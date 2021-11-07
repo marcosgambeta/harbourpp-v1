@@ -92,14 +92,17 @@
 /* NOTE: HB_USHORT is used intentionally to fill up the structure to
  * full 16 bytes (on 16/32-bit environment)
  */
-typedef struct HB_GARBAGE_
+struct HB_GARBAGE_
 {
    struct HB_GARBAGE_ * pNext;   /* next memory block */
    struct HB_GARBAGE_ * pPrev;   /* previous memory block */
    const HB_GC_FUNCS *  pFuncs;  /* cleanup function called before memory releasing */
    HB_USHORT locked;             /* locking counter */
    HB_USHORT used;               /* used/unused block */
-} HB_GARBAGE, * PHB_GARBAGE;
+};
+
+using HB_GARBAGE = HB_GARBAGE_;
+using PHB_GARBAGE = HB_GARBAGE *;
 
 #ifdef HB_ALLOC_ALIGNMENT
 #  define HB_GARBAGE_SIZE     ( ( sizeof( HB_GARBAGE ) + HB_ALLOC_ALIGNMENT - 1 ) - \

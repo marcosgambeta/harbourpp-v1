@@ -248,7 +248,7 @@ static HB_BOOL s_fInitedFM = HB_FALSE;
 
 #define HB_MEMINFO_SIGNATURE  0xfeedbeef
 
-typedef struct _HB_MEMINFO
+struct _HB_MEMINFO
 {
    HB_U32    u32Signature;
    HB_USHORT uiProcLine;
@@ -257,7 +257,10 @@ typedef struct _HB_MEMINFO
    char      szProcName[ HB_SYMBOL_NAME_LEN + 1 ];
    struct _HB_MEMINFO * pPrevBlock;
    struct _HB_MEMINFO * pNextBlock;
-} HB_MEMINFO, * PHB_MEMINFO;
+};
+
+using HB_MEMINFO = _HB_MEMINFO;
+using PHB_MEMINFO = HB_MEMINFO *;
 
 #ifdef HB_ALLOC_ALIGNMENT
 #  define _HB_MEMINFO_SIZE    ( ( ( sizeof( HB_MEMINFO ) + HB_ALLOC_ALIGNMENT - 1 ) - \
@@ -300,7 +303,7 @@ static char s_szInfo[ 256 ] = { '\0' };
 
 #else /* ! HB_FM_STATISTICS */
 
-typedef void * PHB_MEMINFO;
+using PHB_MEMINFO = void *;
 #define HB_MEMINFO_SIZE  HB_COUNTER_OFFSET
 #define HB_ALLOC_SIZE( n )  ( ( n ) + HB_MEMINFO_SIZE )
 #define HB_FM_PTR( p )      HB_COUNTER_PTR( p )
@@ -358,11 +361,13 @@ typedef void * PHB_MEMINFO;
 #     define HB_MSPACE_COUNT  16
 #  endif
 
-typedef struct
+struct HB_MSPACE
 {
    int    count;
    mspace ms;
-} HB_MSPACE, * PHB_MSPACE;
+};
+
+using PHB_MSPACE = HB_MSPACE *;
 
 static mspace    s_gm = nullptr;
 static HB_MSPACE s_mspool[ HB_MSPACE_COUNT ];

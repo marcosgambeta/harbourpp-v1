@@ -50,18 +50,22 @@
 #include "hbapierr.h"
 #include "hbstack.h"
 
-typedef struct
+struct DYNHB_ITEM
 {
    PHB_DYNS pDynSym;             /* Pointer to dynamic symbol */
-} DYNHB_ITEM, * PDYNHB_ITEM;
+};
 
-typedef struct _HB_SYM_HOLDER
+using PDYNHB_ITEM = DYNHB_ITEM *;
+
+struct _HB_SYM_HOLDER
 {
    HB_SYMB  symbol;
    struct _HB_SYM_HOLDER * pNext;
    char     szName[ 1 ];
-}
-HB_SYM_HOLDER, * PHB_SYM_HOLDER;
+};
+
+using HB_SYM_HOLDER = _HB_SYM_HOLDER;
+using PHB_SYM_HOLDER = HB_SYM_HOLDER *;
 
 #if defined( HB_MT_VM )
 

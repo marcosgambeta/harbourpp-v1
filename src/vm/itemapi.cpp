@@ -1955,7 +1955,7 @@ const char * hb_itemTypeStr( PHB_ITEM pItem )
    return "U";
 }
 
-typedef enum
+enum HB_IT_BASIC
 {
    HB_IT_U,
    HB_IT_N,
@@ -1968,7 +1968,7 @@ typedef enum
    HB_IT_O,
    HB_IT_P,
    HB_IT_S
-} HB_IT_BASIC;
+};
 
 static HB_IT_BASIC s_hb_itemTypeBasic( PHB_ITEM pItem )
 {
