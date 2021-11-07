@@ -76,7 +76,7 @@ static HB_GT_FUNCS SuperTable;
 
 #define HB_GTCGI_GET( p )  ( static_cast< PHB_GTCGI >( HB_GTLOCAL( p ) ) )
 
-typedef struct _HB_GTCGI
+struct _HB_GTCGI
 {
    HB_FHANDLE     hStdout;
    int            iRow;
@@ -88,7 +88,10 @@ typedef struct _HB_GTCGI
 #endif
    char *         szCrLf;
    HB_SIZE        nCrLf;
-} HB_GTCGI, * PHB_GTCGI;
+};
+
+using HB_GTCGI = _HB_GTCGI;
+using PHB_GTCGI = HB_GTCGI *;
 
 static void hb_gt_cgi_termOut( PHB_GTCGI pGTCGI, const char * szStr, HB_SIZE nLen )
 {
@@ -102,11 +105,13 @@ static void hb_gt_cgi_newLine( PHB_GTCGI pGTCGI )
 
 static void hb_gt_cgi_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Init(%p,%p,%p,%p)", static_cast< void * >( pGT ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdin ) ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdout ) ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStderr ) ) ) );
+#endif
 
    PHB_GTCGI pGTCGI;
 
-   HB_GTLOCAL( pGT ) = pGTCGI = static_cast< PHB_GTCGI >( hb_xgrabz( sizeof( HB_GTCGI ) ) );
+   HB_GTLOCAL( pGT ) = pGTCGI = new HB_GTCGI();
 
    pGTCGI->hStdout = hFilenoStdout;
 
@@ -121,7 +126,9 @@ static void hb_gt_cgi_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
 static void hb_gt_cgi_Exit( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Exit(%p)", static_cast< void * >( pGT ) ) );
+#endif
 
    PHB_GTCGI pGTCGI;
 
@@ -149,13 +156,15 @@ static void hb_gt_cgi_Exit( PHB_GT pGT )
       {
          hb_xfree( pGTCGI->szCrLf );
       }
-      hb_xfree( pGTCGI );
+      delete pGTCGI;
    }
 }
 
 static int hb_gt_cgi_ReadKey( PHB_GT pGT, int iEventMask )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_ReadKey(%p,%d)", static_cast< void * >( pGT ), iEventMask ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
    HB_SYMBOL_UNUSED( iEventMask );
@@ -165,7 +174,9 @@ static int hb_gt_cgi_ReadKey( PHB_GT pGT, int iEventMask )
 
 static HB_BOOL hb_gt_cgi_IsColor( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_IsColor(%p)", static_cast< void * >( pGT ) ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -174,7 +185,9 @@ static HB_BOOL hb_gt_cgi_IsColor( PHB_GT pGT )
 
 static void hb_gt_cgi_Bell( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Bell(%p)", static_cast< void * >( pGT ) ) );
+#endif
 
    static const char s_szBell[] = { HB_CHAR_BEL, 0 };
    PHB_GTCGI pGTCGI;
@@ -186,7 +199,9 @@ static void hb_gt_cgi_Bell( PHB_GT pGT )
 
 static const char * hb_gt_cgi_Version( PHB_GT pGT, int iType )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Version(%p,%d)", static_cast< void * >( pGT ), iType ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -200,7 +215,9 @@ static const char * hb_gt_cgi_Version( PHB_GT pGT, int iType )
 
 static void hb_gt_cgi_Scroll( PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, int iColor, HB_USHORT usChar, int iRows, int iCols )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Scroll(%p,%d,%d,%d,%d,%d,%d,%d,%d)", static_cast< void * >( pGT ), iTop, iLeft, iBottom, iRight, iColor, usChar, iRows, iCols ) );
+#endif
 
    int iHeight, iWidth;
 
@@ -290,7 +307,9 @@ static void hb_gt_cgi_conOut( PHB_GT pGT, const char * szText, HB_SIZE nLength, 
 
          case HB_CHAR_BS:
             if( pGTCGI->iCol )
+            {
                pGTCGI->iCol--;
+            }
             break;
 
          case HB_CHAR_LF:
@@ -346,7 +365,9 @@ static void hb_gt_cgi_WriteAtW( PHB_GT pGT, int iRow, int iCol, const HB_WCHAR *
 
 static void hb_gt_cgi_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Redraw(%p,%d,%d,%d)", static_cast< void * >( pGT ), iRow, iCol, iSize ) );
+#endif
 
    int iColor;
    HB_BYTE bAttr;
@@ -420,7 +441,9 @@ static void hb_gt_cgi_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 
 static void hb_gt_cgi_Refresh( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Refresh(%p)", static_cast< void * >( pGT ) ) );
+#endif
 
    int iHeight, iWidth;
    PHB_GTCGI pGTCGI;
@@ -442,7 +465,9 @@ static void hb_gt_cgi_Refresh( PHB_GT pGT )
 
 static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_FuncInit(%p)", static_cast< void * >( pFuncTable ) ) );
+#endif
 
    pFuncTable->Init                       = hb_gt_cgi_Init;
    pFuncTable->Exit                       = hb_gt_cgi_Exit;

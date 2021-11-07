@@ -67,12 +67,12 @@ static HB_GT_FUNCS SuperTable;
 
 #if defined( HB_OS_WIN )
 
-typedef struct
+struct _HB_BUTTON_ID
 {
    const char * name;
    HB_SIZE      len;
    int          id;
-} _HB_BUTTON_ID;
+};
 
 static const _HB_BUTTON_ID s_buttons[] =
 {
@@ -246,7 +246,9 @@ static int hb_gt_gui_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, in
 
 static const char * hb_gt_gui_Version( PHB_GT pGT, int iType )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_gui_Version(%p,%d)", static_cast< void * >( pGT ), iType ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -262,7 +264,9 @@ static const char * hb_gt_gui_Version( PHB_GT pGT, int iType )
 /* dDuration is in 'Ticks' (18.2 per second) */
 static void hb_gt_gui_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_gui_Tone(%p,%lf,%lf)", static_cast< void * >( pGT ), dFrequency, dDuration ) );
+#endif
 
 #if defined( HB_OS_WIN )
    hb_gt_BaseUnlock( pGT );
@@ -277,7 +281,9 @@ static void hb_gt_gui_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 
 static HB_BOOL hb_gt_gui_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_gui_Info(%p,%d,%p)", static_cast< void * >( pGT ), iType, static_cast< void * >( pInfo ) ) );
+#endif
 
    switch( iType )
    {
@@ -324,7 +330,9 @@ static HB_BOOL hb_gt_gui_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
 static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_FuncInit(%p)", static_cast< void * >( pFuncTable ) ) );
+#endif
 
    pFuncTable->Version                    = hb_gt_gui_Version;
    pFuncTable->Tone                       = hb_gt_gui_Tone;

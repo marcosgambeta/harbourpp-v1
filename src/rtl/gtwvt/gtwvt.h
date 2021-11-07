@@ -66,10 +66,10 @@
 
 #define WVT_MAX_WINDOWS             256
 
-#define WVT_DEFAULT_ROWS         25
-#define WVT_DEFAULT_COLS         80
-#define WVT_DEFAULT_FONT_HEIGHT  20
-#define WVT_DEFAULT_FONT_WIDTH   10
+#define WVT_DEFAULT_ROWS            25
+#define WVT_DEFAULT_COLS            80
+#define WVT_DEFAULT_FONT_HEIGHT     20
+#define WVT_DEFAULT_FONT_WIDTH      10
 
 #define WVT_DEFAULT_FONT_ATTR       0
 #define WVT_DEFAULT_FONT_NAME       TEXT( "Courier New" )
@@ -241,16 +241,19 @@
 #define HB_BOXCH_TRANS_COUNT        ( HB_BOXCH_CHR_BASE + ( HB_BOXCH_BOX_MAX - HB_BOXCH_BOX_MIN + 1 ) + ( HB_BOXCH_RC_MAX - HB_BOXCH_RC_MIN + 1 ) )
 #define HB_BOXCH_TRANS_MAX          0xFF
 
-typedef struct _HB_GTWVT_MNU
+struct _HB_GTWVT_MNU
 {
    int      iKey;
    int      iEvent;
    void *   hName;
    LPCTSTR  lpName;
    struct _HB_GTWVT_MNU * pNext;
-} HB_GTWVT_MNU, * PHB_GTWVT_MNU;
+};
 
-typedef struct
+using HB_GTWVT_MNU = _HB_GTWVT_MNU;
+using PHB_GTWVT_MNU = HB_GTWVT_MNU *;
+
+struct HB_GTWVT
 {
    PHB_GT   pGT;                          /* core GT pointer */
    int      iHandle;                      /* window number */
@@ -351,8 +354,9 @@ typedef struct
    HB_BOOL  bComposited;
 
    RECT     ciLast;                       /* need in WM_ENTERSIZEMOVE processing and hb_gt_wvt_PaintText() function [HVB] */
+};
 
-} HB_GTWVT, * PHB_GTWVT;
+using PHB_GTWVT = HB_GTWVT *;
 
 #ifndef WM_MOUSEWHEEL
 #define WM_MOUSEWHEEL       0x020A
