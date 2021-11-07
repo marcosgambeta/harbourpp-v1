@@ -5527,23 +5527,24 @@ static HB_ERRCODE hb_dbfTransCond( DBFAREAP pArea, LPDBTRANSINFO pTransInfo )
 #define HB_SORTREC_MINRECBUF  0x10
 
 #if HB_SORTREC_ARRAYSIZE <= 0x10000
-   typedef HB_U16 HB_SORTIDX;
+   using HB_SORTIDX = HB_U16;
 #else
-   typedef HB_U32 HB_SORTIDX;
+   using HB_SORTIDX = HB_U32;
 #endif
-typedef HB_U32 HB_DBRECNO;
+using HB_DBRECNO = HB_U32;
 
-typedef struct
+struct HB_DBSORTPAGE
 {
    HB_FOFFSET     nOffset;
    HB_DBRECNO     nCount;
    HB_DBRECNO     nInBuf;
    HB_DBRECNO     nCurrent;
    HB_DBRECNO *   pnRecords;
-}
-HB_DBSORTPAGE, * PHB_DBSORTPAGE;
+};
 
-typedef struct
+using PHB_DBSORTPAGE = HB_DBSORTPAGE *;
+
+struct DBSORTREC
 {
    LPDBSORTINFO   pSortInfo;
 
@@ -5560,8 +5561,9 @@ typedef struct
    HB_DBRECNO *   pnRecords;
    HB_DBRECNO *   pnOrder;
    PHB_ITEM       pSortArray;
-}
-DBSORTREC, * LPDBSORTREC;
+};
+
+using LPDBSORTREC = DBSORTREC *;
 
 static HB_ERRCODE hb_dbfSortInit( LPDBSORTREC pSortRec, LPDBSORTINFO pSortInfo )
 {

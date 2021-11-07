@@ -57,14 +57,16 @@
 #include "hbdate.h"
 
 #define HB_FILE_BUF_SIZE  0x10000
-typedef struct _HB_FILEBUF
+struct _HB_FILEBUF
 {
    PHB_FILE   pFile;
    HB_BYTE *  pBuf;
    HB_SIZE    nSize;
    HB_SIZE    nPos;
-} HB_FILEBUF;
-typedef HB_FILEBUF * PHB_FILEBUF;
+};
+
+using HB_FILEBUF = _HB_FILEBUF;
+using PHB_FILEBUF = HB_FILEBUF *;
 
 static void hb_flushFBuffer( PHB_FILEBUF pFileBuf )
 {

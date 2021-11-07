@@ -147,7 +147,7 @@ static void hb_cdxDspTags( LPCDXINDEX pIndex )
 
 #ifdef HB_CDX_DBGTIME
 #include <sys/time.h>
-typedef HB_LONGLONG CDXDBGTIME;
+using CDXDBGTIME = HB_LONGLONG;
 
 static CDXDBGTIME cdxTimeIntBld  = 0;
 static CDXDBGTIME cdxTimeExtBld  = 0;

@@ -160,7 +160,7 @@
 /* uninitialized (dummy) node in compression trees */
 #define DUMMYNODE      RBUFLENGTH
 
-typedef struct _HB_LZSSX_COMPR
+struct _HB_LZSSX_COMPR
 {
    PHB_FILE   pInput;
    HB_BYTE *  inBuffer;
@@ -186,9 +186,10 @@ typedef struct _HB_LZSSX_COMPR
    HB_SHORT   parent[ RBUFLENGTH + 1 ];
    HB_SHORT   left  [ RBUFLENGTH + 1 ];
    HB_SHORT   right [ RBUFLENGTH + 257 ];
-}
-HB_LZSSX_COMPR;
-typedef HB_LZSSX_COMPR * PHB_LZSSX_COMPR;
+};
+
+using HB_LZSSX_COMPR = _HB_LZSSX_COMPR;
+using PHB_LZSSX_COMPR = HB_LZSSX_COMPR *;
 
 static void hb_LZSSxExit( PHB_LZSSX_COMPR pCompr )
 {

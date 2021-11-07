@@ -64,20 +64,24 @@
 #undef __SUPERTABLE
 #define __SUPERTABLE( r )  ( &( ( r )->pSuperTable ) )
 
-typedef struct _USRRDDNODE
+struct _USRRDDNODE
 {
    HB_USHORT uiDataOffset;
    PRDDFUNCS pSuperTable;
    PHB_ITEM  pMethods;
    PHB_ITEM  pItem;
-} USRRDDNODE;
-typedef USRRDDNODE * LPUSRRDDNODE;
+};
 
-typedef struct _USRRDDDATA
+using USRRDDNODE = _USRRDDNODE;
+using LPUSRRDDNODE = USRRDDNODE *;
+
+struct _USRRDDDATA
 {
    PHB_ITEM pItem;
-} USRRDDDATA;
-typedef USRRDDDATA * LPUSRRDDDATA;
+};
+
+using USRRDDDATA = _USRRDDDATA;
+using LPUSRRDDDATA = USRRDDDATA *;
 
 static HB_USHORT      s_uiUsrNodes   = 0;
 static LPUSRRDDNODE * s_pUsrRddNodes = nullptr;

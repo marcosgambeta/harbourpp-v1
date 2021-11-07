@@ -285,7 +285,7 @@
 #define HSX_HDRREADUNLOCK   11
 #define HSX_HDRWRITEUNLOCK  12
 
-typedef struct _HSXHEADER
+struct _HSXHEADER
 {
    HB_BYTE recCount[ 4 ];      /* number of records in HSX index file */
    HB_BYTE recSize[ 4 ];       /* in bytes 16, 32, 64 */
@@ -294,8 +294,10 @@ typedef struct _HSXHEADER
    HB_BYTE filterType[ 2 ];    /* 1=> all characters, 2=> chars in range 33..126 */
    HB_BYTE hashLetters[ 4 ];   /* 1=> use hash function for letters */
    HB_BYTE keyExpression[ 1 ]; /* xHarbour extension: key expression for automatic update */
-} HSXHEADER;
-typedef HSXHEADER * LPHSXHEADER;
+};
+
+using HSXHEADER = _HSXHEADER;
+using LPHSXHEADER = HSXHEADER *;
 
 typedef union
 {
@@ -303,7 +305,7 @@ typedef union
    HSXHEADER header;
 } HSXHEADERBUF;
 
-typedef struct _HSXINFO
+struct _HSXINFO
 {
    int       iHandle;           /* HSX handle */
    HB_ULONG  ulRecCount;        /* number of records */
@@ -334,16 +336,19 @@ typedef struct _HSXINFO
    char *    szKeyExpr;         /* key expression when bound with WA for automatic update */
    PHB_ITEM  pKeyItem;          /* item with compiled key expression */
    HB_BOOL   fFlush;            /* data was written to file and not committed */
-} HSXINFO;
-typedef HSXINFO * LPHSXINFO;
+};
 
-typedef struct
+using HSXINFO = _HSXINFO;
+using LPHSXINFO = HSXINFO *;
+
+struct HSXTABLE
 {
    int         iHandleCount;  /* number of active HSX indexes */
    int         iHandleSize;   /* size of handle array */
    LPHSXINFO * handleArray;   /* array indexed by handle number with HSXINFO pointers */
-}
-HSXTABLE, * LPHSXTABLE;
+};
+
+using LPHSXTABLE = HSXTABLE *;
 
 #if defined( HB_HSX_TSDSTORE )
 
