@@ -76,14 +76,18 @@ static HB_TSD_NEW( s_ct_str, sizeof( CT_STR ), s_ct_str_init, nullptr );
 /* -------------- */
 int ct_str_init( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ctstr_init()" ) );
+#endif
 
    return 1;
 }
 
 int ct_str_exit( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ctstr_exit()" ) );
+#endif
 
    return 1;
 }
@@ -91,7 +95,9 @@ int ct_str_exit( void )
 /* search for exact substring */
 const char * ct_at_exact_forward( const char * pcString, HB_SIZE sStrLen, const char * pcMatch, HB_SIZE sMatchLen, HB_SIZE * psMatchStrLen )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_at_exact_forward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, %p)", pcString, sStrLen, pcMatch, sMatchLen, static_cast< void * >( psMatchStrLen ) ) );
+#endif
 
    HB_SIZE sPos;
 
@@ -118,7 +124,9 @@ const char * ct_at_exact_forward( const char * pcString, HB_SIZE sStrLen, const 
 /* search for exact substring in backward direction */
 const char * ct_at_exact_backward( const char * pcString, HB_SIZE sStrLen, const char * pcMatch, HB_SIZE sMatchLen, HB_SIZE * psMatchStrLen )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_at_exact_backward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, %p)", pcString, sStrLen, pcMatch, sMatchLen, static_cast< void * >( psMatchStrLen ) ) );
+#endif
 
    HB_SIZE sIndex;
    const char * pcRet;
@@ -154,7 +162,9 @@ const char * ct_at_exact_backward( const char * pcString, HB_SIZE sStrLen, const
 /* search for substring using wildcard */
 const char * ct_at_wildcard_forward( const char * pcString, HB_SIZE sStrLen, const char * pcMatch, HB_SIZE sMatchLen, char cWildCard, HB_SIZE * psMatchStrLen )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_at_wildcard_forward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, \'%c\', %p)", pcString, sStrLen, pcMatch, sMatchLen, cWildCard, static_cast< void * >( psMatchStrLen ) ) );
+#endif
 
    HB_SIZE sIndex;
    const char * pcRet, * pcStop;
@@ -192,7 +202,9 @@ const char * ct_at_wildcard_forward( const char * pcString, HB_SIZE sStrLen, con
 /* search for substring using wildcard in backward direction */
 const char * ct_at_wildcard_backward( const char * pcString, HB_SIZE sStrLen, const char * pcMatch, HB_SIZE sMatchLen, char cWildCard, HB_SIZE * psMatchStrLen )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_at_wildcard_backward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, \'%c\', %p)", pcString, sStrLen, pcMatch, sMatchLen, cWildCard, static_cast< void * >( psMatchStrLen ) ) );
+#endif
 
    HB_SIZE sIndex;
    const char * pcRet;
@@ -230,7 +242,9 @@ const char * ct_at_wildcard_backward( const char * pcString, HB_SIZE sStrLen, co
 /* search for character from a set */
 const char * ct_at_charset_forward( const char * pcString, HB_SIZE sStrLen, const char * pcCharSet, HB_SIZE sCharSetLen, HB_SIZE * psMatchedCharPos )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_at_charset_forward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, %p)", pcString, sStrLen, pcCharSet, sCharSetLen, static_cast< void * >( psMatchedCharPos ) ) );
+#endif
 
    const char * pcRet, * pcSet, * pcStop1, * pcStop2;
 
@@ -264,7 +278,9 @@ const char * ct_at_charset_forward( const char * pcString, HB_SIZE sStrLen, cons
 /* search for character from a set in backward direction */
 const char * ct_at_charset_backward( const char * pcString, HB_SIZE sStrLen, const char * pcCharSet, HB_SIZE sCharSetLen, HB_SIZE * psMatchedCharPos )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_at_charset_backward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, %p)", pcString, sStrLen, pcCharSet, sCharSetLen, static_cast< void * >( psMatchedCharPos ) ) );
+#endif
 
    const char * pcRet, * pcSet, * pcStop;
 
@@ -298,7 +314,9 @@ const char * ct_at_charset_backward( const char * pcString, HB_SIZE sStrLen, con
 
 void ct_setref( int iNewSwitch )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_setref(%i)", iNewSwitch ) );
+#endif
 
    PCT_STR ct_str = static_cast< PCT_STR >( hb_stackGetTSD( &s_ct_str ) );
 
@@ -307,7 +325,9 @@ void ct_setref( int iNewSwitch )
 
 int ct_getref( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_getref()" ) );
+#endif
 
    PCT_STR ct_str = static_cast< PCT_STR >( hb_stackGetTSD( &s_ct_str ) );
 
@@ -338,7 +358,9 @@ HB_FUNC( CSETREF )
 
 void ct_setatmupa( int iNewSwitch )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_setatmupa(%i)", iNewSwitch ) );
+#endif
 
    PCT_STR ct_str = static_cast< PCT_STR >( hb_stackGetTSD( &s_ct_str ) );
 
@@ -347,7 +369,9 @@ void ct_setatmupa( int iNewSwitch )
 
 int ct_getatmupa( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_getatmupa()" ) );
+#endif
 
    PCT_STR ct_str = static_cast< PCT_STR >( hb_stackGetTSD( &s_ct_str ) );
 
@@ -378,7 +402,9 @@ HB_FUNC( CSETATMUPA )
 
 void ct_setatlike( int iNewMode )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_setatlike(%i)", iNewMode ) );
+#endif
 
    PCT_STR ct_str = static_cast< PCT_STR >( hb_stackGetTSD( &s_ct_str ) );
 
@@ -387,7 +413,9 @@ void ct_setatlike( int iNewMode )
 
 int ct_getatlike( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_getatlike()" ) );
+#endif
 
    PCT_STR ct_str = static_cast< PCT_STR >( hb_stackGetTSD( &s_ct_str ) );
 
@@ -396,7 +424,9 @@ int ct_getatlike( void )
 
 void ct_setatlikechar( char cNewChar )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_setatlikechar(\'%c\')", cNewChar ) );
+#endif
 
    PCT_STR ct_str = static_cast< PCT_STR >( hb_stackGetTSD( &s_ct_str ) );
 
@@ -405,7 +435,9 @@ void ct_setatlikechar( char cNewChar )
 
 char ct_getatlikechar( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_getatlikechar()" ) );
+#endif
 
    PCT_STR ct_str = static_cast< PCT_STR >( hb_stackGetTSD( &s_ct_str ) );
 

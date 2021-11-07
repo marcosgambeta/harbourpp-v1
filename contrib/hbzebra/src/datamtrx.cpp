@@ -485,7 +485,9 @@ PHB_ZEBRA hb_zebra_create_datamatrix( const char * szCode, HB_SIZE nLen, int iFl
 #if 0
    for( i = 0; i < pSize->iDataSize + iErrorSize; i++ )
    {
+#if 0
       HB_TRACE( HB_TR_ALWAYS, ( "cw=%d", pCW[ i ] ) );
+#endif
    }
 #endif
 

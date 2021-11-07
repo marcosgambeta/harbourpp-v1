@@ -48,7 +48,9 @@
 
 HB_SIZE hbwapi_tstrlen( const TCHAR * pText )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hbwapi_tstrlen(%p)", static_cast< const void * >( pText ) ) );
+#endif
 
    HB_SIZE nLen = 0;
 
@@ -63,7 +65,9 @@ HB_SIZE hbwapi_tstrlen( const TCHAR * pText )
 /* NOTE: Based on hb_strdup() */
 TCHAR * hbwapi_tstrdup( const TCHAR * pszText )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hbwapi_tstrdup(%p)", static_cast< const void * >( pszText ) ) );
+#endif
 
    TCHAR * pszDup;
    HB_SIZE nLen;
@@ -79,7 +83,9 @@ TCHAR * hbwapi_tstrdup( const TCHAR * pszText )
 /* NOTE: Based on hb_strncat() */
 TCHAR * hbwapi_tstrncat( TCHAR * pDest, const TCHAR * pSource, HB_SIZE nLen )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hbwapi_tstrncat(%p, %p, %" HB_PFS "u)", static_cast< void * >( pDest ), static_cast< const void * >( pSource ), nLen ) );
+#endif
 
    TCHAR * pBuf = pDest;
 

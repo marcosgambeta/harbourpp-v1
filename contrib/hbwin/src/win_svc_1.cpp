@@ -70,7 +70,9 @@ static VOID WINAPI hbwin_SvcControlHandler( DWORD fdwControl )
       }
       else
       {
+#if 0
          HB_TRACE( HB_TR_DEBUG, ( "HVM stack not available" ) );
+#endif
       }
       return;
    }
@@ -145,17 +147,23 @@ static VOID WINAPI hbwin_SvcMainFunction( DWORD dwArgc, LPTSTR * lpszArgv )
          }
          else
          {
+#if 0
             HB_TRACE( HB_TR_DEBUG, ( "HVM stack not available" ) );
+#endif
          }
       }
       else
       {
+#if 0
          HB_TRACE( HB_TR_DEBUG, ( "Harbour service entry function not found" ) );
+#endif
       }
    }
    else
    {
+#if 0
       HB_TRACE( HB_TR_DEBUG, ( "Error registering service" ) );
+#endif
    }
 }
 

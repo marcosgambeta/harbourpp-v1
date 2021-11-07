@@ -1229,7 +1229,9 @@ static HB_BOOL hb_gt_wvt_CreateConsoleWindow( PHB_GTWVT pWVT )
 
 static void hb_gt_wvt_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvt_Init(%p,%p,%p,%p)", static_cast< void * >( pGT ), static_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdin ) ), static_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdout ) ), static_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStderr ) ) ) );
+#endif
 
    HANDLE    hInstance;
    int       iCmdShow;
@@ -1264,7 +1266,9 @@ static void hb_gt_wvt_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
 static void hb_gt_wvt_Exit( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvt_Exit(%p)", static_cast< void * >( pGT ) ) );
+#endif
 
    PHB_GTWVT pWVT;
 
@@ -1281,7 +1285,9 @@ static void hb_gt_wvt_Exit( PHB_GT pGT )
 
 static int hb_gt_wvt_ReadKey( PHB_GT pGT, int iEventMask )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvt_ReadKey(%p,%d)", static_cast< void * >( pGT ), iEventMask ) );
+#endif
 
    PHB_GTWVT pWVT;
    int  c = 0;
@@ -1304,7 +1310,9 @@ static int hb_gt_wvt_ReadKey( PHB_GT pGT, int iEventMask )
 /* dDuration is in 'Ticks' (18.2 per second) */
 static void hb_gt_wvt_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvt_Tone(%p,%lf,%lf)", static_cast< void * >( pGT ), dFrequency, dDuration ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -1313,7 +1321,9 @@ static void hb_gt_wvt_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 
 static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvt_Info(%p,%d,%p)", static_cast< void * >( pGT ), iType, static_cast< void * >( pInfo ) ) );
+#endif
 
    PHB_GTWVT pWVT;
    int iVal;
@@ -2107,7 +2117,9 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
 static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_FuncInit(%p)", static_cast< void * >( pFuncTable ) ) );
+#endif
 
    pFuncTable->Init = hb_gt_wvt_Init;
    pFuncTable->Exit = hb_gt_wvt_Exit;

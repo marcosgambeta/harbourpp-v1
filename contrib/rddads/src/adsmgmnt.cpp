@@ -115,7 +115,9 @@ HB_FUNC( ADSMGGETINSTALLINFO )
 #if HB_TR_LEVEL >= HB_TR_INFO
    if( usStructSize > sizeof( ADS_MGMT_INSTALL_INFO ) )
    {
+#if 0
       HB_TRACE( HB_TR_INFO, ( "%s returned extra data; available with newer client lib.", "AdsMgGetInstallInfo()" ) );
+#endif
    }
 #endif
 }
@@ -227,7 +229,9 @@ HB_FUNC( ADSMGGETACTIVITYINFO )
 #if HB_TR_LEVEL >= HB_TR_INFO
    if( usStructSize > sizeof( ADS_MGMT_ACTIVITY_INFO ) )
    {
+#if 0
       HB_TRACE( HB_TR_INFO, ( "%s returned extra data; available with newer client lib.", "AdsMgGetActivityInfo()" ) );
+#endif
    }
 #endif
 }
@@ -260,7 +264,9 @@ HB_FUNC( ADSMGGETCOMMSTATS )
 #if HB_TR_LEVEL >= HB_TR_INFO
    if( usStructSize > sizeof( ADS_MGMT_COMM_STATS ) )
    {
+#if 0
       HB_TRACE( HB_TR_INFO, ( "%s returned extra data; available with newer client lib.", "AdsMgGetCommStats()" ) );
+#endif
    }
 #endif
 }
@@ -350,12 +356,16 @@ HB_FUNC( ADSMGGETCONFIGINFO )
 #if HB_TR_LEVEL >= HB_TR_INFO
    if( usConfigValuesStructSize > sizeof( ADS_MGMT_CONFIG_PARAMS ) )
    {
+#if 0
       HB_TRACE( HB_TR_INFO, ( "%s returned extra data; available with newer client lib.", "AdsMgGetConfigInfo()" ) );
+#endif
    }
 
    if( usConfigMemoryStructSize > sizeof( ADS_MGMT_CONFIG_MEMORY ) )
    {
+#if 0
       HB_TRACE( HB_TR_INFO, ( "%s returned extra data; available with newer client lib.", "AdsMgGetConfigInfo()" ) );
+#endif
    }
 #endif
 }
@@ -417,7 +427,9 @@ HB_FUNC( ADSMGGETUSERNAMES )
 #if HB_TR_LEVEL >= HB_TR_INFO
    if( usStructSize > sizeof( ADS_MGMT_USER_INFO ) )
    {
+#if 0
       HB_TRACE( HB_TR_INFO, ( "%s returned extra data; available with newer client lib.", "AdsMgGetUserNames()" ) );
+#endif
    }
 #endif
 }
@@ -468,7 +480,9 @@ HB_FUNC( ADSMGGETLOCKOWNER )
 #if HB_TR_LEVEL >= HB_TR_INFO
    if( usStructSize > sizeof( ADS_MGMT_USER_INFO ) )
    {
+#if 0
       HB_TRACE( HB_TR_INFO, ( "%s returned extra data; available with newer client lib.", "AdsMgGetLockOwner()" ) );
+#endif
    }
 #endif
 }
@@ -507,7 +521,9 @@ HB_FUNC( ADSMGGETOPENTABLES ) /* nMaxNumberOfFilesToReturn, cUserName, nConnecti
 #if HB_TR_LEVEL >= HB_TR_INFO
    if( usStructSize > sizeof( ADS_MGMT_TABLE_INFO ) )
    {
+#if 0
       HB_TRACE( HB_TR_INFO, ( "%s returned extra data; available with newer client lib.", "AdsMgGetOpenTables()" ) );
+#endif
    }
 #endif
 }
@@ -548,7 +564,9 @@ HB_FUNC( ADSMGGETOPENTABLES2 ) /* nMaxNumberOfFilesToReturn, cUserName, nConnect
 #if HB_TR_LEVEL >= HB_TR_INFO
    if( usStructSize > sizeof( ADS_MGMT_TABLE_INFO ) )
    {
+#if 0
       HB_TRACE( HB_TR_INFO, ( "%s returned extra data; available with newer client lib.", "AdsMgGetOpenTables()" ) );
+#endif
    }
 #endif
 }
@@ -586,7 +604,9 @@ HB_FUNC( ADSMGGETOPENINDEXES ) /* nMaxNumberOfFilesToReturn, cTableName, cUserNa
 #if HB_TR_LEVEL >= HB_TR_INFO
    if( usStructSize > sizeof( ADS_MGMT_INDEX_INFO ) )
    {
+#if 0
       HB_TRACE( HB_TR_INFO, ( "%s returned extra data; available with newer client lib.", "AdsMgGetOpenIndexes()" ) );
+#endif
    }
 #endif
 }
@@ -624,7 +644,9 @@ HB_FUNC( ADSMGGETLOCKS )
 #if HB_TR_LEVEL >= HB_TR_INFO
    if( usStructSize > sizeof( ADS_MGMT_RECORD_INFO ) )
    {
+#if 0
       HB_TRACE( HB_TR_INFO, ( "%s returned extra data; available with newer client lib.", "AdsMgGetLocks()" ) );
+#endif
    }
 #endif
 }
@@ -667,7 +689,9 @@ HB_FUNC( ADSMGGETWORKERTHREADACTIVITY )
 #if HB_TR_LEVEL >= HB_TR_INFO
    if( usStructSize > sizeof( ADS_MGMT_THREAD_ACTIVITY ) )
    {
+#if 0
       HB_TRACE( HB_TR_INFO, ( "%s returned extra data; available with newer client lib.", "AdsMgGetWorkerThreadActivity()" ) );
+#endif
    }
 #endif
 }

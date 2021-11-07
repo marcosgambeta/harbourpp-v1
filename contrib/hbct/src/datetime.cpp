@@ -221,7 +221,9 @@ HB_FUNC( EOY )
 
 static int hb_wom( int iYear, int iMonth, int iDay )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_wom(%d, %d, %d)", iYear, iMonth, iDay ) );
+#endif
 
    int iWom;
 

@@ -403,7 +403,9 @@ static HRESULT _get_default_sink( IDispatch * iDisp, const char * szEvent, IID *
       hr = HB_VTBL( iDisp )->QueryInterface( HB_THIS_( iDisp ) HB_ID_REF( IID_IProvideClassInfo2 ), static_cast< void ** >( static_cast< void * >( &iPCI2 ) ) );
       if( hr == S_OK )
       {
+#if 0
          HB_TRACE( HB_TR_DEBUG, ( "_get_default_sink IProvideClassInfo2 OK" ) );
+#endif
          hr = HB_VTBL( iPCI2 )->GetGUID( HB_THIS_( iPCI2 ) GUIDKIND_DEFAULT_SOURCE_DISP_IID, piid );
          HB_VTBL( iPCI2 )->Release( HB_THIS( iPCI2 ) );
 
@@ -414,7 +416,9 @@ static HRESULT _get_default_sink( IDispatch * iDisp, const char * szEvent, IID *
       }
       else
       {
+#if 0
          HB_TRACE( HB_TR_DEBUG, ( "_get_default_sink IProvideClassInfo2 obtain error %08lX", hr ) );
+#endif
       }
 
       /* Method 2: using IProvideClassInfo and searching for default source in ITypeInfo */
@@ -422,7 +426,9 @@ static HRESULT _get_default_sink( IDispatch * iDisp, const char * szEvent, IID *
       hr = HB_VTBL( iDisp )->QueryInterface( HB_THIS_( iDisp ) HB_ID_REF( IID_IProvideClassInfo ), static_cast< void ** >( static_cast< void * >( &iPCI ) ) );
       if( hr == S_OK )
       {
+#if 0
          HB_TRACE( HB_TR_DEBUG, ( "_get_default_sink IProvideClassInfo OK" ) );
+#endif
 
          hr = HB_VTBL( iPCI )->GetClassInfo( HB_THIS_( iPCI ) & iTI );
          if( hr == S_OK )
@@ -438,7 +444,9 @@ static HRESULT _get_default_sink( IDispatch * iDisp, const char * szEvent, IID *
                      if( HB_VTBL( iTI )->GetRefTypeOfImplType( HB_THIS_( iTI ) i, &hRefType ) == S_OK &&
                          HB_VTBL( iTI )->GetRefTypeInfo( HB_THIS_( iTI ) hRefType, &iTISink ) == S_OK )
                      {
+#if 0
                         HB_TRACE( HB_TR_DEBUG, ( "_get_default_sink Method 2: default source is found" ) );
+#endif
 
                         hr = HB_VTBL( iTISink )->GetTypeAttr( HB_THIS_( iTISink ) & pTypeAttr );
                         if( hr == S_OK )
@@ -460,7 +468,9 @@ static HRESULT _get_default_sink( IDispatch * iDisp, const char * szEvent, IID *
       }
       else
       {
+#if 0
          HB_TRACE( HB_TR_DEBUG, ( "_get_default_sink IProvideClassInfo obtain error %08lX", hr ) );
+#endif
       }
    }
 
@@ -549,7 +559,9 @@ static HRESULT _get_default_sink( IDispatch * iDisp, const char * szEvent, IID *
                                     HB_VTBL( iTISink )->GetDocumentation( HB_THIS_( iTISink ) - 1, &bstr, nullptr, nullptr, nullptr );
                                     iLen = WideCharToMultiByte( CP_ACP, 0, bstr, -1, str, sizeof( str ), nullptr, nullptr );
                                     str[ iLen - 1 ] = '\0';
+#if 0
                                     HB_TRACE( HB_TR_DEBUG, ( "_get_default_sink Method 3: iFlags=%d guid=%s class=%s", iFlags, GUID2String( &( pTypeAttr2->guid ) ), str ) );
+#endif
 #endif
                                     *piid = pTypeAttr2->guid;
                                     HB_VTBL( iTISink )->ReleaseTypeAttr( HB_THIS_( iTISink ) pTypeAttr2 );

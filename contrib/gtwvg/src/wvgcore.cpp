@@ -78,7 +78,9 @@ HB_FUNC( WVT_CORE )
 
 void hb_wvt_GetStringAttrib( int top, int left, int bottom, int right, HB_BYTE * sBuffer, HB_BYTE * sAttrib )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_wvt_GetStringAttrib( %d, %d, %d, %d, %p, %p )", top, left, bottom, right, static_cast< void * >( sBuffer ), static_cast< void * >( sAttrib ) ) );
+#endif
 
    int irow, icol, j;
 
@@ -104,7 +106,9 @@ void hb_wvt_GetStringAttrib( int top, int left, int bottom, int right, HB_BYTE *
 
 void hb_wvt_PutStringAttrib( int top, int left, int bottom, int right, HB_BYTE * sBuffer, HB_BYTE * sAttrib )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_wvt_PutStringAttrib( %d, %d, %d, %d, %p, %p )", top, left, bottom, right, static_cast< void * >( sBuffer ), static_cast< void * >( sAttrib ) ) );
+#endif
 
    int irow, icol, j;
 

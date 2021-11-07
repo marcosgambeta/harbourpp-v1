@@ -56,14 +56,18 @@ static HB_BOOL  s_bSafety   = HB_FALSE;
 
 void ct_setfcreate( HB_FATTR nFileAttr )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_setfcreate(%u)", nFileAttr ) );
+#endif
 
    s_nFileAttr = nFileAttr;
 }
 
 HB_FATTR ct_getfcreate( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_getfcreate()" ) );
+#endif
 
    return s_nFileAttr;
 }
@@ -80,14 +84,18 @@ HB_FUNC( SETFCREATE )
 
 void ct_setsafety( HB_BOOL bSafety )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_setsafety(%i)", bSafety ) );
+#endif
 
    s_bSafety = bSafety;
 }
 
 HB_BOOL ct_getsafety( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_getsafety()" ) );
+#endif
 
    return s_bSafety;
 }

@@ -50,7 +50,9 @@
 
 static int hb_inkeyKeyXHB( int iKey )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyKeyXHB(%d)", iKey ) );
+#endif
 
    if( HB_INKEY_ISEXT( iKey ) )
    {

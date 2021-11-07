@@ -109,7 +109,9 @@ HB_FUNC( HB_FRECNO )
 
 static long hb_hbfskip( PFT_TEXT ft_text, char * buffer, HB_SIZE bufsize, int recs )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_hbfskip(%p, %p, %d)", ft_text, buffer, recs ) );
+#endif
 
    HB_FOFFSET read_pos;
    HB_ISIZ    read_len;

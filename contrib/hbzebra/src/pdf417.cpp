@@ -731,7 +731,9 @@ static int _pdf417_punctno( char ch  )
 
 static int _pdf417_encode_byte( const char * szCode, int iLen, int * pCW, int iPos )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "encode byte len=%d", iLen ) );
+#endif
 
    HB_LONGLONG  ill;
    int  i;
@@ -805,7 +807,9 @@ static int _pdf417_encode_byte( const char * szCode, int iLen, int * pCW, int iP
 
 static int _pdf417_encode_text_add( int * pCW, int iPos, int * i1, int * i2, int no )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "text halfcodeword %d", no ) );
+#endif
 
    *i1 = *i2;
    *i2 = no;
@@ -824,7 +828,9 @@ static int _pdf417_encode_text_add( int * pCW, int iPos, int * i1, int * i2, int
 
 static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iPos )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "encode text len=%d", iLen ) );
+#endif
 
    int j, i1, i2, no, iSubMode;
 
@@ -832,7 +838,9 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
    i1 = i2 = -1;
    for( int i = 0; i < iLen; i++ )
    {
+#if 0
       HB_TRACE( HB_TR_DEBUG, ( "submode=%d char=%c", iSubMode, szCode[ i ] ) );
+#endif
       if( iSubMode == SUBMODE_UPPER )
       {
          if( ( no = _pdf417_upperno( szCode[ i ] ) ) != -1 )
@@ -1100,7 +1108,9 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
 
 static int _pdf417_encode_numeric( const char * szCode, int iLen, int * pCW, int iPos )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "encode numeric len=%d", iLen ) );
+#endif
 
    /* Some very long integer (147-bit) arithmetics should be implemented to encode
       digits in an effective way. I use more simple way and encode digits in groups
@@ -1444,12 +1454,16 @@ PHB_ZEBRA hb_zebra_create_pdf417( const char * szCode, HB_SIZE nLen, int iFlags,
       {
          iColCount = ( iDataCount + _pdf417_ec_size( iLevel ) + iRowCount - 1 ) / iRowCount;
          /* w:h aspect ration is less than 2:1 for default 3x module height */
+#if 0
          HB_TRACE( HB_TR_DEBUG, ( "iDataCount=%d iRowCount=%d iColCount=%d", iDataCount, iRowCount, iColCount ) );
+#endif
          if( ( _pdf417_width( iColCount, iFlags ) < iRowCount * 3 * 2 || iColCount == 1 ) &&
              iColCount <= MAX_COL_COUNT &&
              iColCount * iRowCount <= MAX_CODEWORD_COUNT ) /* This should solve 928 (= 29 columns * 32 rows) problem */
          {
+#if 0
             HB_TRACE( HB_TR_DEBUG, ( "tinka" ) );
+#endif
             break;
          }
          iRowCount++;
@@ -1491,10 +1505,14 @@ PHB_ZEBRA hb_zebra_create_pdf417( const char * szCode, HB_SIZE nLen, int iFlags,
    pZebra->szCode = hb_strdup( "" );
    pZebra->pBits = hb_bitbuffer_create();
 
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "iColCount=%d iRowCount=%d ECCount=%d", iColCount, iRowCount, _pdf417_ec_size( iLevel ) ) );
+#endif
    for( i = 0; i < iCount; i++ )
    {
+#if 0
       HB_TRACE( HB_TR_DEBUG, ( "%d", pCW[ i ] ) );
+#endif
    }
 
    for( i = 0; i < iRowCount; i++ )

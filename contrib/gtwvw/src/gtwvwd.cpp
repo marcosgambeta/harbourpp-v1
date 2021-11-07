@@ -293,7 +293,9 @@ LONG GetFontDialogUnits( HWND h, HFONT f )
 
 static void hb_gt_wvw_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_Init()" ) );
+#endif
 
    HANDLE hInstance;
    HANDLE hPrevInstance;
@@ -409,7 +411,9 @@ BOOL hb_gt_wvwDestroyPicture( IPicture * iPicture )
 
 static void hb_gt_wvw_Exit( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_Exit()" ) );
+#endif
 
 /* void gt_Exit( void ) */
    int i;
@@ -647,7 +651,9 @@ static void hb_gt_wvw_Exit( PHB_GT pGT )
 
 void hb_gt_wvw_SetPos( PHB_GT pGT, int iRow, int iCol )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_SetPos( %hd, %hd )", iRow, iCol ) );
+#endif
 
    int i_Row = iRow;
    int i_Col = iCol;
@@ -682,7 +688,9 @@ static int hb_gt_wvw_MaxRow( PHB_GT pGT )
 
 BOOL hb_gt_wvw_IsColor( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_IsColor()" ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -691,7 +699,9 @@ BOOL hb_gt_wvw_IsColor( PHB_GT pGT )
 
 static int hb_gt_wvw_GetCursorStyle( PHB_GT pGT  )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_GetCursorStyle()" ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -704,7 +714,9 @@ static int hb_gt_wvw_GetCursorStyle( PHB_GT pGT  )
 
 static void hb_gt_wvw_SetCursorStyle( PHB_GT pGT, int iStyle )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_SetCursorStyle( %hu )", iStyle ) );
+#endif
 
    BOOL       bCursorOn = TRUE;
    WIN_DATA * pWindowData;
@@ -754,7 +766,9 @@ static void hb_gt_wvw_SetCursorStyle( PHB_GT pGT, int iStyle )
 
 static void hb_gt_wvw_DispBegin( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_DispBegin()" ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -763,7 +777,9 @@ static void hb_gt_wvw_DispBegin( PHB_GT pGT )
 
 static void hb_gt_wvw_DispEnd( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_DispEnd()" ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -772,7 +788,9 @@ static void hb_gt_wvw_DispEnd( PHB_GT pGT )
 
 static int hb_gt_wvw_DispCount( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_DispCount()" ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -781,7 +799,9 @@ static int hb_gt_wvw_DispCount( PHB_GT pGT )
 
 static void hb_gt_wvw_Replicate( PHB_GT pGT, int iRow, int iCol, int bColor, BYTE bAttr, USHORT usChar, ULONG ulLen )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_Replicate( %hu, %hu, %hu, %i, %lu )", iRow, iCol, bColor, bAttr, usChar, ulLen ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -801,7 +821,9 @@ static void hb_gt_wvw_Replicate( PHB_GT pGT, int iRow, int iCol, int bColor, BYT
 //static void hb_gt_wvw_PutText( PHB_GT pGT, int iRow, int iCol, int bColor, const char * pText, ULONG ulLen )
 static int hb_gt_wvw_PutText( PHB_GT pGT, int iRow, int iCol, int bColor, const char * pText, ULONG ulLen )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_PutText(%hu, %hu, %p, %lu, %hu)", iRow, iCol, pText, ulLen, bColor ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -823,7 +845,9 @@ static int hb_gt_wvw_PutText( PHB_GT pGT, int iRow, int iCol, int bColor, const 
 
 static void hb_gt_wvw_SetAttribute( PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, int bColor )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_hb_gt_wvw_SetbColoribute( %hu, %hu, %hu, %hu, %hu", iTop, iLeft, iBottom, iRight, bColor ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -847,7 +871,9 @@ static void hb_gt_wvw_SetAttribute( PHB_GT pGT, int iTop, int iLeft, int iBottom
 #if 0
 static void hb_gt_wvw_Scroll( PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, int bColor, USHORT bChar, int iRows, int iCols )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_Scroll( %hu, %hu, %hu, %hu, %hu, %hd, %hd )", iTop, iLeft, iBottom, iRight, bColor, iRows, iCols ) );
+#endif
 
    LONG usSaveRow, usSaveCol;
 
@@ -976,7 +1002,9 @@ static void hb_gt_wvw_Scroll( PHB_GT pGT, int iTop, int iLeft, int iBottom, int 
 
 static BOOL hb_gt_wvw_SetMode( PHB_GT pGT, int iRow, int iCol )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_SetMode( %hu, %hu )", iRow, iCol ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -1002,7 +1030,9 @@ static void hb_gt_wvw_WriteAt( PHB_GT pGT, int iRow, int iCol, const char * pTex
 
 static BOOL hb_gt_wvw_GetBlink( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_GetBlink()" ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -1011,7 +1041,9 @@ static BOOL hb_gt_wvw_GetBlink( PHB_GT pGT )
 
 static void hb_gt_wvw_SetBlink( PHB_GT pGT, BOOL bBlink )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_SetBlink( %d )", static_cast< int >( bBlink ) ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -1020,7 +1052,9 @@ static void hb_gt_wvw_SetBlink( PHB_GT pGT, BOOL bBlink )
 
 static const char * hb_gt_wvw_Version( PHB_GT pGT, int iType )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_Version()" ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -1215,7 +1249,9 @@ static BOOL hb_gt_wvwGetCharFromInputQueue( int * c )
 
 static int hb_gt_wvw_ReadKey( PHB_GT pGT, int eventmask )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_ReadKey( %d )", static_cast< int >( eventmask ) ) );
+#endif
 
    int  c = 0;
    BOOL bKey;
@@ -1235,7 +1271,9 @@ static int hb_gt_wvw_ReadKey( PHB_GT pGT, int eventmask )
 /*                                                                   */
 static void hb_gt_wvw_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_Tone(%lf, %lf)", dFrequency, dDuration ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -1309,7 +1347,9 @@ static void hb_gt_wvw_mouse_SetPos( PHB_GT pGT, int iRow, int iCol )
 
 static void hb_gt_wvw_mouse_GetPos( PHB_GT pGT, int * piRow, int * piCol )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_mouse_GetPos(%p,%p,%p)", pGT, piRow, piCol ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -1319,7 +1359,9 @@ static void hb_gt_wvw_mouse_GetPos( PHB_GT pGT, int * piRow, int * piCol )
 
 static BOOL hb_gt_wvw_mouse_ButtonState( PHB_GT pGT, int iButton )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_mouse_ButtonState(%p,%i)", pGT, iButton ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -1349,7 +1391,9 @@ static int hb_gt_wvw_mouse_CountButton( PHB_GT pGT )
 /* int gt_info(int iMsgType, BOOL bUpdate, int iParam, void *vpParam ) */
 static BOOL hb_gt_wvw_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_Info(%p,%d,%p)", pGT, iType, pInfo ) );
+#endif
 
    WIN_DATA * pWindowData = s_pWvwData->s_pWindows[ s_pWvwData->s_usCurWindow ];
    int        iVal;
@@ -5249,7 +5293,9 @@ static UINT hb_gt_wvwOpenWindow( LPCTSTR lpszWinName, int iRow1, int iCol1, int 
                                                                   *(relative to MAIN window, NOT to parent window)
                                                                   */
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvwOpenWindow()" ) );
+#endif
 
    HWND hWnd;
 
@@ -5399,7 +5445,9 @@ static void hb_gt_wvwCloseWindow( void ) /*assume s_pWvwData->s_usNumWindows >= 
                                           * similar to gt_exit(), only gt_exit() closes main window
                                           */
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvwCloseWindow()" ) );
+#endif
 
    WIN_DATA *     pWindowData;
    CONTROL_DATA * pcd;
@@ -7190,7 +7238,9 @@ void hb_gt_wvwDrawOutline( UINT usWinNum, int iTop, int iLeft, int iBottom, int 
 /* static void gtFnInit( PHB_GT_FUNCS gt_funcs ) */
 static BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gtFnInit( %p )", pFuncTable ) );
+#endif
 
    pFuncTable->Init   = hb_gt_wvw_Init;
    pFuncTable->Exit   = hb_gt_wvw_Exit;

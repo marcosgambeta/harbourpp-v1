@@ -275,7 +275,9 @@ static void hb_gt_alleg_DoCursor( int iRow, int iCol, int iStyle )
 
 static void hb_gt_alleg_ScreenUpdate( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_ScreenUpdate(%p)", pGT ) );
+#endif
 
    int     iRow, iCol, iStyle;
    HB_BOOL fPix, fCursor;
@@ -310,7 +312,9 @@ static void hb_gt_alleg_ScreenUpdate( PHB_GT pGT )
 
 static HB_BOOL hb_gt_alleg_InitializeScreen( PHB_GT pGT, int iRows, int iCols, HB_BOOL lClearInit )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_InitializeScreen(%p,%d,%d,%d)", pGT, iRows, iCols, static_cast< int >( lClearInit ) ) );
+#endif
 
    int       iRet  = 1, iWidth, iHeight; /* Don't remove iRet, ixFP and iyFP initializers! */
    short     ixFP  = 0, iyFP = 0;
@@ -341,30 +345,40 @@ static HB_BOOL hb_gt_alleg_InitializeScreen( PHB_GT pGT, int iRows, int iCols, H
    if( iRows > 11 && iCols > 23 && iRows < 129 && iCols < 257 )
    {
 #if defined( AL_GFX_XWINDOWS )
+#if 0
       HB_TRACE( HB_TR_DEBUG, ( "trying X DGA2 mode" ) );
+#endif
       iRet = al_set_gfx_mode( AL_GFX_XDGA2, iWidth, iHeight, 0, 0 );
       if( iRet != 0 )
       {
+#if 0
          HB_TRACE( HB_TR_DEBUG, ( "trying X DGA mode" ) );
+#endif
          iRet = al_set_gfx_mode( AL_GFX_XDGA, iWidth, iHeight, 0, 0 );
       }
       if( iRet != 0 )
       {
+#if 0
          HB_TRACE( HB_TR_DEBUG, ( "trying X Windows mode" ) );
+#endif
          iRet = al_set_gfx_mode( AL_GFX_XWINDOWS, iWidth, iHeight, 0, 0 );
       }
 #endif
 #if defined( ALLEGRO_UNIX ) || defined( ALLEGRO_LINUX ) || defined( ALLEGRO_DOS )
       if( iRet != 0 )
       {
+#if 0
          HB_TRACE( HB_TR_DEBUG, ( "trying VBE/AF mode" ) );
+#endif
          iRet = al_set_gfx_mode( AL_GFX_VBEAF, iWidth, iHeight, 0, 0 );
       }
 #endif
 #if ( defined( ALLEGRO_UNIX ) || defined( ALLEGRO_LINUX ) ) && defined( AL_GFX_FBCON )
       if( iRet != 0 )
       {
+#if 0
          HB_TRACE( HB_TR_DEBUG, ( "trying fb console mode" ) );
+#endif
          iRet = al_set_gfx_mode( AL_GFX_FBCON, iWidth, iHeight, 0, 0 );
       }
 #endif
@@ -372,32 +386,42 @@ static HB_BOOL hb_gt_alleg_InitializeScreen( PHB_GT pGT, int iRows, int iCols, H
       /* Try a windowed mode first */
       if( iRet != 0 )
       {
+#if 0
          HB_TRACE( HB_TR_DEBUG, ( "trying autodetect windowed mode" ) );
+#endif
          iRet = al_set_gfx_mode( AL_GFX_AUTODETECT_WINDOWED, iWidth, iHeight, 0, 0 );
       }
 #ifdef ALLEGRO_WINDOWS
       /* GDI is slower, but it is more likely to bring a windowed mode than DirectX */
       if( iRet != 0 )
       {
+#if 0
          HB_TRACE( HB_TR_DEBUG, ( "trying GDI windowed mode" ) );
+#endif
          iRet = al_set_gfx_mode( AL_GFX_GDI, iWidth, iHeight, 0, 0 );
       }
       if( iRet != 0 )
       {
+#if 0
          HB_TRACE( HB_TR_DEBUG, ( "trying DirectX windowed mode" ) );
+#endif
          iRet = al_set_gfx_mode( AL_GFX_DIRECTX_WIN, iWidth, iHeight, 0, 0 );
       }
 #endif
       if( iRet != 0 )
       {
+#if 0
          HB_TRACE( HB_TR_DEBUG, ( "trying autodetect console mode" ) );
+#endif
          iRet = al_set_gfx_mode( AL_GFX_AUTODETECT, iWidth, iHeight, 0, 0 );
       }
       if( iRet != 0 )
       {
          /* If that fails (ie, plain DOS or Linux VESA Framebuffer)
             ensure to get any available gfx mode */
+#if 0
          HB_TRACE( HB_TR_DEBUG, ( "trying safe mode" ) );
+#endif
          iRet = al_set_gfx_mode( AL_GFX_SAFE, iWidth, iHeight, 0, 0 );
       }
       if( iRet != 0 )  /* Doh! */
@@ -541,7 +565,9 @@ static HB_BOOL hb_gt_alleg_InitializeScreen( PHB_GT pGT, int iRows, int iCols, H
 
 static void hb_gt_alleg_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_Init(%p,%p,%p,%p)", pGT, static_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdin ) ), static_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdout ) ), static_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStderr ) ) ) );
+#endif
 
    int iRet;
 
@@ -568,7 +594,9 @@ static void hb_gt_alleg_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hF
 
 static void hb_gt_alleg_Exit( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_Exit(%p)", pGT ) );
+#endif
 
    HB_GTSUPER_EXIT( pGT );
 
@@ -593,7 +621,9 @@ static const char * hb_gt_alleg_Version( PHB_GT pGT, int iType )
 
 static HB_BOOL hb_gt_alleg_SetMode( PHB_GT pGT, int iRows, int iCols )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_SetMode(%p,%d,%d)", pGT, iRows, iCols ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -602,7 +632,9 @@ static HB_BOOL hb_gt_alleg_SetMode( PHB_GT pGT, int iRows, int iCols )
 
 static int hb_gt_alleg_ReadKey( PHB_GT pGT, int iEventMask )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_ReadKey(%p,%d)", pGT, iEventMask ) );
+#endif
 
    int nKey = 0;
    int i, iMseCol, iMseRow;
@@ -821,7 +853,9 @@ static void hb_gt_alleg_mouse_GetBounds( PHB_GT pGT, int * piTop, int * piLeft, 
 
 static HB_BOOL hb_gt_alleg_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_Info(%p,%d,%p)", pGT, iType, pInfo ) );
+#endif
 
    int iWidth, iHeight, iValue;
 
@@ -943,7 +977,9 @@ static HB_BOOL hb_gt_alleg_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
 static int hb_gt_alleg_gfx_Primitive( PHB_GT pGT, int iType, int iTop, int iLeft, int iBottom, int iRight, int iColor )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_gfx_Primitive(%p,%d,%d,%d,%d,%d,%d)", pGT, iType, iTop, iLeft, iBottom, iRight, iColor ) );
+#endif
 
    int iRet = 1, iTmp;
 
@@ -1088,7 +1124,9 @@ static int hb_gt_alleg_gfx_Primitive( PHB_GT pGT, int iType, int iTop, int iLeft
 
 static void hb_gt_alleg_gfx_Text( PHB_GT pGT, int iTop, int iLeft, const char * cBuf, int iColor, int iSize, int iWidth )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_gfx_Text(%p,%d,%d,%s,%d,%d,%d)", pGT, iTop, iLeft, cBuf, iColor, iSize, iWidth ) );
+#endif
 
    int iBottom, iRight;
 
@@ -1125,7 +1163,9 @@ static void hb_gt_alleg_gfx_Text( PHB_GT pGT, int iTop, int iLeft, const char * 
 
 static void hb_gt_alleg_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_Redraw(%p,%d,%d,%d)", pGT, iRow, iCol, iSize ) );
+#endif
 
    int      iColor;
    HB_BYTE  bAttr;
@@ -1175,7 +1215,9 @@ static void hb_gt_alleg_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 
 static void hb_gt_alleg_Refresh( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_alleg_Refresh(%p)", pGT ) );
+#endif
 
    if( ! s_fGtError )
    {
@@ -1205,7 +1247,9 @@ static void hb_gt_alleg_Refresh( PHB_GT pGT )
 
 static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_FuncInit(%p)", pFuncTable ) );
+#endif
 
    pFuncTable->Init    = hb_gt_alleg_Init;
    pFuncTable->Exit    = hb_gt_alleg_Exit;
@@ -1243,7 +1287,9 @@ static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
  */
 int _mangled_main( int argc, char * argv[] )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "_mangled_main(%d, %p)", argc, argv ) );
+#endif
 
    hb_cmdargInit( argc, argv );
    hb_vmInit( HB_TRUE );

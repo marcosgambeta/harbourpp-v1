@@ -55,7 +55,9 @@
 
 static HB_ULONG hb_TimeStrToSec( const char * pszTime )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_TimeStrToSec(%s)", pszTime ) );
+#endif
 
    HB_SIZE  nLen;
    HB_ULONG ulTime = 0;

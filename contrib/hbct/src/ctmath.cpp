@@ -53,14 +53,18 @@
 /* ---------------- */
 int ct_math_init( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_math_init()" ) );
+#endif
 
    return 1;
 }
 
 int ct_math_exit( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_math_exit()" ) );
+#endif
 
    return 1;
 }
@@ -72,14 +76,18 @@ static int s_iPrecision = 16; /* TODO: make this thread safe */
 
 void ct_setprecision( int iPrecision )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_setprecision (%i)", iPrecision ) );
+#endif
 
    s_iPrecision = iPrecision;
 }
 
 int ct_getprecision( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_getprecision()" ) );
+#endif
 
    return s_iPrecision;
 }

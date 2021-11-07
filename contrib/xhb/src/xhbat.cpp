@@ -53,7 +53,9 @@
 
 static HB_SIZE hb_AtSkipStrings( const char * szSub, HB_SIZE nSubLen, const char * szText, HB_SIZE nLen )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_AtSkipStrings(%s, %" HB_PFS "u, %s, %" HB_PFS "u)", szSub, nSubLen, szText, nLen ) );
+#endif
 
    if( nSubLen > 0 && nLen >= nSubLen )
    {

@@ -57,7 +57,9 @@
 
 static PHB_ITEM hb_itemPutCRaw( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutCRaw(%p, %s, %" HB_PFS "u)", static_cast< void * >( pItem ), szText, nLen ) );
+#endif
 
    if( pItem )
    {
@@ -84,7 +86,9 @@ static PHB_ITEM hb_itemPutCRaw( PHB_ITEM pItem, const char * szText, HB_SIZE nLe
 #undef hb_itemPutCRawStatic
 static PHB_ITEM hb_itemPutCRawStatic( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutCRawStatic(%p, %s, %" HB_PFS "u)", static_cast< void * >( pItem ), szText, nLen ) );
+#endif
 
    if( pItem )
    {

@@ -59,7 +59,9 @@
 
 static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest, PHB_ITEM pBlock )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_copyfile(%s, %s, %p)", pszSource, pszDest, static_cast< void * >( pBlock ) ) );
+#endif
 
    HB_BOOL bRetVal = HB_FALSE;
    PHB_FILE pSource;

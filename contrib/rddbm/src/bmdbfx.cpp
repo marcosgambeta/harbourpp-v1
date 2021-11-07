@@ -733,7 +733,9 @@ static void hb_bmGetFuncTable( const char * szSuper )
    uiRddId = static_cast< HB_USHORT >( hb_parni( 4 ) );
    puiSuperRddId = static_cast< HB_USHORT * >( hb_parptr( 5 ) );
 
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "BM%s_GETFUNCTABLE(%p, %p, %p, %hu, %p)", szSuper, static_cast< void * >( puiCount ), pTable, pSuperTable, uiRddId, puiSuperRddId ) );
+#endif
 
    if( puiCount && pTable && pSuperTable && puiSuperRddId )
    {

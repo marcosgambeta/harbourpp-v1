@@ -434,7 +434,9 @@ HB_FUNC( ADSGETSERVERTIME )
 #if HB_TR_LEVEL >= HB_TR_DEBUG
    else
    {
+#if 0
       HB_TRACE( HB_TR_DEBUG, ( "AdsGetServerTime() error" ) );
+#endif
    }
 #endif
 }
@@ -1216,7 +1218,9 @@ HB_FUNC( ADSGETFILTER )
       }
       else
       {
+#if 0
          HB_TRACE( HB_TR_DEBUG, ( "adsGetFilter() error %lu", static_cast< HB_ULONG >( ulRetVal ) ) );
+#endif
          hb_retc_null();
       }
 
@@ -1526,7 +1530,9 @@ HB_FUNC( ADSEXECUTESQLDIRECT )
       }
       else
       {
+#if 0
          HB_TRACE( HB_TR_DEBUG, ( "AdsExecuteSQLDirect() error" ) );
+#endif
          hb_retl( HB_FALSE );
       }
    }
@@ -1548,7 +1554,9 @@ HB_FUNC( ADSPREPARESQL )
       }
       else
       {
+#if 0
          HB_TRACE( HB_TR_DEBUG, ( "AdsPrepareSQL() error" ) );
+#endif
          hb_retl( HB_FALSE );
       }
    }
@@ -1587,7 +1595,9 @@ HB_FUNC( ADSEXECUTESQL )
       }
       else
       {
+#if 0
          HB_TRACE( HB_TR_DEBUG, ( "AdsExecuteSQL() error" ) );
+#endif
          hb_retl( HB_FALSE );
       }
    }
@@ -1713,7 +1723,9 @@ UNSIGNED32 WINAPI hb_adsShowCallback( UNSIGNED16 usPercentDone )
 #if HB_TR_LEVEL >= HB_TR_DEBUG
    else
    {
+#if 0
       HB_TRACE( HB_TR_DEBUG, ( "hb_adsShowCallback(%d) called with no codeblock set.", usPercentDone ) );
+#endif
    }
 #endif
 

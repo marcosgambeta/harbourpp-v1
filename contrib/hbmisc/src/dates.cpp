@@ -57,14 +57,18 @@ static const int s_daysinmonth[ 12 ] =
 
 static HB_BOOL hb_isleapyear( int iYear )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_isleapyear(%d)", iYear ) );
+#endif
 
    return ( iYear % 4 == 0 && iYear % 100 != 0 ) || ( iYear % 400 == 0 );
 }
 
 static int hb_daysinmonth( int iYear, int iMonth )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_daysinmonth(%d, %d)", iYear, iMonth ) );
+#endif
 
    if( iMonth > 0 && iMonth < 13 )
       return s_daysinmonth[ iMonth - 1 ] +
@@ -75,7 +79,9 @@ static int hb_daysinmonth( int iYear, int iMonth )
 
 static int hb_doy( int iYear, int iMonth, int iDay )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_doy(%d, %d, %d)", iYear, iMonth, iDay ) );
+#endif
 
    int i;
    int iDoy = 0;
@@ -88,7 +94,9 @@ static int hb_doy( int iYear, int iMonth, int iDay )
 
 static int hb_woy( long lDate, HB_BOOL fISO )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_woy(%ld, %d)", lDate, static_cast< int >( fISO ) ) );
+#endif
 
    int iYear, iMonth, iDay;
 

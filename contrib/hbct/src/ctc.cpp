@@ -56,7 +56,9 @@ HB_USHORT ct_error( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errS
                     const char * szDescription, const char * szOperation,
                     HB_ERRCODE errOsCode, HB_USHORT uiFlags, HB_ULONG ulArgCount, ... )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_error(%hu, %d, %d, %s, %s, %d, %hu, %lu)", uiSeverity, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags, ulArgCount ) );
+#endif
 
    HB_USHORT uiAction;
    PHB_ITEM pError;
@@ -125,7 +127,9 @@ PHB_ITEM ct_error_subst( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE
                          const char * szDescription, const char * szOperation,
                          HB_ERRCODE errOsCode, HB_USHORT uiFlags, HB_ULONG ulArgCount, ... )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_error_subst(%hu, %d, %d, %s, %s, %d, %hu, %lu)", uiSeverity, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags, ulArgCount ) );
+#endif
 
    PHB_ITEM pRetVal;
    PHB_ITEM pError;
@@ -191,14 +195,18 @@ static int s_iArgErrMode = CT_ARGERR_IGNORE;
 
 void ct_setargerrormode( int iMode )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_setargerrormode(%i)", iMode ) );
+#endif
 
    s_iArgErrMode = iMode;
 }
 
 int ct_getargerrormode( void )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "ct_getargerrormode()" ) );
+#endif
 
    return s_iArgErrMode;
 }

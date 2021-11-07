@@ -54,7 +54,9 @@
 
 static char * hb_fsReadLine( HB_FHANDLE hFileHandle, HB_ISIZ * plBuffLen, const char ** pTerm, HB_ISIZ * pnTermSizes, HB_ISIZ nTerms, HB_BOOL * pbFound, HB_BOOL * pbEOF )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsReadLine(%p, %" HB_PFS "d, %p, %p, %" HB_PFS "d, %p, %p)", static_cast< void * >( static_cast< HB_PTRUINT >( hFileHandle ) ), *plBuffLen, pTerm, pnTermSizes, nTerms, pbFound, pbEOF ) );
+#endif
 
    HB_ISIZ nPosTerm = 0, nPos, nPosition;
    int     nTries;

@@ -718,12 +718,16 @@ HB_FUNC( SQLITE3_TEMP_DIRECTORY )
             }
             else
             {
+#if 0
                HB_TRACE( HB_TR_DEBUG, ( "sqlite_temp_directory(): Could not create directory %s", pszDirName ) );
+#endif
             }
          }
          else
          {
+#if 0
             HB_TRACE( HB_TR_DEBUG, ( "sqlite_temp_directory(): Directory does not exist %s", pszDirName ) );
+#endif
          }
       }
 
@@ -774,7 +778,9 @@ HB_FUNC( SQLITE3_OPEN )
    }
    else
    {
+#if 0
       HB_TRACE( HB_TR_DEBUG, ( "sqlite3_open(): Database does not exist %s", pszdbName ) );
+#endif
 
       hb_retptr( nullptr );
    }
@@ -843,7 +849,9 @@ HB_FUNC( SQLITE3_EXEC )
 
       if( rc != SQLITE_OK )
       {
+#if 0
          HB_TRACE( HB_TR_DEBUG, ( "sqlite3_exec(): Returned error: %s", pszErrMsg ) );
+#endif
          sqlite3_free( pszErrMsg );
       }
 
@@ -1629,7 +1637,9 @@ HB_FUNC( SQLITE3_GET_TABLE )
       }
       else
       {
+#if 0
          HB_TRACE( HB_TR_DEBUG, ( "sqlite3_get_table(): Returned error: %s", pszErrMsg ) );
+#endif
          sqlite3_free( pszErrMsg );
       }
 
