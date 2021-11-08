@@ -52,7 +52,6 @@ HB_DYN_LIBS := \
    gtgui \
    gtwin \
    gtos2 \
-   gtdos \
    gttrm \
    gtcrs \
    gtsln \

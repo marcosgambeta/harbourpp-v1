@@ -296,7 +296,6 @@ LIBNAME := hbrtl
 DIRS := \
    gtcgi \
    gtcrs \
-   gtdos \
    gtgui \
    gtos2 \
    gtpca \

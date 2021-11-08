@@ -36,7 +36,6 @@ else
          src/rtl/gtstd
 
       ifeq ($(HB_PLATFORM),dos)
-         DYNDIRLIST_BASE += src/rtl/gtdos
          ifneq ($(filter $(HB_COMPILER),watcom djgpp),)
             DYNDIRLIST_BASE += src/3rd/hbdossrl
          endif
