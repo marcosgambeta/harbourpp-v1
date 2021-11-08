@@ -297,7 +297,6 @@ DIRS := \
    gtcgi \
    gtcrs \
    gtgui \
-   gtos2 \
    gtpca \
    gtsln \
    gtstd \

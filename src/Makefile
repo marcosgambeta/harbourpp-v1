@@ -40,9 +40,6 @@ else
             DYNDIRLIST_BASE += src/3rd/hbdossrl
          endif
       endif
-      ifeq ($(HB_PLATFORM),os2)
-         DYNDIRLIST_BASE += src/rtl/gtos2
-      endif
       ifeq ($(HB_PLATFORM),wce)
          DYNDIRLIST_BASE += src/rtl/gtwvt src/rtl/gtgui
       endif
