@@ -639,9 +639,9 @@ extern HB_EXPORT int     hb_gt_winapi_getKbdState( void );
 extern HB_EXPORT void    hb_gt_winapi_setKbdState( int kbdShifts );
 extern HB_EXPORT void    hb_gt_winapi_tone( double dFrequency, double dDuration );
 #endif /* HB_OS_WIN */
-#if defined( HB_OS_DOS ) || defined( HB_OS_WIN )
+#if defined( HB_OS_WIN )
 extern int hb_gt_dos_keyCodeTranslate( int iKey, int iFlags, PHB_CODEPAGE cdp );
-#endif /* HB_OS_DOS || HB_OS_WIN */
+#endif /* HB_OS_WIN */
 
 HB_EXTERN_END
 

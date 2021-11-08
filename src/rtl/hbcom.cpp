@@ -65,9 +65,6 @@
 #        define BSD_COMP
 #     endif
 #  endif
-#elif defined( HB_OS_DOS ) && \
-      ! defined( HB_HAS_PMCOM ) && ! defined( HB_HAS_DOSSRL )
-#  define HB_HAS_DOSSRL
 #endif
 
 #if defined( HB_HAS_TERMIOS )

@@ -224,17 +224,6 @@ static HB_MAXINT hb_taskTimeStop( unsigned long ulMilliSec )
 
 static void hb_taskFreeze( HB_MAXINT wakeup )
 {
-#if defined( HB_OS_DOS )
-   while( wakeup > hb_taskTimeStop( 0 ) )
-   {
-      union REGS regs;
-
-      regs.h.ah = 2;
-      regs.HB_XREGS.ax = 0x1680;
-
-      HB_DOS_INT86( 0x2F, &regs, &regs );
-   }
-#else
    wakeup -= hb_taskTimeStop( 0 );
    if( wakeup > 0 )
    {
@@ -249,7 +238,6 @@ static void hb_taskFreeze( HB_MAXINT wakeup )
       select( 0, nullptr, nullptr, nullptr, &tv );
 #  endif
    }
-#endif
 }
 
 static void hb_taskLink( PHB_TASKINFO * pList, PHB_TASKINFO pTask )

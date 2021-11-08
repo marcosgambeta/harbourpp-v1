@@ -72,48 +72,7 @@
 #include "hbapi.h"
 #include "hbdate.h"
 
-#if defined( HB_OS_DOS )
-#  include <dos.h>
-#endif
-
 HB_FUNC( FT_SETTIME )
 {
-#if defined( HB_OS_DOS )
-   int        iHour, iMinute, iSeconds;
-   union REGS regs;
-
-   if( HB_ISCHAR( 1 ) )
-   {
-      const char * pszTime = hb_parc( 1 );
-      HB_SIZE      nLen    = strlen( pszTime );
-
-      if( nLen >= 1 )
-      {
-         iHour = static_cast< int >( hb_strVal( pszTime, nLen ) );
-      }
-      if( nLen >= 4 )
-      {
-         iMinute = static_cast< int >( hb_strVal( pszTime + 3, nLen - 3 ) );
-      }
-      if( nLen >= 7 )
-      {
-         iSeconds = static_cast< int >( hb_strVal( pszTime + 6, nLen - 6 ) );
-      }
-   }
-   else
-   {
-      int iYear, iMonth, iDay, iMillisec;
-      hb_timeStampGetLocal( &iYear, &iMonth, &iDay, &iHour, &iMinute, &iSeconds, &iMillisec );
-   }
-
-   regs.h.ah = 45;
-   regs.h.ch = iHour;
-   regs.h.cl = iMinute;
-   regs.h.dh = iSeconds;
-   HB_DOS_INT86( 0x21, &regs, &regs );
-
-   hb_retl( HB_TRUE );
-#else
    hb_retl( HB_FALSE );
-#endif
 }

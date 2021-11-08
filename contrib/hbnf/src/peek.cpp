@@ -25,75 +25,22 @@
 
 #include "hbapi.h"
 
-#if defined( HB_OS_DOS )
-   #include <dos.h>
-   #include <conio.h>
-
-   #if defined( __DJGPP__ )
-      #include <sys/farptr.h>
-      #include <dpmi.h>
-   #endif
-
-   #if ! defined( MK_FP )
-      #define MK_FP( seg, off ) \
-   ( ( void FAR * ) ( ( static_cast< unsigned long >( seg ) << 4 ) | static_cast< unsigned >( off ) ) )
-   #endif
-
-   #if defined( __DJGPP__ )
-      #define HB_PEEK_BYTE( s, o )     _farpeekb( ( s ), ( o ) )
-      #define HB_POKE_BYTE( s, o, b )  _farpokeb( ( s ), ( o ), ( b ) )
-   #else
-      #define HB_PEEK_BYTE( s, o )     ( *( static_cast< HB_UCHAR FAR * >( MK_FP( ( s ), ( o ) ) ) ) )
-      #define HB_POKE_BYTE( s, o, b )  ( *( static_cast< HB_UCHAR FAR * >( MK_FP( ( s ), ( o ) ) ) ) = static_cast< HB_UCHAR >( b ) )
-   #endif
-#endif
-
 HB_FUNC( FT_PEEK )
 {
-#if defined( HB_OS_DOS )
-   {
-      HB_U16 nSeg = static_cast< HB_U16 >( hb_parni( 1 ) );
-      HB_U16 nOff = static_cast< HB_U16 >( hb_parni( 2 ) );
-
-      hb_retni( HB_PEEK_BYTE( nSeg, nOff ) );
-   }
-#else
    hb_retni( -1 );
-#endif
 }
 
 HB_FUNC( FT_POKE )
 {
-#if defined( HB_OS_DOS )
-   {
-      HB_U16 nSeg = static_cast< HB_U16 >( hb_parni( 1 ) );
-      HB_U16 nOff = static_cast< HB_U16 >( hb_parni( 2 ) );
-
-      HB_POKE_BYTE( nSeg, nOff, static_cast< HB_U8 >( hb_parni( 3 ) ) );
-
-      hb_retl( HB_TRUE );
-   }
-#else
    hb_retl( HB_FALSE );
-#endif
 }
 
 HB_FUNC( FT_INP )
 {
-#if defined( HB_OS_DOS )
-   hb_retni( static_cast< HB_U8 >( inportb( static_cast< HB_U8 >( hb_parni( 1 ) ) ) ) );
-#else
    hb_retni( 0 );
-#endif
 }
 
 HB_FUNC( FT_OUTP )
 {
-#if defined( HB_OS_DOS )
-   outportb( static_cast< HB_U8 >( hb_parni( 1 ) ), static_cast< HB_U8 >( hb_parni( 2 ) ) );
-
-   hb_retl( HB_TRUE );
-#else
    hb_retl( HB_FALSE );
-#endif
 }

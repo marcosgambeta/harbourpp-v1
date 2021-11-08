@@ -54,8 +54,6 @@
 #  include <unistd.h>
 #elif defined( HB_OS_WIN )
 #  include <windows.h>
-#elif defined( HB_OS_DOS )
-#  include <process.h>
 #endif
 
 HB_FUNC( EXECNAME )

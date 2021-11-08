@@ -102,8 +102,6 @@
 
 #if defined( HB_OS_WIN )
 #  include <windows.h>
-#elif defined( HB_OS_DOS )
-#  include <dos.h>
 #endif
 
 #if defined( HB_PTHREAD_API )
@@ -266,26 +264,6 @@ void hb_threadReleaseCPU( void )
    /* Forfeit the remainder of the current time slice. */
    Sleep( 20 );
 
-#elif defined( HB_OS_DOS )
-
-   /* NOTE: there is a bug under NT 4 and 2000 -  if the app is running
-      in protected mode, time slices will _not_ be released - you must switch
-      to real mode first, execute the following, and switch back.
-
-      It just occurred to me that this is actually by design.  Since MS doesn't
-      want you to do this from a console app, their solution was to not allow
-      the call to work in protected mode - screw the rest of the planet <g>.
-
-      returns zero on failure. (means not supported)
-    */
-   {
-      union REGS regs;
-
-      regs.h.ah = 2;
-      regs.HB_XREGS.ax = 0x1680;
-
-      HB_DOS_INT86( 0x2F, &regs, &regs );
-   }
 #elif defined( HB_OS_UNIX )
    {
       struct timeval tv;

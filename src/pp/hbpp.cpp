@@ -449,12 +449,6 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
       static const char * s_szNames[] = {
          "ChangeLog.txt",
          "CHANGES.txt",
-#if defined( HB_OS_DOS )
-         "ChangeLo.txt",
-         "Change~1.txt",
-         "Change~?.txt",
-         "Chang~??.txt",
-#endif
          nullptr
       };
       int i = 0;

@@ -71,38 +71,15 @@
 
 #include "hbapi.h"
 
-#if defined( HB_OS_DOS )
-#  include <dos.h>
-#endif
-
 HB_FUNC( FT_SETMODE )
 {
-#if defined( HB_OS_DOS )
-   {
-      union REGS regs;
-      regs.h.ah = 0;
-      regs.h.al = hb_parni( 1 );
-      HB_DOS_INT86( 0x10, &regs, &regs );
-   }
-#endif
 }
 
 HB_FUNC( FT_GETMODE )
 {
    int iMode;
 
-#if defined( HB_OS_DOS )
-   {
-      union REGS regs;
-      regs.h.ah = 0x0F;
-      HB_DOS_INT86( 0x10, &regs, &regs );
-      iMode = regs.h.al;
-   }
-#else
-   {
-      iMode = 0;
-   }
-#endif
+   iMode = 0;
 
    hb_retni( iMode );
 }

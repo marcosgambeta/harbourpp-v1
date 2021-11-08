@@ -60,24 +60,7 @@
 
 /* --- */
 
-#if defined( HB_OS_DOS )
-
-   #if defined( __DJGPP__ ) || defined( __RSX32__ )
-      #include <sys/param.h>
-   #endif
-   #if defined( __DJGPP__ ) || defined( __RSX32__ ) || defined( __BORLANDC__ )
-      #include <sys/stat.h>
-   #endif
-   #include <dos.h>
-   #include <dir.h>
-   #include <time.h>
-
-   typedef struct
-   {
-      struct ffblk    entry;
-   } HB_FFIND_INFO, * PHB_FFIND_INFO;
-
-#elif defined( HB_OS_WIN )
+#if defined( HB_OS_WIN )
 
    #include <windows.h>
    #include "hbwinuni.h"
@@ -142,17 +125,7 @@ HB_FATTR hb_fsAttrFromRaw( HB_FATTR raw_attr )
 
    HB_FATTR nAttr;
 
-#if defined( HB_OS_DOS )
-
-   nAttr = 0;
-   if( raw_attr & FA_ARCH )   nAttr |= HB_FA_ARCHIVE;
-   if( raw_attr & FA_DIREC )  nAttr |= HB_FA_DIRECTORY;
-   if( raw_attr & FA_HIDDEN ) nAttr |= HB_FA_HIDDEN;
-   if( raw_attr & FA_RDONLY ) nAttr |= HB_FA_READONLY;
-   if( raw_attr & FA_LABEL )  nAttr |= HB_FA_LABEL;
-   if( raw_attr & FA_SYSTEM ) nAttr |= HB_FA_SYSTEM;
-
-#elif defined( HB_OS_WIN )
+#if defined( HB_OS_WIN )
 
    nAttr = 0;
    if( raw_attr & FILE_ATTRIBUTE_ARCHIVE )   nAttr |= HB_FA_ARCHIVE;
@@ -219,17 +192,7 @@ HB_FATTR hb_fsAttrToRaw( HB_FATTR nAttr )
 
    HB_FATTR raw_attr;
 
-#if defined( HB_OS_DOS )
-
-   raw_attr = 0;
-   if( nAttr & HB_FA_ARCHIVE )   raw_attr |= FA_ARCH;
-   if( nAttr & HB_FA_DIRECTORY ) raw_attr |= FA_DIREC;
-   if( nAttr & HB_FA_HIDDEN )    raw_attr |= FA_HIDDEN;
-   if( nAttr & HB_FA_READONLY )  raw_attr |= FA_RDONLY;
-   if( nAttr & HB_FA_LABEL )     raw_attr |= FA_LABEL;
-   if( nAttr & HB_FA_SYSTEM )    raw_attr |= FA_SYSTEM;
-
-#elif defined( HB_OS_WIN )
+#if defined( HB_OS_WIN )
 
    raw_attr = 0;
 
@@ -362,61 +325,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
 
    hb_vmUnlock();
 
-#if defined( HB_OS_DOS )
-
-   {
-      PHB_FFIND_INFO info = static_cast< PHB_FFIND_INFO >( ffind->info );
-
-      /* Handling HB_FA_LABEL doesn't need any special tricks
-         under the MS-DOS platform. */
-
-      if( ffind->bFirst )
-      {
-         ffind->bFirst = HB_FALSE;
-
-         #if 0
-         tzset();
-         #endif
-
-         bFound = ( findfirst( ffind->pszFileMask, &info->entry, static_cast< HB_USHORT >( hb_fsAttrToRaw( ffind->attrmask ) ) ) == 0 );
-      }
-      else
-      {
-         bFound = ( findnext( &info->entry ) == 0 );
-      }
-
-      /* Fill Harbour found file info */
-
-      if( bFound )
-      {
-         hb_strncpy( ffind->szName, info->entry.ff_name, sizeof( ffind->szName ) - 1 );
-         ffind->size = info->entry.ff_fsize;
-
-         raw_attr = info->entry.ff_attrib;
-
-         {
-            time_t ftime;
-            struct tm * ft;
-            struct stat sStat;
-
-            stat( info->entry.ff_name, &sStat );
-
-            ftime = sStat.st_mtime;
-            ft = localtime( &ftime );
-
-            iYear  = ft->tm_year + 1900;
-            iMonth = ft->tm_mon + 1;
-            iDay   = ft->tm_mday;
-
-            iHour  = ft->tm_hour;
-            iMin   = ft->tm_min;
-            iSec   = ft->tm_sec;
-         }
-      }
-      hb_fsSetIOError( bFound, 0 );
-   }
-
-#elif defined( HB_OS_WIN )
+#if defined( HB_OS_WIN )
 
    {
       PHB_FFIND_INFO info = static_cast< PHB_FFIND_INFO >( ffind->info );
@@ -803,13 +712,7 @@ void hb_fsFindClose( PHB_FFIND ffind )
          {
             hb_vmUnlock();
 
-#if defined( HB_OS_DOS )
-
-#  if ! defined( __DJGPP__ ) && ! defined( __BORLANDC__ )
-            findclose( &info->entry );
-#  endif
-
-#elif defined( HB_OS_WIN )
+#if defined( HB_OS_WIN )
 
             if( info->hFindFile != INVALID_HANDLE_VALUE )
             {

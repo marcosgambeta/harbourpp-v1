@@ -46,25 +46,7 @@
 
 #include "hbapi.h"
 
-#if defined( HB_OS_DOS )
-#  include <dos.h>
-#endif
-
 HB_FUNC( FT_DOSVER )
 {
-#if defined( HB_OS_DOS )
-   {
-      char *     pszPlatform = static_cast< char * >( hb_xgrab( 256 ) );
-      union REGS regs;
-
-      regs.h.ah = 0x30;
-      HB_DOS_INT86( 0x21, &regs, &regs );
-
-      hb_snprintf( pszPlatform, 256, "%d.%02d", regs.h.al, regs.h.ah );
-
-      hb_retc_buffer( pszPlatform );
-   }
-#else
    hb_retc_null();
-#endif
 }

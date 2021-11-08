@@ -60,8 +60,7 @@
 #endif
 
 /* These targets cannot compile this module */
-#if ! defined( HB_OS_DOS ) && \
-   ! defined( HB_OS_DARWIN_5 ) && \
+#if ! defined( HB_OS_DARWIN_5 ) && \
    ! defined( HB_OS_WIN_64 ) && \
    ( defined( HB_OS_OS2_GCC ) ) && \
    ! defined( __HAIKU__ )

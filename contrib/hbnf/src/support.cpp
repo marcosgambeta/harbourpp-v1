@@ -47,26 +47,11 @@
 #include "hbapi.h"
 #include "hbapiitm.h"
 
-#if defined( HB_OS_DOS )
-#  include <dos.h>
-#endif
-
 HB_FUNC( _FT_NWKSTAT )
 {
    int iConnect;
 
-#if defined( HB_OS_DOS )
-   {
-      union REGS regs;
-      regs.HB_XREGS.ax = 0xDC;
-      HB_DOS_INT86( 0x2F, &regs, &regs );
-      iConnect = regs.h.al;
-   }
-#else
-   {
-      iConnect = 0;
-   }
-#endif
+   iConnect = 0;
 
    hb_retni( iConnect );
 }
@@ -77,45 +62,20 @@ HB_FUNC( _FT_TEMPFIL )
    int iflags;
    const char * cPath;
 
-#if defined( HB_OS_DOS ) && ! defined( HB_OS_DOS_32 )
-   {
-      int          iMode = hb_parni( 2 );
-      union REGS   regs;
-      struct SREGS sregs;
-      segread( &sregs );
-      cPath            = hb_parcx( 1 );
-      regs.h.ah        = 0x5A;
-      regs.HB_XREGS.cx = iMode;
-      sregs.ds         = FP_SEG( cPath );
-      regs.HB_XREGS.dx = FP_OFF( cPath );
-      HB_DOS_INT86X( 0x21, &regs, &regs, &sregs );
-      nax    = regs.HB_XREGS.ax;
-      iflags = regs.HB_XREGS.flags;
-   }
-#else
-   {
-      nax    = 0;
-      iflags = 0;
-      cPath  = hb_parcx( 1 );
-   }
-#endif
-   {
-      PHB_ITEM pArray = hb_itemArrayNew( 3 );
+   nax    = 0;
+   iflags = 0;
+   cPath  = hb_parcx( 1 );
 
-      hb_arraySetNI( pArray, 1, nax );
-      hb_arraySetC(  pArray, 2, cPath );
-      hb_arraySetNI( pArray, 3, iflags );
+   PHB_ITEM pArray = hb_itemArrayNew( 3 );
 
-      hb_itemReturnRelease( pArray );
-   }
+   hb_arraySetNI( pArray, 1, nax );
+   hb_arraySetC(  pArray, 2, cPath );
+   hb_arraySetNI( pArray, 3, iflags );
+
+   hb_itemReturnRelease( pArray );
 }
 
 HB_FUNC( FT_REBOOT )
 {
-#if defined( HB_OS_DOS )
-   {
-      int iTODO;
-   }
-#endif
    hb_ret();
 }

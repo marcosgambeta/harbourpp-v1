@@ -68,8 +68,6 @@
 #elif defined( HB_OS_WIN )
 #  include <windows.h>
 #  include "hbwinuni.h"
-#elif defined( HB_OS_DOS )
-#  include <dos.h>
 #endif
 
 HB_FUNC( DISKSPACE )
@@ -77,30 +75,7 @@ HB_FUNC( DISKSPACE )
    double dSpace = 0.0;
    HB_BOOL bError;
 
-#if defined( HB_OS_DOS )
-   {
-      int iDrive = hb_parni( 1 ); /* defaults to 0 */
-
-      if( iDrive >= 0 )
-      {
-         union REGS regs;
-
-         regs.HB_XREGS.dx = static_cast< unsigned short int >( iDrive );
-         regs.h.ah = 0x36;
-         HB_DOS_INT86( 0x21, &regs, &regs );
-
-         bError = regs.HB_XREGS.ax == 0xFFFF;
-         if( ! bError )
-         {
-            dSpace = static_cast< double >( regs.HB_XREGS.bx ) * static_cast< double >( regs.HB_XREGS.ax ) * static_cast< double >( regs.HB_XREGS.cx );
-         }
-      }
-      else
-      {
-         bError = HB_TRUE;
-      }
-   }
-#elif defined( HB_OS_WIN )
+#if defined( HB_OS_WIN )
    {
 #if defined( _MSC_VER ) || ( defined( __GNUC__ ) && ! defined( __RSXNT__ ) )
 

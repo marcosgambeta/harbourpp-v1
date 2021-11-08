@@ -296,17 +296,6 @@
  * Ref: http://nadeausoftware.com/articles/2012/01/c_c_tip_how_use_compiler_predefined_macros_detect_operating_system
  */
 
-#ifndef HB_OS_DOS
-   #if defined( DOS ) || defined( _QC ) || defined( __DOS__ ) || defined( MSDOS ) || defined( __MSDOS__ ) || defined( __RSX32__ )
-      #define HB_OS_DOS
-      #if defined( __386__ ) || defined( __DJGPP__ )
-         #define HB_OS_DOS_32
-      #else
-         #define HB_OS_DOS_16
-      #endif
-   #endif
-#endif
-
 #if defined( __EMX__ ) && ! defined( __RSXNT__ )
    #define HB_OS_OS2_GCC
 #endif

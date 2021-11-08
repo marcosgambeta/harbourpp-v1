@@ -103,8 +103,6 @@
 /* For screen support */
 #if defined( __POWERC ) || ( defined( __TURBOC__ ) && ! defined( __BORLANDC__ ) ) || ( defined( __ZTC__ ) && ! defined( __SC__ ) )
    #define FAR  far
-#elif defined( HB_OS_DOS ) && ! defined( __DJGPP__ ) && ! defined( __RSX32__ )
-   #define FAR  _far
 #else
    #define FAR
 #endif

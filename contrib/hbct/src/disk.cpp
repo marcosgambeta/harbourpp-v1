@@ -54,9 +54,6 @@
 #include "ctstrfil.h"
 #include "hbwinuni.h"
 
-#if defined( HB_OS_DOS )
-#  include <dos.h>
-#endif
 #if defined( HB_OS_WIN )
 #  include <windows.h>
 #endif
@@ -160,18 +157,7 @@ HB_FUNC( DRIVETYPE )
 
 HB_FUNC( NUMDISKL )
 {
-#if defined( HB_OS_DOS )
-#if defined( __DJGPP__ )
-   unsigned cur_drive, n_drives;
-
-   _dos_getdrive( &cur_drive );
-   _dos_setdrive( cur_drive, &n_drives );
-   hb_retni( n_drives );
-#else
-   /* should be easily implementable somehow similar to DJGPP */
-   hb_retni( 26 );
-#endif
-#elif defined( HB_OS_WIN )
+#if defined( HB_OS_WIN )
    /* LASTDRIVE does not affect Windows apps, they always have 26 letters avail */
    hb_retni( 26 );
 #else

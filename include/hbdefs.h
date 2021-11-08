@@ -107,23 +107,7 @@
    #endif
 #endif
 
-#if defined( HB_OS_DOS )
-
-   #if defined( __RSX32__ )
-      #define HB_DOS_INT86 _int86
-      #define HB_DOS_INT86X _int86x
-      #define HB_XREGS x
-   #elif defined( __DJGPP__ )
-      #define HB_DOS_INT86 int86
-      #define HB_DOS_INT86X int86x
-      #define HB_XREGS w
-   #else
-      #define HB_DOS_INT86 int86
-      #define HB_DOS_INT86X int86x
-      #define HB_XREGS x
-   #endif
-
-#elif defined( HB_OS_DARWIN )
+#if defined( HB_OS_DARWIN )
 
    /* Detect if it is Darwin < 6.x */
    #include <pthread.h>

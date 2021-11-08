@@ -49,34 +49,12 @@
 #include "hbapi.h"
 #include "hbapifs.h"
 
-#if defined( HB_OS_DOS )
-#  include <dos.h>
-#  if defined( __DJGPP__ )
-#     include <dpmi.h>
-#  endif
-#endif
-
 HB_FUNC( PRINTSTAT )
 {
    HB_USHORT uiPort = static_cast< HB_USHORT >( hb_parnidef( 1, 1 ) );
    int Status = 0;
 
-#if defined( HB_OS_DOS )
-
-   /* NOTE: MS-DOS specific solution, using BIOS interrupt */
-
-   union REGS regs;
-
-   regs.h.ah = 2;
-   regs.HB_XREGS.dx = uiPort - 1;
-
-   HB_DOS_INT86( 0x17, &regs, &regs );
-
-   Status = regs.h.ah;
-
-#else
    HB_SYMBOL_UNUSED( uiPort );
-#endif
 
    hb_retni( Status );
 }

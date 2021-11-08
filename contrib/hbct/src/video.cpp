@@ -48,15 +48,6 @@
 #include "hbapi.h"
 #include "hbapigt.h"
 
-#if defined( HB_OS_DOS )
-   #if defined( __DJGPP__ )
-      #include <dpmi.h>
-      #include <go32.h>
-      #include <pc.h>
-      #include <sys/farptr.h>
-   #endif
-#endif
-
 #include "ctvideo.ch"
 
 HB_FUNC( CHARPIX )

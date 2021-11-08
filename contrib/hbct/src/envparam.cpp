@@ -54,13 +54,6 @@
 #  else
       extern char ** environ;
 #  endif
-#elif defined( HB_OS_DOS )
-#  if defined( __DJGPP__ )
-      extern char ** environ;
-#  else
-#     define environ _environ
-      extern char ** _environ;
-#  endif
 #elif defined( HB_OS_WIN )
 #  include "hbwinuni.h"
 #  include <windows.h>
@@ -68,7 +61,7 @@
 
 HB_FUNC( ENVPARAM )
 {
-#if ( defined( HB_OS_UNIX ) && ! defined( HB_OS_IOS ) ) || defined( HB_OS_DOS )
+#if ( defined( HB_OS_UNIX ) && ! defined( HB_OS_IOS ) )
    char * const * pEnviron = environ, * const * pEnv;
    char * pResult = nullptr, * pDst;
 

@@ -67,8 +67,6 @@
 
 #if defined( HB_OS_WIN )
 #  include <wincrypt.h>
-#elif defined( HB_OS_DOS )
-#  include <sys/types.h>
 #else
 #  include <sys/param.h>
 #  include <sys/time.h>

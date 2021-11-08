@@ -33,13 +33,6 @@
 #  elif ! defined( __WATCOMC__ )
       extern char ** environ;
 #  endif
-#elif defined( HB_OS_DOS )
-#  if defined( __DJGPP__ )
-      extern char ** environ;
-#  elif ! defined( __WATCOMC__ )
-#     define environ _environ
-      extern char ** _environ;
-#  endif
 #elif defined( HB_OS_WIN )
 #  include "hbwinuni.h"
 #  include <windows.h>
@@ -52,8 +45,7 @@
 
 HB_FUNC( FT_GETE )
 {
-#if ( defined( HB_OS_UNIX ) && ! defined( HB_OS_IOS ) ) || \
-    defined( HB_OS_DOS )
+#if ( defined( HB_OS_UNIX ) && ! defined( HB_OS_IOS ) )
    {
       char * buffer = nullptr;
       int    x;

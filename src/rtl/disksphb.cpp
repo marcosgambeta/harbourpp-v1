@@ -62,8 +62,6 @@
 #elif defined( HB_OS_WIN )
    #include <windows.h>
    #include "hbwinuni.h"
-#elif defined( HB_OS_DOS )
-   #include <dos.h>
 #endif
 
 double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
@@ -202,59 +200,6 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
       if( lpFree )
       {
          hb_xfree( lpFree );
-      }
-   }
-#elif defined( HB_OS_DOS )
-   {
-      HB_USHORT uiDrive;
-
-      uiDrive = pszPath == nullptr || pszPath[ 0 ] == 0 ||
-                pszPath[ 1 ] != HB_OS_DRIVE_DELIM_CHR ? 0 :
-                ( pszPath[ 0 ] >= 'A' && pszPath[ 0 ] <= 'Z' ?
-                  pszPath[ 0 ] - 'A' + 1 :
-                ( pszPath[ 0 ] >= 'a' && pszPath[ 0 ] <= 'z' ?
-                  pszPath[ 0 ] - 'a' + 1 : 0 ) );
-      for( ;; )
-      {
-         union REGS regs;
-
-         regs.HB_XREGS.dx = uiDrive;
-         regs.h.ah = 0x36;
-         HB_DOS_INT86( 0x21, &regs, &regs );
-
-         if( regs.HB_XREGS.ax != 0xFFFF )
-         {
-            HB_USHORT uiClusterTotal  = regs.HB_XREGS.dx;
-            HB_USHORT uiClusterFree   = regs.HB_XREGS.bx;
-            HB_USHORT uiSecPerCluster = regs.HB_XREGS.ax;
-            HB_USHORT uiSectorSize    = regs.HB_XREGS.cx;
-
-            switch( uiType )
-            {
-               case HB_DISK_AVAIL:
-               case HB_DISK_FREE:
-                  dSpace = static_cast< double >( uiClusterFree ) * static_cast< double >( uiSecPerCluster ) * static_cast< double >( uiSectorSize );
-                  break;
-
-               case HB_DISK_USED:
-               case HB_DISK_TOTAL:
-                  dSpace = static_cast< double >( uiClusterTotal ) * static_cast< double >( uiSecPerCluster ) * static_cast< double >( uiSectorSize );
-
-                  if( uiType == HB_DISK_USED )
-                  {
-                     dSpace -= static_cast< double >( uiClusterFree ) * static_cast< double >( uiSecPerCluster ) * static_cast< double >( uiSectorSize );
-                  }
-                  break;
-            }
-         }
-         else
-         {
-            if( hb_errRT_BASE_Ext1( EG_OPEN, 2018, nullptr, nullptr, 0, ( EF_CANDEFAULT | EF_CANRETRY ), HB_ERR_ARGS_BASEPARAMS ) == E_RETRY )
-            {
-               continue;
-            }
-         }
-         break;
       }
    }
 #elif defined( HB_OS_UNIX ) && !( defined( __CEGCC__ ) )

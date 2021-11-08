@@ -145,11 +145,7 @@
    #include <fcntl.h>
 #endif
 
-#if defined( HB_OS_DOS )
-   #include <dos.h>
-   #include <time.h>
-   #include <utime.h>
-#elif defined( HB_OS_WIN )
+#if defined( HB_OS_WIN )
    #include <windows.h>
    #include "hbwinuni.h"
    #if ! defined( INVALID_SET_FILE_POINTER ) && ( defined( _MSC_VER ) )
@@ -482,30 +478,7 @@ static void convert_open_flags( HB_BOOL fCreate, HB_FATTR nAttr, HB_USHORT uiFla
 #endif
 
    /* dos file attributes */
-#if defined( HB_OS_DOS )
-   if( nAttr == FC_NORMAL )
-   {
-      *attr = _A_NORMAL;
-   }
-   else
-   {
-      *attr = _A_ARCH;
-      if( nAttr & FC_READONLY )
-      {
-         *attr |= _A_RDONLY;
-      }
-      if( nAttr & FC_HIDDEN )
-      {
-         *attr |= _A_HIDDEN;
-      }
-      if( nAttr & FC_SYSTEM )
-      {
-         *attr |= _A_SYSTEM;
-      }
-   }
-#else
    *attr = 0;
-#endif
 
    if( fCreate )
    {
@@ -1206,9 +1179,7 @@ HB_BOOL hb_fsPipeCreate( HB_FHANDLE hPipe[ 2 ] )
 }
 #else
 {
-#  if ! defined( HB_OS_DOS )
-      int iTODO; /* TODO: for given platform */
-#  endif
+   int iTODO; /* TODO: for given platform */
 
    hPipe[ 0 ] = hPipe[ 1 ] = FS_ERROR;
    hb_fsSetError( static_cast< HB_ERRCODE >( FS_ERROR ) );
@@ -1244,9 +1215,7 @@ int hb_fsIsPipeOrSock( HB_FHANDLE hPipeHandle )
    return type == FILE_TYPE_PIPE ? 1 : 0;
 }
 #else
-#  if ! defined( HB_OS_DOS )
-      int iTODO; /* TODO: for given platform */
-#  endif
+   int iTODO; /* TODO: for given platform */
    HB_SYMBOL_UNUSED( hPipeHandle );
    hb_fsSetError( static_cast< HB_ERRCODE >( FS_ERROR ) );
    return 0;
@@ -1282,9 +1251,7 @@ HB_BOOL hb_fsPipeUnblock( HB_FHANDLE hPipeHandle )
    }
 #else
    {
-#  if ! defined( HB_OS_DOS )
       int iTODO; /* TODO: for given platform */
-#  endif
       HB_SYMBOL_UNUSED( hPipeHandle );
       hb_fsSetError( static_cast< HB_ERRCODE >( FS_ERROR ) );
       return HB_FALSE;
@@ -1350,9 +1317,7 @@ HB_SIZE hb_fsPipeIsData( HB_FHANDLE hPipeHandle, HB_SIZE nBufferSize, HB_MAXINT 
 }
 #else
 {
-#  if ! defined( HB_OS_DOS )
-      int iTODO; /* TODO: for given platform */
-#  endif
+   int iTODO; /* TODO: for given platform */
    HB_SYMBOL_UNUSED( hPipeHandle );
    HB_SYMBOL_UNUSED( nBufferSize );
    HB_SYMBOL_UNUSED( nTimeOut );
@@ -1489,9 +1454,7 @@ HB_SIZE hb_fsPipeWrite( HB_FHANDLE hPipeHandle, const void * buffer, HB_SIZE nSi
 }
 #else
 {
-#  if ! defined( HB_OS_DOS )
-      int iTODO; /* TODO: for given platform */
-#  endif
+   int iTODO; /* TODO: for given platform */
    HB_SYMBOL_UNUSED( nTimeOut );
    nWritten = hb_fsWriteLarge( hPipeHandle, buffer, nSize );
 }
@@ -1574,13 +1537,6 @@ HB_FHANDLE hb_fsOpenEx( const char * pszFileName, HB_USHORT uiFlags, HB_FATTR nA
 
       hb_vmUnlock();
 
-#if defined( HB_OS_DOS )
-      if( ( nAttr & ( FC_HIDDEN | FC_SYSTEM ) ) == 0 || access( pszFileName, F_OK ) == 0 )
-      {
-         attr = 0;
-      }
-#endif
-
 #if defined( _MSC_VER )
       if( share )
       {
@@ -1603,17 +1559,6 @@ HB_FHANDLE hb_fsOpenEx( const char * pszFileName, HB_USHORT uiFlags, HB_FATTR nA
       hb_fsSetIOError( hFileHandle != FS_ERROR, 0 );
 #else
       HB_FAILURE_RETRY( hFileHandle, open( pszFileName, flags | share, mode ) );
-#endif
-
-#if defined( HB_OS_DOS )
-      if( attr != 0 && hFileHandle != static_cast< HB_FHANDLE >( FS_ERROR ) )
-      {
-#     if defined( __DJGPP__ ) || defined( __BORLANDC__ )
-         _chmod( pszFileName, 1, attr );
-#     else
-         _dos_setfileattr( pszFileName, attr );
-#     endif
-      }
 #endif
 
       hb_vmLock();
@@ -1698,45 +1643,10 @@ int hb_fsSetDevMode( HB_FHANDLE hFileHandle, int iDevMode )
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsSetDevMode(%p, %d)", reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFileHandle ) ), iDevMode ) );
 #endif
 
-#if defined( HB_OS_DOS )
-{
-   int iRet = O_BINARY;
-
-   switch( iDevMode )
-   {
-      case FD_TEST:
-         iRet = setmode( static_cast< int >( hFileHandle ), O_BINARY );
-         if( iRet != -1 && iRet != O_BINARY )
-         {
-            setmode( static_cast< int >( hFileHandle ), iRet );
-         }
-         break;
-
-      case FD_BINARY:
-         iRet = setmode( static_cast< int >( hFileHandle ), O_BINARY );
-         break;
-
-      case FD_TEXT:
-         iRet = setmode( static_cast< int >( hFileHandle ), O_TEXT );
-         break;
-   }
-
-   if( iRet != -1 )
-   {
-      iRet = ( iRet & O_TEXT ) == O_TEXT ? FD_TEXT : FD_BINARY;
-   }
-   hb_fsSetIOError( iRet != -1, 0 );
-
-   return iRet;
-}
-#else
-
    HB_SYMBOL_UNUSED( hFileHandle );
 
    hb_fsSetError( static_cast< HB_ERRCODE >( iDevMode == FD_TEXT ? FS_ERROR : 0 ) );
    return FD_BINARY;
-
-#endif
 }
 
 HB_BOOL hb_fsGetFileTime( const char * pszFileName, long * plJulian, long * plMillisec )
@@ -1849,7 +1759,7 @@ HB_BOOL hb_fsGetFileTime( const char * pszFileName, long * plJulian, long * plMi
          }
       }
    }
-#elif defined( HB_OS_UNIX ) || defined( HB_OS_DOS ) || defined( __GNUC__ )
+#elif defined( HB_OS_UNIX ) || defined( __GNUC__ )
    {
       char * pszFree;
 #  if defined( HB_USE_LARGEFILE64 )
@@ -1939,22 +1849,7 @@ HB_BOOL hb_fsGetAttr( const char * pszFileName, HB_FATTR * pnAttr )
       char * pszFree;
       pszFileName = hb_fsNameConv( pszFileName, &pszFree );
 
-#  if defined( HB_OS_DOS )
-      {
-#     if defined( __DJGPP__ ) || defined( __BORLANDC__ )
-         int attr = _chmod( pszFileName, 0, 0 );
-         if( attr != -1 )
-#     else
-         unsigned int attr = 0;
-         if( _dos_getfileattr( pszFileName, &attr ) == 0 )
-#     endif
-         {
-            *pnAttr = hb_fsAttrFromRaw( attr );
-            fResult = HB_TRUE;
-         }
-         hb_fsSetIOError( fResult, 0 );
-      }
-#  elif defined( HB_OS_UNIX )
+#  if defined( HB_OS_UNIX )
       {
 #     if defined( HB_USE_LARGEFILE64 )
          struct stat64 statbuf;
@@ -2051,7 +1946,7 @@ HB_BOOL hb_fsSetFileTime( const char * pszFileName, long lJulian, long lMillisec
          hb_fsClose( hFile );
       }
    }
-#elif defined( HB_OS_UNIX ) || defined( HB_OS_DOS )
+#elif defined( HB_OS_UNIX )
    {
       char * pszFree;
 
@@ -2186,17 +2081,7 @@ HB_BOOL hb_fsSetAttr( const char * pszFileName, HB_FATTR nAttr )
 
       pszFileName = hb_fsNameConv( pszFileName, &pszFree );
 
-#  if defined( HB_OS_DOS )
-
-      nAttr &= ~( HB_FA_ARCHIVE | HB_FA_HIDDEN | HB_FA_READONLY | HB_FA_SYSTEM );
-#     if defined( __DJGPP__ ) || defined( __BORLANDC__ )
-      fResult = _chmod( pszFileName, 1, nAttr ) != -1;
-#     else
-      fResult = _dos_setfileattr( pszFileName, nAttr ) != -1;
-#     endif
-      hb_fsSetIOError( fResult, 0 );
-
-#  elif defined( HB_OS_UNIX )
+#  if defined( HB_OS_UNIX )
       {
          int iAttr = HB_FA_POSIX_ATTR( nAttr ), iResult;
          if( iAttr == 0 )
@@ -4406,11 +4291,6 @@ HB_BOOL hb_fsEof( HB_FHANDLE hFileHandle )
 
    hb_vmUnlock();
 
-#if defined( HB_OS_DOS ) && ! defined( __DJGPP__ )
-   fResult = eof( hFileHandle ) != 0;
-   hb_fsSetIOError( fResult, 0 );
-#else
-{
    HB_FOFFSET curPos;
    HB_FOFFSET endPos;
 
@@ -4429,8 +4309,6 @@ HB_BOOL hb_fsEof( HB_FHANDLE hFileHandle )
    }
    hb_fsSetIOError( fResult, 0 );
    fResult = ! fResult || curPos >= endPos;
-}
-#endif
 
    hb_vmLock();
 

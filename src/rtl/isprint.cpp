@@ -47,55 +47,9 @@
 #include "hbapi.h"
 #include "hbapifs.h"
 
-#if defined( HB_OS_DOS )
-#  include <dos.h>
-#endif
-
 HB_BOOL hb_printerIsReady( const char * pszPrinterName )
 {
    HB_BOOL bIsPrinter;
-
-#if defined( HB_OS_DOS )
-
-   /* NOTE: MS-DOS specific solution, using BIOS interrupt */
-
-   {
-      int iPort;
-
-      if( pszPrinterName == nullptr )
-      {
-         pszPrinterName = "LPT1";
-      }
-
-      if( hb_strnicmp( pszPrinterName, "PRN", 3 ) == 0 )
-      {
-         union REGS regs;
-
-         regs.h.ah = 2;
-         regs.HB_XREGS.dx = 0; /* LPT1 */
-
-         HB_DOS_INT86( 0x17, &regs, &regs );
-
-         bIsPrinter = ( regs.h.ah == 0x90 );
-      }
-      else if( strlen( pszPrinterName ) >= 4 && hb_strnicmp( pszPrinterName, "LPT", 3 ) == 0 && ( iPort = atoi( pszPrinterName + 3 ) ) > 0 )
-      {
-         union REGS regs;
-
-         regs.h.ah = 2;
-         regs.HB_XREGS.dx = iPort - 1;
-
-         HB_DOS_INT86( 0x17, &regs, &regs );
-
-         bIsPrinter = ( regs.h.ah == 0x90 );
-      }
-      else
-      {
-         bIsPrinter = HB_FALSE;
-      }   
-   }
-
-#else
 
    /* NOTE: Platform independent method, at least it will compile and run
             on any platform, but the result may not be the expected one,
@@ -123,8 +77,6 @@ HB_BOOL hb_printerIsReady( const char * pszPrinterName )
          hb_fileClose( pFile );
       }
    }
-
-#endif
 
    return bIsPrinter;
 }

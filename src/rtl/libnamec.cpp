@@ -50,8 +50,6 @@ HB_FUNC( HB_LIBEXT )
 {
 #if defined( HB_OS_WIN )
    hb_retc_const( ".dll" );
-#elif defined( HB_OS_DOS )
-   hb_retc_null();
 #elif defined( HB_OS_DARWIN )
    hb_retc_const( ".dylib" );
 #elif defined( HB_OS_HPUX )

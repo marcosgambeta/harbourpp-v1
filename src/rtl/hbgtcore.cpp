@@ -4061,8 +4061,6 @@ static char s_gtNameBuf[ HB_GT_NAME_MAX_ + 1 ];
    static const char * s_szNameDefault = HB_GT_DRVNAME( HB_GT_LIB );
 #elif defined( HB_OS_WIN )
    static const char * s_szNameDefault = "win";
-#elif defined( HB_OS_DOS )
-   static const char * s_szNameDefault = "dos";
 #elif defined( HB_OS_VXWORKS )
    static const char * s_szNameDefault = "std";
 #elif defined( HB_OS_UNIX )

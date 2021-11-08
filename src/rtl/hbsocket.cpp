@@ -46,12 +46,6 @@
 
 #include "hbsocket.h"
 
-#if ( defined( HB_OS_DOS ) && ! defined( HB_HAS_WATT ) )
-#  if ! defined( HB_SOCKET_OFF )
-#     define HB_SOCKET_OFF
-#  endif
-#endif
-
 #if ! defined( HB_SOCKET_OFF )
 
 /* we do not use autoconf so we can only guess what is supported
@@ -175,16 +169,6 @@
 #  define HB_IS_INET_NTOA_MT_SAFE
 #  define HB_HAS_GETHOSTBYADDR
 #  define hb_socketSetResolveError( err ) hb_socketSetOsError( err )
-#elif defined( HB_OS_DOS )
-#  define HB_HAS_INET_ATON
-#  define HB_HAS_INET_PTON
-#  define HB_HAS_INET_NTOP
-#  define HB_HAS_SOCKADDR_STORAGE
-#  define HB_HAS_ADDRINFO
-#  define HB_HAS_NAMEINFO
-#  define HB_HAS_GETHOSTBYADDR
-#  define HB_HAS_INET6_ADDR_CONST
-/* #  define HB_HAS_INET6 */
 #endif
 
 #if defined( HB_HAS_NAMEINFO ) && ! defined( HB_HAS_ADDRINFO )
@@ -197,9 +181,6 @@
 #  include <iphlpapi.h>
 #else
 #  include <errno.h>
-#  if defined( HB_OS_DOS )
-#     include <tcp.h>
-#  endif
 #  include <sys/time.h>
 #  include <sys/types.h>
 #  include <sys/socket.h>
@@ -228,23 +209,14 @@
 #  include <net/if.h>
 #  include <unistd.h>
 #  include <fcntl.h>
-#  if defined( HB_OS_DOS )
-#     define select          select_s
-#  endif
 #endif
 
-#if defined( HB_OS_WIN ) || defined( HB_OS_DOS ) || defined( HB_OS_VXWORKS )
+#if defined( HB_OS_WIN )|| defined( HB_OS_VXWORKS )
 #  define socklen_t int
 #endif
 
 #if ! defined( INET_ADDRSTRLEN )
 #  define INET_ADDRSTRLEN  16
-#endif
-
-#if defined( HB_OS_DOS ) && ! defined( SHUT_RD )
-#  define SHUT_RD       0
-#  define SHUT_WR       1
-#  define SHUT_RDWR     2
 #endif
 
 #if defined( HB_OS_WIN )
@@ -808,8 +780,6 @@ int hb_socketInit( void )
 #if defined( HB_OS_WIN )
       WSADATA wsadata;
       ret = WSAStartup( HB_MKUSHORT( 1, 1 ), &wsadata );
-#elif defined( HB_OS_DOS )
-      ret = sock_init();
 #endif
    }
    HB_SOCKET_UNLOCK();
@@ -824,8 +794,6 @@ void hb_socketCleanup( void )
    {
 #if defined( HB_OS_WIN )
       WSACleanup();
-#elif defined( HB_OS_DOS )
-      sock_exit();
 #endif
    }
    HB_SOCKET_UNLOCK();
@@ -1909,12 +1877,6 @@ static int hb_socketSelectWRE( HB_SOCKET sd, HB_MAXINT timeout )
          iResult = -1;
          iError = HB_SOCK_GETERROR();
       }
-#if defined( HB_OS_DOS )
-      else if( iError == EISCONN )
-      {
-         iError = 0;
-      }
-#endif
       else if( iError != 0 )
       {
          iResult = -1;
@@ -2377,8 +2339,6 @@ int hb_socketClose( HB_SOCKET sd )
    hb_vmUnlock();
 #if defined( HB_OS_WIN )
    ret = closesocket( sd );
-#elif defined( HB_OS_DOS )
-   ret = close_s( sd );
 #else
 #  if defined( EINTR )
    {
@@ -2740,14 +2700,6 @@ int hb_socketSetBlockingIO( HB_SOCKET sd, HB_BOOL fBlocking )
 #if defined( HB_OS_WIN )
    u_long mode = fBlocking ? 0 : 1;
    ret = ioctlsocket( sd, FIONBIO, &mode );
-   hb_socketSetOsError( ret != -1 ? 0 : HB_SOCK_GETERROR() );
-   if( ret == 0 )
-   {
-      ret = 1;
-   }
-#elif defined( HB_OS_DOS )
-   int mode = fBlocking ? 0 : 1;
-   ret = ioctlsocket( sd, FIONBIO, static_cast< char * >( &mode ) );
    hb_socketSetOsError( ret != -1 ? 0 : HB_SOCK_GETERROR() );
    if( ret == 0 )
    {
@@ -3800,11 +3752,6 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
       char * buf, * ptr;
       const char * pLastName = nullptr;
       int len = 0, size, iLastName = 0, iLastFamily = 0, flags, family;
-
-#  if defined( HB_OS_DOS )
-#     undef ioctl
-#     define ioctl( s, cmd, argp )  ioctlsocket( ( s ), ( cmd ), static_cast< char * >( argp ) )
-#  endif
 
 #  if defined( HB_SOCKET_TRANSLATE_DOMAIN )
       af = hb_socketTransDomain( af, nullptr );

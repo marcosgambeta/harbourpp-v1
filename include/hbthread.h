@@ -52,7 +52,7 @@
 
 #if defined( HB_TASK_THREAD )
    /* Harbour tasks explicitly requested */
-#elif defined( HB_OS_DOS ) || defined( HB_OS_MINIX )
+#elif defined( HB_OS_MINIX )
 #  define HB_TASK_THREAD
 #elif defined( HB_OS_LINUX ) || defined( HB_OS_DARWIN ) || \
       defined( HB_OS_SUNOS ) || defined( HB_OS_HPUX ) || \

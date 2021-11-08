@@ -340,14 +340,7 @@ HB_BOOL hb_fsNameExists( const char * pszFileName )
       pszFileName = hb_fsNameConv( pszFileName, &pszFree );
 
       {
-#  if defined( HB_OS_DOS )
-#     if defined( __DJGPP__ ) || defined( __BORLANDC__ )
-         fExist = _chmod( pszFileName, 0, 0 ) != -1;
-#     else
-         unsigned int iAttr = 0;
-         fExist = _dos_getfileattr( pszFileName, &iAttr ) == 0;
-#     endif
-#  elif defined( HB_OS_UNIX )
+#  if defined( HB_OS_UNIX )
 #     if defined( HB_USE_LARGEFILE64 )
          struct stat64 statbuf;
          fExist = stat64( pszFileName, &statbuf ) == 0;
@@ -398,15 +391,7 @@ HB_BOOL hb_fsFileExists( const char * pszFileName )
       pszFileName = hb_fsNameConv( pszFileName, &pszFree );
 
       {
-#  if defined( HB_OS_DOS )
-#     if defined( __DJGPP__ ) || defined( __BORLANDC__ )
-         int iAttr = _chmod( pszFileName, 0, 0 );
-         fExist = iAttr != -1 && ( iAttr & 0x10 ) == 0;
-#     else
-         unsigned int iAttr = 0;
-         fExist = _dos_getfileattr( pszFileName, &iAttr ) == 0 && ( iAttr & 0x10 ) == 0;
-#     endif
-#  elif defined( HB_OS_UNIX )
+#  if defined( HB_OS_UNIX )
 #     if defined( HB_USE_LARGEFILE64 )
          struct stat64 statbuf;
          fExist = stat64( pszFileName, &statbuf ) == 0 && S_ISREG( statbuf.st_mode );
@@ -457,15 +442,7 @@ HB_BOOL hb_fsDirExists( const char * pszDirName )
       pszDirName = hb_fsNameConv( pszDirName, &pszFree );
 
       {
-#  if defined( HB_OS_DOS )
-#     if defined( __DJGPP__ ) || defined( __BORLANDC__ )
-         int iAttr = _chmod( pszDirName, 0, 0 );
-         fExist = iAttr != -1 && ( iAttr & 0x10 ) != 0;
-#     else
-         unsigned int iAttr = 0;
-         fExist = _dos_getfileattr( pszDirName, &iAttr ) == 0 && ( iAttr & 0x10 ) != 0;
-#     endif
-#  elif defined( HB_OS_UNIX )
+#  if defined( HB_OS_UNIX )
 #     if defined( HB_USE_LARGEFILE64 )
          struct stat64 statbuf;
          fExist = stat64( pszDirName, &statbuf ) == 0 && S_ISDIR( statbuf.st_mode );

@@ -72,33 +72,7 @@
 #include "hbapi.h"
 #include "hbdate.h"
 
-#if defined( HB_OS_DOS )
-#  include <dos.h>
-#endif
-
 HB_FUNC( FT_SETDATE )
 {
-#if defined( HB_OS_DOS )
-   int        iYear, iMonth, iDay;
-   union REGS regs;
-
-   if( HB_ISDATE( 1 ) )
-   {
-      hb_dateDecode( hb_pardl( 1 ), &iYear, &iMonth, &iDay );
-   }
-   else
-   {
-      hb_dateToday( &iYear, &iMonth, &iDay );
-   }
-
-   regs.h.ah        = 43;
-   regs.HB_XREGS.cx = iYear;
-   regs.h.dh        = iMonth;
-   regs.h.dl        = iDay;
-   HB_DOS_INT86( 0x21, &regs, &regs );
-
-   hb_retl( HB_TRUE );
-#else
    hb_retl( HB_FALSE );
-#endif
 }

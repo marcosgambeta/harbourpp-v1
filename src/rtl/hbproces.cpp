@@ -67,24 +67,9 @@
 #  if defined( HB_HAS_POLL )
 #     include <poll.h>
 #  endif
-#elif defined( HB_OS_DOS )
-#  include <process.h>
-#  include <fcntl.h>
-#  if defined( __DJGPP__ )
-#     include <sys/stat.h>
-#     include <unistd.h>
-#  else
-#     include <io.h>
-#  endif
 #elif defined( HB_OS_WIN )
 #  include <windows.h>
 #  include "hbwinuni.h"
-#endif
-
-#ifndef HB_PROCESS_USEFILES
-#  if defined( HB_OS_DOS )
-#    define HB_PROCESS_USEFILES
-#  endif
 #endif
 
 #if defined( HB_OS_UNIX ) && defined( EINTR )
@@ -246,7 +231,7 @@ static int hb_fsProcessExec( const char * pszFileName, HB_FHANDLE hStdin, HB_FHA
 
    int iResult = FS_ERROR;
 
-#if defined( HB_OS_DOS ) || defined( HB_OS_WIN ) || defined( HB_OS_UNIX )
+#if defined( HB_OS_WIN ) || defined( HB_OS_UNIX )
 {
    int iStdIn, iStdOut, iStdErr;
    char ** argv;

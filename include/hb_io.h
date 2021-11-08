@@ -56,8 +56,5 @@
 #else
    #include <io.h>
 #endif
-#if defined( HB_OS_DOS ) && ! defined( __RSX32__ )
-   #include <dos.h>
-#endif
 
 #endif

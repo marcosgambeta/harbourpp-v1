@@ -52,13 +52,6 @@
    #include <windows.h>
    #include "hbwinuni.h"
 
-#elif defined( HB_OS_DOS )
-
-   #include "hb_io.h"
-   #if defined( __DJGPP__ ) || defined( __RSX32__ ) || defined( __GNUC__ )
-      #include <sys/param.h>
-   #endif
-
 #elif defined( HB_OS_UNIX )
 
    #if defined( HB_OS_VXWORKS )
@@ -68,7 +61,7 @@
 
 #endif
 
-#if ! defined( MAXGETHOSTNAME ) && ( defined( HB_OS_UNIX ) || ( ( defined( HB_OS_DOS ) ) && defined( __GNUC__ ) ) )
+#if ! defined( MAXGETHOSTNAME ) && ( defined( HB_OS_UNIX ) )
    #define MAXGETHOSTNAME 256      /* should be enough for a host name */
 #endif
 
@@ -94,34 +87,6 @@ char * hb_netname( void )
    {
       return HB_OSSTRDUP( lpValue );
    }
-
-#elif defined( HB_OS_DOS )
-
-#  if defined( __DJGPP__ ) || defined( __RSX32__ ) || defined( __GNUC__ )
-      char szValue[ MAXGETHOSTNAME + 1 ];
-      szValue[ 0 ] = szValue[ MAXGETHOSTNAME ] = '\0';
-      gethostname( szValue, MAXGETHOSTNAME );
-      if( szValue[ 0 ] )
-      {
-         return hb_osStrDecode( szValue );
-      }
-#  else
-      union REGS regs;
-      struct SREGS sregs;
-      char szValue[ 16 ];
-      szValue[ 0 ] = szValue[ 15 ] = '\0';
-
-      regs.HB_XREGS.ax = 0x5E00;
-      regs.HB_XREGS.dx = FP_OFF( szValue );
-      sregs.ds = FP_SEG( szValue );
-
-      HB_DOS_INT86X( 0x21, &regs, &regs, &sregs );
-
-      if( regs.h.ch != 0 && szValue[ 0 ] )
-      {
-         return hb_osStrDecode( szValue );
-      }
-#  endif
 
 #elif ( defined( HB_OS_UNIX ) )
 

@@ -26,17 +26,5 @@
 
 HB_FUNC( FT_PRTSCR )
 {
-#if defined( HB_OS_DOS )
-
-   #define pbyte  *( static_cast< char * >( 0x00400100 ) )
-
-   if( HB_ISLOG( 1 ) )
-   {
-      pbyte = hb_parl( 1 ) ? 0 : 1;
-   }
-
-   hb_retl( pbyte != 1 );
-#else
    hb_retl( HB_FALSE );
-#endif
 }
