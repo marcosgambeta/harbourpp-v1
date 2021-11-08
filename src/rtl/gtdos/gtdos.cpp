@@ -93,7 +93,7 @@
 #endif
 
 /* For screen support */
-#if defined( __POWERC ) || ( defined( __TURBOC__ ) && ! defined( __BORLANDC__ ) ) || ( defined( __ZTC__ ) && ! defined( __SC__ ) )
+#if defined( __POWERC ) || ( defined( __ZTC__ ) && ! defined( __SC__ ) )
    #define FAR  far
 #else
    #define FAR
