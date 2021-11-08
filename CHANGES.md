@@ -9,8 +9,9 @@
 . Biblioteca SQLite atualizada para a versão 3.36.0  
 . Suporte para OS/2 descontinuado  
 . Suporte para Symbian descontinuado  
-. Suporte para Windows CE descontinuado  
+. Suporte para DOS descontinuado  
 . Suporte para Windows 95/98/ME descontinuado  
 . Suporte para Windows NT/2000 descontinuado  
+. Suporte para Windows CE descontinuado  
 
 Este documento é um trabalho em progresso.
