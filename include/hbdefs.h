@@ -62,8 +62,6 @@
     ( ( defined( __GNUC__ ) || defined( __SUNPRO_C ) || defined( __SUNPRO_CC ) ) && \
       ( defined( _ISOC99_SOURCE ) || defined( _STDC_C99 ) || \
         ( defined( __STDC_VERSION__ ) && __STDC_VERSION__ >= 199901L ) || \
-        ( defined( __DJGPP__ ) && \
-          ( __DJGPP__ > 2 || ( __DJGPP__ == 2 && __DJGPP_MINOR__ >= 4 ) ) ) || \
         defined( HB_OS_LINUX ) || defined( HB_OS_DARWIN ) || \
         defined( HB_OS_BSD ) || defined( HB_OS_SUNOS ) || \
         defined( HB_OS_BEOS ) || defined( HB_OS_QNX ) || \
@@ -1475,7 +1473,7 @@ typedef HB_U32 HB_FATTR;
  * starting procedure (due to unknown order of static data initialization)
  */
 #define HB_START_PROCEDURE "MAIN"
-#if ( defined( __GNUC__ ) && ! defined( __DJGPP__ ) && ! defined( HB_OS_OS2_GCC ) )
+#if ( defined( __GNUC__ ) && ! defined( HB_OS_OS2_GCC ) )
    #define HB_START_PROC_STRICT
 #endif
 

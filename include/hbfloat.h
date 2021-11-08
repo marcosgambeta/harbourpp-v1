@@ -64,16 +64,11 @@
 
 #include "hbapi.h"
 
-#if defined( __DJGPP__ )
-#  include <libm/math.h>
-   /* _LIB_VERSION_TYPE _LIB_VERSION = _XOPEN_; */
-#else
-#  include <math.h>
-#  if defined( __BORLANDC__ ) || defined( _MSC_VER ) || defined( HB_OS_MINIX )
-#     include <float.h>
-#  elif defined( HB_OS_SUNOS )
-#     include <ieeefp.h>    /* for finite() */
-#  endif
+#include <math.h>
+#if defined( __BORLANDC__ ) || defined( _MSC_VER ) || defined( HB_OS_MINIX )
+#   include <float.h>
+#elif defined( HB_OS_SUNOS )
+#   include <ieeefp.h>    /* for finite() */
 #endif
 
 
@@ -192,7 +187,7 @@
 #     define hb_isfinite( d )       _finite( ( double ) d )
 #  elif defined( __BORLANDC__ )
 #     define hb_isfinite( d )       _finite( d )
-#  elif defined( __GNUC__ ) || defined( __DJGPP__ ) || \
+#  elif defined( __GNUC__ ) || \
       defined( HB_OS_SUNOS )
 #     define hb_isfinite( d )       finite( d )
 #  endif

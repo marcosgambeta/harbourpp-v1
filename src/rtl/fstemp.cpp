@@ -132,14 +132,6 @@ static HB_BOOL fsGetTempDirByCase( char * pszName, const char * pszTempDir, HB_B
 
    if( fOK )
    {
-#  if defined( __DJGPP__ )
-      /* convert '/' to '\' */
-      char * pszDelim = pszName;
-      while( ( pszDelim = strchr( pszDelim, '/' ) ) != nullptr )
-      {
-         *pszDelim = '\\';
-      }
-#  endif
       if( ! hb_fsDirExists( pszTempDir ) )
       {
          fOK = HB_FALSE;
@@ -316,14 +308,6 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
 
       if( fResult )
       {
-#  if defined( __DJGPP__ )
-         /* convert '/' to '\' */
-         char * pszDelim = pTmpBuffer;
-         while( ( pszDelim = strchr( pszDelim, '/' ) ) != nullptr )
-         {
-            *pszDelim = '\\';
-         }
-#  endif
          hb_osStrDecode2( pTmpBuffer, pszBuffer, HB_PATH_MAX - 1 );
       }
       hb_xfree( pTmpBuffer );

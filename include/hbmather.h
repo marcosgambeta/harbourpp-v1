@@ -75,10 +75,6 @@ HB_EXTERN_BEGIN
    #define HB_MATH_HANDLER
    #define matherr _matherr
    #define exception _exception
-#elif defined( __DJGPP__ )
-   #if ! defined( __cplusplus )
-      #define HB_MATH_HANDLER
-   #endif
 #endif
 
 #if ! defined( HB_MATH_HANDLER ) && \

@@ -50,7 +50,7 @@
 
 #include "hbapi.h"
 
-#if defined( HB_OS_UNIX ) /* || defined( __DJGPP__ ) */
+#if defined( HB_OS_UNIX )
 #  if defined( HB_OS_VXWORKS )
 #     if ! defined( HB_HAS_SIOLIB )
 #        define HB_HAS_SIOLIB

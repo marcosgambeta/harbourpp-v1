@@ -87,16 +87,8 @@
  * add other compilers for which calling real mode
  * interrupts with memory pointer is implemented.
  */
-#if defined( __DJGPP__ )
-   #define HB_MOUSE_SAVE
-#endif
 
-#if defined( __DJGPP__ )
-   #include <pc.h>
-   #include <sys/exceptn.h>
-   #include <sys/farptr.h>
-   #include <dpmi.h>
-#elif defined( _MSC_VER )
+#if defined( _MSC_VER )
    #include <signal.h>
 #endif
 
@@ -107,21 +99,14 @@
    #define FAR
 #endif
 
-#if ! defined( __DJGPP__ )
-   #ifndef MK_FP
-      #define MK_FP( seg, off ) \
-         ((void FAR *)(((unsigned long)(seg) << 4)|(unsigned)(off)))
-   #endif
-   static unsigned char FAR * s_pScreenAddress;
+#ifndef MK_FP
+   #define MK_FP( seg, off ) \
+      ((void FAR *)(((unsigned long)(seg) << 4)|(unsigned)(off)))
 #endif
+static unsigned char FAR * s_pScreenAddress;
 
-#if defined( __DJGPP__ )
-   #define HB_PEEK_BYTE( s, o )     _farpeekb( ( s ), ( o ) )
-   #define HB_POKE_BYTE( s, o, b )  _farpokeb( ( s ), ( o ), ( b ) )
-#else
-   #define HB_PEEK_BYTE( s, o )     ( *( ( HB_UCHAR FAR * ) MK_FP( ( s ), ( o ) ) ) )
-   #define HB_POKE_BYTE( s, o, b )  ( *( ( HB_UCHAR FAR * ) MK_FP( ( s ), ( o ) ) ) = static_cast< HB_UCHAR >( b ) )
-#endif
+#define HB_PEEK_BYTE( s, o )     ( *( ( HB_UCHAR FAR * ) MK_FP( ( s ), ( o ) ) ) )
+#define HB_POKE_BYTE( s, o, b )  ( *( ( HB_UCHAR FAR * ) MK_FP( ( s ), ( o ) ) ) = static_cast< HB_UCHAR >( b ) )
 
 static int s_GtId;
 static HB_GT_FUNCS SuperTable;
@@ -149,7 +134,7 @@ static int kbhit( void )
 }
 #endif
 
-#if ! defined( __DJGPP__ ) && ! defined( __RSX32__ )
+#if ! defined( __RSX32__ )
 #if defined( _MSC_VER )
 static void hb_gt_dos_CtrlBreak_Handler( int iSignal )
 {
@@ -244,7 +229,6 @@ static void hb_gt_dos_GetScreenSize( int * piRows, int * piCols )
    *piCols = static_cast< int >( HB_PEEK_BYTE( 0x0040, 0x004A ) );
 }
 
-#if ! defined( __DJGPP__ )
 static HB_BYTE FAR * hb_gt_dos_ScreenAddress( PHB_GT pGT )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_ScreenAddress(%p)", static_cast< void * >( pGT ) ) );
@@ -265,7 +249,6 @@ HB_BYTE FAR * hb_gt_dos_ScreenPtr( int iRow, int iCol )
 
    return s_pScreenAddress + ( ( ( iRow * s_iCols ) + iCol ) << 1 );
 }
-#endif
 
 static void hb_gt_dos_GetScreenContents( PHB_GT pGT )
 {
@@ -276,9 +259,7 @@ static void hb_gt_dos_GetScreenContents( PHB_GT pGT )
    HB_BYTE bAttr, bChar, bxAttr;
    HB_USHORT usChar;
 
-#if ! defined( __DJGPP__ )
    HB_BYTE * pScreenPtr = s_pScreenAddress;
-#endif
 
    bxAttr = 0;
    cdp = HB_GTSELF_CPTERM( pGT );
@@ -301,11 +282,6 @@ static void hb_gt_dos_GetScreenContents( PHB_GT pGT )
          bChar = ch_attr & 0xFF;
          bAttr = ch_attr >> 8;
          HB_SYMBOL_UNUSED( pScreenPtr );
-#elif defined( __DJGPP__ )
-         int iChar, iAttr;
-         ScreenGetChar( &iChar, &iAttr, iCol, iRow );
-         bAttr = iAttr;
-         bChar = iChar;
 #else
          bChar = *pScreenPtr;
          bAttr = *( pScreenPtr + 1 );
@@ -664,30 +640,11 @@ static void hb_gt_dos_mouse_SaveState( PHB_GT pGT, void * pBuffer )
 
       memset( &sregs, 0, sizeof( sregs ) );
 
-#if defined( __DJGPP__ )
-      {
-         _go32_dpmi_seginfo info;
-
-         info.size = ( s_iMouseStorageSize + 15 ) >> 4;
-         _go32_dpmi_allocate_dos_memory( &info );
-
-         regs.HB_XREGS.ax = 0x16;
-         regs.HB_XREGS.bx = s_iMouseStorageSize;
-         regs.HB_XREGS.dx = 0;
-         sregs.es         = info.rm_segment;
-
-         HB_DOS_INT86X( 0x33, &regs, &regs, &sregs );
-
-         dosmemget( info.rm_segment << 4, s_iMouseStorageSize, pBuffer );
-         _go32_dpmi_free_dos_memory( &info );
-      }
-#else
       regs.HB_XREGS.ax = 0x16;
       regs.HB_XREGS.bx = s_iMouseStorageSize;
       regs.HB_XREGS.dx = FP_OFF( pBuffer );
       sregs.es = FP_SEG( pBuffer );
       HB_DOS_INT86X( 0x33, &regs, &regs, &sregs );
-#endif
       ( ( HB_BYTE * ) pBuffer )[ s_iMouseStorageSize ] = HB_GTSELF_MOUSEGETCURSOR( pGT ) ? 1 : 0;
    }
 }
@@ -709,30 +666,11 @@ static void hb_gt_dos_mouse_RestoreState( PHB_GT pGT, const void * pBuffer )
        */
       HB_GTSELF_MOUSESETCURSOR( pGT, ( ( HB_BYTE * ) pBuffer )[ s_iMouseStorageSize ] );
 
-#if defined( __DJGPP__ )
-      {
-         _go32_dpmi_seginfo info;
-
-         info.size = ( s_iMouseStorageSize + 15 ) >> 4;
-         _go32_dpmi_allocate_dos_memory( &info );
-
-         regs.HB_XREGS.ax = 0x17;
-         regs.HB_XREGS.bx = s_iMouseStorageSize;
-         regs.HB_XREGS.dx = 0;
-         sregs.es         = info.rm_segment;
-
-         HB_DOS_INT86X( 0x33, &regs, &regs, &sregs );
-
-         dosmemput( pBuffer, s_iMouseStorageSize, info.rm_segment << 4 );
-         _go32_dpmi_free_dos_memory( &info );
-      }
-#else
       regs.HB_XREGS.ax = 0x17;
       regs.HB_XREGS.bx = s_iMouseStorageSize;
       regs.HB_XREGS.dx = FP_OFF( pBuffer );
       sregs.es = FP_SEG( pBuffer );
       HB_DOS_INT86X( 0x33, &regs, &regs, &sregs );
-#endif
    }
 }
 #endif
@@ -791,14 +729,7 @@ static void hb_gt_dos_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
    /* Set the Ctrl+Break handler [vszakats] */
 
-#if defined( __DJGPP__ )
-
-   gppconio_init();
-   __djgpp_hwint_flags |= 2;     /* Count Ctrl+Break instead of killing program */
-   __djgpp_set_ctrl_c( 0 );      /* Disable Ctrl+C */
-   __djgpp_set_sigquit_key( 0 ); /* Disable Ctrl+\ */
-
-#elif defined( __RSX32__ )
+#if defined( __RSX32__ )
 
    /* TODO */
 
@@ -817,9 +748,7 @@ static void hb_gt_dos_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 #endif
 
    s_iScreenMode = hb_gt_dos_GetScreenMode();
-#if ! defined( __DJGPP__ )
    s_pScreenAddress = hb_gt_dos_ScreenAddress( pGT );
-#endif
    hb_gt_dos_GetScreenSize( &s_iRows, &s_iCols );
    hb_gt_dos_GetCursorPosition( &s_iCurRow, &s_iCurCol );
    s_iCursorStyle = hb_gt_dos_GetCursorStyle();
@@ -844,14 +773,6 @@ static int hb_gt_dos_ReadKey( PHB_GT pGT, int iEventMask )
 
    int iKey = 0, iFlags = 0;
 
-#if defined( __DJGPP__ )
-   /* Check to see if Ctrl+Break has been detected */
-   if( __djgpp_cbrk_count )
-   {
-      __djgpp_cbrk_count = 0; /* Indicate that Ctrl+Break has been handled */
-      iKey = HB_BREAK_FLAG;     /* Note that Ctrl+Break was pressed */
-   }
-#else
    /* First check for Ctrl+Break, which is handled by gt/gtdos.c,
       with the exception of the DJGPP compiler */
    if( s_bBreak )
@@ -859,19 +780,9 @@ static int hb_gt_dos_ReadKey( PHB_GT pGT, int iEventMask )
       s_bBreak = HB_FALSE; /* Indicate that Ctrl+Break has been handled */
       iKey = HB_BREAK_FLAG; /* Note that Ctrl+Break was pressed */
    }
-#endif
    else if( kbhit() )
    {
       /* A key code is available in the BIOS keyboard buffer, so read it */
-#if defined( __DJGPP__ )
-      iKey = getxkey();
-      if( iKey == 256 )
-         /* Ignore Ctrl+Break, because it is being handled as soon as it
-            happens (see above) rather than waiting for it to show up in
-            the keyboard input queue */
-         iKey = -1;
-      iFlags = HB_KF_KEYPAD;
-#else
       /* A key code is available in the BIOS keyboard buffer */
       iKey = getch();                  /* Get the key code */
       if( iKey == 0 && kbhit() )
@@ -891,7 +802,6 @@ static int hb_gt_dos_ReadKey( PHB_GT pGT, int iEventMask )
          if( iKey != -1 )
             iKey += 256;
       }
-#endif
 #endif
    }
 
@@ -951,8 +861,6 @@ static void hb_gt_dos_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 
 #if defined( __BORLANDC__ )
    sound( static_cast< unsigned >( dFrequency ) );
-#elif defined( __DJGPP__ )
-   sound( static_cast< int >( dFrequency ) );
 #else
    HB_SYMBOL_UNUSED( dFrequency );
 #endif
@@ -962,8 +870,6 @@ static void hb_gt_dos_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 
 #if defined( __BORLANDC__ )
    nosound();
-#elif defined( __DJGPP__ )
-   sound( 0 );
 #endif
 }
 
@@ -997,9 +903,7 @@ static void vmode12x40( void )
    outportb( 0x03D4, 0x09 );         /* update cursor size / pointers */
    regs.h.al = ( inportb( 0x03D5 ) | 0x80 );
    outportb( 0x03D5, regs.h.al );
-#if ! defined( __DJGPP__ )
    HB_POKE_BYTE( 0x40, 0x84, 11 );   /* 11 rows number update */
-#endif
 }
 
 static void vmode25x40( void )
@@ -1042,9 +946,7 @@ static void vmode12x80( void )
    outportb( 0x03D4, 0x09 );            /* update cursor size / pointers */
    regs.h.al = ( inportb( 0x03D5 ) | 0x80 );
    outportb( 0x03D5, regs.h.al );
-#if ! defined( __DJGPP__ )
    HB_POKE_BYTE( 0x40, 0x84, 11 );      /* 11 rows number update */
-#endif
 }
 
 static void vmode25x80( void )
@@ -1086,9 +988,7 @@ static void vmode43x80( void )
    regs.HB_XREGS.ax = 0x1112;               /* load 8x8 double dot font into RAM */
    HB_DOS_INT86( INT_VIDEO, &regs, &regs );
    outportw( 0x03D4, 0x060A );              /* update cursor size / pointers */
-#if ! defined( __DJGPP__ )
    HB_POKE_BYTE( 0x40, 0x84, 42 );          /* 42 rows number update */
-#endif
 }
 
 static void vmode50x80( void )
@@ -1202,9 +1102,7 @@ static HB_BOOL hb_gt_dos_SetMode( PHB_GT pGT, int iRows, int iCols )
       hb_gt_dos_GetScreenSize( &s_iRows, &s_iCols );
    }
    s_iScreenMode = hb_gt_dos_GetScreenMode();
-#if ! defined( __DJGPP__ )
    s_pScreenAddress = hb_gt_dos_ScreenAddress( pGT );
-#endif
    hb_gt_dos_GetCursorPosition( &s_iCurRow, &s_iCurCol );
    s_iCursorStyle = hb_gt_dos_GetCursorStyle();
    HB_GTSELF_RESIZE( pGT, s_iRows, s_iCols );
@@ -1232,9 +1130,7 @@ static HB_BOOL hb_gt_dos_Resume( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_Resume(%p)", static_cast< void * >( pGT ) ) );
 
    s_iScreenMode = hb_gt_dos_GetScreenMode();
-#if ! defined( __DJGPP__ )
    s_pScreenAddress = hb_gt_dos_ScreenAddress( pGT );
-#endif
    hb_gt_dos_GetScreenSize( &s_iRows, &s_iCols );
    hb_gt_dos_GetCursorPosition( &s_iCurRow, &s_iCurCol );
    s_iCursorStyle = hb_gt_dos_GetCursorStyle();
@@ -1253,9 +1149,7 @@ static void hb_gt_dos_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_dos_Redraw(%p,%d,%d,%d)", static_cast< void * >( pGT ), iRow, iCol, iSize ) );
 
-#if ! defined( __DJGPP__ )
    HB_USHORT FAR * pScreenPtr = ( HB_USHORT FAR * ) hb_gt_dos_ScreenPtr( iRow, iCol );
-#endif
    int iColor;
    HB_BYTE bAttr;
    HB_UCHAR uc;
@@ -1272,8 +1166,6 @@ static void hb_gt_dos_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
          puttext( iCol + iLen + 1, iRow + 1, iCol + iLen + 1, iRow + 1, &ch_attr );
          HB_SYMBOL_UNUSED( pScreenPtr );
       }
-#elif defined( __DJGPP__ )
-      ScreenPutChar( uc, iColor, iCol + iLen, iRow );
 #else
       *pScreenPtr++ = ( iColor << 8 ) + uc;
 #endif

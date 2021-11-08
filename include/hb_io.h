@@ -50,7 +50,7 @@
 #if defined( HB_OS_UNIX ) || \
     ( defined( __GNUC__ ) && ! defined( __MINGW32__ ) )
    #include <unistd.h>
-   #if defined( __DJGPP__ ) || defined( __EMX__ )
+   #if defined( __EMX__ )
       #include <io.h>
    #endif
 #else

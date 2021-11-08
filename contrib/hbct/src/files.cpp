@@ -59,14 +59,7 @@
 #include "hb_io.h"
 #include "ctdisk.ch"
 
-#if defined( __DJGPP__ )
-#  include <dpmi.h>
-#  include <go32.h>
-#  include <sys/farptr.h>
-#  include <sys/param.h>
-#endif
-
-#if defined( HB_OS_UNIX ) || defined( __DJGPP__ )
+#if defined( HB_OS_UNIX )
 #  include <sys/types.h>
 #  include <utime.h>
 #  include <unistd.h>
@@ -309,18 +302,7 @@ HB_FUNC( DELETEFILE )
 
 HB_FUNC( FILESMAX )
 {
-#if defined( __DJGPP__ )
-   __dpmi_regs r;
-   unsigned handles;
-   HB_ULONG psp;
-
-   r.h.ah = 0x62;               /* Get PSP address */
-   __dpmi_int( 0x21, &r );
-   psp = ( ( static_cast< HB_ULONG >( r.x.bx ) ) << 4 ) & 0xFFFFF;
-
-   handles = _farpeekw( _dos_ds, psp + 0x32 );
-   hb_retni( handles );
-#elif defined( _SC_OPEN_MAX )
+#if defined( _SC_OPEN_MAX )
    hb_retnl( sysconf( _SC_OPEN_MAX ) );
 #else
    hb_retni( -1 );

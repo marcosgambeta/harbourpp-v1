@@ -63,13 +63,13 @@
 
 #include <string.h>
 
-#if ( defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS ) ) || defined( __DJGPP__ )
+#if ( defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS ) )
 #  if ! defined( HB_HAS_TERMIOS )
 #     define HB_HAS_TERMIOS
 #  endif
 #endif
 
-#if defined( HB_OS_UNIX ) || defined( __DJGPP__ )
+#if defined( HB_OS_UNIX )
 #  if defined( HB_HAS_TERMIOS )
 #     include <unistd.h>  /* read() function requires it */
 #     include <termios.h>

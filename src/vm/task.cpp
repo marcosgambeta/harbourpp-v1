@@ -60,8 +60,6 @@
 #  include <sys/time.h>
 #  include <sys/types.h>
 #  include <unistd.h>
-#elif defined( __DJGPP__ )
-#  include <unistd.h>
 #elif defined( __MINGW32__ )
 #  include <sys/time.h>
 #endif
@@ -88,10 +86,7 @@
 #if ! defined( HB_HAS_UCONTEXT )
 
 #  if defined( __GNUC__ )
-#     if defined( __DJGPP__ )
-#        define HB_TASK_STACK_INIT( jmp, sp )      \
-                  do { (jmp)[0].__esp = (unsigned) (sp); } while( 0 )
-#     elif defined( HB_OS_LINUX )
+#     if defined( HB_OS_LINUX )
 #        if defined( JB_SP )
 #           define HB_TASK_STACK_INIT( jmp, sp )      \
                   do { (jmp)[0].__jmpbuf[JB_SP] = (int) (sp); } while( 0 )
@@ -205,10 +200,7 @@ static HB_MAXINT hb_taskTimeStop( unsigned long ulMilliSec )
    }
    else
    {
-#if defined( __DJGPP__ )
-      /* uclock_t uclock() * 1000 / UCLOCKS_PER_SEC */
-      return static_cast< HB_MAXINT >( clock() ) * 1000 / CLOCKS_PER_SEC + ulMilliSec;
-#elif _POSIX_C_SOURCE >= 199309L
+#if _POSIX_C_SOURCE >= 199309L
       struct timespec ts;
       clock_gettime( CLOCK_REALTIME, &ts );
       return static_cast< HB_MAXINT >( ts.tv_sec ) * 1000 + ts.tv_nsec / 1000000 + ulMilliSec;
@@ -227,9 +219,7 @@ static void hb_taskFreeze( HB_MAXINT wakeup )
    wakeup -= hb_taskTimeStop( 0 );
    if( wakeup > 0 )
    {
-#  if defined( __DJGPP__ )
-      usleep( wakeup * 1000 );
-#  elif defined( HB_OS_WIN )
+#  if defined( HB_OS_WIN )
       Sleep( wakeup );
 #  elif defined( HB_OS_UNIX )
       struct timeval tv;
@@ -732,17 +722,7 @@ void hb_taskSheduler( void )
     * counter updated by interrupt.
     * In DJGPP clock() seems to be such chip counter.
     */
-#if defined( __DJGPP__ )
-   static clock_t s_timer;
-   clock_t timer = clock();
-   if( s_timer != timer )
-   {
-      s_timer = timer;
-      hb_taskYield();
-   }
-#else
    hb_taskYield();
-#endif
 }
 
 /* suspend current task execution */

@@ -48,10 +48,6 @@
 #ifndef HB_MATH_H_
 #define HB_MATH_H_
 
-#if defined( __DJGPP__ )
-#include <libm/math.h>
-#else
 #include <math.h>
-#endif
 
 #endif /* HB_MATH_H_ */

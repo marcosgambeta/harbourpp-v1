@@ -49,7 +49,7 @@
 #include "hbapi.h"
 #include "hbapifs.h"
 
-#if defined( HB_OS_UNIX ) || defined( __DJGPP__ )
+#if defined( HB_OS_UNIX )
 #  include <sys/types.h>
 #  include <unistd.h>
 #elif defined( HB_OS_WIN )

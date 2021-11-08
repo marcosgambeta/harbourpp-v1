@@ -109,8 +109,6 @@
 #if ( defined( __BORLANDC__ ) && __BORLANDC__ < 0x0582 ) || \
     defined( HB_OS_QNX ) || \
     defined( __DCC__ ) || \
-    ( defined( __DJGPP__ ) && \
-      ( __DJGPP__ < 2 || ( __DJGPP__ == 2 && __DJGPP_MINOR__ <= 3 ) ) ) || \
     ( defined( _MSC_VER ) )
    /* TODO: add other C compilers which does not support [u]intmax_t
     *       definitions (check C compiler version number).
@@ -1576,12 +1574,7 @@ int hb_vsnprintf( char * buffer, size_t nSize, const char * format, va_list argl
 {
    int result;
 
-#if defined( __DJGPP__ ) && ( __DJGPP__ < 2 || ( __DJGPP__ == 2 && __DJGPP_MINOR__ <= 3 ) )
-   /* Use vsprintf() for DJGPP <= 2.03.
-      This is a temporary hack, should implement a C99 snprintf() ourselves. */
-   result = vsprintf( buffer, format, arglist );
-   #define _HB_SNPRINTF_ADD_EOS
-#elif defined( _MSC_VER ) && _MSC_VER >= 1400
+#if defined( _MSC_VER ) && _MSC_VER >= 1400
    result = _vsnprintf_s( buffer, nSize, _TRUNCATE, format, arglist );
 #elif defined( _MSC_VER )
    result = _vsnprintf( buffer, nSize, format, arglist );

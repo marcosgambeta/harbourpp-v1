@@ -131,11 +131,6 @@
    #include <sys/types.h>
    #include <sys/stat.h>
    #include <fcntl.h>
-   #if defined( __DJGPP__ )
-      #include <dir.h>
-      #include <utime.h>
-      #include <time.h>
-   #endif
    #if ! defined( HAVE_POSIX_IO )
       #define HAVE_POSIX_IO
    #endif
@@ -203,7 +198,7 @@
    #define HB_FS_GETDRIVE(n)  do { n = fs_win_get_drive(); } while( 0 )
    #define HB_FS_SETDRIVE(n)  fs_win_set_drive( n )
 
-#elif defined( __DJGPP__ ) || defined( __BORLANDC__ )
+#elif defined( __BORLANDC__ )
    /* 0 based version */
 
    #define HB_FS_GETDRIVE(n)  do { n = getdisk(); } while( 0 )
@@ -611,7 +606,7 @@ HB_FHANDLE hb_fsGetOsHandle( HB_FHANDLE hFileHandle )
 #endif
 }
 
-#if defined( HB_OS_UNIX ) || defined( __DJGPP__ )
+#if defined( HB_OS_UNIX )
 /* for POSIX systems only, hides low-level select()/poll() access,
    intentionally covered by HB_OS_UNIX macro to generate compile time
    error in code which tries to use it on other platforms */
@@ -3686,20 +3681,7 @@ HB_ERRCODE hb_fsCurDirBuff( int iDrive, char * pszBuffer, HB_SIZE nSize )
       /* NOTE: A trailing underscore is not returned on this platform,
                so we don't need to strip it. [vszakats] */
 
-#if defined( __DJGPP__ )
-      /* convert '/' to '\' */
-      nLen = 0;
-      while( pszBuffer[ nLen ] != 0 )
-      {
-         if( pszBuffer[ nLen ] == '/' )
-         {
-            pszBuffer[ nLen ] = '\\';
-         }
-         ++nLen;
-      }
-#else
       nLen = strlen( pszBuffer );
-#endif
       pszStart = pszBuffer;
 
 #if defined( HB_OS_HAS_DRIVE_LETTER )
@@ -3789,20 +3771,7 @@ HB_BOOL hb_fsGetCWD( char * pszBuffer, HB_SIZE nSize )
    if( fResult && pszBuffer[ 0 ] )
    {
       HB_SIZE nLen;
-#if defined( __DJGPP__ )
-      /* convert '/' to '\' */
-      nLen = 0;
-      while( pszBuffer[ nLen ] != 0 )
-      {
-         if( pszBuffer[ nLen ] == '/' )
-         {
-            pszBuffer[ nLen ] = '\\';
-         }
-         ++nLen;
-      }
-#else
       nLen = strlen( pszBuffer );
-#endif
 
       /* add the trailing (back)slash if there's no one */
       if( nLen + 1 < nSize && strchr( HB_OS_PATH_DELIM_CHR_LIST, static_cast< HB_UCHAR >( pszBuffer[ nLen - 1 ] ) ) == 0 )
@@ -3876,7 +3845,7 @@ HB_BOOL hb_fsSetCWD( const char * pszDirName )
       fResult = ( chdir( pszDirName ) == 0 );
       hb_fsSetIOError( fResult, 0 );
 
-#if defined( HB_OS_HAS_DRIVE_LETTER ) && ! defined( __DJGPP__ )
+#if defined( HB_OS_HAS_DRIVE_LETTER )
       if( fResult && pszDirName[ 0 ] != 0 && pszDirName[ 1 ] == HB_OS_DRIVE_DELIM_CHR )
       {
          int iDrive = pszDirName[ 0 ];

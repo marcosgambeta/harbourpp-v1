@@ -56,10 +56,6 @@
 #include "hbvm.h"
 #include "hbstack.h"
 
-#if defined( __DJGPP__ )
-_LIB_VERSION_TYPE _LIB_VERSION = _XOPEN_;
-#endif
-
 #if defined( HB_MATH_ERRNO )
 #   include <errno.h>
 #endif

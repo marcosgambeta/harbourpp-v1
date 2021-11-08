@@ -76,7 +76,7 @@
 #include <string.h>
 #include <fcntl.h>
 
-#if defined( HB_OS_UNIX ) || defined( __DJGPP__ )
+#if defined( HB_OS_UNIX )
 # include <errno.h>
 # include <time.h>
 # include <unistd.h>
@@ -218,7 +218,7 @@ static HB_GT_FUNCS SuperTable;
 #define K_MOUSETERM        0x10004
 #define K_RESIZE           0x10005
 
-#if defined( HB_OS_UNIX ) || defined( __DJGPP__ )
+#if defined( HB_OS_UNIX )
 
 #define TIMEVAL_GET( tv )           gettimeofday( &( tv ), nullptr )
 #define TIMEVAL_LESS( tv1, tv2 )    ( ( ( tv1 ).tv_sec == ( tv2 ).tv_sec ) ? \
@@ -264,7 +264,7 @@ typedef struct
    int mbup_row, mbup_col;
    int mbdn_row, mbdn_col;
    /* to analize DBLCLK on xterm */
-#if defined( HB_OS_UNIX ) || defined( __DJGPP__ )
+#if defined( HB_OS_UNIX )
    struct timeval BL_time;
    struct timeval BR_time;
    struct timeval BM_time;
@@ -345,7 +345,7 @@ typedef struct _HB_GTTRM
    int        terminal_type;
    int        terminal_ext;
 
-#if defined( HB_OS_UNIX ) || defined( __DJGPP__ )
+#if defined( HB_OS_UNIX )
    struct termios saved_TIO, curr_TIO;
    HB_BOOL    fRestTTY;
 #endif
@@ -395,7 +395,7 @@ typedef struct _HB_GTTRM
 } HB_TERM_STATE, HB_GTTRM, * PHB_GTTRM;
 
 /* static variables use by signal handler */
-#if defined( HB_OS_UNIX ) || defined( __DJGPP__ )
+#if defined( HB_OS_UNIX )
    static volatile HB_BOOL s_WinSizeChangeFlag = HB_FALSE;
 #endif
 #if defined( HB_OS_UNIX ) && defined( SA_NOCLDSTOP )
@@ -533,7 +533,7 @@ static int hb_gt_trm_getSize( PHB_GTTRM pTerm, int * piRows, int * piCols )
 {
    *piRows = *piCols = 0;
 
-#if ( defined( HB_OS_UNIX ) || defined( __DJGPP__ ) ) && \
+#if ( defined( HB_OS_UNIX ) ) && \
     defined( TIOCGWINSZ )
    if( pTerm->fOutTTY )
    {
@@ -650,7 +650,7 @@ static int add_efds( PHB_GTTRM pTerm, int fd, int mode,
    if( eventFunc == nullptr && mode != O_RDONLY )
       return -1;
 
-#if defined( HB_OS_UNIX ) || defined( __DJGPP__ )
+#if defined( HB_OS_UNIX )
    {
       int fl;
       if( ( fl = fcntl( fd, F_GETFL, 0 ) ) == -1 )
@@ -829,7 +829,7 @@ static void chk_mevtdblck( PHB_GTTRM pTerm )
 
    if( newbuttons != 0 )
    {
-#if defined( HB_OS_UNIX ) || defined( __DJGPP__ )
+#if defined( HB_OS_UNIX )
       struct timeval tv;
 #else
       double tv;
@@ -1075,7 +1075,7 @@ static int read_bufch( PHB_GTTRM pTerm, int fd )
    {
       unsigned char buf[ STDIN_BUFLEN ];
 
-#if defined( HB_OS_UNIX ) || defined( __DJGPP__ )
+#if defined( HB_OS_UNIX )
       n = read( fd, buf, STDIN_BUFLEN - pTerm->stdin_inbuf );
 #else
       n = hb_fsRead( fd, buf, STDIN_BUFLEN - pTerm->stdin_inbuf );
@@ -1237,7 +1237,7 @@ static int wait_key( PHB_GTTRM pTerm, int milisec )
    int nKey, esc, n, i, ch, counter;
    keyTab * ptr;
 
-#if defined( HB_OS_UNIX ) || defined( __DJGPP__ )
+#if defined( HB_OS_UNIX )
    if( s_WinSizeChangeFlag )
    {
       s_WinSizeChangeFlag = HB_FALSE;
@@ -1575,7 +1575,7 @@ static HB_BOOL hb_gt_trm_XtermSetMode( PHB_GTTRM pTerm, int * piRows, int * piCo
    hb_gt_trm_termOut( pTerm, escseq, strlen( escseq ) );
    hb_gt_trm_termFlush( pTerm );
 
-#if defined( HB_OS_UNIX ) || defined( __DJGPP__ )
+#if defined( HB_OS_UNIX )
    /* dirty hack - wait for SIGWINCH */
    if( *piRows != iHeight || *piCols != iWidth )
       sleep( 3 );
@@ -2054,7 +2054,7 @@ static HB_BOOL hb_gt_trm_AnsiGetCursorPos( PHB_GTTRM pTerm, int * iRow, int * iC
             break;
          else
          {
-#if defined( HB_OS_UNIX ) || defined( __DJGPP__ )
+#if defined( HB_OS_UNIX )
             if( hb_fsCanRead( pTerm->hFilenoStdin, timeout ) <= 0 )
                break;
             i = read( pTerm->hFilenoStdin, rdbuf + n, sizeof( rdbuf ) - n );
@@ -3490,7 +3490,7 @@ static void hb_gt_trm_Exit( PHB_GT pGT )
 
    if( pTerm )
    {
-#if defined( HB_OS_UNIX ) || defined( __DJGPP__ )
+#if defined( HB_OS_UNIX )
       if( pTerm->fRestTTY )
          tcsetattr( pTerm->hFilenoStdin, TCSANOW, &pTerm->saved_TIO );
 #endif
@@ -3662,7 +3662,7 @@ static HB_BOOL hb_gt_trm_Suspend( PHB_GT pGT )
    pTerm = HB_GTTRM_GET( pGT );
    if( pTerm->mouse_type & MOUSE_XTERM )
       hb_gt_trm_termOut( pTerm, s_szMouseOff, strlen( s_szMouseOff ) );
-#if defined( HB_OS_UNIX ) || defined( __DJGPP__ )
+#if defined( HB_OS_UNIX )
    if( pTerm->fRestTTY )
       tcsetattr( pTerm->hFilenoStdin, TCSANOW, &pTerm->saved_TIO );
 #endif
@@ -3679,7 +3679,7 @@ static HB_BOOL hb_gt_trm_Resume( PHB_GT pGT )
    int iHeight, iWidth;
 
    pTerm = HB_GTTRM_GET( pGT );
-#if defined( HB_OS_UNIX ) || defined( __DJGPP__ )
+#if defined( HB_OS_UNIX )
    if( pTerm->fRestTTY )
       tcsetattr( pTerm->hFilenoStdin, TCSANOW, &pTerm->curr_TIO );
 #endif

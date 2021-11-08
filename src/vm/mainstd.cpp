@@ -50,19 +50,6 @@
 HB_EXTERN_BEGIN
 #if defined( __MINGW32__ )
 int _CRT_glob = 0;
-#elif defined( __DJGPP__ )
-
-#include <crt0.h>
-
-int _crt0_startup_flags = _CRT0_FLAG_USE_DOS_SLASHES;
-
-char ** __crt0_glob_function( char * _arg )
-{
-   /* This function disables command-line wildcard expansion. */
-   HB_SYMBOL_UNUSED( _arg );
-
-   return 0;
-}
 #endif
 
 HB_EXTERN_END
@@ -71,15 +58,6 @@ int main( int argc, char * argv[] )
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "main(%d, %p)", argc, static_cast< void * >( argv ) ) );
-#endif
-
-#if defined( __DJGPP__ )
-   __system_flags =
-      __system_redirect |
-      __system_allow_long_cmds |
-      __system_emulate_command |
-      __system_handle_null_commands |
-      __system_emulate_chdir;
 #endif
 
    hb_cmdargInit( argc, argv );

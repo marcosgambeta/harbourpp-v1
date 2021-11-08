@@ -70,46 +70,7 @@ HB_FUNC( PRINTREADY )
 
 HB_FUNC( PRINTSEND )
 {
-#ifdef __DJGPP__
-   __dpmi_regs r;
-
-   r.x.dx = hb_parni( 2 ) - 1;
-
-   if( HB_ISNUM( 1 ) )
-   {
-      r.h.al = hb_parni( 1 );
-      __dpmi_int( 0x17, &r );
-      if( r.h.ah & 1 )
-      {
-         hb_retni( 1 );
-      }
-      else
-      {
-         hb_retni( 0 );
-      }
-   }
-   else if( HB_ISCHAR( 1 ) )
-   {
-      const char * string = hb_parcx( 1 );
-      int i, len = hb_parclen( 1 );
-
-      r.h.ah = 0;
-      for( i = 0; i < len && !( r.h.ah & 1 ); i++ )
-      {
-         r.h.al = string[ i ];
-         __dpmi_int( 0x17, &r );
-      }
-      if( r.h.ah & 1 )
-      {
-         hb_retni( len - ( i - 1 ) );
-      }
-      else
-      {
-         hb_retni( 0 );
-      }
-   }
-
-#elif defined( HB_OS_WIN )
+#if defined( HB_OS_WIN )
 
    char szChr[ 2 ] = { ' ', '\0' };
    char szPort[ 5 ] = { 'l', 'p', 't', '1', '\0' };

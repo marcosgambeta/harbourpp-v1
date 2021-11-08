@@ -1043,9 +1043,7 @@ char * hb_verCompiler( void )
 
 #elif defined( __GNUC__ )
 
-   #if defined( __DJGPP__ )
-      pszName = "Delorie GNU C";
-   #elif defined( __CYGWIN__ )
+   #if defined( __CYGWIN__ )
       pszName = "Cygwin GNU C";
    #elif defined( __MINGW32__ )
       pszName = "MinGW GNU C";
@@ -1140,11 +1138,6 @@ char * hb_verCompiler( void )
    {
       hb_snprintf( szSub, sizeof( szSub ), " (%s)", __clang_version__ );
    }
-   hb_strncat( pszCompiler, szSub, COMPILER_BUF_SIZE - 1 );
-#endif
-
-#if defined( __DJGPP__ )
-   hb_snprintf( szSub, sizeof( szSub ), " (DJGPP %i.%02i)", static_cast< int >( __DJGPP__ ), static_cast< int >( __DJGPP_MINOR__ ) );
    hb_strncat( pszCompiler, szSub, COMPILER_BUF_SIZE - 1 );
 #endif
 

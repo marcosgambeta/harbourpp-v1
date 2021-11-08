@@ -188,7 +188,6 @@ HB_BOOL hb_setenv( const char * szName, const char * szValue )
    }
 #elif defined( _BSD_SOURCE ) || _POSIX_C_SOURCE >= 200112L || \
    _XOPEN_SOURCE >= 600 || \
-   defined( __DJGPP__ ) || \
    defined( HB_OS_SUNOS ) || defined( HB_OS_BSD ) || \
    defined( HB_OS_DARWIN ) || defined( HB_OS_BEOS ) || \
    defined( HB_OS_QNX ) || defined( HB_OS_VXWORKS ) || \
@@ -210,17 +209,7 @@ HB_BOOL hb_setenv( const char * szName, const char * szValue )
       }
       else
       {
-#  if ( defined( __DJGPP__ ) && ( __DJGPP__ < 2 || ( __DJGPP__ == 2 && __DJGPP_MINOR__ < 4 ) ) )
-         szValue = getenv( szName );
-         if( szValue && *szValue )
-         {
-            fResult = setenv( szName, "", 1 ) == 0;
-         }
-         else
-         {
-            fResult = HB_TRUE;
-         }
-#  elif defined( __OpenBSD__ ) || defined( HB_OS_QNX ) || \
+#  if defined( __OpenBSD__ ) || defined( HB_OS_QNX ) || \
         ( defined( __FreeBSD_version ) && __FreeBSD_version < 700050 ) || \
         ( defined( HB_OS_DARWIN ) && !( defined( __DARWIN_UNIX03 ) && __DARWIN_UNIX03 ) )
          unsetenv( szName );

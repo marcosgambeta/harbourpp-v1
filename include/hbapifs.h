@@ -195,7 +195,7 @@ extern HB_EXPORT HB_BOOL    hb_fsLink        ( const char * pszExisting, const c
 extern HB_EXPORT HB_BOOL    hb_fsLinkSym     ( const char * pszTarget, const char * pszNewFile ); /* create symbolic (soft) link */
 extern HB_EXPORT char *     hb_fsLinkRead    ( const char * pszFileName ); /* returns the link pointed to */
 
-#if defined( HB_OS_UNIX ) || defined( __DJGPP__ )
+#if defined( HB_OS_UNIX )
 /* for POSIX systems only, hides low-level select()/poll() access,
    intentionally covered by HB_OS_UNIX / __DJGPP__ macros to generate
    compile time error in code which tries to use it on other platforms */

@@ -70,8 +70,6 @@
    #if defined( __CYGWIN__ )
       #define SCAN_DEPEND
    #endif
-#elif defined( __DJGPP__ )
-   #define ALLEGRO_DJGPP
 #elif defined( HB_OS_DARWIN )
    #define ALLEGRO_MACOSX
 #endif
