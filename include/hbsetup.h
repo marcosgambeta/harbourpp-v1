@@ -296,10 +296,6 @@
  * Ref: http://nadeausoftware.com/articles/2012/01/c_c_tip_how_use_compiler_predefined_macros_detect_operating_system
  */
 
-#if defined( __EMX__ ) && ! defined( __RSXNT__ )
-   #define HB_OS_OS2_GCC
-#endif
-
 #ifndef HB_OS_WIN
    #if defined( WINNT ) || defined( _Windows ) || defined( __NT__ ) || defined( _WIN32 ) || defined( _WINDOWS_ ) || defined( __WINDOWS_386__ ) || defined( __WIN32__ )
       #define HB_OS_WIN

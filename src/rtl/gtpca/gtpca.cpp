@@ -642,24 +642,7 @@ static int hb_gt_pca_ReadKey( PHB_GT pGT, int iEventMask )
    HB_SYMBOL_UNUSED( pGT );
    HB_SYMBOL_UNUSED( iEventMask );
 
-#if defined( HB_OS_OS2_GCC )
-
-   /* Read from the keyboard with no echo, no wait, and no SIGSEV on Ctrl-C */
-   ch = _read_kbd( 0, 0, 0 );
-   if( ch == 0 )
-   {
-      /* It's a function key lead-in, so read the function key scan code */
-      ch = _read_kbd( 0, 0, 0 );
-      if( ch != -1 )
-      {
-         ch += 256;                  /* If it's really a scan code, offset it */
-      }
-   }
-   /* _read_kbd() returns -1 for no key, the switch statement will handle
-      this. */
-
-   ch = hb_gt_dos_keyCodeTranslate( ch, 0, HB_GTSELF_CPIN( pGT ) );
-#elif defined( HB_HAS_TERMIOS )
+#if defined( HB_HAS_TERMIOS )
    if( hb_fsCanRead( s_hFilenoStdin, 0 ) > 0 )
    {
       HB_BYTE bChar;

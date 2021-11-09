@@ -62,11 +62,10 @@
 /* These targets cannot compile this module */
 #if ! defined( HB_OS_DARWIN_5 ) && \
    ! defined( HB_OS_WIN_64 ) && \
-   ( defined( HB_OS_OS2_GCC ) ) && \
    ! defined( __HAIKU__ )
 /* TODO: Haiku will supposedly do this later on, read /boot/develop/headers/posix/signal.h */
 
-#if defined( HB_OS_UNIX ) || defined( HB_OS_OS2_GCC )
+#if defined( HB_OS_UNIX )
 #include <sys/types.h>
 #include <unistd.h>
 #include <signal.h>
@@ -104,7 +103,7 @@ static int s_translateSignal( HB_UINT sig, HB_UINT subsig );
  * signals, both from kernel or from users.
  */
 
-#if defined( HB_OS_UNIX ) || defined( HB_OS_OS2_GCC )
+#if defined( HB_OS_UNIX )
 
 /* TODO: Register the old signal action to allow graceful fallback */
 #if 0
@@ -127,18 +126,12 @@ static S_TUPLE s_sigTable[] =
    { 0,       0, 0                   }
 };
 
-#if defined( HB_OS_OS2_GCC )
-static void s_signalHandler( int sig )
-#else
 static void s_signalHandler( int sig, siginfo_t * info, void * v )
-#endif
 {
    HB_UINT  uiSig;
    HB_SIZE  nPos;
 
-   #if ! ( defined( HB_OS_OS2_GCC ) )
    HB_SYMBOL_UNUSED( v );
-   #endif
 
    /* let's find the right signal handler. */
    hb_threadEnterCriticalSectionGC( &s_ServiceMutex );
@@ -177,15 +170,12 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
          /* the third parameter is an array: */
 
          pRet = hb_arrayGetItemPtr( pExecArray, 3 );
-         #if defined( HB_OS_OS2_GCC )
-         hb_arrayNew( pRet, 1 );
-         #elif defined( HB_OS_BSD )
+         #if defined( HB_OS_BSD )
          hb_arrayNew( pRet, info ? 6 : 1 );
          #else
          hb_arrayNew( pRet, 6 );
          #endif
          hb_arraySetNI( pRet, HB_SERVICE_OSSIGNAL, sig );
-         #if ! ( defined( HB_OS_OS2_GCC ) )
          #if defined( HB_OS_BSD )
          if( info )
          #endif
@@ -198,7 +188,6 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
             hb_arraySetNI( pRet, HB_SERVICE_UID, info->si_uid );
             #endif
          }
-         #endif
 
          pRet = hb_itemDo( pExecArray, 0 );
          iRet = hb_itemGetNI( pRet );
@@ -562,7 +551,7 @@ BOOL WINAPI s_ConsoleHandlerRoutine( DWORD dwCtrlType )
 
 static void s_serviceSetHBSig( void )
 {
-#if defined( HB_OS_UNIX ) || defined( HB_OS_OS2_GCC )
+#if defined( HB_OS_UNIX )
    struct sigaction act;
 
 #if defined( HB_THREAD_SUPPORT )
@@ -587,9 +576,6 @@ static void s_serviceSetHBSig( void )
       fields */
    memset( &act, 0, sizeof( act ) );
 
-   #if defined( HB_OS_OS2_GCC )
-   act.sa_handler = s_signalHandler;
-   #else
    /* using more descriptive sa_action instead of sa_handler */
    act.sa_handler   = nullptr;            /* if act.sa.. is a union, we just clean this */
    act.sa_sigaction = s_signalHandler; /* this is what matters */
@@ -597,14 +583,9 @@ static void s_serviceSetHBSig( void )
    #if 0
    sigfillset( &act.sa_mask );
    #endif
-   #endif
 
 
-   #ifdef HB_OS_OS2_GCC
-   act.sa_flags = SA_NOCLDSTOP;
-   #else
    act.sa_flags = SA_NOCLDSTOP | SA_SIGINFO;
-   #endif
 
    sigaction( SIGHUP, &act, nullptr );
    sigaction( SIGQUIT, &act, nullptr );
@@ -898,7 +879,7 @@ HB_FUNC( HB_POPSIGNALHANDLER )
  */
 HB_FUNC( HB_SIGNALDESC )
 {
-#if defined( HB_OS_UNIX ) || defined( HB_OS_OS2_GCC )
+#if defined( HB_OS_UNIX )
 
    int iSig    = hb_parni( 1 );
    int iSubSig = hb_parni( 2 );
@@ -907,7 +888,7 @@ HB_FUNC( HB_SIGNALDESC )
    {
       case SIGSEGV: switch( iSubSig )
          {
-         #if ! defined( HB_OS_BSD ) && ! defined( HB_OS_OS2_GCC )
+         #if ! defined( HB_OS_BSD )
             case SEGV_MAPERR: hb_retc_const( "Segmentation fault: address not mapped to object" ); return;
             case SEGV_ACCERR: hb_retc_const( "Segmentation fault: invalid permissions for mapped object" ); return;
          #endif
@@ -916,7 +897,7 @@ HB_FUNC( HB_SIGNALDESC )
 
       case SIGILL: switch( iSubSig )
          {
-         #if ! defined( HB_OS_BSD ) && ! defined( HB_OS_OS2_GCC )
+         #if ! defined( HB_OS_BSD )
             case ILL_ILLOPC: hb_retc_const( "Illegal operation: illegal opcode" ); return;
             case ILL_ILLOPN: hb_retc_const( "Illegal operation: illegal operand" ); return;
             case ILL_ILLADR: hb_retc_const( "Illegal operation: illegal addressing mode" ); return;
@@ -931,7 +912,6 @@ HB_FUNC( HB_SIGNALDESC )
 
       case SIGFPE: switch( iSubSig )
          {
-         #if ! defined( HB_OS_OS2_GCC )
          #if ! defined( HB_OS_DARWIN )
             case FPE_INTDIV: hb_retc_const( "Floating point: integer divide by zero" ); return;
             case FPE_INTOVF: hb_retc_const( "Floating point: integer overflow" ); return;
@@ -945,7 +925,6 @@ HB_FUNC( HB_SIGNALDESC )
          #endif
          #if ! defined( HB_OS_DARWIN )
             case FPE_FLTSUB: hb_retc_const( "Floating point: subscript out of range" ); return;
-         #endif
          #endif
             default: hb_retc_const( "Floating point" ); return;
          }

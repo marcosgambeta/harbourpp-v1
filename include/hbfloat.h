@@ -180,8 +180,7 @@
 #elif 0 /* TODO: add other C compilers here (check their version number) */
 #else
 
-#  if defined( __RSXNT__ ) || defined( __EMX__ ) || \
-      defined( __MINGW32__ ) || defined( HB_OS_HPUX ) || defined( HB_OS_MINIX )
+#  if defined( __MINGW32__ ) || defined( HB_OS_HPUX ) || defined( HB_OS_MINIX )
 #     define hb_isfinite( d )       isfinite( d )
 #  elif defined( _MSC_VER )
 #     define hb_isfinite( d )       _finite( ( double ) d )

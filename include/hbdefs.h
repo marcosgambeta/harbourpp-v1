@@ -1473,7 +1473,7 @@ typedef HB_U32 HB_FATTR;
  * starting procedure (due to unknown order of static data initialization)
  */
 #define HB_START_PROCEDURE "MAIN"
-#if ( defined( __GNUC__ ) && ! defined( HB_OS_OS2_GCC ) )
+#if ( defined( __GNUC__ ) )
    #define HB_START_PROC_STRICT
 #endif
 
@@ -1485,14 +1485,7 @@ typedef HB_U32 HB_FATTR;
 
 #define HB_EXTERN extern
 
-#if defined( __RSXNT__ )
-   /* RSXNT does not support any type of export keyword.
-      Exported (i.e., public) names can be obtained via
-      the emxexp utility and the output can be used for
-      input to a module definition file. See emxdev.doc
-      in the RSXNT doc/ directory for more information. */
-   #define HB_EXPORT_ATTR
-#elif defined( __GNUC__ ) && defined( HB_OS_WIN )
+#if defined( __GNUC__ ) && defined( HB_OS_WIN )
    #define HB_EXPORT_ATTR     __attribute__ (( dllexport ))
 #elif defined( __GNUC__ ) && defined( HB_OS_LINUX ) && __GNUC__ >= 3
    #define HB_EXPORT_ATTR     __attribute__ ((visibility ("default")))
@@ -1514,14 +1507,7 @@ typedef HB_U32 HB_FATTR;
 
 #define HB_EXPORT_INT HB_EXPORT
 
-#if defined( __RSXNT__ )
-   /* RSXNT does not support any type of export keyword.
-      Exported (i.e., public) names can be obtained via
-      the emxexp utility and the output can be used for
-      input to a module definition file. See emxdev.doc
-      in the RSXNT doc/ directory for more information. */
-   #define HB_IMPORT_ATTR
-#elif defined( __GNUC__ ) && defined( HB_OS_WIN )
+#if defined( __GNUC__ ) && defined( HB_OS_WIN )
    #define HB_IMPORT_ATTR     __attribute__ (( dllimport ))
 #elif defined( __BORLANDC__ )
    #define HB_IMPORT_ATTR     __declspec( dllimport )
