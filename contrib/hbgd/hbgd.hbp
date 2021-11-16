@@ -19,10 +19,12 @@ hbct.hbc
 
 ${hb_name}.hbx
 
-gdwrp.cpp
+-i.
 
-gd.prg
-gdbar.prg
-gdchart.prg
-gdimage.prg
-gdbarcod.prg
+src\gdwrp.cpp
+
+src\gd.prg
+src\gdbar.prg
+src\gdchart.prg
+src\gdimage.prg
+src\gdbarcod.prg
