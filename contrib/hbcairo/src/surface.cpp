@@ -51,5 +51,7 @@ HB_FUNC( CAIRO_SURFACE_STATUS )
    cairo_surface_t * pSurface = hb_cairo_surface_param( 1 );
 
    if( pSurface )
+   {
       hb_retni( cairo_surface_status( pSurface ) );
+   }
 }

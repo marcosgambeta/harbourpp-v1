@@ -94,7 +94,7 @@ HB_FUNC( CAIRO_SELECT_FONT_FACE )
    if( pCairo )
    {
       void * hFamily;
-      cairo_select_font_face( pCairo, hb_parstr_utf8( 2, &hFamily, nullptr ), ( cairo_font_slant_t ) hb_parni( 3 ), ( cairo_font_weight_t ) hb_parni( 4 ) );
+      cairo_select_font_face( pCairo, hb_parstr_utf8( 2, &hFamily, nullptr ), static_cast< cairo_font_slant_t >( hb_parni( 3 ) ), static_cast< cairo_font_weight_t >( hb_parni( 4 ) ) );
       hb_strfree( hFamily );
    }
 }
@@ -119,7 +119,9 @@ HB_FUNC( CAIRO_SET_FONT_MATRIX )
          cairo_set_font_matrix( pCairo, &m );
       }
       else
+      {
          hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      }
    }
 }
 
@@ -128,7 +130,9 @@ HB_FUNC( CAIRO_SET_FONT_SIZE )
    cairo_t * pCairo = hb_cairo_param( 1 );
 
    if( pCairo )
+   {
       cairo_set_font_size( pCairo, hb_parnd( 2 ) );
+   }
 }
 
 HB_FUNC( CAIRO_SHOW_TEXT )

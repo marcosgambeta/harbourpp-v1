@@ -73,7 +73,9 @@ HB_FUNC( CAIRO_IDENTITY_MATRIX )
    cairo_t * pCairo = hb_cairo_param( 1 );
 
    if( pCairo )
+   {
       cairo_identity_matrix( pCairo );
+   }
 }
 
 HB_FUNC( CAIRO_ROTATE )
@@ -81,7 +83,9 @@ HB_FUNC( CAIRO_ROTATE )
    cairo_t * pCairo = hb_cairo_param( 1 );
 
    if( pCairo )
+   {
       cairo_rotate( pCairo, hb_parnd( 2 ) );
+   }
 }
 
 HB_FUNC( CAIRO_SET_MATRIX )
@@ -104,7 +108,9 @@ HB_FUNC( CAIRO_SET_MATRIX )
          cairo_set_matrix( pCairo, &m );
       }
       else
+      {
          hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      }
    }
 }
 
@@ -113,7 +119,9 @@ HB_FUNC( CAIRO_SCALE )
    cairo_t * pCairo = hb_cairo_param( 1 );
 
    if( pCairo )
+   {
       cairo_scale( pCairo, hb_parnd( 2 ), hb_parnd( 3 ) );
+   }
 }
 
 HB_FUNC( CAIRO_TRANSFORM )
@@ -136,7 +144,9 @@ HB_FUNC( CAIRO_TRANSFORM )
          cairo_transform( pCairo, &m );
       }
       else
+      {
          hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      }
    }
 }
 
@@ -145,5 +155,7 @@ HB_FUNC( CAIRO_TRANSLATE )
    cairo_t * pCairo = hb_cairo_param( 1 );
 
    if( pCairo )
+   {
       cairo_translate( pCairo, hb_parnd( 2 ), hb_parnd( 3 ) );
+   }
 }
