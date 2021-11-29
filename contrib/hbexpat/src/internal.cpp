@@ -56,16 +56,18 @@ HB_FUNC( __HB_XML_CDPU16MAP )
    {
       PHB_ITEM pMap = hb_itemArrayNew( UCHAR_MAX + 1 );
 
-      unsigned int tmp;
-
       /* FIXME: uses hb_cdpGetU16() which cannot be used
                 with CPs using multibyte encoding. */
 
-      for( tmp = 0; tmp <= UCHAR_MAX; ++tmp )
+      for( unsigned int tmp = 0; tmp <= UCHAR_MAX; ++tmp )
+      {
          hb_arraySetNI( pMap, tmp + 1, hb_cdpGetU16( cdp, static_cast< HB_UCHAR >( tmp ) ) );
+      }
 
       hb_itemReturnRelease( pMap );
    }
    else
+   {
       hb_ret();
+   }
 }
