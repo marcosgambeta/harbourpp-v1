@@ -7,5 +7,7 @@
 
 ${hb_name}.hbx
 
-telepath.prg
-tp_idle.prg
+-i.
+
+src\telepath.prg
+src\tp_idle.prg

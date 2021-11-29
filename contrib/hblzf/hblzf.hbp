@@ -14,6 +14,8 @@
 
 ${hb_name}.hbx
 
-core.cpp
+-i.
+
+src\core.cpp
 
 3rd/liblzf/lzf.hbc{HBMK_HAS_LZF_LOCAL}

@@ -7,5 +7,5 @@
 
 ${hb_name}.hbx
 
-hbfmtcls.prg
-hbfuncs.prg
+src\hbfmtcls.prg
+src\hbfuncs.prg

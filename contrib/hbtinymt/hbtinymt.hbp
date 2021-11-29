@@ -16,7 +16,7 @@
 
 ${hb_name}.hbx
 
-core32.cpp
-core64.cpp
+src\core32.cpp
+src\core64.cpp
 
 3rd/tinymt/tinymt.hbc{HBMK_HAS_TINYMT_LOCAL}

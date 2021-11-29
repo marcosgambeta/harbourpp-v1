@@ -6,11 +6,11 @@
 
 -gtcgi
 
-hbdoc.prg
-_base.prg
-_html.prg
-_txt.prg
-_xml.prg
+src\hbdoc.prg
+src\_base.prg
+src\_html.prg
+src\_txt.prg
+src\_xml.prg
 
 # NOTE: hbdoc doesn't work from other locations than
 #       the current one, so we don't install it yet.

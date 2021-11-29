@@ -13,5 +13,7 @@
 
 ${hb_name}.hbx
 
-core.cpp
-hbmagis.prg
+-i.
+
+src\core.cpp
+src\hbmagis.prg

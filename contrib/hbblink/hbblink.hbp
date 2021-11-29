@@ -7,4 +7,6 @@
 
 ${hb_name}.hbx
 
-blinker.prg
+-i.
+
+src\blinker.prg

@@ -5,7 +5,7 @@
 
 -w3 -es2
 
-gzio.cpp
+src\gzio.cpp
 
 ${hb_name}.hbx
 
