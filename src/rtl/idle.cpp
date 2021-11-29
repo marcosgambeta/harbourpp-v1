@@ -54,14 +54,16 @@
 #include "hbdate.h"
 #include "error.ch"
 
-typedef struct
+struct HB_IDLEDATA
 {
    HB_BOOL    fCollectGarbage;      /* flag to force GC activation in idle state */
    HB_BOOL    fIamIdle;             /* flag to prevent recursive calls of hb_idleState() */
    int        iIdleTask;            /* current task to be executed */
    int        iIdleMaxTask;         /* number of tasks in the list */
    PHB_ITEM * pIdleTasks;           /* list of background tasks */
-} HB_IDLEDATA, * PHB_IDLEDATA;
+};
+
+using PHB_IDLEDATA = HB_IDLEDATA *;
 
 static void hb_idleDataRelease( void * Cargo )
 {

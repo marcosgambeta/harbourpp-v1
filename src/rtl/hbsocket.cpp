@@ -220,9 +220,9 @@
 #endif
 
 #if defined( HB_OS_WIN )
-   typedef SOCKET       HB_SOCKET_T;
+   using HB_SOCKET_T = SOCKET;
 #else
-   typedef HB_SOCKET    HB_SOCKET_T;
+   using HB_SOCKET_T = HB_SOCKET;
 #endif
 
 #endif /* HB_SOCKET_OFF */

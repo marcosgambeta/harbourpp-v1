@@ -63,13 +63,13 @@
 #define K_SH_ENTER          K_ENTER           /* Shift-Enter == Enter */
 #endif
 
-typedef struct
+struct HB_KEY_VALUE
 {
    short key;
    short alt_key;
    short ctrl_key;
    short shift_key;
-} HB_KEY_VALUE;
+};
 
 static const int s_keyPadCtrl[] = {
    K_CTRL_INS, K_CTRL_END, K_CTRL_DOWN, K_CTRL_PGDN, K_CTRL_LEFT,

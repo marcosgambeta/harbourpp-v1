@@ -113,7 +113,7 @@
 #else /* ! defined( HB_SLN_UTF8 ) */
 
 #if SLANG_VERSION < 10400
-    typedef unsigned short SLsmg_Char_Type;
+    using SLsmg_Char_Type = unsigned short;
     #define SLSMG_EXTRACT_CHAR( x ) ( ( x ) & 0xFF )
     #define SLSMG_EXTRACT_COLOR( x ) ( ( ( x ) >> 8 ) & 0xFF )
     #define SLSMG_BUILD_CHAR( ch, color ) ( ( ( SLsmg_Char_Type ) ( unsigned char )( ch ) ) | ( ( color ) << 8 ) )

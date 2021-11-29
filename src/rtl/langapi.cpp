@@ -209,18 +209,20 @@ HB_LANG_REQUEST( HB_LANG_DEFAULT );
 #define HB_LANG_ITEM_ID_NAMENAT   2
 #define HB_LANG_ITEM_ID_CODEPAGE  4
 
-typedef struct
+struct HB_LANG_TRANS
 {
    const char * pItemList[ HB_LANG_ITEM_MAX_ ];
-}
-HB_LANG_TRANS, * PHB_LANG_TRANS;
+};
 
-typedef struct
+using PHB_LANG_TRANS = HB_LANG_TRANS *;
+
+struct HB_LANG_BASE
 {
    PHB_LANG lang;
    void *   buffer;
-}
-HB_LANG_BASE, * PHB_LANG_BASE;
+};
+
+using PHB_LANG_BASE = HB_LANG_BASE *;
 
 static HB_LANG_BASE s_langList[ HB_LANG_MAX_ ] = { { &s_lang_en, nullptr } };
 

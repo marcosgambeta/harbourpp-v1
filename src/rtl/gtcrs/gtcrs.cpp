@@ -67,7 +67,7 @@ static volatile HB_BOOL s_WinSizeChangeFlag = HB_FALSE;
 
 static int s_iStdIn, s_iStdOut, s_iStdErr;
 
-typedef struct
+struct evtFD
 {
    int    fd;
    int    mode;
@@ -75,9 +75,9 @@ typedef struct
    int    index;
    void * data;
    int ( * eventFunc )( int, int, void * );
-} evtFD;
+};
 
-typedef struct
+struct mouseEvent
 {
    int row, col;
    int buttonstate;
@@ -94,17 +94,19 @@ typedef struct
    struct timeval BL_time;
    struct timeval BR_time;
    struct timeval BM_time;
-} mouseEvent;
+};
 
-typedef struct _keyTab
+struct _keyTab
 {
    int ch;
    int key;
    struct _keyTab * nextCh;
    struct _keyTab * otherCh;
-} keyTab;
+};
 
-typedef struct InOutBase
+using keyTab = _keyTab;
+
+struct InOutBase
 {
    int terminal_type;
 
@@ -162,7 +164,7 @@ typedef struct InOutBase
    chtype   box_chmap[ 256 ];
    chtype   attr_map[ 256 ];
    chtype   attr_mask;
-} InOutBase;
+};
 
 static InOutBase * s_ioBase = nullptr;
 
@@ -2352,7 +2354,9 @@ void HB_GT_FUNC( gt_CatchSignal( int iSig ) )
 
 static void hb_gt_crs_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_Init(%p,%p,%p,%p)", static_cast< void * >( pGT ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdin ) ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdout ) ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStderr ) ) ) );
+#endif
 
    if( ! s_ioBase )
    {
@@ -2389,7 +2393,9 @@ static void hb_gt_crs_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
 static void hb_gt_crs_Exit( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_Exit(%p)", static_cast< void * >( pGT ) ) );
+#endif
 
    HB_GTSUPER_EXIT( pGT );
 
@@ -2400,7 +2406,9 @@ static void hb_gt_crs_Exit( PHB_GT pGT )
 
 static HB_BOOL hb_gt_crs_IsColor( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_IsColor(%p)", static_cast< void * >( pGT ) ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -2411,7 +2419,9 @@ static HB_BOOL hb_gt_crs_IsColor( PHB_GT pGT )
 
 static HB_BOOL hb_gt_crs_SetMode( PHB_GT pGT, int iRows, int iCols )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_SetMode(%p,%d,%d)", static_cast< void * >( pGT ), iRows, iCols ) );
+#endif
 
    if( gt_setsize( s_ioBase, iRows, iCols ) == 0 )
    {
@@ -2426,7 +2436,9 @@ static HB_BOOL hb_gt_crs_SetMode( PHB_GT pGT, int iRows, int iCols )
 
 static void hb_gt_crs_SetBlink( PHB_GT pGT, HB_BOOL fBlink )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_SetBlink(%p, %d)", static_cast< void * >( pGT ), static_cast< int >( fBlink ) ) );
+#endif
 
    if( fBlink )
       s_ioBase->attr_mask |= A_BLINK;
@@ -2440,7 +2452,9 @@ static void hb_gt_crs_SetBlink( PHB_GT pGT, HB_BOOL fBlink )
 
 static void hb_gt_crs_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_Tone(%p,%lf,%lf)", static_cast< void * >( pGT ), dFrequency, dDuration ) );
+#endif
 
    gt_tone( s_ioBase, dFrequency, dDuration );
 
@@ -2453,7 +2467,9 @@ static void hb_gt_crs_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 
 static const char * hb_gt_crs_Version( PHB_GT pGT, int iType )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_Version(%p,%d)", static_cast< void * >( pGT ), iType ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -2467,7 +2483,9 @@ static const char * hb_gt_crs_Version( PHB_GT pGT, int iType )
 
 static void hb_gt_crs_OutStd( PHB_GT pGT, const char * szStr, HB_SIZE nLen )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_OutStd(%p,%s,%lu)", static_cast< void * >( pGT ), szStr, nLen ) );
+#endif
 
    if( s_ioBase )
    {
@@ -2484,7 +2502,9 @@ static void hb_gt_crs_OutStd( PHB_GT pGT, const char * szStr, HB_SIZE nLen )
 
 static void hb_gt_crs_OutErr( PHB_GT pGT, const char * szStr, HB_SIZE nLen )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_OutErr(%p,%s,%lu)", static_cast< void * >( pGT ), szStr, nLen ) );
+#endif
    if( s_ioBase )
    {
       if( s_ioBase->stderrfd == -1 )
@@ -2500,7 +2520,9 @@ static void hb_gt_crs_OutErr( PHB_GT pGT, const char * szStr, HB_SIZE nLen )
 
 static HB_BOOL hb_gt_crs_Suspend( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_Suspend(%p)", static_cast< void * >( pGT ) ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -2518,7 +2540,9 @@ static HB_BOOL hb_gt_crs_Suspend( PHB_GT pGT )
 
 static HB_BOOL hb_gt_crs_Resume( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_Resume(%p)", static_cast< void * >( pGT ) ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -2540,7 +2564,9 @@ static HB_BOOL hb_gt_crs_Resume( PHB_GT pGT )
 
 static HB_BOOL hb_gt_crs_PreExt( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_PreExt(%p)", static_cast< void * >( pGT ) ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -2554,7 +2580,9 @@ static HB_BOOL hb_gt_crs_PreExt( PHB_GT pGT )
 
 static HB_BOOL hb_gt_crs_PostExt( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_PostExt(%p)", static_cast< void * >( pGT ) ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -2565,7 +2593,9 @@ static HB_BOOL hb_gt_crs_PostExt( PHB_GT pGT )
 
 static HB_BOOL hb_gt_crs_mouse_IsPresent( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_mouse_IsPresent(%p)", static_cast< void * >( pGT ) ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -2576,7 +2606,9 @@ static HB_BOOL hb_gt_crs_mouse_IsPresent( PHB_GT pGT )
 
 static void hb_gt_crs_mouse_Show( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_mouse_Show(%p)", static_cast< void * >( pGT ) ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -2591,7 +2623,9 @@ static void hb_gt_crs_mouse_Show( PHB_GT pGT )
 
 static void hb_gt_crs_mouse_Hide( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_mouse_Hide(%p)", static_cast< void * >( pGT ) ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -2605,7 +2639,9 @@ static void hb_gt_crs_mouse_Hide( PHB_GT pGT )
 
 static void hb_gt_crs_mouse_GetPos( PHB_GT pGT, int * piRow, int * piCol )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_mouse_Col(%p,%p,%p)", static_cast< void * >( pGT ), static_cast< void * >( piRow ), static_cast< void * >( piCol ) ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -2617,7 +2653,9 @@ static void hb_gt_crs_mouse_GetPos( PHB_GT pGT, int * piRow, int * piCol )
 
 static void hb_gt_crs_mouse_SetPos( PHB_GT pGT, int iRow, int iCol )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_mouse_SetPos(%p,%i,%i)", static_cast< void * >( pGT ), iRow, iCol ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -2631,7 +2669,9 @@ static void hb_gt_crs_mouse_SetPos( PHB_GT pGT, int iRow, int iCol )
 
 static HB_BOOL hb_gt_crs_mouse_ButtonState( PHB_GT pGT, int iButton )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_mouse_ButtonState(%p,%i)", static_cast< void * >( pGT ), iButton ) );
+#endif
 
    HB_BOOL ret = HB_FALSE;
 
@@ -2660,7 +2700,9 @@ static HB_BOOL hb_gt_crs_mouse_ButtonState( PHB_GT pGT, int iButton )
 
 static int hb_gt_crs_mouse_CountButton( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_mouse_CountButton(%p)", static_cast< void * >( pGT ) ) );
+#endif
 
    HB_SYMBOL_UNUSED( pGT );
 
@@ -2669,7 +2711,9 @@ static int hb_gt_crs_mouse_CountButton( PHB_GT pGT )
 
 static void hb_gt_crs_mouse_SetDoubleClickSpeed( PHB_GT pGT, int iSpeed )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_mouse_SetDoubleClickSpeed(%p,%d)", static_cast< void * >( pGT ), iSpeed ) );
+#endif
 
    HB_GTSUPER_MOUSESETDOUBLECLICKSPEED( pGT, iSpeed );
    s_ioBase->mLastEvt.click_delay = iSpeed;
@@ -2679,7 +2723,9 @@ static void hb_gt_crs_mouse_SetDoubleClickSpeed( PHB_GT pGT, int iSpeed )
 
 static int hb_gt_crs_ReadKey( PHB_GT pGT, int iEventMask )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_ReadKey(%p,%d)", static_cast< void * >( pGT ), iEventMask ) );
+#endif
 
    int iKey;
 
@@ -2701,7 +2747,9 @@ static int hb_gt_crs_ReadKey( PHB_GT pGT, int iEventMask )
 
 static HB_BOOL hb_gt_crs_SetDispCP( PHB_GT pGT, const char * pszTermCDP, const char * pszHostCDP, HB_BOOL fBox )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_SetDispCP(%p,%s,%s,%d)", static_cast< void * >( pGT ), pszTermCDP, pszHostCDP, static_cast< int >( fBox ) ) );
+#endif
 
    if( HB_GTSUPER_SETDISPCP( pGT, pszTermCDP, pszHostCDP, fBox ) )
    {
@@ -2716,7 +2764,9 @@ static HB_BOOL hb_gt_crs_SetDispCP( PHB_GT pGT, const char * pszTermCDP, const c
 
 static HB_BOOL hb_gt_crs_SetKeyCP( PHB_GT pGT, const char * pszTermCDP, const char * pszHostCDP )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_SetKeyCP(%p,%s,%s)", static_cast< void * >( pGT ), pszTermCDP, pszHostCDP ) );
+#endif
 
    if( HB_GTSUPER_SETKEYCP( pGT, pszTermCDP, pszHostCDP ) )
    {
@@ -2730,7 +2780,9 @@ static HB_BOOL hb_gt_crs_SetKeyCP( PHB_GT pGT, const char * pszTermCDP, const ch
 
 static HB_BOOL hb_gt_crs_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_Info(%p,%d,%p)", static_cast< void * >( pGT ), iType, static_cast< void * >( pInfo ) ) );
+#endif
 
    if( s_ioBase )
    {
@@ -2760,7 +2812,9 @@ static HB_BOOL hb_gt_crs_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
 static void hb_gt_crs_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_Redraw(%p,%d,%d,%d)", static_cast< void * >( pGT ), iRow, iCol, iSize ) );
+#endif
 
    if( s_ioBase )
    {
@@ -2786,7 +2840,9 @@ static void hb_gt_crs_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 
 static void hb_gt_crs_Refresh( PHB_GT pGT )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_Refresh(%p)", static_cast< void * >( pGT ) ) );
+#endif
 
    HB_GTSUPER_REFRESH( pGT );
    if( s_ioBase )
@@ -2805,7 +2861,9 @@ static void hb_gt_crs_Refresh( PHB_GT pGT )
 
 static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
 {
+#if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_FuncInit(%p)", static_cast< void * >( pFuncTable ) ) );
+#endif
 
    pFuncTable->Init                       = hb_gt_crs_Init;
    pFuncTable->Exit                       = hb_gt_crs_Exit;

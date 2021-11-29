@@ -52,13 +52,15 @@
 
 #define HB_EOL_BUFFER_SIZE    4
 
-typedef struct
+struct HB_EOL_INFO
 {
    const char *   szEOL;
    HB_SIZE        nLen;
-} HB_EOL_INFO, * PHB_EOL_INFO;
+};
 
-typedef struct
+using PHB_EOL_INFO = HB_EOL_INFO *;
+
+struct HB_MLC_INFO
 {
    const char *   pszString;
    HB_SIZE        nLen;
@@ -75,8 +77,9 @@ typedef struct
    HB_SIZE        nCol;
 
    HB_EOL_INFO    EOL_buffer[ HB_EOL_BUFFER_SIZE ];
-}
-HB_MLC_INFO, * PHB_MLC_INFO;
+};
+
+using PHB_MLC_INFO = HB_MLC_INFO *;
 
 static void hb_mlGetEOLs( PHB_MLC_INFO pMLC, int iParam )
 {

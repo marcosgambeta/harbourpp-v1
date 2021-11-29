@@ -120,12 +120,13 @@
 #include "hbapierr.h"
 #include "hblpp.h"
 
-typedef struct
+struct HB_LPP_GC
 {
    PHB_LPP  pSocket;
    PHB_ITEM pItemSocket;
-} HB_LPP_GC, * PHB_LPP_GC;
+};
 
+using PHB_LPP_GC = HB_LPP_GC *;
 
 static HB_GARBAGE_FUNC( hb_lpp_destructor )
 {

@@ -56,18 +56,23 @@
 #include "hbapigt.h"
 #include "hbstack.h"
 
-typedef struct HB_SETKEY_
+struct HB_SETKEY_
 {
    int iKeyCode;
    PHB_ITEM pAction;
    PHB_ITEM pIsActive;
    struct HB_SETKEY_ * next;
-} HB_SETKEY, * PHB_SETKEY;
+};
 
-typedef struct
+using HB_SETKEY = HB_SETKEY_;
+using PHB_SETKEY = HB_SETKEY_ *;
+
+struct HB_SK_DATA
 {
    PHB_SETKEY sk_list;
-} HB_SK_DATA, * PHB_SK_DATA;
+};
+
+using PHB_SK_DATA = HB_SK_DATA *;
 
 static void hb_setkeyRelease( void * cargo )
 {

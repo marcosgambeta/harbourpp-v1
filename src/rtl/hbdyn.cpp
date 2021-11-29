@@ -99,7 +99,7 @@ static int hb_hbtoctype( int iHarbourType )
 
 #if defined( HB_ARCH_64BIT )
 
-typedef struct
+struct HB_DYNVAL
 {
    union
    {
@@ -108,9 +108,9 @@ typedef struct
       double nDB;
       float  nFL;
    } t;
-} HB_DYNVAL;
+};
 
-typedef struct
+struct HB_DYNARG
 {
    void *    hString;
    int       iType;
@@ -119,7 +119,9 @@ typedef struct
    HB_BOOL   bRawBuffer;
    HB_BOOL   bByRef;
    HB_DYNVAL value;
-} HB_DYNARG, * PHB_DYNARG;
+};
+
+using PHB_DYNARG = HB_DYNARG *;
 
 static HB_U64 hb_u64par( PHB_ITEM pParam, PHB_DYNARG pArg )
 {
@@ -467,7 +469,7 @@ HB_DYN_CTYPE_DECL( float,  FX64_FL );
 
 #elif defined( HB_ARCH_32BIT )
 
-typedef struct
+struct HB_DYNVAL
 {
    union
    {
@@ -478,9 +480,9 @@ typedef struct
       double nDB;
       float  nFL;
    } t;
-} HB_DYNVAL;
+};
 
-typedef struct
+struct HB_DYNARG
 {
    void *    hString;
    int       iType;
@@ -489,7 +491,9 @@ typedef struct
    HB_BOOL   bRawBuffer;
    HB_BOOL   bByRef;
    HB_DYNVAL value;
-} HB_DYNARG, * PHB_DYNARG;
+};
+
+using PHB_DYNARG = HB_DYNARG *;
 
 static void hb_u32par( PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r2, HB_BOOL * b64 )
 {

@@ -51,14 +51,16 @@
 /* NOTE: In original CA-Cl*pper 5.x these functions are written in Clipper
          [vszakats] */
 
-typedef struct
+struct HB_SCRDATA
 {
    int    row;
    int    col;
    int    maxrow;
    int    maxcol;
    void * buffer;
-} HB_SCRDATA, * PHB_SCRDATA;
+};
+
+using PHB_SCRDATA = HB_SCRDATA *;
 
 static void hb_xSaveRestRelease( void * cargo )
 {

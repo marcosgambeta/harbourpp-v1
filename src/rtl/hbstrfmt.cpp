@@ -48,12 +48,12 @@
 #include "hbapiitm.h"
 #include "hbapierr.h"
 
-typedef struct
+struct BUFFERTYPE
 {
    char *  pData;
    HB_SIZE nLen;
    HB_SIZE nMax;
-} BUFFERTYPE;
+};
 
 static void bufadd( BUFFERTYPE * pBuf, const char * pAdd, HB_SIZE nLen )
 {

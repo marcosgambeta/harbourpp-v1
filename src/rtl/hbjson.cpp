@@ -91,7 +91,7 @@
              ? hb_jsonEncode( xI )  // [2,[1,true],[1,true]]
  */
 
-typedef struct
+struct HB_JSON_ENCODE_CTX
 {
    char *  pBuffer;
    char *  pHead;
@@ -101,8 +101,9 @@ typedef struct
    int     iIndent;
    int     iEolLen;
    const char * szEol;
-} HB_JSON_ENCODE_CTX, * PHB_JSON_ENCODE_CTX;
+};
 
+using PHB_JSON_ENCODE_CTX = HB_JSON_ENCODE_CTX *;
 
 #define INDENT_SIZE  2
 

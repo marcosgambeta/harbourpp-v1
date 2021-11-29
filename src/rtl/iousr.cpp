@@ -59,21 +59,24 @@
 
 #define HB_FILE_ERR_UNSUPPORTED  ( static_cast< HB_ERRCODE >( FS_ERROR ) )
 
-typedef struct _HB_IOUSR
+struct _HB_IOUSR
 {
    HB_FILE_FUNCS  funcs;
    char *         prefix;
    int            prefix_len;
    PHB_SYMB       prg_funcs[ IOUSR_METHODCOUNT ];
-}
-HB_IOUSR, * PHB_IOUSR;
+};
 
-typedef struct _HB_FILE
+using HB_IOUSR = _HB_IOUSR;
+using PHB_IOUSR = _HB_IOUSR *;
+
+struct _HB_FILE
 {
    const HB_FILE_FUNCS * pFuncs;
    PHB_ITEM              pFileItm;
-}
-HB_FILE;
+};
+
+using HB_FILE = _HB_FILE;
 
 static HB_CRITICAL_NEW( s_iousrMtx );
 #define HB_IOUSR_LOCK()       do { hb_threadEnterCriticalSection( &s_iousrMtx )

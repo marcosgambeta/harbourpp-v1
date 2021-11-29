@@ -58,7 +58,7 @@
 #include "hbthread.h"
 #include "hbznet.h"
 
-typedef struct
+struct HB_SOCKET_STRUCT
 {
    HB_SOCKET      sd;
    void *         remote;
@@ -79,7 +79,9 @@ typedef struct
    HB_INET_CLFUNC cleanFunc;
    HB_INET_ERFUNC errorFunc;
    HB_INET_ESFUNC errstrFunc;
-} HB_SOCKET_STRUCT, * PHB_SOCKET_STRUCT;
+};
+
+using PHB_SOCKET_STRUCT = HB_SOCKET_STRUCT *;
 
 #define HB_INET_BUFFER_LEN  1500
 

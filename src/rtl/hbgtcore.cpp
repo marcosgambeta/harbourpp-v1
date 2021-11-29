@@ -3597,7 +3597,7 @@ static void hb_gt_def_MouseGetBounds( PHB_GT pGT, int * piTop, int * piLeft, int
    --( *piRight );
 }
 
-typedef struct
+struct _HB_MOUSE_STORAGE
 {
    int iRow;
    int iCol;
@@ -3606,7 +3606,7 @@ typedef struct
    int iLeft;
    int iBottom;
    int iRight;
-} _HB_MOUSE_STORAGE;
+};
 
 static int hb_gt_def_mouseStorageSize( PHB_GT pGT )
 {

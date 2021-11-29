@@ -56,7 +56,7 @@
 
 #include <zlib.h>
 
-typedef struct _HB_ZNETSTREAM
+struct _HB_ZNETSTREAM
 {
    z_stream rd;         /* input stream */
    z_stream wr;         /* output stream */
@@ -70,8 +70,9 @@ typedef struct _HB_ZNETSTREAM
    Bytef *  inbuf;      /* input buffer */
    Bytef *  outbuf;     /* output buffer */
    HB_BLOWFISH * bf;
-}
-HB_ZNETSTREAM;
+};
+
+using HB_ZNETSTREAM = _HB_ZNETSTREAM;
 
 #define HB_ZNET_BUFSIZE       0x4000
 #define HB_ZNET_READAHEAD     0x40

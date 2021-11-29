@@ -81,14 +81,15 @@
 
 #define HB_FLOCK_RESIZE  16
 
-typedef struct
+struct HB_FLOCK
 {
    HB_FOFFSET start;
    HB_FOFFSET len;
-}
-HB_FLOCK, * PHB_FLOCK;
+};
 
-typedef struct _HB_FILE
+using PHB_FLOCK = HB_FLOCK *;
+
+struct _HB_FILE
 {
    const HB_FILE_FUNCS * pFuncs;
    HB_ULONG       device;
@@ -103,8 +104,9 @@ typedef struct _HB_FILE
    HB_UINT        uiSize;
    struct _HB_FILE * pNext;
    struct _HB_FILE * pPrev;
-}
-HB_FILE;
+};
+
+using HB_FILE = _HB_FILE;
 
 static const HB_FILE_FUNCS * s_fileMethods( void );
 #if defined( HB_OS_UNIX )
@@ -944,13 +946,14 @@ static const HB_FILE_FUNCS * s_fileMethods( void )
 
 #if defined( HB_OS_UNIX )
 
-typedef struct
+struct HB_FILEPOS
 {
    const HB_FILE_FUNCS * pFuncs;
    PHB_FILE       pFile;
    HB_FOFFSET     seek_pos;
-}
-HB_FILEPOS, * PHB_FILEPOS;
+};
+
+using PHB_FILEPOS = HB_FILEPOS *;
 
 #define _PHB_FILEPOS  ( static_cast< PHB_FILEPOS >( pFilePos ) )
 #define _PHB_FILE     _PHB_FILEPOS->pFile

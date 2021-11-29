@@ -183,20 +183,24 @@ complex ones:
 
 #define HB_SERIAL_REFLSTINIT  16
 
-typedef struct
+struct HB_REF_ITEM
 {
    void *   value;
    HB_SIZE  nOffset;
    int      iRefs;
    int      iType;
-} HB_REF_ITEM, * PHB_REF_ITEM;
+};
 
-typedef struct
+using PHB_REF_ITEM = HB_REF_ITEM *;
+
+struct HB_REF_LIST
 {
    HB_SIZE        nSize;
    HB_SIZE        nCount;
    PHB_REF_ITEM   pRefs;
-} HB_REF_LIST, * PHB_REF_LIST;
+};
+
+using PHB_REF_LIST = HB_REF_LIST *;
 
 static HB_SIZE hb_deserializeItem( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut,
                                    const HB_UCHAR * pBuffer, HB_SIZE nOffset, PHB_REF_LIST pRefList );

@@ -60,7 +60,7 @@
 #   include <errno.h>
 #endif
 
-typedef struct
+struct HB_MATHERRDATA
 {
    int                  mode;
    PHB_ITEM             block;
@@ -69,7 +69,9 @@ typedef struct
 #if defined( HB_MATH_HANDLER )
    HB_MATH_EXCEPTION    exception;
 #endif
-} HB_MATHERRDATA, * PHB_MATHERRDATA;
+};
+
+using PHB_MATHERRDATA = HB_MATHERRDATA *;
 
 /* Harbour default math error handling routine */
 static int hb_matherr( HB_MATH_EXCEPTION * pexc )

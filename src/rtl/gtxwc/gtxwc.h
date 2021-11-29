@@ -77,8 +77,8 @@
 
 /************************************************************/
 /* Utility functions                                        */
-typedef unsigned long HB_GT_PIXELTYPE;
-typedef HB_USHORT HB_GT_CELLTYPE;
+using HB_GT_PIXELTYPE = unsigned long;
+using HB_GT_CELLTYPE = HB_USHORT;
 
 #define XWC_CHAR_QUEUE_SIZE         128
 #define XWC_CHAR_BUFFER             1024
@@ -260,7 +260,7 @@ typedef HB_USHORT HB_GT_CELLTYPE;
 
 /********************** Unix to graphic box translation ******************/
 
-typedef enum
+enum XWC_CharType
 {
    CH_UNDEF,         /* undefined */
    CH_CHAR,          /* normal U16 character */
@@ -272,9 +272,9 @@ typedef enum
    CH_SEG,           /* character built from lines (segments) */
    CH_RECT,          /* character built from rectangles */
    CH_POLY           /* character built by polygon */
-} XWC_CharType;
+} ;
 
-typedef struct
+struct XWC_CharTrans
 {
    XWC_CharType type;
    union
@@ -287,6 +287,6 @@ typedef struct
    } u;
    HB_BYTE size;
    HB_BOOL inverse;
-} XWC_CharTrans;
+};
 
 #endif

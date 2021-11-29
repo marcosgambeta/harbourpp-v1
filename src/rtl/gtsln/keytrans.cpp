@@ -386,9 +386,7 @@ static int KeyTranslationTable[][ 2 ] =
 /* a very simple sort algorithm */
 static void hb_sln_SortKeyTranslationTable( void )
 {
-   int i;
-
-   for( i = 0; i < ( static_cast< int >( KeyTranslationTableSize ) - 1 ); i++ )
+   for( int i = 0; i < ( static_cast< int >( KeyTranslationTableSize ) - 1 ); i++ )
    {
       int j, min, KeyTmp[ 2 ];
 
@@ -397,7 +395,9 @@ static void hb_sln_SortKeyTranslationTable( void )
       for( j = i + 1; j < static_cast< int >( KeyTranslationTableSize ); j++ )
       {
          if( KeyTranslationTable[ j ][ 0 ] < KeyTranslationTable[ min ][ 0 ] )
+         {
             min = j;
+         }
       }
 
       if( min > i )
@@ -415,7 +415,9 @@ static void hb_sln_SortKeyTranslationTable( void )
 
 #if 0
    for( i = 0; i < KeyTranslationTableSize; i++ )
+   {
       fprintf( stderr, "%02x %8x %8x\n", i, KeyTranslationTable[ i ][ 0 ], KeyTranslationTable[ i ][ 1 ] );
+   }
 #endif
 }
 
@@ -424,8 +426,7 @@ static void hb_sln_SortKeyTranslationTable( void )
 /* standard binary search */
 static int hb_sln_FindKeyTranslation( int SlangKey )
 {
-   if( ( SlangKey >= KeyTranslationTable[ 0 ][ 0 ] ) &&
-       ( SlangKey <= KeyTranslationTable[ KeyTranslationTableSize - 1 ][ 0 ] ) )
+   if( ( SlangKey >= KeyTranslationTable[ 0 ][ 0 ] ) && ( SlangKey <= KeyTranslationTable[ KeyTranslationTableSize - 1 ][ 0 ] ) )
    {
       int Start = 0, Stop = KeyTranslationTableSize - 1;
 
@@ -438,13 +439,17 @@ static int hb_sln_FindKeyTranslation( int SlangKey )
          #endif
 
          if( SlangKey == KeyTranslationTable[ CurPos ][ 0 ] )
+         {
             return KeyTranslationTable[ CurPos ][ 1 ];
-
+         }
          else if( SlangKey < KeyTranslationTable[ CurPos ][ 0 ] )
+         {
             Stop = CurPos - 1;
-
+         }
          else if( SlangKey > KeyTranslationTable[ CurPos ][ 0 ] )
+         {
             Start = CurPos + 1;
+         }
       }
    }
 
@@ -466,7 +471,9 @@ int hb_sln_SetKeyInKeyTranslationTable( int SlangKey, int ClipKey )
       for( int i = 0; i < static_cast< int >( KeyTranslationTableSize ); i++ )
       {
          if( SlangKey == KeyTranslationTable[ i ][ 0 ] )
+         {
             KeyTranslationTable[ i ][ 1 ] = ClipKey;
+         }
          Found = 1;
          /* we don't break here because SlangKey can be defined more than once */
       }

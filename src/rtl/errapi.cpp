@@ -83,13 +83,15 @@ static PHB_ITEM s_pError = nullptr;
 
 static HB_SYMB s_symErrorNew = { "ERRORNEW", { HB_FS_PUBLIC | HB_FS_LOCAL }, { HB_FUNCNAME( ERRORNEW ) }, nullptr };
 
-typedef struct
+struct HB_ERRDATA
 {
    PHB_ERROR_INFO errorHandler;
    PHB_ITEM       errorBlock;
    int            iLaunchCount;
    int            uiErrorDOS;    /* The value of DosError() */
-} HB_ERRDATA, * PHB_ERRDATA;
+};
+
+using PHB_ERRDATA = HB_ERRDATA *;
 
 static void hb_errorDataRelease( void * Cargo )
 {

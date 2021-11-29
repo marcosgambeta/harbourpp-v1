@@ -89,11 +89,13 @@ static HB_FHANDLE s_hFilenoStdin  = static_cast< HB_FHANDLE >( HB_STDIN_HANDLE )
 static HB_FHANDLE s_hFilenoStdout = static_cast< HB_FHANDLE >( HB_STDOUT_HANDLE );
 static HB_FHANDLE s_hFilenoStderr = static_cast< HB_FHANDLE >( HB_STDERR_HANDLE );
 
-typedef struct
+struct HB_PRNPOS
 {
    int row;
    int col;
-} HB_PRNPOS, * PHB_PRNPOS;
+};
+
+using PHB_PRNPOS = HB_PRNPOS *;
 
 static HB_TSD_NEW( s_prnPos, sizeof( HB_PRNPOS ), nullptr, nullptr );
 

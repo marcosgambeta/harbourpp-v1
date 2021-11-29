@@ -69,7 +69,7 @@
 
 #define HB_ZSOCK_GET( p )     ( static_cast< PHB_SOCKEX_Z >( p->cargo ) )
 
-typedef struct
+struct HB_SOCKEX_Z
 {
    PHB_SOCKEX     sock;
 
@@ -81,8 +81,9 @@ typedef struct
 
    HB_BYTE *      rdbuf;
    HB_BYTE *      wrbuf;
-}
-HB_SOCKEX_Z, * PHB_SOCKEX_Z;
+};
+
+using PHB_SOCKEX_Z = HB_SOCKEX_Z *;
 
 static voidpf s_zsock_zalloc( voidpf opaque, uInt items, uInt size )
 {

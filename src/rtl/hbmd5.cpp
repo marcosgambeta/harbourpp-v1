@@ -78,11 +78,11 @@
 #include "hbchksum.h"
 
 /* MD5 buffer */
-typedef struct
+struct MD5_BUF
 {
    HB_U32  accum[ 4 ];
    HB_BYTE buf[ 64 ];
-} MD5_BUF;
+};
 
 /*
    Pseudo-functions;

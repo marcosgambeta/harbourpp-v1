@@ -107,7 +107,7 @@
 #include "hbdate.h"
 #include "hbthread.h"
 
-typedef struct
+struct HB_COM
 {
 #if defined( HB_HAS_TERMIOS )
    HB_FHANDLE     fd;
@@ -127,8 +127,9 @@ typedef struct
    #if 0
    struct termios tio;
    #endif
-}
-HB_COM, * PHB_COM;
+};
+
+using PHB_COM = HB_COM *;
 
 static HB_CRITICAL_NEW( s_comMtx );
 #define HB_COM_LOCK()      do { hb_threadEnterCriticalSection( &s_comMtx )

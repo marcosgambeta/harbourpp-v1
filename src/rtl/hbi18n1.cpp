@@ -110,12 +110,14 @@
 #define HB_I18N_PLURAL_UK     19
 #define HB_I18N_PLURAL_VI     20
 
-typedef struct _HB_PLURAL_FORMS
+struct _HB_PLURAL_FORMS
 {
    const char * szLangID;
    int          iForm;
-}
-HB_PLURAL_FORMS, * PHB_PLURAL_FORMS;
+};
+
+using HB_PLURAL_FORMS = _HB_PLURAL_FORMS;
+using PHB_PLURAL_FORMS = _HB_PLURAL_FORMS *;
 
 static const HB_PLURAL_FORMS s_plural_forms[] =
 {
@@ -144,7 +146,7 @@ static const HB_PLURAL_FORMS s_plural_forms[] =
 #define HB_PLURAL_FOMRS_COUNT  HB_SIZEOFARRAY( s_plural_forms )
 
 static const HB_UCHAR s_signature[ 4 ] = { 193, 'H', 'B', 'L' };
-typedef struct _HB_I18N_TRANS
+struct _HB_I18N_TRANS
 {
    HB_COUNTER   iUsers;
    PHB_CODEPAGE cdpage;
@@ -156,12 +158,14 @@ typedef struct _HB_I18N_TRANS
    PHB_ITEM     base_plural_block;
    int          plural_form;
    int          base_plural_form;
-}
-HB_I18N_TRANS, * PHB_I18N_TRANS;
+};
+
+using HB_I18N_TRANS = _HB_I18N_TRANS;
+using PHB_I18N_TRANS = _HB_I18N_TRANS *;
 
 static PHB_I18N_TRANS hb_i18n_table( void )
 {
-   return ( PHB_I18N_TRANS ) hb_vmI18N();
+   return static_cast< PHB_I18N_TRANS >( hb_vmI18N() );
 }
 
 static int hb_i18n_pluralformfind( const char * szLang )

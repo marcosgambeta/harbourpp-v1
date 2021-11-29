@@ -58,7 +58,7 @@
 
 #define HB_BFSOCK_GET( p )    ( static_cast< PHB_SOCKEX_BF >( p->cargo ) )
 
-typedef struct
+struct HB_SOCKEX_BF
 {
    PHB_SOCKEX     sock;
 
@@ -71,8 +71,9 @@ typedef struct
    long           inbuffer;
    int            encoded;
    int            decoded;
-}
-HB_SOCKEX_BF, * PHB_SOCKEX_BF;
+};
+
+using PHB_SOCKEX_BF = HB_SOCKEX_BF *;
 
 static void s_bf_hash( const HB_BLOWFISH * bf, HB_BYTE * vect, HB_BYTE * counter )
 {
