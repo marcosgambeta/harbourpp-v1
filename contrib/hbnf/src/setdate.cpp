@@ -74,5 +74,5 @@
 
 HB_FUNC( FT_SETDATE )
 {
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }

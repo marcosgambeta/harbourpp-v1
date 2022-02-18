@@ -70,7 +70,7 @@ HB_FUNC( CHARREPL )
       {
          if( iNoRet )
          {
-            hb_retl( HB_FALSE );
+            hb_retl(false);
          }
          else
          {
@@ -120,7 +120,7 @@ HB_FUNC( CHARREPL )
 
       if( iNoRet )
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
          hb_xfree( pcRet );
       }
       else
@@ -146,7 +146,7 @@ HB_FUNC( CHARREPL )
       }
       else if( iNoRet )
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
       else if( HB_ISCHAR( 2 ) )
       {

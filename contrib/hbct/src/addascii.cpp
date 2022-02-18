@@ -74,7 +74,7 @@ HB_FUNC( ADDASCII )
          /* return string unchanged */
          if( iNoRet )
          {
-            hb_retl( HB_FALSE );
+            hb_retl(false);
          }
          else
          {
@@ -118,7 +118,7 @@ HB_FUNC( ADDASCII )
 
       if( iNoRet )
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
          hb_xfree( pcResult );
       }
       else
@@ -143,7 +143,7 @@ HB_FUNC( ADDASCII )
       }
       else if( iNoRet )
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
       else
       {

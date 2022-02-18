@@ -233,7 +233,7 @@ HB_FUNC( WAPI_IMAGELIST_GETICONSIZE )
    }
    else
    {
-      hb_retl( HB_FALSE );
+      hb_retl(false);
    }
 }
 

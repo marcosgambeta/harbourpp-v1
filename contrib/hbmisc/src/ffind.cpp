@@ -91,7 +91,7 @@ HB_FUNC( FILEFINDFIRST )
       hb_retl( ffind != nullptr );
    }
    else
-      hb_retl( HB_FALSE );
+      hb_retl(false);
 }
 
 HB_FUNC( FILEFINDNEXT )

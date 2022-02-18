@@ -123,7 +123,7 @@ HB_FUNC( WORDREPL )
 
       if( iNoRet )
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
          hb_xfree( pcRet );
       }
       else
@@ -149,7 +149,7 @@ HB_FUNC( WORDREPL )
       }
       else if( iNoRet )
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
       else if( HB_ISCHAR( 2 ) )
       {

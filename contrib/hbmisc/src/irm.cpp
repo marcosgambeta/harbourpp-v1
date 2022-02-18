@@ -329,7 +329,7 @@ HB_FUNC( IRMMAPSKIP )
       if( ulRecNo != 0 )
          hb_retl( SELF_GOTO( static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() ), ulRecNo ) == HB_SUCCESS );
       else
-         hb_retl( HB_FALSE );
+         hb_retl(false);
    }
 }
 

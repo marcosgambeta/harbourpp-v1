@@ -113,14 +113,14 @@ HB_FUNC( HB_SSL_APPLINK )
 #if defined( HB_OPENSSL_HAS_APPLINK )
    hb_retl(true);
 #else
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 #endif
 }
 
 HB_FUNC( HB_SSL_STATIC )
 {
 #if defined( HB_DYNLIB )
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 #else
    hb_retl(true);
 #endif

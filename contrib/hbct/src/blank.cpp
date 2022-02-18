@@ -59,7 +59,7 @@ HB_FUNC( BLANK )
    {
       if( bRet )
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
    }
    else if( HB_IS_TIMESTAMP( pItem ) )
@@ -152,14 +152,14 @@ HB_FUNC( BLANK )
       }
       if( bRet )
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
    }
    else
    {
       if( bRet )
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
    }
    if( ! bRet )

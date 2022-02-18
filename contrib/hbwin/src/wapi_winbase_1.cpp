@@ -413,6 +413,6 @@ HB_FUNC( WAPI_GETVOLUMEINFORMATION )
 
    hb_retl( bResult != 0 );
 #else
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 #endif
 }

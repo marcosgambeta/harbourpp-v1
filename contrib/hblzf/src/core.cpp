@@ -87,7 +87,7 @@ HB_FUNC( HB_LZF_OPTIMIZED_FOR_SPEED )
 #if ULTRA_FAST
    hb_retl(true);
 #else
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 #endif
 }
 

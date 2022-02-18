@@ -443,6 +443,6 @@ HB_FUNC( HB_PQCOPYFROMWA )
       hb_retl( ! bFail );
    }
 #else
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 #endif
 }

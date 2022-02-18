@@ -124,7 +124,7 @@ HB_FUNC( NETCANCEL )
     */
    hb_retl( dwResult == NO_ERROR );
 #else
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 #endif
 }
 
@@ -139,7 +139,7 @@ HB_FUNC( NETPRINTER )
    }
    hb_retl( hb_IsNetShared( cPrn ) );
 #else
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 #endif
 }
 
@@ -160,7 +160,7 @@ HB_FUNC( NETDISK )
    }
    else
 #endif
-      hb_retl( HB_FALSE );
+      hb_retl(false);
 }
 
 HB_FUNC( NETREDIR )
@@ -180,7 +180,7 @@ HB_FUNC( NETREDIR )
 
    hb_retl( dwResult == NO_ERROR );
 #else
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 #endif
 }
 
@@ -237,7 +237,7 @@ HB_FUNC( NETWORK )
 
    hb_retl( dwResult == NO_ERROR );
 #else
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 #endif
 }
 
@@ -249,6 +249,6 @@ HB_FUNC( NNETWORK )
 
    hb_retl( WNetGetProviderName( WNNC_NET_NETWARE, lpProviderName, &dwLen ) == NO_ERROR );
 #else
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 #endif
 }

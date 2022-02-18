@@ -139,7 +139,7 @@ static void do_charswap( int iSwitch )
 
       if( iNoRet )
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
       else
       {
@@ -176,7 +176,7 @@ static void do_charswap( int iSwitch )
       }
       else if( iNoRet )
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
       else
       {

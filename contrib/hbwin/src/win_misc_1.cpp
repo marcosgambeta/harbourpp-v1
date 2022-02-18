@@ -141,7 +141,7 @@ HB_FUNC( WIN_UNICODE )
 #if defined( UNICODE )
    hb_retl(true);
 #else
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 #endif
 }
 

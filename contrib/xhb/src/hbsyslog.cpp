@@ -79,17 +79,17 @@ HB_FUNC( HB_SYSLOGOPEN )
       hb_retl(true);
    }
    else
-      hb_retl( HB_FALSE );
+      hb_retl(false);
 #  else
    s_RegHandle = nullptr;
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 #  endif
 
 #elif defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS )
    openlog( hb_parcx( 1 ), LOG_NDELAY | LOG_NOWAIT | LOG_PID, LOG_USER );
    hb_retl(true);
 #else
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 #endif
 }
 
@@ -105,16 +105,16 @@ HB_FUNC( HB_SYSLOGCLOSE )
       hb_retl(true);
    }
    else
-      hb_retl( HB_FALSE );
+      hb_retl(false);
 #  else
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 #  endif
 
 #elif defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS )
    closelog();
    hb_retl(true);
 #else
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 #endif
 }
 
@@ -150,9 +150,9 @@ HB_FUNC( HB_SYSLOGMESSAGE )
       hb_strfree( hMsg );
    }
    else
-      hb_retl( HB_FALSE );
+      hb_retl(false);
 #  else
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 #  endif
 
 #elif defined( HB_OS_UNIX ) && \
@@ -173,6 +173,6 @@ HB_FUNC( HB_SYSLOGMESSAGE )
    syslog( logval, "[%lX]: %s", hb_parnl( 3 ), hb_parcx( 1 ) );
    hb_retl(true);
 #else
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 #endif
 }

@@ -85,7 +85,7 @@ HB_FUNC( WIN_RUNDETACHED )
    else
    {
       hb_stornl( -1, 3 );
-      hb_retl( HB_FALSE );
+      hb_retl(false);
    }
 
    hb_strfree( hCommandName );

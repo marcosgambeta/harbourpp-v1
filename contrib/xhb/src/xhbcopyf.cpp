@@ -186,7 +186,7 @@ HB_FUNC( XHB_COPYFILE )
    if( szSource && szDest )
    {
       if( ! hb_copyfile( szSource, szDest, hb_param( 3, HB_IT_EVALITEM ) ) )
-         hb_retl( HB_FALSE );
+         hb_retl(false);
    }
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );  /* NOTE: Undocumented but existing Clipper Run-time error */

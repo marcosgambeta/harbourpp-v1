@@ -177,7 +177,7 @@ HB_FUNC( BM_DBSEEKWILD )
 
 HB_FUNC( BM_TURBO )
 {
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 

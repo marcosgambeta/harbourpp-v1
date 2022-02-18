@@ -95,7 +95,7 @@ HB_FUNC( ISALNUM )
    if( szString != nullptr )
       hb_retl( HB_ISALNUM( static_cast< HB_BYTE >( *szString ) ) );
    else
-      hb_retl( HB_FALSE );
+      hb_retl(false);
 }
 
 /* determines if first char of a string is a white-space character;
@@ -110,7 +110,7 @@ HB_FUNC( ISSPACE )
    if( szString != nullptr )
       hb_retl( HB_ISSPACE( static_cast< HB_BYTE >( *szString ) ) );
    else
-      hb_retl( HB_FALSE );
+      hb_retl(false);
 }
 
 /* determines if first char of a string is a hexadecimal digit

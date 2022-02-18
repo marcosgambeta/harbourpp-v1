@@ -330,7 +330,7 @@ HB_FUNC( WIN_COMSTATUS )
          hb_storl( HB_FALSE, 4 );
          hb_storl( HB_FALSE, 5 );
 
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
    }
    else
@@ -358,7 +358,7 @@ HB_FUNC( WIN_COMPURGE )
       else
       {
          s_PortData[ iPort ].dwError = GetLastError();
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
    }
    else
@@ -403,7 +403,7 @@ HB_FUNC( WIN_COMQUEUESTATUS )
          hb_stornl( 0, 7 );
          hb_stornl( 0, 8 );
 
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
    }
    else
@@ -433,7 +433,7 @@ HB_FUNC( WIN_COMSETRTS )
       else
       {
          s_PortData[ iPort ].dwError = GetLastError();
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
    }
    else
@@ -463,7 +463,7 @@ HB_FUNC( WIN_COMSETDTR )
       else
       {
          s_PortData[ iPort ].dwError = GetLastError();
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
    }
    else
@@ -488,7 +488,7 @@ HB_FUNC( WIN_COMRTSFLOW )
       if( ! GetCommState( hCommPort, &CurDCB ) )
       {
          s_PortData[ iPort ].dwError = GetLastError();
-         hb_retl( HB_FALSE );
+         hb_retl(false);
          return;
       }
 
@@ -509,7 +509,7 @@ HB_FUNC( WIN_COMRTSFLOW )
       }
       else    /* RTS_CONTROL_TOGGLE - RS485? */
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
          return;
       }
 
@@ -518,7 +518,7 @@ HB_FUNC( WIN_COMRTSFLOW )
       if( ! SetCommState( hCommPort, &CurDCB ) )
       {
          s_PortData[ iPort ].dwError = GetLastError();
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
       else
       {
@@ -547,7 +547,7 @@ HB_FUNC( WIN_COMDTRFLOW )
       if( ! GetCommState( hCommPort, &CurDCB ) )
       {
          s_PortData[ iPort ].dwError = GetLastError();
-         hb_retl( HB_FALSE );
+         hb_retl(false);
          return;
       }
 
@@ -568,7 +568,7 @@ HB_FUNC( WIN_COMDTRFLOW )
       }
       else
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
          return;
       }
 
@@ -577,7 +577,7 @@ HB_FUNC( WIN_COMDTRFLOW )
       if( ! SetCommState( hCommPort, &CurDCB ) )
       {
          s_PortData[ iPort ].dwError = GetLastError();
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
       else
       {
@@ -605,7 +605,7 @@ HB_FUNC( WIN_COMXONXOFFFLOW )
       if( ! GetCommState( hCommPort, &CurDCB ) )
       {
          s_PortData[ iPort ].dwError = GetLastError();
-         hb_retl( HB_FALSE );
+         hb_retl(false);
          return;
       }
 
@@ -625,7 +625,7 @@ HB_FUNC( WIN_COMXONXOFFFLOW )
       if( ! SetCommState( hCommPort, &CurDCB ) )
       {
          s_PortData[ iPort ].dwError = GetLastError();
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
       else
       {
@@ -716,7 +716,7 @@ HB_FUNC( WIN_COMSETTIMEOUTS )
       if( ! GetCommState( hCommPort, &CurDCB ) )
       {
          s_PortData[ iPort ].dwError = GetLastError();
-         hb_retl( HB_FALSE );
+         hb_retl(false);
          return;
       }
 
@@ -725,7 +725,7 @@ HB_FUNC( WIN_COMSETTIMEOUTS )
       if( ! hb_win_ComSetTimeouts( hCommPort, &Timeouts, CurDCB.BaudRate, CurDCB.Parity, CurDCB.ByteSize, CurDCB.StopBits ) )
       {
          s_PortData[ iPort ].dwError = GetLastError();
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
       else
       {
@@ -750,7 +750,7 @@ HB_FUNC( WIN_COMSETQUEUESIZE )
       if( ! SetupComm( hCommPort, hb_parni( 2 ), hb_parni( 3 ) ) )
       {
          s_PortData[ iPort ].dwError = GetLastError();
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
       else
       {

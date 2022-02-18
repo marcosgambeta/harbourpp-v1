@@ -64,7 +64,7 @@ HB_FUNC( VGAPALETTE )
    if( hb_pcount() < 4 )
    {
       /* Resetting palette registers to default values is not supported yet */
-      hb_retl( HB_FALSE );
+      hb_retl(false);
       return;
    }
 
@@ -85,7 +85,7 @@ HB_FUNC( VGAPALETTE )
    if( attr < 0 || attr >= 16 )
    {
       /* An invalid argument */
-      hb_retl( HB_FALSE );
+      hb_retl(false);
       return;
    }
 
@@ -96,7 +96,7 @@ HB_FUNC( VGAPALETTE )
    HB_SYMBOL_UNUSED( blue );
    HB_SYMBOL_UNUSED( green );
    HB_SYMBOL_UNUSED( red );
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 HB_FUNC( VIDEOTYPE )

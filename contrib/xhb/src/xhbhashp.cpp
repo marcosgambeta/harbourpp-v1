@@ -70,7 +70,7 @@ HB_FUNC( HSETPARTITION )
 HB_FUNC( HGETPARTITION )
 {
    if( hb_param( 1, HB_IT_HASH ) )
-      hb_retl( HB_FALSE );
+      hb_retl(false);
    else
       hb_errRT_BASE( EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

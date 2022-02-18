@@ -2527,7 +2527,7 @@ HB_FUNC( SQLITE3_COMPILEOPTION_USED )
 #if SQLITE_VERSION_NUMBER >= 3006023
    hb_retl( static_cast< HB_BOOL >( sqlite3_compileoption_used( hb_parcx( 1 ) ) ) );
 #else
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 #endif
 }
 

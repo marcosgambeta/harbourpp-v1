@@ -166,7 +166,7 @@ static void do_token1( int iSwitch )
          {
             if( iNoRef )
             {
-               hb_retl( HB_FALSE );
+               hb_retl(false );
             }
             else
             {
@@ -252,7 +252,7 @@ static void do_token1( int iSwitch )
                   if( iNoRef )
                   {
                      hb_xfree( pcRet );
-                     hb_retl( HB_FALSE );
+                     hb_retl(false);
                   }
                   else
                   {
@@ -377,7 +377,7 @@ static void do_token1( int iSwitch )
             if( iNoRef )
             {
                hb_xfree( pcRet );
-               hb_retl( HB_FALSE );
+               hb_retl(false);
             }
             else
             {
@@ -425,7 +425,7 @@ static void do_token1( int iSwitch )
             }
             else
             {
-               hb_retl( HB_FALSE );
+               hb_retl(false);
             }
             break;
          }
@@ -455,7 +455,7 @@ static void do_token1( int iSwitch )
             }
             else
             {
-               hb_retl( HB_FALSE );
+               hb_retl(false);
             }
             break;
          }

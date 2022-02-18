@@ -513,12 +513,12 @@ HB_FUNC( WVG_CLIENTTOSCREEN )
       }
       else
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
    }
    else
    {
-      hb_retl( HB_FALSE );
+      hb_retl(false);
    }
 }
 
@@ -536,12 +536,12 @@ HB_FUNC( WVG_SCREENTOCLIENT )
       }
       else
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
    }
    else
    {
-      hb_retl( HB_FALSE );
+      hb_retl(false);
    }
 }
 

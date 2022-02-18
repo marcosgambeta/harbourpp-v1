@@ -1327,7 +1327,7 @@ HB_FUNC( PQCANCEL )
       hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
 #else
-   hb_retl( HB_FALSE );
+   hb_retl(false);
    hb_storc( nullptr, 2 );
 #endif
 }

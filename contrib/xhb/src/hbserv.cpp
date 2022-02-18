@@ -864,12 +864,12 @@ HB_FUNC( HB_POPSIGNALHANDLER )
          }
       }
       else
-         hb_retl( HB_FALSE );
+         hb_retl(false);
 
       hb_threadLeaveCriticalSection( &s_ServiceMutex );
    }
    else
-      hb_retl( HB_FALSE );
+      hb_retl(false);
 }
 
 /**

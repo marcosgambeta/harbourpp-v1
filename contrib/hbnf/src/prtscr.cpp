@@ -26,5 +26,5 @@
 
 HB_FUNC( FT_PRTSCR )
 {
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }

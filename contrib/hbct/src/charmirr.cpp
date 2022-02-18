@@ -73,7 +73,7 @@ HB_FUNC( CHARMIRR )
 
          if( iNoRet )
          {
-            hb_retl( HB_FALSE );
+            hb_retl(false);
          }
          else
          {
@@ -108,7 +108,7 @@ HB_FUNC( CHARMIRR )
 
       if( iNoRet )
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
          hb_xfree( pcRet );
       }
       else
@@ -134,7 +134,7 @@ HB_FUNC( CHARMIRR )
       }
       else if( iNoRet )
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
       else
       {

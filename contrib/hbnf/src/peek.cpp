@@ -32,7 +32,7 @@ HB_FUNC( FT_PEEK )
 
 HB_FUNC( FT_POKE )
 {
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 HB_FUNC( FT_INP )
@@ -42,5 +42,5 @@ HB_FUNC( FT_INP )
 
 HB_FUNC( FT_OUTP )
 {
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }

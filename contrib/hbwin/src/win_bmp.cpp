@@ -242,11 +242,11 @@ HB_FUNC( WIN_DRAWBITMAP )
       }
       else
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
    }
    else
    {
-      hb_retl( HB_FALSE );
+      hb_retl(false);
    }
 }

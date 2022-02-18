@@ -469,7 +469,7 @@ HB_FUNC( WVG_STATUSBARCREATEPANEL )
 
    if( hWndSB == nullptr || ! IsWindow( hWndSB ) )
    {
-      hb_retl( HB_FALSE );
+      hb_retl(false);
       return;
    }
 
@@ -517,7 +517,7 @@ HB_FUNC( WVG_STATUSBARCREATEPANEL )
       }
    }
 
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 HB_FUNC( WVG_STATUSBARSETTEXT )
@@ -561,7 +561,7 @@ HB_FUNC( WVG_STATUSBARREFRESH )
          return;
       }
    }
-   hb_retl( HB_FALSE );
+   hb_retl(false);
    #endif
 }
 

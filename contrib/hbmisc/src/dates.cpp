@@ -143,7 +143,7 @@ HB_FUNC( ISLEAPYEAR )
       hb_retl( hb_isleapyear( iYear ) );
    }
    else
-      hb_retl( HB_FALSE );
+      hb_retl(false);
 }
 
 HB_FUNC( HBMISC_DAYSINMONTH )

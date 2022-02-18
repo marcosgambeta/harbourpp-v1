@@ -344,7 +344,7 @@ HB_FUNC( TOKENINIT )
                       HB_ERR_ARGS_BASEPARAMS );
          }
 
-         hb_retl( HB_FALSE );
+         hb_retl(false);
          return;
       }
 
@@ -397,7 +397,7 @@ HB_FUNC( TOKENINIT )
             }
 
             sTokEnvDel( sTokenEnvironment );
-            hb_retl( HB_FALSE );
+            hb_retl(false);
             return;
          }
 
@@ -446,7 +446,7 @@ HB_FUNC( TOKENINIT )
          }
          else
          {
-            hb_retl( HB_FALSE );
+            hb_retl(false);
          }
       }
    }
@@ -614,7 +614,7 @@ HB_FUNC( TOKENEXIT )
    }
    else
    {
-      hb_retl( HB_FALSE );
+      hb_retl(false);
    }
 }
 

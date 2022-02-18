@@ -72,24 +72,24 @@ HB_FUNC_TRANSLATE( OS_NETVREDIROK         , WIN_OSNETVREDIROK    )
 #else
 
 HB_FUNC( OS_VERSIONINFO         ) {}
-HB_FUNC( OS_ISWINNT             ) { hb_retl( HB_FALSE ); }
-HB_FUNC( OS_ISWINNT351          ) { hb_retl( HB_FALSE ); }
-HB_FUNC( OS_ISWINNT4            ) { hb_retl( HB_FALSE ); }
-HB_FUNC( OS_ISWIN2000_OR_LATER  ) { hb_retl( HB_FALSE ); }
-HB_FUNC( OS_ISWIN2000           ) { hb_retl( HB_FALSE ); }
-HB_FUNC( OS_ISWINXP             ) { hb_retl( HB_FALSE ); }
-HB_FUNC( OS_ISWINXP_OR_LATER    ) { hb_retl( HB_FALSE ); }
-HB_FUNC( OS_ISWIN2003           ) { hb_retl( HB_FALSE ); }
-HB_FUNC( OS_ISWINVISTA          ) { hb_retl( HB_FALSE ); }
-HB_FUNC( OS_ISWINVISTA_OR_LATER ) { hb_retl( HB_FALSE ); }
-HB_FUNC( OS_ISWIN7              ) { hb_retl( HB_FALSE ); }
-HB_FUNC( OS_ISWIN8              ) { hb_retl( HB_FALSE ); }
-HB_FUNC( OS_ISWIN9X             ) { hb_retl( HB_FALSE ); }
-HB_FUNC( OS_ISWIN95             ) { hb_retl( HB_FALSE ); }
-HB_FUNC( OS_ISWIN98             ) { hb_retl( HB_FALSE ); }
-HB_FUNC( OS_ISWINME             ) { hb_retl( HB_FALSE ); }
-HB_FUNC( OS_ISWTSCLIENT         ) { hb_retl( HB_FALSE ); }
-HB_FUNC( OS_NETREGOK            ) { hb_retl( HB_FALSE ); }
-HB_FUNC( OS_NETVREDIROK         ) { hb_retl( HB_FALSE ); }
+HB_FUNC( OS_ISWINNT             ) { hb_retl(false); }
+HB_FUNC( OS_ISWINNT351          ) { hb_retl(false); }
+HB_FUNC( OS_ISWINNT4            ) { hb_retl(false); }
+HB_FUNC( OS_ISWIN2000_OR_LATER  ) { hb_retl(false); }
+HB_FUNC( OS_ISWIN2000           ) { hb_retl(false); }
+HB_FUNC( OS_ISWINXP             ) { hb_retl(false); }
+HB_FUNC( OS_ISWINXP_OR_LATER    ) { hb_retl(false); }
+HB_FUNC( OS_ISWIN2003           ) { hb_retl(false); }
+HB_FUNC( OS_ISWINVISTA          ) { hb_retl(false); }
+HB_FUNC( OS_ISWINVISTA_OR_LATER ) { hb_retl(false); }
+HB_FUNC( OS_ISWIN7              ) { hb_retl(false); }
+HB_FUNC( OS_ISWIN8              ) { hb_retl(false); }
+HB_FUNC( OS_ISWIN9X             ) { hb_retl(false); }
+HB_FUNC( OS_ISWIN95             ) { hb_retl(false); }
+HB_FUNC( OS_ISWIN98             ) { hb_retl(false); }
+HB_FUNC( OS_ISWINME             ) { hb_retl(false); }
+HB_FUNC( OS_ISWTSCLIENT         ) { hb_retl(false); }
+HB_FUNC( OS_NETREGOK            ) { hb_retl(false); }
+HB_FUNC( OS_NETVREDIROK         ) { hb_retl(false); }
 
 #endif

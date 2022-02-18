@@ -860,7 +860,7 @@ HB_FUNC( WVT_SETPEN )
 
    if( ! HB_ISNUM( 1 ) )
    {
-      hb_retl( HB_FALSE );
+      hb_retl(false);
    }
 
    iPenStyle = hb_parni( 1 );
@@ -881,7 +881,7 @@ HB_FUNC( WVT_SETPEN )
    }
    else
    {
-      hb_retl( HB_FALSE );
+      hb_retl(false);
    }
 }
 
@@ -895,7 +895,7 @@ HB_FUNC( WVT_SETBRUSH )
 
    if( ! HB_ISNUM( 1 ) )
    {
-      hb_retl( HB_FALSE );
+      hb_retl(false);
    }
 
    lb.lbStyle = hb_parnl( 1 );
@@ -914,7 +914,7 @@ HB_FUNC( WVT_SETBRUSH )
    }
    else
    {
-      hb_retl( HB_FALSE );
+      hb_retl(false);
    }
 }
 
@@ -1120,7 +1120,7 @@ HB_FUNC( WVT_DRAWLABEL )
       hb_retl(true);
    }
 
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 /*                   1      2       3        4       5       6        7         8
@@ -1579,7 +1579,7 @@ HB_FUNC( WVT_DRAWGRIDVERT )
 
    if( ! iTabs )
    {
-      hb_retl( HB_FALSE );
+      hb_retl(false);
    }
 
    iCharWidth  = _s->PTEXTSIZE.x;
@@ -1924,7 +1924,7 @@ HB_FUNC( WVT_DRAWLABELEX )
       hb_retl(true);
    }
 
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 /*                    1      2       3       4        5        6       7       8          9
@@ -2893,7 +2893,7 @@ HB_FUNC( WVT_LOADPEN )
    }
    else
    {
-      hb_retl( HB_FALSE );
+      hb_retl(false);
    }
 }
 

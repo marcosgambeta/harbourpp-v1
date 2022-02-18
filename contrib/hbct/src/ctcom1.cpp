@@ -392,7 +392,7 @@ HB_FUNC( COM_EVENT )
 HB_FUNC( COM_KEY )
 {
    /* TODO: unsupported */
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 /* com_SKey( [<nComPort>], [<nKeyValue1|cKeyValue1>],
@@ -401,7 +401,7 @@ HB_FUNC( COM_KEY )
 HB_FUNC( COM_SKEY )
 {
    /* TODO: unsupported */
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 /* com_Init( <nComPort>, [<nBaudRate>=300], [<cParity:E,O,M,S,N>=N],

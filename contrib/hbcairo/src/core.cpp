@@ -421,7 +421,7 @@ HB_FUNC( CAIRO_PATH_ITERATOR_SET_POINTS )
             }
             else
             {
-               hb_retl( HB_FALSE );
+               hb_retl(false);
                return;
             }
          }
@@ -429,7 +429,7 @@ HB_FUNC( CAIRO_PATH_ITERATOR_SET_POINTS )
       }
       else
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
    }
    else

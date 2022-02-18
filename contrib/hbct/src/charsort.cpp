@@ -128,7 +128,7 @@ HB_FUNC( CHARSORT )
 
          if( iNoRet )
          {
-            hb_retl( HB_FALSE );
+            hb_retl(false);
          }
          else
          {
@@ -154,7 +154,7 @@ HB_FUNC( CHARSORT )
 
       if( iNoRet )
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
          hb_xfree( pcRet );
       }
       else
@@ -180,7 +180,7 @@ HB_FUNC( CHARSORT )
       }
       else if( iNoRet )
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
       else
       {

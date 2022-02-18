@@ -75,7 +75,7 @@ HB_FUNC( TINYMT64_INIT )
       hb_retl(true);
    }
    else
-      hb_retl( HB_FALSE );
+      hb_retl(false);
 }
 
 /* Syntax: HB_TINYMT64_INIT_BY_ARRAY( { <nVector1>, <nVector2>, <nVector3> }, [<nSeed>], [<nKeyLength>] ) -> <lSuccess> */
@@ -100,7 +100,7 @@ HB_FUNC( TINYMT64_INIT_BY_ARRAY )
       hb_retl(true);
    }
    else
-      hb_retl( HB_FALSE );
+      hb_retl(false);
 }
 
 HB_FUNC( TINYMT64_GENERATE_UINT64 )
