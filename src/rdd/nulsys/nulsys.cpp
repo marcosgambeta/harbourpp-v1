@@ -190,7 +190,7 @@ HB_FUNC( DBGOBOTTOM )
 
 HB_FUNC( DBSEEK )
 {
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 HB_FUNC( DBSKIP )
@@ -212,12 +212,12 @@ HB_FUNC( DBDELETE )
 
 HB_FUNC( DBRLOCK )
 {
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 HB_FUNC( DBUNLOCK )
 {
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 HB_FUNC( DBRELATION )
@@ -251,47 +251,47 @@ HB_FUNC( ALIAS )
 
 HB_FUNC( USED )
 {
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 HB_FUNC( NETERR )
 {
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 HB_FUNC( LOCK )
 {
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 HB_FUNC( FLOCK )
 {
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 HB_FUNC( RLOCK )
 {
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 HB_FUNC( BOF )
 {
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 HB_FUNC( EOF )
 {
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 HB_FUNC( FOUND )
 {
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 HB_FUNC( DELETED )
 {
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 HB_FUNC( RECNO )

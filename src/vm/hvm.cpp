@@ -13316,12 +13316,12 @@ HB_FUNC( __DBGINVOKEDEBUG )
       hb_retl( *pfRequest );
       *pfRequest = hb_parl( 1 );
 #else
-      hb_retl( HB_FALSE );
+      hb_retl(false);
 #endif
    }
    else
    {
-      hb_retl( HB_FALSE );
+      hb_retl(false);
    }
 }
 
@@ -13545,7 +13545,7 @@ HB_FUNC( __SETPROFILER )
 {
    HB_STACK_TLS_PRELOAD
 #ifdef HB_NO_PROFILER
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 #else
    hb_retl( hb_bProfiler );
    if( HB_ISLOG( 1 ) )
@@ -13599,7 +13599,7 @@ HB_FUNC( __TRACEPRGCALLS )
       hb_bTracePrgCalls = hb_parl( 1 );
    }
 #else
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 #endif
 }
 

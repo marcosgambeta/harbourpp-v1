@@ -452,7 +452,7 @@ HB_FUNC( SX_TURBOAREA )
    }
    else
    {
-      hb_retl( HB_FALSE );
+      hb_retl(false);
    }
 }
 

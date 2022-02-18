@@ -253,7 +253,7 @@ HB_FUNC( __PP_ADDRULE )
          return;
       }
    }
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 /*

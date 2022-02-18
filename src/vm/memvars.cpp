@@ -1872,7 +1872,7 @@ HB_FUNC( __MVRESTORE )
       }
       else
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
 
       if( pError )

@@ -184,7 +184,7 @@ HB_FUNC( __COPYFILE )
    {
       if( ! hb_copyfile( szSource, szDest ) )
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
    }
    else

@@ -379,7 +379,7 @@ HB_FUNC( HB_VFTIMEGET )
          hb_stortdt( 0, 0, 2 );
       }
 
-      hb_retl( HB_FALSE );
+      hb_retl(false);
    }
 }
 

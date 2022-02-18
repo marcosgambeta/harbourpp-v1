@@ -137,7 +137,7 @@ HB_FUNC( HB_VERSION )
       #if defined( HB_DYNLIB )
          hb_retl(true);
       #else
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       #endif
          break;
 
@@ -145,7 +145,7 @@ HB_FUNC( HB_VERSION )
       #if defined( HB_OS_UNIX )
          hb_retl(true);
       #else
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       #endif
          break;
 
@@ -153,7 +153,7 @@ HB_FUNC( HB_VERSION )
       #if defined( __cplusplus )
          hb_retl(true);
       #else
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       #endif
          break;
 

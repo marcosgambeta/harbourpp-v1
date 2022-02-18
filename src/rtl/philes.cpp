@@ -179,7 +179,7 @@ HB_FUNC( FCLOSE )
    }
    else
    {
-      hb_retl( HB_FALSE );
+      hb_retl(false);
    }
    hb_fsSetFError( uiError );
 }
@@ -538,7 +538,7 @@ HB_FUNC( HB_FGETDATETIME )
          hb_stortdt( 0, 0, 2 );
       }
 
-      hb_retl( HB_FALSE );
+      hb_retl(false);
    }
 }
 

@@ -2765,7 +2765,7 @@ HB_FUNC( HB_MUTEXSUBSCRIBE )
       }
       else
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
    }
 }
@@ -2802,7 +2802,7 @@ HB_FUNC( HB_MUTEXSUBSCRIBENOW )
       }
       else
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
    }
 }
@@ -2863,7 +2863,7 @@ HB_FUNC( HB_MTVM )
 #if defined( HB_MT_VM )
    hb_retl( HB_TRUE );
 #else
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 #endif
 }
 

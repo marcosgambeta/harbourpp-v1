@@ -53,7 +53,7 @@ HB_FUNC( HB_STRCLEAR )
 
    /* NOTE: clear RETURN value before calling hb_itemGetWriteCL(),
             it's possible that it contains copy of passed item [druzus] */
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 
    if( pItem && HB_ISBYREF( 1 ) )
    {
@@ -69,7 +69,7 @@ HB_FUNC( HB_STRCLEAR )
       }
       else
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
       }
    }
 }

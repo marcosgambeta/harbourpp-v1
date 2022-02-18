@@ -215,7 +215,7 @@ HB_FUNC( HB_HGETREF )
    }
    else
    {
-      hb_retl( HB_FALSE );
+      hb_retl(false);
    }
 }
 

@@ -1429,7 +1429,7 @@ HB_FUNC( ORDCONDSET )
    }
    else
    {
-      hb_retl( HB_FALSE );
+      hb_retl(false);
    }
 }
 
@@ -1491,7 +1491,7 @@ HB_FUNC( ORDBAGCLEAR )
    }
    else
    {
-      hb_retl( HB_FALSE );
+      hb_retl(false);
    }
 }
 
@@ -1509,7 +1509,7 @@ HB_FUNC( ORDDESTROY )
    }
    else
    {
-      hb_retl( HB_FALSE );
+      hb_retl(false);
    }
 }
 

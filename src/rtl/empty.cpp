@@ -94,7 +94,7 @@ HB_FUNC( EMPTY )
          break;
 
       case HB_IT_BLOCK:
-         hb_retl( HB_FALSE );
+         hb_retl(false);
          break;
 
       case HB_IT_POINTER:
