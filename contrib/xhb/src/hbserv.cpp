@@ -856,7 +856,7 @@ HB_FUNC( HB_POPSIGNALHANDLER )
          hb_arrayDel( sp_hooks, nLen );
          hb_arrayDel( sp_hooks, nLen - 1 );
          hb_arraySize( sp_hooks, nLen - 2 );
-         hb_retl( HB_TRUE );
+         hb_retl(true);
          if( hb_arrayLen( sp_hooks ) == 0 )
          {
             hb_itemRelease( sp_hooks );

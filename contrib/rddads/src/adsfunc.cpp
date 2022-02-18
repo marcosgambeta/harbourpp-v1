@@ -1383,7 +1383,7 @@ HB_FUNC( ADSCONNECT )
    if( HB_ISCHAR( 1 ) && AdsConnect( static_cast< UNSIGNED8 * >( const_cast< char * >( hb_parc( 1 ) ) ), &hConnect ) == AE_SUCCESS )
    {
       hb_ads_setConnection( hConnect );
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
    {
@@ -1414,7 +1414,7 @@ HB_FUNC( ADSDISCONNECT )
    {
       hb_ads_clrConnection( hConnect );
 
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
    {
@@ -1526,7 +1526,7 @@ HB_FUNC( ADSEXECUTESQLDIRECT )
             hb_adsCloseCursor( pArea );
          }
 
-         hb_retl( HB_TRUE );
+         hb_retl(true);
       }
       else
       {
@@ -1550,7 +1550,7 @@ HB_FUNC( ADSPREPARESQL )
    {
       if( AdsPrepareSQL( pArea->hStatement, static_cast< UNSIGNED8 * >( const_cast< char * >( hb_parc( 1 ) ) ) /* pucStmt */ ) == AE_SUCCESS )
       {
-         hb_retl( HB_TRUE );
+         hb_retl(true);
       }
       else
       {
@@ -1591,7 +1591,7 @@ HB_FUNC( ADSEXECUTESQL )
             hb_adsCloseCursor( pArea );
          }
 
-         hb_retl( HB_TRUE );
+         hb_retl(true);
       }
       else
       {
@@ -1917,7 +1917,7 @@ HB_FUNC( ADSCACHERECORDS )
 
    if( pArea && AdsCacheRecords( pArea->hTable, static_cast< UNSIGNED16 >( hb_parni( 1 ) ) ) == AE_SUCCESS )
    {
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
    {
@@ -2168,7 +2168,7 @@ HB_FUNC( ADSCONNECT60 )
 
       hb_stornint( hConnect, 6 );
 
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
       hb_retl( HB_FALSE );
@@ -2188,7 +2188,7 @@ HB_FUNC( ADSDDCREATE )
                     &hConnect ) == AE_SUCCESS )
    {
       hb_ads_setConnection( hConnect );
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
    {
@@ -2441,7 +2441,7 @@ HB_FUNC( ADSTESTLOGIN )
 
       AdsDisconnect( adsTestHandle );
 
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
    {
@@ -2625,7 +2625,7 @@ HB_FUNC( ADSCLOSECACHEDTABLES )
    if( hConnect )
    {
       AdsCloseCachedTables( hConnect );
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
    {

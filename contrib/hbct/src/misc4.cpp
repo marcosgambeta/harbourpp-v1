@@ -48,7 +48,7 @@
 
 HB_FUNC( ISAT )
 {
-   hb_retl( HB_TRUE );
+   hb_retl(true);
 }
 
 HB_FUNC( TOOLVER )

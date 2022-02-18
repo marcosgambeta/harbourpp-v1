@@ -319,7 +319,7 @@ HB_FUNC( WIN_COMSTATUS )
          hb_storl( ( dwModemStat & MS_RING_ON ) != 0, 4 );     /* The ring indicator signal is on. */
          hb_storl( ( dwModemStat & MS_RLSD_ON ) != 0, 5 );     /* The RLSD (receive-line-signal-detect) signal is on. Also is DCD. */
 
-         hb_retl( HB_TRUE );
+         hb_retl(true);
       }
       else
       {
@@ -353,7 +353,7 @@ HB_FUNC( WIN_COMPURGE )
       s_PortData[ iPort ].dwError = 0;
       if( PurgeComm( hCommPort, dwFlags ) )
       {
-         hb_retl( HB_TRUE );
+         hb_retl(true);
       }
       else
       {
@@ -389,7 +389,7 @@ HB_FUNC( WIN_COMQUEUESTATUS )
          hb_stornl( ComStat.cbInQue, 7 );
          hb_stornl( ComStat.cbOutQue, 8 ); /* This value will be zero for a nonoverlapped write */
 
-         hb_retl( HB_TRUE );
+         hb_retl(true);
       }
       else
       {
@@ -428,7 +428,7 @@ HB_FUNC( WIN_COMSETRTS )
       s_PortData[ iPort ].dwError = 0;
       if( EscapeCommFunction( hCommPort, dwFunc ) )
       {
-         hb_retl( HB_TRUE );
+         hb_retl(true);
       }
       else
       {
@@ -458,7 +458,7 @@ HB_FUNC( WIN_COMSETDTR )
       s_PortData[ iPort ].dwError = 0;
       if( EscapeCommFunction( hCommPort, dwFunc ) )
       {
-         hb_retl( HB_TRUE );
+         hb_retl(true);
       }
       else
       {
@@ -522,7 +522,7 @@ HB_FUNC( WIN_COMRTSFLOW )
       }
       else
       {
-         hb_retl( HB_TRUE );
+         hb_retl(true);
       }
    }
    else
@@ -581,7 +581,7 @@ HB_FUNC( WIN_COMDTRFLOW )
       }
       else
       {
-         hb_retl( HB_TRUE );
+         hb_retl(true);
       }
    }
    else
@@ -629,7 +629,7 @@ HB_FUNC( WIN_COMXONXOFFFLOW )
       }
       else
       {
-         hb_retl( HB_TRUE );
+         hb_retl(true);
       }
    }
    else
@@ -729,7 +729,7 @@ HB_FUNC( WIN_COMSETTIMEOUTS )
       }
       else
       {
-         hb_retl( HB_TRUE );
+         hb_retl(true);
       }
    }
    else
@@ -754,7 +754,7 @@ HB_FUNC( WIN_COMSETQUEUESIZE )
       }
       else
       {
-         hb_retl( HB_TRUE );
+         hb_retl(true);
       }
    }
    else

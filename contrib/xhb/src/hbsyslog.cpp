@@ -76,7 +76,7 @@ HB_FUNC( HB_SYSLOGOPEN )
       void * hSourceName;
       s_RegHandle = RegisterEventSource( nullptr, HB_PARSTRDEF( 1, &hSourceName, nullptr ) );
       hb_strfree( hSourceName );
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
       hb_retl( HB_FALSE );
@@ -87,7 +87,7 @@ HB_FUNC( HB_SYSLOGOPEN )
 
 #elif defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS )
    openlog( hb_parcx( 1 ), LOG_NDELAY | LOG_NOWAIT | LOG_PID, LOG_USER );
-   hb_retl( HB_TRUE );
+   hb_retl(true);
 #else
    hb_retl( HB_FALSE );
 #endif
@@ -102,7 +102,7 @@ HB_FUNC( HB_SYSLOGCLOSE )
    if( hb_iswinnt() )
    {
       DeregisterEventSource( s_RegHandle );
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
       hb_retl( HB_FALSE );
@@ -112,7 +112,7 @@ HB_FUNC( HB_SYSLOGCLOSE )
 
 #elif defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS )
    closelog();
-   hb_retl( HB_TRUE );
+   hb_retl(true);
 #else
    hb_retl( HB_FALSE );
 #endif
@@ -171,7 +171,7 @@ HB_FUNC( HB_SYSLOGMESSAGE )
    }
 
    syslog( logval, "[%lX]: %s", hb_parnl( 3 ), hb_parcx( 1 ) );
-   hb_retl( HB_TRUE );
+   hb_retl(true);
 #else
    hb_retl( HB_FALSE );
 #endif

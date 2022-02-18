@@ -495,7 +495,7 @@ HB_FUNC( WVG_STATUSBARCREATEPANEL )
 
          if( SendMessage( hWndSB, SB_SETPARTS, static_cast< WPARAM >( iParts ) + 1, reinterpret_cast< LPARAM >( static_cast< LPINT >( ptArray ) ) ) )
          {
-            hb_retl( HB_TRUE );
+            hb_retl(true);
             return;
          }
          break;
@@ -511,7 +511,7 @@ HB_FUNC( WVG_STATUSBARCREATEPANEL )
 
             SendMessage( hWndSB, SB_SETPARTS, static_cast< WPARAM >( 1 ), reinterpret_cast< LPARAM >( static_cast< LPINT >( ptArray ) ) );
 
-            hb_retl( HB_TRUE );
+            hb_retl(true);
             return;
          }
       }
@@ -557,7 +557,7 @@ HB_FUNC( WVG_STATUSBARREFRESH )
 
       if( SendMessage( hWndSB, SB_SETPARTS, iParts, static_cast< LPARAM >( static_cast< LPINT >( ptArray ) ) ) )
       {
-         hb_retl( HB_TRUE );
+         hb_retl(true);
          return;
       }
    }

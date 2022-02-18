@@ -877,7 +877,7 @@ HB_FUNC( WVT_SETPEN )
       }
       _s->currentPen = hPen;
 
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
    {
@@ -910,7 +910,7 @@ HB_FUNC( WVT_SETBRUSH )
       }
       _s->currentBrush = hBrush;
 
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
    {
@@ -1048,7 +1048,7 @@ HB_FUNC( WVT_DRAWIMAGE )
       #endif
    }
 
-   hb_retl( HB_TRUE );
+   hb_retl(true);
 }
 
 /*
@@ -1117,7 +1117,7 @@ HB_FUNC( WVT_DRAWLABEL )
       #endif
       hb_strfree( hText );
       DeleteObject( hFont );
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
 
    hb_retl( HB_FALSE );
@@ -1384,7 +1384,7 @@ HB_FUNC( WVT_DRAWLINE )
       SelectObject( _s->hGuiDC, hOldPenGUI );
    }
    DeleteObject( hPen );
-   hb_retl( HB_TRUE );
+   hb_retl(true);
 }
 
 /* Inside the area requested!
@@ -1565,7 +1565,7 @@ HB_FUNC( WVT_DRAWGRIDHORZ )
       }
    }
    #endif
-   hb_retl( HB_TRUE );
+   hb_retl(true);
 }
 
 /* wvt_DrawGridVert( nTop, nBottom, aCols, nCols, aPxlOff )
@@ -1612,7 +1612,7 @@ HB_FUNC( WVT_DRAWGRIDVERT )
       }
    }
    #endif
-   hb_retl( HB_TRUE );
+   hb_retl(true);
 }
 
 /* wvt_DrawButton( nTop, nLeft, nBottom, nRight, cText, cnImage, ;
@@ -1765,7 +1765,7 @@ HB_FUNC( WVT_DRAWBUTTON )
       }
    }
 
-   hb_retl( HB_TRUE );
+   hb_retl(true);
 }
 
 /* wvt_DrawStatusBar( nNumPanels, aTLBRofPanels ) */
@@ -1921,7 +1921,7 @@ HB_FUNC( WVT_DRAWLABELEX )
       }
       #endif
       hb_strfree( hText );
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
 
    hb_retl( HB_FALSE );
@@ -2123,7 +2123,7 @@ HB_FUNC( WVT_DRAWLINEEX )
          break;
    }
 
-   hb_retl( HB_TRUE );
+   hb_retl(true);
 }
 
 /*
@@ -2253,7 +2253,7 @@ HB_FUNC( WVT_DRAWLABELOBJ )
    }
    #endif
    hb_strfree( hText );
-   hb_retl( HB_TRUE );
+   hb_retl(true);
 }
 
 /*
@@ -2301,7 +2301,7 @@ HB_FUNC( WVT_DRAWTOOLBUTTONSTATE )
          #endif
          break;
    }
-   hb_retl( HB_TRUE );
+   hb_retl(true);
 }
 
 /*
@@ -2889,7 +2889,7 @@ HB_FUNC( WVT_LOADPEN )
       }
       _s->pGUI->hUserPens[ iSlot ] = hPen;
 
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
    {

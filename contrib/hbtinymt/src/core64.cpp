@@ -72,7 +72,7 @@ HB_FUNC( TINYMT64_INIT )
 
       tinymt64_init( &tinymtData->tinymt, seed );
 
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
       hb_retl( HB_FALSE );
@@ -97,7 +97,7 @@ HB_FUNC( TINYMT64_INIT_BY_ARRAY )
 
       tinymt64_init_by_array( &tinymtData->tinymt, seed_array, hb_parnldef( 3, 1 ) );
 
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
       hb_retl( HB_FALSE );

@@ -509,7 +509,7 @@ HB_FUNC( WVG_CLIENTTOSCREEN )
       if( ClientToScreen( reinterpret_cast< HWND >( static_cast< HB_PTRUINT >( hb_parnint( 1 ) ) ), &Point ) )
       {
          wvt_Point2ArrayEx( &Point, pArray );
-         hb_retl( HB_TRUE );
+         hb_retl(true);
       }
       else
       {
@@ -532,7 +532,7 @@ HB_FUNC( WVG_SCREENTOCLIENT )
       if( ScreenToClient( reinterpret_cast< HWND >( static_cast< HB_PTRUINT >( hb_parnint( 1 ) ) ), &Point ) > 0 )
       {
          wvt_Point2ArrayEx( &Point, pArray );
-         hb_retl( HB_TRUE );
+         hb_retl(true);
       }
       else
       {

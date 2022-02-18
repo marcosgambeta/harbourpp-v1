@@ -74,7 +74,7 @@ HB_FUNC( WIN_RUNDETACHED )
           &pi )                                                 /* Pointer to PROCESS_INFORMATION structure */
        )
    {
-      hb_retl( HB_TRUE );
+      hb_retl(true);
 
       hb_stornl( pi.dwProcessId, 3 );
 

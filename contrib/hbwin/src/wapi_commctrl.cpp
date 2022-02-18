@@ -229,7 +229,7 @@ HB_FUNC( WAPI_IMAGELIST_GETICONSIZE )
    {
       hb_storni( cx, 2 );
       hb_storni( cy, 3 );
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
    {

@@ -291,7 +291,7 @@ HB_FUNC( FILESTATS )
       hb_stordl( lmDate, 6 );
       hb_stornint( lmTime, 7 );
 
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
       hb_retl( HB_FALSE );

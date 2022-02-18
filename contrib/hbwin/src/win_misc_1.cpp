@@ -139,7 +139,7 @@ HB_FUNC( WIN_WIDETOANSI )
 HB_FUNC( WIN_UNICODE )
 {
 #if defined( UNICODE )
-   hb_retl( HB_TRUE );
+   hb_retl(true);
 #else
    hb_retl( HB_FALSE );
 #endif

@@ -598,7 +598,7 @@ HB_FUNC( TOKENEND )
       else
       {
          /* it is CT3 behaviour to return .T. if there's no string TokenInit()'ed */
-         hb_retl( HB_TRUE );
+         hb_retl(true);
       }
    }
 }
@@ -610,7 +610,7 @@ HB_FUNC( TOKENEXIT )
    if( sTokenEnvironment != nullptr )
    {
       sTokSet( nullptr );
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
    {
