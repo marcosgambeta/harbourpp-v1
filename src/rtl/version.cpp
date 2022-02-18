@@ -135,7 +135,7 @@ HB_FUNC( HB_VERSION )
                                          it is 32-bit Windows. */
 
       #if defined( HB_DYNLIB )
-         hb_retl( HB_TRUE );
+         hb_retl(true);
       #else
          hb_retl( HB_FALSE );
       #endif
@@ -143,7 +143,7 @@ HB_FUNC( HB_VERSION )
 
       case HB_VERSION_UNIX_COMPAT:
       #if defined( HB_OS_UNIX )
-         hb_retl( HB_TRUE );
+         hb_retl(true);
       #else
          hb_retl( HB_FALSE );
       #endif
@@ -151,7 +151,7 @@ HB_FUNC( HB_VERSION )
 
       case HB_VERSION_COMPILER_CPP:
       #if defined( __cplusplus )
-         hb_retl( HB_TRUE );
+         hb_retl(true);
       #else
          hb_retl( HB_FALSE );
       #endif

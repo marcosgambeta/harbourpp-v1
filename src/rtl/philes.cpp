@@ -524,7 +524,7 @@ HB_FUNC( HB_FGETDATETIME )
          hb_stortdt( lJulian, lMillisec, 2 );
       }
 
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
    {

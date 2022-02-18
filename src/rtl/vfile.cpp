@@ -365,7 +365,7 @@ HB_FUNC( HB_VFTIMEGET )
          hb_stortdt( lJulian, lMillisec, 2 );
       }
 
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
    {
@@ -550,7 +550,7 @@ HB_FUNC( HB_VFCLOSE )
       * pFilePtr = nullptr;
       hb_fileClose( pFile );
       hb_fsSetFError( hb_fsError() );
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
 }
 

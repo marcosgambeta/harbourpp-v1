@@ -112,7 +112,7 @@ HB_FUNC( EMPTY )
          break;
 
       default:
-         hb_retl( HB_TRUE );
+         hb_retl(true);
          break;
    }
 }

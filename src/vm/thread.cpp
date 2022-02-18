@@ -1328,7 +1328,7 @@ HB_FUNC( HB_THREADISMAIN )
       hb_retl( hb_vmThreadIsMain( nullptr ) );
    }
 #else
-   hb_retl( HB_TRUE );
+   hb_retl(true);
 #endif
 }
 

@@ -249,7 +249,7 @@ HB_FUNC( __PP_ADDRULE )
          }
          while( hb_pp_nextLine( pState, nullptr ) );
 
-         hb_retl( HB_TRUE );
+         hb_retl(true);
          return;
       }
    }
