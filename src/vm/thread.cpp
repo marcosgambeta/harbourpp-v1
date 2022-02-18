@@ -2761,7 +2761,7 @@ HB_FUNC( HB_MUTEXSUBSCRIBE )
       {
          hb_itemParamStoreForward( 3, pResult );
          hb_itemRelease( pResult );
-         hb_retl( HB_TRUE );
+         hb_retl(true);
       }
       else
       {
@@ -2798,7 +2798,7 @@ HB_FUNC( HB_MUTEXSUBSCRIBENOW )
       {
          hb_itemParamStoreForward( 3, pResult );
          hb_itemRelease( pResult );
-         hb_retl( HB_TRUE );
+         hb_retl(true);
       }
       else
       {
@@ -2852,7 +2852,7 @@ HB_FUNC( HB_MUTEXQUEUEINFO )
          HB_STACK_TLS_PRELOAD
          hb_storni( pMutex->waiters, 2 );
          hb_storns( pMutex->events ? hb_arrayLen( pMutex->events ) : 0, 3 );
-         hb_retl( HB_TRUE );
+         hb_retl(true);
       }
    }
 }
@@ -2861,7 +2861,7 @@ HB_FUNC( HB_MTVM )
 {
    HB_STACK_TLS_PRELOAD
 #if defined( HB_MT_VM )
-   hb_retl( HB_TRUE );
+   hb_retl(true);
 #else
    hb_retl(false);
 #endif
