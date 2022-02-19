@@ -459,8 +459,8 @@ HB_FUNC( ASORT )
 
    if( pArray && ! hb_arrayIsObject( pArray ) )
    {
-      HB_SIZE nStart = hb_parns( 2 );
-      HB_SIZE nCount = hb_parns( 3 );
+      HB_SIZE nStart = hb_parns(2);
+      HB_SIZE nCount = hb_parns(3);
 
       hb_arraySort( pArray, HB_ISNUM( 2 ) ? &nStart : nullptr, HB_ISNUM( 3 ) ? &nCount : nullptr, hb_param( 4, HB_IT_EVALITEM ) );
 

@@ -60,7 +60,7 @@
 
 HB_FUNC( __RUN )
 {
-   const char * pszCommand = hb_parc( 1 );
+   const char * pszCommand = hb_parc(1);
 
    if( pszCommand && hb_gtSuspend() == HB_SUCCESS )
    {

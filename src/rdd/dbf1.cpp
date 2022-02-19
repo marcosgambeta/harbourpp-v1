@@ -666,7 +666,7 @@ static HB_BOOL hb_dbfTriggerDo( DBFAREAP pArea, int iEvent, int iField, PHB_ITEM
             #endif
             hb_vmProc( 3 );
          }
-         fResult = hb_parl( -1 );
+         fResult = hb_parl(-1);
          hb_vmRequestRestore();
       }
    }
@@ -7857,9 +7857,9 @@ HB_FUNC_STATIC( DBF_GETFUNCTABLE )
    RDDFUNCS * pTable;
    HB_USHORT * puiCount, uiRddId;
 
-   puiCount = static_cast< HB_USHORT * >( hb_parptr( 1 ) );
-   pTable = static_cast< RDDFUNCS * >( hb_parptr( 2 ) );
-   uiRddId = static_cast< HB_USHORT >( hb_parni( 4 ) );
+   puiCount = static_cast< HB_USHORT * >( hb_parptr(1) );
+   pTable = static_cast< RDDFUNCS * >( hb_parptr(2) );
+   uiRddId = static_cast< HB_USHORT >( hb_parni(4) );
 
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "DBF_GETFUNCTABLE(%p, %p)", static_cast< void * >( puiCount ), static_cast< void * >( pTable ) ) );

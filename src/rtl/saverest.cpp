@@ -54,13 +54,13 @@ static void hb_getScreenRange( int * piMin, int * piMax, HB_BOOL fNoCheck, HB_BO
    if( fVertical )
    {
       iMax  = hb_gtMaxRow();
-      iFrom = hb_parni( 1 );
+      iFrom = hb_parni(1);
       iTo   = hb_parnidef( 3, iMax );
    }
    else
    {
       iMax  = hb_gtMaxCol();
-      iFrom = hb_parni( 2 );
+      iFrom = hb_parni(2);
       iTo   = hb_parnidef( 4, iMax );
    }
 
@@ -118,13 +118,13 @@ HB_FUNC( RESTSCREEN )
       int iTop, iLeft, iBottom, iRight;
       HB_SIZE nSize, nLen;
       void * pBuffer = nullptr;
-      const char * pBufStr = hb_parc( 5 );
+      const char * pBufStr = hb_parc(5);
       HB_BOOL fNoCheck = HB_FALSE;
 
       hb_getScreenRange( &iTop, &iBottom, fNoCheck, HB_TRUE );
       hb_getScreenRange( &iLeft, &iRight, fNoCheck, HB_FALSE );
 
-      nLen = hb_parclen( 5 );
+      nLen = hb_parclen(5);
       hb_gtRectSize( iTop, iLeft, iBottom, iRight, &nSize );
       if( nLen < nSize )
       {

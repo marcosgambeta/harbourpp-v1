@@ -52,7 +52,7 @@
 
 HB_FUNC( HB_PROCESSOPEN )
 {
-   const char * szName = hb_parc( 1 );
+   const char * szName = hb_parc(1);
    PHB_ITEM pStdIn  = hb_param( 2, HB_IT_BYREF );
    PHB_ITEM pStdOut = hb_param( 3, HB_IT_BYREF );
    PHB_ITEM pStdErr = hb_param( 4, HB_IT_BYREF );
@@ -65,7 +65,7 @@ HB_FUNC( HB_PROCESSOPEN )
        ( HB_ISBYREF( 6 ) || HB_ISNIL( 6 ) ) &&
        ( ! pStdIn || ( pStdIn != pStdOut && pStdIn != pStdErr ) ) )
    {
-      HB_BOOL fDetach = hb_parl( 5 );
+      HB_BOOL fDetach = hb_parl(5);
       HB_FHANDLE hStdIn, *phStdIn, hStdOut, *phStdOut, hStdErr, *phStdErr;
       HB_FHANDLE hProcess;
       HB_ULONG ulPID;
@@ -102,11 +102,11 @@ HB_FUNC( HB_PROCESSOPEN )
 
 HB_FUNC( HB_PROCESSVALUE )
 {
-   HB_FHANDLE hProcess = hb_numToHandle( hb_parnint( 1 ) );
+   HB_FHANDLE hProcess = hb_numToHandle( hb_parnint(1) );
 
    if( hProcess != 0 && hProcess != FS_ERROR && ( hb_pcount() < 2 || HB_ISLOG( 2 ) ) )
    {
-      int iResult = hb_fsProcessValue( hProcess, hb_pcount() < 2 || hb_parl( 2 ) );
+      int iResult = hb_fsProcessValue( hProcess, hb_pcount() < 2 || hb_parl(2) );
       hb_fsSetFError( hb_fsError() );
       hb_retni( iResult );
    }
@@ -118,11 +118,11 @@ HB_FUNC( HB_PROCESSVALUE )
 
 HB_FUNC( HB_PROCESSCLOSE )
 {
-   HB_FHANDLE hProcess = hb_numToHandle( hb_parnint( 1 ) );
+   HB_FHANDLE hProcess = hb_numToHandle( hb_parnint(1) );
 
    if( hProcess != 0 && hProcess != FS_ERROR && ( hb_pcount() < 2 || HB_ISLOG( 2 ) ) )
    {
-      HB_BOOL fResult = hb_fsProcessClose( hProcess, hb_pcount() < 2 || hb_parl( 2 ) );
+      HB_BOOL fResult = hb_fsProcessClose( hProcess, hb_pcount() < 2 || hb_parl(2) );
       hb_fsSetFError( hb_fsError() );
       hb_retl( fResult );
    }
@@ -136,11 +136,11 @@ HB_FUNC( HB_PROCESSCLOSE )
                   [ <lDetach> ] ) --> <nResult> */
 HB_FUNC( HB_PROCESSRUN )
 {
-   const char * szName = hb_parc( 1 );
-   const char * szStdIn = hb_parc( 2 );
+   const char * szName = hb_parc(1);
+   const char * szStdIn = hb_parc(2);
    PHB_ITEM pStdOut = hb_param( 3, HB_IT_BYREF );
    PHB_ITEM pStdErr = hb_param( 4, HB_IT_BYREF );
-   HB_BOOL fDetach = hb_parl( 5 );
+   HB_BOOL fDetach = hb_parl(5);
 
    if( szName &&
        ( szStdIn || HB_ISNIL( 2 ) ) &&
@@ -158,7 +158,7 @@ HB_FUNC( HB_PROCESSRUN )
       pStdOutPtr = pStdOut ? &pStdOutBuf : nullptr;
       pStdErrPtr = pStdErr ? ( pStdOut == pStdErr ? pStdOutPtr : &pStdErrBuf ) : nullptr;
 
-      iResult = hb_fsProcessRun( szName, szStdIn, hb_parclen( 2 ), pStdOutPtr, &nStdOut, pStdErrPtr, &nStdErr, fDetach );
+      iResult = hb_fsProcessRun( szName, szStdIn, hb_parclen(2), pStdOutPtr, &nStdOut, pStdErrPtr, &nStdErr, fDetach );
       hb_fsSetFError( hb_fsError() );
 
       if( pStdOutBuf )

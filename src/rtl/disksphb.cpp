@@ -262,7 +262,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
 
 HB_FUNC( HB_DISKSPACE )
 {
-   const char * pszPath = hb_parc( 1 );
+   const char * pszPath = hb_parc(1);
    HB_USHORT uiType = static_cast< HB_USHORT >( hb_parnidef( 2, HB_DISK_AVAIL ) );
 
 #ifdef HB_OS_HAS_DRIVE_LETTER
@@ -270,7 +270,7 @@ HB_FUNC( HB_DISKSPACE )
 
    if( ! pszPath )
    {
-      int iDrive = hb_parni( 1 );
+      int iDrive = hb_parni(1);
 
       if( iDrive >= 1 && iDrive < 32 )
       {

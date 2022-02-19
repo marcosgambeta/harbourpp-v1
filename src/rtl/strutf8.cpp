@@ -48,12 +48,12 @@
 
 HB_FUNC( HB_STRISUTF8 )
 {
-   HB_SIZE nLen = hb_parclen( 1 );
+   HB_SIZE nLen = hb_parclen(1);
    HB_BOOL fUtf8 = HB_FALSE;
 
    if( nLen > 0 )
    {
-      const char * szText = hb_parc( 1 );
+      const char * szText = hb_parc(1);
 
       do
       {

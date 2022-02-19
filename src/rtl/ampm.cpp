@@ -48,14 +48,14 @@
 
 HB_FUNC( AMPM )
 {
-   HB_SIZE nTimeLen  = hb_parclen( 1 );
+   HB_SIZE nTimeLen  = hb_parclen(1);
    char *  pszResult = static_cast< char * >( hb_xgrab( HB_MAX( nTimeLen, 2 ) + 3 + 1 ) );
    int     iHour     = 0;
    HB_BOOL bAM;
 
    if( nTimeLen )
    {
-      const char * pszTime = hb_parc( 1 );
+      const char * pszTime = hb_parc(1);
       memcpy( pszResult, pszTime, nTimeLen );
       iHour = static_cast< int >( hb_strVal( pszTime, nTimeLen ) );
    }

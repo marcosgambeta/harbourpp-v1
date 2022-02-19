@@ -93,7 +93,7 @@ static gzFile hb_gzParam( int iParam )
 HB_FUNC( HB_GZOPEN )
 {
 #ifndef HB_NO_GZLIB
-   const char * cFile = hb_parc( 1 ), * cMode = hb_parc( 2 );
+   const char * cFile = hb_parc(1), * cMode = hb_parc(2);
 
    if( cFile && cMode )
    {
@@ -131,14 +131,14 @@ HB_FUNC( HB_GZOPEN )
 HB_FUNC( HB_GZDOPEN )
 {
 #ifndef HB_NO_GZLIB
-   const char * cMode = hb_parc( 2 );
+   const char * cMode = hb_parc(2);
 
    if( HB_ISNUM( 1 ) && cMode )
    {
       gzFile gz;
 
       hb_vmUnlock();
-      gz = gzdopen( hb_parni( 1 ), cMode );
+      gz = gzdopen( hb_parni(1), cMode );
       hb_vmLock();
 
       if( gz )
@@ -194,7 +194,7 @@ HB_FUNC( HB_GZSETPARAMS )
       gzFile gz = hb_gzParam( 1 );
       if( gz )
       {
-         hb_retni( gzsetparams( gz, hb_parni( 2 ), hb_parni( 3 ) ) );
+         hb_retni( gzsetparams( gz, hb_parni(2), hb_parni(3) ) );
       }
    }
    else
@@ -223,7 +223,7 @@ HB_FUNC( HB_GZREAD )
 
          if( HB_ISNUM( 3 ) )
          {
-            HB_SIZE nLim = hb_parns( 3 );
+            HB_SIZE nLim = hb_parns(3);
             if( nLim < nLen )
             {
                nLen = nLim;
@@ -250,7 +250,7 @@ HB_FUNC( HB_GZREAD )
 HB_FUNC( HB_GZWRITE )
 {
 #ifndef HB_NO_GZLIB
-   const char * szData = hb_parc( 2 );
+   const char * szData = hb_parc(2);
 
    if( szData )
    {
@@ -261,8 +261,8 @@ HB_FUNC( HB_GZWRITE )
 
          hb_vmUnlock();
          iResult = gzwrite( gz, szData,
-                            HB_ISNUM( 3 ) ? static_cast< unsigned >( hb_parns( 3 ) ) :
-                                            static_cast< unsigned >( hb_parclen( 2 ) ) );
+                            HB_ISNUM( 3 ) ? static_cast< unsigned >( hb_parns(3) ) :
+                                            static_cast< unsigned >( hb_parclen(2) ) );
          hb_vmLock();
 
          hb_retni( iResult );
@@ -281,7 +281,7 @@ HB_FUNC( HB_GZWRITE )
 HB_FUNC( HB_GZGETS )
 {
 #ifndef HB_NO_GZLIB
-   int iLen = hb_parni( 2 );
+   int iLen = hb_parni(2);
 
    if( iLen > 0 )
    {
@@ -322,7 +322,7 @@ HB_FUNC( HB_GZGETS )
 HB_FUNC( HB_GZPUTS )
 {
 #ifndef HB_NO_GZLIB
-   const char * szData = hb_parc( 2 );
+   const char * szData = hb_parc(2);
 
    if( szData )
    {
@@ -359,7 +359,7 @@ HB_FUNC( HB_GZPUTC )
          int iResult;
 
          hb_vmUnlock();
-         iResult = gzputc( gz, hb_parni( 2 ) );
+         iResult = gzputc( gz, hb_parni(2) );
          hb_vmLock();
 
          hb_retni( iResult );
@@ -408,7 +408,7 @@ HB_FUNC( HB_GZUNGETC )
          int iResult;
 
          hb_vmUnlock();
-         iResult = gzungetc( hb_parni( 1 ), gz );
+         iResult = gzungetc( hb_parni(1), gz );
          hb_vmLock();
 
          hb_retni( iResult );
@@ -457,7 +457,7 @@ HB_FUNC( HB_GZSEEK )
          HB_MAXINT nResult;
 
          hb_vmUnlock();
-         nResult = gzseek( gz, ( z_off_t ) hb_parnint( 2 ), hb_parnidef( 3, SEEK_SET ) );
+         nResult = gzseek( gz, ( z_off_t ) hb_parnint(2), hb_parnidef( 3, SEEK_SET ) );
          hb_vmLock();
 
          hb_retnint( nResult );

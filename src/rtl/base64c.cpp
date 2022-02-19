@@ -49,11 +49,11 @@
 
 HB_FUNC( HB_BASE64ENCODE )
 {
-   HB_SIZE len = hb_parclen( 1 );
+   HB_SIZE len = hb_parclen(1);
 
    if( len > 0 )
    {
-      HB_SIZE lin = hb_parns( 2 );
+      HB_SIZE lin = hb_parns(2);
       HB_SIZE dst = ( 4 * ( ( len + 2 ) / 3 ) + 1 );
 
       if( lin <= 2 )
@@ -69,7 +69,7 @@ HB_FUNC( HB_BASE64ENCODE )
 
       if( dst > len )
       {
-         const char * s = hb_parcx( 1 );
+         const char * s = hb_parcx(1);
          char * t, * p;
          HB_SIZE lln = lin;
 

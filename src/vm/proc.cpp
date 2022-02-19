@@ -60,19 +60,19 @@ HB_FUNC( HB_METHODNAME )
 {
    char szName[ HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5 ];
 
-   hb_retc( hb_procname( hb_parni( 1 ) + 1, szName, HB_TRUE ) );
+   hb_retc( hb_procname( hb_parni(1) + 1, szName, HB_TRUE ) );
 }
 
 HB_FUNC( PROCNAME )
 {
    char szName[ HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5 ];
 
-   hb_retc( hb_procname( hb_parni( 1 ) + 1, szName, HB_FALSE ) );
+   hb_retc( hb_procname( hb_parni(1) + 1, szName, HB_FALSE ) );
 }
 
 HB_FUNC( PROCLINE )
 {
-   HB_ISIZ nOffset = hb_stackBaseProcOffset( hb_parni( 1 ) + 1 );
+   HB_ISIZ nOffset = hb_stackBaseProcOffset( hb_parni(1) + 1 );
 
    if( nOffset > 0 )
    {
@@ -100,7 +100,7 @@ HB_FUNC( PROCFILE )
    }
    else if( HB_ISCHAR( 1 ) )
    {
-      PHB_DYNS pDynSym = hb_dynsymFindName( hb_parc( 1 ) );
+      PHB_DYNS pDynSym = hb_dynsymFindName( hb_parc(1) );
 
       if( pDynSym )
       {
@@ -109,7 +109,7 @@ HB_FUNC( PROCFILE )
    }
    else
    {
-      HB_ISIZ nOffset = hb_stackBaseProcOffset( hb_parni( 1 ) + 1 );
+      HB_ISIZ nOffset = hb_stackBaseProcOffset( hb_parni(1) + 1 );
 
       if( nOffset > 0 )
       {

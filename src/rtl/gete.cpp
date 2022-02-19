@@ -119,7 +119,7 @@ HB_FUNC( HB_GETENV )
       }
       else
       {
-         hb_retc( hb_parc( 2 ) );
+         hb_retc( hb_parc(2) );
       }
 
 #ifdef _HB_GETENV_REQUIRES_UPPERCASE
@@ -128,18 +128,18 @@ HB_FUNC( HB_GETENV )
    }
    else
    {
-      hb_retc( hb_parc( 2 ) );
+      hb_retc( hb_parc(2) );
    }
 }
 
 HB_FUNC( HB_SETENV )
 {
-   const char * pszName = hb_parc( 1 );
+   const char * pszName = hb_parc(1);
    HB_BOOL fResult = HB_FALSE;
 
    if( pszName )
    {
-      fResult = hb_setenv( pszName, hb_parc( 2 ) );
+      fResult = hb_setenv( pszName, hb_parc(2) );
    }
 
    hb_retl( fResult );

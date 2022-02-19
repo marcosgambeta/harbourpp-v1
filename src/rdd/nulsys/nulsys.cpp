@@ -301,7 +301,7 @@ HB_FUNC( RECNO )
 
 HB_FUNC( RECCOUNT )
 {
-   hb_parni( 0 );
+   hb_parni(0);
 }
 
 HB_FUNC( LASTREC )
@@ -311,7 +311,7 @@ HB_FUNC( LASTREC )
 
 HB_FUNC( FCOUNT )
 {
-   hb_parni( 0 );
+   hb_parni(0);
 }
 
 HB_FUNC( RECSIZE )
@@ -331,7 +331,7 @@ HB_FUNC( LUPDATE )
 
 HB_FUNC( INDEXORD )
 {
-   hb_parni( 1 );
+   hb_parni(1);
 }
 
 HB_FUNC( INDEXKEY )

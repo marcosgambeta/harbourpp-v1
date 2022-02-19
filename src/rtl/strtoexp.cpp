@@ -48,11 +48,11 @@
 
 HB_FUNC( HB_STRTOEXP )
 {
-   const char * pszString = hb_parc( 1 );
+   const char * pszString = hb_parc(1);
 
    if( pszString )
    {
-      HB_SIZE nLen = hb_parclen( 1 ), nRet, n, nQ = 0;
+      HB_SIZE nLen = hb_parclen(1), nRet, n, nQ = 0;
       int iType = 0;
       char ch, * pDst, * pszResult;
 
@@ -84,7 +84,7 @@ HB_FUNC( HB_STRTOEXP )
                break;
          }
       }
-      if( iType == 7 || hb_parl( 2 ) )
+      if( iType == 7 || hb_parl(2) )
       {
          nRet = nLen + 3 + nQ;
          pDst = pszResult = static_cast< char * >( hb_xgrab( nRet + 1 ) );

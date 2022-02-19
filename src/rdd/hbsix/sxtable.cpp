@@ -202,7 +202,7 @@ HB_FUNC( SX_ROLLBACK )
 
    if( HB_ISNUM( 1 ) )
    {
-      iArea = hb_parni( 1 );
+      iArea = hb_parni(1);
       fRollChild = iArea == 0;
    }
 
@@ -332,13 +332,13 @@ HB_FUNC( SX_SETPASS )
          }
          else
          {
-            szDriver = hb_parc( 3 );
+            szDriver = hb_parc(3);
          }
          pRDDNode = hb_rddFindNode( szDriver, &uiRddID );   /* find the RDDNODE */
          if( pRDDNode )
          {
             pItem = hb_itemParam( 1 );
-            if( SELF_RDDINFO( pRDDNode, RDDI_PENDINGPASSWORD, hb_parnl( 4 ), pItem ) == HB_SUCCESS )
+            if( SELF_RDDINFO( pRDDNode, RDDI_PENDINGPASSWORD, hb_parnl(4), pItem ) == HB_SUCCESS )
             {
                fResult = HB_TRUE;
             }
@@ -351,7 +351,7 @@ HB_FUNC( SX_SETPASS )
          if( pArea )
          {
             /* Undocumented SIX3 extension */
-            switch( hb_parni( 1 ) )
+            switch( hb_parni(1) )
             {
                case 1:  /* return current password key in raw form */
                   pItem = hb_itemNew( nullptr );
@@ -462,7 +462,7 @@ HB_FUNC( SX_SETTURBO )
    HB_USHORT uiRddID;
    const char * szDriver;
 
-   szDriver = hb_parc( 2 );
+   szDriver = hb_parc(2);
    if( ! szDriver ) /* no VIA RDD parameter, use default */
    {
       szDriver = hb_rddDefaultDrv( nullptr );
@@ -494,7 +494,7 @@ HB_FUNC( SX_SETTURBO )
 HB_FUNC( _SXOPENINIT )
 {
    AREAP pArea = nullptr;
-   int iArea = hb_parni( 1 );
+   int iArea = hb_parni(1);
 
    if( iArea )
    {
@@ -515,15 +515,15 @@ HB_FUNC( _SXOPENINIT )
       {
          if( HB_ISLOG( 2 ) )
          {
-            pInfo->fShared = hb_parl( 2 );
+            pInfo->fShared = hb_parl(2);
          }
          if( HB_ISLOG( 3 ) )
          {
-            pInfo->fReadonly = hb_parl( 2 );
+            pInfo->fReadonly = hb_parl(2);
          }
          if( HB_ISCHAR( 4 ) )
          {
-            const char * szAlias = hb_parc( 1 );
+            const char * szAlias = hb_parc(1);
             if( szAlias && szAlias[ 0 ] )
             {
                pInfo->atomAlias = hb_dynsymName( hb_dynsymGet( szAlias ) );

@@ -931,7 +931,7 @@ PHB_ITEM hb_i18n_ngettext( PHB_ITEM pNum, PHB_ITEM pMsgID, PHB_ITEM pContext )
       else if( pBlock )
       {
          hb_evalBlock1( pBlock, pNum );
-         lIndex = hb_parnl( -1 );
+         lIndex = hb_parnl(-1);
       }
       else
       {
@@ -1043,7 +1043,7 @@ HB_FUNC( HB_I18N_CODEPAGE )
 
    if( pI18N )
    {
-      hb_retc( hb_i18n_setcodepage( pI18N, hb_parc( iParam ), hb_parl( iParam + 1 ), hb_parl( iParam + 2 ) ) );
+      hb_retc( hb_i18n_setcodepage( pI18N, hb_parc(iParam), hb_parl(iParam + 1), hb_parl(iParam + 2) ) );
    }
    else
    {
@@ -1061,7 +1061,7 @@ HB_FUNC( HB_I18N_PLURALFORM )
    {
       PHB_ITEM pOldForm = hb_itemNew( nullptr );
       PHB_ITEM pForm = hb_param( iParam, HB_IT_STRING | HB_IT_EVALITEM );
-      HB_BOOL fBase = hb_parl( iParam + 1 );
+      HB_BOOL fBase = hb_parl(iParam + 1);
 
       if( hb_i18n_getpluralform( pI18N, pOldForm, fBase ) )
       {
@@ -1205,7 +1205,7 @@ HB_FUNC( HB_I18N_HEADERSIZE )
 
 HB_FUNC( HB_I18N_CHECK )
 {
-   hb_retl( hb_i18n_headercheck( hb_parc( 1 ), hb_parclen( 1 ) ) );
+   hb_retl( hb_i18n_headercheck( hb_parc(1), hb_parclen(1) ) );
 }
 
 /* unofficial function to access internal hash table used by i18n set */

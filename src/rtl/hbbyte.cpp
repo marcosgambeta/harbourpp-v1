@@ -51,7 +51,7 @@ static HB_BOOL hb_numParam( int iParam, HB_MAXINT * plNum )
 {
    if( HB_ISNUM( iParam ) )
    {
-      *plNum = hb_parnint( iParam );
+      *plNum = hb_parnint(iParam);
       return HB_TRUE;
    }
    hb_errRT_BASE_SubstR( EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );

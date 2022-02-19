@@ -57,7 +57,7 @@ HB_FUNC( CTOD )
 {
    if( HB_ISCHAR( 1 ) )
    {
-      hb_retdl( hb_dateUnformat( hb_parc( 1 ), hb_setGetDateFormat() ) );
+      hb_retdl( hb_dateUnformat( hb_parc(1), hb_setGetDateFormat() ) );
    }
    else
    {
@@ -69,13 +69,13 @@ HB_FUNC( HB_CTOD )
 {
    if( HB_ISCHAR( 1 ) )
    {
-      const char * szFormat = hb_parc( 2 );
+      const char * szFormat = hb_parc(2);
 
       if( ! szFormat )
       {
          szFormat = hb_setGetDateFormat();
       }
-      hb_retdl( hb_dateUnformat( hb_parc( 1 ), szFormat ) );
+      hb_retdl( hb_dateUnformat( hb_parc(1), szFormat ) );
    }
    else
    {
@@ -104,7 +104,7 @@ HB_FUNC( HB_DTOC )
    {
       char szDate[ 9 ];
       char szFormatted[ 11 ];
-      const char * szFormat = hb_parc( 2 );
+      const char * szFormat = hb_parc(2);
 
       if( ! szFormat )
       {
@@ -235,7 +235,7 @@ HB_FUNC( HB_DATE )
    }
    else
    {
-      hb_retd( hb_parni( 1 ), hb_parni( 2 ), hb_parni( 3 ) );
+      hb_retd( hb_parni(1), hb_parni(2), hb_parni(3) );
    }
 }
 
@@ -249,7 +249,7 @@ HB_FUNC( HB_DATETIME )
    }
    else
    {
-      hb_rettdt( hb_dateEncode( hb_parni( 1 ), hb_parni( 2 ), hb_parni( 3 ) ), hb_timeEncode( hb_parni( 4 ), hb_parni( 5 ), hb_parni( 6 ), hb_parni( 7 ) ) );
+      hb_rettdt( hb_dateEncode( hb_parni(1), hb_parni(2), hb_parni(3) ), hb_timeEncode( hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7) ) );
    }
 }
 
@@ -259,14 +259,14 @@ HB_FUNC( HB_DTOT )
 
    if( hb_partdt( &lDate, &lTime, 1 ) )
    {
-      const char * szTime = hb_parc( 2 );
+      const char * szTime = hb_parc(2);
       if( szTime )
       {
          hb_timeStampStrGetDT( szTime, &lDate2, &lTime );
       }
       else if( HB_ISNUM( 2 ) )
       {
-         lTime = static_cast< long >( hb_parnd( 2 ) * 1000 );
+         lTime = static_cast< long >( hb_parnd(2) * 1000 );
          if( lTime < 0 )
          {
             lTime = 0;
@@ -293,7 +293,7 @@ HB_FUNC( HB_TTOD )
       hb_retdl( lDate );
       if( HB_ISBYREF( 2 ) )
       {
-         const char * szTimeFormat = hb_parc( 3 );
+         const char * szTimeFormat = hb_parc(3);
          if( szTimeFormat )
          {
             char szBuffer[ 27 ];
@@ -489,8 +489,8 @@ HB_FUNC( HB_TTOC )
 
    if( hb_partdt( &lDate, &lTime, 1 ) )
    {
-      const char * szDateFormat = hb_parc( 2 );
-      const char * szTimeFormat = hb_parc( 3 );
+      const char * szDateFormat = hb_parc(2);
+      const char * szTimeFormat = hb_parc(3);
       char szBuffer[ 27 ];
 
       if( ! szDateFormat )
@@ -512,13 +512,13 @@ HB_FUNC( HB_TTOC )
 
 HB_FUNC( HB_CTOT )
 {
-   const char * szDateTime = hb_parc( 1 );
+   const char * szDateTime = hb_parc(1);
 
    if( szDateTime )
    {
       long lDate, lTime;
-      const char * szDateFormat = hb_parc( 2 );
-      const char * szTimeFormat = hb_parc( 3 );
+      const char * szDateFormat = hb_parc(2);
+      const char * szTimeFormat = hb_parc(3);
 
       if( ! szDateFormat )
       {
@@ -556,7 +556,7 @@ HB_FUNC( HB_TTOS )
 
 HB_FUNC( HB_STOT )
 {
-   const char * szDateTime = hb_parc( 1 );
+   const char * szDateTime = hb_parc(1);
 
    if( szDateTime )
    {
@@ -631,7 +631,7 @@ HB_FUNC( HB_TSTOSTR )
       char szBuffer[ 24 ];
 
       hb_timeStampStr( szBuffer, lDate, lTime );
-      if( hb_parl( 2 ) )
+      if( hb_parl(2) )
       {
          if( lTime == 0 )
          {
@@ -682,7 +682,7 @@ HB_FUNC( HB_TSTOSTR )
 
 HB_FUNC( HB_STRTOTS )
 {
-   const char * szDateTime = hb_parc( 1 );
+   const char * szDateTime = hb_parc(1);
 
    if( szDateTime )
    {

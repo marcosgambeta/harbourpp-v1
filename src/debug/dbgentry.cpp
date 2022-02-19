@@ -1960,7 +1960,7 @@ HB_FUNC( __DBGSETENTRY )
 
 HB_FUNC( __DBGSETGO )
 {
-   void * ptr = hb_parptr( 1 );
+   void * ptr = hb_parptr(1);
 
    if( ptr )
    {
@@ -1970,7 +1970,7 @@ HB_FUNC( __DBGSETGO )
 
 HB_FUNC( __DBGSETTRACE )
 {
-   void * ptr = hb_parptr( 1 );
+   void * ptr = hb_parptr(1);
 
    if( ptr )
    {
@@ -1980,17 +1980,17 @@ HB_FUNC( __DBGSETTRACE )
 
 HB_FUNC( __DBGSETCBTRACE )
 {
-   void * ptr = hb_parptr( 1 );
+   void * ptr = hb_parptr(1);
 
    if( ptr )
    {
-      hb_dbgSetCBTrace( ptr, hb_parl( 2 ) );
+      hb_dbgSetCBTrace( ptr, hb_parl(2) );
    }
 }
 
 HB_FUNC( __DBGSETNEXTROUTINE )
 {
-   void * ptr = hb_parptr( 1 );
+   void * ptr = hb_parptr(1);
 
    if( ptr )
    {
@@ -2000,7 +2000,7 @@ HB_FUNC( __DBGSETNEXTROUTINE )
 
 HB_FUNC( __DBGSETQUIT )
 {
-   void * ptr = hb_parptr( 1 );
+   void * ptr = hb_parptr(1);
 
    if( ptr )
    {
@@ -2010,17 +2010,17 @@ HB_FUNC( __DBGSETQUIT )
 
 HB_FUNC( __DBGSETTOCURSOR )
 {
-   void * ptr = hb_parptr( 1 );
+   void * ptr = hb_parptr(1);
 
    if( ptr )
    {
-      hb_dbgSetToCursor( ptr, hb_parc( 2 ), hb_parni( 3 ) );
+      hb_dbgSetToCursor( ptr, hb_parc(2), hb_parni(3) );
    }
 }
 
 HB_FUNC( __DBGGETEXPRVALUE )
 {
-   void * ptr = hb_parptr( 1 );
+   void * ptr = hb_parptr(1);
 
    if( ptr )
    {
@@ -2028,11 +2028,11 @@ HB_FUNC( __DBGGETEXPRVALUE )
 
       if( HB_ISCHAR( 2 ) )
       {
-         pItem = hb_dbgGetExpressionValue( ptr, hb_parc( 2 ) );
+         pItem = hb_dbgGetExpressionValue( ptr, hb_parc(2) );
       }
       else
       {
-         pItem = hb_dbgGetWatchValue( ptr, hb_parni( 2 ) - 1 );
+         pItem = hb_dbgGetWatchValue( ptr, hb_parni(2) - 1 );
       }
 
       if( pItem )
@@ -2049,7 +2049,7 @@ HB_FUNC( __DBGGETEXPRVALUE )
 
 HB_FUNC( __DBGGETSOURCEFILES )
 {
-   void * ptr = hb_parptr( 1 );
+   void * ptr = hb_parptr(1);
 
    if( ptr )
    {
@@ -2059,48 +2059,48 @@ HB_FUNC( __DBGGETSOURCEFILES )
 
 HB_FUNC( __DBGISVALIDSTOPLINE )
 {
-   void * ptr = hb_parptr( 1 );
+   void * ptr = hb_parptr(1);
 
    if( ptr )
    {
-      hb_retl( hb_dbgIsValidStopLine( ptr, hb_parc( 2 ), hb_parni( 3 ) ) );
+      hb_retl( hb_dbgIsValidStopLine( ptr, hb_parc(2), hb_parni(3) ) );
    }
 }
 
 HB_FUNC( __DBGADDBREAK )
 {
-   void * ptr = hb_parptr( 1 );
+   void * ptr = hb_parptr(1);
 
    if( ptr )
    {
-      hb_dbgAddBreak( ptr, hb_parc( 2 ), hb_parni( 3 ), hb_parc( 4 ) );
+      hb_dbgAddBreak( ptr, hb_parc(2), hb_parni(3), hb_parc(4) );
    }
 }
 
 HB_FUNC( __DBGDELBREAK )
 {
-   void * ptr = hb_parptr( 1 );
+   void * ptr = hb_parptr(1);
 
    if( ptr )
    {
-      hb_dbgDelBreak( ptr, hb_parni( 2 ) );
+      hb_dbgDelBreak( ptr, hb_parni(2) );
    }
 }
 
 HB_FUNC( __DBGISBREAK )
 {
-   void * ptr = hb_parptr( 1 );
-   const char * szModule = hb_parc( 2 );
+   void * ptr = hb_parptr(1);
+   const char * szModule = hb_parc(2);
 
    if( ptr && szModule )
    {
-      hb_retni( hb_dbgIsBreakPoint( static_cast< HB_DEBUGINFO * >( ptr ), hb_dbgStripModuleName( szModule ), hb_parni( 3 ) ) );
+      hb_retni( hb_dbgIsBreakPoint( static_cast< HB_DEBUGINFO * >( ptr ), hb_dbgStripModuleName( szModule ), hb_parni(3) ) );
    }
 }
 
 HB_FUNC( __DBGGETBREAKPOINTS )
 {
-   void * ptr = hb_parptr( 1 );
+   void * ptr = hb_parptr(1);
 
    if( ptr )
    {
@@ -2110,37 +2110,37 @@ HB_FUNC( __DBGGETBREAKPOINTS )
 
 HB_FUNC( __DBGADDWATCH )
 {
-   void * ptr = hb_parptr( 1 );
+   void * ptr = hb_parptr(1);
 
    if( ptr )
    {
-      hb_dbgAddWatch( ptr, hb_parc( 2 ), hb_parl( 3 ) );
+      hb_dbgAddWatch( ptr, hb_parc(2), hb_parl(3) );
    }
 }
 
 HB_FUNC( __DBGDELWATCH )
 {
-   void * ptr = hb_parptr( 1 );
+   void * ptr = hb_parptr(1);
 
    if( ptr )
    {
-      hb_dbgDelWatch( ptr, hb_parni( 2 ) );
+      hb_dbgDelWatch( ptr, hb_parni(2) );
    }
 }
 
 HB_FUNC( __DBGSETWATCH )
 {
-   void * ptr = hb_parptr( 1 );
+   void * ptr = hb_parptr(1);
 
    if( ptr )
    {
-      hb_dbgSetWatch( ptr, hb_parni( 2 ), hb_parc( 3 ), hb_parl( 4 ) );
+      hb_dbgSetWatch( ptr, hb_parni(2), hb_parc(3), hb_parl(4) );
    }
 }
 
 HB_FUNC( __DBGCNTWATCH )
 {
-   void * ptr = hb_parptr( 1 );
+   void * ptr = hb_parptr(1);
 
    if( ptr )
    {
@@ -2150,7 +2150,7 @@ HB_FUNC( __DBGCNTWATCH )
 
 HB_FUNC( __DBGGETWATCHPOINTS )
 {
-   void * ptr = hb_parptr( 1 );
+   void * ptr = hb_parptr(1);
 
    if( ptr )
    {
@@ -2165,21 +2165,21 @@ HB_FUNC( __DBGGETSETS )
 
 HB_FUNC( __DBGGETMODULENAME )
 {
-   void * ptr = hb_parptr( 1 );
+   void * ptr = hb_parptr(1);
 
    if( ptr )
    {
-      hb_retc( hb_dbgGetModuleName( ptr, hb_parc( 2 ) ) );
+      hb_retc( hb_dbgGetModuleName( ptr, hb_parc(2) ) );
    }
 }
 
 HB_FUNC( __DBGMODULEMATCH )
 {
-   void * ptr = hb_parptr( 1 );
+   void * ptr = hb_parptr(1);
 
    if( ptr )
    {
-      const char * szModule1 = hb_parc( 2 ), * szModule2 = hb_parc( 3 );
+      const char * szModule1 = hb_parc(2), * szModule2 = hb_parc(3);
 
       hb_retl( szModule1 && szModule2 && FILENAME_EQUAL( hb_dbgStripModuleName( szModule1 ), hb_dbgStripModuleName( szModule2 ) ) );
    }
@@ -2187,5 +2187,5 @@ HB_FUNC( __DBGMODULEMATCH )
 
 HB_FUNC( __DBGSENDMSG )
 {
-   hb_dbg_objSendMessage( hb_parnl( 1 ), hb_param( 2, HB_IT_ANY ), hb_param( 3, HB_IT_ANY ), 4 );
+   hb_dbg_objSendMessage( hb_parnl(1), hb_param( 2, HB_IT_ANY ), hb_param( 3, HB_IT_ANY ), 4 );
 }

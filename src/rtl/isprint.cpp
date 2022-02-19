@@ -104,7 +104,7 @@ HB_BOOL hb_printerIsReady( const char * pszPrinterName )
 
 HB_FUNC( HB_ISPRINTER )
 {
-   hb_retl( hb_printerIsReady( hb_parc( 1 ) ) );
+   hb_retl( hb_printerIsReady( hb_parc(1) ) );
 }
 
 HB_FUNC( ISPRINTER )

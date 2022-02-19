@@ -160,7 +160,7 @@ HB_FUNC( __PP_INIT )
    if( pState )
    {
       PHB_PP_STATE * pStatePtr;
-      const char * szPath = hb_parc( 1 ), * szStdCh = hb_parc( 2 );
+      const char * szPath = hb_parc(1), * szStdCh = hb_parc(2);
       HB_BOOL fArchDefs = hb_parldef( 3, HB_TRUE );
       PHB_ITEM ppItem;
 
@@ -199,7 +199,7 @@ HB_FUNC( __PP_PATH )
    PHB_PP_STATE pState = hb_pp_Param( 1 );
 
    if( pState )
-      hb_pp_addSearchPath( pState, hb_parc( 2 ), hb_parl( 3 ) );
+      hb_pp_addSearchPath( pState, hb_parc(2), hb_parl(3) );
 }
 
 /*
@@ -224,8 +224,8 @@ HB_FUNC( __PP_ADDRULE )
 
    if( pState )
    {
-      const char * szText = hb_parc( 2 );
-      HB_SIZE nLen = hb_parclen( 2 );
+      const char * szText = hb_parc(2);
+      HB_SIZE nLen = hb_parclen(2);
 
       if( szText )
       {
@@ -266,11 +266,11 @@ HB_FUNC( __PP_PROCESS )
 
    if( pState )
    {
-      HB_SIZE nLen = hb_parclen( 2 );
+      HB_SIZE nLen = hb_parclen(2);
 
       if( nLen )
       {
-         char * szText = hb_pp_parseLine( pState, hb_parc( 2 ), &nLen );
+         char * szText = hb_pp_parseLine( pState, hb_parc(2), &nLen );
          hb_retclen( szText, nLen );
          return;
       }

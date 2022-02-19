@@ -2918,7 +2918,7 @@ HB_BOOL hb_rddIsDerivedFrom( HB_USHORT uiRddID, HB_USHORT uiSuperRddID )
  */
 HB_FUNC( __RDDPREALLOCATE )
 {
-   HB_LONG lNewSize = hb_parnl( 1 );
+   HB_LONG lNewSize = hb_parnl(1);
 
    if( lNewSize > static_cast< HB_LONG >( USHRT_MAX ) )
    {

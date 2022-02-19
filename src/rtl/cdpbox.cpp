@@ -53,11 +53,11 @@
 
 HB_FUNC( HB_UTF8TOSTRBOX )
 {
-   const char * szString = hb_parc( 1 );
+   const char * szString = hb_parc(1);
 
    if( szString )
    {
-      HB_SIZE nLen = hb_parclen( 1 ), nDest = 0;
+      HB_SIZE nLen = hb_parclen(1), nDest = 0;
       char * szDest = nullptr;
 
       if( nLen )
@@ -73,7 +73,7 @@ HB_FUNC( HB_UTF8TOSTRBOX )
             }
             else
             {
-               szString = hb_parc( 1 );
+               szString = hb_parc(1);
                nDest = hb_cdpUTF8AsStrLen( cdp, szString, nLen, 0 );
                szDest = static_cast< char * >( hb_xgrab( nDest + 1 ) );
                hb_cdpUTF8ToStr( cdp, szString, nLen, szDest, nDest + 1 );

@@ -58,7 +58,7 @@ HB_FUNC( LEFT )
 
    if( pText && HB_ISNUM( 2 ) )
    {
-      HB_ISIZ nLen = hb_parns( 2 );
+      HB_ISIZ nLen = hb_parns(2);
       if( nLen <= 0 )
       {
          hb_retc_null();

@@ -675,7 +675,7 @@ HB_BOOL hb_LZSSxDecompressFile( PHB_FILE pInput, PHB_FILE pOutput )
 HB_FUNC( SX_FCOMPRESS )
 {
    HB_BOOL fRet = HB_FALSE;
-   const char * szSource = hb_parc( 1 ), * szDestin = hb_parc( 2 );
+   const char * szSource = hb_parc(1), * szDestin = hb_parc(2);
 
    if( szSource && *szSource && szDestin && *szDestin )
    {
@@ -709,7 +709,7 @@ HB_FUNC( SX_FCOMPRESS )
 HB_FUNC( SX_FDECOMPRESS )
 {
    HB_BOOL fRet = HB_FALSE;
-   const char * szSource = hb_parc( 1 ), * szDestin = hb_parc( 2 );
+   const char * szSource = hb_parc(1), * szDestin = hb_parc(2);
 
    if( szSource && *szSource && szDestin && *szDestin )
    {
@@ -734,11 +734,11 @@ HB_FUNC( SX_FDECOMPRESS )
 
 HB_FUNC( _SX_STRCOMPRESS )
 {
-   const char * pStr = hb_parc( 1 );
+   const char * pStr = hb_parc(1);
 
    if( pStr )
    {
-      HB_SIZE nLen = hb_parclen( 1 ), nBuf, nDst;
+      HB_SIZE nLen = hb_parclen(1), nBuf, nDst;
       char * pBuf;
 
       /* this is for strict SIX compatibility - in general very bad idea */
@@ -764,11 +764,11 @@ HB_FUNC( _SX_STRCOMPRESS )
 HB_FUNC( _SX_STRDECOMPRESS )
 {
    HB_BOOL fOK = HB_FALSE;
-   const char * pStr = hb_parc( 1 );
+   const char * pStr = hb_parc(1);
 
    if( pStr )
    {
-      HB_SIZE nLen = hb_parclen( 1 ), nBuf;
+      HB_SIZE nLen = hb_parclen(1), nBuf;
 
       if( nLen >= 4 )
       {

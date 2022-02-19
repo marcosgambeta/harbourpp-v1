@@ -261,11 +261,11 @@ HB_MAXUINT hb_crcct( HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT p
 
 HB_FUNC( HB_CRC32 )
 {
-   const char * szString = hb_parc( 1 );
+   const char * szString = hb_parc(1);
 
    if( szString )
    {
-      hb_retnint( hb_crc32( static_cast< HB_U32 >( hb_parnl( 2 ) ), szString, hb_parclen( 1 ) ) );
+      hb_retnint( hb_crc32( static_cast< HB_U32 >( hb_parnl(2) ), szString, hb_parclen(1) ) );
    }
    else
    {
@@ -275,11 +275,11 @@ HB_FUNC( HB_CRC32 )
 
 HB_FUNC( HB_CRC16 )
 {
-   const char * szString = hb_parc( 1 );
+   const char * szString = hb_parc(1);
 
    if( szString )
    {
-      hb_retnint( hb_crc16( static_cast< HB_U16 >( hb_parnl( 2 ) ), szString, hb_parclen( 1 ) ) );
+      hb_retnint( hb_crc16( static_cast< HB_U16 >( hb_parnl(2) ), szString, hb_parclen(1) ) );
    }
    else
    {
@@ -289,16 +289,16 @@ HB_FUNC( HB_CRC16 )
 
 HB_FUNC( HB_CRC )
 {
-   const char * szString = hb_parc( 1 );
+   const char * szString = hb_parc(1);
 
    if( szString )
    {
-      HB_MAXUINT ulPolynomial = static_cast< HB_MAXUINT >( hb_parnint( 3 ) );
+      HB_MAXUINT ulPolynomial = static_cast< HB_MAXUINT >( hb_parnint(3) );
       if( ulPolynomial == 0 )
       {
          ulPolynomial = 0x11021;
       }
-      hb_retnint( hb_crc( static_cast< HB_MAXUINT >( hb_parnint( 2 ) ), szString, hb_parclen( 1 ), ulPolynomial ) );
+      hb_retnint( hb_crc( static_cast< HB_MAXUINT >( hb_parnint(2) ), szString, hb_parclen(1), ulPolynomial ) );
    }
    else
    {
@@ -308,16 +308,16 @@ HB_FUNC( HB_CRC )
 
 HB_FUNC( HB_CRCCT )
 {
-   const char * szString = hb_parc( 1 );
+   const char * szString = hb_parc(1);
 
    if( szString )
    {
-      HB_MAXUINT ulPolynomial = static_cast< HB_MAXUINT >( hb_parnint( 3 ) );
+      HB_MAXUINT ulPolynomial = static_cast< HB_MAXUINT >( hb_parnint(3) );
       if( ulPolynomial == 0 )
       {
          ulPolynomial = 0x11021;
       }
-      hb_retnint( hb_crcct( static_cast< HB_MAXUINT >( hb_parnint( 2 ) ), szString, hb_parclen( 1 ), ulPolynomial ) );
+      hb_retnint( hb_crcct( static_cast< HB_MAXUINT >( hb_parnint(2) ), szString, hb_parclen(1), ulPolynomial ) );
    }
    else
    {

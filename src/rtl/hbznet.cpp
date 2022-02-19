@@ -756,8 +756,8 @@ HB_FUNC( HB_SOCKETNEWZNET )
       }
       else
       {
-         const char * keydata = hb_parc( 2 );
-         int keylen = static_cast< int >( hb_parclen( 2 ) ),
+         const char * keydata = hb_parc(2);
+         int keylen = static_cast< int >( hb_parclen(2) ),
              level = hb_parnidef( 3, HB_ZLIB_COMPRESSION_DEFAULT ),
              strategy = hb_parnidef( 4, HB_ZLIB_STRATEGY_DEFAULT );
 

@@ -203,7 +203,7 @@ HB_FUNC( __DBGVMSTKLCOUNT )
 {
    if( hb_vmInternalsEnabled() )
    {
-      hb_retns( hb_stackLen( hb_parni( 1 ) + 1 ) );
+      hb_retns( hb_stackLen( hb_parni(1) + 1 ) );
    }
    else
    {
@@ -253,7 +253,7 @@ HB_FUNC( __DBGVMLOCALLIST )
    {
       PHB_ITEM pArray;
       HB_ISIZ nBaseOffset, nPrevOffset, nLen;
-      int iLevel = hb_parni( 1 ) + 1;
+      int iLevel = hb_parni(1) + 1;
 
       nBaseOffset = hb_stackBaseOffset();
       while( --iLevel > 0 && nBaseOffset > 1 )
@@ -293,7 +293,7 @@ HB_FUNC( __DBGVMPARLLIST )
 {
    if( hb_vmInternalsEnabled() )
    {
-      hb_itemReturnRelease( hb_arrayFromParams( hb_parni( 1 ) + 1 ) );
+      hb_itemReturnRelease( hb_arrayFromParams( hb_parni(1) + 1 ) );
    }
    else
    {
@@ -349,8 +349,8 @@ HB_FUNC( __DBGVMVARLGET )
 {
    if( hb_vmInternalsEnabled() )
    {
-      int iLevel = hb_parni( 1 ) + 1;
-      int iLocal = hb_parni( 2 );
+      int iLevel = hb_parni(1) + 1;
+      int iLocal = hb_parni(2);
       PHB_ITEM pLocal = hb_dbg_vmVarLGet( iLevel, iLocal );
 
       if( pLocal )
@@ -368,8 +368,8 @@ HB_FUNC( __DBGVMVARLSET )
 {
    if( hb_vmInternalsEnabled() )
    {
-      int iLevel = hb_parni( 1 ) + 1;
-      int iLocal = hb_parni( 2 );
+      int iLevel = hb_parni(1) + 1;
+      int iLocal = hb_parni(2);
       HB_ISIZ nBaseOffset;
 
       nBaseOffset = hb_stackBaseOffset();

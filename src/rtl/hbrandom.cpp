@@ -103,12 +103,12 @@ static void hb_random( double dRnd )
    }
    else if( ! HB_ISNUM( 2 ) )
    {
-      hb_retnd( dRnd * hb_parnd( 1 ) );
+      hb_retnd( dRnd * hb_parnd(1) );
    }
    else
    {
-      double dX = hb_parnd( 2 );
-      double dY = hb_parnd( 1 );
+      double dX = hb_parnd(2);
+      double dY = hb_parnd(1);
       if( dX > dY )
       {
          double dZ = dY;
@@ -142,12 +142,12 @@ static void hb_randomint( double dRnd )
    }
    else if( ! HB_ISNUM( 2 ) )
    {
-      hb_retnint( static_cast< HB_MAXINT >( 1 + ( dRnd * hb_parnint( 1 ) ) ) );
+      hb_retnint( static_cast< HB_MAXINT >( 1 + ( dRnd * hb_parnint(1) ) ) );
    }
    else
    {
-      HB_MAXINT lX = hb_parnint( 1 );
-      HB_MAXINT lY = hb_parnint( 2 );
+      HB_MAXINT lX = hb_parnint(1);
+      HB_MAXINT lY = hb_parnint(2);
       if( lX > lY )
       {
          HB_MAXINT lZ = lY;
@@ -176,7 +176,7 @@ HB_FUNC( HB_RANDINT )
 
 HB_FUNC( HB_RANDOMSEED )
 {
-   hb_random_seed( hb_parni( 1 ) );
+   hb_random_seed( hb_parni(1) );
 }
 
 HB_FUNC( HB_RANDOMINTMAX )

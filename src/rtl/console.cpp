@@ -538,7 +538,7 @@ HB_FUNC( DEVPOS ) /* Sets the screen and/or printer position */
 {
    if( HB_ISNUM( 1 ) && HB_ISNUM( 2 ) )
    {
-      hb_conDevPos( hb_parni( 1 ), hb_parni( 2 ) );
+      hb_conDevPos( hb_parni(1), hb_parni(2) );
    }
 
 #if defined( HB_CLP_UNDOC )
@@ -553,8 +553,8 @@ HB_FUNC( SETPRC ) /* Sets the current printer row and column positions */
    if( hb_pcount() == 2 && HB_ISNUM( 1 ) && HB_ISNUM( 2 ) )
    {
       PHB_PRNPOS pPrnPos = hb_prnPos();
-      pPrnPos->row = hb_parni( 1 );
-      pPrnPos->col = hb_parni( 2 );
+      pPrnPos->row = hb_parni(1);
+      pPrnPos->col = hb_parni(2);
    }
 }
 
@@ -569,7 +569,7 @@ HB_FUNC( DEVOUT ) /* writes a single value to the current device (screen or prin
       char szOldColor[ HB_CLRSTR_LEN ];
 
       hb_gtGetColorStr( szOldColor );
-      hb_gtSetColorStr( hb_parc( 2 ) );
+      hb_gtSetColorStr( hb_parc(2) );
 
       pszString = hb_itemStringCon( hb_param( 1, HB_IT_ANY ), &nLen, &fFree );
       if( nLen )
@@ -608,7 +608,7 @@ HB_FUNC( DISPOUT ) /* writes a single value to the screen, but is not affected b
       char szOldColor[ HB_CLRSTR_LEN ];
 
       hb_gtGetColorStr( szOldColor );
-      hb_gtSetColorStr( hb_parc( 2 ) );
+      hb_gtSetColorStr( hb_parc(2) );
 
       pszString = hb_itemStringCon( hb_param( 1, HB_IT_ANY ), &nLen, &bFreeReq );
 
@@ -649,11 +649,11 @@ HB_FUNC( DISPOUTAT )  /* writes a single value to the screen at specific positio
       char szOldColor[ HB_CLRSTR_LEN ];
 
       hb_gtGetColorStr( szOldColor );
-      hb_gtSetColorStr( hb_parc( 4 ) );
+      hb_gtSetColorStr( hb_parc(4) );
 
       pszString = hb_itemStringCon( hb_param( 3, HB_IT_ANY ), &nLen, &bFreeReq );
 
-      hb_gtWriteAt( hb_parni( 1 ), hb_parni( 2 ), pszString, nLen );
+      hb_gtWriteAt( hb_parni(1), hb_parni(2), pszString, nLen );
 
       if( bFreeReq )
       {
@@ -666,7 +666,7 @@ HB_FUNC( DISPOUTAT )  /* writes a single value to the screen at specific positio
    {
       pszString = hb_itemStringCon( hb_param( 3, HB_IT_ANY ), &nLen, &bFreeReq );
 
-      hb_gtWriteAt( hb_parni( 1 ), hb_parni( 2 ), pszString, nLen );
+      hb_gtWriteAt( hb_parni(1), hb_parni(2), pszString, nLen );
 
       if( bFreeReq )
       {
@@ -690,18 +690,18 @@ HB_FUNC( HB_DISPOUTAT )
 
       if( HB_ISCHAR( 4 ) )
       {
-         iColor = hb_gtColorToN( hb_parc( 4 ) );
+         iColor = hb_gtColorToN( hb_parc(4) );
       }
       else if( HB_ISNUM( 4 ) )
       {
-         iColor = hb_parni( 4 );
+         iColor = hb_parni(4);
       }
       else
       {
          iColor = -1;
       }
 
-      hb_gtPutText( hb_parni( 1 ), hb_parni( 2 ), pszString, nLen, iColor );
+      hb_gtPutText( hb_parni(1), hb_parni(2), pszString, nLen, iColor );
 
       if( bFreeReq )
       {
@@ -714,13 +714,13 @@ HB_FUNC( HB_DISPOUTAT )
    so we can use it to draw graphical elements. */
 HB_FUNC( HB_DISPOUTATBOX )
 {
-   HB_SIZE nLen = hb_parclen( 3 );
+   HB_SIZE nLen = hb_parclen(3);
 
    if( nLen > 0 )
    {
-      int iRow = hb_parni( 1 );
-      int iCol = hb_parni( 2 );
-      const char * pszString = hb_parc( 3 );
+      int iRow = hb_parni(1);
+      int iCol = hb_parni(2);
+      const char * pszString = hb_parc(3);
       int iColor;
       PHB_CODEPAGE cdp;
       HB_SIZE nIndex = 0;
@@ -728,11 +728,11 @@ HB_FUNC( HB_DISPOUTATBOX )
 
       if( HB_ISCHAR( 4 ) )
       {
-         iColor = hb_gtColorToN( hb_parc( 4 ) );
+         iColor = hb_gtColorToN( hb_parc(4) );
       }
       else if( HB_ISNUM( 4 ) )
       {
-         iColor = hb_parni( 4 );
+         iColor = hb_parni(4);
       }
       else
       {

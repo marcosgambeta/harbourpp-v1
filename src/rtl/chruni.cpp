@@ -61,7 +61,7 @@ HB_FUNC( HB_UCHAR )
       char szChar[ HB_MAX_CHAR_LEN ];
       HB_SIZE nLen;
 
-      nLen = hb_cdpTextPutU16( hb_vmCDP(), szChar, sizeof( szChar ), static_cast< HB_WCHAR >( hb_parni( 1 ) ) );
+      nLen = hb_cdpTextPutU16( hb_vmCDP(), szChar, sizeof( szChar ), static_cast< HB_WCHAR >( hb_parni(1) ) );
       hb_retclen( szChar, nLen );
    }
    else
@@ -77,7 +77,7 @@ HB_FUNC( HB_BCHAR )
 {
    if( HB_ISNUM( 1 ) )
    {
-      char c = static_cast< char >( hb_parni( 1 ) );
+      char c = static_cast< char >( hb_parni(1) );
 
       hb_retclen( &c, 1 );
    }
@@ -109,7 +109,7 @@ HB_FUNC( HB_UCODE )
  */
 HB_FUNC( HB_BCODE )
 {
-   const char * szText = hb_parc( 1 );
+   const char * szText = hb_parc(1);
 
    if( szText )
    {
@@ -167,7 +167,7 @@ HB_FUNC( HB_UPEEK )
       PHB_CODEPAGE cdp = hb_vmCDP();
       const char * szText = hb_itemGetCPtr( pText );
       HB_SIZE nLen = hb_itemGetCLen( pText );
-      HB_SIZE nPos = hb_parns( 2 );
+      HB_SIZE nPos = hb_parns(2);
       HB_WCHAR wc = 0;
 
       if( nPos > 0 && nPos <= nLen )
@@ -197,7 +197,7 @@ HB_FUNC( HB_BPEEK )
 
    if( pText && HB_ISNUM( 2 ) )
    {
-      HB_SIZE nPos = hb_parns( 2 );
+      HB_SIZE nPos = hb_parns(2);
 
       hb_retni( ( nPos > 0 && nPos <= hb_itemGetCLen( pText ) ) ? static_cast< HB_UCHAR >( hb_itemGetCPtr( pText )[ nPos - 1 ] ) : 0 );
    }
@@ -219,7 +219,7 @@ HB_FUNC( HB_UPOKE )
       PHB_CODEPAGE cdp = hb_vmCDP();
       const char * szText = hb_itemGetCPtr( pText );
       HB_SIZE nLen = hb_itemGetCLen( pText );
-      HB_SIZE nPos = hb_parns( 2 );
+      HB_SIZE nPos = hb_parns(2);
 
       if( nPos > 0 && nPos <= nLen )
       {
@@ -229,7 +229,7 @@ HB_FUNC( HB_UPOKE )
             char szChar[ HB_MAX_CHAR_LEN ], * pszText;
             HB_SIZE nChar, nOldChar;
 
-            nChar = hb_cdpTextPutU16( cdp, szChar, sizeof( szChar ), static_cast< HB_WCHAR >( hb_parni( 3 ) ) );
+            nChar = hb_cdpTextPutU16( cdp, szChar, sizeof( szChar ), static_cast< HB_WCHAR >( hb_parni(3) ) );
             nOldChar = hb_cdpTextPos( cdp, szText + nPos, nLen - nPos, 1 );
             if( nChar == nOldChar )
             {
@@ -271,12 +271,12 @@ HB_FUNC( HB_BPOKE )
 
    if( pText && HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
    {
-      HB_SIZE nPos = hb_parns( 2 ), nLen;
+      HB_SIZE nPos = hb_parns(2), nLen;
       char * pszText;
 
       if( nPos > 0 && hb_itemGetWriteCL( pText, &pszText, &nLen ) && nPos <= nLen )
       {
-         pszText[ nPos - 1 ] = static_cast< char >( hb_parni( 3 ) & 0xff );
+         pszText[ nPos - 1 ] = static_cast< char >( hb_parni(3) & 0xff );
       }
       hb_itemReturn( pText );
    }
@@ -298,8 +298,8 @@ HB_FUNC( HB_USUBSTR )
       PHB_CODEPAGE cdp = hb_vmCDP();
       const char * pszText = hb_itemGetCPtr( pText );
       HB_ISIZ nSize = hb_itemGetCLen( pText );
-      HB_ISIZ nFrom = hb_parns( 2 );
-      HB_ISIZ nCount = iPCount < 3 ? nSize : hb_parns( 3 );
+      HB_ISIZ nFrom = hb_parns(2);
+      HB_ISIZ nCount = iPCount < 3 ? nSize : hb_parns(3);
 
       if( nFrom > 0 )
       {
@@ -357,8 +357,8 @@ HB_FUNC( HB_BSUBSTR )
    {
       const char * pszText = hb_itemGetCPtr( pText );
       HB_ISIZ nSize = hb_itemGetCLen( pText );
-      HB_ISIZ nFrom = hb_parns( 2 );
-      HB_ISIZ nCount = iPCount < 3 ? nSize : hb_parns( 3 );
+      HB_ISIZ nFrom = hb_parns(2);
+      HB_ISIZ nCount = iPCount < 3 ? nSize : hb_parns(3);
 
       if( nFrom > 0 )
       {
@@ -414,7 +414,7 @@ HB_FUNC( HB_ULEFT )
 
    if( pText && HB_ISNUM( 2 ) )
    {
-      HB_ISIZ nLen = hb_parns( 2 );
+      HB_ISIZ nLen = hb_parns(2);
       if( nLen <= 0 )
       {
          hb_retc_null();
@@ -450,7 +450,7 @@ HB_FUNC( HB_BLEFT )
 
    if( pText && HB_ISNUM( 2 ) )
    {
-      HB_ISIZ nLen = hb_parns( 2 );
+      HB_ISIZ nLen = hb_parns(2);
       if( nLen <= 0 )
       {
          hb_retc_null();
@@ -480,7 +480,7 @@ HB_FUNC( HB_URIGHT )
 {
    PHB_ITEM pText = hb_param( 1, HB_IT_STRING );
    HB_SIZE nText = hb_itemGetCLen( pText );
-   HB_ISIZ nLen = hb_parns( 2 );
+   HB_ISIZ nLen = hb_parns(2);
 
    if( nLen > 0 && nText > 0 )
    {
@@ -518,7 +518,7 @@ HB_FUNC( HB_BRIGHT )
 {
    PHB_ITEM pText = hb_param( 1, HB_IT_STRING );
    HB_SIZE nText = hb_itemGetCLen( pText );
-   HB_ISIZ nLen = hb_parns( 2 );
+   HB_ISIZ nLen = hb_parns(2);
 
    if( nLen > 0 && nText > 0 )
    {
@@ -550,7 +550,7 @@ HB_FUNC( HB_UAT )
       PHB_CODEPAGE cdp = hb_vmCDP();
       const char * pszText = hb_itemGetCPtr( pText );
       HB_SIZE nTextLength = hb_itemGetCLen( pText );
-      HB_SIZE nStart = hb_parns( 3 );
+      HB_SIZE nStart = hb_parns(3);
       HB_SIZE nFrom, nPos = 0;
 
       if( nStart <= 1 )
@@ -570,7 +570,7 @@ HB_FUNC( HB_UAT )
          nTextLength -= nFrom;
          if( HB_ISNUM( 4 ) )
          {
-            nTo = hb_parns( 4 );
+            nTo = hb_parns(4);
             if( nTo <= nStart )
             {
                nTo = 0;
@@ -618,7 +618,7 @@ HB_FUNC( HB_BAT )
    {
       const char * pszText = hb_itemGetCPtr( pText );
       HB_SIZE nTextLength = hb_itemGetCLen( pText );
-      HB_SIZE nStart = hb_parns( 3 );
+      HB_SIZE nStart = hb_parns(3);
       HB_SIZE nFrom, nPos = 0;
 
       if( nStart <= 1 )
@@ -638,7 +638,7 @@ HB_FUNC( HB_BAT )
          nTextLength -= nFrom;
          if( HB_ISNUM( 4 ) )
          {
-            nTo = hb_parns( 4 );
+            nTo = hb_parns(4);
             if( nTo <= nStart )
             {
                nTo = 0;
@@ -678,19 +678,19 @@ HB_FUNC( HB_BAT )
  */
 HB_FUNC( HB_BRAT )
 {
-   HB_SIZE nSubLen = hb_parclen( 1 );
+   HB_SIZE nSubLen = hb_parclen(1);
    HB_SIZE nPos = 0;
 
    if( nSubLen )
    {
-      HB_SIZE nLen = hb_parclen( 2 );
+      HB_SIZE nLen = hb_parclen(2);
       HB_ISIZ nTo = nLen - nSubLen;
 
       if( nTo >= 0 )
       {
-         const char * pszSub = hb_parc( 1 );
-         const char * pszText = hb_parc( 2 );
-         HB_ISIZ nStart = hb_parns( 3 );
+         const char * pszSub = hb_parc(1);
+         const char * pszText = hb_parc(2);
+         HB_ISIZ nStart = hb_parns(3);
          HB_ISIZ nFrom;
 
          if( nStart <= 1 )
@@ -706,7 +706,7 @@ HB_FUNC( HB_BRAT )
          {
             if( HB_ISNUM( 4 ) )
             {
-               HB_ISIZ nEnd = hb_parns( 4 ) - nSubLen;
+               HB_ISIZ nEnd = hb_parns(4) - nSubLen;
 
                if( nEnd < nTo )
                {
@@ -737,15 +737,15 @@ HB_FUNC( HB_BRAT )
  */
 HB_FUNC( HB_BSTUFF )
 {
-   const char * szText = hb_parc( 1 );
-   const char * szIns = hb_parc( 4 );
+   const char * szText = hb_parc(1);
+   const char * szIns = hb_parc(4);
 
    if( szText && szIns && HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
    {
-      HB_SIZE nLen = hb_parclen( 1 );
-      HB_SIZE nPos = hb_parns( 2 );
-      HB_SIZE nDel = hb_parns( 3 );
-      HB_SIZE nIns = hb_parclen( 4 );
+      HB_SIZE nLen = hb_parclen(1);
+      HB_SIZE nPos = hb_parns(2);
+      HB_SIZE nDel = hb_parns(3);
+      HB_SIZE nIns = hb_parclen(4);
       HB_SIZE nTot;
 
       if( nPos )
@@ -791,16 +791,16 @@ HB_FUNC( HB_BSTUFF )
  */
 HB_FUNC( HB_USTUFF )
 {
-   const char * szText = hb_parc( 1 );
-   const char * szIns = hb_parc( 4 );
+   const char * szText = hb_parc(1);
+   const char * szIns = hb_parc(4);
 
    if( szText && szIns && HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
    {
       PHB_CODEPAGE cdp = hb_vmCDP();
-      HB_SIZE nLen = hb_parclen( 1 );
-      HB_SIZE nPos = hb_parns( 2 );
-      HB_SIZE nDel = hb_parns( 3 );
-      HB_SIZE nIns = hb_parclen( 4 );
+      HB_SIZE nLen = hb_parclen(1);
+      HB_SIZE nPos = hb_parns(2);
+      HB_SIZE nDel = hb_parns(3);
+      HB_SIZE nIns = hb_parclen(4);
       HB_SIZE nTot;
 
       if( nPos )

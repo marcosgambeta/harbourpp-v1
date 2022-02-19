@@ -53,7 +53,7 @@
 
 HB_FUNC( SX_SLIMFAST )
 {
-   const char * szExp = hb_parc( 1 );
+   const char * szExp = hb_parc(1);
 
    if( szExp && *szExp )
    {
@@ -94,7 +94,7 @@ HB_FUNC( SX_SLIMFAST )
 
 HB_FUNC( SX_WILDMATCH )
 {
-   const char * szPattern = hb_parc( 1 ), * szValue = hb_parc( 2 );
+   const char * szPattern = hb_parc(1), * szValue = hb_parc(2);
    HB_BOOL fMatch = HB_FALSE;
 
    if( szPattern && szPattern[ 0 ] && szValue )
@@ -112,7 +112,7 @@ HB_FUNC( SX_WILDMATCH )
 
 HB_FUNC( SX_VERSION )
 {
-   switch( hb_parni( 1 ) )
+   switch( hb_parni(1) )
    {
       case 1:
          hb_retds( HB_SX_DAY );

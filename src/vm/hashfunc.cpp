@@ -457,12 +457,12 @@ HB_FUNC( HB_HCOPY )
       {
          HB_SIZE nLen = hb_hashLen( pSource ), nStart, nCount;
 
-         nStart = hb_parns( 3 );
+         nStart = hb_parns(3);
          if( ! nStart )
          {
             ++nStart;
          }
-         nCount = HB_ISNUM( 4 ) ? static_cast< HB_SIZE >( hb_parns( 4 ) ) : nLen - nStart + 1;
+         nCount = HB_ISNUM( 4 ) ? static_cast< HB_SIZE >( hb_parns(4) ) : nLen - nStart + 1;
 
          while( nCount-- )
          {
@@ -549,12 +549,12 @@ HB_FUNC( HB_HEVAL )
    {
       HB_SIZE nLen = hb_hashLen( pHash ), nStart, nCount;
 
-      nStart = hb_parns( 3 );
+      nStart = hb_parns(3);
       if( ! nStart )
       {
          ++nStart;
       }
-      nCount = HB_ISNUM( 4 ) ? static_cast< HB_SIZE >( hb_parns( 4 ) ) : nLen - nStart + 1;
+      nCount = HB_ISNUM( 4 ) ? static_cast< HB_SIZE >( hb_parns(4) ) : nLen - nStart + 1;
 
       while( nCount-- )
       {
@@ -591,15 +591,15 @@ HB_FUNC( HB_HSCAN )
 
    if( pHash && pValue )
    {
-      HB_BOOL fExact = hb_parl( 5 ), fFound = HB_FALSE;
+      HB_BOOL fExact = hb_parl(5), fFound = HB_FALSE;
       HB_SIZE nLen = hb_hashLen( pHash ), nStart, nCount;
 
-      nStart = hb_parns( 3 );
+      nStart = hb_parns(3);
       if( ! nStart )
       {
          ++nStart;
       }
-      nCount = HB_ISNUM( 4 ) ? static_cast< HB_SIZE >( hb_parns( 4 ) ) : nLen - nStart + 1;
+      nCount = HB_ISNUM( 4 ) ? static_cast< HB_SIZE >( hb_parns(4) ) : nLen - nStart + 1;
 
       if( HB_IS_EVALITEM( pValue ) )
       {

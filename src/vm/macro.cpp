@@ -890,7 +890,7 @@ static void hb_macroBlock( const char * szString, PHB_ITEM pItem )
 
 HB_FUNC( HB_MACROBLOCK )
 {
-   const char * szMacro = hb_parc( 1 );
+   const char * szMacro = hb_parc(1);
 
    if( szMacro )
    {
@@ -971,7 +971,7 @@ static void hb_macroSetGetBlock( PHB_DYNS pVarSym, PHB_ITEM pItem, int iWorkArea
 
 HB_FUNC( MEMVARBLOCK )
 {
-   const char * szName = hb_parc( 1 );
+   const char * szName = hb_parc(1);
 
    if( szName )
    {
@@ -998,7 +998,7 @@ HB_FUNC( MEMVARBLOCK )
 
 HB_FUNC( FIELDBLOCK )
 {
-   const char * szName = hb_parc( 1 );
+   const char * szName = hb_parc(1);
 
    if( szName )
    {
@@ -1041,8 +1041,8 @@ HB_FUNC( FIELDBLOCK )
 
 HB_FUNC( FIELDWBLOCK )
 {
-   const char * szName = hb_parc( 1 );
-   int iWorkArea = hb_parni( 2 );
+   const char * szName = hb_parc(1);
+   int iWorkArea = hb_parni(2);
 
    if( szName && iWorkArea != 0 )
    {
@@ -1293,7 +1293,7 @@ HB_FUNC( HB_SETMACRO )
 
    if( iPrmCnt > 0 )
    {
-      int flags = hb_parni( 1 );
+      int flags = hb_parni(1);
       PHB_ITEM pValue;
 
       switch( flags )

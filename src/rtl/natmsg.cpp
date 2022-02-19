@@ -79,7 +79,7 @@ static const char * hb_nationGetMsg( int iMsg )
 
 HB_FUNC( __NATISAFFIRM )
 {
-   HB_SIZE nLen = hb_parclen( 1 );
+   HB_SIZE nLen = hb_parclen(1);
    HB_BOOL fIS = HB_FALSE;
 
    if( nLen > 0 )
@@ -97,11 +97,11 @@ HB_FUNC( __NATISAFFIRM )
          PHB_CODEPAGE cdp = hb_vmCDP();
          if( cdp )
          {
-            fIS = hb_cdpicmp( hb_parc( 1 ), nLen, szYesNo, nStr, cdp, HB_FALSE ) == 0;
+            fIS = hb_cdpicmp( hb_parc(1), nLen, szYesNo, nStr, cdp, HB_FALSE ) == 0;
          }
          else
          {
-            fIS = hb_strnicmp( hb_parc( 1 ), szYesNo, nStr ) == 0;
+            fIS = hb_strnicmp( hb_parc(1), szYesNo, nStr ) == 0;
          }   
       }
    }
@@ -110,7 +110,7 @@ HB_FUNC( __NATISAFFIRM )
 
 HB_FUNC( __NATISNEGATIVE )
 {
-   HB_SIZE nLen = hb_parclen( 1 );
+   HB_SIZE nLen = hb_parclen(1);
    HB_BOOL fIS = HB_FALSE;
 
    if( nLen > 0 )
@@ -132,11 +132,11 @@ HB_FUNC( __NATISNEGATIVE )
          PHB_CODEPAGE cdp = hb_vmCDP();
          if( cdp )
          {
-            fIS = hb_cdpicmp( hb_parc( 1 ), nLen, szYesNo, nStr, cdp, HB_FALSE ) == 0;
+            fIS = hb_cdpicmp( hb_parc(1), nLen, szYesNo, nStr, cdp, HB_FALSE ) == 0;
          }
          else
          {
-            fIS = hb_strnicmp( hb_parc( 1 ), szYesNo, nStr ) == 0;
+            fIS = hb_strnicmp( hb_parc(1), szYesNo, nStr ) == 0;
          }   
       }
    }
@@ -152,7 +152,7 @@ HB_FUNC( __NATMSG )
    }
    else if( HB_ISNUM( 1 ) )
    {
-      hb_retc_const( hb_nationGetMsg( hb_parni( 1 ) ) );
+      hb_retc_const( hb_nationGetMsg( hb_parni(1) ) );
    }
    else
    {

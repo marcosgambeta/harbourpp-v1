@@ -1561,11 +1561,11 @@ HB_FUNC( HB_THREADWAIT )
 
       if( HB_ISNUM( 2 ) )
       {
-         double dTimeOut = hb_parnd( 2 );
+         double dTimeOut = hb_parnd(2);
          ulMilliSec = dTimeOut > 0 ? static_cast< HB_ULONG >( dTimeOut * 1000 ) : 0;
       }
 
-      fAll = hb_parl( 3 );
+      fAll = hb_parl(3);
 
       hb_retni( hb_threadWait( pThreads, iThreads, fAll, ulMilliSec ) );
    }
@@ -2688,7 +2688,7 @@ HB_FUNC( HB_MUTEXLOCK )
       if( HB_ISNUM( 2 ) )
       {
          HB_ULONG ulMilliSec = 0;
-         double dTimeOut = hb_parnd( 2 );
+         double dTimeOut = hb_parnd(2);
          if( dTimeOut > 0 )
          {
             ulMilliSec = static_cast< HB_ULONG >( dTimeOut * 1000 );
@@ -2745,7 +2745,7 @@ HB_FUNC( HB_MUTEXSUBSCRIBE )
       if( HB_ISNUM( 2 ) )
       {
          HB_ULONG ulMilliSec = 0;
-         double dTimeOut = hb_parnd( 2 );
+         double dTimeOut = hb_parnd(2);
          if( dTimeOut > 0 )
          {
             ulMilliSec = static_cast< HB_ULONG >( dTimeOut * 1000 );
@@ -2782,7 +2782,7 @@ HB_FUNC( HB_MUTEXSUBSCRIBENOW )
       if( HB_ISNUM( 2 ) )
       {
          HB_ULONG ulMilliSec = 0;
-         double dTimeOut = hb_parnd( 2 );
+         double dTimeOut = hb_parnd(2);
          if( dTimeOut > 0 )
          {
             ulMilliSec = static_cast< HB_ULONG >( dTimeOut * 1000 );

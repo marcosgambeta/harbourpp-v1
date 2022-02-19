@@ -93,7 +93,7 @@ HB_FUNC( MEMOTRAN )
       char cHardCR = ';';
       char cSoftCR = ' ';
 
-      pszRepl = hb_parc( 2 );
+      pszRepl = hb_parc(2);
       if( pszRepl )
       {
          cHardCR = *pszRepl;
@@ -105,7 +105,7 @@ HB_FUNC( MEMOTRAN )
 #ifdef HB_CLP_STRICT
       if( pszRepl )
 #endif
-      pszRepl = hb_parc( 3 );
+      pszRepl = hb_parc(3);
       if( pszRepl )
       {
          cSoftCR = *pszRepl;

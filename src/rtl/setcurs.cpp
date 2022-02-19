@@ -75,6 +75,6 @@ HB_FUNC( SETCURSOR )
 
    if( HB_ISNUM( 1 ) )
    {
-      hb_gtSetCursor( hb_parni( 1 ) );
+      hb_gtSetCursor( hb_parni(1) );
    }
 }

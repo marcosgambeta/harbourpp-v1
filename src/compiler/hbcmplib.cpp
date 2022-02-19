@@ -130,7 +130,7 @@ static void hb_compGenArgList( int iFirst, int iLast,
       *pMsgFunc = nullptr;
       if( HB_ISLOG( iFirst ) )
       {
-         if( hb_parl( iFirst ) )
+         if( hb_parl(iFirst) )
          {
             *pMsgFunc = s_pp_msg;
          }
@@ -241,7 +241,7 @@ HB_FUNC( HB_COMPILEBUF )
 
 HB_FUNC( HB_COMPILEFROMBUF )
 {
-   const char * szSource = hb_parc( 1 );
+   const char * szSource = hb_parc(1);
 
    if( szSource )
    {

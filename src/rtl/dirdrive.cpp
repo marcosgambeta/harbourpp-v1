@@ -51,7 +51,7 @@ HB_FUNC( HB_DIRCREATE )
 {
    if( HB_ISCHAR( 1 ) )
    {
-      hb_retni( hb_fsMkDir( hb_parc( 1 ) ) ? 0 : hb_fsError() );
+      hb_retni( hb_fsMkDir( hb_parc(1) ) ? 0 : hb_fsError() );
    }
    else
    {
@@ -63,7 +63,7 @@ HB_FUNC( HB_DIRDELETE )
 {
    if( HB_ISCHAR( 1 ) )
    {
-      hb_retni( hb_fsRmDir( hb_parc( 1 ) ) ? 0 : hb_fsError() );
+      hb_retni( hb_fsRmDir( hb_parc(1) ) ? 0 : hb_fsError() );
    }
    else
    {
@@ -79,7 +79,7 @@ HB_FUNC( DIRCHANGE )
 {
    if( HB_ISCHAR( 1 ) )
    {
-      hb_retni( hb_fsChDir( hb_parc( 1 ) ) ? 0 : hb_fsError() );
+      hb_retni( hb_fsChDir( hb_parc(1) ) ? 0 : hb_fsError() );
    }
    else
    {
@@ -100,7 +100,7 @@ HB_FUNC_TRANSLATE( DIRREMOVE, HB_DIRDELETE )
 HB_FUNC( ISDISK )
 {
    HB_BOOL fResult = HB_FALSE;
-   const char * szDrive = hb_parc( 1 );
+   const char * szDrive = hb_parc(1);
 
    if( szDrive )
    {
@@ -119,7 +119,7 @@ HB_FUNC( ISDISK )
 HB_FUNC( DISKCHANGE )
 {
    HB_BOOL fResult = HB_FALSE;
-   const char * szDrive = hb_parc( 1 );
+   const char * szDrive = hb_parc(1);
 
    if( szDrive )
    {

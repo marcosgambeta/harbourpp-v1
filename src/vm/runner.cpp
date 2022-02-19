@@ -708,15 +708,15 @@ HB_FUNC( HB_HRBRUN )
 
    if( HB_ISNUM( 1 ) )
    {
-      usMode = static_cast< HB_USHORT >( hb_parni( 1 ) );
+      usMode = static_cast< HB_USHORT >( hb_parni(1) );
       nParam++;
    }
 
-   nLen = hb_parclen( nParam );
+   nLen = hb_parclen(nParam);
 
    if( nLen > 0 )
    {
-      const char * fileOrBody = hb_parc( nParam );
+      const char * fileOrBody = hb_parc(nParam);
       PHRB_BODY pHrbBody;
 
       if( hb_hrbCheckSig( fileOrBody, nLen ) != 0 )
@@ -768,15 +768,15 @@ HB_FUNC( HB_HRBLOAD )
 
    if( HB_ISNUM( 1 ) )
    {
-      usMode = static_cast< HB_USHORT >( hb_parni( 1 ) );
+      usMode = static_cast< HB_USHORT >( hb_parni(1) );
       nParam++;
    }
 
-   nLen = hb_parclen( nParam );
+   nLen = hb_parclen(nParam);
 
    if( nLen > 0 )
    {
-      const char * fileOrBody = hb_parc( nParam );
+      const char * fileOrBody = hb_parc(nParam);
       PHRB_BODY pHrbBody;
 
       if( hb_hrbCheckSig( fileOrBody, nLen ) != 0 )
@@ -871,7 +871,7 @@ HB_FUNC( HB_HRBUNLOAD )
 HB_FUNC( HB_HRBGETFUNSYM )
 {
    PHRB_BODY pHrbBody = hb_hrbParam( 1 );
-   const char * szName = hb_parc( 2 );
+   const char * szName = hb_parc(2);
 
    if( pHrbBody && szName )
    {
@@ -903,7 +903,7 @@ HB_FUNC( HB_HRBGETFUNLIST )
       HB_ULONG nPos;
       PHB_ITEM paList = hb_itemArrayNew( 0 );
       PHB_ITEM pFuncName = hb_itemNew( nullptr );
-      int iType = hb_parni( 2 );
+      int iType = hb_parni(2);
 
       for( nPos = 0, pSym = pHrbBody->pSymRead; nPos < pHrbBody->ulSymbols; ++pSym, ++nPos )
       {

@@ -513,7 +513,7 @@ HB_FUNC( __HB_LANGSELECT )
 
    hb_retc( hb_langID() );
 
-   szNewLang = hb_parc( 1 );
+   szNewLang = hb_parc(1);
    if( szNewLang )
    {
       hb_langSelectID( szNewLang );
@@ -522,17 +522,17 @@ HB_FUNC( __HB_LANGSELECT )
 
 HB_FUNC( HB_LANGNAME )
 {
-   hb_retc_buffer( hb_langName( hb_parc( 1 ) ) );
+   hb_retc_buffer( hb_langName( hb_parc(1) ) );
 }
 
 HB_FUNC( HB_LANGERRMSG )
 {
-   hb_retc_const( hb_langDGetErrorDesc( hb_parnl( 1 ) ) );
+   hb_retc_const( hb_langDGetErrorDesc( hb_parnl(1) ) );
 }
 
 HB_FUNC( HB_LANGMESSAGE )
 {
-   hb_retc_const( hb_langGetItem( hb_parc( 2 ), hb_parnl( 1 ) ) );
+   hb_retc_const( hb_langGetItem( hb_parc(2), hb_parnl(1) ) );
 }
 
 /* hb_langNew( <cNewLangId>, <cNewLangCpId>,
@@ -540,5 +540,5 @@ HB_FUNC( HB_LANGMESSAGE )
  */
 HB_FUNC( HB_LANGNEW )
 {
-   hb_retl( hb_langTranslate( hb_parc( 1 ), hb_langFind( hb_parc( 3 ) ), hb_cdpFindExt( hb_parc( 4 ) ), hb_cdpFindExt( hb_parc( 2 ) ) ) );
+   hb_retl( hb_langTranslate( hb_parc(1), hb_langFind( hb_parc(3) ), hb_cdpFindExt( hb_parc(4) ), hb_cdpFindExt( hb_parc(2) ) ) );
 }

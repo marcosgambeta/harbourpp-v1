@@ -100,11 +100,11 @@ HB_U32 hb_adler32( HB_U32 adler, const void * buf, HB_SIZE len )
 
 HB_FUNC( HB_ADLER32 )
 {
-   const char * szString = hb_parc( 1 );
+   const char * szString = hb_parc(1);
 
    if( szString )
    {
-      hb_retnint( hb_adler32( static_cast< HB_U32 >( hb_parnl( 2 ) ), szString, hb_parclen( 1 ) ) );
+      hb_retnint( hb_adler32( static_cast< HB_U32 >( hb_parnl(2) ), szString, hb_parclen(1) ) );
    }
    else
    {

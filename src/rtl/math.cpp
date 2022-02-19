@@ -444,7 +444,7 @@ HB_FUNC( HB_MATHERMODE )        /* ([<nNewMode>]) --> <nOldMode> */
    /* set new mode */
    if( HB_ISNUM( 1 ) )
    {
-      hb_mathSetErrMode( hb_parni( 1 ) );
+      hb_mathSetErrMode( hb_parni(1) );
    }
 }
 
@@ -650,7 +650,7 @@ HB_FUNC( EXP )
    if( HB_ISNUM( 1 ) )
    {
       HB_MATH_EXCEPTION hb_exc;
-      double dResult, dArg = hb_parnd( 1 );
+      double dResult, dArg = hb_parnd(1);
 
       hb_mathResetError( &hb_exc );
       dResult = exp( dArg );
@@ -690,7 +690,7 @@ HB_FUNC( LOG )
    if( HB_ISNUM( 1 ) )
    {
       HB_MATH_EXCEPTION hb_exc;
-      double dArg = hb_parnd( 1 );
+      double dArg = hb_parnd(1);
 
       if( dArg <= 0 )
       {
@@ -741,7 +741,7 @@ HB_FUNC( SQRT )
    if( HB_ISNUM( 1 ) )
    {
       HB_MATH_EXCEPTION hb_exc;
-      double dArg = hb_parnd( 1 );
+      double dArg = hb_parnd(1);
 
       if( dArg <= 0 )
       {

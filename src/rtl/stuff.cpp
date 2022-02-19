@@ -51,16 +51,16 @@
 /* replaces characters in a string */
 HB_FUNC( STUFF )
 {
-   const char * szText = hb_parc( 1 );
-   const char * szIns = hb_parc( 4 );
+   const char * szText = hb_parc(1);
+   const char * szIns = hb_parc(4);
 
    if( szText && szIns && HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
    {
       PHB_CODEPAGE cdp = hb_vmCDP();
-      HB_SIZE nLen = hb_parclen( 1 );
-      HB_SIZE nPos = hb_parns( 2 );
-      HB_SIZE nDel = hb_parns( 3 );
-      HB_SIZE nIns = hb_parclen( 4 );
+      HB_SIZE nLen = hb_parclen(1);
+      HB_SIZE nPos = hb_parns(2);
+      HB_SIZE nDel = hb_parns(3);
+      HB_SIZE nIns = hb_parclen(4);
       HB_SIZE nTot;
 
       if( HB_CDP_ISCHARIDX( cdp ) )

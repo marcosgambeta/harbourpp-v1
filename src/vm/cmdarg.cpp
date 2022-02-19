@@ -713,14 +713,14 @@ char * hb_cmdargBaseProgName( void )
 
 HB_FUNC( HB_ARGCHECK )
 {
-   hb_retl( HB_ISCHAR( 1 ) ? hb_cmdargCheck( hb_parc( 1 ) ) : HB_FALSE );
+   hb_retl( HB_ISCHAR( 1 ) ? hb_cmdargCheck( hb_parc(1) ) : HB_FALSE );
 }
 
 /* Returns the value of an internal switch */
 
 HB_FUNC( HB_ARGSTRING )
 {
-   const char * pszName = hb_parc( 1 );
+   const char * pszName = hb_parc(1);
 
    if( pszName )
    {
@@ -750,7 +750,7 @@ HB_FUNC( HB_ARGC )
 
 HB_FUNC( HB_ARGV )
 {
-   char * pszArg = hb_cmdargDup( hb_parni( 1 ) );
+   char * pszArg = hb_cmdargDup( hb_parni(1) );
 
    if( pszArg )
    {
@@ -766,7 +766,7 @@ HB_FUNC( HB_ARGSHIFT )
 {
    int iArg = 1;
 
-   if( hb_parl( 1 ) )
+   if( hb_parl(1) )
    {
       while( iArg < s_argc )
       {

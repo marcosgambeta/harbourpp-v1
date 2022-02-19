@@ -57,7 +57,7 @@ HB_FUNC( REPLICATE )
    if( pItem && HB_ISNUM( 2 ) )
    {
       HB_SIZE nLen = hb_itemGetCLen( pItem );
-      HB_ISIZ nTimes = hb_parns( 2 );
+      HB_ISIZ nTimes = hb_parns(2);
 
       if( nLen > 0 && nTimes > 0 )
       {

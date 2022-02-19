@@ -69,14 +69,14 @@ const char * hb_conSetColor( const char * szColor )
 
 HB_FUNC( SETCOLOR )
 {
-   hb_retc( hb_conSetColor( hb_parc( 1 ) ) );
+   hb_retc( hb_conSetColor( hb_parc(1) ) );
 }
 
 HB_FUNC( COLORSELECT )
 {
    if( HB_ISNUM( 1 ) )
    {
-      hb_gtColorSelect( hb_parni( 1 ) );
+      hb_gtColorSelect( hb_parni(1) );
    }
 }
 
@@ -88,7 +88,7 @@ HB_FUNC( SETBLINK )
 
    if( HB_ISLOG( 1 ) )
    {
-      hb_gtSetBlink( hb_parl( 1 ) );
+      hb_gtSetBlink( hb_parl(1) );
    }
 
    hb_retl( bPreviousBlink );
@@ -98,7 +98,7 @@ HB_FUNC( HB_COLORTON )
 {
    if( HB_ISCHAR( 1 ) )
    {
-      hb_retni( hb_gtColorToN( hb_parc( 1 ) ) );
+      hb_retni( hb_gtColorToN( hb_parc(1) ) );
    }
    else
    {
@@ -113,7 +113,7 @@ HB_FUNC( HB_NTOCOLOR )
       char szColorString[ 10 ];
       int colors[ 1 ];
 
-      colors[ 0 ] = hb_parni( 1 );
+      colors[ 0 ] = hb_parni(1);
 
       hb_gtColorsToString( colors, HB_SIZEOFARRAY( colors ), szColorString, sizeof( szColorString ) );
 

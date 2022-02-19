@@ -177,8 +177,8 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest )
 
 HB_FUNC( __COPYFILE )
 {
-   const char * szSource = hb_parc( 1 );
-   const char * szDest = hb_parc( 2 );
+   const char * szSource = hb_parc(1);
+   const char * szDest = hb_parc(2);
 
    if( szSource && szDest )
    {

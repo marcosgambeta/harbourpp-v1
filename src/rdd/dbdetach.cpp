@@ -105,18 +105,18 @@ HB_FUNC( HB_DBREQUEST )
 {
    if( HB_ISNIL( 1 ) || HB_ISCHAR( 1 ) )
    {
-      const char * szAlias = hb_parc( 1 );
-      HB_BOOL fNewArea = hb_parl( 2 );
+      const char * szAlias = hb_parc(1);
+      HB_BOOL fNewArea = hb_parl(2);
       PHB_ITEM pCargo = HB_ISBYREF( 3 ) ? hb_itemNew( nullptr ) : nullptr;
       HB_ULONG ulMilliSec = HB_THREAD_INFINITE_WAIT;
       AREAP pArea;
 
       if( HB_ISNUM( 4 ) )
       {
-         double dTimeOut = hb_parnd( 4 );
+         double dTimeOut = hb_parnd(4);
          ulMilliSec = dTimeOut > 0 ? static_cast< HB_ULONG >( dTimeOut * 1000 ) : 0;
       }
-      else if( ! hb_parl( 4 ) )
+      else if( ! hb_parl(4) )
       {
          ulMilliSec = 0;
       }

@@ -87,7 +87,7 @@ HB_FUNC( DISKSPACE )
 #  define HB_GET_LARGE_UINT( v )  ( static_cast< double >( (v).u.LowPart ) + static_cast< double >( (v).u.HighPart ) * ( ( static_cast< double >( 0xFFFFFFFF ) ) + 1 ) )
 #endif
 
-      int iDrive = hb_parni( 1 );
+      int iDrive = hb_parni(1);
 
       if( iDrive >= 0 )
       {
@@ -158,7 +158,7 @@ HB_FUNC( DISKSPACE )
    }
 #elif defined( HB_OS_UNIX )
    {
-      const char * szName = hb_parc( 1 );
+      const char * szName = hb_parc(1);
       char * pszFree = nullptr;
 
       if( ! szName )

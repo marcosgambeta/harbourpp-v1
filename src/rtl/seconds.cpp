@@ -55,7 +55,7 @@ HB_FUNC( SECONDS )
 
 HB_FUNC( HB_SECONDSCPU )
 {
-   hb_retnd( hb_secondsCPU( hb_parni( 1 ) ) );
+   hb_retnd( hb_secondsCPU( hb_parni(1) ) );
 }
 
 HB_FUNC( HB_MILLISECONDS )
@@ -66,8 +66,8 @@ HB_FUNC( HB_MILLISECONDS )
 HB_FUNC( HB_CLOCKS2SECS )
 {
 #ifdef CLOCKS_PER_SEC
-   hb_retnd( static_cast< double >( hb_parnint( 1 ) ) / CLOCKS_PER_SEC );
+   hb_retnd( static_cast< double >( hb_parnint(1) ) / CLOCKS_PER_SEC );
 #else
-   hb_retnd( static_cast< double >( hb_parnint( 1 ) ) / 1000 );
+   hb_retnd( static_cast< double >( hb_parnint(1) ) / 1000 );
 #endif
 }

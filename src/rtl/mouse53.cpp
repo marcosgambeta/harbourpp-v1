@@ -71,13 +71,13 @@ HB_FUNC( MSETCURSOR )
 
    if( HB_ISLOG( 1 ) )
    {
-      hb_mouseSetCursor( hb_parl( 1 ) );
+      hb_mouseSetCursor( hb_parl(1) );
    }   
 }
 
 HB_FUNC( MROW )
 {
-   if( hb_parl( 1 ) )
+   if( hb_parl(1) )
    {
       int iRow, iCol;
 
@@ -92,7 +92,7 @@ HB_FUNC( MROW )
 
 HB_FUNC( MCOL )
 {
-   if( hb_parl( 1 ) )
+   if( hb_parl(1) )
    {
       int iRow, iCol;
 
@@ -109,7 +109,7 @@ HB_FUNC( MSETPOS )
 {
    if( HB_ISNUM( 1 ) && HB_ISNUM( 2 ) )
    {
-      hb_mouseSetPos( hb_parni( 1 ), hb_parni( 2 ) );
+      hb_mouseSetPos( hb_parni(1), hb_parni(2) );
    }   
 }
 
@@ -129,7 +129,7 @@ HB_FUNC( MDBLCLK )
 
    if( HB_ISNUM( 1 ) )
    {
-      hb_mouseSetDoubleClickSpeed( hb_parni( 1 ) );
+      hb_mouseSetDoubleClickSpeed( hb_parni(1) );
    }   
 }
 
@@ -152,18 +152,18 @@ HB_FUNC( MSAVESTATE )
 
 HB_FUNC( MRESTSTATE )
 {
-   if( hb_parclen( 1 ) == static_cast< HB_SIZE >( hb_mouseStorageSize() ) )
+   if( hb_parclen(1) == static_cast< HB_SIZE >( hb_mouseStorageSize() ) )
    {
-      hb_mouseRestoreState( hb_parc( 1 ) );
+      hb_mouseRestoreState( hb_parc(1) );
    }
 }
 
 HB_FUNC( MSETBOUNDS )
 {
-   hb_mouseSetBounds( hb_parni( 1 ), /* Defaults to zero on bad type */
-                      hb_parni( 2 ), /* Defaults to zero on bad type */
-                      HB_ISNUM( 3 ) ? hb_parni( 3 ) : hb_gtMaxRow(),
-                      HB_ISNUM( 4 ) ? hb_parni( 4 ) : hb_gtMaxCol() );
+   hb_mouseSetBounds( hb_parni(1), /* Defaults to zero on bad type */
+                      hb_parni(2), /* Defaults to zero on bad type */
+                      HB_ISNUM( 3 ) ? hb_parni(3) : hb_gtMaxRow(),
+                      HB_ISNUM( 4 ) ? hb_parni(4) : hb_gtMaxCol() );
 }
 
 #endif

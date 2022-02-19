@@ -117,7 +117,7 @@ static HB_BOOL hb_usrPushMethod( PHB_ITEM pMethods, HB_USHORT uiMethod )
 
 static HB_ERRCODE hb_usrReturn( void )
 {
-   HB_ERRCODE errCode = hb_parni( -1 );
+   HB_ERRCODE errCode = hb_parni(-1);
 
    /*
     * clear the return value - it's not strictly necessary and Clipper
@@ -3388,15 +3388,15 @@ HB_FUNC( USRRDD_GETFUNCTABLE )
    const char * szSuperRDD;
    PHB_ITEM pMethods;
 
-   puiCount    = static_cast< HB_USHORT * >( hb_parptr( 1 ) );
-   pSelfTable  = static_cast< RDDFUNCS * >( hb_parptr( 2 ) );
-   pSuperTable = static_cast< RDDFUNCS * >( hb_parptr( 3 ) );
+   puiCount    = static_cast< HB_USHORT * >( hb_parptr(1) );
+   pSelfTable  = static_cast< RDDFUNCS * >( hb_parptr(2) );
+   pSuperTable = static_cast< RDDFUNCS * >( hb_parptr(3) );
 #if 0
-   uiRddID = hb_parni( 4 );
+   uiRddID = hb_parni(4);
 #endif
-   szSuperRDD = hb_parc( 5 );
+   szSuperRDD = hb_parc(5);
    pMethods = hb_param( 6, HB_IT_ARRAY );
-   puiSuperRddId = static_cast< HB_USHORT * >( hb_parptr( 7 ) );
+   puiSuperRddId = static_cast< HB_USHORT * >( hb_parptr(7) );
 
    if( puiCount && pSelfTable && pSuperTable && pMethods )
    {
@@ -3439,7 +3439,7 @@ HB_FUNC( USRRDD_GETFUNCTABLE )
 
 HB_FUNC( USRRDD_RDDDATA )
 {
-   HB_USHORT uiRddID = static_cast< HB_USHORT >( hb_parni( 1 ) );
+   HB_USHORT uiRddID = static_cast< HB_USHORT >( hb_parni(1) );
 
    if( uiRddID < s_uiUsrNodes && s_pUsrRddNodes[ uiRddID ] )
    {
@@ -3458,7 +3458,7 @@ HB_FUNC( USRRDD_ID )
    if( HB_ISCHAR( 1 ) )
    {
       HB_USHORT uiRddId;
-      LPRDDNODE pRddNode = hb_rddFindNode( hb_parc( 1 ), &uiRddId );
+      LPRDDNODE pRddNode = hb_rddFindNode( hb_parc(1), &uiRddId );
 
       if( pRddNode && uiRddId < s_uiUsrNodes && s_pUsrRddNodes[ uiRddId ] )
       {
@@ -3471,11 +3471,11 @@ HB_FUNC( USRRDD_ID )
 
       if( HB_ISNUM( 1 ) )
       {
-         pArea = hb_usrGetAreaPointer( hb_parni( 1 ) );
+         pArea = hb_usrGetAreaPointer( hb_parni(1) );
       }
       else
       {
-         pArea = static_cast< AREAP >( hb_parptr( 1 ) );
+         pArea = static_cast< AREAP >( hb_parptr(1) );
       }
 
       if( pArea && pArea->rddID < s_uiUsrNodes && SELF_USRNODE( pArea ) )
@@ -3491,11 +3491,11 @@ HB_FUNC( USRRDD_AREADATA )
 
    if( HB_ISNUM( 1 ) )
    {
-      pArea = hb_usrGetAreaPointer( hb_parni( 1 ) );
+      pArea = hb_usrGetAreaPointer( hb_parni(1) );
    }
    else
    {
-      pArea = static_cast< AREAP >( hb_parptr( 1 ) );
+      pArea = static_cast< AREAP >( hb_parptr(1) );
    }
 
    if( pArea && pArea->rddID < s_uiUsrNodes && SELF_USRNODE( pArea ) )
@@ -3516,11 +3516,11 @@ HB_FUNC( USRRDD_AREARESULT )
 
    if( HB_ISNUM( 1 ) )
    {
-      pArea = hb_usrGetAreaPointer( hb_parni( 1 ) );
+      pArea = hb_usrGetAreaPointer( hb_parni(1) );
    }
    else
    {
-      pArea = static_cast< AREAP >( hb_parptr( 1 ) );
+      pArea = static_cast< AREAP >( hb_parptr(1) );
    }
 
    if( pArea && pArea->rddID < s_uiUsrNodes && SELF_USRNODE( pArea ) )
@@ -3546,16 +3546,16 @@ HB_FUNC( USRRDD_SETBOF )
 
       if( HB_ISNUM( 1 ) )
       {
-         pArea = hb_usrGetAreaPointer( hb_parni( 1 ) );
+         pArea = hb_usrGetAreaPointer( hb_parni(1) );
       }
       else
       {
-         pArea = static_cast< AREAP >( hb_parptr( 1 ) );
+         pArea = static_cast< AREAP >( hb_parptr(1) );
       }
 
       if( pArea && pArea->rddID < s_uiUsrNodes && SELF_USRNODE( pArea ) )
       {
-         pArea->fBof = hb_parl( 2 );
+         pArea->fBof = hb_parl(2);
       }
    }
 }
@@ -3568,16 +3568,16 @@ HB_FUNC( USRRDD_SETEOF )
 
       if( HB_ISNUM( 1 ) )
       {
-         pArea = hb_usrGetAreaPointer( hb_parni( 1 ) );
+         pArea = hb_usrGetAreaPointer( hb_parni(1) );
       }
       else
       {
-         pArea = static_cast< AREAP >( hb_parptr( 1 ) );
+         pArea = static_cast< AREAP >( hb_parptr(1) );
       }
 
       if( pArea && pArea->rddID < s_uiUsrNodes && SELF_USRNODE( pArea ) )
       {
-         pArea->fEof = hb_parl( 2 );
+         pArea->fEof = hb_parl(2);
       }
    }
 }
@@ -3590,16 +3590,16 @@ HB_FUNC( USRRDD_SETFOUND )
 
       if( HB_ISNUM( 1 ) )
       {
-         pArea = hb_usrGetAreaPointer( hb_parni( 1 ) );
+         pArea = hb_usrGetAreaPointer( hb_parni(1) );
       }
       else
       {
-         pArea = static_cast< AREAP >( hb_parptr( 1 ) );
+         pArea = static_cast< AREAP >( hb_parptr(1) );
       }
 
       if( pArea && pArea->rddID < s_uiUsrNodes && SELF_USRNODE( pArea ) )
       {
-         pArea->fFound = hb_parl( 2 );
+         pArea->fFound = hb_parl(2);
       }
    }
 }
@@ -3612,16 +3612,16 @@ HB_FUNC( USRRDD_SETTOP )
 
       if( HB_ISNUM( 1 ) )
       {
-         pArea = hb_usrGetAreaPointer( hb_parni( 1 ) );
+         pArea = hb_usrGetAreaPointer( hb_parni(1) );
       }
       else
       {
-         pArea = static_cast< AREAP >( hb_parptr( 1 ) );
+         pArea = static_cast< AREAP >( hb_parptr(1) );
       }
 
       if( pArea && pArea->rddID < s_uiUsrNodes && SELF_USRNODE( pArea ) )
       {
-         pArea->fTop = hb_parl( 2 );
+         pArea->fTop = hb_parl(2);
       }
    }
 }
@@ -3634,16 +3634,16 @@ HB_FUNC( USRRDD_SETBOTTOM )
 
       if( HB_ISNUM( 1 ) )
       {
-         pArea = hb_usrGetAreaPointer( hb_parni( 1 ) );
+         pArea = hb_usrGetAreaPointer( hb_parni(1) );
       }
       else
       {
-         pArea = static_cast< AREAP >( hb_parptr( 1 ) );
+         pArea = static_cast< AREAP >( hb_parptr(1) );
       }
 
       if( pArea && pArea->rddID < s_uiUsrNodes && SELF_USRNODE( pArea ) )
       {
-         pArea->fBottom = hb_parl( 2 );
+         pArea->fBottom = hb_parl(2);
       }
    }
 }
@@ -3682,11 +3682,11 @@ static AREAP hb_usrGetAreaParam( int iParams )
    {
       if( HB_ISNUM( 1 ) )
       {
-         pArea = hb_usrGetAreaPointer( hb_parni( 1 ) );
+         pArea = hb_usrGetAreaPointer( hb_parni(1) );
       }
       else
       {
-         pArea = static_cast< AREAP >( hb_parptr( 1 ) );
+         pArea = static_cast< AREAP >( hb_parptr(1) );
       }
 
       if( pArea && pArea->rddID < s_uiUsrNodes && SELF_USRNODE( pArea ) )
@@ -3720,7 +3720,7 @@ static LPRDDNODE hb_usrGetNodeParam( int iParams )
 
    if( iParams <= hb_pcount() )
    {
-      uiNode = static_cast< HB_USHORT >( hb_parni( 1 ) );
+      uiNode = static_cast< HB_USHORT >( hb_parni(1) );
       pRDD = hb_rddGetNode( uiNode );
       if( pRDD && uiNode < s_uiUsrNodes && s_pUsrRddNodes[ uiNode ] )
       {
@@ -3813,7 +3813,7 @@ HB_FUNC_UR_SUPER( GOTO )
 
    if( pArea )
    {
-      hb_retni( SUPER_GOTO( pArea, hb_parnl( 2 ) ) );
+      hb_retni( SUPER_GOTO( pArea, hb_parnl(2) ) );
    }
 }
 
@@ -3833,7 +3833,7 @@ HB_FUNC_UR_SUPER( SEEK )
 
    if( pArea )
    {
-      hb_retni( SUPER_SEEK( pArea, hb_parl( 2 ), hb_param( 3, HB_IT_ANY ), hb_parl( 4 ) ) );
+      hb_retni( SUPER_SEEK( pArea, hb_parl(2), hb_param( 3, HB_IT_ANY ), hb_parl(4) ) );
    }
 }
 
@@ -3843,7 +3843,7 @@ HB_FUNC_UR_SUPER( SKIP )
 
    if( pArea )
    {
-      hb_retni( SUPER_SKIP( pArea, hb_parnl( 2 ) ) );
+      hb_retni( SUPER_SKIP( pArea, hb_parnl(2) ) );
    }
 }
 
@@ -3853,7 +3853,7 @@ HB_FUNC_UR_SUPER( SKIPFILTER )
 
    if( pArea )
    {
-      hb_retni( SUPER_SKIPFILTER( pArea, hb_parnl( 2 ) ) );
+      hb_retni( SUPER_SKIPFILTER( pArea, hb_parnl(2) ) );
    }
 }
 
@@ -3863,7 +3863,7 @@ HB_FUNC_UR_SUPER( SKIPRAW )
 
    if( pArea )
    {
-      hb_retni( SUPER_SKIPRAW( pArea, hb_parnl( 2 ) ) );
+      hb_retni( SUPER_SKIPRAW( pArea, hb_parnl(2) ) );
    }
 }
 
@@ -3928,7 +3928,7 @@ HB_FUNC_UR_SUPER( FIELDNAME )
    {
       char * szName = static_cast< char * >( hb_xgrab( pArea->uiMaxFieldNameLength + 1 ) );
 
-      hb_retni( SUPER_FIELDNAME( pArea, static_cast< HB_USHORT >( hb_parni( 2 ) ), szName ) );
+      hb_retni( SUPER_FIELDNAME( pArea, static_cast< HB_USHORT >( hb_parni(2) ), szName ) );
       hb_storc( szName, 3 );
       hb_xfree( szName );
    }
@@ -3940,7 +3940,7 @@ HB_FUNC_UR_SUPER( APPEND )
 
    if( pArea )
    {
-      hb_retni( SUPER_APPEND( pArea, hb_parl( 2 ) ) );
+      hb_retni( SUPER_APPEND( pArea, hb_parl(2) ) );
    }
 }
 
@@ -4015,11 +4015,11 @@ HB_FUNC_UR_SUPER( PUTREC )
    {
       if( HB_ISPOINTER( 2 ) )
       {
-         hb_retni( SUPER_PUTREC( pArea, static_cast< const HB_BYTE * >( hb_parptr( 2 ) ) ) );
+         hb_retni( SUPER_PUTREC( pArea, static_cast< const HB_BYTE * >( hb_parptr(2) ) ) );
       }
       else if( HB_ISCHAR( 2 ) )
       {
-         hb_retni( SUPER_PUTREC( pArea, reinterpret_cast< const HB_BYTE * >( hb_parc( 2 ) ) ) );
+         hb_retni( SUPER_PUTREC( pArea, reinterpret_cast< const HB_BYTE * >( hb_parc(2) ) ) );
       }
       else
       {
@@ -4048,7 +4048,7 @@ HB_FUNC_UR_SUPER( GETVALUE )
 
    if( pArea )
    {
-      hb_retni( SUPER_GETVALUE( pArea, static_cast< HB_USHORT >( hb_parni( 2 ) ), hb_param( 3, HB_IT_ANY ) ) );
+      hb_retni( SUPER_GETVALUE( pArea, static_cast< HB_USHORT >( hb_parni(2) ), hb_param( 3, HB_IT_ANY ) ) );
    }
 }
 
@@ -4058,7 +4058,7 @@ HB_FUNC_UR_SUPER( PUTVALUE )
 
    if( pArea )
    {
-      hb_retni( SUPER_PUTVALUE( pArea, static_cast< HB_USHORT >( hb_parni( 2 ) ), hb_param( 3, HB_IT_ANY ) ) );
+      hb_retni( SUPER_PUTVALUE( pArea, static_cast< HB_USHORT >( hb_parni(2) ), hb_param( 3, HB_IT_ANY ) ) );
    }
 }
 
@@ -4070,7 +4070,7 @@ HB_FUNC_UR_SUPER( GETVARLEN )
    {
       HB_ULONG ulLength;
 
-      hb_retni( SUPER_GETVARLEN( pArea, static_cast< HB_USHORT >( hb_parni( 2 ) ), &ulLength ) );
+      hb_retni( SUPER_GETVARLEN( pArea, static_cast< HB_USHORT >( hb_parni(2) ), &ulLength ) );
       hb_stornl( ulLength, 3 );
    }
 }
@@ -4094,7 +4094,7 @@ HB_FUNC_UR_SUPER( RECINFO )
 
    if( pArea )
    {
-      hb_retni( SUPER_RECINFO( pArea, hb_param( 2, HB_IT_ANY ), static_cast< HB_USHORT >( hb_parni( 3 ) ), hb_param( 4, HB_IT_ANY ) ) );
+      hb_retni( SUPER_RECINFO( pArea, hb_param( 2, HB_IT_ANY ), static_cast< HB_USHORT >( hb_parni(3) ), hb_param( 4, HB_IT_ANY ) ) );
    }
 }
 
@@ -4127,7 +4127,7 @@ HB_FUNC_UR_SUPER( FIELDINFO )
 
    if( pArea )
    {
-      hb_retni( SUPER_FIELDINFO( pArea, static_cast< HB_USHORT >( hb_parni( 2 ) ), static_cast< HB_USHORT >( hb_parni( 3 ) ), hb_param( 4, HB_IT_ANY ) ) );
+      hb_retni( SUPER_FIELDINFO( pArea, static_cast< HB_USHORT >( hb_parni(2) ), static_cast< HB_USHORT >( hb_parni(3) ), hb_param( 4, HB_IT_ANY ) ) );
    }
 }
 
@@ -4147,7 +4147,7 @@ HB_FUNC_UR_SUPER( SETFIELDEXTENT )
 
    if( pArea )
    {
-      hb_retni( SUPER_SETFIELDEXTENT( pArea, static_cast< HB_USHORT >( hb_parni( 2 ) ) ) );
+      hb_retni( SUPER_SETFIELDEXTENT( pArea, static_cast< HB_USHORT >( hb_parni(2) ) ) );
    }
 }
 
@@ -4220,7 +4220,7 @@ HB_FUNC_UR_SUPER( INFO )
 
    if( pArea )
    {
-      hb_retni( SUPER_INFO( pArea, static_cast< HB_USHORT >( hb_parni( 2 ) ), hb_param( 3, HB_IT_ANY ) ) );
+      hb_retni( SUPER_INFO( pArea, static_cast< HB_USHORT >( hb_parni(2) ), hb_param( 3, HB_IT_ANY ) ) );
    }
 }
 
@@ -4262,7 +4262,7 @@ HB_FUNC_UR_SUPER( PACKREC )
    {
       HB_BOOL fWritten;
 
-      hb_retni( SUPER_PACKREC( pArea, hb_parnl( 2 ), &fWritten ) );
+      hb_retni( SUPER_PACKREC( pArea, hb_parnl(2), &fWritten ) );
       hb_storl( fWritten, 3 );
    }
 }
@@ -4438,7 +4438,7 @@ HB_FUNC_UR_SUPER( RELAREA )
    {
       HB_USHORT uiRelArea;
 
-      hb_retni( SUPER_RELAREA( pArea, static_cast< HB_USHORT >( hb_parni( 2 ) ), &uiRelArea ) );
+      hb_retni( SUPER_RELAREA( pArea, static_cast< HB_USHORT >( hb_parni(2) ), &uiRelArea ) );
       hb_storni( uiRelArea, 3 );
    }
 }
@@ -4469,7 +4469,7 @@ HB_FUNC_UR_SUPER( RELTEXT )
 
    if( pArea )
    {
-      hb_retni( SUPER_RELTEXT( pArea, static_cast< HB_USHORT >( hb_parni( 2 ) ), hb_param( 3, HB_IT_ANY ) ) );
+      hb_retni( SUPER_RELTEXT( pArea, static_cast< HB_USHORT >( hb_parni(2) ), hb_param( 3, HB_IT_ANY ) ) );
    }
 }
 
@@ -4664,7 +4664,7 @@ HB_FUNC_UR_SUPER( ORDINFO )
 
       if( hb_usrItemToOrderInfo( pItem, &dbOrderInfo ) )
       {
-         hb_retni( SUPER_ORDINFO( pArea, static_cast< HB_USHORT >( hb_parni( 2 ) ), &dbOrderInfo ) );
+         hb_retni( SUPER_ORDINFO( pArea, static_cast< HB_USHORT >( hb_parni(2) ), &dbOrderInfo ) );
          hb_arraySet( pItem, UR_ORI_RESULT, dbOrderInfo.itmResult );
       }
       else
@@ -4761,7 +4761,7 @@ HB_FUNC_UR_SUPER( LOCATE )
 
    if( pArea )
    {
-      hb_retni( SUPER_LOCATE( pArea, hb_parl( 2 ) ) );
+      hb_retni( SUPER_LOCATE( pArea, hb_parl(2) ) );
    }
 }
 
@@ -4773,7 +4773,7 @@ HB_FUNC_UR_SUPER( COMPILE )
    {
       if( HB_ISCHAR( 2 ) )
       {
-         hb_retni( SUPER_COMPILE( pArea, hb_parc( 2 ) ) );
+         hb_retni( SUPER_COMPILE( pArea, hb_parc(2) ) );
       }
       else
       {
@@ -4831,7 +4831,7 @@ HB_FUNC_UR_SUPER( RAWLOCK )
 
    if( pArea )
    {
-      hb_retni( SUPER_RAWLOCK( pArea, static_cast< HB_USHORT >( hb_parni( 2 ) ), hb_parnl( 3 ) ) );
+      hb_retni( SUPER_RAWLOCK( pArea, static_cast< HB_USHORT >( hb_parni(2) ), hb_parnl(3) ) );
    }
 }
 
@@ -4923,7 +4923,7 @@ HB_FUNC_UR_SUPER( GETVALUEFILE )
 
    if( pArea )
    {
-      hb_retni( SUPER_GETVALUEFILE( pArea, static_cast< HB_USHORT >( hb_parni( 2 ) ), hb_parc( 3 ), static_cast< HB_USHORT >( hb_parni( 4 ) ) ) );
+      hb_retni( SUPER_GETVALUEFILE( pArea, static_cast< HB_USHORT >( hb_parni(2) ), hb_parc(3), static_cast< HB_USHORT >( hb_parni(4) ) ) );
    }
 }
 
@@ -4933,7 +4933,7 @@ HB_FUNC_UR_SUPER( PUTVALUEFILE )
 
    if( pArea )
    {
-      hb_retni( SUPER_PUTVALUEFILE( pArea, static_cast< HB_USHORT >( hb_parni( 2 ) ), hb_parc( 3 ), static_cast< HB_USHORT >( hb_parni( 4 ) ) ) );
+      hb_retni( SUPER_PUTVALUEFILE( pArea, static_cast< HB_USHORT >( hb_parni(2) ), hb_parc(3), static_cast< HB_USHORT >( hb_parni(4) ) ) );
    }
 }
 
@@ -4963,7 +4963,7 @@ HB_FUNC_UR_SUPER( DROP )
 
    if( pRDD )
    {
-      hb_retni( SUPER_DROP( pRDD, hb_param( 2, HB_IT_ANY ), hb_param( 3, HB_IT_ANY ), hb_parnl( 4 ) ) );
+      hb_retni( SUPER_DROP( pRDD, hb_param( 2, HB_IT_ANY ), hb_param( 3, HB_IT_ANY ), hb_parnl(4) ) );
    }
 }
 
@@ -4973,7 +4973,7 @@ HB_FUNC_UR_SUPER( EXISTS )
 
    if( pRDD )
    {
-      hb_retni( SUPER_EXISTS( pRDD, hb_param( 2, HB_IT_ANY ), hb_param( 3, HB_IT_ANY ), hb_parnl( 4 ) ) );
+      hb_retni( SUPER_EXISTS( pRDD, hb_param( 2, HB_IT_ANY ), hb_param( 3, HB_IT_ANY ), hb_parnl(4) ) );
    }
 }
 
@@ -4983,7 +4983,7 @@ HB_FUNC_UR_SUPER( RENAME )
 
    if( pRDD )
    {
-      hb_retni( SUPER_RENAME( pRDD, hb_param( 2, HB_IT_ANY ), hb_param( 3, HB_IT_ANY ), hb_param( 4, HB_IT_ANY ), hb_parnl( 5 ) ) );
+      hb_retni( SUPER_RENAME( pRDD, hb_param( 2, HB_IT_ANY ), hb_param( 3, HB_IT_ANY ), hb_param( 4, HB_IT_ANY ), hb_parnl(5) ) );
    }
 }
 
@@ -4993,6 +4993,6 @@ HB_FUNC_UR_SUPER( RDDINFO )
 
    if( pRDD )
    {
-      hb_retni( SUPER_RDDINFO( pRDD, static_cast< HB_USHORT >( hb_parni( 2 ) ), hb_parnl( 3 ), hb_param( 4, HB_IT_ANY ) ) );
+      hb_retni( SUPER_RDDINFO( pRDD, static_cast< HB_USHORT >( hb_parni(2) ), hb_parnl(3), hb_param( 4, HB_IT_ANY ) ) );
    }
 }

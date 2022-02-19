@@ -54,7 +54,7 @@
 
 static HB_BOOL hb_sxSemName( char * szFileName )
 {
-   const char * szName = hb_parc( 1 );
+   const char * szName = hb_parc(1);
    HB_BOOL fResult = HB_FALSE;
 
    if( szName && szName[ 0 ] )

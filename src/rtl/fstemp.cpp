@@ -454,7 +454,7 @@ HB_FUNC( HB_FTEMPCREATE )
 {
    char szName[ HB_PATH_MAX ];
 
-   hb_retnint( static_cast< HB_NHANDLE >( hb_fsCreateTemp( hb_parc( 1 ), hb_parc( 2 ), static_cast< HB_FATTR >( hb_parnldef( 3, FC_NORMAL ) ), szName ) ) );
+   hb_retnint( static_cast< HB_NHANDLE >( hb_fsCreateTemp( hb_parc(1), hb_parc(2), static_cast< HB_FATTR >( hb_parnldef( 3, FC_NORMAL ) ), szName ) ) );
 
    hb_storc( szName, 4 );
 }
@@ -463,7 +463,7 @@ HB_FUNC( HB_FTEMPCREATEEX )
 {
    char szName[ HB_PATH_MAX ];
 
-   hb_retnint( static_cast< HB_NHANDLE >( hb_fsCreateTempEx( szName, hb_parc( 2 ), hb_parc( 3 ), hb_parc( 4 ), static_cast< HB_FATTR >( hb_parnldef( 5, FC_NORMAL ) ) ) ) );
+   hb_retnint( static_cast< HB_NHANDLE >( hb_fsCreateTempEx( szName, hb_parc(2), hb_parc(3), hb_parc(4), static_cast< HB_FATTR >( hb_parnldef( 5, FC_NORMAL ) ) ) ) );
 
    hb_storc( szName, 1 );
 }

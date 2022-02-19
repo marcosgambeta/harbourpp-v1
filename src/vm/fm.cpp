@@ -1591,7 +1591,7 @@ HB_FUNC( __FM_ALLOCLIMIT )
    hb_retns( mspace_footprint_limit( hb_mspace() ) );
    if( HB_ISNUM( 1 ) )
    {
-      HB_ISIZ nLimit = hb_parns( 1 );
+      HB_ISIZ nLimit = hb_parns(1);
 
       if( nLimit <= 0 )
       {
@@ -1603,7 +1603,7 @@ HB_FUNC( __FM_ALLOCLIMIT )
    hb_retns( dlmalloc_footprint_limit() );
    if( HB_ISNUM( 1 ) )
    {
-      HB_ISIZ nLimit = hb_parns( 1 );
+      HB_ISIZ nLimit = hb_parns(1);
 
       if( nLimit <= 0 )
       {
@@ -1615,7 +1615,7 @@ HB_FUNC( __FM_ALLOCLIMIT )
    hb_retns( s_nMemoryLimConsumed ? s_nMemoryLimConsumed : -1 );
    if( HB_ISNUM( 1 ) )
    {
-      HB_ISIZ nLimit = hb_parns( 1 );
+      HB_ISIZ nLimit = hb_parns(1);
 
       s_nMemoryLimConsumed = HB_MAX( nLimit, 0 );
    }

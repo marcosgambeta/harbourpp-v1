@@ -50,9 +50,9 @@ HB_FUNC( HB_COLORINDEX )
 {
    if( HB_ISCHAR( 1 ) && HB_ISNUM( 2 ) )
    {
-      const char * pszColor = hb_parc( 1 );
+      const char * pszColor = hb_parc(1);
       HB_SIZE      nColorPos;
-      int          iColorIndex = hb_parni( 2 );
+      int          iColorIndex = hb_parni(2);
 
       /* Skip the given number of commas */
       for( nColorPos = 0; pszColor[ nColorPos ] != '\0' && iColorIndex > 0; nColorPos++ )

@@ -5735,10 +5735,10 @@ static void hb_dbffptRegisterRDD( HB_USHORT * pusRddId )
    RDDFUNCS * pTable;
    HB_USHORT * puiCount, uiRddId, * puiSuperRddId;
 
-   puiCount = static_cast< HB_USHORT * >( hb_parptr( 1 ) );
-   pTable = static_cast< RDDFUNCS * >( hb_parptr( 2 ) );
-   uiRddId = static_cast< HB_USHORT >( hb_parni( 4 ) );
-   puiSuperRddId = static_cast< HB_USHORT * >( hb_parptr( 5 ) );
+   puiCount = static_cast< HB_USHORT * >( hb_parptr(1) );
+   pTable = static_cast< RDDFUNCS * >( hb_parptr(2) );
+   uiRddId = static_cast< HB_USHORT >( hb_parni(4) );
+   puiSuperRddId = static_cast< HB_USHORT * >( hb_parptr(5) );
 
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "DBFFPT_GETFUNCTABLE(%p, %p)", puiCount, pTable ) );

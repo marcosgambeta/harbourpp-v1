@@ -71,10 +71,10 @@ HB_FUNC( HB_INETCOMPRESS )
       }
       if( hb_znetInetInitialize( pItem, pStream, hb_znetRead, hb_znetWrite, hb_znetFlush, hb_znetClose, nullptr, nullptr ) )
       {
-         int keylen = static_cast< int >( hb_parclen( 4 ) );
+         int keylen = static_cast< int >( hb_parclen(4) );
          if( keylen )
          {
-            hb_znetEncryptKey( pStream, hb_parc( 4 ), keylen );
+            hb_znetEncryptKey( pStream, hb_parc(4), keylen );
          }
       }
       else if( pStream )

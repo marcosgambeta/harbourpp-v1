@@ -96,7 +96,7 @@ static HB_BOOL hb_sxOrdParam( LPDBORDERINFO pInfo )
       if( ! HB_ISNIL( 2 ) ) /* hb_pcount() > 2 */
       {
          pInfo->atomBagName = hb_param( 2, HB_IT_NUMERIC );
-         if( hb_parni( 2 ) <= 0 )
+         if( hb_parni(2) <= 0 )
          {
             return HB_FALSE;
          }
@@ -321,7 +321,7 @@ HB_FUNC( SX_SETSCOPE )
 
       if( hb_sxOrdParam( &Info ) )
       {
-         int iScope = hb_parni( 1 );
+         int iScope = hb_parni(1);
          Info.itmResult = hb_itemNew( nullptr );
          if( ! HB_ISNIL( 2 ) )
          {
@@ -625,7 +625,7 @@ HB_FUNC( SX_KEYGOTO )
    AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
    HB_BOOL fResult = HB_FALSE;
 
-   if( pArea && hb_parnl( 3 ) != 0 )
+   if( pArea && hb_parnl(3) != 0 )
    {
       DBORDERINFO Info;
       if( hb_sxOrdParam( &Info ) )
@@ -664,7 +664,7 @@ HB_FUNC( SX_SEEKLAST )
    if( pArea && hb_pcount() > 0 )
    {
       PHB_ITEM pKey = hb_param( 1, HB_IT_ANY );
-      HB_BOOL bSoftSeek = hb_parl( 2 );
+      HB_BOOL bSoftSeek = hb_parl(2);
 
       if( SELF_SEEK( pArea, bSoftSeek, pKey, HB_TRUE ) == HB_SUCCESS )
       {
@@ -696,8 +696,8 @@ HB_FUNC( SX_TAGUNIQUE )
 HB_FUNC( SX_WILDSEEK )
 {
    AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
-   const char * szPattern = hb_parc( 1 );
-   HB_BOOL fCont = hb_parl( 2 );
+   const char * szPattern = hb_parc(1);
+   HB_BOOL fCont = hb_parl(2);
    HB_BOOL fFound = HB_FALSE;
 
    if( pArea )

@@ -204,7 +204,7 @@ static void sk_add( PHB_SETKEY * sk_list_ptr, HB_BOOL bReturn, int iKeyCode, PHB
 
 HB_FUNC( SETKEY )
 {
-   int iKeyCode = hb_parni( 1 );
+   int iKeyCode = hb_parni(1);
 
    if( iKeyCode != 0 )
    {
@@ -233,7 +233,7 @@ HB_FUNC( SETKEY )
 
 HB_FUNC( HB_SETKEY )
 {
-   int iKeyCode = hb_parni( 1 );
+   int iKeyCode = hb_parni(1);
 
    if( iKeyCode != 0 )
    {
@@ -375,7 +375,7 @@ HB_FUNC( HB_SETKEYSAVE )
 HB_FUNC( HB_SETKEYCHECK )
 {
    HB_BOOL bIsKeySet = HB_FALSE;
-   int iKeyCode = hb_parni( 1 );
+   int iKeyCode = hb_parni(1);
 
    if( iKeyCode != 0 )
    {

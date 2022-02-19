@@ -50,18 +50,18 @@
 
 HB_FUNC( RAT )
 {
-   HB_SIZE nSubLen = hb_parclen( 1 );
+   HB_SIZE nSubLen = hb_parclen(1);
    HB_SIZE nPos = 0;
 
    if( nSubLen )
    {
-      HB_ISIZ nTo = hb_parclen( 2 ) - nSubLen;
+      HB_ISIZ nTo = hb_parclen(2) - nSubLen;
 
       if( nTo >= 0 )
       {
          PHB_CODEPAGE cdp = hb_vmCDP();
-         const char * pszSub = hb_parc( 1 );
-         const char * pszText = hb_parc( 2 );
+         const char * pszSub = hb_parc(1);
+         const char * pszText = hb_parc(2);
 
          do
          {
@@ -87,20 +87,20 @@ HB_FUNC( RAT )
 
 HB_FUNC( HB_RAT )
 {
-   HB_SIZE nSubLen = hb_parclen( 1 );
+   HB_SIZE nSubLen = hb_parclen(1);
    HB_SIZE nPos = 0;
 
    if( nSubLen )
    {
-      HB_SIZE nLen = hb_parclen( 2 );
+      HB_SIZE nLen = hb_parclen(2);
       HB_ISIZ nTo = nLen - nSubLen;
 
       if( nTo >= 0 )
       {
          PHB_CODEPAGE cdp = hb_vmCDP();
-         const char * pszSub = hb_parc( 1 );
-         const char * pszText = hb_parc( 2 );
-         HB_ISIZ nStart = hb_parns( 3 );
+         const char * pszSub = hb_parc(1);
+         const char * pszText = hb_parc(2);
+         HB_ISIZ nStart = hb_parns(3);
          HB_ISIZ nFrom;
 
          if( nStart <= 1 )
@@ -120,7 +120,7 @@ HB_FUNC( HB_RAT )
          {
             if( HB_ISNUM( 4 ) )
             {
-               HB_ISIZ nEnd = hb_parns( 4 ) - 1;
+               HB_ISIZ nEnd = hb_parns(4) - 1;
 
                if( nEnd > 0 && HB_CDP_ISCHARIDX( cdp ) )
                {

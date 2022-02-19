@@ -1934,19 +1934,19 @@ HB_FUNC( HB_SERIALIZE )
       HB_SIZE nSize;
       int iFlags;
 
-      pszCdpIn = hb_parc( 3 );
-      pszCdpOut = hb_parc( 4 );
+      pszCdpIn = hb_parc(3);
+      pszCdpOut = hb_parc(4);
 
       cdpIn = pszCdpIn ? hb_cdpFindExt( pszCdpIn ) : hb_vmCDP();
       cdpOut = pszCdpOut ? hb_cdpFindExt( pszCdpOut ) : hb_vmCDP();
 
       if( HB_ISNUM( 2 ) )
       {
-         iFlags = hb_parni( 2 );
+         iFlags = hb_parni(2);
       }
       else
       {
-         iFlags = hb_parl( 2 ) ? HB_SERIALIZE_NUMSIZE : 0;
+         iFlags = hb_parl(2) ? HB_SERIALIZE_NUMSIZE : 0;
       }
 
       pBuffer = hb_itemSerializeCP( pItem, iFlags, cdpIn, cdpOut, &nSize );
@@ -1957,14 +1957,14 @@ HB_FUNC( HB_SERIALIZE )
 HB_FUNC( HB_DESERIALIZE )
 {
    PHB_ITEM pParam = hb_param( 1, HB_IT_BYREF );
-   HB_SIZE nSize = hb_parclen( 1 );
+   HB_SIZE nSize = hb_parclen(1);
 
    if( nSize )
    {
       PHB_ITEM pItem;
       PHB_CODEPAGE cdpIn, cdpOut;
-      const char * pBuffer = hb_parc( 1 );
-      const char * pszCdpIn = hb_parc( 2 ), * pszCdpOut = hb_parc( 3 );
+      const char * pBuffer = hb_parc(1);
+      const char * pszCdpIn = hb_parc(2), * pszCdpOut = hb_parc(3);
 
       cdpIn = pszCdpIn ? hb_cdpFindExt( pszCdpIn ) : hb_vmCDP();
       cdpOut = pszCdpOut ? hb_cdpFindExt( pszCdpOut ) : hb_vmCDP();

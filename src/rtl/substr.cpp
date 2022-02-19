@@ -62,8 +62,8 @@ HB_FUNC( SUBSTR )
       PHB_CODEPAGE cdp = hb_vmCDP();
       const char * pszText = hb_itemGetCPtr( pText );
       HB_ISIZ nSize = hb_itemGetCLen( pText );
-      HB_ISIZ nFrom = hb_parns( 2 );
-      HB_ISIZ nCount = iPCount < 3 ? nSize : hb_parns( 3 );
+      HB_ISIZ nFrom = hb_parns(2);
+      HB_ISIZ nCount = iPCount < 3 ? nSize : hb_parns(3);
 
       if( nFrom > 0 )
       {

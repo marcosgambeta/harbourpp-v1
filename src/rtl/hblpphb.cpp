@@ -219,7 +219,7 @@ HB_FUNC( HB_LPPSETLIMIT )
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
    }
-   hb_lppSetLimit( pGC->pSocket, hb_parns( 2 ) );
+   hb_lppSetLimit( pGC->pSocket, hb_parns(2) );
 }
 
 HB_FUNC( HB_LPPSEND )

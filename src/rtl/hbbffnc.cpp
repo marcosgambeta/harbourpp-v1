@@ -50,9 +50,9 @@
 
 static const HB_BLOWFISH * hb_bf_keyparam( void )
 {
-   if( hb_parclen( 1 ) == sizeof( HB_BLOWFISH ) )
+   if( hb_parclen(1) == sizeof( HB_BLOWFISH ) )
    {
-      return reinterpret_cast< const HB_BLOWFISH * >( hb_parc( 1 ) );
+      return reinterpret_cast< const HB_BLOWFISH * >( hb_parc(1) );
    }
    else
    {
@@ -64,13 +64,13 @@ static const HB_BLOWFISH * hb_bf_keyparam( void )
  */
 HB_FUNC( HB_BLOWFISHKEY )
 {
-   int iLen = static_cast< int >( hb_parclen( 1 ) );
+   int iLen = static_cast< int >( hb_parclen(1) );
 
    if( iLen )
    {
       HB_BLOWFISH bf;
 
-      hb_blowfishInit( &bf, hb_parc( 1 ), iLen );
+      hb_blowfishInit( &bf, hb_parc(1), iLen );
       hb_retclen( reinterpret_cast< const char * >( &bf ), sizeof( HB_BLOWFISH ) );
    }
 }
@@ -93,7 +93,7 @@ HB_FUNC( HB_BLOWFISHENCRYPT )
       if( nLen )
       {
          char * pszData;
-         HB_BOOL fRaw = hb_parl( 3 );
+         HB_BOOL fRaw = hb_parl(3);
          HB_SIZE nSize;
 
          /* In raw mode passed string is padded to 8 bytes with '\0'
@@ -144,7 +144,7 @@ HB_FUNC( HB_BLOWFISHDECRYPT )
       {
          const char * pszSource;
          char * pszData;
-         HB_BOOL fRaw = hb_parl( 3 );
+         HB_BOOL fRaw = hb_parl(3);
          HB_SIZE nLen;
 
          pszData = static_cast< char * >( hb_xgrab( nSize + ( fRaw ? 1 : 0 ) ) );
@@ -184,8 +184,8 @@ HB_FUNC( HB_BLOWFISHDECRYPT )
  */
 static void hb_bf_initvect( HB_BYTE * vect )
 {
-   const char * pszVect = hb_parc( 3 );
-   int iLen = static_cast< int >( hb_parclen( 3 ) );
+   const char * pszVect = hb_parc(3);
+   int iLen = static_cast< int >( hb_parclen(3) );
 
    for( int i = 0; i < HB_BF_CIPHERBLOCK; ++i )
    {

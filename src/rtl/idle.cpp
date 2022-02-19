@@ -171,7 +171,7 @@ HB_FUNC( HB_IDLERESET )
 /* call from user code to stay in idle state for given period */
 HB_FUNC( HB_IDLESLEEP )
 {
-   hb_idleSleep( hb_parnd( 1 ) );
+   hb_idleSleep( hb_parnd(1) );
 }
 
 /* add a new background task and return its handle */
@@ -208,7 +208,7 @@ HB_FUNC( HB_IDLEADD )
 HB_FUNC( HB_IDLEDEL )
 {
    PHB_IDLEDATA pIdleData = static_cast< PHB_IDLEDATA >( hb_stackTestTSD( &s_idleData ) );
-   void * pID = hb_parptr( 1 );
+   void * pID = hb_parptr(1);
 
    if( pID && pIdleData && pIdleData->pIdleTasks )
    {

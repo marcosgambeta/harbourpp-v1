@@ -65,7 +65,7 @@ HB_FUNC( HB_RAND32 ) /* returns an integer between 0 and 0xFFFFFFFF (inclusive) 
 
 HB_FUNC( HB_RANDSTR )
 {
-   HB_ISIZ len = hb_parns( 1 );
+   HB_ISIZ len = hb_parns(1);
 
    if( len > 0 )
    {

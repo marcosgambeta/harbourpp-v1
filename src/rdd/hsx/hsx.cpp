@@ -1946,9 +1946,9 @@ static int hb_hsxFilter( int iHandle, const char * pSeek, HB_SIZE nSeek, PHB_ITE
    Creates a new, empty HiPer-SEEK index file */
 HB_FUNC( HS_CREATE )
 {
-   hb_retni( hb_hsxCreate( hb_parc( 1 ), hb_parni( 2 ), hb_parni( 3 ),
-                           hb_param( 4, HB_IT_LOGICAL ) == nullptr || hb_parl( 4 ),
-                           hb_parni( 5 ), hb_param( 6, HB_IT_ANY ) ) );
+   hb_retni( hb_hsxCreate( hb_parc(1), hb_parni(2), hb_parni(3),
+                           hb_param( 4, HB_IT_LOGICAL ) == nullptr || hb_parl(4),
+                           hb_parni(5), hb_param( 6, HB_IT_ANY ) ) );
 }
 
 /* hs_Open( <cFile>, <nBufSize>, <nOpenMode> )
@@ -1956,7 +1956,7 @@ HB_FUNC( HS_CREATE )
    Opens an existing HiPer-SEEK index file */
 HB_FUNC( HS_OPEN )
 {
-   hb_retni( hb_hsxOpen( hb_parc( 1 ), hb_parni( 2 ), hb_param( 3, HB_IT_NUMERIC ) ? hb_parni( 3 ) : HSXDEFOPENMODE ) );
+   hb_retni( hb_hsxOpen( hb_parc(1), hb_parni(2), hb_param( 3, HB_IT_NUMERIC ) ? hb_parni(3) : HSXDEFOPENMODE ) );
 }
 
 /* hs_Close( <hIndex> ) --> nVal = 1 (OK), nVal < 0 (ERROR CODE)
@@ -1965,7 +1965,7 @@ HB_FUNC( HS_CLOSE )
 {
    if( hb_param( 1, HB_IT_NUMERIC ) )
    {
-      hb_retni( hb_hsxDestroy( hb_parni( 1 ) ) );
+      hb_retni( hb_hsxDestroy( hb_parni(1) ) );
    }
    else
    {
@@ -1978,11 +1978,11 @@ HB_FUNC( HS_CLOSE )
    Creates and populates a new HiPer-SEEK index */
 HB_FUNC( HS_INDEX )
 {
-   hb_retni( hb_hsxIndex( hb_parc( 1 ), hb_param( 2, HB_IT_ANY ), hb_parni( 3 ),
-                          hb_param( 4, HB_IT_NUMERIC ) ? hb_parni( 4 ) : HSXDEFOPENMODE,
-                          hb_parni( 5 ),
-                          hb_param( 6, HB_IT_LOGICAL ) == nullptr || hb_parl( 6 ),
-                          hb_parni( 7 ) ) );
+   hb_retni( hb_hsxIndex( hb_parc(1), hb_param( 2, HB_IT_ANY ), hb_parni(3),
+                          hb_param( 4, HB_IT_NUMERIC ) ? hb_parni(4) : HSXDEFOPENMODE,
+                          hb_parni(5),
+                          hb_param( 6, HB_IT_LOGICAL ) == nullptr || hb_parl(6),
+                          hb_parni(7) ) );
 }
 
 /* hs_Add( <hIndex>, [<xExpr>], [lDel] ) --> nVal >= 1 (RECNO), nVal < 0 (ERROR CODE)
@@ -1994,7 +1994,7 @@ HB_FUNC( HS_ADD )
       HB_ULONG ulRecNo;
       int iRetVal;
 
-      iRetVal = hb_hsxAdd( hb_parni( 1 ), &ulRecNo, hb_param( 2, HB_IT_BLOCK | HB_IT_STRING ), hb_parl( 3 ) );
+      iRetVal = hb_hsxAdd( hb_parni(1), &ulRecNo, hb_param( 2, HB_IT_BLOCK | HB_IT_STRING ), hb_parl(3) );
 
       if( iRetVal == HSX_SUCCESS )
       {
@@ -2017,7 +2017,7 @@ HB_FUNC( HS_REPLACE )
 {
    if( hb_param( 1, HB_IT_NUMERIC ) && hb_param( 3, HB_IT_NUMERIC ) )
    {
-      hb_retni( hb_hsxReplace( hb_parni( 1 ), hb_parnl( 3 ), hb_param( 2, HB_IT_BLOCK | HB_IT_STRING ), hb_parl( 4 ) ) );
+      hb_retni( hb_hsxReplace( hb_parni(1), hb_parnl(3), hb_param( 2, HB_IT_BLOCK | HB_IT_STRING ), hb_parl(4) ) );
    }
    else
    {
@@ -2031,7 +2031,7 @@ HB_FUNC( HS_IFDEL )
 {
    if( hb_param( 1, HB_IT_NUMERIC ) && hb_param( 2, HB_IT_NUMERIC ) )
    {
-      hb_retni( hb_hsxIfDel( hb_parni( 1 ), hb_parnl( 2 ) ) );
+      hb_retni( hb_hsxIfDel( hb_parni(1), hb_parnl(2) ) );
    }
    else
    {
@@ -2045,7 +2045,7 @@ HB_FUNC( HS_DELETE )
 {
    if( hb_param( 1, HB_IT_NUMERIC ) && hb_param( 2, HB_IT_NUMERIC ) )
    {
-      hb_retni( hb_hsxDelete( hb_parni( 1 ), hb_parnl( 2 ) ) );
+      hb_retni( hb_hsxDelete( hb_parni(1), hb_parnl(2) ) );
    }
    else
    {
@@ -2059,7 +2059,7 @@ HB_FUNC( HS_UNDELETE )
 {
    if( hb_param( 1, HB_IT_NUMERIC ) && hb_param( 2, HB_IT_NUMERIC ) )
    {
-      hb_retni( hb_hsxUnDelete( hb_parni( 1 ), hb_parnl( 2 ) ) );
+      hb_retni( hb_hsxUnDelete( hb_parni(1), hb_parnl(2) ) );
    }
    else
    {
@@ -2073,7 +2073,7 @@ HB_FUNC( HS_KEYCOUNT )
 {
    if( hb_param( 1, HB_IT_NUMERIC ) )
    {
-      LPHSXINFO pHSX = hb_hsxGetPointer( hb_parni( 1 ) );
+      LPHSXINFO pHSX = hb_hsxGetPointer( hb_parni(1) );
 
       if( pHSX )
       {
@@ -2099,12 +2099,12 @@ HB_FUNC( HS_KEYCOUNT )
    Sets up parameters for a subsequent hs_Next() call */
 HB_FUNC( HS_SET )
 {
-   const char * pStr = hb_parc( 2 );
+   const char * pStr = hb_parc(2);
    int iRetVal = HSX_BADPARMS;
 
    if( pStr && hb_param( 1, HB_IT_NUMERIC ) )
    {
-      iRetVal = hb_hsxSeekSet( hb_parni( 1 ), pStr, hb_parclen( 2 ) );
+      iRetVal = hb_hsxSeekSet( hb_parni(1), pStr, hb_parclen(2) );
    }
    hb_retni( iRetVal );
 }
@@ -2113,18 +2113,18 @@ HB_FUNC( HS_SET )
    Sets a WA RM filter using a HiPer-SEEK index */
 HB_FUNC( HS_FILTER )
 {
-   const char * szText = hb_parc( 2 );
+   const char * szText = hb_parc(2);
    char * pBuff = nullptr;
-   HB_SIZE nLen = hb_parclen( 2 );
+   HB_SIZE nLen = hb_parclen(2);
    HB_ULONG ulRecords = 0;
    int iHandle = -1, iResult = HSX_BADPARMS;
    HB_BOOL fNew = HB_FALSE, fToken = HB_TRUE;
 
-   if( hb_parclen( 1 ) > 0 )
+   if( hb_parclen(1) > 0 )
    {
       if( nLen > 0 )
       {
-         iHandle = hb_hsxOpen( hb_parc( 1 ), hb_parni( 4 ), hb_param( 5, HB_IT_NUMERIC ) ? hb_parni( 5 ) : HSXDEFOPENMODE );
+         iHandle = hb_hsxOpen( hb_parc(1), hb_parni(4), hb_param( 5, HB_IT_NUMERIC ) ? hb_parni(5) : HSXDEFOPENMODE );
          if( iHandle >= 0 )
          {
             fNew = HB_TRUE;
@@ -2137,7 +2137,7 @@ HB_FUNC( HS_FILTER )
    }
    else if( hb_param( 1, HB_IT_NUMERIC ) )
    {
-      LPHSXINFO pHSX = hb_hsxGetPointer( hb_parni( 1 ) );
+      LPHSXINFO pHSX = hb_hsxGetPointer( hb_parni(1) );
 
       if( ! pHSX )
       {
@@ -2246,7 +2246,7 @@ HB_FUNC( HS_NEXT )
 
    if( hb_param( 1, HB_IT_NUMERIC ) )
    {
-      iRetVal = hb_hsxNext( hb_parni( 1 ), &ulRecNo );
+      iRetVal = hb_hsxNext( hb_parni(1), &ulRecNo );
    }
 
    if( iRetVal == HSX_SUCCESS )
@@ -2267,7 +2267,7 @@ HB_FUNC( HS_VERIFY )
 {
    if( hb_param( 1, HB_IT_NUMERIC ) )
    {
-      int iHandle = hb_parni( 1 );
+      int iHandle = hb_parni(1);
       PHB_ITEM pExpr = hb_param( 2, HB_IT_BLOCK );
       const char * szText = nullptr;
       HB_SIZE nLen = 0;
@@ -2297,14 +2297,14 @@ HB_FUNC( HS_VERIFY )
          nLen = hb_itemGetCLen( pExpr );
       }
 
-      hb_retni( hb_hsxVerify( hb_parni( 1 ), szText, nLen, hb_parc( 3 ), hb_parclen( 3 ), hb_parni( 4 ) ) );
+      hb_retni( hb_hsxVerify( hb_parni(1), szText, nLen, hb_parc(3), hb_parclen(3), hb_parni(4) ) );
    }
    else
    {
       PHB_ITEM pExpr = hb_param( 1, HB_IT_BLOCK );
-      const char * szSub = hb_parc( 2 ), * szText = nullptr;
-      HB_SIZE nSub = hb_parclen( 2 ), nLen = 0;
-      HB_BOOL fIgnoreCase = hb_parl( 3 );
+      const char * szSub = hb_parc(2), * szText = nullptr;
+      HB_SIZE nSub = hb_parclen(2), nLen = 0;
+      HB_BOOL fIgnoreCase = hb_parl(3);
 
       if( nSub )
       {

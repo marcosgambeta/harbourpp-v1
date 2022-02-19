@@ -1184,7 +1184,7 @@ void hb_memvarRestoreFromArray( PHB_ITEM pArray )
 
 static const char * hb_memvarGetMask( int iParam )
 {
-   const char * pszMask = hb_parc( iParam );
+   const char * pszMask = hb_parc(iParam);
 
    if( ! pszMask || pszMask[ 0 ] == '*' )
    {
@@ -1305,7 +1305,7 @@ HB_FUNC( __MVRELEASE )
       const char * pszMask;
 
       pszMask = hb_memvarGetMask( 1 );
-      bIncludeVar = ( pszMask[ 0 ] == '*' && ! pszMask[ 1 ] ) || iCount < 2 || hb_parl( 2 );
+      bIncludeVar = ( pszMask[ 0 ] == '*' && ! pszMask[ 1 ] ) || iCount < 2 || hb_parl(2);
       hb_memvarReleaseWithMask( pszMask, bIncludeVar );
    }
 }
@@ -1340,7 +1340,7 @@ HB_FUNC( __MVDBGINFO )
 
    if( iCount == 1 || iCount == 2 )          /* request for a number of variables */
    {
-      hb_retns( hb_memvarCount( hb_parni( 1 ), hb_parni( 2 ) ) );
+      hb_retns( hb_memvarCount( hb_parni(1), hb_parni(2) ) );
    }
 
    else if( iCount > 2 )     /* request for a value of variable */
@@ -1348,7 +1348,7 @@ HB_FUNC( __MVDBGINFO )
       PHB_ITEM pValue;
       const char * szName;
 
-      pValue = hb_memvarDebugVariable( hb_parni( 1 ), hb_parni( 2 ), &szName );
+      pValue = hb_memvarDebugVariable( hb_parni(1), hb_parni(2), &szName );
 
       if( pValue )   /* the requested variable was found */
       {
@@ -1368,7 +1368,7 @@ HB_FUNC( __MVEXIST )
    HB_STACK_TLS_PRELOAD
    PHB_DYNS pDyn;
 
-   pDyn = hb_memvarFindSymbol( hb_parc( 1 ), hb_parclen( 1 ) );
+   pDyn = hb_memvarFindSymbol( hb_parc(1), hb_parclen(1) );
    hb_retl( pDyn && hb_dynsymGetMemvar( pDyn ) );
 }
 
@@ -1612,7 +1612,7 @@ HB_FUNC( __MVSAVE )
    /* Clipper also checks for the number of arguments here */
    if( hb_pcount() == 3 && HB_ISCHAR( 1 ) && HB_ISCHAR( 2 ) && HB_ISLOG( 3 ) )
    {
-      const char * pszFileName = hb_parc( 1 );
+      const char * pszFileName = hb_parc(1);
       PHB_ITEM pError = nullptr;
       PHB_FILE fhnd;
 
@@ -1641,7 +1641,7 @@ HB_FUNC( __MVSAVE )
          MEMVARSAVE_CARGO msc;
 
          msc.pszMask      = hb_memvarGetMask( 2 );
-         msc.bIncludeMask = hb_parl( 3 );
+         msc.bIncludeMask = hb_parl(3);
          msc.buffer       = buffer;
          msc.fhnd         = fhnd;
 
@@ -1691,11 +1691,11 @@ HB_FUNC( __MVRESTORE )
 #endif
    {
       HB_STACK_TLS_PRELOAD
-      const char * pszFileName = hb_parc( 1 );
+      const char * pszFileName = hb_parc(1);
       PHB_ITEM pError = nullptr;
       PHB_FILE fhnd;
 
-      HB_BOOL bAdditive = hb_parl( 2 );
+      HB_BOOL bAdditive = hb_parl(2);
 
       /* Clear all memory variables if not ADDITIVE */
 

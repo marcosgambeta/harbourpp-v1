@@ -224,7 +224,7 @@ static int s_zlibUncompress( char * pDst, HB_SIZE * pnDst, const char * pSrc, HB
  */
 HB_FUNC( HB_ZLIBVERSION )
 {
-   if( hb_parni( 1 ) == 1 )
+   if( hb_parni(1) == 1 )
    {
       hb_retc_const( ZLIB_VERSION );
    }
@@ -244,11 +244,11 @@ HB_FUNC( HB_ZCOMPRESSBOUND )
 {
    if( HB_ISCHAR( 1 ) )
    {
-      hb_retnint( s_zlibCompressBound( hb_parclen( 1 ) ) );
+      hb_retnint( s_zlibCompressBound( hb_parclen(1) ) );
    }
    else if( HB_ISNUM( 1 ) )
    {
-      hb_retnint( s_zlibCompressBound( hb_parns( 1 ) ) );
+      hb_retnint( s_zlibCompressBound( hb_parns(1) ) );
    }
    else
    {
@@ -262,11 +262,11 @@ HB_FUNC( HB_ZCOMPRESSBOUND )
  */
 HB_FUNC( HB_ZUNCOMPRESSLEN )
 {
-   const char * szData = hb_parc( 1 );
+   const char * szData = hb_parc(1);
 
    if( szData )
    {
-      HB_SIZE nLen = hb_parclen( 1 );
+      HB_SIZE nLen = hb_parclen(1);
       int iResult = Z_OK;
 
       if( nLen )
@@ -297,11 +297,11 @@ HB_FUNC( HB_ZUNCOMPRESSLEN )
  */
 HB_FUNC( HB_ZCOMPRESS )
 {
-   const char * szData = hb_parc( 1 );
+   const char * szData = hb_parc(1);
 
    if( szData )
    {
-      HB_SIZE nLen = hb_parclen( 1 );
+      HB_SIZE nLen = hb_parclen(1);
 
       if( nLen )
       {
@@ -322,7 +322,7 @@ HB_FUNC( HB_ZCOMPRESS )
          {
             if( HB_ISNUM( 2 ) )
             {
-               nDstLen = hb_parns( 2 );
+               nDstLen = hb_parns(2);
                pDest = static_cast< char * >( hb_xalloc( nDstLen + 1 ) );
             }
             else
@@ -378,11 +378,11 @@ HB_FUNC( HB_ZCOMPRESS )
 HB_FUNC( HB_ZUNCOMPRESS )
 {
    PHB_ITEM pBuffer = HB_ISBYREF( 2 ) ? hb_param( 2, HB_IT_STRING ) : nullptr;
-   const char * szData = hb_parc( 1 );
+   const char * szData = hb_parc(1);
 
    if( szData )
    {
-      HB_SIZE nLen = hb_parclen( 1 );
+      HB_SIZE nLen = hb_parclen(1);
 
       if( nLen )
       {
@@ -399,7 +399,7 @@ HB_FUNC( HB_ZUNCOMPRESS )
          }
          else
          {
-            nDstLen = HB_ISNUM( 2 ) ? static_cast< HB_SIZE >( hb_parns( 2 ) ) : s_zlibUncompressedSize( szData, nLen, &iResult );
+            nDstLen = HB_ISNUM( 2 ) ? static_cast< HB_SIZE >( hb_parns(2) ) : s_zlibUncompressedSize( szData, nLen, &iResult );
             if( iResult == Z_OK )
             {
                pDest = static_cast< char * >( hb_xalloc( nDstLen + 1 ) );
@@ -451,11 +451,11 @@ HB_FUNC( HB_GZCOMPRESSBOUND )
 {
    if( HB_ISCHAR( 1 ) )
    {
-      hb_retnint( s_zlibCompressBound( static_cast< uLong >( hb_parclen( 1 ) ) ) + 12 );
+      hb_retnint( s_zlibCompressBound( static_cast< uLong >( hb_parclen(1) ) ) + 12 );
    }
    else if( HB_ISNUM( 1 ) )
    {
-      hb_retnint( s_zlibCompressBound( static_cast< uLong >( hb_parns( 1 ) ) ) + 12 );
+      hb_retnint( s_zlibCompressBound( static_cast< uLong >( hb_parns(1) ) ) + 12 );
    }
    else
    {
@@ -472,11 +472,11 @@ HB_FUNC( HB_GZCOMPRESSBOUND )
  */
 HB_FUNC( HB_GZCOMPRESS )
 {
-   const char * szData = hb_parc( 1 );
+   const char * szData = hb_parc(1);
 
    if( szData )
    {
-      HB_SIZE nLen = hb_parclen( 1 );
+      HB_SIZE nLen = hb_parclen(1);
 
       if( nLen )
       {
@@ -497,7 +497,7 @@ HB_FUNC( HB_GZCOMPRESS )
          {
             if( HB_ISNUM( 2 ) )
             {
-               nDstLen = hb_parns( 2 );
+               nDstLen = hb_parns(2);
                pDest = static_cast< char * >( hb_xalloc( nDstLen + 1 ) );
             }
             else
@@ -555,7 +555,7 @@ HB_FUNC( HB_ZERROR )
    /* NOTE: Hack to avoid "undefined reference to 'zlibVersion' when linking hbrun on QNX 6.2.1. */
    hb_retc_null();
 #else
-   hb_retc( zError( hb_parni( 1 ) ) );
+   hb_retc( zError( hb_parni(1) ) );
 #endif
 }
 

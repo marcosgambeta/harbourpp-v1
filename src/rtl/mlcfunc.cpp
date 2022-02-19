@@ -95,10 +95,10 @@ static void hb_mlGetEOLs( PHB_MLC_INFO pMLC, int iParam )
          Clipper will ignore these parameters and use CRLF EOL hard
          coded. [vszakats] */
 #ifndef HB_CLP_STRICT /* HB_EXTENSION */
-   nLen = hb_parclen( iParam );
+   nLen = hb_parclen(iParam);
    if( nLen )
    {
-      pMLC->pEOLs[ 0 ].szEOL = hb_parc( iParam );
+      pMLC->pEOLs[ 0 ].szEOL = hb_parc(iParam);
       pMLC->pEOLs[ 0 ].nLen = nLen;
       iEOLs = 1;
    }
@@ -156,13 +156,13 @@ static HB_BOOL hb_mlInit( PHB_MLC_INFO pMLC, int iParAdd )
 {
    HB_ISIZ nSize = hb_parnsdef( 2, 79 );
 
-   pMLC->pszString = hb_parc( 1 );
+   pMLC->pszString = hb_parc(1);
    if( pMLC->pszString && nSize > 0 )
    {
       pMLC->nOffset = pMLC->nMaxCol = pMLC->nMaxPos = pMLC->nCol = 0;
 
       pMLC->nLineLength = nSize;
-      pMLC->nLen = hb_parclen( 1 );
+      pMLC->nLen = hb_parclen(1);
 
       pMLC->nTabSize = hb_parnsdef( 3 + iParAdd, 4 );
       pMLC->fWordWrap = hb_parldef( 4 + iParAdd, HB_TRUE );
@@ -549,8 +549,8 @@ HB_FUNC( MLPOS )
  */
 HB_FUNC( MLCTOPOS )
 {
-   HB_SIZE nLine   = hb_parns( 3 );
-   HB_SIZE nCol    = hb_parns( 4 );
+   HB_SIZE nLine   = hb_parns(3);
+   HB_SIZE nCol    = hb_parns(4);
    HB_SIZE nOffset = 0;
 
    if( nLine > 0 && HB_ISNUM( 4 ) )
@@ -592,7 +592,7 @@ HB_FUNC( MLCTOPOS )
  */
 HB_FUNC( MPOSTOLC )
 {
-   HB_ISIZ nPos    = hb_parns( 3 );
+   HB_ISIZ nPos    = hb_parns(3);
    HB_SIZE nLine   = 0;
    HB_SIZE nCol    = 0;
 
@@ -636,7 +636,7 @@ HB_FUNC( MPOSTOLC )
  */
 HB_FUNC( HB_MLEVAL )
 {
-   const char * pszString = hb_parc( 1 );
+   const char * pszString = hb_parc(1);
    PHB_ITEM pBlock = hb_param( 2, HB_IT_EVALITEM );
    HB_ISIZ nSize = hb_parnsdef( 3, 79 );
    HB_SIZE nRowPos = 0, nColPos = 0, nLines = 0;
@@ -645,9 +645,9 @@ HB_FUNC( HB_MLEVAL )
    {
       HB_SIZE nOffset = 0;
       HB_SIZE nLineLength = nSize;
-      HB_SIZE nLen = hb_parclen( 1 );
+      HB_SIZE nLen = hb_parclen(1);
       HB_SIZE nTabSize = hb_parnsdef( 4, 4 );
-      HB_SIZE nPos = hb_parns( 6 ) - 1;
+      HB_SIZE nPos = hb_parns(6) - 1;
       HB_BOOL fWordWrap = hb_parldef( 5, HB_TRUE );
       PHB_CODEPAGE cdp = hb_vmCDP();
       PHB_ITEM pLineItem = nullptr, pSoftItem = nullptr;

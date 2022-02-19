@@ -113,7 +113,7 @@ HB_FUNC( HB_FCOPY )
 {
    HB_ERRCODE errCode = 2; /* file not found */
    HB_BOOL fResult = HB_FALSE;
-   const char * pszSource = hb_parc( 1 ), * pszDest = hb_parc( 2 );
+   const char * pszSource = hb_parc(1), * pszDest = hb_parc(2);
 
    if( pszSource && pszDest )
    {

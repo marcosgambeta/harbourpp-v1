@@ -52,7 +52,7 @@
 HB_FUNC( HB_PVALUE )
 {
    HB_ISIZ nOffset = hb_stackBaseItem()->item.asSymbol.stackstate->nBaseItem;
-   HB_USHORT uiParam = static_cast< HB_USHORT >( hb_parni( 1 ) );
+   HB_USHORT uiParam = static_cast< HB_USHORT >( hb_parni(1) );
 
    if( uiParam && uiParam <= hb_stackItem( nOffset )->item.asSymbol.paramcnt )
    {

@@ -55,7 +55,7 @@ HB_FUNC( WORD )
 {
    if( HB_ISNUM( 1 ) )
    {
-      hb_retni( hb_parni( 1 ) );
+      hb_retni( hb_parni(1) );
    }
    else
    {

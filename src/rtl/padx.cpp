@@ -59,7 +59,7 @@ static HB_SIZE hb_cdpItemLen( PHB_CODEPAGE cdp, PHB_ITEM pItem )
 
 static const char * s_hb_padGet( PHB_CODEPAGE cdp, HB_SIZE * pnPad )
 {
-   const char * szPad = hb_parc( 3 );
+   const char * szPad = hb_parc(3);
 
    *pnPad = 1;
    if( szPad == nullptr )
@@ -68,7 +68,7 @@ static const char * s_hb_padGet( PHB_CODEPAGE cdp, HB_SIZE * pnPad )
    }
    else if( cdp )
    {
-      *pnPad = hb_cdpTextPos( cdp, szPad, hb_parclen( 3 ), 1 );
+      *pnPad = hb_cdpTextPos( cdp, szPad, hb_parclen(3), 1 );
       if( *pnPad == 0 )
       {
          szPad = "";
@@ -83,7 +83,7 @@ static const char * s_hb_padGet( PHB_CODEPAGE cdp, HB_SIZE * pnPad )
 
 static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
 {
-   HB_ISIZ nLen = hb_parns( 2 );
+   HB_ISIZ nLen = hb_parns(2);
 
    if( nLen > 0 )
    {

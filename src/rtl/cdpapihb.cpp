@@ -80,7 +80,7 @@ static HB_SIZE utf8pos( const char * szUTF8, HB_SIZE nLen, HB_SIZE nUTF8Pos )
 
 HB_FUNC( HB_CDPSELECT )
 {
-   const char * id = hb_parc( 1 );
+   const char * id = hb_parc(1);
 
    hb_retc( hb_cdpID() );
 
@@ -92,7 +92,7 @@ HB_FUNC( HB_CDPSELECT )
 
 HB_FUNC( HB_CDPEXISTS )
 {
-   const char * id = hb_parc( 1 );
+   const char * id = hb_parc(1);
 
    if( id )
    {
@@ -106,7 +106,7 @@ HB_FUNC( HB_CDPEXISTS )
 
 HB_FUNC( HB_CDPUNIID )
 {
-   const char * id = hb_parc( 1 );
+   const char * id = hb_parc(1);
    PHB_CODEPAGE cdp = id ? hb_cdpFindExt( id ) : hb_vmCDP();
 
    hb_retc( cdp ? cdp->uniTable->uniID : nullptr );
@@ -114,7 +114,7 @@ HB_FUNC( HB_CDPUNIID )
 
 HB_FUNC( HB_CDPINFO )
 {
-   const char * id = hb_parc( 1 );
+   const char * id = hb_parc(1);
    PHB_CODEPAGE cdp = id ? hb_cdpFindExt( id ) : hb_vmCDP();
 
    hb_retc( cdp ? cdp->info : nullptr );
@@ -122,7 +122,7 @@ HB_FUNC( HB_CDPINFO )
 
 HB_FUNC( HB_CDPISCHARIDX )
 {
-   const char * id = hb_parc( 1 );
+   const char * id = hb_parc(1);
    PHB_CODEPAGE cdp = id ? hb_cdpFindExt( id ) : hb_vmCDP();
    HB_BOOL fResult = HB_FALSE;
 
@@ -131,7 +131,7 @@ HB_FUNC( HB_CDPISCHARIDX )
       fResult = HB_CDP_ISCHARIDX( cdp );
       if( HB_CDP_ISCUSTOM( cdp ) && HB_ISLOG( 2 ) )
       {
-         if( hb_parl( 2 ) )
+         if( hb_parl(2) )
          {
             cdp->type |= HB_CDP_TYPE_CHARIDX;
          }
@@ -146,12 +146,12 @@ HB_FUNC( HB_CDPISCHARIDX )
 
 HB_FUNC( HB_CDPCHARMAX )
 {
-   hb_retnl( ( 1 << ( static_cast< int >( hb_cdpIsUTF8( hb_cdpFindExt( hb_parc( 1 ) ) ) ? sizeof( HB_WCHAR ) : sizeof( HB_UCHAR ) ) * 8 ) ) - 1 );
+   hb_retnl( ( 1 << ( static_cast< int >( hb_cdpIsUTF8( hb_cdpFindExt( hb_parc(1) ) ) ? sizeof( HB_WCHAR ) : sizeof( HB_UCHAR ) ) * 8 ) ) - 1 );
 }
 
 HB_FUNC( HB_CDPISUTF8 )
 {
-   hb_retl( hb_cdpIsUTF8( hb_cdpFindExt( hb_parc( 1 ) ) ) );
+   hb_retl( hb_cdpIsUTF8( hb_cdpFindExt( hb_parc(1) ) ) );
 }
 
 HB_FUNC( HB_CDPLIST )
@@ -186,9 +186,9 @@ HB_FUNC_TRANSLATE( __NATSORTVER, HB_CDPINFO )
  */
 HB_FUNC( HB_TRANSLATE )
 {
-   HB_SIZE nLen = hb_parclen( 1 );
-   const char * szIdIn = hb_parc( 2 );
-   const char * szIdOut = hb_parc( 3 );
+   HB_SIZE nLen = hb_parclen(1);
+   const char * szIdIn = hb_parc(2);
+   const char * szIdOut = hb_parc(3);
 
    if( nLen && ( szIdIn || szIdOut ) )
    {
@@ -197,7 +197,7 @@ HB_FUNC( HB_TRANSLATE )
 
       if( cdpIn && cdpOut && cdpIn != cdpOut && ( cdpIn->uniTable != cdpOut->uniTable || HB_CDP_ISCUSTOM( cdpIn ) || HB_CDP_ISCUSTOM( cdpOut ) ) )
       {
-         char * szResult = hb_cdpnDup( hb_parc( 1 ), &nLen, cdpIn, cdpOut );
+         char * szResult = hb_cdpnDup( hb_parc(1), &nLen, cdpIn, cdpOut );
          hb_retclen_buffer( szResult, nLen );
       }
       else
@@ -218,7 +218,7 @@ HB_FUNC( HB_UTF8CHR )
       char utf8Char[ HB_MAX_CHAR_LEN ];
       int iLen;
 
-      iLen = hb_cdpU16CharToUTF8( utf8Char, static_cast< HB_WCHAR >( hb_parni( 1 ) ) );
+      iLen = hb_cdpU16CharToUTF8( utf8Char, static_cast< HB_WCHAR >( hb_parni(1) ) );
       hb_retclen( utf8Char, iLen );
    }
    else
@@ -229,11 +229,11 @@ HB_FUNC( HB_UTF8CHR )
 
 HB_FUNC( HB_UTF8ASC )
 {
-   const char * pszString = hb_parc( 1 );
+   const char * pszString = hb_parc(1);
 
    if( pszString )
    {
-      HB_SIZE nLen = hb_parclen( 1 );
+      HB_SIZE nLen = hb_parclen(1);
       HB_WCHAR wc = 0;
       int n = 0;
 
@@ -260,12 +260,12 @@ HB_FUNC( HB_UTF8ASC )
 
 HB_FUNC( HB_STRTOUTF8 )
 {
-   HB_SIZE nLen = hb_parclen( 1 ), nDest = 0;
+   HB_SIZE nLen = hb_parclen(1), nDest = 0;
    char * szDest = nullptr;
 
    if( nLen )
    {
-      const char * szCP = hb_parc( 2 );
+      const char * szCP = hb_parc(2);
       PHB_CODEPAGE cdp = szCP ? hb_cdpFindExt( szCP ) : hb_vmCDP();
 
       if( cdp )
@@ -277,7 +277,7 @@ HB_FUNC( HB_STRTOUTF8 )
          }
          else
          {
-            const char * szString = hb_parc( 1 );
+            const char * szString = hb_parc(1);
             nDest = hb_cdpStrAsUTF8Len( cdp, szString, nLen, 0 );
             szDest = static_cast< char * >( hb_xgrab( nDest + 1 ) );
             hb_cdpStrToUTF8( cdp, szString, nLen, szDest, nDest + 1 );
@@ -296,16 +296,16 @@ HB_FUNC( HB_STRTOUTF8 )
 
 HB_FUNC( HB_UTF8TOSTR )
 {
-   const char * szString = hb_parc( 1 );
+   const char * szString = hb_parc(1);
 
    if( szString )
    {
-      HB_SIZE nLen = hb_parclen( 1 ), nDest = 0;
+      HB_SIZE nLen = hb_parclen(1), nDest = 0;
       char * szDest = nullptr;
 
       if( nLen )
       {
-         const char * szCP = hb_parc( 2 );
+         const char * szCP = hb_parc(2);
          PHB_CODEPAGE cdp = szCP ? hb_cdpFindExt( szCP ) : hb_vmCDP();
 
          if( cdp )
@@ -317,7 +317,7 @@ HB_FUNC( HB_UTF8TOSTR )
             }
             else
             {
-               szString = hb_parc( 1 );
+               szString = hb_parc(1);
                nDest = hb_cdpUTF8AsStrLen( cdp, szString, nLen, 0 );
                szDest = static_cast< char * >( hb_xgrab( nDest + 1 ) );
                hb_cdpUTF8ToStr( cdp, szString, nLen, szDest, nDest + 1 );
@@ -400,15 +400,15 @@ HB_FUNC( HB_UTF8RAT )
 
 HB_FUNC( HB_UTF8SUBSTR )
 {
-   const char * szString = hb_parc( 1 );
+   const char * szString = hb_parc(1);
    int iPCount = hb_pcount();
 
    if( szString && ( iPCount < 2 || ( HB_ISNUM( 2 ) && ( iPCount < 3 || HB_ISNUM( 3 ) ) ) ) )
    {
       char * szDest = nullptr;
-      HB_SIZE nLen = hb_parclen( 1 ), nDest = 0;
-      HB_ISIZ nFrom = hb_parns( 2 );
-      HB_ISIZ nCount = iPCount < 3 ? static_cast< HB_ISIZ >( nLen ) : hb_parns( 3 );
+      HB_SIZE nLen = hb_parclen(1), nDest = 0;
+      HB_ISIZ nFrom = hb_parns(2);
+      HB_ISIZ nCount = iPCount < 3 ? static_cast< HB_ISIZ >( nLen ) : hb_parns(3);
 
       if( nFrom < 0 )
       {
@@ -444,17 +444,17 @@ HB_FUNC( HB_UTF8SUBSTR )
 
 HB_FUNC( HB_UTF8LEFT )
 {
-   const char * szString = hb_parc( 1 );
+   const char * szString = hb_parc(1);
 
    if( szString && HB_ISNUM( 2 ) )
    {
-      HB_ISIZ nLenReq = hb_parns( 2 );
+      HB_ISIZ nLenReq = hb_parns(2);
       HB_SIZE nDest = 0;
       char * szDest = nullptr;
 
       if( nLenReq > 0 )
       {
-         szDest = hb_cdpUTF8StringSubstr( szString, hb_parclen( 1 ), 0, nLenReq, &nDest );
+         szDest = hb_cdpUTF8StringSubstr( szString, hb_parclen(1), 0, nLenReq, &nDest );
       }
 
       if( szDest )
@@ -474,12 +474,12 @@ HB_FUNC( HB_UTF8LEFT )
 
 HB_FUNC( HB_UTF8RIGHT )
 {
-   const char * szString = hb_parc( 1 );
+   const char * szString = hb_parc(1);
 
    if( szString && HB_ISNUM( 2 ) )
    {
-      HB_ISIZ nLenReq = hb_parns( 2 ), nFrom;
-      HB_SIZE nLen = hb_parclen( 1 ), nDest = 0;
+      HB_ISIZ nLenReq = hb_parns(2), nFrom;
+      HB_SIZE nLen = hb_parclen(1), nDest = 0;
       char * szDest = nullptr;
 
       if( nLen && nLenReq > 0 )
@@ -509,12 +509,12 @@ HB_FUNC( HB_UTF8RIGHT )
 
 HB_FUNC( HB_UTF8PEEK )
 {
-   const char * szString = hb_parc( 1 );
+   const char * szString = hb_parc(1);
 
    if( szString && HB_ISNUM( 2 ) )
    {
-      HB_SIZE nPos = hb_parns( 2 );
-      HB_SIZE nLen = hb_parclen( 1 );
+      HB_SIZE nPos = hb_parns(2);
+      HB_SIZE nLen = hb_parclen(1);
 
       if( nPos > 0 && nPos <= nLen )
       {
@@ -540,14 +540,14 @@ HB_FUNC( HB_UTF8POKE )
       const char * szString = hb_itemGetCPtr( pText );
       HB_SIZE nLen = hb_itemGetCLen( pText ), nPos;
 
-      nPos = utf8pos( szString, nLen, hb_parns( 2 ) );
+      nPos = utf8pos( szString, nLen, hb_parns(2) );
       if( nPos )
       {
          HB_WCHAR uc, uc2;
          int n, n2;
 
          --nPos;
-         uc = static_cast< HB_WCHAR >( hb_parni( 3 ) );
+         uc = static_cast< HB_WCHAR >( hb_parni(3) );
          n = hb_cdpUTF8CharSize( uc );
          n2 = 0;
          hb_cdpUTF8ToU16NextChar( szString[ nPos ], &n2, &uc2 );
@@ -588,15 +588,15 @@ HB_FUNC( HB_UTF8POKE )
 
 HB_FUNC( HB_UTF8STUFF )
 {
-   const char * szText = hb_parc( 1 );
-   const char * szIns = hb_parc( 4 );
+   const char * szText = hb_parc(1);
+   const char * szIns = hb_parc(4);
 
    if( szText && szIns && HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
    {
-      HB_SIZE nLen = hb_parclen( 1 );
-      HB_SIZE nPos = hb_parns( 2 );
-      HB_SIZE nDel = hb_parns( 3 );
-      HB_SIZE nIns = hb_parclen( 4 );
+      HB_SIZE nLen = hb_parclen(1);
+      HB_SIZE nPos = hb_parns(2);
+      HB_SIZE nDel = hb_parns(3);
+      HB_SIZE nIns = hb_parclen(4);
       HB_SIZE nTot;
 
       if( nPos )
@@ -653,11 +653,11 @@ HB_FUNC( HB_UTF8STUFF )
 
 HB_FUNC( HB_UTF8LEN )
 {
-   const char * szText = hb_parc( 1 );
+   const char * szText = hb_parc(1);
 
    if( szText )
    {
-      hb_retnint( hb_cdpUTF8StringLength( szText, hb_parclen( 1 ) ) );
+      hb_retnint( hb_cdpUTF8StringLength( szText, hb_parclen(1) ) );
    }
    else
    {

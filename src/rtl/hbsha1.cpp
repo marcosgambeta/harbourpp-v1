@@ -57,8 +57,8 @@ HB_FUNC( HB_SHA1 )
 
    #if HB_SIZE_MAX > UINT_MAX
    {
-      const char * buffer = hb_parcx( 1 );
-      HB_SIZE nCount = hb_parclen( 1 );
+      const char * buffer = hb_parcx(1);
+      HB_SIZE nCount = hb_parclen(1);
       HB_SIZE nDone = 0;
 
       while( nCount )
@@ -82,12 +82,12 @@ HB_FUNC( HB_SHA1 )
       }
    }
    #else
-      hb_SHA1_Update( &ctx, hb_parcx( 1 ), hb_parclen( 1 ) );
+      hb_SHA1_Update( &ctx, hb_parcx(1), hb_parclen(1) );
    #endif
 
    hb_SHA1_Final( digest, &ctx );
 
-   if( ! hb_parl( 2 ) )
+   if( ! hb_parl(2) )
    {
       char hex[ ( sizeof( digest ) * 2 ) + 1 ];
       hb_strtohex( reinterpret_cast< char * >( digest ), sizeof( digest ), hex );

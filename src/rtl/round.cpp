@@ -80,7 +80,7 @@ HB_FUNC( ROUND )
 
    if( pNumber && HB_ISNUM( 2 ) )
    {
-      int iDec = hb_parni( 2 );
+      int iDec = hb_parni(2);
 
 #ifdef HB_CLP_STRICT
       /* In CA-Cl*pper Round() always returns double item, what in some

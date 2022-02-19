@@ -147,7 +147,7 @@ HB_FUNC( ORDFINDREC )
       memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
       pOrderInfo.itmNewVal = hb_param( 1, HB_IT_NUMERIC );
       pOrderInfo.itmResult = hb_itemPutL( nullptr, HB_FALSE );
-      SELF_ORDINFO( pArea, hb_parl( 2 ) ? DBOI_FINDRECCONT : DBOI_FINDREC, &pOrderInfo );
+      SELF_ORDINFO( pArea, hb_parl(2) ? DBOI_FINDRECCONT : DBOI_FINDREC, &pOrderInfo );
       hb_itemReturnRelease( pOrderInfo.itmResult );
    }
    else
@@ -387,7 +387,7 @@ HB_FUNC( DBFIELDINFO )
       PHB_ITEM pType;
 
       pType = hb_param( 1, HB_IT_NUMERIC );
-      uiIndex = static_cast< HB_FIELDNO >( hb_parni( 2 ) );
+      uiIndex = static_cast< HB_FIELDNO >( hb_parni(2) );
       if( pType && SELF_FIELDCOUNT( pArea, &uiFields ) == HB_SUCCESS && uiIndex > 0 && uiIndex <= uiFields )
       {
          PHB_ITEM pInfo = hb_itemNew( hb_param( 3, HB_IT_ANY ) );
@@ -443,7 +443,7 @@ HB_FUNC( DBFILEGET )
    {
       HB_USHORT uiFields, uiIndex;
       PHB_ITEM pMode;
-      const char * szField = hb_parc( 1 );
+      const char * szField = hb_parc(1);
 
       if( szField )
       {
@@ -451,13 +451,13 @@ HB_FUNC( DBFILEGET )
       }
       else
       {
-         uiIndex = static_cast< HB_FIELDNO >( hb_parni( 1 ) );
+         uiIndex = static_cast< HB_FIELDNO >( hb_parni(1) );
       }
 
       pMode = hb_param( 3, HB_IT_NUMERIC );
-      if( uiIndex > 0 && pMode && hb_parclen( 2 ) > 0 && SELF_FIELDCOUNT( pArea, &uiFields ) == HB_SUCCESS && uiIndex <= uiFields )
+      if( uiIndex > 0 && pMode && hb_parclen(2) > 0 && SELF_FIELDCOUNT( pArea, &uiFields ) == HB_SUCCESS && uiIndex <= uiFields )
       {
-         hb_retl( SELF_GETVALUEFILE( pArea, uiIndex, hb_parc( 2 ), static_cast< HB_USHORT >( hb_itemGetNI( pMode ) ) ) == HB_SUCCESS );
+         hb_retl( SELF_GETVALUEFILE( pArea, uiIndex, hb_parc(2), static_cast< HB_USHORT >( hb_itemGetNI( pMode ) ) ) == HB_SUCCESS );
       }
       else
       {
@@ -480,7 +480,7 @@ HB_FUNC( DBFILEPUT )
    if( pArea )
    {
       HB_USHORT uiFields, uiIndex;
-      const char * szField = hb_parc( 1 );
+      const char * szField = hb_parc(1);
 
       if( szField )
       {
@@ -488,11 +488,11 @@ HB_FUNC( DBFILEPUT )
       }
       else
       {
-         uiIndex = static_cast< HB_FIELDNO >( hb_parni( 1 ) );
+         uiIndex = static_cast< HB_FIELDNO >( hb_parni(1) );
       }
-      if( uiIndex > 0 && hb_parclen( 2 ) > 0 && SELF_FIELDCOUNT( pArea, &uiFields ) == HB_SUCCESS && uiIndex <= uiFields )
+      if( uiIndex > 0 && hb_parclen(2) > 0 && SELF_FIELDCOUNT( pArea, &uiFields ) == HB_SUCCESS && uiIndex <= uiFields )
       {
-         hb_retl( SELF_PUTVALUEFILE( pArea, uiIndex, hb_parc( 2 ), static_cast< HB_USHORT >( hb_parni( 3 ) ) ) == HB_SUCCESS );
+         hb_retl( SELF_PUTVALUEFILE( pArea, uiIndex, hb_parc(2), static_cast< HB_USHORT >( hb_parni(3) ) ) == HB_SUCCESS );
       }
       else
       {

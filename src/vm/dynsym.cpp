@@ -748,7 +748,7 @@ HB_FUNC( __DYNSCOUNT ) /* How much symbols do we have: dsCount = __dynsymCount()
 HB_FUNC( __DYNSGETNAME ) /* Get name of symbol: cSymbol = __dynsymGetName( dsIndex ) */
 {
    HB_STACK_TLS_PRELOAD
-   PHB_DYNS pDynSym = hb_dynsymGetByIndex( hb_parnl( 1 ) );
+   PHB_DYNS pDynSym = hb_dynsymGetByIndex( hb_parnl(1) );
 
    hb_retc( pDynSym ? pDynSym->pSymbol->szName : nullptr );
 }
@@ -757,7 +757,7 @@ HB_FUNC( __DYNSGETINDEX ) /* Gimme index number of symbol: dsIndex = __dynsymGet
 {
    HB_STACK_TLS_PRELOAD
    HB_SYMCNT uiPos = 0;
-   const char * szName = hb_parc( 1 );
+   const char * szName = hb_parc(1);
 
    if( szName )
    {
@@ -783,7 +783,7 @@ HB_FUNC( __DYNSGETINDEX ) /* Gimme index number of symbol: dsIndex = __dynsymGet
 HB_FUNC( HB_ISFUNCTION ) /* returns .T. if a symbol has a function/procedure pointer, given its name */
 {
    HB_STACK_TLS_PRELOAD
-   const char * szProc = hb_parc( 1 );
+   const char * szProc = hb_parc(1);
    HB_BOOL fResult = HB_FALSE;
 
    if( szProc )
@@ -801,8 +801,8 @@ HB_FUNC( HB_ISFUNCTION ) /* returns .T. if a symbol has a function/procedure poi
 HB_FUNC( __DYNSISFUN ) /* returns .T. if a symbol has a function/procedure pointer, given its symbol index or name */
 {
    HB_STACK_TLS_PRELOAD
-   const char * szName = hb_parc( 1 );
-   PHB_DYNS pDynSym = szName ? hb_dynsymFindName( szName ) : hb_dynsymGetByIndex( hb_parnl( 1 ) );
+   const char * szName = hb_parc(1);
+   PHB_DYNS pDynSym = szName ? hb_dynsymFindName( szName ) : hb_dynsymGetByIndex( hb_parnl(1) );
 
    hb_retl( pDynSym && hb_dynsymIsFunction( pDynSym ) );
 }
@@ -811,7 +811,7 @@ HB_FUNC( __DYNSGETPRF ) /* profiler: It returns an array with a function or proc
 {
    HB_STACK_TLS_PRELOAD
 #ifndef HB_NO_PROFILER
-   PHB_DYNS pDynSym = hb_dynsymGetByIndex( hb_parnl( 1 ) );
+   PHB_DYNS pDynSym = hb_dynsymGetByIndex( hb_parnl(1) );
 #endif
 
    hb_reta( 2 );
@@ -833,7 +833,7 @@ HB_FUNC( __DYNSGETPRF ) /* profiler: It returns an array with a function or proc
 HB_FUNC( __DYNSN2PTR )
 {
    HB_STACK_TLS_PRELOAD
-   const char * szName = hb_parc( 1 );
+   const char * szName = hb_parc(1);
 
    hb_retptr( szName ? hb_dynsymGet( szName ) : nullptr );
 }
@@ -841,7 +841,7 @@ HB_FUNC( __DYNSN2PTR )
 HB_FUNC( __DYNSN2SYM )
 {
    HB_STACK_TLS_PRELOAD
-   const char * szName = hb_parc( 1 );
+   const char * szName = hb_parc(1);
 
    if( szName )
    {
@@ -852,7 +852,7 @@ HB_FUNC( __DYNSN2SYM )
 HB_FUNC( __DYNSP2NAME )
 {
    HB_STACK_TLS_PRELOAD
-   PHB_DYNS pDynSym = static_cast< PHB_DYNS >( hb_parptr( 1 ) );
+   PHB_DYNS pDynSym = static_cast< PHB_DYNS >( hb_parptr(1) );
 
    hb_retc( pDynSym != nullptr ? pDynSym->pSymbol->szName : nullptr );
 }

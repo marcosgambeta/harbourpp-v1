@@ -814,7 +814,7 @@ HB_FUNC( HB_GCSETAUTO )
    HB_PTRUINT nBlocks, nPrevBlocks;
    HB_BOOL fSet = HB_ISNUM( 1 );
 
-   nBlocks = fSet ? hb_parnint( 1 ) * 1000 : 0;
+   nBlocks = fSet ? hb_parnint(1) * 1000 : 0;
 
    HB_GC_LOCK();
    nPrevBlocks = s_ulBlocksAuto;

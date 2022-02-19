@@ -166,7 +166,7 @@ static int hb_regexec( PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen, in
 
 HB_FUNC( HB_REGEXCOMP )
 {
-   HB_SIZE nLen = hb_parclen( 1 );
+   HB_SIZE nLen = hb_parclen(1);
 
    if( nLen == 0 )
    {
@@ -181,12 +181,12 @@ HB_FUNC( HB_REGEXCOMP )
       {
          iFlags |= HBREG_ICASE;
       }
-      if( hb_parl( 3 ) )
+      if( hb_parl(3) )
       {
          iFlags |= HBREG_NEWLINE;
       }
 
-      pRegEx = hb_regexCompile( hb_parc( 1 ), nLen, iFlags );
+      pRegEx = hb_regexCompile( hb_parc(1), nLen, iFlags );
       if( pRegEx )
       {
          pRegEx->fFree = HB_FALSE;
@@ -211,7 +211,7 @@ HB_FUNC( HB_ATX )
       if( pRegEx )
       {
          HB_SIZE nLen = hb_itemGetCLen( pString );
-         HB_SIZE nStart = hb_parns( 4 );
+         HB_SIZE nStart = hb_parns(4);
          HB_SIZE nEnd = hb_parnsdef( 5, nLen );
 
          if( nLen && nStart <= nLen && nStart <= nEnd )
@@ -278,7 +278,7 @@ static HB_BOOL hb_regex( int iRequest )
       hb_errRT_BASE_SubstR( EG_ARG, 3014, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return HB_FALSE;
    }
-   pRegEx = hb_regexGet( hb_param( 1, HB_IT_ANY ), ( ! hb_parldef( 3, HB_TRUE ) ? HBREG_ICASE : 0 ) | ( hb_parl( 4 ) ? HBREG_NEWLINE : 0 ) );
+   pRegEx = hb_regexGet( hb_param( 1, HB_IT_ANY ), ( ! hb_parldef( 3, HB_TRUE ) ? HBREG_ICASE : 0 ) | ( hb_parl(4) ? HBREG_NEWLINE : 0 ) );
    if( ! pRegEx )
    {
       return HB_FALSE;
@@ -321,7 +321,7 @@ static HB_BOOL hb_regex( int iRequest )
             break;
 
          case 3: /* SPLIT */
-            iMaxMatch = hb_parni( 5 );
+            iMaxMatch = hb_parni(5);
             pRetArray = hb_itemArrayNew( 0 );
             pMatch = hb_itemNew( nullptr );
             iMatches = 0;
@@ -381,8 +381,8 @@ static HB_BOOL hb_regex( int iRequest )
          case 5: /* _ALL_ results AND positions */
          {
             PHB_ITEM pAtxArray;
-            int      iMax       = hb_parni( 5 );   /* max nuber of matches I want, 0 = unlimited */
-            int      iGetMatch  = hb_parni( 6 );   /* Gets if want only one single match or a sub-match */
+            int      iMax       = hb_parni(5);   /* max nuber of matches I want, 0 = unlimited */
+            int      iGetMatch  = hb_parni(6);   /* Gets if want only one single match or a sub-match */
             HB_BOOL  fOnlyMatch = hb_parldef( 7, HB_TRUE ); /* if HB_TRUE returns only matches and sub-matches, not positions */
             HB_SIZE  nOffset    = 0;
             int      iCount     = 0;
@@ -523,7 +523,7 @@ HB_FUNC( HB_REGEX )
 
 HB_FUNC( HB_REGEXMATCH )
 {
-   hb_retl( hb_regex( hb_parl( 5 ) ? 1 /* LIKE */ : 2 /* HAS */ ) );
+   hb_retl( hb_regex( hb_parl(5) ? 1 /* LIKE */ : 2 /* HAS */ ) );
 }
 
 #endif

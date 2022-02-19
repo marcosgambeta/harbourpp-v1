@@ -57,8 +57,8 @@ HB_FUNC( DISPBOX )
 
    if( pTop && pLeft && pBottom && pRight )
    {
-      const char * pszBox   = hb_parc( 5 );
-      const char * pszColor = hb_parc( 6 );
+      const char * pszBox   = hb_parc(5);
+      const char * pszColor = hb_parc(6);
 
       if( pszBox )
       {
@@ -70,7 +70,7 @@ HB_FUNC( DISPBOX )
          }
          else if( HB_ISNUM( 6 ) )
          {
-            iColor = hb_parni( 6 );
+            iColor = hb_parni(6);
          }
          else
          {
@@ -88,7 +88,7 @@ HB_FUNC( DISPBOX )
             hb_gtSetColorStr( pszColor );
          }
 
-         if( hb_parni( 5 ) == 2 )
+         if( hb_parni(5) == 2 )
          {
             hb_gtBoxD( hb_itemGetNI( pTop ), hb_itemGetNI( pLeft ), hb_itemGetNI( pBottom ), hb_itemGetNI( pRight ) );
          }
@@ -114,8 +114,8 @@ HB_FUNC( HB_DISPBOX )
 
    if( pTop && pLeft && pBottom && pRight )
    {
-      const char * pszBox   = hb_parc( 5 );
-      const char * pszColor = hb_parc( 6 );
+      const char * pszBox   = hb_parc(5);
+      const char * pszColor = hb_parc(6);
       int          iColor   = pszColor ? hb_gtColorToN( pszColor ) : hb_parnidef( 6, -1 );
 
       hb_gtDrawBox( hb_itemGetNI( pTop ), hb_itemGetNI( pLeft ), hb_itemGetNI( pBottom ), hb_itemGetNI( pRight ), pszBox, iColor );

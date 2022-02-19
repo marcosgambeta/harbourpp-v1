@@ -49,7 +49,7 @@
 
 HB_FUNC( HB_HEXTONUM )
 {
-   const char * szHex = hb_parc( 1 );
+   const char * szHex = hb_parc(1);
 
    if( szHex )
    {
@@ -99,7 +99,7 @@ HB_FUNC( HB_NUMTOHEX )
 
    if( HB_ISNUM( 2 ) )
    {
-      iLen = hb_parni( 2 );
+      iLen = hb_parni(2);
       iLen = ( iLen < 1 ) ? 1 : ( ( iLen > 32 ) ? 32 : iLen );
       fDefaultLen = 0;
    }
@@ -111,11 +111,11 @@ HB_FUNC( HB_NUMTOHEX )
 
    if( HB_ISNUM( 1 ) )
    {
-      nNum = hb_parnint( 1 );
+      nNum = hb_parnint(1);
    }
    else if( HB_ISPOINTER( 1 ) )
    {
-      nNum = reinterpret_cast< HB_PTRUINT >( hb_parptr( 1 ) );
+      nNum = reinterpret_cast< HB_PTRUINT >( hb_parptr(1) );
    }
    else
    {
@@ -137,13 +137,13 @@ HB_FUNC( HB_NUMTOHEX )
 
 HB_FUNC( HB_STRTOHEX )
 {
-   const char * szStr = hb_parc( 1 ), * szSep = "";
+   const char * szStr = hb_parc(1), * szSep = "";
    HB_SIZE nStr, nSep = 0;
 
    if( hb_pcount() > 1 )
    {
-      szSep = hb_parc( 2 );
-      nSep = hb_parclen( 2 );
+      szSep = hb_parc(2);
+      nSep = hb_parclen(2);
    }
 
    if( ! szStr || ! szSep )
@@ -152,7 +152,7 @@ HB_FUNC( HB_STRTOHEX )
       return;
    }
 
-   nStr = hb_parclen( 1 );
+   nStr = hb_parclen(1);
    if( nStr )
    {
       HB_SIZE nDest = ( nStr << 1 ) + ( nStr - 1 ) * nSep;
@@ -183,7 +183,7 @@ HB_FUNC( HB_STRTOHEX )
 
 HB_FUNC( HB_HEXTOSTR )
 {
-   const char * szStr = hb_parc( 1 );
+   const char * szStr = hb_parc(1);
    HB_SIZE nStr;
 
    if( ! szStr )
@@ -192,7 +192,7 @@ HB_FUNC( HB_HEXTOSTR )
       return;
    }
 
-   nStr = hb_parclen( 1 );
+   nStr = hb_parclen(1);
    if( nStr > 1 )
    {
       HB_SIZE nDest, ul;

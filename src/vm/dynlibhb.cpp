@@ -249,7 +249,7 @@ HB_FUNC( HB_LIBERROR )
  */
 HB_FUNC( HB_LIBGETFUNSYM )
 {
-   const char * szFuncName = hb_parc( 2 );
+   const char * szFuncName = hb_parc(2);
 
    if( szFuncName )
    {

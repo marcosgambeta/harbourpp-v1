@@ -62,7 +62,7 @@ HB_FUNC( SCROLL )
 
    /* Enforce limits of (0,0) to (MaxRow(),MaxCol()) */
 
-   iTop = hb_parni( 1 ); /* Defaults to zero on bad type */
+   iTop = hb_parni(1); /* Defaults to zero on bad type */
    if( iTop < 0 )
    {
       iTop = 0;
@@ -72,7 +72,7 @@ HB_FUNC( SCROLL )
       iTop = iMaxRow;
    }
 
-   iLeft = hb_parni( 2 ); /* Defaults to zero on bad type */
+   iLeft = hb_parni(2); /* Defaults to zero on bad type */
    if( iLeft < 0 )
    {
       iLeft = 0;
@@ -84,7 +84,7 @@ HB_FUNC( SCROLL )
 
    if( HB_ISNUM( 3 ) )
    {
-      iBottom = hb_parni( 3 );
+      iBottom = hb_parni(3);
       if( iBottom < 0 )
       {
          iBottom = 0;
@@ -101,7 +101,7 @@ HB_FUNC( SCROLL )
 
    if( HB_ISNUM( 4 ) )
    {
-      iRight = hb_parni( 4 );
+      iRight = hb_parni(4);
       if( iRight < 0 )
       {
          iRight = 0;
@@ -120,8 +120,8 @@ HB_FUNC( SCROLL )
                 iLeft,
                 iBottom,
                 iRight,
-                hb_parni( 5 ),   /* Defaults to zero on bad type */
-                hb_parni( 6 ) ); /* Defaults to zero on bad type */
+                hb_parni(5),   /* Defaults to zero on bad type */
+                hb_parni(6) ); /* Defaults to zero on bad type */
 }
 
 HB_FUNC( HB_SCROLL )
@@ -138,7 +138,7 @@ HB_FUNC( HB_SCROLL )
 
    /* Enforce limits of (0,0) to (MaxRow(),MaxCol()) */
 
-   iTop = hb_parni( 1 ); /* Defaults to zero on bad type */
+   iTop = hb_parni(1); /* Defaults to zero on bad type */
    if( iTop < 0 )
    {
       iTop = 0;
@@ -148,7 +148,7 @@ HB_FUNC( HB_SCROLL )
       iTop = iMaxRow;
    }
 
-   iLeft = hb_parni( 2 ); /* Defaults to zero on bad type */
+   iLeft = hb_parni(2); /* Defaults to zero on bad type */
    if( iLeft < 0 )
    {
       iLeft = 0;
@@ -160,7 +160,7 @@ HB_FUNC( HB_SCROLL )
 
    if( HB_ISNUM( 3 ) )
    {
-      iBottom = hb_parni( 3 );
+      iBottom = hb_parni(3);
       if( iBottom < 0 )
       {
          iBottom = 0;
@@ -177,7 +177,7 @@ HB_FUNC( HB_SCROLL )
 
    if( HB_ISNUM( 4 ) )
    {
-      iRight = hb_parni( 4 );
+      iRight = hb_parni(4);
       if( iRight < 0 )
       {
          iRight = 0;
@@ -194,11 +194,11 @@ HB_FUNC( HB_SCROLL )
 
    if( HB_ISNUM( 7 ) )
    {
-      iColor = hb_parni( 7 );
+      iColor = hb_parni(7);
    }
    else if( HB_ISCHAR( 7 ) )
    {
-      iColor = hb_gtColorToN( hb_parc( 7 ) );
+      iColor = hb_gtColorToN( hb_parc(7) );
    }
    else
    {
@@ -207,7 +207,7 @@ HB_FUNC( HB_SCROLL )
 
    if( HB_ISNUM( 8 ) )
    {
-      iChar = hb_parni( 8 );
+      iChar = hb_parni(8);
       if( iChar > 0 && iChar <= 255 )
       {
          PHB_CODEPAGE cdp = hb_vmCDP();
@@ -219,7 +219,7 @@ HB_FUNC( HB_SCROLL )
    }
    else if( HB_ISCHAR( 8 ) )
    {
-      iChar = hb_cdpTextGetU16( hb_vmCDP(), hb_parc( 8 ), hb_parclen( 8 ) );
+      iChar = hb_cdpTextGetU16( hb_vmCDP(), hb_parc(8), hb_parclen(8) );
    }
    else
    {
@@ -232,6 +232,6 @@ HB_FUNC( HB_SCROLL )
                   iRight,
                   iColor,
                   iChar,
-                  hb_parni( 5 ),   /* Defaults to zero on bad type */
-                  hb_parni( 6 ) ); /* Defaults to zero on bad type */
+                  hb_parni(5),   /* Defaults to zero on bad type */
+                  hb_parni(6) ); /* Defaults to zero on bad type */
 }

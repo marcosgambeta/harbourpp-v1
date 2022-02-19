@@ -62,7 +62,7 @@ HB_FUNC( HB_AT )
       PHB_CODEPAGE cdp         = hb_vmCDP();
       const char * pszText     = hb_itemGetCPtr( pText );
       HB_SIZE      nTextLength = hb_itemGetCLen( pText );
-      HB_SIZE      nStart      = hb_parns( 3 );
+      HB_SIZE      nStart      = hb_parns(3);
       HB_SIZE      nFrom, nPos = 0;
 
       if( nStart <= 1 )
@@ -86,7 +86,7 @@ HB_FUNC( HB_AT )
          nTextLength -= nFrom;
          if( HB_ISNUM( 4 ) )
          {
-            nTo = hb_parns( 4 );
+            nTo = hb_parns(4);
             if( nTo <= nStart )
             {
                nTo = 0;

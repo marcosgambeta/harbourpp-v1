@@ -51,7 +51,7 @@
 
 HB_FUNC( SX_FNAMEPARSER )
 {
-   const char * szFileName = hb_parc( 1 );
+   const char * szFileName = hb_parc(1);
 
    if( szFileName )
    {
@@ -67,11 +67,11 @@ HB_FUNC( SX_FNAMEPARSER )
          hb_xfree( pszFree );
       }
 
-      if( ! hb_parl( 2 ) )
+      if( ! hb_parl(2) )
       {
          pFileName->szPath = nullptr;
       }
-      if( ! hb_parl( 3 ) )
+      if( ! hb_parl(3) )
       {
          pFileName->szExtension = nullptr;
       }

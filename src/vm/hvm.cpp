@@ -13314,7 +13314,7 @@ HB_FUNC( __DBGINVOKEDEBUG )
       HB_BOOL * pfRequest = hb_stackDebugRequest();
 
       hb_retl( *pfRequest );
-      *pfRequest = hb_parl( 1 );
+      *pfRequest = hb_parl(1);
 #else
       hb_retl(false);
 #endif
@@ -13365,7 +13365,7 @@ HB_FUNC( __DBGVMVARSGET )
 {
    if( hb_vmInternalsEnabled() )
    {
-      hb_itemReturn( hb_dbg_vmVarSGet( hb_param( 1, HB_IT_ARRAY ), hb_parni( 2 ) ) );
+      hb_itemReturn( hb_dbg_vmVarSGet( hb_param( 1, HB_IT_ARRAY ), hb_parni(2) ) );
    }
 }
 
@@ -13382,7 +13382,7 @@ HB_FUNC( __DBGVMVARSSET )
 
       if( pStaticsBase && pItem )
       {
-         hb_arraySet( pStaticsBase, hb_parni( 2 ), pItem );
+         hb_arraySet( pStaticsBase, hb_parni(2), pItem );
       }
    }
 }
@@ -13448,7 +13448,7 @@ HB_FUNC( __DBGVMVARGGET )
 {
    if( hb_vmInternalsEnabled() )
    {
-      hb_itemReturn( hb_dbg_vmVarGGet( hb_parni( 1 ), hb_parni( 2 ) ) );
+      hb_itemReturn( hb_dbg_vmVarGGet( hb_parni(1), hb_parni(2) ) );
    }
 }
 
@@ -13460,7 +13460,7 @@ HB_FUNC( __DBGVMVARGSET )
       PHB_ITEM pItem = hb_param( 3, HB_IT_ANY );
       if( pItem )
       {
-         hb_arraySet( &s_aGlobals, hb_parni( 1 ) + hb_parni( 2 ), pItem );
+         hb_arraySet( &s_aGlobals, hb_parni(1) + hb_parni(2), pItem );
       }
    }
 #endif
@@ -13550,7 +13550,7 @@ HB_FUNC( __SETPROFILER )
    hb_retl( hb_bProfiler );
    if( HB_ISLOG( 1 ) )
    {
-      hb_bProfiler = hb_parl( 1 );
+      hb_bProfiler = hb_parl(1);
    }
 #endif
 }
@@ -13567,7 +13567,7 @@ HB_FUNC( __OPGETPRF ) /* profiler: It returns an array with an opcode called and
 {
    HB_STACK_TLS_PRELOAD
 #ifndef HB_NO_PROFILER
-   HB_ULONG ulOpcode = hb_parnl( 1 );
+   HB_ULONG ulOpcode = hb_parnl(1);
 
    hb_reta( 2 );
    if( ulOpcode < HB_P_LAST_PCODE )
@@ -13596,7 +13596,7 @@ HB_FUNC( __TRACEPRGCALLS )
    hb_retl( hb_bTracePrgCalls );
    if( HB_ISLOG( 1 ) )
    {
-      hb_bTracePrgCalls = hb_parl( 1 );
+      hb_bTracePrgCalls = hb_parl(1);
    }
 #else
    hb_retl(false);
@@ -13773,7 +13773,7 @@ HB_FUNC( ERRORLEVEL )
    if( hb_pcount() >= 1 )
    {
       /* Only replace the error level if a parameter was passed */
-      s_nErrorLevel = hb_parni( 1 );
+      s_nErrorLevel = hb_parni(1);
    }
 }
 

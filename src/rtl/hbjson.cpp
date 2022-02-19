@@ -781,7 +781,7 @@ static PHB_CODEPAGE _hb_jsonCdpPar( int iParam )
 {
    if( hb_pcount() >= iParam )
    {
-      const char * szCdp = hb_parc( iParam );
+      const char * szCdp = hb_parc(iParam);
 
       if( szCdp )
       {
@@ -798,7 +798,7 @@ HB_FUNC( HB_JSONENCODE )
    if( pItem )
    {
       HB_SIZE nLen;
-      int iIndent = hb_parl( 2 ) ? INDENT_SIZE : hb_parni( 2 );
+      int iIndent = hb_parl(2) ? INDENT_SIZE : hb_parni(2);
       char * szRet = hb_jsonEncodeCP( pItem, &nLen, iIndent, _hb_jsonCdpPar( 3 ) );
       hb_retclen_buffer( szRet, nLen );
    }
@@ -807,7 +807,7 @@ HB_FUNC( HB_JSONENCODE )
 HB_FUNC( HB_JSONDECODE )
 {
    PHB_ITEM pItem = hb_itemNew( nullptr );
-   HB_SIZE nSize = hb_jsonDecodeCP( hb_parc( 1 ), pItem, _hb_jsonCdpPar( 3 ) );
+   HB_SIZE nSize = hb_jsonDecodeCP( hb_parc(1), pItem, _hb_jsonCdpPar( 3 ) );
 
    if( HB_ISBYREF( 2 ) )
    {

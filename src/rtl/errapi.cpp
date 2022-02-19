@@ -175,7 +175,7 @@ HB_FUNC_STATIC( _CANDEFAULT )
    if( HB_ISLOG( 1 ) )
    {
       PHB_ITEM pError = hb_stackSelfItem();
-      HB_BOOL fCan = hb_parl( 1 );
+      HB_BOOL fCan = hb_parl(1);
 
       if( fCan )
       {
@@ -200,7 +200,7 @@ HB_FUNC_STATIC( _CANRETRY )
    if( HB_ISLOG( 1 ) )
    {
       PHB_ITEM pError = hb_stackSelfItem();
-      HB_BOOL fCan = hb_parl( 1 );
+      HB_BOOL fCan = hb_parl(1);
 
       if( fCan )
       {
@@ -225,7 +225,7 @@ HB_FUNC_STATIC( _CANSUBST )
    if( HB_ISLOG( 1 ) )
    {
       PHB_ITEM pError = hb_stackSelfItem();
-      HB_BOOL fCan = hb_parl( 1 );
+      HB_BOOL fCan = hb_parl(1);
 
       if( fCan )
       {
@@ -492,7 +492,7 @@ HB_FUNC( DOSERROR )
 
    if( HB_ISNUM( 1 ) )
    {
-      pErrData->uiErrorDOS = hb_parni( 1 );
+      pErrData->uiErrorDOS = hb_parni(1);
    }
 }
 
@@ -1119,21 +1119,21 @@ PHB_ITEM hb_errRT_FileError( PHB_ITEM pError, const char * szSubSystem, HB_ERRCO
 
 HB_FUNC( __ERRRT_BASE )
 {
-   hb_errRT_BASE( static_cast< HB_ERRCODE >( hb_parni( 1 ) ),
-                  static_cast< HB_ERRCODE >( hb_parni( 2 ) ),
-                  hb_parc( 3 ),
-                  hb_parc( 4 ),
-                  ( hb_pcount() > 5 && hb_parnl( 5 ) > 0 ? 1 : 0 ),
+   hb_errRT_BASE( static_cast< HB_ERRCODE >( hb_parni(1) ),
+                  static_cast< HB_ERRCODE >( hb_parni(2) ),
+                  hb_parc(3),
+                  hb_parc(4),
+                  ( hb_pcount() > 5 && hb_parnl(5) > 0 ? 1 : 0 ),
                   hb_param( 6, HB_IT_ANY ) );
 }
 
 HB_FUNC( __ERRRT_SBASE )
 {
-   hb_errRT_BASE_SubstR( static_cast< HB_ERRCODE >( hb_parni( 1 ) ),
-                         static_cast< HB_ERRCODE >( hb_parni( 2 ) ),
-                         hb_parc( 3 ),
-                         hb_parc( 4 ),
-                         ( hb_pcount() > 5 && hb_parnl( 5 ) > 0 ? 1 : 0 ),
+   hb_errRT_BASE_SubstR( static_cast< HB_ERRCODE >( hb_parni(1) ),
+                         static_cast< HB_ERRCODE >( hb_parni(2) ),
+                         hb_parc(3),
+                         hb_parc(4),
+                         ( hb_pcount() > 5 && hb_parnl(5) > 0 ? 1 : 0 ),
                          hb_param( 6, HB_IT_ANY ) );
 }
 
