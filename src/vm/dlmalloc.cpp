@@ -1718,7 +1718,7 @@ static FORCEINLINE int os2munmap(void* ptr, size_t size) {
       return -1;
     if (DosFreeMem(ptr) != 0)
       return -1;
-    ptr = static_cast< void * >( static_cast< char * >( ptr ) + ulSize );
+    ptr = static_cast<void*>( static_cast<char*>( ptr ) + ulSize );
     size -= ulSize;
   }
   return 0;

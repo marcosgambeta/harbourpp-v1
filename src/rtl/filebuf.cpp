@@ -159,7 +159,7 @@ static PHB_FILE hb_fileNew( HB_FHANDLE hFile, HB_BOOL fShared, int iMode, HB_ULO
 
    if( ! pFile )
    {
-      pFile = static_cast< PHB_FILE >( hb_xgrabz( sizeof( HB_FILE ) ) );
+      pFile = static_cast<PHB_FILE>( hb_xgrabz( sizeof( HB_FILE ) ) );
       pFile->pFuncs  = s_fileMethods();
       pFile->device  = device;
       pFile->inode   = inode;
@@ -218,7 +218,7 @@ static void hb_fileInsertLock( PHB_FILE pFile, HB_UINT uiPos, HB_FOFFSET nStart,
    if( pFile->uiLocks == pFile->uiSize )
    {
       pFile->uiSize += HB_FLOCK_RESIZE;
-      pFile->pLocks = static_cast< PHB_FLOCK >( hb_xrealloc( pFile->pLocks, sizeof( HB_FLOCK ) * pFile->uiSize ) );
+      pFile->pLocks = static_cast<PHB_FLOCK>( hb_xrealloc( pFile->pLocks, sizeof( HB_FLOCK ) * pFile->uiSize ) );
       memset( &pFile->pLocks[ pFile->uiLocks ], 0, sizeof( HB_FLOCK ) * HB_FLOCK_RESIZE );
    }
    memmove( &pFile->pLocks[ uiPos + 1 ], &pFile->pLocks[ uiPos ], ( pFile->uiLocks - uiPos ) * sizeof( HB_FLOCK ) );
@@ -234,7 +234,7 @@ static void hb_fileDeleteLock( PHB_FILE pFile, HB_UINT uiPos )
    if( pFile->uiSize - pFile->uiLocks >= ( HB_FLOCK_RESIZE << 1 ) )
    {
       pFile->uiSize -= HB_FLOCK_RESIZE;
-      pFile->pLocks = static_cast< PHB_FLOCK >( hb_xrealloc( pFile->pLocks, sizeof( HB_FLOCK ) * pFile->uiSize ) );
+      pFile->pLocks = static_cast<PHB_FLOCK>( hb_xrealloc( pFile->pLocks, sizeof( HB_FLOCK ) * pFile->uiSize ) );
    }
 }
 
@@ -498,7 +498,7 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
    HB_SYMBOL_UNUSED( pFuncs );
 
    fShared = ( nExFlags & ( FO_DENYREAD | FO_DENYWRITE | FO_EXCLUSIVE ) ) == 0;
-   iMode = static_cast< int >( nExFlags & ( FO_READ | FO_WRITE | FO_READWRITE ) );
+   iMode = static_cast<int>( nExFlags & ( FO_READ | FO_WRITE | FO_READWRITE ) );
    pszFile = hb_fsExtName( pszFileName, pDefExt, nExFlags, pPaths );
 
    hb_vmUnlock();
@@ -522,7 +522,7 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
       }
       else if( iMode == FO_READ && ! fShared )
       {
-         nExFlags &= ~ static_cast< HB_FATTR >( FO_DENYREAD | FO_DENYWRITE | FO_EXCLUSIVE );
+         nExFlags &= ~ static_cast<HB_FATTR>( FO_DENYREAD | FO_DENYWRITE | FO_EXCLUSIVE );
          fShared = HB_TRUE;
       }
    }
@@ -539,7 +539,7 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
 
    if( fResult )
    {
-      pFile = hb_fileFind( static_cast< HB_ULONG >( statbuf.st_dev ), static_cast< HB_ULONG >( statbuf.st_ino ) );
+      pFile = hb_fileFind( static_cast<HB_ULONG>( statbuf.st_dev ), static_cast<HB_ULONG>( statbuf.st_ino ) );
       if( pFile )
       {
          if( ! fShared || ! pFile->shared || ( nExFlags & FXO_TRUNCATE ) != 0 )
@@ -574,7 +574,7 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
    if( fResult && pFile == nullptr )
 #endif /* HB_OS_UNIX */
    {
-      HB_FHANDLE hFile = hb_fsExtOpen( pszFile, nullptr, nExFlags & ~ static_cast< HB_FATTR >( FXO_DEFAULTS | FXO_COPYNAME ), nullptr, nullptr );
+      HB_FHANDLE hFile = hb_fsExtOpen( pszFile, nullptr, nExFlags & ~ static_cast<HB_FATTR>( FXO_DEFAULTS | FXO_COPYNAME ), nullptr, nullptr );
       if( hFile != FS_ERROR )
       {
          HB_ULONG device = 0, inode = 0;
@@ -587,8 +587,8 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
          if( fstat( hFile, &statbuf ) == 0 )
 #  endif
          {
-            device = static_cast< HB_ULONG >( statbuf.st_dev );
-            inode  = static_cast< HB_ULONG >( statbuf.st_ino );
+            device = static_cast<HB_ULONG>( statbuf.st_dev );
+            inode  = static_cast<HB_ULONG>( statbuf.st_ino );
             if( ( nExFlags & FXO_NOSEEKPOS ) == 0 )
             {
 #  if defined( HB_OS_VXWORKS )
@@ -678,7 +678,7 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
    }
    if( ( nExFlags & FXO_COPYNAME ) != 0 && pFile )
    {
-      hb_strncpy( const_cast< char * >( pszFileName ), pszFile, HB_PATH_MAX - 1 );
+      hb_strncpy( const_cast<char*>( pszFileName ), pszFile, HB_PATH_MAX - 1 );
    }
    if( pError )
    {
@@ -686,7 +686,7 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
       if( ! fResult )
       {
          hb_errPutOsCode( pError, hb_fsError() );
-         hb_errPutGenCode( pError, static_cast< HB_ERRCODE >( ( nExFlags & FXO_TRUNCATE ) ? EG_CREATE : EG_OPEN ) );
+         hb_errPutGenCode( pError, static_cast<HB_ERRCODE>( ( nExFlags & FXO_TRUNCATE ) ? EG_CREATE : EG_OPEN ) );
       }
    }
 
@@ -751,7 +751,7 @@ static HB_BOOL s_fileLock( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, i
       hb_threadLeaveCriticalSection( &s_lockMtx );
       if( fLockFS )
       {
-         hb_fsLockLarge( pFile->hFile, nStart, nLen, static_cast< HB_USHORT >( iType ) );
+         hb_fsLockLarge( pFile->hFile, nStart, nLen, static_cast<HB_USHORT>( iType ) );
          hb_threadEnterCriticalSection( &s_lockMtx );
          hb_fileUnlock( pFile, nullptr, nStart, nLen );
          hb_threadLeaveCriticalSection( &s_lockMtx );
@@ -778,7 +778,7 @@ static HB_BOOL s_fileLock( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, i
             iType &= ~FLX_SHARED;
          }
 #endif
-         fResult = hb_fsLockLarge( pFile->hFile, nStart, nLen, static_cast< HB_USHORT >( iType ) );
+         fResult = hb_fsLockLarge( pFile->hFile, nStart, nLen, static_cast<HB_USHORT>( iType ) );
          if( ! fResult )
          {
             hb_threadEnterCriticalSection( &s_lockMtx );
@@ -816,7 +816,7 @@ static int s_fileLockTest( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, i
    }
    else
    {
-      iResult = hb_fsLockTest( pFile->hFile, nStart, nLen, static_cast< HB_USHORT >( iType ) );
+      iResult = hb_fsLockTest( pFile->hFile, nStart, nLen, static_cast<HB_USHORT>( iType ) );
    }
 
    hb_vmLock();
@@ -955,7 +955,7 @@ struct HB_FILEPOS
 
 using PHB_FILEPOS = HB_FILEPOS *;
 
-#define _PHB_FILEPOS  ( static_cast< PHB_FILEPOS >( pFilePos ) )
+#define _PHB_FILEPOS  ( static_cast<PHB_FILEPOS>( pFilePos ) )
 #define _PHB_FILE     _PHB_FILEPOS->pFile
 
 static void s_fileposClose( PHB_FILE pFilePos )
@@ -1121,7 +1121,7 @@ static const HB_FILE_FUNCS * s_fileposMethods( void )
 
 static PHB_FILE hb_fileposNew( PHB_FILE pFile )
 {
-   PHB_FILEPOS pFilePos = static_cast< PHB_FILEPOS >( hb_xgrabz( sizeof( HB_FILEPOS ) ) );
+   PHB_FILEPOS pFilePos = static_cast<PHB_FILEPOS>( hb_xgrabz( sizeof( HB_FILEPOS ) ) );
 
    pFilePos->pFuncs   = s_fileposMethods();
    pFilePos->pFile    = pFile;
@@ -1564,7 +1564,7 @@ HB_BOOL hb_fileDetach( PHB_FILE pFile )
 #if defined( HB_OS_UNIX )
       else if( pFile->pFuncs == s_fileposMethods() )
       {
-         PHB_FILEPOS pFilePos = static_cast< PHB_FILEPOS >( pFile );
+         PHB_FILEPOS pFilePos = static_cast<PHB_FILEPOS>( pFile );
 
          pFilePos->pFile->hFile = FS_ERROR;
          s_fileposClose( pFile );
@@ -1614,7 +1614,7 @@ PHB_FILE hb_filePOpen( const char * pszFileName, const char * pszMode )
 
 HB_SIZE hb_fileResult( HB_SIZE nSize )
 {
-   return nSize == static_cast< HB_SIZE >( FS_ERROR ) ? 0 : nSize;
+   return nSize == static_cast<HB_SIZE>( FS_ERROR ) ? 0 : nSize;
 }
 
 #define HB_FILELOAD_BUFFERSIZE  65536
@@ -1640,10 +1640,10 @@ HB_BYTE * hb_fileLoadData( PHB_FILE pFile, HB_SIZE nMaxSize, HB_SIZE * pnSize )
                   break;
                }
             }
-            pFileBuf = static_cast< HB_BYTE * >( hb_xrealloc( pFileBuf, nBufSize ) );
+            pFileBuf = static_cast<HB_BYTE*>( hb_xrealloc( pFileBuf, nBufSize ) );
          }
          nRead = hb_fileRead( pFile, pFileBuf + nSize, nBufSize - nSize, -1 );
-         if( nRead == 0 || nRead == static_cast< HB_SIZE >( FS_ERROR ) )
+         if( nRead == 0 || nRead == static_cast<HB_SIZE>( FS_ERROR ) )
          {
             break;
          }
@@ -1652,17 +1652,17 @@ HB_BYTE * hb_fileLoadData( PHB_FILE pFile, HB_SIZE nMaxSize, HB_SIZE * pnSize )
    }
    else if( nFileSize > 0 )
    {
-      nBufSize = static_cast< HB_SIZE >( nFileSize );
+      nBufSize = static_cast<HB_SIZE>( nFileSize );
       if( nMaxSize > 0 && nBufSize > nMaxSize )
       {
          nBufSize = nMaxSize;
       }
 
-      pFileBuf = static_cast< HB_BYTE * >( hb_xgrab( nBufSize + 1 ) );
+      pFileBuf = static_cast<HB_BYTE*>( hb_xgrab( nBufSize + 1 ) );
       do
       {
          nRead = hb_fileReadAt( pFile, pFileBuf + nSize, nBufSize - nSize, nSize );
-         if( nRead == 0 || nRead == static_cast< HB_SIZE >( FS_ERROR ) )
+         if( nRead == 0 || nRead == static_cast<HB_SIZE>( FS_ERROR ) )
          {
             break;
          }
@@ -1673,7 +1673,7 @@ HB_BYTE * hb_fileLoadData( PHB_FILE pFile, HB_SIZE nMaxSize, HB_SIZE * pnSize )
 
    if( nSize > 0 )
    {
-      pFileBuf = static_cast< HB_BYTE * >( hb_xrealloc( pFileBuf, nSize + 1 ) );
+      pFileBuf = static_cast<HB_BYTE*>( hb_xrealloc( pFileBuf, nSize + 1 ) );
       pFileBuf[ nSize ] = '\0';
    }
    else if( pFileBuf )

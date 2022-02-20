@@ -105,7 +105,7 @@ PHB_REGEX hb_regexCompile( const char * szRegEx, HB_SIZE nLen, int iFlags )
 
    HB_SYMBOL_UNUSED( nLen );
 
-   pRegEx = static_cast< PHB_REGEX >( hb_gcAllocate( sizeof( *pRegEx ), &s_gcRegexFuncs ) );
+   pRegEx = static_cast<PHB_REGEX>( hb_gcAllocate( sizeof( *pRegEx ), &s_gcRegexFuncs ) );
    memset( pRegEx, 0, sizeof( *pRegEx ) );
    pRegEx->fFree = HB_TRUE;
    pRegEx->iFlags = iFlags;
@@ -128,7 +128,7 @@ PHB_REGEX hb_regexGet( PHB_ITEM pRegExItm, int iFlags )
    {
       if( HB_IS_POINTER( pRegExItm ) )
       {
-         pRegEx = static_cast< PHB_REGEX >( hb_itemGetPtrGC( pRegExItm, &s_gcRegexFuncs ) );
+         pRegEx = static_cast<PHB_REGEX>( hb_itemGetPtrGC( pRegExItm, &s_gcRegexFuncs ) );
          if( pRegEx )
          {
             fArgError = HB_FALSE;
@@ -173,5 +173,5 @@ HB_BOOL hb_regexMatch( PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen, HB
    HB_BOOL fMatch;
 
    fMatch = ( s_reg_exec )( pRegEx, szString, nLen, 1, aMatches ) > 0;
-   return fMatch && ( ! fFull || ( HB_REGMATCH_SO( aMatches, 0 ) == 0 && HB_REGMATCH_EO( aMatches, 0 ) == static_cast< int >( nLen ) ) );
+   return fMatch && ( ! fFull || ( HB_REGMATCH_SO( aMatches, 0 ) == 0 && HB_REGMATCH_EO( aMatches, 0 ) == static_cast<int>( nLen ) ) );
 }

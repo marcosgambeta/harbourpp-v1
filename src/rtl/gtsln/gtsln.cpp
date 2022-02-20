@@ -153,7 +153,7 @@ static void hb_sln_colorTrans( void )
        * the same.
        */
       clr = ( bg << 4 ) | ( fg ^ 0x07 );
-      SLtt_set_color( clr, nullptr, const_cast< char * >( s_colorNames[ fg ] ), const_cast< char * >( s_colorNames[ bg ] ) );
+      SLtt_set_color( clr, nullptr, const_cast<char*>( s_colorNames[ fg ] ), const_cast<char*>( s_colorNames[ bg ] ) );
 #ifdef HB_SLN_UTF8
       s_colorTab[ i ] = clr;
 #else
@@ -230,7 +230,7 @@ static void hb_sln_setACSCtrans( void )
    if( ( p = ( unsigned char * ) SLtt_Graphics_Char_Pairs ) )
    {
       SLsmg_Char_Type SLch;
-      int i, len = strlen( static_cast< char * >( p ) );
+      int i, len = strlen( static_cast<char*>( p ) );
 
       memset( &SLch, 0, sizeof( SLsmg_Char_Type ) );
       for( i = 0; i < len; i += 2 )
@@ -387,7 +387,7 @@ static void hb_sln_setCharTrans( PHB_GT pGT, HB_BOOL fBox )
          if( hb_cdpIsAlpha( cdpHost, i ) )
          {
 #ifdef HB_SLN_UNICODE
-            int iDst = hb_cdpGetU16Ctrl( hb_cdpGetU16( cdpHost, static_cast< HB_UCHAR >( i ) ) );
+            int iDst = hb_cdpGetU16Ctrl( hb_cdpGetU16( cdpHost, static_cast<HB_UCHAR>( i ) ) );
 #else
             int iDst = hb_cdpTranslateDispChar( i, cdpHost, cdpTerm );
 #endif
@@ -410,7 +410,7 @@ static void hb_sln_setKeyTrans( PHB_GT pGT )
 
    for( i = 0; i < 256; i++ )
    {
-      hb_sln_inputTab[ i ] = static_cast< unsigned char >( hb_cdpTranslateChar( i, cdpTerm, cdpHost ) );
+      hb_sln_inputTab[ i ] = static_cast<unsigned char>( hb_cdpTranslateChar( i, cdpTerm, cdpHost ) );
    }
 
    /* init national chars */
@@ -426,15 +426,15 @@ static void hb_sln_setKeyTrans( PHB_GT pGT )
       }
 
       /* the first element contains a number of Dead keys defined in an ENVAR */
-      hb_sln_convKDeadKeys[ 0 ] = static_cast< unsigned char >( len );
+      hb_sln_convKDeadKeys[ 0 ] = static_cast<unsigned char>( len );
 
       len <<= 1;
       for( i = 0; i < len; i += 2 )
       {
-         int ch = static_cast< unsigned char >( p[ i + 1 ] );
-         hb_sln_convKDeadKeys[ i + 1 ] = static_cast< unsigned char >( p[ i ] );
+         int ch = static_cast<unsigned char>( p[ i + 1 ] );
+         hb_sln_convKDeadKeys[ i + 1 ] = static_cast<unsigned char>( p[ i ] );
          hb_sln_convKDeadKeys[ i + 2 ] = ch;
-         hb_sln_inputTab[ static_cast< unsigned char >( p[ i ] ) ] = ch;
+         hb_sln_inputTab[ static_cast<unsigned char>( p[ i ] ) ] = ch;
       }
    }
 }
@@ -584,7 +584,7 @@ static int hb_sln_isUTF8( int iStdOut, int iStdIn )
 static void hb_gt_sln_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Init(%p,%p,%p,%p)", static_cast< void * >( pGT ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdin ) ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdout ) ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStderr ) ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Init(%p,%p,%p,%p)", static_cast<void*>( pGT ), reinterpret_cast<void*>( static_cast<HB_PTRUINT>( hFilenoStdin ) ), reinterpret_cast<void*>( static_cast<HB_PTRUINT>( hFilenoStdout ) ), reinterpret_cast<void*>( static_cast<HB_PTRUINT>( hFilenoStderr ) ) ) );
 #endif
 
    HB_BOOL gt_Inited = HB_FALSE;
@@ -734,14 +734,14 @@ static void hb_gt_sln_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 static void hb_gt_sln_Exit( PHB_GT pGT )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Exit(%p)", static_cast< void * >( pGT ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Exit(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
    /* restore a standard bell frequency and duration */
    if( hb_sln_UnderLinuxConsole )
    {
-      SLtt_write_string( const_cast< char * >( "\033[10]" ) );
-      SLtt_write_string( const_cast< char * >( "\033[11]" ) );
+      SLtt_write_string( const_cast<char*>( "\033[10]" ) );
+      SLtt_write_string( const_cast<char*>( "\033[11]" ) );
       SLtt_flush_output();
    }
 
@@ -764,7 +764,7 @@ static void hb_gt_sln_Exit( PHB_GT pGT )
 static HB_BOOL hb_gt_sln_SetMode( PHB_GT pGT, int iRows, int iCols )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_SetMode(%p,%d,%d)", static_cast< void * >( pGT ), iRows, iCols ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_SetMode(%p,%d,%d)", static_cast<void*>( pGT ), iRows, iCols ) );
 #endif
 
    HB_SYMBOL_UNUSED( pGT );
@@ -780,7 +780,7 @@ static HB_BOOL hb_gt_sln_SetMode( PHB_GT pGT, int iRows, int iCols )
 static HB_BOOL hb_gt_sln_IsColor( PHB_GT pGT )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_IsColor(%p)", static_cast< void * >( pGT ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_IsColor(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
    HB_SYMBOL_UNUSED( pGT );
@@ -793,7 +793,7 @@ static HB_BOOL hb_gt_sln_IsColor( PHB_GT pGT )
 static void hb_gt_sln_SetBlink( PHB_GT pGT, HB_BOOL fBlink )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_SetBlink(%p,%d)", static_cast< void * >( pGT ), static_cast< int >( fBlink ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_SetBlink(%p,%d)", static_cast<void*>( pGT ), static_cast<int>( fBlink ) ) );
 #endif
 
    /*
@@ -818,7 +818,7 @@ static void hb_gt_sln_SetBlink( PHB_GT pGT, HB_BOOL fBlink )
 static void hb_gt_sln_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Tone(%p,%lf,%lf)", static_cast< void * >( pGT ), dFrequency, dDuration ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Tone(%p,%lf,%lf)", static_cast<void*>( pGT ), dFrequency, dDuration ) );
 #endif
 
    /* TODO: Implement this for other consoles than linux ? */
@@ -828,9 +828,9 @@ static void hb_gt_sln_Tone( PHB_GT pGT, double dFrequency, double dDuration )
       char escstr[ 64 ];
 
       dFrequency = HB_MIN( HB_MAX( 0.0, dFrequency ), 32767.0 );
-      hb_snprintf( escstr, 63, "\033[10;%d]", static_cast< int >( dFrequency ) );
+      hb_snprintf( escstr, 63, "\033[10;%d]", static_cast<int>( dFrequency ) );
       SLtt_write_string( escstr );
-      hb_snprintf( escstr, 63, "\033[11;%d]", static_cast< int >( dDuration * 1000.0 / 18.2 ) );
+      hb_snprintf( escstr, 63, "\033[11;%d]", static_cast<int>( dDuration * 1000.0 / 18.2 ) );
       SLtt_write_string( escstr );
       SLtt_flush_output();
    }
@@ -853,7 +853,7 @@ static void hb_gt_sln_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 static const char * hb_gt_sln_Version( PHB_GT pGT, int iType )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Version(%p)", static_cast< void * >( pGT ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Version(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
    HB_SYMBOL_UNUSED( pGT );
@@ -934,7 +934,7 @@ static HB_BOOL hb_gt_sln_PostExt( PHB_GT pGT )
 static HB_BOOL hb_gt_sln_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Info(%p,%d,%p)", static_cast< void * >( pGT ), iType, static_cast< void * >( pInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Info(%p,%d,%p)", static_cast<void*>( pGT ), iType, static_cast<void*>( pInfo ) ) );
 #endif
 
    switch( iType )
@@ -997,7 +997,7 @@ static HB_BOOL hb_gt_sln_SetKeyCP( PHB_GT pGT, const char * pszTermCDP, const ch
 static void hb_gt_sln_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Redraw(%p,%d,%d,%d)", static_cast< void * >( pGT ), iRow, iCol, iSize ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Redraw(%p,%d,%d,%d)", static_cast<void*>( pGT ), iRow, iCol, iSize ) );
 #endif
 
    if( s_fActive )
@@ -1018,11 +1018,11 @@ static void hb_gt_sln_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
             SLsmg_gotorc( iRow, iCol );
             usChar = hb_cdpGetU16Ctrl( usChar );
 #ifdef HB_SLN_UTF8
-            SLchar.color = s_colorTab[ static_cast< HB_UCHAR >( iColor ) ];
+            SLchar.color = s_colorTab[ static_cast<HB_UCHAR>( iColor ) ];
             SLchar.nchars = 1;
             SLchar.wchars[ 0 ] = usChar;
 #else
-            SLchar = s_colorTab[ static_cast< HB_UCHAR >( iColor ) ] | SLSMG_BUILD_CHAR( usChar, 0 );
+            SLchar = s_colorTab[ static_cast<HB_UCHAR>( iColor ) ] | SLSMG_BUILD_CHAR( usChar, 0 );
 #endif
             SLsmg_write_raw( &SLchar, 1 );
             ++iCol;
@@ -1051,7 +1051,7 @@ static void hb_gt_sln_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 static void hb_gt_sln_Refresh( PHB_GT pGT )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Refresh(%p)", static_cast< void * >( pGT ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Refresh(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
    HB_GTSUPER_REFRESH( pGT );
@@ -1075,7 +1075,7 @@ static void hb_gt_sln_Refresh( PHB_GT pGT )
 static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_FuncInit(%p)", static_cast< void * >( pFuncTable ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_FuncInit(%p)", static_cast<void*>( pFuncTable ) ) );
 #endif
 
    pFuncTable->Init                       = hb_gt_sln_Init;

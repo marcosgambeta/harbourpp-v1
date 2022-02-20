@@ -75,14 +75,14 @@ HB_FUNC( HB_STRREPLACE )
          nDst = hb_itemSize( HB_IS_HASH( pSrc ) ? pSrc : pDst );
          if( nText > 1024 )
          {
-            ptrOpt = static_cast< HB_SIZE * >( hb_xgrabz( 256 * sizeof( HB_SIZE ) ) );
+            ptrOpt = static_cast<HB_SIZE*>( hb_xgrabz( 256 * sizeof( HB_SIZE ) ) );
             for( nAt = 0; nAt < nSrc; ++nAt )
             {
                HB_UCHAR uc;
 
                if( pszSrc )
                {
-                  uc = static_cast< HB_UCHAR >( pszSrc[ nAt ] );
+                  uc = static_cast<HB_UCHAR>( pszSrc[ nAt ] );
                }
                else
                {
@@ -91,7 +91,7 @@ HB_FUNC( HB_STRREPLACE )
                   {
                      continue;
                   }
-                  uc = static_cast< HB_UCHAR >( hb_itemGetCPtr( pItem )[ 0 ] );
+                  uc = static_cast<HB_UCHAR>( hb_itemGetCPtr( pItem )[ 0 ] );
                }
                if( ptrOpt[ uc ] == 0 )
                {
@@ -109,7 +109,7 @@ HB_FUNC( HB_STRREPLACE )
          {
             if( ptrOpt )
             {
-               nAt = ptrOpt[ static_cast< HB_UCHAR >( pszText[ nPos ] ) ];
+               nAt = ptrOpt[ static_cast<HB_UCHAR>( pszText[ nPos ] ) ];
                if( nAt == 0 || pszSrc )
                {
                   nSkip = 1;
@@ -147,7 +147,7 @@ HB_FUNC( HB_STRREPLACE )
             }
             else if( pszSrc )
             {
-               ptr = static_cast< const char * >( memchr( pszSrc, static_cast< HB_UCHAR >( pszText[ nPos ] ), nSrc ) );
+               ptr = static_cast<const char*>( memchr( pszSrc, static_cast<HB_UCHAR>( pszText[ nPos ] ), nSrc ) );
                nAt = ptr ? ptr - pszSrc + 1 : 0;
                nSkip = 1;
             }
@@ -239,7 +239,7 @@ HB_FUNC( HB_STRREPLACE )
                nPos += nSkip;
                if( nPos == nText )
                {
-                  pszResult = static_cast< char * >( hb_xgrab( nSize + 1 ) );
+                  pszResult = static_cast<char*>( hb_xgrab( nSize + 1 ) );
                   nSize = nPos = 0;
                }
             }

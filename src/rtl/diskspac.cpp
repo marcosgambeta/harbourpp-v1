@@ -79,12 +79,12 @@ HB_FUNC( DISKSPACE )
    {
 #if defined( _MSC_VER ) || ( defined( __GNUC__ ) )
 
-#  define HB_GET_LARGE_UINT( v )  ( static_cast< double >( (v).LowPart ) + static_cast< double >( (v).HighPart ) * ( ( static_cast< double >( 0xFFFFFFFF ) ) + 1 ) )
+#  define HB_GET_LARGE_UINT( v )  ( static_cast<double>( (v).LowPart ) + static_cast<double>( (v).HighPart ) * ( ( static_cast<double>( 0xFFFFFFFF ) ) + 1 ) )
 
 #else
    /* NOTE: For compilers that don't seem to deal with the
             unnamed struct that is part of ULARGE_INTEGER [pt] */
-#  define HB_GET_LARGE_UINT( v )  ( static_cast< double >( (v).u.LowPart ) + static_cast< double >( (v).u.HighPart ) * ( ( static_cast< double >( 0xFFFFFFFF ) ) + 1 ) )
+#  define HB_GET_LARGE_UINT( v )  ( static_cast<double>( (v).u.LowPart ) + static_cast<double>( (v).u.HighPart ) * ( ( static_cast<double>( 0xFFFFFFFF ) ) + 1 ) )
 #endif
 
       int iDrive = hb_parni(1);
@@ -101,7 +101,7 @@ HB_FUNC( DISKSPACE )
             iDrive = hb_fsCurDrv() + 1;
          }
 
-         lpPath[ 0 ] = static_cast< TCHAR >( iDrive + 'A' - 1 );
+         lpPath[ 0 ] = static_cast<TCHAR>( iDrive + 'A' - 1 );
          lpPath[ 1 ] = TEXT( ':' );
          lpPath[ 2 ] = TEXT( '\\' );
          lpPath[ 3 ] = TEXT( '\0' );
@@ -119,7 +119,7 @@ HB_FUNC( DISKSPACE )
                HMODULE hModule = GetModuleHandle( HB_WINAPI_KERNEL32_DLL() );
                if( hModule )
                {
-                  s_pGetDiskFreeSpaceEx = reinterpret_cast< P_GDFSE >( HB_WINAPI_GETPROCADDRESST( hModule, "GetDiskFreeSpaceEx" ) );
+                  s_pGetDiskFreeSpaceEx = reinterpret_cast<P_GDFSE>( HB_WINAPI_GETPROCADDRESST( hModule, "GetDiskFreeSpaceEx" ) );
                }
                s_fInit = HB_TRUE;
             }
@@ -127,9 +127,9 @@ HB_FUNC( DISKSPACE )
             if( s_pGetDiskFreeSpaceEx )
             {
                bError = s_pGetDiskFreeSpaceEx( lpPath,
-                                               static_cast< PULARGE_INTEGER >( &i64FreeBytesToCaller ),
-                                               static_cast< PULARGE_INTEGER >( &i64TotalBytes ),
-                                               static_cast< PULARGE_INTEGER >( &i64FreeBytes ) ) ? HB_FALSE : HB_TRUE;
+                                               static_cast<PULARGE_INTEGER>( &i64FreeBytesToCaller ),
+                                               static_cast<PULARGE_INTEGER>( &i64TotalBytes ),
+                                               static_cast<PULARGE_INTEGER>( &i64FreeBytes ) ) ? HB_FALSE : HB_TRUE;
                if( ! bError )
                {
                   dSpace = HB_GET_LARGE_UINT( i64FreeBytesToCaller );
@@ -145,7 +145,7 @@ HB_FUNC( DISKSPACE )
                bError = GetDiskFreeSpace( lpPath, &dwSectorsPerCluster, &dwBytesPerSector, &dwNumberOfFreeClusters, &dwTotalNumberOfClusters ) ? HB_FALSE : HB_TRUE;
                if( ! bError )
                {
-                  dSpace = static_cast< double >( dwNumberOfFreeClusters ) * static_cast< double >( dwSectorsPerCluster ) * static_cast< double >( dwBytesPerSector );
+                  dSpace = static_cast<double>( dwNumberOfFreeClusters ) * static_cast<double>( dwSectorsPerCluster ) * static_cast<double>( dwBytesPerSector );
                }
             }
          }
@@ -188,11 +188,11 @@ HB_FUNC( DISKSPACE )
 #if ! defined( HB_OS_VXWORKS )
             if( getuid() == 0 )
             {
-               dSpace = static_cast< double >( st.f_bfree ) * static_cast< double >( st.f_bsize );
+               dSpace = static_cast<double>( st.f_bfree ) * static_cast<double>( st.f_bsize );
             }
             else
 #endif
-               dSpace = static_cast< double >( st.f_bavail ) * static_cast< double >( st.f_bsize );
+               dSpace = static_cast<double>( st.f_bavail ) * static_cast<double>( st.f_bsize );
          }
 #endif
       }

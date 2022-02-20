@@ -115,7 +115,7 @@ HB_FUNC( HB_NUMTOHEX )
    }
    else if( HB_ISPOINTER( 1 ) )
    {
-      nNum = reinterpret_cast< HB_PTRUINT >( hb_parptr(1) );
+      nNum = reinterpret_cast<HB_PTRUINT>( hb_parptr(1) );
    }
    else
    {
@@ -126,8 +126,8 @@ HB_FUNC( HB_NUMTOHEX )
    ret[ iLen ] = '\0';
    do
    {
-      int iDigit = static_cast< int >( nNum & 0x0F );
-      ret[ --iLen ] = static_cast< char >( iDigit + ( iDigit < 10 ? '0' : 'A' - 10 ) );
+      int iDigit = static_cast<int>( nNum & 0x0F );
+      ret[ --iLen ] = static_cast<char>( iDigit + ( iDigit < 10 ? '0' : 'A' - 10 ) );
       nNum >>= 4;
    }
    while( fDefaultLen ? nNum != 0 : iLen != 0 );
@@ -158,10 +158,10 @@ HB_FUNC( HB_STRTOHEX )
       HB_SIZE nDest = ( nStr << 1 ) + ( nStr - 1 ) * nSep;
       char * szDest, * szPtr;
 
-      szPtr = szDest = static_cast< char * >( hb_xgrab( nDest + 1 ) );
+      szPtr = szDest = static_cast<char*>( hb_xgrab( nDest + 1 ) );
       do
       {
-         HB_UCHAR uc = static_cast< HB_UCHAR >( *szStr++ ), ud;
+         HB_UCHAR uc = static_cast<HB_UCHAR>( *szStr++ ), ud;
          ud = uc >> 4;
          *szPtr++ = ud + ( ud < 10 ? '0' : 'A' - 10 );
          ud = uc & 0x0F;
@@ -216,7 +216,7 @@ HB_FUNC( HB_HEXTOSTR )
       {
          int iVal = 0x10;
 
-         char * szDest = static_cast< char * >( hb_xgrab( nDest + 1 ) );
+         char * szDest = static_cast<char*>( hb_xgrab( nDest + 1 ) );
 
          /* ul = 0; see above stop condition */
          do
@@ -241,7 +241,7 @@ HB_FUNC( HB_HEXTOSTR )
 
             if( iVal & 0x100 )
             {
-               szDest[ ul++ ] = static_cast< char >( iVal ) & 0xff;
+               szDest[ ul++ ] = static_cast<char>( iVal ) & 0xff;
                iVal = 0x1;
             }
             iVal <<= 4;

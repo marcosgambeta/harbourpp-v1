@@ -61,7 +61,7 @@ static HB_TSD_NEW( s_szAcceptResult, ACCEPT_BUFFER_LEN, nullptr, nullptr );
 
 static char * hb_acceptBuffer( void )
 {
-   return static_cast< char * >( hb_stackGetTSD( &s_szAcceptResult ) );
+   return static_cast<char*>( hb_stackGetTSD( &s_szAcceptResult ) );
 }
 
 HB_FUNC( __ACCEPTSTR )

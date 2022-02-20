@@ -74,7 +74,7 @@ static HB_GT_FUNCS SuperTable;
 #define HB_GTSUPER   ( &SuperTable )
 #define HB_GTID_PTR  ( &s_GtId )
 
-#define HB_GTCGI_GET( p )  ( static_cast< PHB_GTCGI >( HB_GTLOCAL( p ) ) )
+#define HB_GTCGI_GET( p )  ( static_cast<PHB_GTCGI>( HB_GTLOCAL( p ) ) )
 
 struct _HB_GTCGI
 {
@@ -106,7 +106,7 @@ static void hb_gt_cgi_newLine( PHB_GTCGI pGTCGI )
 static void hb_gt_cgi_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Init(%p,%p,%p,%p)", static_cast< void * >( pGT ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdin ) ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStdout ) ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hFilenoStderr ) ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Init(%p,%p,%p,%p)", static_cast<void*>( pGT ), reinterpret_cast<void*>( static_cast<HB_PTRUINT>( hFilenoStdin ) ), reinterpret_cast<void*>( static_cast<HB_PTRUINT>( hFilenoStdout ) ), reinterpret_cast<void*>( static_cast<HB_PTRUINT>( hFilenoStderr ) ) ) );
 #endif
 
    PHB_GTCGI pGTCGI;
@@ -127,7 +127,7 @@ static void hb_gt_cgi_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 static void hb_gt_cgi_Exit( PHB_GT pGT )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Exit(%p)", static_cast< void * >( pGT ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Exit(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
    PHB_GTCGI pGTCGI;
@@ -163,7 +163,7 @@ static void hb_gt_cgi_Exit( PHB_GT pGT )
 static int hb_gt_cgi_ReadKey( PHB_GT pGT, int iEventMask )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_ReadKey(%p,%d)", static_cast< void * >( pGT ), iEventMask ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_ReadKey(%p,%d)", static_cast<void*>( pGT ), iEventMask ) );
 #endif
 
    HB_SYMBOL_UNUSED( pGT );
@@ -175,7 +175,7 @@ static int hb_gt_cgi_ReadKey( PHB_GT pGT, int iEventMask )
 static HB_BOOL hb_gt_cgi_IsColor( PHB_GT pGT )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_IsColor(%p)", static_cast< void * >( pGT ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_IsColor(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
    HB_SYMBOL_UNUSED( pGT );
@@ -186,7 +186,7 @@ static HB_BOOL hb_gt_cgi_IsColor( PHB_GT pGT )
 static void hb_gt_cgi_Bell( PHB_GT pGT )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Bell(%p)", static_cast< void * >( pGT ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Bell(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
    static const char s_szBell[] = { HB_CHAR_BEL, 0 };
@@ -200,7 +200,7 @@ static void hb_gt_cgi_Bell( PHB_GT pGT )
 static const char * hb_gt_cgi_Version( PHB_GT pGT, int iType )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Version(%p,%d)", static_cast< void * >( pGT ), iType ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Version(%p,%d)", static_cast<void*>( pGT ), iType ) );
 #endif
 
    HB_SYMBOL_UNUSED( pGT );
@@ -216,7 +216,7 @@ static const char * hb_gt_cgi_Version( PHB_GT pGT, int iType )
 static void hb_gt_cgi_Scroll( PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, int iColor, HB_USHORT usChar, int iRows, int iCols )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Scroll(%p,%d,%d,%d,%d,%d,%d,%d,%d)", static_cast< void * >( pGT ), iTop, iLeft, iBottom, iRight, iColor, usChar, iRows, iCols ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Scroll(%p,%d,%d,%d,%d,%d,%d,%d,%d)", static_cast<void*>( pGT ), iTop, iLeft, iBottom, iRight, iColor, usChar, iRows, iCols ) );
 #endif
 
    int iHeight, iWidth;
@@ -264,7 +264,7 @@ static void hb_gt_cgi_conPos( PHB_GTCGI pGTCGI, int iRow, int iCol )
 
    if( iSpace > 0 )
    {
-      char * buffer = static_cast< char * >( hb_xgrab( iSpace ) );
+      char * buffer = static_cast<char*>( hb_xgrab( iSpace ) );
       memset( buffer, ' ', iSpace );
       hb_gt_cgi_termOut( pGTCGI, buffer, iSpace );
       hb_xfree( buffer );
@@ -336,7 +336,7 @@ static void hb_gt_cgi_WriteConW( PHB_GT pGT, const HB_WCHAR * szTextW, HB_SIZE n
 {
    PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP( pGT );
    HB_SIZE nSize = hb_cdpU16AsStrLen( cdpTerm, szTextW, nLength, 0 );
-   char * buffer = static_cast< char * >( hb_xgrab( nSize ) );
+   char * buffer = static_cast<char*>( hb_xgrab( nSize ) );
 
    hb_cdpU16ToStr( cdpTerm, HB_CDP_ENDIAN_NATIVE, szTextW, nLength, buffer, nSize );
    hb_gt_cgi_conOut( pGT, buffer, nSize, nullptr, nullptr );
@@ -353,7 +353,7 @@ static void hb_gt_cgi_WriteAtW( PHB_GT pGT, int iRow, int iCol, const HB_WCHAR *
 {
    PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP( pGT );
    HB_SIZE nSize = hb_cdpU16AsStrLen( cdpTerm, szTextW, nLength, 0 );
-   char * buffer = static_cast< char * >( hb_xgrab( nSize ) );
+   char * buffer = static_cast<char*>( hb_xgrab( nSize ) );
 
    hb_cdpU16ToStr( cdpTerm, HB_CDP_ENDIAN_NATIVE, szTextW, nLength, buffer, nSize );
    hb_gt_cgi_conPos( HB_GTCGI_GET( pGT ), iRow, iCol );
@@ -366,7 +366,7 @@ static void hb_gt_cgi_WriteAtW( PHB_GT pGT, int iRow, int iCol, const HB_WCHAR *
 static void hb_gt_cgi_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Redraw(%p,%d,%d,%d)", static_cast< void * >( pGT ), iRow, iCol, iSize ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Redraw(%p,%d,%d,%d)", static_cast<void*>( pGT ), iRow, iCol, iSize ) );
 #endif
 
    int iColor;
@@ -423,7 +423,7 @@ static void hb_gt_cgi_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
          {
             break;
          }
-         iIndex += static_cast< int >( hb_cdpTextPutU16( cdpTerm, pGTCGI->sLineBuf + iIndex, pGTCGI->iLineBufSize - iIndex, usChar ) );
+         iIndex += static_cast<int>( hb_cdpTextPutU16( cdpTerm, pGTCGI->sLineBuf + iIndex, pGTCGI->iLineBufSize - iIndex, usChar ) );
          ++iLen;
          ++iCol;
       }
@@ -442,7 +442,7 @@ static void hb_gt_cgi_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 static void hb_gt_cgi_Refresh( PHB_GT pGT )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Refresh(%p)", static_cast< void * >( pGT ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Refresh(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
    int iHeight, iWidth;
@@ -453,7 +453,7 @@ static void hb_gt_cgi_Refresh( PHB_GT pGT )
    iWidth *= HB_MAX_CHAR_LEN;
    if( pGTCGI->iLineBufSize < iWidth )
    {
-      pGTCGI->sLineBuf = static_cast< char * >( hb_xrealloc( pGTCGI->sLineBuf, iWidth ) );
+      pGTCGI->sLineBuf = static_cast<char*>( hb_xrealloc( pGTCGI->sLineBuf, iWidth ) );
       pGTCGI->iLineBufSize = iWidth;
    }
    HB_GTSUPER_REFRESH( pGT );
@@ -466,7 +466,7 @@ static void hb_gt_cgi_Refresh( PHB_GT pGT )
 static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_FuncInit(%p)", static_cast< void * >( pFuncTable ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_FuncInit(%p)", static_cast<void*>( pFuncTable ) ) );
 #endif
 
    pFuncTable->Init                       = hb_gt_cgi_Init;

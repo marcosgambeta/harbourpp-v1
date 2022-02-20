@@ -85,9 +85,9 @@
    static const int  s_iCrLfLen = 2;
 #endif
 
-static HB_FHANDLE s_hFilenoStdin  = static_cast< HB_FHANDLE >( HB_STDIN_HANDLE );
-static HB_FHANDLE s_hFilenoStdout = static_cast< HB_FHANDLE >( HB_STDOUT_HANDLE );
-static HB_FHANDLE s_hFilenoStderr = static_cast< HB_FHANDLE >( HB_STDERR_HANDLE );
+static HB_FHANDLE s_hFilenoStdin  = static_cast<HB_FHANDLE>( HB_STDIN_HANDLE );
+static HB_FHANDLE s_hFilenoStdout = static_cast<HB_FHANDLE>( HB_STDOUT_HANDLE );
+static HB_FHANDLE s_hFilenoStderr = static_cast<HB_FHANDLE>( HB_STDERR_HANDLE );
 
 struct HB_PRNPOS
 {
@@ -101,7 +101,7 @@ static HB_TSD_NEW( s_prnPos, sizeof( HB_PRNPOS ), nullptr, nullptr );
 
 static PHB_PRNPOS hb_prnPos( void )
 {
-   return static_cast< PHB_PRNPOS >( hb_stackGetTSD( &s_prnPos ) );
+   return static_cast<PHB_PRNPOS>( hb_stackGetTSD( &s_prnPos ) );
 }
 
 void hb_conInit( void )
@@ -138,7 +138,7 @@ void hb_conInit( void )
 #ifdef HB_CLP_STRICT
       else if( iStderr > 0 ) /* //STDERR:x */
       {
-         s_hFilenoStderr = static_cast< HB_FHANDLE >( iStderr );
+         s_hFilenoStderr = static_cast<HB_FHANDLE>( iStderr );
       }
 #endif
    }
@@ -277,7 +277,7 @@ void hb_conOutAlt( const char * szStr, HB_SIZE nLen )
    {
       /* Print to printer if SET PRINTER ON and valid printer file */
       hb_fileWrite( pFile, szStr, nLen, -1 );
-      hb_prnPos()->col += static_cast< int >( nLen );
+      hb_prnPos()->col += static_cast<int>( nLen );
    }
 }
 
@@ -294,7 +294,7 @@ static void hb_conOutDev( const char * szStr, HB_SIZE nLen )
    {
       /* Display to printer if SET DEVICE TO PRINTER and valid printer file */
       hb_fileWrite( pFile, szStr, nLen, -1 );
-      hb_prnPos()->col += static_cast< int >( nLen );
+      hb_prnPos()->col += static_cast<int>( nLen );
    }
    else
    {
@@ -311,7 +311,7 @@ static char * hb_itemStringCon( PHB_ITEM pItem, HB_SIZE * pnLen, HB_BOOL * pfFre
    {
       *pnLen = 1;
       *pfFreeReq = HB_FALSE;
-      return const_cast< char * >( hb_itemGetL( pItem ) ? "T" : "F" );
+      return const_cast<char*>( hb_itemGetL( pItem ) ? "T" : "F" );
    }
    return hb_itemString( pItem, pnLen, pfFreeReq );
 }
@@ -411,17 +411,17 @@ HB_FUNC( QOUT )
       {
          char buf[ 256 ];
 
-         if( pPrnPos->col > static_cast< int >( sizeof( buf ) ) )
+         if( pPrnPos->col > static_cast<int>( sizeof( buf ) ) )
          {
-            char * pBuf = static_cast< char * >( hb_xgrab( pPrnPos->col ) );
+            char * pBuf = static_cast<char*>( hb_xgrab( pPrnPos->col ) );
             memset( pBuf, ' ', pPrnPos->col );
-            hb_fileWrite( pFile, pBuf, static_cast< HB_USHORT >( pPrnPos->col ), -1 );
+            hb_fileWrite( pFile, pBuf, static_cast<HB_USHORT>( pPrnPos->col ), -1 );
             hb_xfree( pBuf );
          }
          else
          {
             memset( buf, ' ', pPrnPos->col );
-            hb_fileWrite( pFile, buf, static_cast< HB_USHORT >( pPrnPos->col ), -1 );
+            hb_fileWrite( pFile, buf, static_cast<HB_USHORT>( pPrnPos->col ), -1 );
          }
       }
    }
@@ -446,12 +446,12 @@ HB_FUNC( __EJECT ) /* Ejects the current page from the printer */
 
 HB_FUNC( PROW ) /* Returns the current printer row position */
 {
-   hb_retni( static_cast< int >( hb_prnPos()->row ) );
+   hb_retni( static_cast<int>( hb_prnPos()->row ) );
 }
 
 HB_FUNC( PCOL ) /* Returns the current printer row position */
 {
-   hb_retni( static_cast< int >( hb_prnPos()->col ) );
+   hb_retni( static_cast<int>( hb_prnPos()->col ) );
 }
 
 static void hb_conDevPos( int iRow, int iCol )
@@ -492,9 +492,9 @@ static void hb_conDevPos( int iRow, int iCol )
 
             while( pPrnPos->row < iPRow )
             {
-               if( iPtr + s_iCrLfLen > static_cast< int >( sizeof( buf ) ) )
+               if( iPtr + s_iCrLfLen > static_cast<int>( sizeof( buf ) ) )
                {
-                  hb_fileWrite( pFile, buf, static_cast< HB_USHORT >( iPtr ), -1 );
+                  hb_fileWrite( pFile, buf, static_cast<HB_USHORT>( iPtr ), -1 );
                   iPtr = 0;
                }
                memcpy( &buf[ iPtr ], s_szCrLf, s_iCrLfLen );
@@ -511,9 +511,9 @@ static void hb_conDevPos( int iRow, int iCol )
 
          while( pPrnPos->col < iPCol )
          {
-            if( iPtr == static_cast< int >( sizeof( buf ) ) )
+            if( iPtr == static_cast<int>( sizeof( buf ) ) )
             {
-               hb_fileWrite( pFile, buf, static_cast< HB_USHORT >( iPtr ), -1 );
+               hb_fileWrite( pFile, buf, static_cast<HB_USHORT>( iPtr ), -1 );
                iPtr = 0;
             }
             buf[ iPtr++ ] = ' ';
@@ -522,7 +522,7 @@ static void hb_conDevPos( int iRow, int iCol )
 
          if( iPtr )
          {
-            hb_fileWrite( pFile, buf, static_cast< HB_USHORT >( iPtr ), -1 );
+            hb_fileWrite( pFile, buf, static_cast<HB_USHORT>( iPtr ), -1 );
          }
       }
    }
@@ -752,15 +752,15 @@ HB_FUNC( HB_DISPOUTATBOX )
 
 HB_FUNC( HB_GETSTDIN ) /* Return handle for STDIN */
 {
-   hb_retnint( static_cast< HB_NHANDLE >( s_hFilenoStdin ) );
+   hb_retnint( static_cast<HB_NHANDLE>( s_hFilenoStdin ) );
 }
 
 HB_FUNC( HB_GETSTDOUT ) /* Return handle for STDOUT */
 {
-   hb_retnint( static_cast< HB_NHANDLE >( s_hFilenoStdout ) );
+   hb_retnint( static_cast<HB_NHANDLE>( s_hFilenoStdout ) );
 }
 
 HB_FUNC( HB_GETSTDERR ) /* Return handle for STDERR */
 {
-   hb_retnint( static_cast< HB_NHANDLE >( s_hFilenoStderr ) );
+   hb_retnint( static_cast<HB_NHANDLE>( s_hFilenoStderr ) );
 }

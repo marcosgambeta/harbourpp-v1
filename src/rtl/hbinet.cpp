@@ -87,13 +87,13 @@ using PHB_SOCKET_STRUCT = HB_SOCKET_STRUCT *;
 
 #define HB_INET_INITIALIZE()  if( s_initialize ) hb_inetAutoInit()
 
-#define HB_PARSOCKET( n )     ( static_cast< PHB_SOCKET_STRUCT >( hb_parptrGC( &s_gcInetFuncs, n ) ) )
+#define HB_PARSOCKET( n )     ( static_cast<PHB_SOCKET_STRUCT>( hb_parptrGC( &s_gcInetFuncs, n ) ) )
 
 #define HB_SOCKET_INIT( s, p ) \
    do \
    { \
       HB_INET_INITIALIZE(); \
-      s = static_cast< PHB_SOCKET_STRUCT >( hb_gcAllocate( sizeof( *s ), &s_gcInetFuncs ) ); \
+      s = static_cast<PHB_SOCKET_STRUCT>( hb_gcAllocate( sizeof( *s ), &s_gcInetFuncs ) ); \
       memset( s, 0, sizeof( *s ) ); \
       s->sd         = HB_NO_SOCKET; \
       s->readahead  = HB_INET_BUFFER_LEN; \
@@ -198,7 +198,7 @@ static int hb_inetCloseSocket( PHB_SOCKET_STRUCT socket, HB_BOOL fShutDown )
 
 static HB_GARBAGE_FUNC( hb_inetSocketFinalize )
 {
-   PHB_SOCKET_STRUCT socket = static_cast< PHB_SOCKET_STRUCT >( Cargo );
+   PHB_SOCKET_STRUCT socket = static_cast<PHB_SOCKET_STRUCT>( Cargo );
 
    if( socket->sd != HB_NO_SOCKET )
    {
@@ -228,7 +228,7 @@ static HB_GARBAGE_FUNC( hb_inetSocketFinalize )
 
 static HB_GARBAGE_FUNC( hb_inetSocketMark )
 {
-   PHB_SOCKET_STRUCT socket = static_cast< PHB_SOCKET_STRUCT >( Cargo );
+   PHB_SOCKET_STRUCT socket = static_cast<PHB_SOCKET_STRUCT>( Cargo );
 
    if( socket->pPeriodicBlock )
    {
@@ -260,7 +260,7 @@ static void hb_inetAutoInit( void )
 
 HB_SOCKET hb_znetInetFD( PHB_ITEM pItem, HB_BOOL fError )
 {
-   PHB_SOCKET_STRUCT socket = static_cast< PHB_SOCKET_STRUCT >( hb_itemGetPtrGC( pItem, &s_gcInetFuncs ) );
+   PHB_SOCKET_STRUCT socket = static_cast<PHB_SOCKET_STRUCT>( hb_itemGetPtrGC( pItem, &s_gcInetFuncs ) );
 
    if( socket )
    {
@@ -276,7 +276,7 @@ HB_SOCKET hb_znetInetFD( PHB_ITEM pItem, HB_BOOL fError )
 
 HB_MAXINT hb_znetInetTimeout( PHB_ITEM pItem, HB_BOOL fError )
 {
-   PHB_SOCKET_STRUCT socket = static_cast< PHB_SOCKET_STRUCT >( hb_itemGetPtrGC( pItem, &s_gcInetFuncs ) );
+   PHB_SOCKET_STRUCT socket = static_cast<PHB_SOCKET_STRUCT>( hb_itemGetPtrGC( pItem, &s_gcInetFuncs ) );
 
    if( socket )
    {
@@ -298,7 +298,7 @@ HB_BOOL hb_znetInetInitialize( PHB_ITEM pItem, PHB_ZNETSTREAM pStream,
                                HB_INET_ERFUNC errorFunc,
                                HB_INET_ESFUNC errstrFunc )
 {
-   PHB_SOCKET_STRUCT socket = static_cast< PHB_SOCKET_STRUCT >( hb_itemGetPtrGC( pItem, &s_gcInetFuncs ) );
+   PHB_SOCKET_STRUCT socket = static_cast<PHB_SOCKET_STRUCT>( hb_itemGetPtrGC( pItem, &s_gcInetFuncs ) );
 
    if( socket )
    {
@@ -753,7 +753,7 @@ static long s_inetRecv( PHB_SOCKET_STRUCT socket, char * buffer, long size, HB_B
    {
       if( socket->buffer == nullptr )
       {
-         socket->buffer = static_cast< char * >( hb_xgrab( socket->readahead ) );
+         socket->buffer = static_cast<char*>( hb_xgrab( socket->readahead ) );
       }
       socket->posbuffer = 0;
       if( socket->recvFunc )
@@ -822,7 +822,7 @@ static void s_inetRecvInternal( int iMode )
 
       if( hb_itemGetWriteCL( pBuffer, &buffer, &nLen ) )
       {
-         iLen = static_cast< int >( nLen );
+         iLen = static_cast<int>( nLen );
       }
       else
       {
@@ -940,7 +940,7 @@ static void s_inetRecvPattern( const char * const * patterns, int * patternsizes
 
    socket->iError = HB_INET_ERR_OK;
 
-   buffer = static_cast< char * >( hb_xgrab( iBufferSize ) );
+   buffer = static_cast<char*>( hb_xgrab( iBufferSize ) );
    iAllocated = iBufferSize;
 
    do
@@ -948,7 +948,7 @@ static void s_inetRecvPattern( const char * const * patterns, int * patternsizes
       if( iPos == iAllocated - 1 )
       {
          iAllocated += iBufferSize;
-         buffer = static_cast< char * >( hb_xrealloc( buffer, iAllocated ) );
+         buffer = static_cast<char*>( hb_xrealloc( buffer, iAllocated ) );
       }
 
       iLen = s_inetRecv( socket, &cChar, 1, HB_TRUE, socket->iTimeout );
@@ -1022,7 +1022,7 @@ static void s_inetRecvPattern( const char * const * patterns, int * patternsizes
 
 HB_FUNC( HB_INETRECVLINE )
 {
-   int iEolLen = static_cast< int >( strlen( s_inetCRLF ) );
+   int iEolLen = static_cast<int>( strlen( s_inetCRLF ) );
 
    s_inetRecvPattern( &s_inetCRLF, &iEolLen, 1, 2 );
 }
@@ -1041,11 +1041,11 @@ HB_FUNC( HB_INETRECVENDBLOCK )
 
    if( pProto && HB_IS_ARRAY( pProto ) )
    {
-      int iPatternsMax = static_cast< int >( hb_arrayLen( pProto ) ), i;
+      int iPatternsMax = static_cast<int>( hb_arrayLen( pProto ) ), i;
 
       for( i = 1; i <= iPatternsMax; i++ )
       {
-         iLen = static_cast< int >( hb_arrayGetCLen( pProto, i ) );
+         iLen = static_cast<int>( hb_arrayGetCLen( pProto, i ) );
          if( iLen > 0 )
          {
             ++iPatternsCount;
@@ -1055,13 +1055,13 @@ HB_FUNC( HB_INETRECVENDBLOCK )
       {
          if( iPatternsCount > HB_PATERN_BUF_SIZE )
          {
-            patterns = static_cast< const char ** >( hb_xgrab( sizeof( char * ) * iPatternsCount ) );
-            patternsizes = static_cast< int * >( hb_xgrab( sizeof( int ) * iPatternsCount ) );
+            patterns = static_cast<const char**>( hb_xgrab( sizeof( char * ) * iPatternsCount ) );
+            patternsizes = static_cast<int*>( hb_xgrab( sizeof( int ) * iPatternsCount ) );
          }
          iPatternsCount = 0;
          for( i = 1; i <= iPatternsMax; i++ )
          {
-            iLen = static_cast< int >( hb_arrayGetCLen( pProto, i ) );
+            iLen = static_cast<int>( hb_arrayGetCLen( pProto, i ) );
             if( iLen > 0 )
             {
                patterns[ iPatternsCount ]     = hb_arrayGetCPtr( pProto, i );
@@ -1074,7 +1074,7 @@ HB_FUNC( HB_INETRECVENDBLOCK )
 
    if( iPatternsCount == 0 )
    {
-      iLen = static_cast< int >( hb_itemGetCLen( pProto ) );
+      iLen = static_cast<int>( hb_itemGetCLen( pProto ) );
       if( iLen > 0 )
       {
          patterns[ 0 ]     = hb_itemGetCPtr( pProto );
@@ -1083,7 +1083,7 @@ HB_FUNC( HB_INETRECVENDBLOCK )
       else
       {
          patterns[ 0 ]     = s_inetCRLF;
-         patternsizes[ 0 ] = static_cast< int >( strlen( s_inetCRLF ) );
+         patternsizes[ 0 ] = static_cast<int>( strlen( s_inetCRLF ) );
       }
       iPatternsCount = 1;
    }
@@ -1092,7 +1092,7 @@ HB_FUNC( HB_INETRECVENDBLOCK )
 
    if( iPatternsCount > HB_PATERN_BUF_SIZE )
    {
-      hb_xfree( static_cast< void * >( patterns ) );
+      hb_xfree( static_cast<void*>( patterns ) );
       hb_xfree( patternsizes );
    }
 }
@@ -1126,7 +1126,7 @@ HB_FUNC( HB_INETDATAREADY )
          {
             char buffer[ 1 ];
 
-            iVal = static_cast< int >( s_inetRecv( socket, buffer, 1, HB_TRUE, timeout ) );
+            iVal = static_cast<int>( s_inetRecv( socket, buffer, 1, HB_TRUE, timeout ) );
             if( iVal == 1 )
             {
                socket->posbuffer--;
@@ -1166,7 +1166,7 @@ static void s_inetSendInternal( HB_BOOL lAll )
    else
    {
       buffer = hb_itemGetCPtr( pBuffer );
-      iSend = static_cast< int >( hb_itemGetCLen( pBuffer ) );
+      iSend = static_cast<int>( hb_itemGetCLen( pBuffer ) );
       if( HB_ISNUM( 3 ) )
       {
          iLen = hb_parni(3);
@@ -1187,7 +1187,7 @@ static void s_inetSendInternal( HB_BOOL lAll )
             if( lLastSnd <= 0 && iLen > 0 )
             {
                iSent += iLen;
-               iLen = static_cast< int >( lLastSnd );
+               iLen = static_cast<int>( lLastSnd );
             }
          }
          else
@@ -1610,7 +1610,7 @@ HB_FUNC( HB_INETDGRAMSEND )
       else
       {
          szBuffer = hb_itemGetCPtr( pBuffer );
-         iLen = static_cast< int >( hb_itemGetCLen( pBuffer ) );
+         iLen = static_cast<int>( hb_itemGetCLen( pBuffer ) );
          if( HB_ISNUM( 5 ) )
          {
             int iMaxLen = hb_parni(5);
@@ -1658,7 +1658,7 @@ HB_FUNC( HB_INETDGRAMRECV )
       socket->iCount = 0;
       if( hb_itemGetWriteCL( pBuffer, &buffer, &nLen ) )
       {
-         iLen = static_cast< int >( nLen );
+         iLen = static_cast<int>( nLen );
       }
       if( HB_ISNUM( 3 ) )
       {

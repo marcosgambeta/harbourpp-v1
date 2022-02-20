@@ -52,7 +52,7 @@ static const HB_BLOWFISH * hb_bf_keyparam( void )
 {
    if( hb_parclen(1) == sizeof( HB_BLOWFISH ) )
    {
-      return reinterpret_cast< const HB_BLOWFISH * >( hb_parc(1) );
+      return reinterpret_cast<const HB_BLOWFISH*>( hb_parc(1) );
    }
    else
    {
@@ -64,14 +64,14 @@ static const HB_BLOWFISH * hb_bf_keyparam( void )
  */
 HB_FUNC( HB_BLOWFISHKEY )
 {
-   int iLen = static_cast< int >( hb_parclen(1) );
+   int iLen = static_cast<int>( hb_parclen(1) );
 
    if( iLen )
    {
       HB_BLOWFISH bf;
 
       hb_blowfishInit( &bf, hb_parc(1), iLen );
-      hb_retclen( reinterpret_cast< const char * >( &bf ), sizeof( HB_BLOWFISH ) );
+      hb_retclen( reinterpret_cast<const char*>( &bf ), sizeof( HB_BLOWFISH ) );
    }
 }
 
@@ -100,12 +100,12 @@ HB_FUNC( HB_BLOWFISHENCRYPT )
           * otherwise ANSI X.923 padding is used
           */
          nSize = ( fRaw ? ( ( nLen + 7 ) >> 3 ) : ( ( nLen >> 3 ) + 1 ) ) << 3;
-         pszData = static_cast< char * >( hb_xgrab( nSize + 1 ) );
+         pszData = static_cast<char*>( hb_xgrab( nSize + 1 ) );
          memcpy( pszData, hb_itemGetCPtr( pData ), nLen );
          memset( pszData + nLen, '\0', nSize - nLen );
          if( ! fRaw )
          {
-            pszData[ nSize - 1 ] = static_cast< char >( nSize - nLen );
+            pszData[ nSize - 1 ] = static_cast<char>( nSize - nLen );
          }
          for( nLen = 0; nLen < nSize; nLen += 8 )
          {
@@ -147,7 +147,7 @@ HB_FUNC( HB_BLOWFISHDECRYPT )
          HB_BOOL fRaw = hb_parl(3);
          HB_SIZE nLen;
 
-         pszData = static_cast< char * >( hb_xgrab( nSize + ( fRaw ? 1 : 0 ) ) );
+         pszData = static_cast<char*>( hb_xgrab( nSize + ( fRaw ? 1 : 0 ) ) );
          pszSource = hb_itemGetCPtr( pData );
          for( nLen = 0; nLen < nSize; nLen += 8 )
          {
@@ -160,7 +160,7 @@ HB_FUNC( HB_BLOWFISHDECRYPT )
          }
          if( ! fRaw )
          {
-            nSize = static_cast< unsigned char >( pszData[ nSize - 1 ] );
+            nSize = static_cast<unsigned char>( pszData[ nSize - 1 ] );
             nLen -= ( ( nSize - 1 ) & ~0x07 ) == 0 ? nSize : nLen;
          }
          if( nLen )
@@ -185,14 +185,14 @@ HB_FUNC( HB_BLOWFISHDECRYPT )
 static void hb_bf_initvect( HB_BYTE * vect )
 {
    const char * pszVect = hb_parc(3);
-   int iLen = static_cast< int >( hb_parclen(3) );
+   int iLen = static_cast<int>( hb_parclen(3) );
 
    for( int i = 0; i < HB_BF_CIPHERBLOCK; ++i )
    {
-      vect[ i ] = static_cast< HB_BYTE >( i );
+      vect[ i ] = static_cast<HB_BYTE>( i );
       if( iLen > 0 )
       {
-         vect[ i ] ^= static_cast< HB_BYTE >( pszVect[ i % iLen ] );
+         vect[ i ] ^= static_cast<HB_BYTE>( pszVect[ i % iLen ] );
       }
    }
 }
@@ -225,14 +225,14 @@ HB_FUNC( HB_BLOWFISHENCRYPT_CFB )
       if( nLen )
       {
          const char * pszSource = hb_itemGetCPtr( pData );
-         char * pszData = static_cast< char * >( hb_xgrab( nLen + 1 ) );
+         char * pszData = static_cast<char*>( hb_xgrab( nLen + 1 ) );
          HB_BYTE vect[ HB_BF_CIPHERBLOCK ];
 
          hb_bf_initvect( vect );
 
          for( HB_SIZE n = 0; n < nLen; ++n )
          {
-            int i = static_cast< int >( n & ( HB_BF_CIPHERBLOCK - 1 ) );
+            int i = static_cast<int>( n & ( HB_BF_CIPHERBLOCK - 1 ) );
             if( i == 0 )
             {
                hb_bf_encode( bf, vect );
@@ -265,14 +265,14 @@ HB_FUNC( HB_BLOWFISHDECRYPT_CFB )
       if( nLen )
       {
          const char * pszSource = hb_itemGetCPtr( pData );
-         char * pszData = static_cast< char * >( hb_xgrab( nLen + 1 ) );
+         char * pszData = static_cast<char*>( hb_xgrab( nLen + 1 ) );
          HB_BYTE vect[ HB_BF_CIPHERBLOCK ];
 
          hb_bf_initvect( vect );
 
          for( HB_SIZE n = 0; n < nLen; ++n )
          {
-            int i = static_cast< int >( n & ( HB_BF_CIPHERBLOCK - 1 ) );
+            int i = static_cast<int>( n & ( HB_BF_CIPHERBLOCK - 1 ) );
             if( i == 0 )
             {
                hb_bf_encode( bf, vect );

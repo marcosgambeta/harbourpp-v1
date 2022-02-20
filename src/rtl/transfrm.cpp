@@ -167,7 +167,7 @@ HB_FUNC( TRANSFORM )
                   nParamS = 0;
                   while( nPicLen > 1 && *szPic >= '0' && *szPic <= '9' )
                   {
-                     nParamS = ( nParamS * 10 ) + ( static_cast< HB_SIZE >( *szPic++ - '0' ) );
+                     nParamS = ( nParamS * 10 ) + ( static_cast<HB_SIZE>( *szPic++ - '0' ) );
                      nPicLen--;
                   }
                   break;
@@ -212,7 +212,7 @@ HB_FUNC( TRANSFORM )
             HB_SIZE nSize = nExpLen + nExpLen + nPicLen - nPicPos;
             HB_WCHAR wcPict, wcExp;
 
-            szResult = static_cast< char * >( hb_xgrab( nSize + 1 ) );
+            szResult = static_cast<char*>( hb_xgrab( nSize + 1 ) );
             nResultPos = 0;
 
             while( HB_CDPCHAR_GET( cdp, szPic, nPicLen, &nPicPos, &wcPict ) )
@@ -326,7 +326,7 @@ HB_FUNC( TRANSFORM )
             }
             else
             {
-               szResult = static_cast< char * >( hb_xmemdup( szExp, nResultPos + 1 ) );
+               szResult = static_cast<char*>( hb_xmemdup( szExp, nResultPos + 1 ) );
             }
 
             if( uiPicFlags & PF_EXCHANG )
@@ -487,7 +487,7 @@ HB_FUNC( TRANSFORM )
          }
 
          /* allocate 4 additional bytes for possible ") CR" or ") DB" suffix */
-         szResult = static_cast< char * >( hb_xgrab( iWidth + 5 ) );
+         szResult = static_cast<char*>( hb_xgrab( iWidth + 5 ) );
          hb_itemStrBuf( szResult, pValue, iWidth, iDec );
          if( pNumber )
          {
@@ -531,7 +531,7 @@ HB_FUNC( TRANSFORM )
          {
             if( uiPicFlags & PF_EXCHANG )
             {
-               for( i = 0; i < static_cast< HB_SIZE >( iWidth ); ++i )
+               for( i = 0; i < static_cast<HB_SIZE>( iWidth ); ++i )
                {
                   if( szResult[ i ] == '.' )
                   {
@@ -547,7 +547,7 @@ HB_FUNC( TRANSFORM )
             char * szStr = szResult;
 
             /* allocate 4 additional bytes for possible ") CR" or ") DB" suffix */
-            szResult = static_cast< char * >( hb_xgrab( nPicLen + 5 ) );
+            szResult = static_cast<char*>( hb_xgrab( nPicLen + 5 ) );
 
             for( i = iCount = 0; i < nPicLen; i++ )
             {
@@ -573,7 +573,7 @@ HB_FUNC( TRANSFORM )
                }
                else if( cPic == ',' && i && iCount < iWidth )
                {
-                  if( HB_ISDIGIT( static_cast< HB_UCHAR >( szResult[ i - 1 ] ) ) )
+                  if( HB_ISDIGIT( static_cast<HB_UCHAR>( szResult[ i - 1 ] ) ) )
                   {
                      szResult[ i ] = ( uiPicFlags & PF_EXCHANG ) ? '.' : ',';
                   }
@@ -607,7 +607,7 @@ HB_FUNC( TRANSFORM )
                      ++iCount;
                   }
                }
-               while( static_cast< HB_SIZE >( iCount ) + 1 < i && szResult[ iCount + 1 ] == ' ' )
+               while( static_cast<HB_SIZE>( iCount ) + 1 < i && szResult[ iCount + 1 ] == ' ' )
                {
                   ++iCount;
                }
@@ -619,7 +619,7 @@ HB_FUNC( TRANSFORM )
                      szPic[ iCount ] != szResult[ iCount ] ) )
                {
                   szResult[ iCount ] = '(';
-                  for( ++iCount; static_cast< HB_SIZE >( iCount ) < i; iCount++ )
+                  for( ++iCount; static_cast<HB_SIZE>( iCount ) < i; iCount++ )
                   {
                      if( szResult[ iCount ] >= '0' && szResult[ iCount ] <= '9' &&
                          ( nPicLen == 0 || szPic[ iCount ] == '9' ||
@@ -641,7 +641,7 @@ HB_FUNC( TRANSFORM )
                /* This is not Clipper compatible */
                if( *szResult >= '1' && *szResult <= '9' && ( nPicLen == 0 || *szPic == '9' || *szPic != *szResult ) )
                {
-                  for( iCount = 1; static_cast< HB_SIZE >( iCount ) < i; iCount++ )
+                  for( iCount = 1; static_cast<HB_SIZE>( iCount ) < i; iCount++ )
                   {
                      if( szResult[ iCount ] >= '0' && szResult[ iCount ] <= '9' &&
                          ( nPicLen == 0 || szPic[ iCount ] == '9' ||
@@ -684,7 +684,7 @@ HB_FUNC( TRANSFORM )
          char szDate[ 9 ];
          HB_SIZE nFor;
 
-         szResult = static_cast< char * >( hb_xgrab( 13 ) );
+         szResult = static_cast<char*>( hb_xgrab( 13 ) );
          szDateFormat = hb_setGetDateFormat();
 
 #ifndef HB_CLP_STRICT
@@ -788,7 +788,7 @@ HB_FUNC( TRANSFORM )
          long lDate, lTime;
          HB_SIZE nFor;
 
-         szResult = static_cast< char * >( hb_xgrab( 29 ) );
+         szResult = static_cast<char*>( hb_xgrab( 29 ) );
          if( ( uiPicFlags & ( PF_DATE | PF_TIME ) ) != PF_TIME )
          {
             szDateFormat = hb_setGetDateFormat();
@@ -922,7 +922,7 @@ HB_FUNC( TRANSFORM )
          }
 
          nResultPos = 0;
-         szResult = static_cast< char * >( hb_xgrab( nPicLen + 2 ) );
+         szResult = static_cast<char*>( hb_xgrab( nPicLen + 2 ) );
 
          for( ; ( nPicLen || ! bDone ) && ! bExit; nResultPos++, szPic++, nPicLen-- )
          {
@@ -1030,7 +1030,7 @@ HB_FUNC( TRANSFORM )
             int iWidth, iDec;
             hb_itemGetNLen( pValue, &iWidth, &iDec );
             iWidth += 2 + ( hb_setGetDecimals() << 1 );
-            szStr = static_cast< char * >( hb_xgrab( iWidth + 1 ) );
+            szStr = static_cast<char*>( hb_xgrab( iWidth + 1 ) );
             hb_itemStrBuf( szStr, pValue, iWidth, iDec );
             hb_retclen_buffer( szStr, iWidth );
          }

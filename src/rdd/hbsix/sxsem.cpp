@@ -65,7 +65,7 @@ static HB_BOOL hb_sxSemName( char * szFileName )
    }
    else
    {
-      AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
+      AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
 
       if( pArea )
       {

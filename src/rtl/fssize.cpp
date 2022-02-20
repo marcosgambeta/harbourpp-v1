@@ -83,12 +83,12 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
       typedef BOOL ( WINAPI * _HB_GETFILEATTRIBUTESEX )( LPCTSTR, GET_FILEEX_INFO_LEVELS, LPVOID );
       static _HB_GETFILEATTRIBUTESEX s_pGetFileAttributesEx = ( _HB_GETFILEATTRIBUTESEX ) -1;
 
-      if( s_pGetFileAttributesEx == reinterpret_cast< _HB_GETFILEATTRIBUTESEX >( -1 ) )
+      if( s_pGetFileAttributesEx == reinterpret_cast<_HB_GETFILEATTRIBUTESEX>( -1 ) )
       {
          HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
          if( hModule )
          {
-            s_pGetFileAttributesEx = reinterpret_cast< _HB_GETFILEATTRIBUTESEX >( HB_WINAPI_GETPROCADDRESST( hModule, "GetFileAttributesEx" ) );
+            s_pGetFileAttributesEx = reinterpret_cast<_HB_GETFILEATTRIBUTESEX>( HB_WINAPI_GETPROCADDRESST( hModule, "GetFileAttributesEx" ) );
          }
          else
          {
@@ -113,7 +113,7 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
          }
          if( fResult )
          {
-            return static_cast< HB_FOFFSET >( attrex.nFileSizeLow ) + ( static_cast< HB_FOFFSET >( attrex.nFileSizeHigh ) << 32 );
+            return static_cast<HB_FOFFSET>( attrex.nFileSizeLow ) + ( static_cast<HB_FOFFSET>( attrex.nFileSizeHigh ) << 32 );
          }
       }
       else
@@ -143,7 +143,7 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
       }
       if( fResult )
       {
-         return static_cast< HB_FOFFSET >( statbuf.st_size );
+         return static_cast<HB_FOFFSET>( statbuf.st_size );
       }
 #else
       char * pszFree;
@@ -152,7 +152,7 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
       pszFileName = hb_fsNameConv( pszFileName, &pszFree );
       statbuf.st_size = 0;
       hb_vmUnlock();
-      fResult = stat( static_cast< char * >( pszFileName ), &statbuf ) == 0;
+      fResult = stat( static_cast<char*>( pszFileName ), &statbuf ) == 0;
       hb_fsSetIOError( fResult, 0 );
       hb_vmLock();
       if( pszFree )
@@ -161,7 +161,7 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
       }
       if( fResult )
       {
-         return static_cast< HB_FOFFSET >( statbuf.st_size );
+         return static_cast<HB_FOFFSET>( statbuf.st_size );
       }
 #endif
    }

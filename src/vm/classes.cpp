@@ -191,9 +191,9 @@ using PCLASS = CLASS *;
 #define hb_clsBucketPos( p, m )     ( ( (p)->uiSymNum & (m) ) << BUCKETBITS )
 
 #ifdef HB_MSG_POOL
-#  define hb_clsMthNum( p )      ( static_cast< HB_SIZE >( ( p )->uiMethodCount ) )
+#  define hb_clsMthNum( p )      ( static_cast<HB_SIZE>( ( p )->uiMethodCount ) )
 #else
-#  define hb_clsMthNum( p )      ( ( static_cast< HB_SIZE >( ( p )->uiHashKey ) + 1 ) << BUCKETBITS )
+#  define hb_clsMthNum( p )      ( ( static_cast<HB_SIZE>( ( p )->uiHashKey ) + 1 ) << BUCKETBITS )
 #endif
 
 #if defined( HB_REAL_BLOCK_SCOPE )
@@ -394,7 +394,7 @@ static HB_SYMCNT hb_clsBucketPos( PHB_DYNS pMsg, HB_SYMCNT uiMask )
     * HB_DYNS structure
     */
    /*
-      return ( static_cast< HB_USHORT >( static_cast< HB_PTRUINT >( pMsg ) >> 4 ) & uiMask ) << BUCKETBITS;
+      return ( static_cast<HB_USHORT>( static_cast<HB_PTRUINT>( pMsg ) >> 4 ) & uiMask ) << BUCKETBITS;
     */
 
    /* Using continuous symbol numbers we are 100% sure that we will cover
@@ -412,7 +412,7 @@ static HB_SYMCNT hb_clsBucketPos( PHB_DYNS pMsg, HB_SYMCNT uiMask )
 static HB_BOOL hb_clsDictRealloc( PCLASS pClass )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsDictRealloc(%p)", static_cast< void * >( pClass ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_clsDictRealloc(%p)", static_cast<void*>( pClass ) ) );
 #endif
 
    HB_SIZE nNewHashKey, nLimit, n;
@@ -423,7 +423,7 @@ static HB_BOOL hb_clsDictRealloc( PCLASS pClass )
    PMETHOD pNewMethods;
 #endif
 
-   nNewHashKey = static_cast< HB_SIZE >( pClass->uiHashKey ) + 1;
+   nNewHashKey = static_cast<HB_SIZE>( pClass->uiHashKey ) + 1;
    nLimit = nNewHashKey << BUCKETBITS;
 
    do
@@ -435,7 +435,7 @@ static HB_BOOL hb_clsDictRealloc( PCLASS pClass )
       }
 
 #ifdef HB_MSG_POOL
-      puiMsgIdx = static_cast< HB_SYMCNT * >( hb_xgrabz( ( nNewHashKey << BUCKETBITS ) * sizeof( HB_SYMCNT ) ) );
+      puiMsgIdx = static_cast<HB_SYMCNT*>( hb_xgrabz( ( nNewHashKey << BUCKETBITS ) * sizeof( HB_SYMCNT ) ) );
 
       for( n = 0; n < nLimit; n++ )
       {
@@ -466,17 +466,17 @@ static HB_BOOL hb_clsDictRealloc( PCLASS pClass )
    }
    while( n < nLimit );
 
-   pClass->uiHashKey = static_cast< HB_SYMCNT >( nNewHashKey - 1 );
+   pClass->uiHashKey = static_cast<HB_SYMCNT>( nNewHashKey - 1 );
    hb_xfree( pClass->puiMsgIdx );
    pClass->puiMsgIdx = puiMsgIdx;
 
 #else
 
-      pNewMethods = static_cast< PMETHOD >( hb_xgrabz( ( nNewHashKey << BUCKETBITS ) * sizeof( METHOD ) ) );
+      pNewMethods = static_cast<PMETHOD>( hb_xgrabz( ( nNewHashKey << BUCKETBITS ) * sizeof( METHOD ) ) );
 
       for( n = 0; n < nLimit; n++ )
       {
-         PHB_DYNS pMessage = static_cast< PHB_DYNS >( pClass->pMethods[ n ].pMessage );
+         PHB_DYNS pMessage = static_cast<PHB_DYNS>( pClass->pMethods[ n ].pMessage );
 
          if( pMessage )
          {
@@ -505,7 +505,7 @@ static HB_BOOL hb_clsDictRealloc( PCLASS pClass )
    }
    while( n < nLimit );
 
-   pClass->uiHashKey = static_cast< HB_SYMCNT >( nNewHashKey - 1 );
+   pClass->uiHashKey = static_cast<HB_SYMCNT>( nNewHashKey - 1 );
    hb_xfree( pClass->pMethods );
    pClass->pMethods = pNewMethods;
 #endif
@@ -516,28 +516,28 @@ static HB_BOOL hb_clsDictRealloc( PCLASS pClass )
 static void hb_clsDictInit( PCLASS pClass, HB_SYMCNT uiHashKey )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsDictInit(%p,%hu)", static_cast< void * >( pClass ), uiHashKey ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_clsDictInit(%p,%hu)", static_cast<void*>( pClass ), uiHashKey ) );
 #endif
 
    HB_SIZE nSize;
 
    pClass->uiHashKey = uiHashKey;
 #ifdef HB_MSG_POOL
-   nSize = ( ( static_cast< HB_SIZE >( uiHashKey ) + 1 ) << BUCKETBITS ) * sizeof( HB_SYMCNT );
-   pClass->puiMsgIdx = static_cast< HB_SYMCNT * >( hb_xgrabz( nSize ) );
+   nSize = ( ( static_cast<HB_SIZE>( uiHashKey ) + 1 ) << BUCKETBITS ) * sizeof( HB_SYMCNT );
+   pClass->puiMsgIdx = static_cast<HB_SYMCNT*>( hb_xgrabz( nSize ) );
 
    pClass->uiMethodCount = 1;
-   pClass->pMethods = static_cast< PMETHOD >( hb_xgrabz( sizeof( METHOD ) ) );
+   pClass->pMethods = static_cast<PMETHOD>( hb_xgrabz( sizeof( METHOD ) ) );
 #else
-   nSize = ( ( static_cast< HB_SIZE >( uiHashKey ) + 1 ) << BUCKETBITS ) * sizeof( METHOD );
-   pClass->pMethods = static_cast< PMETHOD >( hb_xgrabz( nSize ) );
+   nSize = ( ( static_cast<HB_SIZE>( uiHashKey ) + 1 ) << BUCKETBITS ) * sizeof( METHOD );
+   pClass->pMethods = static_cast<PMETHOD>( hb_xgrabz( nSize ) );
 #endif
 }
 
 static PMETHOD hb_clsFindMsg( PCLASS pClass, PHB_DYNS pMsg )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsFindMsg(%p,%p)", static_cast< void * >( pClass ), static_cast< void * >( pMsg ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_clsFindMsg(%p,%p)", static_cast<void*>( pClass ), static_cast<void*>( pMsg ) ) );
 #endif
 
 #ifdef HB_MSG_POOL
@@ -585,7 +585,7 @@ static PMETHOD hb_clsFindMsg( PCLASS pClass, PHB_DYNS pMsg )
 static PMETHOD hb_clsAllocMsg( PCLASS pClass, PHB_DYNS pMsg )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsAllocMsg(%p,%p)", static_cast< void * >( pClass ), static_cast< void * >( pMsg ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_clsAllocMsg(%p,%p)", static_cast<void*>( pClass ), static_cast<void*>( pMsg ) ) );
 #endif
 
    do
@@ -599,7 +599,7 @@ static PMETHOD hb_clsAllocMsg( PCLASS pClass, PHB_DYNS pMsg )
       {
          if( *puiMsgIdx == 0 )
          {
-            pClass->pMethods = static_cast< PMETHOD >( hb_xrealloc( pClass->pMethods, sizeof( METHOD ) * ( pClass->uiMethodCount + 1 ) ) );
+            pClass->pMethods = static_cast<PMETHOD>( hb_xrealloc( pClass->pMethods, sizeof( METHOD ) * ( pClass->uiMethodCount + 1 ) ) );
             memset( &pClass->pMethods[ pClass->uiMethodCount ], 0, sizeof( METHOD ) );
             *puiMsgIdx = pClass->uiMethodCount++;
             return &pClass->pMethods[ *puiMsgIdx ];
@@ -657,7 +657,7 @@ static HB_BOOL hb_clsCanClearMethod( PMETHOD pMethod, HB_BOOL fError )
 static void hb_clsFreeMsg( PCLASS pClass, PHB_DYNS pMsg )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsFreeMsg(%p,%p)", static_cast< void * >( pClass ), static_cast< void * >( pMsg ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_clsFreeMsg(%p,%p)", static_cast<void*>( pClass ), static_cast<void*>( pMsg ) ) );
 #endif
 
 #ifdef HB_MSG_POOL
@@ -786,7 +786,7 @@ static HB_USHORT hb_clsParentInstanceOffset( PCLASS pClass, HB_USHORT uiParentCl
 static HB_USHORT hb_clsAddInitValue( PCLASS pClass, PHB_ITEM pItem, HB_USHORT uiType, HB_USHORT uiData, HB_USHORT uiOffset, HB_USHORT uiSprClass )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsAddInitValue(%p,%p,%hu,%hu,%hu,%hu)", static_cast< void * >( pClass ), static_cast< void * >( pItem ), uiType, uiData, uiOffset, uiSprClass ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_clsAddInitValue(%p,%p,%hu,%hu,%hu,%hu)", static_cast<void*>( pClass ), static_cast<void*>( pItem ), uiType, uiData, uiOffset, uiSprClass ) );
 #endif
 
    PINITDATA pInitData;
@@ -798,7 +798,7 @@ static HB_USHORT hb_clsAddInitValue( PCLASS pClass, PHB_ITEM pItem, HB_USHORT ui
 
    if( ! pClass->uiInitDatas )
    {
-      pClass->pInitData = static_cast< PINITDATA >( hb_xgrab( sizeof( INITDATA ) ) );
+      pClass->pInitData = static_cast<PINITDATA>( hb_xgrab( sizeof( INITDATA ) ) );
       pInitData = pClass->pInitData + pClass->uiInitDatas++;
    }
    else
@@ -818,7 +818,7 @@ static HB_USHORT hb_clsAddInitValue( PCLASS pClass, PHB_ITEM pItem, HB_USHORT ui
 
       if( ui == 0 )
       {
-         pClass->pInitData = static_cast< PINITDATA >( hb_xrealloc( pClass->pInitData, static_cast< HB_SIZE >( pClass->uiInitDatas + 1 ) * sizeof( INITDATA ) ) );
+         pClass->pInitData = static_cast<PINITDATA>( hb_xrealloc( pClass->pInitData, static_cast<HB_SIZE>( pClass->uiInitDatas + 1 ) * sizeof( INITDATA ) ) );
          pInitData = pClass->pInitData + pClass->uiInitDatas++;
       }
    }
@@ -835,7 +835,7 @@ static HB_USHORT hb_clsAddInitValue( PCLASS pClass, PHB_ITEM pItem, HB_USHORT ui
 static HB_USHORT hb_clsFindRealClassDataOffset( PMETHOD pMethod )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsFindRealClassDataOffset(%p)", static_cast< void * >( pMethod ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_clsFindRealClassDataOffset(%p)", static_cast<void*>( pMethod ) ) );
 #endif
 
    PMETHOD pRealMth;
@@ -851,7 +851,7 @@ static HB_USHORT hb_clsFindRealClassDataOffset( PMETHOD pMethod )
 static HB_USHORT hb_clsFindClassDataOffset( PCLASS pClass, PMETHOD pNewMethod )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsFindClassDataOffset(%p,%p)", static_cast< void * >( pClass ), static_cast< void * >( pNewMethod ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_clsFindClassDataOffset(%p,%p)", static_cast<void*>( pClass ), static_cast<void*>( pNewMethod ) ) );
 #endif
 
    HB_USHORT uiData;
@@ -880,7 +880,7 @@ static HB_USHORT hb_clsFindClassDataOffset( PCLASS pClass, PMETHOD pNewMethod )
 static HB_BOOL hb_clsUpdateHiddenMessages( PMETHOD pSrcMethod, PMETHOD pDstMethod, PCLASS pDstClass )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsUpdateHiddenMessages(%p,%p,%p)", static_cast< void * >( pSrcMethod ), static_cast< void * >( pDstMethod ), static_cast< void * >( pDstClass ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_clsUpdateHiddenMessages(%p,%p,%p)", static_cast<void*>( pSrcMethod ), static_cast<void*>( pDstMethod ), static_cast<void*>( pDstClass ) ) );
 #endif
 
    PMETHOD pNewMethod = pSrcMethod;
@@ -924,7 +924,7 @@ static HB_BOOL hb_clsUpdateHiddenMessages( PMETHOD pSrcMethod, PMETHOD pDstMetho
 
             if( uiData == 0 )
             {
-               uiData = static_cast< HB_USHORT >( hb_arrayLen( pDstClass->pClassDatas ) ) + 1;
+               uiData = static_cast<HB_USHORT>( hb_arrayLen( pDstClass->pClassDatas ) ) + 1;
                hb_arraySize( pDstClass->pClassDatas, uiData );
             }
             if( pDstMethod->uiOffset )
@@ -945,10 +945,10 @@ static HB_BOOL hb_clsUpdateHiddenMessages( PMETHOD pSrcMethod, PMETHOD pDstMetho
 static void hb_clsAddSuperClass( PCLASS pClass, HB_USHORT uiSuperCls, HB_USHORT uiOffset )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsAddSuperClass(%p,%hu,%hu)", static_cast< void * >( pClass ), uiSuperCls, uiOffset ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_clsAddSuperClass(%p,%hu,%hu)", static_cast<void*>( pClass ), uiSuperCls, uiOffset ) );
 #endif
 
-   pClass->pSuperClasses = static_cast< PHB_CLSCAST >( hb_xrealloc( pClass->pSuperClasses, ( pClass->uiSuperClasses + 1 ) * sizeof( HB_CLSCAST ) ) );
+   pClass->pSuperClasses = static_cast<PHB_CLSCAST>( hb_xrealloc( pClass->pSuperClasses, ( pClass->uiSuperClasses + 1 ) * sizeof( HB_CLSCAST ) ) );
    pClass->pSuperClasses[ pClass->uiSuperClasses ].uiClass = uiSuperCls;
    pClass->pSuperClasses[ pClass->uiSuperClasses++ ].uiOffset = uiOffset;
 }
@@ -956,7 +956,7 @@ static void hb_clsAddSuperClass( PCLASS pClass, HB_USHORT uiSuperCls, HB_USHORT 
 static void hb_clsDefineSuperClass( PCLASS pClass, HB_USHORT uiSuperCls, HB_BOOL fNew )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsDefineSuperClass(%p,%hu,%d)", static_cast< void * >( pClass ), uiSuperCls, fNew ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_clsDefineSuperClass(%p,%hu,%d)", static_cast<void*>( pClass ), uiSuperCls, fNew ) );
 #endif
 
    PMETHOD pMethod;
@@ -1006,7 +1006,7 @@ static void hb_clsDefineSuperClass( PCLASS pClass, HB_USHORT uiSuperCls, HB_BOOL
 static void hb_clsCopyClass( PCLASS pClsDst, PCLASS pClsSrc )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsCopyClass(%p,%p)", static_cast< void * >( pClsDst ), static_cast< void * >( pClsSrc ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_clsCopyClass(%p,%p)", static_cast<void*>( pClsDst ), static_cast<void*>( pClsSrc ) ) );
 #endif
 
    PMETHOD pMethod;
@@ -1039,10 +1039,10 @@ static void hb_clsCopyClass( PCLASS pClsDst, PCLASS pClsSrc )
 
    if( pClsSrc->uiInitDatas )
    {
-      HB_SIZE nSize = static_cast< HB_SIZE >( pClsSrc->uiInitDatas ) * sizeof( INITDATA );
+      HB_SIZE nSize = static_cast<HB_SIZE>( pClsSrc->uiInitDatas ) * sizeof( INITDATA );
 
       pClsDst->uiInitDatas = pClsSrc->uiInitDatas;
-      pClsDst->pInitData = static_cast< PINITDATA >( hb_xgrab( nSize ) );
+      pClsDst->pInitData = static_cast<PINITDATA>( hb_xgrab( nSize ) );
       memcpy( pClsDst->pInitData, pClsSrc->pInitData, nSize );
       for( HB_USHORT uiData = 0; uiData < pClsDst->uiInitDatas; ++uiData )
       {
@@ -1056,9 +1056,9 @@ static void hb_clsCopyClass( PCLASS pClsDst, PCLASS pClsSrc )
 
    nLimit = hb_clsMthNum( pClsSrc );
 #ifdef HB_MSG_POOL
-   memcpy( pClsDst->puiMsgIdx, pClsSrc->puiMsgIdx, ( ( static_cast< HB_SIZE >( pClsSrc->uiHashKey ) + 1 ) << BUCKETBITS ) * sizeof( HB_SYMCNT ) );
+   memcpy( pClsDst->puiMsgIdx, pClsSrc->puiMsgIdx, ( ( static_cast<HB_SIZE>( pClsSrc->uiHashKey ) + 1 ) << BUCKETBITS ) * sizeof( HB_SYMCNT ) );
    pClsDst->uiMethodCount = pClsSrc->uiMethodCount;
-   pClsDst->pMethods = static_cast< PMETHOD >( hb_xrealloc( pClsDst->pMethods, nLimit * sizeof( METHOD ) ) );
+   pClsDst->pMethods = static_cast<PMETHOD>( hb_xrealloc( pClsDst->pMethods, nLimit * sizeof( METHOD ) ) );
 #endif
    memcpy( pClsDst->pMethods, pClsSrc->pMethods, nLimit * sizeof( METHOD ) );
    pClsDst->uiMethods = pClsSrc->uiMethods;
@@ -1066,7 +1066,7 @@ static void hb_clsCopyClass( PCLASS pClsDst, PCLASS pClsSrc )
    if( pClsSrc->uiSuperClasses )
    {
       pClsDst->uiSuperClasses = pClsSrc->uiSuperClasses;
-      pClsDst->pSuperClasses = static_cast< PHB_CLSCAST >( hb_xgrab( pClsSrc->uiSuperClasses * sizeof( HB_CLSCAST ) ) );
+      pClsDst->pSuperClasses = static_cast<PHB_CLSCAST>( hb_xgrab( pClsSrc->uiSuperClasses * sizeof( HB_CLSCAST ) ) );
       memcpy( pClsDst->pSuperClasses, pClsSrc->pSuperClasses, pClsSrc->uiSuperClasses * sizeof( HB_CLSCAST ) );
    }
    hb_clsDefineSuperClass( pClsDst, pClsSrc->uiClass, HB_FALSE );
@@ -1087,7 +1087,7 @@ static void hb_clsCopyClass( PCLASS pClsDst, PCLASS pClsSrc )
 static HB_BOOL hb_clsIsFriendSymbol( PCLASS pClass, PHB_SYMB pSym )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsIsFriendSymbol(%p,%p)", static_cast< void * >( pClass ), static_cast< void * >( pSym ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_clsIsFriendSymbol(%p,%p)", static_cast<void*>( pClass ), static_cast<void*>( pSym ) ) );
 #endif
 
    if( pSym >= pClass->pFriendModule && pSym < pClass->pFriendModule + pClass->uiFriendModule )
@@ -1109,20 +1109,20 @@ static HB_BOOL hb_clsIsFriendSymbol( PCLASS pClass, PHB_SYMB pSym )
 static void hb_clsAddFriendSymbol( PCLASS pClass, PHB_SYMB pSym )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsAddFriendSymbol(%p,%p)", static_cast< void * >( pClass ), static_cast< void * >( pSym ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_clsAddFriendSymbol(%p,%p)", static_cast<void*>( pClass ), static_cast<void*>( pSym ) ) );
 #endif
 
    if( ! hb_clsIsFriendSymbol( pClass, pSym ) )
    {
       if( pClass->uiFriendSyms == 0 )
       {
-         pClass->pFriendSyms = static_cast< PHB_SYMB * >( hb_xgrab( sizeof( PHB_SYMB ) ) );
+         pClass->pFriendSyms = static_cast<PHB_SYMB*>( hb_xgrab( sizeof( PHB_SYMB ) ) );
          pClass->pFriendSyms[ 0 ] = pSym;
          pClass->uiFriendSyms++;
       }
       else
       {
-         pClass->pFriendSyms = static_cast< PHB_SYMB * >( hb_xrealloc( pClass->pFriendSyms, ( pClass->uiFriendSyms + 1 ) * sizeof( PHB_SYMB ) ) );
+         pClass->pFriendSyms = static_cast<PHB_SYMB*>( hb_xrealloc( pClass->pFriendSyms, ( pClass->uiFriendSyms + 1 ) * sizeof( PHB_SYMB ) ) );
          pClass->pFriendSyms[ pClass->uiFriendSyms++ ] = pSym;
       }
    }
@@ -1172,7 +1172,7 @@ void hb_clsInit( void )
 
    s_uiClsSize = HB_CLASS_POOL_SIZE;
    s_uiClasses = 0;
-   s_pClasses = static_cast< PCLASS * >( hb_xgrab( ( static_cast< HB_SIZE >( s_uiClsSize ) + 1 ) * sizeof( PCLASS ) ) );
+   s_pClasses = static_cast<PCLASS*>( hb_xgrab( ( static_cast<HB_SIZE>( s_uiClsSize ) + 1 ) * sizeof( PCLASS ) ) );
    s_pClasses[ 0 ] = nullptr;
 
 #if defined( HB_MT_VM )
@@ -1195,7 +1195,7 @@ void hb_clsDoInit( void )
 
    HB_STACK_TLS_PRELOAD
 
-   for( int i = 0; i < static_cast< int >( HB_SIZEOFARRAY( s_puiHandles ) ); ++i )
+   for( int i = 0; i < static_cast<int>( HB_SIZEOFARRAY( s_puiHandles ) ); ++i )
    {
       PHB_DYNS pFuncSym = hb_dynsymFindName( s_pszFuncNames[i] );
       if( pFuncSym && hb_dynsymIsFunction( pFuncSym ) )
@@ -1220,7 +1220,7 @@ void hb_clsDoInit( void )
 static void hb_clsRelease( PCLASS pClass )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsRelease(%p)", static_cast< void * >( pClass ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_clsRelease(%p)", static_cast<void*>( pClass ) ) );
 #endif
 
    if( pClass->uiInitDatas )
@@ -1422,7 +1422,7 @@ HB_USHORT hb_objSetClass( PHB_ITEM pItem, const char * szClass, const char * szF
 static HB_USHORT hb_objGetClassH( PHB_ITEM pObject )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_objGetClassH(%p)", static_cast< void * >( pObject ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_objGetClassH(%p)", static_cast<void*>( pObject ) ) );
 #endif
 
    if( HB_IS_ARRAY( pObject ) )
@@ -1485,7 +1485,7 @@ static HB_USHORT hb_objGetClassH( PHB_ITEM pObject )
 const char * hb_objGetClsName( PHB_ITEM pObject )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_objGetClsName(%p)", static_cast< void * >( pObject ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_objGetClsName(%p)", static_cast<void*>( pObject ) ) );
 #endif
 
    if( HB_IS_ARRAY( pObject ) )
@@ -1584,7 +1584,7 @@ PHB_SYMB hb_clsFuncSym( HB_USHORT uiClass )
 
 const char * hb_clsMethodName( HB_USHORT uiClass, HB_USHORT uiMethod )
 {
-   if( uiClass && uiClass <= s_uiClasses && static_cast< HB_UINT >( uiMethod ) < static_cast< HB_UINT >( hb_clsMthNum( s_pClasses[ uiClass ] ) ) )
+   if( uiClass && uiClass <= s_uiClasses && static_cast<HB_UINT>( uiMethod ) < static_cast<HB_UINT>( hb_clsMthNum( s_pClasses[ uiClass ] ) ) )
    {
       PMETHOD pMethod = s_pClasses[ uiClass ]->pMethods + uiMethod;
       if( pMethod->pMessage )
@@ -1609,7 +1609,7 @@ static HB_SIZE hb_clsGetVarIndexEx( HB_USHORT uiClass, PHB_DYNS pVarSym, HB_USHO
 
       if( pFuncSym == &s___msgSetData || pFuncSym == &s___msgGetData )
       {
-         return static_cast< HB_SIZE >( pMethod->uiData ) + ( uiClass != uiSuper ? hb_clsParentInstanceOffset( s_pClasses[ uiClass ], uiSuper ) : pMethod->uiOffset );
+         return static_cast<HB_SIZE>( pMethod->uiData ) + ( uiClass != uiSuper ? hb_clsParentInstanceOffset( s_pClasses[ uiClass ], uiSuper ) : pMethod->uiOffset );
       }
    }
    return 0;
@@ -1696,7 +1696,7 @@ PHB_SYMB hb_clsMethodSym( PHB_ITEM pBaseSymbol )
 const char * hb_objGetRealClsName( PHB_ITEM pObject, const char * szName )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_objGetrealClsName(%p,%s)", static_cast< void * >( pObject ), szName ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_objGetrealClsName(%p,%s)", static_cast<void*>( pObject ), szName ) );
 #endif
 
    HB_USHORT uiClass;
@@ -1847,7 +1847,7 @@ static PHB_SYMB hb_clsValidScope( PMETHOD pMethod, PHB_STACK_STATE pStack )
             if( pHiddenMthd && ( pHiddenMthd->uiScope & HB_OO_CLSTP_NONVIRTUAL ) && pHiddenMthd->uiSprClass == uiSenderClass )
             {
                pStack->uiClass = uiSenderClass;
-               pStack->uiMethod = static_cast< HB_USHORT >( pHiddenMthd - pClass->pMethods );
+               pStack->uiMethod = static_cast<HB_USHORT>( pHiddenMthd - pClass->pMethods );
                return pHiddenMthd->pFuncSym;
             }
          }
@@ -1899,7 +1899,7 @@ static PHB_SYMB hb_clsScalarMethod( PCLASS pClass, PHB_DYNS pMsg, PHB_STACK_STAT
       pStack->uiClass = pClass->uiClass;
       if( pMethod )
       {
-         pStack->uiMethod = static_cast< HB_USHORT >( pMethod - pClass->pMethods );
+         pStack->uiMethod = static_cast<HB_USHORT>( pMethod - pClass->pMethods );
          return hb_clsValidScope( pMethod, pStack );
       }
    }
@@ -1914,7 +1914,7 @@ static PHB_SYMB hb_clsScalarMethod( PCLASS pClass, PHB_DYNS pMsg, PHB_STACK_STAT
 static void hb_clsMakeSuperObject( PHB_ITEM pDest, PHB_ITEM pObject, HB_USHORT uiSuperClass )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_clsMakeSuperObject(%p, %p, %hu)", static_cast< void * >( pDest ), static_cast< void * >( pObject ), uiSuperClass ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_clsMakeSuperObject(%p, %p, %hu)", static_cast<void*>( pDest ), static_cast<void*>( pObject ), uiSuperClass ) );
 #endif
 
    /* create a fake object array */
@@ -1935,7 +1935,7 @@ static void hb_clsMakeSuperObject( PHB_ITEM pDest, PHB_ITEM pObject, HB_USHORT u
 PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pStack )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_objGetMethod(%p, %p, %p)", static_cast< void * >( pObject ), static_cast< void * >( pMessage ), static_cast< void * >( pStack ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_objGetMethod(%p, %p, %p)", static_cast<void*>( pObject ), static_cast<void*>( pMessage ), static_cast<void*>( pStack ) ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -1991,7 +1991,7 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE p
                PMETHOD pMethod = hb_clsFindMsg( pClass, pMsg );
                if( pMethod )
                {
-                  pStack->uiMethod = static_cast< HB_USHORT >( pMethod - pClass->pMethods );
+                  pStack->uiMethod = static_cast<HB_USHORT>( pMethod - pClass->pMethods );
                   return hb_clsValidScope( pMethod, pStack );
                }
             }
@@ -2106,7 +2106,7 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE p
                {
                   return hb_objGetMethod( pBase, pMessage, pStack );
                }
-               hb_itemPutL( hb_stackReturnItem(), static_cast< HB_SIZE >( pEnum->item.asEnum.offset ) <= 1 );
+               hb_itemPutL( hb_stackReturnItem(), static_cast<HB_SIZE>( pEnum->item.asEnum.offset ) <= 1 );
                return &s___msgEnumIsFirst;
             }
             else if( pMsg == s___msgEnumIsLast.pDynSym )
@@ -2120,16 +2120,16 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE p
                   }
                   else
                   {
-                     hb_itemPutL( hb_stackReturnItem(), static_cast< HB_SIZE >( pEnum->item.asEnum.offset ) >= hb_arrayLen( pBase ) );
+                     hb_itemPutL( hb_stackReturnItem(), static_cast<HB_SIZE>( pEnum->item.asEnum.offset ) >= hb_arrayLen( pBase ) );
                   }
                }
                else if( HB_IS_HASH( pBase ) )
                {
-                  hb_itemPutL( hb_stackReturnItem(), static_cast< HB_SIZE >( pEnum->item.asEnum.offset ) >= hb_hashLen( pBase ) );
+                  hb_itemPutL( hb_stackReturnItem(), static_cast<HB_SIZE>( pEnum->item.asEnum.offset ) >= hb_hashLen( pBase ) );
                }
                else if( HB_IS_STRING( pBase ) )
                {
-                  hb_itemPutL( hb_stackReturnItem(), static_cast< HB_SIZE >( pEnum->item.asEnum.offset ) >= hb_itemGetCLen( pBase ) );
+                  hb_itemPutL( hb_stackReturnItem(), static_cast<HB_SIZE>( pEnum->item.asEnum.offset ) >= hb_itemGetCLen( pBase ) );
                }
 
                return &s___msgEnumIsLast;
@@ -2381,7 +2381,7 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE p
          PMETHOD pMethod = hb_clsFindMsg( pClass, s___msgOnError.pDynSym );
          if( pMethod )
          {
-            pStack->uiMethod = static_cast< HB_USHORT >( pMethod - pClass->pMethods );
+            pStack->uiMethod = static_cast<HB_USHORT>( pMethod - pClass->pMethods );
             return pMethod->pFuncSym;
          }
       }
@@ -2502,7 +2502,7 @@ static void hb_objSuperDestructorCall( PHB_ITEM pObject, PCLASS pClass )
    char * pcClasses;
    HB_USHORT uiClass;
 
-   pcClasses = static_cast< char * >( hb_xgrabz( static_cast< HB_SIZE >( s_uiClasses ) + 1 ) );
+   pcClasses = static_cast<char*>( hb_xgrabz( static_cast<HB_SIZE>( s_uiClasses ) + 1 ) );
 
    do
    {
@@ -2609,7 +2609,7 @@ void hb_objDestructorCall( PHB_ITEM pObject )
 HB_BOOL hb_objHasOperator( PHB_ITEM pObject, HB_USHORT uiOperator )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_objHasOperator(%p,%hu)", static_cast< void * >( pObject ), uiOperator ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_objHasOperator(%p,%hu)", static_cast<void*>( pObject ), uiOperator ) );
 #endif
 
    HB_USHORT uiClass;
@@ -2630,7 +2630,7 @@ HB_BOOL hb_objHasOperator( PHB_ITEM pObject, HB_USHORT uiOperator )
 HB_BOOL hb_objOperatorCall( HB_USHORT uiOperator, PHB_ITEM pResult, PHB_ITEM pObject, PHB_ITEM pMsgArg1, PHB_ITEM pMsgArg2 )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_objOperatorCall(%hu,%p,%p,%p,%p)", uiOperator, static_cast< void * >( pResult ), static_cast< void * >( pObject ), static_cast< void * >( pMsgArg1 ), static_cast< void * >( pMsgArg2 ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_objOperatorCall(%hu,%p,%p,%p,%p)", uiOperator, static_cast<void*>( pResult ), static_cast<void*>( pObject ), static_cast<void*>( pMsgArg1 ), static_cast<void*>( pMsgArg2 ) ) );
 #endif
 
    if( hb_objHasOperator( pObject, uiOperator ) )
@@ -2679,7 +2679,7 @@ HB_BOOL hb_objHasMessage( PHB_ITEM pObject, PHB_DYNS pMessage )
 HB_BOOL hb_objHasMsg( PHB_ITEM pObject, const char * szString )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_objHasMsg(%p, %s)", static_cast< void * >( pObject ), szString ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_objHasMsg(%p, %s)", static_cast<void*>( pObject ), szString ) );
 #endif
 
    PHB_DYNS pDynSym;
@@ -2713,7 +2713,7 @@ PHB_ITEM hb_objSendMessage( PHB_ITEM pObject, PHB_DYNS pMsgSym, HB_ULONG ulArg, 
          }
          va_end( ap );
       }
-      hb_vmSend( static_cast< HB_USHORT >( ulArg ) );
+      hb_vmSend( static_cast<HB_USHORT>( ulArg ) );
    }
    else
    {
@@ -2741,7 +2741,7 @@ PHB_ITEM hb_objSendMsg( PHB_ITEM pObject, const char * szMsg, HB_ULONG ulArg, ..
       }
       va_end( ap );
    }
-   hb_vmSend( static_cast< HB_USHORT >( ulArg ) );
+   hb_vmSend( static_cast<HB_USHORT>( ulArg ) );
 
    {
       HB_STACK_TLS_PRELOAD
@@ -2844,7 +2844,7 @@ static PHB_SYMB hb_objGetFuncSym( PHB_ITEM pItem )
 void hb_objCloneBody( PHB_ITEM pDest, PHB_ITEM pObject, PHB_NESTED_CLONED pClonedList )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_objCloneBody(%p,%p,%p)", static_cast< void * >( pDest ), static_cast< void * >( pObject ), static_cast< void * >( pClonedList ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_objCloneBody(%p,%p,%p)", static_cast<void*>( pDest ), static_cast<void*>( pObject ), static_cast<void*>( pClonedList ) ) );
 #endif
 
    HB_SYMBOL_UNUSED( pClonedList );
@@ -2858,7 +2858,7 @@ void hb_objCloneBody( PHB_ITEM pDest, PHB_ITEM pObject, PHB_NESTED_CLONED pClone
 PHB_ITEM hb_objCloneTo( PHB_ITEM pDest, PHB_ITEM pObject )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_objCloneTo(%p,%p)", static_cast< void * >( pDest ), static_cast< void * >( pObject ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_objCloneTo(%p,%p)", static_cast<void*>( pDest ), static_cast<void*>( pObject ) ) );
 #endif
 
    hb_objCloneBody( pDest, pObject, nullptr );
@@ -2907,7 +2907,7 @@ void hb_dbg_objSendMessage( int iProcLevel, PHB_ITEM pObject, PHB_ITEM pMessage,
                PHB_ITEM pBase = hb_stackBaseItem();
 
                pBase->item.asSymbol.stackstate->uiClass = uiClass;
-               pBase->item.asSymbol.stackstate->uiMethod = static_cast< HB_USHORT >( pMethod - s_pClasses[ uiClass ]->pMethods );
+               pBase->item.asSymbol.stackstate->uiMethod = static_cast<HB_USHORT>( pMethod - s_pClasses[ uiClass ]->pMethods );
             }
          }
       }
@@ -3297,14 +3297,14 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage, HB_USHOR
             break;
 
          case HB_OO_MSG_SUPER:
-            uiIndex = static_cast< HB_USHORT >( hb_itemGetNI( pFunction ) );
-            uiSprClass = static_cast< HB_USHORT >( hb_itemGetNI( pInit ) );
+            uiIndex = static_cast<HB_USHORT>( hb_itemGetNI( pFunction ) );
+            uiSprClass = static_cast<HB_USHORT>( hb_itemGetNI( pInit ) );
             fOK = uiSprClass && uiSprClass <= s_uiClasses && uiIndex <= pClass->uiDatas;
             break;
 
          case HB_OO_MSG_ASSIGN:
          case HB_OO_MSG_ACCESS:
-            uiIndex = static_cast< HB_USHORT >( hb_itemGetNI( pFunction ) );
+            uiIndex = static_cast<HB_USHORT>( hb_itemGetNI( pFunction ) );
             /* This validation can break buggy .prg code which wrongly
              * sets data offsets but IMHO it will help to clean the code.
              * [druzus]
@@ -3314,7 +3314,7 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage, HB_USHOR
 
          case HB_OO_MSG_CLSASSIGN:
          case HB_OO_MSG_CLSACCESS:
-            uiIndex = static_cast< HB_USHORT >( hb_itemGetNI( pFunction ) );
+            uiIndex = static_cast<HB_USHORT>( hb_itemGetNI( pFunction ) );
             fOK = uiIndex != 0;
             break;
 
@@ -3326,7 +3326,7 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage, HB_USHOR
                pNewMeth = hb_clsFindMsg( pClass, pDelegMsg );
                if( pNewMeth )
                {
-                  uiIndex = static_cast< HB_USHORT >( pNewMeth - pClass->pMethods );
+                  uiIndex = static_cast<HB_USHORT>( pNewMeth - pClass->pMethods );
                }
             }
             fOK = pFunction == nullptr || HB_IS_NIL( pFunction ) || uiIndex != 0;
@@ -3338,7 +3338,7 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage, HB_USHOR
                   pNewMeth = hb_clsFindMsg( pClass, pDelegMsg );
                   if( pNewMeth )
                   {
-                     uiSprClass = static_cast< HB_USHORT >( pNewMeth - pClass->pMethods );
+                     uiSprClass = static_cast<HB_USHORT>( pNewMeth - pClass->pMethods );
                   }
                }
                fOK = ( pInit == nullptr || HB_IS_NIL( pInit ) || uiSprClass != 0 ) && ( uiIndex != 0 || uiSprClass != 0 );
@@ -3364,7 +3364,7 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage, HB_USHOR
       pNewMeth = hb_clsAllocMsg( pClass, pMessage );
 
       uiPrevCls = uiClass;
-      uiPrevMth = static_cast< HB_USHORT >( pClass->pMethods - pNewMeth );
+      uiPrevMth = static_cast<HB_USHORT>( pClass->pMethods - pNewMeth );
 
 #ifndef HB_VIRTUAL_HIDDEN
       if( uiScope & HB_OO_CLSTP_HIDDEN )
@@ -3449,7 +3449,7 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage, HB_USHOR
             }
             else if( pNewMeth->uiScope & HB_OO_CLSTP_SHARED )
             {
-               if( hb_arrayLen( pClass->pSharedDatas ) < static_cast< HB_SIZE >( pNewMeth->uiData ) )
+               if( hb_arrayLen( pClass->pSharedDatas ) < static_cast<HB_SIZE>( pNewMeth->uiData ) )
                {
                   hb_arraySize( pClass->pSharedDatas, pNewMeth->uiData );
                }
@@ -3457,7 +3457,7 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage, HB_USHOR
             }
             else
             {
-               if( hb_arrayLen( pClass->pClassDatas ) < static_cast< HB_SIZE >( pNewMeth->uiData ) )
+               if( hb_arrayLen( pClass->pClassDatas ) < static_cast<HB_SIZE>( pNewMeth->uiData ) )
                {
                   hb_arraySize( pClass->pClassDatas, pNewMeth->uiData );
                }
@@ -3471,7 +3471,7 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage, HB_USHOR
             pNewMeth->uiData = uiIndex;
             if( pNewMeth->uiScope & HB_OO_CLSTP_SHARED )
             {
-               if( hb_arrayLen( pClass->pSharedDatas ) < static_cast< HB_SIZE >( pNewMeth->uiData ) )
+               if( hb_arrayLen( pClass->pSharedDatas ) < static_cast<HB_SIZE>( pNewMeth->uiData ) )
                {
                   hb_arraySize( pClass->pSharedDatas, pNewMeth->uiData );
                }
@@ -3489,7 +3489,7 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage, HB_USHOR
             }
             else
             {
-               if( hb_arrayLen( pClass->pClassDatas ) < static_cast< HB_SIZE >( pNewMeth->uiData ) )
+               if( hb_arrayLen( pClass->pClassDatas ) < static_cast<HB_SIZE>( pNewMeth->uiData ) )
                {
                   hb_arraySize( pClass->pClassDatas, pNewMeth->uiData );
                }
@@ -3506,7 +3506,7 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage, HB_USHOR
             pNewMeth->pFuncSym = &s___msgEvalInline;
             pNewMeth->uiScope = uiScope;
             hb_arrayAdd( pClass->pInlines, pFunction );
-            pNewMeth->uiData = static_cast< HB_USHORT >( hb_arrayLen( pClass->pInlines ) );
+            pNewMeth->uiData = static_cast<HB_USHORT>( hb_arrayLen( pClass->pInlines ) );
             break;
 
          case HB_OO_MSG_VIRTUAL:
@@ -3638,13 +3638,13 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage, HB_USHOR
 
 HB_FUNC( __CLSADDMSG )
 {
-   HB_USHORT uiClass = static_cast< HB_USHORT >( hb_parni(1) );
+   HB_USHORT uiClass = static_cast<HB_USHORT>( hb_parni(1) );
    const char * szMessage = hb_parc(2);
 
    if( szMessage && uiClass && uiClass <= s_uiClasses )
    {
-      HB_USHORT nType     = static_cast< HB_USHORT >( hb_parni(4) );
-      HB_USHORT uiScope   = static_cast< HB_USHORT >( hb_parni(6) );
+      HB_USHORT nType     = static_cast<HB_USHORT>( hb_parni(4) );
+      HB_USHORT uiScope   = static_cast<HB_USHORT>( hb_parni(6) );
       PHB_ITEM  pFunction = hb_param( 3, HB_IT_ANY );
       PHB_ITEM  pInit     = hb_param( 5, HB_IT_ANY );
 
@@ -3661,7 +3661,7 @@ HB_FUNC( __CLSADDMSG )
       {
          PHB_ITEM pType = hb_param( 7, HB_IT_ANY );
          char szAssign[ HB_SYMBOL_NAME_LEN + 1 ];
-         int iLen = static_cast< int >( hb_parclen(2) );
+         int iLen = static_cast<int>( hb_parclen(2) );
          if( iLen >= HB_SYMBOL_NAME_LEN )
          {
             iLen = HB_SYMBOL_NAME_LEN - 1;
@@ -3673,12 +3673,12 @@ HB_FUNC( __CLSADDMSG )
          uiScope = ( uiScope | HB_OO_CLSTP_EXPORTED ) & ~( HB_OO_CLSTP_PROTECTED | HB_OO_CLSTP_HIDDEN );
          if( nType == HB_OO_MSG_PROPERTY )
          {
-            hb_clsAddMsg( uiClass, szAssign, HB_OO_MSG_ASSIGN, static_cast< HB_USHORT >( uiScope & ~HB_OO_CLSTP_PERSIST ), pFunction, pType );
+            hb_clsAddMsg( uiClass, szAssign, HB_OO_MSG_ASSIGN, static_cast<HB_USHORT>( uiScope & ~HB_OO_CLSTP_PERSIST ), pFunction, pType );
             nType = HB_OO_MSG_ACCESS;
          }
          else
          {
-            hb_clsAddMsg( uiClass, szAssign, HB_OO_MSG_CLSASSIGN, static_cast< HB_USHORT >( uiScope & ~HB_OO_CLSTP_PERSIST ), pFunction, pType );
+            hb_clsAddMsg( uiClass, szAssign, HB_OO_MSG_CLSASSIGN, static_cast<HB_USHORT>( uiScope & ~HB_OO_CLSTP_PERSIST ), pFunction, pType );
             nType = HB_OO_MSG_CLSACCESS;
          }
       }
@@ -3709,17 +3709,17 @@ static HB_USHORT hb_clsNew( const char * szClassName, HB_USHORT uiDatas, PHB_ITE
    HB_USHORT * puiClassData = nullptr, uiClassDataSize = 0;
    HB_BOOL fClsMutex = HB_FALSE;
 
-   uiSuper  = static_cast< HB_USHORT >( pSuperArray ? hb_arrayLen( pSuperArray ) : 0 );
+   uiSuper  = static_cast<HB_USHORT>( pSuperArray ? hb_arrayLen( pSuperArray ) : 0 );
    pClassFunc = hb_vmGetRealFuncSym( pClassFunc );
 
-   pNewCls = static_cast< PCLASS >( hb_xgrabz( sizeof( CLASS ) ) );
+   pNewCls = static_cast<PCLASS>( hb_xgrabz( sizeof( CLASS ) ) );
 
    HB_CLASS_LOCK();
 
    if( s_uiClasses == s_uiClsSize )
    {
       s_uiClsSize += HB_CLASS_POOL_RESIZE;
-      s_pClasses = static_cast< PCLASS * >( hb_xrealloc( s_pClasses, sizeof( PCLASS ) * ( static_cast< HB_SIZE >( s_uiClsSize ) + 1 ) ) );
+      s_pClasses = static_cast<PCLASS*>( hb_xrealloc( s_pClasses, sizeof( PCLASS ) * ( static_cast<HB_SIZE>( s_uiClsSize ) + 1 ) ) );
    }
    pNewCls->uiClass = s_uiClasses + 1;
    s_pClasses[ pNewCls->uiClass ] = pNewCls;
@@ -3741,7 +3741,7 @@ static HB_USHORT hb_clsNew( const char * szClassName, HB_USHORT uiDatas, PHB_ITE
 
    for( HB_USHORT ui = 1; ui <= uiSuper; ++ui )
    {
-      uiSuperCls = static_cast< HB_USHORT >( hb_arrayGetNI( pSuperArray, ui ) );
+      uiSuperCls = static_cast<HB_USHORT>( hb_arrayGetNI( pSuperArray, ui ) );
       if( uiSuperCls && uiSuperCls < pNewCls->uiClass )
       {
          PCLASS pSprCls;
@@ -3757,12 +3757,12 @@ static HB_USHORT hb_clsNew( const char * szClassName, HB_USHORT uiDatas, PHB_ITE
             HB_USHORT nLenClsDatas;
 
             /* create class data translation tables */
-            nLenClsDatas = static_cast< HB_USHORT >( hb_itemSize( pSprCls->pClassDatas ) );
+            nLenClsDatas = static_cast<HB_USHORT>( hb_itemSize( pSprCls->pClassDatas ) );
             if( nLenClsDatas )
             {
                if( nLenClsDatas > uiClassDataSize )
                {
-                  puiClassData = static_cast< HB_USHORT * >( hb_xrealloc( puiClassData, sizeof( HB_USHORT ) * nLenClsDatas ) );
+                  puiClassData = static_cast<HB_USHORT*>( hb_xrealloc( puiClassData, sizeof( HB_USHORT ) * nLenClsDatas ) );
                   uiClassDataSize = nLenClsDatas;
                }
                memset( puiClassData, 0, sizeof( HB_USHORT ) * nLenClsDatas );
@@ -3839,7 +3839,7 @@ static HB_USHORT hb_clsNew( const char * szClassName, HB_USHORT uiDatas, PHB_ITE
 
                            if( puiClassData[ pMethod->uiData - 1 ] == 0 )
                            {
-                              puiClassData[ pMethod->uiData - 1 ] = static_cast< HB_USHORT >( hb_arrayLen( pNewCls->pClassDatas ) ) + 1;
+                              puiClassData[ pMethod->uiData - 1 ] = static_cast<HB_USHORT>( hb_arrayLen( pNewCls->pClassDatas ) ) + 1;
                               hb_arraySize( pNewCls->pClassDatas, puiClassData[ pMethod->uiData - 1 ] );
                            }
                            if( pMethod->uiOffset )
@@ -3964,7 +3964,7 @@ HB_FUNC( __CLSNEW )
    {
       HB_STACK_TLS_PRELOAD
       HB_USHORT uiClass;
-      uiClass = hb_clsNew( szClassName, static_cast< HB_USHORT >( hb_itemGetNI( pDatas ) ), pSuperArray, hb_itemGetSymbol( pClassFunc ), hb_itemGetL( pModFriend ) );
+      uiClass = hb_clsNew( szClassName, static_cast<HB_USHORT>( hb_itemGetNI( pDatas ) ), pSuperArray, hb_itemGetSymbol( pClassFunc ), hb_itemGetL( pModFriend ) );
       hb_retni( uiClass );
    }
    else
@@ -3979,7 +3979,7 @@ HB_FUNC( __CLSNEW )
  */
 HB_FUNC( __CLSADDFRIEND )
 {
-   HB_USHORT uiClass = static_cast< HB_USHORT >( hb_parni(1) );
+   HB_USHORT uiClass = static_cast<HB_USHORT>( hb_parni(1) );
 
    if( uiClass && uiClass <= s_uiClasses )
    {
@@ -4005,7 +4005,7 @@ HB_FUNC( __CLSADDFRIEND )
  */
 HB_FUNC( __CLSDELMSG )
 {
-   HB_USHORT uiClass = static_cast< HB_USHORT >( hb_parni(1) );
+   HB_USHORT uiClass = static_cast<HB_USHORT>( hb_parni(1) );
    PHB_ITEM pString = hb_param( 2, HB_IT_STRING );
 
    if( uiClass && uiClass <= s_uiClasses && pString && ! s_pClasses[ uiClass ]->fLocked )
@@ -4091,7 +4091,7 @@ static PHB_ITEM hb_clsInst( HB_USHORT uiClass )
  */
 HB_FUNC( __CLSINST )
 {
-   PHB_ITEM pSelf = hb_clsInst( static_cast< HB_USHORT >( hb_parni(1) ) );
+   PHB_ITEM pSelf = hb_clsInst( static_cast<HB_USHORT>( hb_parni(1) ) );
 
    if( pSelf )
    {
@@ -4105,7 +4105,7 @@ HB_FUNC( __CLSINST )
  */
 HB_FUNC( __CLSLOCK )
 {
-   HB_USHORT uiClass = static_cast< HB_USHORT >( hb_parni(1) );
+   HB_USHORT uiClass = static_cast<HB_USHORT>( hb_parni(1) );
 
    if( uiClass && uiClass <= s_uiClasses )
    {
@@ -4119,7 +4119,7 @@ HB_FUNC( __CLSLOCK )
  */
 HB_FUNC( __CLSMODMSG )
 {
-   HB_USHORT uiClass = static_cast< HB_USHORT >( hb_parni(1) );
+   HB_USHORT uiClass = static_cast<HB_USHORT>( hb_parni(1) );
    PHB_ITEM pString = hb_param( 2, HB_IT_STRING );
 
    if( uiClass && uiClass <= s_uiClasses && pString && ! s_pClasses[ uiClass ]->fLocked )
@@ -4191,7 +4191,7 @@ HB_FUNC( __CLSMODMSG )
                   else
                   {
                      hb_arrayAdd( pClass->pInlines, pBlock );
-                     pMethod->uiData = static_cast< HB_USHORT >( hb_arrayLen( pClass->pInlines ) );
+                     pMethod->uiData = static_cast<HB_USHORT>( hb_arrayLen( pClass->pInlines ) );
                   }
                }
                else
@@ -4229,7 +4229,7 @@ HB_FUNC( __OBJGETCLSNAME )
    }
    else
    {
-      uiClass = static_cast< HB_USHORT >( hb_parni(1) );
+      uiClass = static_cast<HB_USHORT>( hb_parni(1) );
    }
 
    hb_retc( hb_clsName( uiClass ) );
@@ -4295,7 +4295,7 @@ HB_FUNC( __OBJSENDMSG )
          hb_vmPush( hb_stackItemFromBase( uiParam ) );
       }
 
-      hb_vmSend( static_cast< HB_USHORT >( uiPCount - 2 ) );             /* Execute message */
+      hb_vmSend( static_cast<HB_USHORT>( uiPCount - 2 ) );             /* Execute message */
    }
    else
    {
@@ -4435,7 +4435,7 @@ HB_FUNC( __CLSINSTSUPER )
 HB_FUNC( __CLSASSOCTYPE )
 {
    HB_STACK_TLS_PRELOAD
-   HB_USHORT uiClass = static_cast< HB_USHORT >( hb_parni(1) );
+   HB_USHORT uiClass = static_cast<HB_USHORT>( hb_parni(1) );
    PHB_ITEM pType = hb_param( 2, HB_IT_ANY );
    HB_BOOL fResult = HB_FALSE;
 
@@ -4501,7 +4501,7 @@ HB_FUNC( __CLSASSOCTYPE )
 HB_FUNC( __CLSCNTCLASSES )
 {
    HB_STACK_TLS_PRELOAD
-   hb_retni( static_cast< int >( s_uiClasses ) );
+   hb_retni( static_cast<int>( s_uiClasses ) );
 }
 
 /* __cls_CntClsData( <hClass> ) --> <nCount>
@@ -4511,9 +4511,9 @@ HB_FUNC( __CLSCNTCLASSES )
 HB_FUNC( __CLS_CNTCLSDATA )
 {
    HB_STACK_TLS_PRELOAD
-   HB_USHORT uiClass = static_cast< HB_USHORT >( hb_parni(1) );
+   HB_USHORT uiClass = static_cast<HB_USHORT>( hb_parni(1) );
 
-   hb_retni( uiClass && uiClass <= s_uiClasses ? static_cast< HB_USHORT >( hb_arrayLen( s_pClasses[ uiClass ]->pClassDatas ) ) : 0 );
+   hb_retni( uiClass && uiClass <= s_uiClasses ? static_cast<HB_USHORT>( hb_arrayLen( s_pClasses[ uiClass ]->pClassDatas ) ) : 0 );
 }
 
 /* __cls_CntShrData( <hClass> ) --> <nCount>
@@ -4523,9 +4523,9 @@ HB_FUNC( __CLS_CNTCLSDATA )
 HB_FUNC( __CLS_CNTSHRDATA )
 {
    HB_STACK_TLS_PRELOAD
-   HB_USHORT uiClass = static_cast< HB_USHORT >( hb_parni(1) );
+   HB_USHORT uiClass = static_cast<HB_USHORT>( hb_parni(1) );
 
-   hb_retni( uiClass && uiClass <= s_uiClasses ? static_cast< HB_USHORT >( hb_arrayLen( s_pClasses[ uiClass ]->pSharedDatas ) ) : 0 );
+   hb_retni( uiClass && uiClass <= s_uiClasses ? static_cast<HB_USHORT>( hb_arrayLen( s_pClasses[ uiClass ]->pSharedDatas ) ) : 0 );
 }
 
 /* __cls_CntData( <hClass> ) --> <nCount>
@@ -4535,7 +4535,7 @@ HB_FUNC( __CLS_CNTSHRDATA )
 HB_FUNC( __CLS_CNTDATA )
 {
    HB_STACK_TLS_PRELOAD
-   HB_USHORT uiClass = static_cast< HB_USHORT >( hb_parni(1) );
+   HB_USHORT uiClass = static_cast<HB_USHORT>( hb_parni(1) );
 
    hb_retni( uiClass && uiClass <= s_uiClasses ? s_pClasses[ uiClass ]->uiDatas : 0 );
 }
@@ -4547,7 +4547,7 @@ HB_FUNC( __CLS_CNTDATA )
 HB_FUNC( __CLS_DECDATA )
 {
    HB_STACK_TLS_PRELOAD
-   HB_USHORT uiClass = static_cast< HB_USHORT >( hb_parni(1) );
+   HB_USHORT uiClass = static_cast<HB_USHORT>( hb_parni(1) );
 
    if( uiClass && uiClass <= s_uiClasses && s_pClasses[ uiClass ]->uiDatas > s_pClasses[ uiClass ]->uiDataFirst )
    {
@@ -4570,7 +4570,7 @@ HB_FUNC( __CLS_DECDATA )
 HB_FUNC( __CLS_INCDATA )
 {
    HB_STACK_TLS_PRELOAD
-   HB_USHORT uiClass = static_cast< HB_USHORT >( hb_parni(1) );
+   HB_USHORT uiClass = static_cast<HB_USHORT>( hb_parni(1) );
 
    if( uiClass && uiClass <= s_uiClasses )
    {
@@ -4604,14 +4604,14 @@ HB_FUNC_TRANSLATE( __CLASSADD, __CLSADDMSG )
 HB_FUNC( __CLASSNAME )
 {
    HB_STACK_TLS_PRELOAD
-   hb_retc( hb_clsName( static_cast< HB_USHORT >( hb_parni(1) ) ) );
+   hb_retc( hb_clsName( static_cast<HB_USHORT>( hb_parni(1) ) ) );
 }
 
 /* NOTE: Undocumented Clipper function */
 
 HB_FUNC( __CLASSSEL )
 {
-   HB_USHORT uiClass = static_cast< HB_USHORT >( hb_parni(1) );
+   HB_USHORT uiClass = static_cast<HB_USHORT>( hb_parni(1) );
    PHB_ITEM pReturn = hb_itemNew( nullptr );
 
    if( uiClass && uiClass <= s_uiClasses )
@@ -4632,7 +4632,7 @@ HB_FUNC( __CLASSSEL )
       }
       while( --nLimit );
 
-      if( nPos < static_cast< HB_SIZE >( pClass->uiMethods ) )
+      if( nPos < static_cast<HB_SIZE>( pClass->uiMethods ) )
       {
          hb_arraySize( pReturn, nPos );
       }
@@ -4656,7 +4656,7 @@ HB_FUNC( __CLSPARENT )
    HB_STACK_TLS_PRELOAD
    const char * szParentName = hb_parc(2);
 
-   hb_retl( szParentName && hb_clsIsParent( static_cast< HB_USHORT >( hb_parni(1) ), szParentName ) );
+   hb_retl( szParentName && hb_clsIsParent( static_cast<HB_USHORT>( hb_parni(1) ), szParentName ) );
 }
 
 /* __Sender() --> <obj> | NIL
@@ -4738,7 +4738,7 @@ HB_FUNC( __CLSSYNCWAIT )
       double dTimeOut = hb_parnd(2);
       if( dTimeOut > 0 )
       {
-         ulMilliSec = static_cast< HB_ULONG >( dTimeOut * 10 );
+         ulMilliSec = static_cast<HB_ULONG>( dTimeOut * 10 );
       }
    }
 
@@ -4865,8 +4865,8 @@ HB_FUNC_STATIC( msgClassSel )
       HB_USHORT nParam, nScope;
       HB_BOOL lFull;
 
-      nParam = static_cast< HB_USHORT >( hb_parnidef( 1, HB_MSGLISTALL ) );
-      nScope = static_cast< HB_USHORT >( hb_parni(2) );
+      nParam = static_cast<HB_USHORT>( hb_parnidef( 1, HB_MSGLISTALL ) );
+      nScope = static_cast<HB_USHORT>( hb_parni(2) );
       lFull = hb_parl(3);
       pReturn = hb_itemArrayNew( pClass->uiMethods );
 
@@ -4902,9 +4902,9 @@ HB_FUNC_STATIC( msgClassSel )
          }
          ++pMethod;
       }
-      while( --nLimit && nPos < static_cast< HB_SIZE >( pClass->uiMethods ) );
+      while( --nLimit && nPos < static_cast<HB_SIZE>( pClass->uiMethods ) );
 
-      if( nPos < static_cast< HB_SIZE >( pClass->uiMethods ) )
+      if( nPos < static_cast<HB_SIZE>( pClass->uiMethods ) )
       {
          hb_arraySize( pReturn, nPos );
       }
@@ -4982,7 +4982,7 @@ HB_FUNC_STATIC( msgEvalInline )
       hb_vmPush( hb_stackItemFromBase( uiParam ) );
    }
 
-   hb_vmEval( static_cast< HB_USHORT >( uiPCount + 1 ) );
+   hb_vmEval( static_cast<HB_USHORT>( uiPCount + 1 ) );
 }
 
 HB_FUNC_STATIC( msgPerform )
@@ -5019,7 +5019,7 @@ HB_FUNC_STATIC( msgPerform )
          {
             hb_vmPush( hb_stackItemFromBase( uiParam ) );
          }
-         hb_vmSend( static_cast< HB_USHORT >( uiPCount - 1 ) );
+         hb_vmSend( static_cast<HB_USHORT>( uiPCount - 1 ) );
       }
    }
 }
@@ -5447,7 +5447,7 @@ HB_FUNC( __GETMSGPRF ) /* profiler: returns a method called and consumed times *
 {
    HB_STACK_TLS_PRELOAD
 #ifndef HB_NO_PROFILER
-   HB_USHORT uiClass = static_cast< HB_USHORT >( hb_parni(1) );
+   HB_USHORT uiClass = static_cast<HB_USHORT>( hb_parni(1) );
    const char * cMsg = hb_parc(2);
 
    hb_reta( 2 );
@@ -5501,7 +5501,7 @@ static PHB_ITEM hb_objGetIVars( PHB_ITEM pObject, HB_USHORT uiScope, HB_BOOL fCh
    pClass = s_pClasses[ uiClass ];
    nLen = nCount = hb_arrayLen( pObject );
    nSize = 0;
-   pIndex = nLen ? static_cast< PHB_IVARINFO >( hb_xgrabz( nLen * sizeof( HB_IVARINFO ) ) ) : nullptr;
+   pIndex = nLen ? static_cast<PHB_IVARINFO>( hb_xgrabz( nLen * sizeof( HB_IVARINFO ) ) ) : nullptr;
 
    if( fChanged && pClass->uiInitDatas )
    {
@@ -5553,7 +5553,7 @@ static PHB_ITEM hb_objGetIVars( PHB_ITEM pObject, HB_USHORT uiScope, HB_BOOL fCh
          {
             HB_USHORT uiStatus = pFuncSym == &s___msgGetData ? 3 : 2;
 
-            nIndex = ( uiClass == pClass->uiClass ? static_cast< HB_SIZE >( pMethod->uiOffset ) : nOffset ) + pMethod->uiData;
+            nIndex = ( uiClass == pClass->uiClass ? static_cast<HB_SIZE>( pMethod->uiOffset ) : nOffset ) + pMethod->uiData;
             if( nIndex == 0 || nIndex > nLen )
             {
                hb_errInternal( HB_EI_CLSINVMETHOD, nullptr, "__objGetIVars()", nullptr );
@@ -5689,7 +5689,7 @@ static void hb_objSetIVars( PHB_ITEM pObject, PHB_ITEM pArray )
 HB_FUNC( __OBJGETIVARS )
 {
    PHB_ITEM pObject = hb_param( 1, HB_IT_OBJECT );
-   HB_USHORT uiScope = static_cast< HB_USHORT >( hb_parni(2) );
+   HB_USHORT uiScope = static_cast<HB_USHORT>( hb_parni(2) );
    HB_BOOL fChanged = hb_parldef( 3, HB_TRUE );
 
    hb_itemReturnRelease( hb_objGetIVars( pObject, uiScope, fChanged ) );
@@ -5709,7 +5709,7 @@ HB_FUNC( __OBJSETIVARS )
 
       if( HB_IS_NUMERIC( pObject ) )
       {
-         pObject = pNewObj = hb_clsInst( static_cast< HB_USHORT >( hb_itemGetNI( pObject ) ) );
+         pObject = pNewObj = hb_clsInst( static_cast<HB_USHORT>( hb_itemGetNI( pObject ) ) );
       }
       else if( HB_IS_STRING( pObject ) )
       {
@@ -5751,7 +5751,7 @@ HB_FUNC( __OBJRESTOREIVARS )
 
       if( HB_IS_NUMERIC( pClass ) )
       {
-         pObject = hb_clsInst( static_cast< HB_USHORT >( hb_itemGetNI( pClass ) ) );
+         pObject = hb_clsInst( static_cast<HB_USHORT>( hb_itemGetNI( pClass ) ) );
       }
       else if( HB_IS_STRING( pClass ) )
       {
@@ -5782,7 +5782,7 @@ HB_FUNC( __OBJRESTOREIVARS )
  */
 HB_FUNC( __CLSGETPROPERTIES )
 {
-   HB_USHORT uiClass = static_cast< HB_USHORT >( hb_parni(1) );
+   HB_USHORT uiClass = static_cast<HB_USHORT>( hb_parni(1) );
    PHB_ITEM pReturn = hb_itemNew( nullptr );
 
    if( uiClass && uiClass <= s_uiClasses )
@@ -5858,7 +5858,7 @@ HB_FUNC( __CLSGETPROPERTIES )
 /* __clsGetAncestors( <nClass> ) --> { <nSuper1>, <nSuper2>, ... } */
 HB_FUNC( __CLSGETANCESTORS )
 {
-   HB_USHORT uiClass = static_cast< HB_USHORT >( hb_parni(1) ), uiCount;
+   HB_USHORT uiClass = static_cast<HB_USHORT>( hb_parni(1) ), uiCount;
 
    if( uiClass && uiClass <= s_uiClasses )
    {
@@ -5894,7 +5894,7 @@ HB_FUNC( __CLSMSGTYPE )
    if( pMessage )
    {
       HB_STACK_TLS_PRELOAD
-      HB_USHORT uiClass = static_cast< HB_USHORT >( hb_parni(1) );
+      HB_USHORT uiClass = static_cast<HB_USHORT>( hb_parni(1) );
       PMETHOD pMethod = nullptr;
 
       if( uiClass && uiClass <= s_uiClasses )
@@ -5922,17 +5922,17 @@ HB_FUNC( __CLSPREALLOCATE )
    HB_STACK_TLS_PRELOAD
    HB_LONG lNewSize = hb_parnl(1);
 
-   if( lNewSize > static_cast< HB_LONG >( USHRT_MAX ) )
+   if( lNewSize > static_cast<HB_LONG>( USHRT_MAX ) )
    {
       lNewSize = USHRT_MAX;
    }
 
    HB_CLASS_LOCK();
 
-   if( lNewSize > static_cast< HB_LONG >( s_uiClsSize ) )
+   if( lNewSize > static_cast<HB_LONG>( s_uiClsSize ) )
    {
-      s_uiClsSize = static_cast< HB_USHORT >( lNewSize );
-      s_pClasses = static_cast< PCLASS * >( hb_xrealloc( s_pClasses, sizeof( PCLASS ) * ( static_cast< HB_SIZE >( s_uiClsSize ) + 1 ) ) );
+      s_uiClsSize = static_cast<HB_USHORT>( lNewSize );
+      s_pClasses = static_cast<PCLASS*>( hb_xrealloc( s_pClasses, sizeof( PCLASS ) * ( static_cast<HB_SIZE>( s_uiClsSize ) + 1 ) ) );
    }
 
    HB_CLASS_UNLOCK();
@@ -6017,7 +6017,7 @@ HB_FUNC( __OBJSETCLASSHANDLE )
 
    if( pObject )
    {
-      HB_USHORT uiClass = static_cast< HB_USHORT >( hb_parni(2) );
+      HB_USHORT uiClass = static_cast<HB_USHORT>( hb_parni(2) );
 
       uiPrevClassHandle = pObject->item.asArray.value->uiClass;
       if( uiClass <= s_uiClasses )
@@ -6076,7 +6076,7 @@ void hb_clsAssociate( HB_USHORT usClassH )
 
 HB_FUNC( __CLSVERIFY )
 {
-   HB_USHORT uiClass = static_cast< HB_USHORT >( hb_parni(1) );
+   HB_USHORT uiClass = static_cast<HB_USHORT>( hb_parni(1) );
    PHB_ITEM pReturn = hb_itemNew( nullptr );
 
    if( uiClass && uiClass <= s_uiClasses )
@@ -6101,7 +6101,7 @@ HB_FUNC( __CLSVERIFY )
       }
       while( --nLimit );
 
-      if( nPos < static_cast< HB_SIZE >( pClass->uiMethods ) )
+      if( nPos < static_cast<HB_SIZE>( pClass->uiMethods ) )
       {
          hb_arraySize( pReturn, nPos );
       }
@@ -6125,7 +6125,7 @@ const char * hb_clsRealMethodName( void )
       {
          PCLASS pClass = s_pClasses[ pStack->uiClass ];
 
-         if( static_cast< HB_SIZE >( pStack->uiMethod ) < hb_clsMthNum( pClass ) )
+         if( static_cast<HB_SIZE>( pStack->uiMethod ) < hb_clsMthNum( pClass ) )
          {
             PMETHOD pMethod = pClass->pMethods + pStack->uiMethod;
 

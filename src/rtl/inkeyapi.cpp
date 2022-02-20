@@ -210,7 +210,7 @@ static const HB_KEY_VALUE s_transKeyStd[] = {
 int hb_inkey( HB_BOOL fWait, double dSeconds, int iEventMask )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_inkey(%d, %f, %d)", static_cast< int >( fWait ), dSeconds, iEventMask ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_inkey(%d, %f, %d)", static_cast<int>( fWait ), dSeconds, iEventMask ) );
 #endif
 
    int iKey = 0;
@@ -425,7 +425,7 @@ static int s_inkeyTransChar( int iKey, int iFlags, const HB_KEY_VALUE * pKeyVal 
 HB_SIZE hb_inkeyKeyString( int iKey, char * buffer, HB_SIZE nSize )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyKeyString(%d,%p, %" HB_PFS "u)", iKey, static_cast< void * >( buffer ), nSize ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyKeyString(%d,%p, %" HB_PFS "u)", iKey, static_cast<void*>( buffer ), nSize ) );
 #endif
 
    HB_SIZE nLen = 0;
@@ -446,7 +446,7 @@ HB_SIZE hb_inkeyKeyString( int iKey, char * buffer, HB_SIZE nSize )
 
          iKey = HB_INKEY_VALUE( iKey );
 
-         if( iKey > 0 && iKey <= static_cast< int >( HB_SIZEOFARRAY( s_transKeyFun ) ) )
+         if( iKey > 0 && iKey <= static_cast<int>( HB_SIZEOFARRAY( s_transKeyFun ) ) )
          {
             iKey = s_inkeyTransChar( iKey, iFlags, &s_transKeyFun[ iKey - 1 ] );
          }
@@ -458,7 +458,7 @@ HB_SIZE hb_inkeyKeyString( int iKey, char * buffer, HB_SIZE nSize )
       if( iKey >= 32 && iKey <= 255 && iKey != 127 )
       {
          PHB_CODEPAGE cdp = hb_vmCDP();
-         nLen = hb_cdpTextPutU16( cdp, buffer, nSize, hb_cdpGetU16( cdp, static_cast< HB_UCHAR >( iKey ) ) );
+         nLen = hb_cdpTextPutU16( cdp, buffer, nSize, hb_cdpGetU16( cdp, static_cast<HB_UCHAR>( iKey ) ) );
       }
    }
    return nLen;
@@ -482,7 +482,7 @@ int hb_inkeyKeyStd( int iKey )
       {
          iKey = HB_INKEY_VALUE( iKey );
 
-         if( iKey > 0 && iKey <= static_cast< int >( HB_SIZEOFARRAY( s_transKeyFun ) ) )
+         if( iKey > 0 && iKey <= static_cast<int>( HB_SIZEOFARRAY( s_transKeyFun ) ) )
          {
             iKey = s_inkeyTransChar( iKey, iFlags, &s_transKeyFun[ iKey - 1 ] );
          }
@@ -501,7 +501,7 @@ int hb_inkeyKeyStd( int iKey )
          }
          else if( HB_INKEY_ISUNICODE( iKey ) )
          {
-            HB_WCHAR wc = static_cast< HB_WCHAR >( iVal );
+            HB_WCHAR wc = static_cast<HB_WCHAR>( iVal );
             if( wc )
             {
                HB_UCHAR uc = hb_cdpGetUC( hb_vmCDP(), wc, 0 );
@@ -571,7 +571,7 @@ int hb_inkeyKeyExt( int iKey )
    if( HB_INKEY_ISKEY( iKey ) )
    {
       iValue = HB_INKEY_VALUE( iKey );
-      if( iValue < 1 || iValue > static_cast< int >( HB_SIZEOFARRAY( s_transKeyFun ) ) )
+      if( iValue < 1 || iValue > static_cast<int>( HB_SIZEOFARRAY( s_transKeyFun ) ) )
       {
          iValue = 0;
       }

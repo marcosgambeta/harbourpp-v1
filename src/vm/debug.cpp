@@ -104,7 +104,7 @@
 static void AddToArray( PHB_ITEM pItem, PHB_ITEM pReturn, HB_SIZE nPos )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "AddToArray(%p, %p, %" HB_PFS "u)", static_cast< void * >( pItem ), static_cast< void * >( pReturn ), nPos ) );
+   HB_TRACE( HB_TR_DEBUG, ( "AddToArray(%p, %p, %" HB_PFS "u)", static_cast<void*>( pItem ), static_cast<void*>( pReturn ), nPos ) );
 #endif
 
    if( HB_IS_SYMBOL( pItem ) )                  /* Symbol is pushed as text */
@@ -114,7 +114,7 @@ static void AddToArray( PHB_ITEM pItem, PHB_ITEM pReturn, HB_SIZE nPos )
       if( pArrayItem )
       {
          HB_SIZE nLen = strlen( pItem->item.asSymbol.value->szName ) + 2;
-         char * szBuff = static_cast< char * >( hb_xgrab( nLen + 1 ) );
+         char * szBuff = static_cast<char*>( hb_xgrab( nLen + 1 ) );
 
          hb_snprintf( szBuff, nLen + 1, "[%s]", pItem->item.asSymbol.value->szName );
          hb_itemPutCLPtr( pArrayItem, szBuff, nLen );

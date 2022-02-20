@@ -53,7 +53,7 @@
 /* extended FILE IO handle destructor */
 static HB_GARBAGE_FUNC( hb_file_Destructor )
 {
-   PHB_FILE * fileHolder = static_cast< PHB_FILE * >( Cargo );
+   PHB_FILE * fileHolder = static_cast<PHB_FILE*>( Cargo );
 
    if( * fileHolder )
    {
@@ -71,7 +71,7 @@ static const HB_GC_FUNCS s_gcFileFuncs =
 
 PHB_FILE hb_fileParam( int iParam )
 {
-   PHB_FILE * fileHolder = static_cast< PHB_FILE * >( hb_parptrGC( &s_gcFileFuncs, iParam ) );
+   PHB_FILE * fileHolder = static_cast<PHB_FILE*>( hb_parptrGC( &s_gcFileFuncs, iParam ) );
 
    if( fileHolder && * fileHolder )
    {
@@ -84,28 +84,28 @@ PHB_FILE hb_fileParam( int iParam )
 
 PHB_FILE hb_fileParamGet( int iParam )
 {
-   PHB_FILE * fileHolder = static_cast< PHB_FILE * >( hb_parptrGC( &s_gcFileFuncs, iParam ) );
+   PHB_FILE * fileHolder = static_cast<PHB_FILE*>( hb_parptrGC( &s_gcFileFuncs, iParam ) );
 
    return fileHolder ? *fileHolder : nullptr;
 }
 
 PHB_FILE hb_fileItemGet( PHB_ITEM pItem )
 {
-   PHB_FILE * fileHolder = static_cast< PHB_FILE * >( hb_itemGetPtrGC( pItem, &s_gcFileFuncs ) );
+   PHB_FILE * fileHolder = static_cast<PHB_FILE*>( hb_itemGetPtrGC( pItem, &s_gcFileFuncs ) );
 
    return fileHolder ? *fileHolder : nullptr;
 }
 
 PHB_ITEM hb_fileItemPut( PHB_ITEM pItem, PHB_FILE pFile )
 {
-   PHB_FILE * fileHolder = static_cast< PHB_FILE * >( hb_gcAllocate( sizeof( PHB_FILE ), &s_gcFileFuncs ) );
+   PHB_FILE * fileHolder = static_cast<PHB_FILE*>( hb_gcAllocate( sizeof( PHB_FILE ), &s_gcFileFuncs ) );
    * fileHolder = pFile;
    return hb_itemPutPtrGC( pItem, fileHolder );
 }
 
 void hb_fileItemClear( PHB_ITEM pItem )
 {
-   PHB_FILE * fileHolder = static_cast< PHB_FILE * >( hb_itemGetPtrGC( pItem, &s_gcFileFuncs ) );
+   PHB_FILE * fileHolder = static_cast<PHB_FILE*>( hb_itemGetPtrGC( pItem, &s_gcFileFuncs ) );
 
    if( fileHolder )
    {
@@ -115,7 +115,7 @@ void hb_fileItemClear( PHB_ITEM pItem )
 
 static PHB_FILE * hb_fileParamPtr( int iParam )
 {
-   PHB_FILE * fileHolder = static_cast< PHB_FILE * >( hb_parptrGC( &s_gcFileFuncs, iParam ) );
+   PHB_FILE * fileHolder = static_cast<PHB_FILE*>( hb_parptrGC( &s_gcFileFuncs, iParam ) );
 
    if( fileHolder && * fileHolder )
    {
@@ -314,7 +314,7 @@ HB_FUNC( HB_VFDIRECTORY )
 /* hb_vfDirSpace( <cDirName>, [ <nInfoType> ] ) --> <nFreeSpace> */
 HB_FUNC( HB_VFDIRSPACE )
 {
-   HB_USHORT uiType = static_cast< HB_USHORT >( hb_parnidef( 2, HB_DISK_AVAIL ) );
+   HB_USHORT uiType = static_cast<HB_USHORT>( hb_parnidef( 2, HB_DISK_AVAIL ) );
 
    hb_retnlen( hb_fileDirSpace( hb_parc(1), uiType ), -1, 0 );
    hb_fsSetFError( hb_fsError() );
@@ -334,7 +334,7 @@ HB_FUNC( HB_VFATTRGET )
 /* hb_vfAttrSet( <cFileName>, <nAttr> ) --> <lOK> */
 HB_FUNC( HB_VFATTRSET )
 {
-   hb_retl( hb_fileAttrSet( hb_parcx(1), static_cast< HB_FATTR >( hb_parnl(2) ) ) );
+   hb_retl( hb_fileAttrSet( hb_parcx(1), static_cast<HB_FATTR>( hb_parnl(2) ) ) );
    hb_fsSetFError( hb_fsError() );
 }
 
@@ -509,7 +509,7 @@ HB_FUNC( HB_VFOPEN )
          nModeAttr |= FXO_SHARELOCK;
       }
 
-      nModeAttr |= static_cast< HB_FATTR >( iMode & 0xFF );
+      nModeAttr |= static_cast<HB_FATTR>( iMode & 0xFF );
 
       if( HB_ISBYREF( 1 ) )
       {
@@ -519,7 +519,7 @@ HB_FUNC( HB_VFOPEN )
       }
       else
       {
-         nModeAttr &= static_cast< HB_FATTR >( ~FXO_COPYNAME );
+         nModeAttr &= static_cast<HB_FATTR>( ~FXO_COPYNAME );
       }
 
       pFile = hb_fileExtOpen( pszFile, nullptr /* pDefExt */, nModeAttr, nullptr /* pPaths */, nullptr /* pError */ );
@@ -567,8 +567,8 @@ HB_FUNC( HB_VFLOCK )
       if( HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
       {
          fResult = hb_fileLock( pFile,
-                                static_cast< HB_FOFFSET >( hb_parnint(2) ),
-                                static_cast< HB_FOFFSET >( hb_parnint(3) ),
+                                static_cast<HB_FOFFSET>( hb_parnint(2) ),
+                                static_cast<HB_FOFFSET>( hb_parnint(3) ),
                                 FL_LOCK | ( hb_parni(4) & ~FL_MASK ) );
          uiError = hb_fsError();
       }
@@ -590,8 +590,8 @@ HB_FUNC( HB_VFUNLOCK )
       if( HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
       {
          fResult = hb_fileLock( pFile,
-                                static_cast< HB_FOFFSET >( hb_parnint(2) ),
-                                static_cast< HB_FOFFSET >( hb_parnint(3) ),
+                                static_cast<HB_FOFFSET>( hb_parnint(2) ),
+                                static_cast<HB_FOFFSET>( hb_parnint(3) ),
                                 FL_UNLOCK );
          uiError = hb_fsError();
       }
@@ -613,8 +613,8 @@ HB_FUNC( HB_VFLOCKTEST )
       if( HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
       {
          iResult = hb_fileLockTest( pFile,
-                                    static_cast< HB_FOFFSET >( hb_parnint(2) ),
-                                    static_cast< HB_FOFFSET >( hb_parnint(3) ),
+                                    static_cast<HB_FOFFSET>( hb_parnint(2) ),
+                                    static_cast<HB_FOFFSET>( hb_parnint(3) ),
                                     FL_LOCK | ( hb_parni(4) & ~FL_MASK ) );
          uiError = hb_fsError();
       }
@@ -651,7 +651,7 @@ HB_FUNC( HB_VFREAD )
          uiError = hb_fsError();
       }
 
-      if( nRead == static_cast< HB_SIZE >( FS_ERROR ) )
+      if( nRead == static_cast<HB_SIZE>( FS_ERROR ) )
       {
          hb_retni( FS_ERROR );
       }
@@ -675,13 +675,13 @@ HB_FUNC( HB_VFREADLEN )
 
       if( nToRead > 0 )
       {
-         char * buffer = static_cast< char * >( hb_xgrab( nToRead + 1 ) );
+         char * buffer = static_cast<char*>( hb_xgrab( nToRead + 1 ) );
          HB_SIZE nRead;
 
          nRead = hb_fileRead( pFile, buffer, nToRead, hb_parnintdef( 3, -1 ) );
          uiError = hb_fsError();
 
-         if( nRead == static_cast< HB_SIZE >( FS_ERROR ) )
+         if( nRead == static_cast<HB_SIZE>( FS_ERROR ) )
          {
             nRead = 0;
          }
@@ -719,7 +719,7 @@ HB_FUNC( HB_VFWRITE )
          }
 
          nLen = hb_fileWrite( pFile, hb_parc(2), nLen, hb_parnintdef( 4, -1 ) );
-         if( nLen == static_cast< HB_SIZE >( FS_ERROR ) )
+         if( nLen == static_cast<HB_SIZE>( FS_ERROR ) )
          {
             hb_retni( FS_ERROR );
          }
@@ -761,11 +761,11 @@ HB_FUNC( HB_VFREADAT )
                nSize = nRead;
             }
          }
-         nRead = hb_fileReadAt( pFile, buffer, nSize, static_cast< HB_FOFFSET >( hb_parnintdef( 4, -1 ) ) );
+         nRead = hb_fileReadAt( pFile, buffer, nSize, static_cast<HB_FOFFSET>( hb_parnintdef( 4, -1 ) ) );
          uiError = hb_fsError();
       }
 
-      if( nRead == static_cast< HB_SIZE >( FS_ERROR ) )
+      if( nRead == static_cast<HB_SIZE>( FS_ERROR ) )
       {
          hb_retni( FS_ERROR );
       }
@@ -800,8 +800,8 @@ HB_FUNC( HB_VFWRITEAT )
             }
          }
 
-         nLen = hb_fileWriteAt( pFile, pszData, nLen, static_cast< HB_FOFFSET >( hb_parnintdef( 4, -1 ) ) );
-         if( nLen == static_cast< HB_SIZE >( FS_ERROR ) )
+         nLen = hb_fileWriteAt( pFile, pszData, nLen, static_cast<HB_FOFFSET>( hb_parnintdef( 4, -1 ) ) );
+         if( nLen == static_cast<HB_SIZE>( FS_ERROR ) )
          {
             hb_retni( FS_ERROR );
          }
@@ -831,7 +831,7 @@ HB_FUNC( HB_VFSEEK )
 
       if( HB_ISNUM( 2 ) )
       {
-         hb_retnint( hb_fileSeek( pFile, static_cast< HB_FOFFSET >( hb_parnint(2) ), static_cast< HB_USHORT >( hb_parnidef( 3, FS_SET ) ) ) );
+         hb_retnint( hb_fileSeek( pFile, static_cast<HB_FOFFSET>( hb_parnint(2) ), static_cast<HB_USHORT>( hb_parnidef( 3, FS_SET ) ) ) );
          uiError = hb_fsError();
       }
       else
@@ -850,7 +850,7 @@ HB_FUNC( HB_VFTRUNC )
 
    if( pFile )
    {
-      hb_retl( hb_fileTruncAt( pFile, static_cast< HB_FOFFSET >( hb_parnint(2) ) ) );
+      hb_retl( hb_fileTruncAt( pFile, static_cast<HB_FOFFSET>( hb_parnint(2) ) ) );
       hb_fsSetFError( hb_fsError() );
    }
 }
@@ -939,7 +939,7 @@ HB_FUNC( HB_VFHANDLE )
 {
    PHB_FILE pFile = hb_fileParam( 1 );
 
-   hb_retnint( static_cast< HB_NHANDLE >( pFile ? hb_fileHandle( pFile ) : FS_ERROR ) );
+   hb_retnint( static_cast<HB_NHANDLE>( pFile ? hb_fileHandle( pFile ) : FS_ERROR ) );
 }
 
 /* hb_vfTempFile( @<cFileName>, [ <cDir> ], [ <cPrefix> ], [ <cExt> ], [ <nAttr> ] ) --> <pHandle> | NIL */
@@ -951,7 +951,7 @@ HB_FUNC( HB_VFTEMPFILE )
                                        hb_parc(2), /* pszDir */
                                        hb_parc(3), /* pszPrefix */
                                        hb_parc(4), /* pszExt */
-                                       static_cast< HB_FATTR >( hb_parnldef( 5, FC_NORMAL ) ) ) );
+                                       static_cast<HB_FATTR>( hb_parnldef( 5, FC_NORMAL ) ) ) );
    hb_fsSetFError( hb_fsError() );
    hb_storc( szName, 1 );
 }
@@ -964,7 +964,7 @@ HB_FUNC( HB_VFLOAD )
    if( pszFileName )
    {
       HB_SIZE nSize;
-      char * pBuffer = reinterpret_cast< char * >( hb_fileLoad( pszFileName, hb_parns(2), &nSize ) );
+      char * pBuffer = reinterpret_cast<char*>( hb_fileLoad( pszFileName, hb_parns(2), &nSize ) );
       if( pBuffer )
       {
          hb_retclen_buffer( pBuffer, nSize );

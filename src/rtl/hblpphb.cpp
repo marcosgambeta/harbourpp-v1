@@ -130,7 +130,7 @@ using PHB_LPP_GC = HB_LPP_GC *;
 
 static HB_GARBAGE_FUNC( hb_lpp_destructor )
 {
-   PHB_LPP_GC pGC = static_cast< PHB_LPP_GC >( Cargo );
+   PHB_LPP_GC pGC = static_cast<PHB_LPP_GC>( Cargo );
 
    if( pGC->pSocket )
    {
@@ -146,7 +146,7 @@ static HB_GARBAGE_FUNC( hb_lpp_destructor )
 
 static HB_GARBAGE_FUNC( hb_lpp_mark )
 {
-   PHB_LPP_GC pGC = static_cast< PHB_LPP_GC >( Cargo );
+   PHB_LPP_GC pGC = static_cast<PHB_LPP_GC>( Cargo );
 
    if( pGC->pItemSocket )
    {
@@ -173,7 +173,7 @@ HB_FUNC( HB_LPPCREATE )
       return;
    }
 
-   pGC = static_cast< PHB_LPP_GC >( hb_gcAllocate( sizeof( HB_LPP_GC ), &s_gcPSocketFuncs ) );
+   pGC = static_cast<PHB_LPP_GC>( hb_gcAllocate( sizeof( HB_LPP_GC ), &s_gcPSocketFuncs ) );
    pGC->pSocket = hb_lppCreate( sd );
    pGC->pItemSocket = hb_itemNew( pItem );
    hb_gcUnlock( pGC->pItemSocket );
@@ -184,7 +184,7 @@ HB_FUNC( HB_LPPDESTROY )
 {
    PHB_LPP_GC pGC;
 
-   pGC = static_cast< PHB_LPP_GC >( hb_parptrGC( &s_gcPSocketFuncs, 1 ) );
+   pGC = static_cast<PHB_LPP_GC>( hb_parptrGC( &s_gcPSocketFuncs, 1 ) );
    if( ! pGC || ! pGC->pSocket )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -200,7 +200,7 @@ HB_FUNC( HB_LPPERROR )
 {
    PHB_LPP_GC pGC;
 
-   pGC = static_cast< PHB_LPP_GC >( hb_parptrGC( &s_gcPSocketFuncs, 1 ) );
+   pGC = static_cast<PHB_LPP_GC>( hb_parptrGC( &s_gcPSocketFuncs, 1 ) );
    if( ! pGC || ! pGC->pSocket )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -213,7 +213,7 @@ HB_FUNC( HB_LPPSETLIMIT )
 {
    PHB_LPP_GC pGC;
 
-   pGC = static_cast< PHB_LPP_GC >( hb_parptrGC( &s_gcPSocketFuncs, 1 ) );
+   pGC = static_cast<PHB_LPP_GC>( hb_parptrGC( &s_gcPSocketFuncs, 1 ) );
    if( ! pGC || ! pGC->pSocket )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -227,7 +227,7 @@ HB_FUNC( HB_LPPSEND )
    PHB_LPP_GC pGC;
    PHB_ITEM pData;
 
-   pGC = static_cast< PHB_LPP_GC >( hb_parptrGC( &s_gcPSocketFuncs, 1 ) );
+   pGC = static_cast<PHB_LPP_GC>( hb_parptrGC( &s_gcPSocketFuncs, 1 ) );
    if( ! pGC || ! pGC->pSocket || hb_socketItemGet( pGC->pItemSocket ) == HB_NO_SOCKET )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -245,7 +245,7 @@ HB_FUNC( HB_LPPRECV )
    void *     data;
    HB_SIZE    len;
 
-   pGC = static_cast< PHB_LPP_GC >( hb_parptrGC( &s_gcPSocketFuncs, 1 ) );
+   pGC = static_cast<PHB_LPP_GC>( hb_parptrGC( &s_gcPSocketFuncs, 1 ) );
    if( ! pGC || ! pGC->pSocket || hb_socketItemGet( pGC->pItemSocket ) == HB_NO_SOCKET )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -257,7 +257,7 @@ HB_FUNC( HB_LPPRECV )
    {
       if( HB_ISBYREF( 2 ) )
       {
-         hb_storclen( static_cast< char * >( data ), len, 2 );
+         hb_storclen( static_cast<char*>( data ), len, 2 );
       }
       hb_xfree( data );
    }
@@ -268,7 +268,7 @@ HB_FUNC( HB_LPPSENDLEN )
 {
    PHB_LPP_GC pGC;
 
-   pGC = static_cast< PHB_LPP_GC >( hb_parptrGC( &s_gcPSocketFuncs, 1 ) );
+   pGC = static_cast<PHB_LPP_GC>( hb_parptrGC( &s_gcPSocketFuncs, 1 ) );
    if( ! pGC || ! pGC->pSocket )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -281,7 +281,7 @@ HB_FUNC( HB_LPPRECVLEN )
 {
    PHB_LPP_GC pGC;
 
-   pGC = static_cast< PHB_LPP_GC >( hb_parptrGC( &s_gcPSocketFuncs, 1 ) );
+   pGC = static_cast<PHB_LPP_GC>( hb_parptrGC( &s_gcPSocketFuncs, 1 ) );
    if( ! pGC || ! pGC->pSocket )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );

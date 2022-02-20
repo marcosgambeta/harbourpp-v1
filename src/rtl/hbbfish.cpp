@@ -294,7 +294,7 @@ void hb_blowfishDecrypt( const HB_BLOWFISH * bf, HB_U32 * xl, HB_U32 * xr )
 
 void hb_blowfishInit( HB_BLOWFISH * bf, const void * keydata, int keylen )
 {
-   const unsigned char * key = static_cast< const unsigned char * >( keydata );
+   const unsigned char * key = static_cast<const unsigned char*>( keydata );
    HB_U32 xL, xR;
    int i, j, l;
 

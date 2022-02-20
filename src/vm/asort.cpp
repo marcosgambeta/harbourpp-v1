@@ -230,7 +230,7 @@ static HB_ISIZ hb_arraySortQuickPartition( PHB_BASEARRAY pBaseArray, HB_ISIZ lb,
    }
 
    /* pivot belongs in pBaseArray->pItems[ j ] */
-   if( j > lb && pBaseArray->nLen > static_cast< HB_SIZE >( j ) )
+   if( j > lb && pBaseArray->nLen > static_cast<HB_SIZE>( j ) )
    {
       hb_itemRawSwap( pBaseArray->pItems + lb, pBaseArray->pItems + j );
    }
@@ -246,7 +246,7 @@ static void hb_arraySortQuick( PHB_BASEARRAY pBaseArray, HB_ISIZ lb, HB_ISIZ ub,
    {
       HB_ISIZ m;
 
-      if( static_cast< HB_SIZE >( ub ) >= pBaseArray->nLen )
+      if( static_cast<HB_SIZE>( ub ) >= pBaseArray->nLen )
       {
          ub = pBaseArray->nLen - 1;
          if( lb >= ub )
@@ -345,7 +345,7 @@ static void hb_arraySortStart( PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZ
 {
    HB_SIZE * pBuffer, * pDest, * pPos, nPos, nTo;
 
-   pBuffer = static_cast< HB_SIZE * >( hb_xgrab( sizeof( HB_SIZE ) * 2 * nCount ) );
+   pBuffer = static_cast<HB_SIZE*>( hb_xgrab( sizeof( HB_SIZE ) * 2 * nCount ) );
    for( nPos = 0; nPos < nCount; ++nPos )
    {
       pBuffer[ nPos ] = nStart + nPos;
@@ -402,7 +402,7 @@ static void hb_arraySortStart( PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZ
 HB_BOOL hb_arraySort( PHB_ITEM pArray, HB_SIZE * pnStart, HB_SIZE * pnCount, PHB_ITEM pBlock )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_arraySort(%p, %p, %p, %p)", static_cast< void * >( pArray ), static_cast< void * >( pnStart ), static_cast< void * >( pnCount ), static_cast< void * >( pBlock ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_arraySort(%p, %p, %p, %p)", static_cast<void*>( pArray ), static_cast<void*>( pnStart ), static_cast<void*>( pnCount ), static_cast<void*>( pBlock ) ) );
 #endif
 
    if( HB_IS_ARRAY( pArray ) )

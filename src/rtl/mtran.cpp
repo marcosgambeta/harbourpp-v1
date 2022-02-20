@@ -52,7 +52,7 @@
 static HB_SIZE hb_strMemotran( char * pszResult, const char * pszString, HB_SIZE nStringLen, char cHardCR, char cSoftCR )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strMemotran(%p, %s, %" HB_PFS "u, %x, %x)", static_cast< void * >( pszResult ), pszString, nStringLen, cHardCR, cSoftCR ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_strMemotran(%p, %s, %" HB_PFS "u, %x, %x)", static_cast<void*>( pszResult ), pszString, nStringLen, cHardCR, cSoftCR ) );
 #endif
 
    HB_SIZE nStringPos = 0;
@@ -88,7 +88,7 @@ HB_FUNC( MEMOTRAN )
    if( pString )
    {
       HB_SIZE nLen = hb_itemGetCLen( pString );
-      char * pszResult = static_cast< char * >( hb_xgrab( nLen + 1 ) );
+      char * pszResult = static_cast<char*>( hb_xgrab( nLen + 1 ) );
       const char * pszRepl;
       char cHardCR = ';';
       char cSoftCR = ' ';

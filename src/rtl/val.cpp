@@ -56,7 +56,7 @@ static void hb_val( HB_BOOL fExt )
    if( pText )
    {
       const char * szText = hb_itemGetCPtr( pText );
-      int iWidth, iDec, iLen = static_cast< int >( hb_itemGetCLen( pText ) );
+      int iWidth, iDec, iLen = static_cast<int>( hb_itemGetCLen( pText ) );
       HB_BOOL fDbl;
       HB_MAXINT lValue;
       double dValue;

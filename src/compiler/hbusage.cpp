@@ -106,7 +106,7 @@ void hb_compPrintUsage( HB_COMP_DECL, const char * szSelf )
    hb_snprintf( buffer, sizeof( buffer ), "\nSyntax:  %s <file[s][.prg]|@file> [options]\n", szSelf );
    hb_compOutStd( HB_COMP_PARAM, buffer );
 
-   for( int iLine = 0; iLine < static_cast< int >( HB_SIZEOFARRAY( s_szOptions ) ); iLine++ )
+   for( int iLine = 0; iLine < static_cast<int>( HB_SIZEOFARRAY( s_szOptions ) ); iLine++ )
    {
       hb_compOutStd( HB_COMP_PARAM, s_szOptions[ iLine ] );
    }
@@ -149,10 +149,10 @@ void hb_compPrintModes( HB_COMP_DECL )
    hb_compOutStd( HB_COMP_PARAM,
                   "\nCompatibility flags: -k[options]\n" );
 
-   for( int iLine = 0; iLine < static_cast< int >( HB_SIZEOFARRAY( s_szOptions ) ); iLine++ )
+   for( int iLine = 0; iLine < static_cast<int>( HB_SIZEOFARRAY( s_szOptions ) ); iLine++ )
    {
       hb_compOutStd( HB_COMP_PARAM, s_szOptions[ iLine ] );
-      if( iLine < static_cast< int >( HB_SIZEOFARRAY( s_flags ) ) &&
+      if( iLine < static_cast<int>( HB_SIZEOFARRAY( s_flags ) ) &&
           ( s_flags[ iLine ] < 0 ? HB_COMP_ISSUPPORTED( ~s_flags[ iLine ] ) == 0 :
                                    HB_COMP_ISSUPPORTED( s_flags[ iLine ] ) != 0 ) )
       {

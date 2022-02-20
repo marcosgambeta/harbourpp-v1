@@ -113,7 +113,7 @@ double hb_secondsCPU( int n )
       #if 0
       d /= CLK_TCK;
       #endif
-      d /= static_cast< double >( sysconf( _SC_CLK_TCK ) );
+      d /= static_cast<double>( sysconf( _SC_CLK_TCK ) );
    }
 #else
    if( n > 10 )
@@ -125,11 +125,11 @@ double hb_secondsCPU( int n )
    {
       if( n & 1 )
       {
-         d += static_cast< double >( ( static_cast< HB_MAXINT >( User.dwHighDateTime ) << 32 ) + static_cast< HB_MAXINT >( User.dwLowDateTime ) );
+         d += static_cast<double>( ( static_cast<HB_MAXINT>( User.dwHighDateTime ) << 32 ) + static_cast<HB_MAXINT>( User.dwLowDateTime ) );
       }
       if( n & 2 )
       {
-         d += static_cast< double >( ( static_cast< HB_MAXINT >( Kernel.dwHighDateTime ) << 32 ) + static_cast< HB_MAXINT >( Kernel.dwLowDateTime ) );
+         d += static_cast<double>( ( static_cast<HB_MAXINT>( Kernel.dwHighDateTime ) << 32 ) + static_cast<HB_MAXINT>( Kernel.dwLowDateTime ) );
       }
       d /= 10000000.0;
    }

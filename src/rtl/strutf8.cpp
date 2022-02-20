@@ -67,7 +67,7 @@ HB_FUNC( HB_STRISUTF8 )
             {
                ++i;
             }
-            if( i == 0 || static_cast< HB_SIZE >( i ) >= nLen )
+            if( i == 0 || static_cast<HB_SIZE>( i ) >= nLen )
             {
                break;
             }

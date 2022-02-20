@@ -58,7 +58,7 @@
 
 HB_FUNC( ORDWILDSEEK )
 {
-   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
 
    if( pArea )
    {

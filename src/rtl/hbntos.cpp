@@ -99,7 +99,7 @@ HB_FUNC( HB_NTOC )
          szBuffer[ --iPos ] = '\0';
          do
          {
-            szBuffer[ --iPos ] = '0' + static_cast< char >( nNumber % 10 );
+            szBuffer[ --iPos ] = '0' + static_cast<char>( nNumber % 10 );
             nNumber /= 10;
          }
          while( nNumber != 0 );

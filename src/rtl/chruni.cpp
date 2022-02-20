@@ -61,7 +61,7 @@ HB_FUNC( HB_UCHAR )
       char szChar[ HB_MAX_CHAR_LEN ];
       HB_SIZE nLen;
 
-      nLen = hb_cdpTextPutU16( hb_vmCDP(), szChar, sizeof( szChar ), static_cast< HB_WCHAR >( hb_parni(1) ) );
+      nLen = hb_cdpTextPutU16( hb_vmCDP(), szChar, sizeof( szChar ), static_cast<HB_WCHAR>( hb_parni(1) ) );
       hb_retclen( szChar, nLen );
    }
    else
@@ -77,7 +77,7 @@ HB_FUNC( HB_BCHAR )
 {
    if( HB_ISNUM( 1 ) )
    {
-      char c = static_cast< char >( hb_parni(1) );
+      char c = static_cast<char>( hb_parni(1) );
 
       hb_retclen( &c, 1 );
    }
@@ -113,7 +113,7 @@ HB_FUNC( HB_BCODE )
 
    if( szText )
    {
-      hb_retni( static_cast< HB_UCHAR >( szText[ 0 ] ) );
+      hb_retni( static_cast<HB_UCHAR>( szText[ 0 ] ) );
    }
    else
    {
@@ -199,7 +199,7 @@ HB_FUNC( HB_BPEEK )
    {
       HB_SIZE nPos = hb_parns(2);
 
-      hb_retni( ( nPos > 0 && nPos <= hb_itemGetCLen( pText ) ) ? static_cast< HB_UCHAR >( hb_itemGetCPtr( pText )[ nPos - 1 ] ) : 0 );
+      hb_retni( ( nPos > 0 && nPos <= hb_itemGetCLen( pText ) ) ? static_cast<HB_UCHAR>( hb_itemGetCPtr( pText )[ nPos - 1 ] ) : 0 );
    }
    else
    {
@@ -229,7 +229,7 @@ HB_FUNC( HB_UPOKE )
             char szChar[ HB_MAX_CHAR_LEN ], * pszText;
             HB_SIZE nChar, nOldChar;
 
-            nChar = hb_cdpTextPutU16( cdp, szChar, sizeof( szChar ), static_cast< HB_WCHAR >( hb_parni(3) ) );
+            nChar = hb_cdpTextPutU16( cdp, szChar, sizeof( szChar ), static_cast<HB_WCHAR>( hb_parni(3) ) );
             nOldChar = hb_cdpTextPos( cdp, szText + nPos, nLen - nPos, 1 );
             if( nChar == nOldChar )
             {
@@ -240,7 +240,7 @@ HB_FUNC( HB_UPOKE )
             }
             else
             {
-               pszText = static_cast< char * >( hb_xgrab( nLen - nOldChar + nChar + 1 ) );
+               pszText = static_cast<char*>( hb_xgrab( nLen - nOldChar + nChar + 1 ) );
 
                memcpy( pszText, szText, nPos );
                memcpy( pszText + nPos, szChar, nChar );
@@ -276,7 +276,7 @@ HB_FUNC( HB_BPOKE )
 
       if( nPos > 0 && hb_itemGetWriteCL( pText, &pszText, &nLen ) && nPos <= nLen )
       {
-         pszText[ nPos - 1 ] = static_cast< char >( hb_parni(3) & 0xff );
+         pszText[ nPos - 1 ] = static_cast<char>( hb_parni(3) & 0xff );
       }
       hb_itemReturn( pText );
    }
@@ -422,11 +422,11 @@ HB_FUNC( HB_ULEFT )
       else
       {
          HB_SIZE nText = hb_itemGetCLen( pText );
-         if( static_cast< HB_SIZE >( nLen ) < nText )
+         if( static_cast<HB_SIZE>( nLen ) < nText )
          {
             nLen = hb_cdpTextPos( hb_vmCDP(), hb_itemGetCPtr( pText ), nText, nLen );
          }
-         if( static_cast< HB_SIZE >( nLen ) >= nText )
+         if( static_cast<HB_SIZE>( nLen ) >= nText )
          {
             hb_itemReturn( pText );
          }
@@ -458,7 +458,7 @@ HB_FUNC( HB_BLEFT )
       else
       {
          HB_SIZE nText = hb_itemGetCLen( pText );
-         if( static_cast< HB_SIZE >( nLen ) >= nText )
+         if( static_cast<HB_SIZE>( nLen ) >= nText )
          {
             hb_itemReturn( pText );
          }
@@ -484,11 +484,11 @@ HB_FUNC( HB_URIGHT )
 
    if( nLen > 0 && nText > 0 )
    {
-      if( static_cast< HB_SIZE >( nLen ) < nText )
+      if( static_cast<HB_SIZE>( nLen ) < nText )
       {
          PHB_CODEPAGE cdp = hb_vmCDP();
          HB_SIZE nChars = hb_cdpTextLen( cdp, hb_itemGetCPtr( pText ), nText );
-         if( nChars > static_cast< HB_SIZE >( nLen ) )
+         if( nChars > static_cast<HB_SIZE>( nLen ) )
          {
             nLen = nText - hb_cdpTextPos( cdp, hb_itemGetCPtr( pText ), nText, nChars - nLen );
          }
@@ -497,7 +497,7 @@ HB_FUNC( HB_URIGHT )
             nLen = nText;
          }
       }
-      if( static_cast< HB_SIZE >( nLen ) >= nText )
+      if( static_cast<HB_SIZE>( nLen ) >= nText )
       {
          hb_itemReturn( pText );
       }
@@ -522,7 +522,7 @@ HB_FUNC( HB_BRIGHT )
 
    if( nLen > 0 && nText > 0 )
    {
-      if( static_cast< HB_SIZE >( nLen ) >= nText )
+      if( static_cast<HB_SIZE>( nLen ) >= nText )
       {
          hb_itemReturn( pText );
       }
@@ -769,7 +769,7 @@ HB_FUNC( HB_BSTUFF )
 
       if( ( nTot = nLen + nIns - nDel ) > 0 )
       {
-         char * szResult = static_cast< char * >( hb_xgrab( nTot + 1 ) );
+         char * szResult = static_cast<char*>( hb_xgrab( nTot + 1 ) );
 
          hb_xmemcpy( szResult, szText, nPos );
          hb_xmemcpy( szResult + nPos, szIns, nIns );
@@ -825,7 +825,7 @@ HB_FUNC( HB_USTUFF )
 
       if( ( nTot = nLen + nIns - nDel ) > 0 )
       {
-         char * szResult = static_cast< char * >( hb_xgrab( nTot + 1 ) );
+         char * szResult = static_cast<char*>( hb_xgrab( nTot + 1 ) );
 
          hb_xmemcpy( szResult, szText, nPos );
          hb_xmemcpy( szResult + nPos, szIns, nIns );

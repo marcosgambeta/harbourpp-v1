@@ -386,13 +386,13 @@ static int KeyTranslationTable[][ 2 ] =
 /* a very simple sort algorithm */
 static void hb_sln_SortKeyTranslationTable( void )
 {
-   for( int i = 0; i < ( static_cast< int >( KeyTranslationTableSize ) - 1 ); i++ )
+   for( int i = 0; i < ( static_cast<int>( KeyTranslationTableSize ) - 1 ); i++ )
    {
       int j, min, KeyTmp[ 2 ];
 
       min = i;
 
-      for( j = i + 1; j < static_cast< int >( KeyTranslationTableSize ); j++ )
+      for( j = i + 1; j < static_cast<int>( KeyTranslationTableSize ); j++ )
       {
          if( KeyTranslationTable[ j ][ 0 ] < KeyTranslationTable[ min ][ 0 ] )
          {
@@ -468,7 +468,7 @@ int hb_sln_SetKeyInKeyTranslationTable( int SlangKey, int ClipKey )
    if( ( SlangKey >= KeyTranslationTable[ 0 ][ 0 ] ) &&
        ( SlangKey <= KeyTranslationTable[ KeyTranslationTableSize - 1 ][ 0 ] ) )
    {
-      for( int i = 0; i < static_cast< int >( KeyTranslationTableSize ); i++ )
+      for( int i = 0; i < static_cast<int>( KeyTranslationTableSize ); i++ )
       {
          if( SlangKey == KeyTranslationTable[ i ][ 0 ] )
          {

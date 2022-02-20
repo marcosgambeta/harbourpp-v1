@@ -65,13 +65,13 @@ HB_FUNC( REPLICATE )
          {
             hb_itemReturn( pItem );
          }
-         else if( static_cast< double >( nLen ) * nTimes < HB_SIZE_MAX )
+         else if( static_cast<double>( nLen ) * nTimes < HB_SIZE_MAX )
          {
             const char * szText = hb_itemGetCPtr( pItem );
             HB_SIZE nSize = nLen * nTimes;
             char * szResult, * szPtr;
 
-            szResult = szPtr = static_cast< char * >( hb_xgrab( nSize + 1 ) );
+            szResult = szPtr = static_cast<char*>( hb_xgrab( nSize + 1 ) );
             if( nLen == 1 )
             {
                memset( szResult, szText[ 0 ], nSize );

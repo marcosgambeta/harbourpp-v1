@@ -79,7 +79,7 @@
       ( ret ) = ( exp ); \
       hb_fsSetIOError( ( ret ) != -1, 0 ); \
    } \
-   while( ( ret ) == -1 && hb_fsOsError() == static_cast< HB_ERRCODE >( EINTR ) && hb_vmRequestQuery() == 0 )
+   while( ( ret ) == -1 && hb_fsOsError() == static_cast<HB_ERRCODE>( EINTR ) && hb_vmRequestQuery() == 0 )
 #else
 #  define HB_FAILURE_RETRY( ret, exp ) \
    do \
@@ -152,7 +152,7 @@ static char ** hb_buildArgs( const char *pszFileName )
       ++src;
    }
 
-   argv = static_cast< char ** >( hb_xgrab( ( argc + 2 ) * sizeof( char * ) ) );
+   argv = static_cast<char**>( hb_xgrab( ( argc + 2 ) * sizeof( char * ) ) );
    argv[ 0 ] = dst;
    argv[ argc + 1 ] = nullptr;
    argc = 0;
@@ -226,7 +226,7 @@ static void hb_freeArgs( char ** argv )
 static int hb_fsProcessExec( const char * pszFileName, HB_FHANDLE hStdin, HB_FHANDLE hStdout, HB_FHANDLE hStderr )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsProcessExec(%s, %p, %p, %p)", pszFileName, reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hStdin ) ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hStdout ) ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hStderr ) ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_fsProcessExec(%s, %p, %p, %p)", pszFileName, reinterpret_cast<void*>( static_cast<HB_PTRUINT>( hStdin ) ), reinterpret_cast<void*>( static_cast<HB_PTRUINT>( hStdout ) ), reinterpret_cast<void*>( static_cast<HB_PTRUINT>( hStderr ) ) ) );
 #endif
 
    int iResult = FS_ERROR;
@@ -313,9 +313,9 @@ static int hb_fsProcessExec( const char * pszFileName, HB_FHANDLE hStdin, HB_FHA
 #  if defined( _MSC_VER )
       iResult = _spawnvp( _P_WAIT, argv[ 0 ], argv );
 #  elif defined( __MINGW32__ )
-      iResult = spawnvp( P_WAIT, argv[ 0 ], static_cast< const char * const * >( argv ) );
+      iResult = spawnvp( P_WAIT, argv[ 0 ], static_cast<const char* const*>( argv ) );
 #  else
-      iResult = spawnvp( P_WAIT, argv[ 0 ], static_cast< char * const * >( argv ) );
+      iResult = spawnvp( P_WAIT, argv[ 0 ], static_cast<char* const*>( argv ) );
 #  endif
    hb_fsSetIOError( iResult >= 0, 0 );
 #endif
@@ -348,7 +348,7 @@ static int hb_fsProcessExec( const char * pszFileName, HB_FHANDLE hStdin, HB_FHA
    HB_SYMBOL_UNUSED( hStdout );
    HB_SYMBOL_UNUSED( hStderr );
 
-   hb_fsSetError( static_cast< HB_ERRCODE >( FS_ERROR ) );
+   hb_fsSetError( static_cast<HB_ERRCODE>( FS_ERROR ) );
 }
 #endif
 
@@ -359,7 +359,7 @@ static int hb_fsProcessExec( const char * pszFileName, HB_FHANDLE hStdin, HB_FHA
 HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_FHANDLE * phStdout, HB_FHANDLE * phStderr, HB_BOOL fDetach, HB_ULONG * pulPID )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsProcessOpen(%s, %p, %p, %p, %d, %p)", pszFileName, static_cast< void * >( phStdin ), static_cast< void * >( phStdout ), static_cast< void * >( phStderr ), fDetach, static_cast< void * >( pulPID ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_fsProcessOpen(%s, %p, %p, %p, %d, %p)", pszFileName, static_cast<void*>( phStdin ), static_cast<void*>( phStdout ), static_cast<void*>( phStderr ), fDetach, static_cast<void*>( pulPID ) ) );
 #endif
 
    HB_FHANDLE hPipeIn [ 2 ] = { FS_ERROR, FS_ERROR },
@@ -400,15 +400,15 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
 
       if( phStdin != nullptr )
       {
-         SetHandleInformation( reinterpret_cast< HANDLE >( hb_fsGetOsHandle( hPipeIn [ 1 ] ) ), HANDLE_FLAG_INHERIT, 0 );
+         SetHandleInformation( reinterpret_cast<HANDLE>( hb_fsGetOsHandle( hPipeIn [ 1 ] ) ), HANDLE_FLAG_INHERIT, 0 );
       }
       if( phStdout != nullptr )
       {
-         SetHandleInformation( reinterpret_cast< HANDLE >( hb_fsGetOsHandle( hPipeOut[ 0 ] ) ), HANDLE_FLAG_INHERIT, 0 );
+         SetHandleInformation( reinterpret_cast<HANDLE>( hb_fsGetOsHandle( hPipeOut[ 0 ] ) ), HANDLE_FLAG_INHERIT, 0 );
       }
       if( phStderr != nullptr && phStdout != phStderr )
       {
-         SetHandleInformation( reinterpret_cast< HANDLE >( hb_fsGetOsHandle( hPipeErr[ 0 ] ) ), HANDLE_FLAG_INHERIT, 0 );
+         SetHandleInformation( reinterpret_cast<HANDLE>( hb_fsGetOsHandle( hPipeErr[ 0 ] ) ), HANDLE_FLAG_INHERIT, 0 );
       }
 
       memset( &pi, 0, sizeof( pi ) );
@@ -423,18 +423,18 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
          si.dwFlags |= STARTF_USESHOWWINDOW;
 #  endif
          si.wShowWindow = SW_HIDE;
-         si.hStdInput  = reinterpret_cast< HANDLE >( hb_fsGetOsHandle( hPipeIn [ 0 ] ) );
-         si.hStdOutput = reinterpret_cast< HANDLE >( hb_fsGetOsHandle( hPipeOut[ 1 ] ) );
-         si.hStdError  = reinterpret_cast< HANDLE >( hb_fsGetOsHandle( hPipeErr[ 1 ] ) );
+         si.hStdInput  = reinterpret_cast<HANDLE>( hb_fsGetOsHandle( hPipeIn [ 0 ] ) );
+         si.hStdOutput = reinterpret_cast<HANDLE>( hb_fsGetOsHandle( hPipeOut[ 1 ] ) );
+         si.hStdError  = reinterpret_cast<HANDLE>( hb_fsGetOsHandle( hPipeErr[ 1 ] ) );
 #  ifdef DETACHED_PROCESS
          dwFlags |= DETACHED_PROCESS;
 #  endif
       }
       else
       {
-         si.hStdInput  = phStdin  ? reinterpret_cast< HANDLE >( hb_fsGetOsHandle( hPipeIn [ 0 ] ) ) : GetStdHandle( STD_INPUT_HANDLE );
-         si.hStdOutput = phStdout ? reinterpret_cast< HANDLE >( hb_fsGetOsHandle( hPipeOut[ 1 ] ) ) : GetStdHandle( STD_OUTPUT_HANDLE );
-         si.hStdError  = phStderr ? reinterpret_cast< HANDLE >( hb_fsGetOsHandle( hPipeErr[ 1 ] ) ) : GetStdHandle( STD_ERROR_HANDLE );
+         si.hStdInput  = phStdin  ? reinterpret_cast<HANDLE>( hb_fsGetOsHandle( hPipeIn [ 0 ] ) ) : GetStdHandle( STD_INPUT_HANDLE );
+         si.hStdOutput = phStdout ? reinterpret_cast<HANDLE>( hb_fsGetOsHandle( hPipeOut[ 1 ] ) ) : GetStdHandle( STD_OUTPUT_HANDLE );
+         si.hStdError  = phStderr ? reinterpret_cast<HANDLE>( hb_fsGetOsHandle( hPipeErr[ 1 ] ) ) : GetStdHandle( STD_ERROR_HANDLE );
       }
       fError = ! CreateProcess( nullptr,           /* lpAppName */
                                 lpCommand,
@@ -452,17 +452,17 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
       {
          if( phStdin != nullptr )
          {
-            *phStdin = static_cast< HB_FHANDLE >( hPipeIn[ 1 ] );
+            *phStdin = static_cast<HB_FHANDLE>( hPipeIn[ 1 ] );
             hPipeIn[ 1 ] = FS_ERROR;
          }
          if( phStdout != nullptr )
          {
-            *phStdout = static_cast< HB_FHANDLE >( hPipeOut[ 0 ] );
+            *phStdout = static_cast<HB_FHANDLE>( hPipeOut[ 0 ] );
             hPipeOut[ 0 ] = FS_ERROR;
          }
          if( phStderr != nullptr )
          {
-            *phStderr = static_cast< HB_FHANDLE >( hPipeErr[ 0 ] );
+            *phStderr = static_cast<HB_FHANDLE>( hPipeErr[ 0 ] );
             hPipeErr[ 0 ] = FS_ERROR;
          }
          if( pulPID )
@@ -470,7 +470,7 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
             *pulPID = pi.dwProcessId;
          }
          CloseHandle( pi.hThread );
-         hResult = reinterpret_cast< HB_FHANDLE >( pi.hProcess );
+         hResult = reinterpret_cast<HB_FHANDLE>( pi.hProcess );
       }
 
 #elif defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS )
@@ -486,24 +486,24 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
       {
          if( phStdin != nullptr )
          {
-            *phStdin = static_cast< HB_FHANDLE >( hPipeIn[ 1 ] );
+            *phStdin = static_cast<HB_FHANDLE>( hPipeIn[ 1 ] );
             hPipeIn[ 1 ] = FS_ERROR;
          }
          if( phStdout != nullptr )
          {
-            *phStdout = static_cast< HB_FHANDLE >( hPipeOut[ 0 ] );
+            *phStdout = static_cast<HB_FHANDLE>( hPipeOut[ 0 ] );
             hPipeOut[ 0 ] = FS_ERROR;
          }
          if( phStderr != nullptr )
          {
-            *phStderr = static_cast< HB_FHANDLE >( hPipeErr[ 0 ] );
+            *phStderr = static_cast<HB_FHANDLE>( hPipeErr[ 0 ] );
             hPipeErr[ 0 ] = FS_ERROR;
          }
          if( pulPID )
          {
             *pulPID = pid;
          }
-         hResult = static_cast< HB_FHANDLE >( pid );
+         hResult = static_cast<HB_FHANDLE>( pid );
       }
       else                    /* child process */
       {
@@ -632,9 +632,9 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
 #if defined( _MSC_VER )
       pid = _spawnvp( _P_NOWAIT, argv[ 0 ], argv );
 #elif defined( __MINGW32__ )
-      pid = spawnvp( P_NOWAIT, argv[ 0 ], static_cast< const char * const * >( argv ) );
+      pid = spawnvp( P_NOWAIT, argv[ 0 ], static_cast<const char* const*>( argv ) );
 #else
-      pid = spawnvp( P_NOWAIT, argv[ 0 ], static_cast< char * const * >( argv ) );
+      pid = spawnvp( P_NOWAIT, argv[ 0 ], static_cast<char* const*>( argv ) );
 #endif
       hb_freeArgs( argv );
 
@@ -655,24 +655,24 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
       {
          if( phStdin != nullptr )
          {
-            *phStdin = static_cast< HB_FHANDLE >( hPipeIn[ 1 ] );
+            *phStdin = static_cast<HB_FHANDLE>( hPipeIn[ 1 ] );
             hPipeIn[ 1 ] = FS_ERROR;
          }
          if( phStdout != nullptr )
          {
-            *phStdout = static_cast< HB_FHANDLE >( hPipeOut[ 0 ] );
+            *phStdout = static_cast<HB_FHANDLE>( hPipeOut[ 0 ] );
             hPipeOut[ 0 ] = FS_ERROR;
          }
          if( phStderr != nullptr )
          {
-            *phStderr = static_cast< HB_FHANDLE >( hPipeErr[ 0 ] );
+            *phStderr = static_cast<HB_FHANDLE>( hPipeErr[ 0 ] );
             hPipeErr[ 0 ] = FS_ERROR;
          }
          if( pulPID )
          {
             *pulPID = pid;
          }
-         hResult = static_cast< HB_FHANDLE >( pid );
+         hResult = static_cast<HB_FHANDLE>( pid );
       }
 
       hb_fsSetIOError( ! fError, 0 );
@@ -684,7 +684,7 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
       HB_SYMBOL_UNUSED( fDetach );
       HB_SYMBOL_UNUSED( pulPID );
 
-      hb_fsSetError( static_cast< HB_ERRCODE >( FS_ERROR ) );
+      hb_fsSetError( static_cast<HB_ERRCODE>( FS_ERROR ) );
 #endif
    }
 
@@ -722,7 +722,7 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
 int hb_fsProcessValue( HB_FHANDLE hProcess, HB_BOOL fWait )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsProcessValue(%p, %d)", reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hProcess ) ), fWait ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_fsProcessValue(%p, %d)", reinterpret_cast<void*>( static_cast<HB_PTRUINT>( hProcess ) ), fWait ) );
 #endif
 
    int iRetStatus = -1;
@@ -731,7 +731,7 @@ int hb_fsProcessValue( HB_FHANDLE hProcess, HB_BOOL fWait )
 {
    HB_BOOL fError = HB_TRUE;
    DWORD dwResult;
-   HANDLE hProc = reinterpret_cast< HANDLE >( hb_fsGetOsHandle( hProcess ) );
+   HANDLE hProc = reinterpret_cast<HANDLE>( hb_fsGetOsHandle( hProcess ) );
 
    if( hProc )
    {
@@ -740,7 +740,7 @@ int hb_fsProcessValue( HB_FHANDLE hProcess, HB_BOOL fWait )
       if( dwResult == WAIT_OBJECT_0 )
       {
          fError = ! GetExitCodeProcess( hProc, &dwResult );
-         iRetStatus = ! fError ? static_cast< int >( dwResult ) : -2;
+         iRetStatus = ! fError ? static_cast<int>( dwResult ) : -2;
       }
       hb_fsSetIOError( ! fError, 0 );
       if( ! fError )
@@ -751,7 +751,7 @@ int hb_fsProcessValue( HB_FHANDLE hProcess, HB_BOOL fWait )
    }
    else
    {
-      hb_fsSetError( static_cast< HB_ERRCODE >( FS_ERROR ) );
+      hb_fsSetError( static_cast<HB_ERRCODE>( FS_ERROR ) );
    }
 }
 #elif defined( HB_OS_UNIX )
@@ -764,7 +764,7 @@ int hb_fsProcessValue( HB_FHANDLE hProcess, HB_BOOL fWait )
       hb_vmUnlock();
       HB_FAILURE_RETRY( iRetStatus, waitpid( pid, &iStatus, fWait ? 0 : WNOHANG ) );
 #ifdef ERESTARTSYS
-      if( iRetStatus < 0 && hb_fsOsError() != static_cast< HB_ERRCODE >( ERESTARTSYS ) )
+      if( iRetStatus < 0 && hb_fsOsError() != static_cast<HB_ERRCODE>( ERESTARTSYS ) )
 #else
       if( iRetStatus < 0 )
 #endif
@@ -783,7 +783,7 @@ int hb_fsProcessValue( HB_FHANDLE hProcess, HB_BOOL fWait )
    }
    else
    {
-      hb_fsSetError( static_cast< HB_ERRCODE >( FS_ERROR ) );
+      hb_fsSetError( static_cast<HB_ERRCODE>( FS_ERROR ) );
    }
 }
 #else
@@ -792,7 +792,7 @@ int hb_fsProcessValue( HB_FHANDLE hProcess, HB_BOOL fWait )
 
    HB_SYMBOL_UNUSED( hProcess );
    HB_SYMBOL_UNUSED( fWait );
-   hb_fsSetError( static_cast< HB_ERRCODE >( FS_ERROR ) );
+   hb_fsSetError( static_cast<HB_ERRCODE>( FS_ERROR ) );
 }
 #endif
    return iRetStatus;
@@ -804,14 +804,14 @@ int hb_fsProcessValue( HB_FHANDLE hProcess, HB_BOOL fWait )
 HB_BOOL hb_fsProcessClose( HB_FHANDLE hProcess, HB_BOOL fGentle )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsProcessClose(%p, %d)", reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hProcess ) ), fGentle ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_fsProcessClose(%p, %d)", reinterpret_cast<void*>( static_cast<HB_PTRUINT>( hProcess ) ), fGentle ) );
 #endif
 
    HB_BOOL fResult = HB_FALSE;
 
 #if defined( HB_OS_WIN )
 {
-   HANDLE hProc = reinterpret_cast< HANDLE >( hb_fsGetOsHandle( hProcess ) );
+   HANDLE hProc = reinterpret_cast<HANDLE>( hb_fsGetOsHandle( hProcess ) );
 
    if( hProc )
    {
@@ -824,12 +824,12 @@ HB_BOOL hb_fsProcessClose( HB_FHANDLE hProcess, HB_BOOL fGentle )
    }
    else
    {
-      hb_fsSetError( static_cast< HB_ERRCODE >( FS_ERROR ) );
+      hb_fsSetError( static_cast<HB_ERRCODE>( FS_ERROR ) );
    }
 }
 #elif defined( HB_OS_UNIX )
 {
-   pid_t pid = static_cast< pid_t >( hProcess );
+   pid_t pid = static_cast<pid_t>( hProcess );
    if( pid > 0 )
    {
       fResult = kill( pid, fGentle ? SIGTERM : SIGKILL ) == 0;
@@ -837,7 +837,7 @@ HB_BOOL hb_fsProcessClose( HB_FHANDLE hProcess, HB_BOOL fGentle )
    }
    else
    {
-      hb_fsSetError( static_cast< HB_ERRCODE >( FS_ERROR ) );
+      hb_fsSetError( static_cast<HB_ERRCODE>( FS_ERROR ) );
    }
 }
 #else
@@ -846,7 +846,7 @@ HB_BOOL hb_fsProcessClose( HB_FHANDLE hProcess, HB_BOOL fGentle )
 
    HB_SYMBOL_UNUSED( hProcess );
    HB_SYMBOL_UNUSED( fGentle );
-   hb_fsSetError( static_cast< HB_ERRCODE >( FS_ERROR ) );
+   hb_fsSetError( static_cast<HB_ERRCODE>( FS_ERROR ) );
 }
 #endif
    return fResult;
@@ -861,7 +861,7 @@ int hb_fsProcessRun( const char * pszFileName,
                      HB_BOOL fDetach )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsProcessRun(%s, %p, %" HB_PFS "u, %p, %p, %p, %p, %d)", pszFileName, static_cast< const void * >( pStdInBuf ), nStdInLen, static_cast< void * >( pStdOutPtr ), static_cast< void * >( pulStdOut ), static_cast< void * >( pStdErrPtr ), static_cast< void * >( pulStdErr ), fDetach ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_fsProcessRun(%s, %p, %" HB_PFS "u, %p, %p, %p, %p, %d)", pszFileName, static_cast<const void*>( pStdInBuf ), nStdInLen, static_cast<void*>( pStdOutPtr ), static_cast<void*>( pulStdOut ), static_cast<void*>( pStdErrPtr ), static_cast<void*>( pulStdErr ), fDetach ) );
 #endif
 
    HB_FHANDLE hStdin, hStdout, hStderr, *phStdin, *phStdout, *phStderr;
@@ -949,7 +949,7 @@ int hb_fsProcessRun( const char * pszFileName,
          nOutBuf = hb_fsSeek( hStdout, 0, FS_END );
          if( nOutBuf )
          {
-            pOutBuf = static_cast< char * >( hb_xgrab( nOutBuf + 1 ) );
+            pOutBuf = static_cast<char*>( hb_xgrab( nOutBuf + 1 ) );
             hb_fsSeek( hStdout, 0, FS_SET );
             nOutBuf = hb_fsReadLarge( hStdout, pOutBuf, nOutBuf );
          }
@@ -967,7 +967,7 @@ int hb_fsProcessRun( const char * pszFileName,
          nErrBuf = hb_fsSeek( hStderr, 0, FS_END );
          if( nErrBuf )
          {
-            pErrBuf = static_cast< char * >( hb_xgrab( nErrBuf + 1 ) );
+            pErrBuf = static_cast<char*>( hb_xgrab( nErrBuf + 1 ) );
             hb_fsSeek( hStderr, 0, FS_SET );
             nErrBuf = hb_fsReadLarge( hStderr, pErrBuf, nErrBuf );
          }
@@ -1054,7 +1054,7 @@ int hb_fsProcessRun( const char * pszFileName,
                {
                   nOutSize += nOutSize >> 1;
                }
-               pOutBuf = static_cast< char * >( hb_xrealloc( pOutBuf, nOutSize + 1 ) );
+               pOutBuf = static_cast<char*>( hb_xrealloc( pOutBuf, nOutSize + 1 ) );
             }
             nLen = hb_fsReadLarge( hStdout, pOutBuf + nOutBuf, nOutSize - nOutBuf );
             if( nLen > 0 )
@@ -1082,7 +1082,7 @@ int hb_fsProcessRun( const char * pszFileName,
                {
                   nErrSize += nErrSize >> 1;
                }
-               pErrBuf = static_cast< char * >( hb_xrealloc( pErrBuf, nErrSize + 1 ) );
+               pErrBuf = static_cast<char*>( hb_xrealloc( pErrBuf, nErrSize + 1 ) );
             }
             nLen = hb_fsReadLarge( hStderr, pErrBuf + nErrBuf, nErrSize - nErrBuf );
             if( nLen > 0 )
@@ -1130,12 +1130,12 @@ int hb_fsProcessRun( const char * pszFileName,
          {
             dwWait = INFINITE;
          }
-         dwResult = WaitForSingleObject( reinterpret_cast< HANDLE >( hb_fsGetOsHandle( hProcess ) ), dwWait );
+         dwResult = WaitForSingleObject( reinterpret_cast<HANDLE>( hb_fsGetOsHandle( hProcess ) ), dwWait );
          if( dwResult == WAIT_OBJECT_0 )
          {
-            if( GetExitCodeProcess( reinterpret_cast< HANDLE >( hb_fsGetOsHandle( hProcess ) ), &dwResult ) )
+            if( GetExitCodeProcess( reinterpret_cast<HANDLE>( hb_fsGetOsHandle( hProcess ) ), &dwResult ) )
             {
-               iResult = static_cast< int >( dwResult );
+               iResult = static_cast<int>( dwResult );
             }
             else
             {
@@ -1158,7 +1158,7 @@ int hb_fsProcessRun( const char * pszFileName,
          hb_fsClose( hStderr );
       }
 
-      CloseHandle( reinterpret_cast< HANDLE >( hb_fsGetOsHandle( hProcess ) ) );
+      CloseHandle( reinterpret_cast<HANDLE>( hb_fsGetOsHandle( hProcess ) ) );
 
 #elif defined( HB_OS_WIN )
 
@@ -1203,7 +1203,7 @@ int hb_fsProcessRun( const char * pszFileName,
             {
                nLen = hb_fsPipeWrite( hStdin, pStdInBuf, nStdInLen, nTimeOut );
             }
-            if( nLen == static_cast< HB_SIZE >( iPipeCount == 1 ? 0 : FS_ERROR ) )
+            if( nLen == static_cast<HB_SIZE>( iPipeCount == 1 ? 0 : FS_ERROR ) )
             {
                nStdInLen = 0;
             }
@@ -1233,7 +1233,7 @@ int hb_fsProcessRun( const char * pszFileName,
                {
                   nOutSize += nOutSize >> 1;
                }
-               pOutBuf = static_cast< char * >( hb_xrealloc( pOutBuf, nOutSize + 1 ) );
+               pOutBuf = static_cast<char*>( hb_xrealloc( pOutBuf, nOutSize + 1 ) );
             }
             if( iPipeCount == 1 )
             {
@@ -1243,7 +1243,7 @@ int hb_fsProcessRun( const char * pszFileName,
             {
                nLen = hb_fsPipeRead( hStdout, pOutBuf + nOutBuf, nOutSize - nOutBuf, nTimeOut );
             }
-            if( nLen == static_cast< HB_SIZE >( iPipeCount == 1 ? 0 : FS_ERROR ) )
+            if( nLen == static_cast<HB_SIZE>( iPipeCount == 1 ? 0 : FS_ERROR ) )
             {
                hb_fsClose( hStdout );
                hStdout = FS_ERROR;
@@ -1268,7 +1268,7 @@ int hb_fsProcessRun( const char * pszFileName,
                {
                   nErrSize += nErrSize >> 1;
                }
-               pErrBuf = static_cast< char * >( hb_xrealloc( pErrBuf, nErrSize + 1 ) );
+               pErrBuf = static_cast<char*>( hb_xrealloc( pErrBuf, nErrSize + 1 ) );
             }
             if( iPipeCount == 1 )
             {
@@ -1278,7 +1278,7 @@ int hb_fsProcessRun( const char * pszFileName,
             {
                nLen = hb_fsPipeRead( hStderr, pErrBuf + nErrBuf, nErrSize - nErrBuf, nTimeOut );
             }
-            if( nLen == static_cast< HB_SIZE >( iPipeCount == 1 ? 0 : FS_ERROR ) )
+            if( nLen == static_cast<HB_SIZE>( iPipeCount == 1 ? 0 : FS_ERROR ) )
             {
                hb_fsClose( hStderr );
                hStderr = FS_ERROR;
@@ -1369,7 +1369,7 @@ int hb_fsProcessRun( const char * pszFileName,
 
             iResult = poll( fds, nfds, -1 );
             hb_fsSetIOError( iResult >= 0, 0 );
-            if( iResult == -1 && hb_fsOsError() == static_cast< HB_ERRCODE >( EINTR ) && hb_vmRequestQuery() == 0 )
+            if( iResult == -1 && hb_fsOsError() == static_cast<HB_ERRCODE>( EINTR ) && hb_vmRequestQuery() == 0 )
             {
                continue;
             }
@@ -1464,7 +1464,7 @@ int hb_fsProcessRun( const char * pszFileName,
 
             iResult = select( fdMax + 1, prfds, pwfds, nullptr, nullptr );
             hb_fsSetIOError( iResult >= 0, 0 );
-            if( iResult == -1 && hb_fsOsError() != static_cast< HB_ERRCODE >( EINTR ) && hb_vmRequestQuery() == 0 )
+            if( iResult == -1 && hb_fsOsError() != static_cast<HB_ERRCODE>( EINTR ) && hb_vmRequestQuery() == 0 )
             {
                continue;
             }
@@ -1490,7 +1490,7 @@ int hb_fsProcessRun( const char * pszFileName,
                {
                   nOutSize += nOutSize >> 1;
                }
-               pOutBuf = static_cast< char * >( hb_xrealloc( pOutBuf, nOutSize + 1 ) );
+               pOutBuf = static_cast<char*>( hb_xrealloc( pOutBuf, nOutSize + 1 ) );
             }
             nLen = hb_fsReadLarge( hStdout, pOutBuf + nOutBuf, nOutSize - nOutBuf );
             if( nLen == 0 )
@@ -1519,7 +1519,7 @@ int hb_fsProcessRun( const char * pszFileName,
                {
                   nErrSize += nErrSize >> 1;
                }
-               pErrBuf = static_cast< char * >( hb_xrealloc( pErrBuf, nErrSize + 1 ) );
+               pErrBuf = static_cast<char*>( hb_xrealloc( pErrBuf, nErrSize + 1 ) );
             }
             nLen = hb_fsReadLarge( hStderr, pErrBuf + nErrBuf, nErrSize - nErrBuf );
             if( nLen == 0 )

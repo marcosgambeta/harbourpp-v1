@@ -52,7 +52,7 @@
 char * hb_dateFormat( const char * szDate, char * szFormattedDate, const char * szDateFormat )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_dateFormat(%s, %p, %s)", szDate, static_cast< void * >( szFormattedDate ), szDateFormat ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_dateFormat(%s, %p, %s)", szDate, static_cast<void*>( szFormattedDate ), szDateFormat ) );
 #endif
 
    /*
@@ -64,7 +64,7 @@ char * hb_dateFormat( const char * szDate, char * szFormattedDate, const char * 
    /*
     * Determine the maximum size of the formatted date string
     */
-   size = static_cast< int >( strlen( szDateFormat ) );
+   size = static_cast<int>( strlen( szDateFormat ) );
    if( size > 10 )
    {
       size = 10;
@@ -81,10 +81,10 @@ char * hb_dateFormat( const char * szDate, char * szFormattedDate, const char * 
 
       while( format_count < size )
       {
-         int digit = HB_TOUPPER( static_cast< HB_UCHAR >( *szPtr ) );
+         int digit = HB_TOUPPER( static_cast<HB_UCHAR>( *szPtr ) );
          szPtr++;
          digit_count = 1;
-         while( HB_TOUPPER( static_cast< HB_UCHAR >( *szPtr ) ) == digit && format_count < size )
+         while( HB_TOUPPER( static_cast<HB_UCHAR>( *szPtr ) ) == digit && format_count < size )
          {
             szPtr++;
             if( format_count + digit_count < size )
@@ -132,7 +132,7 @@ char * hb_dateFormat( const char * szDate, char * szFormattedDate, const char * 
                      }
                      while( digit_count-- > 0 && format_count < size )
                      {
-                        szFormattedDate[ format_count++ ] = static_cast< char >( digit );
+                        szFormattedDate[ format_count++ ] = static_cast<char>( digit );
                      }
                }
                used_d = HB_TRUE;
@@ -176,7 +176,7 @@ char * hb_dateFormat( const char * szDate, char * szFormattedDate, const char * 
                      }
                      while( digit_count-- > 0 && format_count < size )
                      {
-                        szFormattedDate[ format_count++ ] = static_cast< char >( digit );
+                        szFormattedDate[ format_count++ ] = static_cast<char>( digit );
                      }
                }
                used_m = HB_TRUE;
@@ -214,7 +214,7 @@ char * hb_dateFormat( const char * szDate, char * szFormattedDate, const char * 
                      }
                      while( digit_count-- > 0 && format_count < size )
                      {
-                        szFormattedDate[ format_count++ ] = static_cast< char >( digit );
+                        szFormattedDate[ format_count++ ] = static_cast<char>( digit );
                      }
                }
                used_y = HB_TRUE;
@@ -223,7 +223,7 @@ char * hb_dateFormat( const char * szDate, char * szFormattedDate, const char * 
             default:
                while( digit_count-- > 0 && format_count < size )
                {
-                  szFormattedDate[ format_count++ ] = static_cast< char >( digit );
+                  szFormattedDate[ format_count++ ] = static_cast<char>( digit );
                }
          }
       }
@@ -257,7 +257,7 @@ char * hb_dateFormat( const char * szDate, char * szFormattedDate, const char * 
 static int hb_dateUnformatRaw( const char * szDate, const char * szDateFormat, long * plDate )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_dateUnformatRaw(%s, %s, %p)", szDate, szDateFormat, static_cast< void * >( plDate ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_dateUnformatRaw(%s, %s, %p)", szDate, szDateFormat, static_cast<void*>( plDate ) ) );
 #endif
 
    int d_value = 0, m_value = 0, y_value = 0;
@@ -272,7 +272,7 @@ static int hb_dateUnformatRaw( const char * szDate, const char * szDateFormat, l
       {
          szDateFormat = hb_setGetDateFormat();
       }
-      size = static_cast< int >( strlen( szDateFormat ) );
+      size = static_cast<int>( strlen( szDateFormat ) );
 
       for( count = used = 0; count < size && used < 3; count++ )
       {
@@ -340,7 +340,7 @@ static int hb_dateUnformatRaw( const char * szDate, const char * szDateFormat, l
       /* If there are non-digits at the start of the date field,
          they are not to be treated as date field separators */
       non_digit = 1;
-      size = static_cast< int >( strlen( szDate ) );
+      size = static_cast<int>( strlen( szDate ) );
       for( count = used = 0; count < size; count++ )
       {
          digit = szDate[ count ];
@@ -416,7 +416,7 @@ long hb_dateUnformat( const char * szDate, const char * szDateFormat )
 char * hb_timeFormat( char * szBuffer, const char * szTimeFormat, long lMilliSec )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_timeFormat(%p, %s, %ld)", static_cast< void * >( szBuffer ), szTimeFormat, lMilliSec ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_timeFormat(%p, %s, %ld)", static_cast<void*>( szBuffer ), szTimeFormat, lMilliSec ) );
 #endif
 
    char * szTimeBuffer;
@@ -426,7 +426,7 @@ char * hb_timeFormat( char * szBuffer, const char * szTimeFormat, long lMilliSec
    hb_timeDecode( lMilliSec, &iHour, &iMinutes, &iSeconds, &iMSec );
    szTimeBuffer = szBuffer;
 
-   size = static_cast< int >( hb_strnlen( szTimeFormat, 16 ) );
+   size = static_cast<int>( hb_strnlen( szTimeFormat, 16 ) );
    iPM = i12 = 0;
    for( i = 0; i < size; ++i )
    {
@@ -527,7 +527,7 @@ char * hb_timeFormat( char * szBuffer, const char * szTimeFormat, long lMilliSec
          count -= digits;
          do
          {
-            szTimeBuffer[ --digits ] = static_cast< char >( '0' + value % 10 );
+            szTimeBuffer[ --digits ] = static_cast<char>( '0' + value % 10 );
             value /= 10;
          }
          while( digits );
@@ -535,7 +535,7 @@ char * hb_timeFormat( char * szBuffer, const char * szTimeFormat, long lMilliSec
       }
       while( count-- )
       {
-         *szTimeBuffer++ = static_cast< char >( ch );
+         *szTimeBuffer++ = static_cast<char>( ch );
       }
    }
 
@@ -553,7 +553,7 @@ char * hb_timeFormat( char * szBuffer, const char * szTimeFormat, long lMilliSec
 char * hb_timeStampFormat( char * szBuffer, const char * szDateFormat, const char * szTimeFormat, long lJulian, long lMilliSec )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_timeStampFormat(%p, %s, %s, %ld, %ld)", static_cast< void * >( szBuffer ), szDateFormat, szTimeFormat, lJulian, lMilliSec ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_timeStampFormat(%p, %s, %s, %ld, %ld)", static_cast<void*>( szBuffer ), szDateFormat, szTimeFormat, lJulian, lMilliSec ) );
 #endif
 
    char szDate[ 9 ], * szTimeBuffer;
@@ -589,7 +589,7 @@ long hb_timeUnformat( const char * szTime, const char * szTimeFormat )
       szTimeFormat = hb_setGetTimeFormat();
    }
 
-   size = static_cast< int >( hb_strnlen( szTime, hb_strnlen( szTimeFormat, 16 ) ) );
+   size = static_cast<int>( hb_strnlen( szTime, hb_strnlen( szTimeFormat, 16 ) ) );
    iHour = iMinutes = iSeconds = iMSec = iPM = -1;
    prec = 0;
    for( i = count = 0; i < size && szTime[ count ]; ++i )
@@ -716,7 +716,7 @@ long hb_timeUnformat( const char * szTime, const char * szTimeFormat )
 void hb_timeStampUnformat( const char * szDateTime, const char * szDateFormat, const char * szTimeFormat, long * plJulian, long * plMilliSec )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_timeStampUnformat(%s, %s, %s, %p, %p)", szDateTime, szDateFormat, szTimeFormat, static_cast< void * >( plJulian ), static_cast< void * >( plMilliSec ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_timeStampUnformat(%s, %s, %s, %p, %p)", szDateTime, szDateFormat, szTimeFormat, static_cast<void*>( plJulian ), static_cast<void*>( plMilliSec ) ) );
 #endif
 
    if( szDateTime )

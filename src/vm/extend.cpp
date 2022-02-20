@@ -71,13 +71,13 @@ PHB_ITEM hb_param( int iParam, long lMask )
       if( pItem->type & HB_IT_BYREF )
       {
          pItem = hb_itemUnRef( pItem );
-         if( static_cast< HB_TYPE >( lMask ) == HB_IT_BYREF )
+         if( static_cast<HB_TYPE>( lMask ) == HB_IT_BYREF )
          {
             return pItem;
          }
       }
 
-      if( ( pItem->type & static_cast< HB_TYPE >( lMask ) ) || static_cast< HB_TYPE >( lMask ) == HB_IT_ANY )
+      if( ( pItem->type & static_cast<HB_TYPE>( lMask ) ) || static_cast<HB_TYPE>( lMask ) == HB_IT_ANY )
       {
          return pItem;
       }
@@ -111,7 +111,7 @@ HB_ULONG hb_parinfo( int iParam )
 
    if( iParam == 0 )
    {
-      return static_cast< HB_ULONG >( hb_pcount() );
+      return static_cast<HB_ULONG>( hb_pcount() );
    }
    else
    {
@@ -125,7 +125,7 @@ HB_ULONG hb_parinfo( int iParam )
             uiType |= HB_ITEM_TYPE( hb_itemUnRef( pItem ) );
          }
 
-         return static_cast< HB_ULONG >( uiType );
+         return static_cast<HB_ULONG>( uiType );
       }
       else
       {
@@ -152,7 +152,7 @@ HB_SIZE hb_parinfa( int iParamNum, HB_SIZE nArrayIndex )
       }
       else
       {
-         return static_cast< HB_ISIZ >( hb_arrayGetType( pArray, nArrayIndex ) );
+         return static_cast<HB_ISIZ>( hb_arrayGetType( pArray, nArrayIndex ) );
       }
    }
    else
@@ -397,7 +397,7 @@ const char * hb_pards( int iParam )
 char * hb_pardsbuff( char * szDate, int iParam )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_pardsbuff(%p, %d)", static_cast< void * >( szDate ), iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_pardsbuff(%p, %d)", static_cast<void*>( szDate ), iParam ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -477,7 +477,7 @@ double hb_partd( int iParam )
 HB_BOOL hb_partdt( long * plJulian, long * plMilliSec, int iParam )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_partdt(%p,%p,%d)", static_cast< void * >( plJulian ), static_cast< void * >( plMilliSec ), iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_partdt(%p,%p,%d)", static_cast<void*>( plJulian ), static_cast<void*>( plMilliSec ), iParam ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -577,11 +577,11 @@ double  hb_parnd( int iParam )
       }
       else if( HB_IS_INTEGER( pItem ) )
       {
-         return static_cast< double >( pItem->item.asInteger.value );
+         return static_cast<double>( pItem->item.asInteger.value );
       }
       else if( HB_IS_LONG( pItem ) )
       {
-         return static_cast< double >( pItem->item.asLong.value );
+         return static_cast<double>( pItem->item.asLong.value );
       }
    }
 
@@ -611,7 +611,7 @@ int  hb_parni( int iParam )
       }
       else if( HB_IS_LONG( pItem ) )
       {
-         return static_cast< int >( pItem->item.asLong.value );
+         return static_cast<int>( pItem->item.asLong.value );
       }
       else if( HB_IS_DOUBLE( pItem ) )
       {
@@ -645,7 +645,7 @@ int  hb_parnidef( int iParam, int iDefValue )
       }
       else if( HB_IS_LONG( pItem ) )
       {
-         return static_cast< int >( pItem->item.asLong.value );
+         return static_cast<int>( pItem->item.asLong.value );
       }
       else if( HB_IS_DOUBLE( pItem ) )
       {
@@ -675,11 +675,11 @@ long  hb_parnl( int iParam )
 
       if( HB_IS_LONG( pItem ) )
       {
-         return static_cast< long >( pItem->item.asLong.value );
+         return static_cast<long>( pItem->item.asLong.value );
       }
       else if( HB_IS_INTEGER( pItem ) )
       {
-         return static_cast< long >( pItem->item.asInteger.value );
+         return static_cast<long>( pItem->item.asInteger.value );
       }
       else if( HB_IS_DOUBLE( pItem ) )
       {
@@ -709,11 +709,11 @@ long  hb_parnldef( int iParam, long lDefValue )
 
       if( HB_IS_LONG( pItem ) )
       {
-         return static_cast< long >( pItem->item.asLong.value );
+         return static_cast<long>( pItem->item.asLong.value );
       }
       else if( HB_IS_INTEGER( pItem ) )
       {
-         return static_cast< long >( pItem->item.asInteger.value );
+         return static_cast<long>( pItem->item.asInteger.value );
       }
       else if( HB_IS_DOUBLE( pItem ) )
       {
@@ -743,11 +743,11 @@ HB_ISIZ hb_parns( int iParam )
 
       if( HB_IS_LONG( pItem ) )
       {
-         return static_cast< HB_ISIZ >( pItem->item.asLong.value );
+         return static_cast<HB_ISIZ>( pItem->item.asLong.value );
       }
       else if( HB_IS_INTEGER( pItem ) )
       {
-         return static_cast< HB_ISIZ >( pItem->item.asInteger.value );
+         return static_cast<HB_ISIZ>( pItem->item.asInteger.value );
       }
       else if( HB_IS_DOUBLE( pItem ) )
       {
@@ -777,11 +777,11 @@ HB_ISIZ hb_parnsdef( int iParam, HB_ISIZ nDefValue )
 
       if( HB_IS_LONG( pItem ) )
       {
-         return static_cast< HB_ISIZ >( pItem->item.asLong.value );
+         return static_cast<HB_ISIZ>( pItem->item.asLong.value );
       }
       else if( HB_IS_INTEGER( pItem ) )
       {
-         return static_cast< HB_ISIZ >( pItem->item.asInteger.value );
+         return static_cast<HB_ISIZ>( pItem->item.asInteger.value );
       }
       else if( HB_IS_DOUBLE( pItem ) )
       {
@@ -812,11 +812,11 @@ HB_LONGLONG  hb_parnll( int iParam )
 
       if( HB_IS_LONG( pItem ) )
       {
-         return static_cast< HB_LONGLONG >( pItem->item.asLong.value );
+         return static_cast<HB_LONGLONG>( pItem->item.asLong.value );
       }
       else if( HB_IS_INTEGER( pItem ) )
       {
-         return static_cast< HB_LONGLONG >( pItem->item.asInteger.value );
+         return static_cast<HB_LONGLONG>( pItem->item.asInteger.value );
       }
       else if( HB_IS_DOUBLE( pItem ) )
       {
@@ -847,11 +847,11 @@ HB_MAXINT hb_parnint( int iParam )
 
       if( HB_IS_LONG( pItem ) )
       {
-         return static_cast< HB_MAXINT >( pItem->item.asLong.value );
+         return static_cast<HB_MAXINT>( pItem->item.asLong.value );
       }
       else if( HB_IS_INTEGER( pItem ) )
       {
-         return static_cast< HB_MAXINT >( pItem->item.asInteger.value );
+         return static_cast<HB_MAXINT>( pItem->item.asInteger.value );
       }
       else if( HB_IS_DOUBLE( pItem ) )
       {
@@ -881,11 +881,11 @@ HB_MAXINT hb_parnintdef( int iParam, HB_MAXINT nDefValue )
 
       if( HB_IS_LONG( pItem ) )
       {
-         return static_cast< HB_MAXINT >( pItem->item.asLong.value );
+         return static_cast<HB_MAXINT>( pItem->item.asLong.value );
       }
       else if( HB_IS_INTEGER( pItem ) )
       {
-         return static_cast< HB_MAXINT >( pItem->item.asInteger.value );
+         return static_cast<HB_MAXINT>( pItem->item.asInteger.value );
       }
       else if( HB_IS_DOUBLE( pItem ) )
       {
@@ -925,7 +925,7 @@ void * hb_parptr( int iParam )
 void * hb_parptrGC( const HB_GC_FUNCS * pFuncs, int iParam )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_parptrGC(%p,%d)", static_cast< const void * >( pFuncs ), iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_parptrGC(%p,%d)", static_cast<const void*>( pFuncs ), iParam ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -1152,7 +1152,7 @@ const char * hb_parvds( int iParam, ... )
 char  * hb_parvdsbuff( char * szDate, int iParam, ... )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_parvdsbuff(%p, %d, ...)", static_cast< void * >( szDate ), iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_parvdsbuff(%p, %d, ...)", static_cast<void*>( szDate ), iParam ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -1265,7 +1265,7 @@ double hb_parvtd( int iParam, ... )
 HB_BOOL hb_parvtdt( long * plJulian, long * plMilliSec, int iParam, ... )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_parvtdt(%p,%p,%d, ...)", static_cast< void * >( plJulian ), static_cast< void * >( plMilliSec ), iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_parvtdt(%p,%p,%d, ...)", static_cast<void*>( plJulian ), static_cast<void*>( plMilliSec ), iParam ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -1373,11 +1373,11 @@ double  hb_parvnd( int iParam, ... )
       }
       else if( HB_IS_INTEGER( pItem ) )
       {
-         return static_cast< double >( pItem->item.asInteger.value );
+         return static_cast<double>( pItem->item.asInteger.value );
       }
       else if( HB_IS_LONG( pItem ) )
       {
-         return static_cast< double >( pItem->item.asLong.value );
+         return static_cast<double>( pItem->item.asLong.value );
       }
       else if( HB_IS_ARRAY( pItem ) )
       {
@@ -1418,7 +1418,7 @@ int  hb_parvni( int iParam, ... )
       }
       else if( HB_IS_LONG( pItem ) )
       {
-         return static_cast< int >( pItem->item.asLong.value );
+         return static_cast<int>( pItem->item.asLong.value );
       }
       else if( HB_IS_DOUBLE( pItem ) )
       {
@@ -1459,11 +1459,11 @@ long  hb_parvnl( int iParam, ... )
 
       if( HB_IS_LONG( pItem ) )
       {
-         return static_cast< long >( pItem->item.asLong.value );
+         return static_cast<long>( pItem->item.asLong.value );
       }
       else if( HB_IS_INTEGER( pItem ) )
       {
-         return static_cast< long >( pItem->item.asInteger.value );
+         return static_cast<long>( pItem->item.asInteger.value );
       }
       else if( HB_IS_DOUBLE( pItem ) )
       {
@@ -1472,7 +1472,7 @@ long  hb_parvnl( int iParam, ... )
       /* CA-Cl*pper does it */
       else if( HB_IS_DATETIME( pItem ) )
       {
-         return static_cast< long >( pItem->item.asDateTime.julian );
+         return static_cast<long>( pItem->item.asDateTime.julian );
       }
       else if( HB_IS_ARRAY( pItem ) )
       {
@@ -1509,11 +1509,11 @@ HB_ISIZ hb_parvns( int iParam, ... )
 
       if( HB_IS_LONG( pItem ) )
       {
-         return static_cast< HB_ISIZ >( pItem->item.asLong.value );
+         return static_cast<HB_ISIZ>( pItem->item.asLong.value );
       }
       else if( HB_IS_INTEGER( pItem ) )
       {
-         return static_cast< HB_ISIZ >( pItem->item.asInteger.value );
+         return static_cast<HB_ISIZ>( pItem->item.asInteger.value );
       }
       else if( HB_IS_DOUBLE( pItem ) )
       {
@@ -1555,11 +1555,11 @@ HB_LONGLONG hb_parvnll( int iParam, ... )
 
       if( HB_IS_LONG( pItem ) )
       {
-         return static_cast< HB_LONGLONG >( pItem->item.asLong.value );
+         return static_cast<HB_LONGLONG>( pItem->item.asLong.value );
       }
       else if( HB_IS_INTEGER( pItem ) )
       {
-         return static_cast< HB_LONGLONG >( pItem->item.asInteger.value );
+         return static_cast<HB_LONGLONG>( pItem->item.asInteger.value );
       }
       else if( HB_IS_DOUBLE( pItem ) )
       {
@@ -1601,11 +1601,11 @@ HB_MAXINT hb_parvnint( int iParam, ... )
 
       if( HB_IS_LONG( pItem ) )
       {
-         return static_cast< HB_MAXINT >( pItem->item.asLong.value );
+         return static_cast<HB_MAXINT>( pItem->item.asLong.value );
       }
       else if( HB_IS_INTEGER( pItem ) )
       {
-         return static_cast< HB_MAXINT >( pItem->item.asInteger.value );
+         return static_cast<HB_MAXINT>( pItem->item.asInteger.value );
       }
       else if( HB_IS_DOUBLE( pItem ) )
       {
@@ -1667,7 +1667,7 @@ void * hb_parvptr( int iParam, ... )
 void * hb_parvptrGC( const HB_GC_FUNCS * pFuncs, int iParam, ... )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_parvptrGC(%p,%d, ...)", static_cast< const void * >( pFuncs ), iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_parvptrGC(%p,%d, ...)", static_cast<const void*>( pFuncs ), iParam ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -1784,7 +1784,7 @@ void hb_retc_const( const char * szText )
 void hb_retclen( const char * szText, HB_SIZE nLen )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_retclen(%.*s, %" HB_PFS "u)", static_cast< int >( nLen ), szText, nLen ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_retclen(%.*s, %" HB_PFS "u)", static_cast<int>( nLen ), szText, nLen ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -1796,7 +1796,7 @@ void hb_retclen( const char * szText, HB_SIZE nLen )
 void hb_retclen_buffer( char * szText, HB_SIZE nLen )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_retclen_buffer(%.*s, %" HB_PFS "u)", static_cast< int >( nLen ), szText, nLen ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_retclen_buffer(%.*s, %" HB_PFS "u)", static_cast<int>( nLen ), szText, nLen ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -1808,7 +1808,7 @@ void hb_retclen_buffer( char * szText, HB_SIZE nLen )
 void hb_retclen_const( const char * szText, HB_SIZE nLen )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_retclen_const(%.*s, %" HB_PFS "u)", static_cast< int >( nLen ), szText, nLen ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_retclen_const(%.*s, %" HB_PFS "u)", static_cast<int>( nLen ), szText, nLen ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -2119,7 +2119,7 @@ int hb_storc( const char * szText, int iParam )
 int hb_storclen( const char * szText, HB_SIZE nLen, int iParam )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_storclen(%.*s, %" HB_PFS "u, %d)", static_cast< int >( nLen ), szText, nLen, iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_storclen(%.*s, %" HB_PFS "u, %d)", static_cast<int>( nLen ), szText, nLen, iParam ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -2146,7 +2146,7 @@ int hb_storclen( const char * szText, HB_SIZE nLen, int iParam )
 int hb_storclen_buffer( char * szText, HB_SIZE nLen, int iParam )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_storclen_buffer(%.*s, %" HB_PFS "u, %d)", static_cast< int >( nLen ), szText, nLen, iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_storclen_buffer(%.*s, %" HB_PFS "u, %d)", static_cast<int>( nLen ), szText, nLen, iParam ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -2569,7 +2569,7 @@ int hb_storvc( const char * szText, int iParam, ... )
 int hb_storvclen( const char * szText, HB_SIZE nLen, int iParam, ... )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_storvclen(%.*s, %" HB_PFS "u, %d, ...)", static_cast< int >( nLen ), szText, nLen, iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_storvclen(%.*s, %" HB_PFS "u, %d, ...)", static_cast<int>( nLen ), szText, nLen, iParam ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -2606,7 +2606,7 @@ int hb_storvclen( const char * szText, HB_SIZE nLen, int iParam, ... )
 int hb_storvclen_buffer( char * szText, HB_SIZE nLen, int iParam, ... )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_storvclen_buffer(%.*s, %" HB_PFS "u, %d, ...)", static_cast< int >( nLen ), szText, nLen, iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_storvclen_buffer(%.*s, %" HB_PFS "u, %d, ...)", static_cast<int>( nLen ), szText, nLen, iParam ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -3134,5 +3134,5 @@ int  hb_pcount( void )
 
    HB_STACK_TLS_PRELOAD
 
-   return static_cast< int >( ( hb_stackBaseItem() )->item.asSymbol.paramcnt );
+   return static_cast<int>( ( hb_stackBaseItem() )->item.asSymbol.paramcnt );
 }

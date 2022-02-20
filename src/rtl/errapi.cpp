@@ -95,7 +95,7 @@ using PHB_ERRDATA = HB_ERRDATA *;
 
 static void hb_errorDataRelease( void * Cargo )
 {
-   PHB_ERRDATA pErrData = static_cast< PHB_ERRDATA >( Cargo );
+   PHB_ERRDATA pErrData = static_cast<PHB_ERRDATA>( Cargo );
 
    hb_itemRelease( pErrData->errorBlock );
 }
@@ -179,11 +179,11 @@ HB_FUNC_STATIC( _CANDEFAULT )
 
       if( fCan )
       {
-         hb_errPutFlags( pError, static_cast< HB_USHORT >( hb_errGetFlags( pError ) | EF_CANDEFAULT ) );
+         hb_errPutFlags( pError, static_cast<HB_USHORT>( hb_errGetFlags( pError ) | EF_CANDEFAULT ) );
       }
       else
       {
-         hb_errPutFlags( pError, static_cast< HB_USHORT >( hb_errGetFlags( pError ) & ~EF_CANDEFAULT ) );
+         hb_errPutFlags( pError, static_cast<HB_USHORT>( hb_errGetFlags( pError ) & ~EF_CANDEFAULT ) );
       }
 
       hb_retl( fCan );
@@ -204,11 +204,11 @@ HB_FUNC_STATIC( _CANRETRY )
 
       if( fCan )
       {
-         hb_errPutFlags( pError, static_cast< HB_USHORT >( hb_errGetFlags( pError ) | EF_CANRETRY ) );
+         hb_errPutFlags( pError, static_cast<HB_USHORT>( hb_errGetFlags( pError ) | EF_CANRETRY ) );
       }
       else
       {
-         hb_errPutFlags( pError, static_cast< HB_USHORT >( hb_errGetFlags( pError ) & ~EF_CANRETRY ) );
+         hb_errPutFlags( pError, static_cast<HB_USHORT>( hb_errGetFlags( pError ) & ~EF_CANRETRY ) );
       }
 
       hb_retl( fCan );
@@ -229,11 +229,11 @@ HB_FUNC_STATIC( _CANSUBST )
 
       if( fCan )
       {
-         hb_errPutFlags( pError, static_cast< HB_USHORT >( hb_errGetFlags( pError ) | EF_CANSUBSTITUTE ) );
+         hb_errPutFlags( pError, static_cast<HB_USHORT>( hb_errGetFlags( pError ) | EF_CANSUBSTITUTE ) );
       }
       else
       {
-         hb_errPutFlags( pError, static_cast< HB_USHORT >( hb_errGetFlags( pError ) & ~EF_CANSUBSTITUTE ) );
+         hb_errPutFlags( pError, static_cast<HB_USHORT>( hb_errGetFlags( pError ) & ~EF_CANSUBSTITUTE ) );
       }
 
       hb_retl( fCan );
@@ -319,7 +319,7 @@ HB_FUNC_STATIC( _GENCODE )
 
    if( hb_errGetNumCode( &iValue, "GENCODE" ) )
    {
-      hb_errPutGenCode( hb_stackSelfItem(), static_cast< HB_ERRCODE >( iValue ) );
+      hb_errPutGenCode( hb_stackSelfItem(), static_cast<HB_ERRCODE>( iValue ) );
       hb_errPutDescription( hb_stackSelfItem(), hb_langDGetErrorDesc( iValue ) );
    }
 
@@ -337,7 +337,7 @@ HB_FUNC_STATIC( _OSCODE )
 
    if( hb_errGetNumCode( &iValue, "OSCODE" ) )
    {
-      hb_errPutOsCode( hb_stackSelfItem(), static_cast< HB_ERRCODE >( iValue ) );
+      hb_errPutOsCode( hb_stackSelfItem(), static_cast<HB_ERRCODE>( iValue ) );
    }
 
    hb_retni( iValue );
@@ -354,7 +354,7 @@ HB_FUNC_STATIC( _SUBCODE )
 
    if( hb_errGetNumCode( &iValue, "SUBCODE" ) )
    {
-      hb_errPutSubCode( hb_stackSelfItem(), static_cast< HB_ERRCODE >( iValue ) );
+      hb_errPutSubCode( hb_stackSelfItem(), static_cast<HB_ERRCODE>( iValue ) );
    }
 
    hb_retni( iValue );
@@ -371,7 +371,7 @@ HB_FUNC_STATIC( _SEVERITY )
 
    if( hb_errGetNumCode( &iValue, "SEVERITY" ) )
    {
-      hb_errPutSeverity( hb_stackSelfItem(), static_cast< HB_USHORT >( iValue ) );
+      hb_errPutSeverity( hb_stackSelfItem(), static_cast<HB_USHORT>( iValue ) );
    }
 
    hb_retni( iValue );
@@ -388,7 +388,7 @@ HB_FUNC_STATIC( _TRIES )
 
    if( hb_errGetNumCode( &iValue, "TRIES" ) )
    {
-      hb_errPutTries( hb_stackSelfItem(), static_cast< HB_USHORT >( iValue ) );
+      hb_errPutTries( hb_stackSelfItem(), static_cast<HB_USHORT>( iValue ) );
    }
 
    hb_retni( iValue );
@@ -457,7 +457,7 @@ HB_FUNC( ERRORBLOCK )
 
 PHB_ITEM hb_errorBlock( void )
 {
-   PHB_ERRDATA pErrData = static_cast< PHB_ERRDATA >( hb_stackGetTSD( &s_errData ) );
+   PHB_ERRDATA pErrData = static_cast<PHB_ERRDATA>( hb_stackGetTSD( &s_errData ) );
 
    if( ! pErrData->errorBlock )
    {
@@ -472,7 +472,7 @@ PHB_ITEM hb_errorBlock( void )
  */
 PHB_ERROR_INFO hb_errorHandler( PHB_ERROR_INFO pNewHandler )
 {
-   PHB_ERRDATA pErrData = static_cast< PHB_ERRDATA >( hb_stackGetTSD( &s_errData ) );
+   PHB_ERRDATA pErrData = static_cast<PHB_ERRDATA>( hb_stackGetTSD( &s_errData ) );
    PHB_ERROR_INFO pOld = pErrData->errorHandler;
 
    if( pNewHandler )
@@ -486,7 +486,7 @@ PHB_ERROR_INFO hb_errorHandler( PHB_ERROR_INFO pNewHandler )
 
 HB_FUNC( DOSERROR )
 {
-   PHB_ERRDATA pErrData = static_cast< PHB_ERRDATA >( hb_stackGetTSD( &s_errData ) );
+   PHB_ERRDATA pErrData = static_cast<PHB_ERRDATA>( hb_stackGetTSD( &s_errData ) );
 
    hb_retni( pErrData->uiErrorDOS );
 
@@ -545,7 +545,7 @@ HB_USHORT hb_errLaunch( PHB_ITEM pError )
 
    if( pError )
    {
-      PHB_ERRDATA pErrData = static_cast< PHB_ERRDATA >( hb_stackGetTSD( &s_errData ) );
+      PHB_ERRDATA pErrData = static_cast<PHB_ERRDATA>( hb_stackGetTSD( &s_errData ) );
       HB_USHORT uiFlags = hb_errGetFlags( pError );
       PHB_ITEM pResult;
 
@@ -565,12 +565,12 @@ HB_USHORT hb_errLaunch( PHB_ITEM pError )
       pErrData->iLaunchCount++;
 
       /* set DosError() to last OS error code */
-      pErrData->uiErrorDOS = static_cast< int >( hb_errGetOsCode( pError ) );
+      pErrData->uiErrorDOS = static_cast<int>( hb_errGetOsCode( pError ) );
 
       /* Add one try to the counter. */
       if( uiFlags & EF_CANRETRY )
       {
-         hb_errPutTries( pError, static_cast< HB_USHORT >( hb_errGetTries( pError ) + 1 ) );
+         hb_errPutTries( pError, static_cast<HB_USHORT>( hb_errGetTries( pError ) + 1 ) );
       }
 
       if( pErrData->errorHandler )
@@ -660,7 +660,7 @@ PHB_ITEM hb_errLaunchSubst( PHB_ITEM pError )
 
    if( pError )
    {
-      PHB_ERRDATA pErrData = static_cast< PHB_ERRDATA >( hb_stackGetTSD( &s_errData ) );
+      PHB_ERRDATA pErrData = static_cast<PHB_ERRDATA>( hb_stackGetTSD( &s_errData ) );
       HB_USHORT uiFlags = hb_errGetFlags( pError );
 
       /* Check if we have a valid error handler */
@@ -679,12 +679,12 @@ PHB_ITEM hb_errLaunchSubst( PHB_ITEM pError )
       pErrData->iLaunchCount++;
 
       /* set DosError() to last OS error code */
-      pErrData->uiErrorDOS = static_cast< int >( hb_errGetOsCode( pError ) );
+      pErrData->uiErrorDOS = static_cast<int>( hb_errGetOsCode( pError ) );
 
       /* Add one try to the counter. */
       if( uiFlags & EF_CANRETRY )
       {
-         hb_errPutTries( pError, static_cast< HB_USHORT >( hb_errGetTries( pError ) + 1 ) );
+         hb_errPutTries( pError, static_cast<HB_USHORT>( hb_errGetTries( pError ) + 1 ) );
       }
 
       if( pErrData->errorHandler )
@@ -827,7 +827,7 @@ HB_ERRCODE hb_errGetGenCode( PHB_ITEM pError )
    HB_TRACE( HB_TR_DEBUG, ( "hb_errGetGenCode(%p)", pError ) );
 #endif
 
-   return static_cast< HB_ERRCODE >( hb_arrayGetNI( pError, HB_TERROR_GENCODE ) );
+   return static_cast<HB_ERRCODE>( hb_arrayGetNI( pError, HB_TERROR_GENCODE ) );
 }
 
 PHB_ITEM hb_errPutGenCode( PHB_ITEM pError, HB_ERRCODE errGenCode )
@@ -876,7 +876,7 @@ HB_ERRCODE hb_errGetOsCode( PHB_ITEM pError )
    HB_TRACE( HB_TR_DEBUG, ( "hb_errGetOsCode(%p)", pError ) );
 #endif
 
-   return static_cast< HB_ERRCODE >( hb_arrayGetNI( pError, HB_TERROR_OSCODE ) );
+   return static_cast<HB_ERRCODE>( hb_arrayGetNI( pError, HB_TERROR_OSCODE ) );
 }
 
 PHB_ITEM hb_errPutOsCode( PHB_ITEM pError, HB_ERRCODE errOsCode )
@@ -896,7 +896,7 @@ HB_USHORT hb_errGetSeverity( PHB_ITEM pError )
    HB_TRACE( HB_TR_DEBUG, ( "hb_errGetSeverity(%p)", pError ) );
 #endif
 
-   return static_cast< HB_USHORT >( hb_arrayGetNI( pError, HB_TERROR_SEVERITY ) );
+   return static_cast<HB_USHORT>( hb_arrayGetNI( pError, HB_TERROR_SEVERITY ) );
 }
 
 PHB_ITEM hb_errPutSeverity( PHB_ITEM pError, HB_USHORT uiSeverity )
@@ -916,7 +916,7 @@ HB_ERRCODE hb_errGetSubCode( PHB_ITEM pError )
    HB_TRACE( HB_TR_DEBUG, ( "hb_errGetSubCode(%p)", pError ) );
 #endif
 
-   return static_cast< HB_ERRCODE >( hb_arrayGetNI( pError, HB_TERROR_SUBCODE ) );
+   return static_cast<HB_ERRCODE>( hb_arrayGetNI( pError, HB_TERROR_SUBCODE ) );
 }
 
 PHB_ITEM hb_errPutSubCode( PHB_ITEM pError, HB_ERRCODE errSubCode )
@@ -956,7 +956,7 @@ HB_USHORT hb_errGetTries( PHB_ITEM pError )
    HB_TRACE( HB_TR_DEBUG, ( "hb_errGetTries(%p)", pError ) );
 #endif
 
-   return static_cast< HB_USHORT >( hb_arrayGetNI( pError, HB_TERROR_TRIES ) );
+   return static_cast<HB_USHORT>( hb_arrayGetNI( pError, HB_TERROR_TRIES ) );
 }
 
 PHB_ITEM hb_errPutTries( PHB_ITEM pError, HB_USHORT uiTries )
@@ -976,7 +976,7 @@ HB_USHORT hb_errGetFlags( PHB_ITEM pError )
    HB_TRACE( HB_TR_DEBUG, ( "hb_errGetFlags(%p)", pError ) );
 #endif
 
-   return static_cast< HB_USHORT >( hb_arrayGetNI( pError, HB_TERROR_FLAGS ) );
+   return static_cast<HB_USHORT>( hb_arrayGetNI( pError, HB_TERROR_FLAGS ) );
 }
 
 PHB_ITEM hb_errPutFlags( PHB_ITEM pError, HB_USHORT uiFlags )
@@ -1065,7 +1065,7 @@ PHB_ITEM hb_errRT_New_Subst(
    hb_errPutDescription( pError, szDescription ? szDescription : hb_langDGetItem( HB_LANG_ITEM_BASE_ERRDESC + errGenCode ) );
    hb_errPutOperation( pError, szOperation );
    hb_errPutOsCode( pError, errOsCode );
-   hb_errPutFlags( pError, static_cast< HB_USHORT >( uiFlags | EF_CANSUBSTITUTE ) );
+   hb_errPutFlags( pError, static_cast<HB_USHORT>( uiFlags | EF_CANSUBSTITUTE ) );
 
    return pError;
 }
@@ -1119,8 +1119,8 @@ PHB_ITEM hb_errRT_FileError( PHB_ITEM pError, const char * szSubSystem, HB_ERRCO
 
 HB_FUNC( __ERRRT_BASE )
 {
-   hb_errRT_BASE( static_cast< HB_ERRCODE >( hb_parni(1) ),
-                  static_cast< HB_ERRCODE >( hb_parni(2) ),
+   hb_errRT_BASE( static_cast<HB_ERRCODE>( hb_parni(1) ),
+                  static_cast<HB_ERRCODE>( hb_parni(2) ),
                   hb_parc(3),
                   hb_parc(4),
                   ( hb_pcount() > 5 && hb_parnl(5) > 0 ? 1 : 0 ),
@@ -1129,8 +1129,8 @@ HB_FUNC( __ERRRT_BASE )
 
 HB_FUNC( __ERRRT_SBASE )
 {
-   hb_errRT_BASE_SubstR( static_cast< HB_ERRCODE >( hb_parni(1) ),
-                         static_cast< HB_ERRCODE >( hb_parni(2) ),
+   hb_errRT_BASE_SubstR( static_cast<HB_ERRCODE>( hb_parni(1) ),
+                         static_cast<HB_ERRCODE>( hb_parni(2) ),
                          hb_parc(3),
                          hb_parc(4),
                          ( hb_pcount() > 5 && hb_parnl(5) > 0 ? 1 : 0 ),

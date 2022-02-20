@@ -128,7 +128,7 @@ HB_FUNC( STRTRAN )
 
                if( nLength )
                {
-                  char * szResult = static_cast< char * >( hb_xgrab( nLength + 1 ) );
+                  char * szResult = static_cast<char*>( hb_xgrab( nLength + 1 ) );
                   char * szPtr = szResult;
 
                   nFound -= nReplaced;

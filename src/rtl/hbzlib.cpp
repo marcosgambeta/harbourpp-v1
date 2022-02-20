@@ -73,7 +73,7 @@ static HB_SIZE s_zlibCompressBound( HB_SIZE nLen )
 #if ! defined( _HB_Z_COMPRESSBOUND )
    return nLen + ( nLen >> 12 ) + ( nLen >> 14 ) + ( nLen >> 25 ) + 13;
 #else
-   return compressBound( static_cast< uLong >( nLen ) );
+   return compressBound( static_cast<uLong>( nLen ) );
 #endif
 }
 
@@ -81,7 +81,7 @@ static void * s_zlib_alloc( void * cargo, uInt items, uInt size )
 {
    HB_SYMBOL_UNUSED( cargo );
 
-   return ( items > 0 && size > 0 ) ? hb_xalloc( static_cast< HB_SIZE >( items ) * size ) : nullptr;
+   return ( items > 0 && size > 0 ) ? hb_xalloc( static_cast<HB_SIZE>( items ) * size ) : nullptr;
 }
 
 static void s_zlib_free( void * cargo, void * address )
@@ -103,8 +103,8 @@ static int s_zlibCompress2( char ** pDstPtr, HB_SIZE * pnDst, const char * pSrc,
    stream.zalloc    = s_zlib_alloc;
    stream.zfree     = s_zlib_free;
    stream.opaque    = nullptr;
-   stream.next_in   = reinterpret_cast< Bytef * >( const_cast< char *>( pSrc ) );
-   stream.avail_in  = static_cast< uInt >( nSrc );
+   stream.next_in   = reinterpret_cast<Bytef*>( const_cast<char*>( pSrc ) );
+   stream.avail_in  = static_cast<uInt>( nSrc );
    iResult = deflateInit2( &stream, level, Z_DEFLATED, 15 + ( fGZip ? 16 : 0 ), 8, Z_DEFAULT_STRATEGY );
    if( iResult == Z_OK )
    {
@@ -112,9 +112,9 @@ static int s_zlibCompress2( char ** pDstPtr, HB_SIZE * pnDst, const char * pSrc,
       {
          if( *pnDst == 0 )
          {
-            *pnDst = deflateBound( &stream, static_cast< uLong >( nSrc ) );
+            *pnDst = deflateBound( &stream, static_cast<uLong>( nSrc ) );
          }
-         *pDstPtr = static_cast< char * >( hb_xalloc( *pnDst + 1 ) );
+         *pDstPtr = static_cast<char*>( hb_xalloc( *pnDst + 1 ) );
          if( *pDstPtr == nullptr )
          {
             iResult = Z_MEM_ERROR;
@@ -124,8 +124,8 @@ static int s_zlibCompress2( char ** pDstPtr, HB_SIZE * pnDst, const char * pSrc,
 
    if( iResult == Z_OK )
    {
-      stream.next_out  = reinterpret_cast< Bytef * >( *pDstPtr );
-      stream.avail_out = static_cast< uInt >( *pnDst );
+      stream.next_out  = reinterpret_cast<Bytef*>( *pDstPtr );
+      stream.avail_out = static_cast<uInt>( *pnDst );
 
       do
       {
@@ -159,8 +159,8 @@ static HB_SIZE s_zlibUncompressedSize( const char * szSrc, HB_SIZE nLen, int * p
    stream.zalloc    = s_zlib_alloc;
    stream.zfree     = s_zlib_free;
    stream.opaque    = nullptr;
-   stream.next_in   = reinterpret_cast< Bytef * >( const_cast< char *>( szSrc ) );
-   stream.avail_in  = static_cast< uInt >( nLen );
+   stream.next_in   = reinterpret_cast<Bytef*>( const_cast<char*>( szSrc ) );
+   stream.avail_in  = static_cast<uInt>( nLen );
 
    *piResult = inflateInit2( &stream, 15 + 32 );
    if( *piResult == Z_OK )
@@ -193,14 +193,14 @@ static int s_zlibUncompress( char * pDst, HB_SIZE * pnDst, const char * pSrc, HB
    stream.zalloc    = s_zlib_alloc;
    stream.zfree     = s_zlib_free;
    stream.opaque    = nullptr;
-   stream.next_in   = reinterpret_cast< Bytef * >( const_cast< char *>( pSrc ) );
-   stream.avail_in  = static_cast< uInt >( nSrc );
+   stream.next_in   = reinterpret_cast<Bytef*>( const_cast<char*>( pSrc ) );
+   stream.avail_in  = static_cast<uInt>( nSrc );
    iResult = inflateInit2( &stream, 15 + 32 );
 
    if( iResult == Z_OK )
    {
-      stream.next_out  = reinterpret_cast< Bytef * >( pDst );
-      stream.avail_out = static_cast< uInt >( *pnDst );
+      stream.next_out  = reinterpret_cast<Bytef*>( pDst );
+      stream.avail_out = static_cast<uInt>( *pnDst );
 
       do
       {
@@ -323,7 +323,7 @@ HB_FUNC( HB_ZCOMPRESS )
             if( HB_ISNUM( 2 ) )
             {
                nDstLen = hb_parns(2);
-               pDest = static_cast< char * >( hb_xalloc( nDstLen + 1 ) );
+               pDest = static_cast<char*>( hb_xalloc( nDstLen + 1 ) );
             }
             else
             {
@@ -399,10 +399,10 @@ HB_FUNC( HB_ZUNCOMPRESS )
          }
          else
          {
-            nDstLen = HB_ISNUM( 2 ) ? static_cast< HB_SIZE >( hb_parns(2) ) : s_zlibUncompressedSize( szData, nLen, &iResult );
+            nDstLen = HB_ISNUM( 2 ) ? static_cast<HB_SIZE>( hb_parns(2) ) : s_zlibUncompressedSize( szData, nLen, &iResult );
             if( iResult == Z_OK )
             {
-               pDest = static_cast< char * >( hb_xalloc( nDstLen + 1 ) );
+               pDest = static_cast<char*>( hb_xalloc( nDstLen + 1 ) );
                if( ! pDest )
                {
                   iResult = Z_MEM_ERROR;
@@ -451,11 +451,11 @@ HB_FUNC( HB_GZCOMPRESSBOUND )
 {
    if( HB_ISCHAR( 1 ) )
    {
-      hb_retnint( s_zlibCompressBound( static_cast< uLong >( hb_parclen(1) ) ) + 12 );
+      hb_retnint( s_zlibCompressBound( static_cast<uLong>( hb_parclen(1) ) ) + 12 );
    }
    else if( HB_ISNUM( 1 ) )
    {
-      hb_retnint( s_zlibCompressBound( static_cast< uLong >( hb_parns(1) ) ) + 12 );
+      hb_retnint( s_zlibCompressBound( static_cast<uLong>( hb_parns(1) ) ) + 12 );
    }
    else
    {
@@ -498,7 +498,7 @@ HB_FUNC( HB_GZCOMPRESS )
             if( HB_ISNUM( 2 ) )
             {
                nDstLen = hb_parns(2);
-               pDest = static_cast< char * >( hb_xalloc( nDstLen + 1 ) );
+               pDest = static_cast<char*>( hb_xalloc( nDstLen + 1 ) );
             }
             else
             {

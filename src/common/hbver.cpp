@@ -169,7 +169,7 @@ static HB_BOOL s_win_iswow64( void )
 
       if( hModule )
       {
-         pIsWow64Process = reinterpret_cast< P_ISWOW64PROCESS >( HB_WINAPI_GETPROCADDRESS( hModule, "IsWow64Process" ) );
+         pIsWow64Process = reinterpret_cast<P_ISWOW64PROCESS>( HB_WINAPI_GETPROCADDRESS( hModule, "IsWow64Process" ) );
       }
       else
       {
@@ -320,8 +320,8 @@ static HB_BOOL s_hb_winVerifyVersionInit( void )
       HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
       if( hModule )
       {
-         s_pVerifyVersionInfo = reinterpret_cast< _HB_VERIFYVERSIONINFO >( HB_WINAPI_GETPROCADDRESS( hModule, "VerifyVersionInfoW" ) );
-         s_pVerSetConditionMask = reinterpret_cast< _HB_VERSETCONDITIONMASK >( HB_WINAPI_GETPROCADDRESS( hModule, "VerSetConditionMask" ) );
+         s_pVerifyVersionInfo = reinterpret_cast<_HB_VERIFYVERSIONINFO>( HB_WINAPI_GETPROCADDRESS( hModule, "VerifyVersionInfoW" ) );
+         s_pVerSetConditionMask = reinterpret_cast<_HB_VERSETCONDITIONMASK>( HB_WINAPI_GETPROCADDRESS( hModule, "VerSetConditionMask" ) );
       }
       s_fVerInfoInit = HB_FALSE;
    }
@@ -415,7 +415,7 @@ char * hb_verPlatform( void )
 
    char * pszPlatform;
 
-   pszPlatform = static_cast< char * >( hb_xgrab( PLATFORM_BUF_SIZE + 1 ) );
+   pszPlatform = static_cast<char*>( hb_xgrab( PLATFORM_BUF_SIZE + 1 ) );
 
 #if defined( HB_OS_WIN )
 
@@ -617,8 +617,8 @@ HB_BOOL hb_iswinver( int iMajor, int iMinor, int iType, HB_BOOL fOrUpper )
 
       memset( &ver, 0, sizeof( ver ) );
       ver.dwOSVersionInfoSize = sizeof( ver );
-      ver.dwMajorVersion = static_cast< DWORD >( iMajor );
-      ver.dwMinorVersion = static_cast< DWORD >( iMinor );
+      ver.dwMajorVersion = static_cast<DWORD>( iMajor );
+      ver.dwMinorVersion = static_cast<DWORD>( iMinor );
 
       dwlConditionMask = s_pVerSetConditionMask( dwlConditionMask, VER_MAJORVERSION, fOrUpper ? VER_GREATER_EQUAL : VER_EQUAL );
       dwlConditionMask = s_pVerSetConditionMask( dwlConditionMask, VER_MINORVERSION, fOrUpper ? VER_GREATER_EQUAL : VER_EQUAL );
@@ -636,7 +636,7 @@ HB_BOOL hb_iswinver( int iMajor, int iMinor, int iType, HB_BOOL fOrUpper )
          in above calls, both fixes the problem. [vszakats] */
 #if defined( __HB_DISABLE_WINE_VERIFYVERSIONINFO_BUG_WORKAROUND )
       ver.wServicePackMajor =
-      ver.wServicePackMinor = static_cast< WORD >( 0 );
+      ver.wServicePackMinor = static_cast<WORD>( 0 );
       dwTypeMask |= VER_SERVICEPACKMAJOR | VER_SERVICEPACKMINOR;
       dwlConditionMask = s_pVerSetConditionMask( dwlConditionMask, VER_SERVICEPACKMAJOR, VER_GREATER_EQUAL );
       dwlConditionMask = s_pVerSetConditionMask( dwlConditionMask, VER_SERVICEPACKMINOR, VER_GREATER_EQUAL );
@@ -645,11 +645,11 @@ HB_BOOL hb_iswinver( int iMajor, int iMinor, int iType, HB_BOOL fOrUpper )
       if( iType )
       {
          dwTypeMask |= VER_PRODUCT_TYPE;
-         ver.wProductType = static_cast< BYTE >( iType );
+         ver.wProductType = static_cast<BYTE>( iType );
          dwlConditionMask = s_pVerSetConditionMask( dwlConditionMask, VER_PRODUCT_TYPE, VER_EQUAL );
       }
 
-      return static_cast< HB_BOOL >( s_pVerifyVersionInfo( &ver, dwTypeMask, dwlConditionMask ) );
+      return static_cast<HB_BOOL>( s_pVerifyVersionInfo( &ver, dwTypeMask, dwlConditionMask ) );
    }
 #else
    HB_SYMBOL_UNUSED( iMajor );
@@ -670,11 +670,11 @@ HB_BOOL hb_iswinsp( int iServicePackMajor, HB_BOOL fOrUpper )
 
       memset( &ver, 0, sizeof( ver ) );
       ver.dwOSVersionInfoSize = sizeof( ver );
-      ver.wServicePackMajor = static_cast< WORD >( iServicePackMajor );
+      ver.wServicePackMajor = static_cast<WORD>( iServicePackMajor );
 
       dwlConditionMask = s_pVerSetConditionMask( dwlConditionMask, VER_SERVICEPACKMAJOR, fOrUpper ? VER_GREATER_EQUAL : VER_EQUAL );
 
-      return static_cast< HB_BOOL >( s_pVerifyVersionInfo( &ver, VER_SERVICEPACKMAJOR, dwlConditionMask ) );
+      return static_cast<HB_BOOL>( s_pVerifyVersionInfo( &ver, VER_SERVICEPACKMAJOR, dwlConditionMask ) );
    }
 #else
    HB_SYMBOL_UNUSED( iServicePackMajor );
@@ -837,7 +837,7 @@ char * hb_verCompiler( void )
    int iVerMicro = 0;
    int iElements = 0;
 
-   pszCompiler = static_cast< char * >( hb_xgrab( COMPILER_BUF_SIZE ) );
+   pszCompiler = static_cast<char*>( hb_xgrab( COMPILER_BUF_SIZE ) );
    szSub[ 0 ] = '\0';
 
 #if defined( __IBMC__ ) || defined( __IBMCPP__ )
@@ -1154,7 +1154,7 @@ char * hb_verHarbour( void )
 
    char * pszVersion;
 
-   pszVersion = static_cast< char * >( hb_xgrab( 80 ) );
+   pszVersion = static_cast<char*>( hb_xgrab( 80 ) );
    hb_snprintf( pszVersion, 80, "Harbour++ %d.%d.%d%s (r%d)", HB_VER_MAJOR, HB_VER_MINOR, HB_VER_RELEASE, HB_VER_STATUS, hb_verRevision() );
 
    return pszVersion;
@@ -1168,7 +1168,7 @@ char * hb_verPCode( void )
 
    char * pszPCode;
 
-   pszPCode = static_cast< char * >( hb_xgrab( 24 ) );
+   pszPCode = static_cast<char*>( hb_xgrab( 24 ) );
    hb_snprintf( pszPCode, 24, "PCode version: %d.%d", HB_PCODE_VER >> 8, HB_PCODE_VER & 0xFF );
 
    return pszPCode;
@@ -1182,7 +1182,7 @@ char * hb_verBuildDate( void )
 
    char * pszDate;
 
-   pszDate = static_cast< char * >( hb_xgrab( 64 ) );
+   pszDate = static_cast<char*>( hb_xgrab( 64 ) );
    hb_snprintf( pszDate, 64, "%s %s", __DATE__, __TIME__ );
 
    return pszDate;

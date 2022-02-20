@@ -67,7 +67,7 @@ HB_BOOL hb_fsCopy( const char * pszSource, const char * pszDest )
          {
             HB_SIZE nBytesRead;
             if( ( nBytesRead = hb_fileRead( pSrcFile, pbyBuffer, HB_FSCOPY_BUFFERSIZE, -1 ) ) > 0 &&
-                nBytesRead != static_cast< HB_SIZE >( FS_ERROR ) )
+                nBytesRead != static_cast<HB_SIZE>( FS_ERROR ) )
             {
                if( nBytesRead != hb_fileWrite( pDstFile, pbyBuffer, nBytesRead, -1 ) )
                {

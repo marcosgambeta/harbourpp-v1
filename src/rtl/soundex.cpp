@@ -88,7 +88,7 @@ HB_FUNC( SOUNDEX )
          {
             static const char s_szTable[] = "01230120022455012623010202"; /* NOTE: SoundEx result codes for letters from "A" to "Z" */
                                          /* "ABCDEFGHIJKLMNOPQRSTUVWXYZ" */
-            char cCharConverted = ( ( cChar - 'A' ) > ( static_cast< int >( sizeof( s_szTable ) ) - 1 ) ) ? '9' : s_szTable[ cChar - 'A' ];
+            char cCharConverted = ( ( cChar - 'A' ) > ( static_cast<int>( sizeof( s_szTable ) ) - 1 ) ) ? '9' : s_szTable[ cChar - 'A' ];
 
             if( nResultPos == 0 )
             {

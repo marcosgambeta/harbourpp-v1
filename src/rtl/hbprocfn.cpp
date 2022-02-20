@@ -80,19 +80,19 @@ HB_FUNC( HB_PROCESSOPEN )
       {
          if( phStdIn )
          {
-            hb_stornint( static_cast< HB_NHANDLE >( *phStdIn ), 2 );
+            hb_stornint( static_cast<HB_NHANDLE>( *phStdIn ), 2 );
          }
          if( phStdOut )
          {
-            hb_stornint( static_cast< HB_NHANDLE >( *phStdOut ), 3 );
+            hb_stornint( static_cast<HB_NHANDLE>( *phStdOut ), 3 );
          }
          if( phStdErr && phStdOut != phStdErr )
          {
-            hb_stornint( static_cast< HB_NHANDLE >( *phStdErr ), 4 );
+            hb_stornint( static_cast<HB_NHANDLE>( *phStdErr ), 4 );
          }
          hb_stornint( ulPID, 6 );
       }
-      hb_retnint( static_cast< HB_NHANDLE >( hProcess ) );
+      hb_retnint( static_cast<HB_NHANDLE>( hProcess ) );
    }
    else
    {

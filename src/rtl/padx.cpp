@@ -89,7 +89,7 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
    {
       PHB_ITEM pItem = hb_param( 1, HB_IT_ANY );
 
-      if( pItem && HB_IS_STRING( pItem ) && static_cast< HB_SIZE >( nLen ) == hb_cdpItemLen( cdp, pItem ) )
+      if( pItem && HB_IS_STRING( pItem ) && static_cast<HB_SIZE>( nLen ) == hb_cdpItemLen( cdp, pItem ) )
       {
          hb_itemReturn( pItem );
       }
@@ -108,7 +108,7 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
                nLen += nText;
             }
 
-            if( static_cast< HB_SIZE >( nLen ) > nSize )
+            if( static_cast<HB_SIZE>( nLen ) > nSize )
             {
                HB_SIZE nPad = 0;
                const char * szPad = s_hb_padGet( cdp, &nPad );
@@ -119,9 +119,9 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
                   case HB_PAD_L:
                      if( nPad > 1 )
                      {
-                        HB_SIZE nRep = ( static_cast< HB_SIZE >( nLen ) - nSize ), nPos = 0;
+                        HB_SIZE nRep = ( static_cast<HB_SIZE>( nLen ) - nSize ), nPos = 0;
                         nLen += nRep * ( nPad - 1 );
-                        szResult = static_cast< char * >( hb_xgrab( nLen + 1 ) );
+                        szResult = static_cast<char*>( hb_xgrab( nLen + 1 ) );
                         while( nRep-- )
                         {
                            hb_xmemcpy( szResult + nPos, szPad, nPad );
@@ -131,18 +131,18 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
                      }
                      else
                      {
-                        szResult = static_cast< char * >( hb_xgrab( nLen + 1 ) );
-                        hb_xmemset( szResult, szPad[ 0 ], static_cast< HB_SIZE >( nLen ) - nSize );
-                        hb_xmemcpy( szResult + static_cast< HB_SIZE >( nLen ) - nSize, szText, nSize );
+                        szResult = static_cast<char*>( hb_xgrab( nLen + 1 ) );
+                        hb_xmemset( szResult, szPad[ 0 ], static_cast<HB_SIZE>( nLen ) - nSize );
+                        hb_xmemcpy( szResult + static_cast<HB_SIZE>( nLen ) - nSize, szText, nSize );
                      }
                      break;
                   case HB_PAD_R:
                      if( nPad > 1 )
                      {
                         nLen += ( nLen - nSize ) * ( nPad - 1 );
-                        szResult = static_cast< char * >( hb_xgrab( nLen + 1 ) );
+                        szResult = static_cast<char*>( hb_xgrab( nLen + 1 ) );
                         hb_xmemcpy( szResult, szText, nSize );
-                        while( nSize < static_cast< HB_SIZE >( nLen ) )
+                        while( nSize < static_cast<HB_SIZE>( nLen ) )
                         {
                            hb_xmemcpy( szResult + nSize, szPad, nPad );
                            nSize += nPad;
@@ -150,17 +150,17 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
                      }
                      else
                      {
-                        szResult = static_cast< char * >( hb_xgrab( nLen + 1 ) );
+                        szResult = static_cast<char*>( hb_xgrab( nLen + 1 ) );
                         hb_xmemcpy( szResult, szText, nSize );
-                        hb_xmemset( szResult + nSize, szPad[ 0 ], static_cast< HB_SIZE >( nLen ) - nSize );
+                        hb_xmemset( szResult + nSize, szPad[ 0 ], static_cast<HB_SIZE>( nLen ) - nSize );
                      }
                      break;
                   default: /* HB_PAD_C */
                      if( nPad > 1 )
                      {
-                        HB_SIZE nRep = ( static_cast< HB_SIZE >( nLen ) - nSize ) >> 1, nPos = 0;
+                        HB_SIZE nRep = ( static_cast<HB_SIZE>( nLen ) - nSize ) >> 1, nPos = 0;
                         nLen += ( nLen - nSize ) * ( nPad - 1 );
-                        szResult = static_cast< char * >( hb_xgrab( nLen + 1 ) );
+                        szResult = static_cast<char*>( hb_xgrab( nLen + 1 ) );
                         while( nRep-- )
                         {
                            hb_xmemcpy( szResult + nPos, szPad, nPad );
@@ -168,7 +168,7 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
                         }
                         hb_xmemcpy( szResult + nPos, szText, nSize );
                         nSize += nPos;
-                        while( nSize < static_cast< HB_SIZE >( nLen ) )
+                        while( nSize < static_cast<HB_SIZE>( nLen ) )
                         {
                            hb_xmemcpy( szResult + nSize, szPad, nPad );
                            nSize += nPad;
@@ -176,15 +176,15 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
                      }
                      else
                      {
-                        szResult = static_cast< char * >( hb_xgrab( nLen + 1 ) );
-                        nPad = ( static_cast< HB_SIZE >( nLen ) - nSize ) >> 1;
+                        szResult = static_cast<char*>( hb_xgrab( nLen + 1 ) );
+                        nPad = ( static_cast<HB_SIZE>( nLen ) - nSize ) >> 1;
                         hb_xmemset( szResult, szPad[ 0 ], nPad );
                         hb_xmemcpy( szResult + nPad, szText, nSize );
-                        hb_xmemset( szResult + nPad + nSize, szPad[ 0 ], static_cast< HB_SIZE >( nLen ) - nSize - nPad );
+                        hb_xmemset( szResult + nPad + nSize, szPad[ 0 ], static_cast<HB_SIZE>( nLen ) - nSize - nPad );
                      }
                      break;
                }
-               hb_retclen_buffer( szResult, static_cast< HB_SIZE >( nLen ) );
+               hb_retclen_buffer( szResult, static_cast<HB_SIZE>( nLen ) );
                if( bFreeReq )
                {
                   hb_xfree( szText );
@@ -194,7 +194,7 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
             {
                if( bFreeReq )
                {
-                  hb_retclen_buffer( szText, static_cast< HB_SIZE >( nLen ) );
+                  hb_retclen_buffer( szText, static_cast<HB_SIZE>( nLen ) );
                }
                else
                {

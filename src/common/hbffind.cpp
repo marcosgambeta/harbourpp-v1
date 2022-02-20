@@ -243,14 +243,14 @@ HB_FATTR hb_fsAttrToRaw( HB_FATTR nAttr )
 HB_FATTR hb_fsAttrEncode( const char * szAttr )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsAttrEncode(%p)", static_cast< const void * >( szAttr ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_fsAttrEncode(%p)", static_cast<const void*>( szAttr ) ) );
 #endif
 
    const char * pos = szAttr;
    char ch;
    HB_FATTR nAttr = 0;
 
-   while( ( ch = static_cast< char >( HB_TOUPPER( *pos ) ) ) != '\0' )
+   while( ( ch = static_cast<char>( HB_TOUPPER( *pos ) ) ) != '\0' )
    {
       switch( ch )
       {
@@ -277,7 +277,7 @@ HB_FATTR hb_fsAttrEncode( const char * szAttr )
 char * hb_fsAttrDecode( HB_FATTR nAttr, char * szAttr )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsAttrDecode(%u, %p)", nAttr, static_cast< void * >( szAttr ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_fsAttrDecode(%u, %p)", nAttr, static_cast<void*>( szAttr ) ) );
 #endif
 
    char * ptr = szAttr;
@@ -328,7 +328,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
 #if defined( HB_OS_WIN )
 
    {
-      PHB_FFIND_INFO info = static_cast< PHB_FFIND_INFO >( ffind->info );
+      PHB_FFIND_INFO info = static_cast<PHB_FFIND_INFO>( ffind->info );
 
       bFound = HB_FALSE;
 
@@ -381,7 +381,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
          {
             LPTSTR lpFileMask = HB_CHARDUP( ffind->pszFileMask );
             ffind->bFirst = HB_FALSE;
-            info->dwAttr    = static_cast< DWORD >( hb_fsAttrToRaw( ffind->attrmask ) );
+            info->dwAttr    = static_cast<DWORD>( hb_fsAttrToRaw( ffind->attrmask ) );
             info->hFindFile = FindFirstFile( lpFileMask, &info->pFindFileData );
             hb_xfree( lpFileMask );
 
@@ -415,10 +415,10 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
             }
             else
             {
-               ffind->size = static_cast< HB_FOFFSET >( info->pFindFileData.nFileSizeLow ) + ( static_cast< HB_FOFFSET >( info->pFindFileData.nFileSizeHigh ) << 32 );
+               ffind->size = static_cast<HB_FOFFSET>( info->pFindFileData.nFileSizeLow ) + ( static_cast<HB_FOFFSET>( info->pFindFileData.nFileSizeHigh ) << 32 );
             }
 
-            raw_attr = static_cast< HB_FATTR >( info->pFindFileData.dwFileAttributes );
+            raw_attr = static_cast<HB_FATTR>( info->pFindFileData.dwFileAttributes );
 
             /* NOTE: One of these may fail when searching on an UNC path, I
                      don't know yet what's the reason. [vszakats] */
@@ -446,7 +446,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
 #elif defined( HB_OS_UNIX )
 
    {
-      PHB_FFIND_INFO info = static_cast< PHB_FFIND_INFO >( ffind->info );
+      PHB_FFIND_INFO info = static_cast<PHB_FFIND_INFO>( ffind->info );
 
       char dirname[ HB_PATH_MAX ];
 
@@ -643,10 +643,10 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
 
 PHB_FFIND hb_fsFindFirst( const char * pszFileMask, HB_FATTR attrmask )
 {
-   PHB_FFIND ffind = static_cast< PHB_FFIND >( hb_xgrabz( sizeof( HB_FFIND ) ) );
+   PHB_FFIND ffind = static_cast<PHB_FFIND>( hb_xgrabz( sizeof( HB_FFIND ) ) );
 
    /* Allocate platform dependent file find info storage */
-   ffind->info = static_cast< void * >( hb_xgrabz( sizeof( HB_FFIND_INFO ) ) );
+   ffind->info = static_cast<void*>( hb_xgrabz( sizeof( HB_FFIND_INFO ) ) );
 
    /* Store search parameters */
 #if defined( HB_OS_WIN )
@@ -706,7 +706,7 @@ void hb_fsFindClose( PHB_FFIND ffind )
 
       if( ffind->info )
       {
-         PHB_FFIND_INFO info = static_cast< PHB_FFIND_INFO >( ffind->info );
+         PHB_FFIND_INFO info = static_cast<PHB_FFIND_INFO>( ffind->info );
 
          if( ! ffind->bFirst )
          {

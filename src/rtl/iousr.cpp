@@ -57,7 +57,7 @@
 
 #include "hbiousr.ch"
 
-#define HB_FILE_ERR_UNSUPPORTED  ( static_cast< HB_ERRCODE >( FS_ERROR ) )
+#define HB_FILE_ERR_UNSUPPORTED  ( static_cast<HB_ERRCODE>( FS_ERROR ) )
 
 struct _HB_IOUSR
 {
@@ -115,7 +115,7 @@ static void s_iousrFreeAll( void * cargo )
 
 static PHB_FILE s_fileNew( PHB_IOUSR pIO, PHB_ITEM pFileItm )
 {
-   PHB_FILE pFile = static_cast< PHB_FILE >( hb_xgrab( sizeof( HB_FILE ) ) );
+   PHB_FILE pFile = static_cast<PHB_FILE>( hb_xgrab( sizeof( HB_FILE ) ) );
 
    pFile->pFuncs = &pIO->funcs;
    pFile->pFileItm = pFileItm;
@@ -144,9 +144,9 @@ static PHB_IOUSR s_iousrAddNew( const char * pszPrefix )
       {
          hb_vmAtQuit( s_iousrFreeAll, nullptr );
       }
-      pIO = static_cast< PHB_IOUSR >( hb_xgrabz( sizeof( HB_IOUSR ) ) );
+      pIO = static_cast<PHB_IOUSR>( hb_xgrabz( sizeof( HB_IOUSR ) ) );
       pIO->prefix = hb_strdup( pszPrefix );
-      pIO->prefix_len = static_cast< int >( strlen( pszPrefix ) );
+      pIO->prefix_len = static_cast<int>( strlen( pszPrefix ) );
       s_ioUsrs[ s_iCount++ ] = pIO;
    }
 
@@ -157,7 +157,7 @@ static PHB_IOUSR s_iousrAddNew( const char * pszPrefix )
 
 #define s_hasMethod( pIO, iMethod ) ( ( pIO )->prg_funcs[ ( iMethod ) - 1 ] != nullptr )
 
-#define s_getUsrIO( p )       ( static_cast< PHB_IOUSR >( HB_UNCONST( p ) ) )
+#define s_getUsrIO( p )       ( static_cast<PHB_IOUSR>( HB_UNCONST( p ) ) )
 
 static void s_pushMethod( PHB_IOUSR pIO, int iMethod )
 {
@@ -299,14 +299,14 @@ static HB_BOOL s_fileTimeGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, l
    HB_BOOL fResult;
    int iOffset;
 
-   iOffset = static_cast< int >( hb_stackTopOffset() - hb_stackBaseOffset() );
+   iOffset = static_cast<int>( hb_stackTopOffset() - hb_stackBaseOffset() );
    hb_vmPushNil();
    hb_vmPushNil();
 
    s_pushMethod( pIO, IOUSR_TIMEGET );
    hb_vmPushString( pszFileName, strlen( pszFileName ) );
-   hb_xvmPushLocalByRef( static_cast< HB_SHORT >( iOffset ) );
-   hb_xvmPushLocalByRef( static_cast< HB_SHORT >( iOffset + 1 ) );
+   hb_xvmPushLocalByRef( static_cast<HB_SHORT>( iOffset ) );
+   hb_xvmPushLocalByRef( static_cast<HB_SHORT>( iOffset + 1 ) );
    hb_vmDo( 3 );
 
    fResult = hb_parl(-1);
@@ -340,18 +340,18 @@ static HB_BOOL s_fileAttrGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, H
    HB_BOOL fResult;
    int iOffset;
 
-   iOffset = static_cast< int >( hb_stackTopOffset() - hb_stackBaseOffset() );
+   iOffset = static_cast<int>( hb_stackTopOffset() - hb_stackBaseOffset() );
    hb_vmPushNil();
 
    s_pushMethod( pIO, IOUSR_ATTRGET );
    hb_vmPushString( pszFileName, strlen( pszFileName ) );
-   hb_xvmPushLocalByRef( static_cast< HB_SHORT >( iOffset ) );
+   hb_xvmPushLocalByRef( static_cast<HB_SHORT>( iOffset ) );
    hb_vmDo( 2 );
 
    fResult = hb_parl(-1);
    if( fResult )
    {
-      *pnAttr = static_cast< HB_FATTR >( hb_itemGetNL( hb_stackItemFromBase( iOffset ) ) );
+      *pnAttr = static_cast<HB_FATTR>( hb_itemGetNL( hb_stackItemFromBase( iOffset ) ) );
    }
    hb_stackPop();
 
@@ -467,8 +467,8 @@ static HB_BOOL s_fileLock( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, i
 
    s_pushMethod( pIO, IOUSR_LOCK );
    hb_vmPush( pFile->pFileItm );
-   hb_vmPushNumInt( static_cast< HB_MAXINT >( nStart ) );
-   hb_vmPushNumInt( static_cast< HB_MAXINT >( nLen ) );
+   hb_vmPushNumInt( static_cast<HB_MAXINT>( nStart ) );
+   hb_vmPushNumInt( static_cast<HB_MAXINT>( nLen ) );
    hb_vmPushInteger( iType );
    hb_vmDo( 4 );
 
@@ -481,8 +481,8 @@ static int s_fileLockTest( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, i
 
    s_pushMethod( pIO, IOUSR_LOCKTEST );
    hb_vmPush( pFile->pFileItm );
-   hb_vmPushNumInt( static_cast< HB_MAXINT >( nStart ) );
-   hb_vmPushNumInt( static_cast< HB_MAXINT >( nLen ) );
+   hb_vmPushNumInt( static_cast<HB_MAXINT>( nStart ) );
+   hb_vmPushNumInt( static_cast<HB_MAXINT>( nLen ) );
    hb_vmPushInteger( iType );
    hb_vmDo( 4 );
 
@@ -495,13 +495,13 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * data, HB_SIZE nSize, HB_MAXINT
    HB_SIZE nResult;
    int iOffset;
 
-   iOffset = static_cast< int >( hb_stackTopOffset() - hb_stackBaseOffset() );
+   iOffset = static_cast<int>( hb_stackTopOffset() - hb_stackBaseOffset() );
    memset( data, 0, nSize );
-   hb_vmPushString( static_cast< const char * >( data ), nSize );
+   hb_vmPushString( static_cast<const char*>( data ), nSize );
 
    s_pushMethod( pIO, IOUSR_READ );
    hb_vmPush( pFile->pFileItm );
-   hb_xvmPushLocalByRef( static_cast< HB_SHORT >( iOffset ) );
+   hb_xvmPushLocalByRef( static_cast<HB_SHORT>( iOffset ) );
    hb_vmPushSize( nSize );
    hb_vmPushNumInt( timeout );
    hb_vmDo( 4 );
@@ -527,7 +527,7 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * data, HB_SIZE nSize, HB
 
    s_pushMethod( pIO, IOUSR_WRITE );
    hb_vmPush( pFile->pFileItm );
-   hb_vmPushString( static_cast< const char * >( data ), nSize );
+   hb_vmPushString( static_cast<const char*>( data ), nSize );
    hb_vmPushSize( nSize );
    hb_vmPushNumInt( timeout );
    hb_vmDo( 4 );
@@ -541,15 +541,15 @@ static HB_SIZE s_fileReadAt( PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_FO
    HB_SIZE nResult;
    int iOffset;
 
-   iOffset = static_cast< int >( hb_stackTopOffset() - hb_stackBaseOffset() );
+   iOffset = static_cast<int>( hb_stackTopOffset() - hb_stackBaseOffset() );
    memset( buffer, 0, nSize );
-   hb_vmPushString( static_cast< const char * >( buffer ), nSize );
+   hb_vmPushString( static_cast<const char*>( buffer ), nSize );
 
    s_pushMethod( pIO, IOUSR_READAT );
    hb_vmPush( pFile->pFileItm );
-   hb_xvmPushLocalByRef( static_cast< HB_SHORT >( iOffset ) );
+   hb_xvmPushLocalByRef( static_cast<HB_SHORT>( iOffset ) );
    hb_vmPushSize( nSize );
-   hb_vmPushNumInt( static_cast< HB_MAXINT >( nOffset ) );
+   hb_vmPushNumInt( static_cast<HB_MAXINT>( nOffset ) );
    hb_vmDo( 4 );
 
    nResult = hb_parns(-1);
@@ -573,9 +573,9 @@ static HB_SIZE s_fileWriteAt( PHB_FILE pFile, const void * buffer, HB_SIZE nSize
 
    s_pushMethod( pIO, IOUSR_WRITEAT );
    hb_vmPush( pFile->pFileItm );
-   hb_vmPushString( static_cast< const char * >( buffer ), nSize );
+   hb_vmPushString( static_cast<const char*>( buffer ), nSize );
    hb_vmPushSize( nSize );
-   hb_vmPushNumInt( static_cast< HB_MAXINT >( nOffset ) );
+   hb_vmPushNumInt( static_cast<HB_MAXINT>( nOffset ) );
    hb_vmDo( 4 );
 
    return hb_parns(-1);
@@ -587,7 +587,7 @@ static HB_BOOL s_fileTruncAt( PHB_FILE pFile, HB_FOFFSET nOffset )
 
    s_pushMethod( pIO, IOUSR_TRUNCAT );
    hb_vmPush( pFile->pFileItm );
-   hb_vmPushNumInt( static_cast< HB_MAXINT >( nOffset ) );
+   hb_vmPushNumInt( static_cast<HB_MAXINT>( nOffset ) );
    hb_vmDo( 2 );
 
    return hb_parl(-1);
@@ -599,11 +599,11 @@ static HB_FOFFSET s_fileSeek( PHB_FILE pFile, HB_FOFFSET nOffset, HB_USHORT uiFl
 
    s_pushMethod( pIO, IOUSR_SEEK );
    hb_vmPush( pFile->pFileItm );
-   hb_vmPushNumInt( static_cast< HB_MAXINT >( nOffset ) );
+   hb_vmPushNumInt( static_cast<HB_MAXINT>( nOffset ) );
    hb_vmPushInteger( uiFlags );
    hb_vmDo( 3 );
 
-   return static_cast< HB_FOFFSET >( hb_parnint(-1) );
+   return static_cast<HB_FOFFSET>( hb_parnint(-1) );
 }
 
 static HB_FOFFSET s_fileSize( PHB_FILE pFile )
@@ -614,7 +614,7 @@ static HB_FOFFSET s_fileSize( PHB_FILE pFile )
    hb_vmPush( pFile->pFileItm );
    hb_vmDo( 1 );
 
-   return static_cast< HB_FOFFSET >( hb_parnint(-1) );
+   return static_cast<HB_FOFFSET>( hb_parnint(-1) );
 }
 
 static HB_BOOL s_fileEof( PHB_FILE pFile )
@@ -671,7 +671,7 @@ static HB_FHANDLE s_fileHandle( PHB_FILE pFile )
    hb_vmPush( pFile->pFileItm );
    hb_vmDo( 1 );
 
-   return static_cast< HB_FHANDLE >( hb_parns(-1) );
+   return static_cast<HB_FHANDLE>( hb_parns(-1) );
 }
 
 static const HB_FILE_FUNCS s_fileFuncs =
@@ -791,10 +791,10 @@ HB_FUNC( IOUSR_SETERROR )
 
    if( HB_ISNUM( 1 ) )
    {
-      HB_ERRCODE errCodeNew = static_cast< HB_ERRCODE >( hb_parni(1) );
+      HB_ERRCODE errCodeNew = static_cast<HB_ERRCODE>( hb_parni(1) );
       if( errCodeNew != 0 )
       {
-         errCodeNew += static_cast< HB_ERRCODE >( hb_parni(2) );
+         errCodeNew += static_cast<HB_ERRCODE>( hb_parni(2) );
       }
       hb_fsSetError( errCodeNew );
    }

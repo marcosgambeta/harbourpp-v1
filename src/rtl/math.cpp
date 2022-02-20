@@ -77,7 +77,7 @@ using PHB_MATHERRDATA = HB_MATHERRDATA *;
 static int hb_matherr( HB_MATH_EXCEPTION * pexc )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_matherr(%p)", static_cast< void * >( pexc ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_matherr(%p)", static_cast<void*>( pexc ) ) );
 #endif
 
    int mode = hb_mathGetErrMode();
@@ -163,7 +163,7 @@ static int hb_matherr( HB_MATH_EXCEPTION * pexc )
 
 static void hb_mathErrDataInit( void * Cargo )
 {
-   PHB_MATHERRDATA pMathErr = static_cast< PHB_MATHERRDATA >( Cargo );
+   PHB_MATHERRDATA pMathErr = static_cast<PHB_MATHERRDATA>( Cargo );
 
    pMathErr->mode = HB_MATH_ERRMODE_DEFAULT;
 
@@ -184,14 +184,14 @@ static void hb_mathErrDataInit( void * Cargo )
 
 static void hb_mathErrDataRelease( void * Cargo )
 {
-   PHB_MATHERRDATA pMathErr = static_cast< PHB_MATHERRDATA >( Cargo );
+   PHB_MATHERRDATA pMathErr = static_cast<PHB_MATHERRDATA>( Cargo );
 
    hb_itemRelease( pMathErr->block );
 }
 
 static HB_TSD_NEW( s_mathErrData, sizeof( HB_MATHERRDATA ), hb_mathErrDataInit, hb_mathErrDataRelease );
 
-#define hb_mathErrData()  ( static_cast< PHB_MATHERRDATA >( hb_stackGetTSD( &s_mathErrData ) ) )
+#define hb_mathErrData()  ( static_cast<PHB_MATHERRDATA>( hb_stackGetTSD( &s_mathErrData ) ) )
 
 /* Harbour Math functions Part I:
  * handling math errors, C math lib redirection
@@ -201,7 +201,7 @@ static HB_TSD_NEW( s_mathErrData, sizeof( HB_MATHERRDATA ), hb_mathErrDataInit, 
 void hb_mathResetError( HB_MATH_EXCEPTION * phb_exc )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_mathResetError(%p)", static_cast< void * >( phb_exc ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_mathResetError(%p)", static_cast<void*>( phb_exc ) ) );
 #endif
 
    HB_SYMBOL_UNUSED( phb_exc );
@@ -230,7 +230,7 @@ void hb_mathResetError( HB_MATH_EXCEPTION * phb_exc )
 int matherr( struct exception * err )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "matherr(%p)", static_cast< void * >( err ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "matherr(%p)", static_cast<void*>( err ) ) );
 #endif
 
    int retval;
@@ -302,7 +302,7 @@ int matherr( struct exception * err )
 HB_BOOL hb_mathGetError( HB_MATH_EXCEPTION * phb_exc, const char * szFunc, double arg1, double arg2, double dResult )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_mathGetError(%p,%s,%lf,%lf,%lf)", static_cast< void * >( phb_exc ), szFunc, arg1, arg2, dResult ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_mathGetError(%p,%s,%lf,%lf,%lf)", static_cast<void*>( phb_exc ), szFunc, arg1, arg2, dResult ) );
 #endif
 
 #if defined( HB_MATH_ERRNO )
@@ -457,7 +457,7 @@ HB_FUNC( HB_MATHERMODE )        /* ([<nNewMode>]) --> <nOldMode> */
 HB_MATH_HANDLERPROC hb_mathSetHandler( HB_MATH_HANDLERPROC handlerproc )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_mathSetHandler (%p)", static_cast< void * >( handlerproc ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_mathSetHandler (%p)", static_cast<void*>( handlerproc ) ) );
 #endif
 
    HB_MATH_HANDLERPROC oldHandlerProc;

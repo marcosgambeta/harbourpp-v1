@@ -108,7 +108,7 @@ static int hb_regexec( PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen, in
    int iResult, i;
 
    iResult = pcre_exec( pRegEx->re_pcre, nullptr /* pcre_extra */,
-                        szString, static_cast< int >( nLen ), 0 /* startoffset */,
+                        szString, static_cast<int>( nLen ), 0 /* startoffset */,
                         pRegEx->iEFlags, aMatches, HB_REGMATCH_SIZE( iMatches ) );
    if( iResult == 0 )
    {
@@ -313,7 +313,7 @@ static HB_BOOL hb_regex( int iRequest )
             break;
 
          case 1: /* LIKE */
-            fResult = HB_REGMATCH_SO( aMatches, 0 ) == 0 && static_cast< HB_SIZE >( HB_REGMATCH_EO( aMatches, 0 ) ) == nLen;
+            fResult = HB_REGMATCH_SO( aMatches, 0 ) == 0 && static_cast<HB_SIZE>( HB_REGMATCH_EO( aMatches, 0 ) ) == nLen;
             break;
 
          case 2: /* MATCH ( HAS ) */

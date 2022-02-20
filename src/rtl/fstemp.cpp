@@ -155,7 +155,7 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
       if( pszDir && pszDir[ 0 ] != '\0' )
       {
          hb_strncpy( pszName, pszDir, HB_PATH_MAX - 1 );
-         iLen = static_cast< int >( strlen( pszName ) );
+         iLen = static_cast<int>( strlen( pszName ) );
          if( pszName[ iLen - 1 ] != HB_OS_PATH_DELIM_CHR && iLen < HB_PATH_MAX - 1 )
          {
             pszName[ iLen ] = HB_OS_PATH_DELIM_CHR;
@@ -172,8 +172,8 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
          hb_strncat( pszName, pszPrefix, HB_PATH_MAX - 1 );
       }
 
-      iLen = static_cast< int >( strlen( pszName ) );
-      if( iLen > ( HB_PATH_MAX - 1 ) - 6 - ( pszExt ? static_cast< int >( strlen( pszExt ) ) : 0 ) )
+      iLen = static_cast<int>( strlen( pszName ) );
+      if( iLen > ( HB_PATH_MAX - 1 ) - 6 - ( pszExt ? static_cast<int>( strlen( pszExt ) ) : 0 ) )
       {
          fd = FS_ERROR;
          break;
@@ -196,19 +196,19 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
          {
             hb_strncat( pszName, pszExt, HB_PATH_MAX - 1 );
 #if defined( HB_USE_LARGEFILE64 )
-            fd = static_cast< HB_FHANDLE >( mkstemps64( pszName, static_cast< int >( strlen( pszExt ) ) ) );
+            fd = static_cast<HB_FHANDLE>( mkstemps64( pszName, static_cast<int>( strlen( pszExt ) ) ) );
 #else
-            fd = static_cast< HB_FHANDLE >( mkstemps( pszName, static_cast< int >( strlen( pszExt ) ) ) );
+            fd = static_cast<HB_FHANDLE>( mkstemps( pszName, static_cast<int>( strlen( pszExt ) ) ) );
 #endif
          }
          else
 #endif
 #if defined( HB_USE_LARGEFILE64 )
-            fd = static_cast< HB_FHANDLE >( mkstemp64( pszName ) );
+            fd = static_cast<HB_FHANDLE>( mkstemp64( pszName ) );
 #else
-            fd = static_cast< HB_FHANDLE >( mkstemp( pszName ) );
+            fd = static_cast<HB_FHANDLE>( mkstemp( pszName ) );
 #endif
-         hb_fsSetIOError( fd != static_cast< HB_FHANDLE >( -1 ), 0 );
+         hb_fsSetIOError( fd != static_cast<HB_FHANDLE>( -1 ), 0 );
          hb_vmLock();
       }
       else
@@ -220,9 +220,9 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
          {
             int n;
             d = d * 36;
-            n = static_cast< int >( d );
+            n = static_cast<int>( d );
             d = modf( d, &x );
-            pszName[ iLen++ ] = static_cast< char >( n + ( n > 9 ? 'a' - 10 : '0' ) );
+            pszName[ iLen++ ] = static_cast<char>( n + ( n > 9 ? 'a' - 10 : '0' ) );
          }
          pszName[ iLen ] = '\0';
          if( pszExt )
@@ -232,7 +232,7 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
          fd = hb_fsCreateEx( pszName, ulAttr, FO_EXCLUSIVE | FO_EXCL );
       }
 
-      if( fd != static_cast< HB_FHANDLE >( FS_ERROR ) )
+      if( fd != static_cast<HB_FHANDLE>( FS_ERROR ) )
       {
          break;
       }
@@ -296,7 +296,7 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
    }
 #else
    {
-      char * pTmpBuffer = static_cast< char * >( hb_xgrab( L_tmpnam + 1 ) );
+      char * pTmpBuffer = static_cast<char*>( hb_xgrab( L_tmpnam + 1 ) );
 
       /* TODO: Implement these: */
       HB_SYMBOL_UNUSED( pszDir );
@@ -370,7 +370,7 @@ HB_FHANDLE hb_fsCreateTemp( const char * pszDir, const char * pszPrefix, HB_FATT
 /* NOTE: pszTempDir must be at least HB_PATH_MAX long. */
 HB_ERRCODE hb_fsTempDir( char * pszTempDir )
 {
-   HB_ERRCODE nResult = static_cast< HB_ERRCODE >( FS_ERROR );
+   HB_ERRCODE nResult = static_cast<HB_ERRCODE>( FS_ERROR );
 
    pszTempDir[ 0 ] = '\0';
 
@@ -433,7 +433,7 @@ HB_ERRCODE hb_fsTempDir( char * pszTempDir )
 
    if( nResult == 0 && pszTempDir[ 0 ] != '\0' )
    {
-      int len = static_cast< int >( strlen( pszTempDir ) );
+      int len = static_cast<int>( strlen( pszTempDir ) );
       if( pszTempDir[ len - 1 ] != HB_OS_PATH_DELIM_CHR && len < HB_PATH_MAX - 1 )
       {
          pszTempDir[ len ] = HB_OS_PATH_DELIM_CHR;
@@ -454,7 +454,7 @@ HB_FUNC( HB_FTEMPCREATE )
 {
    char szName[ HB_PATH_MAX ];
 
-   hb_retnint( static_cast< HB_NHANDLE >( hb_fsCreateTemp( hb_parc(1), hb_parc(2), static_cast< HB_FATTR >( hb_parnldef( 3, FC_NORMAL ) ), szName ) ) );
+   hb_retnint( static_cast<HB_NHANDLE>( hb_fsCreateTemp( hb_parc(1), hb_parc(2), static_cast<HB_FATTR>( hb_parnldef( 3, FC_NORMAL ) ), szName ) ) );
 
    hb_storc( szName, 4 );
 }
@@ -463,7 +463,7 @@ HB_FUNC( HB_FTEMPCREATEEX )
 {
    char szName[ HB_PATH_MAX ];
 
-   hb_retnint( static_cast< HB_NHANDLE >( hb_fsCreateTempEx( szName, hb_parc(2), hb_parc(3), hb_parc(4), static_cast< HB_FATTR >( hb_parnldef( 5, FC_NORMAL ) ) ) ) );
+   hb_retnint( static_cast<HB_NHANDLE>( hb_fsCreateTempEx( szName, hb_parc(2), hb_parc(3), hb_parc(4), static_cast<HB_FATTR>( hb_parnldef( 5, FC_NORMAL ) ) ) ) );
 
    hb_storc( szName, 1 );
 }
@@ -472,7 +472,7 @@ HB_FUNC( HB_DIRTEMP )
 {
    char szTempDir[ HB_PATH_MAX ];
 
-   if( hb_fsTempDir( szTempDir ) != static_cast< HB_ERRCODE >( FS_ERROR ) )
+   if( hb_fsTempDir( szTempDir ) != static_cast<HB_ERRCODE>( FS_ERROR ) )
    {
       hb_retc( szTempDir );
    }

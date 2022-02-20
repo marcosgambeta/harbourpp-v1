@@ -55,7 +55,7 @@
 HB_BOOL hb_evalNew( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_evalNew(%p, %p)", static_cast< void * >( pEvalInfo ), static_cast< void * >( pItem ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_evalNew(%p, %p)", static_cast<void*>( pEvalInfo ), static_cast<void*>( pItem ) ) );
 #endif
 
    if( pEvalInfo )
@@ -88,7 +88,7 @@ HB_BOOL hb_evalNew( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
 HB_BOOL hb_evalPutParam( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_evalPutParam(%p, %p)", static_cast< void * >( pEvalInfo ), static_cast< void * >( pItem ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_evalPutParam(%p, %p)", static_cast<void*>( pEvalInfo ), static_cast<void*>( pItem ) ) );
 #endif
 
    if( pEvalInfo && pItem && pEvalInfo->paramCount < HB_EVAL_PARAM_MAX_ )
@@ -106,7 +106,7 @@ HB_BOOL hb_evalPutParam( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
 PHB_ITEM hb_evalLaunch( PHB_EVALINFO pEvalInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_evalLaunch(%p)", static_cast< void * >( pEvalInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_evalLaunch(%p)", static_cast<void*>( pEvalInfo ) ) );
 #endif
 
    PHB_ITEM pResult = nullptr;
@@ -175,7 +175,7 @@ PHB_ITEM hb_evalLaunch( PHB_EVALINFO pEvalInfo )
 HB_BOOL hb_evalRelease( PHB_EVALINFO pEvalInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_evalRelease(%p)", static_cast< void * >( pEvalInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_evalRelease(%p)", static_cast<void*>( pEvalInfo ) ) );
 #endif
 
    if( pEvalInfo )
@@ -209,7 +209,7 @@ HB_BOOL hb_evalRelease( PHB_EVALINFO pEvalInfo )
 PHB_ITEM hb_itemDo( PHB_ITEM pItem, HB_ULONG ulPCount, ... )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_itemDo(%p, %lu, ...)", static_cast< void * >( pItem ), ulPCount ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_itemDo(%p, %lu, ...)", static_cast<void*>( pItem ), ulPCount ) );
 #endif
 
    PHB_ITEM pResult = nullptr;
@@ -264,11 +264,11 @@ PHB_ITEM hb_itemDo( PHB_ITEM pItem, HB_ULONG ulPCount, ... )
             }
             if( pItem )
             {
-               hb_vmSend( static_cast< HB_USHORT >( ulPCount ) );
+               hb_vmSend( static_cast<HB_USHORT>( ulPCount ) );
             }
             else
             {
-               hb_vmProc( static_cast< HB_USHORT >( ulPCount ) );
+               hb_vmProc( static_cast<HB_USHORT>( ulPCount ) );
             }
 
             pResult = hb_itemNew( hb_stackReturnItem() );
@@ -315,7 +315,7 @@ PHB_ITEM hb_itemDoC( const char * szFunc, HB_ULONG ulPCount, ... )
                }
                va_end( va );
             }
-            hb_vmProc( static_cast< HB_USHORT >( ulPCount ) );
+            hb_vmProc( static_cast<HB_USHORT>( ulPCount ) );
             pResult = hb_itemNew( hb_stackReturnItem() );
             hb_vmRequestRestore();
          }
@@ -534,11 +534,11 @@ HB_FUNC( HB_EXECFROMARRAY )
 
       if( pSelf )
       {
-         hb_vmSend( static_cast< HB_USHORT >( iPCount ) );
+         hb_vmSend( static_cast<HB_USHORT>( iPCount ) );
       }
       else
       {
-         hb_vmProc( static_cast< HB_USHORT >( iPCount ) );
+         hb_vmProc( static_cast<HB_USHORT>( iPCount ) );
       }
    }
    else
@@ -614,11 +614,11 @@ HB_BOOL hb_execFromArray( PHB_ITEM pParam )
 
          if( pSelf )
          {
-            hb_vmSend( static_cast< HB_USHORT >( iPCount ) );
+            hb_vmSend( static_cast<HB_USHORT>( iPCount ) );
          }
          else
          {
-            hb_vmProc( static_cast< HB_USHORT >( iPCount ) );
+            hb_vmProc( static_cast<HB_USHORT>( iPCount ) );
          }
 
          return HB_TRUE;
@@ -641,7 +641,7 @@ HB_FUNC( HB_EXECMSG )
    {
       PHB_ITEM pBase = hb_stackBaseItem();
       pBase->item.asSymbol.paramcnt = pBase->item.asSymbol.paramdeclcnt = 0;
-      hb_vmProc( static_cast< HB_USHORT >( iParams - 2 ) );
+      hb_vmProc( static_cast<HB_USHORT>( iParams - 2 ) );
    }
    else
    {

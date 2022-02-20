@@ -59,7 +59,7 @@ HB_FUNC( FOPEN )
 
    if( szFile )
    {
-      hb_retnint( static_cast< HB_NHANDLE >( hb_fsOpen( szFile, static_cast< HB_USHORT >( hb_parnidef( 2, FO_READ | FO_COMPAT ) ) ) ) );
+      hb_retnint( static_cast<HB_NHANDLE>( hb_fsOpen( szFile, static_cast<HB_USHORT>( hb_parnidef( 2, FO_READ | FO_COMPAT ) ) ) ) );
       hb_fsSetFError( hb_fsError() );
    }
    else
@@ -76,7 +76,7 @@ HB_FUNC( FCREATE )
 
    if( szFile )
    {
-      hb_retnint( static_cast< HB_NHANDLE >( hb_fsCreate( szFile, hb_parnidef( 2, FC_NORMAL ) ) ) );
+      hb_retnint( static_cast<HB_NHANDLE>( hb_fsCreate( szFile, hb_parnidef( 2, FC_NORMAL ) ) ) );
       hb_fsSetFError( hb_fsError() );
    }
    else
@@ -92,7 +92,7 @@ HB_FUNC( HB_FCREATE )
 
    if( szFile )
    {
-      hb_retnint( static_cast< HB_NHANDLE >( hb_fsCreateEx( szFile, hb_parnidef( 2, FC_NORMAL ), static_cast< HB_USHORT >( hb_parnidef( 3, FO_COMPAT ) ) ) ) );
+      hb_retnint( static_cast<HB_NHANDLE>( hb_fsCreateEx( szFile, hb_parnidef( 2, FC_NORMAL ), static_cast<HB_USHORT>( hb_parnidef( 3, FO_COMPAT ) ) ) ) );
       hb_fsSetFError( hb_fsError() );
    }
    else
@@ -224,7 +224,7 @@ HB_FUNC( FSEEK )
 
    if( HB_ISNUM( 1 ) && HB_ISNUM( 2 ) )
    {
-      hb_retnint( hb_fsSeekLarge( hb_numToHandle( hb_parnint(1) ), hb_parnint(2), static_cast< HB_USHORT >( hb_parnidef( 3, FS_SET ) ) ) );
+      hb_retnint( hb_fsSeekLarge( hb_numToHandle( hb_parnint(1) ), hb_parnint(2), static_cast<HB_USHORT>( hb_parnidef( 3, FS_SET ) ) ) );
       uiError = hb_fsError();
    }
    else
@@ -246,7 +246,7 @@ HB_FUNC( FREADSTR )
       if( nToRead > 0 )
       {
          HB_FHANDLE fhnd = hb_numToHandle( hb_parnint(1) );
-         char * buffer = static_cast< char * >( hb_xgrab( nToRead + 1 ) );
+         char * buffer = static_cast<char*>( hb_xgrab( nToRead + 1 ) );
          HB_SIZE nRead;
 
          nRead = hb_fsReadLarge( fhnd, buffer, nToRead );
@@ -276,7 +276,7 @@ HB_FUNC( HB_FREADLEN )
    if( nToRead > 0 && HB_ISNUM( 1 ) )
    {
       HB_FHANDLE fhnd = hb_numToHandle( hb_parnint(1) );
-      char * buffer = static_cast< char * >( hb_xgrab( nToRead + 1 ) );
+      char * buffer = static_cast<char*>( hb_xgrab( nToRead + 1 ) );
       HB_SIZE nRead;
 
       nRead = hb_fsReadLarge( fhnd, buffer, nToRead );
@@ -325,7 +325,7 @@ HB_FUNC( HB_CURDRIVE )
    char szCurDrive[ 1 ];
    const char * szDrive;
 
-   szCurDrive[ 0 ] = ( static_cast< char >( hb_fsCurDrv() ) ) + 'A';
+   szCurDrive[ 0 ] = ( static_cast<char>( hb_fsCurDrv() ) ) + 'A';
    hb_retclen( szCurDrive, 1 );
 
    szDrive = hb_parc(1);
@@ -428,9 +428,9 @@ HB_FUNC( HB_FLOCK )
    if( HB_ISNUM( 1 ) && HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
    {
       fResult = hb_fsLockLarge( hb_numToHandle( hb_parnint(1) ),
-                                static_cast< HB_FOFFSET >( hb_parnint(2) ),
-                                static_cast< HB_FOFFSET >( hb_parnint(3) ),
-                                FL_LOCK | ( static_cast< HB_USHORT >( hb_parni(4) ) & ~FL_MASK ) );
+                                static_cast<HB_FOFFSET>( hb_parnint(2) ),
+                                static_cast<HB_FOFFSET>( hb_parnint(3) ),
+                                FL_LOCK | ( static_cast<HB_USHORT>( hb_parni(4) ) & ~FL_MASK ) );
       uiError = hb_fsError();
    }
    hb_fsSetFError( uiError );
@@ -445,8 +445,8 @@ HB_FUNC( HB_FUNLOCK )
    if( HB_ISNUM( 1 ) && HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
    {
       fResult = hb_fsLockLarge( hb_numToHandle( hb_parnint(1) ),
-                                static_cast< HB_FOFFSET >( hb_parnint(2) ),
-                                static_cast< HB_FOFFSET >( hb_parnint(3) ),
+                                static_cast<HB_FOFFSET>( hb_parnint(2) ),
+                                static_cast<HB_FOFFSET>( hb_parnint(3) ),
                                 FL_UNLOCK );
       uiError = hb_fsError();
    }
@@ -582,7 +582,7 @@ HB_FUNC( HB_PREAD )
       {
          HB_ISIZ nToRead = hb_parns(3);
 
-         if( nToRead >= 0 && static_cast< HB_SIZE >( nToRead ) < nSize )
+         if( nToRead >= 0 && static_cast<HB_SIZE>( nToRead ) < nSize )
          {
             nSize = nToRead;
          }
@@ -594,7 +594,7 @@ HB_FUNC( HB_PREAD )
          uiError = hb_fsError();
       }
 
-      if( nSize == static_cast< HB_SIZE >( FS_ERROR ) )
+      if( nSize == static_cast<HB_SIZE>( FS_ERROR ) )
       {
          hb_retni( FS_ERROR );
       }
@@ -631,7 +631,7 @@ HB_FUNC( HB_PWRITE )
       }
       nLen = hb_fsPipeWrite( hPipe, data, nLen, hb_parnint(4) );
       hb_fsSetFError( hb_fsError() );
-      if( nLen == static_cast< HB_SIZE >( FS_ERROR ) )
+      if( nLen == static_cast<HB_SIZE>( FS_ERROR ) )
       {
          hb_retni( FS_ERROR );
       }

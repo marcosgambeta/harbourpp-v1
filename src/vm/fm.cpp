@@ -197,16 +197,16 @@
 #  undef HB_FM_DLMT_ALLOC
 #  if defined( HB_FM_WIN_ALLOC ) && defined( HB_OS_WIN )
 #     if defined( HB_FM_LOCALALLOC )
-#        define malloc( n )      static_cast< void * >( LocalAlloc( LMEM_FIXED, ( n ) ) )
-#        define realloc( p, n )  static_cast< void * >( LocalReAlloc( ( HLOCAL ) ( p ), ( n ), LMEM_MOVEABLE ) )
+#        define malloc( n )      static_cast<void*>( LocalAlloc( LMEM_FIXED, ( n ) ) )
+#        define realloc( p, n )  static_cast<void*>( LocalReAlloc( ( HLOCAL ) ( p ), ( n ), LMEM_MOVEABLE ) )
 #        define free( p )        LocalFree( ( HLOCAL ) ( p ) )
 #     else
          static HANDLE s_hProcessHeap = nullptr;
 #        define HB_FM_NEED_INIT
 #        define HB_FM_HEAP_INIT
-#        define malloc( n )      static_cast< void * >( HeapAlloc( s_hProcessHeap, 0, ( n ) ) )
-#        define realloc( p, n )  static_cast< void * >( HeapReAlloc( s_hProcessHeap, 0, static_cast< void * >( p ), ( n ) ) )
-#        define free( p )        HeapFree( s_hProcessHeap, 0, static_cast< void * >( p ) )
+#        define malloc( n )      static_cast<void*>( HeapAlloc( s_hProcessHeap, 0, ( n ) ) )
+#        define realloc( p, n )  static_cast<void*>( HeapReAlloc( s_hProcessHeap, 0, static_cast<void*>( p ), ( n ) ) )
+#        define free( p )        HeapFree( s_hProcessHeap, 0, static_cast<void*>( p ) )
 #     endif
 #  endif
 #endif
@@ -271,12 +271,12 @@ using PHB_MEMINFO = HB_MEMINFO *;
 #define HB_MEMINFO_SIZE       ( s_fStatistic ? sizeof( HB_MEMINFO ) + HB_COUNTER_OFFSET : HB_COUNTER_OFFSET )
 #define HB_MEMSIG_SIZE        sizeof( HB_U32 )
 
-#define HB_FM_GETSIG( p, n )  HB_GET_UINT32( static_cast< HB_BYTE * >( p ) + ( n ) )
-#define HB_FM_SETSIG( p, n )  HB_PUT_UINT32( static_cast< HB_BYTE * >( p ) + ( n ), HB_MEMINFO_SIGNATURE )
-#define HB_FM_CLRSIG( p, n )  HB_PUT_UINT32( static_cast< HB_BYTE * >( p ) + ( n ), 0 )
+#define HB_FM_GETSIG( p, n )  HB_GET_UINT32( static_cast<HB_BYTE*>( p ) + ( n ) )
+#define HB_FM_SETSIG( p, n )  HB_PUT_UINT32( static_cast<HB_BYTE*>( p ) + ( n ), HB_MEMINFO_SIGNATURE )
+#define HB_FM_CLRSIG( p, n )  HB_PUT_UINT32( static_cast<HB_BYTE*>( p ) + ( n ), 0 )
 
 #define HB_ALLOC_SIZE( n )    ( ( n ) + ( s_fStatistic ? _HB_MEMINFO_SIZE + HB_MEMSIG_SIZE : HB_COUNTER_OFFSET ) )
-#define HB_FM_PTR( p )        ( static_cast< PHB_MEMINFO >( static_cast< HB_BYTE * >( p ) - HB_MEMINFO_SIZE ) )
+#define HB_FM_PTR( p )        ( static_cast<PHB_MEMINFO>( static_cast<HB_BYTE*>( p ) - HB_MEMINFO_SIZE ) )
 
 #define HB_FM_BLOCKSIZE( p )  ( s_fStatistic ? HB_FM_PTR( pMem )->nSize : 0 )
 
@@ -309,7 +309,7 @@ using PHB_MEMINFO = void *;
 
 #endif /* HB_FM_STATISTICS */
 
-#define HB_MEM_PTR( p )     ( static_cast< void * >( static_cast< HB_BYTE * >( p ) + HB_MEMINFO_SIZE ) )
+#define HB_MEM_PTR( p )     ( static_cast<void*>( static_cast<HB_BYTE*>( p ) + HB_MEMINFO_SIZE ) )
 
 #if ! defined( HB_MT_VM )
 
@@ -372,7 +372,7 @@ static HB_MSPACE s_mspool[ HB_MSPACE_COUNT ];
 
 static mspace hb_mspace( void )
 {
-   PHB_MSPACE pm = static_cast< PHB_MSPACE >( hb_stackAllocator() );
+   PHB_MSPACE pm = static_cast<PHB_MSPACE>( hb_stackAllocator() );
 
    if( pm )
    {
@@ -416,11 +416,11 @@ static PHB_MSPACE hb_mspace_alloc( void )
 
 static void * hb_mspace_update( void * pAlloc, int iCount )
 {
-   PHB_MSPACE pm = static_cast< PHB_MSPACE >( pAlloc );
+   PHB_MSPACE pm = static_cast<PHB_MSPACE>( pAlloc );
 
    if( pm && pm->count > iCount )
    {
-      pAlloc = static_cast< void * >( hb_mspace_alloc() );
+      pAlloc = static_cast<void*>( hb_mspace_alloc() );
       pm->count--;
    }
 
@@ -472,7 +472,7 @@ void hb_xinit_thread( void )
    if( hb_stack.allocator == nullptr )
    {
       HB_FM_LOCK();
-      hb_stack.allocator = static_cast< void * >( hb_mspace_alloc() );
+      hb_stack.allocator = static_cast<void*>( hb_mspace_alloc() );
       HB_FM_UNLOCK();
    }
 #endif
@@ -482,7 +482,7 @@ void hb_xexit_thread( void )
 {
 #if defined( HB_FM_DLMT_ALLOC )
    HB_STACK_TLS_PRELOAD
-   PHB_MSPACE pm = static_cast< PHB_MSPACE >( hb_stack.allocator );
+   PHB_MSPACE pm = static_cast<PHB_MSPACE>( hb_stack.allocator );
 
    if( pm )
    {
@@ -579,7 +579,7 @@ void * hb_xalloc( HB_SIZE nSize )         /* allocates fixed memory, returns nul
    }
 #endif
 
-   pMem = static_cast< PHB_MEMINFO >( malloc( HB_ALLOC_SIZE( nSize ) ) );
+   pMem = static_cast<PHB_MEMINFO>( malloc( HB_ALLOC_SIZE( nSize ) ) );
 
    if( ! pMem )
    {
@@ -686,7 +686,7 @@ void * hb_xgrab( HB_SIZE nSize )         /* allocates fixed memory, exits on fai
    }
 #endif
 
-   pMem = static_cast< PHB_MEMINFO >( malloc( HB_ALLOC_SIZE( nSize ) ) );
+   pMem = static_cast<PHB_MEMINFO>( malloc( HB_ALLOC_SIZE( nSize ) ) );
 
    if( ! pMem )
    {
@@ -849,26 +849,26 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
             s_nMemoryMaxConsumed = s_nMemoryConsumed;
          }
 
-         ( static_cast< PHB_MEMINFO >( pMem ) )->nSize = nSize;  /* size of the memory block */
-         ( static_cast< PHB_MEMINFO >( pMem ) )->u32Signature = HB_MEMINFO_SIGNATURE;
+         ( static_cast<PHB_MEMINFO>( pMem ) )->nSize = nSize;  /* size of the memory block */
+         ( static_cast<PHB_MEMINFO>( pMem ) )->u32Signature = HB_MEMINFO_SIGNATURE;
          HB_FM_SETSIG( HB_MEM_PTR( pMem ), nSize );
 
-         if( ( static_cast< PHB_MEMINFO >( pMem ) )->pPrevBlock )
+         if( ( static_cast<PHB_MEMINFO>( pMem ) )->pPrevBlock )
          {
-            ( static_cast< PHB_MEMINFO >( pMem ) )->pPrevBlock->pNextBlock = static_cast< PHB_MEMINFO >( pMem );
+            ( static_cast<PHB_MEMINFO>( pMem ) )->pPrevBlock->pNextBlock = static_cast<PHB_MEMINFO>( pMem );
          }
-         if( ( static_cast< PHB_MEMINFO >( pMem ) )->pNextBlock )
+         if( ( static_cast<PHB_MEMINFO>( pMem ) )->pNextBlock )
          {
-            ( static_cast< PHB_MEMINFO >( pMem ) )->pNextBlock->pPrevBlock = static_cast< PHB_MEMINFO >( pMem );
+            ( static_cast<PHB_MEMINFO>( pMem ) )->pNextBlock->pPrevBlock = static_cast<PHB_MEMINFO>( pMem );
          }
 
          if( s_pFirstBlock == pMemBlock )
          {
-            s_pFirstBlock = static_cast< PHB_MEMINFO >( pMem );
+            s_pFirstBlock = static_cast<PHB_MEMINFO>( pMem );
          }
          if( s_pLastBlock == pMemBlock )
          {
-            s_pLastBlock = static_cast< PHB_MEMINFO >( pMem );
+            s_pLastBlock = static_cast<PHB_MEMINFO>( pMem );
          }
       }
 
@@ -885,7 +885,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
       memset( pMemBlock, HB_MEMFILER, HB_ALLOC_SIZE( nMemSize ) );
       if( nSize > nMemSize && pMem )
       {
-         memset( static_cast< HB_BYTE * >( HB_MEM_PTR( pMem ) ) + nMemSize, HB_MEMFILER, nSize - nMemSize );
+         memset( static_cast<HB_BYTE*>( HB_MEM_PTR( pMem ) ) + nMemSize, HB_MEMFILER, nSize - nMemSize );
       }
 #  endif
       free( pMemBlock );
@@ -1337,15 +1337,15 @@ void hb_xexit( void ) /* Deinitialize fixed memory subsystem */
       {
          HB_TRACE( HB_TR_ERROR, ( "Block %i (size %" HB_PFS "u) %s(%i), \"%s\"", ui,
             pMemBlock->nSize, pMemBlock->szProcName, pMemBlock->uiProcLine,
-            hb_mem2str( membuffer, static_cast< char * >( HB_MEM_PTR( pMemBlock ) ),
+            hb_mem2str( membuffer, static_cast<char*>( HB_MEM_PTR( pMemBlock ) ),
                         HB_MIN( pMemBlock->nSize, HB_MAX_MEM2STR_BLOCK ) ) ) );
 
          if( hLog )
          {
             fprintf( hLog, HB_I_( "Block %i %p (size %" HB_PFS "u) %s(%i), \"%s\"\n" ), ui,
-                     static_cast< char * >( HB_MEM_PTR( pMemBlock ) ),
+                     static_cast<char*>( HB_MEM_PTR( pMemBlock ) ),
                      pMemBlock->nSize, pMemBlock->szProcName, pMemBlock->uiProcLine,
-                     hb_mem2str( membuffer, static_cast< char * >( HB_MEM_PTR( pMemBlock ) ),
+                     hb_mem2str( membuffer, static_cast<char*>( HB_MEM_PTR( pMemBlock ) ),
                                  HB_MIN( pMemBlock->nSize, HB_MAX_MEM2STR_BLOCK ) ) );
          }
       }

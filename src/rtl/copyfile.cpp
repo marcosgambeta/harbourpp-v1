@@ -119,17 +119,17 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest )
          HB_UCHAR * buffer;
          HB_SIZE nRead;
 
-         buffer = static_cast< HB_UCHAR * >( hb_xgrab( BUFFER_SIZE ) );
+         buffer = static_cast<HB_UCHAR*>( hb_xgrab( BUFFER_SIZE ) );
          bRetVal = HB_TRUE;
 
-         while( ( nRead = hb_fileRead( pSource, buffer, BUFFER_SIZE, -1 ) ) != 0 && nRead != static_cast< HB_SIZE >( FS_ERROR ) )
+         while( ( nRead = hb_fileRead( pSource, buffer, BUFFER_SIZE, -1 ) ) != 0 && nRead != static_cast<HB_SIZE>( FS_ERROR ) )
          {
             HB_SIZE nWritten = 0;
 
             while( nWritten < nRead )
             {
                HB_SIZE nDone = hb_fileWrite( pDest, buffer + nWritten, nRead - nWritten, -1 );
-               if( nDone != static_cast< HB_SIZE >( FS_ERROR ) )
+               if( nDone != static_cast<HB_SIZE>( FS_ERROR ) )
                {
                   nWritten += nDone;
                }

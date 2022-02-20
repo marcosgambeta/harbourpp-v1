@@ -203,13 +203,13 @@ static HB_MAXINT hb_taskTimeStop( unsigned long ulMilliSec )
 #if _POSIX_C_SOURCE >= 199309L
       struct timespec ts;
       clock_gettime( CLOCK_REALTIME, &ts );
-      return static_cast< HB_MAXINT >( ts.tv_sec ) * 1000 + ts.tv_nsec / 1000000 + ulMilliSec;
+      return static_cast<HB_MAXINT>( ts.tv_sec ) * 1000 + ts.tv_nsec / 1000000 + ulMilliSec;
 #elif defined( HB_OS_UNIX )
       struct timeval tv;
       gettimeofday( &tv, nullptr );
-      return static_cast< HB_MAXINT >( tv.tv_sec ) * 1000 + tv.tv_usec / 1000 + ulMilliSec;
+      return static_cast<HB_MAXINT>( tv.tv_sec ) * 1000 + tv.tv_usec / 1000 + ulMilliSec;
 #else
-      return static_cast< HB_MAXINT >( clock() ) * 1000 / CLOCKS_PER_SEC + ulMilliSec;
+      return static_cast<HB_MAXINT>( clock() ) * 1000 / CLOCKS_PER_SEC + ulMilliSec;
 #endif
    }
 }
@@ -262,7 +262,7 @@ static PHB_TASKMTX hb_taskMutexNew( void )
 {
    PHB_TASKMTX pMutex;
 
-   pMutex = static_cast< PHB_TASKMTX >( hb_xgrab( sizeof( HB_TASKMTX ) ) );
+   pMutex = static_cast<PHB_TASKMTX>( hb_xgrab( sizeof( HB_TASKMTX ) ) );
    pMutex->count = 0;
    pMutex->task = nullptr;
    pMutex->lockers = nullptr;
@@ -276,7 +276,7 @@ static PHB_TASKCOND hb_taskCondNew( void )
 {
    PHB_TASKCOND pCond;
 
-   pCond = static_cast< PHB_TASKCOND >( hb_xgrab( sizeof( HB_TASKCOND ) ) );
+   pCond = static_cast<PHB_TASKCOND>( hb_xgrab( sizeof( HB_TASKCOND ) ) );
    pCond->waiters = nullptr;
    pCond->mutex = nullptr;
    pCond->next = s_condList;
@@ -514,14 +514,14 @@ static PHB_TASKINFO hb_taskNew( long stack_size )
       stack_size = HB_TASK_STACK_MIN;
    }
 
-   pTask = static_cast< PHB_TASKINFO >( hb_xgrabz( sizeof( HB_TASKINFO ) ) );
-   pTask->stack = static_cast< char * >( hb_xgrab( stack_size ) );
+   pTask = static_cast<PHB_TASKINFO>( hb_xgrabz( sizeof( HB_TASKINFO ) ) );
+   pTask->stack = static_cast<char*>( hb_xgrab( stack_size ) );
 
-   new_size = static_cast< HB_PTRUINT >( pTask->stack ) + stack_size;
-   new_size &= ~ static_cast< HB_PTRUINT >( HB_TASK_STACK_ALIGN - 1 );
-   new_size -= static_cast< HB_PTRUINT >( pTask->stack );
+   new_size = static_cast<HB_PTRUINT>( pTask->stack ) + stack_size;
+   new_size &= ~ static_cast<HB_PTRUINT>( HB_TASK_STACK_ALIGN - 1 );
+   new_size -= static_cast<HB_PTRUINT>( pTask->stack );
 
-   pTask->stack_size = static_cast< long >( new_size );
+   pTask->stack_size = static_cast<long>( new_size );
    pTask->id = ++s_iTaskID;
 
    pTask->state = TASK_INIT;
@@ -567,7 +567,7 @@ void hb_taskInit( void )
 {
    if( s_iTaskID == 0 )
    {
-      s_mainTask = s_currTask = static_cast< PHB_TASKINFO >( hb_xgrabz( sizeof( HB_TASKINFO ) ) );
+      s_mainTask = s_currTask = static_cast<PHB_TASKINFO>( hb_xgrabz( sizeof( HB_TASKINFO ) ) );
       /* main task uses default application stack */
       s_currTask->id = ++s_iTaskID;
       s_currTask->state = TASK_RUNNING;
@@ -617,7 +617,7 @@ void * hb_taskSelf( void )
 /* return given task number */
 int hb_taskID( void * pTask )
 {
-   return ( static_cast< PHB_TASKINFO >( pTask ) )->id;
+   return ( static_cast<PHB_TASKINFO>( pTask ) )->id;
 }
 
 /* get current task user data */
@@ -635,19 +635,19 @@ void hb_taskSetData( void * pData )
 /* get given task user data */
 void * hb_taskRestoreData( void * pTask )
 {
-   return ( static_cast< PHB_TASKINFO >( pTask ) )->data;
+   return ( static_cast<PHB_TASKINFO>( pTask ) )->data;
 }
 
 /* set given task user data */
 void hb_taskSaveData( void * pTask, void * pData )
 {
-   ( static_cast< PHB_TASKINFO >( pTask ) )->data = pData;
+   ( static_cast<PHB_TASKINFO>( pTask ) )->data = pData;
 }
 
 /* get result of task execution */
 void * hb_taskResult( void * pTask )
 {
-   return ( static_cast< PHB_TASKINFO >( pTask ) )->result;
+   return ( static_cast<PHB_TASKINFO>( pTask ) )->result;
 }
 
 void hb_taskSleep( unsigned long ulMilliSec )
@@ -737,7 +737,7 @@ void hb_taskSuspend( void )
 /* TODO: do not start task immediately */
 void hb_taskResume( void * pTaskPtr )
 {
-   PHB_TASKINFO pTask = static_cast< PHB_TASKINFO >( pTaskPtr );
+   PHB_TASKINFO pTask = static_cast<PHB_TASKINFO>( pTaskPtr );
 
    if( s_currTask != pTask )
    {
@@ -816,7 +816,7 @@ void * hb_taskCreate( void * ( *start )( void * ), void * cargo, long stack_size
 /* destroy given task */
 void hb_taskDestroy( void * pTaskPtr )
 {
-   PHB_TASKINFO pTask = static_cast< PHB_TASKINFO >( pTaskPtr );
+   PHB_TASKINFO pTask = static_cast<PHB_TASKINFO>( pTaskPtr );
 
    if( pTask != s_mainTask )
    {
@@ -835,7 +835,7 @@ void hb_taskDestroy( void * pTaskPtr )
 /* wait for given task termination */
 int hb_taskJoin( void * pTaskPtr, unsigned long ulMilliSec, void ** pResult )
 {
-   PHB_TASKINFO pTask = static_cast< PHB_TASKINFO >( pTaskPtr );
+   PHB_TASKINFO pTask = static_cast<PHB_TASKINFO>( pTaskPtr );
    int result = 0;
 
    if( pTask != s_mainTask && pTask != s_currTask )
@@ -871,7 +871,7 @@ int hb_taskJoin( void * pTaskPtr, unsigned long ulMilliSec, void ** pResult )
 /* detach given task - it will be removed automatically */
 void hb_taskDetach( void * pTask )
 {
-   ( static_cast< PHB_TASKINFO >( pTask ) )->detached = HB_TRUE;
+   ( static_cast<PHB_TASKINFO>( pTask ) )->detached = HB_TRUE;
 }
 
 /* current task quit */
@@ -899,10 +899,10 @@ int hb_taskLock( void ** pMutexPtr, unsigned long ulMilliSec )
 
    if( *pMutexPtr == nullptr )
    {
-      *pMutexPtr = static_cast< void * >( hb_taskMutexNew() );
+      *pMutexPtr = static_cast<void*>( hb_taskMutexNew() );
    }
 
-   pMutex = static_cast< PHB_TASKMTX >( *pMutexPtr );
+   pMutex = static_cast<PHB_TASKMTX>( *pMutexPtr );
    if( pMutex->count == 0 )
    {
       s_currTask->locked++;
@@ -959,7 +959,7 @@ int hb_taskLock( void ** pMutexPtr, unsigned long ulMilliSec )
 /* unlock given mutex */
 void hb_taskUnlock( void ** pMutexPtr )
 {
-   PHB_TASKMTX pMutex = static_cast< PHB_TASKMTX >( *pMutexPtr );
+   PHB_TASKMTX pMutex = static_cast<PHB_TASKMTX>( *pMutexPtr );
 
    if( pMutex && pMutex->task == s_currTask )
    {
@@ -981,10 +981,10 @@ void hb_taskSignal( void ** pCondPtr )
 
    if( *pCondPtr == nullptr )
    {
-      *pCondPtr = static_cast< void * >( hb_taskCondNew() );
+      *pCondPtr = static_cast<void*>( hb_taskCondNew() );
    }
 
-   pCond = static_cast< PHB_TASKCOND >( *pCondPtr );
+   pCond = static_cast<PHB_TASKCOND>( *pCondPtr );
 
    if( pCond->waiters )
    {
@@ -1023,10 +1023,10 @@ void hb_taskBroadcast( void ** pCondPtr )
 
    if( *pCondPtr == nullptr )
    {
-      *pCondPtr = static_cast< void * >( hb_taskCondNew() );
+      *pCondPtr = static_cast<void*>( hb_taskCondNew() );
    }
 
-   pCond = static_cast< PHB_TASKCOND >( *pCondPtr );
+   pCond = static_cast<PHB_TASKCOND>( *pCondPtr );
 
    if( pCond->waiters )
    {
@@ -1067,7 +1067,7 @@ void hb_taskBroadcast( void ** pCondPtr )
 int hb_taskWait( void ** pCondPtr, void ** pMutexPtr, unsigned long ulMilliSec )
 {
    PHB_TASKINFO * pWaiters;
-   PHB_TASKMTX pMutex = static_cast< PHB_TASKMTX >( *pMutexPtr );
+   PHB_TASKMTX pMutex = static_cast<PHB_TASKMTX>( *pMutexPtr );
    PHB_TASKCOND pCond;
    int iCount;
 
@@ -1083,7 +1083,7 @@ int hb_taskWait( void ** pCondPtr, void ** pMutexPtr, unsigned long ulMilliSec )
 
    if( *pCondPtr == nullptr )
    {
-      *pCondPtr = static_cast< void * >( hb_taskCondNew() );
+      *pCondPtr = static_cast<void*>( hb_taskCondNew() );
    }
 
    pCond = ( PHB_TASKCOND ) *pCondPtr;
@@ -1153,7 +1153,7 @@ int hb_taskWait( void ** pCondPtr, void ** pMutexPtr, unsigned long ulMilliSec )
 
 void hb_taskDestroyMutex( void ** pMutexPtr )
 {
-   PHB_TASKMTX pMutex = static_cast< PHB_TASKMTX >( *pMutexPtr );
+   PHB_TASKMTX pMutex = static_cast<PHB_TASKMTX>( *pMutexPtr );
 
    if( pMutex )
    {
@@ -1183,7 +1183,7 @@ void hb_taskDestroyMutex( void ** pMutexPtr )
 
 void hb_taskDestroyCond( void ** pCondPtr )
 {
-   PHB_TASKCOND pCond = static_cast< PHB_TASKCOND >( *pCondPtr );
+   PHB_TASKCOND pCond = static_cast<PHB_TASKCOND>( *pCondPtr );
 
    if( pCond )
    {

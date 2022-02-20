@@ -74,11 +74,11 @@ HB_BOOL hb_macroLexNew( PHB_MACRO pMacro )
        * value tokens or strings which will have not used delimiters
        */
       pMacro->pLex = hb_xgrab( sizeof( HB_MACRO_LEX ) + pMacro->length );
-      ( static_cast< PHB_MACRO_LEX >( pMacro->pLex ) )->pString = pMacro->string;
-      ( static_cast< PHB_MACRO_LEX >( pMacro->pLex ) )->nLen    = pMacro->length;
-      ( static_cast< PHB_MACRO_LEX >( pMacro->pLex ) )->nSrc  = 0;
-      ( static_cast< PHB_MACRO_LEX >( pMacro->pLex ) )->quote = HB_TRUE;
-      ( static_cast< PHB_MACRO_LEX >( pMacro->pLex ) )->pDst  = ( static_cast< PHB_MACRO_LEX >( pMacro->pLex ) )->pBuffer;
+      ( static_cast<PHB_MACRO_LEX>( pMacro->pLex ) )->pString = pMacro->string;
+      ( static_cast<PHB_MACRO_LEX>( pMacro->pLex ) )->nLen    = pMacro->length;
+      ( static_cast<PHB_MACRO_LEX>( pMacro->pLex ) )->nSrc  = 0;
+      ( static_cast<PHB_MACRO_LEX>( pMacro->pLex ) )->quote = HB_TRUE;
+      ( static_cast<PHB_MACRO_LEX>( pMacro->pLex ) )->pDst  = ( static_cast<PHB_MACRO_LEX>( pMacro->pLex ) )->pBuffer;
       return HB_TRUE;
    }
 
@@ -250,15 +250,15 @@ static int hb_lexNumConv( YYSTYPE * yylval_ptr, PHB_MACRO_LEX pLex, HB_SIZE nLen
    if( hb_compStrToNum( pLex->pString + pLex->nSrc, nLen, &lNumber, &dNumber, &iDec, &iWidth ) )
    {
       yylval_ptr->valDouble.dNumber = dNumber;
-      yylval_ptr->valDouble.bDec = static_cast< HB_UCHAR >( iDec );
-      yylval_ptr->valDouble.bWidth = static_cast< HB_UCHAR >( iWidth );
+      yylval_ptr->valDouble.bDec = static_cast<HB_UCHAR>( iDec );
+      yylval_ptr->valDouble.bWidth = static_cast<HB_UCHAR>( iWidth );
       pLex->nSrc += nLen;
       return NUM_DOUBLE;
    }
    else
    {
       yylval_ptr->valLong.lNumber = lNumber;
-      yylval_ptr->valLong.bWidth = static_cast< HB_UCHAR >( iWidth );
+      yylval_ptr->valLong.bWidth = static_cast<HB_UCHAR>( iWidth );
       pLex->nSrc += nLen;
       return NUM_LONG;
    }
@@ -268,11 +268,11 @@ extern int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro );
 
 int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
 {
-   PHB_MACRO_LEX pLex = static_cast< PHB_MACRO_LEX >( pMacro->pLex );
+   PHB_MACRO_LEX pLex = static_cast<PHB_MACRO_LEX>( pMacro->pLex );
 
    while( pLex->nSrc < pLex->nLen )
    {
-      unsigned char ch = static_cast< unsigned char >( pLex->pString[ pLex->nSrc++ ] );
+      unsigned char ch = static_cast<unsigned char>( pLex->pString[ pLex->nSrc++ ] );
       switch( ch )
       {
          case ' ':
@@ -546,7 +546,7 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
                      yylval_ptr->string++;
                      if( pLex->pDst - yylval_ptr->string > HB_SYMBOL_NAME_LEN + 1 )
                      {
-                        ( static_cast< char * >( HB_UNCONST( yylval_ptr->string ) ) )[ HB_SYMBOL_NAME_LEN ] = '\0';
+                        ( static_cast<char*>( HB_UNCONST( yylval_ptr->string ) ) )[ HB_SYMBOL_NAME_LEN ] = '\0';
                      }
                      return MACROVAR;
                   }
@@ -753,7 +753,7 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
                   }
                   if( pLex->pDst - yylval_ptr->string > HB_SYMBOL_NAME_LEN + 1 )
                   {
-                     ( static_cast< char * >( HB_UNCONST( yylval_ptr->string ) ) )[ HB_SYMBOL_NAME_LEN ] = '\0';
+                     ( static_cast<char*>( HB_UNCONST( yylval_ptr->string ) ) )[ HB_SYMBOL_NAME_LEN ] = '\0';
                   }
                }
                return IDENTIFIER;

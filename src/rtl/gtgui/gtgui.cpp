@@ -110,7 +110,7 @@ static int hb_gt_gui_optionId( const char * pszOption )
 
       if( nSize >= 2 && nSize <= 9 )
       {
-         for( int i = 0; i < static_cast< int >( _HB_BUTTON_COUNT ); ++i )
+         for( int i = 0; i < static_cast<int>( _HB_BUTTON_COUNT ); ++i )
          {
             if( nSize == s_buttons[ i ].len && hb_strnicmp( s_buttons[ i ].name, pszOption, nSize ) == 0 )
             {
@@ -162,7 +162,7 @@ static int hb_gt_gui_optionPos( int id, int iType, PHB_ITEM pOptions )
    }
    if( iButton )
    {
-      int iOptions = static_cast< int >( hb_arrayLen( pOptions ) );
+      int iOptions = static_cast<int>( hb_arrayLen( pOptions ) );
 
       for( int i = 1; i <= iOptions; ++i )
       {
@@ -180,7 +180,7 @@ static int hb_gt_gui_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, in
 {
    void * hText;
    LPCTSTR lpText = HB_ITEMGETSTR( pMessage, &hText, nullptr );
-   int iRet, iOptions = pOptions ? static_cast< int >( hb_arrayLen( pOptions ) ) : 0;
+   int iRet, iOptions = pOptions ? static_cast<int>( hb_arrayLen( pOptions ) ) : 0;
 
    if( lpText && iOptions > 0 )
    {
@@ -247,7 +247,7 @@ static int hb_gt_gui_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, in
 static const char * hb_gt_gui_Version( PHB_GT pGT, int iType )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_gui_Version(%p,%d)", static_cast< void * >( pGT ), iType ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_gui_Version(%p,%d)", static_cast<void*>( pGT ), iType ) );
 #endif
 
    HB_SYMBOL_UNUSED( pGT );
@@ -265,7 +265,7 @@ static const char * hb_gt_gui_Version( PHB_GT pGT, int iType )
 static void hb_gt_gui_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_gui_Tone(%p,%lf,%lf)", static_cast< void * >( pGT ), dFrequency, dDuration ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_gui_Tone(%p,%lf,%lf)", static_cast<void*>( pGT ), dFrequency, dDuration ) );
 #endif
 
 #if defined( HB_OS_WIN )
@@ -282,7 +282,7 @@ static void hb_gt_gui_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 static HB_BOOL hb_gt_gui_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_gui_Info(%p,%d,%p)", static_cast< void * >( pGT ), iType, static_cast< void * >( pInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_gui_Info(%p,%d,%p)", static_cast<void*>( pGT ), iType, static_cast<void*>( pInfo ) ) );
 #endif
 
    switch( iType )
@@ -331,7 +331,7 @@ static HB_BOOL hb_gt_gui_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_FuncInit(%p)", static_cast< void * >( pFuncTable ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_FuncInit(%p)", static_cast<void*>( pFuncTable ) ) );
 #endif
 
    pFuncTable->Version                    = hb_gt_gui_Version;

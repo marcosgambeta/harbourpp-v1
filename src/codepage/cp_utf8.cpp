@@ -65,7 +65,7 @@ static HB_CDP_GET_FUNC( UTF8_get )
    *wc = 0;
    while( nIndex < nLen )
    {
-      if( hb_cdpUTF8ToU16NextChar( static_cast< HB_UCHAR >( pSrc[ nIndex ] ), &n, wc ) )
+      if( hb_cdpUTF8ToU16NextChar( static_cast<HB_UCHAR>( pSrc[ nIndex ] ), &n, wc ) )
       {
          ++nIndex;
       }
@@ -240,7 +240,7 @@ static HB_CDP_CMP_FUNC( UTF8_cmpi )
 
    while( nLen-- )
    {
-      HB_UCHAR u1 = cdp->upper[ static_cast< HB_UCHAR >( *szFirst++ ) ], u2 = cdp->upper[ static_cast< HB_UCHAR >( *szSecond++ ) ];
+      HB_UCHAR u1 = cdp->upper[ static_cast<HB_UCHAR>( *szFirst++ ) ], u2 = cdp->upper[ static_cast<HB_UCHAR>( *szSecond++ ) ];
       if( u1 != u2 )
       {
          iRet = ( u1 < u2 ) ? -1 : 1;
@@ -269,10 +269,10 @@ static void hb_cp_init( PHB_CODEPAGE cdp )
 {
    HB_UCHAR * flags, * upper, * lower;
 
-   cdp->buffer = static_cast< HB_UCHAR * >( hb_xgrab( 0x300 ) );
-   cdp->flags = flags = static_cast< HB_UCHAR * >( cdp->buffer );
-   cdp->upper = upper = static_cast< HB_UCHAR * >( cdp->buffer ) + 0x100;
-   cdp->lower = lower = static_cast< HB_UCHAR * >( cdp->buffer ) + 0x200;
+   cdp->buffer = static_cast<HB_UCHAR*>( hb_xgrab( 0x300 ) );
+   cdp->flags = flags = static_cast<HB_UCHAR*>( cdp->buffer );
+   cdp->upper = upper = static_cast<HB_UCHAR*>( cdp->buffer ) + 0x100;
+   cdp->lower = lower = static_cast<HB_UCHAR*>( cdp->buffer ) + 0x200;
 
    for( int i = 0; i < 0x100; ++i )
    {
@@ -293,8 +293,8 @@ static void hb_cp_init( PHB_CODEPAGE cdp )
       {
          flags[ i ] |= HB_CDP_LOWER;
       }
-      upper[ i ] = static_cast< HB_UCHAR >( HB_TOUPPER( i ) );
-      lower[ i ] = static_cast< HB_UCHAR >( HB_TOLOWER( i ) );
+      upper[ i ] = static_cast<HB_UCHAR>( HB_TOUPPER( i ) );
+      lower[ i ] = static_cast<HB_UCHAR>( HB_TOLOWER( i ) );
    }
 }
 

@@ -94,7 +94,7 @@ void hb_winmainArgVBuild( void )
    int iArgC;
 
    /* NOTE: MAX_PATH used intentionally instead of HB_MAX_PATH */
-   lpModuleName = static_cast< LPTSTR >( HB_WINARG_ALLOC( ( MAX_PATH + 1 ) * sizeof( TCHAR ) ) );
+   lpModuleName = static_cast<LPTSTR>( HB_WINARG_ALLOC( ( MAX_PATH + 1 ) * sizeof( TCHAR ) ) );
    nModuleName = GetModuleFileName( nullptr, lpModuleName, MAX_PATH + 1 );
    if( nModuleName )
    {
@@ -114,14 +114,14 @@ void hb_winmainArgVBuild( void )
 
       if( nSize != 0 )
       {
-         lpArgV = static_cast< LPTSTR * >( HB_WINARG_ALLOC( iArgC * sizeof( LPTSTR ) + nSize * sizeof( TCHAR ) ) );
-         lpDst = reinterpret_cast< LPTSTR >( lpArgV + iArgC );
+         lpArgV = static_cast<LPTSTR*>( HB_WINARG_ALLOC( iArgC * sizeof( LPTSTR ) + nSize * sizeof( TCHAR ) ) );
+         lpDst = reinterpret_cast<LPTSTR>( lpArgV + iArgC );
          lpArgV[ 0 ] = lpDst;
          lpDst += nModuleName;
       }
       else
       {
-         lpDst = const_cast< LPTSTR >( lpCmdLine );
+         lpDst = const_cast<LPTSTR>( lpCmdLine );
          nSize = nModuleName;
       }
 
@@ -203,8 +203,8 @@ void hb_winmainArgVBuild( void )
       if( nModuleName != 0 )
       {
          iArgC = 1;
-         lpArgV = static_cast< LPTSTR * >( HB_WINARG_ALLOC( iArgC * sizeof( LPTSTR ) + nModuleName * sizeof( TCHAR ) ) );
-         lpArgV[ 0 ] = reinterpret_cast< LPTSTR >( lpArgV + iArgC );
+         lpArgV = static_cast<LPTSTR*>( HB_WINARG_ALLOC( iArgC * sizeof( LPTSTR ) + nModuleName * sizeof( TCHAR ) ) );
+         lpArgV[ 0 ] = reinterpret_cast<LPTSTR>( lpArgV + iArgC );
       }
       else
       {
@@ -217,7 +217,7 @@ void hb_winmainArgVBuild( void )
                because in console apps the name may be truncated
                in some cases, and in GUI apps it's not filled
                at all. [vszakats] */
-      if( GetModuleFileName( nullptr, lpArgV[ 0 ], static_cast< DWORD >( nModuleName ) ) != 0 )
+      if( GetModuleFileName( nullptr, lpArgV[ 0 ], static_cast<DWORD>( nModuleName ) ) != 0 )
       {
          /* Windows XP does not set trailing 0 if buffer is not large enough [druzus] */
          lpArgV[ 0 ][ nModuleName - 1 ] = 0;
@@ -240,8 +240,8 @@ void hb_winmainArgVBuild( void )
             nSize += hb_wctomblen( s_lpArgV[ iArgC ] ) + 1;
          }
 
-         s_lpArgVStr = static_cast< LPSTR * >( HB_WINARG_ALLOC( s_argc * sizeof( LPSTR ) + nSize * sizeof( char ) ) );
-         lpStr = reinterpret_cast< LPSTR >( s_lpArgVStr + s_argc );
+         s_lpArgVStr = static_cast<LPSTR*>( HB_WINARG_ALLOC( s_argc * sizeof( LPSTR ) + nSize * sizeof( char ) ) );
+         lpStr = reinterpret_cast<LPSTR>( s_lpArgVStr + s_argc );
          for( iArgC = 0; iArgC < s_argc; ++iArgC )
          {
             nSize = hb_wctomblen( s_lpArgV[ iArgC ] ) + 1;
@@ -286,8 +286,8 @@ void hb_winmainArgVFree( void )
 
 void hb_winmainArgInit( void * hInstance, void * hPrevInstance, int iCmdShow )
 {
-   s_hInstance = static_cast< HANDLE >( hInstance );
-   s_hPrevInstance = static_cast< HANDLE >( hPrevInstance );
+   s_hInstance = static_cast<HANDLE>( hInstance );
+   s_hPrevInstance = static_cast<HANDLE>( hPrevInstance );
    s_iCmdShow = iCmdShow;
    s_WinMainParam = HB_TRUE;
 }
@@ -296,11 +296,11 @@ HB_BOOL hb_winmainArgGet( void * phInstance, void * phPrevInstance, int * piCmdS
 {
    if( phInstance )
    {
-      *( static_cast< HANDLE * >( phInstance ) ) = s_hInstance;
+      *( static_cast<HANDLE*>( phInstance ) ) = s_hInstance;
    }
    if( phPrevInstance )
    {
-      *( static_cast< HANDLE * >( phPrevInstance ) ) = s_hPrevInstance;
+      *( static_cast<HANDLE*>( phPrevInstance ) ) = s_hPrevInstance;
    }
    if( piCmdShow )
    {
@@ -315,7 +315,7 @@ HB_BOOL hb_winmainArgGet( void * phInstance, void * phPrevInstance, int * piCmdS
 void hb_cmdargInit( int argc, char * argv[] )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargInit(%d, %p)", argc, static_cast< void * >( argv ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargInit(%d, %p)", argc, static_cast<void*>( argv ) ) );
 #endif
 
 #if defined( HB_OS_WIN )
@@ -485,7 +485,7 @@ int hb_cmdargPushArgs( void )
 HB_BOOL hb_cmdargIsInternal( const char * szArg, int * piLen )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargIsInternal(%s, %p)", szArg, static_cast< void * >( piLen ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargIsInternal(%s, %p)", szArg, static_cast<void*>( piLen ) ) );
 #endif
 
    /* NOTE: Not checking for '--' here, as it would filter out
@@ -516,7 +516,7 @@ HB_BOOL hb_cmdargIsInternal( const char * szArg, int * piLen )
 static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargGet(%s, %d)", pszName, static_cast< int >( bRetValue ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargGet(%s, %d)", pszName, static_cast<int>( bRetValue ) ) );
 #endif
 
    char * pszRetVal = nullptr;
@@ -558,7 +558,7 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
          }
          else
          {
-            return const_cast< char * >( "" );
+            return const_cast<char*>( "" );
          }
       }
    }
@@ -585,7 +585,7 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
                chars at all, Harbour is more strict/standard in this respect,
                it requires the switches to be separated. */
 
-      i = static_cast< int >( strlen( pszName ) );
+      i = static_cast<int>( strlen( pszName ) );
       while( *pszNext )
       {
          static const char * s_szSeparator = " ;,\t";
@@ -625,12 +625,12 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
                }
 
                nLen = pszEnd > pszNext ? pszEnd - pszNext : 0;
-               pszRetVal = static_cast< char * >( hb_xgrab( nLen + 1 ) );
+               pszRetVal = static_cast<char*>( hb_xgrab( nLen + 1 ) );
                hb_strncpy( pszRetVal, pszNext, nLen );
             }
             else
             {
-               pszRetVal = const_cast< char * >( "" );
+               pszRetVal = const_cast<char*>( "" );
             }
             break;
          }
@@ -838,7 +838,7 @@ HB_FUNC( HB_CMDLINE )
             nLen += HB_STRLEN( s_lpArgV[ iArg ] ) + 1;
          }
 
-         ptr = lpBuffer = static_cast< LPTSTR >( hb_xgrab( nLen * sizeof( TCHAR ) ) );
+         ptr = lpBuffer = static_cast<LPTSTR>( hb_xgrab( nLen * sizeof( TCHAR ) ) );
          for( iArg = 1; iArg < s_argc; iArg++ )
          {
             nLen = HB_STRLEN( s_lpArgV[ iArg ] );
@@ -853,7 +853,7 @@ HB_FUNC( HB_CMDLINE )
          HB_RETSTR( lpBuffer );
          hb_xfree( lpBuffer );
 #else
-         hb_retc_buffer( static_cast< char * >( hb_osDecodeCP( lpBuffer, nullptr, nullptr ) ) );
+         hb_retc_buffer( static_cast<char*>( hb_osDecodeCP( lpBuffer, nullptr, nullptr ) ) );
 #endif
       }
       else
@@ -866,7 +866,7 @@ HB_FUNC( HB_CMDLINE )
             nLen += strlen( s_argv[ iArg ] ) + 1;
          }
 
-         ptr = pszBuffer = static_cast< char * >( hb_xgrab( nLen ) );
+         ptr = pszBuffer = static_cast<char*>( hb_xgrab( nLen ) );
          for( iArg = 1; iArg < s_argc; iArg++ )
          {
             nLen = strlen( s_argv[ iArg ] );
@@ -877,7 +877,7 @@ HB_FUNC( HB_CMDLINE )
          *--ptr = '\0';
 
          /* Convert from OS codepage */
-         hb_retc_buffer( const_cast< char * >( hb_osDecodeCP( pszBuffer, nullptr, nullptr ) ) );
+         hb_retc_buffer( const_cast<char*>( hb_osDecodeCP( pszBuffer, nullptr, nullptr ) ) );
       }
    }
    else

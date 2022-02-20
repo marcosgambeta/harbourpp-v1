@@ -306,11 +306,11 @@ static v_param * va_arg_get( int iArg, v_paramlst * plst, int iType )
          plst->size = iArg + _ARGBUF_ALLOC;
          if( prev_size == _ARGBUF_SIZE )
          {
-            plst->arglst = static_cast< v_param * >( memcpy( hb_xgrab( plst->size * sizeof( v_param ) ), plst->arglst, _ARGBUF_SIZE * sizeof( v_param ) ) );
+            plst->arglst = static_cast<v_param*>( memcpy( hb_xgrab( plst->size * sizeof( v_param ) ), plst->arglst, _ARGBUF_SIZE * sizeof( v_param ) ) );
          }
          else
          {
-            plst->arglst = static_cast< v_param * >( hb_xrealloc( plst->arglst, plst->size * sizeof( v_param ) ) );
+            plst->arglst = static_cast<v_param*>( hb_xrealloc( plst->arglst, plst->size * sizeof( v_param ) ) );
          }
          memset( &plst->arglst[ prev_size ], 0, ( plst->size - prev_size ) * sizeof( v_param ) );
       }
@@ -443,7 +443,7 @@ static size_t put_octal( char *buffer, size_t bufsize, size_t size, uintmax_t va
       int n = nums;
       do
       {
-         char c = static_cast< char >( value & 0x7 ) + '0';
+         char c = static_cast<char>( value & 0x7 ) + '0';
          value >>= 3;
          --n;
          if( size + n < bufsize )
@@ -520,7 +520,7 @@ static size_t put_dec( char *buffer, size_t bufsize, size_t size, uintmax_t valu
       int n = nums;
       do
       {
-         char c = static_cast< char >( value % 10 ) + '0';
+         char c = static_cast<char>( value % 10 ) + '0';
          value /= 10;
          --n;
          if( size + n < bufsize )
@@ -631,7 +631,7 @@ static size_t put_dbl( char *buffer, size_t bufsize, size_t size, _x_long_dbl va
    do
    {
       value = _MODFD( dInt / 10 + _FL_FIX, &dInt ) * 10;
-      c = '0' + static_cast< char >( value + _FL_FIX );
+      c = '0' + static_cast<char>( value + _FL_FIX );
       --n;
       if( size + n < bufsize )
       {
@@ -651,7 +651,7 @@ static size_t put_dbl( char *buffer, size_t bufsize, size_t size, _x_long_dbl va
       while( precision > 0 )
       {
          dFract = _MODFD( dFract * 10, &dInt );
-         c = '0' + static_cast< char >( dInt + _FL_FIX );
+         c = '0' + static_cast<char>( dInt + _FL_FIX );
          if( size < bufsize )
          {
             buffer[ size ] = c;
@@ -740,7 +740,7 @@ static size_t put_hex( char *buffer, size_t bufsize, size_t size, uintmax_t valu
       int n = nums;
       do
       {
-         char c = static_cast< char >( value & 0x0f ) + '0';
+         char c = static_cast<char>( value & 0x0f ) + '0';
          if( c > '9' )
          {
             c += upper ? 'A' - '9' - 1 : 'a' - '9' - 1;
@@ -788,11 +788,11 @@ static size_t put_str( char *buffer, size_t bufsize, size_t size, const _x_str s
    }
    if( precision < 0 )
    {
-      precision = static_cast< int >( strlen( str ) );
+      precision = static_cast<int>( strlen( str ) );
    }
    else if( precision > 0 )
    {
-      precision = static_cast< int >( _hb_strnlen( str, precision ) );
+      precision = static_cast<int>( _hb_strnlen( str, precision ) );
    }
 
    width -= precision;
@@ -874,7 +874,7 @@ static size_t put_wstr( char *buffer, size_t bufsize, size_t size, const _x_wstr
    {
       if( size < bufsize )
       {
-         buffer[ size ] = static_cast< char >( *wstr++ );
+         buffer[ size ] = static_cast<char>( *wstr++ );
       }
       ++size;
       --precision;
@@ -1343,7 +1343,7 @@ int hb_vsnprintf( char * buffer, size_t bufsize, const char * format, va_list ap
                      {
                         double d = va_arg_n( args, _x_double, param );
                         HB_NUMTYPE( value, d );
-                        argval.value.as_x_long_dbl = static_cast< _x_long_dbl >( ( value & ( _HB_NUM_NAN | _HB_NUM_PINF | _HB_NUM_NINF ) ) == 0 ? d : 0 );
+                        argval.value.as_x_long_dbl = static_cast<_x_long_dbl>( ( value & ( _HB_NUM_NAN | _HB_NUM_PINF | _HB_NUM_NINF ) ) == 0 ? d : 0 );
                      }
                      if( value & _HB_NUM_NAN )
                      {
@@ -1375,11 +1375,11 @@ int hb_vsnprintf( char * buffer, size_t bufsize, const char * format, va_list ap
                   case 'i':   /* signed int decimal conversion */
                      if( length == _L_CHAR_ )
                      {
-                        argval.value.as_x_intmax_t = static_cast< unsigned char >( va_arg_n( args, _x_int, param ) );
+                        argval.value.as_x_intmax_t = static_cast<unsigned char>( va_arg_n( args, _x_int, param ) );
                      }
                      else if( length == _L_SHORT_ )
                      {
-                        argval.value.as_x_intmax_t = static_cast< unsigned short >( va_arg_n( args, _x_int, param ) );
+                        argval.value.as_x_intmax_t = static_cast<unsigned short>( va_arg_n( args, _x_int, param ) );
                      }
                      else if( length == _L_LONG_ )
                      {
@@ -1415,11 +1415,11 @@ int hb_vsnprintf( char * buffer, size_t bufsize, const char * format, va_list ap
                   case 'X':   /* unsigned int hexadecimal conversion */
                      if( length == _L_CHAR_ )
                      {
-                        argval.value.as_x_uintmax_t = static_cast< unsigned char >( va_arg_n( args, _x_int, param ) );
+                        argval.value.as_x_uintmax_t = static_cast<unsigned char>( va_arg_n( args, _x_int, param ) );
                      }
                      else if( length == _L_SHORT_ )
                      {
-                        argval.value.as_x_uintmax_t = static_cast< unsigned short >( va_arg_n( args, _x_int, param ) );
+                        argval.value.as_x_uintmax_t = static_cast<unsigned short>( va_arg_n( args, _x_int, param ) );
                      }
                      else if( length == _L_LONG_ )
                      {
@@ -1463,7 +1463,7 @@ int hb_vsnprintf( char * buffer, size_t bufsize, const char * format, va_list ap
                      argval.value.as_x_ptr = va_arg_n( args, _x_ptr, param );
                      if( argval.value.as_x_ptr )
                      {
-                        size = put_hex( buffer, bufsize, size, reinterpret_cast< HB_PTRUINT >( argval.value.as_x_ptr ), flags | _F_ALTERNATE, width, precision, 0 );
+                        size = put_hex( buffer, bufsize, size, reinterpret_cast<HB_PTRUINT>( argval.value.as_x_ptr ), flags | _F_ALTERNATE, width, precision, 0 );
                      }
                      else
                      {
@@ -1482,7 +1482,7 @@ int hb_vsnprintf( char * buffer, size_t bufsize, const char * format, va_list ap
                            ++size;
                         }
                      }
-                     c = static_cast< unsigned char >( va_arg_n( args, _x_int, param ) );
+                     c = static_cast<unsigned char>( va_arg_n( args, _x_int, param ) );
                      if( size < bufsize )
                      {
                         buffer[ size ] = c;
@@ -1516,7 +1516,7 @@ int hb_vsnprintf( char * buffer, size_t bufsize, const char * format, va_list ap
                       * corruption by programmers typo in pattern so if it's
                       * not strictly necessary it's good to disable it.
                       */
-                     *( va_arg_n( args, _x_intptr, param ) ) = static_cast< int >( size );
+                     *( va_arg_n( args, _x_intptr, param ) ) = static_cast<int>( size );
                      continue;
                   case '%':   /* store % consuming arguments % */
                      break;
@@ -1562,7 +1562,7 @@ int hb_vsnprintf( char * buffer, size_t bufsize, const char * format, va_list ap
       buffer[ bufsize - 1 ] = 0;
    }
 
-   return static_cast< int >( size - 1 );
+   return static_cast<int>( size - 1 );
 }
 
 #else /* defined( HB_USE_CRTL_SNPRINTF ) */

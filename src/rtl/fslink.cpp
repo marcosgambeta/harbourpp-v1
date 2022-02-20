@@ -51,7 +51,7 @@
 #if defined( HB_OS_WIN )
    #include <windows.h>
    #if ! defined( INVALID_FILE_ATTRIBUTES )
-      #define INVALID_FILE_ATTRIBUTES  ( static_cast< DWORD >( -1 ) )
+      #define INVALID_FILE_ATTRIBUTES  ( static_cast<DWORD>( -1 ) )
    #endif
    #include "hbwinuni.h"
 #elif defined( HB_OS_UNIX )
@@ -77,7 +77,7 @@ HB_BOOL hb_fsLink( const char * pszExisting, const char * pszNewFile )
             HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
             if( hModule )
             {
-               s_pCreateHardLink = reinterpret_cast< _HB_CREATEHARDLINK >( HB_WINAPI_GETPROCADDRESST( hModule, "CreateHardLink" ) );
+               s_pCreateHardLink = reinterpret_cast<_HB_CREATEHARDLINK>( HB_WINAPI_GETPROCADDRESST( hModule, "CreateHardLink" ) );
             }
          }
 
@@ -168,7 +168,7 @@ HB_BOOL hb_fsLinkSym( const char * pszTarget, const char * pszNewFile )
             HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
             if( hModule )
             {
-               s_pCreateSymbolicLink = reinterpret_cast< _HB_CREATESYMBOLICLINK >( HB_WINAPI_GETPROCADDRESST( hModule, "CreateSymbolicLink" ) );
+               s_pCreateSymbolicLink = reinterpret_cast<_HB_CREATESYMBOLICLINK>( HB_WINAPI_GETPROCADDRESST( hModule, "CreateSymbolicLink" ) );
             }
          }
 
@@ -280,7 +280,7 @@ char * hb_fsLinkRead( const char * pszFile )
             HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
             if( hModule )
             {
-               s_pGetFinalPathNameByHandle = reinterpret_cast< _HB_GETFINALPATHNAMEBYHANDLE >( HB_WINAPI_GETPROCADDRESST( hModule, "GetFinalPathNameByHandle" ) );
+               s_pGetFinalPathNameByHandle = reinterpret_cast<_HB_GETFINALPATHNAMEBYHANDLE>( HB_WINAPI_GETPROCADDRESST( hModule, "GetFinalPathNameByHandle" ) );
             }
          }
 
@@ -347,10 +347,10 @@ char * hb_fsLinkRead( const char * pszFile )
 
          pszFile = hb_fsNameConv( pszFile, &pszFileFree );
 
-         pszLink = static_cast< char * >( hb_xgrab( HB_PATH_MAX + 1 ) );
+         pszLink = static_cast<char*>( hb_xgrab( HB_PATH_MAX + 1 ) );
          size = readlink( pszFile, pszLink, HB_PATH_MAX );
-         hb_fsSetIOError( size != static_cast< size_t >( -1 ), 0 );
-         if( size == static_cast< size_t >( -1 ) )
+         hb_fsSetIOError( size != static_cast<size_t>( -1 ), 0 );
+         if( size == static_cast<size_t>( -1 ) )
          {
             hb_xfree( pszLink );
             pszLink = nullptr;
@@ -359,7 +359,7 @@ char * hb_fsLinkRead( const char * pszFile )
          {
             pszLink[ size ] = '\0';
             /* Convert from OS codepage */
-            pszLink = const_cast< char * >( hb_osDecodeCP( pszLink, nullptr, nullptr ) );
+            pszLink = const_cast<char*>( hb_osDecodeCP( pszLink, nullptr, nullptr ) );
          }
 
          if( pszFileFree )

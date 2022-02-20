@@ -253,8 +253,8 @@ HB_FUNC( AFILL )
                return;
             }
          }
-         nStart = static_cast< HB_SIZE >( lStart );
-         nCount = static_cast< HB_SIZE >( lCount );
+         nStart = static_cast<HB_SIZE>( lStart );
+         nCount = static_cast<HB_SIZE>( lCount );
          hb_arrayFill( pArray, pValue, HB_ISNUM( 3 ) ? &nStart : nullptr, HB_ISNUM( 4 ) ? &nCount : nullptr );
       }
    }
@@ -342,7 +342,7 @@ HB_FUNC( HB_AINS )
       if( hb_parl(4) )
       {
          HB_SIZE nLen = hb_arrayLen( pArray ) + 1;
-         if( nPos >= 1 && static_cast< HB_SIZE >( nPos ) <= nLen )
+         if( nPos >= 1 && static_cast<HB_SIZE>( nPos ) <= nLen )
          {
             hb_arraySize( pArray, nLen );
          }

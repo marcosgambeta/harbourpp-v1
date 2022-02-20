@@ -58,7 +58,7 @@ static void hb_pp_ErrorMessage( void * cargo, const char * const szMsgTable[],
                                 const char * szParam1, const char * szParam2 )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_pp_ErrorGen(%p, %p, %c, %d, %s, %s)", cargo, static_cast< const void * >( szMsgTable ), cPrefix, iCode, szParam1, szParam2 ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_pp_ErrorGen(%p, %p, %c, %d, %s, %s)", cargo, static_cast<const void*>( szMsgTable ), cPrefix, iCode, szParam1, szParam2 ) );
 #endif
 
    HB_SYMBOL_UNUSED( cargo );
@@ -70,7 +70,7 @@ static void hb_pp_ErrorMessage( void * cargo, const char * const szMsgTable[],
       PHB_ITEM pError;
       hb_snprintf( szMsgBuf, sizeof( szMsgBuf ), szMsgTable[ iCode - 1 ],
                    szParam1, szParam2 );
-      pError = hb_errRT_New( ES_ERROR, "PP", 1001, static_cast< HB_ERRCODE >( iCode ), szMsgBuf,
+      pError = hb_errRT_New( ES_ERROR, "PP", 1001, static_cast<HB_ERRCODE>( iCode ), szMsgBuf,
                              nullptr, 0, EF_NONE | EF_CANDEFAULT );
       hb_errLaunch( pError );
       hb_errRelease( pError );
@@ -167,7 +167,7 @@ HB_FUNC( __PP_INIT )
       pStatePtr = ( PHB_PP_STATE * ) hb_gcAllocate( sizeof( PHB_PP_STATE ),
                                                     &s_gcPPFuncs );
       *pStatePtr = pState;
-      ppItem = hb_itemPutPtrGC( nullptr, static_cast< void * >( pStatePtr ) );
+      ppItem = hb_itemPutPtrGC( nullptr, static_cast<void*>( pStatePtr ) );
 
       hb_pp_init( pState, HB_TRUE, HB_FALSE, 0, nullptr, nullptr, nullptr,
                   hb_pp_ErrorMessage, hb_pp_Disp, nullptr, nullptr,
