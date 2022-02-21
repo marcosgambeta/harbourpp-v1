@@ -164,7 +164,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
       if( nLevel >= pCtx->nAllocId )
       {
          pCtx->nAllocId += 8;
-         pCtx->pId = static_cast<void**>( hb_xrealloc( pCtx->pId, sizeof( void * ) * pCtx->nAllocId ) );
+         pCtx->pId = static_cast<void**>( hb_xrealloc( pCtx->pId, sizeof(void*) * pCtx->nAllocId ) );
       }
       pCtx->pId[ nLevel ] = id;
    }
@@ -236,7 +236,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
                _hb_jsonCtxAdd( pCtx, "\\t", 2 );
                break;
             default:
-               hb_snprintf( buf, sizeof( buf ), "\\u00%02X", uch );
+               hb_snprintf( buf, sizeof(buf), "\\u00%02X", uch );
                _hb_jsonCtxAdd( pCtx, buf, 6 );
                break;
          }
@@ -258,14 +258,14 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
       }
       do
       {
-         buf[ sizeof( buf ) - ++i ] = ( nVal % 10 ) + '0';
+         buf[ sizeof(buf) - ++i ] = ( nVal % 10 ) + '0';
       }
       while( ( nVal /= 10 ) != 0 );
       if( fNeg )
       {
-         buf[ sizeof( buf ) - ++i ] = '-';
+         buf[ sizeof(buf) - ++i ] = '-';
       }
-      _hb_jsonCtxAdd( pCtx, &buf[ sizeof( buf ) - i ], i );
+      _hb_jsonCtxAdd( pCtx, &buf[ sizeof(buf) - i ], i );
    }
    else if( HB_IS_NUMERIC( pValue ) )
    {
@@ -273,7 +273,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
       int iDec;
       double dblValue = hb_itemGetNDDec( pValue, &iDec );
 
-      hb_snprintf( buf, sizeof( buf ), "%.*f", iDec, dblValue );
+      hb_snprintf( buf, sizeof(buf), "%.*f", iDec, dblValue );
       _hb_jsonCtxAdd( pCtx, buf, strlen( buf ) );
    }
    else if( HB_IS_NIL( pValue ) )
@@ -717,11 +717,11 @@ char * hb_jsonEncodeCP( PHB_ITEM pValue, HB_SIZE * pnLen, int iIndent, PHB_CODEP
    char * szRet;
    HB_SIZE nLen;
 
-   pCtx = static_cast<PHB_JSON_ENCODE_CTX>( hb_xgrab( sizeof( HB_JSON_ENCODE_CTX ) ) );
+   pCtx = static_cast<PHB_JSON_ENCODE_CTX>( hb_xgrab( sizeof(HB_JSON_ENCODE_CTX) ) );
    pCtx->nAlloc = 16;
    pCtx->pHead = pCtx->pBuffer = static_cast<char*>( hb_xgrab( pCtx->nAlloc ) );
    pCtx->nAllocId = 8;
-   pCtx->pId = static_cast<void**>( hb_xgrab( sizeof( void * ) * pCtx->nAllocId ) );
+   pCtx->pId = static_cast<void**>( hb_xgrab( sizeof(void*) * pCtx->nAllocId ) );
    pCtx->iIndent = iIndent;
    pCtx->szEol = hb_setGetEOL();
    if( ! pCtx->szEol || ! pCtx->szEol[ 0 ] )

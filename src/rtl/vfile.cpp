@@ -98,7 +98,7 @@ PHB_FILE hb_fileItemGet( PHB_ITEM pItem )
 
 PHB_ITEM hb_fileItemPut( PHB_ITEM pItem, PHB_FILE pFile )
 {
-   PHB_FILE * fileHolder = static_cast<PHB_FILE*>( hb_gcAllocate( sizeof( PHB_FILE ), &s_gcFileFuncs ) );
+   PHB_FILE * fileHolder = static_cast<PHB_FILE*>( hb_gcAllocate( sizeof(PHB_FILE), &s_gcFileFuncs ) );
    * fileHolder = pFile;
    return hb_itemPutPtrGC( pItem, fileHolder );
 }
@@ -513,7 +513,7 @@ HB_FUNC( HB_VFOPEN )
 
       if( HB_ISBYREF( 1 ) )
       {
-         hb_strncpy( szName, pszFile, sizeof( szName ) - 1 );
+         hb_strncpy( szName, pszFile, sizeof(szName) - 1 );
          nModeAttr |= FXO_COPYNAME;
          pszFile = szName;
       }

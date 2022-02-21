@@ -438,7 +438,7 @@ static const HB_FILE_FUNCS s_fileFuncs =
 };
 
 typedef HB_BOOL ( * HB_FILE_FUNC )( PHB_FILE_FUNCS pFuncs, const char * );
-#define HB_FILE_FUNC_COUNT ( sizeof( HB_FILE_FUNCS ) / sizeof( HB_FILE_FUNC ) )
+#define HB_FILE_FUNC_COUNT ( sizeof(HB_FILE_FUNCS) / sizeof(HB_FILE_FUNC) )
 
 HB_BOOL hb_fileRegisterPart( HB_FILE_FUNCS * pFuncs )
 {

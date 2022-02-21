@@ -102,14 +102,14 @@ void hb_fsAddSearchPath( const char * szPath, HB_PATHNAMES ** pSearchList )
    while( ( pDelim = strchr( pPath, HB_OS_PATH_LIST_SEP_CHR ) ) != nullptr )
    {
       *pDelim = '\0';
-      *pSearchList = static_cast<HB_PATHNAMES*>( hb_xgrab( sizeof( HB_PATHNAMES ) ) );
+      *pSearchList = static_cast<HB_PATHNAMES*>( hb_xgrab( sizeof(HB_PATHNAMES) ) );
       ( *pSearchList )->szPath = pPath;
       ( *pSearchList )->fFree  = fFree;
       pSearchList = &( *pSearchList )->pNext;
       pPath = pDelim + 1;
       fFree = HB_FALSE;
    }
-   *pSearchList = static_cast<HB_PATHNAMES*>( hb_xgrab( sizeof( HB_PATHNAMES ) ) );
+   *pSearchList = static_cast<HB_PATHNAMES*>( hb_xgrab( sizeof(HB_PATHNAMES) ) );
    ( *pSearchList )->szPath = pPath;
    ( *pSearchList )->pNext  = nullptr;
    ( *pSearchList )->fFree  = fFree;
@@ -151,7 +151,7 @@ PHB_FNAME hb_fsFNameSplit( const char * pszFileName )
    PHB_FNAME pFileName;
 
    /* Grab memory, set defaults */
-   pFileName = static_cast<PHB_FNAME>( hb_xgrab( sizeof( HB_FNAME ) ) );
+   pFileName = static_cast<PHB_FNAME>( hb_xgrab( sizeof(HB_FNAME) ) );
 
    pFileName->szPath =
    pFileName->szName =

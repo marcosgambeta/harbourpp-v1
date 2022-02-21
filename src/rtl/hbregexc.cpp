@@ -105,8 +105,8 @@ PHB_REGEX hb_regexCompile( const char * szRegEx, HB_SIZE nLen, int iFlags )
 
    HB_SYMBOL_UNUSED( nLen );
 
-   pRegEx = static_cast<PHB_REGEX>( hb_gcAllocate( sizeof( *pRegEx ), &s_gcRegexFuncs ) );
-   memset( pRegEx, 0, sizeof( *pRegEx ) );
+   pRegEx = static_cast<PHB_REGEX>( hb_gcAllocate( sizeof(*pRegEx), &s_gcRegexFuncs ) );
+   memset( pRegEx, 0, sizeof(*pRegEx) );
    pRegEx->fFree = HB_TRUE;
    pRegEx->iFlags = iFlags;
 

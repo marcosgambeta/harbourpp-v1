@@ -118,7 +118,7 @@ static void hb_mlGetEOLs( PHB_MLC_INFO pMLC, int iParam )
       {
          if( iEOLs > HB_EOL_BUFFER_SIZE )
          {
-            pMLC->pEOLs = static_cast<PHB_EOL_INFO>( hb_xgrab( sizeof( HB_EOL_INFO ) * iEOLs ) );
+            pMLC->pEOLs = static_cast<PHB_EOL_INFO>( hb_xgrab( sizeof(HB_EOL_INFO) * iEOLs ) );
          }
          iEOLs = 0;
          for( n = 1; n <= nSize; ++n )

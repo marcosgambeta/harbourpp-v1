@@ -266,7 +266,7 @@ static PHB_SOCKEX s_sockexNew( HB_SOCKET sd, PHB_ITEM pParams )
 {
    PHB_SOCKEX pSock;
 
-   pSock = static_cast<PHB_SOCKEX>( hb_xgrabz( sizeof( HB_SOCKEX ) ) );
+   pSock = static_cast<PHB_SOCKEX>( hb_xgrabz( sizeof(HB_SOCKEX) ) );
    pSock->sd = sd;
    pSock->pFilter = &s_sockFilter;
 
@@ -407,7 +407,7 @@ HB_SOCKET hb_socketItemGet( PHB_ITEM pItem )
 
 PHB_ITEM hb_socketItemPut( PHB_ITEM pItem, HB_SOCKET sd )
 {
-   PHB_SOCKEX * pSockPtr = static_cast<PHB_SOCKEX*>( hb_gcAllocate( sizeof( PHB_SOCKEX ), &s_gcSocketFuncs ) );
+   PHB_SOCKEX * pSockPtr = static_cast<PHB_SOCKEX*>( hb_gcAllocate( sizeof(PHB_SOCKEX), &s_gcSocketFuncs ) );
 
    *pSockPtr = hb_sockexNew( sd, nullptr, nullptr );
 
@@ -449,7 +449,7 @@ PHB_SOCKEX hb_sockexItemGet( PHB_ITEM pItem )
 
 PHB_ITEM hb_sockexItemPut( PHB_ITEM pItem, PHB_SOCKEX pSock )
 {
-   PHB_SOCKEX * pSockPtr = static_cast<PHB_SOCKEX*>( hb_gcAllocate( sizeof( PHB_SOCKEX ), &s_gcSocketFuncs ) );
+   PHB_SOCKEX * pSockPtr = static_cast<PHB_SOCKEX*>( hb_gcAllocate( sizeof(PHB_SOCKEX), &s_gcSocketFuncs ) );
 
    *pSockPtr = pSock;
 
@@ -565,10 +565,10 @@ static const HB_SOCKET_FILTER ** s_socket_getfilters( const char * pszFilter, co
                {
                   if( iMax == *piCount )
                   {
-                     pFilters = static_cast<const HB_SOCKET_FILTER**>( hb_xmemdup( pFilters, sizeof( *pFilters ) * iMax ) );
+                     pFilters = static_cast<const HB_SOCKET_FILTER**>( hb_xmemdup( pFilters, sizeof(*pFilters) * iMax ) );
                   }
                   iMax += 16;
-                  pFilters = static_cast<const HB_SOCKET_FILTER**>( hb_xrealloc( pFilters, sizeof( *pFilters ) * iMax ) );
+                  pFilters = static_cast<const HB_SOCKET_FILTER**>( hb_xrealloc( pFilters, sizeof(*pFilters) * iMax ) );
                }
                pFilters[ iCount++ ] = s_socketFilters[ i ];
             }
@@ -789,7 +789,7 @@ int hb_sockexRawClear( PHB_SOCKEX pSock, HB_BOOL fClose )
       hb_xfree( pSock->buffer );
    }
 
-   memset( pSock, 0, sizeof( *pSock ) );
+   memset( pSock, 0, sizeof(*pSock) );
    pSock->sd = HB_NO_SOCKET;
 
    return iResult;

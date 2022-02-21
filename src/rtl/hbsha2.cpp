@@ -87,13 +87,13 @@ HB_FUNC( HB_SHA224 )
 
    if( ! hb_parl(2) )
    {
-      char hex[ ( sizeof( digest ) * 2 ) + 1 ];
-      hb_strtohex( reinterpret_cast<char*>( digest ), sizeof( digest ), hex );
+      char hex[ ( sizeof(digest) * 2 ) + 1 ];
+      hb_strtohex( reinterpret_cast<char*>( digest ), sizeof(digest), hex );
       hb_retclen( hex, HB_SIZEOFARRAY( hex ) - 1 );
    }
    else
    {
-      hb_retclen( reinterpret_cast<char*>( digest ), sizeof( digest ) );
+      hb_retclen( reinterpret_cast<char*>( digest ), sizeof(digest) );
    }
 }
 
@@ -136,13 +136,13 @@ HB_FUNC( HB_SHA256 )
 
    if( ! hb_parl(2) )
    {
-      char hex[ ( sizeof( digest ) * 2 ) + 1 ];
-      hb_strtohex( reinterpret_cast<char*>( digest ), sizeof( digest ), hex );
+      char hex[ ( sizeof(digest) * 2 ) + 1 ];
+      hb_strtohex( reinterpret_cast<char*>( digest ), sizeof(digest), hex );
       hb_retclen( hex, HB_SIZEOFARRAY( hex ) - 1 );
    }
    else
    {
-      hb_retclen( reinterpret_cast<char*>( digest ), sizeof( digest ) );
+      hb_retclen( reinterpret_cast<char*>( digest ), sizeof(digest) );
    }
 }
 
@@ -185,13 +185,13 @@ HB_FUNC( HB_SHA384 )
 
    if( ! hb_parl(2) )
    {
-      char hex[ ( sizeof( digest ) * 2 ) + 1 ];
-      hb_strtohex( reinterpret_cast<char*>( digest ), sizeof( digest ), hex );
+      char hex[ ( sizeof(digest) * 2 ) + 1 ];
+      hb_strtohex( reinterpret_cast<char*>( digest ), sizeof(digest), hex );
       hb_retclen( hex, HB_SIZEOFARRAY( hex ) - 1 );
    }
    else
    {
-      hb_retclen( reinterpret_cast<char*>( digest ), sizeof( digest ) );
+      hb_retclen( reinterpret_cast<char*>( digest ), sizeof(digest) );
    }
 }
 
@@ -234,12 +234,12 @@ HB_FUNC( HB_SHA512 )
 
    if( ! hb_parl(2) )
    {
-      char hex[ ( sizeof( digest ) * 2 ) + 1 ];
-      hb_strtohex( reinterpret_cast<char*>( digest ), sizeof( digest ), hex );
+      char hex[ ( sizeof(digest) * 2 ) + 1 ];
+      hb_strtohex( reinterpret_cast<char*>( digest ), sizeof(digest), hex );
       hb_retclen( hex, HB_SIZEOFARRAY( hex ) - 1 );
    }
    else
    {
-      hb_retclen( reinterpret_cast<char*>( digest ), sizeof( digest ) );
+      hb_retclen( reinterpret_cast<char*>( digest ), sizeof(digest) );
    }
 }

@@ -225,7 +225,7 @@ static void hb_itemSerialRefListShow( PHB_REF_LIST pRefList )
 
 static void hb_itemSerialRefListInit( PHB_REF_LIST pRefList )
 {
-   memset( pRefList, 0, sizeof( HB_REF_LIST ) );
+   memset( pRefList, 0, sizeof(HB_REF_LIST) );
 }
 
 static void hb_itemSerialRefListFree( PHB_REF_LIST pRefList )
@@ -321,7 +321,7 @@ static PHB_REF_ITEM hb_itemSerialRefNew( PHB_REF_LIST pRefList, HB_SIZE nPos )
       {
          pRefList->nSize += pRefList->nSize >> 1;
       }
-      pRefList->pRefs = static_cast<PHB_REF_ITEM>( hb_xrealloc( pRefList->pRefs, pRefList->nSize * sizeof( HB_REF_ITEM ) ) );
+      pRefList->pRefs = static_cast<PHB_REF_ITEM>( hb_xrealloc( pRefList->pRefs, pRefList->nSize * sizeof(HB_REF_ITEM) ) );
    }
 
    nMove = pRefList->nCount - nPos;
@@ -370,13 +370,13 @@ static void hb_itemSerialUnusedFree( PHB_REF_LIST pRefList )
          {
             if( nCount != nPos )
             {
-               memcpy( &pRefList->pRefs[ nCount ], &pRefList->pRefs[ nPos ], sizeof( HB_REF_ITEM ) );
+               memcpy( &pRefList->pRefs[ nCount ], &pRefList->pRefs[ nPos ], sizeof(HB_REF_ITEM) );
             }
             ++nCount;
          }
       }
       pRefList->nSize = pRefList->nCount = nCount;
-      pRefList->pRefs = static_cast<PHB_REF_ITEM>( hb_xrealloc( pRefList->pRefs, nCount * sizeof( HB_REF_ITEM ) ) );
+      pRefList->pRefs = static_cast<PHB_REF_ITEM>( hb_xrealloc( pRefList->pRefs, nCount * sizeof(HB_REF_ITEM) ) );
    }
 }
 
@@ -1785,7 +1785,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
                if( hb_vmRequestQuery() == 0 )
                {
                   char szMsg[ HB_SYMBOL_NAME_LEN ];
-                  hb_snprintf( szMsg, sizeof( szMsg ), "_%s", hb_itemGetCPtr( pMsg ) );
+                  hb_snprintf( szMsg, sizeof(szMsg), "_%s", hb_itemGetCPtr( pMsg ) );
                   hb_objSendMsg( pItem, szMsg, 1, pVal );
                }
             }

@@ -298,7 +298,7 @@ void hb_blowfishInit( HB_BLOWFISH * bf, const void * keydata, int keylen )
    HB_U32 xL, xR;
    int i, j, l;
 
-   memcpy( bf, &s_blowFishInit, sizeof( s_blowFishInit ) );
+   memcpy( bf, &s_blowFishInit, sizeof(s_blowFishInit) );
 
    for( i = j = 0; i < SUBKEYS_COUNT; ++i )
    {

@@ -1030,8 +1030,8 @@ PHB_THREADSTATE hb_threadStateNew( void )
    PHB_THREADSTATE pThread;
 
    pThItm = hb_itemNew( nullptr );
-   pThread = static_cast<PHB_THREADSTATE>( hb_gcAllocRaw( sizeof( HB_THREADSTATE ), &s_gcThreadFuncs ) );
-   memset( pThread, 0, sizeof( HB_THREADSTATE ) );
+   pThread = static_cast<PHB_THREADSTATE>( hb_gcAllocRaw( sizeof(HB_THREADSTATE), &s_gcThreadFuncs ) );
+   memset( pThread, 0, sizeof(HB_THREADSTATE) );
    hb_itemPutPtrRawGC( pThItm, pThread );
 
    pThread->pszCDP  = HB_MACRO2STRING( HB_CODEPAGE_DEFAULT );
@@ -1540,8 +1540,8 @@ HB_FUNC( HB_THREADWAIT )
          }
          if( pThreads == pAlloc && iThreads >= HB_THREAD_WAIT_ALLOC )
          {
-            pThreads = static_cast<PHB_THREADSTATE*>( hb_xgrab( sizeof( PHB_THREADSTATE ) * iLen ) );
-            memcpy( pThreads, pAlloc, sizeof( pAlloc ) );
+            pThreads = static_cast<PHB_THREADSTATE*>( hb_xgrab( sizeof(PHB_THREADSTATE) * iLen ) );
+            memcpy( pThreads, pAlloc, sizeof(pAlloc) );
          }
          pThreads[ iThreads++ ] = pThread;
       }
@@ -1884,8 +1884,8 @@ PHB_ITEM hb_threadMutexCreate( void )
    PHB_ITEM pItem;
 
    pItem = hb_itemNew( nullptr );
-   pMutex = static_cast<PHB_MUTEX>( hb_gcAllocRaw( sizeof( HB_MUTEX ), &s_gcMutexFuncs ) );
-   memset( pMutex, 0, sizeof( HB_MUTEX ) );
+   pMutex = static_cast<PHB_MUTEX>( hb_gcAllocRaw( sizeof(HB_MUTEX), &s_gcMutexFuncs ) );
+   memset( pMutex, 0, sizeof(HB_MUTEX) );
    pItem = hb_itemPutPtrRawGC( pItem, pMutex );
 
 #if ! defined( HB_MT_VM )

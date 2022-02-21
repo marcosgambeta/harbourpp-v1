@@ -2035,7 +2035,7 @@ HB_BOOL hb_compExprReduceAT( PHB_EXPR pSelf, HB_COMP_DECL )
       HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
       HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pParms );
 
-      memcpy( pSelf, pReduced, sizeof( HB_EXPR ) );
+      memcpy( pSelf, pReduced, sizeof(HB_EXPR) );
       HB_COMP_EXPR_CLEAR( pReduced );
       return HB_TRUE;
    }
@@ -2107,7 +2107,7 @@ HB_BOOL hb_compExprReduceCHR( PHB_EXPR pSelf, HB_COMP_DECL )
 
       HB_COMP_EXPR_FREE( pParms );
       HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
-      memcpy( pSelf, pExpr, sizeof( HB_EXPR ) );
+      memcpy( pSelf, pExpr, sizeof(HB_EXPR) );
       HB_COMP_EXPR_CLEAR( pExpr );
       return HB_TRUE;
    }
@@ -2134,7 +2134,7 @@ HB_BOOL hb_compExprReduceBCHAR( PHB_EXPR pSelf, HB_COMP_DECL )
 
       HB_COMP_EXPR_FREE( pParms );
       HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
-      memcpy( pSelf, pExpr, sizeof( HB_EXPR ) );
+      memcpy( pSelf, pExpr, sizeof(HB_EXPR) );
       HB_COMP_EXPR_CLEAR( pExpr );
       return HB_TRUE;
    }
@@ -2154,7 +2154,7 @@ HB_BOOL hb_compExprReduceLEN( PHB_EXPR pSelf, HB_COMP_DECL )
 
       HB_COMP_EXPR_FREE( pParms );
       HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
-      memcpy( pSelf, pExpr, sizeof( HB_EXPR ) );
+      memcpy( pSelf, pExpr, sizeof(HB_EXPR) );
       HB_COMP_EXPR_CLEAR( pExpr );
       return HB_TRUE;
    }
@@ -2220,7 +2220,7 @@ HB_BOOL hb_compExprReduceEMPTY( PHB_EXPR pSelf, HB_COMP_DECL )
 
       HB_COMP_EXPR_FREE( pParms );
       HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
-      memcpy( pSelf, pExpr, sizeof( HB_EXPR ) );
+      memcpy( pSelf, pExpr, sizeof(HB_EXPR) );
       HB_COMP_EXPR_CLEAR( pExpr );
       return HB_TRUE;
    }
@@ -2238,7 +2238,7 @@ HB_BOOL hb_compExprReduceASC( PHB_EXPR pSelf, HB_COMP_DECL )
 
       HB_COMP_EXPR_FREE( pParms );
       HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
-      memcpy( pSelf, pExpr, sizeof( HB_EXPR ) );
+      memcpy( pSelf, pExpr, sizeof(HB_EXPR) );
       HB_COMP_EXPR_CLEAR( pExpr );
       return HB_TRUE;
    }
@@ -2256,7 +2256,7 @@ HB_BOOL hb_compExprReduceBCODE( PHB_EXPR pSelf, HB_COMP_DECL )
 
       HB_COMP_EXPR_FREE( pParms );
       HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
-      memcpy( pSelf, pExpr, sizeof( HB_EXPR ) );
+      memcpy( pSelf, pExpr, sizeof(HB_EXPR) );
       HB_COMP_EXPR_CLEAR( pExpr );
       return HB_TRUE;
    }
@@ -2290,7 +2290,7 @@ HB_BOOL hb_compExprReduceINT( PHB_EXPR pSelf, HB_COMP_DECL )
       }
       HB_COMP_EXPR_FREE( pParms );
       HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
-      memcpy( pSelf, pExpr, sizeof( HB_EXPR ) );
+      memcpy( pSelf, pExpr, sizeof(HB_EXPR) );
       HB_COMP_EXPR_CLEAR( pExpr );
       return HB_TRUE;
    }
@@ -2322,7 +2322,7 @@ HB_BOOL hb_compExprReduceSTOT( PHB_EXPR pSelf, HB_USHORT usCount, HB_COMP_DECL )
          HB_COMP_EXPR_FREE( pParms );
       }
       HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
-      memcpy( pSelf, pExpr, sizeof( HB_EXPR ) );
+      memcpy( pSelf, pExpr, sizeof(HB_EXPR) );
       HB_COMP_EXPR_CLEAR( pExpr );
       return HB_TRUE;
    }
@@ -2352,7 +2352,7 @@ HB_BOOL hb_compExprReduceSTOD( PHB_EXPR pSelf, HB_USHORT usCount, HB_COMP_DECL )
          HB_COMP_EXPR_FREE( pParms );
       }
       HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
-      memcpy( pSelf, pExpr, sizeof( HB_EXPR ) );
+      memcpy( pSelf, pExpr, sizeof(HB_EXPR) );
       HB_COMP_EXPR_CLEAR( pExpr );
       return HB_TRUE;
    }
@@ -2375,7 +2375,7 @@ HB_BOOL hb_compExprReduceDTOS( PHB_EXPR pSelf, HB_COMP_DECL )
 
       HB_COMP_EXPR_FREE( pParms );
       HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
-      memcpy( pSelf, pExpr, sizeof( HB_EXPR ) );
+      memcpy( pSelf, pExpr, sizeof(HB_EXPR) );
       HB_COMP_EXPR_CLEAR( pExpr );
       return HB_TRUE;
    }
@@ -2394,7 +2394,7 @@ HB_BOOL hb_compExprReduceCTOD( PHB_EXPR pSelf, HB_COMP_DECL )
 
       HB_COMP_EXPR_FREE( pParms );
       HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
-      memcpy( pSelf, pExpr, sizeof( HB_EXPR ) );
+      memcpy( pSelf, pExpr, sizeof(HB_EXPR) );
       HB_COMP_EXPR_CLEAR( pExpr );
       return HB_TRUE;
    }
@@ -2479,7 +2479,7 @@ HB_BOOL hb_compExprReduceUPPER( PHB_EXPR pSelf, HB_COMP_DECL )
 
          HB_COMP_EXPR_FREE( pParms );
          HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
-         memcpy( pSelf, pExpr, sizeof( HB_EXPR ) );
+         memcpy( pSelf, pExpr, sizeof(HB_EXPR) );
          HB_COMP_EXPR_CLEAR( pExpr );
 
          return HB_TRUE;
@@ -2564,7 +2564,7 @@ HB_BOOL hb_compExprReduceMIN( PHB_EXPR pSelf, HB_COMP_DECL )
       }
       HB_COMP_EXPR_FREE( pParms );
       HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
-      memcpy( pSelf, pExpr, sizeof( HB_EXPR ) );
+      memcpy( pSelf, pExpr, sizeof(HB_EXPR) );
       HB_COMP_EXPR_CLEAR( pExpr );
       return HB_TRUE;
    }
@@ -2648,7 +2648,7 @@ HB_BOOL hb_compExprReduceMAX( PHB_EXPR pSelf, HB_COMP_DECL )
       }
       HB_COMP_EXPR_FREE( pParms );
       HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
-      memcpy( pSelf, pExpr, sizeof( HB_EXPR ) );
+      memcpy( pSelf, pExpr, sizeof(HB_EXPR) );
       HB_COMP_EXPR_CLEAR( pExpr );
       return HB_TRUE;
    }
@@ -2663,7 +2663,7 @@ HB_BOOL hb_compExprReduceBitFunc( PHB_EXPR pSelf, HB_MAXINT nResult, HB_BOOL fBo
 
    HB_COMP_EXPR_FREE( pParms );
    HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
-   memcpy( pSelf, pExpr, sizeof( HB_EXPR ) );
+   memcpy( pSelf, pExpr, sizeof(HB_EXPR) );
    HB_COMP_EXPR_CLEAR( pExpr );
    return HB_TRUE;
 }

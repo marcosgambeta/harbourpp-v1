@@ -188,13 +188,13 @@ static int arc4_seed_win( void )
 
    s_provider_set = 1;
 
-   if( ! CryptGenRandom( s_provider, sizeof( buf ), buf ) )
+   if( ! CryptGenRandom( s_provider, sizeof(buf), buf ) )
    {
       return -1;
    }
 
-   arc4_addrandom( buf, sizeof( buf ) );
-   memset( buf, 0, sizeof( buf ) );
+   arc4_addrandom( buf, sizeof(buf) );
+   memset( buf, 0, sizeof(buf) );
 
    return 0;
 }
@@ -218,11 +218,11 @@ static int arc4_seed_sysctl_linux( void )
    size_t       n;
    int          any_set;
 
-   memset( buf, 0, sizeof( buf ) );
+   memset( buf, 0, sizeof(buf) );
 
-   for( size_t len = 0; len < sizeof( buf ); len += n )
+   for( size_t len = 0; len < sizeof(buf); len += n )
    {
-      n = sizeof( buf ) - len;
+      n = sizeof(buf) - len;
 
       if( sysctl( mib, 3, &buf[ len ], &n, nullptr, 0 ) != 0 )
       {
@@ -231,7 +231,7 @@ static int arc4_seed_sysctl_linux( void )
    }
 
    /* make sure that the buffer actually got set. */
-   for( unsigned int i = 0, any_set = 0; i < sizeof( buf ); ++i )
+   for( unsigned int i = 0, any_set = 0; i < sizeof(buf); ++i )
    {
       any_set |= buf[ i ];
    }
@@ -241,8 +241,8 @@ static int arc4_seed_sysctl_linux( void )
       return -1;
    }
 
-   arc4_addrandom( buf, sizeof( buf ) );
-   memset( buf, 0, sizeof( buf ) );
+   arc4_addrandom( buf, sizeof(buf) );
+   memset( buf, 0, sizeof(buf) );
 
    return 0;
 }
@@ -264,18 +264,18 @@ static int arc4_seed_sysctl_bsd( void )
    size_t len, n;
    int    any_set;
 
-   memset( buf, 0, sizeof( buf ) );
+   memset( buf, 0, sizeof(buf) );
 
-   len = sizeof( buf );
+   len = sizeof(buf);
    if( sysctl( mib, 2, buf, &len, nullptr, 0 ) == -1 )
    {
-      for( len = 0; len < sizeof( buf ); len += sizeof( unsigned ) )
+      for( len = 0; len < sizeof(buf); len += sizeof(unsigned) )
       {
-         n = sizeof( unsigned );
+         n = sizeof(unsigned);
 
-         if( n + len > sizeof( buf ) )
+         if( n + len > sizeof(buf) )
          {
-            n = len - sizeof( buf );
+            n = len - sizeof(buf);
          }
 
          if( sysctl( mib, 2, &buf[ len ], &n, nullptr, 0 ) == -1 )
@@ -286,7 +286,7 @@ static int arc4_seed_sysctl_bsd( void )
    }
 
    /* make sure that the buffer actually got set. */
-   for( int i = any_set = 0; i < static_cast<int>( sizeof( buf ) ); ++i )
+   for( int i = any_set = 0; i < static_cast<int>( sizeof(buf) ); ++i )
    {
       any_set |= buf[ i ];
    }
@@ -296,8 +296,8 @@ static int arc4_seed_sysctl_bsd( void )
       return -1;
    }
 
-   arc4_addrandom( buf, sizeof( buf ) );
-   memset( buf, 0, sizeof( buf ) );
+   arc4_addrandom( buf, sizeof(buf) );
+   memset( buf, 0, sizeof(buf) );
 
    return 0;
 }
@@ -354,7 +354,7 @@ static int arc4_seed_proc_sys_kernel_random_uuid( void )
          return -1;
       }
 
-      n = read( fd, buf, sizeof( buf ) );
+      n = read( fd, buf, sizeof(buf) );
       close( fd );
 
       if( n <= 0 )
@@ -362,7 +362,7 @@ static int arc4_seed_proc_sys_kernel_random_uuid( void )
          return -1;
       }
 
-      memset( entropy, 0, sizeof( entropy ) );
+      memset( entropy, 0, sizeof(entropy) );
       for( i = nybbles = 0; i < n; ++i )
       {
          if( HB_ISXDIGIT( buf[ i ] ) )
@@ -390,8 +390,8 @@ static int arc4_seed_proc_sys_kernel_random_uuid( void )
       bytes += nybbles / 2;
    }
 
-   memset( entropy, 0, sizeof( entropy ) );
-   memset( buf, 0, sizeof( buf ) );
+   memset( entropy, 0, sizeof(entropy) );
+   memset( buf, 0, sizeof(buf) );
 
    return 0;
 }
@@ -417,16 +417,16 @@ static int arc4_seed_urandom( void )
          continue;
       }
 
-      n = read_all( fd, buf, sizeof( buf ) );
+      n = read_all( fd, buf, sizeof(buf) );
       close( fd );
 
-      if( n != sizeof( buf ) )
+      if( n != sizeof(buf) )
       {
          return -1;
       }
 
-      arc4_addrandom( buf, sizeof( buf ) );
-      memset( buf, 0, sizeof( buf ) );
+      arc4_addrandom( buf, sizeof(buf) );
+      memset( buf, 0, sizeof(buf) );
 
       return 0;
    }
@@ -441,13 +441,13 @@ static int arc4_seed_rand( void )
 
    srand( static_cast<unsigned>( hb_dateMilliSeconds() ) );
 
-   for( HB_SIZE i = 0; i < sizeof( buf ); i++ )
+   for( HB_SIZE i = 0; i < sizeof(buf); i++ )
    {
       buf[ i ] = static_cast<HB_U8>( rand() % 256 );  /* not biased */
    }
 
-   arc4_addrandom( buf, sizeof( buf ) );
-   memset( buf, 0, sizeof( buf ) );
+   arc4_addrandom( buf, sizeof(buf) );
+   memset( buf, 0, sizeof(buf) );
 
    return 0;
 }

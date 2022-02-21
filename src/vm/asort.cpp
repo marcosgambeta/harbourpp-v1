@@ -345,7 +345,7 @@ static void hb_arraySortStart( PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZ
 {
    HB_SIZE * pBuffer, * pDest, * pPos, nPos, nTo;
 
-   pBuffer = static_cast<HB_SIZE*>( hb_xgrab( sizeof( HB_SIZE ) * 2 * nCount ) );
+   pBuffer = static_cast<HB_SIZE*>( hb_xgrab( sizeof(HB_SIZE) * 2 * nCount ) );
    for( nPos = 0; nPos < nCount; ++nPos )
    {
       pBuffer[ nPos ] = nStart + nPos;

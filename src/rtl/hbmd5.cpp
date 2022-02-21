@@ -138,7 +138,7 @@ static void hb_md5go( MD5_BUF * md5 )
    int i;
 
    /* copy accumulators first */
-   memcpy( A, md5->accum, sizeof( A ) );
+   memcpy( A, md5->accum, sizeof(A) );
 
    /* fill buffer */
    for( i = 0, ptr = md5->buf; i < 16; i++, ptr += 4 )
@@ -268,7 +268,7 @@ static void hb_md5_count( const void * data, HB_SIZE nLen, char * digest, const 
       nLen += 64;
    }
    /* prepare additional block(s) */
-   memset( buf, 0, sizeof( buf ) );
+   memset( buf, 0, sizeof(buf) );
    n = nLen & 63;
    if( n )
    {
@@ -313,8 +313,8 @@ void hb_hmac_md5( const void * key, HB_SIZE nKeyLen, const void * message, HB_SI
    char init_block[ 64 ];
    int i;
 
-   memset( init_block, 0, sizeof( init_block ) );
-   if( nKeyLen <= sizeof( init_block ) )
+   memset( init_block, 0, sizeof(init_block) );
+   if( nKeyLen <= sizeof(init_block) )
    {
       memcpy( init_block, key, nKeyLen );
    }
@@ -323,14 +323,14 @@ void hb_hmac_md5( const void * key, HB_SIZE nKeyLen, const void * message, HB_SI
       hb_md5( key, nKeyLen, init_block );
    }
 
-   for( i = 0; i < static_cast<int>( sizeof( init_block ) ); ++i )
+   for( i = 0; i < static_cast<int>( sizeof(init_block) ); ++i )
    {
       init_block[ i ] ^= IPAD;
    }
 
    hb_md5_count( message, nMsgLen, digest, init_block );
 
-   for( i = 0; i < static_cast<int>( sizeof( init_block ) ); ++i )
+   for( i = 0; i < static_cast<int>( sizeof(init_block) ); ++i )
    {
       init_block[ i ] ^= IPAD ^ OPAD;
    }
@@ -386,7 +386,7 @@ HB_BOOL hb_md5file( const char * pszFileName, char * digest )
          i += 64;
          n -= 64;
       }
-      memset( buf, 0, sizeof( buf ) );
+      memset( buf, 0, sizeof(buf) );
       if( n )
       {
          memcpy( buf, readbuf + i, n );
@@ -429,8 +429,8 @@ HB_FUNC( HB_MD5 )  /* Considered insecure. Use SHA256 or higher instead. */
 
       if( ! hb_parl(2) )
       {
-         char digest[ ( sizeof( dststr ) * 2 ) + 1 ];
-         hb_strtohex( dststr, sizeof( dststr ), digest );
+         char digest[ ( sizeof(dststr) * 2 ) + 1 ];
+         hb_strtohex( dststr, sizeof(dststr), digest );
          hb_retclen( digest, HB_SIZEOFARRAY( digest ) - 1 );
       }
       else
@@ -439,8 +439,8 @@ HB_FUNC( HB_MD5 )  /* Considered insecure. Use SHA256 or higher instead. */
       }
       if( ! hb_parl(2) )
       {
-         char digest[ ( sizeof( dststr ) * 2 ) + 1 ];
-         hb_strtohex( dststr, sizeof( dststr ), digest );
+         char digest[ ( sizeof(dststr) * 2 ) + 1 ];
+         hb_strtohex( dststr, sizeof(dststr), digest );
          hb_retclen( digest, HB_SIZEOFARRAY( digest ) - 1 );
       }
       else
@@ -463,8 +463,8 @@ HB_FUNC( HB_MD5FILE )  /* Considered insecure. Use SHA256 or higher instead. */
    {
       if( ! hb_parl(2) )
       {
-         char digest[ ( sizeof( dststr ) * 2 ) + 1 ];
-         hb_strtohex( dststr, sizeof( dststr ), digest );
+         char digest[ ( sizeof(dststr) * 2 ) + 1 ];
+         hb_strtohex( dststr, sizeof(dststr), digest );
          hb_retclen( digest, HB_SIZEOFARRAY( digest ) - 1 );
       }
       else
@@ -486,8 +486,8 @@ HB_FUNC( HB_HMAC_MD5 )
 
    if( ! hb_parl(3) )
    {
-      char digest[ ( sizeof( dststr ) * 2 ) + 1 ];
-      hb_strtohex( dststr, sizeof( dststr ), digest );
+      char digest[ ( sizeof(dststr) * 2 ) + 1 ];
+      hb_strtohex( dststr, sizeof(dststr), digest );
       hb_retclen( digest, HB_SIZEOFARRAY( digest ) - 1 );
    }
    else

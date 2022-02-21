@@ -303,7 +303,7 @@ static int chrmap_parse( FILE * fp, const char * pszTerm, int * nTransTbl, const
    {
       char buf[ 256 ];
       ++line;
-      if( fgets( buf, sizeof( buf ), fp ) != nullptr )
+      if( fgets( buf, sizeof(buf), fp ) != nullptr )
       {
          n = 0;
          if( *buf == ':' )
@@ -398,7 +398,7 @@ static int hb_gt_chrmapread( const char * pszFile, const char * pszTerm, int * n
    {
       char buf[ 256 ], * ptr, * pTerm;
 
-      hb_strncpy( buf, pszTerm, sizeof( buf ) - 1 );
+      hb_strncpy( buf, pszTerm, sizeof(buf) - 1 );
       isTerm = 0;
       pTerm = buf;
       while( pTerm )
@@ -459,10 +459,10 @@ int hb_gt_chrmapinit( int * piTransTbl, const char * pszTerm, HB_BOOL fSetACSC )
             hb_xfree( pszFile );
          }
          pszFile = hb_getenv( "HB_ROOT" );
-         if( pszFile != nullptr && sizeof( szFile ) > strlen( pszFile ) + strlen( hb_gt_szCharMapFileDefault ) )
+         if( pszFile != nullptr && sizeof(szFile) > strlen( pszFile ) + strlen( hb_gt_szCharMapFileDefault ) )
          {
-            hb_strncpy( szFile, pszFile, sizeof( szFile ) - 1 );
-            hb_strncat( szFile, hb_gt_szCharMapFileDefault, sizeof( szFile ) - 1 );
+            hb_strncpy( szFile, pszFile, sizeof(szFile) - 1 );
+            hb_strncat( szFile, hb_gt_szCharMapFileDefault, sizeof(szFile) - 1 );
             nRet = hb_gt_chrmapread( szFile, pszTerm, piTransTbl );
          }
       }

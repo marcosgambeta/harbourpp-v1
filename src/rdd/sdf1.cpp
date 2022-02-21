@@ -915,15 +915,15 @@ static HB_ERRCODE hb_sdfInfo( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
 
          if( iSub == 1 )
          {
-            hb_snprintf( szBuf, sizeof( szBuf ), "%d.%d (%s)", 0, 1, "SDF" );
+            hb_snprintf( szBuf, sizeof(szBuf), "%d.%d (%s)", 0, 1, "SDF" );
          }
          else if( iSub == 2 )
          {
-            hb_snprintf( szBuf, sizeof( szBuf ), "%d.%d (%s:%d)", 0, 1, "SDF", pArea->area.rddID );
+            hb_snprintf( szBuf, sizeof(szBuf), "%d.%d (%s:%d)", 0, 1, "SDF", pArea->area.rddID );
          }
          else
          {
-            hb_snprintf( szBuf, sizeof( szBuf ), "%d.%d", 0, 1 );
+            hb_snprintf( szBuf, sizeof(szBuf), "%d.%d", 0, 1 );
          }
          hb_itemPutC( pItem, szBuf );
          break;
@@ -1070,7 +1070,7 @@ static HB_ERRCODE hb_sdfSetFieldExtent( SDFAREAP pArea, HB_USHORT uiFieldExtent 
    /* Alloc field offsets array */
    if( uiFieldExtent )
    {
-      pArea->pFieldOffset = static_cast<HB_USHORT*>( hb_xgrabz( uiFieldExtent * sizeof( HB_USHORT ) ) );
+      pArea->pFieldOffset = static_cast<HB_USHORT*>( hb_xgrabz( uiFieldExtent * sizeof(HB_USHORT) ) );
    }
 
    return HB_SUCCESS;
@@ -1108,7 +1108,7 @@ static HB_ERRCODE hb_sdfStructSize( SDFAREAP pArea, HB_USHORT * uiSize )
 #endif
    HB_SYMBOL_UNUSED( pArea );
 
-   *uiSize = sizeof( SDFAREA );
+   *uiSize = sizeof(SDFAREA);
    return HB_SUCCESS;
 }
 
@@ -1211,7 +1211,7 @@ static HB_ERRCODE hb_sdfCreate( SDFAREAP pArea, LPDBOPENINFO pCreateInfo )
    }
    else
    {
-      hb_strncpy( szFileName, pCreateInfo->abName, sizeof( szFileName ) - 1 );
+      hb_strncpy( szFileName, pCreateInfo->abName, sizeof(szFileName) - 1 );
    }
    hb_xfree( pFileName );
 
@@ -1318,7 +1318,7 @@ static HB_ERRCODE hb_sdfOpen( SDFAREAP pArea, LPDBOPENINFO pOpenInfo )
    }
    else
    {
-      hb_strncpy( szFileName, pOpenInfo->abName, sizeof( szFileName ) - 1 );
+      hb_strncpy( szFileName, pOpenInfo->abName, sizeof(szFileName) - 1 );
    }
 
    /* Create default alias if necessary */
@@ -1333,7 +1333,7 @@ static HB_ERRCODE hb_sdfOpen( SDFAREAP pArea, LPDBOPENINFO pOpenInfo )
       {
          ++szName;
       }
-      hb_strncpyUpperTrim( szAlias, szName, sizeof( szAlias ) - 1 );
+      hb_strncpyUpperTrim( szAlias, szName, sizeof(szAlias) - 1 );
       pOpenInfo->atomAlias = szAlias;
    }
    hb_xfree( pFileName );

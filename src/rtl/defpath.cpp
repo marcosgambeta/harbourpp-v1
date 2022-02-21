@@ -56,7 +56,7 @@ HB_FUNC( __DEFPATH )
    if( szDefault )
    {
       /* Leave enough space to append a path delimiter */
-      hb_strncpy( buffer, szDefault, sizeof( buffer ) - 1 );
+      hb_strncpy( buffer, szDefault, sizeof(buffer) - 1 );
       size = static_cast<int>( strlen( buffer ) );
    }
 

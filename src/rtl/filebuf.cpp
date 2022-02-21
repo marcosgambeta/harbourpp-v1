@@ -159,7 +159,7 @@ static PHB_FILE hb_fileNew( HB_FHANDLE hFile, HB_BOOL fShared, int iMode, HB_ULO
 
    if( ! pFile )
    {
-      pFile = static_cast<PHB_FILE>( hb_xgrabz( sizeof( HB_FILE ) ) );
+      pFile = static_cast<PHB_FILE>( hb_xgrabz( sizeof(HB_FILE) ) );
       pFile->pFuncs  = s_fileMethods();
       pFile->device  = device;
       pFile->inode   = inode;
@@ -218,10 +218,10 @@ static void hb_fileInsertLock( PHB_FILE pFile, HB_UINT uiPos, HB_FOFFSET nStart,
    if( pFile->uiLocks == pFile->uiSize )
    {
       pFile->uiSize += HB_FLOCK_RESIZE;
-      pFile->pLocks = static_cast<PHB_FLOCK>( hb_xrealloc( pFile->pLocks, sizeof( HB_FLOCK ) * pFile->uiSize ) );
-      memset( &pFile->pLocks[ pFile->uiLocks ], 0, sizeof( HB_FLOCK ) * HB_FLOCK_RESIZE );
+      pFile->pLocks = static_cast<PHB_FLOCK>( hb_xrealloc( pFile->pLocks, sizeof(HB_FLOCK) * pFile->uiSize ) );
+      memset( &pFile->pLocks[ pFile->uiLocks ], 0, sizeof(HB_FLOCK) * HB_FLOCK_RESIZE );
    }
-   memmove( &pFile->pLocks[ uiPos + 1 ], &pFile->pLocks[ uiPos ], ( pFile->uiLocks - uiPos ) * sizeof( HB_FLOCK ) );
+   memmove( &pFile->pLocks[ uiPos + 1 ], &pFile->pLocks[ uiPos ], ( pFile->uiLocks - uiPos ) * sizeof(HB_FLOCK) );
    pFile->pLocks[ uiPos ].start = nStart;
    pFile->pLocks[ uiPos ].len   = nLen;
    pFile->uiLocks++;
@@ -230,11 +230,11 @@ static void hb_fileInsertLock( PHB_FILE pFile, HB_UINT uiPos, HB_FOFFSET nStart,
 static void hb_fileDeleteLock( PHB_FILE pFile, HB_UINT uiPos )
 {
    pFile->uiLocks--;
-   memmove( &pFile->pLocks[ uiPos ], &pFile->pLocks[ uiPos + 1 ], ( pFile->uiLocks - uiPos ) * sizeof( HB_FLOCK ) );
+   memmove( &pFile->pLocks[ uiPos ], &pFile->pLocks[ uiPos + 1 ], ( pFile->uiLocks - uiPos ) * sizeof(HB_FLOCK) );
    if( pFile->uiSize - pFile->uiLocks >= ( HB_FLOCK_RESIZE << 1 ) )
    {
       pFile->uiSize -= HB_FLOCK_RESIZE;
-      pFile->pLocks = static_cast<PHB_FLOCK>( hb_xrealloc( pFile->pLocks, sizeof( HB_FLOCK ) * pFile->uiSize ) );
+      pFile->pLocks = static_cast<PHB_FLOCK>( hb_xrealloc( pFile->pLocks, sizeof(HB_FLOCK) * pFile->uiSize ) );
    }
 }
 
@@ -1121,7 +1121,7 @@ static const HB_FILE_FUNCS * s_fileposMethods( void )
 
 static PHB_FILE hb_fileposNew( PHB_FILE pFile )
 {
-   PHB_FILEPOS pFilePos = static_cast<PHB_FILEPOS>( hb_xgrabz( sizeof( HB_FILEPOS ) ) );
+   PHB_FILEPOS pFilePos = static_cast<PHB_FILEPOS>( hb_xgrabz( sizeof(HB_FILEPOS) ) );
 
    pFilePos->pFuncs   = s_fileposMethods();
    pFilePos->pFile    = pFile;

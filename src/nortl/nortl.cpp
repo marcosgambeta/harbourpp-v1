@@ -78,10 +78,10 @@ typedef struct _HB_MEMINFO
 } HB_MEMINFO, * PHB_MEMINFO;
 
 #ifdef HB_ALLOC_ALIGNMENT
-#  define HB_MEMINFO_SIZE  ( ( sizeof( HB_MEMINFO ) + HB_ALLOC_ALIGNMENT - 1 ) - \
-                             ( sizeof( HB_MEMINFO ) + HB_ALLOC_ALIGNMENT - 1 ) % HB_ALLOC_ALIGNMENT )
+#  define HB_MEMINFO_SIZE  ( ( sizeof(HB_MEMINFO) + HB_ALLOC_ALIGNMENT - 1 ) - \
+                             ( sizeof(HB_MEMINFO) + HB_ALLOC_ALIGNMENT - 1 ) % HB_ALLOC_ALIGNMENT )
 #else
-#  define HB_MEMINFO_SIZE  sizeof( HB_MEMINFO )
+#  define HB_MEMINFO_SIZE  sizeof(HB_MEMINFO)
 #endif
 
 static PHB_MEMINFO s_pMemBlocks         = nullptr;
@@ -100,7 +100,7 @@ void * hb_xgrab( HB_SIZE nSize )        /* allocates fixed memory, exits on fail
       hb_errInternal( HB_EI_XGRABNULLSIZE, "hb_xgrab requested to allocate zero bytes", nullptr, nullptr );
 
 #ifdef HB_FM_STATISTICS
-   pMem = malloc( nSize + HB_MEMINFO_SIZE + sizeof( HB_U32 ) );
+   pMem = malloc( nSize + HB_MEMINFO_SIZE + sizeof(HB_U32) );
    if( pMem )
    {
       if( s_pMemBlocks )
@@ -157,7 +157,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
 
    HB_PUT_LE_UINT32( ( ( HB_BYTE * ) pMem ) + nMemSize, 0 );
 
-   pResult = realloc( pMemBlock, nSize + HB_MEMINFO_SIZE + sizeof( HB_U32 ) );
+   pResult = realloc( pMemBlock, nSize + HB_MEMINFO_SIZE + sizeof(HB_U32) );
    if( pResult )
    {
       if( s_pMemBlocks == pMemBlock )
@@ -299,13 +299,13 @@ void hb_xexit( void )
       hb_conOutErr( hb_conNewLine(), 0 );
       hb_conOutErr( "----------------------------------------", 0 );
       hb_conOutErr( hb_conNewLine(), 0 );
-      hb_snprintf( szBuffer, sizeof( szBuffer ), "Total memory allocated: %" HB_PFS "u bytes (%" HB_PFS "u blocks)", s_nMemoryMaxConsumed, s_nMemoryMaxBlocks );
+      hb_snprintf( szBuffer, sizeof(szBuffer), "Total memory allocated: %" HB_PFS "u bytes (%" HB_PFS "u blocks)", s_nMemoryMaxConsumed, s_nMemoryMaxBlocks );
       hb_conOutErr( szBuffer, 0 );
 
       if( s_nMemoryBlocks )
       {
          hb_conOutErr( hb_conNewLine(), 0 );
-         hb_snprintf( szBuffer, sizeof( szBuffer ), "WARNING! Memory allocated but not released: %" HB_PFS "u bytes (%" HB_PFS "u blocks)", s_nMemoryConsumed, s_nMemoryBlocks );
+         hb_snprintf( szBuffer, sizeof(szBuffer), "WARNING! Memory allocated but not released: %" HB_PFS "u bytes (%" HB_PFS "u blocks)", s_nMemoryConsumed, s_nMemoryBlocks );
          hb_conOutErr( szBuffer, 0 );
       }
 
@@ -336,11 +336,11 @@ void hb_errInternal( HB_ERRCODE errCode, const char * szText, const char * szPar
    char buffer[ 1024 ];
 
    hb_conOutErr( hb_conNewLine(), 0 );
-   hb_snprintf( buffer, sizeof( buffer ), "Unrecoverable error %d: ", errCode );
+   hb_snprintf( buffer, sizeof(buffer), "Unrecoverable error %d: ", errCode );
    hb_conOutErr( buffer, 0 );
    if( szText )
    {
-      hb_snprintf( buffer, sizeof( buffer ), szText, szPar1, szPar2 );
+      hb_snprintf( buffer, sizeof(buffer), szText, szPar1, szPar2 );
       hb_conOutErr( buffer, 0 );
    }
    hb_conOutErr( hb_conNewLine(), 0 );

@@ -515,7 +515,7 @@ static HB_BOOL hb_usrItemToTransInfo( PHB_ITEM pItem, LPDBTRANSINFO pTransInfo )
          {
             LPDBTRANSITEM pTransItem;
 
-            pTransInfo->lpTransItems = pTransItem = static_cast<LPDBTRANSITEM>( hb_xgrab( uiItemCount * sizeof( DBTRANSITEM ) ) );
+            pTransInfo->lpTransItems = pTransItem = static_cast<LPDBTRANSITEM>( hb_xgrab( uiItemCount * sizeof(DBTRANSITEM) ) );
 
             for( HB_USHORT uiCount = 1; uiCount <= uiItemCount; ++uiCount, ++pTransItem )
             {
@@ -585,7 +585,7 @@ static HB_BOOL hb_usrItemToSortInfo( PHB_ITEM pItem, LPDBSORTINFO pSortInfo )
          {
             LPDBSORTITEM pSortItem;
 
-            pSortInfo->lpdbsItem = pSortItem = static_cast<LPDBSORTITEM>( hb_xgrab( uiItemCount * sizeof( DBSORTITEM ) ) );
+            pSortInfo->lpdbsItem = pSortItem = static_cast<LPDBSORTITEM>( hb_xgrab( uiItemCount * sizeof(DBSORTITEM) ) );
 
             for( HB_USHORT uiCount = 1; uiCount <= uiItemCount; ++uiCount, ++pSortItem )
             {
@@ -852,7 +852,7 @@ static HB_BOOL hb_usrItemToOrderCreateInfo( PHB_ITEM pItem, LPDBORDERCREATEINFO 
       if( hb_arrayLen( pCond ) > 0 )
       {
          LPDBORDERCONDINFO pOrderCondInfo;
-         pOrderCondInfo = static_cast<LPDBORDERCONDINFO>( hb_xgrab( sizeof( DBORDERCONDINFO ) ) );
+         pOrderCondInfo = static_cast<LPDBORDERCONDINFO>( hb_xgrab( sizeof(DBORDERCONDINFO) ) );
          if( ! hb_usrItemToOrderCondInfo( pCond, pOrderCondInfo ) )
          {
             hb_xfree( pOrderCondInfo );
@@ -900,7 +900,7 @@ static HB_ERRCODE hb_usrInit( LPRDDNODE pRDD )
 
    if( pRDD->rddID >= s_uiUsrNodes )
    {
-      HB_SIZE nSize = ( pRDD->rddID + 1 ) * sizeof( LPUSRRDDNODE );
+      HB_SIZE nSize = ( pRDD->rddID + 1 ) * sizeof(LPUSRRDDNODE);
       if( s_uiUsrNodes )
       {
          s_pUsrRddNodes = static_cast<LPUSRRDDNODE*>( hb_xrealloc( s_pUsrRddNodes, nSize ) );
@@ -916,7 +916,7 @@ static HB_ERRCODE hb_usrInit( LPRDDNODE pRDD )
       while( ++s_uiUsrNodes <= pRDD->rddID );
    }
 
-   s_pUsrRddNodes[ pRDD->rddID ] = pNode = static_cast<LPUSRRDDNODE>( hb_xgrabz( sizeof( USRRDDNODE ) ) );
+   s_pUsrRddNodes[ pRDD->rddID ] = pNode = static_cast<LPUSRRDDNODE>( hb_xgrabz( sizeof(USRRDDNODE) ) );
    pNode->pSuperTable = &pRDD->pSuperTable;
    pNode->pMethods = reinterpret_cast<PHB_ITEM>( pRDD->pTable.whoCares );
    pRDD->pTable.whoCares = pRDD->pSuperTable.whoCares;
@@ -970,7 +970,7 @@ static HB_ERRCODE hb_usrExit( LPRDDNODE pRDD )
 
       if( s_uiUsrNodes )
       {
-         s_pUsrRddNodes = static_cast<LPUSRRDDNODE*>( hb_xrealloc( s_pUsrRddNodes, s_uiUsrNodes * sizeof( LPUSRRDDNODE ) ) );
+         s_pUsrRddNodes = static_cast<LPUSRRDDNODE*>( hb_xrealloc( s_pUsrRddNodes, s_uiUsrNodes * sizeof(LPUSRRDDNODE) ) );
       }
       else
       {
@@ -1001,7 +1001,7 @@ static HB_ERRCODE hb_usrStructSize( AREAP pArea, HB_USHORT * puiSize )
 
    errCode = SUPER_STRUCTSIZE( pArea, puiSize );
    s_pUsrRddNodes[ pArea->rddID ]->uiDataOffset = *puiSize;
-   *puiSize += sizeof( USRRDDDATA );
+   *puiSize += sizeof(USRRDDDATA);
 
    return errCode;
 }
@@ -4593,7 +4593,7 @@ HB_FUNC_UR_SUPER( ORDSETCOND )
       }
       else
       {
-         LPDBORDERCONDINFO lpdbOrderCondInfo = static_cast<LPDBORDERCONDINFO>( hb_xgrab( sizeof( DBORDERCONDINFO ) ) );
+         LPDBORDERCONDINFO lpdbOrderCondInfo = static_cast<LPDBORDERCONDINFO>( hb_xgrab( sizeof(DBORDERCONDINFO) ) );
          if( hb_usrItemToOrderCondInfo( pItem, lpdbOrderCondInfo ) )
          {
             hb_usrOrderCondClone( lpdbOrderCondInfo );

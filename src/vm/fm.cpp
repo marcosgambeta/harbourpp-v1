@@ -261,15 +261,15 @@ using HB_MEMINFO = _HB_MEMINFO;
 using PHB_MEMINFO = HB_MEMINFO *;
 
 #ifdef HB_ALLOC_ALIGNMENT
-#  define _HB_MEMINFO_SIZE    ( ( ( sizeof( HB_MEMINFO ) + HB_ALLOC_ALIGNMENT - 1 ) - \
-                                  ( sizeof( HB_MEMINFO ) + HB_ALLOC_ALIGNMENT - 1 ) % HB_ALLOC_ALIGNMENT ) + \
+#  define _HB_MEMINFO_SIZE    ( ( ( sizeof(HB_MEMINFO) + HB_ALLOC_ALIGNMENT - 1 ) - \
+                                  ( sizeof(HB_MEMINFO) + HB_ALLOC_ALIGNMENT - 1 ) % HB_ALLOC_ALIGNMENT ) + \
                                 HB_COUNTER_OFFSET )
 #else
-#  define _HB_MEMINFO_SIZE    ( sizeof( HB_MEMINFO ) + HB_COUNTER_OFFSET )
+#  define _HB_MEMINFO_SIZE    ( sizeof(HB_MEMINFO) + HB_COUNTER_OFFSET )
 #endif
 
-#define HB_MEMINFO_SIZE       ( s_fStatistic ? sizeof( HB_MEMINFO ) + HB_COUNTER_OFFSET : HB_COUNTER_OFFSET )
-#define HB_MEMSIG_SIZE        sizeof( HB_U32 )
+#define HB_MEMINFO_SIZE       ( s_fStatistic ? sizeof(HB_MEMINFO) + HB_COUNTER_OFFSET : HB_COUNTER_OFFSET )
+#define HB_MEMSIG_SIZE        sizeof(HB_U32)
 
 #define HB_FM_GETSIG( p, n )  HB_GET_UINT32( static_cast<HB_BYTE*>( p ) + ( n ) )
 #define HB_FM_SETSIG( p, n )  HB_PUT_UINT32( static_cast<HB_BYTE*>( p ) + ( n ), HB_MEMINFO_SIGNATURE )
@@ -539,7 +539,7 @@ void hb_xsetfilename( const char * szValue )
 #ifdef HB_FM_STATISTICS
    if( szValue )
    {
-      hb_strncpy( s_szFileName, szValue, sizeof( s_szFileName ) - 1 );
+      hb_strncpy( s_szFileName, szValue, sizeof(s_szFileName) - 1 );
    }
    else
    {
@@ -553,7 +553,7 @@ void hb_xsetfilename( const char * szValue )
 void hb_xsetinfo( const char * szValue )
 {
 #ifdef HB_FM_STATISTICS
-   hb_strncpy( s_szInfo, szValue, sizeof( s_szInfo ) - 1 );
+   hb_strncpy( s_szInfo, szValue, sizeof(s_szInfo) - 1 );
 #else
    HB_SYMBOL_UNUSED( szValue );
 #endif
@@ -602,7 +602,7 @@ void * hb_xalloc( HB_SIZE nSize )         /* allocates fixed memory, returns nul
          pMem->uiProcLine = pTrace->line; /* C line number */
          if( pTrace->file )
          {
-            hb_strncpy( pMem->szProcName, pTrace->file, sizeof( pMem->szProcName ) - 1 );
+            hb_strncpy( pMem->szProcName, pTrace->file, sizeof(pMem->szProcName) - 1 );
          }
          else
          {
@@ -634,7 +634,7 @@ void * hb_xalloc( HB_SIZE nSize )         /* allocates fixed memory, returns nul
       HB_FM_SETSIG( HB_MEM_PTR( pMem ), nSize );
       pMem->nSize = nSize;  /* size of the memory block */
 
-      s_nMemoryConsumed += nSize + sizeof( HB_COUNTER );
+      s_nMemoryConsumed += nSize + sizeof(HB_COUNTER);
       if( s_nMemoryMaxConsumed < s_nMemoryConsumed )
       {
          s_nMemoryMaxConsumed = s_nMemoryConsumed;
@@ -709,7 +709,7 @@ void * hb_xgrab( HB_SIZE nSize )         /* allocates fixed memory, exits on fai
          pMem->uiProcLine = pTrace->line; /* C line number */
          if( pTrace->file )
          {
-            hb_strncpy( pMem->szProcName, pTrace->file, sizeof( pMem->szProcName ) - 1 );
+            hb_strncpy( pMem->szProcName, pTrace->file, sizeof(pMem->szProcName) - 1 );
          }
          else
          {
@@ -741,7 +741,7 @@ void * hb_xgrab( HB_SIZE nSize )         /* allocates fixed memory, exits on fai
       HB_FM_SETSIG( HB_MEM_PTR( pMem ), nSize );
       pMem->nSize = nSize;  /* size of the memory block */
 
-      s_nMemoryConsumed += nSize + sizeof( HB_COUNTER );
+      s_nMemoryConsumed += nSize + sizeof(HB_COUNTER);
       if( s_nMemoryMaxConsumed < s_nMemoryConsumed )
       {
          s_nMemoryMaxConsumed = s_nMemoryConsumed;
@@ -974,7 +974,7 @@ void hb_xfree( void * pMem )            /* frees fixed memory */
 
          HB_FM_LOCK();
 
-         s_nMemoryConsumed -= pMemBlock->nSize + sizeof( HB_COUNTER );
+         s_nMemoryConsumed -= pMemBlock->nSize + sizeof(HB_COUNTER);
          s_nMemoryBlocks--;
 
          if( pMemBlock->pPrevBlock )
@@ -1198,7 +1198,7 @@ void hb_xinit( void ) /* Initialize fixed memory subsystem */
       {
          char buffer[ 5 ];
 
-         if( hb_getenv_buffer( "HB_FM_STAT", buffer, sizeof( buffer ) ) )
+         if( hb_getenv_buffer( "HB_FM_STAT", buffer, sizeof(buffer) ) )
          {
             if( hb_stricmp( "yes", buffer ) == 0 )
             {
@@ -1294,7 +1294,7 @@ void hb_xexit( void ) /* Deinitialize fixed memory subsystem */
       hb_conOutErr( hb_conNewLine(), 0 );
       hb_conOutErr( "----------------------------------------", 0 );
       hb_conOutErr( hb_conNewLine(), 0 );
-      hb_snprintf( buffer, sizeof( buffer ), HB_I_( "Total memory allocated: %" HB_PFS "i bytes (%" HB_PFS "i block(s))" ), s_nMemoryMaxConsumed, s_nMemoryMaxBlocks );
+      hb_snprintf( buffer, sizeof(buffer), HB_I_( "Total memory allocated: %" HB_PFS "i bytes (%" HB_PFS "i block(s))" ), s_nMemoryMaxConsumed, s_nMemoryMaxBlocks );
       hb_conOutErr( buffer, 0 );
 
       if( s_nMemoryBlocks )
@@ -1317,7 +1317,7 @@ void hb_xexit( void ) /* Deinitialize fixed memory subsystem */
          }
 
          hb_conOutErr( hb_conNewLine(), 0 );
-         hb_snprintf( buffer, sizeof( buffer ), HB_I_( "Warning, memory allocated but not released: %" HB_PFS "i bytes (%" HB_PFS "i block(s))" ), s_nMemoryConsumed, s_nMemoryBlocks );
+         hb_snprintf( buffer, sizeof(buffer), HB_I_( "Warning, memory allocated but not released: %" HB_PFS "i bytes (%" HB_PFS "i block(s))" ), s_nMemoryConsumed, s_nMemoryBlocks );
          hb_conOutErr( buffer, 0 );
 
          if( hLog )
@@ -1538,7 +1538,7 @@ HB_SIZE hb_xquery( int iMode )
          break;
 
       case HB_MEM_STACK:      /* Harbour extension (Total memory size used by the stack [bytes]) */
-         nResult = hb_stackTotalItems() * sizeof( HB_ITEM );
+         nResult = hb_stackTotalItems() * sizeof(HB_ITEM);
          break;
 
       case HB_MEM_STACK_TOP:  /* Harbour extension (Total items currently on the stack) */

@@ -348,7 +348,7 @@ int hb_comFindPort( const char * pszDevName, HB_BOOL fCreate )
    if( iPort > 0 )
    {
       pCom = hb_comGetPort( iPort, HB_COM_ANY );
-      if( pCom == nullptr || ! hb_comPortCmp( hb_comGetNameRaw( pCom, buffer, sizeof( buffer ) ), pszDevName ) )
+      if( pCom == nullptr || ! hb_comPortCmp( hb_comGetNameRaw( pCom, buffer, sizeof(buffer) ), pszDevName ) )
       {
          iPort = 0;
       }
@@ -402,7 +402,7 @@ int hb_comFindPort( const char * pszDevName, HB_BOOL fCreate )
          if( iPort != 0 )
          {
             pCom = &s_comList[ iPort - 1 ];
-            if( ! hb_comPortCmp( hb_comGetNameRaw( pCom, buffer, sizeof( buffer ) ), pszDevName ) )
+            if( ! hb_comPortCmp( hb_comGetNameRaw( pCom, buffer, sizeof(buffer) ), pszDevName ) )
             {
                pCom->name = hb_strdup( pszDevName );
             }
@@ -1712,7 +1712,7 @@ int hb_comOpen( int iPort )
       else
       {
          char buffer[ HB_COM_DEV_NAME_MAX ];
-         const char * name = hb_comGetName( pCom, buffer, sizeof( buffer ) );
+         const char * name = hb_comGetName( pCom, buffer, sizeof(buffer) );
 
          hb_vmUnlock();
 
@@ -2018,7 +2018,7 @@ int hb_comFlowControl( int iPort, int * piFlow, int iFlow )
    {
       DCB dcb;
 
-      dcb.DCBlength = sizeof( DCB );
+      dcb.DCBlength = sizeof(DCB);
       fResult = GetCommState( pCom->hComm, &dcb );
       if( fResult )
       {
@@ -2171,7 +2171,7 @@ int hb_comFlowChars( int iPort, int iXONchar, int iXOFFchar )
       {
          DCB dcb;
 
-         dcb.DCBlength = sizeof( DCB );
+         dcb.DCBlength = sizeof(DCB);
          fResult = GetCommState( pCom->hComm, &dcb );
          if( fResult )
          {
@@ -2217,7 +2217,7 @@ int hb_comErrorChar( int iPort, int iChar )
    {
       DCB dcb;
 
-      dcb.DCBlength = sizeof( DCB );
+      dcb.DCBlength = sizeof(DCB);
       fResult = GetCommState( pCom->hComm, &dcb );
       if( fResult )
       {
@@ -2426,7 +2426,7 @@ int hb_comInit( int iPort, int iBaud, int iParity, int iSize, int iStop )
    {
       DCB dcb;
 
-      dcb.DCBlength = sizeof( DCB );
+      dcb.DCBlength = sizeof(DCB);
       fResult = GetCommState( pCom->hComm, &dcb );
       if( fResult )
       {
@@ -2563,7 +2563,7 @@ int hb_comOpen( int iPort )
       else
       {
          char buffer[ HB_COM_DEV_NAME_MAX ];
-         const char * szName = hb_comGetName( pCom, buffer, sizeof( buffer ) );
+         const char * szName = hb_comGetName( pCom, buffer, sizeof(buffer) );
          LPCTSTR lpName;
          LPTSTR lpFree;
 

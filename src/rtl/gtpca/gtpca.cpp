@@ -305,7 +305,7 @@ static void hb_gt_pca_AnsiGetCurPos( int * iRow, int * iCol )
                continue;
             }
          }
-         if( n == static_cast<int>( sizeof( rdbuf ) ) )
+         if( n == static_cast<int>( sizeof(rdbuf) ) )
          {
             break;
          }
@@ -321,7 +321,7 @@ static void hb_gt_pca_AnsiGetCurPos( int * iRow, int * iCol )
             {
                break;
             }
-            i = read( s_hFilenoStdin, rdbuf + n, sizeof( rdbuf ) - n );
+            i = read( s_hFilenoStdin, rdbuf + n, sizeof(rdbuf) - n );
 #else
             i = getc( stdin );
             if( i > 0 )
@@ -359,7 +359,7 @@ static void hb_gt_pca_AnsiSetCursorPos( int iRow, int iCol )
    if( s_iRow != iRow || s_iCol != iCol )
    {
       char buff[ 16 ];
-      hb_snprintf( buff, sizeof( buff ), "\x1B[%d;%dH", iRow + 1, iCol + 1 );
+      hb_snprintf( buff, sizeof(buff), "\x1B[%d;%dH", iRow + 1, iCol + 1 );
       hb_gt_pca_termOut( buff, static_cast<int>( strlen( buff ) ) );
       s_iRow = iRow;
       s_iCol = iCol;
@@ -524,7 +524,7 @@ static void hb_gt_pca_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
       /* if( s_saved_TIO.c_lflag & TOSTOP ) != 0 */
       sigaction( SIGTTOU, nullptr, &old );
-      memcpy( &act, &old, sizeof( struct sigaction ) );
+      memcpy( &act, &old, sizeof(struct sigaction) );
       act.sa_handler = sig_handler;
       /* do not use SA_RESTART - new Linux kernels will repeat the operation */
 #if defined( SA_ONESHOT )
@@ -540,7 +540,7 @@ static void hb_gt_pca_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
       s_fRestTTY = HB_TRUE;
 
       tcgetattr( hFilenoStdin, &s_saved_TIO );
-      memcpy( &s_curr_TIO, &s_saved_TIO, sizeof( struct termios ) );
+      memcpy( &s_curr_TIO, &s_saved_TIO, sizeof(struct termios) );
       #if 0
       atexit( restore_input_mode );
       #endif

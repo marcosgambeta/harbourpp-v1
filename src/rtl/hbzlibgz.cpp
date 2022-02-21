@@ -113,7 +113,7 @@ HB_FUNC( HB_GZOPEN )
 
       if( gz )
       {
-         gzFile * gzHolder = static_cast<gzFile*>( hb_gcAllocate( sizeof( gzFile ), &s_gcGZFuncs ) );
+         gzFile * gzHolder = static_cast<gzFile*>( hb_gcAllocate( sizeof(gzFile), &s_gcGZFuncs ) );
          *gzHolder = gz;
          hb_retptrGC( gzHolder );
       }
@@ -143,7 +143,7 @@ HB_FUNC( HB_GZDOPEN )
 
       if( gz )
       {
-         gzFile * gzHolder = static_cast<gzFile*>( hb_gcAllocate( sizeof( gzFile ), &s_gcGZFuncs ) );
+         gzFile * gzHolder = static_cast<gzFile*>( hb_gcAllocate( sizeof(gzFile), &s_gcGZFuncs ) );
          *gzHolder = gz;
          hb_retptrGC( gzHolder );
       }

@@ -97,7 +97,7 @@ struct HB_PRNPOS
 
 using PHB_PRNPOS = HB_PRNPOS *;
 
-static HB_TSD_NEW( s_prnPos, sizeof( HB_PRNPOS ), nullptr, nullptr );
+static HB_TSD_NEW( s_prnPos, sizeof(HB_PRNPOS), nullptr, nullptr );
 
 static PHB_PRNPOS hb_prnPos( void )
 {
@@ -411,7 +411,7 @@ HB_FUNC( QOUT )
       {
          char buf[ 256 ];
 
-         if( pPrnPos->col > static_cast<int>( sizeof( buf ) ) )
+         if( pPrnPos->col > static_cast<int>( sizeof(buf) ) )
          {
             char * pBuf = static_cast<char*>( hb_xgrab( pPrnPos->col ) );
             memset( pBuf, ' ', pPrnPos->col );
@@ -492,7 +492,7 @@ static void hb_conDevPos( int iRow, int iCol )
 
             while( pPrnPos->row < iPRow )
             {
-               if( iPtr + s_iCrLfLen > static_cast<int>( sizeof( buf ) ) )
+               if( iPtr + s_iCrLfLen > static_cast<int>( sizeof(buf) ) )
                {
                   hb_fileWrite( pFile, buf, static_cast<HB_USHORT>( iPtr ), -1 );
                   iPtr = 0;
@@ -511,7 +511,7 @@ static void hb_conDevPos( int iRow, int iCol )
 
          while( pPrnPos->col < iPCol )
          {
-            if( iPtr == static_cast<int>( sizeof( buf ) ) )
+            if( iPtr == static_cast<int>( sizeof(buf) ) )
             {
                hb_fileWrite( pFile, buf, static_cast<HB_USHORT>( iPtr ), -1 );
                iPtr = 0;

@@ -223,7 +223,7 @@ static int hb_compReadClpFile( HB_COMP_DECL, const char * szClpFile )
    if( ! inFile )
    {
       /* TODO: Clipper compatible error */
-      hb_snprintf( buffer, sizeof( buffer ), "Cannot open input file: %s\n", szClpFile );
+      hb_snprintf( buffer, sizeof(buffer), "Cannot open input file: %s\n", szClpFile );
       hb_compOutErr( HB_COMP_PARAM, buffer );
       iStatus = EXIT_FAILURE;
    }
@@ -231,7 +231,7 @@ static int hb_compReadClpFile( HB_COMP_DECL, const char * szClpFile )
    {
       int i = 0, ch;
 
-      hb_snprintf( buffer, sizeof( buffer ), "Reading '%s'...\n", szClpFile );
+      hb_snprintf( buffer, sizeof(buffer), "Reading '%s'...\n", szClpFile );
       hb_compOutStd( HB_COMP_PARAM, buffer );
 
       do
@@ -293,7 +293,7 @@ static PHB_HSYMBOL hb_compSymbolAdd( HB_COMP_DECL, const char * szSymbolName, HB
 {
    PHB_HSYMBOL pSym;
 
-   pSym = static_cast<PHB_HSYMBOL>( hb_xgrab( sizeof( HB_HSYMBOL ) ) );
+   pSym = static_cast<PHB_HSYMBOL>( hb_xgrab( sizeof(HB_HSYMBOL) ) );
 
    pSym->szName = szSymbolName;
    pSym->cScope = 0;
@@ -477,7 +477,7 @@ void hb_compVariableAdd( HB_COMP_DECL, const char * szVarName, PHB_VARTYPE pVarT
    else if( HB_COMP_PARAM->iVarScope != HB_VSCOMP_PARAMETER )
    {
       char buffer[ 80 ];
-      hb_snprintf( buffer, sizeof( buffer ),
+      hb_snprintf( buffer, sizeof(buffer),
                    "Wrong type of codeblock parameter, is: %d, should be: %d\n",
                    HB_COMP_PARAM->iVarScope, HB_VSCOMP_PARAMETER );
       hb_compOutErr( HB_COMP_PARAM, buffer );
@@ -487,7 +487,7 @@ void hb_compVariableAdd( HB_COMP_DECL, const char * szVarName, PHB_VARTYPE pVarT
 
    hb_compCheckDuplVars( HB_COMP_PARAM, pFunc->pLocals, szVarName );
 
-   pVar = static_cast<PHB_HVAR>( hb_xgrab( sizeof( HB_HVAR ) ) );
+   pVar = static_cast<PHB_HVAR>( hb_xgrab( sizeof(HB_HVAR) ) );
    pVar->szName = szVarName;
    pVar->szAlias = nullptr;
    pVar->uiFlags = 0;
@@ -826,7 +826,7 @@ PHB_HVAR hb_compVariableFind( HB_COMP_DECL, const char * szVarName, int * piPos,
                   szVarName = pVar->szName;
 
                   /* this variable was not referenced yet - add it to the list */
-                  pVar = static_cast<PHB_HVAR>( hb_xgrab( sizeof( HB_HVAR ) ) );
+                  pVar = static_cast<PHB_HVAR>( hb_xgrab( sizeof(HB_HVAR) ) );
 
                   pVar->szName = szVarName;
                   pVar->szAlias = nullptr;
@@ -1203,7 +1203,7 @@ PHB_HCLASS hb_compClassAdd( HB_COMP_DECL, const char * szClassName, const char *
       return pClass;
    }
 
-   pClass = static_cast<PHB_HCLASS>( hb_xgrab( sizeof( HB_HCLASS ) ) );
+   pClass = static_cast<PHB_HCLASS>( hb_xgrab( sizeof(HB_HCLASS) ) );
 
    pClass->szName = szClassName;
    pClass->pMethod = nullptr;
@@ -1280,7 +1280,7 @@ PHB_HDECLARED hb_compMethodAdd( HB_COMP_DECL, PHB_HCLASS pClass, const char * sz
       return pMethod;
    }
 
-   pMethod = static_cast<PHB_HDECLARED>( hb_xgrab( sizeof( HB_HDECLARED ) ) );
+   pMethod = static_cast<PHB_HDECLARED>( hb_xgrab( sizeof(HB_HDECLARED) ) );
 
    pMethod->szName = szMethodName;
    pMethod->cType = ' '; /* Not known yet */
@@ -1358,7 +1358,7 @@ PHB_HDECLARED hb_compDeclaredAdd( HB_COMP_DECL, const char * szDeclaredName )
       return pDeclared;
    }
 
-   pDeclared = static_cast<PHB_HDECLARED>( hb_xgrab( sizeof( HB_HDECLARED ) ) );
+   pDeclared = static_cast<PHB_HDECLARED>( hb_xgrab( sizeof(HB_HDECLARED) ) );
 
    pDeclared->szName = szDeclaredName;
    pDeclared->cType = ' '; /* Not known yet */
@@ -1403,12 +1403,12 @@ void hb_compDeclaredParameterAdd( HB_COMP_DECL, const char * szVarName, PHB_VART
          if( pDeclared->cParamTypes )
          {
             pDeclared->cParamTypes = static_cast<HB_BYTE*>( hb_xrealloc( pDeclared->cParamTypes, pDeclared->iParamCount ) );
-            pDeclared->pParamClasses = static_cast<PHB_HCLASS*>( hb_xrealloc( pDeclared->pParamClasses, pDeclared->iParamCount * sizeof( PHB_HCLASS ) ) );
+            pDeclared->pParamClasses = static_cast<PHB_HCLASS*>( hb_xrealloc( pDeclared->pParamClasses, pDeclared->iParamCount * sizeof(PHB_HCLASS) ) );
          }
          else
          {
             pDeclared->cParamTypes = static_cast<HB_BYTE*>( hb_xgrab( 1 ) );
-            pDeclared->pParamClasses = static_cast<PHB_HCLASS*>( hb_xgrab( sizeof( PHB_HCLASS ) ) );
+            pDeclared->pParamClasses = static_cast<PHB_HCLASS*>( hb_xgrab( sizeof(PHB_HCLASS) ) );
          }
 
          pDeclared->cParamTypes[ pDeclared->iParamCount - 1 ] = pVarType->cVarType;
@@ -1430,12 +1430,12 @@ void hb_compDeclaredParameterAdd( HB_COMP_DECL, const char * szVarName, PHB_VART
       if( HB_COMP_PARAM->pLastMethod->cParamTypes )
       {
          HB_COMP_PARAM->pLastMethod->cParamTypes = static_cast<HB_BYTE*>( hb_xrealloc( HB_COMP_PARAM->pLastMethod->cParamTypes, HB_COMP_PARAM->pLastMethod->iParamCount ) );
-         HB_COMP_PARAM->pLastMethod->pParamClasses = static_cast<PHB_HCLASS*>( hb_xrealloc( HB_COMP_PARAM->pLastMethod->pParamClasses, HB_COMP_PARAM->pLastMethod->iParamCount * sizeof( HB_HCLASS ) ) );
+         HB_COMP_PARAM->pLastMethod->pParamClasses = static_cast<PHB_HCLASS*>( hb_xrealloc( HB_COMP_PARAM->pLastMethod->pParamClasses, HB_COMP_PARAM->pLastMethod->iParamCount * sizeof(HB_HCLASS) ) );
       }
       else
       {
          HB_COMP_PARAM->pLastMethod->cParamTypes = static_cast<HB_BYTE*>( hb_xgrab( 1 ) );
-         HB_COMP_PARAM->pLastMethod->pParamClasses = static_cast<PHB_HCLASS*>( hb_xgrab( sizeof( HB_HCLASS ) ) );
+         HB_COMP_PARAM->pLastMethod->pParamClasses = static_cast<PHB_HCLASS*>( hb_xgrab( sizeof(HB_HCLASS) ) );
       }
 
       HB_COMP_PARAM->pLastMethod->cParamTypes[ HB_COMP_PARAM->pLastMethod->iParamCount - 1 ] = pVarType->cVarType;
@@ -1471,7 +1471,7 @@ PHB_VARTYPE hb_compVarTypeNew( HB_COMP_DECL, HB_BYTE cVarType, const char* szFro
 
    /* Add to the end of list. I hope it will help the most usual type (' ', nullptr)
       to be in the beginning of the list, and it will be found faster. [Mindaugas] */
-   pVT = static_cast<PHB_VARTYPE>( hb_xgrab( sizeof( HB_VARTYPE ) ) );
+   pVT = static_cast<PHB_VARTYPE>( hb_xgrab( sizeof(HB_VARTYPE) ) );
    pVT->pNext = nullptr;
    pVT->cVarType = cVarType;
    pVT->szFromClass = szFromClass;
@@ -1675,7 +1675,7 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
             {
                if( HB_COMP_PARAM->functions.pLast->nJumps > nJump + 1 )
                {
-                  memmove( &pJumps[ nJump ], &pJumps[ nJump + 1 ], ( HB_COMP_PARAM->functions.pLast->nJumps - nJump - 1 ) * sizeof( HB_SIZE ) );
+                  memmove( &pJumps[ nJump ], &pJumps[ nJump + 1 ], ( HB_COMP_PARAM->functions.pLast->nJumps - nJump - 1 ) * sizeof(HB_SIZE) );
                }
                HB_COMP_PARAM->functions.pLast->nJumps--;
             }
@@ -1708,7 +1708,7 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
       pNOOPs = HB_COMP_PARAM->functions.pLast->pNOOPs;
 
       /* Needed so the pasting of PCODE pieces below will work correctly */
-      qsort( static_cast<void*>( pNOOPs ), HB_COMP_PARAM->functions.pLast->nNOOPs, sizeof( HB_SIZE ), hb_compSort_HB_SIZE );
+      qsort( static_cast<void*>( pNOOPs ), HB_COMP_PARAM->functions.pLast->nNOOPs, sizeof(HB_SIZE), hb_compSort_HB_SIZE );
 
       if( HB_COMP_PARAM->functions.pLast->nJumps )
       {
@@ -1716,7 +1716,7 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
          HB_SIZE nSize;
 
          pJumps = HB_COMP_PARAM->functions.pLast->pJumps;
-         nSize = sizeof( HB_ISIZ ) * HB_COMP_PARAM->functions.pLast->nJumps;
+         nSize = sizeof(HB_ISIZ) * HB_COMP_PARAM->functions.pLast->nJumps;
          plSizes = static_cast<HB_ISIZ*>( hb_xgrab( nSize ) );
          plShifts = static_cast<HB_ISIZ*>( hb_xgrab( nSize ) );
 
@@ -2016,11 +2016,11 @@ static void hb_compWarnUnusedVar( HB_COMP_DECL, const char * szFuncName, const c
 
    if( HB_COMP_PARAM->iErrorFmt == HB_ERRORFMT_CLIPPER )
    {
-      hb_snprintf( szFun, sizeof( szFun ), "%s(%i)", szFuncName, iDeclLine );
+      hb_snprintf( szFun, sizeof(szFun), "%s(%i)", szFuncName, iDeclLine );
    }
    else
    {
-      hb_snprintf( szFun, sizeof( szFun ), "%i:%s", iDeclLine, szFuncName );
+      hb_snprintf( szFun, sizeof(szFun), "%i:%s", iDeclLine, szFuncName );
    }
    hb_compGenWarning( HB_COMP_PARAM, hb_comp_szWarnings, 'W', HB_COMP_WARN_VAR_NOT_USED, szVarName, szFun );
 }
@@ -2107,7 +2107,7 @@ static void hb_compFinalizeFunction( HB_COMP_DECL ) /* fixes all last defined fu
  */
 static PHB_HFUNC hb_compFunctionNew( HB_COMP_DECL, const char * szName, HB_SYMBOLSCOPE cScope )
 {
-   PHB_HFUNC pFunc = static_cast<PHB_HFUNC>( hb_xgrabz( sizeof( HB_HFUNC ) ) );
+   PHB_HFUNC pFunc = static_cast<PHB_HFUNC>( hb_xgrabz( sizeof(HB_HFUNC) ) );
 
    pFunc->szName         = szName;
    pFunc->cScope         = cScope;
@@ -2121,7 +2121,7 @@ static PHB_HFUNC hb_compFunctionNew( HB_COMP_DECL, const char * szName, HB_SYMBO
 
 static PHB_HINLINE hb_compInlineNew( HB_COMP_DECL, const char * szName, int iLine )
 {
-   PHB_HINLINE pInline = static_cast<PHB_HINLINE>( hb_xgrab( sizeof( HB_HINLINE ) ) );
+   PHB_HINLINE pInline = static_cast<PHB_HINLINE>( hb_xgrab( sizeof(HB_HINLINE) ) );
 
    pInline->szName     = szName;
    pInline->pCode      = nullptr;
@@ -2247,7 +2247,7 @@ void hb_compExternAdd( HB_COMP_DECL, const char * szExternName, HB_SYMBOLSCOPE c
    }
    else
    {
-      *pExtern = static_cast<PHB_HEXTERN>( hb_xgrab( sizeof( HB_HEXTERN ) ) );
+      *pExtern = static_cast<PHB_HEXTERN>( hb_xgrab( sizeof(HB_HEXTERN) ) );
       ( *pExtern )->szName = szExternName;
       ( *pExtern )->cScope = cScope;
       ( *pExtern )->pNext  = nullptr;
@@ -2602,11 +2602,11 @@ static void hb_compNOOPadd( PHB_HFUNC pFunc, HB_SIZE nPos )
 
    if( pFunc->nNOOPs )
    {
-      pFunc->pNOOPs = static_cast<HB_SIZE*>( hb_xrealloc( pFunc->pNOOPs, sizeof( HB_SIZE ) * ( pFunc->nNOOPs + 1 ) ) );
+      pFunc->pNOOPs = static_cast<HB_SIZE*>( hb_xrealloc( pFunc->pNOOPs, sizeof(HB_SIZE) * ( pFunc->nNOOPs + 1 ) ) );
    }
    else
    {
-      pFunc->pNOOPs = static_cast<HB_SIZE*>( hb_xgrab( sizeof( HB_SIZE ) ) );
+      pFunc->pNOOPs = static_cast<HB_SIZE*>( hb_xgrab( sizeof(HB_SIZE) ) );
    }
    pFunc->pNOOPs[ pFunc->nNOOPs++ ] = nPos;
 }
@@ -2617,11 +2617,11 @@ static void hb_compPrepareJumps( HB_COMP_DECL )
 
    if( pFunc->nJumps )
    {
-      pFunc->pJumps = static_cast<HB_SIZE*>( hb_xrealloc( pFunc->pJumps, sizeof( HB_SIZE ) * ( pFunc->nJumps + 1 ) ) );
+      pFunc->pJumps = static_cast<HB_SIZE*>( hb_xrealloc( pFunc->pJumps, sizeof(HB_SIZE) * ( pFunc->nJumps + 1 ) ) );
    }
    else
    {
-      pFunc->pJumps = static_cast<HB_SIZE*>( hb_xgrab( sizeof( HB_SIZE ) ) );
+      pFunc->pJumps = static_cast<HB_SIZE*>( hb_xgrab( sizeof(HB_SIZE) ) );
    }
    pFunc->pJumps[ pFunc->nJumps++ ] = static_cast<HB_SIZE>( pFunc->nPCodePos - 4 );
 }
@@ -3336,15 +3336,15 @@ void hb_compGenPushNil( HB_COMP_DECL )
 /* generates the pcode to push a double number on the virtual machine stack */
 void hb_compGenPushDouble( double dNumber, HB_BYTE bWidth, HB_BYTE bDec, HB_COMP_DECL )
 {
-   HB_BYTE pBuffer[ sizeof( double ) + sizeof( HB_BYTE ) + sizeof( HB_BYTE ) + 1 ];
+   HB_BYTE pBuffer[ sizeof(double) + sizeof(HB_BYTE) + sizeof(HB_BYTE) + 1 ];
 
    pBuffer[ 0 ] = HB_P_PUSHDOUBLE;
    HB_PUT_LE_DOUBLE( &( pBuffer[ 1 ] ), dNumber );
 
-   pBuffer[ 1 + sizeof( double ) ] = bWidth;
-   pBuffer[ 1 + sizeof( double ) + sizeof( HB_BYTE ) ] = bDec;
+   pBuffer[ 1 + sizeof(double) ] = bWidth;
+   pBuffer[ 1 + sizeof(double) + sizeof(HB_BYTE) ] = bDec;
 
-   hb_compGenPCodeN( pBuffer, sizeof( pBuffer ), HB_COMP_PARAM );
+   hb_compGenPCodeN( pBuffer, sizeof(pBuffer), HB_COMP_PARAM );
 }
 
 void hb_compGenPushFunCall( const char * szFunName, int iFlags, HB_COMP_DECL )
@@ -3429,14 +3429,14 @@ void hb_compGenPushLong( HB_MAXINT nNumber, HB_COMP_DECL )
          HB_BYTE pBuffer[ 5 ];
          pBuffer[ 0 ] = HB_P_PUSHLONG;
          HB_PUT_LE_UINT32( pBuffer + 1, nNumber );
-         hb_compGenPCodeN( pBuffer, sizeof( pBuffer ), HB_COMP_PARAM );
+         hb_compGenPCodeN( pBuffer, sizeof(pBuffer), HB_COMP_PARAM );
       }
       else
       {
          HB_BYTE pBuffer[ 9 ];
          pBuffer[ 0 ] = HB_P_PUSHLONGLONG;
          HB_PUT_LE_UINT64( pBuffer + 1, nNumber );
-         hb_compGenPCodeN( pBuffer, sizeof( pBuffer ), HB_COMP_PARAM );
+         hb_compGenPCodeN( pBuffer, sizeof(pBuffer), HB_COMP_PARAM );
       }
    }
    else
@@ -3446,14 +3446,14 @@ void hb_compGenPushLong( HB_MAXINT nNumber, HB_COMP_DECL )
          HB_BYTE pBuffer[ 5 ];
          pBuffer[ 0 ] = HB_P_PUSHLONG;
          HB_PUT_LE_UINT32( pBuffer + 1, nNumber );
-         hb_compGenPCodeN( pBuffer, sizeof( pBuffer ), HB_COMP_PARAM );
+         hb_compGenPCodeN( pBuffer, sizeof(pBuffer), HB_COMP_PARAM );
       }
       else
       {
          HB_BYTE pBuffer[ 9 ];
          pBuffer[ 0 ] = HB_P_PUSHLONGLONG;
          HB_PUT_LE_UINT64( pBuffer + 1, nNumber );
-         hb_compGenPCodeN( pBuffer, sizeof( pBuffer ), HB_COMP_PARAM );
+         hb_compGenPCodeN( pBuffer, sizeof(pBuffer), HB_COMP_PARAM );
       }
    }
 }
@@ -3464,7 +3464,7 @@ void hb_compGenPushDate( long lDate, HB_COMP_DECL )
 
    pBuffer[ 0 ] = HB_P_PUSHDATE;
    HB_PUT_LE_UINT32( pBuffer + 1, lDate );
-   hb_compGenPCodeN( pBuffer, sizeof( pBuffer ), HB_COMP_PARAM );
+   hb_compGenPCodeN( pBuffer, sizeof(pBuffer), HB_COMP_PARAM );
 }
 
 void hb_compGenPushTimeStamp( long lDate, long lTime, HB_COMP_DECL )
@@ -3474,7 +3474,7 @@ void hb_compGenPushTimeStamp( long lDate, long lTime, HB_COMP_DECL )
    pBuffer[ 0 ] = HB_P_PUSHTIMESTAMP;
    HB_PUT_LE_UINT32( pBuffer + 1, lDate );
    HB_PUT_LE_UINT32( pBuffer + 5, lTime );
-   hb_compGenPCodeN( pBuffer, sizeof( pBuffer ), HB_COMP_PARAM );
+   hb_compGenPCodeN( pBuffer, sizeof(pBuffer), HB_COMP_PARAM );
 }
 
 /* generates the pcode to push a string on the virtual machine stack */
@@ -4114,7 +4114,7 @@ void hb_compCodeBlockEnd( HB_COMP_DECL )
    while( pVar )
    {
       char szName[ HB_SYMBOL_NAME_LEN + 4 ];
-      hb_snprintf( szName, sizeof( szName ), "%s(b)", pVar->szName );
+      hb_snprintf( szName, sizeof(szName), "%s(b)", pVar->szName );
       pVar->szName = hb_compIdentifierNew( HB_COMP_PARAM, szName, HB_IDENT_COPY );
       pVar = pVar->pNext;
    }
@@ -4323,7 +4323,7 @@ void hb_compModuleAdd( HB_COMP_DECL, const char * szModuleName, HB_BOOL fForce )
          pModule = &( *pModule )->pNext;
       }
 
-      *pModule = static_cast<PHB_MODULE>( hb_xgrab( sizeof( HB_MODULE ) ) );
+      *pModule = static_cast<PHB_MODULE>( hb_xgrab( sizeof(HB_MODULE) ) );
       ( *pModule )->szName = szModuleName;
       ( *pModule )->force = fForce;
       ( *pModule )->pNext = nullptr;
@@ -4426,7 +4426,7 @@ static void hb_compGenIncluded( HB_COMP_DECL )
       char szDestFile[ HB_PATH_MAX ];
       HB_FNAME FileName;
 
-      memcpy( &FileName, HB_COMP_PARAM->pFileName, sizeof( HB_FNAME ) );
+      memcpy( &FileName, HB_COMP_PARAM->pFileName, sizeof(HB_FNAME) );
       szDestFile[ 0 ] = '\0';
 
       if( ( HB_COMP_PARAM->iTraceInclude & 0xff ) == 2 )
@@ -4664,7 +4664,7 @@ static int hb_compCompile( HB_COMP_DECL, const char * szPrg, const char * szBuff
       }
       else if( ! hb_pp_inFile( HB_COMP_PARAM->pLex->pPP, szFileName, HB_FALSE, nullptr, HB_FALSE ) )
       {
-         hb_snprintf( buffer, sizeof( buffer ), "Cannot open %s, assumed external\n", szFileName );
+         hb_snprintf( buffer, sizeof(buffer), "Cannot open %s, assumed external\n", szFileName );
          hb_compOutErr( HB_COMP_PARAM, buffer );
          if( pModule->force )
          {
@@ -4737,13 +4737,13 @@ static int hb_compCompile( HB_COMP_DECL, const char * szPrg, const char * szBuff
             {
                if( HB_COMP_PARAM->fPPO )
                {
-                  hb_snprintf( buffer, sizeof( buffer ),
+                  hb_snprintf( buffer, sizeof(buffer),
                                "Compiling '%s' and generating preprocessed output to '%s'...\n",
                                szFileName, szPpoName );
                }
                else
                {
-                  hb_snprintf( buffer, sizeof( buffer ), "Compiling '%s'...\n", szFileName );
+                  hb_snprintf( buffer, sizeof(buffer), "Compiling '%s'...\n", szFileName );
                }
                hb_compOutStd( HB_COMP_PARAM, buffer );
             }
@@ -4815,7 +4815,7 @@ static int hb_compCompile( HB_COMP_DECL, const char * szPrg, const char * szBuff
          HB_COMP_PARAM->pInitFunc->pCode[ 4 ] = HB_HIBYTE( HB_COMP_PARAM->iStaticCnt );
          HB_COMP_PARAM->pInitFunc->iStaticsBase = HB_COMP_PARAM->iStaticCnt;
          /* Update pseudo function name */
-         hb_snprintf( szNewName, sizeof( szNewName ), "(_INITSTATICS%05d)", HB_COMP_PARAM->iStaticCnt );
+         hb_snprintf( szNewName, sizeof(szNewName), "(_INITSTATICS%05d)", HB_COMP_PARAM->iStaticCnt );
          HB_COMP_PARAM->pInitFunc->szName = hb_compIdentifierNew( HB_COMP_PARAM, szNewName, HB_IDENT_COPY );
 
          hb_compAddInitFunc( HB_COMP_PARAM, HB_COMP_PARAM->pInitFunc );
@@ -4869,7 +4869,7 @@ static int hb_compCompile( HB_COMP_DECL, const char * szPrg, const char * szBuff
          {
             iStatus = EXIT_FAILURE;
             fGenCode = HB_FALSE;
-            hb_snprintf( buffer, sizeof( buffer ),
+            hb_snprintf( buffer, sizeof(buffer),
                          "\r%i error%s\n",
                          HB_COMP_PARAM->iErrorCount,
                          HB_COMP_PARAM->iErrorCount > 1 ? "s" : "" );
@@ -4933,7 +4933,7 @@ static int hb_compCompile( HB_COMP_DECL, const char * szPrg, const char * szBuff
 
          if( ! HB_COMP_PARAM->fQuiet )
          {
-            hb_snprintf( buffer, sizeof( buffer ),
+            hb_snprintf( buffer, sizeof(buffer),
                          "\rLines %i, Functions/Procedures %i\n",
                          hb_pp_lineTot( HB_COMP_PARAM->pLex->pPP ),
                          iFunctionCount );

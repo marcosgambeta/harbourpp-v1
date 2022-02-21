@@ -167,7 +167,7 @@ HB_BOOL hb_arrayNew( PHB_ITEM pItem, HB_SIZE nLen ) /* creates a new array */
     */
    if( nLen > 0 )
    {
-      pItems = static_cast<PHB_ITEM>( hb_xgrab( sizeof( HB_ITEM ) * nLen ) );
+      pItems = static_cast<PHB_ITEM>( hb_xgrab( sizeof(HB_ITEM) * nLen ) );
       for( HB_SIZE nPos = 0; nPos < nLen; ++nPos )
       {
          ( pItems + nPos )->type = HB_IT_NIL;
@@ -178,7 +178,7 @@ HB_BOOL hb_arrayNew( PHB_ITEM pItem, HB_SIZE nLen ) /* creates a new array */
       pItems = nullptr;
    }
 
-   pBaseArray = static_cast<PHB_BASEARRAY>( hb_gcAllocRaw( sizeof( HB_BASEARRAY ), &s_gcArrayFuncs ) );
+   pBaseArray = static_cast<PHB_BASEARRAY>( hb_gcAllocRaw( sizeof(HB_BASEARRAY), &s_gcArrayFuncs ) );
    pBaseArray->pItems     = pItems;
    pBaseArray->nLen       = nLen;
    pBaseArray->uiClass    = 0;
@@ -222,7 +222,7 @@ HB_BOOL hb_arraySize( PHB_ITEM pArray, HB_SIZE nLen )
 
          if( pBaseArray->nLen == 0 )
          {
-            pBaseArray->pItems = static_cast<PHB_ITEM>( hb_xgrab( nLen * sizeof( HB_ITEM ) ) );
+            pBaseArray->pItems = static_cast<PHB_ITEM>( hb_xgrab( nLen * sizeof(HB_ITEM) ) );
             pBaseArray->nAllocated = nLen;
 
             for( nPos = 0; nPos < nLen; nPos++ )
@@ -248,7 +248,7 @@ HB_BOOL hb_arraySize( PHB_ITEM pArray, HB_SIZE nLen )
                        - adding of 1, allows reduce reallocation count for small arrays.
                    */
                   pBaseArray->nAllocated = ( pBaseArray->nAllocated >> 1 ) + 1 + nLen;
-                  pBaseArray->pItems = static_cast<PHB_ITEM>( hb_xrealloc( pBaseArray->pItems, sizeof( HB_ITEM ) * pBaseArray->nAllocated ) );
+                  pBaseArray->pItems = static_cast<PHB_ITEM>( hb_xrealloc( pBaseArray->pItems, sizeof(HB_ITEM) * pBaseArray->nAllocated ) );
                }
 
                /* set value for new items */
@@ -275,7 +275,7 @@ HB_BOOL hb_arraySize( PHB_ITEM pArray, HB_SIZE nLen )
                }
                else if( nLen < ( pBaseArray->nAllocated >> 1 ) )
                {
-                  pBaseArray->pItems = static_cast<PHB_ITEM>( hb_xrealloc( pBaseArray->pItems, sizeof( HB_ITEM ) * nLen ) );
+                  pBaseArray->pItems = static_cast<PHB_ITEM>( hb_xrealloc( pBaseArray->pItems, sizeof(HB_ITEM) * nLen ) );
                   pBaseArray->nAllocated = nLen;
                }
             }
@@ -1871,7 +1871,7 @@ void hb_nestedCloneInit( PHB_NESTED_CLONED pClonedList, void * pValue, PHB_ITEM 
 {
    pClonedList->nSize  = 16;
    pClonedList->nCount = 1;
-   pClonedList->pRefs  = static_cast<PHB_NESTED_REF>( hb_xgrab( pClonedList->nSize * sizeof( HB_NESTED_REF ) ) );
+   pClonedList->pRefs  = static_cast<PHB_NESTED_REF>( hb_xgrab( pClonedList->nSize * sizeof(HB_NESTED_REF) ) );
    pClonedList->pRefs[ 0 ].value = pValue;
    pClonedList->pRefs[ 0 ].pDest = pDest;
 }
@@ -1912,13 +1912,13 @@ static HB_BOOL hb_nestedCloneFind( PHB_NESTED_CLONED pClonedList, void * pValue,
    if( pClonedList->nCount >= pClonedList->nSize )
    {
       pClonedList->nSize += pClonedList->nSize >> 1;
-      pClonedList->pRefs = static_cast<PHB_NESTED_REF>( hb_xrealloc( pClonedList->pRefs, pClonedList->nSize * sizeof( HB_NESTED_REF ) ) );
+      pClonedList->pRefs = static_cast<PHB_NESTED_REF>( hb_xrealloc( pClonedList->pRefs, pClonedList->nSize * sizeof(HB_NESTED_REF) ) );
    }
 
    pRef = &pClonedList->pRefs[ nMiddle ];
    if( nMiddle < pClonedList->nCount )
    {
-      memmove( pRef + 1, pRef, ( pClonedList->nCount - nMiddle ) * sizeof( HB_NESTED_REF ) );
+      memmove( pRef + 1, pRef, ( pClonedList->nCount - nMiddle ) * sizeof(HB_NESTED_REF) );
    }
    pClonedList->nCount++;
 

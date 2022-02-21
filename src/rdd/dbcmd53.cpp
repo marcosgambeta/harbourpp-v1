@@ -62,7 +62,7 @@ HB_FUNC( ORDKEYCOUNT )
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
+      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
       pOrderInfo.itmOrder = hb_param( 1, HB_IT_STRING | HB_IT_NUMERIC );
       pOrderInfo.atomBagName = hb_param( 2, HB_IT_STRING );
       /* Either or both may be NIL */
@@ -84,7 +84,7 @@ HB_FUNC( ORDKEYNO )
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
+      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
       pOrderInfo.itmOrder = hb_param( 1, HB_IT_STRING | HB_IT_NUMERIC );
       pOrderInfo.atomBagName = hb_param( 2, HB_IT_STRING );
       /* Either or both may be NIL */
@@ -106,7 +106,7 @@ HB_FUNC( ORDKEYGOTO )
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
+      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
       pOrderInfo.itmNewVal = hb_param( 1, HB_IT_NUMERIC );
       pOrderInfo.itmResult = hb_itemPutL( nullptr, HB_FALSE );
       SELF_ORDINFO( pArea, DBOI_POSITION, &pOrderInfo );
@@ -125,7 +125,7 @@ HB_FUNC( ORDKEYRELPOS )
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
+      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
       pOrderInfo.itmNewVal = hb_param( 1, HB_IT_NUMERIC );
       pOrderInfo.itmResult = hb_itemPutNI( nullptr, 0 );
       SELF_ORDINFO( pArea, DBOI_RELKEYPOS, &pOrderInfo );
@@ -144,7 +144,7 @@ HB_FUNC( ORDFINDREC )
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
+      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
       pOrderInfo.itmNewVal = hb_param( 1, HB_IT_NUMERIC );
       pOrderInfo.itmResult = hb_itemPutL( nullptr, HB_FALSE );
       SELF_ORDINFO( pArea, hb_parl(2) ? DBOI_FINDRECCONT : DBOI_FINDREC, &pOrderInfo );
@@ -177,7 +177,7 @@ HB_FUNC( ORDSKIPUNIQUE )
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
+      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
       pOrderInfo.itmNewVal = hb_param( 1, HB_IT_ANY );
       pOrderInfo.itmResult = hb_itemPutL( nullptr, HB_FALSE );
       SELF_ORDINFO( pArea, DBOI_SKIPUNIQUE, &pOrderInfo );
@@ -196,7 +196,7 @@ HB_FUNC( ORDKEYVAL )
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
+      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
       pOrderInfo.itmResult = hb_itemNew( nullptr );
       SELF_ORDINFO( pArea, DBOI_KEYVAL, &pOrderInfo );
       hb_itemReturnRelease( pOrderInfo.itmResult );
@@ -214,7 +214,7 @@ HB_FUNC( ORDKEYADD )
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
+      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
       pOrderInfo.itmOrder = hb_param( 1, HB_IT_STRING | HB_IT_NUMERIC );
       pOrderInfo.atomBagName = hb_param( 2, HB_IT_STRING );
       /* Either or both may be NIL */
@@ -236,7 +236,7 @@ HB_FUNC( ORDKEYDEL )
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
+      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
       pOrderInfo.itmOrder = hb_param( 1, HB_IT_STRING | HB_IT_NUMERIC );
       pOrderInfo.atomBagName = hb_param( 2, HB_IT_STRING );
       /* Either or both may be NIL */
@@ -258,7 +258,7 @@ HB_FUNC( ORDDESCEND )
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
+      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
       pOrderInfo.itmOrder = hb_param( 1, HB_IT_STRING | HB_IT_NUMERIC );
       pOrderInfo.atomBagName = hb_param( 2, HB_IT_STRING );
       /* Either or both may be NIL */
@@ -280,7 +280,7 @@ HB_FUNC( ORDISUNIQUE )
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
+      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
       pOrderInfo.itmOrder = hb_param( 1, HB_IT_STRING | HB_IT_NUMERIC );
       pOrderInfo.atomBagName = hb_param( 2, HB_IT_STRING );
       /* Harbour extension: NewVal to set/reset unique flag */
@@ -302,7 +302,7 @@ HB_FUNC( ORDCUSTOM )
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
+      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
       pOrderInfo.itmOrder = hb_param( 1, HB_IT_STRING | HB_IT_NUMERIC );
       pOrderInfo.atomBagName = hb_param( 2, HB_IT_STRING );
       /* Either or both may be NIL */

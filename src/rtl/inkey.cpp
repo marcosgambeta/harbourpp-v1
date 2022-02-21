@@ -65,7 +65,7 @@ static void hb_inkeySetTextKeys( const char * pszText, HB_SIZE nSize, HB_BOOL fI
       HB_WCHAR buffer[ 32 ], * keys;
       HB_SIZE n = 0;
 
-      keys = nSize <= HB_SIZEOFARRAY( buffer ) ? buffer : static_cast<HB_WCHAR*>( hb_xgrab( nSize * sizeof( HB_WCHAR ) ) );
+      keys = nSize <= HB_SIZEOFARRAY( buffer ) ? buffer : static_cast<HB_WCHAR*>( hb_xgrab( nSize * sizeof(HB_WCHAR) ) );
       while( HB_CDPCHAR_GET( cdp, pszText, nSize, &nIndex, &wc ) )
       {
          keys[ n++ ] = wc;
@@ -243,7 +243,7 @@ HB_FUNC( HB_KEYCHAR )
    char szKeyChr[ HB_MAX_CHAR_LEN ];
    HB_SIZE nLen;
 
-   nLen = hb_inkeyKeyString( hb_parni(1), szKeyChr, sizeof( szKeyChr ) );
+   nLen = hb_inkeyKeyString( hb_parni(1), szKeyChr, sizeof(szKeyChr) );
    hb_retclen( szKeyChr, nLen );
 }
 

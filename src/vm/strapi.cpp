@@ -194,7 +194,7 @@ HB_WCHAR * hb_wstrdup( const HB_WCHAR * szText )
    HB_WCHAR * pszDest;
    HB_SIZE nSize;
 
-   nSize = ( hb_wstrlen( szText ) + 1 ) * sizeof( HB_WCHAR );
+   nSize = ( hb_wstrlen( szText ) + 1 ) * sizeof(HB_WCHAR);
    pszDest = static_cast<HB_WCHAR*>( hb_xgrab( nSize ) );
 
    memcpy( pszDest, szText, nSize );
@@ -216,8 +216,8 @@ HB_WCHAR * hb_wstrndup( const HB_WCHAR * szText, HB_SIZE nLen )
    {
       nLen = nSize;
    }
-   nSize = nLen * sizeof( HB_WCHAR );
-   pszDest = static_cast<HB_WCHAR*>( hb_xgrab( nSize + sizeof( HB_WCHAR ) ) );
+   nSize = nLen * sizeof(HB_WCHAR);
+   pszDest = static_cast<HB_WCHAR*>( hb_xgrab( nSize + sizeof(HB_WCHAR) ) );
    memcpy( pszDest, szText, nSize );
    pszDest[ nLen ] = 0;
 
@@ -237,8 +237,8 @@ HB_WCHAR * hb_wstrunshare( void ** phStr, const HB_WCHAR * pStr, HB_SIZE nLen )
 
    if( nLen > 0 && ( *phStr == static_cast<const void*>( s_szConstStr ) || hb_xRefCount( *phStr ) > 1 ) )
    {
-      HB_WCHAR * pszDest = static_cast<HB_WCHAR*>( hb_xgrab( ( nLen + 1 ) * sizeof( HB_WCHAR ) ) );
-      memcpy( pszDest, pStr, nLen * sizeof( HB_WCHAR ) );
+      HB_WCHAR * pszDest = static_cast<HB_WCHAR*>( hb_xgrab( ( nLen + 1 ) * sizeof(HB_WCHAR) ) );
+      memcpy( pszDest, pStr, nLen * sizeof(HB_WCHAR) );
       pszDest[ nLen ] = 0;
       if( *phStr != static_cast<const void*>( s_szConstStr ) )
       {
@@ -265,8 +265,8 @@ char * hb_strunshare( void ** phStr, const char * pStr, HB_SIZE nLen )
 
    if( nLen > 0 && ( *phStr == static_cast<const void*>( s_szConstStr ) || hb_xRefCount( *phStr ) > 1 ) )
    {
-      char * pszDest = static_cast<char*>( hb_xgrab( ( nLen + 1 ) * sizeof( char ) ) );
-      memcpy( pszDest, pStr, nLen * sizeof( char ) );
+      char * pszDest = static_cast<char*>( hb_xgrab( ( nLen + 1 ) * sizeof(char) ) );
+      memcpy( pszDest, pStr, nLen * sizeof(char) );
       pszDest[ nLen ] = 0;
       if( *phStr != static_cast<const void*>( s_szConstStr ) )
       {
@@ -417,7 +417,7 @@ const HB_WCHAR * hb_itemGetStrU16( PHB_ITEM pItem, int iEndian, void ** phString
          return s_szConstStr;
       }
 
-      pszU16 = static_cast<HB_WCHAR*>( hb_xgrab( ( nLen + 1 ) * sizeof( HB_WCHAR ) ) );
+      pszU16 = static_cast<HB_WCHAR*>( hb_xgrab( ( nLen + 1 ) * sizeof(HB_WCHAR) ) );
       hb_cdpStrToU16( cdp, iEndian, pItem->item.asString.value, pItem->item.asString.length, pszU16, nLen + 1 );
 
       *phString = static_cast<void*>( pszU16 );

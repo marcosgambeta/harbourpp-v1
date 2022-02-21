@@ -137,7 +137,7 @@ static void hb_gt_wvt_RegisterClass( HINSTANCE hInstance )
 {
    WNDCLASS wndclass;
 
-   memset( &wndclass, 0, sizeof( wndclass ) );
+   memset( &wndclass, 0, sizeof(wndclass) );
    wndclass.style         = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
    wndclass.lpfnWndProc   = hb_gt_wvt_WndProc;
    wndclass.hInstance     = hInstance;
@@ -327,8 +327,8 @@ static PHB_GTWVT hb_gt_wvt_New( PHB_GT pGT, HINSTANCE hInstance, int iCmdShow )
    pWVT->ROWS              = WVT_DEFAULT_ROWS;
    pWVT->COLS              = WVT_DEFAULT_COLS;
 
-   pWVT->TextLine          = static_cast<TCHAR*>( hb_xgrab( pWVT->COLS * sizeof( TCHAR ) ) );
-   pWVT->FixedSize         = static_cast<int*>( hb_xgrab( pWVT->COLS * sizeof( int ) ) );
+   pWVT->TextLine          = static_cast<TCHAR*>( hb_xgrab( pWVT->COLS * sizeof(TCHAR) ) );
+   pWVT->FixedSize         = static_cast<int*>( hb_xgrab( pWVT->COLS * sizeof(int) ) );
 
    pWVT->COLORS[ 0 ]       = BLACK;
    pWVT->COLORS[ 1 ]       = BLUE;
@@ -1491,7 +1491,7 @@ static void hb_gt_wvt_ResetBoxCharBitmaps( PHB_GTWVT pWVT )
       DeleteObject( pWVT->boxImage[ i ] );
    }
 
-   memset( pWVT->boxImage, 0, sizeof( pWVT->boxImage ) );
+   memset( pWVT->boxImage, 0, sizeof(pWVT->boxImage) );
    pWVT->boxCount = 0;
 
    for( i = 0; i < HB_BOXCH_TRANS_COUNT; ++i )
@@ -1622,7 +1622,7 @@ static HFONT hb_gt_wvt_GetFont( LPCTSTR lpFace, int iHeight, int iWidth, int iWe
    {
       LOGFONT logfont;
 
-      memset( &logfont, 0, sizeof( logfont ) );
+      memset( &logfont, 0, sizeof(logfont) );
       logfont.lfEscapement     = 0;
       logfont.lfOrientation    = 0;
       logfont.lfWeight         = iWeight;
@@ -2190,8 +2190,8 @@ static HB_BOOL hb_gt_wvt_SetWindowSize( PHB_GTWVT pWVT, int iRows, int iCols )
    {
       if( pWVT->COLS != iCols )
       {
-         pWVT->TextLine = static_cast<TCHAR*>( hb_xrealloc( pWVT->TextLine, iCols * sizeof( TCHAR ) ) );
-         pWVT->FixedSize = static_cast<int*>( hb_xrealloc( pWVT->FixedSize, iCols * sizeof( int ) ) );
+         pWVT->TextLine = static_cast<TCHAR*>( hb_xrealloc( pWVT->TextLine, iCols * sizeof(TCHAR) ) );
+         pWVT->FixedSize = static_cast<int*>( hb_xrealloc( pWVT->FixedSize, iCols * sizeof(int) ) );
       }
       if( pWVT->hWnd && ( iRows != pWVT->ROWS || iCols != pWVT->COLS ) )
       {
@@ -2442,7 +2442,7 @@ static void hb_gt_wvt_MouseEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
                rect = hb_gt_wvt_GetColRowFromXYRect( pWVT, rect );
 
                nSize = ( rect.bottom - rect.top + 1 ) * ( rect.right - rect.left + 1 + 2 );
-               sBuffer = static_cast<TCHAR*>( hb_xgrab( nSize * sizeof( TCHAR ) + 1 ) );
+               sBuffer = static_cast<TCHAR*>( hb_xgrab( nSize * sizeof(TCHAR) + 1 ) );
 
                for( n = 0, row = rect.top; row <= rect.bottom; row++ )
                {
@@ -3581,7 +3581,7 @@ static HB_BOOL hb_gt_wvt_FullScreen( PHB_GT pGT )
       if( pMonitorFromWindow && pGetMonitorInfo )
       {
          mon = pMonitorFromWindow( pWVT->hWnd, MONITOR_DEFAULTTONEAREST );
-         mi.cbSize = sizeof( mi );
+         mi.cbSize = sizeof(mi);
          pGetMonitorInfo( mon, &mi );
          rt = mi.rcMonitor;
       }
@@ -4264,7 +4264,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
       case HB_GTI_UNITRANS:
          if( pWVT->wcTrans )
          {
-            pInfo->pResult = hb_itemPutCL( pInfo->pResult, reinterpret_cast<char*>( pWVT->wcTrans ), pWVT->wcTransLen * sizeof( HB_WCHAR ) );
+            pInfo->pResult = hb_itemPutCL( pInfo->pResult, reinterpret_cast<char*>( pWVT->wcTrans ), pWVT->wcTransLen * sizeof(HB_WCHAR) );
          }
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_STRING )
          {
@@ -4273,7 +4273,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                hb_itemFreeC( reinterpret_cast<char*>( pWVT->wcTrans ) );
                pWVT->wcTrans = nullptr;
             }
-            pWVT->wcTransLen = hb_itemGetCLen( pInfo->pNewVal ) / sizeof( HB_WCHAR );
+            pWVT->wcTransLen = hb_itemGetCLen( pInfo->pNewVal ) / sizeof(HB_WCHAR);
             if( pWVT->wcTransLen > 0 )
             {
                pWVT->wcTrans = pWVT->wcTransLen == 0 ? nullptr : reinterpret_cast<HB_WCHAR*>( hb_itemGetC( pInfo->pNewVal ) );
@@ -4457,7 +4457,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                {
                   if( fAdd )
                   {
-                     * pMenu = static_cast<PHB_GTWVT_MNU>( hb_xgrab( sizeof( HB_GTWVT_MNU ) ) );
+                     * pMenu = static_cast<PHB_GTWVT_MNU>( hb_xgrab( sizeof(HB_GTWVT_MNU) ) );
                      ( * pMenu )->iKey   = iVal;
                      ( * pMenu )->iEvent = iEvent + 1;
                      ( * pMenu )->pNext  = nullptr;

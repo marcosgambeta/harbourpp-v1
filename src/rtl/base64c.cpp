@@ -65,7 +65,7 @@ HB_FUNC( HB_BASE64ENCODE )
       {
          dst += ( ( dst + lin - 1 ) / lin ) * 2;
       }
-      dst *= sizeof( char );
+      dst *= sizeof(char);
 
       if( dst > len )
       {

@@ -72,7 +72,7 @@ static void hb_xSaveRestRelease( void * cargo )
    }
 }
 
-static HB_TSD_NEW( s_scrData, sizeof( HB_SCRDATA ), nullptr, hb_xSaveRestRelease );
+static HB_TSD_NEW( s_scrData, sizeof(HB_SCRDATA), nullptr, hb_xSaveRestRelease );
 
 HB_FUNC( __XSAVESCREEN )
 {

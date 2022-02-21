@@ -1150,10 +1150,10 @@ static HB_GENC_FUNC( hb_p_pushdouble )
 
 #if 0
    fprintf( cargo->yyc, "\thb_xvmPushDouble( %.*f, %u, %u );\n",
-            pFunc->pCode[ nPCodePos + 1 + sizeof( double ) + sizeof( HB_BYTE ) ] + 1,
+            pFunc->pCode[ nPCodePos + 1 + sizeof(double) + sizeof(HB_BYTE) ] + 1,
             HB_PCODE_MKDOUBLE( &pFunc->pCode[ nPCodePos + 1 ] ),
-            pFunc->pCode[ nPCodePos + 1 + sizeof( double ) ],
-            pFunc->pCode[ nPCodePos + 1 + sizeof( double ) + sizeof( HB_BYTE ) ] );
+            pFunc->pCode[ nPCodePos + 1 + sizeof(double) ],
+            pFunc->pCode[ nPCodePos + 1 + sizeof(double) + sizeof(HB_BYTE) ] );
 #else
    /*
     * This version keeps double calculation compatible with RT FL functions
@@ -1161,13 +1161,13 @@ static HB_GENC_FUNC( hb_p_pushdouble )
    fprintf( cargo->yyc, "\thb_xvmPushDouble( * ( double * ) " );
    {
       double d = HB_PCODE_MKDOUBLE( &pFunc->pCode[ nPCodePos + 1 ] );
-      hb_compGenCString( cargo->yyc, reinterpret_cast<const HB_BYTE*>( &d ), sizeof( double ) );
+      hb_compGenCString( cargo->yyc, reinterpret_cast<const HB_BYTE*>( &d ), sizeof(double) );
    }
    fprintf( cargo->yyc, ", %u, %u );\n",
-            pFunc->pCode[ nPCodePos + 1 + sizeof( double ) ],
-            pFunc->pCode[ nPCodePos + 1 + sizeof( double ) + sizeof( HB_BYTE ) ] );
+            pFunc->pCode[ nPCodePos + 1 + sizeof(double) ],
+            pFunc->pCode[ nPCodePos + 1 + sizeof(double) + sizeof(HB_BYTE) ] );
 #endif
-   return sizeof( double ) + sizeof( HB_BYTE ) + sizeof( HB_BYTE ) + 1;
+   return sizeof(double) + sizeof(HB_BYTE) + sizeof(HB_BYTE) + 1;
 }
 
 static HB_GENC_FUNC( hb_p_pushfield )
@@ -1301,7 +1301,7 @@ static HB_GENC_FUNC( hb_p_pushlonglong )
    HB_GENC_LABEL();
 
    llVal = HB_PCODE_MKLONGLONG( &pFunc->pCode[ nPCodePos + 1 ] );
-   fprintf( cargo->yyc, "\thb_xvmPushLongLong( HB_LL( %s ) );\n", hb_numToStr( szBuf, sizeof( szBuf ), llVal ) );
+   fprintf( cargo->yyc, "\thb_xvmPushLongLong( HB_LL( %s ) );\n", hb_numToStr( szBuf, sizeof(szBuf), llVal ) );
    return 9;
 #else
    HB_LONGLONG llVal;
@@ -1319,7 +1319,7 @@ static HB_GENC_FUNC( hb_p_pushlonglong )
       fprintf( cargo->yyc, "\thb_xvmPushLong( %ldL );\n", static_cast<long>( llVal ) );
    }
    fprintf( cargo->yyc, "#else\n" );
-   fprintf( cargo->yyc, "\thb_xvmPushLongLong( HB_LL( %s ) );\n", hb_numToStr( szBuf, sizeof( szBuf ), llVal ) );
+   fprintf( cargo->yyc, "\thb_xvmPushLongLong( HB_LL( %s ) );\n", hb_numToStr( szBuf, sizeof(szBuf), llVal ) );
    if( iSkip > 0 )
    {
       int iDone = 0;
@@ -2400,7 +2400,7 @@ void hb_compGenCRealCode( HB_COMP_DECL, PHB_HFUNC pFunc, FILE * yyc )
    HB_LABEL_INFO label_info;
 
    /* Make sure that table is correct */
-   assert( HB_P_LAST_PCODE == sizeof( s_verbose_table ) / sizeof( PHB_GENC_FUNC ) );
+   assert( HB_P_LAST_PCODE == sizeof(s_verbose_table) / sizeof(PHB_GENC_FUNC) );
 
    label_info.yyc = yyc;
    label_info.fVerbose = ( HB_COMP_PARAM->iGenCOutput == HB_COMPGENC_VERBOSE );
@@ -2415,7 +2415,7 @@ void hb_compGenCRealCode( HB_COMP_DECL, PHB_HFUNC pFunc, FILE * yyc )
    }
    else
    {
-      label_info.pnLabels = static_cast<HB_SIZE*>( hb_xgrabz( pFunc->nPCodePos * sizeof( HB_SIZE ) ) );
+      label_info.pnLabels = static_cast<HB_SIZE*>( hb_xgrabz( pFunc->nPCodePos * sizeof(HB_SIZE) ) );
       hb_compGenLabelTable( pFunc, &label_info );
    }
 

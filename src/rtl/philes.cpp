@@ -314,7 +314,7 @@ HB_FUNC( CURDIR )
          iDrive = *szDrive - ( 'a' - 1 );
       }
    }
-   hb_fsCurDirBuff( iDrive, szBuffer, sizeof( szBuffer ) );
+   hb_fsCurDirBuff( iDrive, szBuffer, sizeof(szBuffer) );
 
    hb_retc( szBuffer );
 }
@@ -366,7 +366,7 @@ HB_FUNC( HB_CWD )
    char szBuffer[ HB_PATH_MAX ];
    const char * szNewWD;
 
-   if( hb_fsGetCWD( szBuffer, sizeof( szBuffer ) ) )
+   if( hb_fsGetCWD( szBuffer, sizeof(szBuffer) ) )
    {
       hb_retc( szBuffer );
    }

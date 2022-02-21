@@ -60,7 +60,7 @@ HB_BOOL hb_evalNew( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
 
    if( pEvalInfo )
    {
-      memset( pEvalInfo, 0, sizeof( HB_EVALINFO ) );
+      memset( pEvalInfo, 0, sizeof(HB_EVALINFO) );
       pEvalInfo->pItems[ 0 ] = pItem;
       pEvalInfo->paramCount = 0;
 

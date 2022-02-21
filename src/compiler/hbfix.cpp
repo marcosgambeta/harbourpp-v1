@@ -332,7 +332,7 @@ void hb_compFixFuncPCode( HB_COMP_DECL, PHB_HFUNC pFunc )
 
    fix_info.HB_COMP_PARAM = HB_COMP_PARAM;
 
-   assert( HB_P_LAST_PCODE == sizeof( s_fixlocals_table ) / sizeof( PHB_FIX_FUNC ) );
+   assert( HB_P_LAST_PCODE == sizeof(s_fixlocals_table) / sizeof(PHB_FIX_FUNC) );
 
    hb_compPCodeEval( pFunc, reinterpret_cast<const PHB_PCODE_FUNC*>( pFuncTable ), static_cast<void*>( &fix_info ) );
 }

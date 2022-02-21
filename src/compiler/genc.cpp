@@ -207,7 +207,7 @@ void hb_compGenCCode( HB_COMP_DECL, PHB_FNAME pFileName )       /* generates the
    if( ! HB_COMP_PARAM->fQuiet )
    {
       char buffer[ 80 + HB_PATH_MAX - 1 ];
-      hb_snprintf( buffer, sizeof( buffer ), "Generating C++ source output to \'%s\'... ", szFileName );
+      hb_snprintf( buffer, sizeof(buffer), "Generating C++ source output to \'%s\'... ", szFileName );
       hb_compOutStd( HB_COMP_PARAM, buffer );
    }
 
@@ -297,7 +297,7 @@ void hb_compGenCCode( HB_COMP_DECL, PHB_FNAME pFileName )       /* generates the
       /* writes the symbol table */
       /* Generate the wrapper that will initialize local symbol table
        */
-      hb_strncpyUpper( szFileName, pFileName->szName, sizeof( szFileName ) - 1 );
+      hb_strncpyUpper( szFileName, pFileName->szName, sizeof(szFileName) - 1 );
       /* replace non ID characters in name of local symbol table by '_' */
       {
          int iLen = static_cast<int>( strlen( szFileName ) );
@@ -1647,21 +1647,21 @@ static HB_GENC_FUNC( hb_p_pushdouble )
 {
    fprintf( cargo->yyc, "\tHB_P_PUSHDOUBLE," );
    ++nPCodePos;
-   for( int i = 0; i < static_cast<int>( sizeof( double ) + sizeof( HB_BYTE ) + sizeof( HB_BYTE ) ); ++i )
+   for( int i = 0; i < static_cast<int>( sizeof(double) + sizeof(HB_BYTE) + sizeof(HB_BYTE) ); ++i )
    {
       fprintf( cargo->yyc, " %u,", static_cast<HB_UCHAR>( pFunc->pCode[ nPCodePos + i ] ) );
    }
    if( cargo->bVerbose )
    {
       fprintf( cargo->yyc, "\t/* %.*f, %u, %u */",
-               static_cast<HB_UCHAR>( pFunc->pCode[ nPCodePos + sizeof( double ) + sizeof( HB_BYTE ) ] ),
+               static_cast<HB_UCHAR>( pFunc->pCode[ nPCodePos + sizeof(double) + sizeof(HB_BYTE) ] ),
                HB_PCODE_MKDOUBLE( &pFunc->pCode[ nPCodePos ] ),
-               static_cast<HB_UCHAR>( pFunc->pCode[ nPCodePos + sizeof( double ) ] ),
-               static_cast<HB_UCHAR>( pFunc->pCode[ nPCodePos + sizeof( double ) + sizeof( HB_BYTE ) ] ) );
+               static_cast<HB_UCHAR>( pFunc->pCode[ nPCodePos + sizeof(double) ] ),
+               static_cast<HB_UCHAR>( pFunc->pCode[ nPCodePos + sizeof(double) + sizeof(HB_BYTE) ] ) );
    }
    fprintf( cargo->yyc, "\n" );
 
-   return sizeof( double ) + sizeof( HB_BYTE ) + sizeof( HB_BYTE ) + 1;
+   return sizeof(double) + sizeof(HB_BYTE) + sizeof(HB_BYTE) + 1;
 }
 
 static HB_GENC_FUNC( hb_p_pushfield )
@@ -1766,7 +1766,7 @@ static HB_GENC_FUNC( hb_p_pushlonglong )
       fprintf( cargo->yyc, "\t/* %lf */", HB_PCODE_MKLONGLONG( &pFunc->pCode[ nPCodePos + 1 ] ) );
 #else
       char szBuf[ 24 ];
-      fprintf( cargo->yyc, "\t/* %s */", hb_numToStr( szBuf, sizeof( szBuf ), HB_PCODE_MKLONGLONG( &pFunc->pCode[ nPCodePos + 1 ] ) ) );
+      fprintf( cargo->yyc, "\t/* %s */", hb_numToStr( szBuf, sizeof(szBuf), HB_PCODE_MKLONGLONG( &pFunc->pCode[ nPCodePos + 1 ] ) ) );
 #endif
    }
    fprintf( cargo->yyc, "\n" );
@@ -2854,7 +2854,7 @@ static void hb_compGenCReadable( HB_COMP_DECL, PHB_HFUNC pFunc, FILE * yyc )
    HB_GENC_INFO genc_info;
 
    /* Make sure that table is correct */
-   assert( HB_P_LAST_PCODE == sizeof( s_verbose_table ) / sizeof( PHB_GENC_FUNC ) );
+   assert( HB_P_LAST_PCODE == sizeof(s_verbose_table) / sizeof(PHB_GENC_FUNC) );
 
    genc_info.HB_COMP_PARAM = HB_COMP_PARAM;
    genc_info.nEndBlockPos  = 0;

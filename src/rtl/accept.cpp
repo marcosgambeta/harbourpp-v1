@@ -118,7 +118,7 @@ HB_FUNC( __ACCEPT )
             break;
 
          default:
-            nChar = hb_inkeyKeyString( input, szKey, sizeof( szKey ) );
+            nChar = hb_inkeyKeyString( input, szKey, sizeof(szKey) );
             if( nChar > 0 && nLen + nChar < ACCEPT_BUFFER_LEN )
             {
                memcpy( &szAcceptResult[ nLen ], szKey, nChar );

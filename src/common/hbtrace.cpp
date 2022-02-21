@@ -191,7 +191,7 @@ int hb_tr_level( void )
 
       if( s_fp == nullptr )
       {
-         if( hb_getenv_buffer( "HB_TR_OUTPUT", env, sizeof( env ) ) && env[ 0 ] != '\0' )
+         if( hb_getenv_buffer( "HB_TR_OUTPUT", env, sizeof(env) ) && env[ 0 ] != '\0' )
          {
             s_fp = hb_fopen( env, s_mode );
 
@@ -206,7 +206,7 @@ int hb_tr_level( void )
          }
       }
 
-      if( hb_getenv_buffer( "HB_TR_LEVEL", env, sizeof( env ) ) && env[ 0 ] != '\0' )
+      if( hb_getenv_buffer( "HB_TR_LEVEL", env, sizeof(env) ) && env[ 0 ] != '\0' )
       {
          int i;
 
@@ -222,12 +222,12 @@ int hb_tr_level( void )
 
       if( s_sysout < 0 )
       {
-         s_sysout = ( hb_getenv_buffer( "HB_TR_SYSOUT", env, sizeof( env ) ) && env[ 0 ] != '\0' ) ? 1 : 0;
+         s_sysout = ( hb_getenv_buffer( "HB_TR_SYSOUT", env, sizeof(env) ) && env[ 0 ] != '\0' ) ? 1 : 0;
       }
 
       if( s_flush < 0 )
       {
-         s_flush = ( hb_getenv_buffer( "HB_TR_FLUSH", env, sizeof( env ) ) && env[ 0 ] != '\0' ) ? 1 : 0;
+         s_flush = ( hb_getenv_buffer( "HB_TR_FLUSH", env, sizeof(env) ) && env[ 0 ] != '\0' ) ? 1 : 0;
       }
 
       s_enabled = enabled;
@@ -279,11 +279,11 @@ static void hb_tracelog_( int level, const char * file, int line, const char * p
                there is more than 16 parameters in format string */
       if( hb_xtraced() && hb_printf_params( fmt ) > 16 )
       {
-         hb_snprintf( message, sizeof( message ), "more then 16 parameters in message '%s'", fmt );
+         hb_snprintf( message, sizeof(message), "more then 16 parameters in message '%s'", fmt );
       }
       else
       {
-         hb_vsnprintf( message, sizeof( message ), fmt, vargs );
+         hb_vsnprintf( message, sizeof(message), fmt, vargs );
       }
 
       va_end( vargs );
@@ -299,15 +299,15 @@ static void hb_tracelog_( int level, const char * file, int line, const char * p
          /* We add \n at the end of the buffer to make WinDbg display look readable. */
          if( proc )
          {
-            hb_snprintf( buf.psz, sizeof( buf.psz ), "%s:%d:%s() %s %s\n", file, line, proc, pszLevel, message );
+            hb_snprintf( buf.psz, sizeof(buf.psz), "%s:%d:%s() %s %s\n", file, line, proc, pszLevel, message );
          }
          else
          {
-            hb_snprintf( buf.psz, sizeof( buf.psz ), "%s:%d: %s %s\n", file, line, pszLevel, message );
+            hb_snprintf( buf.psz, sizeof(buf.psz), "%s:%d: %s %s\n", file, line, pszLevel, message );
          }
 
          #if defined( UNICODE )
-         MultiByteToWideChar( CP_ACP, 0, ( LPCSTR ) memcpy( message, buf.psz, sizeof( message ) ), -1, buf.lp, HB_SIZEOFARRAY( buf.lp ) );
+         MultiByteToWideChar( CP_ACP, 0, ( LPCSTR ) memcpy( message, buf.psz, sizeof(message) ), -1, buf.lp, HB_SIZEOFARRAY( buf.lp ) );
          buf.lp[ HB_SIZEOFARRAY( buf.lp ) - 1 ] = 0;
          #endif
          OutputDebugString( buf.lp );

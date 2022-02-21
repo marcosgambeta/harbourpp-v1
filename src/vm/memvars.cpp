@@ -92,7 +92,7 @@ static PHB_ITEM hb_memvarValueNew( void )
 
    PHB_ITEM pMemvar;
 
-   pMemvar = static_cast<PHB_ITEM>( hb_xgrab( sizeof( HB_ITEM ) ) );
+   pMemvar = static_cast<PHB_ITEM>( hb_xgrab( sizeof(HB_ITEM) ) );
    pMemvar->type = HB_IT_NIL;
 
    return pMemvar;
@@ -259,14 +259,14 @@ static void hb_memvarAddPrivate( PHB_DYNS pDynSym, PHB_ITEM pValue )
           */
          if( pPrivateStack->size == 0 )
          {
-            pPrivateStack->stack = static_cast<PHB_PRIVATE_ITEM>( hb_xgrab( sizeof( HB_PRIVATE_ITEM ) * TABLE_INITHB_VALUE ) );
+            pPrivateStack->stack = static_cast<PHB_PRIVATE_ITEM>( hb_xgrab( sizeof(HB_PRIVATE_ITEM) * TABLE_INITHB_VALUE ) );
             pPrivateStack->size  = TABLE_INITHB_VALUE;
             pPrivateStack->count = pPrivateStack->base = 0;
          }
          else
          {
             pPrivateStack->size += TABLE_EXPANDHB_VALUE;
-            pPrivateStack->stack = static_cast<PHB_PRIVATE_ITEM>( hb_xrealloc( pPrivateStack->stack, sizeof( HB_PRIVATE_ITEM ) * pPrivateStack->size ) );
+            pPrivateStack->stack = static_cast<PHB_PRIVATE_ITEM>( hb_xrealloc( pPrivateStack->stack, sizeof(HB_PRIVATE_ITEM) * pPrivateStack->size ) );
          }
       }
 
@@ -1116,9 +1116,9 @@ PHB_ITEM hb_memvarSaveInArray( int iScope, HB_BOOL fCopy )
    }
 
 #if ! defined( HB_MT_VM )
-   MVInfo.pDyns = static_cast<PHB_DYNS*>( hb_xgrab( hb_dynsymCount() * sizeof( PHB_DYNS ) ) );
+   MVInfo.pDyns = static_cast<PHB_DYNS*>( hb_xgrab( hb_dynsymCount() * sizeof(PHB_DYNS) ) );
 #else
-   MVInfo.pDyns = static_cast<PHB_DYNS*>( hb_xgrab( hb_stackDynHandlesCount() * sizeof( PHB_DYNS ) ) );
+   MVInfo.pDyns = static_cast<PHB_DYNS*>( hb_xgrab( hb_stackDynHandlesCount() * sizeof(PHB_DYNS) ) );
 #endif
    MVInfo.nCount = 0;
    MVInfo.iScope = iScope;

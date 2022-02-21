@@ -100,7 +100,7 @@ static void hb_errorDataRelease( void * Cargo )
    hb_itemRelease( pErrData->errorBlock );
 }
 
-static HB_TSD_NEW( s_errData, sizeof( HB_ERRDATA ), nullptr, hb_errorDataRelease );
+static HB_TSD_NEW( s_errData, sizeof(HB_ERRDATA), nullptr, hb_errorDataRelease );
 
 static HB_BOOL hb_errGetNumCode( int * piValue, const char * szOperation )
 {

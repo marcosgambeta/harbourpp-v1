@@ -214,8 +214,8 @@ static void hb_sln_setACSCtrans( void )
    unsigned char * p;
    SLsmg_Char_Type chBoard[ 3 ], chArrow[ 4 ];
 
-   memset( &chArrow, 0, sizeof( chArrow ) );
-   memset( &chBoard, 0, sizeof( chBoard ) );
+   memset( &chArrow, 0, sizeof(chArrow) );
+   memset( &chBoard, 0, sizeof(chBoard) );
 
    HB_SLN_BUILD_RAWCHAR( chBoard[ 0 ], 0, 0 );
    HB_SLN_BUILD_RAWCHAR( chBoard[ 1 ], 0, 0 );
@@ -232,7 +232,7 @@ static void hb_sln_setACSCtrans( void )
       SLsmg_Char_Type SLch;
       int i, len = strlen( static_cast<char*>( p ) );
 
-      memset( &SLch, 0, sizeof( SLsmg_Char_Type ) );
+      memset( &SLch, 0, sizeof(SLsmg_Char_Type) );
       for( i = 0; i < len; i += 2 )
       {
          unsigned char ch = *p++;
@@ -378,7 +378,7 @@ static void hb_sln_setCharTrans( PHB_GT pGT, HB_BOOL fBox )
       hb_sln_setSingleBox();
    }
 
-   memcpy( s_outboxTab, s_outputTab, sizeof( s_outputTab ) );
+   memcpy( s_outboxTab, s_outputTab, sizeof(s_outputTab) );
 
    if( cdpHost )
    {
@@ -550,7 +550,7 @@ static int hb_sln_isUTF8( int iStdOut, int iStdIn )
                   continue;
                }
             }
-            if( n == sizeof( rdbuf ) )
+            if( n == sizeof(rdbuf) )
             {
                break;
             }
@@ -565,7 +565,7 @@ static int hb_sln_isUTF8( int iStdOut, int iStdIn )
                {
                   break;
                }
-               i = read( iStdIn, rdbuf + n, sizeof( rdbuf ) - n );
+               i = read( iStdIn, rdbuf + n, sizeof(rdbuf) - n );
                if( i <= 0 )
                {
                   break;

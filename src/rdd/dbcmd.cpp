@@ -202,7 +202,7 @@ HB_FUNC( DBEVAL )
    if( pArea )
    {
       DBEVALINFO pEvalInfo;
-      memset( &pEvalInfo, 0, sizeof( pEvalInfo ) );
+      memset( &pEvalInfo, 0, sizeof(pEvalInfo) );
       pEvalInfo.itmBlock = hb_param( 1, HB_IT_BLOCK );
       if( ! pEvalInfo.itmBlock )
       {
@@ -655,7 +655,7 @@ HB_FUNC( __DBSETLOCATE )
       if( pLocate )
       {
          DBSCOPEINFO pScopeInfo;
-         memset( &pScopeInfo, 0, sizeof( pScopeInfo ) );
+         memset( &pScopeInfo, 0, sizeof(pScopeInfo) );
          pScopeInfo.itmCobFor = pLocate;
          SELF_SETLOCATE( pArea, &pScopeInfo );
       }
@@ -1217,7 +1217,7 @@ HB_FUNC( INDEXORD )
    if( pArea )
    {
       DBORDERINFO pInfo;
-      memset( &pInfo, 0, sizeof( pInfo ) );
+      memset( &pInfo, 0, sizeof(pInfo) );
       pInfo.itmResult = hb_itemPutNI( nullptr, 0 );
       SELF_ORDINFO( pArea, DBOI_NUMBER, &pInfo );
       hb_retni( hb_itemGetNI( pInfo.itmResult ) );
@@ -1293,7 +1293,7 @@ HB_FUNC( ORDBAGEXT )
    DBORDERINFO pInfo;
    AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
 
-   memset( &pInfo, 0, sizeof( pInfo ) );
+   memset( &pInfo, 0, sizeof(pInfo) );
    pInfo.itmResult = hb_itemPutC( nullptr, nullptr );
    if( ! pArea )
    {
@@ -1324,7 +1324,7 @@ HB_FUNC( ORDBAGNAME )
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
+      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
 
       pOrderInfo.itmOrder = hb_param( 1, HB_IT_ANY );
       if( pOrderInfo.itmOrder && ! HB_IS_STRING( pOrderInfo.itmOrder ) )
@@ -1365,7 +1365,7 @@ HB_FUNC( ORDCONDSET )
       LPDBORDERCONDINFO lpdbOrdCondInfo;
       PHB_ITEM pItem;
 
-      lpdbOrdCondInfo = static_cast<LPDBORDERCONDINFO>( hb_xgrab( sizeof( DBORDERCONDINFO ) ) );
+      lpdbOrdCondInfo = static_cast<LPDBORDERCONDINFO>( hb_xgrab( sizeof(DBORDERCONDINFO) ) );
       lpdbOrdCondInfo->abFor = hb_parclen(1) > 0 ? hb_strdup( hb_parc(1) ) : nullptr;
       pItem = hb_param( 2, HB_IT_BLOCK );
       lpdbOrdCondInfo->itmCobFor = pItem ? hb_itemNew( pItem ) : nullptr;
@@ -1485,7 +1485,7 @@ HB_FUNC( ORDBAGCLEAR )
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
+      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
       pOrderInfo.atomBagName = hb_param( 1, HB_IT_STRING | HB_IT_NUMERIC );
       hb_retl( SELF_ORDLSTDELETE( pArea, &pOrderInfo ) == HB_SUCCESS );
    }
@@ -1502,7 +1502,7 @@ HB_FUNC( ORDDESTROY )
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
+      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
       pOrderInfo.itmOrder = hb_param( 1, HB_IT_STRING | HB_IT_NUMERIC );
       pOrderInfo.atomBagName = hb_param( 2, HB_IT_STRING );
       hb_retl( SELF_ORDDESTROY( pArea, &pOrderInfo ) == HB_SUCCESS );
@@ -1561,7 +1561,7 @@ HB_FUNC( ORDKEY )
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
+      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
       pOrderInfo.itmOrder = hb_param( 1, HB_IT_ANY );
       if( pOrderInfo.itmOrder && ! HB_IS_STRING( pOrderInfo.itmOrder ) )
       {
@@ -1605,7 +1605,7 @@ HB_FUNC( ORDLISTADD )
       /* Clipper clears NETERR flag when index is open */
       hb_rddSetNetErr( HB_FALSE );
 
-      memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
+      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
       pOrderInfo.atomBagName = hb_param( 1, HB_IT_STRING );
       pOrderInfo.itmOrder    = hb_param( 2, HB_IT_STRING );
 
@@ -1674,7 +1674,7 @@ HB_FUNC( ORDNAME )
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
+      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
       pOrderInfo.itmOrder = hb_param( 1, HB_IT_ANY );
       if( pOrderInfo.itmOrder )
       {
@@ -1714,7 +1714,7 @@ HB_FUNC( ORDNUMBER )
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
+      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
       pOrderInfo.itmOrder = hb_param( 1, HB_IT_STRING );
       pOrderInfo.atomBagName = hb_param( 2, HB_IT_STRING );
       if( ! ( pOrderInfo.itmOrder || HB_ISNIL( 1 ) ) || ! ( pOrderInfo.atomBagName || HB_ISNIL( 2 ) ) )
@@ -1739,7 +1739,7 @@ HB_FUNC( ORDSETFOCUS )
    if( pArea )
    {
       DBORDERINFO pInfo;
-      memset( &pInfo, 0, sizeof( pInfo ) );
+      memset( &pInfo, 0, sizeof(pInfo) );
       pInfo.itmOrder = hb_param( 1, HB_IT_STRING | HB_IT_NUMERIC );
       pInfo.atomBagName = hb_param( 2, HB_IT_STRING );
       pInfo.itmResult = hb_itemPutC( nullptr, nullptr );
@@ -1919,7 +1919,7 @@ HB_FUNC( ORDSCOPE )
       HB_USHORT uiAction;
       int iScope = hb_parni(1);
 
-      memset( &pInfo, 0, sizeof( pInfo ) );
+      memset( &pInfo, 0, sizeof(pInfo) );
       pInfo.itmResult = hb_itemNew( nullptr );
       if( iScope == 2 )
       {
@@ -2074,7 +2074,7 @@ HB_FUNC( __DBARRANGE )
       /* array with sorted fields in source WorkArea */
       PHB_ITEM pFields = hb_param( 8, HB_IT_ARRAY );
 
-      memset( &dbSortInfo, 0, sizeof( dbSortInfo ) );
+      memset( &dbSortInfo, 0, sizeof(dbSortInfo) );
       errCode = hb_dbTransStruct( pSrcArea, pDstArea, &dbSortInfo.dbtri, nullptr, pStruct );
       if( errCode == HB_SUCCESS )
       {
@@ -2105,7 +2105,7 @@ HB_FUNC( __DBARRANGE )
             char * szFieldLine;
             HB_SIZE nSize = 0;
 
-            dbSortInfo.lpdbsItem = static_cast<LPDBSORTITEM>( hb_xgrab( dbSortInfo.uiItemCount * sizeof( DBSORTITEM ) ) );
+            dbSortInfo.lpdbsItem = static_cast<LPDBSORTITEM>( hb_xgrab( dbSortInfo.uiItemCount * sizeof(DBSORTITEM) ) );
             for( uiCount = 1; uiCount <= dbSortInfo.uiItemCount; ++uiCount )
             {
                HB_SIZE nLine = hb_arrayGetCLen( pFields, uiCount );
@@ -2209,7 +2209,7 @@ HB_FUNC( __DBTRANS )
          PHB_ITEM pFields = hb_param( 2, HB_IT_ARRAY );
          HB_ERRCODE errCode;
 
-         memset( &dbTransInfo, 0, sizeof( dbTransInfo ) );
+         memset( &dbTransInfo, 0, sizeof(dbTransInfo) );
          errCode = hb_dbTransStruct( pSrcArea, pDstArea, &dbTransInfo, nullptr, pFields );
          if( errCode == HB_SUCCESS )
          {

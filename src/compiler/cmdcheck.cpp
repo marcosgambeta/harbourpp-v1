@@ -107,7 +107,7 @@ static const char * hb_compChkAddDefine( HB_COMP_DECL, const char * szSwitch, HB
       }
       if( *pDefinePtr == nullptr )
       {
-         *pDefinePtr = static_cast<PHB_PPDEFINE>( hb_xgrab( sizeof( HB_PPDEFINE ) ) );
+         *pDefinePtr = static_cast<PHB_PPDEFINE>( hb_xgrab( sizeof(HB_PPDEFINE) ) );
          ( *pDefinePtr )->pNext = nullptr;
       }
       else
@@ -124,7 +124,7 @@ static void hb_compChkIgnoredInfo( HB_COMP_DECL, const char * szSwitch )
 {
    char buffer[ 64 ];
 
-   hb_snprintf( buffer, sizeof( buffer ),
+   hb_snprintf( buffer, sizeof(buffer),
                 "Ignored unsupported command-line option: %s\n", szSwitch );
    hb_compOutStd( HB_COMP_PARAM, buffer );
 }
@@ -823,8 +823,8 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
                {
                   HB_COMP_PARAM->szStdChExt = static_cast<char**>(
                      ( HB_COMP_PARAM->iStdChExt == 0 ?
-                        hb_xgrab( sizeof( char * ) ) :
-                        hb_xrealloc( HB_COMP_PARAM->szStdChExt, ( HB_COMP_PARAM->iStdChExt + 1 ) * sizeof( char * ) ) ) );
+                        hb_xgrab( sizeof(char*) ) :
+                        hb_xrealloc( HB_COMP_PARAM->szStdChExt, ( HB_COMP_PARAM->iStdChExt + 1 ) * sizeof(char*) ) ) );
                   szSwPtr = hb_compChkOptionGet( szSwPtr + 1,
                                                  &HB_COMP_PARAM->szStdChExt[ HB_COMP_PARAM->iStdChExt++ ],
                                                  fEnv );

@@ -173,7 +173,7 @@ HB_FUNC( HB_LPPCREATE )
       return;
    }
 
-   pGC = static_cast<PHB_LPP_GC>( hb_gcAllocate( sizeof( HB_LPP_GC ), &s_gcPSocketFuncs ) );
+   pGC = static_cast<PHB_LPP_GC>( hb_gcAllocate( sizeof(HB_LPP_GC), &s_gcPSocketFuncs ) );
    pGC->pSocket = hb_lppCreate( sd );
    pGC->pItemSocket = hb_itemNew( pItem );
    hb_gcUnlock( pGC->pItemSocket );

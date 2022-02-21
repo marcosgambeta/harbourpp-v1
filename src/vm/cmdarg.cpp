@@ -94,7 +94,7 @@ void hb_winmainArgVBuild( void )
    int iArgC;
 
    /* NOTE: MAX_PATH used intentionally instead of HB_MAX_PATH */
-   lpModuleName = static_cast<LPTSTR>( HB_WINARG_ALLOC( ( MAX_PATH + 1 ) * sizeof( TCHAR ) ) );
+   lpModuleName = static_cast<LPTSTR>( HB_WINARG_ALLOC( ( MAX_PATH + 1 ) * sizeof(TCHAR) ) );
    nModuleName = GetModuleFileName( nullptr, lpModuleName, MAX_PATH + 1 );
    if( nModuleName )
    {
@@ -114,7 +114,7 @@ void hb_winmainArgVBuild( void )
 
       if( nSize != 0 )
       {
-         lpArgV = static_cast<LPTSTR*>( HB_WINARG_ALLOC( iArgC * sizeof( LPTSTR ) + nSize * sizeof( TCHAR ) ) );
+         lpArgV = static_cast<LPTSTR*>( HB_WINARG_ALLOC( iArgC * sizeof(LPTSTR) + nSize * sizeof(TCHAR) ) );
          lpDst = reinterpret_cast<LPTSTR>( lpArgV + iArgC );
          lpArgV[ 0 ] = lpDst;
          lpDst += nModuleName;
@@ -203,7 +203,7 @@ void hb_winmainArgVBuild( void )
       if( nModuleName != 0 )
       {
          iArgC = 1;
-         lpArgV = static_cast<LPTSTR*>( HB_WINARG_ALLOC( iArgC * sizeof( LPTSTR ) + nModuleName * sizeof( TCHAR ) ) );
+         lpArgV = static_cast<LPTSTR*>( HB_WINARG_ALLOC( iArgC * sizeof(LPTSTR) + nModuleName * sizeof(TCHAR) ) );
          lpArgV[ 0 ] = reinterpret_cast<LPTSTR>( lpArgV + iArgC );
       }
       else
@@ -240,7 +240,7 @@ void hb_winmainArgVBuild( void )
             nSize += hb_wctomblen( s_lpArgV[ iArgC ] ) + 1;
          }
 
-         s_lpArgVStr = static_cast<LPSTR*>( HB_WINARG_ALLOC( s_argc * sizeof( LPSTR ) + nSize * sizeof( char ) ) );
+         s_lpArgVStr = static_cast<LPSTR*>( HB_WINARG_ALLOC( s_argc * sizeof(LPSTR) + nSize * sizeof(char) ) );
          lpStr = reinterpret_cast<LPSTR>( s_lpArgVStr + s_argc );
          for( iArgC = 0; iArgC < s_argc; ++iArgC )
          {
@@ -838,11 +838,11 @@ HB_FUNC( HB_CMDLINE )
             nLen += HB_STRLEN( s_lpArgV[ iArg ] ) + 1;
          }
 
-         ptr = lpBuffer = static_cast<LPTSTR>( hb_xgrab( nLen * sizeof( TCHAR ) ) );
+         ptr = lpBuffer = static_cast<LPTSTR>( hb_xgrab( nLen * sizeof(TCHAR) ) );
          for( iArg = 1; iArg < s_argc; iArg++ )
          {
             nLen = HB_STRLEN( s_lpArgV[ iArg ] );
-            memcpy( ptr, s_lpArgV[ iArg ], nLen * sizeof( TCHAR ) );
+            memcpy( ptr, s_lpArgV[ iArg ], nLen * sizeof(TCHAR) );
             ptr += nLen;
             *ptr++ = TEXT( ' ' );
          }
@@ -912,9 +912,9 @@ void hb_cmdargProcess( void )
       {
          char buffer[ 128 ];
 #if defined( HB_CLP_STRICT )
-         hb_snprintf( buffer, sizeof( buffer ), "DS avail=%" HB_PFS "uKB  OS avail=%" HB_PFS "uKB  EMM avail=%" HB_PFS "uKB", hb_xquery( HB_MEM_BLOCK ), hb_xquery( HB_MEM_VM ), hb_xquery( HB_MEM_EMS ) );
+         hb_snprintf( buffer, sizeof(buffer), "DS avail=%" HB_PFS "uKB  OS avail=%" HB_PFS "uKB  EMM avail=%" HB_PFS "uKB", hb_xquery( HB_MEM_BLOCK ), hb_xquery( HB_MEM_VM ), hb_xquery( HB_MEM_EMS ) );
 #else
-         hb_snprintf( buffer, sizeof( buffer ), "DS avail=%" HB_PFS "uKB  OS avail=%" HB_PFS "uKB  EMM avail=%" HB_PFS "uKB  MemStat:%s  MT:%s", hb_xquery( HB_MEM_BLOCK ), hb_xquery( HB_MEM_VM ), hb_xquery( HB_MEM_EMS ), hb_xquery( HB_MEM_STATISTICS ) ? "On" : "Off", hb_vmIsMt() ? "On" : "Off" );
+         hb_snprintf( buffer, sizeof(buffer), "DS avail=%" HB_PFS "uKB  OS avail=%" HB_PFS "uKB  EMM avail=%" HB_PFS "uKB  MemStat:%s  MT:%s", hb_xquery( HB_MEM_BLOCK ), hb_xquery( HB_MEM_VM ), hb_xquery( HB_MEM_EMS ), hb_xquery( HB_MEM_STATISTICS ) ? "On" : "Off", hb_vmIsMt() ? "On" : "Off" );
 #endif
          hb_conOutErr( buffer, 0 );
          hb_conOutErr( hb_conNewLine(), 0 );

@@ -943,7 +943,7 @@ void hb_compOptimizePCode( HB_COMP_DECL, PHB_HFUNC pFunc )
 
    HB_SYMBOL_UNUSED( HB_COMP_PARAM );
 
-   assert( HB_P_LAST_PCODE == sizeof( s_opt_table ) / sizeof( PHB_OPT_FUNC ) );
+   assert( HB_P_LAST_PCODE == sizeof(s_opt_table) / sizeof(PHB_OPT_FUNC) );
 
    hb_compPCodeEval( pFunc, static_cast<const PHB_PCODE_FUNC*>( pFuncTable ), nullptr );
 }
@@ -1513,11 +1513,11 @@ static void hb_compPCodeEnumAssignedUnused( HB_COMP_DECL, PHB_HFUNC pFunc, PHB_O
 
                if( HB_COMP_PARAM->iErrorFmt == HB_ERRORFMT_CLIPPER )
                {
-                  hb_snprintf( szFun, sizeof( szFun ), "%s(%i)", pFunc->szName, usLine );
+                  hb_snprintf( szFun, sizeof(szFun), "%s(%i)", pFunc->szName, usLine );
                }
                else
                {
-                  hb_snprintf( szFun, sizeof( szFun ), "%i:%s", usLine, pFunc->szName );
+                  hb_snprintf( szFun, sizeof(szFun), "%i:%s", usLine, pFunc->szName );
                }
                hb_compGenWarning( HB_COMP_PARAM, hb_comp_szWarnings, 'W', HB_COMP_WARN_ASSIGNED_UNUSED, pVar->szName, szFun );
             }
@@ -1671,7 +1671,7 @@ void hb_compPCodeTraceOptimizer( HB_COMP_DECL )
    }
 
    /* Initial scan */
-   pLocals = static_cast<PHB_OPT_LOCAL>( hb_xgrabz( sizeof( HB_OPT_LOCAL ) * usLocalCount ) );
+   pLocals = static_cast<PHB_OPT_LOCAL>( hb_xgrabz( sizeof(HB_OPT_LOCAL) * usLocalCount ) );
    hb_compPCodeEnumScanLocals( pFunc, pLocals );
 
    /* Check */
@@ -1702,11 +1702,11 @@ void hb_compPCodeTraceOptimizer( HB_COMP_DECL )
 
          if( HB_COMP_PARAM->iErrorFmt == HB_ERRORFMT_CLIPPER )
          {
-            hb_snprintf( szFun, sizeof( szFun ), "%s(%i)", pFunc->szName, pVar->iDeclLine );
+            hb_snprintf( szFun, sizeof(szFun), "%s(%i)", pFunc->szName, pVar->iDeclLine );
          }
          else
          {
-            hb_snprintf( szFun, sizeof( szFun ), "%i:%s", pVar->iDeclLine, pFunc->szName );
+            hb_snprintf( szFun, sizeof(szFun), "%i:%s", pVar->iDeclLine, pFunc->szName );
          }
          hb_compGenWarning( HB_COMP_PARAM, hb_comp_szWarnings, 'W', HB_COMP_WARN_NEVER_ASSIGNED, pVar->szName, szFun );
       }

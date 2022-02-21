@@ -93,8 +93,8 @@ using PHB_SOCKET_STRUCT = HB_SOCKET_STRUCT *;
    do \
    { \
       HB_INET_INITIALIZE(); \
-      s = static_cast<PHB_SOCKET_STRUCT>( hb_gcAllocate( sizeof( *s ), &s_gcInetFuncs ) ); \
-      memset( s, 0, sizeof( *s ) ); \
+      s = static_cast<PHB_SOCKET_STRUCT>( hb_gcAllocate( sizeof(*s), &s_gcInetFuncs ) ); \
+      memset( s, 0, sizeof(*s) ); \
       s->sd         = HB_NO_SOCKET; \
       s->readahead  = HB_INET_BUFFER_LEN; \
       s->iTimeout   = -1; \
@@ -1055,8 +1055,8 @@ HB_FUNC( HB_INETRECVENDBLOCK )
       {
          if( iPatternsCount > HB_PATERN_BUF_SIZE )
          {
-            patterns = static_cast<const char**>( hb_xgrab( sizeof( char * ) * iPatternsCount ) );
-            patternsizes = static_cast<int*>( hb_xgrab( sizeof( int ) * iPatternsCount ) );
+            patterns = static_cast<const char**>( hb_xgrab( sizeof(char*) * iPatternsCount ) );
+            patternsizes = static_cast<int*>( hb_xgrab( sizeof(int) * iPatternsCount ) );
          }
          iPatternsCount = 0;
          for( i = 1; i <= iPatternsMax; i++ )

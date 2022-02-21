@@ -80,21 +80,21 @@ static void hb_waNodeInsert( PHB_STACKRDD pRddInfo, AREAP pArea )
 
       if( pRddInfo->uiWaNumMax == 0 )
       {
-         pRddInfo->waNums = static_cast<HB_USHORT*>( hb_xgrab( iSize * sizeof( HB_USHORT ) ) );
+         pRddInfo->waNums = static_cast<HB_USHORT*>( hb_xgrab( iSize * sizeof(HB_USHORT) ) );
       }
       else
       {
-         pRddInfo->waNums = static_cast<HB_USHORT*>( hb_xrealloc( pRddInfo->waNums, iSize * sizeof( HB_USHORT ) ) );
+         pRddInfo->waNums = static_cast<HB_USHORT*>( hb_xrealloc( pRddInfo->waNums, iSize * sizeof(HB_USHORT) ) );
       }
 
-      memset( &pRddInfo->waNums[ pRddInfo->uiWaNumMax ], 0, ( iSize - pRddInfo->uiWaNumMax ) * sizeof( HB_USHORT ) );
+      memset( &pRddInfo->waNums[ pRddInfo->uiWaNumMax ], 0, ( iSize - pRddInfo->uiWaNumMax ) * sizeof(HB_USHORT) );
       pRddInfo->uiWaNumMax = static_cast<HB_USHORT>( iSize );
    }
 
    if( pRddInfo->uiWaSpace == 0 )
    {
       pRddInfo->uiWaSpace = 256;
-      pRddInfo->waList = static_cast<void**>( hb_xgrabz( pRddInfo->uiWaSpace * sizeof( void * ) ) );
+      pRddInfo->waList = static_cast<void**>( hb_xgrabz( pRddInfo->uiWaSpace * sizeof(void*) ) );
       uiWaPos = 1;
       pRddInfo->uiWaMax = 2;
    }
@@ -111,8 +111,8 @@ static void hb_waNodeInsert( PHB_STACKRDD pRddInfo, AREAP pArea )
          }
 
          pRddInfo->uiWaSpace = static_cast<HB_USHORT>( iSize );
-         pRddInfo->waList = static_cast<void**>( hb_xrealloc( pRddInfo->waList, pRddInfo->uiWaSpace * sizeof( void * ) ) );
-         memset( &pRddInfo->waList[ pRddInfo->uiWaMax ], 0, ( pRddInfo->uiWaSpace - pRddInfo->uiWaMax ) * sizeof( void * ) );
+         pRddInfo->waList = static_cast<void**>( hb_xrealloc( pRddInfo->waList, pRddInfo->uiWaSpace * sizeof(void*) ) );
+         memset( &pRddInfo->waList[ pRddInfo->uiWaMax ], 0, ( pRddInfo->uiWaSpace - pRddInfo->uiWaMax ) * sizeof(void*) );
       }
       while( uiWaPos > 1 )
       {
@@ -167,7 +167,7 @@ static void hb_waNodeDelete( PHB_STACKRDD pRddInfo )
          }
 
          pRddInfo->uiWaSpace = static_cast<HB_USHORT>( iSize );
-         pRddInfo->waList = static_cast<void**>( hb_xrealloc( pRddInfo->waList, pRddInfo->uiWaSpace * sizeof( void * ) ) );
+         pRddInfo->waList = static_cast<void**>( hb_xrealloc( pRddInfo->waList, pRddInfo->uiWaSpace * sizeof(void*) ) );
       }
    }
    pRddInfo->pCurrArea = nullptr;
@@ -417,7 +417,7 @@ const char * hb_rddDefaultDrv( const char * szDriver )
       char szNewDriver[ HB_RDD_MAX_DRIVERNAME_LEN + 1 ];
       LPRDDNODE pRddNode;
 
-      hb_strncpyUpper( szNewDriver, szDriver, sizeof( szNewDriver ) - 1 );
+      hb_strncpyUpper( szNewDriver, szDriver, sizeof(szNewDriver) - 1 );
       pRddNode = hb_rddFindNode( szNewDriver, nullptr );
       if( ! pRddNode )
       {
@@ -459,7 +459,7 @@ const char * hb_rddFindDrv( const char * szDriver, const char * szFileName )
    {
       char szNewDriver[ HB_RDD_MAX_DRIVERNAME_LEN + 1 ];
 
-      hb_strncpyUpper( szNewDriver, szDriver, sizeof( szNewDriver ) - 1 );
+      hb_strncpyUpper( szNewDriver, szDriver, sizeof(szNewDriver) - 1 );
       pRddNode = hb_rddFindNode( szNewDriver, nullptr );
    }
    else
@@ -685,7 +685,7 @@ HB_ERRCODE hb_rddDetachArea( AREAP pArea, PHB_ITEM pCargo )
    {
       hb_arraySet( pDetachedArea, 2, pCargo );
    }
-   pHolder = static_cast<AREAP*>( hb_gcAllocate( sizeof( AREAP ), &s_gcWAFuncs ) );
+   pHolder = static_cast<AREAP*>( hb_gcAllocate( sizeof(AREAP), &s_gcWAFuncs ) );
    *pHolder = pArea;
    hb_arraySetPtrGC( pDetachedArea, 1, pHolder );
    /* siagnal waiting processes that new area is available */

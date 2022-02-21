@@ -62,7 +62,7 @@ HB_FUNC( ORDCOUNT )
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
+      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
       pOrderInfo.atomBagName = hb_param( 1, HB_IT_STRING );
       pOrderInfo.itmResult = hb_itemPutNI( nullptr, 0 );
       SELF_ORDINFO( pArea, DBOI_ORDERCOUNT, &pOrderInfo );

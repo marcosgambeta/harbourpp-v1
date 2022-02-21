@@ -114,7 +114,7 @@ PHB_DEBUGINFO hb_compGetDebugInfo( HB_COMP_DECL )
                   }
                   if( ! pInfo )
                   {
-                     pInfo = static_cast<PHB_DEBUGINFO>( hb_xgrab( sizeof( HB_DEBUGINFO ) ) );
+                     pInfo = static_cast<PHB_DEBUGINFO>( hb_xgrab( sizeof(HB_DEBUGINFO) ) );
                      pInfo->pszModuleName = hb_strndup( pszModuleName, i );
                      pInfo->ulFirstLine = pInfo->ulLastLine = ulLine;
                      /*

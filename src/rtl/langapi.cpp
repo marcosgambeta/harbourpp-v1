@@ -277,8 +277,8 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
       return HB_FALSE;
    }
 
-   memset( &trans, 0, sizeof( trans ) );
-   nSize = sizeof( trans );
+   memset( &trans, 0, sizeof(trans) );
+   nSize = sizeof(trans);
 
    for( i = 0; i < HB_LANG_ITEM_MAX_; ++i )
    {
@@ -309,7 +309,7 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
    }
 
    buffer = static_cast<char*>( hb_xgrab( nSize ) );
-   ptr    = buffer + sizeof( trans );
+   ptr    = buffer + sizeof(trans);
    for( i = 0; i < HB_LANG_ITEM_MAX_; ++i )
    {
       if( trans.pItemList[ i ] != nullptr )
@@ -325,7 +325,7 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
          trans.pItemList[ i ] = lang->pItemList[ i ];
       }
    }
-   memcpy( buffer, &trans, sizeof( trans ) );
+   memcpy( buffer, &trans, sizeof(trans) );
 
    pBase = hb_langFindBase( szNewId );
    if( pBase && pBase->lang == nullptr )

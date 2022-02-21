@@ -358,7 +358,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
          bFound = GetVolumeInformation( lpFileMask, lpVolName, HB_SIZEOFARRAY( lpVolName ), nullptr, nullptr, nullptr, nullptr, 0 ) != 0;
          if( bFound )
          {
-            HB_OSSTRDUP2( lpVolName, ffind->szName, sizeof( ffind->szName ) - 1 );
+            HB_OSSTRDUP2( lpVolName, ffind->szName, sizeof(ffind->szName) - 1 );
             if( mask && *mask && ! hb_strMatchFile( ffind->szName, mask ) )
             {
                ffind->szName[ 0 ] = '\0';
@@ -407,7 +407,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
 
          if( bFound )
          {
-            HB_OSSTRDUP2( info->pFindFileData.cFileName, ffind->szName, sizeof( ffind->szName ) - 1 );
+            HB_OSSTRDUP2( info->pFindFileData.cFileName, ffind->szName, sizeof(ffind->szName) - 1 );
 
             if( info->pFindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY )
             {
@@ -460,16 +460,16 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
 
          ffind->bFirst = HB_FALSE;
 
-         hb_strncpy( dirname, ffind->pszFileMask, sizeof( dirname ) - 1 );
+         hb_strncpy( dirname, ffind->pszFileMask, sizeof(dirname) - 1 );
          pos = strrchr( dirname, HB_OS_PATH_DELIM_CHR );
          if( pos )
          {
-            hb_strncpy( info->pattern, pos + 1, sizeof( info->pattern ) - 1 );
+            hb_strncpy( info->pattern, pos + 1, sizeof(info->pattern) - 1 );
             *( pos + 1 ) = '\0';
          }
          else
          {
-            hb_strncpy( info->pattern, dirname, sizeof( info->pattern ) - 1 );
+            hb_strncpy( info->pattern, dirname, sizeof(info->pattern) - 1 );
             dirname[ 0 ] = '.';
             dirname[ 1 ] = HB_OS_PATH_DELIM_CHR;
             dirname[ 2 ] = '\0';
@@ -484,7 +484,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
          #endif
 
          info->dir = opendir( dirname );
-         hb_strncpy( info->path, dirname, sizeof( info->path ) - 1 );
+         hb_strncpy( info->path, dirname, sizeof(info->path) - 1 );
       }
 
       if( info->dir && info->pattern[ 0 ] != '\0' )
@@ -502,8 +502,8 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
       /* Fill Harbour found file info */
       if( bFound )
       {
-         hb_strncpy( dirname, info->path, sizeof( dirname ) - 1 );
-         hb_strncat( dirname, info->entry->d_name, sizeof( dirname ) - 1 );
+         hb_strncpy( dirname, info->path, sizeof(dirname) - 1 );
+         hb_strncat( dirname, info->entry->d_name, sizeof(dirname) - 1 );
          {
             time_t ftime;
             struct tm lt;
@@ -515,7 +515,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
                {
                   if( stat64( dirname, &sStatL ) == 0 )
                   {
-                     memcpy( &sStat, &sStatL, sizeof( sStat ) );
+                     memcpy( &sStat, &sStatL, sizeof(sStat) );
                   }
                   nAttr |= HB_FA_LINK;
                }
@@ -527,7 +527,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
                {
                   if( stat( dirname, &sStatL ) == 0 )
                   {
-                     memcpy( &sStat, &sStatL, sizeof( sStat ) );
+                     memcpy( &sStat, &sStatL, sizeof(sStat) );
                   }
                   nAttr |= HB_FA_LINK;
                }
@@ -539,7 +539,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
                      nAttr |= HB_FA_HIDDEN;
                   }
                }
-               hb_strncpy( ffind->szName, info->entry->d_name, sizeof( ffind->szName ) - 1 );
+               hb_strncpy( ffind->szName, info->entry->d_name, sizeof(ffind->szName) - 1 );
                ffind->size = sStat.st_size;
 
                raw_attr = sStat.st_mode;
@@ -611,18 +611,18 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
    if( bFound )
    {
       /* Do the conversions common for all platforms */
-      ffind->szName[ sizeof( ffind->szName ) - 1 ] = '\0';
+      ffind->szName[ sizeof(ffind->szName) - 1 ] = '\0';
 
 #if ! defined( HB_OS_WIN )
       /* Convert from OS codepage */
       {
          char * pszFree = nullptr;
-         HB_SIZE nSize = sizeof( ffind->szName );
+         HB_SIZE nSize = sizeof(ffind->szName);
          const char * pszResult = hb_osDecodeCP( ffind->szName, &pszFree, &nSize );
 
          if( pszFree )
          {
-            hb_strncpy( ffind->szName, pszResult, sizeof( ffind->szName ) - 1 );
+            hb_strncpy( ffind->szName, pszResult, sizeof(ffind->szName) - 1 );
             hb_xfree( pszFree );
          }
       }
@@ -634,7 +634,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
       hb_dateStrPut( ffind->szDate, iYear, iMonth, iDay );
       ffind->szDate[ 8 ] = '\0';
 
-      hb_snprintf( ffind->szTime, sizeof( ffind->szTime ), "%02d:%02d:%02d", iHour, iMin, iSec );
+      hb_snprintf( ffind->szTime, sizeof(ffind->szTime), "%02d:%02d:%02d", iHour, iMin, iSec );
    }
    hb_vmLock();
 
@@ -643,10 +643,10 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
 
 PHB_FFIND hb_fsFindFirst( const char * pszFileMask, HB_FATTR attrmask )
 {
-   PHB_FFIND ffind = static_cast<PHB_FFIND>( hb_xgrabz( sizeof( HB_FFIND ) ) );
+   PHB_FFIND ffind = static_cast<PHB_FFIND>( hb_xgrabz( sizeof(HB_FFIND) ) );
 
    /* Allocate platform dependent file find info storage */
-   ffind->info = static_cast<void*>( hb_xgrabz( sizeof( HB_FFIND_INFO ) ) );
+   ffind->info = static_cast<void*>( hb_xgrabz( sizeof(HB_FFIND_INFO) ) );
 
    /* Store search parameters */
 #if defined( HB_OS_WIN )

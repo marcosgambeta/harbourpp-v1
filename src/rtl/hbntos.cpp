@@ -89,7 +89,7 @@ HB_FUNC( HB_NTOC )
       if( ! HB_IS_DOUBLE( pNumber ) )
       {
          HB_MAXINT nNumber = hb_itemGetNInt( pNumber );
-         int iPos = sizeof( szBuffer );
+         int iPos = sizeof(szBuffer);
          HB_BOOL fNeg = nNumber < 0;
 
          if( fNeg )
@@ -112,7 +112,7 @@ HB_FUNC( HB_NTOC )
       }
       else
       {
-         hb_retc( hb_dblToStr( szBuffer, sizeof( szBuffer ), hb_itemGetND( pNumber ), hb_parnidef( 2, -1 ) ) );
+         hb_retc( hb_dblToStr( szBuffer, sizeof(szBuffer), hb_itemGetND( pNumber ), hb_parnidef( 2, -1 ) ) );
       }
    }
    else

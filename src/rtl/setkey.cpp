@@ -95,7 +95,7 @@ static void hb_setkeyRelease( void * cargo )
    ( ( PHB_SK_DATA ) cargo )->sk_list = nullptr;
 }
 
-static HB_TSD_NEW( s_skData, sizeof( HB_SK_DATA ), nullptr, hb_setkeyRelease );
+static HB_TSD_NEW( s_skData, sizeof(HB_SK_DATA), nullptr, hb_setkeyRelease );
 
 static HB_BOOL sk_testActive( PHB_ITEM pIsActive, int iKeyCode )
 {
@@ -143,7 +143,7 @@ static void sk_add( PHB_SETKEY * sk_list_ptr, HB_BOOL bReturn, int iKeyCode, PHB
       {
          if( pAction )
          {
-            sk_list_tmp = static_cast<PHB_SETKEY>( hb_xgrab( sizeof( HB_SETKEY ) ) );
+            sk_list_tmp = static_cast<PHB_SETKEY>( hb_xgrab( sizeof(HB_SETKEY) ) );
             sk_list_tmp->next = nullptr;
             sk_list_tmp->iKeyCode = iKeyCode;
             sk_list_tmp->pAction = hb_itemNew( pAction );

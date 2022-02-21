@@ -136,13 +136,13 @@ static int hb_pp_writeRules( FILE * fout, PHB_PP_RULE pFirst, const char * szNam
       ++iRule;
       if( pRule->pMatch )
       {
-         hb_snprintf( szMatch, sizeof( szMatch ), "s_%cm%03d", szName[ 0 ], iRule );
+         hb_snprintf( szMatch, sizeof(szMatch), "s_%cm%03d", szName[ 0 ], iRule );
          hb_pp_writeTokenList( fout, pRule->pMatch, szMatch );
       }
 
       if( pRule->pResult )
       {
-         hb_snprintf( szResult, sizeof( szResult ), "s_%cr%03d", szName[ 0 ], iRule );
+         hb_snprintf( szResult, sizeof(szResult), "s_%cr%03d", szName[ 0 ], iRule );
          hb_pp_writeTokenList( fout, pRule->pResult, szResult );
       }
       pRule = pRule->pPrev;
@@ -157,13 +157,13 @@ static int hb_pp_writeRules( FILE * fout, PHB_PP_RULE pFirst, const char * szNam
    {
       ++iRule;
       if( pRule->pMatch )
-         hb_snprintf( szMatch, sizeof( szMatch ), "s_%cm%03d", szName[ 0 ], iRule );
+         hb_snprintf( szMatch, sizeof(szMatch), "s_%cm%03d", szName[ 0 ], iRule );
       else
-         hb_strncpy( szMatch, "NULL   ", sizeof( szMatch ) - 1 );
+         hb_strncpy( szMatch, "NULL   ", sizeof(szMatch) - 1 );
       if( pRule->pResult )
-         hb_snprintf( szResult, sizeof( szResult ), "s_%cr%03d", szName[ 0 ], iRule );
+         hb_snprintf( szResult, sizeof(szResult), "s_%cr%03d", szName[ 0 ], iRule );
       else
-         hb_strncpy( szResult, "NULL   ", sizeof( szResult ) - 1 );
+         hb_strncpy( szResult, "NULL   ", sizeof(szResult) - 1 );
 
       ulRepeatBits = 0;
       for( u = 0, ulBit = 1; u < pRule->markers; ++u, ulBit <<= 1 )
@@ -511,7 +511,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
 
       do
       {
-         if( ! fgets( szLine, sizeof( szLine ), file_in ) )
+         if( ! fgets( szLine, sizeof(szLine), file_in ) )
             break;
 
          if( ! *szId )
@@ -527,13 +527,13 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
                   if( szTo == szFrom )
                   {
                      /* we do not have revision number :-( */
-                     hb_strncpy( szId, "unknown -1 (source tarball without keyword expanding)", sizeof( szId ) - 1 );
+                     hb_strncpy( szId, "unknown -1 (source tarball without keyword expanding)", sizeof(szId) - 1 );
                   }
                   else if( szTo - szFrom > 3 && szTo[ -1 ] == ' ' &&
                            szFrom[ 0 ] == ':' && szFrom[ 1 ] == ' ' )
                   {
                      szTo[ -1 ] = '\0';
-                     hb_strncpy( szId, szFrom + 2, sizeof( szId ) - 1 );
+                     hb_strncpy( szId, szFrom + 2, sizeof(szId) - 1 );
                   }
                }
             }
@@ -543,7 +543,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
             if( szLine[ 4 ] == '-' && szLine[ 7 ] == '-' &&
                 szLine[ 10 ] == ' ' && szLine[ 13 ] == ':' )
             {
-               hb_strncpy( szLog, szLine, sizeof( szLog ) - 1 );
+               hb_strncpy( szLog, szLine, sizeof(szLog) - 1 );
                iLen = static_cast<int>( strlen( szLog ) );
                while( iLen-- && HB_ISSPACE( szLog[ iLen ] ) )
                {
@@ -567,14 +567,14 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
          char szRevID[ 18 ];
 
          *szLine = '"';
-         hb_strncpy( szLine + 1, szLog, sizeof( szLine ) - 3 );
+         hb_strncpy( szLine + 1, szLog, sizeof(szLine) - 3 );
          iLen = static_cast<int>( strlen( szLine ) );
          szLine[ iLen ] = '"';
          szLine[ ++iLen ] = '\0';
          hb_pp_addDefine( pState, "HB_VER_LENTRY", szLine );
          *pszLastEntry = hb_strdup( szLog );
 
-         hb_strncpy( szLine + 1, szId, sizeof( szLine ) - 3 );
+         hb_strncpy( szLine + 1, szId, sizeof(szLine) - 3 );
          iLen = static_cast<int>( strlen( szLine ) );
          szLine[ iLen ] = '"';
          szLine[ ++iLen ] = '\0';

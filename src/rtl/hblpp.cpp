@@ -53,7 +53,7 @@ PHB_LPP hb_lppCreate( HB_SOCKET sd )
 {
    PHB_LPP pSocket;
 
-   pSocket         = static_cast<PHB_LPP>( hb_xgrabz( sizeof( HB_LPP ) ) );
+   pSocket         = static_cast<PHB_LPP>( hb_xgrabz( sizeof(HB_LPP) ) );
    pSocket->sd     = sd;
    pSocket->nLimit = 1024;
    return pSocket;

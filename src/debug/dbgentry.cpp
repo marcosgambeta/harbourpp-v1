@@ -71,8 +71,8 @@ static HB_BOOL hb_clsSetScope( HB_BOOL fScope )
 #endif
 
 #define ARRAY_ADD( type, array, length ) \
-   ( ( ++length == 1 ) ? ( array = static_cast<type*>( hb_xgrab( sizeof( type ) ) ) ) : \
-     ( ( array = static_cast<type*>( hb_xrealloc( array, sizeof( type ) * length ) ) ) + \
+   ( ( ++length == 1 ) ? ( array = static_cast<type*>( hb_xgrab( sizeof(type) ) ) ) : \
+     ( ( array = static_cast<type*>( hb_xrealloc( array, sizeof(type) * length ) ) ) + \
        length - 1 ) )
 
 #define ARRAY_DEL( type, array, length, index ) \
@@ -80,7 +80,7 @@ static HB_BOOL hb_clsSetScope( HB_BOOL fScope )
       if( ! --length ) \
          hb_xfree( array ); \
       else if( index < length ) \
-         memmove( array + index, array + index + 1, sizeof( type ) * ( length - index ) ); \
+         memmove( array + index, array + index + 1, sizeof(type) * ( length - index ) ); \
    } while( 0 )
 
 #define HB_DBGCOMMON_LOCK()       hb_threadEnterCriticalSectionGC( &s_dbgMtx )
@@ -496,7 +496,7 @@ void hb_dbgEntry( int nMode, int nLine, const char * szName, int nIndex, PHB_ITE
    {
       if( ! info )
       {
-         info = *infoPtr = static_cast<HB_DEBUGINFO*>( hb_xgrabz( sizeof( HB_DEBUGINFO ) ) );
+         info = *infoPtr = static_cast<HB_DEBUGINFO*>( hb_xgrabz( sizeof(HB_DEBUGINFO) ) );
          info->bCBTrace = HB_TRUE;
       }
       else if( info->bInside || info->bQuit )
@@ -824,7 +824,7 @@ static void hb_dbgAddStack( HB_DEBUGINFO * info, const char * szName, int nLine,
    if( info->bCodeBlock )
    {
       memcpy( szBuff, "(b)", 3 );
-      hb_strncpy( szBuff + 3, szFunction, sizeof( szBuff ) - 4 );
+      hb_strncpy( szBuff + 3, szFunction, sizeof(szBuff) - 4 );
       top->szFunction = hb_strdup( szBuff );
    }
    else
@@ -1284,7 +1284,7 @@ static int hb_dbgEvalSubstituteVar( HB_WATCHPOINT * watch, char * szWord, int nS
    }
 
    n = strlen( watch->szExpr );
-   j = hb_snprintf( buf, sizeof( buf ), "__dbg[%d]", j + 1 );
+   j = hb_snprintf( buf, sizeof(buf), "__dbg[%d]", j + 1 );
    szExpr = static_cast<char*>( hb_xgrab( n - nLen + j + 1 ) );
    memcpy( szExpr, watch->szExpr, nStart );
    memcpy( szExpr + nStart, buf, j );
@@ -1491,7 +1491,7 @@ static PHB_ITEM hb_dbgEvalResolve( HB_DEBUGINFO * info, HB_WATCHPOINT * watch )
       return aVars;
    }
 
-   scopes = static_cast<HB_VARINFO*>( hb_xgrab( watch->nVars * sizeof( HB_VARINFO ) ) );
+   scopes = static_cast<HB_VARINFO*>( hb_xgrab( watch->nVars * sizeof(HB_VARINFO) ) );
    nProcLevel = hb_dbg_ProcLevel();
 
    HB_DBGCOMMON_LOCK();

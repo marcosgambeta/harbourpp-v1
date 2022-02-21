@@ -124,7 +124,7 @@ static void hb_destroyFBuffer( PHB_FILEBUF pFileBuf )
 
 static PHB_FILEBUF hb_createFBuffer( PHB_FILE pFile, HB_SIZE nSize )
 {
-   PHB_FILEBUF pFileBuf = static_cast<PHB_FILEBUF>( hb_xgrab( sizeof( HB_FILEBUF ) ) );
+   PHB_FILEBUF pFileBuf = static_cast<PHB_FILEBUF>( hb_xgrab( sizeof(HB_FILEBUF) ) );
 
    pFileBuf->pFile = pFile;
    pFileBuf->pBuf = static_cast<HB_BYTE*>( hb_xgrab( nSize ) );
@@ -313,7 +313,7 @@ static HB_ULONG hb_db2Sql( AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
             HB_ULONG ulRec = ulRecords;
             char szRecno[ 13 ], * szVal;
 
-            szVal = szRecno + sizeof( szRecno );
+            szVal = szRecno + sizeof(szRecno);
             *--szVal = 0;
             do
             {

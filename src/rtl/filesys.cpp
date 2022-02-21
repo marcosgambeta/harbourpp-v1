@@ -290,7 +290,7 @@ static int fs_win_get_drive( void )
    if( dwResult > dwSize )
    {
       dwSize = dwResult;
-      lpBuffer = static_cast<TCHAR*>( hb_xgrab( dwSize * sizeof( TCHAR ) ) );
+      lpBuffer = static_cast<TCHAR*>( hb_xgrab( dwSize * sizeof(TCHAR) ) );
       dwResult = GetCurrentDirectory( dwSize, lpBuffer );
    }
    hb_fsSetIOError( dwResult != 0, 0 );
@@ -763,10 +763,10 @@ int hb_fsPoll( PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut )
 {
    struct pollfd fds[ 16 ], * pfds;
    static const HB_BOOL s_fSamePoll =
-                  sizeof( struct pollfd ) == sizeof( HB_POLLFD ) &&
-                  sizeof( pPollSet->fd ) == sizeof( fds[ 0 ].fd ) &&
-                  sizeof( pPollSet->events ) == sizeof( fds[ 0 ].events ) &&
-                  sizeof( pPollSet->revents ) == sizeof( fds[ 0 ].revents ) &&
+                  sizeof(struct pollfd) == sizeof(HB_POLLFD) &&
+                  sizeof(pPollSet->fd) == sizeof(fds[ 0 ].fd) &&
+                  sizeof(pPollSet->events) == sizeof(fds[ 0 ].events) &&
+                  sizeof(pPollSet->revents) == sizeof(fds[ 0 ].revents) &&
                   HB_POLLIN == POLLIN && HB_POLLPRI == POLLPRI &&
                   HB_POLLOUT == POLLOUT && HB_POLLERR == POLLERR &&
                   HB_POLLHUP == POLLHUP && HB_POLLNVAL == POLLNVAL;
@@ -787,7 +787,7 @@ int hb_fsPoll( PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut )
       }
       else
       {
-         pfds = static_cast<struct pollfd*>( pFree = hb_xgrab( sizeof( struct pollfd ) * iCount ) );
+         pfds = static_cast<struct pollfd*>( pFree = hb_xgrab( sizeof(struct pollfd) * iCount ) );
       }
 
       for( i = 0; i < iCount; ++i )
@@ -1147,8 +1147,8 @@ HB_BOOL hb_fsPipeCreate( HB_FHANDLE hPipe[ 2 ] )
    SECURITY_ATTRIBUTES sa;
    HANDLE hPipeRd, hPipeWr;
 
-   memset( &sa, 0, sizeof( sa ) );
-   sa.nLength = sizeof( sa );
+   memset( &sa, 0, sizeof(sa) );
+   sa.nLength = sizeof(sa);
    sa.bInheritHandle = TRUE;
 
    fResult = CreatePipe( &hPipeRd, &hPipeWr, &sa, 0 ) != 0;
@@ -1683,7 +1683,7 @@ HB_BOOL hb_fsGetFileTime( const char * pszFileName, long * plJulian, long * plMi
 
          lpFileName = HB_FSNAMECONV( pszFileName, &lpFree );
 
-         memset( &attrex, 0, sizeof( attrex ) );
+         memset( &attrex, 0, sizeof(attrex) );
 
          if( GetFileAttributesEx( lpFileName, GetFileExInfoStandard, &attrex ) )
          {
@@ -1909,7 +1909,7 @@ HB_BOOL hb_fsSetFileTime( const char * pszFileName, long lJulian, long lMillisec
          }
          else
          {
-            memset( &st, 0, sizeof( st ) );
+            memset( &st, 0, sizeof(st) );
          }
 
          if( lJulian > 0 )
@@ -1972,7 +1972,7 @@ HB_BOOL hb_fsSetFileTime( const char * pszFileName, long lJulian, long lMillisec
          }
          else
          {
-            memset( &new_value, 0, sizeof( new_value ) );
+            memset( &new_value, 0, sizeof(new_value) );
          }
 
          if( lJulian > 0 )
@@ -2456,7 +2456,7 @@ HB_SIZE hb_fsReadAt( HB_FHANDLE hFileHandle, void * pBuff, HB_SIZE nCount, HB_FO
       OVERLAPPED Overlapped;
       BOOL bResult = TRUE;
 
-      memset( &Overlapped, 0, sizeof( Overlapped ) );
+      memset( &Overlapped, 0, sizeof(Overlapped) );
       Overlapped.Offset     = static_cast<DWORD>( nOffset & 0xFFFFFFFF );
       Overlapped.OffsetHigh = static_cast<DWORD>( nOffset >> 32 );
 
@@ -2498,7 +2498,7 @@ HB_SIZE hb_fsReadAt( HB_FHANDLE hFileHandle, void * pBuff, HB_SIZE nCount, HB_FO
    {
       DWORD dwRead = 0;
       OVERLAPPED Overlapped;
-      memset( &Overlapped, 0, sizeof( Overlapped ) );
+      memset( &Overlapped, 0, sizeof(Overlapped) );
       Overlapped.Offset     = static_cast<DWORD>( nOffset & 0xFFFFFFFF );
       Overlapped.OffsetHigh = static_cast<DWORD>( nOffset >> 32 );
       hb_fsSetIOError( ReadFile( DosToWinHandle( hFileHandle ), pBuff, static_cast<DWORD>( nCount ), &dwRead, &Overlapped ) != 0, 0 );
@@ -2587,7 +2587,7 @@ HB_SIZE hb_fsWriteAt( HB_FHANDLE hFileHandle, const void * pBuff, HB_SIZE nCount
       OVERLAPPED Overlapped;
       BOOL bResult = TRUE;
 
-      memset( &Overlapped, 0, sizeof( Overlapped ) );
+      memset( &Overlapped, 0, sizeof(Overlapped) );
       Overlapped.Offset     = static_cast<DWORD>( nOffset & 0xFFFFFFFF );
       Overlapped.OffsetHigh = static_cast<DWORD>( nOffset >> 32 );
 
@@ -2629,7 +2629,7 @@ HB_SIZE hb_fsWriteAt( HB_FHANDLE hFileHandle, const void * pBuff, HB_SIZE nCount
    {
       DWORD dwWritten = 0;
       OVERLAPPED Overlapped;
-      memset( &Overlapped, 0, sizeof( Overlapped ) );
+      memset( &Overlapped, 0, sizeof(Overlapped) );
       Overlapped.Offset     = static_cast<DWORD>( nOffset & 0xFFFFFFFF );
       Overlapped.OffsetHigh = static_cast<DWORD>( nOffset >> 32 );
       hb_fsSetIOError( WriteFile( DosToWinHandle( hFileHandle ), pBuff, static_cast<DWORD>( nCount ), &dwWritten, &Overlapped ) != 0, 0 );
@@ -2820,7 +2820,7 @@ HB_BOOL hb_fsLock( HB_FHANDLE hFileHandle, HB_ULONG ulStart, HB_ULONG ulLength, 
          {
             OVERLAPPED sOlap;
             DWORD dwFlags;
-            memset( &sOlap, 0, sizeof( sOlap ) );
+            memset( &sOlap, 0, sizeof(sOlap) );
             sOlap.Offset = static_cast<DWORD>( ulStart );
             dwFlags = ( uiMode & FLX_SHARED ) ? 0 : LOCKFILE_EXCLUSIVE_LOCK;
             if( ! s_fUseWaitLocks || ! ( uiMode & FLX_WAIT ) )
@@ -2840,7 +2840,7 @@ HB_BOOL hb_fsLock( HB_FHANDLE hFileHandle, HB_ULONG ulStart, HB_ULONG ulLength, 
          if( hb_iswinnt() )
          {
             OVERLAPPED sOlap;
-            memset( &sOlap, 0, sizeof( sOlap ) );
+            memset( &sOlap, 0, sizeof(sOlap) );
             sOlap.Offset = static_cast<DWORD>( ulStart );
             fResult = UnlockFileEx( DosToWinHandle( hFileHandle ), 0, ulLength, 0, &sOlap ) != 0;
          }
@@ -2988,7 +2988,7 @@ HB_BOOL hb_fsLockLarge( HB_FHANDLE hFileHandle, HB_FOFFSET nStart, HB_FOFFSET nL
                   dwFlags |= LOCKFILE_FAIL_IMMEDIATELY;
                }
 
-               memset( &sOlap, 0, sizeof( sOlap ) );
+               memset( &sOlap, 0, sizeof(sOlap) );
                sOlap.Offset = dwOffsetLo;
                sOlap.OffsetHigh = dwOffsetHi;
 
@@ -3005,7 +3005,7 @@ HB_BOOL hb_fsLockLarge( HB_FHANDLE hFileHandle, HB_FOFFSET nStart, HB_FOFFSET nL
             {
                OVERLAPPED sOlap;
 
-               memset( &sOlap, 0, sizeof( sOlap ) );
+               memset( &sOlap, 0, sizeof(sOlap) );
                sOlap.Offset = dwOffsetLo;
                sOlap.OffsetHigh = dwOffsetHi;
 
@@ -3636,7 +3636,7 @@ HB_ERRCODE hb_fsCurDirBuff( int iDrive, char * pszBuffer, HB_SIZE nSize )
 #if defined( HB_OS_WIN )
    {
       DWORD dwSize = static_cast<DWORD>( nSize );
-      LPTSTR lpBuffer = static_cast<LPTSTR>( hb_xgrab( dwSize * sizeof( TCHAR ) ) );
+      LPTSTR lpBuffer = static_cast<LPTSTR>( hb_xgrab( dwSize * sizeof(TCHAR) ) );
       lpBuffer[ 0 ] = TEXT( '\0' );
       hb_fsSetIOError( ( GetCurrentDirectory( dwSize, lpBuffer ) != 0 ), 0 );
       lpBuffer[ dwSize - 1 ] = TEXT( '\0' );
@@ -3749,7 +3749,7 @@ HB_BOOL hb_fsGetCWD( char * pszBuffer, HB_SIZE nSize )
 #if defined( HB_OS_WIN )
    {
       DWORD dwSize = static_cast<DWORD>( nSize );
-      LPTSTR lpBuffer = static_cast<LPTSTR>( hb_xgrab( dwSize * sizeof( TCHAR ) ) );
+      LPTSTR lpBuffer = static_cast<LPTSTR>( hb_xgrab( dwSize * sizeof(TCHAR) ) );
       lpBuffer[ 0 ] = TEXT( '\0' );
       fResult = GetCurrentDirectory( dwSize, lpBuffer ) != 0;
       hb_fsSetIOError( fResult, 0 );

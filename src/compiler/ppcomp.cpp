@@ -464,7 +464,7 @@ static void hb_pp_fileIncluded( void * cargo, const char * szFileName )
    }
 
    iLen = static_cast<int>( strlen( szFileName ) );
-   pIncFile = static_cast<PHB_INCLST>( hb_xgrab( sizeof( HB_INCLST ) + iLen ) );
+   pIncFile = static_cast<PHB_INCLST>( hb_xgrab( sizeof(HB_INCLST) + iLen ) );
    pIncFile->pNext = nullptr;
    memcpy( pIncFile->szFileName, szFileName, iLen + 1 );
    *pIncFilePtr = pIncFile;

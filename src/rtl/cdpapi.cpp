@@ -165,7 +165,7 @@ void hb_cdpBuildTransTable( PHB_UNITABLE uniTable )
             wcMax = wc;
          }
       }
-      uniTrans = static_cast<HB_UCHAR*>( hb_xgrabz( ( wcMax + 1 ) * sizeof( HB_UCHAR ) ) );
+      uniTrans = static_cast<HB_UCHAR*>( hb_xgrabz( ( wcMax + 1 ) * sizeof(HB_UCHAR) ) );
       for( i = 0; i < 256; ++i )
       {
          if( uniTable->uniCodes[ i ] )
@@ -180,7 +180,7 @@ void hb_cdpBuildTransTable( PHB_UNITABLE uniTable )
       if( s_rev_ctrl == nullptr )
       {
          wcMax = HB_MAX_CTRL_CODE;
-         s_rev_ctrl = static_cast<HB_UCHAR*>( hb_xgrabz( ( wcMax + 1 ) * sizeof( HB_UCHAR ) ) );
+         s_rev_ctrl = static_cast<HB_UCHAR*>( hb_xgrabz( ( wcMax + 1 ) * sizeof(HB_UCHAR) ) );
          for( i = 0; i < 32; ++i )
          {
             s_rev_ctrl[ s_uniCtrls[ i ] ] = static_cast<HB_UCHAR>( i );
@@ -2134,7 +2134,7 @@ HB_SIZE hb_cdpStrToU16( PHB_CODEPAGE cdp, int iEndian, const char * pSrc, HB_SIZ
 HB_WCHAR * hb_cdpnStrDupU16( PHB_CODEPAGE cdp, int iEndian, const char * pSrc, HB_SIZE nSrc, HB_SIZE * pnDst )
 {
    HB_SIZE nLen = hb_cdpStrAsU16Len( cdp, pSrc, nSrc, 0 );
-   HB_WCHAR * pDst = static_cast<HB_WCHAR*>( hb_xgrab( ( nLen + 1 ) * sizeof( HB_WCHAR ) ) );
+   HB_WCHAR * pDst = static_cast<HB_WCHAR*>( hb_xgrab( ( nLen + 1 ) * sizeof(HB_WCHAR) ) );
 
    hb_cdpStrToU16( cdp, iEndian, pSrc, nSrc, pDst, nLen + 1 );
    if( pnDst )
@@ -3111,7 +3111,7 @@ static PHB_CODEPAGE hb_buildCodePage( const char * id, const char * info,
    PHB_CODEPAGE cdp;
    PHB_MULTICHAR multi;
 
-   memset( used, '\0', sizeof( used ) );
+   memset( used, '\0', sizeof(used) );
 
    iMulti = iAcc = iSortUp = iSortLo = 0;
    fError = lSort = HB_FALSE;
@@ -3260,10 +3260,10 @@ static PHB_CODEPAGE hb_buildCodePage( const char * id, const char * info,
       }
    }
    ul = nSize;
-   nSize += sizeof( HB_CODEPAGE );
+   nSize += sizeof(HB_CODEPAGE);
    if( iMulti )
    {
-      nSize += iMulti * sizeof( HB_MULTICHAR );
+      nSize += iMulti * sizeof(HB_MULTICHAR);
    }
 
    buffer = static_cast<HB_UCHAR*>( hb_xgrabz( nSize ) );
@@ -3289,7 +3289,7 @@ static PHB_CODEPAGE hb_buildCodePage( const char * id, const char * info,
    }
    if( iMulti )
    {
-      cdp->multi = reinterpret_cast<PHB_MULTICHAR>( &buffer[ sizeof( HB_CODEPAGE ) ] );
+      cdp->multi = reinterpret_cast<PHB_MULTICHAR>( &buffer[ sizeof(HB_CODEPAGE) ] );
    }
 
    cdp->id = id;
@@ -3324,7 +3324,7 @@ static PHB_CODEPAGE hb_buildCodePage( const char * id, const char * info,
    pup = pszUpper;
    plo = pszLower;
    ucUp2 = ucLo2 = 255;
-   memset( used, '\0', sizeof( used ) );
+   memset( used, '\0', sizeof(used) );
    while( *pup )
    {
       ucUp = _HB_CDP_GETUC( pup );
@@ -3824,7 +3824,7 @@ const char ** hb_cdpList( void )
       cdp = cdp->next;
    }
 
-   list = static_cast<const char**>( hb_xgrab( ( iCount + 1 ) * sizeof( char * ) ) );
+   list = static_cast<const char**>( hb_xgrab( ( iCount + 1 ) * sizeof(char*) ) );
 
    cdp = s_cdpList;
    iPos = 0;

@@ -105,10 +105,10 @@ using HB_GARBAGE = HB_GARBAGE_;
 using PHB_GARBAGE = HB_GARBAGE *;
 
 #ifdef HB_ALLOC_ALIGNMENT
-#  define HB_GARBAGE_SIZE     ( ( sizeof( HB_GARBAGE ) + HB_ALLOC_ALIGNMENT - 1 ) - \
-                                ( sizeof( HB_GARBAGE ) + HB_ALLOC_ALIGNMENT - 1 ) % HB_ALLOC_ALIGNMENT )
+#  define HB_GARBAGE_SIZE     ( ( sizeof(HB_GARBAGE) + HB_ALLOC_ALIGNMENT - 1 ) - \
+                                ( sizeof(HB_GARBAGE) + HB_ALLOC_ALIGNMENT - 1 ) % HB_ALLOC_ALIGNMENT )
 #else
-#  define HB_GARBAGE_SIZE     sizeof( HB_GARBAGE )
+#  define HB_GARBAGE_SIZE     sizeof(HB_GARBAGE)
 #endif
 
 #define HB_GC_PTR( p )        ( reinterpret_cast<PHB_GARBAGE>( reinterpret_cast<HB_BYTE*>( p ) - HB_GARBAGE_SIZE ) )
@@ -371,7 +371,7 @@ static const HB_GC_FUNCS s_gcGripFuncs =
 
 PHB_ITEM hb_gcGripGet( PHB_ITEM pOrigin )
 {
-   PHB_GARBAGE pAlloc = HB_GARBAGE_NEW( sizeof( HB_ITEM ) );
+   PHB_GARBAGE pAlloc = HB_GARBAGE_NEW( sizeof(HB_ITEM) );
    PHB_ITEM pItem = static_cast<PHB_ITEM>( HB_BLOCK_PTR( pAlloc ) );
 
    pAlloc->pFuncs = &s_gcGripFuncs;

@@ -91,7 +91,7 @@ static const char s_szHead[ 4 ] = { '\xC0', 'H', 'R', 'B' };
 
 static HB_SIZE hb_hrbCheckSig( const char * szBody, HB_SIZE nBodySize )
 {
-   return ( nBodySize > sizeof( s_szHead ) && memcmp( s_szHead, szBody, sizeof( s_szHead ) ) == 0 ) ? sizeof( s_szHead ) : 0;
+   return ( nBodySize > sizeof(s_szHead) && memcmp( s_szHead, szBody, sizeof(s_szHead) ) == 0 ) ? sizeof(s_szHead) : 0;
 }
 
 static int hb_hrbReadHead( const char * szBody, HB_SIZE nBodySize, HB_SIZE * pnBodyOffset )
@@ -346,7 +346,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
          return nullptr;
       }
 
-      pHrbBody = static_cast<PHRB_BODY>( hb_xgrab( sizeof( HRB_BODY ) ) );
+      pHrbBody = static_cast<PHRB_BODY>( hb_xgrab( sizeof(HRB_BODY) ) );
 
       pHrbBody->fInit = HB_FALSE;
       pHrbBody->fExit = HB_FALSE;
@@ -386,7 +386,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
       }
 
       nBodyOffset = nPos;
-      ul = pHrbBody->ulSymbols * sizeof( HB_SYMB );
+      ul = pHrbBody->ulSymbols * sizeof(HB_SYMB);
       pSymRead = static_cast<PHB_SYMB>( hb_xgrab( nSize + ul ) );
       buffer = ( reinterpret_cast<char*>( pSymRead ) ) + ul;
 
@@ -421,7 +421,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
 
       if( pHrbBody->ulFuncs )
       {
-         pDynFunc = static_cast<PHB_DYNF>( hb_xgrabz( pHrbBody->ulFuncs * sizeof( HB_DYNF ) ) );
+         pDynFunc = static_cast<PHB_DYNF>( hb_xgrabz( pHrbBody->ulFuncs * sizeof(HB_DYNF) ) );
          pHrbBody->pDynFunc = pDynFunc;
 
          for( ul = 0; ul < pHrbBody->ulFuncs; ul++ )
@@ -514,7 +514,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
                {
                   char szName[ HB_SYMBOL_NAME_LEN + 1 ];
 
-                  hb_strncpy( szName, pSymRead[ ul ].szName, sizeof( szName ) - 1 );
+                  hb_strncpy( szName, pSymRead[ ul ].szName, sizeof(szName) - 1 );
                   hb_xfree( pSymRead );
                   hb_hrbUnLoad( pHrbBody );
                   hb_errRT_BASE( EG_ARG, 6101, "Unknown or unregistered symbol", szName, 0 );
@@ -685,7 +685,7 @@ static PHRB_BODY hb_hrbParam( int iParam )
 
 static void hb_hrbReturn( PHRB_BODY pHrbBody )
 {
-   PHRB_BODY * pHrbPtr = static_cast<PHRB_BODY*>( hb_gcAllocate( sizeof( PHRB_BODY ), &s_gcHrbFuncs ) );
+   PHRB_BODY * pHrbPtr = static_cast<PHRB_BODY*>( hb_gcAllocate( sizeof(PHRB_BODY), &s_gcHrbFuncs ) );
 
    *pHrbPtr = pHrbBody;
    hb_retptrGC( pHrbPtr );
@@ -735,7 +735,7 @@ HB_FUNC( HB_HRBRUN )
 
          if( iPCount > 0 )
          {
-            pParams = static_cast<PHB_ITEM*>( hb_xgrab( sizeof( PHB_ITEM ) * iPCount ) );
+            pParams = static_cast<PHB_ITEM*>( hb_xgrab( sizeof(PHB_ITEM) * iPCount ) );
             for( int i = 0; i < iPCount; i++ )
             {
                pParams[ i ] = hb_stackItemFromBase( i + 1 + nParam );
@@ -795,7 +795,7 @@ HB_FUNC( HB_HRBLOAD )
 
          if( iPCount > 0 )
          {
-            pParams = static_cast<PHB_ITEM*>( hb_xgrab( sizeof( PHB_ITEM ) * iPCount ) );
+            pParams = static_cast<PHB_ITEM*>( hb_xgrab( sizeof(PHB_ITEM) * iPCount ) );
             for( int i = 0; i < iPCount; i++ )
             {
                pParams[ i ] = hb_stackItemFromBase( i + 1 + nParam );
@@ -828,7 +828,7 @@ HB_FUNC( HB_HRBDO )
 
       if( iPCount > 0 )
       {
-         pParams = static_cast<PHB_ITEM*>( hb_xgrab( sizeof( PHB_ITEM ) * iPCount ) );
+         pParams = static_cast<PHB_ITEM*>( hb_xgrab( sizeof(PHB_ITEM) * iPCount ) );
          for( int i = 0; i < iPCount; i++ )
          {
             pParams[ i ] = hb_stackItemFromBase( i + 2 );
@@ -934,5 +934,5 @@ HB_FUNC( HB_HRBGETFUNLIST )
 
 HB_FUNC( HB_HRBSIGNATURE )
 {
-   hb_retclen( s_szHead, sizeof( s_szHead ) );
+   hb_retclen( s_szHead, sizeof(s_szHead) );
 }

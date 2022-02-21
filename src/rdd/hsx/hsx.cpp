@@ -257,7 +257,7 @@
 #define HSXDEFFILTER        1 /* default character filter */
 
 #define HSXHEADER_LEN       512L
-#define HSXKEYEXP_LEN       ( 512 - sizeof( HSXHEADER ) )
+#define HSXKEYEXP_LEN       ( 512 - sizeof(HSXHEADER) )
 #define HSXMINBUF_LEN       512L   /* minimum buffer size */
 #define HSXMAXBUF_LEN       64536L /* maximum buffer size */
 #define HSXDEFBUF_LEN       16384L /* default buffer size */
@@ -373,7 +373,7 @@ static void hb_hsxTableRelease( void * Cargo )
    }
 }
 
-static HB_TSD_NEW( s_hsxTable, sizeof( HSXTABLE ), nullptr, hb_hsxTableRelease );
+static HB_TSD_NEW( s_hsxTable, sizeof(HSXTABLE), nullptr, hb_hsxTableRelease );
 
 static LPHSXTABLE hb_hsxTable( void )
 {
@@ -1394,7 +1394,7 @@ static LPHSXINFO hb_hsxNew( void )
    if( pTable->iHandleSize == 0 )
    {
       pTable->iHandleSize = HSX_HALLOC;
-      pTable->handleArray = static_cast<LPHSXINFO*>( hb_xgrabz( sizeof( LPHSXINFO ) * HSX_HALLOC ) );
+      pTable->handleArray = static_cast<LPHSXINFO*>( hb_xgrabz( sizeof(LPHSXINFO) * HSX_HALLOC ) );
    }
    else
    {
@@ -1409,11 +1409,11 @@ static LPHSXINFO hb_hsxNew( void )
       if( iHandle == pTable->iHandleSize )
       {
          pTable->iHandleSize += HSX_HALLOC;
-         pTable->handleArray = static_cast<LPHSXINFO*>( hb_xrealloc( pTable->handleArray, sizeof( LPHSXINFO ) * pTable->iHandleSize ) );
-         memset( &pTable->handleArray[ iHandle ], 0, sizeof( LPHSXINFO ) * HSX_HALLOC );
+         pTable->handleArray = static_cast<LPHSXINFO*>( hb_xrealloc( pTable->handleArray, sizeof(LPHSXINFO) * pTable->iHandleSize ) );
+         memset( &pTable->handleArray[ iHandle ], 0, sizeof(LPHSXINFO) * HSX_HALLOC );
       }
    }
-   pTable->handleArray[ iHandle ] = pHSX = static_cast<LPHSXINFO>( hb_xgrabz( sizeof( HSXINFO ) ) );
+   pTable->handleArray[ iHandle ] = pHSX = static_cast<LPHSXINFO>( hb_xgrabz( sizeof(HSXINFO) ) );
    pTable->iHandleCount++;
    pHSX->iHandle = iHandle;
    pHSX->pFile = nullptr;

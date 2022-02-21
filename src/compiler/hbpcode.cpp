@@ -222,7 +222,7 @@ const HB_BYTE hb_comp_pcode_len[] = {
    3,        /* HB_P_PUSHMEMVAR            */
    3,        /* HB_P_PUSHMEMVARREF         */
    1,        /* HB_P_PUSHNIL               */
-   1 + sizeof( double ) + sizeof( HB_BYTE ) + sizeof( HB_BYTE ),        /* HB_P_PUSHDOUBLE            */
+   1 + sizeof(double) + sizeof(HB_BYTE) + sizeof(HB_BYTE),        /* HB_P_PUSHDOUBLE            */
    1,        /* HB_P_PUSHSELF              */
    3,        /* HB_P_PUSHSTATIC            */
    3,        /* HB_P_PUSHSTATICREF         */
@@ -525,8 +525,8 @@ void hb_compPCodeEval( PHB_HFUNC pFunc, const PHB_PCODE_FUNC * pFunctions, void 
    HB_SIZE nSkip;
 
    /* Make sure that table is correct */
-   assert( sizeof( hb_comp_pcode_len ) == HB_P_LAST_PCODE );
-   assert( sizeof( s_psize_table ) / sizeof( PHB_PCODE_FUNC ) == HB_P_LAST_PCODE );
+   assert( sizeof(hb_comp_pcode_len) == HB_P_LAST_PCODE );
+   assert( sizeof(s_psize_table) / sizeof(PHB_PCODE_FUNC) == HB_P_LAST_PCODE );
 
    while( nPos < pFunc->nPCodePos )
    {
@@ -552,7 +552,7 @@ void hb_compPCodeEval( PHB_HFUNC pFunc, const PHB_PCODE_FUNC * pFunctions, void 
          {
             char szOpcode[ 16 ];
             ++nPos;
-            hb_snprintf( szOpcode, sizeof( szOpcode ), "%i", opcode );
+            hb_snprintf( szOpcode, sizeof(szOpcode), "%i", opcode );
             hb_errInternal( HB_EI_COMPBADOPSIZE, "Invalid (zero) opcode %s size in hb_compPCodeEval()", szOpcode, nullptr );
          }
 #if 0
@@ -564,7 +564,7 @@ void hb_compPCodeEval( PHB_HFUNC pFunc, const PHB_PCODE_FUNC * pFunctions, void 
          if( hb_comp_pcode_len[ opcode ] != 0 && hb_comp_pcode_len[ opcode ] != nSkip )
          {
             char szMsg[ 100 ];
-            hb_snprintf( szMsg, sizeof( szMsg ), "Wrong PCODE (%d) size (%ld!=%d)", opcode, nSkip, hb_comp_pcode_len[ opcode ] );
+            hb_snprintf( szMsg, sizeof(szMsg), "Wrong PCODE (%d) size (%ld!=%d)", opcode, nSkip, hb_comp_pcode_len[ opcode ] );
             hb_errInternal( HB_EI_COMPBADOPSIZE, szMsg, nullptr, nullptr );
          }
 #endif
@@ -574,7 +574,7 @@ void hb_compPCodeEval( PHB_HFUNC pFunc, const PHB_PCODE_FUNC * pFunctions, void 
       {
          char szOpcode[ 16 ];
          ++nPos;
-         hb_snprintf( szOpcode, sizeof( szOpcode ), "%i", opcode );
+         hb_snprintf( szOpcode, sizeof(szOpcode), "%i", opcode );
          hb_errInternal( HB_EI_COMPBADOPCODE, "Invalid opcode: %s in hb_compPCodeEval()", szOpcode, nullptr );
       }
    }
@@ -585,7 +585,7 @@ void hb_compPCodeTrace( PHB_HFUNC pFunc, const PHB_PCODE_FUNC * pFunctions, void
    HB_SIZE nPos = 0;
 
    /* Make sure that table is correct */
-   assert( sizeof( hb_comp_pcode_len ) == HB_P_LAST_PCODE );
+   assert( sizeof(hb_comp_pcode_len) == HB_P_LAST_PCODE );
 
    while( nPos < pFunc->nPCodePos )
    {
@@ -606,7 +606,7 @@ void hb_compPCodeTrace( PHB_HFUNC pFunc, const PHB_PCODE_FUNC * pFunctions, void
       {
          char szOpcode[ 16 ];
          ++nPos;
-         hb_snprintf( szOpcode, sizeof( szOpcode ), "%i", opcode );
+         hb_snprintf( szOpcode, sizeof(szOpcode), "%i", opcode );
          hb_errInternal( HB_EI_COMPBADOPCODE, "Invalid opcode: %s in hb_compPCodeTrace()", szOpcode, nullptr );
       }
    }

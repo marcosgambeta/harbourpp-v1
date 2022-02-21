@@ -169,7 +169,7 @@ HB_BOOL hb_gt_winapi_setClipboard( HB_UINT uFormat, PHB_ITEM pItem )
       if( nSize )
       {
          /* Allocate a global memory object for the text. */
-         HGLOBAL hglb = GlobalAlloc( GMEM_MOVEABLE, ( nSize + 1 ) * ( uFormat == CF_UNICODETEXT ? sizeof( wchar_t ) : sizeof( char ) ) );
+         HGLOBAL hglb = GlobalAlloc( GMEM_MOVEABLE, ( nSize + 1 ) * ( uFormat == CF_UNICODETEXT ? sizeof(wchar_t) : sizeof(char) ) );
          if( hglb )
          {
             /* Lock the handle and copy the text to the buffer. */

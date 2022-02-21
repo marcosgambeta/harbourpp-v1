@@ -726,11 +726,11 @@ static int add_efds( PHB_GTTRM pTerm, int fd, int mode, int ( * eventFunc )( int
    {
       if( pTerm->efds_size <= pTerm->efds_no )
       {
-         pTerm->event_fds = static_cast<evtFD**>( hb_xrealloc( pTerm->event_fds, ( pTerm->efds_size += 10 ) * sizeof( evtFD * ) ) );
-         pTerm->pPollSet = static_cast<PHB_POLLFD>( hb_xrealloc( pTerm->pPollSet, pTerm->efds_size * sizeof( HB_POLLFD ) ) );
+         pTerm->event_fds = static_cast<evtFD**>( hb_xrealloc( pTerm->event_fds, ( pTerm->efds_size += 10 ) * sizeof(evtFD*) ) );
+         pTerm->pPollSet = static_cast<PHB_POLLFD>( hb_xrealloc( pTerm->pPollSet, pTerm->efds_size * sizeof(HB_POLLFD) ) );
       }
 
-      pefd = static_cast<evtFD*>( hb_xgrab( sizeof( evtFD ) ) );
+      pefd = static_cast<evtFD*>( hb_xgrab( sizeof(evtFD) ) );
       pefd->fd = fd;
       pefd->mode = mode;
       pefd->cargo = cargo;
@@ -1084,7 +1084,7 @@ static void mouse_init( PHB_GTTRM pTerm )
    {
       hb_gt_trm_termOut( pTerm, s_szMouseOn, strlen( s_szMouseOn ) );
       hb_gt_trm_termFlush( pTerm );
-      memset( static_cast<void*>( &pTerm->mLastEvt ), 0, sizeof( pTerm->mLastEvt ) );
+      memset( static_cast<void*>( &pTerm->mLastEvt ), 0, sizeof(pTerm->mLastEvt) );
       pTerm->mouse_type |= MOUSE_XTERM;
       pTerm->mButtons = 3;
    }
@@ -1109,7 +1109,7 @@ static void mouse_init( PHB_GTTRM pTerm )
          }
 
          pTerm->mouse_type |= MOUSE_GPM;
-         memset( static_cast<void*>( &pTerm->mLastEvt ), 0, sizeof( pTerm->mLastEvt ) );
+         memset( static_cast<void*>( &pTerm->mLastEvt ), 0, sizeof(pTerm->mLastEvt) );
          flush_gpmevt( pTerm );
          add_efds( pTerm, gpm_fd, O_RDONLY, set_gpmevt, static_cast<void*>( pTerm ) );
 
@@ -1618,7 +1618,7 @@ static void hb_gt_trm_LinuxTone( PHB_GTTRM pTerm, double dFrequency, double dDur
       hb_gt_trm_termOut( pTerm, "\033[10m", 5 );
       pTerm->iACSC = 0;
    }
-   hb_snprintf( escseq, sizeof( escseq ), "\033[10;%d]\033[11;%d]\007", static_cast<int>( dFrequency ), static_cast<int>( dDuration * 1000.0 / 18.2 ) );
+   hb_snprintf( escseq, sizeof(escseq), "\033[10;%d]\033[11;%d]\007", static_cast<int>( dFrequency ), static_cast<int>( dDuration * 1000.0 / 18.2 ) );
    hb_gt_trm_termOut( pTerm, escseq, strlen( escseq ) );
    hb_gt_trm_termFlush( pTerm );
 
@@ -1661,7 +1661,7 @@ static void hb_gt_trm_LinuxSetCursorStyle( PHB_GTTRM pTerm, int iStyle )
       if( lcurs != -1 )
       {
          char escseq[ 64 ];
-         hb_snprintf( escseq, sizeof( escseq ), "\033[?25%c\033[?%dc", iStyle == SC_NONE ? 'l' : 'h', lcurs );
+         hb_snprintf( escseq, sizeof(escseq), "\033[?25%c\033[?%dc", iStyle == SC_NONE ? 'l' : 'h', lcurs );
          hb_gt_trm_termOut( pTerm, escseq, strlen( escseq ) );
          pTerm->iCursorStyle = iStyle;
       }
@@ -1690,7 +1690,7 @@ static void hb_gt_trm_LinuxSetPalette( PHB_GTTRM pTerm, int iIndexFrom, int iInd
          char szColor[ 11 ];
          int iAnsiIndex = s_AnsiColors[ iIndexFrom & 0x0F ];
 
-         hb_snprintf( szColor, sizeof( szColor ), "\033]P%X%02X%02X%02X",
+         hb_snprintf( szColor, sizeof(szColor), "\033]P%X%02X%02X%02X",
                       iAnsiIndex,
                       ( pTerm->colors[ iIndexFrom ] ) & 0xff,
                       ( pTerm->colors[ iIndexFrom ] >> 8 ) & 0xff,
@@ -1733,7 +1733,7 @@ static HB_BOOL hb_gt_trm_XtermSetMode( PHB_GTTRM pTerm, int * piRows, int * piCo
    char escseq[ 64 ];
 
    HB_GTSELF_GETSIZE( pTerm->pGT, &iHeight, &iWidth );
-   hb_snprintf( escseq, sizeof( escseq ), "\033[8;%d;%dt", *piRows, *piCols );
+   hb_snprintf( escseq, sizeof(escseq), "\033[8;%d;%dt", *piRows, *piCols );
    hb_gt_trm_termOut( pTerm, escseq, strlen( escseq ) );
    hb_gt_trm_termFlush( pTerm );
 
@@ -1845,22 +1845,22 @@ static void hb_gt_trm_XtermSetAttributes( PHB_GTTRM pTerm, int iAttr )
             rgb = 16 + 36 * ( (   rgb         & 0xFF ) / 43 ) +
                         6 * ( ( ( rgb >> 8  ) & 0xFF ) / 43 ) +
                             ( ( ( rgb >> 16 ) & 0xFF ) / 43 );
-            i += hb_snprintf( buff + i, sizeof( buff ) - i, "38;5;%d", rgb );
+            i += hb_snprintf( buff + i, sizeof(buff) - i, "38;5;%d", rgb );
             /* ESC [ 48 ; 5 ; <16 + 36 * r + 6 * g + b> m   0 <= r,g,b <= 5 */
             rgb = pTerm->colors[ ( iAttr >> 4 ) & 0x0F ];
             rgb = 16 + 36 * ( (   rgb         & 0xFF ) / 43 ) +
                         6 * ( ( ( rgb >> 8  ) & 0xFF ) / 43 ) +
                             ( ( ( rgb >> 16 ) & 0xFF ) / 43 );
-            i += hb_snprintf( buff + i, sizeof( buff ) - i, ";48;5;%d", rgb );
+            i += hb_snprintf( buff + i, sizeof(buff) - i, ";48;5;%d", rgb );
          }
          else if( pTerm->iExtColor == HB_GTTRM_CLRRGB )
          {
             /* ESC [ 38 ; 2 ; <r> ; <g> ; <b> m */
             rgb = pTerm->colors[ iAttr & 0x0F ];
-            i += hb_snprintf( buff + i, sizeof( buff ) - i, "38;2;%d;%d;%d", rgb & 0xFF, ( rgb >> 8 ) & 0xFF, ( rgb >> 16 ) & 0xFF );
+            i += hb_snprintf( buff + i, sizeof(buff) - i, "38;2;%d;%d;%d", rgb & 0xFF, ( rgb >> 8 ) & 0xFF, ( rgb >> 16 ) & 0xFF );
             /* ESC [ 48 ; 2 ; <r> ; <g> ; <b> m */
             rgb = pTerm->colors[ ( iAttr >> 4 ) & 0x0F ];
-            i += hb_snprintf( buff + i, sizeof( buff ) - i, ";48;2;%d;%d;%d", rgb & 0xFF, ( rgb >> 8 ) & 0xFF, ( rgb >> 16 ) & 0xFF );
+            i += hb_snprintf( buff + i, sizeof(buff) - i, ";48;2;%d;%d;%d", rgb & 0xFF, ( rgb >> 8 ) & 0xFF, ( rgb >> 16 ) & 0xFF );
          }
          else if( pTerm->iExtColor == HB_GTTRM_CLRAIX )
          {
@@ -1948,13 +1948,13 @@ static void hb_gt_trm_XtermSetAttributes( PHB_GTTRM pTerm, int iAttr )
                rgb = 16 + 36 * ( (   rgb         & 0xFF ) / 43 ) +
                            6 * ( ( ( rgb >> 8  ) & 0xFF ) / 43 ) +
                                ( ( ( rgb >> 16 ) & 0xFF ) / 43 );
-               i += hb_snprintf( buff + i, sizeof( buff ) - i, "38;5;%d", rgb );
+               i += hb_snprintf( buff + i, sizeof(buff) - i, "38;5;%d", rgb );
             }
             else if( pTerm->iExtColor == HB_GTTRM_CLRRGB )
             {
                /* ESC [ 38 ; 2 ; <r> ; <g> ; <b> m */
                rgb = pTerm->colors[ iAttr & 0x0F ];
-               i += hb_snprintf( buff + i, sizeof( buff ) - i, "38;2;%d;%d;%d", rgb & 0xFF, ( rgb >> 8 ) & 0xFF, ( rgb >> 16 ) & 0xFF );
+               i += hb_snprintf( buff + i, sizeof(buff) - i, "38;2;%d;%d;%d", rgb & 0xFF, ( rgb >> 8 ) & 0xFF, ( rgb >> 16 ) & 0xFF );
             }
             else if( pTerm->iExtColor == HB_GTTRM_CLRAIX )
             {
@@ -2000,13 +2000,13 @@ static void hb_gt_trm_XtermSetAttributes( PHB_GTTRM pTerm, int iAttr )
                rgb = 16 + 36 * ( (   rgb         & 0xFF ) / 43 ) +
                            6 * ( ( ( rgb >> 8  ) & 0xFF ) / 43 ) +
                                ( ( ( rgb >> 16 ) & 0xFF ) / 43 );
-               i += hb_snprintf( buff + i, sizeof( buff ) - i, "48;5;%d", rgb );
+               i += hb_snprintf( buff + i, sizeof(buff) - i, "48;5;%d", rgb );
             }
             else if( pTerm->iExtColor == HB_GTTRM_CLRRGB )
             {
                /* ESC [ 48 ; 2 ; <r> ; <g> ; <b> m */
                rgb = pTerm->colors[ ( iAttr >> 4 ) & 0x0F ];
-               i += hb_snprintf( buff + i, sizeof( buff ) - i, "48;2;%d;%d;%d", rgb & 0xFF, ( rgb >> 8 ) & 0xFF, ( rgb >> 16 ) & 0xFF );
+               i += hb_snprintf( buff + i, sizeof(buff) - i, "48;2;%d;%d;%d", rgb & 0xFF, ( rgb >> 8 ) & 0xFF, ( rgb >> 16 ) & 0xFF );
             }
             else if( pTerm->iExtColor == HB_GTTRM_CLRAIX )
             {
@@ -2125,7 +2125,7 @@ static void hb_gt_trm_BsdTone( PHB_GTTRM pTerm, double dFrequency, double dDurat
 
    char escseq[ 64 ];
 
-   hb_snprintf( escseq, sizeof( escseq ), "\033[=%d;%dB\007", static_cast<int>( dFrequency ), static_cast<int>( dDuration * 10.0 / 18.2 ) );
+   hb_snprintf( escseq, sizeof(escseq), "\033[=%d;%dB\007", static_cast<int>( dFrequency ), static_cast<int>( dDuration * 10.0 / 18.2 ) );
    hb_gt_trm_termOut( pTerm, escseq, strlen( escseq ) );
    hb_gt_trm_termFlush( pTerm );
 
@@ -2236,7 +2236,7 @@ static HB_BOOL hb_gt_trm_AnsiGetCursorPos( PHB_GTTRM pTerm, int * iRow, int * iC
                continue;
             }
          }
-         if( n == sizeof( rdbuf ) )
+         if( n == sizeof(rdbuf) )
          {
             break;
          }
@@ -2252,7 +2252,7 @@ static HB_BOOL hb_gt_trm_AnsiGetCursorPos( PHB_GTTRM pTerm, int * iRow, int * iC
             {
                break;
             }
-            i = read( pTerm->hFilenoStdin, rdbuf + n, sizeof( rdbuf ) - n );
+            i = read( pTerm->hFilenoStdin, rdbuf + n, sizeof(rdbuf) - n );
 #else
             int iTODO;
             break;
@@ -2288,7 +2288,7 @@ static void hb_gt_trm_AnsiSetCursorPos( PHB_GTTRM pTerm, int iRow, int iCol )
    if( pTerm->iRow != iRow || pTerm->iCol != iCol )
    {
       char buff[ 16 ];
-      hb_snprintf( buff, sizeof( buff ), "\x1B[%d;%dH", iRow + 1, iCol + 1 );
+      hb_snprintf( buff, sizeof(buff), "\x1B[%d;%dH", iRow + 1, iCol + 1 );
       hb_gt_trm_termOut( pTerm, buff, strlen( buff ) );
       pTerm->iRow = iRow;
       pTerm->iCol = iCol;
@@ -2682,8 +2682,8 @@ static void hb_gt_trm_SetDispTrans( PHB_GTTRM pTerm, int box )
    PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP( pTerm->pGT ), cdpHost = HB_GTSELF_HOSTCP( pTerm->pGT );
    int i;
 
-   memset( pTerm->chrattr, 0, sizeof( pTerm->chrattr ) );
-   memset( pTerm->boxattr, 0, sizeof( pTerm->boxattr ) );
+   memset( pTerm->chrattr, 0, sizeof(pTerm->chrattr) );
+   memset( pTerm->boxattr, 0, sizeof(pTerm->boxattr) );
 
    for( i = 0; i < 256; i++ )
    {
@@ -2753,7 +2753,7 @@ static int addKeyMap( PHB_GTTRM pTerm, int nKey, const char * cdesc )
    {
       if( *ptr == nullptr )
       {
-         *ptr = static_cast<keyTab*>( hb_xgrab( sizeof( keyTab ) ) );
+         *ptr = static_cast<keyTab*>( hb_xgrab( sizeof(keyTab) ) );
          ( *ptr )->ch = c;
          ( *ptr )->key = K_UNDEF;
          ( *ptr )->nextCh = nullptr;
@@ -3641,7 +3641,7 @@ static void hb_gt_trm_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    int iRows = 24, iCols = 80;
    PHB_GTTRM pTerm;
 
-   HB_GTLOCAL( pGT ) = pTerm = static_cast<PHB_GTTRM>( hb_xgrabz( sizeof( HB_GTTRM ) ) );
+   HB_GTLOCAL( pGT ) = pTerm = static_cast<PHB_GTTRM>( hb_xgrabz( sizeof(HB_GTTRM) ) );
 
    pTerm->pGT = pGT;
    pTerm->hFilenoStdin  = hFilenoStdin;
@@ -3661,7 +3661,7 @@ static void hb_gt_trm_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
       /* if( pTerm->saved_TIO.c_lflag & TOSTOP ) != 0 */
       sigaction( SIGTTOU, nullptr, &old );
-      memcpy( &act, &old, sizeof( struct sigaction ) );
+      memcpy( &act, &old, sizeof(struct sigaction) );
       act.sa_handler = sig_handler;
       /* do not use SA_RESTART - new Linux kernels will repeat the operation */
 #if defined( SA_ONESHOT )
@@ -3674,7 +3674,7 @@ static void hb_gt_trm_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
       sigaction( SIGTTOU, &act, 0 );
 
       tcgetattr( pTerm->hFilenoStdin, &pTerm->saved_TIO );
-      memcpy( &pTerm->curr_TIO, &pTerm->saved_TIO, sizeof( struct termios ) );
+      memcpy( &pTerm->curr_TIO, &pTerm->saved_TIO, sizeof(struct termios) );
       #if 0
       atexit( restore_input_mode );
       #endif

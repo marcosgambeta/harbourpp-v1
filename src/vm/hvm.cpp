@@ -284,7 +284,7 @@ static PHB_ITEM hb_breakBlock( void )
                           0,        /* number of referenced local variables */
                           nullptr,     /* table with referenced local variables */
                           &s_symBreak,
-                          sizeof( s_pCode ) );
+                          sizeof(s_pCode) );
       s_breakBlock->type = HB_IT_BLOCK;
       s_breakBlock->item.asBlock.paramcnt = 1;
       s_breakBlock->item.asBlock.lineno = 0;
@@ -305,7 +305,7 @@ static void hb_breakBlockRelease( void )
 
 static void hb_vmAddModuleFunction( PHB_FUNC_LIST * pLstPtr, HB_INIT_FUNC pFunc, void * cargo )
 {
-   PHB_FUNC_LIST pLst = static_cast<PHB_FUNC_LIST>( hb_xgrab( sizeof( HB_FUNC_LIST ) ) );
+   PHB_FUNC_LIST pLst = static_cast<PHB_FUNC_LIST>( hb_xgrab( sizeof(HB_FUNC_LIST) ) );
 
    pLst->pFunc = pFunc;
    pLst->cargo = cargo;
@@ -981,7 +981,7 @@ void hb_vmThreadInit( void * Cargo )
 
       if( pState->pSet )
       {
-         memcpy( hb_stackSetStruct(), pState->pSet, sizeof( HB_SET_STRUCT ) );
+         memcpy( hb_stackSetStruct(), pState->pSet, sizeof(HB_SET_STRUCT) );
          hb_xfree( pState->pSet );
          pState->pSet = nullptr;
       }
@@ -1108,9 +1108,9 @@ void hb_vmSetFunction( PHB_SYMB pOldSym, PHB_SYMB pNewSym )
    /* make copy of symbols to eliminate possible problem with
     * dynamic modification of passed parameters inside the loop
     */
-   memcpy( &SymOldBuf, pOldSym, sizeof( SymOldBuf ) );
+   memcpy( &SymOldBuf, pOldSym, sizeof(SymOldBuf) );
    pOldSym = &SymOldBuf;
-   memcpy( &SymNewBuf, pNewSym, sizeof( SymNewBuf ) );
+   memcpy( &SymNewBuf, pNewSym, sizeof(SymNewBuf) );
    pNewSym = &SymNewBuf;
 
    while( pLastSymbols )
@@ -2483,9 +2483,9 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 
          case HB_P_PUSHDOUBLE:
             hb_vmPushDoubleConst( HB_PCODE_MKDOUBLE( &pCode[ 1 ] ),
-                                  static_cast<int>( *static_cast<const unsigned char*>( &pCode[ 1 + sizeof( double ) ] ) ),
-                                  static_cast<int>( *static_cast<const unsigned char*>( &pCode[ 2 + sizeof( double ) ] ) ) );
-            pCode += 3 + sizeof( double );
+                                  static_cast<int>( *static_cast<const unsigned char*>( &pCode[ 1 + sizeof(double) ] ) ),
+                                  static_cast<int>( *static_cast<const unsigned char*>( &pCode[ 2 + sizeof(double) ] ) ) );
+            pCode += 3 + sizeof(double);
             break;
 
          case HB_P_PUSHSTRSHORT:
@@ -2939,7 +2939,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
          {
             PHB_DYNS pDynSym = static_cast<PHB_DYNS>( HB_GET_PTR( pCode + 1 ) );
             hb_vmPushSymbol( pDynSym->pSymbol );
-            pCode += sizeof( PHB_DYNS ) + 1;
+            pCode += sizeof(PHB_DYNS) + 1;
             break;
          }
 
@@ -2947,7 +2947,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
          {
             PHB_DYNS pDynSym = static_cast<PHB_DYNS>( HB_GET_PTR( pCode + 1 ) );
             hb_vmPopAliasedField( pDynSym->pSymbol );
-            pCode += sizeof( PHB_DYNS ) + 1;
+            pCode += sizeof(PHB_DYNS) + 1;
             break;
          }
 
@@ -2955,7 +2955,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
          {
             PHB_DYNS pDynSym = static_cast<PHB_DYNS>( HB_GET_PTR( pCode + 1 ) );
             hb_vmPopAliasedVar( pDynSym->pSymbol );
-            pCode += sizeof( PHB_DYNS ) + 1;
+            pCode += sizeof(PHB_DYNS) + 1;
             break;
          }
 
@@ -2970,7 +2970,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 #if 0
             HB_TRACE( HB_TR_INFO, ( "(hb_vmMPopField)" ) );
 #endif
-            pCode += sizeof( PHB_DYNS ) + 1;
+            pCode += sizeof(PHB_DYNS) + 1;
             break;
          }
 
@@ -2982,7 +2982,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 #if 0
             HB_TRACE( HB_TR_INFO, ( "(hb_vmMPopMemvar)" ) );
 #endif
-            pCode += sizeof( PHB_DYNS ) + 1;
+            pCode += sizeof(PHB_DYNS) + 1;
             break;
          }
 
@@ -2990,7 +2990,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
          {
             PHB_DYNS pDynSym = static_cast<PHB_DYNS>( HB_GET_PTR( pCode + 1 ) );
             hb_vmPushAliasedField( pDynSym->pSymbol );
-            pCode += sizeof( PHB_DYNS ) + 1;
+            pCode += sizeof(PHB_DYNS) + 1;
             break;
          }
 
@@ -2998,7 +2998,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
          {
             PHB_DYNS pDynSym = static_cast<PHB_DYNS>( HB_GET_PTR( pCode + 1 ) );
             hb_vmPushAliasedVar( pDynSym->pSymbol );
-            pCode += sizeof( PHB_DYNS ) + 1;
+            pCode += sizeof(PHB_DYNS) + 1;
             break;
          }
 
@@ -3045,7 +3045,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 #if 0
             HB_TRACE( HB_TR_INFO, ( "(hb_vmMPushField)" ) );
 #endif
-            pCode += sizeof( PHB_DYNS ) + 1;
+            pCode += sizeof(PHB_DYNS) + 1;
             break;
          }
 
@@ -3056,7 +3056,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 #if 0
             HB_TRACE( HB_TR_INFO, ( "(hb_vmMPushMemvar)" ) );
 #endif
-            pCode += sizeof( PHB_DYNS ) + 1;
+            pCode += sizeof(PHB_DYNS) + 1;
             break;
          }
 
@@ -3067,7 +3067,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 #if 0
             HB_TRACE( HB_TR_INFO, ( "(hb_vmMPushMemvarRef)" ) );
 #endif
-            pCode += sizeof( PHB_DYNS ) + 1;
+            pCode += sizeof(PHB_DYNS) + 1;
             break;
          }
 
@@ -3075,7 +3075,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
          {
             PHB_DYNS pDynSym = static_cast<PHB_DYNS>( HB_GET_PTR( pCode + 1 ) );
             hb_vmPushSymbol( pDynSym->pSymbol );
-            pCode += sizeof( PHB_DYNS ) + 1;
+            pCode += sizeof(PHB_DYNS) + 1;
             break;
          }
 
@@ -3083,7 +3083,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
          {
             PHB_DYNS pDynSym = static_cast<PHB_DYNS>( HB_GET_PTR( pCode + 1 ) );
             hb_vmPushVariable( pDynSym->pSymbol );
-            pCode += sizeof( PHB_DYNS ) + 1;
+            pCode += sizeof(PHB_DYNS) + 1;
             break;
          }
 
@@ -4904,7 +4904,7 @@ static void hb_vmSeqBlock( void )
       PHB_ITEM pBlockCopy, pBlock;
 
       pBlock = hb_errorBlock();
-      pBlockCopy = static_cast<PHB_ITEM>( hb_gcAllocRaw( sizeof( HB_ITEM ), &s_gcSeqBlockFuncs ) );
+      pBlockCopy = static_cast<PHB_ITEM>( hb_gcAllocRaw( sizeof(HB_ITEM), &s_gcSeqBlockFuncs ) );
       hb_itemRawCpy( pBlockCopy, pBlock );
       hb_itemRawCpy( pBlock, pItem );
       pItem->type = HB_IT_POINTER;
@@ -4939,7 +4939,7 @@ static void hb_vmWithObjectStart( void )
    PHB_ITEM pItem;
 
    pItem = hb_stackAllocItem();
-   pnWithObjectBase = static_cast<HB_ISIZ*>( hb_gcAllocRaw( sizeof( HB_ISIZ ), &s_gcWithObjectFuncs ) );
+   pnWithObjectBase = static_cast<HB_ISIZ*>( hb_gcAllocRaw( sizeof(HB_ISIZ), &s_gcWithObjectFuncs ) );
    * pnWithObjectBase = hb_stackWithObjectOffset();
    pItem->type = HB_IT_POINTER;
    pItem->item.asPointer.value = pnWithObjectBase;
@@ -5054,7 +5054,7 @@ static void hb_vmEnumReference( PHB_ITEM pBase )
 
    PHB_ENUMREF pEnumExtRef;
 
-   pEnumExtRef = static_cast<PHB_ENUMREF>( hb_xgrab( sizeof( HB_ENUMREF ) ) );
+   pEnumExtRef = static_cast<PHB_ENUMREF>( hb_xgrab( sizeof(HB_ENUMREF) ) );
    pEnumExtRef->oldvalue.type = HB_IT_NIL;
    pEnumExtRef->enumref.type = HB_IT_NIL;
    hb_itemRawCpy( &pEnumExtRef->basevalue, pBase );
@@ -7257,10 +7257,10 @@ static void hb_vmTSVReference( PHB_ITEM pStatic )
    PHB_TSVREF pTSVRef;
    PHB_ITEM pRefer;
 
-   pTSVRef = static_cast<PHB_TSVREF>( hb_xgrab( sizeof( HB_TSVREF ) ) );
+   pTSVRef = static_cast<PHB_TSVREF>( hb_xgrab( sizeof(HB_TSVREF) ) );
 
    pTSVRef->source.type = HB_IT_NIL;
-   HB_TSD_INIT( &pTSVRef->threadData, sizeof( HB_ITEM ), nullptr, hb_vmTSVarClean );
+   HB_TSD_INIT( &pTSVRef->threadData, sizeof(HB_ITEM), nullptr, hb_vmTSVarClean );
 
    /* Use hb_stackReturnItem() as temporary item holder */
    pRefer = hb_stackReturnItem();
@@ -8729,7 +8729,7 @@ PHB_SYMBOLS hb_vmRegisterSymbols( PHB_SYMB pModuleSymbols, HB_USHORT uiSymbols, 
 
       if( fClone )
       {
-         HB_SIZE nSymSize = uiSymbols * sizeof( HB_SYMB );
+         HB_SIZE nSymSize = uiSymbols * sizeof(HB_SYMB);
          HB_SIZE nSize;
          char * buffer;
 
@@ -8749,7 +8749,7 @@ PHB_SYMBOLS hb_vmRegisterSymbols( PHB_SYMB pModuleSymbols, HB_USHORT uiSymbols, 
          }
       }
 
-      pNewSymbols = static_cast<PHB_SYMBOLS>( hb_xgrab( sizeof( HB_SYMBOLS ) ) );
+      pNewSymbols = static_cast<PHB_SYMBOLS>( hb_xgrab( sizeof(HB_SYMBOLS) ) );
       pNewSymbols->pModuleSymbols = pModuleSymbols;
       pNewSymbols->uiModuleSymbols = uiSymbols;
       pNewSymbols->uiStaticsOffset = 0;
@@ -8909,7 +8909,7 @@ static void hb_vmVerifySymbols( PHB_ITEM pArray )
          {
             char szText[ 256 ];
 
-            hb_snprintf( szText, sizeof( szText ), "%s->%s", pLastSymbols->szModuleName, pSym->szName );
+            hb_snprintf( szText, sizeof(szText), "%s->%s", pLastSymbols->szModuleName, pSym->szName );
             pItem = hb_itemPutC( pItem, szText );
             hb_arrayAddForward( pArray, pItem );
          }
@@ -8930,7 +8930,7 @@ static void hb_vmVerifyPCodeVersion( const char * szModuleName, HB_USHORT uiPCod
           uiPCodeVer < HB_PCODE_VER_MIN ) /* the module is compiled with old not longer supported by HVM compiler version */
       {
          char szPCode[ 10 ];
-         hb_snprintf( szPCode, sizeof( szPCode ), "%i.%i", uiPCodeVer >> 8, uiPCodeVer & 0xff );
+         hb_snprintf( szPCode, sizeof(szPCode), "%i.%i", uiPCodeVer >> 8, uiPCodeVer & 0xff );
 
          hb_errInternal( HB_EI_ERRUNRECOV, "Module '%s'\n"
                          "was compiled with unsupported PCODE version %s.\n"
@@ -9221,9 +9221,9 @@ void hb_vmPushItemRef( PHB_ITEM pItem )
    PHB_ITMREF pItmRef;
    PHB_ITEM pRefer;
 
-   pItmRef = static_cast<PHB_ITMREF>( hb_xgrab( sizeof( HB_ITMREF ) ) );
+   pItmRef = static_cast<PHB_ITMREF>( hb_xgrab( sizeof(HB_ITMREF) ) );
 
-   pItmRef->value = static_cast<PHB_ITEM>( hb_xgrab( sizeof( HB_ITEM ) ) );
+   pItmRef->value = static_cast<PHB_ITEM>( hb_xgrab( sizeof(HB_ITEM) ) );
    pItmRef->value->type = HB_IT_BYREF | HB_IT_EXTREF;
    pItmRef->value->item.asExtRef.value = static_cast<void*>( pItem );
    pItmRef->value->item.asExtRef.func = &s_ItmExtRawRef;
@@ -9398,7 +9398,7 @@ HB_BOOL hb_vmMsgReference( PHB_ITEM pObject, PHB_DYNS pMessage, PHB_DYNS pAccMsg
    PHB_MSGREF pMsgRef;
    PHB_ITEM pRefer;
 
-   pMsgRef = static_cast<PHB_MSGREF>( hb_xgrab( sizeof( HB_MSGREF ) ) );
+   pMsgRef = static_cast<PHB_MSGREF>( hb_xgrab( sizeof(HB_MSGREF) ) );
    pMsgRef->access = pAccMsg;
    pMsgRef->assign = pMessage;
    pMsgRef->value.type = HB_IT_NIL | HB_IT_DEFAULT;
@@ -9568,7 +9568,7 @@ static void hb_vmMsgIndexReference( PHB_ITEM pRefer, PHB_ITEM pObject, PHB_ITEM 
 
    PHB_MSGIDXREF pMsgIdxRef;
 
-   pMsgIdxRef = static_cast<PHB_MSGIDXREF>( hb_xgrab( sizeof( HB_MSGIDXREF ) ) );
+   pMsgIdxRef = static_cast<PHB_MSGIDXREF>( hb_xgrab( sizeof(HB_MSGIDXREF) ) );
    pMsgIdxRef->value.type = HB_IT_NIL | HB_IT_DEFAULT;
    pMsgIdxRef->object.type = HB_IT_NIL;
    pMsgIdxRef->index.type = HB_IT_NIL;
@@ -9697,7 +9697,7 @@ void hb_vmRequestCancel( void )
       while( hb_procinfo( iLevel++, buffer, &uiLine, file ) )
       {
          int l = static_cast<int>( strlen( buffer ) );
-         hb_snprintf( buffer + l, sizeof( buffer ) - l, " (%hu)%s%s", uiLine, *file ? HB_I_( " in " ) : "", file );
+         hb_snprintf( buffer + l, sizeof(buffer) - l, " (%hu)%s%s", uiLine, *file ? HB_I_( " in " ) : "", file );
 
          hb_conOutErr( buffer, 0 );
          hb_conOutErr( hb_conNewLine(), 0 );

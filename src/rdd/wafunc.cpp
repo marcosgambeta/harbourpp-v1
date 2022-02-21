@@ -114,7 +114,7 @@ void * hb_rddNewAreaNode( LPRDDNODE pRddNode, HB_USHORT uiRddID )
    {
       HB_USHORT uiSize;
 
-      pArea = static_cast<AREAP>( hb_xgrabz( sizeof( AREA ) ) );
+      pArea = static_cast<AREAP>( hb_xgrabz( sizeof(AREA) ) );
       pArea->lprfsHost = &pRddNode->pTable;
       pArea->rddID = uiRddID;
 
@@ -124,7 +124,7 @@ void * hb_rddNewAreaNode( LPRDDNODE pRddNode, HB_USHORT uiRddID )
       }
 
       /* Need more space? */
-      if( uiSize > sizeof( AREA ) )   /* Size of Area changed */
+      if( uiSize > sizeof(AREA) )   /* Size of Area changed */
       {
          pArea = static_cast<AREAP>( hb_xrealloc( pArea, uiSize ) );
          memset( pArea, 0, uiSize );
@@ -819,7 +819,7 @@ HB_ERRCODE hb_rddCreateTableTemp( const char * szDriver, const char * szAlias, c
 
    if( szDriver && szDriver[ 0 ] )
    {
-      hb_strncpyUpper( szDriverBuffer, szDriver, sizeof( szDriverBuffer ) - 1 );
+      hb_strncpyUpper( szDriverBuffer, szDriver, sizeof(szDriverBuffer) - 1 );
       szDriver = szDriverBuffer;
    }
    else
@@ -940,7 +940,7 @@ PHB_ITEM hb_dbTransInfoPut( PHB_ITEM pItem, LPDBTRANSINFO lpdbTransInfo )
 {
    LPDBTRANSINFO * pHolder;
 
-   pHolder = static_cast<LPDBTRANSINFO*>( hb_gcAllocate( sizeof( LPDBTRANSINFO ), &s_gcTransInfo ) );
+   pHolder = static_cast<LPDBTRANSINFO*>( hb_gcAllocate( sizeof(LPDBTRANSINFO), &s_gcTransInfo ) );
    *pHolder = lpdbTransInfo;
 
    return hb_itemPutPtrGC( pItem, pHolder );
@@ -1026,7 +1026,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
 
    lpdbTransInfo->lpaSource    = lpaSource;
    lpdbTransInfo->lpaDest      = lpaDest;
-   lpdbTransInfo->lpTransItems = static_cast<LPDBTRANSITEM>( hb_xgrab( uiSize * sizeof( DBTRANSITEM ) ) );
+   lpdbTransInfo->lpTransItems = static_cast<LPDBTRANSITEM>( hb_xgrab( uiSize * sizeof(DBTRANSITEM) ) );
 
    if( ! lpaDest )
    {
@@ -1214,7 +1214,7 @@ HB_ERRCODE hb_rddTransRecords( AREAP pArea,
    HB_USHORT uiPrevArea;
    HB_ERRCODE errCode;
 
-   memset( &dbTransInfo, 0, sizeof( dbTransInfo ) );
+   memset( &dbTransInfo, 0, sizeof(dbTransInfo) );
    uiPrevArea = static_cast<HB_AREANO>( hb_rddGetCurrentWorkAreaNumber() );
 
    szDriver = hb_rddFindDrv( szDriver, szFileName );

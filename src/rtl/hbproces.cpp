@@ -152,7 +152,7 @@ static char ** hb_buildArgs( const char *pszFileName )
       ++src;
    }
 
-   argv = static_cast<char**>( hb_xgrab( ( argc + 2 ) * sizeof( char * ) ) );
+   argv = static_cast<char**>( hb_xgrab( ( argc + 2 ) * sizeof(char*) ) );
    argv[ 0 ] = dst;
    argv[ argc + 1 ] = nullptr;
    argc = 0;
@@ -411,9 +411,9 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
          SetHandleInformation( reinterpret_cast<HANDLE>( hb_fsGetOsHandle( hPipeErr[ 0 ] ) ), HANDLE_FLAG_INHERIT, 0 );
       }
 
-      memset( &pi, 0, sizeof( pi ) );
-      memset( &si, 0, sizeof( si ) );
-      si.cb = sizeof( si );
+      memset( &pi, 0, sizeof(pi) );
+      memset( &si, 0, sizeof(si) );
+      si.cb = sizeof(si);
 #  ifdef STARTF_USESTDHANDLES
       si.dwFlags = STARTF_USESTDHANDLES;
 #  endif

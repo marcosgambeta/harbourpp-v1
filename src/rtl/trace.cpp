@@ -131,7 +131,7 @@ HB_FUNC( HB_TRACELOG )
    char file[ HB_PATH_MAX ];
    HB_USHORT line;
 
-   hb_trace_message( message, sizeof( message ) - 1, 1, hb_pcount() );
+   hb_trace_message( message, sizeof(message) - 1, 1, hb_pcount() );
    hb_procinfo( 1, procname, &line, file );
    hb_tracelog( s_traceLogLevel, file, line, procname, "%s", message );
 }
@@ -149,7 +149,7 @@ HB_FUNC( HB_TRACELOGAT )
          char file[ HB_PATH_MAX ];
          HB_USHORT line;
 
-         hb_trace_message( message, sizeof( message ) - 1, 2, hb_pcount() );
+         hb_trace_message( message, sizeof(message) - 1, 2, hb_pcount() );
          hb_procinfo( 1, procname, &line, file );
          hb_tracelog( iLevel, file, line, procname, "%s", message );
       }
@@ -164,7 +164,7 @@ HB_FUNC( HB_TRACESTRING )
    {
       char message[ 1024 ];
 
-      hb_trace_message( message, sizeof( message ) - 1, 1, iPCount );
+      hb_trace_message( message, sizeof(message) - 1, 1, iPCount );
 
       HB_TRACE( HB_TR_ALWAYS, ( "%s", message ) );
    }

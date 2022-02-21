@@ -121,7 +121,7 @@ HB_FUNC( HB_COMFLUSH )
 HB_FUNC( HB_COMGETDEVICE )
 {
    char buffer[ HB_COM_DEV_NAME_MAX ];
-   const char * name = hb_comGetDevice( hb_parni(1), buffer, sizeof( buffer ) );
+   const char * name = hb_comGetDevice( hb_parni(1), buffer, sizeof(buffer) );
 
    hb_retc( name );
 }

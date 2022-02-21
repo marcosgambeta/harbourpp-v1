@@ -73,7 +73,7 @@ HB_BOOL hb_macroLexNew( PHB_MACRO pMacro )
        * as string and all these tokens have to be separated by some non
        * value tokens or strings which will have not used delimiters
        */
-      pMacro->pLex = hb_xgrab( sizeof( HB_MACRO_LEX ) + pMacro->length );
+      pMacro->pLex = hb_xgrab( sizeof(HB_MACRO_LEX) + pMacro->length );
       ( static_cast<PHB_MACRO_LEX>( pMacro->pLex ) )->pString = pMacro->string;
       ( static_cast<PHB_MACRO_LEX>( pMacro->pLex ) )->nLen    = pMacro->length;
       ( static_cast<PHB_MACRO_LEX>( pMacro->pLex ) )->nSrc  = 0;

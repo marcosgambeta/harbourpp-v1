@@ -59,14 +59,14 @@ static void s_pp_msg( void * cargo, int iErrorFmt, int iLine,
       char szMsgBuf[ 512 ], szLine[ 512 ];
       PHB_ITEM pError;
 
-      hb_snprintf( szMsgBuf, sizeof( szMsgBuf ), szText, szPar1, szPar2 );
+      hb_snprintf( szMsgBuf, sizeof(szMsgBuf), szText, szPar1, szPar2 );
       if( ! szModule || *szModule == 0 || strcmp( szModule, "{SOURCE}.prg" ) == 0 )
       {
-         hb_snprintf( szLine, sizeof( szLine ), "line:%i", iLine );
+         hb_snprintf( szLine, sizeof(szLine), "line:%i", iLine );
       }
       else
       {
-         hb_snprintf( szLine, sizeof( szLine ), iErrorFmt == HB_ERRORFMT_CLIPPER ? "%s(%i)" : "%s:%i", szModule, iLine );
+         hb_snprintf( szLine, sizeof(szLine), iErrorFmt == HB_ERRORFMT_CLIPPER ? "%s(%i)" : "%s:%i", szModule, iLine );
       }
       pError = hb_errRT_New( ES_ERROR, "COMPILER", 1001, static_cast<HB_ERRCODE>( iValue ), szMsgBuf, szLine, 0 /*OsCode*/, EF_NONE );
       hb_errLaunch( pError );
@@ -176,7 +176,7 @@ static void hb_compGenArgList( int iFirst, int iLast,
       }
    }
 
-   argv = static_cast<const char**>( hb_xgrab( sizeof( char * ) * ( argc + 1 ) ) );
+   argv = static_cast<const char**>( hb_xgrab( sizeof(char*) * ( argc + 1 ) ) );
    argc = 0;
    for( i = iFirst; i <= iLast; ++i )
    {

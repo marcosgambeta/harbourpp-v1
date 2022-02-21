@@ -332,8 +332,8 @@ static int s_errorHandler( Display * dpy, XErrorEvent * e )
 {
    char errorText[ 1024 ];
 
-   hb_strncpy( errorText, "Xlib error: ", sizeof( errorText ) - 1 );
-   XGetErrorText( dpy, e->error_code, errorText + strlen( errorText ), sizeof( errorText ) - strlen( errorText ) );
+   hb_strncpy( errorText, "Xlib error: ", sizeof(errorText) - 1 );
+   XGetErrorText( dpy, e->error_code, errorText + strlen( errorText ), sizeof(errorText) - strlen( errorText ) );
 
    if( ! s_fIgnoreErrors )
    {
@@ -2301,18 +2301,18 @@ static HB_BOOL hb_gt_xwc_DefineBoxChar( PXWND_DEF wnd, HB_USHORT usCh, XWC_CharT
       switch( type )
       {
          case CH_SEG:
-            bxCh->u.seg = static_cast<XSegment*>( hb_xgrab( sizeof( XSegment ) * size ) );
-            memcpy( bxCh->u.seg, segs, sizeof( XSegment ) * size );
+            bxCh->u.seg = static_cast<XSegment*>( hb_xgrab( sizeof(XSegment) * size ) );
+            memcpy( bxCh->u.seg, segs, sizeof(XSegment) * size );
             break;
          case CH_RECT:
-            bxCh->u.rect = static_cast<XRectangle*>( hb_xgrab( sizeof( XRectangle ) * size ) );
-            memcpy( bxCh->u.rect, rect, sizeof( XRectangle ) * size );
+            bxCh->u.rect = static_cast<XRectangle*>( hb_xgrab( sizeof(XRectangle) * size ) );
+            memcpy( bxCh->u.rect, rect, sizeof(XRectangle) * size );
             break;
          case CH_PTS:
          case CH_LINE:
          case CH_POLY:
-            bxCh->u.pts = static_cast<XPoint*>( hb_xgrab( sizeof( XPoint ) * size ) );
-            memcpy( bxCh->u.pts, pts, sizeof( XPoint ) * size );
+            bxCh->u.pts = static_cast<XPoint*>( hb_xgrab( sizeof(XPoint) * size ) );
+            memcpy( bxCh->u.pts, pts, sizeof(XPoint) * size );
             break;
          case CH_UNDEF:
          case CH_CHAR:
@@ -2357,7 +2357,7 @@ static void hb_gt_xwc_ResetCharTrans( PXWND_DEF wnd )
             break;
       }
    }
-   memset( wnd->boxTrans, 0, sizeof( wnd->boxTrans ) );
+   memset( wnd->boxTrans, 0, sizeof(wnd->boxTrans) );
    wnd->boxCount = 0;
 
    wnd->boxTrans[ 0 ].type = CH_CHAR;
@@ -2537,7 +2537,7 @@ static void hb_gt_xwc_FullScreen( PXWND_DEF wnd )
 {
    XEvent evt;
 
-   memset( &evt, 0, sizeof( evt ) );
+   memset( &evt, 0, sizeof(evt) );
    evt.xclient.type = ClientMessage;
    evt.xclient.message_type = s_atomState;
    evt.xclient.display = wnd->dpy;
@@ -2553,7 +2553,7 @@ static void hb_gt_xwc_MaximizeScreen( PXWND_DEF wnd )
 {
    XEvent evt;
 
-   memset( &evt, 0, sizeof( evt ) );
+   memset( &evt, 0, sizeof(evt) );
    evt.xclient.type = ClientMessage;
    evt.xclient.message_type = s_atomState;
    evt.xclient.display = wnd->dpy;
@@ -2571,7 +2571,7 @@ static void hb_gt_xwc_ActivateScreen( PXWND_DEF wnd )
 {
    XEvent evt;
 
-   memset( &evt, 0, sizeof( evt ) );
+   memset( &evt, 0, sizeof(evt) );
    evt.xclient.type = ClientMessage;
    evt.xclient.message_type = s_atomActivate;
    evt.xclient.display = wnd->dpy;
@@ -2635,7 +2635,7 @@ static void hb_gt_xwc_MotifWmHints( PXWND_DEF wnd )
    unsigned long functions, decorations;
    int result;
 
-   memset( &mwmhints, 0, sizeof( mwmhints ) );
+   memset( &mwmhints, 0, sizeof(mwmhints) );
 
    result = XGetWindowProperty( wnd->dpy, wnd->window, s_atomMotifHints,
                                 0, 20, HB_FALSE, s_atomMotifHints,
@@ -2767,14 +2767,14 @@ static void hb_gt_xwc_ProcessKey( PXWND_DEF wnd, XKeyEvent * evt )
 #  ifdef X_HAVE_UTF8_STRING
    if( wnd->ic )
    {
-      i = Xutf8LookupString( wnd->ic, evt, buf, static_cast<int>( sizeof( buf ) ), &outISO, &status_return );
+      i = Xutf8LookupString( wnd->ic, evt, buf, static_cast<int>( sizeof(buf) ), &outISO, &status_return );
       buf[ HB_MAX( i, 0 ) ] = '\0';
       printf( "UTF-8: KeySym=%lx, keySymISO=%lx, keystr[%d]='%s'\n", out, outISO, i, buf ); fflush( stdout );
    }
    else
 #  endif
    {
-      i = XLookupString( evt, buf, static_cast<int>( sizeof( buf ) ), &outISO, nullptr );
+      i = XLookupString( evt, buf, static_cast<int>( sizeof(buf) ), &outISO, nullptr );
       buf[ HB_MAX( i, 0 ) ] = '\0';
       printf( "KeySym=%lx, keySymISO=%lx, keystr[%d]='%s'\n", out, outISO, i, buf ); fflush( stdout );
    }
@@ -2981,12 +2981,12 @@ static void hb_gt_xwc_ProcessKey( PXWND_DEF wnd, XKeyEvent * evt )
 #ifdef X_HAVE_UTF8_STRING
    if( wnd->ic )
    {
-      i = Xutf8LookupString( wnd->ic, evt, buf, static_cast<int>( sizeof( buf ) ), &outISO, &status_return );
+      i = Xutf8LookupString( wnd->ic, evt, buf, static_cast<int>( sizeof(buf) ), &outISO, &status_return );
    }
    else
 #endif
    {
-      i = XLookupString( evt, buf, static_cast<int>( sizeof( buf ) ), &outISO, nullptr );
+      i = XLookupString( evt, buf, static_cast<int>( sizeof(buf) ), &outISO, nullptr );
 #ifndef HB_XWC_USE_LOCALE
       if( i <= 0 )
       {
@@ -3642,8 +3642,8 @@ static HB_BOOL hb_gt_xwc_AllocColor( PXWND_DEF wnd, XColor * pColor )
       XColor *colorTable;
       HB_BYTE *checkTable;
 
-      colorTable = static_cast<XColor*>( hb_xgrab( iCMapSize * sizeof( XColor ) ) );
-      checkTable = static_cast<HB_BYTE*>( hb_xgrab( iCMapSize * sizeof( HB_BYTE ) ) );
+      colorTable = static_cast<XColor*>( hb_xgrab( iCMapSize * sizeof(XColor) ) );
+      checkTable = static_cast<HB_BYTE*>( hb_xgrab( iCMapSize * sizeof(HB_BYTE) ) );
       for( i = 0; i < iCMapSize; i++ )
       {
          colorTable[ i ].pixel = static_cast<HB_GT_PIXELTYPE>( i );
@@ -3728,7 +3728,7 @@ static HB_BOOL hb_gt_xwc_setPalette( PXWND_DEF wnd )
          {
             XFreeColors( wnd->dpy, wnd->colorsmap, &wnd->colors[ i ].pixel, 1, 0 );
          }
-         hb_snprintf( rgb_color, sizeof( rgb_color ),
+         hb_snprintf( rgb_color, sizeof(rgb_color),
                       "rgb:%02X/%02X/%02X",
                       ( wnd->colors[ i ].value ) & 0xFF,
                       ( wnd->colors[ i ].value >> 8 ) & 0xFF,
@@ -4204,7 +4204,7 @@ static HB_BOOL hb_gt_xwc_SetScrBuff( PXWND_DEF wnd, HB_USHORT cols, HB_USHORT ro
          {
             hb_xfree( wnd->pCurrScr );
          }
-         wnd->pCurrScr = static_cast<HB_U32*>( hb_xgrab( cols * rows * sizeof( HB_U32 ) ) );
+         wnd->pCurrScr = static_cast<HB_U32*>( hb_xgrab( cols * rows * sizeof(HB_U32) ) );
          hb_gt_xwc_InvalidateFull( wnd );
 
          return HB_TRUE;
@@ -4419,11 +4419,11 @@ static HB_BOOL hb_gt_xwc_SetFont( PXWND_DEF wnd, const char * fontFace, int weig
 /*
       "-*-%s-%s-r-normal-*-%d-*-*-*-*-*-%s"
  */
-      hb_snprintf( fontString, sizeof( fontString ), "-*-%s-%s-r-*-*-%d-*-*-*-*-*-%s", fontFace, szWeight, size, encoding == nullptr ? "*-*" : encoding );
+      hb_snprintf( fontString, sizeof(fontString), "-*-%s-%s-r-*-*-%d-*-*-*-*-*-%s", fontFace, szWeight, size, encoding == nullptr ? "*-*" : encoding );
    }
    else
    {
-      hb_strncpy( fontString, fontFace, sizeof( fontString ) - 1 );
+      hb_strncpy( fontString, fontFace, sizeof(fontString) - 1 );
    }
 
    xfs = XLoadQueryFont( wnd->dpy, fontString );
@@ -4612,7 +4612,7 @@ static HB_BOOL hb_gt_xwc_isUTF8( void )
 
 static PXWND_DEF hb_gt_xwc_CreateWndDef( PHB_GT pGT )
 {
-   PXWND_DEF wnd = static_cast<PXWND_DEF>( hb_xgrabz( sizeof( XWND_DEF ) ) );
+   PXWND_DEF wnd = static_cast<PXWND_DEF>( hb_xgrabz( sizeof(XWND_DEF) ) );
 
    wnd->pGT = pGT;
    wnd->dpy = nullptr;
@@ -4821,7 +4821,7 @@ static void hb_gt_xwc_SetResizing( PXWND_DEF wnd )
 {
    XSizeHints xsize;
 
-   memset( &xsize, 0, sizeof( xsize ) );
+   memset( &xsize, 0, sizeof(xsize) );
 
    xsize.flags = PWinGravity | PResizeInc | PMinSize | PMaxSize | PBaseSize;
 

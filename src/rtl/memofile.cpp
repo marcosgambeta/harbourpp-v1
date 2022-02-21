@@ -129,7 +129,7 @@ static HB_BOOL hb_memowrit( HB_BOOL bHandleEOF )
          if( bHandleEOF && bRetVal )  /* if true, then write EOF */
          {
             char cEOF = HB_CHAR_EOF;
-            hb_fileWrite( pFile, &cEOF, sizeof( char ), -1 );
+            hb_fileWrite( pFile, &cEOF, sizeof(char), -1 );
          }
 
          hb_fileClose( pFile );

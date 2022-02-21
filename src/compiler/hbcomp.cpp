@@ -48,7 +48,7 @@
 
 static PHB_EXPR hb_compExprAlloc( HB_COMP_DECL )
 {
-   PHB_EXPRLST pExpItm = static_cast<PHB_EXPRLST>( hb_xgrab( sizeof( HB_EXPRLST ) ) );
+   PHB_EXPRLST pExpItm = static_cast<PHB_EXPRLST>( hb_xgrab( sizeof(HB_EXPRLST) ) );
 
    pExpItm->pNext = HB_COMP_PARAM->pExprLst;
    HB_COMP_PARAM->pExprLst = pExpItm;
@@ -183,15 +183,15 @@ static void hb_compOutMsg( void * cargo, int iErrorFmt, int iLine,
    {
       if( iErrorFmt == HB_ERRORFMT_CLIPPER )
       {
-         hb_snprintf( buffer, sizeof( buffer ), "\r%s(%i) ", szModule, iLine );
+         hb_snprintf( buffer, sizeof(buffer), "\r%s(%i) ", szModule, iLine );
       }
       else if( iLine )
       {
-         hb_snprintf( buffer, sizeof( buffer ), "\n%s:%i: ", szModule, iLine );
+         hb_snprintf( buffer, sizeof(buffer), "\n%s:%i: ", szModule, iLine );
       }
       else
       {
-         hb_snprintf( buffer, sizeof( buffer ), "\n%s:%s ", szModule, szPar2 );
+         hb_snprintf( buffer, sizeof(buffer), "\n%s:%s ", szModule, szPar2 );
       }
 
       hb_compOutErr( static_cast<PHB_COMP>( cargo ), buffer );
@@ -199,15 +199,15 @@ static void hb_compOutMsg( void * cargo, int iErrorFmt, int iLine,
 
    if( iErrorFmt == HB_ERRORFMT_CLIPPER )
    {
-      hb_snprintf( buffer, sizeof( buffer ), "%s %c%04i  ", cPrefix == 'W' ? "Warning" : "Error", cPrefix, iValue );
+      hb_snprintf( buffer, sizeof(buffer), "%s %c%04i  ", cPrefix == 'W' ? "Warning" : "Error", cPrefix, iValue );
    }
    else
    {
-      hb_snprintf( buffer, sizeof( buffer ), "%s %c%04i  ", cPrefix == 'W' ? "warning" : "error", cPrefix, iValue );
+      hb_snprintf( buffer, sizeof(buffer), "%s %c%04i  ", cPrefix == 'W' ? "warning" : "error", cPrefix, iValue );
    }
 
    hb_compOutErr( static_cast<PHB_COMP>( cargo ), buffer );
-   hb_snprintf( buffer, sizeof( buffer ), szText, szPar1, szPar2 );
+   hb_snprintf( buffer, sizeof(buffer), szText, szPar1, szPar2 );
    hb_compOutErr( static_cast<PHB_COMP>( cargo ), buffer );
    hb_compOutErr( static_cast<PHB_COMP>( cargo ), "\n" );
 }
@@ -259,8 +259,8 @@ PHB_COMP hb_comp_new( void )
 
    if( pPP )
    {
-      pComp = static_cast<PHB_COMP>( hb_xgrabz( sizeof( HB_COMP ) ) );
-      pComp->pLex = static_cast<PHB_COMP_LEX>( hb_xgrabz( sizeof( HB_COMP_LEX ) ) );
+      pComp = static_cast<PHB_COMP>( hb_xgrabz( sizeof(HB_COMP) ) );
+      pComp->pLex = static_cast<PHB_COMP_LEX>( hb_xgrabz( sizeof(HB_COMP_LEX) ) );
 
       /* initialize default settings */
       pComp->mode = HB_MODE_COMPILER;

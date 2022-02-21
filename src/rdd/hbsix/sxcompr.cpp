@@ -206,7 +206,7 @@ static void hb_LZSSxExit( PHB_LZSSX_COMPR pCompr )
 
 static PHB_LZSSX_COMPR hb_LZSSxInit( PHB_FILE pInput, const HB_BYTE * pSrcBuf, HB_SIZE nSrcBuf, PHB_FILE pOutput, HB_BYTE * pDstBuf, HB_SIZE nDstBuf )
 {
-   PHB_LZSSX_COMPR pCompr = static_cast<PHB_LZSSX_COMPR>( hb_xgrab( sizeof( HB_LZSSX_COMPR ) ) );
+   PHB_LZSSX_COMPR pCompr = static_cast<PHB_LZSSX_COMPR>( hb_xgrab( sizeof(HB_LZSSX_COMPR) ) );
 
    if( pInput != nullptr && nSrcBuf == 0 )
    {

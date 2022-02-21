@@ -50,7 +50,7 @@
 
 static const HB_BLOWFISH * hb_bf_keyparam( void )
 {
-   if( hb_parclen(1) == sizeof( HB_BLOWFISH ) )
+   if( hb_parclen(1) == sizeof(HB_BLOWFISH) )
    {
       return reinterpret_cast<const HB_BLOWFISH*>( hb_parc(1) );
    }
@@ -71,7 +71,7 @@ HB_FUNC( HB_BLOWFISHKEY )
       HB_BLOWFISH bf;
 
       hb_blowfishInit( &bf, hb_parc(1), iLen );
-      hb_retclen( reinterpret_cast<const char*>( &bf ), sizeof( HB_BLOWFISH ) );
+      hb_retclen( reinterpret_cast<const char*>( &bf ), sizeof(HB_BLOWFISH) );
    }
 }
 

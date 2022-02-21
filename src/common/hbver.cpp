@@ -342,7 +342,7 @@ static void s_hb_winVerInit( void )
 #if !( defined( HB_OS_WIN_64 ) || ( defined( _MSC_VER ) && _MSC_VER > 1310 ) )
    {
       OSVERSIONINFO osvi;
-      osvi.dwOSVersionInfoSize = sizeof( osvi );
+      osvi.dwOSVersionInfoSize = sizeof(osvi);
       if( GetVersionEx( &osvi ) )
       {
          /* NOTE: Value is VER_PLATFORM_WIN32_CE on WinCE */
@@ -424,7 +424,7 @@ char * hb_verPlatform( void )
 
       OSVERSIONINFO osvi;
 
-      memset( &osvi, 0, sizeof( osvi ) );
+      memset( &osvi, 0, sizeof(osvi) );
 
       /* Detection of legacy Windows versions */
       switch( hb_iswin9x() )
@@ -570,7 +570,7 @@ char * hb_verPlatform( void )
             if( hb_iswinsp( tmp, HB_TRUE ) )
             {
                char szServicePack[ 8 ];
-               hb_snprintf( szServicePack, sizeof( szServicePack ), " SP%u", tmp );
+               hb_snprintf( szServicePack, sizeof(szServicePack), " SP%u", tmp );
                hb_strncat( pszPlatform, szServicePack, PLATFORM_BUF_SIZE );
                break;
             }
@@ -615,8 +615,8 @@ HB_BOOL hb_iswinver( int iMajor, int iMinor, int iType, HB_BOOL fOrUpper )
       DWORD dwTypeMask = VER_MAJORVERSION | VER_MINORVERSION;
       DWORDLONG dwlConditionMask = 0;
 
-      memset( &ver, 0, sizeof( ver ) );
-      ver.dwOSVersionInfoSize = sizeof( ver );
+      memset( &ver, 0, sizeof(ver) );
+      ver.dwOSVersionInfoSize = sizeof(ver);
       ver.dwMajorVersion = static_cast<DWORD>( iMajor );
       ver.dwMinorVersion = static_cast<DWORD>( iMinor );
 
@@ -668,8 +668,8 @@ HB_BOOL hb_iswinsp( int iServicePackMajor, HB_BOOL fOrUpper )
       OSVERSIONINFOEXW ver;
       DWORDLONG dwlConditionMask = 0;
 
-      memset( &ver, 0, sizeof( ver ) );
-      ver.dwOSVersionInfoSize = sizeof( ver );
+      memset( &ver, 0, sizeof(ver) );
+      ver.dwOSVersionInfoSize = sizeof(ver);
       ver.wServicePackMajor = static_cast<WORD>( iServicePackMajor );
 
       dwlConditionMask = s_pVerSetConditionMask( dwlConditionMask, VER_SERVICEPACKMAJOR, fOrUpper ? VER_GREATER_EQUAL : VER_EQUAL );
@@ -866,7 +866,7 @@ char * hb_verCompiler( void )
    pszName = "Intel(R) C";
 
    #if defined( __cplusplus )
-      hb_strncpy( szSub, "++", sizeof( szSub ) - 1 );
+      hb_strncpy( szSub, "++", sizeof(szSub) - 1 );
    #endif
 
    iVerMajor = __INTEL_COMPILER / 100;
@@ -878,7 +878,7 @@ char * hb_verCompiler( void )
    pszName = "Intel(R) C";
 
    #if defined( __cplusplus )
-      hb_strncpy( szSub, "++", sizeof( szSub ) - 1 );
+      hb_strncpy( szSub, "++", sizeof(szSub) - 1 );
    #endif
 
    iVerMajor = __ICL / 100;
@@ -890,7 +890,7 @@ char * hb_verCompiler( void )
    pszName = "Intel(R) (ICC) C";
 
    #if defined( __cplusplus )
-      hb_strncpy( szSub, "++", sizeof( szSub ) - 1 );
+      hb_strncpy( szSub, "++", sizeof(szSub) - 1 );
    #endif
 
    iVerMajor = __ICC / 100;
@@ -902,7 +902,7 @@ char * hb_verCompiler( void )
    pszName = "Open64 C";
 
    #if defined( __cplusplus )
-      hb_strncpy( szSub, "++", sizeof( szSub ) - 1 );
+      hb_strncpy( szSub, "++", sizeof(szSub) - 1 );
    #endif
 
    iVerMajor = __OPENCC__;
@@ -920,7 +920,7 @@ char * hb_verCompiler( void )
    pszName = "LLVM/Clang C";
 
    #if defined( __cplusplus )
-      hb_strncpy( szSub, "++", sizeof( szSub ) - 1 );
+      hb_strncpy( szSub, "++", sizeof(szSub) - 1 );
    #endif
 
    iVerMajor = __clang_major__;
@@ -932,10 +932,10 @@ char * hb_verCompiler( void )
    pszName = "LLVM/Clang C";
 
    #if defined( __cplusplus )
-      hb_strncpy( szSub, "++", sizeof( szSub ) - 1 );
+      hb_strncpy( szSub, "++", sizeof(szSub) - 1 );
    #endif
 
-   hb_strncat( szSub, " 1.x", sizeof( szSub ) - 1 );
+   hb_strncat( szSub, " 1.x", sizeof(szSub) - 1 );
 
    iVerMajor = iVerMinor = iVerPatch = 0;
 
@@ -944,7 +944,7 @@ char * hb_verCompiler( void )
    pszName = "LLVM/GNU C";
 
    #if defined( __cplusplus )
-      hb_strncpy( szSub, "++", sizeof( szSub ) - 1 );
+      hb_strncpy( szSub, "++", sizeof(szSub) - 1 );
    #endif
 
    iVerMajor = __GNUC__;
@@ -964,7 +964,7 @@ char * hb_verCompiler( void )
    #endif
 
    #if defined( __cplusplus )
-      hb_strncpy( szSub, "++", sizeof( szSub ) - 1 );
+      hb_strncpy( szSub, "++", sizeof(szSub) - 1 );
    #endif
 
    iVerMajor = _MSC_VER / 100;
@@ -1045,7 +1045,7 @@ char * hb_verCompiler( void )
    #endif
 
    #if defined( __cplusplus )
-      hb_strncpy( szSub, "++", sizeof( szSub ) - 1 );
+      hb_strncpy( szSub, "++", sizeof(szSub) - 1 );
    #endif
 
    iVerMajor = __GNUC__;
@@ -1119,11 +1119,11 @@ char * hb_verCompiler( void )
    if( strstr( __clang_version__, "(" ) )
    {
       /* "2.0 (trunk 103176)" -> "(trunk 103176)" */
-      hb_snprintf( szSub, sizeof( szSub ), " %s", strstr( __clang_version__, "(" ) );
+      hb_snprintf( szSub, sizeof(szSub), " %s", strstr( __clang_version__, "(" ) );
    }
    else
    {
-      hb_snprintf( szSub, sizeof( szSub ), " (%s)", __clang_version__ );
+      hb_snprintf( szSub, sizeof(szSub), " (%s)", __clang_version__ );
    }
    hb_strncat( pszCompiler, szSub, COMPILER_BUF_SIZE - 1 );
 #endif

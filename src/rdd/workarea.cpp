@@ -798,7 +798,7 @@ static HB_ERRCODE hb_waSetFieldExtent( AREAP pArea, HB_USHORT uiFieldExtent )
    /* Alloc field array */
    if( uiFieldExtent )
    {
-      pArea->lpFields = static_cast<LPFIELD>( hb_xgrabz( uiFieldExtent * sizeof( FIELD ) ) );
+      pArea->lpFields = static_cast<LPFIELD>( hb_xgrabz( uiFieldExtent * sizeof(FIELD) ) );
    }
 
    return HB_SUCCESS;
@@ -1148,7 +1148,7 @@ static HB_ERRCODE hb_waStructSize( AREAP pArea, HB_USHORT * uiSize )
 #endif
    HB_SYMBOL_UNUSED( pArea );
 
-   *uiSize = sizeof( AREA );
+   *uiSize = sizeof(AREA);
    return HB_SUCCESS;
 }
 
@@ -1731,7 +1731,7 @@ static HB_ERRCODE hb_waRelEval( AREAP pArea, LPDBRELINFO pRelInfo )
              */
             pResult = pRelInfo->lpaParent->valResult;
             pRelInfo->lpaParent->valResult = nullptr;
-            memset( &pInfo, 0, sizeof( pInfo ) );
+            memset( &pInfo, 0, sizeof(pInfo) );
             pInfo.itmResult = hb_itemPutNI( nullptr, 0 );
             errCode = SELF_ORDINFO( pArea, DBOI_NUMBER, &pInfo );
 
@@ -1829,7 +1829,7 @@ static HB_ERRCODE hb_waSetRel( AREAP pArea, LPDBRELINFO lpdbRelInf )
    lpdbRelations = pArea->lpdbRelations;
    if( ! lpdbRelations )
    {
-      pArea->lpdbRelations = static_cast<LPDBRELINFO>( hb_xgrab( sizeof( DBRELINFO ) ) );
+      pArea->lpdbRelations = static_cast<LPDBRELINFO>( hb_xgrab( sizeof(DBRELINFO) ) );
       lpdbRelations = pArea->lpdbRelations;
    }
    else
@@ -1838,7 +1838,7 @@ static HB_ERRCODE hb_waSetRel( AREAP pArea, LPDBRELINFO lpdbRelInf )
       {
          lpdbRelations = lpdbRelations->lpdbriNext;
       }
-      lpdbRelations->lpdbriNext = static_cast<LPDBRELINFO>( hb_xgrab( sizeof( DBRELINFO ) ) );
+      lpdbRelations->lpdbriNext = static_cast<LPDBRELINFO>( hb_xgrab( sizeof(DBRELINFO) ) );
       lpdbRelations = lpdbRelations->lpdbriNext;
    }
    lpdbRelations->lpaParent = pArea;
@@ -2690,7 +2690,7 @@ void hb_rddSetFileRedirector( HB_RDDACCEPT funcAccept, HB_BOOL fEnable )
       if( s_uiRddRedirCount == s_uiRddRedirMax )
       {
          s_uiRddRedirMax += HB_RDD_POOL_ALLOCSIZE;
-         s_rddRedirAccept = static_cast<HB_RDDACCEPT*>( hb_xrealloc( s_rddRedirAccept, sizeof( HB_RDDACCEPT ) * s_uiRddRedirMax ) );
+         s_rddRedirAccept = static_cast<HB_RDDACCEPT*>( hb_xrealloc( s_rddRedirAccept, sizeof(HB_RDDACCEPT) * s_uiRddRedirMax ) );
       }
       s_rddRedirAccept[ s_uiRddRedirCount ] = funcAccept;
       s_uiRddRedirCount++;
@@ -2751,7 +2751,7 @@ int hb_rddRegister( const char * szDriver, HB_USHORT uiType )
       return 1;
    }
 
-   hb_snprintf( szGetFuncTable, sizeof( szGetFuncTable ), "%s_GETFUNCTABLE", szDriver );
+   hb_snprintf( szGetFuncTable, sizeof(szGetFuncTable), "%s_GETFUNCTABLE", szDriver );
    pGetFuncTable = hb_dynsymFindName( szGetFuncTable );
    if( ! pGetFuncTable )
    {
@@ -2759,10 +2759,10 @@ int hb_rddRegister( const char * szDriver, HB_USHORT uiType )
    }
 
    /* Create a new RDD node */
-   pRddNewNode = static_cast<LPRDDNODE>( hb_xgrabz( sizeof( RDDNODE ) ) );
+   pRddNewNode = static_cast<LPRDDNODE>( hb_xgrabz( sizeof(RDDNODE) ) );
 
    /* Fill the new RDD node */
-   hb_strncpy( pRddNewNode->szName, szDriver, sizeof( pRddNewNode->szName ) - 1 );
+   hb_strncpy( pRddNewNode->szName, szDriver, sizeof(pRddNewNode->szName) - 1 );
    pRddNewNode->uiType = uiType;
    pRddNewNode->rddID = s_uiRddCount;
    pRddNewNode->rddSuperID = static_cast<HB_USHORT>( -1 );
@@ -2791,7 +2791,7 @@ int hb_rddRegister( const char * szDriver, HB_USHORT uiType )
          if( s_uiRddCount == s_uiRddMax )
          {
             s_uiRddMax += HB_RDD_POOL_ALLOCSIZE;
-            s_RddList = static_cast<LPRDDNODE*>( hb_xrealloc( s_RddList, sizeof( LPRDDNODE ) * s_uiRddMax ) );
+            s_RddList = static_cast<LPRDDNODE*>( hb_xrealloc( s_RddList, sizeof(LPRDDNODE) * s_uiRddMax ) );
          }
          s_RddList[ s_uiRddCount ] = pRddNewNode;   /* Add the new RDD node */
          s_uiRddCount++;
@@ -2843,8 +2843,8 @@ HB_ERRCODE hb_rddInheritEx( RDDFUNCS * pTable, const RDDFUNCS * pSubTable,
    if( ! szDrvName || ! *szDrvName )
    {
       /* no name for inherited driver - use the default one */
-      memcpy( pTable, &waTable, sizeof( RDDFUNCS ) );
-      memcpy( pSuperTable, &waTable, sizeof( RDDFUNCS ) );
+      memcpy( pTable, &waTable, sizeof(RDDFUNCS) );
+      memcpy( pSuperTable, &waTable, sizeof(RDDFUNCS) );
       if( puiSuperRddId )
       {
          *puiSuperRddId = static_cast<HB_USHORT>( -1 );
@@ -2853,7 +2853,7 @@ HB_ERRCODE hb_rddInheritEx( RDDFUNCS * pTable, const RDDFUNCS * pSubTable,
    else
    {
       char szSuperName[ HB_RDD_MAX_DRIVERNAME_LEN + 1 ];
-      hb_strncpyUpper( szSuperName, szDrvName, sizeof( szSuperName ) - 1 );
+      hb_strncpyUpper( szSuperName, szDrvName, sizeof(szSuperName) - 1 );
       pRddNode = hb_rddFindNode( szSuperName, nullptr );
 
       if( ! pRddNode )
@@ -2861,8 +2861,8 @@ HB_ERRCODE hb_rddInheritEx( RDDFUNCS * pTable, const RDDFUNCS * pSubTable,
          return HB_FAILURE;
       }
 
-      memcpy( pTable, &pRddNode->pTable, sizeof( RDDFUNCS ) );
-      memcpy( pSuperTable, &pRddNode->pTable, sizeof( RDDFUNCS ) );
+      memcpy( pTable, &pRddNode->pTable, sizeof(RDDFUNCS) );
+      memcpy( pSuperTable, &pRddNode->pTable, sizeof(RDDFUNCS) );
       if( puiSuperRddId )
       {
          *puiSuperRddId = pRddNode->rddID;
@@ -2927,7 +2927,7 @@ HB_FUNC( __RDDPREALLOCATE )
    if( lNewSize > static_cast<HB_LONG>( s_uiRddMax ) )
    {
       s_uiRddMax += HB_RDD_POOL_ALLOCSIZE;
-      s_RddList = static_cast<LPRDDNODE*>( hb_xrealloc( s_RddList, sizeof( LPRDDNODE ) * s_uiRddMax ) );
+      s_RddList = static_cast<LPRDDNODE*>( hb_xrealloc( s_RddList, sizeof(LPRDDNODE) * s_uiRddMax ) );
    }
 
    hb_retnl( s_uiRddMax );

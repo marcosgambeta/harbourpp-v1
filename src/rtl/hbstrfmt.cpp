@@ -244,7 +244,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
             fSign = 0;
             if( pItem && HB_IS_NUMERIC( pItem ) )
             {
-               iSize = sizeof( HB_MAXINT ) * 3 + 1;
+               iSize = sizeof(HB_MAXINT) * 3 + 1;
                pStr2 = pStr = static_cast<char*>( hb_xgrab( iSize + 1 ) );
                if( *pFmt == 'd' )
                {
@@ -594,7 +594,7 @@ HB_FUNC( HB_STRFORMAT )
 
       if( iParams > 1 )
       {
-         pItemArray = static_cast<PHB_ITEM*>( hb_xgrab( ( iParams - 1 ) * sizeof( PHB_ITEM ) ) );
+         pItemArray = static_cast<PHB_ITEM*>( hb_xgrab( ( iParams - 1 ) * sizeof(PHB_ITEM) ) );
          for( int i = 1; i < iParams; i++ )
          {
             pItemArray[ i - 1 ] = hb_param( i + 1, HB_IT_ANY );

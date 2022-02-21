@@ -115,7 +115,7 @@ static void s_iousrFreeAll( void * cargo )
 
 static PHB_FILE s_fileNew( PHB_IOUSR pIO, PHB_ITEM pFileItm )
 {
-   PHB_FILE pFile = static_cast<PHB_FILE>( hb_xgrab( sizeof( HB_FILE ) ) );
+   PHB_FILE pFile = static_cast<PHB_FILE>( hb_xgrab( sizeof(HB_FILE) ) );
 
    pFile->pFuncs = &pIO->funcs;
    pFile->pFileItm = pFileItm;
@@ -144,7 +144,7 @@ static PHB_IOUSR s_iousrAddNew( const char * pszPrefix )
       {
          hb_vmAtQuit( s_iousrFreeAll, nullptr );
       }
-      pIO = static_cast<PHB_IOUSR>( hb_xgrabz( sizeof( HB_IOUSR ) ) );
+      pIO = static_cast<PHB_IOUSR>( hb_xgrabz( sizeof(HB_IOUSR) ) );
       pIO->prefix = hb_strdup( pszPrefix );
       pIO->prefix_len = static_cast<int>( strlen( pszPrefix ) );
       s_ioUsrs[ s_iCount++ ] = pIO;
@@ -717,7 +717,7 @@ static const HB_FILE_FUNCS s_fileFuncs =
 };
 
 typedef HB_BOOL ( * HB_FILE_FUNC )( PHB_FILE_FUNCS pFuncs, const char * );
-#define HB_FILE_FUNC_COUNT ( sizeof( HB_FILE_FUNCS ) / sizeof( HB_FILE_FUNC ) )
+#define HB_FILE_FUNC_COUNT ( sizeof(HB_FILE_FUNCS) / sizeof(HB_FILE_FUNC) )
 
 /* IOUSR_Register( <aMethods>, <cPrefix> ) */
 HB_FUNC( IOUSR_REGISTER )

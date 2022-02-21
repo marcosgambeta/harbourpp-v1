@@ -118,7 +118,7 @@ void hb_znetClose( PHB_ZNETSTREAM pStream )
  */
 PHB_ZNETSTREAM hb_znetOpen( int level, int strategy )
 {
-   PHB_ZNETSTREAM pStream = static_cast<PHB_ZNETSTREAM>( hb_xgrabz( sizeof( HB_ZNETSTREAM ) ) );
+   PHB_ZNETSTREAM pStream = static_cast<PHB_ZNETSTREAM>( hb_xgrabz( sizeof(HB_ZNETSTREAM) ) );
 
    if( level != Z_DEFAULT_COMPRESSION && !( level >= Z_NO_COMPRESSION && level <= Z_BEST_COMPRESSION ) )
    {
@@ -160,7 +160,7 @@ void hb_znetEncryptKey( PHB_ZNETSTREAM pStream, const void * keydata, int keylen
       pStream->crypt = 1;
 
       /* initialize encryption key */
-      pStream->bf = static_cast<HB_BLOWFISH*>( hb_xgrab( sizeof( HB_BLOWFISH ) ) );
+      pStream->bf = static_cast<HB_BLOWFISH*>( hb_xgrab( sizeof(HB_BLOWFISH) ) );
       hb_blowfishInit( pStream->bf, keydata, keylen );
 
       /* initialize input buffer */
@@ -727,7 +727,7 @@ PHB_SOCKEX hb_sockexNewZNet( HB_SOCKET sd, const void * keydata, int keylen, int
       }
       if( sd != HB_NO_SOCKET )
       {
-         pSock = static_cast<PHB_SOCKEX>( hb_xgrabz( sizeof( HB_SOCKEX ) ) );
+         pSock = static_cast<PHB_SOCKEX>( hb_xgrabz( sizeof(HB_SOCKEX) ) );
          pSock->sd = sd;
          pSock->fRedirAll = HB_TRUE;
          pSock->fShutDown = HB_TRUE;

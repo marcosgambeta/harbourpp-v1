@@ -174,7 +174,7 @@ PHB_CODEBLOCK hb_codeblockNew( const HB_BYTE * pBuffer, HB_USHORT uiLocals, cons
        * NOTE: This table can be shared by codeblocks created during
        * evaluation of this codeblock
        */
-      pLocals = static_cast<PHB_ITEM>( hb_xgrab( ( uiLocals + 1 ) * sizeof( HB_ITEM ) ) );
+      pLocals = static_cast<PHB_ITEM>( hb_xgrab( ( uiLocals + 1 ) * sizeof(HB_ITEM) ) );
       pLocals[ 0 ].type = HB_IT_NIL;
 
       do
@@ -222,7 +222,7 @@ PHB_CODEBLOCK hb_codeblockNew( const HB_BYTE * pBuffer, HB_USHORT uiLocals, cons
    }
 
    pBase = hb_stackBaseItem();
-   pCBlock = static_cast<PHB_CODEBLOCK>( hb_gcAllocRaw( sizeof( HB_CODEBLOCK ), &s_gcCodeblockFuncs ) );
+   pCBlock = static_cast<PHB_CODEBLOCK>( hb_gcAllocRaw( sizeof(HB_CODEBLOCK), &s_gcCodeblockFuncs ) );
 
    pCBlock->pCode     = pCode;
    pCBlock->dynBuffer = nLen != 0;
@@ -260,7 +260,7 @@ PHB_CODEBLOCK hb_codeblockMacroNew( const HB_BYTE * pBuffer, HB_SIZE nLen )
     */
    pCode = static_cast<HB_BYTE*>( memcpy( hb_xgrab( nLen ), pBuffer, nLen ) );
 
-   pCBlock = static_cast<PHB_CODEBLOCK>( hb_gcAllocRaw( sizeof( HB_CODEBLOCK ), &s_gcCodeblockFuncs ) );
+   pCBlock = static_cast<PHB_CODEBLOCK>( hb_gcAllocRaw( sizeof(HB_CODEBLOCK), &s_gcCodeblockFuncs ) );
    pBase = hb_stackBaseItem();
    /* Store the number of referenced local variables */
    pCBlock->pCode     = pCode;

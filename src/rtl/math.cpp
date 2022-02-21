@@ -189,7 +189,7 @@ static void hb_mathErrDataRelease( void * Cargo )
    hb_itemRelease( pMathErr->block );
 }
 
-static HB_TSD_NEW( s_mathErrData, sizeof( HB_MATHERRDATA ), hb_mathErrDataInit, hb_mathErrDataRelease );
+static HB_TSD_NEW( s_mathErrData, sizeof(HB_MATHERRDATA), hb_mathErrDataInit, hb_mathErrDataRelease );
 
 #define hb_mathErrData()  ( static_cast<PHB_MATHERRDATA>( hb_stackGetTSD( &s_mathErrData ) ) )
 
@@ -385,7 +385,7 @@ HB_BOOL hb_mathGetError( HB_MATH_EXCEPTION * phb_exc, const char * szFunc, doubl
 
 #  if defined( HB_MATH_HANDLER )
 
-   memcpy( phb_exc, &hb_mathErrData()->exception, sizeof( HB_MATH_EXCEPTION ) );
+   memcpy( phb_exc, &hb_mathErrData()->exception, sizeof(HB_MATH_EXCEPTION) );
    return phb_exc->type != HB_MATH_ERR_NONE;
 
 #  else

@@ -260,17 +260,17 @@ static int hb_hashItemCmp( PHB_ITEM pKey1, PHB_ITEM pKey2, int iFlags )
 
 static void hb_hashResort( PHB_BASEHASH pBaseHash )
 {
-   PHB_HASHPAIR pPairs = static_cast<PHB_HASHPAIR>( hb_xgrab( pBaseHash->nLen * sizeof( HB_HASHPAIR ) ) );
+   PHB_HASHPAIR pPairs = static_cast<PHB_HASHPAIR>( hb_xgrab( pBaseHash->nLen * sizeof(HB_HASHPAIR) ) );
    for( HB_SIZE nPos = 0; nPos < pBaseHash->nLen; ++nPos )
    {
-      memcpy( pPairs + nPos, pBaseHash->pPairs + pBaseHash->pnPos[ nPos ], sizeof( HB_HASHPAIR ) );
+      memcpy( pPairs + nPos, pBaseHash->pPairs + pBaseHash->pnPos[ nPos ], sizeof(HB_HASHPAIR) );
       pBaseHash->pnPos[ nPos ] = nPos;
    }
 
    hb_xfree( pBaseHash->pPairs );
    pBaseHash->pPairs = pPairs;
    pBaseHash->nSize = pBaseHash->nLen;
-   pBaseHash->pnPos = static_cast<HB_SIZE*>( hb_xrealloc( pBaseHash->pnPos, pBaseHash->nSize * sizeof( HB_SIZE ) ) );
+   pBaseHash->pnPos = static_cast<HB_SIZE*>( hb_xrealloc( pBaseHash->pnPos, pBaseHash->nSize * sizeof(HB_SIZE) ) );
 }
 
 static void hb_hashSortDo( PHB_BASEHASH pBaseHash )
@@ -325,9 +325,9 @@ static void hb_hashSortDo( PHB_BASEHASH pBaseHash )
          while( nPos > 0 && hb_hashItemCmp( &pBaseHash->pPairs[ nPos - 1 ].key, &pBaseHash->pPairs[ nPos ].key, iFlags ) > 0 )
          {
             HB_HASHPAIR pair;
-            memcpy( &pair, pBaseHash->pPairs + nPos - 1, sizeof( HB_HASHPAIR ) );
-            memcpy( pBaseHash->pPairs + nPos - 1, pBaseHash->pPairs + nPos, sizeof( HB_HASHPAIR ) );
-            memcpy( pBaseHash->pPairs + nPos, &pair, sizeof( HB_HASHPAIR ) );
+            memcpy( &pair, pBaseHash->pPairs + nPos - 1, sizeof(HB_HASHPAIR) );
+            memcpy( pBaseHash->pPairs + nPos - 1, pBaseHash->pPairs + nPos, sizeof(HB_HASHPAIR) );
+            memcpy( pBaseHash->pPairs + nPos, &pair, sizeof(HB_HASHPAIR) );
             --nPos;
          }
       }
@@ -378,18 +378,18 @@ static void hb_hashResize( PHB_BASEHASH pBaseHash, HB_SIZE nNewSize )
    {
       if( pBaseHash->nSize )
       {
-         pBaseHash->pPairs = static_cast<PHB_HASHPAIR>( hb_xrealloc( pBaseHash->pPairs, nNewSize * sizeof( HB_HASHPAIR ) ) );
+         pBaseHash->pPairs = static_cast<PHB_HASHPAIR>( hb_xrealloc( pBaseHash->pPairs, nNewSize * sizeof(HB_HASHPAIR) ) );
          if( pBaseHash->pnPos )
          {
-            pBaseHash->pnPos = static_cast<HB_SIZE*>( hb_xrealloc( pBaseHash->pnPos, nNewSize * sizeof( HB_SIZE ) ) );
+            pBaseHash->pnPos = static_cast<HB_SIZE*>( hb_xrealloc( pBaseHash->pnPos, nNewSize * sizeof(HB_SIZE) ) );
          }
       }
       else
       {
-         pBaseHash->pPairs = static_cast<PHB_HASHPAIR>( hb_xgrab( nNewSize * sizeof( HB_HASHPAIR ) ) );
+         pBaseHash->pPairs = static_cast<PHB_HASHPAIR>( hb_xgrab( nNewSize * sizeof(HB_HASHPAIR) ) );
          if( pBaseHash->iFlags & HB_HASH_KEEPORDER )
          {
-            pBaseHash->pnPos = static_cast<HB_SIZE*>( hb_xgrab( nNewSize * sizeof( HB_SIZE ) ) );
+            pBaseHash->pnPos = static_cast<HB_SIZE*>( hb_xgrab( nNewSize * sizeof(HB_SIZE) ) );
          }
       }
 
@@ -405,10 +405,10 @@ static void hb_hashResize( PHB_BASEHASH pBaseHash, HB_SIZE nNewSize )
       pBaseHash->nSize = nNewSize;
       if( nNewSize )
       {
-         pBaseHash->pPairs = static_cast<PHB_HASHPAIR>( hb_xrealloc( pBaseHash->pPairs, nNewSize * sizeof( HB_HASHPAIR ) ) );
+         pBaseHash->pPairs = static_cast<PHB_HASHPAIR>( hb_xrealloc( pBaseHash->pPairs, nNewSize * sizeof(HB_HASHPAIR) ) );
          if( pBaseHash->pnPos )
          {
-            pBaseHash->pnPos = static_cast<HB_SIZE*>( hb_xrealloc( pBaseHash->pnPos, nNewSize * sizeof( HB_SIZE ) ) );
+            pBaseHash->pnPos = static_cast<HB_SIZE*>( hb_xrealloc( pBaseHash->pnPos, nNewSize * sizeof(HB_SIZE) ) );
          }
       }
       else
@@ -442,12 +442,12 @@ static PHB_ITEM hb_hashValuePtr( PHB_BASEHASH pBaseHash, PHB_ITEM pKey, HB_BOOL 
 
       if( pBaseHash->pnPos )
       {
-         memmove( pBaseHash->pnPos + nPos + 1, pBaseHash->pnPos + nPos, ( pBaseHash->nLen - nPos ) * sizeof( HB_SIZE ) );
+         memmove( pBaseHash->pnPos + nPos + 1, pBaseHash->pnPos + nPos, ( pBaseHash->nLen - nPos ) * sizeof(HB_SIZE) );
          nPos = ( pBaseHash->pnPos[ nPos ] = pBaseHash->nLen );
       }
       else if( nPos < pBaseHash->nLen )
       {
-         memmove( pBaseHash->pPairs + nPos + 1, pBaseHash->pPairs + nPos, ( pBaseHash->nLen - nPos ) * sizeof( HB_HASHPAIR ) );
+         memmove( pBaseHash->pPairs + nPos + 1, pBaseHash->pPairs + nPos, ( pBaseHash->nLen - nPos ) * sizeof(HB_HASHPAIR) );
          pBaseHash->pPairs[ nPos ].key.type = HB_IT_NIL;
          pBaseHash->pPairs[ nPos ].value.type = HB_IT_NIL;
       }
@@ -476,12 +476,12 @@ static HB_BOOL hb_hashNewValue( PHB_BASEHASH pBaseHash, PHB_ITEM pKey, PHB_ITEM 
 
       if( pBaseHash->pnPos )
       {
-         memmove( pBaseHash->pnPos + nPos + 1, pBaseHash->pnPos + nPos, ( pBaseHash->nLen - nPos ) * sizeof( HB_SIZE ) );
+         memmove( pBaseHash->pnPos + nPos + 1, pBaseHash->pnPos + nPos, ( pBaseHash->nLen - nPos ) * sizeof(HB_SIZE) );
          nPos = ( pBaseHash->pnPos[ nPos ] = pBaseHash->nLen );
       }
       else if( nPos < pBaseHash->nLen )
       {
-         memmove( pBaseHash->pPairs + nPos + 1, pBaseHash->pPairs + nPos, ( pBaseHash->nLen - nPos ) * sizeof( HB_HASHPAIR ) );
+         memmove( pBaseHash->pPairs + nPos + 1, pBaseHash->pPairs + nPos, ( pBaseHash->nLen - nPos ) * sizeof(HB_HASHPAIR) );
          pBaseHash->pPairs[ nPos ].key.type = HB_IT_NIL;
          pBaseHash->pPairs[ nPos ].value.type = HB_IT_NIL;
       }
@@ -571,15 +571,15 @@ static void hb_hashDelPair( PHB_BASEHASH pBaseHash, HB_SIZE nPos )
          *pnLast = *pnDel;
          if( pnDel < pBaseHash->pnPos + pBaseHash->nLen )
          {
-            memmove( pnDel, pnDel + 1, ( pBaseHash->pnPos + pBaseHash->nLen - pnDel ) * sizeof( HB_SIZE ) );
+            memmove( pnDel, pnDel + 1, ( pBaseHash->pnPos + pBaseHash->nLen - pnDel ) * sizeof(HB_SIZE) );
          }
          if( nPos != pBaseHash->nLen )
          {
             HB_HASHPAIR pair;
-            memcpy( &pair, pBaseHash->pPairs + nPos, sizeof( HB_HASHPAIR ) );
-            memcpy( pBaseHash->pPairs + nPos, pBaseHash->pPairs + pBaseHash->nLen, sizeof( HB_HASHPAIR ) );
+            memcpy( &pair, pBaseHash->pPairs + nPos, sizeof(HB_HASHPAIR) );
+            memcpy( pBaseHash->pPairs + nPos, pBaseHash->pPairs + pBaseHash->nLen, sizeof(HB_HASHPAIR) );
             nPos = pBaseHash->nLen;
-            memcpy( pBaseHash->pPairs + nPos, &pair, sizeof( HB_HASHPAIR ) );
+            memcpy( pBaseHash->pPairs + nPos, &pair, sizeof(HB_HASHPAIR) );
          }
 #else
          HB_SIZE n = 0;
@@ -591,7 +591,7 @@ static void hb_hashDelPair( PHB_BASEHASH pBaseHash, HB_SIZE nPos )
             }
             else if( pBaseHash->pnPos[ n ] == nPos )
             {
-               memmove( &pBaseHash->pnPos[ n ], &pBaseHash->pnPos[ n + 1 ], ( pBaseHash->nLen - n ) * sizeof( HB_SIZE ) );
+               memmove( &pBaseHash->pnPos[ n ], &pBaseHash->pnPos[ n + 1 ], ( pBaseHash->nLen - n ) * sizeof(HB_SIZE) );
             }
             else
             {
@@ -604,10 +604,10 @@ static void hb_hashDelPair( PHB_BASEHASH pBaseHash, HB_SIZE nPos )
       if( nPos != pBaseHash->nLen )
       {
          HB_HASHPAIR pair;
-         memcpy( &pair, pBaseHash->pPairs + nPos, sizeof( HB_HASHPAIR ) );
-         memmove( pBaseHash->pPairs + nPos, pBaseHash->pPairs + nPos + 1, ( pBaseHash->nLen - nPos ) * sizeof( HB_HASHPAIR ) );
+         memcpy( &pair, pBaseHash->pPairs + nPos, sizeof(HB_HASHPAIR) );
+         memmove( pBaseHash->pPairs + nPos, pBaseHash->pPairs + nPos + 1, ( pBaseHash->nLen - nPos ) * sizeof(HB_HASHPAIR) );
          nPos = pBaseHash->nLen;
-         memcpy( pBaseHash->pPairs + nPos, &pair, sizeof( HB_HASHPAIR ) );
+         memcpy( pBaseHash->pPairs + nPos, &pair, sizeof(HB_HASHPAIR) );
       }
 
       hb_itemSetNil( &pBaseHash->pPairs[ nPos ].key );
@@ -615,10 +615,10 @@ static void hb_hashDelPair( PHB_BASEHASH pBaseHash, HB_SIZE nPos )
       if( pBaseHash->nSize - pBaseHash->nLen > ( HB_HASH_ITEM_ALLOC << 1 ) )
       {
          pBaseHash->nSize -= HB_HASH_ITEM_ALLOC;
-         pBaseHash->pPairs = static_cast<PHB_HASHPAIR>( hb_xrealloc( pBaseHash->pPairs, pBaseHash->nSize * sizeof( HB_HASHPAIR ) ) );
+         pBaseHash->pPairs = static_cast<PHB_HASHPAIR>( hb_xrealloc( pBaseHash->pPairs, pBaseHash->nSize * sizeof(HB_HASHPAIR) ) );
          if( pBaseHash->pnPos )
          {
-            pBaseHash->pnPos = static_cast<HB_SIZE*>( hb_xrealloc( pBaseHash->pnPos, pBaseHash->nSize * sizeof( HB_SIZE ) ) );
+            pBaseHash->pnPos = static_cast<HB_SIZE*>( hb_xrealloc( pBaseHash->pnPos, pBaseHash->nSize * sizeof(HB_SIZE) ) );
          }
       }
    }
@@ -641,7 +641,7 @@ PHB_ITEM hb_hashNew( PHB_ITEM pItem )
       hb_itemClear( pItem );
    }
 
-   pBaseHash = static_cast<PHB_BASEHASH>( hb_gcAllocRaw( sizeof( HB_BASEHASH ), &s_gcHashFuncs ) );
+   pBaseHash = static_cast<PHB_BASEHASH>( hb_gcAllocRaw( sizeof(HB_BASEHASH), &s_gcHashFuncs ) );
    pBaseHash->pPairs   = nullptr;
    pBaseHash->pnPos    = nullptr;
    pBaseHash->nSize    = 0;
@@ -1153,7 +1153,7 @@ void hb_hashCloneBody( PHB_ITEM pDest, PHB_ITEM pHash, PHB_NESTED_CLONED pCloned
    {
       memcpy( pDest->item.asHash.value->pnPos,
               pHash->item.asHash.value->pnPos,
-              pHash->item.asHash.value->nLen * sizeof( HB_SIZE ) );
+              pHash->item.asHash.value->nLen * sizeof(HB_SIZE) );
    }
    for( HB_SIZE nPos = 0; nPos < pHash->item.asHash.value->nLen; ++nPos )
    {
@@ -1394,7 +1394,7 @@ void hb_hashSetFlags( PHB_ITEM pHash, int iFlags )
       {
          HB_SIZE n = pHash->item.asHash.value->nSize;
 
-         pHash->item.asHash.value->pnPos = static_cast<HB_SIZE*>( hb_xgrab( n * sizeof( HB_SIZE ) ) );
+         pHash->item.asHash.value->pnPos = static_cast<HB_SIZE*>( hb_xgrab( n * sizeof(HB_SIZE) ) );
          do
          {
             --n;

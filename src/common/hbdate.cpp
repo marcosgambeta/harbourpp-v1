@@ -1074,7 +1074,7 @@ long hb_timeUTCOffset( void ) /* in seconds */
       TIME_ZONE_INFORMATION tzInfo;
       DWORD retval;
 
-      memset( &tzInfo, 0, sizeof( tzInfo ) );
+      memset( &tzInfo, 0, sizeof(tzInfo) );
       retval = GetTimeZoneInformation( &tzInfo );
 
       /* disabled because users reported that in some

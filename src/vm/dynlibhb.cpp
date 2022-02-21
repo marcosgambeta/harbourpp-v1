@@ -98,7 +98,7 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
 
       if( argc > 0 )
       {
-         argv = static_cast<const char**>( hb_xgrab( sizeof( char * ) * argc ) );
+         argv = static_cast<const char**>( hb_xgrab( sizeof(char*) * argc ) );
          for( int i = 0; i < argc; ++i )
          {
             argv[ i ] = hb_arrayGetCPtr( pArgs, i + 1 );
@@ -147,7 +147,7 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
 
    if( hDynLib )
    {
-      void ** pLibPtr = static_cast<void**>( hb_gcAllocate( sizeof( void * ), &s_gcDynlibFuncs ) );
+      void ** pLibPtr = static_cast<void**>( hb_gcAllocate( sizeof(void*), &s_gcDynlibFuncs ) );
       *pLibPtr = hDynLib;
       return hb_itemPutPtrGC( nullptr, pLibPtr );
    }

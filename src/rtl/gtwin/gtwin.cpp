@@ -528,7 +528,7 @@ static void hb_gt_win_xInitScreenParam( PHB_GT pGT )
    {
       COORD coDest;
       SMALL_RECT srWin;
-      HB_SIZE nSize = static_cast<HB_SIZE>( _GetScreenWidth() ) * _GetScreenHeight() * sizeof( CHAR_INFO );
+      HB_SIZE nSize = static_cast<HB_SIZE>( _GetScreenWidth() ) * _GetScreenHeight() * sizeof(CHAR_INFO);
 
       HB_GTSELF_RESIZE( pGT, _GetScreenHeight(), _GetScreenWidth() );
 
@@ -617,7 +617,7 @@ static HB_BOOL hb_gt_win_SetPalette_Vista( HB_BOOL bSet, COLORREF * colors )
    {
       CONSOLE_SCREEN_BUFFER_INFOEX info;
 
-      info.cbSize = sizeof( info );
+      info.cbSize = sizeof(info);
       bDone = s_pGetConsoleScreenBufferInfoEx( s_HOutput, &info ) != 0;
       if( bDone )
       {
@@ -842,7 +842,7 @@ static void hb_gt_win_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    GetConsoleScreenBufferInfo( s_HOutput, &s_csbi );
 
    /* save screen info to restore on exit */
-   memcpy( &s_origCsbi, &s_csbi, sizeof( s_csbi ) );
+   memcpy( &s_origCsbi, &s_csbi, sizeof(s_csbi) );
 
    s_csbi.srWindow.Top = s_csbi.srWindow.Left = 0;
    s_csbi.srWindow.Right = HB_MIN( s_csbi.srWindow.Right, _GetScreenWidth() - 1 );

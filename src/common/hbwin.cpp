@@ -85,7 +85,7 @@ wchar_t * hb_mbtowc( const char * srcA )
    wchar_t *dstW;
 
    length = MultiByteToWideChar( CP_ACP, 0, srcA, -1, nullptr, 0 );
-   dstW = static_cast<wchar_t*>( hb_xgrab( length * sizeof( wchar_t ) ) );
+   dstW = static_cast<wchar_t*>( hb_xgrab( length * sizeof(wchar_t) ) );
    MultiByteToWideChar( CP_ACP, 0, srcA, -1, dstW, length );
 
    return dstW;
@@ -110,7 +110,7 @@ wchar_t * hb_mbntowc( const char * srcA, HB_SIZE nLen )
 
    nLen = hb_strnlen( srcA, nLen );
    length = MultiByteToWideChar( CP_ACP, 0, srcA, static_cast<int>( nLen ), nullptr, 0 );
-   dstW = static_cast<wchar_t*>( hb_xgrab( ( length + 1 ) * sizeof( wchar_t ) ) );
+   dstW = static_cast<wchar_t*>( hb_xgrab( ( length + 1 ) * sizeof(wchar_t) ) );
    MultiByteToWideChar( CP_ACP, 0, srcA, static_cast<int>( nLen ), dstW, length );
    dstW[ length ] = L'\0';
 

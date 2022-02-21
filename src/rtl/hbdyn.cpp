@@ -201,7 +201,7 @@ static HB_U64 hb_u64par( PHB_ITEM pParam, PHB_DYNARG pArg )
       case HB_DYN_CTYPE_STRUCTURE:
       {
          HB_SIZE nLen = hb_itemGetCLen( pParam );
-         pArg->hString = hb_xgrab( nLen + sizeof( char ) );
+         pArg->hString = hb_xgrab( nLen + sizeof(char) );
          pArg->bRawBuffer = HB_TRUE;
          memcpy( static_cast<char*>( pArg->hString ), hb_itemGetCPtr( pParam ), nLen );
          ( static_cast<char*>( pArg->hString ) )[ nLen ] = '\0';
@@ -237,7 +237,7 @@ static HB_U64 hb_u64par( PHB_ITEM pParam, PHB_DYNARG pArg )
             default:
             {
                HB_SIZE nLen = hb_itemGetCLen( pParam );
-               pArg->hString = hb_xgrab( nLen + sizeof( char ) );
+               pArg->hString = hb_xgrab( nLen + sizeof(char) );
                pArg->bRawBuffer = HB_TRUE;
                memcpy( static_cast<char*>( pArg->hString ), hb_itemGetCPtr( pParam ), nLen );
                ( static_cast<char*>( pArg->hString ) )[ nLen ] = '\0';
@@ -609,7 +609,7 @@ static void hb_u32par( PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r
       case HB_DYN_CTYPE_STRUCTURE:
       {
          HB_SIZE nLen = hb_itemGetCLen( pParam );
-         pArg->hString = hb_xgrab( nLen + sizeof( char ) );
+         pArg->hString = hb_xgrab( nLen + sizeof(char) );
          pArg->bRawBuffer = HB_TRUE;
          memcpy( static_cast<char*>( pArg->hString ), hb_itemGetCPtr( pParam ), nLen );
          ( static_cast<char*>( pArg->hString ) )[ nLen ] = '\0';
@@ -645,7 +645,7 @@ static void hb_u32par( PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r
             default:
             {
                HB_SIZE nLen = hb_itemGetCLen( pParam );
-               pArg->hString = hb_xgrab( nLen + sizeof( char ) );
+               pArg->hString = hb_xgrab( nLen + sizeof(char) );
                pArg->bRawBuffer = HB_TRUE;
                memcpy( static_cast<char*>( pArg->hString ), hb_itemGetCPtr( pParam ), nLen );
                ( static_cast<char*>( pArg->hString ) )[ nLen ] = '\0';
@@ -971,7 +971,7 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
 
          if( iParams )
          {
-            pArg = static_cast<HB_DYNARG*>( hb_xgrabz( iParams * sizeof( HB_DYNARG ) ) );
+            pArg = static_cast<HB_DYNARG*>( hb_xgrabz( iParams * sizeof(HB_DYNARG) ) );
          }
          else
          {
@@ -1075,7 +1075,7 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
 #if ! defined( HB_LONG_LONG_OFF )
          ret.t.n64 = 0;
 #else
-         memset( &ret, 0, sizeof( ret ) );
+         memset( &ret, 0, sizeof(ret) );
 #endif
 
          if( iRetType == HB_DYN_CTYPE_DOUBLE )
@@ -1097,7 +1097,7 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
 
          if( iParams )
          {
-            pArg = static_cast<HB_DYNARG*>( hb_xgrabz( iParams * sizeof( HB_DYNARG ) ) );
+            pArg = static_cast<HB_DYNARG*>( hb_xgrabz( iParams * sizeof(HB_DYNARG) ) );
          }
          else
          {

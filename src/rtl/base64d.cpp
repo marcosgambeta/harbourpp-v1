@@ -133,7 +133,7 @@ HB_FUNC( HB_BASE64DECODE )
 
    if( nSrcLen > 0 )
    {
-      HB_SIZE nDstLen = ( ( ( nSrcLen * 3 ) / 4 ) + 1 ) * sizeof( char );
+      HB_SIZE nDstLen = ( ( ( nSrcLen * 3 ) / 4 ) + 1 ) * sizeof(char);
       char *  code    = static_cast<char*>( hb_xgrab( nDstLen ) );
 
       nDstLen = base64_decode_block( hb_parcx(1), nSrcLen, code );
