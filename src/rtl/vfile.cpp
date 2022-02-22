@@ -130,7 +130,7 @@ static void hb_fileReturn( PHB_FILE pFile )
 {
    if( pFile )
    {
-      hb_fileItemPut( hb_param( -1, HB_IT_ANY ), pFile );
+      hb_fileItemPut( hb_param(-1, HB_IT_ANY), pFile );
    }
    else
    {
@@ -630,7 +630,7 @@ HB_FUNC( HB_VFREAD )
 
    if( pFile )
    {
-      PHB_ITEM pBuffer = hb_param( 2, HB_IT_STRING );
+      PHB_ITEM pBuffer = hb_param(2, HB_IT_STRING);
       HB_ERRCODE uiError = 0;
       HB_SIZE nRead = 0;
       HB_SIZE nSize;
@@ -745,7 +745,7 @@ HB_FUNC( HB_VFREADAT )
 
    if( pFile )
    {
-      PHB_ITEM pBuffer = hb_param( 2, HB_IT_STRING );
+      PHB_ITEM pBuffer = hb_param(2, HB_IT_STRING);
       HB_ERRCODE uiError = 0;
       HB_SIZE nRead = 0;
       HB_SIZE nSize;
@@ -921,7 +921,7 @@ HB_FUNC( HB_VFCONFIG )
    {
       if( HB_ISNUM( 2 ) )
       {
-         PHB_ITEM pValue = hb_itemNew( hb_param( 3, HB_IT_ANY ) );
+         PHB_ITEM pValue = hb_itemNew( hb_param(3, HB_IT_ANY) );
 
          hb_fileConfigure( pFile, hb_parni(2), pValue );
          hb_fsSetFError( hb_fsError() );

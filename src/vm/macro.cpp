@@ -1307,7 +1307,7 @@ HB_FUNC( HB_SETMACRO )
          case HB_SM_SHORTCUTS:
             /* enable/disable support for shortcut logical operators */
             hb_retl( hb_macroFlags() & flags );
-            pValue = hb_param( 2, HB_IT_LOGICAL );
+            pValue = hb_param(2, HB_IT_LOGICAL);
             if( pValue )
             {
                hb_macroSetMacro( hb_itemGetL( pValue ), flags );

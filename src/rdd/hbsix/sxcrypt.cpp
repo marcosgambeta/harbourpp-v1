@@ -175,7 +175,7 @@ HB_FUNC( SX_ENCRYPT )
       char keyBuf[ 8 ];
       HB_SIZE nLen = hb_parclen(1);
 
-      if( nLen > 0 && _hb_sxGetKey( hb_param( 2, HB_IT_ANY ), keyBuf ) )
+      if( nLen > 0 && _hb_sxGetKey( hb_param(2, HB_IT_ANY), keyBuf ) )
       {
          char * pDst = static_cast<char*>( hb_xgrab( nLen + 1 ) );
          hb_sxEnCrypt( hb_parc(1), pDst, keyBuf, nLen );
@@ -184,7 +184,7 @@ HB_FUNC( SX_ENCRYPT )
       }
       else
       {
-         hb_itemReturn( hb_param( 1, HB_IT_ANY ) );
+         hb_itemReturn( hb_param(1, HB_IT_ANY) );
       }
    }
 }
@@ -196,7 +196,7 @@ HB_FUNC( SX_DECRYPT )
       char keyBuf[ 8 ];
       HB_SIZE nLen = hb_parclen(1);
 
-      if( nLen > 0 && _hb_sxGetKey( hb_param( 2, HB_IT_ANY ), keyBuf ) )
+      if( nLen > 0 && _hb_sxGetKey( hb_param(2, HB_IT_ANY), keyBuf ) )
       {
          char * pDst = static_cast<char*>( hb_xgrab( nLen + 1 ) );
          hb_sxDeCrypt( hb_parc(1), pDst, keyBuf, nLen );
@@ -205,7 +205,7 @@ HB_FUNC( SX_DECRYPT )
       }
       else
       {
-         hb_itemReturn( hb_param( 1, HB_IT_ANY ) );
+         hb_itemReturn( hb_param(1, HB_IT_ANY) );
       }
    }
 }

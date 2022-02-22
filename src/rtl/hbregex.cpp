@@ -197,16 +197,16 @@ HB_FUNC( HB_REGEXCOMP )
 
 HB_FUNC( HB_ISREGEX )
 {
-   hb_retl( hb_regexIs( hb_param( 1, HB_IT_ANY ) ) );
+   hb_retl( hb_regexIs( hb_param(1, HB_IT_ANY) ) );
 }
 
 HB_FUNC( HB_ATX )
 {
-   PHB_ITEM pString = hb_param( 2, HB_IT_STRING );
+   PHB_ITEM pString = hb_param(2, HB_IT_STRING);
 
    if( pString )
    {
-      PHB_REGEX pRegEx = hb_regexGet( hb_param( 1, HB_IT_ANY ), ! hb_parldef( 3, HB_TRUE ) ? HBREG_ICASE : 0 );
+      PHB_REGEX pRegEx = hb_regexGet( hb_param(1, HB_IT_ANY), ! hb_parldef( 3, HB_TRUE ) ? HBREG_ICASE : 0 );
 
       if( pRegEx )
       {
@@ -272,13 +272,13 @@ static HB_BOOL hb_regex( int iRequest )
    const char * pszString;
    HB_SIZE nLen;
 
-   pString = hb_param( 2, HB_IT_STRING );
+   pString = hb_param(2, HB_IT_STRING);
    if( ! pString )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3014, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return HB_FALSE;
    }
-   pRegEx = hb_regexGet( hb_param( 1, HB_IT_ANY ), ( ! hb_parldef( 3, HB_TRUE ) ? HBREG_ICASE : 0 ) | ( hb_parl(4) ? HBREG_NEWLINE : 0 ) );
+   pRegEx = hb_regexGet( hb_param(1, HB_IT_ANY), ( ! hb_parldef( 3, HB_TRUE ) ? HBREG_ICASE : 0 ) | ( hb_parl(4) ? HBREG_NEWLINE : 0 ) );
    if( ! pRegEx )
    {
       return HB_FALSE;

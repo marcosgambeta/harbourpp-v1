@@ -104,7 +104,7 @@ static HB_TSD_NEW( s_errData, sizeof(HB_ERRDATA), nullptr, hb_errorDataRelease )
 
 static HB_BOOL hb_errGetNumCode( int * piValue, const char * szOperation )
 {
-   PHB_ITEM pItem = hb_param( 1, HB_IT_NUMERIC );
+   PHB_ITEM pItem = hb_param(1, HB_IT_NUMERIC);
 
    if( pItem )
    {
@@ -138,7 +138,7 @@ HB_FUNC_STATIC( CARGO )
 
 HB_FUNC_STATIC( _CARGO )
 {
-   PHB_ITEM pItem = hb_param( 1, HB_IT_ANY );
+   PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
 
    if( pItem )
    {
@@ -155,7 +155,7 @@ HB_FUNC_STATIC( ARGS )
 
 HB_FUNC_STATIC( _ARGS )
 {
-   PHB_ITEM pItem = hb_param( 1, HB_IT_ARRAY );
+   PHB_ITEM pItem = hb_param(1, HB_IT_ARRAY);
 
    if( pItem )
    {
@@ -247,7 +247,7 @@ HB_FUNC_STATIC( DESCRIPTION )
 
 HB_FUNC_STATIC( _DESCRIPTION )
 {
-   PHB_ITEM pItem = hb_param( 1, HB_IT_ANY );
+   PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
 
    if( pItem && HB_IS_STRING( pItem ) )
    {
@@ -264,7 +264,7 @@ HB_FUNC_STATIC( FILENAME )
 
 HB_FUNC_STATIC( _FILENAME )
 {
-   PHB_ITEM pItem = hb_param( 1, HB_IT_ANY );
+   PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
 
    if( pItem && HB_IS_STRING( pItem ) )
    {
@@ -281,7 +281,7 @@ HB_FUNC_STATIC( OPERATION )
 
 HB_FUNC_STATIC( _OPERATION )
 {
-   PHB_ITEM pItem = hb_param( 1, HB_IT_ANY );
+   PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
 
    if( pItem && HB_IS_STRING( pItem ) )
    {
@@ -298,7 +298,7 @@ HB_FUNC_STATIC( SUBSYSTEM )
 
 HB_FUNC_STATIC( _SUBSYSTEM )
 {
-   PHB_ITEM pItem = hb_param( 1, HB_IT_ANY );
+   PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
 
    if( pItem && HB_IS_STRING( pItem ) )
    {
@@ -445,7 +445,7 @@ HB_FUNC( __ERRINHANDLER )
 
 HB_FUNC( ERRORBLOCK )
 {
-   PHB_ITEM pNewErrorBlock = hb_param( 1, HB_IT_EVALITEM );
+   PHB_ITEM pNewErrorBlock = hb_param(1, HB_IT_EVALITEM);
    PHB_ITEM pErrorBlock = hb_errorBlock();
 
    hb_itemReturn( pErrorBlock );
@@ -1124,7 +1124,7 @@ HB_FUNC( __ERRRT_BASE )
                   hb_parc(3),
                   hb_parc(4),
                   ( hb_pcount() > 5 && hb_parnl(5) > 0 ? 1 : 0 ),
-                  hb_param( 6, HB_IT_ANY ) );
+                  hb_param(6, HB_IT_ANY) );
 }
 
 HB_FUNC( __ERRRT_SBASE )
@@ -1134,7 +1134,7 @@ HB_FUNC( __ERRRT_SBASE )
                          hb_parc(3),
                          hb_parc(4),
                          ( hb_pcount() > 5 && hb_parnl(5) > 0 ? 1 : 0 ),
-                         hb_param( 6, HB_IT_ANY ) );
+                         hb_param(6, HB_IT_ANY) );
 }
 
 HB_USHORT hb_errRT_BASE( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char * szDescription, const char * szOperation, HB_ULONG ulArgCount, ... )

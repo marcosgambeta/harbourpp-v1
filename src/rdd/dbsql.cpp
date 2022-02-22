@@ -395,11 +395,11 @@ HB_FUNC( __DBSQL )
       HB_BOOL fExport         = hb_parl(1);
       const char * szFileName = hb_parc(2);
       const char * szTable    = hb_parc(3);
-      PHB_ITEM pFields        = hb_param( 4, HB_IT_ARRAY );
-      PHB_ITEM pFor           = hb_param( 5, HB_IT_BLOCK );
-      PHB_ITEM pWhile         = hb_param( 6, HB_IT_BLOCK );
-      PHB_ITEM pNext          = hb_param( 7, HB_IT_NUMERIC );
-      PHB_ITEM pRecord        = HB_ISNIL( 8 ) ? nullptr : hb_param( 8, HB_IT_ANY );
+      PHB_ITEM pFields        = hb_param(4, HB_IT_ARRAY);
+      PHB_ITEM pFor           = hb_param(5, HB_IT_BLOCK);
+      PHB_ITEM pWhile         = hb_param(6, HB_IT_BLOCK);
+      PHB_ITEM pNext          = hb_param(7, HB_IT_NUMERIC);
+      PHB_ITEM pRecord        = HB_ISNIL( 8 ) ? nullptr : hb_param(8, HB_IT_ANY);
       HB_BOOL fRest           = pWhile != nullptr || hb_parl(9);
       HB_BOOL fAppend         = hb_parl(10);
       HB_BOOL fInsert         = hb_parl(11);

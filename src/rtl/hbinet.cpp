@@ -618,7 +618,7 @@ HB_FUNC( HB_INETPERIODCALLBACK )
 
    if( socket )
    {
-      PHB_ITEM pExec = hb_param( 2, HB_IT_ARRAY | HB_IT_EVALITEM );
+      PHB_ITEM pExec = hb_param(2, HB_IT_ARRAY | HB_IT_EVALITEM);
 
       if( socket->pPeriodicBlock )
       {
@@ -804,7 +804,7 @@ static long s_inetRecv( PHB_SOCKET_STRUCT socket, char * buffer, long size, HB_B
 static void s_inetRecvInternal( int iMode )
 {
    PHB_SOCKET_STRUCT socket = HB_PARSOCKET( 1 );
-   PHB_ITEM pBuffer = hb_param( 2, HB_IT_STRING );
+   PHB_ITEM pBuffer = hb_param(2, HB_IT_STRING);
 
    if( socket == nullptr || pBuffer == nullptr || ! HB_ISBYREF( 2 ) )
    {
@@ -906,9 +906,9 @@ HB_FUNC( HB_INETRECVALL )
 static void s_inetRecvPattern( const char * const * patterns, int * patternsizes, int iPatternsCount, int iParam )
 {
    PHB_SOCKET_STRUCT socket = HB_PARSOCKET( 1 );
-   PHB_ITEM pResult         = hb_param( iParam, HB_IT_BYREF );
-   PHB_ITEM pMaxSize        = hb_param( iParam + 1, HB_IT_NUMERIC );
-   PHB_ITEM pBufferSize     = hb_param( iParam + 2, HB_IT_NUMERIC );
+   PHB_ITEM pResult         = hb_param(iParam, HB_IT_BYREF);
+   PHB_ITEM pMaxSize        = hb_param(iParam + 1, HB_IT_NUMERIC);
+   PHB_ITEM pBufferSize     = hb_param(iParam + 2, HB_IT_NUMERIC);
 
    char cChar = '\0';
    char * buffer;
@@ -1031,7 +1031,7 @@ HB_FUNC( HB_INETRECVLINE )
 
 HB_FUNC( HB_INETRECVENDBLOCK )
 {
-   PHB_ITEM pProto = hb_param( 2, HB_IT_ARRAY | HB_IT_STRING );
+   PHB_ITEM pProto = hb_param(2, HB_IT_ARRAY | HB_IT_STRING);
    const char * patterns_buf[ HB_PATERN_BUF_SIZE ];
    const char ** patterns = patterns_buf;
    int patternsizes_buf[ HB_PATERN_BUF_SIZE ];
@@ -1150,7 +1150,7 @@ HB_FUNC( HB_INETDATAREADY )
 static void s_inetSendInternal( HB_BOOL lAll )
 {
    PHB_SOCKET_STRUCT socket = HB_PARSOCKET( 1 );
-   PHB_ITEM pBuffer = hb_param( 2, HB_IT_STRING );
+   PHB_ITEM pBuffer = hb_param(2, HB_IT_STRING);
    const char * buffer;
    int iLen, iSent, iSend;
    long lLastSnd = 1;
@@ -1363,7 +1363,7 @@ HB_FUNC( HB_INETSERVER )
    }
    else
    {
-      hb_itemReturn( hb_param( 2, HB_IT_ANY ) );
+      hb_itemReturn( hb_param(2, HB_IT_ANY) );
    }
 }
 
@@ -1485,7 +1485,7 @@ static void hb_inetConnectInternal( HB_BOOL fResolve )
       }
       else
       {
-         hb_itemReturn( hb_param( 3, HB_IT_ANY ) );
+         hb_itemReturn( hb_param(3, HB_IT_ANY) );
       }
    }
 }
@@ -1584,7 +1584,7 @@ HB_FUNC( HB_INETDGRAMSEND )
    PHB_SOCKET_STRUCT socket = HB_PARSOCKET( 1 );
    const char * szAddress = hb_parc(2);
    int iPort = hb_parni(3);
-   PHB_ITEM pBuffer = hb_param( 4, HB_IT_STRING );
+   PHB_ITEM pBuffer = hb_param(4, HB_IT_STRING);
    int iLen;
    const char * szBuffer;
 
@@ -1637,7 +1637,7 @@ HB_FUNC( HB_INETDGRAMSEND )
 HB_FUNC( HB_INETDGRAMRECV )
 {
    PHB_SOCKET_STRUCT socket = HB_PARSOCKET( 1 );
-   PHB_ITEM pBuffer = hb_param( 2, HB_IT_STRING );
+   PHB_ITEM pBuffer = hb_param(2, HB_IT_STRING);
    int iTimeElapsed = 0;
    int iLen = 0, iMax;
    char * buffer = nullptr;

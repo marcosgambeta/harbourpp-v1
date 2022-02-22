@@ -609,11 +609,11 @@ HB_FUNC( HB_SOCKETNEWZSOCK )
 
    if( pSock )
    {
-      pSock = s_sockexNext( pSock, hb_param( 2, HB_IT_HASH ) );
+      pSock = s_sockexNext( pSock, hb_param(2, HB_IT_HASH) );
       if( pSock )
       {
-         hb_sockexItemClear( hb_param( 1, HB_IT_POINTER ) );
-         hb_sockexItemPut( hb_param( -1, HB_IT_ANY ), pSock );
+         hb_sockexItemClear( hb_param(1, HB_IT_POINTER) );
+         hb_sockexItemPut( hb_param(-1, HB_IT_ANY), pSock );
       }
    }
 }

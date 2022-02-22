@@ -68,7 +68,7 @@ static void hb_trace_message( char * buffer, HB_SIZE nSize, int iParam, int iCou
          *buffer++ = ' ';
          --nSize;
       }
-      pszString = hb_itemString( hb_param( iParam, HB_IT_ANY ), &nLen, &fFree );
+      pszString = hb_itemString( hb_param(iParam, HB_IT_ANY), &nLen, &fFree );
       hb_strncpy( buffer, pszString, nSize );
       nLen = strlen( buffer );
       nSize -= nLen;

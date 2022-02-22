@@ -96,7 +96,7 @@ HB_FUNC( PROCFILE )
 
    if( HB_ISSYMBOL( 1 ) )
    {
-      pSym = hb_itemGetSymbol( hb_param( 1, HB_IT_SYMBOL ) );
+      pSym = hb_itemGetSymbol( hb_param(1, HB_IT_SYMBOL) );
    }
    else if( HB_ISCHAR( 1 ) )
    {

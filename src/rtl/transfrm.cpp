@@ -71,8 +71,8 @@
 
 HB_FUNC( TRANSFORM )
 {
-   PHB_ITEM pValue = hb_param( 1, HB_IT_ANY ); /* Input parameter */
-   PHB_ITEM pPic = hb_param( 2, HB_IT_STRING ); /* Picture string */
+   PHB_ITEM pValue = hb_param(1, HB_IT_ANY); /* Input parameter */
+   PHB_ITEM pPic = hb_param(2, HB_IT_STRING); /* Picture string */
 
    HB_BOOL bError = HB_FALSE;
 

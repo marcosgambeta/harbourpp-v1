@@ -793,7 +793,7 @@ static PHB_CODEPAGE _hb_jsonCdpPar( int iParam )
 
 HB_FUNC( HB_JSONENCODE )
 {
-   PHB_ITEM pItem = hb_param( 1, HB_IT_ANY );
+   PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
 
    if( pItem )
    {

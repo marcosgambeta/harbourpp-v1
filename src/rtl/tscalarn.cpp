@@ -55,7 +55,7 @@ HB_FUNC( HBNUMERIC )
 
    if( hb_vmRequestQuery() == 0 )
    {
-      PHB_ITEM pItem = hb_param( -1, HB_IT_ANY );
+      PHB_ITEM pItem = hb_param(-1, HB_IT_ANY);
 
       if( HB_IS_OBJECT( pItem ) )
       {

@@ -49,7 +49,7 @@
 
 HB_FUNC( EMPTY )
 {
-   PHB_ITEM pItem = hb_param( 1, HB_IT_ANY );
+   PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
    long lDate, lTime;
    PHB_SYMB pSym;
 

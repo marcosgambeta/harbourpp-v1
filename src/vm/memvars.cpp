@@ -1202,7 +1202,7 @@ HB_FUNC( __MVPUBLIC )
    {
       for( int i = 1; i <= iCount; i++ )
       {
-         PHB_ITEM pMemvar = hb_param( i, HB_IT_ANY );
+         PHB_ITEM pMemvar = hb_param(i, HB_IT_ANY);
 
          if( pMemvar )
          {
@@ -1236,7 +1236,7 @@ HB_FUNC( __MVPRIVATE )
       hb_memvarResetPrivatesBase();
       for( int i = 1; i <= iCount; i++ )
       {
-         PHB_ITEM pMemvar = hb_param( i, HB_IT_ANY );
+         PHB_ITEM pMemvar = hb_param(i, HB_IT_ANY);
 
          if( pMemvar )
          {
@@ -1270,7 +1270,7 @@ HB_FUNC( __MVXRELEASE )
    {
       for( int i = 1; i <= iCount; i++ )
       {
-         PHB_ITEM pMemvar = hb_param( i, HB_IT_ANY );
+         PHB_ITEM pMemvar = hb_param(i, HB_IT_ANY);
 
          if( pMemvar )
          {
@@ -1317,7 +1317,7 @@ HB_FUNC( __MVSCOPE )
 
    if( hb_pcount() )
    {
-      PHB_ITEM pVarName = hb_param( 1, HB_IT_STRING );
+      PHB_ITEM pVarName = hb_param(1, HB_IT_STRING);
 
       if( pVarName )
       {
@@ -1374,7 +1374,7 @@ HB_FUNC( __MVEXIST )
 
 HB_FUNC( __MVGET )
 {
-   PHB_ITEM pName = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pName = hb_param(1, HB_IT_STRING);
 
    if( pName )
    {
@@ -1426,7 +1426,7 @@ HB_FUNC( __MVGET )
 
 HB_FUNC( __MVGETDEF )
 {
-   PHB_ITEM pName = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pName = hb_param(1, HB_IT_STRING);
 
    if( pName )
    {
@@ -1440,7 +1440,7 @@ HB_FUNC( __MVGETDEF )
       }
       else if( hb_pcount() >= 2 )
       {
-         hb_itemReturn( hb_param( 2, HB_IT_ANY ) );
+         hb_itemReturn( hb_param(2, HB_IT_ANY) );
       }
    }
    else
@@ -1451,7 +1451,7 @@ HB_FUNC( __MVGETDEF )
 
 HB_FUNC( __MVPUT )
 {
-   PHB_ITEM pName = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pName = hb_param(1, HB_IT_STRING);
    PHB_ITEM pValue = hb_paramError( 2 );
 
    if( pName )

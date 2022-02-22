@@ -50,7 +50,7 @@
 
 HB_FUNC( VALTYPE )
 {
-   hb_retc( hb_itemTypeStr( hb_param( 1, HB_IT_ANY ) ) );
+   hb_retc( hb_itemTypeStr( hb_param(1, HB_IT_ANY) ) );
 }
 
 #if defined( HB_LEGACY_LEVEL5 )
@@ -139,14 +139,14 @@ HB_FUNC( HB_ISHASHKEY )
 
 HB_FUNC( HB_ISEVALITEM )
 {
-   PHB_ITEM pItem = hb_param( 1, HB_IT_ANY );
+   PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
 
    hb_retl( pItem && HB_IS_EVALITEM( pItem ) );
 }
 
 HB_FUNC( HB_ISNULL )
 {
-   PHB_ITEM pItem = hb_param( 1, HB_IT_ANY );
+   PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
 
    if( pItem )
    {

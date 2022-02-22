@@ -50,7 +50,7 @@
 
 HB_FUNC( HB_NTOS )
 {
-   PHB_ITEM pNumber = hb_param( 1, HB_IT_NUMERIC );
+   PHB_ITEM pNumber = hb_param(1, HB_IT_NUMERIC);
 
    if( pNumber )
    {
@@ -80,7 +80,7 @@ HB_FUNC( HB_NTOS )
 
 HB_FUNC( HB_NTOC )
 {
-   PHB_ITEM pNumber = hb_param( 1, HB_IT_NUMERIC );
+   PHB_ITEM pNumber = hb_param(1, HB_IT_NUMERIC);
 
    if( pNumber )
    {

@@ -136,14 +136,14 @@ HB_FUNC( DTOS )
 
 HB_FUNC( HB_STOD )
 {
-   PHB_ITEM pDateString = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pDateString = hb_param(1, HB_IT_STRING);
 
    hb_retds( hb_itemGetCLen( pDateString ) >= 7 ? hb_itemGetCPtr( pDateString ) : nullptr );
 }
 
 HB_FUNC( YEAR )
 {
-   PHB_ITEM pDate = hb_param( 1, HB_IT_DATETIME );
+   PHB_ITEM pDate = hb_param(1, HB_IT_DATETIME);
 
    if( pDate )
    {
@@ -161,7 +161,7 @@ HB_FUNC( YEAR )
 
 HB_FUNC( MONTH )
 {
-   PHB_ITEM pDate = hb_param( 1, HB_IT_DATETIME );
+   PHB_ITEM pDate = hb_param(1, HB_IT_DATETIME);
 
    if( pDate )
    {
@@ -179,7 +179,7 @@ HB_FUNC( MONTH )
 
 HB_FUNC( DAY )
 {
-   PHB_ITEM pDate = hb_param( 1, HB_IT_DATETIME );
+   PHB_ITEM pDate = hb_param(1, HB_IT_DATETIME);
 
    if( pDate )
    {
@@ -197,7 +197,7 @@ HB_FUNC( DAY )
 
 HB_FUNC( DOW )
 {
-   PHB_ITEM pDate = hb_param( 1, HB_IT_DATETIME );
+   PHB_ITEM pDate = hb_param(1, HB_IT_DATETIME);
 
    if( pDate )
    {
@@ -317,7 +317,7 @@ HB_FUNC( HB_TTOD )
 
 HB_FUNC( HB_TTON )
 {
-   PHB_ITEM pTime = hb_param( 1, HB_IT_DATETIME );
+   PHB_ITEM pTime = hb_param(1, HB_IT_DATETIME);
 
    if( pTime )
    {
@@ -331,7 +331,7 @@ HB_FUNC( HB_TTON )
 
 HB_FUNC( HB_NTOT )
 {
-   PHB_ITEM pNum = hb_param( 1, HB_IT_NUMERIC );
+   PHB_ITEM pNum = hb_param(1, HB_IT_NUMERIC);
 
    if( pNum )
    {
@@ -345,7 +345,7 @@ HB_FUNC( HB_NTOT )
 
 HB_FUNC( HB_NTOMSEC )
 {
-   PHB_ITEM pNum = hb_param( 1, HB_IT_NUMERIC );
+   PHB_ITEM pNum = hb_param(1, HB_IT_NUMERIC);
 
    if( pNum )
    {
@@ -359,7 +359,7 @@ HB_FUNC( HB_NTOMSEC )
 
 HB_FUNC( HB_NTOSEC )
 {
-   PHB_ITEM pNum = hb_param( 1, HB_IT_NUMERIC );
+   PHB_ITEM pNum = hb_param(1, HB_IT_NUMERIC);
 
    if( pNum )
    {
@@ -373,7 +373,7 @@ HB_FUNC( HB_NTOSEC )
 
 HB_FUNC( HB_NTOMIN )
 {
-   PHB_ITEM pNum = hb_param( 1, HB_IT_NUMERIC );
+   PHB_ITEM pNum = hb_param(1, HB_IT_NUMERIC);
 
    if( pNum )
    {
@@ -387,7 +387,7 @@ HB_FUNC( HB_NTOMIN )
 
 HB_FUNC( HB_NTOHOUR )
 {
-   PHB_ITEM pNum = hb_param( 1, HB_IT_NUMERIC );
+   PHB_ITEM pNum = hb_param(1, HB_IT_NUMERIC);
 
    if( pNum )
    {
@@ -415,7 +415,7 @@ HB_FUNC( HB_TTOSEC )
 
 HB_FUNC( HB_SECTOT )
 {
-   PHB_ITEM pNum = hb_param( 1, HB_IT_NUMERIC );
+   PHB_ITEM pNum = hb_param(1, HB_IT_NUMERIC);
 
    if( pNum )
    {
@@ -429,7 +429,7 @@ HB_FUNC( HB_SECTOT )
 
 HB_FUNC( HB_MSECTOT )
 {
-   PHB_ITEM pNum = hb_param( 1, HB_IT_NUMERIC );
+   PHB_ITEM pNum = hb_param(1, HB_IT_NUMERIC);
 
    if( pNum )
    {
@@ -701,7 +701,7 @@ HB_FUNC( HB_STRTOTS )
    hb_Week( <dDate>, [@<nYear>], [@<nDayOfWeek>] ) --> <nWeek> */
 HB_FUNC( HB_WEEK )
 {
-   PHB_ITEM pDate = hb_param( 1, HB_IT_DATETIME );
+   PHB_ITEM pDate = hb_param(1, HB_IT_DATETIME);
 
    if( pDate )
    {

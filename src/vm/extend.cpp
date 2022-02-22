@@ -90,7 +90,7 @@ PHB_ITEM hb_paramError( int iParam )
 {
    static HB_ITEM s_NIL;
 
-   PHB_ITEM pParam = hb_param( iParam, HB_IT_ANY );
+   PHB_ITEM pParam = hb_param(iParam, HB_IT_ANY);
 
    if( pParam == nullptr )
    {
@@ -142,7 +142,7 @@ HB_SIZE hb_parinfa( int iParamNum, HB_SIZE nArrayIndex )
 
    PHB_ITEM pArray;
 
-   pArray = hb_param( iParamNum, HB_IT_ARRAY );
+   pArray = hb_param(iParamNum, HB_IT_ARRAY);
 
    if( pArray )
    {

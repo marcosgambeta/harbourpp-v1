@@ -82,7 +82,7 @@ PHB_ITEM hb_itemParam( HB_USHORT uiParam )
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemParam(%hu)", uiParam ) );
 #endif
 
-   return hb_itemNew( hb_param( uiParam, HB_IT_ANY ) );
+   return hb_itemNew( hb_param(uiParam, HB_IT_ANY) );
 }
 
 /* Internal Item API. Use this with care. */
@@ -93,7 +93,7 @@ PHB_ITEM hb_itemParamPtr( HB_USHORT uiParam, long lMask )
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemParamPtr(%hu, %ld)", uiParam, lMask ) );
 #endif
 
-   return hb_param( static_cast<int>( uiParam ), lMask );
+   return hb_param(static_cast<int>( uiParam ), lMask);
 }
 
 HB_BOOL hb_itemParamStore( HB_USHORT uiParam, PHB_ITEM pItem )
@@ -102,7 +102,7 @@ HB_BOOL hb_itemParamStore( HB_USHORT uiParam, PHB_ITEM pItem )
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemParamStore(%hu, %p)", uiParam, static_cast<void*>( pItem ) ) );
 #endif
 
-   if( hb_param( uiParam, HB_IT_BYREF ) )
+   if( hb_param(uiParam, HB_IT_BYREF) )
    {
       HB_STACK_TLS_PRELOAD
       PHB_ITEM pDest = hb_stackItemFromBase( uiParam );
@@ -127,7 +127,7 @@ HB_BOOL hb_itemParamStoreForward( HB_USHORT uiParam, PHB_ITEM pItem )
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemParamStoreForward(%hu, %p)", uiParam, static_cast<void*>( pItem ) ) );
 #endif
 
-   if( hb_param( uiParam, HB_IT_BYREF ) )
+   if( hb_param(uiParam, HB_IT_BYREF) )
    {
       HB_STACK_TLS_PRELOAD
       PHB_ITEM pDest = hb_stackItemFromBase( uiParam );
@@ -152,7 +152,7 @@ HB_BOOL hb_itemParamStoreRelease( HB_USHORT uiParam, PHB_ITEM pItem )
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemParamStoreRelease(%hu, %p)", uiParam, static_cast<void*>( pItem ) ) );
 #endif
 
-   if( hb_param( uiParam, HB_IT_BYREF ) )
+   if( hb_param(uiParam, HB_IT_BYREF) )
    {
       HB_STACK_TLS_PRELOAD
       PHB_ITEM pDest = hb_stackItemFromBase( uiParam );

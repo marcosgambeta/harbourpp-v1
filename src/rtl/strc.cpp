@@ -54,7 +54,7 @@
  */
 HB_FUNC( HB_STRDECODESCAPE )
 {
-   PHB_ITEM pText = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pText = hb_param(1, HB_IT_STRING);
 
    if( pText )
    {
@@ -86,7 +86,7 @@ HB_FUNC( HB_STRDECODESCAPE )
  */
 HB_FUNC( HB_STRCDECODE )
 {
-   PHB_ITEM pText = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pText = hb_param(1, HB_IT_STRING);
 
    if( pText )
    {

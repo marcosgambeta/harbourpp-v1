@@ -52,10 +52,10 @@
 
 HB_FUNC( __BOX )
 {
-   PHB_ITEM pTop    = hb_param( 1, HB_IT_NUMERIC );
-   PHB_ITEM pLeft   = hb_param( 2, HB_IT_NUMERIC );
-   PHB_ITEM pBottom = hb_param( 3, HB_IT_NUMERIC );
-   PHB_ITEM pRight  = hb_param( 4, HB_IT_NUMERIC );
+   PHB_ITEM pTop    = hb_param(1, HB_IT_NUMERIC);
+   PHB_ITEM pLeft   = hb_param(2, HB_IT_NUMERIC);
+   PHB_ITEM pBottom = hb_param(3, HB_IT_NUMERIC);
+   PHB_ITEM pRight  = hb_param(4, HB_IT_NUMERIC);
    const char * pszBox = hb_parc(5);
 
    if( pTop && pLeft && pBottom && pRight && pszBox )
@@ -66,10 +66,10 @@ HB_FUNC( __BOX )
 
 HB_FUNC( __BOXD )
 {
-   PHB_ITEM pTop    = hb_param( 1, HB_IT_NUMERIC );
-   PHB_ITEM pLeft   = hb_param( 2, HB_IT_NUMERIC );
-   PHB_ITEM pBottom = hb_param( 3, HB_IT_NUMERIC );
-   PHB_ITEM pRight  = hb_param( 4, HB_IT_NUMERIC );
+   PHB_ITEM pTop    = hb_param(1, HB_IT_NUMERIC);
+   PHB_ITEM pLeft   = hb_param(2, HB_IT_NUMERIC);
+   PHB_ITEM pBottom = hb_param(3, HB_IT_NUMERIC);
+   PHB_ITEM pRight  = hb_param(4, HB_IT_NUMERIC);
 
    if( pTop && pLeft && pBottom && pRight )
    {
@@ -79,10 +79,10 @@ HB_FUNC( __BOXD )
 
 HB_FUNC( __BOXS )
 {
-   PHB_ITEM pTop    = hb_param( 1, HB_IT_NUMERIC );
-   PHB_ITEM pLeft   = hb_param( 2, HB_IT_NUMERIC );
-   PHB_ITEM pBottom = hb_param( 3, HB_IT_NUMERIC );
-   PHB_ITEM pRight  = hb_param( 4, HB_IT_NUMERIC );
+   PHB_ITEM pTop    = hb_param(1, HB_IT_NUMERIC);
+   PHB_ITEM pLeft   = hb_param(2, HB_IT_NUMERIC);
+   PHB_ITEM pBottom = hb_param(3, HB_IT_NUMERIC);
+   PHB_ITEM pRight  = hb_param(4, HB_IT_NUMERIC);
 
    if( pTop && pLeft && pBottom && pRight )
    {

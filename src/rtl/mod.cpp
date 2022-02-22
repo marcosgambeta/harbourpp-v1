@@ -61,8 +61,8 @@
 
 HB_FUNC( MOD )
 {
-   PHB_ITEM pNumber = hb_param( 1, HB_IT_NUMERIC );
-   PHB_ITEM pBase   = hb_param( 2, HB_IT_NUMERIC );
+   PHB_ITEM pNumber = hb_param(1, HB_IT_NUMERIC);
+   PHB_ITEM pBase   = hb_param(2, HB_IT_NUMERIC);
 
    if( pNumber && pBase )
    {
@@ -103,7 +103,7 @@ HB_FUNC( MOD )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1085, nullptr, "%", 2, hb_param( 1, HB_IT_ANY ), hb_param( 2, HB_IT_ANY ) );
+      hb_errRT_BASE_SubstR( EG_ARG, 1085, nullptr, "%", 2, hb_param(1, HB_IT_ANY), hb_param(2, HB_IT_ANY) );
    }   
 }
 

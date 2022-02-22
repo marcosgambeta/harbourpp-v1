@@ -126,7 +126,7 @@ HB_FUNC( HB_KEYPUT )
    }
    else if( HB_ISARRAY( 1 ) )
    {
-      PHB_ITEM pArray = hb_param( 1, HB_IT_ARRAY );
+      PHB_ITEM pArray = hb_param(1, HB_IT_ARRAY);
       HB_SIZE nElements = hb_arrayLen( pArray );
 
       for( HB_SIZE nIndex = 1; nIndex <= nElements; ++nIndex )
@@ -157,7 +157,7 @@ HB_FUNC( HB_KEYINS )
    }
    else if( HB_ISARRAY( 1 ) )
    {
-      PHB_ITEM pArray = hb_param( 1, HB_IT_ARRAY );
+      PHB_ITEM pArray = hb_param(1, HB_IT_ARRAY);
       HB_SIZE nElements = hb_arrayLen( pArray );
 
       for( HB_SIZE nIndex = 1; nIndex <= nElements; ++nIndex )

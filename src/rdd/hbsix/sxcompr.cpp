@@ -757,7 +757,7 @@ HB_FUNC( _SX_STRCOMPRESS )
    }
    else
    {
-      hb_itemReturn( hb_param( 1, HB_IT_ANY ) );
+      hb_itemReturn( hb_param(1, HB_IT_ANY) );
    }
 }
 
@@ -808,6 +808,6 @@ HB_FUNC( _SX_STRDECOMPRESS )
 
    if( ! fOK )
    {
-      hb_itemReturn( hb_param( 1, HB_IT_ANY ) );
+      hb_itemReturn( hb_param(1, HB_IT_ANY) );
    }
 }

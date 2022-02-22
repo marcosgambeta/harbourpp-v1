@@ -52,7 +52,7 @@
 
 HB_FUNC( REPLICATE )
 {
-   PHB_ITEM pItem = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pItem = hb_param(1, HB_IT_STRING);
 
    if( pItem && HB_ISNUM( 2 ) )
    {

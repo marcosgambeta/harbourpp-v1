@@ -94,7 +94,7 @@ HB_SIZE hb_strRTrimLen( const char * szText, HB_SIZE nLen, HB_BOOL bAnySpace )
 
 HB_FUNC( LTRIM )
 {
-   PHB_ITEM pText = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pText = hb_param(1, HB_IT_STRING);
 
    if( pText )
    {
@@ -125,7 +125,7 @@ HB_FUNC( LTRIM )
 
 HB_FUNC( RTRIM )
 {
-   PHB_ITEM pText = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pText = hb_param(1, HB_IT_STRING);
 
    if( pText )
    {
@@ -160,7 +160,7 @@ HB_FUNC_TRANSLATE( TRIM, RTRIM )
 
 HB_FUNC( ALLTRIM )
 {
-   PHB_ITEM pText = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pText = hb_param(1, HB_IT_STRING);
 
    if( pText )
    {

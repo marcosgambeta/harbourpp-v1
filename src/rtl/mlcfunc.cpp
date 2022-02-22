@@ -104,7 +104,7 @@ static void hb_mlGetEOLs( PHB_MLC_INFO pMLC, int iParam )
    }
    else if( HB_ISARRAY( iParam ) )
    {
-      PHB_ITEM pArray = hb_param( iParam, HB_IT_ARRAY );
+      PHB_ITEM pArray = hb_param(iParam, HB_IT_ARRAY);
       HB_SIZE nSize = hb_arrayLen( pArray ), n;
 
       for( n = 1; n <= nSize; ++n )
@@ -637,7 +637,7 @@ HB_FUNC( MPOSTOLC )
 HB_FUNC( HB_MLEVAL )
 {
    const char * pszString = hb_parc(1);
-   PHB_ITEM pBlock = hb_param( 2, HB_IT_EVALITEM );
+   PHB_ITEM pBlock = hb_param(2, HB_IT_EVALITEM);
    HB_ISIZ nSize = hb_parnsdef( 3, 79 );
    HB_SIZE nRowPos = 0, nColPos = 0, nLines = 0;
 

@@ -76,7 +76,7 @@ static HB_BOOL hb_itemIsLess( PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE
       hb_vmPush( pItem2 );
       hb_vmSend( 2 );
 
-      pRet = hb_param( -1, HB_IT_ANY );
+      pRet = hb_param(-1, HB_IT_ANY);
 
       /* CA-Cl*pper always takes return value as logical item
        * accepting 0, 1 as numeric representation of HB_FALSE/HB_TRUE
@@ -455,14 +455,14 @@ HB_BOOL hb_arraySort( PHB_ITEM pArray, HB_SIZE * pnStart, HB_SIZE * pnCount, PHB
 
 HB_FUNC( ASORT )
 {
-   PHB_ITEM pArray = hb_param( 1, HB_IT_ARRAY );
+   PHB_ITEM pArray = hb_param(1, HB_IT_ARRAY);
 
    if( pArray && ! hb_arrayIsObject( pArray ) )
    {
       HB_SIZE nStart = hb_parns(2);
       HB_SIZE nCount = hb_parns(3);
 
-      hb_arraySort( pArray, HB_ISNUM( 2 ) ? &nStart : nullptr, HB_ISNUM( 3 ) ? &nCount : nullptr, hb_param( 4, HB_IT_EVALITEM ) );
+      hb_arraySort( pArray, HB_ISNUM( 2 ) ? &nStart : nullptr, HB_ISNUM( 3 ) ? &nCount : nullptr, hb_param(4, HB_IT_EVALITEM) );
 
       hb_itemReturn( pArray ); /* ASort() returns the array itself */
    }

@@ -68,7 +68,7 @@ void hb_strDescend( char * szStringTo, const char * szStringFrom, HB_SIZE nLen )
 
 HB_FUNC( DESCEND )
 {
-   PHB_ITEM pItem = hb_param( 1, HB_IT_ANY );
+   PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
 
    if( pItem )
    {

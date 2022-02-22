@@ -50,7 +50,7 @@
 
 HB_FUNC( HB_STRSHRINK )
 {
-   PHB_ITEM pText = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pText = hb_param(1, HB_IT_STRING);
 
    if( pText )
    {

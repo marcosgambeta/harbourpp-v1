@@ -1924,7 +1924,7 @@ PHB_ITEM hb_itemDeserialize( const char ** pBufferPtr, HB_SIZE * pnSize )
 
 HB_FUNC( HB_SERIALIZE )
 {
-   PHB_ITEM pItem = hb_param( 1, HB_IT_ANY );
+   PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
 
    if( pItem )
    {
@@ -1956,7 +1956,7 @@ HB_FUNC( HB_SERIALIZE )
 
 HB_FUNC( HB_DESERIALIZE )
 {
-   PHB_ITEM pParam = hb_param( 1, HB_IT_BYREF );
+   PHB_ITEM pParam = hb_param(1, HB_IT_BYREF);
    HB_SIZE nSize = hb_parclen(1);
 
    if( nSize )

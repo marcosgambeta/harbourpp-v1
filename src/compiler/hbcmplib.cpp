@@ -141,7 +141,7 @@ static void hb_compGenArgList( int iFirst, int iLast,
    if( pIncItem && pOpenFunc )
    {
       *pOpenFunc = nullptr;
-      *pIncItem = hb_param( iFirst, HB_IT_HASH );
+      *pIncItem = hb_param(iFirst, HB_IT_HASH);
       if( *pIncItem )
       {
          ++iFirst;
@@ -151,7 +151,7 @@ static void hb_compGenArgList( int iFirst, int iLast,
 
    for( i = iFirst; i <= iLast; ++i )
    {
-      pParam = hb_param( i, HB_IT_ARRAY | HB_IT_STRING );
+      pParam = hb_param(i, HB_IT_ARRAY | HB_IT_STRING);
       if( pParam )
       {
          if( HB_IS_ARRAY( pParam ) )
@@ -180,7 +180,7 @@ static void hb_compGenArgList( int iFirst, int iLast,
    argc = 0;
    for( i = iFirst; i <= iLast; ++i )
    {
-      pParam = hb_param( i, HB_IT_ARRAY | HB_IT_STRING );
+      pParam = hb_param(i, HB_IT_ARRAY | HB_IT_STRING);
       if( pParam )
       {
          if( HB_IS_ARRAY( pParam ) )

@@ -3395,7 +3395,7 @@ HB_FUNC( USRRDD_GETFUNCTABLE )
    uiRddID = hb_parni(4);
 #endif
    szSuperRDD = hb_parc(5);
-   pMethods = hb_param( 6, HB_IT_ARRAY );
+   pMethods = hb_param(6, HB_IT_ARRAY);
    puiSuperRddId = static_cast<HB_USHORT*>( hb_parptr(7) );
 
    if( puiCount && pSelfTable && pSuperTable && pMethods )
@@ -3448,7 +3448,7 @@ HB_FUNC( USRRDD_RDDDATA )
       hb_itemReturn( pItem );
       if( hb_pcount() >= 2 )
       {
-         hb_itemCopy( pItem, hb_param( 2, HB_IT_ANY ) );
+         hb_itemCopy( pItem, hb_param(2, HB_IT_ANY) );
       }
    }
 }
@@ -3505,7 +3505,7 @@ HB_FUNC( USRRDD_AREADATA )
       hb_itemReturn( pItem );
       if( hb_pcount() >= 2 )
       {
-         hb_itemCopy( pItem, hb_param( 2, HB_IT_ANY ) );
+         hb_itemCopy( pItem, hb_param(2, HB_IT_ANY) );
       }
    }
 }
@@ -3533,7 +3533,7 @@ HB_FUNC( USRRDD_AREARESULT )
       hb_itemReturn( pArea->valResult );
       if( hb_pcount() >= 2 )
       {
-         hb_itemCopy( pArea->valResult, hb_param( 2, HB_IT_ANY ) );
+         hb_itemCopy( pArea->valResult, hb_param(2, HB_IT_ANY) );
       }
    }
 }
@@ -3823,7 +3823,7 @@ HB_FUNC_UR_SUPER( GOTOID )
 
    if( pArea )
    {
-      hb_retni( SUPER_GOTOID( pArea, hb_param( 2, HB_IT_ANY ) ) );
+      hb_retni( SUPER_GOTOID( pArea, hb_param(2, HB_IT_ANY) ) );
    }
 }
 
@@ -3833,7 +3833,7 @@ HB_FUNC_UR_SUPER( SEEK )
 
    if( pArea )
    {
-      hb_retni( SUPER_SEEK( pArea, hb_parl(2), hb_param( 3, HB_IT_ANY ), hb_parl(4) ) );
+      hb_retni( SUPER_SEEK( pArea, hb_parl(2), hb_param(3, HB_IT_ANY), hb_parl(4) ) );
    }
 }
 
@@ -3888,7 +3888,7 @@ HB_FUNC_UR_SUPER( ADDFIELD )
    {
       DBFIELDINFO dbFieldInfo;
 
-      if( hb_usrItemToFieldInfo( hb_param( 2, HB_IT_ARRAY ), &dbFieldInfo ) )
+      if( hb_usrItemToFieldInfo( hb_param(2, HB_IT_ARRAY), &dbFieldInfo ) )
       {
          hb_retni( SUPER_ADDFIELD( pArea, &dbFieldInfo ) );
       }
@@ -3908,7 +3908,7 @@ HB_FUNC_UR_SUPER( FIELDDISPLAY )
    {
       DBFIELDINFO dbFieldInfo;
 
-      if( hb_usrItemToFieldInfo( hb_param( 2, HB_IT_ARRAY ), &dbFieldInfo ) )
+      if( hb_usrItemToFieldInfo( hb_param(2, HB_IT_ARRAY), &dbFieldInfo ) )
       {
          hb_retni( SUPER_FIELDDISPLAY( pArea, &dbFieldInfo ) );
       }
@@ -4048,7 +4048,7 @@ HB_FUNC_UR_SUPER( GETVALUE )
 
    if( pArea )
    {
-      hb_retni( SUPER_GETVALUE( pArea, static_cast<HB_USHORT>( hb_parni(2) ), hb_param( 3, HB_IT_ANY ) ) );
+      hb_retni( SUPER_GETVALUE( pArea, static_cast<HB_USHORT>( hb_parni(2) ), hb_param(3, HB_IT_ANY) ) );
    }
 }
 
@@ -4058,7 +4058,7 @@ HB_FUNC_UR_SUPER( PUTVALUE )
 
    if( pArea )
    {
-      hb_retni( SUPER_PUTVALUE( pArea, static_cast<HB_USHORT>( hb_parni(2) ), hb_param( 3, HB_IT_ANY ) ) );
+      hb_retni( SUPER_PUTVALUE( pArea, static_cast<HB_USHORT>( hb_parni(2) ), hb_param(3, HB_IT_ANY) ) );
    }
 }
 
@@ -4094,7 +4094,7 @@ HB_FUNC_UR_SUPER( RECINFO )
 
    if( pArea )
    {
-      hb_retni( SUPER_RECINFO( pArea, hb_param( 2, HB_IT_ANY ), static_cast<HB_USHORT>( hb_parni(3) ), hb_param( 4, HB_IT_ANY ) ) );
+      hb_retni( SUPER_RECINFO( pArea, hb_param(2, HB_IT_ANY), static_cast<HB_USHORT>( hb_parni(3) ), hb_param(4, HB_IT_ANY) ) );
    }
 }
 
@@ -4117,7 +4117,7 @@ HB_FUNC_UR_SUPER( RECID )
 
    if( pArea )
    {
-      hb_retni( SUPER_RECID( pArea, hb_param( 2, HB_IT_ANY ) ) );
+      hb_retni( SUPER_RECID( pArea, hb_param(2, HB_IT_ANY) ) );
    }
 }
 
@@ -4127,7 +4127,7 @@ HB_FUNC_UR_SUPER( FIELDINFO )
 
    if( pArea )
    {
-      hb_retni( SUPER_FIELDINFO( pArea, static_cast<HB_USHORT>( hb_parni(2) ), static_cast<HB_USHORT>( hb_parni(3) ), hb_param( 4, HB_IT_ANY ) ) );
+      hb_retni( SUPER_FIELDINFO( pArea, static_cast<HB_USHORT>( hb_parni(2) ), static_cast<HB_USHORT>( hb_parni(3) ), hb_param(4, HB_IT_ANY) ) );
    }
 }
 
@@ -4137,7 +4137,7 @@ HB_FUNC_UR_SUPER( CREATEFIELDS )
 
    if( pArea )
    {
-      hb_retni( SUPER_CREATEFIELDS( pArea, hb_param( 2, HB_IT_ANY ) ) );
+      hb_retni( SUPER_CREATEFIELDS( pArea, hb_param(2, HB_IT_ANY) ) );
    }
 }
 
@@ -4182,7 +4182,7 @@ HB_FUNC_UR_SUPER( CREATE )
    {
       DBOPENINFO dbOpenInfo;
 
-      if( hb_usrItemToOpenInfo( hb_param( 2, HB_IT_ARRAY ), &dbOpenInfo ) )
+      if( hb_usrItemToOpenInfo( hb_param(2, HB_IT_ARRAY), &dbOpenInfo ) )
       {
          hb_retni( SUPER_CREATE( pArea, &dbOpenInfo ) );
       }
@@ -4202,7 +4202,7 @@ HB_FUNC_UR_SUPER( OPEN )
    {
       DBOPENINFO dbOpenInfo;
 
-      if( hb_usrItemToOpenInfo( hb_param( 2, HB_IT_ARRAY ), &dbOpenInfo ) )
+      if( hb_usrItemToOpenInfo( hb_param(2, HB_IT_ARRAY), &dbOpenInfo ) )
       {
          hb_retni( SUPER_OPEN( pArea, &dbOpenInfo ) );
       }
@@ -4220,7 +4220,7 @@ HB_FUNC_UR_SUPER( INFO )
 
    if( pArea )
    {
-      hb_retni( SUPER_INFO( pArea, static_cast<HB_USHORT>( hb_parni(2) ), hb_param( 3, HB_IT_ANY ) ) );
+      hb_retni( SUPER_INFO( pArea, static_cast<HB_USHORT>( hb_parni(2) ), hb_param(3, HB_IT_ANY) ) );
    }
 }
 
@@ -4232,7 +4232,7 @@ HB_FUNC_UR_SUPER( DBEVAL )
    {
       DBEVALINFO dbEvalInfo;
 
-      if( hb_usrItemToEvalInfo( hb_param( 2, HB_IT_ARRAY ), &dbEvalInfo ) )
+      if( hb_usrItemToEvalInfo( hb_param(2, HB_IT_ARRAY), &dbEvalInfo ) )
       {
          hb_retni( SUPER_DBEVAL( pArea, &dbEvalInfo ) );
       }
@@ -4275,7 +4275,7 @@ HB_FUNC_UR_SUPER( SORT )
    {
       DBSORTINFO dbSortInfo;
 
-      if( hb_usrItemToSortInfo( hb_param( 2, HB_IT_ARRAY ), &dbSortInfo ) )
+      if( hb_usrItemToSortInfo( hb_param(2, HB_IT_ARRAY), &dbSortInfo ) )
       {
          hb_retni( SUPER_SORT( pArea, &dbSortInfo ) );
          hb_usrSortInfoFree( &dbSortInfo );
@@ -4296,7 +4296,7 @@ HB_FUNC_UR_SUPER( TRANS )
    {
       DBTRANSINFO dbTransInfo;
 
-      if( hb_usrItemToTransInfo( hb_param( 2, HB_IT_ARRAY ), &dbTransInfo ) )
+      if( hb_usrItemToTransInfo( hb_param(2, HB_IT_ARRAY), &dbTransInfo ) )
       {
          hb_retni( SUPER_TRANS( pArea, &dbTransInfo ) );
          hb_usrTransInfoFree( &dbTransInfo );
@@ -4317,7 +4317,7 @@ HB_FUNC_UR_SUPER( TRANSREC )
    {
       DBTRANSINFO dbTransInfo;
 
-      if( hb_usrItemToTransInfo( hb_param( 2, HB_IT_ARRAY ), &dbTransInfo ) )
+      if( hb_usrItemToTransInfo( hb_param(2, HB_IT_ARRAY), &dbTransInfo ) )
       {
          hb_retni( SUPER_TRANSREC( pArea, &dbTransInfo ) );
          hb_usrTransInfoFree( &dbTransInfo );
@@ -4348,7 +4348,7 @@ HB_FUNC_UR_SUPER( CHILDEND )
    {
       DBRELINFO dbRelInfo;
 
-      if( hb_usrItemToRelInfo( hb_param( 2, HB_IT_ARRAY ), &dbRelInfo ) )
+      if( hb_usrItemToRelInfo( hb_param(2, HB_IT_ARRAY), &dbRelInfo ) )
       {
          hb_retni( SUPER_CHILDEND( pArea, &dbRelInfo ) );
       }
@@ -4368,7 +4368,7 @@ HB_FUNC_UR_SUPER( CHILDSTART )
    {
       DBRELINFO dbRelInfo;
 
-      if( hb_usrItemToRelInfo( hb_param( 2, HB_IT_ARRAY ), &dbRelInfo ) )
+      if( hb_usrItemToRelInfo( hb_param(2, HB_IT_ARRAY), &dbRelInfo ) )
       {
          hb_retni( SUPER_CHILDSTART( pArea, &dbRelInfo ) );
       }
@@ -4388,7 +4388,7 @@ HB_FUNC_UR_SUPER( CHILDSYNC )
    {
       DBRELINFO dbRelInfo;
 
-      if( hb_usrItemToRelInfo( hb_param( 2, HB_IT_ARRAY ), &dbRelInfo ) )
+      if( hb_usrItemToRelInfo( hb_param(2, HB_IT_ARRAY), &dbRelInfo ) )
       {
          hb_retni( SUPER_CHILDSYNC( pArea, &dbRelInfo ) );
       }
@@ -4451,7 +4451,7 @@ HB_FUNC_UR_SUPER( RELEVAL )
    {
       DBRELINFO dbRelInfo;
 
-      if( hb_usrItemToRelInfo( hb_param( 2, HB_IT_ARRAY ), &dbRelInfo ) )
+      if( hb_usrItemToRelInfo( hb_param(2, HB_IT_ARRAY), &dbRelInfo ) )
       {
          hb_retni( SUPER_RELEVAL( pArea, &dbRelInfo ) );
       }
@@ -4469,7 +4469,7 @@ HB_FUNC_UR_SUPER( RELTEXT )
 
    if( pArea )
    {
-      hb_retni( SUPER_RELTEXT( pArea, static_cast<HB_USHORT>( hb_parni(2) ), hb_param( 3, HB_IT_ANY ) ) );
+      hb_retni( SUPER_RELTEXT( pArea, static_cast<HB_USHORT>( hb_parni(2) ), hb_param(3, HB_IT_ANY) ) );
    }
 }
 
@@ -4481,7 +4481,7 @@ HB_FUNC_UR_SUPER( SETREL )
    {
       DBRELINFO dbRelInfo;
 
-      if( hb_usrItemToRelInfo( hb_param( 2, HB_IT_ARRAY ), &dbRelInfo ) )
+      if( hb_usrItemToRelInfo( hb_param(2, HB_IT_ARRAY), &dbRelInfo ) )
       {
          hb_retni( SUPER_SETREL( pArea, &dbRelInfo ) );
       }
@@ -4500,7 +4500,7 @@ HB_FUNC_UR_SUPER( ORDLSTADD )
    if( pArea )
    {
       DBORDERINFO dbOrderInfo;
-      PHB_ITEM pItem = hb_param( 2, HB_IT_ARRAY );
+      PHB_ITEM pItem = hb_param(2, HB_IT_ARRAY);
 
       if( hb_usrItemToOrderInfo( pItem, &dbOrderInfo ) )
       {
@@ -4532,7 +4532,7 @@ HB_FUNC_UR_SUPER( ORDLSTDELETE )
    if( pArea )
    {
       DBORDERINFO dbOrderInfo;
-      PHB_ITEM pItem = hb_param( 2, HB_IT_ARRAY );
+      PHB_ITEM pItem = hb_param(2, HB_IT_ARRAY);
 
       if( hb_usrItemToOrderInfo( pItem, &dbOrderInfo ) )
       {
@@ -4554,7 +4554,7 @@ HB_FUNC_UR_SUPER( ORDLSTFOCUS )
    if( pArea )
    {
       DBORDERINFO dbOrderInfo;
-      PHB_ITEM pItem = hb_param( 2, HB_IT_ARRAY );
+      PHB_ITEM pItem = hb_param(2, HB_IT_ARRAY);
 
       if( hb_usrItemToOrderInfo( pItem, &dbOrderInfo ) )
       {
@@ -4585,7 +4585,7 @@ HB_FUNC_UR_SUPER( ORDSETCOND )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_param( 2, HB_IT_ANY );
+      PHB_ITEM pItem = hb_param(2, HB_IT_ANY);
 
       if( pItem && HB_IS_NIL( pItem ) )
       {
@@ -4616,7 +4616,7 @@ HB_FUNC_UR_SUPER( ORDCREATE )
    if( pArea )
    {
       DBORDERCREATEINFO dbOrderCreateInfo;
-      PHB_ITEM pItem = hb_param( 2, HB_IT_ARRAY );
+      PHB_ITEM pItem = hb_param(2, HB_IT_ARRAY);
 
       if( hb_usrItemToOrderCreateInfo( pItem, &dbOrderCreateInfo ) )
       {
@@ -4638,7 +4638,7 @@ HB_FUNC_UR_SUPER( ORDDESTROY )
    if( pArea )
    {
       DBORDERINFO dbOrderInfo;
-      PHB_ITEM pItem = hb_param( 2, HB_IT_ARRAY );
+      PHB_ITEM pItem = hb_param(2, HB_IT_ARRAY);
 
       if( hb_usrItemToOrderInfo( pItem, &dbOrderInfo ) )
       {
@@ -4660,7 +4660,7 @@ HB_FUNC_UR_SUPER( ORDINFO )
    if( pArea )
    {
       DBORDERINFO dbOrderInfo;
-      PHB_ITEM pItem = hb_param( 3, HB_IT_ARRAY );
+      PHB_ITEM pItem = hb_param(3, HB_IT_ARRAY);
 
       if( hb_usrItemToOrderInfo( pItem, &dbOrderInfo ) )
       {
@@ -4711,7 +4711,7 @@ HB_FUNC_UR_SUPER( FILTERTEXT )
 
    if( pArea )
    {
-      hb_retni( SUPER_FILTERTEXT( pArea, hb_param( 2, HB_IT_ANY ) ) );
+      hb_retni( SUPER_FILTERTEXT( pArea, hb_param(2, HB_IT_ANY) ) );
    }
 }
 
@@ -4723,7 +4723,7 @@ HB_FUNC_UR_SUPER( SETFILTER )
    {
       DBFILTERINFO dbFilterInfo;
 
-      if( hb_usrItemToFilterInfo( hb_param( 2, HB_IT_ARRAY ), &dbFilterInfo ) )
+      if( hb_usrItemToFilterInfo( hb_param(2, HB_IT_ARRAY), &dbFilterInfo ) )
       {
          hb_retni( SUPER_SETFILTER( pArea, &dbFilterInfo ) );
       }
@@ -4743,7 +4743,7 @@ HB_FUNC_UR_SUPER( SETLOCATE )
    {
       DBSCOPEINFO dbScopeInfo;
 
-      if( hb_usrItemToScopeInfo( hb_param( 2, HB_IT_ARRAY ), &dbScopeInfo ) )
+      if( hb_usrItemToScopeInfo( hb_param(2, HB_IT_ARRAY), &dbScopeInfo ) )
       {
          hb_retni( SUPER_SETLOCATE( pArea, &dbScopeInfo ) );
       }
@@ -4789,7 +4789,7 @@ HB_FUNC_UR_SUPER( ERROR )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_param( 2, HB_IT_OBJECT );
+      PHB_ITEM pItem = hb_param(2, HB_IT_OBJECT);
 
       if( pItem )
       {
@@ -4811,7 +4811,7 @@ HB_FUNC_UR_SUPER( EVALBLOCK )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_param( 2, HB_IT_BLOCK );
+      PHB_ITEM pItem = hb_param(2, HB_IT_BLOCK);
 
       if( pItem )
       {
@@ -4842,7 +4842,7 @@ HB_FUNC_UR_SUPER( LOCK )
    if( pArea )
    {
       DBLOCKINFO dbLockInfo;
-      PHB_ITEM pItem = hb_param( 2, HB_IT_ARRAY );
+      PHB_ITEM pItem = hb_param(2, HB_IT_ARRAY);
 
       if( hb_usrItemToLockInfo( pItem, &dbLockInfo ) )
       {
@@ -4863,7 +4863,7 @@ HB_FUNC_UR_SUPER( UNLOCK )
 
    if( pArea )
    {
-      hb_retni( SUPER_UNLOCK( pArea, hb_param( 2, HB_IT_ANY ) ) );
+      hb_retni( SUPER_UNLOCK( pArea, hb_param(2, HB_IT_ANY) ) );
    }
 }
 
@@ -4885,7 +4885,7 @@ HB_FUNC_UR_SUPER( CREATEMEMFILE )
    {
       DBOPENINFO dbOpenInfo;
 
-      if( hb_usrItemToOpenInfo( hb_param( 2, HB_IT_ARRAY ), &dbOpenInfo ) )
+      if( hb_usrItemToOpenInfo( hb_param(2, HB_IT_ARRAY), &dbOpenInfo ) )
       {
          hb_retni( SUPER_CREATEMEMFILE( pArea, &dbOpenInfo ) );
       }
@@ -4905,7 +4905,7 @@ HB_FUNC_UR_SUPER( OPENMEMFILE )
    {
       DBOPENINFO dbOpenInfo;
 
-      if( hb_usrItemToOpenInfo( hb_param( 2, HB_IT_ARRAY ), &dbOpenInfo ) )
+      if( hb_usrItemToOpenInfo( hb_param(2, HB_IT_ARRAY), &dbOpenInfo ) )
       {
          hb_retni( SUPER_OPENMEMFILE( pArea, &dbOpenInfo ) );
       }
@@ -4963,7 +4963,7 @@ HB_FUNC_UR_SUPER( DROP )
 
    if( pRDD )
    {
-      hb_retni( SUPER_DROP( pRDD, hb_param( 2, HB_IT_ANY ), hb_param( 3, HB_IT_ANY ), hb_parnl(4) ) );
+      hb_retni( SUPER_DROP( pRDD, hb_param(2, HB_IT_ANY), hb_param(3, HB_IT_ANY), hb_parnl(4) ) );
    }
 }
 
@@ -4973,7 +4973,7 @@ HB_FUNC_UR_SUPER( EXISTS )
 
    if( pRDD )
    {
-      hb_retni( SUPER_EXISTS( pRDD, hb_param( 2, HB_IT_ANY ), hb_param( 3, HB_IT_ANY ), hb_parnl(4) ) );
+      hb_retni( SUPER_EXISTS( pRDD, hb_param(2, HB_IT_ANY), hb_param(3, HB_IT_ANY), hb_parnl(4) ) );
    }
 }
 
@@ -4983,7 +4983,7 @@ HB_FUNC_UR_SUPER( RENAME )
 
    if( pRDD )
    {
-      hb_retni( SUPER_RENAME( pRDD, hb_param( 2, HB_IT_ANY ), hb_param( 3, HB_IT_ANY ), hb_param( 4, HB_IT_ANY ), hb_parnl(5) ) );
+      hb_retni( SUPER_RENAME( pRDD, hb_param(2, HB_IT_ANY), hb_param(3, HB_IT_ANY), hb_param(4, HB_IT_ANY), hb_parnl(5) ) );
    }
 }
 
@@ -4993,6 +4993,6 @@ HB_FUNC_UR_SUPER( RDDINFO )
 
    if( pRDD )
    {
-      hb_retni( SUPER_RDDINFO( pRDD, static_cast<HB_USHORT>( hb_parni(2) ), hb_parnl(3), hb_param( 4, HB_IT_ANY ) ) );
+      hb_retni( SUPER_RDDINFO( pRDD, static_cast<HB_USHORT>( hb_parni(2) ), hb_parnl(3), hb_param(4, HB_IT_ANY) ) );
    }
 }

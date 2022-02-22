@@ -53,8 +53,8 @@
  */
 HB_FUNC( HB_STRREPLACE )
 {
-   PHB_ITEM pText = hb_param( 1, HB_IT_STRING );
-   PHB_ITEM pSrc = hb_param( 2, HB_IT_STRING | HB_IT_ARRAY | ( HB_ISNIL( 3 ) ? HB_IT_HASH : 0 ) );
+   PHB_ITEM pText = hb_param(1, HB_IT_STRING);
+   PHB_ITEM pSrc = hb_param(2, HB_IT_STRING | HB_IT_ARRAY | ( HB_ISNIL( 3 ) ? HB_IT_HASH : 0 ));
 
    if( pText && pSrc )
    {
@@ -62,7 +62,7 @@ HB_FUNC( HB_STRREPLACE )
 
       if( nText > 0 && nSrc > 0 )
       {
-         PHB_ITEM pDst = hb_param( 3, HB_IT_STRING | HB_IT_ARRAY );
+         PHB_ITEM pDst = hb_param(3, HB_IT_STRING | HB_IT_ARRAY);
          const char * pszDst = pDst && HB_IS_STRING( pDst ) ? hb_itemGetCPtr( pDst ) : nullptr;
          const char * pszSrc = HB_IS_STRING( pSrc ) ? hb_itemGetCPtr( pSrc ) : nullptr;
          const char * pszText = hb_itemGetCPtr( pText );

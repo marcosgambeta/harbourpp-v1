@@ -51,20 +51,20 @@
 HB_FUNC( STR )
 {
    int iParams = hb_pcount();
-   PHB_ITEM pNumber = hb_param( 1, HB_IT_NUMERIC );
+   PHB_ITEM pNumber = hb_param(1, HB_IT_NUMERIC);
    PHB_ITEM pWidth  = nullptr;
    PHB_ITEM pDec    = nullptr;
 
    if( iParams >= 2 )
    {
-      pWidth = hb_param( 2, HB_IT_NUMERIC );
+      pWidth = hb_param(2, HB_IT_NUMERIC);
       if( pWidth == nullptr )
       {
          pNumber = nullptr;
       }
       else if( iParams >= 3 )
       {
-         pDec = hb_param( 3, HB_IT_NUMERIC );
+         pDec = hb_param(3, HB_IT_NUMERIC);
          if( pDec == nullptr )
          {
             pNumber = nullptr;

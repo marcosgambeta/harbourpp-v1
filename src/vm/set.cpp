@@ -566,7 +566,7 @@ HB_FUNC( __SETCENTURY )
 {
    HB_STACK_TLS_PRELOAD
    HB_BOOL old_century_setting = hb_setGetCentury();
-   PHB_ITEM pNewVal = hb_param( 1, HB_IT_ANY );
+   PHB_ITEM pNewVal = hb_param(1, HB_IT_ANY);
 
    if( pNewVal )
    {
@@ -581,7 +581,7 @@ HB_FUNC( SETCANCEL )
    HB_STACK_TLS_PRELOAD
    hb_retl( hb_setGetCancel() );
    /* SetCancel() accepts only logical parameters */
-   hb_setSetItem( HB_SET_CANCEL, hb_param( 1, HB_IT_LOGICAL ) );
+   hb_setSetItem( HB_SET_CANCEL, hb_param(1, HB_IT_LOGICAL) );
 }
 
 /* return default printer device */
@@ -1347,7 +1347,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pA
 HB_FUNC( SET )
 {
    HB_STACK_TLS_PRELOAD
-   hb_setGetItem( ( HB_set_enum ) hb_parnidef( 1, HB_SET_INVALID_ ), hb_stackReturnItem(), hb_param( 2, HB_IT_ANY ), hb_param( 3, HB_IT_ANY ) );
+   hb_setGetItem( ( HB_set_enum ) hb_parnidef( 1, HB_SET_INVALID_ ), hb_stackReturnItem(), hb_param(2, HB_IT_ANY), hb_param(3, HB_IT_ANY) );
 }
 
 void hb_setInitialize( PHB_SET_STRUCT pSet )

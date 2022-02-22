@@ -87,7 +87,7 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
 
    if( nLen > 0 )
    {
-      PHB_ITEM pItem = hb_param( 1, HB_IT_ANY );
+      PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
 
       if( pItem && HB_IS_STRING( pItem ) && static_cast<HB_SIZE>( nLen ) == hb_cdpItemLen( cdp, pItem ) )
       {

@@ -202,7 +202,7 @@ HB_FUNC( HB_TRANSLATE )
       }
       else
       {
-         hb_itemReturn( hb_param( 1, HB_IT_STRING ) );
+         hb_itemReturn( hb_param(1, HB_IT_STRING) );
       }
    }
    else
@@ -272,7 +272,7 @@ HB_FUNC( HB_STRTOUTF8 )
       {
          if( hb_cdpIsUTF8( cdp ) )
          {
-            hb_itemReturn( hb_param( 1, HB_IT_STRING ) );
+            hb_itemReturn( hb_param(1, HB_IT_STRING) );
             return;
          }
          else
@@ -312,7 +312,7 @@ HB_FUNC( HB_UTF8TOSTR )
          {
             if( hb_cdpIsUTF8( cdp ) )
             {
-               hb_itemReturn( hb_param( 1, HB_IT_STRING ) );
+               hb_itemReturn( hb_param(1, HB_IT_STRING) );
                return;
             }
             else
@@ -342,8 +342,8 @@ HB_FUNC( HB_UTF8TOSTR )
 
 HB_FUNC( HB_UTF8AT )
 {
-   PHB_ITEM pSub = hb_param( 1, HB_IT_STRING );
-   PHB_ITEM pText = hb_param( 2, HB_IT_STRING );
+   PHB_ITEM pSub = hb_param(1, HB_IT_STRING);
+   PHB_ITEM pText = hb_param(2, HB_IT_STRING);
 
    if( pText && pSub )
    {
@@ -374,8 +374,8 @@ HB_FUNC( HB_UTF8AT )
 
 HB_FUNC( HB_UTF8RAT )
 {
-   PHB_ITEM pSub = hb_param( 1, HB_IT_STRING );
-   PHB_ITEM pText = hb_param( 2, HB_IT_STRING );
+   PHB_ITEM pSub = hb_param(1, HB_IT_STRING);
+   PHB_ITEM pText = hb_param(2, HB_IT_STRING);
 
    if( pText && pSub )
    {
@@ -533,7 +533,7 @@ HB_FUNC( HB_UTF8PEEK )
 
 HB_FUNC( HB_UTF8POKE )
 {
-   PHB_ITEM pText = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pText = hb_param(1, HB_IT_STRING);
 
    if( pText && HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
    {

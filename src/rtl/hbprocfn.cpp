@@ -53,9 +53,9 @@
 HB_FUNC( HB_PROCESSOPEN )
 {
    const char * szName = hb_parc(1);
-   PHB_ITEM pStdIn  = hb_param( 2, HB_IT_BYREF );
-   PHB_ITEM pStdOut = hb_param( 3, HB_IT_BYREF );
-   PHB_ITEM pStdErr = hb_param( 4, HB_IT_BYREF );
+   PHB_ITEM pStdIn  = hb_param(2, HB_IT_BYREF);
+   PHB_ITEM pStdOut = hb_param(3, HB_IT_BYREF);
+   PHB_ITEM pStdErr = hb_param(4, HB_IT_BYREF);
 
    if( szName &&
        ( pStdIn  || HB_ISNIL( 2 ) ) &&
@@ -138,8 +138,8 @@ HB_FUNC( HB_PROCESSRUN )
 {
    const char * szName = hb_parc(1);
    const char * szStdIn = hb_parc(2);
-   PHB_ITEM pStdOut = hb_param( 3, HB_IT_BYREF );
-   PHB_ITEM pStdErr = hb_param( 4, HB_IT_BYREF );
+   PHB_ITEM pStdOut = hb_param(3, HB_IT_BYREF);
+   PHB_ITEM pStdErr = hb_param(4, HB_IT_BYREF);
    HB_BOOL fDetach = hb_parl(5);
 
    if( szName &&

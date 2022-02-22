@@ -67,7 +67,7 @@ static void hb_md5_next_seed( char * vect, const char * pszKey, int iLen )
  */
 HB_FUNC( HB_MD5ENCRYPT )
 {
-   PHB_ITEM pData = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pData = hb_param(1, HB_IT_STRING);
 
    if( pData && hb_parclen(2) > 0 )
    {
@@ -106,7 +106,7 @@ HB_FUNC( HB_MD5ENCRYPT )
  */
 HB_FUNC( HB_MD5DECRYPT )
 {
-   PHB_ITEM pData = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pData = hb_param(1, HB_IT_STRING);
 
    if( pData && hb_parclen(2) > 0 )
    {

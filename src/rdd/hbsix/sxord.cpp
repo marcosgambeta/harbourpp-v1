@@ -87,15 +87,15 @@ static HB_BOOL hb_sxOrdParam( LPDBORDERINFO pInfo )
 
    if( HB_ISCHAR( 1 ) )
    {
-      pInfo->itmOrder = hb_param( 1, HB_IT_STRING );
-      pInfo->atomBagName = hb_param( 2, HB_IT_STRING );
+      pInfo->itmOrder = hb_param(1, HB_IT_STRING);
+      pInfo->atomBagName = hb_param(2, HB_IT_STRING);
    }
    else if( HB_ISNUM( 1 ) )
    {
-      pInfo->itmOrder = hb_param( 1, HB_IT_NUMERIC );
+      pInfo->itmOrder = hb_param(1, HB_IT_NUMERIC);
       if( ! HB_ISNIL( 2 ) ) /* hb_pcount() > 2 */
       {
-         pInfo->atomBagName = hb_param( 2, HB_IT_NUMERIC );
+         pInfo->atomBagName = hb_param(2, HB_IT_NUMERIC);
          if( hb_parni(2) <= 0 )
          {
             return HB_FALSE;
@@ -325,7 +325,7 @@ HB_FUNC( SX_SETSCOPE )
          Info.itmResult = hb_itemNew( nullptr );
          if( ! HB_ISNIL( 2 ) )
          {
-            Info.itmNewVal = hb_param( 2, HB_IT_ANY );
+            Info.itmNewVal = hb_param(2, HB_IT_ANY);
          }
          SELF_ORDINFO( pArea, static_cast<HB_USHORT>( iScope ? DBOI_SCOPEBOTTOM : DBOI_SCOPETOP ), &Info );
          hb_itemReturnRelease( Info.itmResult );
@@ -517,7 +517,7 @@ HB_FUNC( SX_KEYADD )
       if( hb_sxOrdParam( &Info ) )
       {
          Info.itmResult = hb_itemPutL( nullptr, HB_FALSE );
-         Info.itmNewVal = hb_param( 3, HB_IT_ANY );
+         Info.itmNewVal = hb_param(3, HB_IT_ANY);
          SELF_ORDINFO( pArea, DBOI_KEYADD, &Info );
          fResult = hb_itemGetL( Info.itmResult );
          hb_itemRelease( Info.itmResult );
@@ -537,7 +537,7 @@ HB_FUNC( SX_KEYDROP )
       if( hb_sxOrdParam( &Info ) )
       {
          Info.itmResult = hb_itemPutL( nullptr, HB_FALSE );
-         Info.itmNewVal = hb_param( 3, HB_IT_ANY );
+         Info.itmNewVal = hb_param(3, HB_IT_ANY);
          SELF_ORDINFO( pArea, DBOI_KEYDELETE, &Info );
          fResult = hb_itemGetL( Info.itmResult );
          hb_itemRelease( Info.itmResult );
@@ -630,7 +630,7 @@ HB_FUNC( SX_KEYGOTO )
       DBORDERINFO Info;
       if( hb_sxOrdParam( &Info ) )
       {
-         Info.itmNewVal = hb_param( 3, HB_IT_NUMERIC );
+         Info.itmNewVal = hb_param(3, HB_IT_NUMERIC);
          Info.itmResult = hb_itemNew( nullptr );
          SELF_ORDINFO( pArea, DBOI_POSITION, &Info );
          fResult = hb_itemGetL( Info.itmResult );
@@ -649,7 +649,7 @@ HB_FUNC( SX_SKIPUNIQUE )
    {
       DBORDERINFO Info;
       memset( &Info, 0, sizeof(Info) );
-      Info.itmNewVal = hb_param( 1, HB_IT_ANY );
+      Info.itmNewVal = hb_param(1, HB_IT_ANY);
       Info.itmResult = hb_itemNew( nullptr );
       SELF_ORDINFO( pArea, DBOI_SKIPUNIQUE, &Info );
       hb_itemRelease( Info.itmResult );
@@ -663,7 +663,7 @@ HB_FUNC( SX_SEEKLAST )
 
    if( pArea && hb_pcount() > 0 )
    {
-      PHB_ITEM pKey = hb_param( 1, HB_IT_ANY );
+      PHB_ITEM pKey = hb_param(1, HB_IT_ANY);
       HB_BOOL bSoftSeek = hb_parl(2);
 
       if( SELF_SEEK( pArea, bSoftSeek, pKey, HB_TRUE ) == HB_SUCCESS )
@@ -733,7 +733,7 @@ HB_FUNC( SX_WILDSEEK )
          }
          if( ! fFound && errCode == HB_SUCCESS )
          {
-            Info.itmNewVal = hb_param( 1, HB_IT_STRING );
+            Info.itmNewVal = hb_param(1, HB_IT_STRING);
             if( SELF_ORDINFO( pArea, DBOI_SKIPWILD, &Info ) == HB_SUCCESS )
             {
                fFound = HB_IS_LOGICAL( Info.itmResult ) && hb_itemGetL( Info.itmResult );
@@ -858,7 +858,7 @@ HB_FUNC( SX_SORTOPTION )
       if( hb_sxOrdParam( &Info ) )
       {
          Info.itmResult = hb_itemNew( nullptr );
-         Info.itmNewVal = hb_param( 1, HB_IT_LOGICAL );
+         Info.itmNewVal = hb_param(1, HB_IT_LOGICAL);
          if( SELF_ORDINFO( pArea, DBOI_USECURRENT, &Info ) == HB_SUCCESS )
          {
             fUseCurrent = hb_itemGetL( Info.itmResult );

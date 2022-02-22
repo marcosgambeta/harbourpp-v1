@@ -49,7 +49,7 @@
 
 HB_FUNC( LENNUM )
 {
-   PHB_ITEM pNumber = hb_param( 1, HB_IT_NUMERIC );
+   PHB_ITEM pNumber = hb_param(1, HB_IT_NUMERIC);
    HB_SIZE nLen = 0;
 
    if( pNumber )

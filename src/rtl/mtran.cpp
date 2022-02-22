@@ -83,7 +83,7 @@ static HB_SIZE hb_strMemotran( char * pszResult, const char * pszString, HB_SIZE
 
 HB_FUNC( MEMOTRAN )
 {
-   PHB_ITEM pString = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pString = hb_param(1, HB_IT_STRING);
 
    if( pString )
    {

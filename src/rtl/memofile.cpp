@@ -97,7 +97,7 @@ HB_FUNC( MEMOREAD )
 static HB_BOOL hb_memowrit( HB_BOOL bHandleEOF )
 {
    const char * pszFileName = hb_parc(1);
-   PHB_ITEM pString   = hb_param( 2, HB_IT_STRING );
+   PHB_ITEM pString   = hb_param(2, HB_IT_STRING);
    HB_BOOL bRetVal    = HB_FALSE;
 
    if( pszFileName && pString )

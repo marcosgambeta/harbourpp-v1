@@ -980,7 +980,7 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
 
          for( tmp = 0; tmp < iParams; ++tmp )
          {
-            PHB_ITEM pParam = hb_param( iFirst + tmp, HB_IT_ANY );
+            PHB_ITEM pParam = hb_param(iFirst + tmp, HB_IT_ANY);
 
             if( piArgFlags )
             {
@@ -1106,7 +1106,7 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
 
          for( tmp = 0; tmp < iParams; ++tmp )
          {
-            PHB_ITEM pParam = hb_param( iFirst + tmp, HB_IT_ANY );
+            PHB_ITEM pParam = hb_param(iFirst + tmp, HB_IT_ANY);
 
             HB_U32 r1;
             HB_U32 r2;

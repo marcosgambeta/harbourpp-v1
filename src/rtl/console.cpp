@@ -330,7 +330,7 @@ HB_FUNC( OUTSTD ) /* writes a list of values to the standard output device */
       {
          hb_conOutStd( " ", 1 );
       }
-      pszString = hb_itemString( hb_param( iParam, HB_IT_ANY ), &nLen, &fFree );
+      pszString = hb_itemString( hb_param(iParam, HB_IT_ANY), &nLen, &fFree );
       if( nLen )
       {
          hb_conOutStd( pszString, nLen );
@@ -356,7 +356,7 @@ HB_FUNC( OUTERR ) /* writes a list of values to the standard error device */
       {
          hb_conOutErr( " ", 1 );
       }
-      pszString = hb_itemString( hb_param( iParam, HB_IT_ANY ), &nLen, &fFree );
+      pszString = hb_itemString( hb_param(iParam, HB_IT_ANY), &nLen, &fFree );
       if( nLen )
       {
          hb_conOutErr( pszString, nLen );
@@ -382,7 +382,7 @@ HB_FUNC( QQOUT ) /* writes a list of values to the current device (screen or pri
       {
          hb_conOutAlt( " ", 1 );
       }
-      pszString = hb_itemString( hb_param( iParam, HB_IT_ANY ), &nLen, &fFree );
+      pszString = hb_itemString( hb_param(iParam, HB_IT_ANY), &nLen, &fFree );
       if( nLen )
       {
          hb_conOutAlt( pszString, nLen );
@@ -544,7 +544,7 @@ HB_FUNC( DEVPOS ) /* Sets the screen and/or printer position */
 #if defined( HB_CLP_UNDOC )
    /* NOTE: Both 5.2e and 5.3 does that, while the documentation
             says it will return NIL. [vszakats] */
-   hb_itemReturn( hb_param( 1, HB_IT_ANY ) );
+   hb_itemReturn( hb_param(1, HB_IT_ANY) );
 #endif
 }
 
@@ -571,7 +571,7 @@ HB_FUNC( DEVOUT ) /* writes a single value to the current device (screen or prin
       hb_gtGetColorStr( szOldColor );
       hb_gtSetColorStr( hb_parc(2) );
 
-      pszString = hb_itemStringCon( hb_param( 1, HB_IT_ANY ), &nLen, &fFree );
+      pszString = hb_itemStringCon( hb_param(1, HB_IT_ANY), &nLen, &fFree );
       if( nLen )
       {
          hb_conOutDev( pszString, nLen );
@@ -585,7 +585,7 @@ HB_FUNC( DEVOUT ) /* writes a single value to the current device (screen or prin
    }
    else if( hb_pcount() >= 1 )
    {
-      pszString = hb_itemStringCon( hb_param( 1, HB_IT_ANY ), &nLen, &fFree );
+      pszString = hb_itemStringCon( hb_param(1, HB_IT_ANY), &nLen, &fFree );
       if( nLen )
       {
          hb_conOutDev( pszString, nLen );
@@ -610,7 +610,7 @@ HB_FUNC( DISPOUT ) /* writes a single value to the screen, but is not affected b
       hb_gtGetColorStr( szOldColor );
       hb_gtSetColorStr( hb_parc(2) );
 
-      pszString = hb_itemStringCon( hb_param( 1, HB_IT_ANY ), &nLen, &bFreeReq );
+      pszString = hb_itemStringCon( hb_param(1, HB_IT_ANY), &nLen, &bFreeReq );
 
       hb_gtWrite( pszString, nLen );
 
@@ -623,7 +623,7 @@ HB_FUNC( DISPOUT ) /* writes a single value to the screen, but is not affected b
    }
    else if( hb_pcount() >= 1 )
    {
-      pszString = hb_itemStringCon( hb_param( 1, HB_IT_ANY ), &nLen, &bFreeReq );
+      pszString = hb_itemStringCon( hb_param(1, HB_IT_ANY), &nLen, &bFreeReq );
 
       hb_gtWrite( pszString, nLen );
 
@@ -651,7 +651,7 @@ HB_FUNC( DISPOUTAT )  /* writes a single value to the screen at specific positio
       hb_gtGetColorStr( szOldColor );
       hb_gtSetColorStr( hb_parc(4) );
 
-      pszString = hb_itemStringCon( hb_param( 3, HB_IT_ANY ), &nLen, &bFreeReq );
+      pszString = hb_itemStringCon( hb_param(3, HB_IT_ANY), &nLen, &bFreeReq );
 
       hb_gtWriteAt( hb_parni(1), hb_parni(2), pszString, nLen );
 
@@ -664,7 +664,7 @@ HB_FUNC( DISPOUTAT )  /* writes a single value to the screen at specific positio
    }
    else if( hb_pcount() >= 3 )
    {
-      pszString = hb_itemStringCon( hb_param( 3, HB_IT_ANY ), &nLen, &bFreeReq );
+      pszString = hb_itemStringCon( hb_param(3, HB_IT_ANY), &nLen, &bFreeReq );
 
       hb_gtWriteAt( hb_parni(1), hb_parni(2), pszString, nLen );
 
@@ -686,7 +686,7 @@ HB_FUNC( HB_DISPOUTAT )
       HB_BOOL bFreeReq;
       int iColor;
 
-      pszString = hb_itemStringCon( hb_param( 3, HB_IT_ANY ), &nLen, &bFreeReq );
+      pszString = hb_itemStringCon( hb_param(3, HB_IT_ANY), &nLen, &bFreeReq );
 
       if( HB_ISCHAR( 4 ) )
       {
