@@ -56,7 +56,7 @@ HB_FUNC( INT )
 
    if( pNumber )
    {
-      if( HB_IS_NUMINT( pNumber ) )
+      if( HB_IS_NUMINT(pNumber) )
       {
          hb_itemReturn( pNumber );
       }
@@ -89,7 +89,7 @@ HB_FUNC( ROUND )
        */
       hb_retndlen( hb_numRound( hb_itemGetND( pNumber ), iDec ), 0, HB_MAX( iDec, 0 ) );
 #else
-      if( iDec == 0 && HB_IS_NUMINT( pNumber ) )
+      if( iDec == 0 && HB_IS_NUMINT(pNumber) )
       {
          hb_retnint( hb_itemGetNInt( pNumber ) );
       }

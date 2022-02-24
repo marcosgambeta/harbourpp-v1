@@ -440,7 +440,7 @@ HB_FUNC( SX_TURBOAREA )
    if( pArea )
    {
       PHB_ITEM pItem = hb_itemParam( 1 );
-      if( hb_pcount() > 0 && HB_IS_NIL( pItem ) )
+      if( hb_pcount() > 0 && HB_IS_NIL(pItem) )
       {
          hb_itemPutNI( pItem, 0 );
       }
@@ -476,7 +476,7 @@ HB_FUNC( SX_SETTURBO )
    else
    {
       PHB_ITEM pItem = hb_itemParam( 1 );
-      if( hb_pcount() > 0 && HB_IS_NIL( pItem ) )
+      if( hb_pcount() > 0 && HB_IS_NIL(pItem) )
       {
          hb_itemPutNI( pItem, 0 );
       }

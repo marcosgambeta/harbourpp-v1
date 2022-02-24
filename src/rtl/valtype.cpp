@@ -141,7 +141,7 @@ HB_FUNC( HB_ISEVALITEM )
 {
    PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
 
-   hb_retl( pItem && HB_IS_EVALITEM( pItem ) );
+   hb_retl( pItem && HB_IS_EVALITEM(pItem) );
 }
 
 HB_FUNC( HB_ISNULL )
@@ -150,17 +150,17 @@ HB_FUNC( HB_ISNULL )
 
    if( pItem )
    {
-      if( HB_IS_STRING( pItem ) )
+      if( HB_IS_STRING(pItem) )
       {
          hb_retl( hb_itemGetCLen( pItem ) == 0 );
          return;
       }
-      else if( HB_IS_ARRAY( pItem ) )
+      else if( HB_IS_ARRAY(pItem) )
       {
          hb_retl( hb_arrayLen( pItem ) == 0 );
          return;
       }
-      else if( HB_IS_HASH( pItem ) )
+      else if( HB_IS_HASH(pItem) )
       {
          hb_retl( hb_hashLen( pItem ) == 0 );
          return;

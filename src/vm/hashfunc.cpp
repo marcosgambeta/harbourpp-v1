@@ -498,7 +498,7 @@ HB_FUNC( HB_HMERGE )
       {
          PHB_ITEM pAction = hb_param(3, HB_IT_EVALITEM | HB_IT_NUMERIC);
 
-         if( pAction && HB_IS_EVALITEM( pAction ) )
+         if( pAction && HB_IS_EVALITEM(pAction) )
          {
             HB_SIZE nLen = hb_hashLen( pSource ), nPos = 0;
             while( ++nPos <= nLen )
@@ -515,7 +515,7 @@ HB_FUNC( HB_HMERGE )
                   hb_vmSend( 3 );
                   {
                      PHB_ITEM pReturn = hb_stackReturnItem();
-                     if( HB_IS_LOGICAL( pReturn ) && hb_itemGetL( pReturn ) )
+                     if( HB_IS_LOGICAL(pReturn) && hb_itemGetL( pReturn ) )
                      {
                         hb_hashAdd( pDest, pKey, pValue );
                      }
@@ -601,7 +601,7 @@ HB_FUNC( HB_HSCAN )
       }
       nCount = HB_ISNUM( 4 ) ? static_cast<HB_SIZE>( hb_parns(4) ) : nLen - nStart + 1;
 
-      if( HB_IS_EVALITEM( pValue ) )
+      if( HB_IS_EVALITEM(pValue) )
       {
          while( nCount-- )
          {
@@ -617,7 +617,7 @@ HB_FUNC( HB_HSCAN )
                hb_vmSend( 3 );
                {
                   PHB_ITEM pReturn = hb_stackReturnItem();
-                  if( HB_IS_LOGICAL( pReturn ) && hb_itemGetL( pReturn ) )
+                  if( HB_IS_LOGICAL(pReturn) && hb_itemGetL( pReturn ) )
                   {
                      fFound = HB_TRUE;
                      break;
@@ -631,14 +631,14 @@ HB_FUNC( HB_HSCAN )
             ++nStart;
          }
       }
-      else if( HB_IS_STRING( pValue ) )
+      else if( HB_IS_STRING(pValue) )
       {
          while( nCount-- )
          {
             PHB_ITEM pItem = hb_hashGetValueAt( pHash, nStart );
             if( pItem )
             {
-               if( HB_IS_STRING( pItem ) && hb_itemStrCmp( pItem, pValue, fExact ) == 0 )
+               if( HB_IS_STRING(pItem) && hb_itemStrCmp( pItem, pValue, fExact ) == 0 )
                {
                   fFound = HB_TRUE;
                   break;
@@ -651,7 +651,7 @@ HB_FUNC( HB_HSCAN )
             ++nStart;
          }
       }
-      else if( HB_IS_NUMINT( pValue ) )
+      else if( HB_IS_NUMINT(pValue) )
       {
          HB_MAXINT nValue = hb_itemGetNInt( pValue );
          while( nCount-- )
@@ -659,7 +659,7 @@ HB_FUNC( HB_HSCAN )
             PHB_ITEM pItem = hb_hashGetValueAt( pHash, nStart );
             if( pItem )
             {
-               if( HB_IS_NUMERIC( pItem ) && hb_itemGetNInt( pItem ) == nValue && hb_itemGetND( pItem ) == static_cast<double>( nValue ) )
+               if( HB_IS_NUMERIC(pItem) && hb_itemGetNInt( pItem ) == nValue && hb_itemGetND( pItem ) == static_cast<double>( nValue ) )
                {
                   fFound = HB_TRUE;
                   break;
@@ -672,7 +672,7 @@ HB_FUNC( HB_HSCAN )
             ++nStart;
          }
       }
-      else if( HB_IS_NUMERIC( pValue ) )
+      else if( HB_IS_NUMERIC(pValue) )
       {
          double dValue = hb_itemGetND( pValue );
          while( nCount-- )
@@ -680,7 +680,7 @@ HB_FUNC( HB_HSCAN )
             PHB_ITEM pItem = hb_hashGetValueAt( pHash, nStart );
             if( pItem )
             {
-               if( HB_IS_NUMERIC( pItem ) && hb_itemGetND( pItem ) == dValue )
+               if( HB_IS_NUMERIC(pItem) && hb_itemGetND( pItem ) == dValue )
                {
                   fFound = HB_TRUE;
                   break;
@@ -693,14 +693,14 @@ HB_FUNC( HB_HSCAN )
             ++nStart;
          }
       }
-      else if( HB_IS_DATETIME( pValue ) )
+      else if( HB_IS_DATETIME(pValue) )
       {
          while( nCount-- )
          {
             PHB_ITEM pItem = hb_hashGetValueAt( pHash, nStart );
             if( pItem )
             {
-               if( HB_IS_DATETIME( pItem ) &&
+               if( HB_IS_DATETIME(pItem) &&
                    pItem->item.asDateTime.julian == pValue->item.asDateTime.julian &&
                    ( ! fExact || pItem->item.asDateTime.time == pValue->item.asDateTime.time ) )
                {
@@ -715,7 +715,7 @@ HB_FUNC( HB_HSCAN )
             ++nStart;
          }
       }
-      else if( HB_IS_LOGICAL( pValue ) )
+      else if( HB_IS_LOGICAL(pValue) )
       {
          HB_BOOL fValue = hb_itemGetDL( pValue );
          while( nCount-- )
@@ -723,7 +723,7 @@ HB_FUNC( HB_HSCAN )
             PHB_ITEM pItem = hb_hashGetValueAt( pHash, nStart );
             if( pItem )
             {
-               if( HB_IS_LOGICAL( pItem ) && hb_itemGetL( pItem ) == fValue )
+               if( HB_IS_LOGICAL(pItem) && hb_itemGetL( pItem ) == fValue )
                {
                   fFound = HB_TRUE;
                   break;
@@ -736,14 +736,14 @@ HB_FUNC( HB_HSCAN )
             ++nStart;
          }
       }
-      else if( HB_IS_NIL( pValue ) )
+      else if( HB_IS_NIL(pValue) )
       {
          while( nCount-- )
          {
             PHB_ITEM pItem = hb_hashGetValueAt( pHash, nStart );
             if( pItem )
             {
-               if( HB_IS_NIL( pItem ) )
+               if( HB_IS_NIL(pItem) )
                {
                   fFound = HB_TRUE;
                   break;
@@ -756,14 +756,14 @@ HB_FUNC( HB_HSCAN )
             ++nStart;
          }
       }
-      else if( HB_IS_POINTER( pValue ) )
+      else if( HB_IS_POINTER(pValue) )
       {
          while( nCount-- )
          {
             PHB_ITEM pItem = hb_hashGetValueAt( pHash, nStart );
             if( pItem )
             {
-               if( HB_IS_POINTER( pItem ) &&
+               if( HB_IS_POINTER(pItem) &&
                    pItem->item.asPointer.value == pValue->item.asPointer.value )
                {
                   fFound = HB_TRUE;
@@ -777,14 +777,14 @@ HB_FUNC( HB_HSCAN )
             ++nStart;
          }
       }
-      else if( fExact && HB_IS_ARRAY( pValue ) )
+      else if( fExact && HB_IS_ARRAY(pValue) )
       {
          while( nCount-- )
          {
             PHB_ITEM pItem = hb_hashGetValueAt( pHash, nStart );
             if( pItem )
             {
-               if( HB_IS_ARRAY( pItem ) &&
+               if( HB_IS_ARRAY(pItem) &&
                    pItem->item.asArray.value == pValue->item.asArray.value )
                {
                   fFound = HB_TRUE;
@@ -798,14 +798,14 @@ HB_FUNC( HB_HSCAN )
             ++nStart;
          }
       }
-      else if( fExact && HB_IS_HASH( pValue ) )
+      else if( fExact && HB_IS_HASH(pValue) )
       {
          while( nCount-- )
          {
             PHB_ITEM pItem = hb_hashGetValueAt( pHash, nStart );
             if( pItem )
             {
-               if( HB_IS_HASH( pItem ) && pItem->item.asHash.value == pValue->item.asHash.value )
+               if( HB_IS_HASH(pItem) && pItem->item.asHash.value == pValue->item.asHash.value )
                {
                   fFound = HB_TRUE;
                   break;
@@ -928,7 +928,7 @@ HB_FUNC( HB_HAUTOADD )
 
       if( pValue )
       {
-         if( HB_IS_LOGICAL( pValue ) )
+         if( HB_IS_LOGICAL(pValue) )
          {
             if( hb_itemGetL( pValue ) )
             {

@@ -639,7 +639,7 @@ static int hb_hsxEval( int iHandle, PHB_ITEM pExpr, HB_BYTE * pKey, HB_BOOL * fD
       return HSX_BADPARMS;
    }
 
-   if( HB_IS_STRING( pExpr ) )
+   if( HB_IS_STRING(pExpr) )
    {
       pStr = hb_itemGetCPtr( pExpr );
       nLen = hb_itemGetCLen( pExpr );
@@ -1624,7 +1624,7 @@ static int hb_hsxCreate( const char * szFile, int iBufSize, int iKeySize, HB_BOO
             return iRetVal;
          }
       }
-      else if( HB_IS_BLOCK( pExpr ) )
+      else if( HB_IS_BLOCK(pExpr) )
       {
          pKeyExpr = hb_itemNew( pExpr );
       }
@@ -1859,7 +1859,7 @@ static int hb_hsxFilter( int iHandle, const char * pSeek, HB_SIZE nSeek, PHB_ITE
       return HSX_NOTABLE;
    }
 
-   if( ! pVerify || HB_IS_NIL( pVerify ) )
+   if( ! pVerify || HB_IS_NIL(pVerify) )
    {
       pVerify = pHSX->pKeyItem;
    }
@@ -1874,7 +1874,7 @@ static int hb_hsxFilter( int iHandle, const char * pSeek, HB_SIZE nSeek, PHB_ITE
          }
          fDestroyExpr = HB_TRUE;
       }
-      else if( ! HB_IS_BLOCK( pVerify ) )
+      else if( ! HB_IS_BLOCK(pVerify) )
       {
          pVerify = nullptr;
       }

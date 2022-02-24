@@ -204,7 +204,7 @@ PHB_CODEBLOCK hb_codeblockNew( const HB_BYTE * pBuffer, HB_USHORT uiLocals, cons
       PHB_ITEM pLocal;
 
       pLocal = hb_stackSelfItem();
-      if( HB_IS_BLOCK( pLocal ) )
+      if( HB_IS_BLOCK(pLocal) )
       {
          PHB_CODEBLOCK pOwner = pLocal->item.asBlock.value;
 
@@ -304,7 +304,7 @@ PHB_ITEM hb_codeblockGetRef( PHB_CODEBLOCK pCBlock, int iItemPos )
 /* retrieves the codeblock unique ID */
 void * hb_codeblockId( PHB_ITEM pItem )
 {
-   if( HB_IS_BLOCK( pItem ) )
+   if( HB_IS_BLOCK(pItem) )
    {
       return static_cast<void*>( pItem->item.asBlock.value );
    }
@@ -317,7 +317,7 @@ void * hb_codeblockId( PHB_ITEM pItem )
 /* retrieves numer of references to the codeblock */
 HB_COUNTER hb_codeblockRefs( PHB_ITEM pItem )
 {
-   if( HB_IS_BLOCK( pItem ) )
+   if( HB_IS_BLOCK(pItem) )
    {
       return hb_gcRefCount( pItem->item.asBlock.value );
    }

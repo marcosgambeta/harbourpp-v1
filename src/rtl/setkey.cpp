@@ -129,11 +129,11 @@ static void sk_add( PHB_SETKEY * sk_list_ptr, HB_BOOL bReturn, int iKeyCode, PHB
    {
       PHB_SETKEY sk_list_tmp, sk_list_end;
 
-      if( pIsActive && ! HB_IS_EVALITEM( pIsActive ) )
+      if( pIsActive && ! HB_IS_EVALITEM(pIsActive) )
       {
          pIsActive = nullptr;
       }
-      if( pAction && ! HB_IS_EVALITEM( pAction ) )
+      if( pAction && ! HB_IS_EVALITEM(pAction) )
       {
          pAction = nullptr;
       }
@@ -355,7 +355,7 @@ HB_FUNC( HB_SETKEYSAVE )
    {
       hb_setkeyRelease( sk_data ); /* destroy the internal list */
 
-      if( HB_IS_ARRAY( pParam ) )
+      if( HB_IS_ARRAY(pParam) )
       {
          nItemCount = hb_arrayLen( pParam );
 

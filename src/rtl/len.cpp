@@ -60,7 +60,7 @@ HB_FUNC( LEN )
 
    if( pItem )
    {
-      if( HB_IS_STRING( pItem ) )
+      if( HB_IS_STRING(pItem) )
       {
          HB_SIZE nLen = hb_itemGetCLen( pItem );
          PHB_CODEPAGE cdp = hb_vmCDP();
@@ -71,12 +71,12 @@ HB_FUNC( LEN )
          hb_retns( nLen );
          return;
       }
-      else if( HB_IS_ARRAY( pItem ) )
+      else if( HB_IS_ARRAY(pItem) )
       {
          hb_retns( hb_arrayLen( pItem ) );
          return;
       }
-      else if( HB_IS_HASH( pItem ) )
+      else if( HB_IS_HASH(pItem) )
       {
          hb_retns( hb_hashLen( pItem ) );
          return;

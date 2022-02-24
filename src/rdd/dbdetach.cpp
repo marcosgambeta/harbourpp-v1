@@ -60,11 +60,11 @@ HB_FUNC( HB_DBDETACH )
    AREAP pArea = nullptr;
    int iArea;
 
-   if( ! pAlias || HB_IS_NIL( pAlias ) )
+   if( ! pAlias || HB_IS_NIL(pAlias) )
    {
       pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
    }
-   else if( HB_IS_STRING( pAlias ) )
+   else if( HB_IS_STRING(pAlias) )
    {
       const char * szAlias = hb_itemGetCPtr( pAlias );
       hb_rddGetAliasNumber( szAlias, &iArea );
@@ -73,7 +73,7 @@ HB_FUNC( HB_DBDETACH )
          pArea = static_cast<AREAP>( hb_rddGetWorkAreaPointer( iArea ) );
       }
    }
-   else if( HB_IS_NUMBER( pAlias ) )
+   else if( HB_IS_NUMBER(pAlias) )
    {
       iArea = hb_itemGetNI( pAlias );
       if( iArea > 0 )

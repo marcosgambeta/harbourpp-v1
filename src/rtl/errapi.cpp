@@ -119,7 +119,7 @@ static HB_BOOL hb_errGetNumCode( int * piValue, const char * szOperation )
          return HB_FALSE;
       }
 
-      if( ! HB_IS_NUMERIC( pItem ) )
+      if( ! HB_IS_NUMERIC(pItem) )
       {
          hb_errInternal( HB_EI_ERRRECFAILURE, nullptr, nullptr, nullptr );
       }
@@ -249,7 +249,7 @@ HB_FUNC_STATIC( _DESCRIPTION )
 {
    PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
 
-   if( pItem && HB_IS_STRING( pItem ) )
+   if( pItem && HB_IS_STRING(pItem) )
    {
       hb_errPutDescription( hb_stackSelfItem(), hb_itemGetCPtr( pItem ) );
    }
@@ -266,7 +266,7 @@ HB_FUNC_STATIC( _FILENAME )
 {
    PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
 
-   if( pItem && HB_IS_STRING( pItem ) )
+   if( pItem && HB_IS_STRING(pItem) )
    {
       hb_errPutFileName( hb_stackSelfItem(), hb_itemGetCPtr( pItem ) );
    }
@@ -283,7 +283,7 @@ HB_FUNC_STATIC( _OPERATION )
 {
    PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
 
-   if( pItem && HB_IS_STRING( pItem ) )
+   if( pItem && HB_IS_STRING(pItem) )
    {
       hb_errPutOperation( hb_stackSelfItem(), hb_itemGetCPtr( pItem ) );
    }
@@ -300,7 +300,7 @@ HB_FUNC_STATIC( _SUBSYSTEM )
 {
    PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
 
-   if( pItem && HB_IS_STRING( pItem ) )
+   if( pItem && HB_IS_STRING(pItem) )
    {
       hb_errPutSubSystem( hb_stackSelfItem(), hb_itemGetCPtr( pItem ) );
    }
@@ -527,7 +527,7 @@ PHB_ITEM hb_errNew( void )
    HB_TRACE( HB_TR_DEBUG, ( "hb_errNew()" ) );
 #endif
 
-   if( ! s_pError || ! HB_IS_OBJECT( s_pError ) )
+   if( ! s_pError || ! HB_IS_OBJECT(s_pError) )
    {
       hb_errInternal( HB_EI_ERRRECFAILURE, nullptr, nullptr, nullptr );
    }
@@ -550,7 +550,7 @@ HB_USHORT hb_errLaunch( PHB_ITEM pError )
       PHB_ITEM pResult;
 
       /* Check if we have a valid error handler */
-      if( ! pErrData->errorBlock || ! HB_IS_EVALITEM( pErrData->errorBlock ) )
+      if( ! pErrData->errorBlock || ! HB_IS_EVALITEM(pErrData->errorBlock) )
       {
          hb_errInternal( HB_EI_ERRNOBLOCK, nullptr, nullptr, nullptr );
       }
@@ -605,7 +605,7 @@ HB_USHORT hb_errLaunch( PHB_ITEM pError )
 
          /* If the error block didn't return a logical value, */
          /* or the canSubstitute flag has been set, consider it as a failure */
-         if( ! HB_IS_LOGICAL( pResult ) || ( uiFlags & EF_CANSUBSTITUTE ) )
+         if( ! HB_IS_LOGICAL(pResult) || ( uiFlags & EF_CANSUBSTITUTE ) )
          {
             bFailure = HB_TRUE;
          }
@@ -664,7 +664,7 @@ PHB_ITEM hb_errLaunchSubst( PHB_ITEM pError )
       HB_USHORT uiFlags = hb_errGetFlags( pError );
 
       /* Check if we have a valid error handler */
-      if( ! pErrData->errorBlock || ! HB_IS_EVALITEM( pErrData->errorBlock ) )
+      if( ! pErrData->errorBlock || ! HB_IS_EVALITEM(pErrData->errorBlock) )
       {
          hb_errInternal( HB_EI_ERRNOBLOCK, nullptr, nullptr, nullptr );
       }

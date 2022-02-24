@@ -1130,47 +1130,47 @@ static HB_BOOL hb_dbgEqual( PHB_ITEM pItem1, PHB_ITEM pItem2 )
    {
       return HB_FALSE;
    }
-   if( HB_IS_NIL( pItem1 ) )
+   if( HB_IS_NIL(pItem1) )
    {
-      return HB_IS_NIL( pItem2 );
+      return HB_IS_NIL(pItem2);
    }
-   if( HB_IS_LOGICAL( pItem1 ) )
+   if( HB_IS_LOGICAL(pItem1) )
    {
       return hb_itemGetL( pItem1 ) == hb_itemGetL( pItem2 );
    }
-   if( HB_IS_POINTER( pItem1 ) )
+   if( HB_IS_POINTER(pItem1) )
    {
       return hb_itemGetPtr( pItem1 ) == hb_itemGetPtr( pItem2 );
    }
-   if( HB_IS_SYMBOL( pItem1 ) )
+   if( HB_IS_SYMBOL(pItem1) )
    {
       return hb_itemGetSymbol( pItem1 ) == hb_itemGetSymbol( pItem2 );
    }
-   if( HB_IS_STRING( pItem1 ) )
+   if( HB_IS_STRING(pItem1) )
    {
       return ! hb_itemStrCmp( pItem1, pItem2, HB_TRUE );
    }
-   if( HB_IS_NUMINT( pItem1 ) )
+   if( HB_IS_NUMINT(pItem1) )
    {
       return hb_itemGetNInt( pItem1 ) == hb_itemGetNInt( pItem2 );
    }
-   if( HB_IS_NUMERIC( pItem1 ) )
+   if( HB_IS_NUMERIC(pItem1) )
    {
       return hb_itemGetND( pItem1 ) == hb_itemGetND( pItem2 );
    }
-   if( HB_IS_DATE( pItem1 ) )
+   if( HB_IS_DATE(pItem1) )
    {
       return hb_itemGetDL( pItem1 ) == hb_itemGetDL( pItem2 );
    }
-   if( HB_IS_TIMESTAMP( pItem1 ) )
+   if( HB_IS_TIMESTAMP(pItem1) )
    {
       return hb_itemGetTD( pItem1 ) == hb_itemGetTD( pItem2 );
    }
-   if( HB_IS_ARRAY( pItem1 ) )
+   if( HB_IS_ARRAY(pItem1) )
    {
       return hb_arrayId( pItem1 ) == hb_arrayId( pItem2 );
    }
-   if( HB_IS_HASH( pItem1 ) )
+   if( HB_IS_HASH(pItem1) )
    {
       return hb_hashId( pItem1 ) == hb_hashId( pItem2 );
    }

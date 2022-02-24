@@ -2018,7 +2018,7 @@ static void hb_gt_def_SetBlock( PHB_ITEM * pItemPtr, PHB_GT_INFO pInfo )
          hb_itemRelease( *pItemPtr );
          *pItemPtr = nullptr;
       }
-      if( HB_IS_EVALITEM( pInfo->pNewVal ) )
+      if( HB_IS_EVALITEM(pInfo->pNewVal) )
       {
          *pItemPtr = hb_itemNew( pInfo->pNewVal );
          hb_gcUnlock( *pItemPtr );
@@ -2248,7 +2248,7 @@ static int hb_gt_def_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, in
 {
    int iRet = 0, iOptions;
 
-   if( pMessage && HB_IS_STRING( pMessage ) && pOptions && ( iOptions = static_cast<int>( hb_arrayLen( pOptions ) ) ) > 0 )
+   if( pMessage && HB_IS_STRING(pMessage) && pOptions && ( iOptions = static_cast<int>( hb_arrayLen( pOptions ) ) ) > 0 )
    {
       HB_SIZE nLen;
       void * hMessage;

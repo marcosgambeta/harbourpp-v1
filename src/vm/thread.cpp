@@ -942,18 +942,18 @@ HB_CARGO_FUNC( hb_threadStartVM )
    {
       PHB_ITEM pStart = hb_arrayGetItemPtr( pThread->pParams, 1 );
 
-      if( HB_IS_BLOCK( pStart ) )
+      if( HB_IS_BLOCK(pStart) )
       {
          hb_vmPushEvalSym();
          hb_vmPush( pStart );
          fSend = HB_TRUE;
       }
-      else if( HB_IS_SYMBOL( pStart ) )
+      else if( HB_IS_SYMBOL(pStart) )
       {
          hb_vmPush( pStart );
          hb_vmPushNil();
       }
-      else if( HB_IS_STRING( pStart ) )
+      else if( HB_IS_STRING(pStart) )
       {
          hb_vmPushDynSym( hb_dynsymGet( hb_itemGetCPtr( pStart ) ) );
          hb_vmPushNil();
@@ -1086,7 +1086,7 @@ PHB_THREADSTATE hb_threadStateClone( HB_ULONG ulAttr, PHB_ITEM pParams )
          for( HB_SIZE nParam = 1; nParam <= nPCount; ++nParam )
          {
             PHB_ITEM pParam = hb_arrayGetItemPtr( pParams, nParam );
-            if( HB_IS_BYREF( pParam ) )
+            if( HB_IS_BYREF(pParam) )
             {
                hb_memvarDetachLocal( pParam );
             }
@@ -1149,7 +1149,7 @@ HB_FUNC( HB_THREADSTART )
    PHB_ITEM pStart;
 
    pStart = hb_param(ulStart, HB_IT_ANY);
-   while( pStart && HB_IS_NUMERIC( pStart ) )
+   while( pStart && HB_IS_NUMERIC(pStart) )
    {
       ulAttr |= static_cast<HB_ULONG>( hb_itemGetNL( pStart ) );
       pStart = hb_param(++ulStart, HB_IT_ANY);
@@ -1157,7 +1157,7 @@ HB_FUNC( HB_THREADSTART )
 
    if( pStart )
    {
-      if( HB_IS_STRING( pStart ) )
+      if( HB_IS_STRING(pStart) )
       {
          PHB_DYNS pDynSym;
          szFuncName = hb_itemGetCPtr( pStart );
@@ -1171,7 +1171,7 @@ HB_FUNC( HB_THREADSTART )
             pStart = nullptr;
          }
       }
-      else if( HB_IS_SYMBOL( pStart ) )
+      else if( HB_IS_SYMBOL(pStart) )
       {
          pSymbol = hb_itemGetSymbol( pStart );
          if( ! pSymbol->value.pFunPtr )
@@ -1180,7 +1180,7 @@ HB_FUNC( HB_THREADSTART )
             pStart = nullptr;
          }
       }
-      else if( ! HB_IS_BLOCK( pStart ) )
+      else if( ! HB_IS_BLOCK(pStart) )
       {
          pStart = nullptr;
       }
@@ -1214,14 +1214,14 @@ HB_FUNC( HB_THREADSTART )
       }
 
       /* update startup item if necessary */
-      if( HB_IS_STRING( pStart ) && pSymbol )
+      if( HB_IS_STRING(pStart) && pSymbol )
       {
          hb_itemPutSymbol( hb_arrayGetItemPtr( pParams, 1 ), pSymbol );
       }
       else
       {
          PHB_ITEM pParam = hb_arrayGetItemPtr( pParams, 1 );
-         if( HB_IS_BYREF( pParam ) )
+         if( HB_IS_BYREF(pParam) )
          {
             hb_itemCopy( pParam, hb_itemUnRef( pParam ) );
          }
@@ -1613,11 +1613,11 @@ HB_FUNC( HB_THREADONCE )
 {
    PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
 
-   if( pItem && HB_ISBYREF( 1 ) && ( HB_IS_NIL( pItem ) || HB_IS_LOGICAL( pItem ) ) )
+   if( pItem && HB_ISBYREF( 1 ) && ( HB_IS_NIL(pItem) || HB_IS_LOGICAL(pItem) ) )
    {
       HB_STACK_TLS_PRELOAD
       HB_BOOL fFirstCall = HB_FALSE;
-      if( HB_IS_NIL( pItem ) || ! hb_itemGetL( pItem ) )
+      if( HB_IS_NIL(pItem) || ! hb_itemGetL( pItem ) )
       {
          PHB_ITEM pAction = hb_param(2, HB_IT_EVALITEM);
 
@@ -1637,7 +1637,7 @@ HB_FUNC( HB_THREADONCE )
          }
          if( hb_threadMutexLock( s_pOnceMutex ) )
          {
-            if( HB_IS_NIL( pItem ) )
+            if( HB_IS_NIL(pItem) )
             {
                if( pAction )
                {
@@ -1679,7 +1679,7 @@ HB_FUNC( HB_THREADONCEINIT )
       HB_STACK_TLS_PRELOAD
       HB_BOOL fInitialized = HB_FALSE;
 
-      if( HB_IS_NIL( pItem ) && ! HB_IS_NIL( pValue ) )
+      if( HB_IS_NIL(pItem) && ! HB_IS_NIL(pValue) )
       {
 #if defined( HB_MT_VM )
          if( ! s_fThreadInit )
@@ -1687,7 +1687,7 @@ HB_FUNC( HB_THREADONCEINIT )
             hb_threadInit();
          }
          HB_CRITICAL_LOCK( s_once_mtx );
-         if( HB_IS_NIL( pItem ) )
+         if( HB_IS_NIL(pItem) )
          {
             /* special core code only macro used to eliminate race condition
              * in unprotected readonly access to pItem variable.
@@ -2299,7 +2299,7 @@ void hb_threadMutexNotify( PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting 
          {
             pMutex->events = hb_itemArrayNew( 1 );
             hb_gcUnlock( pMutex->events );
-            if( pNotifier && ! HB_IS_NIL( pNotifier ) )
+            if( pNotifier && ! HB_IS_NIL(pNotifier) )
             {
                hb_arraySet( pMutex->events, 1, pNotifier );
             }
@@ -2335,7 +2335,7 @@ void hb_threadMutexNotify( PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting 
          }
          if( iCount > 0 )
          {
-            if( pNotifier && ! HB_IS_NIL( pNotifier ) )
+            if( pNotifier && ! HB_IS_NIL(pNotifier) )
             {
                int iSet = iCount;
                do
@@ -2383,7 +2383,7 @@ void hb_threadMutexNotify( PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting 
             {
                hb_vmLockForce();
                hb_arraySize( pMutex->events, iLen + iCount );
-               if( pNotifier && ! HB_IS_NIL( pNotifier ) )
+               if( pNotifier && ! HB_IS_NIL(pNotifier) )
                {
                   int iSet = iCount;
                   do

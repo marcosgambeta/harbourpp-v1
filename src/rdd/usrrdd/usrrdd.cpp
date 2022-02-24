@@ -90,7 +90,7 @@ static HB_BOOL hb_usrIsMethod( PHB_ITEM pMethods, HB_USHORT uiMethod )
 {
    PHB_ITEM pItem = hb_arrayGetItemPtr( pMethods, uiMethod );
 
-   return pItem && HB_IS_EVALITEM( pItem );
+   return pItem && HB_IS_EVALITEM(pItem);
 }
 
 static HB_BOOL hb_usrPushMethod( PHB_ITEM pMethods, HB_USHORT uiMethod )
@@ -99,13 +99,13 @@ static HB_BOOL hb_usrPushMethod( PHB_ITEM pMethods, HB_USHORT uiMethod )
 
    if( pItem )
    {
-      if( HB_IS_SYMBOL( pItem ) )
+      if( HB_IS_SYMBOL(pItem) )
       {
          hb_vmPush( pItem );
          hb_vmPushNil();
          return HB_TRUE;
       }
-      else if( HB_IS_BLOCK( pItem ) )
+      else if( HB_IS_BLOCK(pItem) )
       {
          hb_vmPushEvalSym();
          hb_vmPush( pItem );
@@ -186,7 +186,7 @@ static const char * hb_usrArrayGetCPtr( PHB_ITEM pArray, HB_SIZE nPos )
 {
    PHB_ITEM pItem = hb_arrayGetItemPtr( pArray, nPos );
 
-   if( pItem && HB_IS_STRING( pItem ) )
+   if( pItem && HB_IS_STRING(pItem) )
    {
       return hb_itemGetCPtr( pItem );
    }
@@ -1584,7 +1584,7 @@ static HB_ERRCODE hb_usrGetRec( AREAP pArea, HB_BYTE ** pBuffer )
    hb_vmDo( 2 );
 
    pItem = hb_stackItemFromBase( nOffset );
-   if( HB_IS_STRING( pItem ) )
+   if( HB_IS_STRING(pItem) )
    {
       *pBuffer = reinterpret_cast<HB_BYTE*>( const_cast<char*>( hb_itemGetCPtr( pItem ) ) );
    }
@@ -2316,7 +2316,7 @@ static HB_ERRCODE hb_usrOrderListAdd( AREAP pArea, LPDBORDERINFO pOrderInfo )
    hb_vmDo( 2 );
 
    pResult = hb_arrayGetItemPtr( pItem, UR_ORI_RESULT );
-   if( pResult && ! HB_IS_NIL( pResult ) )
+   if( pResult && ! HB_IS_NIL(pResult) )
    {
       if( pOrderInfo->itmResult )
       {
@@ -2369,7 +2369,7 @@ static HB_ERRCODE hb_usrOrderListDelete( AREAP pArea, LPDBORDERINFO pOrderInfo )
    hb_vmDo( 2 );
 
    pResult = hb_arrayGetItemPtr( pItem, UR_ORI_RESULT );
-   if( pResult && ! HB_IS_NIL( pResult ) )
+   if( pResult && ! HB_IS_NIL(pResult) )
    {
       if( pOrderInfo->itmResult )
       {
@@ -2405,7 +2405,7 @@ static HB_ERRCODE hb_usrOrderListFocus( AREAP pArea, LPDBORDERINFO pOrderInfo )
    hb_vmDo( 2 );
 
    pResult = hb_arrayGetItemPtr( pItem, UR_ORI_RESULT );
-   if( pResult && ! HB_IS_NIL( pResult ) )
+   if( pResult && ! HB_IS_NIL(pResult) )
    {
       if( pOrderInfo->itmResult )
       {
@@ -2509,7 +2509,7 @@ static HB_ERRCODE hb_usrOrderDestroy( AREAP pArea, LPDBORDERINFO pOrderInfo )
    hb_vmDo( 2 );
 
    pResult = hb_arrayGetItemPtr( pItem, UR_ORI_RESULT );
-   if( pResult && ! HB_IS_NIL( pResult ) )
+   if( pResult && ! HB_IS_NIL(pResult) )
    {
       if( pOrderInfo->itmResult )
       {
@@ -2546,7 +2546,7 @@ static HB_ERRCODE hb_usrOrderInfo( AREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO
    hb_vmDo( 3 );
 
    pResult = hb_arrayGetItemPtr( pItem, UR_ORI_RESULT );
-   if( pResult && ! HB_IS_NIL( pResult ) )
+   if( pResult && ! HB_IS_NIL(pResult) )
    {
       if( pOrderInfo->itmResult )
       {
@@ -4587,7 +4587,7 @@ HB_FUNC_UR_SUPER( ORDSETCOND )
    {
       PHB_ITEM pItem = hb_param(2, HB_IT_ANY);
 
-      if( pItem && HB_IS_NIL( pItem ) )
+      if( pItem && HB_IS_NIL(pItem) )
       {
          hb_retni( SUPER_ORDSETCOND( pArea, nullptr ) );
       }

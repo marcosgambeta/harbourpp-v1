@@ -209,7 +209,7 @@ static HB_ERRCODE hb_waSkipFilter( AREAP pArea, HB_LONG lUpDown )
             return HB_FAILURE;
          }
 
-         if( HB_IS_LOGICAL( pArea->valResult ) && ! hb_itemGetL( pArea->valResult ) )
+         if( HB_IS_LOGICAL(pArea->valResult) && ! hb_itemGetL( pArea->valResult ) )
          {
             if( SELF_SKIPRAW( pArea, lUpDown ) != HB_SUCCESS )
             {

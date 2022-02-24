@@ -167,7 +167,7 @@ static HB_BOOL hb_macroCheckParam( PHB_ITEM pItem )
 
    HB_BOOL bValid = HB_TRUE;
 
-   if( ! HB_IS_STRING( pItem ) )
+   if( ! HB_IS_STRING(pItem) )
    {
       PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1065, nullptr, "&", 1, pItem );
 
@@ -629,7 +629,7 @@ static void hb_macroUseAliased( PHB_ITEM pAlias, PHB_ITEM pVar, int iFlag, int i
 {
    HB_STACK_TLS_PRELOAD
 
-   if( HB_IS_STRING( pAlias ) && HB_IS_STRING( pVar ) )
+   if( HB_IS_STRING(pAlias) && HB_IS_STRING(pVar) )
    {
       /* grab memory for "alias->var"
        */
@@ -872,7 +872,7 @@ static void hb_macroBlock( const char * szString, PHB_ITEM pItem )
    {
       pMacro->pCodeInfo->pCode[ pMacro->pCodeInfo->nPCodePos - 1 ] = HB_P_ENDBLOCK;
 
-      if( HB_IS_COMPLEX( pItem ) )
+      if( HB_IS_COMPLEX(pItem) )
       {
          hb_itemClear( pItem );
       }
@@ -957,7 +957,7 @@ static void hb_macroSetGetBlock( PHB_DYNS pVarSym, PHB_ITEM pItem, int iWorkArea
    i += sizeof(PHB_DYNS);
    byBuf[ i++ ] = HB_P_ENDBLOCK;
 
-   if( HB_IS_COMPLEX( pItem ) )
+   if( HB_IS_COMPLEX(pItem) )
    {
       hb_itemClear( pItem );
    }
@@ -1109,7 +1109,7 @@ void hb_macroPushSymbol( PHB_ITEM pItem )
       }
    }
 
-   if( ! HB_IS_SYMBOL( hb_stackItemFromTop( -1 ) ) && hb_vmRequestQuery() == 0 )
+   if( ! HB_IS_SYMBOL(hb_stackItemFromTop( -1 )) && hb_vmRequestQuery() == 0 )
    {
       hb_stackPop();    /* remove compiled string */
       hb_vmPushDynSym( hb_dynsymGetCase( "" ) );  /* push compiled symbol instead of a string */

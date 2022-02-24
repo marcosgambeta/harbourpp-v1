@@ -710,7 +710,7 @@ HB_ERRCODE hb_rddOpenTable( const char * szFileName, const char * szDriver,
    errCode = pStruct ? SELF_CREATEFIELDS( pArea, pStruct ) : HB_SUCCESS;
    if( errCode == HB_SUCCESS )
    {
-      if( pDelim && ! HB_IS_NIL( pDelim ) )
+      if( pDelim && ! HB_IS_NIL(pDelim) )
       {
          errCode = SELF_INFO( pArea, DBI_SETDELIMITER, pDelim );
       }
@@ -776,7 +776,7 @@ HB_ERRCODE hb_rddCreateTable( const char * szFileName, const char * szDriver,
    pInfo.ulConnection = ulConnection;
    pInfo.lpdbHeader = nullptr;
 
-   if( pDelim && ! HB_IS_NIL( pDelim ) )
+   if( pDelim && ! HB_IS_NIL(pDelim) )
    {
       errCode = SELF_INFO( pArea, DBI_SETDELIMITER, pDelim );
    }
@@ -912,7 +912,7 @@ static const char * hb_dbTransFieldPos( PHB_ITEM pFields, HB_USHORT uiField )
    pItem = hb_arrayGetItemPtr( pFields, uiField );
    if( pItem )
    {
-      if( HB_IS_ARRAY( pItem ) )
+      if( HB_IS_ARRAY(pItem) )
       {
          szField = hb_arrayGetCPtr( pItem, DBS_NAME );
       }
@@ -1396,7 +1396,7 @@ static HB_ERRCODE hb_rddEvalWABlock( AREAP pArea, void * pBlock )
    hb_rddSelectWorkAreaNumber( pArea->uiArea );
    pItem = hb_vmEvalBlockOrMacro( static_cast<PHB_ITEM>( pBlock ) );
 
-   if( hb_vmRequestQuery() != 0 || ( HB_IS_LOGICAL( pItem ) && ! hb_itemGetL( pItem ) ) )
+   if( hb_vmRequestQuery() != 0 || ( HB_IS_LOGICAL(pItem) && ! hb_itemGetL( pItem ) ) )
    {
       return HB_FAILURE;
    }

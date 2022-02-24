@@ -190,7 +190,7 @@ HB_FUNC( TRANSFORM )
 
       /* --- Handle STRING values --- */
 
-      if( HB_IS_STRING( pValue ) )
+      if( HB_IS_STRING(pValue) )
       {
          const char * szExp = hb_itemGetCPtr( pValue );
          HB_SIZE nExpLen = hb_itemGetCLen( pValue );
@@ -398,7 +398,7 @@ HB_FUNC( TRANSFORM )
 
       /* --- Handle NUMERIC values --- */
 
-      else if( HB_IS_NUMERIC( pValue ) )
+      else if( HB_IS_NUMERIC(pValue) )
       {
          int      iWidth;                             /* Width of string          */
          int      iDec;                               /* Number of decimals       */
@@ -446,7 +446,7 @@ HB_FUNC( TRANSFORM )
             hb_itemGetNLen( pValue, &iWidth, &iDec );
             if( hb_setGetFixed() )
             {
-               if( HB_IS_NUMINT( pValue ) )
+               if( HB_IS_NUMINT(pValue) )
                {
                   iWidth += 2 + ( hb_setGetDecimals() << 1 );
                }
@@ -469,7 +469,7 @@ HB_FUNC( TRANSFORM )
          if( ( uiPicFlags & ( PF_DEBIT | PF_PARNEG | PF_PARNEGWOS ) ) && dValue < 0 )
          {
             /* Always convert absolute val */
-            if( HB_IS_NUMINT( pValue ) ) /* workaround for 64-bit integer conversion */
+            if( HB_IS_NUMINT(pValue) ) /* workaround for 64-bit integer conversion */
             {
                pNumber = hb_itemPutNInt( nullptr, -hb_itemGetNInt( pValue ) );
             }
@@ -677,7 +677,7 @@ HB_FUNC( TRANSFORM )
 
       /* --- Handle DATE values --- */
 
-      else if( HB_IS_DATE( pValue ) )
+      else if( HB_IS_DATE(pValue) )
       {
          const char * szDateFormat;
          char szNewFormat[ 11 ];
@@ -781,7 +781,7 @@ HB_FUNC( TRANSFORM )
 
       /* --- Handle TIMESTAMP values --- */
 
-      else if( HB_IS_TIMESTAMP( pValue ) )
+      else if( HB_IS_TIMESTAMP(pValue) )
       {
          const char * szDateFormat = nullptr, * szTimeFormat = nullptr;
          char szNewFormat[ 11 ];
@@ -908,7 +908,7 @@ HB_FUNC( TRANSFORM )
 
       /* --- Handle LOGICAL values --- */
 
-      else if( HB_IS_LOGICAL( pValue ) )
+      else if( HB_IS_LOGICAL(pValue) )
       {
          HB_BOOL bDone = HB_FALSE;
          HB_BOOL bExit = HB_FALSE;
@@ -1017,15 +1017,15 @@ HB_FUNC( TRANSFORM )
    }
    else if( pPic || HB_ISNIL( 2 ) )  /* Picture is an empty string or NIL */
    {
-      if( HB_IS_STRING( pValue ) )
+      if( HB_IS_STRING(pValue) )
       {
          hb_itemReturn( pValue );
       }
-      else if( HB_IS_NUMERIC( pValue ) )
+      else if( HB_IS_NUMERIC(pValue) )
       {
          char * szStr;
 
-         if( HB_IS_NUMINT( pValue ) && hb_setGetFixed() )
+         if( HB_IS_NUMINT(pValue) && hb_setGetFixed() )
          {
             int iWidth, iDec;
             hb_itemGetNLen( pValue, &iWidth, &iDec );
@@ -1050,14 +1050,14 @@ HB_FUNC( TRANSFORM )
             }
          }
       }
-      else if( HB_IS_DATE( pValue ) )
+      else if( HB_IS_DATE(pValue) )
       {
          char szDate[ 9 ];
          char szResult[ 11 ];
 
          hb_retc( hb_dateFormat( hb_itemGetDS( pValue, szDate ), szResult, hb_setGetDateFormat() ) );
       }
-      else if( HB_IS_TIMESTAMP( pValue ) )
+      else if( HB_IS_TIMESTAMP(pValue) )
       {
          char szResult[ 27 ];
          long lDate, lTime;
@@ -1065,7 +1065,7 @@ HB_FUNC( TRANSFORM )
          hb_itemGetTDT( pValue, &lDate, &lTime );
          hb_retc( hb_timeStampFormat( szResult, hb_setGetDateFormat(), hb_setGetTimeFormat(), lDate, lTime ) );
       }
-      else if( HB_IS_LOGICAL( pValue ) )
+      else if( HB_IS_LOGICAL(pValue) )
       {
          hb_retc_const( hb_itemGetL( pValue ) ? "T" : "F" );
       }

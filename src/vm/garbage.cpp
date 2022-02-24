@@ -357,7 +357,7 @@ HB_GARBAGE_FUNC( hb_gcGripMark )
 
 static HB_GARBAGE_FUNC( hb_gcGripRelease )
 {
-   if( HB_IS_COMPLEX( static_cast<PHB_ITEM>( Cargo ) ) )
+   if( HB_IS_COMPLEX(static_cast<PHB_ITEM>( Cargo )) )
    {
       hb_itemClear( static_cast<PHB_ITEM>( Cargo ) );
    }
@@ -492,18 +492,18 @@ void hb_gcMark( void * pBlock )
  */
 void hb_gcItemRef( PHB_ITEM pItem )
 {
-   while( HB_IS_BYREF( pItem ) )
+   while( HB_IS_BYREF(pItem) )
    {
-      if( HB_IS_ENUM( pItem ) )
+      if( HB_IS_ENUM(pItem) )
       {
          return;
       }
-      else if( HB_IS_EXTREF( pItem ) )
+      else if( HB_IS_EXTREF(pItem) )
       {
          pItem->item.asExtRef.func->mark( pItem->item.asExtRef.value );
          return;
       }
-      else if( ! HB_IS_MEMVAR( pItem ) && pItem->item.asRefer.offset == 0 && pItem->item.asRefer.value >= 0 )
+      else if( ! HB_IS_MEMVAR(pItem) && pItem->item.asRefer.offset == 0 && pItem->item.asRefer.value >= 0 )
       {
          /* array item reference */
          PHB_GARBAGE pAlloc = HB_GC_PTR( pItem->item.asRefer.BasePtr.array );
@@ -519,7 +519,7 @@ void hb_gcItemRef( PHB_ITEM pItem )
       pItem = hb_itemUnRefOnce( pItem );
    }
 
-   if( HB_IS_ARRAY( pItem ) )
+   if( HB_IS_ARRAY(pItem) )
    {
       PHB_GARBAGE pAlloc = HB_GC_PTR( pItem->item.asArray.value );
 
@@ -534,7 +534,7 @@ void hb_gcItemRef( PHB_ITEM pItem )
          pAlloc->pFuncs->mark( HB_BLOCK_PTR( pAlloc ) );
       }
    }
-   else if( HB_IS_HASH( pItem ) )
+   else if( HB_IS_HASH(pItem) )
    {
       PHB_GARBAGE pAlloc = HB_GC_PTR( pItem->item.asHash.value );
 
@@ -547,7 +547,7 @@ void hb_gcItemRef( PHB_ITEM pItem )
          pAlloc->pFuncs->mark( HB_BLOCK_PTR( pAlloc ) );
       }
    }
-   else if( HB_IS_BLOCK( pItem ) )
+   else if( HB_IS_BLOCK(pItem) )
    {
       PHB_GARBAGE pAlloc = HB_GC_PTR( pItem->item.asBlock.value );
 
@@ -559,7 +559,7 @@ void hb_gcItemRef( PHB_ITEM pItem )
          pAlloc->pFuncs->mark( HB_BLOCK_PTR( pAlloc ) );
       }
    }
-   else if( HB_IS_POINTER( pItem ) )
+   else if( HB_IS_POINTER(pItem) )
    {
       if( pItem->item.asPointer.collect )
       {

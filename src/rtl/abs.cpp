@@ -59,7 +59,7 @@ HB_FUNC( ABS )
 
       hb_itemGetNLen( pNumber, &iWidth, &iDec );
 
-      if( HB_IS_INTEGER( pNumber ) )
+      if( HB_IS_INTEGER(pNumber) )
       {
          int iNumber = hb_itemGetNI( pNumber );
 
@@ -82,7 +82,7 @@ HB_FUNC( ABS )
             hb_retni( -iNumber );
          }   
       }
-      else if( HB_IS_LONG( pNumber ) )
+      else if( HB_IS_LONG(pNumber) )
       {
          HB_MAXINT lNumber = hb_itemGetNInt( pNumber );
 

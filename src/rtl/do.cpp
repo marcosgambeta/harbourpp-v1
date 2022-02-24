@@ -66,7 +66,7 @@ HB_FUNC( DO )
    {
       PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
 
-      if( HB_IS_STRING( pItem ) )
+      if( HB_IS_STRING(pItem) )
       {
          PHB_DYNS pDynSym = hb_dynsymFindName( hb_itemGetCPtr( pItem ) );
 
@@ -77,12 +77,12 @@ HB_FUNC( DO )
          }
          hb_vmPushDynSym( pDynSym );
       }
-      else if( HB_IS_BLOCK( pItem ) )
+      else if( HB_IS_BLOCK(pItem) )
       {
          hb_vmPushEvalSym();
          pSelf = pItem;
       }
-      else if( HB_IS_SYMBOL( pItem ) )
+      else if( HB_IS_SYMBOL(pItem) )
       {
          hb_vmPush( pItem );
       }

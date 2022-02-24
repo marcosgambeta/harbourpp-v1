@@ -804,7 +804,7 @@ static HB_BOOL hb_dbfPasswordSet( DBFAREAP pArea, PHB_ITEM pPasswd, HB_BOOL fRaw
 
    nLen = hb_itemGetCLen( pPasswd );
 
-   fSet = ! pArea->fHasMemo && HB_IS_STRING( pPasswd ) && ( ! fRaw || nLen == 8 );
+   fSet = ! pArea->fHasMemo && HB_IS_STRING(pPasswd) && ( ! fRaw || nLen == 8 );
    if( fSet )
    {
       if( nLen > 0 )
@@ -1929,7 +1929,7 @@ static HB_ERRCODE hb_dbfGoToId( DBFAREAP pArea, PHB_ITEM pItem )
    HB_TRACE( HB_TR_DEBUG, ( "hb_dbfGoToId(%p, %p)", static_cast<void*>( pArea ), static_cast<void*>( pItem ) ) );
 #endif
 
-   if( HB_IS_NUMERIC( pItem ) )
+   if( HB_IS_NUMERIC(pItem) )
    {
       return SELF_GOTO( &pArea->area, hb_itemGetNL( pItem ) );
    }
@@ -2917,7 +2917,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
    }
    else
    {
-      if( HB_IS_MEMO( pItem ) || HB_IS_STRING( pItem ) )
+      if( HB_IS_MEMO(pItem) || HB_IS_STRING(pItem) )
       {
          nLen = pField->uiLen;
          if( pField->uiType == HB_FT_STRING )
@@ -3001,7 +3001,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             errCode = EDBF_DATATYPE;
          }
       }
-      else if( HB_IS_DATETIME( pItem ) )
+      else if( HB_IS_DATETIME(pItem) )
       {
          if( pField->uiType == HB_FT_DATE )
          {
@@ -3043,7 +3043,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             errCode = EDBF_DATATYPE;
          }
       }
-      else if( HB_IS_NUMBER( pItem ) )
+      else if( HB_IS_NUMBER(pItem) )
       {
          if( pField->uiType == HB_FT_LONG || pField->uiType == HB_FT_FLOAT )
          {
@@ -3062,7 +3062,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             HB_MAXINT lVal;
             int iSize;
 
-            if( pField->uiDec || HB_IS_DOUBLE( pItem ) )
+            if( pField->uiDec || HB_IS_DOUBLE(pItem) )
             {
                double dVal;
 #if 0    /* this version rounds double values to nearest integer */
@@ -3144,7 +3144,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          else if( pField->uiType == HB_FT_ANY && pField->uiLen == 4 )
          {
             HB_MAXINT lVal = hb_itemGetNInt( pItem );
-            if( HB_IS_DOUBLE( pItem ) ? HB_DBL_LIM_INT32( hb_itemGetND( pItem ) ) : HB_LIM_INT32( lVal ) )
+            if( HB_IS_DOUBLE(pItem) ? HB_DBL_LIM_INT32( hb_itemGetND( pItem ) ) : HB_LIM_INT32( lVal ) )
             {
                HB_PUT_LE_UINT32( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], static_cast<HB_U32>( lVal ) );
             }
@@ -3158,7 +3158,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             errCode = EDBF_DATATYPE;
          }
       }
-      else if( HB_IS_LOGICAL( pItem ) )
+      else if( HB_IS_LOGICAL(pItem) )
       {
          if( pField->uiType == HB_FT_LOGICAL )
          {
@@ -4093,11 +4093,11 @@ static HB_ERRCODE hb_dbfInfo( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
       {
          HB_BOOL fTransRec = pArea->fTransRec;
 
-         if( HB_IS_LOGICAL( pItem ) )
+         if( HB_IS_LOGICAL(pItem) )
          {
             pArea->fTransRec = hb_itemGetL( pItem );
          }
-         else if( HB_IS_POINTER( pItem ) )
+         else if( HB_IS_POINTER(pItem) )
          {
             LPDBTRANSINFO lpdbTransInfo = hb_dbTransInfoGet( pItem );
 
@@ -4119,7 +4119,7 @@ static HB_ERRCODE hb_dbfInfo( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
       {
          HB_BOOL fShared = pArea->fShared;
 
-         if( HB_IS_LOGICAL( pItem ) )
+         if( HB_IS_LOGICAL(pItem) )
          {
             pArea->fShared = hb_itemGetL( pItem );
          }
@@ -4135,7 +4135,7 @@ static HB_ERRCODE hb_dbfInfo( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
          break;
 
       case DBI_ISTEMPORARY:
-         if( ! pArea->pDataFile && ! pArea->pMemoFile && HB_IS_LOGICAL( pItem ) )
+         if( ! pArea->pDataFile && ! pArea->pMemoFile && HB_IS_LOGICAL(pItem) )
          {
             pArea->fTemporary = hb_itemGetL( pItem );
          }
@@ -4182,7 +4182,7 @@ static HB_ERRCODE hb_dbfInfo( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
       }
 
       case DBI_LOCKTEST:
-         if( HB_IS_NUMERIC( pItem ) )
+         if( HB_IS_NUMERIC(pItem) )
          {
             hb_itemPutNI( pItem, hb_dbfLockTest( pArea, REC_LOCK, hb_itemGetNL( pItem ) ) );
          }
@@ -4222,7 +4222,7 @@ static HB_ERRCODE hb_dbfInfo( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
       {
          HB_UINT uiSetHeader = pArea->uiSetHeader;
 
-         if( HB_IS_NUMERIC( pItem ) )
+         if( HB_IS_NUMERIC(pItem) )
          {
             int iMode = hb_itemGetNI( pItem );
             if( ( iMode & ~DB_SETHEADER_MASK ) == 0 )
@@ -4253,14 +4253,14 @@ static HB_ERRCODE hb_dbfInfo( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
          break;
 
       case DBI_TRIGGER:
-         if( HB_IS_LOGICAL( pItem ) )
+         if( HB_IS_LOGICAL(pItem) )
          {
             pArea->fTrigger = pArea->pTriggerSym && hb_itemGetL( pItem );
          }
          else
          {
             PHB_DYNS pTriggerSym = pArea->pTriggerSym;
-            if( HB_IS_STRING( pItem ) )
+            if( HB_IS_STRING(pItem) )
             {
                hb_dbfTriggerSet( pArea, pItem );
             }
@@ -4276,11 +4276,11 @@ static HB_ERRCODE hb_dbfInfo( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
       {
          HB_BOOL fDirty = HB_DIRTYREAD( pArea );
 
-         if( HB_IS_LOGICAL( pItem ) )
+         if( HB_IS_LOGICAL(pItem) )
          {
             pArea->uiDirtyRead = hb_itemGetL( pItem ) ? HB_IDXREAD_DIRTY : HB_IDXREAD_CLEAN;
          }
-         else if( ! HB_IS_NIL( pItem ) )
+         else if( ! HB_IS_NIL(pItem) )
          {
             pArea->uiDirtyRead = HB_IDXREAD_DEFAULT;
          }
@@ -4354,7 +4354,7 @@ static HB_ERRCODE hb_dbfFieldInfo( DBFAREAP pArea, HB_USHORT uiIndex, HB_USHORT 
                }
                fLck = HB_TRUE;
             }
-            if( HB_IS_NUMERIC( pItem ) )
+            if( HB_IS_NUMERIC(pItem) )
             {
                nValue = hb_dbfNextValueSet( pArea, uiIndex - 1, hb_itemGetNInt( pItem ) );
             }
@@ -4376,7 +4376,7 @@ static HB_ERRCODE hb_dbfFieldInfo( DBFAREAP pArea, HB_USHORT uiIndex, HB_USHORT 
          if( hb_dbfIsAutoIncField( pArea->area.lpFields + uiIndex - 1 ) != HB_AUTOINC_NONE )
          {
             int iValue;
-            if( HB_IS_NUMERIC( pItem ) )
+            if( HB_IS_NUMERIC(pItem) )
             {
                fLck = HB_FALSE;
                if( pArea->fShared && ! pArea->fFLocked && ! pArea->fHeaderLocked )
@@ -4629,7 +4629,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
 
    if( SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_PENDINGTRIGGER, pOpenInfo->ulConnection, pItem ) == HB_SUCCESS )
    {
-      if( HB_IS_STRING( pItem ) )
+      if( HB_IS_STRING(pItem) )
       {
          hb_dbfTriggerSet( pArea, pItem );
       }
@@ -4640,7 +4640,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
       hb_itemClear( pItem );
       if( SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_TRIGGER, pOpenInfo->ulConnection, pItem ) == HB_SUCCESS )
       {
-         if( HB_IS_STRING( pItem ) )
+         if( HB_IS_STRING(pItem) )
          {
             hb_dbfTriggerSet( pArea, pItem );
          }
@@ -5360,7 +5360,7 @@ static HB_ERRCODE hb_dbfPack( DBFAREAP pArea )
    /* This is bad hack but looks that people begins to use it :-(
     * so I'll add workaround to make it more safe
     */
-   if( pArea->area.valResult && HB_IS_ARRAY( pArea->area.valResult ) &&
+   if( pArea->area.valResult && HB_IS_ARRAY(pArea->area.valResult) &&
        hb_arrayLen( pArea->area.valResult ) == 2 &&
        ( hb_arrayGetType( pArea->area.valResult, 1 ) & HB_IT_BLOCK ) != 0 &&
        ( hb_arrayGetType( pArea->area.valResult, 2 ) & HB_IT_NUMERIC ) != 0 )
@@ -5714,9 +5714,9 @@ static int hb_dbfSortCmp( LPDBSORTREC pSortRec, PHB_ITEM pValue1, PHB_ITEM pValu
          HB_MAXINT nValue1 = hb_itemGetNInt( pItem1 ), nValue2 = hb_itemGetNInt( pItem2 );
          i = nValue1 < nValue2 ? -1 : ( nValue1 == nValue2 ? 0 : 1 );
       }
-      else if( HB_IS_STRING( pItem1 ) )
+      else if( HB_IS_STRING(pItem1) )
       {
-         if( ! HB_IS_STRING( pItem2 ) )
+         if( ! HB_IS_STRING(pItem2) )
          {
             i = 1;
          }
@@ -5729,12 +5729,12 @@ static int hb_dbfSortCmp( LPDBSORTREC pSortRec, PHB_ITEM pValue1, PHB_ITEM pValu
             i = hb_itemStrCmp( pItem1, pItem2, HB_TRUE );
          }
       }
-      else if( HB_IS_DATETIME( pItem1 ) )
+      else if( HB_IS_DATETIME(pItem1) )
       {
          double dValue1 = hb_itemGetTD( pItem1 ), dValue2 = hb_itemGetTD( pItem2 );
          i = dValue1 < dValue2 ? -1 : ( dValue1 == dValue2 ? 0 : 1 );
       }
-      else if( HB_IS_LOGICAL( pItem1 ) )
+      else if( HB_IS_LOGICAL(pItem1) )
       {
          i = hb_itemGetL( pItem1 ) ? ( hb_itemGetL( pItem2 ) ? 0 : 1 ) : ( hb_itemGetL( pItem2 ) ? -1 : 0 );
       }
@@ -5916,7 +5916,7 @@ static HB_ERRCODE hb_dbfSortReadRec( LPDBSORTREC pSortRec, PHB_ITEM pValue )
 {
    AREAP pArea = pSortRec->pSortInfo->dbtri.lpaSource;
 
-   if( HB_IS_NIL( pValue ) )
+   if( HB_IS_NIL(pValue) )
    {
       hb_arrayNew( pValue, pSortRec->pSortInfo->uiItemCount );
    }
@@ -7588,7 +7588,7 @@ static HB_ERRCODE hb_dbfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
       {
          HB_USHORT uiSetHeader = pData->uiSetHeader;
 
-         if( HB_IS_NUMERIC( pItem ) )
+         if( HB_IS_NUMERIC(pItem) )
          {
             int iMode = hb_itemGetNI( pItem );
             if( ( iMode & ~DB_SETHEADER_MASK ) == 0 )
@@ -7602,7 +7602,7 @@ static HB_ERRCODE hb_dbfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
       case RDDI_DIRTYREAD:
       {
          HB_BOOL fDirty = ( pData->uiDirtyRead == HB_IDXREAD_DIRTYMASK );
-         if( HB_IS_LOGICAL( pItem ) )
+         if( HB_IS_LOGICAL(pItem) )
          {
             pData->uiDirtyRead = hb_itemGetL( pItem ) ? HB_IDXREAD_DIRTYMASK : HB_IDXREAD_CLEANMASK;
          }
@@ -7622,7 +7622,7 @@ static HB_ERRCODE hb_dbfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
       }
       case RDDI_DECIMALS:
       {
-         int iDecimals = HB_IS_NUMERIC( pItem ) ? hb_itemGetNI( pItem ) : -1;
+         int iDecimals = HB_IS_NUMERIC(pItem) ? hb_itemGetNI( pItem ) : -1;
 
          hb_itemPutNI( pItem, pData->bDecimals );
          if( iDecimals >= 0 && iDecimals <= 20 )
@@ -7636,7 +7636,7 @@ static HB_ERRCODE hb_dbfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
          char * szTrigger = pData->szTrigger;
          HB_BOOL fFree = HB_FALSE;
 
-         if( HB_IS_STRING( pItem ) )
+         if( HB_IS_STRING(pItem) )
          {
             fFree = HB_TRUE;
             pData->szTrigger = hb_itemGetCLen( pItem ) > 0 ? hb_itemGetC( pItem ) : nullptr;
@@ -7659,7 +7659,7 @@ static HB_ERRCODE hb_dbfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
          break;
       }
       case RDDI_PENDINGTRIGGER:
-         if( HB_IS_STRING( pItem ) )
+         if( HB_IS_STRING(pItem) )
          {
             if( pData->szPendingTrigger )
             {
@@ -7687,7 +7687,7 @@ static HB_ERRCODE hb_dbfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
          char * szPasswd = pData->szPasswd;
          HB_BOOL fFree = HB_FALSE;
 
-         if( HB_IS_STRING( pItem ) )
+         if( HB_IS_STRING(pItem) )
          {
             fFree = HB_TRUE;
             pData->szPasswd = hb_itemGetCLen( pItem ) > 0 ? hb_itemGetC( pItem ) : nullptr;
@@ -7710,7 +7710,7 @@ static HB_ERRCODE hb_dbfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
          break;
       }
       case RDDI_PENDINGPASSWORD:
-         if( HB_IS_STRING( pItem ) )
+         if( HB_IS_STRING(pItem) )
          {
             if( pData->szPendingPasswd )
             {

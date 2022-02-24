@@ -74,7 +74,7 @@ HB_FUNC( HB_DEFAULTVALUE )
    Not recommended for new code. */
 HB_FUNC( __DEFAULTNIL )
 {
-   if( hb_pcount() >= 2 && HB_IS_NIL( hb_param(1, HB_IT_ANY) ) )
+   if( hb_pcount() >= 2 && HB_IS_NIL(hb_param(1, HB_IT_ANY)) )
    {
       hb_itemParamStore( 1, hb_param(2, HB_IT_ANY) );
    }

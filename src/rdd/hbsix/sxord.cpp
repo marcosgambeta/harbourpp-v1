@@ -187,7 +187,7 @@ HB_FUNC( SX_FREEZE )
          Info.itmResult = hb_itemNew( nullptr );
          if( SELF_ORDINFO( pArea, DBOI_CUSTOM, &Info ) == HB_SUCCESS )
          {
-            fResult = HB_IS_LOGICAL( Info.itmResult ) && hb_itemGetL( Info.itmResult );
+            fResult = HB_IS_LOGICAL(Info.itmResult) && hb_itemGetL( Info.itmResult );
          }
          hb_itemRelease( Info.itmNewVal );
          hb_itemRelease( Info.itmResult );
@@ -211,7 +211,7 @@ HB_FUNC( SX_WARM )
          Info.itmResult = hb_itemNew( nullptr );
          if( SELF_ORDINFO( pArea, DBOI_CHGONLY, &Info ) == HB_SUCCESS )
          {
-            fResult = HB_IS_LOGICAL( Info.itmResult ) && ! hb_itemGetL( Info.itmResult );
+            fResult = HB_IS_LOGICAL(Info.itmResult) && ! hb_itemGetL( Info.itmResult );
          }
          hb_itemRelease( Info.itmNewVal );
          hb_itemRelease( Info.itmResult );
@@ -235,7 +235,7 @@ HB_FUNC( SX_CHILL )
          Info.itmResult = hb_itemNew( nullptr );
          if( SELF_ORDINFO( pArea, DBOI_CHGONLY, &Info ) == HB_SUCCESS )
          {
-            fResult = HB_IS_LOGICAL( Info.itmResult ) && hb_itemGetL( Info.itmResult );
+            fResult = HB_IS_LOGICAL(Info.itmResult) && hb_itemGetL( Info.itmResult );
          }
          hb_itemRelease( Info.itmNewVal );
          hb_itemRelease( Info.itmResult );
@@ -273,7 +273,7 @@ HB_FUNC( SX_THERMOMETER )
             for( i = 0; i < 3; ++i, --iTemperature )
             {
                hb_itemClear( Info.itmResult );
-               if( SELF_ORDINFO( pArea, s_iStates[ i ], &Info ) == HB_SUCCESS && HB_IS_LOGICAL( Info.itmResult ) && hb_itemGetL( Info.itmResult ) )
+               if( SELF_ORDINFO( pArea, s_iStates[ i ], &Info ) == HB_SUCCESS && HB_IS_LOGICAL(Info.itmResult) && hb_itemGetL( Info.itmResult ) )
                {
                   break;
                }
@@ -736,7 +736,7 @@ HB_FUNC( SX_WILDSEEK )
             Info.itmNewVal = hb_param(1, HB_IT_STRING);
             if( SELF_ORDINFO( pArea, DBOI_SKIPWILD, &Info ) == HB_SUCCESS )
             {
-               fFound = HB_IS_LOGICAL( Info.itmResult ) && hb_itemGetL( Info.itmResult );
+               fFound = HB_IS_LOGICAL(Info.itmResult) && hb_itemGetL( Info.itmResult );
             }
          }
       }

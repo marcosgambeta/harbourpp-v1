@@ -81,26 +81,26 @@ static HB_BOOL hb_itemIsLess( PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE
       /* CA-Cl*pper always takes return value as logical item
        * accepting 0, 1 as numeric representation of HB_FALSE/HB_TRUE
        */
-      return ( HB_IS_LOGICAL( pRet ) || HB_IS_NUMERIC( pRet ) ) ? hb_itemGetL( pRet ) : HB_TRUE;
+      return ( HB_IS_LOGICAL(pRet) || HB_IS_NUMERIC(pRet) ) ? hb_itemGetL( pRet ) : HB_TRUE;
    }
 
    /* Do native compare when no codeblock is supplied */
 
-   if( HB_IS_STRING( pItem1 ) && HB_IS_STRING( pItem2 ) )
+   if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) )
    {
       return hb_itemStrCmp( pItem1, pItem2, HB_FALSE ) < 0;
    }
-   else if( HB_IS_NUMINT( pItem1 ) && HB_IS_NUMINT( pItem2 ) )
+   else if( HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2) )
    {
       /* intentionally separate comparison for integer numbers
          to avoid precision lose in 64-bit integer to double conversion */
       return hb_itemGetNInt( pItem1 ) < hb_itemGetNInt( pItem2 );
    }
-   else if( HB_IS_NUMERIC( pItem1 ) && HB_IS_NUMERIC( pItem2 ) )
+   else if( HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2) )
    {
       return hb_itemGetND( pItem1 ) < hb_itemGetND( pItem2 );
    }
-   else if( HB_IS_TIMESTAMP( pItem1 ) && HB_IS_TIMESTAMP( pItem2 ) )
+   else if( HB_IS_TIMESTAMP(pItem1) && HB_IS_TIMESTAMP(pItem2) )
    {
       long lDate1, lTime1, lDate2, lTime2;
 
@@ -108,12 +108,12 @@ static HB_BOOL hb_itemIsLess( PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE
       hb_itemGetTDT( pItem2, &lDate2, &lTime2 );
       return lDate1 == lDate2 ? lTime1 < lTime2 : lDate1 < lDate2;
    }
-   else if( HB_IS_DATETIME( pItem1 ) && HB_IS_DATETIME( pItem2 ) )
+   else if( HB_IS_DATETIME(pItem1) && HB_IS_DATETIME(pItem2) )
    {
       /* it's not exact comparison, compare only Julian date */
       return hb_itemGetDL( pItem1 ) < hb_itemGetDL( pItem2 );
    }
-   else if( HB_IS_LOGICAL( pItem1 ) && HB_IS_LOGICAL( pItem2 ) )
+   else if( HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2) )
    {
       return hb_itemGetL( pItem1 ) < hb_itemGetL( pItem2 );
    }
@@ -125,27 +125,27 @@ static HB_BOOL hb_itemIsLess( PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE
       int iWeight1;
       int iWeight2;
 
-      if( HB_IS_ARRAY( pItem1 ) )
+      if( HB_IS_ARRAY(pItem1) )
       {
          iWeight1 = 1;
       }
-      else if( HB_IS_BLOCK( pItem1 ) )
+      else if( HB_IS_BLOCK(pItem1) )
       {
          iWeight1 = 2;
       }
-      else if( HB_IS_STRING( pItem1 ) )
+      else if( HB_IS_STRING(pItem1) )
       {
          iWeight1 = 3;
       }
-      else if( HB_IS_LOGICAL( pItem1 ) )
+      else if( HB_IS_LOGICAL(pItem1) )
       {
          iWeight1 = 4;
       }
-      else if( HB_IS_DATETIME( pItem1 ) )
+      else if( HB_IS_DATETIME(pItem1) )
       {
          iWeight1 = 5;
       }
-      else if( HB_IS_NUMERIC( pItem1 ) )
+      else if( HB_IS_NUMERIC(pItem1) )
       {
          iWeight1 = 6;
       }
@@ -154,27 +154,27 @@ static HB_BOOL hb_itemIsLess( PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE
          iWeight1 = 7;
       }
 
-      if( HB_IS_ARRAY( pItem2 ) )
+      if( HB_IS_ARRAY(pItem2) )
       {
          iWeight2 = 1;
       }
-      else if( HB_IS_BLOCK( pItem2 ) )
+      else if( HB_IS_BLOCK(pItem2) )
       {
          iWeight2 = 2;
       }
-      else if( HB_IS_STRING( pItem2 ) )
+      else if( HB_IS_STRING(pItem2) )
       {
          iWeight2 = 3;
       }
-      else if( HB_IS_LOGICAL( pItem2 ) )
+      else if( HB_IS_LOGICAL(pItem2) )
       {
          iWeight2 = 4;
       }
-      else if( HB_IS_DATETIME( pItem2 ) )
+      else if( HB_IS_DATETIME(pItem2) )
       {
          iWeight2 = 5;
       }
-      else if( HB_IS_NUMERIC( pItem2 ) )
+      else if( HB_IS_NUMERIC(pItem2) )
       {
          iWeight2 = 6;
       }
@@ -405,7 +405,7 @@ HB_BOOL hb_arraySort( PHB_ITEM pArray, HB_SIZE * pnStart, HB_SIZE * pnCount, PHB
    HB_TRACE( HB_TR_DEBUG, ( "hb_arraySort(%p, %p, %p, %p)", static_cast<void*>( pArray ), static_cast<void*>( pnStart ), static_cast<void*>( pnCount ), static_cast<void*>( pBlock ) ) );
 #endif
 
-   if( HB_IS_ARRAY( pArray ) )
+   if( HB_IS_ARRAY(pArray) )
    {
       PHB_BASEARRAY pBaseArray = pArray->item.asArray.value;
       HB_SIZE nLen = pBaseArray->nLen;

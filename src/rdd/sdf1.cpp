@@ -244,7 +244,7 @@ static HB_ERRCODE hb_sdfGoToId( SDFAREAP pArea, PHB_ITEM pItem )
 #endif
 
 #ifndef HB_CLP_STRICT
-   if( HB_IS_NUMERIC( pItem ) )
+   if( HB_IS_NUMERIC(pItem) )
    {
       return SELF_GOTO( &pArea->area, hb_itemGetNL( pItem ) );
    }
@@ -601,7 +601,7 @@ static HB_ERRCODE hb_sdfPutValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
    {
       char szBuffer[ 256 ];
 
-      if( HB_IS_MEMO( pItem ) || HB_IS_STRING( pItem ) )
+      if( HB_IS_MEMO(pItem) || HB_IS_STRING(pItem) )
       {
          if( pField->uiType == HB_FT_STRING )
          {
@@ -631,7 +631,7 @@ static HB_ERRCODE hb_sdfPutValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             errCode = EDBF_DATATYPE;
          }
       }
-      else if( HB_IS_DATETIME( pItem ) )
+      else if( HB_IS_DATETIME(pItem) )
       {
          if( pField->uiType == HB_FT_DATE )
          {
@@ -657,7 +657,7 @@ static HB_ERRCODE hb_sdfPutValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             errCode = EDBF_DATATYPE;
          }
       }
-      else if( HB_IS_NUMBER( pItem ) )
+      else if( HB_IS_NUMBER(pItem) )
       {
          if( pField->uiType == HB_FT_LONG )
          {
@@ -676,7 +676,7 @@ static HB_ERRCODE hb_sdfPutValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             errCode = EDBF_DATATYPE;
          }
       }
-      else if( HB_IS_LOGICAL( pItem ) )
+      else if( HB_IS_LOGICAL(pItem) )
       {
          if( pField->uiType == HB_FT_LOGICAL )
          {

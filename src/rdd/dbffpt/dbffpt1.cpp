@@ -3115,7 +3115,7 @@ static HB_ERRCODE hb_fptPutMemo( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
    HB_MAXINT iVal;
    HB_LONG lVal;
 
-   if( HB_IS_STRING( pItem ) )
+   if( HB_IS_STRING(pItem) )
    {
       ulType = FPTIT_TEXT;
       if( iTrans == FPT_TRANS_UNICODE )
@@ -3162,7 +3162,7 @@ static HB_ERRCODE hb_fptPutMemo( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
    }
    else if( pArea->uiMemoVersion == DB_MEMOVER_SIX )
    {
-      if( HB_IS_NIL( pItem ) )
+      if( HB_IS_NIL(pItem) )
       {
          ulType = FPTIT_SIX_NIL;
          ulSize = 0;
@@ -3807,7 +3807,7 @@ static HB_ERRCODE hb_fptPutVarField( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
       }
       else if( pField->uiLen == 3 )
       {
-         if( ! HB_IS_DATETIME( pItem ) )
+         if( ! HB_IS_DATETIME(pItem) )
          {
             return EDBF_DATATYPE;
          }
@@ -3817,12 +3817,12 @@ static HB_ERRCODE hb_fptPutVarField( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
       {
          HB_MAXINT lVal;
 
-         if( ! HB_IS_NUMBER( pItem ) )
+         if( ! HB_IS_NUMBER(pItem) )
          {
             return EDBF_DATATYPE;
          }
          lVal = hb_itemGetNInt( pItem );
-         if( HB_IS_DOUBLE( pItem ) ? ! HB_DBL_LIM_INT32( hb_itemGetND( pItem ) ) : ! HB_LIM_INT32( lVal ) )
+         if( HB_IS_DOUBLE(pItem) ? ! HB_DBL_LIM_INT32( hb_itemGetND( pItem ) ) : ! HB_LIM_INT32( lVal ) )
          {
             return EDBF_DATAWIDTH;
          }
@@ -3870,26 +3870,26 @@ static HB_ERRCODE hb_fptPutVarField( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
             }
          }
 
-         if( HB_IS_DATETIME( pItem ) )
+         if( HB_IS_DATETIME(pItem) )
          {
             hb_sxDtoP( reinterpret_cast<char*>( pFieldBuf ), hb_itemGetDL( pItem ) );
             uiType = HB_VF_DATE;
          }
-         else if( HB_IS_LOGICAL( pItem ) )
+         else if( HB_IS_LOGICAL(pItem) )
          {
             pFieldBuf[ 0 ] = hb_itemGetL( pItem ) ? 1 : 0;
             uiType = HB_VF_LOG;
          }
-         else if( HB_IS_NIL( pItem ) )
+         else if( HB_IS_NIL(pItem) )
          {
             uiType = 0;
          }
-         else if( HB_IS_NUMBER( pItem ) )
+         else if( HB_IS_NUMBER(pItem) )
          {
             HB_MAXINT lVal;
             lVal = hb_itemGetNInt( pItem );
 
-            if( ! HB_IS_DOUBLE( pItem ) && HB_LIM_INT32( lVal ) )
+            if( ! HB_IS_DOUBLE(pItem) && HB_LIM_INT32( lVal ) )
             {
                HB_PUT_LE_UINT32( pFieldBuf, ( HB_U32 ) lVal );
                uiType = HB_VF_INT;
@@ -3920,7 +3920,7 @@ static HB_ERRCODE hb_fptPutVarField( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
                }
             }
          }
-         else if( HB_IS_STRING( pItem ) )
+         else if( HB_IS_STRING(pItem) )
          {
             HB_SIZE nLen = hb_itemGetCLen( pItem );
 
@@ -3953,7 +3953,7 @@ static HB_ERRCODE hb_fptPutVarField( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
                }
             }
          }
-         else if( HB_IS_ARRAY( pItem ) )
+         else if( HB_IS_ARRAY(pItem) )
          {
             HB_ULONG ulArrayCount = 0;
             int iTrans;
@@ -4855,7 +4855,7 @@ static HB_ERRCODE hb_fptDoPack( FPTAREAP pArea, HB_ULONG ulBlockSize, PHB_ITEM p
       HB_ULONG ulRecords;
       HB_LONG lStep = lEvalStep;
 
-      if( pEvalBlock && ! HB_IS_BLOCK( pEvalBlock ) )
+      if( pEvalBlock && ! HB_IS_BLOCK(pEvalBlock) )
       {
          pEvalBlock = nullptr;
       }
@@ -5175,7 +5175,7 @@ static HB_ERRCODE hb_fptInfo( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
       {
          HB_ERRCODE errCode = HB_FAILURE;
 
-         if( HB_IS_ARRAY( pItem ) )
+         if( HB_IS_ARRAY(pItem) )
          {
             HB_ULONG ulBlock = hb_arrayGetNL( pItem, 1 );
             const char * szFile = hb_arrayGetCPtr( pItem, 2 );
@@ -5194,7 +5194,7 @@ static HB_ERRCODE hb_fptInfo( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
          HB_ULONG ulBlock, ulStart, ulCount;
          HB_ERRCODE errCode;
 
-         if( HB_IS_ARRAY( pItem ) )
+         if( HB_IS_ARRAY(pItem) )
          {
             ulBlock = hb_arrayGetNL( pItem, 1 );
             ulStart = hb_arrayGetNL( pItem, 2 );
@@ -5220,7 +5220,7 @@ static HB_ERRCODE hb_fptInfo( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
          break;
       }
       case DBI_BLOB_DIRECT_IMPORT:  /* BLOBDirectImport() { <nOldPointer>, <cSourceFile> } */
-         if( HB_IS_ARRAY( pItem ) )
+         if( HB_IS_ARRAY(pItem) )
          {
             hb_itemPutNInt( pItem, hb_fptPutVarFile( pArea, hb_arrayGetNL( pItem, 1 ), hb_arrayGetCPtr( pItem, 2 ) ) );
          }
@@ -5236,7 +5236,7 @@ static HB_ERRCODE hb_fptInfo( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
          HB_ERRCODE errCode = EDBF_UNSUPPORTED;
          HB_ULONG ulBlock = 0;
 
-         if( HB_IS_ARRAY( pItem ) )
+         if( HB_IS_ARRAY(pItem) )
          {
             PHB_ITEM pValue = hb_arrayGetItemPtr( pItem, 2 );
             ulBlock = hb_arrayGetNL( pItem, 1 );
@@ -5393,7 +5393,7 @@ static HB_ERRCODE hb_fptFieldInfo( FPTAREAP pArea, HB_USHORT uiIndex, HB_USHORT 
                iTrans = FPT_TRANS_NONE;
             }
 
-            if( HB_IS_ARRAY( pItem ) )
+            if( HB_IS_ARRAY(pItem) )
             {
                ulStart = hb_arrayGetNL( pItem, 1 );
                if( ulStart )

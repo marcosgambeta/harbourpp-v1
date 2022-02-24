@@ -1032,7 +1032,7 @@ void hb_vmThreadQuit( void )
    {
       PHB_ITEM pReturn = hb_stackReturnItem();
 
-      if( HB_IS_BYREF( pReturn ) )
+      if( HB_IS_BYREF(pReturn) )
       {
          pReturn = hb_itemUnRef( pReturn );
       }
@@ -3133,7 +3133,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
          {
             int      iLocal = HB_PCODE_MKUSHORT( &pCode[ 1 ] );
             PHB_ITEM pLocal = hb_stackLocalVariable( iLocal );
-            hb_vmInc( HB_IS_BYREF( pLocal ) ? hb_itemUnRef( pLocal ) : pLocal );
+            hb_vmInc( HB_IS_BYREF(pLocal) ? hb_itemUnRef( pLocal ) : pLocal );
             pCode += 3;
             break;
          }
@@ -3142,7 +3142,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
          {
             int iLocal = HB_PCODE_MKUSHORT( &pCode[ 1 ] );
             PHB_ITEM pLocal = hb_stackLocalVariable( iLocal );
-            hb_vmDec( HB_IS_BYREF( pLocal ) ? hb_itemUnRef( pLocal ) : pLocal );
+            hb_vmDec( HB_IS_BYREF(pLocal) ? hb_itemUnRef( pLocal ) : pLocal );
             pCode += 3;
             break;
          }
@@ -3151,7 +3151,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
          {
             int iLocal = HB_PCODE_MKUSHORT( &pCode[ 1 ] );
             PHB_ITEM pLocal = hb_stackLocalVariable( iLocal );
-            if( HB_IS_BYREF( pLocal ) )
+            if( HB_IS_BYREF(pLocal) )
             {
                pLocal = hb_itemUnRef( pLocal );
             }
@@ -3355,12 +3355,12 @@ static void hb_vmAddInt( PHB_ITEM pResult, HB_LONG lAdd )
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmAddInt(%p,%ld)", static_cast<void*>( pResult ), lAdd ) );
 #endif
 
-   if( HB_IS_BYREF( pResult ) )
+   if( HB_IS_BYREF(pResult) )
    {
       pResult = hb_itemUnRef( pResult );
    }
 
-   if( HB_IS_NUMINT( pResult ) )
+   if( HB_IS_NUMINT(pResult) )
    {
       HB_MAXINT nVal = HB_ITEM_GET_NUMINTRAW( pResult ), nResult;
 
@@ -3378,12 +3378,12 @@ static void hb_vmAddInt( PHB_ITEM pResult, HB_LONG lAdd )
          pResult->item.asDouble.decimal = 0;
       }
    }
-   else if( HB_IS_DOUBLE( pResult ) )
+   else if( HB_IS_DOUBLE(pResult) )
    {
       pResult->item.asDouble.value += lAdd;
       pResult->item.asDouble.length = HB_DBL_LENGTH( pResult->item.asDouble.value );
    }
-   else if( HB_IS_DATETIME( pResult ) )
+   else if( HB_IS_DATETIME(pResult) )
    {
       pResult->type &= ~HB_IT_DEFAULT;
       pResult->item.asDateTime.julian += lAdd;
@@ -3424,7 +3424,7 @@ static void hb_vmNegate( void )
 
    pItem = hb_stackItemFromTop( -1 );
 
-   if( HB_IS_INTEGER( pItem ) )
+   if( HB_IS_INTEGER(pItem) )
    {
 #if -HB_VMINT_MAX > HB_VMINT_MIN
       if( pItem->item.asInteger.value < -HB_VMINT_MAX )
@@ -3450,7 +3450,7 @@ static void hb_vmNegate( void )
          pItem->item.asInteger.length = HB_INT_EXPLENGTH( pItem->item.asInteger.value );
       }
    }
-   else if( HB_IS_LONG( pItem ) )
+   else if( HB_IS_LONG(pItem) )
    {
 #if -HB_VMLONG_MAX > HB_VMLONG_MIN
       if( pItem->item.asLong.value < -HB_VMLONG_MAX )
@@ -3469,7 +3469,7 @@ static void hb_vmNegate( void )
          pItem->item.asLong.length = HB_LONG_EXPLENGTH( pItem->item.asLong.value );
       }
    }
-   else if( HB_IS_DOUBLE( pItem ) )
+   else if( HB_IS_DOUBLE(pItem) )
    {
       pItem->type = HB_IT_DOUBLE;
       pItem->item.asDouble.value = -pItem->item.asDouble.value;
@@ -3556,13 +3556,13 @@ static void hb_vmPlus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmPlus(%p,%p,%p)", static_cast<void*>( pResult ), static_cast<void*>( pItem1 ), static_cast<void*>( pItem2 ) ) );
 #endif
 
-   if( HB_IS_NUMINT( pItem1 ) && HB_IS_NUMINT( pItem2 ) )
+   if( HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2) )
    {
       HB_MAXINT nNumber1 = HB_ITEM_GET_NUMINTRAW( pItem1 );
       HB_MAXINT nNumber2 = HB_ITEM_GET_NUMINTRAW( pItem2 );
       HB_MAXINT nResult = nNumber1 + nNumber2;
 
-      if( HB_IS_COMPLEX( pResult ) )
+      if( HB_IS_COMPLEX(pResult) )
       {
          hb_itemClear( pResult );
       }
@@ -3580,7 +3580,7 @@ static void hb_vmPlus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
          pResult->item.asDouble.decimal = 0;
       }
    }
-   else if( HB_IS_NUMERIC( pItem1 ) && HB_IS_NUMERIC( pItem2 ) )
+   else if( HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2) )
    {
       int iDec1, iDec2;
       double dNumber1 = hb_itemGetNDDec( pItem1, &iDec1 );
@@ -3588,7 +3588,7 @@ static void hb_vmPlus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
 
       hb_itemPutNDDec( pResult, dNumber1 + dNumber2, HB_MAX( iDec1, iDec2 ) );
    }
-   else if( HB_IS_STRING( pItem1 ) && HB_IS_STRING( pItem2 ) )
+   else if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) )
    {
       HB_SIZE nLen1 = pItem1->item.asString.length;
       HB_SIZE nLen2 = pItem2->item.asString.length;
@@ -3623,9 +3623,9 @@ static void hb_vmPlus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
       }
       pResult->type &= ~( HB_IT_MEMOFLAG | HB_IT_DEFAULT );
    }
-   else if( HB_IS_DATETIME( pItem1 ) && HB_IS_DATETIME( pItem2 ) )
+   else if( HB_IS_DATETIME(pItem1) && HB_IS_DATETIME(pItem2) )
    {
-      if( HB_IS_TIMESTAMP( pItem1 ) || HB_IS_TIMESTAMP( pItem2 ) )
+      if( HB_IS_TIMESTAMP(pItem1) || HB_IS_TIMESTAMP(pItem2) )
       {
          hb_vmTimeStampPut( pResult, pItem1->item.asDateTime.julian + pItem2->item.asDateTime.julian, pItem1->item.asDateTime.time + pItem2->item.asDateTime.time );
       }
@@ -3635,11 +3635,11 @@ static void hb_vmPlus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
          hb_itemPutDL( pResult, pItem1->item.asDateTime.julian + pItem2->item.asDateTime.julian );
       }
    }
-   else if( HB_IS_DATETIME( pItem1 ) && HB_IS_NUMERIC( pItem2 ) )
+   else if( HB_IS_DATETIME(pItem1) && HB_IS_NUMERIC(pItem2) )
    {
-      if( HB_IS_TIMESTAMP( pItem1 ) )
+      if( HB_IS_TIMESTAMP(pItem1) )
       {
-         if( HB_IS_NUMINT( pItem2 ) )
+         if( HB_IS_NUMINT(pItem2) )
          {
             hb_vmTimeStampPut( pResult, pItem1->item.asDateTime.julian + static_cast<long>( HB_ITEM_GET_NUMINTRAW( pItem2 ) ), pItem1->item.asDateTime.time );
          }
@@ -3653,11 +3653,11 @@ static void hb_vmPlus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
          hb_itemPutDL( pResult, hb_itemGetDL( pItem1 ) + hb_itemGetNL( pItem2 ) );
       }
    }
-   else if( HB_IS_NUMERIC( pItem1 ) && HB_IS_DATETIME( pItem2 ) )
+   else if( HB_IS_NUMERIC(pItem1) && HB_IS_DATETIME(pItem2) )
    {
-      if( HB_IS_TIMESTAMP( pItem2 ) )
+      if( HB_IS_TIMESTAMP(pItem2) )
       {
-         if( HB_IS_NUMINT( pItem1 ) )
+         if( HB_IS_NUMINT(pItem1) )
          {
             hb_vmTimeStampPut( pResult, static_cast<long>( HB_ITEM_GET_NUMINTRAW( pItem1 ) ) + pItem2->item.asDateTime.julian, pItem2->item.asDateTime.time );
          }
@@ -3689,13 +3689,13 @@ static void hb_vmMinus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmMinus(%p,%p,%p)", static_cast<void*>( pResult ), static_cast<void*>( pItem1 ), static_cast<void*>( pItem2 ) ) );
 #endif
 
-   if( HB_IS_NUMINT( pItem1 ) && HB_IS_NUMINT( pItem2 ) )
+   if( HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2) )
    {
       HB_MAXINT nNumber1 = HB_ITEM_GET_NUMINTRAW( pItem1 );
       HB_MAXINT nNumber2 = HB_ITEM_GET_NUMINTRAW( pItem2 );
       HB_MAXINT nResult = nNumber1 - nNumber2;
 
-      if( HB_IS_COMPLEX( pResult ) )
+      if( HB_IS_COMPLEX(pResult) )
       {
          hb_itemClear( pResult );
       }
@@ -3713,7 +3713,7 @@ static void hb_vmMinus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
          pResult->item.asDouble.decimal = 0;
       }
    }
-   else if( HB_IS_NUMERIC( pItem1 ) && HB_IS_NUMERIC( pItem2 ) )
+   else if( HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2) )
    {
       int iDec1, iDec2;
       double dNumber1 = hb_itemGetNDDec( pItem1, &iDec1 );
@@ -3721,7 +3721,7 @@ static void hb_vmMinus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
 
       hb_itemPutNDDec( pResult, dNumber1 - dNumber2, HB_MAX( iDec1, iDec2 ) );
    }
-   else if( HB_IS_DATETIME( pItem1 ) && HB_IS_DATETIME( pItem2 ) )
+   else if( HB_IS_DATETIME(pItem1) && HB_IS_DATETIME(pItem2) )
    {
       long lTime = pItem1->item.asDateTime.time - pItem2->item.asDateTime.time, lJulian = pItem1->item.asDateTime.julian - pItem2->item.asDateTime.julian;
       if( lTime != 0 )
@@ -3730,18 +3730,18 @@ static void hb_vmMinus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
       }
       else
       {
-         if( HB_IS_COMPLEX( pResult ) )
+         if( HB_IS_COMPLEX(pResult) )
          {
             hb_itemClear( pResult );
          }
          HB_ITEM_PUT_LONGRAW( pResult, lJulian );
       }
    }
-   else if( HB_IS_DATETIME( pItem1 ) && HB_IS_NUMERIC( pItem2 ) )
+   else if( HB_IS_DATETIME(pItem1) && HB_IS_NUMERIC(pItem2) )
    {
-      if( HB_IS_TIMESTAMP( pItem1 ) )
+      if( HB_IS_TIMESTAMP(pItem1) )
       {
-         if( HB_IS_NUMINT( pItem2 ) )
+         if( HB_IS_NUMINT(pItem2) )
          {
             hb_vmTimeStampPut( pResult, pItem1->item.asDateTime.julian - static_cast<long>( HB_ITEM_GET_NUMINTRAW( pItem2 ) ), pItem1->item.asDateTime.time );
          }
@@ -3755,7 +3755,7 @@ static void hb_vmMinus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
          hb_itemPutDL( pResult, hb_itemGetDL( pItem1 ) - hb_itemGetNL( pItem2 ) );
       }
    }
-   else if( HB_IS_STRING( pItem1 ) && HB_IS_STRING( pItem2 ) )
+   else if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) )
    {
       HB_SIZE nLen1 = pItem1->item.asString.length;
       HB_SIZE nLen2 = pItem2->item.asString.length;
@@ -3812,10 +3812,10 @@ static void hb_vmMult( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
 #endif
 
 #if -( HB_VMLONG_MAX / HB_VMINT_MIN ) >= HB_VMINT_MAX && 1
-   if( HB_IS_INTEGER( pItem1 ) && HB_IS_INTEGER( pItem2 ) )
+   if( HB_IS_INTEGER(pItem1) && HB_IS_INTEGER(pItem2) )
    {
       HB_MAXINT nResult = static_cast<HB_MAXINT>( pItem1->item.asInteger.value ) * static_cast<HB_MAXINT>( pItem2->item.asInteger.value );
-      if( HB_IS_COMPLEX( pResult ) )
+      if( HB_IS_COMPLEX(pResult) )
       {
          hb_itemClear( pResult );
       }
@@ -3823,7 +3823,7 @@ static void hb_vmMult( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
    }
    else
 #endif
-   if( HB_IS_NUMERIC( pItem1 ) && HB_IS_NUMERIC( pItem2 ) )
+   if( HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2) )
    {
       int iDec1, iDec2;
       double dNumber1 = hb_itemGetNDDec( pItem1, &iDec1 );
@@ -3849,7 +3849,7 @@ static void hb_vmDivide( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmDivide(%p,%p,%p)", static_cast<void*>( pResult ), static_cast<void*>( pItem1 ), static_cast<void*>( pItem2 ) ) );
 #endif
 
-   if( HB_IS_NUMINT( pItem1 ) && HB_IS_NUMINT( pItem2 ) )
+   if( HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2) )
    {
       HB_MAXINT nDivisor = HB_ITEM_GET_NUMINTRAW( pItem2 );
 
@@ -3869,7 +3869,7 @@ static void hb_vmDivide( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
          hb_itemPutND( pResult, static_cast<double>( nNumber1 ) / static_cast<double>( nDivisor ) );
       }
    }
-   else if( HB_IS_NUMERIC( pItem1 ) && HB_IS_NUMERIC( pItem2 ) )
+   else if( HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2) )
    {
       double dDivisor = hb_itemGetND( pItem2 );
 
@@ -3913,7 +3913,7 @@ static void hb_vmModulus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmModulus(%p,%p,%p)", static_cast<void*>( pResult ), static_cast<void*>( pItem1 ), static_cast<void*>( pItem2 ) ) );
 #endif
 
-   if( HB_IS_NUMINT( pItem1 ) && HB_IS_NUMINT( pItem2 ) )
+   if( HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2) )
    {
       HB_MAXINT nDivisor = HB_ITEM_GET_NUMINTRAW( pItem2 );
 
@@ -3933,7 +3933,7 @@ static void hb_vmModulus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
          hb_itemPutND( pResult, static_cast<double>( HB_ITEM_GET_NUMINTRAW( pItem1 ) % nDivisor ) );
       }
    }
-   else if( HB_IS_NUMERIC( pItem1 ) && HB_IS_NUMERIC( pItem2 ) )
+   else if( HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2) )
    {
       double dDivisor = hb_itemGetND( pItem2 );
 
@@ -3971,7 +3971,7 @@ static void hb_vmPower( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmPower(%p,%p,%p)", static_cast<void*>( pResult ), static_cast<void*>( pItem1 ), static_cast<void*>( pItem2 ) ) );
 #endif
 
-   if( HB_IS_NUMERIC( pItem1 ) && HB_IS_NUMERIC( pItem2 ) )
+   if( HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2) )
    {
       /* NOTE: Clipper always returns the result of power with the SET number of decimal places. */
       hb_itemPutND( pResult, pow( hb_itemGetND( pItem1 ), hb_itemGetND( pItem2 ) ) );
@@ -3994,9 +3994,9 @@ static void hb_vmInc( PHB_ITEM pItem )
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmInc(%p)", static_cast<void*>( pItem ) ) );
 #endif
 
-   if( HB_IS_NUMINT( pItem ) )
+   if( HB_IS_NUMINT(pItem) )
    {
-      if( HB_IS_INTEGER( pItem ) )
+      if( HB_IS_INTEGER(pItem) )
       {
          if( pItem->item.asInteger.value < HB_VMINT_MAX )
          {
@@ -4032,13 +4032,13 @@ static void hb_vmInc( PHB_ITEM pItem )
          pItem->item.asDouble.decimal = 0;
       }
    }
-   else if( HB_IS_DOUBLE( pItem ) )
+   else if( HB_IS_DOUBLE(pItem) )
    {
       pItem->type = HB_IT_DOUBLE;
       pItem->item.asDouble.value++;
       pItem->item.asDouble.length = HB_DBL_LENGTH( pItem->item.asDouble.value );
    }
-   else if( HB_IS_DATETIME( pItem ) )
+   else if( HB_IS_DATETIME(pItem) )
    {
       pItem->type &= ~HB_IT_DEFAULT;
       pItem->item.asDateTime.julian++;
@@ -4061,9 +4061,9 @@ static void hb_vmDec( PHB_ITEM pItem )
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmDec(%p)", static_cast<void*>( pItem ) ) );
 #endif
 
-   if( HB_IS_NUMINT( pItem ) )
+   if( HB_IS_NUMINT(pItem) )
    {
-      if( HB_IS_INTEGER( pItem ) )
+      if( HB_IS_INTEGER(pItem) )
       {
          if( pItem->item.asInteger.value > HB_VMINT_MIN )
          {
@@ -4099,13 +4099,13 @@ static void hb_vmDec( PHB_ITEM pItem )
          pItem->item.asDouble.decimal = 0;
       }
    }
-   else if( HB_IS_DOUBLE( pItem ) )
+   else if( HB_IS_DOUBLE(pItem) )
    {
       pItem->type = HB_IT_DOUBLE;
       pItem->item.asDouble.value--;
       pItem->item.asDouble.length = HB_DBL_LENGTH( pItem->item.asDouble.value );
    }
-   else if( HB_IS_DATETIME( pItem ) )
+   else if( HB_IS_DATETIME(pItem) )
    {
       pItem->type &= ~HB_IT_DEFAULT;
       pItem->item.asDateTime.julian--;
@@ -4133,7 +4133,7 @@ static void hb_vmFuncPtr( void )  /* pushes a function address pointer. Removes 
 
    pItem = hb_stackItemFromTop( -1 );
 
-   if( HB_IS_SYMBOL( pItem ) )
+   if( HB_IS_SYMBOL(pItem) )
    {
       /* do nothing - now we are using HB_IT_SYMBOL */
 #if 0
@@ -4164,24 +4164,24 @@ static void hb_vmExactlyEqual( void )
    pItem2 = hb_stackItemFromTop( -1 );
    pItem1 = hb_stackItemFromTop( -2 );
 
-   if( HB_IS_NIL( pItem1 ) )
+   if( HB_IS_NIL(pItem1) )
    {
       /* pItem1 is NIL so this is safe */
       pItem1->type = HB_IT_LOGICAL;
-      pItem1->item.asLogical.value = HB_IS_NIL( pItem2 );
+      pItem1->item.asLogical.value = HB_IS_NIL(pItem2);
       hb_stackPop();    /* clear the pItem2 */
    }
-   else if( HB_IS_NIL( pItem2 ) )
+   else if( HB_IS_NIL(pItem2) )
    {
       hb_stackDec();    /* pItem2 is already NIL */
-      if( HB_IS_COMPLEX( pItem1 ) )
+      if( HB_IS_COMPLEX(pItem1) )
       {
          hb_itemClear( pItem1 );
       }
       pItem1->type = HB_IT_LOGICAL;
       pItem1->item.asLogical.value = HB_FALSE;
    }
-   else if( HB_IS_STRING( pItem1 ) && HB_IS_STRING( pItem2 ) )
+   else if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) )
    {
       HB_BOOL fResult = pItem1->item.asString.length == pItem2->item.asString.length &&
                         ( pItem1->item.asString.value == pItem2->item.asString.value ||
@@ -4191,31 +4191,31 @@ static void hb_vmExactlyEqual( void )
       pItem1->type = HB_IT_LOGICAL;
       pItem1->item.asLogical.value = fResult;
    }
-   else if( HB_IS_NUMINT( pItem1 ) && HB_IS_NUMINT( pItem2 ) )
+   else if( HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2) )
    {
       pItem1->item.asLogical.value = ( HB_ITEM_GET_NUMINTRAW( pItem1 ) == HB_ITEM_GET_NUMINTRAW( pItem2 ) );
       pItem1->type = HB_IT_LOGICAL;
       hb_stackDec();
    }
-   else if( HB_IS_NUMERIC( pItem1 ) && HB_IS_NUMERIC( pItem2 ) )
+   else if( HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2) )
    {
       pItem1->item.asLogical.value = ( HB_ITEM_GET_NUMDBLRAW( pItem1 ) == HB_ITEM_GET_NUMDBLRAW( pItem2 ) );
       pItem1->type = HB_IT_LOGICAL;
       hb_stackDec();
    }
-   else if( HB_IS_DATETIME( pItem1 ) && HB_IS_DATETIME( pItem2 ) )
+   else if( HB_IS_DATETIME(pItem1) && HB_IS_DATETIME(pItem2) )
    {
       pItem1->item.asLogical.value = ( pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
                                        pItem1->item.asDateTime.time == pItem2->item.asDateTime.time );
       pItem1->type = HB_IT_LOGICAL;
       hb_stackDec();
    }
-   else if( HB_IS_LOGICAL( pItem1 ) && HB_IS_LOGICAL( pItem2 ) )
+   else if( HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2) )
    {
       pItem1->item.asLogical.value = pItem1->item.asLogical.value ? pItem2->item.asLogical.value : ! pItem2->item.asLogical.value;
       hb_stackDec();
    }
-   else if( HB_IS_POINTER( pItem1 ) && HB_IS_POINTER( pItem2 ) )
+   else if( HB_IS_POINTER(pItem1) && HB_IS_POINTER(pItem2) )
    {
       HB_BOOL fResult = pItem1->item.asPointer.value == pItem2->item.asPointer.value;
 
@@ -4224,7 +4224,7 @@ static void hb_vmExactlyEqual( void )
       pItem1->type = HB_IT_LOGICAL;
       pItem1->item.asLogical.value = fResult;
    }
-   else if( HB_IS_HASH( pItem1 ) && HB_IS_HASH( pItem2 ) )
+   else if( HB_IS_HASH(pItem1) && HB_IS_HASH(pItem2) )
    {
       HB_BOOL fResult = pItem1->item.asHash.value == pItem2->item.asHash.value;
 
@@ -4234,7 +4234,7 @@ static void hb_vmExactlyEqual( void )
       pItem1->item.asLogical.value = fResult;
    }
 #ifndef HB_CLP_STRICT
-   else if( HB_IS_BLOCK( pItem1 ) && HB_IS_BLOCK( pItem2 ) )
+   else if( HB_IS_BLOCK(pItem1) && HB_IS_BLOCK(pItem2) )
    {
       HB_BOOL fResult = pItem1->item.asBlock.value == pItem2->item.asBlock.value;
 
@@ -4244,7 +4244,7 @@ static void hb_vmExactlyEqual( void )
       pItem1->item.asLogical.value = fResult;
    }
 #endif
-   else if( HB_IS_SYMBOL( pItem1 ) && HB_IS_SYMBOL( pItem2 ) )
+   else if( HB_IS_SYMBOL(pItem1) && HB_IS_SYMBOL(pItem2) )
    {
       pItem1->item.asLogical.value =
                pItem1->item.asSymbol.value == pItem2->item.asSymbol.value ||
@@ -4252,7 +4252,7 @@ static void hb_vmExactlyEqual( void )
       pItem1->type = HB_IT_LOGICAL;
       hb_stackDec();
    }
-   else if( HB_IS_ARRAY( pItem1 ) && HB_IS_ARRAY( pItem2 ) && ! hb_objHasOperator( pItem1, HB_OO_OP_EXACTEQUAL ) )
+   else if( HB_IS_ARRAY(pItem1) && HB_IS_ARRAY(pItem2) && ! hb_objHasOperator( pItem1, HB_OO_OP_EXACTEQUAL ) )
    {
       HB_BOOL fResult = pItem1->item.asArray.value == pItem2->item.asArray.value;
 
@@ -4290,24 +4290,24 @@ static void hb_vmEqual( void )
    pItem2 = hb_stackItemFromTop( -1 );
    pItem1 = hb_stackItemFromTop( -2 );
 
-   if( HB_IS_NIL( pItem1 ) )
+   if( HB_IS_NIL(pItem1) )
    {
       /* pItem1 is NIL so this is safe */
       pItem1->type = HB_IT_LOGICAL;
-      pItem1->item.asLogical.value = HB_IS_NIL( pItem2 );
+      pItem1->item.asLogical.value = HB_IS_NIL(pItem2);
       hb_stackPop();    /* clear the pItem2 */
    }
-   else if( HB_IS_NIL( pItem2 ) )
+   else if( HB_IS_NIL(pItem2) )
    {
       hb_stackDec();    /* pItem2 is already NIL */
-      if( HB_IS_COMPLEX( pItem1 ) )
+      if( HB_IS_COMPLEX(pItem1) )
       {
          hb_itemClear( pItem1 );
       }
       pItem1->type = HB_IT_LOGICAL;
       pItem1->item.asLogical.value = HB_FALSE;
    }
-   else if( HB_IS_STRING( pItem1 ) && HB_IS_STRING( pItem2 ) )
+   else if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) )
    {
       HB_BOOL fResult = hb_itemStrCmp( pItem1, pItem2, HB_FALSE ) == 0;
       hb_stackPop();
@@ -4315,21 +4315,21 @@ static void hb_vmEqual( void )
       pItem1->type = HB_IT_LOGICAL;
       pItem1->item.asLogical.value = fResult;
    }
-   else if( HB_IS_NUMINT( pItem1 ) && HB_IS_NUMINT( pItem2 ) )
+   else if( HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2) )
    {
       pItem1->item.asLogical.value = ( HB_ITEM_GET_NUMINTRAW( pItem1 ) == HB_ITEM_GET_NUMINTRAW( pItem2 ) );
       pItem1->type = HB_IT_LOGICAL;
       hb_stackDec();
    }
-   else if( HB_IS_NUMERIC( pItem1 ) && HB_IS_NUMERIC( pItem2 ) )
+   else if( HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2) )
    {
       pItem1->item.asLogical.value = ( HB_ITEM_GET_NUMDBLRAW( pItem1 ) == HB_ITEM_GET_NUMDBLRAW( pItem2 ) );
       pItem1->type = HB_IT_LOGICAL;
       hb_stackDec();
    }
-   else if( HB_IS_DATETIME( pItem1 ) && HB_IS_DATETIME( pItem2 ) )
+   else if( HB_IS_DATETIME(pItem1) && HB_IS_DATETIME(pItem2) )
    {
-      if( HB_IS_TIMESTAMP( pItem1 ) && HB_IS_TIMESTAMP( pItem2 ) )
+      if( HB_IS_TIMESTAMP(pItem1) && HB_IS_TIMESTAMP(pItem2) )
       {
          pItem1->item.asLogical.value = ( pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian ) &&
                                         ( pItem1->item.asDateTime.time == pItem2->item.asDateTime.time );
@@ -4341,12 +4341,12 @@ static void hb_vmEqual( void )
       pItem1->type = HB_IT_LOGICAL;
       hb_stackDec();
    }
-   else if( HB_IS_LOGICAL( pItem1 ) && HB_IS_LOGICAL( pItem2 ) )
+   else if( HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2) )
    {
       pItem1->item.asLogical.value = pItem1->item.asLogical.value ? pItem2->item.asLogical.value : ! pItem2->item.asLogical.value;
       hb_stackDec();
    }
-   else if( HB_IS_POINTER( pItem1 ) && HB_IS_POINTER( pItem2 ) )
+   else if( HB_IS_POINTER(pItem1) && HB_IS_POINTER(pItem2) )
    {
       HB_BOOL fResult = pItem1->item.asPointer.value == pItem2->item.asPointer.value;
       hb_stackPop();
@@ -4355,7 +4355,7 @@ static void hb_vmEqual( void )
       pItem1->item.asLogical.value = fResult;
    }
 #if 0
-   else if( HB_IS_HASH( pItem1 ) && HB_IS_HASH( pItem2 ) )
+   else if( HB_IS_HASH(pItem1) && HB_IS_HASH(pItem2) )
    {
       HB_BOOL fResult = pItem1->item.asHash.value == pItem2->item.asHash.value;
       hb_stackPop();
@@ -4393,24 +4393,24 @@ static void hb_vmNotEqual( void )
    pItem2 = hb_stackItemFromTop( -1 );
    pItem1 = hb_stackItemFromTop( -2 );
 
-   if( HB_IS_NIL( pItem1 ) )
+   if( HB_IS_NIL(pItem1) )
    {
       /* pItem1 is NIL so this is safe */
       pItem1->type = HB_IT_LOGICAL;
-      pItem1->item.asLogical.value = ! HB_IS_NIL( pItem2 );
+      pItem1->item.asLogical.value = ! HB_IS_NIL(pItem2);
       hb_stackPop();    /* clear the pItem2 */
    }
-   else if( HB_IS_NIL( pItem2 ) )
+   else if( HB_IS_NIL(pItem2) )
    {
       hb_stackDec();    /* pItem2 is already NIL */
-      if( HB_IS_COMPLEX( pItem1 ) )
+      if( HB_IS_COMPLEX(pItem1) )
       {
          hb_itemClear( pItem1 );
       }
       pItem1->type = HB_IT_LOGICAL;
       pItem1->item.asLogical.value = HB_TRUE;
    }
-   else if( HB_IS_STRING( pItem1 ) && HB_IS_STRING( pItem2 ) )
+   else if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) )
    {
       int i = hb_itemStrCmp( pItem1, pItem2, HB_FALSE );
       hb_stackPop();
@@ -4418,21 +4418,21 @@ static void hb_vmNotEqual( void )
       pItem1->type = HB_IT_LOGICAL;
       pItem1->item.asLogical.value = i != 0;
    }
-   else if( HB_IS_NUMINT( pItem1 ) && HB_IS_NUMINT( pItem2 ) )
+   else if( HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2) )
    {
       pItem1->item.asLogical.value = ( HB_ITEM_GET_NUMINTRAW( pItem1 ) != HB_ITEM_GET_NUMINTRAW( pItem2 ) );
       pItem1->type = HB_IT_LOGICAL;
       hb_stackDec();
    }
-   else if( HB_IS_NUMERIC( pItem1 ) && HB_IS_NUMERIC( pItem2 ) )
+   else if( HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2) )
    {
       pItem1->item.asLogical.value = ( HB_ITEM_GET_NUMDBLRAW( pItem1 ) != HB_ITEM_GET_NUMDBLRAW( pItem2 ) );
       pItem1->type = HB_IT_LOGICAL;
       hb_stackDec();
    }
-   else if( HB_IS_DATETIME( pItem1 ) && HB_IS_DATETIME( pItem2 ) )
+   else if( HB_IS_DATETIME(pItem1) && HB_IS_DATETIME(pItem2) )
    {
-      if( HB_IS_TIMESTAMP( pItem1 ) && HB_IS_TIMESTAMP( pItem2 ) )
+      if( HB_IS_TIMESTAMP(pItem1) && HB_IS_TIMESTAMP(pItem2) )
       {
          pItem1->item.asLogical.value = ( pItem1->item.asDateTime.julian != pItem2->item.asDateTime.julian ) ||
                                         ( pItem1->item.asDateTime.time != pItem2->item.asDateTime.time );
@@ -4444,12 +4444,12 @@ static void hb_vmNotEqual( void )
       pItem1->type = HB_IT_LOGICAL;
       hb_stackDec();
    }
-   else if( HB_IS_LOGICAL( pItem1 ) && HB_IS_LOGICAL( pItem2 ) )
+   else if( HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2) )
    {
       pItem1->item.asLogical.value = pItem1->item.asLogical.value ? ! pItem2->item.asLogical.value : pItem2->item.asLogical.value;
       hb_stackDec();
    }
-   else if( HB_IS_POINTER( pItem1 ) && HB_IS_POINTER( pItem2 ) )
+   else if( HB_IS_POINTER(pItem1) && HB_IS_POINTER(pItem2) )
    {
       HB_BOOL fResult = pItem1->item.asPointer.value != pItem2->item.asPointer.value;
       hb_stackPop();
@@ -4458,7 +4458,7 @@ static void hb_vmNotEqual( void )
       pItem1->item.asLogical.value = fResult;
    }
 #if 0
-   else if( HB_IS_HASH( pItem1 ) && HB_IS_HASH( pItem2 ) )
+   else if( HB_IS_HASH(pItem1) && HB_IS_HASH(pItem2) )
    {
       HB_BOOL fResult = pItem1->item.asHash.value != pItem2->item.asHash.value;
       hb_stackPop();
@@ -4497,7 +4497,7 @@ static void hb_vmLess( void )
    pItem2 = hb_stackItemFromTop( -1 );
    pItem1 = hb_stackItemFromTop( -2 );
 
-   if( HB_IS_STRING( pItem1 ) && HB_IS_STRING( pItem2 ) )
+   if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) )
    {
       int i = hb_itemStrCmp( pItem1, pItem2, HB_FALSE );
       hb_stackPop();
@@ -4505,21 +4505,21 @@ static void hb_vmLess( void )
       pItem1->type = HB_IT_LOGICAL;
       pItem1->item.asLogical.value = i < 0;
    }
-   else if( HB_IS_NUMINT( pItem1 ) && HB_IS_NUMINT( pItem2 ) )
+   else if( HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2) )
    {
       pItem1->item.asLogical.value = ( HB_ITEM_GET_NUMINTRAW( pItem1 ) < HB_ITEM_GET_NUMINTRAW( pItem2 ) );
       pItem1->type = HB_IT_LOGICAL;
       hb_stackDec();
    }
-   else if( HB_IS_NUMERIC( pItem1 ) && HB_IS_NUMERIC( pItem2 ) )
+   else if( HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2) )
    {
       pItem1->item.asLogical.value = ( HB_ITEM_GET_NUMDBLRAW( pItem1 ) < HB_ITEM_GET_NUMDBLRAW( pItem2 ) );
       pItem1->type = HB_IT_LOGICAL;
       hb_stackDec();
    }
-   else if( HB_IS_DATETIME( pItem1 ) && HB_IS_DATETIME( pItem2 ) )
+   else if( HB_IS_DATETIME(pItem1) && HB_IS_DATETIME(pItem2) )
    {
-      if( HB_IS_TIMESTAMP( pItem1 ) && HB_IS_TIMESTAMP( pItem2 ) )
+      if( HB_IS_TIMESTAMP(pItem1) && HB_IS_TIMESTAMP(pItem2) )
       {
          pItem1->item.asLogical.value = ( pItem1->item.asDateTime.julian < pItem2->item.asDateTime.julian ) ||
                                         ( pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
@@ -4532,7 +4532,7 @@ static void hb_vmLess( void )
       pItem1->type = HB_IT_LOGICAL;
       hb_stackDec();
    }
-   else if( HB_IS_LOGICAL( pItem1 ) && HB_IS_LOGICAL( pItem2 ) )
+   else if( HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2) )
    {
       pItem1->item.asLogical.value = ! pItem1->item.asLogical.value && pItem2->item.asLogical.value;
       hb_stackDec();
@@ -4567,7 +4567,7 @@ static void hb_vmLessEqual( void )
    pItem2 = hb_stackItemFromTop( -1 );
    pItem1 = hb_stackItemFromTop( -2 );
 
-   if( HB_IS_STRING( pItem1 ) && HB_IS_STRING( pItem2 ) )
+   if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) )
    {
       int i = hb_itemStrCmp( pItem1, pItem2, HB_FALSE );
       hb_stackPop();
@@ -4575,21 +4575,21 @@ static void hb_vmLessEqual( void )
       pItem1->type = HB_IT_LOGICAL;
       pItem1->item.asLogical.value = i <= 0;
    }
-   else if( HB_IS_NUMINT( pItem1 ) && HB_IS_NUMINT( pItem2 ) )
+   else if( HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2) )
    {
       pItem1->item.asLogical.value = ( HB_ITEM_GET_NUMINTRAW( pItem1 ) <= HB_ITEM_GET_NUMINTRAW( pItem2 ) );
       pItem1->type = HB_IT_LOGICAL;
       hb_stackDec();
    }
-   else if( HB_IS_NUMERIC( pItem1 ) && HB_IS_NUMERIC( pItem2 ) )
+   else if( HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2) )
    {
       pItem1->item.asLogical.value = ( HB_ITEM_GET_NUMDBLRAW( pItem1 ) <= HB_ITEM_GET_NUMDBLRAW( pItem2 ) );
       pItem1->type = HB_IT_LOGICAL;
       hb_stackDec();
    }
-   else if( HB_IS_DATETIME( pItem1 ) && HB_IS_DATETIME( pItem2 ) )
+   else if( HB_IS_DATETIME(pItem1) && HB_IS_DATETIME(pItem2) )
    {
-      if( HB_IS_TIMESTAMP( pItem1 ) && HB_IS_TIMESTAMP( pItem2 ) )
+      if( HB_IS_TIMESTAMP(pItem1) && HB_IS_TIMESTAMP(pItem2) )
       {
          pItem1->item.asLogical.value = ( pItem1->item.asDateTime.julian < pItem2->item.asDateTime.julian ) ||
                                         ( pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
@@ -4602,7 +4602,7 @@ static void hb_vmLessEqual( void )
       pItem1->type = HB_IT_LOGICAL;
       hb_stackDec();
    }
-   else if( HB_IS_LOGICAL( pItem1 ) && HB_IS_LOGICAL( pItem2 ) )
+   else if( HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2) )
    {
       pItem1->item.asLogical.value = ! pItem1->item.asLogical.value || pItem2->item.asLogical.value;
       hb_stackDec();
@@ -4637,7 +4637,7 @@ static void hb_vmGreater( void )
    pItem2 = hb_stackItemFromTop( -1 );
    pItem1 = hb_stackItemFromTop( -2 );
 
-   if( HB_IS_STRING( pItem1 ) && HB_IS_STRING( pItem2 ) )
+   if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) )
    {
       int i = hb_itemStrCmp( pItem1, pItem2, HB_FALSE );
       hb_stackPop();
@@ -4645,21 +4645,21 @@ static void hb_vmGreater( void )
       pItem1->type = HB_IT_LOGICAL;
       pItem1->item.asLogical.value = i > 0;
    }
-   else if( HB_IS_NUMINT( pItem1 ) && HB_IS_NUMINT( pItem2 ) )
+   else if( HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2) )
    {
       pItem1->item.asLogical.value = ( HB_ITEM_GET_NUMINTRAW( pItem1 ) > HB_ITEM_GET_NUMINTRAW( pItem2 ) );
       pItem1->type = HB_IT_LOGICAL;
       hb_stackDec();
    }
-   else if( HB_IS_NUMERIC( pItem1 ) && HB_IS_NUMERIC( pItem2 ) )
+   else if( HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2) )
    {
       pItem1->item.asLogical.value = ( HB_ITEM_GET_NUMDBLRAW( pItem1 ) > HB_ITEM_GET_NUMDBLRAW( pItem2 ) );
       pItem1->type = HB_IT_LOGICAL;
       hb_stackDec();
    }
-   else if( HB_IS_DATETIME( pItem1 ) && HB_IS_DATETIME( pItem2 ) )
+   else if( HB_IS_DATETIME(pItem1) && HB_IS_DATETIME(pItem2) )
    {
-      if( HB_IS_TIMESTAMP( pItem1 ) && HB_IS_TIMESTAMP( pItem2 ) )
+      if( HB_IS_TIMESTAMP(pItem1) && HB_IS_TIMESTAMP(pItem2) )
       {
          pItem1->item.asLogical.value = ( pItem1->item.asDateTime.julian > pItem2->item.asDateTime.julian ) ||
                                         ( pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
@@ -4672,7 +4672,7 @@ static void hb_vmGreater( void )
       pItem1->type = HB_IT_LOGICAL;
       hb_stackDec();
    }
-   else if( HB_IS_LOGICAL( pItem1 ) && HB_IS_LOGICAL( pItem2 ) )
+   else if( HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2) )
    {
       pItem1->item.asLogical.value = pItem1->item.asLogical.value && ! pItem2->item.asLogical.value;
       hb_stackDec();
@@ -4707,7 +4707,7 @@ static void hb_vmGreaterEqual( void )
    pItem2 = hb_stackItemFromTop( -1 );
    pItem1 = hb_stackItemFromTop( -2 );
 
-   if( HB_IS_STRING( pItem1 ) && HB_IS_STRING( pItem2 ) )
+   if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) )
    {
       int i = hb_itemStrCmp( pItem1, pItem2, HB_FALSE );
       hb_stackPop();
@@ -4715,21 +4715,21 @@ static void hb_vmGreaterEqual( void )
       pItem1->type = HB_IT_LOGICAL;
       pItem1->item.asLogical.value = i >= 0;
    }
-   else if( HB_IS_NUMINT( pItem1 ) && HB_IS_NUMINT( pItem2 ) )
+   else if( HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2) )
    {
       pItem1->item.asLogical.value = ( HB_ITEM_GET_NUMINTRAW( pItem1 ) >= HB_ITEM_GET_NUMINTRAW( pItem2 ) );
       pItem1->type = HB_IT_LOGICAL;
       hb_stackDec();
    }
-   else if( HB_IS_NUMERIC( pItem1 ) && HB_IS_NUMERIC( pItem2 ) )
+   else if( HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2) )
    {
       pItem1->item.asLogical.value = ( HB_ITEM_GET_NUMDBLRAW( pItem1 ) >= HB_ITEM_GET_NUMDBLRAW( pItem2 ) );
       pItem1->type = HB_IT_LOGICAL;
       hb_stackDec();
    }
-   else if( HB_IS_DATETIME( pItem1 ) && HB_IS_DATETIME( pItem2 ) )
+   else if( HB_IS_DATETIME(pItem1) && HB_IS_DATETIME(pItem2) )
    {
-      if( HB_IS_TIMESTAMP( pItem1 ) && HB_IS_TIMESTAMP( pItem2 ) )
+      if( HB_IS_TIMESTAMP(pItem1) && HB_IS_TIMESTAMP(pItem2) )
       {
          pItem1->item.asLogical.value = ( pItem1->item.asDateTime.julian > pItem2->item.asDateTime.julian ) ||
                                         ( pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
@@ -4742,7 +4742,7 @@ static void hb_vmGreaterEqual( void )
       pItem1->type = HB_IT_LOGICAL;
       hb_stackDec();
    }
-   else if( HB_IS_LOGICAL( pItem1 ) && HB_IS_LOGICAL( pItem2 ) )
+   else if( HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2) )
    {
       pItem1->item.asLogical.value = pItem1->item.asLogical.value || ! pItem2->item.asLogical.value;
       hb_stackDec();
@@ -4777,7 +4777,7 @@ static void hb_vmInstring( void )
    pItem1 = hb_stackItemFromTop( -2 );
    pItem2 = hb_stackItemFromTop( -1 );
 
-   if( HB_IS_STRING( pItem1 ) && HB_IS_STRING( pItem2 ) )
+   if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) )
    {
       HB_BOOL fResult = ( hb_strAt( pItem1->item.asString.value, pItem1->item.asString.length,
                                     pItem2->item.asString.value, pItem2->item.asString.length ) != 0 );
@@ -4786,7 +4786,7 @@ static void hb_vmInstring( void )
       pItem1->type = HB_IT_LOGICAL;
       pItem1->item.asLogical.value = fResult;
    }
-   else if( HB_IS_HASH( pItem2 ) && ( HB_IS_HASHKEY( pItem1 ) || hb_hashLen( pItem1 ) == 1 ) )
+   else if( HB_IS_HASH(pItem2) && ( HB_IS_HASHKEY(pItem1) || hb_hashLen( pItem1 ) == 1 ) )
    {
       HB_BOOL fResult = hb_hashScan( pItem2, pItem1, nullptr );
 
@@ -4832,7 +4832,7 @@ static void hb_vmForTest( void )        /* Test to check the end point of the FO
    HB_BOOL fBack;
 
    pStep = hb_stackItemFromTop( -1 );
-   if( HB_IS_NUMERIC( pStep ) )
+   if( HB_IS_NUMERIC(pStep) )
    {
       fBack = HB_ITEM_GET_NUMDBLRAW( pStep ) < 0.0;
       hb_stackDec();
@@ -4846,7 +4846,7 @@ static void hb_vmForTest( void )        /* Test to check the end point of the FO
 
       if( pResult )
       {
-         if( HB_IS_LOGICAL( pResult ) )
+         if( HB_IS_LOGICAL(pResult) )
          {
             fBack = pResult->item.asLogical.value;
             hb_itemRelease( pResult );
@@ -4899,7 +4899,7 @@ static void hb_vmSeqBlock( void )
    PHB_ITEM pItem;
 
    pItem = hb_stackItemFromTop( -1 );
-   if( HB_IS_BLOCK( pItem ) )
+   if( HB_IS_BLOCK(pItem) )
    {
       PHB_ITEM pBlockCopy, pBlock;
 
@@ -4965,7 +4965,7 @@ void hb_vmEnumRelease( PHB_ITEM pBase, PHB_ITEM pValue )
       hb_itemRelease( pValue );
    }
 
-   if( HB_IS_OBJECT( pBase ) && hb_vmRequestQuery() == 0 && hb_objHasOperator( pBase, HB_OO_OP_ENUMSTOP ) )
+   if( HB_IS_OBJECT(pBase) && hb_vmRequestQuery() == 0 && hb_objHasOperator( pBase, HB_OO_OP_ENUMSTOP ) )
    {
       hb_stackPushReturn();
       HB_VM_PUSHNIL();
@@ -5007,11 +5007,11 @@ static void hb_vmEnumRefCopy( PHB_ITEM pDest )
 static void hb_vmEnumRefClear( void * value )
 {
    hb_itemMove( hb_itemUnRefOnce( &( static_cast<PHB_ENUMREF>( value ) )->enumref ), &( static_cast<PHB_ENUMREF>( value ) )->oldvalue );
-   if( HB_IS_COMPLEX( &( static_cast<PHB_ENUMREF>( value ) )->basevalue ) )
+   if( HB_IS_COMPLEX(&( static_cast<PHB_ENUMREF>( value ) )->basevalue) )
    {
       hb_itemClear( &( static_cast<PHB_ENUMREF>( value ) )->basevalue );
    }
-   if( HB_IS_COMPLEX( &( static_cast<PHB_ENUMREF>( value ) )->enumref ) )
+   if( HB_IS_COMPLEX(&( static_cast<PHB_ENUMREF>( value ) )->enumref) )
    {
       hb_itemClear( &( static_cast<PHB_ENUMREF>( value ) )->enumref );
    }
@@ -5021,15 +5021,15 @@ static void hb_vmEnumRefClear( void * value )
 
 static void hb_vmEnumRefMark( void * value )
 {
-   if( HB_IS_GCITEM( &( static_cast<PHB_ENUMREF>( value ) )->basevalue ) )
+   if( HB_IS_GCITEM(&( static_cast<PHB_ENUMREF>( value ) )->basevalue) )
    {
       hb_gcItemRef( &( static_cast<PHB_ENUMREF>( value ) )->basevalue );
    }
-   if( HB_IS_GCITEM( &( static_cast<PHB_ENUMREF>( value ) )->oldvalue ) )
+   if( HB_IS_GCITEM(&( static_cast<PHB_ENUMREF>( value ) )->oldvalue) )
    {
       hb_gcItemRef( &( static_cast<PHB_ENUMREF>( value ) )->oldvalue );
    }
-   if( HB_IS_GCITEM( &( static_cast<PHB_ENUMREF>( value ) )->enumref ) )
+   if( HB_IS_GCITEM(&( static_cast<PHB_ENUMREF>( value ) )->enumref) )
    {
       hb_gcItemRef( &( static_cast<PHB_ENUMREF>( value ) )->enumref );
    }
@@ -5102,12 +5102,12 @@ static void hb_vmEnumStart( int nVars, int nDescend )
       pEnum->item.asEnum.basePtr = pBase = &( static_cast<PHB_ENUMREF>( pValue->item.asExtRef.value ) )->basevalue;
       pEnum->item.asEnum.valuePtr = nullptr;
 
-      if( HB_IS_BYREF( pBase ) )
+      if( HB_IS_BYREF(pBase) )
       {
          pBase = hb_itemUnRef( pBase );
       }
 
-      if( HB_IS_OBJECT( pBase ) && hb_objHasOperator( pBase, HB_OO_OP_ENUMSTART ) )
+      if( HB_IS_OBJECT(pBase) && hb_objHasOperator( pBase, HB_OO_OP_ENUMSTART ) )
       {
          pEnum->item.asEnum.offset = 0;
          pEnum->item.asEnum.valuePtr = hb_itemNew( nullptr );
@@ -5128,7 +5128,7 @@ static void hb_vmEnumStart( int nVars, int nDescend )
          pEnum->item.asEnum.valuePtr = nullptr;
       }
 
-      if( HB_IS_ARRAY( pBase ) )
+      if( HB_IS_ARRAY(pBase) )
       {
          /* the index into an array */
          pEnum->item.asEnum.offset = ( nDescend > 0 ) ? 1 : pBase->item.asArray.value->nLen;
@@ -5137,7 +5137,7 @@ static void hb_vmEnumStart( int nVars, int nDescend )
             fStart = HB_FALSE;
          }
       }
-      else if( HB_IS_HASH( pBase ) )
+      else if( HB_IS_HASH(pBase) )
       {
          HB_SIZE nLen = hb_hashLen( pBase );
          /* the index into a hash */
@@ -5147,7 +5147,7 @@ static void hb_vmEnumStart( int nVars, int nDescend )
             fStart = HB_FALSE;
          }
       }
-      else if( HB_IS_STRING( pBase ) )
+      else if( HB_IS_STRING(pBase) )
       {
          /* storage item for single characters */
          pEnum->item.asEnum.offset = ( nDescend > 0 ) ? 1 : pBase->item.asString.length;
@@ -5190,13 +5190,13 @@ static void hb_vmEnumNext( void )
       pEnumRef = hb_stackItemFromTop( -( i << 1 ) );
       pEnum = hb_itemUnRefOnce( pEnumRef );
       pBase = pEnum->item.asEnum.basePtr;
-      if( HB_IS_BYREF( pBase ) )
+      if( HB_IS_BYREF(pBase) )
       {
          pBase = hb_itemUnRef( pBase );
       }
-      if( HB_IS_ARRAY( pBase ) )
+      if( HB_IS_ARRAY(pBase) )
       {
-         if( HB_IS_OBJECT( pBase ) && hb_objHasOperator( pBase, HB_OO_OP_ENUMSKIP ) )
+         if( HB_IS_OBJECT(pBase) && hb_objHasOperator( pBase, HB_OO_OP_ENUMSKIP ) )
          {
             ++pEnum->item.asEnum.offset;
             HB_VM_PUSHNIL();
@@ -5224,7 +5224,7 @@ static void hb_vmEnumNext( void )
             }
          }
       }
-      else if( HB_IS_HASH( pBase ) )
+      else if( HB_IS_HASH(pBase) )
       {
          /* Clear the item value which can be set with RT error
             when enumerator was out of array size during unreferencing
@@ -5239,7 +5239,7 @@ static void hb_vmEnumNext( void )
             break;
          }
       }
-      else if( HB_IS_STRING( pBase ) )
+      else if( HB_IS_STRING(pBase) )
       {
          if( static_cast<HB_SIZE>( ++pEnum->item.asEnum.offset ) > pBase->item.asString.length )
          {
@@ -5274,13 +5274,13 @@ static void hb_vmEnumPrev( void )
       pEnumRef = hb_stackItemFromTop( -( i << 1 ) );
       pEnum = hb_itemUnRefOnce( pEnumRef );
       pBase = pEnum->item.asEnum.basePtr;
-      if( HB_IS_BYREF( pBase ) )
+      if( HB_IS_BYREF(pBase) )
       {
          pBase = hb_itemUnRef( pBase );
       }
-      if( HB_IS_ARRAY( pBase ) )
+      if( HB_IS_ARRAY(pBase) )
       {
-         if( HB_IS_OBJECT( pBase ) && hb_objHasOperator( pBase, HB_OO_OP_ENUMSKIP ) )
+         if( HB_IS_OBJECT(pBase) && hb_objHasOperator( pBase, HB_OO_OP_ENUMSKIP ) )
          {
             --pEnum->item.asEnum.offset;
             HB_VM_PUSHNIL();
@@ -5308,7 +5308,7 @@ static void hb_vmEnumPrev( void )
             }
          }
       }
-      else if( HB_IS_HASH( pBase ) )
+      else if( HB_IS_HASH(pBase) )
       {
          /* Clear the item value which can be set with RT error
             when enumerator was out of array size during unreferencing
@@ -5323,7 +5323,7 @@ static void hb_vmEnumPrev( void )
             break;
          }
       }
-      else if( HB_IS_STRING( pBase ) )
+      else if( HB_IS_STRING(pBase) )
       {
          if( --pEnum->item.asEnum.offset == 0 )
          {
@@ -5367,7 +5367,7 @@ static PHB_ITEM hb_vmSwitchGet( void )
    HB_STACK_TLS_PRELOAD
    PHB_ITEM pSwitch = hb_stackItemFromTop( -1 );
 
-   if( ! ( HB_IS_NUMINT( pSwitch ) || HB_IS_STRING( pSwitch ) ) )
+   if( ! ( HB_IS_NUMINT(pSwitch) || HB_IS_STRING(pSwitch) ) )
    {
       PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 3104, nullptr, "SWITCH", 1, pSwitch );
 
@@ -5397,7 +5397,7 @@ static const HB_BYTE * hb_vmSwitch( const HB_BYTE * pCode, HB_USHORT casesCnt )
          switch( pCode[ 0 ] )
          {
             case HB_P_PUSHLONG:
-               if( HB_IS_NUMINT( pSwitch ) )
+               if( HB_IS_NUMINT(pSwitch) )
                {
                   fFound = HB_ITEM_GET_NUMINTRAW( pSwitch ) == HB_PCODE_MKLONG( &pCode[ 1 ] );
                }
@@ -5405,7 +5405,7 @@ static const HB_BYTE * hb_vmSwitch( const HB_BYTE * pCode, HB_USHORT casesCnt )
                break;
 
             case HB_P_PUSHSTRSHORT:
-               if( HB_IS_STRING( pSwitch ) )
+               if( HB_IS_STRING(pSwitch) )
                {
                   #if 0
                   fFound = hb_itemStrCmp( pItem1, pItem2, bExact );
@@ -5477,7 +5477,7 @@ static void hb_vmNot( void )
 
    pItem = hb_stackItemFromTop( -1 );
 
-   if( HB_IS_LOGICAL( pItem ) )
+   if( HB_IS_LOGICAL(pItem) )
    {
       pItem->type = HB_IT_LOGICAL;
       pItem->item.asLogical.value = ! pItem->item.asLogical.value;
@@ -5507,7 +5507,7 @@ static void hb_vmAnd( void )
    pItem2 = hb_stackItemFromTop( -1 );
    pItem1 = hb_stackItemFromTop( -2 );
 
-   if( HB_IS_LOGICAL( pItem1 ) && HB_IS_LOGICAL( pItem2 ) )
+   if( HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2) )
    {
       pItem1->type = HB_IT_LOGICAL;
       pItem1->item.asLogical.value = pItem1->item.asLogical.value && pItem2->item.asLogical.value;
@@ -5544,7 +5544,7 @@ static void hb_vmOr( void )
    pItem2 = hb_stackItemFromTop( -1 );
    pItem1 = hb_stackItemFromTop( -2 );
 
-   if( HB_IS_LOGICAL( pItem1 ) && HB_IS_LOGICAL( pItem2 ) )
+   if( HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2) )
    {
       pItem1->type = HB_IT_LOGICAL;
       pItem1->item.asLogical.value = pItem1->item.asLogical.value || pItem2->item.asLogical.value;
@@ -5586,7 +5586,7 @@ static void hb_vmArrayPush( void )
    pIndex = hb_stackItemFromTop( -1 );
    pArray = hb_stackItemFromTop( -2 );
 
-   if( HB_IS_HASH( pArray ) && HB_IS_HASHKEY( pIndex ) )
+   if( HB_IS_HASH(pArray) && HB_IS_HASHKEY(pIndex) )
    {
       PHB_ITEM pValue = hb_hashGetItemPtr( pArray, pIndex, HB_HASH_AUTOADD_ACCESS );
       if( pValue )
@@ -5605,15 +5605,15 @@ static void hb_vmArrayPush( void )
       }
       return;
    }
-   else if( HB_IS_INTEGER( pIndex ) )
+   else if( HB_IS_INTEGER(pIndex) )
    {
       nIndex = static_cast<HB_SIZE>( pIndex->item.asInteger.value );
    }
-   else if( HB_IS_LONG( pIndex ) )
+   else if( HB_IS_LONG(pIndex) )
    {
       nIndex = static_cast<HB_SIZE>( pIndex->item.asLong.value );
    }
-   else if( HB_IS_DOUBLE( pIndex ) )
+   else if( HB_IS_DOUBLE(pIndex) )
    {
       nIndex = static_cast<HB_SIZE>( pIndex->item.asDouble.value );
    }
@@ -5636,9 +5636,9 @@ static void hb_vmArrayPush( void )
       return;
    }
 
-   if( HB_IS_ARRAY( pArray ) )
+   if( HB_IS_ARRAY(pArray) )
    {
-      if( HB_IS_OBJECT( pArray ) && hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pArray, pArray, pIndex, nullptr ) )
+      if( HB_IS_OBJECT(pArray) && hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pArray, pArray, pIndex, nullptr ) )
       {
          hb_stackPop();
          return;
@@ -5650,7 +5650,7 @@ static void hb_vmArrayPush( void )
          hb_itemMove( pArray, pIndex );
          hb_stackDec();
       }
-      else if( ! HB_IS_OBJECT( pArray ) && hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pArray, pArray, pIndex, nullptr ) )
+      else if( ! HB_IS_OBJECT(pArray) && hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pArray, pArray, pIndex, nullptr ) )
       {
          hb_stackPop();
       }
@@ -5688,9 +5688,9 @@ static void hb_vmArrayPushRef( void )
 
    pIndex = hb_stackItemFromTop( -1 );
    pRefer = hb_stackItemFromTop( -2 );
-   pArray = HB_IS_BYREF( pRefer ) ? hb_itemUnRef( pRefer ) : pRefer;
+   pArray = HB_IS_BYREF(pRefer) ? hb_itemUnRef( pRefer ) : pRefer;
 
-   if( HB_IS_HASH( pArray ) && HB_IS_HASHKEY( pIndex ) )
+   if( HB_IS_HASH(pArray) && HB_IS_HASHKEY(pIndex) )
    {
       PHB_ITEM pValue = hb_hashGetItemRefPtr( pArray, pIndex );
       if( pValue )
@@ -5712,15 +5712,15 @@ static void hb_vmArrayPushRef( void )
       }
       return;
    }
-   else if( HB_IS_INTEGER( pIndex ) )
+   else if( HB_IS_INTEGER(pIndex) )
    {
       nIndex = static_cast<HB_SIZE>( pIndex->item.asInteger.value );
    }
-   else if( HB_IS_LONG( pIndex ) )
+   else if( HB_IS_LONG(pIndex) )
    {
       nIndex = static_cast<HB_SIZE>( pIndex->item.asLong.value );
    }
-   else if( HB_IS_DOUBLE( pIndex ) )
+   else if( HB_IS_DOUBLE(pIndex) )
    {
       nIndex = static_cast<HB_SIZE>( pIndex->item.asDouble.value );
    }
@@ -5744,9 +5744,9 @@ static void hb_vmArrayPushRef( void )
       return;
    }
 
-   if( HB_IS_ARRAY( pArray ) )
+   if( HB_IS_ARRAY(pArray) )
    {
-      if( HB_IS_OBJECT( pArray ) && hb_objHasOperator( pArray, HB_OO_OP_ARRAYINDEX ) )
+      if( HB_IS_OBJECT(pArray) && hb_objHasOperator( pArray, HB_OO_OP_ARRAYINDEX ) )
       {
          /* create extended object index reference */
          hb_vmMsgIndexReference( pRefer, pArray, pIndex );
@@ -5759,7 +5759,7 @@ static void hb_vmArrayPushRef( void )
          hb_arrayGetItemRef( pArray, nIndex, pRefer );
          hb_stackDec();
       }
-      else if( ! HB_IS_OBJECT( pArray ) && hb_objHasOperator( pArray, HB_OO_OP_ARRAYINDEX ) )
+      else if( ! HB_IS_OBJECT(pArray) && hb_objHasOperator( pArray, HB_OO_OP_ARRAYINDEX ) )
       {
          /* create extended object index reference */
          hb_vmMsgIndexReference( pRefer, pArray, pIndex );
@@ -5804,12 +5804,12 @@ static void hb_vmArrayPop( void )
    pArray = hb_stackItemFromTop( -2 );
    pIndex = hb_stackItemFromTop( -1 );
 
-   if( HB_IS_BYREF( pArray ) )
+   if( HB_IS_BYREF(pArray) )
    {
       pArray = hb_itemUnRef( pArray );
    }
 
-   if( HB_IS_HASH( pArray ) && HB_IS_HASHKEY( pIndex ) )
+   if( HB_IS_HASH(pArray) && HB_IS_HASHKEY(pIndex) )
    {
       PHB_ITEM pDest = hb_hashGetItemPtr( pArray, pIndex, HB_HASH_AUTOADD_ASSIGN );
       if( pDest )
@@ -5832,15 +5832,15 @@ static void hb_vmArrayPop( void )
       }
       return;
    }
-   else if( HB_IS_INTEGER( pIndex ) )
+   else if( HB_IS_INTEGER(pIndex) )
    {
       nIndex = static_cast<HB_SIZE>( pIndex->item.asInteger.value );
    }
-   else if( HB_IS_LONG( pIndex ) )
+   else if( HB_IS_LONG(pIndex) )
    {
       nIndex = static_cast<HB_SIZE>( pIndex->item.asLong.value );
    }
-   else if( HB_IS_DOUBLE( pIndex ) )
+   else if( HB_IS_DOUBLE(pIndex) )
    {
       nIndex = static_cast<HB_SIZE>( pIndex->item.asDouble.value );
    }
@@ -5859,9 +5859,9 @@ static void hb_vmArrayPop( void )
       return;
    }
 
-   if( HB_IS_ARRAY( pArray ) )
+   if( HB_IS_ARRAY(pArray) )
    {
-      if( HB_IS_OBJECT( pArray ) && hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pArray, pArray, pIndex, pValue ) )
+      if( HB_IS_OBJECT(pArray) && hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pArray, pArray, pIndex, pValue ) )
       {
          hb_stackPop();
          hb_stackPop();
@@ -5877,7 +5877,7 @@ static void hb_vmArrayPop( void )
          hb_stackPop();
          hb_stackDec();    /* value was moved above hb_stackDec() is enough */
       }
-      else if( ! HB_IS_OBJECT( pArray ) && hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pArray, pArray, pIndex, pValue ) )
+      else if( ! HB_IS_OBJECT(pArray) && hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pArray, pArray, pIndex, pValue ) )
       {
          hb_stackPop();
          hb_stackPop();
@@ -5951,15 +5951,15 @@ static HB_BOOL hb_vmArrayNew( PHB_ITEM pArray, HB_USHORT uiDimension )
    pDim = hb_stackItemFromTop( static_cast<int>( -1 - uiDimension ) );
 
    /* use the proper type of number of elements */
-   if( HB_IS_INTEGER( pDim ) )
+   if( HB_IS_INTEGER(pDim) )
    {
       nElements = static_cast<HB_ISIZ>( pDim->item.asInteger.value );
    }
-   else if( HB_IS_LONG( pDim ) )
+   else if( HB_IS_LONG(pDim) )
    {
       nElements = static_cast<HB_ISIZ>( pDim->item.asLong.value );
    }
-   else if( HB_IS_DOUBLE( pDim ) )
+   else if( HB_IS_DOUBLE(pDim) )
    {
       nElements = static_cast<HB_ISIZ>( pDim->item.asDouble.value );
    }
@@ -6039,7 +6039,7 @@ static void hb_vmHashGen( HB_SIZE nElements ) /* generates an nElements Hash and
    {
       PHB_ITEM pKey = hb_stackItemFromTop( iPos++ );
       PHB_ITEM pVal = hb_stackItemFromTop( iPos++ );
-      if( HB_IS_HASHKEY( pKey ) )
+      if( HB_IS_HASHKEY(pKey) )
       {
          hb_hashAdd( pHash, pKey, pVal );
       }
@@ -6087,7 +6087,7 @@ static void hb_vmMacroPushIndex( void )
       do
       {
          PHB_ITEM pArray = hb_stackItemFromTop( -2 );
-         if( HB_IS_BYREF( pArray ) )
+         if( HB_IS_BYREF(pArray) )
          {
             hb_vmArrayPushRef();
          }
@@ -6133,7 +6133,7 @@ static HB_LONG hb_vmArgsJoin( HB_LONG lLevel, HB_USHORT uiArgSets )
    PHB_ITEM pArgs = hb_stackItemFromTop( lLevel ) ;
 
    lArgs = hb_itemGetNL( pArgs );
-   if( HB_IS_COMPLEX( pArgs ) )
+   if( HB_IS_COMPLEX(pArgs) )
    {
       hb_itemClear( pArgs );
    }
@@ -6246,7 +6246,7 @@ static void hb_vmPushAParams( void )
    PHB_ITEM pArray;
 
    pArray = hb_stackItemFromTop( -1 );
-   if( HB_IS_ARRAY( pArray ) )
+   if( HB_IS_ARRAY(pArray) )
    {
       HB_SIZE nLen = pArray->item.asArray.value->nLen;
 
@@ -6521,7 +6521,7 @@ void hb_vmDo( HB_USHORT uiParams )
    pSym = hb_stackNewFrame( &sStackState, uiParams )->item.asSymbol.value;
    pSelf = hb_stackSelfItem();   /* NIL, OBJECT or BLOCK */
 
-   if( ! HB_IS_NIL( pSelf ) )  /* are we sending a message ? */
+   if( ! HB_IS_NIL(pSelf) )  /* are we sending a message ? */
    {
       PHB_SYMB pExecSym;
 
@@ -6747,7 +6747,7 @@ static HARBOUR hb_vmDoBlock( void )
    int iParam;
 
    pBlock = hb_stackSelfItem();
-   if( ! HB_IS_BLOCK( pBlock ) )
+   if( ! HB_IS_BLOCK(pBlock) )
    {
       hb_errInternal( HB_EI_VMNOTCBLOCK, nullptr, "hb_vmDoBlock()", nullptr );
    }
@@ -6833,7 +6833,7 @@ PHB_ITEM hb_vmEvalBlockOrMacro( PHB_ITEM pItem )
 
    HB_STACK_TLS_PRELOAD
 
-   if( HB_IS_BLOCK( pItem ) )
+   if( HB_IS_BLOCK(pItem) )
    {
       hb_vmPushEvalSym();
       hb_vmPush( pItem );
@@ -6860,7 +6860,7 @@ PHB_ITEM hb_vmEvalBlockOrMacro( PHB_ITEM pItem )
  */
 void hb_vmDestroyBlockOrMacro( PHB_ITEM pItem )
 {
-   if( HB_IS_POINTER( pItem ) )
+   if( HB_IS_POINTER(pItem) )
    {
       PHB_MACRO pMacro = static_cast<PHB_MACRO>( hb_itemGetPtr( pItem ) );
       if( pMacro )
@@ -7200,7 +7200,7 @@ static void hb_vmTSVRefClear( void * value )
 {
    if( hb_xRefDec( value ) )
    {
-      if( HB_IS_COMPLEX( &( static_cast<PHB_TSVREF>( value ) )->source ) )
+      if( HB_IS_COMPLEX(&( static_cast<PHB_TSVREF>( value ) )->source) )
       {
          hb_itemClear( &( static_cast<PHB_TSVREF>( value ) )->source );
       }
@@ -7215,13 +7215,13 @@ static void hb_vmTSVRefMark( void * value )
 {
    PHB_ITEM pItem;
 
-   if( HB_IS_GCITEM( &( static_cast<PHB_TSVREF>( value ) )->source ) )
+   if( HB_IS_GCITEM(&( static_cast<PHB_TSVREF>( value ) )->source) )
    {
       hb_gcItemRef( &( static_cast<PHB_TSVREF>( value ) )->source );
    }
 
    pItem = static_cast<PHB_ITEM>( hb_stackTestTSD( &( static_cast<PHB_TSVREF>( value ) )->threadData ) );
-   if( pItem && HB_IS_GCITEM( pItem ) )
+   if( pItem && HB_IS_GCITEM(pItem) )
    {
       hb_gcItemRef( pItem );
    }
@@ -7230,7 +7230,7 @@ static void hb_vmTSVRefMark( void * value )
 /* destructor for terminated threads */
 static void hb_vmTSVarClean( void * pThreadItem )
 {
-   if( HB_IS_COMPLEX( static_cast<PHB_ITEM>( pThreadItem ) ) )
+   if( HB_IS_COMPLEX(static_cast<PHB_ITEM>( pThreadItem )) )
    {
       hb_itemClear( static_cast<PHB_ITEM>( pThreadItem ) );
    }
@@ -7264,7 +7264,7 @@ static void hb_vmTSVReference( PHB_ITEM pStatic )
 
    /* Use hb_stackReturnItem() as temporary item holder */
    pRefer = hb_stackReturnItem();
-   if( HB_IS_COMPLEX( pRefer ) )
+   if( HB_IS_COMPLEX(pRefer) )
    {
       hb_itemClear( pRefer );
    }
@@ -7853,7 +7853,7 @@ static void hb_vmPushAliasedVar( PHB_SYMB pSym )
    HB_STACK_TLS_PRELOAD
    PHB_ITEM pAlias = hb_stackItemFromTop( -1 );
 
-   if( HB_IS_STRING( pAlias ) )
+   if( HB_IS_STRING(pAlias) )
    {
       const char * szAlias = pAlias->item.asString.value;
 
@@ -7903,7 +7903,7 @@ static void hb_vmPushLocal( int iLocal )
       pLocal = hb_codeblockGetRef( hb_stackSelfItem()->item.asBlock.value, iLocal );
    }
 
-   hb_itemCopy( hb_stackAllocItem(), HB_IS_BYREF( pLocal ) ? hb_itemUnRef( pLocal ) : pLocal );
+   hb_itemCopy( hb_stackAllocItem(), HB_IS_BYREF(pLocal) ? hb_itemUnRef( pLocal ) : pLocal );
 }
 
 static void hb_vmPushLocalByRef( int iLocal )
@@ -7920,7 +7920,7 @@ static void hb_vmPushLocalByRef( int iLocal )
    if( iLocal >= 0 )
    {
       PHB_ITEM pLocal = hb_stackLocalVariableAt( &iLocal );
-      if( HB_IS_BYREF( pLocal ) && ! HB_IS_ENUM( pLocal ) )
+      if( HB_IS_BYREF(pLocal) && ! HB_IS_ENUM(pLocal) )
       {
          hb_itemCopy( pTop, pLocal );
          return;
@@ -7950,7 +7950,7 @@ static void hb_vmPushStatic( HB_USHORT uiStatic )
    PHB_ITEM pStatic;
 
    pStatic = ( static_cast<PHB_ITEM>( hb_stackGetStaticsBase() ) )->item.asArray.value->pItems + uiStatic - 1;
-   hb_itemCopy( hb_stackAllocItem(), HB_IS_BYREF( pStatic ) ? hb_itemUnRef( pStatic ) : pStatic );
+   hb_itemCopy( hb_stackAllocItem(), HB_IS_BYREF(pStatic) ? hb_itemUnRef( pStatic ) : pStatic );
 }
 
 static void hb_vmPushStaticByRef( HB_USHORT uiStatic )
@@ -7965,7 +7965,7 @@ static void hb_vmPushStaticByRef( HB_USHORT uiStatic )
    pTop = hb_stackAllocItem();
    pBase = static_cast<PHB_ITEM>( hb_stackGetStaticsBase() );
 
-   if( HB_IS_BYREF( pBase->item.asArray.value->pItems + uiStatic - 1 ) && ! HB_IS_ENUM( pBase->item.asArray.value->pItems + uiStatic - 1 ) )
+   if( HB_IS_BYREF(pBase->item.asArray.value->pItems + uiStatic - 1) && ! HB_IS_ENUM(pBase->item.asArray.value->pItems + uiStatic - 1) )
    {
       hb_itemCopy( pTop, pBase->item.asArray.value->pItems + uiStatic - 1 );
       return;
@@ -8036,7 +8036,7 @@ static void hb_vmDuplUnRef( void )
 
    pItem = hb_stackItemFromTop( -1 );
    hb_itemCopy( hb_stackAllocItem(), pItem );
-   if( HB_IS_BYREF( pItem ) )
+   if( HB_IS_BYREF(pItem) )
    {
       hb_itemCopy( pItem, hb_itemUnRef( pItem ) );
    }
@@ -8052,7 +8052,7 @@ static void hb_vmPushUnRef( void )
    PHB_ITEM pItem;
 
    pItem = hb_stackItemFromTop( -1 );
-   hb_itemCopy( hb_stackAllocItem(), HB_IS_BYREF( pItem ) ? hb_itemUnRef( pItem ) : pItem );
+   hb_itemCopy( hb_stackAllocItem(), HB_IS_BYREF(pItem) ? hb_itemUnRef( pItem ) : pItem );
 }
 
 static void hb_vmSwap( int iCount )
@@ -8084,7 +8084,7 @@ static HB_BOOL hb_vmPopLogical( void )
 
    HB_STACK_TLS_PRELOAD
 
-   if( HB_IS_LOGICAL( hb_stackItemFromTop( -1 ) ) )
+   if( HB_IS_LOGICAL(hb_stackItemFromTop( -1 )) )
    {
       HB_BOOL fValue = hb_stackItemFromTop( -1 )->item.asLogical.value;
 
@@ -8153,7 +8153,7 @@ static void hb_vmPopAliasedVar( PHB_SYMB pSym )
    /*
     * "M", "MEMV" - "MEMVAR" and "FIEL" - "FIELD" are reserved aliases
     */
-   if( HB_IS_STRING( pAlias ) )
+   if( HB_IS_STRING(pAlias) )
    {
       const char * szAlias = pAlias->item.asString.value;
 
@@ -8373,7 +8373,7 @@ static void hb_vmStaticsClear( void )
             for( HB_SIZE ul = 1; ul <= nLen; ++ul )
             {
                PHB_ITEM pItem = hb_arrayGetItemPtr( pStatics, ul );
-               if( pItem && HB_IS_COMPLEX( pItem ) )
+               if( pItem && HB_IS_COMPLEX(pItem) )
                {
                   hb_itemClear( pItem );
                }
@@ -9164,9 +9164,9 @@ static void hb_vmItemRefClear( void * value )
    PHB_ITMREF pItmRef = static_cast<PHB_ITMREF>( value );
 
 #if 1
-   if( ! HB_IS_MEMVAR( &pItmRef->memvar ) ||
+   if( ! HB_IS_MEMVAR(&pItmRef->memvar) ||
        pItmRef->memvar.item.asMemvar.value != pItmRef->value ||
-       ! HB_IS_EXTREF( pItmRef->value ) ||
+       ! HB_IS_EXTREF(pItmRef->value) ||
        pItmRef->value->item.asExtRef.func != &s_ItmExtRawRef )
    {
       hb_errInternal( HB_EI_ERRUNRECOV, "hb_vmItemRefClear()", nullptr, nullptr );
@@ -9353,11 +9353,11 @@ static void hb_vmMsgRefClear( void * value )
 
    if( hb_xRefDec( value ) )
    {
-      if( HB_IS_COMPLEX( &pMsgRef->value ) )
+      if( HB_IS_COMPLEX(&pMsgRef->value) )
       {
          hb_itemClear( &pMsgRef->value );
       }
-      if( HB_IS_COMPLEX( &pMsgRef->object ) )
+      if( HB_IS_COMPLEX(&pMsgRef->object) )
       {
          hb_itemClear( &pMsgRef->object );
       }
@@ -9367,11 +9367,11 @@ static void hb_vmMsgRefClear( void * value )
 
 static void hb_vmMsgRefMark( void * value )
 {
-   if( HB_IS_GCITEM( &( static_cast<PHB_MSGREF>( value ) )->object ) )
+   if( HB_IS_GCITEM(&( static_cast<PHB_MSGREF>( value ) )->object) )
    {
       hb_gcItemRef( &( static_cast<PHB_MSGREF>( value ) )->object );
    }
-   if( HB_IS_GCITEM( &( static_cast<PHB_MSGREF>( value ) )->value ) )
+   if( HB_IS_GCITEM(&( static_cast<PHB_MSGREF>( value ) )->value) )
    {
       hb_gcItemRef( &( static_cast<PHB_MSGREF>( value ) )->value );
    }
@@ -9406,7 +9406,7 @@ HB_BOOL hb_vmMsgReference( PHB_ITEM pObject, PHB_DYNS pMessage, PHB_DYNS pAccMsg
    hb_itemMove( &pMsgRef->object, pObject );
 
    pRefer = hb_stackReturnItem();
-   if( HB_IS_COMPLEX( pRefer ) )
+   if( HB_IS_COMPLEX(pRefer) )
    {
       hb_itemClear( pRefer );
    }
@@ -9441,7 +9441,7 @@ static PHB_ITEM hb_vmMsgIdxRefRead( PHB_ITEM pRefer )
    if( hb_vmRequestQuery() == 0 )
    {
       HB_STACK_TLS_PRELOAD
-      PHB_ITEM pObject = HB_IS_BYREF( &pMsgIdxRef->object ) ? hb_itemUnRef( &pMsgIdxRef->object ) : &pMsgIdxRef->object;
+      PHB_ITEM pObject = HB_IS_BYREF(&pMsgIdxRef->object) ? hb_itemUnRef( &pMsgIdxRef->object ) : &pMsgIdxRef->object;
 
       hb_stackPushReturn();
       if( ( pMsgIdxRef->value.type & HB_IT_DEFAULT ) == 0 )
@@ -9465,7 +9465,7 @@ static PHB_ITEM hb_vmMsgIdxRefWrite( PHB_ITEM pRefer, PHB_ITEM pSource )
    if( hb_vmRequestQuery() == 0 )
    {
       HB_STACK_TLS_PRELOAD
-      PHB_ITEM pObject = HB_IS_BYREF( &pMsgIdxRef->object ) ? hb_itemUnRef( &pMsgIdxRef->object ) : &pMsgIdxRef->object;
+      PHB_ITEM pObject = HB_IS_BYREF(&pMsgIdxRef->object) ? hb_itemUnRef( &pMsgIdxRef->object ) : &pMsgIdxRef->object;
       hb_stackPushReturn();
       hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pObject, pObject, &pMsgIdxRef->index, pSource );
       hb_stackPopReturn();
@@ -9491,7 +9491,7 @@ static void hb_vmMsgIdxRefCopy( PHB_ITEM pDest )
    {
       if( hb_vmRequestReenter() )
       {
-         PHB_ITEM pObject = HB_IS_BYREF( &pMsgIdxRef->object ) ? hb_itemUnRef( &pMsgIdxRef->object ) : &pMsgIdxRef->object;
+         PHB_ITEM pObject = HB_IS_BYREF(&pMsgIdxRef->object) ? hb_itemUnRef( &pMsgIdxRef->object ) : &pMsgIdxRef->object;
          hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pObject, pObject, &pMsgIdxRef->index, &pMsgIdxRef->value );
          hb_vmRequestRestore();
       }
@@ -9509,7 +9509,7 @@ static void hb_vmMsgIdxRefClear( void * value )
    {
       if( hb_vmRequestReenter() )
       {
-         PHB_ITEM pObject = HB_IS_BYREF( &pMsgIdxRef->object ) ? hb_itemUnRef( &pMsgIdxRef->object ) : &pMsgIdxRef->object;
+         PHB_ITEM pObject = HB_IS_BYREF(&pMsgIdxRef->object) ? hb_itemUnRef( &pMsgIdxRef->object ) : &pMsgIdxRef->object;
          hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pObject, pObject, &pMsgIdxRef->index, &pMsgIdxRef->value );
          hb_vmRequestRestore();
       }
@@ -9517,15 +9517,15 @@ static void hb_vmMsgIdxRefClear( void * value )
 
    if( hb_xRefDec( value ) )
    {
-      if( HB_IS_COMPLEX( &pMsgIdxRef->value ) )
+      if( HB_IS_COMPLEX(&pMsgIdxRef->value) )
       {
          hb_itemClear( &pMsgIdxRef->value );
       }
-      if( HB_IS_COMPLEX( &pMsgIdxRef->object ) )
+      if( HB_IS_COMPLEX(&pMsgIdxRef->object) )
       {
          hb_itemClear( &pMsgIdxRef->object );
       }
-      if( HB_IS_COMPLEX( &pMsgIdxRef->index ) )
+      if( HB_IS_COMPLEX(&pMsgIdxRef->index) )
       {
          hb_itemClear( &pMsgIdxRef->index );
       }
@@ -9535,15 +9535,15 @@ static void hb_vmMsgIdxRefClear( void * value )
 
 static void hb_vmMsgIdxRefMark( void * value )
 {
-   if( HB_IS_GCITEM( &( static_cast<PHB_MSGIDXREF>( value ) )->object ) )
+   if( HB_IS_GCITEM(&( static_cast<PHB_MSGIDXREF>( value ) )->object) )
    {
       hb_gcItemRef( &( static_cast<PHB_MSGIDXREF>( value ) )->object );
    }
-   if( HB_IS_GCITEM( &( static_cast<PHB_MSGIDXREF>( value ) )->index ) )
+   if( HB_IS_GCITEM(&( static_cast<PHB_MSGIDXREF>( value ) )->index) )
    {
       hb_gcItemRef( &( static_cast<PHB_MSGIDXREF>( value ) )->index );
    }
-   if( HB_IS_GCITEM( &( static_cast<PHB_MSGIDXREF>( value ) )->value ) )
+   if( HB_IS_GCITEM(&( static_cast<PHB_MSGIDXREF>( value ) )->value) )
    {
       hb_gcItemRef( &( static_cast<PHB_MSGIDXREF>( value ) )->value );
    }
@@ -9572,7 +9572,7 @@ static void hb_vmMsgIndexReference( PHB_ITEM pRefer, PHB_ITEM pObject, PHB_ITEM 
    pMsgIdxRef->value.type = HB_IT_NIL | HB_IT_DEFAULT;
    pMsgIdxRef->object.type = HB_IT_NIL;
    pMsgIdxRef->index.type = HB_IT_NIL;
-   hb_itemCopy( &pMsgIdxRef->object, HB_IS_STRING( pObject ) ? pRefer : pObject );
+   hb_itemCopy( &pMsgIdxRef->object, HB_IS_STRING(pObject) ? pRefer : pObject );
    hb_itemMove( &pMsgIdxRef->index, pIndex );
 
    pIndex->type = HB_IT_BYREF | HB_IT_EXTREF;
@@ -9915,7 +9915,7 @@ HB_BOOL hb_vmTryEval( PHB_ITEM * pResult, PHB_ITEM pItem, HB_ULONG ulPCount, ...
    {
       PHB_SYMB pSymbol = nullptr;
 
-      if( HB_IS_STRING( pItem ) )
+      if( HB_IS_STRING(pItem) )
       {
          PHB_DYNS pDynSym = hb_dynsymFindName( pItem->item.asString.value );
 
@@ -9925,12 +9925,12 @@ HB_BOOL hb_vmTryEval( PHB_ITEM * pResult, PHB_ITEM pItem, HB_ULONG ulPCount, ...
             pItem = nullptr;
          }
       }
-      else if( HB_IS_SYMBOL( pItem ) )
+      else if( HB_IS_SYMBOL(pItem) )
       {
          pSymbol = pItem->item.asSymbol.value;
          pItem = nullptr;
       }
-      else if( HB_IS_BLOCK( pItem ) )
+      else if( HB_IS_BLOCK(pItem) )
       {
          pSymbol = &hb_symEval;
       }
@@ -10673,7 +10673,7 @@ void hb_xvmCopyLocals( int iDest, int iSource )
    PHB_ITEM pDest;
 
    pDest = hb_xvmLocalPtr( iDest );
-   hb_itemCopyToRef( hb_xvmLocalPtr( iSource ), HB_IS_BYREF( pDest ) ? hb_itemUnRef( pDest ) : pDest );
+   hb_itemCopyToRef( hb_xvmLocalPtr( iSource ), HB_IS_BYREF(pDest) ? hb_itemUnRef( pDest ) : pDest );
 }
 
 void hb_xvmPushStatic( HB_USHORT uiStatic )
@@ -11007,7 +11007,7 @@ void hb_xvmLocalSetInt( int iLocal, HB_LONG lValue )
    {
       /* local variable or local parameter */
       pLocal = hb_stackLocalVariable( iLocal );
-      if( HB_IS_BYREF( pLocal ) )
+      if( HB_IS_BYREF(pLocal) )
       {
          pLocal = hb_itemUnRef( pLocal );
       }
@@ -11020,7 +11020,7 @@ void hb_xvmLocalSetInt( int iLocal, HB_LONG lValue )
       pLocal = hb_codeblockGetVar( hb_stackSelfItem(), iLocal );
    }
 
-   if( HB_IS_OBJECT( pLocal ) && hb_objHasOperator( pLocal, HB_OO_OP_ASSIGN ) )
+   if( HB_IS_OBJECT(pLocal) && hb_objHasOperator( pLocal, HB_OO_OP_ASSIGN ) )
    {
       hb_vmPushLong( lValue );
       hb_objOperatorCall( HB_OO_OP_ASSIGN, pLocal, pLocal, hb_stackItemFromTop( -1 ), nullptr );
@@ -11055,7 +11055,7 @@ HB_BOOL hb_xvmLocalInc( int iLocal )
    PHB_ITEM pLocal;
 
    pLocal = hb_stackLocalVariable( iLocal );
-   hb_vmInc( HB_IS_BYREF( pLocal ) ? hb_itemUnRef( pLocal ) : pLocal );
+   hb_vmInc( HB_IS_BYREF(pLocal) ? hb_itemUnRef( pLocal ) : pLocal );
 
    HB_XVM_RETURN
 }
@@ -11070,7 +11070,7 @@ HB_BOOL hb_xvmLocalDec( int iLocal )
    PHB_ITEM pLocal;
 
    pLocal = hb_stackLocalVariable( iLocal );
-   hb_vmDec( HB_IS_BYREF( pLocal ) ? hb_itemUnRef( pLocal ) : pLocal );
+   hb_vmDec( HB_IS_BYREF(pLocal) ? hb_itemUnRef( pLocal ) : pLocal );
 
    HB_XVM_RETURN
 }
@@ -11085,7 +11085,7 @@ HB_BOOL hb_xvmLocalIncPush( int iLocal )
    PHB_ITEM pLocal;
 
    pLocal = hb_stackLocalVariable( iLocal );
-   if( HB_IS_BYREF( pLocal ) )
+   if( HB_IS_BYREF(pLocal) )
    {
       pLocal = hb_itemUnRef( pLocal );
    }
@@ -11105,7 +11105,7 @@ HB_BOOL hb_xvmLocalAdd( int iLocal )
    PHB_ITEM pLocal;
 
    pLocal = hb_stackLocalVariable( iLocal );
-   if( HB_IS_BYREF( pLocal ) )
+   if( HB_IS_BYREF(pLocal) )
    {
       pLocal = hb_itemUnRef( pLocal );
    }
@@ -11126,7 +11126,7 @@ HB_BOOL hb_xvmStaticAdd( HB_USHORT uiStatic )
    PHB_ITEM pStatic;
 
    pStatic = ( static_cast<PHB_ITEM>( hb_stackGetStaticsBase() ) )->item.asArray.value->pItems + uiStatic - 1;
-   if( HB_IS_BYREF( pStatic ) )
+   if( HB_IS_BYREF(pStatic) )
    {
       pStatic = hb_itemUnRef( pStatic );
    }
@@ -11148,7 +11148,7 @@ HB_BOOL hb_xvmMemvarAdd( PHB_SYMB pSymbol )
 
    pVal1 = hb_stackItemFromTop( -2 );
    pVal2 = hb_stackItemFromTop( -1 );
-   if( HB_IS_STRING( pVal1 ) && HB_IS_STRING( pVal2 ) )
+   if( HB_IS_STRING(pVal1) && HB_IS_STRING(pVal2) )
    {
       PHB_ITEM pMemVar = hb_memvarGetItem( pSymbol );
       if( pMemVar )
@@ -11314,12 +11314,12 @@ HB_BOOL hb_xvmEqualInt( HB_LONG lValue )
    PHB_ITEM pItem;
 
    pItem = hb_stackItemFromTop( -1 );
-   if( HB_IS_INTEGER( pItem ) )
+   if( HB_IS_INTEGER(pItem) )
    {
       pItem->item.asLogical.value = static_cast<HB_LONG>( pItem->item.asInteger.value ) == lValue;
       pItem->type = HB_IT_LOGICAL;
    }
-   else if( HB_IS_LONG( pItem ) )
+   else if( HB_IS_LONG(pItem) )
    {
 #if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
       HB_BOOL f = pItem->item.asLong.value == static_cast<HB_MAXINT>( lValue );
@@ -11329,12 +11329,12 @@ HB_BOOL hb_xvmEqualInt( HB_LONG lValue )
 #endif
       pItem->type = HB_IT_LOGICAL;
    }
-   else if( HB_IS_DOUBLE( pItem ) )
+   else if( HB_IS_DOUBLE(pItem) )
    {
       pItem->item.asLogical.value = pItem->item.asDouble.value == static_cast<double>( lValue );
       pItem->type = HB_IT_LOGICAL;
    }
-   else if( HB_IS_NIL( pItem ) )
+   else if( HB_IS_NIL(pItem) )
    {
       pItem->item.asLogical.value = HB_FALSE;
       pItem->type = HB_IT_LOGICAL;
@@ -11373,12 +11373,12 @@ HB_BOOL hb_xvmEqualIntIs( HB_LONG lValue, HB_BOOL * pfValue )
    PHB_ITEM pItem;
 
    pItem = hb_stackItemFromTop( -1 );
-   if( HB_IS_INTEGER( pItem ) )
+   if( HB_IS_INTEGER(pItem) )
    {
       *pfValue = static_cast<HB_LONG>( pItem->item.asInteger.value ) == lValue;
       hb_stackDec();
    }
-   else if( HB_IS_LONG( pItem ) )
+   else if( HB_IS_LONG(pItem) )
    {
 #if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
       HB_BOOL f = pItem->item.asLong.value == static_cast<HB_MAXINT>( lValue );
@@ -11388,12 +11388,12 @@ HB_BOOL hb_xvmEqualIntIs( HB_LONG lValue, HB_BOOL * pfValue )
 #endif
       hb_stackDec();
    }
-   else if( HB_IS_DOUBLE( pItem ) )
+   else if( HB_IS_DOUBLE(pItem) )
    {
       *pfValue = pItem->item.asDouble.value == static_cast<double>( lValue );
       hb_stackDec();
    }
-   else if( HB_IS_NIL( pItem ) )
+   else if( HB_IS_NIL(pItem) )
    {
       *pfValue = HB_FALSE;
       hb_stackDec();
@@ -11447,12 +11447,12 @@ HB_BOOL hb_xvmNotEqualInt( HB_LONG lValue )
    PHB_ITEM pItem;
 
    pItem = hb_stackItemFromTop( -1 );
-   if( HB_IS_INTEGER( pItem ) )
+   if( HB_IS_INTEGER(pItem) )
    {
       pItem->item.asLogical.value = static_cast<HB_LONG>( pItem->item.asInteger.value ) != lValue;
       pItem->type = HB_IT_LOGICAL;
    }
-   else if( HB_IS_LONG( pItem ) )
+   else if( HB_IS_LONG(pItem) )
    {
 #if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
       HB_BOOL f = pItem->item.asLong.value != static_cast<HB_MAXINT>( lValue );
@@ -11462,12 +11462,12 @@ HB_BOOL hb_xvmNotEqualInt( HB_LONG lValue )
 #endif
       pItem->type = HB_IT_LOGICAL;
    }
-   else if( HB_IS_DOUBLE( pItem ) )
+   else if( HB_IS_DOUBLE(pItem) )
    {
       pItem->item.asLogical.value = pItem->item.asDouble.value != static_cast<double>( lValue );
       pItem->type = HB_IT_LOGICAL;
    }
-   else if( HB_IS_NIL( pItem ) )
+   else if( HB_IS_NIL(pItem) )
    {
       pItem->item.asLogical.value = HB_TRUE;
       pItem->type = HB_IT_LOGICAL;
@@ -11506,12 +11506,12 @@ HB_BOOL hb_xvmNotEqualIntIs( HB_LONG lValue, HB_BOOL * pfValue )
    PHB_ITEM pItem;
 
    pItem = hb_stackItemFromTop( -1 );
-   if( HB_IS_INTEGER( pItem ) )
+   if( HB_IS_INTEGER(pItem) )
    {
       *pfValue = static_cast<HB_LONG>( pItem->item.asInteger.value ) != lValue;
       hb_stackDec();
    }
-   else if( HB_IS_LONG( pItem ) )
+   else if( HB_IS_LONG(pItem) )
    {
 #if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
       HB_BOOL f = pItem->item.asLong.value != static_cast<HB_MAXINT>( lValue );
@@ -11521,12 +11521,12 @@ HB_BOOL hb_xvmNotEqualIntIs( HB_LONG lValue, HB_BOOL * pfValue )
 #endif
       hb_stackDec();
    }
-   else if( HB_IS_DOUBLE( pItem ) )
+   else if( HB_IS_DOUBLE(pItem) )
    {
       *pfValue = pItem->item.asDouble.value != static_cast<double>( lValue );
       hb_stackDec();
    }
-   else if( HB_IS_NIL( pItem ) )
+   else if( HB_IS_NIL(pItem) )
    {
       *pfValue = HB_TRUE;
       hb_stackDec();
@@ -11580,12 +11580,12 @@ HB_BOOL hb_xvmLessThenInt( HB_LONG lValue )
    PHB_ITEM pItem;
 
    pItem = hb_stackItemFromTop( -1 );
-   if( HB_IS_INTEGER( pItem ) )
+   if( HB_IS_INTEGER(pItem) )
    {
       pItem->item.asLogical.value = static_cast<HB_LONG>( pItem->item.asInteger.value ) < lValue;
       pItem->type = HB_IT_LOGICAL;
    }
-   else if( HB_IS_LONG( pItem ) )
+   else if( HB_IS_LONG(pItem) )
    {
 #if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
       HB_BOOL f = pItem->item.asLong.value < static_cast<HB_MAXINT>( lValue );
@@ -11595,7 +11595,7 @@ HB_BOOL hb_xvmLessThenInt( HB_LONG lValue )
 #endif
       pItem->type = HB_IT_LOGICAL;
    }
-   else if( HB_IS_DOUBLE( pItem ) )
+   else if( HB_IS_DOUBLE(pItem) )
    {
       pItem->item.asLogical.value = pItem->item.asDouble.value < static_cast<double>( lValue );
       pItem->type = HB_IT_LOGICAL;
@@ -11634,12 +11634,12 @@ HB_BOOL hb_xvmLessThenIntIs( HB_LONG lValue, HB_BOOL * pfValue )
    PHB_ITEM pItem;
 
    pItem = hb_stackItemFromTop( -1 );
-   if( HB_IS_INTEGER( pItem ) )
+   if( HB_IS_INTEGER(pItem) )
    {
       *pfValue = static_cast<HB_LONG>( pItem->item.asInteger.value ) < lValue;
       hb_stackDec();
    }
-   else if( HB_IS_LONG( pItem ) )
+   else if( HB_IS_LONG(pItem) )
    {
 #if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
       HB_BOOL f = pItem->item.asLong.value < static_cast<HB_MAXINT>( lValue );
@@ -11649,7 +11649,7 @@ HB_BOOL hb_xvmLessThenIntIs( HB_LONG lValue, HB_BOOL * pfValue )
 #endif
       hb_stackDec();
    }
-   else if( HB_IS_DOUBLE( pItem ) )
+   else if( HB_IS_DOUBLE(pItem) )
    {
       *pfValue = pItem->item.asDouble.value < static_cast<double>( lValue );
       hb_stackDec();
@@ -11703,12 +11703,12 @@ HB_BOOL hb_xvmLessEqualThenInt( HB_LONG lValue )
    PHB_ITEM pItem;
 
    pItem = hb_stackItemFromTop( -1 );
-   if( HB_IS_INTEGER( pItem ) )
+   if( HB_IS_INTEGER(pItem) )
    {
       pItem->item.asLogical.value = static_cast<HB_LONG>( pItem->item.asInteger.value ) <= lValue;
       pItem->type = HB_IT_LOGICAL;
    }
-   else if( HB_IS_LONG( pItem ) )
+   else if( HB_IS_LONG(pItem) )
    {
 #if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
       HB_BOOL f = pItem->item.asLong.value <= static_cast<HB_MAXINT>( lValue );
@@ -11718,7 +11718,7 @@ HB_BOOL hb_xvmLessEqualThenInt( HB_LONG lValue )
 #endif
       pItem->type = HB_IT_LOGICAL;
    }
-   else if( HB_IS_DOUBLE( pItem ) )
+   else if( HB_IS_DOUBLE(pItem) )
    {
       pItem->item.asLogical.value = pItem->item.asDouble.value <= static_cast<double>( lValue );
       pItem->type = HB_IT_LOGICAL;
@@ -11757,12 +11757,12 @@ HB_BOOL hb_xvmLessEqualThenIntIs( HB_LONG lValue, HB_BOOL * pfValue )
    PHB_ITEM pItem;
 
    pItem = hb_stackItemFromTop( -1 );
-   if( HB_IS_INTEGER( pItem ) )
+   if( HB_IS_INTEGER(pItem) )
    {
       *pfValue = static_cast<HB_LONG>( pItem->item.asInteger.value ) <= lValue;
       hb_stackDec();
    }
-   else if( HB_IS_LONG( pItem ) )
+   else if( HB_IS_LONG(pItem) )
    {
 #if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
       HB_BOOL f = pItem->item.asLong.value <= static_cast<HB_MAXINT>( lValue );
@@ -11772,7 +11772,7 @@ HB_BOOL hb_xvmLessEqualThenIntIs( HB_LONG lValue, HB_BOOL * pfValue )
 #endif
       hb_stackDec();
    }
-   else if( HB_IS_DOUBLE( pItem ) )
+   else if( HB_IS_DOUBLE(pItem) )
    {
       *pfValue = pItem->item.asDouble.value <= static_cast<double>( lValue );
       hb_stackDec();
@@ -11826,12 +11826,12 @@ HB_BOOL hb_xvmGreaterThenInt( HB_LONG lValue )
    PHB_ITEM pItem;
 
    pItem = hb_stackItemFromTop( -1 );
-   if( HB_IS_INTEGER( pItem ) )
+   if( HB_IS_INTEGER(pItem) )
    {
       pItem->item.asLogical.value = static_cast<HB_LONG>( pItem->item.asInteger.value ) > lValue;
       pItem->type = HB_IT_LOGICAL;
    }
-   else if( HB_IS_LONG( pItem ) )
+   else if( HB_IS_LONG(pItem) )
    {
 #if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
       HB_BOOL f = pItem->item.asLong.value > static_cast<HB_MAXINT>( lValue );
@@ -11841,7 +11841,7 @@ HB_BOOL hb_xvmGreaterThenInt( HB_LONG lValue )
 #endif
       pItem->type = HB_IT_LOGICAL;
    }
-   else if( HB_IS_DOUBLE( pItem ) )
+   else if( HB_IS_DOUBLE(pItem) )
    {
       pItem->item.asLogical.value = pItem->item.asDouble.value > static_cast<double>( lValue );
       pItem->type = HB_IT_LOGICAL;
@@ -11880,12 +11880,12 @@ HB_BOOL hb_xvmGreaterThenIntIs( HB_LONG lValue, HB_BOOL * pfValue )
    PHB_ITEM pItem;
 
    pItem = hb_stackItemFromTop( -1 );
-   if( HB_IS_INTEGER( pItem ) )
+   if( HB_IS_INTEGER(pItem) )
    {
       *pfValue = static_cast<HB_LONG>( pItem->item.asInteger.value ) > lValue;
       hb_stackDec();
    }
-   else if( HB_IS_LONG( pItem ) )
+   else if( HB_IS_LONG(pItem) )
    {
 #if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
       HB_BOOL f = pItem->item.asLong.value > static_cast<HB_MAXINT>( lValue );
@@ -11895,7 +11895,7 @@ HB_BOOL hb_xvmGreaterThenIntIs( HB_LONG lValue, HB_BOOL * pfValue )
 #endif
       hb_stackDec();
    }
-   else if( HB_IS_DOUBLE( pItem ) )
+   else if( HB_IS_DOUBLE(pItem) )
    {
       *pfValue = pItem->item.asDouble.value > static_cast<double>( lValue );
       hb_stackDec();
@@ -11949,12 +11949,12 @@ HB_BOOL hb_xvmGreaterEqualThenInt( HB_LONG lValue )
    PHB_ITEM pItem;
 
    pItem = hb_stackItemFromTop( -1 );
-   if( HB_IS_INTEGER( pItem ) )
+   if( HB_IS_INTEGER(pItem) )
    {
       pItem->item.asLogical.value = static_cast<HB_LONG>( pItem->item.asInteger.value ) >= lValue;
       pItem->type = HB_IT_LOGICAL;
    }
-   else if( HB_IS_LONG( pItem ) )
+   else if( HB_IS_LONG(pItem) )
    {
 #if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
       HB_BOOL f = pItem->item.asLong.value >= static_cast<HB_MAXINT>( lValue );
@@ -11964,7 +11964,7 @@ HB_BOOL hb_xvmGreaterEqualThenInt( HB_LONG lValue )
 #endif
       pItem->type = HB_IT_LOGICAL;
    }
-   else if( HB_IS_DOUBLE( pItem ) )
+   else if( HB_IS_DOUBLE(pItem) )
    {
       pItem->item.asLogical.value = pItem->item.asDouble.value >= static_cast<double>( lValue );
       pItem->type = HB_IT_LOGICAL;
@@ -12003,12 +12003,12 @@ HB_BOOL hb_xvmGreaterEqualThenIntIs( HB_LONG lValue, HB_BOOL * pfValue )
    PHB_ITEM pItem;
 
    pItem = hb_stackItemFromTop( -1 );
-   if( HB_IS_INTEGER( pItem ) )
+   if( HB_IS_INTEGER(pItem) )
    {
       *pfValue = static_cast<HB_LONG>( pItem->item.asInteger.value ) >= lValue;
       hb_stackDec();
    }
-   else if( HB_IS_LONG( pItem ) )
+   else if( HB_IS_LONG(pItem) )
    {
 #if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
       HB_BOOL f = pItem->item.asLong.value >= static_cast<HB_MAXINT>( lValue );
@@ -12018,7 +12018,7 @@ HB_BOOL hb_xvmGreaterEqualThenIntIs( HB_LONG lValue, HB_BOOL * pfValue )
 #endif
       hb_stackDec();
    }
-   else if( HB_IS_DOUBLE( pItem ) )
+   else if( HB_IS_DOUBLE(pItem) )
    {
       *pfValue = pItem->item.asDouble.value >= static_cast<double>( lValue );
       hb_stackDec();
@@ -12186,7 +12186,7 @@ HB_BOOL hb_xvmMultByInt( HB_LONG lValue )
 
    pValue = hb_stackItemFromTop( -1 );
 
-   if( HB_IS_NUMERIC( pValue ) )
+   if( HB_IS_NUMERIC(pValue) )
    {
       int iDec;
       double dValue = hb_itemGetNDDec( pValue, &iDec );
@@ -12278,7 +12278,7 @@ HB_BOOL hb_xvmDivideByInt( HB_LONG lDivisor )
 
    pValue = hb_stackItemFromTop( -1 );
 
-   if( HB_IS_NUMERIC( pValue ) )
+   if( HB_IS_NUMERIC(pValue) )
    {
       if( lDivisor == 0 )
       {
@@ -12334,7 +12334,7 @@ HB_BOOL hb_xvmModulusByInt( HB_LONG lDivisor )
 
    pValue = hb_stackItemFromTop( -1 );
 
-   if( HB_IS_NUMERIC( pValue ) )
+   if( HB_IS_NUMERIC(pValue) )
    {
       if( lDivisor == 0 )
       {
@@ -12350,7 +12350,7 @@ HB_BOOL hb_xvmModulusByInt( HB_LONG lDivisor )
             hb_itemRelease( pSubst );
          }
       }
-      else if( HB_IS_NUMINT( pValue ) )
+      else if( HB_IS_NUMINT(pValue) )
       {
          hb_itemPutND( pValue, static_cast<double>( HB_ITEM_GET_NUMINTRAW( pValue ) % lDivisor ) );
       }
@@ -12664,9 +12664,9 @@ static void hb_vmArrayItemPush( HB_SIZE nIndex )
 
    pArray = hb_stackItemFromTop( -1 );
 
-   if( HB_IS_ARRAY( pArray ) )
+   if( HB_IS_ARRAY(pArray) )
    {
-      if( HB_IS_OBJECT( pArray ) && hb_objHasOperator( pArray, HB_OO_OP_ARRAYINDEX ) )
+      if( HB_IS_OBJECT(pArray) && hb_objHasOperator( pArray, HB_OO_OP_ARRAYINDEX ) )
       {
          hb_vmPushNumInt( nIndex );
          hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pArray, pArray, hb_stackItemFromTop( -1 ), nullptr );
@@ -12685,7 +12685,7 @@ static void hb_vmArrayItemPush( HB_SIZE nIndex )
       else
       {
          hb_vmPushNumInt( nIndex );
-         if( ! HB_IS_OBJECT( pArray ) && hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pArray, pArray, hb_stackItemFromTop( -1 ), nullptr ) )
+         if( ! HB_IS_OBJECT(pArray) && hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pArray, pArray, hb_stackItemFromTop( -1 ), nullptr ) )
          {
             hb_stackPop();
          }
@@ -12699,7 +12699,7 @@ static void hb_vmArrayItemPush( HB_SIZE nIndex )
          }
       }
    }
-   else if( HB_IS_HASH( pArray ) )
+   else if( HB_IS_HASH(pArray) )
    {
       PHB_ITEM pValue, pIndex;
 
@@ -12749,14 +12749,14 @@ static void hb_vmArrayItemPop( HB_SIZE nIndex )
    pValue = hb_stackItemFromTop( -2 );
    pArray = hb_stackItemFromTop( -1 );
 
-   if( HB_IS_BYREF( pArray ) )
+   if( HB_IS_BYREF(pArray) )
    {
       pArray = hb_itemUnRef( pArray );
    }
 
-   if( HB_IS_ARRAY( pArray ) )
+   if( HB_IS_ARRAY(pArray) )
    {
-      if( HB_IS_OBJECT( pArray ) && hb_objHasOperator( pArray, HB_OO_OP_ARRAYINDEX ) )
+      if( HB_IS_OBJECT(pArray) && hb_objHasOperator( pArray, HB_OO_OP_ARRAYINDEX ) )
       {
          hb_vmPushNumInt( nIndex );
          hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pArray, pArray, hb_stackItemFromTop( -1 ), pValue );
@@ -12776,7 +12776,7 @@ static void hb_vmArrayItemPop( HB_SIZE nIndex )
       else
       {
          hb_vmPushNumInt( nIndex );
-         if( ! HB_IS_OBJECT( pArray ) && hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pArray, pArray, hb_stackItemFromTop( -1 ), pValue ) )
+         if( ! HB_IS_OBJECT(pArray) && hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pArray, pArray, hb_stackItemFromTop( -1 ), pValue ) )
          {
             hb_stackPop();
             hb_stackPop();
@@ -12792,7 +12792,7 @@ static void hb_vmArrayItemPop( HB_SIZE nIndex )
          }
       }
    }
-   else if( HB_IS_HASH( pArray ) )
+   else if( HB_IS_HASH(pArray) )
    {
       PHB_ITEM pDest;
 
@@ -13645,19 +13645,19 @@ HB_FUNC( __VMITEMID )
 
    if( pItem )
    {
-      if( HB_IS_ARRAY( pItem ) )
+      if( HB_IS_ARRAY(pItem) )
       {
          hb_retptr( hb_arrayId( pItem ) );
       }
-      else if( HB_IS_HASH( pItem ) )
+      else if( HB_IS_HASH(pItem) )
       {
          hb_retptr( hb_hashId( pItem ) );
       }
-      else if( HB_IS_BLOCK( pItem ) )
+      else if( HB_IS_BLOCK(pItem) )
       {
          hb_retptr( hb_codeblockId( pItem ) );
       }
-      else if( HB_IS_SYMBOL( pItem ) )
+      else if( HB_IS_SYMBOL(pItem) )
       {
          hb_retptr( pItem->item.asSymbol.value );
       }
@@ -13672,23 +13672,23 @@ HB_FUNC( __VMITEMREFS )
 
    if( pItem )
    {
-      if( HB_IS_ARRAY( pItem ) )
+      if( HB_IS_ARRAY(pItem) )
       {
          hb_retnint( hb_arrayRefs( pItem ) );
       }
-      else if( HB_IS_HASH( pItem ) )
+      else if( HB_IS_HASH(pItem) )
       {
          hb_retnint( hb_hashRefs( pItem ) );
       }
-      else if( HB_IS_BLOCK( pItem ) )
+      else if( HB_IS_BLOCK(pItem) )
       {
          hb_retnint( hb_codeblockRefs( pItem ) );
       }
-      else if( HB_IS_POINTER( pItem ) )
+      else if( HB_IS_POINTER(pItem) )
       {
          hb_retnint( hb_gcRefCount( pItem->item.asPointer.value ) );
       }
-      else if( HB_IS_STRING( pItem ) )
+      else if( HB_IS_STRING(pItem) )
       {
          hb_retnint( hb_xRefCount( pItem->item.asString.value ) );
       }
@@ -13740,7 +13740,7 @@ HB_FUNC( __RECOVERERRORBLOCK )
    {
       PHB_ITEM pItem = hb_stackItem( nRecoverBase );
 
-      if( HB_IS_POINTER( pItem ) &&
+      if( HB_IS_POINTER(pItem) &&
           pItem->item.asPointer.collect && pItem->item.asPointer.single &&
           hb_gcFuncs( pItem->item.asPointer.value ) == &s_gcSeqBlockFuncs )
       {

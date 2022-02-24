@@ -5486,7 +5486,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_FONTWEIGHT:
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, wnd->fontWeight );
-         if( pInfo->pNewVal && HB_IS_NUMERIC( pInfo->pNewVal ) )
+         if( pInfo->pNewVal && HB_IS_NUMERIC(pInfo->pNewVal) )
          {
             iVal = hb_itemGetNI( pInfo->pNewVal );
             switch( iVal )
@@ -5537,7 +5537,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_FONTNAME:
          pInfo->pResult = hb_itemPutC( pInfo->pResult, wnd->szFontName );
-         if( pInfo->pNewVal && HB_IS_STRING( pInfo->pNewVal ) ) /* TODO */
+         if( pInfo->pNewVal && HB_IS_STRING(pInfo->pNewVal) ) /* TODO */
          {
             if( wnd->szFontName )
             {
@@ -5549,7 +5549,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_FONTSEL:
          pInfo->pResult = hb_itemPutC( pInfo->pResult, wnd->szFontSel );
-         if( pInfo->pNewVal && HB_IS_STRING( pInfo->pNewVal ) )
+         if( pInfo->pNewVal && HB_IS_STRING(pInfo->pNewVal) )
          {
             HB_BOOL fInit;
             HB_XWC_XLIB_LOCK( wnd->dpy );
@@ -5567,7 +5567,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                            ( wnd->fFixMetric ? HB_GTI_FONTA_FIXMETRIC : 0 ) |
                            ( wnd->fClearBkg  ? HB_GTI_FONTA_CLRBKG    : 0 ) |
                            ( wnd->fDrawBox   ? HB_GTI_FONTA_DRAWBOX   : 0 ) );
-         if( pInfo->pNewVal && HB_IS_NUMERIC( pInfo->pNewVal ) )
+         if( pInfo->pNewVal && HB_IS_NUMERIC(pInfo->pNewVal) )
          {
             iVal = hb_itemGetNI( pInfo->pNewVal );
             wnd->fFixMetric = ( iVal & HB_GTI_FONTA_FIXMETRIC ) != 0;
@@ -5585,7 +5585,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_WINTITLE:
          pInfo->pResult = wnd->szTitle ? hb_itemPutStrLenUTF8( pInfo->pResult, wnd->szTitle, strlen( wnd->szTitle ) ) : hb_itemPutC( pInfo->pResult, nullptr );
-         if( pInfo->pNewVal && HB_IS_STRING( pInfo->pNewVal ) )
+         if( pInfo->pNewVal && HB_IS_STRING(pInfo->pNewVal) )
          {
             void * hString;
             HB_SIZE nLen;
@@ -5630,7 +5630,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_SELECTCOPY:
          pInfo->pResult = hb_itemPutL( pInfo->pResult, wnd->fSelectCopy );
-         if( pInfo->pNewVal && HB_IS_LOGICAL( pInfo->pNewVal ) )
+         if( pInfo->pNewVal && HB_IS_LOGICAL(pInfo->pNewVal) )
          {
             wnd->fSelectCopy = hb_itemGetL( pInfo->pNewVal );
          }
@@ -5638,7 +5638,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_CURSORBLINKRATE:
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, wnd->cursorBlinkRate );
-         if( pInfo->pNewVal && HB_IS_NUMERIC( pInfo->pNewVal ) )
+         if( pInfo->pNewVal && HB_IS_NUMERIC(pInfo->pNewVal) )
          {
             iVal = hb_itemGetNI( pInfo->pNewVal );
             wnd->cursorBlinkRate = HB_MAX( iVal, 0 );
@@ -5651,7 +5651,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_ALTENTER:
          pInfo->pResult = hb_itemPutL( pInfo->pResult, wnd->fAltEnter );
-         if( pInfo->pNewVal && HB_IS_LOGICAL( pInfo->pNewVal ) )
+         if( pInfo->pNewVal && HB_IS_LOGICAL(pInfo->pNewVal) )
          {
             wnd->fAltEnter = hb_itemGetL( pInfo->pNewVal );
          }
@@ -5659,7 +5659,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_ISFULLSCREEN:
          pInfo->pResult = hb_itemPutL( pInfo->pResult, wnd->fFullScreen );
-         if( pInfo->pNewVal && HB_IS_LOGICAL( pInfo->pNewVal ) && hb_itemGetL( pInfo->pNewVal ) != wnd->fFullScreen )
+         if( pInfo->pNewVal && HB_IS_LOGICAL(pInfo->pNewVal) && hb_itemGetL( pInfo->pNewVal ) != wnd->fFullScreen )
          {
             wnd->fFullScreen = ! wnd->fFullScreen;
             if( wnd->fInit )
@@ -5673,7 +5673,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_MAXIMIZED:
          pInfo->pResult = hb_itemPutL( pInfo->pResult, wnd->fMaximized );
-         if( pInfo->pNewVal && HB_IS_LOGICAL( pInfo->pNewVal ) && hb_itemGetL( pInfo->pNewVal ) != wnd->fMaximized )
+         if( pInfo->pNewVal && HB_IS_LOGICAL(pInfo->pNewVal) && hb_itemGetL( pInfo->pNewVal ) != wnd->fMaximized )
          {
             wnd->fMaximized = ! wnd->fMaximized;
             if( wnd->fInit )
@@ -5687,7 +5687,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_MINIMIZED:
          pInfo->pResult = hb_itemPutL( pInfo->pResult, wnd->fMinimized );
-         if( pInfo->pNewVal && HB_IS_LOGICAL( pInfo->pNewVal ) && hb_itemGetL( pInfo->pNewVal ) != wnd->fMinimized )
+         if( pInfo->pNewVal && HB_IS_LOGICAL(pInfo->pNewVal) && hb_itemGetL( pInfo->pNewVal ) != wnd->fMinimized )
          {
             wnd->fMinimized = ! wnd->fMinimized;
             if( wnd->fInit )
@@ -5710,7 +5710,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_CLOSABLE:
          pInfo->pResult = hb_itemPutL( pInfo->pResult, wnd->iCloseMode == 0 );
-         if( pInfo->pNewVal && HB_IS_LOGICAL( pInfo->pNewVal ) && ( hb_itemGetL( pInfo->pNewVal ) ? ( wnd->iCloseMode != 0 ) : ( wnd->iCloseMode == 0 ) ) )
+         if( pInfo->pNewVal && HB_IS_LOGICAL(pInfo->pNewVal) && ( hb_itemGetL( pInfo->pNewVal ) ? ( wnd->iCloseMode != 0 ) : ( wnd->iCloseMode == 0 ) ) )
          {
             iVal = wnd->iCloseMode;
             wnd->iCloseMode = iVal == 0 ? 1 : 0;
@@ -5725,7 +5725,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_CLOSEMODE:
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, wnd->iCloseMode );
-         if( pInfo->pNewVal && HB_IS_NUMERIC( pInfo->pNewVal ) )
+         if( pInfo->pNewVal && HB_IS_NUMERIC(pInfo->pNewVal) )
          {
             iVal = hb_itemGetNI( pInfo->pNewVal );
             if( iVal >= 0 && iVal <= 2 && wnd->iCloseMode != iVal )
@@ -5747,7 +5747,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_RESIZABLE:
          pInfo->pResult = hb_itemPutL( pInfo->pResult, wnd->fResizable );
-         if( pInfo->pNewVal && HB_IS_LOGICAL( pInfo->pNewVal ) && hb_itemGetL( pInfo->pNewVal ) != wnd->fResizable )
+         if( pInfo->pNewVal && HB_IS_LOGICAL(pInfo->pNewVal) && hb_itemGetL( pInfo->pNewVal ) != wnd->fResizable )
          {
             wnd->fResizable = ! wnd->fResizable;
             if( wnd->fInit )
@@ -5762,7 +5762,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_RESIZEMODE:
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, HB_GTI_RESIZEMODE_ROWS );
-         if( pInfo->pNewVal && HB_IS_NUMERIC( pInfo->pNewVal ) )
+         if( pInfo->pNewVal && HB_IS_NUMERIC(pInfo->pNewVal) )
          {
             iVal = hb_itemGetNI( pInfo->pNewVal );
             switch( iVal )
@@ -5833,12 +5833,12 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          hb_arraySetNI( pInfo->pResult, 1, x );
          hb_arraySetNI( pInfo->pResult, 2, y );
 
-         if( pInfo->pNewVal && HB_IS_NUMERIC( pInfo->pNewVal ) && pInfo->pNewVal2 && HB_IS_NUMERIC( pInfo->pNewVal2 ) )
+         if( pInfo->pNewVal && HB_IS_NUMERIC(pInfo->pNewVal) && pInfo->pNewVal2 && HB_IS_NUMERIC(pInfo->pNewVal2) )
          {
             x = hb_itemGetNI( pInfo->pNewVal );
             y = hb_itemGetNI( pInfo->pNewVal2 );
          }
-         else if( pInfo->pNewVal && HB_IS_ARRAY( pInfo->pNewVal ) && hb_arrayLen( pInfo->pNewVal ) == 2 )
+         else if( pInfo->pNewVal && HB_IS_ARRAY(pInfo->pNewVal) && hb_arrayLen( pInfo->pNewVal ) == 2 )
          {
             x = hb_arrayGetNI( pInfo->pNewVal, 1 );
             y = hb_arrayGetNI( pInfo->pNewVal, 2 );
@@ -5868,13 +5868,13 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
       }
       case HB_GTI_PALETTE:
-         if( pInfo->pNewVal && HB_IS_NUMERIC( pInfo->pNewVal ) )
+         if( pInfo->pNewVal && HB_IS_NUMERIC(pInfo->pNewVal) )
          {
             iVal = hb_itemGetNI( pInfo->pNewVal );
             if( iVal >= 0 && iVal < 16 )
             {
                pInfo->pResult = hb_itemPutNI( pInfo->pResult, wnd->colors[ iVal ].value );
-               if( pInfo->pNewVal2 && HB_IS_NUMERIC( pInfo->pNewVal2 ) )
+               if( pInfo->pNewVal2 && HB_IS_NUMERIC(pInfo->pNewVal2) )
                {
                   int iColor = hb_itemGetNI( pInfo->pNewVal2 );
                   if( iColor != wnd->colors[ iVal ].value )
@@ -5905,7 +5905,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             {
                hb_arraySetNI( pInfo->pResult, iVal + 1, wnd->colors[ iVal ].value );
             }
-            if( pInfo->pNewVal && HB_IS_ARRAY( pInfo->pNewVal ) && hb_arrayLen( pInfo->pNewVal ) == 16 )
+            if( pInfo->pNewVal && HB_IS_ARRAY(pInfo->pNewVal) && hb_arrayLen( pInfo->pNewVal ) == 16 )
             {
                for( iVal = 0; iVal < 16; iVal++ )
                {
@@ -5931,10 +5931,10 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_DISPIMAGE:
          if( wnd->window && pInfo->pNewVal &&
-             ( ( HB_IS_ARRAY( pInfo->pNewVal ) &&
+             ( ( HB_IS_ARRAY(pInfo->pNewVal) &&
                  hb_arrayLen( pInfo->pNewVal ) == static_cast<HB_SIZE>
                  ( ( hb_arrayGetType( pInfo->pNewVal, 4 ) & HB_IT_NUMERIC ) ? 4 : 3 ) ) ||
-               HB_IS_STRING( pInfo->pNewVal ) ) )
+               HB_IS_STRING(pInfo->pNewVal) ) )
          {
             XImage * xImage = nullptr;
             XWC_RECT rx;
@@ -6000,7 +6000,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             }
 
             /* fetch & validate area for displaying */
-            if( pInfo->pNewVal2 && HB_IS_ARRAY( pInfo->pNewVal2 ) )
+            if( pInfo->pNewVal2 && HB_IS_ARRAY(pInfo->pNewVal2) )
             {
                switch( hb_arrayLen( pInfo->pNewVal2 ) )
                {

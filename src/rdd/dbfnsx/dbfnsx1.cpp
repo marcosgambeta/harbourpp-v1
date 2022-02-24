@@ -4286,7 +4286,7 @@ static LPTAGINFO hb_nsxFindTag( NSXAREAP pArea, PHB_ITEM pTagItem, PHB_ITEM pBag
       return pArea->lpCurTag;
    }
 
-   fBag = HB_IS_STRING( pTagItem ) && hb_itemGetCLen( pBagItem ) > 0;
+   fBag = HB_IS_STRING(pTagItem) && hb_itemGetCLen( pBagItem ) > 0;
    if( fBag )
    {
       pIndex = hb_nsxFindBag( pArea, hb_itemGetCPtr( pBagItem ) );
@@ -8397,7 +8397,7 @@ static HB_ERRCODE hb_nsxOrderInfo( NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
             break;
          case DBOI_SKIPUNIQUE:
             pInfo->itmResult = hb_itemPutL( pInfo->itmResult,
-               hb_nsxOrdSkipUnique( pTag, pInfo->itmNewVal && HB_IS_NUMERIC( pInfo->itmNewVal ) ? hb_itemGetNL( pInfo->itmNewVal ) : 1 ) );
+               hb_nsxOrdSkipUnique( pTag, pInfo->itmNewVal && HB_IS_NUMERIC(pInfo->itmNewVal) ? hb_itemGetNL( pInfo->itmNewVal ) : 1 ) );
             break;
          case DBOI_SKIPEVAL:
          case DBOI_SKIPEVALBACK:
@@ -8579,7 +8579,7 @@ static HB_ERRCODE hb_nsxOrderInfo( NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
             break;
          case DBOI_SKIPUNIQUE:
             hb_itemPutL( pInfo->itmResult, SELF_SKIP( &pArea->dbfarea.area,
-                        pInfo->itmNewVal && HB_IS_NUMERIC( pInfo->itmNewVal ) ?
+                        pInfo->itmNewVal && HB_IS_NUMERIC(pInfo->itmNewVal) ?
                         hb_itemGetNL( pInfo->itmNewVal ) : 1 ) == HB_SUCCESS );
             break;
          case DBOI_SKIPEVAL:
@@ -8856,9 +8856,9 @@ static HB_ERRCODE hb_nsxOrderListFocus( NSXAREAP pArea, LPDBORDERINFO pOrderInfo
        */
 #ifdef HB_CLP_STRICT
       if( pTag ||
-          ( HB_IS_NUMERIC( pOrderInfo->itmOrder ) &&
+          ( HB_IS_NUMERIC(pOrderInfo->itmOrder) &&
             hb_itemGetNI( pOrderInfo->itmOrder ) == 0 ) ||
-          ( HB_IS_STRING( pOrderInfo->itmOrder ) &&
+          ( HB_IS_STRING(pOrderInfo->itmOrder) &&
             hb_itemGetCLen( pOrderInfo->itmOrder ) == 0 ) )
 #endif
          pArea->lpCurTag = pTag;

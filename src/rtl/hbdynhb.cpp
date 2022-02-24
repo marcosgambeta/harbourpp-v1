@@ -61,7 +61,7 @@ HB_FUNC( HB_DYNCALL )
 
    if( pParam )
    {
-      if( HB_IS_ARRAY( pParam ) )
+      if( HB_IS_ARRAY(pParam) )
       {
          HB_SIZE nLen = hb_arrayLen( pParam );
 
@@ -70,11 +70,11 @@ HB_FUNC( HB_DYNCALL )
             PHB_ITEM pFunction = hb_arrayGetItemPtr( pParam, 1 );
             HB_SIZE nBasePos = 2;
 
-            if( HB_IS_STRING( pFunction ) && nLen >= nBasePos )
+            if( HB_IS_STRING(pFunction) && nLen >= nBasePos )
             {
                PHB_ITEM pLibrary = hb_arrayGetItemPtr( pParam, nBasePos );
 
-               if( HB_IS_STRING( pLibrary ) )
+               if( HB_IS_STRING(pLibrary) )
                {
                   pLibraryHandle = hb_libLoad( pLibrary, nullptr );
                   if( pLibraryHandle )
@@ -112,7 +112,7 @@ HB_FUNC( HB_DYNCALL )
 
                for( HB_SIZE nPos = 0; nPos < nArgCount; ++nPos )
                {
-                  piArgFlags[ nPos ] = ( ( nPos + nBasePos ) <= nLen && HB_IS_NUMERIC( hb_arrayGetItemPtr( pParam, nPos + nBasePos ) ) ) ? hb_arrayGetNI( pParam, nPos + nBasePos ) : HB_DYN_CTYPE_DEFAULT;
+                  piArgFlags[ nPos ] = ( ( nPos + nBasePos ) <= nLen && HB_IS_NUMERIC(hb_arrayGetItemPtr( pParam, nPos + nBasePos )) ) ? hb_arrayGetNI( pParam, nPos + nBasePos ) : HB_DYN_CTYPE_DEFAULT;
                }
             }
          }

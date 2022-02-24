@@ -123,7 +123,7 @@ void hb_memvarValueDecRef( PHB_ITEM pMemvar )
 
    if( hb_xRefDec( pMemvar ) )
    {
-      if( HB_IS_COMPLEX( pMemvar ) )
+      if( HB_IS_COMPLEX(pMemvar) )
       {
          hb_itemClear( pMemvar );
       }
@@ -157,20 +157,20 @@ PHB_ITEM hb_memvarDetachLocal( PHB_ITEM pLocal )
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarDetachLocal(%p)", static_cast<void*>( pLocal ) ) );
 #endif
 
-   if( HB_IS_BYREF( pLocal ) )
+   if( HB_IS_BYREF(pLocal) )
    {
       do
       {
-         if( HB_IS_MEMVAR( pLocal ) || HB_IS_EXTREF( pLocal ) )
+         if( HB_IS_MEMVAR(pLocal) || HB_IS_EXTREF(pLocal) )
          {
             break;
          }
-         else if( HB_IS_ENUM( pLocal ) )
+         else if( HB_IS_ENUM(pLocal) )
          {
             if( ! pLocal->item.asEnum.valuePtr )
             {
-               PHB_ITEM pBase = HB_IS_BYREF( pLocal->item.asEnum.basePtr ) ? hb_itemUnRef( pLocal->item.asEnum.basePtr ) : pLocal->item.asEnum.basePtr;
-               if( HB_IS_ARRAY( pBase ) )
+               PHB_ITEM pBase = HB_IS_BYREF(pLocal->item.asEnum.basePtr) ? hb_itemUnRef( pLocal->item.asEnum.basePtr ) : pLocal->item.asEnum.basePtr;
+               if( HB_IS_ARRAY(pBase) )
                {
                   PHB_ITEM pItem = hb_itemNew( nullptr );
                   hb_arrayGetItemRef( pBase, pLocal->item.asEnum.offset, pItem );
@@ -186,7 +186,7 @@ PHB_ITEM hb_memvarDetachLocal( PHB_ITEM pLocal )
          }
          pLocal = hb_itemUnRefOnce( pLocal );
       }
-      while( HB_IS_BYREF( pLocal ) );
+      while( HB_IS_BYREF(pLocal) );
    }
 
    /* Change the value only if this variable is not referenced
@@ -194,7 +194,7 @@ PHB_ITEM hb_memvarDetachLocal( PHB_ITEM pLocal )
     * In this case we have to copy the current value to a global memory
     * pool so it can be shared by codeblocks
     */
-   if( ! HB_IS_MEMVAR( pLocal ) )
+   if( ! HB_IS_MEMVAR(pLocal) )
    {
       PHB_ITEM pMemvar = hb_memvarValueNew();
 
@@ -273,7 +273,7 @@ static void hb_memvarAddPrivate( PHB_DYNS pDynSym, PHB_ITEM pValue )
       pPrivateStack->stack[ pPrivateStack->count ].pDynSym = pDynSym;
       pPrivateStack->stack[ pPrivateStack->count++ ].pPrevMemvar = hb_dynsymGetMemvar( pDynSym );
 
-      if( pValue && HB_IS_MEMVAR( pValue ) )
+      if( pValue && HB_IS_MEMVAR(pValue) )
       {
          pMemvar = pValue->item.asMemvar.value;
          hb_xRefInc( pMemvar );
@@ -434,7 +434,7 @@ HB_ERRCODE hb_memvarGet( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
       {
          /* value is already created
           */
-         if( HB_IS_BYREF( pMemvar ) )
+         if( HB_IS_BYREF(pMemvar) )
          {
             hb_itemCopy( pItem, hb_itemUnRef( pMemvar ) );
          }
@@ -500,7 +500,7 @@ void hb_memvarGetRefer( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
 
       if( pMemvar )
       {
-         if( HB_IS_BYREF( pMemvar ) && ! HB_IS_ENUM( pMemvar ) )
+         if( HB_IS_BYREF(pMemvar) && ! HB_IS_ENUM(pMemvar) )
          {
             hb_itemCopy( pItem, pMemvar );
          }
@@ -527,7 +527,7 @@ void hb_memvarGetRefer( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
             pMemvar = hb_dynsymGetMemvar( pDyn );
             if( pMemvar )
             {
-               if( HB_IS_BYREF( pMemvar ) && ! HB_IS_ENUM( pMemvar ) )
+               if( HB_IS_BYREF(pMemvar) && ! HB_IS_ENUM(pMemvar) )
                {
                   hb_itemCopy( pItem, pMemvar );
                }
@@ -562,7 +562,7 @@ PHB_ITEM hb_memvarGetItem( PHB_SYMB pMemvarSymb )
 
       if( pMemvar )
       {
-         if( HB_IS_BYREF( pMemvar ) )
+         if( HB_IS_BYREF(pMemvar) )
          {
             return hb_itemUnRef( pMemvar );
          }
@@ -656,12 +656,12 @@ char * hb_memvarGetStrValuePtr( char * szVarName, HB_SIZE * pnLen )
       {
          /* variable contains some data
           */
-         if( HB_IS_BYREF( pMemvar ) )
+         if( HB_IS_BYREF(pMemvar) )
          {
             pMemvar = hb_itemUnRef( pMemvar );
          }
 
-         if( HB_IS_STRING( pMemvar ) )
+         if( HB_IS_STRING(pMemvar) )
          {
             szValue = pMemvar->item.asString.value;
             *pnLen = pMemvar->item.asString.length;
@@ -694,7 +694,7 @@ void hb_memvarCreateFromItem( PHB_ITEM pMemvar, int iScope, PHB_ITEM pValue )
    PHB_DYNS pDynVar = nullptr;
 
    /* find dynamic symbol or create one */
-   if( HB_IS_SYMBOL( pMemvar ) )
+   if( HB_IS_SYMBOL(pMemvar) )
    {
 #if 0
       pDynVar = hb_dynsymGet( pMemvar->item.asSymbol.value->szName );
@@ -702,7 +702,7 @@ void hb_memvarCreateFromItem( PHB_ITEM pMemvar, int iScope, PHB_ITEM pValue )
       pDynVar = pMemvar->item.asSymbol.value->pDynSym;
 #endif
    }
-   else if( HB_IS_STRING( pMemvar ) )
+   else if( HB_IS_STRING(pMemvar) )
    {
       pDynVar = hb_dynsymGet( pMemvar->item.asString.value );
    }
@@ -773,7 +773,7 @@ static void hb_memvarRelease( PHB_ITEM pMemvar )
    HB_TRACE( HB_TR_DEBUG, ( "hb_memvarRelease(%p)", static_cast<void*>( pMemvar ) ) );
 #endif
 
-   if( HB_IS_STRING( pMemvar ) )
+   if( HB_IS_STRING(pMemvar) )
    {
       PHB_DYNS pDynSymbol = hb_memvarFindSymbol( pMemvar->item.asString.value, pMemvar->item.asString.length );
 
@@ -1206,7 +1206,7 @@ HB_FUNC( __MVPUBLIC )
 
          if( pMemvar )
          {
-            if( HB_IS_ARRAY( pMemvar ) )
+            if( HB_IS_ARRAY(pMemvar) )
             {
                /* we are accepting an one-dimensional array of strings only
                 */
@@ -1240,7 +1240,7 @@ HB_FUNC( __MVPRIVATE )
 
          if( pMemvar )
          {
-            if( HB_IS_ARRAY( pMemvar ) )
+            if( HB_IS_ARRAY(pMemvar) )
             {
                /* we are accepting an one-dimensional array of strings only
                 */
@@ -1274,7 +1274,7 @@ HB_FUNC( __MVXRELEASE )
 
          if( pMemvar )
          {
-            if( HB_IS_ARRAY( pMemvar ) )
+            if( HB_IS_ARRAY(pMemvar) )
             {
                /* we are accepting an one-dimensional array of strings only
                 */
@@ -1436,7 +1436,7 @@ HB_FUNC( __MVGETDEF )
 
       if( pDynVar && ( pMemvar = hb_dynsymGetMemvar( pDynVar ) ) != nullptr )
       {
-         hb_itemReturn( HB_IS_BYREF( pMemvar ) ? hb_itemUnRef( pMemvar ) : pMemvar );
+         hb_itemReturn( HB_IS_BYREF(pMemvar) ? hb_itemUnRef( pMemvar ) : pMemvar );
       }
       else if( hb_pcount() >= 2 )
       {
@@ -1531,7 +1531,7 @@ static HB_DYNS_FUNC( hb_memvarSave )
          /* NOTE: Save only the first 10 characters of the name */
          hb_strncpy( reinterpret_cast<char*>( buffer ), pDynSymbol->pSymbol->szName, 10 );
 
-         if( HB_IS_STRING( pMemvar ) )
+         if( HB_IS_STRING(pMemvar) )
          {
             /* Store the closing zero byte, too */
             HB_SIZE nLen = hb_itemGetCLen( pMemvar ) + 1;
@@ -1552,7 +1552,7 @@ static HB_DYNS_FUNC( hb_memvarSave )
                hb_fileWrite( fhnd, "\0", 1, -1 );
             }
          }
-         else if( HB_IS_NUMERIC( pMemvar ) )
+         else if( HB_IS_NUMERIC(pMemvar) )
          {
             double dNumber;
             int iWidth;
@@ -1563,7 +1563,7 @@ static HB_DYNS_FUNC( hb_memvarSave )
             buffer[ 11 ] = 'N' + 128;
 #ifdef HB_CLP_STRICT
 /* NOTE: This is the buggy, but fully CA-Cl*pper compatible method. [vszakats] */
-            buffer[ 16 ] = static_cast<HB_BYTE>( iWidth ) + ( HB_IS_DOUBLE( pMemvar ) ? static_cast<HB_BYTE>( iDec + 1 ) : 0 );
+            buffer[ 16 ] = static_cast<HB_BYTE>( iWidth ) + ( HB_IS_DOUBLE(pMemvar) ? static_cast<HB_BYTE>( iDec + 1 ) : 0 );
 #else
 /* NOTE: This would be the correct method, but Clipper is buggy here. [vszakats] */
             buffer[ 16 ] = static_cast<HB_BYTE>( iWidth ) + ( iDec == 0 ? 0 : static_cast<HB_BYTE>( iDec + 1 ) );
@@ -1572,7 +1572,7 @@ static HB_DYNS_FUNC( hb_memvarSave )
             HB_PUT_LE_DOUBLE( &buffer[ HB_MEM_REC_LEN ], dNumber );
             hb_fileWrite( fhnd, buffer, HB_MEM_REC_LEN + HB_MEM_NUM_LEN, -1 );
          }
-         else if( HB_IS_DATE( pMemvar ) )
+         else if( HB_IS_DATE(pMemvar) )
          {
             double dNumber = static_cast<double>( hb_itemGetDL( pMemvar ) );
 
@@ -1582,7 +1582,7 @@ static HB_DYNS_FUNC( hb_memvarSave )
             HB_PUT_LE_DOUBLE( &buffer[ HB_MEM_REC_LEN ], dNumber );
             hb_fileWrite( fhnd, buffer, HB_MEM_REC_LEN + HB_MEM_NUM_LEN, -1 );
          }
-         else if( HB_IS_TIMESTAMP( pMemvar ) )
+         else if( HB_IS_TIMESTAMP(pMemvar) )
          {
             double dNumber = hb_itemGetTD( pMemvar );
 
@@ -1592,7 +1592,7 @@ static HB_DYNS_FUNC( hb_memvarSave )
             HB_PUT_LE_DOUBLE( &buffer[ HB_MEM_REC_LEN ], dNumber );
             hb_fileWrite( fhnd, buffer, HB_MEM_REC_LEN + HB_MEM_NUM_LEN, -1 );
          }
-         else if( HB_IS_LOGICAL( pMemvar ) )
+         else if( HB_IS_LOGICAL(pMemvar) )
          {
             buffer[ 11 ] = 'L' + 128;
             buffer[ 16 ] = 1;

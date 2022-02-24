@@ -4383,7 +4383,7 @@ static HB_BOOL hb_cdxCheckRecordFilter( CDXAREAP pArea, HB_ULONG ulRecNo )
       if( ! lResult && pArea->dbfarea.area.dbfi.itmCobExpr )
       {
          PHB_ITEM pResult = hb_vmEvalBlock( pArea->dbfarea.area.dbfi.itmCobExpr );
-         lResult = HB_IS_LOGICAL( pResult ) && ! hb_itemGetL( pResult );
+         lResult = HB_IS_LOGICAL(pResult) && ! hb_itemGetL( pResult );
       }
    }
    return ! lResult;
@@ -6377,7 +6377,7 @@ static HB_ULONG hb_cdxDBOIScopeEval( LPCDXTAG pTag, HB_EVALSCOPE_FUNC pFunc, voi
             pBtmScopeKey = pTag->bottomScopeKey;
 
    /* TODO: RT error when item type differ then Tag type */
-   if( ! pItemLo || HB_IS_NIL( pItemLo ) )
+   if( ! pItemLo || HB_IS_NIL(pItemLo) )
    {
       pTag->topScopeKey = nullptr;
    }
@@ -6386,7 +6386,7 @@ static HB_ULONG hb_cdxDBOIScopeEval( LPCDXTAG pTag, HB_EVALSCOPE_FUNC pFunc, voi
       pTag->topScopeKey = hb_cdxKeyPutItem( nullptr, pItemLo, CDX_IGNORE_REC_NUM, pTag, CDX_CMP_PREFIX );
    }
 
-   if( ! pItemHi || HB_IS_NIL( pItemHi ) )
+   if( ! pItemHi || HB_IS_NIL(pItemHi) )
    {
       pTag->bottomScopeKey = nullptr;
    }
@@ -9047,7 +9047,7 @@ static HB_ERRCODE hb_cdxOrderInfo( CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
    {
       case DBOI_CONDITION:
          pInfo->itmResult = hb_itemPutC( pInfo->itmResult, pTag ? pTag->ForExpr : nullptr );
-         if( pTag && pInfo->itmNewVal && HB_IS_STRING( pInfo->itmNewVal ) )
+         if( pTag && pInfo->itmNewVal && HB_IS_STRING(pInfo->itmNewVal) )
          {
             if( pTag->ForExpr != nullptr )
             {
@@ -9091,7 +9091,7 @@ static HB_ERRCODE hb_cdxOrderInfo( CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
          break;
 
       case DBOI_POSITION:
-         if( pInfo->itmNewVal && HB_IS_NUMERIC( pInfo->itmNewVal ) )
+         if( pInfo->itmNewVal && HB_IS_NUMERIC(pInfo->itmNewVal) )
          {
             pInfo->itmResult = hb_itemPutL( pInfo->itmResult, hb_cdxDBOIKeyGoto( pArea, pTag, hb_itemGetNL( pInfo->itmNewVal ), HB_TRUE ) == HB_SUCCESS );
          }
@@ -9104,7 +9104,7 @@ static HB_ERRCODE hb_cdxOrderInfo( CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
       /* TODO: is this ok?  DBOI_RECNO == DBOI_KEYNORAW ? No, it isn't. */
       /* case DBOI_RECNO: */
       case DBOI_KEYNORAW:
-         if( pInfo->itmNewVal && HB_IS_NUMERIC( pInfo->itmNewVal ) )
+         if( pInfo->itmNewVal && HB_IS_NUMERIC(pInfo->itmNewVal) )
          {
             pInfo->itmResult = hb_itemPutL( pInfo->itmResult,
                hb_cdxDBOIKeyGoto( pArea, pTag, hb_itemGetNL( pInfo->itmNewVal ), HB_FALSE ) == HB_SUCCESS );
@@ -9124,7 +9124,7 @@ static HB_ERRCODE hb_cdxOrderInfo( CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
          break;
 
       case DBOI_RELKEYPOS:
-         if( pInfo->itmNewVal && HB_IS_NUMERIC( pInfo->itmNewVal ) )
+         if( pInfo->itmNewVal && HB_IS_NUMERIC(pInfo->itmNewVal) )
          {
             hb_cdxDBOISetRelKeyPos( pArea, pTag, hb_itemGetND( pInfo->itmNewVal ) );
          }
@@ -9144,7 +9144,7 @@ static HB_ERRCODE hb_cdxOrderInfo( CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
 
       case DBOI_SKIPUNIQUE:
          pInfo->itmResult = hb_itemPutL( pInfo->itmResult, hb_cdxDBOISkipUnique( pArea, pTag,
-                        pInfo->itmNewVal && HB_IS_NUMERIC( pInfo->itmNewVal ) ? hb_itemGetNL( pInfo->itmNewVal ) : 1 ) == HB_SUCCESS );
+                        pInfo->itmNewVal && HB_IS_NUMERIC(pInfo->itmNewVal) ? hb_itemGetNL( pInfo->itmNewVal ) : 1 ) == HB_SUCCESS );
          break;
 
       case DBOI_SKIPEVAL:
@@ -9225,7 +9225,7 @@ static HB_ERRCODE hb_cdxOrderInfo( CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
 
       case DBOI_ISDESC:
          pInfo->itmResult = hb_itemPutL( pInfo->itmResult, pTag && ! pTag->UsrAscend );
-         if( pTag && pInfo->itmNewVal && HB_IS_LOGICAL( pInfo->itmNewVal ) )
+         if( pTag && pInfo->itmNewVal && HB_IS_LOGICAL(pInfo->itmNewVal) )
          {
             pTag->UsrAscend = ! hb_itemGetL( pInfo->itmNewVal );
             pTag->curKeyState &= ~( CDX_CURKEY_RAWPOS | CDX_CURKEY_LOGPOS );
@@ -9234,7 +9234,7 @@ static HB_ERRCODE hb_cdxOrderInfo( CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
 
       case DBOI_UNIQUE:
          pInfo->itmResult = hb_itemPutL( pInfo->itmResult, ( pTag ? pTag->UniqueKey || pTag->UsrUnique : HB_FALSE ) );
-         if( pTag && pInfo->itmNewVal && HB_IS_LOGICAL( pInfo->itmNewVal ) && ! pTag->UniqueKey )
+         if( pTag && pInfo->itmNewVal && HB_IS_LOGICAL(pInfo->itmNewVal) && ! pTag->UniqueKey )
          {
             pTag->UsrUnique = hb_itemGetL( pInfo->itmNewVal );
             pTag->curKeyState &= ~( CDX_CURKEY_RAWPOS | CDX_CURKEY_LOGPOS | CDX_CURKEY_RAWCNT | CDX_CURKEY_LOGCNT );
@@ -9497,7 +9497,7 @@ static HB_ERRCODE hb_cdxOrderInfo( CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
                      }
                   }
 #else
-                  if( pInfo->itmNewVal && ! HB_IS_NIL( pInfo->itmNewVal ) && pTag->Template )
+                  if( pInfo->itmNewVal && ! HB_IS_NIL(pInfo->itmNewVal) && pTag->Template )
                   {
                      pKey = hb_cdxKeyPutItem( nullptr, pInfo->itmNewVal, pArea->dbfarea.ulRecNo, pTag, CDX_CMP_EXACT );
                   }
@@ -9557,7 +9557,7 @@ static HB_ERRCODE hb_cdxOrderInfo( CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
                      }
                   }
 #else
-                  if( pInfo->itmNewVal && ! HB_IS_NIL( pInfo->itmNewVal ) && pTag->Template )
+                  if( pInfo->itmNewVal && ! HB_IS_NIL(pInfo->itmNewVal) && pTag->Template )
                   {
                      pKey = hb_cdxKeyPutItem( nullptr, pInfo->itmNewVal, pArea->dbfarea.ulRecNo, pTag, CDX_CMP_EXACT );
                   }

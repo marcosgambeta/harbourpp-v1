@@ -61,6 +61,6 @@ HB_FUNC( HB_PVALUE )
       {
          hb_itemCopyToRef( pItem, hb_param(2, HB_IT_ANY) );
       }
-      hb_itemReturn( HB_IS_BYREF( pItem ) ? hb_itemUnRef( pItem ) : pItem );
+      hb_itemReturn( HB_IS_BYREF(pItem) ? hb_itemUnRef( pItem ) : pItem );
    }
 }

@@ -610,7 +610,7 @@ void hb_stackPop( void )
       hb_errInternal( HB_EI_STACKUFLOW, nullptr, nullptr, nullptr );
    }
 
-   if( HB_IS_COMPLEX( *hb_stack.pPos ) )
+   if( HB_IS_COMPLEX(*hb_stack.pPos) )
    {
       hb_itemClear( *hb_stack.pPos );
    }
@@ -625,7 +625,7 @@ void hb_stackPopReturn( void )
 
    HB_STACK_TLS_PRELOAD
 
-   if( HB_IS_COMPLEX( &hb_stack.Return ) )
+   if( HB_IS_COMPLEX(&hb_stack.Return) )
    {
       hb_itemClear( &hb_stack.Return );
    }
@@ -761,7 +761,7 @@ void hb_stackRemove( HB_ISIZ nUntilPos )
    while( hb_stack.pPos > pEnd )
    {
       --hb_stack.pPos;
-      if( HB_IS_COMPLEX( *hb_stack.pPos ) )
+      if( HB_IS_COMPLEX(*hb_stack.pPos) )
       {
          hb_itemClear( *hb_stack.pPos );
       }
@@ -877,7 +877,7 @@ PHB_ITEM hb_stackNewFrame( PHB_STACK_STATE pFrame, HB_USHORT uiParams )
    pBase = hb_stack.pPos - uiParams - 2;
    pItem = *pBase;   /* procedure symbol */
 
-   if( ! HB_IS_SYMBOL( pItem ) )
+   if( ! HB_IS_SYMBOL(pItem) )
    {
 #if defined( HB_VM_DEBUG )
       hb_stackDispLocal();
@@ -914,7 +914,7 @@ void hb_stackOldFrame( PHB_STACK_STATE pFrame )
    do
    {
       --hb_stack.pPos;
-      if( HB_IS_COMPLEX( *hb_stack.pPos ) )
+      if( HB_IS_COMPLEX(*hb_stack.pPos) )
       {
          hb_itemClear( *hb_stack.pPos );
       }
@@ -1311,7 +1311,7 @@ HB_ISIZ hb_stackBaseProcOffset( int iLevel )
       nOffset = ( *( hb_stack.pItems + nOffset ) )->item.asSymbol.stackstate->nBaseItem;
    }
 
-   if( iLevel < 0 && ( nOffset > 0 || HB_IS_SYMBOL( *hb_stack.pItems ) ) )
+   if( iLevel < 0 && ( nOffset > 0 || HB_IS_SYMBOL(*hb_stack.pItems) ) )
    {
       return nOffset;
    }
@@ -1407,7 +1407,7 @@ static HB_DYNS_FUNC( hb_stackMemvarScan )
    HB_SYMBOL_UNUSED( Cargo );
 
    pMemvar = hb_dynsymGetMemvar( pDynSymbol );
-   if( pMemvar && HB_IS_GCITEM( pMemvar ) )
+   if( pMemvar && HB_IS_GCITEM(pMemvar) )
    {
       hb_gcItemRef( pMemvar );
    }
@@ -1426,7 +1426,7 @@ static void hb_stackIsMemvarRef( PHB_STACK pStack )
    while( nCount )
    {
       PHB_ITEM pMemvar = pPrivateStack->stack[ --nCount ].pPrevMemvar;
-      if( pMemvar && HB_IS_GCITEM( pMemvar ) )
+      if( pMemvar && HB_IS_GCITEM(pMemvar) )
       {
          hb_gcItemRef( pMemvar );
       }
@@ -1439,7 +1439,7 @@ static void hb_stackIsMemvarRef( PHB_STACK pStack )
       while( uiDynSym > 0 )
       {
          PHB_ITEM pMemvar = static_cast<PHB_ITEM>( pStack->pDynH[ --uiDynSym ].pMemvar );
-         if( pMemvar && HB_IS_GCITEM( pMemvar ) )
+         if( pMemvar && HB_IS_GCITEM(pMemvar) )
          {
             hb_gcItemRef( pMemvar );
          }
@@ -1460,7 +1460,7 @@ static void hb_stackIsTsdRef( PHB_STACK pStack, PHB_TSD_FUNC pCleanFunc )
       if( pStack->pTSD[ iTSD ].pTSD && pStack->pTSD[ iTSD ].pTSD->pCleanFunc == pCleanFunc )
       {
          PHB_ITEM pItem = static_cast<PHB_ITEM>( pStack->pTSD[ iTSD ].value );
-         if( HB_IS_GCITEM( pItem ) )
+         if( HB_IS_GCITEM(pItem) )
          {
             hb_gcItemRef( pItem );
          }
@@ -1487,7 +1487,7 @@ void hb_stackIsStackRef( void * pStackId, PHB_TSD_FUNC pCleanFunc )
    {
       PHB_ITEM pItem = pStack->pItems[ --nCount ];
 
-      if( HB_IS_GCITEM( pItem ) )
+      if( HB_IS_GCITEM(pItem) )
       {
          hb_gcItemRef( pItem );
       }

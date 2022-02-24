@@ -126,7 +126,7 @@ PHB_REGEX hb_regexGet( PHB_ITEM pRegExItm, int iFlags )
 
    if( pRegExItm )
    {
-      if( HB_IS_POINTER( pRegExItm ) )
+      if( HB_IS_POINTER(pRegExItm) )
       {
          pRegEx = static_cast<PHB_REGEX>( hb_itemGetPtrGC( pRegExItm, &s_gcRegexFuncs ) );
          if( pRegEx )
@@ -134,7 +134,7 @@ PHB_REGEX hb_regexGet( PHB_ITEM pRegExItm, int iFlags )
             fArgError = HB_FALSE;
          }
       }
-      else if( HB_IS_STRING( pRegExItm ) )
+      else if( HB_IS_STRING(pRegExItm) )
       {
          HB_SIZE nLen = hb_itemGetCLen( pRegExItm );
          const char * szRegEx = hb_itemGetCPtr( pRegExItm );

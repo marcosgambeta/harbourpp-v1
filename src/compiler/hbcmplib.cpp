@@ -93,7 +93,7 @@ static int s_pp_openFile( void * cargo, char * szFileName,
 
       if( pIncItem )
       {
-         if( HB_IS_HASH( pIncItem ) )
+         if( HB_IS_HASH(pIncItem) )
          {
             PHB_ITEM pFileItem = hb_hashGetCItemPtr( pIncItem, szFileName );
 
@@ -154,7 +154,7 @@ static void hb_compGenArgList( int iFirst, int iLast,
       pParam = hb_param(i, HB_IT_ARRAY | HB_IT_STRING);
       if( pParam )
       {
-         if( HB_IS_ARRAY( pParam ) )
+         if( HB_IS_ARRAY(pParam) )
          {
             HB_SIZE nPos = hb_arrayLen( pParam );
             if( nPos )
@@ -169,7 +169,7 @@ static void hb_compGenArgList( int iFirst, int iLast,
                while( --nPos );
             }
          }
-         else if( HB_IS_STRING( pParam ) )
+         else if( HB_IS_STRING(pParam) )
          {
             ++argc;
          }
@@ -183,7 +183,7 @@ static void hb_compGenArgList( int iFirst, int iLast,
       pParam = hb_param(i, HB_IT_ARRAY | HB_IT_STRING);
       if( pParam )
       {
-         if( HB_IS_ARRAY( pParam ) )
+         if( HB_IS_ARRAY(pParam) )
          {
             HB_SIZE nLen = hb_arrayLen( pParam );
             for( HB_SIZE nPos = 1; nPos <= nLen; ++nPos )
@@ -194,7 +194,7 @@ static void hb_compGenArgList( int iFirst, int iLast,
                }
             }
          }
-         else if( HB_IS_STRING( pParam ) )
+         else if( HB_IS_STRING(pParam) )
          {
             argv[ argc++ ] = hb_itemGetCPtr( pParam );
          }

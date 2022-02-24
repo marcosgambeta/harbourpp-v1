@@ -1152,7 +1152,7 @@ HB_FUNC( FIELDPUT )
       if( uiIndex > 0 )
       {
          PHB_ITEM pItem = hb_param(2, HB_IT_ANY);
-         if( pItem && ! HB_IS_NIL( pItem ) )
+         if( pItem && ! HB_IS_NIL(pItem) )
          {
             if( SELF_PUTVALUE( pArea, uiIndex, pItem ) == HB_SUCCESS )
             {
@@ -1327,13 +1327,13 @@ HB_FUNC( ORDBAGNAME )
       memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
 
       pOrderInfo.itmOrder = hb_param(1, HB_IT_ANY);
-      if( pOrderInfo.itmOrder && ! HB_IS_STRING( pOrderInfo.itmOrder ) )
+      if( pOrderInfo.itmOrder && ! HB_IS_STRING(pOrderInfo.itmOrder) )
       {
-         if( HB_IS_NIL( pOrderInfo.itmOrder ) )
+         if( HB_IS_NIL(pOrderInfo.itmOrder) )
          {
             pOrderInfo.itmOrder = nullptr;
          }
-         else if( HB_IS_NUMERIC( pOrderInfo.itmOrder ) )
+         else if( HB_IS_NUMERIC(pOrderInfo.itmOrder) )
          {
             if( hb_itemGetNI( pOrderInfo.itmOrder ) == 0 )
             {
@@ -1521,13 +1521,13 @@ HB_FUNC( ORDFOR )
    {
       DBORDERINFO pOrderInfo;
       pOrderInfo.itmOrder = hb_param(1, HB_IT_ANY);
-      if( pOrderInfo.itmOrder && ! HB_IS_STRING( pOrderInfo.itmOrder ) )
+      if( pOrderInfo.itmOrder && ! HB_IS_STRING(pOrderInfo.itmOrder) )
       {
-         if( HB_IS_NIL( pOrderInfo.itmOrder ) )
+         if( HB_IS_NIL(pOrderInfo.itmOrder) )
          {
             pOrderInfo.itmOrder = nullptr;
          }
-         else if( HB_IS_NUMERIC( pOrderInfo.itmOrder ) )
+         else if( HB_IS_NUMERIC(pOrderInfo.itmOrder) )
          {
             if( hb_itemGetNI( pOrderInfo.itmOrder ) == 0 )
             {
@@ -1563,13 +1563,13 @@ HB_FUNC( ORDKEY )
       DBORDERINFO pOrderInfo;
       memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
       pOrderInfo.itmOrder = hb_param(1, HB_IT_ANY);
-      if( pOrderInfo.itmOrder && ! HB_IS_STRING( pOrderInfo.itmOrder ) )
+      if( pOrderInfo.itmOrder && ! HB_IS_STRING(pOrderInfo.itmOrder) )
       {
-         if( HB_IS_NIL( pOrderInfo.itmOrder ) )
+         if( HB_IS_NIL(pOrderInfo.itmOrder) )
          {
             pOrderInfo.itmOrder = nullptr;
          }
-         else if( HB_IS_NUMERIC( pOrderInfo.itmOrder ) )
+         else if( HB_IS_NUMERIC(pOrderInfo.itmOrder) )
          {
             if( hb_itemGetNI( pOrderInfo.itmOrder ) == 0 )
             {
@@ -1622,7 +1622,7 @@ HB_FUNC( ORDLISTADD )
 
       errCode = SELF_ORDLSTADD( pArea, &pOrderInfo );
 
-      if( ! pOrderInfo.itmResult || HB_IS_NIL( pOrderInfo.itmResult ) )
+      if( ! pOrderInfo.itmResult || HB_IS_NIL(pOrderInfo.itmResult) )
       {
          hb_retl( errCode == HB_SUCCESS );
       }
@@ -1678,11 +1678,11 @@ HB_FUNC( ORDNAME )
       pOrderInfo.itmOrder = hb_param(1, HB_IT_ANY);
       if( pOrderInfo.itmOrder )
       {
-         if( HB_IS_NIL( pOrderInfo.itmOrder ) )
+         if( HB_IS_NIL(pOrderInfo.itmOrder) )
          {
             pOrderInfo.itmOrder = nullptr;
          }
-         else if( HB_IS_NUMERIC( pOrderInfo.itmOrder ) )
+         else if( HB_IS_NUMERIC(pOrderInfo.itmOrder) )
          {
             if( hb_itemGetNI( pOrderInfo.itmOrder ) == 0 )
             {

@@ -2149,7 +2149,7 @@ HB_BOOL hb_socketAddrFromItem( void ** pSockAddr, unsigned * puiLen, PHB_ITEM pA
    *pSockAddr = nullptr;
    *puiLen = 0;
 
-   if( pAddrItm && HB_IS_ARRAY( pAddrItm ) )
+   if( pAddrItm && HB_IS_ARRAY(pAddrItm) )
    {
       if( hb_arrayLen( pAddrItm ) >= 2 && ( hb_arrayGetType( pAddrItm, 1 ) & HB_IT_NUMERIC ) != 0 )
       {
@@ -2982,11 +2982,11 @@ static HB_SOCKET s_socketSelectCallback( PHB_ITEM pItem )
 
    if( pItem )
    {
-      if( HB_IS_NUMERIC( pItem ) )
+      if( HB_IS_NUMERIC(pItem) )
       {
          sd = static_cast<HB_SOCKET>( hb_itemGetNInt( pItem ) );
       }
-      else if( HB_IS_POINTER( pItem ) )
+      else if( HB_IS_POINTER(pItem) )
       {
          sd = hb_socketItemGet( pItem );
          if( sd == HB_NO_SOCKET )

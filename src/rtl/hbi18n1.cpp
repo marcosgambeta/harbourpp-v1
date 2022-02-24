@@ -306,7 +306,7 @@ static PHB_ITEM hb_i18n_pluralexp_compile( PHB_ITEM pExp )
          if( hb_vmRequestQuery() == 0 )
          {
             pExp = hb_stackItemFromTop( -1 );
-            if( HB_IS_BLOCK( pExp ) )
+            if( HB_IS_BLOCK(pExp) )
             {
                pBlock = hb_itemNew( pExp );
             }
@@ -398,7 +398,7 @@ static PHB_I18N_TRANS hb_i18n_initialize( PHB_ITEM pTable )
 {
    PHB_I18N_TRANS pI18N = nullptr;
 
-   if( HB_IS_HASH( pTable ) )
+   if( HB_IS_HASH(pTable) )
    {
       PHB_ITEM pKey, pContext, pDefContext = nullptr;
 
@@ -519,7 +519,7 @@ static PHB_I18N_TRANS hb_i18n_deserialize( PHB_ITEM pItem )
 {
    PHB_I18N_TRANS pI18N = nullptr;
 
-   if( pItem && HB_IS_STRING( pItem ) )
+   if( pItem && HB_IS_STRING(pItem) )
    {
       HB_SIZE nLen = hb_itemGetCLen( pItem );
       const char * pBuffer = hb_itemGetCPtr( pItem );
@@ -636,7 +636,7 @@ static HB_BOOL hb_i18n_setpluralform( PHB_I18N_TRANS pI18N, PHB_ITEM pForm, HB_B
 
    if( pI18N && pForm )
    {
-      if( HB_IS_EVALITEM( pForm ) )
+      if( HB_IS_EVALITEM(pForm) )
       {
          if( fBase )
          {
@@ -662,7 +662,7 @@ static HB_BOOL hb_i18n_setpluralform( PHB_I18N_TRANS pI18N, PHB_ITEM pForm, HB_B
          }
          fResult = HB_TRUE;
       }
-      else if( HB_IS_STRING( pForm ) )
+      else if( HB_IS_STRING(pForm) )
       {
          int iForm = hb_i18n_pluralformfind( hb_itemGetCPtr( pForm ) );
          if( iForm )
@@ -741,11 +741,11 @@ static const char * hb_i18n_setcodepage( PHB_I18N_TRANS pI18N, const char * szCd
                   else
                   {
                      PHB_ITEM pResult = hb_hashGetValueAt( pContext, u );
-                     if( HB_IS_STRING( pResult ) )
+                     if( HB_IS_STRING(pResult) )
                      {
                         hb_i18n_transitm( pResult, cdpage, cdp );
                      }
-                     else if( HB_IS_ARRAY( pResult ) )
+                     else if( HB_IS_ARRAY(pResult) )
                      {
                         HB_SIZE nTrans = hb_arrayLen( pResult ), u2;
                         for( u2 = 1; u2 <= nTrans; ++u2 )
@@ -793,7 +793,7 @@ static const char * hb_i18n_description( PHB_I18N_TRANS pI18N, PHB_ITEM pItem )
       pValue = hb_hashGetItemPtr( pI18N->table, pKey, 0 );
       if( pItem )
       {
-         if( HB_IS_STRING( pItem ) )
+         if( HB_IS_STRING(pItem) )
          {
             if( pValue )
             {
@@ -847,11 +847,11 @@ PHB_ITEM hb_i18n_gettext( PHB_ITEM pMsgID, PHB_ITEM pContext )
          pTable = hb_hashGetItemPtr( pTable, pMsgID, 0 );
          if( pTable )
          {
-            if( HB_IS_ARRAY( pTable ) )
+            if( HB_IS_ARRAY(pTable) )
             {
                pTable = hb_arrayGetItemPtr( pTable, 1 );
             }
-            if( pTable && HB_IS_STRING( pTable ) )
+            if( pTable && HB_IS_STRING(pTable) )
             {
                pMsgID = pTable;
                cdpage = pI18N->cdpage;
@@ -862,7 +862,7 @@ PHB_ITEM hb_i18n_gettext( PHB_ITEM pMsgID, PHB_ITEM pContext )
 
    if( pMsgID )
    {
-      if( HB_IS_STRING( pMsgID ) )
+      if( HB_IS_STRING(pMsgID) )
       {
          if( cdpage )
          {
@@ -905,11 +905,11 @@ PHB_ITEM hb_i18n_ngettext( PHB_ITEM pNum, PHB_ITEM pMsgID, PHB_ITEM pContext )
 
       if( pTable )
       {
-         PHB_ITEM pMsg = HB_IS_ARRAY( pMsgID ) ? hb_arrayGetItemPtr( pMsgID, 1 ) : pMsgID;
-         pTable = pMsg && HB_IS_STRING( pMsg ) ? hb_hashGetItemPtr( pTable, pMsg, 0 ) : nullptr;
+         PHB_ITEM pMsg = HB_IS_ARRAY(pMsgID) ? hb_arrayGetItemPtr( pMsgID, 1 ) : pMsgID;
+         pTable = pMsg && HB_IS_STRING(pMsg) ? hb_hashGetItemPtr( pTable, pMsg, 0 ) : nullptr;
          if( pTable )
          {
-            if( HB_IS_STRING( pTable ) || ( HB_IS_ARRAY( pTable ) && ( hb_arrayGetType( pTable, 1 ) & HB_IT_STRING ) != 0 ) )
+            if( HB_IS_STRING(pTable) || ( HB_IS_ARRAY(pTable) && ( hb_arrayGetType( pTable, 1 ) & HB_IT_STRING ) != 0 ) )
             {
                pMsgID = pTable;
                cdpage = pI18N->cdpage;
@@ -920,7 +920,7 @@ PHB_ITEM hb_i18n_ngettext( PHB_ITEM pNum, PHB_ITEM pMsgID, PHB_ITEM pContext )
       }
    }
 
-   if( pMsgID && HB_IS_ARRAY( pMsgID ) )
+   if( pMsgID && HB_IS_ARRAY(pMsgID) )
    {
       long lIndex;
 
@@ -948,7 +948,7 @@ PHB_ITEM hb_i18n_ngettext( PHB_ITEM pNum, PHB_ITEM pMsgID, PHB_ITEM pContext )
 
    if( pMsgID )
    {
-      if( HB_IS_STRING( pMsgID ) )
+      if( HB_IS_STRING(pMsgID) )
       {
          if( cdpage )
          {
@@ -987,7 +987,7 @@ HB_FUNC( HB_I18N_GETTEXT )
       pMsgID = hb_i18n_gettext( pMsgID, pContext );
    }
 
-   if( pMsgID && HB_IS_STRING( pMsgID ) )
+   if( pMsgID && HB_IS_STRING(pMsgID) )
    {
       hb_itemReturn( pMsgID );
    }
@@ -1012,7 +1012,7 @@ HB_FUNC( HB_I18N_NGETTEXT )
       pMsgID = hb_i18n_ngettext( pNum, pMsgID, pContext );
    }
 
-   if( pMsgID && HB_IS_STRING( pMsgID ) )
+   if( pMsgID && HB_IS_STRING(pMsgID) )
    {
       hb_itemReturn( pMsgID );
    }
@@ -1115,14 +1115,14 @@ HB_FUNC( HB_I18N_ADDTEXT )
 
       if( pMsgID && pTrans )
       {
-         if( HB_IS_ARRAY( pTrans ) )
+         if( HB_IS_ARRAY(pTrans) )
          {
             HB_SIZE nLen = hb_arrayLen( pTrans );
             if( nLen != 0 )
             {
                for( HB_SIZE n = 1; n <= nLen; ++n )
                {
-                  if( ! HB_IS_STRING( hb_arrayGetItemPtr( pTrans, n ) ) )
+                  if( ! HB_IS_STRING(hb_arrayGetItemPtr( pTrans, n )) )
                   {
                      pTrans = nullptr;
                      break;

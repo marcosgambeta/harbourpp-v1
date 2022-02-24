@@ -841,30 +841,30 @@ void hb_sockexSetAutoFlush( PHB_SOCKEX pSock, int iAutoFlush )
 
 void hb_socekxParamsGetStd( PHB_ITEM pParams, const void ** pKeydata, int * pKeylen, const void ** pIV, int * pIVlen, int * pLevel, int * pStrategy )
 {
-   if( pParams && HB_IS_HASH( pParams ) )
+   if( pParams && HB_IS_HASH(pParams) )
    {
       PHB_ITEM pItem;
 
-      if( pKeydata && pKeylen && ( pItem = hb_hashGetCItemPtr( pParams, "key" ) ) != nullptr &&  HB_IS_STRING( pItem ) )
+      if( pKeydata && pKeylen && ( pItem = hb_hashGetCItemPtr( pParams, "key" ) ) != nullptr &&  HB_IS_STRING(pItem) )
       {
          *pKeydata = hb_itemGetCPtr( pItem );
          *pKeylen  = static_cast<int>( hb_itemGetCLen( pItem ) );
       }
-      else if( pKeydata && pKeylen && ( pItem = hb_hashGetCItemPtr( pParams, "pass" ) ) != nullptr && HB_IS_STRING( pItem ) )
+      else if( pKeydata && pKeylen && ( pItem = hb_hashGetCItemPtr( pParams, "pass" ) ) != nullptr && HB_IS_STRING(pItem) )
       {
          *pKeydata = hb_itemGetCPtr( pItem );
          *pKeylen  = static_cast<int>( hb_itemGetCLen( pItem ) );
       }
-      if( pIV && pIVlen && ( pItem = hb_hashGetCItemPtr( pParams, "iv" ) ) != nullptr && HB_IS_STRING( pItem ) )
+      if( pIV && pIVlen && ( pItem = hb_hashGetCItemPtr( pParams, "iv" ) ) != nullptr && HB_IS_STRING(pItem) )
       {
          *pIV    = hb_itemGetCPtr( pItem );
          *pIVlen = static_cast<int>( hb_itemGetCLen( pItem ) );
       }
-      if( pLevel && ( pItem = hb_hashGetCItemPtr( pParams, "zlib" ) ) != nullptr && HB_IS_NUMERIC( pItem ) )
+      if( pLevel && ( pItem = hb_hashGetCItemPtr( pParams, "zlib" ) ) != nullptr && HB_IS_NUMERIC(pItem) )
       {
          *pLevel = hb_itemGetNI( pItem );
       }
-      if( pStrategy && ( pItem = hb_hashGetCItemPtr( pParams, "zs" ) ) != nullptr && HB_IS_NUMERIC( pItem ) )
+      if( pStrategy && ( pItem = hb_hashGetCItemPtr( pParams, "zs" ) ) != nullptr && HB_IS_NUMERIC(pItem) )
       {
          *pStrategy = hb_itemGetNI( pItem );
       }
@@ -873,22 +873,22 @@ void hb_socekxParamsGetStd( PHB_ITEM pParams, const void ** pKeydata, int * pKey
 
 void hb_socekxParamsInit( PHB_SOCKEX pSock, PHB_ITEM pParams )
 {
-   if( pParams && HB_IS_HASH( pParams ) )
+   if( pParams && HB_IS_HASH(pParams) )
    {
       PHB_ITEM pItem;
 
-      if( ( pItem = hb_hashGetCItemPtr( pParams, "readahead" ) ) != nullptr && HB_IS_NUMERIC( pItem ) )
+      if( ( pItem = hb_hashGetCItemPtr( pParams, "readahead" ) ) != nullptr && HB_IS_NUMERIC(pItem) )
       {
          if( pSock->buffer == nullptr )
          {
             pSock->readahead = hb_itemGetNL( pItem );
          }
       }
-      if( ( pItem = hb_hashGetCItemPtr( pParams, "flush" ) ) != nullptr && HB_IS_NUMERIC( pItem ) )
+      if( ( pItem = hb_hashGetCItemPtr( pParams, "flush" ) ) != nullptr && HB_IS_NUMERIC(pItem) )
       {
          pSock->iAutoFlush = hb_itemGetNI( pItem );
       }
-      if( ( pItem = hb_hashGetCItemPtr( pParams, "redir" ) ) != nullptr && HB_IS_LOGICAL( pItem ) )
+      if( ( pItem = hb_hashGetCItemPtr( pParams, "redir" ) ) != nullptr && HB_IS_LOGICAL(pItem) )
       {
          pSock->fRedirAll = hb_itemGetL( pItem );
       }

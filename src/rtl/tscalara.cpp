@@ -57,7 +57,7 @@ HB_FUNC( HBARRAY )
    {
       PHB_ITEM pItem = hb_param(-1, HB_IT_ANY);
 
-      if( HB_IS_OBJECT( pItem ) )
+      if( HB_IS_OBJECT(pItem) )
       {
          hb_vmPushDynSym( hb_dynsymGetCase( "NEW" ) );
          hb_vmPush( pItem );
