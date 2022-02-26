@@ -59,15 +59,15 @@ HB_FUNC( HB_STRXOR )
       const char * pStr1;
       char *       pRet;
 
-      pStr1 = hb_itemGetCPtr( pItem );
-      nLen1 = hb_itemGetCLen( pItem );
+      pStr1 = hb_itemGetCPtr(pItem);
+      nLen1 = hb_itemGetCLen(pItem);
 
       if( ( pItem2 = hb_param(2, HB_IT_STRING) ) != nullptr )
       {
-         HB_SIZE nLen2 = hb_itemGetCLen( pItem2 );
+         HB_SIZE nLen2 = hb_itemGetCLen(pItem2);
          if( nLen2 )
          {
-            const char * pStr2 = hb_itemGetCPtr( pItem2 );
+            const char * pStr2 = hb_itemGetCPtr(pItem2);
             HB_SIZE n2;
 
             pRet = static_cast<char*>( hb_xgrab( nLen1 + 1 ) );
@@ -92,7 +92,7 @@ HB_FUNC( HB_STRXOR )
       }
       else if( ( pItem2 = hb_param(2, HB_IT_NUMERIC) ) != nullptr )
       {
-         char bChar = static_cast<char>( hb_itemGetNI( pItem2 ) );
+         char bChar = static_cast<char>( hb_itemGetNI(pItem2) );
 
          if( bChar )
          {

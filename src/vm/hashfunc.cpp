@@ -259,7 +259,7 @@ HB_FUNC( HB_HKEYAT )
 
    if( pHash && pPos )
    {
-      PHB_ITEM pKey = hb_hashGetKeyAt( pHash, hb_itemGetNS( pPos ) );
+      PHB_ITEM pKey = hb_hashGetKeyAt( pHash, hb_itemGetNS(pPos) );
       if( pKey )
       {
          hb_itemReturn( pKey );
@@ -283,7 +283,7 @@ HB_FUNC( HB_HVALUEAT )
 
    if( pHash && pPos )
    {
-      PHB_ITEM pItem = hb_hashGetValueAt( pHash, hb_itemGetNS( pPos ) );
+      PHB_ITEM pItem = hb_hashGetValueAt( pHash, hb_itemGetNS(pPos) );
       if( pItem )
       {
          if( pValue )
@@ -314,8 +314,8 @@ HB_FUNC( HB_HPAIRAT )
 
    if( pHash && pPos )
    {
-      PHB_ITEM pKey = hb_hashGetKeyAt( pHash, hb_itemGetNS( pPos ) );
-      PHB_ITEM pValue = hb_hashGetValueAt( pHash, hb_itemGetNS( pPos ) );
+      PHB_ITEM pKey = hb_hashGetKeyAt( pHash, hb_itemGetNS(pPos) );
+      PHB_ITEM pValue = hb_hashGetValueAt( pHash, hb_itemGetNS(pPos) );
       if( pKey && pValue )
       {
          PHB_ITEM pDstKey = hb_param(3, HB_IT_BYREF);
@@ -351,7 +351,7 @@ HB_FUNC( HB_HDELAT )
 
    if( pHash && pPos )
    {
-      if( hb_hashDelAt( pHash, hb_itemGetNS( pPos ) ) )
+      if( hb_hashDelAt( pHash, hb_itemGetNS(pPos) ) )
       {
          hb_itemReturn( pHash );
       }
@@ -515,7 +515,7 @@ HB_FUNC( HB_HMERGE )
                   hb_vmSend( 3 );
                   {
                      PHB_ITEM pReturn = hb_stackReturnItem();
-                     if( HB_IS_LOGICAL(pReturn) && hb_itemGetL( pReturn ) )
+                     if( HB_IS_LOGICAL(pReturn) && hb_itemGetL(pReturn) )
                      {
                         hb_hashAdd( pDest, pKey, pValue );
                      }
@@ -529,7 +529,7 @@ HB_FUNC( HB_HMERGE )
          }
          else
          {
-            hb_hashJoin( pDest, pSource, pAction ? hb_itemGetNI( pAction ) : HB_HASH_UNION );
+            hb_hashJoin( pDest, pSource, pAction ? hb_itemGetNI(pAction) : HB_HASH_UNION );
          }
       }
       hb_itemReturn( pDest );
@@ -617,7 +617,7 @@ HB_FUNC( HB_HSCAN )
                hb_vmSend( 3 );
                {
                   PHB_ITEM pReturn = hb_stackReturnItem();
-                  if( HB_IS_LOGICAL(pReturn) && hb_itemGetL( pReturn ) )
+                  if( HB_IS_LOGICAL(pReturn) && hb_itemGetL(pReturn) )
                   {
                      fFound = HB_TRUE;
                      break;
@@ -653,13 +653,13 @@ HB_FUNC( HB_HSCAN )
       }
       else if( HB_IS_NUMINT(pValue) )
       {
-         HB_MAXINT nValue = hb_itemGetNInt( pValue );
+         HB_MAXINT nValue = hb_itemGetNInt(pValue);
          while( nCount-- )
          {
             PHB_ITEM pItem = hb_hashGetValueAt( pHash, nStart );
             if( pItem )
             {
-               if( HB_IS_NUMERIC(pItem) && hb_itemGetNInt( pItem ) == nValue && hb_itemGetND( pItem ) == static_cast<double>( nValue ) )
+               if( HB_IS_NUMERIC(pItem) && hb_itemGetNInt(pItem) == nValue && hb_itemGetND(pItem) == static_cast<double>( nValue ) )
                {
                   fFound = HB_TRUE;
                   break;
@@ -674,13 +674,13 @@ HB_FUNC( HB_HSCAN )
       }
       else if( HB_IS_NUMERIC(pValue) )
       {
-         double dValue = hb_itemGetND( pValue );
+         double dValue = hb_itemGetND(pValue);
          while( nCount-- )
          {
             PHB_ITEM pItem = hb_hashGetValueAt( pHash, nStart );
             if( pItem )
             {
-               if( HB_IS_NUMERIC(pItem) && hb_itemGetND( pItem ) == dValue )
+               if( HB_IS_NUMERIC(pItem) && hb_itemGetND(pItem) == dValue )
                {
                   fFound = HB_TRUE;
                   break;
@@ -717,13 +717,13 @@ HB_FUNC( HB_HSCAN )
       }
       else if( HB_IS_LOGICAL(pValue) )
       {
-         HB_BOOL fValue = hb_itemGetDL( pValue );
+         HB_BOOL fValue = hb_itemGetDL(pValue);
          while( nCount-- )
          {
             PHB_ITEM pItem = hb_hashGetValueAt( pHash, nStart );
             if( pItem )
             {
-               if( HB_IS_LOGICAL(pItem) && hb_itemGetL( pItem ) == fValue )
+               if( HB_IS_LOGICAL(pItem) && hb_itemGetL(pItem) == fValue )
                {
                   fFound = HB_TRUE;
                   break;
@@ -855,7 +855,7 @@ HB_FUNC( HB_HCASEMATCH )
 
       if( pValue )
       {
-         if( hb_itemGetL( pValue ) )
+         if( hb_itemGetL(pValue) )
          {
             if( ( iFlags & HB_HASH_IGNORECASE ) != 0 )
             {
@@ -889,7 +889,7 @@ HB_FUNC( HB_HBINARY )
 
       if( pValue )
       {
-         if( hb_itemGetL( pValue ) )
+         if( hb_itemGetL(pValue) )
          {
             if( ( iFlags & HB_HASH_BINARY ) == 0 )
             {
@@ -930,7 +930,7 @@ HB_FUNC( HB_HAUTOADD )
       {
          if( HB_IS_LOGICAL(pValue) )
          {
-            if( hb_itemGetL( pValue ) )
+            if( hb_itemGetL(pValue) )
             {
                hb_hashSetFlags( pHash, hb_hashGetDefault( pHash ) ? HB_HASH_AUTOADD_ALWAYS : HB_HASH_AUTOADD_ASSIGN );
             }
@@ -941,7 +941,7 @@ HB_FUNC( HB_HAUTOADD )
          }
          else
          {
-            int iNewFlags = hb_itemGetNI( pValue );
+            int iNewFlags = hb_itemGetNI(pValue);
             if( ( iNewFlags | iOldFlags ) != iNewFlags )
             {
                hb_hashClearFlags( pHash, iOldFlags );
@@ -972,7 +972,7 @@ HB_FUNC( HB_HKEEPORDER )
 
       if( pValue )
       {
-         if( hb_itemGetL( pValue ) )
+         if( hb_itemGetL(pValue) )
          {
             if( ( iFlags & HB_HASH_KEEPORDER ) == 0 )
             {
@@ -1001,7 +1001,7 @@ HB_FUNC( HB_HALLOCATE )
 
    if( pHash && pValue )
    {
-      HB_ISIZ nMem = hb_itemGetNS( pValue );
+      HB_ISIZ nMem = hb_itemGetNS(pValue);
       if( nMem >= 0 )
       {
          hb_hashPreallocate( pHash, nMem );

@@ -246,7 +246,7 @@ static HB_ERRCODE hb_sdfGoToId( SDFAREAP pArea, PHB_ITEM pItem )
 #ifndef HB_CLP_STRICT
    if( HB_IS_NUMERIC(pItem) )
    {
-      return SELF_GOTO( &pArea->area, hb_itemGetNL( pItem ) );
+      return SELF_GOTO( &pArea->area, hb_itemGetNL(pItem) );
    }
 #endif
    /* generate RTE */
@@ -608,18 +608,18 @@ static HB_ERRCODE hb_sdfPutValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             if( ( pField->uiFlags & HB_FF_BINARY ) == 0 )
             {
                nSize = pField->uiLen;
-               hb_cdpnDup2( hb_itemGetCPtr( pItem ), hb_itemGetCLen( pItem ),
+               hb_cdpnDup2( hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem),
                             reinterpret_cast<char*>( pArea->pRecord ) + pArea->pFieldOffset[ uiIndex ],
                             &nSize, hb_vmCDP(), pArea->area.cdPage );
             }
             else
             {
-               nSize = hb_itemGetCLen( pItem );
+               nSize = hb_itemGetCLen(pItem);
                if( nSize > static_cast<HB_SIZE>( pField->uiLen ) )
                {
                   nSize = pField->uiLen;
                }
-               memcpy( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], hb_itemGetCPtr( pItem ), nSize );
+               memcpy( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], hb_itemGetCPtr(pItem), nSize );
             }
             if( nSize < static_cast<HB_SIZE>( pField->uiLen ) )
             {
@@ -635,13 +635,13 @@ static HB_ERRCODE hb_sdfPutValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
       {
          if( pField->uiType == HB_FT_DATE )
          {
-            hb_itemGetDS( pItem, szBuffer );
+            hb_itemGetDS(pItem, szBuffer);
             memcpy( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], szBuffer, 8 );
          }
          else if( pField->uiType == HB_FT_TIMESTAMP && ( pField->uiLen == 12 || pField->uiLen == 23 ) )
          {
             long lDate, lTime;
-            hb_itemGetTDT( pItem, &lDate, &lTime );
+            hb_itemGetTDT(pItem, &lDate, &lTime);
             if( pField->uiLen == 12 )
             {
                hb_timeStr( szBuffer, lTime );
@@ -680,7 +680,7 @@ static HB_ERRCODE hb_sdfPutValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
       {
          if( pField->uiType == HB_FT_LOGICAL )
          {
-            pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ] = hb_itemGetL( pItem ) ? 'T' : 'F';
+            pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ] = hb_itemGetL(pItem) ? 'T' : 'F';
          }
          else
          {
@@ -777,7 +777,7 @@ static HB_ERRCODE hb_sdfTrans( SDFAREAP pArea, LPDBTRANSINFO pTransInfo )
             hb_itemRelease( pPutRec );
             return HB_FAILURE;
          }
-         if( hb_itemGetL( pPutRec ) )
+         if( hb_itemGetL(pPutRec) )
          {
             pTransInfo->uiFlags |= DBTF_PUTREC;
          }
@@ -911,7 +911,7 @@ static HB_ERRCODE hb_sdfInfo( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
       case DBI_RDD_VERSION:
       {
          char szBuf[ 64 ];
-         int iSub = hb_itemGetNI( pItem );
+         int iSub = hb_itemGetNI(pItem);
 
          if( iSub == 1 )
          {
@@ -1204,7 +1204,7 @@ static HB_ERRCODE hb_sdfCreate( SDFAREAP pArea, LPDBOPENINFO pCreateInfo )
       PHB_ITEM pItem = hb_itemNew( nullptr );
       if( SELF_INFO( &pArea->area, DBI_TABLEEXT, pItem ) == HB_SUCCESS )
       {
-         pFileName->szExtension = hb_itemGetCPtr( pItem );
+         pFileName->szExtension = hb_itemGetCPtr(pItem);
          hb_fsFNameMerge( szFileName, pFileName );
       }
       hb_itemRelease( pItem );
@@ -1311,7 +1311,7 @@ static HB_ERRCODE hb_sdfOpen( SDFAREAP pArea, LPDBOPENINFO pOpenInfo )
       PHB_ITEM pFileExt = hb_itemNew( nullptr );
       if( SELF_INFO( &pArea->area, DBI_TABLEEXT, pFileExt ) == HB_SUCCESS )
       {
-         pFileName->szExtension = hb_itemGetCPtr( pFileExt );
+         pFileName->szExtension = hb_itemGetCPtr(pFileExt);
          hb_fsFNameMerge( szFileName, pFileName );
       }
       hb_itemRelease( pFileExt );

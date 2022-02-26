@@ -739,7 +739,7 @@ HB_BOOL hb_itemGetTDT( PHB_ITEM pItem, long * plJulian, long * plMilliSec )
    }
 }
 
-HB_BOOL hb_itemGetL( PHB_ITEM pItem )
+HB_BOOL hb_itemGetL(PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemGetL(%p)", static_cast<void*>( pItem ) ) );
@@ -2766,7 +2766,7 @@ HB_BOOL hb_itemEqual( PHB_ITEM pItem1, PHB_ITEM pItem2 )
       }
       else
       {
-         fResult = HB_IS_NUMERIC(pItem2) && hb_itemGetND( pItem1 ) == hb_itemGetND( pItem2 );
+         fResult = HB_IS_NUMERIC(pItem2) && hb_itemGetND(pItem1) == hb_itemGetND(pItem2);
       }
    }
    else if( HB_IS_STRING(pItem1) )
@@ -2832,7 +2832,7 @@ HB_BOOL hb_itemCompare( PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, i
       }
       else if( HB_IS_NUMERIC(pItem2) )
       {
-         double d1 = hb_itemGetND( pItem1 ), d2 = hb_itemGetND( pItem2 );
+         double d1 = hb_itemGetND(pItem1), d2 = hb_itemGetND(pItem2);
          *piResult = d1 < d2 ? -1 : ( d1 > d2 ? 1 : 0 );
          fResult = HB_TRUE;
       }
@@ -3139,7 +3139,7 @@ HB_BOOL hb_itemStrBuf( char * szResult, PHB_ITEM pNumber, int iSize, int iDec )
 
    if( HB_IS_DOUBLE(pNumber) )
    {
-      double dNumber = hb_itemGetND( pNumber );
+      double dNumber = hb_itemGetND(pNumber);
 
       if( ! hb_isfinite( dNumber ) )
       {
@@ -3385,7 +3385,7 @@ char * hb_itemStr( PHB_ITEM pNumber, PHB_ITEM pWidth, PHB_ITEM pDec )
          with a limit of 90 integer places, plus one space for the sign. */
       int iWidth, iDec, iSize;
 
-      hb_itemGetNLen( pNumber, &iWidth, &iDec );
+      hb_itemGetNLen(pNumber, &iWidth, &iDec);
 
       if( iWidth > 90 )
       {
@@ -3396,7 +3396,7 @@ char * hb_itemStr( PHB_ITEM pNumber, PHB_ITEM pWidth, PHB_ITEM pDec )
       {
          /* If the width parameter is specified, override the default value
             and set the number of decimals to zero */
-         iWidth = hb_itemGetNI( pWidth );
+         iWidth = hb_itemGetNI(pWidth);
 
          if( iWidth < 1 )
          {
@@ -3411,7 +3411,7 @@ char * hb_itemStr( PHB_ITEM pNumber, PHB_ITEM pWidth, PHB_ITEM pDec )
          /* This function does not include the decimal places in the width,
             so the width must be adjusted downwards, if the decimal places
             parameter is greater than 0  */
-         iDec = hb_itemGetNI( pDec );
+         iDec = hb_itemGetNI(pDec);
 
          if( iDec <= 0 )
          {
@@ -3453,8 +3453,8 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
    {
       case HB_IT_STRING:
       case HB_IT_MEMO:
-         buffer = const_cast<char*>( hb_itemGetCPtr( pItem ) );
-         * nLen = hb_itemGetCLen( pItem );
+         buffer = const_cast<char*>( hb_itemGetCPtr(pItem) );
+         * nLen = hb_itemGetCLen(pItem);
          * bFreeReq = HB_FALSE;
          break;
 
@@ -3525,17 +3525,17 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
          break;
 
       case HB_IT_LOGICAL:
-         buffer = const_cast<char*>( hb_itemGetL( pItem ) ? ".T." : ".F." );
+         buffer = const_cast<char*>( hb_itemGetL(pItem) ? ".T." : ".F." );
          *nLen = 3;
          *bFreeReq = HB_FALSE;
          break;
 
       case HB_IT_SYMBOL:
          *bFreeReq = HB_TRUE;
-         *nLen = strlen( hb_itemGetSymbol( pItem )->szName ) + 3;
+         *nLen = strlen( hb_itemGetSymbol(pItem)->szName ) + 3;
          buffer = static_cast<char*>( hb_xgrab( *nLen + 1 ) );
          buffer[ 0 ] = '@';
-         memcpy( buffer + 1, hb_itemGetSymbol( pItem )->szName, *nLen - 3 );
+         memcpy( buffer + 1, hb_itemGetSymbol(pItem)->szName, *nLen - 3 );
          buffer[ *nLen - 2 ] = '(';
          buffer[ *nLen - 1 ] = ')';
          buffer[ *nLen ] = '\0';
@@ -3544,7 +3544,7 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
       case HB_IT_POINTER:
       {
          int size = ( sizeof(void*) << 1 ) + 3; /* n bytes for address + 0x + \0 */
-         HB_PTRUINT addr = reinterpret_cast<HB_PTRUINT>( hb_itemGetPtr( pItem ) );
+         HB_PTRUINT addr = reinterpret_cast<HB_PTRUINT>( hb_itemGetPtr(pItem) );
 
          *nLen = size - 1;
          *bFreeReq = HB_TRUE;

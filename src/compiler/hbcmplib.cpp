@@ -99,10 +99,10 @@ static int s_pp_openFile( void * cargo, char * szFileName,
 
             if( pFileItem )
             {
-               HB_SIZE nLen = hb_itemGetCLen( pFileItem );
+               HB_SIZE nLen = hb_itemGetCLen(pFileItem);
                if( nLen )
                {
-                  *pBufPtr = hb_itemGetCPtr( pFileItem );
+                  *pBufPtr = hb_itemGetCPtr(pFileItem);
                   *pnLen   = nLen;
                   *pfFree  = HB_FALSE;
                   return HB_PP_OPEN_OK;
@@ -196,7 +196,7 @@ static void hb_compGenArgList( int iFirst, int iLast,
          }
          else if( HB_IS_STRING(pParam) )
          {
-            argv[ argc++ ] = hb_itemGetCPtr( pParam );
+            argv[ argc++ ] = hb_itemGetCPtr(pParam);
          }
       }
    }

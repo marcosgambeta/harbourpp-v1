@@ -72,7 +72,7 @@ static void hb_itemHexStr( PHB_ITEM pItem, char * pStr, HB_BOOL fUpper )
    HB_MAXUINT nValue, nTmp;
    int iLen;
 
-   nValue = nTmp = hb_itemGetNInt( pItem );
+   nValue = nTmp = hb_itemGetNInt(pItem);
 
    iLen = 0;
    do
@@ -101,8 +101,8 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
    HB_SIZE     nSize;
    HB_BOOL     fLeftAlign, fForceSign, fPadZero, fSpaceSign, fSign;
 
-   pFmt = hb_itemGetCPtr( pItemFormat );
-   nSize = hb_itemGetCLen( pItemFormat );
+   pFmt = hb_itemGetCPtr(pItemFormat);
+   nSize = hb_itemGetCLen(pItemFormat);
    pFmtEnd = pFmt + nSize;
 
    buffer.nMax = nSize + 16;
@@ -214,7 +214,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
          {
             char  buf[ 1 ];
 
-            buf[ 0 ] = static_cast<char>( hb_itemGetNI( pItem ) );
+            buf[ 0 ] = static_cast<char>( hb_itemGetNI(pItem) );
             if( fLeftAlign )
             {
                bufadd( &buffer, buf, 1 );
@@ -270,7 +270,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
             else if( pItem && HB_IS_LOGICAL(pItem) )
             {
                iSize = 1;
-               if( hb_itemGetL( pItem ) )
+               if( hb_itemGetL(pItem) )
                {
                   pStr2 = "1";
                }
@@ -400,7 +400,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
 
             if( pItem && HB_IS_NUMERIC(pItem) )
             {
-               hb_itemGetNLen( pItem, &iSize, &iD );
+               hb_itemGetNLen(pItem, &iSize, &iD);
 
                if( iDec != -1 )
                {
@@ -538,9 +538,9 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
 
          case 's':
          {
-            const char * pStr = hb_itemGetCPtr( pItem );
+            const char * pStr = hb_itemGetCPtr(pItem);
 
-            nSize = hb_itemGetCLen( pItem );
+            nSize = hb_itemGetCLen(pItem);
             if( iDec >= 0 )
             {
                if( static_cast<HB_SIZE>( iDec ) < nSize )

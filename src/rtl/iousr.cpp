@@ -312,8 +312,8 @@ static HB_BOOL s_fileTimeGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, l
    fResult = hb_parl(-1);
    if( fResult )
    {
-      *plJulian = hb_itemGetNL( hb_stackItemFromBase( iOffset ) );
-      *plMillisec = hb_itemGetNL( hb_stackItemFromBase( iOffset + 1 ) );
+      *plJulian = hb_itemGetNL(hb_stackItemFromBase( iOffset ));
+      *plMillisec = hb_itemGetNL(hb_stackItemFromBase( iOffset + 1 ));
    }
    hb_stackPop();
    hb_stackPop();
@@ -351,7 +351,7 @@ static HB_BOOL s_fileAttrGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, H
    fResult = hb_parl(-1);
    if( fResult )
    {
-      *pnAttr = static_cast<HB_FATTR>( hb_itemGetNL( hb_stackItemFromBase( iOffset ) ) );
+      *pnAttr = static_cast<HB_FATTR>( hb_itemGetNL(hb_stackItemFromBase( iOffset )) );
    }
    hb_stackPop();
 
@@ -509,12 +509,12 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * data, HB_SIZE nSize, HB_MAXINT
    nResult = hb_parns(-1);
    if( nResult > 0 )
    {
-      nSize = hb_itemGetCLen( hb_stackItemFromBase( iOffset ) );
+      nSize = hb_itemGetCLen(hb_stackItemFromBase( iOffset ));
       if( nResult > nSize )
       {
          nResult = nSize;
       }
-      memcpy( data, hb_itemGetCPtr( hb_stackItemFromBase( iOffset ) ), nSize );
+      memcpy( data, hb_itemGetCPtr(hb_stackItemFromBase( iOffset )), nSize );
    }
    hb_stackPop();
 
@@ -555,12 +555,12 @@ static HB_SIZE s_fileReadAt( PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_FO
    nResult = hb_parns(-1);
    if( nResult > 0 )
    {
-      nSize = hb_itemGetCLen( hb_stackItemFromBase( iOffset ) );
+      nSize = hb_itemGetCLen(hb_stackItemFromBase( iOffset ));
       if( nResult > nSize )
       {
          nResult = nSize;
       }
-      memcpy( buffer, hb_itemGetCPtr( hb_stackItemFromBase( iOffset ) ), nSize );
+      memcpy( buffer, hb_itemGetCPtr(hb_stackItemFromBase( iOffset )), nSize );
    }
    hb_stackPop();
 

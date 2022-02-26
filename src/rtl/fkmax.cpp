@@ -62,7 +62,7 @@ HB_FUNC( FKLABEL )
 
    if( pPar1 )
    {
-      int iFKey = hb_itemGetNI( pPar1 );
+      int iFKey = hb_itemGetNI(pPar1);
 
       if( iFKey > 0 && iFKey <= 40 )
       {

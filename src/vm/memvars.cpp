@@ -1400,7 +1400,7 @@ HB_FUNC( __MVGET )
 
          while( hb_errLaunch( pError ) == E_RETRY )
          {
-            pDynVar = hb_memvarFindSymbol( hb_itemGetCPtr( pName ), hb_itemGetCLen( pName ) );
+            pDynVar = hb_memvarFindSymbol( hb_itemGetCPtr(pName), hb_itemGetCLen(pName) );
             if( pDynVar )
             {
                PHB_ITEM pValue = hb_stackAllocItem();
@@ -1534,7 +1534,7 @@ static HB_DYNS_FUNC( hb_memvarSave )
          if( HB_IS_STRING(pMemvar) )
          {
             /* Store the closing zero byte, too */
-            HB_SIZE nLen = hb_itemGetCLen( pMemvar ) + 1;
+            HB_SIZE nLen = hb_itemGetCLen(pMemvar) + 1;
             int iOverFlow = 0;
 
             /* Clipper supports only 64 KiB strings */
@@ -1546,7 +1546,7 @@ static HB_DYNS_FUNC( hb_memvarSave )
             buffer[ 11 ] = 'C' + 128;
             HB_PUT_LE_UINT16( &buffer[ 16 ], nLen );
             hb_fileWrite( fhnd, buffer, HB_MEM_REC_LEN, -1 );
-            hb_fileWrite( fhnd, hb_itemGetCPtr( pMemvar ), nLen - iOverFlow, -1 );
+            hb_fileWrite( fhnd, hb_itemGetCPtr(pMemvar), nLen - iOverFlow, -1 );
             if( iOverFlow )
             {
                hb_fileWrite( fhnd, "\0", 1, -1 );
@@ -1558,8 +1558,8 @@ static HB_DYNS_FUNC( hb_memvarSave )
             int iWidth;
             int iDec;
 
-            dNumber = hb_itemGetND( pMemvar );
-            hb_itemGetNLen( pMemvar, &iWidth, &iDec );
+            dNumber = hb_itemGetND(pMemvar);
+            hb_itemGetNLen(pMemvar, &iWidth, &iDec);
             buffer[ 11 ] = 'N' + 128;
 #ifdef HB_CLP_STRICT
 /* NOTE: This is the buggy, but fully CA-Cl*pper compatible method. [vszakats] */
@@ -1574,7 +1574,7 @@ static HB_DYNS_FUNC( hb_memvarSave )
          }
          else if( HB_IS_DATE(pMemvar) )
          {
-            double dNumber = static_cast<double>( hb_itemGetDL( pMemvar ) );
+            double dNumber = static_cast<double>( hb_itemGetDL(pMemvar) );
 
             buffer[ 11 ] = 'D' + 128;
             buffer[ 16 ] = 1;
@@ -1584,7 +1584,7 @@ static HB_DYNS_FUNC( hb_memvarSave )
          }
          else if( HB_IS_TIMESTAMP(pMemvar) )
          {
-            double dNumber = hb_itemGetTD( pMemvar );
+            double dNumber = hb_itemGetTD(pMemvar);
 
             buffer[ 11 ] = 'T' + 128;
             buffer[ 16 ] = 1;
@@ -1597,7 +1597,7 @@ static HB_DYNS_FUNC( hb_memvarSave )
             buffer[ 11 ] = 'L' + 128;
             buffer[ 16 ] = 1;
             buffer[ 17 ] = 0;
-            buffer[ HB_MEM_REC_LEN ] = hb_itemGetL( pMemvar ) ? 1 : 0;
+            buffer[ HB_MEM_REC_LEN ] = hb_itemGetL(pMemvar) ? 1 : 0;
             hb_fileWrite( fhnd, buffer, HB_MEM_REC_LEN + 1, -1 );
          }
       }

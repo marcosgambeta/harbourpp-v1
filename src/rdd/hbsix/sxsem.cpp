@@ -73,13 +73,13 @@ static HB_BOOL hb_sxSemName( char * szFileName )
 
          memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
          pOrderInfo.itmOrder = hb_param(1, HB_IT_NUMERIC);
-         if( pOrderInfo.itmOrder && hb_itemGetNI( pOrderInfo.itmOrder ) == 0 )
+         if( pOrderInfo.itmOrder && hb_itemGetNI(pOrderInfo.itmOrder) == 0 )
          {
             pOrderInfo.itmOrder = nullptr;
          }
          pOrderInfo.itmResult = hb_itemPutC( nullptr, nullptr );
          SELF_ORDINFO( pArea, DBOI_NAME, &pOrderInfo );
-         szName = hb_itemGetCPtr( pOrderInfo.itmResult );
+         szName = hb_itemGetCPtr(pOrderInfo.itmResult);
          if( szName && szName[ 0 ] )
          {
             hb_cdpnDup2Lower( hb_vmCDP(), szName, strlen( szName ), szFileName, HB_PATH_MAX );

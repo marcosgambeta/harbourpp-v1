@@ -1136,15 +1136,15 @@ static HB_BOOL hb_dbgEqual( PHB_ITEM pItem1, PHB_ITEM pItem2 )
    }
    if( HB_IS_LOGICAL(pItem1) )
    {
-      return hb_itemGetL( pItem1 ) == hb_itemGetL( pItem2 );
+      return hb_itemGetL(pItem1) == hb_itemGetL(pItem2);
    }
    if( HB_IS_POINTER(pItem1) )
    {
-      return hb_itemGetPtr( pItem1 ) == hb_itemGetPtr( pItem2 );
+      return hb_itemGetPtr(pItem1) == hb_itemGetPtr(pItem2);
    }
    if( HB_IS_SYMBOL(pItem1) )
    {
-      return hb_itemGetSymbol( pItem1 ) == hb_itemGetSymbol( pItem2 );
+      return hb_itemGetSymbol(pItem1) == hb_itemGetSymbol(pItem2);
    }
    if( HB_IS_STRING(pItem1) )
    {
@@ -1152,19 +1152,19 @@ static HB_BOOL hb_dbgEqual( PHB_ITEM pItem1, PHB_ITEM pItem2 )
    }
    if( HB_IS_NUMINT(pItem1) )
    {
-      return hb_itemGetNInt( pItem1 ) == hb_itemGetNInt( pItem2 );
+      return hb_itemGetNInt(pItem1) == hb_itemGetNInt(pItem2);
    }
    if( HB_IS_NUMERIC(pItem1) )
    {
-      return hb_itemGetND( pItem1 ) == hb_itemGetND( pItem2 );
+      return hb_itemGetND(pItem1) == hb_itemGetND(pItem2);
    }
    if( HB_IS_DATE(pItem1) )
    {
-      return hb_itemGetDL( pItem1 ) == hb_itemGetDL( pItem2 );
+      return hb_itemGetDL(pItem1) == hb_itemGetDL(pItem2);
    }
    if( HB_IS_TIMESTAMP(pItem1) )
    {
-      return hb_itemGetTD( pItem1 ) == hb_itemGetTD( pItem2 );
+      return hb_itemGetTD(pItem1) == hb_itemGetTD(pItem2);
    }
    if( HB_IS_ARRAY(pItem1) )
    {
@@ -1679,7 +1679,7 @@ static HB_BOOL hb_dbgIsAltD( void )
 {
    HB_ISIZ nOffset = hb_stackBaseProcOffset( 1 );
 
-   return nOffset > 0 && ! strcmp( hb_itemGetSymbol( hb_stackItem( nOffset ) )->szName, "ALTD" );
+   return nOffset > 0 && ! strcmp( hb_itemGetSymbol(hb_stackItem( nOffset ))->szName, "ALTD" );
 }
 
 static int hb_dbgIsBreakPoint( HB_DEBUGINFO * info, const char * szModule, int nLine )

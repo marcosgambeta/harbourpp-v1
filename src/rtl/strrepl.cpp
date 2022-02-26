@@ -58,14 +58,14 @@ HB_FUNC( HB_STRREPLACE )
 
    if( pText && pSrc )
    {
-      HB_SIZE nText = hb_itemGetCLen( pText ), nSrc = hb_itemSize( pSrc );
+      HB_SIZE nText = hb_itemGetCLen(pText), nSrc = hb_itemSize( pSrc );
 
       if( nText > 0 && nSrc > 0 )
       {
          PHB_ITEM pDst = hb_param(3, HB_IT_STRING | HB_IT_ARRAY);
-         const char * pszDst = pDst && HB_IS_STRING(pDst) ? hb_itemGetCPtr( pDst ) : nullptr;
-         const char * pszSrc = HB_IS_STRING(pSrc) ? hb_itemGetCPtr( pSrc ) : nullptr;
-         const char * pszText = hb_itemGetCPtr( pText );
+         const char * pszDst = pDst && HB_IS_STRING(pDst) ? hb_itemGetCPtr(pDst) : nullptr;
+         const char * pszSrc = HB_IS_STRING(pSrc) ? hb_itemGetCPtr(pSrc) : nullptr;
+         const char * pszText = hb_itemGetCPtr(pText);
          const char * ptr;
          char * pszResult = nullptr;
          HB_SIZE * ptrOpt = nullptr;
@@ -87,11 +87,11 @@ HB_FUNC( HB_STRREPLACE )
                else
                {
                   PHB_ITEM pItem = HB_IS_HASH(pSrc) ? hb_hashGetKeyAt( pSrc, nAt + 1 ) : hb_arrayGetItemPtr( pSrc, nAt + 1 );
-                  if( hb_itemGetCLen( pItem ) == 0 )
+                  if( hb_itemGetCLen(pItem) == 0 )
                   {
                      continue;
                   }
-                  uc = static_cast<HB_UCHAR>( hb_itemGetCPtr( pItem )[ 0 ] );
+                  uc = static_cast<HB_UCHAR>( hb_itemGetCPtr(pItem)[ 0 ] );
                }
                if( ptrOpt[ uc ] == 0 )
                {
@@ -121,8 +121,8 @@ HB_FUNC( HB_STRREPLACE )
                      if( HB_IS_HASH(pSrc) )
                      {
                         pDst = hb_hashGetKeyAt( pSrc, nAt );
-                        nSkip = hb_itemGetCLen( pDst );
-                        ptr = hb_itemGetCPtr( pDst );
+                        nSkip = hb_itemGetCLen(pDst);
+                        ptr = hb_itemGetCPtr(pDst);
                      }
                      else
                      {
@@ -158,8 +158,8 @@ HB_FUNC( HB_STRREPLACE )
                   if( HB_IS_HASH(pSrc) )
                   {
                      pDst = hb_hashGetKeyAt( pSrc, nAt );
-                     nSkip = hb_itemGetCLen( pDst );
-                     ptr = hb_itemGetCPtr( pDst );
+                     nSkip = hb_itemGetCLen(pDst);
+                     ptr = hb_itemGetCPtr(pDst);
                   }
                   else
                   {
@@ -193,8 +193,8 @@ HB_FUNC( HB_STRREPLACE )
                         if( HB_IS_HASH(pSrc) )
                         {
                            pDst = hb_hashGetValueAt( pSrc, nAt );
-                           nTmp = hb_itemGetCLen( pDst );
-                           ptr = hb_itemGetCPtr( pDst );
+                           nTmp = hb_itemGetCLen(pDst);
+                           ptr = hb_itemGetCPtr(pDst);
                         }
                         else
                         {
@@ -224,7 +224,7 @@ HB_FUNC( HB_STRREPLACE )
                      }
                      else if( HB_IS_HASH(pSrc) )
                      {
-                        nSize += hb_itemGetCLen( hb_hashGetValueAt( pSrc, nAt ) );
+                        nSize += hb_itemGetCLen(hb_hashGetValueAt( pSrc, nAt ));
                      }
                      else
                      {

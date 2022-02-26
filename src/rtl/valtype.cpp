@@ -152,7 +152,7 @@ HB_FUNC( HB_ISNULL )
    {
       if( HB_IS_STRING(pItem) )
       {
-         hb_retl( hb_itemGetCLen( pItem ) == 0 );
+         hb_retl( hb_itemGetCLen(pItem) == 0 );
          return;
       }
       else if( HB_IS_ARRAY(pItem) )

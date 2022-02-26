@@ -96,7 +96,7 @@ static const HB_GC_FUNCS s_gcRegexFuncs =
 
 HB_BOOL hb_regexIs( PHB_ITEM pItem )
 {
-   return hb_itemGetPtrGC( pItem, &s_gcRegexFuncs ) != nullptr;
+   return hb_itemGetPtrGC(pItem, &s_gcRegexFuncs) != nullptr;
 }
 
 PHB_REGEX hb_regexCompile( const char * szRegEx, HB_SIZE nLen, int iFlags )
@@ -128,7 +128,7 @@ PHB_REGEX hb_regexGet( PHB_ITEM pRegExItm, int iFlags )
    {
       if( HB_IS_POINTER(pRegExItm) )
       {
-         pRegEx = static_cast<PHB_REGEX>( hb_itemGetPtrGC( pRegExItm, &s_gcRegexFuncs ) );
+         pRegEx = static_cast<PHB_REGEX>( hb_itemGetPtrGC(pRegExItm, &s_gcRegexFuncs) );
          if( pRegEx )
          {
             fArgError = HB_FALSE;
@@ -136,8 +136,8 @@ PHB_REGEX hb_regexGet( PHB_ITEM pRegExItm, int iFlags )
       }
       else if( HB_IS_STRING(pRegExItm) )
       {
-         HB_SIZE nLen = hb_itemGetCLen( pRegExItm );
-         const char * szRegEx = hb_itemGetCPtr( pRegExItm );
+         HB_SIZE nLen = hb_itemGetCLen(pRegExItm);
+         const char * szRegEx = hb_itemGetCPtr(pRegExItm);
          if( nLen > 0 )
          {
             fArgError = HB_FALSE;

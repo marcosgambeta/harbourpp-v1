@@ -62,11 +62,11 @@ HB_FUNC( LEN )
    {
       if( HB_IS_STRING(pItem) )
       {
-         HB_SIZE nLen = hb_itemGetCLen( pItem );
+         HB_SIZE nLen = hb_itemGetCLen(pItem);
          PHB_CODEPAGE cdp = hb_vmCDP();
          if( HB_CDP_ISCHARIDX( cdp ) )
          {
-            nLen = hb_cdpTextLen( cdp, hb_itemGetCPtr( pItem ), nLen );
+            nLen = hb_cdpTextLen( cdp, hb_itemGetCPtr(pItem), nLen );
          }
          hb_retns( nLen );
          return;

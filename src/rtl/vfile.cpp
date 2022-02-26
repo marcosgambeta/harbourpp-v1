@@ -91,7 +91,7 @@ PHB_FILE hb_fileParamGet( int iParam )
 
 PHB_FILE hb_fileItemGet( PHB_ITEM pItem )
 {
-   PHB_FILE * fileHolder = static_cast<PHB_FILE*>( hb_itemGetPtrGC( pItem, &s_gcFileFuncs ) );
+   PHB_FILE * fileHolder = static_cast<PHB_FILE*>( hb_itemGetPtrGC(pItem, &s_gcFileFuncs) );
 
    return fileHolder ? *fileHolder : nullptr;
 }
@@ -105,7 +105,7 @@ PHB_ITEM hb_fileItemPut( PHB_ITEM pItem, PHB_FILE pFile )
 
 void hb_fileItemClear( PHB_ITEM pItem )
 {
-   PHB_FILE * fileHolder = static_cast<PHB_FILE*>( hb_itemGetPtrGC( pItem, &s_gcFileFuncs ) );
+   PHB_FILE * fileHolder = static_cast<PHB_FILE*>( hb_itemGetPtrGC(pItem, &s_gcFileFuncs) );
 
    if( fileHolder )
    {

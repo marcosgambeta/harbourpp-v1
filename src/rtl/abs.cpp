@@ -57,11 +57,11 @@ HB_FUNC( ABS )
       int iWidth;
       int iDec;
 
-      hb_itemGetNLen( pNumber, &iWidth, &iDec );
+      hb_itemGetNLen(pNumber, &iWidth, &iDec);
 
       if( HB_IS_INTEGER(pNumber) )
       {
-         int iNumber = hb_itemGetNI( pNumber );
+         int iNumber = hb_itemGetNI(pNumber);
 
          if( iNumber >= 0 )
          {
@@ -84,7 +84,7 @@ HB_FUNC( ABS )
       }
       else if( HB_IS_LONG(pNumber) )
       {
-         HB_MAXINT lNumber = hb_itemGetNInt( pNumber );
+         HB_MAXINT lNumber = hb_itemGetNInt(pNumber);
 
          if( lNumber >= 0 )
          {
@@ -103,7 +103,7 @@ HB_FUNC( ABS )
       }
       else
       {
-         double dNumber = hb_itemGetND( pNumber );
+         double dNumber = hb_itemGetND(pNumber);
 
          hb_retndlen( dNumber >= 0.0 ? dNumber : -dNumber, 0, iDec );
       }

@@ -210,13 +210,13 @@ HB_FUNC( HB_ATX )
 
       if( pRegEx )
       {
-         HB_SIZE nLen = hb_itemGetCLen( pString );
+         HB_SIZE nLen = hb_itemGetCLen(pString);
          HB_SIZE nStart = hb_parns(4);
          HB_SIZE nEnd = hb_parnsdef( 5, nLen );
 
          if( nLen && nStart <= nLen && nStart <= nEnd )
          {
-            const char * pszString = hb_itemGetCPtr( pString );
+            const char * pszString = hb_itemGetCPtr(pString);
             HB_REGMATCH aMatches[ HB_REGMATCH_SIZE( 1 ) ];
 
             if( nEnd < nLen )
@@ -284,8 +284,8 @@ static HB_BOOL hb_regex( int iRequest )
       return HB_FALSE;
    }
 
-   pszString = hb_itemGetCPtr( pString );
-   nLen      = hb_itemGetCLen( pString );
+   pszString = hb_itemGetCPtr(pString);
+   nLen      = hb_itemGetCLen(pString);
    iMaxMatch = iRequest == 0 || iRequest == 4 || iRequest == 5 ? REGEX_MAX_GROUPS : 1;
    iMatches = hb_regexec( pRegEx, pszString, nLen, iMaxMatch, aMatches );
    if( iMatches > 0 )

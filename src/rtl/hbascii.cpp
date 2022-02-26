@@ -54,14 +54,14 @@ HB_FUNC( HB_ASCIIUPPER )
 
    if( pText )
    {
-      const char * pszText = hb_itemGetCPtr( pText );
-      HB_SIZE nLen = hb_itemGetCLen( pText );
+      const char * pszText = hb_itemGetCPtr(pText);
+      HB_SIZE nLen = hb_itemGetCLen(pText);
 
       for( HB_SIZE u = 0; u < nLen; u++ )
       {
          if( HB_ISLOWER( pszText[ u ] ) )
          {
-            char * pszBuff = hb_itemGetC( pText );
+            char * pszBuff = hb_itemGetC(pText);
 
             do
             {
@@ -86,14 +86,14 @@ HB_FUNC( HB_ASCIILOWER )
 
    if( pText )
    {
-      const char * pszText = hb_itemGetCPtr( pText );
-      HB_SIZE nLen = hb_itemGetCLen( pText );
+      const char * pszText = hb_itemGetCPtr(pText);
+      HB_SIZE nLen = hb_itemGetCLen(pText);
 
       for( HB_SIZE u = 0; u < nLen; u++ )
       {
          if( HB_ISUPPER( pszText[ u ] ) )
          {
-            char * pszBuff = hb_itemGetC( pText );
+            char * pszBuff = hb_itemGetC(pText);
 
             do
             {

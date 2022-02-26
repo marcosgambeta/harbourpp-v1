@@ -2984,14 +2984,14 @@ static HB_SOCKET s_socketSelectCallback( PHB_ITEM pItem )
    {
       if( HB_IS_NUMERIC(pItem) )
       {
-         sd = static_cast<HB_SOCKET>( hb_itemGetNInt( pItem ) );
+         sd = static_cast<HB_SOCKET>( hb_itemGetNInt(pItem) );
       }
       else if( HB_IS_POINTER(pItem) )
       {
          sd = hb_socketItemGet( pItem );
          if( sd == HB_NO_SOCKET )
          {
-            sd = static_cast<HB_SOCKET>( reinterpret_cast<HB_PTRUINT>( hb_itemGetPtr( pItem ) ) );
+            sd = static_cast<HB_SOCKET>( reinterpret_cast<HB_PTRUINT>( hb_itemGetPtr(pItem) ) );
          }
       }
    }

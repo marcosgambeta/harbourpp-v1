@@ -56,7 +56,7 @@ HB_FUNC( REPLICATE )
 
    if( pItem && HB_ISNUM( 2 ) )
    {
-      HB_SIZE nLen = hb_itemGetCLen( pItem );
+      HB_SIZE nLen = hb_itemGetCLen(pItem);
       HB_ISIZ nTimes = hb_parns(2);
 
       if( nLen > 0 && nTimes > 0 )
@@ -67,7 +67,7 @@ HB_FUNC( REPLICATE )
          }
          else if( static_cast<double>( nLen ) * nTimes < HB_SIZE_MAX )
          {
-            const char * szText = hb_itemGetCPtr( pItem );
+            const char * szText = hb_itemGetCPtr(pItem);
             HB_SIZE nSize = nLen * nTimes;
             char * szResult, * szPtr;
 

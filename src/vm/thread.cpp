@@ -955,7 +955,7 @@ HB_CARGO_FUNC( hb_threadStartVM )
       }
       else if( HB_IS_STRING(pStart) )
       {
-         hb_vmPushDynSym( hb_dynsymGet( hb_itemGetCPtr( pStart ) ) );
+         hb_vmPushDynSym( hb_dynsymGet( hb_itemGetCPtr(pStart) ) );
          hb_vmPushNil();
       }
       else
@@ -1151,7 +1151,7 @@ HB_FUNC( HB_THREADSTART )
    pStart = hb_param(ulStart, HB_IT_ANY);
    while( pStart && HB_IS_NUMERIC(pStart) )
    {
-      ulAttr |= static_cast<HB_ULONG>( hb_itemGetNL( pStart ) );
+      ulAttr |= static_cast<HB_ULONG>( hb_itemGetNL(pStart) );
       pStart = hb_param(++ulStart, HB_IT_ANY);
    }
 
@@ -1160,7 +1160,7 @@ HB_FUNC( HB_THREADSTART )
       if( HB_IS_STRING(pStart) )
       {
          PHB_DYNS pDynSym;
-         szFuncName = hb_itemGetCPtr( pStart );
+         szFuncName = hb_itemGetCPtr(pStart);
          pDynSym = hb_dynsymFindName( szFuncName );
          if( pDynSym )
          {
@@ -1173,7 +1173,7 @@ HB_FUNC( HB_THREADSTART )
       }
       else if( HB_IS_SYMBOL(pStart) )
       {
-         pSymbol = hb_itemGetSymbol( pStart );
+         pSymbol = hb_itemGetSymbol(pStart);
          if( ! pSymbol->value.pFunPtr )
          {
             szFuncName = pSymbol->szName;
@@ -1617,7 +1617,7 @@ HB_FUNC( HB_THREADONCE )
    {
       HB_STACK_TLS_PRELOAD
       HB_BOOL fFirstCall = HB_FALSE;
-      if( HB_IS_NIL(pItem) || ! hb_itemGetL( pItem ) )
+      if( HB_IS_NIL(pItem) || ! hb_itemGetL(pItem) )
       {
          PHB_ITEM pAction = hb_param(2, HB_IT_EVALITEM);
 
@@ -1862,14 +1862,14 @@ static const HB_GC_FUNCS s_gcMutexFuncs =
 
 static PHB_MUTEX hb_mutexPtr( PHB_ITEM pItem )
 {
-   return static_cast<PHB_MUTEX>( hb_itemGetPtrGC( pItem, &s_gcMutexFuncs ) );
+   return static_cast<PHB_MUTEX>( hb_itemGetPtrGC(pItem, &s_gcMutexFuncs) );
 }
 
 static PHB_ITEM hb_mutexParam( int iParam )
 {
    PHB_ITEM pItem = hb_param(iParam, HB_IT_POINTER);
 
-   if( hb_itemGetPtrGC( pItem, &s_gcMutexFuncs ) )
+   if( hb_itemGetPtrGC(pItem, &s_gcMutexFuncs) )
    {
       return pItem;
    }
@@ -2670,7 +2670,7 @@ PHB_ITEM hb_threadMutexTimedSubscribe( PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_B
 HB_FUNC( HB_MUTEXEXISTS )
 {
    HB_STACK_TLS_PRELOAD
-   hb_retl( hb_itemGetPtrGC( hb_param(1, HB_IT_POINTER), &s_gcMutexFuncs ) != nullptr );
+   hb_retl( hb_itemGetPtrGC(hb_param(1, HB_IT_POINTER), &s_gcMutexFuncs) != nullptr );
 }
 
 HB_FUNC( HB_MUTEXCREATE )

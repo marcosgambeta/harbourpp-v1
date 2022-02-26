@@ -88,7 +88,7 @@ HB_FUNC( SX_ISFLOCKED )
    {
       PHB_ITEM pItem = hb_itemNew( nullptr );
       SELF_INFO( pArea, DBI_ISFLOCK, pItem );
-      fLocked = hb_itemGetL( pItem );
+      fLocked = hb_itemGetL(pItem);
       hb_itemRelease( pItem );
    }
 
@@ -104,7 +104,7 @@ HB_FUNC( SX_ISREADONLY )
    {
       PHB_ITEM pItem = hb_itemNew( nullptr );
       SELF_INFO( pArea, DBI_ISREADONLY, pItem );
-      fReadOnly = hb_itemGetL( pItem );
+      fReadOnly = hb_itemGetL(pItem);
       hb_itemRelease( pItem );
    }
 
@@ -120,7 +120,7 @@ HB_FUNC( SX_ISSHARED )
    {
       PHB_ITEM pItem = hb_itemNew( nullptr );
       SELF_INFO( pArea, DBI_SHARED, pItem );
-      fShared = hb_itemGetL( pItem );
+      fShared = hb_itemGetL(pItem);
       hb_itemRelease( pItem );
    }
 
@@ -137,7 +137,7 @@ HB_FUNC( SX_IDTYPE )
       PHB_ITEM pItem = hb_itemNew( nullptr );
       if( SELF_RECINFO( pArea, nullptr, DBRI_ENCRYPTED, pItem ) == HB_SUCCESS )
       {
-         iType = hb_itemGetL( pItem ) ? 2 : 1;
+         iType = hb_itemGetL(pItem) ? 2 : 1;
       }
       hb_itemRelease( pItem );
    }
@@ -155,7 +155,7 @@ HB_FUNC( SX_TABLETYPE )
       PHB_ITEM pItem = hb_itemNew( nullptr );
       if( SELF_INFO( pArea, DBI_ISENCRYPTED, pItem ) == HB_SUCCESS )
       {
-         iType = hb_itemGetL( pItem ) ? 2 : 1;
+         iType = hb_itemGetL(pItem) ? 2 : 1;
       }
       hb_itemRelease( pItem );
    }
@@ -390,7 +390,7 @@ HB_FUNC( SX_DBFENCRYPT )
 
       if( SELF_INFO( pArea, DBI_ENCRYPT, pItem ) == HB_SUCCESS )
       {
-         fResult = hb_itemGetL( pItem );
+         fResult = hb_itemGetL(pItem);
       }
       hb_itemRelease( pItem );
    }
@@ -407,7 +407,7 @@ HB_FUNC( SX_DBFDECRYPT )
       PHB_ITEM pItem = hb_itemParam( 1 );
       if( SELF_INFO( pArea, DBI_DECRYPT, pItem ) == HB_SUCCESS )
       {
-         fResult = hb_itemGetL( pItem );
+         fResult = hb_itemGetL(pItem);
       }
       hb_itemRelease( pItem );
    }
@@ -508,7 +508,7 @@ HB_FUNC( _SXOPENINIT )
 
       if( SELF_INFO( pArea, DBI_OPENINFO, pItem ) )
       {
-         pInfo = static_cast<LPDBOPENINFO>( hb_itemGetPtr( pItem ) );
+         pInfo = static_cast<LPDBOPENINFO>( hb_itemGetPtr(pItem) );
       }
       hb_itemRelease( pItem );
       if( pInfo )

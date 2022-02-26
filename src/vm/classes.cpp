@@ -2056,7 +2056,7 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE p
                hb_itemPutNS( hb_stackReturnItem(), pEnum->item.asEnum.offset );
                if( hb_pcount() > 0 && HB_ISNUM( 1 ) )
                {
-                  pEnum->item.asEnum.offset = hb_itemGetNS( hb_param(1, HB_IT_ANY) );
+                  pEnum->item.asEnum.offset = hb_itemGetNS(hb_param(1, HB_IT_ANY));
                }
                return &s___msgEnumIndex;
             }
@@ -2129,7 +2129,7 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE p
                }
                else if( HB_IS_STRING(pBase) )
                {
-                  hb_itemPutL( hb_stackReturnItem(), static_cast<HB_SIZE>( pEnum->item.asEnum.offset ) >= hb_itemGetCLen( pBase ) );
+                  hb_itemPutL( hb_stackReturnItem(), static_cast<HB_SIZE>( pEnum->item.asEnum.offset ) >= hb_itemGetCLen(pBase) );
                }
 
                return &s___msgEnumIsLast;
@@ -2828,7 +2828,7 @@ static PHB_SYMB hb_objGetFuncSym( PHB_ITEM pItem )
       }
       else if( HB_IS_STRING(pItem) )
       {
-         PHB_DYNS pDynSym = hb_dynsymFindName( hb_itemGetCPtr( pItem ) );
+         PHB_DYNS pDynSym = hb_dynsymFindName( hb_itemGetCPtr(pItem) );
 
          if( pDynSym && pDynSym->pSymbol->value.pFunPtr )
          {
@@ -2962,11 +2962,11 @@ static HB_TYPE hb_clsGetItemType( PHB_ITEM pItem, HB_TYPE nDefault )
    {
       if( HB_IS_STRING(pItem) )
       {
-         switch( hb_itemGetCPtr( pItem )[ 0 ] )
+         switch( hb_itemGetCPtr(pItem)[ 0 ] )
          {
             case 'C':
             case 'c':
-               if( hb_strnicmp( hb_itemGetCPtr( pItem ), "code", 4 ) == 0 )
+               if( hb_strnicmp( hb_itemGetCPtr(pItem), "code", 4 ) == 0 )
                {
                   return HB_IT_BLOCK;
                }
@@ -2976,7 +2976,7 @@ static HB_TYPE hb_clsGetItemType( PHB_ITEM pItem, HB_TYPE nDefault )
 
             case 'S':
             case 's':
-               if( hb_strnicmp( hb_itemGetCPtr( pItem ), "str", 3 ) == 0 )
+               if( hb_strnicmp( hb_itemGetCPtr(pItem), "str", 3 ) == 0 )
                {
                   return HB_IT_STRING;
                }
@@ -2991,7 +2991,7 @@ static HB_TYPE hb_clsGetItemType( PHB_ITEM pItem, HB_TYPE nDefault )
 
             case 'D':
             case 'd':
-               if( hb_strnicmp( hb_itemGetCPtr( pItem ), "datet", 5 ) == 0 )
+               if( hb_strnicmp( hb_itemGetCPtr(pItem), "datet", 5 ) == 0 )
                {
                   return HB_IT_TIMESTAMP;
                }
@@ -3014,7 +3014,7 @@ static HB_TYPE hb_clsGetItemType( PHB_ITEM pItem, HB_TYPE nDefault )
 
             case 'N':
             case 'n':
-               if( hb_stricmp( hb_itemGetCPtr( pItem ), "nil" ) == 0 )
+               if( hb_stricmp( hb_itemGetCPtr(pItem), "nil" ) == 0 )
                {
                   return HB_IT_NIL;
                }
@@ -3297,14 +3297,14 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage, HB_USHOR
             break;
 
          case HB_OO_MSG_SUPER:
-            uiIndex = static_cast<HB_USHORT>( hb_itemGetNI( pFunction ) );
-            uiSprClass = static_cast<HB_USHORT>( hb_itemGetNI( pInit ) );
+            uiIndex = static_cast<HB_USHORT>( hb_itemGetNI(pFunction) );
+            uiSprClass = static_cast<HB_USHORT>( hb_itemGetNI(pInit) );
             fOK = uiSprClass && uiSprClass <= s_uiClasses && uiIndex <= pClass->uiDatas;
             break;
 
          case HB_OO_MSG_ASSIGN:
          case HB_OO_MSG_ACCESS:
-            uiIndex = static_cast<HB_USHORT>( hb_itemGetNI( pFunction ) );
+            uiIndex = static_cast<HB_USHORT>( hb_itemGetNI(pFunction) );
             /* This validation can break buggy .prg code which wrongly
              * sets data offsets but IMHO it will help to clean the code.
              * [druzus]
@@ -3314,7 +3314,7 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage, HB_USHOR
 
          case HB_OO_MSG_CLSASSIGN:
          case HB_OO_MSG_CLSACCESS:
-            uiIndex = static_cast<HB_USHORT>( hb_itemGetNI( pFunction ) );
+            uiIndex = static_cast<HB_USHORT>( hb_itemGetNI(pFunction) );
             fOK = uiIndex != 0;
             break;
 
@@ -3964,7 +3964,7 @@ HB_FUNC( __CLSNEW )
    {
       HB_STACK_TLS_PRELOAD
       HB_USHORT uiClass;
-      uiClass = hb_clsNew( szClassName, static_cast<HB_USHORT>( hb_itemGetNI( pDatas ) ), pSuperArray, hb_itemGetSymbol( pClassFunc ), hb_itemGetL( pModFriend ) );
+      uiClass = hb_clsNew( szClassName, static_cast<HB_USHORT>( hb_itemGetNI(pDatas) ), pSuperArray, hb_itemGetSymbol(pClassFunc), hb_itemGetL(pModFriend) );
       hb_retni( uiClass );
    }
    else
@@ -3987,7 +3987,7 @@ HB_FUNC( __CLSADDFRIEND )
 
       if( ! pClass->fLocked )
       {
-         PHB_SYMB pSym = hb_vmGetRealFuncSym( hb_itemGetSymbol( hb_param(2, HB_IT_SYMBOL) ) );
+         PHB_SYMB pSym = hb_vmGetRealFuncSym( hb_itemGetSymbol(hb_param(2, HB_IT_SYMBOL)) );
          if( pSym )
          {
             hb_clsAddFriendSymbol( pClass, pSym );
@@ -4338,11 +4338,11 @@ HB_FUNC( __CLSINSTSUPER )
    {
       if( HB_IS_SYMBOL(pItem) )
       {
-         pClassFuncSym = hb_itemGetSymbol( pItem );
+         pClassFuncSym = hb_itemGetSymbol(pItem);
       }
       else if( HB_IS_STRING(pItem) )
       {
-         PHB_DYNS pDynSym = hb_dynsymFindName( hb_itemGetCPtr( pItem ) );
+         PHB_DYNS pDynSym = hb_dynsymFindName( hb_itemGetCPtr(pItem) );
          if( pDynSym )
          {
             pClassFuncSym = pDynSym->pSymbol;
@@ -4412,14 +4412,14 @@ HB_FUNC( __CLSINSTSUPER )
    {
       const char * pszName;
 
-      pClassFuncSym = hb_itemGetSymbol( pItem );
+      pClassFuncSym = hb_itemGetSymbol(pItem);
       if( pClassFuncSym )
       {
          pszName = pClassFuncSym->szName;
       }
       else
       {
-         pszName = hb_itemGetCPtr( pItem );
+         pszName = hb_itemGetCPtr(pItem);
       }
       hb_snprintf( szDesc, sizeof(szDesc), "Cannot find super class '%s'", pszName );
       hb_errRT_BASE( EG_ARG, 3003, szDesc, HB_ERR_FUNCNAME, 0 );
@@ -5119,7 +5119,7 @@ HB_FUNC_STATIC( msgSyncClass )
 HB_FUNC_STATIC( msgNoMethod )
 {
    HB_STACK_TLS_PRELOAD
-   PHB_SYMB pSym = hb_itemGetSymbol( hb_stackBaseItem() );
+   PHB_SYMB pSym = hb_itemGetSymbol(hb_stackBaseItem());
 
 #if 1  /* Clipper compatible error message */
    if( pSym->szName[ 0 ] == '_' )
@@ -5249,7 +5249,7 @@ HB_FUNC_STATIC( msgSetClsData )
       {
          if( pMethod->itemType == HB_IT_NUMINT && HB_IS_NUMERIC(pReturn) )
          {
-            hb_itemPutNInt( pReturn, hb_itemGetNInt( pReturn ) );
+            hb_itemPutNInt( pReturn, hb_itemGetNInt(pReturn) );
          }
          else
          {
@@ -5297,7 +5297,7 @@ HB_FUNC_STATIC( msgSetShrData )
       {
          if( pMethod->itemType == HB_IT_NUMINT && HB_IS_NUMERIC(pReturn) )
          {
-            hb_itemPutNInt( pReturn, hb_itemGetNInt( pReturn ) );
+            hb_itemPutNInt( pReturn, hb_itemGetNInt(pReturn) );
          }
          else
          {
@@ -5378,7 +5378,7 @@ HB_FUNC_STATIC( msgSetData )
          {
             if( pMethod->itemType == HB_IT_NUMINT && HB_IS_NUMERIC(pReturn) )
             {
-               hb_itemPutNInt( pReturn, hb_itemGetNInt( pReturn ) );
+               hb_itemPutNInt( pReturn, hb_itemGetNInt(pReturn) );
             }
             else
             {
@@ -5709,15 +5709,15 @@ HB_FUNC( __OBJSETIVARS )
 
       if( HB_IS_NUMERIC(pObject) )
       {
-         pObject = pNewObj = hb_clsInst( static_cast<HB_USHORT>( hb_itemGetNI( pObject ) ) );
+         pObject = pNewObj = hb_clsInst( static_cast<HB_USHORT>( hb_itemGetNI(pObject) ) );
       }
       else if( HB_IS_STRING(pObject) )
       {
-         pObject = pNewObj = hb_clsInst( hb_clsFindClass( hb_itemGetCPtr( pObject ), nullptr ) );
+         pObject = pNewObj = hb_clsInst( hb_clsFindClass( hb_itemGetCPtr(pObject), nullptr ) );
       }
       else if( HB_IS_SYMBOL(pObject) )
       {
-         pObject = pNewObj = hb_clsInst( hb_clsFindClassByFunc( hb_itemGetSymbol( pObject ) ) );
+         pObject = pNewObj = hb_clsInst( hb_clsFindClassByFunc( hb_itemGetSymbol(pObject) ) );
       }
       else if( ! HB_IS_OBJECT(pObject) )
       {
@@ -5751,15 +5751,15 @@ HB_FUNC( __OBJRESTOREIVARS )
 
       if( HB_IS_NUMERIC(pClass) )
       {
-         pObject = hb_clsInst( static_cast<HB_USHORT>( hb_itemGetNI( pClass ) ) );
+         pObject = hb_clsInst( static_cast<HB_USHORT>( hb_itemGetNI(pClass) ) );
       }
       else if( HB_IS_STRING(pClass) )
       {
-         pObject = hb_clsInst( hb_clsFindClass( hb_itemGetCPtr( pClass ), hb_parc(3) ) );
+         pObject = hb_clsInst( hb_clsFindClass( hb_itemGetCPtr(pClass), hb_parc(3) ) );
       }
       else if( HB_IS_SYMBOL(pClass) )
       {
-         pObject = hb_clsInst( hb_clsFindClassByFunc( hb_itemGetSymbol( pClass ) ) );
+         pObject = hb_clsInst( hb_clsFindClassByFunc( hb_itemGetSymbol(pClass) ) );
       }
 
       if( pObject )

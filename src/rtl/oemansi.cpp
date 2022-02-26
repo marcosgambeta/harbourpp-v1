@@ -63,8 +63,8 @@ HB_FUNC( HB_ANSITOOEM )
    if( pString )
 #if defined( HB_OS_WIN )
    {
-      int nLen = static_cast<int>( hb_itemGetCLen( pString ) );
-      const char * pszSrc = hb_itemGetCPtr( pString );
+      int nLen = static_cast<int>( hb_itemGetCLen(pString) );
+      const char * pszSrc = hb_itemGetCPtr(pString);
 
       int nWideLen = MultiByteToWideChar( CP_ACP, MB_PRECOMPOSED, pszSrc, nLen, nullptr, 0 );
       LPWSTR pszWide = static_cast<LPWSTR>( hb_xgrab( ( nWideLen + 1 ) * sizeof(wchar_t) ) );
@@ -97,8 +97,8 @@ HB_FUNC( HB_OEMTOANSI )
    if( pString )
 #if defined( HB_OS_WIN )
    {
-      int nLen = static_cast<int>( hb_itemGetCLen( pString ) );
-      const char * pszSrc = hb_itemGetCPtr( pString );
+      int nLen = static_cast<int>( hb_itemGetCLen(pString) );
+      const char * pszSrc = hb_itemGetCPtr(pString);
 
       int nWideLen = MultiByteToWideChar( CP_OEMCP, MB_PRECOMPOSED, pszSrc, nLen, nullptr, 0 );
       LPWSTR pszWide = static_cast<LPWSTR>( hb_xgrab( ( nWideLen + 1 ) * sizeof(wchar_t) ) );

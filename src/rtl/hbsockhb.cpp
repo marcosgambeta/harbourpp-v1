@@ -400,7 +400,7 @@ HB_SOCKET hb_socketParam( int iParam )
 
 HB_SOCKET hb_socketItemGet( PHB_ITEM pItem )
 {
-   PHB_SOCKEX * pSockPtr = static_cast<PHB_SOCKEX*>( hb_itemGetPtrGC( pItem, &s_gcSocketFuncs ) );
+   PHB_SOCKEX * pSockPtr = static_cast<PHB_SOCKEX*>( hb_itemGetPtrGC(pItem, &s_gcSocketFuncs) );
 
    return pSockPtr && *pSockPtr ? ( *pSockPtr )->sd : HB_NO_SOCKET;
 }
@@ -416,7 +416,7 @@ PHB_ITEM hb_socketItemPut( PHB_ITEM pItem, HB_SOCKET sd )
 
 void hb_socketItemClear( PHB_ITEM pItem )
 {
-   PHB_SOCKEX * pSockPtr = static_cast<PHB_SOCKEX*>( hb_itemGetPtrGC( pItem, &s_gcSocketFuncs ) );
+   PHB_SOCKEX * pSockPtr = static_cast<PHB_SOCKEX*>( hb_itemGetPtrGC(pItem, &s_gcSocketFuncs) );
 
    if( pSockPtr && *pSockPtr )
    {
@@ -442,7 +442,7 @@ PHB_SOCKEX hb_sockexParam( int iParam )
 
 PHB_SOCKEX hb_sockexItemGet( PHB_ITEM pItem )
 {
-   PHB_SOCKEX * pSockPtr = static_cast<PHB_SOCKEX*>( hb_itemGetPtrGC( pItem, &s_gcSocketFuncs ) );
+   PHB_SOCKEX * pSockPtr = static_cast<PHB_SOCKEX*>( hb_itemGetPtrGC(pItem, &s_gcSocketFuncs) );
 
    return pSockPtr ? *pSockPtr : nullptr;
 }
@@ -458,7 +458,7 @@ PHB_ITEM hb_sockexItemPut( PHB_ITEM pItem, PHB_SOCKEX pSock )
 
 void hb_sockexItemClear( PHB_ITEM pItem )
 {
-   PHB_SOCKEX * pSockPtr = static_cast<PHB_SOCKEX*>( hb_itemGetPtrGC( pItem, &s_gcSocketFuncs ) );
+   PHB_SOCKEX * pSockPtr = static_cast<PHB_SOCKEX*>( hb_itemGetPtrGC(pItem, &s_gcSocketFuncs) );
 
    if( pSockPtr && *pSockPtr )
    {
@@ -468,7 +468,7 @@ void hb_sockexItemClear( PHB_ITEM pItem )
 
 HB_BOOL hb_sockexItemReplace( PHB_ITEM pItem, PHB_SOCKEX pSock )
 {
-   PHB_SOCKEX * pSockPtr = static_cast<PHB_SOCKEX*>( hb_itemGetPtrGC( pItem, &s_gcSocketFuncs ) );
+   PHB_SOCKEX * pSockPtr = static_cast<PHB_SOCKEX*>( hb_itemGetPtrGC(pItem, &s_gcSocketFuncs) );
 
    if( pSockPtr )
    {
@@ -484,7 +484,7 @@ HB_BOOL hb_sockexItemReplace( PHB_ITEM pItem, PHB_SOCKEX pSock )
 
 HB_BOOL hb_sockexItemSetFilter( PHB_ITEM pItem, const char * pszFilter, PHB_ITEM pParams )
 {
-   PHB_SOCKEX * pSockPtr = static_cast<PHB_SOCKEX*>( hb_itemGetPtrGC( pItem, &s_gcSocketFuncs ) );
+   PHB_SOCKEX * pSockPtr = static_cast<PHB_SOCKEX*>( hb_itemGetPtrGC(pItem, &s_gcSocketFuncs) );
 
    if( pSockPtr && *pSockPtr )
    {
@@ -847,26 +847,26 @@ void hb_socekxParamsGetStd( PHB_ITEM pParams, const void ** pKeydata, int * pKey
 
       if( pKeydata && pKeylen && ( pItem = hb_hashGetCItemPtr( pParams, "key" ) ) != nullptr &&  HB_IS_STRING(pItem) )
       {
-         *pKeydata = hb_itemGetCPtr( pItem );
-         *pKeylen  = static_cast<int>( hb_itemGetCLen( pItem ) );
+         *pKeydata = hb_itemGetCPtr(pItem);
+         *pKeylen  = static_cast<int>( hb_itemGetCLen(pItem) );
       }
       else if( pKeydata && pKeylen && ( pItem = hb_hashGetCItemPtr( pParams, "pass" ) ) != nullptr && HB_IS_STRING(pItem) )
       {
-         *pKeydata = hb_itemGetCPtr( pItem );
-         *pKeylen  = static_cast<int>( hb_itemGetCLen( pItem ) );
+         *pKeydata = hb_itemGetCPtr(pItem);
+         *pKeylen  = static_cast<int>( hb_itemGetCLen(pItem) );
       }
       if( pIV && pIVlen && ( pItem = hb_hashGetCItemPtr( pParams, "iv" ) ) != nullptr && HB_IS_STRING(pItem) )
       {
-         *pIV    = hb_itemGetCPtr( pItem );
-         *pIVlen = static_cast<int>( hb_itemGetCLen( pItem ) );
+         *pIV    = hb_itemGetCPtr(pItem);
+         *pIVlen = static_cast<int>( hb_itemGetCLen(pItem) );
       }
       if( pLevel && ( pItem = hb_hashGetCItemPtr( pParams, "zlib" ) ) != nullptr && HB_IS_NUMERIC(pItem) )
       {
-         *pLevel = hb_itemGetNI( pItem );
+         *pLevel = hb_itemGetNI(pItem);
       }
       if( pStrategy && ( pItem = hb_hashGetCItemPtr( pParams, "zs" ) ) != nullptr && HB_IS_NUMERIC(pItem) )
       {
-         *pStrategy = hb_itemGetNI( pItem );
+         *pStrategy = hb_itemGetNI(pItem);
       }
    }
 }
@@ -881,16 +881,16 @@ void hb_socekxParamsInit( PHB_SOCKEX pSock, PHB_ITEM pParams )
       {
          if( pSock->buffer == nullptr )
          {
-            pSock->readahead = hb_itemGetNL( pItem );
+            pSock->readahead = hb_itemGetNL(pItem);
          }
       }
       if( ( pItem = hb_hashGetCItemPtr( pParams, "flush" ) ) != nullptr && HB_IS_NUMERIC(pItem) )
       {
-         pSock->iAutoFlush = hb_itemGetNI( pItem );
+         pSock->iAutoFlush = hb_itemGetNI(pItem);
       }
       if( ( pItem = hb_hashGetCItemPtr( pParams, "redir" ) ) != nullptr && HB_IS_LOGICAL(pItem) )
       {
-         pSock->fRedirAll = hb_itemGetL( pItem );
+         pSock->fRedirAll = hb_itemGetL(pItem);
       }
    }
 }

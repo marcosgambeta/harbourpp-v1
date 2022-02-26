@@ -235,7 +235,7 @@ HB_FUNC( HB_LPPSEND )
    }
 
    pData = hb_param(2, HB_IT_STRING);
-   hb_retl( hb_lppSend( pGC->pSocket, pData ? hb_itemGetCPtr( pData ) : "", hb_itemGetCLen( pData ), hb_parnintdef( 3, -1 ) ) );
+   hb_retl( hb_lppSend( pGC->pSocket, pData ? hb_itemGetCPtr(pData) : "", hb_itemGetCLen(pData), hb_parnintdef( 3, -1 ) ) );
 }
 
 HB_FUNC( HB_LPPRECV )

@@ -685,7 +685,7 @@ static void hb_dbfTriggerSet( DBFAREAP pArea, PHB_ITEM pTrigger )
 
    const char * szName;
 
-   szName = hb_itemGetCPtr( pTrigger );
+   szName = hb_itemGetCPtr(pTrigger);
    pArea->pTriggerSym = *szName ? hb_dynsymFindName( szName ) : nullptr;
    if( pArea->pTriggerSym && ! hb_dynsymIsFunction( pArea->pTriggerSym ) )
    {
@@ -802,7 +802,7 @@ static HB_BOOL hb_dbfPasswordSet( DBFAREAP pArea, PHB_ITEM pPasswd, HB_BOOL fRaw
    HB_SIZE nLen;
    HB_BOOL fKeySet = HB_FALSE, fSet;
 
-   nLen = hb_itemGetCLen( pPasswd );
+   nLen = hb_itemGetCLen(pPasswd);
 
    fSet = ! pArea->fHasMemo && HB_IS_STRING(pPasswd) && ( ! fRaw || nLen == 8 );
    if( fSet )
@@ -811,12 +811,12 @@ static HB_BOOL hb_dbfPasswordSet( DBFAREAP pArea, PHB_ITEM pPasswd, HB_BOOL fRaw
       {
          if( nLen < 8 )
          {
-            memcpy( pKeyBuffer, hb_itemGetCPtr( pPasswd ), nLen );
+            memcpy( pKeyBuffer, hb_itemGetCPtr(pPasswd), nLen );
             memset( pKeyBuffer + nLen, '\0', 8 - nLen );
          }
          else
          {
-            memcpy( pKeyBuffer, hb_itemGetCPtr( pPasswd ), 8 );
+            memcpy( pKeyBuffer, hb_itemGetCPtr(pPasswd), 8 );
          }
       }
    }
@@ -1931,7 +1931,7 @@ static HB_ERRCODE hb_dbfGoToId( DBFAREAP pArea, PHB_ITEM pItem )
 
    if( HB_IS_NUMERIC(pItem) )
    {
-      return SELF_GOTO( &pArea->area, hb_itemGetNL( pItem ) );
+      return SELF_GOTO( &pArea->area, hb_itemGetNL(pItem) );
    }
    else
    {
@@ -2934,8 +2934,8 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             }
             else
             {
-               pszPtr = hb_itemGetCPtr( pItem );
-               nSize = hb_itemGetCLen( pItem );
+               pszPtr = hb_itemGetCPtr(pItem);
+               nSize = hb_itemGetCLen(pItem);
                if( ( pField->uiFlags & HB_FF_BINARY ) == 0 )
                {
                   hb_cdpnDup2( pszPtr, nSize,
@@ -2948,7 +2948,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
                   {
                      nLen = nSize;
                   }
-                  memcpy( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], hb_itemGetCPtr( pItem ), nLen );
+                  memcpy( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], hb_itemGetCPtr(pItem), nLen );
                }
                if( nLen < static_cast<HB_SIZE>( pField->uiLen ) )
                {
@@ -2966,8 +2966,8 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             }
             else
             {
-               pszPtr = hb_itemGetCPtr( pItem );
-               nSize = hb_itemGetCLen( pItem );
+               pszPtr = hb_itemGetCPtr(pItem);
+               nSize = hb_itemGetCLen(pItem);
                if( ( pField->uiFlags & HB_FF_BINARY ) == 0 )
                {
                   if( nLen > static_cast<HB_SIZE>( sizeof(szBuffer) ) )
@@ -3007,15 +3007,15 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          {
             if( pField->uiLen == 3 )
             {
-               HB_PUT_LE_UINT24( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], hb_itemGetDL( pItem ) );
+               HB_PUT_LE_UINT24( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], hb_itemGetDL(pItem) );
             }
             else if( pField->uiLen == 4 )
             {
-               HB_PUT_LE_UINT32( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], hb_itemGetDL( pItem ) );
+               HB_PUT_LE_UINT32( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], hb_itemGetDL(pItem) );
             }
             else
             {
-               hb_itemGetDS( pItem, szBuffer );
+               hb_itemGetDS(pItem, szBuffer);
                memcpy( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], szBuffer, 8 );
             }
          }
@@ -3025,7 +3025,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          {
             long lDate, lTime;
 
-            hb_itemGetTDT( pItem, &lDate, &lTime );
+            hb_itemGetTDT(pItem, &lDate, &lTime);
             ptr = pArea->pRecord + pArea->pFieldOffset[ uiIndex ];
             if( pField->uiType != HB_FT_TIME )
             {
@@ -3036,7 +3036,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          }
          else if( pField->uiType == HB_FT_ANY && pField->uiLen == 3 )
          {
-            hb_sxDtoP( reinterpret_cast<char*>( pArea->pRecord ) + pArea->pFieldOffset[ uiIndex ], hb_itemGetDL( pItem ) );
+            hb_sxDtoP( reinterpret_cast<char*>( pArea->pRecord ) + pArea->pFieldOffset[ uiIndex ], hb_itemGetDL(pItem) );
          }
          else
          {
@@ -3066,9 +3066,9 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             {
                double dVal;
 #if 0    /* this version rounds double values to nearest integer */
-               dVal = hb_numDecConv( hb_itemGetND( pItem ), -static_cast<int>( pField->uiDec ) );
+               dVal = hb_numDecConv( hb_itemGetND(pItem), -static_cast<int>( pField->uiDec ) );
 #else    /* this one truncates double value to integer dropping fractional part */
-               dVal = hb_itemGetND( pItem );
+               dVal = hb_itemGetND(pItem);
                if( pField->uiDec )
                {
                   dVal = hb_numDecConv( dVal, -static_cast<int>( pField->uiDec ) );
@@ -3094,7 +3094,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             }
             else
             {
-               lVal = static_cast<HB_MAXINT>( hb_itemGetNInt( pItem ) );
+               lVal = static_cast<HB_MAXINT>( hb_itemGetNInt(pItem) );
 #ifdef HB_LONG_LONG_OFF
                dVal = static_cast<double>( lVal );
 #endif
@@ -3139,12 +3139,12 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          }
          else if( pField->uiType == HB_FT_DOUBLE )
          {
-            HB_PUT_LE_DOUBLE( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], hb_itemGetND( pItem ) );
+            HB_PUT_LE_DOUBLE( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], hb_itemGetND(pItem) );
          }
          else if( pField->uiType == HB_FT_ANY && pField->uiLen == 4 )
          {
-            HB_MAXINT lVal = hb_itemGetNInt( pItem );
-            if( HB_IS_DOUBLE(pItem) ? HB_DBL_LIM_INT32( hb_itemGetND( pItem ) ) : HB_LIM_INT32( lVal ) )
+            HB_MAXINT lVal = hb_itemGetNInt(pItem);
+            if( HB_IS_DOUBLE(pItem) ? HB_DBL_LIM_INT32( hb_itemGetND(pItem) ) : HB_LIM_INT32( lVal ) )
             {
                HB_PUT_LE_UINT32( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], static_cast<HB_U32>( lVal ) );
             }
@@ -3162,7 +3162,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
       {
          if( pField->uiType == HB_FT_LOGICAL )
          {
-            pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ] = hb_itemGetL( pItem ) ? 'T' : 'F';
+            pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ] = hb_itemGetL(pItem) ? 'T' : 'F';
          }
          else
          {
@@ -3496,7 +3496,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
             pArea->lpdbOpenInfo = nullptr;
             return HB_FAILURE;
          }
-         pFileName->szExtension = hb_itemGetCPtr( pItem );
+         pFileName->szExtension = hb_itemGetCPtr(pItem);
          hb_fsFNameMerge( szFileName, pFileName );
       }
       else
@@ -3507,7 +3507,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
    }
 
    pItem = hb_itemPutL( pItem, HB_FALSE );
-   fRawBlob = SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_BLOB_SUPPORT, pCreateInfo->ulConnection, pItem ) == HB_SUCCESS && hb_itemGetL( pItem );
+   fRawBlob = SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_BLOB_SUPPORT, pCreateInfo->ulConnection, pItem ) == HB_SUCCESS && hb_itemGetL(pItem);
 
    if( pArea->bLockType == 0 )
    {
@@ -3518,7 +3518,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
          pArea->lpdbOpenInfo = nullptr;
          return HB_FAILURE;
       }
-      pArea->bLockType = static_cast<HB_BYTE>( hb_itemGetNI( pItem ) );
+      pArea->bLockType = static_cast<HB_BYTE>( hb_itemGetNI(pItem) );
       if( pArea->bLockType == 0 )
       {
          pArea->bLockType = DB_DBFLOCK_CLIPPER;
@@ -3539,7 +3539,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
          pArea->lpdbOpenInfo = nullptr;
          return HB_FAILURE;
       }
-      pArea->bMemoType = static_cast<HB_BYTE>( hb_itemGetNI( pItem ) );
+      pArea->bMemoType = static_cast<HB_BYTE>( hb_itemGetNI(pItem) );
    }
 
    pArea->bCryptType = DB_CRYPT_NONE;
@@ -4095,7 +4095,7 @@ static HB_ERRCODE hb_dbfInfo( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
 
          if( HB_IS_LOGICAL(pItem) )
          {
-            pArea->fTransRec = hb_itemGetL( pItem );
+            pArea->fTransRec = hb_itemGetL(pItem);
          }
          else if( HB_IS_POINTER(pItem) )
          {
@@ -4121,7 +4121,7 @@ static HB_ERRCODE hb_dbfInfo( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
 
          if( HB_IS_LOGICAL(pItem) )
          {
-            pArea->fShared = hb_itemGetL( pItem );
+            pArea->fShared = hb_itemGetL(pItem);
          }
          hb_itemPutL( pItem, fShared );
          break;
@@ -4137,7 +4137,7 @@ static HB_ERRCODE hb_dbfInfo( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
       case DBI_ISTEMPORARY:
          if( ! pArea->pDataFile && ! pArea->pMemoFile && HB_IS_LOGICAL(pItem) )
          {
-            pArea->fTemporary = hb_itemGetL( pItem );
+            pArea->fTemporary = hb_itemGetL(pItem);
          }
          else
          {
@@ -4184,7 +4184,7 @@ static HB_ERRCODE hb_dbfInfo( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
       case DBI_LOCKTEST:
          if( HB_IS_NUMERIC(pItem) )
          {
-            hb_itemPutNI( pItem, hb_dbfLockTest( pArea, REC_LOCK, hb_itemGetNL( pItem ) ) );
+            hb_itemPutNI( pItem, hb_dbfLockTest( pArea, REC_LOCK, hb_itemGetNL(pItem) ) );
          }
          else
          {
@@ -4194,7 +4194,7 @@ static HB_ERRCODE hb_dbfInfo( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
 
       case DBI_LOCKSCHEME:
       {
-         int iScheme = hb_itemGetNI( pItem );
+         int iScheme = hb_itemGetNI(pItem);
          if( pArea->bLockType )
          {
             hb_itemPutNI( pItem, pArea->bLockType );
@@ -4224,7 +4224,7 @@ static HB_ERRCODE hb_dbfInfo( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
 
          if( HB_IS_NUMERIC(pItem) )
          {
-            int iMode = hb_itemGetNI( pItem );
+            int iMode = hb_itemGetNI(pItem);
             if( ( iMode & ~DB_SETHEADER_MASK ) == 0 )
             {
                pArea->uiSetHeader = iMode;
@@ -4255,7 +4255,7 @@ static HB_ERRCODE hb_dbfInfo( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
       case DBI_TRIGGER:
          if( HB_IS_LOGICAL(pItem) )
          {
-            pArea->fTrigger = pArea->pTriggerSym && hb_itemGetL( pItem );
+            pArea->fTrigger = pArea->pTriggerSym && hb_itemGetL(pItem);
          }
          else
          {
@@ -4278,7 +4278,7 @@ static HB_ERRCODE hb_dbfInfo( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
 
          if( HB_IS_LOGICAL(pItem) )
          {
-            pArea->uiDirtyRead = hb_itemGetL( pItem ) ? HB_IDXREAD_DIRTY : HB_IDXREAD_CLEAN;
+            pArea->uiDirtyRead = hb_itemGetL(pItem) ? HB_IDXREAD_DIRTY : HB_IDXREAD_CLEAN;
          }
          else if( ! HB_IS_NIL(pItem) )
          {
@@ -4292,7 +4292,7 @@ static HB_ERRCODE hb_dbfInfo( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
       case DBI_RDD_VERSION:
       {
          char szBuf[ 64 ];
-         int iSub = hb_itemGetNI( pItem );
+         int iSub = hb_itemGetNI(pItem);
 
          if( iSub == 1 )
          {
@@ -4356,7 +4356,7 @@ static HB_ERRCODE hb_dbfFieldInfo( DBFAREAP pArea, HB_USHORT uiIndex, HB_USHORT 
             }
             if( HB_IS_NUMERIC(pItem) )
             {
-               nValue = hb_dbfNextValueSet( pArea, uiIndex - 1, hb_itemGetNInt( pItem ) );
+               nValue = hb_dbfNextValueSet( pArea, uiIndex - 1, hb_itemGetNInt(pItem) );
             }
             else
             {
@@ -4387,7 +4387,7 @@ static HB_ERRCODE hb_dbfFieldInfo( DBFAREAP pArea, HB_USHORT uiIndex, HB_USHORT 
                   }
                   fLck = HB_TRUE;
                }
-               iValue = hb_dbfNextValueStep( pArea, uiIndex - 1, hb_itemGetNI( pItem ) );
+               iValue = hb_dbfNextValueStep( pArea, uiIndex - 1, hb_itemGetNI(pItem) );
                if( fLck )
                {
                   SELF_RAWLOCK( &pArea->area, HEADER_UNLOCK, 0 );
@@ -4416,7 +4416,7 @@ static HB_ERRCODE hb_dbfRecInfo( DBFAREAP pArea, PHB_ITEM pRecID, HB_USHORT uiIn
    HB_TRACE( HB_TR_DEBUG, ( "hb_dbfRecInfo(%p, %p, %hu, %p)", static_cast<void*>( pArea ), static_cast<void*>( pRecID ), uiInfoType, static_cast<void*>( pInfo ) ) );
 #endif
 
-   HB_ULONG ulRecNo = hb_itemGetNL( pRecID ), ulPrevRec = 0;
+   HB_ULONG ulRecNo = hb_itemGetNL(pRecID), ulPrevRec = 0;
    HB_ERRCODE errResult = HB_SUCCESS;
    HB_BOOL bDeleted;
 
@@ -4533,11 +4533,11 @@ static HB_ERRCODE hb_dbfRecInfo( DBFAREAP pArea, PHB_ITEM pRecID, HB_USHORT uiIn
                   {
                      break;
                   }
-                  nLen = hb_itemGetCLen( pInfo );
+                  nLen = hb_itemGetCLen(pInfo);
                   if( nLen > 0 )
                   {
                      pResult = static_cast<HB_BYTE*>( hb_xrealloc( pResult, nLength + nLen + 1 ) );
-                     memcpy( pResult + nLength, hb_itemGetCPtr( pInfo ), nLen );
+                     memcpy( pResult + nLength, hb_itemGetCPtr(pInfo), nLen );
                      nLength += nLen;
                   }
                }
@@ -4590,12 +4590,12 @@ static HB_ERRCODE hb_dbfNewArea( DBFAREAP pArea )
       PHB_ITEM pItem = hb_itemNew( nullptr );
       if( SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_TABLETYPE, 0, pItem ) == HB_SUCCESS )
       {
-         pArea->bTableType = static_cast<HB_BYTE>( hb_itemGetNI( pItem ) );
+         pArea->bTableType = static_cast<HB_BYTE>( hb_itemGetNI(pItem) );
       }
       hb_itemClear( pItem );
       if( SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_SETHEADER, 0, pItem ) == HB_SUCCESS )
       {
-         pArea->uiSetHeader = static_cast<HB_UINT>( hb_itemGetNI( pItem ) );
+         pArea->uiSetHeader = static_cast<HB_UINT>( hb_itemGetNI(pItem) );
       }
       hb_itemRelease( pItem );
    }
@@ -4656,7 +4656,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
          pArea->lpdbOpenInfo = nullptr;
          return HB_FAILURE;
       }
-      hb_strncpy( szFileName, hb_itemGetCPtr( pItem ), sizeof(szFileName) - 1 );
+      hb_strncpy( szFileName, hb_itemGetCPtr(pItem), sizeof(szFileName) - 1 );
    }
    else
    {
@@ -4672,7 +4672,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
          pArea->lpdbOpenInfo = nullptr;
          return HB_FAILURE;
       }
-      pArea->bLockType = static_cast<HB_BYTE>( hb_itemGetNI( pItem ) );
+      pArea->bLockType = static_cast<HB_BYTE>( hb_itemGetNI(pItem) );
       if( ! pArea->bLockType )
       {
          pArea->bLockType = DB_DBFLOCK_CLIPPER;
@@ -4718,7 +4718,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
          pArea->lpdbOpenInfo = nullptr;
          return HB_FAILURE;
       }
-      pFileName->szExtension = hb_itemGetCPtr( pItem );
+      pFileName->szExtension = hb_itemGetCPtr(pItem);
       hb_fsFNameMerge( szFileName, pFileName );
    }
 
@@ -4740,10 +4740,10 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
    hb_xfree( pFileName );
 
    hb_itemClear( pItem );
-   fRawBlob = SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_BLOB_SUPPORT, pOpenInfo->ulConnection, pItem ) == HB_SUCCESS && hb_itemGetL( pItem );
+   fRawBlob = SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_BLOB_SUPPORT, pOpenInfo->ulConnection, pItem ) == HB_SUCCESS && hb_itemGetL(pItem);
    hb_itemClear( pItem );
    uiDecimals = static_cast<HB_USHORT>( SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_DECIMALS, pOpenInfo->ulConnection, pItem ) == HB_SUCCESS ?
-                                hb_itemGetNI( pItem ) : 0 );
+                                hb_itemGetNI(pItem) : 0 );
    hb_itemRelease( pItem );
    uiFlagsMask = 0;
 
@@ -5495,7 +5495,7 @@ static HB_ERRCODE hb_dbfTransCond( DBFAREAP pArea, LPDBTRANSINFO pTransInfo )
             hb_itemRelease( pPutRec );
             return HB_FAILURE;
          }
-         if( hb_itemGetL( pPutRec ) )
+         if( hb_itemGetL(pPutRec) )
          {
             pTransInfo->uiFlags |= DBTF_PUTREC;
          }
@@ -5706,12 +5706,12 @@ static int hb_dbfSortCmp( LPDBSORTREC pSortRec, PHB_ITEM pValue1, PHB_ITEM pValu
 
       if( uiFlags & SF_DOUBLE )
       {
-         double dValue1 = hb_itemGetND( pItem1 ), dValue2 = hb_itemGetND( pItem2 );
+         double dValue1 = hb_itemGetND(pItem1), dValue2 = hb_itemGetND(pItem2);
          i = dValue1 < dValue2 ? -1 : ( dValue1 == dValue2 ? 0 : 1 );
       }
       else if( uiFlags & SF_LONG )
       {
-         HB_MAXINT nValue1 = hb_itemGetNInt( pItem1 ), nValue2 = hb_itemGetNInt( pItem2 );
+         HB_MAXINT nValue1 = hb_itemGetNInt(pItem1), nValue2 = hb_itemGetNInt(pItem2);
          i = nValue1 < nValue2 ? -1 : ( nValue1 == nValue2 ? 0 : 1 );
       }
       else if( HB_IS_STRING(pItem1) )
@@ -5731,12 +5731,12 @@ static int hb_dbfSortCmp( LPDBSORTREC pSortRec, PHB_ITEM pValue1, PHB_ITEM pValu
       }
       else if( HB_IS_DATETIME(pItem1) )
       {
-         double dValue1 = hb_itemGetTD( pItem1 ), dValue2 = hb_itemGetTD( pItem2 );
+         double dValue1 = hb_itemGetTD(pItem1), dValue2 = hb_itemGetTD(pItem2);
          i = dValue1 < dValue2 ? -1 : ( dValue1 == dValue2 ? 0 : 1 );
       }
       else if( HB_IS_LOGICAL(pItem1) )
       {
-         i = hb_itemGetL( pItem1 ) ? ( hb_itemGetL( pItem2 ) ? 0 : 1 ) : ( hb_itemGetL( pItem2 ) ? -1 : 0 );
+         i = hb_itemGetL(pItem1) ? ( hb_itemGetL(pItem2) ? 0 : 1 ) : ( hb_itemGetL(pItem2) ? -1 : 0 );
       }
       if( i != 0 )
       {
@@ -6200,9 +6200,9 @@ static HB_ERRCODE hb_dbfSort( DBFAREAP pArea, LPDBSORTINFO pSortInfo )
       }
       else if( pSortInfo->dbtri.dbsci.lNext )
       {
-         lNext = hb_itemGetNL( pSortInfo->dbtri.dbsci.lNext );
+         lNext = hb_itemGetNL(pSortInfo->dbtri.dbsci.lNext);
       }
-      else if( ! pSortInfo->dbtri.dbsci.itmCobWhile && ! hb_itemGetLX( pSortInfo->dbtri.dbsci.fRest ) )
+      else if( ! pSortInfo->dbtri.dbsci.itmCobWhile && ! hb_itemGetLX(pSortInfo->dbtri.dbsci.fRest) )
       {
          errCode = SELF_GOTOP( &pArea->area );
       }
@@ -6221,7 +6221,7 @@ static HB_ERRCODE hb_dbfSort( DBFAREAP pArea, LPDBSORTINFO pSortInfo )
       if( pSortInfo->dbtri.dbsci.itmCobWhile )
       {
          errCode = SELF_EVALBLOCK( &pArea->area, pSortInfo->dbtri.dbsci.itmCobWhile );
-         if( errCode != HB_SUCCESS || ! hb_itemGetLX( pArea->area.valResult ) )
+         if( errCode != HB_SUCCESS || ! hb_itemGetLX(pArea->area.valResult) )
          {
             break;
          }
@@ -6234,7 +6234,7 @@ static HB_ERRCODE hb_dbfSort( DBFAREAP pArea, LPDBSORTINFO pSortInfo )
          {
             break;
          }
-         fFor = hb_itemGetLX( pArea->area.valResult );
+         fFor = hb_itemGetLX(pArea->area.valResult);
       }
       else
       {
@@ -6709,7 +6709,7 @@ static HB_ERRCODE hb_dbfLock( DBFAREAP pArea, LPDBLOCKINFO pLockInfo )
             return hb_dbfLockRecord( pArea, 0, &pLockInfo->fResult, HB_TRUE );
 
          case DBLM_MULTIPLE:
-            return hb_dbfLockRecord( pArea, hb_itemGetNL( pLockInfo->itmRecID ), &pLockInfo->fResult, HB_FALSE );
+            return hb_dbfLockRecord( pArea, hb_itemGetNL(pLockInfo->itmRecID), &pLockInfo->fResult, HB_FALSE );
 
          case DBLM_FILE:
             return hb_dbfLockFile( pArea, &pLockInfo->fResult );
@@ -6739,7 +6739,7 @@ static HB_ERRCODE hb_dbfUnLock( DBFAREAP pArea, PHB_ITEM pRecNo )
    {
       if( pArea->ulNumLocksPos > 0 )
       {
-         HB_ULONG ulRecNo = hb_itemGetNL( pRecNo );
+         HB_ULONG ulRecNo = hb_itemGetNL(pRecNo);
          /* Unlock all records? */
          if( ulRecNo == 0 )
          {
@@ -7196,11 +7196,11 @@ static HB_ERRCODE hb_dbfDrop( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIte
    PHB_FNAME pFileName;
    HB_BOOL fTable = HB_FALSE, fResult = HB_FALSE;
 
-   szFile = hb_itemGetCPtr( pItemIndex );
+   szFile = hb_itemGetCPtr(pItemIndex);
    if( ! szFile[ 0 ] )
    {
       /* Try to delete index file */
-      szFile = hb_itemGetCPtr( pItemTable );
+      szFile = hb_itemGetCPtr(pItemTable);
       if( ! szFile[ 0 ] )
       {
          return HB_FAILURE;
@@ -7216,7 +7216,7 @@ static HB_ERRCODE hb_dbfDrop( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIte
       pFileExt = hb_itemPutNil( pFileExt );
       if( SELF_RDDINFO( pRDD, fTable ? RDDI_TABLEEXT : RDDI_ORDBAGEXT, ulConnect, pFileExt ) == HB_SUCCESS )
       {
-         pFileName->szExtension = hb_itemGetCPtr( pFileExt );
+         pFileName->szExtension = hb_itemGetCPtr(pFileExt);
       }
    }
    hb_fsFNameMerge( szFileName, pFileName );
@@ -7239,7 +7239,7 @@ static HB_ERRCODE hb_dbfDrop( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIte
          pFileExt = hb_itemPutNil( pFileExt );
          if( SELF_RDDINFO( pRDD, RDDI_MEMOEXT, ulConnect, pFileExt ) == HB_SUCCESS )
          {
-            szExt = hb_itemGetCPtr( pFileExt );
+            szExt = hb_itemGetCPtr(pFileExt);
             if( szExt[ 0 ] )
             {
                pFileName->szExtension = szExt;
@@ -7254,7 +7254,7 @@ static HB_ERRCODE hb_dbfDrop( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIte
          hb_itemClear( pFileExt );
          if( SELF_RDDINFO( pRDD, RDDI_ORDSTRUCTEXT, ulConnect, pFileExt ) == HB_SUCCESS )
          {
-            szExt = hb_itemGetCPtr( pFileExt );
+            szExt = hb_itemGetCPtr(pFileExt);
             if( szExt[ 0 ] )
             {
                pFileName->szExtension = szExt;
@@ -7286,10 +7286,10 @@ static HB_ERRCODE hb_dbfExists( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pI
    PHB_FNAME pFileName;
    HB_BOOL fTable = HB_FALSE;
 
-   szFile = hb_itemGetCPtr( pItemIndex );
+   szFile = hb_itemGetCPtr(pItemIndex);
    if( ! szFile[ 0 ] )
    {
-      szFile = hb_itemGetCPtr( pItemTable );
+      szFile = hb_itemGetCPtr(pItemTable);
       if( ! szFile[ 0 ] )
       {
          return HB_FAILURE;
@@ -7304,7 +7304,7 @@ static HB_ERRCODE hb_dbfExists( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pI
       pFileExt = hb_itemPutNil( pFileExt );
       if( SELF_RDDINFO( pRDD, fTable ? RDDI_TABLEEXT : RDDI_ORDBAGEXT, ulConnect, pFileExt ) == HB_SUCCESS )
       {
-         pFileName->szExtension = hb_itemGetCPtr( pFileExt );
+         pFileName->szExtension = hb_itemGetCPtr(pFileExt);
       }
    }
    hb_fsFNameMerge( szFileName, pFileName );
@@ -7330,11 +7330,11 @@ static HB_ERRCODE hb_dbfRename( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pI
    PHB_FNAME pFileName;
    HB_BOOL fTable = HB_FALSE, fResult = HB_FALSE;
 
-   szFile = hb_itemGetCPtr( pItemIndex );
+   szFile = hb_itemGetCPtr(pItemIndex);
    if( ! szFile[ 0 ] )
    {
       /* Try to delete index file */
-      szFile = hb_itemGetCPtr( pItemTable );
+      szFile = hb_itemGetCPtr(pItemTable);
       if( ! szFile[ 0 ] )
       {
          return HB_FAILURE;
@@ -7350,13 +7350,13 @@ static HB_ERRCODE hb_dbfRename( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pI
       pFileExt = hb_itemPutNil( pFileExt );
       if( SELF_RDDINFO( pRDD, fTable ? RDDI_TABLEEXT : RDDI_ORDBAGEXT, ulConnect, pFileExt ) == HB_SUCCESS )
       {
-         pFileName->szExtension = hb_itemGetCPtr( pFileExt );
+         pFileName->szExtension = hb_itemGetCPtr(pFileExt);
       }
    }
    hb_fsFNameMerge( szFileName, pFileName );
    hb_xfree( pFileName );
 
-   szFile = hb_itemGetCPtr( pItemNew );
+   szFile = hb_itemGetCPtr(pItemNew);
    /* Use hb_fileExists() first to locate table which can be in different path */
    if( szFile[ 0 ] && hb_fileExists( szFileName, szFileName ) )
    {
@@ -7375,7 +7375,7 @@ static HB_ERRCODE hb_dbfRename( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pI
          pFileExt = hb_itemPutNil( pFileExt );
          if( SELF_RDDINFO( pRDD, fTable ? RDDI_TABLEEXT : RDDI_ORDBAGEXT, ulConnect, pFileExt ) == HB_SUCCESS )
          {
-            pFileNameNew->szExtension = hb_itemGetCPtr( pFileExt );
+            pFileNameNew->szExtension = hb_itemGetCPtr(pFileExt);
          }
       }
       if( ! pFileNameNew->szPath )
@@ -7395,7 +7395,7 @@ static HB_ERRCODE hb_dbfRename( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pI
          pFileExt = hb_itemPutNil( pFileExt );
          if( SELF_RDDINFO( pRDD, RDDI_MEMOEXT, ulConnect, pFileExt ) == HB_SUCCESS )
          {
-            szExt = hb_itemGetCPtr( pFileExt );
+            szExt = hb_itemGetCPtr(pFileExt);
             if( szExt[ 0 ] )
             {
                pFileName->szExtension = szExt;
@@ -7412,7 +7412,7 @@ static HB_ERRCODE hb_dbfRename( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pI
          hb_itemClear( pFileExt );
          if( SELF_RDDINFO( pRDD, RDDI_ORDSTRUCTEXT, ulConnect, pFileExt ) == HB_SUCCESS )
          {
-            szExt = hb_itemGetCPtr( pFileExt );
+            szExt = hb_itemGetCPtr(pFileExt);
             if( szExt[ 0 ] )
             {
                pFileName->szExtension = szExt;
@@ -7541,7 +7541,7 @@ static HB_ERRCODE hb_dbfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
 
       case RDDI_TABLEEXT:
       {
-         const char * szNew = hb_itemGetCPtr( pItem );
+         const char * szNew = hb_itemGetCPtr(pItem);
          char * szNewVal;
 
          szNewVal = szNew[ 0 ] == '.' && szNew[ 1 ] ? hb_strdup( szNew ) : nullptr;
@@ -7555,7 +7555,7 @@ static HB_ERRCODE hb_dbfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
       }
       case RDDI_TABLETYPE:
       {
-         int iType = hb_itemGetNI( pItem );
+         int iType = hb_itemGetNI(pItem);
          hb_itemPutNI( pItem, pData->bTableType ? pData->bTableType : DB_DBF_STD );
          switch( iType )
          {
@@ -7567,7 +7567,7 @@ static HB_ERRCODE hb_dbfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
       }
       case RDDI_LOCKSCHEME:
       {
-         int iScheme = hb_itemGetNI( pItem );
+         int iScheme = hb_itemGetNI(pItem);
 
          hb_itemPutNI( pItem, pData->bLockType ? pData->bLockType : hb_setGetDBFLockScheme() );
          switch( iScheme )
@@ -7590,7 +7590,7 @@ static HB_ERRCODE hb_dbfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
 
          if( HB_IS_NUMERIC(pItem) )
          {
-            int iMode = hb_itemGetNI( pItem );
+            int iMode = hb_itemGetNI(pItem);
             if( ( iMode & ~DB_SETHEADER_MASK ) == 0 )
             {
                pData->uiSetHeader = static_cast<HB_USHORT>( iMode );
@@ -7604,14 +7604,14 @@ static HB_ERRCODE hb_dbfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
          HB_BOOL fDirty = ( pData->uiDirtyRead == HB_IDXREAD_DIRTYMASK );
          if( HB_IS_LOGICAL(pItem) )
          {
-            pData->uiDirtyRead = hb_itemGetL( pItem ) ? HB_IDXREAD_DIRTYMASK : HB_IDXREAD_CLEANMASK;
+            pData->uiDirtyRead = hb_itemGetL(pItem) ? HB_IDXREAD_DIRTYMASK : HB_IDXREAD_CLEANMASK;
          }
          hb_itemPutL( pItem, fDirty );
          break;
       }
       case RDDI_INDEXPAGESIZE:
       {
-         int iPageSize = hb_itemGetNI( pItem );
+         int iPageSize = hb_itemGetNI(pItem);
 
          hb_itemPutNI( pItem, pData->uiIndexPageSize );
          if( iPageSize >= 0x200 && iPageSize <= 0x2000 && ( ( iPageSize - 1 ) & iPageSize ) == 0 )
@@ -7622,7 +7622,7 @@ static HB_ERRCODE hb_dbfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
       }
       case RDDI_DECIMALS:
       {
-         int iDecimals = HB_IS_NUMERIC(pItem) ? hb_itemGetNI( pItem ) : -1;
+         int iDecimals = HB_IS_NUMERIC(pItem) ? hb_itemGetNI(pItem) : -1;
 
          hb_itemPutNI( pItem, pData->bDecimals );
          if( iDecimals >= 0 && iDecimals <= 20 )
@@ -7639,7 +7639,7 @@ static HB_ERRCODE hb_dbfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
          if( HB_IS_STRING(pItem) )
          {
             fFree = HB_TRUE;
-            pData->szTrigger = hb_itemGetCLen( pItem ) > 0 ? hb_itemGetC( pItem ) : nullptr;
+            pData->szTrigger = hb_itemGetCLen(pItem) > 0 ? hb_itemGetC(pItem) : nullptr;
          }
 
          if( fFree && szTrigger )
@@ -7666,9 +7666,9 @@ static HB_ERRCODE hb_dbfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
                hb_xfree( pData->szPendingTrigger );
                pData->szPendingTrigger = nullptr;
             }
-            if( hb_itemGetCLen( pItem ) > 0 )
+            if( hb_itemGetCLen(pItem) > 0 )
             {
-               pData->szPendingTrigger = hb_itemGetC( pItem );
+               pData->szPendingTrigger = hb_itemGetC(pItem);
             }
          }
          else if( pData->szPendingTrigger )
@@ -7690,7 +7690,7 @@ static HB_ERRCODE hb_dbfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
          if( HB_IS_STRING(pItem) )
          {
             fFree = HB_TRUE;
-            pData->szPasswd = hb_itemGetCLen( pItem ) > 0 ? hb_itemGetC( pItem ) : nullptr;
+            pData->szPasswd = hb_itemGetCLen(pItem) > 0 ? hb_itemGetC(pItem) : nullptr;
          }
 
          if( fFree && szPasswd )
@@ -7717,9 +7717,9 @@ static HB_ERRCODE hb_dbfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
                hb_xfree( pData->szPendingPasswd );
                pData->szPendingPasswd = nullptr;
             }
-            if( hb_itemGetCLen( pItem ) > 0 )
+            if( hb_itemGetCLen(pItem) > 0 )
             {
-               pData->szPendingPasswd = hb_itemGetC( pItem );
+               pData->szPendingPasswd = hb_itemGetC(pItem);
             }
          }
          else if( pData->szPendingPasswd )

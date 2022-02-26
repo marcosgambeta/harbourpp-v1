@@ -4358,7 +4358,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 #ifndef HB_GT_UNICODE_BUF
       case HB_GTI_BOXCP:
          pInfo->pResult = hb_itemPutC( pInfo->pResult, pTerm->cdpBox ? pTerm->cdpBox->id : nullptr );
-         szVal = hb_itemGetCPtr( pInfo->pNewVal );
+         szVal = hb_itemGetCPtr(pInfo->pNewVal);
          if( szVal && *szVal )
          {
             PHB_CODEPAGE cdpBox = hb_cdpFind( szVal );
@@ -4374,7 +4374,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, pTerm->esc_delay );
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
          {
-            pTerm->esc_delay = hb_itemGetNI( pInfo->pNewVal );
+            pTerm->esc_delay = hb_itemGetNI(pInfo->pNewVal);
          }
          break;
 
@@ -4383,10 +4383,10 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_DELKEYMAP:
-         szVal = hb_itemGetCPtr( pInfo->pNewVal );
+         szVal = hb_itemGetCPtr(pInfo->pNewVal);
          if( szVal && *szVal )
          {
-            removeKeyMap( pTerm, hb_itemGetCPtr( pInfo->pNewVal ) );
+            removeKeyMap( pTerm, hb_itemGetCPtr(pInfo->pNewVal) );
          }
          break;
 
@@ -4463,13 +4463,13 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
       case HB_GTI_PALETTE:
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
          {
-            iVal = hb_itemGetNI( pInfo->pNewVal );
+            iVal = hb_itemGetNI(pInfo->pNewVal);
             if( iVal >= 0 && iVal < 16 )
             {
                pInfo->pResult = hb_itemPutNI( pInfo->pResult, pTerm->colors[ iVal ] );
                if( hb_itemType( pInfo->pNewVal2 ) & HB_IT_NUMERIC )
                {
-                  pTerm->colors[ iVal ] = hb_itemGetNI( pInfo->pNewVal2 );
+                  pTerm->colors[ iVal ] = hb_itemGetNI(pInfo->pNewVal2);
                   hb_gt_trm_SetPalette( pTerm, iVal, iVal );
                   hb_gt_trm_termFlush( pTerm );
                }

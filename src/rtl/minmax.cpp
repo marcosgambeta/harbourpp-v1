@@ -59,8 +59,8 @@ HB_FUNC( MAX )
    {
       if( HB_IS_NUMINT(p1) && HB_IS_NUMINT(p2) )
       {
-         HB_MAXINT l1 = hb_itemGetNInt( p1 );
-         HB_MAXINT l2 = hb_itemGetNInt( p2 );
+         HB_MAXINT l1 = hb_itemGetNInt(p1);
+         HB_MAXINT l2 = hb_itemGetNInt(p2);
 
          if( l1 >= l2 )
          {
@@ -74,8 +74,8 @@ HB_FUNC( MAX )
       }
       else if( HB_IS_NUMERIC(p1) && HB_IS_NUMERIC(p2) )
       {
-         double d1 = hb_itemGetND( p1 );
-         double d2 = hb_itemGetND( p2 );
+         double d1 = hb_itemGetND(p1);
+         double d2 = hb_itemGetND(p2);
 
          if( d1 >= d2 )
          {
@@ -89,33 +89,33 @@ HB_FUNC( MAX )
       }
       else if( HB_IS_LOGICAL(p1) && HB_IS_LOGICAL(p2) )
       {
-         HB_BOOL b1 = hb_itemGetL( p1 );
-         HB_BOOL b2 = hb_itemGetL( p2 );
+         HB_BOOL b1 = hb_itemGetL(p1);
+         HB_BOOL b2 = hb_itemGetL(p2);
 
          hb_retl( b1 >= b2 ? b1 : b2 );
          return;
       }
       else if( HB_IS_DATE(p1) && HB_IS_DATE(p2) )
       {
-         long l1 = hb_itemGetDL( p1 );
-         long l2 = hb_itemGetDL( p2 );
+         long l1 = hb_itemGetDL(p1);
+         long l2 = hb_itemGetDL(p2);
 
          hb_retdl( l1 >= l2 ? l1 : l2 );
          return;
       }
       else if( HB_IS_DATETIME(p1) && HB_IS_DATETIME(p2) )
       {
-         if( HB_IS_DATE(p1) && hb_itemGetDL( p1 ) == hb_itemGetDL( p2 ) )
+         if( HB_IS_DATE(p1) && hb_itemGetDL(p1) == hb_itemGetDL(p2) )
          {
             hb_itemReturn( p1 );
          }
-         else if( HB_IS_DATE(p2) && hb_itemGetDL( p1 ) == hb_itemGetDL( p2 ) )
+         else if( HB_IS_DATE(p2) && hb_itemGetDL(p1) == hb_itemGetDL(p2) )
          {
             hb_itemReturn( p2 );
          }
          else
          {
-            hb_itemReturn( hb_itemGetTD( p1 ) >= hb_itemGetTD( p2 ) ? p1 : p2 );
+            hb_itemReturn( hb_itemGetTD(p1) >= hb_itemGetTD(p2) ? p1 : p2 );
          }
          return;
       }
@@ -134,8 +134,8 @@ HB_FUNC( MIN )
    {
       if( HB_IS_NUMINT(p1) && HB_IS_NUMINT(p2) )
       {
-         HB_MAXINT l1 = hb_itemGetNInt( p1 );
-         HB_MAXINT l2 = hb_itemGetNInt( p2 );
+         HB_MAXINT l1 = hb_itemGetNInt(p1);
+         HB_MAXINT l2 = hb_itemGetNInt(p2);
 
          if( l1 <= l2 )
          {
@@ -149,8 +149,8 @@ HB_FUNC( MIN )
       }
       else if( HB_IS_NUMERIC(p1) && HB_IS_NUMERIC(p2) )
       {
-         double d1 = hb_itemGetND( p1 );
-         double d2 = hb_itemGetND( p2 );
+         double d1 = hb_itemGetND(p1);
+         double d2 = hb_itemGetND(p2);
 
          if( d1 <= d2 )
          {
@@ -164,33 +164,33 @@ HB_FUNC( MIN )
       }
       else if( HB_IS_LOGICAL(p1) && HB_IS_LOGICAL(p2) )
       {
-         HB_BOOL b1 = hb_itemGetL( p1 );
-         HB_BOOL b2 = hb_itemGetL( p2 );
+         HB_BOOL b1 = hb_itemGetL(p1);
+         HB_BOOL b2 = hb_itemGetL(p2);
 
          hb_retl( b1 <= b2 ? b1 : b2 );
          return;
       }
       else if( HB_IS_DATE(p1) && HB_IS_DATE(p2) )
       {
-         long l1 = hb_itemGetDL( p1 );
-         long l2 = hb_itemGetDL( p2 );
+         long l1 = hb_itemGetDL(p1);
+         long l2 = hb_itemGetDL(p2);
 
          hb_retdl( l1 <= l2 ? l1 : l2 );
          return;
       }
       else if( HB_IS_DATETIME(p1) && HB_IS_DATETIME(p2) )
       {
-         if( HB_IS_DATE(p1) && hb_itemGetDL( p1 ) == hb_itemGetDL( p2 ) )
+         if( HB_IS_DATE(p1) && hb_itemGetDL(p1) == hb_itemGetDL(p2) )
          {
             hb_itemReturn( p1 );
          }
-         else if( HB_IS_DATE(p2) && hb_itemGetDL( p1 ) == hb_itemGetDL( p2 ) )
+         else if( HB_IS_DATE(p2) && hb_itemGetDL(p1) == hb_itemGetDL(p2) )
          {
             hb_itemReturn( p2 );
          }
          else
          {
-            hb_itemReturn( hb_itemGetTD( p1 ) <= hb_itemGetTD( p2 ) ? p1 : p2 );
+            hb_itemReturn( hb_itemGetTD(p1) <= hb_itemGetTD(p2) ? p1 : p2 );
          }
          return;
       }

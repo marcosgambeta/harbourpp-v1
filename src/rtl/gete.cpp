@@ -55,9 +55,9 @@ HB_FUNC( GETENV )
    if( pName && hb_pcount() == 1 )
    {
 #ifdef _HB_GETENV_REQUIRES_UPPERCASE
-      char * pszName = hb_cdpnDupUpper( hb_vmCDP(), hb_itemGetCPtr( pName ), nullptr );
+      char * pszName = hb_cdpnDupUpper( hb_vmCDP(), hb_itemGetCPtr(pName), nullptr );
 #else
-      const char * pszName = hb_itemGetCPtr( pName );
+      const char * pszName = hb_itemGetCPtr(pName);
 #endif
       char * pszValue = nullptr;
 
@@ -102,9 +102,9 @@ HB_FUNC( HB_GETENV )
    if( pName )
    {
 #ifdef _HB_GETENV_REQUIRES_UPPERCASE
-      char * pszName = hb_cdpnDupUpper( hb_vmCDP(), hb_itemGetCPtr( pName ), nullptr );
+      char * pszName = hb_cdpnDupUpper( hb_vmCDP(), hb_itemGetCPtr(pName), nullptr );
 #else
-      const char * pszName = hb_itemGetCPtr( pName );
+      const char * pszName = hb_itemGetCPtr(pName);
 #endif
       char * pszValue = nullptr;
 

@@ -87,7 +87,7 @@ HB_FUNC( MEMOTRAN )
 
    if( pString )
    {
-      HB_SIZE nLen = hb_itemGetCLen( pString );
+      HB_SIZE nLen = hb_itemGetCLen(pString);
       char * pszResult = static_cast<char*>( hb_xgrab( nLen + 1 ) );
       const char * pszRepl;
       char cHardCR = ';';
@@ -111,7 +111,7 @@ HB_FUNC( MEMOTRAN )
          cSoftCR = *pszRepl;
       }
 
-      nLen = hb_strMemotran( pszResult, hb_itemGetCPtr( pString ), nLen, cHardCR, cSoftCR );
+      nLen = hb_strMemotran( pszResult, hb_itemGetCPtr(pString), nLen, cHardCR, cSoftCR );
       hb_retclen_buffer( pszResult, nLen );
    }
    else

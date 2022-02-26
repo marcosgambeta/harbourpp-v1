@@ -124,8 +124,8 @@ static int hb_matherr( HB_MATH_EXCEPTION * pexc )
       {
          if( HB_IS_NUMERIC(pMatherrResult) )
          {
-            pexc->retval = hb_itemGetND( pMatherrResult );
-            hb_itemGetNLen( pMatherrResult, &pexc->retvalwidth, &pexc->retvaldec );
+            pexc->retval = hb_itemGetND(pMatherrResult);
+            hb_itemGetNLen(pMatherrResult, &pexc->retvalwidth, &pexc->retvaldec);
             pexc->handled = 1;
          }
          hb_itemRelease( pMatherrResult );
@@ -538,7 +538,7 @@ static int hb_matherrblock( HB_MATH_EXCEPTION * pexc )
          pHandled = hb_itemArrayGet( pArray, 2 );
          if( pHandled )
          {
-            pexc->handled = hb_itemGetL( pHandled );
+            pexc->handled = hb_itemGetL(pHandled);
             hb_itemRelease( pHandled );
          }
 
@@ -549,13 +549,13 @@ static int hb_matherrblock( HB_MATH_EXCEPTION * pexc )
             pRetval = hb_itemArrayGet( pArray, 1 );
             if( pRetval )
             {
-               pexc->retval = hb_itemGetND( pRetval );
-               hb_itemGetNLen( pRetval, &pexc->retvalwidth, &pexc->retvaldec );
+               pexc->retval = hb_itemGetND(pRetval);
+               hb_itemGetNLen(pRetval, &pexc->retvalwidth, &pexc->retvaldec);
                hb_itemRelease( pRetval );
             }
             if( pRet && HB_IS_NUMERIC(pRet) )
             {
-               retval = hb_itemGetNI( pRet );  /* block may also return 0 to force C math lib warnings */
+               retval = hb_itemGetNI(pRet);  /* block may also return 0 to force C math lib warnings */
                hb_itemRelease( pRet );
             }
             else

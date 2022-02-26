@@ -155,7 +155,7 @@ static int hb_memoDefaultType( LPRDDNODE pRDD, HB_ULONG ulConnect )
    hb_itemClear( pItem );
    if( SELF_RDDINFO( pRDD, RDDI_MEMOTYPE, ulConnect, pItem ) == HB_SUCCESS )
    {
-      iType = hb_itemGetNI( pItem );
+      iType = hb_itemGetNI(pItem);
    }
    hb_stackPop();
 
@@ -1151,10 +1151,10 @@ static HB_ULONG hb_fptCountSMTItemLength( FPTAREAP pArea, PHB_ITEM pItem, HB_ULO
          }
          else
          {
-            ulLen = static_cast<HB_ULONGCAST>( hb_itemGetCLen( pItem ) );
+            ulLen = static_cast<HB_ULONGCAST>( hb_itemGetCLen(pItem) );
             if( iTrans == FPT_TRANS_CP && ulLen > 0 )
             {
-               ulLen = static_cast<HB_ULONGCAST>( hb_cdpnDup2Len( hb_itemGetCPtr( pItem ), ulLen, 0xFFFF, hb_vmCDP(), pArea->area.cdPage ) );
+               ulLen = static_cast<HB_ULONGCAST>( hb_cdpnDup2Len( hb_itemGetCPtr(pItem), ulLen, 0xFFFF, hb_vmCDP(), pArea->area.cdPage ) );
             }
             else
             {
@@ -1176,7 +1176,7 @@ static HB_ULONG hb_fptCountSMTItemLength( FPTAREAP pArea, PHB_ITEM pItem, HB_ULO
       case HB_IT_INTEGER:
       case HB_IT_LONG:
       {
-         HB_MAXINT iVal = hb_itemGetNInt( pItem );
+         HB_MAXINT iVal = hb_itemGetNInt(pItem);
          if( HB_LIM_INT32( iVal ) )
          {
             ulSize = 5;
@@ -1294,14 +1294,14 @@ static void hb_fptStoreSMTItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBufP
          }
          else
          {
-            ulLen = static_cast<HB_ULONGCAST>( hb_itemGetCLen( pItem ) );
+            ulLen = static_cast<HB_ULONGCAST>( hb_itemGetCLen(pItem) );
             if( ulLen > 0 )
             {
                u = 0xFFFF;
                if( iTrans == FPT_TRANS_CP )
                {
                   HB_SIZE nSize = u;
-                  hb_cdpnDup2( hb_itemGetCPtr( pItem ), ulLen, reinterpret_cast<char*>( *bBufPtr ) + 2, &nSize, hb_vmCDP(), pArea->area.cdPage );
+                  hb_cdpnDup2( hb_itemGetCPtr(pItem), ulLen, reinterpret_cast<char*>( *bBufPtr ) + 2, &nSize, hb_vmCDP(), pArea->area.cdPage );
                   ulLen = static_cast<HB_ULONG>( nSize );
                }
                else
@@ -1310,7 +1310,7 @@ static void hb_fptStoreSMTItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBufP
                   {
                      ulLen = u;
                   }
-                  memcpy( *bBufPtr + 2, hb_itemGetCPtr( pItem ), ulLen );
+                  memcpy( *bBufPtr + 2, hb_itemGetCPtr(pItem), ulLen );
                }
             }
          }
@@ -1321,7 +1321,7 @@ static void hb_fptStoreSMTItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBufP
       case HB_IT_INTEGER:
       case HB_IT_LONG:
       {
-         HB_MAXINT iVal = hb_itemGetNInt( pItem );
+         HB_MAXINT iVal = hb_itemGetNInt(pItem);
          if( HB_LIM_INT32( iVal ) )
          {
             *( *bBufPtr )++ = SMT_IT_INT;
@@ -1333,9 +1333,9 @@ static void hb_fptStoreSMTItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBufP
       /* fallthrough */
       case HB_IT_DOUBLE:
       {
-         double dVal = hb_itemGetND( pItem );
+         double dVal = hb_itemGetND(pItem);
          int iWidth, iDec;
-         hb_itemGetNLen( pItem, &iWidth, &iDec );
+         hb_itemGetNLen(pItem, &iWidth, &iDec);
          if( iDec )
          {
             iWidth += iDec + 1;
@@ -1352,14 +1352,14 @@ static void hb_fptStoreSMTItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBufP
       {
          HB_LONG lVal;
          *( *bBufPtr )++ = SMT_IT_DATE;
-         lVal = hb_itemGetDL( pItem );
+         lVal = hb_itemGetDL(pItem);
          HB_PUT_LE_UINT32( *bBufPtr, lVal );
          *bBufPtr += 4;
          break;
       }
       case HB_IT_LOGICAL:
          *( *bBufPtr )++ = SMT_IT_LOGICAL;
-         *( *bBufPtr )++ = hb_itemGetL( pItem ) ? 1 : 0;
+         *( *bBufPtr )++ = hb_itemGetL(pItem) ? 1 : 0;
          break;
 
       case HB_IT_NIL:
@@ -1663,10 +1663,10 @@ static HB_ULONG hb_fptCountSixItemLength( FPTAREAP pArea, PHB_ITEM pItem, HB_ULO
          }
          else
          {
-            ulLen = static_cast<HB_ULONGCAST>( hb_itemGetCLen( pItem ) );
+            ulLen = static_cast<HB_ULONGCAST>( hb_itemGetCLen(pItem) );
             if( iTrans == FPT_TRANS_CP && ulLen > 0 )
             {
-               ulLen = static_cast<HB_ULONGCAST>( hb_cdpnDup2Len( hb_itemGetCPtr( pItem ), ulLen, u, hb_vmCDP(), pArea->area.cdPage ) );
+               ulLen = static_cast<HB_ULONGCAST>( hb_cdpnDup2Len( hb_itemGetCPtr(pItem), ulLen, u, hb_vmCDP(), pArea->area.cdPage ) );
             }
             else
             {
@@ -1721,8 +1721,8 @@ static HB_ULONG hb_fptStoreSixItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** b
       case HB_IT_INTEGER:
       case HB_IT_LONG:
       {
-         HB_MAXINT iVal = hb_itemGetNInt( pItem );
-         hb_itemGetNLen( pItem, &iWidth, &iDec );
+         HB_MAXINT iVal = hb_itemGetNInt(pItem);
+         hb_itemGetNLen(pItem, &iWidth, &iDec);
          if( HB_LIM_INT32( iVal ) )
          {
             HB_PUT_LE_UINT16( &( *bBufPtr )[ 0 ], FPTIT_SIX_LNUM );
@@ -1743,8 +1743,8 @@ static HB_ULONG hb_fptStoreSixItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** b
       }
       case HB_IT_DOUBLE:
       {
-         double dVal = hb_itemGetND( pItem );
-         hb_itemGetNLen( pItem, &iWidth, &iDec );
+         double dVal = hb_itemGetND(pItem);
+         hb_itemGetNLen(pItem, &iWidth, &iDec);
          HB_PUT_LE_UINT16( &( *bBufPtr )[ 0 ], FPTIT_SIX_DNUM );
          HB_PUT_LE_UINT16( &( *bBufPtr )[ 2 ], iWidth );
          HB_PUT_LE_UINT16( &( *bBufPtr )[ 4 ], iDec );
@@ -1755,7 +1755,7 @@ static HB_ULONG hb_fptStoreSixItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** b
       case HB_IT_DATE:
       case HB_IT_TIMESTAMP:
       {
-         HB_LONG lVal = hb_itemGetDL( pItem );
+         HB_LONG lVal = hb_itemGetDL(pItem);
          HB_PUT_LE_UINT16( &( *bBufPtr )[ 0 ], FPTIT_SIX_LDATE );
          HB_PUT_LE_UINT32( &( *bBufPtr )[ 6 ], lVal );
          *bBufPtr += SIX_ITEM_BUFSIZE;
@@ -1763,7 +1763,7 @@ static HB_ULONG hb_fptStoreSixItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** b
       }
       case HB_IT_LOGICAL:
          HB_PUT_LE_UINT16( &( *bBufPtr )[ 0 ], FPTIT_SIX_LOG );
-         ( *bBufPtr )[ 6 ] = hb_itemGetL( pItem ) ? 1 : 0;
+         ( *bBufPtr )[ 6 ] = hb_itemGetL(pItem) ? 1 : 0;
          *bBufPtr += SIX_ITEM_BUFSIZE;
          break;
 
@@ -1780,13 +1780,13 @@ static HB_ULONG hb_fptStoreSixItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** b
          }
          else
          {
-            ulLen = static_cast<HB_ULONGCAST>( hb_itemGetCLen( pItem ) );
+            ulLen = static_cast<HB_ULONGCAST>( hb_itemGetCLen(pItem) );
             if( ulLen > 0 )
             {
                if( iTrans == FPT_TRANS_CP )
                {
                   HB_SIZE nSize = u;
-                  hb_cdpnDup2( hb_itemGetCPtr( pItem ), ulLen, reinterpret_cast<char*>( *bBufPtr ) + SIX_ITEM_BUFSIZE, &nSize, hb_vmCDP(), pArea->area.cdPage );
+                  hb_cdpnDup2( hb_itemGetCPtr(pItem), ulLen, reinterpret_cast<char*>( *bBufPtr ) + SIX_ITEM_BUFSIZE, &nSize, hb_vmCDP(), pArea->area.cdPage );
                   ulLen = static_cast<HB_ULONG>( nSize );
                }
                else
@@ -1795,7 +1795,7 @@ static HB_ULONG hb_fptStoreSixItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** b
                   {
                      ulLen = u;
                   }
-                  memcpy( *bBufPtr + SIX_ITEM_BUFSIZE, hb_itemGetCPtr( pItem ), ulLen );
+                  memcpy( *bBufPtr + SIX_ITEM_BUFSIZE, hb_itemGetCPtr(pItem), ulLen );
                }
             }
          }
@@ -1945,10 +1945,10 @@ static HB_ULONG hb_fptCountFlexItemLength( FPTAREAP pArea, PHB_ITEM pItem, HB_UL
          }
          else
          {
-            ulLen = static_cast<HB_ULONGCAST>( hb_itemGetCLen( pItem ) );
+            ulLen = static_cast<HB_ULONGCAST>( hb_itemGetCLen(pItem) );
             if( iTrans == FPT_TRANS_CP && ulLen > 0 )
             {
-               ulLen = static_cast<HB_ULONGCAST>( hb_cdpnDup2Len( hb_itemGetCPtr( pItem ), ulLen, 0xFFFF, hb_vmCDP(), pArea->area.cdPage ) );
+               ulLen = static_cast<HB_ULONGCAST>( hb_cdpnDup2Len( hb_itemGetCPtr(pItem), ulLen, 0xFFFF, hb_vmCDP(), pArea->area.cdPage ) );
             }
             else
             {
@@ -1969,7 +1969,7 @@ static HB_ULONG hb_fptCountFlexItemLength( FPTAREAP pArea, PHB_ITEM pItem, HB_UL
          break;
       case HB_IT_INTEGER:
       case HB_IT_LONG:
-         iVal = hb_itemGetNInt( pItem );
+         iVal = hb_itemGetNInt(pItem);
          ulSize += ( HB_LIM_INT8( iVal ) ? 2 : ( HB_LIM_INT16( iVal ) ? 3 : ( HB_LIM_INT32( iVal ) ? 5 : 10 ) ) );
          break;
       case HB_IT_DOUBLE:
@@ -2001,7 +2001,7 @@ static void hb_fptStoreFlexItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBuf
          break;
       case HB_IT_MEMO:
       case HB_IT_STRING:
-         ulLen = static_cast<HB_ULONGCAST>( hb_itemGetCLen( pItem ) );
+         ulLen = static_cast<HB_ULONGCAST>( hb_itemGetCLen(pItem) );
          if( ulLen == 0 )
          {
             *( *bBufPtr )++ = FPTIT_FLEXAR_NUL;
@@ -2019,7 +2019,7 @@ static void hb_fptStoreFlexItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBuf
             else if( iTrans == FPT_TRANS_CP )
             {
                HB_SIZE nSize = u;
-               hb_cdpnDup2( hb_itemGetCPtr( pItem ), ulLen, reinterpret_cast<char*>( *bBufPtr ) + 2, &nSize, hb_vmCDP(), pArea->area.cdPage );
+               hb_cdpnDup2( hb_itemGetCPtr(pItem), ulLen, reinterpret_cast<char*>( *bBufPtr ) + 2, &nSize, hb_vmCDP(), pArea->area.cdPage );
                ulLen = static_cast<HB_ULONG>( nSize );
             }
             else
@@ -2028,7 +2028,7 @@ static void hb_fptStoreFlexItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBuf
                {
                   ulLen = u;
                }
-               memcpy( *bBufPtr + 2, hb_itemGetCPtr( pItem ), ulLen );
+               memcpy( *bBufPtr + 2, hb_itemGetCPtr(pItem), ulLen );
             }
             HB_PUT_LE_UINT16( *bBufPtr, static_cast<HB_USHORT>( ulLen ) );
             *bBufPtr += ulLen + 2;
@@ -2039,7 +2039,7 @@ static void hb_fptStoreFlexItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBuf
       {
          HB_LONG lVal;
          *( *bBufPtr )++ = FPTIT_FLEXAR_DATEJ;
-         lVal = hb_itemGetDL( pItem );
+         lVal = hb_itemGetDL(pItem);
          HB_PUT_LE_UINT32( *bBufPtr, lVal );
          *bBufPtr += 4;
          break;
@@ -2047,8 +2047,8 @@ static void hb_fptStoreFlexItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBuf
       case HB_IT_INTEGER:
       case HB_IT_LONG:
       {
-         HB_MAXINT iVal = hb_itemGetNInt( pItem );
-         hb_itemGetNLen( pItem, &iWidth, &iDec );
+         HB_MAXINT iVal = hb_itemGetNInt(pItem);
+         hb_itemGetNLen(pItem, &iWidth, &iDec);
          if( HB_LIM_INT8( iVal ) )
          {
             *( *bBufPtr )++ = FPTIT_FLEXAR_CHAR1;
@@ -2081,8 +2081,8 @@ static void hb_fptStoreFlexItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBuf
       }
       case HB_IT_DOUBLE:
       {
-         double dVal = hb_itemGetND( pItem );
-         hb_itemGetNLen( pItem, &iWidth, &iDec );
+         double dVal = hb_itemGetND(pItem);
+         hb_itemGetNLen(pItem, &iWidth, &iDec);
          if( iDec )
          {
             iWidth += iDec + 1;
@@ -2095,7 +2095,7 @@ static void hb_fptStoreFlexItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBuf
          break;
       }
       case HB_IT_LOGICAL:
-         *( *bBufPtr )++ = hb_itemGetL( pItem ) ? FPTIT_FLEXAR_TRUE : FPTIT_FLEXAR_FALSE;
+         *( *bBufPtr )++ = hb_itemGetL(pItem) ? FPTIT_FLEXAR_TRUE : FPTIT_FLEXAR_FALSE;
          break;
       case HB_IT_NIL:
       default:
@@ -3129,8 +3129,8 @@ static HB_ERRCODE hb_fptPutMemo( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
       }
       else
       {
-         ulSize = static_cast<HB_ULONGCAST>( hb_itemGetCLen( pItem ) );
-         bBufPtr = reinterpret_cast<const HB_BYTE*>( hb_itemGetCPtr( pItem ) );
+         ulSize = static_cast<HB_ULONGCAST>( hb_itemGetCLen(pItem) );
+         bBufPtr = reinterpret_cast<const HB_BYTE*>( hb_itemGetCPtr(pItem) );
          if( iTrans == FPT_TRANS_CP && ulSize > 0 )
          {
             HB_SIZE nSize = ulSize;
@@ -3202,20 +3202,20 @@ static HB_ERRCODE hb_fptPutMemo( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
             ulSize = 0;
             break;
          case HB_IT_LOGICAL:
-            ulType = hb_itemGetL( pItem ) ? FPTIT_FLEX_TRUE : FPTIT_FLEX_FALSE;
+            ulType = hb_itemGetL(pItem) ? FPTIT_FLEX_TRUE : FPTIT_FLEX_FALSE;
             ulSize = 0;
             break;
          case HB_IT_DATE:
          case HB_IT_TIMESTAMP:
             ulType = FPTIT_FLEX_LDATE;
             ulSize = 4;
-            lVal = hb_itemGetDL( pItem );
+            lVal = hb_itemGetDL(pItem);
             HB_PUT_LE_UINT32( itmBuffer, lVal );
             bBufPtr = itmBuffer;
             break;
          case HB_IT_INTEGER:
          case HB_IT_LONG:
-            iVal = hb_itemGetNInt( pItem );
+            iVal = hb_itemGetNInt(pItem);
             if( HB_LIM_INT8( iVal ) )
             {
                ulType = FPTIT_FLEX_CHAR;
@@ -3248,7 +3248,7 @@ static HB_ERRCODE hb_fptPutMemo( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
             break;
          case HB_IT_DOUBLE:
          {
-            double d = hb_itemGetND( pItem );
+            double d = hb_itemGetND(pItem);
             ulType = FPTIT_FLEX_DOUBLE;
             ulSize = 8;
             HB_PUT_LE_DOUBLE( itmBuffer, d );
@@ -3392,7 +3392,7 @@ static HB_ERRCODE hb_fptLockForRead( FPTAREAP pArea, HB_USHORT uiIndex, HB_BOOL 
       PHB_ITEM pRecNo = hb_itemNew( nullptr ), pResult = hb_itemNew( nullptr );
 
       errCode = SELF_RECINFO( &pArea->area, pRecNo, DBRI_LOCKED, pResult );
-      fLocked = hb_itemGetL( pResult );
+      fLocked = hb_itemGetL(pResult);
       hb_itemRelease( pRecNo );
       hb_itemRelease( pResult );
       if( errCode != HB_SUCCESS )
@@ -3811,7 +3811,7 @@ static HB_ERRCODE hb_fptPutVarField( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
          {
             return EDBF_DATATYPE;
          }
-         hb_sxDtoP( reinterpret_cast<char*>( pFieldBuf ), hb_itemGetDL( pItem ) );
+         hb_sxDtoP( reinterpret_cast<char*>( pFieldBuf ), hb_itemGetDL(pItem) );
       }
       else if( pField->uiLen == 4 )
       {
@@ -3821,8 +3821,8 @@ static HB_ERRCODE hb_fptPutVarField( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
          {
             return EDBF_DATATYPE;
          }
-         lVal = hb_itemGetNInt( pItem );
-         if( HB_IS_DOUBLE(pItem) ? ! HB_DBL_LIM_INT32( hb_itemGetND( pItem ) ) : ! HB_LIM_INT32( lVal ) )
+         lVal = hb_itemGetNInt(pItem);
+         if( HB_IS_DOUBLE(pItem) ? ! HB_DBL_LIM_INT32( hb_itemGetND(pItem) ) : ! HB_LIM_INT32( lVal ) )
          {
             return EDBF_DATAWIDTH;
          }
@@ -3872,12 +3872,12 @@ static HB_ERRCODE hb_fptPutVarField( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
 
          if( HB_IS_DATETIME(pItem) )
          {
-            hb_sxDtoP( reinterpret_cast<char*>( pFieldBuf ), hb_itemGetDL( pItem ) );
+            hb_sxDtoP( reinterpret_cast<char*>( pFieldBuf ), hb_itemGetDL(pItem) );
             uiType = HB_VF_DATE;
          }
          else if( HB_IS_LOGICAL(pItem) )
          {
-            pFieldBuf[ 0 ] = hb_itemGetL( pItem ) ? 1 : 0;
+            pFieldBuf[ 0 ] = hb_itemGetL(pItem) ? 1 : 0;
             uiType = HB_VF_LOG;
          }
          else if( HB_IS_NIL(pItem) )
@@ -3887,7 +3887,7 @@ static HB_ERRCODE hb_fptPutVarField( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
          else if( HB_IS_NUMBER(pItem) )
          {
             HB_MAXINT lVal;
-            lVal = hb_itemGetNInt( pItem );
+            lVal = hb_itemGetNInt(pItem);
 
             if( ! HB_IS_DOUBLE(pItem) && HB_LIM_INT32( lVal ) )
             {
@@ -3896,10 +3896,10 @@ static HB_ERRCODE hb_fptPutVarField( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
             }
             else
             {
-               double dVal = hb_itemGetND( pItem );
+               double dVal = hb_itemGetND(pItem);
                int iWidth, iDec;
 
-               hb_itemGetNLen( pItem, &iWidth, &iDec );
+               hb_itemGetNLen(pItem, &iWidth, &iDec);
                if( iDec )
                {
                   iWidth += iDec + 1;
@@ -3922,9 +3922,9 @@ static HB_ERRCODE hb_fptPutVarField( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
          }
          else if( HB_IS_STRING(pItem) )
          {
-            HB_SIZE nLen = hb_itemGetCLen( pItem );
+            HB_SIZE nLen = hb_itemGetCLen(pItem);
 
-            pBlock = reinterpret_cast<const HB_BYTE*>( hb_itemGetCPtr( pItem ) );
+            pBlock = reinterpret_cast<const HB_BYTE*>( hb_itemGetCPtr(pItem) );
             if( nLen > HB_VF_CHAR )
             {
                nLen = HB_VF_CHAR;
@@ -4173,7 +4173,7 @@ static HB_ERRCODE hb_fptCreateMemFile( FPTAREAP pArea, LPDBOPENINFO pCreateInfo 
             hb_itemRelease( pItem );
             return HB_FAILURE;
          }
-         pArea->bMemoType = static_cast<HB_BYTE>( hb_itemGetNI( pItem ) );
+         pArea->bMemoType = static_cast<HB_BYTE>( hb_itemGetNI(pItem) );
 #if 0
          if( ! pArea->bMemoType )
          {
@@ -4204,7 +4204,7 @@ static HB_ERRCODE hb_fptCreateMemFile( FPTAREAP pArea, LPDBOPENINFO pCreateInfo 
                hb_itemRelease( pItem );
                return HB_FAILURE;
             }
-            pArea->uiMemoVersion = static_cast<HB_USHORT>( hb_itemGetNI( pItem ) );
+            pArea->uiMemoVersion = static_cast<HB_USHORT>( hb_itemGetNI(pItem) );
          }
          else
          {
@@ -4219,7 +4219,7 @@ static HB_ERRCODE hb_fptCreateMemFile( FPTAREAP pArea, LPDBOPENINFO pCreateInfo 
             hb_itemRelease( pItem );
             return HB_FAILURE;
          }
-         pArea->ulMemoBlockSize = hb_itemGetNL( pItem );
+         pArea->ulMemoBlockSize = hb_itemGetNL(pItem);
       }
 
       if( ! pArea->fTemporary )
@@ -4231,7 +4231,7 @@ static HB_ERRCODE hb_fptCreateMemFile( FPTAREAP pArea, LPDBOPENINFO pCreateInfo 
             pItem = hb_itemPutNil( pItem );
             if( SELF_INFO( &pArea->area, DBI_MEMOEXT, pItem ) == HB_SUCCESS )
             {
-               pFileName->szExtension = hb_itemGetCPtr( pItem );
+               pFileName->szExtension = hb_itemGetCPtr(pItem);
                hb_fsFNameMerge( szFileName, pFileName );
             }
          }
@@ -4446,7 +4446,7 @@ static HB_ERRCODE hb_fptOpenMemFile( FPTAREAP pArea, LPDBOPENINFO pOpenInfo )
       PHB_ITEM pItem = hb_itemNew( nullptr );
       if( SELF_INFO( &pArea->area, DBI_MEMOEXT, pItem ) == HB_SUCCESS )
       {
-         pFileName->szExtension = hb_itemGetCPtr( pItem );
+         pFileName->szExtension = hb_itemGetCPtr(pItem);
          hb_fsFNameMerge( szFileName, pFileName );
       }
       hb_itemRelease( pItem );
@@ -5463,7 +5463,7 @@ static HB_ERRCODE hb_fptRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
    {
       case RDDI_MEMOEXT:
       {
-         const char * szExt = hb_itemGetCPtr( pItem );
+         const char * szExt = hb_itemGetCPtr(pItem);
          char * szNewVal;
 
          szNewVal = szExt[ 0 ] == '.' && szExt[ 1 ] ? hb_strdup( szExt ) : nullptr;
@@ -5494,7 +5494,7 @@ static HB_ERRCODE hb_fptRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
       }
       case RDDI_MEMOBLOCKSIZE:
       {
-         int iSize = hb_itemGetNI( pItem ), iOldSize;
+         int iSize = hb_itemGetNI(pItem), iOldSize;
 
          if( pData->ulMemoBlockSize )
          {
@@ -5527,7 +5527,7 @@ static HB_ERRCODE hb_fptRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
       }
       case RDDI_MEMOTYPE:
       {
-         int iType = hb_itemGetNI( pItem );
+         int iType = hb_itemGetNI(pItem);
 
          hb_itemPutNI( pItem, pData->bMemoType ? pData->bMemoType : DB_MEMO_FPT );
 
@@ -5546,7 +5546,7 @@ static HB_ERRCODE hb_fptRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
 
       case RDDI_MEMOVERSION:
       {
-         int iType = hb_itemGetNI( pItem );
+         int iType = hb_itemGetNI(pItem);
 
          hb_itemPutNI( pItem, pData->bMemoExtType ? pData->bMemoExtType : DB_MEMOVER_FLEX );
          switch( iType )

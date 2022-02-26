@@ -260,7 +260,7 @@ static void hb_inetAutoInit( void )
 
 HB_SOCKET hb_znetInetFD( PHB_ITEM pItem, HB_BOOL fError )
 {
-   PHB_SOCKET_STRUCT socket = static_cast<PHB_SOCKET_STRUCT>( hb_itemGetPtrGC( pItem, &s_gcInetFuncs ) );
+   PHB_SOCKET_STRUCT socket = static_cast<PHB_SOCKET_STRUCT>( hb_itemGetPtrGC(pItem, &s_gcInetFuncs) );
 
    if( socket )
    {
@@ -276,7 +276,7 @@ HB_SOCKET hb_znetInetFD( PHB_ITEM pItem, HB_BOOL fError )
 
 HB_MAXINT hb_znetInetTimeout( PHB_ITEM pItem, HB_BOOL fError )
 {
-   PHB_SOCKET_STRUCT socket = static_cast<PHB_SOCKET_STRUCT>( hb_itemGetPtrGC( pItem, &s_gcInetFuncs ) );
+   PHB_SOCKET_STRUCT socket = static_cast<PHB_SOCKET_STRUCT>( hb_itemGetPtrGC(pItem, &s_gcInetFuncs) );
 
    if( socket )
    {
@@ -298,7 +298,7 @@ HB_BOOL hb_znetInetInitialize( PHB_ITEM pItem, PHB_ZNETSTREAM pStream,
                                HB_INET_ERFUNC errorFunc,
                                HB_INET_ESFUNC errstrFunc )
 {
-   PHB_SOCKET_STRUCT socket = static_cast<PHB_SOCKET_STRUCT>( hb_itemGetPtrGC( pItem, &s_gcInetFuncs ) );
+   PHB_SOCKET_STRUCT socket = static_cast<PHB_SOCKET_STRUCT>( hb_itemGetPtrGC(pItem, &s_gcInetFuncs) );
 
    if( socket )
    {
@@ -935,8 +935,8 @@ static void s_inetRecvPattern( const char * const * patterns, int * patternsizes
    }
 
 
-   iBufferSize = pBufferSize ? hb_itemGetNI( pBufferSize ) : 80;
-   iMax = pMaxSize ? hb_itemGetNI( pMaxSize ) : 0;
+   iBufferSize = pBufferSize ? hb_itemGetNI(pBufferSize) : 80;
+   iMax = pMaxSize ? hb_itemGetNI(pMaxSize) : 0;
 
    socket->iError = HB_INET_ERR_OK;
 
@@ -1074,10 +1074,10 @@ HB_FUNC( HB_INETRECVENDBLOCK )
 
    if( iPatternsCount == 0 )
    {
-      iLen = static_cast<int>( hb_itemGetCLen( pProto ) );
+      iLen = static_cast<int>( hb_itemGetCLen(pProto) );
       if( iLen > 0 )
       {
-         patterns[ 0 ]     = hb_itemGetCPtr( pProto );
+         patterns[ 0 ]     = hb_itemGetCPtr(pProto);
          patternsizes[ 0 ] = iLen;
       }
       else
@@ -1165,8 +1165,8 @@ static void s_inetSendInternal( HB_BOOL lAll )
    }
    else
    {
-      buffer = hb_itemGetCPtr( pBuffer );
-      iSend = static_cast<int>( hb_itemGetCLen( pBuffer ) );
+      buffer = hb_itemGetCPtr(pBuffer);
+      iSend = static_cast<int>( hb_itemGetCLen(pBuffer) );
       if( HB_ISNUM( 3 ) )
       {
          iLen = hb_parni(3);
@@ -1609,8 +1609,8 @@ HB_FUNC( HB_INETDGRAMSEND )
       }
       else
       {
-         szBuffer = hb_itemGetCPtr( pBuffer );
-         iLen = static_cast<int>( hb_itemGetCLen( pBuffer ) );
+         szBuffer = hb_itemGetCPtr(pBuffer);
+         iLen = static_cast<int>( hb_itemGetCLen(pBuffer) );
          if( HB_ISNUM( 5 ) )
          {
             int iMaxLen = hb_parni(5);

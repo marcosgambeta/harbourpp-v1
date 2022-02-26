@@ -2061,7 +2061,7 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          pInfo->pResult = hb_itemPutL( pInfo->pResult, pGT->fVgaCell );
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_LOGICAL )
          {
-            pGT->fVgaCell = hb_itemGetL( pInfo->pNewVal );
+            pGT->fVgaCell = hb_itemGetL(pInfo->pNewVal);
          }
          break;
 
@@ -2069,7 +2069,7 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, pGT->iRedrawMax );
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
          {
-            pGT->iRedrawMax = hb_itemGetNI( pInfo->pNewVal );
+            pGT->iRedrawMax = hb_itemGetNI(pInfo->pNewVal);
          }
          break;
 
@@ -2077,9 +2077,9 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          pInfo->pResult = hb_itemPutC( pInfo->pResult, pGT->cdpBox ? pGT->cdpBox->id : nullptr );
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_STRING )
          {
-            if( hb_itemGetCLen( pInfo->pNewVal ) > 0 )
+            if( hb_itemGetCLen(pInfo->pNewVal) > 0 )
             {
-               PHB_CODEPAGE cdpBox = hb_cdpFind( hb_itemGetCPtr( pInfo->pNewVal ) );
+               PHB_CODEPAGE cdpBox = hb_cdpFind( hb_itemGetCPtr(pInfo->pNewVal) );
                if( cdpBox )
                {
                   pGT->cdpBox = cdpBox;
@@ -2167,7 +2167,7 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_STRING )
          {
             /* set new Clipboard value */
-            hb_gt_setClipboard( hb_itemGetCPtr( pInfo->pNewVal ), hb_itemGetCLen( pInfo->pNewVal ) );
+            hb_gt_setClipboard( hb_itemGetCPtr(pInfo->pNewVal), hb_itemGetCLen(pInfo->pNewVal) );
          }
          else
          {
@@ -2189,7 +2189,7 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
       case HB_GTI_CLIPBOARDPASTE:
          if( HB_GTSELF_INFO( pGT, HB_GTI_CLIPBOARDDATA, pInfo ) )
          {
-            HB_GTSELF_INKEYSETTEXT( pGT, hb_itemGetCPtr( pInfo->pResult ), hb_itemGetCLen( pInfo->pResult ), hb_itemGetL( pInfo->pNewVal ) );
+            HB_GTSELF_INKEYSETTEXT( pGT, hb_itemGetCPtr(pInfo->pResult), hb_itemGetCLen(pInfo->pResult), hb_itemGetL(pInfo->pNewVal) );
          }
          break;
 
@@ -2234,7 +2234,7 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_VERSION:
-         pInfo->pResult = hb_itemPutC( pInfo->pResult, HB_GTSELF_VERSION( pGT, hb_itemGetNI( pInfo->pNewVal ) ) );
+         pInfo->pResult = hb_itemPutC( pInfo->pResult, HB_GTSELF_VERSION( pGT, hb_itemGetNI(pInfo->pNewVal) ) );
          break;
 
       default:
@@ -2265,12 +2265,12 @@ static int hb_gt_def_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, in
       HB_GTSELF_INFO( pGT, HB_GTI_ISSCREENPOS, &gtInfo );
       if( gtInfo.pResult )
       {
-         fScreen = hb_itemGetL( gtInfo.pResult );
+         fScreen = hb_itemGetL(gtInfo.pResult);
       }
       HB_GTSELF_INFO( pGT, HB_GTI_KBDSUPPORT, &gtInfo );
       if( gtInfo.pResult )
       {
-         fKeyBoard = hb_itemGetL( gtInfo.pResult );
+         fKeyBoard = hb_itemGetL(gtInfo.pResult);
          hb_itemRelease( gtInfo.pResult );
       }
       HB_GTSELF_GETSIZE( pGT, &iRows, &iCols );
@@ -3296,7 +3296,7 @@ static int hb_gt_def_InkeyGet( PHB_GT pGT, HB_BOOL fWait, double dSeconds, int i
    {
       int iKey;
       HB_GTSELF_UNLOCK( pGT );
-      iKey = hb_itemGetNI( hb_vmEvalBlock( pGT->pInkeyReadBlock ) );
+      iKey = hb_itemGetNI(hb_vmEvalBlock( pGT->pInkeyReadBlock ));
       HB_GTSELF_LOCK( pGT );
       if( iKey != 0 )
       {
@@ -3322,7 +3322,7 @@ static int hb_gt_def_InkeyGet( PHB_GT pGT, HB_BOOL fWait, double dSeconds, int i
          }
          pKey = hb_itemPutNI( pKey, pGT->inkeyLast );
          HB_GTSELF_UNLOCK( pGT );
-         pGT->inkeyLast = hb_itemGetNI( hb_vmEvalBlockV( pGT->pInkeyFilterBlock, 1, pKey ) );
+         pGT->inkeyLast = hb_itemGetNI(hb_vmEvalBlockV( pGT->pInkeyFilterBlock, 1, pKey ));
          HB_GTSELF_LOCK( pGT );
          if( pGT->inkeyLast != 0 )
          {
@@ -4411,7 +4411,7 @@ static void * hb_gtParam( int iParam )
 
 PHB_GT hb_gt_ItemBase( PHB_ITEM pItemGT )
 {
-   void ** gtHolder = static_cast<void**>( hb_itemGetPtrGC( pItemGT, &s_gcGTFuncs ) );
+   void ** gtHolder = static_cast<void**>( hb_itemGetPtrGC(pItemGT, &s_gcGTFuncs) );
 
    if( gtHolder && *gtHolder )
    {

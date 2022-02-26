@@ -3868,11 +3868,11 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          pInfo->pResult = hb_itemPutL( pInfo->pResult, pWVT->bMaximized );
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_LOGICAL )
          {
-            if( hb_itemGetL( pInfo->pNewVal ) != pWVT->bMaximized && ! pWVT->bFullScreen )
+            if( hb_itemGetL(pInfo->pNewVal) != pWVT->bMaximized && ! pWVT->bFullScreen )
             {
                if( ! pWVT->hWnd )
                {
-                  pWVT->bMaximized = hb_itemGetL( pInfo->pNewVal );
+                  pWVT->bMaximized = hb_itemGetL(pInfo->pNewVal);
                }
                else if( pWVT->bMaximized )
                {
@@ -3892,7 +3892,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          pInfo->pResult = hb_itemPutL( pInfo->pResult, pWVT->bFullScreen );
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_LOGICAL )
          {
-            if( hb_itemGetL( pInfo->pNewVal ) != pWVT->bFullScreen )
+            if( hb_itemGetL(pInfo->pNewVal) != pWVT->bFullScreen )
             {
                if( pWVT->hWnd )
                {
@@ -3900,7 +3900,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                }
                else
                {
-                  pWVT->bFullScreen = hb_itemGetL( pInfo->pNewVal );
+                  pWVT->bFullScreen = hb_itemGetL(pInfo->pNewVal);
                }
             }
          }
@@ -3910,7 +3910,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          pInfo->pResult = hb_itemPutL( pInfo->pResult, pWVT->bAltEnter );
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_LOGICAL )
          {
-            pWVT->bAltEnter = hb_itemGetL( pInfo->pNewVal );
+            pWVT->bAltEnter = hb_itemGetL(pInfo->pNewVal);
          }
          break;
 
@@ -3946,7 +3946,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_FONTSIZE:
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, pWVT->PTEXTSIZE.y );
-         iVal = hb_itemGetNI( pInfo->pNewVal );
+         iVal = hb_itemGetNI(pInfo->pNewVal);
          if( iVal > 0 )
          {
             HFONT hFont = hb_gt_wvt_GetFont( pWVT->fontFace, iVal, pWVT->fontWidth, pWVT->fontWeight, pWVT->fontQuality, pWVT->CodePage );
@@ -3981,7 +3981,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_FONTWIDTH:
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, pWVT->fontWidth );
-         iVal = hb_itemGetNI( pInfo->pNewVal );
+         iVal = hb_itemGetNI(pInfo->pNewVal);
          if( iVal > 0 )
          {
             pWVT->fontWidth = iVal;  /* store font status for next operation on fontsize */
@@ -4027,7 +4027,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
          {
             /* store font status for next operation on fontsize */
-            switch( hb_itemGetNI( pInfo->pNewVal ) )
+            switch( hb_itemGetNI(pInfo->pNewVal) )
             {
                case HB_GTI_FONTW_THIN:
                   pWVT->fontWeight = FW_LIGHT;
@@ -4063,7 +4063,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, iVal );
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
          {
-            switch( hb_itemGetNI( pInfo->pNewVal ) )
+            switch( hb_itemGetNI(pInfo->pNewVal) )
             {
                case HB_GTI_FONTQ_HIGH:
                   pWVT->fontQuality = ANTIALIASED_QUALITY;
@@ -4082,7 +4082,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, pWVT->fontAttribute );
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
          {
-            pWVT->fontAttribute = hb_itemGetNI( pInfo->pNewVal ) & ( HB_GTI_FONTA_FIXMETRIC | HB_GTI_FONTA_CLRBKG | HB_GTI_FONTA_CTRLCHARS | HB_GTI_FONTA_DRAWBOX );
+            pWVT->fontAttribute = hb_itemGetNI(pInfo->pNewVal) & ( HB_GTI_FONTA_FIXMETRIC | HB_GTI_FONTA_CLRBKG | HB_GTI_FONTA_CTRLCHARS | HB_GTI_FONTA_DRAWBOX );
          }
          break;
 
@@ -4092,7 +4092,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_SCREENHEIGHT:
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, pWVT->PTEXTSIZE.y * pWVT->ROWS );
-         iVal = hb_itemGetNI( pInfo->pNewVal );
+         iVal = hb_itemGetNI(pInfo->pNewVal);
          if( iVal > 0 && ! pWVT->bMaximized && ! pWVT->bFullScreen && pWVT->hWnd )  /* Don't allow if Maximized or FullScreen */
          {
             /* Now conforms to pWVT->ResizeMode setting, resize by FONT or ROWS as applicable [HVB] */
@@ -4110,7 +4110,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_SCREENWIDTH:
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, pWVT->PTEXTSIZE.x * pWVT->COLS );
-         iVal = hb_itemGetNI( pInfo->pNewVal );
+         iVal = hb_itemGetNI(pInfo->pNewVal);
          if( iVal > 0 && ! pWVT->bMaximized && ! pWVT->bFullScreen && pWVT->hWnd )  /* Don't allow if Maximized or FullScreen */
          {
             /* Now conforms to pWVT->ResizeMode setting, resize by FONT or ROWS as applicable [HVB] */
@@ -4175,7 +4175,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, pWVT->CodePage );
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
          {
-            iVal = hb_itemGetNI( pInfo->pNewVal );
+            iVal = hb_itemGetNI(pInfo->pNewVal);
             if( iVal != pWVT->CodePage )
             {
                if( ! pWVT->hWnd )
@@ -4222,7 +4222,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, pWVT->boxCodePage );
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
          {
-            iVal = hb_itemGetNI( pInfo->pNewVal );
+            iVal = hb_itemGetNI(pInfo->pNewVal);
             if( iVal != pWVT->boxCodePage )
             {
                if( ! pWVT->hWnd )
@@ -4273,10 +4273,10 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                hb_itemFreeC( reinterpret_cast<char*>( pWVT->wcTrans ) );
                pWVT->wcTrans = nullptr;
             }
-            pWVT->wcTransLen = hb_itemGetCLen( pInfo->pNewVal ) / sizeof(HB_WCHAR);
+            pWVT->wcTransLen = hb_itemGetCLen(pInfo->pNewVal) / sizeof(HB_WCHAR);
             if( pWVT->wcTransLen > 0 )
             {
-               pWVT->wcTrans = pWVT->wcTransLen == 0 ? nullptr : reinterpret_cast<HB_WCHAR*>( hb_itemGetC( pInfo->pNewVal ) );
+               pWVT->wcTrans = pWVT->wcTransLen == 0 ? nullptr : reinterpret_cast<HB_WCHAR*>( hb_itemGetC(pInfo->pNewVal) );
             }
          }
          break;
@@ -4300,7 +4300,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          }
          else if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
          {
-            hIcon = LoadIcon( pWVT->hInstance, MAKEINTRESOURCE( hb_itemGetNI( pInfo->pNewVal ) ) );
+            hIcon = LoadIcon( pWVT->hInstance, MAKEINTRESOURCE( hb_itemGetNI(pInfo->pNewVal) ) );
          }
          if( hIcon != pWVT->hIcon )
          {
@@ -4333,7 +4333,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, hb_gt_winapi_getKbdState() );
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
          {
-            hb_gt_winapi_setKbdState( hb_itemGetNI( pInfo->pNewVal ) );
+            hb_gt_winapi_setKbdState( hb_itemGetNI(pInfo->pNewVal) );
          }
          break;
 
@@ -4364,7 +4364,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, GetCaretBlinkTime() );
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
          {
-            iVal = hb_itemGetNI( pInfo->pNewVal );
+            iVal = hb_itemGetNI(pInfo->pNewVal);
             SetCaretBlinkTime( HB_MAX( iVal, 0 ) );
          }
          break;
@@ -4407,7 +4407,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          pInfo->pResult = hb_itemPutL( pInfo->pResult, pWVT->bResizable );
          if( pInfo->pNewVal )
          {
-            HB_BOOL bNewValue = hb_itemGetL( pInfo->pNewVal );
+            HB_BOOL bNewValue = hb_itemGetL(pInfo->pNewVal);
             if( bNewValue != pWVT->bResizable )
             {
                pWVT->bResizable = bNewValue;
@@ -4426,7 +4426,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          pInfo->pResult = hb_itemPutL( pInfo->pResult, HB_FALSE );
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
          {
-            iVal = hb_itemGetNI( pInfo->pNewVal );
+            iVal = hb_itemGetNI(pInfo->pNewVal);
             if( iVal != 0 )
             {
                HB_BOOL fAdd = ( hb_itemType( pInfo->pNewVal2 ) & HB_IT_STRING ) != 0;
@@ -4493,7 +4493,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          {
             pInfo->pResult = HB_ITEMPUTSTR( pInfo->pResult, pWVT->lpSelectCopy );
 
-            if( hb_itemGetCLen( pInfo->pNewVal ) )
+            if( hb_itemGetCLen(pInfo->pNewVal) )
             {
                HMENU hSysMenu = pWVT->hWnd ? GetSystemMenu( pWVT->hWnd, FALSE ) : nullptr;
                if( hSysMenu || ! pWVT->hWnd )
@@ -4513,7 +4513,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             pInfo->pResult = hb_itemPutL( pInfo->pResult, pWVT->bSelectCopy );
             if( pInfo->pNewVal )
             {
-               HB_BOOL bNewValue = hb_itemGetL( pInfo->pNewVal );
+               HB_BOOL bNewValue = hb_itemGetL(pInfo->pNewVal);
                if( bNewValue != pWVT->bSelectCopy )
                {
                   if( pWVT->hWnd )
@@ -4536,7 +4536,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_CLOSABLE:
          pInfo->pResult = hb_itemPutL( pInfo->pResult, pWVT->CloseMode == 0 );
-         if( ( hb_itemType( pInfo->pNewVal ) & HB_IT_LOGICAL ) && ( hb_itemGetL( pInfo->pNewVal ) ? ( pWVT->CloseMode != 0 ) : ( pWVT->CloseMode == 0 ) ) )
+         if( ( hb_itemType( pInfo->pNewVal ) & HB_IT_LOGICAL ) && ( hb_itemGetL(pInfo->pNewVal) ? ( pWVT->CloseMode != 0 ) : ( pWVT->CloseMode == 0 ) ) )
          {
             iVal = pWVT->CloseMode;
             pWVT->CloseMode = iVal == 0 ? 1 : 0;
@@ -4551,7 +4551,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, pWVT->CloseMode );
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
          {
-            iVal = hb_itemGetNI( pInfo->pNewVal );
+            iVal = hb_itemGetNI(pInfo->pNewVal);
             if( iVal >= 0 && iVal <= 2 && pWVT->CloseMode != iVal )
             {
                pWVT->CloseMode = iVal;
@@ -4566,7 +4566,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
       case HB_GTI_PALETTE:
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
          {
-            int iIndex = hb_itemGetNI( pInfo->pNewVal );
+            int iIndex = hb_itemGetNI(pInfo->pNewVal);
 
             if( iIndex >= 0 && iIndex < 16 )
             {
@@ -4574,7 +4574,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
                if( hb_itemType( pInfo->pNewVal2 ) & HB_IT_NUMERIC )
                {
-                  pWVT->COLORS[ iIndex ] = hb_itemGetNL( pInfo->pNewVal2 );
+                  pWVT->COLORS[ iIndex ] = hb_itemGetNL(pInfo->pNewVal2);
 
                   if( pWVT->hWnd )
                   {
@@ -4618,7 +4618,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, pWVT->ResizeMode );
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
          {
-            iVal = hb_itemGetNI( pInfo->pNewVal );
+            iVal = hb_itemGetNI(pInfo->pNewVal);
             switch( iVal )
             {
                case HB_GTI_RESIZEMODE_FONT:
@@ -4661,8 +4661,8 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
          if( ( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC ) && ( hb_itemType( pInfo->pNewVal2 ) & HB_IT_NUMERIC ) )
          {
-            x = hb_itemGetNI( pInfo->pNewVal );
-            y = hb_itemGetNI( pInfo->pNewVal2 );
+            x = hb_itemGetNI(pInfo->pNewVal);
+            y = hb_itemGetNI(pInfo->pNewVal2);
          }
          else if( ( hb_itemType( pInfo->pNewVal ) & HB_IT_ARRAY ) && hb_arrayLen( pInfo->pNewVal ) == 2 )
          {

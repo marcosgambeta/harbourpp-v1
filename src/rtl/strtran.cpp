@@ -69,16 +69,16 @@ HB_FUNC( STRTRAN )
 
       if( nStart && nCount )
       {
-         HB_SIZE nText = hb_itemGetCLen( pText );
-         HB_SIZE nSeek = hb_itemGetCLen( pSeek );
+         HB_SIZE nText = hb_itemGetCLen(pText);
+         HB_SIZE nSeek = hb_itemGetCLen(pSeek);
 
          if( nSeek && nSeek <= nText && nStart > 0 )
          {
             PHB_ITEM pReplace = hb_param(3, HB_IT_STRING);
-            HB_SIZE nReplace = hb_itemGetCLen( pReplace );
-            const char * szReplace = hb_itemGetCPtr( pReplace );
-            const char * szText = hb_itemGetCPtr( pText );
-            const char * szSeek = hb_itemGetCPtr( pSeek );
+            HB_SIZE nReplace = hb_itemGetCLen(pReplace);
+            const char * szReplace = hb_itemGetCPtr(pReplace);
+            const char * szText = hb_itemGetCPtr(pText);
+            const char * szSeek = hb_itemGetCPtr(pSeek);
             HB_SIZE nFound = 0;
             HB_SIZE nReplaced = 0;
             HB_SIZE nT = 0;

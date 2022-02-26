@@ -918,7 +918,7 @@ static const char * hb_dbTransFieldPos( PHB_ITEM pFields, HB_USHORT uiField )
       }
       else
       {
-         szField = hb_itemGetCPtr( pItem );
+         szField = hb_itemGetCPtr(pItem);
       }
 
       if( *szField == '\0' )
@@ -948,7 +948,7 @@ PHB_ITEM hb_dbTransInfoPut( PHB_ITEM pItem, LPDBTRANSINFO lpdbTransInfo )
 
 LPDBTRANSINFO hb_dbTransInfoGet( PHB_ITEM pItem )
 {
-   LPDBTRANSINFO * pHolder = static_cast<LPDBTRANSINFO*>( hb_itemGetPtrGC( pItem, &s_gcTransInfo ) );
+   LPDBTRANSINFO * pHolder = static_cast<LPDBTRANSINFO*>( hb_itemGetPtrGC(pItem, &s_gcTransInfo) );
 
    return pHolder ? * pHolder : nullptr;
 }
@@ -1047,7 +1047,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
                uiSize = 0;
                break;
             }
-            szField = hb_itemGetCPtr( pItem );
+            szField = hb_itemGetCPtr(pItem);
             uiPosDst = hb_rddFieldExpIndex( lpaDest, szField );
             if( uiPosDst != uiCount )
             {
@@ -1146,7 +1146,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
             uiSize = 0;
             break;
          }
-         if( hb_stricmp( hb_itemGetCPtr( pSrcItm ), hb_itemGetCPtr( pDstItm ) ) != 0 )
+         if( hb_stricmp( hb_itemGetCPtr(pSrcItm), hb_itemGetCPtr(pDstItm) ) != 0 )
          {
             fAll = HB_FALSE;
             break;
@@ -1157,7 +1157,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
             uiSize = 0;
             break;
          }
-         if( hb_itemGetNL( pSrcItm ) != hb_itemGetNL( pDstItm ) )
+         if( hb_itemGetNL(pSrcItm) != hb_itemGetNL(pDstItm) )
          {
             fAll = HB_FALSE;
             break;
@@ -1168,7 +1168,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
             uiSize = 0;
             break;
          }
-         if( hb_itemGetNL( pSrcItm ) != hb_itemGetNL( pDstItm ) )
+         if( hb_itemGetNL(pSrcItm) != hb_itemGetNL(pDstItm) )
          {
             fAll = HB_FALSE;
             break;
@@ -1180,7 +1180,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
             uiSize = 0;
             break;
          }
-         if( hb_itemGetNL( pSrcItm ) != hb_itemGetNL( pDstItm ) )
+         if( hb_itemGetNL(pSrcItm) != hb_itemGetNL(pDstItm) )
          {
             fAll = HB_FALSE;
             break;
@@ -1396,7 +1396,7 @@ static HB_ERRCODE hb_rddEvalWABlock( AREAP pArea, void * pBlock )
    hb_rddSelectWorkAreaNumber( pArea->uiArea );
    pItem = hb_vmEvalBlockOrMacro( static_cast<PHB_ITEM>( pBlock ) );
 
-   if( hb_vmRequestQuery() != 0 || ( HB_IS_LOGICAL(pItem) && ! hb_itemGetL( pItem ) ) )
+   if( hb_vmRequestQuery() != 0 || ( HB_IS_LOGICAL(pItem) && ! hb_itemGetL(pItem) ) )
    {
       return HB_FAILURE;
    }

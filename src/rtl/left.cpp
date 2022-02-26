@@ -65,13 +65,13 @@ HB_FUNC( LEFT )
       }
       else
       {
-         HB_SIZE nText = hb_itemGetCLen( pText );
+         HB_SIZE nText = hb_itemGetCLen(pText);
          if( static_cast<HB_SIZE>( nLen ) < nText )
          {
             PHB_CODEPAGE cdp = hb_vmCDP();
             if( HB_CDP_ISCHARIDX( cdp ) )
             {
-               nLen = hb_cdpTextPos( cdp, hb_itemGetCPtr( pText ), nText, nLen );
+               nLen = hb_cdpTextPos( cdp, hb_itemGetCPtr(pText), nText, nLen );
             }   
          }
          if( static_cast<HB_SIZE>( nLen ) >= nText )
@@ -80,7 +80,7 @@ HB_FUNC( LEFT )
          }
          else
          {
-            hb_retclen( hb_itemGetCPtr( pText ), nLen );
+            hb_retclen( hb_itemGetCPtr(pText), nLen );
          }
       }
    }
@@ -97,7 +97,7 @@ HB_FUNC( HB_LEFTEQ )
 
    if( pItem1 && pItem2 )
    {
-      hb_retl( hb_cdpcmp( hb_itemGetCPtr( pItem1 ), hb_itemGetCLen( pItem1 ), hb_itemGetCPtr( pItem2 ), hb_itemGetCLen( pItem2 ), hb_vmCDP(), HB_FALSE ) == 0 );
+      hb_retl( hb_cdpcmp( hb_itemGetCPtr(pItem1), hb_itemGetCLen(pItem1), hb_itemGetCPtr(pItem2), hb_itemGetCLen(pItem2), hb_vmCDP(), HB_FALSE ) == 0 );
    }
    else
    {
@@ -112,7 +112,7 @@ HB_FUNC( HB_LEFTEQI )
 
    if( pItem1 && pItem2 )
    {
-      hb_retl( hb_cdpicmp( hb_itemGetCPtr( pItem1 ), hb_itemGetCLen( pItem1 ), hb_itemGetCPtr( pItem2 ), hb_itemGetCLen( pItem2 ), hb_vmCDP(), HB_FALSE ) == 0 );
+      hb_retl( hb_cdpicmp( hb_itemGetCPtr(pItem1), hb_itemGetCLen(pItem1), hb_itemGetCPtr(pItem2), hb_itemGetCLen(pItem2), hb_vmCDP(), HB_FALSE ) == 0 );
    }
    else
    {

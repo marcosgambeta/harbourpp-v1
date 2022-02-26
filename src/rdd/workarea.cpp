@@ -209,7 +209,7 @@ static HB_ERRCODE hb_waSkipFilter( AREAP pArea, HB_LONG lUpDown )
             return HB_FAILURE;
          }
 
-         if( HB_IS_LOGICAL(pArea->valResult) && ! hb_itemGetL( pArea->valResult ) )
+         if( HB_IS_LOGICAL(pArea->valResult) && ! hb_itemGetL(pArea->valResult) )
          {
             if( SELF_SKIPRAW( pArea, lUpDown ) != HB_SUCCESS )
             {
@@ -947,7 +947,7 @@ static HB_ERRCODE hb_waInfo( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
       }
       case DBI_SCOPEDRELATION:
       {
-         int iRelNo = hb_itemGetNI( pItem );
+         int iRelNo = hb_itemGetNI(pItem);
          HB_BOOL fScoped = HB_FALSE;
 
          if( iRelNo > 0 )
@@ -1187,13 +1187,13 @@ static HB_ERRCODE hb_waEval( AREAP pArea, LPDBEVALINFO pEvalInfo )
    }
    else if( pEvalInfo->dbsci.lNext )
    {
-      lNext = hb_itemGetNL( pEvalInfo->dbsci.lNext );
+      lNext = hb_itemGetNL(pEvalInfo->dbsci.lNext);
       if( lNext <= 0 )
       {
          return HB_SUCCESS;
       }
    }
-   else if( ! pEvalInfo->dbsci.itmCobWhile && ! hb_itemGetLX( pEvalInfo->dbsci.fRest ) )
+   else if( ! pEvalInfo->dbsci.itmCobWhile && ! hb_itemGetLX(pEvalInfo->dbsci.fRest) )
    {
       if( SELF_GOTOP( pArea ) != HB_SUCCESS )
       {
@@ -1221,7 +1221,7 @@ static HB_ERRCODE hb_waEval( AREAP pArea, LPDBEVALINFO pEvalInfo )
          {
             return HB_FAILURE;
          }
-         if( ! hb_itemGetLX( pArea->valResult ) )
+         if( ! hb_itemGetLX(pArea->valResult) )
          {
             break;
          }
@@ -1233,7 +1233,7 @@ static HB_ERRCODE hb_waEval( AREAP pArea, LPDBEVALINFO pEvalInfo )
          {
             return HB_FAILURE;
          }
-         fFor = hb_itemGetLX( pArea->valResult );
+         fFor = hb_itemGetLX(pArea->valResult);
       }
       else
       {
@@ -1295,13 +1295,13 @@ static HB_ERRCODE hb_waLocate( AREAP pArea, HB_BOOL fContinue )
    }
    else if( pArea->dbsi.lNext )
    {
-      lNext = hb_itemGetNL( pArea->dbsi.lNext );
+      lNext = hb_itemGetNL(pArea->dbsi.lNext);
       if( lNext <= 0 )
       {
          return HB_SUCCESS;
       }
    }
-   else if( ! pArea->dbsi.itmCobWhile && ! hb_itemGetLX( pArea->dbsi.fRest ) )
+   else if( ! pArea->dbsi.itmCobWhile && ! hb_itemGetLX(pArea->dbsi.fRest) )
    {
       if( SELF_GOTOP( pArea ) != HB_SUCCESS )
       {
@@ -1331,7 +1331,7 @@ static HB_ERRCODE hb_waLocate( AREAP pArea, HB_BOOL fContinue )
          {
             return HB_FAILURE;
          }
-         if( ! hb_itemGetLX( pArea->valResult ) )
+         if( ! hb_itemGetLX(pArea->valResult) )
          {
             break;
          }
@@ -1349,7 +1349,7 @@ static HB_ERRCODE hb_waLocate( AREAP pArea, HB_BOOL fContinue )
             return HB_FAILURE;
          }
 
-         if( hb_itemGetLX( pArea->valResult ) )
+         if( hb_itemGetLX(pArea->valResult) )
          {
             pArea->fFound = HB_TRUE;
             break;
@@ -1391,13 +1391,13 @@ static HB_ERRCODE hb_waTrans( AREAP pArea, LPDBTRANSINFO pTransInfo )
    }
    else if( pTransInfo->dbsci.lNext )
    {
-      lNext = hb_itemGetNL( pTransInfo->dbsci.lNext );
+      lNext = hb_itemGetNL(pTransInfo->dbsci.lNext);
       if( lNext <= 0 )
       {
          return HB_SUCCESS;
       }
    }
-   else if( ! pTransInfo->dbsci.itmCobWhile && ! hb_itemGetLX( pTransInfo->dbsci.fRest ) )
+   else if( ! pTransInfo->dbsci.itmCobWhile && ! hb_itemGetLX(pTransInfo->dbsci.fRest) )
    {
       if( SELF_GOTOP( pArea ) != HB_SUCCESS )
       {
@@ -1425,7 +1425,7 @@ static HB_ERRCODE hb_waTrans( AREAP pArea, LPDBTRANSINFO pTransInfo )
          {
             return HB_FAILURE;
          }
-         if( ! hb_itemGetLX( pArea->valResult ) )
+         if( ! hb_itemGetLX(pArea->valResult) )
          {
             break;
          }
@@ -1437,7 +1437,7 @@ static HB_ERRCODE hb_waTrans( AREAP pArea, LPDBTRANSINFO pTransInfo )
          {
             return HB_FAILURE;
          }
-         fFor = hb_itemGetLX( pArea->valResult );
+         fFor = hb_itemGetLX(pArea->valResult);
       }
       else
       {
@@ -1737,7 +1737,7 @@ static HB_ERRCODE hb_waRelEval( AREAP pArea, LPDBRELINFO pRelInfo )
 
             if( errCode == HB_SUCCESS )
             {
-               int iOrder = hb_itemGetNI( pInfo.itmResult );
+               int iOrder = hb_itemGetNI(pInfo.itmResult);
                if( iOrder != 0 )
                {
                   if( pRelInfo->isScoped )
@@ -1769,7 +1769,7 @@ static HB_ERRCODE hb_waRelEval( AREAP pArea, LPDBRELINFO pRelInfo )
                   #if 0
                   errCode = SELF_GOTOID( pArea, pResult );
                   #endif
-                  errCode = SELF_GOTO( pArea, hb_itemGetNL( pResult ) );
+                  errCode = SELF_GOTO( pArea, hb_itemGetNL(pResult) );
                   if( errCode == HB_SUCCESS )
                   {
                      errCode = SELF_EOF( pArea, &fEof );

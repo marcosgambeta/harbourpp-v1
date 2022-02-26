@@ -252,7 +252,7 @@ static int hb_hashItemCmp( PHB_ITEM pKey1, PHB_ITEM pKey2, int iFlags )
    }
    else if( HB_IS_NUMERIC(pKey2) )
    {
-      double d1 = hb_itemGetND( pKey1 ), d2 = hb_itemGetND( pKey2 );
+      double d1 = hb_itemGetND(pKey1), d2 = hb_itemGetND(pKey2);
       return d1 < d2 ? -1 : ( d1 > d2 ? 1 : 0 );
    }
    return -1;

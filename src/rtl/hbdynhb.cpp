@@ -89,7 +89,7 @@ HB_FUNC( HB_DYNCALL )
 
                if( pLibraryHandle )
                {
-                  pFunctionPtr = hb_libSymAddr( pLibraryHandle, hb_itemGetCPtr( pFunction ) );
+                  pFunctionPtr = hb_libSymAddr( pLibraryHandle, hb_itemGetCPtr(pFunction) );
                }
 
                ++nBasePos;

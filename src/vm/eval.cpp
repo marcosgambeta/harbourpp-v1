@@ -488,11 +488,11 @@ HB_FUNC( HB_EXECFROMARRAY )
    {
       if( HB_IS_SYMBOL(pFunc) )
       {
-         pExecSym = hb_itemGetSymbol( pFunc );
+         pExecSym = hb_itemGetSymbol(pFunc);
       }
       else if( HB_IS_STRING(pFunc) )
       {
-         pExecSym = hb_dynsymGet( hb_itemGetCPtr( pFunc ) )->pSymbol;
+         pExecSym = hb_dynsymGet( hb_itemGetCPtr(pFunc) )->pSymbol;
       }
       else if( HB_IS_BLOCK(pFunc) && ! pSelf )
       {
@@ -575,11 +575,11 @@ HB_BOOL hb_execFromArray( PHB_ITEM pParam )
 
       if( HB_IS_SYMBOL(pParam) )
       {
-         pExecSym = hb_itemGetSymbol( pParam );
+         pExecSym = hb_itemGetSymbol(pParam);
       }
       else if( HB_IS_STRING(pParam) )
       {
-         pExecSym = hb_dynsymGet( hb_itemGetCPtr( pParam ) )->pSymbol;
+         pExecSym = hb_dynsymGet( hb_itemGetCPtr(pParam) )->pSymbol;
       }
       else if( HB_IS_BLOCK(pParam) && ! pSelf )
       {

@@ -347,7 +347,7 @@ HB_FUNC( HB_UTF8AT )
 
    if( pText && pSub )
    {
-      HB_SIZE nTextLength = hb_itemGetCLen( pText );
+      HB_SIZE nTextLength = hb_itemGetCLen(pText);
       HB_SIZE nStart = hb_parnsdef( 3, 1 );
       HB_SIZE nEnd = hb_parnsdef( 4, nTextLength ); /* nTextLength can be > UTF8 len. No problem.*/
 
@@ -357,7 +357,7 @@ HB_FUNC( HB_UTF8AT )
       }
       else
       {
-         hb_retns( hb_cdpUTF8StringAt( hb_itemGetCPtr( pSub ), hb_itemGetCLen( pSub ), hb_itemGetCPtr( pText ), nTextLength, nStart, nEnd, HB_FALSE ) );
+         hb_retns( hb_cdpUTF8StringAt( hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), hb_itemGetCPtr(pText), nTextLength, nStart, nEnd, HB_FALSE ) );
       }
    }
    else
@@ -379,7 +379,7 @@ HB_FUNC( HB_UTF8RAT )
 
    if( pText && pSub )
    {
-      HB_SIZE nTextLength = hb_itemGetCLen( pText );
+      HB_SIZE nTextLength = hb_itemGetCLen(pText);
       HB_SIZE nStart = hb_parnsdef( 3, 1 );
       HB_SIZE nEnd = hb_parnsdef( 4, nTextLength ); /* nTextLength can be > UTF8 len. No problem.*/
 
@@ -389,7 +389,7 @@ HB_FUNC( HB_UTF8RAT )
       }
       else
       {
-         hb_retns( hb_cdpUTF8StringAt( hb_itemGetCPtr( pSub ), hb_itemGetCLen( pSub ), hb_itemGetCPtr( pText ), nTextLength, nStart, nEnd, HB_TRUE ) );
+         hb_retns( hb_cdpUTF8StringAt( hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), hb_itemGetCPtr(pText), nTextLength, nStart, nEnd, HB_TRUE ) );
       }
    }
    else
@@ -537,8 +537,8 @@ HB_FUNC( HB_UTF8POKE )
 
    if( pText && HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
    {
-      const char * szString = hb_itemGetCPtr( pText );
-      HB_SIZE nLen = hb_itemGetCLen( pText ), nPos;
+      const char * szString = hb_itemGetCPtr(pText);
+      HB_SIZE nLen = hb_itemGetCLen(pText), nPos;
 
       nPos = utf8pos( szString, nLen, hb_parns(2) );
       if( nPos )

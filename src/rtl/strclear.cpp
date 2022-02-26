@@ -61,7 +61,7 @@ HB_FUNC( HB_STRCLEAR )
       char * pBuffer;
       HB_SIZE nSize;
 
-      pszPtr = hb_itemGetCPtr( pItem );
+      pszPtr = hb_itemGetCPtr(pItem);
       if( hb_itemGetWriteCL( pItem, &pBuffer, &nSize ) )
       {
          memset( pBuffer, '\0', nSize + 1 );

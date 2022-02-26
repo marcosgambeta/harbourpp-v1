@@ -1310,7 +1310,7 @@ HB_FUNC( HB_SETMACRO )
             pValue = hb_param(2, HB_IT_LOGICAL);
             if( pValue )
             {
-               hb_macroSetMacro( hb_itemGetL( pValue ), flags );
+               hb_macroSetMacro( hb_itemGetL(pValue), flags );
             }
             break;
 

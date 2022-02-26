@@ -587,13 +587,13 @@ char * hb_arrayGetDS( PHB_ITEM pArray, HB_SIZE nIndex, char * szDate )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      return hb_itemGetDS( pArray->item.asArray.value->pItems + nIndex - 1, szDate );
+      return hb_itemGetDS(pArray->item.asArray.value->pItems + nIndex - 1, szDate);
    }
    else
    {
       /* NOTE: Intentionally calling it with a bad parameter in order to get
                the default value from hb_itemGetDS(). [vszakats] */
-      return hb_itemGetDS( nullptr, szDate );
+      return hb_itemGetDS(nullptr, szDate);
    }
 }
 
@@ -605,13 +605,13 @@ long hb_arrayGetDL( PHB_ITEM pArray, HB_SIZE nIndex )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      return hb_itemGetDL( pArray->item.asArray.value->pItems + nIndex - 1 );
+      return hb_itemGetDL(pArray->item.asArray.value->pItems + nIndex - 1);
    }
    else
    {
       /* NOTE: Intentionally calling it with a bad parameter in order to get
                the default value from hb_itemGetDL(). [vszakats] */
-      return hb_itemGetDL( nullptr );
+      return hb_itemGetDL(nullptr);
    }
 }
 
@@ -623,7 +623,7 @@ double hb_arrayGetTD( PHB_ITEM pArray, HB_SIZE nIndex )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      return hb_itemGetTD( pArray->item.asArray.value->pItems + nIndex - 1 );
+      return hb_itemGetTD(pArray->item.asArray.value->pItems + nIndex - 1);
    }
    else
    {
@@ -639,7 +639,7 @@ HB_BOOL hb_arrayGetTDT( PHB_ITEM pArray, HB_SIZE nIndex, long * plJulian, long *
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      return hb_itemGetTDT( pArray->item.asArray.value->pItems + nIndex - 1, plJulian, plMilliSec );
+      return hb_itemGetTDT(pArray->item.asArray.value->pItems + nIndex - 1, plJulian, plMilliSec);
    }
    else
    {
@@ -656,7 +656,7 @@ HB_BOOL hb_arrayGetL( PHB_ITEM pArray, HB_SIZE nIndex )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      return hb_itemGetL( pArray->item.asArray.value->pItems + nIndex - 1 );
+      return hb_itemGetL(pArray->item.asArray.value->pItems + nIndex - 1);
    }
    else
    {
@@ -672,7 +672,7 @@ int hb_arrayGetNI( PHB_ITEM pArray, HB_SIZE nIndex )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      return hb_itemGetNI( pArray->item.asArray.value->pItems + nIndex - 1 );
+      return hb_itemGetNI(pArray->item.asArray.value->pItems + nIndex - 1);
    }
    else
    {
@@ -688,7 +688,7 @@ long hb_arrayGetNL( PHB_ITEM pArray, HB_SIZE nIndex )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      return hb_itemGetNL( pArray->item.asArray.value->pItems + nIndex - 1 );
+      return hb_itemGetNL(pArray->item.asArray.value->pItems + nIndex - 1);
    }
    else
    {
@@ -704,7 +704,7 @@ HB_ISIZ hb_arrayGetNS( PHB_ITEM pArray, HB_SIZE nIndex )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      return hb_itemGetNS( pArray->item.asArray.value->pItems + nIndex - 1 );
+      return hb_itemGetNS(pArray->item.asArray.value->pItems + nIndex - 1);
    }
    else
    {
@@ -721,7 +721,7 @@ HB_LONGLONG hb_arrayGetNLL( PHB_ITEM pArray, HB_SIZE nIndex )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      return hb_itemGetNLL( pArray->item.asArray.value->pItems + nIndex - 1 );
+      return hb_itemGetNLL(pArray->item.asArray.value->pItems + nIndex - 1);
    }
    else
    {
@@ -738,7 +738,7 @@ HB_MAXINT hb_arrayGetNInt( PHB_ITEM pArray, HB_SIZE nIndex )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      return hb_itemGetNInt( pArray->item.asArray.value->pItems + nIndex - 1 );
+      return hb_itemGetNInt(pArray->item.asArray.value->pItems + nIndex - 1);
    }
    else
    {
@@ -754,7 +754,7 @@ double hb_arrayGetND( PHB_ITEM pArray, HB_SIZE nIndex )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      return hb_itemGetND( pArray->item.asArray.value->pItems + nIndex - 1 );
+      return hb_itemGetND(pArray->item.asArray.value->pItems + nIndex - 1);
    }
    else
    {
@@ -786,7 +786,7 @@ char * hb_arrayGetC( PHB_ITEM pArray, HB_SIZE nIndex )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      return hb_itemGetC( pArray->item.asArray.value->pItems + nIndex - 1 );
+      return hb_itemGetC(pArray->item.asArray.value->pItems + nIndex - 1);
    }
    else
    {
@@ -802,7 +802,7 @@ const char * hb_arrayGetCPtr( PHB_ITEM pArray, HB_SIZE nIndex )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      return hb_itemGetCPtr( pArray->item.asArray.value->pItems + nIndex - 1 );
+      return hb_itemGetCPtr(pArray->item.asArray.value->pItems + nIndex - 1);
    }
    else
    {
@@ -818,7 +818,7 @@ HB_SIZE hb_arrayGetCLen( PHB_ITEM pArray, HB_SIZE nIndex )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      return hb_itemGetCLen( pArray->item.asArray.value->pItems + nIndex - 1 );
+      return hb_itemGetCLen(pArray->item.asArray.value->pItems + nIndex - 1);
    }
    else
    {
@@ -834,7 +834,7 @@ void * hb_arrayGetPtr( PHB_ITEM pArray, HB_SIZE nIndex )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      return hb_itemGetPtr( pArray->item.asArray.value->pItems + nIndex - 1 );
+      return hb_itemGetPtr(pArray->item.asArray.value->pItems + nIndex - 1);
    }
    else
    {
@@ -850,7 +850,7 @@ void * hb_arrayGetPtrGC( PHB_ITEM pArray, HB_SIZE nIndex, const HB_GC_FUNCS * pF
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      return hb_itemGetPtrGC( pArray->item.asArray.value->pItems + nIndex - 1, pFuncs );
+      return hb_itemGetPtrGC(pArray->item.asArray.value->pItems + nIndex - 1, pFuncs);
    }
    else
    {
@@ -866,7 +866,7 @@ PHB_SYMB hb_arrayGetSymbol( PHB_ITEM pArray, HB_SIZE nIndex )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      return hb_itemGetSymbol( pArray->item.asArray.value->pItems + nIndex - 1 );
+      return hb_itemGetSymbol(pArray->item.asArray.value->pItems + nIndex - 1);
    }
    else
    {
@@ -1356,13 +1356,13 @@ HB_SIZE hb_arrayScan( PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE * pnStart, HB_SI
             }
             else if( HB_IS_NUMINT(pValue) )
             {
-               HB_MAXINT nValue = hb_itemGetNInt( pValue );
+               HB_MAXINT nValue = hb_itemGetNInt(pValue);
 
                do
                {
                   PHB_ITEM pItem = pBaseArray->pItems + nStart++;
 
-                  if( HB_IS_NUMERIC(pItem) && hb_itemGetNInt( pItem ) == nValue && hb_itemGetND( pItem ) == static_cast<double>( nValue ) )
+                  if( HB_IS_NUMERIC(pItem) && hb_itemGetNInt(pItem) == nValue && hb_itemGetND(pItem) == static_cast<double>( nValue ) )
                   {
                      return nStart;
                   }
@@ -1371,13 +1371,13 @@ HB_SIZE hb_arrayScan( PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE * pnStart, HB_SI
             }
             else if( HB_IS_NUMERIC(pValue) )
             {
-               double dValue = hb_itemGetND( pValue );
+               double dValue = hb_itemGetND(pValue);
 
                do
                {
                   PHB_ITEM pItem = pBaseArray->pItems + nStart++;
 
-                  if( HB_IS_NUMERIC(pItem) && hb_itemGetND( pItem ) == dValue )
+                  if( HB_IS_NUMERIC(pItem) && hb_itemGetND(pItem) == dValue )
                   {
                      return nStart;
                   }
@@ -1417,13 +1417,13 @@ HB_SIZE hb_arrayScan( PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE * pnStart, HB_SI
             }
             else if( HB_IS_LOGICAL(pValue) )
             {
-               HB_BOOL bValue = hb_itemGetL( pValue );
+               HB_BOOL bValue = hb_itemGetL(pValue);
 
                do
                {
                   PHB_ITEM pItem = pBaseArray->pItems + nStart++;
 
-                  if( HB_IS_LOGICAL(pItem) && hb_itemGetL( pItem ) == bValue )
+                  if( HB_IS_LOGICAL(pItem) && hb_itemGetL(pItem) == bValue )
                   {
                      return nStart;
                   }
@@ -1565,13 +1565,13 @@ HB_SIZE hb_arrayRevScan( PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE * pnStart, HB
             }
             else if( HB_IS_NUMINT(pValue) )
             {
-               HB_MAXINT nValue = hb_itemGetNInt( pValue );
+               HB_MAXINT nValue = hb_itemGetNInt(pValue);
 
                do
                {
                   PHB_ITEM pItem = pBaseArray->pItems + nStart;
 
-                  if( HB_IS_NUMERIC(pItem) && hb_itemGetNInt( pItem ) == nValue && hb_itemGetND( pItem ) == static_cast<double>( nValue ) )
+                  if( HB_IS_NUMERIC(pItem) && hb_itemGetNInt(pItem) == nValue && hb_itemGetND(pItem) == static_cast<double>( nValue ) )
                   {
                      return nStart + 1;
                   }
@@ -1580,13 +1580,13 @@ HB_SIZE hb_arrayRevScan( PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE * pnStart, HB
             }
             else if( HB_IS_NUMERIC(pValue) )
             {
-               double dValue = hb_itemGetND( pValue );
+               double dValue = hb_itemGetND(pValue);
 
                do
                {
                   PHB_ITEM pItem = pBaseArray->pItems + nStart;
 
-                  if( HB_IS_NUMERIC(pItem) && hb_itemGetND( pItem ) == dValue )
+                  if( HB_IS_NUMERIC(pItem) && hb_itemGetND(pItem) == dValue )
                   {
                      return nStart + 1;
                   }
@@ -1626,13 +1626,13 @@ HB_SIZE hb_arrayRevScan( PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE * pnStart, HB
             }
             else if( HB_IS_LOGICAL(pValue) )
             {
-               HB_BOOL bValue = hb_itemGetL( pValue );
+               HB_BOOL bValue = hb_itemGetL(pValue);
 
                do
                {
                   PHB_ITEM pItem = pBaseArray->pItems + nStart;
 
-                  if( HB_IS_LOGICAL(pItem) && hb_itemGetL( pItem ) == bValue )
+                  if( HB_IS_LOGICAL(pItem) && hb_itemGetL(pItem) == bValue )
                   {
                      return nStart + 1;
                   }

@@ -56,8 +56,8 @@ HB_FUNC( LOWER )
 
    if( pText )
    {
-      HB_SIZE nLen = hb_itemGetCLen( pText );
-      char * pszBuffer = hb_cdpnDupLower( hb_vmCDP(), hb_itemGetCPtr( pText ), &nLen );
+      HB_SIZE nLen = hb_itemGetCLen(pText);
+      char * pszBuffer = hb_cdpnDupLower( hb_vmCDP(), hb_itemGetCPtr(pText), &nLen );
       hb_retclen_buffer( pszBuffer, nLen );
    }
    else
@@ -73,8 +73,8 @@ HB_FUNC( UPPER )
 
    if( pText )
    {
-      HB_SIZE nLen = hb_itemGetCLen( pText );
-      char * pszBuffer = hb_cdpnDupUpper( hb_vmCDP(), hb_itemGetCPtr( pText ), &nLen );
+      HB_SIZE nLen = hb_itemGetCLen(pText);
+      char * pszBuffer = hb_cdpnDupUpper( hb_vmCDP(), hb_itemGetCPtr(pText), &nLen );
       hb_retclen_buffer( pszBuffer, nLen );
    }
    else

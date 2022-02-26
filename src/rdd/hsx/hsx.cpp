@@ -641,8 +641,8 @@ static int hb_hsxEval( int iHandle, PHB_ITEM pExpr, HB_BYTE * pKey, HB_BOOL * fD
 
    if( HB_IS_STRING(pExpr) )
    {
-      pStr = hb_itemGetCPtr( pExpr );
-      nLen = hb_itemGetCLen( pExpr );
+      pStr = hb_itemGetCPtr(pExpr);
+      nLen = hb_itemGetCLen(pExpr);
       if( fDeleted )
       {
          *fDeleted = HB_FALSE;
@@ -666,8 +666,8 @@ static int hb_hsxEval( int iHandle, PHB_ITEM pExpr, HB_BYTE * pKey, HB_BOOL * fD
          }
       }
       pItem = hb_vmEvalBlockOrMacro( pExpr );
-      pStr = hb_itemGetCPtr( pItem );
-      nLen = hb_itemGetCLen( pItem );
+      pStr = hb_itemGetCPtr(pItem);
+      nLen = hb_itemGetCLen(pItem);
       if( fDeleted )
       {
          AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
@@ -1615,9 +1615,9 @@ static int hb_hsxCreate( const char * szFile, int iBufSize, int iKeySize, HB_BOO
 
    if( pExpr )
    {
-      if( hb_itemGetCLen( pExpr ) > 0 )
+      if( hb_itemGetCLen(pExpr) > 0 )
       {
-         szExpr = hb_itemGetCPtr( pExpr );
+         szExpr = hb_itemGetCPtr(pExpr);
          iRetVal = hb_hsxCompile( szExpr, &pKeyExpr );
          if( iRetVal != HSX_SUCCESS )
          {
@@ -1865,9 +1865,9 @@ static int hb_hsxFilter( int iHandle, const char * pSeek, HB_SIZE nSeek, PHB_ITE
    }
    else
    {
-      if( hb_itemGetCLen( pVerify ) > 0 )
+      if( hb_itemGetCLen(pVerify) > 0 )
       {
-         iResult = hb_hsxCompile( hb_itemGetCPtr( pVerify ), &pVerify );
+         iResult = hb_hsxCompile( hb_itemGetCPtr(pVerify), &pVerify );
          if( iResult != HSX_SUCCESS )
          {
             return HSX_BADPARMS;
@@ -1907,7 +1907,7 @@ static int hb_hsxFilter( int iHandle, const char * pSeek, HB_SIZE nSeek, PHB_ITE
          {
             break;
          }
-         fValid = hb_hsxVerify( iHandle, hb_itemGetCPtr( pArea->valResult ), hb_itemGetCLen( pArea->valResult ), pSeek, nSeek, iVerifyType ) == HSX_SUCCESS;
+         fValid = hb_hsxVerify( iHandle, hb_itemGetCPtr(pArea->valResult), hb_itemGetCLen(pArea->valResult), pSeek, nSeek, iVerifyType ) == HSX_SUCCESS;
       }
       if( fValid )
       {
@@ -2212,7 +2212,7 @@ HB_FUNC( HS_FILTER )
          }
          else
          {
-            ulRecords = hb_itemGetNL( pItem );
+            ulRecords = hb_itemGetNL(pItem);
          }
       }
       hb_itemRelease( pItem );
@@ -2293,8 +2293,8 @@ HB_FUNC( HS_VERIFY )
       }
       if( pExpr )
       {
-         szText = hb_itemGetCPtr( pExpr );
-         nLen = hb_itemGetCLen( pExpr );
+         szText = hb_itemGetCPtr(pExpr);
+         nLen = hb_itemGetCLen(pExpr);
       }
 
       hb_retni( hb_hsxVerify( hb_parni(1), szText, nLen, hb_parc(3), hb_parclen(3), hb_parni(4) ) );
@@ -2312,8 +2312,8 @@ HB_FUNC( HS_VERIFY )
 
          if( pExpr )
          {
-            szText = hb_itemGetCPtr( pExpr );
-            nLen = hb_itemGetCLen( pExpr );
+            szText = hb_itemGetCPtr(pExpr);
+            nLen = hb_itemGetCLen(pExpr);
          }
       }
       hb_retl( nLen && nSub && hb_hsxStrCmp( szSub, nSub, szText, nLen, fIgnoreCase, 3 ) );

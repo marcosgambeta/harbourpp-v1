@@ -65,32 +65,32 @@ HB_FUNC( EMPTY )
 
       case HB_IT_STRING:
       case HB_IT_MEMO:
-         hb_retl( hb_strEmpty( hb_itemGetCPtr( pItem ), hb_itemGetCLen( pItem ) ) );
+         hb_retl( hb_strEmpty( hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem) ) );
          break;
 
       case HB_IT_INTEGER:
-         hb_retl( hb_itemGetNI( pItem ) == 0 );
+         hb_retl( hb_itemGetNI(pItem) == 0 );
          break;
 
       case HB_IT_LONG:
-         hb_retl( hb_itemGetNInt( pItem ) == 0 );
+         hb_retl( hb_itemGetNInt(pItem) == 0 );
          break;
 
       case HB_IT_DOUBLE:
-         hb_retl( hb_itemGetND( pItem ) == 0.0 );
+         hb_retl( hb_itemGetND(pItem) == 0.0 );
          break;
 
       case HB_IT_DATE:
-         hb_retl( hb_itemGetDL( pItem ) == 0 );
+         hb_retl( hb_itemGetDL(pItem) == 0 );
          break;
 
       case HB_IT_TIMESTAMP:
-         hb_itemGetTDT( pItem, &lDate, &lTime );
+         hb_itemGetTDT(pItem, &lDate, &lTime);
          hb_retl( lDate == 0 && lTime == 0 );
          break;
 
       case HB_IT_LOGICAL:
-         hb_retl( ! hb_itemGetL( pItem ) );
+         hb_retl( ! hb_itemGetL(pItem) );
          break;
 
       case HB_IT_BLOCK:
@@ -98,11 +98,11 @@ HB_FUNC( EMPTY )
          break;
 
       case HB_IT_POINTER:
-         hb_retl( hb_itemGetPtr( pItem ) == nullptr );
+         hb_retl( hb_itemGetPtr(pItem) == nullptr );
          break;
 
       case HB_IT_SYMBOL:
-         pSym = hb_itemGetSymbol( pItem );
+         pSym = hb_itemGetSymbol(pItem);
          if( pSym && ( pSym->scope.value & HB_FS_DEFERRED ) && \
              pSym->pDynSym )
          {

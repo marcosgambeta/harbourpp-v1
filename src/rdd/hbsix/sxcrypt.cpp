@@ -150,10 +150,10 @@ static HB_BOOL _hb_sxGetKey( PHB_ITEM pKeyItem, char * pKeyVal )
    }
    if( hb_itemType( pKeyItem ) & HB_IT_STRING )
    {
-      HB_SIZE nKey = hb_itemGetCLen( pKeyItem );
+      HB_SIZE nKey = hb_itemGetCLen(pKeyItem);
       if( nKey )
       {
-         memcpy( pKeyVal, hb_itemGetCPtr( pKeyItem ), HB_MIN( nKey, 8 ) );
+         memcpy( pKeyVal, hb_itemGetCPtr(pKeyItem), HB_MIN( nKey, 8 ) );
       }
       if( nKey < 8 )
       {

@@ -1865,12 +1865,12 @@ static HB_GENC_FUNC( hb_p_switch )
                "\t\ttype = hb_itemType( pSwitch );\n" );
       if( fStr )
       {
-         fprintf( cargo->yyc, "\t\tpszText = ( type & HB_IT_STRING ) ? hb_itemGetCPtr( pSwitch ) : nullptr;\n" );
-         fprintf( cargo->yyc, "\t\tnLen = pszText ? hb_itemGetCLen( pSwitch ) : 0;\n" );
+         fprintf( cargo->yyc, "\t\tpszText = ( type & HB_IT_STRING ) ? hb_itemGetCPtr(pSwitch) : nullptr;\n" );
+         fprintf( cargo->yyc, "\t\tnLen = pszText ? hb_itemGetCLen(pSwitch) : 0;\n" );
       }
       if( fNum )
       {
-         fprintf( cargo->yyc, "\t\tlVal = ( type & HB_IT_NUMINT ) ? hb_itemGetNL( pSwitch ) : 0;\n\n" );
+         fprintf( cargo->yyc, "\t\tlVal = ( type & HB_IT_NUMINT ) ? hb_itemGetNL(pSwitch) : 0;\n\n" );
       }
    }
 

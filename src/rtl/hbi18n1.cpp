@@ -210,7 +210,7 @@ static const char * hb_i18n_pluralformid( int iForm )
 
 static long hb_i18n_pluralindex( int iForm, PHB_ITEM pNum )
 {
-   double n = hb_numRound( hb_itemGetND( pNum ), 10 ), n10, n100;
+   double n = hb_numRound( hb_itemGetND(pNum), 10 ), n10, n100;
 
    switch( iForm )
    {
@@ -281,7 +281,7 @@ static void hb_i18n_setitem( PHB_ITEM pHash, const char * szKey, const char * sz
 
 static PHB_ITEM hb_i18n_pluralexp_compile( PHB_ITEM pExp )
 {
-   HB_SIZE nLen = hb_itemGetCLen( pExp );
+   HB_SIZE nLen = hb_itemGetCLen(pExp);
    PHB_ITEM pBlock = nullptr;
 
    if( nLen > 0 )
@@ -294,7 +294,7 @@ static PHB_ITEM hb_i18n_pluralexp_compile( PHB_ITEM pExp )
       szMacro[ 1 ] = '|';
       szMacro[ 2 ] = 'n';
       szMacro[ 3 ] = '|';
-      memcpy( &szMacro[ 4 ], hb_itemGetCPtr( pExp ), nLen );
+      memcpy( &szMacro[ 4 ], hb_itemGetCPtr(pExp), nLen );
       szMacro[ 4 + nLen ] = '}';
       szMacro[ 5 + nLen ] = '\0';
       pMacro = hb_itemPutCLPtr( nullptr, szMacro, nLen );
@@ -424,28 +424,28 @@ static PHB_I18N_TRANS hb_i18n_initialize( PHB_ITEM pTable )
          pValue = hb_hashGetItemPtr( pTable, pKey, 0 );
          if( pValue )
          {
-            pI18N->base_cdpage = hb_cdpFind( hb_itemGetCPtr( pValue ) );
+            pI18N->base_cdpage = hb_cdpFind( hb_itemGetCPtr(pValue) );
          }
 
          pKey = hb_itemPutCConst( pKey, "CODEPAGE" );
          pValue = hb_hashGetItemPtr( pTable, pKey, 0 );
          if( pValue )
          {
-            pI18N->cdpage = hb_cdpFind( hb_itemGetCPtr( pValue ) );
+            pI18N->cdpage = hb_cdpFind( hb_itemGetCPtr(pValue) );
          }
 
          pKey = hb_itemPutCConst( pKey, "BASE_LANG" );
          pValue = hb_hashGetItemPtr( pTable, pKey, 0 );
          if( pValue )
          {
-            pI18N->base_plural_form = hb_i18n_pluralformfind( hb_itemGetCPtr( pValue ) );
+            pI18N->base_plural_form = hb_i18n_pluralformfind( hb_itemGetCPtr(pValue) );
          }
 
          pKey = hb_itemPutCConst( pKey, "LANG" );
          pValue = hb_hashGetItemPtr( pTable, pKey, 0 );
          if( pValue )
          {
-            pI18N->plural_form = hb_i18n_pluralformfind( hb_itemGetCPtr( pValue ) );
+            pI18N->plural_form = hb_i18n_pluralformfind( hb_itemGetCPtr(pValue) );
          }
 
          pKey = hb_itemPutCConst( pKey, "BASE_PLURAL_EXP" );
@@ -491,7 +491,7 @@ static PHB_ITEM hb_i18n_serialize( PHB_I18N_TRANS pI18N )
       pValue = hb_hashGetItemPtr( pI18N->table, pKey, 0 );
       if( pValue )
       {
-         hb_strncpy( &pI18Nbuffer[ HB_I18N_TXT_OFFSET ], hb_itemGetCPtr( pValue ), HB_I18N_TXT_SIZE );
+         hb_strncpy( &pI18Nbuffer[ HB_I18N_TXT_OFFSET ], hb_itemGetCPtr(pValue), HB_I18N_TXT_SIZE );
       }
 
       return hb_itemPutCLPtr( pKey, pI18Nbuffer, nSize + HB_I18N_HEADER_SIZE );
@@ -521,8 +521,8 @@ static PHB_I18N_TRANS hb_i18n_deserialize( PHB_ITEM pItem )
 
    if( pItem && HB_IS_STRING(pItem) )
    {
-      HB_SIZE nLen = hb_itemGetCLen( pItem );
-      const char * pBuffer = hb_itemGetCPtr( pItem );
+      HB_SIZE nLen = hb_itemGetCLen(pItem);
+      const char * pBuffer = hb_itemGetCPtr(pItem);
 
       if( nLen > HB_I18N_HEADER_SIZE && hb_i18n_headercheck( pBuffer, nLen ) )
       {
@@ -664,7 +664,7 @@ static HB_BOOL hb_i18n_setpluralform( PHB_I18N_TRANS pI18N, PHB_ITEM pForm, HB_B
       }
       else if( HB_IS_STRING(pForm) )
       {
-         int iForm = hb_i18n_pluralformfind( hb_itemGetCPtr( pForm ) );
+         int iForm = hb_i18n_pluralformfind( hb_itemGetCPtr(pForm) );
          if( iForm )
          {
             const char * szKey;
@@ -698,11 +698,11 @@ static HB_BOOL hb_i18n_setpluralform( PHB_I18N_TRANS pI18N, PHB_ITEM pForm, HB_B
 
 static void hb_i18n_transitm( PHB_ITEM pText, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut )
 {
-   HB_SIZE nLen = hb_itemGetCLen( pText );
+   HB_SIZE nLen = hb_itemGetCLen(pText);
 
    if( nLen > 0 )
    {
-      char * szValue = hb_cdpnDup( hb_itemGetCPtr( pText ), &nLen, cdpIn, cdpOut );
+      char * szValue = hb_cdpnDup( hb_itemGetCPtr(pText), &nLen, cdpIn, cdpOut );
       hb_itemPutCLPtr( pText, szValue, nLen );
    }
 }
@@ -808,7 +808,7 @@ static const char * hb_i18n_description( PHB_I18N_TRANS pI18N, PHB_ITEM pItem )
       }
       hb_itemRelease( pKey );
 
-      return hb_itemGetCPtr( pValue );
+      return hb_itemGetCPtr(pValue);
    }
 
    return nullptr;

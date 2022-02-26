@@ -816,7 +816,7 @@ static void hb_stackDispLocal( void )
          case HB_IT_DATE:
          {
             char szDate[ 9 ];
-            hb_snprintf( buffer, sizeof(buffer), HB_I_( "DATE = \"%s\" " ), hb_itemGetDS( *pBase, szDate ) );
+            hb_snprintf( buffer, sizeof(buffer), HB_I_( "DATE = \"%s\" " ), hb_itemGetDS(*pBase, szDate) );
          }
          break;
 
@@ -828,26 +828,26 @@ static void hb_stackDispLocal( void )
          break;
 
          case HB_IT_DOUBLE:
-            hb_snprintf( buffer, sizeof(buffer), HB_I_( "DOUBLE = %f " ), hb_itemGetND( *pBase ) );
+            hb_snprintf( buffer, sizeof(buffer), HB_I_( "DOUBLE = %f " ), hb_itemGetND(*pBase) );
             break;
 
          case HB_IT_LOGICAL:
-            hb_snprintf( buffer, sizeof(buffer), HB_I_( "LOGICAL = %s " ), hb_itemGetL( *pBase ) ? ".T." : ".F." );
+            hb_snprintf( buffer, sizeof(buffer), HB_I_( "LOGICAL = %s " ), hb_itemGetL(*pBase) ? ".T." : ".F." );
             break;
 
          case HB_IT_LONG:
          {
             char szBuf[ 24 ];
-            hb_snprintf( buffer, sizeof(buffer), HB_I_( "LONG = %s " ), hb_numToStr( szBuf, sizeof(szBuf), hb_itemGetNInt( *pBase ) ) );
+            hb_snprintf( buffer, sizeof(buffer), HB_I_( "LONG = %s " ), hb_numToStr( szBuf, sizeof(szBuf), hb_itemGetNInt(*pBase) ) );
             break;
          }
 
          case HB_IT_INTEGER:
-            hb_snprintf( buffer, sizeof(buffer), HB_I_( "INTEGER = %i " ), hb_itemGetNI( *pBase ) );
+            hb_snprintf( buffer, sizeof(buffer), HB_I_( "INTEGER = %i " ), hb_itemGetNI(*pBase) );
             break;
 
          case HB_IT_STRING:
-            hb_snprintf( buffer, sizeof(buffer), HB_I_( "STRING = \"%s\" " ), hb_itemGetCPtr( *pBase ) );
+            hb_snprintf( buffer, sizeof(buffer), HB_I_( "STRING = \"%s\" " ), hb_itemGetCPtr(*pBase) );
             break;
 
          case HB_IT_SYMBOL:

@@ -58,8 +58,8 @@ HB_FUNC( HB_STRSHRINK )
 
       if( nShrinkBy > 0 )
       {
-         const char * pszText = hb_itemGetCPtr( pText );
-         HB_ISIZ nText = hb_itemGetCLen( pText );
+         const char * pszText = hb_itemGetCPtr(pText);
+         HB_ISIZ nText = hb_itemGetCLen(pText);
          HB_ISIZ nLen;
          PHB_CODEPAGE cdp = hb_vmCDP();
 

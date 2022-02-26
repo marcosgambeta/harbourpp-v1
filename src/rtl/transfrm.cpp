@@ -80,12 +80,12 @@ HB_FUNC( TRANSFORM )
    {
       bError = HB_TRUE;
    }
-   else if( pPic && hb_itemGetCLen( pPic ) > 0 )
+   else if( pPic && hb_itemGetCLen(pPic) > 0 )
    {
       PHB_CODEPAGE cdp = hb_vmCDP();
       char szPicDate[ 11 ];
-      const char * szPic = hb_itemGetCPtr( pPic );
-      HB_SIZE nPicLen = hb_itemGetCLen( pPic );
+      const char * szPic = hb_itemGetCPtr(pPic);
+      HB_SIZE nPicLen = hb_itemGetCLen(pPic);
       HB_SIZE nPicPos = 0;
       HB_USHORT uiPicFlags; /* Function flags */
 
@@ -192,8 +192,8 @@ HB_FUNC( TRANSFORM )
 
       if( HB_IS_STRING(pValue) )
       {
-         const char * szExp = hb_itemGetCPtr( pValue );
-         HB_SIZE nExpLen = hb_itemGetCLen( pValue );
+         const char * szExp = hb_itemGetCPtr(pValue);
+         HB_SIZE nExpLen = hb_itemGetCLen(pValue);
          HB_SIZE nExpPos = 0;
 
          /* Grab enough */
@@ -406,7 +406,7 @@ HB_FUNC( TRANSFORM )
          HB_SIZE  i;
          PHB_ITEM pNumber = nullptr;
 
-         double dValue = hb_itemGetND( pValue );
+         double dValue = hb_itemGetND(pValue);
 
          /* Support date function for numbers */
          if( uiPicFlags & PF_DATE )
@@ -443,7 +443,7 @@ HB_FUNC( TRANSFORM )
          iCount = 0;
          if( iWidth == 0 )                             /* Width calculated ??      */
          {
-            hb_itemGetNLen( pValue, &iWidth, &iDec );
+            hb_itemGetNLen(pValue, &iWidth, &iDec);
             if( hb_setGetFixed() )
             {
                if( HB_IS_NUMINT(pValue) )
@@ -471,7 +471,7 @@ HB_FUNC( TRANSFORM )
             /* Always convert absolute val */
             if( HB_IS_NUMINT(pValue) ) /* workaround for 64-bit integer conversion */
             {
-               pNumber = hb_itemPutNInt( nullptr, -hb_itemGetNInt( pValue ) );
+               pNumber = hb_itemPutNInt( nullptr, -hb_itemGetNInt(pValue) );
             }
             else
             {
@@ -734,7 +734,7 @@ HB_FUNC( TRANSFORM )
          }
 #endif
 
-         hb_dateFormat( hb_itemGetDS( pValue, szDate ), szResult, szDateFormat );
+         hb_dateFormat( hb_itemGetDS(pValue, szDate), szResult, szDateFormat );
          nResultPos = strlen( szResult );
 
 #ifdef HB_CLP_STRICT
@@ -845,7 +845,7 @@ HB_FUNC( TRANSFORM )
          }
 #endif
 
-         hb_itemGetTDT( pValue, &lDate, &lTime );
+         hb_itemGetTDT(pValue, &lDate, &lTime);
          if( szTimeFormat )
          {
             if( szDateFormat )
@@ -943,7 +943,7 @@ HB_FUNC( TRANSFORM )
 
                   if( ! bDone )
                   {
-                     szResult[ nResultPos ] = hb_itemGetL( pValue ) ? 'Y' : 'N';
+                     szResult[ nResultPos ] = hb_itemGetL(pValue) ? 'Y' : 'N';
                      bDone = HB_TRUE;           /* Logical written */
                   }
                   else
@@ -959,7 +959,7 @@ HB_FUNC( TRANSFORM )
 
                   if( ! bDone )
                   {
-                     szResult[ nResultPos ] = hb_itemGetL( pValue ) ? 'T' : 'F';
+                     szResult[ nResultPos ] = hb_itemGetL(pValue) ? 'T' : 'F';
                      bDone = HB_TRUE;
                   }
                   else
@@ -1028,7 +1028,7 @@ HB_FUNC( TRANSFORM )
          if( HB_IS_NUMINT(pValue) && hb_setGetFixed() )
          {
             int iWidth, iDec;
-            hb_itemGetNLen( pValue, &iWidth, &iDec );
+            hb_itemGetNLen(pValue, &iWidth, &iDec);
             iWidth += 2 + ( hb_setGetDecimals() << 1 );
             szStr = static_cast<char*>( hb_xgrab( iWidth + 1 ) );
             hb_itemStrBuf( szStr, pValue, iWidth, iDec );
@@ -1055,19 +1055,19 @@ HB_FUNC( TRANSFORM )
          char szDate[ 9 ];
          char szResult[ 11 ];
 
-         hb_retc( hb_dateFormat( hb_itemGetDS( pValue, szDate ), szResult, hb_setGetDateFormat() ) );
+         hb_retc( hb_dateFormat( hb_itemGetDS(pValue, szDate), szResult, hb_setGetDateFormat() ) );
       }
       else if( HB_IS_TIMESTAMP(pValue) )
       {
          char szResult[ 27 ];
          long lDate, lTime;
 
-         hb_itemGetTDT( pValue, &lDate, &lTime );
+         hb_itemGetTDT(pValue, &lDate, &lTime);
          hb_retc( hb_timeStampFormat( szResult, hb_setGetDateFormat(), hb_setGetTimeFormat(), lDate, lTime ) );
       }
       else if( HB_IS_LOGICAL(pValue) )
       {
-         hb_retc_const( hb_itemGetL( pValue ) ? "T" : "F" );
+         hb_retc_const( hb_itemGetL(pValue) ? "T" : "F" );
       }
       else
       {

@@ -445,7 +445,7 @@ long hb_pardl( int iParam )
       }
    }
 
-   return hb_itemGetDL( nullptr );
+   return hb_itemGetDL(nullptr);
 }
 
 double hb_partd( int iParam )
@@ -982,7 +982,7 @@ const char * hb_parvc( int iParam, ... )
          va_end( va );
 
          pItem = hb_arrayGetItemPtr( pItem, nArrayIndex );
-         return pItem && HB_IS_STRING(pItem) ? hb_itemGetCPtr( pItem ) : nullptr;
+         return pItem && HB_IS_STRING(pItem) ? hb_itemGetCPtr(pItem) : nullptr;
       }
    }
 
@@ -1222,7 +1222,7 @@ long hb_parvdl( int iParam, ... )
       }
    }
 
-   return hb_itemGetDL( nullptr );
+   return hb_itemGetDL(nullptr);
 }
 
 double hb_parvtd( int iParam, ... )

@@ -138,7 +138,7 @@ HB_FUNC( HB_STOD )
 {
    PHB_ITEM pDateString = hb_param(1, HB_IT_STRING);
 
-   hb_retds( hb_itemGetCLen( pDateString ) >= 7 ? hb_itemGetCPtr( pDateString ) : nullptr );
+   hb_retds( hb_itemGetCLen(pDateString) >= 7 ? hb_itemGetCPtr(pDateString) : nullptr );
 }
 
 HB_FUNC( YEAR )
@@ -149,7 +149,7 @@ HB_FUNC( YEAR )
    {
       int iYear, iMonth, iDay;
 
-      hb_dateDecode( hb_itemGetDL( pDate ), &iYear, &iMonth, &iDay );
+      hb_dateDecode( hb_itemGetDL(pDate), &iYear, &iMonth, &iDay );
 
       hb_retnilen( iYear, 5 );
    }
@@ -167,7 +167,7 @@ HB_FUNC( MONTH )
    {
       int iYear, iMonth, iDay;
 
-      hb_dateDecode( hb_itemGetDL( pDate ), &iYear, &iMonth, &iDay );
+      hb_dateDecode( hb_itemGetDL(pDate), &iYear, &iMonth, &iDay );
 
       hb_retnilen( iMonth, 3 );
    }
@@ -185,7 +185,7 @@ HB_FUNC( DAY )
    {
       int iYear, iMonth, iDay;
 
-      hb_dateDecode( hb_itemGetDL( pDate ), &iYear, &iMonth, &iDay );
+      hb_dateDecode( hb_itemGetDL(pDate), &iYear, &iMonth, &iDay );
 
       hb_retnilen( iDay, 3 );
    }
@@ -201,7 +201,7 @@ HB_FUNC( DOW )
 
    if( pDate )
    {
-      hb_retnilen( hb_dateJulianDOW( hb_itemGetDL( pDate ) ), 3 );
+      hb_retnilen( hb_dateJulianDOW( hb_itemGetDL(pDate) ), 3 );
    }
    else
    {
@@ -321,7 +321,7 @@ HB_FUNC( HB_TTON )
 
    if( pTime )
    {
-      hb_retnd( hb_itemGetTD( pTime ) );
+      hb_retnd( hb_itemGetTD(pTime) );
    }
    else
    {
@@ -335,7 +335,7 @@ HB_FUNC( HB_NTOT )
 
    if( pNum )
    {
-      hb_rettd( hb_itemGetND( pNum ) );
+      hb_rettd( hb_itemGetND(pNum) );
    }
    else
    {
@@ -349,7 +349,7 @@ HB_FUNC( HB_NTOMSEC )
 
    if( pNum )
    {
-      hb_retnint( static_cast<HB_MAXINT>( hb_itemGetND( pNum ) * HB_MILLISECS_PER_DAY ) );
+      hb_retnint( static_cast<HB_MAXINT>( hb_itemGetND(pNum) * HB_MILLISECS_PER_DAY ) );
    }
    else
    {
@@ -363,7 +363,7 @@ HB_FUNC( HB_NTOSEC )
 
    if( pNum )
    {
-      hb_retnd( hb_itemGetND( pNum ) * HB_SECONDS_PER_DAY );
+      hb_retnd( hb_itemGetND(pNum) * HB_SECONDS_PER_DAY );
    }
    else
    {
@@ -377,7 +377,7 @@ HB_FUNC( HB_NTOMIN )
 
    if( pNum )
    {
-      hb_retnd( hb_itemGetND( pNum ) * HB_MINUTES_PER_DAY );
+      hb_retnd( hb_itemGetND(pNum) * HB_MINUTES_PER_DAY );
    }
    else
    {
@@ -391,7 +391,7 @@ HB_FUNC( HB_NTOHOUR )
 
    if( pNum )
    {
-      hb_retnd( hb_itemGetND( pNum ) * 24 );
+      hb_retnd( hb_itemGetND(pNum) * 24 );
    }
    else
    {
@@ -419,7 +419,7 @@ HB_FUNC( HB_SECTOT )
 
    if( pNum )
    {
-      hb_rettd( hb_itemGetND( pNum ) / HB_SECONDS_PER_DAY );
+      hb_rettd( hb_itemGetND(pNum) / HB_SECONDS_PER_DAY );
    }
    else
    {
@@ -433,7 +433,7 @@ HB_FUNC( HB_MSECTOT )
 
    if( pNum )
    {
-      hb_rettd( hb_itemGetND( pNum ) / HB_MILLISECS_PER_DAY );
+      hb_rettd( hb_itemGetND(pNum) / HB_MILLISECS_PER_DAY );
    }
    else
    {
@@ -707,7 +707,7 @@ HB_FUNC( HB_WEEK )
    {
       int iYear, iWeek, iDay;
 
-      hb_dateDecWeek( hb_itemGetDL( pDate ), &iYear, &iWeek, &iDay );
+      hb_dateDecWeek( hb_itemGetDL(pDate), &iYear, &iWeek, &iDay );
       hb_storni( iYear, 2 );
       hb_storni( iDay, 3 );
       hb_retni( iWeek );

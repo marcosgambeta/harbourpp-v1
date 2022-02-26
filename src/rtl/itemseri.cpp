@@ -523,7 +523,7 @@ static HB_SIZE hb_itemSerialSize( PHB_ITEM pItem, int iFlags, PHB_CODEPAGE cdpIn
 
       case HB_IT_INTEGER:
       case HB_IT_LONG:
-         lVal = hb_itemGetNInt( pItem );
+         lVal = hb_itemGetNInt(pItem);
          if( lVal == 0 )
          {
             nSize = ( iFlags & HB_SERIALIZE_NUMSIZE ) ? 2 : 1;
@@ -561,18 +561,18 @@ static HB_SIZE hb_itemSerialSize( PHB_ITEM pItem, int iFlags, PHB_CODEPAGE cdpIn
          }
          else
          {
-            nSize = ( hb_itemGetND( pItem ) == 0.0 ) ? 1 : 9;
+            nSize = ( hb_itemGetND(pItem) == 0.0 ) ? 1 : 9;
          }
          break;
 
       case HB_IT_SYMBOL:
-         nSize = 2 + strlen( hb_itemGetSymbol( pItem )->szName );
+         nSize = 2 + strlen( hb_itemGetSymbol(pItem)->szName );
          break;
 
       case HB_IT_STRING:
       case HB_IT_MEMO:
-         szVal = hb_itemGetCPtr( pItem );
-         nLen = hb_itemGetCLen( pItem );
+         szVal = hb_itemGetCPtr(pItem);
+         nLen = hb_itemGetCLen(pItem);
          if( nLen == 0 )
          {
             nSize = 1;
@@ -712,19 +712,19 @@ static HB_SIZE hb_serializeItem( PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cd
          break;
 
       case HB_IT_LOGICAL:
-         pBuffer[ nOffset++ ] = hb_itemGetL( pItem ) ? HB_SERIAL_TRUE : HB_SERIAL_FALSE;
+         pBuffer[ nOffset++ ] = hb_itemGetL(pItem) ? HB_SERIAL_TRUE : HB_SERIAL_FALSE;
          break;
 
       case HB_IT_DATE:
          pBuffer[ nOffset++ ] = HB_SERIAL_DATE;
-         l = hb_itemGetDL( pItem );
+         l = hb_itemGetDL(pItem);
          HB_PUT_LE_UINT24( &pBuffer[ nOffset ], l );
          nOffset += 3;
          break;
 
       case HB_IT_TIMESTAMP:
          pBuffer[ nOffset++ ] = HB_SERIAL_TIMESTAMP;
-         hb_itemGetTDT( pItem, &l, &l2 );
+         hb_itemGetTDT(pItem, &l, &l2);
          HB_PUT_LE_UINT32( &pBuffer[ nOffset ], l );
          nOffset += 4;
          HB_PUT_LE_UINT32( &pBuffer[ nOffset ], l2 );
@@ -733,10 +733,10 @@ static HB_SIZE hb_serializeItem( PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cd
 
       case HB_IT_INTEGER:
       case HB_IT_LONG:
-         lVal = hb_itemGetNInt( pItem );
+         lVal = hb_itemGetNInt(pItem);
          if( iFlags & HB_SERIALIZE_NUMSIZE )
          {
-            hb_itemGetNLen( pItem, &iWidth, nullptr );
+            hb_itemGetNLen(pItem, &iWidth, nullptr);
             if( HB_LIM_INT8( lVal ) )
             {
                pBuffer[ nOffset++ ] = HB_SERIAL_INT8NUM;
@@ -804,10 +804,10 @@ static HB_SIZE hb_serializeItem( PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cd
          break;
 
       case HB_IT_DOUBLE:
-         d = hb_itemGetND( pItem );
+         d = hb_itemGetND(pItem);
          if( iFlags & HB_SERIALIZE_NUMSIZE )
          {
-            hb_itemGetNLen( pItem, &iWidth, &iDecimal );
+            hb_itemGetNLen(pItem, &iWidth, &iDecimal);
             pBuffer[ nOffset++ ] = HB_SERIAL_DBLNUM;
             HB_PUT_LE_DOUBLE( &pBuffer[ nOffset ], d );
             nOffset += 8;
@@ -827,7 +827,7 @@ static HB_SIZE hb_serializeItem( PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cd
          break;
 
       case HB_IT_SYMBOL:
-         szVal = hb_itemGetSymbol( pItem )->szName;
+         szVal = hb_itemGetSymbol(pItem)->szName;
          nLen = strlen( szVal );
          if( nLen > 0xFF )
          {
@@ -841,8 +841,8 @@ static HB_SIZE hb_serializeItem( PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cd
 
       case HB_IT_STRING:
       case HB_IT_MEMO:
-         szVal = hb_itemGetCPtr( pItem );
-         nLen = hb_itemGetCLen( pItem );
+         szVal = hb_itemGetCPtr(pItem);
+         nLen = hb_itemGetCLen(pItem);
          if( nLen == 0 )
          {
             pBuffer[ nOffset++ ] = HB_SERIAL_STRNUL;
@@ -1769,7 +1769,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
          /* deserialize :className */
          nOffset = hb_deserializeItem( pItem, cdpIn, cdpOut, pBuffer, nOffset + 8, pRefList );
          /* find class handle */
-         uiClass = hb_clsFindClass( hb_itemGetCPtr( pItem ), nullptr );
+         uiClass = hb_clsFindClass( hb_itemGetCPtr(pItem), nullptr );
          if( uiClass && hb_vmRequestReenter() )
          {
             PHB_ITEM pMsg = hb_stackAllocItem(), pVal = hb_stackAllocItem();
@@ -1785,7 +1785,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
                if( hb_vmRequestQuery() == 0 )
                {
                   char szMsg[ HB_SYMBOL_NAME_LEN ];
-                  hb_snprintf( szMsg, sizeof(szMsg), "_%s", hb_itemGetCPtr( pMsg ) );
+                  hb_snprintf( szMsg, sizeof(szMsg), "_%s", hb_itemGetCPtr(pMsg) );
                   hb_objSendMsg( pItem, szMsg, 1, pVal );
                }
             }
@@ -1817,7 +1817,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
          szVal = hb_cdpnDup( reinterpret_cast<const char*>( &pBuffer[ nOffset ] ), &nLen, cdpIn, cdpOut );
          nOffset = nPad;
          /* find class handle */
-         uiClass = hb_clsFindClass( hb_itemGetCPtr( pItem ), nullptr );
+         uiClass = hb_clsFindClass( hb_itemGetCPtr(pItem), nullptr );
          hb_itemPutCLPtr( pItem, szVal, nLen );
          if( uiClass && hb_vmRequestReenter() )
          {

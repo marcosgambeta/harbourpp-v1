@@ -852,7 +852,7 @@ HB_FUNC( __DBSETFOUND )
       PHB_ITEM pFound = hb_param(1, HB_IT_LOGICAL);
       if( pFound )
       {
-         pArea->fFound = hb_itemGetL( pFound );
+         pArea->fFound = hb_itemGetL(pFound);
       }
    }
 }
@@ -875,7 +875,7 @@ HB_FUNC( DBSETFILTER )
          may use only text version of filter and ignore or use with
          lower priority the codeblock so Harbour has to work like
          Cl*pper here. [druzus] */
-      if( pBlock || hb_itemGetCLen( pText ) > 0 )
+      if( pBlock || hb_itemGetCLen(pText) > 0 )
       {
          pFilterInfo.itmCobExpr = pBlock;
          if( pText )
@@ -1220,7 +1220,7 @@ HB_FUNC( INDEXORD )
       memset( &pInfo, 0, sizeof(pInfo) );
       pInfo.itmResult = hb_itemPutNI( nullptr, 0 );
       SELF_ORDINFO( pArea, DBOI_NUMBER, &pInfo );
-      hb_retni( hb_itemGetNI( pInfo.itmResult ) );
+      hb_retni( hb_itemGetNI(pInfo.itmResult) );
       hb_itemRelease( pInfo.itmResult );
    }
    else
@@ -1335,7 +1335,7 @@ HB_FUNC( ORDBAGNAME )
          }
          else if( HB_IS_NUMERIC(pOrderInfo.itmOrder) )
          {
-            if( hb_itemGetNI( pOrderInfo.itmOrder ) == 0 )
+            if( hb_itemGetNI(pOrderInfo.itmOrder) == 0 )
             {
                pOrderInfo.itmOrder = nullptr;
             }
@@ -1529,7 +1529,7 @@ HB_FUNC( ORDFOR )
          }
          else if( HB_IS_NUMERIC(pOrderInfo.itmOrder) )
          {
-            if( hb_itemGetNI( pOrderInfo.itmOrder ) == 0 )
+            if( hb_itemGetNI(pOrderInfo.itmOrder) == 0 )
             {
                pOrderInfo.itmOrder = nullptr;
             }
@@ -1571,7 +1571,7 @@ HB_FUNC( ORDKEY )
          }
          else if( HB_IS_NUMERIC(pOrderInfo.itmOrder) )
          {
-            if( hb_itemGetNI( pOrderInfo.itmOrder ) == 0 )
+            if( hb_itemGetNI(pOrderInfo.itmOrder) == 0 )
             {
                pOrderInfo.itmOrder = nullptr;
             }
@@ -1684,7 +1684,7 @@ HB_FUNC( ORDNAME )
          }
          else if( HB_IS_NUMERIC(pOrderInfo.itmOrder) )
          {
-            if( hb_itemGetNI( pOrderInfo.itmOrder ) == 0 )
+            if( hb_itemGetNI(pOrderInfo.itmOrder) == 0 )
             {
                pOrderInfo.itmOrder = nullptr;
             }
@@ -2367,7 +2367,7 @@ HB_FUNC( HB_RDDINFO )
    if( pRDDNode && pIndex )
    {
       PHB_ITEM pInfo = hb_itemParam( 2 );
-      SELF_RDDINFO( pRDDNode, static_cast<HB_USHORT>( hb_itemGetNI( pIndex ) ), ulConnection, pInfo );
+      SELF_RDDINFO( pRDDNode, static_cast<HB_USHORT>( hb_itemGetNI(pIndex) ), ulConnection, pInfo );
       hb_itemReturnRelease( pInfo );
    }
    else

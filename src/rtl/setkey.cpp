@@ -304,7 +304,7 @@ HB_FUNC( HB_SETKEYGET )
       PHB_SETKEY sk_list_tmp, sk_list_end;
 
       /* sk_list_end is not used in this context */
-      sk_list_tmp = sk_findkey( hb_itemGetNI( pKeyCode ), sk_data->sk_list, &sk_list_end );
+      sk_list_tmp = sk_findkey( hb_itemGetNI(pKeyCode), sk_data->sk_list, &sk_list_end );
 
       if( sk_list_tmp )
       {

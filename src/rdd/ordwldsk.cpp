@@ -89,7 +89,7 @@ HB_FUNC( ORDWILDSEEK )
                errCode = SELF_ORDINFO( pArea, DBOI_KEYVAL, &OrderInfo );
                if( errCode == HB_SUCCESS )
                {
-                  fFound = hb_strMatchWild( hb_itemGetCPtr( OrderInfo.itmResult ), szPattern );
+                  fFound = hb_strMatchWild( hb_itemGetCPtr(OrderInfo.itmResult), szPattern );
                }
             }
          }
@@ -98,7 +98,7 @@ HB_FUNC( ORDWILDSEEK )
             OrderInfo.itmNewVal = hb_param(1, HB_IT_STRING);
             if( SELF_ORDINFO( pArea, fBack ? DBOI_SKIPWILDBACK : DBOI_SKIPWILD, &OrderInfo ) == HB_SUCCESS )
             {
-               fFound = hb_itemGetL( OrderInfo.itmResult );
+               fFound = hb_itemGetL(OrderInfo.itmResult);
             }
          }
          hb_itemRelease( OrderInfo.itmResult );

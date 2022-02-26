@@ -108,7 +108,7 @@ static HB_BOOL hb_errGetNumCode( int * piValue, const char * szOperation )
 
    if( pItem )
    {
-      *piValue = hb_itemGetNI( pItem );
+      *piValue = hb_itemGetNI(pItem);
    }
    else
    {
@@ -124,7 +124,7 @@ static HB_BOOL hb_errGetNumCode( int * piValue, const char * szOperation )
          hb_errInternal( HB_EI_ERRRECFAILURE, nullptr, nullptr, nullptr );
       }
 
-      *piValue = hb_itemGetNI( pItem );
+      *piValue = hb_itemGetNI(pItem);
       hb_itemRelease( pItem );
    }
 
@@ -251,7 +251,7 @@ HB_FUNC_STATIC( _DESCRIPTION )
 
    if( pItem && HB_IS_STRING(pItem) )
    {
-      hb_errPutDescription( hb_stackSelfItem(), hb_itemGetCPtr( pItem ) );
+      hb_errPutDescription( hb_stackSelfItem(), hb_itemGetCPtr(pItem) );
    }
 
    hb_itemReturn( pItem );
@@ -268,7 +268,7 @@ HB_FUNC_STATIC( _FILENAME )
 
    if( pItem && HB_IS_STRING(pItem) )
    {
-      hb_errPutFileName( hb_stackSelfItem(), hb_itemGetCPtr( pItem ) );
+      hb_errPutFileName( hb_stackSelfItem(), hb_itemGetCPtr(pItem) );
    }
 
    hb_itemReturn( pItem );
@@ -285,7 +285,7 @@ HB_FUNC_STATIC( _OPERATION )
 
    if( pItem && HB_IS_STRING(pItem) )
    {
-      hb_errPutOperation( hb_stackSelfItem(), hb_itemGetCPtr( pItem ) );
+      hb_errPutOperation( hb_stackSelfItem(), hb_itemGetCPtr(pItem) );
    }
 
    hb_itemReturn( pItem );
@@ -302,7 +302,7 @@ HB_FUNC_STATIC( _SUBSYSTEM )
 
    if( pItem && HB_IS_STRING(pItem) )
    {
-      hb_errPutSubSystem( hb_stackSelfItem(), hb_itemGetCPtr( pItem ) );
+      hb_errPutSubSystem( hb_stackSelfItem(), hb_itemGetCPtr(pItem) );
    }
 
    hb_itemReturn( pItem );
@@ -611,7 +611,7 @@ HB_USHORT hb_errLaunch( PHB_ITEM pError )
          }
          else
          {
-            uiAction = hb_itemGetL( pResult ) ? E_RETRY : E_DEFAULT;
+            uiAction = hb_itemGetL(pResult) ? E_RETRY : E_DEFAULT;
 
             if( ( uiAction == E_DEFAULT && !( uiFlags & EF_CANDEFAULT ) ) || ( uiAction == E_RETRY   && !( uiFlags & EF_CANRETRY ) ) )
             {
@@ -858,7 +858,7 @@ PHB_ITEM hb_errPutOperation( PHB_ITEM pError, const char * szOperation )
 
    if( szOperation == HB_ERR_FUNCNAME )
    {
-      PHB_SYMB pSym = hb_itemGetSymbol( hb_stackBaseItem() );
+      PHB_SYMB pSym = hb_itemGetSymbol(hb_stackBaseItem());
       if( pSym )
       {
          szOperation = pSym->szName;

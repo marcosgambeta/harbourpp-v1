@@ -101,8 +101,8 @@ HB_FUNC( LTRIM )
       HB_SIZE nLen, nSrc;
       const char * szText;
 
-      nLen = nSrc = hb_itemGetCLen( pText );
-      szText = hb_strLTrim( hb_itemGetCPtr( pText ), &nLen );
+      nLen = nSrc = hb_itemGetCLen(pText);
+      szText = hb_strLTrim( hb_itemGetCPtr(pText), &nLen );
 
       if( nLen == nSrc )
       {
@@ -130,9 +130,9 @@ HB_FUNC( RTRIM )
    if( pText )
    {
       HB_SIZE nLen, nSrc;
-      const char * szText = hb_itemGetCPtr( pText );
+      const char * szText = hb_itemGetCPtr(pText);
 
-      nSrc = hb_itemGetCLen( pText );
+      nSrc = hb_itemGetCLen(pText);
       nLen = hb_strRTrimLen( szText, nSrc, HB_FALSE );
 
       if( nLen == nSrc )
@@ -165,9 +165,9 @@ HB_FUNC( ALLTRIM )
    if( pText )
    {
       HB_SIZE nLen, nSrc;
-      const char * szText = hb_itemGetCPtr( pText );
+      const char * szText = hb_itemGetCPtr(pText);
 
-      nSrc = hb_itemGetCLen( pText );
+      nSrc = hb_itemGetCLen(pText);
       nLen = hb_strRTrimLen( szText, nSrc, HB_FALSE );
       szText = hb_strLTrim( szText, &nLen );
 

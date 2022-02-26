@@ -188,8 +188,8 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
       }
       else
       {
-         szString = hb_itemGetCPtr( pValue );
-         nLen = hb_itemGetCLen( pValue );
+         szString = hb_itemGetCPtr(pValue);
+         nLen = hb_itemGetCLen(pValue);
       }
 
       _hb_jsonCtxAdd( pCtx, "\"", 1 );
@@ -248,7 +248,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
    else if( HB_IS_NUMINT(pValue) )
    {
       char buf[ 24 ];
-      HB_MAXINT nVal = hb_itemGetNInt( pValue );
+      HB_MAXINT nVal = hb_itemGetNInt(pValue);
       HB_BOOL fNeg = nVal < 0;
       int i = 0;
 
@@ -271,7 +271,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
    {
       char buf[ 64 ];
       int iDec;
-      double dblValue = hb_itemGetNDDec( pValue, &iDec );
+      double dblValue = hb_itemGetNDDec(pValue, &iDec);
 
       hb_snprintf( buf, sizeof(buf), "%.*f", iDec, dblValue );
       _hb_jsonCtxAdd( pCtx, buf, strlen( buf ) );
@@ -282,7 +282,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
    }
    else if( HB_IS_LOGICAL(pValue) )
    {
-      if( hb_itemGetL( pValue ) )
+      if( hb_itemGetL(pValue) )
       {
          _hb_jsonCtxAdd( pCtx, "true", 4 );
       }
@@ -295,7 +295,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
    {
       char szBuffer[ 10 ];
 
-      hb_itemGetDS( pValue, szBuffer + 1 );
+      hb_itemGetDS(pValue, szBuffer + 1);
       szBuffer[ 0 ] = '\"';
       szBuffer[ 9 ] = '\"';
       _hb_jsonCtxAdd( pCtx, szBuffer, 10 );
@@ -303,7 +303,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
    else if( HB_IS_TIMESTAMP(pValue) )
    {
       char szBuffer[ 19 ];
-      hb_itemGetTS( pValue, szBuffer + 1 );
+      hb_itemGetTS(pValue, szBuffer + 1);
       szBuffer[ 0 ] = '\"';
       szBuffer[ 18 ] = '\"';
       _hb_jsonCtxAdd( pCtx, szBuffer, 19 );

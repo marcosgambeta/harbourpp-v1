@@ -141,9 +141,9 @@ static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const 
       case HB_IT_STRING:
       case HB_IT_MEMO:
       {
-         HB_SIZE nLen = hb_itemGetCLen( pValue );
+         HB_SIZE nLen = hb_itemGetCLen(pValue);
          HB_SIZE nCnt = 0;
-         const char *szVal = hb_itemGetCPtr( pValue );
+         const char *szVal = hb_itemGetCPtr(pValue);
 
          hb_addStrToFBuffer( pFileBuf, szDelim );
          while( nLen && HB_ISSPACE( szVal[ nLen - 1 ] ) )
@@ -178,7 +178,7 @@ static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const 
          char szDate[ 9 ];
 
          hb_addStrToFBuffer( pFileBuf, szDelim );
-         hb_itemGetDS( pValue, szDate );
+         hb_itemGetDS(pValue, szDate);
          if( szDate[ 0 ] == ' ' )
          {
             hb_addStrToFBuffer( pFileBuf, "0100-01-01" );
@@ -200,7 +200,7 @@ static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const 
          long lDate, lTime;
          char szDateTime[ 24 ];
 
-         hb_itemGetTDT( pValue, &lDate, &lTime );
+         hb_itemGetTDT(pValue, &lDate, &lTime);
          hb_timeStampStr( szDateTime, lDate, lTime );
          hb_addStrToFBuffer( pFileBuf, szDelim );
          hb_addStrToFBuffer( pFileBuf, szDateTime );
@@ -210,7 +210,7 @@ static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const 
 
       case HB_IT_LOGICAL:
          hb_addStrToFBuffer( pFileBuf, szDelim );
-         hb_addToFBuffer( pFileBuf, hb_itemGetL( pValue ) ? 'Y' : 'N' );
+         hb_addToFBuffer( pFileBuf, hb_itemGetL(pValue) ? 'Y' : 'N' );
          hb_addStrToFBuffer( pFileBuf, szDelim );
          break;
 
@@ -221,7 +221,7 @@ static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const 
          char szResult[ HB_MAX_DOUBLE_LENGTH ];
          int iSize, iWidth, iDec;
 
-         hb_itemGetNLen( pValue, &iWidth, &iDec );
+         hb_itemGetNLen(pValue, &iWidth, &iDec);
          iSize = ( iDec > 0 ? iWidth + 1 + iDec : iWidth );
          if( hb_itemStrBuf( szResult, pValue, iSize, iDec ) )
          {
@@ -281,7 +281,7 @@ static HB_ULONG hb_db2Sql( AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
    {
       if( pWhile )
       {
-         if( SELF_EVALBLOCK( pArea, pWhile ) != HB_SUCCESS || ! hb_itemGetL( pArea->valResult ) )
+         if( SELF_EVALBLOCK( pArea, pWhile ) != HB_SUCCESS || ! hb_itemGetL(pArea->valResult) )
          {
             break;
          }
@@ -299,7 +299,7 @@ static HB_ULONG hb_db2Sql( AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
             break;
          }
       }
-      if( ! pFor || hb_itemGetL( pArea->valResult ) )
+      if( ! pFor || hb_itemGetL(pArea->valResult) )
       {
          ++ulRecords;
 
@@ -479,7 +479,7 @@ HB_FUNC( __DBSQL )
             }
             else if( pNext )
             {
-               llNext = hb_itemGetNInt( pNext );
+               llNext = hb_itemGetNInt(pNext);
             }
             else if( ! fRest )
             {
