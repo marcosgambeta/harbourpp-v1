@@ -64,11 +64,11 @@ HB_FUNC( MAX )
 
          if( l1 >= l2 )
          {
-            hb_itemReturn( p1 );
+            hb_itemReturn(p1);
          }
          else
          {
-            hb_itemReturn( p2 );
+            hb_itemReturn(p2);
          }
          return;
       }
@@ -79,11 +79,11 @@ HB_FUNC( MAX )
 
          if( d1 >= d2 )
          {
-            hb_itemReturn( p1 );
+            hb_itemReturn(p1);
          }
          else
          {
-            hb_itemReturn( p2 );
+            hb_itemReturn(p2);
          }
          return;
       }
@@ -107,15 +107,15 @@ HB_FUNC( MAX )
       {
          if( HB_IS_DATE(p1) && hb_itemGetDL(p1) == hb_itemGetDL(p2) )
          {
-            hb_itemReturn( p1 );
+            hb_itemReturn(p1);
          }
          else if( HB_IS_DATE(p2) && hb_itemGetDL(p1) == hb_itemGetDL(p2) )
          {
-            hb_itemReturn( p2 );
+            hb_itemReturn(p2);
          }
          else
          {
-            hb_itemReturn( hb_itemGetTD(p1) >= hb_itemGetTD(p2) ? p1 : p2 );
+            hb_itemReturn(hb_itemGetTD(p1) >= hb_itemGetTD(p2) ? p1 : p2);
          }
          return;
       }
@@ -139,11 +139,11 @@ HB_FUNC( MIN )
 
          if( l1 <= l2 )
          {
-            hb_itemReturn( p1 );
+            hb_itemReturn(p1);
          }
          else
          {
-            hb_itemReturn( p2 );
+            hb_itemReturn(p2);
          }
          return;
       }
@@ -154,11 +154,11 @@ HB_FUNC( MIN )
 
          if( d1 <= d2 )
          {
-            hb_itemReturn( p1 );
+            hb_itemReturn(p1);
          }
          else
          {
-            hb_itemReturn( p2 );
+            hb_itemReturn(p2);
          }
          return;
       }
@@ -182,15 +182,15 @@ HB_FUNC( MIN )
       {
          if( HB_IS_DATE(p1) && hb_itemGetDL(p1) == hb_itemGetDL(p2) )
          {
-            hb_itemReturn( p1 );
+            hb_itemReturn(p1);
          }
          else if( HB_IS_DATE(p2) && hb_itemGetDL(p1) == hb_itemGetDL(p2) )
          {
-            hb_itemReturn( p2 );
+            hb_itemReturn(p2);
          }
          else
          {
-            hb_itemReturn( hb_itemGetTD(p1) <= hb_itemGetTD(p2) ? p1 : p2 );
+            hb_itemReturn(hb_itemGetTD(p1) <= hb_itemGetTD(p2) ? p1 : p2);
          }
          return;
       }

@@ -73,7 +73,7 @@ static void hb_idleDataRelease( void * Cargo )
    {
       do
       {
-         hb_itemRelease( pIdleData->pIdleTasks[ --pIdleData->iIdleMaxTask ] );
+         hb_itemRelease(pIdleData->pIdleTasks[ --pIdleData->iIdleMaxTask ]);
       }
       while( pIdleData->iIdleMaxTask );
       hb_xfree( pIdleData->pIdleTasks );
@@ -111,7 +111,7 @@ void hb_idleState( void )
 
          if( pIdleData->pIdleTasks && pIdleData->iIdleTask < pIdleData->iIdleMaxTask )
          {
-            hb_itemRelease( hb_itemDo( pIdleData->pIdleTasks[ pIdleData->iIdleTask ], 0 ) );
+            hb_itemRelease(hb_itemDo( pIdleData->pIdleTasks[ pIdleData->iIdleTask ], 0 ));
             ++pIdleData->iIdleTask;
             if( pIdleData->iIdleTask == pIdleData->iIdleMaxTask && hb_setGetIdleRepeat() )
             {
@@ -196,7 +196,7 @@ HB_FUNC( HB_IDLEADD )
 
       /* store a copy of passed codeblock
        */
-      pIdleData->pIdleTasks[ pIdleData->iIdleMaxTask - 1 ] = hb_itemNew( pBlock );
+      pIdleData->pIdleTasks[ pIdleData->iIdleMaxTask - 1 ] = hb_itemNew(pBlock);
 
       /* return a pointer as a handle to this idle task
        */
@@ -220,8 +220,8 @@ HB_FUNC( HB_IDLEDEL )
 
          if( pID == hb_codeblockId( pItem ) )
          {
-            hb_itemClear( hb_itemReturn( pItem ) );  /* return a codeblock */
-            hb_itemRelease( pItem );
+            hb_itemClear( hb_itemReturn(pItem) );  /* return a codeblock */
+            hb_itemRelease(pItem);
 
             --pIdleData->iIdleMaxTask;
             if( pIdleData->iIdleMaxTask )

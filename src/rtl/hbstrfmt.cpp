@@ -601,7 +601,7 @@ HB_FUNC( HB_STRFORMAT )
          }
       }
 
-      hb_itemReturnRelease( hb_strFormat( nullptr, pFormat, iParams - 1, pItemArray ) );
+      hb_itemReturnRelease(hb_strFormat( nullptr, pFormat, iParams - 1, pItemArray ));
 
       if( iParams > 1 )
       {

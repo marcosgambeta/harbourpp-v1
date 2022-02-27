@@ -307,7 +307,7 @@ HB_FUNC( HB_VFDIRREMOVE )
 /* hb_vfDirectory( [ <cDirSpec> ], [ <cAttr> ] ) --> <aDirectory> */
 HB_FUNC( HB_VFDIRECTORY )
 {
-   hb_itemReturnRelease( hb_fileDirectory( hb_parc(1), hb_parc(2) ) );
+   hb_itemReturnRelease(hb_fileDirectory( hb_parc(1), hb_parc(2) ));
    hb_fsSetFError( hb_fsError() );
 }
 
@@ -921,11 +921,11 @@ HB_FUNC( HB_VFCONFIG )
    {
       if( HB_ISNUM( 2 ) )
       {
-         PHB_ITEM pValue = hb_itemNew( hb_param(3, HB_IT_ANY) );
+         PHB_ITEM pValue = hb_itemNew(hb_param(3, HB_IT_ANY));
 
          hb_fileConfigure( pFile, hb_parni(2), pValue );
          hb_fsSetFError( hb_fsError() );
-         hb_itemReturnRelease( pValue );
+         hb_itemReturnRelease(pValue);
       }
       else
       {

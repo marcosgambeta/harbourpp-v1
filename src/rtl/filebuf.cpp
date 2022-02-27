@@ -1349,7 +1349,7 @@ HB_FOFFSET hb_fileSizeGet( const char * pszFileName, HB_BOOL bUseDirEntry )
             {
                nSize = hb_arrayGetNInt( pEntry, F_SIZE );
             }
-            hb_itemRelease( pDir );
+            hb_itemRelease(pDir);
          }
       }
       else

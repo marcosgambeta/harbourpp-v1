@@ -82,10 +82,10 @@ static void hb_setkeyRelease( void * cargo )
    {
       PHB_SETKEY sk_list_tmp;
 
-      hb_itemRelease( sk_list->pAction );
+      hb_itemRelease(sk_list->pAction);
       if( sk_list->pIsActive )
       {
-         hb_itemRelease( sk_list->pIsActive );
+         hb_itemRelease(sk_list->pIsActive);
       }
       sk_list_tmp = sk_list;
       sk_list = sk_list->next;
@@ -146,8 +146,8 @@ static void sk_add( PHB_SETKEY * sk_list_ptr, HB_BOOL bReturn, int iKeyCode, PHB
             sk_list_tmp = static_cast<PHB_SETKEY>( hb_xgrab( sizeof(HB_SETKEY) ) );
             sk_list_tmp->next = nullptr;
             sk_list_tmp->iKeyCode = iKeyCode;
-            sk_list_tmp->pAction = hb_itemNew( pAction );
-            sk_list_tmp->pIsActive = pIsActive ? hb_itemNew( pIsActive ) : nullptr;
+            sk_list_tmp->pAction = hb_itemNew(pAction);
+            sk_list_tmp->pIsActive = pIsActive ? hb_itemNew(pIsActive) : nullptr;
 
             if( sk_list_end == nullptr )
             {
@@ -165,23 +165,23 @@ static void sk_add( PHB_SETKEY * sk_list_ptr, HB_BOOL bReturn, int iKeyCode, PHB
 
          if( bReturn )
          {
-            hb_itemReturn( sk_list_tmp->pAction );
+            hb_itemReturn(sk_list_tmp->pAction);
          }
 
          /* Free the previous values */
 
-         hb_itemRelease( sk_list_tmp->pAction );
+         hb_itemRelease(sk_list_tmp->pAction);
          if( sk_list_tmp->pIsActive )
          {
-            hb_itemRelease( sk_list_tmp->pIsActive );
+            hb_itemRelease(sk_list_tmp->pIsActive);
          }
 
          /* Set the new values or free the entry */
 
          if( pAction )
          {
-            sk_list_tmp->pAction = hb_itemNew( pAction );
-            sk_list_tmp->pIsActive = pIsActive ? hb_itemNew( pIsActive ) : nullptr;
+            sk_list_tmp->pAction = hb_itemNew(pAction);
+            sk_list_tmp->pIsActive = pIsActive ? hb_itemNew(pIsActive) : nullptr;
          }
          else
          {
@@ -220,7 +220,7 @@ HB_FUNC( SETKEY )
 
          if( sk_list_tmp )
          {
-            hb_itemReturn( sk_list_tmp->pAction );
+            hb_itemReturn(sk_list_tmp->pAction);
          }
       }
       else
@@ -261,7 +261,7 @@ HB_FUNC( HB_SETKEY )
          {
             if( sk_testActive( sk_list_tmp->pIsActive, iKeyCode ) )
             {
-               hb_itemReturn( sk_list_tmp->pAction );
+               hb_itemReturn(sk_list_tmp->pAction);
             }
          }
       }
@@ -308,7 +308,7 @@ HB_FUNC( HB_SETKEYGET )
 
       if( sk_list_tmp )
       {
-         hb_itemReturn( sk_list_tmp->pAction );
+         hb_itemReturn(sk_list_tmp->pAction);
 
          if( sk_list_tmp->pIsActive )
          {
@@ -334,7 +334,7 @@ HB_FUNC( HB_SETKEYSAVE )
    }
 
    pKeys = hb_itemArrayNew( nItemCount );
-   pKeyElements = hb_itemNew( nullptr );
+   pKeyElements = hb_itemNew(nullptr);
 
    for( nItem = 1, sk_list_tmp = sk_data->sk_list; nItem <= nItemCount; nItem++, sk_list_tmp = sk_list_tmp->next )
    {
@@ -347,8 +347,8 @@ HB_FUNC( HB_SETKEYSAVE )
       }
       hb_arraySetForward( pKeys, nItem, pKeyElements );
    }
-   hb_itemRelease( pKeyElements );
-   hb_itemReturnRelease( pKeys );
+   hb_itemRelease(pKeyElements);
+   hb_itemReturnRelease(pKeys);
 
    pParam = hb_param(1, HB_IT_ANY);
    if( pParam )

@@ -139,7 +139,7 @@ static HB_GARBAGE_FUNC( hb_lpp_destructor )
    }
    if( pGC->pItemSocket )
    {
-      hb_itemRelease( pGC->pItemSocket );
+      hb_itemRelease(pGC->pItemSocket);
       pGC->pItemSocket = nullptr;
    }
 }
@@ -175,7 +175,7 @@ HB_FUNC( HB_LPPCREATE )
 
    pGC = static_cast<PHB_LPP_GC>( hb_gcAllocate( sizeof(HB_LPP_GC), &s_gcPSocketFuncs ) );
    pGC->pSocket = hb_lppCreate( sd );
-   pGC->pItemSocket = hb_itemNew( pItem );
+   pGC->pItemSocket = hb_itemNew(pItem);
    hb_gcUnlock( pGC->pItemSocket );
    hb_retptrGC( pGC );
 }
@@ -192,7 +192,7 @@ HB_FUNC( HB_LPPDESTROY )
    }
    hb_lppDestroy( pGC->pSocket );
    pGC->pSocket = nullptr;
-   hb_itemRelease( pGC->pItemSocket );
+   hb_itemRelease(pGC->pItemSocket);
    pGC->pItemSocket = nullptr;
 }
 

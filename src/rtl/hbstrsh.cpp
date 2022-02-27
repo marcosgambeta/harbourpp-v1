@@ -92,7 +92,7 @@ HB_FUNC( HB_STRSHRINK )
       }
       else
       {
-         hb_itemReturn( pText );
+         hb_itemReturn(pText);
       }
    }
    else

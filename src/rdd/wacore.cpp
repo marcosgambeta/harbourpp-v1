@@ -621,7 +621,7 @@ void hb_rddCloseDetachedAreas( void )
    /* release detached areas */
    if( pDetachedArea )
    {
-      hb_itemRelease( pDetachedArea );
+      hb_itemRelease(pDetachedArea);
    }
 }
 

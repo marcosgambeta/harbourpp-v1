@@ -450,7 +450,7 @@ static PHB_ITEM hb_usrEvalInfoToItem( LPDBEVALINFO pEvalInfo )
       hb_itemCopy( hb_arrayGetItemPtr( pItem, UR_EI_CEXPR ), pEvalInfo->abBlock );
    }
    hb_itemMove( hb_arrayGetItemPtr( pItem, UR_EI_SCOPE ), pScope );
-   hb_itemRelease( pScope );
+   hb_itemRelease(pScope);
 
    return pItem;
 }
@@ -491,7 +491,7 @@ static PHB_ITEM hb_usrTransInfoToItem( LPDBTRANSINFO pTransInfo )
          hb_itemPutNI( hb_arrayGetItemPtr( pItm, UR_TITEM_DESTIN ), pTransItem->uiDest );
       }
    }
-   hb_itemRelease( pScope );
+   hb_itemRelease(pScope);
 
    return pItem;
 }
@@ -564,7 +564,7 @@ static PHB_ITEM hb_usrSortInfoToItem( LPDBSORTINFO pSortInfo )
          hb_itemPutNI( hb_arrayGetItemPtr( pItm, UR_SITEM_FLAGS ), pSortItem->uiFlags );
       }
    }
-   hb_itemRelease( pTrans );
+   hb_itemRelease(pTrans);
 
    return pItem;
 }
@@ -755,23 +755,23 @@ static void hb_usrOrderCondFree( LPDBORDERCONDINFO pOrderCondInfo )
    }
    if( pOrderCondInfo->itmCobFor )
    {
-      hb_itemRelease( pOrderCondInfo->itmCobFor );
+      hb_itemRelease(pOrderCondInfo->itmCobFor);
    }
    if( pOrderCondInfo->itmCobWhile )
    {
-      hb_itemRelease( pOrderCondInfo->itmCobWhile );
+      hb_itemRelease(pOrderCondInfo->itmCobWhile);
    }
    if( pOrderCondInfo->itmCobEval )
    {
-      hb_itemRelease( pOrderCondInfo->itmCobEval );
+      hb_itemRelease(pOrderCondInfo->itmCobEval);
    }
    if( pOrderCondInfo->itmStartRecID )
    {
-      hb_itemRelease( pOrderCondInfo->itmStartRecID );
+      hb_itemRelease(pOrderCondInfo->itmStartRecID);
    }
    if( pOrderCondInfo->itmRecID )
    {
-      hb_itemRelease( pOrderCondInfo->itmRecID );
+      hb_itemRelease(pOrderCondInfo->itmRecID);
    }
    hb_xfree( pOrderCondInfo );
 }
@@ -788,23 +788,23 @@ static void hb_usrOrderCondClone( LPDBORDERCONDINFO pOrderCondInfo )
    }
    if( pOrderCondInfo->itmCobFor )
    {
-      pOrderCondInfo->itmCobFor = hb_itemNew( pOrderCondInfo->itmCobFor );
+      pOrderCondInfo->itmCobFor = hb_itemNew(pOrderCondInfo->itmCobFor);
    }
    if( pOrderCondInfo->itmCobWhile )
    {
-      pOrderCondInfo->itmCobWhile = hb_itemNew( pOrderCondInfo->itmCobWhile );
+      pOrderCondInfo->itmCobWhile = hb_itemNew(pOrderCondInfo->itmCobWhile);
    }
    if( pOrderCondInfo->itmCobEval )
    {
-      pOrderCondInfo->itmCobEval = hb_itemNew( pOrderCondInfo->itmCobEval );
+      pOrderCondInfo->itmCobEval = hb_itemNew(pOrderCondInfo->itmCobEval);
    }
    if( pOrderCondInfo->itmStartRecID )
    {
-      pOrderCondInfo->itmStartRecID = hb_itemNew( pOrderCondInfo->itmStartRecID );
+      pOrderCondInfo->itmStartRecID = hb_itemNew(pOrderCondInfo->itmStartRecID);
    }
    if( pOrderCondInfo->itmRecID )
    {
-      pOrderCondInfo->itmRecID = hb_itemNew( pOrderCondInfo->itmRecID );
+      pOrderCondInfo->itmRecID = hb_itemNew(pOrderCondInfo->itmRecID);
    }
 }
 
@@ -816,7 +816,7 @@ static PHB_ITEM hb_usrOrderCreateInfoToItem( LPDBORDERCREATEINFO pOrderCreateInf
    {
       PHB_ITEM pCond = hb_usrOrderCondInfoToItem( pOrderCreateInfo->lpdbOrdCondInfo );
       hb_arraySet( pItem, UR_ORCR_CONDINFO, pCond );
-      hb_itemRelease( pCond );
+      hb_itemRelease(pCond);
    }
    if( pOrderCreateInfo->abBagName )
    {
@@ -920,7 +920,7 @@ static HB_ERRCODE hb_usrInit( LPRDDNODE pRDD )
    pNode->pSuperTable = &pRDD->pSuperTable;
    pNode->pMethods = reinterpret_cast<PHB_ITEM>( pRDD->pTable.whoCares );
    pRDD->pTable.whoCares = pRDD->pSuperTable.whoCares;
-   pNode->pItem = hb_itemNew( nullptr );
+   pNode->pItem = hb_itemNew(nullptr);
 
    if( ISSUPER_INIT( pRDD ) )
    {
@@ -949,11 +949,11 @@ static HB_ERRCODE hb_usrExit( LPRDDNODE pRDD )
    hb_usrEvalRddFunc( pNode->pMethods, UR_EXIT, pRDD->rddID );
    if( pNode->pItem )
    {
-      hb_itemRelease( pNode->pItem );
+      hb_itemRelease(pNode->pItem);
    }
    if( pNode->pMethods )
    {
-      hb_itemRelease( pNode->pMethods );
+      hb_itemRelease(pNode->pMethods);
    }
    hb_xfree( pNode );
    s_pUsrRddNodes[ pRDD->rddID ] = nullptr;
@@ -1045,7 +1045,7 @@ static HB_ERRCODE hb_usrNewArea( AREAP pArea )
 
    if( errCode == HB_SUCCESS )
    {
-      SELF_USRDATA( pArea )->pItem = hb_itemNew( nullptr );
+      SELF_USRDATA( pArea )->pItem = hb_itemNew(nullptr);
       hb_usrEvalAreaFunc( SELF_USRNODE( pArea )->pMethods, UR_NEW, pArea );
    }
 
@@ -1065,7 +1065,7 @@ static HB_ERRCODE hb_usrRelease( AREAP pArea )
    pItem = SELF_USRDATA( pArea )->pItem;
    if( pItem )
    {
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
 
    return SUPER_RELEASE( pArea );
@@ -1359,7 +1359,7 @@ static HB_ERRCODE hb_usrAddField( AREAP pArea, LPDBFIELDINFO pFieldInfo )
 
    hb_vmPushInteger( pArea->uiArea );
    hb_vmPush( pItem );
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
    hb_vmDo( 2 );
 
    return hb_usrReturn();
@@ -1382,7 +1382,7 @@ static HB_ERRCODE hb_usrFieldDisplay( AREAP pArea, LPDBFIELDINFO pFieldInfo )
 
    hb_vmPushInteger( pArea->uiArea );
    hb_vmPush( pItem );
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
    hb_vmDo( 2 );
 
    return hb_usrReturn();
@@ -1872,7 +1872,7 @@ static HB_ERRCODE hb_usrCreate( AREAP pArea, LPDBOPENINFO pOpenInfo )
 
    hb_vmPushInteger( pArea->uiArea );
    hb_vmPush( pItem );
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
    hb_vmDo( 2 );
 
    return hb_usrReturn();
@@ -1895,7 +1895,7 @@ static HB_ERRCODE hb_usrOpen( AREAP pArea, LPDBOPENINFO pOpenInfo )
 
    hb_vmPushInteger( pArea->uiArea );
    hb_vmPush( pItem );
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
    hb_vmDo( 2 );
 
    return hb_usrReturn();
@@ -1937,7 +1937,7 @@ static HB_ERRCODE hb_usrEval( AREAP pArea, LPDBEVALINFO pEvalInfo )
 
    hb_vmPushInteger( pArea->uiArea );
    hb_vmPush( pItem );
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
    hb_vmDo( 2 );
 
    return hb_usrReturn();
@@ -2007,7 +2007,7 @@ static HB_ERRCODE hb_usrSort( AREAP pArea, LPDBSORTINFO pSortInfo )
 
    hb_vmPushInteger( pArea->uiArea );
    hb_vmPush( pItem );
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
    hb_vmDo( 2 );
 
    return hb_usrReturn();
@@ -2030,7 +2030,7 @@ static HB_ERRCODE hb_usrTrans( AREAP pArea, LPDBTRANSINFO pTransInfo )
 
    hb_vmPushInteger( pArea->uiArea );
    hb_vmPush( pItem );
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
    hb_vmDo( 2 );
 
    return hb_usrReturn();
@@ -2053,7 +2053,7 @@ static HB_ERRCODE hb_usrTransRec( AREAP pArea, LPDBTRANSINFO pTransInfo )
 
    hb_vmPushInteger( pArea->uiArea );
    hb_vmPush( pItem );
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
    hb_vmDo( 2 );
 
    return hb_usrReturn();
@@ -2097,7 +2097,7 @@ static HB_ERRCODE hb_usrChildEnd( AREAP pArea, LPDBRELINFO pRelInfo )
 
    hb_vmPushInteger( pArea->uiArea );
    hb_vmPush( pItem );
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
    hb_vmDo( 2 );
 
    return hb_usrReturn();
@@ -2120,7 +2120,7 @@ static HB_ERRCODE hb_usrChildStart( AREAP pArea, LPDBRELINFO pRelInfo )
 
    hb_vmPushInteger( pArea->uiArea );
    hb_vmPush( pItem );
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
    hb_vmDo( 2 );
 
    return hb_usrReturn();
@@ -2143,7 +2143,7 @@ static HB_ERRCODE hb_usrChildSync( AREAP pArea, LPDBRELINFO pRelInfo )
 
    hb_vmPushInteger( pArea->uiArea );
    hb_vmPush( pItem );
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
    hb_vmDo( 2 );
 
    return hb_usrReturn();
@@ -2244,7 +2244,7 @@ static HB_ERRCODE hb_usrRelEval( AREAP pArea, LPDBRELINFO pRelInfo )
 
    hb_vmPushInteger( pArea->uiArea );
    hb_vmPush( pItem );
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
    hb_vmDo( 2 );
 
    return hb_usrReturn();
@@ -2286,7 +2286,7 @@ static HB_ERRCODE hb_usrSetRel( AREAP pArea, LPDBRELINFO pRelInfo )
 
    hb_vmPushInteger( pArea->uiArea );
    hb_vmPush( pItem );
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
    hb_vmDo( 2 );
 
    return hb_usrReturn();
@@ -2324,10 +2324,10 @@ static HB_ERRCODE hb_usrOrderListAdd( AREAP pArea, LPDBORDERINFO pOrderInfo )
       }
       else
       {
-         pOrderInfo->itmResult = hb_itemNew( pResult );
+         pOrderInfo->itmResult = hb_itemNew(pResult);
       }
    }
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
 
    return hb_usrReturn();
 }
@@ -2377,10 +2377,10 @@ static HB_ERRCODE hb_usrOrderListDelete( AREAP pArea, LPDBORDERINFO pOrderInfo )
       }
       else
       {
-         pOrderInfo->itmResult = hb_itemNew( pResult );
+         pOrderInfo->itmResult = hb_itemNew(pResult);
       }
    }
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
 
    return hb_usrReturn();
 }
@@ -2413,10 +2413,10 @@ static HB_ERRCODE hb_usrOrderListFocus( AREAP pArea, LPDBORDERINFO pOrderInfo )
       }
       else
       {
-         pOrderInfo->itmResult = hb_itemNew( pResult );
+         pOrderInfo->itmResult = hb_itemNew(pResult);
       }
    }
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
 
    return hb_usrReturn();
 }
@@ -2454,7 +2454,7 @@ static HB_ERRCODE hb_usrOrderCondition( AREAP pArea, LPDBORDERCONDINFO pOrderCon
    {
       PHB_ITEM pItem = hb_usrOrderCondInfoToItem( pOrderCondInfo );
       hb_vmPush( pItem );
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
       hb_usrOrderCondFree( pOrderCondInfo );
    }
    else
@@ -2483,7 +2483,7 @@ static HB_ERRCODE hb_usrOrderCreate( AREAP pArea, LPDBORDERCREATEINFO pOrderCrea
 
    hb_vmPushInteger( pArea->uiArea );
    hb_vmPush( pItem );
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
    hb_vmDo( 2 );
 
    return hb_usrReturn();
@@ -2517,10 +2517,10 @@ static HB_ERRCODE hb_usrOrderDestroy( AREAP pArea, LPDBORDERINFO pOrderInfo )
       }
       else
       {
-         pOrderInfo->itmResult = hb_itemNew( pResult );
+         pOrderInfo->itmResult = hb_itemNew(pResult);
       }
    }
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
 
    return hb_usrReturn();
 }
@@ -2554,10 +2554,10 @@ static HB_ERRCODE hb_usrOrderInfo( AREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO
       }
       else
       {
-         pOrderInfo->itmResult = hb_itemNew( pResult );
+         pOrderInfo->itmResult = hb_itemNew(pResult);
       }
    }
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
 
    return hb_usrReturn();
 }
@@ -2652,7 +2652,7 @@ static HB_ERRCODE hb_usrSetFilter( AREAP pArea, LPDBFILTERINFO pFilterInfo )
 
    hb_vmPushInteger( pArea->uiArea );
    hb_vmPush( pItem );
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
    hb_vmDo( 2 );
 
    return hb_usrReturn();
@@ -2675,7 +2675,7 @@ static HB_ERRCODE hb_usrSetLocate( AREAP pArea, LPDBSCOPEINFO pScopeInfo )
 
    hb_vmPushInteger( pArea->uiArea );
    hb_vmPush( pItem );
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
    hb_vmDo( 2 );
 
    return hb_usrReturn();
@@ -2807,7 +2807,7 @@ static HB_ERRCODE hb_usrLock( AREAP pArea, LPDBLOCKINFO pLockInfo )
    hb_vmDo( 2 );
 
    pLockInfo->fResult = static_cast<HB_USHORT>( hb_arrayGetL( pItem, UR_LI_RESULT ) );
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
 
    return hb_usrReturn();
 }
@@ -2875,7 +2875,7 @@ static HB_ERRCODE hb_usrCreateMemFile( AREAP pArea, LPDBOPENINFO pOpenInfo )
 
    hb_vmPushInteger( pArea->uiArea );
    hb_vmPush( pItem );
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
    hb_vmDo( 2 );
 
    return hb_usrReturn();
@@ -2898,7 +2898,7 @@ static HB_ERRCODE hb_usrOpenMemFile( AREAP pArea, LPDBOPENINFO pOpenInfo )
 
    hb_vmPushInteger( pArea->uiArea );
    hb_vmPush( pItem );
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
    hb_vmDo( 2 );
 
    return hb_usrReturn();
@@ -3426,7 +3426,7 @@ HB_FUNC( USRRDD_GETFUNCTABLE )
       uiResult = hb_rddInheritEx( pSelfTable, &funcTable.funcTable, pSuperTable, szSuperRDD, puiSuperRddId );
       if( uiResult == HB_SUCCESS )
       {
-         pSelfTable->whoCares = reinterpret_cast<DBENTRYP_SVP>( hb_itemNew( pMethods ) );
+         pSelfTable->whoCares = reinterpret_cast<DBENTRYP_SVP>( hb_itemNew(pMethods) );
       }
 
       hb_retni( uiResult );
@@ -3445,7 +3445,7 @@ HB_FUNC( USRRDD_RDDDATA )
    {
       PHB_ITEM pItem = s_pUsrRddNodes[ uiRddID ]->pItem;
 
-      hb_itemReturn( pItem );
+      hb_itemReturn(pItem);
       if( hb_pcount() >= 2 )
       {
          hb_itemCopy( pItem, hb_param(2, HB_IT_ANY) );
@@ -3502,7 +3502,7 @@ HB_FUNC( USRRDD_AREADATA )
    {
       PHB_ITEM pItem = SELF_USRDATA( pArea )->pItem;
 
-      hb_itemReturn( pItem );
+      hb_itemReturn(pItem);
       if( hb_pcount() >= 2 )
       {
          hb_itemCopy( pItem, hb_param(2, HB_IT_ANY) );
@@ -3527,10 +3527,10 @@ HB_FUNC( USRRDD_AREARESULT )
    {
       if( ! pArea->valResult )
       {
-         pArea->valResult = hb_itemNew( nullptr );
+         pArea->valResult = hb_itemNew(nullptr);
       }
 
-      hb_itemReturn( pArea->valResult );
+      hb_itemReturn(pArea->valResult);
       if( hb_pcount() >= 2 )
       {
          hb_itemCopy( pArea->valResult, hb_param(2, HB_IT_ANY) );
@@ -4793,9 +4793,9 @@ HB_FUNC_UR_SUPER( ERROR )
 
       if( pItem )
       {
-         pItem = hb_itemNew( pItem );
+         pItem = hb_itemNew(pItem);
          hb_retni( SUPER_ERROR( pArea, pItem ) );
-         hb_itemRelease( pItem );
+         hb_itemRelease(pItem);
       }
       else
       {

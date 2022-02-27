@@ -177,7 +177,7 @@ static HB_BOOL hb_macroCheckParam( PHB_ITEM pItem )
          HB_STACK_TLS_PRELOAD
          hb_stackPop();
          hb_vmPush( pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
       }
    }
    return bValid;
@@ -192,7 +192,7 @@ static HB_ERROR_HANDLE( hb_macroErrorType )
    /* copy error object for later diagnostic usage */
    if( ! pMacro->pError )
    {
-      pMacro->pError = hb_itemNew( ErrorInfo->Error );
+      pMacro->pError = hb_itemNew(ErrorInfo->Error);
    }
 
    pMacro->status &= ~HB_MACRO_CONT;
@@ -245,7 +245,7 @@ static void hb_macroSyntaxError( PHB_MACRO pMacro )
       {
          hb_stackPop();    /* remove compiled string */
          hb_vmPush( pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
       }
    }
 }

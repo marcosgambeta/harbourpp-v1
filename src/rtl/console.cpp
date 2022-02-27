@@ -544,7 +544,7 @@ HB_FUNC( DEVPOS ) /* Sets the screen and/or printer position */
 #if defined( HB_CLP_UNDOC )
    /* NOTE: Both 5.2e and 5.3 does that, while the documentation
             says it will return NIL. [vszakats] */
-   hb_itemReturn( hb_param(1, HB_IT_ANY) );
+   hb_itemReturn(hb_param(1, HB_IT_ANY));
 #endif
 }
 

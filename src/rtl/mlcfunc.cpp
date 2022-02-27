@@ -810,8 +810,8 @@ HB_FUNC( HB_MLEVAL )
          nColPos = 0;
       }
 
-      hb_itemRelease( pLineItem );
-      hb_itemRelease( pSoftItem );
+      hb_itemRelease(pLineItem);
+      hb_itemRelease(pSoftItem);
       hb_xfree( pszLine );
    }
 

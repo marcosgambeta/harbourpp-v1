@@ -222,11 +222,11 @@ HB_FUNC( HB_LIBLOAD )
       }
    }
 
-   hb_itemReturnRelease( hb_libLoad( hb_param(1, HB_IT_ANY), pArgs ) );
+   hb_itemReturnRelease(hb_libLoad( hb_param(1, HB_IT_ANY), pArgs ));
 
    if( pArgs )
    {
-      hb_itemRelease( pArgs );
+      hb_itemRelease(pArgs);
    }
 }
 

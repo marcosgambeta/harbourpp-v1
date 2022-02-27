@@ -1046,7 +1046,7 @@ static HB_ERRCODE hb_waNewArea( AREAP pArea )
    HB_TRACE( HB_TR_DEBUG, ( "hb_waNewArea(%p)", static_cast<void*>( pArea ) ) );
 #endif
 
-   pArea->valResult = hb_itemNew( nullptr );
+   pArea->valResult = hb_itemNew(nullptr);
    pArea->lpdbRelations = nullptr;
    pArea->uiParents = 0;
    pArea->uiMaxFieldNameLength = HB_SYMBOL_NAME_LEN;
@@ -1086,23 +1086,23 @@ static HB_ERRCODE hb_waOrderCondition( AREAP pArea, LPDBORDERCONDINFO param )
       }
       if( pArea->lpdbOrdCondInfo->itmCobFor )
       {
-         hb_itemRelease( pArea->lpdbOrdCondInfo->itmCobFor );
+         hb_itemRelease(pArea->lpdbOrdCondInfo->itmCobFor);
       }
       if( pArea->lpdbOrdCondInfo->itmCobWhile )
       {
-         hb_itemRelease( pArea->lpdbOrdCondInfo->itmCobWhile );
+         hb_itemRelease(pArea->lpdbOrdCondInfo->itmCobWhile);
       }
       if( pArea->lpdbOrdCondInfo->itmCobEval )
       {
-         hb_itemRelease( pArea->lpdbOrdCondInfo->itmCobEval );
+         hb_itemRelease(pArea->lpdbOrdCondInfo->itmCobEval);
       }
       if( pArea->lpdbOrdCondInfo->itmStartRecID )
       {
-         hb_itemRelease( pArea->lpdbOrdCondInfo->itmStartRecID );
+         hb_itemRelease(pArea->lpdbOrdCondInfo->itmStartRecID);
       }
       if( pArea->lpdbOrdCondInfo->itmRecID )
       {
-         hb_itemRelease( pArea->lpdbOrdCondInfo->itmRecID );
+         hb_itemRelease(pArea->lpdbOrdCondInfo->itmRecID);
       }
       hb_xfree( pArea->lpdbOrdCondInfo );
    }
@@ -1127,7 +1127,7 @@ static HB_ERRCODE hb_waRelease( AREAP pArea )
    }
    if( pArea->valResult )
    {
-      hb_itemRelease( pArea->valResult );
+      hb_itemRelease(pArea->valResult);
    }
    if( pArea->lpdbOrdCondInfo )
    {
@@ -1530,7 +1530,7 @@ static HB_ERRCODE hb_waTransRec( AREAP pArea, LPDBTRANSINFO pTransInfo )
          return errCode;
       }
 
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
       pTransItem = pTransInfo->lpTransItems;
       for( HB_USHORT uiCount = pTransInfo->uiItemCount; uiCount; --uiCount )
       {
@@ -1546,7 +1546,7 @@ static HB_ERRCODE hb_waTransRec( AREAP pArea, LPDBTRANSINFO pTransInfo )
          }
          ++pTransItem;
       }
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
 
    /* Delete the new record if copy fail */
@@ -1584,11 +1584,11 @@ static HB_ERRCODE hb_waChildEnd( AREAP pArea, LPDBRELINFO pRelInfo )
       DBORDERINFO pInfo;
       pInfo.itmOrder = nullptr;
       pInfo.atomBagName = nullptr;
-      pInfo.itmResult = hb_itemNew( nullptr );
+      pInfo.itmResult = hb_itemNew(nullptr);
       pInfo.itmNewVal = nullptr;
       SELF_ORDINFO( pArea, DBOI_SCOPETOPCLEAR, &pInfo );
       SELF_ORDINFO( pArea, DBOI_SCOPEBOTTOMCLEAR, &pInfo );
-      hb_itemRelease( pInfo.itmResult );
+      hb_itemRelease(pInfo.itmResult);
    }
 
    pArea->uiParents--;
@@ -1657,11 +1657,11 @@ static HB_ERRCODE hb_waClearRel( AREAP pArea )
 
          if( lpdbRelation->itmCobExpr )
          {
-            hb_itemRelease( lpdbRelation->itmCobExpr );
+            hb_itemRelease(lpdbRelation->itmCobExpr);
          }
          if( lpdbRelation->abKey )
          {
-            hb_itemRelease( lpdbRelation->abKey );
+            hb_itemRelease(lpdbRelation->abKey);
          }
          hb_xfree( lpdbRelation );
       }
@@ -1780,8 +1780,8 @@ static HB_ERRCODE hb_waRelEval( AREAP pArea, LPDBRELINFO pRelInfo )
                   }
                }
             }
-            hb_itemRelease( pInfo.itmResult );
-            hb_itemRelease( pResult );
+            hb_itemRelease(pInfo.itmResult);
+            hb_itemRelease(pResult);
          }
       }
    }
@@ -1864,12 +1864,12 @@ static HB_ERRCODE hb_waClearFilter( AREAP pArea )
    /* Free all items */
    if( pArea->dbfi.itmCobExpr )
    {
-      hb_itemRelease( pArea->dbfi.itmCobExpr );
+      hb_itemRelease(pArea->dbfi.itmCobExpr);
       pArea->dbfi.itmCobExpr = nullptr;
    }
    if( pArea->dbfi.abFilterText )
    {
-      hb_itemRelease( pArea->dbfi.abFilterText );
+      hb_itemRelease(pArea->dbfi.abFilterText);
       pArea->dbfi.abFilterText = nullptr;
    }
    pArea->dbfi.fOptimized = HB_FALSE;
@@ -1890,37 +1890,37 @@ static HB_ERRCODE hb_waClearLocate( AREAP pArea )
    /* Free all items */
    if( pArea->dbsi.itmCobFor )
    {
-      hb_itemRelease( pArea->dbsi.itmCobFor );
+      hb_itemRelease(pArea->dbsi.itmCobFor);
       pArea->dbsi.itmCobFor = nullptr;
    }
    if( pArea->dbsi.lpstrFor )
    {
-      hb_itemRelease( pArea->dbsi.lpstrFor );
+      hb_itemRelease(pArea->dbsi.lpstrFor);
       pArea->dbsi.lpstrFor = nullptr;
    }
    if( pArea->dbsi.itmCobWhile )
    {
-      hb_itemRelease( pArea->dbsi.itmCobWhile );
+      hb_itemRelease(pArea->dbsi.itmCobWhile);
       pArea->dbsi.itmCobWhile = nullptr;
    }
    if( pArea->dbsi.lpstrWhile )
    {
-      hb_itemRelease( pArea->dbsi.lpstrWhile );
+      hb_itemRelease(pArea->dbsi.lpstrWhile);
       pArea->dbsi.lpstrWhile = nullptr;
    }
    if( pArea->dbsi.lNext )
    {
-      hb_itemRelease( pArea->dbsi.lNext );
+      hb_itemRelease(pArea->dbsi.lNext);
       pArea->dbsi.lNext = nullptr;
    }
    if( pArea->dbsi.itmRecID )
    {
-      hb_itemRelease( pArea->dbsi.itmRecID );
+      hb_itemRelease(pArea->dbsi.itmRecID);
       pArea->dbsi.itmRecID = nullptr;
    }
    if( pArea->dbsi.fRest )
    {
-      hb_itemRelease( pArea->dbsi.fRest );
+      hb_itemRelease(pArea->dbsi.fRest);
       pArea->dbsi.fRest = nullptr;
    }
 
@@ -1961,11 +1961,11 @@ static HB_ERRCODE hb_waSetFilter( AREAP pArea, LPDBFILTERINFO pFilterInfo )
 
    if( pFilterInfo->itmCobExpr )
    {
-      pArea->dbfi.itmCobExpr = hb_itemNew( pFilterInfo->itmCobExpr );
+      pArea->dbfi.itmCobExpr = hb_itemNew(pFilterInfo->itmCobExpr);
    }
    if( pFilterInfo->abFilterText )
    {
-      pArea->dbfi.abFilterText = hb_itemNew( pFilterInfo->abFilterText );
+      pArea->dbfi.abFilterText = hb_itemNew(pFilterInfo->abFilterText);
    }
    pArea->dbfi.fOptimized = pFilterInfo->fOptimized;
    pArea->dbfi.fFilter = HB_TRUE;
@@ -1990,37 +1990,37 @@ static HB_ERRCODE hb_waSetLocate( AREAP pArea, LPDBSCOPEINFO pScopeInfo )
 
    if( pScopeInfo->itmCobFor )
    {
-      pArea->dbsi.itmCobFor = hb_itemNew( pScopeInfo->itmCobFor );
+      pArea->dbsi.itmCobFor = hb_itemNew(pScopeInfo->itmCobFor);
    }
 
    if( pScopeInfo->lpstrFor )
    {
-      pArea->dbsi.lpstrFor = hb_itemNew( pScopeInfo->lpstrFor );
+      pArea->dbsi.lpstrFor = hb_itemNew(pScopeInfo->lpstrFor);
    }
 
    if( pScopeInfo->itmCobWhile )
    {
-      pArea->dbsi.itmCobWhile = hb_itemNew( pScopeInfo->itmCobWhile );
+      pArea->dbsi.itmCobWhile = hb_itemNew(pScopeInfo->itmCobWhile);
    }
 
    if( pScopeInfo->lpstrWhile )
    {
-      pArea->dbsi.lpstrWhile = hb_itemNew( pScopeInfo->lpstrWhile );
+      pArea->dbsi.lpstrWhile = hb_itemNew(pScopeInfo->lpstrWhile);
    }
 
    if( pScopeInfo->lNext )
    {
-      pArea->dbsi.lNext = hb_itemNew( pScopeInfo->lNext );
+      pArea->dbsi.lNext = hb_itemNew(pScopeInfo->lNext);
    }
 
    if( pScopeInfo->itmRecID )
    {
-      pArea->dbsi.itmRecID = hb_itemNew( pScopeInfo->itmRecID );
+      pArea->dbsi.itmRecID = hb_itemNew(pScopeInfo->itmRecID);
    }
 
    if( pScopeInfo->fRest )
    {
-      pArea->dbsi.fRest = hb_itemNew( pScopeInfo->fRest );
+      pArea->dbsi.fRest = hb_itemNew(pScopeInfo->fRest);
    }
 
    pArea->dbsi.fIgnoreFilter     = pScopeInfo->fIgnoreFilter;
@@ -2108,7 +2108,7 @@ static HB_ERRCODE hb_waEvalBlock( AREAP pArea, PHB_ITEM pBlock )
 
    if( ! pArea->valResult )
    {
-      pArea->valResult = hb_itemNew( nullptr );
+      pArea->valResult = hb_itemNew(nullptr);
    }
    hb_itemMove( pArea->valResult, pItem );
 
@@ -2264,7 +2264,7 @@ static HB_ERRCODE hb_waUnsupported( AREAP pArea )
    hb_errPutGenCode( pError, EG_UNSUPPORTED );
    hb_errPutDescription( pError, hb_langDGetErrorDesc( EG_UNSUPPORTED ) );
    SELF_ERROR( pArea, pError );
-   hb_itemRelease( pError );
+   hb_itemRelease(pError);
 
    return HB_FAILURE;
 }
@@ -2368,7 +2368,7 @@ static HB_ERRCODE hb_waRddUnsupported( LPRDDNODE pRDD )
    hb_errPutSeverity( pError, ES_ERROR );
    hb_errPutSubSystem( pError, pRDD->szName );
    hb_errLaunch( pError );
-   hb_itemRelease( pError );
+   hb_itemRelease(pError);
 
    return HB_FAILURE;
 }

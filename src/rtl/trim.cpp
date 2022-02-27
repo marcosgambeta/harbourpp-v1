@@ -106,7 +106,7 @@ HB_FUNC( LTRIM )
 
       if( nLen == nSrc )
       {
-         hb_itemReturn( pText );
+         hb_itemReturn(pText);
       }
       else
       {
@@ -137,7 +137,7 @@ HB_FUNC( RTRIM )
 
       if( nLen == nSrc )
       {
-         hb_itemReturn( pText );
+         hb_itemReturn(pText);
       }
       else
       {
@@ -173,7 +173,7 @@ HB_FUNC( ALLTRIM )
 
       if( nLen == nSrc )
       {
-         hb_itemReturn( pText );
+         hb_itemReturn(pText);
       }
       else
       {

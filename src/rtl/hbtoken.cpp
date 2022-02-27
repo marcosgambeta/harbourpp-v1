@@ -374,7 +374,7 @@ HB_FUNC( HB_ATOKENS )
 
    if( hb_tokenParam( 2, 0, &szLine, &nLen, &szDelim, &nDelim, &iFlags ) )
    {
-      hb_itemReturnRelease( hb_tokenArray( szLine, nLen, szDelim, nDelim, iFlags ) );
+      hb_itemReturnRelease(hb_tokenArray( szLine, nLen, szDelim, nDelim, iFlags ));
    }
    else
    {

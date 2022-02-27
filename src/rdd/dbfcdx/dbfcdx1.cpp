@@ -661,7 +661,7 @@ static PHB_ITEM hb_cdxKeyGetItem( LPCDXKEY pKey, PHB_ITEM pItem, LPCDXTAG pTag )
             }
             else
             {
-               pItem = hb_itemNew( nullptr );
+               pItem = hb_itemNew(nullptr);
             }
       }
    }
@@ -671,7 +671,7 @@ static PHB_ITEM hb_cdxKeyGetItem( LPCDXKEY pKey, PHB_ITEM pItem, LPCDXTAG pTag )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    return pItem;
@@ -763,8 +763,8 @@ static HB_BOOL hb_cdxEvalSeekCond( LPCDXTAG pTag, PHB_ITEM pCondItem )
 
    fRet = hb_itemGetL(hb_vmEvalBlockV( pCondItem, 2, pKeyVal, pKeyRec ));
 
-   hb_itemRelease( pKeyVal );
-   hb_itemRelease( pKeyRec );
+   hb_itemRelease(pKeyVal);
+   hb_itemRelease(pKeyRec);
 
    return fRet;
 }
@@ -838,7 +838,7 @@ static void hb_cdxTagClearScope( LPCDXTAG pTag, HB_USHORT nScope )
    }
    if( *pScope )
    {
-      hb_itemRelease( *pScope );
+      hb_itemRelease(*pScope);
       *pScope = nullptr;
    }
    if( *pScopeKey )
@@ -890,7 +890,7 @@ static void hb_cdxTagSetScope( LPCDXTAG pTag, HB_USHORT nScope, PHB_ITEM pItem )
 
       if( *pScope == nullptr )
       {
-         *pScope = hb_itemNew( nullptr );
+         *pScope = hb_itemNew(nullptr);
       }
       hb_itemCopy( *pScope, pItem );
       *pScopeKey = hb_cdxKeyPutItem( *pScopeKey, pScopeVal, ulRec, pTag, CDX_CMP_PREFIX );
@@ -5492,7 +5492,7 @@ static void hb_cdxCreateFName( CDXAREAP pArea, const char * szBagName, HB_BOOL *
    hb_xfree( pFileName );
    if( pExt )
    {
-      hb_itemRelease( pExt );
+      hb_itemRelease(pExt);
    }
 }
 
@@ -5527,7 +5527,7 @@ static void hb_cdxOrdListClear( CDXAREAP pArea, HB_BOOL fAll, LPCDXINDEX pKeepIn
             {
                fAll = hb_stricmp( pFileNameCdx->szExtension, hb_itemGetCPtr(pExt) ) != 0;
             }
-            hb_itemRelease( pExt );
+            hb_itemRelease(pExt);
          }
          hb_xfree( pFileNameDbf );
          hb_xfree( pFileNameCdx );
@@ -7935,14 +7935,14 @@ static HB_ERRCODE hb_cdxOpen( CDXAREAP pArea, LPDBOPENINFO pOpenInfo )
 
    if( ! pArea->dbfarea.bLockType )
    {
-      PHB_ITEM pItem = hb_itemNew( nullptr );
+      PHB_ITEM pItem = hb_itemNew(nullptr);
       if( SELF_INFO( &pArea->dbfarea.area, DBI_LOCKSCHEME, pItem ) != HB_SUCCESS )
       {
-         hb_itemRelease( pItem );
+         hb_itemRelease(pItem);
          return HB_FAILURE;
       }
       pArea->dbfarea.bLockType = static_cast<HB_BYTE>( hb_itemGetNI(pItem) );
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
       if( pArea->dbfarea.bLockType == 0 )
       {
          pArea->dbfarea.bLockType = DB_DBFLOCK_VFP;
@@ -7981,14 +7981,14 @@ static HB_ERRCODE hb_cdxOpen( CDXAREAP pArea, LPDBOPENINFO pOpenInfo )
          {
             pOrderInfo.itmOrder  = hb_itemPutNI( nullptr, hb_setGetAutOrder() );
             errCode = SELF_ORDLSTFOCUS( &pArea->dbfarea.area, &pOrderInfo );
-            hb_itemRelease( pOrderInfo.itmOrder );
+            hb_itemRelease(pOrderInfo.itmOrder);
             if( errCode == HB_SUCCESS )
             {
                errCode = SELF_GOTOP( &pArea->dbfarea.area );
             }
          }
-         hb_itemRelease( pOrderInfo.atomBagName );
-         hb_itemRelease( pOrderInfo.itmResult );
+         hb_itemRelease(pOrderInfo.atomBagName);
+         hb_itemRelease(pOrderInfo.itmResult);
       }
    }
    else
@@ -8403,7 +8403,7 @@ static HB_ERRCODE hb_cdxOrderCreate( CDXAREAP pArea, LPDBORDERCREATEINFO pOrderI
    {
       if( pOrderInfo->itmCobExpr )
       {
-         pKeyExp = hb_itemNew( pOrderInfo->itmCobExpr );
+         pKeyExp = hb_itemNew(pOrderInfo->itmCobExpr);
       }
       else
       {
@@ -8419,7 +8419,7 @@ static HB_ERRCODE hb_cdxOrderCreate( CDXAREAP pArea, LPDBORDERCREATEINFO pOrderI
       if( pOrderInfo->itmCobExpr )
       {
          hb_vmDestroyBlockOrMacro( pKeyExp );
-         pKeyExp = hb_itemNew( pOrderInfo->itmCobExpr );
+         pKeyExp = hb_itemNew(pOrderInfo->itmCobExpr);
       }
    }
 
@@ -8460,7 +8460,7 @@ static HB_ERRCODE hb_cdxOrderCreate( CDXAREAP pArea, LPDBORDERCREATEINFO pOrderI
          bType = 'U';
          uiLen = 0;
    }
-   hb_itemRelease( pResult );
+   hb_itemRelease(pResult);
 
    /* Make sure KEY has proper type and length */
    if( bType == 'U' || uiLen == 0 )
@@ -8513,7 +8513,7 @@ static HB_ERRCODE hb_cdxOrderCreate( CDXAREAP pArea, LPDBORDERCREATEINFO pOrderI
          {
             hb_vmDestroyBlockOrMacro( pForExp );
          }
-         pForExp = hb_itemNew( pArea->dbfarea.area.lpdbOrdCondInfo->itmCobFor );
+         pForExp = hb_itemNew(pArea->dbfarea.area.lpdbOrdCondInfo->itmCobFor);
       }
    }
 
@@ -8535,7 +8535,7 @@ static HB_ERRCODE hb_cdxOrderCreate( CDXAREAP pArea, LPDBORDERCREATEINFO pOrderI
          return HB_FAILURE;
       }
       fOK = hb_itemType( pArea->dbfarea.area.valResult ) & HB_IT_LOGICAL;
-      hb_itemRelease( pArea->dbfarea.area.valResult );
+      hb_itemRelease(pArea->dbfarea.area.valResult);
       pArea->dbfarea.area.valResult = nullptr;
       if( ! fOK )
       {
@@ -9074,7 +9074,7 @@ static HB_ERRCODE hb_cdxOrderInfo( CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
                         pTag->pForItem = pForItem;
                         pForItem = nullptr;
                      }
-                     hb_itemRelease( pArea->dbfarea.area.valResult );
+                     hb_itemRelease(pArea->dbfarea.area.valResult);
                      pArea->dbfarea.area.valResult = nullptr;
                   }
                   if( pForItem )
@@ -10587,7 +10587,7 @@ static void hb_cdxTagDoIndex( LPCDXTAG pTag, HB_BOOL fReindex )
       pForItem = pTag->pForItem;
       if( pTag->nField )
       {
-         pItem = hb_itemNew( nullptr );
+         pItem = hb_itemNew(nullptr);
       }
 
       if( ! pArea->dbfarea.area.lpdbOrdCondInfo || pArea->dbfarea.area.lpdbOrdCondInfo->fAll )
@@ -10851,7 +10851,7 @@ static void hb_cdxTagDoIndex( LPCDXTAG pTag, HB_BOOL fReindex )
       hb_cdxSortOut( pSort );
       if( pTag->nField )
       {
-         hb_itemRelease( pItem );
+         hb_itemRelease(pItem);
       }
 
       if( fDirectRead )

@@ -447,7 +447,7 @@ HB_ERRCODE hb_rddSelectWorkAreaSymbol( PHB_SYMB pSymAlias )
    }
    while( errCode == HB_FAILURE );
 
-   hb_itemRelease( pError );
+   hb_itemRelease(pError);
 
    return errCode;
 }
@@ -484,7 +484,7 @@ HB_ERRCODE hb_rddSelectWorkAreaAlias( const char * szAlias )
       }
       while( errCode == HB_FAILURE );
 
-      hb_itemRelease( pError );
+      hb_itemRelease(pError);
    }
 
    if( errCode == HB_SUCCESS )
@@ -597,7 +597,7 @@ HB_ERRCODE hb_rddGetFieldValue( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
             break;
          }
       }
-      hb_itemRelease( pError );
+      hb_itemRelease(pError);
    }
 
    return errCode;
@@ -633,7 +633,7 @@ HB_ERRCODE hb_rddPutFieldValue( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
             break;
          }
       }
-      hb_itemRelease( pError );
+      hb_itemRelease(pError);
    }
 
    return errCode;
@@ -848,7 +848,7 @@ HB_ERRCODE hb_rddCreateTableTemp( const char * szDriver, const char * szAlias, c
 
    pItem = hb_itemPutL( nullptr, HB_TRUE );
    errCode = SELF_INFO( pArea, DBI_ISTEMPORARY, pItem );
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
 
    if( errCode == HB_SUCCESS )
    {
@@ -956,7 +956,7 @@ LPDBTRANSINFO hb_dbTransInfoGet( PHB_ITEM pItem )
 /* update counters for autoinc and rowver fields */
 HB_ERRCODE hb_dbTransCounters( LPDBTRANSINFO lpdbTransInfo )
 {
-   PHB_ITEM pItem = hb_itemNew( nullptr );
+   PHB_ITEM pItem = hb_itemNew(nullptr);
 
    for( HB_USHORT uiCount = 0; uiCount < lpdbTransInfo->uiItemCount; ++uiCount )
    {
@@ -973,7 +973,7 @@ HB_ERRCODE hb_dbTransCounters( LPDBTRANSINFO lpdbTransInfo )
       }
       hb_itemClear( pItem );
    }
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
 
    return HB_SUCCESS;
 }
@@ -1030,7 +1030,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
 
    if( ! lpaDest )
    {
-      *pStruct = hb_itemNew( nullptr );
+      *pStruct = hb_itemNew(nullptr);
       hb_arrayNew( *pStruct, 0 );
    }
 
@@ -1038,7 +1038,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
    {
       if( lpaDest )
       {
-         PHB_ITEM pItem = hb_itemNew( nullptr );
+         PHB_ITEM pItem = hb_itemNew(nullptr);
          uiSize = 0;
          for( uiCount = 1; uiCount <= uiSizeSrc; ++uiCount )
          {
@@ -1072,7 +1072,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
                }
             }
          }
-         hb_itemRelease( pItem );
+         hb_itemRelease(pItem);
       }
       else
       {
@@ -1131,8 +1131,8 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
 
    if( fAll && lpaDest )
    {
-      PHB_ITEM pSrcItm = hb_itemNew( nullptr ),
-               pDstItm = hb_itemNew( nullptr );
+      PHB_ITEM pSrcItm = hb_itemNew(nullptr),
+               pDstItm = hb_itemNew(nullptr);
       /*
        * if fAll is HB_TRUE here then it means that all fields are included
        * and they are on the same positions in both tables, so now check
@@ -1187,8 +1187,8 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
          }
 #endif
       }
-      hb_itemRelease( pSrcItm );
-      hb_itemRelease( pDstItm );
+      hb_itemRelease(pSrcItm);
+      hb_itemRelease(pDstItm);
    }
 
    lpdbTransInfo->uiFlags = fAll ? DBTF_MATCH : 0;
@@ -1276,7 +1276,7 @@ HB_ERRCODE hb_rddTransRecords( AREAP pArea,
 
    if( pStruct )
    {
-      hb_itemRelease( pStruct );
+      hb_itemRelease(pStruct);
    }
 
    if( errCode == HB_SUCCESS )
@@ -1315,7 +1315,7 @@ HB_ERRCODE hb_rddTransRecords( AREAP pArea,
             errCode = hb_dbTransCounters( &dbTransInfo );
          }
       }
-      hb_itemRelease( pTransItm );
+      hb_itemRelease(pTransItm);
    }
 
    if( dbTransInfo.lpTransItems )
@@ -1350,11 +1350,11 @@ static HB_ERRCODE hb_rddCloseParentRel( AREAP pArea, void * pChildArea )
             SELF_CHILDEND( lpdbRelation->lpaChild, lpdbRelation );
             if( lpdbRelation->itmCobExpr )
             {
-               hb_itemRelease( lpdbRelation->itmCobExpr );
+               hb_itemRelease(lpdbRelation->itmCobExpr);
             }
             if( lpdbRelation->abKey )
             {
-               hb_itemRelease( lpdbRelation->abKey );
+               hb_itemRelease(lpdbRelation->abKey);
             }
 
             *lpdbRelationPtr = lpdbRelation->lpdbriNext;

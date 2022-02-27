@@ -111,7 +111,7 @@ HB_FUNC( SUBSTR )
       {
          if( nFrom <= 0 && nCount == nSize )
          {
-            hb_itemReturn( pText );
+            hb_itemReturn(pText);
          }
          else
          {

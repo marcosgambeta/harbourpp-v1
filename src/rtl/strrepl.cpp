@@ -252,7 +252,7 @@ HB_FUNC( HB_STRREPLACE )
       }
       else
       {
-         hb_itemReturn( pText );
+         hb_itemReturn(pText);
       }
    }
    else

@@ -96,8 +96,8 @@ HB_FUNC( MOD )
           */
          if( pResult )
          {
-            hb_itemReturn( pNumber );
-            hb_itemRelease( pResult );
+            hb_itemReturn(pNumber);
+            hb_itemRelease(pResult);
          }
       }
    }

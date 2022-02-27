@@ -3389,12 +3389,12 @@ static HB_ERRCODE hb_fptLockForRead( FPTAREAP pArea, HB_USHORT uiIndex, HB_BOOL 
    }
    else
    {
-      PHB_ITEM pRecNo = hb_itemNew( nullptr ), pResult = hb_itemNew( nullptr );
+      PHB_ITEM pRecNo = hb_itemNew(nullptr), pResult = hb_itemNew(nullptr);
 
       errCode = SELF_RECINFO( &pArea->area, pRecNo, DBRI_LOCKED, pResult );
       fLocked = hb_itemGetL(pResult);
-      hb_itemRelease( pRecNo );
-      hb_itemRelease( pResult );
+      hb_itemRelease(pRecNo);
+      hb_itemRelease(pResult);
       if( errCode != HB_SUCCESS )
       {
          return errCode;
@@ -4170,7 +4170,7 @@ static HB_ERRCODE hb_fptCreateMemFile( FPTAREAP pArea, LPDBOPENINFO pCreateInfo 
          pItem = hb_itemPutNil( pItem );
          if( SELF_INFO( &pArea->area, DBI_MEMOTYPE, pItem ) != HB_SUCCESS )
          {
-            hb_itemRelease( pItem );
+            hb_itemRelease(pItem);
             return HB_FAILURE;
          }
          pArea->bMemoType = static_cast<HB_BYTE>( hb_itemGetNI(pItem) );
@@ -4186,7 +4186,7 @@ static HB_ERRCODE hb_fptCreateMemFile( FPTAREAP pArea, LPDBOPENINFO pCreateInfo 
              pArea->bMemoType != DB_MEMO_SMT )
          {
             hb_memoErrorRT( pArea, EG_CREATE, EDBF_MEMOTYPE, pCreateInfo->abName, 0, 0 );
-            hb_itemRelease( pItem );
+            hb_itemRelease(pItem);
             return HB_FAILURE;
          }
       }
@@ -4201,7 +4201,7 @@ static HB_ERRCODE hb_fptCreateMemFile( FPTAREAP pArea, LPDBOPENINFO pCreateInfo 
             pItem = hb_itemPutNil( pItem );
             if( SELF_INFO( &pArea->area, DBI_MEMOVERSION, pItem ) != HB_SUCCESS )
             {
-               hb_itemRelease( pItem );
+               hb_itemRelease(pItem);
                return HB_FAILURE;
             }
             pArea->uiMemoVersion = static_cast<HB_USHORT>( hb_itemGetNI(pItem) );
@@ -4216,7 +4216,7 @@ static HB_ERRCODE hb_fptCreateMemFile( FPTAREAP pArea, LPDBOPENINFO pCreateInfo 
          pItem = hb_itemPutNil( pItem );
          if( SELF_INFO( &pArea->area, DBI_MEMOBLOCKSIZE, pItem ) != HB_SUCCESS )
          {
-            hb_itemRelease( pItem );
+            hb_itemRelease(pItem);
             return HB_FAILURE;
          }
          pArea->ulMemoBlockSize = hb_itemGetNL(pItem);
@@ -4244,7 +4244,7 @@ static HB_ERRCODE hb_fptCreateMemFile( FPTAREAP pArea, LPDBOPENINFO pCreateInfo 
 
       if( pItem )
       {
-         hb_itemRelease( pItem );
+         hb_itemRelease(pItem);
       }
 
       /* Try create */
@@ -4285,7 +4285,7 @@ static HB_ERRCODE hb_fptCreateMemFile( FPTAREAP pArea, LPDBOPENINFO pCreateInfo 
 
       if( pError )
       {
-         hb_itemRelease( pError );
+         hb_itemRelease(pError);
       }
 
       if( ! pArea->pMemoFile )
@@ -4443,13 +4443,13 @@ static HB_ERRCODE hb_fptOpenMemFile( FPTAREAP pArea, LPDBOPENINFO pOpenInfo )
    pFileName = hb_fsFNameSplit( pOpenInfo->abName );
    if( ! pFileName->szExtension )
    {
-      PHB_ITEM pItem = hb_itemNew( nullptr );
+      PHB_ITEM pItem = hb_itemNew(nullptr);
       if( SELF_INFO( &pArea->area, DBI_MEMOEXT, pItem ) == HB_SUCCESS )
       {
          pFileName->szExtension = hb_itemGetCPtr(pItem);
          hb_fsFNameMerge( szFileName, pFileName );
       }
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
    else
    {
@@ -4487,7 +4487,7 @@ static HB_ERRCODE hb_fptOpenMemFile( FPTAREAP pArea, LPDBOPENINFO pOpenInfo )
 
    if( pError )
    {
-      hb_itemRelease( pError );
+      hb_itemRelease(pError);
    }
 
    if( ! pArea->pMemoFile )
@@ -4633,7 +4633,7 @@ static HB_ERRCODE hb_fptPutValueFile( FPTAREAP pArea, HB_USHORT uiIndex, const c
          {
             PHB_ITEM pItem = hb_itemPutCLPtr( nullptr, reinterpret_cast<char*>( pAlloc ), ulSize );
             errCode = hb_fptPutVarField( pArea, uiIndex, pItem );
-            hb_itemRelease( pItem );
+            hb_itemRelease(pItem);
          }
       }
       else if( ! hb_fptFileLockEx( pArea, HB_TRUE ) )

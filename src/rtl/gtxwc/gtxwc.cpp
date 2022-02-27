@@ -5782,7 +5782,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
       case HB_GTI_MOUSEPOS_XY:
          if( ! pInfo->pResult )
          {
-            pInfo->pResult = hb_itemNew( nullptr );
+            pInfo->pResult = hb_itemNew(nullptr);
          }
          hb_arrayNew( pInfo->pResult, 2 );
          hb_arraySetNI( pInfo->pResult, 1, wnd->mouseColPxl );
@@ -5813,7 +5813,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
          if( ! pInfo->pResult )
          {
-            pInfo->pResult = hb_itemNew( nullptr );
+            pInfo->pResult = hb_itemNew(nullptr);
          }
          hb_arrayNew( pInfo->pResult, 2 );
 
@@ -5898,7 +5898,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          {
             if( ! pInfo->pResult )
             {
-               pInfo->pResult = hb_itemNew( nullptr );
+               pInfo->pResult = hb_itemNew(nullptr);
             }
             hb_arrayNew( pInfo->pResult, 16 );
             for( iVal = 0; iVal < 16; iVal++ )

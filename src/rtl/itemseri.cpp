@@ -1368,8 +1368,8 @@ static HB_SIZE hb_deserializeHash( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
    if( nLen )
    {
 #if 0
-      PHB_ITEM pKey = hb_itemNew( nullptr );
-      PHB_ITEM pVal = hb_itemNew( nullptr );
+      PHB_ITEM pKey = hb_itemNew(nullptr);
+      PHB_ITEM pVal = hb_itemNew(nullptr);
 
       hb_hashPreallocate( pItem, nLen );
       while( nLen-- )
@@ -1378,8 +1378,8 @@ static HB_SIZE hb_deserializeHash( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
          nOffset = hb_deserializeItem( pVal, cdpIn, cdpOut, pBuffer, nOffset, pRefList );
          hb_hashAdd( pItem, pKey, pVal );
       }
-      hb_itemRelease( pKey );
-      hb_itemRelease( pVal );
+      hb_itemRelease(pKey);
+      hb_itemRelease(pVal);
 #else
       PHB_ITEM pKey, pVal;
 
@@ -1644,11 +1644,11 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
 
       case HB_SERIAL_HASHDEFVAL:
       {
-         PHB_ITEM pDefVal = hb_itemNew( nullptr );
+         PHB_ITEM pDefVal = hb_itemNew(nullptr);
          nOffset = hb_deserializeItem( pDefVal, cdpIn, cdpOut, pBuffer, nOffset, pRefList );
          nOffset = hb_deserializeItem( pItem, cdpIn, cdpOut, pBuffer, nOffset, pRefList );
          hb_hashSetDefault( pItem, pDefVal );
-         hb_itemRelease( pDefVal );
+         hb_itemRelease(pDefVal);
          break;
       }
 
@@ -1909,7 +1909,7 @@ PHB_ITEM hb_itemDeserializeCP( const char ** pBufferPtr, HB_SIZE * pnSize, PHB_C
    hb_itemSerialRefListInit( &refList );
    if( ! pnSize || hb_deserializeTest( reinterpret_cast<const HB_UCHAR**>( pBufferPtr ), pnSize, 0, &refList ) )
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
       hb_deserializeItem( pItem, cdpIn, cdpOut, pBuffer, 0, &refList );
    }
    hb_itemSerialRefListFree( &refList );
@@ -1972,13 +1972,13 @@ HB_FUNC( HB_DESERIALIZE )
       pItem = hb_itemDeserializeCP( &pBuffer, &nSize, cdpIn, cdpOut );
       if( pItem )
       {
-         hb_itemReturn( pItem );
+         hb_itemReturn(pItem);
          if( pParam )
          {
             hb_itemPutCL( pItem, pBuffer, nSize );
             hb_itemMove( pParam, pItem );
          }
-         hb_itemRelease( pItem );
+         hb_itemRelease(pItem);
       }
       else if( pParam )
       {

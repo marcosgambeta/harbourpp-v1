@@ -85,7 +85,7 @@ HB_FUNC( HB_STRXOR )
          }
          else
          {
-            hb_itemReturn( pItem );
+            hb_itemReturn(pItem);
          }
 
          return;
@@ -107,7 +107,7 @@ HB_FUNC( HB_STRXOR )
          }
          else
          {
-            hb_itemReturn( pItem );
+            hb_itemReturn(pItem);
          }
 
          return;

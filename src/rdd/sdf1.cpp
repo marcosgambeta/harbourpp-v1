@@ -559,7 +559,7 @@ static HB_ERRCODE hb_sdfGetValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          hb_errPutOperation( pError, hb_dynsymName( static_cast<PHB_DYNS>( pField->sym ) ) );
          hb_errPutSubCode( pError, EDBF_DATATYPE );
          SELF_ERROR( &pArea->area, pError );
-         hb_itemRelease( pError );
+         hb_itemRelease(pError);
          return HB_FAILURE;
       }
    }
@@ -704,7 +704,7 @@ static HB_ERRCODE hb_sdfPutValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
       hb_errPutSubCode( pError, errCode );
       hb_errPutFlags( pError, EF_CANDEFAULT );
       errCode = SELF_ERROR( &pArea->area, pError );
-      hb_itemRelease( pError );
+      hb_itemRelease(pError);
       return errCode == E_DEFAULT ? HB_SUCCESS : HB_FAILURE;
    }
 
@@ -774,7 +774,7 @@ static HB_ERRCODE hb_sdfTrans( SDFAREAP pArea, LPDBTRANSINFO pTransInfo )
          PHB_ITEM pPutRec = hb_itemPutL( nullptr, HB_FALSE );
          if( SELF_INFO( pTransInfo->lpaDest, DBI_CANPUTREC, pPutRec ) != HB_SUCCESS )
          {
-            hb_itemRelease( pPutRec );
+            hb_itemRelease(pPutRec);
             return HB_FAILURE;
          }
          if( hb_itemGetL(pPutRec) )
@@ -785,7 +785,7 @@ static HB_ERRCODE hb_sdfTrans( SDFAREAP pArea, LPDBTRANSINFO pTransInfo )
          {
             pTransInfo->uiFlags &= ~DBTF_PUTREC;
          }
-         hb_itemRelease( pPutRec );
+         hb_itemRelease(pPutRec);
       }
    }
    return SUPER_TRANS( &pArea->area, pTransInfo );
@@ -814,7 +814,7 @@ static HB_ERRCODE hb_sdfGoCold( SDFAREAP pArea )
          hb_errPutOsCode( pError, hb_fsError() );
          hb_errPutFileName( pError, pArea->szFileName );
          SELF_ERROR( &pArea->area, pError );
-         hb_itemRelease( pError );
+         hb_itemRelease(pError);
          return HB_FAILURE;
       }
       pArea->fRecordChanged = HB_FALSE;
@@ -839,7 +839,7 @@ static HB_ERRCODE hb_sdfGoHot( SDFAREAP pArea )
       hb_errPutDescription( pError, hb_langDGetErrorDesc( EG_READONLY ) );
       hb_errPutSubCode( pError, EDBF_READONLY );
       SELF_ERROR( &pArea->area, pError );
-      hb_itemRelease( pError );
+      hb_itemRelease(pError);
       return HB_FAILURE;
    }
    pArea->fRecordChanged = HB_TRUE;
@@ -1201,13 +1201,13 @@ static HB_ERRCODE hb_sdfCreate( SDFAREAP pArea, LPDBOPENINFO pCreateInfo )
    pFileName = hb_fsFNameSplit( pCreateInfo->abName );
    if( hb_setGetDefExtension() && ! pFileName->szExtension )
    {
-      PHB_ITEM pItem = hb_itemNew( nullptr );
+      PHB_ITEM pItem = hb_itemNew(nullptr);
       if( SELF_INFO( &pArea->area, DBI_TABLEEXT, pItem ) == HB_SUCCESS )
       {
          pFileName->szExtension = hb_itemGetCPtr(pItem);
          hb_fsFNameMerge( szFileName, pFileName );
       }
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
    else
    {
@@ -1245,7 +1245,7 @@ static HB_ERRCODE hb_sdfCreate( SDFAREAP pArea, LPDBOPENINFO pCreateInfo )
 
    if( pError )
    {
-      hb_itemRelease( pError );
+      hb_itemRelease(pError);
    }
 
    if( ! pArea->pFile )
@@ -1308,13 +1308,13 @@ static HB_ERRCODE hb_sdfOpen( SDFAREAP pArea, LPDBOPENINFO pOpenInfo )
    /* Add default file name extension if necessary */
    if( hb_setGetDefExtension() && ! pFileName->szExtension )
    {
-      PHB_ITEM pFileExt = hb_itemNew( nullptr );
+      PHB_ITEM pFileExt = hb_itemNew(nullptr);
       if( SELF_INFO( &pArea->area, DBI_TABLEEXT, pFileExt ) == HB_SUCCESS )
       {
          pFileName->szExtension = hb_itemGetCPtr(pFileExt);
          hb_fsFNameMerge( szFileName, pFileName );
       }
-      hb_itemRelease( pFileExt );
+      hb_itemRelease(pFileExt);
    }
    else
    {
@@ -1365,7 +1365,7 @@ static HB_ERRCODE hb_sdfOpen( SDFAREAP pArea, LPDBOPENINFO pOpenInfo )
 
    if( pError )
    {
-      hb_itemRelease( pError );
+      hb_itemRelease(pError);
    }
 
    if( ! pArea->pFile )

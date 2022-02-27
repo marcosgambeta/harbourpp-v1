@@ -278,7 +278,7 @@ static PHB_ITEM hb_breakBlock( void )
                              HB_P_FUNCTIONSHORT, 1,
                              HB_P_ENDBLOCK };
 
-      s_breakBlock = hb_itemNew( nullptr );
+      s_breakBlock = hb_itemNew(nullptr);
       s_breakBlock->item.asBlock.value =
          hb_codeblockNew( s_pCode,  /* pcode buffer         */
                           0,        /* number of referenced local variables */
@@ -298,7 +298,7 @@ static void hb_breakBlockRelease( void )
 {
    if( s_breakBlock != nullptr )
    {
-      hb_itemRelease( s_breakBlock );
+      hb_itemRelease(s_breakBlock);
       s_breakBlock = nullptr;
    }
 }
@@ -488,7 +488,7 @@ void hb_vmThreadRelease( void * Cargo )
    pState->pThItm = nullptr;
    if( pThItm )
    {
-      hb_itemRelease( pThItm );
+      hb_itemRelease(pThItm);
    }
 }
 #endif
@@ -896,7 +896,7 @@ static void hb_vmStackRelease( void )
     */
    if( pThItm )
    {
-      hb_itemRelease( pThItm );
+      hb_itemRelease(pThItm);
    }
 
    hb_setRelease( hb_stackSetStruct() );
@@ -949,7 +949,7 @@ void hb_vmThreadRelease( void * Cargo )
 
    if( pThItm )
    {
-      hb_itemRelease( pThItm );
+      hb_itemRelease(pThItm);
    }
 }
 
@@ -1009,7 +1009,7 @@ void hb_vmThreadInit( void * Cargo )
       if( pState->pMemvars )
       {
          hb_memvarRestoreFromArray( pState->pMemvars );
-         hb_itemRelease( pState->pMemvars );
+         hb_itemRelease(pState->pMemvars);
          pState->pMemvars = nullptr;
       }
    }
@@ -1039,7 +1039,7 @@ void hb_vmThreadQuit( void )
 
       if( ! pState->pResult )
       {
-         pState->pResult = hb_itemNew( pReturn );
+         pState->pResult = hb_itemNew(pReturn);
          hb_gcUnlock( pState->pResult );
       }
       else
@@ -1410,7 +1410,7 @@ int hb_vmQuit( void )
    hb_vmStackRelease();             /* release HVM stack and remove it from linked HVM stacks list */
    if( s_pSymbolsMtx )
    {
-      hb_itemRelease( s_pSymbolsMtx );
+      hb_itemRelease(s_pSymbolsMtx);
       s_pSymbolsMtx = nullptr;
    }
    hb_threadExit();
@@ -3406,7 +3406,7 @@ static void hb_vmAddInt( PHB_ITEM pResult, HB_LONG lAdd )
       {
          hb_stackPop();
          hb_itemMove( pResult, pSubst );
-         hb_itemRelease( pSubst );
+         hb_itemRelease(pSubst);
       }
    }
 }
@@ -3482,7 +3482,7 @@ static void hb_vmNegate( void )
       if( pResult )
       {
          hb_itemMove( pItem, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
       }
    }
 }
@@ -3678,7 +3678,7 @@ static void hb_vmPlus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
       if( pSubst )
       {
          hb_itemMove( pResult, pSubst );
-         hb_itemRelease( pSubst );
+         hb_itemRelease(pSubst);
       }
    }
 }
@@ -3800,7 +3800,7 @@ static void hb_vmMinus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
       if( pSubst )
       {
          hb_itemMove( pResult, pSubst );
-         hb_itemRelease( pSubst );
+         hb_itemRelease(pSubst);
       }
    }
 }
@@ -3838,7 +3838,7 @@ static void hb_vmMult( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
       if( pSubst )
       {
          hb_itemMove( pResult, pSubst );
-         hb_itemRelease( pSubst );
+         hb_itemRelease(pSubst);
       }
    }
 }
@@ -3860,7 +3860,7 @@ static void hb_vmDivide( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
          if( pSubst )
          {
             hb_itemMove( pResult, pSubst );
-            hb_itemRelease( pSubst );
+            hb_itemRelease(pSubst);
          }
       }
       else
@@ -3880,7 +3880,7 @@ static void hb_vmDivide( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
          if( pSubst )
          {
             hb_itemMove( pResult, pSubst );
-            hb_itemRelease( pSubst );
+            hb_itemRelease(pSubst);
          }
       }
       else
@@ -3902,7 +3902,7 @@ static void hb_vmDivide( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
       if( pSubst )
       {
          hb_itemMove( pResult, pSubst );
-         hb_itemRelease( pSubst );
+         hb_itemRelease(pSubst);
       }
    }
 }
@@ -3924,7 +3924,7 @@ static void hb_vmModulus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
          if( pSubst )
          {
             hb_itemMove( pResult, pSubst );
-            hb_itemRelease( pSubst );
+            hb_itemRelease(pSubst);
          }
       }
       else
@@ -3944,7 +3944,7 @@ static void hb_vmModulus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
          if( pSubst )
          {
             hb_itemMove( pResult, pSubst );
-            hb_itemRelease( pSubst );
+            hb_itemRelease(pSubst);
          }
       }
       else
@@ -3960,7 +3960,7 @@ static void hb_vmModulus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
       if( pSubst )
       {
          hb_itemMove( pResult, pSubst );
-         hb_itemRelease( pSubst );
+         hb_itemRelease(pSubst);
       }
    }
 }
@@ -3983,7 +3983,7 @@ static void hb_vmPower( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
       if( pSubst )
       {
          hb_itemMove( pResult, pSubst );
-         hb_itemRelease( pSubst );
+         hb_itemRelease(pSubst);
       }
    }
 }
@@ -4050,7 +4050,7 @@ static void hb_vmInc( PHB_ITEM pItem )
       if( pResult )
       {
          hb_itemMove( pItem, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
       }
    }
 }
@@ -4117,7 +4117,7 @@ static void hb_vmDec( PHB_ITEM pItem )
       if( pResult )
       {
          hb_itemMove( pItem, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
       }
    }
 }
@@ -4272,7 +4272,7 @@ static void hb_vmExactlyEqual( void )
       {
          hb_stackPop();
          hb_itemMove( pItem1, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
       }
    }
 }
@@ -4375,7 +4375,7 @@ static void hb_vmEqual( void )
       {
          hb_stackPop();
          hb_itemMove( pItem1, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
       }
    }
 }
@@ -4479,7 +4479,7 @@ static void hb_vmNotEqual( void )
       {
          hb_stackPop();
          hb_itemMove( pItem1, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
       }
    }
 }
@@ -4549,7 +4549,7 @@ static void hb_vmLess( void )
       {
          hb_stackPop();
          hb_itemMove( pItem1, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
       }
    }
 }
@@ -4619,7 +4619,7 @@ static void hb_vmLessEqual( void )
       {
          hb_stackPop();
          hb_itemMove( pItem1, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
       }
    }
 }
@@ -4689,7 +4689,7 @@ static void hb_vmGreater( void )
       {
          hb_stackPop();
          hb_itemMove( pItem1, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
       }
    }
 }
@@ -4759,7 +4759,7 @@ static void hb_vmGreaterEqual( void )
       {
          hb_stackPop();
          hb_itemMove( pItem1, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
       }
    }
 }
@@ -4811,7 +4811,7 @@ static void hb_vmInstring( void )
       {
          hb_stackPop();
          hb_itemMove( pItem1, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
       }
    }
 }
@@ -4849,14 +4849,14 @@ static void hb_vmForTest( void )        /* Test to check the end point of the FO
          if( HB_IS_LOGICAL(pResult) )
          {
             fBack = pResult->item.asLogical.value;
-            hb_itemRelease( pResult );
+            hb_itemRelease(pResult);
             hb_stackPop();
             hb_stackPop();
          }
          else
          {
             hb_itemMove( hb_stackItemFromTop( -1 ), pResult );
-            hb_itemRelease( pResult );
+            hb_itemRelease(pResult);
             hb_errRT_BASE( EG_ARG, 1066, nullptr, hb_langDGetErrorDesc( EG_CONDITION ), 1, hb_stackItemFromTop( -1 ) );
             return;
          }
@@ -4962,7 +4962,7 @@ void hb_vmEnumRelease( PHB_ITEM pBase, PHB_ITEM pValue )
 
    if( pValue )
    {
-      hb_itemRelease( pValue );
+      hb_itemRelease(pValue);
    }
 
    if( HB_IS_OBJECT(pBase) && hb_vmRequestQuery() == 0 && hb_objHasOperator( pBase, HB_OO_OP_ENUMSTOP ) )
@@ -5110,7 +5110,7 @@ static void hb_vmEnumStart( int nVars, int nDescend )
       if( HB_IS_OBJECT(pBase) && hb_objHasOperator( pBase, HB_OO_OP_ENUMSTART ) )
       {
          pEnum->item.asEnum.offset = 0;
-         pEnum->item.asEnum.valuePtr = hb_itemNew( nullptr );
+         pEnum->item.asEnum.valuePtr = hb_itemNew(nullptr);
          HB_VM_PUSHNIL();
          hb_vmPushLogical( nDescend == 0 );
          hb_objOperatorCall( HB_OO_OP_ENUMSTART, hb_stackItemFromTop( -2 ), pBase, pEnumRef, hb_stackItemFromTop( -1 ) );
@@ -5124,7 +5124,7 @@ static void hb_vmEnumStart( int nVars, int nDescend )
          {
             continue;
          }
-         hb_itemRelease( pEnum->item.asEnum.valuePtr );
+         hb_itemRelease(pEnum->item.asEnum.valuePtr);
          pEnum->item.asEnum.valuePtr = nullptr;
       }
 
@@ -5215,7 +5215,7 @@ static void hb_vmEnumNext( void )
              */
             if( pEnum->item.asEnum.valuePtr )
             {
-               hb_itemRelease( pEnum->item.asEnum.valuePtr );
+               hb_itemRelease(pEnum->item.asEnum.valuePtr);
                pEnum->item.asEnum.valuePtr = nullptr;
             }
             if( static_cast<HB_SIZE>( ++pEnum->item.asEnum.offset ) > pBase->item.asArray.value->nLen )
@@ -5231,7 +5231,7 @@ static void hb_vmEnumNext( void )
           */
          if( pEnum->item.asEnum.valuePtr )
          {
-            hb_itemRelease( pEnum->item.asEnum.valuePtr );
+            hb_itemRelease(pEnum->item.asEnum.valuePtr);
             pEnum->item.asEnum.valuePtr = nullptr;
          }
          if( static_cast<HB_SIZE>( ++pEnum->item.asEnum.offset ) > hb_hashLen( pBase ) )
@@ -5299,7 +5299,7 @@ static void hb_vmEnumPrev( void )
              */
             if( pEnum->item.asEnum.valuePtr )
             {
-               hb_itemRelease( pEnum->item.asEnum.valuePtr );
+               hb_itemRelease(pEnum->item.asEnum.valuePtr);
                pEnum->item.asEnum.valuePtr = nullptr;
             }
             if( --pEnum->item.asEnum.offset == 0 )
@@ -5315,7 +5315,7 @@ static void hb_vmEnumPrev( void )
           */
          if( pEnum->item.asEnum.valuePtr )
          {
-            hb_itemRelease( pEnum->item.asEnum.valuePtr );
+            hb_itemRelease(pEnum->item.asEnum.valuePtr);
             pEnum->item.asEnum.valuePtr = nullptr;
          }
          if( --pEnum->item.asEnum.offset == 0 )
@@ -5377,7 +5377,7 @@ static PHB_ITEM hb_vmSwitchGet( void )
       }
 
       hb_itemMove( pSwitch, pResult );
-      hb_itemRelease( pResult );
+      hb_itemRelease(pResult);
    }
 
    return pSwitch;
@@ -5489,7 +5489,7 @@ static void hb_vmNot( void )
       if( pResult )
       {
          hb_itemMove( pItem, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
       }
    }
 }
@@ -5526,7 +5526,7 @@ static void hb_vmAnd( void )
       {
          hb_stackPop();
          hb_itemMove( pItem1, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
       }
    }
 }
@@ -5563,7 +5563,7 @@ static void hb_vmOr( void )
       {
          hb_stackPop();
          hb_itemMove( pItem1, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
       }
    }
 }
@@ -5630,7 +5630,7 @@ static void hb_vmArrayPush( void )
          {
             hb_stackPop();
             hb_itemMove( pArray, pResult );
-            hb_itemRelease( pResult );
+            hb_itemRelease(pResult);
          }
       }
       return;
@@ -5739,7 +5739,7 @@ static void hb_vmArrayPushRef( void )
       {
          hb_stackPop();
          hb_itemMove( pRefer, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
       }
       return;
    }
@@ -6051,7 +6051,7 @@ static void hb_vmHashGen( HB_SIZE nElements ) /* generates an nElements Hash and
    }
    hb_stackRemove( hb_stackTopOffset() - nElements );
    hb_itemMove( hb_stackAllocItem(), pHash );
-   hb_itemRelease( pHash );
+   hb_itemRelease(pHash);
 }
 
 /* ------------------------------- */
@@ -6080,7 +6080,7 @@ static void hb_vmMacroPushIndex( void )
       HB_SIZE n = 1;
 
       hb_vmArrayGen( nIndexes - 1 );
-      pIndexArray = hb_itemNew( hb_stackItemFromTop( -1 ) );
+      pIndexArray = hb_itemNew(hb_stackItemFromTop( -1 ));
       hb_stackPop();
 
       /* First index is still on stack.*/
@@ -6104,7 +6104,7 @@ static void hb_vmMacroPushIndex( void )
       }
       while( ++n < nIndexes );
 
-      hb_itemRelease( pIndexArray );
+      hb_itemRelease(pIndexArray);
    }
    else if( nIndexes == 0 )
    {
@@ -6366,7 +6366,7 @@ static HB_ERRCODE hb_vmSelectWorkarea( PHB_ITEM pAlias, PHB_SYMB pField )
                if( pSubstVal )
                {
                   hb_itemMove( pAlias, pSubstVal );
-                  hb_itemRelease( pSubstVal );
+                  hb_itemRelease(pSubstVal);
                   fRepeat = HB_TRUE;
                }
                else
@@ -6868,7 +6868,7 @@ void hb_vmDestroyBlockOrMacro( PHB_ITEM pItem )
          hb_macroDelete( pMacro );
       }
    }
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
 }
 
 void hb_vmFunction( HB_USHORT uiParams )
@@ -8396,7 +8396,7 @@ static void hb_vmStaticsRelease( void )
          PHB_ITEM pStatics = HB_SYM_STATICSBASE( pSym );
          if( pStatics )
          {
-            hb_itemRelease( pStatics );
+            hb_itemRelease(pStatics);
             pSym->value.pStaticsBase = nullptr;
          }
       }
@@ -8918,7 +8918,7 @@ static void hb_vmVerifySymbols( PHB_ITEM pArray )
    }
    if( pItem )
    {
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
 }
 
@@ -9976,14 +9976,14 @@ HB_BOOL hb_vmTryEval( PHB_ITEM * pResult, PHB_ITEM pItem, HB_ULONG ulPCount, ...
          if( hb_xvmSeqEndTest() )
          {
             hb_xvmSeqRecover();
-            *pResult = hb_itemNew( nullptr );
+            *pResult = hb_itemNew(nullptr);
             hb_itemMove( *pResult, hb_stackItemFromTop( -1 ) );
             hb_stackDec();
             hb_stackSetActionRequest( 0 );
          }
          else
          {
-            *pResult = hb_itemNew( hb_stackReturnItem() );
+            *pResult = hb_itemNew(hb_stackReturnItem());
             fResult = HB_TRUE;
          }
          hb_vmRequestRestore();
@@ -11356,7 +11356,7 @@ HB_BOOL hb_xvmEqualInt( HB_LONG lValue )
       {
          hb_stackPop();
          hb_itemMove( pItem, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
       }
    }
 
@@ -11416,7 +11416,7 @@ HB_BOOL hb_xvmEqualIntIs( HB_LONG lValue, HB_BOOL * pfValue )
       {
          hb_stackPop();
          hb_itemMove( pItem, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
          return hb_xvmPopLogical( pfValue );
       }
    }
@@ -11489,7 +11489,7 @@ HB_BOOL hb_xvmNotEqualInt( HB_LONG lValue )
       {
          hb_stackPop();
          hb_itemMove( pItem, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
       }
    }
 
@@ -11549,7 +11549,7 @@ HB_BOOL hb_xvmNotEqualIntIs( HB_LONG lValue, HB_BOOL * pfValue )
       {
          hb_stackPop();
          hb_itemMove( pItem, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
          return hb_xvmPopLogical( pfValue );
       }
    }
@@ -11617,7 +11617,7 @@ HB_BOOL hb_xvmLessThenInt( HB_LONG lValue )
       {
          hb_stackPop();
          hb_itemMove( pItem, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
       }
    }
 
@@ -11672,7 +11672,7 @@ HB_BOOL hb_xvmLessThenIntIs( HB_LONG lValue, HB_BOOL * pfValue )
       {
          hb_stackPop();
          hb_itemMove( pItem, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
          return hb_xvmPopLogical( pfValue );
       }
    }
@@ -11740,7 +11740,7 @@ HB_BOOL hb_xvmLessEqualThenInt( HB_LONG lValue )
       {
          hb_stackPop();
          hb_itemMove( pItem, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
       }
    }
 
@@ -11795,7 +11795,7 @@ HB_BOOL hb_xvmLessEqualThenIntIs( HB_LONG lValue, HB_BOOL * pfValue )
       {
          hb_stackPop();
          hb_itemMove( pItem, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
          return hb_xvmPopLogical( pfValue );
       }
    }
@@ -11863,7 +11863,7 @@ HB_BOOL hb_xvmGreaterThenInt( HB_LONG lValue )
       {
          hb_stackPop();
          hb_itemMove( pItem, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
       }
    }
 
@@ -11918,7 +11918,7 @@ HB_BOOL hb_xvmGreaterThenIntIs( HB_LONG lValue, HB_BOOL * pfValue )
       {
          hb_stackPop();
          hb_itemMove( pItem, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
          return hb_xvmPopLogical( pfValue );
       }
    }
@@ -11986,7 +11986,7 @@ HB_BOOL hb_xvmGreaterEqualThenInt( HB_LONG lValue )
       {
          hb_stackPop();
          hb_itemMove( pItem, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
       }
    }
 
@@ -12041,7 +12041,7 @@ HB_BOOL hb_xvmGreaterEqualThenIntIs( HB_LONG lValue, HB_BOOL * pfValue )
       {
          hb_stackPop();
          hb_itemMove( pItem, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
          return hb_xvmPopLogical( pfValue );
       }
    }
@@ -12210,7 +12210,7 @@ HB_BOOL hb_xvmMultByInt( HB_LONG lValue )
       {
          hb_stackPop();
          hb_itemMove( pValue, pSubst );
-         hb_itemRelease( pSubst );
+         hb_itemRelease(pSubst);
       }
    }
 
@@ -12291,7 +12291,7 @@ HB_BOOL hb_xvmDivideByInt( HB_LONG lDivisor )
          {
             hb_stackPop();
             hb_itemMove( pValue, pSubst );
-            hb_itemRelease( pSubst );
+            hb_itemRelease(pSubst);
          }
       }
       else
@@ -12316,7 +12316,7 @@ HB_BOOL hb_xvmDivideByInt( HB_LONG lDivisor )
       {
          hb_stackPop();
          hb_itemMove( pValue, pSubst );
-         hb_itemRelease( pSubst );
+         hb_itemRelease(pSubst);
       }
    }
 
@@ -12347,7 +12347,7 @@ HB_BOOL hb_xvmModulusByInt( HB_LONG lDivisor )
          {
             hb_stackPop();
             hb_itemMove( pValue, pSubst );
-            hb_itemRelease( pSubst );
+            hb_itemRelease(pSubst);
          }
       }
       else if( HB_IS_NUMINT(pValue) )
@@ -12377,7 +12377,7 @@ HB_BOOL hb_xvmModulusByInt( HB_LONG lDivisor )
       {
          hb_stackPop();
          hb_itemMove( pValue, pSubst );
-         hb_itemRelease( pSubst );
+         hb_itemRelease(pSubst);
       }
    }
 
@@ -13332,7 +13332,7 @@ HB_FUNC( __DBGVMVARSLIST )
 {
    if( hb_vmInternalsEnabled() )
    {
-      hb_itemReturnRelease( hb_vmStaticsArray() );
+      hb_itemReturnRelease(hb_vmStaticsArray());
    }
    else
    {
@@ -13365,7 +13365,7 @@ HB_FUNC( __DBGVMVARSGET )
 {
    if( hb_vmInternalsEnabled() )
    {
-      hb_itemReturn( hb_dbg_vmVarSGet( hb_param(1, HB_IT_ARRAY), hb_parni(2) ) );
+      hb_itemReturn(hb_dbg_vmVarSGet( hb_param(1, HB_IT_ARRAY), hb_parni(2) ));
    }
 }
 
@@ -13435,7 +13435,7 @@ HB_FUNC( __DBGVMVARGLIST )
       PHB_ITEM pGlobals = hb_itemArrayNew( 0 );
 #endif
 
-      hb_itemReturnRelease( pGlobals );
+      hb_itemReturnRelease(pGlobals);
    }
    else
    {
@@ -13448,7 +13448,7 @@ HB_FUNC( __DBGVMVARGGET )
 {
    if( hb_vmInternalsEnabled() )
    {
-      hb_itemReturn( hb_dbg_vmVarGGet( hb_parni(1), hb_parni(2) ) );
+      hb_itemReturn(hb_dbg_vmVarGGet( hb_parni(1), hb_parni(2) ));
    }
 }
 
@@ -13727,7 +13727,7 @@ HB_FUNC( __VMCOUNTTHREADS )
 
 HB_FUNC( __BREAKBLOCK )
 {
-   hb_itemReturn( hb_breakBlock() );
+   hb_itemReturn(hb_breakBlock());
 }
 
 HB_FUNC( __RECOVERERRORBLOCK )
@@ -13744,7 +13744,7 @@ HB_FUNC( __RECOVERERRORBLOCK )
           pItem->item.asPointer.collect && pItem->item.asPointer.single &&
           hb_gcFuncs( pItem->item.asPointer.value ) == &s_gcSeqBlockFuncs )
       {
-         hb_itemReturn( static_cast<PHB_ITEM>( pItem->item.asPointer.value ) );
+         hb_itemReturn(static_cast<PHB_ITEM>( pItem->item.asPointer.value ));
       }
    }
 }

@@ -68,7 +68,7 @@ HB_FUNC( HB_UTF8TOSTRBOX )
          {
             if( hb_cdpIsUTF8( cdp ) )
             {
-               hb_itemReturn( hb_param(1, HB_IT_STRING) );
+               hb_itemReturn(hb_param(1, HB_IT_STRING));
                return;
             }
             else

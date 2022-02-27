@@ -965,7 +965,7 @@ HB_FUNC( HB_SOCKETGETSOCKNAME )
 
          if( pItem )
          {
-            hb_itemReturnRelease( pItem );
+            hb_itemReturnRelease(pItem);
             return;
          }
       }
@@ -993,7 +993,7 @@ HB_FUNC( HB_SOCKETGETPEERNAME )
 
          if( pItem )
          {
-            hb_itemReturnRelease( pItem );
+            hb_itemReturnRelease(pItem);
             return;
          }
       }
@@ -1090,7 +1090,7 @@ HB_FUNC( HB_SOCKETACCEPT )
          if( socketaccept != HB_NO_SOCKET && ( pItem = hb_socketAddrToItem( addr, len ) ) != nullptr )
          {
             hb_itemParamStoreForward( 2, pItem );
-            hb_itemRelease( pItem );
+            hb_itemRelease(pItem);
          }
          else
          {
@@ -1247,7 +1247,7 @@ HB_FUNC( HB_SOCKETRECVFROM )
             if( lRet != -1 && ( pAddr = hb_socketAddrToItem( addr, len ) ) != nullptr )
             {
                hb_itemParamStoreForward( 5, pAddr );
-               hb_itemRelease( pAddr );
+               hb_itemRelease(pAddr);
             }
             else
             {
@@ -1435,7 +1435,7 @@ HB_FUNC( HB_SOCKETRESOLVEINETADDR )
 
       if( pItem )
       {
-         hb_itemReturnRelease( pItem );
+         hb_itemReturnRelease(pItem);
          return;
       }
    }
@@ -1494,7 +1494,7 @@ HB_FUNC( HB_SOCKETGETHOSTS )
       pItem = hb_socketGetHosts( szAddr, hb_parnidef( 2, HB_SOCKET_AF_INET ) );
       if( pItem )
       {
-         hb_itemReturnRelease( pItem );
+         hb_itemReturnRelease(pItem);
       }
       else
       {
@@ -1521,7 +1521,7 @@ HB_FUNC( HB_SOCKETGETALIASES )
       pItem = hb_socketGetAliases( szAddr, hb_parnidef( 2, HB_SOCKET_AF_INET ) );
       if( pItem )
       {
-         hb_itemReturnRelease( pItem );
+         hb_itemReturnRelease(pItem);
       }
       else
       {
@@ -1543,7 +1543,7 @@ HB_FUNC( HB_SOCKETGETIFACES )
    pItem = hb_socketGetIFaces( hb_parni(1), hb_parl(2) );
    if( pItem )
    {
-      hb_itemReturnRelease( pItem );
+      hb_itemReturnRelease(pItem);
    }
    else
    {
@@ -1562,7 +1562,7 @@ HB_FUNC( HB_SOCKETSETFILTER )
 
    if( hb_sockexItemSetFilter( pItem, hb_parc(2), hb_param(3, HB_IT_ANY) ) )
    {
-      hb_itemReturn( pItem );
+      hb_itemReturn(pItem);
    }
    else
    {

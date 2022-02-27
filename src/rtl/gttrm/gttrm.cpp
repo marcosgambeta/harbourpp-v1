@@ -4479,7 +4479,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          {
             if( ! pInfo->pResult )
             {
-               pInfo->pResult = hb_itemNew( nullptr );
+               pInfo->pResult = hb_itemNew(nullptr);
             }
             hb_arrayNew( pInfo->pResult, 16 );
             for( iVal = 0; iVal < 16; iVal++ )

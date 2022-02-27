@@ -172,7 +172,7 @@ PHB_ITEM hb_memvarDetachLocal( PHB_ITEM pLocal )
                PHB_ITEM pBase = HB_IS_BYREF(pLocal->item.asEnum.basePtr) ? hb_itemUnRef( pLocal->item.asEnum.basePtr ) : pLocal->item.asEnum.basePtr;
                if( HB_IS_ARRAY(pBase) )
                {
-                  PHB_ITEM pItem = hb_itemNew( nullptr );
+                  PHB_ITEM pItem = hb_itemNew(nullptr);
                   hb_arrayGetItemRef( pBase, pLocal->item.asEnum.offset, pItem );
                   pLocal->item.asEnum.valuePtr = pItem;
                   pLocal = pItem;
@@ -1386,7 +1386,7 @@ HB_FUNC( __MVGET )
          PHB_ITEM pValue = hb_stackAllocItem();
 
          hb_memvarGetValue( pValue, pDynVar->pSymbol );
-         hb_itemReturnForward( pValue );
+         hb_itemReturnForward(pValue);
          hb_stackDec();
       }
       else
@@ -1406,7 +1406,7 @@ HB_FUNC( __MVGET )
                PHB_ITEM pValue = hb_stackAllocItem();
 
                hb_memvarGetValue( pValue, pDynVar->pSymbol );
-               hb_itemReturnForward( pValue );
+               hb_itemReturnForward(pValue);
                hb_stackDec();
                break;
             }
@@ -1436,11 +1436,11 @@ HB_FUNC( __MVGETDEF )
 
       if( pDynVar && ( pMemvar = hb_dynsymGetMemvar( pDynVar ) ) != nullptr )
       {
-         hb_itemReturn( HB_IS_BYREF(pMemvar) ? hb_itemUnRef( pMemvar ) : pMemvar );
+         hb_itemReturn(HB_IS_BYREF(pMemvar) ? hb_itemUnRef( pMemvar ) : pMemvar);
       }
       else if( hb_pcount() >= 2 )
       {
-         hb_itemReturn( hb_param(2, HB_IT_ANY) );
+         hb_itemReturn(hb_param(2, HB_IT_ANY));
       }
    }
    else
@@ -1473,7 +1473,7 @@ HB_FUNC( __MVPUT )
          hb_memvarCreateFromDynSymbol( hb_dynsymGet( pName->item.asString.value ), HB_VSCOMP_PRIVATE, pValue );
       }
       hb_memvarUpdatePrivatesBase();
-      hb_itemReturn( pValue );
+      hb_itemReturn(pValue);
    }
    else
    {
@@ -1485,9 +1485,9 @@ HB_FUNC( __MVPUT )
 
       if( pRetValue )
       {
-         hb_itemRelease( pRetValue );
+         hb_itemRelease(pRetValue);
       }
-      hb_itemReturn( pValue );
+      hb_itemReturn(pValue);
    }
 }
 
@@ -1666,7 +1666,7 @@ HB_FUNC( __MVSAVE )
 
       if( pError )
       {
-         hb_itemRelease( pError );
+         hb_itemRelease(pError);
       }
    }
    else
@@ -1868,7 +1868,7 @@ HB_FUNC( __MVRESTORE )
 
          hb_fileClose( fhnd );
          hb_memvarUpdatePrivatesBase();
-         hb_itemReturnRelease( pItem );
+         hb_itemReturnRelease(pItem);
       }
       else
       {
@@ -1877,7 +1877,7 @@ HB_FUNC( __MVRESTORE )
 
       if( pError )
       {
-         hb_itemRelease( pError );
+         hb_itemRelease(pError);
       }
    }
    else

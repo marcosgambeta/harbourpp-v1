@@ -141,7 +141,7 @@ static HB_BOOL _hb_sxGetKey( PHB_ITEM pKeyItem, char * pKeyVal )
 
       if( pArea )
       {
-         pItem = hb_itemNew( nullptr );
+         pItem = hb_itemNew(nullptr);
          if( SELF_INFO( pArea, DBI_PASSWORD, pItem ) == HB_SUCCESS )
          {
             pKeyItem = pItem;
@@ -163,7 +163,7 @@ static HB_BOOL _hb_sxGetKey( PHB_ITEM pKeyItem, char * pKeyVal )
    }
    if( pItem )
    {
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
    return fResult;
 }
@@ -184,7 +184,7 @@ HB_FUNC( SX_ENCRYPT )
       }
       else
       {
-         hb_itemReturn( hb_param(1, HB_IT_ANY) );
+         hb_itemReturn(hb_param(1, HB_IT_ANY));
       }
    }
 }
@@ -205,7 +205,7 @@ HB_FUNC( SX_DECRYPT )
       }
       else
       {
-         hb_itemReturn( hb_param(1, HB_IT_ANY) );
+         hb_itemReturn(hb_param(1, HB_IT_ANY));
       }
    }
 }

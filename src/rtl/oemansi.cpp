@@ -82,7 +82,7 @@ HB_FUNC( HB_ANSITOOEM )
       hb_retclen_buffer( pszDst, nLen );
    }
 #else
-      hb_itemReturn( pString );
+      hb_itemReturn(pString);
 #endif
    else
    {
@@ -116,7 +116,7 @@ HB_FUNC( HB_OEMTOANSI )
       hb_retclen_buffer( pszDst, nLen );
    }
 #else
-      hb_itemReturn( pString );
+      hb_itemReturn(pString);
 #endif
    else
    {

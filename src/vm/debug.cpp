@@ -158,7 +158,7 @@ HB_FUNC( __DBGVMSTKGLIST )
          AddToArray( hb_stackItem( nPos ), pReturn, nPos + 1 );
       }
 
-      hb_itemReturnRelease( pReturn );
+      hb_itemReturnRelease(pReturn);
    }
    else
    {
@@ -239,7 +239,7 @@ HB_FUNC( __DBGVMSTKLLIST )
          AddToArray( hb_stackItem( nPrevOffset + n ), pReturn, n + 1 );
       }
 
-      hb_itemReturnRelease( pReturn );
+      hb_itemReturnRelease(pReturn);
    }
    else
    {
@@ -281,7 +281,7 @@ HB_FUNC( __DBGVMLOCALLIST )
          hb_itemCopyFromRef( hb_arrayGetItemPtr( pArray, n ), hb_stackItem( nPrevOffset + n ) );
       }
 
-      hb_itemReturnRelease( pArray );
+      hb_itemReturnRelease(pArray);
    }
    else
    {
@@ -293,7 +293,7 @@ HB_FUNC( __DBGVMPARLLIST )
 {
    if( hb_vmInternalsEnabled() )
    {
-      hb_itemReturnRelease( hb_arrayFromParams( hb_parni(1) + 1 ) );
+      hb_itemReturnRelease(hb_arrayFromParams( hb_parni(1) + 1 ));
    }
    else
    {
@@ -355,7 +355,7 @@ HB_FUNC( __DBGVMVARLGET )
 
       if( pLocal )
       {
-         hb_itemReturn( pLocal );
+         hb_itemReturn(pLocal);
       }
       else
       {

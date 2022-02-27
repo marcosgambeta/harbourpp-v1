@@ -309,7 +309,7 @@ void hb_dbfTransCheckCounters( LPDBTRANSINFO lpdbTransInfo )
          {
             if( pItem == nullptr )
             {
-               pItem = hb_itemNew( nullptr );
+               pItem = hb_itemNew(nullptr);
             }
             if( SELF_FIELDINFO( lpdbTransInfo->lpaSource, lpdbTransInfo->lpTransItems[ uiCount ].uiSource, DBS_COUNTER, pItem ) != HB_SUCCESS )
             {
@@ -320,7 +320,7 @@ void hb_dbfTransCheckCounters( LPDBTRANSINFO lpdbTransInfo )
       }
       if( pItem != nullptr )
       {
-         hb_itemRelease( pItem );
+         hb_itemRelease(pItem);
       }
    }
 
@@ -2654,7 +2654,7 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
       hb_errPutOperation( pError, hb_dynsymName( static_cast<PHB_DYNS>( pField->sym ) ) );
       hb_errPutSubCode( pError, EDBF_DATATYPE );
       SELF_ERROR( &pArea->area, pError );
-      hb_itemRelease( pError );
+      hb_itemRelease(pError);
       return HB_FAILURE;
    }
 
@@ -3186,7 +3186,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
       hb_errPutFlags( pError, EF_CANDEFAULT );
       hb_errPutArgs( pError, 1, pItem );
       errCode = SELF_ERROR( &pArea->area, pError );
-      hb_itemRelease( pError );
+      hb_itemRelease(pError);
       return errCode == E_DEFAULT ? HB_SUCCESS : HB_FAILURE;
    }
    else if( ( pField->uiFlags & HB_FF_NULLABLE ) != 0 )
@@ -3491,7 +3491,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
          pItem = hb_itemPutNil( pItem );
          if( SELF_INFO( &pArea->area, DBI_TABLEEXT, pItem ) != HB_SUCCESS )
          {
-            hb_itemRelease( pItem );
+            hb_itemRelease(pItem);
             hb_xfree( pFileName );
             pArea->lpdbOpenInfo = nullptr;
             return HB_FAILURE;
@@ -3514,7 +3514,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
       pItem = hb_itemPutNil( pItem );
       if( SELF_INFO( &pArea->area, DBI_LOCKSCHEME, pItem ) != HB_SUCCESS )
       {
-         hb_itemRelease( pItem );
+         hb_itemRelease(pItem);
          pArea->lpdbOpenInfo = nullptr;
          return HB_FAILURE;
       }
@@ -3535,7 +3535,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
       pItem = hb_itemPutNil( pItem );
       if( SELF_INFO( &pArea->area, DBI_MEMOTYPE, pItem ) != HB_SUCCESS )
       {
-         hb_itemRelease( pItem );
+         hb_itemRelease(pItem);
          pArea->lpdbOpenInfo = nullptr;
          return HB_FAILURE;
       }
@@ -3546,7 +3546,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
 
    if( pItem )
    {
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
 
    nSize = static_cast<HB_SIZE>( pArea->area.uiFieldCount ) * sizeof(DBFFIELD) + ( pArea->bTableType == DB_DBF_VFP ? 264 : 2 );
@@ -3582,7 +3582,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
       while( hb_dbfErrorRT( pArea, EG_CREATE, EDBF_CREATE_DBF, szFileName, hb_fsError(), EF_CANRETRY | EF_CANDEFAULT, &pError ) == E_RETRY );
       if( pError )
       {
-         hb_itemRelease( pError );
+         hb_itemRelease(pError);
       }
 
       if( ! pArea->pDataFile )
@@ -3940,7 +3940,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
       pArea->area.cdPage = hb_vmCDP();
    }
 
-   pItem = hb_itemNew( nullptr );
+   pItem = hb_itemNew(nullptr);
    if( SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_PENDINGPASSWORD, pCreateInfo->ulConnection, pItem ) == HB_SUCCESS )
    {
       if( hb_dbfPasswordSet( pArea, pItem, HB_FALSE ) )
@@ -3959,7 +3959,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
          }
       }
    }
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
 
    if( ! fRawBlob )
    {
@@ -4587,7 +4587,7 @@ static HB_ERRCODE hb_dbfNewArea( DBFAREAP pArea )
    pArea->uiSetHeader = DB_SETHEADER_APPENDSYNC;
 
    {
-      PHB_ITEM pItem = hb_itemNew( nullptr );
+      PHB_ITEM pItem = hb_itemNew(nullptr);
       if( SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_TABLETYPE, 0, pItem ) == HB_SUCCESS )
       {
          pArea->bTableType = static_cast<HB_BYTE>( hb_itemGetNI(pItem) );
@@ -4597,7 +4597,7 @@ static HB_ERRCODE hb_dbfNewArea( DBFAREAP pArea )
       {
          pArea->uiSetHeader = static_cast<HB_UINT>( hb_itemGetNI(pItem) );
       }
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
 
    return HB_SUCCESS;
@@ -4625,7 +4625,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
 
    pArea->lpdbOpenInfo = pOpenInfo;
 
-   pItem = hb_itemNew( nullptr );
+   pItem = hb_itemNew(nullptr);
 
    if( SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_PENDINGTRIGGER, pOpenInfo->ulConnection, pItem ) == HB_SUCCESS )
    {
@@ -4652,7 +4652,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
       hb_itemPutC( pItem, pOpenInfo->abName );
       if( ! hb_dbfTriggerDo( pArea, EVENT_PREUSE, 0, pItem ) )
       {
-         hb_itemRelease( pItem );
+         hb_itemRelease(pItem);
          pArea->lpdbOpenInfo = nullptr;
          return HB_FAILURE;
       }
@@ -4668,7 +4668,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
       hb_itemClear( pItem );
       if( SELF_INFO( &pArea->area, DBI_LOCKSCHEME, pItem ) != HB_SUCCESS )
       {
-         hb_itemRelease( pItem );
+         hb_itemRelease(pItem);
          pArea->lpdbOpenInfo = nullptr;
          return HB_FAILURE;
       }
@@ -4714,7 +4714,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
       if( SELF_INFO( &pArea->area, DBI_TABLEEXT, pItem ) != HB_SUCCESS )
       {
          hb_xfree( pFileName );
-         hb_itemRelease( pItem );
+         hb_itemRelease(pItem);
          pArea->lpdbOpenInfo = nullptr;
          return HB_FAILURE;
       }
@@ -4744,7 +4744,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
    hb_itemClear( pItem );
    uiDecimals = static_cast<HB_USHORT>( SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_DECIMALS, pOpenInfo->ulConnection, pItem ) == HB_SUCCESS ?
                                 hb_itemGetNI(pItem) : 0 );
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
    uiFlagsMask = 0;
 
    if( fRawBlob )
@@ -4774,7 +4774,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
 
       if( pError )
       {
-         hb_itemRelease( pError );
+         hb_itemRelease(pError);
          pError = nullptr;
       }
 
@@ -4819,7 +4819,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
                             pArea->szDataFileName, errOsCode, EF_CANRETRY | EF_CANDEFAULT, &pError ) == E_RETRY );
       if( pError )
       {
-         hb_itemRelease( pError );
+         hb_itemRelease(pError);
       }
 
       /* Exit if error */
@@ -5226,7 +5226,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
       return errCode;
    }
 
-   pItem = hb_itemNew( nullptr );
+   pItem = hb_itemNew(nullptr);
    if( SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_PENDINGPASSWORD, pOpenInfo->ulConnection, pItem ) == HB_SUCCESS )
    {
       hb_dbfPasswordSet( pArea, pItem, HB_FALSE );
@@ -5239,7 +5239,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
          hb_dbfPasswordSet( pArea, pItem, HB_FALSE );
       }
    }
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
 
    /* Open memo file if exists */
    if( pArea->fHasMemo )
@@ -5365,7 +5365,7 @@ static HB_ERRCODE hb_dbfPack( DBFAREAP pArea )
        ( hb_arrayGetType( pArea->area.valResult, 1 ) & HB_IT_BLOCK ) != 0 &&
        ( hb_arrayGetType( pArea->area.valResult, 2 ) & HB_IT_NUMERIC ) != 0 )
    {
-      pBlock = hb_itemNew( nullptr );
+      pBlock = hb_itemNew(nullptr);
       hb_arrayGet( pArea->area.valResult, 1, pBlock );
       if( hb_arrayGetND( pArea->area.valResult, 2 ) >= 1 )
       {
@@ -5390,7 +5390,7 @@ static HB_ERRCODE hb_dbfPack( DBFAREAP pArea )
       {
          if( pBlock )
          {
-            hb_itemRelease( pBlock );
+            hb_itemRelease(pBlock);
          }
          return HB_FAILURE;
       }
@@ -5398,7 +5398,7 @@ static HB_ERRCODE hb_dbfPack( DBFAREAP pArea )
       {
          if( pBlock )
          {
-            hb_itemRelease( pBlock );
+            hb_itemRelease(pBlock);
          }
          return HB_FAILURE;
       }
@@ -5411,7 +5411,7 @@ static HB_ERRCODE hb_dbfPack( DBFAREAP pArea )
             ulEvery = 0;
             if( SELF_EVALBLOCK( &pArea->area, pBlock ) != HB_SUCCESS )
             {
-               hb_itemRelease( pBlock );
+               hb_itemRelease(pBlock);
                return HB_FAILURE;
             }
          }
@@ -5421,7 +5421,7 @@ static HB_ERRCODE hb_dbfPack( DBFAREAP pArea )
       {
          if( pBlock )
          {
-            hb_itemRelease( pBlock );
+            hb_itemRelease(pBlock);
          }
          return HB_FAILURE;
       }
@@ -5437,7 +5437,7 @@ static HB_ERRCODE hb_dbfPack( DBFAREAP pArea )
             {
                if( pBlock )
                {
-                  hb_itemRelease( pBlock );
+                  hb_itemRelease(pBlock);
                }
                return HB_FAILURE;
             }
@@ -5453,11 +5453,11 @@ static HB_ERRCODE hb_dbfPack( DBFAREAP pArea )
       {
          if( SELF_EVALBLOCK( &pArea->area, pBlock ) != HB_SUCCESS )
          {
-            hb_itemRelease( pBlock );
+            hb_itemRelease(pBlock);
             return HB_FAILURE;
          }
       }
-      hb_itemRelease( pBlock );
+      hb_itemRelease(pBlock);
    }
 
    if( pArea->ulRecCount != ulRecOut )
@@ -5492,7 +5492,7 @@ static HB_ERRCODE hb_dbfTransCond( DBFAREAP pArea, LPDBTRANSINFO pTransInfo )
          PHB_ITEM pPutRec = hb_itemPutL( nullptr, HB_FALSE );
          if( SELF_INFO( pTransInfo->lpaDest, DBI_CANPUTREC, pPutRec ) != HB_SUCCESS )
          {
-            hb_itemRelease( pPutRec );
+            hb_itemRelease(pPutRec);
             return HB_FAILURE;
          }
          if( hb_itemGetL(pPutRec) )
@@ -5503,7 +5503,7 @@ static HB_ERRCODE hb_dbfTransCond( DBFAREAP pArea, LPDBTRANSINFO pTransInfo )
          {
             pTransInfo->uiFlags &= ~DBTF_PUTREC;
          }
-         hb_itemRelease( pPutRec );
+         hb_itemRelease(pPutRec);
       }
    }
 
@@ -5675,7 +5675,7 @@ static void hb_dbfSortFree( LPDBSORTREC pSortRec )
 
    if( pSortRec->pSortArray )
    {
-      hb_itemRelease( pSortRec->pSortArray );
+      hb_itemRelease(pSortRec->pSortArray);
    }
    if( pSortRec->pnIndex )
    {
@@ -6015,7 +6015,7 @@ static HB_ERRCODE hb_dbfSortFinish( LPDBSORTREC pSortRec )
 
          if( pSortRec->pSortArray )
          {
-            hb_itemRelease( pSortRec->pSortArray );
+            hb_itemRelease(pSortRec->pSortArray);
          }
          if( pSortRec->pnRecords )
          {
@@ -6078,7 +6078,7 @@ static HB_ERRCODE hb_dbfSortFinish( LPDBSORTREC pSortRec )
          pSortRec->pnIndex[ 0 ] = 0;
          if( pSortRec->pSortArray )
          {
-            hb_itemRelease( pSortRec->pSortArray );
+            hb_itemRelease(pSortRec->pSortArray);
             pSortRec->pSortArray = nullptr;
          }
          if( pSortRec->pnRecords )
@@ -7052,7 +7052,7 @@ static HB_ERRCODE hb_dbfReadDBHeader( DBFAREAP pArea )
    while( hb_dbfErrorRT( pArea, hb_dbfGetEGcode( errCode ), errCode, pArea->szDataFileName, hb_fsError(), EF_CANRETRY | EF_CANDEFAULT, &pError ) == E_RETRY );
    if( pError )
    {
-      hb_itemRelease( pError );
+      hb_itemRelease(pError);
    }
 
    if( errCode != HB_SUCCESS )
@@ -7268,7 +7268,7 @@ static HB_ERRCODE hb_dbfDrop( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIte
 
    if( pFileExt )
    {
-      hb_itemRelease( pFileExt );
+      hb_itemRelease(pFileExt);
    }
 
    return fResult ? HB_SUCCESS : HB_FAILURE;
@@ -7312,7 +7312,7 @@ static HB_ERRCODE hb_dbfExists( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pI
 
    if( pFileExt )
    {
-      hb_itemRelease( pFileExt );
+      hb_itemRelease(pFileExt);
    }
 
    return hb_fileExists( szFileName, szFileName ) ? HB_SUCCESS : HB_FAILURE;
@@ -7429,7 +7429,7 @@ static HB_ERRCODE hb_dbfRename( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pI
 
    if( pFileExt )
    {
-      hb_itemRelease( pFileExt );
+      hb_itemRelease(pFileExt);
    }
 
    return fResult ? HB_SUCCESS : HB_FAILURE;

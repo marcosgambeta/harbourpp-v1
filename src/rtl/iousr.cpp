@@ -94,10 +94,10 @@ static void s_errRT_IOUSR( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const c
    if( pArray )
    {
       hb_errPutArgsArray( pError, pArray );
-      hb_itemRelease( pArray );
+      hb_itemRelease(pArray);
    }
    hb_errLaunch( pError );
-   hb_itemRelease( pError );
+   hb_itemRelease(pError);
 }
 
 static void s_iousrFreeAll( void * cargo )
@@ -290,7 +290,7 @@ static PHB_ITEM s_fileDirectory( PHB_FILE_FUNCS pFuncs, const char * pszDirSpec,
    hb_vmPushString( pszAttr, strlen( pszAttr ) );
    hb_vmDo( 2 );
 
-   return hb_itemNew( hb_stackReturnItem() );
+   return hb_itemNew(hb_stackReturnItem());
 }
 
 static HB_BOOL s_fileTimeGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, long * plJulian, long * plMillisec )
@@ -446,7 +446,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName, const c
    pFileItm = hb_stackReturnItem();
    if( ! HB_IS_NIL(pFileItm) )
    {
-      pFile = s_fileNew( pIO, hb_itemNew( pFileItm ) );
+      pFile = s_fileNew( pIO, hb_itemNew(pFileItm) );
    }
 
    return pFile;

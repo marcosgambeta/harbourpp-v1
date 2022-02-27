@@ -464,6 +464,6 @@ HB_FUNC( ASORT )
 
       hb_arraySort( pArray, HB_ISNUM( 2 ) ? &nStart : nullptr, HB_ISNUM( 3 ) ? &nCount : nullptr, hb_param(4, HB_IT_EVALITEM) );
 
-      hb_itemReturn( pArray ); /* ASort() returns the array itself */
+      hb_itemReturn(pArray); /* ASort() returns the array itself */
    }
 }

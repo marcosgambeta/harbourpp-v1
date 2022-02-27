@@ -186,27 +186,27 @@ static void hb_gt_def_Free( PHB_GT pGT )
 
    if( pGT->pNotifierBlock )
    {
-      hb_itemRelease( pGT->pNotifierBlock );
+      hb_itemRelease(pGT->pNotifierBlock);
       pGT->pNotifierBlock = nullptr;
    }
    if( pGT->pInkeyFilterBlock )
    {
-      hb_itemRelease( pGT->pInkeyFilterBlock );
+      hb_itemRelease(pGT->pInkeyFilterBlock);
       pGT->pInkeyFilterBlock = nullptr;
    }
    if( pGT->pInkeyReadBlock )
    {
-      hb_itemRelease( pGT->pInkeyReadBlock );
+      hb_itemRelease(pGT->pInkeyReadBlock);
       pGT->pInkeyReadBlock = nullptr;
    }
    if( pGT->pCargo )
    {
-      hb_itemRelease( pGT->pCargo );
+      hb_itemRelease(pGT->pCargo);
       pGT->pCargo = nullptr;
    }
    if( pGT->pMutex )
    {
-      hb_itemRelease( pGT->pMutex );
+      hb_itemRelease(pGT->pMutex);
       pGT->pMutex = nullptr;
    }
 
@@ -2008,19 +2008,19 @@ static void hb_gt_def_SetBlock( PHB_ITEM * pItemPtr, PHB_GT_INFO pInfo )
       }
       else
       {
-         pInfo->pResult = hb_itemNew( *pItemPtr );
+         pInfo->pResult = hb_itemNew(*pItemPtr);
       }
    }
    if( pInfo->pNewVal )
    {
       if( *pItemPtr )
       {
-         hb_itemRelease( *pItemPtr );
+         hb_itemRelease(*pItemPtr);
          *pItemPtr = nullptr;
       }
       if( HB_IS_EVALITEM(pInfo->pNewVal) )
       {
-         *pItemPtr = hb_itemNew( pInfo->pNewVal );
+         *pItemPtr = hb_itemNew(pInfo->pNewVal);
          hb_gcUnlock( *pItemPtr );
       }
    }
@@ -2118,7 +2118,7 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
          if( ! pInfo->pResult )
          {
-            pInfo->pResult = hb_itemNew( nullptr );
+            pInfo->pResult = hb_itemNew(nullptr);
          }
          hb_arrayNew( pInfo->pResult, 7 );
          /* 7th item is allocated for GTCTW window number */
@@ -2214,17 +2214,17 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             }
             else
             {
-               pInfo->pResult = hb_itemNew( pGT->pCargo );
+               pInfo->pResult = hb_itemNew(pGT->pCargo);
             }
          }
          if( pInfo->pNewVal )
          {
             if( pGT->pCargo )
             {
-               hb_itemRelease( pGT->pCargo );
+               hb_itemRelease(pGT->pCargo);
                pGT->pCargo = nullptr;
             }
-            pGT->pCargo = hb_itemNew( pInfo->pNewVal );
+            pGT->pCargo = hb_itemNew(pInfo->pNewVal);
             hb_gcUnlock( pGT->pCargo );
          }
          break;
@@ -2271,7 +2271,7 @@ static int hb_gt_def_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, in
       if( gtInfo.pResult )
       {
          fKeyBoard = hb_itemGetL(gtInfo.pResult);
-         hb_itemRelease( gtInfo.pResult );
+         hb_itemRelease(gtInfo.pResult);
       }
       HB_GTSELF_GETSIZE( pGT, &iRows, &iCols );
       if( iCols <= 4 || iRows <= 4 )
@@ -3343,7 +3343,7 @@ static int hb_gt_def_InkeyGet( PHB_GT pGT, HB_BOOL fWait, double dSeconds, int i
 
    if( pKey )
    {
-      hb_itemRelease( pKey );
+      hb_itemRelease(pKey);
    }
 
    hb_idleReset();

@@ -69,7 +69,7 @@ HB_FUNC( ORDKEYCOUNT )
 
       pOrderInfo.itmResult = hb_itemPutNL( nullptr, 0 );
       SELF_ORDINFO( pArea, DBOI_KEYCOUNT, &pOrderInfo );
-      hb_itemReturnRelease( pOrderInfo.itmResult );
+      hb_itemReturnRelease(pOrderInfo.itmResult);
    }
    else
    {
@@ -91,7 +91,7 @@ HB_FUNC( ORDKEYNO )
       pOrderInfo.itmNewVal = nullptr;
       pOrderInfo.itmResult = hb_itemPutNL( nullptr, 0 );
       SELF_ORDINFO( pArea, DBOI_POSITION, &pOrderInfo );
-      hb_itemReturnRelease( pOrderInfo.itmResult );
+      hb_itemReturnRelease(pOrderInfo.itmResult);
    }
    else
    {
@@ -110,7 +110,7 @@ HB_FUNC( ORDKEYGOTO )
       pOrderInfo.itmNewVal = hb_param(1, HB_IT_NUMERIC);
       pOrderInfo.itmResult = hb_itemPutL( nullptr, HB_FALSE );
       SELF_ORDINFO( pArea, DBOI_POSITION, &pOrderInfo );
-      hb_itemReturnRelease( pOrderInfo.itmResult );
+      hb_itemReturnRelease(pOrderInfo.itmResult);
    }
    else
    {
@@ -129,7 +129,7 @@ HB_FUNC( ORDKEYRELPOS )
       pOrderInfo.itmNewVal = hb_param(1, HB_IT_NUMERIC);
       pOrderInfo.itmResult = hb_itemPutNI( nullptr, 0 );
       SELF_ORDINFO( pArea, DBOI_RELKEYPOS, &pOrderInfo );
-      hb_itemReturnRelease( pOrderInfo.itmResult );
+      hb_itemReturnRelease(pOrderInfo.itmResult);
    }
    else
    {
@@ -148,7 +148,7 @@ HB_FUNC( ORDFINDREC )
       pOrderInfo.itmNewVal = hb_param(1, HB_IT_NUMERIC);
       pOrderInfo.itmResult = hb_itemPutL( nullptr, HB_FALSE );
       SELF_ORDINFO( pArea, hb_parl(2) ? DBOI_FINDRECCONT : DBOI_FINDREC, &pOrderInfo );
-      hb_itemReturnRelease( pOrderInfo.itmResult );
+      hb_itemReturnRelease(pOrderInfo.itmResult);
    }
    else
    {
@@ -181,7 +181,7 @@ HB_FUNC( ORDSKIPUNIQUE )
       pOrderInfo.itmNewVal = hb_param(1, HB_IT_ANY);
       pOrderInfo.itmResult = hb_itemPutL( nullptr, HB_FALSE );
       SELF_ORDINFO( pArea, DBOI_SKIPUNIQUE, &pOrderInfo );
-      hb_itemReturnRelease( pOrderInfo.itmResult );
+      hb_itemReturnRelease(pOrderInfo.itmResult);
    }
    else
    {
@@ -197,9 +197,9 @@ HB_FUNC( ORDKEYVAL )
    {
       DBORDERINFO pOrderInfo;
       memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
-      pOrderInfo.itmResult = hb_itemNew( nullptr );
+      pOrderInfo.itmResult = hb_itemNew(nullptr);
       SELF_ORDINFO( pArea, DBOI_KEYVAL, &pOrderInfo );
-      hb_itemReturnRelease( pOrderInfo.itmResult );
+      hb_itemReturnRelease(pOrderInfo.itmResult);
    }
    else
    {
@@ -221,7 +221,7 @@ HB_FUNC( ORDKEYADD )
       pOrderInfo.itmNewVal = hb_param(3, HB_IT_ANY);
       pOrderInfo.itmResult = hb_itemPutNL( nullptr, 0 );
       SELF_ORDINFO( pArea, DBOI_KEYADD, &pOrderInfo );
-      hb_itemReturnRelease( pOrderInfo.itmResult );
+      hb_itemReturnRelease(pOrderInfo.itmResult);
    }
    else
    {
@@ -243,7 +243,7 @@ HB_FUNC( ORDKEYDEL )
       pOrderInfo.itmNewVal = hb_param(3, HB_IT_ANY);
       pOrderInfo.itmResult = hb_itemPutNL( nullptr, 0 );
       SELF_ORDINFO( pArea, DBOI_KEYDELETE, &pOrderInfo );
-      hb_itemReturnRelease( pOrderInfo.itmResult );
+      hb_itemReturnRelease(pOrderInfo.itmResult);
    }
    else
    {
@@ -265,7 +265,7 @@ HB_FUNC( ORDDESCEND )
       pOrderInfo.itmNewVal = hb_param(3, HB_IT_LOGICAL);
       pOrderInfo.itmResult = hb_itemPutL( nullptr, HB_FALSE );
       SELF_ORDINFO( pArea, DBOI_ISDESC, &pOrderInfo );
-      hb_itemReturnRelease( pOrderInfo.itmResult );
+      hb_itemReturnRelease(pOrderInfo.itmResult);
    }
    else
    {
@@ -287,7 +287,7 @@ HB_FUNC( ORDISUNIQUE )
       pOrderInfo.itmNewVal = hb_param(3, HB_IT_LOGICAL);
       pOrderInfo.itmResult = hb_itemPutL( nullptr, HB_FALSE );
       SELF_ORDINFO( pArea, DBOI_UNIQUE, &pOrderInfo );
-      hb_itemReturnRelease( pOrderInfo.itmResult );
+      hb_itemReturnRelease(pOrderInfo.itmResult);
    }
    else
    {
@@ -309,7 +309,7 @@ HB_FUNC( ORDCUSTOM )
       pOrderInfo.itmNewVal = hb_param(3, HB_IT_LOGICAL);
       pOrderInfo.itmResult = hb_itemPutL( nullptr, HB_FALSE );
       SELF_ORDINFO( pArea, DBOI_CUSTOM, &pOrderInfo );
-      hb_itemReturnRelease( pOrderInfo.itmResult );
+      hb_itemReturnRelease(pOrderInfo.itmResult);
    }
    else
    {
@@ -331,7 +331,7 @@ HB_FUNC( DBINFO )
          PHB_ITEM pInfo = hb_itemParam( 2 );
 
          SELF_INFO( pArea, static_cast<HB_USHORT>( hb_itemGetNI(pIndex) ), pInfo );
-         hb_itemReturnRelease( pInfo );
+         hb_itemReturnRelease(pInfo);
       }
       else
       {
@@ -360,11 +360,11 @@ HB_FUNC( DBORDERINFO )
          pOrderInfo.itmOrder = hb_param(3, HB_IT_STRING | HB_IT_NUMERIC);
 
          pOrderInfo.itmNewVal  = hb_param(4, HB_IT_ANY);
-         pOrderInfo.itmResult  = hb_itemNew( nullptr );
+         pOrderInfo.itmResult  = hb_itemNew(nullptr);
          pOrderInfo.itmCobExpr = nullptr;
          pOrderInfo.fAllTags   = HB_FALSE;
          SELF_ORDINFO( pArea, static_cast<HB_USHORT>( hb_itemGetNI(pType) ), &pOrderInfo );
-         hb_itemReturnRelease( pOrderInfo.itmResult );
+         hb_itemReturnRelease(pOrderInfo.itmResult);
       }
       else
       {
@@ -390,10 +390,10 @@ HB_FUNC( DBFIELDINFO )
       uiIndex = static_cast<HB_FIELDNO>( hb_parni(2) );
       if( pType && SELF_FIELDCOUNT( pArea, &uiFields ) == HB_SUCCESS && uiIndex > 0 && uiIndex <= uiFields )
       {
-         PHB_ITEM pInfo = hb_itemNew( hb_param(3, HB_IT_ANY) );
+         PHB_ITEM pInfo = hb_itemNew(hb_param(3, HB_IT_ANY));
 
          SELF_FIELDINFO( pArea, uiIndex, static_cast<HB_USHORT>( hb_itemGetNI(pType) ), pInfo );
-         hb_itemReturnRelease( pInfo );
+         hb_itemReturnRelease(pInfo);
       }
       else
       {
@@ -421,7 +421,7 @@ HB_FUNC( DBRECORDINFO )
          PHB_ITEM pInfo = hb_itemParam( 3 );
 
          SELF_RECINFO( pArea, pRecNo, static_cast<HB_USHORT>( hb_itemGetNI(pType) ), pInfo );
-         hb_itemReturnRelease( pInfo );
+         hb_itemReturnRelease(pInfo);
       }
       else
          hb_errRT_DBCMD( EG_ARG, EDBCMD_INFOBADPARAMETER, nullptr, HB_ERR_FUNCNAME );

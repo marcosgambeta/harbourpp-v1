@@ -67,7 +67,7 @@ HB_FUNC( HB_DEFAULTVALUE )
       pParam = pDefault;
    }
 
-   hb_itemReturn( pParam );
+   hb_itemReturn(pParam);
 }
 
 /* For compatibility with legacy DEFAULT ... TO ... command.

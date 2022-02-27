@@ -690,7 +690,7 @@ HB_FUNC( __DBPACK )
       if( pBlock )
       {
          PHB_ITEM pEvery;
-         hb_itemRelease( pArea->valResult );
+         hb_itemRelease(pArea->valResult);
          pArea->valResult = hb_itemArrayNew( 2 );
          hb_arraySet( pArea->valResult, 1, pBlock );
          pEvery = hb_param(2, HB_IT_NUMERIC);
@@ -711,7 +711,7 @@ HB_FUNC( __DBPACK )
          }
          else
          {
-            pArea->valResult = hb_itemNew( nullptr );
+            pArea->valResult = hb_itemNew(nullptr);
          }
       }
       SELF_PACK( pArea );
@@ -760,7 +760,7 @@ HB_FUNC( DBRLOCKLIST )
    {
       PHB_ITEM pList = hb_itemArrayNew( 0 );
       SELF_INFO( pArea, DBI_GETLOCKARRAY, pList );
-      hb_itemReturnRelease( pList );
+      hb_itemReturnRelease(pList);
    }
    else
    {
@@ -892,7 +892,7 @@ HB_FUNC( DBSETFILTER )
          SELF_SETFILTER( pArea, &pFilterInfo );
          if( ! pText )
          {
-            hb_itemRelease( pFilterInfo.abFilterText );
+            hb_itemRelease(pFilterInfo.abFilterText);
          }
       }
       else
@@ -928,7 +928,7 @@ HB_FUNC( DBFILTER )
    {
       PHB_ITEM pFilter = hb_itemPutC( nullptr, nullptr );
       SELF_FILTERTEXT( pArea, pFilter );
-      hb_itemReturnRelease( pFilter );
+      hb_itemReturnRelease(pFilter);
    }
    else
    {
@@ -943,7 +943,7 @@ HB_FUNC( HB_DBGETFILTER )
 
    if( pArea )
    {
-      hb_itemReturn( pArea->dbfi.itmCobExpr );
+      hb_itemReturn(pArea->dbfi.itmCobExpr);
    }
    else
    {
@@ -974,13 +974,13 @@ HB_FUNC( DBSTRUCT )
    {
       hb_tblStructure( pArea, pStruct, DBS_ALEN );
    }
-   hb_itemReturnRelease( pStruct );
+   hb_itemReturnRelease(pStruct);
 }
 
 HB_FUNC( DBTABLEEXT )
 {
    AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
-   PHB_ITEM pItem = hb_itemNew( nullptr );
+   PHB_ITEM pItem = hb_itemNew(nullptr);
    HB_ERRCODE errCode = HB_FAILURE;
 
    if( ! pArea )
@@ -1007,7 +1007,7 @@ HB_FUNC( DBTABLEEXT )
    {
       hb_itemPutC( pItem, nullptr );
    }
-   hb_itemReturnRelease( pItem );
+   hb_itemReturnRelease(pItem);
 }
 
 HB_FUNC( DBUNLOCK )
@@ -1092,7 +1092,7 @@ HB_FUNC( FCOUNT )
 
 HB_FUNC( FIELDGET )
 {
-   PHB_ITEM pItem = hb_itemNew( nullptr );
+   PHB_ITEM pItem = hb_itemNew(nullptr);
    AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
    HB_USHORT uiField = static_cast<HB_FIELDNO>( hb_parni(1) );
 
@@ -1101,7 +1101,7 @@ HB_FUNC( FIELDGET )
       SELF_GETVALUE( pArea, uiField, pItem );
    }
 
-   hb_itemReturnRelease( pItem );
+   hb_itemReturnRelease(pItem);
 }
 
 HB_FUNC( FIELDNAME )
@@ -1156,7 +1156,7 @@ HB_FUNC( FIELDPUT )
          {
             if( SELF_PUTVALUE( pArea, uiIndex, pItem ) == HB_SUCCESS )
             {
-               hb_itemReturn( pItem );
+               hb_itemReturn(pItem);
             }
          }
       }
@@ -1204,9 +1204,9 @@ HB_FUNC( HEADER )
    }
    else
    {
-      PHB_ITEM pItem = hb_itemNew( nullptr );
+      PHB_ITEM pItem = hb_itemNew(nullptr);
       SELF_INFO( pArea, DBI_GETHEADERSIZE, pItem );
-      hb_itemReturnRelease( pItem );
+      hb_itemReturnRelease(pItem);
    }
 }
 
@@ -1221,7 +1221,7 @@ HB_FUNC( INDEXORD )
       pInfo.itmResult = hb_itemPutNI( nullptr, 0 );
       SELF_ORDINFO( pArea, DBOI_NUMBER, &pInfo );
       hb_retni( hb_itemGetNI(pInfo.itmResult) );
-      hb_itemRelease( pInfo.itmResult );
+      hb_itemRelease(pInfo.itmResult);
    }
    else
    {
@@ -1267,10 +1267,10 @@ HB_FUNC( LUPDATE )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_itemNew( nullptr );
+      PHB_ITEM pItem = hb_itemNew(nullptr);
 
       SELF_INFO( pArea, DBI_LASTUPDATE, pItem );
-      hb_itemReturnRelease( pItem );
+      hb_itemReturnRelease(pItem);
    }
    else
    {
@@ -1314,7 +1314,7 @@ HB_FUNC( ORDBAGEXT )
    {
       SELF_ORDINFO( pArea, DBOI_BAGEXT, &pInfo );
    }
-   hb_itemReturnRelease( pInfo.itmResult );
+   hb_itemReturnRelease(pInfo.itmResult);
 }
 
 HB_FUNC( ORDBAGNAME )
@@ -1348,7 +1348,7 @@ HB_FUNC( ORDBAGNAME )
       }
       pOrderInfo.itmResult = hb_itemPutC( nullptr, nullptr );
       SELF_ORDINFO( pArea, DBOI_BAGNAME, &pOrderInfo );
-      hb_itemReturnRelease( pOrderInfo.itmResult );
+      hb_itemReturnRelease(pOrderInfo.itmResult);
    }
    else
    {
@@ -1368,21 +1368,21 @@ HB_FUNC( ORDCONDSET )
       lpdbOrdCondInfo = static_cast<LPDBORDERCONDINFO>( hb_xgrab( sizeof(DBORDERCONDINFO) ) );
       lpdbOrdCondInfo->abFor = hb_parclen(1) > 0 ? hb_strdup( hb_parc(1) ) : nullptr;
       pItem = hb_param(2, HB_IT_BLOCK);
-      lpdbOrdCondInfo->itmCobFor = pItem ? hb_itemNew( pItem ) : nullptr;
+      lpdbOrdCondInfo->itmCobFor = pItem ? hb_itemNew(pItem) : nullptr;
 
       lpdbOrdCondInfo->fAll = hb_parldef( 3, HB_TRUE );
 
       lpdbOrdCondInfo->abWhile = hb_parclen(17) > 0 ? hb_strdup( hb_parc(17) ) : nullptr;
       pItem = hb_param(4, HB_IT_BLOCK);
-      lpdbOrdCondInfo->itmCobWhile = pItem ? hb_itemNew( pItem ) : nullptr;
+      lpdbOrdCondInfo->itmCobWhile = pItem ? hb_itemNew(pItem) : nullptr;
 
       pItem = hb_param(5, HB_IT_BLOCK);
-      lpdbOrdCondInfo->itmCobEval = pItem ? hb_itemNew( pItem ) : nullptr;
+      lpdbOrdCondInfo->itmCobEval = pItem ? hb_itemNew(pItem) : nullptr;
 
       lpdbOrdCondInfo->lStep         = hb_parnl(6);
-      lpdbOrdCondInfo->itmStartRecID = HB_ISNIL( 7 ) ? nullptr : hb_itemNew( hb_param(7, HB_IT_ANY) );
+      lpdbOrdCondInfo->itmStartRecID = HB_ISNIL( 7 ) ? nullptr : hb_itemNew(hb_param(7, HB_IT_ANY));
       lpdbOrdCondInfo->lNextCount    = hb_parnl(8);
-      lpdbOrdCondInfo->itmRecID      = HB_ISNIL( 9 ) ? nullptr : hb_itemNew( hb_param(9, HB_IT_ANY) );
+      lpdbOrdCondInfo->itmRecID      = HB_ISNIL( 9 ) ? nullptr : hb_itemNew(hb_param(9, HB_IT_ANY));
       lpdbOrdCondInfo->fRest         = hb_parl(10);
       lpdbOrdCondInfo->fDescending   = hb_parl(11);
       /* 12th parameter is always nil in CL5.3, in CL5.2 it's compound flag */
@@ -1546,7 +1546,7 @@ HB_FUNC( ORDFOR )
       pOrderInfo.itmCobExpr = nullptr;
       pOrderInfo.fAllTags = HB_FALSE;
       SELF_ORDINFO( pArea, DBOI_CONDITION, &pOrderInfo );
-      hb_itemReturnRelease( pOrderInfo.itmResult );
+      hb_itemReturnRelease(pOrderInfo.itmResult);
    }
    else
    {
@@ -1585,7 +1585,7 @@ HB_FUNC( ORDKEY )
       pOrderInfo.atomBagName = hb_param(2, HB_IT_STRING);
       pOrderInfo.itmResult = hb_itemPutC( nullptr, nullptr );
       SELF_ORDINFO( pArea, DBOI_EXPRESSION, &pOrderInfo );
-      hb_itemReturnRelease( pOrderInfo.itmResult );
+      hb_itemReturnRelease(pOrderInfo.itmResult);
    }
    else
    {
@@ -1618,7 +1618,7 @@ HB_FUNC( ORDLISTADD )
          return;
       }
 
-      pOrderInfo.itmResult = hb_itemNew( nullptr );
+      pOrderInfo.itmResult = hb_itemNew(nullptr);
 
       errCode = SELF_ORDLSTADD( pArea, &pOrderInfo );
 
@@ -1628,10 +1628,10 @@ HB_FUNC( ORDLISTADD )
       }
       else
       {
-         hb_itemReturn( pOrderInfo.itmResult );
+         hb_itemReturn(pOrderInfo.itmResult);
       }
 
-      hb_itemRelease( pOrderInfo.itmResult );
+      hb_itemRelease(pOrderInfo.itmResult);
    }
    else
    {
@@ -1699,7 +1699,7 @@ HB_FUNC( ORDNAME )
       pOrderInfo.atomBagName = hb_param(2, HB_IT_STRING);
       pOrderInfo.itmResult   = hb_itemPutC( nullptr, nullptr );
       SELF_ORDINFO( pArea, DBOI_NAME, &pOrderInfo );
-      hb_itemReturnRelease( pOrderInfo.itmResult );
+      hb_itemReturnRelease(pOrderInfo.itmResult);
    }
    else
    {
@@ -1724,7 +1724,7 @@ HB_FUNC( ORDNUMBER )
       }
       pOrderInfo.itmResult = hb_itemPutNI( nullptr, 0 );
       SELF_ORDINFO( pArea, DBOI_NUMBER, &pOrderInfo );
-      hb_itemReturnRelease( pOrderInfo.itmResult );
+      hb_itemReturnRelease(pOrderInfo.itmResult);
    }
    else
    {
@@ -1744,7 +1744,7 @@ HB_FUNC( ORDSETFOCUS )
       pInfo.atomBagName = hb_param(2, HB_IT_STRING);
       pInfo.itmResult = hb_itemPutC( nullptr, nullptr );
       SELF_ORDLSTFOCUS( pArea, &pInfo );
-      hb_itemReturnRelease( pInfo.itmResult );
+      hb_itemReturnRelease(pInfo.itmResult);
    }
    else
    {
@@ -1754,7 +1754,7 @@ HB_FUNC( ORDSETFOCUS )
 
 HB_FUNC( RDDLIST )
 {
-   hb_itemReturnRelease( hb_rddList( static_cast<HB_USHORT>( hb_parni(1) ) ) );
+   hb_itemReturnRelease(hb_rddList( static_cast<HB_USHORT>( hb_parni(1) ) ));
 }
 
 HB_FUNC( RDDNAME )
@@ -1814,7 +1814,7 @@ HB_FUNC( RECNO )
    {
       SELF_RECID( pArea, pRecNo );
    }
-   hb_itemReturnRelease( pRecNo );
+   hb_itemReturnRelease(pRecNo);
 }
 
 HB_FUNC( RECSIZE )
@@ -1823,9 +1823,9 @@ HB_FUNC( RECSIZE )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_itemNew( nullptr );
+      PHB_ITEM pItem = hb_itemNew(nullptr);
       SELF_INFO( pArea, DBI_GETRECSIZE, pItem );
-      hb_itemReturnRelease( pItem );
+      hb_itemReturnRelease(pItem);
    }
    else
    {
@@ -1920,7 +1920,7 @@ HB_FUNC( ORDSCOPE )
       int iScope = hb_parni(1);
 
       memset( &pInfo, 0, sizeof(pInfo) );
-      pInfo.itmResult = hb_itemNew( nullptr );
+      pInfo.itmResult = hb_itemNew(nullptr);
       if( iScope == 2 )
       {
          if( hb_pcount() > 1 && ! HB_ISNIL( 2 ) )
@@ -1949,7 +1949,7 @@ HB_FUNC( ORDSCOPE )
          }
       }
       SELF_ORDINFO( pArea, uiAction, &pInfo );
-      hb_itemReturnRelease( pInfo.itmResult );
+      hb_itemReturnRelease(pInfo.itmResult);
    }
    else
    {
@@ -1966,7 +1966,7 @@ HB_FUNC( DBRELATION )  /* (<nRelation>) --> cLinkExp */
       PHB_ITEM pRelExpr = hb_itemPutC( nullptr, nullptr );
       HB_USHORT uiRelNo = static_cast<HB_USHORT>( hb_parni(1) );
       SELF_RELTEXT( pArea, uiRelNo ? uiRelNo : 1, pRelExpr );
-      hb_itemReturnRelease( pRelExpr );
+      hb_itemReturnRelease(pRelExpr);
    }
    else
    {
@@ -2040,8 +2040,8 @@ HB_FUNC( DBSETRELATION )
          return;
       }
 
-      dbRelations.itmCobExpr = hb_itemNew( hb_param(2, HB_IT_BLOCK) );
-      dbRelations.abKey = hb_itemNew( hb_param(3, HB_IT_STRING) );
+      dbRelations.itmCobExpr = hb_itemNew(hb_param(2, HB_IT_BLOCK));
+      dbRelations.abKey = hb_itemNew(hb_param(3, HB_IT_STRING));
       dbRelations.isScoped = hb_parl(4);
       dbRelations.isOptimized = HB_FALSE;
       dbRelations.lpaChild = pChildArea;
@@ -2172,7 +2172,7 @@ HB_FUNC( __DBARRANGE )
                errCode = hb_dbTransCounters( &dbSortInfo.dbtri );
             }
          }
-         hb_itemRelease( pTransItm );
+         hb_itemRelease(pTransItm);
       }
 
       /* Free items */
@@ -2248,7 +2248,7 @@ HB_FUNC( __DBTRANS )
                   errCode = hb_dbTransCounters( &dbTransInfo );
                }
             }
-            hb_itemRelease( pTransItm );
+            hb_itemRelease(pTransItm);
          }
 
          if( dbTransInfo.lpTransItems )
@@ -2368,7 +2368,7 @@ HB_FUNC( HB_RDDINFO )
    {
       PHB_ITEM pInfo = hb_itemParam( 2 );
       SELF_RDDINFO( pRDDNode, static_cast<HB_USHORT>( hb_itemGetNI(pIndex) ), ulConnection, pInfo );
-      hb_itemReturnRelease( pInfo );
+      hb_itemReturnRelease(pInfo);
    }
    else
    {
@@ -2498,14 +2498,14 @@ HB_FUNC( HB_FIELDLEN )
 
       if( uiIndex > 0 )
       {
-         PHB_ITEM pItem = hb_itemNew( nullptr );
+         PHB_ITEM pItem = hb_itemNew(nullptr);
 
          if( SELF_FIELDINFO( pArea, uiIndex, DBS_LEN, pItem ) == HB_SUCCESS )
          {
-            hb_itemReturnRelease( pItem );
+            hb_itemReturnRelease(pItem);
             return;
          }
-         hb_itemRelease( pItem );
+         hb_itemRelease(pItem);
       }
    }
 
@@ -2532,14 +2532,14 @@ HB_FUNC( HB_FIELDDEC )
 
       if( uiIndex > 0 )
       {
-         PHB_ITEM pItem = hb_itemNew( nullptr );
+         PHB_ITEM pItem = hb_itemNew(nullptr);
 
          if( SELF_FIELDINFO( pArea, uiIndex, DBS_DEC, pItem ) == HB_SUCCESS )
          {
-            hb_itemReturnRelease( pItem );
+            hb_itemReturnRelease(pItem);
             return;
          }
-         hb_itemRelease( pItem );
+         hb_itemRelease(pItem);
       }
    }
 
@@ -2566,14 +2566,14 @@ HB_FUNC( HB_FIELDTYPE )
 
       if( uiIndex > 0 )
       {
-         PHB_ITEM pItem = hb_itemNew( nullptr );
+         PHB_ITEM pItem = hb_itemNew(nullptr);
 
          if( SELF_FIELDINFO( pArea, uiIndex, DBS_TYPE, pItem ) == HB_SUCCESS )
          {
-            hb_itemReturnRelease( pItem );
+            hb_itemReturnRelease(pItem);
             return;
          }
-         hb_itemRelease( pItem );
+         hb_itemRelease(pItem);
       }
    }
 

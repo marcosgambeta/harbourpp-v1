@@ -809,7 +809,7 @@ static HB_USHORT hb_clsAddInitValue( PCLASS pClass, PHB_ITEM pItem, HB_USHORT ui
       {
          if( pInitData->uiType == uiType && pInitData->uiData + pInitData->uiOffset == uiData + uiOffset )
          {
-            hb_itemRelease( pInitData->pInitValue );
+            hb_itemRelease(pInitData->pInitValue);
             break;
          }
          ++pInitData;
@@ -1050,7 +1050,7 @@ static void hb_clsCopyClass( PCLASS pClsDst, PCLASS pClsSrc )
          {
             pClsDst->pInitData[ uiData ].uiType = HB_OO_MSG_CLASSDATA;
          }
-         pClsDst->pInitData[ uiData ].pInitValue = hb_itemNew( pClsDst->pInitData[ uiData ].pInitValue );
+         pClsDst->pInitData[ uiData ].pInitValue = hb_itemNew(pClsDst->pInitData[ uiData ].pInitValue);
       }
    }
 
@@ -1230,7 +1230,7 @@ static void hb_clsRelease( PCLASS pClass )
 
       do
       {
-         hb_itemRelease( pInitData->pInitValue );
+         hb_itemRelease(pInitData->pInitValue);
          ++pInitData;
       }
       while( --ui );
@@ -1261,15 +1261,15 @@ static void hb_clsRelease( PCLASS pClass )
 #endif
    if( pClass->pClassDatas )
    {
-      hb_itemRelease( pClass->pClassDatas );
+      hb_itemRelease(pClass->pClassDatas);
    }
    if( pClass->pSharedDatas )
    {
-      hb_itemRelease( pClass->pSharedDatas );
+      hb_itemRelease(pClass->pSharedDatas);
    }
    if( pClass->pInlines )
    {
-      hb_itemRelease( pClass->pInlines );
+      hb_itemRelease(pClass->pInlines);
    }
 
    hb_xfree( pClass );
@@ -1309,7 +1309,7 @@ void hb_clsReleaseAll( void )
 
    if( s_pClassMtx )
    {
-      hb_itemRelease( s_pClassMtx );
+      hb_itemRelease(s_pClassMtx);
       s_pClassMtx = nullptr;
    }
 }
@@ -2183,12 +2183,12 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE p
 
       if( pMsg == s___msgKeys.pDynSym )
       {
-         hb_itemReturnRelease( hb_hashGetKeys( pObject ) );
+         hb_itemReturnRelease(hb_hashGetKeys( pObject ));
          return &s___msgKeys;
       }
       else if( pMsg == s___msgValues.pDynSym )
       {
-         hb_itemReturnRelease( hb_hashGetValues( pObject ) );
+         hb_itemReturnRelease(hb_hashGetValues( pObject ));
          return &s___msgValues;
       }
 #if defined( HB_HASH_MSG_ITEMS )
@@ -2203,7 +2203,7 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE p
             {
                PHB_ITEM pValue = hb_param(1, HB_IT_ANY);
                hb_itemCopyFromRef( pDest, pValue );
-               hb_itemReturn( pValue );
+               hb_itemReturn(pValue);
                return &s___msgVirtual;
             }
          }
@@ -2214,7 +2214,7 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE p
             hb_stackPop();
             if( pValue )
             {
-               hb_itemReturn( pValue );
+               hb_itemReturn(pValue);
                return &s___msgVirtual;
             }
          }
@@ -2405,7 +2405,7 @@ HB_BOOL hb_objGetVarRef( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
       hb_stackPop();
       if( pValue )
       {
-         hb_itemReturn( pValue );
+         hb_itemReturn(pValue);
       }
       return pValue != nullptr;
    }
@@ -4037,7 +4037,7 @@ static PHB_ITEM hb_clsInst( HB_USHORT uiClass )
       {
          ++uiDatas;
       }
-      pSelf = hb_itemNew( nullptr );
+      pSelf = hb_itemNew(nullptr);
       hb_arrayNew( pSelf, uiDatas );
       pSelf->item.asArray.value->uiClass = uiClass;
 
@@ -4045,7 +4045,7 @@ static PHB_ITEM hb_clsInst( HB_USHORT uiClass )
       {
          PHB_ITEM pMutex = hb_threadMutexCreate();
          hb_arraySet( pSelf, pClass->uiMutexOffset, pMutex );
-         hb_itemRelease( pMutex );
+         hb_itemRelease(pMutex);
       }
       /* Initialise value if initialisation was requested */
       if( pClass->uiInitDatas )
@@ -4095,7 +4095,7 @@ HB_FUNC( __CLSINST )
 
    if( pSelf )
    {
-      hb_itemReturnRelease( pSelf );
+      hb_itemReturnRelease(pSelf);
    }
 }
 
@@ -4612,7 +4612,7 @@ HB_FUNC( __CLASSNAME )
 HB_FUNC( __CLASSSEL )
 {
    HB_USHORT uiClass = static_cast<HB_USHORT>( hb_parni(1) );
-   PHB_ITEM pReturn = hb_itemNew( nullptr );
+   PHB_ITEM pReturn = hb_itemNew(nullptr);
 
    if( uiClass && uiClass <= s_uiClasses )
    {
@@ -4638,7 +4638,7 @@ HB_FUNC( __CLASSSEL )
       }
    }
 
-   hb_itemReturnRelease( pReturn );
+   hb_itemReturnRelease(pReturn);
 }
 
 /* to be used from Classes ERROR HANDLER method */
@@ -4679,7 +4679,7 @@ HB_FUNC( __SENDER )
 
       if( HB_IS_OBJECT(pSelf) )
       {
-         hb_itemReturn( pSelf );
+         hb_itemReturn(pSelf);
       }
    }
 }
@@ -4908,7 +4908,7 @@ HB_FUNC_STATIC( msgClassSel )
       {
          hb_arraySize( pReturn, nPos );
       }
-      hb_itemReturnRelease( pReturn );
+      hb_itemReturnRelease(pReturn);
    }
 }
 
@@ -4920,7 +4920,7 @@ HB_FUNC_STATIC( msgClassSel )
  */
 HB_FUNC_STATIC( msgClass )
 {
-   hb_itemReturnForward( hb_stackSelfItem() );
+   hb_itemReturnForward(hb_stackSelfItem());
 }
 
 /* Added by JfL&RaC
@@ -5211,7 +5211,7 @@ HB_FUNC_STATIC( msgRealClass )
    }
    else
    {
-      hb_itemReturnForward( pObject );
+      hb_itemReturnForward(pObject);
    }
 }
 
@@ -5259,7 +5259,7 @@ HB_FUNC_STATIC( msgSetClsData )
       }
 
       hb_arraySet( pClass->pClassDatas, pMethod->uiData, pReturn );
-      hb_itemReturn( pReturn );
+      hb_itemReturn(pReturn);
    }
 }
 
@@ -5307,7 +5307,7 @@ HB_FUNC_STATIC( msgSetShrData )
       }
 
       hb_arraySet( s_pClasses[ pMethod->uiSprClass ]->pSharedDatas, pMethod->uiData, pReturn );
-      hb_itemReturn( pReturn );
+      hb_itemReturn(pReturn);
    }
 }
 
@@ -5393,7 +5393,7 @@ HB_FUNC_STATIC( msgSetData )
             hb_arraySize( pObject, nIndex );   /* Make large enough */
          }
          hb_arraySet( pObject, nIndex, pReturn );
-         hb_itemReturn( pReturn );
+         hb_itemReturn(pReturn);
       }
    }
 }
@@ -5692,7 +5692,7 @@ HB_FUNC( __OBJGETIVARS )
    HB_USHORT uiScope = static_cast<HB_USHORT>( hb_parni(2) );
    HB_BOOL fChanged = hb_parldef( 3, HB_TRUE );
 
-   hb_itemReturnRelease( hb_objGetIVars( pObject, uiScope, fChanged ) );
+   hb_itemReturnRelease(hb_objGetIVars( pObject, uiScope, fChanged ));
 }
 
 /* __objSetIVars( <oObject> | <hClass> | <cClassName> | <sClassFunc>,
@@ -5728,11 +5728,11 @@ HB_FUNC( __OBJSETIVARS )
 
       if( pObject )
       {
-         hb_itemReturn( pObject );
+         hb_itemReturn(pObject);
       }
       if( pNewObj )
       {
-         hb_itemRelease( pNewObj );
+         hb_itemRelease(pNewObj);
       }
    }
 }
@@ -5766,11 +5766,11 @@ HB_FUNC( __OBJRESTOREIVARS )
       {
          hb_objSetIVars( pObject, pArray );
          hb_arraySwap( pObject, pArray );
-         hb_itemRelease( pObject );
+         hb_itemRelease(pObject);
       }
    }
 
-   hb_itemReturn( pArray );
+   hb_itemReturn(pArray);
 }
 
 /* __clsGetProperties( <nClassHandle>, [<lAllExported>] ) --> <acProperties>
@@ -5783,7 +5783,7 @@ HB_FUNC( __OBJRESTOREIVARS )
 HB_FUNC( __CLSGETPROPERTIES )
 {
    HB_USHORT uiClass = static_cast<HB_USHORT>( hb_parni(1) );
-   PHB_ITEM pReturn = hb_itemNew( nullptr );
+   PHB_ITEM pReturn = hb_itemNew(nullptr);
 
    if( uiClass && uiClass <= s_uiClasses )
    {
@@ -5852,7 +5852,7 @@ HB_FUNC( __CLSGETPROPERTIES )
       while( --nLimit );
    }
 
-   hb_itemReturnRelease( pReturn );
+   hb_itemReturnRelease(pReturn);
 }
 
 /* __clsGetAncestors( <nClass> ) --> { <nSuper1>, <nSuper2>, ... } */
@@ -6000,7 +6000,7 @@ HB_FUNC( __OBJSETCLASS )
       }
    }
 
-   hb_itemReturn( pObject );
+   hb_itemReturn(pObject);
 }
 
 /* Real dirty function, though very useful under certain circumstances:
@@ -6055,7 +6055,7 @@ void hb_clsAdd( HB_USHORT usClassH, const char * szMethodName, PHB_FUNC pFuncPtr
 
    hb_clsAddMsg( usClassH, szMethodName, HB_OO_MSG_METHOD, 0, pFuncItem, nullptr );
 
-   hb_itemRelease( pFuncItem );
+   hb_itemRelease(pFuncItem);
 }
 
 /* Harbour equivalent for Clipper internal __mdAssociate() */
@@ -6065,7 +6065,7 @@ void hb_clsAssociate( HB_USHORT usClassH )
 
    if( pSelf )
    {
-      hb_itemReturnRelease( pSelf );
+      hb_itemReturnRelease(pSelf);
    }
    else
    {
@@ -6077,7 +6077,7 @@ void hb_clsAssociate( HB_USHORT usClassH )
 HB_FUNC( __CLSVERIFY )
 {
    HB_USHORT uiClass = static_cast<HB_USHORT>( hb_parni(1) );
-   PHB_ITEM pReturn = hb_itemNew( nullptr );
+   PHB_ITEM pReturn = hb_itemNew(nullptr);
 
    if( uiClass && uiClass <= s_uiClasses )
    {
@@ -6107,7 +6107,7 @@ HB_FUNC( __CLSVERIFY )
       }
    }
 
-   hb_itemReturnRelease( pReturn );
+   hb_itemReturnRelease(pReturn);
 }
 
 #if 0

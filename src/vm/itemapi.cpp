@@ -82,7 +82,7 @@ PHB_ITEM hb_itemParam( HB_USHORT uiParam )
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemParam(%hu)", uiParam ) );
 #endif
 
-   return hb_itemNew( hb_param(uiParam, HB_IT_ANY) );
+   return hb_itemNew(hb_param(uiParam, HB_IT_ANY));
 }
 
 /* Internal Item API. Use this with care. */
@@ -160,7 +160,7 @@ HB_BOOL hb_itemParamStoreRelease( HB_USHORT uiParam, PHB_ITEM pItem )
       if( pItem )
       {
          hb_itemMoveToRef( pDest, pItem );
-         hb_itemRelease( pItem );
+         hb_itemRelease(pItem);
       }
       else
       {
@@ -208,7 +208,7 @@ PHB_ITEM hb_itemArrayNew( HB_SIZE nLen )
 
    PHB_ITEM pItem;
 
-   pItem = hb_itemNew( nullptr );
+   pItem = hb_itemNew(nullptr);
 
    hb_arrayNew( pItem, nLen );
 
@@ -223,7 +223,7 @@ PHB_ITEM hb_itemArrayGet( PHB_ITEM pArray, HB_SIZE nIndex )
 
    PHB_ITEM pItem;
 
-   pItem = hb_itemNew( nullptr );
+   pItem = hb_itemNew(nullptr);
 
    if( pArray )
    {
@@ -259,7 +259,7 @@ PHB_ITEM hb_itemPutNil( PHB_ITEM pItem )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    return pItem;
@@ -294,7 +294,7 @@ PHB_ITEM hb_itemPutC( PHB_ITEM pItem, const char * szText )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    pItem->type = HB_IT_STRING;
@@ -335,7 +335,7 @@ PHB_ITEM hb_itemPutCL( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    /* NOTE: CA-Cl*pper seems to be buggy here, it will return nLen bytes of
@@ -367,7 +367,7 @@ PHB_ITEM hb_itemPutCConst( PHB_ITEM pItem, const char * szText )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    nLen = szText ? strlen( szText ) : 0;
@@ -395,7 +395,7 @@ PHB_ITEM hb_itemPutCLConst( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    pItem->type = HB_IT_STRING;
@@ -435,7 +435,7 @@ PHB_ITEM hb_itemPutCPtr( PHB_ITEM pItem, char * szText )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    nLen = szText ? strlen( szText ) : 0;
@@ -475,7 +475,7 @@ PHB_ITEM hb_itemPutCLPtr( PHB_ITEM pItem, char * szText, HB_SIZE nLen )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    pItem->type = HB_IT_STRING;
@@ -1045,7 +1045,7 @@ void hb_itemReturnRelease( PHB_ITEM pItem )
    {
       HB_STACK_TLS_PRELOAD
       hb_itemMove( hb_stackReturnItem(), pItem );
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
 }
 
@@ -1064,7 +1064,7 @@ PHB_ITEM hb_itemPutDS( PHB_ITEM pItem, const char * szDate )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    pItem->type = HB_IT_DATE;
@@ -1089,7 +1089,7 @@ PHB_ITEM hb_itemPutD( PHB_ITEM pItem, int iYear, int iMonth, int iDay )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    pItem->type = HB_IT_DATE;
@@ -1114,7 +1114,7 @@ PHB_ITEM hb_itemPutDL( PHB_ITEM pItem, long lJulian )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    pItem->type = HB_IT_DATE;
@@ -1139,7 +1139,7 @@ PHB_ITEM hb_itemPutTS( PHB_ITEM pItem, const char * szDateTime )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    pItem->type = HB_IT_TIMESTAMP;
@@ -1165,7 +1165,7 @@ PHB_ITEM hb_itemPutTD( PHB_ITEM pItem, double dTimeStamp )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    hb_timeStampUnpackDT( dTimeStamp, &lJulian, &lMilliSec );
@@ -1191,7 +1191,7 @@ PHB_ITEM hb_itemPutTDT( PHB_ITEM pItem, long lJulian, long lMilliSec )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    pItem->type = HB_IT_TIMESTAMP;
@@ -1216,7 +1216,7 @@ PHB_ITEM hb_itemPutL( PHB_ITEM pItem, HB_BOOL bValue )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    pItem->type = HB_IT_LOGICAL;
@@ -1242,7 +1242,7 @@ PHB_ITEM hb_itemPutND( PHB_ITEM pItem, double dNumber )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    pItem->type = HB_IT_DOUBLE;
@@ -1268,7 +1268,7 @@ PHB_ITEM hb_itemPutNI( PHB_ITEM pItem, int iNumber )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    pItem->type = HB_IT_INTEGER;
@@ -1293,7 +1293,7 @@ PHB_ITEM hb_itemPutNL( PHB_ITEM pItem, long lNumber )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    HB_ITEM_PUT_LONGRAW( pItem, lNumber );
@@ -1316,7 +1316,7 @@ PHB_ITEM hb_itemPutNS( PHB_ITEM pItem, HB_ISIZ nNumber )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
 #if HB_SIZE_MAX <= HB_VMUINT_MAX
@@ -1359,7 +1359,7 @@ PHB_ITEM hb_itemPutNLL( PHB_ITEM pItem, HB_LONGLONG llNumber )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
 #if HB_VMLONG_MAX >= LONGLONG_MAX
@@ -1391,7 +1391,7 @@ PHB_ITEM hb_itemPutNInt( PHB_ITEM pItem, HB_MAXINT nNumber )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    if( HB_LIM_INT( nNumber ) )
@@ -1476,7 +1476,7 @@ PHB_ITEM hb_itemPutNDLen( PHB_ITEM pItem, double dNumber, int iWidth, int iDec )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    if( iWidth <= 0 || iWidth >= HB_DEFAULT_WIDTH )
@@ -1513,7 +1513,7 @@ PHB_ITEM hb_itemPutNDDec( PHB_ITEM pItem, double dNumber, int iDec )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    pItem->type = HB_IT_DOUBLE;
@@ -1575,7 +1575,7 @@ PHB_ITEM hb_itemPutNILen( PHB_ITEM pItem, int iNumber, int iWidth )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    if( iWidth <= 0 || iWidth >= HB_DEFAULT_WIDTH )
@@ -1605,7 +1605,7 @@ PHB_ITEM hb_itemPutNLLen( PHB_ITEM pItem, long lNumber, int iWidth )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
 #if HB_VMINT_MAX == LONG_MAX
@@ -1647,7 +1647,7 @@ PHB_ITEM hb_itemPutNLLLen( PHB_ITEM pItem, HB_LONGLONG llNumber, int iWidth )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
 #if HB_VMLONG_MAX >= LONGLONG_MAX
@@ -1717,7 +1717,7 @@ PHB_ITEM hb_itemPutPtr( PHB_ITEM pItem, void * pValue )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    pItem->type = HB_IT_POINTER;
@@ -1743,7 +1743,7 @@ PHB_ITEM hb_itemPutPtrGC( PHB_ITEM pItem, void * pValue )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    pItem->type = HB_IT_POINTER;
@@ -1771,7 +1771,7 @@ PHB_ITEM hb_itemPutPtrRawGC( PHB_ITEM pItem, void * pValue )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    pItem->type = HB_IT_POINTER;
@@ -1797,7 +1797,7 @@ PHB_ITEM hb_itemPutSymbol( PHB_ITEM pItem, PHB_SYMB pSym )
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    pItem->type = HB_IT_SYMBOL;
@@ -2442,7 +2442,7 @@ PHB_ITEM hb_itemUnRefOnce( PHB_ITEM pItem )
             }
 
             /* put it here to avoid recursive RT error generation */
-            pItem->item.asEnum.valuePtr = hb_itemNew( nullptr );
+            pItem->item.asEnum.valuePtr = hb_itemNew(nullptr);
 
             if( hb_vmRequestQuery() == 0 )
             {
@@ -2709,7 +2709,7 @@ PHB_ITEM hb_itemClone( PHB_ITEM pItem )
    {
       if( HB_IS_OBJECT(pItem) )
       {
-         return hb_objCloneTo( hb_itemNew( nullptr ), pItem );
+         return hb_objCloneTo( hb_itemNew(nullptr), pItem );
       }
       else
       {
@@ -2722,7 +2722,7 @@ PHB_ITEM hb_itemClone( PHB_ITEM pItem )
    }
    else
    {
-      return hb_itemNew( pItem );
+      return hb_itemNew(pItem);
    }
 }
 

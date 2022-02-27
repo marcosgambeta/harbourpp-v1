@@ -122,7 +122,7 @@ HB_FUNC( AADD )
 
       if( pValue && hb_arrayAdd( pArray, pValue ) )
       {
-         hb_itemReturn( pValue );
+         hb_itemReturn(pValue);
       }
       else
       {
@@ -148,7 +148,7 @@ HB_FUNC( ASIZE )
 
       hb_arraySize( pArray, HB_MAX( nSize, 0 ) );
 
-      hb_itemReturn( pArray ); /* ASize() returns the array itself */
+      hb_itemReturn(pArray); /* ASize() returns the array itself */
    }
 #ifdef HB_COMPAT_C53 /* From CA-Cl*pper 5.3a */
    else
@@ -187,7 +187,7 @@ HB_FUNC( AINS )
 
       hb_arrayIns( pArray, nPos );
 
-      hb_itemReturn( pArray ); /* AIns() returns the array itself */
+      hb_itemReturn(pArray); /* AIns() returns the array itself */
    }
 }
 
@@ -206,7 +206,7 @@ HB_FUNC( ADEL )
 
       hb_arrayDel( pArray, nPos );
 
-      hb_itemReturn( pArray ); /* ADel() returns the array itself */
+      hb_itemReturn(pArray); /* ADel() returns the array itself */
    }
 }
 
@@ -218,7 +218,7 @@ HB_FUNC( AFILL )
    {
       PHB_ITEM pValue = hb_param(2, HB_IT_ANY);
 
-      hb_itemReturn( pArray ); /* AFill() returns the array itself */
+      hb_itemReturn(pArray); /* AFill() returns the array itself */
 
       if( pValue )
       {
@@ -356,7 +356,7 @@ HB_FUNC( HB_AINS )
          }
       }
 
-      hb_itemReturn( pArray ); /* AIns() returns the array itself */
+      hb_itemReturn(pArray); /* AIns() returns the array itself */
    }
 }
 
@@ -381,7 +381,7 @@ HB_FUNC( HB_ADEL )
          }
       }
 
-      hb_itemReturn( pArray ); /* ADel() returns the array itself */
+      hb_itemReturn(pArray); /* ADel() returns the array itself */
    }
 }
 
@@ -400,7 +400,7 @@ HB_FUNC( AEVAL )
 
       hb_arrayEval( pArray, pBlock, HB_ISNUM( 3 ) ? &nStart : nullptr, HB_ISNUM( 4 ) ? &nCount : nullptr );
 
-      hb_itemReturn( pArray ); /* AEval() returns the array itself */
+      hb_itemReturn(pArray); /* AEval() returns the array itself */
    }
    else
    {
@@ -425,7 +425,7 @@ HB_FUNC( ACOPY )
          hb_arrayCopy( pSrcArray, pDstArray, HB_ISNUM( 3 ) ? &nStart : nullptr, HB_ISNUM( 4 ) ? &nCount : nullptr, HB_ISNUM( 5 ) ? &nTarget : nullptr );
       }
 
-      hb_itemReturn( pDstArray ); /* ACopy() returns the target array */
+      hb_itemReturn(pDstArray); /* ACopy() returns the target array */
    }
 }
 
@@ -443,5 +443,5 @@ HB_FUNC( ACLONE )
 
 HB_FUNC( HB_APARAMS )
 {
-   hb_itemReturnRelease( hb_arrayFromParams( hb_parni(1) + 1 ) );
+   hb_itemReturnRelease(hb_arrayFromParams( hb_parni(1) + 1 ));
 }

@@ -491,7 +491,7 @@ HB_FUNC( TRANSFORM )
          hb_itemStrBuf( szResult, pValue, iWidth, iDec );
          if( pNumber )
          {
-            hb_itemRelease( pNumber );
+            hb_itemRelease(pNumber);
          }
 
          if( iCount )
@@ -1019,7 +1019,7 @@ HB_FUNC( TRANSFORM )
    {
       if( HB_IS_STRING(pValue) )
       {
-         hb_itemReturn( pValue );
+         hb_itemReturn(pValue);
       }
       else if( HB_IS_NUMERIC(pValue) )
       {

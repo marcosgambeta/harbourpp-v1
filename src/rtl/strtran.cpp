@@ -181,12 +181,12 @@ HB_FUNC( STRTRAN )
             }
             else
             {
-               hb_itemReturn( pText );
+               hb_itemReturn(pText);
             }
          }
          else
          {
-            hb_itemReturn( pText );
+            hb_itemReturn(pText);
          }
       }
       else

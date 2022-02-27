@@ -605,7 +605,7 @@ static PHRB_BODY hb_hrbLoadFromFile( const char * szHrb, HB_USHORT usMode )
 
    if( pError )
    {
-      hb_itemRelease( pError );
+      hb_itemRelease(pError);
    }
 
    if( pFile != nullptr )
@@ -648,13 +648,13 @@ static void hb_hrbDo( PHRB_BODY pHrbBody, int iPCount, PHB_ITEM * pParams )
 
       hb_vmProc( static_cast<HB_USHORT>( iPCount ) );
 
-      pRetVal = hb_itemNew( nullptr );
+      pRetVal = hb_itemNew(nullptr);
       hb_itemMove( pRetVal, hb_stackReturnItem() );
    }
 
    if( pRetVal )
    {
-      hb_itemReturnRelease( pRetVal );
+      hb_itemReturnRelease(pRetVal);
    }
 }
 
@@ -902,7 +902,7 @@ HB_FUNC( HB_HRBGETFUNLIST )
       PHB_SYMB pSym;
       HB_ULONG nPos;
       PHB_ITEM paList = hb_itemArrayNew( 0 );
-      PHB_ITEM pFuncName = hb_itemNew( nullptr );
+      PHB_ITEM pFuncName = hb_itemNew(nullptr);
       int iType = hb_parni(2);
 
       for( nPos = 0, pSym = pHrbBody->pSymRead; nPos < pHrbBody->ulSymbols; ++pSym, ++nPos )
@@ -923,8 +923,8 @@ HB_FUNC( HB_HRBGETFUNLIST )
          }
       }
 
-      hb_itemRelease( pFuncName );
-      hb_itemReturnRelease( paList );
+      hb_itemRelease(pFuncName);
+      hb_itemReturnRelease(paList);
    }
    else
    {

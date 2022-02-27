@@ -142,7 +142,7 @@ static HB_GARBAGE_FUNC( hb_hashGarbageRelease )
    {
       PHB_ITEM pDefault = pBaseHash->pDefault;
       pBaseHash->pDefault = nullptr;
-      hb_itemRelease( pDefault );
+      hb_itemRelease(pDefault);
    }
 }
 
@@ -634,7 +634,7 @@ PHB_ITEM hb_hashNew( PHB_ITEM pItem )
 
    if( pItem == nullptr )
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
    else if( HB_IS_COMPLEX(pItem) )
    {
@@ -1146,7 +1146,7 @@ void hb_hashCloneBody( PHB_ITEM pDest, PHB_ITEM pHash, PHB_NESTED_CLONED pCloned
    hb_hashResize( pDest->item.asHash.value, pHash->item.asHash.value->nLen );
    if( pHash->item.asHash.value->pDefault )
    {
-      pDest->item.asHash.value->pDefault = hb_itemNew( pHash->item.asHash.value->pDefault );
+      pDest->item.asHash.value->pDefault = hb_itemNew(pHash->item.asHash.value->pDefault);
       hb_gcUnlock( pDest->item.asHash.value->pDefault );
    }
    if( pHash->item.asHash.value->pnPos )
@@ -1192,7 +1192,7 @@ PHB_ITEM hb_hashClone( PHB_ITEM pHash )
    HB_TRACE( HB_TR_DEBUG, ( "hb_hashClone(%p)", static_cast<void*>( pHash ) ) );
 #endif
 
-   return hb_hashCloneTo( hb_itemNew( nullptr ), pHash );
+   return hb_hashCloneTo( hb_itemNew(nullptr), pHash );
 }
 
 void hb_hashJoin( PHB_ITEM pDest, PHB_ITEM pSource, int iType )
@@ -1352,7 +1352,7 @@ void hb_hashSetDefault( PHB_ITEM pHash, PHB_ITEM pValue )
    {
       if( pHash->item.asHash.value->pDefault )
       {
-         hb_itemRelease( pHash->item.asHash.value->pDefault );
+         hb_itemRelease(pHash->item.asHash.value->pDefault);
          pHash->item.asHash.value->pDefault = nullptr;
       }
       if( pValue && ! HB_IS_NIL(pValue) && ( ! HB_IS_HASH(pValue) || pHash->item.asHash.value != pValue->item.asHash.value ) )

@@ -58,7 +58,7 @@ HB_FUNC( INT )
    {
       if( HB_IS_NUMINT(pNumber) )
       {
-         hb_itemReturn( pNumber );
+         hb_itemReturn(pNumber);
       }
       else
       {

@@ -409,7 +409,7 @@ static void open_handle( PHB_SET_STRUCT pSet, const char * file_name, HB_BOOL fA
 
    if( pError )
    {
-      hb_itemRelease( pError );
+      hb_itemRelease(pError);
    }
 
    if( handle != nullptr && fStripEof )
@@ -1267,7 +1267,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pA
          }
          else
          {
-            pResult = hb_itemNew( nullptr );
+            pResult = hb_itemNew(nullptr);
          }
          if( pArg1 != nullptr )
          {
@@ -1300,7 +1300,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pA
          }
          else
          {
-            pResult = hb_itemNew( nullptr );
+            pResult = hb_itemNew(nullptr);
          }
          if( pArg1 != nullptr )
          {

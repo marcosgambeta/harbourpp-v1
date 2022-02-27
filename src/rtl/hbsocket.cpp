@@ -3850,7 +3850,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
 
             if( pItem == nullptr )
             {
-               pItem = hb_itemNew( nullptr );
+               pItem = hb_itemNew(nullptr);
             }
 
             hb_arrayNew( pItem, HB_SOCKET_IFINFO_LEN );
@@ -3989,7 +3989,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
             {
                if( pItem == nullptr )
                {
-                  pItem = hb_itemNew( nullptr );
+                  pItem = hb_itemNew(nullptr);
                }
                hb_arrayNew( pItem, HB_SOCKET_IFINFO_LEN );
 
@@ -4099,7 +4099,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
 
    if( pItem )
    {
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
 
    if( iError != 0 )

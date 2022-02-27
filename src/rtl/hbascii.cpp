@@ -72,7 +72,7 @@ HB_FUNC( HB_ASCIIUPPER )
             return;
          }
       }
-      hb_itemReturn( pText );
+      hb_itemReturn(pText);
    }
    else
    {
@@ -104,7 +104,7 @@ HB_FUNC( HB_ASCIILOWER )
             return;
          }
       }
-      hb_itemReturn( pText );
+      hb_itemReturn(pText);
    }
    else
    {

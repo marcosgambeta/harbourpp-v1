@@ -211,7 +211,7 @@ static HB_GARBAGE_FUNC( hb_inetSocketFinalize )
 
    if( socket->pPeriodicBlock )
    {
-      hb_itemRelease( socket->pPeriodicBlock );
+      hb_itemRelease(socket->pPeriodicBlock);
       socket->pPeriodicBlock = nullptr;
    }
    if( socket->remote )
@@ -352,7 +352,7 @@ HB_FUNC( HB_INETCREATE )
       socket->iTimeout = hb_parni(1);
    }
 
-   hb_itemReturnRelease( pSocket );
+   hb_itemReturnRelease(pSocket);
 }
 
 HB_FUNC( HB_INETCLOSE )
@@ -622,14 +622,14 @@ HB_FUNC( HB_INETPERIODCALLBACK )
 
       if( socket->pPeriodicBlock )
       {
-         hb_itemReturn( socket->pPeriodicBlock );
+         hb_itemReturn(socket->pPeriodicBlock);
       }
 
       if( pExec )
       {
          if( socket->pPeriodicBlock )
          {
-            hb_itemRelease( socket->pPeriodicBlock );
+            hb_itemRelease(socket->pPeriodicBlock);
          }
          socket->pPeriodicBlock = hb_itemClone( pExec );
          hb_gcUnlock( socket->pPeriodicBlock );
@@ -649,7 +649,7 @@ HB_FUNC( HB_INETCLEARPERIODCALLBACK )
    {
       if( socket->pPeriodicBlock )
       {
-         hb_itemRelease( socket->pPeriodicBlock );
+         hb_itemRelease(socket->pPeriodicBlock);
          socket->pPeriodicBlock = nullptr;
       }
    }
@@ -1245,7 +1245,7 @@ HB_FUNC( HB_INETGETHOSTS )
       pHosts = hb_socketGetHosts( szHost, HB_SOCKET_PF_INET );
       if( pHosts )
       {
-         hb_itemReturnRelease( pHosts );
+         hb_itemReturnRelease(pHosts);
       }
       else
       {
@@ -1270,7 +1270,7 @@ HB_FUNC( HB_INETGETALIAS )
       pHosts = hb_socketGetAliases( szHost, HB_SOCKET_PF_INET );
       if( pHosts )
       {
-         hb_itemReturnRelease( pHosts );
+         hb_itemReturnRelease(pHosts);
       }
       else
       {
@@ -1293,7 +1293,7 @@ HB_FUNC( HB_INETIFINFO )
    pInfo = hb_socketGetIFaces( hb_parnidef( 2, HB_SOCKET_PF_INET ), hb_parl(1) );
    if( pInfo )
    {
-      hb_itemReturnRelease( pInfo );
+      hb_itemReturnRelease(pInfo);
    }
    else
    {
@@ -1359,11 +1359,11 @@ HB_FUNC( HB_INETSERVER )
    }
    if( pSocket )
    {
-      hb_itemReturnRelease( pSocket );
+      hb_itemReturnRelease(pSocket);
    }
    else
    {
-      hb_itemReturn( hb_param(2, HB_IT_ANY) );
+      hb_itemReturn(hb_param(2, HB_IT_ANY));
    }
 }
 
@@ -1395,7 +1395,7 @@ HB_FUNC( HB_INETACCEPT )
             new_socket->remote = sa;
             new_socket->remotelen = len;
             new_socket->sd = incoming;
-            hb_itemReturnRelease( pSocket );
+            hb_itemReturnRelease(pSocket);
             socket->iError = HB_INET_ERR_OK;
             break;
          }
@@ -1481,11 +1481,11 @@ static void hb_inetConnectInternal( HB_BOOL fResolve )
       }
       if( pSocket )
       {
-         hb_itemReturnRelease( pSocket );
+         hb_itemReturnRelease(pSocket);
       }
       else
       {
-         hb_itemReturn( hb_param(3, HB_IT_ANY) );
+         hb_itemReturn(hb_param(3, HB_IT_ANY));
       }
    }
 }
@@ -1523,7 +1523,7 @@ HB_FUNC( HB_INETDGRAMBIND )
    if( socket->sd == HB_NO_SOCKET )
    {
       hb_inetGetError( socket );
-      hb_itemReturnRelease( pSocket );
+      hb_itemReturnRelease(pSocket);
       return;
    }
 
@@ -1551,7 +1551,7 @@ HB_FUNC( HB_INETDGRAMBIND )
       }
    }
 
-   hb_itemReturnRelease( pSocket );
+   hb_itemReturnRelease(pSocket);
 }
 
 HB_FUNC( HB_INETDGRAM )
@@ -1566,7 +1566,7 @@ HB_FUNC( HB_INETDGRAM )
    if( socket->sd == HB_NO_SOCKET )
    {
       hb_inetGetError( socket );
-      hb_itemReturnRelease( pSocket );
+      hb_itemReturnRelease(pSocket);
       return;
    }
 
@@ -1576,7 +1576,7 @@ HB_FUNC( HB_INETDGRAM )
       hb_socketSetBroadcast( socket->sd, HB_TRUE );
    }
 
-   hb_itemReturnRelease( pSocket );
+   hb_itemReturnRelease(pSocket);
 }
 
 HB_FUNC( HB_INETDGRAMSEND )

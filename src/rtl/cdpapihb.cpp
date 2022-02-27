@@ -202,7 +202,7 @@ HB_FUNC( HB_TRANSLATE )
       }
       else
       {
-         hb_itemReturn( hb_param(1, HB_IT_STRING) );
+         hb_itemReturn(hb_param(1, HB_IT_STRING));
       }
    }
    else
@@ -272,7 +272,7 @@ HB_FUNC( HB_STRTOUTF8 )
       {
          if( hb_cdpIsUTF8( cdp ) )
          {
-            hb_itemReturn( hb_param(1, HB_IT_STRING) );
+            hb_itemReturn(hb_param(1, HB_IT_STRING));
             return;
          }
          else
@@ -312,7 +312,7 @@ HB_FUNC( HB_UTF8TOSTR )
          {
             if( hb_cdpIsUTF8( cdp ) )
             {
-               hb_itemReturn( hb_param(1, HB_IT_STRING) );
+               hb_itemReturn(hb_param(1, HB_IT_STRING));
                return;
             }
             else
@@ -559,7 +559,7 @@ HB_FUNC( HB_UTF8POKE )
             {
                hb_cdpU16CharToUTF8( &szText[ nPos ], uc );
             }
-            hb_itemReturn( pText );
+            hb_itemReturn(pText);
          }
          else
          {
@@ -577,7 +577,7 @@ HB_FUNC( HB_UTF8POKE )
       }
       else
       {
-         hb_itemReturn( pText );
+         hb_itemReturn(pText);
       }
    }
    else

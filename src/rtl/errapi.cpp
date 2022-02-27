@@ -97,7 +97,7 @@ static void hb_errorDataRelease( void * Cargo )
 {
    PHB_ERRDATA pErrData = static_cast<PHB_ERRDATA>( Cargo );
 
-   hb_itemRelease( pErrData->errorBlock );
+   hb_itemRelease(pErrData->errorBlock);
 }
 
 static HB_TSD_NEW( s_errData, sizeof(HB_ERRDATA), nullptr, hb_errorDataRelease );
@@ -125,7 +125,7 @@ static HB_BOOL hb_errGetNumCode( int * piValue, const char * szOperation )
       }
 
       *piValue = hb_itemGetNI(pItem);
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
 
    return HB_TRUE;
@@ -133,7 +133,7 @@ static HB_BOOL hb_errGetNumCode( int * piValue, const char * szOperation )
 
 HB_FUNC_STATIC( CARGO )
 {
-   hb_itemReturn( hb_errGetCargo( hb_stackSelfItem() ) );
+   hb_itemReturn(hb_errGetCargo( hb_stackSelfItem() ));
 }
 
 HB_FUNC_STATIC( _CARGO )
@@ -145,12 +145,12 @@ HB_FUNC_STATIC( _CARGO )
       hb_errPutCargo( hb_stackSelfItem(), pItem );
    }
 
-   hb_itemReturn( pItem );
+   hb_itemReturn(pItem);
 }
 
 HB_FUNC_STATIC( ARGS )
 {
-   hb_itemReturn( hb_errGetArgs( hb_stackSelfItem() ) );
+   hb_itemReturn(hb_errGetArgs( hb_stackSelfItem() ));
 }
 
 HB_FUNC_STATIC( _ARGS )
@@ -162,7 +162,7 @@ HB_FUNC_STATIC( _ARGS )
       hb_errPutArgsArray( hb_stackSelfItem(), pItem );
    }
 
-   hb_itemReturn( pItem );
+   hb_itemReturn(pItem);
 }
 
 HB_FUNC_STATIC( CANDEFAULT )
@@ -254,7 +254,7 @@ HB_FUNC_STATIC( _DESCRIPTION )
       hb_errPutDescription( hb_stackSelfItem(), hb_itemGetCPtr(pItem) );
    }
 
-   hb_itemReturn( pItem );
+   hb_itemReturn(pItem);
 }
 
 HB_FUNC_STATIC( FILENAME )
@@ -271,7 +271,7 @@ HB_FUNC_STATIC( _FILENAME )
       hb_errPutFileName( hb_stackSelfItem(), hb_itemGetCPtr(pItem) );
    }
 
-   hb_itemReturn( pItem );
+   hb_itemReturn(pItem);
 }
 
 HB_FUNC_STATIC( OPERATION )
@@ -288,7 +288,7 @@ HB_FUNC_STATIC( _OPERATION )
       hb_errPutOperation( hb_stackSelfItem(), hb_itemGetCPtr(pItem) );
    }
 
-   hb_itemReturn( pItem );
+   hb_itemReturn(pItem);
 }
 
 HB_FUNC_STATIC( SUBSYSTEM )
@@ -305,7 +305,7 @@ HB_FUNC_STATIC( _SUBSYSTEM )
       hb_errPutSubSystem( hb_stackSelfItem(), hb_itemGetCPtr(pItem) );
    }
 
-   hb_itemReturn( pItem );
+   hb_itemReturn(pItem);
 }
 
 HB_FUNC_STATIC( GENCODE )
@@ -432,7 +432,7 @@ static HB_USHORT hb_errClassCreate( void )
 
 HB_FUNC( ERRORNEW )
 {
-   hb_itemReturnRelease( hb_errNew() );
+   hb_itemReturnRelease(hb_errNew());
 }
 
 /* There's a similar undocumented, internal function in CA-Cl*pper named
@@ -448,7 +448,7 @@ HB_FUNC( ERRORBLOCK )
    PHB_ITEM pNewErrorBlock = hb_param(1, HB_IT_EVALITEM);
    PHB_ITEM pErrorBlock = hb_errorBlock();
 
-   hb_itemReturn( pErrorBlock );
+   hb_itemReturn(pErrorBlock);
    if( pNewErrorBlock )
    {
       hb_itemCopy( pErrorBlock, pNewErrorBlock );
@@ -461,7 +461,7 @@ PHB_ITEM hb_errorBlock( void )
 
    if( ! pErrData->errorBlock )
    {
-      pErrData->errorBlock = hb_itemNew( nullptr );
+      pErrData->errorBlock = hb_itemNew(nullptr);
    }
 
    return pErrData->errorBlock;
@@ -506,7 +506,7 @@ void hb_errInit( void )
    hb_dynsymNew( &s_symErrorNew );
 
    /* Create error class and base object */
-   s_pError = hb_itemNew( nullptr );
+   s_pError = hb_itemNew(nullptr);
    hb_clsAssociate( hb_errClassCreate() );
    hb_itemMove( s_pError, hb_stackReturnItem() );
 }
@@ -517,7 +517,7 @@ void hb_errExit( void )
    HB_TRACE( HB_TR_DEBUG, ( "hb_errExit()" ) );
 #endif
 
-   hb_itemRelease( s_pError );
+   hb_itemRelease(s_pError);
    s_pError = nullptr;
 }
 
@@ -595,7 +595,7 @@ HB_USHORT hb_errLaunch( PHB_ITEM pError )
       {
          if( pResult )
          {
-            hb_itemRelease( pResult );
+            hb_itemRelease(pResult);
          }
          uiAction = E_BREAK;
       }
@@ -619,7 +619,7 @@ HB_USHORT hb_errLaunch( PHB_ITEM pError )
             }
          }
 
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
 
          if( bFailure )
          {
@@ -709,7 +709,7 @@ PHB_ITEM hb_errLaunchSubst( PHB_ITEM pError )
       {
          if( pResult )
          {
-            hb_itemRelease( pResult );
+            hb_itemRelease(pResult);
          }
          pResult = nullptr;
       }
@@ -725,7 +725,7 @@ PHB_ITEM hb_errLaunchSubst( PHB_ITEM pError )
    }
    else
    {
-      pResult = hb_itemNew( nullptr );
+      pResult = hb_itemNew(nullptr);
    }
 
    return pResult;
@@ -738,7 +738,7 @@ void hb_errRelease( PHB_ITEM pError )
 #endif
 
    /* NOTE: nullptr pointer is checked by hb_itemRelease() [vszakats] */
-   hb_itemRelease( pError );
+   hb_itemRelease(pError);
 }
 
 PHB_ITEM hb_errGetCargo( PHB_ITEM pError )
@@ -1015,7 +1015,7 @@ PHB_ITEM hb_errPutArgs( PHB_ITEM pError, HB_ULONG ulArgCount, ... )
    hb_errPutArgsArray( pError, pArray );
 
    /* Release the Array. */
-   hb_itemRelease( pArray );
+   hb_itemRelease(pArray);
 
    return pError;
 }
@@ -1089,12 +1089,12 @@ PHB_ITEM hb_errRT_SubstParams( const char * szSubSystem, HB_ERRCODE errGenCode, 
    hb_errPutArgsArray( pError, pArray );
 
    /* Release the Array. */
-   hb_itemRelease( pArray );
+   hb_itemRelease(pArray);
 
    /* Ok, launch... */
    pRetVal = hb_errLaunchSubst( pError );
 
-   hb_itemRelease( pError );
+   hb_itemRelease(pError);
 
    return pRetVal;
 }
@@ -1191,7 +1191,7 @@ HB_USHORT hb_errRT_BASE( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const cha
       hb_errPutArgsArray( pError, pArray );
 
       /* Release the Array. */
-      hb_itemRelease( pArray );
+      hb_itemRelease(pArray);
    }
 
    /* Ok, launch... */
@@ -1254,7 +1254,7 @@ HB_USHORT hb_errRT_BASE_Ext1( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, cons
       hb_errPutArgsArray( pError, pArray );
 
       /* Release the Array. */
-      hb_itemRelease( pArray );
+      hb_itemRelease(pArray);
    }
 
    /* Ok, launch... */
@@ -1316,7 +1316,7 @@ PHB_ITEM hb_errRT_BASE_Subst( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, cons
       hb_errPutArgsArray( pError, pArray );
 
       /* Release the Array. */
-      hb_itemRelease( pArray );
+      hb_itemRelease(pArray);
    }
 
    /* Ok, launch... */
@@ -1377,11 +1377,11 @@ void hb_errRT_BASE_SubstR( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const c
       hb_errPutArgsArray( pError, pArray );
 
       /* Release the Array. */
-      hb_itemRelease( pArray );
+      hb_itemRelease(pArray);
    }
 
    /* Ok, launch... */
-   hb_itemReturnRelease( hb_errLaunchSubst( pError ) );
+   hb_itemReturnRelease(hb_errLaunchSubst( pError ));
    hb_errRelease( pError );
 }
 
@@ -1418,7 +1418,7 @@ HB_USHORT hb_errRT_DBCMD_Ext( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, cons
 
    uiAction = hb_errLaunch( pError );
 
-   hb_itemRelease( pError );
+   hb_itemRelease(pError);
 
    return uiAction;
 }

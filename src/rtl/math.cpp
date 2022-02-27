@@ -113,8 +113,8 @@ static int hb_matherr( HB_MATH_EXCEPTION * pexc )
       pArg1 = hb_itemPutND( nullptr, pexc->arg1 );
       pArg2 = hb_itemPutND( nullptr, pexc->arg2 );
       hb_errPutArgs( pError, 2, pArg1, pArg2 );
-      hb_itemRelease( pArg1 );
-      hb_itemRelease( pArg2 );
+      hb_itemRelease(pArg1);
+      hb_itemRelease(pArg2);
 
       /* launch error codeblock */
       pMatherrResult = hb_errLaunchSubst( pError );
@@ -128,7 +128,7 @@ static int hb_matherr( HB_MATH_EXCEPTION * pexc )
             hb_itemGetNLen(pMatherrResult, &pexc->retvalwidth, &pexc->retvaldec);
             pexc->handled = 1;
          }
-         hb_itemRelease( pMatherrResult );
+         hb_itemRelease(pMatherrResult);
       }
    }
 
@@ -186,7 +186,7 @@ static void hb_mathErrDataRelease( void * Cargo )
 {
    PHB_MATHERRDATA pMathErr = static_cast<PHB_MATHERRDATA>( Cargo );
 
-   hb_itemRelease( pMathErr->block );
+   hb_itemRelease(pMathErr->block);
 }
 
 static HB_TSD_NEW( s_mathErrData, sizeof(HB_MATHERRDATA), hb_mathErrDataInit, hb_mathErrDataRelease );
@@ -518,13 +518,13 @@ static int hb_matherrblock( HB_MATH_EXCEPTION * pexc )
          to .T. within the codeblock */
       pRet = hb_itemDo( pMathErr->block, 6, pType, pFuncname, pError, pArg1, pArg2, pArray );
 
-      hb_itemRelease( pType );
-      hb_itemRelease( pFuncname );
-      hb_itemRelease( pError );
-      hb_itemRelease( pArg1 );
-      hb_itemRelease( pArg2 );
-      hb_itemRelease( pRetval );
-      hb_itemRelease( pHandled );
+      hb_itemRelease(pType);
+      hb_itemRelease(pFuncname);
+      hb_itemRelease(pError);
+      hb_itemRelease(pArg1);
+      hb_itemRelease(pArg2);
+      hb_itemRelease(pRetval);
+      hb_itemRelease(pHandled);
 
       if( pexc->handled )
       {
@@ -539,7 +539,7 @@ static int hb_matherrblock( HB_MATH_EXCEPTION * pexc )
          if( pHandled )
          {
             pexc->handled = hb_itemGetL(pHandled);
-            hb_itemRelease( pHandled );
+            hb_itemRelease(pHandled);
          }
 
          if( pexc->handled )
@@ -551,12 +551,12 @@ static int hb_matherrblock( HB_MATH_EXCEPTION * pexc )
             {
                pexc->retval = hb_itemGetND(pRetval);
                hb_itemGetNLen(pRetval, &pexc->retvalwidth, &pexc->retvaldec);
-               hb_itemRelease( pRetval );
+               hb_itemRelease(pRetval);
             }
             if( pRet && HB_IS_NUMERIC(pRet) )
             {
                retval = hb_itemGetNI(pRet);  /* block may also return 0 to force C math lib warnings */
-               hb_itemRelease( pRet );
+               hb_itemRelease(pRet);
             }
             else
             {
@@ -569,7 +569,7 @@ static int hb_matherrblock( HB_MATH_EXCEPTION * pexc )
             retval = 1;
          }
       }
-      hb_itemRelease( pArray );
+      hb_itemRelease(pArray);
    }
    else
    {
@@ -612,7 +612,7 @@ HB_FUNC( HB_MATHERBLOCK )  /* ([<nNewErrorBlock>]) --> <nOldErrorBlock> */
    }
    else
    {
-      hb_itemReturn( pMathErr->block );
+      hb_itemReturn(pMathErr->block);
    }
 
    if( hb_pcount() > 0 )
@@ -624,7 +624,7 @@ HB_FUNC( HB_MATHERBLOCK )  /* ([<nNewErrorBlock>]) --> <nOldErrorBlock> */
       {
          if( pMathErr->block == nullptr )
          {
-            pMathErr->block = hb_itemNew( nullptr );
+            pMathErr->block = hb_itemNew(nullptr);
          }
          hb_itemCopy( pMathErr->block, pNewErrorBlock );
       }
@@ -634,7 +634,7 @@ HB_FUNC( HB_MATHERBLOCK )  /* ([<nNewErrorBlock>]) --> <nOldErrorBlock> */
             -> delete error handler! */
          if( pMathErr->block )
          {
-            hb_itemRelease( pMathErr->block );
+            hb_itemRelease(pMathErr->block);
             pMathErr->block = nullptr;
          }
       }

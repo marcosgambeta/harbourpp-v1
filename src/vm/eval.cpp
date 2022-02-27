@@ -161,7 +161,7 @@ PHB_ITEM hb_evalLaunch( PHB_EVALINFO pEvalInfo )
          {
             hb_vmProc( uiParam );
          }
-         pResult = hb_itemNew( hb_stackReturnItem() );
+         pResult = hb_itemNew(hb_stackReturnItem());
       }
    }
 
@@ -182,7 +182,7 @@ HB_BOOL hb_evalRelease( PHB_EVALINFO pEvalInfo )
    {
       for( HB_USHORT uiParam = 0; uiParam <= pEvalInfo->paramCount; uiParam++ )
       {
-         hb_itemRelease( pEvalInfo->pItems[ uiParam ] );
+         hb_itemRelease(pEvalInfo->pItems[ uiParam ]);
          pEvalInfo->pItems[ uiParam ] = nullptr;
       }
 
@@ -271,7 +271,7 @@ PHB_ITEM hb_itemDo( PHB_ITEM pItem, HB_ULONG ulPCount, ... )
                hb_vmProc( static_cast<HB_USHORT>( ulPCount ) );
             }
 
-            pResult = hb_itemNew( hb_stackReturnItem() );
+            pResult = hb_itemNew(hb_stackReturnItem());
             hb_vmRequestRestore();
          }
       }
@@ -316,7 +316,7 @@ PHB_ITEM hb_itemDoC( const char * szFunc, HB_ULONG ulPCount, ... )
                va_end( va );
             }
             hb_vmProc( static_cast<HB_USHORT>( ulPCount ) );
-            pResult = hb_itemNew( hb_stackReturnItem() );
+            pResult = hb_itemNew(hb_stackReturnItem());
             hb_vmRequestRestore();
          }
       }

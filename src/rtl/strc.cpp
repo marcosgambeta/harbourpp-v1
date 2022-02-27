@@ -68,7 +68,7 @@ HB_FUNC( HB_STRDECODESCAPE )
       }
       else
       {
-         hb_itemReturn( pText );
+         hb_itemReturn(pText);
       }
    }
    else
@@ -160,7 +160,7 @@ HB_FUNC( HB_STRCDECODE )
       }
       else if( fCont )
       {
-         hb_itemReturn( pText );
+         hb_itemReturn(pText);
       }
    }
    else

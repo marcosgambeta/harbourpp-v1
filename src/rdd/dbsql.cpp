@@ -275,7 +275,7 @@ static HB_ULONG hb_db2Sql( AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
    }
 
    pFileBuf = hb_createFBuffer( pFile, HB_FILE_BUF_SIZE );
-   pTmp = hb_itemNew( nullptr );
+   pTmp = hb_itemNew(nullptr);
 
    while( llNext-- > 0 )
    {
@@ -373,7 +373,7 @@ static HB_ULONG hb_db2Sql( AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
       hb_xfree( szInsert );
    }
    hb_destroyFBuffer( pFileBuf );
-   hb_itemRelease( pTmp );
+   hb_itemRelease(pTmp);
 
 #if 0
    /* Writing EOF */
@@ -462,7 +462,7 @@ HB_FUNC( __DBSQL )
 
          if( pError )
          {
-            hb_itemRelease( pError );
+            hb_itemRelease(pError);
          }
 
          if( pFile != nullptr )

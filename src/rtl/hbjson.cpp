@@ -629,14 +629,14 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
       szSource = _skipws( szSource + 1 );
       if( *szSource != ']' )
       {
-         PHB_ITEM pItem = hb_itemNew( nullptr );
+         PHB_ITEM pItem = hb_itemNew(nullptr);
 
          for( ;; )
          {
             szSource = _hb_jsonDecode( szSource, pItem, cdp );
             if( ! szSource )
             {
-               hb_itemRelease( pItem );
+               hb_itemRelease(pItem);
                return nullptr;
             }
             hb_arrayAddForward( pValue, pItem );
@@ -653,11 +653,11 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
             }
             else
             {
-               hb_itemRelease( pItem );
+               hb_itemRelease(pItem);
                return nullptr;
             }
          }
-         hb_itemRelease( pItem );
+         hb_itemRelease(pItem);
       }
       return szSource + 1;
    }
@@ -667,8 +667,8 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
       szSource = _skipws( szSource + 1 );
       if( *szSource != '}' )
       {
-         PHB_ITEM pItemKey = hb_itemNew( nullptr );
-         PHB_ITEM pItemValue = hb_itemNew( nullptr );
+         PHB_ITEM pItemKey = hb_itemNew(nullptr);
+         PHB_ITEM pItemValue = hb_itemNew(nullptr);
 
          for( ;; )
          {
@@ -678,8 +678,8 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
                 * ( szSource = _skipws( szSource ) ) != ':' ||
                 ( szSource = _hb_jsonDecode( _skipws( szSource + 1 ), pItemValue, cdp ) ) == nullptr)
             {
-               hb_itemRelease( pItemKey );
-               hb_itemRelease( pItemValue );
+               hb_itemRelease(pItemKey);
+               hb_itemRelease(pItemValue);
                return nullptr;
             }
 
@@ -696,13 +696,13 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
             }
             else
             {
-               hb_itemRelease( pItemKey );
-               hb_itemRelease( pItemValue );
+               hb_itemRelease(pItemKey);
+               hb_itemRelease(pItemValue);
                return nullptr;
             }
          }
-         hb_itemRelease( pItemKey );
-         hb_itemRelease( pItemValue );
+         hb_itemRelease(pItemKey);
+         hb_itemRelease(pItemValue);
       }
       return szSource + 1;
    }
@@ -755,13 +755,13 @@ char * hb_jsonEncode( PHB_ITEM pValue, HB_SIZE * pnLen, int iIndent )
 
 HB_SIZE hb_jsonDecodeCP( const char * szSource, PHB_ITEM pValue, PHB_CODEPAGE cdp )
 {
-   PHB_ITEM pItem = pValue ? pValue : hb_itemNew( nullptr );
+   PHB_ITEM pItem = pValue ? pValue : hb_itemNew(nullptr);
    const char * sz;
 
    sz = szSource ? _hb_jsonDecode( _skipws( szSource ), pItem, cdp ) : nullptr;
    if( ! pValue )
    {
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
    if( sz )
    {
@@ -806,17 +806,17 @@ HB_FUNC( HB_JSONENCODE )
 
 HB_FUNC( HB_JSONDECODE )
 {
-   PHB_ITEM pItem = hb_itemNew( nullptr );
+   PHB_ITEM pItem = hb_itemNew(nullptr);
    HB_SIZE nSize = hb_jsonDecodeCP( hb_parc(1), pItem, _hb_jsonCdpPar( 3 ) );
 
    if( HB_ISBYREF( 2 ) )
    {
       hb_retns( static_cast<HB_ISIZ>( nSize ) );
       hb_itemParamStoreForward( 2, pItem );
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
    else
    {
-      hb_itemReturnRelease( pItem );
+      hb_itemReturnRelease(pItem);
    }
 }

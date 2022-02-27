@@ -75,7 +75,7 @@ HB_FUNC( SX_GETLOCKS )
    {
       PHB_ITEM pList = hb_itemArrayNew( 0 );
       SELF_INFO( pArea, DBI_GETLOCKARRAY, pList );
-      hb_itemReturnRelease( pList );
+      hb_itemReturnRelease(pList);
    }
 }
 
@@ -86,10 +86,10 @@ HB_FUNC( SX_ISFLOCKED )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_itemNew( nullptr );
+      PHB_ITEM pItem = hb_itemNew(nullptr);
       SELF_INFO( pArea, DBI_ISFLOCK, pItem );
       fLocked = hb_itemGetL(pItem);
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
 
    hb_retl( fLocked );
@@ -102,10 +102,10 @@ HB_FUNC( SX_ISREADONLY )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_itemNew( nullptr );
+      PHB_ITEM pItem = hb_itemNew(nullptr);
       SELF_INFO( pArea, DBI_ISREADONLY, pItem );
       fReadOnly = hb_itemGetL(pItem);
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
 
    hb_retl( fReadOnly );
@@ -118,10 +118,10 @@ HB_FUNC( SX_ISSHARED )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_itemNew( nullptr );
+      PHB_ITEM pItem = hb_itemNew(nullptr);
       SELF_INFO( pArea, DBI_SHARED, pItem );
       fShared = hb_itemGetL(pItem);
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
 
    hb_retl( fShared );
@@ -134,12 +134,12 @@ HB_FUNC( SX_IDTYPE )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_itemNew( nullptr );
+      PHB_ITEM pItem = hb_itemNew(nullptr);
       if( SELF_RECINFO( pArea, nullptr, DBRI_ENCRYPTED, pItem ) == HB_SUCCESS )
       {
          iType = hb_itemGetL(pItem) ? 2 : 1;
       }
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
 
    hb_retni( iType );
@@ -152,12 +152,12 @@ HB_FUNC( SX_TABLETYPE )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_itemNew( nullptr );
+      PHB_ITEM pItem = hb_itemNew(nullptr);
       if( SELF_INFO( pArea, DBI_ISENCRYPTED, pItem ) == HB_SUCCESS )
       {
          iType = hb_itemGetL(pItem) ? 2 : 1;
       }
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
 
    hb_retni( iType );
@@ -169,9 +169,9 @@ HB_FUNC( SX_TABLENAME )
 
    if( pArea )
    {
-      PHB_ITEM pList = hb_itemNew( nullptr );
+      PHB_ITEM pList = hb_itemNew(nullptr);
       SELF_INFO( pArea, DBI_FULLPATH, pList );
-      hb_itemReturnRelease( pList );
+      hb_itemReturnRelease(pList);
    }
    else
    {
@@ -217,13 +217,13 @@ HB_FUNC( SX_ROLLBACK )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_itemNew( nullptr );
+      PHB_ITEM pItem = hb_itemNew(nullptr);
       fResult = SELF_INFO( pArea, DBI_ROLLBACK, pItem ) == HB_SUCCESS;
       if( fResult && fRollChild )
       {
          hb_sxRollBackChild( pArea, pItem );
       }
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
 
    hb_retl( fResult );
@@ -262,7 +262,7 @@ HB_FUNC( SX_RLOCK )
 
    if( pResult )
    {
-      hb_itemReturnRelease( pResult );
+      hb_itemReturnRelease(pResult);
    }
    else
    {
@@ -310,7 +310,7 @@ HB_FUNC( SX_SETPASS )
             {
                fResult = HB_TRUE;
             }
-            hb_itemRelease( pItem );
+            hb_itemRelease(pItem);
          }
       }
    }
@@ -342,7 +342,7 @@ HB_FUNC( SX_SETPASS )
             {
                fResult = HB_TRUE;
             }
-            hb_itemRelease( pItem );
+            hb_itemRelease(pItem);
          }
       }
       else if( iPCount == 2 && HB_ISNUM( 1 ) && HB_ISCHAR( 2 ) )
@@ -354,12 +354,12 @@ HB_FUNC( SX_SETPASS )
             switch( hb_parni(1) )
             {
                case 1:  /* return current password key in raw form */
-                  pItem = hb_itemNew( nullptr );
+                  pItem = hb_itemNew(nullptr);
                   if( SELF_INFO( pArea, DBI_PASSWORD, pItem ) == HB_SUCCESS )
                   {
-                     hb_itemReturn( pItem );
+                     hb_itemReturn(pItem);
                   }
-                  hb_itemRelease( pItem );
+                  hb_itemRelease(pItem);
                   break;
                case 2:  /* set raw password key */
                   /* not implemented */
@@ -392,7 +392,7 @@ HB_FUNC( SX_DBFENCRYPT )
       {
          fResult = hb_itemGetL(pItem);
       }
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
    hb_retl( fResult );
 }
@@ -409,7 +409,7 @@ HB_FUNC( SX_DBFDECRYPT )
       {
          fResult = hb_itemGetL(pItem);
       }
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
    hb_retl( fResult );
 }
@@ -428,7 +428,7 @@ HB_FUNC( SX_MEMOPACK )
          hb_arraySet( pItem, i, hb_param(i, HB_IT_ANY) );
       }
       fResult = SELF_INFO( pArea, DBI_MEMOPACK, pItem ) == HB_SUCCESS;
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
    hb_retl( fResult );
 }
@@ -448,7 +448,7 @@ HB_FUNC( SX_TURBOAREA )
       {
          hb_itemPutL( pItem, HB_FALSE );
       }
-      hb_itemReturnRelease( pItem );
+      hb_itemReturnRelease(pItem);
    }
    else
    {
@@ -484,7 +484,7 @@ HB_FUNC( SX_SETTURBO )
       {
          hb_itemPutL( pItem, HB_FALSE );
       }
-      hb_itemReturnRelease( pItem );
+      hb_itemReturnRelease(pItem);
    }
 }
 
@@ -504,13 +504,13 @@ HB_FUNC( _SXOPENINIT )
    if( pArea )
    {
       LPDBOPENINFO pInfo = nullptr;
-      PHB_ITEM pItem = hb_itemNew( nullptr );
+      PHB_ITEM pItem = hb_itemNew(nullptr);
 
       if( SELF_INFO( pArea, DBI_OPENINFO, pItem ) )
       {
          pInfo = static_cast<LPDBOPENINFO>( hb_itemGetPtr(pItem) );
       }
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
       if( pInfo )
       {
          if( HB_ISLOG( 2 ) )

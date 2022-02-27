@@ -1626,7 +1626,7 @@ static int hb_hsxCreate( const char * szFile, int iBufSize, int iKeySize, HB_BOO
       }
       else if( HB_IS_BLOCK(pExpr) )
       {
-         pKeyExpr = hb_itemNew( pExpr );
+         pKeyExpr = hb_itemNew(pExpr);
       }
    }
 
@@ -1816,7 +1816,7 @@ static int hb_hsxIndex( const char * szFile, PHB_ITEM pExpr, int iKeySize, int i
          }
          if( pArea->valResult )
          {
-            hb_itemRelease( pArea->valResult );
+            hb_itemRelease(pArea->valResult);
             pArea->valResult = nullptr;
          }
          if( ulRecNo )
@@ -1887,7 +1887,7 @@ static int hb_hsxFilter( int iHandle, const char * pSeek, HB_SIZE nSeek, PHB_ITE
    }
 
    fValid = HB_TRUE;
-   pItem = hb_itemNew( nullptr );
+   pItem = hb_itemNew(nullptr);
    while( iResult == HSX_SUCCESS && errCode != HB_FAILURE )
    {
       iResult = hb_hsxNext( iHandle, &ulRec );
@@ -1918,10 +1918,10 @@ static int hb_hsxFilter( int iHandle, const char * pSeek, HB_SIZE nSeek, PHB_ITE
    }
    if( pArea->valResult )
    {
-      hb_itemRelease( pArea->valResult );
+      hb_itemRelease(pArea->valResult);
       pArea->valResult = nullptr;
    }
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
 
    if( ulRecNo )
    {
@@ -2162,7 +2162,7 @@ HB_FUNC( HS_FILTER )
    }
    if( iHandle >= 0 && nLen > 0 && szText )
    {
-      PHB_ITEM pItem = hb_itemNew( nullptr );
+      PHB_ITEM pItem = hb_itemNew(nullptr);
       AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
 
       if( ! pArea )
@@ -2215,7 +2215,7 @@ HB_FUNC( HS_FILTER )
             ulRecords = hb_itemGetNL(pItem);
          }
       }
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
 
       if( fNew )
       {

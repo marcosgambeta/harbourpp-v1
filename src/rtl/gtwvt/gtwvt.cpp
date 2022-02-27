@@ -403,7 +403,7 @@ static PHB_GTWVT hb_gt_wvt_New( PHB_GT pGT, HINSTANCE hInstance, int iCmdShow )
       PHB_ITEM pItem = hb_itemPutCPtr( nullptr, hb_cmdargBaseProgName() );
 
       pWVT->lpWindowTitle = HB_ITEMGETSTR( pItem, &pWVT->hWindowTitle, nullptr );
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
 
    pWVT->bResizable        = HB_TRUE;
@@ -2475,7 +2475,7 @@ static void hb_gt_wvt_MouseEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
                {
                   PHB_ITEM pItem = hb_itemPutStrLenU16( nullptr, HB_CDP_ENDIAN_NATIVE, sBuffer, n );
                   hb_gt_winapi_setClipboard( CF_UNICODETEXT, pItem );
-                  hb_itemRelease( pItem );
+                  hb_itemRelease(pItem);
                }
                hb_xfree( sBuffer );
 #else
@@ -2483,7 +2483,7 @@ static void hb_gt_wvt_MouseEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
                {
                   PHB_ITEM pItem = hb_itemPutCLPtr( nullptr, sBuffer, n );
                   hb_gt_winapi_setClipboard( pWVT->CodePage == OEM_CHARSET ? CF_OEMTEXT : CF_TEXT, pItem );
-                  hb_itemRelease( pItem );
+                  hb_itemRelease(pItem);
                }
                else
                {
@@ -4350,7 +4350,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          {
             if( pInfo->pResult == nullptr )
             {
-               pInfo->pResult = hb_itemNew( nullptr );
+               pInfo->pResult = hb_itemNew(nullptr);
             }
 #if defined( UNICODE )
             hb_gt_winapi_getClipboard( CF_UNICODETEXT, pInfo->pResult );
@@ -4372,7 +4372,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
       case HB_GTI_SCREENSIZE:
          if( ! pInfo->pResult )
          {
-            pInfo->pResult = hb_itemNew( nullptr );
+            pInfo->pResult = hb_itemNew(nullptr);
          }
 
          hb_arrayNew( pInfo->pResult, 2 );
@@ -4588,7 +4588,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             int i;
             if( ! pInfo->pResult )
             {
-               pInfo->pResult = hb_itemNew( nullptr );
+               pInfo->pResult = hb_itemNew(nullptr);
             }
             hb_arrayNew( pInfo->pResult, 16 );
             for( i = 0; i < 16; i++ )
@@ -4652,7 +4652,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
          if( ! pInfo->pResult )
          {
-            pInfo->pResult = hb_itemNew( nullptr );
+            pInfo->pResult = hb_itemNew(nullptr);
          }
          hb_arrayNew( pInfo->pResult, 2 );
 

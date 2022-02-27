@@ -140,7 +140,7 @@ PHB_ITEM hb_fsDirectory( const char * pszDirSpec, const char * pszAttributes, HB
 
    if( ( ffind = hb_fsFindFirst( pszDirSpec, ulMask ) ) != nullptr )
    {
-      PHB_ITEM pSubarray = hb_itemNew( nullptr );
+      PHB_ITEM pSubarray = hb_itemNew(nullptr);
 
       do
       {
@@ -166,7 +166,7 @@ PHB_ITEM hb_fsDirectory( const char * pszDirSpec, const char * pszAttributes, HB
       }
       while( hb_fsFindNext( ffind ) );
 
-      hb_itemRelease( pSubarray );
+      hb_itemRelease(pSubarray);
 
       hb_fsFindClose( ffind );
    }
@@ -181,10 +181,10 @@ PHB_ITEM hb_fsDirectory( const char * pszDirSpec, const char * pszAttributes, HB
 
 HB_FUNC( DIRECTORY )
 {
-   hb_itemReturnRelease( hb_fsDirectory( hb_parc(1), hb_parc(2), HB_FALSE ) );
+   hb_itemReturnRelease(hb_fsDirectory( hb_parc(1), hb_parc(2), HB_FALSE ));
 }
 
 HB_FUNC( HB_DIRECTORY )
 {
-   hb_itemReturnRelease( hb_fsDirectory( hb_parc(1), hb_parc(2), HB_TRUE ) );
+   hb_itemReturnRelease(hb_fsDirectory( hb_parc(1), hb_parc(2), HB_TRUE ));
 }

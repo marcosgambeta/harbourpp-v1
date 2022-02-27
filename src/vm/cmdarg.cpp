@@ -813,7 +813,7 @@ HB_FUNC( HB_ACMDLINE )
          hb_arraySetCPtr( pArray, iPos, hb_cmdargDup( iPos ) );
       }
 
-      hb_itemReturnRelease( pArray );
+      hb_itemReturnRelease(pArray);
    }
    else
    {

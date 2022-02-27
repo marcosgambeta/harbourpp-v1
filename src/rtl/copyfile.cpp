@@ -86,7 +86,7 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest )
 
    if( pError )
    {
-      hb_itemRelease( pError );
+      hb_itemRelease(pError);
       pError = nullptr;
    }
 
@@ -110,7 +110,7 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest )
 
       if( pError )
       {
-         hb_itemRelease( pError );
+         hb_itemRelease(pError);
          pError = nullptr;
       }
 
@@ -147,7 +147,7 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest )
 
          if( pError )
          {
-            hb_itemRelease( pError );
+            hb_itemRelease(pError);
          }
 
          hb_xfree( buffer );

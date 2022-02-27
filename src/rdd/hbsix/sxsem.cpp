@@ -86,7 +86,7 @@ static HB_BOOL hb_sxSemName( char * szFileName )
             szFileName[ HB_PATH_MAX - 1 ] = '\0';
             fResult = HB_TRUE;
          }
-         hb_itemRelease( pOrderInfo.itmResult );
+         hb_itemRelease(pOrderInfo.itmResult);
       }
    }
 

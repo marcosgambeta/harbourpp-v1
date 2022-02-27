@@ -228,7 +228,7 @@ void hb_threadExit( void )
 {
    if( s_pOnceMutex )
    {
-      hb_itemRelease( s_pOnceMutex );
+      hb_itemRelease(s_pOnceMutex);
       s_pOnceMutex = nullptr;
    }
 #if defined( HB_TASK_THREAD ) && defined( HB_MT_VM )
@@ -865,17 +865,17 @@ static HB_GARBAGE_FUNC( hb_threadDestructor )
 
    if( pThread->pParams )
    {
-      hb_itemRelease( pThread->pParams );
+      hb_itemRelease(pThread->pParams);
       pThread->pParams = nullptr;
    }
    if( pThread->pMemvars )
    {
-      hb_itemRelease( pThread->pMemvars );
+      hb_itemRelease(pThread->pMemvars);
       pThread->pMemvars = nullptr;
    }
    if( pThread->pResult )
    {
-      hb_itemRelease( pThread->pResult );
+      hb_itemRelease(pThread->pResult);
       pThread->pResult = nullptr;
    }
    if( pThread->pI18N )
@@ -971,7 +971,7 @@ HB_CARGO_FUNC( hb_threadStartVM )
          hb_vmPush( hb_arrayGetItemPtr( pThread->pParams, ulParam ) );
       }
 
-      hb_itemRelease( pThread->pParams );
+      hb_itemRelease(pThread->pParams);
       pThread->pParams = nullptr;
 
       if( fSend )
@@ -985,11 +985,11 @@ HB_CARGO_FUNC( hb_threadStartVM )
    }
    else
    {
-      hb_itemRelease( pThread->pParams );
+      hb_itemRelease(pThread->pParams);
       pThread->pParams = nullptr;
       if( pThread->pMemvars )
       {
-         hb_itemRelease( pThread->pMemvars );
+         hb_itemRelease(pThread->pMemvars);
          pThread->pMemvars = nullptr;
       }
 
@@ -1029,7 +1029,7 @@ PHB_THREADSTATE hb_threadStateNew( void )
    PHB_ITEM pThItm;
    PHB_THREADSTATE pThread;
 
-   pThItm = hb_itemNew( nullptr );
+   pThItm = hb_itemNew(nullptr);
    pThread = static_cast<PHB_THREADSTATE>( hb_gcAllocRaw( sizeof(HB_THREADSTATE), &s_gcThreadFuncs ) );
    memset( pThread, 0, sizeof(HB_THREADSTATE) );
    hb_itemPutPtrRawGC( pThItm, pThread );
@@ -1124,7 +1124,7 @@ PHB_ITEM hb_threadStart( HB_ULONG ulAttr, PHB_CARGO_FUNC pFunc, void * cargo )
    pThread = hb_threadStateClone( ulAttr, nullptr );
    pThread->pFunc = pFunc;
    pThread->cargo = cargo;
-   pReturn = hb_itemNew( pThread->pThItm );
+   pReturn = hb_itemNew(pThread->pThItm);
 
    if( hb_vmThreadRegister( static_cast<void*>( pThread ) ) )
    {
@@ -1134,7 +1134,7 @@ PHB_ITEM hb_threadStart( HB_ULONG ulAttr, PHB_CARGO_FUNC pFunc, void * cargo )
    if( ! pThread->th_h )
    {
       hb_vmThreadRelease( pThread );
-      hb_itemRelease( pReturn );
+      hb_itemRelease(pReturn);
       pReturn = nullptr;
    }
    return pReturn;
@@ -1235,7 +1235,7 @@ HB_FUNC( HB_THREADSTART )
       /* make copy of thread pointer item before we pass it to new thread
        * to avoid race condition
        */
-      hb_itemReturn( pReturn );
+      hb_itemReturn(pReturn);
 
       if( hb_vmThreadRegister( static_cast<void*>( pThread ) ) )
       {
@@ -1274,7 +1274,7 @@ HB_FUNC( HB_THREADSELF )
     */
    if( pThread )
    {
-      hb_itemReturn( pThread->pThItm );
+      hb_itemReturn(pThread->pThItm);
    }
 #endif
 }
@@ -1469,7 +1469,7 @@ HB_FUNC( HB_THREADJOIN )
          if( pThread->pResult )
          {
             hb_itemParamStoreForward( 2, pThread->pResult );
-            hb_itemRelease( pThread->pResult );
+            hb_itemRelease(pThread->pResult);
             pThread->pResult = nullptr;
          }
       }
@@ -1829,7 +1829,7 @@ static HB_GARBAGE_FUNC( hb_mutexDestructor )
 
    if( pMutex->events )
    {
-      hb_itemRelease( pMutex->events );
+      hb_itemRelease(pMutex->events);
       pMutex->events = nullptr;
    }
 
@@ -1883,7 +1883,7 @@ PHB_ITEM hb_threadMutexCreate( void )
    PHB_MUTEX pMutex;
    PHB_ITEM pItem;
 
-   pItem = hb_itemNew( nullptr );
+   pItem = hb_itemNew(nullptr);
    pMutex = static_cast<PHB_MUTEX>( hb_gcAllocRaw( sizeof(HB_MUTEX), &s_gcMutexFuncs ) );
    memset( pMutex, 0, sizeof(HB_MUTEX) );
    pItem = hb_itemPutPtrRawGC( pItem, pMutex );
@@ -2279,7 +2279,7 @@ static void hb_thredMutexEventInit( PHB_MUTEX pMutex )
    {
       HB_CRITICAL_UNLOCK( pMutex->mutex );
       hb_vmLock();
-      hb_itemRelease( pEvents );
+      hb_itemRelease(pEvents);
       hb_vmUnlock();
       HB_CRITICAL_LOCK( pMutex->mutex );
    }
@@ -2426,7 +2426,7 @@ PHB_ITEM hb_threadMutexSubscribe( PHB_ITEM pItem, HB_BOOL fClear )
          }
          else
          {
-            pResult = hb_itemNew( nullptr );
+            pResult = hb_itemNew(nullptr);
             hb_arrayGet( pMutex->events, 1, pResult );
             hb_arrayDel( pMutex->events, 1 );
             hb_arraySize( pMutex->events, hb_arrayLen( pMutex->events ) - 1 );
@@ -2520,7 +2520,7 @@ PHB_ITEM hb_threadMutexSubscribe( PHB_ITEM pItem, HB_BOOL fClear )
 
       if( pResult )
       {
-         pResult = hb_itemNew( pResult );
+         pResult = hb_itemNew(pResult);
          hb_stackPop();
       }
 #endif
@@ -2546,7 +2546,7 @@ PHB_ITEM hb_threadMutexTimedSubscribe( PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_B
          }
          else
          {
-            pResult = hb_itemNew( nullptr );
+            pResult = hb_itemNew(nullptr);
             hb_arrayGet( pMutex->events, 1, pResult );
             hb_arrayDel( pMutex->events, 1 );
             hb_arraySize( pMutex->events, hb_arrayLen( pMutex->events ) - 1 );
@@ -2659,7 +2659,7 @@ PHB_ITEM hb_threadMutexTimedSubscribe( PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_B
 
       if( pResult )
       {
-         pResult = hb_itemNew( pResult );
+         pResult = hb_itemNew(pResult);
          hb_stackPop();
       }
 #endif
@@ -2675,7 +2675,7 @@ HB_FUNC( HB_MUTEXEXISTS )
 
 HB_FUNC( HB_MUTEXCREATE )
 {
-   hb_itemReturnRelease( hb_threadMutexCreate() );
+   hb_itemReturnRelease(hb_threadMutexCreate());
 }
 
 HB_FUNC( HB_MUTEXLOCK )
@@ -2760,7 +2760,7 @@ HB_FUNC( HB_MUTEXSUBSCRIBE )
       if( pResult )
       {
          hb_itemParamStoreForward( 3, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
          hb_retl(true);
       }
       else
@@ -2797,7 +2797,7 @@ HB_FUNC( HB_MUTEXSUBSCRIBENOW )
       if( pResult )
       {
          hb_itemParamStoreForward( 3, pResult );
-         hb_itemRelease( pResult );
+         hb_itemRelease(pResult);
          hb_retl(true);
       }
       else

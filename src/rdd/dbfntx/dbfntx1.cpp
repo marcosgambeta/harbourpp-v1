@@ -580,7 +580,7 @@ static PHB_ITEM hb_ntxKeyGetItem( PHB_ITEM pItem, LPKEYINFO pKey, LPTAGINFO pTag
             }
             else
             {
-               pItem = hb_itemNew( nullptr );
+               pItem = hb_itemNew(nullptr);
             }
       }
    }
@@ -590,7 +590,7 @@ static PHB_ITEM hb_ntxKeyGetItem( PHB_ITEM pItem, LPKEYINFO pKey, LPTAGINFO pTag
    }
    else
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
    }
 
    return pItem;
@@ -640,8 +640,8 @@ static HB_BOOL hb_ntxEvalSeekCond( LPTAGINFO pTag, PHB_ITEM pCondItem )
 
    fRet = hb_itemGetL(hb_vmEvalBlockV( pCondItem, 2, pKeyVal, pKeyRec ));
 
-   hb_itemRelease( pKeyVal );
-   hb_itemRelease( pKeyRec );
+   hb_itemRelease(pKeyVal);
+   hb_itemRelease(pKeyRec);
 
    return fRet;
 }
@@ -655,10 +655,10 @@ static HB_BYTE hb_ntxGetKeyType( LPTAGINFO pTag )
 
    if( pTag->nField )
    {
-      PHB_ITEM pItem = hb_itemNew( nullptr );
+      PHB_ITEM pItem = hb_itemNew(nullptr);
       SELF_GETVALUE( &pTag->pIndex->pArea->dbfarea.area, pTag->nField, pItem );
       bType = hb_ntxItemType( pItem );
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
    else
    {
@@ -694,10 +694,10 @@ static LPKEYINFO hb_ntxEvalKey( LPKEYINFO pKey, LPTAGINFO pTag )
 
    if( pTag->nField )
    {
-      pItem = hb_itemNew( nullptr );
+      pItem = hb_itemNew(nullptr);
       SELF_GETVALUE( &pArea->dbfarea.area, pTag->nField, pItem );
       pKey = hb_ntxKeyPutItem( pKey, pItem, pArea->dbfarea.ulRecNo, pTag, HB_FALSE, nullptr );
-      hb_itemRelease( pItem );
+      hb_itemRelease(pItem);
    }
    else
    {
@@ -866,7 +866,7 @@ static void hb_ntxTagClearScope( LPTAGINFO pTag, HB_USHORT nScope )
    }
    if( pScope->scopeItem )
    {
-      hb_itemRelease( pScope->scopeItem );
+      hb_itemRelease(pScope->scopeItem);
       pScope->scopeItem = nullptr;
    }
    pScope->scopeKeyLen = 0;
@@ -906,7 +906,7 @@ static void hb_ntxTagSetScope( LPTAGINFO pTag, HB_USHORT nScope, PHB_ITEM pItem 
 
       if( pScope->scopeItem == nullptr )
       {
-         pScope->scopeItem = hb_itemNew( nullptr );
+         pScope->scopeItem = hb_itemNew(nullptr);
       }
       hb_itemCopy( pScope->scopeItem, pItem );
 
@@ -3994,7 +3994,7 @@ static void hb_ntxCreateFName( NTXAREAP pArea, const char * szBagName, HB_BOOL *
    hb_xfree( pFileName );
    if( pExt )
    {
-      hb_itemRelease( pExt );
+      hb_itemRelease(pExt);
    }
 }
 
@@ -5169,7 +5169,7 @@ static HB_BOOL hb_ntxOrdFindRec( LPTAGINFO pTag, HB_ULONG ulRecNo, HB_BOOL fCont
 static HB_ULONG hb_ntxOrdScopeEval( LPTAGINFO pTag, HB_EVALSCOPE_FUNC pFunc, void * pParam, PHB_ITEM pItemLo, PHB_ITEM pItemHi )
 {
    HB_ULONG ulCount = 0, ulLen = static_cast<HB_ULONG>( pTag->KeyLength );
-   PHB_ITEM pItemTop = hb_itemNew( nullptr ), pItemBottom = hb_itemNew( nullptr );
+   PHB_ITEM pItemTop = hb_itemNew(nullptr), pItemBottom = hb_itemNew(nullptr);
 
    hb_ntxTagGetScope( pTag, 0, pItemTop );
    hb_ntxTagGetScope( pTag, 1, pItemBottom );
@@ -5190,8 +5190,8 @@ static HB_ULONG hb_ntxOrdScopeEval( LPTAGINFO pTag, HB_EVALSCOPE_FUNC pFunc, voi
 
    hb_ntxTagSetScope( pTag, 0, pItemTop );
    hb_ntxTagSetScope( pTag, 1, pItemBottom );
-   hb_itemRelease( pItemTop );
-   hb_itemRelease( pItemBottom );
+   hb_itemRelease(pItemTop);
+   hb_itemRelease(pItemBottom);
 
    return ulCount;
 }
@@ -5982,7 +5982,7 @@ static HB_ERRCODE hb_ntxTagCreate( LPTAGINFO pTag, HB_BOOL fReindex )
       pForItem = pTag->pForItem;
       if( pTag->nField )
       {
-         pItem = hb_itemNew( nullptr );
+         pItem = hb_itemNew(nullptr);
       }
 
       if( ! pArea->dbfarea.area.lpdbOrdCondInfo || pArea->dbfarea.area.lpdbOrdCondInfo->fAll )
@@ -6237,7 +6237,7 @@ static HB_ERRCODE hb_ntxTagCreate( LPTAGINFO pTag, HB_BOOL fReindex )
 
       if( pTag->nField )
       {
-         hb_itemRelease( pItem );
+         hb_itemRelease(pItem);
       }
 
       pArea->lpCurTag = pSaveTag;
@@ -6924,14 +6924,14 @@ static HB_ERRCODE hb_ntxOpen( NTXAREAP pArea, LPDBOPENINFO pOpenInfo )
          {
             pOrderInfo.itmOrder  = hb_itemPutNI( nullptr, hb_setGetAutOrder() );
             errCode = SELF_ORDLSTFOCUS( &pArea->dbfarea.area, &pOrderInfo );
-            hb_itemRelease( pOrderInfo.itmOrder );
+            hb_itemRelease(pOrderInfo.itmOrder);
             if( errCode == HB_SUCCESS )
             {
                errCode = SELF_GOTOP( &pArea->dbfarea.area );
             }
          }
-         hb_itemRelease( pOrderInfo.atomBagName );
-         hb_itemRelease( pOrderInfo.itmResult );
+         hb_itemRelease(pOrderInfo.atomBagName);
+         hb_itemRelease(pOrderInfo.itmResult);
       }
    }
 
@@ -7033,7 +7033,7 @@ static HB_ERRCODE hb_ntxOrderCreate( NTXAREAP pArea, LPDBORDERCREATEINFO pOrderI
    /* If we have a codeblock for the expression, use it */
    if( pOrderInfo->itmCobExpr )
    {
-      pKeyExp = hb_itemNew( pOrderInfo->itmCobExpr );
+      pKeyExp = hb_itemNew(pOrderInfo->itmCobExpr);
    }
    else /* Otherwise, try compiling the key expression string */
    {
@@ -7094,7 +7094,7 @@ static HB_ERRCODE hb_ntxOrderCreate( NTXAREAP pArea, LPDBORDERCREATEINFO pOrderI
       default:
          bType = 'U';
    }
-   hb_itemRelease( pResult );
+   hb_itemRelease(pResult);
 
    /* Make sure KEY has proper type and iLen is not 0 */
    if( bType == 'U' || iLen == 0 )
@@ -7116,7 +7116,7 @@ static HB_ERRCODE hb_ntxOrderCreate( NTXAREAP pArea, LPDBORDERCREATEINFO pOrderI
       if( pArea->dbfarea.area.lpdbOrdCondInfo->itmCobFor )
       {
          /* If we have a codeblock for the conditional expression, use it */
-         pForExp = hb_itemNew( pArea->dbfarea.area.lpdbOrdCondInfo->itmCobFor );
+         pForExp = hb_itemNew(pArea->dbfarea.area.lpdbOrdCondInfo->itmCobFor);
       }
       else if( szFor )
       {
@@ -7152,7 +7152,7 @@ static HB_ERRCODE hb_ntxOrderCreate( NTXAREAP pArea, LPDBORDERCREATEINFO pOrderI
          return errCode;
       }
       fOK = hb_itemType( pArea->dbfarea.area.valResult ) & HB_IT_LOGICAL;
-      hb_itemRelease( pArea->dbfarea.area.valResult );
+      hb_itemRelease(pArea->dbfarea.area.valResult);
       pArea->dbfarea.area.valResult = nullptr;
       if( ! fOK )
       {
@@ -7745,7 +7745,7 @@ static HB_ERRCODE hb_ntxOrderInfo( NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
                         if( SELF_EVALBLOCK( &pArea->dbfarea.area, pForItem ) == HB_SUCCESS )
                         {
                            fOK = hb_itemType( pArea->dbfarea.area.valResult ) & HB_IT_LOGICAL;
-                           hb_itemRelease( pArea->dbfarea.area.valResult );
+                           hb_itemRelease(pArea->dbfarea.area.valResult);
                            pArea->dbfarea.area.valResult = nullptr;
                         }
                      }

@@ -254,7 +254,7 @@ HB_FUNC( HB_UPOKE )
             }
          }
       }
-      hb_itemReturn( pText );
+      hb_itemReturn(pText);
    }
    else
    {
@@ -278,7 +278,7 @@ HB_FUNC( HB_BPOKE )
       {
          pszText[ nPos - 1 ] = static_cast<char>( hb_parni(3) & 0xff );
       }
-      hb_itemReturn( pText );
+      hb_itemReturn(pText);
    }
    else
    {
@@ -328,7 +328,7 @@ HB_FUNC( HB_USUBSTR )
       {
          if( nFrom <= 0 && nCount == nSize )
          {
-            hb_itemReturn( pText );
+            hb_itemReturn(pText);
          }
          else
          {
@@ -388,7 +388,7 @@ HB_FUNC( HB_BSUBSTR )
       {
          if( nFrom <= 0 && nCount == nSize )
          {
-            hb_itemReturn( pText );
+            hb_itemReturn(pText);
          }
          else
          {
@@ -428,7 +428,7 @@ HB_FUNC( HB_ULEFT )
          }
          if( static_cast<HB_SIZE>( nLen ) >= nText )
          {
-            hb_itemReturn( pText );
+            hb_itemReturn(pText);
          }
          else
          {
@@ -460,7 +460,7 @@ HB_FUNC( HB_BLEFT )
          HB_SIZE nText = hb_itemGetCLen(pText);
          if( static_cast<HB_SIZE>( nLen ) >= nText )
          {
-            hb_itemReturn( pText );
+            hb_itemReturn(pText);
          }
          else
          {
@@ -499,7 +499,7 @@ HB_FUNC( HB_URIGHT )
       }
       if( static_cast<HB_SIZE>( nLen ) >= nText )
       {
-         hb_itemReturn( pText );
+         hb_itemReturn(pText);
       }
       else
       {
@@ -524,7 +524,7 @@ HB_FUNC( HB_BRIGHT )
    {
       if( static_cast<HB_SIZE>( nLen ) >= nText )
       {
-         hb_itemReturn( pText );
+         hb_itemReturn(pText);
       }
       else
       {

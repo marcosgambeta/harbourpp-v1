@@ -364,7 +364,7 @@ static PHB_ITEM hb_dbgActivateWatchArray( HB_DEBUGINFO * info )
       if( xValue )
       {
          hb_arraySetForward( pWatch, HB_DBG_WP_RESULT, xValue );
-         hb_itemRelease( xValue );
+         hb_itemRelease(xValue);
       }
    }
    return pArray;
@@ -470,9 +470,9 @@ static void hb_dbgActivate( HB_DEBUGINFO * info )
       hb_vmPush( aModules );
       hb_vmPush( aBreak );
 
-      hb_itemRelease( aCallStack );
-      hb_itemRelease( aModules );
-      hb_itemRelease( aBreak );
+      hb_itemRelease(aCallStack);
+      hb_itemRelease(aModules);
+      hb_itemRelease(aBreak);
 
       info->bInside = HB_TRUE;
       hb_vmDo( 6 );
@@ -590,7 +590,7 @@ void hb_dbgEntry( int nMode, int nLine, const char * szName, int nIndex, PHB_ITE
             {
                if( tp->xValue )
                {
-                  hb_itemRelease( tp->xValue );
+                  hb_itemRelease(tp->xValue);
                }
                tp->xValue = xValue;
 
@@ -607,7 +607,7 @@ void hb_dbgEntry( int nMode, int nLine, const char * szName, int nIndex, PHB_ITE
             }
             if( xValue )
             {
-               hb_itemRelease( xValue );
+               hb_itemRelease(xValue);
             }
          }
 
@@ -892,7 +892,7 @@ static void hb_dbgAddStopLines( PHB_ITEM pItem )
 
    if( ! s_common.pStopLines )
    {
-      s_common.pStopLines = hb_itemNew( pItem );
+      s_common.pStopLines = hb_itemNew(pItem);
    }
    else
    {
@@ -1019,7 +1019,7 @@ static void hb_dbgClearWatch( HB_WATCHPOINT * pWatch )
 
    if( pWatch->pBlock )
    {
-      hb_itemRelease( pWatch->pBlock );
+      hb_itemRelease(pWatch->pBlock);
    }
 
    if( pWatch->nVars )
@@ -1080,7 +1080,7 @@ void hb_dbgDelWatch( void * handle, int nWatch )
          {
             if( pTrace->xValue )
             {
-               hb_itemRelease( pTrace->xValue );
+               hb_itemRelease(pTrace->xValue);
             }
 
             ARRAY_DEL( HB_TRACEPOINT, info->aTrace, info->nTracePoints, i );
@@ -1211,7 +1211,7 @@ static PHB_ITEM hb_dbgEval( HB_DEBUGINFO * info, HB_WATCHPOINT * watch, HB_BOOL 
       }
       else if( valid == nullptr )
       {
-         hb_itemRelease( xResult );
+         hb_itemRelease(xResult);
          xResult = nullptr;
       }
 
@@ -1228,8 +1228,8 @@ static PHB_ITEM hb_dbgEval( HB_DEBUGINFO * info, HB_WATCHPOINT * watch, HB_BOOL 
          }
       }
 
-      hb_itemRelease( aVars );
-      hb_itemRelease( aNewVars );
+      hb_itemRelease(aVars);
+      hb_itemRelease(aNewVars);
       if( watch->nVars )
       {
          hb_xfree( watch->aScopes );
@@ -1245,7 +1245,7 @@ static PHB_ITEM hb_dbgEvalMacro( const char * szExpr, PHB_ITEM pItem )
 
    pStr = hb_itemPutC( nullptr, szExpr );
    type = hb_macroGetType( pStr );
-   hb_itemRelease( pStr );
+   hb_itemRelease(pStr);
    if( ! strcmp( type, "U" ) || ! strcmp( type, "UE" ) )
    {
       return nullptr;
@@ -1459,11 +1459,11 @@ static PHB_ITEM hb_dbgEvalMakeBlock( HB_WATCHPOINT * watch )
    hb_strncpy( szBlock, "{|__dbg|", buffsize );
    hb_strncat( szBlock, watch->szExpr, buffsize );
    hb_strncat( szBlock, "}", buffsize );
-   pBlock = hb_itemNew( nullptr );
+   pBlock = hb_itemNew(nullptr);
 
    if( ! hb_dbgEvalMacro( szBlock, pBlock ) )
    {
-      hb_itemRelease( pBlock );
+      hb_itemRelease(pBlock);
       pBlock = nullptr;
    }
    hb_xfree( szBlock );
@@ -1612,7 +1612,7 @@ static PHB_ITEM hb_dbgEvalResolve( HB_DEBUGINFO * info, HB_WATCHPOINT * watch )
 
       if( scopes[ i ].cType == 'F' )
       {
-         hb_itemRelease( pItem );
+         hb_itemRelease(pItem);
       }
    }
    watch->aScopes = scopes;
@@ -1777,7 +1777,7 @@ static void hb_dbgRelease( void )
 {
    if( s_common.pStopLines )
    {
-      hb_itemRelease( s_common.pStopLines );
+      hb_itemRelease(s_common.pStopLines);
       s_common.pStopLines = nullptr;
    }
    while( s_common.nModules )
@@ -1880,7 +1880,7 @@ void hb_dbgSetWatch( void * handle, int nWatch, const char * szExpr, HB_BOOL bTr
          {
             if( pTrace->xValue )
             {
-               hb_itemRelease( pTrace->xValue );
+               hb_itemRelease(pTrace->xValue);
             }
 
             ARRAY_DEL( HB_TRACEPOINT, info->aTrace, info->nTracePoints, i );
@@ -1917,14 +1917,14 @@ static PHB_ITEM hb_dbgVarGet( HB_VARINFO * scope )
             PHB_ITEM pItem = hb_memvarGetValueBySym( pDyn );
             if( ! pItem )
             {
-               pItem = hb_itemNew( nullptr );
+               pItem = hb_itemNew(nullptr);
                if( hb_rddFieldGet( pItem, hb_dynsymSymbol( pDyn ) ) == HB_SUCCESS )
                {
                   scope->cType = 'F';
                }
                else
                {
-                  hb_itemRelease( pItem );
+                  hb_itemRelease(pItem);
                   pItem = nullptr;
                }
             }
@@ -2038,7 +2038,7 @@ HB_FUNC( __DBGGETEXPRVALUE )
       if( pItem )
       {
          hb_storl( HB_TRUE, 3 );
-         hb_itemReturnRelease( pItem );
+         hb_itemReturnRelease(pItem);
       }
       else
       {
@@ -2053,7 +2053,7 @@ HB_FUNC( __DBGGETSOURCEFILES )
 
    if( ptr )
    {
-      hb_itemReturnRelease( hb_dbgGetSourceFiles( ptr ) );
+      hb_itemReturnRelease(hb_dbgGetSourceFiles( ptr ));
    }
 }
 
@@ -2104,7 +2104,7 @@ HB_FUNC( __DBGGETBREAKPOINTS )
 
    if( ptr )
    {
-      hb_itemReturnRelease( hb_dbgActivateBreakArray( static_cast<HB_DEBUGINFO*>( ptr ) ) );
+      hb_itemReturnRelease(hb_dbgActivateBreakArray( static_cast<HB_DEBUGINFO*>( ptr ) ));
    }
 }
 
@@ -2154,13 +2154,13 @@ HB_FUNC( __DBGGETWATCHPOINTS )
 
    if( ptr )
    {
-      hb_itemReturnRelease( hb_dbgActivateWatchArray( static_cast<HB_DEBUGINFO*>( ptr ) ) );
+      hb_itemReturnRelease(hb_dbgActivateWatchArray( static_cast<HB_DEBUGINFO*>( ptr ) ));
    }
 }
 
 HB_FUNC( __DBGGETSETS )
 {
-   hb_itemReturnRelease( hb_dbgSetArray() );
+   hb_itemReturnRelease(hb_dbgSetArray());
 }
 
 HB_FUNC( __DBGGETMODULENAME )

@@ -84,7 +84,7 @@ HB_FUNC( RIGHT )
          }
          if( static_cast<HB_SIZE>( nLen ) >= nText )
          {
-            hb_itemReturn( pText );
+            hb_itemReturn(pText);
          }
          else
          {
