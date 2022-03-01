@@ -2038,27 +2038,27 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
       case HB_GTI_ISCTWIN:
       case HB_GTI_ISMULTIWIN:
       case HB_GTI_ISUNICODE:
-         pInfo->pResult = hb_itemPutL( pInfo->pResult, HB_FALSE );
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_FALSE);
          break;
 
       case HB_GTI_KBDSHIFTS:
-         pInfo->pResult = hb_itemPutNI( pInfo->pResult, 0 );
+         pInfo->pResult = hb_itemPutNI(pInfo->pResult, 0);
          break;
 
       case HB_GTI_INPUTFD:
-         pInfo->pResult = hb_itemPutNInt( pInfo->pResult, static_cast<HB_NHANDLE>( pGT->hStdIn ) );
+         pInfo->pResult = hb_itemPutNInt(pInfo->pResult, static_cast<HB_NHANDLE>( pGT->hStdIn ));
          break;
 
       case HB_GTI_OUTPUTFD:
-         pInfo->pResult = hb_itemPutNInt( pInfo->pResult, static_cast<HB_NHANDLE>( pGT->hStdOut ) );
+         pInfo->pResult = hb_itemPutNInt(pInfo->pResult, static_cast<HB_NHANDLE>( pGT->hStdOut ));
          break;
 
       case HB_GTI_ERRORFD:
-         pInfo->pResult = hb_itemPutNInt( pInfo->pResult, static_cast<HB_NHANDLE>( pGT->hStdErr ) );
+         pInfo->pResult = hb_itemPutNInt(pInfo->pResult, static_cast<HB_NHANDLE>( pGT->hStdErr ));
          break;
 
       case HB_GTI_COMPATBUFFER:
-         pInfo->pResult = hb_itemPutL( pInfo->pResult, pGT->fVgaCell );
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, pGT->fVgaCell);
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_LOGICAL )
          {
             pGT->fVgaCell = hb_itemGetL(pInfo->pNewVal);
@@ -2066,7 +2066,7 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_REDRAWMAX:
-         pInfo->pResult = hb_itemPutNI( pInfo->pResult, pGT->iRedrawMax );
+         pInfo->pResult = hb_itemPutNI(pInfo->pResult, pGT->iRedrawMax);
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
          {
             pGT->iRedrawMax = hb_itemGetNI(pInfo->pNewVal);
@@ -2074,7 +2074,7 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_BOXCP:
-         pInfo->pResult = hb_itemPutC( pInfo->pResult, pGT->cdpBox ? pGT->cdpBox->id : nullptr );
+         pInfo->pResult = hb_itemPutC(pInfo->pResult, pGT->cdpBox ? pGT->cdpBox->id : nullptr);
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_STRING )
          {
             if( hb_itemGetCLen(pInfo->pNewVal) > 0 )
@@ -2093,11 +2093,11 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_VIEWMAXWIDTH:
-         pInfo->pResult = hb_itemPutNInt( pInfo->pResult, HB_GTSELF_MAXCOL( pGT ) );
+         pInfo->pResult = hb_itemPutNInt(pInfo->pResult, HB_GTSELF_MAXCOL( pGT ));
          break;
 
       case HB_GTI_VIEWMAXHEIGHT:
-         pInfo->pResult = hb_itemPutNInt( pInfo->pResult, HB_GTSELF_MAXROW( pGT ) );
+         pInfo->pResult = hb_itemPutNInt(pInfo->pResult, HB_GTSELF_MAXROW( pGT ));
          break;
 
       case HB_GTI_NEWWIN:  /* clear screen area, set default cursor shape and position */
@@ -2177,11 +2177,11 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
             if( hb_gt_getClipboard( &pszClipData, &nLen ) )
             {
-               pInfo->pResult = hb_itemPutCLPtr( pInfo->pResult, pszClipData, nLen );
+               pInfo->pResult = hb_itemPutCLPtr(pInfo->pResult, pszClipData, nLen);
             }
             else
             {
-               pInfo->pResult = hb_itemPutC( pInfo->pResult, nullptr );
+               pInfo->pResult = hb_itemPutC(pInfo->pResult, nullptr);
             }
          }
          break;
@@ -2230,11 +2230,11 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_RESIZEMODE:
-         pInfo->pResult = hb_itemPutNInt( pInfo->pResult, HB_GTI_RESIZEMODE_FONT );
+         pInfo->pResult = hb_itemPutNInt(pInfo->pResult, HB_GTI_RESIZEMODE_FONT);
          break;
 
       case HB_GTI_VERSION:
-         pInfo->pResult = hb_itemPutC( pInfo->pResult, HB_GTSELF_VERSION( pGT, hb_itemGetNI(pInfo->pNewVal) ) );
+         pInfo->pResult = hb_itemPutC(pInfo->pResult, HB_GTSELF_VERSION( pGT, hb_itemGetNI(pInfo->pNewVal) ));
          break;
 
       default:
@@ -3320,7 +3320,7 @@ static int hb_gt_def_InkeyGet( PHB_GT pGT, HB_BOOL fWait, double dSeconds, int i
          {
             break;
          }
-         pKey = hb_itemPutNI( pKey, pGT->inkeyLast );
+         pKey = hb_itemPutNI(pKey, pGT->inkeyLast);
          HB_GTSELF_UNLOCK( pGT );
          pGT->inkeyLast = hb_itemGetNI(hb_vmEvalBlockV( pGT->pInkeyFilterBlock, 1, pKey ));
          HB_GTSELF_LOCK( pGT );

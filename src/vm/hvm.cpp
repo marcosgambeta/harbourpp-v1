@@ -2534,7 +2534,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
          {
             HB_SIZE nSize = static_cast<HB_SIZE>( HB_PCODE_MKUSHORT( &pCode[ 2 ] ) );
             char * szText = hb_compDecodeString( pCode[ 1 ], reinterpret_cast<const char*>( pCode ) + 4, &nSize );
-            hb_itemPutCLPtr( hb_stackAllocItem(), szText, nSize );
+            hb_itemPutCLPtr(hb_stackAllocItem(), szText, nSize);
             pCode += ( 4 + nSize );
             break;
          }
@@ -3531,7 +3531,7 @@ static void hb_vmTimeStampPut( PHB_ITEM pItem, long lJulian, long lMilliSec )
       }
    }
 
-   hb_itemPutTDT( pItem, lJulian, lMilliSec );
+   hb_itemPutTDT(pItem, lJulian, lMilliSec);
 }
 
 static void hb_vmTimeStampAdd( PHB_ITEM pResult, PHB_ITEM pItem, double dValue )
@@ -3586,7 +3586,7 @@ static void hb_vmPlus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
       double dNumber1 = hb_itemGetNDDec(pItem1, &iDec1);
       double dNumber2 = hb_itemGetNDDec(pItem2, &iDec2);
 
-      hb_itemPutNDDec( pResult, dNumber1 + dNumber2, HB_MAX( iDec1, iDec2 ) );
+      hb_itemPutNDDec(pResult, dNumber1 + dNumber2, HB_MAX( iDec1, iDec2 ));
    }
    else if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) )
    {
@@ -3632,7 +3632,7 @@ static void hb_vmPlus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
       else
       {
          /* NOTE: This is not a bug. CA-Cl*pper does exactly that for DATEs. */
-         hb_itemPutDL( pResult, pItem1->item.asDateTime.julian + pItem2->item.asDateTime.julian );
+         hb_itemPutDL(pResult, pItem1->item.asDateTime.julian + pItem2->item.asDateTime.julian);
       }
    }
    else if( HB_IS_DATETIME(pItem1) && HB_IS_NUMERIC(pItem2) )
@@ -3650,7 +3650,7 @@ static void hb_vmPlus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
       }
       else
       {
-         hb_itemPutDL( pResult, hb_itemGetDL(pItem1) + hb_itemGetNL(pItem2) );
+         hb_itemPutDL(pResult, hb_itemGetDL(pItem1) + hb_itemGetNL(pItem2));
       }
    }
    else if( HB_IS_NUMERIC(pItem1) && HB_IS_DATETIME(pItem2) )
@@ -3668,7 +3668,7 @@ static void hb_vmPlus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
       }
       else
       {
-         hb_itemPutDL( pResult, hb_itemGetNL(pItem1) + hb_itemGetDL(pItem2) );
+         hb_itemPutDL(pResult, hb_itemGetNL(pItem1) + hb_itemGetDL(pItem2));
       }
    }
    else if( ! hb_objOperatorCall( HB_OO_OP_PLUS, pResult, pItem1, pItem2, nullptr ) )
@@ -3719,14 +3719,14 @@ static void hb_vmMinus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
       double dNumber1 = hb_itemGetNDDec(pItem1, &iDec1);
       double dNumber2 = hb_itemGetNDDec(pItem2, &iDec2);
 
-      hb_itemPutNDDec( pResult, dNumber1 - dNumber2, HB_MAX( iDec1, iDec2 ) );
+      hb_itemPutNDDec(pResult, dNumber1 - dNumber2, HB_MAX( iDec1, iDec2 ));
    }
    else if( HB_IS_DATETIME(pItem1) && HB_IS_DATETIME(pItem2) )
    {
       long lTime = pItem1->item.asDateTime.time - pItem2->item.asDateTime.time, lJulian = pItem1->item.asDateTime.julian - pItem2->item.asDateTime.julian;
       if( lTime != 0 )
       {
-         hb_itemPutNDDec( pResult, hb_timeStampPackDT( lJulian, lTime ), HB_TIMEDIFF_DEC );
+         hb_itemPutNDDec(pResult, hb_timeStampPackDT( lJulian, lTime ), HB_TIMEDIFF_DEC);
       }
       else
       {
@@ -3752,7 +3752,7 @@ static void hb_vmMinus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
       }
       else
       {
-         hb_itemPutDL( pResult, hb_itemGetDL(pItem1) - hb_itemGetNL(pItem2) );
+         hb_itemPutDL(pResult, hb_itemGetDL(pItem1) - hb_itemGetNL(pItem2));
       }
    }
    else if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) )
@@ -3829,7 +3829,7 @@ static void hb_vmMult( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
       double dNumber1 = hb_itemGetNDDec(pItem1, &iDec1);
       double dNumber2 = hb_itemGetNDDec(pItem2, &iDec2);
 
-      hb_itemPutNumType( pResult, dNumber1 * dNumber2, iDec1 + iDec2, HB_ITEM_TYPERAW( pItem1 ), HB_ITEM_TYPERAW( pItem2 ) );
+      hb_itemPutNumType(pResult, dNumber1 * dNumber2, iDec1 + iDec2, HB_ITEM_TYPERAW( pItem1 ), HB_ITEM_TYPERAW( pItem2 ));
    }
    else if( ! hb_objOperatorCall( HB_OO_OP_MULT, pResult, pItem1, pItem2, nullptr ) )
    {
@@ -3866,7 +3866,7 @@ static void hb_vmDivide( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
       else
       {
          HB_MAXINT nNumber1 = HB_ITEM_GET_NUMINTRAW( pItem1 );
-         hb_itemPutND( pResult, static_cast<double>( nNumber1 ) / static_cast<double>( nDivisor ) );
+         hb_itemPutND(pResult, static_cast<double>( nNumber1 ) / static_cast<double>( nDivisor ));
       }
    }
    else if( HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2) )
@@ -3892,7 +3892,7 @@ static void hb_vmDivide( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
             integer result. Therefore this code is not needed and has been
             removed - David G. Holm <dholm@jsd-llc.com>
           */
-         hb_itemPutND( pResult, hb_itemGetND(pItem1) / dDivisor );
+         hb_itemPutND(pResult, hb_itemGetND(pItem1) / dDivisor);
       }
    }
    else if( ! hb_objOperatorCall( HB_OO_OP_DIVIDE, pResult, pItem1, pItem2, nullptr ) )
@@ -3930,7 +3930,7 @@ static void hb_vmModulus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
       else
       {
          /* NOTE: Clipper always returns the result of modulus with the SET number of decimal places. */
-         hb_itemPutND( pResult, static_cast<double>( HB_ITEM_GET_NUMINTRAW( pItem1 ) % nDivisor ) );
+         hb_itemPutND(pResult, static_cast<double>( HB_ITEM_GET_NUMINTRAW( pItem1 ) % nDivisor ));
       }
    }
    else if( HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2) )
@@ -3950,7 +3950,7 @@ static void hb_vmModulus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
       else
       {
          /* NOTE: Clipper always returns the result of modulus with the SET number of decimal places. */
-         hb_itemPutND( pResult, fmod( hb_itemGetND(pItem1), dDivisor ) );
+         hb_itemPutND(pResult, fmod( hb_itemGetND(pItem1), dDivisor ));
       }
    }
    else if( ! hb_objOperatorCall( HB_OO_OP_MOD, pResult, pItem1, pItem2, nullptr ) )
@@ -3974,7 +3974,7 @@ static void hb_vmPower( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
    if( HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2) )
    {
       /* NOTE: Clipper always returns the result of power with the SET number of decimal places. */
-      hb_itemPutND( pResult, pow( hb_itemGetND(pItem1), hb_itemGetND(pItem2) ) );
+      hb_itemPutND(pResult, pow( hb_itemGetND(pItem1), hb_itemGetND(pItem2) ));
    }
    else if( ! hb_objOperatorCall( HB_OO_OP_POWER, pResult, pItem1, pItem2, nullptr ) )
    {
@@ -5153,7 +5153,7 @@ static void hb_vmEnumStart( int nVars, int nDescend )
          pEnum->item.asEnum.offset = ( nDescend > 0 ) ? 1 : pBase->item.asString.length;
          if( pBase->item.asString.length )
          {
-            pEnum->item.asEnum.valuePtr = hb_itemPutCL( nullptr, pBase->item.asString.value + pEnum->item.asEnum.offset - 1, 1 );
+            pEnum->item.asEnum.valuePtr = hb_itemPutCL(nullptr, pBase->item.asString.value + pEnum->item.asEnum.offset - 1, 1);
          }
          else
          {
@@ -5245,7 +5245,7 @@ static void hb_vmEnumNext( void )
          {
             break;
          }
-         pEnum->item.asEnum.valuePtr = hb_itemPutCL( pEnum->item.asEnum.valuePtr, pBase->item.asString.value + pEnum->item.asEnum.offset - 1, 1 );
+         pEnum->item.asEnum.valuePtr = hb_itemPutCL(pEnum->item.asEnum.valuePtr, pBase->item.asString.value + pEnum->item.asEnum.offset - 1, 1);
       }
       else
       {
@@ -5329,7 +5329,7 @@ static void hb_vmEnumPrev( void )
          {
             break;
          }
-         pEnum->item.asEnum.valuePtr = hb_itemPutCL( pEnum->item.asEnum.valuePtr, pBase->item.asString.value + pEnum->item.asEnum.offset - 1, 1 );
+         pEnum->item.asEnum.valuePtr = hb_itemPutCL(pEnum->item.asEnum.valuePtr, pBase->item.asString.value + pEnum->item.asEnum.offset - 1, 1);
       }
       else
       {
@@ -6260,11 +6260,11 @@ static void hb_vmPushAParams( void )
          pCount = hb_stackAllocItem();
          hb_itemCopy( pCount, pArray->item.asArray.value->pItems );
          hb_itemMove( pArray, pCount );
-         hb_itemPutNS( pCount, nLen );
+         hb_itemPutNS(pCount, nLen);
       }
       else
       {
-         hb_itemPutNL( pArray, 0 );
+         hb_itemPutNL(pArray, 0);
       }
    }
    else
@@ -7628,7 +7628,7 @@ void hb_vmPushString( const char * szText, HB_SIZE nLength )
 
    HB_STACK_TLS_PRELOAD
 
-   hb_itemPutCL( hb_stackAllocItem(), szText, nLength );
+   hb_itemPutCL(hb_stackAllocItem(), szText, nLength);
 }
 
 void hb_vmPushStringPcode( const char * szText, HB_SIZE nLength )
@@ -8910,7 +8910,7 @@ static void hb_vmVerifySymbols( PHB_ITEM pArray )
             char szText[ 256 ];
 
             hb_snprintf( szText, sizeof(szText), "%s->%s", pLastSymbols->szModuleName, pSym->szName );
-            pItem = hb_itemPutC( pItem, szText );
+            pItem = hb_itemPutC(pItem, szText);
             hb_arrayAddForward( pArray, pItem );
          }
       }
@@ -10583,7 +10583,7 @@ void hb_xvmRetInt( HB_LONG lValue )
 
    HB_STACK_TLS_PRELOAD
 
-   hb_itemPutNL( hb_stackReturnItem(), lValue );
+   hb_itemPutNL(hb_stackReturnItem(), lValue);
 }
 
 void hb_xvmStatics( PHB_SYMB pSymbol, HB_USHORT uiStatics )
@@ -11028,7 +11028,7 @@ void hb_xvmLocalSetInt( int iLocal, HB_LONG lValue )
    }
    else
    {
-      hb_itemPutNL( pLocal, lValue );
+      hb_itemPutNL(pLocal, lValue);
    }
 }
 
@@ -12191,7 +12191,7 @@ HB_BOOL hb_xvmMultByInt( HB_LONG lValue )
       int iDec;
       double dValue = hb_itemGetNDDec(pValue, &iDec);
 
-      hb_itemPutNumType( pValue, dValue * lValue, iDec, HB_ITEM_TYPERAW( pValue ), HB_IT_INTEGER );
+      hb_itemPutNumType(pValue, dValue * lValue, iDec, HB_ITEM_TYPERAW( pValue ), HB_IT_INTEGER);
    }
    else if( hb_objHasOperator( pValue, HB_OO_OP_MULT ) )
    {
@@ -12296,7 +12296,7 @@ HB_BOOL hb_xvmDivideByInt( HB_LONG lDivisor )
       }
       else
       {
-         hb_itemPutND( pValue, hb_itemGetND(pValue) / lDivisor );
+         hb_itemPutND(pValue, hb_itemGetND(pValue) / lDivisor);
       }
    }
    else if( hb_objHasOperator( pValue, HB_OO_OP_DIVIDE ) )
@@ -12352,11 +12352,11 @@ HB_BOOL hb_xvmModulusByInt( HB_LONG lDivisor )
       }
       else if( HB_IS_NUMINT(pValue) )
       {
-         hb_itemPutND( pValue, static_cast<double>( HB_ITEM_GET_NUMINTRAW( pValue ) % lDivisor ) );
+         hb_itemPutND(pValue, static_cast<double>( HB_ITEM_GET_NUMINTRAW( pValue ) % lDivisor ));
       }
       else
       {
-         hb_itemPutND( pValue, fmod( hb_itemGetND(pValue), lDivisor ) );
+         hb_itemPutND(pValue, fmod( hb_itemGetND(pValue), lDivisor ));
       }
 
    }
@@ -12938,7 +12938,7 @@ void hb_xvmPushStringHidden( int iMethod, const char * szText, HB_SIZE nSize )
    char * szString;
 
    szString = hb_compDecodeString( iMethod, szText, &nSize );
-   hb_itemPutCLPtr( hb_stackAllocItem(), szString, nSize );
+   hb_itemPutCLPtr(hb_stackAllocItem(), szString, nSize);
 }
 
 void hb_xvmLocalName( HB_USHORT uiLocal, const char * szLocalName )

@@ -529,7 +529,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
       }
       else
       {
-         hb_itemPutCL( pValue, szDest, szHead - szDest );
+         hb_itemPutCL(pValue, szDest, szHead - szDest);
       }
       hb_xfree( szDest );
       return szSource + 1;
@@ -600,11 +600,11 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
 
       if( fDbl )
       {
-         hb_itemPutNDDec( pValue, hb_numRound( fNeg ? -dblValue : dblValue, iDec ), iDec );
+         hb_itemPutNDDec(pValue, hb_numRound( fNeg ? -dblValue : dblValue, iDec ), iDec);
       }
       else
       {
-         hb_itemPutNInt( pValue, fNeg ? -nValue : nValue );
+         hb_itemPutNInt(pValue, fNeg ? -nValue : nValue);
       }
       return szSource;
    }
@@ -615,12 +615,12 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
    }
    else if( ! strncmp( szSource, "true", 4 ) )
    {
-      hb_itemPutL( pValue, HB_TRUE );
+      hb_itemPutL(pValue, HB_TRUE);
       return szSource + 4;
    }
    else if( ! strncmp( szSource, "false", 5 ) )
    {
-      hb_itemPutL( pValue, HB_FALSE );
+      hb_itemPutL(pValue, HB_FALSE);
       return szSource + 5;
    }
    else if( *szSource == '[' )

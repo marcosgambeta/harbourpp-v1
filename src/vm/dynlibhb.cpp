@@ -149,7 +149,7 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
    {
       void ** pLibPtr = static_cast<void**>( hb_gcAllocate( sizeof(void*), &s_gcDynlibFuncs ) );
       *pLibPtr = hDynLib;
-      return hb_itemPutPtrGC( nullptr, pLibPtr );
+      return hb_itemPutPtrGC(nullptr, pLibPtr);
    }
 
    return nullptr;
@@ -261,7 +261,7 @@ HB_FUNC( HB_LIBGETFUNSYM )
 
          if( pSym )
          {
-            hb_itemPutSymbol( hb_stackReturnItem(), pSym );
+            hb_itemPutSymbol(hb_stackReturnItem(), pSym);
          }   
       }
    }

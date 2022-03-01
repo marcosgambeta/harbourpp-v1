@@ -884,7 +884,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
    switch( iIndex )
    {
       case HB_VF_IONAME:
-         hb_itemPutC( pValue, "FILE:" );
+         hb_itemPutC(pValue, "FILE:");
          return HB_TRUE;
    }
 

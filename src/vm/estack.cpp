@@ -177,7 +177,7 @@ static void hb_stack_init( PHB_STACK pStack )
    }
 
    pStack->pPos++;
-   hb_itemPutSymbol( *pStack->pItems, &s_initSymbol );
+   hb_itemPutSymbol(*pStack->pItems, &s_initSymbol);
    ( *pStack->pItems )->item.asSymbol.stackstate = &pStack->state;
 
    pStack->rdd.uiCurrArea = 1;

@@ -882,7 +882,7 @@ HB_FUNC( HB_HRBGETFUNSYM )
       {
          if( pSym->value.pFunPtr != nullptr && ( pSym->scope.value & HB_FS_INITEXIT ) == 0 && hb_stricmp( szName, pSym->szName ) == 0 )
          {
-            hb_itemPutSymbol( hb_stackReturnItem(), pSym );
+            hb_itemPutSymbol(hb_stackReturnItem(), pSym);
             break;
          }
       }
@@ -918,7 +918,7 @@ HB_FUNC( HB_HRBGETFUNLIST )
                     ( ( iType & HB_HRB_FUNC_PUBLIC ) &&
                       ( pSym->scope.value & HB_FS_STATIC ) == 0 ) ) ) )
             {
-               hb_arrayAdd( paList, hb_itemPutC( pFuncName, pSym->szName ) );
+               hb_arrayAdd( paList, hb_itemPutC(pFuncName, pSym->szName) );
             }
          }
       }

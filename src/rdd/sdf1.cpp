@@ -376,14 +376,14 @@ static HB_ERRCODE hb_sdfRecId( SDFAREAP pArea, PHB_ITEM pRecNo )
       do that and always set fixed size independent to the record number */
    if( ulRecNo < 10000000 )
    {
-      hb_itemPutNLLen( pRecNo, ulRecNo, 7 );
+      hb_itemPutNLLen(pRecNo, ulRecNo, 7);
    }
    else
    {
-      hb_itemPutNLLen( pRecNo, ulRecNo, 10 );
+      hb_itemPutNLLen(pRecNo, ulRecNo, 10);
    }
 #else
-   hb_itemPutNInt( pRecNo, ulRecNo );
+   hb_itemPutNInt(pRecNo, ulRecNo);
 #endif
    return errCode;
 }
@@ -480,11 +480,11 @@ static HB_ERRCODE hb_sdfGetValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          {
             HB_SIZE nLen = pField->uiLen;
             char * pszVal = hb_cdpnDup( reinterpret_cast<const char*>( pArea->pRecord ) + pArea->pFieldOffset[ uiIndex ], &nLen, pArea->area.cdPage, hb_vmCDP() );
-            hb_itemPutCLPtr( pItem, pszVal, nLen );
+            hb_itemPutCLPtr(pItem, pszVal, nLen);
          }
          else
          {
-            hb_itemPutCL( pItem, reinterpret_cast<char*>( pArea->pRecord ) + pArea->pFieldOffset[ uiIndex ], pField->uiLen );
+            hb_itemPutCL(pItem, reinterpret_cast<char*>( pArea->pRecord ) + pArea->pFieldOffset[ uiIndex ], pField->uiLen);
          }
          break;
 
@@ -495,16 +495,16 @@ static HB_ERRCODE hb_sdfGetValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             case 't':
             case 'Y':
             case 'y':
-               hb_itemPutL( pItem, HB_TRUE );
+               hb_itemPutL(pItem, HB_TRUE);
                break;
             default:
-               hb_itemPutL( pItem, HB_FALSE );
+               hb_itemPutL(pItem, HB_FALSE);
                break;
          }
          break;
 
       case HB_FT_DATE:
-         hb_itemPutDS( pItem, reinterpret_cast<const char*>( pArea->pRecord ) + pArea->pFieldOffset[ uiIndex ] );
+         hb_itemPutDS(pItem, reinterpret_cast<const char*>( pArea->pRecord ) + pArea->pFieldOffset[ uiIndex ]);
          break;
 
       case HB_FT_TIMESTAMP:
@@ -516,7 +516,7 @@ static HB_ERRCODE hb_sdfGetValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          pFieldPtr[ pField->uiLen ] = 0;
          hb_timeStampStrGetDT( reinterpret_cast<const char*>( pFieldPtr ), &lJulian, &lMilliSec );
          pFieldPtr[ pField->uiLen ] = bChar;
-         hb_itemPutTDT( pItem, lJulian, lMilliSec );
+         hb_itemPutTDT(pItem, lJulian, lMilliSec);
          break;
       }
 
@@ -530,21 +530,21 @@ static HB_ERRCODE hb_sdfGetValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
 
          if( pField->uiDec )
          {
-            hb_itemPutNDLen( pItem, fDbl ? dVal : static_cast<double>( lVal ), static_cast<int>( pField->uiLen - pField->uiDec - 1 ), static_cast<int>( pField->uiDec ) );
+            hb_itemPutNDLen(pItem, fDbl ? dVal : static_cast<double>( lVal ), static_cast<int>( pField->uiLen - pField->uiDec - 1 ), static_cast<int>( pField->uiDec ));
          }
          else if( fDbl )
          {
-            hb_itemPutNDLen( pItem, dVal, static_cast<int>( pField->uiLen ), 0 );
+            hb_itemPutNDLen(pItem, dVal, static_cast<int>( pField->uiLen ), 0);
          }
          else
          {
-            hb_itemPutNIntLen( pItem, lVal, static_cast<int>( pField->uiLen ) );
+            hb_itemPutNIntLen(pItem, lVal, static_cast<int>( pField->uiLen ));
          }
          break;
       }
 
       case HB_FT_MEMO:
-         hb_itemPutC( pItem, nullptr );
+         hb_itemPutC(pItem, nullptr);
          break;
 
       case HB_FT_NONE:
@@ -771,7 +771,7 @@ static HB_ERRCODE hb_sdfTrans( SDFAREAP pArea, LPDBTRANSINFO pTransInfo )
       }
       else
       {
-         PHB_ITEM pPutRec = hb_itemPutL( nullptr, HB_FALSE );
+         PHB_ITEM pPutRec = hb_itemPutL(nullptr, HB_FALSE);
          if( SELF_INFO( pTransInfo->lpaDest, DBI_CANPUTREC, pPutRec ) != HB_SUCCESS )
          {
             hb_itemRelease(pPutRec);
@@ -880,31 +880,31 @@ static HB_ERRCODE hb_sdfInfo( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
    switch( uiIndex )
    {
       case DBI_CANPUTREC:
-         hb_itemPutL( pItem, pArea->fTransRec );
+         hb_itemPutL(pItem, pArea->fTransRec);
          break;
 
       case DBI_GETRECSIZE:
-         hb_itemPutNL( pItem, pArea->uiRecordLen );
+         hb_itemPutNL(pItem, pArea->uiRecordLen);
          break;
 
       case DBI_FULLPATH:
-         hb_itemPutC( pItem, pArea->szFileName );
+         hb_itemPutC(pItem, pArea->szFileName);
          break;
 
       case DBI_FILEHANDLE:
-         hb_itemPutNInt( pItem, static_cast<HB_NHANDLE>( hb_fileHandle( pArea->pFile ) ) );
+         hb_itemPutNInt(pItem, static_cast<HB_NHANDLE>( hb_fileHandle( pArea->pFile ) ));
          break;
 
       case DBI_SHARED:
-         hb_itemPutL( pItem, pArea->fShared );
+         hb_itemPutL(pItem, pArea->fShared);
          break;
 
       case DBI_ISREADONLY:
-         hb_itemPutL( pItem, pArea->fReadonly );
+         hb_itemPutL(pItem, pArea->fReadonly);
          break;
 
       case DBI_POSITIONED:
-         hb_itemPutL( pItem, pArea->fPositioned );
+         hb_itemPutL(pItem, pArea->fPositioned);
          break;
 
       case DBI_DB_VERSION:
@@ -925,7 +925,7 @@ static HB_ERRCODE hb_sdfInfo( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
          {
             hb_snprintf( szBuf, sizeof(szBuf), "%d.%d", 0, 1 );
          }
-         hb_itemPutC( pItem, szBuf );
+         hb_itemPutC(pItem, szBuf);
          break;
       }
 
@@ -1399,11 +1399,11 @@ static HB_ERRCODE hb_sdfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
    {
       case RDDI_CANPUTREC:
       case RDDI_LOCAL:
-         hb_itemPutL( pItem, HB_TRUE );
+         hb_itemPutL(pItem, HB_TRUE);
          break;
 
       case RDDI_TABLEEXT:
-         hb_itemPutC( pItem, SDF_TABLEEXT );
+         hb_itemPutC(pItem, SDF_TABLEEXT);
          break;
 
       default:

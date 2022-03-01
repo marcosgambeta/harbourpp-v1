@@ -1419,14 +1419,14 @@ PHB_ITEM hb_itemPutNIntLen( PHB_ITEM pItem, HB_MAXINT nNumber, int iWidth )
 
    if( HB_LIM_INT( nNumber ) )
    {
-      return hb_itemPutNILen( pItem, static_cast<int>( nNumber ), iWidth );
+      return hb_itemPutNILen(pItem, static_cast<int>( nNumber ), iWidth);
    }
    else
    {
 #ifdef HB_LONG_LONG_OFF
-      return hb_itemPutNLLen( pItem, static_cast<long>( nNumber ), iWidth );
+      return hb_itemPutNLLen(pItem, static_cast<long>( nNumber ), iWidth);
 #else
-      return hb_itemPutNLLLen( pItem, static_cast<HB_LONGLONG>( nNumber ), iWidth );
+      return hb_itemPutNLLLen(pItem, static_cast<HB_LONGLONG>( nNumber ), iWidth);
 #endif
    }
 }
@@ -1454,11 +1454,11 @@ PHB_ITEM hb_itemPutNLen( PHB_ITEM pItem, double dNumber, int iWidth, int iDec )
             iWidth = HB_DBL_LENGTH( dNumber );
          }
 
-         return hb_itemPutNIntLen( pItem, nNumber, iWidth );
+         return hb_itemPutNIntLen(pItem, nNumber, iWidth);
       }
    }
 
-   return hb_itemPutNDLen( pItem, dNumber, iWidth, iDec );
+   return hb_itemPutNDLen(pItem, dNumber, iWidth, iDec);
 }
 
 PHB_ITEM hb_itemPutNDLen( PHB_ITEM pItem, double dNumber, int iWidth, int iDec )
@@ -1682,23 +1682,23 @@ PHB_ITEM hb_itemPutNumType( PHB_ITEM pItem, double dNumber, int iDec, int iType1
 
    if( iDec || iType1 & HB_IT_DOUBLE || iType2 & HB_IT_DOUBLE )
    {
-      return hb_itemPutNDDec( pItem, dNumber, iDec );
+      return hb_itemPutNDDec(pItem, dNumber, iDec);
    }
    else if( HB_DBL_LIM_INT( dNumber ) )
    {
-      return hb_itemPutNI( pItem, static_cast<int>( dNumber ) );
+      return hb_itemPutNI(pItem, static_cast<int>( dNumber ));
    }
    else if( HB_DBL_LIM_LONG( dNumber ) )
    {
 #ifdef HB_LONG_LONG_OFF
-      return hb_itemPutNL( pItem, static_cast<long>( static_cast<unsigned long>( dNumber ) ) );
+      return hb_itemPutNL(pItem, static_cast<long>( static_cast<unsigned long>( dNumber ) ));
 #else
-      return hb_itemPutNLL( pItem, static_cast<HB_LONGLONG>( dNumber ) );
+      return hb_itemPutNLL(pItem, static_cast<HB_LONGLONG>( dNumber ));
 #endif
    }
    else
    {
-      return hb_itemPutND( pItem, dNumber );
+      return hb_itemPutND(pItem, dNumber);
    }
 }
 
@@ -2436,7 +2436,7 @@ PHB_ITEM hb_itemUnRefOnce( PHB_ITEM pItem )
             {
                if( pItem->item.asEnum.offset > 0 && static_cast<HB_SIZE>( pItem->item.asEnum.offset ) <= pBase->item.asString.length )
                {
-                  pItem->item.asEnum.valuePtr = hb_itemPutCL( nullptr, pBase->item.asString.value + pItem->item.asEnum.offset - 1, 1 );
+                  pItem->item.asEnum.valuePtr = hb_itemPutCL(nullptr, pBase->item.asString.value + pItem->item.asEnum.offset - 1, 1);
                   return pItem->item.asEnum.valuePtr;
                }
             }
@@ -2447,7 +2447,7 @@ PHB_ITEM hb_itemUnRefOnce( PHB_ITEM pItem )
             if( hb_vmRequestQuery() == 0 )
             {
                HB_STACK_TLS_PRELOAD
-               hb_itemPutNS( hb_stackAllocItem(), pItem->item.asEnum.offset );
+               hb_itemPutNS(hb_stackAllocItem(), pItem->item.asEnum.offset);
                hb_errRT_BASE( EG_BOUND, 1132, nullptr, hb_langDGetErrorDesc( EG_ARRACCESS ), 2, pItem->item.asEnum.basePtr, hb_stackItemFromTop( -1 ) );
                hb_stackPop();
             }
@@ -2473,7 +2473,7 @@ PHB_ITEM hb_itemUnRefOnce( PHB_ITEM pItem )
                {
                   HB_STACK_TLS_PRELOAD
                   hb_arrayPushBase( pItem->item.asRefer.BasePtr.array );
-                  hb_itemPutNS( hb_stackAllocItem(), pItem->item.asRefer.value + 1 );
+                  hb_itemPutNS(hb_stackAllocItem(), pItem->item.asRefer.value + 1);
                   hb_errRT_BASE( EG_BOUND, 1132, nullptr, hb_langDGetErrorDesc( EG_ARRACCESS ), 2, hb_stackItemFromTop( -2 ), hb_stackItemFromTop( -1 ) );
                   hb_stackPop();
                   hb_stackPop();
@@ -3497,7 +3497,7 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
          if( hb_stackSetStruct()->HB_SET_FIXED )
          {
             /* If fixed mode is enabled, use the default number of decimal places. */
-            hb_itemPutNI( hb_stackAllocItem(), hb_stackSetStruct()->HB_SET_DECIMALS );
+            hb_itemPutNI(hb_stackAllocItem(), hb_stackSetStruct()->HB_SET_DECIMALS);
             buffer = hb_itemStr( pItem, nullptr, hb_stackItemFromTop( -1 ) );
             hb_stackPop();
          }
@@ -3638,11 +3638,11 @@ PHB_ITEM hb_itemValToStr( PHB_ITEM pItem )
    buffer = hb_itemString( pItem, &nLen, &bFreeReq );
    if( bFreeReq )
    {
-      pResult = hb_itemPutCLPtr( nullptr, buffer, nLen );
+      pResult = hb_itemPutCLPtr(nullptr, buffer, nLen);
    }
    else
    {
-      pResult = hb_itemPutCL( nullptr, buffer, nLen );
+      pResult = hb_itemPutCL(nullptr, buffer, nLen);
    }
 
    return pResult;

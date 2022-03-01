@@ -411,7 +411,7 @@ PHB_ITEM hb_socketItemPut( PHB_ITEM pItem, HB_SOCKET sd )
 
    *pSockPtr = hb_sockexNew( sd, nullptr, nullptr );
 
-   return hb_itemPutPtrGC( pItem, pSockPtr );
+   return hb_itemPutPtrGC(pItem, pSockPtr);
 }
 
 void hb_socketItemClear( PHB_ITEM pItem )
@@ -453,7 +453,7 @@ PHB_ITEM hb_sockexItemPut( PHB_ITEM pItem, PHB_SOCKEX pSock )
 
    *pSockPtr = pSock;
 
-   return hb_itemPutPtrGC( pItem, pSockPtr );
+   return hb_itemPutPtrGC(pItem, pSockPtr);
 }
 
 void hb_sockexItemClear( PHB_ITEM pItem )

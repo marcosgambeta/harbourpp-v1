@@ -846,7 +846,7 @@ HB_ERRCODE hb_rddCreateTableTemp( const char * szDriver, const char * szAlias, c
    pInfo.ulConnection = ulConnection;
    pInfo.lpdbHeader = nullptr;
 
-   pItem = hb_itemPutL( nullptr, HB_TRUE );
+   pItem = hb_itemPutL(nullptr, HB_TRUE);
    errCode = SELF_INFO( pArea, DBI_ISTEMPORARY, pItem );
    hb_itemRelease(pItem);
 
@@ -943,7 +943,7 @@ PHB_ITEM hb_dbTransInfoPut( PHB_ITEM pItem, LPDBTRANSINFO lpdbTransInfo )
    pHolder = static_cast<LPDBTRANSINFO*>( hb_gcAllocate( sizeof(LPDBTRANSINFO), &s_gcTransInfo ) );
    *pHolder = lpdbTransInfo;
 
-   return hb_itemPutPtrGC( pItem, pHolder );
+   return hb_itemPutPtrGC(pItem, pHolder);
 }
 
 LPDBTRANSINFO hb_dbTransInfoGet( PHB_ITEM pItem )

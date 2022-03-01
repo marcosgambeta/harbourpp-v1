@@ -100,7 +100,7 @@ using PHB_SOCKET_STRUCT = HB_SOCKET_STRUCT *;
       s->iTimeout   = -1; \
       s->iTimeLimit = -1; \
       s->iError     = HB_INET_ERR_OK; \
-      p = hb_itemPutPtrGC( p, s ); \
+      p = hb_itemPutPtrGC(p, s); \
    } while( 0 )
 
 static const char * const s_inetCRLF = "\r\n";
@@ -928,7 +928,7 @@ static void s_inetRecvPattern( const char * const * patterns, int * patternsizes
    {
       if( pResult )
       {
-         hb_itemPutNI( pResult, -1 );
+         hb_itemPutNI(pResult, -1);
       }
       hb_retc_null();
       return;
@@ -992,7 +992,7 @@ static void s_inetRecvPattern( const char * const * patterns, int * patternsizes
       socket->iCount = iPos;
       if( pResult )
       {
-         hb_itemPutNI( pResult, iPos );
+         hb_itemPutNI(pResult, iPos);
       }
       hb_retclen_buffer( buffer, iPos - patternsizes[ iPaternFound - 1 ] );
    }
@@ -1013,7 +1013,7 @@ static void s_inetRecvPattern( const char * const * patterns, int * patternsizes
       }
       if( pResult )
       {
-         hb_itemPutNI( pResult, iLen );
+         hb_itemPutNI(pResult, iLen);
       }
       hb_xfree( buffer );
       hb_retc_null();

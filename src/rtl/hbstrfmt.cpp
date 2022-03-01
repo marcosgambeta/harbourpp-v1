@@ -578,7 +578,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
       pFmt++;
    }
 
-   pItemReturn = hb_itemPutCL( pItemReturn, buffer.pData, buffer.nLen );
+   pItemReturn = hb_itemPutCL(pItemReturn, buffer.pData, buffer.nLen);
    hb_xfree( buffer.pData );
    return pItemReturn;
 }

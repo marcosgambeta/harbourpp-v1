@@ -535,12 +535,12 @@ PHB_ITEM hb_itemPutStrLen( PHB_ITEM pItem, void * cdp, const char * pStr, HB_SIZ
 
    if( nLen == 0 )
    {
-      return hb_itemPutC( pItem, nullptr );
+      return hb_itemPutC(pItem, nullptr);
    }
 
    pszText = hb_cdpnDup( pStr, &nLen, static_cast<PHB_CODEPAGE>( cdp ), hb_vmCDP() );
 
-   return hb_itemPutCLPtr( pItem, pszText, nLen );
+   return hb_itemPutCLPtr(pItem, pszText, nLen);
 }
 
 PHB_ITEM hb_itemPutStrLenUTF8( PHB_ITEM pItem, const char * pStr, HB_SIZE nLen )
@@ -555,7 +555,7 @@ PHB_ITEM hb_itemPutStrLenUTF8( PHB_ITEM pItem, const char * pStr, HB_SIZE nLen )
 
    if( nLen == 0 )
    {
-      return hb_itemPutC( pItem, nullptr );
+      return hb_itemPutC(pItem, nullptr);
    }
 
    cdp = hb_vmCDP();
@@ -563,7 +563,7 @@ PHB_ITEM hb_itemPutStrLenUTF8( PHB_ITEM pItem, const char * pStr, HB_SIZE nLen )
    pszDest = static_cast<char*>( hb_xgrab( nDest + 1 ) );
    hb_cdpUTF8ToStr( cdp, pStr, nLen, pszDest, nDest + 1 );
 
-   return hb_itemPutCLPtr( pItem, pszDest, nDest );
+   return hb_itemPutCLPtr(pItem, pszDest, nDest);
 }
 
 PHB_ITEM hb_itemPutStrLenU16( PHB_ITEM pItem, int iEndian, const HB_WCHAR * pStr, HB_SIZE nLen )
@@ -578,7 +578,7 @@ PHB_ITEM hb_itemPutStrLenU16( PHB_ITEM pItem, int iEndian, const HB_WCHAR * pStr
 
    if( nLen == 0 )
    {
-      return hb_itemPutC( pItem, nullptr );
+      return hb_itemPutC(pItem, nullptr);
    }
 
    cdp = hb_vmCDP();
@@ -586,7 +586,7 @@ PHB_ITEM hb_itemPutStrLenU16( PHB_ITEM pItem, int iEndian, const HB_WCHAR * pStr
    pszDest = static_cast<char*>( hb_xgrab( nDest + 1 ) );
    hb_cdpU16ToStr( cdp, iEndian, pStr, nLen, pszDest, nDest + 1 );
 
-   return hb_itemPutCLPtr( pItem, pszDest, nDest );
+   return hb_itemPutCLPtr(pItem, pszDest, nDest);
 }
 
 PHB_ITEM hb_itemPutStr( PHB_ITEM pItem, void * cdp, const char * pStr )
@@ -600,13 +600,13 @@ PHB_ITEM hb_itemPutStr( PHB_ITEM pItem, void * cdp, const char * pStr )
 
    if( pStr == nullptr )
    {
-      return hb_itemPutC( pItem, nullptr );
+      return hb_itemPutC(pItem, nullptr);
    }
 
    nLen = strlen( pStr );
    pszText = hb_cdpnDup( pStr, &nLen, static_cast<PHB_CODEPAGE>( cdp ), hb_vmCDP() );
 
-   return hb_itemPutCLPtr( pItem, pszText, nLen );
+   return hb_itemPutCLPtr(pItem, pszText, nLen);
 }
 
 PHB_ITEM hb_itemPutStrUTF8( PHB_ITEM pItem, const char * pStr )
@@ -621,7 +621,7 @@ PHB_ITEM hb_itemPutStrUTF8( PHB_ITEM pItem, const char * pStr )
 
    if( pStr == nullptr )
    {
-      return hb_itemPutC( pItem, nullptr );
+      return hb_itemPutC(pItem, nullptr);
    }
 
    cdp = hb_vmCDP();
@@ -630,7 +630,7 @@ PHB_ITEM hb_itemPutStrUTF8( PHB_ITEM pItem, const char * pStr )
    pszDest = static_cast<char*>( hb_xgrab( nDest + 1 ) );
    hb_cdpUTF8ToStr( cdp, pStr, nLen, pszDest, nDest + 1 );
 
-   return hb_itemPutCLPtr( pItem, pszDest, nDest );
+   return hb_itemPutCLPtr(pItem, pszDest, nDest);
 }
 
 PHB_ITEM hb_itemPutStrU16( PHB_ITEM pItem, int iEndian, const HB_WCHAR * pStr )
@@ -645,7 +645,7 @@ PHB_ITEM hb_itemPutStrU16( PHB_ITEM pItem, int iEndian, const HB_WCHAR * pStr )
 
    if( pStr == nullptr )
    {
-      return hb_itemPutC( pItem, nullptr );
+      return hb_itemPutC(pItem, nullptr);
    }
 
    cdp = hb_vmCDP();
@@ -654,7 +654,7 @@ PHB_ITEM hb_itemPutStrU16( PHB_ITEM pItem, int iEndian, const HB_WCHAR * pStr )
    pszDest = static_cast<char*>( hb_xgrab( nDest + 1 ) );
    hb_cdpU16ToStr( cdp, iEndian, pStr, nLen, pszDest, nDest + 1 );
 
-   return hb_itemPutCLPtr( pItem, pszDest, nDest );
+   return hb_itemPutCLPtr(pItem, pszDest, nDest);
 }
 
 const char * hb_arrayGetStr( PHB_ITEM pArray, HB_SIZE nIndex, void * cdp, void ** phString, HB_SIZE * pnLen )

@@ -4348,16 +4348,16 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
    {
       case HB_GTI_ISSCREENPOS:
       case HB_GTI_KBDSUPPORT:
-         pInfo->pResult = hb_itemPutL( pInfo->pResult, HB_TRUE );
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_TRUE);
          break;
 
       case HB_GTI_ISUNICODE:
-         pInfo->pResult = hb_itemPutL( pInfo->pResult, pTerm->fUTF8 );
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, pTerm->fUTF8);
          break;
 
 #ifndef HB_GT_UNICODE_BUF
       case HB_GTI_BOXCP:
-         pInfo->pResult = hb_itemPutC( pInfo->pResult, pTerm->cdpBox ? pTerm->cdpBox->id : nullptr );
+         pInfo->pResult = hb_itemPutC(pInfo->pResult, pTerm->cdpBox ? pTerm->cdpBox->id : nullptr);
          szVal = hb_itemGetCPtr(pInfo->pNewVal);
          if( szVal && *szVal )
          {
@@ -4371,7 +4371,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 #endif
 
       case HB_GTI_ESCDELAY:
-         pInfo->pResult = hb_itemPutNI( pInfo->pResult, pTerm->esc_delay );
+         pInfo->pResult = hb_itemPutNI(pInfo->pResult, pTerm->esc_delay);
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
          {
             pTerm->esc_delay = hb_itemGetNI(pInfo->pNewVal);
@@ -4379,7 +4379,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_KBDSHIFTS:
-         pInfo->pResult = hb_itemPutNI( pInfo->pResult, hb_gt_trm_getKbdState( pTerm ) );
+         pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_gt_trm_getKbdState( pTerm ));
          break;
 
       case HB_GTI_DELKEYMAP:
@@ -4457,7 +4457,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                iVal = 3;
                break;
          }
-         pInfo->pResult = hb_itemPutNI( pInfo->pResult, iVal );
+         pInfo->pResult = hb_itemPutNI(pInfo->pResult, iVal);
          break;
 
       case HB_GTI_PALETTE:
@@ -4466,7 +4466,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             iVal = hb_itemGetNI(pInfo->pNewVal);
             if( iVal >= 0 && iVal < 16 )
             {
-               pInfo->pResult = hb_itemPutNI( pInfo->pResult, pTerm->colors[ iVal ] );
+               pInfo->pResult = hb_itemPutNI(pInfo->pResult, pTerm->colors[ iVal ]);
                if( hb_itemType( pInfo->pNewVal2 ) & HB_IT_NUMERIC )
                {
                   pTerm->colors[ iVal ] = hb_itemGetNI(pInfo->pNewVal2);

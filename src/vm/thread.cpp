@@ -1216,7 +1216,7 @@ HB_FUNC( HB_THREADSTART )
       /* update startup item if necessary */
       if( HB_IS_STRING(pStart) && pSymbol )
       {
-         hb_itemPutSymbol( hb_arrayGetItemPtr( pParams, 1 ), pSymbol );
+         hb_itemPutSymbol(hb_arrayGetItemPtr( pParams, 1 ), pSymbol);
       }
       else
       {

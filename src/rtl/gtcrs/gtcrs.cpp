@@ -2790,11 +2790,11 @@ static HB_BOOL hb_gt_crs_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
       {
          case HB_GTI_ISSCREENPOS:
          case HB_GTI_KBDSUPPORT:
-            pInfo->pResult = hb_itemPutL( pInfo->pResult, HB_TRUE );
+            pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_TRUE);
             break;
 
          case HB_GTI_ESCDELAY:
-            pInfo->pResult = hb_itemPutNI( pInfo->pResult, s_ioBase->esc_delay );
+            pInfo->pResult = hb_itemPutNI(pInfo->pResult, s_ioBase->esc_delay);
             if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
                s_ioBase->esc_delay = hb_itemGetNI(pInfo->pNewVal);
             break;

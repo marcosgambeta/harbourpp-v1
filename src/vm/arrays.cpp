@@ -898,7 +898,7 @@ HB_BOOL hb_arraySetDS( PHB_ITEM pArray, HB_SIZE nIndex, const char * szDate )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      hb_itemPutDS( pArray->item.asArray.value->pItems + nIndex - 1, szDate );
+      hb_itemPutDS(pArray->item.asArray.value->pItems + nIndex - 1, szDate);
       return HB_TRUE;
    }
    else
@@ -915,7 +915,7 @@ HB_BOOL hb_arraySetDL( PHB_ITEM pArray, HB_SIZE nIndex, long lDate )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      hb_itemPutDL( pArray->item.asArray.value->pItems + nIndex - 1, lDate );
+      hb_itemPutDL(pArray->item.asArray.value->pItems + nIndex - 1, lDate);
       return HB_TRUE;
    }
    else
@@ -932,7 +932,7 @@ HB_BOOL hb_arraySetTD( PHB_ITEM pArray, HB_SIZE nIndex, double dTimeStamp )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      hb_itemPutTD( pArray->item.asArray.value->pItems + nIndex - 1, dTimeStamp );
+      hb_itemPutTD(pArray->item.asArray.value->pItems + nIndex - 1, dTimeStamp);
       return HB_TRUE;
    }
    else
@@ -949,7 +949,7 @@ HB_BOOL hb_arraySetTDT( PHB_ITEM pArray, HB_SIZE nIndex, long lJulian, long lMil
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      hb_itemPutTDT( pArray->item.asArray.value->pItems + nIndex - 1, lJulian, lMilliSec );
+      hb_itemPutTDT(pArray->item.asArray.value->pItems + nIndex - 1, lJulian, lMilliSec);
       return HB_TRUE;
    }
    else
@@ -966,7 +966,7 @@ HB_BOOL hb_arraySetL( PHB_ITEM pArray, HB_SIZE nIndex, HB_BOOL fValue )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      hb_itemPutL( pArray->item.asArray.value->pItems + nIndex - 1, fValue );
+      hb_itemPutL(pArray->item.asArray.value->pItems + nIndex - 1, fValue);
       return HB_TRUE;
    }
    else
@@ -983,7 +983,7 @@ HB_BOOL hb_arraySetNI( PHB_ITEM pArray, HB_SIZE nIndex, int iNumber )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      hb_itemPutNI( pArray->item.asArray.value->pItems + nIndex - 1, iNumber );
+      hb_itemPutNI(pArray->item.asArray.value->pItems + nIndex - 1, iNumber);
       return HB_TRUE;
    }
    else
@@ -1000,7 +1000,7 @@ HB_BOOL hb_arraySetNL( PHB_ITEM pArray, HB_SIZE nIndex, long lNumber )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      hb_itemPutNL( pArray->item.asArray.value->pItems + nIndex - 1, lNumber );
+      hb_itemPutNL(pArray->item.asArray.value->pItems + nIndex - 1, lNumber);
       return HB_TRUE;
    }
    else
@@ -1017,7 +1017,7 @@ HB_BOOL hb_arraySetNS( PHB_ITEM pArray, HB_SIZE nIndex, HB_ISIZ nNumber )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      hb_itemPutNS( pArray->item.asArray.value->pItems + nIndex - 1, nNumber );
+      hb_itemPutNS(pArray->item.asArray.value->pItems + nIndex - 1, nNumber);
       return HB_TRUE;
    }
    else
@@ -1035,7 +1035,7 @@ HB_BOOL hb_arraySetNLL( PHB_ITEM pArray, HB_SIZE nIndex, HB_LONGLONG llNumber )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      hb_itemPutNLL( pArray->item.asArray.value->pItems + nIndex - 1, llNumber );
+      hb_itemPutNLL(pArray->item.asArray.value->pItems + nIndex - 1, llNumber);
       return HB_TRUE;
    }
    else
@@ -1053,7 +1053,7 @@ HB_BOOL hb_arraySetNInt( PHB_ITEM pArray, HB_SIZE nIndex, HB_MAXINT nNumber )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      hb_itemPutNInt( pArray->item.asArray.value->pItems + nIndex - 1, nNumber );
+      hb_itemPutNInt(pArray->item.asArray.value->pItems + nIndex - 1, nNumber);
       return HB_TRUE;
    }
    else
@@ -1070,7 +1070,7 @@ HB_BOOL hb_arraySetND( PHB_ITEM pArray, HB_SIZE nIndex, double dNumber )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      hb_itemPutND( pArray->item.asArray.value->pItems + nIndex - 1, dNumber );
+      hb_itemPutND(pArray->item.asArray.value->pItems + nIndex - 1, dNumber);
       return HB_TRUE;
    }
    else
@@ -1087,7 +1087,7 @@ HB_BOOL hb_arraySetC( PHB_ITEM pArray, HB_SIZE nIndex, const char * szText )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      hb_itemPutC( pArray->item.asArray.value->pItems + nIndex - 1, szText );
+      hb_itemPutC(pArray->item.asArray.value->pItems + nIndex - 1, szText);
       return HB_TRUE;
    }
    else
@@ -1104,7 +1104,7 @@ HB_BOOL hb_arraySetCL( PHB_ITEM pArray, HB_SIZE nIndex, const char * szText, HB_
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      hb_itemPutCL( pArray->item.asArray.value->pItems + nIndex - 1, szText, nLen );
+      hb_itemPutCL(pArray->item.asArray.value->pItems + nIndex - 1, szText, nLen);
       return HB_TRUE;
    }
    else
@@ -1121,7 +1121,7 @@ HB_BOOL hb_arraySetCPtr( PHB_ITEM pArray, HB_SIZE nIndex, char * szText )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      hb_itemPutCPtr( pArray->item.asArray.value->pItems + nIndex - 1, szText );
+      hb_itemPutCPtr(pArray->item.asArray.value->pItems + nIndex - 1, szText);
       return HB_TRUE;
    }
    else
@@ -1138,7 +1138,7 @@ HB_BOOL hb_arraySetCLPtr( PHB_ITEM pArray, HB_SIZE nIndex, char * szText, HB_SIZ
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      hb_itemPutCLPtr( pArray->item.asArray.value->pItems + nIndex - 1, szText, nLen );
+      hb_itemPutCLPtr(pArray->item.asArray.value->pItems + nIndex - 1, szText, nLen);
       return HB_TRUE;
    }
    else
@@ -1155,7 +1155,7 @@ HB_BOOL hb_arraySetCConst( PHB_ITEM pArray, HB_SIZE nIndex, const char * szText 
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      hb_itemPutCConst( pArray->item.asArray.value->pItems + nIndex - 1, szText );
+      hb_itemPutCConst(pArray->item.asArray.value->pItems + nIndex - 1, szText);
       return HB_TRUE;
    }
    else
@@ -1172,7 +1172,7 @@ HB_BOOL hb_arraySetPtr( PHB_ITEM pArray, HB_SIZE nIndex, void * pValue )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      hb_itemPutPtr( pArray->item.asArray.value->pItems + nIndex - 1, pValue );
+      hb_itemPutPtr(pArray->item.asArray.value->pItems + nIndex - 1, pValue);
       return HB_TRUE;
    }
    else
@@ -1189,7 +1189,7 @@ HB_BOOL hb_arraySetPtrGC( PHB_ITEM pArray, HB_SIZE nIndex, void * pValue )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      hb_itemPutPtrGC( pArray->item.asArray.value->pItems + nIndex - 1, pValue );
+      hb_itemPutPtrGC(pArray->item.asArray.value->pItems + nIndex - 1, pValue);
       return HB_TRUE;
    }
    else
@@ -1206,7 +1206,7 @@ HB_BOOL hb_arraySetSymbol( PHB_ITEM pArray, HB_SIZE nIndex, PHB_SYMB pSymbol )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      hb_itemPutSymbol( pArray->item.asArray.value->pItems + nIndex - 1, pSymbol );
+      hb_itemPutSymbol(pArray->item.asArray.value->pItems + nIndex - 1, pSymbol);
       return HB_TRUE;
    }
    else

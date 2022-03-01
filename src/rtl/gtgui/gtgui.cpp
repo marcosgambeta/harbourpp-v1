@@ -312,7 +312,7 @@ static HB_BOOL hb_gt_gui_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_KBDSHIFTS:
-         pInfo->pResult = hb_itemPutNI( pInfo->pResult, hb_gt_winapi_getKbdState() );
+         pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_gt_winapi_getKbdState());
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
          {
             hb_gt_winapi_setKbdState( hb_itemGetNI(pInfo->pNewVal) );

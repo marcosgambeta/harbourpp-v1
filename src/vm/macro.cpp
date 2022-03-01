@@ -1138,7 +1138,7 @@ void hb_macroTextValue( PHB_ITEM pItem )
       {
          /* replace the old value on the eval stack with the new one
           */
-         hb_itemPutCLPtr( pItem, szString, nLength );
+         hb_itemPutCLPtr(pItem, szString, nLength);
       }
       /*
        * else

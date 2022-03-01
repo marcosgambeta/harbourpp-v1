@@ -442,11 +442,11 @@ HB_FUNC( SX_TURBOAREA )
       PHB_ITEM pItem = hb_itemParam( 1 );
       if( hb_pcount() > 0 && HB_IS_NIL(pItem) )
       {
-         hb_itemPutNI( pItem, 0 );
+         hb_itemPutNI(pItem, 0);
       }
       if( SELF_INFO( pArea, DBI_DIRTYREAD, pItem ) != HB_SUCCESS )
       {
-         hb_itemPutL( pItem, HB_FALSE );
+         hb_itemPutL(pItem, HB_FALSE);
       }
       hb_itemReturnRelease(pItem);
    }
@@ -478,11 +478,11 @@ HB_FUNC( SX_SETTURBO )
       PHB_ITEM pItem = hb_itemParam( 1 );
       if( hb_pcount() > 0 && HB_IS_NIL(pItem) )
       {
-         hb_itemPutNI( pItem, 0 );
+         hb_itemPutNI(pItem, 0);
       }
       if( SELF_RDDINFO( pRDDNode, RDDI_DIRTYREAD, 0, pItem ) != HB_SUCCESS )
       {
-         hb_itemPutL( pItem, HB_FALSE );
+         hb_itemPutL(pItem, HB_FALSE);
       }
       hb_itemReturnRelease(pItem);
    }

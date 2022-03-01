@@ -1999,7 +1999,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
    switch( iType )
    {
       case HB_GTI_ISFULLSCREEN:
-         pInfo->pResult = hb_itemPutL( pInfo->pResult, hb_gt_win_IsFullScreen() );
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, hb_gt_win_IsFullScreen());
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_LOGICAL )
          {
             HB_BOOL fNewValue = hb_itemGetL(pInfo->pNewVal);
@@ -2012,14 +2012,14 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_ISSCREENPOS:
       case HB_GTI_KBDSUPPORT:
-         pInfo->pResult = hb_itemPutL( pInfo->pResult, HB_TRUE );
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_TRUE);
          break;
 
       case HB_GTI_ISUNICODE:
 #if defined( UNICODE )
-         pInfo->pResult = hb_itemPutL( pInfo->pResult, HB_TRUE );
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_TRUE);
 #else
-         pInfo->pResult = hb_itemPutL( pInfo->pResult, HB_FALSE );
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_FALSE);
 #endif
          break;
 
@@ -2027,7 +2027,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
       {
          UINT uiCodePage = GetConsoleCP();
          UINT uiCodePageNew = hb_itemGetNI(pInfo->pNewVal);
-         pInfo->pResult = hb_itemPutNI( pInfo->pResult, uiCodePage );
+         pInfo->pResult = hb_itemPutNI(pInfo->pResult, uiCodePage);
          if( ( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC ) && uiCodePageNew != uiCodePage )
          {
             SetConsoleCP( uiCodePageNew );
@@ -2053,7 +2053,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
       }
 
       case HB_GTI_CLOSABLE:
-         pInfo->pResult = hb_itemPutL( pInfo->pResult, s_fClosable );
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, s_fClosable);
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_LOGICAL )
          {
             HB_BOOL fNewValue = hb_itemGetL(pInfo->pNewVal);
@@ -2066,7 +2066,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_CLOSEMODE:
-         pInfo->pResult = hb_itemPutNI( pInfo->pResult, s_fClosable ? 0 : 2 );
+         pInfo->pResult = hb_itemPutNI(pInfo->pResult, s_fClosable ? 0 : 2);
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
          {
             int iVal = hb_itemGetNI(pInfo->pNewVal);
@@ -2079,15 +2079,15 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_RESIZABLE:
-         pInfo->pResult = hb_itemPutL( pInfo->pResult, HB_FALSE );
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_FALSE);
          break;
 
       case HB_GTI_RESIZEMODE:
-         pInfo->pResult = hb_itemPutNI( pInfo->pResult, HB_GTI_RESIZEMODE_ROWS );
+         pInfo->pResult = hb_itemPutNI(pInfo->pResult, HB_GTI_RESIZEMODE_ROWS);
          break;
 
       case HB_GTI_ALTENTER:
-         pInfo->pResult = hb_itemPutL( pInfo->pResult, ! hb_iswinvista() );
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, ! hb_iswinvista());
          break;
 
       case HB_GTI_PALETTE:
@@ -2100,7 +2100,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                COLORREF colors[ 16 ];
                HB_BOOL fGet = hb_gt_win_SetPalette( HB_FALSE, colors );
 
-               pInfo->pResult = hb_itemPutNL( pInfo->pResult, colors[ iIndex ] );
+               pInfo->pResult = hb_itemPutNL(pInfo->pResult, colors[ iIndex ]);
 
                if( fGet && ( hb_itemType( pInfo->pNewVal2 ) & HB_IT_NUMERIC ) )
                {
@@ -2147,7 +2147,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
       case HB_GTI_VIEWMAXHEIGHT:
       {
          COORD coBuf = GetLargestConsoleWindowSize( s_HOutput );
-         pInfo->pResult = hb_itemPutNI( pInfo->pResult, coBuf.Y - 1 );
+         pInfo->pResult = hb_itemPutNI(pInfo->pResult, coBuf.Y - 1);
          break;
       }
       case HB_GTI_DESKTOPCOLS:
@@ -2155,21 +2155,21 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
       case HB_GTI_VIEWMAXWIDTH:
       {
          COORD coBuf = GetLargestConsoleWindowSize( s_HOutput );
-         pInfo->pResult = hb_itemPutNI( pInfo->pResult, coBuf.X - 1 );
+         pInfo->pResult = hb_itemPutNI(pInfo->pResult, coBuf.X - 1);
          break;
       }
       case HB_GTI_SCREENHEIGHT:
       case HB_GTI_VIEWPORTHEIGHT:
-         pInfo->pResult = hb_itemPutNI( pInfo->pResult, s_csbi.srWindow.Bottom - s_csbi.srWindow.Top );
+         pInfo->pResult = hb_itemPutNI(pInfo->pResult, s_csbi.srWindow.Bottom - s_csbi.srWindow.Top);
          break;
 
       case HB_GTI_SCREENWIDTH:
       case HB_GTI_VIEWPORTWIDTH:
-         pInfo->pResult = hb_itemPutNI( pInfo->pResult, s_csbi.srWindow.Right - s_csbi.srWindow.Left );
+         pInfo->pResult = hb_itemPutNI(pInfo->pResult, s_csbi.srWindow.Right - s_csbi.srWindow.Left);
          break;
 
       case HB_GTI_KBDSHIFTS:
-         pInfo->pResult = hb_itemPutNI( pInfo->pResult, hb_gt_win_getKbdState() );
+         pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_gt_win_getKbdState());
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
          {
             hb_gt_winapi_setKbdState( hb_itemGetNI(pInfo->pNewVal) );
@@ -2177,7 +2177,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_KBDSPECIAL:
-         pInfo->pResult = hb_itemPutL( pInfo->pResult, s_fSpecialKeyHandling );
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, s_fSpecialKeyHandling);
          if( s_fWin9x && hb_itemType( pInfo->pNewVal ) & HB_IT_LOGICAL )
          {
             s_fSpecialKeyHandling = hb_itemGetL(pInfo->pNewVal);
@@ -2185,7 +2185,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_KBDALT:
-         pInfo->pResult = hb_itemPutL( pInfo->pResult, s_fAltKeyHandling );
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, s_fAltKeyHandling);
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_LOGICAL )
          {
             s_fAltKeyHandling = hb_itemGetL(pInfo->pNewVal);
@@ -2193,7 +2193,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_MOUSESTATUS:
-         pInfo->pResult = hb_itemPutL( pInfo->pResult, s_fMouseEnable );
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, s_fMouseEnable);
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_LOGICAL )
          {
             s_fMouseEnable = hb_itemGetL(pInfo->pNewVal);
@@ -2223,7 +2223,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_WINHANDLE:
-         pInfo->pResult = hb_itemPutPtr( pInfo->pResult, hb_getConsoleWindowHandle() );
+         pInfo->pResult = hb_itemPutPtr(pInfo->pResult, hb_getConsoleWindowHandle());
          break;
 
       default:

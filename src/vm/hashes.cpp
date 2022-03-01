@@ -753,7 +753,7 @@ PHB_ITEM hb_hashGetCItemPtr( PHB_ITEM pHash, const char * pszKey )
       /* we will not make any copy of pKey (autoadd is disabled) so it's
        * safe to use hb_itemPutCConst()
        */
-      PHB_ITEM pKey = hb_itemPutCConst( hb_stackAllocItem(), pszKey );
+      PHB_ITEM pKey = hb_itemPutCConst(hb_stackAllocItem(), pszKey);
       PHB_ITEM pDest = hb_hashValuePtr( pHash->item.asHash.value, pKey, HB_FALSE );
       hb_stackPop();
       if( pDest )
@@ -779,7 +779,7 @@ HB_SIZE hb_hashGetCItemPos( PHB_ITEM pHash, const char * pszKey )
       /* we will not make any copy of pKey (autoadd is disabled) so it's
        * safe to use hb_itemPutCConst()
        */
-      PHB_ITEM pKey = hb_itemPutCConst( hb_stackAllocItem(), pszKey );
+      PHB_ITEM pKey = hb_itemPutCConst(hb_stackAllocItem(), pszKey);
 
       if( hb_hashFind( pHash->item.asHash.value, pKey, &nPos ) )
       {

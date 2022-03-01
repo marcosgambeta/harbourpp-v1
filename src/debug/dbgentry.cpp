@@ -1243,7 +1243,7 @@ static PHB_ITEM hb_dbgEvalMacro( const char * szExpr, PHB_ITEM pItem )
    PHB_ITEM pStr;
    const char * type;
 
-   pStr = hb_itemPutC( nullptr, szExpr );
+   pStr = hb_itemPutC(nullptr, szExpr);
    type = hb_macroGetType( pStr );
    hb_itemRelease(pStr);
    if( ! strcmp( type, "U" ) || ! strcmp( type, "UE" ) )

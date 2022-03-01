@@ -596,7 +596,7 @@ static HB_ERRCODE hb_waFieldInfo( AREAP pArea, HB_USHORT uiIndex, HB_USHORT uiTy
    switch( uiType )
    {
       case DBS_NAME:
-         hb_itemPutC( pItem, hb_dynsymName( static_cast<PHB_DYNS>( pField->sym ) ) );
+         hb_itemPutC(pItem, hb_dynsymName( static_cast<PHB_DYNS>( pField->sym ) ));
          break;
 
       case DBS_TYPE:
@@ -739,20 +739,20 @@ static HB_ERRCODE hb_waFieldInfo( AREAP pArea, HB_USHORT uiIndex, HB_USHORT uiTy
             }
 #endif
          }
-         hb_itemPutCL( pItem, szType, iLen );
+         hb_itemPutCL(pItem, szType, iLen);
          break;
       }
       case DBS_LEN:
-         hb_itemPutNL( pItem, pField->uiLen );
+         hb_itemPutNL(pItem, pField->uiLen);
          break;
 
       case DBS_DEC:
-         hb_itemPutNL( pItem, pField->uiDec );
+         hb_itemPutNL(pItem, pField->uiDec);
          break;
 
 #ifdef DBS_FLAG
       case DBS_FLAG:
-         hb_itemPutNL( pItem, pField->uiFlags );
+         hb_itemPutNL(pItem, pField->uiFlags);
          break;
 #endif
 
@@ -862,7 +862,7 @@ static HB_ERRCODE hb_waInfo( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
       case DBI_ISFLOCK:
       case DBI_SHARED:
       case DBI_TRANSREC:
-         hb_itemPutL( pItem, HB_FALSE );
+         hb_itemPutL(pItem, HB_FALSE);
          break;
 
       /*
@@ -871,13 +871,13 @@ static HB_ERRCODE hb_waInfo( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
       case DBI_GETDELIMITER:
       case DBI_SETDELIMITER:
       case DBI_SEPARATOR:
-         hb_itemPutC( pItem, nullptr );
+         hb_itemPutC(pItem, nullptr);
          return HB_FAILURE;
 
       case DBI_GETHEADERSIZE:
       case DBI_GETRECSIZE:
       case DBI_LOCKCOUNT:
-         hb_itemPutNI( pItem, 0 );
+         hb_itemPutNI(pItem, 0);
          break;
 
       case DBI_LASTUPDATE:
@@ -897,16 +897,16 @@ static HB_ERRCODE hb_waInfo( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
             uiCount++;
             lpdbRelations = lpdbRelations->lpdbriNext;
          }
-         hb_itemPutNI( pItem, uiCount );
+         hb_itemPutNI(pItem, uiCount);
          break;
       }
 
       case DBI_BOF:
-         hb_itemPutL( pItem, pArea->fBof );
+         hb_itemPutL(pItem, pArea->fBof);
          break;
 
       case DBI_EOF:
-         hb_itemPutL( pItem, pArea->fEof );
+         hb_itemPutL(pItem, pArea->fEof);
          break;
 
       case DBI_DBFILTER:
@@ -916,16 +916,16 @@ static HB_ERRCODE hb_waInfo( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
          }
          else
          {
-            hb_itemPutC( pItem, nullptr );
+            hb_itemPutC(pItem, nullptr);
          }
          break;
 
       case DBI_FOUND:
-         hb_itemPutL( pItem, pArea->fFound );
+         hb_itemPutL(pItem, pArea->fFound);
          break;
 
       case DBI_FCOUNT:
-         hb_itemPutNI( pItem, pArea->uiFieldCount );
+         hb_itemPutNI(pItem, pArea->uiFieldCount);
          break;
 
       case DBI_ALIAS:
@@ -935,7 +935,7 @@ static HB_ERRCODE hb_waInfo( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
          {
             return HB_FAILURE;
          }
-         hb_itemPutC( pItem, szAlias );
+         hb_itemPutC(pItem, szAlias);
          break;
       }
 
@@ -963,7 +963,7 @@ static HB_ERRCODE hb_waInfo( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
                lpdbRelations = lpdbRelations->lpdbriNext;
             }
          }
-         hb_itemPutL( pItem, fScoped );
+         hb_itemPutL(pItem, fScoped);
          break;
       }
       case DBI_POSITIONED:
@@ -975,7 +975,7 @@ static HB_ERRCODE hb_waInfo( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
          }
          if( ulRecNo == 0 )
          {
-            hb_itemPutL( pItem, HB_FALSE );
+            hb_itemPutL(pItem, HB_FALSE);
          }
          else if( SELF_RECCOUNT( pArea, &ulRecCount ) != HB_SUCCESS )
          {
@@ -983,24 +983,24 @@ static HB_ERRCODE hb_waInfo( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
          }
          else
          {
-            hb_itemPutL( pItem, ulRecNo != ulRecCount + 1 );
+            hb_itemPutL(pItem, ulRecNo != ulRecCount + 1);
          }
          break;
       }
       case DBI_CODEPAGE:
-         hb_itemPutC( pItem, pArea->cdPage ? pArea->cdPage->id : nullptr );
+         hb_itemPutC(pItem, pArea->cdPage ? pArea->cdPage->id : nullptr);
          break;
 
       case DBI_RM_SUPPORTED:
-         hb_itemPutL( pItem, HB_FALSE );
+         hb_itemPutL(pItem, HB_FALSE);
          break;
 
       case DBI_DB_VERSION:
-         hb_itemPutC( pItem, nullptr );
+         hb_itemPutC(pItem, nullptr);
          break;
 
       case DBI_RDD_VERSION:
-         hb_itemPutC( pItem, nullptr );
+         hb_itemPutC(pItem, nullptr);
          break;
 
       default:
@@ -1732,7 +1732,7 @@ static HB_ERRCODE hb_waRelEval( AREAP pArea, LPDBRELINFO pRelInfo )
             pResult = pRelInfo->lpaParent->valResult;
             pRelInfo->lpaParent->valResult = nullptr;
             memset( &pInfo, 0, sizeof(pInfo) );
-            pInfo.itmResult = hb_itemPutNI( nullptr, 0 );
+            pInfo.itmResult = hb_itemPutNI(nullptr, 0);
             errCode = SELF_ORDINFO( pArea, DBOI_NUMBER, &pInfo );
 
             if( errCode == HB_SUCCESS )
@@ -2047,7 +2047,7 @@ static HB_ERRCODE hb_waCompile( AREAP pArea, const char * pExpr )
    pMacro = hb_macroCompile( pExpr );
    if( pMacro )
    {
-      pArea->valResult = hb_itemPutPtr( pArea->valResult, static_cast<void*>( pMacro ) );
+      pArea->valResult = hb_itemPutPtr(pArea->valResult, static_cast<void*>( pMacro ));
       return HB_SUCCESS;
    }
    else
@@ -2147,14 +2147,14 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
       case RDDI_SORTRECNO:
       case RDDI_MULTIKEY:
       case RDDI_BLOB_SUPPORT:
-         hb_itemPutL( pItem, HB_FALSE );
+         hb_itemPutL(pItem, HB_FALSE);
          break;
 
       case RDDI_CONNECTION:
       case RDDI_TABLETYPE:
       case RDDI_MEMOTYPE:
       case RDDI_MEMOVERSION:
-         hb_itemPutNI( pItem, 0 );
+         hb_itemPutNI(pItem, 0);
          break;
 
       case RDDI_STRICTREAD:
@@ -2163,7 +2163,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          {
             hb_setSetItem( HB_SET_STRICTREAD, pItem );
          }
-         hb_itemPutL( pItem, fResult );
+         hb_itemPutL(pItem, fResult);
          break;
       case RDDI_OPTIMIZE:
          fResult = hb_setGetOptimize();
@@ -2171,7 +2171,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          {
             hb_setSetItem( HB_SET_OPTIMIZE, pItem );
          }
-         hb_itemPutL( pItem, fResult );
+         hb_itemPutL(pItem, fResult);
          break;
       case RDDI_FORCEOPT:
          fResult = hb_setGetForceOpt();
@@ -2179,7 +2179,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          {
             hb_setSetItem( HB_SET_FORCEOPT, pItem );
          }
-         hb_itemPutL( pItem, fResult );
+         hb_itemPutL(pItem, fResult);
          break;
       case RDDI_AUTOOPEN:
          fResult = hb_setGetAutOpen();
@@ -2187,7 +2187,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          {
             hb_setSetItem( HB_SET_AUTOPEN, pItem );
          }
-         hb_itemPutL( pItem, fResult );
+         hb_itemPutL(pItem, fResult);
          break;
       case RDDI_AUTOORDER:
          iResult = hb_setGetAutOrder();
@@ -2195,7 +2195,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          {
             hb_setSetItem( HB_SET_AUTORDER, pItem );
          }
-         hb_itemPutNI( pItem, iResult );
+         hb_itemPutNI(pItem, iResult);
          break;
       case RDDI_AUTOSHARE:
          fResult = hb_setGetAutoShare();
@@ -2203,7 +2203,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          {
             hb_setSetItem( HB_SET_AUTOSHARE, pItem );
          }
-         hb_itemPutL( pItem, fResult );
+         hb_itemPutL(pItem, fResult);
          break;
       case RDDI_LOCKSCHEME:
          iResult = hb_setGetDBFLockScheme();
@@ -2211,7 +2211,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          {
             hb_setSetItem( HB_SET_DBFLOCKSCHEME, pItem );
          }
-         hb_itemPutNI( pItem, iResult );
+         hb_itemPutNI(pItem, iResult);
          break;
       case RDDI_MEMOBLOCKSIZE:
          iResult = hb_setGetMBlockSize();
@@ -2219,7 +2219,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          {
             hb_setSetItem( HB_SET_MBLOCKSIZE, pItem );
          }
-         hb_itemPutNI( pItem, iResult );
+         hb_itemPutNI(pItem, iResult);
          break;
       case RDDI_MEMOEXT:
       {
@@ -2229,7 +2229,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          {
             hb_setSetItem( HB_SET_MFILEEXT, pItem );
          }
-         hb_itemPutCPtr( pItem, szResult );
+         hb_itemPutCPtr(pItem, szResult);
          break;
       }
       case RDDI_TABLEEXT:
@@ -2240,7 +2240,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
       case RDDI_SEPARATOR:
       case RDDI_TRIGGER:
       case RDDI_PENDINGTRIGGER:
-         hb_itemPutC( pItem, nullptr );
+         hb_itemPutC(pItem, nullptr);
          /* fallthrough */ /* return HB_FAILURE */
 
       default:

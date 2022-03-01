@@ -845,7 +845,7 @@ HB_FUNC( __DYNSN2SYM )
 
    if( szName )
    {
-      hb_itemPutSymbol( hb_stackReturnItem(), hb_dynsymGet( szName )->pSymbol );
+      hb_itemPutSymbol(hb_stackReturnItem(), hb_dynsymGet( szName )->pSymbol);
    }
 }
 

@@ -612,7 +612,7 @@ static int hb_hsxCompile( const char * szExpr, PHB_ITEM * pExpr )
       {
          return HSX_BADPARMS;
       }
-      *pExpr = hb_itemPutPtr( nullptr, static_cast<void*>( pMacro ) );
+      *pExpr = hb_itemPutPtr(nullptr, static_cast<void*>( pMacro ));
    }
    return HSX_SUCCESS;
 }
@@ -1912,7 +1912,7 @@ static int hb_hsxFilter( int iHandle, const char * pSeek, HB_SIZE nSeek, PHB_ITE
       if( fValid )
       {
          /* set record in WA RM filter */
-         hb_itemPutNInt( pItem, ulRec );
+         hb_itemPutNInt(pItem, ulRec);
          errCode = SELF_INFO( pArea, DBI_RM_ADD, pItem );
       }
    }

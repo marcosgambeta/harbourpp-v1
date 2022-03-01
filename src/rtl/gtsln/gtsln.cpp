@@ -941,15 +941,15 @@ static HB_BOOL hb_gt_sln_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
    {
       case HB_GTI_ISSCREENPOS:
       case HB_GTI_KBDSUPPORT:
-         pInfo->pResult = hb_itemPutL( pInfo->pResult, HB_TRUE );
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_TRUE);
          break;
 
       case HB_GTI_ISUNICODE:
-         pInfo->pResult = hb_itemPutL( pInfo->pResult, hb_sln_Is_Unicode );
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, hb_sln_Is_Unicode);
          break;
 
       case HB_GTI_ESCDELAY:
-         pInfo->pResult = hb_itemPutNI( pInfo->pResult, hb_sln_escDelay );
+         pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_sln_escDelay);
          if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
             hb_sln_escDelay = hb_itemGetNI(pInfo->pNewVal);
          break;

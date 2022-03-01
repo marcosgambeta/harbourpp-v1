@@ -282,65 +282,65 @@ static PHB_ITEM hb_u64ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
          break;
 
       case HB_DYN_CTYPE_BOOL:
-         hb_itemPutL( pItem, value.t.n64 != 0 );
+         hb_itemPutL(pItem, value.t.n64 != 0);
          break;
 
       case HB_DYN_CTYPE_CHAR:
-         hb_itemPutNI( pItem, static_cast<char>( value.t.n64 ) );
+         hb_itemPutNI(pItem, static_cast<char>( value.t.n64 ));
          break;
 
       case HB_DYN_CTYPE_CHAR_UNSIGNED:
-         hb_itemPutNI( pItem, static_cast<unsigned char>( value.t.n64 ) );
+         hb_itemPutNI(pItem, static_cast<unsigned char>( value.t.n64 ));
          break;
 
       case HB_DYN_CTYPE_SHORT:
-         hb_itemPutNI( pItem, static_cast<short>( value.t.n64 ) );
+         hb_itemPutNI(pItem, static_cast<short>( value.t.n64 ));
          break;
 
       case HB_DYN_CTYPE_SHORT_UNSIGNED:
-         hb_itemPutNI( pItem, static_cast<unsigned short>( value.t.n64 ) );
+         hb_itemPutNI(pItem, static_cast<unsigned short>( value.t.n64 ));
          break;
 
       case HB_DYN_CTYPE_INT:
-         hb_itemPutNI( pItem, static_cast<int>( value.t.n64 ) );
+         hb_itemPutNI(pItem, static_cast<int>( value.t.n64 ));
          break;
 
       case HB_DYN_CTYPE_INT_UNSIGNED:
-         hb_itemPutNInt( pItem, static_cast<unsigned int>( value.t.n64 ) );
+         hb_itemPutNInt(pItem, static_cast<unsigned int>( value.t.n64 ));
          break;
 
       case HB_DYN_CTYPE_LONG:
-         hb_itemPutNL( pItem, static_cast<long>( value.t.n64 ) );
+         hb_itemPutNL(pItem, static_cast<long>( value.t.n64 ));
          break;
 
       case HB_DYN_CTYPE_LONG_UNSIGNED:
-         hb_itemPutNInt( pItem, static_cast<unsigned long>( value.t.n64 ) );
+         hb_itemPutNInt(pItem, static_cast<unsigned long>( value.t.n64 ));
          break;
 
       case HB_DYN_CTYPE_LLONG:
 #if HB_VMLONG_MAX == INT32_MAX || defined( HB_LONG_LONG_OFF )
-         hb_itemPutNInt( pItem, static_cast<HB_MAXINT>( value.t.n64 ) );
+         hb_itemPutNInt(pItem, static_cast<HB_MAXINT>( value.t.n64 ));
 #else
-         hb_itemPutNInt( pItem, static_cast<HB_LONGLONG>( value.t.n64 ) );
+         hb_itemPutNInt(pItem, static_cast<HB_LONGLONG>( value.t.n64 ));
 #endif
          break;
 
       case HB_DYN_CTYPE_LLONG_UNSIGNED:
 #if HB_VMLONG_MAX == INT32_MAX || defined( HB_LONG_LONG_OFF )
-         hb_itemPutNInt( pItem, static_cast<HB_MAXUINT>( value.t.n64 ) );
+         hb_itemPutNInt(pItem, static_cast<HB_MAXUINT>( value.t.n64 ));
 #else
-         hb_itemPutNInt( pItem, static_cast<HB_ULONGLONG>( value.t.n64 ) );
+         hb_itemPutNInt(pItem, static_cast<HB_ULONGLONG>( value.t.n64 ));
 #endif
          break;
 
       case HB_DYN_CTYPE_CHAR_UNSIGNED_PTR:
          if( nLen == -1 )
          {
-            hb_itemPutC( pItem, reinterpret_cast<const char*>( value.t.n64 ) );
+            hb_itemPutC(pItem, reinterpret_cast<const char*>( value.t.n64 ));
          }
          else
          {
-            hb_itemPutCL( pItem, reinterpret_cast<const char*>( value.t.n64 ), nLen );
+            hb_itemPutCL(pItem, reinterpret_cast<const char*>( value.t.n64 ), nLen);
          }
          break;
 
@@ -380,11 +380,11 @@ static PHB_ITEM hb_u64ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
             default:
                if( nLen == -1 )
                {
-                  hb_itemPutC( pItem, reinterpret_cast<const char*>( value.t.n64 ) );
+                  hb_itemPutC(pItem, reinterpret_cast<const char*>( value.t.n64 ));
                }
                else
                {
-                  hb_itemPutCL( pItem, reinterpret_cast<const char*>( value.t.n64 ), nLen );
+                  hb_itemPutCL(pItem, reinterpret_cast<const char*>( value.t.n64 ), nLen);
                }
          }
          break;
@@ -402,19 +402,19 @@ static PHB_ITEM hb_u64ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
       case HB_DYN_CTYPE_FLOAT_PTR:
       case HB_DYN_CTYPE_DOUBLE_PTR:
       case HB_DYN_CTYPE_STRUCTURE_PTR:
-         hb_itemPutPtr( pItem, reinterpret_cast<void*>( value.t.n64 ) );
+         hb_itemPutPtr(pItem, reinterpret_cast<void*>( value.t.n64 ));
          break;
 
       case HB_DYN_CTYPE_FLOAT:
-         hb_itemPutND( pItem, static_cast<double>( value.t.nFL ) );
+         hb_itemPutND(pItem, static_cast<double>( value.t.nFL ));
          break;
 
       case HB_DYN_CTYPE_DOUBLE:
-         hb_itemPutND( pItem, value.t.nDB );
+         hb_itemPutND(pItem, value.t.nDB);
          break;
 
       default:
-         hb_itemPutNInt( pItem, value.t.n64 );
+         hb_itemPutNInt(pItem, value.t.n64);
    }
 
    return pItem;
@@ -688,47 +688,47 @@ static PHB_ITEM hb_u32ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
          break;
 
       case HB_DYN_CTYPE_BOOL:
-         hb_itemPutL( pItem, value.t.n32 != 0 );
+         hb_itemPutL(pItem, value.t.n32 != 0);
          break;
 
       case HB_DYN_CTYPE_CHAR:
-         hb_itemPutNI( pItem, static_cast<char>( value.t.n32 ) );
+         hb_itemPutNI(pItem, static_cast<char>( value.t.n32 ));
          break;
 
       case HB_DYN_CTYPE_CHAR_UNSIGNED:
-         hb_itemPutNI( pItem, static_cast<unsigned char>( value.t.n32 ) );
+         hb_itemPutNI(pItem, static_cast<unsigned char>( value.t.n32 ));
          break;
 
       case HB_DYN_CTYPE_SHORT:
-         hb_itemPutNI( pItem, static_cast<short>( value.t.n32 ) );
+         hb_itemPutNI(pItem, static_cast<short>( value.t.n32 ));
          break;
 
       case HB_DYN_CTYPE_SHORT_UNSIGNED:
-         hb_itemPutNI( pItem, static_cast<unsigned short>( value.t.n32 ) );
+         hb_itemPutNI(pItem, static_cast<unsigned short>( value.t.n32 ));
          break;
 
       case HB_DYN_CTYPE_INT:
-         hb_itemPutNI( pItem, static_cast<int>( value.t.n32 ) );
+         hb_itemPutNI(pItem, static_cast<int>( value.t.n32 ));
          break;
 
       case HB_DYN_CTYPE_INT_UNSIGNED:
-         hb_itemPutNInt( pItem, static_cast<unsigned int>( value.t.n32 ) );
+         hb_itemPutNInt(pItem, static_cast<unsigned int>( value.t.n32 ));
          break;
 
       case HB_DYN_CTYPE_LONG:
-         hb_itemPutNL( pItem, static_cast<long>( value.t.n32 ) );
+         hb_itemPutNL(pItem, static_cast<long>( value.t.n32 ));
          break;
 
       case HB_DYN_CTYPE_LONG_UNSIGNED:
-         hb_itemPutNInt( pItem, value.t.n32 );
+         hb_itemPutNInt(pItem, value.t.n32);
          break;
 
       case HB_DYN_CTYPE_LLONG:
 #if ! defined( HB_LONG_LONG_OFF )
 #if HB_VMLONG_MAX == INT32_MAX || defined( HB_LONG_LONG_OFF )
-         hb_itemPutNInt( pItem, static_cast<HB_MAXINT>( value.t.n64 ) );
+         hb_itemPutNInt(pItem, static_cast<HB_MAXINT>( value.t.n64 ));
 #else
-         hb_itemPutNInt( pItem, static_cast<HB_LONGLONG>( value.t.n64 ) );
+         hb_itemPutNInt(pItem, static_cast<HB_LONGLONG>( value.t.n64 ));
 #endif
 #endif
          break;
@@ -736,9 +736,9 @@ static PHB_ITEM hb_u32ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
       case HB_DYN_CTYPE_LLONG_UNSIGNED:
 #if ! defined( HB_LONG_LONG_OFF )
 #if HB_VMLONG_MAX == INT32_MAX || defined( HB_LONG_LONG_OFF )
-         hb_itemPutNInt( pItem, static_cast<HB_MAXUINT>( value.t.n64 ) );
+         hb_itemPutNInt(pItem, static_cast<HB_MAXUINT>( value.t.n64 ));
 #else
-         hb_itemPutNInt( pItem, static_cast<HB_ULONGLONG>( value.t.n64 ) );
+         hb_itemPutNInt(pItem, static_cast<HB_ULONGLONG>( value.t.n64 ));
 #endif
 #endif
          break;
@@ -746,11 +746,11 @@ static PHB_ITEM hb_u32ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
       case HB_DYN_CTYPE_CHAR_UNSIGNED_PTR:
          if( nLen == -1 )
          {
-            hb_itemPutC( pItem, reinterpret_cast<const char*>( value.t.n32 ) );
+            hb_itemPutC(pItem, reinterpret_cast<const char*>( value.t.n32 ));
          }
          else
          {
-            hb_itemPutCL( pItem, reinterpret_cast<const char*>( value.t.n32 ), nLen );
+            hb_itemPutCL(pItem, reinterpret_cast<const char*>( value.t.n32 ), nLen);
          }
          break;
 
@@ -791,11 +791,11 @@ static PHB_ITEM hb_u32ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
             default:
                if( nLen == -1 )
                {
-                  hb_itemPutC( pItem, reinterpret_cast<const char*>( value.t.n32 ) );
+                  hb_itemPutC(pItem, reinterpret_cast<const char*>( value.t.n32 ));
                }
                else
                {
-                  hb_itemPutCL( pItem, reinterpret_cast<const char*>( value.t.n32 ), nLen );
+                  hb_itemPutCL(pItem, reinterpret_cast<const char*>( value.t.n32 ), nLen);
                }
          }
          break;
@@ -813,19 +813,19 @@ static PHB_ITEM hb_u32ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
       case HB_DYN_CTYPE_FLOAT_PTR:
       case HB_DYN_CTYPE_DOUBLE_PTR:
       case HB_DYN_CTYPE_STRUCTURE_PTR:
-         hb_itemPutPtr( pItem, reinterpret_cast<void*>( value.t.n32 ) );
+         hb_itemPutPtr(pItem, reinterpret_cast<void*>( value.t.n32 ));
          break;
 
       case HB_DYN_CTYPE_FLOAT:
-         hb_itemPutND( pItem, static_cast<double>( value.t.nFL ) );
+         hb_itemPutND(pItem, static_cast<double>( value.t.nFL ));
          break;
 
       case HB_DYN_CTYPE_DOUBLE:
-         hb_itemPutND( pItem, value.t.nDB );
+         hb_itemPutND(pItem, value.t.nDB);
          break;
 
       default:
-         hb_itemPutNL( pItem, static_cast<long>( value.t.n32 ) );
+         hb_itemPutNL(pItem, static_cast<long>( value.t.n32 ));
    }
 
    return pItem;

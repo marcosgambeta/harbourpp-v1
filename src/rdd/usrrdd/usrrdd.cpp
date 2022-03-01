@@ -203,12 +203,12 @@ static PHB_ITEM hb_usrFieldInfoToItem( LPDBFIELDINFO pFieldInfo )
    pItem = hb_itemArrayNew( UR_FI_SIZE );
    if( pFieldInfo->atomName )
    {
-      hb_itemPutC( hb_arrayGetItemPtr( pItem, UR_FI_NAME ), pFieldInfo->atomName );
+      hb_itemPutC(hb_arrayGetItemPtr( pItem, UR_FI_NAME ), pFieldInfo->atomName);
    }
-   hb_itemPutNI( hb_arrayGetItemPtr( pItem, UR_FI_TYPE ), pFieldInfo->uiType );
-   hb_itemPutNI( hb_arrayGetItemPtr( pItem, UR_FI_TYPEEXT ), pFieldInfo->uiTypeExtended );
-   hb_itemPutNI( hb_arrayGetItemPtr( pItem, UR_FI_LEN ), pFieldInfo->uiLen );
-   hb_itemPutNI( hb_arrayGetItemPtr( pItem, UR_FI_DEC ), pFieldInfo->uiDec );
+   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_FI_TYPE ), pFieldInfo->uiType);
+   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_FI_TYPEEXT ), pFieldInfo->uiTypeExtended);
+   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_FI_LEN ), pFieldInfo->uiLen);
+   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_FI_DEC ), pFieldInfo->uiDec);
 
    return pItem;
 }
@@ -232,25 +232,25 @@ static PHB_ITEM hb_usrOpenInfoToItem( LPDBOPENINFO pOpenInfo )
    PHB_ITEM pItem;
 
    pItem = hb_itemArrayNew( UR_OI_SIZE );
-   hb_itemPutNI( hb_arrayGetItemPtr( pItem, UR_OI_AREA ), pOpenInfo->uiArea );
+   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_OI_AREA ), pOpenInfo->uiArea);
    if( pOpenInfo->abName )
    {
-      hb_itemPutC( hb_arrayGetItemPtr( pItem, UR_OI_NAME ), pOpenInfo->abName );
+      hb_itemPutC(hb_arrayGetItemPtr( pItem, UR_OI_NAME ), pOpenInfo->abName);
    }
    if( pOpenInfo->atomAlias )
    {
-      hb_itemPutC( hb_arrayGetItemPtr( pItem, UR_OI_ALIAS ), pOpenInfo->atomAlias );
+      hb_itemPutC(hb_arrayGetItemPtr( pItem, UR_OI_ALIAS ), pOpenInfo->atomAlias);
    }
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_OI_SHARED ), pOpenInfo->fShared );
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_OI_READONLY ), pOpenInfo->fReadonly );
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_OI_SHARED ), pOpenInfo->fShared);
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_OI_READONLY ), pOpenInfo->fReadonly);
    if( pOpenInfo->cdpId )
    {
-      hb_itemPutC( hb_arrayGetItemPtr( pItem, UR_OI_CDPID ), pOpenInfo->cdpId );
+      hb_itemPutC(hb_arrayGetItemPtr( pItem, UR_OI_CDPID ), pOpenInfo->cdpId);
    }
-   hb_itemPutNL( hb_arrayGetItemPtr( pItem, UR_OI_CONNECT ), pOpenInfo->ulConnection );
+   hb_itemPutNL(hb_arrayGetItemPtr( pItem, UR_OI_CONNECT ), pOpenInfo->ulConnection);
    if( pOpenInfo->lpdbHeader )
    {
-      hb_itemPutPtr( hb_arrayGetItemPtr( pItem, UR_OI_HEADER ), pOpenInfo->lpdbHeader );
+      hb_itemPutPtr(hb_arrayGetItemPtr( pItem, UR_OI_HEADER ), pOpenInfo->lpdbHeader);
    }
 
    return pItem;
@@ -286,9 +286,9 @@ static PHB_ITEM hb_usrFilterInfoToItem( LPDBFILTERINFO pFilterInfo )
    {
       hb_itemCopy( hb_arrayGetItemPtr( pItem, UR_FRI_CEXPR ), pFilterInfo->abFilterText );
    }
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_FRI_ACTIVE ), pFilterInfo->fFilter );
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_FRI_OPTIMIZED ), pFilterInfo->fOptimized );
-   hb_itemPutPtr( hb_arrayGetItemPtr( pItem, UR_FRI_CARGO ), pFilterInfo->lpvCargo );
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_FRI_ACTIVE ), pFilterInfo->fFilter);
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_FRI_OPTIMIZED ), pFilterInfo->fOptimized);
+   hb_itemPutPtr(hb_arrayGetItemPtr( pItem, UR_FRI_CARGO ), pFilterInfo->lpvCargo);
 
    return pItem;
 }
@@ -320,11 +320,11 @@ static PHB_ITEM hb_usrRelInfoToItem( LPDBRELINFO pRelInfo )
    {
       hb_itemCopy( hb_arrayGetItemPtr( pItem, UR_RI_CEXPR ), pRelInfo->abKey );
    }
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_RI_SCOPED ), pRelInfo->isScoped );
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_RI_OPTIMIZED ), pRelInfo->isOptimized );
-   hb_itemPutNI( hb_arrayGetItemPtr( pItem, UR_RI_PARENT ), pRelInfo->lpaParent ? pRelInfo->lpaParent->uiArea : 0 );
-   hb_itemPutNI( hb_arrayGetItemPtr( pItem, UR_RI_CHILD ), pRelInfo->lpaChild ? pRelInfo->lpaChild->uiArea : 0 );
-   hb_itemPutPtr( hb_arrayGetItemPtr( pItem, UR_RI_NEXT ), pRelInfo->lpdbriNext );
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_RI_SCOPED ), pRelInfo->isScoped);
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_RI_OPTIMIZED ), pRelInfo->isOptimized);
+   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_RI_PARENT ), pRelInfo->lpaParent ? pRelInfo->lpaParent->uiArea : 0);
+   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_RI_CHILD ), pRelInfo->lpaChild ? pRelInfo->lpaChild->uiArea : 0);
+   hb_itemPutPtr(hb_arrayGetItemPtr( pItem, UR_RI_NEXT ), pRelInfo->lpdbriNext);
 
    return pItem;
 }
@@ -354,8 +354,8 @@ static PHB_ITEM hb_usrLockInfoToItem( LPDBLOCKINFO pLockInfo )
    {
       hb_itemCopy( hb_arrayGetItemPtr( pItem, UR_LI_RECORD ), pLockInfo->itmRecID );
    }
-   hb_itemPutNI( hb_arrayGetItemPtr( pItem, UR_LI_METHOD ), pLockInfo->uiMethod );
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_LI_RESULT ), pLockInfo->fResult );
+   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_LI_METHOD ), pLockInfo->uiMethod);
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_LI_RESULT ), pLockInfo->fResult);
 
    return pItem;
 }
@@ -403,12 +403,12 @@ static PHB_ITEM hb_usrScopeInfoToItem( LPDBSCOPEINFO pScopeInfo )
    {
       hb_itemCopy( hb_arrayGetItemPtr( pItem, UR_SI_REST ), pScopeInfo->fRest );
    }
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_SI_IGNOREFILTER ), pScopeInfo->fIgnoreFilter );
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_SI_INCLUDEDELETED ), pScopeInfo->fIncludeDeleted );
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_SI_LAST ), pScopeInfo->fLast );
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_SI_IGNOREDUPS ), pScopeInfo->fIgnoreDuplicates );
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_SI_BACKWARD ), pScopeInfo->fBackward );
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_SI_OPTIMIZED ), pScopeInfo->fOptimized );
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_SI_IGNOREFILTER ), pScopeInfo->fIgnoreFilter);
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_SI_INCLUDEDELETED ), pScopeInfo->fIncludeDeleted);
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_SI_LAST ), pScopeInfo->fLast);
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_SI_IGNOREDUPS ), pScopeInfo->fIgnoreDuplicates);
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_SI_BACKWARD ), pScopeInfo->fBackward);
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_SI_OPTIMIZED ), pScopeInfo->fOptimized);
 
    return pItem;
 }
@@ -472,11 +472,11 @@ static PHB_ITEM hb_usrTransInfoToItem( LPDBTRANSINFO pTransInfo )
 
    pScope = hb_usrScopeInfoToItem( &pTransInfo->dbsci );
    pItem = hb_itemArrayNew( UR_TI_SIZE );
-   hb_itemPutNI( hb_arrayGetItemPtr( pItem, UR_TI_SRCAREA ), pTransInfo->lpaSource->uiArea );
-   hb_itemPutNI( hb_arrayGetItemPtr( pItem, UR_TI_DSTAREA ), pTransInfo->lpaDest->uiArea );
+   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_TI_SRCAREA ), pTransInfo->lpaSource->uiArea);
+   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_TI_DSTAREA ), pTransInfo->lpaDest->uiArea);
    hb_itemMove( hb_arrayGetItemPtr( pItem, UR_TI_SCOPE ), pScope );
-   hb_itemPutNI( hb_arrayGetItemPtr( pItem, UR_TI_FLAGS ), pTransInfo->uiFlags );
-   hb_itemPutNI( hb_arrayGetItemPtr( pItem, UR_TI_ITEMCOUNT ), pTransInfo->uiItemCount );
+   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_TI_FLAGS ), pTransInfo->uiFlags);
+   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_TI_ITEMCOUNT ), pTransInfo->uiItemCount);
    if( pTransInfo->uiItemCount )
    {
       PHB_ITEM pItems = hb_arrayGetItemPtr( pItem, UR_TI_ITEMS );
@@ -487,8 +487,8 @@ static PHB_ITEM hb_usrTransInfoToItem( LPDBTRANSINFO pTransInfo )
       {
          PHB_ITEM pItm = hb_arrayGetItemPtr( pItems, uiCount );
          hb_arrayNew( pItm, UR_TITEM_SIZE );
-         hb_itemPutNI( hb_arrayGetItemPtr( pItm, UR_TITEM_SOURCE ), pTransItem->uiSource );
-         hb_itemPutNI( hb_arrayGetItemPtr( pItm, UR_TITEM_DESTIN ), pTransItem->uiDest );
+         hb_itemPutNI(hb_arrayGetItemPtr( pItm, UR_TITEM_SOURCE ), pTransItem->uiSource);
+         hb_itemPutNI(hb_arrayGetItemPtr( pItm, UR_TITEM_DESTIN ), pTransItem->uiDest);
       }
    }
    hb_itemRelease(pScope);
@@ -549,7 +549,7 @@ static PHB_ITEM hb_usrSortInfoToItem( LPDBSORTINFO pSortInfo )
    pTrans = hb_usrTransInfoToItem( &pSortInfo->dbtri );
    pItem = hb_itemArrayNew( UR_SRI_SIZE );
    hb_itemMove( hb_arrayGetItemPtr( pItem, UR_SRI_TRANSINFO ), pTrans );
-   hb_itemPutNI( hb_arrayGetItemPtr( pItem, UR_SRI_ITEMCOUNT ), pSortInfo->uiItemCount );
+   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_SRI_ITEMCOUNT ), pSortInfo->uiItemCount);
    if( pSortInfo->uiItemCount )
    {
       PHB_ITEM pItems = hb_arrayGetItemPtr( pItem, UR_SRI_ITEMS );
@@ -560,8 +560,8 @@ static PHB_ITEM hb_usrSortInfoToItem( LPDBSORTINFO pSortInfo )
       {
          PHB_ITEM pItm = hb_arrayGetItemPtr( pItems, uiCount );
          hb_arrayNew( pItm, UR_SITEM_SIZE );
-         hb_itemPutNI( hb_arrayGetItemPtr( pItm, UR_SITEM_FIELD ), pSortItem->uiField );
-         hb_itemPutNI( hb_arrayGetItemPtr( pItm, UR_SITEM_FLAGS ), pSortItem->uiFlags );
+         hb_itemPutNI(hb_arrayGetItemPtr( pItm, UR_SITEM_FIELD ), pSortItem->uiField);
+         hb_itemPutNI(hb_arrayGetItemPtr( pItm, UR_SITEM_FLAGS ), pSortItem->uiFlags);
       }
    }
    hb_itemRelease(pTrans);
@@ -638,7 +638,7 @@ static PHB_ITEM hb_usrOrderInfoToItem( LPDBORDERINFO pOrderInfo )
    {
       hb_itemCopy( hb_arrayGetItemPtr( pItem, UR_ORI_NEWVAL ), pOrderInfo->itmNewVal );
    }
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_ORI_ALLTAGS ), pOrderInfo->fAllTags );
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORI_ALLTAGS ), pOrderInfo->fAllTags);
 
    return pItem;
 }
@@ -663,14 +663,14 @@ static PHB_ITEM hb_usrOrderCondInfoToItem( LPDBORDERCONDINFO pOrderCondInfo )
    PHB_ITEM pItem;
 
    pItem = hb_itemArrayNew( UR_ORC_SIZE );
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_ORC_ACTIVE ), pOrderCondInfo->fActive );
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_ACTIVE ), pOrderCondInfo->fActive);
    if( pOrderCondInfo->abFor )
    {
-      hb_itemPutC( hb_arrayGetItemPtr( pItem, UR_ORC_CFOR ), pOrderCondInfo->abFor );
+      hb_itemPutC(hb_arrayGetItemPtr( pItem, UR_ORC_CFOR ), pOrderCondInfo->abFor);
    }
    if( pOrderCondInfo->abWhile )
    {
-      hb_itemPutC( hb_arrayGetItemPtr( pItem, UR_ORC_CWHILE ), pOrderCondInfo->abWhile );
+      hb_itemPutC(hb_arrayGetItemPtr( pItem, UR_ORC_CWHILE ), pOrderCondInfo->abWhile);
    }
    if( pOrderCondInfo->itmCobFor )
    {
@@ -684,29 +684,29 @@ static PHB_ITEM hb_usrOrderCondInfoToItem( LPDBORDERCONDINFO pOrderCondInfo )
    {
       hb_itemCopy( hb_arrayGetItemPtr( pItem, UR_ORC_BEVAL ), pOrderCondInfo->itmCobEval );
    }
-   hb_itemPutNL( hb_arrayGetItemPtr( pItem, UR_ORC_STEP ), pOrderCondInfo->lStep );
+   hb_itemPutNL(hb_arrayGetItemPtr( pItem, UR_ORC_STEP ), pOrderCondInfo->lStep);
    if( pOrderCondInfo->itmStartRecID )
    {
       hb_itemCopy( hb_arrayGetItemPtr( pItem, UR_ORC_STARTREC ), pOrderCondInfo->itmStartRecID );
    }
-   hb_itemPutNL( hb_arrayGetItemPtr( pItem, UR_ORC_NEXT ), pOrderCondInfo->lNextCount );
+   hb_itemPutNL(hb_arrayGetItemPtr( pItem, UR_ORC_NEXT ), pOrderCondInfo->lNextCount);
    if( pOrderCondInfo->itmRecID )
    {
       hb_itemCopy( hb_arrayGetItemPtr( pItem, UR_ORC_RECORD ), pOrderCondInfo->itmRecID );
    }
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_ORC_REST ), pOrderCondInfo->fRest );
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_ORC_DESCEND ), pOrderCondInfo->fDescending );
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_ORC_SCOPED ), pOrderCondInfo->fScoped );
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_ORC_ALL ), pOrderCondInfo->fAll );
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_ORC_ADDITIVE ), pOrderCondInfo->fAdditive );
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_ORC_USECURRENT ), pOrderCondInfo->fUseCurrent );
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_ORC_CUSTOM ), pOrderCondInfo->fCustom );
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_ORC_NOOPTIMIZE ), pOrderCondInfo->fNoOptimize );
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_ORC_COMPOUND ), pOrderCondInfo->fCompound );
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_ORC_USEFILTER ), pOrderCondInfo->fUseFilter );
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_ORC_TEMPORARY ), pOrderCondInfo->fTemporary );
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_ORC_EXCLUSIVE ), pOrderCondInfo->fExclusive );
-   hb_itemPutPtr( hb_arrayGetItemPtr( pItem, UR_ORC_CARGO ), pOrderCondInfo->lpvCargo );
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_REST ), pOrderCondInfo->fRest);
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_DESCEND ), pOrderCondInfo->fDescending);
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_SCOPED ), pOrderCondInfo->fScoped);
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_ALL ), pOrderCondInfo->fAll);
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_ADDITIVE ), pOrderCondInfo->fAdditive);
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_USECURRENT ), pOrderCondInfo->fUseCurrent);
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_CUSTOM ), pOrderCondInfo->fCustom);
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_NOOPTIMIZE ), pOrderCondInfo->fNoOptimize);
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_COMPOUND ), pOrderCondInfo->fCompound);
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_USEFILTER ), pOrderCondInfo->fUseFilter);
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_TEMPORARY ), pOrderCondInfo->fTemporary);
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_EXCLUSIVE ), pOrderCondInfo->fExclusive);
+   hb_itemPutPtr(hb_arrayGetItemPtr( pItem, UR_ORC_CARGO ), pOrderCondInfo->lpvCargo);
 
    return pItem;
 }
@@ -820,17 +820,17 @@ static PHB_ITEM hb_usrOrderCreateInfoToItem( LPDBORDERCREATEINFO pOrderCreateInf
    }
    if( pOrderCreateInfo->abBagName )
    {
-      hb_itemPutC( hb_arrayGetItemPtr( pItem, UR_ORCR_BAGNAME ), pOrderCreateInfo->abBagName );
+      hb_itemPutC(hb_arrayGetItemPtr( pItem, UR_ORCR_BAGNAME ), pOrderCreateInfo->abBagName);
    }
    if( pOrderCreateInfo->atomBagName )
    {
-      hb_itemPutC( hb_arrayGetItemPtr( pItem, UR_ORCR_TAGNAME ), pOrderCreateInfo->atomBagName );
+      hb_itemPutC(hb_arrayGetItemPtr( pItem, UR_ORCR_TAGNAME ), pOrderCreateInfo->atomBagName);
    }
    if( pOrderCreateInfo->itmOrder )
    {
       hb_itemCopy( hb_arrayGetItemPtr( pItem, UR_ORCR_ORDER ), pOrderCreateInfo->itmOrder );
    }
-   hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_ORCR_UNIQUE ), pOrderCreateInfo->fUnique );
+   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORCR_UNIQUE ), pOrderCreateInfo->fUnique);
    if( pOrderCreateInfo->itmCobExpr )
    {
       hb_itemCopy( hb_arrayGetItemPtr( pItem, UR_ORCR_BKEY ), pOrderCreateInfo->itmCobExpr );
@@ -4847,7 +4847,7 @@ HB_FUNC_UR_SUPER( LOCK )
       if( hb_usrItemToLockInfo( pItem, &dbLockInfo ) )
       {
          hb_retni( SUPER_LOCK( pArea, &dbLockInfo ) );
-         hb_itemPutL( hb_arrayGetItemPtr( pItem, UR_LI_RESULT ), dbLockInfo.fResult );
+         hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_LI_RESULT ), dbLockInfo.fResult);
       }
       else
       {

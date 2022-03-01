@@ -247,7 +247,7 @@ HB_BOOL hb_gt_winapi_getClipboard( HB_UINT uFormat, PHB_ITEM pItem )
 
    if( nSize == 0 )
    {
-      hb_itemPutC( pItem, nullptr );
+      hb_itemPutC(pItem, nullptr);
    }
 
    return nSize != 0;

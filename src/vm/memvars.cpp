@@ -1763,7 +1763,7 @@ HB_FUNC( __MVRESTORE )
 
                   if( hb_fileRead( fhnd, pbyString, uiWidth, -1 ) == static_cast<HB_SIZE>( uiWidth ) )
                   {
-                     pItem = hb_itemPutCLPtr( pItem, reinterpret_cast<char*>( pbyString ), uiWidth - 1 );
+                     pItem = hb_itemPutCLPtr(pItem, reinterpret_cast<char*>( pbyString ), uiWidth - 1);
                   }
                   else
                   {
@@ -1780,7 +1780,7 @@ HB_FUNC( __MVRESTORE )
 
                   if( hb_fileRead( fhnd, pbyNumber, HB_MEM_NUM_LEN, -1 ) == HB_MEM_NUM_LEN )
                   {
-                     pItem = hb_itemPutNLen( pItem, HB_GET_LE_DOUBLE( pbyNumber ), uiWidth - ( uiDec ? ( uiDec + 1 ) : 0 ), uiDec );
+                     pItem = hb_itemPutNLen(pItem, HB_GET_LE_DOUBLE( pbyNumber ), uiWidth - ( uiDec ? ( uiDec + 1 ) : 0 ), uiDec);
                   }
                   else
                   {
@@ -1796,7 +1796,7 @@ HB_FUNC( __MVRESTORE )
 
                   if( hb_fileRead( fhnd, pbyNumber, HB_MEM_NUM_LEN, -1 ) == HB_MEM_NUM_LEN )
                   {
-                     pItem = hb_itemPutDL( pItem, static_cast<long>( HB_GET_LE_DOUBLE( pbyNumber ) ) );
+                     pItem = hb_itemPutDL(pItem, static_cast<long>( HB_GET_LE_DOUBLE( pbyNumber ) ));
                   }
                   else
                   {
@@ -1812,7 +1812,7 @@ HB_FUNC( __MVRESTORE )
 
                   if( hb_fileRead( fhnd, pbyNumber, HB_MEM_NUM_LEN, -1 ) == HB_MEM_NUM_LEN )
                   {
-                     pItem = hb_itemPutTD( pItem, HB_GET_LE_DOUBLE( pbyNumber ) );
+                     pItem = hb_itemPutTD(pItem, HB_GET_LE_DOUBLE( pbyNumber ));
                   }
                   else
                   {
@@ -1828,7 +1828,7 @@ HB_FUNC( __MVRESTORE )
 
                   if( hb_fileRead( fhnd, pbyLogical, 1, -1 ) == 1 )
                   {
-                     pItem = hb_itemPutL( pItem, pbyLogical[ 0 ] != 0 );
+                     pItem = hb_itemPutL(pItem, pbyLogical[ 0 ] != 0);
                   }
                   else
                   {

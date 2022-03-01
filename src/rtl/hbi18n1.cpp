@@ -271,8 +271,8 @@ static long hb_i18n_pluralindex( int iForm, PHB_ITEM pNum )
 
 static void hb_i18n_setitem( PHB_ITEM pHash, const char * szKey, const char * szValue )
 {
-   PHB_ITEM pKey = hb_itemPutC( nullptr, szKey );
-   PHB_ITEM pValue = hb_itemPutC( nullptr, szValue );
+   PHB_ITEM pKey = hb_itemPutC(nullptr, szKey);
+   PHB_ITEM pValue = hb_itemPutC(nullptr, szValue);
 
    hb_hashAdd( pHash, pKey, pValue );
    hb_itemRelease(pKey);
@@ -297,7 +297,7 @@ static PHB_ITEM hb_i18n_pluralexp_compile( PHB_ITEM pExp )
       memcpy( &szMacro[ 4 ], hb_itemGetCPtr(pExp), nLen );
       szMacro[ 4 + nLen ] = '}';
       szMacro[ 5 + nLen ] = '\0';
-      pMacro = hb_itemPutCLPtr( nullptr, szMacro, nLen );
+      pMacro = hb_itemPutCLPtr(nullptr, szMacro, nLen);
       szType = hb_macroGetType( pMacro );
       if( *szType == 'B' )
       {
@@ -329,9 +329,9 @@ static PHB_I18N_TRANS hb_i18n_new( void )
    pI18N->table = hb_hashNew( hb_itemNew(nullptr) );
    pI18N->context_table = hb_hashNew( hb_itemNew(nullptr) );
    pI18N->default_context = hb_hashNew( hb_itemNew(nullptr) );
-   pKey = hb_itemPutCConst( nullptr, "CONTEXT" );
+   pKey = hb_itemPutCConst(nullptr, "CONTEXT");
    hb_hashAdd( pI18N->table, pKey, pI18N->context_table );
-   pKey = hb_itemPutC( pKey, nullptr );
+   pKey = hb_itemPutC(pKey, nullptr);
    hb_hashAdd( pI18N->context_table, pKey, pI18N->default_context );
    hb_itemRelease(pKey);
 
@@ -402,11 +402,11 @@ static PHB_I18N_TRANS hb_i18n_initialize( PHB_ITEM pTable )
    {
       PHB_ITEM pKey, pContext, pDefContext = nullptr;
 
-      pKey = hb_itemPutCConst( nullptr, "CONTEXT" );
+      pKey = hb_itemPutCConst(nullptr, "CONTEXT");
       pContext = hb_hashGetItemPtr( pTable, pKey, 0 );
       if( pContext )
       {
-         pKey = hb_itemPutC( pKey, nullptr );
+         pKey = hb_itemPutC(pKey, nullptr);
          pDefContext = hb_hashGetItemPtr( pContext, pKey, 0 );
       }
 
@@ -420,42 +420,42 @@ static PHB_I18N_TRANS hb_i18n_initialize( PHB_ITEM pTable )
          pI18N->context_table = hb_itemNew(pContext);
          pI18N->default_context = hb_itemNew(pDefContext);
 
-         pKey = hb_itemPutCConst( pKey, "BASE_CODEPAGE" );
+         pKey = hb_itemPutCConst(pKey, "BASE_CODEPAGE");
          pValue = hb_hashGetItemPtr( pTable, pKey, 0 );
          if( pValue )
          {
             pI18N->base_cdpage = hb_cdpFind( hb_itemGetCPtr(pValue) );
          }
 
-         pKey = hb_itemPutCConst( pKey, "CODEPAGE" );
+         pKey = hb_itemPutCConst(pKey, "CODEPAGE");
          pValue = hb_hashGetItemPtr( pTable, pKey, 0 );
          if( pValue )
          {
             pI18N->cdpage = hb_cdpFind( hb_itemGetCPtr(pValue) );
          }
 
-         pKey = hb_itemPutCConst( pKey, "BASE_LANG" );
+         pKey = hb_itemPutCConst(pKey, "BASE_LANG");
          pValue = hb_hashGetItemPtr( pTable, pKey, 0 );
          if( pValue )
          {
             pI18N->base_plural_form = hb_i18n_pluralformfind( hb_itemGetCPtr(pValue) );
          }
 
-         pKey = hb_itemPutCConst( pKey, "LANG" );
+         pKey = hb_itemPutCConst(pKey, "LANG");
          pValue = hb_hashGetItemPtr( pTable, pKey, 0 );
          if( pValue )
          {
             pI18N->plural_form = hb_i18n_pluralformfind( hb_itemGetCPtr(pValue) );
          }
 
-         pKey = hb_itemPutCConst( pKey, "BASE_PLURAL_EXP" );
+         pKey = hb_itemPutCConst(pKey, "BASE_PLURAL_EXP");
          pValue = hb_hashGetItemPtr( pTable, pKey, 0 );
          if( pValue )
          {
             pI18N->base_plural_block = hb_i18n_pluralexp_compile( pValue );
          }
 
-         pKey = hb_itemPutCConst( pKey, "PLURAL_EXP" );
+         pKey = hb_itemPutCConst(pKey, "PLURAL_EXP");
          pValue = hb_hashGetItemPtr( pTable, pKey, 0 );
          if( pValue )
          {
@@ -487,14 +487,14 @@ static PHB_ITEM hb_i18n_serialize( PHB_I18N_TRANS pI18N )
       HB_PUT_LE_UINT32( &pI18Nbuffer[ HB_I18N_SIZE_OFFSET ], nSize );
       HB_PUT_LE_UINT32( &pI18Nbuffer[ HB_I18N_CRC_OFFSET ], ulCRC );
 
-      pKey = hb_itemPutCConst( nullptr, "DESCRIPTION" );
+      pKey = hb_itemPutCConst(nullptr, "DESCRIPTION");
       pValue = hb_hashGetItemPtr( pI18N->table, pKey, 0 );
       if( pValue )
       {
          hb_strncpy( &pI18Nbuffer[ HB_I18N_TXT_OFFSET ], hb_itemGetCPtr(pValue), HB_I18N_TXT_SIZE );
       }
 
-      return hb_itemPutCLPtr( pKey, pI18Nbuffer, nSize + HB_I18N_HEADER_SIZE );
+      return hb_itemPutCLPtr(pKey, pI18Nbuffer, nSize + HB_I18N_HEADER_SIZE);
    }
 
    return nullptr;
@@ -587,7 +587,7 @@ static PHB_ITEM hb_i18n_newitem( PHB_I18N_TRANS pI18N )
    pI18NHolder = static_cast<PHB_I18N_TRANS*>( hb_gcAllocate( sizeof(PHB_I18N_TRANS), &s_gcI18NFuncs ) );
    *pI18NHolder = pI18N;
 
-   return hb_itemPutPtrGC( pItem, pI18NHolder );
+   return hb_itemPutPtrGC(pItem, pI18NHolder);
 }
 
 static HB_BOOL hb_i18n_getpluralform( PHB_I18N_TRANS pI18N, PHB_ITEM pOldForm, HB_BOOL fBase )
@@ -618,11 +618,11 @@ static HB_BOOL hb_i18n_getpluralform( PHB_I18N_TRANS pI18N, PHB_ITEM pOldForm, H
          }
          else if( iForm )
          {
-            hb_itemPutC( pOldForm, hb_i18n_pluralformid( iForm ) );
+            hb_itemPutC(pOldForm, hb_i18n_pluralformid( iForm ));
          }
          else
          {
-            hb_itemPutCConst( pOldForm, "EN" ); /* default is ENGLISH */
+            hb_itemPutCConst(pOldForm, "EN"); /* default is ENGLISH */
          }
       }
       fResult = HB_TRUE;
@@ -703,7 +703,7 @@ static void hb_i18n_transitm( PHB_ITEM pText, PHB_CODEPAGE cdpIn, PHB_CODEPAGE c
    if( nLen > 0 )
    {
       char * szValue = hb_cdpnDup( hb_itemGetCPtr(pText), &nLen, cdpIn, cdpOut );
-      hb_itemPutCLPtr( pText, szValue, nLen );
+      hb_itemPutCLPtr(pText, szValue, nLen);
    }
 }
 
@@ -788,7 +788,7 @@ static const char * hb_i18n_description( PHB_I18N_TRANS pI18N, PHB_ITEM pItem )
 {
    if( pI18N )
    {
-      PHB_ITEM pKey = hb_itemPutCConst( nullptr, "DESCRIPTION" ), pValue;
+      PHB_ITEM pKey = hb_itemPutCConst(nullptr, "DESCRIPTION"), pValue;
 
       pValue = hb_hashGetItemPtr( pI18N->table, pKey, 0 );
       if( pItem )

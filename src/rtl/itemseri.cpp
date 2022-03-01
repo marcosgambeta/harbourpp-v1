@@ -1423,115 +1423,115 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
          break;
 
       case HB_SERIAL_TRUE:
-         hb_itemPutL( pItem, HB_TRUE );
+         hb_itemPutL(pItem, HB_TRUE);
          break;
 
       case HB_SERIAL_FALSE:
-         hb_itemPutL( pItem, HB_FALSE );
+         hb_itemPutL(pItem, HB_FALSE);
          break;
 
       case HB_SERIAL_ZERO:
-         hb_itemPutNI( pItem, 0 );
+         hb_itemPutNI(pItem, 0);
          break;
 
       case HB_SERIAL_INT8:
-         hb_itemPutNI( pItem, static_cast<signed char>( pBuffer[ nOffset++ ] ) );
+         hb_itemPutNI(pItem, static_cast<signed char>( pBuffer[ nOffset++ ] ));
          break;
 
       case HB_SERIAL_INT16:
-         hb_itemPutNI( pItem, HB_GET_LE_INT16( &pBuffer[ nOffset ] ) );
+         hb_itemPutNI(pItem, HB_GET_LE_INT16( &pBuffer[ nOffset ] ));
          nOffset += 2;
          break;
 
       case HB_SERIAL_INT24:
-         hb_itemPutNInt( pItem, HB_GET_LE_INT24( &pBuffer[ nOffset ] ) );
+         hb_itemPutNInt(pItem, HB_GET_LE_INT24( &pBuffer[ nOffset ] ));
          nOffset += 3;
          break;
 
       case HB_SERIAL_INT32:
-         hb_itemPutNInt( pItem, HB_GET_LE_INT32( &pBuffer[ nOffset ] ) );
+         hb_itemPutNInt(pItem, HB_GET_LE_INT32( &pBuffer[ nOffset ] ));
          nOffset += 4;
          break;
 
       case HB_SERIAL_INT64:
-         hb_itemPutNInt( pItem, HB_GET_LE_INT64( &pBuffer[ nOffset ] ) );
+         hb_itemPutNInt(pItem, HB_GET_LE_INT64( &pBuffer[ nOffset ] ));
          nOffset += 8;
          break;
 
       case HB_SERIAL_INT8NUM:
-         hb_itemPutNILen( pItem, static_cast<signed char>( pBuffer[ nOffset ] ), pBuffer[ nOffset + 1 ] );
+         hb_itemPutNILen(pItem, static_cast<signed char>( pBuffer[ nOffset ] ), pBuffer[ nOffset + 1 ]);
          nOffset += 2;
          break;
 
       case HB_SERIAL_INT16NUM:
-         hb_itemPutNILen( pItem, HB_GET_LE_INT16( &pBuffer[ nOffset ] ), pBuffer[ nOffset + 2 ] );
+         hb_itemPutNILen(pItem, HB_GET_LE_INT16( &pBuffer[ nOffset ] ), pBuffer[ nOffset + 2 ]);
          nOffset += 3;
          break;
 
       case HB_SERIAL_INT24NUM:
-         hb_itemPutNIntLen( pItem, HB_GET_LE_INT24( &pBuffer[ nOffset ] ), pBuffer[ nOffset + 3 ] );
+         hb_itemPutNIntLen(pItem, HB_GET_LE_INT24( &pBuffer[ nOffset ] ), pBuffer[ nOffset + 3 ]);
          nOffset += 4;
          break;
 
       case HB_SERIAL_INT32NUM:
-         hb_itemPutNIntLen( pItem, HB_GET_LE_INT32( &pBuffer[ nOffset ] ), pBuffer[ nOffset + 4 ] );
+         hb_itemPutNIntLen(pItem, HB_GET_LE_INT32( &pBuffer[ nOffset ] ), pBuffer[ nOffset + 4 ]);
          nOffset += 5;
          break;
 
       case HB_SERIAL_INT64NUM:
-         hb_itemPutNIntLen( pItem, HB_GET_LE_INT64( &pBuffer[ nOffset ] ), pBuffer[ nOffset + 8 ] );
+         hb_itemPutNIntLen(pItem, HB_GET_LE_INT64( &pBuffer[ nOffset ] ), pBuffer[ nOffset + 8 ]);
          nOffset += 9;
          break;
 
       case HB_SERIAL_DOUBLE:
-         hb_itemPutND( pItem, HB_GET_LE_DOUBLE( &pBuffer[ nOffset ] ) );
+         hb_itemPutND(pItem, HB_GET_LE_DOUBLE( &pBuffer[ nOffset ] ));
          nOffset += 8;
          break;
 
       case HB_SERIAL_DBLNUM:
-         hb_itemPutNDLen( pItem, HB_GET_LE_DOUBLE( &pBuffer[ nOffset ] ), pBuffer[ nOffset + 8 ], pBuffer[ nOffset + 9 ] );
+         hb_itemPutNDLen(pItem, HB_GET_LE_DOUBLE( &pBuffer[ nOffset ] ), pBuffer[ nOffset + 8 ], pBuffer[ nOffset + 9 ]);
          nOffset += 10;
          break;
 
       case HB_SERIAL_DATE:
-         hb_itemPutDL( pItem, HB_GET_LE_UINT24( &pBuffer[ nOffset ] ) );
+         hb_itemPutDL(pItem, HB_GET_LE_UINT24( &pBuffer[ nOffset ] ));
          nOffset += 3;
          break;
 
       case HB_SERIAL_TIMESTAMP:
-         hb_itemPutTDT( pItem, HB_GET_LE_UINT32( &pBuffer[ nOffset ] ), HB_GET_LE_UINT32( &pBuffer[ nOffset + 4 ] ) );
+         hb_itemPutTDT(pItem, HB_GET_LE_UINT32( &pBuffer[ nOffset ] ), HB_GET_LE_UINT32( &pBuffer[ nOffset + 4 ] ));
          nOffset += 8;
          break;
 
       case HB_SERIAL_SYMBOL:
          nLen = pBuffer[ nOffset++ ];
          szVal = hb_strndup( reinterpret_cast<const char*>( &pBuffer[ nOffset ] ), nLen );
-         hb_itemPutSymbol( pItem, hb_dynsymGetSymbol( szVal ) );
+         hb_itemPutSymbol(pItem, hb_dynsymGetSymbol( szVal ));
          hb_xfree( szVal );
          nOffset += nLen;
          break;
 
       case HB_SERIAL_STRNUL:
-         hb_itemPutCL( pItem, nullptr, 0 );
+         hb_itemPutCL(pItem, nullptr, 0);
          break;
       case HB_SERIAL_STRING8:
          nSize = nLen = pBuffer[ nOffset++ ];
          szVal = hb_cdpnDup( reinterpret_cast<const char*>( &pBuffer[ nOffset ] ), &nLen, cdpIn, cdpOut );
-         hb_itemPutCLPtr( pItem, szVal, nLen );
+         hb_itemPutCLPtr(pItem, szVal, nLen);
          nOffset += nSize;
          break;
       case HB_SERIAL_STRING16:
          nSize = nLen = HB_GET_LE_UINT16( &pBuffer[ nOffset ] );
          nOffset += 2;
          szVal = hb_cdpnDup( reinterpret_cast<const char*>( &pBuffer[ nOffset ] ), &nLen, cdpIn, cdpOut );
-         hb_itemPutCLPtr( pItem, szVal, nLen );
+         hb_itemPutCLPtr(pItem, szVal, nLen);
          nOffset += nSize;
          break;
       case HB_SERIAL_STRING32:
          nSize = nLen = HB_GET_LE_UINT32( &pBuffer[ nOffset ] );
          nOffset += 4;
          szVal = hb_cdpnDup( reinterpret_cast<const char*>( &pBuffer[ nOffset ] ), &nLen, cdpIn, cdpOut );
-         hb_itemPutCLPtr( pItem, szVal, nLen );
+         hb_itemPutCLPtr(pItem, szVal, nLen);
          nOffset += nSize;
          break;
       case HB_SERIAL_STRPAD8:
@@ -1541,7 +1541,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
          szVal = static_cast<char*>( hb_xgrab( nLen + nPad + 1 ) );
          hb_cdpnDup2( reinterpret_cast<const char*>( &pBuffer[ nOffset ] ), nSize, szVal, &nLen, cdpIn, cdpOut );
          memset( szVal + nLen, ' ', nPad );
-         hb_itemPutCLPtr( pItem, szVal, nLen + nPad );
+         hb_itemPutCLPtr(pItem, szVal, nLen + nPad);
          nOffset += nSize;
          break;
       case HB_SERIAL_STRPAD16:
@@ -1553,7 +1553,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
          szVal = static_cast<char*>( hb_xgrab( nLen + nPad + 1 ) );
          hb_cdpnDup2( reinterpret_cast<const char*>( &pBuffer[ nOffset ] ), nSize, szVal, &nLen, cdpIn, cdpOut );
          memset( szVal + nLen, ' ', nPad );
-         hb_itemPutCLPtr( pItem, szVal, nLen + nPad );
+         hb_itemPutCLPtr(pItem, szVal, nLen + nPad);
          nOffset += nSize;
          break;
       case HB_SERIAL_STRPAD32:
@@ -1565,7 +1565,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
          szVal = static_cast<char*>( hb_xgrab( nLen + nPad + 1 ) );
          hb_cdpnDup2( reinterpret_cast<const char*>( &pBuffer[ nOffset ] ), nSize, szVal, &nLen, cdpIn, cdpOut );
          hb_xmemset( szVal + nLen, ' ', nPad );
-         hb_itemPutCLPtr( pItem, szVal, nLen + nPad );
+         hb_itemPutCLPtr(pItem, szVal, nLen + nPad);
          nOffset += nSize;
          break;
 
@@ -1680,7 +1680,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
             case HB_ZLIB_RES_UNSUPPORTED:
                if( hb_vmRequestQuery() == 0 )
                {
-                  hb_itemPutCLPtr( pItem, szVal, nLen );
+                  hb_itemPutCLPtr(pItem, szVal, nLen);
                   hb_errRT_BASE_Ext1( EG_ARG, 3016, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, 1, pItem );
                   szVal = nullptr;
                }
@@ -1702,28 +1702,28 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
          nSize = nLen = static_cast<HB_SIZE>( HB_GET_BE_UINT64( &pBuffer[ nOffset ] ) );
          nOffset += 8;
          szVal = hb_cdpnDup( reinterpret_cast<const char*>( &pBuffer[ nOffset ] ), &nLen, cdpIn, cdpOut );
-         hb_itemPutCLPtr( pItem, szVal, nLen );
+         hb_itemPutCLPtr(pItem, szVal, nLen);
          nOffset += nSize;
          break;
       case HB_SERIAL_XHB_L:
-         hb_itemPutL( pItem, pBuffer[ nOffset++ ] == 'T' );
+         hb_itemPutL(pItem, pBuffer[ nOffset++ ] == 'T');
          break;
       case HB_SERIAL_XHB_N:
          switch( pBuffer[ nOffset++ ] )
          {
             case 'I':
-               hb_itemPutNI( pItem, static_cast<int>( HB_GET_BE_UINT64( &pBuffer[ nOffset ] ) ) );
+               hb_itemPutNI(pItem, static_cast<int>( HB_GET_BE_UINT64( &pBuffer[ nOffset ] ) ));
                break;
             case 'L':
-               hb_itemPutNL( pItem, static_cast<long>( HB_GET_BE_UINT64( &pBuffer[ nOffset ] ) ) );
+               hb_itemPutNL(pItem, static_cast<long>( HB_GET_BE_UINT64( &pBuffer[ nOffset ] ) ));
                break;
             case 'X':
-               hb_itemPutNInt( pItem, static_cast<HB_MAXINT>( HB_GET_BE_UINT64( &pBuffer[ nOffset ] ) ) );
+               hb_itemPutNInt(pItem, static_cast<HB_MAXINT>( HB_GET_BE_UINT64( &pBuffer[ nOffset ] ) ));
                /* this is workaround for bug in xHarbour serialization code */
                nOffset += 10;
                break;
             case 'D':
-               hb_itemPutND( pItem, HB_GET_LE_DOUBLE( &pBuffer[ nOffset ] ) );
+               hb_itemPutND(pItem, HB_GET_LE_DOUBLE( &pBuffer[ nOffset ] ));
                break;
             default:
                hb_itemClear( pItem );
@@ -1732,11 +1732,11 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
          nOffset += 8;
          break;
       case HB_SERIAL_XHB_D:
-         hb_itemPutDL( pItem, static_cast<long>( HB_GET_BE_UINT64( &pBuffer[ nOffset ] ) ) );
+         hb_itemPutDL(pItem, static_cast<long>( HB_GET_BE_UINT64( &pBuffer[ nOffset ] ) ));
          nOffset += 8;
          break;
       case HB_SERIAL_XHB_T:
-         hb_itemPutTD( pItem, HB_GET_LE_DOUBLE( &pBuffer[ nOffset ] ) );
+         hb_itemPutTD(pItem, HB_GET_LE_DOUBLE( &pBuffer[ nOffset ] ));
          nOffset += 8;
          break;
       case HB_SERIAL_XHB_Z:
@@ -1818,7 +1818,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
          nOffset = nPad;
          /* find class handle */
          uiClass = hb_clsFindClass( hb_itemGetCPtr(pItem), nullptr );
-         hb_itemPutCLPtr( pItem, szVal, nLen );
+         hb_itemPutCLPtr(pItem, szVal, nLen);
          if( uiClass && hb_vmRequestReenter() )
          {
             hb_clsAssociate( uiClass );
@@ -1975,7 +1975,7 @@ HB_FUNC( HB_DESERIALIZE )
          hb_itemReturn(pItem);
          if( pParam )
          {
-            hb_itemPutCL( pItem, pBuffer, nSize );
+            hb_itemPutCL(pItem, pBuffer, nSize);
             hb_itemMove( pParam, pItem );
          }
          hb_itemRelease(pItem);

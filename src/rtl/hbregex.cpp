@@ -327,7 +327,7 @@ static HB_BOOL hb_regex( int iRequest )
             iMatches = 0;
             do
             {
-               hb_itemPutCL( pMatch, pszString, HB_REGMATCH_SO( aMatches, 0 ) );
+               hb_itemPutCL(pMatch, pszString, HB_REGMATCH_SO( aMatches, 0 ));
                hb_arrayAddForward( pRetArray, pMatch );
                nLen -= HB_REGMATCH_EO( aMatches, 0 );
                pszString += HB_REGMATCH_EO( aMatches, 0 );
@@ -341,7 +341,7 @@ static HB_BOOL hb_regex( int iRequest )
                this would mean an empty split field at the end of the string */
             /* if( nLen ) */
             {
-               hb_itemPutCL( pMatch, pszString, nLen );
+               hb_itemPutCL(pMatch, pszString, nLen);
                hb_arrayAddForward( pRetArray, pMatch );
             }
             hb_itemRelease(pMatch);
@@ -425,11 +425,11 @@ static HB_BOOL hb_regex( int iRequest )
                         if( iEO != -1 )
                         {
                            /* matched string */
-                           hb_itemPutCL( pMatch, pszString + iSO, iEO - iSO );
+                           hb_itemPutCL(pMatch, pszString + iSO, iEO - iSO);
                         }
                         else
                         {
-                           hb_itemPutC( pMatch, nullptr );
+                           hb_itemPutC(pMatch, nullptr);
                         }
                      }
                   }
@@ -466,11 +466,11 @@ static HB_BOOL hb_regex( int iRequest )
                      if( iEO != -1 )
                      {
                         /* matched string */
-                        hb_itemPutCL( pMatch, pszString + iSO, iEO - iSO );
+                        hb_itemPutCL(pMatch, pszString + iSO, iEO - iSO);
                      }
                      else
                      {
-                        hb_itemPutC( pMatch, nullptr );
+                        hb_itemPutC(pMatch, nullptr);
                      }
                   }
                   hb_arrayAddForward( pRetArray, pMatch );

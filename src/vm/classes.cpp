@@ -2053,7 +2053,7 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE p
              */
             if( pMsg == s___msgEnumIndex.pDynSym )
             {
-               hb_itemPutNS( hb_stackReturnItem(), pEnum->item.asEnum.offset );
+               hb_itemPutNS(hb_stackReturnItem(), pEnum->item.asEnum.offset);
                if( hb_pcount() > 0 && HB_ISNUM( 1 ) )
                {
                   pEnum->item.asEnum.offset = hb_itemGetNS(hb_param(1, HB_IT_ANY));
@@ -2106,7 +2106,7 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE p
                {
                   return hb_objGetMethod( pBase, pMessage, pStack );
                }
-               hb_itemPutL( hb_stackReturnItem(), static_cast<HB_SIZE>( pEnum->item.asEnum.offset ) <= 1 );
+               hb_itemPutL(hb_stackReturnItem(), static_cast<HB_SIZE>( pEnum->item.asEnum.offset ) <= 1);
                return &s___msgEnumIsFirst;
             }
             else if( pMsg == s___msgEnumIsLast.pDynSym )
@@ -2120,16 +2120,16 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE p
                   }
                   else
                   {
-                     hb_itemPutL( hb_stackReturnItem(), static_cast<HB_SIZE>( pEnum->item.asEnum.offset ) >= hb_arrayLen( pBase ) );
+                     hb_itemPutL(hb_stackReturnItem(), static_cast<HB_SIZE>( pEnum->item.asEnum.offset ) >= hb_arrayLen( pBase ));
                   }
                }
                else if( HB_IS_HASH(pBase) )
                {
-                  hb_itemPutL( hb_stackReturnItem(), static_cast<HB_SIZE>( pEnum->item.asEnum.offset ) >= hb_hashLen( pBase ) );
+                  hb_itemPutL(hb_stackReturnItem(), static_cast<HB_SIZE>( pEnum->item.asEnum.offset ) >= hb_hashLen( pBase ));
                }
                else if( HB_IS_STRING(pBase) )
                {
-                  hb_itemPutL( hb_stackReturnItem(), static_cast<HB_SIZE>( pEnum->item.asEnum.offset ) >= hb_itemGetCLen(pBase) );
+                  hb_itemPutL(hb_stackReturnItem(), static_cast<HB_SIZE>( pEnum->item.asEnum.offset ) >= hb_itemGetCLen(pBase));
                }
 
                return &s___msgEnumIsLast;
@@ -2163,7 +2163,7 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE p
       }
       else if( pMsg == s___msgName.pDynSym )
       {
-         hb_itemPutC( hb_stackReturnItem(), pObject->item.asSymbol.value->szName );
+         hb_itemPutC(hb_stackReturnItem(), pObject->item.asSymbol.value->szName);
          return &s___msgName;
       }
    }
@@ -2196,7 +2196,7 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE p
       {
          if( hb_pcount() == 1 && pMessage->szName[ 0 ] == '_' ) /* ASSIGN */
          {
-            PHB_ITEM pIndex = hb_itemPutCConst( hb_stackAllocItem(), pMessage->szName + 1 );
+            PHB_ITEM pIndex = hb_itemPutCConst(hb_stackAllocItem(), pMessage->szName + 1);
             PHB_ITEM pDest = hb_hashGetItemPtr( pObject, pIndex, HB_HASH_AUTOADD_ASSIGN );
             hb_stackPop();
             if( pDest )
@@ -2209,7 +2209,7 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE p
          }
          else if( hb_pcount() == 0 ) /* ACCESS */
          {
-            PHB_ITEM pIndex = hb_itemPutCConst( hb_stackAllocItem(), pMessage->szName );
+            PHB_ITEM pIndex = hb_itemPutCConst(hb_stackAllocItem(), pMessage->szName);
             PHB_ITEM pValue = hb_hashGetItemPtr( pObject, pIndex, HB_HASH_AUTOADD_ACCESS );
             hb_stackPop();
             if( pValue )
@@ -2400,7 +2400,7 @@ HB_BOOL hb_objGetVarRef( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
    if( HB_IS_HASH(pObject) )
    {
       HB_STACK_TLS_PRELOAD
-      PHB_ITEM pIndex = hb_itemPutCConst( hb_stackAllocItem(), pMessage->szName + 1 );
+      PHB_ITEM pIndex = hb_itemPutCConst(hb_stackAllocItem(), pMessage->szName + 1);
       PHB_ITEM pValue = hb_hashGetItemRefPtr( pObject, pIndex );
       hb_stackPop();
       if( pValue )
@@ -5249,7 +5249,7 @@ HB_FUNC_STATIC( msgSetClsData )
       {
          if( pMethod->itemType == HB_IT_NUMINT && HB_IS_NUMERIC(pReturn) )
          {
-            hb_itemPutNInt( pReturn, hb_itemGetNInt(pReturn) );
+            hb_itemPutNInt(pReturn, hb_itemGetNInt(pReturn));
          }
          else
          {
@@ -5297,7 +5297,7 @@ HB_FUNC_STATIC( msgSetShrData )
       {
          if( pMethod->itemType == HB_IT_NUMINT && HB_IS_NUMERIC(pReturn) )
          {
-            hb_itemPutNInt( pReturn, hb_itemGetNInt(pReturn) );
+            hb_itemPutNInt(pReturn, hb_itemGetNInt(pReturn));
          }
          else
          {
@@ -5378,7 +5378,7 @@ HB_FUNC_STATIC( msgSetData )
          {
             if( pMethod->itemType == HB_IT_NUMINT && HB_IS_NUMERIC(pReturn) )
             {
-               hb_itemPutNInt( pReturn, hb_itemGetNInt(pReturn) );
+               hb_itemPutNInt(pReturn, hb_itemGetNInt(pReturn));
             }
             else
             {
@@ -6051,7 +6051,7 @@ void hb_clsAdd( HB_USHORT usClassH, const char * szMethodName, PHB_FUNC pFuncPtr
     */
    pExecSym = hb_symbolNew( "" );
    pExecSym->value.pFunPtr = pFuncPtr;
-   pFuncItem = hb_itemPutSymbol( nullptr, pExecSym );
+   pFuncItem = hb_itemPutSymbol(nullptr, pExecSym);
 
    hb_clsAddMsg( usClassH, szMethodName, HB_OO_MSG_METHOD, 0, pFuncItem, nullptr );
 
