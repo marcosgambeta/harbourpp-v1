@@ -55,7 +55,7 @@
 
 HB_FUNC( CTOD )
 {
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
       hb_retdl( hb_dateUnformat( hb_parc(1), hb_setGetDateFormat() ) );
    }
@@ -67,7 +67,7 @@ HB_FUNC( CTOD )
 
 HB_FUNC( HB_CTOD )
 {
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
       const char * szFormat = hb_parc(2);
 
@@ -85,7 +85,7 @@ HB_FUNC( HB_CTOD )
 
 HB_FUNC( DTOC )
 {
-   if( HB_ISDATETIME( 1 ) )
+   if( HB_ISDATETIME(1) )
    {
       char szDate[ 9 ];
       char szFormatted[ 11 ];
@@ -100,7 +100,7 @@ HB_FUNC( DTOC )
 
 HB_FUNC( HB_DTOC )
 {
-   if( HB_ISDATETIME( 1 ) )
+   if( HB_ISDATETIME(1) )
    {
       char szDate[ 9 ];
       char szFormatted[ 11 ];
@@ -120,7 +120,7 @@ HB_FUNC( HB_DTOC )
 
 HB_FUNC( DTOS )
 {
-   if( HB_ISDATETIME( 1 ) )
+   if( HB_ISDATETIME(1) )
    {
       char szDate[ 9 ];
 
@@ -264,7 +264,7 @@ HB_FUNC( HB_DTOT )
       {
          hb_timeStampStrGetDT( szTime, &lDate2, &lTime );
       }
-      else if( HB_ISNUM( 2 ) )
+      else if( HB_ISNUM(2) )
       {
          lTime = static_cast<long>( hb_parnd(2) * 1000 );
          if( lTime < 0 )
@@ -291,7 +291,7 @@ HB_FUNC( HB_TTOD )
    if( hb_partdt( &lDate, &lTime, 1 ) )
    {
       hb_retdl( lDate );
-      if( HB_ISBYREF( 2 ) )
+      if( HB_ISBYREF(2) )
       {
          const char * szTimeFormat = hb_parc(3);
          if( szTimeFormat )
@@ -720,11 +720,11 @@ HB_FUNC( HB_WEEK )
 
 HB_FUNC( HB_UTCOFFSET )
 {
-   if( HB_ISDATETIME( 1 ) )
+   if( HB_ISDATETIME(1) )
    {
       int iYear, iMonth, iDay, iHour, iMinute, iSecond, iMSec;
 
-      hb_timeStampUnpack( hb_partd( 1 ), &iYear, &iMonth, &iDay, &iHour, &iMinute, &iSecond, &iMSec );
+      hb_timeStampUnpack( hb_partd(1), &iYear, &iMonth, &iDay, &iHour, &iMinute, &iSecond, &iMSec );
       hb_retnl( hb_timeStampUTCOffset( iYear, iMonth, iDay, iHour, iMinute, iSecond ) );
    }
    else
@@ -735,9 +735,9 @@ HB_FUNC( HB_UTCOFFSET )
 
 HB_FUNC( HB_TSTOUTC )
 {
-   if( HB_ISTIMESTAMP( 1 ) )
+   if( HB_ISTIMESTAMP(1) )
    {
-      hb_rettd( hb_timeLocalToUTC( hb_partd( 1 ) ) );
+      hb_rettd( hb_timeLocalToUTC( hb_partd(1) ) );
    }
    else
    {

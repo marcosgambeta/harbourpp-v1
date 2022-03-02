@@ -483,7 +483,7 @@ static void hb_gt_pca_AnsiPutStr( int iRow, int iCol, int iColor, const char * s
 
    hb_gt_pca_AnsiSetAttributes( static_cast<HB_BYTE>( iColor ) );
    hb_gt_pca_AnsiSetCursorPos( iRow, iCol );
-   hb_gt_pca_AnsiSetAutoMargin( 0 );
+   hb_gt_pca_AnsiSetAutoMargin(0);
    hb_gt_pca_termOut( szStr, iLen );
    s_iCol += iLen;
 }
@@ -602,7 +602,7 @@ static void hb_gt_pca_Exit( PHB_GT pGT )
    /* set default color */
    hb_gt_pca_AnsiSetAttributes( 0x07 );
    hb_gt_pca_AnsiSetCursorStyle( SC_NORMAL );
-   hb_gt_pca_AnsiSetAutoMargin( 1 );
+   hb_gt_pca_AnsiSetAutoMargin(1);
    hb_gt_pca_termFlush();
 
    HB_GTSUPER_EXIT( pGT );
@@ -775,7 +775,7 @@ static HB_BOOL hb_gt_pca_Suspend( PHB_GT pGT )
    }
 #endif
    /* Enable line wrap when cursor set after last column */
-   hb_gt_pca_AnsiSetAutoMargin( 1 );
+   hb_gt_pca_AnsiSetAutoMargin(1);
    return HB_TRUE;
 }
 

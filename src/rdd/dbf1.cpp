@@ -62,7 +62,7 @@
 
 #include "hbapicdp.h"
 
-static HB_USHORT s_uiRddId = static_cast<HB_USHORT>( -1 );
+static HB_USHORT s_uiRddId = static_cast<HB_USHORT>(-1);
 static RDDFUNCS  dbfSuper;
 
 /*
@@ -657,14 +657,14 @@ static HB_BOOL hb_dbfTriggerDo( DBFAREAP pArea, int iEvent, int iField, PHB_ITEM
 #else
             hb_vmPush( pItem );
 #endif
-            hb_vmProc( 4 );
+            hb_vmProc(4);
          }
          else
          {
             #if 0
-            hb_vmPushInteger( 0 );  /* SIx3 makes this */
+            hb_vmPushInteger(0);  /* SIx3 makes this */
             #endif
-            hb_vmProc( 3 );
+            hb_vmProc(3);
          }
          fResult = hb_parl(-1);
          hb_vmRequestRestore();
@@ -851,7 +851,7 @@ static HB_BOOL hb_dbfPasswordSet( DBFAREAP pArea, PHB_ITEM pPasswd, HB_BOOL fRaw
          /* at this moment only one encryption method is used,
             I'll add other later, [druzus] */
          pArea->bCryptType = DB_CRYPT_SIX;
-         pArea->pCryptKey = static_cast<char*>( hb_xgrab( 8 ) );
+         pArea->pCryptKey = static_cast<char*>( hb_xgrab(8) );
 
          /* SIX encode the key with its own value before use */
          if( ! fRaw )
@@ -5722,11 +5722,11 @@ static int hb_dbfSortCmp( LPDBSORTREC pSortRec, PHB_ITEM pValue1, PHB_ITEM pValu
          }
          else if( uiFlags & SF_CASE )
          {
-            i = hb_itemStrICmp( pItem1, pItem2, HB_TRUE );
+            i = hb_itemStrICmp(pItem1, pItem2, HB_TRUE);
          }
          else
          {
-            i = hb_itemStrCmp( pItem1, pItem2, HB_TRUE );
+            i = hb_itemStrCmp(pItem1, pItem2, HB_TRUE);
          }
       }
       else if( HB_IS_DATETIME(pItem1) )
@@ -6045,7 +6045,7 @@ static HB_ERRCODE hb_dbfSortFinish( LPDBSORTREC pSortRec )
          }
          nCount = pSortRec->nMaxRec * pSortRec->nPages - nCount;
 
-         pSortRec->pSortArray = hb_itemArrayNew( pSortRec->nPages );
+         pSortRec->pSortArray = hb_itemArrayNew(pSortRec->nPages);
          pSortRec->pnRecords = static_cast<HB_DBRECNO*>( hb_xgrab( pSortRec->nPages * sizeof(HB_DBRECNO) ) );
          pSortRec->pnIndex = static_cast<HB_SORTIDX*>( hb_xgrab( pSortRec->nPages * sizeof(HB_SORTIDX) ) );
          pSortRec->pnOrder = pnOrder = static_cast<HB_DBRECNO*>( hb_xgrab( nCount * sizeof(HB_DBRECNO) ) );
@@ -6139,7 +6139,7 @@ static HB_ERRCODE hb_dbfSortAdd( LPDBSORTREC pSortRec )
          }
          else
          {
-            pSortRec->pSortArray = hb_itemArrayNew( pSortRec->nMaxRec );
+            pSortRec->pSortArray = hb_itemArrayNew(pSortRec->nMaxRec);
          }
       }
       if( pSortRec->nCount == pSortRec->nMaxRec )
@@ -7509,7 +7509,7 @@ static HB_ERRCODE hb_dbfExit( LPRDDNODE pRDD )
       hb_xfree( pRDD->lpvCargo );
       pRDD->lpvCargo = nullptr;
    }
-   s_uiRddId = static_cast<HB_USHORT>( -1 );
+   s_uiRddId = static_cast<HB_USHORT>(-1);
 
    if( ISSUPER_EXIT( pRDD ) )
    {

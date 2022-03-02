@@ -684,7 +684,7 @@ HB_FUNC( TRANSFORM )
          char szDate[ 9 ];
          HB_SIZE nFor;
 
-         szResult = static_cast<char*>( hb_xgrab( 13 ) );
+         szResult = static_cast<char*>( hb_xgrab(13) );
          szDateFormat = hb_setGetDateFormat();
 
 #ifndef HB_CLP_STRICT
@@ -1015,7 +1015,7 @@ HB_FUNC( TRANSFORM )
          hb_retclen_buffer( szResult, ( nParamS && nResultPos > nParamS ) ? nParamS : nResultPos );
       }
    }
-   else if( pPic || HB_ISNIL( 2 ) )  /* Picture is an empty string or NIL */
+   else if( pPic || HB_ISNIL(2) )  /* Picture is an empty string or NIL */
    {
       if( HB_IS_STRING(pValue) )
       {

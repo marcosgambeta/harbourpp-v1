@@ -51,7 +51,7 @@
 #if defined( HB_OS_WIN )
    #include <windows.h>
    #if ! defined( INVALID_FILE_ATTRIBUTES )
-      #define INVALID_FILE_ATTRIBUTES  ( static_cast<DWORD>( -1 ) )
+      #define INVALID_FILE_ATTRIBUTES  ( static_cast<DWORD>(-1) )
    #endif
    #include "hbwinuni.h"
 #elif defined( HB_OS_UNIX )
@@ -103,7 +103,7 @@ HB_BOOL hb_fsLink( const char * pszExisting, const char * pszNewFile )
          }
          else
          {
-            hb_fsSetError( 1 );
+            hb_fsSetError(1);
             fResult = HB_FALSE;
          }
       }
@@ -129,7 +129,7 @@ HB_BOOL hb_fsLink( const char * pszExisting, const char * pszNewFile )
       }
 #else
       {
-         hb_fsSetError( 1 );
+         hb_fsSetError(1);
          fResult = HB_FALSE;
       }
 #endif
@@ -138,7 +138,7 @@ HB_BOOL hb_fsLink( const char * pszExisting, const char * pszNewFile )
    }
    else
    {
-      hb_fsSetError( 2 );
+      hb_fsSetError(2);
       fResult = HB_FALSE;
    }
 
@@ -199,7 +199,7 @@ HB_BOOL hb_fsLinkSym( const char * pszTarget, const char * pszNewFile )
          }
          else
          {
-            hb_fsSetError( 1 );
+            hb_fsSetError(1);
             fResult = HB_FALSE;
          }
       }
@@ -225,7 +225,7 @@ HB_BOOL hb_fsLinkSym( const char * pszTarget, const char * pszNewFile )
       }
 #else
       {
-         hb_fsSetError( 1 );
+         hb_fsSetError(1);
          fResult = HB_FALSE;
       }
 #endif
@@ -234,7 +234,7 @@ HB_BOOL hb_fsLinkSym( const char * pszTarget, const char * pszNewFile )
    }
    else
    {
-      hb_fsSetError( 2 );
+      hb_fsSetError(2);
       fResult = HB_FALSE;
    }
 
@@ -326,7 +326,7 @@ char * hb_fsLinkRead( const char * pszFile )
                }
                else
                {
-                  hb_fsSetError( 9 );
+                  hb_fsSetError(9);
                }
             }
 
@@ -337,7 +337,7 @@ char * hb_fsLinkRead( const char * pszFile )
          }
          else
          {
-            hb_fsSetError( 1 );
+            hb_fsSetError(1);
          }
       }
 #elif defined( HB_OS_UNIX )
@@ -349,8 +349,8 @@ char * hb_fsLinkRead( const char * pszFile )
 
          pszLink = static_cast<char*>( hb_xgrab( HB_PATH_MAX + 1 ) );
          size = readlink( pszFile, pszLink, HB_PATH_MAX );
-         hb_fsSetIOError( size != static_cast<size_t>( -1 ), 0 );
-         if( size == static_cast<size_t>( -1 ) )
+         hb_fsSetIOError( size != static_cast<size_t>(-1), 0 );
+         if( size == static_cast<size_t>(-1) )
          {
             hb_xfree( pszLink );
             pszLink = nullptr;
@@ -369,7 +369,7 @@ char * hb_fsLinkRead( const char * pszFile )
       }
 #else
       {
-         hb_fsSetError( 1 );
+         hb_fsSetError(1);
       }
 #endif
 
@@ -377,7 +377,7 @@ char * hb_fsLinkRead( const char * pszFile )
    }
    else
    {
-      hb_fsSetError( 2 );
+      hb_fsSetError(2);
    }
 
    return pszLink;

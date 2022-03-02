@@ -147,7 +147,7 @@ HB_FUNC( HB_VFEXISTS )
 
    if( pszFileName )
    {
-      if( HB_ISBYREF( 2 ) )
+      if( HB_ISBYREF(2) )
       {
          char szName[ HB_PATH_MAX ];
 
@@ -349,7 +349,7 @@ HB_FUNC( HB_VFTIMEGET )
 
    if( fOK )
    {
-      if( HB_ISBYREF( 3 ) )
+      if( HB_ISBYREF(3) )
       {
          char buf[ 13 ];
          hb_timeStr( buf, lMillisec );
@@ -369,7 +369,7 @@ HB_FUNC( HB_VFTIMEGET )
    }
    else
    {
-      if( HB_ISBYREF( 3 ) )
+      if( HB_ISBYREF(3) )
       {
          hb_storc( nullptr, 3 );
          hb_stordl( 0, 2 );
@@ -388,17 +388,17 @@ HB_FUNC( HB_VFTIMESET )
 {
    long lDate = -1, lTime = -1;
 
-   if( HB_ISTIMESTAMP( 2 ) )
+   if( HB_ISTIMESTAMP(2) )
    {
       hb_partdt( &lDate, &lTime, 2 );
    }
    else
    {
-      if( HB_ISDATE( 2 ) )
+      if( HB_ISDATE(2) )
       {
-         lDate = hb_pardl( 2 );
+         lDate = hb_pardl(2);
       }
-      if( HB_ISCHAR( 3 ) )
+      if( HB_ISCHAR(3) )
       {
          int iHour, iMinutes, iSeconds, iMSec;
          if( hb_timeStrGet( hb_parc(3), &iHour, &iMinutes, &iSeconds, &iMSec ) )
@@ -511,7 +511,7 @@ HB_FUNC( HB_VFOPEN )
 
       nModeAttr |= static_cast<HB_FATTR>( iMode & 0xFF );
 
-      if( HB_ISBYREF( 1 ) )
+      if( HB_ISBYREF(1) )
       {
          hb_strncpy( szName, pszFile, sizeof(szName) - 1 );
          nModeAttr |= FXO_COPYNAME;
@@ -534,7 +534,7 @@ HB_FUNC( HB_VFOPEN )
    }
    else
    {
-      hb_fsSetFError( 0 );
+      hb_fsSetFError(0);
       hb_errRT_BASE( EG_ARG, 2021, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
 }
@@ -542,7 +542,7 @@ HB_FUNC( HB_VFOPEN )
 /* hb_vfClose( <pHandle> ) --> <lOK> */
 HB_FUNC( HB_VFCLOSE )
 {
-   PHB_FILE * pFilePtr = hb_fileParamPtr( 1 );
+   PHB_FILE * pFilePtr = hb_fileParamPtr(1);
 
    if( pFilePtr )
    {
@@ -557,14 +557,14 @@ HB_FUNC( HB_VFCLOSE )
 /* hb_vfLock( <pHandle>, <nStart>, <nLen>, [ <nType> ] ) --> <lOK> */
 HB_FUNC( HB_VFLOCK )
 {
-   PHB_FILE pFile = hb_fileParam( 1 );
+   PHB_FILE pFile = hb_fileParam(1);
 
    if( pFile )
    {
       HB_ERRCODE uiError = 0;
       HB_BOOL fResult = HB_FALSE;
 
-      if( HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
+      if( HB_ISNUM(2) && HB_ISNUM(3) )
       {
          fResult = hb_fileLock( pFile,
                                 static_cast<HB_FOFFSET>( hb_parnint(2) ),
@@ -580,14 +580,14 @@ HB_FUNC( HB_VFLOCK )
 /* hb_vfUnlock( <pHandle>, <nStart>, <nLen> ) --> <lOK> */
 HB_FUNC( HB_VFUNLOCK )
 {
-   PHB_FILE pFile = hb_fileParam( 1 );
+   PHB_FILE pFile = hb_fileParam(1);
 
    if( pFile )
    {
       HB_ERRCODE uiError = 0;
       HB_BOOL fResult = HB_FALSE;
 
-      if( HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
+      if( HB_ISNUM(2) && HB_ISNUM(3) )
       {
          fResult = hb_fileLock( pFile,
                                 static_cast<HB_FOFFSET>( hb_parnint(2) ),
@@ -603,14 +603,14 @@ HB_FUNC( HB_VFUNLOCK )
 /* hb_vfLockTest( <pHandle>, <nStart>, <nLen>, [ <nType> ] ) --> <nPID> | 0 (nolock) | -1 (err) */
 HB_FUNC( HB_VFLOCKTEST )
 {
-   PHB_FILE pFile = hb_fileParam( 1 );
+   PHB_FILE pFile = hb_fileParam(1);
 
    if( pFile )
    {
       HB_ERRCODE uiError = 0;
       int iResult = -1;
 
-      if( HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
+      if( HB_ISNUM(2) && HB_ISNUM(3) )
       {
          iResult = hb_fileLockTest( pFile,
                                     static_cast<HB_FOFFSET>( hb_parnint(2) ),
@@ -626,7 +626,7 @@ HB_FUNC( HB_VFLOCKTEST )
 /* hb_vfRead( <pHandle>, @<cBuff>, [ <nToRead> ], [ <nTimeOut> ] ) --> <nRead> */
 HB_FUNC( HB_VFREAD )
 {
-   PHB_FILE pFile = hb_fileParam( 1 );
+   PHB_FILE pFile = hb_fileParam(1);
 
    if( pFile )
    {
@@ -636,10 +636,10 @@ HB_FUNC( HB_VFREAD )
       HB_SIZE nSize;
       char * buffer;
 
-      if( pBuffer && HB_ISBYREF( 2 ) &&
+      if( pBuffer && HB_ISBYREF(2) &&
           hb_itemGetWriteCL( pBuffer, &buffer, &nSize ) )
       {
-         if( HB_ISNUM( 3 ) )
+         if( HB_ISNUM(3) )
          {
             nRead = hb_parns(3);
             if( nRead < nSize )
@@ -666,9 +666,9 @@ HB_FUNC( HB_VFREAD )
 /* hb_vfReadLen( <pHandle>, <nToRead>, [ <nTimeOut> ] ) --> <cBuffer> */
 HB_FUNC( HB_VFREADLEN )
 {
-   PHB_FILE pFile = hb_fileParam( 1 );
+   PHB_FILE pFile = hb_fileParam(1);
 
-   if( pFile && HB_ISNUM( 2 ) )
+   if( pFile && HB_ISNUM(2) )
    {
       HB_ERRCODE uiError = 0;
       HB_SIZE nToRead = hb_parns(2);
@@ -699,17 +699,17 @@ HB_FUNC( HB_VFREADLEN )
 /* hb_vfWrite( <pHandle>, <cBuff>, [ <nToWrite> ], [ <nTimeOut> ] ) --> <nWritten> */
 HB_FUNC( HB_VFWRITE )
 {
-   PHB_FILE pFile = hb_fileParam( 1 );
+   PHB_FILE pFile = hb_fileParam(1);
 
    if( pFile )
    {
       HB_ERRCODE uiError = 0;
 
-      if( HB_ISCHAR( 2 ) )
+      if( HB_ISCHAR(2) )
       {
          HB_SIZE nLen = hb_parclen(2);
 
-         if( HB_ISNUM( 3 ) )
+         if( HB_ISNUM(3) )
          {
             HB_SIZE nWrite = hb_parns(3);
             if( nWrite < nLen )
@@ -731,7 +731,7 @@ HB_FUNC( HB_VFWRITE )
       }
       else
       {
-         hb_retni( 0 );
+         hb_retni(0);
       }
 
       hb_fsSetFError( uiError );
@@ -741,7 +741,7 @@ HB_FUNC( HB_VFWRITE )
 /* hb_vfReadAt( <pHandle>, @<cBuff>, [ <nToRead> ], [ <nAtOffset> ] ) --> <nRead> */
 HB_FUNC( HB_VFREADAT )
 {
-   PHB_FILE pFile = hb_fileParam( 1 );
+   PHB_FILE pFile = hb_fileParam(1);
 
    if( pFile )
    {
@@ -751,9 +751,9 @@ HB_FUNC( HB_VFREADAT )
       HB_SIZE nSize;
       char * buffer;
 
-      if( pBuffer && HB_ISBYREF( 2 ) && hb_itemGetWriteCL( pBuffer, &buffer, &nSize ) )
+      if( pBuffer && HB_ISBYREF(2) && hb_itemGetWriteCL( pBuffer, &buffer, &nSize ) )
       {
-         if( HB_ISNUM( 3 ) )
+         if( HB_ISNUM(3) )
          {
             nRead = hb_parns(3);
             if( nRead < nSize )
@@ -780,7 +780,7 @@ HB_FUNC( HB_VFREADAT )
 /* hb_vfWriteAt( <pHandle>, <cBuff>, [ <nToWrite> ], [ <nAtOffset> ] ) --> <nWritten> */
 HB_FUNC( HB_VFWRITEAT )
 {
-   PHB_FILE pFile = hb_fileParam( 1 );
+   PHB_FILE pFile = hb_fileParam(1);
 
    if( pFile )
    {
@@ -791,7 +791,7 @@ HB_FUNC( HB_VFWRITEAT )
       {
          HB_SIZE nLen = hb_parclen(2);
 
-         if( HB_ISNUM( 3 ) )
+         if( HB_ISNUM(3) )
          {
             HB_SIZE nWrite = hb_parns(3);
             if( nWrite < nLen )
@@ -813,7 +813,7 @@ HB_FUNC( HB_VFWRITEAT )
       }
       else
       {
-         hb_retni( 0 );
+         hb_retni(0);
       }
 
       hb_fsSetFError( uiError );
@@ -823,20 +823,20 @@ HB_FUNC( HB_VFWRITEAT )
 /* hb_vfSeek( <pHandle>, <nOffset>, [ <nWhence> ] ) --> <nOffset> */
 HB_FUNC( HB_VFSEEK )
 {
-   PHB_FILE pFile = hb_fileParam( 1 );
+   PHB_FILE pFile = hb_fileParam(1);
 
    if( pFile )
    {
       HB_ERRCODE uiError = 0;
 
-      if( HB_ISNUM( 2 ) )
+      if( HB_ISNUM(2) )
       {
          hb_retnint( hb_fileSeek( pFile, static_cast<HB_FOFFSET>( hb_parnint(2) ), static_cast<HB_USHORT>( hb_parnidef( 3, FS_SET ) ) ) );
          uiError = hb_fsError();
       }
       else
       {
-         hb_retni( 0 );
+         hb_retni(0);
       }
 
       hb_fsSetFError( uiError );
@@ -846,7 +846,7 @@ HB_FUNC( HB_VFSEEK )
 /* hb_vfTrunc( <pHandle>, [ <nAtOffset> ] ) --> <lOK> */
 HB_FUNC( HB_VFTRUNC )
 {
-   PHB_FILE pFile = hb_fileParam( 1 );
+   PHB_FILE pFile = hb_fileParam(1);
 
    if( pFile )
    {
@@ -867,7 +867,7 @@ HB_FUNC( HB_VFSIZE )
    }
    else
    {
-      PHB_FILE pFile = hb_fileParam( 1 );
+      PHB_FILE pFile = hb_fileParam(1);
       if( pFile )
       {
          hb_retnint( hb_fileSize( pFile ) );
@@ -879,7 +879,7 @@ HB_FUNC( HB_VFSIZE )
 /* hb_vfEof( <pHandle> ) --> <lEOF> */
 HB_FUNC( HB_VFEOF )
 {
-   PHB_FILE pFile = hb_fileParam( 1 );
+   PHB_FILE pFile = hb_fileParam(1);
 
    if( pFile )
    {
@@ -891,7 +891,7 @@ HB_FUNC( HB_VFEOF )
 /* hb_vfFlush( <pHandle>, [ <lDirtyOnly> ] ) --> NIL */
 HB_FUNC( HB_VFFLUSH )
 {
-   PHB_FILE pFile = hb_fileParam( 1 );
+   PHB_FILE pFile = hb_fileParam(1);
 
    if( pFile )
    {
@@ -903,7 +903,7 @@ HB_FUNC( HB_VFFLUSH )
 /* hb_vfCommit( <pHandle> ) --> NIL */
 HB_FUNC( HB_VFCOMMIT )
 {
-   PHB_FILE pFile = hb_fileParam( 1 );
+   PHB_FILE pFile = hb_fileParam(1);
 
    if( pFile )
    {
@@ -915,11 +915,11 @@ HB_FUNC( HB_VFCOMMIT )
 /* hb_vfConfig( <pHandle>, <nSet>, [ <nParam> ] ) --> <nResult> */
 HB_FUNC( HB_VFCONFIG )
 {
-   PHB_FILE pFile = hb_fileParam( 1 );
+   PHB_FILE pFile = hb_fileParam(1);
 
    if( pFile )
    {
-      if( HB_ISNUM( 2 ) )
+      if( HB_ISNUM(2) )
       {
          PHB_ITEM pValue = hb_itemNew(hb_param(3, HB_IT_ANY));
 
@@ -937,7 +937,7 @@ HB_FUNC( HB_VFCONFIG )
 /* hb_vfHandle( <pHandle> ) --> <nOsHandle> */
 HB_FUNC( HB_VFHANDLE )
 {
-   PHB_FILE pFile = hb_fileParam( 1 );
+   PHB_FILE pFile = hb_fileParam(1);
 
    hb_retnint( static_cast<HB_NHANDLE>( pFile ? hb_fileHandle( pFile ) : FS_ERROR ) );
 }

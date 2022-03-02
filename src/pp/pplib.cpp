@@ -132,7 +132,7 @@ static void hb_pp_StdRules( PHB_ITEM ppItem )
       hb_vmPushDynSym( s_pDynSym );
       hb_vmPushNil();
       hb_vmPush( ppItem );
-      hb_vmProc( 1 );
+      hb_vmProc(1);
    }
 }
 
@@ -196,7 +196,7 @@ HB_FUNC( __PP_INIT )
  */
 HB_FUNC( __PP_PATH )
 {
-   PHB_PP_STATE pState = hb_pp_Param( 1 );
+   PHB_PP_STATE pState = hb_pp_Param(1);
 
    if( pState )
       hb_pp_addSearchPath( pState, hb_parc(2), hb_parl(3) );
@@ -208,7 +208,7 @@ HB_FUNC( __PP_PATH )
  */
 HB_FUNC( __PP_RESET )
 {
-   PHB_PP_STATE pState = hb_pp_Param( 1 );
+   PHB_PP_STATE pState = hb_pp_Param(1);
 
    if( pState )
       hb_pp_reset( pState );
@@ -220,7 +220,7 @@ HB_FUNC( __PP_RESET )
  */
 HB_FUNC( __PP_ADDRULE )
 {
-   PHB_PP_STATE pState = hb_pp_Param( 1 );
+   PHB_PP_STATE pState = hb_pp_Param(1);
 
    if( pState )
    {
@@ -262,7 +262,7 @@ HB_FUNC( __PP_ADDRULE )
  */
 HB_FUNC( __PP_PROCESS )
 {
-   PHB_PP_STATE pState = hb_pp_Param( 1 );
+   PHB_PP_STATE pState = hb_pp_Param(1);
 
    if( pState )
    {

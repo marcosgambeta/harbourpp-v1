@@ -610,7 +610,7 @@ static void hb_gt_sln_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    {
       /* initialize a terminal stuff and a Slang
          keyboard subsystem for the first time */
-      if( hb_sln_Init_Terminal( 0 ) )
+      if( hb_sln_Init_Terminal(0) )
       {
          /* fix an OutStd()/OutErr() output */
          if( ! s_fStdOutTTY && s_fStdInTTY )
@@ -644,7 +644,7 @@ static void hb_gt_sln_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
                out a current cursor state */
 
             /* turn on a cursor visibility */
-            if( SLtt_set_cursor_visibility( 1 ) == -1 )
+            if( SLtt_set_cursor_visibility(1) == -1 )
             {
                 s_iCursorStyle = SC_UNAVAIL;
             }
@@ -692,10 +692,10 @@ static void hb_gt_sln_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
             }
 
             /* ensure we are in a normal chars set */
-            SLtt_set_alt_char_set( 0 );
+            SLtt_set_alt_char_set(0);
 
             /* set the normal Slang color */
-            SLsmg_set_color( 0 );
+            SLsmg_set_color(0);
 
             /* NOTE: due to a work of a Slang library which does not
                prepare its internal screen buffer properly, a screen
@@ -895,7 +895,7 @@ static HB_BOOL hb_gt_sln_Resume( PHB_GT pGT )
 {
    HB_SYMBOL_UNUSED( pGT );
 
-   if( s_bSuspended && SLsmg_resume_smg() != -1 && hb_sln_Init_Terminal( 1 ) != -1 )
+   if( s_bSuspended && SLsmg_resume_smg() != -1 && hb_sln_Init_Terminal(1) != -1 )
    {
       SLsmg_refresh(); /* reinitialize a terminal */
 #if defined( HB_HAS_GPM )
@@ -950,7 +950,7 @@ static HB_BOOL hb_gt_sln_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_ESCDELAY:
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_sln_escDelay);
-         if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
+         if( hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC )
             hb_sln_escDelay = hb_itemGetNI(pInfo->pNewVal);
          break;
 

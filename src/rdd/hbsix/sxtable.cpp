@@ -73,7 +73,7 @@ HB_FUNC( SX_GETLOCKS )
 
    if( pArea )
    {
-      PHB_ITEM pList = hb_itemArrayNew( 0 );
+      PHB_ITEM pList = hb_itemArrayNew(0);
       SELF_INFO( pArea, DBI_GETLOCKARRAY, pList );
       hb_itemReturnRelease(pList);
    }
@@ -200,7 +200,7 @@ HB_FUNC( SX_ROLLBACK )
    int iArea = 0;
    AREAP pArea;
 
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
       iArea = hb_parni(1);
       fRollChild = iArea == 0;
@@ -244,7 +244,7 @@ HB_FUNC( SX_RLOCK )
       if( pRecords )
       {
          HB_SIZE nLen = hb_arrayLen( pRecords );
-         pResult = hb_itemArrayNew( nLen );
+         pResult = hb_itemArrayNew(nLen);
          for( HB_SIZE nPos = 1; nPos <= nLen; ++nPos )
          {
             dbLockInfo.itmRecID = hb_arrayGetItemPtr( pRecords, nPos );
@@ -300,12 +300,12 @@ HB_FUNC( SX_SETPASS )
 
    if( iPCount == 1 )
    {
-      if( HB_ISCHAR( 1 ) )
+      if( HB_ISCHAR(1) )
       {
          AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
          if( pArea )
          {
-            pItem = hb_itemParam( 1 );
+            pItem = hb_itemParam(1);
             if( SELF_INFO( pArea, DBI_PASSWORD, pItem ) == HB_SUCCESS )
             {
                fResult = HB_TRUE;
@@ -316,7 +316,7 @@ HB_FUNC( SX_SETPASS )
    }
    else if( iPCount >= 2 && iPCount <= 4 )
    {
-      if( HB_ISCHAR( 1 ) && HB_ISNUM( 2 ) && ( iPCount < 3 || HB_ISCHAR( 3 ) ) && ( iPCount < 4 || HB_ISNUM( 4 ) ) )
+      if( HB_ISCHAR(1) && HB_ISNUM(2) && ( iPCount < 3 || HB_ISCHAR(3) ) && ( iPCount < 4 || HB_ISNUM(4) ) )
       {
          /* Set pending password for table which will be open
           * 3rd and 4th parameters are optional Harbour extensions
@@ -337,7 +337,7 @@ HB_FUNC( SX_SETPASS )
          pRDDNode = hb_rddFindNode( szDriver, &uiRddID );   /* find the RDDNODE */
          if( pRDDNode )
          {
-            pItem = hb_itemParam( 1 );
+            pItem = hb_itemParam(1);
             if( SELF_RDDINFO( pRDDNode, RDDI_PENDINGPASSWORD, hb_parnl(4), pItem ) == HB_SUCCESS )
             {
                fResult = HB_TRUE;
@@ -345,7 +345,7 @@ HB_FUNC( SX_SETPASS )
             hb_itemRelease(pItem);
          }
       }
-      else if( iPCount == 2 && HB_ISNUM( 1 ) && HB_ISCHAR( 2 ) )
+      else if( iPCount == 2 && HB_ISNUM(1) && HB_ISCHAR(2) )
       {
          AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
          if( pArea )
@@ -386,7 +386,7 @@ HB_FUNC( SX_DBFENCRYPT )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_itemParam( 1 );
+      PHB_ITEM pItem = hb_itemParam(1);
 
       if( SELF_INFO( pArea, DBI_ENCRYPT, pItem ) == HB_SUCCESS )
       {
@@ -404,7 +404,7 @@ HB_FUNC( SX_DBFDECRYPT )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_itemParam( 1 );
+      PHB_ITEM pItem = hb_itemParam(1);
       if( SELF_INFO( pArea, DBI_DECRYPT, pItem ) == HB_SUCCESS )
       {
          fResult = hb_itemGetL(pItem);
@@ -421,7 +421,7 @@ HB_FUNC( SX_MEMOPACK )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_itemArrayNew( 3 );
+      PHB_ITEM pItem = hb_itemArrayNew(3);
       int iPCount = hb_pcount();
       for( int i = 1; i <= iPCount; ++i )
       {
@@ -439,7 +439,7 @@ HB_FUNC( SX_TURBOAREA )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_itemParam( 1 );
+      PHB_ITEM pItem = hb_itemParam(1);
       if( hb_pcount() > 0 && HB_IS_NIL(pItem) )
       {
          hb_itemPutNI(pItem, 0);
@@ -475,7 +475,7 @@ HB_FUNC( SX_SETTURBO )
    }
    else
    {
-      PHB_ITEM pItem = hb_itemParam( 1 );
+      PHB_ITEM pItem = hb_itemParam(1);
       if( hb_pcount() > 0 && HB_IS_NIL(pItem) )
       {
          hb_itemPutNI(pItem, 0);
@@ -513,15 +513,15 @@ HB_FUNC( _SXOPENINIT )
       hb_itemRelease(pItem);
       if( pInfo )
       {
-         if( HB_ISLOG( 2 ) )
+         if( HB_ISLOG(2) )
          {
             pInfo->fShared = hb_parl(2);
          }
-         if( HB_ISLOG( 3 ) )
+         if( HB_ISLOG(3) )
          {
             pInfo->fReadonly = hb_parl(2);
          }
-         if( HB_ISCHAR( 4 ) )
+         if( HB_ISCHAR(4) )
          {
             const char * szAlias = hb_parc(1);
             if( szAlias && szAlias[ 0 ] )

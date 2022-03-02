@@ -215,7 +215,7 @@ HB_FUNC( HB_LIBLOAD )
 
    if( iPCount > 1 )
    {
-      pArgs = hb_itemArrayNew( iPCount - 1 );
+      pArgs = hb_itemArrayNew(iPCount - 1);
       for( int i = 2; i <= iPCount; ++i )
       {
          hb_arraySet( pArgs, i, hb_param(i, HB_IT_ANY) );

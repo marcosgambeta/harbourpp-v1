@@ -54,7 +54,7 @@ HB_FUNC( STUFF )
    const char * szText = hb_parc(1);
    const char * szIns = hb_parc(4);
 
-   if( szText && szIns && HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
+   if( szText && szIns && HB_ISNUM(2) && HB_ISNUM(3) )
    {
       PHB_CODEPAGE cdp = hb_vmCDP();
       HB_SIZE nLen = hb_parclen(1);

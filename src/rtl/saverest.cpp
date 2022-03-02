@@ -113,7 +113,7 @@ HB_FUNC( SAVESCREEN )
 
 HB_FUNC( RESTSCREEN )
 {
-   if( HB_ISCHAR( 5 ) )
+   if( HB_ISCHAR(5) )
    {
       int iTop, iLeft, iBottom, iRight;
       HB_SIZE nSize, nLen;

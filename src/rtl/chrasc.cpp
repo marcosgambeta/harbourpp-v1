@@ -52,12 +52,12 @@
 /* converts an ASCII code to a character value */
 HB_FUNC( CHR )
 {
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
       /* NOTE: CA-Cl*pper's compiler optimizer will be wrong for those
                Chr() cases where the passed parameter is a constant which
                can be divided by 256 but it's not zero, in this case it
-               will return an empty string instead of a Chr( 0 ). [vszakats] */
+               will return an empty string instead of a Chr(0). [vszakats] */
 
       /* Believe it or not, Cl*pper does this! */
 #ifdef HB_CLP_STRICT

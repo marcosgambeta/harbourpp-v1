@@ -87,7 +87,7 @@ static void hb_macroFlagsSet( int flag )
 
 static int s_macroFlags = HB_SM_DEFAULT;
 #  define hb_macroFlags()        s_macroFlags
-#  define hb_macroFlagsSet( f )  do { s_macroFlags = ( f ); } while( 0 )
+#  define hb_macroFlagsSet( f )  do { s_macroFlags = ( f ); } while(0)
 
 #endif
 
@@ -239,7 +239,7 @@ static void hb_macroSyntaxError( PHB_MACRO pMacro )
    }
    else
    {
-      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_SYNTAX, 1449, nullptr, "&", 1, hb_stackItemFromTop( -1 ) );
+      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_SYNTAX, 1449, nullptr, "&", 1, hb_stackItemFromTop(-1) );
 
       if( pResult )
       {
@@ -518,7 +518,7 @@ void hb_macroGetValue( PHB_ITEM pItem, int iContext, int flags )
    }
    else if( iContext == HB_P_MACROPUSHLIST && hb_vmRequestQuery() == 0 )
    {
-      hb_vmPushInteger( 1 );
+      hb_vmPushInteger(1);
    }
 }
 
@@ -1109,7 +1109,7 @@ void hb_macroPushSymbol( PHB_ITEM pItem )
       }
    }
 
-   if( ! HB_IS_SYMBOL(hb_stackItemFromTop( -1 )) && hb_vmRequestQuery() == 0 )
+   if( ! HB_IS_SYMBOL(hb_stackItemFromTop(-1)) && hb_vmRequestQuery() == 0 )
    {
       hb_stackPop();    /* remove compiled string */
       hb_vmPushDynSym( hb_dynsymGetCase( "" ) );  /* push compiled symbol instead of a string */
@@ -1217,7 +1217,7 @@ const char * hb_macroGetType( PHB_ITEM pItem )
                 * Now the value of expression is placed on the eval stack -
                 * check its type and pop it from the stack
                 */
-               szType = hb_itemTypeStr( hb_stackItemFromTop( -1 ) );
+               szType = hb_itemTypeStr(hb_stackItemFromTop(-1));
                hb_stackPop();
             }
             else

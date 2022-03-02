@@ -148,7 +148,7 @@ HB_FUNC( HB_STRCDECODE )
                --nLen;
             }
          }
-         if( nLen == 0 && ( ! fCont || HB_ISBYREF( 2 ) ) )
+         if( nLen == 0 && ( ! fCont || HB_ISBYREF(2) ) )
          {
             hb_retclen_buffer( pszDst, nDst );
             hb_storl( fCont, 2 );

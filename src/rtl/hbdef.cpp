@@ -51,9 +51,9 @@ HB_FUNC( HB_DEFAULT )
 {
    PHB_ITEM pDefault = hb_param(2, HB_IT_ANY);
 
-   if( pDefault && ! hb_itemTypeCmp( hb_param(1, HB_IT_ANY), pDefault ) )
+   if( pDefault && ! hb_itemTypeCmp(hb_param(1, HB_IT_ANY), pDefault) )
    {
-      hb_itemParamStore( 1, pDefault );
+      hb_itemParamStore(1, pDefault);
    }
 }
 
@@ -62,7 +62,7 @@ HB_FUNC( HB_DEFAULTVALUE )
    PHB_ITEM pParam = hb_param(1, HB_IT_ANY);
    PHB_ITEM pDefault = hb_param(2, HB_IT_ANY);
 
-   if( pDefault && ! hb_itemTypeCmp( pParam, pDefault ) )
+   if( pDefault && ! hb_itemTypeCmp(pParam, pDefault) )
    {
       pParam = pDefault;
    }
@@ -76,6 +76,6 @@ HB_FUNC( __DEFAULTNIL )
 {
    if( hb_pcount() >= 2 && HB_IS_NIL(hb_param(1, HB_IT_ANY)) )
    {
-      hb_itemParamStore( 1, hb_param(2, HB_IT_ANY) );
+      hb_itemParamStore(1, hb_param(2, HB_IT_ANY));
    }
 }

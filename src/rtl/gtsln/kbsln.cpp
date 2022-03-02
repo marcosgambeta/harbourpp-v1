@@ -344,7 +344,7 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
       return HB_K_RESIZE;
    }
 
-   fInput = SLang_input_pending( 0 ) != 0;
+   fInput = SLang_input_pending(0) != 0;
    iKey = hb_gt_sln_mouse_Inkey( iEventMask, ! fInput );
    if( ! fInput || iKey != 0 )
    {
@@ -366,7 +366,7 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
       if( hb_sln_escDelay == 0 )
       {
          /* standard action, wait a 1 second for next char and if not then exit */
-         if( 0 == SLang_input_pending( 10 ) )
+         if( 0 == SLang_input_pending(10) )
          {
             return 0;
          }

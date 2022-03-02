@@ -50,91 +50,91 @@
 
 HB_FUNC( VALTYPE )
 {
-   hb_retc( hb_itemTypeStr( hb_param(1, HB_IT_ANY) ) );
+   hb_retc( hb_itemTypeStr(hb_param(1, HB_IT_ANY)) );
 }
 
 #if defined( HB_LEGACY_LEVEL5 )
 
 HB_FUNC( HB_ISNIL )
 {
-   hb_retl( HB_ISNIL( 1 ) );
+   hb_retl( HB_ISNIL(1) );
 }
 
 #endif
 
 HB_FUNC( HB_ISNUMERIC )
 {
-   hb_retl( HB_ISNUM( 1 ) );
+   hb_retl( HB_ISNUM(1) );
 }
 
 HB_FUNC( HB_ISLOGICAL )
 {
-   hb_retl( HB_ISLOG( 1 ) );
+   hb_retl( HB_ISLOG(1) );
 }
 
 HB_FUNC( HB_ISDATE )
 {
-   hb_retl( HB_ISDATE( 1 ) );
+   hb_retl( HB_ISDATE(1) );
 }
 
 HB_FUNC( HB_ISDATETIME )
 {
-   hb_retl( HB_ISDATETIME( 1 ) );
+   hb_retl( HB_ISDATETIME(1) );
 }
 
 HB_FUNC( HB_ISTIMESTAMP )
 {
-   hb_retl( HB_ISTIMESTAMP( 1 ) );
+   hb_retl( HB_ISTIMESTAMP(1) );
 }
 
 HB_FUNC( HB_ISBLOCK )
 {
-   hb_retl( HB_ISBLOCK( 1 ) );
+   hb_retl( HB_ISBLOCK(1) );
 }
 
 HB_FUNC( HB_ISPOINTER )
 {
-   hb_retl( HB_ISPOINTER( 1 ) );
+   hb_retl( HB_ISPOINTER(1) );
 }
 
 HB_FUNC( HB_ISSYMBOL )
 {
-   hb_retl( HB_ISSYMBOL( 1 ) );
+   hb_retl( HB_ISSYMBOL(1) );
 }
 
 HB_FUNC( HB_ISSTRING )
 {
-   hb_retl( HB_ISCHAR( 1 ) );
+   hb_retl( HB_ISCHAR(1) );
 }
 
 HB_FUNC( HB_ISCHAR )
 {
-   hb_retl( ( hb_parinfo( 1 ) & ( HB_IT_MEMO | HB_IT_STRING ) ) == HB_IT_STRING );
+   hb_retl( ( hb_parinfo(1) & ( HB_IT_MEMO | HB_IT_STRING ) ) == HB_IT_STRING );
 }
 
 HB_FUNC( HB_ISMEMO )
 {
-   hb_retl( HB_ISMEMO( 1 ) );
+   hb_retl( HB_ISMEMO(1) );
 }
 
 HB_FUNC( HB_ISARRAY )
 {
-   hb_retl( hb_extIsArray( 1 ) );
+   hb_retl( hb_extIsArray(1) );
 }
 
 HB_FUNC( HB_ISOBJECT )
 {
-   hb_retl( HB_ISOBJECT( 1 ) );
+   hb_retl( HB_ISOBJECT(1) );
 }
 
 HB_FUNC( HB_ISHASH )
 {
-   hb_retl( HB_ISHASH( 1 ) );
+   hb_retl( HB_ISHASH(1) );
 }
 
 HB_FUNC( HB_ISHASHKEY )
 {
-   hb_retl( ( hb_parinfo( 1 ) & HB_IT_HASHKEY ) != 0 );
+   hb_retl( ( hb_parinfo(1) & HB_IT_HASHKEY ) != 0 );
 }
 
 HB_FUNC( HB_ISEVALITEM )

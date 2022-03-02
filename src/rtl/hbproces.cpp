@@ -87,7 +87,7 @@
       ( ret ) = ( exp ); \
       hb_fsSetIOError( ( ret ) != -1, 0 ); \
    } \
-   while( 0 )
+   while(0)
 #endif
 
 #if defined( HB_PROCESS_USEFILES ) || defined( HB_OS_UNIX )
@@ -244,17 +244,17 @@ static int hb_fsProcessExec( const char * pszFileName, HB_FHANDLE hStdin, HB_FHA
 
    if( hStdin != FS_ERROR )
    {
-      iStdIn  = dup( 0 );
+      iStdIn  = dup(0);
       dup2( hStdin,  0 );
    }
    if( hStdout != FS_ERROR )
    {
-      iStdOut = dup( 1 );
+      iStdOut = dup(1);
       dup2( hStdout, 1 );
    }
    if( hStderr != FS_ERROR )
    {
-      iStdErr = dup( 2 );
+      iStdErr = dup(2);
       dup2( hStderr, 2 );
    }
 #if defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS )
@@ -587,9 +587,9 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
       char ** argv;
       int pid;
 
-      hStdIn  = dup( 0 );
-      hStdOut = dup( 1 );
-      hStdErr = dup( 2 );
+      hStdIn  = dup(0);
+      hStdOut = dup(1);
+      hStdErr = dup(2);
 
       if( fDetach && ( ! phStdin || ! phStdout || ! phStderr ) )
       {

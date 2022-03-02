@@ -566,7 +566,7 @@ static HB_SIZE hb_LZSSxEncode( PHB_LZSSX_COMPR pCompr )
          {
             if( ! hb_LZSSxWrite( pCompr, itemSet[ i ] ) )
             {
-               return static_cast<HB_SIZE>( -1 );
+               return static_cast<HB_SIZE>(-1);
             }
          }
          nSize += item;
@@ -605,7 +605,7 @@ static HB_SIZE hb_LZSSxEncode( PHB_LZSSX_COMPR pCompr )
       {
          if( ! hb_LZSSxWrite( pCompr, itemSet[ i ] ) )
          {
-            return static_cast<HB_SIZE>( -1 );
+            return static_cast<HB_SIZE>(-1);
          }
       }
       nSize += item;
@@ -613,7 +613,7 @@ static HB_SIZE hb_LZSSxEncode( PHB_LZSSX_COMPR pCompr )
 
    if( ! hb_LZSSxFlush( pCompr ) )
    {
-      return static_cast<HB_SIZE>( -1 );
+      return static_cast<HB_SIZE>(-1);
    }
 
    return nSize;
@@ -658,7 +658,7 @@ HB_BOOL hb_LZSSxCompressFile( PHB_FILE pInput, PHB_FILE pOutput, HB_SIZE * pnSiz
    {
       *pnSize = nSize;
    }
-   return nSize != static_cast<HB_SIZE>( -1 );
+   return nSize != static_cast<HB_SIZE>(-1);
 }
 
 HB_BOOL hb_LZSSxDecompressFile( PHB_FILE pInput, PHB_FILE pOutput )

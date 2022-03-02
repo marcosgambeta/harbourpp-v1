@@ -111,7 +111,7 @@ void hb_idleState( void )
 
          if( pIdleData->pIdleTasks && pIdleData->iIdleTask < pIdleData->iIdleMaxTask )
          {
-            hb_itemRelease(hb_itemDo( pIdleData->pIdleTasks[ pIdleData->iIdleTask ], 0 ));
+            hb_itemRelease(hb_itemDo(pIdleData->pIdleTasks[ pIdleData->iIdleTask ], 0));
             ++pIdleData->iIdleTask;
             if( pIdleData->iIdleTask == pIdleData->iIdleMaxTask && hb_setGetIdleRepeat() )
             {

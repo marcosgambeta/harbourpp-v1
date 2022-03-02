@@ -58,7 +58,7 @@
    #include <windows.h>
    #include "hbwinuni.h"
    #if ! defined( INVALID_FILE_ATTRIBUTES )
-      #define INVALID_FILE_ATTRIBUTES  ( static_cast<DWORD>( -1 ) )
+      #define INVALID_FILE_ATTRIBUTES  ( static_cast<DWORD>(-1) )
    #endif
    #if ! defined( FILE_ATTRIBUTE_DEVICE )
       #define FILE_ATTRIBUTE_DEVICE    0x00000040

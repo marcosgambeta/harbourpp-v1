@@ -203,7 +203,7 @@ using PCLASS = CLASS *;
 #endif
 
 #if ! defined( HB_CLASSY_BLOCK_SCOPE )
-#  define hb_clsSenderOffset()  hb_stackBaseProcOffset( 1 )
+#  define hb_clsSenderOffset()  hb_stackBaseProcOffset(1)
 #endif
 
 HB_FUNC_STATIC( msgGetData );
@@ -364,8 +364,8 @@ static HB_USHORT s_uiObjectClass    = 0;
 #else
 
 #  define HB_CLASS_POOL_SIZE  0
-#  define HB_CLASS_LOCK()     do {} while( 0 )
-#  define HB_CLASS_UNLOCK()   do {} while( 0 )
+#  define HB_CLASS_LOCK()     do {} while(0)
+#  define HB_CLASS_UNLOCK()   do {} while(0)
 
 #endif
 
@@ -1024,10 +1024,10 @@ static void hb_clsCopyClass( PCLASS pClsDst, PCLASS pClsSrc )
     */
    pClsDst->pClassDatas = hb_arrayClone( pClsSrc->pClassDatas );
 #else
-   pClsDst->pClassDatas = hb_itemArrayNew( hb_arrayLen( pClsSrc->pClassDatas ) );
+   pClsDst->pClassDatas = hb_itemArrayNew(hb_arrayLen( pClsSrc->pClassDatas ));
 #endif
    /* do not copy shared data array - just simply create new one */
-   pClsDst->pSharedDatas = hb_itemArrayNew( 0 );
+   pClsDst->pSharedDatas = hb_itemArrayNew(0);
    pClsDst->pInlines = hb_arrayClone( pClsSrc->pInlines );
    pClsDst->uiDatas = pClsSrc->uiDatas;
    pClsDst->uiMutexOffset = pClsSrc->uiMutexOffset;
@@ -1204,7 +1204,7 @@ void hb_clsDoInit( void )
          hb_itemSetNil( pReturn );
          hb_vmPushDynSym( pFuncSym );
          hb_vmPushNil();
-         hb_vmProc( 0 );
+         hb_vmProc(0);
          if( HB_IS_OBJECT(pReturn) )
          {
             *( s_puiHandles[ i ] ) = pReturn->item.asArray.value->uiClass;
@@ -1726,7 +1726,7 @@ const char * hb_objGetRealClsName( PHB_ITEM pObject, const char * szName )
 #if defined( HB_CLASSY_BLOCK_SCOPE )
 static HB_ISIZ hb_clsSenderOffset( void )
 {
-   HB_ISIZ nOffset = hb_stackBaseProcOffset( 1 );
+   HB_ISIZ nOffset = hb_stackBaseProcOffset(1);
 
    if( nOffset > 0 )
    {
@@ -2054,7 +2054,7 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE p
             if( pMsg == s___msgEnumIndex.pDynSym )
             {
                hb_itemPutNS(hb_stackReturnItem(), pEnum->item.asEnum.offset);
-               if( hb_pcount() > 0 && HB_ISNUM( 1 ) )
+               if( hb_pcount() > 0 && HB_ISNUM(1) )
                {
                   pEnum->item.asEnum.offset = hb_itemGetNS(hb_param(1, HB_IT_ANY));
                }
@@ -2085,7 +2085,7 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE p
                }
                if( hb_pcount() > 0 )
                {
-                  hb_itemCopy( pEnum->item.asEnum.basePtr, hb_itemUnRef( hb_stackItemFromBase( 1 ) ) );
+                  hb_itemCopy( pEnum->item.asEnum.basePtr, hb_itemUnRef( hb_stackItemFromBase(1) ) );
                }
                return &s___msgEnumBase;
             }
@@ -2095,7 +2095,7 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE p
                hb_itemCopy( hb_stackReturnItem(), pEnum );
                if( hb_pcount() > 0 )
                {
-                  hb_itemCopy( pEnum, hb_itemUnRef( hb_stackItemFromBase( 1 ) ) );
+                  hb_itemCopy( pEnum, hb_itemUnRef( hb_stackItemFromBase(1) ) );
                }
                return &s___msgEnumValue;
             }
@@ -2342,7 +2342,7 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE p
          if( pItem )
          {
             /* replace current WITH OBJECT object */
-            hb_itemCopy( pItem, hb_stackItemFromBase( 1 ) );
+            hb_itemCopy( pItem, hb_stackItemFromBase(1) );
             hb_itemCopy( hb_stackReturnItem(), pItem );
             return &s___msgWithObjectPop;
          }
@@ -2536,7 +2536,7 @@ static void hb_objSuperDestructorCall( PHB_ITEM pObject, PCLASS pClass )
             {
                hb_vmPushSymbol( &s___msgDestructor );
                hb_clsMakeSuperObject( hb_stackAllocItem(), pObject, uiClass );
-               hb_vmSend( 0 );
+               hb_vmSend(0);
                if( hb_vmRequestQuery() != 0 )
                {
                   break;
@@ -2569,7 +2569,7 @@ static void hb_objSuperDestructorCall( PHB_ITEM pObject, PCLASS pClass )
             {
                hb_vmPushSymbol( &s___msgDestructor );
                hb_clsMakeSuperObject( hb_stackAllocItem(), pObject, uiParentCls );
-               hb_vmSend( 0 );
+               hb_vmSend(0);
                if( hb_vmRequestQuery() != 0 )
                {
                   break;
@@ -2594,7 +2594,7 @@ void hb_objDestructorCall( PHB_ITEM pObject )
          {
             hb_vmPushSymbol( &s___msgDestructor );
             hb_vmPush( pObject );
-            hb_vmSend( 0 );
+            hb_vmSend(0);
             if( hb_vmRequestQuery() == 0 )
             {
                hb_objSuperDestructorCall( pObject, pClass );
@@ -2645,16 +2645,16 @@ HB_BOOL hb_objOperatorCall( HB_USHORT uiOperator, PHB_ITEM pResult, PHB_ITEM pOb
          if( pMsgArg2 )
          {
             hb_vmPush( pMsgArg2 );
-            hb_vmSend( 2 );
+            hb_vmSend(2);
          }
          else
          {
-            hb_vmSend( 1 );
+            hb_vmSend(1);
          }
       }
       else
       {
-         hb_vmSend( 0 );
+         hb_vmSend(0);
       }
 
       /* store the return value */
@@ -3757,7 +3757,7 @@ static HB_USHORT hb_clsNew( const char * szClassName, HB_USHORT uiDatas, PHB_ITE
             HB_USHORT nLenClsDatas;
 
             /* create class data translation tables */
-            nLenClsDatas = static_cast<HB_USHORT>( hb_itemSize( pSprCls->pClassDatas ) );
+            nLenClsDatas = static_cast<HB_USHORT>( hb_itemSize(pSprCls->pClassDatas) );
             if( nLenClsDatas )
             {
                if( nLenClsDatas > uiClassDataSize )
@@ -3897,9 +3897,9 @@ static HB_USHORT hb_clsNew( const char * szClassName, HB_USHORT uiDatas, PHB_ITE
    if( ! hb_clsInited( pNewCls ) )
    {
       hb_clsDictInit( pNewCls, HASH_KEY );
-      pNewCls->pClassDatas  = hb_itemArrayNew( 0 );
-      pNewCls->pSharedDatas = hb_itemArrayNew( 0 );
-      pNewCls->pInlines     = hb_itemArrayNew( 0 );
+      pNewCls->pClassDatas  = hb_itemArrayNew(0);
+      pNewCls->pSharedDatas = hb_itemArrayNew(0);
+      pNewCls->pInlines     = hb_itemArrayNew(0);
    }
 
    /* add self class casting */
@@ -4358,7 +4358,7 @@ HB_FUNC( __CLSINSTSUPER )
       {
          hb_vmPushSymbol( pClassFuncSym );
          hb_vmPushNil();
-         hb_vmProc( 0 ); /* Execute super class */
+         hb_vmProc(0); /* Execute super class */
 
          if( hb_vmRequestQuery() == 0 )
          {
@@ -4380,7 +4380,7 @@ HB_FUNC( __CLSINSTSUPER )
                   {
                      hb_vmPushSymbol( &s___msgNew );
                      hb_vmPush( pObject );
-                     hb_vmSend( 0 );
+                     hb_vmSend(0);
 
                      pObject = hb_stackReturnItem();
                      if( HB_IS_OBJECT(pObject) )
@@ -4559,7 +4559,7 @@ HB_FUNC( __CLS_DECDATA )
    }
    else
    {
-      hb_retni( 0 );
+      hb_retni(0);
    }
 }
 
@@ -4582,7 +4582,7 @@ HB_FUNC( __CLS_INCDATA )
    }
    else
    {
-      hb_retni( 0 );
+      hb_retni(0);
    }
 }
 
@@ -4665,7 +4665,7 @@ HB_FUNC( __CLSPARENT )
 HB_FUNC( __SENDER )
 {
    HB_STACK_TLS_PRELOAD
-   HB_ISIZ nOffset = hb_stackBaseProcOffset( 2 );
+   HB_ISIZ nOffset = hb_stackBaseProcOffset(2);
 
    if( nOffset > 0 )
    {
@@ -4697,7 +4697,7 @@ HB_FUNC( __CLSSYNCWAIT )
    HB_STACK_TLS_PRELOAD
    PHB_ITEM pMutex = nullptr;
    HB_ULONG ulMilliSec = HB_THREAD_INFINITE_WAIT;
-   HB_ISIZ nOffset = hb_stackBaseProcOffset( 2 );
+   HB_ISIZ nOffset = hb_stackBaseProcOffset(2);
 
    if( nOffset > 0 )
    {
@@ -4733,7 +4733,7 @@ HB_FUNC( __CLSSYNCWAIT )
       }
    }
 
-   if( HB_ISNUM( 2 ) )
+   if( HB_ISNUM(2) )
    {
       double dTimeOut = hb_parnd(2);
       if( dTimeOut > 0 )
@@ -4868,7 +4868,7 @@ HB_FUNC_STATIC( msgClassSel )
       nParam = static_cast<HB_USHORT>( hb_parnidef( 1, HB_MSGLISTALL ) );
       nScope = static_cast<HB_USHORT>( hb_parni(2) );
       lFull = hb_parl(3);
-      pReturn = hb_itemArrayNew( pClass->uiMethods );
+      pReturn = hb_itemArrayNew(pClass->uiMethods);
 
       do
       {
@@ -4971,7 +4971,7 @@ HB_FUNC_STATIC( msgEvalInline )
    hb_vmPushEvalSym();
 
    hb_vmPush( hb_arrayGetItemPtr( s_pClasses[ pMethod->uiSprClass ]->pInlines, pMethod->uiData ) );
-   pBlock = hb_stackItemFromTop( -1 );    /* Push block */
+   pBlock = hb_stackItemFromTop(-1);    /* Push block */
    pBlock->item.asBlock.hclass = pStack->uiClass;
    pBlock->item.asBlock.method = pStack->uiMethod;
 
@@ -5450,7 +5450,7 @@ HB_FUNC( __GETMSGPRF ) /* profiler: returns a method called and consumed times *
    HB_USHORT uiClass = static_cast<HB_USHORT>( hb_parni(1) );
    const char * cMsg = hb_parc(2);
 
-   hb_reta( 2 );
+   hb_reta(2);
    if( uiClass && uiClass <= s_uiClasses && cMsg && *cMsg )
    {
       PHB_DYNS pMsg = hb_dynsymFindName( cMsg );
@@ -5468,7 +5468,7 @@ HB_FUNC( __GETMSGPRF ) /* profiler: returns a method called and consumed times *
       }
    }
 #else
-   hb_reta( 2 );
+   hb_reta(2);
 #endif
    hb_storvnl( 0, -1, 1 );
    hb_storvnl( 0, -1, 2 );
@@ -5516,7 +5516,7 @@ static PHB_ITEM hb_objGetIVars( PHB_ITEM pObject, HB_USHORT uiScope, HB_BOOL fCh
             pItem = hb_arrayGetItemPtr( pObject, nIndex );
             if( pItem )
             {
-               if( hb_itemEqual( pItem, pInitData->pInitValue ) )
+               if( hb_itemEqual(pItem, pInitData->pInitValue) )
                {
                   pIndex[ nIndex - 1 ].uiStatus = 3;
                   --nCount;
@@ -5605,7 +5605,7 @@ static PHB_ITEM hb_objGetIVars( PHB_ITEM pObject, HB_USHORT uiScope, HB_BOOL fCh
    }
 
    nCount = 0;
-   pReturn = hb_itemArrayNew( nSize );
+   pReturn = hb_itemArrayNew(nSize);
    for( nIndex = 1; nIndex <= nLen && nCount < nSize; ++nIndex )
    {
       pInfo = &pIndex[ nIndex - 1 ];
@@ -5969,7 +5969,7 @@ HB_FUNC( __CLSUNLOCKDEF )
 {
    PHB_ITEM pClsDst = hb_param(1, HB_IT_BYREF), pClsSrc = hb_param(2, HB_IT_ANY);
 
-   if( pClsDst && pClsSrc && HB_IS_NIL(pClsDst) && ! HB_ISBYREF( 2 ) )
+   if( pClsDst && pClsSrc && HB_IS_NIL(pClsDst) && ! HB_ISBYREF(2) )
    {
       /* special core code only macro used to eliminate race condition
        * in unprotected readonly access to pClsDst variable.
@@ -6114,7 +6114,7 @@ HB_FUNC( __CLSVERIFY )
 /* return real function name ignoring aliasing */
 const char * hb_clsRealMethodName( void )
 {
-   HB_ISIZ nOffset = hb_stackBaseProcOffset( 1 );
+   HB_ISIZ nOffset = hb_stackBaseProcOffset(1);
    const char * szName = nullptr;
 
    if( nOffset > 0 )

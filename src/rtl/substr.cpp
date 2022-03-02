@@ -57,7 +57,7 @@ HB_FUNC( SUBSTR )
    PHB_ITEM pText = hb_param(1, HB_IT_STRING);
    int iPCount = hb_pcount();
 
-   if( pText && HB_ISNUM( 2 ) && ( iPCount < 3 || HB_ISNUM( 3 ) ) )
+   if( pText && HB_ISNUM(2) && ( iPCount < 3 || HB_ISNUM(3) ) )
    {
       PHB_CODEPAGE cdp = hb_vmCDP();
       const char * pszText = hb_itemGetCPtr(pText);

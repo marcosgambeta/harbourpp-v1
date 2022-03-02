@@ -553,7 +553,7 @@ HB_FUNC( MLCTOPOS )
    HB_SIZE nCol    = hb_parns(4);
    HB_SIZE nOffset = 0;
 
-   if( nLine > 0 && HB_ISNUM( 4 ) )
+   if( nLine > 0 && HB_ISNUM(4) )
    {
       HB_MLC_INFO MLC;
       if( hb_mlInit( &MLC, 2 ) )
@@ -625,7 +625,7 @@ HB_FUNC( MPOSTOLC )
          hb_mlExit( &MLC );
       }
    }
-   hb_reta( 2 );
+   hb_reta(2);
    hb_storvns( nLine, -1, 1 );
    hb_storvns( nCol, -1, 2 );
 }

@@ -53,7 +53,7 @@ HB_FUNC( EMPTY )
    long lDate, lTime;
    PHB_SYMB pSym;
 
-   switch( hb_itemType( pItem ) )
+   switch( hb_itemType(pItem) )
    {
       case HB_IT_ARRAY:
          hb_retl( hb_arrayLen( pItem ) == 0 );

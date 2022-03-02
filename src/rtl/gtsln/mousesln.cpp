@@ -93,14 +93,14 @@ static HB_BOOL GetGpmEvent( Gpm_Event * Evt )
 static HB_BOOL GetXtermEvent( int * Btn, int * Col, int * Row )
 {
    /* Xterm mouse event consists of three chars */
-   if( SLang_input_pending( 0 ) > 0 )
+   if( SLang_input_pending(0) > 0 )
    {
       *Btn = SLang_getkey() - 0x20;
 
-      if( SLang_input_pending( 0 ) > 0 )
+      if( SLang_input_pending(0) > 0 )
       {
          *Col = SLang_getkey() - 0x21;
-         if( SLang_input_pending( 0 ) > 0 )
+         if( SLang_input_pending(0) > 0 )
          {
             *Row = SLang_getkey() - 0x21;
             return HB_TRUE;

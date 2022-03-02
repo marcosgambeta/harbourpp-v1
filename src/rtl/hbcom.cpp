@@ -133,7 +133,7 @@ using PHB_COM = HB_COM *;
 
 static HB_CRITICAL_NEW( s_comMtx );
 #define HB_COM_LOCK()      do { hb_threadEnterCriticalSection( &s_comMtx )
-#define HB_COM_UNLOCK()    hb_threadLeaveCriticalSection( &s_comMtx ); } while( 0 )
+#define HB_COM_UNLOCK()    hb_threadLeaveCriticalSection( &s_comMtx ); } while(0)
 
 static HB_COM s_comList[ HB_COM_PORT_MAX ];
 

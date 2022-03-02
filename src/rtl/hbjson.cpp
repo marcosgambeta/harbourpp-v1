@@ -145,7 +145,7 @@ static void _hb_jsonCtxAddIndent( PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nLevel )
 static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nLevel, HB_BOOL fEOL, PHB_CODEPAGE cdp )
 {
    /* Protection against recursive structures */
-   if( ( HB_IS_ARRAY(pValue) || HB_IS_HASH(pValue) ) && hb_itemSize( pValue ) > 0 )
+   if( ( HB_IS_ARRAY(pValue) || HB_IS_HASH(pValue) ) && hb_itemSize(pValue) > 0 )
    {
       void * id = HB_IS_HASH(pValue) ? hb_hashId( pValue ) : hb_arrayId( pValue );
 
@@ -310,7 +310,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
    }
    else if( HB_IS_ARRAY(pValue) )
    {
-      HB_SIZE nLen = hb_itemSize( pValue );
+      HB_SIZE nLen = hb_itemSize(pValue);
 
       if( nLen )
       {
@@ -337,7 +337,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
                _hb_jsonCtxAdd( pCtx, pCtx->szEol, pCtx->iEolLen );
             }
 
-            if( pCtx->iIndent && ! ( ( HB_IS_ARRAY(pItem) || HB_IS_HASH(pItem) ) && hb_itemSize( pItem ) > 0 ) )
+            if( pCtx->iIndent && ! ( ( HB_IS_ARRAY(pItem) || HB_IS_HASH(pItem) ) && hb_itemSize(pItem) > 0 ) )
             {
                _hb_jsonCtxAddIndent( pCtx, ( nLevel + 1 ) );
             }
@@ -392,7 +392,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
                if( pCtx->iIndent )
                {
                   _hb_jsonCtxAdd( pCtx, ": ", 2 );
-                  fEOL = ( HB_IS_ARRAY(pItem) || HB_IS_HASH(pItem) ) && hb_itemSize( pItem ) > 0;
+                  fEOL = ( HB_IS_ARRAY(pItem) || HB_IS_HASH(pItem) ) && hb_itemSize(pItem) > 0;
                }
                else
                {
@@ -799,7 +799,7 @@ HB_FUNC( HB_JSONENCODE )
    {
       HB_SIZE nLen;
       int iIndent = hb_parl(2) ? INDENT_SIZE : hb_parni(2);
-      char * szRet = hb_jsonEncodeCP( pItem, &nLen, iIndent, _hb_jsonCdpPar( 3 ) );
+      char * szRet = hb_jsonEncodeCP( pItem, &nLen, iIndent, _hb_jsonCdpPar(3) );
       hb_retclen_buffer( szRet, nLen );
    }
 }
@@ -807,12 +807,12 @@ HB_FUNC( HB_JSONENCODE )
 HB_FUNC( HB_JSONDECODE )
 {
    PHB_ITEM pItem = hb_itemNew(nullptr);
-   HB_SIZE nSize = hb_jsonDecodeCP( hb_parc(1), pItem, _hb_jsonCdpPar( 3 ) );
+   HB_SIZE nSize = hb_jsonDecodeCP( hb_parc(1), pItem, _hb_jsonCdpPar(3) );
 
-   if( HB_ISBYREF( 2 ) )
+   if( HB_ISBYREF(2) )
    {
       hb_retns( static_cast<HB_ISIZ>( nSize ) );
-      hb_itemParamStoreForward( 2, pItem );
+      hb_itemParamStoreForward(2, pItem);
       hb_itemRelease(pItem);
    }
    else

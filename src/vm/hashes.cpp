@@ -199,11 +199,11 @@ static int hb_hashItemCmp( PHB_ITEM pKey1, PHB_ITEM pKey2, int iFlags )
          }
          else if( iFlags & HB_HASH_IGNORECASE )
          {
-            return hb_itemStrICmp( pKey1, pKey2, HB_TRUE );
+            return hb_itemStrICmp(pKey1, pKey2, HB_TRUE);
          }
          else
          {
-            return hb_itemStrCmp( pKey1, pKey2, HB_TRUE );
+            return hb_itemStrCmp(pKey1, pKey2, HB_TRUE);
          }
       }
       else
@@ -846,7 +846,7 @@ HB_BOOL hb_hashScan( PHB_ITEM pHash, PHB_ITEM pKey, HB_SIZE * pnPos )
             PHB_ITEM pVal1 = &pHash->item.asHash.value->pPairs[ nPos ].value;
             PHB_ITEM pVal2 = &pKey->item.asHash.value->pPairs[ 0 ].value;
 
-            if( hb_itemEqual( pVal1, pVal2 ) )
+            if( hb_itemEqual(pVal1, pVal2) )
             {
                if( pnPos )
                {
@@ -1298,7 +1298,7 @@ PHB_ITEM hb_hashGetKeys( PHB_ITEM pHash )
 
    if( HB_IS_HASH(pHash) )
    {
-      PHB_ITEM pKeys = hb_itemArrayNew( hb_hashLen( pHash ) ), pKey;
+      PHB_ITEM pKeys = hb_itemArrayNew(hb_hashLen( pHash )), pKey;
       HB_SIZE nPos = 0;
 
       while( ( pKey = hb_hashGetKeyAt( pHash, ++nPos ) ) != nullptr )
@@ -1324,7 +1324,7 @@ PHB_ITEM hb_hashGetValues( PHB_ITEM pHash )
 
    if( HB_IS_HASH(pHash) )
    {
-      PHB_ITEM pValues = hb_itemArrayNew( hb_hashLen( pHash ) ), pVal;
+      PHB_ITEM pValues = hb_itemArrayNew(hb_hashLen( pHash )), pVal;
       HB_SIZE nPos = 0;
 
       while( ( pVal = hb_hashGetValueAt( pHash, ++nPos ) ) != nullptr )

@@ -231,13 +231,13 @@ static HB_GT_FUNCS SuperTable;
       { \
          ( dst ).tv_usec -= 1000000; ( dst ).tv_sec++; \
       } \
-   } while( 0 )
+   } while(0)
 
 #else
 
-#define TIMEVAL_GET( tv )           do { ( tv ) = hb_dateSeconds(); } while( 0 )
+#define TIMEVAL_GET( tv )           do { ( tv ) = hb_dateSeconds(); } while(0)
 #define TIMEVAL_LESS( tv1, tv2 )    ( ( tv1 ) < ( tv2 ) )
-#define TIMEVAL_ADD( dst, src, n )  do { ( dst ) = ( src ) + n / 1000; } while( 0 )
+#define TIMEVAL_ADD( dst, src, n )  do { ( dst ) = ( src ) + n / 1000; } while(0)
 
 #endif
 
@@ -1741,7 +1741,7 @@ static HB_BOOL hb_gt_trm_XtermSetMode( PHB_GTTRM pTerm, int * piRows, int * piCo
    /* dirty hack - wait for SIGWINCH */
    if( *piRows != iHeight || *piCols != iWidth )
    {
-      sleep( 3 );
+      sleep(3);
    }
    if( s_WinSizeChangeFlag )
    {
@@ -4372,7 +4372,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_ESCDELAY:
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, pTerm->esc_delay);
-         if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
+         if( hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC )
          {
             pTerm->esc_delay = hb_itemGetNI(pInfo->pNewVal);
          }
@@ -4391,7 +4391,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_ADDKEYMAP:
-         if( hb_itemType( pInfo->pNewVal ) & HB_IT_ARRAY )
+         if( hb_itemType(pInfo->pNewVal) & HB_IT_ARRAY )
          {
             iVal = hb_arrayGetNI( pInfo->pNewVal, 1 );
             szVal = hb_arrayGetCPtr( pInfo->pNewVal, 2 );
@@ -4413,7 +4413,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 #else
             pInfo->pResult = hb_itemPutStr( pInfo->pResult, pTerm->cdpTerm, pTerm->szTitle );
 #endif
-         if( hb_itemType( pInfo->pNewVal ) & HB_IT_STRING )
+         if( hb_itemType(pInfo->pNewVal) & HB_IT_STRING )
          {
             if( pTerm->fUTF8 )
             {
@@ -4461,13 +4461,13 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_PALETTE:
-         if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
+         if( hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC )
          {
             iVal = hb_itemGetNI(pInfo->pNewVal);
             if( iVal >= 0 && iVal < 16 )
             {
                pInfo->pResult = hb_itemPutNI(pInfo->pResult, pTerm->colors[ iVal ]);
-               if( hb_itemType( pInfo->pNewVal2 ) & HB_IT_NUMERIC )
+               if( hb_itemType(pInfo->pNewVal2) & HB_IT_NUMERIC )
                {
                   pTerm->colors[ iVal ] = hb_itemGetNI(pInfo->pNewVal2);
                   hb_gt_trm_SetPalette( pTerm, iVal, iVal );
@@ -4486,7 +4486,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             {
                hb_arraySetNI( pInfo->pResult, iVal + 1, pTerm->colors[ iVal ] );
             }
-            if( hb_itemType( pInfo->pNewVal ) & HB_IT_ARRAY && hb_arrayLen( pInfo->pNewVal ) == 16 )
+            if( hb_itemType(pInfo->pNewVal) & HB_IT_ARRAY && hb_arrayLen( pInfo->pNewVal ) == 16 )
             {
                for( iVal = 0; iVal < 16; iVal++ )
                {

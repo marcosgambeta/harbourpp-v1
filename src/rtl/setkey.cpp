@@ -104,7 +104,7 @@ static HB_BOOL sk_testActive( PHB_ITEM pIsActive, int iKeyCode )
       hb_vmPushEvalSym();
       hb_vmPush( pIsActive );
       hb_vmPushInteger( iKeyCode );
-      hb_vmSend( 1 );
+      hb_vmSend(1);
       return hb_parldef( -1, HB_TRUE );
    }
    return HB_TRUE;
@@ -312,7 +312,7 @@ HB_FUNC( HB_SETKEYGET )
 
          if( sk_list_tmp->pIsActive )
          {
-            hb_itemParamStore( 2, sk_list_tmp->pIsActive );
+            hb_itemParamStore(2, sk_list_tmp->pIsActive);
          }
       }
    }
@@ -333,7 +333,7 @@ HB_FUNC( HB_SETKEYSAVE )
       ;
    }
 
-   pKeys = hb_itemArrayNew( nItemCount );
+   pKeys = hb_itemArrayNew(nItemCount);
    pKeyElements = hb_itemNew(nullptr);
 
    for( nItem = 1, sk_list_tmp = sk_data->sk_list; nItem <= nItemCount; nItem++, sk_list_tmp = sk_list_tmp->next )

@@ -132,5 +132,5 @@ HB_FUNC( SX_VERSION )
 HB_FUNC( SX_ERROR )
 {
    /* not use by Harbour */
-   hb_retni( 0 );
+   hb_retni(0);
 }

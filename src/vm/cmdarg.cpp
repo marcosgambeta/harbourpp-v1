@@ -687,7 +687,7 @@ int hb_cmdargNum( const char * pszName )
 
 char * hb_cmdargProgName( void )
 {
-   return hb_cmdargDup( 0 );
+   return hb_cmdargDup(0);
 }
 
 /* NOTE: Pointer must be freed with hb_xfree() if not nullptr */
@@ -713,7 +713,7 @@ char * hb_cmdargBaseProgName( void )
 
 HB_FUNC( HB_ARGCHECK )
 {
-   hb_retl( HB_ISCHAR( 1 ) ? hb_cmdargCheck( hb_parc(1) ) : HB_FALSE );
+   hb_retl( HB_ISCHAR(1) ? hb_cmdargCheck( hb_parc(1) ) : HB_FALSE );
 }
 
 /* Returns the value of an internal switch */
@@ -806,7 +806,7 @@ HB_FUNC( HB_ACMDLINE )
    if( s_argc > 1 )
    {
       int iLen = s_argc - 1;
-      PHB_ITEM pArray = hb_itemArrayNew( iLen );
+      PHB_ITEM pArray = hb_itemArrayNew(iLen);
 
       for( int iPos = 1; iPos <= iLen; ++iPos )
       {
@@ -817,7 +817,7 @@ HB_FUNC( HB_ACMDLINE )
    }
    else
    {
-      hb_reta( 0 );
+      hb_reta(0);
    }
 }
 

@@ -136,7 +136,7 @@ static PHB_FILEBUF hb_createFBuffer( PHB_FILE pFile, HB_SIZE nSize )
 /* Export field value into the buffer in SQL format */
 static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const char * szDelim, const char * szEsc )
 {
-   switch( hb_itemType( pValue ) )
+   switch( hb_itemType(pValue) )
    {
       case HB_IT_STRING:
       case HB_IT_MEMO:
@@ -399,7 +399,7 @@ HB_FUNC( __DBSQL )
       PHB_ITEM pFor           = hb_param(5, HB_IT_BLOCK);
       PHB_ITEM pWhile         = hb_param(6, HB_IT_BLOCK);
       PHB_ITEM pNext          = hb_param(7, HB_IT_NUMERIC);
-      PHB_ITEM pRecord        = HB_ISNIL( 8 ) ? nullptr : hb_param(8, HB_IT_ANY);
+      PHB_ITEM pRecord        = HB_ISNIL(8) ? nullptr : hb_param(8, HB_IT_ANY);
       HB_BOOL fRest           = pWhile != nullptr || hb_parl(9);
       HB_BOOL fAppend         = hb_parl(10);
       HB_BOOL fInsert         = hb_parl(11);

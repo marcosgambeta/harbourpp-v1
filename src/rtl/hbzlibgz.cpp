@@ -133,7 +133,7 @@ HB_FUNC( HB_GZDOPEN )
 #ifndef HB_NO_GZLIB
    const char * cMode = hb_parc(2);
 
-   if( HB_ISNUM( 1 ) && cMode )
+   if( HB_ISNUM(1) && cMode )
    {
       gzFile gz;
 
@@ -189,9 +189,9 @@ HB_FUNC( HB_GZCLOSE )
 HB_FUNC( HB_GZSETPARAMS )
 {
 #ifndef HB_NO_GZLIB
-   if( HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
+   if( HB_ISNUM(2) && HB_ISNUM(3) )
    {
-      gzFile gz = hb_gzParam( 1 );
+      gzFile gz = hb_gzParam(1);
       if( gz )
       {
          hb_retni( gzsetparams( gz, hb_parni(2), hb_parni(3) ) );
@@ -210,18 +210,18 @@ HB_FUNC( HB_GZSETPARAMS )
 HB_FUNC( HB_GZREAD )
 {
 #ifndef HB_NO_GZLIB
-   PHB_ITEM pBuffer = HB_ISBYREF( 2 ) ? hb_param(2, HB_IT_STRING) : nullptr;
+   PHB_ITEM pBuffer = HB_ISBYREF(2) ? hb_param(2, HB_IT_STRING) : nullptr;
    char * szBuffer;
    HB_SIZE nLen;
 
    if( pBuffer && hb_itemGetWriteCL( pBuffer, &szBuffer, &nLen ) )
    {
-      gzFile gz = hb_gzParam( 1 );
+      gzFile gz = hb_gzParam(1);
       if( gz )
       {
          int iResult;
 
-         if( HB_ISNUM( 3 ) )
+         if( HB_ISNUM(3) )
          {
             HB_SIZE nLim = hb_parns(3);
             if( nLim < nLen )
@@ -254,14 +254,14 @@ HB_FUNC( HB_GZWRITE )
 
    if( szData )
    {
-      gzFile gz = hb_gzParam( 1 );
+      gzFile gz = hb_gzParam(1);
       if( gz )
       {
          int iResult;
 
          hb_vmUnlock();
          iResult = gzwrite( gz, szData,
-                            HB_ISNUM( 3 ) ? static_cast<unsigned>( hb_parns(3) ) :
+                            HB_ISNUM(3) ? static_cast<unsigned>( hb_parns(3) ) :
                                             static_cast<unsigned>( hb_parclen(2) ) );
          hb_vmLock();
 
@@ -285,7 +285,7 @@ HB_FUNC( HB_GZGETS )
 
    if( iLen > 0 )
    {
-      gzFile gz = hb_gzParam( 1 );
+      gzFile gz = hb_gzParam(1);
       if( gz )
       {
          char * szBuffer = static_cast<char*>( hb_xalloc( iLen + 1 ) );
@@ -326,7 +326,7 @@ HB_FUNC( HB_GZPUTS )
 
    if( szData )
    {
-      gzFile gz = hb_gzParam( 1 );
+      gzFile gz = hb_gzParam(1);
       if( gz )
       {
          int iResult;
@@ -351,9 +351,9 @@ HB_FUNC( HB_GZPUTS )
 HB_FUNC( HB_GZPUTC )
 {
 #ifndef HB_NO_GZLIB
-   if( HB_ISNUM( 2 ) )
+   if( HB_ISNUM(2) )
    {
-      gzFile gz = hb_gzParam( 1 );
+      gzFile gz = hb_gzParam(1);
       if( gz )
       {
          int iResult;
@@ -378,7 +378,7 @@ HB_FUNC( HB_GZPUTC )
 HB_FUNC( HB_GZGETC )
 {
 #ifndef HB_NO_GZLIB
-   gzFile gz = hb_gzParam( 1 );
+   gzFile gz = hb_gzParam(1);
 
    if( gz )
    {
@@ -399,10 +399,10 @@ HB_FUNC( HB_GZGETC )
 HB_FUNC( HB_GZUNGETC )
 {
 #ifndef HB_NO_GZLIB
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
 #if ZLIB_VERNUM >= 0x1202
-      gzFile gz = hb_gzParam( 2 );
+      gzFile gz = hb_gzParam(2);
       if( gz )
       {
          int iResult;
@@ -428,7 +428,7 @@ HB_FUNC( HB_GZUNGETC )
 HB_FUNC( HB_GZFLUSH )
 {
 #ifndef HB_NO_GZLIB
-   gzFile gz = hb_gzParam( 1 );
+   gzFile gz = hb_gzParam(1);
 
    if( gz )
    {
@@ -449,9 +449,9 @@ HB_FUNC( HB_GZFLUSH )
 HB_FUNC( HB_GZSEEK )
 {
 #ifndef HB_NO_GZLIB
-   if( HB_ISNUM( 2 ) )
+   if( HB_ISNUM(2) )
    {
-      gzFile gz = hb_gzParam( 1 );
+      gzFile gz = hb_gzParam(1);
       if( gz )
       {
          HB_MAXINT nResult;
@@ -476,7 +476,7 @@ HB_FUNC( HB_GZSEEK )
 HB_FUNC( HB_GZREWIND )
 {
 #ifndef HB_NO_GZLIB
-   gzFile gz = hb_gzParam( 1 );
+   gzFile gz = hb_gzParam(1);
 
    if( gz )
    {
@@ -497,7 +497,7 @@ HB_FUNC( HB_GZREWIND )
 HB_FUNC( HB_GZTELL )
 {
 #ifndef HB_NO_GZLIB
-   gzFile gz = hb_gzParam( 1 );
+   gzFile gz = hb_gzParam(1);
 
    if( gz )
    {
@@ -518,7 +518,7 @@ HB_FUNC( HB_GZTELL )
 HB_FUNC( HB_GZEOF )
 {
 #ifndef HB_NO_GZLIB
-   gzFile gz = hb_gzParam( 1 );
+   gzFile gz = hb_gzParam(1);
 
    if( gz )
    {
@@ -540,7 +540,7 @@ HB_FUNC( HB_GZDIRECT )
 {
 #ifndef HB_NO_GZLIB
 #if ZLIB_VERNUM >= 0x1230
-   gzFile gz = hb_gzParam( 1 );
+   gzFile gz = hb_gzParam(1);
    if( gz )
    {
       int iResult;
@@ -561,7 +561,7 @@ HB_FUNC( HB_GZDIRECT )
 HB_FUNC( HB_GZERROR )
 {
 #ifndef HB_NO_GZLIB
-   gzFile gz = hb_gzParam( 1 );
+   gzFile gz = hb_gzParam(1);
 
    if( gz )
    {
@@ -580,7 +580,7 @@ HB_FUNC( HB_GZCLEARERR )
 {
 #ifndef HB_NO_GZLIB
 #if ZLIB_VERNUM >= 0x1202
-   gzFile gz = hb_gzParam( 1 );
+   gzFile gz = hb_gzParam(1);
    if( gz )
    {
       gzclearerr( gz );

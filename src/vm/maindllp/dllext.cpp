@@ -58,7 +58,7 @@
                   TEXT( "Function '" ) TEXT( func ) TEXT( "' not found!" ), \
                   TEXT( func ), \
                   MB_OK | MB_ICONERROR ); \
-   } while( 0 )
+   } while(0)
 
 int hb_pcount( void )
 {

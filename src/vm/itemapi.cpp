@@ -2448,7 +2448,7 @@ PHB_ITEM hb_itemUnRefOnce( PHB_ITEM pItem )
             {
                HB_STACK_TLS_PRELOAD
                hb_itemPutNS(hb_stackAllocItem(), pItem->item.asEnum.offset);
-               hb_errRT_BASE( EG_BOUND, 1132, nullptr, hb_langDGetErrorDesc( EG_ARRACCESS ), 2, pItem->item.asEnum.basePtr, hb_stackItemFromTop( -1 ) );
+               hb_errRT_BASE( EG_BOUND, 1132, nullptr, hb_langDGetErrorDesc( EG_ARRACCESS ), 2, pItem->item.asEnum.basePtr, hb_stackItemFromTop(-1) );
                hb_stackPop();
             }
             return pItem->item.asEnum.valuePtr;
@@ -2474,7 +2474,7 @@ PHB_ITEM hb_itemUnRefOnce( PHB_ITEM pItem )
                   HB_STACK_TLS_PRELOAD
                   hb_arrayPushBase( pItem->item.asRefer.BasePtr.array );
                   hb_itemPutNS(hb_stackAllocItem(), pItem->item.asRefer.value + 1);
-                  hb_errRT_BASE( EG_BOUND, 1132, nullptr, hb_langDGetErrorDesc( EG_ARRACCESS ), 2, hb_stackItemFromTop( -2 ), hb_stackItemFromTop( -1 ) );
+                  hb_errRT_BASE( EG_BOUND, 1132, nullptr, hb_langDGetErrorDesc( EG_ARRACCESS ), 2, hb_stackItemFromTop(-2), hb_stackItemFromTop(-1) );
                   hb_stackPop();
                   hb_stackPop();
 
@@ -2841,7 +2841,7 @@ HB_BOOL hb_itemCompare( PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, i
    {
       if( HB_IS_STRING(pItem2) )
       {
-         *piResult = hb_itemStrCmp( pItem1, pItem2, bForceExact );
+         *piResult = hb_itemStrCmp(pItem1, pItem2, bForceExact);
          fResult = HB_TRUE;
       }
    }
@@ -3465,7 +3465,7 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
 
          hb_dateDecStr( szDate, pItem->item.asDateTime.julian );
 
-         buffer = static_cast<char*>( hb_xgrab( 11 ) );
+         buffer = static_cast<char*>( hb_xgrab(11) );
          hb_dateFormat( szDate, buffer, hb_stackSetStruct()->HB_SET_DATEFORMAT );
          * nLen = strlen( buffer );
          * bFreeReq = HB_TRUE;
@@ -3498,7 +3498,7 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
          {
             /* If fixed mode is enabled, use the default number of decimal places. */
             hb_itemPutNI(hb_stackAllocItem(), hb_stackSetStruct()->HB_SET_DECIMALS);
-            buffer = hb_itemStr( pItem, nullptr, hb_stackItemFromTop( -1 ) );
+            buffer = hb_itemStr( pItem, nullptr, hb_stackItemFromTop(-1) );
             hb_stackPop();
          }
          else

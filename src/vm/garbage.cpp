@@ -83,8 +83,8 @@
 
 #else
 
-#  define HB_GC_LOCK()       do {} while( 0 )
-#  define HB_GC_UNLOCK()     do {} while( 0 )
+#  define HB_GC_LOCK()       do {} while(0)
+#  define HB_GC_UNLOCK()     do {} while(0)
 
 #endif /* HB_MT_VM */
 
@@ -128,7 +128,7 @@ using PHB_GARBAGE = HB_GARBAGE *;
 #define HB_GC_DELETELST    4  /* item will be deleted during finalization */
 
 #ifdef HB_GC_AUTO
-#define HB_GC_AUTO_MAX        ( static_cast<HB_PTRUINT>( -1 ) )
+#define HB_GC_AUTO_MAX        ( static_cast<HB_PTRUINT>(-1) )
 /* number of allocated memory blocks */
 static HB_PTRUINT s_ulBlocks = 0;
 /* number of allocated memory blocks after last GC activation */
@@ -141,8 +141,8 @@ static HB_PTRUINT s_ulBlocksCheck = 0;
 #  define HB_GC_AUTO_INC()    ++s_ulBlocks
 #  define HB_GC_AUTO_DEC()    --s_ulBlocks
 #else
-#  define HB_GC_AUTO_INC()    do {} while( 0 )
-#  define HB_GC_AUTO_DEC()    do {} while( 0 )
+#  define HB_GC_AUTO_INC()    do {} while(0)
+#  define HB_GC_AUTO_DEC()    do {} while(0)
 #endif
 
 /* pointer to memory block that will be checked in next step */
@@ -812,7 +812,7 @@ HB_FUNC( HB_GCSETAUTO )
    HB_STACK_TLS_PRELOAD
 
    HB_PTRUINT nBlocks, nPrevBlocks;
-   HB_BOOL fSet = HB_ISNUM( 1 );
+   HB_BOOL fSet = HB_ISNUM(1);
 
    nBlocks = fSet ? hb_parnint(1) * 1000 : 0;
 

@@ -48,7 +48,7 @@
 
 HB_FUNC( HB_COLORINDEX )
 {
-   if( HB_ISCHAR( 1 ) && HB_ISNUM( 2 ) )
+   if( HB_ISCHAR(1) && HB_ISNUM(2) )
    {
       const char * pszColor = hb_parc(1);
       HB_SIZE      nColorPos;

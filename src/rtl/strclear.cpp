@@ -55,7 +55,7 @@ HB_FUNC( HB_STRCLEAR )
             it's possible that it contains copy of passed item [druzus] */
    hb_retl(false);
 
-   if( pItem && HB_ISBYREF( 1 ) )
+   if( pItem && HB_ISBYREF(1) )
    {
       const char * pszPtr;
       char * pBuffer;

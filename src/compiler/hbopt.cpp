@@ -1026,7 +1026,7 @@ static HB_SHORT hb_compLocalGetNumber( HB_BYTE * pCode )
       case HB_P_LOCALADDINT:
          return HB_PCODE_MKSHORT( pCode + 1 );
    }
-   assert( 0 );
+   assert(0);
    return 0;
 }
 
@@ -1053,7 +1053,7 @@ static HB_ISIZ hb_compJumpGetOffset( HB_BYTE * pCode )
       case HB_P_ALWAYSBEGIN:
          return HB_PCODE_MKINT24( pCode + 1 );
    }
-   assert( 0 );
+   assert(0);
    return 0;
 }
 

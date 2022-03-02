@@ -118,7 +118,7 @@ HB_FUNC( HB_RAT )
 
          if( nTo >= nFrom )
          {
-            if( HB_ISNUM( 4 ) )
+            if( HB_ISNUM(4) )
             {
                HB_ISIZ nEnd = hb_parns(4) - 1;
 

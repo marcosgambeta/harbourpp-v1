@@ -86,18 +86,18 @@ HB_FUNC( HB_COMCLOSE )
 
 HB_FUNC( HB_COMDISCARDCHAR )
 {
-   hb_retl( hb_comDiscardChar( hb_parni(1), HB_ISCHAR( 2 ) ? hb_parc(2)[ 0 ] : hb_parni(2) ) == 0 );
+   hb_retl( hb_comDiscardChar( hb_parni(1), HB_ISCHAR(2) ? hb_parc(2)[ 0 ] : hb_parni(2) ) == 0 );
 }
 
 HB_FUNC( HB_COMERRORCHAR )
 {
-   hb_retl( hb_comErrorChar( hb_parni(1), HB_ISCHAR( 2 ) ? hb_parc(2)[ 0 ] : hb_parni(2) ) == 0 );
+   hb_retl( hb_comErrorChar( hb_parni(1), HB_ISCHAR(2) ? hb_parc(2)[ 0 ] : hb_parni(2) ) == 0 );
 }
 
 HB_FUNC( HB_COMFLOWCHARS )
 {
-   hb_retl( hb_comFlowChars( hb_parni(1), HB_ISCHAR( 2 ) ? hb_parc(2)[ 0 ] : hb_parni(2),
-                             HB_ISCHAR( 3 ) ? hb_parc(3)[ 0 ] : hb_parni(3) ) == 0 );
+   hb_retl( hb_comFlowChars( hb_parni(1), HB_ISCHAR(2) ? hb_parc(2)[ 0 ] : hb_parni(2),
+                             HB_ISCHAR(3) ? hb_parc(3)[ 0 ] : hb_parni(3) ) == 0 );
 }
 
 HB_FUNC( HB_COMFLOWCONTROL )
@@ -148,7 +148,7 @@ HB_FUNC( HB_COMFINDPORT )
 
 HB_FUNC( HB_COMINIT )
 {
-   hb_retl( hb_comInit( hb_parni(1), hb_parni(2), HB_ISCHAR( 3 ) ? hb_parc(3)[ 0 ] : 0, hb_parni(4), hb_parni(5) ) == 0 );
+   hb_retl( hb_comInit( hb_parni(1), hb_parni(2), HB_ISCHAR(3) ? hb_parc(3)[ 0 ] : 0, hb_parni(4), hb_parni(5) ) == 0 );
 }
 
 HB_FUNC( HB_COMINPUTCOUNT )
@@ -227,9 +227,9 @@ HB_FUNC( HB_COMRECV )
    char * pBuffer;
    HB_SIZE nLen;
 
-   if( pItem && HB_ISBYREF( 2 ) && hb_itemGetWriteCL( pItem, &pBuffer, &nLen ) )
+   if( pItem && HB_ISBYREF(2) && hb_itemGetWriteCL( pItem, &pBuffer, &nLen ) )
    {
-      if( HB_ISNUM( 3 ) )
+      if( HB_ISNUM(3) )
       {
          long lRead = hb_parnl(3);
          if( lRead >= 0 && lRead < static_cast<long>( nLen ) )
@@ -249,7 +249,7 @@ HB_FUNC( HB_COMSEND )
 {
    long  lLen = static_cast<long>( hb_parclen(2) );
 
-   if( HB_ISNUM( 3 ) )
+   if( HB_ISNUM(3) )
    {
       long lParam = hb_parnl(3);
 

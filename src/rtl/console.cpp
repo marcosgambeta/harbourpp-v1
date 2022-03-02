@@ -159,7 +159,7 @@ void hb_conInit( void )
 
    if( hb_cmdargCheck( "INFO" ) )
    {
-      hb_conOutErr( hb_gtVersion( 1 ), 0 );
+      hb_conOutErr( hb_gtVersion(1), 0 );
       hb_conOutErr( hb_conNewLine(), 0 );
    }
 }
@@ -536,7 +536,7 @@ static void hb_conDevPos( int iRow, int iCol )
 
 HB_FUNC( DEVPOS ) /* Sets the screen and/or printer position */
 {
-   if( HB_ISNUM( 1 ) && HB_ISNUM( 2 ) )
+   if( HB_ISNUM(1) && HB_ISNUM(2) )
    {
       hb_conDevPos( hb_parni(1), hb_parni(2) );
    }
@@ -550,7 +550,7 @@ HB_FUNC( DEVPOS ) /* Sets the screen and/or printer position */
 
 HB_FUNC( SETPRC ) /* Sets the current printer row and column positions */
 {
-   if( hb_pcount() == 2 && HB_ISNUM( 1 ) && HB_ISNUM( 2 ) )
+   if( hb_pcount() == 2 && HB_ISNUM(1) && HB_ISNUM(2) )
    {
       PHB_PRNPOS pPrnPos = hb_prnPos();
       pPrnPos->row = hb_parni(1);
@@ -564,7 +564,7 @@ HB_FUNC( DEVOUT ) /* writes a single value to the current device (screen or prin
    HB_SIZE nLen;
    HB_BOOL fFree;
 
-   if( HB_ISCHAR( 2 ) )
+   if( HB_ISCHAR(2) )
    {
       char szOldColor[ HB_CLRSTR_LEN ];
 
@@ -603,7 +603,7 @@ HB_FUNC( DISPOUT ) /* writes a single value to the screen, but is not affected b
    HB_SIZE nLen;
    HB_BOOL bFreeReq;
 
-   if( HB_ISCHAR( 2 ) )
+   if( HB_ISCHAR(2) )
    {
       char szOldColor[ HB_CLRSTR_LEN ];
 
@@ -644,7 +644,7 @@ HB_FUNC( DISPOUTAT )  /* writes a single value to the screen at specific positio
    HB_SIZE nLen;
    HB_BOOL bFreeReq;
 
-   if( HB_ISCHAR( 4 ) )
+   if( HB_ISCHAR(4) )
    {
       char szOldColor[ HB_CLRSTR_LEN ];
 
@@ -688,11 +688,11 @@ HB_FUNC( HB_DISPOUTAT )
 
       pszString = hb_itemStringCon( hb_param(3, HB_IT_ANY), &nLen, &bFreeReq );
 
-      if( HB_ISCHAR( 4 ) )
+      if( HB_ISCHAR(4) )
       {
          iColor = hb_gtColorToN( hb_parc(4) );
       }
-      else if( HB_ISNUM( 4 ) )
+      else if( HB_ISNUM(4) )
       {
          iColor = hb_parni(4);
       }
@@ -726,11 +726,11 @@ HB_FUNC( HB_DISPOUTATBOX )
       HB_SIZE nIndex = 0;
       HB_WCHAR wc;
 
-      if( HB_ISCHAR( 4 ) )
+      if( HB_ISCHAR(4) )
       {
          iColor = hb_gtColorToN( hb_parc(4) );
       }
-      else if( HB_ISNUM( 4 ) )
+      else if( HB_ISNUM(4) )
       {
          iColor = hb_parni(4);
       }

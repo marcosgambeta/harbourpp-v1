@@ -89,14 +89,14 @@
 #     if defined( HB_OS_LINUX )
 #        if defined( JB_SP )
 #           define HB_TASK_STACK_INIT( jmp, sp )      \
-                  do { (jmp)[0].__jmpbuf[JB_SP] = (int) (sp); } while( 0 )
+                  do { (jmp)[0].__jmpbuf[JB_SP] = (int) (sp); } while(0)
 #        else
 #           define HB_TASK_STACK_INIT( jmp, sp )      \
-                  do { (jmp)[0].__jmpbuf[4] = (int) (sp); } while( 0 )
+                  do { (jmp)[0].__jmpbuf[4] = (int) (sp); } while(0)
 #        endif
 #     elif defined( HB_OS_WIN )
 #        define HB_TASK_STACK_INIT( jmp, sp )      \
-                  do { (jmp)[7] = (unsigned) (sp); } while( 0 )
+                  do { (jmp)[7] = (unsigned) (sp); } while(0)
 #     endif
 #  endif
 
@@ -216,7 +216,7 @@ static HB_MAXINT hb_taskTimeStop( unsigned long ulMilliSec )
 
 static void hb_taskFreeze( HB_MAXINT wakeup )
 {
-   wakeup -= hb_taskTimeStop( 0 );
+   wakeup -= hb_taskTimeStop(0);
    if( wakeup > 0 )
    {
 #  if defined( HB_OS_WIN )
@@ -683,7 +683,7 @@ void hb_taskYield( void )
          {
             if( s_taskSleep->wakeup == HB_TASK_NO_DELAY ||
                 ( s_taskSleep->wakeup != HB_TASK_INFINITE_DELAY &&
-                  s_taskSleep->wakeup <= hb_taskTimeStop( 0 ) ) )
+                  s_taskSleep->wakeup <= hb_taskTimeStop(0) ) )
             {
                s_taskSleep = pTask->pSleepNext;
                pTask->state = TASK_RUNNING;

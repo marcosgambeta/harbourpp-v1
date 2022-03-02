@@ -302,10 +302,10 @@ static PHB_ITEM hb_i18n_pluralexp_compile( PHB_ITEM pExp )
       if( *szType == 'B' )
       {
          hb_vmPush( pMacro );
-         hb_macroGetValue( hb_stackItemFromTop( -1 ), 0, 0 );
+         hb_macroGetValue( hb_stackItemFromTop(-1), 0, 0 );
          if( hb_vmRequestQuery() == 0 )
          {
-            pExp = hb_stackItemFromTop( -1 );
+            pExp = hb_stackItemFromTop(-1);
             if( HB_IS_BLOCK(pExp) )
             {
                pBlock = hb_itemNew(pExp);
@@ -930,7 +930,7 @@ PHB_ITEM hb_i18n_ngettext( PHB_ITEM pNum, PHB_ITEM pMsgID, PHB_ITEM pContext )
       }
       else if( pBlock )
       {
-         hb_evalBlock1( pBlock, pNum );
+         hb_evalBlock1(pBlock, pNum);
          lIndex = hb_parnl(-1);
       }
       else
@@ -1150,7 +1150,7 @@ HB_FUNC( HB_I18N_SET )
 {
    if( hb_pcount() > 0 )
    {
-      if( HB_ISNIL( 1 ) )
+      if( HB_ISNIL(1) )
       {
          hb_vmSetI18N( nullptr );
       }

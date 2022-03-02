@@ -442,7 +442,7 @@ HB_FUNC( HB_MATHERMODE )        /* ([<nNewMode>]) --> <nOldMode> */
    hb_retni( hb_mathGetErrMode() );
 
    /* set new mode */
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
       hb_mathSetErrMode( hb_parni(1) );
    }
@@ -505,9 +505,9 @@ static int hb_matherrblock( HB_MATH_EXCEPTION * pexc )
       pRetval = hb_itemPutNDLen(nullptr, pexc->retval, pexc->retvalwidth, pexc->retvaldec);
       pHandled = hb_itemPutL(nullptr, pexc->handled);
 
-      pArray = hb_itemArrayNew( 2 );
-      hb_itemArrayPut( pArray, 1, pRetval );
-      hb_itemArrayPut( pArray, 2, pHandled );
+      pArray = hb_itemArrayNew(2);
+      hb_itemArrayPut(pArray, 1, pRetval);
+      hb_itemArrayPut(pArray, 2, pHandled);
 
       /* launch error codeblock that can
          a) change the members of the array = {dRetval, lHandled} to set the
@@ -516,7 +516,7 @@ static int hb_matherrblock( HB_MATH_EXCEPTION * pexc )
          b) can return an integer value to set the return value of matherr().
          NOTE that these values are only used if lHandled was .F. and is set
          to .T. within the codeblock */
-      pRet = hb_itemDo( pMathErr->block, 6, pType, pFuncname, pError, pArg1, pArg2, pArray );
+      pRet = hb_itemDo(pMathErr->block, 6, pType, pFuncname, pError, pArg1, pArg2, pArray);
 
       hb_itemRelease(pType);
       hb_itemRelease(pFuncname);
@@ -535,7 +535,7 @@ static int hb_matherrblock( HB_MATH_EXCEPTION * pexc )
       else
       {
          /* exception handled by codeblock ? */
-         pHandled = hb_itemArrayGet( pArray, 2 );
+         pHandled = hb_itemArrayGet(pArray, 2);
          if( pHandled )
          {
             pexc->handled = hb_itemGetL(pHandled);
@@ -546,7 +546,7 @@ static int hb_matherrblock( HB_MATH_EXCEPTION * pexc )
          {
             /* YES ! */
             /* extract retval for math routine and matherr() */
-            pRetval = hb_itemArrayGet( pArray, 1 );
+            pRetval = hb_itemArrayGet(pArray, 1);
             if( pRetval )
             {
                pexc->retval = hb_itemGetND(pRetval);
@@ -647,7 +647,7 @@ HB_FUNC( HB_MATHERBLOCK )  /* ([<nNewErrorBlock>]) --> <nOldErrorBlock> */
 
 HB_FUNC( EXP )
 {
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
       HB_MATH_EXCEPTION hb_exc;
       double dResult, dArg = hb_parnd(1);
@@ -687,7 +687,7 @@ HB_FUNC( EXP )
 
 HB_FUNC( LOG )
 {
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
       HB_MATH_EXCEPTION hb_exc;
       double dArg = hb_parnd(1);
@@ -738,7 +738,7 @@ HB_FUNC( LOG )
 
 HB_FUNC( SQRT )
 {
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
       HB_MATH_EXCEPTION hb_exc;
       double dArg = hb_parnd(1);

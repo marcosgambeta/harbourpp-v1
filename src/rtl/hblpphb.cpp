@@ -255,7 +255,7 @@ HB_FUNC( HB_LPPRECV )
    bRet = hb_lppRecv( pGC->pSocket, &data, &len, hb_parnintdef( 3, -1 ) );
    if( bRet )
    {
-      if( HB_ISBYREF( 2 ) )
+      if( HB_ISBYREF(2) )
       {
          hb_storclen( static_cast<char*>( data ), len, 2 );
       }

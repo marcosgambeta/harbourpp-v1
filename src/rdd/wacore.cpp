@@ -60,7 +60,7 @@
       pRddInfo->pCurrArea  = ( ( pRddInfo->uiCurrArea < pRddInfo->uiWaNumMax ) ? \
                                pRddInfo->waList[ pRddInfo->waNums[ pRddInfo->uiCurrArea ] ] : \
                                nullptr ); \
-   } while( 0 )
+   } while(0)
 
 /*
  * Insert new WorkArea node at current WA position
@@ -330,7 +330,7 @@ void hb_rddCloseAll( void )
       hb_xfree( pRddInfo->waNums );
       pRddInfo->waList = nullptr;
       pRddInfo->waNums = nullptr;
-      HB_SET_WA( 1 );
+      HB_SET_WA(1);
    }
 }
 
@@ -426,7 +426,7 @@ const char * hb_rddDefaultDrv( const char * szDriver )
 
       pRddInfo->szDefaultRDD = pRddNode->szName;
    }
-   else if( ! pRddInfo->szDefaultRDD && hb_rddGetNode( 0 ) )
+   else if( ! pRddInfo->szDefaultRDD && hb_rddGetNode(0) )
    {
       const char * szDrvTable[] = { "DBFNTX", "DBFCDX", "DBFFPT", "DBF" };
 
@@ -473,7 +473,7 @@ const char * hb_rddFindDrv( const char * szDriver, const char * szFileName )
             pRddNode = hb_rddFindNode( pRddInfo->szDefaultRDD, nullptr );
          }
       }
-      else if( hb_rddGetNode( 0 ) )
+      else if( hb_rddGetNode(0) )
       {
          const char * szDrvTable[] = { "DBFNTX", "DBFCDX", "DBFFPT", "DBF" };
 
@@ -558,7 +558,7 @@ HB_ERRCODE hb_rddSelectWorkAreaNumber( int iArea )
    pRddInfo = hb_stackRDD();
    if( iArea < 1 || iArea > HB_RDD_MAX_AREA_NUM )
    {
-      HB_SET_WA( 0 );
+      HB_SET_WA(0);
    }
    else
    {
@@ -671,7 +671,7 @@ HB_ERRCODE hb_rddDetachArea( AREAP pArea, PHB_ITEM pCargo )
    hb_threadEnterCriticalSectionGC( &s_waMtx );
    if( ! s_pDetachedAreas )
    {
-      s_pDetachedAreas = hb_itemArrayNew( 1 );
+      s_pDetachedAreas = hb_itemArrayNew(1);
       nPos = 1;
    }
    else
@@ -818,7 +818,7 @@ PHB_ITEM hb_rddDetachedList( void )
 
    PHB_ITEM pArray;
 
-   pArray = hb_itemArrayNew( 0 );
+   pArray = hb_itemArrayNew(0);
    /* protect by critical section access to s_pDetachedAreas array */
    hb_threadEnterCriticalSectionGC( &s_waMtx );
    if( s_pDetachedAreas )

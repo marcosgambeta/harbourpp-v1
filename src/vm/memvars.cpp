@@ -61,7 +61,7 @@
 
 #if ! defined( HB_MT_VM )
 #  define hb_dynsymGetMemvar( p )     ( static_cast<PHB_ITEM>( ( p )->pMemvar ) )
-#  define hb_dynsymSetMemvar( p, h )  do { ( p )->pMemvar = ( h ); } while( 0 )
+#  define hb_dynsymSetMemvar( p, h )  do { ( p )->pMemvar = ( h ); } while(0)
 #endif
 
 #define TABLE_INITHB_VALUE    100
@@ -935,7 +935,7 @@ void hb_memvarsClear( HB_BOOL fAll )
 
    hb_stackClearMemvarsBase();
    hb_stackGetPrivateStack()->base = 0;
-   hb_memvarSetPrivatesBase( 0 );
+   hb_memvarSetPrivatesBase(0);
 #if ! defined( HB_MT_VM )
    hb_dynsymEval( hb_memvarClear, static_cast<void*>( pGetList ) );
 #else
@@ -1126,7 +1126,7 @@ PHB_ITEM hb_memvarSaveInArray( int iScope, HB_BOOL fCopy )
    hb_dynsymProtectEval( hb_memvarCountVisible, static_cast<void*>( &MVInfo ) );
    if( MVInfo.nCount > 0 )
    {
-      pArray = hb_itemArrayNew( MVInfo.nCount );
+      pArray = hb_itemArrayNew(MVInfo.nCount);
       do
       {
          PHB_ITEM pItem = hb_arrayGetItemPtr( pArray, MVInfo.nCount );
@@ -1299,12 +1299,12 @@ HB_FUNC( __MVRELEASE )
    HB_STACK_TLS_PRELOAD
    int iCount = hb_pcount();
 
-   if( iCount && HB_ISCHAR( 1 ) )
+   if( iCount && HB_ISCHAR(1) )
    {
       HB_BOOL bIncludeVar;
       const char * pszMask;
 
-      pszMask = hb_memvarGetMask( 1 );
+      pszMask = hb_memvarGetMask(1);
       bIncludeVar = ( pszMask[ 0 ] == '*' && ! pszMask[ 1 ] ) || iCount < 2 || hb_parl(2);
       hb_memvarReleaseWithMask( pszMask, bIncludeVar );
    }
@@ -1452,7 +1452,7 @@ HB_FUNC( __MVGETDEF )
 HB_FUNC( __MVPUT )
 {
    PHB_ITEM pName = hb_param(1, HB_IT_STRING);
-   PHB_ITEM pValue = hb_paramError( 2 );
+   PHB_ITEM pValue = hb_paramError(2);
 
    if( pName )
    {
@@ -1610,7 +1610,7 @@ HB_FUNC( __MVSAVE )
    HB_STACK_TLS_PRELOAD
 
    /* Clipper also checks for the number of arguments here */
-   if( hb_pcount() == 3 && HB_ISCHAR( 1 ) && HB_ISCHAR( 2 ) && HB_ISLOG( 3 ) )
+   if( hb_pcount() == 3 && HB_ISCHAR(1) && HB_ISCHAR(2) && HB_ISLOG(3) )
    {
       const char * pszFileName = hb_parc(1);
       PHB_ITEM pError = nullptr;
@@ -1640,7 +1640,7 @@ HB_FUNC( __MVSAVE )
          HB_BYTE buffer[ HB_MEM_REC_LEN + HB_MEM_NUM_LEN ];
          MEMVARSAVE_CARGO msc;
 
-         msc.pszMask      = hb_memvarGetMask( 2 );
+         msc.pszMask      = hb_memvarGetMask(2);
          msc.bIncludeMask = hb_parl(3);
          msc.buffer       = buffer;
          msc.fhnd         = fhnd;
@@ -1685,9 +1685,9 @@ HB_FUNC( __MVRESTORE )
    /* Clipper checks for the number of arguments here here, but we cannot
       in Harbour since we have two optional parameters as an extension. */
 #ifdef HB_CLP_STRICT
-   if( hb_pcount() == 2 && HB_ISCHAR( 1 ) && HB_ISLOG( 2 ) )
+   if( hb_pcount() == 2 && HB_ISCHAR(1) && HB_ISLOG(2) )
 #else
-   if( HB_ISCHAR( 1 ) && HB_ISLOG( 2 ) )
+   if( HB_ISCHAR(1) && HB_ISLOG(2) )
 #endif
    {
       HB_STACK_TLS_PRELOAD
@@ -1733,7 +1733,7 @@ HB_FUNC( __MVRESTORE )
          pszMask = "*";
          bIncludeMask = HB_TRUE;
 #else
-         pszMask = hb_memvarGetMask( 3 );
+         pszMask = hb_memvarGetMask(3);
          bIncludeMask = hb_parldef( 4, HB_TRUE );
 #endif
 
@@ -1896,7 +1896,7 @@ HB_FUNC( __MVRESTORE )
 HB_FUNC( __MVSETBASE )
 {
    HB_STACK_TLS_PRELOAD
-   HB_ISIZ nOffset = hb_stackBaseProcOffset( 0 );
+   HB_ISIZ nOffset = hb_stackBaseProcOffset(0);
 
    if( nOffset > 0 )
    {

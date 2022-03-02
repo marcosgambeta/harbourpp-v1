@@ -2059,7 +2059,7 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_COMPATBUFFER:
          pInfo->pResult = hb_itemPutL(pInfo->pResult, pGT->fVgaCell);
-         if( hb_itemType( pInfo->pNewVal ) & HB_IT_LOGICAL )
+         if( hb_itemType(pInfo->pNewVal) & HB_IT_LOGICAL )
          {
             pGT->fVgaCell = hb_itemGetL(pInfo->pNewVal);
          }
@@ -2067,7 +2067,7 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_REDRAWMAX:
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, pGT->iRedrawMax);
-         if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
+         if( hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC )
          {
             pGT->iRedrawMax = hb_itemGetNI(pInfo->pNewVal);
          }
@@ -2075,7 +2075,7 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_BOXCP:
          pInfo->pResult = hb_itemPutC(pInfo->pResult, pGT->cdpBox ? pGT->cdpBox->id : nullptr);
-         if( hb_itemType( pInfo->pNewVal ) & HB_IT_STRING )
+         if( hb_itemType(pInfo->pNewVal) & HB_IT_STRING )
          {
             if( hb_itemGetCLen(pInfo->pNewVal) > 0 )
             {
@@ -2147,7 +2147,7 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
       }
       case HB_GTI_SETWIN:  /* restore screen buffer, cursor shape and position */
-         if( ( hb_itemType( pInfo->pNewVal ) & HB_IT_ARRAY ) && hb_arrayLen( pInfo->pNewVal ) == 7 )
+         if( ( hb_itemType(pInfo->pNewVal) & HB_IT_ARRAY ) && hb_arrayLen( pInfo->pNewVal ) == 7 )
          {
             HB_GTSELF_DISPBEGIN( pGT );
             if( hb_arrayGetCLen( pInfo->pNewVal, 6 ) > 0 )
@@ -2164,7 +2164,7 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_CLIPBOARDDATA:
-         if( hb_itemType( pInfo->pNewVal ) & HB_IT_STRING )
+         if( hb_itemType(pInfo->pNewVal) & HB_IT_STRING )
          {
             /* set new Clipboard value */
             hb_gt_setClipboard( hb_itemGetCPtr(pInfo->pNewVal), hb_itemGetCLen(pInfo->pNewVal) );
@@ -4427,9 +4427,9 @@ PHB_GT hb_gt_ItemBase( PHB_ITEM pItemGT )
 HB_FUNC( HB_GTRELOAD )
 {
    hb_retl( hb_gtReload( hb_parc(1),
-            HB_ISNUM( 2 ) ? hb_numToHandle( hb_parnint(1) ) : HB_STDIN_HANDLE,
-            HB_ISNUM( 3 ) ? hb_numToHandle( hb_parnint(2) ) : HB_STDOUT_HANDLE,
-            HB_ISNUM( 4 ) ? hb_numToHandle( hb_parnint(3) ) : HB_STDERR_HANDLE ) );
+            HB_ISNUM(2) ? hb_numToHandle( hb_parnint(1) ) : HB_STDIN_HANDLE,
+            HB_ISNUM(3) ? hb_numToHandle( hb_parnint(2) ) : HB_STDOUT_HANDLE,
+            HB_ISNUM(4) ? hb_numToHandle( hb_parnint(3) ) : HB_STDERR_HANDLE ) );
 }
 
 HB_FUNC( HB_GTCREATE )
@@ -4437,9 +4437,9 @@ HB_FUNC( HB_GTCREATE )
    void * hGT;
 
    hGT = hb_gtCreate( hb_parc(1),
-            HB_ISNUM( 2 ) ? hb_numToHandle( hb_parnint(1) ) : HB_STDIN_HANDLE,
-            HB_ISNUM( 3 ) ? hb_numToHandle( hb_parnint(2) ) : HB_STDOUT_HANDLE,
-            HB_ISNUM( 4 ) ? hb_numToHandle( hb_parnint(3) ) : HB_STDERR_HANDLE );
+            HB_ISNUM(2) ? hb_numToHandle( hb_parnint(1) ) : HB_STDIN_HANDLE,
+            HB_ISNUM(3) ? hb_numToHandle( hb_parnint(2) ) : HB_STDOUT_HANDLE,
+            HB_ISNUM(4) ? hb_numToHandle( hb_parnint(3) ) : HB_STDERR_HANDLE );
 
    if( hGT )
    {
@@ -4455,7 +4455,7 @@ HB_FUNC( HB_GTSELECT )
 
    if( hb_pcount() > 0 )
    {
-      hGT = hb_gtParam( 1 );
+      hGT = hb_gtParam(1);
       if( hGT )
       {
          hGT = hb_gtAlloc( hGT );

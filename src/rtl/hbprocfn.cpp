@@ -58,11 +58,11 @@ HB_FUNC( HB_PROCESSOPEN )
    PHB_ITEM pStdErr = hb_param(4, HB_IT_BYREF);
 
    if( szName &&
-       ( pStdIn  || HB_ISNIL( 2 ) ) &&
-       ( pStdOut || HB_ISNIL( 3 ) ) &&
-       ( pStdErr || HB_ISNIL( 4 ) ) &&
-       ( HB_ISLOG( 5 ) || HB_ISNIL( 5 ) ) &&
-       ( HB_ISBYREF( 6 ) || HB_ISNIL( 6 ) ) &&
+       ( pStdIn  || HB_ISNIL(2) ) &&
+       ( pStdOut || HB_ISNIL(3) ) &&
+       ( pStdErr || HB_ISNIL(4) ) &&
+       ( HB_ISLOG(5) || HB_ISNIL(5) ) &&
+       ( HB_ISBYREF(6) || HB_ISNIL(6) ) &&
        ( ! pStdIn || ( pStdIn != pStdOut && pStdIn != pStdErr ) ) )
    {
       HB_BOOL fDetach = hb_parl(5);
@@ -104,7 +104,7 @@ HB_FUNC( HB_PROCESSVALUE )
 {
    HB_FHANDLE hProcess = hb_numToHandle( hb_parnint(1) );
 
-   if( hProcess != 0 && hProcess != FS_ERROR && ( hb_pcount() < 2 || HB_ISLOG( 2 ) ) )
+   if( hProcess != 0 && hProcess != FS_ERROR && ( hb_pcount() < 2 || HB_ISLOG(2) ) )
    {
       int iResult = hb_fsProcessValue( hProcess, hb_pcount() < 2 || hb_parl(2) );
       hb_fsSetFError( hb_fsError() );
@@ -120,7 +120,7 @@ HB_FUNC( HB_PROCESSCLOSE )
 {
    HB_FHANDLE hProcess = hb_numToHandle( hb_parnint(1) );
 
-   if( hProcess != 0 && hProcess != FS_ERROR && ( hb_pcount() < 2 || HB_ISLOG( 2 ) ) )
+   if( hProcess != 0 && hProcess != FS_ERROR && ( hb_pcount() < 2 || HB_ISLOG(2) ) )
    {
       HB_BOOL fResult = hb_fsProcessClose( hProcess, hb_pcount() < 2 || hb_parl(2) );
       hb_fsSetFError( hb_fsError() );
@@ -143,10 +143,10 @@ HB_FUNC( HB_PROCESSRUN )
    HB_BOOL fDetach = hb_parl(5);
 
    if( szName &&
-       ( szStdIn || HB_ISNIL( 2 ) ) &&
-       ( pStdOut || HB_ISNIL( 3 ) ) &&
-       ( pStdErr || HB_ISNIL( 4 ) ) &&
-       ( HB_ISLOG( 5 ) || HB_ISNIL( 5 ) ) )
+       ( szStdIn || HB_ISNIL(2) ) &&
+       ( pStdOut || HB_ISNIL(3) ) &&
+       ( pStdErr || HB_ISNIL(4) ) &&
+       ( HB_ISLOG(5) || HB_ISNIL(5) ) )
    {
       HB_SIZE nStdOut, nStdErr;
       char * pStdOutBuf, * pStdErrBuf;

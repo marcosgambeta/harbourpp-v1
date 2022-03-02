@@ -122,7 +122,7 @@ static void AddToArray( PHB_ITEM pItem, PHB_ITEM pReturn, HB_SIZE nPos )
    }
    else                                         /* Normal types             */
    {
-      hb_itemArrayPut( pReturn, nPos, pItem );
+      hb_itemArrayPut(pReturn, nPos, pItem);
    }
 }
 
@@ -137,7 +137,7 @@ HB_FUNC( __DBGVMSTKGCOUNT )
    }
    else
    {
-      hb_retns( 0 );
+      hb_retns(0);
    }
 }
 
@@ -151,7 +151,7 @@ HB_FUNC( __DBGVMSTKGLIST )
       PHB_ITEM pReturn;
       HB_ISIZ nLen = hb_stackTopOffset();
 
-      pReturn = hb_itemArrayNew( nLen );           /* Create a transfer array  */
+      pReturn = hb_itemArrayNew(nLen);           /* Create a transfer array  */
 
       for( HB_ISIZ nPos = 0; nPos < nLen; ++nPos )
       {
@@ -162,7 +162,7 @@ HB_FUNC( __DBGVMSTKGLIST )
    }
    else
    {
-      hb_reta( 0 );
+      hb_reta(0);
    }
 }
 
@@ -207,7 +207,7 @@ HB_FUNC( __DBGVMSTKLCOUNT )
    }
    else
    {
-      hb_retns( 0 );
+      hb_retns(0);
    }
 }
 
@@ -233,7 +233,7 @@ HB_FUNC( __DBGVMSTKLLIST )
       nPrevOffset = hb_stackItem( nBaseOffset - 1 )->item.asSymbol.stackstate->nBaseItem;
 
       nLen = nBaseOffset - nPrevOffset - 3;
-      pReturn = hb_itemArrayNew( nLen );           /* Create a transfer array  */
+      pReturn = hb_itemArrayNew(nLen);           /* Create a transfer array  */
       for( HB_ISIZ n = 0; n < nLen; ++n )
       {
          AddToArray( hb_stackItem( nPrevOffset + n ), pReturn, n + 1 );
@@ -243,7 +243,7 @@ HB_FUNC( __DBGVMSTKLLIST )
    }
    else
    {
-      hb_reta( 0 );
+      hb_reta(0);
    }
 }
 
@@ -275,7 +275,7 @@ HB_FUNC( __DBGVMLOCALLIST )
          nLen = nPrevOffset = 0;
       }
 
-      pArray = hb_itemArrayNew( nLen );
+      pArray = hb_itemArrayNew(nLen);
       for( HB_ISIZ n = 1; n <= nLen; ++n )
       {
          hb_itemCopyFromRef( hb_arrayGetItemPtr( pArray, n ), hb_stackItem( nPrevOffset + n ) );
@@ -285,7 +285,7 @@ HB_FUNC( __DBGVMLOCALLIST )
    }
    else
    {
-      hb_reta( 0 );
+      hb_reta(0);
    }
 }
 
@@ -297,7 +297,7 @@ HB_FUNC( __DBGVMPARLLIST )
    }
    else
    {
-      hb_reta( 0 );
+      hb_reta(0);
    }
 }
 
@@ -404,7 +404,7 @@ HB_FUNC( __DBGVMVARLSET )
             pLocal = hb_codeblockGetRef( hb_stackItem( nBaseOffset )->item.asBlock.value, iLocal );
          }
 
-         hb_itemCopyToRef( pLocal, hb_stackItemFromBase( 3 ) );
+         hb_itemCopyToRef( pLocal, hb_stackItemFromBase(3) );
       }
    }
 }

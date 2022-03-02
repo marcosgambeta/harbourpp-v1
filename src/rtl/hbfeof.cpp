@@ -51,7 +51,7 @@ HB_FUNC( HB_FEOF )
 {
    HB_ERRCODE uiError = 6;
 
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
       hb_retl( hb_fsEof( hb_numToHandle( hb_parnint(1) ) ) );
       uiError = hb_fsError();

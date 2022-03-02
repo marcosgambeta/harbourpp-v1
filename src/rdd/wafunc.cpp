@@ -815,7 +815,7 @@ HB_ERRCODE hb_rddCreateTableTemp( const char * szDriver, const char * szAlias, c
    uiPrevArea = static_cast<HB_AREANO>( hb_rddGetCurrentWorkAreaNumber() );
 
    /* 0 means chose first available in hb_rddInsertAreaNode() */
-   hb_rddSelectWorkAreaNumber( 0 );
+   hb_rddSelectWorkAreaNumber(0);
 
    if( szDriver && szDriver[ 0 ] )
    {
@@ -1009,7 +1009,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
    {
       return HB_FAILURE;
    }
-   if( hb_itemType( pFields ) & HB_IT_ARRAY )
+   if( hb_itemType(pFields) & HB_IT_ARRAY )
    {
       uiFields = static_cast<HB_USHORT>( hb_arrayLen( pFields ) );
       if( uiFields )

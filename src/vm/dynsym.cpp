@@ -79,8 +79,8 @@ using PHB_SYM_HOLDER = HB_SYM_HOLDER *;
 
 #else
 
-#  define HB_DYNSYM_LOCK()      do {} while( 0 )
-#  define HB_DYNSYM_UNLOCK()    do {} while( 0 )
+#  define HB_DYNSYM_LOCK()      do {} while(0)
+#  define HB_DYNSYM_UNLOCK()    do {} while(0)
 
 #  define hb_dynsymHandles( p )     ( p )
 
@@ -814,7 +814,7 @@ HB_FUNC( __DYNSGETPRF ) /* profiler: It returns an array with a function or proc
    PHB_DYNS pDynSym = hb_dynsymGetByIndex( hb_parnl(1) );
 #endif
 
-   hb_reta( 2 );
+   hb_reta(2);
    hb_storvnl( 0, -1, 1 );
    hb_storvnl( 0, -1, 2 );
 

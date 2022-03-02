@@ -74,7 +74,7 @@ static HB_BOOL hb_itemIsLess( PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE
       hb_vmPush( pBlock );
       hb_vmPush( pItem1 );
       hb_vmPush( pItem2 );
-      hb_vmSend( 2 );
+      hb_vmSend(2);
 
       pRet = hb_param(-1, HB_IT_ANY);
 
@@ -88,7 +88,7 @@ static HB_BOOL hb_itemIsLess( PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE
 
    if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) )
    {
-      return hb_itemStrCmp( pItem1, pItem2, HB_FALSE ) < 0;
+      return hb_itemStrCmp(pItem1, pItem2, HB_FALSE) < 0;
    }
    else if( HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2) )
    {
@@ -462,7 +462,7 @@ HB_FUNC( ASORT )
       HB_SIZE nStart = hb_parns(2);
       HB_SIZE nCount = hb_parns(3);
 
-      hb_arraySort( pArray, HB_ISNUM( 2 ) ? &nStart : nullptr, HB_ISNUM( 3 ) ? &nCount : nullptr, hb_param(4, HB_IT_EVALITEM) );
+      hb_arraySort( pArray, HB_ISNUM(2) ? &nStart : nullptr, HB_ISNUM(3) ? &nCount : nullptr, hb_param(4, HB_IT_EVALITEM) );
 
       hb_itemReturn(pArray); /* ASort() returns the array itself */
    }

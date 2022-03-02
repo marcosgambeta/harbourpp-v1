@@ -96,9 +96,9 @@
 #     endif
 
 #     define hb_stack_alloc()    do { hb_stack_ptr = static_cast<PHB_STACK>( \
-                                      hb_xgrab( sizeof(HB_STACK) ) ); } while( 0 )
+                                      hb_xgrab( sizeof(HB_STACK) ) ); } while(0)
 #     define hb_stack_dealloc()  do { hb_xfree( hb_stack_ptr ); \
-                                      hb_stack_ptr = nullptr; } while( 0 )
+                                      hb_stack_ptr = nullptr; } while(0)
 #     define hb_stack_ready()    (hb_stack_ptr != nullptr)
 
 #  else
@@ -116,10 +116,10 @@
                                          s_fInited = HB_TRUE; } \
                                       hb_tls_set( hb_stack_key, \
                                                   hb_xgrab( sizeof(HB_STACK) ) ); \
-                                 } while( 0 )
+                                 } while(0)
 #     define hb_stack_dealloc()  do { hb_xfree( static_cast<void*>( hb_tls_get( hb_stack_key ) ) ); \
                                       hb_tls_set( hb_stack_key, nullptr ); } \
-                                 while( 0 )
+                                 while(0)
 #     define hb_stack_ready()    ( s_fInited && hb_tls_get( hb_stack_key ) )
 
 #  endif /* HB_USE_TLS */
@@ -792,7 +792,7 @@ static void hb_stackDispLocal( void )
    {
       hb_conOutErr( hb_conNewLine(), 0 );
 
-      switch( hb_itemType( *pBase ) )
+      switch( hb_itemType(*pBase) )
       {
          case HB_IT_NIL:
             hb_snprintf( buffer, sizeof(buffer), HB_I_( "NIL " ) );
@@ -859,7 +859,7 @@ static void hb_stackDispLocal( void )
             break;
 
          default:
-            hb_snprintf( buffer, sizeof(buffer), HB_I_( "UNKNOWN = TYPE %i " ), hb_itemType( *pBase ) );
+            hb_snprintf( buffer, sizeof(buffer), HB_I_( "UNKNOWN = TYPE %i " ), hb_itemType(*pBase) );
             break;
       }
 

@@ -92,7 +92,7 @@ HB_FUNC( SX_DTOP )
 {
    char pDate[ 3 ];
 
-   hb_retclen( hb_sxDtoP( pDate, hb_pardl( 1 ) ), 3 );
+   hb_retclen( hb_sxDtoP( pDate, hb_pardl(1) ), 3 );
 }
 
 HB_FUNC( SX_PTOD )

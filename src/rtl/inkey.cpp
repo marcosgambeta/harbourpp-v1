@@ -95,7 +95,7 @@ HB_FUNC( INKEY )
 {
    int iPCount = hb_pcount();
 
-   hb_retni( hb_inkey( iPCount == 1 || ( iPCount > 1 && HB_ISNUM( 1 ) ), hb_parnd(1), hb_parnidef( 2, hb_setGetEventMask() ) ) );
+   hb_retni( hb_inkey( iPCount == 1 || ( iPCount > 1 && HB_ISNUM(1) ), hb_parnd(1), hb_parnidef( 2, hb_setGetEventMask() ) ) );
 }
 
 HB_FUNC( __KEYBOARD )
@@ -103,7 +103,7 @@ HB_FUNC( __KEYBOARD )
    /* Clear the typeahead buffer without reallocating the keyboard buffer */
    hb_inkeyReset();
 
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
       hb_inkeySetText( hb_parc(1), hb_parclen(1), HB_FALSE );
    }
@@ -116,15 +116,15 @@ HB_FUNC( HB_KEYCLEAR )
 
 HB_FUNC( HB_KEYPUT )
 {
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
       hb_inkeyPut( hb_parni(1) );
    }
-   else if( HB_ISCHAR( 1 ) )
+   else if( HB_ISCHAR(1) )
    {
       hb_inkeySetTextKeys( hb_parc(1), hb_parclen(1), HB_FALSE );
    }
-   else if( HB_ISARRAY( 1 ) )
+   else if( HB_ISARRAY(1) )
    {
       PHB_ITEM pArray = hb_param(1, HB_IT_ARRAY);
       HB_SIZE nElements = hb_arrayLen( pArray );
@@ -147,15 +147,15 @@ HB_FUNC( HB_KEYPUT )
 
 HB_FUNC( HB_KEYINS )
 {
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
       hb_inkeyIns( hb_parni(1) );
    }
-   else if( HB_ISCHAR( 1 ) )
+   else if( HB_ISCHAR(1) )
    {
       hb_inkeySetTextKeys( hb_parc(1), hb_parclen(1), HB_TRUE );
    }
-   else if( HB_ISARRAY( 1 ) )
+   else if( HB_ISARRAY(1) )
    {
       PHB_ITEM pArray = hb_param(1, HB_IT_ARRAY);
       HB_SIZE nElements = hb_arrayLen( pArray );
@@ -178,7 +178,7 @@ HB_FUNC( HB_KEYINS )
 
 HB_FUNC( HB_KEYNEXT )
 {
-   hb_retni( hb_inkeyNext( HB_ISNUM( 1 ) ? hb_parni(1) : hb_setGetEventMask() ) );
+   hb_retni( hb_inkeyNext( HB_ISNUM(1) ? hb_parni(1) : hb_setGetEventMask() ) );
 }
 
 HB_FUNC( NEXTKEY )
@@ -188,7 +188,7 @@ HB_FUNC( NEXTKEY )
 
 HB_FUNC( HB_KEYLAST )
 {
-   hb_retni( hb_inkeyLast( HB_ISNUM( 1 ) ? hb_parni(1) : hb_setGetEventMask() ) );
+   hb_retni( hb_inkeyLast( HB_ISNUM(1) ? hb_parni(1) : hb_setGetEventMask() ) );
 }
 
 HB_FUNC( LASTKEY )
@@ -198,7 +198,7 @@ HB_FUNC( LASTKEY )
 
 HB_FUNC( HB_KEYSETLAST )
 {
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
       hb_retni( hb_inkeySetLast( hb_parni(1) ) );
    }

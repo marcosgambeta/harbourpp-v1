@@ -365,7 +365,7 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
 /* hb_socketNewBFSock( <pSocket>, [<hParams>] ) --> <pSocket> */
 HB_FUNC( HB_SOCKETNEWBFSOCK )
 {
-   PHB_SOCKEX pSock = hb_sockexParam( 1 );
+   PHB_SOCKEX pSock = hb_sockexParam(1);
 
    if( pSock )
    {

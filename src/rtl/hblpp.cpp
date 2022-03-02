@@ -140,7 +140,7 @@ HB_BOOL hb_lppRecv( PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT time
 
    if( ! pSocket->pRecvBuffer )
    {
-      pSocket->pRecvBuffer  = static_cast<char*>( hb_xgrab( 4 ) );
+      pSocket->pRecvBuffer  = static_cast<char*>( hb_xgrab(4) );
       pSocket->nRecvLen     = 0;
       pSocket->fRecvHasSize = HB_FALSE;
    }

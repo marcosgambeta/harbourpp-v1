@@ -99,7 +99,7 @@
 
 PHB_ITEM hb_fsDirectory( const char * pszDirSpec, const char * pszAttributes, HB_BOOL fDateTime )
 {
-   PHB_ITEM  pDir = hb_itemArrayNew( 0 );
+   PHB_ITEM  pDir = hb_itemArrayNew(0);
    char *    pszFree = nullptr;
    PHB_FFIND ffind;
    HB_FATTR  ulMask;

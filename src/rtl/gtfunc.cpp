@@ -50,9 +50,9 @@
 
 HB_FUNC( HB_SETDISPCP )
 {
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      if( hb_pcount() == 2 && HB_ISLOG( 2 ) )
+      if( hb_pcount() == 2 && HB_ISLOG(2) )
       {
          hb_gtSetDispCP( hb_parc(1), nullptr, hb_parl(2) );
       }
@@ -61,7 +61,7 @@ HB_FUNC( HB_SETDISPCP )
          hb_gtSetDispCP( hb_parc(1), hb_parc(2), hb_parl(3) );
       }   
    }
-   else if( ! ( hb_pcount() >= 1 && HB_ISNIL( 1 ) ) )
+   else if( ! ( hb_pcount() >= 1 && HB_ISNIL(1) ) )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }   
@@ -69,11 +69,11 @@ HB_FUNC( HB_SETDISPCP )
 
 HB_FUNC( HB_SETKEYCP )
 {
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
       hb_gtSetKeyCP( hb_parc(1), hb_parc(2) );
    }
-   else if( ! ( hb_pcount() >= 1 && HB_ISNIL( 1 ) ) )
+   else if( ! ( hb_pcount() >= 1 && HB_ISNIL(1) ) )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }   
@@ -81,9 +81,9 @@ HB_FUNC( HB_SETKEYCP )
 
 HB_FUNC( HB_SETTERMCP )
 {
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      if( hb_pcount() == 2 && HB_ISLOG( 2 ) )
+      if( hb_pcount() == 2 && HB_ISLOG(2) )
       {
          hb_gtSetDispCP( hb_parc(1), nullptr, hb_parl(2) );
          hb_gtSetKeyCP( hb_parc(1), nullptr );
@@ -94,7 +94,7 @@ HB_FUNC( HB_SETTERMCP )
          hb_gtSetKeyCP( hb_parc(1), hb_parc(2) );
       }
    }
-   else if( ! ( hb_pcount() >= 1 && HB_ISNIL( 1 ) ) )
+   else if( ! ( hb_pcount() >= 1 && HB_ISNIL(1) ) )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }   
@@ -102,7 +102,7 @@ HB_FUNC( HB_SETTERMCP )
 
 HB_FUNC( HB_GTINFO )
 {
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
       HB_GT_INFO gtInfo;
 
@@ -131,8 +131,8 @@ HB_FUNC( HB_GTALERT )
 {
    hb_retni( hb_gtAlert( hb_param(1, HB_IT_ANY),
                          hb_param(2, HB_IT_ANY),
-                         HB_ISCHAR( 3 ) ? hb_gtColorToN( hb_parc(3) ) : hb_parni(3) /* iClrNorm */,
-                         HB_ISCHAR( 4 ) ? hb_gtColorToN( hb_parc(4) ) : hb_parni(4) /* iClrHigh */,
+                         HB_ISCHAR(3) ? hb_gtColorToN( hb_parc(3) ) : hb_parni(3) /* iClrNorm */,
+                         HB_ISCHAR(4) ? hb_gtColorToN( hb_parc(4) ) : hb_parni(4) /* iClrHigh */,
                          hb_parnd(5) ) );
 }
 

@@ -132,7 +132,7 @@ HB_FUNC( RDDNAME )
 
 HB_FUNC( RDDLIST )
 {
-   hb_reta( 0 );
+   hb_reta(0);
 }
 
 HB_FUNC( FIELDGET )
@@ -147,7 +147,7 @@ HB_FUNC( FIELDPUT )
 
 HB_FUNC( FIELDPOS )
 {
-   hb_retni( 0 );
+   hb_retni(0);
 }
 
 HB_FUNC( FIELDNAME )
@@ -177,7 +177,7 @@ HB_FUNC( DBSTRUCT )
 
 HB_FUNC( DBGOTO )
 {
-   hb_retni( 0 );
+   hb_retni(0);
 }
 
 HB_FUNC( DBGOTOP )
@@ -195,7 +195,7 @@ HB_FUNC( DBSEEK )
 
 HB_FUNC( DBSKIP )
 {
-   hb_retni( 0 );
+   hb_retni(0);
 }
 
 HB_FUNC( DBAPPEND )
@@ -227,7 +227,7 @@ HB_FUNC( DBRELATION )
 
 HB_FUNC( DBRSELECT )
 {
-   hb_retni( 0 );
+   hb_retni(0);
 }
 
 HB_FUNC( DBFILTER )
@@ -241,7 +241,7 @@ HB_FUNC( DBEVAL )
 
 HB_FUNC( SELECT )
 {
-   hb_retni( 0 );
+   hb_retni(0);
 }
 
 HB_FUNC( ALIAS )
@@ -296,7 +296,7 @@ HB_FUNC( DELETED )
 
 HB_FUNC( RECNO )
 {
-   hb_retni( 0 );
+   hb_retni(0);
 }
 
 HB_FUNC( RECCOUNT )
@@ -306,7 +306,7 @@ HB_FUNC( RECCOUNT )
 
 HB_FUNC( LASTREC )
 {
-   hb_retni( 0 );
+   hb_retni(0);
 }
 
 HB_FUNC( FCOUNT )
@@ -316,12 +316,12 @@ HB_FUNC( FCOUNT )
 
 HB_FUNC( RECSIZE )
 {
-   hb_retni( 0 );
+   hb_retni(0);
 }
 
 HB_FUNC( HEADER )
 {
-   hb_retni( 0 );
+   hb_retni(0);
 }
 
 HB_FUNC( LUPDATE )

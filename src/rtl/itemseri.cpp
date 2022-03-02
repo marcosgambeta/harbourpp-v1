@@ -179,7 +179,7 @@ complex ones:
 #define HB_SERIAL_XHB_T      84
 #define HB_SERIAL_XHB_Z      90
 
-#define HB_SERIAL_DUMMYOFFSET ( static_cast<HB_SIZE>( -1 ) )
+#define HB_SERIAL_DUMMYOFFSET ( static_cast<HB_SIZE>(-1) )
 
 #define HB_SERIAL_REFLSTINIT  16
 
@@ -506,7 +506,7 @@ static HB_SIZE hb_itemSerialSize( PHB_ITEM pItem, int iFlags, PHB_CODEPAGE cdpIn
       pItem = hb_itemUnRef( pItem );
    }
 
-   switch( hb_itemType( pItem ) )
+   switch( hb_itemType(pItem) )
    {
       case HB_IT_NIL:
       case HB_IT_LOGICAL:
@@ -705,7 +705,7 @@ static HB_SIZE hb_serializeItem( PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cd
       pItem = hb_itemUnRef( pItem );
    }
 
-   switch( hb_itemType( pItem ) )
+   switch( hb_itemType(pItem) )
    {
       case HB_IT_NIL:
          pBuffer[ nOffset++ ] = HB_SERIAL_NIL;
@@ -1827,7 +1827,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
             hb_vmPush( pItem );
             hb_vmPushLogical( HB_TRUE );
             hb_itemMove( pItem, hb_stackReturnItem() );
-            hb_vmSend( 2 );
+            hb_vmSend(2);
             hb_vmRequestRestore();
          }
          else
@@ -1940,7 +1940,7 @@ HB_FUNC( HB_SERIALIZE )
       cdpIn = pszCdpIn ? hb_cdpFindExt( pszCdpIn ) : hb_vmCDP();
       cdpOut = pszCdpOut ? hb_cdpFindExt( pszCdpOut ) : hb_vmCDP();
 
-      if( HB_ISNUM( 2 ) )
+      if( HB_ISNUM(2) )
       {
          iFlags = hb_parni(2);
       }

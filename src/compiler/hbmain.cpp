@@ -1407,7 +1407,7 @@ void hb_compDeclaredParameterAdd( HB_COMP_DECL, const char * szVarName, PHB_VART
          }
          else
          {
-            pDeclared->cParamTypes = static_cast<HB_BYTE*>( hb_xgrab( 1 ) );
+            pDeclared->cParamTypes = static_cast<HB_BYTE*>( hb_xgrab(1) );
             pDeclared->pParamClasses = static_cast<PHB_HCLASS*>( hb_xgrab( sizeof(PHB_HCLASS) ) );
          }
 
@@ -1434,7 +1434,7 @@ void hb_compDeclaredParameterAdd( HB_COMP_DECL, const char * szVarName, PHB_VART
       }
       else
       {
-         HB_COMP_PARAM->pLastMethod->cParamTypes = static_cast<HB_BYTE*>( hb_xgrab( 1 ) );
+         HB_COMP_PARAM->pLastMethod->cParamTypes = static_cast<HB_BYTE*>( hb_xgrab(1) );
          HB_COMP_PARAM->pLastMethod->pParamClasses = static_cast<PHB_HCLASS*>( hb_xgrab( sizeof(HB_HCLASS) ) );
       }
 

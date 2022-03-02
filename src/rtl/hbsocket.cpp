@@ -2197,7 +2197,7 @@ PHB_ITEM hb_socketAddrToItem( const void * pSockAddr, unsigned len )
 #  endif
             if( szAddr )
             {
-               pAddrItm = hb_itemArrayNew( 3 );
+               pAddrItm = hb_itemArrayNew(3);
                hb_arraySetNI( pAddrItm, 1, HB_SOCKET_AF_INET );
                hb_arraySetC( pAddrItm, 2, szAddr );
                hb_arraySetNI( pAddrItm, 3, ntohs( sa->sin_port ) );
@@ -2222,7 +2222,7 @@ PHB_ITEM hb_socketAddrToItem( const void * pSockAddr, unsigned len )
 #  endif
             if( szAddr )
             {
-               pAddrItm = hb_itemArrayNew( 3 );
+               pAddrItm = hb_itemArrayNew(3);
                hb_arraySetNI( pAddrItm, 1, HB_SOCKET_AF_INET6 );
                hb_arraySetC( pAddrItm, 2, szAddr );
                hb_arraySetNI( pAddrItm, 3, ntohs( sa->sin6_port ) );
@@ -2239,7 +2239,7 @@ PHB_ITEM hb_socketAddrToItem( const void * pSockAddr, unsigned len )
          if( len >= sizeof(struct sockaddr_un) )
          {
             const struct sockaddr_un * sa = static_cast<const struct sockaddr_un*>( pSockAddr );
-            pAddrItm = hb_itemArrayNew( 2 );
+            pAddrItm = hb_itemArrayNew(2);
             hb_arraySetNI( pAddrItm, 1, HB_SOCKET_AF_LOCAL );
             hb_arraySetC( pAddrItm, 2, sa->sun_path );
          }
@@ -2503,7 +2503,7 @@ int hb_socketConnect( HB_SOCKET sd, const void * pSockAddr, unsigned uiLen, HB_M
       ret = hb_socketSelectWRE( sd, timeout );
       if( ret > 0 )
       {
-         hb_socketSetError( 0 );
+         hb_socketSetError(0);
          ret = 0;
       }
       else if( ret == 0 )
@@ -2790,7 +2790,7 @@ int hb_socketSetExclusiveAddr( HB_SOCKET sd, HB_BOOL fExclusive )
    #else
       HB_SYMBOL_UNUSED( sd );
       HB_SYMBOL_UNUSED( fExclusive );
-      hb_socketSetOsError( 0 );
+      hb_socketSetOsError(0);
       ret = 0;
    #endif
    return ret;
@@ -3461,7 +3461,7 @@ PHB_ITEM hb_socketGetHosts( const char * szAddr, int af )
       }
       if( iCount )
       {
-         pItem = hb_itemArrayNew( iCount );
+         pItem = hb_itemArrayNew(iCount);
          ai = res;
          iCount = 0;
          while( ai )
@@ -3541,7 +3541,7 @@ PHB_ITEM hb_socketGetHosts( const char * szAddr, int af )
       }
       if( iCount > 0 )
       {
-         pItem = hb_itemArrayNew( iCount );
+         pItem = hb_itemArrayNew(iCount);
          do
          {
             struct in_addr * sin = reinterpret_cast<struct in_addr*>( he->h_addr_list[ iCount - 1 ] );
@@ -3950,7 +3950,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
 
             if( pArray == nullptr )
             {
-               pArray = hb_itemArrayNew( 0 );
+               pArray = hb_itemArrayNew(0);
             }
             hb_arrayAddForward( pArray, pItem );
          }
@@ -4020,7 +4020,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
 
                if( pArray == nullptr )
                {
-                  pArray = hb_itemArrayNew( 0 );
+                  pArray = hb_itemArrayNew(0);
                }
                hb_arrayAddForward( pArray, pItem );
             }

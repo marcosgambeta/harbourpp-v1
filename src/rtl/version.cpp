@@ -177,7 +177,7 @@ HB_FUNC( HB_VERSION )
       #elif defined( HB_PDP_ENDIAN )
          hb_retni( HB_VERSION_ENDIAN_PDP );
       #else
-         hb_retni( 0 );
+         hb_retni(0);
       #endif
          break;
    }

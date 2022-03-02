@@ -257,12 +257,12 @@ void hb_threadReleaseCPU( void )
 
 #if defined( HB_TASK_THREAD ) && defined( HB_MT_VM )
 
-   hb_taskSleep( 20 );
+   hb_taskSleep(20);
 
 #elif defined( HB_OS_WIN )
 
    /* Forfeit the remainder of the current time slice. */
-   Sleep( 20 );
+   Sleep(20);
 
 #elif defined( HB_OS_UNIX )
    {
@@ -771,15 +771,15 @@ HB_THREAD_HANDLE hb_threadCreate( HB_THREAD_ID * th_id, PHB_THREAD_STARTFUNC sta
 #if ! defined( HB_MT_VM )
    HB_SYMBOL_UNUSED( start_func );
    HB_SYMBOL_UNUSED( Cargo );
-   *th_id = static_cast<HB_THREAD_ID>( 0 );
-   th_h = static_cast<HB_THREAD_HANDLE>( 0 );
+   *th_id = static_cast<HB_THREAD_ID>(0);
+   th_h = static_cast<HB_THREAD_HANDLE>(0);
 #elif defined( HB_TASK_THREAD )
    *th_id = hb_taskCreate( start_func, Cargo, 0 );
    th_h = *th_id;
 #elif defined( HB_PTHREAD_API )
    if( pthread_create( th_id, nullptr, start_func, Cargo ) != 0 )
    {
-      *th_id = static_cast<HB_THREAD_ID>( 0 );
+      *th_id = static_cast<HB_THREAD_ID>(0);
    }
    th_h = *th_id;
 #elif defined( HB_OS_WIN )
@@ -790,12 +790,12 @@ HB_THREAD_HANDLE hb_threadCreate( HB_THREAD_ID * th_id, PHB_THREAD_STARTFUNC sta
 #  endif
    if( ! th_h )
    {
-      *th_id = static_cast<HB_THREAD_ID>( 0 );
+      *th_id = static_cast<HB_THREAD_ID>(0);
    }
 #else
    { int iTODO_MT; }
-   *th_id = static_cast<HB_THREAD_ID>( 0 );
-   th_h = static_cast<HB_THREAD_HANDLE>( 0 );
+   *th_id = static_cast<HB_THREAD_ID>(0);
+   th_h = static_cast<HB_THREAD_HANDLE>(0);
 #endif
 
    return th_h;
@@ -1302,11 +1302,11 @@ HB_FUNC( HB_THREADID )
       }
       else
       {
-         hb_retnint( 0 );
+         hb_retnint(0);
       }
    }
 #else
-   hb_retnint( 0 );
+   hb_retnint(0);
 #endif
 }
 
@@ -1468,7 +1468,7 @@ HB_FUNC( HB_THREADJOIN )
       {
          if( pThread->pResult )
          {
-            hb_itemParamStoreForward( 2, pThread->pResult );
+            hb_itemParamStoreForward(2, pThread->pResult);
             hb_itemRelease(pThread->pResult);
             pThread->pResult = nullptr;
          }
@@ -1525,7 +1525,7 @@ HB_FUNC( HB_THREADWAIT )
    int iThreads = -1;
 
    pThreads = pAlloc;
-   if( HB_ISARRAY( 1 ) )
+   if( HB_ISARRAY(1) )
    {
       PHB_ITEM pArray = hb_param(1, HB_IT_ARRAY);
       int iLen = static_cast<int>( hb_arrayLen( pArray ) ), i;
@@ -1559,7 +1559,7 @@ HB_FUNC( HB_THREADWAIT )
    {
       HB_BOOL fAll;
 
-      if( HB_ISNUM( 2 ) )
+      if( HB_ISNUM(2) )
       {
          double dTimeOut = hb_parnd(2);
          ulMilliSec = dTimeOut > 0 ? static_cast<HB_ULONG>( dTimeOut * 1000 ) : 0;
@@ -1571,7 +1571,7 @@ HB_FUNC( HB_THREADWAIT )
    }
    else if( iThreads == 0 )
    {
-      hb_retni( 0 );
+      hb_retni(0);
    }
 
    if( pThreads != pAlloc )
@@ -1613,7 +1613,7 @@ HB_FUNC( HB_THREADONCE )
 {
    PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
 
-   if( pItem && HB_ISBYREF( 1 ) && ( HB_IS_NIL(pItem) || HB_IS_LOGICAL(pItem) ) )
+   if( pItem && HB_ISBYREF(1) && ( HB_IS_NIL(pItem) || HB_IS_LOGICAL(pItem) ) )
    {
       HB_STACK_TLS_PRELOAD
       HB_BOOL fFirstCall = HB_FALSE;
@@ -1674,7 +1674,7 @@ HB_FUNC( HB_THREADONCEINIT )
    PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
    PHB_ITEM pValue = hb_param(2, HB_IT_ANY);
 
-   if( pItem && pValue && HB_ISBYREF( 1 ) && ! HB_ISBYREF( 2 ) )
+   if( pItem && pValue && HB_ISBYREF(1) && ! HB_ISBYREF(2) )
    {
       HB_STACK_TLS_PRELOAD
       HB_BOOL fInitialized = HB_FALSE;
@@ -1775,7 +1775,7 @@ void hb_threadMutexUnlockAll( void )
             if( HB_THREAD_EQUAL( pMutex->owner, HB_THREAD_SELF() ) )
             {
                pMutex->lock_count = 0;
-               pMutex->owner = static_cast<HB_THREAD_ID>( 0 );
+               pMutex->owner = static_cast<HB_THREAD_ID>(0);
                if( pMutex->lockers )
                {
                   HB_COND_SIGNAL( pMutex->cond_l );
@@ -1971,7 +1971,7 @@ HB_BOOL hb_threadMutexSyncWait( PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, PHB_ITEM
             HB_CRITICAL_LOCK( pSyncMutex->mutex );
             lock_count = pSyncMutex->lock_count;
             pSyncMutex->lock_count = 0;
-            pSyncMutex->owner = static_cast<HB_THREAD_ID>( 0 );
+            pSyncMutex->owner = static_cast<HB_THREAD_ID>(0);
             if( pSyncMutex->lockers )
             {
                HB_COND_SIGNAL( pSyncMutex->cond_l );
@@ -2090,7 +2090,7 @@ HB_BOOL hb_threadMutexUnlock( PHB_ITEM pItem )
       {
          if( --pMutex->lock_count == 0 )
          {
-            pMutex->owner = static_cast<HB_THREAD_ID>( 0 );
+            pMutex->owner = static_cast<HB_THREAD_ID>(0);
          }
          fResult = HB_TRUE;
       }
@@ -2101,7 +2101,7 @@ HB_BOOL hb_threadMutexUnlock( PHB_ITEM pItem )
       {
          if( --pMutex->lock_count == 0 )
          {
-            pMutex->owner = static_cast<HB_THREAD_ID>( 0 );
+            pMutex->owner = static_cast<HB_THREAD_ID>(0);
             if( pMutex->lockers )
             {
                HB_COND_SIGNAL( pMutex->cond_l );
@@ -2125,7 +2125,7 @@ HB_BOOL hb_threadMutexLock( PHB_ITEM pItem )
    {
 #if ! defined( HB_MT_VM )
       pMutex->lock_count++;
-      pMutex->owner = static_cast<HB_THREAD_ID>( 1 );
+      pMutex->owner = static_cast<HB_THREAD_ID>(1);
       fResult = HB_TRUE;
 #else
 #  if ! defined( HB_HELGRIND_FRIENDLY )
@@ -2187,7 +2187,7 @@ HB_BOOL hb_threadMutexTimedLock( PHB_ITEM pItem, HB_ULONG ulMilliSec )
 #if ! defined( HB_MT_VM )
       HB_SYMBOL_UNUSED( ulMilliSec );
       pMutex->lock_count++;
-      pMutex->owner = static_cast<HB_THREAD_ID>( 1 );
+      pMutex->owner = static_cast<HB_THREAD_ID>(1);
       fResult = HB_TRUE;
 #else
       if( HB_THREAD_EQUAL( pMutex->owner, HB_THREAD_SELF() ) )
@@ -2265,7 +2265,7 @@ static void hb_thredMutexEventInit( PHB_MUTEX pMutex )
 
    HB_CRITICAL_UNLOCK( pMutex->mutex );
    hb_vmLock();
-   pEvents = hb_itemArrayNew( 0 );
+   pEvents = hb_itemArrayNew(0);
    hb_vmUnlock();
    HB_CRITICAL_LOCK( pMutex->mutex );
    if( pMutex->events == nullptr )
@@ -2297,7 +2297,7 @@ void hb_threadMutexNotify( PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting 
       {
          if( ! pMutex->events )
          {
-            pMutex->events = hb_itemArrayNew( 1 );
+            pMutex->events = hb_itemArrayNew(1);
             hb_gcUnlock( pMutex->events );
             if( pNotifier && ! HB_IS_NIL(pNotifier) )
             {
@@ -2330,7 +2330,7 @@ void hb_threadMutexNotify( PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting 
          else
          {
             ulLen = 0;
-            pMutex->events = hb_itemArrayNew( iCount );
+            pMutex->events = hb_itemArrayNew(iCount);
             hb_gcUnlock( pMutex->events );
          }
          if( iCount > 0 )
@@ -2680,12 +2680,12 @@ HB_FUNC( HB_MUTEXCREATE )
 
 HB_FUNC( HB_MUTEXLOCK )
 {
-   PHB_ITEM pItem = hb_mutexParam( 1 );
+   PHB_ITEM pItem = hb_mutexParam(1);
 
    if( pItem )
    {
       HB_STACK_TLS_PRELOAD
-      if( HB_ISNUM( 2 ) )
+      if( HB_ISNUM(2) )
       {
          HB_ULONG ulMilliSec = 0;
          double dTimeOut = hb_parnd(2);
@@ -2704,7 +2704,7 @@ HB_FUNC( HB_MUTEXLOCK )
 
 HB_FUNC( HB_MUTEXUNLOCK )
 {
-   PHB_ITEM pItem = hb_mutexParam( 1 );
+   PHB_ITEM pItem = hb_mutexParam(1);
 
    if( pItem )
    {
@@ -2715,7 +2715,7 @@ HB_FUNC( HB_MUTEXUNLOCK )
 
 HB_FUNC( HB_MUTEXNOTIFY )
 {
-   PHB_ITEM pItem = hb_mutexParam( 1 );
+   PHB_ITEM pItem = hb_mutexParam(1);
 
    if( pItem )
    {
@@ -2725,7 +2725,7 @@ HB_FUNC( HB_MUTEXNOTIFY )
 
 HB_FUNC( HB_MUTEXNOTIFYALL )
 {
-   PHB_ITEM pItem = hb_mutexParam( 1 );
+   PHB_ITEM pItem = hb_mutexParam(1);
 
    if( pItem )
    {
@@ -2735,14 +2735,14 @@ HB_FUNC( HB_MUTEXNOTIFYALL )
 
 HB_FUNC( HB_MUTEXSUBSCRIBE )
 {
-   PHB_ITEM pItem = hb_mutexParam( 1 );
+   PHB_ITEM pItem = hb_mutexParam(1);
 
    if( pItem )
    {
       HB_STACK_TLS_PRELOAD
       PHB_ITEM pResult;
 
-      if( HB_ISNUM( 2 ) )
+      if( HB_ISNUM(2) )
       {
          HB_ULONG ulMilliSec = 0;
          double dTimeOut = hb_parnd(2);
@@ -2759,7 +2759,7 @@ HB_FUNC( HB_MUTEXSUBSCRIBE )
 
       if( pResult )
       {
-         hb_itemParamStoreForward( 3, pResult );
+         hb_itemParamStoreForward(3, pResult);
          hb_itemRelease(pResult);
          hb_retl(true);
       }
@@ -2772,14 +2772,14 @@ HB_FUNC( HB_MUTEXSUBSCRIBE )
 
 HB_FUNC( HB_MUTEXSUBSCRIBENOW )
 {
-   PHB_ITEM pItem = hb_mutexParam( 1 );
+   PHB_ITEM pItem = hb_mutexParam(1);
 
    if( pItem )
    {
       HB_STACK_TLS_PRELOAD
       PHB_ITEM pResult;
 
-      if( HB_ISNUM( 2 ) )
+      if( HB_ISNUM(2) )
       {
          HB_ULONG ulMilliSec = 0;
          double dTimeOut = hb_parnd(2);
@@ -2796,7 +2796,7 @@ HB_FUNC( HB_MUTEXSUBSCRIBENOW )
 
       if( pResult )
       {
-         hb_itemParamStoreForward( 3, pResult );
+         hb_itemParamStoreForward(3, pResult);
          hb_itemRelease(pResult);
          hb_retl(true);
       }
@@ -2809,7 +2809,7 @@ HB_FUNC( HB_MUTEXSUBSCRIBENOW )
 
 HB_FUNC( HB_MUTEXEVAL )
 {
-   PHB_ITEM pItem = hb_mutexParam( 1 );
+   PHB_ITEM pItem = hb_mutexParam(1);
 
    if( pItem )
    {
@@ -2841,7 +2841,7 @@ HB_FUNC( HB_MUTEXEVAL )
 
 HB_FUNC( HB_MUTEXQUEUEINFO )
 {
-   PHB_ITEM pItem = hb_mutexParam( 1 );
+   PHB_ITEM pItem = hb_mutexParam(1);
 
    if( pItem )
    {

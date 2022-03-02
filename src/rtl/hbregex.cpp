@@ -217,7 +217,7 @@ HB_FUNC( HB_ATX )
          if( nLen && nStart <= nLen && nStart <= nEnd )
          {
             const char * pszString = hb_itemGetCPtr(pString);
-            HB_REGMATCH aMatches[ HB_REGMATCH_SIZE( 1 ) ];
+            HB_REGMATCH aMatches[ HB_REGMATCH_SIZE(1) ];
 
             if( nEnd < nLen )
             {
@@ -293,7 +293,7 @@ static HB_BOOL hb_regex( int iRequest )
       switch( iRequest )
       {
          case 0:
-            pRetArray = hb_itemArrayNew( iMatches );
+            pRetArray = hb_itemArrayNew(iMatches);
             for( i = 0; i < iMatches; i++ )
             {
                if( HB_REGMATCH_EO( aMatches, i ) > -1 )
@@ -322,7 +322,7 @@ static HB_BOOL hb_regex( int iRequest )
 
          case 3: /* SPLIT */
             iMaxMatch = hb_parni(5);
-            pRetArray = hb_itemArrayNew( 0 );
+            pRetArray = hb_itemArrayNew(0);
             pMatch = hb_itemNew(nullptr);
             iMatches = 0;
             do
@@ -351,7 +351,7 @@ static HB_BOOL hb_regex( int iRequest )
             break;
 
          case 4: /* results AND positions */
-            pRetArray = hb_itemArrayNew( iMatches );
+            pRetArray = hb_itemArrayNew(iMatches);
 
             for( i = 0; i < iMatches; i++ )
             {
@@ -389,13 +389,13 @@ static HB_BOOL hb_regex( int iRequest )
             int      iSO, iEO;
 
             /* Set new array */
-            pRetArray = hb_itemArrayNew( 0 );
+            pRetArray = hb_itemArrayNew(0);
             do
             {
                /* If I want all matches */
                if( iGetMatch == 0 || /* Check boundaries */ ( iGetMatch < 0 || iGetMatch > iMatches ) )
                {
-                  pAtxArray = hb_itemArrayNew( iMatches );
+                  pAtxArray = hb_itemArrayNew(iMatches);
                   for( i = 0; i < iMatches; i++ )
                   {
                      iSO = HB_REGMATCH_SO( aMatches, i );
@@ -496,7 +496,7 @@ static HB_BOOL hb_regex( int iRequest )
    }
    else if( iRequest == 3 )
    {
-      pRetArray = hb_itemArrayNew( 1 );
+      pRetArray = hb_itemArrayNew(1);
       hb_arraySet( pRetArray, 1, pString );
       hb_itemReturnRelease(pRetArray);
       fResult = HB_TRUE;
@@ -509,9 +509,9 @@ static HB_BOOL hb_regex( int iRequest )
 /* Returns array of Match + Sub-Matches. */
 HB_FUNC( HB_REGEX )
 {
-   if( ! hb_regex( 0 ) )
+   if( ! hb_regex(0) )
    {
-      hb_reta( 0 );
+      hb_reta(0);
    }
 }
 
@@ -530,29 +530,29 @@ HB_FUNC( HB_REGEXMATCH )
 
 HB_FUNC( HB_REGEXLIKE )
 {
-   hb_retl( hb_regex( 1 ) );
+   hb_retl( hb_regex(1) );
 }
 
 HB_FUNC( HB_REGEXHAS )
 {
-   hb_retl( hb_regex( 2 ) );
+   hb_retl( hb_regex(2) );
 }
 
 /* Splits the string in an array of matched expressions */
 HB_FUNC( HB_REGEXSPLIT )
 {
-   if( ! hb_regex( 3 ) )
+   if( ! hb_regex(3) )
    {
-      hb_reta( 0 );
+      hb_reta(0);
    }
 }
 
 /* Returns array of { Match, start, end }, { Sub-Matches, start, end } */
 HB_FUNC( HB_REGEXATX )
 {
-   if( ! hb_regex( 4 ) )
+   if( ! hb_regex(4) )
    {
-      hb_reta( 0 );
+      hb_reta(0);
    }
 }
 
@@ -574,9 +574,9 @@ HB_FUNC( HB_REGEXATX )
 
 HB_FUNC( HB_REGEXALL )
 {
-   if( ! hb_regex( 5 ) )
+   if( ! hb_regex(5) )
    {
-      hb_reta( 0 );
+      hb_reta(0);
    }
 }
 

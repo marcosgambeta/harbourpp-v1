@@ -104,7 +104,7 @@ static HB_GARBAGE_FUNC( hb_arrayGarbageRelease )
       {
          HB_STACK_TLS_PRELOAD
          hb_arrayPushBase( pBaseArray );
-         hb_objDestructorCall( hb_stackItemFromTop( -1 ) );
+         hb_objDestructorCall( hb_stackItemFromTop(-1) );
          hb_stackPop();
       }
 
@@ -359,7 +359,7 @@ PHB_ITEM hb_arrayFromId( PHB_ITEM pItem, void * pArrayId )
    {
       pItem = hb_itemNew(nullptr);
    }
-   hb_itemMove( pItem, hb_stackItemFromTop( -1 ) );
+   hb_itemMove( pItem, hb_stackItemFromTop(-1) );
    hb_stackPop();
 
    return pItem;
@@ -770,7 +770,7 @@ HB_SIZE hb_arrayCopyC( PHB_ITEM pArray, HB_SIZE nIndex, char * szBuffer, HB_SIZE
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      return hb_itemCopyC( pArray->item.asArray.value->pItems + nIndex - 1, szBuffer, nLen );
+      return hb_itemCopyC(pArray->item.asArray.value->pItems + nIndex - 1, szBuffer, nLen);
    }
    else
    {
@@ -882,7 +882,7 @@ HB_TYPE hb_arrayGetType( PHB_ITEM pArray, HB_SIZE nIndex )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      return hb_itemType( pArray->item.asArray.value->pItems + nIndex - 1 );
+      return hb_itemType(pArray->item.asArray.value->pItems + nIndex - 1);
    }
    else
    {
@@ -1330,7 +1330,7 @@ HB_SIZE hb_arrayScan( PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE * pnStart, HB_SI
                   hb_vmPush( pValue );
                   hb_vmPush( pBaseArray->pItems + nStart );
                   hb_vmPushSize( ++nStart );
-                  hb_vmEval( 2 );
+                  hb_vmEval(2);
 
                   if( HB_IS_LOGICAL(hb_stackReturnItem()) && hb_stackReturnItem()->item.asLogical.value )
                   {
@@ -1347,7 +1347,7 @@ HB_SIZE hb_arrayScan( PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE * pnStart, HB_SI
 
                   /* NOTE: The order of the pItem and pValue parameters passed to
                            hb_itemStrCmp() is significant, please don't change it. [vszakats] */
-                  if( HB_IS_STRING(pItem) && hb_itemStrCmp( pItem, pValue, fExact ) == 0 )
+                  if( HB_IS_STRING(pItem) && hb_itemStrCmp(pItem, pValue, fExact) == 0 )
                   {
                      return nStart;
                   }
@@ -1539,7 +1539,7 @@ HB_SIZE hb_arrayRevScan( PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE * pnStart, HB
                      hb_vmPushNil();
                   }
                   hb_vmPushSize( nStart + 1 );
-                  hb_vmEval( 2 );
+                  hb_vmEval(2);
 
                   if( HB_IS_LOGICAL(hb_stackReturnItem()) && hb_stackReturnItem()->item.asLogical.value )
                   {
@@ -1556,7 +1556,7 @@ HB_SIZE hb_arrayRevScan( PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE * pnStart, HB
 
                   /* NOTE: The order of the pItem and pValue parameters passed to
                            hb_itemStrCmp() is significant, please don't change it. [vszakats] */
-                  if( HB_IS_STRING(pItem) && hb_itemStrCmp( pItem, pValue, fExact ) == 0 )
+                  if( HB_IS_STRING(pItem) && hb_itemStrCmp(pItem, pValue, fExact) == 0 )
                   {
                      return nStart + 1;
                   }
@@ -1735,7 +1735,7 @@ HB_BOOL hb_arrayEval( PHB_ITEM pArray, PHB_ITEM bBlock, HB_SIZE * pnStart, HB_SI
                hb_vmPush( bBlock );
                hb_vmPush( pBaseArray->pItems + nStart );
                hb_vmPushSize( nStart + 1 );
-               hb_vmEval( 2 );
+               hb_vmEval(2);
             }
             while( --nCount > 0 && ++nStart < pBaseArray->nLen );
             /*
@@ -2024,7 +2024,7 @@ PHB_ITEM hb_arrayFromParams( int iLevel )
       uiPCount = 0;
    }
 
-   pArray = hb_itemArrayNew( uiPCount );
+   pArray = hb_itemArrayNew(uiPCount);
    for( HB_USHORT uiPos = 1; uiPos <= uiPCount; uiPos++ )
    {
       hb_arraySet( pArray, uiPos, hb_stackItem( nBaseOffset + uiPos + 1 ) );

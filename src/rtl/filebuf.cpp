@@ -700,7 +700,7 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
 static void s_fileClose( PHB_FILE pFile )
 {
    hb_vmUnlock();
-   hb_fsSetError( 0 );
+   hb_fsSetError(0);
    hb_threadEnterCriticalSection( &s_fileMtx );
 
    if( --pFile->used == 0 )
@@ -1031,7 +1031,7 @@ static HB_FOFFSET s_fileposSeek( PHB_FILE pFilePos, HB_FOFFSET nOffset, HB_USHOR
    if( nOffset >= 0 )
    {
       _PHB_FILEPOS->seek_pos = nOffset;
-      hb_fsSetError( 0 );
+      hb_fsSetError(0);
    }
    else
    {

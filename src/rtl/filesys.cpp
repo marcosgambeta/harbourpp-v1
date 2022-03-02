@@ -144,10 +144,10 @@
    #include <windows.h>
    #include "hbwinuni.h"
    #if ! defined( INVALID_SET_FILE_POINTER ) && ( defined( _MSC_VER ) )
-      #define INVALID_SET_FILE_POINTER ( static_cast<DWORD>( -1 ) )
+      #define INVALID_SET_FILE_POINTER ( static_cast<DWORD>(-1) )
    #endif
    #if ! defined( INVALID_FILE_ATTRIBUTES )
-      #define INVALID_FILE_ATTRIBUTES     ( static_cast<DWORD>( -1 ) )
+      #define INVALID_FILE_ATTRIBUTES     ( static_cast<DWORD>(-1) )
    #endif
    #if defined( HB_OS_WIN_64 )
       #if ! defined( HB_WIN_IOREAD_LIMIT )
@@ -195,19 +195,19 @@
 
 #if defined( HB_OS_WIN )
 
-   #define HB_FS_GETDRIVE(n)  do { n = fs_win_get_drive(); } while( 0 )
+   #define HB_FS_GETDRIVE(n)  do { n = fs_win_get_drive(); } while(0)
    #define HB_FS_SETDRIVE(n)  fs_win_set_drive( n )
 
 #elif defined( __BORLANDC__ )
    /* 0 based version */
 
-   #define HB_FS_GETDRIVE(n)  do { n = getdisk(); } while( 0 )
+   #define HB_FS_GETDRIVE(n)  do { n = getdisk(); } while(0)
    #define HB_FS_SETDRIVE(n)  setdisk( n )
 
 #else /* _MSC_VER */
    /* 1 based version */
 
-   #define HB_FS_GETDRIVE(n)  do { n = _getdrive() - 1; } while( 0 )
+   #define HB_FS_GETDRIVE(n)  do { n = _getdrive() - 1; } while(0)
    #define HB_FS_SETDRIVE(n)  _chdrive( ( n ) + 1 )
 
 #endif
@@ -271,7 +271,7 @@
       ( ret ) = ( exp ); \
       hb_fsSetIOError( ( ret ) != -1, 0 ); \
    } \
-   while( 0 )
+   while(0)
 #endif
 
 static HB_BOOL s_fUseWaitLocks = HB_TRUE;
@@ -1281,7 +1281,7 @@ HB_SIZE hb_fsPipeIsData( HB_FHANDLE hPipeHandle, HB_SIZE nBufferSize, HB_MAXINT 
       fResult = PeekNamedPipe( reinterpret_cast<HANDLE>( hb_fsGetOsHandle( hPipeHandle ) ), nullptr, 0, nullptr, &dwAvail, nullptr ) != 0;
       if( ! fResult && GetLastError() == ERROR_BROKEN_PIPE )
       {
-         hb_fsSetError( 0 );
+         hb_fsSetError(0);
          break;
       }
       hb_fsSetIOError( fResult, 0 );
@@ -1662,7 +1662,7 @@ HB_BOOL hb_fsGetFileTime( const char * pszFileName, long * plJulian, long * plMi
       typedef BOOL ( WINAPI * _HB_GETFILEATTRIBUTESEX )( LPCTSTR, GET_FILEEX_INFO_LEVELS, LPVOID );
       static _HB_GETFILEATTRIBUTESEX s_pGetFileAttributesEx = ( _HB_GETFILEATTRIBUTESEX ) -1;
 
-      if( s_pGetFileAttributesEx == reinterpret_cast<_HB_GETFILEATTRIBUTESEX>( -1 ) )
+      if( s_pGetFileAttributesEx == reinterpret_cast<_HB_GETFILEATTRIBUTESEX>(-1) )
       {
          HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
          if( hModule )
@@ -2541,7 +2541,7 @@ HB_SIZE hb_fsReadAt( HB_FHANDLE hFileHandle, void * pBuff, HB_SIZE nCount, HB_FO
 #  else
       HB_FOFFSET nPos = lseek( hFileHandle, nOffset, SEEK_SET );
 #  endif
-      if( nPos == static_cast<HB_FOFFSET>( -1 ) )
+      if( nPos == static_cast<HB_FOFFSET>(-1) )
       {
          hb_fsSetIOError( HB_FALSE, 0 );
          nRead = 0;
@@ -2672,7 +2672,7 @@ HB_SIZE hb_fsWriteAt( HB_FHANDLE hFileHandle, const void * pBuff, HB_SIZE nCount
 #  else
       HB_FOFFSET nPos = lseek( hFileHandle, nOffset, SEEK_SET );
 #  endif
-      if( nPos == static_cast<HB_FOFFSET>( -1 ) )
+      if( nPos == static_cast<HB_FOFFSET>(-1) )
       {
          hb_fsSetIOError( HB_FALSE, 0 );
          nWritten = 0;
@@ -3156,13 +3156,13 @@ HB_ULONG hb_fsSeek( HB_FHANDLE hFileHandle, HB_LONG lOffset, HB_USHORT uiFlags )
    /* This DOS hack creates 2 GiB file size limit, Druzus */
    if( lOffset < 0 && nFlags == SEEK_SET )
    {
-      ulPos = static_cast<HB_ULONG>( -1 );
+      ulPos = static_cast<HB_ULONG>(-1);
       hb_fsSetError( 25 ); /* 'Seek Error' */
    }
    else
    {
       ulPos = lseek( hFileHandle, lOffset, nFlags );
-      hb_fsSetIOError( ulPos != static_cast<HB_ULONG>( -1 ), 0 );
+      hb_fsSetIOError( ulPos != static_cast<HB_ULONG>(-1), 0 );
 #  if defined( HB_OS_UNIX )
       /* small trick to resolve problem with position reported for directories */
       if( ulPos == LONG_MAX && lOffset == 0 && nFlags == SEEK_END )
@@ -3178,10 +3178,10 @@ HB_ULONG hb_fsSeek( HB_FHANDLE hFileHandle, HB_LONG lOffset, HB_USHORT uiFlags )
 #  endif
    }
 
-   if( ulPos == static_cast<HB_ULONG>( -1 ) )
+   if( ulPos == static_cast<HB_ULONG>(-1) )
    {
       ulPos = lseek( hFileHandle, 0L, SEEK_CUR );
-      if( ulPos == static_cast<HB_ULONG>( -1 ) )
+      if( ulPos == static_cast<HB_ULONG>(-1) )
       {
          ulPos = 0;
       }
@@ -3209,7 +3209,7 @@ HB_FOFFSET hb_fsSeekLarge( HB_FHANDLE hFileHandle, HB_FOFFSET nOffset, HB_USHORT
       hb_vmUnlock();
       if( nOffset < 0 && nFlags == SEEK_SET )
       {
-         nPos = static_cast<HB_FOFFSET>( -1 );
+         nPos = static_cast<HB_FOFFSET>(-1);
          hb_fsSetError( 25 ); /* 'Seek Error' */
       }
       else
@@ -3217,16 +3217,16 @@ HB_FOFFSET hb_fsSeekLarge( HB_FHANDLE hFileHandle, HB_FOFFSET nOffset, HB_USHORT
          ulOffsetLow = SetFilePointer( DosToWinHandle( hFileHandle ), ulOffsetLow, reinterpret_cast<PLONG>( &ulOffsetHigh ), static_cast<DWORD>( nFlags ) );
          if( ulOffsetLow == static_cast<ULONG>( INVALID_SET_FILE_POINTER ) && GetLastError() != NO_ERROR )
          {
-            nPos = static_cast<HB_FOFFSET>( -1 );
+            nPos = static_cast<HB_FOFFSET>(-1);
          }
          else
          {
             nPos = ( static_cast<HB_FOFFSET>( ulOffsetHigh ) << 32 ) | ulOffsetLow;
          }
-         hb_fsSetIOError( nPos != static_cast<HB_FOFFSET>( -1 ), 0 );
+         hb_fsSetIOError( nPos != static_cast<HB_FOFFSET>(-1), 0 );
       }
 
-      if( nPos == static_cast<HB_FOFFSET>( -1 ) )
+      if( nPos == static_cast<HB_FOFFSET>(-1) )
       {
          ulOffsetHigh = 0;
          ulOffsetLow = SetFilePointer( DosToWinHandle( hFileHandle ), 0, reinterpret_cast<PLONG>( &ulOffsetHigh ), SEEK_CUR );
@@ -3248,13 +3248,13 @@ HB_FOFFSET hb_fsSeekLarge( HB_FHANDLE hFileHandle, HB_FOFFSET nOffset, HB_USHORT
       hb_vmUnlock();
       if( nOffset < 0 && nFlags == SEEK_SET )
       {
-         nPos = static_cast<HB_FOFFSET>( -1 );
+         nPos = static_cast<HB_FOFFSET>(-1);
          hb_fsSetError( 25 ); /* 'Seek Error' */
       }
       else
       {
          nPos = lseek64( hFileHandle, nOffset, nFlags );
-         hb_fsSetIOError( nPos != static_cast<HB_FOFFSET>( -1 ), 0 );
+         hb_fsSetIOError( nPos != static_cast<HB_FOFFSET>(-1), 0 );
 #  if defined( HB_OS_UNIX )
          /* small trick to resolve problem with position reported for directories */
          if( nPos == LONG_MAX && nOffset == 0 && nFlags == SEEK_END )
@@ -3269,10 +3269,10 @@ HB_FOFFSET hb_fsSeekLarge( HB_FHANDLE hFileHandle, HB_FOFFSET nOffset, HB_USHORT
 #  endif
       }
 
-      if( nPos == static_cast<HB_FOFFSET>( -1 ) )
+      if( nPos == static_cast<HB_FOFFSET>(-1) )
       {
          nPos = lseek64( hFileHandle, 0L, SEEK_CUR );
-         if( nPos == static_cast<HB_FOFFSET>( -1 ) )
+         if( nPos == static_cast<HB_FOFFSET>(-1) )
          {
             nPos = 0;
          }
@@ -3905,7 +3905,7 @@ HB_ERRCODE hb_fsChDrv( int iDrive )
       if( iDrive == iNewDrive )
       {
          nResult = 0;
-         hb_fsSetError( 0 );
+         hb_fsSetError(0);
       }
       else
       {
@@ -3941,7 +3941,7 @@ int hb_fsCurDrv( void )
 
    hb_vmUnlock();
    HB_FS_GETDRIVE( iDrive );
-   hb_fsSetError( 0 );
+   hb_fsSetError(0);
    hb_vmLock();
 
 #else
@@ -3970,7 +3970,7 @@ HB_ERRCODE hb_fsIsDrv( int iDrive )
       hb_vmUnlock();
       nResult = ( ( GetLogicalDrives() >> iDrive ) & 1 ) ? 0 : static_cast<HB_ERRCODE>( F_ERROR );
       hb_vmLock();
-      hb_fsSetError( 0 );
+      hb_fsSetError(0);
    }
 #elif defined( HB_OS_HAS_DRIVE_LETTER )
    {
@@ -3983,7 +3983,7 @@ HB_ERRCODE hb_fsIsDrv( int iDrive )
       HB_FS_GETDRIVE( iNewDrive );
       nResult = ( iDrive == iNewDrive ) ? 0 : static_cast<HB_ERRCODE>( FS_ERROR );
       HB_FS_SETDRIVE( iSave );
-      hb_fsSetError( 0 );
+      hb_fsSetError(0);
 
       hb_vmLock();
    }
@@ -3991,13 +3991,13 @@ HB_ERRCODE hb_fsIsDrv( int iDrive )
    {
       HB_SYMBOL_UNUSED( iDrive );
       nResult = static_cast<HB_ERRCODE>( FS_ERROR );
-      hb_fsSetError( 0 );
+      hb_fsSetError(0);
    }
 #endif
    else
    {
       nResult = static_cast<HB_ERRCODE>( FS_ERROR );
-      hb_fsSetError( 0 );
+      hb_fsSetError(0);
    }
 
    return nResult;
@@ -4216,7 +4216,7 @@ HB_FHANDLE hb_fsExtOpen( const char * pszFileName, const char * pDefExt, HB_FATT
          {
             hb_fsClose( hFile );
             hFile = FS_ERROR;
-            hb_fsSetError( 5 );
+            hb_fsSetError(5);
          }
       }
    }

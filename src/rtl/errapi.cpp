@@ -172,7 +172,7 @@ HB_FUNC_STATIC( CANDEFAULT )
 
 HB_FUNC_STATIC( _CANDEFAULT )
 {
-   if( HB_ISLOG( 1 ) )
+   if( HB_ISLOG(1) )
    {
       PHB_ITEM pError = hb_stackSelfItem();
       HB_BOOL fCan = hb_parl(1);
@@ -197,7 +197,7 @@ HB_FUNC_STATIC( CANRETRY )
 
 HB_FUNC_STATIC( _CANRETRY )
 {
-   if( HB_ISLOG( 1 ) )
+   if( HB_ISLOG(1) )
    {
       PHB_ITEM pError = hb_stackSelfItem();
       HB_BOOL fCan = hb_parl(1);
@@ -222,7 +222,7 @@ HB_FUNC_STATIC( CANSUBST )
 
 HB_FUNC_STATIC( _CANSUBST )
 {
-   if( HB_ISLOG( 1 ) )
+   if( HB_ISLOG(1) )
    {
       PHB_ITEM pError = hb_stackSelfItem();
       HB_BOOL fCan = hb_parl(1);
@@ -490,7 +490,7 @@ HB_FUNC( DOSERROR )
 
    hb_retni( pErrData->uiErrorDOS );
 
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
       pErrData->uiErrorDOS = hb_parni(1);
    }
@@ -585,7 +585,7 @@ HB_USHORT hb_errLaunch( PHB_ITEM pError )
       }
       else
       {
-         pResult = hb_itemDo( pErrData->errorBlock, 1, pError );
+         pResult = hb_itemDo(pErrData->errorBlock, 1, pError);
       }
 
       pErrData->iLaunchCount--;
@@ -699,7 +699,7 @@ PHB_ITEM hb_errLaunchSubst( PHB_ITEM pError )
       }
       else
       {
-         pResult = hb_itemDo( pErrData->errorBlock, 1, pError );
+         pResult = hb_itemDo(pErrData->errorBlock, 1, pError);
       }
 
       pErrData->iLaunchCount--;
@@ -1000,14 +1000,14 @@ PHB_ITEM hb_errPutArgs( PHB_ITEM pError, HB_ULONG ulArgCount, ... )
    PHB_ITEM pArray;
    va_list va;
 
-   pArray = hb_itemArrayNew( ulArgCount );
+   pArray = hb_itemArrayNew(ulArgCount);
 
    /* Build the array from the passed arguments. */
 
    va_start( va, ulArgCount );
    for( HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
    {
-      hb_itemArrayPut( pArray, ulArgPos, va_arg( va, PHB_ITEM ) );
+      hb_itemArrayPut(pArray, ulArgPos, va_arg( va, PHB_ITEM ));
    }
    va_end( va );
 
@@ -1172,7 +1172,7 @@ HB_USHORT hb_errRT_BASE( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const cha
    }
    else
    {
-      pArray = hb_itemArrayNew( ulArgCount );
+      pArray = hb_itemArrayNew(ulArgCount);
 
       va_start( va, ulArgCount );
       for( HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
@@ -1180,7 +1180,7 @@ HB_USHORT hb_errRT_BASE( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const cha
          PHB_ITEM pArg = va_arg( va, PHB_ITEM );
          if( pArg )
          {
-            hb_itemArrayPut( pArray, ulArgPos, pArg );
+            hb_itemArrayPut(pArray, ulArgPos, pArg);
          }
       }
       va_end( va );
@@ -1235,7 +1235,7 @@ HB_USHORT hb_errRT_BASE_Ext1( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, cons
    }
    else
    {
-      pArray = hb_itemArrayNew( ulArgCount );
+      pArray = hb_itemArrayNew(ulArgCount);
 
       va_start( va, ulArgCount );
       for( HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
@@ -1243,7 +1243,7 @@ HB_USHORT hb_errRT_BASE_Ext1( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, cons
          PHB_ITEM pArg = va_arg( va, PHB_ITEM );
          if( pArg )
          {
-            hb_itemArrayPut( pArray, ulArgPos, pArg );
+            hb_itemArrayPut(pArray, ulArgPos, pArg);
          }
       }
       va_end( va );
@@ -1297,7 +1297,7 @@ PHB_ITEM hb_errRT_BASE_Subst( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, cons
    }
    else
    {
-      pArray = hb_itemArrayNew( ulArgCount );
+      pArray = hb_itemArrayNew(ulArgCount);
 
       va_start( va, ulArgCount );
       for( HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
@@ -1305,7 +1305,7 @@ PHB_ITEM hb_errRT_BASE_Subst( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, cons
          PHB_ITEM pArg = va_arg( va, PHB_ITEM );
          if( pArg )
          {
-            hb_itemArrayPut( pArray, ulArgPos, pArg );
+            hb_itemArrayPut(pArray, ulArgPos, pArg);
          }
       }
       va_end( va );
@@ -1358,7 +1358,7 @@ void hb_errRT_BASE_SubstR( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const c
    }
    else
    {
-      pArray = hb_itemArrayNew( ulArgCount );
+      pArray = hb_itemArrayNew(ulArgCount);
 
       va_start( va, ulArgCount );
       for( HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
@@ -1366,7 +1366,7 @@ void hb_errRT_BASE_SubstR( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const c
          PHB_ITEM pArg = va_arg( va, PHB_ITEM );
          if( pArg )
          {
-            hb_itemArrayPut( pArray, ulArgPos, pArg );
+            hb_itemArrayPut(pArray, ulArgPos, pArg);
          }
       }
       va_end( va );

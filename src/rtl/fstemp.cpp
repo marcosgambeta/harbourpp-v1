@@ -208,7 +208,7 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
 #else
             fd = static_cast<HB_FHANDLE>( mkstemp( pszName ) );
 #endif
-         hb_fsSetIOError( fd != static_cast<HB_FHANDLE>( -1 ), 0 );
+         hb_fsSetIOError( fd != static_cast<HB_FHANDLE>(-1), 0 );
          hb_vmLock();
       }
       else

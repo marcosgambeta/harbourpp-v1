@@ -354,8 +354,8 @@ using LPHSXTABLE = HSXTABLE *;
 
 #include "hbstack.h"
 
-#define HB_HSX_LOCK()    do {} while( 0 )
-#define HB_HSX_UNLOCK()  do {} while( 0 )
+#define HB_HSX_LOCK()    do {} while(0)
+#define HB_HSX_UNLOCK()  do {} while(0)
 
 static int hb_hsxDestroy( int iHandle );
 

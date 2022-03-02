@@ -912,13 +912,13 @@ HB_FUNC( HB_SOCKETERRORSTRING )
    PHB_SOCKEX pSock;
    int iError = 1;
 
-   if( HB_ISPOINTER( 1 ) )
+   if( HB_ISPOINTER(1) )
    {
-      pSock = hb_sockexParam( 1 );
+      pSock = hb_sockexParam(1);
    }
-   else if( HB_ISPOINTER( 2 ) )
+   else if( HB_ISPOINTER(2) )
    {
-      pSock = hb_sockexParam( 2 );
+      pSock = hb_sockexParam(2);
    }
    else
    {
@@ -928,11 +928,11 @@ HB_FUNC( HB_SOCKETERRORSTRING )
 
    if( pSock || iError == 0 )
    {
-      if( HB_ISNUM( 1 ) )
+      if( HB_ISNUM(1) )
       {
          iError = hb_parni(1);
       }
-      else if( HB_ISNUM( 2 ) )
+      else if( HB_ISNUM(2) )
       {
          iError = hb_parni(2);
       }
@@ -947,7 +947,7 @@ HB_FUNC( HB_SOCKETERRORSTRING )
 
 HB_FUNC( HB_SOCKETGETSOCKNAME )
 {
-   HB_SOCKET socket = hb_socketParam( 1 );
+   HB_SOCKET socket = hb_socketParam(1);
 
    if( socket != HB_NO_SOCKET )
    {
@@ -975,7 +975,7 @@ HB_FUNC( HB_SOCKETGETSOCKNAME )
 
 HB_FUNC( HB_SOCKETGETPEERNAME )
 {
-   HB_SOCKET socket = hb_socketParam( 1 );
+   HB_SOCKET socket = hb_socketParam(1);
 
    if( socket != HB_NO_SOCKET )
    {
@@ -1021,7 +1021,7 @@ HB_FUNC( HB_SOCKETOPEN )
 
 HB_FUNC( HB_SOCKETCLOSE )
 {
-   PHB_SOCKEX pSock = hb_sockexParam( 1 );
+   PHB_SOCKEX pSock = hb_sockexParam(1);
 
    if( pSock )
    {
@@ -1032,7 +1032,7 @@ HB_FUNC( HB_SOCKETCLOSE )
 
 HB_FUNC( HB_SOCKETSHUTDOWN )
 {
-   HB_SOCKET socket = hb_socketParam( 1 );
+   HB_SOCKET socket = hb_socketParam(1);
 
    if( socket != HB_NO_SOCKET )
    {
@@ -1042,7 +1042,7 @@ HB_FUNC( HB_SOCKETSHUTDOWN )
 
 HB_FUNC( HB_SOCKETBIND )
 {
-   HB_SOCKET socket = hb_socketParam( 1 );
+   HB_SOCKET socket = hb_socketParam(1);
    void * addr;
    unsigned int len;
 
@@ -1055,7 +1055,7 @@ HB_FUNC( HB_SOCKETBIND )
 
 HB_FUNC( HB_SOCKETLISTEN )
 {
-   HB_SOCKET socket = hb_socketParam( 1 );
+   HB_SOCKET socket = hb_socketParam(1);
 
    if( socket != HB_NO_SOCKET )
    {
@@ -1065,7 +1065,7 @@ HB_FUNC( HB_SOCKETLISTEN )
 
 HB_FUNC( HB_SOCKETACCEPT )
 {
-   HB_SOCKET socket = hb_socketParam( 1 );
+   HB_SOCKET socket = hb_socketParam(1);
 
    if( socket != HB_NO_SOCKET )
    {
@@ -1084,17 +1084,17 @@ HB_FUNC( HB_SOCKETACCEPT )
          hb_retptr( nullptr );
       }
 
-      if( HB_ISBYREF( 2 ) )
+      if( HB_ISBYREF(2) )
       {
          PHB_ITEM pItem;
          if( socketaccept != HB_NO_SOCKET && ( pItem = hb_socketAddrToItem( addr, len ) ) != nullptr )
          {
-            hb_itemParamStoreForward( 2, pItem );
+            hb_itemParamStoreForward(2, pItem);
             hb_itemRelease(pItem);
          }
          else
          {
-            hb_stor( 2 );
+            hb_stor(2);
          }
       }
 
@@ -1107,7 +1107,7 @@ HB_FUNC( HB_SOCKETACCEPT )
 
 HB_FUNC( HB_SOCKETCONNECT )
 {
-   HB_SOCKET socket = hb_socketParam( 1 );
+   HB_SOCKET socket = hb_socketParam(1);
    void * addr;
    unsigned int len;
 
@@ -1126,7 +1126,7 @@ HB_FUNC( HB_SOCKETCONNECT )
 
 HB_FUNC( HB_SOCKETSEND )
 {
-   PHB_SOCKEX pSock = hb_sockexParam( 1 );
+   PHB_SOCKEX pSock = hb_sockexParam(1);
 
    if( pSock )
    {
@@ -1134,7 +1134,7 @@ HB_FUNC( HB_SOCKETSEND )
       const char * data = hb_parc(2);
       HB_MAXINT timeout = hb_parnintdef( 5, -1 );
 
-      if( HB_ISNUM( 3 ) )
+      if( HB_ISNUM(3) )
       {
          long lParam = hb_parnl(3);
 
@@ -1163,7 +1163,7 @@ HB_FUNC( HB_SOCKETSEND )
 
 HB_FUNC( HB_SOCKETSENDTO )
 {
-   HB_SOCKET socket = hb_socketParam( 1 );
+   HB_SOCKET socket = hb_socketParam(1);
    void * addr;
    unsigned int len;
 
@@ -1171,7 +1171,7 @@ HB_FUNC( HB_SOCKETSENDTO )
    {
       long lLen = static_cast<long>( hb_parclen(2) );
 
-      if( HB_ISNUM( 3 ) )
+      if( HB_ISNUM(3) )
       {
          long lParam = hb_parnl(3);
 
@@ -1187,7 +1187,7 @@ HB_FUNC( HB_SOCKETSENDTO )
 
 HB_FUNC( HB_SOCKETRECV )
 {
-   PHB_SOCKEX pSock = hb_sockexParam( 1 );
+   PHB_SOCKEX pSock = hb_sockexParam(1);
 
    if( pSock )
    {
@@ -1195,9 +1195,9 @@ HB_FUNC( HB_SOCKETRECV )
       char * pBuffer;
       HB_SIZE nLen;
 
-      if( pItem && HB_ISBYREF( 2 ) && hb_itemGetWriteCL( pItem, &pBuffer, &nLen ) )
+      if( pItem && HB_ISBYREF(2) && hb_itemGetWriteCL( pItem, &pBuffer, &nLen ) )
       {
-         if( HB_ISNUM( 3 ) )
+         if( HB_ISNUM(3) )
          {
             long lRead = hb_parnl(3);
             if( lRead >= 0 && lRead < static_cast<long>( nLen ) )
@@ -1217,7 +1217,7 @@ HB_FUNC( HB_SOCKETRECV )
 
 HB_FUNC( HB_SOCKETRECVFROM )
 {
-   HB_SOCKET socket = hb_socketParam( 1 );
+   HB_SOCKET socket = hb_socketParam(1);
 
    if( socket != HB_NO_SOCKET )
    {
@@ -1225,13 +1225,13 @@ HB_FUNC( HB_SOCKETRECVFROM )
       char * pBuffer;
       HB_SIZE nLen;
 
-      if( pItem && HB_ISBYREF( 2 ) && hb_itemGetWriteCL( pItem, &pBuffer, &nLen ) )
+      if( pItem && HB_ISBYREF(2) && hb_itemGetWriteCL( pItem, &pBuffer, &nLen ) )
       {
          void * addr = nullptr;
          unsigned int len;
          long lRet;
 
-         if( HB_ISNUM( 3 ) )
+         if( HB_ISNUM(3) )
          {
             long lRead = hb_parnl(3);
             if( lRead >= 0 && lRead < static_cast<long>( nLen ) )
@@ -1240,18 +1240,18 @@ HB_FUNC( HB_SOCKETRECVFROM )
             }
          }
          hb_retnl( lRet = hb_socketRecvFrom( socket, pBuffer, static_cast<long>( nLen ), hb_parni(4), &addr, &len, hb_parnintdef( 6, -1 ) ) );
-         if( HB_ISBYREF( 5 ) )
+         if( HB_ISBYREF(5) )
          {
             PHB_ITEM pAddr;
 
             if( lRet != -1 && ( pAddr = hb_socketAddrToItem( addr, len ) ) != nullptr )
             {
-               hb_itemParamStoreForward( 5, pAddr );
+               hb_itemParamStoreForward(5, pAddr);
                hb_itemRelease(pAddr);
             }
             else
             {
-               hb_stor( 5 );
+               hb_stor(5);
             }
          }
 
@@ -1267,7 +1267,7 @@ HB_FUNC( HB_SOCKETRECVFROM )
 
 HB_FUNC( HB_SOCKETSETBLOCKINGIO )
 {
-   HB_SOCKET socket = hb_socketParam( 1 );
+   HB_SOCKET socket = hb_socketParam(1);
 
    if( socket != HB_NO_SOCKET )
    {
@@ -1277,7 +1277,7 @@ HB_FUNC( HB_SOCKETSETBLOCKINGIO )
 
 HB_FUNC( HB_SOCKETSETNODELAY )
 {
-   HB_SOCKET socket = hb_socketParam( 1 );
+   HB_SOCKET socket = hb_socketParam(1);
 
    if( socket != HB_NO_SOCKET )
    {
@@ -1287,7 +1287,7 @@ HB_FUNC( HB_SOCKETSETNODELAY )
 
 HB_FUNC( HB_SOCKETSETEXCLUSIVEADDR )
 {
-   HB_SOCKET socket = hb_socketParam( 1 );
+   HB_SOCKET socket = hb_socketParam(1);
 
    if( socket != HB_NO_SOCKET )
    {
@@ -1297,7 +1297,7 @@ HB_FUNC( HB_SOCKETSETEXCLUSIVEADDR )
 
 HB_FUNC( HB_SOCKETSETREUSEADDR )
 {
-   HB_SOCKET socket = hb_socketParam( 1 );
+   HB_SOCKET socket = hb_socketParam(1);
 
    if( socket != HB_NO_SOCKET )
    {
@@ -1307,7 +1307,7 @@ HB_FUNC( HB_SOCKETSETREUSEADDR )
 
 HB_FUNC( HB_SOCKETSETKEEPALIVE )
 {
-   HB_SOCKET socket = hb_socketParam( 1 );
+   HB_SOCKET socket = hb_socketParam(1);
 
    if( socket != HB_NO_SOCKET )
    {
@@ -1317,7 +1317,7 @@ HB_FUNC( HB_SOCKETSETKEEPALIVE )
 
 HB_FUNC( HB_SOCKETSETBROADCAST )
 {
-   HB_SOCKET socket = hb_socketParam( 1 );
+   HB_SOCKET socket = hb_socketParam(1);
 
    if( socket != HB_NO_SOCKET )
    {
@@ -1327,7 +1327,7 @@ HB_FUNC( HB_SOCKETSETBROADCAST )
 
 HB_FUNC( HB_SOCKETSETSNDBUFSIZE )
 {
-   HB_SOCKET socket = hb_socketParam( 1 );
+   HB_SOCKET socket = hb_socketParam(1);
 
    if( socket != HB_NO_SOCKET )
    {
@@ -1337,7 +1337,7 @@ HB_FUNC( HB_SOCKETSETSNDBUFSIZE )
 
 HB_FUNC( HB_SOCKETSETRCVBUFSIZE )
 {
-   HB_SOCKET socket = hb_socketParam( 1 );
+   HB_SOCKET socket = hb_socketParam(1);
 
    if( socket != HB_NO_SOCKET )
    {
@@ -1347,7 +1347,7 @@ HB_FUNC( HB_SOCKETSETRCVBUFSIZE )
 
 HB_FUNC( HB_SOCKETGETSNDBUFSIZE )
 {
-   HB_SOCKET socket = hb_socketParam( 1 );
+   HB_SOCKET socket = hb_socketParam(1);
 
    if( socket != HB_NO_SOCKET )
    {
@@ -1359,7 +1359,7 @@ HB_FUNC( HB_SOCKETGETSNDBUFSIZE )
 
 HB_FUNC( HB_SOCKETGETRCVBUFSIZE )
 {
-   HB_SOCKET socket = hb_socketParam( 1 );
+   HB_SOCKET socket = hb_socketParam(1);
 
    if( socket != HB_NO_SOCKET )
    {
@@ -1371,7 +1371,7 @@ HB_FUNC( HB_SOCKETGETRCVBUFSIZE )
 
 HB_FUNC( HB_SOCKETSETMULTICAST )
 {
-   HB_SOCKET socket = hb_socketParam( 1 );
+   HB_SOCKET socket = hb_socketParam(1);
 
    if( socket != HB_NO_SOCKET )
    {
@@ -1381,7 +1381,7 @@ HB_FUNC( HB_SOCKETSETMULTICAST )
 
 HB_FUNC( HB_SOCKETSELECTREAD )
 {
-   PHB_SOCKEX pSock = hb_sockexParam( 1 );
+   PHB_SOCKEX pSock = hb_sockexParam(1);
 
    if( pSock )
    {
@@ -1391,7 +1391,7 @@ HB_FUNC( HB_SOCKETSELECTREAD )
 
 HB_FUNC( HB_SOCKETSELECTWRITE )
 {
-   PHB_SOCKEX pSock = hb_sockexParam( 1 );
+   PHB_SOCKEX pSock = hb_sockexParam(1);
 
    if( pSock )
    {
@@ -1401,7 +1401,7 @@ HB_FUNC( HB_SOCKETSELECTWRITE )
 
 HB_FUNC( HB_SOCKETSELECTWRITEEX )
 {
-   HB_SOCKET socket = hb_socketParam( 1 );
+   HB_SOCKET socket = hb_socketParam(1);
 
    if( socket != HB_NO_SOCKET )
    {
@@ -1498,7 +1498,7 @@ HB_FUNC( HB_SOCKETGETHOSTS )
       }
       else
       {
-         hb_reta( 0 );
+         hb_reta(0);
       }
    }
    else
@@ -1525,7 +1525,7 @@ HB_FUNC( HB_SOCKETGETALIASES )
       }
       else
       {
-         hb_reta( 0 );
+         hb_reta(0);
       }
    }
    else
@@ -1547,13 +1547,13 @@ HB_FUNC( HB_SOCKETGETIFACES )
    }
    else
    {
-      hb_reta( 0 );
+      hb_reta(0);
    }
 }
 
 HB_FUNC( HB_SOCKETGETFD )
 {
-   hb_retnint( hb_socketParam( 1 ) );
+   hb_retnint( hb_socketParam(1) );
 }
 
 HB_FUNC( HB_SOCKETSETFILTER )
@@ -1572,7 +1572,7 @@ HB_FUNC( HB_SOCKETSETFILTER )
 
 HB_FUNC( HB_SOCKETGETFILTER )
 {
-   PHB_SOCKEX pSock = hb_sockexParam( 1 );
+   PHB_SOCKEX pSock = hb_sockexParam(1);
 
    if( pSock )
    {
@@ -1582,7 +1582,7 @@ HB_FUNC( HB_SOCKETGETFILTER )
 
 HB_FUNC( HB_SOCKETREAD )
 {
-   PHB_SOCKEX pSock = hb_sockexParam( 1 );
+   PHB_SOCKEX pSock = hb_sockexParam(1);
 
    if( pSock )
    {
@@ -1590,9 +1590,9 @@ HB_FUNC( HB_SOCKETREAD )
       char * pBuffer;
       HB_SIZE nLen;
 
-      if( pItem && HB_ISBYREF( 2 ) && hb_itemGetWriteCL( pItem, &pBuffer, &nLen ) )
+      if( pItem && HB_ISBYREF(2) && hb_itemGetWriteCL( pItem, &pBuffer, &nLen ) )
       {
-         if( HB_ISNUM( 3 ) )
+         if( HB_ISNUM(3) )
          {
             long lRead = hb_parnl(3);
             if( lRead >= 0 && lRead < static_cast<long>( nLen ) )
@@ -1611,14 +1611,14 @@ HB_FUNC( HB_SOCKETREAD )
 
 HB_FUNC( HB_SOCKETWRITE )
 {
-   PHB_SOCKEX pSock = hb_sockexParam( 1 );
+   PHB_SOCKEX pSock = hb_sockexParam(1);
 
    if( pSock )
    {
       HB_MAXINT timeout = hb_parnintdef( 4, -1 );
       long lLen = static_cast<long>( hb_parclen(2) );
 
-      if( HB_ISNUM( 3 ) )
+      if( HB_ISNUM(3) )
       {
          long lWrite = hb_parnl(3);
 
@@ -1633,7 +1633,7 @@ HB_FUNC( HB_SOCKETWRITE )
 
 HB_FUNC( HB_SOCKETFLUSH )
 {
-   PHB_SOCKEX pSock = hb_sockexParam( 1 );
+   PHB_SOCKEX pSock = hb_sockexParam(1);
 
    if( pSock )
    {
@@ -1643,12 +1643,12 @@ HB_FUNC( HB_SOCKETFLUSH )
 
 HB_FUNC( HB_SOCKETAUTOFLUSH )
 {
-   PHB_SOCKEX pSock = hb_sockexParam( 1 );
+   PHB_SOCKEX pSock = hb_sockexParam(1);
 
    if( pSock )
    {
       hb_retni( hb_sockexGetAutoFlush( pSock ) );
-      if( HB_ISNUM( 2 ) )
+      if( HB_ISNUM(2) )
       {
          hb_sockexSetAutoFlush( pSock, hb_parni(2) );
       }
@@ -1657,12 +1657,12 @@ HB_FUNC( HB_SOCKETAUTOFLUSH )
 
 HB_FUNC( HB_SOCKETAUTOSHUTDOWN )
 {
-   PHB_SOCKEX pSock = hb_sockexParam( 1 );
+   PHB_SOCKEX pSock = hb_sockexParam(1);
 
    if( pSock )
    {
       hb_retl( hb_sockexGetShutDown( pSock ) );
-      if( HB_ISLOG( 2 ) )
+      if( HB_ISLOG(2) )
       {
          hb_sockexSetShutDown( pSock, hb_parl(2) );
       }

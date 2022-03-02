@@ -327,7 +327,7 @@ PHB_ITEM hb_itemDoC( const char * szFunc, HB_ULONG ulPCount, ... )
 
 /*
  * Notice that these two functions place the result at hb_stackReturnItem(),
- * that you may access its value using a hb_par...( -1 ).
+ * that you may access its value using a hb_par...(-1).
  */
 
 /* undocumented Clipper _cEval0() */
@@ -335,7 +335,7 @@ void hb_evalBlock0( PHB_ITEM pCodeBlock )
 {
    hb_vmPushEvalSym();
    hb_vmPush( pCodeBlock );
-   hb_vmSend( 0 );
+   hb_vmSend(0);
 }
 
 /* undocumented Clipper _cEval1() */
@@ -344,7 +344,7 @@ void hb_evalBlock1( PHB_ITEM pCodeBlock, PHB_ITEM pParam )
    hb_vmPushEvalSym();
    hb_vmPush( pCodeBlock );
    hb_vmPush( pParam );
-   hb_vmSend( 1 );
+   hb_vmSend(1);
 }
 
 /* same functionality but with a nullptr terminated list of parameters */
@@ -381,7 +381,7 @@ HB_FUNC( HB_FORNEXT ) /* nStart, nEnd | bEnd, bCode, nStep */
 
       if( pEndBlock )
       {
-         hb_evalBlock0( pEndBlock );
+         hb_evalBlock0(pEndBlock);
          nEnd = hb_parnint(-1);
 
          while( nStart <= nEnd )
@@ -389,11 +389,11 @@ HB_FUNC( HB_FORNEXT ) /* nStart, nEnd | bEnd, bCode, nStep */
             hb_vmPushEvalSym();
             hb_vmPush( pCodeBlock );
             hb_vmPushNumInt( nStart );
-            hb_vmSend( 1 );
+            hb_vmSend(1);
 
             nStart += nStep;
 
-            hb_evalBlock0( pEndBlock );
+            hb_evalBlock0(pEndBlock);
             nEnd = hb_parnint(-1);
          }
       }
@@ -405,7 +405,7 @@ HB_FUNC( HB_FORNEXT ) /* nStart, nEnd | bEnd, bCode, nStep */
             hb_vmPushEvalSym();
             hb_vmPush( pCodeBlock );
             hb_vmPushNumInt( nStart );
-            hb_vmSend( 1 );
+            hb_vmSend(1);
 
             nStart += nStep;
          }
@@ -637,7 +637,7 @@ HB_FUNC( HB_EXECMSG )
 {
    int iParams = hb_pcount();
 
-   if( iParams >= 2 && HB_ISSYMBOL( 1 ) )
+   if( iParams >= 2 && HB_ISSYMBOL(1) )
    {
       PHB_ITEM pBase = hb_stackBaseItem();
       pBase->item.asSymbol.paramcnt = pBase->item.asSymbol.paramdeclcnt = 0;

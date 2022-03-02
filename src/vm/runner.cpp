@@ -200,7 +200,7 @@ static void hb_hrbInitStatic( PHRB_BODY pHrbBody )
 
             hb_vmPushSymbol( &( pHrbBody->pSymRead[ ul ] ) );
             hb_vmPushNil();
-            hb_vmProc( 0 );
+            hb_vmProc(0);
          }
       }
    }
@@ -271,7 +271,7 @@ static void hb_hrbExit( PHRB_BODY pHrbBody )
             {
                hb_vmPushSymbol( pHrbBody->pSymRead + ul );
                hb_vmPushNil();
-               hb_vmProc( 0 );
+               hb_vmProc(0);
                if( hb_vmRequestQuery() != 0 )
                {
                   break;
@@ -706,7 +706,7 @@ HB_FUNC( HB_HRBRUN )
    HB_USHORT nParam = 1;
    HB_SIZE nLen;
 
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
       usMode = static_cast<HB_USHORT>( hb_parni(1) );
       nParam++;
@@ -766,7 +766,7 @@ HB_FUNC( HB_HRBLOAD )
    HB_USHORT nParam = 1;
    HB_SIZE nLen;
 
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
       usMode = static_cast<HB_USHORT>( hb_parni(1) );
       nParam++;
@@ -819,7 +819,7 @@ HB_FUNC( HB_HRBLOAD )
 
 HB_FUNC( HB_HRBDO )
 {
-   PHRB_BODY pHrbBody = hb_hrbParam( 1 );
+   PHRB_BODY pHrbBody = hb_hrbParam(1);
 
    if( pHrbBody )
    {
@@ -870,7 +870,7 @@ HB_FUNC( HB_HRBUNLOAD )
 
 HB_FUNC( HB_HRBGETFUNSYM )
 {
-   PHRB_BODY pHrbBody = hb_hrbParam( 1 );
+   PHRB_BODY pHrbBody = hb_hrbParam(1);
    const char * szName = hb_parc(2);
 
    if( pHrbBody && szName )
@@ -895,13 +895,13 @@ HB_FUNC( HB_HRBGETFUNSYM )
 
 HB_FUNC( HB_HRBGETFUNLIST )
 {
-   PHRB_BODY pHrbBody = hb_hrbParam( 1 );
+   PHRB_BODY pHrbBody = hb_hrbParam(1);
 
    if( pHrbBody )
    {
       PHB_SYMB pSym;
       HB_ULONG nPos;
-      PHB_ITEM paList = hb_itemArrayNew( 0 );
+      PHB_ITEM paList = hb_itemArrayNew(0);
       PHB_ITEM pFuncName = hb_itemNew(nullptr);
       int iType = hb_parni(2);
 

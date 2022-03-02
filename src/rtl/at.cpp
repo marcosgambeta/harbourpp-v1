@@ -84,7 +84,7 @@ HB_FUNC( HB_AT )
 
          pszText     += nFrom;
          nTextLength -= nFrom;
-         if( HB_ISNUM( 4 ) )
+         if( HB_ISNUM(4) )
          {
             nTo = hb_parns(4);
             if( nTo <= nStart )

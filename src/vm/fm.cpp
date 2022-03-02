@@ -217,7 +217,7 @@
 
    static HB_CRITICAL_NEW( s_fmMtx );
 #  define HB_FM_LOCK()           do { hb_threadEnterCriticalSection( &s_fmMtx )
-#  define HB_FM_UNLOCK()         hb_threadLeaveCriticalSection( &s_fmMtx ); } while( 0 )
+#  define HB_FM_UNLOCK()         hb_threadLeaveCriticalSection( &s_fmMtx ); } while(0)
 
 #else
 
@@ -530,7 +530,7 @@ void hb_xclean( void )
    }
    HB_FM_UNLOCK();
 #elif defined( HB_FM_DL_ALLOC )
-   dlmalloc_trim( 0 );
+   dlmalloc_trim(0);
 #endif
 }
 
@@ -1307,7 +1307,7 @@ void hb_xexit( void ) /* Deinitialize fixed memory subsystem */
             hb_dateToday( &iYear, &iMonth, &iDay );
             hb_dateTimeStr( szTime );
 
-            fprintf( hLog, HB_I_( "Application Memory Allocation Report - %s\n" ), hb_cmdargARGVN( 0 ) );
+            fprintf( hLog, HB_I_( "Application Memory Allocation Report - %s\n" ), hb_cmdargARGVN(0) );
             fprintf( hLog, HB_I_( "Terminated at: %04d-%02d-%02d %s\n" ), iYear, iMonth, iDay, szTime );
             if( s_szInfo[ 0 ] )
             {
@@ -1363,7 +1363,7 @@ void hb_xexit( void ) /* Deinitialize fixed memory subsystem */
 #  elif defined( USE_DL_PREFIX )
       dlmalloc_destroy();
 #  else
-      malloc_trim( 0 );
+      malloc_trim(0);
 #  endif
 #endif
 }
@@ -1382,7 +1382,7 @@ void hb_xexit( void ) /* Deinitialize fixed memory subsystem */
 #  elif defined( USE_DL_PREFIX )
       dlmalloc_destroy();
 #  else
-      malloc_trim( 0 );
+      malloc_trim(0);
 #  endif
 #endif
 }
@@ -1589,7 +1589,7 @@ HB_FUNC( __FM_ALLOCLIMIT )
    hb_xclean();
 #if defined( HB_FM_DLMT_ALLOC )
    hb_retns( mspace_footprint_limit( hb_mspace() ) );
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
       HB_ISIZ nLimit = hb_parns(1);
 
@@ -1601,7 +1601,7 @@ HB_FUNC( __FM_ALLOCLIMIT )
    }
 #elif defined( HB_FM_DL_ALLOC )
    hb_retns( dlmalloc_footprint_limit() );
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
       HB_ISIZ nLimit = hb_parns(1);
 
@@ -1613,13 +1613,13 @@ HB_FUNC( __FM_ALLOCLIMIT )
    }
 #elif defined( HB_FM_STATISTICS )
    hb_retns( s_nMemoryLimConsumed ? s_nMemoryLimConsumed : -1 );
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
       HB_ISIZ nLimit = hb_parns(1);
 
       s_nMemoryLimConsumed = HB_MAX( nLimit, 0 );
    }
 #else
-   hb_retni( 0 );
+   hb_retni(0);
 #endif
 }

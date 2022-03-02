@@ -251,7 +251,7 @@ void hb_blowfishEncrypt( const HB_BLOWFISH * bf, HB_U32 * xl, HB_U32 * xr )
 {
    HB_U32 xL = *xl, xR = *xr;
 
-   xL ^= P( 0 );
+   xL ^= P(0);
    xR ^= R( xL, 1 );  xL ^= R( xR, 2 );
    xR ^= R( xL, 3 );  xL ^= R( xR, 4 );
    xR ^= R( xL, 5 );  xL ^= R( xR, 6 );
@@ -260,7 +260,7 @@ void hb_blowfishEncrypt( const HB_BLOWFISH * bf, HB_U32 * xl, HB_U32 * xr )
    xR ^= R( xL, 11 ); xL ^= R( xR, 12 );
    xR ^= R( xL, 13 ); xL ^= R( xR, 14 );
    xR ^= R( xL, 15 ); xL ^= R( xR, 16 );
-   xR ^= P( 17 );
+   xR ^= P(17);
 
    *xr = xL;
    *xl = xR;
@@ -270,7 +270,7 @@ void hb_blowfishDecrypt( const HB_BLOWFISH * bf, HB_U32 * xl, HB_U32 * xr )
 {
    HB_U32 xL = *xl, xR = *xr;
 
-   xL ^= P( 17 );
+   xL ^= P(17);
    xR ^= R( xL, 16 ); xL ^= R( xR, 15 );
    xR ^= R( xL, 14 ); xL ^= R( xR, 13 );
    xR ^= R( xL, 12 ); xL ^= R( xR, 11 );
@@ -279,7 +279,7 @@ void hb_blowfishDecrypt( const HB_BLOWFISH * bf, HB_U32 * xl, HB_U32 * xr )
    xR ^= R( xL, 6 );  xL ^= R( xR, 5 );
    xR ^= R( xL, 4 );  xL ^= R( xR, 3 );
    xR ^= R( xL, 2 );  xL ^= R( xR, 1 );
-   xR ^= P( 0 );
+   xR ^= P(0);
 
    *xr = xL;
    *xl = xR;

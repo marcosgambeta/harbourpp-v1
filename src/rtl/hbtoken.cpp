@@ -170,7 +170,7 @@ static const char * hb_tokenGet( const char * szLine, HB_SIZE nLen, const char *
 static PHB_ITEM hb_tokenArray( const char * szLine, HB_SIZE nLen, const char * szDelim, HB_SIZE nDelim, int iFlags )
 {
    HB_SIZE nTokens = hb_tokenCount( szLine, nLen, szDelim, nDelim, iFlags );
-   PHB_ITEM pArray = hb_itemArrayNew( nTokens );
+   PHB_ITEM pArray = hb_itemArrayNew(nTokens);
 
    if( nTokens )
    {
@@ -308,7 +308,7 @@ HB_FUNC( HB_TOKENCOUNT )
    }
    else
    {
-      hb_retns( 0 );
+      hb_retns(0);
    }
 }
 
@@ -331,7 +331,7 @@ HB_FUNC( HB_TOKENGET )
 
 /* like hb_tokenGet() but returns next token starting from passed position
  * (0 based) inside string, f.e.:
- *    hb_tokenPtr( cString, @nTokPos, Chr( 9 ) ) --> cToken
+ *    hb_tokenPtr( cString, @nTokPos, Chr(9) ) --> cToken
  */
 HB_FUNC( HB_TOKENPTR )
 {

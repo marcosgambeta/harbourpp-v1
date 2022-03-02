@@ -55,7 +55,7 @@ HB_FUNC( FSETDEVMOD )
 {
    int iRet = FD_BINARY;
 
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
       iRet = hb_fsSetDevMode( hb_numToHandle( hb_parnint(1) ), hb_parni(2) );
       if( iRet != FD_TEXT )
@@ -66,7 +66,7 @@ HB_FUNC( FSETDEVMOD )
    }
    else
    {
-      hb_fsSetFError( 6 );  /* ERROR_INVALID_HANDLE */
+      hb_fsSetFError(6);  /* ERROR_INVALID_HANDLE */
    }
    
    hb_retni( iRet );

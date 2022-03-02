@@ -78,7 +78,7 @@ HB_FUNC( ROUND )
 {
    PHB_ITEM pNumber = hb_param(1, HB_IT_NUMERIC);
 
-   if( pNumber && HB_ISNUM( 2 ) )
+   if( pNumber && HB_ISNUM(2) )
    {
       int iDec = hb_parni(2);
 

@@ -1324,7 +1324,7 @@ static char * tiGetS( const char * capname )
    ptr = tigetstr( const_cast<char*>( capname ) );
    if( ptr )
    {
-      if( ptr == static_cast<char*>( -1 ) )
+      if( ptr == static_cast<char*>(-1) )
          ptr = nullptr;
       else if( ! ptr[ 0 ] )
          ptr = nullptr;
@@ -1706,7 +1706,7 @@ static int gt_setsize( InOutBase * ioBase, int rows, int cols )
       write_ttyseq( ioBase, escseq );
       /* dirty hack - wait for SIGWINCH */
       if( gt_getsize( ioBase, &r, &c ) > 0 )
-         sleep( 3 );
+         sleep(3);
 
       if( s_WinSizeChangeFlag )
       {
@@ -2038,15 +2038,15 @@ static InOutBase * create_ioBase( char * term, int infd, int outfd, int errfd,
    raw();
 
    leaveok( ioBase->hb_stdscr, HB_FALSE );
-   curs_set( 0 );
+   curs_set(0);
 
 #if 0
    nonl();
    nodelay( ioBase->hb_stdscr, HB_TRUE );
    keypad( ioBase->hb_stdscr, HB_FALSE );
-   timeout( 0 );
+   timeout(0);
    noecho();
-   curs_set( 0 );
+   curs_set(0);
 #endif
    wclear( ioBase->hb_stdscr );
    wrefresh( ioBase->hb_stdscr );
@@ -2147,9 +2147,9 @@ static InOutBase * create_newXterm( void )
          ptr = ptyname;
       hb_snprintf( buf, sizeof(buf), "-S%s/%d", ptr, masterfd );
 #if 0
-      close( 0 );
-      close( 1 );
-      close( 2 );
+      close(0);
+      close(1);
+      close(2);
 #endif
 #if 0
       dup2( masterfd, 0 );
@@ -2795,7 +2795,7 @@ static HB_BOOL hb_gt_crs_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
          case HB_GTI_ESCDELAY:
             pInfo->pResult = hb_itemPutNI(pInfo->pResult, s_ioBase->esc_delay);
-            if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
+            if( hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC )
                s_ioBase->esc_delay = hb_itemGetNI(pInfo->pNewVal);
             break;
 

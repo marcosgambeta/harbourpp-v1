@@ -333,7 +333,7 @@ static long hb_znetStreamWrite( PHB_ZNETSTREAM pStream, HB_SOCKET sd, HB_MAXINT 
          {
             while( uiLen-- )
             {
-               *pStream->wr.next_out++ = static_cast<Byte>( 0 ); /* TODO: use better hashing data */
+               *pStream->wr.next_out++ = static_cast<Byte>(0); /* TODO: use better hashing data */
                pStream->wr.avail_out--;
                rest++;
             }
@@ -744,13 +744,13 @@ PHB_SOCKEX hb_sockexNewZNet( HB_SOCKET sd, const void * keydata, int keylen, int
  */
 HB_FUNC( HB_SOCKETNEWZNET )
 {
-   HB_SOCKET sd = hb_socketParam( 1 );
+   HB_SOCKET sd = hb_socketParam(1);
 
    if( sd != HB_NO_SOCKET )
    {
       PHB_SOCKEX pSock;
 
-      if( HB_ISHASH( 2 ) )
+      if( HB_ISHASH(2) )
       {
          pSock = hb_sockexNew( sd, s_sockFilter.pszName, hb_param(2, HB_IT_ANY) );
       }

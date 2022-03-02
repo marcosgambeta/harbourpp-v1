@@ -64,7 +64,7 @@ HB_FUNC( FOPEN )
    }
    else
    {
-      hb_fsSetFError( 0 );
+      hb_fsSetFError(0);
       /* NOTE: Undocumented but existing Clipper Run-time error */
       hb_errRT_BASE( EG_ARG, 2021, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
@@ -82,7 +82,7 @@ HB_FUNC( FCREATE )
    else
    {
       hb_retni( F_ERROR );
-      hb_fsSetFError( 0 );
+      hb_fsSetFError(0);
    }
 }
 
@@ -98,7 +98,7 @@ HB_FUNC( HB_FCREATE )
    else
    {
       hb_retni( F_ERROR );
-      hb_fsSetFError( 0 );
+      hb_fsSetFError(0);
    }
 }
 
@@ -108,7 +108,7 @@ HB_FUNC( FREAD )
    HB_ERRCODE uiError = 0;
    HB_SIZE nRead = 0;
 
-   if( HB_ISNUM( 1 ) && pBuffer && HB_ISBYREF( 2 ) && HB_ISNUM( 3 ) )
+   if( HB_ISNUM(1) && pBuffer && HB_ISBYREF(2) && HB_ISNUM(3) )
    {
       char * buffer;
       HB_SIZE nSize;
@@ -120,7 +120,7 @@ HB_FUNC( FREAD )
                will be one more than the length of the passed buffer, because
                the terminating zero could be used if needed. [vszakats] */
 
-      if( nRead <= hb_parcsiz( 2 ) && hb_itemGetWriteCL( pBuffer, &buffer, &nSize ) )
+      if( nRead <= hb_parcsiz(2) && hb_itemGetWriteCL( pBuffer, &buffer, &nSize ) )
       {
          nRead = hb_fsReadLarge( hb_numToHandle( hb_parnint(1) ), buffer, nRead );
          uiError = hb_fsError();
@@ -139,11 +139,11 @@ HB_FUNC( FWRITE )
 {
    HB_ERRCODE uiError = 0;
 
-   if( HB_ISNUM( 1 ) && HB_ISCHAR( 2 ) )
+   if( HB_ISNUM(1) && HB_ISCHAR(2) )
    {
       HB_SIZE nLen = hb_parclen(2);
 
-      if( HB_ISNUM( 3 ) )
+      if( HB_ISNUM(3) )
       {
          HB_SIZE nWrite = hb_parns(3);
          if( nWrite < nLen )
@@ -157,7 +157,7 @@ HB_FUNC( FWRITE )
    }
    else
    {
-      hb_retns( 0 );
+      hb_retns(0);
    }
    hb_fsSetFError( uiError );
 }
@@ -171,7 +171,7 @@ HB_FUNC( FCLOSE )
 {
    HB_ERRCODE uiError = 0;
 
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
       hb_fsClose( hb_numToHandle( hb_parnint(1) ) );
       uiError = hb_fsError();
@@ -222,14 +222,14 @@ HB_FUNC( FSEEK )
 {
    HB_ERRCODE uiError = 0;
 
-   if( HB_ISNUM( 1 ) && HB_ISNUM( 2 ) )
+   if( HB_ISNUM(1) && HB_ISNUM(2) )
    {
       hb_retnint( hb_fsSeekLarge( hb_numToHandle( hb_parnint(1) ), hb_parnint(2), static_cast<HB_USHORT>( hb_parnidef( 3, FS_SET ) ) ) );
       uiError = hb_fsError();
    }
    else
    {
-      hb_retni( 0 );
+      hb_retni(0);
    }
 
    hb_fsSetFError( uiError );
@@ -239,7 +239,7 @@ HB_FUNC( FREADSTR )
 {
    HB_ERRCODE uiError = 0;
 
-   if( HB_ISNUM( 1 ) && HB_ISNUM( 2 ) )
+   if( HB_ISNUM(1) && HB_ISNUM(2) )
    {
       HB_SIZE nToRead = hb_parns(2);
 
@@ -273,7 +273,7 @@ HB_FUNC( HB_FREADLEN )
    HB_ERRCODE uiError = 0;
    HB_SIZE nToRead = hb_parns(2);
 
-   if( nToRead > 0 && HB_ISNUM( 1 ) )
+   if( nToRead > 0 && HB_ISNUM(1) )
    {
       HB_FHANDLE fhnd = hb_numToHandle( hb_parnint(1) );
       char * buffer = static_cast<char*>( hb_xgrab( nToRead + 1 ) );
@@ -411,7 +411,7 @@ HB_FUNC( HB_FCOMMIT )
 {
    HB_ERRCODE uiError = 6;
 
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
       hb_fsCommit( hb_numToHandle( hb_parnint(1) ) );
       uiError = hb_fsError();
@@ -425,7 +425,7 @@ HB_FUNC( HB_FLOCK )
    HB_ERRCODE uiError = 0;
    HB_BOOL fResult = HB_FALSE;
 
-   if( HB_ISNUM( 1 ) && HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
+   if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) )
    {
       fResult = hb_fsLockLarge( hb_numToHandle( hb_parnint(1) ),
                                 static_cast<HB_FOFFSET>( hb_parnint(2) ),
@@ -442,7 +442,7 @@ HB_FUNC( HB_FUNLOCK )
    HB_ERRCODE uiError = 0;
    HB_BOOL fResult = HB_FALSE;
 
-   if( HB_ISNUM( 1 ) && HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
+   if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) )
    {
       fResult = hb_fsLockLarge( hb_numToHandle( hb_parnint(1) ),
                                 static_cast<HB_FOFFSET>( hb_parnint(2) ),
@@ -474,17 +474,17 @@ HB_FUNC( HB_FSETDATETIME )
 {
    long lDate = -1, lTime = -1;
 
-   if( HB_ISTIMESTAMP( 2 ) )
+   if( HB_ISTIMESTAMP(2) )
    {
       hb_partdt( &lDate, &lTime, 2 );
    }
    else
    {
-      if( HB_ISDATE( 2 ) )
+      if( HB_ISDATE(2) )
       {
-         lDate = hb_pardl( 2 );
+         lDate = hb_pardl(2);
       }
-      if( HB_ISCHAR( 3 ) )
+      if( HB_ISCHAR(3) )
       {
          int iHour, iMinutes, iSeconds, iMSec;
          if( hb_timeStrGet( hb_parc(3), &iHour, &iMinutes, &iSeconds, &iMSec ) )
@@ -508,7 +508,7 @@ HB_FUNC( HB_FGETDATETIME )
 
    if( fOK )
    {
-      if( HB_ISBYREF( 3 ) )
+      if( HB_ISBYREF(3) )
       {
          char buf[ 13 ];
          hb_timeStr( buf, lMillisec );
@@ -528,7 +528,7 @@ HB_FUNC( HB_FGETDATETIME )
    }
    else
    {
-      if( HB_ISBYREF( 3 ) )
+      if( HB_ISBYREF(3) )
       {
          hb_storc( nullptr, 3 );
          hb_stordl( 0, 2 );
@@ -546,14 +546,14 @@ HB_FUNC( HB_FSETDEVMODE )
 {
    int iRet = -1;
 
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
       iRet = hb_fsSetDevMode( hb_numToHandle( hb_parnint(1) ), hb_parni(2) );
       hb_fsSetFError( hb_fsError() );
    }
    else
    {
-      hb_fsSetFError( 6 );  /* ERROR_INVALID_HANDLE */
+      hb_fsSetFError(6);  /* ERROR_INVALID_HANDLE */
    }
 
    hb_retni( iRet );
@@ -574,11 +574,11 @@ HB_FUNC( HB_PREAD )
    char * buffer;
    HB_SIZE nSize;
 
-   if( hPipe != FS_ERROR && pBuffer && HB_ISBYREF( 2 ) && hb_itemGetWriteCL( pBuffer, &buffer, &nSize ) )
+   if( hPipe != FS_ERROR && pBuffer && HB_ISBYREF(2) && hb_itemGetWriteCL( pBuffer, &buffer, &nSize ) )
    {
       HB_ERRCODE uiError = 0;
 
-      if( HB_ISNUM( 3 ) )
+      if( HB_ISNUM(3) )
       {
          HB_ISIZ nToRead = hb_parns(3);
 
@@ -621,7 +621,7 @@ HB_FUNC( HB_PWRITE )
    {
       HB_SIZE nLen = hb_parclen(2);
 
-      if( HB_ISNUM( 3 ) )
+      if( HB_ISNUM(3) )
       {
          HB_SIZE nWrite = hb_parns(3);
          if( nWrite < nLen )

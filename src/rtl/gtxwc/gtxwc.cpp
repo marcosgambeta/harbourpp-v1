@@ -68,13 +68,13 @@ static HB_GT_FUNCS SuperTable;
 #if defined( HB_XWC_XLIB_NEEDLOCKS )
    static HB_CRITICAL_NEW( s_xwcMtx );
 #  define HB_XWC_XLIB_LOCK( dpy )   do { hb_threadEnterCriticalSection( &s_xwcMtx )
-#  define HB_XWC_XLIB_UNLOCK( dpy ) hb_threadLeaveCriticalSection( &s_xwcMtx ); } while( 0 )
+#  define HB_XWC_XLIB_UNLOCK( dpy ) hb_threadLeaveCriticalSection( &s_xwcMtx ); } while(0)
 #elif ! defined( HB_XWC_XLOCK_OFF )
 #  define HB_XWC_XLIB_LOCK( dpy )   do { XLockDisplay( dpy )
-#  define HB_XWC_XLIB_UNLOCK( dpy ) XUnlockDisplay( dpy ); } while( 0 )
+#  define HB_XWC_XLIB_UNLOCK( dpy ) XUnlockDisplay( dpy ); } while(0)
 #else
 #  define HB_XWC_XLIB_LOCK( dpy )   do {
-#  define HB_XWC_XLIB_UNLOCK( dpy ) } while( 0 )
+#  define HB_XWC_XLIB_UNLOCK( dpy ) } while(0)
 #endif
 #define HB_XWC_XLIB_UNLOCKRAW( dpy ) do { HB_XWC_XLIB_UNLOCK( dpy )
 
@@ -4563,7 +4563,7 @@ static void hb_gt_xwc_RequestSelection( PXWND_DEF wnd )
             {
                break;
             }
-            sleep( 1 );
+            sleep(1);
          }
          else
          {
@@ -6087,7 +6087,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                do { \
                      if( l > r ) { tmp = r; r = l; l = tmp; } \
                      if( t > b ) { tmp = b; b = t; t = tmp; } \
-               } while( 0 )
+               } while(0)
 
 static int hb_gt_xwc_gfx_Primitive( PHB_GT pGT, int iType, int iTop, int iLeft, int iBottom, int iRight, int iColor )
 {

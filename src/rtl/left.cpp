@@ -56,7 +56,7 @@ HB_FUNC( LEFT )
 {
    PHB_ITEM pText = hb_param(1, HB_IT_STRING);
 
-   if( pText && HB_ISNUM( 2 ) )
+   if( pText && HB_ISNUM(2) )
    {
       HB_ISIZ nLen = hb_parns(2);
       if( nLen <= 0 )
