@@ -82,7 +82,10 @@ PHB_ITEM hb_itemParam( HB_USHORT uiParam )
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemParam(%hu)", uiParam ) );
 #endif
 
+#if 0
    return hb_itemNew(hb_param(uiParam, HB_IT_ANY));
+#endif
+   return hb_gcGripGet(hb_param(uiParam, HB_IT_ANY));
 }
 
 /* Internal Item API. Use this with care. */
