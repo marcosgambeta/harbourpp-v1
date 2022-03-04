@@ -148,7 +148,7 @@ static void hb_comCloseAll( void )
 
       if( s_comList[ iPort ].name )
       {
-         hb_xfree( s_comList[ iPort ].name );
+         hb_xfree(s_comList[ iPort ].name);
          s_comList[ iPort ].name = nullptr;
       }
    }
@@ -392,7 +392,7 @@ int hb_comFindPort( const char * pszDevName, HB_BOOL fCreate )
                {
                   if( pCom->name )
                   {
-                     hb_xfree( pCom->name );
+                     hb_xfree(pCom->name);
                      pCom->name = nullptr;
                   }
                   break;
@@ -443,7 +443,7 @@ int hb_comSetDevice( int iPort, const char * szDevName )
       HB_COM_LOCK();
       if( pCom->name )
       {
-         hb_xfree( pCom->name );
+         hb_xfree(pCom->name);
       }
       pCom->name = szDevName && *szDevName ? hb_strdup( szDevName ) : nullptr;
       HB_COM_UNLOCK();
@@ -2583,7 +2583,7 @@ int hb_comOpen( int iPort )
 
          if( lpFree )
          {
-            hb_xfree( lpFree );
+            hb_xfree(lpFree);
          }
       }
    }

@@ -118,8 +118,8 @@ using PHB_GARBAGE = HB_GARBAGE *;
 #define HB_BLOCK_PTR( p )       ( static_cast<void*>( reinterpret_cast<HB_BYTE*>( p ) + HB_GARBAGE_SIZE ) )
 
 /* we may use a cache later */
-#define HB_GARBAGE_NEW( nSize )    ( static_cast<PHB_GARBAGE>( hb_xgrab( HB_GARBAGE_SIZE + ( nSize ) ) ) )
-#define HB_GARBAGE_FREE( pAlloc )   hb_xfree( static_cast<void*>( pAlloc ) )
+#define HB_GARBAGE_NEW( nSize )    ( static_cast<PHB_GARBAGE>( hb_xgrab(HB_GARBAGE_SIZE + ( nSize )) ) )
+#define HB_GARBAGE_FREE( pAlloc )   hb_xfree(static_cast<void*>( pAlloc ))
 
 /* status of memory block */
 /* flags stored in 'used' slot */
@@ -359,7 +359,7 @@ static HB_GARBAGE_FUNC( hb_gcGripRelease )
 {
    if( HB_IS_COMPLEX(static_cast<PHB_ITEM>( Cargo )) )
    {
-      hb_itemClear( static_cast<PHB_ITEM>( Cargo ) );
+      hb_itemClear(static_cast<PHB_ITEM>( Cargo ));
    }
 }
 
@@ -386,7 +386,7 @@ PHB_ITEM hb_gcGripGet( PHB_ITEM pOrigin )
 
    if( pOrigin )
    {
-      hb_itemCopy( pItem, pOrigin );
+      hb_itemCopy(pItem, pOrigin);
    }
 
    return pItem;
@@ -516,7 +516,7 @@ void hb_gcItemRef( PHB_ITEM pItem )
          }
          return;
       }
-      pItem = hb_itemUnRefOnce( pItem );
+      pItem = hb_itemUnRefOnce(pItem);
    }
 
    if( HB_IS_ARRAY(pItem) )

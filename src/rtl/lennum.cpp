@@ -54,13 +54,13 @@ HB_FUNC( LENNUM )
 
    if( pNumber )
    {
-      char * pszString = hb_itemStr( pNumber, nullptr, nullptr );
+      char * pszString = hb_itemStr(pNumber, nullptr, nullptr);
 
       if( pszString )
       {
          nLen = strlen( pszString );
          hb_strLTrim( pszString, &nLen );
-         hb_xfree( pszString );
+         hb_xfree(pszString);
       }
    }
 

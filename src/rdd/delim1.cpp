@@ -84,7 +84,7 @@ static void hb_delimInitArea( DELIMAREAP pArea, char * szFileName )
                         ( szEol[ 1 ] == '\n' || szEol[ 1 ] == '\r' ) ) );
 
    /* allocate record buffer, one additional byte is for deleted flag */
-   pArea->pRecord = static_cast<HB_BYTE*>( hb_xgrab( pArea->uiRecordLen + 1 ) );
+   pArea->pRecord = static_cast<HB_BYTE*>( hb_xgrab(pArea->uiRecordLen + 1) );
    /* pseudo deleted flag */
    *pArea->pRecord++ = ' ';
 
@@ -94,7 +94,7 @@ static void hb_delimInitArea( DELIMAREAP pArea, char * szFileName )
    {
       pArea->nBufferSize = 8192;
    }
-   pArea->pBuffer = static_cast<HB_BYTE*>( hb_xgrab( pArea->nBufferSize ) );
+   pArea->pBuffer = static_cast<HB_BYTE*>( hb_xgrab(pArea->nBufferSize) );
 
    pArea->ulRecCount = 0;
    pArea->nBufferIndex = pArea->nBufferRead = pArea->nBufferSize;
@@ -140,7 +140,7 @@ static HB_ERRCODE hb_delimWriteHeader( DELIMAREAP pArea )
       nSize += pArea->uiEolLen - 1;
       if( nSize > pArea->nBufferSize )
       {
-         pBuffer = static_cast<HB_BYTE*>( hb_xgrab( nSize ) );
+         pBuffer = static_cast<HB_BYTE*>( hb_xgrab(nSize) );
       }
 
       nSize = 0;
@@ -162,7 +162,7 @@ static HB_ERRCODE hb_delimWriteHeader( DELIMAREAP pArea )
       errCode = hb_delimWrite( pArea, pBuffer, nSize );
       if( pBuffer != pArea->pBuffer )
       {
-         hb_xfree( pBuffer );
+         hb_xfree(pBuffer);
       }
    }
    return errCode;
@@ -460,7 +460,7 @@ static HB_ERRCODE hb_delimReadRecord( DELIMAREAP pArea )
                {
                   pArea->area.valResult = hb_itemPutNIntLen(pArea->area.valResult, lVal, uiLen);
                }
-               hb_itemStrBuf( reinterpret_cast<char*>( buffer ), pArea->area.valResult, uiLen, pField->uiDec );
+               hb_itemStrBuf(reinterpret_cast<char*>( buffer ), pArea->area.valResult, uiLen, pField->uiDec);
                /* TODO: RT error on width range */
                memcpy( pFieldBuf, buffer, uiLen );
             }
@@ -851,7 +851,7 @@ static HB_ERRCODE hb_delimGetValue( DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITE
          break;
 
       case HB_FT_NONE:
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
          break;
 
       default:
@@ -963,7 +963,7 @@ static HB_ERRCODE hb_delimPutValue( DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITE
       {
          if( pField->uiType == HB_FT_LONG )
          {
-            if( hb_itemStrBuf( szBuffer, pItem, pField->uiLen, pField->uiDec ) )
+            if( hb_itemStrBuf(szBuffer, pItem, pField->uiLen, pField->uiDec) )
             {
                memcpy( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], szBuffer, pField->uiLen );
             }
@@ -1523,27 +1523,27 @@ static HB_ERRCODE hb_delimClose( DELIMAREAP pArea )
 
    if( pArea->pFieldOffset )
    {
-      hb_xfree( pArea->pFieldOffset );
+      hb_xfree(pArea->pFieldOffset);
       pArea->pFieldOffset = nullptr;
    }
    if( pArea->pRecord )
    {
-      hb_xfree( pArea->pRecord - 1 );
+      hb_xfree(pArea->pRecord - 1);
       pArea->pRecord = nullptr;
    }
    if( pArea->pBuffer )
    {
-      hb_xfree( pArea->pBuffer );
+      hb_xfree(pArea->pBuffer);
       pArea->pBuffer = nullptr;
    }
    if( pArea->szEol )
    {
-      hb_xfree( pArea->szEol );
+      hb_xfree(pArea->szEol);
       pArea->szEol = nullptr;
    }
    if( pArea->szFileName )
    {
-      hb_xfree( pArea->szFileName );
+      hb_xfree(pArea->szFileName);
       pArea->szFileName = nullptr;
    }
 
@@ -1596,7 +1596,7 @@ static HB_ERRCODE hb_delimCreate( DELIMAREAP pArea, LPDBOPENINFO pCreateInfo )
    {
       hb_strncpy( szFileName, pCreateInfo->abName, sizeof(szFileName) - 1 );
    }
-   hb_xfree( pFileName );
+   hb_xfree(pFileName);
 
    /* Try create */
    do
@@ -1731,7 +1731,7 @@ static HB_ERRCODE hb_delimOpen( DELIMAREAP pArea, LPDBOPENINFO pOpenInfo )
       hb_strncpyUpperTrim( szAlias, szName, sizeof(szAlias) - 1 );
       pOpenInfo->atomAlias = szAlias;
    }
-   hb_xfree( pFileName );
+   hb_xfree(pFileName);
 
    /* Try open */
    do
@@ -1792,7 +1792,7 @@ static HB_ERRCODE hb_delimInit( LPRDDNODE pRDD )
 
    PHB_TSD pTSD;
 
-   pTSD = static_cast<PHB_TSD>( hb_xgrab( sizeof(HB_TSD) ) );
+   pTSD = static_cast<PHB_TSD>( hb_xgrab(sizeof(HB_TSD)) );
    HB_TSD_INIT( pTSD, sizeof(DELIMDATA), nullptr, nullptr );
    pRDD->lpvCargo = static_cast<void*>( pTSD );
 
@@ -1818,7 +1818,7 @@ static HB_ERRCODE hb_delimExit( LPRDDNODE pRDD )
    if( pRDD->lpvCargo )
    {
       hb_stackReleaseTSD( static_cast<PHB_TSD>( pRDD->lpvCargo ) );
-      hb_xfree( pRDD->lpvCargo );
+      hb_xfree(pRDD->lpvCargo);
       pRDD->lpvCargo = nullptr;
    }
 
@@ -1859,7 +1859,7 @@ static HB_ERRCODE hb_delimRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG u
          if( szNewVal )
          {
             hb_strncpy( pData->szTableExt, szNewVal, sizeof(pData->szTableExt) - 1 );
-            hb_xfree( szNewVal );
+            hb_xfree(szNewVal);
          }
          break;
       }

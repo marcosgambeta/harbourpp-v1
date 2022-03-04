@@ -89,7 +89,7 @@ static void hb_setkeyRelease( void * cargo )
       }
       sk_list_tmp = sk_list;
       sk_list = sk_list->next;
-      hb_xfree( sk_list_tmp );
+      hb_xfree(sk_list_tmp);
    }
 
    ( ( PHB_SK_DATA ) cargo )->sk_list = nullptr;
@@ -143,7 +143,7 @@ static void sk_add( PHB_SETKEY * sk_list_ptr, HB_BOOL bReturn, int iKeyCode, PHB
       {
          if( pAction )
          {
-            sk_list_tmp = static_cast<PHB_SETKEY>( hb_xgrab( sizeof(HB_SETKEY) ) );
+            sk_list_tmp = static_cast<PHB_SETKEY>( hb_xgrab(sizeof(HB_SETKEY)) );
             sk_list_tmp->next = nullptr;
             sk_list_tmp->iKeyCode = iKeyCode;
             sk_list_tmp->pAction = hb_itemNew(pAction);
@@ -190,12 +190,12 @@ static void sk_add( PHB_SETKEY * sk_list_ptr, HB_BOOL bReturn, int iKeyCode, PHB
             {
                sk_list_tmp = *sk_list_ptr;
                *sk_list_ptr = sk_list_tmp->next;
-               hb_xfree( sk_list_tmp );
+               hb_xfree(sk_list_tmp);
             }
             else
             {
                sk_list_end->next = sk_list_tmp->next;
-               hb_xfree( sk_list_tmp );
+               hb_xfree(sk_list_tmp);
             }
          }
       }
@@ -405,7 +405,7 @@ HB_FUNC( HB_SETKEYCHECK )
             hb_vmPush( sk_list_tmp->pAction );
             for( uiParam = 2; uiParam <= uiPCount; ++uiParam )
             {
-               hb_vmPush( hb_stackItemFromBase( uiParam ) );
+               hb_vmPush( hb_stackItemFromBase(uiParam) );
             }
             hb_vmPushInteger( iKeyCode );
             hb_vmSend( uiPCount );

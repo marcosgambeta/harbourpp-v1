@@ -1536,7 +1536,7 @@ static PHB_CBVAR hb_compExprCBVarNew( const char * szVarName, HB_BYTE bType )
 
    PHB_CBVAR pVar;
 
-   pVar = static_cast<PHB_CBVAR>( hb_xgrab( sizeof(HB_CBVAR) ) );
+   pVar = static_cast<PHB_CBVAR>( hb_xgrab(sizeof(HB_CBVAR)) );
 
    pVar->szName = szVarName;
    pVar->bType  = bType;
@@ -1595,7 +1595,7 @@ void hb_compExprCBVarDel( PHB_CBVAR pVars )
    {
       PHB_CBVAR pDel = pVars;
       pVars = pVars->pNext;
-      hb_xfree( pDel );
+      hb_xfree(pDel);
    }
 }
 

@@ -48,7 +48,7 @@
 
 static PHB_HASH_ITEM hb_hashItemNew( HB_SIZE nKey, const void * pKey, const void * pValue )
 {
-   PHB_HASH_ITEM pItem = static_cast<PHB_HASH_ITEM>( hb_xgrab( sizeof(HB_HASH_ITEM) ) );
+   PHB_HASH_ITEM pItem = static_cast<PHB_HASH_ITEM>( hb_xgrab(sizeof(HB_HASH_ITEM)) );
 
    pItem->key = nKey;
    pItem->KeyPtr = pKey;
@@ -64,7 +64,7 @@ static void hb_hashItemDelete( PHB_HASH_TABLE pTable, PHB_HASH_ITEM pItem )
    {
       ( pTable->pDeleteItemFunc )( pTable, pItem->KeyPtr, pItem->ValPtr );
    }
-   hb_xfree( pItem );
+   hb_xfree(pItem);
 }
 
 /* create a new  hash table
@@ -79,7 +79,7 @@ static void hb_hashItemDelete( PHB_HASH_TABLE pTable, PHB_HASH_ITEM pItem )
  */
 PHB_HASH_TABLE hb_hashTableCreate( HB_SIZE nSize, PHB_HASH_FUNC pHashFunc, PHB_HASH_FUNC pDelete, PHB_HASH_FUNC pComp )
 {
-   PHB_HASH_TABLE pTable = static_cast<PHB_HASH_TABLE>( hb_xgrab( sizeof(HB_HASH_TABLE) ) );
+   PHB_HASH_TABLE pTable = static_cast<PHB_HASH_TABLE>( hb_xgrab(sizeof(HB_HASH_TABLE)) );
 
    pTable->nTableSize = nSize;
    pTable->pKeyFunc = pHashFunc;
@@ -112,8 +112,8 @@ void hb_hashTableKill( PHB_HASH_TABLE pTable )
       }
       ++nSize;
    }
-   hb_xfree( pTable->pItems );
-   hb_xfree( pTable );
+   hb_xfree(pTable->pItems);
+   hb_xfree(pTable);
 }
 
 /* resize table */
@@ -164,8 +164,8 @@ PHB_HASH_TABLE hb_hashTableResize( PHB_HASH_TABLE pTable, HB_SIZE nNewSize )
       }
       ++nSize;
    }
-   hb_xfree( pTable->pItems );
-   hb_xfree( pTable );
+   hb_xfree(pTable->pItems);
+   hb_xfree(pTable);
 
    return pNew;
 }

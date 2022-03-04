@@ -108,15 +108,15 @@ HB_BOOL hb_itemParamStore( HB_USHORT uiParam, PHB_ITEM pItem )
    if( hb_param(uiParam, HB_IT_BYREF) )
    {
       HB_STACK_TLS_PRELOAD
-      PHB_ITEM pDest = hb_stackItemFromBase( uiParam );
+      PHB_ITEM pDest = hb_stackItemFromBase(uiParam);
 
       if( pItem )
       {
-         hb_itemCopyToRef( pDest, pItem );
+         hb_itemCopyToRef(pDest, pItem);
       }
       else
       {
-         hb_itemSetNil( hb_itemUnRef( pDest ) );
+         hb_itemSetNil(hb_itemUnRef(pDest));
       }
       return HB_TRUE;
    }
@@ -133,15 +133,15 @@ HB_BOOL hb_itemParamStoreForward( HB_USHORT uiParam, PHB_ITEM pItem )
    if( hb_param(uiParam, HB_IT_BYREF) )
    {
       HB_STACK_TLS_PRELOAD
-      PHB_ITEM pDest = hb_stackItemFromBase( uiParam );
+      PHB_ITEM pDest = hb_stackItemFromBase(uiParam);
 
       if( pItem )
       {
-         hb_itemMoveToRef( pDest, pItem );
+         hb_itemMoveToRef(pDest, pItem);
       }
       else
       {
-         hb_itemSetNil( hb_itemUnRef( pDest ) );
+         hb_itemSetNil(hb_itemUnRef(pDest));
       }
       return HB_TRUE;
    }
@@ -158,16 +158,16 @@ HB_BOOL hb_itemParamStoreRelease( HB_USHORT uiParam, PHB_ITEM pItem )
    if( hb_param(uiParam, HB_IT_BYREF) )
    {
       HB_STACK_TLS_PRELOAD
-      PHB_ITEM pDest = hb_stackItemFromBase( uiParam );
+      PHB_ITEM pDest = hb_stackItemFromBase(uiParam);
 
       if( pItem )
       {
-         hb_itemMoveToRef( pDest, pItem );
+         hb_itemMoveToRef(pDest, pItem);
          hb_itemRelease(pItem);
       }
       else
       {
-         hb_itemSetNil( hb_itemUnRef( pDest ) );
+         hb_itemSetNil(hb_itemUnRef(pDest));
       }
       return HB_TRUE;
    }
@@ -258,7 +258,7 @@ PHB_ITEM hb_itemPutNil( PHB_ITEM pItem )
 
    if( pItem )
    {
-      hb_itemSetNil( pItem );
+      hb_itemSetNil(pItem);
    }
    else
    {
@@ -285,14 +285,14 @@ PHB_ITEM hb_itemPutC( PHB_ITEM pItem, const char * szText )
    else
    {
       nAlloc = nLen + 1;
-      szText = static_cast<char*>( hb_xmemcpy( hb_xgrab( nAlloc ), szText, nAlloc ) );
+      szText = static_cast<char*>( hb_xmemcpy(hb_xgrab(nAlloc), szText, nAlloc) );
    }
 
    if( pItem )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -325,7 +325,7 @@ PHB_ITEM hb_itemPutCL( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
    else
    {
       nAlloc = nLen + 1;
-      szValue = static_cast<char*>( hb_xmemcpy( hb_xgrab( nAlloc ), szText, nLen ) );
+      szValue = static_cast<char*>( hb_xmemcpy(hb_xgrab(nAlloc), szText, nLen) );
       szValue[ nLen ] = '\0';
    }
 
@@ -333,7 +333,7 @@ PHB_ITEM hb_itemPutCL( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -365,7 +365,7 @@ PHB_ITEM hb_itemPutCConst( PHB_ITEM pItem, const char * szText )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -393,7 +393,7 @@ PHB_ITEM hb_itemPutCLConst( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -433,7 +433,7 @@ PHB_ITEM hb_itemPutCPtr( PHB_ITEM pItem, char * szText )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -451,7 +451,7 @@ PHB_ITEM hb_itemPutCPtr( PHB_ITEM pItem, char * szText )
       pItem->item.asString.value = const_cast<char*>( hb_szAscii[ nLen ? static_cast<unsigned char>( szText[ 0 ] ) : 0 ] );
       if( szText )
       {
-         hb_xfree( szText );
+         hb_xfree(szText);
       }
    }
    else
@@ -473,7 +473,7 @@ PHB_ITEM hb_itemPutCLPtr( PHB_ITEM pItem, char * szText, HB_SIZE nLen )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -487,7 +487,7 @@ PHB_ITEM hb_itemPutCLPtr( PHB_ITEM pItem, char * szText, HB_SIZE nLen )
    {
       pItem->item.asString.allocated = 0;
       pItem->item.asString.value = const_cast<char*>( hb_szAscii[ nLen ? static_cast<unsigned char>( szText[ 0 ] ) : 0 ] );
-      hb_xfree( szText );
+      hb_xfree(szText);
    }
    else
    {
@@ -517,8 +517,8 @@ char * hb_itemGetC( PHB_ITEM pItem )
 
    if( pItem && HB_IS_STRING(pItem) )
    {
-      char * szResult = static_cast<char*>( hb_xgrab( pItem->item.asString.length + 1 ) );
-      hb_xmemcpy( szResult, pItem->item.asString.value, pItem->item.asString.length );
+      char * szResult = static_cast<char*>( hb_xgrab(pItem->item.asString.length + 1) );
+      hb_xmemcpy(szResult, pItem->item.asString.value, pItem->item.asString.length);
       szResult[ pItem->item.asString.length ] = '\0';
 
       return szResult;
@@ -577,7 +577,7 @@ HB_SIZE hb_itemCopyC( PHB_ITEM pItem, char * szBuffer, HB_SIZE nLen )
          nLen = pItem->item.asString.length;
       }
 
-      hb_xmemcpy( szBuffer, pItem->item.asString.value, nLen );
+      hb_xmemcpy(szBuffer, pItem->item.asString.value, nLen);
 
       return nLen;
    }
@@ -595,7 +595,7 @@ HB_BOOL hb_itemFreeC( char * szText )
 
    if( szText )
    {
-      hb_xfree( szText );
+      hb_xfree(szText);
 
       return HB_TRUE;
    }
@@ -1017,7 +1017,7 @@ PHB_ITEM hb_itemReturn( PHB_ITEM pItem )
    if( pItem )
    {
       HB_STACK_TLS_PRELOAD
-      hb_itemCopy( hb_stackReturnItem(), pItem );
+      hb_itemCopy(hb_stackReturnItem(), pItem);
    }
 
    return pItem;
@@ -1032,7 +1032,7 @@ PHB_ITEM hb_itemReturnForward( PHB_ITEM pItem )
    if( pItem )
    {
       HB_STACK_TLS_PRELOAD
-      hb_itemMove( hb_stackReturnItem(), pItem );
+      hb_itemMove(hb_stackReturnItem(), pItem);
    }
 
    return pItem;
@@ -1047,7 +1047,7 @@ void hb_itemReturnRelease( PHB_ITEM pItem )
    if( pItem )
    {
       HB_STACK_TLS_PRELOAD
-      hb_itemMove( hb_stackReturnItem(), pItem );
+      hb_itemMove(hb_stackReturnItem(), pItem);
       hb_itemRelease(pItem);
    }
 }
@@ -1062,7 +1062,7 @@ PHB_ITEM hb_itemPutDS( PHB_ITEM pItem, const char * szDate )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -1087,7 +1087,7 @@ PHB_ITEM hb_itemPutD( PHB_ITEM pItem, int iYear, int iMonth, int iDay )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -1112,7 +1112,7 @@ PHB_ITEM hb_itemPutDL( PHB_ITEM pItem, long lJulian )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -1137,7 +1137,7 @@ PHB_ITEM hb_itemPutTS( PHB_ITEM pItem, const char * szDateTime )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -1163,7 +1163,7 @@ PHB_ITEM hb_itemPutTD( PHB_ITEM pItem, double dTimeStamp )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -1189,7 +1189,7 @@ PHB_ITEM hb_itemPutTDT( PHB_ITEM pItem, long lJulian, long lMilliSec )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -1214,7 +1214,7 @@ PHB_ITEM hb_itemPutL( PHB_ITEM pItem, HB_BOOL bValue )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -1240,7 +1240,7 @@ PHB_ITEM hb_itemPutND( PHB_ITEM pItem, double dNumber )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -1266,7 +1266,7 @@ PHB_ITEM hb_itemPutNI( PHB_ITEM pItem, int iNumber )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -1291,7 +1291,7 @@ PHB_ITEM hb_itemPutNL( PHB_ITEM pItem, long lNumber )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -1314,7 +1314,7 @@ PHB_ITEM hb_itemPutNS( PHB_ITEM pItem, HB_ISIZ nNumber )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -1357,7 +1357,7 @@ PHB_ITEM hb_itemPutNLL( PHB_ITEM pItem, HB_LONGLONG llNumber )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -1389,7 +1389,7 @@ PHB_ITEM hb_itemPutNInt( PHB_ITEM pItem, HB_MAXINT nNumber )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -1474,7 +1474,7 @@ PHB_ITEM hb_itemPutNDLen( PHB_ITEM pItem, double dNumber, int iWidth, int iDec )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -1511,7 +1511,7 @@ PHB_ITEM hb_itemPutNDDec( PHB_ITEM pItem, double dNumber, int iDec )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -1573,7 +1573,7 @@ PHB_ITEM hb_itemPutNILen( PHB_ITEM pItem, int iNumber, int iWidth )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -1603,7 +1603,7 @@ PHB_ITEM hb_itemPutNLLen( PHB_ITEM pItem, long lNumber, int iWidth )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -1645,7 +1645,7 @@ PHB_ITEM hb_itemPutNLLLen( PHB_ITEM pItem, HB_LONGLONG llNumber, int iWidth )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -1715,7 +1715,7 @@ PHB_ITEM hb_itemPutPtr( PHB_ITEM pItem, void * pValue )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -1741,7 +1741,7 @@ PHB_ITEM hb_itemPutPtrGC( PHB_ITEM pItem, void * pValue )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -1769,7 +1769,7 @@ PHB_ITEM hb_itemPutPtrRawGC( PHB_ITEM pItem, void * pValue )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -1795,7 +1795,7 @@ PHB_ITEM hb_itemPutSymbol( PHB_ITEM pItem, PHB_SYMB pSym )
    {
       if( HB_IS_COMPLEX(pItem) )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
       }
    }
    else
@@ -2110,10 +2110,10 @@ void hb_itemCopy( PHB_ITEM pDest, PHB_ITEM pSource )
 
    if( HB_IS_COMPLEX(pDest) )
    {
-      hb_itemClear( pDest );
+      hb_itemClear(pDest);
    }
 
-   hb_itemRawCpy( pDest, pSource );
+   hb_itemRawCpy(pDest, pSource);
    pDest->type &= ~HB_IT_DEFAULT;
 
    if( HB_IS_COMPLEX(pSource) )
@@ -2185,7 +2185,7 @@ void hb_itemCopyToRef( PHB_ITEM pDest, PHB_ITEM pSource )
 
    if( HB_IS_BYREF(pDest) )
    {
-      pDest = hb_itemUnRefWrite( pDest, pSource );
+      pDest = hb_itemUnRefWrite(pDest, pSource);
       if( ! pDest || pDest == pSource )
       {
          /* extended reference or pDest is a reference to pSource
@@ -2196,7 +2196,7 @@ void hb_itemCopyToRef( PHB_ITEM pDest, PHB_ITEM pSource )
 
    if( HB_IS_BYREF(pSource) )
    {
-      if( hb_itemUnRef( pSource ) == pDest )
+      if( hb_itemUnRef(pSource) == pDest )
       {
          /*
           * assign will create cyclic reference
@@ -2212,7 +2212,7 @@ void hb_itemCopyToRef( PHB_ITEM pDest, PHB_ITEM pSource )
       return;
    }
 
-   hb_itemCopy( pDest, pSource );
+   hb_itemCopy(pDest, pSource);
 }
 
 /* Internal API, not standard Clipper */
@@ -2225,7 +2225,7 @@ void hb_itemCopyFromRef( PHB_ITEM pDest, PHB_ITEM pSource )
 
    if( HB_IS_BYREF(pSource) )
    {
-      pSource = hb_itemUnRef( pSource );
+      pSource = hb_itemUnRef(pSource);
       if( pDest == pSource )
       {
          /* pSource is a reference to pDest - do not copy */
@@ -2233,7 +2233,7 @@ void hb_itemCopyFromRef( PHB_ITEM pDest, PHB_ITEM pSource )
       }
    }
 
-   hb_itemCopy( pDest, pSource );
+   hb_itemCopy(pDest, pSource);
 }
 
 /*
@@ -2253,11 +2253,11 @@ void hb_itemMove( PHB_ITEM pDest, PHB_ITEM pSource )
 
    if( HB_IS_COMPLEX(pDest) )
    {
-      hb_itemClear( pDest );
+      hb_itemClear(pDest);
    }
 
    /* GCLOCK enter */
-   hb_itemRawCpy( pDest, pSource );
+   hb_itemRawCpy(pDest, pSource);
    pDest->type &= ~HB_IT_DEFAULT;
    pSource->type = HB_IT_NIL;
    /* GCLOCK leave */
@@ -2273,25 +2273,25 @@ void hb_itemMoveRef( PHB_ITEM pDest, PHB_ITEM pSource )
 
    if( HB_IS_BYREF(pSource) )
    {
-      if( hb_itemUnRef( pSource ) == ( HB_IS_BYREF(pDest) ? hb_itemUnRef( pDest ) : pDest ) )
+      if( hb_itemUnRef(pSource) == ( HB_IS_BYREF(pDest) ? hb_itemUnRef(pDest) : pDest ) )
       {
          /*
           * assign will create cyclic reference
           * pSource is a reference to pDest
           * we can simply drop coping
           */
-         hb_itemSetNil( pSource );
+         hb_itemSetNil(pSource);
          return;
       }
    }
 
    if( HB_IS_COMPLEX(pDest) )
    {
-      hb_itemClear( pDest );
+      hb_itemClear(pDest);
    }
 
    /* GCLOCK enter */
-   hb_itemRawCpy( pDest, pSource );
+   hb_itemRawCpy(pDest, pSource);
    pDest->type &= ~HB_IT_DEFAULT;
    pSource->type = HB_IT_NIL;
    /* GCLOCK leave */
@@ -2307,43 +2307,43 @@ void hb_itemMoveToRef( PHB_ITEM pDest, PHB_ITEM pSource )
 
    if( HB_IS_BYREF(pDest) )
    {
-      pDest = hb_itemUnRefWrite( pDest, pSource );
+      pDest = hb_itemUnRefWrite(pDest, pSource);
       if( ! pDest || pDest == pSource )
       {
          /* extended reference or pDest is a reference to pSource
             - do not copy */
-         hb_itemSetNil( pSource );
+         hb_itemSetNil(pSource);
          return;
       }
    }
 
    if( HB_IS_BYREF(pSource) )
    {
-      if( hb_itemUnRef( pSource ) == pDest )
+      if( hb_itemUnRef(pSource) == pDest )
       {
          /*
           * assign will create cyclic reference
           * pSource and pDest reference to the same item
           * we can simply drop coping
           */
-         hb_itemSetNil( pSource );
+         hb_itemSetNil(pSource);
          return;
       }
    }
 
    if( HB_IS_OBJECT(pDest) && hb_objOperatorCall( HB_OO_OP_ASSIGN, pDest, pDest, pSource, nullptr ) )
    {
-      hb_itemSetNil( pSource );
+      hb_itemSetNil(pSource);
       return;
    }
 
    if( HB_IS_COMPLEX(pDest) )
    {
-      hb_itemClear( pDest );
+      hb_itemClear(pDest);
    }
 
    /* GCLOCK enter */
-   hb_itemRawCpy( pDest, pSource );
+   hb_itemRawCpy(pDest, pSource);
    pDest->type &= ~HB_IT_DEFAULT;
    pSource->type = HB_IT_NIL;
    /* GCLOCK leave */
@@ -2357,17 +2357,17 @@ void hb_itemMoveFromRef( PHB_ITEM pDest, PHB_ITEM pSource )
 
    if( HB_IS_BYREF(pSource) )
    {
-      PHB_ITEM pUnRef = hb_itemUnRef( pSource );
+      PHB_ITEM pUnRef = hb_itemUnRef(pSource);
       if( pDest != pUnRef )
       {
          /* pSource is not a reference to pDest - make copy */
-         hb_itemCopy( pDest, pUnRef );
+         hb_itemCopy(pDest, pUnRef);
       }
-      hb_itemClear( pSource );
+      hb_itemClear(pSource);
    }
    else
    {
-      hb_itemMove( pDest, pSource );
+      hb_itemMove(pDest, pSource);
    }
 }
 
@@ -2386,9 +2386,9 @@ void hb_itemSwap( PHB_ITEM pItem1, PHB_ITEM pItem2 )
     * activated inside memcpy()
     */
    /* GCLOCK enter */
-   hb_itemRawCpy( &temp, pItem2 );
-   hb_itemRawCpy( pItem2, pItem1 );
-   hb_itemRawCpy( pItem1, &temp );
+   hb_itemRawCpy(&temp, pItem2);
+   hb_itemRawCpy(pItem2, pItem1);
+   hb_itemRawCpy(pItem1, &temp);
    pItem1->type &= ~HB_IT_DEFAULT;
    pItem2->type &= ~HB_IT_DEFAULT;
    /* GCLOCK leave */
@@ -2418,7 +2418,7 @@ PHB_ITEM hb_itemUnRefOnce( PHB_ITEM pItem )
          }
          else
          {
-            PHB_ITEM pBase = HB_IS_BYREF(pItem->item.asEnum.basePtr) ? hb_itemUnRef( pItem->item.asEnum.basePtr ) : pItem->item.asEnum.basePtr;
+            PHB_ITEM pBase = HB_IS_BYREF(pItem->item.asEnum.basePtr) ? hb_itemUnRef(pItem->item.asEnum.basePtr) : pItem->item.asEnum.basePtr;
             if( HB_IS_ARRAY(pBase) )
             {
                pBase = hb_arrayGetItemPtr( pBase, pItem->item.asEnum.offset );
@@ -2493,7 +2493,7 @@ PHB_ITEM hb_itemUnRefOnce( PHB_ITEM pItem )
                         one of the pItem->item.asRefer.BasePtr.array items
                         or more then one reference to this array exists
                         so it will not be freed [druzus] */
-                     hb_itemClear( pItem );
+                     hb_itemClear(pItem);
                   }
                }
             }
@@ -2528,7 +2528,7 @@ PHB_ITEM hb_itemUnRef( PHB_ITEM pItem )
 
    do
    {
-      pItem = hb_itemUnRefOnce( pItem );
+      pItem = hb_itemUnRefOnce(pItem);
    }
    while( HB_IS_BYREF(pItem) );
 
@@ -2554,21 +2554,21 @@ PHB_ITEM hb_itemUnRefWrite( PHB_ITEM pItem, PHB_ITEM pSource )
       {
          if( HB_IS_ENUM(pItem) && HB_IS_BYREF(pItem->item.asEnum.basePtr) && pItem->item.asEnum.offset >= 1 )
          {
-            PHB_ITEM pBase = hb_itemUnRef( pItem->item.asEnum.basePtr );
+            PHB_ITEM pBase = hb_itemUnRef(pItem->item.asEnum.basePtr);
             if( HB_IS_STRING(pBase) && static_cast<HB_SIZE>( pItem->item.asEnum.offset ) <= pBase->item.asString.length )
             {
-               hb_itemUnShareString( pBase );
+               hb_itemUnShareString(pBase);
                pBase->item.asString.value[ pItem->item.asEnum.offset - 1 ] = pSource->item.asString.value[ 0 ];
                return pItem->item.asEnum.valuePtr;
             }
          }
-         pItem = hb_itemUnRefOnce( pItem );
+         pItem = hb_itemUnRefOnce(pItem);
       }
       while( HB_IS_BYREF(pItem) );
    }
    else
    {
-      pItem = hb_itemUnRef( pItem );
+      pItem = hb_itemUnRef(pItem);
    }
 
    return pItem;
@@ -2588,7 +2588,7 @@ PHB_ITEM hb_itemUnRefRefer( PHB_ITEM pItem )
    do
    {
       pLast = pItem;
-      pItem = hb_itemUnRefOnce( pItem );
+      pItem = hb_itemUnRefOnce(pItem);
    }
    while( HB_IS_BYREF(pItem) );
 
@@ -2606,8 +2606,8 @@ PHB_ITEM hb_itemReSizeString( PHB_ITEM pItem, HB_SIZE nSize )
 
    if( pItem->item.asString.allocated == 0 )
    {
-      char * szText = static_cast<char*>( hb_xgrab( nSize + 1 ) );
-      hb_xmemcpy( szText, pItem->item.asString.value, pItem->item.asString.length );
+      char * szText = static_cast<char*>( hb_xgrab(nSize + 1) );
+      hb_xmemcpy(szText, pItem->item.asString.value, pItem->item.asString.length);
       szText[ nSize ] = '\0';
       pItem->item.asString.value     = szText;
       pItem->item.asString.length    = nSize;
@@ -2640,7 +2640,7 @@ PHB_ITEM hb_itemUnShareString( PHB_ITEM pItem )
    if( pItem->item.asString.allocated == 0 || hb_xRefCount( pItem->item.asString.value ) > 1 )
    {
       HB_SIZE nLen = pItem->item.asString.length + 1;
-      char * szText = static_cast<char*>( hb_xmemcpy( hb_xgrab( nLen ), pItem->item.asString.value, nLen ) );
+      char * szText = static_cast<char*>( hb_xmemcpy(hb_xgrab(nLen), pItem->item.asString.value, nLen) );
       if( pItem->item.asString.allocated )
       {
          /* GCLOCK enter */
@@ -2663,12 +2663,12 @@ PHB_ITEM hb_itemUnShare( PHB_ITEM pItem )
 
    if( HB_IS_BYREF(pItem) )
    {
-      pItem = hb_itemUnRef( pItem );
+      pItem = hb_itemUnRef(pItem);
    }
 
    if( HB_IS_STRING(pItem) )
    {
-      return hb_itemUnShareString( pItem );
+      return hb_itemUnShareString(pItem);
    }
    else
    {
@@ -2686,12 +2686,12 @@ HB_BOOL hb_itemGetWriteCL( PHB_ITEM pItem, char ** pszValue, HB_SIZE * pnLen )
    {
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_STRING(pItem) )
       {
-         hb_itemUnShareString( pItem );
+         hb_itemUnShareString(pItem);
          *pnLen = pItem->item.asString.length;
          *pszValue = pItem->item.asString.value;
          return HB_TRUE;
@@ -2712,7 +2712,7 @@ PHB_ITEM hb_itemClone( PHB_ITEM pItem )
    {
       if( HB_IS_OBJECT(pItem) )
       {
-         return hb_objCloneTo( hb_itemNew(nullptr), pItem );
+         return hb_objCloneTo(hb_itemNew(nullptr), pItem);
       }
       else
       {
@@ -2739,11 +2739,11 @@ void hb_itemCloneTo( PHB_ITEM pDest, PHB_ITEM pSource )
    {
       if( HB_IS_OBJECT(pSource) )
       {
-         hb_objCloneTo( pDest, pSource );
+         hb_objCloneTo(pDest, pSource);
       }
       else
       {
-         hb_arrayCloneTo( pDest, pSource );
+         hb_arrayCloneTo(pDest, pSource);
       }
    }
    else if( HB_IS_HASH(pSource) )
@@ -2752,7 +2752,7 @@ void hb_itemCloneTo( PHB_ITEM pDest, PHB_ITEM pSource )
    }
    else
    {
-      hb_itemCopy( pDest, pSource );
+      hb_itemCopy(pDest, pSource);
    }
 }
 
@@ -3430,8 +3430,8 @@ char * hb_itemStr( PHB_ITEM pNumber, PHB_ITEM pWidth, PHB_ITEM pDec )
 
       if( iSize > 0 )
       {
-         szResult = static_cast<char*>( hb_xgrab( iSize + 1 ) );
-         hb_itemStrBuf( szResult, pNumber, iSize, iDec );
+         szResult = static_cast<char*>( hb_xgrab(iSize + 1) );
+         hb_itemStrBuf(szResult, pNumber, iSize, iDec);
       }
    }
 
@@ -3501,12 +3501,12 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
          {
             /* If fixed mode is enabled, use the default number of decimal places. */
             hb_itemPutNI(hb_stackAllocItem(), hb_stackSetStruct()->HB_SET_DECIMALS);
-            buffer = hb_itemStr( pItem, nullptr, hb_stackItemFromTop(-1) );
+            buffer = hb_itemStr(pItem, nullptr, hb_stackItemFromTop(-1));
             hb_stackPop();
          }
          else
          {
-            buffer = hb_itemStr( pItem, nullptr, nullptr );
+            buffer = hb_itemStr(pItem, nullptr, nullptr);
          }
          if( buffer )
          {
@@ -3536,7 +3536,7 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
       case HB_IT_SYMBOL:
          *bFreeReq = HB_TRUE;
          *nLen = strlen( hb_itemGetSymbol(pItem)->szName ) + 3;
-         buffer = static_cast<char*>( hb_xgrab( *nLen + 1 ) );
+         buffer = static_cast<char*>( hb_xgrab(*nLen + 1) );
          buffer[ 0 ] = '@';
          memcpy( buffer + 1, hb_itemGetSymbol(pItem)->szName, *nLen - 3 );
          buffer[ *nLen - 2 ] = '(';
@@ -3551,7 +3551,7 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
 
          *nLen = size - 1;
          *bFreeReq = HB_TRUE;
-         buffer = static_cast<char*>( hb_xgrab( size ) );
+         buffer = static_cast<char*>( hb_xgrab(size) );
          buffer[ 0 ] = '0';
          buffer[ 1 ] = 'x';
          buffer[ --size ] = '\0';
@@ -3591,14 +3591,14 @@ char * hb_itemPadConv( PHB_ITEM pItem, HB_SIZE * pnSize, HB_BOOL * bFreeReq )
          case HB_IT_MEMO:
          case HB_IT_DATE:
          case HB_IT_TIMESTAMP:
-            return hb_itemString( pItem, pnSize, bFreeReq );
+            return hb_itemString(pItem, pnSize, bFreeReq);
 
          case HB_IT_DOUBLE:
          case HB_IT_INTEGER:
          case HB_IT_LONG:
          {
             int i;
-            char * buffer = hb_itemString( pItem, pnSize, bFreeReq );
+            char * buffer = hb_itemString(pItem, pnSize, bFreeReq);
 
             /* remove leading spaces if any, a little bit redundant but
              * I don't want to complicate the API interface more. Druzus
@@ -3638,7 +3638,7 @@ PHB_ITEM hb_itemValToStr( PHB_ITEM pItem )
    HB_SIZE nLen;
    HB_BOOL bFreeReq;
 
-   buffer = hb_itemString( pItem, &nLen, &bFreeReq );
+   buffer = hb_itemString(pItem, &nLen, &bFreeReq);
    if( bFreeReq )
    {
       pResult = hb_itemPutCLPtr(nullptr, buffer, nLen);

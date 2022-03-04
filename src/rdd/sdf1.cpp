@@ -83,7 +83,7 @@ static void hb_sdfInitArea( SDFAREAP pArea, char * szFileName )
                         ( szEol[ 1 ] == '\n' || szEol[ 1 ] == '\r' ) ) );
 
    /* allocate record buffer, one additional byte is for deleted flag */
-   pArea->pRecord = static_cast<HB_BYTE*>( hb_xgrab( pArea->uiRecordLen + pArea->uiEolLen + 1 ) );
+   pArea->pRecord = static_cast<HB_BYTE*>( hb_xgrab(pArea->uiRecordLen + pArea->uiEolLen + 1) );
    /* pseudo deleted flag */
    *pArea->pRecord++ = ' ';
    memcpy( pArea->pRecord + pArea->uiRecordLen, pArea->szEol, pArea->uiEolLen );
@@ -96,7 +96,7 @@ static void hb_sdfInitArea( SDFAREAP pArea, char * szFileName )
       {
          pArea->nBufferSize = 8192;
       }
-      pArea->pBuffer = static_cast<HB_BYTE*>( hb_xgrab( pArea->nBufferSize ) );
+      pArea->pBuffer = static_cast<HB_BYTE*>( hb_xgrab(pArea->nBufferSize) );
    }
    pArea->ulRecCount = 0;
    pArea->nBufferIndex = pArea->nBufferRead = pArea->nBufferSize;
@@ -548,7 +548,7 @@ static HB_ERRCODE hb_sdfGetValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          break;
 
       case HB_FT_NONE:
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
          break;
 
       default:
@@ -661,7 +661,7 @@ static HB_ERRCODE hb_sdfPutValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
       {
          if( pField->uiType == HB_FT_LONG )
          {
-            if( hb_itemStrBuf( szBuffer, pItem, pField->uiLen, pField->uiDec ) )
+            if( hb_itemStrBuf(szBuffer, pItem, pField->uiLen, pField->uiDec) )
             {
                memcpy( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], szBuffer, pField->uiLen );
             }
@@ -1140,27 +1140,27 @@ static HB_ERRCODE hb_sdfClose( SDFAREAP pArea )
 
    if( pArea->pFieldOffset )
    {
-      hb_xfree( pArea->pFieldOffset );
+      hb_xfree(pArea->pFieldOffset);
       pArea->pFieldOffset = nullptr;
    }
    if( pArea->pRecord )
    {
-      hb_xfree( pArea->pRecord - 1 );
+      hb_xfree(pArea->pRecord - 1);
       pArea->pRecord = nullptr;
    }
    if( pArea->pBuffer )
    {
-      hb_xfree( pArea->pBuffer );
+      hb_xfree(pArea->pBuffer);
       pArea->pBuffer = nullptr;
    }
    if( pArea->szEol )
    {
-      hb_xfree( pArea->szEol );
+      hb_xfree(pArea->szEol);
       pArea->szEol = nullptr;
    }
    if( pArea->szFileName )
    {
-      hb_xfree( pArea->szFileName );
+      hb_xfree(pArea->szFileName);
       pArea->szFileName = nullptr;
    }
 
@@ -1213,7 +1213,7 @@ static HB_ERRCODE hb_sdfCreate( SDFAREAP pArea, LPDBOPENINFO pCreateInfo )
    {
       hb_strncpy( szFileName, pCreateInfo->abName, sizeof(szFileName) - 1 );
    }
-   hb_xfree( pFileName );
+   hb_xfree(pFileName);
 
    /* Try create */
    do
@@ -1336,7 +1336,7 @@ static HB_ERRCODE hb_sdfOpen( SDFAREAP pArea, LPDBOPENINFO pOpenInfo )
       hb_strncpyUpperTrim( szAlias, szName, sizeof(szAlias) - 1 );
       pOpenInfo->atomAlias = szAlias;
    }
-   hb_xfree( pFileName );
+   hb_xfree(pFileName);
 
    /* Try open */
    do

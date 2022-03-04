@@ -259,7 +259,7 @@ HB_FUNC( HB_LPPRECV )
       {
          hb_storclen( static_cast<char*>( data ), len, 2 );
       }
-      hb_xfree( data );
+      hb_xfree(data);
    }
    hb_retl( bRet );
 }

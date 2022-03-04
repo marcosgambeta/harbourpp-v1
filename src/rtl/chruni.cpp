@@ -233,14 +233,14 @@ HB_FUNC( HB_UPOKE )
             nOldChar = hb_cdpTextPos( cdp, szText + nPos, nLen - nPos, 1 );
             if( nChar == nOldChar )
             {
-               if( hb_itemGetWriteCL( pText, &pszText, &nLen ) && nPos + nChar <= nLen )
+               if( hb_itemGetWriteCL(pText, &pszText, &nLen) && nPos + nChar <= nLen )
                {
                   memcpy( pszText + nPos, szChar, nChar );
                }
             }
             else
             {
-               pszText = static_cast<char*>( hb_xgrab( nLen - nOldChar + nChar + 1 ) );
+               pszText = static_cast<char*>( hb_xgrab(nLen - nOldChar + nChar + 1) );
 
                memcpy( pszText, szText, nPos );
                memcpy( pszText + nPos, szChar, nChar );
@@ -274,7 +274,7 @@ HB_FUNC( HB_BPOKE )
       HB_SIZE nPos = hb_parns(2), nLen;
       char * pszText;
 
-      if( nPos > 0 && hb_itemGetWriteCL( pText, &pszText, &nLen ) && nPos <= nLen )
+      if( nPos > 0 && hb_itemGetWriteCL(pText, &pszText, &nLen) && nPos <= nLen )
       {
          pszText[ nPos - 1 ] = static_cast<char>( hb_parni(3) & 0xff );
       }
@@ -769,11 +769,11 @@ HB_FUNC( HB_BSTUFF )
 
       if( ( nTot = nLen + nIns - nDel ) > 0 )
       {
-         char * szResult = static_cast<char*>( hb_xgrab( nTot + 1 ) );
+         char * szResult = static_cast<char*>( hb_xgrab(nTot + 1) );
 
-         hb_xmemcpy( szResult, szText, nPos );
-         hb_xmemcpy( szResult + nPos, szIns, nIns );
-         hb_xmemcpy( szResult + nPos + nIns, szText + nPos + nDel, nLen - ( nPos + nDel ) );
+         hb_xmemcpy(szResult, szText, nPos);
+         hb_xmemcpy(szResult + nPos, szIns, nIns);
+         hb_xmemcpy(szResult + nPos + nIns, szText + nPos + nDel, nLen - ( nPos + nDel ));
          hb_retclen_buffer( szResult, nTot );
       }
       else
@@ -825,11 +825,11 @@ HB_FUNC( HB_USTUFF )
 
       if( ( nTot = nLen + nIns - nDel ) > 0 )
       {
-         char * szResult = static_cast<char*>( hb_xgrab( nTot + 1 ) );
+         char * szResult = static_cast<char*>( hb_xgrab(nTot + 1) );
 
-         hb_xmemcpy( szResult, szText, nPos );
-         hb_xmemcpy( szResult + nPos, szIns, nIns );
-         hb_xmemcpy( szResult + nPos + nIns, szText + nPos + nDel, nLen - ( nPos + nDel ) );
+         hb_xmemcpy(szResult, szText, nPos);
+         hb_xmemcpy(szResult + nPos, szIns, nIns);
+         hb_xmemcpy(szResult + nPos + nIns, szText + nPos + nDel, nLen - ( nPos + nDel ));
          hb_retclen_buffer( szResult, nTot );
       }
       else

@@ -67,7 +67,7 @@ HB_FUNC( __RUN )
 #if defined( HB_OS_WIN )
       LPTSTR lpCommand = HB_CHARDUP( pszCommand );
       ( void ) HB_WINAPI_SYSTEM( lpCommand );
-      hb_xfree( lpCommand );
+      hb_xfree(lpCommand);
 #else
       char * pszFree = nullptr;
 
@@ -77,7 +77,7 @@ HB_FUNC( __RUN )
 
       if( pszFree )
       {
-         hb_xfree( pszFree );
+         hb_xfree(pszFree);
       }
 #endif
 

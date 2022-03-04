@@ -239,14 +239,14 @@ HB_FUNC( HB_STRREPLACE )
                nPos += nSkip;
                if( nPos == nText )
                {
-                  pszResult = static_cast<char*>( hb_xgrab( nSize + 1 ) );
+                  pszResult = static_cast<char*>( hb_xgrab(nSize + 1) );
                   nSize = nPos = 0;
                }
             }
          }
          if( ptrOpt )
          {
-            hb_xfree( ptrOpt );
+            hb_xfree(ptrOpt);
          }
          hb_retclen_buffer( pszResult, nSize );
       }

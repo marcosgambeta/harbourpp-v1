@@ -90,7 +90,7 @@ static void s_zlib_free( void * cargo, void * address )
 
    if( address )
    {
-      hb_xfree( address );
+      hb_xfree(address);
    }
 }
 
@@ -313,7 +313,7 @@ HB_FUNC( HB_ZCOMPRESS )
 
          if( pBuffer )
          {
-            if( ! hb_itemGetWriteCL( pBuffer, &pDest, &nDstLen ) )
+            if( ! hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen) )
             {
                pDest = nullptr;
             }
@@ -344,7 +344,7 @@ HB_FUNC( HB_ZCOMPRESS )
                }
                else if( pDest )
                {
-                  hb_xfree( pDest );
+                  hb_xfree(pDest);
                }
             }
             else if( iResult == Z_OK )
@@ -392,7 +392,7 @@ HB_FUNC( HB_ZUNCOMPRESS )
 
          if( pBuffer )
          {
-            if( ! hb_itemGetWriteCL( pBuffer, &pDest, &nDstLen ) )
+            if( ! hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen) )
             {
                iResult = Z_MEM_ERROR;
             }
@@ -422,7 +422,7 @@ HB_FUNC( HB_ZUNCOMPRESS )
                }
                else
                {
-                  hb_xfree( pDest );
+                  hb_xfree(pDest);
                }
             }
             else if( iResult == Z_OK )
@@ -488,7 +488,7 @@ HB_FUNC( HB_GZCOMPRESS )
 
          if( pBuffer )
          {
-            if( ! hb_itemGetWriteCL( pBuffer, &pDest, &nDstLen ) )
+            if( ! hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen) )
             {
                pDest = nullptr;
             }
@@ -519,7 +519,7 @@ HB_FUNC( HB_GZCOMPRESS )
                }
                else if( pDest )
                {
-                  hb_xfree( pDest );
+                  hb_xfree(pDest);
                }
             }
             else if( iResult == Z_OK )

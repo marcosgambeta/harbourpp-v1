@@ -177,7 +177,7 @@ HB_FUNC( SX_ENCRYPT )
 
       if( nLen > 0 && _hb_sxGetKey( hb_param(2, HB_IT_ANY), keyBuf ) )
       {
-         char * pDst = static_cast<char*>( hb_xgrab( nLen + 1 ) );
+         char * pDst = static_cast<char*>( hb_xgrab(nLen + 1) );
          hb_sxEnCrypt( hb_parc(1), pDst, keyBuf, nLen );
          pDst[ nLen ] = 0;
          hb_retclen_buffer( pDst, nLen );
@@ -198,7 +198,7 @@ HB_FUNC( SX_DECRYPT )
 
       if( nLen > 0 && _hb_sxGetKey( hb_param(2, HB_IT_ANY), keyBuf ) )
       {
-         char * pDst = static_cast<char*>( hb_xgrab( nLen + 1 ) );
+         char * pDst = static_cast<char*>( hb_xgrab(nLen + 1) );
          hb_sxDeCrypt( hb_parc(1), pDst, keyBuf, nLen );
          pDst[ nLen ] = 0;
          hb_retclen_buffer( pDst, nLen );

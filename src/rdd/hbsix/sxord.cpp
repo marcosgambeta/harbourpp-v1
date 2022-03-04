@@ -149,13 +149,13 @@ HB_FUNC( SX_TAGNO )
             {
                Info.itmOrder = hb_itemPutNI(nullptr, iOrder);
                Info.atomBagName = nullptr;
-               hb_itemClear( Info.itmResult );
+               hb_itemClear(Info.itmResult);
                if( SELF_ORDINFO( pArea, DBOI_FULLPATH, &Info ) == HB_SUCCESS && hb_itemGetCLen(Info.itmResult) > 0 )
                {
                   Info.atomBagName = Info.itmResult;
                   Info.itmResult = Info.itmOrder;
                   Info.itmOrder = nullptr;
-                  hb_itemClear( Info.itmResult );
+                  hb_itemClear(Info.itmResult);
                   if( SELF_ORDINFO( pArea, DBOI_BAGORDER, &Info ) == HB_SUCCESS )
                   {
                      iBagOrder = iOrder - hb_itemGetNI(Info.itmResult) + 1;
@@ -272,7 +272,7 @@ HB_FUNC( SX_THERMOMETER )
             iTemperature = 4;
             for( i = 0; i < 3; ++i, --iTemperature )
             {
-               hb_itemClear( Info.itmResult );
+               hb_itemClear(Info.itmResult);
                if( SELF_ORDINFO( pArea, s_iStates[ i ], &Info ) == HB_SUCCESS && HB_IS_LOGICAL(Info.itmResult) && hb_itemGetL(Info.itmResult) )
                {
                   break;

@@ -64,7 +64,7 @@ HB_FUNC( SX_FNAMEPARSER )
       pFileName = hb_fsFNameSplit( szFileName );
       if( pszFree )
       {
-         hb_xfree( pszFree );
+         hb_xfree(pszFree);
       }
 
       if( ! hb_parl(2) )
@@ -95,7 +95,7 @@ HB_FUNC( SX_FNAMEPARSER )
       }
 
       hb_retc( hb_fsFNameMerge( szPathBuf, pFileName ) );
-      hb_xfree( pFileName );
+      hb_xfree(pFileName);
    }
    else
    {

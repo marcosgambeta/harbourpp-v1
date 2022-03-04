@@ -174,7 +174,7 @@ HB_FUNC( HB_CDPLIST )
       ++nPos;
    }
 
-   hb_xfree( static_cast<void*>( list ) );
+   hb_xfree(static_cast<void*>( list ));
 }
 
 /* NOTE: CA-Cl*pper 5.2e Intl. will return: "NATSORT v1.2i x14 19/Mar/93" */
@@ -279,7 +279,7 @@ HB_FUNC( HB_STRTOUTF8 )
          {
             const char * szString = hb_parc(1);
             nDest = hb_cdpStrAsUTF8Len( cdp, szString, nLen, 0 );
-            szDest = static_cast<char*>( hb_xgrab( nDest + 1 ) );
+            szDest = static_cast<char*>( hb_xgrab(nDest + 1) );
             hb_cdpStrToUTF8( cdp, szString, nLen, szDest, nDest + 1 );
          }
       }
@@ -319,7 +319,7 @@ HB_FUNC( HB_UTF8TOSTR )
             {
                szString = hb_parc(1);
                nDest = hb_cdpUTF8AsStrLen( cdp, szString, nLen, 0 );
-               szDest = static_cast<char*>( hb_xgrab( nDest + 1 ) );
+               szDest = static_cast<char*>( hb_xgrab(nDest + 1) );
                hb_cdpUTF8ToStr( cdp, szString, nLen, szDest, nDest + 1 );
             }
          }
@@ -555,7 +555,7 @@ HB_FUNC( HB_UTF8POKE )
          if( n == n2 )
          {
             char * szText;
-            if( hb_itemGetWriteCL( pText, &szText, &nLen ) && nPos + n <= nLen )
+            if( hb_itemGetWriteCL(pText, &szText, &nLen) && nPos + n <= nLen )
             {
                hb_cdpU16CharToUTF8( &szText[ nPos ], uc );
             }
@@ -563,7 +563,7 @@ HB_FUNC( HB_UTF8POKE )
          }
          else
          {
-            char * szResult = static_cast<char*>( hb_xgrab( nLen - n2 + n + 1 ) );
+            char * szResult = static_cast<char*>( hb_xgrab(nLen - n2 + n + 1) );
 
             memcpy( szResult, szString, nPos );
             hb_cdpU16CharToUTF8( &szResult[ nPos ], uc );
@@ -633,11 +633,11 @@ HB_FUNC( HB_UTF8STUFF )
 
       if( ( nTot = nLen + nIns - nDel ) > 0 )
       {
-         char * szResult = static_cast<char*>( hb_xgrab( nTot + 1 ) );
+         char * szResult = static_cast<char*>( hb_xgrab(nTot + 1) );
 
-         hb_xmemcpy( szResult, szText, nPos );
-         hb_xmemcpy( szResult + nPos, szIns, nIns );
-         hb_xmemcpy( szResult + nPos + nIns, szText + nPos + nDel, nLen - ( nPos + nDel ) );
+         hb_xmemcpy(szResult, szText, nPos);
+         hb_xmemcpy(szResult + nPos, szIns, nIns);
+         hb_xmemcpy(szResult + nPos + nIns, szText + nPos + nDel, nLen - ( nPos + nDel ));
          hb_retclen_buffer( szResult, nTot );
       }
       else

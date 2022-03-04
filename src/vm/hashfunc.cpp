@@ -191,7 +191,7 @@ HB_FUNC( HB_HSETDEF )
       {
          if( pDefault && ! hb_itemTypeCmp(pDest, pDefault) )
          {
-            hb_itemCopy( pDest, pDefault );
+            hb_itemCopy(pDest, pDefault);
          }
          hb_itemReturn(pDest);
       }
@@ -288,7 +288,7 @@ HB_FUNC( HB_HVALUEAT )
       {
          if( pValue )
          {
-            hb_itemCopy( pItem, pValue );
+            hb_itemCopy(pItem, pValue);
          }
          else
          {
@@ -322,8 +322,8 @@ HB_FUNC( HB_HPAIRAT )
          PHB_ITEM pDstVal = hb_param(4, HB_IT_BYREF);
          if( pDstKey && pDstVal )
          {
-            hb_itemCopy( pDstKey, pKey );
-            hb_itemCopy( pDstVal, pValue );
+            hb_itemCopy(pDstKey, pKey);
+            hb_itemCopy(pDstVal, pValue);
          }
          else
          {
@@ -421,7 +421,7 @@ HB_FUNC( HB_HFILL )
 
       while( ( pDest = hb_hashGetValueAt( pHash, ++nPos ) ) != nullptr )
       {
-         hb_itemCopy( pDest, pValue );
+         hb_itemCopy(pDest, pValue);
       }
 
       hb_itemReturn(pHash);

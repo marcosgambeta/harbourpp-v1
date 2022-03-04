@@ -216,12 +216,12 @@ static HB_GARBAGE_FUNC( hb_inetSocketFinalize )
    }
    if( socket->remote )
    {
-      hb_xfree( socket->remote );
+      hb_xfree(socket->remote);
       socket->remote = nullptr;
    }
    if( socket->buffer )
    {
-      hb_xfree( socket->buffer );
+      hb_xfree(socket->buffer);
       socket->buffer = nullptr;
    }
 }
@@ -631,7 +631,7 @@ HB_FUNC( HB_INETPERIODCALLBACK )
          {
             hb_itemRelease(socket->pPeriodicBlock);
          }
-         socket->pPeriodicBlock = hb_itemClone( pExec );
+         socket->pPeriodicBlock = hb_itemClone(pExec);
          hb_gcUnlock( socket->pPeriodicBlock );
       }
    }
@@ -753,7 +753,7 @@ static long s_inetRecv( PHB_SOCKET_STRUCT socket, char * buffer, long size, HB_B
    {
       if( socket->buffer == nullptr )
       {
-         socket->buffer = static_cast<char*>( hb_xgrab( socket->readahead ) );
+         socket->buffer = static_cast<char*>( hb_xgrab(socket->readahead) );
       }
       socket->posbuffer = 0;
       if( socket->recvFunc )
@@ -820,7 +820,7 @@ static void s_inetRecvInternal( int iMode )
       char * buffer;
       HB_SIZE nLen;
 
-      if( hb_itemGetWriteCL( pBuffer, &buffer, &nLen ) )
+      if( hb_itemGetWriteCL(pBuffer, &buffer, &nLen) )
       {
          iLen = static_cast<int>( nLen );
       }
@@ -940,7 +940,7 @@ static void s_inetRecvPattern( const char * const * patterns, int * patternsizes
 
    socket->iError = HB_INET_ERR_OK;
 
-   buffer = static_cast<char*>( hb_xgrab( iBufferSize ) );
+   buffer = static_cast<char*>( hb_xgrab(iBufferSize) );
    iAllocated = iBufferSize;
 
    do
@@ -948,7 +948,7 @@ static void s_inetRecvPattern( const char * const * patterns, int * patternsizes
       if( iPos == iAllocated - 1 )
       {
          iAllocated += iBufferSize;
-         buffer = static_cast<char*>( hb_xrealloc( buffer, iAllocated ) );
+         buffer = static_cast<char*>( hb_xrealloc(buffer, iAllocated) );
       }
 
       iLen = s_inetRecv( socket, &cChar, 1, HB_TRUE, socket->iTimeout );
@@ -1015,7 +1015,7 @@ static void s_inetRecvPattern( const char * const * patterns, int * patternsizes
       {
          hb_itemPutNI(pResult, iLen);
       }
-      hb_xfree( buffer );
+      hb_xfree(buffer);
       hb_retc_null();
    }
 }
@@ -1055,8 +1055,8 @@ HB_FUNC( HB_INETRECVENDBLOCK )
       {
          if( iPatternsCount > HB_PATERN_BUF_SIZE )
          {
-            patterns = static_cast<const char**>( hb_xgrab( sizeof(char*) * iPatternsCount ) );
-            patternsizes = static_cast<int*>( hb_xgrab( sizeof(int) * iPatternsCount ) );
+            patterns = static_cast<const char**>( hb_xgrab(sizeof(char*) * iPatternsCount) );
+            patternsizes = static_cast<int*>( hb_xgrab(sizeof(int) * iPatternsCount) );
          }
          iPatternsCount = 0;
          for( i = 1; i <= iPatternsMax; i++ )
@@ -1092,8 +1092,8 @@ HB_FUNC( HB_INETRECVENDBLOCK )
 
    if( iPatternsCount > HB_PATERN_BUF_SIZE )
    {
-      hb_xfree( static_cast<void*>( patterns ) );
-      hb_xfree( patternsizes );
+      hb_xfree(static_cast<void*>( patterns ));
+      hb_xfree(patternsizes);
    }
 }
 
@@ -1343,7 +1343,7 @@ HB_FUNC( HB_INETSERVER )
 
       if( socket->remote )
       {
-         hb_xfree( socket->remote );
+         hb_xfree(socket->remote);
       }
       if( ! hb_socketInetAddr( &socket->remote, &socket->remotelen, szAddress, iPort ) ||
           s_inetBind( socket, socket->remote, socket->remotelen ) != 0 ||
@@ -1455,7 +1455,7 @@ static void hb_inetConnectInternal( HB_BOOL fResolve )
          {
             if( socket->remote )
             {
-               hb_xfree( socket->remote );
+               hb_xfree(socket->remote);
             }
             if( hb_socketInetAddr( &socket->remote, &socket->remotelen, szHost, iPort ) )
             {
@@ -1476,7 +1476,7 @@ static void hb_inetConnectInternal( HB_BOOL fResolve )
          }
          if( szAddr )
          {
-            hb_xfree( szAddr );
+            hb_xfree(szAddr);
          }
       }
       if( pSocket )
@@ -1536,7 +1536,7 @@ HB_FUNC( HB_INETDGRAMBIND )
    szAddress = hb_parc(2);
    if( socket->remote )
    {
-      hb_xfree( socket->remote );
+      hb_xfree(socket->remote);
    }
    if( ! hb_socketInetAddr( &socket->remote, &socket->remotelen, szAddress, iPort ) || s_inetBind( socket, socket->remote, socket->remotelen ) != 0 )
    {
@@ -1601,7 +1601,7 @@ HB_FUNC( HB_INETDGRAMSEND )
    {
       socket->iCount = 0;
       if( socket->remote )
-         hb_xfree( socket->remote );
+         hb_xfree(socket->remote);
       if( ! hb_socketInetAddr( &socket->remote, &socket->remotelen, szAddress, iPort ) )
       {
          hb_inetGetError( socket );
@@ -1656,7 +1656,7 @@ HB_FUNC( HB_INETDGRAMRECV )
    else
    {
       socket->iCount = 0;
-      if( hb_itemGetWriteCL( pBuffer, &buffer, &nLen ) )
+      if( hb_itemGetWriteCL(pBuffer, &buffer, &nLen) )
       {
          iLen = static_cast<int>( nLen );
       }
@@ -1674,7 +1674,7 @@ HB_FUNC( HB_INETDGRAMRECV )
          fRepeat = HB_FALSE;
          if( socket->remote )
          {
-            hb_xfree( socket->remote );  /* FIXME: double free */
+            hb_xfree(socket->remote);  /* FIXME: double free */
          }
          iMax = hb_socketRecvFrom( socket->sd, buffer, iLen, 0, &socket->remote, &socket->remotelen, socket->iTimeout );
          if( socket->pPeriodicBlock )

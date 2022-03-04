@@ -313,7 +313,7 @@ static char * hb_itemStringCon( PHB_ITEM pItem, HB_SIZE * pnLen, HB_BOOL * pfFre
       *pfFreeReq = HB_FALSE;
       return const_cast<char*>( hb_itemGetL(pItem) ? "T" : "F" );
    }
-   return hb_itemString( pItem, pnLen, pfFreeReq );
+   return hb_itemString(pItem, pnLen, pfFreeReq);
 }
 
 HB_FUNC( OUTSTD ) /* writes a list of values to the standard output device */
@@ -330,14 +330,14 @@ HB_FUNC( OUTSTD ) /* writes a list of values to the standard output device */
       {
          hb_conOutStd( " ", 1 );
       }
-      pszString = hb_itemString( hb_param(iParam, HB_IT_ANY), &nLen, &fFree );
+      pszString = hb_itemString(hb_param(iParam, HB_IT_ANY), &nLen, &fFree);
       if( nLen )
       {
          hb_conOutStd( pszString, nLen );
       }
       if( fFree )
       {
-         hb_xfree( pszString );
+         hb_xfree(pszString);
       }
    }
 }
@@ -356,14 +356,14 @@ HB_FUNC( OUTERR ) /* writes a list of values to the standard error device */
       {
          hb_conOutErr( " ", 1 );
       }
-      pszString = hb_itemString( hb_param(iParam, HB_IT_ANY), &nLen, &fFree );
+      pszString = hb_itemString(hb_param(iParam, HB_IT_ANY), &nLen, &fFree);
       if( nLen )
       {
          hb_conOutErr( pszString, nLen );
       }
       if( fFree )
       {
-         hb_xfree( pszString );
+         hb_xfree(pszString);
       }
    }
 }
@@ -382,14 +382,14 @@ HB_FUNC( QQOUT ) /* writes a list of values to the current device (screen or pri
       {
          hb_conOutAlt( " ", 1 );
       }
-      pszString = hb_itemString( hb_param(iParam, HB_IT_ANY), &nLen, &fFree );
+      pszString = hb_itemString(hb_param(iParam, HB_IT_ANY), &nLen, &fFree);
       if( nLen )
       {
          hb_conOutAlt( pszString, nLen );
       }
       if( fFree )
       {
-         hb_xfree( pszString );
+         hb_xfree(pszString);
       }
    }
 }
@@ -413,10 +413,10 @@ HB_FUNC( QOUT )
 
          if( pPrnPos->col > static_cast<int>( sizeof(buf) ) )
          {
-            char * pBuf = static_cast<char*>( hb_xgrab( pPrnPos->col ) );
+            char * pBuf = static_cast<char*>( hb_xgrab(pPrnPos->col) );
             memset( pBuf, ' ', pPrnPos->col );
             hb_fileWrite( pFile, pBuf, static_cast<HB_USHORT>( pPrnPos->col ), -1 );
-            hb_xfree( pBuf );
+            hb_xfree(pBuf);
          }
          else
          {
@@ -578,7 +578,7 @@ HB_FUNC( DEVOUT ) /* writes a single value to the current device (screen or prin
       }
       if( fFree )
       {
-         hb_xfree( pszString );
+         hb_xfree(pszString);
       }
 
       hb_gtSetColorStr( szOldColor );
@@ -592,7 +592,7 @@ HB_FUNC( DEVOUT ) /* writes a single value to the current device (screen or prin
       }
       if( fFree )
       {
-         hb_xfree( pszString );
+         hb_xfree(pszString);
       }
    }
 }
@@ -616,7 +616,7 @@ HB_FUNC( DISPOUT ) /* writes a single value to the screen, but is not affected b
 
       if( bFreeReq )
       {
-         hb_xfree( pszString );
+         hb_xfree(pszString);
       }
 
       hb_gtSetColorStr( szOldColor );
@@ -629,7 +629,7 @@ HB_FUNC( DISPOUT ) /* writes a single value to the screen, but is not affected b
 
       if( bFreeReq )
       {
-         hb_xfree( pszString );
+         hb_xfree(pszString);
       }
    }
 }
@@ -657,7 +657,7 @@ HB_FUNC( DISPOUTAT )  /* writes a single value to the screen at specific positio
 
       if( bFreeReq )
       {
-         hb_xfree( pszString );
+         hb_xfree(pszString);
       }
 
       hb_gtSetColorStr( szOldColor );
@@ -670,7 +670,7 @@ HB_FUNC( DISPOUTAT )  /* writes a single value to the screen at specific positio
 
       if( bFreeReq )
       {
-         hb_xfree( pszString );
+         hb_xfree(pszString);
       }
    }
 }
@@ -705,7 +705,7 @@ HB_FUNC( HB_DISPOUTAT )
 
       if( bFreeReq )
       {
-         hb_xfree( pszString );
+         hb_xfree(pszString);
       }
    }
 }

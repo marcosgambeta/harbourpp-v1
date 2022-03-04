@@ -109,7 +109,7 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
          hb_fsSetIOError( fResult, 0 );
          if( lpFree )
          {
-            hb_xfree( lpFree );
+            hb_xfree(lpFree);
          }
          if( fResult )
          {
@@ -139,7 +139,7 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
       hb_vmLock();
       if( pszFree )
       {
-         hb_xfree( pszFree );
+         hb_xfree(pszFree);
       }
       if( fResult )
       {
@@ -157,7 +157,7 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
       hb_vmLock();
       if( pszFree )
       {
-         hb_xfree( pszFree );
+         hb_xfree(pszFree);
       }
       if( fResult )
       {

@@ -76,7 +76,7 @@ static void hb_idleDataRelease( void * Cargo )
          hb_itemRelease(pIdleData->pIdleTasks[ --pIdleData->iIdleMaxTask ]);
       }
       while( pIdleData->iIdleMaxTask );
-      hb_xfree( pIdleData->pIdleTasks );
+      hb_xfree(pIdleData->pIdleTasks);
    }
 }
 
@@ -187,11 +187,11 @@ HB_FUNC( HB_IDLEADD )
 
       if( ! pIdleData->pIdleTasks )
       {
-         pIdleData->pIdleTasks = static_cast<PHB_ITEM*>( hb_xgrab( sizeof(PHB_ITEM) ) );
+         pIdleData->pIdleTasks = static_cast<PHB_ITEM*>( hb_xgrab(sizeof(PHB_ITEM)) );
       }
       else
       {
-         pIdleData->pIdleTasks = static_cast<PHB_ITEM*>( hb_xrealloc( pIdleData->pIdleTasks, sizeof(PHB_ITEM) * pIdleData->iIdleMaxTask ) );
+         pIdleData->pIdleTasks = static_cast<PHB_ITEM*>( hb_xrealloc(pIdleData->pIdleTasks, sizeof(PHB_ITEM) * pIdleData->iIdleMaxTask) );
       }
 
       /* store a copy of passed codeblock
@@ -220,7 +220,7 @@ HB_FUNC( HB_IDLEDEL )
 
          if( pID == hb_codeblockId( pItem ) )
          {
-            hb_itemClear( hb_itemReturn(pItem) );  /* return a codeblock */
+            hb_itemClear(hb_itemReturn(pItem));  /* return a codeblock */
             hb_itemRelease(pItem);
 
             --pIdleData->iIdleMaxTask;
@@ -230,7 +230,7 @@ HB_FUNC( HB_IDLEDEL )
                {
                   memmove( &pIdleData->pIdleTasks[ iTask ], &pIdleData->pIdleTasks[ iTask + 1 ], sizeof(PHB_ITEM) * ( pIdleData->iIdleMaxTask - iTask ) );
                }
-               pIdleData->pIdleTasks = static_cast<PHB_ITEM*>( hb_xrealloc( pIdleData->pIdleTasks, sizeof(PHB_ITEM) * pIdleData->iIdleMaxTask ) );
+               pIdleData->pIdleTasks = static_cast<PHB_ITEM*>( hb_xrealloc(pIdleData->pIdleTasks, sizeof(PHB_ITEM) * pIdleData->iIdleMaxTask) );
                if( pIdleData->iIdleTask >= pIdleData->iIdleMaxTask )
                {
                   pIdleData->iIdleTask = 0;
@@ -238,7 +238,7 @@ HB_FUNC( HB_IDLEDEL )
             }
             else
             {
-               hb_xfree( pIdleData->pIdleTasks );
+               hb_xfree(pIdleData->pIdleTasks);
                pIdleData->pIdleTasks = nullptr;
                pIdleData->iIdleTask  = 0;
             }

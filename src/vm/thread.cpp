@@ -886,7 +886,7 @@ static HB_GARBAGE_FUNC( hb_threadDestructor )
    if( pThread->pSet )
    {
       hb_setRelease( pThread->pSet );
-      hb_xfree( pThread->pSet );
+      hb_xfree(pThread->pSet);
       pThread->pSet = nullptr;
    }
    if( pThread->th_h != 0 )
@@ -1032,7 +1032,7 @@ PHB_THREADSTATE hb_threadStateNew( void )
    pThItm = hb_itemNew(nullptr);
    pThread = static_cast<PHB_THREADSTATE>( hb_gcAllocRaw( sizeof(HB_THREADSTATE), &s_gcThreadFuncs ) );
    memset( pThread, 0, sizeof(HB_THREADSTATE) );
-   hb_itemPutPtrRawGC( pThItm, pThread );
+   hb_itemPutPtrRawGC(pThItm, pThread);
 
    pThread->pszCDP  = HB_MACRO2STRING( HB_CODEPAGE_DEFAULT );
    pThread->pszLang = HB_MACRO2STRING( HB_LANG_DEFAULT );
@@ -1223,7 +1223,7 @@ HB_FUNC( HB_THREADSTART )
          PHB_ITEM pParam = hb_arrayGetItemPtr( pParams, 1 );
          if( HB_IS_BYREF(pParam) )
          {
-            hb_itemCopy( pParam, hb_itemUnRef( pParam ) );
+            hb_itemCopy(pParam, hb_itemUnRef(pParam));
          }
       }
 
@@ -1540,7 +1540,7 @@ HB_FUNC( HB_THREADWAIT )
          }
          if( pThreads == pAlloc && iThreads >= HB_THREAD_WAIT_ALLOC )
          {
-            pThreads = static_cast<PHB_THREADSTATE*>( hb_xgrab( sizeof(PHB_THREADSTATE) * iLen ) );
+            pThreads = static_cast<PHB_THREADSTATE*>( hb_xgrab(sizeof(PHB_THREADSTATE) * iLen) );
             memcpy( pThreads, pAlloc, sizeof(pAlloc) );
          }
          pThreads[ iThreads++ ] = pThread;
@@ -1576,7 +1576,7 @@ HB_FUNC( HB_THREADWAIT )
 
    if( pThreads != pAlloc )
    {
-      hb_xfree( pThreads );
+      hb_xfree(pThreads);
    }
 #endif
 }
@@ -1692,12 +1692,12 @@ HB_FUNC( HB_THREADONCEINIT )
             /* special core code only macro used to eliminate race condition
              * in unprotected readonly access to pItem variable.
              */
-            hb_itemSafeMove( pItem, pValue );
+            hb_itemSafeMove(pItem, pValue);
             fInitialized = HB_TRUE;
          }
          HB_CRITICAL_UNLOCK( s_once_mtx );
 #else
-         hb_itemSafeMove( pItem, pValue );
+         hb_itemSafeMove(pItem, pValue);
          fInitialized = HB_TRUE;
 #endif
       }
@@ -1886,7 +1886,7 @@ PHB_ITEM hb_threadMutexCreate( void )
    pItem = hb_itemNew(nullptr);
    pMutex = static_cast<PHB_MUTEX>( hb_gcAllocRaw( sizeof(HB_MUTEX), &s_gcMutexFuncs ) );
    memset( pMutex, 0, sizeof(HB_MUTEX) );
-   pItem = hb_itemPutPtrRawGC( pItem, pMutex );
+   pItem = hb_itemPutPtrRawGC(pItem, pMutex);
 
 #if ! defined( HB_MT_VM )
    /* nothing */
@@ -2442,7 +2442,7 @@ PHB_ITEM hb_threadMutexSubscribe( PHB_ITEM pItem, HB_BOOL fClear )
       if( fClear && pMutex->events )
       {
          hb_vmLockForce();
-         hb_itemMove( hb_stackAllocItem(), pMutex->events );
+         hb_itemMove(hb_stackAllocItem(), pMutex->events);
          pMutex->events = nullptr;
          HB_CRITICAL_UNLOCK( pMutex->mutex );
          hb_stackPop();
@@ -2562,7 +2562,7 @@ PHB_ITEM hb_threadMutexTimedSubscribe( PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_B
       if( fClear && pMutex->events )
       {
          hb_vmLockForce();
-         hb_itemMove( hb_stackAllocItem(), pMutex->events );
+         hb_itemMove(hb_stackAllocItem(), pMutex->events);
          pMutex->events = nullptr;
          HB_CRITICAL_UNLOCK( pMutex->mutex );
          hb_stackPop();
@@ -2826,7 +2826,7 @@ HB_FUNC( HB_MUTEXEVAL )
             hb_vmPush( pEval );
             for( int iParam = 3; iParam <= iPCount; iParam++ )
             {
-               hb_vmPush( hb_stackItemFromBase( iParam ) );
+               hb_vmPush( hb_stackItemFromBase(iParam) );
             }
             hb_vmSend( static_cast<HB_USHORT>( iPCount - 2 ) );
             hb_threadMutexUnlock( pItem );

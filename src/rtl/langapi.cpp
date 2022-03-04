@@ -232,7 +232,7 @@ static void hb_langRelease( PHB_LANG_BASE pBase )
    {
       if( pBase->buffer )
       {
-         hb_xfree( pBase->buffer );
+         hb_xfree(pBase->buffer);
          pBase->buffer = nullptr;
       }
       pBase->lang = pBase == s_langList ? &s_lang_en : nullptr;
@@ -304,11 +304,11 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
       }
       else
       {
-         hb_xfree( pszTrans );
+         hb_xfree(pszTrans);
       }
    }
 
-   buffer = static_cast<char*>( hb_xgrab( nSize ) );
+   buffer = static_cast<char*>( hb_xgrab(nSize) );
    ptr    = buffer + sizeof(trans);
    for( i = 0; i < HB_LANG_ITEM_MAX_; ++i )
    {
@@ -316,7 +316,7 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
       {
          HB_SIZE nLen = strlen( trans.pItemList[ i ] ) + 1;
          memcpy( ptr, trans.pItemList[ i ], nLen );
-         hb_xfree( HB_UNCONST( trans.pItemList[ i ] ) );
+         hb_xfree(HB_UNCONST( trans.pItemList[ i ] ));
          trans.pItemList[ i ] = ptr;
          ptr += nLen;
       }
@@ -335,7 +335,7 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
       return HB_TRUE;
    }
 
-   hb_xfree( buffer );
+   hb_xfree(buffer);
    return HB_FALSE;
 }
 
@@ -461,7 +461,7 @@ char * hb_langName( const char * pszID )
    lang = pszID ? hb_langFind( pszID ) : hb_vmLang();
    if( lang )
    {
-      pszName = static_cast<char*>( hb_xgrab( 128 ) );
+      pszName = static_cast<char*>( hb_xgrab(128) );
       hb_snprintf( pszName, 128, "Harbour Language: %s %s (%s)",
                    hb_langGetItem( pszID, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID ),
                    hb_langGetItem( pszID, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_NAME ),

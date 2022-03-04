@@ -98,7 +98,7 @@ static void suffixes( const char * needle, HB_ISIZ m, HB_ISIZ * suff )
 static void preBmGs( const char * needle, HB_ISIZ m, HB_ISIZ bmGs[] )
 {
    HB_ISIZ i, j;
-   HB_ISIZ * suff = static_cast<HB_ISIZ*>( hb_xgrab( m * sizeof(HB_ISIZ) ) );
+   HB_ISIZ * suff = static_cast<HB_ISIZ*>( hb_xgrab(m * sizeof(HB_ISIZ)) );
 
    suffixes( needle, m, suff );
 
@@ -128,7 +128,7 @@ static void preBmGs( const char * needle, HB_ISIZ m, HB_ISIZ bmGs[] )
       bmGs[ m - 1 - suff[ i ] ] = m - 1 - i;
    }
 
-   hb_xfree( suff );
+   hb_xfree(suff);
 }
 
 HB_ISIZ hb_strAtTBM( const char * needle, HB_ISIZ m, const char * haystack, HB_ISIZ n )
@@ -138,7 +138,7 @@ HB_ISIZ hb_strAtTBM( const char * needle, HB_ISIZ m, const char * haystack, HB_I
    HB_ISIZ bmBc[ ASIZE ];
    HB_ISIZ * bmGs;
 
-   bmGs = static_cast<HB_ISIZ*>( hb_xgrab( m * sizeof(HB_ISIZ) ) );
+   bmGs = static_cast<HB_ISIZ*>( hb_xgrab(m * sizeof(HB_ISIZ)) );
 
    /* Preprocessing */
    preBmGs( needle, m, bmGs );
@@ -191,7 +191,7 @@ HB_ISIZ hb_strAtTBM( const char * needle, HB_ISIZ m, const char * haystack, HB_I
       j += shift;
    }
 
-   hb_xfree( bmGs );
+   hb_xfree(bmGs);
 
    return r;
 }

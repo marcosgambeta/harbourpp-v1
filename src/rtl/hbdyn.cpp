@@ -201,7 +201,7 @@ static HB_U64 hb_u64par( PHB_ITEM pParam, PHB_DYNARG pArg )
       case HB_DYN_CTYPE_STRUCTURE:
       {
          HB_SIZE nLen = hb_itemGetCLen(pParam);
-         pArg->hString = hb_xgrab( nLen + sizeof(char) );
+         pArg->hString = hb_xgrab(nLen + sizeof(char));
          pArg->bRawBuffer = HB_TRUE;
          memcpy( static_cast<char*>( pArg->hString ), hb_itemGetCPtr(pParam), nLen );
          ( static_cast<char*>( pArg->hString ) )[ nLen ] = '\0';
@@ -237,7 +237,7 @@ static HB_U64 hb_u64par( PHB_ITEM pParam, PHB_DYNARG pArg )
             default:
             {
                HB_SIZE nLen = hb_itemGetCLen(pParam);
-               pArg->hString = hb_xgrab( nLen + sizeof(char) );
+               pArg->hString = hb_xgrab(nLen + sizeof(char));
                pArg->bRawBuffer = HB_TRUE;
                memcpy( static_cast<char*>( pArg->hString ), hb_itemGetCPtr(pParam), nLen );
                ( static_cast<char*>( pArg->hString ) )[ nLen ] = '\0';
@@ -278,7 +278,7 @@ static PHB_ITEM hb_u64ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
    switch( iRetType )
    {
       case HB_DYN_CTYPE_VOID:
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
          break;
 
       case HB_DYN_CTYPE_BOOL:
@@ -609,7 +609,7 @@ static void hb_u32par( PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r
       case HB_DYN_CTYPE_STRUCTURE:
       {
          HB_SIZE nLen = hb_itemGetCLen(pParam);
-         pArg->hString = hb_xgrab( nLen + sizeof(char) );
+         pArg->hString = hb_xgrab(nLen + sizeof(char));
          pArg->bRawBuffer = HB_TRUE;
          memcpy( static_cast<char*>( pArg->hString ), hb_itemGetCPtr(pParam), nLen );
          ( static_cast<char*>( pArg->hString ) )[ nLen ] = '\0';
@@ -645,7 +645,7 @@ static void hb_u32par( PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r
             default:
             {
                HB_SIZE nLen = hb_itemGetCLen(pParam);
-               pArg->hString = hb_xgrab( nLen + sizeof(char) );
+               pArg->hString = hb_xgrab(nLen + sizeof(char));
                pArg->bRawBuffer = HB_TRUE;
                memcpy( static_cast<char*>( pArg->hString ), hb_itemGetCPtr(pParam), nLen );
                ( static_cast<char*>( pArg->hString ) )[ nLen ] = '\0';
@@ -684,7 +684,7 @@ static PHB_ITEM hb_u32ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
    switch( iRetType )
    {
       case HB_DYN_CTYPE_VOID:
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
          break;
 
       case HB_DYN_CTYPE_BOOL:
@@ -1035,7 +1035,7 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
 
             if( pArg[ tmp ].bRawBuffer )
             {
-               hb_xfree( pArg[ tmp ].hString );
+               hb_xfree(pArg[ tmp ].hString);
             }
             else
             {
@@ -1045,7 +1045,7 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
 
          if( pArg )
          {
-            hb_xfree( pArg );
+            hb_xfree(pArg);
          }
       }
       else
@@ -1200,7 +1200,7 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
 
             if( pArg[ tmp ].bRawBuffer )
             {
-               hb_xfree( pArg[ tmp ].hString );
+               hb_xfree(pArg[ tmp ].hString);
             }
             else
             {
@@ -1210,7 +1210,7 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
 
          if( pArg )
          {
-            hb_xfree( pArg );
+            hb_xfree(pArg);
          }
       }
       else

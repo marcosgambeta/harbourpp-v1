@@ -92,11 +92,11 @@ FILE * hb_fopen( const char * path, const char * mode )
 
    if( lpFreeP )
    {
-      hb_xfree( lpFreeP );
+      hb_xfree(lpFreeP);
    }
    if( lpFreeM )
    {
-      hb_xfree( lpFreeM );
+      hb_xfree(lpFreeM);
    }
 #else
    char * pszFree = nullptr;
@@ -118,7 +118,7 @@ FILE * hb_fopen( const char * path, const char * mode )
 
    if( pszFree )
    {
-      hb_xfree( pszFree );
+      hb_xfree(pszFree);
    }
 #endif
 

@@ -912,7 +912,7 @@ static HB_ERRCODE hb_waInfo( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
       case DBI_DBFILTER:
          if( pArea->dbfi.abFilterText )
          {
-            hb_itemCopy( pItem, pArea->dbfi.abFilterText );
+            hb_itemCopy(pItem, pArea->dbfi.abFilterText);
          }
          else
          {
@@ -942,7 +942,7 @@ static HB_ERRCODE hb_waInfo( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
       case DBI_TABLEEXT:
       {
          LPRDDNODE pNode = SELF_RDDNODE( pArea );
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
          return pNode ? SELF_RDDINFO( pNode, RDDI_TABLEEXT, 0, pItem ) : HB_FAILURE;
       }
       case DBI_SCOPEDRELATION:
@@ -1024,7 +1024,7 @@ static HB_ERRCODE hb_waOrderInfo( AREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO 
 
    if( pInfo->itmResult )
    {
-      hb_itemClear( pInfo->itmResult );
+      hb_itemClear(pInfo->itmResult);
    }
 
    /* CA-Cl*pper does not generate RT error when default ORDERINFO() method
@@ -1078,11 +1078,11 @@ static HB_ERRCODE hb_waOrderCondition( AREAP pArea, LPDBORDERCONDINFO param )
    {
       if( pArea->lpdbOrdCondInfo->abFor )
       {
-         hb_xfree( pArea->lpdbOrdCondInfo->abFor );
+         hb_xfree(pArea->lpdbOrdCondInfo->abFor);
       }
       if( pArea->lpdbOrdCondInfo->abWhile )
       {
-         hb_xfree( pArea->lpdbOrdCondInfo->abWhile );
+         hb_xfree(pArea->lpdbOrdCondInfo->abWhile);
       }
       if( pArea->lpdbOrdCondInfo->itmCobFor )
       {
@@ -1104,7 +1104,7 @@ static HB_ERRCODE hb_waOrderCondition( AREAP pArea, LPDBORDERCONDINFO param )
       {
          hb_itemRelease(pArea->lpdbOrdCondInfo->itmRecID);
       }
-      hb_xfree( pArea->lpdbOrdCondInfo );
+      hb_xfree(pArea->lpdbOrdCondInfo);
    }
    pArea->lpdbOrdCondInfo = param;
 
@@ -1123,7 +1123,7 @@ static HB_ERRCODE hb_waRelease( AREAP pArea )
    /* Free all allocated pointers */
    if( pArea->lpFields )
    {
-      hb_xfree( pArea->lpFields );
+      hb_xfree(pArea->lpFields);
    }
    if( pArea->valResult )
    {
@@ -1134,7 +1134,7 @@ static HB_ERRCODE hb_waRelease( AREAP pArea )
       /* intentionally direct call not a method */
       hb_waOrderCondition( pArea, nullptr );
    }
-   hb_xfree( pArea );
+   hb_xfree(pArea);
    return HB_SUCCESS;
 }
 
@@ -1663,7 +1663,7 @@ static HB_ERRCODE hb_waClearRel( AREAP pArea )
          {
             hb_itemRelease(lpdbRelation->abKey);
          }
-         hb_xfree( lpdbRelation );
+         hb_xfree(lpdbRelation);
       }
       while( pArea->lpdbRelations );
 
@@ -1806,7 +1806,7 @@ static HB_ERRCODE hb_waRelText( AREAP pArea, HB_USHORT uiRelNo, PHB_ITEM pExpr )
    {
       if( uiIndex++ == uiRelNo )
       {
-         hb_itemCopy( pExpr, lpdbRelations->abKey );
+         hb_itemCopy(pExpr, lpdbRelations->abKey);
          return HB_SUCCESS;
       }
       lpdbRelations = lpdbRelations->lpdbriNext;
@@ -1829,7 +1829,7 @@ static HB_ERRCODE hb_waSetRel( AREAP pArea, LPDBRELINFO lpdbRelInf )
    lpdbRelations = pArea->lpdbRelations;
    if( ! lpdbRelations )
    {
-      pArea->lpdbRelations = static_cast<LPDBRELINFO>( hb_xgrab( sizeof(DBRELINFO) ) );
+      pArea->lpdbRelations = static_cast<LPDBRELINFO>( hb_xgrab(sizeof(DBRELINFO)) );
       lpdbRelations = pArea->lpdbRelations;
    }
    else
@@ -1838,7 +1838,7 @@ static HB_ERRCODE hb_waSetRel( AREAP pArea, LPDBRELINFO lpdbRelInf )
       {
          lpdbRelations = lpdbRelations->lpdbriNext;
       }
-      lpdbRelations->lpdbriNext = static_cast<LPDBRELINFO>( hb_xgrab( sizeof(DBRELINFO) ) );
+      lpdbRelations->lpdbriNext = static_cast<LPDBRELINFO>( hb_xgrab(sizeof(DBRELINFO)) );
       lpdbRelations = lpdbRelations->lpdbriNext;
    }
    lpdbRelations->lpaParent = pArea;
@@ -1938,7 +1938,7 @@ static HB_ERRCODE hb_waFilterText( AREAP pArea, PHB_ITEM pFilter )
 
    if( pArea->dbfi.abFilterText )
    {
-      hb_itemCopy( pFilter, pArea->dbfi.abFilterText );
+      hb_itemCopy(pFilter, pArea->dbfi.abFilterText);
    }
 
    return HB_SUCCESS;
@@ -2110,7 +2110,7 @@ static HB_ERRCODE hb_waEvalBlock( AREAP pArea, PHB_ITEM pBlock )
    {
       pArea->valResult = hb_itemNew(nullptr);
    }
-   hb_itemMove( pArea->valResult, pItem );
+   hb_itemMove(pArea->valResult, pItem);
 
    hb_rddSelectWorkAreaNumber( iCurrArea );
 
@@ -2690,7 +2690,7 @@ void hb_rddSetFileRedirector( HB_RDDACCEPT funcAccept, HB_BOOL fEnable )
       if( s_uiRddRedirCount == s_uiRddRedirMax )
       {
          s_uiRddRedirMax += HB_RDD_POOL_ALLOCSIZE;
-         s_rddRedirAccept = static_cast<HB_RDDACCEPT*>( hb_xrealloc( s_rddRedirAccept, sizeof(HB_RDDACCEPT) * s_uiRddRedirMax ) );
+         s_rddRedirAccept = static_cast<HB_RDDACCEPT*>( hb_xrealloc(s_rddRedirAccept, sizeof(HB_RDDACCEPT) * s_uiRddRedirMax) );
       }
       s_rddRedirAccept[ s_uiRddRedirCount ] = funcAccept;
       s_uiRddRedirCount++;
@@ -2717,15 +2717,15 @@ void hb_rddShutDown( void )
          {
             SELF_EXIT( s_RddList[ uiCount ] );
          }
-         hb_xfree( s_RddList[ uiCount ] );
+         hb_xfree(s_RddList[ uiCount ]);
       }
-      hb_xfree( s_RddList );
+      hb_xfree(s_RddList);
       s_RddList = nullptr;
       s_uiRddMax = s_uiRddCount = 0;
    }
    if( s_uiRddRedirCount )
    {
-      hb_xfree( s_rddRedirAccept );
+      hb_xfree(s_rddRedirAccept);
       s_rddRedirAccept = nullptr;
       s_uiRddRedirMax = s_uiRddRedirCount = 0;
    }
@@ -2791,7 +2791,7 @@ int hb_rddRegister( const char * szDriver, HB_USHORT uiType )
          if( s_uiRddCount == s_uiRddMax )
          {
             s_uiRddMax += HB_RDD_POOL_ALLOCSIZE;
-            s_RddList = static_cast<LPRDDNODE*>( hb_xrealloc( s_RddList, sizeof(LPRDDNODE) * s_uiRddMax ) );
+            s_RddList = static_cast<LPRDDNODE*>( hb_xrealloc(s_RddList, sizeof(LPRDDNODE) * s_uiRddMax) );
          }
          s_RddList[ s_uiRddCount ] = pRddNewNode;   /* Add the new RDD node */
          s_uiRddCount++;
@@ -2806,7 +2806,7 @@ int hb_rddRegister( const char * szDriver, HB_USHORT uiType )
 
    if( iResult != 0 )
    {
-      hb_xfree( pRddNewNode );
+      hb_xfree(pRddNewNode);
    }
    else if( pRddNewNode->pTable.init != nullptr )
    {
@@ -2927,7 +2927,7 @@ HB_FUNC( __RDDPREALLOCATE )
    if( lNewSize > static_cast<HB_LONG>( s_uiRddMax ) )
    {
       s_uiRddMax += HB_RDD_POOL_ALLOCSIZE;
-      s_RddList = static_cast<LPRDDNODE*>( hb_xrealloc( s_RddList, sizeof(LPRDDNODE) * s_uiRddMax ) );
+      s_RddList = static_cast<LPRDDNODE*>( hb_xrealloc(s_RddList, sizeof(LPRDDNODE) * s_uiRddMax) );
    }
 
    hb_retnl( s_uiRddMax );

@@ -438,7 +438,7 @@ int hb_gt_chrmapinit( int * piTransTbl, const char * pszTerm, HB_BOOL fSetACSC )
    {
       if( pszFree )
       {
-         hb_xfree( pszFree );
+         hb_xfree(pszFree);
       }
       pszTerm = pszFree = hb_getenv( "TERM" );
    }
@@ -456,7 +456,7 @@ int hb_gt_chrmapinit( int * piTransTbl, const char * pszTerm, HB_BOOL fSetACSC )
          char szFile[ HB_PATH_MAX ];
          if( pszFile )
          {
-            hb_xfree( pszFile );
+            hb_xfree(pszFile);
          }
          pszFile = hb_getenv( "HB_ROOT" );
          if( pszFile != nullptr && sizeof(szFile) > strlen( pszFile ) + strlen( hb_gt_szCharMapFileDefault ) )
@@ -468,7 +468,7 @@ int hb_gt_chrmapinit( int * piTransTbl, const char * pszTerm, HB_BOOL fSetACSC )
       }
       if( pszFile )
       {
-         hb_xfree( pszFile );
+         hb_xfree(pszFile);
       }
       if( nRet == -1 )
       {
@@ -478,7 +478,7 @@ int hb_gt_chrmapinit( int * piTransTbl, const char * pszTerm, HB_BOOL fSetACSC )
 
    if( pszFree )
    {
-      hb_xfree( pszFree );
+      hb_xfree(pszFree);
    }
 
    if( nRet == -1 )

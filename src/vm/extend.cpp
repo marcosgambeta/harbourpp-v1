@@ -66,11 +66,11 @@ PHB_ITEM hb_param( int iParam, long lMask )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam  );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( pItem->type & HB_IT_BYREF )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
          if( static_cast<HB_TYPE>( lMask ) == HB_IT_BYREF )
          {
             return pItem;
@@ -94,7 +94,7 @@ PHB_ITEM hb_paramError( int iParam )
 
    if( pParam == nullptr )
    {
-      hb_itemClear( &s_NIL );
+      hb_itemClear(&s_NIL);
       pParam = &s_NIL;
    }
 
@@ -117,12 +117,12 @@ HB_ULONG hb_parinfo( int iParam )
    {
       if( iParam >= -1 && iParam <= hb_pcount() )
       {
-         PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+         PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
          HB_TYPE uiType = HB_ITEM_TYPE( pItem );
 
          if( uiType & HB_IT_BYREF )
          {
-            uiType |= HB_ITEM_TYPE( hb_itemUnRef( pItem ) );
+            uiType |= HB_ITEM_TYPE( hb_itemUnRef(pItem) );
          }
 
          return static_cast<HB_ULONG>( uiType );
@@ -176,7 +176,7 @@ HB_BOOL hb_extIsNil( int iParam )
    }
    else if( iParam >= 0 && iParam <= hb_pcount() )
    {
-      pItem = hb_stackItemFromBase( iParam );
+      pItem = hb_stackItemFromBase(iParam);
    }
    else
    {
@@ -185,7 +185,7 @@ HB_BOOL hb_extIsNil( int iParam )
 
    if( HB_IS_BYREF(pItem) )
    {
-      pItem = hb_itemUnRef( pItem );
+      pItem = hb_itemUnRef(pItem);
    }
 
    return HB_IS_NIL(pItem);
@@ -205,7 +205,7 @@ HB_BOOL hb_extIsArray( int iParam )
    }
    else if( iParam >= 0 && iParam <= hb_pcount() )
    {
-      pItem = hb_stackItemFromBase( iParam );
+      pItem = hb_stackItemFromBase(iParam);
    }
    else
    {
@@ -214,7 +214,7 @@ HB_BOOL hb_extIsArray( int iParam )
 
    if( HB_IS_BYREF(pItem) )
    {
-      pItem = hb_itemUnRef( pItem );
+      pItem = hb_itemUnRef(pItem);
    }
 
    return HB_IS_ARRAY(pItem) && ! HB_ARRAY_OBJ( pItem );
@@ -234,7 +234,7 @@ HB_BOOL hb_extIsObject( int iParam )
    }
    else if( iParam >= 0 && iParam <= hb_pcount() )
    {
-      pItem = hb_stackItemFromBase( iParam );
+      pItem = hb_stackItemFromBase(iParam);
    }
    else
    {
@@ -243,7 +243,7 @@ HB_BOOL hb_extIsObject( int iParam )
 
    if( HB_IS_BYREF(pItem) )
    {
-      pItem = hb_itemUnRef( pItem );
+      pItem = hb_itemUnRef(pItem);
    }
 
    return HB_IS_OBJECT(pItem);
@@ -262,11 +262,11 @@ const char * hb_parc( int iParam )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_STRING(pItem) )
@@ -288,11 +288,11 @@ const char * hb_parcx( int iParam )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_STRING(pItem) )
@@ -314,11 +314,11 @@ HB_SIZE hb_parclen( int iParam )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_STRING(pItem) )
@@ -344,14 +344,14 @@ HB_SIZE hb_parcsiz( int iParam )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       /* NOTE: hb_parcsiz() will only work for strings passed by reference.
                CA-Cl*pper works like this. [vszakats] */
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
 
          if( HB_IS_STRING(pItem) )
          {
@@ -376,11 +376,11 @@ const char * hb_pards( int iParam )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_DATETIME(pItem) )
@@ -404,11 +404,11 @@ char * hb_pardsbuff( char * szDate, int iParam )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_DATETIME(pItem) )
@@ -432,11 +432,11 @@ long hb_pardl( int iParam )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_DATETIME(pItem) )
@@ -458,11 +458,11 @@ double hb_partd( int iParam )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_DATETIME(pItem) )
@@ -484,11 +484,11 @@ HB_BOOL hb_partdt( long * plJulian, long * plMilliSec, int iParam )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_DATETIME(pItem) )
@@ -512,11 +512,11 @@ int  hb_parl( int iParam )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_LOGICAL(pItem) )
@@ -538,11 +538,11 @@ int  hb_parldef( int iParam, int iDefValue )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_LOGICAL(pItem) )
@@ -564,11 +564,11 @@ double  hb_parnd( int iParam )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_DOUBLE(pItem) )
@@ -598,11 +598,11 @@ int  hb_parni( int iParam )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_INTEGER(pItem) )
@@ -632,11 +632,11 @@ int  hb_parnidef( int iParam, int iDefValue )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_INTEGER(pItem) )
@@ -666,11 +666,11 @@ long  hb_parnl( int iParam )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_LONG(pItem) )
@@ -700,11 +700,11 @@ long  hb_parnldef( int iParam, long lDefValue )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_LONG(pItem) )
@@ -734,11 +734,11 @@ HB_ISIZ hb_parns( int iParam )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_LONG(pItem) )
@@ -768,11 +768,11 @@ HB_ISIZ hb_parnsdef( int iParam, HB_ISIZ nDefValue )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_LONG(pItem) )
@@ -803,11 +803,11 @@ HB_LONGLONG  hb_parnll( int iParam )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_LONG(pItem) )
@@ -838,11 +838,11 @@ HB_MAXINT hb_parnint( int iParam )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_LONG(pItem) )
@@ -872,11 +872,11 @@ HB_MAXINT hb_parnintdef( int iParam, HB_MAXINT nDefValue )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_LONG(pItem) )
@@ -906,11 +906,11 @@ void * hb_parptr( int iParam )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_POINTER(pItem) )
@@ -932,11 +932,11 @@ void * hb_parptrGC( const HB_GC_FUNCS * pFuncs, int iParam )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_POINTER(pItem) && pItem->item.asPointer.collect && hb_gcFuncs( pItem->item.asPointer.value ) == pFuncs )
@@ -961,11 +961,11 @@ const char * hb_parvc( int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_STRING(pItem) )
@@ -999,11 +999,11 @@ const char * hb_parvcx( int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_STRING(pItem) )
@@ -1036,11 +1036,11 @@ HB_SIZE hb_parvclen( int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_STRING(pItem) )
@@ -1077,14 +1077,14 @@ HB_SIZE hb_parvcsiz( int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       /* NOTE: hb_parvcsiz() will only work for strings passed by reference.
                CA-Cl*pper works like this. [vszakats] */
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
 
          if( HB_IS_STRING(pItem) )
          {
@@ -1120,11 +1120,11 @@ const char * hb_parvds( int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_DATETIME(pItem) )
@@ -1159,11 +1159,11 @@ char  * hb_parvdsbuff( char * szDate, int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_DATETIME(pItem) )
@@ -1198,11 +1198,11 @@ long hb_parvdl( int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_DATETIME(pItem) )
@@ -1235,11 +1235,11 @@ double hb_parvtd( int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_DATETIME(pItem) )
@@ -1272,11 +1272,11 @@ HB_BOOL hb_parvtdt( long * plJulian, long * plMilliSec, int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_DATETIME(pItem) )
@@ -1311,11 +1311,11 @@ int  hb_parvl( int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_LOGICAL(pItem) )
@@ -1360,11 +1360,11 @@ double  hb_parvnd( int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_DOUBLE(pItem) )
@@ -1405,11 +1405,11 @@ int  hb_parvni( int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_INTEGER(pItem) )
@@ -1450,11 +1450,11 @@ long  hb_parvnl( int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_LONG(pItem) )
@@ -1500,11 +1500,11 @@ HB_ISIZ hb_parvns( int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_LONG(pItem) )
@@ -1546,11 +1546,11 @@ HB_LONGLONG hb_parvnll( int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_LONG(pItem) )
@@ -1592,11 +1592,11 @@ HB_MAXINT hb_parvnint( int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_LONG(pItem) )
@@ -1637,11 +1637,11 @@ void * hb_parvptr( int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_POINTER(pItem) )
@@ -1674,11 +1674,11 @@ void * hb_parvptrGC( const HB_GC_FUNCS * pFuncs, int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_POINTER(pItem) )
@@ -1717,7 +1717,7 @@ void hb_ret( void )
 
    HB_STACK_TLS_PRELOAD
 
-   hb_itemClear( hb_stackReturnItem() );
+   hb_itemClear(hb_stackReturnItem());
 }
 
 #undef hb_reta
@@ -2072,16 +2072,16 @@ int hb_stor( int iParam )
 
    if( iParam == -1 )
    {
-      hb_itemClear( hb_stackReturnItem() );
+      hb_itemClear(hb_stackReturnItem());
       return 1;
    }
    else if( iParam >= 0 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         hb_itemClear( hb_itemUnRef( pItem ) );
+         hb_itemClear(hb_itemUnRef(pItem));
          return 1;
       }
    }
@@ -2104,11 +2104,11 @@ int hb_storc( const char * szText, int iParam )
    }
    else if( iParam >= 0 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         hb_itemPutC(hb_itemUnRef( pItem ), szText);
+         hb_itemPutC(hb_itemUnRef(pItem), szText);
          return 1;
       }
    }
@@ -2131,11 +2131,11 @@ int hb_storclen( const char * szText, HB_SIZE nLen, int iParam )
    }
    else if( iParam >= 0 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         hb_itemPutCL(hb_itemUnRef( pItem ), szText, nLen);
+         hb_itemPutCL(hb_itemUnRef(pItem), szText, nLen);
          return 1;
       }
    }
@@ -2158,11 +2158,11 @@ int hb_storclen_buffer( char * szText, HB_SIZE nLen, int iParam )
    }
    else if( iParam >= 0 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         hb_itemPutCLPtr(hb_itemUnRef( pItem ), szText, nLen);
+         hb_itemPutCLPtr(hb_itemUnRef(pItem), szText, nLen);
          return 1;
       }
    }
@@ -2187,11 +2187,11 @@ int hb_stords( const char * szDate, int iParam )
    }
    else if( iParam >= 0 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         hb_itemPutDS(hb_itemUnRef( pItem ), szDate);
+         hb_itemPutDS(hb_itemUnRef(pItem), szDate);
          return 1;
       }
    }
@@ -2214,11 +2214,11 @@ int hb_stordl( long lJulian, int iParam )
    }
    else if( iParam >= 0 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         hb_itemPutDL(hb_itemUnRef( pItem ), lJulian);
+         hb_itemPutDL(hb_itemUnRef(pItem), lJulian);
          return 1;
       }
    }
@@ -2241,11 +2241,11 @@ int hb_stortd( double dTimeStamp, int iParam )
    }
    else if( iParam >= 0 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         hb_itemPutTD(hb_itemUnRef( pItem ), dTimeStamp);
+         hb_itemPutTD(hb_itemUnRef(pItem), dTimeStamp);
          return 1;
       }
    }
@@ -2268,11 +2268,11 @@ int hb_stortdt( long lJulian, long lMilliSec, int iParam )
    }
    else if( iParam >= 0 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         hb_itemPutTDT(hb_itemUnRef( pItem ), lJulian, lMilliSec);
+         hb_itemPutTDT(hb_itemUnRef(pItem), lJulian, lMilliSec);
          return 1;
       }
    }
@@ -2295,11 +2295,11 @@ int hb_storl( int iLogical, int iParam )
    }
    else if( iParam >= 0 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         hb_itemPutL(hb_itemUnRef( pItem ), iLogical ? HB_TRUE : HB_FALSE);
+         hb_itemPutL(hb_itemUnRef(pItem), iLogical ? HB_TRUE : HB_FALSE);
          return 1;
       }
    }
@@ -2322,11 +2322,11 @@ int hb_storni( int iValue, int iParam )
    }
    else if( iParam >= 0 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         hb_itemPutNI(hb_itemUnRef( pItem ), iValue);
+         hb_itemPutNI(hb_itemUnRef(pItem), iValue);
          return 1;
       }
    }
@@ -2349,11 +2349,11 @@ int hb_stornl( long lValue, int iParam )
    }
    else if( iParam >= 0 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         hb_itemPutNL(hb_itemUnRef( pItem ), lValue);
+         hb_itemPutNL(hb_itemUnRef(pItem), lValue);
          return 1;
       }
    }
@@ -2376,11 +2376,11 @@ int hb_storns( HB_ISIZ nValue, int iParam )
    }
    else if( iParam >= 0 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         hb_itemPutNS(hb_itemUnRef( pItem ), nValue);
+         hb_itemPutNS(hb_itemUnRef(pItem), nValue);
          return 1;
       }
    }
@@ -2404,11 +2404,11 @@ int hb_stornll( HB_LONGLONG llValue, int iParam )
    }
    else if( iParam >= 0 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         hb_itemPutNLL(hb_itemUnRef( pItem ), llValue);
+         hb_itemPutNLL(hb_itemUnRef(pItem), llValue);
          return 1;
       }
    }
@@ -2432,11 +2432,11 @@ int hb_stornint( HB_MAXINT nValue, int iParam )
    }
    else if( iParam >= 0 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         hb_itemPutNInt(hb_itemUnRef( pItem ), nValue);
+         hb_itemPutNInt(hb_itemUnRef(pItem), nValue);
          return 1;
       }
    }
@@ -2459,11 +2459,11 @@ int hb_stornd( double dNumber, int iParam )
    }
    else if( iParam >= 0 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         hb_itemPutND(hb_itemUnRef( pItem ), dNumber);
+         hb_itemPutND(hb_itemUnRef(pItem), dNumber);
          return 1;
       }
    }
@@ -2486,11 +2486,11 @@ int hb_storptr( void * pointer, int iParam )
    }
    else if( iParam >= 0 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         hb_itemPutPtr(hb_itemUnRef( pItem ), pointer);
+         hb_itemPutPtr(hb_itemUnRef(pItem), pointer);
          return 1;
       }
    }
@@ -2513,11 +2513,11 @@ int hb_storptrGC( void * pointer, int iParam )
    }
    else if( iParam >= 0 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
       if( HB_IS_BYREF(pItem) )
       {
-         hb_itemPutPtrGC(hb_itemUnRef( pItem ), pointer);
+         hb_itemPutPtrGC(hb_itemUnRef(pItem), pointer);
          return 1;
       }
    }
@@ -2539,12 +2539,12 @@ int hb_storvc( const char * szText, int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
       HB_BOOL bByRef = HB_IS_BYREF(pItem);
 
       if( bByRef )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_ARRAY(pItem) )
@@ -2576,12 +2576,12 @@ int hb_storvclen( const char * szText, HB_SIZE nLen, int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
       HB_BOOL bByRef = HB_IS_BYREF(pItem);
 
       if( bByRef )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_ARRAY(pItem) )
@@ -2613,12 +2613,12 @@ int hb_storvclen_buffer( char * szText, HB_SIZE nLen, int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
       HB_BOOL bByRef = HB_IS_BYREF(pItem);
 
       if( bByRef )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_ARRAY(pItem) )
@@ -2652,12 +2652,12 @@ int hb_storvds( const char * szDate, int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
       HB_BOOL bByRef = HB_IS_BYREF(pItem);
 
       if( bByRef )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_ARRAY(pItem) )
@@ -2689,12 +2689,12 @@ int hb_storvdl( long lJulian, int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
       HB_BOOL bByRef = HB_IS_BYREF(pItem);
 
       if( bByRef )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_ARRAY(pItem) )
@@ -2726,12 +2726,12 @@ int hb_storvtd( double dTimeStamp, int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
       HB_BOOL bByRef = HB_IS_BYREF(pItem);
 
       if( bByRef )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_ARRAY(pItem) )
@@ -2763,12 +2763,12 @@ int hb_storvtdt( long lJulian, long lMilliSec, int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
       HB_BOOL bByRef = HB_IS_BYREF(pItem);
 
       if( bByRef )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_ARRAY(pItem) )
@@ -2800,12 +2800,12 @@ int hb_storvl( int iLogical, int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
       HB_BOOL bByRef = HB_IS_BYREF(pItem);
 
       if( bByRef )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_ARRAY(pItem) )
@@ -2837,12 +2837,12 @@ int hb_storvni( int iValue, int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
       HB_BOOL bByRef = HB_IS_BYREF(pItem);
 
       if( bByRef )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_ARRAY(pItem) )
@@ -2874,12 +2874,12 @@ int hb_storvnl( long lValue, int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
       HB_BOOL bByRef = HB_IS_BYREF(pItem);
 
       if( bByRef )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_ARRAY(pItem) )
@@ -2911,12 +2911,12 @@ int hb_storvns( HB_ISIZ nValue, int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
       HB_BOOL bByRef = HB_IS_BYREF(pItem);
 
       if( bByRef )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_ARRAY(pItem) )
@@ -2949,12 +2949,12 @@ int hb_storvnll( HB_LONGLONG llValue, int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
       HB_BOOL bByRef = HB_IS_BYREF(pItem);
 
       if( bByRef )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_ARRAY(pItem) )
@@ -2987,12 +2987,12 @@ int hb_storvnint( HB_MAXINT nValue, int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
       HB_BOOL bByRef = HB_IS_BYREF(pItem);
 
       if( bByRef )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_ARRAY(pItem) )
@@ -3024,12 +3024,12 @@ int hb_storvnd( double dNumber, int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
       HB_BOOL bByRef = HB_IS_BYREF(pItem);
 
       if( bByRef )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_ARRAY(pItem) )
@@ -3061,12 +3061,12 @@ int hb_storvptr( void * pointer, int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
       HB_BOOL bByRef = HB_IS_BYREF(pItem);
 
       if( bByRef )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_ARRAY(pItem) )
@@ -3098,12 +3098,12 @@ int hb_storvptrGC( void * pointer, int iParam, ... )
 
    if( iParam >= -1 && iParam <= hb_pcount() )
    {
-      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase( iParam );
+      PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
       HB_BOOL bByRef = HB_IS_BYREF(pItem);
 
       if( bByRef )
       {
-         pItem = hb_itemUnRef( pItem );
+         pItem = hb_itemUnRef(pItem);
       }
 
       if( HB_IS_ARRAY(pItem) )

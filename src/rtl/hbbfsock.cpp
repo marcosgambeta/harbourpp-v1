@@ -234,7 +234,7 @@ static char * s_sockexName( PHB_SOCKEX pSock )
    {
       char * pszFree = pszName;
       pszName = hb_xstrcpy( nullptr, pSock->pFilter->pszName, "|", pszName, nullptr );
-      hb_xfree( pszFree );
+      hb_xfree(pszFree);
    }
    else
    {
@@ -274,12 +274,12 @@ static int s_sockexClose( PHB_SOCKEX pSock, HB_BOOL fClose )
          iResult = hb_sockexClose( pBF->sock, fClose );
       }
       memset( pBF, 0, sizeof(*pBF) );
-      hb_xfree( pBF );
+      hb_xfree(pBF);
    }
    /* call hb_sockexRawClear() with fClose = HB_FALSE because
       hb_sockexClose() already closed real socket */
    hb_sockexRawClear( pSock, HB_FALSE );
-   hb_xfree( pSock );
+   hb_xfree(pSock);
 
    return iResult;
 }

@@ -96,8 +96,8 @@
 #     endif
 
 #     define hb_stack_alloc()    do { hb_stack_ptr = static_cast<PHB_STACK>( \
-                                      hb_xgrab( sizeof(HB_STACK) ) ); } while(0)
-#     define hb_stack_dealloc()  do { hb_xfree( hb_stack_ptr ); \
+                                      hb_xgrab(sizeof(HB_STACK)) ); } while(0)
+#     define hb_stack_dealloc()  do { hb_xfree(hb_stack_ptr); \
                                       hb_stack_ptr = nullptr; } while(0)
 #     define hb_stack_ready()    (hb_stack_ptr != nullptr)
 
@@ -115,9 +115,9 @@
                                          hb_tls_init( hb_stack_key ); \
                                          s_fInited = HB_TRUE; } \
                                       hb_tls_set( hb_stack_key, \
-                                                  hb_xgrab( sizeof(HB_STACK) ) ); \
+                                                  hb_xgrab(sizeof(HB_STACK)) ); \
                                  } while(0)
-#     define hb_stack_dealloc()  do { hb_xfree( static_cast<void*>( hb_tls_get( hb_stack_key ) ) ); \
+#     define hb_stack_dealloc()  do { hb_xfree(static_cast<void*>( hb_tls_get( hb_stack_key ) )); \
                                       hb_tls_set( hb_stack_key, nullptr ); } \
                                  while(0)
 #     define hb_stack_ready()    ( s_fInited && hb_tls_get( hb_stack_key ) )
@@ -164,7 +164,7 @@ static void hb_stack_init( PHB_STACK pStack )
 
    memset( pStack, 0, sizeof(HB_STACK) );
 
-   pStack->pItems = static_cast<PHB_ITEM*>( hb_xgrab( sizeof(PHB_ITEM) * STACK_INITHB_ITEMS ) );
+   pStack->pItems = static_cast<PHB_ITEM*>( hb_xgrab(sizeof(PHB_ITEM) * STACK_INITHB_ITEMS) );
    pStack->pBase  = pStack->pItems;
    pStack->pPos   = pStack->pItems;       /* points to the first stack item */
    pStack->nItems = STACK_INITHB_ITEMS;
@@ -172,7 +172,7 @@ static void hb_stack_init( PHB_STACK pStack )
 
    for( HB_ISIZ n = 0; n < pStack->nItems; ++n )
    {
-      pStack->pItems[ n ] = static_cast<PHB_ITEM>( hb_xgrab( sizeof(HB_ITEM) ) );
+      pStack->pItems[ n ] = static_cast<PHB_ITEM>( hb_xgrab(sizeof(HB_ITEM)) );
       pStack->pItems[ n ]->type = HB_IT_NIL;
    }
 
@@ -198,14 +198,14 @@ static void hb_stack_destroy_TSD( PHB_STACK pStack )
          {
             pStack->pTSD[ pStack->iTSD ].pTSD->pCleanFunc( pStack->pTSD[ pStack->iTSD ].value );
          }
-         hb_xfree( pStack->pTSD[ pStack->iTSD ].value );
+         hb_xfree(pStack->pTSD[ pStack->iTSD ].value);
 #if ! defined( HB_MT_VM )
          pStack->pTSD[ pStack->iTSD ].pTSD->iHandle = 0;
 #endif
       }
       if( --pStack->iTSD == 0 )
       {
-         hb_xfree( pStack->pTSD );
+         hb_xfree(pStack->pTSD);
          pStack->pTSD = nullptr;
       }
    }
@@ -223,7 +223,7 @@ static void hb_stack_free( PHB_STACK pStack )
 
    if( pStack->privates.stack )
    {
-      hb_xfree( pStack->privates.stack );
+      hb_xfree(pStack->privates.stack);
       pStack->privates.stack = nullptr;
       pStack->privates.size = pStack->privates.count =
       pStack->privates.base = 0;
@@ -231,20 +231,20 @@ static void hb_stack_free( PHB_STACK pStack )
    n = pStack->nItems - 1;
    while( n >= 0 )
    {
-      hb_xfree( pStack->pItems[ n-- ] );
+      hb_xfree(pStack->pItems[ n-- ]);
    }
-   hb_xfree( pStack->pItems );
+   hb_xfree(pStack->pItems);
    pStack->pItems = pStack->pPos = pStack->pBase = nullptr;
    pStack->nItems = 0;
 #if defined( HB_MT_VM )
    if( pStack->pDirBuffer )
    {
-      hb_xfree( pStack->pDirBuffer );
+      hb_xfree(pStack->pDirBuffer);
       pStack->pDirBuffer = nullptr;
    }
    if( pStack->uiDynH )
    {
-      hb_xfree( pStack->pDynH );
+      hb_xfree(pStack->pDynH);
       pStack->pDynH = nullptr;
       pStack->uiDynH = 0;
    }
@@ -286,7 +286,7 @@ void * hb_stackGetTSD( PHB_TSD pTSD )
 
       if( pTSD->iHandle > hb_stack.iTSD )
       {
-         hb_stack.pTSD = static_cast<PHB_TSD_HOLDER>( hb_xrealloc( hb_stack.pTSD, ( pTSD->iHandle + 1 ) * sizeof(HB_TSD_HOLDER) ) );
+         hb_stack.pTSD = static_cast<PHB_TSD_HOLDER>( hb_xrealloc(hb_stack.pTSD, ( pTSD->iHandle + 1 ) * sizeof(HB_TSD_HOLDER)) );
          memset( &hb_stack.pTSD[ hb_stack.iTSD + 1 ], 0, ( pTSD->iHandle - hb_stack.iTSD ) * sizeof(HB_TSD_HOLDER) );
          hb_stack.iTSD = pTSD->iHandle;
       }
@@ -300,7 +300,7 @@ void * hb_stackGetTSD( PHB_TSD pTSD )
       }
       else
       {
-         hb_stack.pTSD = static_cast<PHB_TSD_HOLDER>( hb_xrealloc( hb_stack.pTSD, nSize ) );
+         hb_stack.pTSD = static_cast<PHB_TSD_HOLDER>( hb_xrealloc(hb_stack.pTSD, nSize) );
       }
       pTSD->iHandle = ++hb_stack.iTSD;
 #endif
@@ -344,7 +344,7 @@ void hb_stackReleaseTSD( PHB_TSD pTSD )
       {
          pTSD->pCleanFunc( hb_stack.pTSD[ pTSD->iHandle ].value );
       }
-      hb_xfree( hb_stack.pTSD[ pTSD->iHandle ].value );
+      hb_xfree(hb_stack.pTSD[ pTSD->iHandle ].value);
       hb_stack.pTSD[ pTSD->iHandle ].value = nullptr;
       hb_stack.pTSD[ pTSD->iHandle ].pTSD  = nullptr;
       pTSD->iHandle = 0;
@@ -442,7 +442,7 @@ PHB_DYN_HANDLES hb_stackGetDynHandle( PHB_DYNS pDynSym )
    uiDynSym = pDynSym->uiSymNum;
    if( uiDynSym > hb_stack.uiDynH )
    {
-      hb_stack.pDynH = static_cast<PHB_DYN_HANDLES>( hb_xrealloc( hb_stack.pDynH, uiDynSym * sizeof(HB_DYN_HANDLES) ) );
+      hb_stack.pDynH = static_cast<PHB_DYN_HANDLES>( hb_xrealloc(hb_stack.pDynH, uiDynSym * sizeof(HB_DYN_HANDLES)) );
       memset( &hb_stack.pDynH[ hb_stack.uiDynH ], 0, ( uiDynSym - hb_stack.uiDynH ) * sizeof(HB_DYN_HANDLES) );
       hb_stack.uiDynH = uiDynSym;
    }
@@ -612,7 +612,7 @@ void hb_stackPop( void )
 
    if( HB_IS_COMPLEX(*hb_stack.pPos) )
    {
-      hb_itemClear( *hb_stack.pPos );
+      hb_itemClear(*hb_stack.pPos);
    }
 }
 
@@ -627,7 +627,7 @@ void hb_stackPopReturn( void )
 
    if( HB_IS_COMPLEX(&hb_stack.Return) )
    {
-      hb_itemClear( &hb_stack.Return );
+      hb_itemClear(&hb_stack.Return);
    }
 
    if( --hb_stack.pPos <= hb_stack.pBase )
@@ -635,7 +635,7 @@ void hb_stackPopReturn( void )
       hb_errInternal( HB_EI_STACKUFLOW, nullptr, nullptr, nullptr );
    }
 
-   hb_itemRawMove( &hb_stack.Return, *hb_stack.pPos );
+   hb_itemRawMove(&hb_stack.Return, *hb_stack.pPos);
 }
 
 #undef hb_stackDec
@@ -712,7 +712,7 @@ void hb_stackPushReturn( void )
 
    HB_STACK_TLS_PRELOAD
 
-   hb_itemRawMove( *hb_stack.pPos, &hb_stack.Return );
+   hb_itemRawMove(*hb_stack.pPos, &hb_stack.Return);
 
    /* enough room for another item ? */
    if( ++hb_stack.pPos == hb_stack.pEnd )
@@ -737,7 +737,7 @@ void hb_stackIncrease( void )
    nEndIndex  = hb_stack.pEnd - hb_stack.pItems;
 
    /* no, make more headroom: */
-   hb_stack.pItems = static_cast<PHB_ITEM*>( hb_xrealloc( static_cast<void*>( hb_stack.pItems ), sizeof(PHB_ITEM) * ( hb_stack.nItems + STACK_EXPANDHB_ITEMS ) ) );
+   hb_stack.pItems = static_cast<PHB_ITEM*>( hb_xrealloc(static_cast<void*>( hb_stack.pItems ), sizeof(PHB_ITEM) * ( hb_stack.nItems + STACK_EXPANDHB_ITEMS )) );
 
    /* fix possibly modified by realloc pointers: */
    hb_stack.pPos   = hb_stack.pItems + nCurrIndex;
@@ -747,7 +747,7 @@ void hb_stackIncrease( void )
 
    do
    {
-      hb_stack.pItems[ nEndIndex ] = static_cast<PHB_ITEM>( hb_xgrab( sizeof(HB_ITEM) ) );
+      hb_stack.pItems[ nEndIndex ] = static_cast<PHB_ITEM>( hb_xgrab(sizeof(HB_ITEM)) );
       hb_stack.pItems[ nEndIndex ]->type = HB_IT_NIL;
    }
    while( ++nEndIndex < hb_stack.nItems );
@@ -763,7 +763,7 @@ void hb_stackRemove( HB_ISIZ nUntilPos )
       --hb_stack.pPos;
       if( HB_IS_COMPLEX(*hb_stack.pPos) )
       {
-         hb_itemClear( *hb_stack.pPos );
+         hb_itemClear(*hb_stack.pPos);
       }
    }
 }
@@ -916,7 +916,7 @@ void hb_stackOldFrame( PHB_STACK_STATE pFrame )
       --hb_stack.pPos;
       if( HB_IS_COMPLEX(*hb_stack.pPos) )
       {
-         hb_itemClear( *hb_stack.pPos );
+         hb_itemClear(*hb_stack.pPos);
       }
    }
    while( hb_stack.pPos > hb_stack.pBase );
@@ -1105,7 +1105,7 @@ char * hb_stackDirBuffer( void )
       HB_STACK_TLS_PRELOAD
       if( ! hb_stack.pDirBuffer )
       {
-         hb_stack.pDirBuffer = static_cast<char*>( hb_xgrab( HB_PATH_MAX ) );
+         hb_stack.pDirBuffer = static_cast<char*>( hb_xgrab(HB_PATH_MAX) );
       }
       return hb_stack.pDirBuffer;
    }

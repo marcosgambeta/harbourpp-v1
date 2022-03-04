@@ -581,7 +581,7 @@ static void hb_gt_pca_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    {
       s_iOutBufIndex = 0;
       s_iOutBufSize = 16384;
-      s_sOutBuf = static_cast<char*>( hb_xgrab( s_iOutBufSize ) );
+      s_sOutBuf = static_cast<char*>( hb_xgrab(s_iOutBufSize) );
    }
 
    HB_GTSELF_RESIZE( pGT, iRows, iCols );
@@ -615,17 +615,17 @@ static void hb_gt_pca_Exit( PHB_GT pGT )
 #endif
    if( s_iLineBufSize > 0 )
    {
-      hb_xfree( s_sLineBuf );
+      hb_xfree(s_sLineBuf);
       s_iLineBufSize = 0;
    }
    if( s_nTransBufSize > 0 )
    {
-      hb_xfree( s_sTransBuf );
+      hb_xfree(s_sTransBuf);
       s_nTransBufSize = 0;
    }
    if( s_iOutBufSize > 0 )
    {
-      hb_xfree( s_sOutBuf );
+      hb_xfree(s_sOutBuf);
       s_iOutBufSize = s_iOutBufIndex = 0;
    }
    s_bStdinConsole = s_bStdoutConsole = s_bStderrConsole = HB_FALSE;
@@ -891,12 +891,12 @@ static void hb_gt_pca_Refresh( PHB_GT pGT )
 
    if( s_iLineBufSize == 0 )
    {
-      s_sLineBuf = static_cast<char*>( hb_xgrab( iWidth ) );
+      s_sLineBuf = static_cast<char*>( hb_xgrab(iWidth) );
       s_iLineBufSize = iWidth;
    }
    else if( s_iLineBufSize != iWidth )
    {
-      s_sLineBuf = static_cast<char*>( hb_xrealloc( s_sLineBuf, iWidth ) );
+      s_sLineBuf = static_cast<char*>( hb_xrealloc(s_sLineBuf, iWidth) );
       s_iLineBufSize = iWidth;
    }
 

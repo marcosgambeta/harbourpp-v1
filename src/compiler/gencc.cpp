@@ -2437,6 +2437,6 @@ void hb_compGenCRealCode( HB_COMP_DECL, PHB_HFUNC pFunc, FILE * yyc )
 
    if( label_info.pnLabels )
    {
-      hb_xfree( label_info.pnLabels );
+      hb_xfree(label_info.pnLabels);
    }
 }

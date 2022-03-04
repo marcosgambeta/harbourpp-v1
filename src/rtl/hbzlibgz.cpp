@@ -214,7 +214,7 @@ HB_FUNC( HB_GZREAD )
    char * szBuffer;
    HB_SIZE nLen;
 
-   if( pBuffer && hb_itemGetWriteCL( pBuffer, &szBuffer, &nLen ) )
+   if( pBuffer && hb_itemGetWriteCL(pBuffer, &szBuffer, &nLen) )
    {
       gzFile gz = hb_gzParam(1);
       if( gz )
@@ -304,7 +304,7 @@ HB_FUNC( HB_GZGETS )
             }
             else
             {
-               hb_xfree( szBuffer );
+               hb_xfree(szBuffer);
             }
          }
       }

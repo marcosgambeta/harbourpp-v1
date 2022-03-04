@@ -70,7 +70,7 @@ HB_FUNC( __XHELP )
        */
       for( int iParam = 1; iParam <= iPCount; iParam++ )
       {
-         hb_vmPush( hb_stackItemFromBase( iParam ) );
+         hb_vmPush( hb_stackItemFromBase(iParam) );
       }
 
       hb_vmProc( static_cast<HB_USHORT>( iPCount ) );

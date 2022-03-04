@@ -94,7 +94,7 @@ static voidpf s_zsock_zalloc( voidpf opaque, uInt items, uInt size )
 static void s_zsock_zfree( voidpf opaque, voidpf address )
 {
    HB_SYMBOL_UNUSED( opaque );
-   hb_xfree( address );
+   hb_xfree(address);
 }
 
 static long s_zsock_write( PHB_SOCKEX_Z pZ, HB_MAXINT timeout )
@@ -153,7 +153,7 @@ static int s_zsock_inbuffer( PHB_SOCKEX pSock )
          {
             pSock->readahead = HB_ZSOCK_READAHEAD;
          }
-         pSock->buffer = static_cast<HB_BYTE*>( hb_xgrab( pSock->readahead ) );
+         pSock->buffer = static_cast<HB_BYTE*>( hb_xgrab(pSock->readahead) );
       }
 
       pZ->z_read.next_out  = static_cast<Bytef*>( pSock->buffer );
@@ -334,7 +334,7 @@ static char * s_sockexName( PHB_SOCKEX pSock )
    {
       char * pszFree = pszName;
       pszName = hb_xstrcpy( nullptr, pSock->pFilter->pszName, "|", pszName, nullptr );
-      hb_xfree( pszFree );
+      hb_xfree(pszFree);
    }
    else
    {
@@ -387,7 +387,7 @@ static int s_sockexClose( PHB_SOCKEX pSock, HB_BOOL fClose )
       }
       if( pZ->rdbuf )
       {
-         hb_xfree( pZ->rdbuf );
+         hb_xfree(pZ->rdbuf);
       }
       if( pZ->fCompressOut )
       {
@@ -395,7 +395,7 @@ static int s_sockexClose( PHB_SOCKEX pSock, HB_BOOL fClose )
       }
       if( pZ->wrbuf )
       {
-         hb_xfree( pZ->wrbuf );
+         hb_xfree(pZ->wrbuf);
       }
 
       if( pZ->sock )
@@ -411,12 +411,12 @@ static int s_sockexClose( PHB_SOCKEX pSock, HB_BOOL fClose )
          iResult = hb_sockexClose( pZ->sock, fClose );
       }
 
-      hb_xfree( pZ );
+      hb_xfree(pZ);
    }
    /* call hb_sockexRawClear() with fClose = HB_FALSE because
       hb_sockexClose() already closed real socket */
    hb_sockexRawClear( pSock, HB_FALSE );
-   hb_xfree( pSock );
+   hb_xfree(pSock);
 
    return iResult;
 }
@@ -557,7 +557,7 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
             if( inflateInit2( &pZ->z_read, windowBitsIn ) == Z_OK )
             {
                pZ->fDecompressIn = HB_TRUE;
-               pZ->rdbuf = static_cast<HB_BYTE*>( hb_xgrab( HB_ZSOCK_RDBUFSIZE ) );
+               pZ->rdbuf = static_cast<HB_BYTE*>( hb_xgrab(HB_ZSOCK_RDBUFSIZE) );
             }
             else
             {
@@ -573,7 +573,7 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
             if( deflateInit2( &pZ->z_write, level, Z_DEFLATED, windowBitsOut, HB_ZSOCK_MEM_LEVEL, strategy ) == Z_OK )
             {
                pZ->fCompressOut = HB_TRUE;
-               pZ->wrbuf = static_cast<HB_BYTE*>( hb_xgrab( HB_ZSOCK_WRBUFSIZE ) );
+               pZ->wrbuf = static_cast<HB_BYTE*>( hb_xgrab(HB_ZSOCK_WRBUFSIZE) );
                pZ->z_write.next_out  = static_cast<Bytef*>( pZ->wrbuf );
                pZ->z_write.avail_out = HB_ZSOCK_WRBUFSIZE;
             }

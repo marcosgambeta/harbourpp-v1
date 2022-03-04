@@ -437,7 +437,7 @@ HB_FUNC( ACLONE )
 
    if( pSrcArray && ! hb_arrayIsObject( pSrcArray ) )
    {
-      hb_arrayCloneTo( hb_stackReturnItem(), pSrcArray ); /* AClone() returns the new array */
+      hb_arrayCloneTo(hb_stackReturnItem(), pSrcArray); /* AClone() returns the new array */
    }
 }
 

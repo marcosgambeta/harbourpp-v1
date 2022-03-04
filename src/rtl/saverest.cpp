@@ -105,7 +105,7 @@ HB_FUNC( SAVESCREEN )
    hb_getScreenRange( &iLeft, &iRight, fNoCheck, HB_FALSE );
 
    hb_gtRectSize( iTop, iLeft, iBottom, iRight, &nSize );
-   pBuffer = hb_xgrab( nSize + 1 );
+   pBuffer = hb_xgrab(nSize + 1);
 
    hb_gtSave( iTop, iLeft, iBottom, iRight, pBuffer );
    hb_retclen_buffer( static_cast<char*>( pBuffer ), nSize );
@@ -128,7 +128,7 @@ HB_FUNC( RESTSCREEN )
       hb_gtRectSize( iTop, iLeft, iBottom, iRight, &nSize );
       if( nLen < nSize )
       {
-         pBuffer = hb_xgrab( nSize );
+         pBuffer = hb_xgrab(nSize);
          memcpy( pBuffer, pBufStr, nLen );
          memset( static_cast<char*>( pBuffer ) + nLen, 0, nSize - nLen );
          pBufStr = static_cast<const char*>( pBuffer );
@@ -138,7 +138,7 @@ HB_FUNC( RESTSCREEN )
 
       if( pBuffer )
       {
-         hb_xfree( pBuffer );
+         hb_xfree(pBuffer);
       }
    }
 }

@@ -114,11 +114,11 @@ static PHB_DYNS hb_dynsymInsert( PHB_SYMB pSymbol, HB_SYMCNT uiPos )
    }
    else if( s_uiDynSymbols == 1 )
    {
-      s_pDynItems = static_cast<PDYNHB_ITEM>( hb_xgrab( sizeof(DYNHB_ITEM) ) );
+      s_pDynItems = static_cast<PDYNHB_ITEM>( hb_xgrab(sizeof(DYNHB_ITEM)) );
    }
    else
    {
-      s_pDynItems = static_cast<PDYNHB_ITEM>( hb_xrealloc( s_pDynItems, s_uiDynSymbols * sizeof(DYNHB_ITEM) ) );
+      s_pDynItems = static_cast<PDYNHB_ITEM>( hb_xrealloc(s_pDynItems, s_uiDynSymbols * sizeof(DYNHB_ITEM)) );
       memmove( &s_pDynItems[ uiPos + 1 ], &s_pDynItems[ uiPos ], sizeof(DYNHB_ITEM) * ( s_uiDynSymbols - uiPos - 1 ) );
    }
 
@@ -185,7 +185,7 @@ static PHB_SYMB hb_symbolAlloc( const char * szName )
    int iLen;
 
    iLen = static_cast<int>( strlen( szName ) );
-   pHolder = static_cast<PHB_SYM_HOLDER>( hb_xgrab( sizeof(HB_SYM_HOLDER) + iLen ) );
+   pHolder = static_cast<PHB_SYM_HOLDER>( hb_xgrab(sizeof(HB_SYM_HOLDER) + iLen) );
    memcpy( pHolder->szName, szName, iLen + 1 );
    pHolder->pNext = s_pAllocSyms;
    s_pAllocSyms = pHolder;
@@ -605,7 +605,7 @@ HB_SYMCNT hb_dynsymToNum( PHB_DYNS pDynSym )
 
    if( uiSymNum > s_uiDynIdxSize )
    {
-      s_pDynIndex = static_cast<PDYNHB_ITEM>( hb_xrealloc( s_pDynIndex, uiSymNum * sizeof(DYNHB_ITEM) ) );
+      s_pDynIndex = static_cast<PDYNHB_ITEM>( hb_xrealloc(s_pDynIndex, uiSymNum * sizeof(DYNHB_ITEM)) );
       memset( &s_pDynIndex[ s_uiDynIdxSize ], 0, ( uiSymNum - s_uiDynIdxSize ) * sizeof(DYNHB_ITEM) );
       s_uiDynIdxSize = uiSymNum;
    }
@@ -713,7 +713,7 @@ void hb_dynsymRelease( void )
 
    if( s_uiDynIdxSize )
    {
-      hb_xfree( s_pDynIndex );
+      hb_xfree(s_pDynIndex);
       s_pDynIndex = nullptr;
       s_uiDynIdxSize = 0;
    }
@@ -722,10 +722,10 @@ void hb_dynsymRelease( void )
    {
       do
       {
-         hb_xfree( ( s_pDynItems + --s_uiDynSymbols )->pDynSym );
+         hb_xfree(( s_pDynItems + --s_uiDynSymbols )->pDynSym);
       }
       while( s_uiDynSymbols );
-      hb_xfree( s_pDynItems );
+      hb_xfree(s_pDynItems);
       s_pDynItems = nullptr;
    }
 
@@ -733,7 +733,7 @@ void hb_dynsymRelease( void )
    {
       PHB_SYM_HOLDER pHolder = s_pAllocSyms;
       s_pAllocSyms = s_pAllocSyms->pNext;
-      hb_xfree( pHolder );
+      hb_xfree(pHolder);
    }
 
    HB_DYNSYM_UNLOCK();

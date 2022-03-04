@@ -176,7 +176,7 @@ static void hb_compGenArgList( int iFirst, int iLast,
       }
    }
 
-   argv = static_cast<const char**>( hb_xgrab( sizeof(char*) * ( argc + 1 ) ) );
+   argv = static_cast<const char**>( hb_xgrab(sizeof(char*) * ( argc + 1 )) );
    argc = 0;
    for( i = iFirst; i <= iLast; ++i )
    {
@@ -216,7 +216,7 @@ HB_FUNC( HB_COMPILE )
 
    hb_compGenArgList( 1, hb_pcount(), &argc, &argv, &pIncItem, &pOpenFunc, &pMsgFunc );
    hb_retni( hb_compMainExt( argc, argv, nullptr, nullptr, nullptr, 0, pIncItem, pOpenFunc, pMsgFunc ) );
-   hb_xfree( static_cast<void*>( argv ) );
+   hb_xfree(static_cast<void*>( argv ));
 }
 
 HB_FUNC( HB_COMPILEBUF )
@@ -231,7 +231,7 @@ HB_FUNC( HB_COMPILEBUF )
 
    hb_compGenArgList( 1, hb_pcount(), &argc, &argv, &pIncItem, &pOpenFunc, &pMsgFunc );
    iResult = hb_compMainExt( argc, argv, &pBuffer, &nLen, nullptr, 0, pIncItem, pOpenFunc, pMsgFunc );
-   hb_xfree( static_cast<void*>( argv ) );
+   hb_xfree(static_cast<void*>( argv ));
 
    if( iResult == EXIT_SUCCESS && pBuffer )
    {
@@ -255,7 +255,7 @@ HB_FUNC( HB_COMPILEFROMBUF )
 
       hb_compGenArgList( 2, hb_pcount(), &argc, &argv, &pIncItem, &pOpenFunc, &pMsgFunc );
       iResult = hb_compMainExt( argc, argv, &pBuffer, &nLen, szSource, 0, pIncItem, pOpenFunc, pMsgFunc );
-      hb_xfree( static_cast<void*>( argv ) );
+      hb_xfree(static_cast<void*>( argv ));
 
       if( iResult == EXIT_SUCCESS && pBuffer )
       {

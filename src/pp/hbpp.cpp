@@ -306,7 +306,7 @@ static char * hb_pp_escapeString( char * szString )
    }
    while( ch );
 
-   szResult = static_cast<char*>( hb_xgrab( iLen ) );
+   szResult = static_cast<char*>( hb_xgrab(iLen) );
    iLen = 0;
    do
    {
@@ -354,14 +354,14 @@ static int hb_pp_generateVerInfo( char * szVerFile,
       {
          pszEscaped = hb_pp_escapeString( szChangeLogID );
          fprintf( fout, "#define HB_VER_CHLID             \"%s\"\n", pszEscaped );
-         hb_xfree( pszEscaped );
+         hb_xfree(pszEscaped);
       }
 
       if( szLastEntry )
       {
          pszEscaped = hb_pp_escapeString( szLastEntry );
          fprintf( fout, "#define HB_VER_LENTRY            \"%s\"\n", pszEscaped );
-         hb_xfree( pszEscaped );
+         hb_xfree(pszEscaped);
       }
 
       pszEnv = hb_getenv( "HB_USER_CFLAGS" );
@@ -369,8 +369,8 @@ static int hb_pp_generateVerInfo( char * szVerFile,
       {
          pszEscaped = hb_pp_escapeString( pszEnv );
          fprintf( fout, "#define HB_VER_HB_USER_CFLAGS    \"%s\"\n", pszEscaped );
-         hb_xfree( pszEscaped );
-         hb_xfree( pszEnv );
+         hb_xfree(pszEscaped);
+         hb_xfree(pszEnv);
       }
 
       pszEnv = hb_getenv( "HB_USER_LDFLAGS" );
@@ -378,8 +378,8 @@ static int hb_pp_generateVerInfo( char * szVerFile,
       {
          pszEscaped = hb_pp_escapeString( pszEnv );
          fprintf( fout, "#define HB_VER_HB_USER_LDFLAGS   \"%s\"\n", pszEscaped );
-         hb_xfree( pszEscaped );
-         hb_xfree( pszEnv );
+         hb_xfree(pszEscaped);
+         hb_xfree(pszEnv);
       }
 
       pszEnv = hb_getenv( "HB_USER_PRGFLAGS" );
@@ -387,8 +387,8 @@ static int hb_pp_generateVerInfo( char * szVerFile,
       {
          pszEscaped = hb_pp_escapeString( pszEnv );
          fprintf( fout, "#define HB_VER_HB_USER_PRGFLAGS  \"%s\"\n", pszEscaped );
-         hb_xfree( pszEscaped );
-         hb_xfree( pszEnv );
+         hb_xfree(pszEscaped);
+         hb_xfree(pszEnv);
       }
 
       pszEnv = hb_getenv( "HB_PLATFORM" );
@@ -396,8 +396,8 @@ static int hb_pp_generateVerInfo( char * szVerFile,
       {
          pszEscaped = hb_pp_escapeString( pszEnv );
          fprintf( fout, "#define HB_PLATFORM              \"%s\"\n", pszEscaped );
-         hb_xfree( pszEscaped );
-         hb_xfree( pszEnv );
+         hb_xfree(pszEscaped);
+         hb_xfree(pszEnv);
       }
 
       pszEnv = hb_getenv( "HB_COMPILER" );
@@ -405,8 +405,8 @@ static int hb_pp_generateVerInfo( char * szVerFile,
       {
          pszEscaped = hb_pp_escapeString( pszEnv );
          fprintf( fout, "#define HB_COMPILER              \"%s\"\n", pszEscaped );
-         hb_xfree( pszEscaped );
-         hb_xfree( pszEnv );
+         hb_xfree(pszEscaped);
+         hb_xfree(pszEnv);
       }
 
       fclose( fout );
@@ -427,7 +427,7 @@ static char * hb_fsFileFind( const char * pszFileMask )
       pFileName->szExtension = nullptr;
       hb_fsFNameMerge( pszFileName, pFileName );
       hb_fsFindClose( ffind );
-      hb_xfree( pFileName );
+      hb_xfree(pFileName);
       return hb_strdup( pszFileName );
    }
    return nullptr;
@@ -485,7 +485,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
          pszFileName = s_szNames[ 0 ];
    }
 
-   hb_xfree( pFileName );
+   hb_xfree(pFileName);
 
    file_in = hb_fopen( pszFileName, "r" );
    if( ! file_in )
@@ -638,7 +638,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
    }
 
    if( pszFree )
-      hb_xfree( pszFree );
+      hb_xfree(pszFree);
 
    return iResult;
 }
@@ -710,7 +710,7 @@ int main( int argc, char * argv[] )
                      if( szAssign )
                         *szAssign++ = '\0';
                      hb_pp_addDefine( pState, szDefText, szAssign );
-                     hb_xfree( szDefText );
+                     hb_xfree(szDefText);
                   }
                   break;
 
@@ -796,7 +796,7 @@ int main( int argc, char * argv[] )
       {
          if( szInclude[ 0 ] )
             hb_pp_addSearchPath( pState, szInclude, HB_FALSE );
-         hb_xfree( szInclude );
+         hb_xfree(szInclude);
       }
 
       if( szStdCh )
@@ -812,7 +812,7 @@ int main( int argc, char * argv[] )
             pFileName = hb_fsFNameSplit( szFile );
             pFileName->szExtension = ".ppo";
             hb_fsFNameMerge( szFileName, pFileName );
-            hb_xfree( pFileName );
+            hb_xfree(pFileName);
 
             hb_pp_outFile( pState, szFileName, nullptr );
          }
@@ -840,9 +840,9 @@ int main( int argc, char * argv[] )
    }
 
    if( szChangeLogID )
-      hb_xfree( szChangeLogID );
+      hb_xfree(szChangeLogID);
    if( szLastEntry )
-      hb_xfree( szLastEntry );
+      hb_xfree(szLastEntry);
 
    hb_pp_free( pState );
 

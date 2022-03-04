@@ -218,7 +218,7 @@ static void hb_fileInsertLock( PHB_FILE pFile, HB_UINT uiPos, HB_FOFFSET nStart,
    if( pFile->uiLocks == pFile->uiSize )
    {
       pFile->uiSize += HB_FLOCK_RESIZE;
-      pFile->pLocks = static_cast<PHB_FLOCK>( hb_xrealloc( pFile->pLocks, sizeof(HB_FLOCK) * pFile->uiSize ) );
+      pFile->pLocks = static_cast<PHB_FLOCK>( hb_xrealloc(pFile->pLocks, sizeof(HB_FLOCK) * pFile->uiSize) );
       memset( &pFile->pLocks[ pFile->uiLocks ], 0, sizeof(HB_FLOCK) * HB_FLOCK_RESIZE );
    }
    memmove( &pFile->pLocks[ uiPos + 1 ], &pFile->pLocks[ uiPos ], ( pFile->uiLocks - uiPos ) * sizeof(HB_FLOCK) );
@@ -234,7 +234,7 @@ static void hb_fileDeleteLock( PHB_FILE pFile, HB_UINT uiPos )
    if( pFile->uiSize - pFile->uiLocks >= ( HB_FLOCK_RESIZE << 1 ) )
    {
       pFile->uiSize -= HB_FLOCK_RESIZE;
-      pFile->pLocks = static_cast<PHB_FLOCK>( hb_xrealloc( pFile->pLocks, sizeof(HB_FLOCK) * pFile->uiSize ) );
+      pFile->pLocks = static_cast<PHB_FLOCK>( hb_xrealloc(pFile->pLocks, sizeof(HB_FLOCK) * pFile->uiSize) );
    }
 }
 
@@ -690,7 +690,7 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
       }
    }
 
-   hb_xfree( pszFile );
+   hb_xfree(pszFile);
 
    hb_vmLock();
 
@@ -729,10 +729,10 @@ static void s_fileClose( PHB_FILE pFile )
 
       if( pFile->pLocks )
       {
-         hb_xfree( pFile->pLocks );
+         hb_xfree(pFile->pLocks);
       }
 
-      hb_xfree( pFile );
+      hb_xfree(pFile);
    }
 
    hb_threadLeaveCriticalSection( &s_fileMtx );
@@ -961,7 +961,7 @@ using PHB_FILEPOS = HB_FILEPOS *;
 static void s_fileposClose( PHB_FILE pFilePos )
 {
    _PHB_FILE->pFuncs->Close( _PHB_FILE );
-   hb_xfree( pFilePos );
+   hb_xfree(pFilePos);
 }
 
 static HB_BOOL s_fileposLock( PHB_FILE pFilePos, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType )
@@ -1640,7 +1640,7 @@ HB_BYTE * hb_fileLoadData( PHB_FILE pFile, HB_SIZE nMaxSize, HB_SIZE * pnSize )
                   break;
                }
             }
-            pFileBuf = static_cast<HB_BYTE*>( hb_xrealloc( pFileBuf, nBufSize ) );
+            pFileBuf = static_cast<HB_BYTE*>( hb_xrealloc(pFileBuf, nBufSize) );
          }
          nRead = hb_fileRead( pFile, pFileBuf + nSize, nBufSize - nSize, -1 );
          if( nRead == 0 || nRead == static_cast<HB_SIZE>( FS_ERROR ) )
@@ -1658,7 +1658,7 @@ HB_BYTE * hb_fileLoadData( PHB_FILE pFile, HB_SIZE nMaxSize, HB_SIZE * pnSize )
          nBufSize = nMaxSize;
       }
 
-      pFileBuf = static_cast<HB_BYTE*>( hb_xgrab( nBufSize + 1 ) );
+      pFileBuf = static_cast<HB_BYTE*>( hb_xgrab(nBufSize + 1) );
       do
       {
          nRead = hb_fileReadAt( pFile, pFileBuf + nSize, nBufSize - nSize, nSize );
@@ -1673,12 +1673,12 @@ HB_BYTE * hb_fileLoadData( PHB_FILE pFile, HB_SIZE nMaxSize, HB_SIZE * pnSize )
 
    if( nSize > 0 )
    {
-      pFileBuf = static_cast<HB_BYTE*>( hb_xrealloc( pFileBuf, nSize + 1 ) );
+      pFileBuf = static_cast<HB_BYTE*>( hb_xrealloc(pFileBuf, nSize + 1) );
       pFileBuf[ nSize ] = '\0';
    }
    else if( pFileBuf )
    {
-      hb_xfree( pFileBuf );
+      hb_xfree(pFileBuf);
       pFileBuf = nullptr;
    }
 

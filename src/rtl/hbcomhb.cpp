@@ -227,7 +227,7 @@ HB_FUNC( HB_COMRECV )
    char * pBuffer;
    HB_SIZE nLen;
 
-   if( pItem && HB_ISBYREF(2) && hb_itemGetWriteCL( pItem, &pBuffer, &nLen ) )
+   if( pItem && HB_ISBYREF(2) && hb_itemGetWriteCL(pItem, &pBuffer, &nLen) )
    {
       if( HB_ISNUM(3) )
       {

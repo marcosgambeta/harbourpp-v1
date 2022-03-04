@@ -117,17 +117,17 @@ static void hb_destroyFBuffer( PHB_FILEBUF pFileBuf )
    hb_flushFBuffer( pFileBuf );
    if( pFileBuf->pBuf )
    {
-      hb_xfree( pFileBuf->pBuf );
+      hb_xfree(pFileBuf->pBuf);
    }
-   hb_xfree( pFileBuf );
+   hb_xfree(pFileBuf);
 }
 
 static PHB_FILEBUF hb_createFBuffer( PHB_FILE pFile, HB_SIZE nSize )
 {
-   PHB_FILEBUF pFileBuf = static_cast<PHB_FILEBUF>( hb_xgrab( sizeof(HB_FILEBUF) ) );
+   PHB_FILEBUF pFileBuf = static_cast<PHB_FILEBUF>( hb_xgrab(sizeof(HB_FILEBUF)) );
 
    pFileBuf->pFile = pFile;
-   pFileBuf->pBuf = static_cast<HB_BYTE*>( hb_xgrab( nSize ) );
+   pFileBuf->pBuf = static_cast<HB_BYTE*>( hb_xgrab(nSize) );
    pFileBuf->nSize = nSize;
    pFileBuf->nPos = 0;
    return pFileBuf;
@@ -223,7 +223,7 @@ static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const 
 
          hb_itemGetNLen(pValue, &iWidth, &iDec);
          iSize = ( iDec > 0 ? iWidth + 1 + iDec : iWidth );
-         if( hb_itemStrBuf( szResult, pValue, iSize, iDec ) )
+         if( hb_itemStrBuf(szResult, pValue, iSize, iDec) )
          {
             int iPos = 0;
             while( iSize && HB_ISSPACE( szResult[ iPos ] ) )
@@ -370,7 +370,7 @@ static HB_ULONG hb_db2Sql( AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
 
    if( szInsert )
    {
-      hb_xfree( szInsert );
+      hb_xfree(szInsert);
    }
    hb_destroyFBuffer( pFileBuf );
    hb_itemRelease(pTmp);

@@ -117,12 +117,12 @@ static HB_BOOL fsGetTempDirByCase( char * pszName, const char * pszTempDir, HB_B
          case HB_SET_CASE_LOWER:
             pTmp = hb_cdpnDupLower( hb_vmCDP(), pszName, nullptr );
             fOK = strcmp( pszName, pTmp ) == 0;
-            hb_xfree( pTmp );
+            hb_xfree(pTmp);
             break;
          case HB_SET_CASE_UPPER:
             pTmp = hb_cdpnDupUpper( hb_vmCDP(), pszName, nullptr );
             fOK = strcmp( pszName, pTmp ) == 0;
-            hb_xfree( pTmp );
+            hb_xfree(pTmp);
             break;
          default:
             fOK = HB_TRUE;
@@ -287,16 +287,16 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
 
       if( lpPrefixFree )
       {
-         hb_xfree( lpPrefixFree );
+         hb_xfree(lpPrefixFree);
       }
       if( lpDirFree )
       {
-         hb_xfree( lpDirFree );
+         hb_xfree(lpDirFree);
       }
    }
 #else
    {
-      char * pTmpBuffer = static_cast<char*>( hb_xgrab( L_tmpnam + 1 ) );
+      char * pTmpBuffer = static_cast<char*>( hb_xgrab(L_tmpnam + 1) );
 
       /* TODO: Implement these: */
       HB_SYMBOL_UNUSED( pszDir );
@@ -310,7 +310,7 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
       {
          hb_osStrDecode2( pTmpBuffer, pszBuffer, HB_PATH_MAX - 1 );
       }
-      hb_xfree( pTmpBuffer );
+      hb_xfree(pTmpBuffer);
    }
 #endif
 
@@ -395,7 +395,7 @@ HB_ERRCODE hb_fsTempDir( char * pszTempDir )
 
       if( pszTempDirEnv )
       {
-         hb_xfree( pszTempDirEnv );
+         hb_xfree(pszTempDirEnv);
       }
    }
 #elif defined( HB_OS_WIN )
@@ -425,7 +425,7 @@ HB_ERRCODE hb_fsTempDir( char * pszTempDir )
             {
                nResult = 0;
             }
-            hb_xfree( pszTempDirEnv );
+            hb_xfree(pszTempDirEnv);
          }
       }
    }

@@ -354,7 +354,7 @@ HB_BOOL hb_md5file( const char * pszFileName, char * digest )
       int i;
       HB_FOFFSET flen = 0;
       HB_UCHAR buf[ 128 ];
-      HB_BYTE * readbuf = static_cast<HB_BYTE*>( hb_xgrab( MAX_FBUF ) );
+      HB_BYTE * readbuf = static_cast<HB_BYTE*>( hb_xgrab(MAX_FBUF) );
 
       hb_md5accinit( md5.accum );
       n = hb_fileRead( pFile, readbuf, MAX_FBUF, -1 );
@@ -409,7 +409,7 @@ HB_BOOL hb_md5file( const char * pszFileName, char * digest )
       memcpy( md5.buf, buf + i - 64, 64 );
       hb_md5go( &md5 );
       hb_md5val( md5.accum, digest );
-      hb_xfree( readbuf );
+      hb_xfree(readbuf);
 
       return HB_TRUE;
    }

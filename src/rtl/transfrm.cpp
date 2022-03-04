@@ -212,7 +212,7 @@ HB_FUNC( TRANSFORM )
             HB_SIZE nSize = nExpLen + nExpLen + nPicLen - nPicPos;
             HB_WCHAR wcPict, wcExp;
 
-            szResult = static_cast<char*>( hb_xgrab( nSize + 1 ) );
+            szResult = static_cast<char*>( hb_xgrab(nSize + 1) );
             nResultPos = 0;
 
             while( HB_CDPCHAR_GET( cdp, szPic, nPicLen, &nPicPos, &wcPict ) )
@@ -487,8 +487,8 @@ HB_FUNC( TRANSFORM )
          }
 
          /* allocate 4 additional bytes for possible ") CR" or ") DB" suffix */
-         szResult = static_cast<char*>( hb_xgrab( iWidth + 5 ) );
-         hb_itemStrBuf( szResult, pValue, iWidth, iDec );
+         szResult = static_cast<char*>( hb_xgrab(iWidth + 5) );
+         hb_itemStrBuf(szResult, pValue, iWidth, iDec);
          if( pNumber )
          {
             hb_itemRelease(pNumber);
@@ -547,7 +547,7 @@ HB_FUNC( TRANSFORM )
             char * szStr = szResult;
 
             /* allocate 4 additional bytes for possible ") CR" or ") DB" suffix */
-            szResult = static_cast<char*>( hb_xgrab( nPicLen + 5 ) );
+            szResult = static_cast<char*>( hb_xgrab(nPicLen + 5) );
 
             for( i = iCount = 0; i < nPicLen; i++ )
             {
@@ -591,7 +591,7 @@ HB_FUNC( TRANSFORM )
                   szResult[ i ] = cPic;
                }
             }
-            hb_xfree( szStr );
+            hb_xfree(szStr);
          }
 
          if( dValue < 0 )
@@ -788,7 +788,7 @@ HB_FUNC( TRANSFORM )
          long lDate, lTime;
          HB_SIZE nFor;
 
-         szResult = static_cast<char*>( hb_xgrab( 29 ) );
+         szResult = static_cast<char*>( hb_xgrab(29) );
          if( ( uiPicFlags & ( PF_DATE | PF_TIME ) ) != PF_TIME )
          {
             szDateFormat = hb_setGetDateFormat();
@@ -922,7 +922,7 @@ HB_FUNC( TRANSFORM )
          }
 
          nResultPos = 0;
-         szResult = static_cast<char*>( hb_xgrab( nPicLen + 2 ) );
+         szResult = static_cast<char*>( hb_xgrab(nPicLen + 2) );
 
          for( ; ( nPicLen || ! bDone ) && ! bExit; nResultPos++, szPic++, nPicLen-- )
          {
@@ -1030,8 +1030,8 @@ HB_FUNC( TRANSFORM )
             int iWidth, iDec;
             hb_itemGetNLen(pValue, &iWidth, &iDec);
             iWidth += 2 + ( hb_setGetDecimals() << 1 );
-            szStr = static_cast<char*>( hb_xgrab( iWidth + 1 ) );
-            hb_itemStrBuf( szStr, pValue, iWidth, iDec );
+            szStr = static_cast<char*>( hb_xgrab(iWidth + 1) );
+            hb_itemStrBuf(szStr, pValue, iWidth, iDec);
             hb_retclen_buffer( szStr, iWidth );
          }
          else
@@ -1039,7 +1039,7 @@ HB_FUNC( TRANSFORM )
             HB_SIZE nLen;
             HB_BOOL bFreeReq;
 
-            szStr = hb_itemString( pValue, &nLen, &bFreeReq );
+            szStr = hb_itemString(pValue, &nLen, &bFreeReq);
             if( bFreeReq )
             {
                hb_retclen_buffer( szStr, nLen );

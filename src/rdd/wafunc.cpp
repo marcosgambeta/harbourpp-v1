@@ -126,7 +126,7 @@ void * hb_rddNewAreaNode( LPRDDNODE pRddNode, HB_USHORT uiRddID )
       /* Need more space? */
       if( uiSize > sizeof(AREA) )   /* Size of Area changed */
       {
-         pArea = static_cast<AREAP>( hb_xrealloc( pArea, uiSize ) );
+         pArea = static_cast<AREAP>( hb_xrealloc(pArea, uiSize) );
          memset( pArea, 0, uiSize );
          pArea->lprfsHost = &pRddNode->pTable;
          pArea->rddID = uiRddID;
@@ -586,7 +586,7 @@ HB_ERRCODE hb_rddGetFieldValue( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
       PHB_ITEM pError;
 
       pError = hb_errRT_New( ES_ERROR, nullptr, EG_NOVAR, EDBCMD_NOVAR, nullptr, pFieldSymbol->szName, 0, EF_CANRETRY );
-      hb_itemClear( pItem );
+      hb_itemClear(pItem);
 
       while( hb_errLaunch( pError ) == E_RETRY )
       {
@@ -965,13 +965,13 @@ HB_ERRCODE hb_dbTransCounters( LPDBTRANSINFO lpdbTransInfo )
       if( SELF_FIELDINFO( lpdbTransInfo->lpaSource, lpdbTransItem->uiSource, DBS_COUNTER, pItem ) == HB_SUCCESS &&
           SELF_FIELDINFO( lpdbTransInfo->lpaDest, lpdbTransItem->uiDest, DBS_COUNTER, pItem ) == HB_SUCCESS )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
          if( SELF_FIELDINFO( lpdbTransInfo->lpaSource, lpdbTransItem->uiSource, DBS_STEP, pItem ) == HB_SUCCESS )
          {
              SELF_FIELDINFO( lpdbTransInfo->lpaDest, lpdbTransItem->uiDest, DBS_STEP, pItem );
          }
       }
-      hb_itemClear( pItem );
+      hb_itemClear(pItem);
    }
    hb_itemRelease(pItem);
 
@@ -1026,7 +1026,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
 
    lpdbTransInfo->lpaSource    = lpaSource;
    lpdbTransInfo->lpaDest      = lpaDest;
-   lpdbTransInfo->lpTransItems = static_cast<LPDBTRANSITEM>( hb_xgrab( uiSize * sizeof(DBTRANSITEM) ) );
+   lpdbTransInfo->lpTransItems = static_cast<LPDBTRANSITEM>( hb_xgrab(uiSize * sizeof(DBTRANSITEM)) );
 
    if( ! lpaDest )
    {
@@ -1320,7 +1320,7 @@ HB_ERRCODE hb_rddTransRecords( AREAP pArea,
 
    if( dbTransInfo.lpTransItems )
    {
-      hb_xfree( dbTransInfo.lpTransItems );
+      hb_xfree(dbTransInfo.lpTransItems);
    }
    if( lpaClose )
    {
@@ -1358,7 +1358,7 @@ static HB_ERRCODE hb_rddCloseParentRel( AREAP pArea, void * pChildArea )
             }
 
             *lpdbRelationPtr = lpdbRelation->lpdbriNext;
-            hb_xfree( lpdbRelation );
+            hb_xfree(lpdbRelation);
          }
          else
          {

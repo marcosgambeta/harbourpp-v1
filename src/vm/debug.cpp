@@ -114,7 +114,7 @@ static void AddToArray( PHB_ITEM pItem, PHB_ITEM pReturn, HB_SIZE nPos )
       if( pArrayItem )
       {
          HB_SIZE nLen = strlen( pItem->item.asSymbol.value->szName ) + 2;
-         char * szBuff = static_cast<char*>( hb_xgrab( nLen + 1 ) );
+         char * szBuff = static_cast<char*>( hb_xgrab(nLen + 1) );
 
          hb_snprintf( szBuff, nLen + 1, "[%s]", pItem->item.asSymbol.value->szName );
          hb_itemPutCLPtr(pArrayItem, szBuff, nLen);
@@ -278,7 +278,7 @@ HB_FUNC( __DBGVMLOCALLIST )
       pArray = hb_itemArrayNew(nLen);
       for( HB_ISIZ n = 1; n <= nLen; ++n )
       {
-         hb_itemCopyFromRef( hb_arrayGetItemPtr( pArray, n ), hb_stackItem( nPrevOffset + n ) );
+         hb_itemCopyFromRef(hb_arrayGetItemPtr( pArray, n ), hb_stackItem( nPrevOffset + n ));
       }
 
       hb_itemReturnRelease(pArray);
@@ -338,7 +338,7 @@ PHB_ITEM hb_dbg_vmVarLGet( int iLevel, int iLocal )
 
       if( HB_IS_BYREF(pLocal) )
       {
-         pLocal = hb_itemUnRef( pLocal );
+         pLocal = hb_itemUnRef(pLocal);
       }
    }
 
@@ -404,7 +404,7 @@ HB_FUNC( __DBGVMVARLSET )
             pLocal = hb_codeblockGetRef( hb_stackItem( nBaseOffset )->item.asBlock.value, iLocal );
          }
 
-         hb_itemCopyToRef( pLocal, hb_stackItemFromBase(3) );
+         hb_itemCopyToRef(pLocal, hb_stackItemFromBase(3));
       }
    }
 }

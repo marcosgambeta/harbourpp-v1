@@ -97,7 +97,7 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
       {
          HB_SIZE nSize;
          HB_BOOL bFreeReq;
-         char * szText = hb_itemPadConv( pItem, &nSize, &bFreeReq );
+         char * szText = hb_itemPadConv(pItem, &nSize, &bFreeReq);
 
          if( szText )
          {
@@ -121,38 +121,38 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
                      {
                         HB_SIZE nRep = ( static_cast<HB_SIZE>( nLen ) - nSize ), nPos = 0;
                         nLen += nRep * ( nPad - 1 );
-                        szResult = static_cast<char*>( hb_xgrab( nLen + 1 ) );
+                        szResult = static_cast<char*>( hb_xgrab(nLen + 1) );
                         while( nRep-- )
                         {
-                           hb_xmemcpy( szResult + nPos, szPad, nPad );
+                           hb_xmemcpy(szResult + nPos, szPad, nPad);
                            nPos += nPad;
                         }
-                        hb_xmemcpy( szResult + nPos, szText, nSize );
+                        hb_xmemcpy(szResult + nPos, szText, nSize);
                      }
                      else
                      {
-                        szResult = static_cast<char*>( hb_xgrab( nLen + 1 ) );
-                        hb_xmemset( szResult, szPad[ 0 ], static_cast<HB_SIZE>( nLen ) - nSize );
-                        hb_xmemcpy( szResult + static_cast<HB_SIZE>( nLen ) - nSize, szText, nSize );
+                        szResult = static_cast<char*>( hb_xgrab(nLen + 1) );
+                        hb_xmemset(szResult, szPad[ 0 ], static_cast<HB_SIZE>( nLen ) - nSize);
+                        hb_xmemcpy(szResult + static_cast<HB_SIZE>( nLen ) - nSize, szText, nSize);
                      }
                      break;
                   case HB_PAD_R:
                      if( nPad > 1 )
                      {
                         nLen += ( nLen - nSize ) * ( nPad - 1 );
-                        szResult = static_cast<char*>( hb_xgrab( nLen + 1 ) );
-                        hb_xmemcpy( szResult, szText, nSize );
+                        szResult = static_cast<char*>( hb_xgrab(nLen + 1) );
+                        hb_xmemcpy(szResult, szText, nSize);
                         while( nSize < static_cast<HB_SIZE>( nLen ) )
                         {
-                           hb_xmemcpy( szResult + nSize, szPad, nPad );
+                           hb_xmemcpy(szResult + nSize, szPad, nPad);
                            nSize += nPad;
                         }
                      }
                      else
                      {
-                        szResult = static_cast<char*>( hb_xgrab( nLen + 1 ) );
-                        hb_xmemcpy( szResult, szText, nSize );
-                        hb_xmemset( szResult + nSize, szPad[ 0 ], static_cast<HB_SIZE>( nLen ) - nSize );
+                        szResult = static_cast<char*>( hb_xgrab(nLen + 1) );
+                        hb_xmemcpy(szResult, szText, nSize);
+                        hb_xmemset(szResult + nSize, szPad[ 0 ], static_cast<HB_SIZE>( nLen ) - nSize);
                      }
                      break;
                   default: /* HB_PAD_C */
@@ -160,34 +160,34 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
                      {
                         HB_SIZE nRep = ( static_cast<HB_SIZE>( nLen ) - nSize ) >> 1, nPos = 0;
                         nLen += ( nLen - nSize ) * ( nPad - 1 );
-                        szResult = static_cast<char*>( hb_xgrab( nLen + 1 ) );
+                        szResult = static_cast<char*>( hb_xgrab(nLen + 1) );
                         while( nRep-- )
                         {
-                           hb_xmemcpy( szResult + nPos, szPad, nPad );
+                           hb_xmemcpy(szResult + nPos, szPad, nPad);
                            nPos += nPad;
                         }
-                        hb_xmemcpy( szResult + nPos, szText, nSize );
+                        hb_xmemcpy(szResult + nPos, szText, nSize);
                         nSize += nPos;
                         while( nSize < static_cast<HB_SIZE>( nLen ) )
                         {
-                           hb_xmemcpy( szResult + nSize, szPad, nPad );
+                           hb_xmemcpy(szResult + nSize, szPad, nPad);
                            nSize += nPad;
                         }
                      }
                      else
                      {
-                        szResult = static_cast<char*>( hb_xgrab( nLen + 1 ) );
+                        szResult = static_cast<char*>( hb_xgrab(nLen + 1) );
                         nPad = ( static_cast<HB_SIZE>( nLen ) - nSize ) >> 1;
-                        hb_xmemset( szResult, szPad[ 0 ], nPad );
-                        hb_xmemcpy( szResult + nPad, szText, nSize );
-                        hb_xmemset( szResult + nPad + nSize, szPad[ 0 ], static_cast<HB_SIZE>( nLen ) - nSize - nPad );
+                        hb_xmemset(szResult, szPad[ 0 ], nPad);
+                        hb_xmemcpy(szResult + nPad, szText, nSize);
+                        hb_xmemset(szResult + nPad + nSize, szPad[ 0 ], static_cast<HB_SIZE>( nLen ) - nSize - nPad);
                      }
                      break;
                }
                hb_retclen_buffer( szResult, static_cast<HB_SIZE>( nLen ) );
                if( bFreeReq )
                {
-                  hb_xfree( szText );
+                  hb_xfree(szText);
                }
             }
             else

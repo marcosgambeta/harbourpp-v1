@@ -1911,7 +1911,7 @@ HB_BOOL hb_socketLocalAddr( void ** pSockAddr, unsigned * puiLen, const char * s
    sa.sun_family = AF_LOCAL;
 #endif
    hb_strncpy( sa.sun_path, szAddr, sizeof(sa.sun_path) - 1 );
-   *pSockAddr = memcpy( hb_xgrab( sizeof(sa) + 1 ), &sa, sizeof(sa) );
+   *pSockAddr = memcpy( hb_xgrab(sizeof(sa) + 1), &sa, sizeof(sa) );
    *puiLen = static_cast<unsigned>( sizeof(sa) );
    return HB_TRUE;
 #else
@@ -1934,7 +1934,7 @@ HB_BOOL hb_socketInetAddr( void ** pSockAddr, unsigned * puiLen, const char * sz
    if( ! szAddr || ! *szAddr )
    {
       sa.sin_addr.s_addr = htonl( INADDR_ANY );
-      *pSockAddr = memcpy( hb_xgrab( sizeof(sa) + 1 ), &sa, sizeof(sa) );
+      *pSockAddr = memcpy( hb_xgrab(sizeof(sa) + 1), &sa, sizeof(sa) );
       *puiLen = static_cast<unsigned>( sizeof(sa) );
       return HB_TRUE;
    }
@@ -1949,7 +1949,7 @@ HB_BOOL hb_socketInetAddr( void ** pSockAddr, unsigned * puiLen, const char * sz
       if( sa.sin_addr.s_addr != INADDR_NONE || strcmp( "255.255.255.255", szAddr ) == 0 )  /* dirty hack */
 #endif
       {
-         *pSockAddr = memcpy( hb_xgrab( sizeof(sa) + 1 ), &sa, sizeof(sa) );
+         *pSockAddr = memcpy( hb_xgrab(sizeof(sa) + 1), &sa, sizeof(sa) );
          *puiLen = static_cast<unsigned>( sizeof(sa) );
          return HB_TRUE;
       }
@@ -1985,7 +1985,7 @@ HB_BOOL hb_socketInet6Addr( void ** pSockAddr, unsigned * puiLen, const char * s
 #else
       int iTODO;
 #endif
-      *pSockAddr = memcpy( hb_xgrab( sizeof(sa) + 1 ), &sa, sizeof(sa) );
+      *pSockAddr = memcpy( hb_xgrab(sizeof(sa) + 1), &sa, sizeof(sa) );
       *puiLen = static_cast<unsigned>( sizeof(sa) );
       return HB_TRUE;
    }
@@ -1995,7 +1995,7 @@ HB_BOOL hb_socketInet6Addr( void ** pSockAddr, unsigned * puiLen, const char * s
       int err = inet_pton( AF_INET6, szAddr, &sa.sin6_addr );
       if( err > 0 )
       {
-         *pSockAddr = memcpy( hb_xgrab( sizeof(sa) + 1 ), &sa, sizeof(sa) );
+         *pSockAddr = memcpy( hb_xgrab(sizeof(sa) + 1), &sa, sizeof(sa) );
          *puiLen = static_cast<unsigned>( sizeof(sa) );
          return HB_TRUE;
       }
@@ -2268,7 +2268,7 @@ int hb_socketGetSockName( HB_SOCKET sd, void ** pSockAddr, unsigned * puiLen )
    hb_socketSetOsError( ret == 0 ? 0 : HB_SOCK_GETERROR() );
    if( ret == 0 )
    {
-      *pSockAddr = memcpy( hb_xgrab( len + 1 ), &st.sa, len );
+      *pSockAddr = memcpy( hb_xgrab(len + 1), &st.sa, len );
       *puiLen = static_cast<unsigned>( len );
    }
    else
@@ -2291,7 +2291,7 @@ int hb_socketGetPeerName( HB_SOCKET sd, void ** pSockAddr, unsigned * puiLen )
    hb_socketSetOsError( ret == 0 ? 0 : HB_SOCK_GETERROR() );
    if( ret == 0 )
    {
-      *pSockAddr = memcpy( hb_xgrab( len + 1 ), &st.sa, len );
+      *pSockAddr = memcpy( hb_xgrab(len + 1), &st.sa, len );
       *puiLen = static_cast<unsigned>( len );
    }
    else
@@ -2461,7 +2461,7 @@ HB_SOCKET hb_socketAccept( HB_SOCKET sd, void ** pSockAddr, unsigned * puiLen, H
       {
          if( pSockAddr && puiLen )
          {
-            *pSockAddr = memcpy( hb_xgrab( len + 1 ), &st.sa, len );
+            *pSockAddr = memcpy( hb_xgrab(len + 1), &st.sa, len );
             *puiLen = static_cast<unsigned>( len );
          }
          /* it's not guarantied that socket returned by accept will use
@@ -2684,7 +2684,7 @@ long hb_socketRecvFrom( HB_SOCKET sd, void * data, long len, int flags, void ** 
 
       if( lReceived != -1 && pSockAddr && puiSockLen )
       {
-         *pSockAddr = memcpy( hb_xgrab( salen + 1 ), &st.sa, salen );
+         *pSockAddr = memcpy( hb_xgrab(salen + 1), &st.sa, salen );
          *puiSockLen = static_cast<unsigned>( salen );
       }
    }
@@ -3049,7 +3049,7 @@ int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
 
    if( ncnt > 0 )
    {
-      pfds = static_cast<struct pollfd*>( hb_xgrab( ncnt * sizeof(struct pollfd) ) );
+      pfds = static_cast<struct pollfd*>( hb_xgrab(ncnt * sizeof(struct pollfd)) );
    }
 
    for( i = 0; i < 3; i++ )
@@ -3111,7 +3111,7 @@ int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
                      {
                         if( ++nPos != ul )
                         {
-                           hb_itemCopy( hb_arrayGetItemPtr( pItemSets[ i ], nPos ), hb_arrayGetItemPtr( pItemSets[ i ], ul ) );
+                           hb_itemCopy(hb_arrayGetItemPtr( pItemSets[ i ], nPos ), hb_arrayGetItemPtr( pItemSets[ i ], ul ));
                         }
                      }
                   }
@@ -3129,7 +3129,7 @@ int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
 
    if( pfds )
    {
-      hb_xfree( pfds );
+      hb_xfree(pfds);
    }
 
    return iResult;
@@ -3232,7 +3232,7 @@ int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
                {
                   if( ++nPos != ul )
                   {
-                     hb_itemCopy( hb_arrayGetItemPtr( pItemSets[ i ], nPos ), hb_arrayGetItemPtr( pItemSets[ i ], ul ) );
+                     hb_itemCopy(hb_arrayGetItemPtr( pItemSets[ i ], nPos ), hb_arrayGetItemPtr( pItemSets[ i ], ul ));
                   }
                }
             }
@@ -3260,7 +3260,7 @@ HB_BOOL hb_socketResolveInetAddr( void ** pSockAddr, unsigned * puiLen, const ch
    if( ! szAddr || ! *szAddr )
    {
       sa.sin_addr.s_addr = htonl( INADDR_ANY );
-      *pSockAddr = memcpy( hb_xgrab( sizeof(sa) + 1 ), &sa, sizeof(sa) );
+      *pSockAddr = memcpy( hb_xgrab(sizeof(sa) + 1), &sa, sizeof(sa) );
       *puiLen = static_cast<unsigned>( sizeof(sa) );
       return HB_TRUE;
    }
@@ -3313,7 +3313,7 @@ HB_BOOL hb_socketResolveInetAddr( void ** pSockAddr, unsigned * puiLen, const ch
 
    if( fTrans )
    {
-      *pSockAddr = memcpy( hb_xgrab( sizeof(sa) + 1 ), &sa, sizeof(sa) );
+      *pSockAddr = memcpy( hb_xgrab(sizeof(sa) + 1), &sa, sizeof(sa) );
       *puiLen = static_cast<unsigned>( sizeof(sa) );
       return HB_TRUE;
    }
@@ -3474,7 +3474,7 @@ PHB_ITEM hb_socketGetHosts( const char * szAddr, int af )
                {
                   if( strcmp( hb_arrayGetCPtr( pItem, i ), szResult ) == 0 )
                   {
-                     hb_xfree( szResult );
+                     hb_xfree(szResult);
                      szResult = nullptr;
                      break;
                   }
@@ -3484,7 +3484,7 @@ PHB_ITEM hb_socketGetHosts( const char * szAddr, int af )
                   ++iCount;
                   if( ! hb_arraySetCLPtr( pItem, iCount, szResult, strlen( szResult ) ) )
                   {
-                     hb_xfree( szResult );
+                     hb_xfree(szResult);
                   }
                }
             }
@@ -3678,7 +3678,7 @@ static void hb_socketArraySetInetAddr( PHB_ITEM pItem, HB_SIZE nPos, const void 
    {
       if( ! hb_arraySetCLPtr( pItem, nPos, szAddr, strlen( szAddr ) ) )
       {
-         hb_xfree( szAddr );
+         hb_xfree(szAddr);
       }
    }
 }
@@ -3767,7 +3767,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
          len = 0x8000;
       }
       len *= sizeof(struct ifreq);
-      buf = static_cast<char*>( hb_xgrab( len ) );
+      buf = static_cast<char*>( hb_xgrab(len) );
 
       ifc.ifc_len = len;
       ifc.ifc_buf = ( caddr_t ) buf;
@@ -3959,7 +3959,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
       {
          iError = HB_SOCK_GETERROR();
       }
-      hb_xfree( buf );
+      hb_xfree(buf);
       hb_socketClose( sd );
    }
 #elif defined( HB_OS_WIN )
@@ -3974,7 +3974,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
    if( sd != HB_NO_SOCKET )
    {
       DWORD dwBuffer = 0x8000 * sizeof(INTERFACE_INFO);
-      void * pBuffer = hb_xgrab( dwBuffer );
+      void * pBuffer = hb_xgrab(dwBuffer);
       LPINTERFACE_INFO pIfInfo = static_cast<LPINTERFACE_INFO>( pBuffer );
 
       if( WSAIoctl( sd, SIO_GET_INTERFACE_LIST, nullptr, 0, pIfInfo, dwBuffer, &dwBuffer, 0, 0 ) != SOCKET_ERROR )
@@ -4033,12 +4033,12 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
             ULONG ulBufLen = sizeof(IP_ADAPTER_INFO);
             DWORD dwResult;
 
-            pAdapterInfo = static_cast<PIP_ADAPTER_INFO>( hb_xgrab( ulBufLen ) );
+            pAdapterInfo = static_cast<PIP_ADAPTER_INFO>( hb_xgrab(ulBufLen) );
             dwResult = GetAdaptersInfo( pAdapterInfo, &ulBufLen );
             if( dwResult == ERROR_BUFFER_OVERFLOW )
             {
-               hb_xfree( pAdapterInfo );
-               pAdapterInfo = static_cast<PIP_ADAPTER_INFO>( hb_xgrab( ulBufLen ) );
+               hb_xfree(pAdapterInfo);
+               pAdapterInfo = static_cast<PIP_ADAPTER_INFO>( hb_xgrab(ulBufLen) );
                dwResult = GetAdaptersInfo( pAdapterInfo, &ulBufLen );
             }
             if( dwResult == NO_ERROR )
@@ -4087,7 +4087,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
          iError = HB_SOCK_GETERROR();
       }
 
-      hb_xfree( pBuffer );
+      hb_xfree(pBuffer);
       hb_socketClose( sd );
    }
 #else

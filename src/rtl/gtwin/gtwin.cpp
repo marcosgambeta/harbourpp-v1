@@ -536,10 +536,10 @@ static void hb_gt_win_xInitScreenParam( PHB_GT pGT )
       {
          if( s_pCharInfoScreen )
          {
-            hb_xfree( s_pCharInfoScreen );
+            hb_xfree(s_pCharInfoScreen);
          }
          s_nScreenBuffSize = nSize;
-         s_pCharInfoScreen = static_cast<CHAR_INFO*>( hb_xgrab( s_nScreenBuffSize ) );
+         s_pCharInfoScreen = static_cast<CHAR_INFO*>( hb_xgrab(s_nScreenBuffSize) );
       }
 
       s_iCurRow = s_csbi.dwCursorPosition.Y;
@@ -582,7 +582,7 @@ static void hb_gt_win_xInitScreenParam( PHB_GT pGT )
    }
    else if( s_pCharInfoScreen )
    {
-      hb_xfree( s_pCharInfoScreen );
+      hb_xfree(s_pCharInfoScreen);
       s_pCharInfoScreen = nullptr;
       s_nScreenBuffSize = 0;
    }
@@ -891,7 +891,7 @@ static void hb_gt_win_Exit( PHB_GT pGT )
 
    if( s_pCharInfoScreen )
    {
-      hb_xfree( s_pCharInfoScreen );
+      hb_xfree(s_pCharInfoScreen);
       s_pCharInfoScreen = nullptr;
       s_nScreenBuffSize = 0;
    }

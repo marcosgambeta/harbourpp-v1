@@ -1432,7 +1432,7 @@ char * hb_cdpUTF8StringSubstr( const char * pSrc, HB_SIZE nLen, HB_SIZE nFrom, H
          while( nPos < nLen && nCnt );
 
          nDst = nPos - nFrom;
-         pDst = static_cast<char*>( hb_xgrab( nDst + 1 ) );
+         pDst = static_cast<char*>( hb_xgrab(nDst + 1) );
          memcpy( pDst, &pSrc[ nFrom ], nDst );
          pDst[ nDst ] = '\0';
       }
@@ -2134,7 +2134,7 @@ HB_SIZE hb_cdpStrToU16( PHB_CODEPAGE cdp, int iEndian, const char * pSrc, HB_SIZ
 HB_WCHAR * hb_cdpnStrDupU16( PHB_CODEPAGE cdp, int iEndian, const char * pSrc, HB_SIZE nSrc, HB_SIZE * pnDst )
 {
    HB_SIZE nLen = hb_cdpStrAsU16Len( cdp, pSrc, nSrc, 0 );
-   HB_WCHAR * pDst = static_cast<HB_WCHAR*>( hb_xgrab( ( nLen + 1 ) * sizeof(HB_WCHAR) ) );
+   HB_WCHAR * pDst = static_cast<HB_WCHAR*>( hb_xgrab(( nLen + 1 ) * sizeof(HB_WCHAR)) );
 
    hb_cdpStrToU16( cdp, iEndian, pSrc, nSrc, pDst, nLen + 1 );
    if( pnDst )
@@ -2557,7 +2557,7 @@ char * hb_cdpnDup( const char * pSrc, HB_SIZE * pnLen, PHB_CODEPAGE cdpIn, PHB_C
    HB_SIZE nDst;
 
    nDst = hb_cdpTransLen( pSrc, *pnLen, 0, cdpIn, cdpOut );
-   pDst = static_cast<char*>( hb_xgrab( nDst + 1 ) );
+   pDst = static_cast<char*>( hb_xgrab(nDst + 1) );
    hb_cdpTransTo( pSrc, *pnLen, pDst, nDst + 1, cdpIn, cdpOut );
    *pnLen = nDst;
 
@@ -2592,7 +2592,7 @@ const char * hb_cdpnDup3( const char * pSrc, HB_SIZE nSrc, char * pDst, HB_SIZE 
       if( nDst >= *pnSize || ( pDst == pSrc && HB_CDP_ISCUSTOM( cdpOut ) ) )
       {
          pPrev = *pFree;
-         pDst = *pFree = static_cast<char*>( hb_xgrab( nDst + 1 ) );
+         pDst = *pFree = static_cast<char*>( hb_xgrab(nDst + 1) );
          *pnSize = nDst + 1;
       }
 
@@ -2600,7 +2600,7 @@ const char * hb_cdpnDup3( const char * pSrc, HB_SIZE nSrc, char * pDst, HB_SIZE 
 
       if( pPrev )
       {
-         hb_xfree( pPrev );
+         hb_xfree(pPrev);
       }
       if( pnDst )
       {
@@ -2632,7 +2632,7 @@ char * hb_cdpDupn( const char * pszSrc, HB_SIZE nLen, PHB_CODEPAGE cdpIn, PHB_CO
 char * hb_cdpnDupUpper( PHB_CODEPAGE cdp, const char * pszText, HB_SIZE * pnSize )
 {
    HB_SIZE nSize = pnSize ? *pnSize : strlen( pszText ), n;
-   char * pszDst = static_cast<char*>( hb_xgrab( nSize + 1 ) );
+   char * pszDst = static_cast<char*>( hb_xgrab(nSize + 1) );
 
    if( cdp )
    {
@@ -2647,7 +2647,7 @@ char * hb_cdpnDupUpper( PHB_CODEPAGE cdp, const char * pszText, HB_SIZE * pnSize
             if( ! HB_CDPCHAR_PUT( cdp, pszDst, nSize, &nD, wc ) )
             {
                nSize += ( nSrc - nS + 2 );
-               pszDst = static_cast<char*>( hb_xrealloc( pszDst, nSize + 1 ) );
+               pszDst = static_cast<char*>( hb_xrealloc(pszDst, nSize + 1) );
                if( ! HB_CDPCHAR_PUT( cdp, pszDst, nSize, &nD, wc ) )
                {
                   break;
@@ -2683,7 +2683,7 @@ char * hb_cdpnDupUpper( PHB_CODEPAGE cdp, const char * pszText, HB_SIZE * pnSize
 char * hb_cdpnDupLower( PHB_CODEPAGE cdp, const char * pszText, HB_SIZE * pnSize )
 {
    HB_SIZE nSize = pnSize ? *pnSize : strlen( pszText ), n;
-   char * pszDst = static_cast<char*>( hb_xgrab( nSize + 1 ) );
+   char * pszDst = static_cast<char*>( hb_xgrab(nSize + 1) );
 
    if( cdp )
    {
@@ -2698,7 +2698,7 @@ char * hb_cdpnDupLower( PHB_CODEPAGE cdp, const char * pszText, HB_SIZE * pnSize
             if( ! HB_CDPCHAR_PUT( cdp, pszDst, nSize, &nD, wc ) )
             {
                nSize += ( nSrc - nS + 2 );
-               pszDst = static_cast<char*>( hb_xrealloc( pszDst, nSize + 1 ) );
+               pszDst = static_cast<char*>( hb_xrealloc(pszDst, nSize + 1) );
                if( ! HB_CDPCHAR_PUT( cdp, pszDst, nSize, &nD, wc ) )
                {
                   break;
@@ -3483,7 +3483,7 @@ static PHB_CODEPAGE hb_buildCodePage( const char * id, const char * info,
          {
 #ifdef __HB_IGNORE_CP_ERRORS
             fprintf( stderr, "Harbour CP (%s) initialization failure (2)\n", id ); fflush( stderr );
-            hb_xfree( buffer );
+            hb_xfree(buffer);
             return nullptr;
 #else
             hb_errInternal( 9994, "Harbour CP (%s) initialization failure", id, nullptr );
@@ -3719,18 +3719,18 @@ void hb_cdpReleaseAll( void )
       void * buffer = s_cdpList->buffer;
       if( s_cdpList->uniTable->uniTrans )
       {
-         hb_xfree( s_cdpList->uniTable->uniTrans );
+         hb_xfree(s_cdpList->uniTable->uniTrans);
          s_cdpList->uniTable->uniTrans = nullptr;
       }
       s_cdpList = s_cdpList->next;
       if( buffer )
       {
-         hb_xfree( buffer );
+         hb_xfree(buffer);
       }
    }
    if( s_rev_ctrl != nullptr )
    {
-      hb_xfree( s_rev_ctrl );
+      hb_xfree(s_rev_ctrl);
       s_rev_ctrl = nullptr;
    }
 }
@@ -3824,7 +3824,7 @@ const char ** hb_cdpList( void )
       cdp = cdp->next;
    }
 
-   list = static_cast<const char**>( hb_xgrab( ( iCount + 1 ) * sizeof(char*) ) );
+   list = static_cast<const char**>( hb_xgrab(( iCount + 1 ) * sizeof(char*)) );
 
    cdp = s_cdpList;
    iPos = 0;

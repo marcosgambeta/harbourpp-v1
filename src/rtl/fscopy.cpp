@@ -61,7 +61,7 @@ HB_BOOL hb_fsCopy( const char * pszSource, const char * pszDest )
 
       if( ( pDstFile = hb_fileExtOpen( pszDest, nullptr, FXO_TRUNCATE | FO_READWRITE | FO_EXCLUSIVE | FXO_SHARELOCK, nullptr, nullptr ) ) != nullptr )
       {
-         void * pbyBuffer = hb_xgrab( HB_FSCOPY_BUFFERSIZE );
+         void * pbyBuffer = hb_xgrab(HB_FSCOPY_BUFFERSIZE);
 
          for( ;; )
          {
@@ -83,7 +83,7 @@ HB_BOOL hb_fsCopy( const char * pszSource, const char * pszDest )
             }
          }
 
-         hb_xfree( pbyBuffer );
+         hb_xfree(pbyBuffer);
 
          hb_fileClose( pDstFile );
       }

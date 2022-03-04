@@ -626,7 +626,7 @@ HB_FUNC( HB_MATHERBLOCK )  /* ([<nNewErrorBlock>]) --> <nOldErrorBlock> */
          {
             pMathErr->block = hb_itemNew(nullptr);
          }
-         hb_itemCopy( pMathErr->block, pNewErrorBlock );
+         hb_itemCopy(pMathErr->block, pNewErrorBlock);
       }
       else
       {

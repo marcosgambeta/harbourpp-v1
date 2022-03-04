@@ -48,7 +48,7 @@
 
 static PHB_EXPR hb_compExprAlloc( HB_COMP_DECL )
 {
-   PHB_EXPRLST pExpItm = static_cast<PHB_EXPRLST>( hb_xgrab( sizeof(HB_EXPRLST) ) );
+   PHB_EXPRLST pExpItm = static_cast<PHB_EXPRLST>( hb_xgrab(sizeof(HB_EXPRLST)) );
 
    pExpItm->pNext = HB_COMP_PARAM->pExprLst;
    HB_COMP_PARAM->pExprLst = pExpItm;
@@ -85,7 +85,7 @@ static void hb_compExprDealloc( HB_COMP_DECL, PHB_EXPR pExpr )
             HB_COMP_PARAM->pExprLst = pExpItm->pNext;
          }
       }
-      hb_xfree( pExpItm );
+      hb_xfree(pExpItm);
    }
    else
    {
@@ -145,7 +145,7 @@ static void hb_compExprLstDealloc( HB_COMP_DECL )
       {
          PHB_EXPRLST pFree = pExp;
          pExp = pExp->pNext;
-         hb_xfree( pFree );
+         hb_xfree(pFree);
       }
       while( pExp != pExpItm );
    }
@@ -330,12 +330,12 @@ void hb_comp_free( PHB_COMP pComp )
 
    if( pComp->pOutPath )
    {
-      hb_xfree( pComp->pOutPath );
+      hb_xfree(pComp->pOutPath);
    }
 
    if( pComp->pPpoPath )
    {
-      hb_xfree( pComp->pPpoPath );
+      hb_xfree(pComp->pPpoPath);
    }
 
    while( pComp->modules )
@@ -343,7 +343,7 @@ void hb_comp_free( PHB_COMP pComp )
       PHB_MODULE pModule = pComp->modules;
 
       pComp->modules = pComp->modules->pNext;
-      hb_xfree( pModule );
+      hb_xfree(pModule);
    }
 
    while( pComp->pVarType )
@@ -351,12 +351,12 @@ void hb_comp_free( PHB_COMP pComp )
       PHB_VARTYPE pVarType = pComp->pVarType;
 
       pComp->pVarType = pComp->pVarType->pNext;
-      hb_xfree( pVarType );
+      hb_xfree(pVarType);
    }
 
    if( pComp->pOutBuf )
    {
-      hb_xfree( pComp->pOutBuf );
+      hb_xfree(pComp->pOutBuf);
    }
 
    if( pComp->pLex )
@@ -365,33 +365,33 @@ void hb_comp_free( PHB_COMP pComp )
       {
          hb_pp_free( pComp->pLex->pPP );
       }
-      hb_xfree( pComp->pLex );
+      hb_xfree(pComp->pLex);
    }
 
    if( pComp->szDepExt )
    {
-      hb_xfree( pComp->szDepExt );
+      hb_xfree(pComp->szDepExt);
    }
 
    if( pComp->szStdCh )
    {
-      hb_xfree( pComp->szStdCh );
+      hb_xfree(pComp->szStdCh);
    }
 
    if( pComp->iStdChExt > 0 )
    {
       do
       {
-         hb_xfree( pComp->szStdChExt[ --pComp->iStdChExt ] );
+         hb_xfree(pComp->szStdChExt[ --pComp->iStdChExt ]);
       }
       while( pComp->iStdChExt != 0 );
-      hb_xfree( pComp->szStdChExt );
+      hb_xfree(pComp->szStdChExt);
    }
 
    if( pComp->pI18nFileName )
    {
-      hb_xfree( pComp->pI18nFileName );
+      hb_xfree(pComp->pI18nFileName);
    }
 
-   hb_xfree( pComp );
+   hb_xfree(pComp);
 }

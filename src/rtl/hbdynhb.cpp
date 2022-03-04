@@ -108,7 +108,7 @@ HB_FUNC( HB_DYNCALL )
             {
                HB_SIZE nArgCount = hb_pcount() - 1;
 
-               piArgFlags = static_cast<int*>( hb_xgrab( sizeof(int) * nArgCount ) );
+               piArgFlags = static_cast<int*>( hb_xgrab(sizeof(int) * nArgCount) );
 
                for( HB_SIZE nPos = 0; nPos < nArgCount; ++nPos )
                {
@@ -123,7 +123,7 @@ HB_FUNC( HB_DYNCALL )
 
    if( piArgFlags )
    {
-      hb_xfree( piArgFlags );
+      hb_xfree(piArgFlags);
    }
 
    if( bFreeLibrary )

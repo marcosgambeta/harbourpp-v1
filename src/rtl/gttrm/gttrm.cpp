@@ -726,11 +726,11 @@ static int add_efds( PHB_GTTRM pTerm, int fd, int mode, int ( * eventFunc )( int
    {
       if( pTerm->efds_size <= pTerm->efds_no )
       {
-         pTerm->event_fds = static_cast<evtFD**>( hb_xrealloc( pTerm->event_fds, ( pTerm->efds_size += 10 ) * sizeof(evtFD*) ) );
-         pTerm->pPollSet = static_cast<PHB_POLLFD>( hb_xrealloc( pTerm->pPollSet, pTerm->efds_size * sizeof(HB_POLLFD) ) );
+         pTerm->event_fds = static_cast<evtFD**>( hb_xrealloc(pTerm->event_fds, ( pTerm->efds_size += 10 ) * sizeof(evtFD*)) );
+         pTerm->pPollSet = static_cast<PHB_POLLFD>( hb_xrealloc(pTerm->pPollSet, pTerm->efds_size * sizeof(HB_POLLFD)) );
       }
 
-      pefd = static_cast<evtFD*>( hb_xgrab( sizeof(evtFD) ) );
+      pefd = static_cast<evtFD*>( hb_xgrab(sizeof(evtFD)) );
       pefd->fd = fd;
       pefd->mode = mode;
       pefd->cargo = cargo;
@@ -757,7 +757,7 @@ static void del_efds( PHB_GTTRM pTerm, int fd )
 
    if( n != -1 )
    {
-      hb_xfree( pTerm->event_fds[ n ] );
+      hb_xfree(pTerm->event_fds[ n ]);
       pTerm->efds_no--;
       for( i = n; i < pTerm->efds_no; i++ )
       {
@@ -773,11 +773,11 @@ static void del_all_efds( PHB_GTTRM pTerm )
    {
       for( int i = 0; i < pTerm->efds_no; i++ )
       {
-         hb_xfree( pTerm->event_fds[ i ] );
+         hb_xfree(pTerm->event_fds[ i ]);
       }
 
-      hb_xfree( pTerm->event_fds );
-      hb_xfree( pTerm->pPollSet );
+      hb_xfree(pTerm->event_fds);
+      hb_xfree(pTerm->pPollSet);
 
       pTerm->event_fds = nullptr;
       pTerm->pPollSet = nullptr;
@@ -1286,7 +1286,7 @@ static int get_inch( PHB_GTTRM pTerm, HB_MAXINT timeout )
    {
       if( pTerm->event_fds[ i ]->status == EVTFDSTAT_DEL )
       {
-         hb_xfree( pTerm->event_fds[ i ] );
+         hb_xfree(pTerm->event_fds[ i ]);
       }
       else if( pTerm->event_fds[ i ]->fd == npfd )
       {
@@ -2555,7 +2555,7 @@ static HB_BOOL hb_trm_Param( const char * pszParam, int * piValue )
             * piValue = HB_ISDIGIT( *pszAt ) ? hb_strValInt( pszAt, &iOverflow ) : 1;
          }
       }
-      hb_xfree( pszGtTrmParams );
+      hb_xfree(pszGtTrmParams);
    }
 
    return fResult;
@@ -2753,7 +2753,7 @@ static int addKeyMap( PHB_GTTRM pTerm, int nKey, const char * cdesc )
    {
       if( *ptr == nullptr )
       {
-         *ptr = static_cast<keyTab*>( hb_xgrab( sizeof(keyTab) ) );
+         *ptr = static_cast<keyTab*>( hb_xgrab(sizeof(keyTab)) );
          ( *ptr )->ch = c;
          ( *ptr )->key = K_UNDEF;
          ( *ptr )->nextCh = nullptr;
@@ -2799,7 +2799,7 @@ static int removeKeyMap( PHB_GTTRM pTerm, const char * cdesc )
             ( *ptr )->key = K_UNDEF;
             if( ( *ptr )->nextCh == nullptr && ( *ptr )->otherCh == nullptr )
             {
-               hb_xfree( *ptr );
+               hb_xfree(*ptr);
                *ptr = nullptr;
             }
          }
@@ -2827,7 +2827,7 @@ static void removeAllKeyMap( PHB_GTTRM pTerm, keyTab ** ptr )
       removeAllKeyMap( pTerm, &( ( *ptr )->otherCh ) );
    }
 
-   hb_xfree( *ptr );
+   hb_xfree(*ptr);
    *ptr = nullptr;
 }
 
@@ -3425,7 +3425,7 @@ static void hb_gt_trm_SetTerm( PHB_GTTRM pTerm )
    {
       pTerm->iOutBufIndex = 0;
       pTerm->iOutBufSize = 16384;
-      pTerm->pOutBuf = static_cast<char*>( hb_xgrab( pTerm->iOutBufSize ) );
+      pTerm->pOutBuf = static_cast<char*>( hb_xgrab(pTerm->iOutBufSize) );
    }
    pTerm->mouse_type    = MOUSE_NONE;
    pTerm->esc_delay     = ESC_DELAY;
@@ -3786,13 +3786,13 @@ static void hb_gt_trm_Exit( PHB_GT pGT )
 #endif
       if( pTerm->nLineBufSize > 0 )
       {
-         hb_xfree( pTerm->pLineBuf );
+         hb_xfree(pTerm->pLineBuf);
       }
       if( pTerm->iOutBufSize > 0 )
       {
-         hb_xfree( pTerm->pOutBuf );
+         hb_xfree(pTerm->pOutBuf);
       }
-      hb_xfree( pTerm );
+      hb_xfree(pTerm);
    }
 }
 
@@ -4309,7 +4309,7 @@ static void hb_gt_trm_Refresh( PHB_GT pGT )
 #endif
    if( pTerm->nLineBufSize != nLineBufSize )
    {
-      pTerm->pLineBuf = static_cast<char*>( hb_xrealloc( pTerm->pLineBuf, nLineBufSize ) );
+      pTerm->pLineBuf = static_cast<char*>( hb_xrealloc(pTerm->pLineBuf, nLineBufSize) );
       pTerm->nLineBufSize = nLineBufSize;
    }
 
@@ -4428,7 +4428,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
             if( pTerm->szTitle )
             {
-               hb_xfree( pTerm->szTitle );
+               hb_xfree(pTerm->szTitle);
             }
             pTerm->szTitle = ( szVal && *szVal ) ? hb_strdup( szVal ) : nullptr;
             hb_gt_trm_SetTitle( pTerm, pTerm->szTitle );

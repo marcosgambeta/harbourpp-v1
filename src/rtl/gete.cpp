@@ -76,7 +76,7 @@ HB_FUNC( GETENV )
       }
 
 #ifdef _HB_GETENV_REQUIRES_UPPERCASE
-      hb_xfree( pszName );
+      hb_xfree(pszName);
 #endif
    }
    else
@@ -123,7 +123,7 @@ HB_FUNC( HB_GETENV )
       }
 
 #ifdef _HB_GETENV_REQUIRES_UPPERCASE
-      hb_xfree( pszName );
+      hb_xfree(pszName);
 #endif
    }
    else

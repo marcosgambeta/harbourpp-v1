@@ -140,11 +140,11 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
    if( nSize == 0 )
    {
       if( pMem )
-         hb_xfree( pMem );
+         hb_xfree(pMem);
       return nullptr;
    }
    else if( ! pMem )
-      return hb_xgrab( nSize );
+      return hb_xgrab(nSize);
 
    pMemBlock = ( PHB_MEMINFO ) ( ( HB_BYTE * ) pMem - HB_MEMINFO_SIZE );
    nMemSize = pMemBlock->nSize;
@@ -517,7 +517,7 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
 
       if( pszFree )
       {
-         szFileName = *pszFree = hb_strncpy( static_cast<char*>( hb_xgrab( HB_PATH_MAX ) ),
+         szFileName = *pszFree = hb_strncpy( static_cast<char*>( hb_xgrab(HB_PATH_MAX) ),
                                              szFileName, HB_PATH_MAX - 1 );
       }
 
@@ -595,7 +595,7 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
       }
 
       hb_fsFNameMerge( const_cast<char*>( szFileName ), pFileName );
-      hb_xfree( pFileName );
+      hb_xfree(pFileName);
    }
    else if( pszFree )
       *pszFree = nullptr;
@@ -614,7 +614,7 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
    {
       PHB_FNAME pFileName;
 
-      szFileName = pszBuffer = hb_strncpy( static_cast<char*>( hb_xgrab( HB_PATH_MAX ) ),
+      szFileName = pszBuffer = hb_strncpy( static_cast<char*>( hb_xgrab(HB_PATH_MAX) ),
                                            szFileName, HB_PATH_MAX - 1 );
 
       if( s_cDirSep != HB_OS_PATH_DELIM_CHR )
@@ -691,12 +691,12 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
       }
 
       hb_fsFNameMerge( const_cast<char*>( szFileName ), pFileName );
-      hb_xfree( pFileName );
+      hb_xfree(pFileName);
    }
 
    lpwFileName = hb_mbtowc( szFileName );
    if( pszBuffer )
-      hb_xfree( pszBuffer );
+      hb_xfree(pszBuffer);
 
    return lpwFileName;
 }

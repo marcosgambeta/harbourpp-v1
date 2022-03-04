@@ -798,11 +798,11 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
       {
          hb_errInternal( HB_EI_XREALLOCNULLSIZE, nullptr, nullptr, nullptr );
       }
-      return hb_xgrab( nSize );
+      return hb_xgrab(nSize);
    }
    else if( nSize == 0 )
    {
-      hb_xfree( pMem );
+      hb_xfree(pMem);
       return nullptr;
    }
    else if( s_fStatistic )
@@ -1045,7 +1045,7 @@ void hb_xRefFree( void * pMem )
 
    if( HB_ATOM_DEC( HB_COUNTER_PTR( pMem ) ) == 0 )
    {
-      hb_xfree( pMem );
+      hb_xfree(pMem);
    }
 
 #else
@@ -1073,11 +1073,11 @@ void * hb_xRefResize( void * pMem, HB_SIZE nSave, HB_SIZE nSize, HB_SIZE * pnAll
 #ifdef HB_FM_STATISTICS
    if( HB_ATOM_GET( HB_COUNTER_PTR( pMem ) ) > 1 )
    {
-      void * pMemNew = memcpy( hb_xgrab( nSize ), pMem, HB_MIN( nSave, nSize ) );
+      void * pMemNew = memcpy( hb_xgrab(nSize), pMem, HB_MIN( nSave, nSize ) );
 
       if( HB_ATOM_DEC( HB_COUNTER_PTR( pMem ) ) == 0 )
       {
-         hb_xfree( pMem );
+         hb_xfree(pMem);
       }
 
       *pnAllocated = nSize;
@@ -1089,7 +1089,7 @@ void * hb_xRefResize( void * pMem, HB_SIZE nSave, HB_SIZE nSize, HB_SIZE * pnAll
    }
 
    *pnAllocated = nSize;
-   return hb_xrealloc( pMem, nSize );
+   return hb_xrealloc(pMem, nSize);
 
 #else
 

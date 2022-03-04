@@ -94,11 +94,11 @@ HB_BOOL hb_fsLink( const char * pszExisting, const char * pszNewFile )
 
             if( lpFileNameFree )
             {
-               hb_xfree( lpFileNameFree );
+               hb_xfree(lpFileNameFree);
             }
             if( lpExistingFileNameFree )
             {
-               hb_xfree( lpExistingFileNameFree );
+               hb_xfree(lpExistingFileNameFree);
             }
          }
          else
@@ -120,11 +120,11 @@ HB_BOOL hb_fsLink( const char * pszExisting, const char * pszNewFile )
 
          if( pszExistingFree )
          {
-            hb_xfree( pszExistingFree );
+            hb_xfree(pszExistingFree);
          }
          if( pszNewFileFree )
          {
-            hb_xfree( pszNewFileFree );
+            hb_xfree(pszNewFileFree);
          }
       }
 #else
@@ -190,11 +190,11 @@ HB_BOOL hb_fsLinkSym( const char * pszTarget, const char * pszNewFile )
 
             if( lpSymlinkFileNameFree )
             {
-               hb_xfree( lpSymlinkFileNameFree );
+               hb_xfree(lpSymlinkFileNameFree);
             }
             if( lpTargetFileNameFree )
             {
-               hb_xfree( lpTargetFileNameFree );
+               hb_xfree(lpTargetFileNameFree);
             }
          }
          else
@@ -216,11 +216,11 @@ HB_BOOL hb_fsLinkSym( const char * pszTarget, const char * pszNewFile )
 
          if( pszTargetFree )
          {
-            hb_xfree( pszTargetFree );
+            hb_xfree(pszTargetFree);
          }
          if( pszNewFileFree )
          {
-            hb_xfree( pszNewFileFree );
+            hb_xfree(pszNewFileFree);
          }
       }
 #else
@@ -332,7 +332,7 @@ char * hb_fsLinkRead( const char * pszFile )
 
             if( lpFileNameFree )
             {
-               hb_xfree( lpFileNameFree );
+               hb_xfree(lpFileNameFree);
             }
          }
          else
@@ -347,12 +347,12 @@ char * hb_fsLinkRead( const char * pszFile )
 
          pszFile = hb_fsNameConv( pszFile, &pszFileFree );
 
-         pszLink = static_cast<char*>( hb_xgrab( HB_PATH_MAX + 1 ) );
+         pszLink = static_cast<char*>( hb_xgrab(HB_PATH_MAX + 1) );
          size = readlink( pszFile, pszLink, HB_PATH_MAX );
          hb_fsSetIOError( size != static_cast<size_t>(-1), 0 );
          if( size == static_cast<size_t>(-1) )
          {
-            hb_xfree( pszLink );
+            hb_xfree(pszLink);
             pszLink = nullptr;
          }
          else
@@ -364,7 +364,7 @@ char * hb_fsLinkRead( const char * pszFile )
 
          if( pszFileFree )
          {
-            hb_xfree( pszFileFree );
+            hb_xfree(pszFileFree);
          }
       }
 #else

@@ -1313,15 +1313,15 @@ static int hb_hsxSeekSet( int iHandle, const char * pStr, HB_SIZE nLen )
       {
          if( pHSX->pSearchVal )
          {
-            hb_xfree( pHSX->pSearchVal );
+            hb_xfree(pHSX->pSearchVal);
          }
-         pHSX->pSearchVal = static_cast<char*>( hb_xgrab( nLen + 1 ) );
+         pHSX->pSearchVal = static_cast<char*>( hb_xgrab(nLen + 1) );
          memcpy( pHSX->pSearchVal, pStr, nLen );
          pHSX->pSearchVal[ nLen ] = '\0';
          pHSX->nSearch = nLen;
          if( ! pHSX->pSearchKey )
          {
-            pHSX->pSearchKey = static_cast<HB_BYTE*>( hb_xgrab( pHSX->uiRecordSize ) );
+            pHSX->pSearchKey = static_cast<HB_BYTE*>( hb_xgrab(pHSX->uiRecordSize) );
          }
          hb_hsxHashStr( pStr, nLen, pHSX->pSearchKey, pHSX->uiRecordSize, pHSX->fIgnoreCase, pHSX->iFilterType, pHSX->fUseHash );
          pHSX->ulCurrRec = 0;
@@ -1409,7 +1409,7 @@ static LPHSXINFO hb_hsxNew( void )
       if( iHandle == pTable->iHandleSize )
       {
          pTable->iHandleSize += HSX_HALLOC;
-         pTable->handleArray = static_cast<LPHSXINFO*>( hb_xrealloc( pTable->handleArray, sizeof(LPHSXINFO) * pTable->iHandleSize ) );
+         pTable->handleArray = static_cast<LPHSXINFO*>( hb_xrealloc(pTable->handleArray, sizeof(LPHSXINFO) * pTable->iHandleSize) );
          memset( &pTable->handleArray[ iHandle ], 0, sizeof(LPHSXINFO) * HSX_HALLOC );
       }
    }
@@ -1523,7 +1523,7 @@ static int hb_hsxDestroy( int iHandle )
          pTable->handleArray[ iHandle ] = nullptr;
          if( --pTable->iHandleCount == 0 )
          {
-            hb_xfree( pTable->handleArray );
+            hb_xfree(pTable->handleArray);
             pTable->iHandleSize = 0;
             pTable->handleArray = nullptr;
          }
@@ -1539,29 +1539,29 @@ static int hb_hsxDestroy( int iHandle )
       }
       if( pHSX->szFileName )
       {
-         hb_xfree( pHSX->szFileName );
+         hb_xfree(pHSX->szFileName);
       }
       if( pHSX->pSearchVal )
       {
-         hb_xfree( pHSX->pSearchVal );
+         hb_xfree(pHSX->pSearchVal);
       }
       if( pHSX->pSearchKey )
       {
-         hb_xfree( pHSX->pSearchKey );
+         hb_xfree(pHSX->pSearchKey);
       }
       if( pHSX->pBuffer )
       {
-         hb_xfree( pHSX->pBuffer );
+         hb_xfree(pHSX->pBuffer);
       }
       if( pHSX->szKeyExpr )
       {
-         hb_xfree( pHSX->szKeyExpr );
+         hb_xfree(pHSX->szKeyExpr);
       }
       if( pHSX->pKeyItem )
       {
          hb_hsxExpDestroy( pHSX->pKeyItem );
       }
-      hb_xfree( pHSX );
+      hb_xfree(pHSX);
    }
    return iRetVal;
 }
@@ -2151,7 +2151,7 @@ HB_FUNC( HS_FILTER )
             nLen = pHSX->nSearch;
             if( nLen && pHSX->pSearchVal )
             {
-               pBuff = static_cast<char*>( hb_xgrab( nLen + 1 ) );
+               pBuff = static_cast<char*>( hb_xgrab(nLen + 1) );
                memcpy( pBuff, pHSX->pSearchVal, nLen );
                pBuff[ nLen ] = '\0';
                szText = pBuff;
@@ -2205,7 +2205,7 @@ HB_FUNC( HS_FILTER )
       }
       if( iResult == HSX_SUCCESS )
       {
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
          if( SELF_INFO( pArea, DBI_RM_COUNT, pItem ) == HB_FAILURE )
          {
             iResult = HSX_RDDFAILURE;
@@ -2224,7 +2224,7 @@ HB_FUNC( HS_FILTER )
    }
    if( pBuff )
    {
-      hb_xfree( pBuff );
+      hb_xfree(pBuff);
    }
 
    if( iResult != HSX_SUCCESS )
@@ -2329,5 +2329,5 @@ HB_FUNC( HS_VERSION )
    char * pszVersion = hb_xstrcpy( nullptr, sc_szVer, ": ", pszHBVersion, nullptr );
 
    hb_retclen_buffer( pszVersion, strlen( pszVersion ) );
-   hb_xfree( pszHBVersion );
+   hb_xfree(pszHBVersion);
 }

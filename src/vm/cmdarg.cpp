@@ -401,7 +401,7 @@ void hb_cmdargUpdate( void )
                       * directories, f.e. "." or "bin" so we should add
                       * current directory if necessary in code below.
                       */
-                     hb_xfree( pFName );
+                     hb_xfree(pFName);
                      pFName = hb_fsFNameSplit( s_szAppName );
                      fInPath = HB_TRUE;
                      break;
@@ -416,7 +416,7 @@ void hb_cmdargUpdate( void )
             }
             if( pszPATH )
             {
-               hb_xfree( pszPATH );
+               hb_xfree(pszPATH);
             }
          }
          if( pFName->szPath )
@@ -439,7 +439,7 @@ void hb_cmdargUpdate( void )
                   hb_strncat( s_szAppName, pFName->szPath, HB_PATH_MAX - 1 );
                   pFName->szPath = hb_strdup( s_szAppName );
                   hb_fsFNameMerge( s_szAppName, pFName );
-                  hb_xfree( HB_UNCONST( pFName->szPath ) );
+                  hb_xfree(HB_UNCONST( pFName->szPath ));
                   s_argv[ 0 ] = s_szAppName;
                }
             }
@@ -448,7 +448,7 @@ void hb_cmdargUpdate( void )
                s_argv[ 0 ] = s_szAppName;
             }
          }
-         hb_xfree( pFName );
+         hb_xfree(pFName);
       }
    }
 #endif
@@ -569,7 +569,7 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
    {
       if( pszEnvVar )
       {
-         hb_xfree( pszEnvVar );
+         hb_xfree(pszEnvVar);
       }
 
       pszEnvVar = hb_getenv( "CLIPPER" );
@@ -625,7 +625,7 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
                }
 
                nLen = pszEnd > pszNext ? pszEnd - pszNext : 0;
-               pszRetVal = static_cast<char*>( hb_xgrab( nLen + 1 ) );
+               pszRetVal = static_cast<char*>( hb_xgrab(nLen + 1) );
                hb_strncpy( pszRetVal, pszNext, nLen );
             }
             else
@@ -642,7 +642,7 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
 
    if( pszEnvVar )
    {
-      hb_xfree( pszEnvVar );
+      hb_xfree(pszEnvVar);
    }
 
    return pszRetVal;
@@ -673,7 +673,7 @@ int hb_cmdargNum( const char * pszName )
    {
       int iValue = atoi( pszValue );
 
-      hb_xfree( pszValue );
+      hb_xfree(pszValue);
 
       return iValue;
    }
@@ -702,8 +702,8 @@ char * hb_cmdargBaseProgName( void )
       PHB_FNAME pFileName = hb_fsFNameSplit( pszProgName );
 
       pszBaseProgName = hb_strdup( pFileName->szName );
-      hb_xfree( pFileName );
-      hb_xfree( pszProgName );
+      hb_xfree(pFileName);
+      hb_xfree(pszProgName);
    }
 
    return pszBaseProgName;
@@ -838,7 +838,7 @@ HB_FUNC( HB_CMDLINE )
             nLen += HB_STRLEN( s_lpArgV[ iArg ] ) + 1;
          }
 
-         ptr = lpBuffer = static_cast<LPTSTR>( hb_xgrab( nLen * sizeof(TCHAR) ) );
+         ptr = lpBuffer = static_cast<LPTSTR>( hb_xgrab(nLen * sizeof(TCHAR)) );
          for( iArg = 1; iArg < s_argc; iArg++ )
          {
             nLen = HB_STRLEN( s_lpArgV[ iArg ] );
@@ -851,7 +851,7 @@ HB_FUNC( HB_CMDLINE )
          /* Convert from OS codepage */
 #if defined( UNICODE )
          HB_RETSTR( lpBuffer );
-         hb_xfree( lpBuffer );
+         hb_xfree(lpBuffer);
 #else
          hb_retc_buffer( static_cast<char*>( hb_osDecodeCP( lpBuffer, nullptr, nullptr ) ) );
 #endif
@@ -866,7 +866,7 @@ HB_FUNC( HB_CMDLINE )
             nLen += strlen( s_argv[ iArg ] ) + 1;
          }
 
-         ptr = pszBuffer = static_cast<char*>( hb_xgrab( nLen ) );
+         ptr = pszBuffer = static_cast<char*>( hb_xgrab(nLen) );
          for( iArg = 1; iArg < s_argc; iArg++ )
          {
             nLen = strlen( s_argv[ iArg ] );
@@ -899,14 +899,14 @@ void hb_cmdargProcess( void )
          char * pszVersion = hb_verHarbour();
          hb_conOutErr( pszVersion, 0 );
          hb_conOutErr( hb_conNewLine(), 0 );
-         hb_xfree( pszVersion );
+         hb_xfree(pszVersion);
       }
 
       {
          char * pszVersion = hb_verPlatform();
          hb_conOutErr( pszVersion, 0 );
          hb_conOutErr( hb_conNewLine(), 0 );
-         hb_xfree( pszVersion );
+         hb_xfree(pszVersion);
       }
 
       {

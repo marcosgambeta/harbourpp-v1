@@ -2301,17 +2301,17 @@ static HB_BOOL hb_gt_xwc_DefineBoxChar( PXWND_DEF wnd, HB_USHORT usCh, XWC_CharT
       switch( type )
       {
          case CH_SEG:
-            bxCh->u.seg = static_cast<XSegment*>( hb_xgrab( sizeof(XSegment) * size ) );
+            bxCh->u.seg = static_cast<XSegment*>( hb_xgrab(sizeof(XSegment) * size) );
             memcpy( bxCh->u.seg, segs, sizeof(XSegment) * size );
             break;
          case CH_RECT:
-            bxCh->u.rect = static_cast<XRectangle*>( hb_xgrab( sizeof(XRectangle) * size ) );
+            bxCh->u.rect = static_cast<XRectangle*>( hb_xgrab(sizeof(XRectangle) * size) );
             memcpy( bxCh->u.rect, rect, sizeof(XRectangle) * size );
             break;
          case CH_PTS:
          case CH_LINE:
          case CH_POLY:
-            bxCh->u.pts = static_cast<XPoint*>( hb_xgrab( sizeof(XPoint) * size ) );
+            bxCh->u.pts = static_cast<XPoint*>( hb_xgrab(sizeof(XPoint) * size) );
             memcpy( bxCh->u.pts, pts, sizeof(XPoint) * size );
             break;
          case CH_UNDEF:
@@ -2340,15 +2340,15 @@ static void hb_gt_xwc_ResetCharTrans( PXWND_DEF wnd )
             XDestroyImage( wnd->boxTrans[ i ].u.img );
             break;
          case CH_SEG:
-            hb_xfree( wnd->boxTrans[ i ].u.seg );
+            hb_xfree(wnd->boxTrans[ i ].u.seg);
             break;
          case CH_RECT:
-            hb_xfree( wnd->boxTrans[ i ].u.rect );
+            hb_xfree(wnd->boxTrans[ i ].u.rect);
             break;
          case CH_PTS:
          case CH_LINE:
          case CH_POLY:
-            hb_xfree( wnd->boxTrans[ i ].u.pts );
+            hb_xfree(wnd->boxTrans[ i ].u.pts);
             break;
          case CH_UNDEF:
          case CH_CHAR:
@@ -3213,7 +3213,7 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
                hb_gt_xwc_InvalidateChar( wnd, left, top, right, bottom );
 
                nSize = ( bottom - top + 1 ) * ( right - left + 2 ) * 3;
-               pBuffer = static_cast<char*>( hb_xgrab( nSize + 1 ) );
+               pBuffer = static_cast<char*>( hb_xgrab(nSize + 1) );
                nI = 0;
                while( top <= bottom )
                {
@@ -3246,7 +3246,7 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
                }
                else
                {
-                  hb_xfree( pBuffer );
+                  hb_xfree(pBuffer);
                }
             }
             else
@@ -3360,7 +3360,7 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
 #endif
                   if( wnd->ClipboardData != nullptr )
                   {
-                     hb_xfree( wnd->ClipboardData );
+                     hb_xfree(wnd->ClipboardData);
                   }
 
                   wnd->ClipboardSize = text.nitems;
@@ -3376,7 +3376,7 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
 #endif
                   if( wnd->ClipboardData != nullptr )
                   {
-                     hb_xfree( wnd->ClipboardData );
+                     hb_xfree(wnd->ClipboardData);
                   }
 
                   wnd->ClipboardSize = text.nitems;
@@ -3467,7 +3467,7 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
                unsigned char * pBuffer = static_cast<unsigned char*>( hb_cdpnDup( static_cast<const char*>( wnd->ClipboardData ), &nLen, wnd->utf8CDP, cdpin ) );
 
                XChangeProperty( wnd->dpy, req->requestor, req->property, s_atomString, 8, PropModeReplace, pBuffer, nLen );
-               hb_xfree( pBuffer );
+               hb_xfree(pBuffer);
             }
             else
             {
@@ -3642,8 +3642,8 @@ static HB_BOOL hb_gt_xwc_AllocColor( PXWND_DEF wnd, XColor * pColor )
       XColor *colorTable;
       HB_BYTE *checkTable;
 
-      colorTable = static_cast<XColor*>( hb_xgrab( iCMapSize * sizeof(XColor) ) );
-      checkTable = static_cast<HB_BYTE*>( hb_xgrab( iCMapSize * sizeof(HB_BYTE) ) );
+      colorTable = static_cast<XColor*>( hb_xgrab(iCMapSize * sizeof(XColor)) );
+      checkTable = static_cast<HB_BYTE*>( hb_xgrab(iCMapSize * sizeof(HB_BYTE)) );
       for( i = 0; i < iCMapSize; i++ )
       {
          colorTable[ i ].pixel = static_cast<HB_GT_PIXELTYPE>( i );
@@ -3703,8 +3703,8 @@ static HB_BOOL hb_gt_xwc_AllocColor( PXWND_DEF wnd, XColor * pColor )
       }
       while( iClosestColor > 0 );
 
-      hb_xfree( colorTable );
-      hb_xfree( checkTable );
+      hb_xfree(colorTable);
+      hb_xfree(checkTable);
    }
 
    return fOK;
@@ -4202,9 +4202,9 @@ static HB_BOOL hb_gt_xwc_SetScrBuff( PXWND_DEF wnd, HB_USHORT cols, HB_USHORT ro
 
          if( wnd->pCurrScr != nullptr )
          {
-            hb_xfree( wnd->pCurrScr );
+            hb_xfree(wnd->pCurrScr);
          }
-         wnd->pCurrScr = static_cast<HB_U32*>( hb_xgrab( cols * rows * sizeof(HB_U32) ) );
+         wnd->pCurrScr = static_cast<HB_U32*>( hb_xgrab(cols * rows * sizeof(HB_U32)) );
          hb_gt_xwc_InvalidateFull( wnd );
 
          return HB_TRUE;
@@ -4321,7 +4321,7 @@ static void hb_gt_xwc_SetTitle( PXWND_DEF wnd, const char * szTitle )
       text.format = 8;
       text.nitems = strlen( pBuffer );
       XSetWMName( wnd->dpy, wnd->window, &text );
-      hb_xfree( pBuffer );
+      hb_xfree(pBuffer);
    }
    else
    {
@@ -4435,7 +4435,7 @@ static HB_BOOL hb_gt_xwc_SetFont( PXWND_DEF wnd, const char * fontFace, int weig
 
    if( wnd->szFontSel )
    {
-      hb_xfree( wnd->szFontSel );
+      hb_xfree(wnd->szFontSel);
    }
    wnd->szFontSel = hb_strdup( fontString );
 
@@ -4480,7 +4480,7 @@ static void hb_gt_xwc_SetSelection( PXWND_DEF wnd, const char * szData, HB_SIZE 
 
    if( wnd->ClipboardData != nullptr )
    {
-      hb_xfree( wnd->ClipboardData );
+      hb_xfree(wnd->ClipboardData);
       wnd->ClipboardData = nullptr;
    }
 
@@ -4492,7 +4492,7 @@ static void hb_gt_xwc_SetSelection( PXWND_DEF wnd, const char * szData, HB_SIZE 
    {
       if( fCopy )
       {
-         wnd->ClipboardData = static_cast<unsigned char*>( hb_xgrab( nSize + 1 ) );
+         wnd->ClipboardData = static_cast<unsigned char*>( hb_xgrab(nSize + 1) );
          memcpy( wnd->ClipboardData, szData, nSize );
          wnd->ClipboardData[ nSize ] = '\0';
       }
@@ -4789,30 +4789,30 @@ static void hb_gt_xwc_DestroyWndDef( PXWND_DEF wnd )
 
    if( wnd->szTitle )
    {
-      hb_xfree( wnd->szTitle );
+      hb_xfree(wnd->szTitle);
    }
    if( wnd->szFontName )
    {
-      hb_xfree( wnd->szFontName );
+      hb_xfree(wnd->szFontName);
    }
    if( wnd->szFontEncoding )
    {
-      hb_xfree( wnd->szFontEncoding );
+      hb_xfree(wnd->szFontEncoding);
    }
    if( wnd->szFontSel )
    {
-      hb_xfree( wnd->szFontSel );
+      hb_xfree(wnd->szFontSel);
    }
    if( wnd->pCurrScr )
    {
-      hb_xfree( wnd->pCurrScr );
+      hb_xfree(wnd->pCurrScr);
    }
    if( wnd->ClipboardData )
    {
-      hb_xfree( wnd->ClipboardData );
+      hb_xfree(wnd->ClipboardData);
    }
 
-   hb_xfree( wnd );
+   hb_xfree(wnd);
 }
 
 /* *********************************************************************** */
@@ -5541,7 +5541,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          {
             if( wnd->szFontName )
             {
-               hb_xfree( wnd->szFontName );
+               hb_xfree(wnd->szFontName);
             }
             wnd->szFontName = hb_strdup( hb_itemGetCPtr(pInfo->pNewVal) );
          }
@@ -5593,7 +5593,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
             if( wnd->szTitle )
             {
-               hb_xfree( wnd->szTitle );
+               hb_xfree(wnd->szTitle);
             }
             wnd->szTitle = nLen > 0 ? hb_strdup( pszTitle ) : nullptr;
             hb_strfree( hString );

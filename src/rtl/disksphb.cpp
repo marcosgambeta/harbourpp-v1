@@ -199,7 +199,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
       }
       if( lpFree )
       {
-         hb_xfree( lpFree );
+         hb_xfree(lpFree);
       }
    }
 #elif defined( HB_OS_UNIX ) && !( defined( __CEGCC__ ) )
@@ -246,7 +246,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
 
       if( pszFree )
       {
-         hb_xfree( pszFree );
+         hb_xfree(pszFree);
       }
    }
 #else

@@ -72,12 +72,12 @@ char * hb_getenv( const char * szName )
 
       if( size != 0 )
       {
-         LPTSTR lpBuffer = static_cast<LPTSTR>( hb_xgrab( size * sizeof(TCHAR) ) );
+         LPTSTR lpBuffer = static_cast<LPTSTR>( hb_xgrab(size * sizeof(TCHAR)) );
          GetEnvironmentVariable( lpName, lpBuffer, size );
          pszBuffer = HB_OSSTRDUP( lpBuffer );
-         hb_xfree( lpBuffer );
+         hb_xfree(lpBuffer);
       }
-      hb_xfree( lpName );
+      hb_xfree(lpName);
    }
 #else
    {
@@ -87,7 +87,7 @@ char * hb_getenv( const char * szName )
       pszTemp = getenv( szName );
       if( pszNameFree )
       {
-         hb_xfree( pszNameFree );
+         hb_xfree(pszNameFree);
       }
 
       if( pszTemp != nullptr )
@@ -110,7 +110,7 @@ HB_BOOL hb_getenv_buffer( const char * szName, char * szBuffer, int nSize )
 
       if( szBuffer != nullptr || nSize > 0 )
       {
-         lpBuffer = static_cast<LPTSTR>( hb_xgrab( nSize * sizeof(TCHAR) ) );
+         lpBuffer = static_cast<LPTSTR>( hb_xgrab(nSize * sizeof(TCHAR)) );
       }
       else
       {
@@ -126,9 +126,9 @@ HB_BOOL hb_getenv_buffer( const char * szName, char * szBuffer, int nSize )
             lpBuffer[ nSize - 1 ] = TEXT( '\0' );
             HB_OSSTRDUP2( lpBuffer, szBuffer, nSize - 1 );
          }
-         hb_xfree( lpBuffer );
+         hb_xfree(lpBuffer);
       }
-      hb_xfree( lpName );
+      hb_xfree(lpName);
    }
 #else
    {
@@ -138,7 +138,7 @@ HB_BOOL hb_getenv_buffer( const char * szName, char * szBuffer, int nSize )
       pszTemp = getenv( szName );
       if( pszNameFree )
       {
-         hb_xfree( pszNameFree );
+         hb_xfree(pszNameFree);
       }
 
       if( pszTemp != nullptr )
@@ -181,9 +181,9 @@ HB_BOOL hb_setenv( const char * szName, const char * szValue )
       HB_BOOL fResult = ( SetEnvironmentVariable( lpName, lpValue ) != 0 );
       if( lpValue )
       {
-         hb_xfree( lpValue );
+         hb_xfree(lpValue);
       }
-      hb_xfree( lpName );
+      hb_xfree(lpName);
       return fResult;
    }
 #elif defined( _BSD_SOURCE ) || _POSIX_C_SOURCE >= 200112L || \
@@ -204,7 +204,7 @@ HB_BOOL hb_setenv( const char * szName, const char * szValue )
          fResult = setenv( szName, szValue, 1 ) == 0;
          if( pszValueFree )
          {
-            hb_xfree( pszValueFree );
+            hb_xfree(pszValueFree);
          }
       }
       else
@@ -221,7 +221,7 @@ HB_BOOL hb_setenv( const char * szName, const char * szValue )
 
       if( pszNameFree )
       {
-         hb_xfree( pszNameFree );
+         hb_xfree(pszNameFree);
       }
 
       return fResult;

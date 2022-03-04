@@ -67,7 +67,7 @@ HB_FUNC( EVAL )
        */
       for( int iParam = 2; iParam <= iPCount; iParam++ )
       {
-         hb_vmPush( hb_stackItemFromBase( iParam ) );
+         hb_vmPush( hb_stackItemFromBase(iParam) );
       }
 
       hb_vmSend( static_cast<HB_USHORT>( iPCount - 1 ) );

@@ -149,12 +149,12 @@ static void hb_gt_cgi_Exit( PHB_GT pGT )
 #ifndef HB_GT_CGI_RAWOUTPUT
       if( pGTCGI->iLineBufSize > 0 )
       {
-         hb_xfree( pGTCGI->sLineBuf );
+         hb_xfree(pGTCGI->sLineBuf);
       }
 #endif
       if( pGTCGI->szCrLf )
       {
-         hb_xfree( pGTCGI->szCrLf );
+         hb_xfree(pGTCGI->szCrLf);
       }
       delete pGTCGI;
    }
@@ -264,10 +264,10 @@ static void hb_gt_cgi_conPos( PHB_GTCGI pGTCGI, int iRow, int iCol )
 
    if( iSpace > 0 )
    {
-      char * buffer = static_cast<char*>( hb_xgrab( iSpace ) );
+      char * buffer = static_cast<char*>( hb_xgrab(iSpace) );
       memset( buffer, ' ', iSpace );
       hb_gt_cgi_termOut( pGTCGI, buffer, iSpace );
-      hb_xfree( buffer );
+      hb_xfree(buffer);
    }
    while( --iLineFeed >= 0 )
    {
@@ -290,7 +290,7 @@ static void hb_gt_cgi_conOut( PHB_GT pGT, const char * szText, HB_SIZE nLength, 
       hb_gt_cgi_termOut( pGTCGI, buffer, nLen );
       if( pBuf )
       {
-         hb_xfree( pBuf );
+         hb_xfree(pBuf);
       }
    }
    else
@@ -336,11 +336,11 @@ static void hb_gt_cgi_WriteConW( PHB_GT pGT, const HB_WCHAR * szTextW, HB_SIZE n
 {
    PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP( pGT );
    HB_SIZE nSize = hb_cdpU16AsStrLen( cdpTerm, szTextW, nLength, 0 );
-   char * buffer = static_cast<char*>( hb_xgrab( nSize ) );
+   char * buffer = static_cast<char*>( hb_xgrab(nSize) );
 
    hb_cdpU16ToStr( cdpTerm, HB_CDP_ENDIAN_NATIVE, szTextW, nLength, buffer, nSize );
    hb_gt_cgi_conOut( pGT, buffer, nSize, nullptr, nullptr );
-   hb_xfree( buffer );
+   hb_xfree(buffer);
 }
 
 static void hb_gt_cgi_WriteAt( PHB_GT pGT, int iRow, int iCol, const char * szText, HB_SIZE nLength )
@@ -353,12 +353,12 @@ static void hb_gt_cgi_WriteAtW( PHB_GT pGT, int iRow, int iCol, const HB_WCHAR *
 {
    PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP( pGT );
    HB_SIZE nSize = hb_cdpU16AsStrLen( cdpTerm, szTextW, nLength, 0 );
-   char * buffer = static_cast<char*>( hb_xgrab( nSize ) );
+   char * buffer = static_cast<char*>( hb_xgrab(nSize) );
 
    hb_cdpU16ToStr( cdpTerm, HB_CDP_ENDIAN_NATIVE, szTextW, nLength, buffer, nSize );
    hb_gt_cgi_conPos( HB_GTCGI_GET( pGT ), iRow, iCol );
    hb_gt_cgi_conOut( pGT, buffer, nSize, nullptr, nullptr );
-   hb_xfree( buffer );
+   hb_xfree(buffer);
 }
 
 #else /* HB_GT_CGI_RAWOUTPUT */
@@ -453,7 +453,7 @@ static void hb_gt_cgi_Refresh( PHB_GT pGT )
    iWidth *= HB_MAX_CHAR_LEN;
    if( pGTCGI->iLineBufSize < iWidth )
    {
-      pGTCGI->sLineBuf = static_cast<char*>( hb_xrealloc( pGTCGI->sLineBuf, iWidth ) );
+      pGTCGI->sLineBuf = static_cast<char*>( hb_xrealloc(pGTCGI->sLineBuf, iWidth) );
       pGTCGI->iLineBufSize = iWidth;
    }
    HB_GTSUPER_REFRESH( pGT );

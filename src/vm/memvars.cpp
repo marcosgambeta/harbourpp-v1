@@ -92,7 +92,7 @@ static PHB_ITEM hb_memvarValueNew( void )
 
    PHB_ITEM pMemvar;
 
-   pMemvar = static_cast<PHB_ITEM>( hb_xgrab( sizeof(HB_ITEM) ) );
+   pMemvar = static_cast<PHB_ITEM>( hb_xgrab(sizeof(HB_ITEM)) );
    pMemvar->type = HB_IT_NIL;
 
    return pMemvar;
@@ -125,9 +125,9 @@ void hb_memvarValueDecRef( PHB_ITEM pMemvar )
    {
       if( HB_IS_COMPLEX(pMemvar) )
       {
-         hb_itemClear( pMemvar );
+         hb_itemClear(pMemvar);
       }
-      hb_xfree( pMemvar );
+      hb_xfree(pMemvar);
    }
 }
 
@@ -169,7 +169,7 @@ PHB_ITEM hb_memvarDetachLocal( PHB_ITEM pLocal )
          {
             if( ! pLocal->item.asEnum.valuePtr )
             {
-               PHB_ITEM pBase = HB_IS_BYREF(pLocal->item.asEnum.basePtr) ? hb_itemUnRef( pLocal->item.asEnum.basePtr ) : pLocal->item.asEnum.basePtr;
+               PHB_ITEM pBase = HB_IS_BYREF(pLocal->item.asEnum.basePtr) ? hb_itemUnRef(pLocal->item.asEnum.basePtr) : pLocal->item.asEnum.basePtr;
                if( HB_IS_ARRAY(pBase) )
                {
                   PHB_ITEM pItem = hb_itemNew(nullptr);
@@ -184,7 +184,7 @@ PHB_ITEM hb_memvarDetachLocal( PHB_ITEM pLocal )
          {
             break;
          }
-         pLocal = hb_itemUnRefOnce( pLocal );
+         pLocal = hb_itemUnRefOnce(pLocal);
       }
       while( HB_IS_BYREF(pLocal) );
    }
@@ -198,7 +198,7 @@ PHB_ITEM hb_memvarDetachLocal( PHB_ITEM pLocal )
    {
       PHB_ITEM pMemvar = hb_memvarValueNew();
 
-      hb_itemRawCpy( pMemvar, pLocal );
+      hb_itemRawCpy(pMemvar, pLocal);
       pMemvar->type &= ~HB_IT_DEFAULT;
 
       pLocal->type = HB_IT_BYREF | HB_IT_MEMVAR;
@@ -259,14 +259,14 @@ static void hb_memvarAddPrivate( PHB_DYNS pDynSym, PHB_ITEM pValue )
           */
          if( pPrivateStack->size == 0 )
          {
-            pPrivateStack->stack = static_cast<PHB_PRIVATE_ITEM>( hb_xgrab( sizeof(HB_PRIVATE_ITEM) * TABLE_INITHB_VALUE ) );
+            pPrivateStack->stack = static_cast<PHB_PRIVATE_ITEM>( hb_xgrab(sizeof(HB_PRIVATE_ITEM) * TABLE_INITHB_VALUE) );
             pPrivateStack->size  = TABLE_INITHB_VALUE;
             pPrivateStack->count = pPrivateStack->base = 0;
          }
          else
          {
             pPrivateStack->size += TABLE_EXPANDHB_VALUE;
-            pPrivateStack->stack = static_cast<PHB_PRIVATE_ITEM>( hb_xrealloc( pPrivateStack->stack, sizeof(HB_PRIVATE_ITEM) * pPrivateStack->size ) );
+            pPrivateStack->stack = static_cast<PHB_PRIVATE_ITEM>( hb_xrealloc(pPrivateStack->stack, sizeof(HB_PRIVATE_ITEM) * pPrivateStack->size) );
          }
       }
 
@@ -288,7 +288,7 @@ static void hb_memvarAddPrivate( PHB_DYNS pDynSym, PHB_ITEM pValue )
 
    if( pValue )
    {
-      hb_itemCopy( pMemvar, pValue );
+      hb_itemCopy(pMemvar, pValue);
       /* Remove MEMOFLAG if exists (assignment from field). */
       pMemvar->type &= ~HB_IT_MEMOFLAG;
    }
@@ -396,7 +396,7 @@ void hb_memvarSetValue( PHB_SYMB pMemvarSymb, PHB_ITEM pItem )
       if( pMemvar )
       {
          /* value is already created */
-         hb_itemCopyToRef( pMemvar, pItem );
+         hb_itemCopyToRef(pMemvar, pItem);
          /* Remove MEMOFLAG if exists (assignment from field). */
          pMemvar->type &= ~HB_IT_MEMOFLAG;
       }
@@ -436,11 +436,11 @@ HB_ERRCODE hb_memvarGet( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
           */
          if( HB_IS_BYREF(pMemvar) )
          {
-            hb_itemCopy( pItem, hb_itemUnRef( pMemvar ) );
+            hb_itemCopy(pItem, hb_itemUnRef(pMemvar));
          }
          else
          {
-            hb_itemCopy( pItem, pMemvar );
+            hb_itemCopy(pItem, pMemvar);
          }
          errCode = HB_SUCCESS;
       }
@@ -467,7 +467,7 @@ void hb_memvarGetValue( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
       PHB_ITEM pError;
 
       pError = hb_errRT_New( ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr, pMemvarSymb->szName, 0, EF_CANRETRY );
-      hb_itemClear( pItem );
+      hb_itemClear(pItem);
 
       while( hb_errLaunch( pError ) == E_RETRY )
       {
@@ -502,7 +502,7 @@ void hb_memvarGetRefer( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
       {
          if( HB_IS_BYREF(pMemvar) && ! HB_IS_ENUM(pMemvar) )
          {
-            hb_itemCopy( pItem, pMemvar );
+            hb_itemCopy(pItem, pMemvar);
          }
          else
          {
@@ -520,7 +520,7 @@ void hb_memvarGetRefer( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
          PHB_ITEM pError;
 
          pError = hb_errRT_New( ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr, pMemvarSymb->szName, 0, EF_CANRETRY );
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
 
          while( hb_errLaunch( pError ) == E_RETRY )
          {
@@ -529,7 +529,7 @@ void hb_memvarGetRefer( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
             {
                if( HB_IS_BYREF(pMemvar) && ! HB_IS_ENUM(pMemvar) )
                {
-                  hb_itemCopy( pItem, pMemvar );
+                  hb_itemCopy(pItem, pMemvar);
                }
                else
                {
@@ -564,7 +564,7 @@ PHB_ITEM hb_memvarGetItem( PHB_SYMB pMemvarSymb )
       {
          if( HB_IS_BYREF(pMemvar) )
          {
-            return hb_itemUnRef( pMemvar );
+            return hb_itemUnRef(pMemvar);
          }
          else
          {
@@ -658,7 +658,7 @@ char * hb_memvarGetStrValuePtr( char * szVarName, HB_SIZE * pnLen )
           */
          if( HB_IS_BYREF(pMemvar) )
          {
-            pMemvar = hb_itemUnRef( pMemvar );
+            pMemvar = hb_itemUnRef(pMemvar);
          }
 
          if( HB_IS_STRING(pMemvar) )
@@ -736,7 +736,7 @@ static void hb_memvarCreateFromDynSymbol( PHB_DYNS pDynVar, int iScope, PHB_ITEM
 
          if( pValue )
          {
-            hb_itemCopy( pMemvar, pValue );
+            hb_itemCopy(pMemvar, pValue);
             /* Remove MEMOFLAG if exists (assignment from field). */
             pMemvar->type &= ~HB_IT_MEMOFLAG;
          }
@@ -795,7 +795,7 @@ static void hb_memvarRelease( PHB_ITEM pMemvar )
                pMemvar = hb_dynsymGetMemvar( pDynSymbol );
                if( pMemvar )
                {
-                  hb_itemClear( pMemvar );
+                  hb_itemClear(pMemvar);
                }
                return;
             }
@@ -844,7 +844,7 @@ static void hb_memvarReleaseWithMask( const char * szMask, HB_BOOL bInclude )
          HB_BOOL fMatch = hb_strMatchCaseWildExact( pDynVar->pSymbol->szName, szMask );
          if( bInclude ? fMatch : ! fMatch )
          {
-            hb_itemClear( pMemvar );
+            hb_itemClear(pMemvar);
          }
       }
    }
@@ -1116,9 +1116,9 @@ PHB_ITEM hb_memvarSaveInArray( int iScope, HB_BOOL fCopy )
    }
 
 #if ! defined( HB_MT_VM )
-   MVInfo.pDyns = static_cast<PHB_DYNS*>( hb_xgrab( hb_dynsymCount() * sizeof(PHB_DYNS) ) );
+   MVInfo.pDyns = static_cast<PHB_DYNS*>( hb_xgrab(hb_dynsymCount() * sizeof(PHB_DYNS)) );
 #else
-   MVInfo.pDyns = static_cast<PHB_DYNS*>( hb_xgrab( hb_stackDynHandlesCount() * sizeof(PHB_DYNS) ) );
+   MVInfo.pDyns = static_cast<PHB_DYNS*>( hb_xgrab(hb_stackDynHandlesCount() * sizeof(PHB_DYNS)) );
 #endif
    MVInfo.nCount = 0;
    MVInfo.iScope = iScope;
@@ -1140,7 +1140,7 @@ PHB_ITEM hb_memvarSaveInArray( int iScope, HB_BOOL fCopy )
             pItem = hb_arrayGetItemPtr( pItem, 2 );
             if( fCopy )
             {
-               hb_itemCopy( pItem, pMemvar );
+               hb_itemCopy(pItem, pMemvar);
                hb_memvarDetachLocal( pItem );
             }
             else
@@ -1153,7 +1153,7 @@ PHB_ITEM hb_memvarSaveInArray( int iScope, HB_BOOL fCopy )
       }
       while( MVInfo.nCount );
    }
-   hb_xfree( MVInfo.pDyns );
+   hb_xfree(MVInfo.pDyns);
 
    return pArray;
 }
@@ -1353,7 +1353,7 @@ HB_FUNC( __MVDBGINFO )
       if( pValue )   /* the requested variable was found */
       {
          hb_storc( szName, 3 );
-         hb_itemCopyFromRef( hb_stackReturnItem(), pValue );
+         hb_itemCopyFromRef(hb_stackReturnItem(), pValue);
       }
       else
       {
@@ -1436,7 +1436,7 @@ HB_FUNC( __MVGETDEF )
 
       if( pDynVar && ( pMemvar = hb_dynsymGetMemvar( pDynVar ) ) != nullptr )
       {
-         hb_itemReturn(HB_IS_BYREF(pMemvar) ? hb_itemUnRef( pMemvar ) : pMemvar);
+         hb_itemReturn(HB_IS_BYREF(pMemvar) ? hb_itemUnRef(pMemvar) : pMemvar);
       }
       else if( hb_pcount() >= 2 )
       {
@@ -1759,7 +1759,7 @@ HB_FUNC( __MVRESTORE )
                   HB_BYTE * pbyString;
 
                   uiWidth += uiDec * 256;
-                  pbyString = static_cast<HB_BYTE*>( hb_xgrab( uiWidth ) );
+                  pbyString = static_cast<HB_BYTE*>( hb_xgrab(uiWidth) );
 
                   if( hb_fileRead( fhnd, pbyString, uiWidth, -1 ) == static_cast<HB_SIZE>( uiWidth ) )
                   {
@@ -1767,7 +1767,7 @@ HB_FUNC( __MVRESTORE )
                   }
                   else
                   {
-                     hb_xfree( pbyString );
+                     hb_xfree(pbyString);
                      pszName = nullptr;
                   }
 

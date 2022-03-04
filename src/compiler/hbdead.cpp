@@ -78,12 +78,12 @@ static void hb_compCodeTraceAddJump( PHB_CODETRACE_INFO pInfo, HB_SIZE nPCodePos
       if( pInfo->nJumpSize == 0 )
       {
          pInfo->nJumpSize = HB_JUMPADDR_ALLOC;
-         pInfo->pnJumps = static_cast<HB_SIZE*>( hb_xgrab( pInfo->nJumpSize * sizeof(HB_SIZE) ) );
+         pInfo->pnJumps = static_cast<HB_SIZE*>( hb_xgrab(pInfo->nJumpSize * sizeof(HB_SIZE)) );
       }
       else if( pInfo->nJumpSize == pInfo->nJumpCount )
       {
          pInfo->nJumpSize += HB_JUMPADDR_ALLOC;
-         pInfo->pnJumps = static_cast<HB_SIZE*>( hb_xrealloc( pInfo->pnJumps, pInfo->nJumpSize * sizeof(HB_SIZE) ) );
+         pInfo->pnJumps = static_cast<HB_SIZE*>( hb_xrealloc(pInfo->pnJumps, pInfo->nJumpSize * sizeof(HB_SIZE)) );
       }
       pInfo->pnJumps[ pInfo->nJumpCount++ ] = nPCodePos;
       pInfo->pCodeMark[ nPCodePos ] = 1;
@@ -606,9 +606,9 @@ void hb_compCodeTraceMarkDead( HB_COMP_DECL, PHB_HFUNC pFunc )
       }
    }
 
-   hb_xfree( code_info.pCodeMark );
+   hb_xfree(code_info.pCodeMark);
    if( code_info.pnJumps )
    {
-      hb_xfree( code_info.pnJumps );
+      hb_xfree(code_info.pnJumps);
    }
 }

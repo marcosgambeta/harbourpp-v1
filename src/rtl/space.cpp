@@ -60,7 +60,7 @@ HB_FUNC( SPACE )
 
       if( nLen > 0 )
       {
-         char * szResult = static_cast<char*>( hb_xgrab( nLen + 1 ) );
+         char * szResult = static_cast<char*>( hb_xgrab(nLen + 1) );
 
          /* NOTE: String overflow could never occur since a string can
                   be as large as ULONG_MAX, and the maximum length that
@@ -69,7 +69,7 @@ HB_FUNC( SPACE )
          hb_errRT_BASE( EG_STROVERFLOW, 1233, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
          #endif
 
-         hb_xmemset( szResult, ' ', nLen );
+         hb_xmemset(szResult, ' ', nLen);
          hb_retclen_buffer( szResult, nLen );
       }
       else

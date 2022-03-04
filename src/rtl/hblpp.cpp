@@ -63,15 +63,15 @@ void hb_lppDestroy( PHB_LPP pSocket )
 {
    if( pSocket->pSendBuffer )
    {
-      hb_xfree( pSocket->pSendBuffer );
+      hb_xfree(pSocket->pSendBuffer);
    }
 
    if( pSocket->pRecvBuffer )
    {
-      hb_xfree( pSocket->pRecvBuffer );
+      hb_xfree(pSocket->pRecvBuffer);
    }
 
-   hb_xfree( pSocket );
+   hb_xfree(pSocket);
 }
 
 void hb_lppSetLimit( PHB_LPP pSocket, HB_SIZE nLimit )
@@ -91,9 +91,9 @@ HB_BOOL hb_lppSend( PHB_LPP pSocket, const void * data, HB_SIZE len, HB_MAXINT t
 
    if( ! pSocket->pSendBuffer )
    {
-      pSocket->pSendBuffer = static_cast<char*>( hb_xgrab( len + 4 ) );
+      pSocket->pSendBuffer = static_cast<char*>( hb_xgrab(len + 4) );
       HB_PUT_LE_UINT32( pSocket->pSendBuffer, len );
-      hb_xmemcpy( pSocket->pSendBuffer + 4, data, len );
+      hb_xmemcpy(pSocket->pSendBuffer + 4, data, len);
       pSocket->nSendLen = len + 4;
       pSocket->nSendPos = 0;
    }
@@ -120,7 +120,7 @@ HB_BOOL hb_lppSend( PHB_LPP pSocket, const void * data, HB_SIZE len, HB_MAXINT t
       pSocket->nSendPos += lSend;
       if( pSocket->nSendPos == pSocket->nSendLen )
       {
-         hb_xfree( pSocket->pSendBuffer );
+         hb_xfree(pSocket->pSendBuffer);
          pSocket->pSendBuffer = nullptr;
          pSocket->iError      = 0;
          return HB_TRUE;
@@ -178,7 +178,7 @@ HB_BOOL hb_lppRecv( PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT time
          {
             /* protection against remote memory exhaust attack */
             pSocket->iError = HB_LPP_ERR_TOOLARGE;
-            hb_xfree( pSocket->pRecvBuffer );
+            hb_xfree(pSocket->pRecvBuffer);
             pSocket->pRecvBuffer = nullptr;
             return HB_FALSE;
          }
@@ -187,7 +187,7 @@ HB_BOOL hb_lppRecv( PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT time
          pSocket->fRecvHasSize = HB_TRUE;
          if( pSocket->nRecvSize != 4 )
          {
-            pSocket->pRecvBuffer = static_cast<char*>( hb_xrealloc( pSocket->pRecvBuffer, pSocket->nRecvSize ) );
+            pSocket->pRecvBuffer = static_cast<char*>( hb_xrealloc(pSocket->pRecvBuffer, pSocket->nRecvSize) );
          }
       }
 

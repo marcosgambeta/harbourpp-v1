@@ -80,11 +80,11 @@ static void hb_waNodeInsert( PHB_STACKRDD pRddInfo, AREAP pArea )
 
       if( pRddInfo->uiWaNumMax == 0 )
       {
-         pRddInfo->waNums = static_cast<HB_USHORT*>( hb_xgrab( iSize * sizeof(HB_USHORT) ) );
+         pRddInfo->waNums = static_cast<HB_USHORT*>( hb_xgrab(iSize * sizeof(HB_USHORT)) );
       }
       else
       {
-         pRddInfo->waNums = static_cast<HB_USHORT*>( hb_xrealloc( pRddInfo->waNums, iSize * sizeof(HB_USHORT) ) );
+         pRddInfo->waNums = static_cast<HB_USHORT*>( hb_xrealloc(pRddInfo->waNums, iSize * sizeof(HB_USHORT)) );
       }
 
       memset( &pRddInfo->waNums[ pRddInfo->uiWaNumMax ], 0, ( iSize - pRddInfo->uiWaNumMax ) * sizeof(HB_USHORT) );
@@ -111,7 +111,7 @@ static void hb_waNodeInsert( PHB_STACKRDD pRddInfo, AREAP pArea )
          }
 
          pRddInfo->uiWaSpace = static_cast<HB_USHORT>( iSize );
-         pRddInfo->waList = static_cast<void**>( hb_xrealloc( pRddInfo->waList, pRddInfo->uiWaSpace * sizeof(void*) ) );
+         pRddInfo->waList = static_cast<void**>( hb_xrealloc(pRddInfo->waList, pRddInfo->uiWaSpace * sizeof(void*)) );
          memset( &pRddInfo->waList[ pRddInfo->uiWaMax ], 0, ( pRddInfo->uiWaSpace - pRddInfo->uiWaMax ) * sizeof(void*) );
       }
       while( uiWaPos > 1 )
@@ -143,8 +143,8 @@ static void hb_waNodeDelete( PHB_STACKRDD pRddInfo )
    if( pRddInfo->uiWaMax <= 1 )
    {
       pRddInfo->uiWaSpace = pRddInfo->uiWaMax = pRddInfo->uiWaNumMax = 0;
-      hb_xfree( pRddInfo->waList );
-      hb_xfree( pRddInfo->waNums );
+      hb_xfree(pRddInfo->waList);
+      hb_xfree(pRddInfo->waNums);
       pRddInfo->waList = nullptr;
       pRddInfo->waNums = nullptr;
    }
@@ -167,7 +167,7 @@ static void hb_waNodeDelete( PHB_STACKRDD pRddInfo )
          }
 
          pRddInfo->uiWaSpace = static_cast<HB_USHORT>( iSize );
-         pRddInfo->waList = static_cast<void**>( hb_xrealloc( pRddInfo->waList, pRddInfo->uiWaSpace * sizeof(void*) ) );
+         pRddInfo->waList = static_cast<void**>( hb_xrealloc(pRddInfo->waList, pRddInfo->uiWaSpace * sizeof(void*)) );
       }
    }
    pRddInfo->pCurrArea = nullptr;
@@ -326,8 +326,8 @@ void hb_rddCloseAll( void )
       while( isParents );
 
       pRddInfo->uiWaSpace = pRddInfo->uiWaMax = pRddInfo->uiWaNumMax = 0;
-      hb_xfree( pRddInfo->waList );
-      hb_xfree( pRddInfo->waNums );
+      hb_xfree(pRddInfo->waList);
+      hb_xfree(pRddInfo->waNums);
       pRddInfo->waList = nullptr;
       pRddInfo->waNums = nullptr;
       HB_SET_WA(1);
@@ -703,7 +703,7 @@ AREAP hb_rddRequestArea( const char * szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea
 
    if( pCargo )
    {
-      hb_itemClear( pCargo );
+      hb_itemClear(pCargo);
    }
 
    /* close current WA or chose 1st free available */

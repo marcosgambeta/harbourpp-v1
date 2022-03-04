@@ -95,23 +95,23 @@ void hb_znetClose( PHB_ZNETSTREAM pStream )
 {
    if( pStream->inbuf )
    {
-      hb_xfree( pStream->inbuf );
+      hb_xfree(pStream->inbuf);
    }
 
    if( pStream->outbuf )
    {
-      hb_xfree( pStream->outbuf );
+      hb_xfree(pStream->outbuf);
    }
 
    if( pStream->bf )
    {
-      hb_xfree( pStream->bf );
+      hb_xfree(pStream->bf);
    }
 
    deflateEnd( &pStream->wr );
    inflateEnd( &pStream->rd );
 
-   hb_xfree( pStream );
+   hb_xfree(pStream);
 }
 
 /* create new stream structure
@@ -137,10 +137,10 @@ PHB_ZNETSTREAM hb_znetOpen( int level, int strategy )
 
    if( deflateInit2( &pStream->wr, level, Z_DEFLATED, -MAX_WBITS, HB_ZNET_MEM_LEVEL, strategy ) == Z_OK )
    {
-      pStream->wr.next_out = pStream->outbuf = static_cast<Bytef*>( hb_xgrab( HB_ZNET_BUFSIZE ) );
+      pStream->wr.next_out = pStream->outbuf = static_cast<Bytef*>( hb_xgrab(HB_ZNET_BUFSIZE) );
       pStream->wr.avail_out = HB_ZNET_BUFSIZE;
 
-      pStream->rd.next_in = pStream->inbuf = static_cast<Bytef*>( hb_xgrab( HB_ZNET_BUFSIZE ) );
+      pStream->rd.next_in = pStream->inbuf = static_cast<Bytef*>( hb_xgrab(HB_ZNET_BUFSIZE) );
       if( inflateInit2( &pStream->rd, -MAX_WBITS ) == Z_OK )
       {
          return pStream;
@@ -160,7 +160,7 @@ void hb_znetEncryptKey( PHB_ZNETSTREAM pStream, const void * keydata, int keylen
       pStream->crypt = 1;
 
       /* initialize encryption key */
-      pStream->bf = static_cast<HB_BLOWFISH*>( hb_xgrab( sizeof(HB_BLOWFISH) ) );
+      pStream->bf = static_cast<HB_BLOWFISH*>( hb_xgrab(sizeof(HB_BLOWFISH)) );
       hb_blowfishInit( pStream->bf, keydata, keylen );
 
       /* initialize input buffer */
@@ -540,7 +540,7 @@ static int s_sockexClose( PHB_SOCKEX pSock, HB_BOOL fClose )
    }
 
    iResult = hb_sockexRawClear( pSock, fClose );
-   hb_xfree( pSock );
+   hb_xfree(pSock);
 
    return iResult;
 }
@@ -623,7 +623,7 @@ static int s_sockexCanRead( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout
          {
             pSock->readahead = HB_ZNET_READAHEAD;
          }
-         pSock->buffer = static_cast<HB_BYTE*>( hb_xgrab( pSock->readahead ) );
+         pSock->buffer = static_cast<HB_BYTE*>( hb_xgrab(pSock->readahead) );
       }
       len = hb_znetRead( HB_ZNET_GET( pSock ), pSock->sd, pSock->buffer, pSock->readahead, 0 );
       if( len > 0 )

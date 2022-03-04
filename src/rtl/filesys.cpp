@@ -290,7 +290,7 @@ static int fs_win_get_drive( void )
    if( dwResult > dwSize )
    {
       dwSize = dwResult;
-      lpBuffer = static_cast<TCHAR*>( hb_xgrab( dwSize * sizeof(TCHAR) ) );
+      lpBuffer = static_cast<TCHAR*>( hb_xgrab(dwSize * sizeof(TCHAR)) );
       dwResult = GetCurrentDirectory( dwSize, lpBuffer );
    }
    hb_fsSetIOError( dwResult != 0, 0 );
@@ -308,7 +308,7 @@ static int fs_win_get_drive( void )
    }
    if( lpBuffer != pBuffer )
    {
-      hb_xfree( lpBuffer );
+      hb_xfree(lpBuffer);
    }
    return iDrive;
 }
@@ -787,7 +787,7 @@ int hb_fsPoll( PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut )
       }
       else
       {
-         pfds = static_cast<struct pollfd*>( pFree = hb_xgrab( sizeof(struct pollfd) * iCount ) );
+         pfds = static_cast<struct pollfd*>( pFree = hb_xgrab(sizeof(struct pollfd) * iCount) );
       }
 
       for( i = 0; i < iCount; ++i )
@@ -839,7 +839,7 @@ int hb_fsPoll( PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut )
 
    if( pFree )
    {
-      hb_xfree( pFree );
+      hb_xfree(pFree);
    }
 }
 #else /* ! HB_HAS_POLL */
@@ -1119,7 +1119,7 @@ HB_FHANDLE hb_fsPOpen( const char * pszFileName, const char * pszMode )
 
       if( pszTmp )
       {
-         hb_xfree( pszTmp );
+         hb_xfree(pszTmp);
       }
    }
 #else
@@ -1515,7 +1515,7 @@ HB_FHANDLE hb_fsOpenEx( const char * pszFileName, HB_USHORT uiFlags, HB_FATTR nA
 
       if( lpFree )
       {
-         hb_xfree( lpFree );
+         hb_xfree(lpFree);
       }
 
       hFileHandle = reinterpret_cast<HB_FHANDLE>( hFile );
@@ -1560,7 +1560,7 @@ HB_FHANDLE hb_fsOpenEx( const char * pszFileName, HB_USHORT uiFlags, HB_FATTR nA
 
       if( pszFree )
       {
-         hb_xfree( pszFree );
+         hb_xfree(pszFree);
       }
    }
 #endif
@@ -1702,7 +1702,7 @@ HB_BOOL hb_fsGetFileTime( const char * pszFileName, long * plJulian, long * plMi
 
          if( lpFree )
          {
-            hb_xfree( lpFree );
+            hb_xfree(lpFree);
          }
       }
       else
@@ -1736,7 +1736,7 @@ HB_BOOL hb_fsGetFileTime( const char * pszFileName, long * plJulian, long * plMi
             hFindFile = FindFirstFile( lpFileName, &findFileData );
             if( lpFree )
             {
-               hb_xfree( lpFree );
+               hb_xfree(lpFree);
             }
 
             if( hFindFile != INVALID_HANDLE_VALUE )
@@ -1789,7 +1789,7 @@ HB_BOOL hb_fsGetFileTime( const char * pszFileName, long * plJulian, long * plMi
 
       if( pszFree )
       {
-         hb_xfree( pszFree );
+         hb_xfree(pszFree);
       }
    }
 #else
@@ -1836,7 +1836,7 @@ HB_BOOL hb_fsGetAttr( const char * pszFileName, HB_FATTR * pnAttr )
 
       if( lpFree )
       {
-         hb_xfree( lpFree );
+         hb_xfree(lpFree);
       }
    }
 #else
@@ -1868,7 +1868,7 @@ HB_BOOL hb_fsGetAttr( const char * pszFileName, HB_FATTR * pnAttr )
 #  endif
       if( pszFree )
       {
-         hb_xfree( pszFree );
+         hb_xfree(pszFree);
       }
    }
 #endif
@@ -2007,7 +2007,7 @@ HB_BOOL hb_fsSetFileTime( const char * pszFileName, long lJulian, long lMillisec
       hb_fsSetIOError( fResult, 0 );
       if( pszFree )
       {
-         hb_xfree( pszFree );
+         hb_xfree(pszFree);
       }
    }
 #else
@@ -2067,7 +2067,7 @@ HB_BOOL hb_fsSetAttr( const char * pszFileName, HB_FATTR nAttr )
 
       if( lpFree )
       {
-         hb_xfree( lpFree );
+         hb_xfree(lpFree);
       }
    }
 #else
@@ -2108,7 +2108,7 @@ HB_BOOL hb_fsSetAttr( const char * pszFileName, HB_FATTR nAttr )
 #  endif
       if( pszFree )
       {
-         hb_xfree( pszFree );
+         hb_xfree(pszFree);
       }
    }
 #endif
@@ -3341,7 +3341,7 @@ HB_BOOL hb_fsDelete( const char * pszFileName )
 
       if( lpFree )
       {
-         hb_xfree( lpFree );
+         hb_xfree(lpFree);
       }
    }
 #else
@@ -3359,7 +3359,7 @@ HB_BOOL hb_fsDelete( const char * pszFileName )
 
       if( pszFree )
       {
-         hb_xfree( pszFree );
+         hb_xfree(pszFree);
       }
    }
 #endif
@@ -3392,11 +3392,11 @@ HB_BOOL hb_fsRename( const char * pOldName, const char * pNewName )
 
       if( lpOldFree )
       {
-         hb_xfree( lpOldFree );
+         hb_xfree(lpOldFree);
       }
       if( lpNewFree )
       {
-         hb_xfree( lpNewFree );
+         hb_xfree(lpNewFree);
       }
    }
 #else
@@ -3415,11 +3415,11 @@ HB_BOOL hb_fsRename( const char * pOldName, const char * pNewName )
 
       if( pszFreeOld )
       {
-         hb_xfree( pszFreeOld );
+         hb_xfree(pszFreeOld);
       }
       if( pszFreeNew )
       {
-         hb_xfree( pszFreeNew );
+         hb_xfree(pszFreeNew);
       }
    }
 #endif
@@ -3451,7 +3451,7 @@ HB_BOOL hb_fsMkDir( const char * pszDirName )
 
       if( lpFree )
       {
-         hb_xfree( lpFree );
+         hb_xfree(lpFree);
       }
    }
 #else
@@ -3473,7 +3473,7 @@ HB_BOOL hb_fsMkDir( const char * pszDirName )
 
       if( pszFree )
       {
-         hb_xfree( pszFree );
+         hb_xfree(pszFree);
       }
    }
 #endif
@@ -3508,7 +3508,7 @@ HB_BOOL hb_fsChDir( const char * pszDirName )
 
       if( lpFree )
       {
-         hb_xfree( lpFree );
+         hb_xfree(lpFree);
       }
    }
 #else
@@ -3526,7 +3526,7 @@ HB_BOOL hb_fsChDir( const char * pszDirName )
 
       if( pszFree )
       {
-         hb_xfree( pszFree );
+         hb_xfree(pszFree);
       }
    }
 #endif
@@ -3558,7 +3558,7 @@ HB_BOOL hb_fsRmDir( const char * pszDirName )
 
       if( lpFree )
       {
-         hb_xfree( lpFree );
+         hb_xfree(lpFree);
       }
    }
 #else
@@ -3576,7 +3576,7 @@ HB_BOOL hb_fsRmDir( const char * pszDirName )
 
       if( pszFree )
       {
-         hb_xfree( pszFree );
+         hb_xfree(pszFree);
       }
    }
 #endif
@@ -3636,12 +3636,12 @@ HB_ERRCODE hb_fsCurDirBuff( int iDrive, char * pszBuffer, HB_SIZE nSize )
 #if defined( HB_OS_WIN )
    {
       DWORD dwSize = static_cast<DWORD>( nSize );
-      LPTSTR lpBuffer = static_cast<LPTSTR>( hb_xgrab( dwSize * sizeof(TCHAR) ) );
+      LPTSTR lpBuffer = static_cast<LPTSTR>( hb_xgrab(dwSize * sizeof(TCHAR)) );
       lpBuffer[ 0 ] = TEXT( '\0' );
       hb_fsSetIOError( ( GetCurrentDirectory( dwSize, lpBuffer ) != 0 ), 0 );
       lpBuffer[ dwSize - 1 ] = TEXT( '\0' );
       HB_OSSTRDUP2( lpBuffer, pszBuffer, nSize - 1 );
-      hb_xfree( lpBuffer );
+      hb_xfree(lpBuffer);
    }
 #elif defined( __MINGW32__ )
 
@@ -3725,7 +3725,7 @@ HB_ERRCODE hb_fsCurDirBuff( int iDrive, char * pszBuffer, HB_SIZE nSize )
          }
          if( pszFree )
          {
-            hb_xfree( pszFree );
+            hb_xfree(pszFree);
          }
       }
 #endif
@@ -3749,13 +3749,13 @@ HB_BOOL hb_fsGetCWD( char * pszBuffer, HB_SIZE nSize )
 #if defined( HB_OS_WIN )
    {
       DWORD dwSize = static_cast<DWORD>( nSize );
-      LPTSTR lpBuffer = static_cast<LPTSTR>( hb_xgrab( dwSize * sizeof(TCHAR) ) );
+      LPTSTR lpBuffer = static_cast<LPTSTR>( hb_xgrab(dwSize * sizeof(TCHAR)) );
       lpBuffer[ 0 ] = TEXT( '\0' );
       fResult = GetCurrentDirectory( dwSize, lpBuffer ) != 0;
       hb_fsSetIOError( fResult, 0 );
       lpBuffer[ dwSize - 1 ] = TEXT( '\0' );
       HB_OSSTRDUP2( lpBuffer, pszBuffer, nSize - 1 );
-      hb_xfree( lpBuffer );
+      hb_xfree(lpBuffer);
    }
 #else
 
@@ -3795,7 +3795,7 @@ HB_BOOL hb_fsGetCWD( char * pszBuffer, HB_SIZE nSize )
          }
          if( pszFree )
          {
-            hb_xfree( pszFree );
+            hb_xfree(pszFree);
          }
       }
 #endif
@@ -3831,7 +3831,7 @@ HB_BOOL hb_fsSetCWD( const char * pszDirName )
 
       if( lpFree )
       {
-         hb_xfree( lpFree );
+         hb_xfree(lpFree);
       }
    }
 #else
@@ -3874,7 +3874,7 @@ HB_BOOL hb_fsSetCWD( const char * pszDirName )
 
       if( pszFree )
       {
-         hb_xfree( pszFree );
+         hb_xfree(pszFree);
       }
    }
 #endif
@@ -4044,7 +4044,7 @@ char * hb_fsExtName( const char * pszFileName, const char * pDefExt, HB_FATTR nE
    HB_BOOL fIsFile = HB_FALSE;
    char * szPath;
 
-   szPath = static_cast<char*>( hb_xgrab( HB_PATH_MAX ) );
+   szPath = static_cast<char*>( hb_xgrab(HB_PATH_MAX) );
 
    pFilepath = hb_fsFNameSplit( pszFileName );
 
@@ -4107,7 +4107,7 @@ char * hb_fsExtName( const char * pszFileName, const char * pDefExt, HB_FATTR nE
       hb_fsFNameMerge( szPath, pFilepath );
    }
 
-   hb_xfree( pFilepath );
+   hb_xfree(pFilepath);
 
    return szPath;
 }
@@ -4248,7 +4248,7 @@ HB_FHANDLE hb_fsExtOpen( const char * pszFileName, const char * pDefExt, HB_FATT
 
    if( szFree )
    {
-      hb_xfree( szFree );
+      hb_xfree(szFree);
    }
 
    return hFile;
@@ -4341,7 +4341,7 @@ const char * hb_fsNameConv( const char * pszFileName, char ** pszFree )
 
       if( pszFree )
       {
-         pszFileName = *pszFree = hb_strncpy( static_cast<char*>( hb_xgrab( HB_PATH_MAX ) ), pszFileName, HB_PATH_MAX - 1 );
+         pszFileName = *pszFree = hb_strncpy( static_cast<char*>( hb_xgrab(HB_PATH_MAX) ), pszFileName, HB_PATH_MAX - 1 );
       }
 
       if( cDirSep != HB_OS_PATH_DELIM_CHR )
@@ -4416,18 +4416,18 @@ const char * hb_fsNameConv( const char * pszFileName, char ** pszFree )
       }
 
       hb_fsFNameMerge( const_cast<char*>( pszFileName ), pFileName );
-      hb_xfree( pFileName );
+      hb_xfree(pFileName);
       if( pszPath )
       {
-         hb_xfree( pszPath );
+         hb_xfree(pszPath);
       }
       if( pszName )
       {
-         hb_xfree( pszName );
+         hb_xfree(pszName);
       }
       if( pszExt )
       {
-         hb_xfree( pszExt );
+         hb_xfree(pszExt);
       }
 
       if( fEncodeCP )
@@ -4438,7 +4438,7 @@ const char * hb_fsNameConv( const char * pszFileName, char ** pszFree )
          if( pszFree == nullptr && pszFileName != pszPrev )
          {
             hb_strncpy( const_cast<char*>( pszPrev ), pszFileName, HB_PATH_MAX - 1 );
-            hb_xfree( HB_UNCONST( pszFileName ) );
+            hb_xfree(HB_UNCONST( pszFileName ));
             pszFileName = pszPrev;
          }
       }
@@ -4501,7 +4501,7 @@ HB_WCHAR * hb_fsNameConvU16( const char * pszFileName )
       char * pszPath = nullptr, * pszName = nullptr, * pszExt = nullptr;
       PHB_FNAME pFileName;
 
-      pszFileName = pszBuffer = hb_strncpy( static_cast<char*>( hb_xgrab( HB_PATH_MAX ) ), pszFileName, HB_PATH_MAX - 1 );
+      pszFileName = pszBuffer = hb_strncpy( static_cast<char*>( hb_xgrab(HB_PATH_MAX) ), pszFileName, HB_PATH_MAX - 1 );
 
       if( cDirSep != HB_OS_PATH_DELIM_CHR )
       {
@@ -4575,25 +4575,25 @@ HB_WCHAR * hb_fsNameConvU16( const char * pszFileName )
       }
 
       hb_fsFNameMerge( pszBuffer, pFileName );
-      hb_xfree( pFileName );
+      hb_xfree(pFileName);
       if( pszPath )
       {
-         hb_xfree( pszPath );
+         hb_xfree(pszPath);
       }
       if( pszName )
       {
-         hb_xfree( pszName );
+         hb_xfree(pszName);
       }
       if( pszExt )
       {
-         hb_xfree( pszExt );
+         hb_xfree(pszExt);
       }
    }
 
    lpwFileName = hb_cdpStrDupU16( cdp, HB_CDP_ENDIAN_NATIVE, pszFileName );
    if( pszBuffer )
    {
-      hb_xfree( pszBuffer );
+      hb_xfree(pszBuffer);
    }
 
    return lpwFileName;
@@ -4611,8 +4611,8 @@ void hb_fsBaseDirBuff( char * pszBuffer )
       pFileName->szName = nullptr;
       pFileName->szExtension = nullptr;
       hb_fsFNameMerge( pszBuffer, pFileName );
-      hb_xfree( pFileName );
-      hb_xfree( pszBaseName );
+      hb_xfree(pFileName);
+      hb_xfree(pszBaseName);
    }
    else
    {

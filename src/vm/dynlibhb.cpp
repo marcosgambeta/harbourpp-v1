@@ -98,7 +98,7 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
 
       if( argc > 0 )
       {
-         argv = static_cast<const char**>( hb_xgrab( sizeof(char*) * argc ) );
+         argv = static_cast<const char**>( hb_xgrab(sizeof(char*) * argc) );
          for( int i = 0; i < argc; ++i )
          {
             argv[ i ] = hb_arrayGetCPtr( pArgs, i + 1 );
@@ -141,7 +141,7 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
 
       if( argv )
       {
-         hb_xfree( static_cast<void*>( argv ) );
+         hb_xfree(static_cast<void*>( argv ));
       }
    }
 

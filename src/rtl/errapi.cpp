@@ -451,7 +451,7 @@ HB_FUNC( ERRORBLOCK )
    hb_itemReturn(pErrorBlock);
    if( pNewErrorBlock )
    {
-      hb_itemCopy( pErrorBlock, pNewErrorBlock );
+      hb_itemCopy(pErrorBlock, pNewErrorBlock);
    }
 }
 
@@ -508,7 +508,7 @@ void hb_errInit( void )
    /* Create error class and base object */
    s_pError = hb_itemNew(nullptr);
    hb_clsAssociate( hb_errClassCreate() );
-   hb_itemMove( s_pError, hb_stackReturnItem() );
+   hb_itemMove(s_pError, hb_stackReturnItem());
 }
 
 void hb_errExit( void )

@@ -637,7 +637,7 @@ HB_FUNC( HB_VFREAD )
       char * buffer;
 
       if( pBuffer && HB_ISBYREF(2) &&
-          hb_itemGetWriteCL( pBuffer, &buffer, &nSize ) )
+          hb_itemGetWriteCL(pBuffer, &buffer, &nSize) )
       {
          if( HB_ISNUM(3) )
          {
@@ -675,7 +675,7 @@ HB_FUNC( HB_VFREADLEN )
 
       if( nToRead > 0 )
       {
-         char * buffer = static_cast<char*>( hb_xgrab( nToRead + 1 ) );
+         char * buffer = static_cast<char*>( hb_xgrab(nToRead + 1) );
          HB_SIZE nRead;
 
          nRead = hb_fileRead( pFile, buffer, nToRead, hb_parnintdef( 3, -1 ) );
@@ -751,7 +751,7 @@ HB_FUNC( HB_VFREADAT )
       HB_SIZE nSize;
       char * buffer;
 
-      if( pBuffer && HB_ISBYREF(2) && hb_itemGetWriteCL( pBuffer, &buffer, &nSize ) )
+      if( pBuffer && HB_ISBYREF(2) && hb_itemGetWriteCL(pBuffer, &buffer, &nSize) )
       {
          if( HB_ISNUM(3) )
          {

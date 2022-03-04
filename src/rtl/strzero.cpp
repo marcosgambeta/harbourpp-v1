@@ -77,7 +77,7 @@ HB_FUNC( STRZERO )
 
       if( pNumber )
       {
-         char * szResult = hb_itemStr( pNumber, pWidth, pDec );
+         char * szResult = hb_itemStr(pNumber, pWidth, pDec);
 
          if( szResult )
          {

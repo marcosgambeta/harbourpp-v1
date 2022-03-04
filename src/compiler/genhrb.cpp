@@ -72,7 +72,7 @@ void hb_compGenBufPortObj( HB_COMP_DECL, HB_BYTE ** pBufPtr, HB_SIZE * pnSize )
 
    *pnSize = hb_compHrbSize( HB_COMP_PARAM, &ulSymbols, &ulFunctions );
    /* additional 0 byte is for passing buffer directly as string item */
-   ptr = *pBufPtr = static_cast<HB_BYTE*>( hb_xgrab( *pnSize + 1 ) );
+   ptr = *pBufPtr = static_cast<HB_BYTE*>( hb_xgrab(*pnSize + 1) );
 
    /* signature */
    *ptr++ = 0xC0;
@@ -173,7 +173,7 @@ void hb_compGenPortObj( HB_COMP_DECL, PHB_FNAME pFileName )
       hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_FILE_WRITE, szFileName, nullptr );
    }
 
-   hb_xfree( pHrbBody );
+   hb_xfree(pHrbBody);
 
    fclose( yyc );
 

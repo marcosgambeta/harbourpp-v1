@@ -73,7 +73,7 @@ HB_FUNC( HB_BASE64ENCODE )
          char * t, * p;
          HB_SIZE lln = lin;
 
-         t = p = static_cast<char*>( hb_xgrab( dst ) );
+         t = p = static_cast<char*>( hb_xgrab(dst) );
 
          while( len-- > 0 )
          {

@@ -195,18 +195,18 @@ static void hb_LZSSxExit( PHB_LZSSX_COMPR pCompr )
 {
    if( pCompr->fInFree )
    {
-      hb_xfree( pCompr->inBuffer );
+      hb_xfree(pCompr->inBuffer);
    }
    if( pCompr->fOutFree )
    {
-      hb_xfree( pCompr->outBuffer );
+      hb_xfree(pCompr->outBuffer);
    }
-   hb_xfree( pCompr );
+   hb_xfree(pCompr);
 }
 
 static PHB_LZSSX_COMPR hb_LZSSxInit( PHB_FILE pInput, const HB_BYTE * pSrcBuf, HB_SIZE nSrcBuf, PHB_FILE pOutput, HB_BYTE * pDstBuf, HB_SIZE nDstBuf )
 {
-   PHB_LZSSX_COMPR pCompr = static_cast<PHB_LZSSX_COMPR>( hb_xgrab( sizeof(HB_LZSSX_COMPR) ) );
+   PHB_LZSSX_COMPR pCompr = static_cast<PHB_LZSSX_COMPR>( hb_xgrab(sizeof(HB_LZSSX_COMPR)) );
 
    if( pInput != nullptr && nSrcBuf == 0 )
    {
@@ -235,11 +235,11 @@ static PHB_LZSSX_COMPR hb_LZSSxInit( PHB_FILE pInput, const HB_BYTE * pSrcBuf, H
 
    if( pCompr->fInFree )
    {
-      pCompr->inBuffer    = static_cast<HB_BYTE*>( hb_xgrab( nDstBuf ) );
+      pCompr->inBuffer    = static_cast<HB_BYTE*>( hb_xgrab(nDstBuf) );
    }
    if( pCompr->fOutFree )
    {
-      pCompr->outBuffer   = static_cast<HB_BYTE*>( hb_xgrab( nDstBuf ) );
+      pCompr->outBuffer   = static_cast<HB_BYTE*>( hb_xgrab(nDstBuf) );
    }
 
    /* initialize the ring buffer with spaces, because SIX uses
@@ -743,7 +743,7 @@ HB_FUNC( _SX_STRCOMPRESS )
 
       /* this is for strict SIX compatibility - in general very bad idea */
       nBuf = nLen + 257;
-      pBuf = static_cast<char*>( hb_xgrab( nBuf ) );
+      pBuf = static_cast<char*>( hb_xgrab(nBuf) );
       HB_PUT_LE_UINT32( pBuf, nLen );
       if( ! hb_LZSSxCompressMem( pStr, nLen, pBuf + 4, nBuf - 4, &nDst ) )
       {
@@ -753,7 +753,7 @@ HB_FUNC( _SX_STRCOMPRESS )
          nDst = nLen;
       }
       hb_retclen( pBuf, nDst + 4 );
-      hb_xfree( pBuf );
+      hb_xfree(pBuf);
    }
    else
    {
@@ -790,7 +790,7 @@ HB_FUNC( _SX_STRDECOMPRESS )
                }
                else
                {
-                  hb_xfree( pBuf );
+                  hb_xfree(pBuf);
                }
             }
             else

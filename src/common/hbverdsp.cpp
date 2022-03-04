@@ -59,7 +59,7 @@ void hb_verBuildInfo( void )
       hb_conOutErr( "Version: ", 0 );
       hb_conOutErr( pszVersion, 0 );
       hb_conOutErr( hb_conNewLine(), 0 );
-      hb_xfree( pszVersion );
+      hb_xfree(pszVersion);
    }
 
    {
@@ -67,7 +67,7 @@ void hb_verBuildInfo( void )
       hb_conOutErr( "Compiler: ", 0 );
       hb_conOutErr( pszVersion, 0 );
       hb_conOutErr( hb_conNewLine(), 0 );
-      hb_xfree( pszVersion );
+      hb_xfree(pszVersion);
    }
 
    {
@@ -75,14 +75,14 @@ void hb_verBuildInfo( void )
       hb_conOutErr( "Platform: ", 0 );
       hb_conOutErr( pszVersion, 0 );
       hb_conOutErr( hb_conNewLine(), 0 );
-      hb_xfree( pszVersion );
+      hb_xfree(pszVersion);
    }
 
    {
       char * pszPCode = hb_verPCode();
       hb_conOutErr( pszPCode, 0 );
       hb_conOutErr( hb_conNewLine(), 0 );
-      hb_xfree( pszPCode );
+      hb_xfree(pszPCode);
    }
 
    hb_conOutErr( "ChangeLog last entry: ", 0 );
@@ -98,7 +98,7 @@ void hb_verBuildInfo( void )
       hb_conOutErr( "Built on: ", 0 );
       hb_conOutErr( pszBuildDate, 0 );
       hb_conOutErr( hb_conNewLine(), 0 );
-      hb_xfree( pszBuildDate );
+      hb_xfree(pszBuildDate);
    }
 
    {

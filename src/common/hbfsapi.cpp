@@ -102,14 +102,14 @@ void hb_fsAddSearchPath( const char * szPath, HB_PATHNAMES ** pSearchList )
    while( ( pDelim = strchr( pPath, HB_OS_PATH_LIST_SEP_CHR ) ) != nullptr )
    {
       *pDelim = '\0';
-      *pSearchList = static_cast<HB_PATHNAMES*>( hb_xgrab( sizeof(HB_PATHNAMES) ) );
+      *pSearchList = static_cast<HB_PATHNAMES*>( hb_xgrab(sizeof(HB_PATHNAMES)) );
       ( *pSearchList )->szPath = pPath;
       ( *pSearchList )->fFree  = fFree;
       pSearchList = &( *pSearchList )->pNext;
       pPath = pDelim + 1;
       fFree = HB_FALSE;
    }
-   *pSearchList = static_cast<HB_PATHNAMES*>( hb_xgrab( sizeof(HB_PATHNAMES) ) );
+   *pSearchList = static_cast<HB_PATHNAMES*>( hb_xgrab(sizeof(HB_PATHNAMES)) );
    ( *pSearchList )->szPath = pPath;
    ( *pSearchList )->pNext  = nullptr;
    ( *pSearchList )->fFree  = fFree;
@@ -130,10 +130,10 @@ void hb_fsFreeSearchPath( HB_PATHNAMES * pSearchList )
    {
       if( pSearchList->fFree )
       {
-         hb_xfree( pSearchList->szPath );
+         hb_xfree(pSearchList->szPath);
       }
       pNext = pSearchList->pNext;
-      hb_xfree( pSearchList );
+      hb_xfree(pSearchList);
       pSearchList = pNext;
    }
 }
@@ -151,7 +151,7 @@ PHB_FNAME hb_fsFNameSplit( const char * pszFileName )
    PHB_FNAME pFileName;
 
    /* Grab memory, set defaults */
-   pFileName = static_cast<PHB_FNAME>( hb_xgrab( sizeof(HB_FNAME) ) );
+   pFileName = static_cast<PHB_FNAME>( hb_xgrab(sizeof(HB_FNAME)) );
 
    pFileName->szPath =
    pFileName->szName =
@@ -332,7 +332,7 @@ HB_BOOL hb_fsNameExists( const char * pszFileName )
 
       if( lpFree )
       {
-         hb_xfree( lpFree );
+         hb_xfree(lpFree);
       }
 #else
       char * pszFree = nullptr;
@@ -355,7 +355,7 @@ HB_BOOL hb_fsNameExists( const char * pszFileName )
 
       if( pszFree )
       {
-         hb_xfree( pszFree );
+         hb_xfree(pszFree);
       }
 #endif
    }
@@ -383,7 +383,7 @@ HB_BOOL hb_fsFileExists( const char * pszFileName )
 
       if( lpFree )
       {
-         hb_xfree( lpFree );
+         hb_xfree(lpFree);
       }
 #else
       char * pszFree = nullptr;
@@ -406,7 +406,7 @@ HB_BOOL hb_fsFileExists( const char * pszFileName )
 
       if( pszFree )
       {
-         hb_xfree( pszFree );
+         hb_xfree(pszFree);
       }
 #endif
    }
@@ -434,7 +434,7 @@ HB_BOOL hb_fsDirExists( const char * pszDirName )
 
       if( lpFree )
       {
-         hb_xfree( lpFree );
+         hb_xfree(lpFree);
       }
 #else
       char * pszFree = nullptr;
@@ -457,7 +457,7 @@ HB_BOOL hb_fsDirExists( const char * pszDirName )
 
       if( pszFree )
       {
-         hb_xfree( pszFree );
+         hb_xfree(pszFree);
       }
 #endif
    }

@@ -199,7 +199,7 @@ HB_FUNC( DISKSPACE )
 
       if( pszFree )
       {
-         hb_xfree( pszFree );
+         hb_xfree(pszFree);
       }
    }
 #else

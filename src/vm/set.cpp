@@ -162,7 +162,7 @@ static char * set_string( PHB_ITEM pItem, char * szOldString )
    {
       if( szOldString )
       {
-         hb_xfree( szOldString );
+         hb_xfree(szOldString);
       }
       /* Limit size of SET strings to 64 KiB, truncating if source is longer */
       szString = hb_strndup( hb_itemGetCPtr(pItem), USHRT_MAX );
@@ -363,7 +363,7 @@ static void open_handle( PHB_SET_STRUCT pSet, const char * file_name, HB_BOOL fA
    close_handle( pSet, set_specifier );
    if( *set_value )
    {
-      hb_xfree( *set_value );
+      hb_xfree(*set_value);
       *set_value = nullptr;
    }
 
@@ -442,7 +442,7 @@ static void open_handle( PHB_SET_STRUCT pSet, const char * file_name, HB_BOOL fA
     */
    if( handle == nullptr )
    {
-      hb_xfree( szFileName );
+      hb_xfree(szFileName);
       szFileName = nullptr;
    }
 
@@ -450,7 +450,7 @@ static void open_handle( PHB_SET_STRUCT pSet, const char * file_name, HB_BOOL fA
    *handle_ptr = handle;
    if( *set_value )
    {
-      hb_xfree( *set_value );
+      hb_xfree(*set_value);
    }
    *set_value = szFileName;
 }
@@ -530,7 +530,7 @@ HB_BOOL hb_setSetCentury( HB_BOOL new_century_setting )
       }
 
       /* Create the new date format */
-      szNewFormat = static_cast<char*>( hb_xgrab( size + 1 ) );
+      szNewFormat = static_cast<char*>( hb_xgrab(size + 1) );
 
       {
          int format_len;
@@ -552,7 +552,7 @@ HB_BOOL hb_setSetCentury( HB_BOOL new_century_setting )
          /* DATE FORMAT is under direct control of SET, so notify when it
             it is changed indirectly via __SetCentury() */
          hb_setListenerNotify( HB_SET_DATEFORMAT, HB_SET_LISTENER_BEFORE );
-         hb_xfree( szDateFormat );
+         hb_xfree(szDateFormat);
          pSet->HB_SET_DATEFORMAT = szNewFormat;
          hb_setListenerNotify( HB_SET_DATEFORMAT, HB_SET_LISTENER_AFTER );
       }
@@ -1234,7 +1234,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pA
          {
             if( pSet->HB_SET_HBOUTLOG )
             {
-               hb_xfree( pSet->HB_SET_HBOUTLOG );
+               hb_xfree(pSet->HB_SET_HBOUTLOG);
             }
             if( HB_IS_NIL(pArg1) )
             {
@@ -1263,7 +1263,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pA
          }
          else if( pResult )
          {
-            hb_itemClear( pResult );
+            hb_itemClear(pResult);
          }
          else
          {
@@ -1296,7 +1296,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pA
          }
          else if( pResult )
          {
-            hb_itemClear( pResult );
+            hb_itemClear(pResult);
          }
          else
          {
@@ -1366,7 +1366,7 @@ void hb_setInitialize( PHB_SET_STRUCT pSet )
    pSet->HB_SET_CANCEL = HB_TRUE;
    pSet->hb_set_century = HB_FALSE;
    pSet->hb_set_prndevice = HB_FALSE;
-   pSet->HB_SET_COLOR = static_cast<char*>( hb_xgrab( HB_CLRSTR_LEN + 1 ) );
+   pSet->HB_SET_COLOR = static_cast<char*>( hb_xgrab(HB_CLRSTR_LEN + 1) );
    /* NOTE: color must be synced with the one in IsDefColor() function */
    hb_strncpy( pSet->HB_SET_COLOR, "W/N,N/W,N/N,N/N,N/W", HB_CLRSTR_LEN );
    pSet->HB_SET_CONFIRM = HB_FALSE;
@@ -1463,59 +1463,59 @@ void hb_setRelease( PHB_SET_STRUCT pSet )
 
    if( pSet->HB_SET_ALTFILE )
    {
-      hb_xfree( pSet->HB_SET_ALTFILE );
+      hb_xfree(pSet->HB_SET_ALTFILE);
    }
    if( pSet->HB_SET_DATEFORMAT )
    {
-      hb_xfree( pSet->HB_SET_DATEFORMAT );
+      hb_xfree(pSet->HB_SET_DATEFORMAT);
    }
    if( pSet->HB_SET_TIMEFORMAT )
    {
-      hb_xfree( pSet->HB_SET_TIMEFORMAT );
+      hb_xfree(pSet->HB_SET_TIMEFORMAT);
    }
    if( pSet->HB_SET_DEFAULT )
    {
-      hb_xfree( pSet->HB_SET_DEFAULT );
+      hb_xfree(pSet->HB_SET_DEFAULT);
    }
    if( pSet->HB_SET_DELIMCHARS )
    {
-      hb_xfree( pSet->HB_SET_DELIMCHARS );
+      hb_xfree(pSet->HB_SET_DELIMCHARS);
    }
    if( pSet->HB_SET_DEVICE )
    {
-      hb_xfree( pSet->HB_SET_DEVICE );
+      hb_xfree(pSet->HB_SET_DEVICE);
    }
    if( pSet->HB_SET_EXTRAFILE )
    {
-      hb_xfree( pSet->HB_SET_EXTRAFILE );
+      hb_xfree(pSet->HB_SET_EXTRAFILE);
    }
    if( pSet->HB_SET_MFILEEXT  )
    {
-      hb_xfree( pSet->HB_SET_MFILEEXT );
+      hb_xfree(pSet->HB_SET_MFILEEXT);
    }
    if( pSet->HB_SET_PATH )
    {
-      hb_xfree( pSet->HB_SET_PATH );
+      hb_xfree(pSet->HB_SET_PATH);
    }
    if( pSet->HB_SET_PRINTFILE )
    {
-      hb_xfree( pSet->HB_SET_PRINTFILE );
+      hb_xfree(pSet->HB_SET_PRINTFILE);
    }
    if( pSet->HB_SET_COLOR )
    {
-      hb_xfree( pSet->HB_SET_COLOR );
+      hb_xfree(pSet->HB_SET_COLOR);
    }
    if( pSet->HB_SET_EOL )
    {
-      hb_xfree( pSet->HB_SET_EOL );
+      hb_xfree(pSet->HB_SET_EOL);
    }
    if( pSet->HB_SET_HBOUTLOG )
    {
-      hb_xfree( pSet->HB_SET_HBOUTLOG );
+      hb_xfree(pSet->HB_SET_HBOUTLOG);
    }
    if( pSet->HB_SET_HBOUTLOGINFO )
    {
-      hb_xfree( pSet->HB_SET_HBOUTLOGINFO );
+      hb_xfree(pSet->HB_SET_HBOUTLOGINFO);
    }
 
    hb_fsFreeSearchPath( pSet->hb_set_path );
@@ -1527,16 +1527,16 @@ void hb_setRelease( PHB_SET_STRUCT pSet )
       while( pListener )
       {
          PHB_SET_LISTENER pNext = pListener->next;
-         hb_xfree( pListener );
+         hb_xfree(pListener);
          pListener = pNext;
       }
-      hb_xfree( pSet->hb_set_listener );
+      hb_xfree(pSet->hb_set_listener);
    }
 }
 
 PHB_SET_STRUCT hb_setClone( PHB_SET_STRUCT pSrc )
 {
-   PHB_SET_STRUCT pSet = static_cast<PHB_SET_STRUCT>( hb_xgrab( sizeof(HB_SET_STRUCT) ) );
+   PHB_SET_STRUCT pSet = static_cast<PHB_SET_STRUCT>( hb_xgrab(sizeof(HB_SET_STRUCT)) );
 
    memcpy( pSet, pSrc, sizeof(HB_SET_STRUCT) );
 
@@ -1546,7 +1546,7 @@ PHB_SET_STRUCT hb_setClone( PHB_SET_STRUCT pSrc )
 
    pSet->HB_SET_TYPEAHEAD = HB_DEFAULT_INKEY_BUFSIZE;
 
-   pSet->HB_SET_COLOR = static_cast<char*>( hb_xgrab( HB_CLRSTR_LEN + 1 ) );
+   pSet->HB_SET_COLOR = static_cast<char*>( hb_xgrab(HB_CLRSTR_LEN + 1) );
    hb_strncpy( pSet->HB_SET_COLOR, pSrc->HB_SET_COLOR, HB_CLRSTR_LEN );
 
    if( pSet->HB_SET_ALTFILE )
@@ -1611,7 +1611,7 @@ int hb_setListenerAdd( HB_SET_LISTENER_CALLBACK * callback )
 {
    HB_STACK_TLS_PRELOAD
    PHB_SET_STRUCT pSet = hb_stackSetStruct();
-   PHB_SET_LISTENER p_sl = static_cast<PHB_SET_LISTENER>( hb_xgrab( sizeof(HB_SET_LISTENER) ) );
+   PHB_SET_LISTENER p_sl = static_cast<PHB_SET_LISTENER>( hb_xgrab(sizeof(HB_SET_LISTENER)) );
    PHB_SET_LISTENER_LST pList;
 
    if( ! pSet->hb_set_listener )
@@ -1680,7 +1680,7 @@ int hb_setListenerRemove( int listener )
             {
                pList->last = p_sl_prev;
             }
-            hb_xfree( p_sl );
+            hb_xfree(p_sl);
             break;
          }
          p_sl_prev = p_sl;
@@ -2148,7 +2148,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
                szValue = hb_strndup( hb_itemGetCPtr(pItem), USHRT_MAX );
                if( pSet->HB_SET_DATEFORMAT )
                {
-                  hb_xfree( pSet->HB_SET_DATEFORMAT );
+                  hb_xfree(pSet->HB_SET_DATEFORMAT);
                }
                pSet->HB_SET_DATEFORMAT = szValue;
                while( *szValue )
@@ -2175,7 +2175,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
                szValue = hb_strndup( hb_itemGetCPtr(pItem), USHRT_MAX );
                if( pSet->HB_SET_TIMEFORMAT )
                {
-                  hb_xfree( pSet->HB_SET_TIMEFORMAT );
+                  hb_xfree(pSet->HB_SET_TIMEFORMAT);
                }
                pSet->HB_SET_TIMEFORMAT = szValue;
                fResult = HB_TRUE;
@@ -2194,7 +2194,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
                szValue = hb_strndup( hb_itemGetCPtr(pItem), USHRT_MAX );
                if( pSet->HB_SET_DEVICE )
                {
-                  hb_xfree( pSet->HB_SET_DEVICE );
+                  hb_xfree(pSet->HB_SET_DEVICE);
                }
                pSet->HB_SET_DEVICE = szValue;
                pSet->hb_set_prndevice = strlen( szValue ) >= 4 && hb_strnicmp( szValue, "PRIN", 4 ) == 0;
@@ -2207,7 +2207,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
                szValue = hb_strndup( hb_itemGetCPtr(pItem), USHRT_MAX );
                if( pSet->HB_SET_MFILEEXT )
                {
-                  hb_xfree( pSet->HB_SET_MFILEEXT );
+                  hb_xfree(pSet->HB_SET_MFILEEXT);
                }
                pSet->HB_SET_MFILEEXT = szValue;
                fResult = HB_TRUE;
@@ -2219,7 +2219,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
                szValue = hb_strndup( hb_itemGetCPtr(pItem), USHRT_MAX );
                if( pSet->HB_SET_DEFAULT )
                {
-                  hb_xfree( pSet->HB_SET_DEFAULT );
+                  hb_xfree(pSet->HB_SET_DEFAULT);
                }
                pSet->HB_SET_DEFAULT = szValue;
                fResult = HB_TRUE;
@@ -2231,7 +2231,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
                szValue = hb_strndup( hb_itemGetCPtr(pItem), USHRT_MAX );
                if( pSet->HB_SET_PATH )
                {
-                  hb_xfree( pSet->HB_SET_PATH );
+                  hb_xfree(pSet->HB_SET_PATH);
                }
                pSet->HB_SET_PATH = szValue;
 
@@ -2248,7 +2248,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
                szValue = hb_strndup( hb_itemGetCPtr(pItem), USHRT_MAX );
                if( pSet->HB_SET_DELIMCHARS )
                {
-                  hb_xfree( pSet->HB_SET_DELIMCHARS );
+                  hb_xfree(pSet->HB_SET_DELIMCHARS);
                }
                pSet->HB_SET_DELIMCHARS = szValue;
                fResult = HB_TRUE;
@@ -2260,7 +2260,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
                szValue = hb_strndup( hb_itemGetCPtr(pItem), USHRT_MAX );
                if( pSet->HB_SET_EOL )
                {
-                  hb_xfree( pSet->HB_SET_EOL );
+                  hb_xfree(pSet->HB_SET_EOL);
                }
                pSet->HB_SET_EOL = szValue;
                fResult = HB_TRUE;
@@ -2279,7 +2279,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
                }
                if( pSet->HB_SET_HBOUTLOG )
                {
-                  hb_xfree( pSet->HB_SET_HBOUTLOG );
+                  hb_xfree(pSet->HB_SET_HBOUTLOG);
                }
                pSet->HB_SET_HBOUTLOG = szValue;
                hb_xsetfilename( pSet->HB_SET_HBOUTLOG );
@@ -2292,7 +2292,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
                szValue = hb_strndup( hb_itemGetCPtr(pItem), USHRT_MAX );
                if( pSet->HB_SET_HBOUTLOGINFO )
                {
-                  hb_xfree( pSet->HB_SET_HBOUTLOGINFO );
+                  hb_xfree(pSet->HB_SET_HBOUTLOGINFO);
                }
                pSet->HB_SET_HBOUTLOGINFO = szValue;
                hb_xsetinfo( pSet->HB_SET_HBOUTLOGINFO );
@@ -3339,7 +3339,7 @@ HB_WCHAR * hb_osStrU16Encode( const char * pszName )
 
          nLen = strlen( pszName );
          nSize = hb_cdpStrAsU16Len( cdp, pszName, nLen, 0 );
-         pszBufferW = static_cast<HB_WCHAR*>( hb_xgrab( ( nSize + 1 ) * sizeof(HB_WCHAR) ) );
+         pszBufferW = static_cast<HB_WCHAR*>( hb_xgrab(( nSize + 1 ) * sizeof(HB_WCHAR)) );
          hb_cdpStrToU16( cdp, HB_CDP_ENDIAN_NATIVE, pszName, nLen, pszBufferW, nSize + 1 );
          return pszBufferW;
       }
@@ -3360,7 +3360,7 @@ HB_WCHAR * hb_osStrU16EncodeN( const char * pszName, HB_SIZE nLen )
 
          nLen = hb_strnlen( pszName, nLen );
          nSize = hb_cdpStrAsU16Len( cdp, pszName, nLen, 0 );
-         pszBufferW = static_cast<HB_WCHAR*>( hb_xgrab( ( nSize + 1 ) * sizeof(HB_WCHAR) ) );
+         pszBufferW = static_cast<HB_WCHAR*>( hb_xgrab(( nSize + 1 ) * sizeof(HB_WCHAR)) );
          hb_cdpStrToU16( cdp, HB_CDP_ENDIAN_NATIVE, pszName, nLen, pszBufferW, nSize + 1 );
          return pszBufferW;
       }
@@ -3381,7 +3381,7 @@ char * hb_osStrU16Decode( const HB_WCHAR * pszNameW )
 
          nLen = hb_wstrlen( pszNameW );
          nSize = hb_cdpU16AsStrLen( cdp, pszNameW, nLen, 0 );
-         pszBuffer = static_cast<char*>( hb_xgrab( nSize + 1 ) );
+         pszBuffer = static_cast<char*>( hb_xgrab(nSize + 1) );
          hb_cdpU16ToStr( cdp, HB_CDP_ENDIAN_NATIVE, pszNameW, nLen, pszBuffer, nSize + 1 );
          return pszBuffer;
       }

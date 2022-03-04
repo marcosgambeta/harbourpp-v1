@@ -107,12 +107,12 @@ static const char * hb_compChkAddDefine( HB_COMP_DECL, const char * szSwitch, HB
       }
       if( *pDefinePtr == nullptr )
       {
-         *pDefinePtr = static_cast<PHB_PPDEFINE>( hb_xgrab( sizeof(HB_PPDEFINE) ) );
+         *pDefinePtr = static_cast<PHB_PPDEFINE>( hb_xgrab(sizeof(HB_PPDEFINE)) );
          ( *pDefinePtr )->pNext = nullptr;
       }
       else
       {
-         hb_xfree( ( *pDefinePtr )->szName );
+         hb_xfree(( *pDefinePtr )->szName);
       }
       ( *pDefinePtr )->szName = szDefine;
       ( *pDefinePtr )->szValue = szValue;
@@ -154,13 +154,13 @@ static const char * hb_compChkOptionFName( const char * szSwitch, PHB_FNAME * pR
    {
       if( *pResult )
       {
-         hb_xfree( *pResult );
+         hb_xfree(*pResult);
       }
       if( szSwitch[ nLen ] != '\0' )
       {
          char * szVal = hb_strndup( szSwitch, nLen );
          *pResult = hb_fsFNameSplit( szVal );
-         hb_xfree( szVal );
+         hb_xfree(szVal);
       }
       else
       {
@@ -180,7 +180,7 @@ static const char * hb_compChkOptionAddPath( HB_COMP_DECL, const char * szSwitch
       {
          char * szVal = hb_strndup( szSwitch, nLen );
          hb_pp_addSearchPath( HB_COMP_PARAM->pLex->pPP, szSwitch, HB_FALSE );
-         hb_xfree( szVal );
+         hb_xfree(szVal);
       }
       else
       {
@@ -248,7 +248,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
                HB_COMP_PARAM->fLineNumbers = HB_TRUE;
                ++szSwPtr;
             }
-            hb_xfree( szOption );
+            hb_xfree(szOption);
             break;
          }
 
@@ -261,7 +261,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
                HB_COMP_PARAM->fCredits = HB_TRUE;
                szSwPtr += strlen( szOption );
             }
-            hb_xfree( szOption );
+            hb_xfree(szOption);
             break;
          }
 
@@ -414,7 +414,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
                case 'D':
                   if( HB_COMP_PARAM->szDepExt )
                   {
-                     hb_xfree( HB_COMP_PARAM->szDepExt );
+                     hb_xfree(HB_COMP_PARAM->szDepExt);
                      HB_COMP_PARAM->szDepExt = nullptr;
                   }
                   szSwPtr += 2;
@@ -707,7 +707,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
             {
                if( HB_COMP_PARAM->pPpoPath )
                {
-                  hb_xfree( HB_COMP_PARAM->pPpoPath );
+                  hb_xfree(HB_COMP_PARAM->pPpoPath);
                   HB_COMP_PARAM->pPpoPath = nullptr;
                }
                if( *szSwPtr == '-' )
@@ -823,8 +823,8 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
                {
                   HB_COMP_PARAM->szStdChExt = static_cast<char**>(
                      ( HB_COMP_PARAM->iStdChExt == 0 ?
-                        hb_xgrab( sizeof(char*) ) :
-                        hb_xrealloc( HB_COMP_PARAM->szStdChExt, ( HB_COMP_PARAM->iStdChExt + 1 ) * sizeof(char*) ) ) );
+                        hb_xgrab(sizeof(char*)) :
+                        hb_xrealloc(HB_COMP_PARAM->szStdChExt, ( HB_COMP_PARAM->iStdChExt + 1 ) * sizeof(char*)) ) );
                   szSwPtr = hb_compChkOptionGet( szSwPtr + 1,
                                                  &HB_COMP_PARAM->szStdChExt[ HB_COMP_PARAM->iStdChExt++ ],
                                                  fEnv );
@@ -834,7 +834,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
             {
                if( HB_COMP_PARAM->szStdCh )
                {
-                  hb_xfree( HB_COMP_PARAM->szStdCh );
+                  hb_xfree(HB_COMP_PARAM->szStdCh);
                }
                szSwPtr = hb_compChkOptionGet( szSwPtr, &HB_COMP_PARAM->szStdCh, fEnv );
             }
@@ -931,7 +931,7 @@ void hb_compChkEnvironment( HB_COMP_DECL )
    {
       if( szEnvCMD )
       {
-         hb_xfree( szEnvCMD );
+         hb_xfree(szEnvCMD);
       }
       szEnvCMD = hb_getenv( "CLIPPERCMD" );
    }
@@ -951,7 +951,7 @@ void hb_compChkEnvironment( HB_COMP_DECL )
             szSwitch = hb_compChkParseSwitch( HB_COMP_PARAM, szSwitch, HB_TRUE );
          }
       }
-      hb_xfree( szEnvCMD );
+      hb_xfree(szEnvCMD);
    }
 }
 
@@ -965,7 +965,7 @@ void hb_compChkAddIncPaths( HB_COMP_DECL )
       {
          hb_pp_addSearchPath( HB_COMP_PARAM->pLex->pPP, szInclude, HB_FALSE );
       }
-      hb_xfree( szInclude );
+      hb_xfree(szInclude);
    }
 }
 

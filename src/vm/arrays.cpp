@@ -66,7 +66,7 @@ static void hb_arrayReleaseItems( PHB_BASEARRAY pBaseArray )
          pBaseArray->nLen--;
          if( HB_IS_COMPLEX(pBaseArray->pItems + pBaseArray->nLen) )
          {
-            hb_itemClear( pBaseArray->pItems + pBaseArray->nLen );
+            hb_itemClear(pBaseArray->pItems + pBaseArray->nLen);
          }
       }
       while( pBaseArray->nLen );
@@ -74,7 +74,7 @@ static void hb_arrayReleaseItems( PHB_BASEARRAY pBaseArray )
       /* protection against possible base array resizing in user destructors */
       if( pBaseArray->pItems )
       {
-         hb_xfree( pBaseArray->pItems );
+         hb_xfree(pBaseArray->pItems);
          pBaseArray->pItems = nullptr;
       }
    }
@@ -157,7 +157,7 @@ HB_BOOL hb_arrayNew( PHB_ITEM pItem, HB_SIZE nLen ) /* creates a new array */
 
    if( HB_IS_COMPLEX(pItem) )
    {
-      hb_itemClear( pItem );
+      hb_itemClear(pItem);
    }
 
    /*
@@ -167,7 +167,7 @@ HB_BOOL hb_arrayNew( PHB_ITEM pItem, HB_SIZE nLen ) /* creates a new array */
     */
    if( nLen > 0 )
    {
-      pItems = static_cast<PHB_ITEM>( hb_xgrab( sizeof(HB_ITEM) * nLen ) );
+      pItems = static_cast<PHB_ITEM>( hb_xgrab(sizeof(HB_ITEM) * nLen) );
       for( HB_SIZE nPos = 0; nPos < nLen; ++nPos )
       {
          ( pItems + nPos )->type = HB_IT_NIL;
@@ -222,7 +222,7 @@ HB_BOOL hb_arraySize( PHB_ITEM pArray, HB_SIZE nLen )
 
          if( pBaseArray->nLen == 0 )
          {
-            pBaseArray->pItems = static_cast<PHB_ITEM>( hb_xgrab( nLen * sizeof(HB_ITEM) ) );
+            pBaseArray->pItems = static_cast<PHB_ITEM>( hb_xgrab(nLen * sizeof(HB_ITEM)) );
             pBaseArray->nAllocated = nLen;
 
             for( nPos = 0; nPos < nLen; nPos++ )
@@ -248,7 +248,7 @@ HB_BOOL hb_arraySize( PHB_ITEM pArray, HB_SIZE nLen )
                        - adding of 1, allows reduce reallocation count for small arrays.
                    */
                   pBaseArray->nAllocated = ( pBaseArray->nAllocated >> 1 ) + 1 + nLen;
-                  pBaseArray->pItems = static_cast<PHB_ITEM>( hb_xrealloc( pBaseArray->pItems, sizeof(HB_ITEM) * pBaseArray->nAllocated ) );
+                  pBaseArray->pItems = static_cast<PHB_ITEM>( hb_xrealloc(pBaseArray->pItems, sizeof(HB_ITEM) * pBaseArray->nAllocated) );
                }
 
                /* set value for new items */
@@ -264,18 +264,18 @@ HB_BOOL hb_arraySize( PHB_ITEM pArray, HB_SIZE nLen )
                {
                   if( HB_IS_COMPLEX(pBaseArray->pItems + nPos) )
                   {
-                     hb_itemClear( pBaseArray->pItems + nPos );
+                     hb_itemClear(pBaseArray->pItems + nPos);
                   }
                }
 
                if( nLen == 0 )
                {
-                  hb_xfree( pBaseArray->pItems );
+                  hb_xfree(pBaseArray->pItems);
                   pBaseArray->pItems = nullptr;
                }
                else if( nLen < ( pBaseArray->nAllocated >> 1 ) )
                {
-                  pBaseArray->pItems = static_cast<PHB_ITEM>( hb_xrealloc( pBaseArray->pItems, sizeof(HB_ITEM) * nLen ) );
+                  pBaseArray->pItems = static_cast<PHB_ITEM>( hb_xrealloc(pBaseArray->pItems, sizeof(HB_ITEM) * nLen) );
                   pBaseArray->nAllocated = nLen;
                }
             }
@@ -359,7 +359,7 @@ PHB_ITEM hb_arrayFromId( PHB_ITEM pItem, void * pArrayId )
    {
       pItem = hb_itemNew(nullptr);
    }
-   hb_itemMove( pItem, hb_stackItemFromTop(-1) );
+   hb_itemMove(pItem, hb_stackItemFromTop(-1));
    hb_stackPop();
 
    return pItem;
@@ -379,7 +379,7 @@ HB_BOOL hb_arrayAdd( PHB_ITEM pArray, PHB_ITEM pValue )
       {
          hb_arraySize( pArray, pBaseArray->nLen + 1 );
          pBaseArray = static_cast<PHB_BASEARRAY>( pArray->item.asArray.value );
-         hb_itemCopy( pBaseArray->pItems + ( pBaseArray->nLen - 1 ), pValue );
+         hb_itemCopy(pBaseArray->pItems + ( pBaseArray->nLen - 1 ), pValue);
 
          return HB_TRUE;
       }
@@ -402,7 +402,7 @@ HB_BOOL hb_arrayAddForward( PHB_ITEM pArray, PHB_ITEM pValue )
       {
          hb_arraySize( pArray, pBaseArray->nLen + 1 );
          pBaseArray = static_cast<PHB_BASEARRAY>( pArray->item.asArray.value );
-         hb_itemMove( pBaseArray->pItems + ( pBaseArray->nLen - 1 ), pValue );
+         hb_itemMove(pBaseArray->pItems + ( pBaseArray->nLen - 1 ), pValue);
 
          return HB_TRUE;
       }
@@ -427,13 +427,13 @@ HB_BOOL hb_arrayDel( PHB_ITEM pArray, HB_SIZE nIndex )
 
          if( nIndex == nLen )
          {
-            hb_itemSetNil( pBaseArray->pItems + nIndex - 1 );
+            hb_itemSetNil(pBaseArray->pItems + nIndex - 1);
          }
          else
          {
             for(; nIndex < nLen; ++nIndex )        /* move items */
             {
-               hb_itemMoveRef( pBaseArray->pItems + nIndex - 1, pBaseArray->pItems + nIndex );
+               hb_itemMoveRef(pBaseArray->pItems + nIndex - 1, pBaseArray->pItems + nIndex);
             }
          }
 
@@ -460,13 +460,13 @@ HB_BOOL hb_arrayIns( PHB_ITEM pArray, HB_SIZE nIndex )
 
          if( nIndex == nLen )
          {
-            hb_itemSetNil( pBaseArray->pItems + nIndex - 1 );
+            hb_itemSetNil(pBaseArray->pItems + nIndex - 1);
          }
          else
          {
             while( --nLen >= nIndex )                     /* move items */
             {
-               hb_itemMoveRef( pBaseArray->pItems + nLen, pBaseArray->pItems + nLen - 1 );
+               hb_itemMoveRef(pBaseArray->pItems + nLen, pBaseArray->pItems + nLen - 1);
             }
          }
 
@@ -485,7 +485,7 @@ HB_BOOL hb_arraySet( PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      hb_itemCopy( pArray->item.asArray.value->pItems + ( nIndex - 1 ), pItem );
+      hb_itemCopy(pArray->item.asArray.value->pItems + ( nIndex - 1 ), pItem);
       return HB_TRUE;
    }
    else
@@ -502,12 +502,12 @@ HB_BOOL hb_arraySetForward( PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      hb_itemMove( pArray->item.asArray.value->pItems + ( nIndex - 1 ), pItem );
+      hb_itemMove(pArray->item.asArray.value->pItems + ( nIndex - 1 ), pItem);
       return HB_TRUE;
    }
    else
    {
-      hb_itemClear( pItem );
+      hb_itemClear(pItem);
       return HB_FALSE;
    }
 }
@@ -520,12 +520,12 @@ HB_BOOL hb_arrayGet( PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem )
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      hb_itemCopy( pItem, pArray->item.asArray.value->pItems + ( nIndex - 1 ) );
+      hb_itemCopy(pItem, pArray->item.asArray.value->pItems + ( nIndex - 1 ));
       return HB_TRUE;
    }
    else
    {
-      hb_itemSetNil( pItem );
+      hb_itemSetNil(pItem);
       return HB_FALSE;
    }
 }
@@ -542,7 +542,7 @@ HB_BOOL hb_arrayGetItemRef( PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem )
       {
          if( HB_IS_COMPLEX(pItem) )
          {
-            hb_itemClear( pItem );
+            hb_itemClear(pItem);
          }
          hb_gcRefInc( pArray->item.asArray.value );
       }
@@ -554,7 +554,7 @@ HB_BOOL hb_arrayGetItemRef( PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem )
    }
    else
    {
-      hb_itemSetNil( pItem );
+      hb_itemSetNil(pItem);
       return HB_FALSE;
    }
 }
@@ -1225,17 +1225,17 @@ HB_BOOL hb_arrayLast( PHB_ITEM pArray, PHB_ITEM pResult )
    {
       if( pArray->item.asArray.value->nLen > 0 )
       {
-         hb_itemCopy( pResult, pArray->item.asArray.value->pItems + ( pArray->item.asArray.value->nLen - 1 ) );
+         hb_itemCopy(pResult, pArray->item.asArray.value->pItems + ( pArray->item.asArray.value->nLen - 1 ));
       }
       else
       {
-         hb_itemSetNil( pResult );
+         hb_itemSetNil(pResult);
       }
 
       return HB_TRUE;
    }
 
-   hb_itemSetNil( pResult );
+   hb_itemSetNil(pResult);
 
    return HB_FALSE;
 }
@@ -1273,7 +1273,7 @@ HB_BOOL hb_arrayFill( PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE * pnStart, HB_SI
          {
             do
             {
-               hb_itemCopy( pBaseArray->pItems + nStart++, pValue );
+               hb_itemCopy(pBaseArray->pItems + nStart++, pValue);
             }
             while( --nCount > 0 );
          }
@@ -1832,7 +1832,7 @@ HB_BOOL hb_arrayCopy( PHB_ITEM pSrcArray, PHB_ITEM pDstArray, HB_SIZE * pnStart,
 
                for( nTarget--, nStart--; nCount > 0; nCount--, nStart++, nTarget++ )
                {
-                  hb_itemCopy( pDstBaseArray->pItems + nTarget, pSrcBaseArray->pItems + nStart );
+                  hb_itemCopy(pDstBaseArray->pItems + nTarget, pSrcBaseArray->pItems + nStart);
                }
             }
          }
@@ -1871,14 +1871,14 @@ void hb_nestedCloneInit( PHB_NESTED_CLONED pClonedList, void * pValue, PHB_ITEM 
 {
    pClonedList->nSize  = 16;
    pClonedList->nCount = 1;
-   pClonedList->pRefs  = static_cast<PHB_NESTED_REF>( hb_xgrab( pClonedList->nSize * sizeof(HB_NESTED_REF) ) );
+   pClonedList->pRefs  = static_cast<PHB_NESTED_REF>( hb_xgrab(pClonedList->nSize * sizeof(HB_NESTED_REF)) );
    pClonedList->pRefs[ 0 ].value = pValue;
    pClonedList->pRefs[ 0 ].pDest = pDest;
 }
 
 void hb_nestedCloneFree( PHB_NESTED_CLONED pClonedList )
 {
-   hb_xfree( pClonedList->pRefs );
+   hb_xfree(pClonedList->pRefs);
 }
 
 static HB_BOOL hb_nestedCloneFind( PHB_NESTED_CLONED pClonedList, void * pValue, PHB_ITEM pDest )
@@ -1903,7 +1903,7 @@ static HB_BOOL hb_nestedCloneFind( PHB_NESTED_CLONED pClonedList, void * pValue,
       }
       else
       {
-         hb_itemCopy( pDest, pRef[ nMiddle ].pDest );
+         hb_itemCopy(pDest, pRef[ nMiddle ].pDest);
          return HB_TRUE;
       }
       nMiddle = ( nFirst + nLast ) >> 1;
@@ -1912,7 +1912,7 @@ static HB_BOOL hb_nestedCloneFind( PHB_NESTED_CLONED pClonedList, void * pValue,
    if( pClonedList->nCount >= pClonedList->nSize )
    {
       pClonedList->nSize += pClonedList->nSize >> 1;
-      pClonedList->pRefs = static_cast<PHB_NESTED_REF>( hb_xrealloc( pClonedList->pRefs, pClonedList->nSize * sizeof(HB_NESTED_REF) ) );
+      pClonedList->pRefs = static_cast<PHB_NESTED_REF>( hb_xrealloc(pClonedList->pRefs, pClonedList->nSize * sizeof(HB_NESTED_REF)) );
    }
 
    pRef = &pClonedList->pRefs[ nMiddle ];
@@ -1954,7 +1954,7 @@ void hb_nestedCloneDo( PHB_ITEM pDstItem, PHB_ITEM pSrcItem, PHB_NESTED_CLONED p
    }
    else
    {
-      hb_itemCopy( pDstItem, pSrcItem );
+      hb_itemCopy(pDstItem, pSrcItem);
    }
 }
 
@@ -1981,7 +1981,7 @@ PHB_ITEM hb_arrayClone( PHB_ITEM pArray )
    HB_TRACE( HB_TR_DEBUG, ( "hb_arrayClone(%p)", static_cast<void*>( pArray ) ) );
 #endif
 
-   return hb_arrayCloneTo( hb_itemNew(nullptr), pArray );
+   return hb_arrayCloneTo(hb_itemNew(nullptr), pArray);
 }
 
 PHB_ITEM hb_arrayFromStack( HB_USHORT uiLen )
@@ -1997,7 +1997,7 @@ PHB_ITEM hb_arrayFromStack( HB_USHORT uiLen )
 
    for( HB_USHORT uiPos = 1; uiPos <= uiLen; uiPos++ )
    {
-      hb_arraySet( pArray, uiPos, hb_stackItemFromTop( uiPos - uiLen - 1 ) );
+      hb_arraySet( pArray, uiPos, hb_stackItemFromTop(uiPos - uiLen - 1) );
    }
 
    return pArray;
@@ -2050,7 +2050,7 @@ PHB_ITEM hb_arrayBaseParams( void )
 
    for( HB_USHORT uiPos = 1; uiPos <= uiPCount; uiPos++ )
    {
-      hb_arraySet( pArray, uiPos, hb_stackItemFromBase( uiPos ) );
+      hb_arraySet( pArray, uiPos, hb_stackItemFromBase(uiPos) );
    }
 
    return pArray;
@@ -2073,7 +2073,7 @@ PHB_ITEM hb_arraySelfParams( void )
 
    for( HB_USHORT uiPos = 0; uiPos <= uiPCount; uiPos++ )
    {
-      hb_arraySet( pArray, uiPos + 1, hb_stackItemFromBase( uiPos ) );
+      hb_arraySet( pArray, uiPos + 1, hb_stackItemFromBase(uiPos) );
    }
 
    return pArray;

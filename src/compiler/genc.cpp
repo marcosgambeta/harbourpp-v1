@@ -89,7 +89,7 @@ static void hb_compDumpFindCFunc( HB_COMP_DECL )
                         {
                            char * name = hb_strndup( pszName, len );
                            hb_compFunctionMarkStatic( HB_COMP_PARAM, name );
-                           hb_xfree( name );
+                           hb_xfree(name);
                         }
                      }
                   }
@@ -219,8 +219,8 @@ void hb_compGenCCode( HB_COMP_DECL, PHB_FNAME pFileName )       /* generates the
       fprintf( yyc, " * %s\n", szCmp );
       fprintf( yyc, " * Generated C++ source from \"%s\"\n */\n\n", HB_COMP_PARAM->szFile );
 
-      hb_xfree( szCmp );
-      hb_xfree( szHrb );
+      hb_xfree(szCmp);
+      hb_xfree(szHrb);
    }
 
    pFunc = HB_COMP_PARAM->functions.pFirst;

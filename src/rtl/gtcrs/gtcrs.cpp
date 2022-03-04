@@ -415,14 +415,14 @@ static int add_efds( InOutBase * ioBase, int fd, int mode,
       if( ioBase->efds_size <= ioBase->efds_no )
       {
          ioBase->event_fds = static_cast<evtFD**>(
-               hb_xrealloc( ioBase->event_fds,
-                            ( ioBase->efds_size += 10 ) * sizeof(evtFD*) ) );
+               hb_xrealloc(ioBase->event_fds,
+                            ( ioBase->efds_size += 10 ) * sizeof(evtFD*)) );
          ioBase->pPollSet = static_cast<PHB_POLLFD>(
-               hb_xrealloc( ioBase->pPollSet,
-                            ioBase->efds_size * sizeof(HB_POLLFD) ) );
+               hb_xrealloc(ioBase->pPollSet,
+                            ioBase->efds_size * sizeof(HB_POLLFD)) );
       }
 
-      pefd = static_cast<evtFD*>( hb_xgrab( sizeof(evtFD) ) );
+      pefd = static_cast<evtFD*>( hb_xgrab(sizeof(evtFD)) );
       pefd->fd = fd;
       pefd->mode = mode;
       pefd->data = data;
@@ -444,7 +444,7 @@ static void del_efds( InOutBase * ioBase, int fd )
 
    if( n != -1 )
    {
-      hb_xfree( ioBase->event_fds[ n ] );
+      hb_xfree(ioBase->event_fds[ n ]);
       ioBase->efds_no--;
       for( i = n; i < ioBase->efds_no; i++ )
          ioBase->event_fds[ i ] = ioBase->event_fds[ i + 1 ];
@@ -456,10 +456,10 @@ static void del_all_efds( InOutBase * ioBase )
    if( ioBase->event_fds != nullptr )
    {
       for( int i = 0; i < ioBase->efds_no; i++ )
-         hb_xfree( ioBase->event_fds[ i ] );
+         hb_xfree(ioBase->event_fds[ i ]);
 
-      hb_xfree( ioBase->event_fds );
-      hb_xfree( ioBase->pPollSet );
+      hb_xfree(ioBase->event_fds);
+      hb_xfree(ioBase->pPollSet);
 
       ioBase->event_fds = nullptr;
       ioBase->pPollSet = nullptr;
@@ -911,7 +911,7 @@ static int get_inch( InOutBase * ioBase, HB_MAXINT timeout )
    for( i = n = nchk; i < ioBase->efds_no; i++ )
    {
       if( ioBase->event_fds[ i ]->status == EVTFDSTAT_DEL )
-         hb_xfree( ioBase->event_fds[ i ] );
+         hb_xfree(ioBase->event_fds[ i ]);
       else if( ioBase->event_fds[ i ]->fd == npfd )
          pefd = ioBase->event_fds[ i ];
       else
@@ -1110,7 +1110,7 @@ static int addKeyMap( InOutBase * ioBase, int nKey, const char * cdesc )
    {
       if( *ptr == nullptr )
       {
-         *ptr = static_cast<keyTab*>( hb_xgrab( sizeof(keyTab) ) );
+         *ptr = static_cast<keyTab*>( hb_xgrab(sizeof(keyTab)) );
          ( *ptr )->ch = c;
          ( *ptr )->key = K_UNDEF;
          ( *ptr )->nextCh = nullptr;
@@ -1152,7 +1152,7 @@ static int removeKeyMap( InOutBase * ioBase, const char * cdesc )
             ( *ptr )->key = K_UNDEF;
             if( ( *ptr )->nextCh == nullptr && ( *ptr )->otherCh == nullptr )
             {
-               hb_xfree( *ptr );
+               hb_xfree(*ptr);
                *ptr = nullptr;
             }
          }
@@ -1172,7 +1172,7 @@ static void removeAllKeyMap( keyTab ** ptr )
    if( ( *ptr )->otherCh != nullptr )
       removeAllKeyMap( &( ( *ptr )->otherCh ) );
 
-   hb_xfree( *ptr );
+   hb_xfree(*ptr);
    *ptr = nullptr;
 }
 
@@ -1289,7 +1289,7 @@ static HB_BOOL gt_outstr( InOutBase * ioBase, int fd, const char * str,
    {
       unsigned char * buf;
 
-      buf = static_cast<unsigned char*>( hb_xgrab( len ) );
+      buf = static_cast<unsigned char*>( hb_xgrab(len) );
       for( int i = 0; i < len; ++i )
       {
          unsigned char c = str[ i ];
@@ -1299,7 +1299,7 @@ static HB_BOOL gt_outstr( InOutBase * ioBase, int fd, const char * str,
             buf[ i ] = c;
       }
       success = ( write( fd, buf, len ) == len );
-      hb_xfree( buf );
+      hb_xfree(buf);
    }
    else
       success = ( write( fd, str, len ) == len );
@@ -1737,14 +1737,14 @@ static void setKeyTrans( InOutBase * ioBase, PHB_CODEPAGE cdpTerm, PHB_CODEPAGE 
    if( cdpTerm && cdpHost && cdpTerm != cdpHost )
    {
       if( ioBase->in_transtbl == nullptr )
-         ioBase->in_transtbl = static_cast<unsigned char*>( hb_xgrab( 256 ) );
+         ioBase->in_transtbl = static_cast<unsigned char*>( hb_xgrab(256) );
 
       for( int i = 0; i < 256; ++i )
          ioBase->in_transtbl[ i ] = hb_cdpTranslateChar( i, cdpTerm, cdpHost );
    }
    else if( ioBase->in_transtbl != nullptr )
    {
-      hb_xfree( ioBase->in_transtbl );
+      hb_xfree(ioBase->in_transtbl);
       ioBase->in_transtbl = nullptr;
    }
 }
@@ -1931,7 +1931,7 @@ static InOutBase * create_ioBase( char * term, int infd, int outfd, int errfd,
       ioBase->cvvis = ioBase->cnorm;
    ioBase->acsc = tiGetS( "acsc" );
 
-   ioBase->charmap = static_cast<int*>( hb_xgrab( 256 * sizeof(int) ) );
+   ioBase->charmap = static_cast<int*>( hb_xgrab(256 * sizeof(int)) );
    hb_gt_chrmapinit( ioBase->charmap, term, ioBase->terminal_type == TERM_XTERM );
    setDispTrans( ioBase, nullptr, nullptr, 0 );
 
@@ -2089,16 +2089,16 @@ static void destroy_ioBase( InOutBase * ioBase )
 
    /* free allocated memory */
    if( ioBase->charmap != nullptr )
-      hb_xfree( ioBase->charmap );
+      hb_xfree(ioBase->charmap);
 
    if( ioBase->in_transtbl != nullptr )
-      hb_xfree( ioBase->in_transtbl );
+      hb_xfree(ioBase->in_transtbl);
 
    if( ioBase->out_transtbl != nullptr )
-      hb_xfree( ioBase->out_transtbl );
+      hb_xfree(ioBase->out_transtbl);
 
    if( ioBase->nation_transtbl != nullptr )
-      hb_xfree( ioBase->nation_transtbl );
+      hb_xfree(ioBase->nation_transtbl);
 
    if( ioBase->pKeyTab != nullptr )
       removeAllKeyMap( &ioBase->pKeyTab );
@@ -2113,7 +2113,7 @@ static void destroy_ioBase( InOutBase * ioBase )
       waitpid( ioBase->termpid, nullptr, 0 );
    }
 
-   hb_xfree( ioBase );
+   hb_xfree(ioBase);
 }
 
 static InOutBase * create_newXterm( void )
@@ -2209,8 +2209,8 @@ static int add_new_ioBase( InOutBase * ioBase )
          s_ioBaseTab = static_cast<InOutBase**>( hb_xgrab(
                         ( s_iSize_ioBaseTab += 10 ) * sizeof(InOutBase*) ) );
       else
-         s_ioBaseTab = static_cast<InOutBase**>( hb_xrealloc( s_ioBaseTab,
-                        ( s_iSize_ioBaseTab += 10 ) * sizeof(InOutBase*) ) );
+         s_ioBaseTab = static_cast<InOutBase**>( hb_xrealloc(s_ioBaseTab,
+                        ( s_iSize_ioBaseTab += 10 ) * sizeof(InOutBase*)) );
       s_ioBaseTab[ i ] = ioBase;
       for( int n = i + 1; n < s_iSize_ioBaseTab; n++ )
          s_ioBaseTab[ n ] = nullptr;
@@ -2248,7 +2248,7 @@ static void del_all_ioBase( void )
       for( int i = 0; i < s_iSize_ioBaseTab; ++i )
          if( s_ioBaseTab[ i ] )
             destroy_ioBase( s_ioBaseTab[ i ] );
-      hb_xfree( s_ioBaseTab );
+      hb_xfree(s_ioBaseTab);
       s_ioBaseTab = nullptr;
    }
    s_iActive_ioBase = -1;

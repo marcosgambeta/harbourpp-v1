@@ -151,7 +151,7 @@ static int hb_regexec( PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen, in
    }
    if( szBuffer )
    {
-      hb_xfree( szBuffer );
+      hb_xfree(szBuffer);
    }
    return iResult;
 #else
@@ -583,11 +583,11 @@ HB_FUNC( HB_REGEXALL )
 #if defined( HB_HAS_PCRE )
 static void * hb_pcre_grab( size_t size )
 {
-   return hb_xgrab( size );
+   return hb_xgrab(size);
 }
 static void hb_pcre_free( void * ptr )
 {
-   hb_xfree( ptr );
+   hb_xfree(ptr);
 }
 #endif
 

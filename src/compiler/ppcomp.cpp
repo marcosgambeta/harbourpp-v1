@@ -82,7 +82,7 @@ static void hb_pp_PragmaDump( void * cargo, char * pBuffer, HB_SIZE nSize, int i
    PHB_HINLINE pInline;
 
    pInline = hb_compInlineAdd( static_cast<PHB_COMP>( cargo ), nullptr, iLine );
-   pInline->pCode = static_cast<HB_BYTE*>( hb_xgrab( nSize + 1 ) );
+   pInline->pCode = static_cast<HB_BYTE*>( hb_xgrab(nSize + 1) );
    memcpy( pInline->pCode, pBuffer, nSize );
    pInline->pCode[ nSize ] = '\0';
    pInline->nPCodeSize = nSize;
@@ -104,7 +104,7 @@ static void hb_pp_hb_inLine( void * cargo, char * szFunc, char * pBuffer, HB_SIZ
    {
       PHB_HINLINE pInline = hb_compInlineAdd( HB_COMP_PARAM,
          hb_compIdentifierNew( HB_COMP_PARAM, szFunc, HB_IDENT_COPY ), iLine );
-      pInline->pCode = static_cast<HB_BYTE*>( hb_xgrab( nSize + 1 ) );
+      pInline->pCode = static_cast<HB_BYTE*>( hb_xgrab(nSize + 1) );
       memcpy( pInline->pCode, pBuffer, nSize );
       pInline->pCode[ nSize ] = '\0';
       pInline->nPCodeSize = nSize;
@@ -464,7 +464,7 @@ static void hb_pp_fileIncluded( void * cargo, const char * szFileName )
    }
 
    iLen = static_cast<int>( strlen( szFileName ) );
-   pIncFile = static_cast<PHB_INCLST>( hb_xgrab( sizeof(HB_INCLST) + iLen ) );
+   pIncFile = static_cast<PHB_INCLST>( hb_xgrab(sizeof(HB_INCLST) + iLen) );
    pIncFile->pNext = nullptr;
    memcpy( pIncFile->szFileName, szFileName, iLen + 1 );
    *pIncFilePtr = pIncFile;

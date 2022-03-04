@@ -173,7 +173,7 @@ PHB_ITEM hb_fsDirectory( const char * pszDirSpec, const char * pszAttributes, HB
 
    if( pszFree )
    {
-      hb_xfree( pszFree );
+      hb_xfree(pszFree);
    }
 
    return pDir;

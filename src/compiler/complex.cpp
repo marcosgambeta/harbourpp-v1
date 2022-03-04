@@ -252,7 +252,7 @@ static int hb_comp_keywordType( PHB_PP_TOKEN pToken )
       {
          if( HB_PP_TOKEN_ALLOC( pToken->type ) && pToken->len == pKey->maxlen )
          {
-            hb_xfree( HB_UNCONST( pToken->value ) );
+            hb_xfree(HB_UNCONST( pToken->value ));
             pToken->value = pKey->value;
             pToken->type |= HB_PP_TOKEN_STATIC;
          }

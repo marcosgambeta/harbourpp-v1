@@ -70,7 +70,7 @@ static HB_GARBAGE_FUNC( hb_codeblockGarbageDelete )
    if( pCBlock->pCode && pCBlock->dynBuffer )
    {
       pCBlock->dynBuffer = HB_FALSE;
-      hb_xfree( HB_UNCONST( pCBlock->pCode ) );
+      hb_xfree(HB_UNCONST( pCBlock->pCode ));
    }
    pCBlock->pCode = s_pCode;
 
@@ -83,7 +83,7 @@ static HB_GARBAGE_FUNC( hb_codeblockGarbageDelete )
          {
             hb_memvarValueDecRef( pCBlock->pLocals[ pCBlock->uiLocals-- ].item.asMemvar.value );
          }
-         hb_xfree( pCBlock->pLocals );
+         hb_xfree(pCBlock->pLocals);
       }
       pCBlock->pLocals = nullptr;
       pCBlock->uiLocals = 0;
@@ -148,7 +148,7 @@ PHB_CODEBLOCK hb_codeblockNew( const HB_BYTE * pBuffer, HB_USHORT uiLocals, cons
        * can be deallocated after creation of a codeblock. We have to duplicate
        * the passed buffer
        */
-      pCode = static_cast<const HB_BYTE*>( memcpy( hb_xgrab( nLen ), pBuffer, nLen ) );
+      pCode = static_cast<const HB_BYTE*>( memcpy( hb_xgrab(nLen), pBuffer, nLen ) );
    }
    else
    {
@@ -174,7 +174,7 @@ PHB_CODEBLOCK hb_codeblockNew( const HB_BYTE * pBuffer, HB_USHORT uiLocals, cons
        * NOTE: This table can be shared by codeblocks created during
        * evaluation of this codeblock
        */
-      pLocals = static_cast<PHB_ITEM>( hb_xgrab( ( uiLocals + 1 ) * sizeof(HB_ITEM) ) );
+      pLocals = static_cast<PHB_ITEM>( hb_xgrab(( uiLocals + 1 ) * sizeof(HB_ITEM)) );
       pLocals[ 0 ].type = HB_IT_NIL;
 
       do
@@ -187,7 +187,7 @@ PHB_CODEBLOCK hb_codeblockNew( const HB_BYTE * pBuffer, HB_USHORT uiLocals, cons
          pLocalPosTable += 2;
 
          pLocal = hb_memvarDetachLocal( pLocal );
-         hb_itemRawCpy( pLocals + ui, pLocal );
+         hb_itemRawCpy(pLocals + ui, pLocal);
          /* Increment the reference counter so this value will not be
           * released if other codeblock will be deleted
           */
@@ -258,7 +258,7 @@ PHB_CODEBLOCK hb_codeblockMacroNew( const HB_BYTE * pBuffer, HB_SIZE nLen )
     * to be safe for automatic GC activation in hb_xgrab() without
     * calling hb_gcLock()/hb_gcUnlock(). [druzus]
     */
-   pCode = static_cast<HB_BYTE*>( memcpy( hb_xgrab( nLen ), pBuffer, nLen ) );
+   pCode = static_cast<HB_BYTE*>( memcpy( hb_xgrab(nLen), pBuffer, nLen ) );
 
    pCBlock = static_cast<PHB_CODEBLOCK>( hb_gcAllocRaw( sizeof(HB_CODEBLOCK), &s_gcCodeblockFuncs ) );
    pBase = hb_stackBaseItem();
@@ -288,7 +288,7 @@ PHB_ITEM hb_codeblockGetVar( PHB_ITEM pItem, int iItemPos )
    PHB_CODEBLOCK pCBlock = pItem->item.asBlock.value;
 
    /* local variables accessed in a codeblock are always stored as reference */
-   return hb_itemUnRef( pCBlock->pLocals - iItemPos );
+   return hb_itemUnRef(pCBlock->pLocals - iItemPos);
 }
 
 /* Get local variable passed by reference */

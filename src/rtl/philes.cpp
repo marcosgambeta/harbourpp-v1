@@ -120,7 +120,7 @@ HB_FUNC( FREAD )
                will be one more than the length of the passed buffer, because
                the terminating zero could be used if needed. [vszakats] */
 
-      if( nRead <= hb_parcsiz(2) && hb_itemGetWriteCL( pBuffer, &buffer, &nSize ) )
+      if( nRead <= hb_parcsiz(2) && hb_itemGetWriteCL(pBuffer, &buffer, &nSize) )
       {
          nRead = hb_fsReadLarge( hb_numToHandle( hb_parnint(1) ), buffer, nRead );
          uiError = hb_fsError();
@@ -246,7 +246,7 @@ HB_FUNC( FREADSTR )
       if( nToRead > 0 )
       {
          HB_FHANDLE fhnd = hb_numToHandle( hb_parnint(1) );
-         char * buffer = static_cast<char*>( hb_xgrab( nToRead + 1 ) );
+         char * buffer = static_cast<char*>( hb_xgrab(nToRead + 1) );
          HB_SIZE nRead;
 
          nRead = hb_fsReadLarge( fhnd, buffer, nToRead );
@@ -276,7 +276,7 @@ HB_FUNC( HB_FREADLEN )
    if( nToRead > 0 && HB_ISNUM(1) )
    {
       HB_FHANDLE fhnd = hb_numToHandle( hb_parnint(1) );
-      char * buffer = static_cast<char*>( hb_xgrab( nToRead + 1 ) );
+      char * buffer = static_cast<char*>( hb_xgrab(nToRead + 1) );
       HB_SIZE nRead;
 
       nRead = hb_fsReadLarge( fhnd, buffer, nToRead );
@@ -574,7 +574,7 @@ HB_FUNC( HB_PREAD )
    char * buffer;
    HB_SIZE nSize;
 
-   if( hPipe != FS_ERROR && pBuffer && HB_ISBYREF(2) && hb_itemGetWriteCL( pBuffer, &buffer, &nSize ) )
+   if( hPipe != FS_ERROR && pBuffer && HB_ISBYREF(2) && hb_itemGetWriteCL(pBuffer, &buffer, &nSize) )
    {
       HB_ERRCODE uiError = 0;
 

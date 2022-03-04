@@ -56,7 +56,7 @@ HB_FUNC( HB_FNAMESPLIT )
    hb_storc( pFileName->szExtension, 4 );
    hb_storc( pFileName->szDrive, 5 );
 
-   hb_xfree( pFileName );
+   hb_xfree(pFileName);
 }
 
 HB_FUNC( HB_FNAMEMERGE )

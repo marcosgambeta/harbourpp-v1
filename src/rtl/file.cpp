@@ -105,7 +105,7 @@ HB_BOOL hb_fsIsDirectory( const char * pszFileName )
 
    if( pszFree )
    {
-      hb_xfree( pszFree );
+      hb_xfree(pszFree);
    }
 
    return bResult;

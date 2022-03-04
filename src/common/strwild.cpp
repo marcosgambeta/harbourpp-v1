@@ -81,15 +81,15 @@ static HB_BOOL hb_strMatchWildRaw( const char * szString, const char * szPattern
             {
                if( ( nBufSize <<= 1 ) == ( HB_MAX_WILDPATTERN << 1 ) )
                {
-                  nAnyPosP = static_cast<HB_SIZE*>( hb_xgrab( nBufSize * sizeof(HB_SIZE) ) );
-                  nAnyPosV = static_cast<HB_SIZE*>( hb_xgrab( nBufSize * sizeof(HB_SIZE) ) );
+                  nAnyPosP = static_cast<HB_SIZE*>( hb_xgrab(nBufSize * sizeof(HB_SIZE)) );
+                  nAnyPosV = static_cast<HB_SIZE*>( hb_xgrab(nBufSize * sizeof(HB_SIZE)) );
                   memcpy( nAnyPosP, pnBufPosP, HB_MAX_WILDPATTERN * sizeof(HB_SIZE) );
                   memcpy( nAnyPosV, pnBufPosV, HB_MAX_WILDPATTERN * sizeof(HB_SIZE) );
                }
                else
                {
-                  nAnyPosP = static_cast<HB_SIZE*>( hb_xrealloc( nAnyPosP, nBufSize * sizeof(HB_SIZE) ) );
-                  nAnyPosV = static_cast<HB_SIZE*>( hb_xrealloc( nAnyPosV, nBufSize * sizeof(HB_SIZE) ) );
+                  nAnyPosP = static_cast<HB_SIZE*>( hb_xrealloc(nAnyPosP, nBufSize * sizeof(HB_SIZE)) );
+                  nAnyPosV = static_cast<HB_SIZE*>( hb_xrealloc(nAnyPosV, nBufSize * sizeof(HB_SIZE)) );
                }
             }
             nAnyPosP[ nAny ] = nPosP;
@@ -126,8 +126,8 @@ static HB_BOOL hb_strMatchWildRaw( const char * szString, const char * szPattern
    }
    if( nBufSize > HB_MAX_WILDPATTERN )
    {
-      hb_xfree( nAnyPosP );
-      hb_xfree( nAnyPosV );
+      hb_xfree(nAnyPosP);
+      hb_xfree(nAnyPosV);
    }
    return fMatch;
 }
@@ -183,15 +183,15 @@ static HB_BOOL hb_strMatchWildCDP( const char * szString, const char * szPattern
                {
                   if( ( nBufSize <<= 1 ) == ( HB_MAX_WILDPATTERN << 1 ) )
                   {
-                     nAnyPosP = static_cast<HB_SIZE*>( hb_xgrab( nBufSize * sizeof(HB_SIZE) ) );
-                     nAnyPosV = static_cast<HB_SIZE*>( hb_xgrab( nBufSize * sizeof(HB_SIZE) ) );
+                     nAnyPosP = static_cast<HB_SIZE*>( hb_xgrab(nBufSize * sizeof(HB_SIZE)) );
+                     nAnyPosV = static_cast<HB_SIZE*>( hb_xgrab(nBufSize * sizeof(HB_SIZE)) );
                      memcpy( nAnyPosP, pnBufPosP, HB_MAX_WILDPATTERN * sizeof(HB_SIZE) );
                      memcpy( nAnyPosV, pnBufPosV, HB_MAX_WILDPATTERN * sizeof(HB_SIZE) );
                   }
                   else
                   {
-                     nAnyPosP = static_cast<HB_SIZE*>( hb_xrealloc( nAnyPosP, nBufSize * sizeof(HB_SIZE) ) );
-                     nAnyPosV = static_cast<HB_SIZE*>( hb_xrealloc( nAnyPosV, nBufSize * sizeof(HB_SIZE) ) );
+                     nAnyPosP = static_cast<HB_SIZE*>( hb_xrealloc(nAnyPosP, nBufSize * sizeof(HB_SIZE)) );
+                     nAnyPosV = static_cast<HB_SIZE*>( hb_xrealloc(nAnyPosV, nBufSize * sizeof(HB_SIZE)) );
                   }
                }
                nAnyPosP[ nAny ] = nPP;
@@ -229,8 +229,8 @@ static HB_BOOL hb_strMatchWildCDP( const char * szString, const char * szPattern
    }
    if( nBufSize > HB_MAX_WILDPATTERN )
    {
-      hb_xfree( nAnyPosP );
-      hb_xfree( nAnyPosV );
+      hb_xfree(nAnyPosP);
+      hb_xfree(nAnyPosV);
    }
    return fMatch;
 }

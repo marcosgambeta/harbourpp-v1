@@ -1401,7 +1401,7 @@ static void hb_compPCodeEnumAssignedUnused( HB_COMP_DECL, PHB_HFUNC pFunc, PHB_O
    HB_SIZE nPos = 0, nLastPos = 0;
    HB_USHORT usLine = 0;
 
-   pMap = static_cast<HB_BYTE*>( hb_xgrab( pFunc->nPCodePos ) );
+   pMap = static_cast<HB_BYTE*>( hb_xgrab(pFunc->nPCodePos) );
 
    while( nPos < pFunc->nPCodePos )
    {
@@ -1530,7 +1530,7 @@ static void hb_compPCodeEnumAssignedUnused( HB_COMP_DECL, PHB_HFUNC pFunc, PHB_O
       nLastPos = nPos;
       nPos += hb_compPCodeSize( pFunc, nPos );
    }
-   hb_xfree( pMap );
+   hb_xfree(pMap);
 }
 
 static void hb_compPCodeEnumRenumberLocals( PHB_HFUNC pFunc, PHB_OPT_LOCAL pLocals )
@@ -1779,7 +1779,7 @@ void hb_compPCodeTraceOptimizer( HB_COMP_DECL )
 
                /* Delete pVar from the linked list */
                *ppVar = pVar->pNext;
-               hb_xfree( pVar );
+               hb_xfree(pVar);
                pVar = *ppVar;
             }
             usLocalCount++;
@@ -1787,5 +1787,5 @@ void hb_compPCodeTraceOptimizer( HB_COMP_DECL )
          hb_compPCodeEnumRenumberLocals( pFunc, pLocals );
       }
    }
-   hb_xfree( pLocals );
+   hb_xfree(pLocals);
 }

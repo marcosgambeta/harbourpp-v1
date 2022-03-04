@@ -262,7 +262,7 @@ static PHB_TASKMTX hb_taskMutexNew( void )
 {
    PHB_TASKMTX pMutex;
 
-   pMutex = static_cast<PHB_TASKMTX>( hb_xgrab( sizeof(HB_TASKMTX) ) );
+   pMutex = static_cast<PHB_TASKMTX>( hb_xgrab(sizeof(HB_TASKMTX)) );
    pMutex->count = 0;
    pMutex->task = nullptr;
    pMutex->lockers = nullptr;
@@ -276,7 +276,7 @@ static PHB_TASKCOND hb_taskCondNew( void )
 {
    PHB_TASKCOND pCond;
 
-   pCond = static_cast<PHB_TASKCOND>( hb_xgrab( sizeof(HB_TASKCOND) ) );
+   pCond = static_cast<PHB_TASKCOND>( hb_xgrab(sizeof(HB_TASKCOND)) );
    pCond->waiters = nullptr;
    pCond->mutex = nullptr;
    pCond->next = s_condList;
@@ -352,9 +352,9 @@ static void hb_taskFree( PHB_TASKINFO pTask )
    hb_taskUnlink( &s_taskList, pTask );
    if( pTask->stack )
    {
-      hb_xfree( pTask->stack );
+      hb_xfree(pTask->stack);
    }
-   hb_xfree( pTask );
+   hb_xfree(pTask);
 }
 
 static void hb_taskFinalize( PHB_TASKINFO pTask )
@@ -515,7 +515,7 @@ static PHB_TASKINFO hb_taskNew( long stack_size )
    }
 
    pTask = static_cast<PHB_TASKINFO>( hb_xgrabz( sizeof(HB_TASKINFO) ) );
-   pTask->stack = static_cast<char*>( hb_xgrab( stack_size ) );
+   pTask->stack = static_cast<char*>( hb_xgrab(stack_size) );
 
    new_size = static_cast<HB_PTRUINT>( pTask->stack ) + stack_size;
    new_size &= ~ static_cast<HB_PTRUINT>( HB_TASK_STACK_ALIGN - 1 );
@@ -590,14 +590,14 @@ void hb_taskExit( void )
       {
          PHB_TASKMTX pMutex = s_mutexList;
          s_mutexList = pMutex->next;
-         hb_xfree( pMutex );
+         hb_xfree(pMutex);
       }
       /* release all conditional variables */
       while( s_condList )
       {
          PHB_TASKCOND pCond = s_condList;
          s_condList = pCond->next;
-         hb_xfree( pCond );
+         hb_xfree(pCond);
       }
    }
 }
@@ -1172,7 +1172,7 @@ void hb_taskDestroyMutex( void ** pMutexPtr )
             {
                hb_errInternal( HB_EI_ERRUNRECOV, "TaskDestroyMutex: lockers", nullptr, nullptr );
             }
-            hb_xfree( pMutex );
+            hb_xfree(pMutex);
             return;
          }
          pMutexLst = &( *pMutexLst )->next;
@@ -1198,7 +1198,7 @@ void hb_taskDestroyCond( void ** pCondPtr )
             {
                hb_errInternal( HB_EI_ERRUNRECOV, "TaskDestroyCond: waiters", nullptr, nullptr );
             }
-            hb_xfree( pCond );
+            hb_xfree(pCond);
             return;
          }
          pCondLst = &( *pCondLst )->next;

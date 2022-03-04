@@ -329,15 +329,15 @@ static void hb_gt_std_Exit( PHB_GT pGT )
 #endif
       if( pGTSTD->iLineBufSize > 0 )
       {
-         hb_xfree( pGTSTD->sLineBuf );
+         hb_xfree(pGTSTD->sLineBuf);
       }
       if( pGTSTD->nTransBufSize > 0 )
       {
-         hb_xfree( pGTSTD->sTransBuf );
+         hb_xfree(pGTSTD->sTransBuf);
       }
       if( pGTSTD->szCrLf )
       {
-         hb_xfree( pGTSTD->szCrLf );
+         hb_xfree(pGTSTD->szCrLf);
       }
       delete pGTSTD;
    }
@@ -741,7 +741,7 @@ static void hb_gt_std_Refresh( PHB_GT pGT )
 
    if( pGTSTD->iLineBufSize != iSize )
    {
-      pGTSTD->sLineBuf = static_cast<char*>( hb_xrealloc( pGTSTD->sLineBuf, iSize ) );
+      pGTSTD->sLineBuf = static_cast<char*>( hb_xrealloc(pGTSTD->sLineBuf, iSize) );
       pGTSTD->iLineBufSize = iSize;
    }
    pGTSTD->fFullRedraw = HB_FALSE;

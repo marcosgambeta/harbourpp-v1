@@ -240,7 +240,7 @@ static void hb_gt_wvt_Free( PHB_GTWVT pWVT )
 
       pWVT->pMenu = pMenu->pNext;
       hb_strfree( pWVT->hSelectCopy );
-      hb_xfree( pMenu );
+      hb_xfree(pMenu);
    }
 
    if( pWVT->hSelectCopy )
@@ -296,12 +296,12 @@ static void hb_gt_wvt_Free( PHB_GTWVT pWVT )
 
    if( pWVT->TextLine )
    {
-      hb_xfree( pWVT->TextLine );
+      hb_xfree(pWVT->TextLine);
    }
 
    if( pWVT->FixedSize )
    {
-      hb_xfree( pWVT->FixedSize );
+      hb_xfree(pWVT->FixedSize);
    }
 
    delete pWVT;
@@ -327,8 +327,8 @@ static PHB_GTWVT hb_gt_wvt_New( PHB_GT pGT, HINSTANCE hInstance, int iCmdShow )
    pWVT->ROWS              = WVT_DEFAULT_ROWS;
    pWVT->COLS              = WVT_DEFAULT_COLS;
 
-   pWVT->TextLine          = static_cast<TCHAR*>( hb_xgrab( pWVT->COLS * sizeof(TCHAR) ) );
-   pWVT->FixedSize         = static_cast<int*>( hb_xgrab( pWVT->COLS * sizeof(int) ) );
+   pWVT->TextLine          = static_cast<TCHAR*>( hb_xgrab(pWVT->COLS * sizeof(TCHAR)) );
+   pWVT->FixedSize         = static_cast<int*>( hb_xgrab(pWVT->COLS * sizeof(int)) );
 
    pWVT->COLORS[ 0 ]       = BLACK;
    pWVT->COLORS[ 1 ]       = BLUE;
@@ -2190,8 +2190,8 @@ static HB_BOOL hb_gt_wvt_SetWindowSize( PHB_GTWVT pWVT, int iRows, int iCols )
    {
       if( pWVT->COLS != iCols )
       {
-         pWVT->TextLine = static_cast<TCHAR*>( hb_xrealloc( pWVT->TextLine, iCols * sizeof(TCHAR) ) );
-         pWVT->FixedSize = static_cast<int*>( hb_xrealloc( pWVT->FixedSize, iCols * sizeof(int) ) );
+         pWVT->TextLine = static_cast<TCHAR*>( hb_xrealloc(pWVT->TextLine, iCols * sizeof(TCHAR)) );
+         pWVT->FixedSize = static_cast<int*>( hb_xrealloc(pWVT->FixedSize, iCols * sizeof(int)) );
       }
       if( pWVT->hWnd && ( iRows != pWVT->ROWS || iCols != pWVT->COLS ) )
       {
@@ -2442,7 +2442,7 @@ static void hb_gt_wvt_MouseEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
                rect = hb_gt_wvt_GetColRowFromXYRect( pWVT, rect );
 
                nSize = ( rect.bottom - rect.top + 1 ) * ( rect.right - rect.left + 1 + 2 );
-               sBuffer = static_cast<TCHAR*>( hb_xgrab( nSize * sizeof(TCHAR) + 1 ) );
+               sBuffer = static_cast<TCHAR*>( hb_xgrab(nSize * sizeof(TCHAR) + 1) );
 
                for( n = 0, row = rect.top; row <= rect.bottom; row++ )
                {
@@ -2477,7 +2477,7 @@ static void hb_gt_wvt_MouseEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
                   hb_gt_winapi_setClipboard( CF_UNICODETEXT, pItem );
                   hb_itemRelease(pItem);
                }
-               hb_xfree( sBuffer );
+               hb_xfree(sBuffer);
 #else
                if( n > 0 )
                {
@@ -2487,7 +2487,7 @@ static void hb_gt_wvt_MouseEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
                }
                else
                {
-                  hb_xfree( sBuffer );
+                  hb_xfree(sBuffer);
                }
 #endif
             }
@@ -4450,14 +4450,14 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                   {
                      PHB_GTWVT_MNU pFree = * pMenu;
                      * pMenu = ( * pMenu )->pNext;
-                     hb_xfree( pFree );
+                     hb_xfree(pFree);
                   }
                }
                else
                {
                   if( fAdd )
                   {
-                     * pMenu = static_cast<PHB_GTWVT_MNU>( hb_xgrab( sizeof(HB_GTWVT_MNU) ) );
+                     * pMenu = static_cast<PHB_GTWVT_MNU>( hb_xgrab(sizeof(HB_GTWVT_MNU)) );
                      ( * pMenu )->iKey   = iVal;
                      ( * pMenu )->iEvent = iEvent + 1;
                      ( * pMenu )->pNext  = nullptr;

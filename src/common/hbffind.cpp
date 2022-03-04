@@ -353,7 +353,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
             {
                lpFileMask = HB_CHARDUP( pFileName->szPath );
             }
-            hb_xfree( pFileName );
+            hb_xfree(pFileName);
          }
          bFound = GetVolumeInformation( lpFileMask, lpVolName, HB_SIZEOFARRAY( lpVolName ), nullptr, nullptr, nullptr, nullptr, 0 ) != 0;
          if( bFound )
@@ -367,11 +367,11 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
          }
          if( lpFileMask )
          {
-            hb_xfree( lpFileMask );
+            hb_xfree(lpFileMask);
          }
          if( mask )
          {
-            hb_xfree( mask );
+            hb_xfree(mask);
          }
       }
 
@@ -383,7 +383,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
             ffind->bFirst = HB_FALSE;
             info->dwAttr    = static_cast<DWORD>( hb_fsAttrToRaw( ffind->attrmask ) );
             info->hFindFile = FindFirstFile( lpFileMask, &info->pFindFileData );
-            hb_xfree( lpFileMask );
+            hb_xfree(lpFileMask);
 
             if( ( info->hFindFile != INVALID_HANDLE_VALUE ) && _HB_WIN_MATCH() )
             {
@@ -623,7 +623,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
          if( pszFree )
          {
             hb_strncpy( ffind->szName, pszResult, sizeof(ffind->szName) - 1 );
-            hb_xfree( pszFree );
+            hb_xfree(pszFree);
          }
       }
 #endif
@@ -699,7 +699,7 @@ void hb_fsFindClose( PHB_FFIND ffind )
    {
       if( ffind->pszFree )
       {
-         hb_xfree( ffind->pszFree );
+         hb_xfree(ffind->pszFree);
       }
 
       /* Do platform dependent cleanup */
@@ -736,9 +736,9 @@ void hb_fsFindClose( PHB_FFIND ffind )
             hb_vmLock();
          }
 
-         hb_xfree( info );
+         hb_xfree(info);
       }
 
-      hb_xfree( ffind );
+      hb_xfree(ffind);
    }
 }

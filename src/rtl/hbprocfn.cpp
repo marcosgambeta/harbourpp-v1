@@ -165,7 +165,7 @@ HB_FUNC( HB_PROCESSRUN )
       {
          if( ! hb_storclen_buffer( pStdOutBuf, nStdOut, 3 ) )
          {
-            hb_xfree( pStdOutBuf );
+            hb_xfree(pStdOutBuf);
          }
       }
       else if( pStdOut )
@@ -177,7 +177,7 @@ HB_FUNC( HB_PROCESSRUN )
       {
          if( ! hb_storclen_buffer( pStdErrBuf, nStdErr, 4 ) )
          {
-            hb_xfree( pStdErrBuf );
+            hb_xfree(pStdErrBuf);
          }
       }
       else if( pStdErr && pStdOut != pStdErr )

@@ -60,7 +60,7 @@ static void bufadd( BUFFERTYPE * pBuf, const char * pAdd, HB_SIZE nLen )
    if( pBuf->nLen + nLen >= pBuf->nMax )
    {
       pBuf->nMax += ( pBuf->nMax >> 1 ) + nLen;
-      pBuf->pData = static_cast<char*>( hb_xrealloc( pBuf->pData, pBuf->nMax ) );
+      pBuf->pData = static_cast<char*>( hb_xrealloc(pBuf->pData, pBuf->nMax) );
    }
    memcpy( pBuf->pData + pBuf->nLen, pAdd, nLen );
    pBuf->nLen += nLen;
@@ -107,7 +107,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
 
    buffer.nMax = nSize + 16;
    buffer.nLen = 0;
-   buffer.pData = static_cast<char*>( hb_xgrab( buffer.nMax ) );
+   buffer.pData = static_cast<char*>( hb_xgrab(buffer.nMax) );
    buffer.pData[ 0 ] = '\0';
 
    iParam = 0;
@@ -245,10 +245,10 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
             if( pItem && HB_IS_NUMERIC(pItem) )
             {
                iSize = sizeof(HB_MAXINT) * 3 + 1;
-               pStr2 = pStr = static_cast<char*>( hb_xgrab( iSize + 1 ) );
+               pStr2 = pStr = static_cast<char*>( hb_xgrab(iSize + 1) );
                if( *pFmt == 'd' )
                {
-                  hb_itemStrBuf( pStr, pItem, iSize, 0 );
+                  hb_itemStrBuf(pStr, pItem, iSize, 0);
                }
                else
                {
@@ -387,7 +387,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
 
             if( pStr )
             {
-               hb_xfree( pStr );
+               hb_xfree(pStr);
             }
             break;
          }
@@ -422,13 +422,13 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
                   iSize = iD + 2;
                }
 
-               pStr2 = pStr = static_cast<char*>( hb_xgrab( iSize + 1 ) );
-               hb_itemStrBuf( pStr, pItem, iSize, iD );
+               pStr2 = pStr = static_cast<char*>( hb_xgrab(iSize + 1) );
+               hb_itemStrBuf(pStr, pItem, iSize, iD);
 
                if( pStr[ 0 ] == '*' && iSize < 255 )
                {
-                  pStr2 = pStr = static_cast<char*>( hb_xrealloc( pStr, 256 ) );
-                  hb_itemStrBuf( pStr, pItem, 255, iD );
+                  pStr2 = pStr = static_cast<char*>( hb_xrealloc(pStr, 256) );
+                  hb_itemStrBuf(pStr, pItem, 255, iD);
                }
                while( *pStr2 == ' ' )
                {
@@ -531,7 +531,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
 
             if( pStr )
             {
-               hb_xfree( pStr );
+               hb_xfree(pStr);
             }
             break;
          }
@@ -579,7 +579,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
    }
 
    pItemReturn = hb_itemPutCL(pItemReturn, buffer.pData, buffer.nLen);
-   hb_xfree( buffer.pData );
+   hb_xfree(buffer.pData);
    return pItemReturn;
 }
 
@@ -594,7 +594,7 @@ HB_FUNC( HB_STRFORMAT )
 
       if( iParams > 1 )
       {
-         pItemArray = static_cast<PHB_ITEM*>( hb_xgrab( ( iParams - 1 ) * sizeof(PHB_ITEM) ) );
+         pItemArray = static_cast<PHB_ITEM*>( hb_xgrab(( iParams - 1 ) * sizeof(PHB_ITEM)) );
          for( int i = 1; i < iParams; i++ )
          {
             pItemArray[ i - 1 ] = hb_param(i + 1, HB_IT_ANY);
@@ -605,7 +605,7 @@ HB_FUNC( HB_STRFORMAT )
 
       if( iParams > 1 )
       {
-         hb_xfree( pItemArray );
+         hb_xfree(pItemArray);
       }
    }
    else

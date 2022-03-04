@@ -73,7 +73,7 @@ static PHB_EXPR hb_compExprReducePlusStrings( PHB_EXPR pLeft, PHB_EXPR pRight, H
 {
    if( pLeft->value.asString.dealloc )
    {
-      pLeft->value.asString.string = static_cast<char*>( hb_xrealloc( pLeft->value.asString.string, pLeft->nLength + pRight->nLength + 1 ) );
+      pLeft->value.asString.string = static_cast<char*>( hb_xrealloc(pLeft->value.asString.string, pLeft->nLength + pRight->nLength + 1) );
       memcpy( pLeft->value.asString.string + pLeft->nLength, pRight->value.asString.string, pRight->nLength );
       pLeft->nLength += pRight->nLength;
       pLeft->value.asString.string[ pLeft->nLength ] = '\0';
@@ -81,7 +81,7 @@ static PHB_EXPR hb_compExprReducePlusStrings( PHB_EXPR pLeft, PHB_EXPR pRight, H
    else
    {
       char * szString;
-      szString = static_cast<char*>( hb_xgrab( pLeft->nLength + pRight->nLength + 1 ) );
+      szString = static_cast<char*>( hb_xgrab(pLeft->nLength + pRight->nLength + 1) );
       memcpy( szString, pLeft->value.asString.string, pLeft->nLength );
       memcpy( szString + pLeft->nLength, pRight->value.asString.string, pRight->nLength );
       pLeft->nLength += pRight->nLength;
@@ -105,7 +105,7 @@ static PHB_EXPR hb_compExprReduceMinusStrings( PHB_EXPR pLeft, PHB_EXPR pRight, 
 
    if( pLeft->value.asString.dealloc )
    {
-      pLeft->value.asString.string = static_cast<char*>( hb_xrealloc( pLeft->value.asString.string, pLeft->nLength + pRight->nLength + 1 ) );
+      pLeft->value.asString.string = static_cast<char*>( hb_xrealloc(pLeft->value.asString.string, pLeft->nLength + pRight->nLength + 1) );
       memcpy( pLeft->value.asString.string + nLen, pRight->value.asString.string, pRight->nLength );
       memset( pLeft->value.asString.string + nLen + pRight->nLength, ' ', pLeft->nLength - nLen );
       pLeft->nLength += pRight->nLength;
@@ -114,7 +114,7 @@ static PHB_EXPR hb_compExprReduceMinusStrings( PHB_EXPR pLeft, PHB_EXPR pRight, 
    else
    {
       char * szString;
-      szString = static_cast<char*>( hb_xgrab( pLeft->nLength + pRight->nLength + 1 ) );
+      szString = static_cast<char*>( hb_xgrab(pLeft->nLength + pRight->nLength + 1) );
       memcpy( szString, pLeft->value.asString.string, nLen );
       memcpy( szString + nLen, pRight->value.asString.string, pRight->nLength );
       memset( szString + nLen + pRight->nLength, ' ', pLeft->nLength - nLen );
@@ -2453,7 +2453,7 @@ HB_BOOL hb_compExprReduceUPPER( PHB_EXPR pSelf, HB_COMP_DECL )
                }
                else
                {
-                  szValue = static_cast<char*>( hb_xgrab( pArg->nLength + 1 ) );
+                  szValue = static_cast<char*>( hb_xgrab(pArg->nLength + 1) );
                   memcpy( szValue, pArg->value.asString.string, pArg->nLength + 1 );
                   fDealloc = HB_TRUE;
                }
