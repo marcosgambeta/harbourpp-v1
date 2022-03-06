@@ -60,7 +60,7 @@ static HB_CDP_GET_FUNC( UTF8_get )
    HB_SIZE nIndex = *pnIndex;
    int n = 0;
 
-   HB_SYMBOL_UNUSED( cdp );
+   HB_SYMBOL_UNUSED(cdp);
 
    *wc = 0;
    while( nIndex < nLen )
@@ -87,7 +87,7 @@ static HB_CDP_PUT_FUNC( UTF8_put )
 {
    int i = hb_cdpUTF8CharSize( wc );
 
-   HB_SYMBOL_UNUSED( cdp );
+   HB_SYMBOL_UNUSED(cdp);
 
    if( *pnIndex + i <= nLen )
    {
@@ -100,7 +100,7 @@ static HB_CDP_PUT_FUNC( UTF8_put )
 
 static HB_CDP_LEN_FUNC( UTF8_len )
 {
-   HB_SYMBOL_UNUSED( cdp );
+   HB_SYMBOL_UNUSED(cdp);
 
    return hb_cdpUTF8CharSize( wc );
 }
@@ -109,7 +109,7 @@ static HB_CDP_UPPER_FUNC( UTF8_upper )
 {
    HB_WCHAR wcUP;
 
-   HB_SYMBOL_UNUSED( cdp );
+   HB_SYMBOL_UNUSED(cdp);
 
    wcUP = s_uc_upper( wc );
    return wcUP ? wcUP : wc;
@@ -119,7 +119,7 @@ static HB_CDP_LOWER_FUNC( UTF8_lower )
 {
    HB_WCHAR wcLO;
 
-   HB_SYMBOL_UNUSED( cdp );
+   HB_SYMBOL_UNUSED(cdp);
 
    wcLO = s_uc_lower( wc );
    return wcLO ? wcLO : wc;
@@ -127,7 +127,7 @@ static HB_CDP_LOWER_FUNC( UTF8_lower )
 
 static HB_CDP_FLAGS_FUNC( UTF8_flags )
 {
-   HB_SYMBOL_UNUSED( cdp );
+   HB_SYMBOL_UNUSED(cdp);
 
    return s_uc_flags( wc );
 }
@@ -172,7 +172,7 @@ static HB_CDP_CMP_FUNC( UTF8_cmp )
 
    HB_SIZE nLen = nLenFirst < nLenSecond ? nLenFirst : nLenSecond;
 
-   HB_SYMBOL_UNUSED( cdp );
+   HB_SYMBOL_UNUSED(cdp);
 
    iRet = memcmp( szFirst, szSecond, nLen );
    if( iRet == 0 )
@@ -293,8 +293,8 @@ static void hb_cp_init( PHB_CODEPAGE cdp )
       {
          flags[ i ] |= HB_CDP_LOWER;
       }
-      upper[ i ] = static_cast<HB_UCHAR>( HB_TOUPPER( i ) );
-      lower[ i ] = static_cast<HB_UCHAR>( HB_TOLOWER( i ) );
+      upper[ i ] = static_cast<HB_UCHAR>( HB_TOUPPER(i) );
+      lower[ i ] = static_cast<HB_UCHAR>( HB_TOLOWER(i) );
    }
 }
 

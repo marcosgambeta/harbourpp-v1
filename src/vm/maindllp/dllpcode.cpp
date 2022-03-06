@@ -140,9 +140,9 @@ BOOL WINAPI HB_DLL_ENTRY_POINT( HINSTANCE hInstance, DWORD dwReason, PVOID pvRes
    HB_TRACE( HB_TR_DEBUG, ( "DllEntryPoint(%p, %lu, %p)", hInstance, dwReason, pvReserved ) );
 #endif
 
-   HB_SYMBOL_UNUSED( hInstance );
-   HB_SYMBOL_UNUSED( dwReason );
-   HB_SYMBOL_UNUSED( pvReserved );
+   HB_SYMBOL_UNUSED(hInstance);
+   HB_SYMBOL_UNUSED(dwReason);
+   HB_SYMBOL_UNUSED(pvReserved);
 
    return TRUE;
 }
@@ -152,10 +152,10 @@ static PHB_SYMB s_dummy_vmProcessSymbols( PHB_SYMB pSymbols, HB_USHORT uiSymbols
                                           const char * szModuleName, HB_ULONG ulID,
                                           HB_USHORT uiPcodeVer )
 {
-   HB_SYMBOL_UNUSED( uiSymbols );
-   HB_SYMBOL_UNUSED( szModuleName );
-   HB_SYMBOL_UNUSED( ulID );
-   HB_SYMBOL_UNUSED( uiPcodeVer );
+   HB_SYMBOL_UNUSED(uiSymbols);
+   HB_SYMBOL_UNUSED(szModuleName);
+   HB_SYMBOL_UNUSED(ulID);
+   HB_SYMBOL_UNUSED(uiPcodeVer);
 
    return pSymbols;
 }
@@ -189,8 +189,8 @@ PHB_SYMB hb_vmProcessSymbols( PHB_SYMB pSymbols, HB_USHORT uiSymbols,
 
 static void s_dummy_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 {
-   HB_SYMBOL_UNUSED( pCode );
-   HB_SYMBOL_UNUSED( pSymbols );
+   HB_SYMBOL_UNUSED(pCode);
+   HB_SYMBOL_UNUSED(pSymbols);
 }
 
 static void s_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )

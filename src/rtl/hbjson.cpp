@@ -274,7 +274,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
       double dblValue = hb_itemGetNDDec(pValue, &iDec);
 
       hb_snprintf( buf, sizeof(buf), "%.*f", iDec, dblValue );
-      _hb_jsonCtxAdd( pCtx, buf, strlen( buf ) );
+      _hb_jsonCtxAdd( pCtx, buf, strlen(buf) );
    }
    else if( HB_IS_NIL(pValue) )
    {
@@ -525,7 +525,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
       }
       if( cdp && hb_vmCDP() != cdp )
       {
-         hb_itemPutStrLen( pValue, cdp, szDest, szHead - szDest );
+         hb_itemPutStrLen(pValue, cdp, szDest, szHead - szDest);
       }
       else
       {
@@ -608,17 +608,17 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
       }
       return szSource;
    }
-   else if( ! strncmp( szSource, "null", 4 ) )
+   else if( ! strncmp(szSource, "null", 4) )
    {
       hb_itemClear(pValue);
       return szSource + 4;
    }
-   else if( ! strncmp( szSource, "true", 4 ) )
+   else if( ! strncmp(szSource, "true", 4) )
    {
       hb_itemPutL(pValue, HB_TRUE);
       return szSource + 4;
    }
-   else if( ! strncmp( szSource, "false", 5 ) )
+   else if( ! strncmp(szSource, "false", 5) )
    {
       hb_itemPutL(pValue, HB_FALSE);
       return szSource + 5;
@@ -728,7 +728,7 @@ char * hb_jsonEncodeCP( PHB_ITEM pValue, HB_SIZE * pnLen, int iIndent, PHB_CODEP
    {
       pCtx->szEol = hb_conNewLine();
    }
-   pCtx->iEolLen = static_cast<int>( strlen( pCtx->szEol ) );
+   pCtx->iEolLen = static_cast<int>( strlen(pCtx->szEol) );
 
    _hb_jsonEncode( pValue, pCtx, 0, HB_FALSE, cdp );
    if( iIndent )

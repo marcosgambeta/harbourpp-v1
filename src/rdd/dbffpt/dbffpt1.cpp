@@ -513,7 +513,7 @@ static HB_ERRCODE hb_fptWriteGCitems( FPTAREAP pArea, LPMEMOGCTABLE pGCtable, HB
    int iStart, iStop;
 #endif
 
-   HB_SYMBOL_UNUSED( usItem );
+   HB_SYMBOL_UNUSED(usItem);
 
 #if 0
    if( usItem == 0 )
@@ -2613,7 +2613,7 @@ static HB_ERRCODE hb_fptReadBlobBlock( FPTAREAP pArea, PHB_ITEM pItem, PHB_FILE 
    }
 
    /* TODO: uiMode => BLOB_IMPORT_COMPRESS, BLOB_IMPORT_ENCRYPT */
-   HB_SYMBOL_UNUSED( uiMode );
+   HB_SYMBOL_UNUSED(uiMode);
 
    if( hb_fileReadAt( pArea->pMemoFile, buffer, 4, FPT_BLOCK_OFFSET( ulBlock ) ) != 4 )
    {
@@ -3415,7 +3415,7 @@ static HB_ERRCODE hb_fptLockForRead( FPTAREAP pArea, HB_USHORT uiIndex, HB_BOOL 
       }
    }
 #else
-   HB_SYMBOL_UNUSED( uiIndex );
+   HB_SYMBOL_UNUSED(uiIndex);
 #endif
    /* update any pending relations and reread record if necessary */
    errCode = SELF_DELETED( &pArea->area, &fLocked );
@@ -4038,7 +4038,7 @@ static HB_ERRCODE hb_fptStructSize( FPTAREAP pArea, HB_USHORT * uiSize )
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_fptStrucSize(%p, %p)", pArea, uiSize ) );
 #endif
-   HB_SYMBOL_UNUSED( pArea );
+   HB_SYMBOL_UNUSED(pArea);
 
    *uiSize = sizeof(FPTAREA);
    return HB_SUCCESS;
@@ -4225,7 +4225,7 @@ static HB_ERRCODE hb_fptCreateMemFile( FPTAREAP pArea, LPDBOPENINFO pCreateInfo 
       if( ! pArea->fTemporary )
       {
          /* create file name */
-         pFileName = hb_fsFNameSplit( pCreateInfo->abName );
+         pFileName = hb_fsFNameSplit(pCreateInfo->abName);
          if( ! pFileName->szExtension )
          {
             pItem = hb_itemPutNil(pItem);
@@ -4237,7 +4237,7 @@ static HB_ERRCODE hb_fptCreateMemFile( FPTAREAP pArea, LPDBOPENINFO pCreateInfo 
          }
          else
          {
-            hb_strncpy( szFileName, pCreateInfo->abName, sizeof(szFileName) - 1 );
+            hb_strncpy(szFileName, pCreateInfo->abName, sizeof(szFileName) - 1);
          }
          hb_xfree(pFileName);
       }
@@ -4293,7 +4293,7 @@ static HB_ERRCODE hb_fptCreateMemFile( FPTAREAP pArea, LPDBOPENINFO pCreateInfo 
          return HB_FAILURE;
       }
 
-      pArea->szMemoFileName = hb_strdup( static_cast<char*>( szFileName ) );
+      pArea->szMemoFileName = hb_strdup(static_cast<char*>( szFileName ));
    }
    /* else -> For zap file */
 
@@ -4440,7 +4440,7 @@ static HB_ERRCODE hb_fptOpenMemFile( FPTAREAP pArea, LPDBOPENINFO pOpenInfo )
    }
 
    /* create file name */
-   pFileName = hb_fsFNameSplit( pOpenInfo->abName );
+   pFileName = hb_fsFNameSplit(pOpenInfo->abName);
    if( ! pFileName->szExtension )
    {
       PHB_ITEM pItem = hb_itemNew(nullptr);
@@ -4453,7 +4453,7 @@ static HB_ERRCODE hb_fptOpenMemFile( FPTAREAP pArea, LPDBOPENINFO pOpenInfo )
    }
    else
    {
-      hb_strncpy( szFileName, pOpenInfo->abName, sizeof(szFileName) - 1 );
+      hb_strncpy(szFileName, pOpenInfo->abName, sizeof(szFileName) - 1);
    }
    hb_xfree(pFileName);
 
@@ -4495,7 +4495,7 @@ static HB_ERRCODE hb_fptOpenMemFile( FPTAREAP pArea, LPDBOPENINFO pOpenInfo )
       return HB_FAILURE;
    }
 
-   pArea->szMemoFileName = hb_strdup( static_cast<char*>( szFileName ) );
+   pArea->szMemoFileName = hb_strdup(static_cast<char*>( szFileName ));
 
    if( pArea->bMemoType == DB_MEMO_DBT )
    {
@@ -5086,7 +5086,7 @@ static HB_ERRCODE hb_fptInfo( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
          {
             PHB_FNAME pFileName;
 
-            pFileName = hb_fsFNameSplit( pArea->szMemoFileName );
+            pFileName = hb_fsFNameSplit(pArea->szMemoFileName);
             hb_itemPutC(pItem, pFileName->szExtension);
             hb_xfree(pFileName);
          }
@@ -5466,7 +5466,7 @@ static HB_ERRCODE hb_fptRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
          const char * szExt = hb_itemGetCPtr(pItem);
          char * szNewVal;
 
-         szNewVal = szExt[ 0 ] == '.' && szExt[ 1 ] ? hb_strdup( szExt ) : nullptr;
+         szNewVal = szExt[ 0 ] == '.' && szExt[ 1 ] ? hb_strdup(szExt) : nullptr;
 
          if( pData->szMemoExt[ 0 ] )
          {
@@ -5487,7 +5487,7 @@ static HB_ERRCODE hb_fptRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
          }
          if( szNewVal )
          {
-            hb_strncpy( pData->szMemoExt, szNewVal, sizeof(pData->szMemoExt) - 1 );
+            hb_strncpy(pData->szMemoExt, szNewVal, sizeof(pData->szMemoExt) - 1);
             hb_xfree(szNewVal);
          }
          break;
@@ -5786,7 +5786,7 @@ HB_FUNC_STATIC( DBFBLOB_GETFUNCTABLE )
 
 static void hb_dbffptRddInit( void * cargo )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
 
    if( hb_rddRegister( "DBF", RDT_FULL ) > 1 || hb_rddRegister( "DBFFPT", RDT_FULL ) > 1 || hb_rddRegister( "DBFBLOB", RDT_FULL ) > 1 )
    {

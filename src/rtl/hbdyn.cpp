@@ -354,7 +354,7 @@ static PHB_ITEM hb_u64ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
                }
                else
                {
-                  hb_itemPutStrLen( pItem, hb_setGetOSCP(), reinterpret_cast<const char*>( value.t.n64 ), nLen );
+                  hb_itemPutStrLen(pItem, hb_setGetOSCP(), reinterpret_cast<const char*>( value.t.n64 ), nLen);
                }
                break;
             case HB_DYN_ENC_UTF8:
@@ -765,7 +765,7 @@ static PHB_ITEM hb_u32ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
                }
                else
                {
-                  hb_itemPutStrLen( pItem, hb_setGetOSCP(), reinterpret_cast<const char*>( value.t.n32 ), nLen );
+                  hb_itemPutStrLen(pItem, hb_setGetOSCP(), reinterpret_cast<const char*>( value.t.n32 ), nLen);
                }
                break;
             case HB_DYN_ENC_UTF8:
@@ -1219,9 +1219,9 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
       }
    }
 #else
-   HB_SYMBOL_UNUSED( iFuncFlags );
-   HB_SYMBOL_UNUSED( iParams );
-   HB_SYMBOL_UNUSED( iFirst );
-   HB_SYMBOL_UNUSED( piArgFlags );
+   HB_SYMBOL_UNUSED(iFuncFlags);
+   HB_SYMBOL_UNUSED(iParams);
+   HB_SYMBOL_UNUSED(iFirst);
+   HB_SYMBOL_UNUSED(piArgFlags);
 #endif
 }

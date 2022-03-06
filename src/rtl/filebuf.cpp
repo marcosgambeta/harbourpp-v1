@@ -362,119 +362,119 @@ static HB_BOOL hb_fileTestLock( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nL
 
 static HB_BOOL s_fileAccept( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
 {
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
    return pszFileName && *pszFileName;
 }
 
 static HB_BOOL s_fileExists( PHB_FILE_FUNCS pFuncs, const char * pszFileName, char * pRetPath )
 {
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
    return pRetPath ? hb_spFileExists( pszFileName, pRetPath ) : hb_fsFileExists( pszFileName );
 }
 
 static HB_BOOL s_fileDelete( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
 {
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fsDelete( pszFileName );
 }
 
 static HB_BOOL s_fileRename( PHB_FILE_FUNCS pFuncs, const char * pszName, const char * pszNewName )
 {
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fsRename( pszName, pszNewName );
 }
 
 static HB_BOOL s_fileCopy( PHB_FILE_FUNCS pFuncs, const char * pszSrcFile, const char * pszDstFile )
 {
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fsCopy( pszSrcFile, pszDstFile );
 }
 
 static HB_BOOL s_fileDirExists( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
 {
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fsDirExists( pszDirName );
 }
 
 static HB_BOOL s_fileDirMake( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
 {
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fsMkDir( pszDirName );
 }
 
 static HB_BOOL s_fileDirRemove( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
 {
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fsRmDir( pszDirName );
 }
 
 static double s_fileDirSpace( PHB_FILE_FUNCS pFuncs, const char * pszDirName, HB_USHORT uiType )
 {
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fsDiskSpace( pszDirName, uiType );
 }
 
 static PHB_ITEM s_fileDirectory( PHB_FILE_FUNCS pFuncs, const char * pszDirSpec, const char * pszAttr )
 {
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fsDirectory( pszDirSpec, pszAttr, HB_TRUE );
 }
 
 static HB_BOOL s_fileTimeGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, long * plJulian, long * plMillisec )
 {
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fsGetFileTime( pszFileName, plJulian, plMillisec );
 }
 
 static HB_BOOL s_fileTimeSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, long lJulian, long lMillisec )
 {
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fsSetFileTime( pszFileName, lJulian, lMillisec );
 }
 
 static HB_BOOL s_fileAttrGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR * pnAttr )
 {
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fsGetAttr( pszFileName, pnAttr );
 }
 
 static HB_BOOL s_fileAttrSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR nAttr )
 {
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fsSetAttr( pszFileName, nAttr );
 }
 
 static HB_BOOL s_fileLink( PHB_FILE_FUNCS pFuncs, const char * pszExisting, const char * pszNewName )
 {
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fsLink( pszExisting, pszNewName );
 }
 
 static HB_BOOL s_fileLinkSym( PHB_FILE_FUNCS pFuncs, const char * pszTarget, const char * pszNewName )
 {
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fsLinkSym( pszTarget, pszNewName );
 }
 
 static char * s_fileLinkRead( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
 {
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fsLinkRead( pszFileName );
 }
@@ -495,7 +495,7 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
    int iMode;
    char * pszFile;
 
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
    fShared = ( nExFlags & ( FO_DENYREAD | FO_DENYWRITE | FO_EXCLUSIVE ) ) == 0;
    iMode = static_cast<int>( nExFlags & ( FO_READ | FO_WRITE | FO_READWRITE ) );
@@ -678,7 +678,7 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
    }
    if( ( nExFlags & FXO_COPYNAME ) != 0 && pFile )
    {
-      hb_strncpy( const_cast<char*>( pszFileName ), pszFile, HB_PATH_MAX - 1 );
+      hb_strncpy(const_cast<char*>( pszFileName ), pszFile, HB_PATH_MAX - 1);
    }
    if( pError )
    {
@@ -826,13 +826,13 @@ static int s_fileLockTest( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, i
 
 static HB_SIZE s_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_MAXINT nTimeout )
 {
-   HB_SYMBOL_UNUSED( nTimeout );
+   HB_SYMBOL_UNUSED(nTimeout);
    return hb_fsReadLarge( pFile->hFile, buffer, nSize );
 }
 
 static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * buffer, HB_SIZE nSize, HB_MAXINT nTimeout )
 {
-   HB_SYMBOL_UNUSED( nTimeout );
+   HB_SYMBOL_UNUSED(nTimeout);
    return hb_fsWriteLarge( pFile->hFile, buffer, nSize );
 }
 
@@ -868,8 +868,8 @@ static HB_BOOL s_fileEof( PHB_FILE pFile )
 
 static void s_fileFlush( PHB_FILE pFile, HB_BOOL fDirty )
 {
-   HB_SYMBOL_UNUSED( pFile );
-   HB_SYMBOL_UNUSED( fDirty );
+   HB_SYMBOL_UNUSED(pFile);
+   HB_SYMBOL_UNUSED(fDirty);
 }
 
 static void s_fileCommit( PHB_FILE pFile )
@@ -879,7 +879,7 @@ static void s_fileCommit( PHB_FILE pFile )
 
 static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
 {
-   HB_SYMBOL_UNUSED( pFile );
+   HB_SYMBOL_UNUSED(pFile);
 
    switch( iIndex )
    {
@@ -978,7 +978,7 @@ static HB_SIZE s_fileposRead( PHB_FILE pFilePos, void * buffer, HB_SIZE nSize, H
 {
    HB_SIZE nDone;
 
-   HB_SYMBOL_UNUSED( nTimeout );
+   HB_SYMBOL_UNUSED(nTimeout);
    nDone = _PHB_FILE->pFuncs->ReadAt( _PHB_FILE, buffer, nSize, _PHB_FILEPOS->seek_pos );
    _PHB_FILEPOS->seek_pos += nDone;
 
@@ -989,7 +989,7 @@ static HB_SIZE s_fileposWrite( PHB_FILE pFilePos, const void * buffer, HB_SIZE n
 {
    HB_SIZE nDone;
 
-   HB_SYMBOL_UNUSED( nTimeout );
+   HB_SYMBOL_UNUSED(nTimeout);
    nDone = _PHB_FILE->pFuncs->WriteAt( _PHB_FILE, buffer, nSize, _PHB_FILEPOS->seek_pos );
    _PHB_FILEPOS->seek_pos += nDone;
 

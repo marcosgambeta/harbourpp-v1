@@ -115,7 +115,7 @@ static HB_COUNTER s_initialize = 1;
 static void hb_inetLinuxSigusrHandle( int sig )
 {
    /* nothing to do */
-   HB_SYMBOL_UNUSED( sig );
+   HB_SYMBOL_UNUSED(sig);
 }
 #  endif
 #endif
@@ -1022,7 +1022,7 @@ static void s_inetRecvPattern( const char * const * patterns, int * patternsizes
 
 HB_FUNC( HB_INETRECVLINE )
 {
-   int iEolLen = static_cast<int>( strlen( s_inetCRLF ) );
+   int iEolLen = static_cast<int>( strlen(s_inetCRLF) );
 
    s_inetRecvPattern( &s_inetCRLF, &iEolLen, 1, 2 );
 }
@@ -1083,7 +1083,7 @@ HB_FUNC( HB_INETRECVENDBLOCK )
       else
       {
          patterns[ 0 ]     = s_inetCRLF;
-         patternsizes[ 0 ] = static_cast<int>( strlen( s_inetCRLF ) );
+         patternsizes[ 0 ] = static_cast<int>( strlen(s_inetCRLF) );
       }
       iPatternsCount = 1;
    }

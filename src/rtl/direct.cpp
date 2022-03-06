@@ -120,7 +120,7 @@ PHB_ITEM hb_fsDirectory( const char * pszDirSpec, const char * pszAttributes, HB
          /* CA-Cl*pper compatible behavior - add all file mask when
           * last character is directory or drive separator
           */
-         HB_SIZE nLen = strlen( pszDirSpec ) - 1;
+         HB_SIZE nLen = strlen(pszDirSpec) - 1;
 #ifdef HB_OS_HAS_DRIVE_LETTER
          if( pszDirSpec[ nLen ] == HB_OS_PATH_DELIM_CHR || pszDirSpec[ nLen ] == HB_OS_DRIVE_DELIM_CHR )
 #else

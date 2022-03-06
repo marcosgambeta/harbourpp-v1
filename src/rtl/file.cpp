@@ -74,7 +74,7 @@ HB_BOOL hb_fsIsDirectory( const char * pszFileName )
    char * pszFree = nullptr;
    int iLen;
 
-   iLen = static_cast<int>( strlen( pszFileName ) );
+   iLen = static_cast<int>( strlen(pszFileName) );
    while( iLen && strchr( HB_OS_PATH_DELIM_CHR_LIST, pszFileName[ iLen - 1 ] ) )
    {
       --iLen;
@@ -82,7 +82,7 @@ HB_BOOL hb_fsIsDirectory( const char * pszFileName )
 
    if( pszFileName[ iLen ] )
    {
-      pszFileName = pszFree = hb_strndup( pszFileName, iLen );
+      pszFileName = pszFree = hb_strndup(pszFileName, iLen);
    }
 
    if( iLen && iLen <= ( HB_PATH_MAX - 1 ) )

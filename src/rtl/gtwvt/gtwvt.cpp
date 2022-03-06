@@ -355,7 +355,7 @@ static PHB_GTWVT hb_gt_wvt_New( PHB_GT pGT, HINSTANCE hInstance, int iCmdShow )
    pWVT->fontWeight        = FW_NORMAL;
    pWVT->fontQuality       = DEFAULT_QUALITY;
    pWVT->fontAttribute     = WVT_DEFAULT_FONT_ATTR;
-   HB_STRNCPY( pWVT->fontFace, WVT_DEFAULT_FONT_NAME, HB_SIZEOFARRAY( pWVT->fontFace ) - 1 );
+   HB_STRNCPY(pWVT->fontFace, WVT_DEFAULT_FONT_NAME, HB_SIZEOFARRAY( pWVT->fontFace ) - 1);
 
    pWVT->CaretExist        = HB_FALSE;
    pWVT->CaretHidden       = HB_TRUE;
@@ -1637,7 +1637,7 @@ static HFONT hb_gt_wvt_GetFont( LPCTSTR lpFace, int iHeight, int iWidth, int iWe
       logfont.lfHeight         = iHeight;
       logfont.lfWidth          = iWidth < 0 ? -iWidth : iWidth;
 
-      HB_STRNCPY( logfont.lfFaceName, lpFace, HB_SIZEOFARRAY( logfont.lfFaceName ) - 1 );
+      HB_STRNCPY(logfont.lfFaceName, lpFace, HB_SIZEOFARRAY( logfont.lfFaceName ) - 1);
 
       return CreateFontIndirect( &logfont );
    }
@@ -3732,7 +3732,7 @@ static const char * hb_gt_wvt_Version( PHB_GT pGT, int iType )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvt_Version(%p,%d)", static_cast<void*>( pGT ), iType ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    if( iType == 0 )
    {
@@ -3754,7 +3754,7 @@ static int hb_gt_wvt_ReadKey( PHB_GT pGT, int iEventMask )
    int c = 0;
    HB_BOOL fKey;
 
-   HB_SYMBOL_UNUSED( iEventMask ); /* we ignore the eventmask! */
+   HB_SYMBOL_UNUSED(iEventMask); /* we ignore the eventmask! */
 
    pWVT = HB_GTWVT_GET( pGT );
 
@@ -3776,7 +3776,7 @@ static void hb_gt_wvt_Tone( PHB_GT pGT, double dFrequency, double dDuration )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvt_Tone(%p,%lf,%lf)", static_cast<void*>( pGT ), dFrequency, dDuration ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    hb_gt_BaseUnlock( pGT );
    hb_gt_winapi_tone( dFrequency, dDuration );
@@ -3791,7 +3791,7 @@ static HB_BOOL hb_gt_wvt_mouse_IsPresent( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvt_mouse_IsPresent(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    return HB_TRUE;
 }
@@ -3824,7 +3824,7 @@ static HB_BOOL hb_gt_wvt_mouse_ButtonState( PHB_GT pGT, int iButton )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvt_mouse_ButtonState(%p,%i)", static_cast<void*>( pGT ), iButton ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    switch( iButton )
    {
@@ -3844,7 +3844,7 @@ static int hb_gt_wvt_mouse_CountButton( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvt_mouse_CountButton(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    return GetSystemMetrics( SM_CMOUSEBUTTONS );
 }
@@ -4857,13 +4857,13 @@ static int hb_gt_wvt_gfx_Primitive( PHB_GT pGT, int iType, int iTop, int iLeft, 
 #if 0
 static void hb_gt_wvt_gfx_Text( PHB_GT pGT, int iTop, int iLeft, const char *cBuf, int iColor, int iSize, int iWidth )
 {
-   HB_SYMBOL_UNUSED( pGT );
-   HB_SYMBOL_UNUSED( iTop );
-   HB_SYMBOL_UNUSED( iLeft );
-   HB_SYMBOL_UNUSED( cBuf );
-   HB_SYMBOL_UNUSED( iColor );
-   HB_SYMBOL_UNUSED( iSize );
-   HB_SYMBOL_UNUSED( iWidth );
+   HB_SYMBOL_UNUSED(pGT);
+   HB_SYMBOL_UNUSED(iTop);
+   HB_SYMBOL_UNUSED(iLeft);
+   HB_SYMBOL_UNUSED(cBuf);
+   HB_SYMBOL_UNUSED(iColor);
+   HB_SYMBOL_UNUSED(iSize);
+   HB_SYMBOL_UNUSED(iWidth);
 }
 #endif
 

@@ -60,8 +60,8 @@ static HB_BOOL hb_strMatchWildRaw( const char * szString, const char * szPattern
    HB_SIZE * nAnyPosP = pnBufPosP, * nAnyPosV = pnBufPosV, nSize, nLen, nAny, nPosP, nPosV;
 
    nPosP = nPosV = nAny = 0;
-   nLen = strlen( szString );
-   nSize = strlen( szPattern );
+   nLen = strlen(szString);
+   nSize = strlen(szPattern);
    while( nPosP < nSize || ( fExact && ! fAny && nPosV < nLen ) )
    {
       if( nPosP < nSize && szPattern[ nPosP ] == '*' )
@@ -139,8 +139,8 @@ static HB_BOOL hb_strMatchWildCDP( const char * szString, const char * szPattern
    HB_SIZE * nAnyPosP = pnBufPosP, * nAnyPosV = pnBufPosV, nSize, nLen, nAny, nPosP, nPosV;
 
    nPosP = nPosV = nAny = 0;
-   nLen = strlen( szString );
-   nSize = strlen( szPattern );
+   nLen = strlen(szString);
+   nSize = strlen(szPattern);
    while( nPosP < nSize || ( fExact && ! fAny && nPosV < nLen ) )
    {
       if( nPosP < nSize && szPattern[ nPosP ] == '*' )

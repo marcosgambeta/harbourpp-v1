@@ -1823,16 +1823,16 @@ static LPTAGINFO hb_nsxTagNew( LPNSXINDEX pIndex, const char * szTagName,
    LPTAGINFO pTag;
 
    pTag = static_cast<LPTAGINFO>( hb_xgrabz( sizeof(TAGINFO) ) );
-   pTag->TagName = hb_strndup( szTagName, NSX_TAGNAME );
+   pTag->TagName = hb_strndup(szTagName, NSX_TAGNAME);
    pTag->pIndex = pIndex;
    if( szKeyExpr )
    {
-      pTag->KeyExpr = hb_strndup( szKeyExpr, NSX_MAXEXPLEN );
+      pTag->KeyExpr = hb_strndup(szKeyExpr, NSX_MAXEXPLEN);
    }
 
    if( pForExpr && szForExpr )
    {
-      pTag->ForExpr = hb_strndup( szForExpr, NSX_MAXEXPLEN );
+      pTag->ForExpr = hb_strndup(szForExpr, NSX_MAXEXPLEN);
    }
 
    pTag->nField = hb_rddFieldExpIndex( &pIndex->pArea->dbfarea.area, pTag->KeyExpr );
@@ -2027,7 +2027,7 @@ static void hb_nsxIndexTagAdd( LPNSXINDEX pIndex, LPTAGINFO pTag )
    {
       ++iTags;
       HB_PUT_LE_UINT16( pIndex->HeaderBuff.TagCount, iTags );
-      hb_strncpy( reinterpret_cast<char*>( pTagItem->TagName ), pTag->TagName, NSX_TAGNAME );
+      hb_strncpy(reinterpret_cast<char*>( pTagItem->TagName ), pTag->TagName, NSX_TAGNAME);
    }
    HB_PUT_LE_UINT32( pTagItem->TagOffset, pTag->HeadBlock );
    pIndex->Update = HB_TRUE;
@@ -2112,7 +2112,7 @@ static HB_ERRCODE hb_nsxTagHeaderSave( LPTAGINFO pTag )
       Header.Unique[ 0 ]  = pTag->UniqueKey ? 1 : 0;
       Header.Descend[ 0 ] = pTag->AscendKey ? 0 : 1;
 
-      iLen = static_cast<int>( strlen( pTag->KeyExpr ) );
+      iLen = static_cast<int>( strlen(pTag->KeyExpr) );
       if( iLen > NSX_MAXEXPLEN )
       {
          iLen = NSX_MAXEXPLEN;
@@ -2120,7 +2120,7 @@ static HB_ERRCODE hb_nsxTagHeaderSave( LPTAGINFO pTag )
       memcpy( Header.KeyExpr, pTag->KeyExpr, iLen );
       if( pTag->ForExpr )
       {
-         iLen = static_cast<int>( strlen( pTag->ForExpr ) );
+         iLen = static_cast<int>( strlen(pTag->ForExpr) );
          if( iLen > NSX_MAXEXPLEN )
          {
             iLen = NSX_MAXEXPLEN;
@@ -4158,7 +4158,7 @@ static void hb_nsxCreateFName( NSXAREAP pArea, const char * szBagName, HB_BOOL *
    PHB_ITEM pExt = nullptr;
    HB_BOOL fName = szBagName && *szBagName;
 
-   pFileName = hb_fsFNameSplit( fName ? szBagName : pArea->dbfarea.szDataFileName );
+   pFileName = hb_fsFNameSplit(fName ? szBagName : pArea->dbfarea.szDataFileName);
 
    if( szTagName )
    {
@@ -4196,7 +4196,7 @@ static void hb_nsxCreateFName( NSXAREAP pArea, const char * szBagName, HB_BOOL *
       }
       else
       {
-         PHB_FNAME pTableFileName = hb_fsFNameSplit( pArea->dbfarea.szDataFileName );
+         PHB_FNAME pTableFileName = hb_fsFNameSplit(pArea->dbfarea.szDataFileName);
 
          *fProd = pTableFileName->szName && hb_stricmp( pTableFileName->szName, pFileName->szName ) == 0;
          if( *fProd && pFileName->szExtension && ! pExt )
@@ -4227,7 +4227,7 @@ static LPNSXINDEX hb_nsxFindBag( NSXAREAP pArea, const char * szBagName )
    LPNSXINDEX pIndex;
    PHB_FNAME pSeek;
 
-   pSeek = hb_fsFNameSplit( szBagName );
+   pSeek = hb_fsFNameSplit(szBagName);
    if( ! pSeek->szName )
    {
       pSeek->szName = "";
@@ -4237,7 +4237,7 @@ static LPNSXINDEX hb_nsxFindBag( NSXAREAP pArea, const char * szBagName )
    while( pIndex )
    {
       HB_BOOL fFound;
-      PHB_FNAME pName = hb_fsFNameSplit( pIndex->IndexName );
+      PHB_FNAME pName = hb_fsFNameSplit(pIndex->IndexName);
       if( ! pName->szName )
       {
          pName->szName = "";
@@ -5803,7 +5803,7 @@ static void hb_nsxSortWritePage( LPNSXSORTINFO pSort )
       }
       else
       {
-         pSort->szTempFileName = hb_strdup( szName );
+         pSort->szTempFileName = hb_strdup(szName);
       }
    }
 
@@ -7311,7 +7311,7 @@ static HB_ERRCODE hb_nsxStructSize( NSXAREAP pArea, HB_USHORT * uiSize )
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_nsxStructSize(%p, %p)", static_cast<void*>( pArea ), static_cast<void*>( uiSize ) ) );
 #endif
-   HB_SYMBOL_UNUSED( pArea );
+   HB_SYMBOL_UNUSED(pArea);
 
    *uiSize = sizeof(NSXAREA);
    return HB_SUCCESS;
@@ -7677,14 +7677,14 @@ static HB_ERRCODE hb_nsxOrderCreate( NSXAREAP pArea, LPDBORDERCREATEINFO pOrderI
       }
 
       pIndex = hb_nsxIndexNew( pArea );
-      pIndex->IndexName = hb_strdup( szFileName );
+      pIndex->IndexName = hb_strdup(szFileName);
       pIndex->fReadonly = HB_FALSE;
       pIndex->fShared = fShared;
       pIndex->pFile = pFile;
       pIndex->fDelete = fTemporary;
       if( fTemporary )
       {
-         pIndex->RealName = hb_strdup( szSpFile );
+         pIndex->RealName = hb_strdup(szSpFile);
       }
       else
       {
@@ -8094,7 +8094,7 @@ static HB_ERRCODE hb_nsxOrderInfo( NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
             if( hb_itemType(pInfo->itmNewVal) & HB_IT_STRING )
             {
                const char * szForExpr = hb_itemGetCPtr(pInfo->itmNewVal);
-               if( pTag->ForExpr ? strncmp( pTag->ForExpr, szForExpr, NSX_MAXEXPLEN ) != 0 : *szForExpr )
+               if( pTag->ForExpr ? strncmp(pTag->ForExpr, szForExpr, NSX_MAXEXPLEN) != 0 : *szForExpr )
                {
                   PHB_ITEM pForItem = nullptr;
                   HB_BOOL fOK = *szForExpr == 0;
@@ -8124,7 +8124,7 @@ static HB_ERRCODE hb_nsxOrderInfo( NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
                      }
                      if( pForItem )
                      {
-                        pTag->ForExpr = hb_strndup( szForExpr, NSX_MAXEXPLEN );
+                        pTag->ForExpr = hb_strndup(szForExpr, NSX_MAXEXPLEN);
                         pTag->pForItem = pForItem;
                         pForItem = nullptr;
                      }
@@ -8150,7 +8150,7 @@ static HB_ERRCODE hb_nsxOrderInfo( NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
             break;
          case DBOI_BAGNAME:
          {
-            PHB_FNAME pFileName = hb_fsFNameSplit( pTag->pIndex->IndexName );
+            PHB_FNAME pFileName = hb_fsFNameSplit(pTag->pIndex->IndexName);
             pInfo->itmResult = hb_itemPutC(pInfo->itmResult, pFileName->szName);
             hb_xfree(pFileName);
             break;
@@ -8730,7 +8730,7 @@ static HB_ERRCODE hb_nsxOrderListAdd( NSXAREAP pArea, LPDBORDERINFO pOrderInfo )
       }
 
       pIndex = hb_nsxIndexNew( pArea );
-      pIndex->IndexName = hb_strdup( szFileName );
+      pIndex->IndexName = hb_strdup(szFileName);
       pIndex->fReadonly = fReadonly;
       pIndex->fShared = fShared;
       pIndex->pFile = pFile;
@@ -8942,11 +8942,11 @@ static HB_ERRCODE hb_nsxRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
          const char * szNew = hb_itemGetCPtr(pItem);
          char * szNewVal;
 
-         szNewVal = szNew[ 0 ] == '.' && szNew[ 1 ] ? hb_strdup( szNew ) : nullptr;
+         szNewVal = szNew[ 0 ] == '.' && szNew[ 1 ] ? hb_strdup(szNew) : nullptr;
          hb_itemPutC(pItem, pData->szIndexExt[ 0 ] ? pData->szIndexExt : NSX_INDEXEXT);
          if( szNewVal )
          {
-            hb_strncpy( pData->szIndexExt, szNewVal, HB_MAX_FILE_EXT );
+            hb_strncpy(pData->szIndexExt, szNewVal, HB_MAX_FILE_EXT);
             hb_xfree(szNewVal);
          }
          break;
@@ -9133,7 +9133,7 @@ HB_FUNC_STATIC( DBFNSX_GETFUNCTABLE )
 
 static void hb_dbfnsxRddInit( void * cargo )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
 
    if( hb_rddRegister( "DBF", RDT_FULL ) <= 1 )
    {

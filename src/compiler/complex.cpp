@@ -282,7 +282,7 @@ static const char * hb_comp_tokenString( YYSTYPE * yylval_ptr, HB_COMP_DECL, PHB
    yylval_ptr->valChar.dealloc = HB_FALSE;
    if( HB_PP_TOKEN_ALLOC( pToken->type ) )
    {
-      yylval_ptr->valChar.dealloc = pToken->len != strlen( pToken->value );
+      yylval_ptr->valChar.dealloc = pToken->len != strlen(pToken->value);
       pToken->value = hb_compIdentifierNew( HB_COMP_PARAM, pToken->value,
                yylval_ptr->valChar.dealloc ? HB_IDENT_COPY : HB_IDENT_FREE );
       if( ! yylval_ptr->valChar.dealloc )
@@ -906,7 +906,7 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
                                   pToken->pNext->len ) == 0 ) )
                {
                   pLex->iScope = iType == INIT ? HB_FS_INIT : ( iType == EXIT ? HB_FS_EXIT : HB_FS_STATIC );
-                  pLex->iState = HB_TOUPPER( pToken->pNext->value[ 0 ] ) == 'F' ? FUNCTION : PROCEDURE;
+                  pLex->iState = HB_TOUPPER(pToken->pNext->value[ 0 ]) == 'F' ? FUNCTION : PROCEDURE;
                   hb_pp_tokenGet( pLex->pPP );
                   return hb_comp_funcStart( HB_COMP_PARAM, yylval_ptr );
                }
@@ -1494,5 +1494,5 @@ void hb_compParserRun( HB_COMP_DECL )
 
 void hb_compParserStop( HB_COMP_DECL )
 {
-   HB_SYMBOL_UNUSED( HB_COMP_PARAM );
+   HB_SYMBOL_UNUSED(HB_COMP_PARAM);
 }

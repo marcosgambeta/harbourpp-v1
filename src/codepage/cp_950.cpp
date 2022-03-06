@@ -115,7 +115,7 @@ static HB_CDP_LEN_FUNC( CP950_len )
 {
    HB_USHORT b5 = s_ucs16_to_cp950( wc );
 
-   HB_SYMBOL_UNUSED( cdp );
+   HB_SYMBOL_UNUSED(cdp);
 
    return b5 ? 2 : 1;
 }
@@ -148,8 +148,8 @@ static void hb_cp_init( PHB_CODEPAGE cdp )
       {
          flags[ i ] |= HB_CDP_LOWER;
       }
-      upper[ i ] = static_cast<HB_UCHAR>( HB_TOUPPER( i ) );
-      lower[ i ] = static_cast<HB_UCHAR>( HB_TOLOWER( i ) );
+      upper[ i ] = static_cast<HB_UCHAR>( HB_TOUPPER(i) );
+      lower[ i ] = static_cast<HB_UCHAR>( HB_TOLOWER(i) );
    }
 
 #if 0

@@ -68,7 +68,7 @@ HB_FUNC( DO )
 
       if( HB_IS_STRING(pItem) )
       {
-         PHB_DYNS pDynSym = hb_dynsymFindName( hb_itemGetCPtr(pItem) );
+         PHB_DYNS pDynSym = hb_dynsymFindName(hb_itemGetCPtr(pItem));
 
          if( ! pDynSym )
          {

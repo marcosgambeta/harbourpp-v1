@@ -177,7 +177,7 @@ HB_FATTR hb_fsAttrFromRaw( HB_FATTR raw_attr )
 #else
 
    nAttr = 0;
-   HB_SYMBOL_UNUSED( raw_attr );
+   HB_SYMBOL_UNUSED(raw_attr);
 
 #endif
 
@@ -229,7 +229,7 @@ HB_FATTR hb_fsAttrToRaw( HB_FATTR nAttr )
 
 #else
 
-   HB_SYMBOL_UNUSED( nAttr );
+   HB_SYMBOL_UNUSED(nAttr);
    raw_attr = 0;
 
 #endif
@@ -250,7 +250,7 @@ HB_FATTR hb_fsAttrEncode( const char * szAttr )
    char ch;
    HB_FATTR nAttr = 0;
 
-   while( ( ch = static_cast<char>( HB_TOUPPER( *pos ) ) ) != '\0' )
+   while( ( ch = static_cast<char>( HB_TOUPPER(*pos) ) ) != '\0' )
    {
       switch( ch )
       {
@@ -342,10 +342,10 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
 
          if( ffind->pszFileMask && *ffind->pszFileMask )
          {
-            PHB_FNAME pFileName = hb_fsFNameSplit( ffind->pszFileMask );
+            PHB_FNAME pFileName = hb_fsFNameSplit(ffind->pszFileMask);
             if( pFileName->szName && pFileName->szName[ 0 ] )
             {
-               mask = hb_strdup( pFileName->szName );
+               mask = hb_strdup(pFileName->szName);
             }
             if( pFileName->szPath && pFileName->szPath[ 0 ] &&
                 ( pFileName->szPath[ 1 ] ||
@@ -460,16 +460,16 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
 
          ffind->bFirst = HB_FALSE;
 
-         hb_strncpy( dirname, ffind->pszFileMask, sizeof(dirname) - 1 );
+         hb_strncpy(dirname, ffind->pszFileMask, sizeof(dirname) - 1);
          pos = strrchr( dirname, HB_OS_PATH_DELIM_CHR );
          if( pos )
          {
-            hb_strncpy( info->pattern, pos + 1, sizeof(info->pattern) - 1 );
+            hb_strncpy(info->pattern, pos + 1, sizeof(info->pattern) - 1);
             *( pos + 1 ) = '\0';
          }
          else
          {
-            hb_strncpy( info->pattern, dirname, sizeof(info->pattern) - 1 );
+            hb_strncpy(info->pattern, dirname, sizeof(info->pattern) - 1);
             dirname[ 0 ] = '.';
             dirname[ 1 ] = HB_OS_PATH_DELIM_CHR;
             dirname[ 2 ] = '\0';
@@ -484,7 +484,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
          #endif
 
          info->dir = opendir( dirname );
-         hb_strncpy( info->path, dirname, sizeof(info->path) - 1 );
+         hb_strncpy(info->path, dirname, sizeof(info->path) - 1);
       }
 
       if( info->dir && info->pattern[ 0 ] != '\0' )
@@ -502,7 +502,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
       /* Fill Harbour found file info */
       if( bFound )
       {
-         hb_strncpy( dirname, info->path, sizeof(dirname) - 1 );
+         hb_strncpy(dirname, info->path, sizeof(dirname) - 1);
          hb_strncat( dirname, info->entry->d_name, sizeof(dirname) - 1 );
          {
             time_t ftime;
@@ -539,7 +539,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
                      nAttr |= HB_FA_HIDDEN;
                   }
                }
-               hb_strncpy( ffind->szName, info->entry->d_name, sizeof(ffind->szName) - 1 );
+               hb_strncpy(ffind->szName, info->entry->d_name, sizeof(ffind->szName) - 1);
                ffind->size = sStat.st_size;
 
                raw_attr = sStat.st_mode;
@@ -587,17 +587,17 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
       int iTODO; /* TODO: for given platform */
 
       #if 0
-      HB_SYMBOL_UNUSED( ffind );
+      HB_SYMBOL_UNUSED(ffind);
       #endif
 
-      HB_SYMBOL_UNUSED( iYear );
-      HB_SYMBOL_UNUSED( iMonth );
-      HB_SYMBOL_UNUSED( iDay );
-      HB_SYMBOL_UNUSED( iHour );
-      HB_SYMBOL_UNUSED( iMin );
-      HB_SYMBOL_UNUSED( iSec );
-      HB_SYMBOL_UNUSED( iMSec );
-      HB_SYMBOL_UNUSED( raw_attr );
+      HB_SYMBOL_UNUSED(iYear);
+      HB_SYMBOL_UNUSED(iMonth);
+      HB_SYMBOL_UNUSED(iDay);
+      HB_SYMBOL_UNUSED(iHour);
+      HB_SYMBOL_UNUSED(iMin);
+      HB_SYMBOL_UNUSED(iSec);
+      HB_SYMBOL_UNUSED(iMSec);
+      HB_SYMBOL_UNUSED(raw_attr);
 
       bFound = HB_FALSE;
 
@@ -622,7 +622,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
 
          if( pszFree )
          {
-            hb_strncpy( ffind->szName, pszResult, sizeof(ffind->szName) - 1 );
+            hb_strncpy(ffind->szName, pszResult, sizeof(ffind->szName) - 1);
             hb_xfree(pszFree);
          }
       }

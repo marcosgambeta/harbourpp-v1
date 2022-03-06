@@ -162,9 +162,9 @@ static long s_sockexWrite( PHB_SOCKEX pSock, const void * data, long len, HB_MAX
    core code set it to true only just before closing the filter. */
 static long s_sockexFlush( PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync )
 {
-   HB_SYMBOL_UNUSED( pSock );
-   HB_SYMBOL_UNUSED( timeout );
-   HB_SYMBOL_UNUSED( fSync );
+   HB_SYMBOL_UNUSED(pSock);
+   HB_SYMBOL_UNUSED(timeout);
+   HB_SYMBOL_UNUSED(fSync);
 
    return 0;
 }
@@ -215,13 +215,13 @@ static int s_sockexCanWrite( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeou
  */
 static char * s_sockexName( PHB_SOCKEX pSock )
 {
-   return hb_strdup( pSock->pFilter->pszName );
+   return hb_strdup(pSock->pFilter->pszName);
 }
 
 /* convert error code into short string description */
 static const char * s_sockexErrorStr( PHB_SOCKEX pSock, int iError )
 {
-   HB_SYMBOL_UNUSED( pSock );
+   HB_SYMBOL_UNUSED(pSock);
 
    return hb_socketErrorStr( iError );
 }
@@ -340,7 +340,7 @@ static HB_SOCKET s_socketSelectCallback( PHB_ITEM pItem )
 
 static void s_socket_exit( void * cargo )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
 
    if( s_fInit )
    {
@@ -540,8 +540,8 @@ static const HB_SOCKET_FILTER ** s_socket_getfilters( const char * pszFilter, co
       {
          char * pszFilterList, * ptr;
 
-         pszFilterList = hb_strdup( pszFilter );
-         ptr = pszFilterList + strlen( pszFilterList );
+         pszFilterList = hb_strdup(pszFilter);
+         ptr = pszFilterList + strlen(pszFilterList);
 
          while( ptr-- > pszFilterList )
          {

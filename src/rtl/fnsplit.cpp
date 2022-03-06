@@ -49,7 +49,7 @@
 
 HB_FUNC( HB_FNAMESPLIT )
 {
-   PHB_FNAME pFileName = hb_fsFNameSplit( hb_parcx(1) );
+   PHB_FNAME pFileName = hb_fsFNameSplit(hb_parcx(1));
 
    hb_storc( pFileName->szPath, 2 );
    hb_storc( pFileName->szName, 3 );

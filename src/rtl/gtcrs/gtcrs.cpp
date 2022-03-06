@@ -359,7 +359,7 @@ static void set_sig_handler( int iSig )
    act.sa_flags = SA_RESTART | ( iSig == SIGCHLD ? SA_NOCLDSTOP : 0 );
    sigaction( iSig, &act, 0 );
 #else
-   HB_SYMBOL_UNUSED( iSig );
+   HB_SYMBOL_UNUSED(iSig);
 #endif
 }
 
@@ -369,13 +369,13 @@ static HB_BOOL write_ttyseq( InOutBase * ioBase, const char * seq )
 
    if( ioBase->baseout != nullptr )
    {
-      size_t seqlen = strlen( seq );
+      size_t seqlen = strlen(seq);
       success = ( fwrite( seq, seqlen, 1, ioBase->baseout ) == seqlen );
       fflush( ioBase->baseout );
    }
    else
    {
-      int seqlen = strlen( seq );
+      int seqlen = strlen(seq);
       success = ( write( ioBase->base_outfd, seq, seqlen ) == seqlen );
    }
 
@@ -644,8 +644,8 @@ static int set_gpmevt( int fd, int mode, void * data )
    mouseEvent * mEvt;
    Gpm_Event gEvt;
 
-   HB_SYMBOL_UNUSED( fd );
-   HB_SYMBOL_UNUSED( mode );
+   HB_SYMBOL_UNUSED(fd);
+   HB_SYMBOL_UNUSED(mode);
 
    mEvt = ( mouseEvent * ) data;
 
@@ -714,7 +714,7 @@ static void disp_mousecursor( InOutBase * ioBase )
                        gpm_consolefd );
    }
 #else
-   HB_SYMBOL_UNUSED( ioBase );
+   HB_SYMBOL_UNUSED(ioBase);
 #endif
 }
 
@@ -1834,18 +1834,18 @@ static InOutBase * create_ioBase( char * term, int infd, int outfd, int errfd,
 
    if( term && *term )
    {
-      if( strncmp( term, "linux", 5 ) == 0 )
+      if( strncmp(term, "linux", 5) == 0 )
          ioBase->terminal_type = TERM_LINUX;
-      else if( strstr( term, "xterm" ) != nullptr ||
-               strncmp( term, "rxvt", 4 ) == 0 ||
-               strstr( term, "putty" ) == 0 )
+      else if( strstr(term, "xterm") != nullptr ||
+               strncmp(term, "rxvt", 4) == 0 ||
+               strstr(term, "putty") == 0 )
          ioBase->terminal_type = TERM_XTERM;
 
       if( ( ptr = strchr( term, '/' ) ) != nullptr )
       {
          if( ( i = ptr - term ) >= sizeof(buf) )
             i = sizeof(buf) - 1;
-         hb_strncpy( buf, term, i );
+         hb_strncpy(buf, term, i);
          if( i )
             crsterm = buf;
       }
@@ -2410,7 +2410,7 @@ static HB_BOOL hb_gt_crs_IsColor( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_IsColor(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    return s_ioBase->is_color;
 }
@@ -2471,7 +2471,7 @@ static const char * hb_gt_crs_Version( PHB_GT pGT, int iType )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_Version(%p,%d)", static_cast<void*>( pGT ), iType ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    if( iType == 0 )
       return HB_GT_DRVNAME( HB_GT_NAME );
@@ -2524,7 +2524,7 @@ static HB_BOOL hb_gt_crs_Suspend( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_Suspend(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    if( s_ioBase )
    {
@@ -2544,7 +2544,7 @@ static HB_BOOL hb_gt_crs_Resume( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_Resume(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    if( s_ioBase )
    {
@@ -2568,7 +2568,7 @@ static HB_BOOL hb_gt_crs_PreExt( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_PreExt(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    if( s_ioBase )
       gt_refresh( s_ioBase );
@@ -2584,7 +2584,7 @@ static HB_BOOL hb_gt_crs_PostExt( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_PostExt(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    return HB_TRUE;
 }
@@ -2597,7 +2597,7 @@ static HB_BOOL hb_gt_crs_mouse_IsPresent( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_mouse_IsPresent(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    return s_ioBase->mouse_type != MOUSE_NONE;
 }
@@ -2610,7 +2610,7 @@ static void hb_gt_crs_mouse_Show( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_mouse_Show(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
 #if defined( HB_HAS_GPM )
    if( s_ioBase->mouse_type == MOUSE_GPM )
@@ -2627,7 +2627,7 @@ static void hb_gt_crs_mouse_Hide( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_mouse_Hide(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
 #if defined( HB_HAS_GPM )
    if( s_ioBase->mouse_type == MOUSE_GPM )
@@ -2643,7 +2643,7 @@ static void hb_gt_crs_mouse_GetPos( PHB_GT pGT, int * piRow, int * piCol )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_mouse_Col(%p,%p,%p)", static_cast<void*>( pGT ), static_cast<void*>( piRow ), static_cast<void*>( piCol ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    *piRow = s_ioBase->mLastEvt.row;
    *piCol = s_ioBase->mLastEvt.col;
@@ -2657,7 +2657,7 @@ static void hb_gt_crs_mouse_SetPos( PHB_GT pGT, int iRow, int iCol )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_mouse_SetPos(%p,%i,%i)", static_cast<void*>( pGT ), iRow, iCol ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    /* it does really nothing */
    s_ioBase->mLastEvt.col = iCol;
@@ -2675,7 +2675,7 @@ static HB_BOOL hb_gt_crs_mouse_ButtonState( PHB_GT pGT, int iButton )
 
    HB_BOOL ret = HB_FALSE;
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    if( s_ioBase->mouse_type != 0 )
    {
@@ -2704,7 +2704,7 @@ static int hb_gt_crs_mouse_CountButton( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_mouse_CountButton(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    return s_ioBase->mButtons;
 }
@@ -2729,7 +2729,7 @@ static int hb_gt_crs_ReadKey( PHB_GT pGT, int iEventMask )
 
    int iKey;
 
-   HB_SYMBOL_UNUSED( iEventMask );
+   HB_SYMBOL_UNUSED(iEventMask);
 
    iKey = wait_key( s_ioBase, 0 );
 

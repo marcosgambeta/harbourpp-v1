@@ -222,7 +222,7 @@ HB_BOOL hb_gt_winapi_getClipboard( HB_UINT uFormat, PHB_ITEM pItem )
             switch( uFormat )
             {
                case CF_UNICODETEXT:
-                  nSize = hb_wstrnlen( static_cast<const wchar_t*>( lpMem ), nSize >> 1 );
+                  nSize = hb_wstrnlen(static_cast<const wchar_t*>( lpMem ), nSize >> 1);
                   if( nSize )
                   {
                      hb_itemPutStrLenU16( pItem, HB_CDP_ENDIAN_NATIVE, static_cast<const wchar_t*>( lpMem ), nSize );
@@ -230,12 +230,12 @@ HB_BOOL hb_gt_winapi_getClipboard( HB_UINT uFormat, PHB_ITEM pItem )
                   break;
                case CF_OEMTEXT:
                case CF_TEXT:
-                  nSize = hb_strnlen( static_cast<const char*>( lpMem ), nSize );
+                  nSize = hb_strnlen(static_cast<const char*>( lpMem ), nSize);
                   /* fallthrough */
                default:
                   if( nSize )
                   {
-                     hb_itemPutStrLen( pItem, uFormat == CF_TEXT ? hb_setGetOSCP() : nullptr, static_cast<const char*>( lpMem ), nSize );
+                     hb_itemPutStrLen(pItem, uFormat == CF_TEXT ? hb_setGetOSCP() : nullptr, static_cast<const char*>( lpMem ), nSize);
                   }
                   break;
             }

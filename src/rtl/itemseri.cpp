@@ -566,7 +566,7 @@ static HB_SIZE hb_itemSerialSize( PHB_ITEM pItem, int iFlags, PHB_CODEPAGE cdpIn
          break;
 
       case HB_IT_SYMBOL:
-         nSize = 2 + strlen( hb_itemGetSymbol(pItem)->szName );
+         nSize = 2 + strlen(hb_itemGetSymbol(pItem)->szName);
          break;
 
       case HB_IT_STRING:
@@ -609,7 +609,7 @@ static HB_SIZE hb_itemSerialSize( PHB_ITEM pItem, int iFlags, PHB_CODEPAGE cdpIn
             const char * szClass = hb_clsName( uiClass ), * szFunc = hb_clsFuncName( uiClass );
             if( szClass && szFunc )
             {
-               nSize += strlen( szClass ) + strlen( szFunc ) + 3;
+               nSize += strlen(szClass) + strlen(szFunc) + 3;
             }
          }
          if( ( iFlags & HB_SERIALIZE_IGNOREREF ) == 0 && hb_arrayRefs( pItem ) > 1 &&
@@ -828,7 +828,7 @@ static HB_SIZE hb_serializeItem( PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cd
 
       case HB_IT_SYMBOL:
          szVal = hb_itemGetSymbol(pItem)->szName;
-         nLen = strlen( szVal );
+         nLen = strlen(szVal);
          if( nLen > 0xFF )
          {
             nLen = 0xFF;
@@ -933,10 +933,10 @@ static HB_SIZE hb_serializeItem( PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cd
                if( szClass && szFunc )
                {
                   pBuffer[ nOffset++ ] = HB_SERIAL_OBJ;
-                  nLen = strlen( szClass ) + 1;
+                  nLen = strlen(szClass) + 1;
                   memcpy( &pBuffer[ nOffset ], szClass, nLen );
                   nOffset += nLen;
-                  nLen = strlen( szFunc ) + 1;
+                  nLen = strlen(szFunc) + 1;
                   memcpy( &pBuffer[ nOffset ], szFunc, nLen );
                   nOffset += nLen;
                }
@@ -1203,14 +1203,14 @@ static HB_BOOL hb_deserializeTest( const HB_UCHAR ** pBufferPtr, HB_SIZE * pnSiz
          nSize = 5;
          break;
       case HB_SERIAL_OBJ:
-         nLen = hb_strnlen( reinterpret_cast<const char*>( pBuffer ), nSize - 1 ) + 1;
+         nLen = hb_strnlen(reinterpret_cast<const char*>( pBuffer ), nSize - 1) + 1;
          if( nLen >= nSize )
          {
             nSize++;
          }
          else
          {
-            nLen += hb_strnlen( reinterpret_cast<const char*>( pBuffer ) + nLen, nSize - nLen - 1 ) + 2;
+            nLen += hb_strnlen(reinterpret_cast<const char*>( pBuffer ) + nLen, nSize - nLen - 1) + 2;
             if( nLen >= nSize )
             {
                nSize++;
@@ -1505,8 +1505,8 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
 
       case HB_SERIAL_SYMBOL:
          nLen = pBuffer[ nOffset++ ];
-         szVal = hb_strndup( reinterpret_cast<const char*>( &pBuffer[ nOffset ] ), nLen );
-         hb_itemPutSymbol(pItem, hb_dynsymGetSymbol( szVal ));
+         szVal = hb_strndup(reinterpret_cast<const char*>( &pBuffer[ nOffset ] ), nLen);
+         hb_itemPutSymbol(pItem, hb_dynsymGetSymbol(szVal));
          hb_xfree(szVal);
          nOffset += nLen;
          break;
@@ -1622,9 +1622,9 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
       {
          const char * szClass, * szFunc;
          szClass = reinterpret_cast<const char*>( &pBuffer[ nOffset ] );
-         nLen = strlen( szClass );
+         nLen = strlen(szClass);
          szFunc = szClass + nLen + 1;
-         nOffset = hb_deserializeItem( pItem, cdpIn, cdpOut, pBuffer, nOffset + nLen + strlen( szFunc ) + 2, pRefList );
+         nOffset = hb_deserializeItem( pItem, cdpIn, cdpOut, pBuffer, nOffset + nLen + strlen(szFunc) + 2, pRefList );
          hb_objSetClass( pItem, szClass, szFunc );
          break;
       }
@@ -1822,7 +1822,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
          if( uiClass && hb_vmRequestReenter() )
          {
             hb_clsAssociate( uiClass );
-            hb_vmPushDynSym( hb_dynsymGetCase( "LOADFROMTEXT" ) );
+            hb_vmPushDynSym( hb_dynsymGetCase("LOADFROMTEXT") );
             hb_vmPush( hb_stackReturnItem() );
             hb_vmPush( pItem );
             hb_vmPushLogical( HB_TRUE );

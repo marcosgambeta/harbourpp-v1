@@ -296,7 +296,7 @@ static int fs_win_get_drive( void )
    hb_fsSetIOError( dwResult != 0, 0 );
    if( dwResult >= 2 && dwResult < dwSize && lpBuffer[ 1 ] == HB_OS_DRIVE_DELIM_CHR )
    {
-      iDrive = HB_TOUPPER( lpBuffer[ 0 ] );
+      iDrive = HB_TOUPPER(lpBuffer[ 0 ]);
       if( iDrive >= 'A' && iDrive <= 'Z' )
       {
          iDrive -= 'A';
@@ -719,9 +719,9 @@ static int hb_fsCanAccess( HB_FHANDLE hFile, HB_MAXINT nTimeOut, HB_BOOL fRead )
 //{
 //   int iTODO; /* TODO: for given platform */
 //
-//   HB_SYMBOL_UNUSED( hFile );
-//   HB_SYMBOL_UNUSED( nTimeOut );
-//   HB_SYMBOL_UNUSED( fRead );
+//   HB_SYMBOL_UNUSED(hFile);
+//   HB_SYMBOL_UNUSED(nTimeOut);
+//   HB_SYMBOL_UNUSED(fRead);
 //   iResult = -1;
 //}
 #endif /* ! HB_HAS_POLL */
@@ -962,9 +962,9 @@ int hb_fsPoll( PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut )
 //{
 //   int iTODO; /* TODO: for given platform */
 //
-//   HB_SYMBOL_UNUSED( pPollSet );
-//   HB_SYMBOL_UNUSED( iCount );
-//   HB_SYMBOL_UNUSED( nTimeOut );
+//   HB_SYMBOL_UNUSED(pPollSet);
+//   HB_SYMBOL_UNUSED(iCount);
+//   HB_SYMBOL_UNUSED(nTimeOut);
 //   iResult = -1;
 //}
 #endif /* ! HB_HAS_POLL */
@@ -991,7 +991,7 @@ HB_FHANDLE hb_fsPOpen( const char * pszFileName, const char * pszMode )
       HB_BOOL fRead;
       HB_SIZE nLen;
 
-      nLen = strlen( pszFileName );
+      nLen = strlen(pszFileName);
       if( pszMode && ( *pszMode == 'r' || *pszMode == 'w' ) )
       {
          fRead = ( *pszMode == 'r' );
@@ -1019,7 +1019,7 @@ HB_FHANDLE hb_fsPOpen( const char * pszFileName, const char * pszMode )
       }
       if( pszFileName[ nLen - 1 ] == '|' )
       {
-         pszTmp = hb_strdup( pszFileName );
+         pszTmp = hb_strdup(pszFileName);
          pszTmp[ --nLen ] = 0;
          pszFileName        = pszTmp;
       }
@@ -1124,8 +1124,8 @@ HB_FHANDLE hb_fsPOpen( const char * pszFileName, const char * pszMode )
    }
 #else
 
-   HB_SYMBOL_UNUSED( pszFileName );
-   HB_SYMBOL_UNUSED( pszMode );
+   HB_SYMBOL_UNUSED(pszFileName);
+   HB_SYMBOL_UNUSED(pszMode);
 
    hb_fsSetError( static_cast<HB_ERRCODE>( FS_ERROR ) );
 
@@ -1211,7 +1211,7 @@ int hb_fsIsPipeOrSock( HB_FHANDLE hPipeHandle )
 }
 #else
    int iTODO; /* TODO: for given platform */
-   HB_SYMBOL_UNUSED( hPipeHandle );
+   HB_SYMBOL_UNUSED(hPipeHandle);
    hb_fsSetError( static_cast<HB_ERRCODE>( FS_ERROR ) );
    return 0;
 #endif
@@ -1247,7 +1247,7 @@ HB_BOOL hb_fsPipeUnblock( HB_FHANDLE hPipeHandle )
 #else
    {
       int iTODO; /* TODO: for given platform */
-      HB_SYMBOL_UNUSED( hPipeHandle );
+      HB_SYMBOL_UNUSED(hPipeHandle);
       hb_fsSetError( static_cast<HB_ERRCODE>( FS_ERROR ) );
       return HB_FALSE;
    }
@@ -1313,9 +1313,9 @@ HB_SIZE hb_fsPipeIsData( HB_FHANDLE hPipeHandle, HB_SIZE nBufferSize, HB_MAXINT 
 #else
 {
    int iTODO; /* TODO: for given platform */
-   HB_SYMBOL_UNUSED( hPipeHandle );
-   HB_SYMBOL_UNUSED( nBufferSize );
-   HB_SYMBOL_UNUSED( nTimeOut );
+   HB_SYMBOL_UNUSED(hPipeHandle);
+   HB_SYMBOL_UNUSED(nBufferSize);
+   HB_SYMBOL_UNUSED(nTimeOut);
    hb_fsSetError( static_cast<HB_ERRCODE>( FS_ERROR ) );
 }
 #endif
@@ -1450,7 +1450,7 @@ HB_SIZE hb_fsPipeWrite( HB_FHANDLE hPipeHandle, const void * buffer, HB_SIZE nSi
 #else
 {
    int iTODO; /* TODO: for given platform */
-   HB_SYMBOL_UNUSED( nTimeOut );
+   HB_SYMBOL_UNUSED(nTimeOut);
    nWritten = hb_fsWriteLarge( hPipeHandle, buffer, nSize );
 }
 #endif
@@ -1638,7 +1638,7 @@ int hb_fsSetDevMode( HB_FHANDLE hFileHandle, int iDevMode )
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsSetDevMode(%p, %d)", reinterpret_cast<void*>( static_cast<HB_PTRUINT>( hFileHandle ) ), iDevMode ) );
 #endif
 
-   HB_SYMBOL_UNUSED( hFileHandle );
+   HB_SYMBOL_UNUSED(hFileHandle);
 
    hb_fsSetError( static_cast<HB_ERRCODE>( iDevMode == FD_TEXT ? FS_ERROR : 0 ) );
    return FD_BINARY;
@@ -1796,7 +1796,7 @@ HB_BOOL hb_fsGetFileTime( const char * pszFileName, long * plJulian, long * plMi
    {
       int iTODO; /* TODO: for given platform */
 
-      HB_SYMBOL_UNUSED( pszFileName );
+      HB_SYMBOL_UNUSED(pszFileName);
    }
 #endif
 
@@ -1863,7 +1863,7 @@ HB_BOOL hb_fsGetAttr( const char * pszFileName, HB_FATTR * pnAttr )
       {
          int iTODO; /* TODO: for given platform */
 
-         HB_SYMBOL_UNUSED( pszFileName );
+         HB_SYMBOL_UNUSED(pszFileName);
       }
 #  endif
       if( pszFree )
@@ -3681,7 +3681,7 @@ HB_ERRCODE hb_fsCurDirBuff( int iDrive, char * pszBuffer, HB_SIZE nSize )
       /* NOTE: A trailing underscore is not returned on this platform,
                so we don't need to strip it. [vszakats] */
 
-      nLen = strlen( pszBuffer );
+      nLen = strlen(pszBuffer);
       pszStart = pszBuffer;
 
 #if defined( HB_OS_HAS_DRIVE_LETTER )
@@ -3721,7 +3721,7 @@ HB_ERRCODE hb_fsCurDirBuff( int iDrive, char * pszBuffer, HB_SIZE nSize )
 
          if( pszResult != pszBuffer )
          {
-            hb_strncpy( pszBuffer, pszResult, nSize - 1 );
+            hb_strncpy(pszBuffer, pszResult, nSize - 1);
          }
          if( pszFree )
          {
@@ -3771,7 +3771,7 @@ HB_BOOL hb_fsGetCWD( char * pszBuffer, HB_SIZE nSize )
    if( fResult && pszBuffer[ 0 ] )
    {
       HB_SIZE nLen;
-      nLen = strlen( pszBuffer );
+      nLen = strlen(pszBuffer);
 
       /* add the trailing (back)slash if there's no one */
       if( nLen + 1 < nSize && strchr( HB_OS_PATH_DELIM_CHR_LIST, static_cast<HB_UCHAR>( pszBuffer[ nLen - 1 ] ) ) == 0 )
@@ -3791,7 +3791,7 @@ HB_BOOL hb_fsGetCWD( char * pszBuffer, HB_SIZE nSize )
 
          if( pszResult != pszBuffer )
          {
-            hb_strncpy( pszBuffer, pszResult, nSize - 1 );
+            hb_strncpy(pszBuffer, pszResult, nSize - 1);
          }
          if( pszFree )
          {
@@ -3918,7 +3918,7 @@ HB_ERRCODE hb_fsChDrv( int iDrive )
    }
 #else
 
-   HB_SYMBOL_UNUSED( iDrive );
+   HB_SYMBOL_UNUSED(iDrive);
    nResult = static_cast<HB_ERRCODE>( FS_ERROR );
    hb_fsSetError( static_cast<HB_ERRCODE>( FS_ERROR ) );
 
@@ -3989,7 +3989,7 @@ HB_ERRCODE hb_fsIsDrv( int iDrive )
    }
 #else
    {
-      HB_SYMBOL_UNUSED( iDrive );
+      HB_SYMBOL_UNUSED(iDrive);
       nResult = static_cast<HB_ERRCODE>( FS_ERROR );
       hb_fsSetError(0);
    }
@@ -4046,7 +4046,7 @@ char * hb_fsExtName( const char * pszFileName, const char * pDefExt, HB_FATTR nE
 
    szPath = static_cast<char*>( hb_xgrab(HB_PATH_MAX) );
 
-   pFilepath = hb_fsFNameSplit( pszFileName );
+   pFilepath = hb_fsFNameSplit(pszFileName);
 
    if( pDefExt && ( ( nExFlags & FXO_FORCEEXT ) || ! pFilepath->szExtension ) )
    {
@@ -4243,7 +4243,7 @@ HB_FHANDLE hb_fsExtOpen( const char * pszFileName, const char * pDefExt, HB_FATT
 
    if( nExFlags & FXO_COPYNAME && hFile != FS_ERROR )
    {
-      hb_strncpy( const_cast<char*>( pszFileName ), szPath, HB_PATH_MAX - 1 );
+      hb_strncpy(const_cast<char*>( pszFileName ), szPath, HB_PATH_MAX - 1);
    }
 
    if( szFree )
@@ -4341,7 +4341,7 @@ const char * hb_fsNameConv( const char * pszFileName, char ** pszFree )
 
       if( pszFree )
       {
-         pszFileName = *pszFree = hb_strncpy( static_cast<char*>( hb_xgrab(HB_PATH_MAX) ), pszFileName, HB_PATH_MAX - 1 );
+         pszFileName = *pszFree = hb_strncpy(static_cast<char*>( hb_xgrab(HB_PATH_MAX) ), pszFileName, HB_PATH_MAX - 1);
       }
 
       if( cDirSep != HB_OS_PATH_DELIM_CHR )
@@ -4357,21 +4357,21 @@ const char * hb_fsNameConv( const char * pszFileName, char ** pszFree )
          }
       }
 
-      pFileName = hb_fsFNameSplit( pszFileName );
+      pFileName = hb_fsFNameSplit(pszFileName);
 
       /* strip trailing and leading spaces */
       if( fTrim )
       {
          if( pFileName->szName )
          {
-            nLen = strlen( pFileName->szName );
+            nLen = strlen(pFileName->szName);
             nLen = hb_strRTrimLen( pFileName->szName, nLen, HB_FALSE );
             pFileName->szName = hb_strLTrim( pFileName->szName, &nLen );
             ( const_cast<char*>( pFileName->szName ) )[ nLen ] = '\0';
          }
          if( pFileName->szExtension )
          {
-            nLen = strlen( pFileName->szExtension );
+            nLen = strlen(pFileName->szExtension);
             nLen = hb_strRTrimLen( pFileName->szExtension, nLen, HB_FALSE );
             pFileName->szExtension = hb_strLTrim( pFileName->szExtension, &nLen );
             ( const_cast<char*>( pFileName->szExtension ) )[ nLen ] = '\0';
@@ -4437,7 +4437,7 @@ const char * hb_fsNameConv( const char * pszFileName, char ** pszFree )
          pszFileName = hb_osEncodeCP( pszFileName, pszFree, &nLen );
          if( pszFree == nullptr && pszFileName != pszPrev )
          {
-            hb_strncpy( const_cast<char*>( pszPrev ), pszFileName, HB_PATH_MAX - 1 );
+            hb_strncpy(const_cast<char*>( pszPrev ), pszFileName, HB_PATH_MAX - 1);
             hb_xfree(HB_UNCONST( pszFileName ));
             pszFileName = pszPrev;
          }
@@ -4501,7 +4501,7 @@ HB_WCHAR * hb_fsNameConvU16( const char * pszFileName )
       char * pszPath = nullptr, * pszName = nullptr, * pszExt = nullptr;
       PHB_FNAME pFileName;
 
-      pszFileName = pszBuffer = hb_strncpy( static_cast<char*>( hb_xgrab(HB_PATH_MAX) ), pszFileName, HB_PATH_MAX - 1 );
+      pszFileName = pszBuffer = hb_strncpy(static_cast<char*>( hb_xgrab(HB_PATH_MAX) ), pszFileName, HB_PATH_MAX - 1);
 
       if( cDirSep != HB_OS_PATH_DELIM_CHR )
       {
@@ -4516,21 +4516,21 @@ HB_WCHAR * hb_fsNameConvU16( const char * pszFileName )
          }
       }
 
-      pFileName = hb_fsFNameSplit( pszBuffer );
+      pFileName = hb_fsFNameSplit(pszBuffer);
 
       /* strip trailing and leading spaces */
       if( fTrim )
       {
          if( pFileName->szName )
          {
-            nLen = strlen( pFileName->szName );
+            nLen = strlen(pFileName->szName);
             nLen = hb_strRTrimLen( pFileName->szName, nLen, HB_FALSE );
             pFileName->szName = hb_strLTrim( pFileName->szName, &nLen );
             ( const_cast<char*>( pFileName->szName ) )[ nLen ] = '\0';
          }
          if( pFileName->szExtension )
          {
-            nLen = strlen( pFileName->szExtension );
+            nLen = strlen(pFileName->szExtension);
             nLen = hb_strRTrimLen( pFileName->szExtension, nLen, HB_FALSE );
             pFileName->szExtension = hb_strLTrim( pFileName->szExtension, &nLen );
             ( const_cast<char*>( pFileName->szExtension ) )[ nLen ] = '\0';
@@ -4607,7 +4607,7 @@ void hb_fsBaseDirBuff( char * pszBuffer )
 
    if( pszBaseName )
    {
-      PHB_FNAME pFileName = hb_fsFNameSplit( pszBaseName );
+      PHB_FNAME pFileName = hb_fsFNameSplit(pszBaseName);
       pFileName->szName = nullptr;
       pFileName->szExtension = nullptr;
       hb_fsFNameMerge( pszBuffer, pFileName );

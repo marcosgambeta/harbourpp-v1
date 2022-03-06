@@ -102,7 +102,7 @@ static void s_errRT_IOUSR( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const c
 
 static void s_iousrFreeAll( void * cargo )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
 
    while( s_iCount > 0 )
    {
@@ -145,8 +145,8 @@ static PHB_IOUSR s_iousrAddNew( const char * pszPrefix )
          hb_vmAtQuit( s_iousrFreeAll, nullptr );
       }
       pIO = static_cast<PHB_IOUSR>( hb_xgrabz( sizeof(HB_IOUSR) ) );
-      pIO->prefix = hb_strdup( pszPrefix );
-      pIO->prefix_len = static_cast<int>( strlen( pszPrefix ) );
+      pIO->prefix = hb_strdup(pszPrefix);
+      pIO->prefix_len = static_cast<int>( strlen(pszPrefix) );
       s_ioUsrs[ s_iCount++ ] = pIO;
    }
 
@@ -175,7 +175,7 @@ static HB_BOOL s_fileAccept( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
       if( s_hasMethod( pIO, IOUSR_ACCEPT ) )
       {
          s_pushMethod( pIO, IOUSR_ACCEPT );
-         hb_vmPushString( pszFileName, strlen( pszFileName ) );
+         hb_vmPushString( pszFileName, strlen(pszFileName) );
          hb_vmDo(1);
          fResult = hb_parl(-1);
       }
@@ -192,10 +192,10 @@ static HB_BOOL s_fileExists( PHB_FILE_FUNCS pFuncs, const char * pszFileName, ch
 {
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
-   HB_SYMBOL_UNUSED( pRetPath );
+   HB_SYMBOL_UNUSED(pRetPath);
 
    s_pushMethod( pIO, IOUSR_EXISTS );
-   hb_vmPushString( pszFileName, strlen( pszFileName ) );
+   hb_vmPushString( pszFileName, strlen(pszFileName) );
    hb_vmDo(1);
 
    return hb_parl(-1);
@@ -206,7 +206,7 @@ static HB_BOOL s_fileDelete( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
    s_pushMethod( pIO, IOUSR_DELETE );
-   hb_vmPushString( pszFileName, strlen( pszFileName ) );
+   hb_vmPushString( pszFileName, strlen(pszFileName) );
    hb_vmDo(1);
 
    return hb_parl(-1);
@@ -217,8 +217,8 @@ static HB_BOOL s_fileRename( PHB_FILE_FUNCS pFuncs, const char * pszName, const 
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
    s_pushMethod( pIO, IOUSR_RENAME );
-   hb_vmPushString( pszName, strlen( pszName ) );
-   hb_vmPushString( pszNewName, strlen( pszNewName ) );
+   hb_vmPushString( pszName, strlen(pszName) );
+   hb_vmPushString( pszNewName, strlen(pszNewName) );
    hb_vmDo(2);
 
    return hb_parl(-1);
@@ -229,8 +229,8 @@ static HB_BOOL s_fileCopy( PHB_FILE_FUNCS pFuncs, const char * pszSrcFile, const
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
    s_pushMethod( pIO, IOUSR_COPY );
-   hb_vmPushString( pszSrcFile, strlen( pszSrcFile ) );
-   hb_vmPushString( pszDstFile, strlen( pszDstFile ) );
+   hb_vmPushString( pszSrcFile, strlen(pszSrcFile) );
+   hb_vmPushString( pszDstFile, strlen(pszDstFile) );
    hb_vmDo(2);
 
    return hb_parl(-1);
@@ -241,7 +241,7 @@ static HB_BOOL s_fileDirExists( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
    s_pushMethod( pIO, IOUSR_DIREXISTS );
-   hb_vmPushString( pszDirName, strlen( pszDirName ) );
+   hb_vmPushString( pszDirName, strlen(pszDirName) );
    hb_vmDo(1);
 
    return hb_parl(-1);
@@ -252,7 +252,7 @@ static HB_BOOL s_fileDirMake( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
    s_pushMethod( pIO, IOUSR_DIRMAKE );
-   hb_vmPushString( pszDirName, strlen( pszDirName ) );
+   hb_vmPushString( pszDirName, strlen(pszDirName) );
    hb_vmDo(1);
 
    return hb_parl(-1);
@@ -263,7 +263,7 @@ static HB_BOOL s_fileDirRemove( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
    s_pushMethod( pIO, IOUSR_DIRREMOVE );
-   hb_vmPushString( pszDirName, strlen( pszDirName ) );
+   hb_vmPushString( pszDirName, strlen(pszDirName) );
    hb_vmDo(1);
 
    return hb_parl(-1);
@@ -274,7 +274,7 @@ static double s_fileDirSpace( PHB_FILE_FUNCS pFuncs, const char * pszDirName, HB
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
    s_pushMethod( pIO, IOUSR_DIRSPACE );
-   hb_vmPushString( pszDirName, strlen( pszDirName ) );
+   hb_vmPushString( pszDirName, strlen(pszDirName) );
    hb_vmPushInteger( uiType );
    hb_vmDo(2);
 
@@ -286,8 +286,8 @@ static PHB_ITEM s_fileDirectory( PHB_FILE_FUNCS pFuncs, const char * pszDirSpec,
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
    s_pushMethod( pIO, IOUSR_DIRECTORY );
-   hb_vmPushString( pszDirSpec, strlen( pszDirSpec ) );
-   hb_vmPushString( pszAttr, strlen( pszAttr ) );
+   hb_vmPushString( pszDirSpec, strlen(pszDirSpec) );
+   hb_vmPushString( pszAttr, strlen(pszAttr) );
    hb_vmDo(2);
 
    return hb_itemNew(hb_stackReturnItem());
@@ -304,7 +304,7 @@ static HB_BOOL s_fileTimeGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, l
    hb_vmPushNil();
 
    s_pushMethod( pIO, IOUSR_TIMEGET );
-   hb_vmPushString( pszFileName, strlen( pszFileName ) );
+   hb_vmPushString( pszFileName, strlen(pszFileName) );
    hb_xvmPushLocalByRef( static_cast<HB_SHORT>( iOffset ) );
    hb_xvmPushLocalByRef( static_cast<HB_SHORT>( iOffset + 1 ) );
    hb_vmDo(3);
@@ -326,7 +326,7 @@ static HB_BOOL s_fileTimeSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, l
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
    s_pushMethod( pIO, IOUSR_TIMESET );
-   hb_vmPushString( pszFileName, strlen( pszFileName ) );
+   hb_vmPushString( pszFileName, strlen(pszFileName) );
    hb_vmPushLong( lJulian );
    hb_vmPushLong( lMillisec );
    hb_vmDo(3);
@@ -344,7 +344,7 @@ static HB_BOOL s_fileAttrGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, H
    hb_vmPushNil();
 
    s_pushMethod( pIO, IOUSR_ATTRGET );
-   hb_vmPushString( pszFileName, strlen( pszFileName ) );
+   hb_vmPushString( pszFileName, strlen(pszFileName) );
    hb_xvmPushLocalByRef( static_cast<HB_SHORT>( iOffset ) );
    hb_vmDo(2);
 
@@ -363,7 +363,7 @@ static HB_BOOL s_fileAttrSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, H
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
    s_pushMethod( pIO, IOUSR_ATTRSET );
-   hb_vmPushString( pszFileName, strlen( pszFileName ) );
+   hb_vmPushString( pszFileName, strlen(pszFileName) );
    hb_vmPushLong( nAttr );
    hb_vmDo(2);
 
@@ -375,8 +375,8 @@ static HB_BOOL s_fileLink( PHB_FILE_FUNCS pFuncs, const char * pszExisting, cons
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
    s_pushMethod( pIO, IOUSR_LINK );
-   hb_vmPushString( pszExisting, strlen( pszExisting ) );
-   hb_vmPushString( pszNewName, strlen( pszNewName ) );
+   hb_vmPushString( pszExisting, strlen(pszExisting) );
+   hb_vmPushString( pszNewName, strlen(pszNewName) );
    hb_vmDo(2);
 
    return hb_parl(-1);
@@ -387,8 +387,8 @@ static HB_BOOL s_fileLinkSym( PHB_FILE_FUNCS pFuncs, const char * pszTarget, con
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
    s_pushMethod( pIO, IOUSR_LINKSYM );
-   hb_vmPushString( pszTarget, strlen( pszTarget ) );
-   hb_vmPushString( pszNewName, strlen( pszNewName ) );
+   hb_vmPushString( pszTarget, strlen(pszTarget) );
+   hb_vmPushString( pszNewName, strlen(pszNewName) );
    hb_vmDo(2);
 
    return hb_parl(-1);
@@ -400,11 +400,11 @@ static char * s_fileLinkRead( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
    const char * pszLink;
 
    s_pushMethod( pIO, IOUSR_LINKREAD );
-   hb_vmPushString( pszFileName, strlen( pszFileName ) );
+   hb_vmPushString( pszFileName, strlen(pszFileName) );
    hb_vmDo(1);
 
    pszLink = hb_parc(-1);
-   return pszLink != nullptr ? hb_strdup( pszLink ) : nullptr;
+   return pszLink != nullptr ? hb_strdup(pszLink) : nullptr;
 }
 
 static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName, const char * pszDefExt, HB_FATTR nExFlags, const char * pPaths, PHB_ITEM pError )
@@ -414,10 +414,10 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName, const c
    PHB_ITEM pFileItm;
 
    s_pushMethod( pIO, IOUSR_OPEN );
-   hb_vmPushString( pszName, strlen( pszName ) );
+   hb_vmPushString( pszName, strlen(pszName) );
    if( pszDefExt )
    {
-      hb_vmPushString( pszDefExt, strlen( pszDefExt ) );
+      hb_vmPushString( pszDefExt, strlen(pszDefExt) );
    }
    else
    {
@@ -426,7 +426,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName, const c
    hb_vmPushInteger( nExFlags );
    if( pPaths )
    {
-      hb_vmPushString( pPaths, strlen( pPaths ) );
+      hb_vmPushString( pPaths, strlen(pPaths) );
    }
    else
    {

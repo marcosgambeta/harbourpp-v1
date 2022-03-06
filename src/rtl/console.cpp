@@ -220,7 +220,7 @@ void hb_conOutStd( const char * szStr, HB_SIZE nLen )
 
    if( nLen == 0 )
    {
-      nLen = strlen( szStr );
+      nLen = strlen(szStr);
    }
 
    if( nLen > 0 )
@@ -238,7 +238,7 @@ void hb_conOutErr( const char * szStr, HB_SIZE nLen )
 
    if( nLen == 0 )
    {
-      nLen = strlen( szStr );
+      nLen = strlen(szStr);
    }
 
    if( nLen > 0 )

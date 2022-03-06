@@ -67,7 +67,7 @@ static void hb_sdfInitArea( SDFAREAP pArea, char * szFileName )
    const char * szEol;
 
    /* Allocate only after successfully open file */
-   pArea->szFileName = hb_strdup( szFileName );
+   pArea->szFileName = hb_strdup(szFileName);
 
    /* set line separator: EOL */
    szEol = hb_setGetEOL();
@@ -75,8 +75,8 @@ static void hb_sdfInitArea( SDFAREAP pArea, char * szFileName )
    {
       szEol = hb_conNewLine();
    }
-   pArea->szEol = hb_strdup( szEol );
-   pArea->uiEolLen = static_cast<HB_USHORT>( strlen( szEol ) );
+   pArea->szEol = hb_strdup(szEol);
+   pArea->uiEolLen = static_cast<HB_USHORT>( strlen(szEol) );
    pArea->fAnyEol = ( szEol[ 0 ] == '\n' || szEol[ 0 ] == '\r' ) &&
                     ( pArea->uiEolLen == 1 ||
                       ( pArea->uiEolLen == 2 && szEol[ 0 ] != szEol[ 1 ] &&
@@ -322,7 +322,7 @@ static HB_ERRCODE hb_sdfDeleted( SDFAREAP pArea, HB_BOOL * pDeleted )
    HB_TRACE( HB_TR_DEBUG, ( "hb_sdfDeleted(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pDeleted ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pArea );
+   HB_SYMBOL_UNUSED(pArea);
 
    *pDeleted = HB_FALSE;
 
@@ -397,7 +397,7 @@ static HB_ERRCODE hb_sdfAppend( SDFAREAP pArea, HB_BOOL fUnLockAll )
    HB_TRACE( HB_TR_DEBUG, ( "hb_sdfAppend(%p,%d)", static_cast<void*>( pArea ), static_cast<int>( fUnLockAll ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( fUnLockAll );
+   HB_SYMBOL_UNUSED(fUnLockAll);
 
    if( SELF_GOCOLD( &pArea->area ) != HB_SUCCESS )
    {
@@ -426,7 +426,7 @@ static HB_ERRCODE hb_sdfDeleteRec( SDFAREAP pArea )
    HB_TRACE( HB_TR_DEBUG, ( "hb_sdfDeleteRec(%p)", static_cast<void*>( pArea ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pArea );
+   HB_SYMBOL_UNUSED(pArea);
 
    /* It's not Cl*pper compatible so I had to disable it [druzus] */
 #if 0
@@ -451,7 +451,7 @@ static HB_ERRCODE hb_sdfRecall( SDFAREAP pArea )
    HB_TRACE( HB_TR_DEBUG, ( "hb_sdfRecall(%p)", static_cast<void*>( pArea ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pArea );
+   HB_SYMBOL_UNUSED(pArea);
 
    return HB_SUCCESS;
 }
@@ -556,7 +556,7 @@ static HB_ERRCODE hb_sdfGetValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          PHB_ITEM pError = hb_errNew();
          hb_errPutGenCode( pError, EG_DATATYPE );
          hb_errPutDescription( pError, hb_langDGetErrorDesc( EG_DATATYPE ) );
-         hb_errPutOperation( pError, hb_dynsymName( static_cast<PHB_DYNS>( pField->sym ) ) );
+         hb_errPutOperation( pError, hb_dynsymName(static_cast<PHB_DYNS>( pField->sym )) );
          hb_errPutSubCode( pError, EDBF_DATATYPE );
          SELF_ERROR( &pArea->area, pError );
          hb_itemRelease(pError);
@@ -700,7 +700,7 @@ static HB_ERRCODE hb_sdfPutValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
 
       hb_errPutGenCode( pError, errGenCode );
       hb_errPutDescription( pError, hb_langDGetErrorDesc( errGenCode ) );
-      hb_errPutOperation( pError, hb_dynsymName( static_cast<PHB_DYNS>( pField->sym ) ) );
+      hb_errPutOperation( pError, hb_dynsymName(static_cast<PHB_DYNS>( pField->sym )) );
       hb_errPutSubCode( pError, errCode );
       hb_errPutFlags( pError, EF_CANDEFAULT );
       errCode = SELF_ERROR( &pArea->area, pError );
@@ -1106,7 +1106,7 @@ static HB_ERRCODE hb_sdfStructSize( SDFAREAP pArea, HB_USHORT * uiSize )
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_sdfStrucSize(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( uiSize ) ) );
 #endif
-   HB_SYMBOL_UNUSED( pArea );
+   HB_SYMBOL_UNUSED(pArea);
 
    *uiSize = sizeof(SDFAREA);
    return HB_SUCCESS;
@@ -1198,7 +1198,7 @@ static HB_ERRCODE hb_sdfCreate( SDFAREAP pArea, LPDBOPENINFO pCreateInfo )
       pArea->area.cdPage = hb_vmCDP();
    }
 
-   pFileName = hb_fsFNameSplit( pCreateInfo->abName );
+   pFileName = hb_fsFNameSplit(pCreateInfo->abName);
    if( hb_setGetDefExtension() && ! pFileName->szExtension )
    {
       PHB_ITEM pItem = hb_itemNew(nullptr);
@@ -1211,7 +1211,7 @@ static HB_ERRCODE hb_sdfCreate( SDFAREAP pArea, LPDBOPENINFO pCreateInfo )
    }
    else
    {
-      hb_strncpy( szFileName, pCreateInfo->abName, sizeof(szFileName) - 1 );
+      hb_strncpy(szFileName, pCreateInfo->abName, sizeof(szFileName) - 1);
    }
    hb_xfree(pFileName);
 
@@ -1304,7 +1304,7 @@ static HB_ERRCODE hb_sdfOpen( SDFAREAP pArea, LPDBOPENINFO pOpenInfo )
 
    uiFlags = ( pArea->fReadonly ? FO_READ : FO_READWRITE ) | ( pArea->fShared ? FO_DENYNONE : FO_EXCLUSIVE );
 
-   pFileName = hb_fsFNameSplit( pOpenInfo->abName );
+   pFileName = hb_fsFNameSplit(pOpenInfo->abName);
    /* Add default file name extension if necessary */
    if( hb_setGetDefExtension() && ! pFileName->szExtension )
    {
@@ -1318,7 +1318,7 @@ static HB_ERRCODE hb_sdfOpen( SDFAREAP pArea, LPDBOPENINFO pOpenInfo )
    }
    else
    {
-      hb_strncpy( szFileName, pOpenInfo->abName, sizeof(szFileName) - 1 );
+      hb_strncpy(szFileName, pOpenInfo->abName, sizeof(szFileName) - 1);
    }
 
    /* Create default alias if necessary */
@@ -1548,7 +1548,7 @@ HB_FUNC_STATIC( SDF_GETFUNCTABLE )
 
 static void hb_sdfRddInit( void * cargo )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
 
    if( hb_rddRegister( "SDF", RDT_TRANSFER ) > 1 )
    {

@@ -109,19 +109,19 @@ static HB_BOOL fsGetTempDirByCase( char * pszName, const char * pszTempDir, HB_B
       }
       else
       {
-         hb_strncpy( pszName, pszTempDir, HB_PATH_MAX - 1 );
+         hb_strncpy(pszName, pszTempDir, HB_PATH_MAX - 1);
       }
 
       switch( hb_setGetDirCase() )
       {
          case HB_SET_CASE_LOWER:
             pTmp = hb_cdpnDupLower( hb_vmCDP(), pszName, nullptr );
-            fOK = strcmp( pszName, pTmp ) == 0;
+            fOK = strcmp(pszName, pTmp) == 0;
             hb_xfree(pTmp);
             break;
          case HB_SET_CASE_UPPER:
             pTmp = hb_cdpnDupUpper( hb_vmCDP(), pszName, nullptr );
-            fOK = strcmp( pszName, pTmp ) == 0;
+            fOK = strcmp(pszName, pTmp) == 0;
             hb_xfree(pTmp);
             break;
          default:
@@ -154,8 +154,8 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
 
       if( pszDir && pszDir[ 0 ] != '\0' )
       {
-         hb_strncpy( pszName, pszDir, HB_PATH_MAX - 1 );
-         iLen = static_cast<int>( strlen( pszName ) );
+         hb_strncpy(pszName, pszDir, HB_PATH_MAX - 1);
+         iLen = static_cast<int>( strlen(pszName) );
          if( pszName[ iLen - 1 ] != HB_OS_PATH_DELIM_CHR && iLen < HB_PATH_MAX - 1 )
          {
             pszName[ iLen ] = HB_OS_PATH_DELIM_CHR;
@@ -172,8 +172,8 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
          hb_strncat( pszName, pszPrefix, HB_PATH_MAX - 1 );
       }
 
-      iLen = static_cast<int>( strlen( pszName ) );
-      if( iLen > ( HB_PATH_MAX - 1 ) - 6 - ( pszExt ? static_cast<int>( strlen( pszExt ) ) : 0 ) )
+      iLen = static_cast<int>( strlen(pszName) );
+      if( iLen > ( HB_PATH_MAX - 1 ) - 6 - ( pszExt ? static_cast<int>( strlen(pszExt) ) : 0 ) )
       {
          fd = FS_ERROR;
          break;
@@ -196,9 +196,9 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
          {
             hb_strncat( pszName, pszExt, HB_PATH_MAX - 1 );
 #if defined( HB_USE_LARGEFILE64 )
-            fd = static_cast<HB_FHANDLE>( mkstemps64( pszName, static_cast<int>( strlen( pszExt ) ) ) );
+            fd = static_cast<HB_FHANDLE>( mkstemps64( pszName, static_cast<int>( strlen(pszExt) ) ) );
 #else
-            fd = static_cast<HB_FHANDLE>( mkstemps( pszName, static_cast<int>( strlen( pszExt ) ) ) );
+            fd = static_cast<HB_FHANDLE>( mkstemps( pszName, static_cast<int>( strlen(pszExt) ) ) );
 #endif
          }
          else
@@ -299,8 +299,8 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
       char * pTmpBuffer = static_cast<char*>( hb_xgrab(L_tmpnam + 1) );
 
       /* TODO: Implement these: */
-      HB_SYMBOL_UNUSED( pszDir );
-      HB_SYMBOL_UNUSED( pszPrefix );
+      HB_SYMBOL_UNUSED(pszDir);
+      HB_SYMBOL_UNUSED(pszPrefix);
 
       pTmpBuffer[ 0 ] = '\0';
       fResult = ( tmpnam( pTmpBuffer ) != nullptr );
@@ -433,7 +433,7 @@ HB_ERRCODE hb_fsTempDir( char * pszTempDir )
 
    if( nResult == 0 && pszTempDir[ 0 ] != '\0' )
    {
-      int len = static_cast<int>( strlen( pszTempDir ) );
+      int len = static_cast<int>( strlen(pszTempDir) );
       if( pszTempDir[ len - 1 ] != HB_OS_PATH_DELIM_CHR && len < HB_PATH_MAX - 1 )
       {
          pszTempDir[ len ] = HB_OS_PATH_DELIM_CHR;

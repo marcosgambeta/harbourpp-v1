@@ -51,23 +51,23 @@
 
 static void hb_regfree( PHB_REGEX pRegEx )
 {
-   HB_SYMBOL_UNUSED( pRegEx );
+   HB_SYMBOL_UNUSED(pRegEx);
 }
 
 static int hb_regcomp( PHB_REGEX pRegEx, const char * szRegEx )
 {
-   HB_SYMBOL_UNUSED( pRegEx );
-   HB_SYMBOL_UNUSED( szRegEx );
+   HB_SYMBOL_UNUSED(pRegEx);
+   HB_SYMBOL_UNUSED(szRegEx);
    return -1;
 }
 
 static int hb_regexec( PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen, int iMatches, HB_REGMATCH * aMatches )
 {
-   HB_SYMBOL_UNUSED( pRegEx );
-   HB_SYMBOL_UNUSED( szString );
-   HB_SYMBOL_UNUSED( nLen );
-   HB_SYMBOL_UNUSED( iMatches );
-   HB_SYMBOL_UNUSED( aMatches );
+   HB_SYMBOL_UNUSED(pRegEx);
+   HB_SYMBOL_UNUSED(szString);
+   HB_SYMBOL_UNUSED(nLen);
+   HB_SYMBOL_UNUSED(iMatches);
+   HB_SYMBOL_UNUSED(aMatches);
    return -1;
 }
 
@@ -103,7 +103,7 @@ PHB_REGEX hb_regexCompile( const char * szRegEx, HB_SIZE nLen, int iFlags )
 {
    PHB_REGEX pRegEx;
 
-   HB_SYMBOL_UNUSED( nLen );
+   HB_SYMBOL_UNUSED(nLen);
 
    pRegEx = static_cast<PHB_REGEX>( hb_gcAllocate( sizeof(*pRegEx), &s_gcRegexFuncs ) );
    memset( pRegEx, 0, sizeof(*pRegEx) );

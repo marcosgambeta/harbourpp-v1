@@ -43,7 +43,7 @@ static HB_SIZE hb_compHrbSize( HB_COMP_DECL, HB_ULONG * pulSymbols, HB_ULONG * p
    while( pSym )
    {
       ( *pulSymbols )++;
-      nSize += strlen( pSym->szName ) + 3; /* \0 + symscope[1] + symtype[1] */
+      nSize += strlen(pSym->szName) + 3; /* \0 + symscope[1] + symtype[1] */
       pSym = pSym->pNext;
    }
    nSize += 4; /* functions_number[4] */
@@ -54,7 +54,7 @@ static HB_SIZE hb_compHrbSize( HB_COMP_DECL, HB_ULONG * pulSymbols, HB_ULONG * p
       if( ( pFunc->funFlags & HB_FUNF_FILE_DECL ) == 0 )
       {
          ( *pulFunctions )++;
-         nSize += strlen( pFunc->szName ) + 5 + pFunc->nPCodePos; /* \0 + func_size[4] + function_body */
+         nSize += strlen(pFunc->szName) + 5 + pFunc->nPCodePos; /* \0 + func_size[4] + function_body */
       }
       pFunc = pFunc->pNext;
    }
@@ -88,7 +88,7 @@ void hb_compGenBufPortObj( HB_COMP_DECL, HB_BYTE ** pBufPtr, HB_SIZE * pnSize )
    pSym = HB_COMP_PARAM->symbols.pFirst;
    while( pSym )
    {
-      nLen = strlen( pSym->szName ) + 1;
+      nLen = strlen(pSym->szName) + 1;
       memcpy( ptr, pSym->szName, nLen );
       ptr += nLen;
       /* FIXME: this conversion strips upper byte from symbol scope
@@ -127,7 +127,7 @@ void hb_compGenBufPortObj( HB_COMP_DECL, HB_BYTE ** pBufPtr, HB_SIZE * pnSize )
    {
       if( ( pFunc->funFlags & HB_FUNF_FILE_DECL ) == 0 )
       {
-         nLen = strlen( pFunc->szName ) + 1;
+         nLen = strlen(pFunc->szName) + 1;
          memcpy( ptr, pFunc->szName, nLen );
          ptr += nLen;
          HB_PUT_LE_UINT32( ptr, pFunc->nPCodePos );      /* function size */

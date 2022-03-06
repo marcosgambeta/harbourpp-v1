@@ -526,7 +526,7 @@ HB_FUNC( _SXOPENINIT )
             const char * szAlias = hb_parc(1);
             if( szAlias && szAlias[ 0 ] )
             {
-               pInfo->atomAlias = hb_dynsymName( hb_dynsymGet( szAlias ) );
+               pInfo->atomAlias = hb_dynsymName(hb_dynsymGet(szAlias));
             }
             else
             {

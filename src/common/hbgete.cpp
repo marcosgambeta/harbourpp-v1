@@ -228,7 +228,7 @@ HB_BOOL hb_setenv( const char * szName, const char * szValue )
    }
 #elif defined( _HB_NO_SETENV_ )
 
-   HB_SYMBOL_UNUSED( szValue );
+   HB_SYMBOL_UNUSED(szValue);
 
    return HB_FALSE;
 
@@ -241,7 +241,7 @@ HB_BOOL hb_setenv( const char * szName, const char * szValue )
 
    int iTODO;
 
-   HB_SYMBOL_UNUSED( szValue );
+   HB_SYMBOL_UNUSED(szValue);
 
    return HB_FALSE;
 

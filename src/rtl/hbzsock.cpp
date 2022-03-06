@@ -87,13 +87,13 @@ using PHB_SOCKEX_Z = HB_SOCKEX_Z *;
 
 static voidpf s_zsock_zalloc( voidpf opaque, uInt items, uInt size )
 {
-   HB_SYMBOL_UNUSED( opaque );
+   HB_SYMBOL_UNUSED(opaque);
    return hb_xalloc( static_cast<HB_SIZE>( items ) * size );
 }
 
 static void s_zsock_zfree( voidpf opaque, voidpf address )
 {
-   HB_SYMBOL_UNUSED( opaque );
+   HB_SYMBOL_UNUSED(opaque);
    hb_xfree(address);
 }
 
@@ -338,7 +338,7 @@ static char * s_sockexName( PHB_SOCKEX pSock )
    }
    else
    {
-      pszName = hb_strdup( pSock->pFilter->pszName );
+      pszName = hb_strdup(pSock->pFilter->pszName);
    }
 
    return pszName;

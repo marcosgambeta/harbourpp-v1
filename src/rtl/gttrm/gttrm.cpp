@@ -574,7 +574,7 @@ static int hb_gt_trm_getSize( PHB_GTTRM pTerm, int * piRows, int * piCols )
       }
    }
 #else
-   HB_SYMBOL_UNUSED( pTerm );
+   HB_SYMBOL_UNUSED(pTerm);
 #endif
 
    if( *piRows <= 0 || *piCols <= 0 )
@@ -985,8 +985,8 @@ static int set_gpmevt( int fd, int mode, void * cargo )
    PHB_GTTRM pTerm;
    Gpm_Event gEvt;
 
-   HB_SYMBOL_UNUSED( fd );
-   HB_SYMBOL_UNUSED( mode );
+   HB_SYMBOL_UNUSED(fd);
+   HB_SYMBOL_UNUSED(mode);
 
    pTerm = ( PHB_GTTRM ) cargo;
 
@@ -1074,7 +1074,7 @@ static void disp_mousecursor( PHB_GTTRM pTerm )
       Gpm_DrawPointer( pTerm->mLastEvt.col, pTerm->mLastEvt.row, gpm_consolefd );
    }
 #else
-   HB_SYMBOL_UNUSED( pTerm );
+   HB_SYMBOL_UNUSED(pTerm);
 #endif
 }
 
@@ -1082,7 +1082,7 @@ static void mouse_init( PHB_GTTRM pTerm )
 {
    if( pTerm->terminal_type == TERM_XTERM || pTerm->terminal_type == TERM_LINUX )
    {
-      hb_gt_trm_termOut( pTerm, s_szMouseOn, strlen( s_szMouseOn ) );
+      hb_gt_trm_termOut( pTerm, s_szMouseOn, strlen(s_szMouseOn) );
       hb_gt_trm_termFlush( pTerm );
       memset( static_cast<void*>( &pTerm->mLastEvt ), 0, sizeof(pTerm->mLastEvt) );
       pTerm->mouse_type |= MOUSE_XTERM;
@@ -1131,7 +1131,7 @@ static void mouse_exit( PHB_GTTRM pTerm )
 {
    if( pTerm->mouse_type & MOUSE_XTERM )
    {
-      hb_gt_trm_termOut( pTerm, s_szMouseOff, strlen( s_szMouseOff ) );
+      hb_gt_trm_termOut( pTerm, s_szMouseOff, strlen(s_szMouseOff) );
       hb_gt_trm_termFlush( pTerm );
    }
 #if defined( HB_HAS_GPM )
@@ -1619,7 +1619,7 @@ static void hb_gt_trm_LinuxTone( PHB_GTTRM pTerm, double dFrequency, double dDur
       pTerm->iACSC = 0;
    }
    hb_snprintf( escseq, sizeof(escseq), "\033[10;%d]\033[11;%d]\007", static_cast<int>( dFrequency ), static_cast<int>( dDuration * 1000.0 / 18.2 ) );
-   hb_gt_trm_termOut( pTerm, escseq, strlen( escseq ) );
+   hb_gt_trm_termOut( pTerm, escseq, strlen(escseq) );
    hb_gt_trm_termFlush( pTerm );
 
    /* convert Clipper (DOS) timer tick units to seconds ( x / 18.2 ) */
@@ -1662,7 +1662,7 @@ static void hb_gt_trm_LinuxSetCursorStyle( PHB_GTTRM pTerm, int iStyle )
       {
          char escseq[ 64 ];
          hb_snprintf( escseq, sizeof(escseq), "\033[?25%c\033[?%dc", iStyle == SC_NONE ? 'l' : 'h', lcurs );
-         hb_gt_trm_termOut( pTerm, escseq, strlen( escseq ) );
+         hb_gt_trm_termOut( pTerm, escseq, strlen(escseq) );
          pTerm->iCursorStyle = iStyle;
       }
    }
@@ -1734,7 +1734,7 @@ static HB_BOOL hb_gt_trm_XtermSetMode( PHB_GTTRM pTerm, int * piRows, int * piCo
 
    HB_GTSELF_GETSIZE( pTerm->pGT, &iHeight, &iWidth );
    hb_snprintf( escseq, sizeof(escseq), "\033[8;%d;%dt", *piRows, *piCols );
-   hb_gt_trm_termOut( pTerm, escseq, strlen( escseq ) );
+   hb_gt_trm_termOut( pTerm, escseq, strlen(escseq) );
    hb_gt_trm_termFlush( pTerm );
 
 #if defined( HB_OS_UNIX )
@@ -2055,7 +2055,7 @@ static void hb_gt_trm_XtermSetTitle( PHB_GTTRM pTerm, const char * szTitle )
    hb_gt_trm_termOut( pTerm, "\033]0;", 4 );
    if( szTitle )
    {
-      hb_gt_trm_termOut( pTerm, szTitle, strlen( szTitle ) );
+      hb_gt_trm_termOut( pTerm, szTitle, strlen(szTitle) );
    }
    hb_gt_trm_termOut( pTerm, "\007", 1 );
 }
@@ -2070,7 +2070,7 @@ static HB_BOOL hb_gt_trm_BsdGetCursorPos( PHB_GTTRM pTerm, int * iRow, int * iCo
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_trm_BsdGetCursorPos(%p,%p,%p,%s)", static_cast<void*>( pTerm ), static_cast<void*>( iRow ), static_cast<void*>( iCol ), szPost ) );
 #endif
 
-   HB_SYMBOL_UNUSED( szPost );
+   HB_SYMBOL_UNUSED(szPost);
 
    if( pTerm->fPosAnswer )
    {
@@ -2112,7 +2112,7 @@ static void hb_gt_trm_BsdSetCursorStyle( PHB_GTTRM pTerm, int iStyle )
             return;
       }
 
-      hb_gt_trm_termOut( pTerm, escseq, strlen( escseq ) );
+      hb_gt_trm_termOut( pTerm, escseq, strlen(escseq) );
       pTerm->iCursorStyle = iStyle;
    }
 }
@@ -2126,7 +2126,7 @@ static void hb_gt_trm_BsdTone( PHB_GTTRM pTerm, double dFrequency, double dDurat
    char escseq[ 64 ];
 
    hb_snprintf( escseq, sizeof(escseq), "\033[=%d;%dB\007", static_cast<int>( dFrequency ), static_cast<int>( dDuration * 10.0 / 18.2 ) );
-   hb_gt_trm_termOut( pTerm, escseq, strlen( escseq ) );
+   hb_gt_trm_termOut( pTerm, escseq, strlen(escseq) );
    hb_gt_trm_termFlush( pTerm );
 
    /* convert Clipper (DOS) timer tick units to seconds ( x / 18.2 ) */
@@ -2175,7 +2175,7 @@ static HB_BOOL hb_gt_trm_AnsiGetCursorPos( PHB_GTTRM pTerm, int * iRow, int * iC
       hb_gt_trm_termOut( pTerm, "\x1B[6n", 4 );
       if( szPost )
       {
-         hb_gt_trm_termOut( pTerm, szPost, strlen( szPost ) );
+         hb_gt_trm_termOut( pTerm, szPost, strlen(szPost) );
       }
       hb_gt_trm_termFlush( pTerm );
 
@@ -2289,7 +2289,7 @@ static void hb_gt_trm_AnsiSetCursorPos( PHB_GTTRM pTerm, int iRow, int iCol )
    {
       char buff[ 16 ];
       hb_snprintf( buff, sizeof(buff), "\x1B[%d;%dH", iRow + 1, iCol + 1 );
-      hb_gt_trm_termOut( pTerm, buff, strlen( buff ) );
+      hb_gt_trm_termOut( pTerm, buff, strlen(buff) );
       pTerm->iRow = iRow;
       pTerm->iCol = iCol;
    }
@@ -2493,7 +2493,7 @@ static void hb_gt_trm_AnsiTone( PHB_GTTRM pTerm, double dFrequency, double dDura
       pTerm->dToneSeconds = dCurrentSeconds;
    }
 
-   HB_SYMBOL_UNUSED( dFrequency );
+   HB_SYMBOL_UNUSED(dFrequency);
 
    /* convert Clipper (DOS) timer tick units to seconds ( x / 18.2 ) */
    hb_gtSleep( pTerm->pGT, dDuration / 18.2 );
@@ -2538,7 +2538,7 @@ static HB_BOOL hb_trm_Param( const char * pszParam, int * piValue )
 
    if( pszGtTrmParams )
    {
-      const char * pszAt = strstr( hb_strupr( pszGtTrmParams ), pszParam );
+      const char * pszAt = strstr(hb_strupr(pszGtTrmParams), pszParam);
 
       if( pszAt != nullptr )
       {
@@ -2547,7 +2547,7 @@ static HB_BOOL hb_trm_Param( const char * pszParam, int * piValue )
          {
             int iOverflow;
 
-            pszAt += strlen( pszParam );
+            pszAt += strlen(pszParam);
             if( *pszAt == '=' || *pszAt == ':' )
             {
                ++pszAt;
@@ -2590,7 +2590,7 @@ static HB_BOOL hb_trm_isUTF8( PHB_GTTRM pTerm )
    }
 
    szLang = getenv( "LANG" );
-   if( szLang && strstr( szLang, "UTF-8" ) != nullptr )
+   if( szLang && strstr(szLang, "UTF-8") != nullptr )
    {
       return HB_TRUE;
    }
@@ -3497,23 +3497,23 @@ static void hb_gt_trm_SetTerm( PHB_GTTRM pTerm )
             szTerm = "ansi";
          }
       }
-      if( strncmp( szTerm, "putty", 5 ) == 0 )
+      if( strncmp(szTerm, "putty", 5) == 0 )
       {
          pTerm->terminal_ext |= TERM_PUTTY;
       }
    }
 
    if( ( pTerm->terminal_ext & TERM_PUTTY ) ||  /* PuTTY terminal emulator */
-       strncmp( szTerm, "xterm", 5 ) == 0 ||    /* X11 terminal emulator */
-       strncmp( szTerm, "rxvt", 4 ) == 0 ||     /* rxvt terminal emulator */
-       strncmp( szTerm, "gnome", 5 ) == 0 ||    /* GNOME Terminal */
-       strncmp( szTerm, "vte", 3 ) == 0 ||      /* VTE aka GNOME Terminal */
-       strncmp( szTerm, "konsole", 7 ) == 0 ||  /* KDE console window */
-       strncmp( szTerm, "nsterm", 6 ) == 0 ||   /* Apple Terminal */
-       strncmp( szTerm, "Apple_Terminal", 14 ) == 0 || /* Apple Terminal */
-       strncmp( szTerm, "aixterm", 7 ) == 0 ||  /* IBM Aixterm Terminal Emulator */
-       strncmp( szTerm, "tmux", 4 ) == 0 ||     /* tmux terminal multiplexer */
-       strncmp( szTerm, "screen", 6 ) == 0 )    /* VT 100/ANSI X3.64 virtual terminal */
+       strncmp(szTerm, "xterm", 5) == 0 ||    /* X11 terminal emulator */
+       strncmp(szTerm, "rxvt", 4) == 0 ||     /* rxvt terminal emulator */
+       strncmp(szTerm, "gnome", 5) == 0 ||    /* GNOME Terminal */
+       strncmp(szTerm, "vte", 3) == 0 ||      /* VTE aka GNOME Terminal */
+       strncmp(szTerm, "konsole", 7) == 0 ||  /* KDE console window */
+       strncmp(szTerm, "nsterm", 6) == 0 ||   /* Apple Terminal */
+       strncmp(szTerm, "Apple_Terminal", 14) == 0 || /* Apple Terminal */
+       strncmp(szTerm, "aixterm", 7) == 0 ||  /* IBM Aixterm Terminal Emulator */
+       strncmp(szTerm, "tmux", 4) == 0 ||     /* tmux terminal multiplexer */
+       strncmp(szTerm, "screen", 6) == 0 )    /* VT 100/ANSI X3.64 virtual terminal */
    {
       pTerm->Init           = hb_gt_trm_AnsiInit;
       pTerm->Exit           = hb_gt_trm_AnsiExit;
@@ -3530,21 +3530,21 @@ static void hb_gt_trm_SetTerm( PHB_GTTRM pTerm )
       pTerm->terminal_type  = TERM_XTERM;
       if( pTerm->iExtColor == HB_GTTRM_CLRNDF )
       {
-         if( pTerm->terminal_ext & TERM_PUTTY || strstr( szTerm, "+256color" ) != nullptr || strstr( szTerm, "-256color" ) != nullptr )
+         if( pTerm->terminal_ext & TERM_PUTTY || strstr(szTerm, "+256color") != nullptr || strstr(szTerm, "-256color") != nullptr )
          {
             pTerm->iExtColor = HB_GTTRM_CLR256;
          }
-         else if( strstr( szTerm, "-88color" ) != nullptr )
+         else if( strstr(szTerm, "-88color") != nullptr )
          {
             pTerm->iExtColor = HB_GTTRM_CLRRGB;
          }
-         else if( strstr( szTerm, "-16color" ) != nullptr )
+         else if( strstr(szTerm, "-16color") != nullptr )
          {
             pTerm->iExtColor = HB_GTTRM_CLRAIX;
          }
       }
    }
-   else if( strncmp( szTerm, "linux", 5 ) == 0 || strcmp( szTerm, "cygwin" ) == 0 || strcmp( szTerm, "tterm" ) == 0 || strcmp( szTerm, "teraterm" ) == 0 )
+   else if( strncmp(szTerm, "linux", 5) == 0 || strcmp(szTerm, "cygwin") == 0 || strcmp(szTerm, "tterm") == 0 || strcmp(szTerm, "teraterm") == 0 )
    {
       pTerm->Init           = hb_gt_trm_AnsiInit;
       pTerm->Exit           = hb_gt_trm_AnsiExit;
@@ -3558,7 +3558,7 @@ static void hb_gt_trm_SetTerm( PHB_GTTRM pTerm )
       pTerm->Tone           = hb_gt_trm_LinuxTone;
       pTerm->Bell           = hb_gt_trm_AnsiBell;
       pTerm->szAcsc         = szExtAcsc;
-      if( strcmp( szTerm, "cygwin" ) == 0 )
+      if( strcmp(szTerm, "cygwin") == 0 )
       {
          pTerm->terminal_type  = TERM_CYGWIN;
          pTerm->fAM            = HB_TRUE;
@@ -3568,7 +3568,7 @@ static void hb_gt_trm_SetTerm( PHB_GTTRM pTerm )
          pTerm->terminal_type  = TERM_LINUX;
       }
    }
-   else if( strncmp( szTerm, "cons", 4 ) == 0 )
+   else if( strncmp(szTerm, "cons", 4) == 0 )
    {
       pTerm->Init           = hb_gt_trm_AnsiInit;
       pTerm->Exit           = hb_gt_trm_AnsiExit;
@@ -3835,7 +3835,7 @@ static void hb_gt_trm_mouse_Hide( PHB_GT pGT )
       gpm_visiblepointer = 0;
    }
 #else
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 #endif
 }
 
@@ -3921,7 +3921,7 @@ static int hb_gt_trm_ReadKey( PHB_GT pGT, int iEventMask )
 
    int iKey;
 
-   HB_SYMBOL_UNUSED( iEventMask );
+   HB_SYMBOL_UNUSED(iEventMask);
 
    iKey = wait_key( HB_GTTRM_GET( pGT ), 0 );
 
@@ -3973,7 +3973,7 @@ static const char * hb_gt_trm_Version( PHB_GT pGT, int iType )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_trm_Version(%p,%d)", static_cast<void*>( pGT ), iType ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    if( iType == 0 )
    {
@@ -3994,7 +3994,7 @@ static HB_BOOL hb_gt_trm_Suspend( PHB_GT pGT )
    pTerm = HB_GTTRM_GET( pGT );
    if( pTerm->mouse_type & MOUSE_XTERM )
    {
-      hb_gt_trm_termOut( pTerm, s_szMouseOff, strlen( s_szMouseOff ) );
+      hb_gt_trm_termOut( pTerm, s_szMouseOff, strlen(s_szMouseOff) );
    }
 #if defined( HB_OS_UNIX )
    if( pTerm->fRestTTY )
@@ -4025,7 +4025,7 @@ static HB_BOOL hb_gt_trm_Resume( PHB_GT pGT )
 #endif
    if( pTerm->mouse_type & MOUSE_XTERM )
    {
-      hb_gt_trm_termOut( pTerm, s_szMouseOn, strlen( s_szMouseOn ) );
+      hb_gt_trm_termOut( pTerm, s_szMouseOn, strlen(s_szMouseOn) );
    }
 
    pTerm->Init( pTerm );
@@ -4110,7 +4110,7 @@ static void hb_gt_trm_SetBlink( PHB_GT pGT, HB_BOOL fBlink )
       const char * szBlink = fBlink ? szBlinkOn : szBlinkOff;
 
       pTerm->iAttrMask |= 0x0080;
-      hb_gt_trm_termOut( pTerm, szBlink, strlen( szBlink ) );
+      hb_gt_trm_termOut( pTerm, szBlink, strlen(szBlink) );
       hb_gt_trm_termFlush( pTerm );
    }
    else
@@ -4430,7 +4430,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             {
                hb_xfree(pTerm->szTitle);
             }
-            pTerm->szTitle = ( szVal && *szVal ) ? hb_strdup( szVal ) : nullptr;
+            pTerm->szTitle = ( szVal && *szVal ) ? hb_strdup(szVal) : nullptr;
             hb_gt_trm_SetTitle( pTerm, pTerm->szTitle );
             hb_gt_trm_termFlush( pTerm );
             hb_strfree( hVal );

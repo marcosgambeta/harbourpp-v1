@@ -78,7 +78,7 @@
 static HB_GARBAGE_FUNC( hb_libRelease )
 {
    /* do nothing */
-   HB_SYMBOL_UNUSED( Cargo );
+   HB_SYMBOL_UNUSED(Cargo);
 }
 
 static const HB_GC_FUNCS s_gcDynlibFuncs =
@@ -202,7 +202,7 @@ void * hb_libSymAddr( PHB_ITEM pDynLib, const char * pszSymbol )
 #elif defined( HB_CAUSEWAY_DLL )
       return GetProcAddress( hDynLib, pszSymbol );
 #else
-      HB_SYMBOL_UNUSED( pszSymbol );
+      HB_SYMBOL_UNUSED(pszSymbol);
 #endif
    }
    return nullptr;

@@ -115,8 +115,8 @@ static void hb_gt_cgi_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
    pGTCGI->hStdout = hFilenoStdout;
 
-   pGTCGI->szCrLf = hb_strdup( hb_conNewLine() );
-   pGTCGI->nCrLf = strlen( pGTCGI->szCrLf );
+   pGTCGI->szCrLf = hb_strdup(hb_conNewLine());
+   pGTCGI->nCrLf = strlen(pGTCGI->szCrLf);
 
    hb_fsSetDevMode( pGTCGI->hStdout, FD_BINARY );
 
@@ -166,8 +166,8 @@ static int hb_gt_cgi_ReadKey( PHB_GT pGT, int iEventMask )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_ReadKey(%p,%d)", static_cast<void*>( pGT ), iEventMask ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
-   HB_SYMBOL_UNUSED( iEventMask );
+   HB_SYMBOL_UNUSED(pGT);
+   HB_SYMBOL_UNUSED(iEventMask);
 
    return 13;
 }
@@ -178,7 +178,7 @@ static HB_BOOL hb_gt_cgi_IsColor( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_IsColor(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    return HB_FALSE;
 }
@@ -203,7 +203,7 @@ static const char * hb_gt_cgi_Version( PHB_GT pGT, int iType )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_cgi_Version(%p,%d)", static_cast<void*>( pGT ), iType ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    if( iType == 0 )
    {
@@ -335,7 +335,7 @@ static void hb_gt_cgi_WriteCon( PHB_GT pGT, const char * szText, HB_SIZE nLength
 static void hb_gt_cgi_WriteConW( PHB_GT pGT, const HB_WCHAR * szTextW, HB_SIZE nLength )
 {
    PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP( pGT );
-   HB_SIZE nSize = hb_cdpU16AsStrLen( cdpTerm, szTextW, nLength, 0 );
+   HB_SIZE nSize = hb_cdpU16AsStrLen(cdpTerm, szTextW, nLength, 0);
    char * buffer = static_cast<char*>( hb_xgrab(nSize) );
 
    hb_cdpU16ToStr( cdpTerm, HB_CDP_ENDIAN_NATIVE, szTextW, nLength, buffer, nSize );
@@ -352,7 +352,7 @@ static void hb_gt_cgi_WriteAt( PHB_GT pGT, int iRow, int iCol, const char * szTe
 static void hb_gt_cgi_WriteAtW( PHB_GT pGT, int iRow, int iCol, const HB_WCHAR * szTextW, HB_SIZE nLength )
 {
    PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP( pGT );
-   HB_SIZE nSize = hb_cdpU16AsStrLen( cdpTerm, szTextW, nLength, 0 );
+   HB_SIZE nSize = hb_cdpU16AsStrLen(cdpTerm, szTextW, nLength, 0);
    char * buffer = static_cast<char*>( hb_xgrab(nSize) );
 
    hb_cdpU16ToStr( cdpTerm, HB_CDP_ENDIAN_NATIVE, szTextW, nLength, buffer, nSize );

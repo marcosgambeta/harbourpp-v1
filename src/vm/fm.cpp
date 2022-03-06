@@ -539,23 +539,23 @@ void hb_xsetfilename( const char * szValue )
 #ifdef HB_FM_STATISTICS
    if( szValue )
    {
-      hb_strncpy( s_szFileName, szValue, sizeof(s_szFileName) - 1 );
+      hb_strncpy(s_szFileName, szValue, sizeof(s_szFileName) - 1);
    }
    else
    {
       s_szFileName[ 0 ] = '\0';
    }
 #else
-   HB_SYMBOL_UNUSED( szValue );
+   HB_SYMBOL_UNUSED(szValue);
 #endif
 }
 
 void hb_xsetinfo( const char * szValue )
 {
 #ifdef HB_FM_STATISTICS
-   hb_strncpy( s_szInfo, szValue, sizeof(s_szInfo) - 1 );
+   hb_strncpy(s_szInfo, szValue, sizeof(s_szInfo) - 1);
 #else
-   HB_SYMBOL_UNUSED( szValue );
+   HB_SYMBOL_UNUSED(szValue);
 #endif
 }
 
@@ -602,7 +602,7 @@ void * hb_xalloc( HB_SIZE nSize )         /* allocates fixed memory, returns nul
          pMem->uiProcLine = pTrace->line; /* C line number */
          if( pTrace->file )
          {
-            hb_strncpy( pMem->szProcName, pTrace->file, sizeof(pMem->szProcName) - 1 );
+            hb_strncpy(pMem->szProcName, pTrace->file, sizeof(pMem->szProcName) - 1);
          }
          else
          {
@@ -709,7 +709,7 @@ void * hb_xgrab( HB_SIZE nSize )         /* allocates fixed memory, exits on fai
          pMem->uiProcLine = pTrace->line; /* C line number */
          if( pTrace->file )
          {
-            hb_strncpy( pMem->szProcName, pTrace->file, sizeof(pMem->szProcName) - 1 );
+            hb_strncpy(pMem->szProcName, pTrace->file, sizeof(pMem->szProcName) - 1);
          }
          else
          {
@@ -1140,7 +1140,7 @@ HB_SIZE hb_xsize( void * pMem ) /* returns the size of an allocated memory block
 #ifdef HB_FM_STATISTICS
    return HB_FM_BLOCKSIZE( pMem );
 #else
-   HB_SYMBOL_UNUSED( pMem );
+   HB_SYMBOL_UNUSED(pMem);
 
    return 0;
 #endif
@@ -1168,7 +1168,7 @@ const char * hb_xinfo( void * pMem, HB_USHORT * puiLine )
    }
 #else
 
-   HB_SYMBOL_UNUSED( pMem );
+   HB_SYMBOL_UNUSED(pMem);
 
    if( puiLine )
    {

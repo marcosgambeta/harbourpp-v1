@@ -852,7 +852,7 @@ PHB_MACRO hb_macroCompile( const char * szString )
    pMacro->uiNameLen = HB_SYMBOL_NAME_LEN;
    pMacro->status    = HB_MACRO_CONT;
    pMacro->string    = szString;
-   pMacro->length    = strlen( szString );
+   pMacro->length    = strlen(szString);
 
    iStatus = hb_macroParse( pMacro );
    if( ! ( iStatus == HB_MACRO_OK && ( pMacro->status & HB_MACRO_CONT ) ) )
@@ -985,9 +985,9 @@ HB_FUNC( MEMVARBLOCK )
 
       if( *szVarName )
       {
-         PHB_DYNS pVarSym = hb_dynsymFind( szVarName );
+         PHB_DYNS pVarSym = hb_dynsymFind(szVarName);
 
-         if( pVarSym && hb_dynsymIsMemvar( pVarSym ) )
+         if( pVarSym && hb_dynsymIsMemvar(pVarSym) )
          {
             HB_STACK_TLS_PRELOAD
             hb_macroSetGetBlock( pVarSym, hb_stackReturnItem(), 0, HB_TRUE );
@@ -1029,7 +1029,7 @@ HB_FUNC( FIELDBLOCK )
           * will register big number of completely unnecessary
           * symbols. [druzus]
           */
-         PHB_DYNS pFieldSym = hb_dynsymFind( szFieldName );
+         PHB_DYNS pFieldSym = hb_dynsymFind(szFieldName);
          if( pFieldSym )
          {
             HB_STACK_TLS_PRELOAD
@@ -1056,7 +1056,7 @@ HB_FUNC( FIELDWBLOCK )
 
       if( *szFieldName )
       {
-         PHB_DYNS pFieldSym = hb_dynsymFind( szFieldName );
+         PHB_DYNS pFieldSym = hb_dynsymFind(szFieldName);
          if( pFieldSym )
          {
             HB_STACK_TLS_PRELOAD
@@ -1089,7 +1089,7 @@ void hb_macroPushSymbol( PHB_ITEM pItem )
       szString = hb_macroTextSymbol( pItem->item.asString.value, pItem->item.asString.length, &fNewBuffer );
       if( szString )
       {
-         PHB_DYNS pDynSym = hb_dynsymGetCase( szString );
+         PHB_DYNS pDynSym = hb_dynsymGetCase(szString);
 
          if( fNewBuffer )
          {
@@ -1112,7 +1112,7 @@ void hb_macroPushSymbol( PHB_ITEM pItem )
    if( ! HB_IS_SYMBOL(hb_stackItemFromTop(-1)) && hb_vmRequestQuery() == 0 )
    {
       hb_stackPop();    /* remove compiled string */
-      hb_vmPushDynSym( hb_dynsymGetCase( "" ) );  /* push compiled symbol instead of a string */
+      hb_vmPushDynSym( hb_dynsymGetCase("") );  /* push compiled symbol instead of a string */
    }
 }
 
@@ -1334,7 +1334,7 @@ int hb_macroLocalVarGetPos( const char * szVarName, HB_COMP_DECL )
 
    while( pVars )
    {
-      if( pVars->szName && ! strcmp( pVars->szName, szVarName ) )
+      if( pVars->szName && ! strcmp(pVars->szName, szVarName) )
       {
          return iVar;
       }
@@ -1475,18 +1475,18 @@ static void hb_macroMemvarGenPCode( HB_BYTE bPCode, const char * szVarName, HB_C
       /* we are determining the type of expression (called from Type() function)
        * then we shouldn't create the requested variable if it doesn't exist
        */
-      pSym = hb_dynsymFind( szVarName );
+      pSym = hb_dynsymFind(szVarName);
       if( ! pSym )
       {
          HB_MACRO_DATA->status |= HB_MACRO_UNKN_VAR;
-         pSym = hb_dynsymGetCase( szVarName );
+         pSym = hb_dynsymGetCase(szVarName);
       }
    }
    else
    {
       /* Find the address of passed symbol - create the symbol if doesn't exist
        * (Clipper compatibility). */
-      pSym = hb_dynsymGetCase( szVarName );
+      pSym = hb_dynsymGetCase(szVarName);
    }
 
    byBuf[ 0 ] = bPCode;
@@ -1504,7 +1504,7 @@ void hb_macroGenPushSymbol( const char * szSymbolName, HB_BOOL bFunction, HB_COM
    {
       /* we are determining the type of expression (called from Type() function)
        */
-      pSym = hb_dynsymFind( szSymbolName );
+      pSym = hb_dynsymFind(szSymbolName);
       if( ! pSym )
       {
          HB_MACRO_DATA->status |= HB_MACRO_UNKN_SYM;
@@ -1526,7 +1526,7 @@ void hb_macroGenPushSymbol( const char * szSymbolName, HB_BOOL bFunction, HB_COM
    }
    else
    {
-      pSym = hb_dynsymGetCase( szSymbolName );
+      pSym = hb_dynsymGetCase(szSymbolName);
    }
 
    byBuf[ 0 ] = HB_P_MPUSHSYM;
@@ -1599,7 +1599,7 @@ void hb_macroGenMessage( const char * szMsgName, HB_BOOL bIsObject, HB_COMP_DECL
 
       /* Find the address of passed symbol - create the symbol if doesn't exist
        */
-      PHB_DYNS pSym = hb_dynsymGetCase( szMsgName );
+      PHB_DYNS pSym = hb_dynsymGetCase(szMsgName);
 
       byBuf[ 0 ] = HB_P_MMESSAGE;
       HB_PUT_PTR( &byBuf[ 1 ], pSym );
@@ -1621,7 +1621,7 @@ void hb_macroGenMessageData( const char * szMsg, HB_BOOL bIsObject, HB_COMP_DECL
    char szResult[ HB_SYMBOL_NAME_LEN + 1 ];
    int iLen;
 
-   iLen = static_cast<int>( strlen( szMsg ) );
+   iLen = static_cast<int>( strlen(szMsg) );
    if( iLen > HB_SYMBOL_NAME_LEN - 1 )
    {
       iLen = HB_SYMBOL_NAME_LEN - 1;
@@ -1669,15 +1669,15 @@ void hb_macroGenPopAliasedVar( const char * szVarName, HB_BOOL bPushAliasValue, 
    {
       if( szAlias )
       {
-         int iLen = static_cast<int>( strlen( szAlias ) );
+         int iLen = static_cast<int>( strlen(szAlias) );
 
-         if( szAlias[ 0 ] == 'M' && ( iLen == 1 || ( iLen >= 4 && iLen <= 6 && strncmp( szAlias, "MEMVAR", iLen ) == 0 ) ) )
+         if( szAlias[ 0 ] == 'M' && ( iLen == 1 || ( iLen >= 4 && iLen <= 6 && strncmp(szAlias, "MEMVAR", iLen) == 0 ) ) )
          {
             /* M-> or MEMV-> or MEMVA-> or MEMVAR-> variable */
             /* TODO: memvars created inside Type() function should have PUBLIC scope */
             hb_macroMemvarGenPCode( HB_P_MPOPMEMVAR, szVarName, HB_COMP_PARAM );
          }
-         else if( iLen >= 4 && iLen <= 6 && ( strncmp( szAlias, "FIELD", iLen ) == 0 || strncmp( szAlias, "_FIELD", iLen ) == 0 ) )
+         else if( iLen >= 4 && iLen <= 6 && ( strncmp(szAlias, "FIELD", iLen) == 0 || strncmp(szAlias, "_FIELD", iLen) == 0 ) )
          {
             /* FIELD-> */
             hb_macroMemvarGenPCode( HB_P_MPOPFIELD, szVarName, HB_COMP_PARAM );
@@ -1764,14 +1764,14 @@ void hb_macroGenPushAliasedVar( const char * szVarName, HB_BOOL bPushAliasValue,
           * FIELD->var
           * MEMVAR->var
           */
-         int iLen = static_cast<int>( strlen( szAlias ) );
+         int iLen = static_cast<int>( strlen(szAlias) );
 
-         if( szAlias[ 0 ] == 'M' && ( iLen == 1 || ( iLen >= 4 && iLen <= 6 && strncmp( szAlias, "MEMVAR", iLen ) == 0 ) ) )
+         if( szAlias[ 0 ] == 'M' && ( iLen == 1 || ( iLen >= 4 && iLen <= 6 && strncmp(szAlias, "MEMVAR", iLen) == 0 ) ) )
          {
             /* M-> or MEMV-> or MEMVA-> or MEMVAR-> variable */
             hb_macroMemvarGenPCode( HB_P_MPUSHMEMVAR, szVarName, HB_COMP_PARAM );
          }
-         else if( iLen >= 4 && iLen <= 6 && ( strncmp( szAlias, "FIELD", iLen ) == 0 || strncmp( szAlias, "_FIELD", iLen ) == 0 ) )
+         else if( iLen >= 4 && iLen <= 6 && ( strncmp(szAlias, "FIELD", iLen) == 0 || strncmp(szAlias, "_FIELD", iLen) == 0 ) )
          {
             /* FIELD-> */
             hb_macroMemvarGenPCode( HB_P_MPUSHFIELD, szVarName, HB_COMP_PARAM );

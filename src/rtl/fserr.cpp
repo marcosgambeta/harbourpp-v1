@@ -200,7 +200,7 @@ void  hb_fsSetIOError( HB_BOOL fResult, HB_USHORT uiOperation )
    PHB_IOERRORS pIOErrors;
 
    /* TODO: implement it */
-   HB_SYMBOL_UNUSED( uiOperation );
+   HB_SYMBOL_UNUSED(uiOperation);
 
    if( fResult )
    {

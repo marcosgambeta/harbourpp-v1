@@ -79,14 +79,14 @@ static HB_SIZE s_zlibCompressBound( HB_SIZE nLen )
 
 static void * s_zlib_alloc( void * cargo, uInt items, uInt size )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
 
    return ( items > 0 && size > 0 ) ? hb_xalloc( static_cast<HB_SIZE>( items ) * size ) : nullptr;
 }
 
 static void s_zlib_free( void * cargo, void * address )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
 
    if( address )
    {

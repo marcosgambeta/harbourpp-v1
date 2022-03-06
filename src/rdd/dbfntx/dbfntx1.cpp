@@ -340,7 +340,7 @@ static PHB_ITEM hb_ntxStrToNum( PHB_ITEM pItem, const char * szKeyVal, HB_USHORT
    HB_MAXINT lValue;
    double dValue;
 
-   HB_SYMBOL_UNUSED( dec );
+   HB_SYMBOL_UNUSED(dec);
 
    if( *ptr == '0' - 4 ) /* negative number */
    {
@@ -1556,16 +1556,16 @@ static LPTAGINFO hb_ntxTagNew( LPNTXINDEX pIndex,
    LPTAGINFO pTag;
 
    pTag = static_cast<LPTAGINFO>( hb_xgrabz( sizeof(TAGINFO) ) );
-   pTag->TagName = hb_strndup( szTagName, NTX_MAX_TAGNAME );
+   pTag->TagName = hb_strndup(szTagName, NTX_MAX_TAGNAME);
    pTag->fTagName = fTagName;
    pTag->pIndex = pIndex;
    if( szKeyExpr )
    {
-      pTag->KeyExpr = hb_strndup( szKeyExpr, NTX_MAX_EXP );
+      pTag->KeyExpr = hb_strndup(szKeyExpr, NTX_MAX_EXP);
    }
    if( pForExpr && szForExpr )
    {
-      pTag->ForExpr = hb_strndup( szForExpr, NTX_MAX_EXP );
+      pTag->ForExpr = hb_strndup(szForExpr, NTX_MAX_EXP);
    }
    pTag->nField = hb_rddFieldExpIndex( &pIndex->pArea->dbfarea.area, pTag->KeyExpr );
    pTag->pKeyItem = pKeyExpr;
@@ -1793,7 +1793,7 @@ static void hb_ntxIndexTagAdd( LPNTXINDEX pIndex, LPTAGINFO pTag )
    {
       ++iTags;
       HB_PUT_LE_UINT16( lpCTX->ntags, iTags );
-      iLen = static_cast<int>( strlen( pTag->TagName ) );
+      iLen = static_cast<int>( strlen(pTag->TagName) );
       if( iLen > NTX_MAX_TAGNAME )
       {
          iLen = NTX_MAX_TAGNAME;
@@ -1911,7 +1911,7 @@ static HB_ERRCODE hb_ntxTagHeaderSave( LPTAGINFO pTag )
       Header.unique[ 0 ]  = pTag->UniqueKey ? 1 : 0;
       Header.descend[ 0 ] = pTag->AscendKey ? 0 : 1;
       Header.custom[ 0 ]  = pTag->Custom    ? 1 : 0;
-      iLen = static_cast<int>( strlen( pTag->KeyExpr ) );
+      iLen = static_cast<int>( strlen(pTag->KeyExpr) );
       if( iLen > NTX_MAX_EXP )
       {
          iLen = NTX_MAX_EXP;
@@ -1919,7 +1919,7 @@ static HB_ERRCODE hb_ntxTagHeaderSave( LPTAGINFO pTag )
       memcpy( Header.key_expr, pTag->KeyExpr, iLen );
       if( pTag->ForExpr )
       {
-         iLen = static_cast<int>( strlen( pTag->ForExpr ) );
+         iLen = static_cast<int>( strlen(pTag->ForExpr) );
          if( iLen > NTX_MAX_EXP )
          {
             iLen = NTX_MAX_EXP;
@@ -1928,7 +1928,7 @@ static HB_ERRCODE hb_ntxTagHeaderSave( LPTAGINFO pTag )
       }
       if( pTag->fTagName )
       {
-         iLen = static_cast<int>( strlen( pTag->TagName ) );
+         iLen = static_cast<int>( strlen(pTag->TagName) );
          if( iLen > NTX_MAX_TAGNAME )
          {
             iLen = NTX_MAX_TAGNAME;
@@ -3937,7 +3937,7 @@ static void hb_ntxCreateFName( NTXAREAP pArea, const char * szBagName, HB_BOOL *
    PHB_ITEM pExt = nullptr;
    HB_BOOL fName = szBagName && *szBagName;
 
-   pFileName = hb_fsFNameSplit( fName ? szBagName : pArea->dbfarea.szDataFileName );
+   pFileName = hb_fsFNameSplit(fName ? szBagName : pArea->dbfarea.szDataFileName);
 
    if( szTagName )
    {
@@ -3975,7 +3975,7 @@ static void hb_ntxCreateFName( NTXAREAP pArea, const char * szBagName, HB_BOOL *
       }
       else
       {
-         PHB_FNAME pTableFileName = hb_fsFNameSplit( pArea->dbfarea.szDataFileName );
+         PHB_FNAME pTableFileName = hb_fsFNameSplit(pArea->dbfarea.szDataFileName);
 
          *fProd = pTableFileName->szName && hb_stricmp( pTableFileName->szName, pFileName->szName ) == 0;
          if( *fProd && pFileName->szExtension && ! pExt )
@@ -4006,7 +4006,7 @@ static LPNTXINDEX hb_ntxFindBag( NTXAREAP pArea, const char * szBagName )
    LPNTXINDEX pIndex;
    PHB_FNAME pSeek;
 
-   pSeek = hb_fsFNameSplit( szBagName );
+   pSeek = hb_fsFNameSplit(szBagName);
    if( ! pSeek->szName )
    {
       pSeek->szName = "";
@@ -4016,7 +4016,7 @@ static LPNTXINDEX hb_ntxFindBag( NTXAREAP pArea, const char * szBagName )
    while( pIndex )
    {
       HB_BOOL fFound;
-      PHB_FNAME pName = hb_fsFNameSplit( pIndex->IndexName );
+      PHB_FNAME pName = hb_fsFNameSplit(pIndex->IndexName);
       if( ! pName->szName )
       {
          pName->szName = "";
@@ -5394,7 +5394,7 @@ static void hb_ntxSortWritePage( LPNTXSORTINFO pSort )
       }
       else
       {
-         pSort->szTempFileName = hb_strdup( szName );
+         pSort->szTempFileName = hb_strdup(szName);
       }
    }
 
@@ -6879,7 +6879,7 @@ static HB_ERRCODE hb_ntxStructSize( NTXAREAP pArea, HB_USHORT * uiSize )
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_ntxStructSize(%p, %p)", static_cast<void*>( pArea ), static_cast<void*>( uiSize ) ) );
 #endif
-   HB_SYMBOL_UNUSED( pArea );
+   HB_SYMBOL_UNUSED(pArea);
 
    *uiSize = sizeof(NTXAREA);
    return HB_SUCCESS;
@@ -7286,14 +7286,14 @@ static HB_ERRCODE hb_ntxOrderCreate( NTXAREAP pArea, LPDBORDERCREATEINFO pOrderI
       }
 
       pIndex = hb_ntxIndexNew( pArea );
-      pIndex->IndexName = hb_strdup( szFileName );
+      pIndex->IndexName = hb_strdup(szFileName);
       pIndex->fReadonly = HB_FALSE;
       pIndex->fShared = fShared;
       pIndex->DiskFile = pFile;
       pIndex->fDelete = fTemporary;
       if( fTemporary )
       {
-         pIndex->RealName = hb_strdup( szSpFile );
+         pIndex->RealName = hb_strdup(szSpFile);
       }
       else
       {
@@ -7732,7 +7732,7 @@ static HB_ERRCODE hb_ntxOrderInfo( NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
             if( hb_itemType(pInfo->itmNewVal) & HB_IT_STRING )
             {
                const char * szForExpr = hb_itemGetCPtr(pInfo->itmNewVal);
-               if( pTag->ForExpr ? strncmp( pTag->ForExpr, szForExpr, NTX_MAX_EXP ) != 0 : *szForExpr )
+               if( pTag->ForExpr ? strncmp(pTag->ForExpr, szForExpr, NTX_MAX_EXP) != 0 : *szForExpr )
                {
                   PHB_ITEM pForItem = nullptr;
                   HB_BOOL fOK = *szForExpr == 0;
@@ -7762,7 +7762,7 @@ static HB_ERRCODE hb_ntxOrderInfo( NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
                      }
                      if( pForItem )
                      {
-                        pTag->ForExpr = hb_strndup( szForExpr, NTX_MAX_EXP );
+                        pTag->ForExpr = hb_strndup(szForExpr, NTX_MAX_EXP);
                         pTag->pForItem = pForItem;
                         pForItem = nullptr;
                      }
@@ -7788,7 +7788,7 @@ static HB_ERRCODE hb_ntxOrderInfo( NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
             break;
          case DBOI_BAGNAME:
          {
-            PHB_FNAME pFileName = hb_fsFNameSplit( pTag->pIndex->IndexName );
+            PHB_FNAME pFileName = hb_fsFNameSplit(pTag->pIndex->IndexName);
             pInfo->itmResult = hb_itemPutC(pInfo->itmResult, pFileName->szName);
             hb_xfree(pFileName);
             break;
@@ -8365,7 +8365,7 @@ static HB_ERRCODE hb_ntxOrderListAdd( NTXAREAP pArea, LPDBORDERINFO pOrderInfo )
       }
 
       pIndex = hb_ntxIndexNew( pArea );
-      pIndex->IndexName = hb_strdup( szFileName );
+      pIndex->IndexName = hb_strdup(szFileName);
       pIndex->fReadonly = fReadonly;
       pIndex->fShared = fShared;
       pIndex->DiskFile = pFile;
@@ -8627,11 +8627,11 @@ static HB_ERRCODE hb_ntxRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
          const char * szNew = hb_itemGetCPtr(pItem);
          char * szNewVal;
 
-         szNewVal = szNew[ 0 ] == '.' && szNew[ 1 ] ? hb_strdup( szNew ) : nullptr;
+         szNewVal = szNew[ 0 ] == '.' && szNew[ 1 ] ? hb_strdup(szNew) : nullptr;
          hb_itemPutC(pItem, pData->szIndexExt[ 0 ] ? pData->szIndexExt : NTX_INDEXEXT);
          if( szNewVal )
          {
-            hb_strncpy( pData->szIndexExt, szNewVal, sizeof(pData->szIndexExt) - 1 );
+            hb_strncpy(pData->szIndexExt, szNewVal, sizeof(pData->szIndexExt) - 1);
             hb_xfree(szNewVal);
          }
          break;
@@ -8857,7 +8857,7 @@ HB_FUNC_STATIC( DBFNTX_GETFUNCTABLE )
 
 static void hb_dbfntxRddInit( void * cargo )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
 
    if( hb_rddRegister( "DBF", RDT_FULL ) <= 1 )
    {

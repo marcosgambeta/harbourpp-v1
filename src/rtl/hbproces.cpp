@@ -108,7 +108,7 @@ static char ** hb_buildArgs( const char *pszFileName )
    }
 
    pszFileName = hb_osEncodeCP( pszFileName, &pszFree, nullptr );
-   dst = pszFree ? pszFree : hb_strdup( pszFileName );
+   dst = pszFree ? pszFree : hb_strdup(pszFileName);
 
    src = dst;
    while( *src )
@@ -343,10 +343,10 @@ static int hb_fsProcessExec( const char * pszFileName, HB_FHANDLE hStdin, HB_FHA
 {
    int iTODO; /* TODO: for given platform */
 
-   HB_SYMBOL_UNUSED( pszFileName );
-   HB_SYMBOL_UNUSED( hStdin );
-   HB_SYMBOL_UNUSED( hStdout );
-   HB_SYMBOL_UNUSED( hStderr );
+   HB_SYMBOL_UNUSED(pszFileName);
+   HB_SYMBOL_UNUSED(hStdin);
+   HB_SYMBOL_UNUSED(hStdout);
+   HB_SYMBOL_UNUSED(hStderr);
 
    hb_fsSetError( static_cast<HB_ERRCODE>( FS_ERROR ) );
 }
@@ -680,9 +680,9 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
 #else
       int iTODO; /* TODO: for given platform */
 
-      HB_SYMBOL_UNUSED( pszFileName );
-      HB_SYMBOL_UNUSED( fDetach );
-      HB_SYMBOL_UNUSED( pulPID );
+      HB_SYMBOL_UNUSED(pszFileName);
+      HB_SYMBOL_UNUSED(fDetach);
+      HB_SYMBOL_UNUSED(pulPID);
 
       hb_fsSetError( static_cast<HB_ERRCODE>( FS_ERROR ) );
 #endif
@@ -790,8 +790,8 @@ int hb_fsProcessValue( HB_FHANDLE hProcess, HB_BOOL fWait )
 {
    int iTODO; /* TODO: for given platform */
 
-   HB_SYMBOL_UNUSED( hProcess );
-   HB_SYMBOL_UNUSED( fWait );
+   HB_SYMBOL_UNUSED(hProcess);
+   HB_SYMBOL_UNUSED(fWait);
    hb_fsSetError( static_cast<HB_ERRCODE>( FS_ERROR ) );
 }
 #endif
@@ -844,8 +844,8 @@ HB_BOOL hb_fsProcessClose( HB_FHANDLE hProcess, HB_BOOL fGentle )
 {
    int iTODO; /* TODO: for given platform */
 
-   HB_SYMBOL_UNUSED( hProcess );
-   HB_SYMBOL_UNUSED( fGentle );
+   HB_SYMBOL_UNUSED(hProcess);
+   HB_SYMBOL_UNUSED(fGentle);
    hb_fsSetError( static_cast<HB_ERRCODE>( FS_ERROR ) );
 }
 #endif
@@ -888,9 +888,9 @@ int hb_fsProcessRun( const char * pszFileName,
    char sTmpOut[ HB_PATH_MAX ];
    char sTmpErr[ HB_PATH_MAX ];
 
-   HB_SYMBOL_UNUSED( phStdin );
-   HB_SYMBOL_UNUSED( nOutSize );
-   HB_SYMBOL_UNUSED( nErrSize );
+   HB_SYMBOL_UNUSED(phStdin);
+   HB_SYMBOL_UNUSED(nOutSize);
+   HB_SYMBOL_UNUSED(nErrSize);
 
    sTmpIn[ 0 ] = sTmpOut[ 0 ] = sTmpErr[ 0 ] = '\0';
    if( pStdInBuf )
@@ -1568,9 +1568,9 @@ int hb_fsProcessRun( const char * pszFileName,
 
       int iTODO;
 
-      HB_SYMBOL_UNUSED( nStdInLen );
-      HB_SYMBOL_UNUSED( nOutSize );
-      HB_SYMBOL_UNUSED( nErrSize );
+      HB_SYMBOL_UNUSED(nStdInLen);
+      HB_SYMBOL_UNUSED(nOutSize);
+      HB_SYMBOL_UNUSED(nErrSize);
 
 #endif
    }

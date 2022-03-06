@@ -79,7 +79,7 @@ static void hb_pp_writeToken( FILE * fout, PHB_PP_TOKEN pToken,
    {
       int iOptional = hb_pp_writeTokenCount( pToken->pMTokens ), i;
 
-      i = static_cast<int>( strlen( szName ) );
+      i = static_cast<int>( strlen(szName) );
       if( pToken->pNext )
          fprintf( fout, "   { %s +%2d", szName, iToken + iOptional + 1 );
       else
@@ -89,7 +89,7 @@ static void hb_pp_writeToken( FILE * fout, PHB_PP_TOKEN pToken,
       else
          fprintf( fout, ", NULL%*s", i, "" );
 
-      i = 16 - static_cast<int>( strlen( pToken->value ) );
+      i = 16 - static_cast<int>( strlen(pToken->value) );
       fprintf( fout, ", \"%s\", %*s %2d,%2d, 0x%04x, %u }%s\n",
                pToken->value,
                i < 0 ? 0 : i, "",
@@ -159,11 +159,11 @@ static int hb_pp_writeRules( FILE * fout, PHB_PP_RULE pFirst, const char * szNam
       if( pRule->pMatch )
          hb_snprintf( szMatch, sizeof(szMatch), "s_%cm%03d", szName[ 0 ], iRule );
       else
-         hb_strncpy( szMatch, "NULL   ", sizeof(szMatch) - 1 );
+         hb_strncpy(szMatch, "NULL   ", sizeof(szMatch) - 1);
       if( pRule->pResult )
          hb_snprintf( szResult, sizeof(szResult), "s_%cr%03d", szName[ 0 ], iRule );
       else
-         hb_strncpy( szResult, "NULL   ", sizeof(szResult) - 1 );
+         hb_strncpy(szResult, "NULL   ", sizeof(szResult) - 1);
 
       ulRepeatBits = 0;
       for( u = 0, ulBit = 1; u < pRule->markers; ++u, ulBit <<= 1 )
@@ -244,7 +244,7 @@ static void hb_pp_undefCompilerRules( PHB_PP_STATE pState )
    {
       pRule = *pRulePtr;
       if( ! pRule->pMatch->pNext &&
-          strncmp( pRule->pMatch->value, "__PLATFORM__", 12 ) == 0 )
+          strncmp(pRule->pMatch->value, "__PLATFORM__", 12) == 0 )
       {
          *pRulePtr = pRule->pPrev;
          hb_pp_ruleFree( pRule );
@@ -422,13 +422,13 @@ static char * hb_fsFileFind( const char * pszFileMask )
    if( ( ffind = hb_fsFindFirst( pszFileMask, HB_FA_ALL ) ) != nullptr )
    {
       char pszFileName[ HB_PATH_MAX ];
-      PHB_FNAME pFileName = hb_fsFNameSplit( pszFileMask );
+      PHB_FNAME pFileName = hb_fsFNameSplit(pszFileMask);
       pFileName->szName = ffind->szName;
       pFileName->szExtension = nullptr;
       hb_fsFNameMerge( pszFileName, pFileName );
       hb_fsFindClose( ffind );
       hb_xfree(pFileName);
-      return hb_strdup( pszFileName );
+      return hb_strdup(pszFileName);
    }
    return nullptr;
 }
@@ -442,7 +442,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
    FILE * file_in;
 
    char szToCheck[ HB_PATH_MAX ];
-   PHB_FNAME pFileName = hb_fsFNameSplit( pszFileName );
+   PHB_FNAME pFileName = hb_fsFNameSplit(pszFileName);
 
    if( ! pFileName->szName )
    {
@@ -516,7 +516,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
 
          if( ! *szId )
          {
-            szFrom = strstr( szLine, "$" "Id" );
+            szFrom = strstr(szLine, "$" "Id");
             if( szFrom )
             {
                szFrom += 3;
@@ -527,13 +527,13 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
                   if( szTo == szFrom )
                   {
                      /* we do not have revision number :-( */
-                     hb_strncpy( szId, "unknown -1 (source tarball without keyword expanding)", sizeof(szId) - 1 );
+                     hb_strncpy(szId, "unknown -1 (source tarball without keyword expanding)", sizeof(szId) - 1);
                   }
                   else if( szTo - szFrom > 3 && szTo[ -1 ] == ' ' &&
                            szFrom[ 0 ] == ':' && szFrom[ 1 ] == ' ' )
                   {
                      szTo[ -1 ] = '\0';
-                     hb_strncpy( szId, szFrom + 2, sizeof(szId) - 1 );
+                     hb_strncpy(szId, szFrom + 2, sizeof(szId) - 1);
                   }
                }
             }
@@ -543,8 +543,8 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
             if( szLine[ 4 ] == '-' && szLine[ 7 ] == '-' &&
                 szLine[ 10 ] == ' ' && szLine[ 13 ] == ':' )
             {
-               hb_strncpy( szLog, szLine, sizeof(szLog) - 1 );
-               iLen = static_cast<int>( strlen( szLog ) );
+               hb_strncpy(szLog, szLine, sizeof(szLog) - 1);
+               iLen = static_cast<int>( strlen(szLog) );
                while( iLen-- && HB_ISSPACE( szLog[ iLen ] ) )
                {
                   szLog[ iLen ] = '\0';
@@ -567,26 +567,26 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
          char szRevID[ 18 ];
 
          *szLine = '"';
-         hb_strncpy( szLine + 1, szLog, sizeof(szLine) - 3 );
-         iLen = static_cast<int>( strlen( szLine ) );
+         hb_strncpy(szLine + 1, szLog, sizeof(szLine) - 3);
+         iLen = static_cast<int>( strlen(szLine) );
          szLine[ iLen ] = '"';
          szLine[ ++iLen ] = '\0';
          hb_pp_addDefine( pState, "HB_VER_LENTRY", szLine );
-         *pszLastEntry = hb_strdup( szLog );
+         *pszLastEntry = hb_strdup(szLog);
 
-         hb_strncpy( szLine + 1, szId, sizeof(szLine) - 3 );
-         iLen = static_cast<int>( strlen( szLine ) );
+         hb_strncpy(szLine + 1, szId, sizeof(szLine) - 3);
+         iLen = static_cast<int>( strlen(szLine) );
          szLine[ iLen ] = '"';
          szLine[ ++iLen ] = '\0';
          hb_pp_addDefine( pState, "HB_VER_CHLID", szLine );
-         *pszChangeLogID = hb_strdup( szId );
+         *pszChangeLogID = hb_strdup(szId);
 
-         if( strlen( szLog ) >= 16 )
+         if( strlen(szLog) >= 16 )
          {
             long lJulian = 0, lMilliSec = 0;
             int iUTC = 0;
 
-            if( strlen( szLog ) >= 25 && szLog[ 17 ] == 'U' &&
+            if( strlen(szLog) >= 25 && szLog[ 17 ] == 'U' &&
                 szLog[ 18 ] == 'T' && szLog[ 19 ] == 'C' &&
                 ( szLog[ 20 ] == '+' || szLog[ 20 ] == '-' ) &&
                 HB_ISDIGIT( szLog[ 21 ] ) && HB_ISDIGIT( szLog[ 22 ] ) &&
@@ -704,7 +704,7 @@ int main( int argc, char * argv[] )
                      szFile = nullptr;
                   else
                   {
-                     char * szDefText = hb_strdup( argv[ i ] + 2 ), * szAssign;
+                     char * szDefText = hb_strdup(argv[ i ] + 2), * szAssign;
 
                      szAssign = strchr( szDefText, '=' );
                      if( szAssign )
@@ -809,7 +809,7 @@ int main( int argc, char * argv[] )
             char szFileName[ HB_PATH_MAX ];
             PHB_FNAME pFileName;
 
-            pFileName = hb_fsFNameSplit( szFile );
+            pFileName = hb_fsFNameSplit(szFile);
             pFileName->szExtension = ".ppo";
             hb_fsFNameMerge( szFileName, pFileName );
             hb_xfree(pFileName);

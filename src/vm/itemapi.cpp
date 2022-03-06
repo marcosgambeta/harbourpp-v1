@@ -276,7 +276,7 @@ PHB_ITEM hb_itemPutC( PHB_ITEM pItem, const char * szText )
 
    HB_SIZE nLen, nAlloc;
 
-   nLen = szText ? strlen( szText ) : 0;
+   nLen = szText ? strlen(szText) : 0;
    if( nLen <= 1 )
    {
       nAlloc = 0;
@@ -373,7 +373,7 @@ PHB_ITEM hb_itemPutCConst( PHB_ITEM pItem, const char * szText )
       pItem = hb_itemNew(nullptr);
    }
 
-   nLen = szText ? strlen( szText ) : 0;
+   nLen = szText ? strlen(szText) : 0;
 
    pItem->type = HB_IT_STRING;
    pItem->item.asString.length = nLen;
@@ -441,7 +441,7 @@ PHB_ITEM hb_itemPutCPtr( PHB_ITEM pItem, char * szText )
       pItem = hb_itemNew(nullptr);
    }
 
-   nLen = szText ? strlen( szText ) : 0;
+   nLen = szText ? strlen(szText) : 0;
 
    pItem->type = HB_IT_STRING;
    pItem->item.asString.length = nLen;
@@ -3071,8 +3071,8 @@ int hb_itemStrICmp( PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact )
       {
          do
          {
-            int i1 = HB_TOUPPER( static_cast<HB_UCHAR>( *szFirst ) );
-            int i2 = HB_TOUPPER( static_cast<HB_UCHAR>( *szSecond ) );
+            int i1 = HB_TOUPPER(static_cast<HB_UCHAR>( *szFirst ));
+            int i2 = HB_TOUPPER(static_cast<HB_UCHAR>( *szSecond) );
             if( i1 != i2 )
             {
                iRet = ( i1 < i2 ) ? -1 : 1;
@@ -3470,7 +3470,7 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
 
          buffer = static_cast<char*>( hb_xgrab(11) );
          hb_dateFormat( szDate, buffer, hb_stackSetStruct()->HB_SET_DATEFORMAT );
-         * nLen = strlen( buffer );
+         * nLen = strlen(buffer);
          * bFreeReq = HB_TRUE;
          break;
       }
@@ -3486,8 +3486,8 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
                              pItem->item.asDateTime.julian,
                              pItem->item.asDateTime.time );
 
-         buffer = hb_strdup( szDateTime );
-         * nLen = strlen( buffer );
+         buffer = hb_strdup(szDateTime);
+         * nLen = strlen(buffer);
          * bFreeReq = HB_TRUE;
          break;
       }
@@ -3510,7 +3510,7 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
          }
          if( buffer )
          {
-            *nLen     = strlen( buffer );
+            *nLen     = strlen(buffer);
             *bFreeReq = HB_TRUE;
          }
          else
@@ -3535,7 +3535,7 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
 
       case HB_IT_SYMBOL:
          *bFreeReq = HB_TRUE;
-         *nLen = strlen( hb_itemGetSymbol(pItem)->szName ) + 3;
+         *nLen = strlen(hb_itemGetSymbol(pItem)->szName) + 3;
          buffer = static_cast<char*>( hb_xgrab(*nLen + 1) );
          buffer[ 0 ] = '@';
          memcpy( buffer + 1, hb_itemGetSymbol(pItem)->szName, *nLen - 3 );

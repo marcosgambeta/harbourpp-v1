@@ -1315,7 +1315,7 @@ int gettimeofday( struct timeval * tv, void * tz )
    int ret;
    struct timespec tp;
 
-   HB_SYMBOL_UNUSED( tz );
+   HB_SYMBOL_UNUSED(tz);
 
    if( ( ret = clock_gettime( CLOCK_REALTIME, &tp ) ) == 0 )
    {

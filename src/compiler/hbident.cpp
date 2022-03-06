@@ -42,7 +42,7 @@ const char * hb_compIdentifierNew( HB_COMP_DECL, const char * szName, int iType 
        */
       if( iType == HB_IDENT_COPY || iType == HB_IDENT_STATIC )
       {
-         szIdent = hb_strdup( szName );
+         szIdent = hb_strdup(szName);
       }
       else
       {
@@ -70,8 +70,8 @@ static HB_HASH_FUNC( hb_comp_IdentKey )    /* HB_SIZE func (void *Value, void *C
       nSum += *szName++;
    }
 
-   HB_SYMBOL_UNUSED( HashPtr );
-   HB_SYMBOL_UNUSED( Cargo );
+   HB_SYMBOL_UNUSED(HashPtr);
+   HB_SYMBOL_UNUSED(Cargo);
 
    return nSum % HB_IDENT_TABLE_SIZE;
 }
@@ -80,16 +80,16 @@ static HB_HASH_FUNC( hb_comp_IdentKey )    /* HB_SIZE func (void *Value, void *C
 static HB_HASH_FUNC( hb_comp_IdentDel )
 {
    hb_xfree(HB_UNCONST( Value ));
-   HB_SYMBOL_UNUSED( HashPtr );
-   HB_SYMBOL_UNUSED( Cargo );
+   HB_SYMBOL_UNUSED(HashPtr);
+   HB_SYMBOL_UNUSED(Cargo);
    return 1;
 }
 
 /* compares two identifiers */
 static HB_HASH_FUNC( hb_comp_IdentComp )
 {
-   HB_SYMBOL_UNUSED( HashPtr );
-   return strcmp( static_cast<const char*>( Value ), static_cast<const char*>( Cargo ) );
+   HB_SYMBOL_UNUSED(HashPtr);
+   return strcmp(static_cast<const char*>( Value ), static_cast<const char*>( Cargo ));
 }
 
 /* initialize the hash table for identifiers */

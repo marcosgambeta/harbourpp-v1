@@ -503,7 +503,7 @@ void hb_errInit( void )
 #endif
 
    /* error function */
-   hb_dynsymNew( &s_symErrorNew );
+   hb_dynsymNew(&s_symErrorNew);
 
    /* Create error class and base object */
    s_pError = hb_itemNew(nullptr);

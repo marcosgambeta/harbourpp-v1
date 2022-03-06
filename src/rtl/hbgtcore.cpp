@@ -547,7 +547,7 @@ static int hb_gt_def_ColorNum( PHB_GT pGT, const char * szColorString )
 {
    int nColor;
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
    hb_gt_def_ColorDecode( szColorString, &nColor );
 
    return nColor;
@@ -562,7 +562,7 @@ static void hb_gt_def_StringToColors( PHB_GT pGT, const char * szColorString, in
    int * pColors;
    int nColor;
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    if( *piColorCount == 0 )
    {
@@ -616,7 +616,7 @@ static void hb_gt_def_ColorsToString( PHB_GT pGT, int * pColors, int iColorCount
 
    int iPos;
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    /* Go on if there's space left for the largest color string plus EOF */
    for( int iColorIndex = iPos = 0; iColorIndex < iColorCount && iPos < iBufSize - 8; ++iColorIndex )
@@ -753,8 +753,8 @@ static void hb_gt_def_SetSnowFlag( PHB_GT pGT, HB_BOOL fNoSnow )
     *       If you're running on a CGA and snow is a problem speak up!
     */
 
-   HB_SYMBOL_UNUSED( pGT );
-   HB_SYMBOL_UNUSED( fNoSnow );
+   HB_SYMBOL_UNUSED(pGT);
+   HB_SYMBOL_UNUSED(fNoSnow);
 }
 
 static void hb_gt_def_DispBegin( PHB_GT pGT )
@@ -860,7 +860,7 @@ static void hb_gt_def_OutErr( PHB_GT pGT, const char * szStr, HB_SIZE nLen )
 
 static void hb_gt_def_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 {
-   HB_SYMBOL_UNUSED( dFrequency );
+   HB_SYMBOL_UNUSED(dFrequency);
 
    /* convert Clipper (MS-DOS) timer tick units to seconds ( x / 18.2 ) */
    hb_gtSleep( pGT, dDuration / 18.2 );
@@ -873,7 +873,7 @@ static void hb_gt_def_Bell( PHB_GT pGT )
 
 static const char * hb_gt_def_Version( PHB_GT pGT, int iType )
 {
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    if( iType == 0 )
    {
@@ -1861,7 +1861,7 @@ static void hb_gt_def_Box( PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRi
    {
       PHB_CODEPAGE cdp = HB_GTSELF_BOXCP( pGT );
       HB_WCHAR szFrameW[ 10 ], wc;
-      HB_SIZE nLen = strlen( szFrame ), nIndex = 0, nPos = 0;
+      HB_SIZE nLen = strlen(szFrame), nIndex = 0, nPos = 0;
 
       while( nPos < 9 && HB_CDPCHAR_GET( cdp, szFrame, nLen, &nIndex, &wc ) )
       {
@@ -2590,7 +2590,7 @@ static int hb_gt_def_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, in
                {
                   HB_GTSELF_WRITECONW( pGT, szMessageW + nStart, nMsg - nStart );
                }
-               HB_GTSELF_WRITECON( pGT, szEol, strlen( szEol ) );
+               HB_GTSELF_WRITECON( pGT, szEol, strlen(szEol) );
                nStart = nMsg + 1;
             }
          }
@@ -2856,10 +2856,10 @@ static void hb_gt_def_TouchCell( PHB_GT pGT, int iRow, int iCol )
 
 static void hb_gt_def_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 {
-   HB_SYMBOL_UNUSED( pGT );
-   HB_SYMBOL_UNUSED( iRow );
-   HB_SYMBOL_UNUSED( iCol );
-   HB_SYMBOL_UNUSED( iSize );
+   HB_SYMBOL_UNUSED(pGT);
+   HB_SYMBOL_UNUSED(iRow);
+   HB_SYMBOL_UNUSED(iCol);
+   HB_SYMBOL_UNUSED(iSize);
 }
 
 static void hb_gt_def_RedrawDiff( PHB_GT pGT )
@@ -2930,7 +2930,7 @@ static int hb_gt_def_InkeyFilter( PHB_GT pGT, int iKey, int iEventMask )
 
    int iMask;
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    if( HB_INKEY_ISEXT( iKey ) )
    {
@@ -3494,28 +3494,28 @@ static void hb_gt_def_InkeyExit( PHB_GT pGT )
 
 static void hb_gt_def_MouseInit( PHB_GT pGT )
 {
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 }
 
 static void hb_gt_def_MouseExit( PHB_GT pGT )
 {
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 }
 
 static HB_BOOL hb_gt_def_MouseIsPresent( PHB_GT pGT )
 {
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
    return HB_FALSE;
 }
 
 static void hb_gt_def_MouseShow( PHB_GT pGT )
 {
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 }
 
 static void hb_gt_def_MouseHide( PHB_GT pGT )
 {
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 }
 
 static HB_BOOL hb_gt_def_MouseGetCursor( PHB_GT pGT )
@@ -3568,25 +3568,25 @@ static int hb_gt_def_MouseCol( PHB_GT pGT )
 
 static void hb_gt_def_MouseGetPos( PHB_GT pGT, int * piRow, int * piCol )
 {
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    *piRow = *piCol = 0;
 }
 
 static void hb_gt_def_MouseSetPos( PHB_GT pGT, int iRow, int iCol )
 {
-   HB_SYMBOL_UNUSED( pGT );
-   HB_SYMBOL_UNUSED( iRow );
-   HB_SYMBOL_UNUSED( iCol );
+   HB_SYMBOL_UNUSED(pGT);
+   HB_SYMBOL_UNUSED(iRow);
+   HB_SYMBOL_UNUSED(iCol);
 }
 
 static void hb_gt_def_MouseSetBounds( PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight )
 {
-   HB_SYMBOL_UNUSED( pGT );
-   HB_SYMBOL_UNUSED( iTop );
-   HB_SYMBOL_UNUSED( iLeft );
-   HB_SYMBOL_UNUSED( iBottom );
-   HB_SYMBOL_UNUSED( iRight );
+   HB_SYMBOL_UNUSED(pGT);
+   HB_SYMBOL_UNUSED(iTop);
+   HB_SYMBOL_UNUSED(iLeft);
+   HB_SYMBOL_UNUSED(iBottom);
+   HB_SYMBOL_UNUSED(iRight);
 }
 
 static void hb_gt_def_MouseGetBounds( PHB_GT pGT, int * piTop, int * piLeft, int * piBottom, int * piRight )
@@ -3610,7 +3610,7 @@ struct _HB_MOUSE_STORAGE
 
 static int hb_gt_def_mouseStorageSize( PHB_GT pGT )
 {
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    return sizeof(_HB_MOUSE_STORAGE);
 }
@@ -3656,35 +3656,35 @@ static void hb_gt_def_mouseSetDoubleClickSpeed( PHB_GT pGT, int iSpeed )
 
 static int hb_gt_def_MouseCountButton( PHB_GT pGT )
 {
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    return 0;
 }
 
 static HB_BOOL hb_gt_def_MouseButtonState( PHB_GT pGT, int iButton )
 {
-   HB_SYMBOL_UNUSED( pGT );
-   HB_SYMBOL_UNUSED( iButton );
+   HB_SYMBOL_UNUSED(pGT);
+   HB_SYMBOL_UNUSED(iButton);
 
    return HB_FALSE;
 }
 
 static HB_BOOL hb_gt_def_MouseButtonPressed( PHB_GT pGT, int iButton, int * piRow, int * piCol )
 {
-   HB_SYMBOL_UNUSED( pGT );
-   HB_SYMBOL_UNUSED( iButton );
-   HB_SYMBOL_UNUSED( piRow );
-   HB_SYMBOL_UNUSED( piCol );
+   HB_SYMBOL_UNUSED(pGT);
+   HB_SYMBOL_UNUSED(iButton);
+   HB_SYMBOL_UNUSED(piRow);
+   HB_SYMBOL_UNUSED(piCol);
 
    return HB_FALSE;
 }
 
 static HB_BOOL hb_gt_def_MouseButtonReleased( PHB_GT pGT, int iButton, int * piRow, int * piCol )
 {
-   HB_SYMBOL_UNUSED( pGT );
-   HB_SYMBOL_UNUSED( iButton );
-   HB_SYMBOL_UNUSED( piRow );
-   HB_SYMBOL_UNUSED( piCol );
+   HB_SYMBOL_UNUSED(pGT);
+   HB_SYMBOL_UNUSED(iButton);
+   HB_SYMBOL_UNUSED(piRow);
+   HB_SYMBOL_UNUSED(piCol);
 
    return HB_FALSE;
 }
@@ -3762,32 +3762,32 @@ static int hb_gt_def_MouseReadKey( PHB_GT pGT, int iEventMask )
 
 static int hb_gt_def_GfxPrimitive( PHB_GT pGT, int iType, int iTop, int iLeft, int iBottom, int iRight, int iColor )
 {
-   HB_SYMBOL_UNUSED( pGT );
-   HB_SYMBOL_UNUSED( iType );
-   HB_SYMBOL_UNUSED( iTop );
-   HB_SYMBOL_UNUSED( iLeft );
-   HB_SYMBOL_UNUSED( iBottom );
-   HB_SYMBOL_UNUSED( iRight );
-   HB_SYMBOL_UNUSED( iColor );
+   HB_SYMBOL_UNUSED(pGT);
+   HB_SYMBOL_UNUSED(iType);
+   HB_SYMBOL_UNUSED(iTop);
+   HB_SYMBOL_UNUSED(iLeft);
+   HB_SYMBOL_UNUSED(iBottom);
+   HB_SYMBOL_UNUSED(iRight);
+   HB_SYMBOL_UNUSED(iColor);
 
    return 0;
 }
 
 static void hb_gt_def_GfxText( PHB_GT pGT, int iTop, int iLeft, const char * szText, int iColor, int iSize, int iWidth )
 {
-   HB_SYMBOL_UNUSED( pGT );
-   HB_SYMBOL_UNUSED( iTop );
-   HB_SYMBOL_UNUSED( iLeft );
-   HB_SYMBOL_UNUSED( szText );
-   HB_SYMBOL_UNUSED( iColor );
-   HB_SYMBOL_UNUSED( iSize );
-   HB_SYMBOL_UNUSED( iWidth );
+   HB_SYMBOL_UNUSED(pGT);
+   HB_SYMBOL_UNUSED(iTop);
+   HB_SYMBOL_UNUSED(iLeft);
+   HB_SYMBOL_UNUSED(szText);
+   HB_SYMBOL_UNUSED(iColor);
+   HB_SYMBOL_UNUSED(iSize);
+   HB_SYMBOL_UNUSED(iWidth);
 }
 
 static void hb_gt_def_WhoCares( PHB_GT pGT, void * pCargo )
 {
-   HB_SYMBOL_UNUSED( pGT );
-   HB_SYMBOL_UNUSED( pCargo );
+   HB_SYMBOL_UNUSED(pGT);
+   HB_SYMBOL_UNUSED(pCargo);
 }
 
 /* - */
@@ -4081,13 +4081,13 @@ static const char * hb_gt_FindDefault( void )
    for( int iPos = 0; iPos < s_iGtCount; iPos++ )
    {
       hb_snprintf( szFuncName, sizeof(szFuncName), "HB_GT_%s_DEFAULT", s_gtInit[ iPos ]->id );
-      if( hb_dynsymFind( szFuncName ) )
+      if( hb_dynsymFind(szFuncName) )
       {
          return s_gtInit[ iPos ]->id;
       }
    }
 
-   if( hb_dynsymFind( "HB_GT_NUL_DEFAULT" ) )
+   if( hb_dynsymFind("HB_GT_NUL_DEFAULT") )
    {
       return "NUL";
    }
@@ -4116,7 +4116,7 @@ static int hb_gt_FindEntry( const char * pszID )
 
 void hb_gtSetDefault( const char * szGtName )
 {
-   hb_strncpy( s_gtNameBuf, szGtName, sizeof(s_gtNameBuf) - 1 );
+   hb_strncpy(s_gtNameBuf, szGtName, sizeof(s_gtNameBuf) - 1);
    s_szNameDefault = s_gtNameBuf;
 }
 
@@ -4353,7 +4353,7 @@ void hb_gtStartupInit( void )
       return;
    }
 
-   if( hb_dynsymFind( "HB_GT_NUL" ) ) /* GTNUL was explicitly REQUESTed */
+   if( hb_dynsymFind("HB_GT_NUL") ) /* GTNUL was explicitly REQUESTed */
    {
       if( hb_gtTryInit( "NUL", HB_FALSE ) )
       {

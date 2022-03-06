@@ -416,7 +416,7 @@ static void hb_vmDoModuleQuitFunctions( void )
  */
 static void hb_vmDoInitHVM( void )
 {
-   PHB_DYNS pDynSym = hb_dynsymFind( "__HBVMINIT" );
+   PHB_DYNS pDynSym = hb_dynsymFind("__HBVMINIT");
 
    if( pDynSym && pDynSym->pSymbol->value.pFunPtr )
    {
@@ -429,11 +429,11 @@ static void hb_vmDoInitHVM( void )
 /* call __SetHelpK() if HELP() function is linked */
 static void hb_vmDoInitHelp( void )
 {
-   PHB_DYNS pDynSym = hb_dynsymFind( "HELP" );
+   PHB_DYNS pDynSym = hb_dynsymFind("HELP");
 
    if( pDynSym && pDynSym->pSymbol->value.pFunPtr )
    {
-      pDynSym = hb_dynsymFind( "__SETHELPK" );
+      pDynSym = hb_dynsymFind("__SETHELPK");
       if( pDynSym && pDynSym->pSymbol->value.pFunPtr )
       {
          hb_vmPushSymbol( pDynSym->pSymbol );
@@ -452,7 +452,7 @@ HB_BOOL hb_vmIsMt( void )
 
 HB_BOOL hb_vmThreadIsMain( void * Cargo )
 {
-   HB_SYMBOL_UNUSED( Cargo );
+   HB_SYMBOL_UNUSED(Cargo);
    return s_fHVMActive;
 }
 
@@ -466,7 +466,7 @@ void hb_vmUnlock( void )
 
 HB_BOOL hb_vmSuspendThreads( HB_BOOL fWait )
 {
-   HB_SYMBOL_UNUSED( fWait );
+   HB_SYMBOL_UNUSED(fWait);
    return HB_TRUE;
 }
 
@@ -477,7 +477,7 @@ void hb_vmResumeThreads( void )
 #if 0
 HB_BOOL hb_vmThreadRegister( void * Cargo )
 {
-   HB_SYMBOL_UNUSED( Cargo );
+   HB_SYMBOL_UNUSED(Cargo);
    return HB_FALSE;
 }
 
@@ -1093,9 +1093,9 @@ PHB_ITEM hb_vmThreadStart( HB_ULONG ulAttr, PHB_CARGO_FUNC pFunc, void * cargo )
 #if defined( HB_MT_VM )
    return hb_threadStart( ulAttr, pFunc, cargo );
 #else
-   HB_SYMBOL_UNUSED( ulAttr );
-   HB_SYMBOL_UNUSED( pFunc );
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(ulAttr);
+   HB_SYMBOL_UNUSED(pFunc);
+   HB_SYMBOL_UNUSED(cargo);
    return nullptr;
 #endif /* HB_MT_VM */
 }
@@ -1121,7 +1121,7 @@ void hb_vmSetFunction( PHB_SYMB pOldSym, PHB_SYMB pNewSym )
       {
          PHB_SYMB pSym = pLastSymbols->pModuleSymbols + ui;
 
-         if( pSym->value.pFunPtr == pOldSym->value.pFunPtr && ( pSym->value.pFunPtr || strcmp( pSym->szName, pOldSym->szName ) == 0 ) )
+         if( pSym->value.pFunPtr == pOldSym->value.pFunPtr && ( pSym->value.pFunPtr || strcmp(pSym->szName, pOldSym->szName) == 0 ) )
          {
             pSym->value.pFunPtr = pNewSym->value.pFunPtr;
             pSym->scope.value   = pNewSym->scope.value;
@@ -1196,8 +1196,8 @@ void hb_vmInit( HB_BOOL bStartMainProc )
    hb_breakBlock();
 
    /* initialize dynamic symbol for evaluating codeblocks and break function */
-   hb_symEval.pDynSym = hb_dynsymGetCase( hb_symEval.szName );
-   s_symBreak.pDynSym = hb_dynsymGetCase( s_symBreak.szName );
+   hb_symEval.pDynSym = hb_dynsymGetCase(hb_symEval.szName);
+   s_symBreak.pDynSym = hb_dynsymGetCase(s_symBreak.szName);
 
    hb_conInit();
 
@@ -1224,7 +1224,7 @@ void hb_vmInit( HB_BOOL bStartMainProc )
    hb_vmLock();
 
 #ifndef HB_NO_DEBUG
-   s_pDynsDbgEntry = hb_dynsymFind( "__DBGENTRY" );
+   s_pDynsDbgEntry = hb_dynsymFind("__DBGENTRY");
    if( s_pDynsDbgEntry )
    {
       /* Try to get C dbgEntry() function pointer */
@@ -1265,7 +1265,7 @@ void hb_vmInit( HB_BOOL bStartMainProc )
    /* This is undocumented CA-Cl*pper, if there's a function called _APPMAIN()
       it will be executed first. [vszakats] */
    {
-      PHB_DYNS pDynSym = hb_dynsymFind( "_APPMAIN" );
+      PHB_DYNS pDynSym = hb_dynsymFind("_APPMAIN");
 
       if( pDynSym && pDynSym->pSymbol->value.pFunPtr )
       {
@@ -1284,7 +1284,7 @@ void hb_vmInit( HB_BOOL bStartMainProc )
          if( s_vm_pszLinkedMain && *s_vm_pszLinkedMain == '@' )
          {
             pszMain = s_vm_pszLinkedMain + 1;
-            pDynSym = hb_dynsymFind( pszMain );
+            pDynSym = hb_dynsymFind(pszMain);
          }
          else
          {
@@ -1292,14 +1292,14 @@ void hb_vmInit( HB_BOOL bStartMainProc )
             pszMain = nullptr;
 #else
             pszMain = HB_START_PROCEDURE;
-            pDynSym = hb_dynsymFind( pszMain );
+            pDynSym = hb_dynsymFind(pszMain);
             if( ! ( pDynSym && pDynSym->pSymbol->value.pFunPtr ) )
 #endif
             {
                if( s_vm_pszLinkedMain )
                {
                   pszMain = s_vm_pszLinkedMain;
-                  pDynSym = hb_dynsymFind( pszMain );
+                  pDynSym = hb_dynsymFind(pszMain);
                }
             }
          }
@@ -2818,7 +2818,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
              */
             PHB_SYMB pSymbol = pSymbols + HB_PCODE_MKUSHORT( &pCode[ 1 ] );
 
-            if( pSymbol->pDynSym && hb_dynsymGetMemvar( pSymbol->pDynSym ) )
+            if( pSymbol->pDynSym && hb_dynsymGetMemvar(pSymbol->pDynSym) )
             {
                /* If exist a memory symbol with this name use it */
                hb_memvarSetValue( pSymbol, hb_stackItemFromTop(-1) );
@@ -4994,8 +4994,8 @@ static PHB_ITEM hb_vmEnumRefRead( PHB_ITEM pRefer )
 
 static PHB_ITEM hb_vmEnumRefWrite( PHB_ITEM pRefer, PHB_ITEM pSource )
 {
-   HB_SYMBOL_UNUSED( pRefer );
-   HB_SYMBOL_UNUSED( pSource );
+   HB_SYMBOL_UNUSED(pRefer);
+   HB_SYMBOL_UNUSED(pSource);
    return nullptr;
 }
 
@@ -6360,7 +6360,7 @@ static HB_ERRCODE hb_vmSelectWorkarea( PHB_ITEM pAlias, PHB_SYMB pField )
             {
                PHB_ITEM pSubstVal;
 
-               hb_vmPushString( pField->szName, strlen( pField->szName ) );
+               hb_vmPushString( pField->szName, strlen(pField->szName) );
                pSubstVal = hb_errRT_BASE_Subst( EG_ARG, 1065, nullptr, "&", 2, pAlias, hb_stackItemFromTop(-1) );
                hb_stackPop();
                if( pSubstVal )
@@ -6898,7 +6898,7 @@ static void hb_vmDebugEntry( int nMode, int nLine, const char * szName, int nInd
          hb_vmPushDynSym( s_pDynsDbgEntry );
          HB_VM_PUSHNIL();
          hb_vmPushInteger( HB_DBG_MODULENAME );
-         hb_vmPushString( szName, strlen( szName ) );
+         hb_vmPushString( szName, strlen(szName) );
          hb_vmProc(2);
          break;
 
@@ -6907,7 +6907,7 @@ static void hb_vmDebugEntry( int nMode, int nLine, const char * szName, int nInd
          HB_VM_PUSHNIL();
          hb_vmPushInteger( HB_DBG_LOCALNAME );
          hb_vmPushInteger( nIndex );
-         hb_vmPushString( szName, strlen( szName ) );
+         hb_vmPushString( szName, strlen(szName) );
          hb_vmProc(3);
          break;
 
@@ -6917,7 +6917,7 @@ static void hb_vmDebugEntry( int nMode, int nLine, const char * szName, int nInd
          hb_vmPushInteger( HB_DBG_STATICNAME );
          hb_vmPush( pFrame );                   /* current static frame */
          hb_vmPushInteger( nIndex );            /* variable index */
-         hb_vmPushString( szName, strlen( szName ) );
+         hb_vmPushString( szName, strlen(szName) );
          hb_vmProc(4);
          break;
 
@@ -6962,11 +6962,11 @@ static void hb_vmDummyDebugEntry( int nMode, int nLine, const char * szName, int
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmDummyDebugEntry" ) );
 #endif
 
-   HB_SYMBOL_UNUSED( nMode );
-   HB_SYMBOL_UNUSED( nLine );
-   HB_SYMBOL_UNUSED( szName );
-   HB_SYMBOL_UNUSED( nIndex );
-   HB_SYMBOL_UNUSED( pFrame );
+   HB_SYMBOL_UNUSED(nMode);
+   HB_SYMBOL_UNUSED(nLine);
+   HB_SYMBOL_UNUSED(szName);
+   HB_SYMBOL_UNUSED(nIndex);
+   HB_SYMBOL_UNUSED(pFrame);
 }
 
 static void hb_vmDebuggerExit( HB_BOOL fRemove )
@@ -7029,7 +7029,7 @@ static void hb_vmStaticName( HB_BYTE bIsGlobal, HB_USHORT uiStatic, const char *
 
    HB_STACK_TLS_PRELOAD
 
-   HB_SYMBOL_UNUSED( bIsGlobal );
+   HB_SYMBOL_UNUSED(bIsGlobal);
 
    if( hb_stackBaseItem()->item.asSymbol.stackstate->fDebugging )
    {
@@ -7187,7 +7187,7 @@ static PHB_ITEM hb_vmTSVRefWrite( PHB_ITEM pRefer, PHB_ITEM pSource )
 {
    PHB_TSVREF pTSVRef = static_cast<PHB_TSVREF>( pRefer->item.asExtRef.value );
 
-   HB_SYMBOL_UNUSED( pSource );
+   HB_SYMBOL_UNUSED(pSource);
    return static_cast<PHB_ITEM>( hb_stackGetTSD( &pTSVRef->threadData ) );
 }
 
@@ -7301,8 +7301,8 @@ static void hb_vmInitThreadStatics( HB_USHORT uiCount, const HB_BYTE * pCode )
 
    /* single thread VM - do nothing, use normal static variables */
 
-   HB_SYMBOL_UNUSED( uiCount );
-   HB_SYMBOL_UNUSED( pCode );
+   HB_SYMBOL_UNUSED(uiCount);
+   HB_SYMBOL_UNUSED(pCode);
 }
 #endif /* HB_MT_VM */
 
@@ -8483,7 +8483,7 @@ static PHB_SYMBOLS hb_vmFindFreeModule( PHB_SYMB pSymbols, HB_USHORT uiSymbols, 
              pLastSymbols->ulID == ulID &&
              pLastSymbols->uiModuleSymbols == uiSymbols &&
              pLastSymbols->szModuleName != nullptr &&
-             strcmp( pLastSymbols->szModuleName, szModuleName ) == 0 )
+             strcmp(pLastSymbols->szModuleName, szModuleName) == 0 )
          {
             PHB_SYMB pModuleSymbols = pLastSymbols->pModuleSymbols;
             HB_USHORT ui;
@@ -8494,7 +8494,7 @@ static PHB_SYMBOLS hb_vmFindFreeModule( PHB_SYMB pSymbols, HB_USHORT uiSymbols, 
                      ( pModuleSymbols[ ui ].scope.value & ~HB_FS_DEFERRED ) &&
                      ! ( ui != 0 && ui == pLastSymbols->uiStaticsOffset &&
                          HB_SYM_STATICSBASE( &pModuleSymbols[ ui ] ) ) ) ||
-                   strcmp( pSymbols[ ui ].szName, pModuleSymbols[ ui ].szName ) != 0 )
+                   strcmp(pSymbols[ ui ].szName, pModuleSymbols[ ui ].szName) != 0 )
                {
                   break;
                }
@@ -8626,14 +8626,14 @@ void hb_vmInitSymbolGroup( void * hNewDynLib, int argc, const char * argv[] )
                         HB_SYMBOLSCOPE scope = ( pLastSymbols->pModuleSymbols + ui )->scope.value & HB_FS_INITEXIT;
 
                         if( scope == HB_FS_INIT &&
-                            ( strcmp( ( pLastSymbols->pModuleSymbols + ui )->szName,
-                                      "CLIPINIT$" ) == 0 ? fClipInit : ! fClipInit ) )
+                            ( strcmp(( pLastSymbols->pModuleSymbols + ui )->szName,
+                                      "CLIPINIT$") == 0 ? fClipInit : ! fClipInit ) )
                         {
                            hb_vmPushSymbol( pLastSymbols->pModuleSymbols + ui );
                            hb_vmPushNil();
                            for( int i = 0; i < argc; ++i )
                            {
-                              hb_vmPushString( argv[ i ], strlen( argv[ i ] ) );
+                              hb_vmPushString( argv[ i ], strlen(argv[ i ]) );
                            }
                            hb_vmProc( static_cast<HB_USHORT>( argc ) );
                            if( hb_vmRequestQuery() != 0 )
@@ -8736,14 +8736,14 @@ PHB_SYMBOLS hb_vmRegisterSymbols( PHB_SYMB pModuleSymbols, HB_USHORT uiSymbols, 
          nSize = nSymSize;
          for( ui = 0; ui < uiSymbols; ui++ )
          {
-            nSize += strlen( pModuleSymbols[ ui ].szName ) + 1;
+            nSize += strlen(pModuleSymbols[ ui ].szName) + 1;
          }
          buffer = static_cast<char*>( memcpy( hb_xgrab(nSize), pModuleSymbols, nSymSize ) );
          pModuleSymbols = reinterpret_cast<PHB_SYMB>( buffer );
          for( ui = 0; ui < uiSymbols; ui++ )
          {
             buffer += nSymSize;
-            nSymSize = strlen( pModuleSymbols[ ui ].szName ) + 1;
+            nSymSize = strlen(pModuleSymbols[ ui ].szName) + 1;
             memcpy( buffer, pModuleSymbols[ ui ].szName, nSymSize );
             pModuleSymbols[ ui ].szName = buffer;
          }
@@ -8753,7 +8753,7 @@ PHB_SYMBOLS hb_vmRegisterSymbols( PHB_SYMB pModuleSymbols, HB_USHORT uiSymbols, 
       pNewSymbols->pModuleSymbols = pModuleSymbols;
       pNewSymbols->uiModuleSymbols = uiSymbols;
       pNewSymbols->uiStaticsOffset = 0;
-      pNewSymbols->szModuleName = hb_strdup( szModuleName );
+      pNewSymbols->szModuleName = hb_strdup(szModuleName);
       pNewSymbols->ulID = ulID;
       pNewSymbols->fAllocated = fClone;
       pNewSymbols->fActive = HB_TRUE;
@@ -8806,7 +8806,7 @@ PHB_SYMBOLS hb_vmRegisterSymbols( PHB_SYMB pModuleSymbols, HB_USHORT uiSymbols, 
       fPublic = ( hSymScope & ( HB_FS_INITEXIT | HB_FS_STATIC | HB_FS_FRAME ) ) == 0;
       if( fStatics )
       {
-         if( ! fRecycled && strncmp( pSymbol->szName, "(_INITSTATICS", 13 ) == 0 )
+         if( ! fRecycled && strncmp(pSymbol->szName, "(_INITSTATICS", 13) == 0 )
          {
             pNewSymbols->uiStaticsOffset = ui;
          }
@@ -8843,7 +8843,7 @@ PHB_SYMBOLS hb_vmRegisterSymbols( PHB_SYMB pModuleSymbols, HB_USHORT uiSymbols, 
          {
             PHB_DYNS pDynSym;
 
-            pDynSym = hb_dynsymFind( pSymbol->szName );
+            pDynSym = hb_dynsymFind(pSymbol->szName);
 
             if( pDynSym )
             {
@@ -8874,7 +8874,7 @@ PHB_SYMBOLS hb_vmRegisterSymbols( PHB_SYMB pModuleSymbols, HB_USHORT uiSymbols, 
             }
          }
 
-         hb_dynsymNew( pSymbol );
+         hb_dynsymNew(pSymbol);
       }
    }
 
@@ -8905,7 +8905,7 @@ static void hb_vmVerifySymbols( PHB_ITEM pArray )
       {
          PHB_SYMB pSym = pLastSymbols->pModuleSymbols + ui;
 
-         if( pSym->pDynSym && hb_dynsymFind( pSym->szName ) != pSym->pDynSym )
+         if( pSym->pDynSym && hb_dynsymFind(pSym->szName) != pSym->pDynSym )
          {
             char szText[ 256 ];
 
@@ -9039,7 +9039,7 @@ static void hb_vmDoInitFunctions( HB_BOOL fClipInit )
          {
             HB_SYMBOLSCOPE scope = ( pLastSymbols->pModuleSymbols + ui )->scope.value & HB_FS_INITEXIT;
 
-            if( scope == HB_FS_INIT && ( strcmp( ( pLastSymbols->pModuleSymbols + ui )->szName, "CLIPINIT$" ) == 0 ? fClipInit : ! fClipInit ) )
+            if( scope == HB_FS_INIT && ( strcmp(( pLastSymbols->pModuleSymbols + ui )->szName, "CLIPINIT$") == 0 ? fClipInit : ! fClipInit ) )
             {
                hb_vmPushSymbol( pLastSymbols->pModuleSymbols + ui );
                hb_vmPushNil();
@@ -9112,7 +9112,7 @@ static PHB_ITEM hb_vmItemRawRefRead( PHB_ITEM pRefer )
 
 static PHB_ITEM hb_vmItemRawRefWrite( PHB_ITEM pRefer, PHB_ITEM pSource )
 {
-   HB_SYMBOL_UNUSED( pSource );
+   HB_SYMBOL_UNUSED(pSource);
    return static_cast<PHB_ITEM>( pRefer->item.asExtRef.value );
 }
 
@@ -9124,7 +9124,7 @@ static void hb_vmItemRawRefCopy( PHB_ITEM pDest )
 
 static void hb_vmItemRawRefDummy( void * value )
 {
-   HB_SYMBOL_UNUSED( value );
+   HB_SYMBOL_UNUSED(value);
 }
 
 static const HB_EXTREF s_ItmExtRawRef = {
@@ -9193,7 +9193,7 @@ static void hb_vmItemRefMark( void * value )
     * not necessary to mark if form this point.
     */
 #if 1
-   HB_SYMBOL_UNUSED( value );
+   HB_SYMBOL_UNUSED(value);
 #else
    hb_gcItemRef( ( static_cast<PHB_ITMREF>( value ) )->memvar );
    hb_gcItemRef( ( static_cast<PHB_ITMREF>( value ) )->value );
@@ -9275,7 +9275,7 @@ static PHB_ITEM hb_vmMsgRefRead( PHB_ITEM pRefer )
       {
          if( ! pMsgRef->access )
          {
-            pMsgRef->access = hb_dynsymGetCase( pMsgRef->assign->pSymbol->szName + 1 );
+            pMsgRef->access = hb_dynsymGetCase(pMsgRef->assign->pSymbol->szName + 1);
          }
          hb_vmPushDynSym( pMsgRef->access );
          hb_vmPush( &pMsgRef->object );
@@ -9696,7 +9696,7 @@ void hb_vmRequestCancel( void )
 
       while( hb_procinfo( iLevel++, buffer, &uiLine, file ) )
       {
-         int l = static_cast<int>( strlen( buffer ) );
+         int l = static_cast<int>( strlen(buffer) );
          hb_snprintf( buffer + l, sizeof(buffer) - l, " (%hu)%s%s", uiLine, *file ? HB_I_( " in " ) : "", file );
 
          hb_conOutErr( buffer, 0 );
@@ -9917,7 +9917,7 @@ HB_BOOL hb_vmTryEval( PHB_ITEM * pResult, PHB_ITEM pItem, HB_ULONG ulPCount, ...
 
       if( HB_IS_STRING(pItem) )
       {
-         PHB_DYNS pDynSym = hb_dynsymFindName( pItem->item.asString.value );
+         PHB_DYNS pDynSym = hb_dynsymFindName(pItem->item.asString.value);
 
          if( pDynSym )
          {
@@ -10726,7 +10726,7 @@ HB_BOOL hb_xvmPopVariable( PHB_SYMB pSymbol )
 
    /* See the note above in HB_P_POPVARIABLE */
 #if 0
-   if( pSymbol->pDynSym && hb_dynsymGetMemvar( pSymbol->pDynSym ) )
+   if( pSymbol->pDynSym && hb_dynsymGetMemvar(pSymbol->pDynSym) )
    {
       hb_memvarSetValue( pSymbol, hb_stackItemFromTop(-1) );
    }
@@ -12950,8 +12950,8 @@ void hb_xvmLocalName( HB_USHORT uiLocal, const char * szLocalName )
 #ifndef HB_NO_DEBUG
    hb_vmLocalName( uiLocal, szLocalName );
 #else
-   HB_SYMBOL_UNUSED( uiLocal );
-   HB_SYMBOL_UNUSED( szLocalName );
+   HB_SYMBOL_UNUSED(uiLocal);
+   HB_SYMBOL_UNUSED(szLocalName);
 #endif
 }
 
@@ -12964,9 +12964,9 @@ void hb_xvmStaticName( HB_BYTE bIsGlobal, HB_USHORT uiStatic, const char * szSta
 #ifndef HB_NO_DEBUG
    hb_vmStaticName( bIsGlobal, uiStatic, szStaticName );
 #else
-   HB_SYMBOL_UNUSED( bIsGlobal );
-   HB_SYMBOL_UNUSED( uiStatic );
-   HB_SYMBOL_UNUSED( szStaticName );
+   HB_SYMBOL_UNUSED(bIsGlobal);
+   HB_SYMBOL_UNUSED(uiStatic);
+   HB_SYMBOL_UNUSED(szStaticName);
 #endif
 }
 
@@ -12979,7 +12979,7 @@ void hb_xvmModuleName( const char * szModuleName )
 #ifndef HB_NO_DEBUG
    hb_vmModuleName( szModuleName );
 #else
-   HB_SYMBOL_UNUSED( szModuleName );
+   HB_SYMBOL_UNUSED(szModuleName);
 #endif
 }
 
@@ -13259,7 +13259,7 @@ HB_BOOL hb_dbg_InvokeDebug( HB_BOOL bInvoke )
    *pfRequest = bInvoke;
    return bRequest;
 #else
-   HB_SYMBOL_UNUSED( bInvoke );
+   HB_SYMBOL_UNUSED(bInvoke);
    return HB_FALSE;
 #endif
 }
@@ -13276,7 +13276,7 @@ HB_DBGENTRY_FUNC hb_dbg_SetEntry( HB_DBGENTRY_FUNC pFunDbgEntry )
    pPrevFunc = s_pFunDbgEntry;
    s_pFunDbgEntry = pFunDbgEntry;
 #else
-   HB_SYMBOL_UNUSED( pFunDbgEntry );
+   HB_SYMBOL_UNUSED(pFunDbgEntry);
    pPrevFunc = nullptr;
 #endif
 
@@ -13415,8 +13415,8 @@ PHB_ITEM hb_dbg_vmVarGGet( int nGlobal, int nOffset )
 #if 0
    return hb_arrayGetItemPtr( &s_aGlobals, nGlobal + nOffset );
 #else
-   HB_SYMBOL_UNUSED( nGlobal );
-   HB_SYMBOL_UNUSED( nOffset );
+   HB_SYMBOL_UNUSED(nGlobal);
+   HB_SYMBOL_UNUSED(nOffset);
    return nullptr;
 #endif
 }

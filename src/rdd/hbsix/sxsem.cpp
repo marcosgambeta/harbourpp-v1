@@ -59,7 +59,7 @@ static HB_BOOL hb_sxSemName( char * szFileName )
 
    if( szName && szName[ 0 ] )
    {
-      hb_cdpnDup2Lower( hb_vmCDP(), szName, strlen( szName ), szFileName, HB_PATH_MAX );
+      hb_cdpnDup2Lower( hb_vmCDP(), szName, strlen(szName), szFileName, HB_PATH_MAX );
       szFileName[ HB_PATH_MAX - 1 ] = '\0';
       fResult = HB_TRUE;
    }
@@ -82,7 +82,7 @@ static HB_BOOL hb_sxSemName( char * szFileName )
          szName = hb_itemGetCPtr(pOrderInfo.itmResult);
          if( szName && szName[ 0 ] )
          {
-            hb_cdpnDup2Lower( hb_vmCDP(), szName, strlen( szName ), szFileName, HB_PATH_MAX );
+            hb_cdpnDup2Lower( hb_vmCDP(), szName, strlen(szName), szFileName, HB_PATH_MAX );
             szFileName[ HB_PATH_MAX - 1 ] = '\0';
             fResult = HB_TRUE;
          }

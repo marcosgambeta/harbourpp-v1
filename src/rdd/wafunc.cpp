@@ -189,11 +189,11 @@ void * hb_rddAllocWorkAreaAlias( const char * szAlias, int iArea )
    }
    else
    {
-      PHB_DYNS pSymAlias = hb_dynsymGet( szAlias );
+      PHB_DYNS pSymAlias = hb_dynsymGet(szAlias);
 
-      if( hb_dynsymAreaHandle( pSymAlias ) == 0 )
+      if( hb_dynsymAreaHandle(pSymAlias) == 0 )
       {
-         hb_dynsymSetAreaHandle( pSymAlias, iArea );
+         hb_dynsymSetAreaHandle(pSymAlias, iArea);
          return pSymAlias;
       }
       hb_errRT_DBCMD_Ext( EG_DUPALIAS, EDBCMD_DUPALIAS, nullptr, szAlias, EF_CANDEFAULT );
@@ -218,7 +218,7 @@ HB_USHORT hb_rddFieldIndex( AREAP pArea, const char * szName )
 
    if( *szName )
    {
-      HB_SIZE nLen = strlen( szName );
+      HB_SIZE nLen = strlen(szName);
 
       while( HB_ISSPACE( szName[ nLen - 1 ] ) )
       {
@@ -233,10 +233,10 @@ HB_USHORT hb_rddFieldIndex( AREAP pArea, const char * szName )
          szFieldName[ nLen ] = '\0';
          while( nLen-- )
          {
-            szFieldName[ nLen ] = HB_TOUPPER( szName[ nLen ] );
+            szFieldName[ nLen ] = HB_TOUPPER(szName[ nLen ]);
          }
 
-         pDynSym = hb_dynsymFind( szFieldName );
+         pDynSym = hb_dynsymFind(szFieldName);
          if( pDynSym )
          {
             LPFIELD pField = pArea->lpFields;
@@ -276,7 +276,7 @@ HB_USHORT hb_rddFieldExpIndex( AREAP pArea, const char * szField )
       n = 0;
       if( SELF_ALIAS( pArea, szAlias ) == HB_SUCCESS )
       {
-         l = static_cast<int>( strlen( szAlias ) );
+         l = static_cast<int>( strlen(szAlias) );
       }
       else
       {
@@ -370,9 +370,9 @@ HB_ERRCODE hb_rddGetAliasNumber( const char * szAlias, int * iArea )
    }
    else
    {
-      PHB_DYNS pSymAlias = hb_dynsymFindName( szAlias );
+      PHB_DYNS pSymAlias = hb_dynsymFindName(szAlias);
 
-      *iArea = pSymAlias ? static_cast<int>( hb_dynsymAreaHandle( pSymAlias ) ) : 0;
+      *iArea = pSymAlias ? static_cast<int>( hb_dynsymAreaHandle(pSymAlias) ) : 0;
       if( *iArea == 0 )
       {
          return HB_FAILURE;
@@ -396,14 +396,14 @@ HB_ERRCODE hb_rddSelectWorkAreaSymbol( PHB_SYMB pSymAlias )
    const char * szName;
    int iArea;
 
-   iArea = static_cast<int>( hb_dynsymAreaHandle( pSymAlias->pDynSym ) );
+   iArea = static_cast<int>( hb_dynsymAreaHandle(pSymAlias->pDynSym) );
    if( iArea )
    {
       hb_rddSelectWorkAreaNumber( iArea );
       return HB_SUCCESS;
    }
 
-   szName = hb_dynsymName( pSymAlias->pDynSym );
+   szName = hb_dynsymName(pSymAlias->pDynSym);
 
    if( szName[ 0 ] && ! szName[ 1 ] )
    {
@@ -438,7 +438,7 @@ HB_ERRCODE hb_rddSelectWorkAreaSymbol( PHB_SYMB pSymAlias )
       {
          break;
       }
-      iArea = static_cast<int>( hb_dynsymAreaHandle( pSymAlias->pDynSym ) );
+      iArea = static_cast<int>( hb_dynsymAreaHandle(pSymAlias->pDynSym) );
       if( iArea )
       {
          hb_rddSelectWorkAreaNumber( iArea );
@@ -673,7 +673,7 @@ HB_ERRCODE hb_rddOpenTable( const char * szFileName, const char * szDriver,
 
    /* Now check parameters, first RDD name.
     * Clipper seems to make something like:
-    *    if( szDriver && strlen( szDriver ) > 1 )
+    *    if( szDriver && strlen(szDriver) > 1 )
     * but I do not think we should replicate it, [druzus]
     */
    szDriver = hb_rddFindDrv( szDriver, szFileName );

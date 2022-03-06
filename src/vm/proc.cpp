@@ -100,7 +100,7 @@ HB_FUNC( PROCFILE )
    }
    else if( HB_ISCHAR(1) )
    {
-      PHB_DYNS pDynSym = hb_dynsymFindName( hb_parc(1) );
+      PHB_DYNS pDynSym = hb_dynsymFindName(hb_parc(1));
 
       if( pDynSym )
       {
@@ -188,7 +188,7 @@ char * hb_procname( int iLevel, char * szName, HB_BOOL fMethodName )
          }
          else if( HB_IS_SYMBOL(pSelf) )
          {
-            hb_strncpy( szName, pSelf->item.asSymbol.value->szName, HB_PROCBUF_LEN );
+            hb_strncpy(szName, pSelf->item.asSymbol.value->szName, HB_PROCBUF_LEN);
          }
          else
          {
@@ -278,7 +278,7 @@ HB_BOOL hb_procinfo( int iLevel, char * szName, HB_USHORT * puiLine, char * szFi
 
          if( szModule )
          {
-            hb_strncpy( szFile, szModule, HB_PATH_MAX - 1 );
+            hb_strncpy(szFile, szModule, HB_PATH_MAX - 1);
          }
          else
          {

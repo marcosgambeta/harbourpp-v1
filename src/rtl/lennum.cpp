@@ -58,7 +58,7 @@ HB_FUNC( LENNUM )
 
       if( pszString )
       {
-         nLen = strlen( pszString );
+         nLen = strlen(pszString);
          hb_strLTrim( pszString, &nLen );
          hb_xfree(pszString);
       }

@@ -136,10 +136,10 @@ static void hb_sln_Init_TermType( void )
    /* an uncertain way to check if we run under linux console */
    Env = getenv( "TERM" );
 
-   hb_sln_UnderLinuxConsole = Env && strncmp( Env, "linux", 5 ) == 0;
+   hb_sln_UnderLinuxConsole = Env && strncmp(Env, "linux", 5) == 0;
 
    /* an uncertain way to check if we run under xterm */
-   hb_sln_UnderXterm = Env && ( strstr( Env, "xterm" ) != nullptr || strncmp( Env, "rxvt", 4 ) == 0 );
+   hb_sln_UnderXterm = Env && ( strstr(Env, "xterm") != nullptr || strncmp(Env, "rxvt", 4) == 0 );
 }
 
 /* *********************************************************************** */

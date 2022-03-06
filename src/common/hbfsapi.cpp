@@ -98,7 +98,7 @@ void hb_fsAddSearchPath( const char * szPath, HB_PATHNAMES ** pSearchList )
       pSearchList = &( *pSearchList )->pNext;
    }
 
-   pPath = hb_strdup( szPath );
+   pPath = hb_strdup(szPath);
    while( ( pDelim = strchr( pPath, HB_OS_PATH_LIST_SEP_CHR ) ) != nullptr )
    {
       *pDelim = '\0';
@@ -163,7 +163,7 @@ PHB_FNAME hb_fsFNameSplit( const char * pszFileName )
       char * pszPos, cDirSep;
       HB_ISIZ iSize, iPos;
 
-      iPos = iSize = hb_strnlen( pszFileName, HB_PATH_MAX - 1 );
+      iPos = iSize = hb_strnlen(pszFileName, HB_PATH_MAX - 1);
       cDirSep = static_cast<char>( hb_setGetDirSeparator() );
 
       pszPos = pFileName->szBuffer;
@@ -176,7 +176,7 @@ PHB_FNAME hb_fsFNameSplit( const char * pszFileName )
          if( pszFileName[ iPos ] == cDirSep || strchr( HB_OS_PATH_DELIM_CHR_LIST, pszFileName[ iPos ] ) )
          {
             pFileName->szPath = pszPos;
-            hb_strncpy( pszPos, pszFileName, iPos + 1 );
+            hb_strncpy(pszPos, pszFileName, iPos + 1);
             pszPos += iPos + 2;
             pszFileName += iPos + 1;
             iSize -= iPos + 1;
@@ -192,7 +192,7 @@ PHB_FNAME hb_fsFNameSplit( const char * pszFileName )
          if( pszFileName[ iPos ] == '.' )
          {
             pFileName->szExtension = pszPos;
-            hb_strncpy( pszPos, pszFileName + iPos, iSize - iPos );
+            hb_strncpy(pszPos, pszFileName + iPos, iSize - iPos);
             pszPos += iSize - iPos + 1;
             iSize = iPos;
             break;
@@ -201,7 +201,7 @@ PHB_FNAME hb_fsFNameSplit( const char * pszFileName )
       if( iSize )
       {
          pFileName->szName = pszPos;
-         hb_strncpy( pszPos, pszFileName, iSize );
+         hb_strncpy(pszPos, pszFileName, iSize);
          pszPos += iSize + 1;
       }
 
@@ -217,7 +217,7 @@ PHB_FNAME hb_fsFNameSplit( const char * pszFileName )
             if( pFileName->szPath[ iPos ] == ':' )
             {
                pFileName->szDrive = pszPos;
-               hb_strncpy( pszPos, pFileName->szPath, iPos );
+               hb_strncpy(pszPos, pFileName->szPath, iPos);
                break;
             }
             ++iPos;
@@ -276,7 +276,7 @@ char * hb_fsFNameMerge( char * pszFileName, PHB_FNAME pFileName )
          was none. */
       if( pszFileName[ 0 ] != '\0' && ( pszName || pFileName->szExtension ) )
       {
-         int iLen = static_cast<int>( strlen( pszFileName ) ) - 1;
+         int iLen = static_cast<int>( strlen(pszFileName) ) - 1;
 
          if( iLen < HB_PATH_MAX - 1 - 2 && pszFileName[ iLen ] != cDirSep && strchr( HB_OS_PATH_DELIM_CHR_LIST, pszFileName[ iLen ] ) == nullptr )
          {

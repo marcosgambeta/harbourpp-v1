@@ -30,43 +30,43 @@
  */
 static HB_PSIZE_FUNC( hb_p_pushstrshort )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
    return 2 + pFunc->pCode[ nPCodePos + 1 ];
 }
 
 static HB_PSIZE_FUNC( hb_p_pushstr )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
    return 3 + HB_PCODE_MKUSHORT( &pFunc->pCode[ nPCodePos + 1 ] );
 }
 
 static HB_PSIZE_FUNC( hb_p_pushstrlarge )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
    return 4 + HB_PCODE_MKUINT24( &pFunc->pCode[ nPCodePos + 1 ] );
 }
 
 static HB_PSIZE_FUNC( hb_p_pushstrhidden )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
    return 4 + HB_PCODE_MKUSHORT( &pFunc->pCode[ nPCodePos + 2 ] );
 }
 
 static HB_PSIZE_FUNC( hb_p_pushblock )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
    return HB_PCODE_MKUSHORT( &pFunc->pCode[ nPCodePos + 1 ] );
 }
 
 static HB_PSIZE_FUNC( hb_p_pushblockshort )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
    return pFunc->pCode[ nPCodePos + 1 ];
 }
 
 static HB_PSIZE_FUNC( hb_p_pushblocklarge )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
    return HB_PCODE_MKUINT24( &pFunc->pCode[ nPCodePos + 1 ] );
 }
 
@@ -74,7 +74,7 @@ static HB_PSIZE_FUNC( hb_p_localname )
 {
    HB_SIZE nStart = nPCodePos;
 
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
    nPCodePos += 3;
    while( pFunc->pCode[ nPCodePos++ ] )
    {
@@ -88,7 +88,7 @@ static HB_PSIZE_FUNC( hb_p_modulename )
 {
    HB_SIZE nStart = nPCodePos;
 
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
    nPCodePos++;
    while( pFunc->pCode[ nPCodePos++ ] )
    {
@@ -102,7 +102,7 @@ static HB_PSIZE_FUNC( hb_p_staticname )
 {
    HB_SIZE nStart = nPCodePos;
 
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
    nPCodePos += 4;
    while( pFunc->pCode[ nPCodePos++ ] )
    {
@@ -114,7 +114,7 @@ static HB_PSIZE_FUNC( hb_p_staticname )
 
 static HB_PSIZE_FUNC( hb_p_threadstatics )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
    return 3 + ( static_cast<HB_SIZE>( HB_PCODE_MKUSHORT( &pFunc->pCode[ nPCodePos + 1 ] ) ) << 1 );
 }
 

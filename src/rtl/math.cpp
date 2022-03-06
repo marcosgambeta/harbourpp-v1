@@ -204,7 +204,7 @@ void hb_mathResetError( HB_MATH_EXCEPTION * phb_exc )
    HB_TRACE( HB_TR_DEBUG, ( "hb_mathResetError(%p)", static_cast<void*>( phb_exc ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( phb_exc );
+   HB_SYMBOL_UNUSED(phb_exc);
 
 #if defined( HB_MATH_HANDLER )
    {
@@ -378,10 +378,10 @@ HB_BOOL hb_mathGetError( HB_MATH_EXCEPTION * phb_exc, const char * szFunc, doubl
    }
    return HB_TRUE;
 #else
-   HB_SYMBOL_UNUSED( dResult );
-   HB_SYMBOL_UNUSED( arg1 );
-   HB_SYMBOL_UNUSED( arg2 );
-   HB_SYMBOL_UNUSED( szFunc );
+   HB_SYMBOL_UNUSED(dResult);
+   HB_SYMBOL_UNUSED(arg1);
+   HB_SYMBOL_UNUSED(arg2);
+   HB_SYMBOL_UNUSED(szFunc);
 
 #  if defined( HB_MATH_HANDLER )
 
@@ -390,7 +390,7 @@ HB_BOOL hb_mathGetError( HB_MATH_EXCEPTION * phb_exc, const char * szFunc, doubl
 
 #  else
 
-   HB_SYMBOL_UNUSED( phb_exc );
+   HB_SYMBOL_UNUSED(phb_exc);
    return HB_FALSE;
 
 #  endif

@@ -788,11 +788,11 @@ static size_t put_str( char *buffer, size_t bufsize, size_t size, const _x_str s
    }
    if( precision < 0 )
    {
-      precision = static_cast<int>( strlen( str ) );
+      precision = static_cast<int>( strlen(str) );
    }
    else if( precision > 0 )
    {
-      precision = static_cast<int>( _hb_strnlen( str, precision ) );
+      precision = static_cast<int>( _hb_strnlen(str, precision) );
    }
 
    width -= precision;

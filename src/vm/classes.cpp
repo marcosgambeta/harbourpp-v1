@@ -639,8 +639,8 @@ static PMETHOD hb_clsAllocMsg( PCLASS pClass, PHB_DYNS pMsg )
 
 static HB_BOOL hb_clsCanClearMethod( PMETHOD pMethod, HB_BOOL fError )
 {
-   HB_SYMBOL_UNUSED( pMethod );
-   HB_SYMBOL_UNUSED( fError );
+   HB_SYMBOL_UNUSED(pMethod);
+   HB_SYMBOL_UNUSED(fError);
 #if 0
    if( pMethod->pFuncSym == &s___msgSuper )
    {
@@ -1140,34 +1140,34 @@ void hb_clsInit( void )
 
    for( uiOperator = 0, pOpSym = s_opSymbols; uiOperator <= HB_OO_MAX_OPERATOR; ++uiOperator, ++pOpSym )
    {
-      pOpSym->pDynSym = hb_dynsymGetCase( pOpSym->szName );
+      pOpSym->pDynSym = hb_dynsymGetCase(pOpSym->szName);
    }
 
-   s___msgDestructor.pDynSym  = hb_dynsymGetCase( s___msgDestructor.szName );
-   s___msgOnError.pDynSym     = hb_dynsymGetCase( s___msgOnError.szName );
+   s___msgDestructor.pDynSym  = hb_dynsymGetCase(s___msgDestructor.szName);
+   s___msgOnError.pDynSym     = hb_dynsymGetCase(s___msgOnError.szName);
 
-   s___msgClassName.pDynSym   = hb_dynsymGetCase( s___msgClassName.szName );  /* Standard messages */
-   s___msgClassH.pDynSym      = hb_dynsymGetCase( s___msgClassH.szName );     /* Not present in classdef. */
-   s___msgClassSel.pDynSym    = hb_dynsymGetCase( s___msgClassSel.szName );
-   s___msgExec.pDynSym        = hb_dynsymGetCase( s___msgExec.szName );
-   s___msgName.pDynSym        = hb_dynsymGetCase( s___msgName.szName );
-   s___msgNew.pDynSym         = hb_dynsymGetCase( s___msgNew.szName );
-   s___msgSymbol.pDynSym      = hb_dynsymGetCase( s___msgSymbol.szName );
-   s___msgKeys.pDynSym        = hb_dynsymGetCase( s___msgKeys.szName );
-   s___msgValues.pDynSym      = hb_dynsymGetCase( s___msgValues.szName );
+   s___msgClassName.pDynSym   = hb_dynsymGetCase(s___msgClassName.szName);  /* Standard messages */
+   s___msgClassH.pDynSym      = hb_dynsymGetCase(s___msgClassH.szName);     /* Not present in classdef. */
+   s___msgClassSel.pDynSym    = hb_dynsymGetCase(s___msgClassSel.szName);
+   s___msgExec.pDynSym        = hb_dynsymGetCase(s___msgExec.szName);
+   s___msgName.pDynSym        = hb_dynsymGetCase(s___msgName.szName);
+   s___msgNew.pDynSym         = hb_dynsymGetCase(s___msgNew.szName);
+   s___msgSymbol.pDynSym      = hb_dynsymGetCase(s___msgSymbol.szName);
+   s___msgKeys.pDynSym        = hb_dynsymGetCase(s___msgKeys.szName);
+   s___msgValues.pDynSym      = hb_dynsymGetCase(s___msgValues.szName);
 /*
-   s___msgClsParent.pDynSym   = hb_dynsymGetCase( s___msgClsParent.szName );
-   s___msgClass.pDynSym       = hb_dynsymGetCase( s___msgClass.szName );
+   s___msgClsParent.pDynSym   = hb_dynsymGetCase(s___msgClsParent.szName);
+   s___msgClass.pDynSym       = hb_dynsymGetCase(s___msgClass.szName);
 */
-   s___msgEnumIndex.pDynSym   = hb_dynsymGetCase( s___msgEnumIndex.szName );
-   s___msgEnumBase.pDynSym    = hb_dynsymGetCase( s___msgEnumBase.szName );
-   s___msgEnumKey.pDynSym     = hb_dynsymGetCase( s___msgEnumKey.szName );
-   s___msgEnumValue.pDynSym   = hb_dynsymGetCase( s___msgEnumValue.szName );
-   s___msgEnumIsFirst.pDynSym = hb_dynsymGetCase( s___msgEnumIsFirst.szName );
-   s___msgEnumIsLast.pDynSym  = hb_dynsymGetCase( s___msgEnumIsLast.szName );
+   s___msgEnumIndex.pDynSym   = hb_dynsymGetCase(s___msgEnumIndex.szName);
+   s___msgEnumBase.pDynSym    = hb_dynsymGetCase(s___msgEnumBase.szName);
+   s___msgEnumKey.pDynSym     = hb_dynsymGetCase(s___msgEnumKey.szName);
+   s___msgEnumValue.pDynSym   = hb_dynsymGetCase(s___msgEnumValue.szName);
+   s___msgEnumIsFirst.pDynSym = hb_dynsymGetCase(s___msgEnumIsFirst.szName);
+   s___msgEnumIsLast.pDynSym  = hb_dynsymGetCase(s___msgEnumIsLast.szName);
 
-   s___msgWithObjectPush.pDynSym = hb_dynsymGetCase( s___msgWithObjectPush.szName );
-   s___msgWithObjectPop.pDynSym  = hb_dynsymGetCase( s___msgWithObjectPop.szName );
+   s___msgWithObjectPush.pDynSym = hb_dynsymGetCase(s___msgWithObjectPush.szName);
+   s___msgWithObjectPop.pDynSym  = hb_dynsymGetCase(s___msgWithObjectPop.szName);
 
 
    s_uiClsSize = HB_CLASS_POOL_SIZE;
@@ -1197,8 +1197,8 @@ void hb_clsDoInit( void )
 
    for( int i = 0; i < static_cast<int>( HB_SIZEOFARRAY( s_puiHandles ) ); ++i )
    {
-      PHB_DYNS pFuncSym = hb_dynsymFindName( s_pszFuncNames[i] );
-      if( pFuncSym && hb_dynsymIsFunction( pFuncSym ) )
+      PHB_DYNS pFuncSym = hb_dynsymFindName(s_pszFuncNames[i]);
+      if( pFuncSym && hb_dynsymIsFunction(pFuncSym) )
       {
          PHB_ITEM pReturn = hb_stackReturnItem();
          hb_itemSetNil(pReturn);
@@ -1374,13 +1374,13 @@ HB_BOOL hb_clsIsParent( HB_USHORT uiClass, const char * szParentName )
    {
       PCLASS pClass = s_pClasses[ uiClass ];
 
-      if( strcmp( pClass->szName, szParentName ) == 0 )
+      if( strcmp(pClass->szName, szParentName) == 0 )
       {
          return HB_TRUE;
       }
       else
       {
-         PHB_DYNS pMsg = hb_dynsymFindName( szParentName );
+         PHB_DYNS pMsg = hb_dynsymFindName(szParentName);
 
          if( pMsg )
          {
@@ -1631,9 +1631,9 @@ HB_USHORT hb_clsFindClass( const char * szClass, const char * szClassFunc )
 {
    for( HB_USHORT uiClass = 1; uiClass <= s_uiClasses; uiClass++ )
    {
-      if( strcmp( szClass, s_pClasses[ uiClass ]->szName ) == 0 &&
+      if( strcmp(szClass, s_pClasses[ uiClass ]->szName) == 0 &&
           ( ! szClassFunc || ( ! s_pClasses[ uiClass ]->pClassFuncSym ? ! *szClassFunc :
-            strcmp( szClassFunc, s_pClasses[ uiClass ]->pClassFuncSym->szName ) == 0 ) ) )
+            strcmp(szClassFunc, s_pClasses[ uiClass ]->pClassFuncSym->szName) == 0 ) ) )
       {
          return uiClass;
       }
@@ -1704,7 +1704,7 @@ const char * hb_objGetRealClsName( PHB_ITEM pObject, const char * szName )
    uiClass = hb_objGetClassH( pObject );
    if( uiClass && uiClass <= s_uiClasses )
    {
-      PHB_DYNS pMsg = hb_dynsymFindName( szName );
+      PHB_DYNS pMsg = hb_dynsymFindName(szName);
 
       if( pMsg )
       {
@@ -2469,7 +2469,7 @@ HB_BOOL hb_objGetVarRef( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
 
          if( ! pMethod->pAccMsg )
          {
-            pMethod->pAccMsg = hb_dynsymGetCase( pMessage->szName + 1 );
+            pMethod->pAccMsg = hb_dynsymGetCase(pMessage->szName + 1);
          }
 
          return hb_vmMsgReference( pObject, pMessage->pDynSym, pMethod->pAccMsg );
@@ -2684,7 +2684,7 @@ HB_BOOL hb_objHasMsg( PHB_ITEM pObject, const char * szString )
 
    PHB_DYNS pDynSym;
 
-   pDynSym = hb_dynsymFindName( szString );
+   pDynSym = hb_dynsymFindName(szString);
    if( pDynSym )
    {
       return hb_objGetMethod( pObject, pDynSym->pSymbol, nullptr ) != nullptr;
@@ -2728,7 +2728,7 @@ PHB_ITEM hb_objSendMessage( PHB_ITEM pObject, PHB_DYNS pMsgSym, HB_ULONG ulArg, 
 
 PHB_ITEM hb_objSendMsg( PHB_ITEM pObject, const char * szMsg, HB_ULONG ulArg, ... )
 {
-   hb_vmPushSymbol( hb_dynsymGet( szMsg )->pSymbol );
+   hb_vmPushSymbol( hb_dynsymGet(szMsg )->pSymbol);
    hb_vmPush( pObject );
    if( ulArg )
    {
@@ -2811,7 +2811,7 @@ static PHB_DYNS hb_objGetMsgSym( PHB_ITEM pMessage )
 
       if( szMsg && *szMsg )
       {
-         pDynSym = hb_dynsymGet( szMsg );
+         pDynSym = hb_dynsymGet(szMsg);
       }
    }
 
@@ -2828,7 +2828,7 @@ static PHB_SYMB hb_objGetFuncSym( PHB_ITEM pItem )
       }
       else if( HB_IS_STRING(pItem) )
       {
-         PHB_DYNS pDynSym = hb_dynsymFindName( hb_itemGetCPtr(pItem) );
+         PHB_DYNS pDynSym = hb_dynsymFindName(hb_itemGetCPtr(pItem));
 
          if( pDynSym && pDynSym->pSymbol->value.pFunPtr )
          {
@@ -2847,7 +2847,7 @@ void hb_objCloneBody( PHB_ITEM pDest, PHB_ITEM pObject, PHB_NESTED_CLONED pClone
    HB_TRACE( HB_TR_DEBUG, ( "hb_objCloneBody(%p,%p,%p)", static_cast<void*>( pDest ), static_cast<void*>( pObject ), static_cast<void*>( pClonedList ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pClonedList );
+   HB_SYMBOL_UNUSED(pClonedList);
 
    /* TODO: add support for user defined clone operation */
 
@@ -3164,91 +3164,91 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage, HB_USHOR
       {
          pMessage = s___msgOnError.pDynSym;
       }
-      else if( strcmp( "+", szMessage ) == 0 )
+      else if( strcmp("+", szMessage) == 0 )
       {
          pMessage = ( s_opSymbols + HB_OO_OP_PLUS )->pDynSym;
       }
-      else if( strcmp( "-", szMessage ) == 0 )
+      else if( strcmp("-", szMessage) == 0 )
       {
          pMessage = ( s_opSymbols + HB_OO_OP_MINUS )->pDynSym;
       }
-      else if( strcmp( "*", szMessage ) == 0 )
+      else if( strcmp("*", szMessage) == 0 )
       {
          pMessage = ( s_opSymbols + HB_OO_OP_MULT )->pDynSym;
       }
-      else if( strcmp( "/", szMessage ) == 0 )
+      else if( strcmp("/", szMessage) == 0 )
       {
          pMessage = ( s_opSymbols + HB_OO_OP_DIVIDE )->pDynSym;
       }
-      else if( strcmp( "%", szMessage ) == 0 )
+      else if( strcmp("%", szMessage) == 0 )
       {
          pMessage = ( s_opSymbols + HB_OO_OP_MOD )->pDynSym;
       }
-      else if( strcmp( "^", szMessage ) == 0 )
+      else if( strcmp("^", szMessage) == 0 )
       {
          pMessage = ( s_opSymbols + HB_OO_OP_POWER )->pDynSym;
       }
-      else if( strcmp( "**", szMessage ) == 0 )
+      else if( strcmp("**", szMessage) == 0 )
       {
          pMessage = ( s_opSymbols + HB_OO_OP_POWER )->pDynSym;
       }
-      else if( strcmp( "++", szMessage ) == 0 )
+      else if( strcmp("++", szMessage) == 0 )
       {
          pMessage = ( s_opSymbols + HB_OO_OP_INC )->pDynSym;
       }
-      else if( strcmp( "--", szMessage ) == 0 )
+      else if( strcmp("--", szMessage) == 0 )
       {
          pMessage = ( s_opSymbols + HB_OO_OP_DEC )->pDynSym;
       }
-      else if( strcmp( "==", szMessage ) == 0 )
+      else if( strcmp("==", szMessage) == 0 )
       {
          pMessage = ( s_opSymbols + HB_OO_OP_EXACTEQUAL )->pDynSym;
       }
-      else if( strcmp( "=", szMessage ) == 0 )
+      else if( strcmp("=", szMessage) == 0 )
       {
          pMessage = ( s_opSymbols + HB_OO_OP_EQUAL )->pDynSym;
       }
-      else if( strcmp( "!=", szMessage ) == 0 )
+      else if( strcmp("!=", szMessage) == 0 )
       {
          pMessage = ( s_opSymbols + HB_OO_OP_NOTEQUAL )->pDynSym;
       }
-      else if( strcmp( "<>", szMessage ) == 0 )
+      else if( strcmp("<>", szMessage) == 0 )
       {
          pMessage = ( s_opSymbols + HB_OO_OP_NOTEQUAL )->pDynSym;
       }
-      else if( strcmp( "#", szMessage ) == 0 )
+      else if( strcmp("#", szMessage) == 0 )
       {
          pMessage = ( s_opSymbols + HB_OO_OP_NOTEQUAL )->pDynSym;
       }
-      else if( strcmp( "<", szMessage ) == 0 )
+      else if( strcmp("<", szMessage) == 0 )
       {
          pMessage = ( s_opSymbols + HB_OO_OP_LESS )->pDynSym;
       }
-      else if( strcmp( "<=", szMessage ) == 0 )
+      else if( strcmp("<=", szMessage) == 0 )
       {
          pMessage = ( s_opSymbols + HB_OO_OP_LESSEQUAL )->pDynSym;
       }
-      else if( strcmp( ">", szMessage ) == 0 )
+      else if( strcmp(">", szMessage) == 0 )
       {
          pMessage = ( s_opSymbols + HB_OO_OP_GREATER )->pDynSym;
       }
-      else if( strcmp( ">=", szMessage ) == 0 )
+      else if( strcmp(">=", szMessage) == 0 )
       {
          pMessage = ( s_opSymbols + HB_OO_OP_GREATEREQUAL )->pDynSym;
       }
-      else if( strcmp( ":=", szMessage ) == 0 )
+      else if( strcmp(":=", szMessage) == 0 )
       {
          pMessage = ( s_opSymbols + HB_OO_OP_ASSIGN )->pDynSym;
       }
-      else if( strcmp( "$", szMessage ) == 0 )
+      else if( strcmp("$", szMessage) == 0 )
       {
          pMessage = ( s_opSymbols + HB_OO_OP_INSTRING )->pDynSym;
       }
-      else if( strcmp( "$$", szMessage ) == 0 )
+      else if( strcmp("$$", szMessage) == 0 )
       {
          pMessage = ( s_opSymbols + HB_OO_OP_INCLUDE )->pDynSym;
       }
-      else if( strcmp( "!", szMessage ) == 0 )
+      else if( strcmp("!", szMessage) == 0 )
       {
          pMessage = ( s_opSymbols + HB_OO_OP_NOT )->pDynSym;
       }
@@ -3264,13 +3264,13 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage, HB_USHOR
       {
          pMessage = ( s_opSymbols + HB_OO_OP_OR )->pDynSym;
       }
-      else if( strcmp( "[]", szMessage ) == 0 )
+      else if( strcmp("[]", szMessage) == 0 )
       {
          pMessage = ( s_opSymbols + HB_OO_OP_ARRAYINDEX )->pDynSym;
       }
       else
       {
-         pMessage = hb_dynsymGet( szMessage );
+         pMessage = hb_dynsymGet(szMessage);
       }   
 
       for( uiOperator = 0, pOpSym = s_opSymbols; uiOperator <= HB_OO_MAX_OPERATOR; ++uiOperator, ++pOpSym )
@@ -3727,8 +3727,8 @@ static HB_USHORT hb_clsNew( const char * szClassName, HB_USHORT uiDatas, PHB_ITE
 
    HB_CLASS_UNLOCK();
 
-   pNewCls->szName = hb_strdup( szClassName );
-   pNewCls->pClassSym = hb_dynsymGet( pNewCls->szName );
+   pNewCls->szName = hb_strdup(szClassName);
+   pNewCls->pClassSym = hb_dynsymGet(pNewCls->szName);
    if( ! pClassFunc )
    {
       pClassFunc = hb_vmGetRealFuncSym( pNewCls->pClassSym->pSymbol );
@@ -4010,7 +4010,7 @@ HB_FUNC( __CLSDELMSG )
 
    if( uiClass && uiClass <= s_uiClasses && pString && ! s_pClasses[ uiClass ]->fLocked )
    {
-      PHB_DYNS pMsg = hb_dynsymFindName( pString->item.asString.value );
+      PHB_DYNS pMsg = hb_dynsymFindName(pString->item.asString.value);
 
       if( pMsg )
       {
@@ -4124,7 +4124,7 @@ HB_FUNC( __CLSMODMSG )
 
    if( uiClass && uiClass <= s_uiClasses && pString && ! s_pClasses[ uiClass ]->fLocked )
    {
-      PHB_DYNS pMsg = hb_dynsymFindName( pString->item.asString.value );
+      PHB_DYNS pMsg = hb_dynsymFindName(pString->item.asString.value);
 
       if( pMsg )
       {
@@ -4342,7 +4342,7 @@ HB_FUNC( __CLSINSTSUPER )
       }
       else if( HB_IS_STRING(pItem) )
       {
-         PHB_DYNS pDynSym = hb_dynsymFindName( hb_itemGetCPtr(pItem) );
+         PHB_DYNS pDynSym = hb_dynsymFindName(hb_itemGetCPtr(pItem));
          if( pDynSym )
          {
             pClassFuncSym = pDynSym->pSymbol;
@@ -5453,7 +5453,7 @@ HB_FUNC( __GETMSGPRF ) /* profiler: returns a method called and consumed times *
    hb_reta(2);
    if( uiClass && uiClass <= s_uiClasses && cMsg && *cMsg )
    {
-      PHB_DYNS pMsg = hb_dynsymFindName( cMsg );
+      PHB_DYNS pMsg = hb_dynsymFindName(cMsg);
 
       if( pMsg )
       {
@@ -5648,7 +5648,7 @@ static void hb_objSetIVars( PHB_ITEM pObject, PHB_ITEM pArray )
       while( ( pValue = hb_arrayGetItemPtr( pArray, ++nPos ) ) != nullptr )
       {
          const char * pszMethod = hb_arrayGetCPtr( pValue, 1 );
-         PHB_DYNS pVarSym = hb_dynsymFind( pszMethod );
+         PHB_DYNS pVarSym = hb_dynsymFind(pszMethod);
          PHB_ITEM pNewVal = hb_arrayGetItemPtr( pValue, 2 );
          HB_USHORT uiSuper = uiClass;
 
@@ -5665,14 +5665,14 @@ static void hb_objSetIVars( PHB_ITEM pObject, PHB_ITEM pArray )
 
                   memcpy( szClassName, pszMethod, nLen );
                   szClassName[ nLen ] = '\0';
-                  pParentSym = hb_dynsymFindName( szClassName );
+                  pParentSym = hb_dynsymFindName(szClassName);
                   uiSuper = pParentSym == nullptr ? 0 : hb_clsGetParent( s_pClasses[ uiClass ], pParentSym );
                }
-               pVarSym = hb_dynsymFindName( pszClass + 1 );
+               pVarSym = hb_dynsymFindName(pszClass + 1);
             }
             else
             {
-               pVarSym = hb_dynsymFindName( pszMethod );
+               pVarSym = hb_dynsymFindName(pszMethod);
             }
          }
          if( uiSuper && pNewVal && pVarSym && ( nIndex = hb_clsGetVarIndexEx( uiClass, pVarSym, uiSuper ) ) != 0 )
@@ -5812,7 +5812,7 @@ HB_FUNC( __CLSGETPROPERTIES )
             {
                if( ! pMethod->pAccMsg )
                {
-                  pMethod->pAccMsg = hb_dynsymGetCase( pMethod->pMessage->pSymbol->szName + 1 );
+                  pMethod->pAccMsg = hb_dynsymGetCase(pMethod->pMessage->pSymbol->szName + 1);
                }
                pAccMth = hb_clsFindMsg( pClass, pMethod->pAccMsg );
                if( pAccMth && ( pAccMth->uiScope & HB_OO_CLSTP_PERSIST ) == 0 )
@@ -6090,7 +6090,7 @@ HB_FUNC( __CLSVERIFY )
       {
          if( pMethod->pMessage )
          {
-            PHB_DYNS pDynSym = hb_dynsymFind( pMethod->pMessage->pSymbol->szName );
+            PHB_DYNS pDynSym = hb_dynsymFind(pMethod->pMessage->pSymbol->szName);
 
             if( pMethod->pMessage != pDynSym || hb_clsFindMsg( pClass, pDynSym ) != pMethod )
             {

@@ -68,7 +68,7 @@ static void hb_delimInitArea( DELIMAREAP pArea, char * szFileName )
    const char * szEol;
 
    /* Allocate only after successfully open file */
-   pArea->szFileName = hb_strdup( szFileName );
+   pArea->szFileName = hb_strdup(szFileName);
 
    /* set line separator: EOL */
    szEol = hb_setGetEOL();
@@ -76,8 +76,8 @@ static void hb_delimInitArea( DELIMAREAP pArea, char * szFileName )
    {
       szEol = hb_conNewLine();
    }
-   pArea->szEol = hb_strdup( szEol );
-   pArea->uiEolLen = static_cast<HB_USHORT>( strlen( szEol ) );
+   pArea->szEol = hb_strdup(szEol);
+   pArea->uiEolLen = static_cast<HB_USHORT>( strlen(szEol) );
    pArea->fAnyEol = ( szEol[ 0 ] == '\n' || szEol[ 0 ] == '\r' ) &&
                     ( pArea->uiEolLen == 1 ||
                       ( pArea->uiEolLen == 2 && szEol[ 0 ] != szEol[ 1 ] &&
@@ -132,8 +132,8 @@ static HB_ERRCODE hb_delimWriteHeader( DELIMAREAP pArea )
 
    for( uiCount = 0; uiCount < pArea->area.uiFieldCount; uiCount++ )
    {
-      pszFieldName = hb_dynsymName( static_cast<PHB_DYNS>( ( pArea->area.lpFields + uiCount )->sym ) );
-      nSize += strlen( pszFieldName ) + 3;
+      pszFieldName = hb_dynsymName(static_cast<PHB_DYNS>( ( pArea->area.lpFields + uiCount )->sym ));
+      nSize += strlen(pszFieldName) + 3;
    }
    if( nSize > 0 )
    {
@@ -146,8 +146,8 @@ static HB_ERRCODE hb_delimWriteHeader( DELIMAREAP pArea )
       nSize = 0;
       for( uiCount = 0; uiCount < pArea->area.uiFieldCount; uiCount++ )
       {
-         pszFieldName = hb_dynsymName( static_cast<PHB_DYNS>( ( pArea->area.lpFields + uiCount )->sym ) );
-         nS = strlen( pszFieldName );
+         pszFieldName = hb_dynsymName(static_cast<PHB_DYNS>( ( pArea->area.lpFields + uiCount )->sym ));
+         nS = strlen(pszFieldName);
          if( uiCount )
          {
             pBuffer[ nSize++ ] = pArea->cSeparator;
@@ -623,7 +623,7 @@ static HB_ERRCODE hb_delimDeleted( DELIMAREAP pArea, HB_BOOL * pDeleted )
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimDeleted(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pDeleted ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pArea );
+   HB_SYMBOL_UNUSED(pArea);
 
    *pDeleted = HB_FALSE;
 
@@ -698,7 +698,7 @@ static HB_ERRCODE hb_delimAppend( DELIMAREAP pArea, HB_BOOL fUnLockAll )
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimAppend(%p,%d)", static_cast<void*>( pArea ), static_cast<int>( fUnLockAll ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( fUnLockAll );
+   HB_SYMBOL_UNUSED(fUnLockAll);
 
    if( SELF_GOCOLD( &pArea->area ) != HB_SUCCESS )
    {
@@ -727,7 +727,7 @@ static HB_ERRCODE hb_delimDeleteRec( DELIMAREAP pArea )
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimDeleteRec(%p)", static_cast<void*>( pArea ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pArea );
+   HB_SYMBOL_UNUSED(pArea);
 
    /* It's not Cl*pper compatible so I had to disable it [druzus] */
 #if 0
@@ -752,7 +752,7 @@ static HB_ERRCODE hb_delimRecall( DELIMAREAP pArea )
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimRecall(%p)", static_cast<void*>( pArea ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pArea );
+   HB_SYMBOL_UNUSED(pArea);
 
    return HB_SUCCESS;
 }
@@ -859,7 +859,7 @@ static HB_ERRCODE hb_delimGetValue( DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITE
          PHB_ITEM pError = hb_errNew();
          hb_errPutGenCode( pError, EG_DATATYPE );
          hb_errPutDescription( pError, hb_langDGetErrorDesc( EG_DATATYPE ) );
-         hb_errPutOperation( pError, hb_dynsymName( static_cast<PHB_DYNS>( pField->sym ) ) );
+         hb_errPutOperation( pError, hb_dynsymName(static_cast<PHB_DYNS>( pField->sym ) ));
          hb_errPutSubCode( pError, EDBF_DATATYPE );
          SELF_ERROR( &pArea->area, pError );
          hb_itemRelease(pError);
@@ -1002,7 +1002,7 @@ static HB_ERRCODE hb_delimPutValue( DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITE
 
       hb_errPutGenCode( pError, errGenCode );
       hb_errPutDescription( pError, hb_langDGetErrorDesc( errGenCode ) );
-      hb_errPutOperation( pError, hb_dynsymName( static_cast<PHB_DYNS>( pField->sym ) ) );
+      hb_errPutOperation( pError, hb_dynsymName(static_cast<PHB_DYNS>( pField->sym )) );
       hb_errPutSubCode( pError, errCode );
       hb_errPutFlags( pError, EF_CANDEFAULT );
       errCode = SELF_ERROR( &pArea->area, pError );
@@ -1489,7 +1489,7 @@ static HB_ERRCODE hb_delimStructSize( DELIMAREAP pArea, HB_USHORT * uiSize )
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_delimStrucSize(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( uiSize ) ) );
 #endif
-   HB_SYMBOL_UNUSED( pArea );
+   HB_SYMBOL_UNUSED(pArea);
 
    *uiSize = sizeof(DELIMAREA);
    return HB_SUCCESS;
@@ -1581,7 +1581,7 @@ static HB_ERRCODE hb_delimCreate( DELIMAREAP pArea, LPDBOPENINFO pCreateInfo )
       pArea->area.cdPage = hb_vmCDP();
    }
 
-   pFileName = hb_fsFNameSplit( pCreateInfo->abName );
+   pFileName = hb_fsFNameSplit(pCreateInfo->abName);
    if( hb_setGetDefExtension() && ! pFileName->szExtension )
    {
       PHB_ITEM pItem = hb_itemNew(nullptr);
@@ -1594,7 +1594,7 @@ static HB_ERRCODE hb_delimCreate( DELIMAREAP pArea, LPDBOPENINFO pCreateInfo )
    }
    else
    {
-      hb_strncpy( szFileName, pCreateInfo->abName, sizeof(szFileName) - 1 );
+      hb_strncpy(szFileName, pCreateInfo->abName, sizeof(szFileName) - 1);
    }
    hb_xfree(pFileName);
 
@@ -1699,7 +1699,7 @@ static HB_ERRCODE hb_delimOpen( DELIMAREAP pArea, LPDBOPENINFO pOpenInfo )
 
    uiFlags = ( pArea->fReadonly ? FO_READ : FO_READWRITE ) | ( pArea->fShared ? FO_DENYNONE : FO_EXCLUSIVE );
 
-   pFileName = hb_fsFNameSplit( pOpenInfo->abName );
+   pFileName = hb_fsFNameSplit(pOpenInfo->abName);
    /* Add default file name extension if necessary */
    if( hb_setGetDefExtension() && ! pFileName->szExtension )
    {
@@ -1713,7 +1713,7 @@ static HB_ERRCODE hb_delimOpen( DELIMAREAP pArea, LPDBOPENINFO pOpenInfo )
    }
    else
    {
-      hb_strncpy( szFileName, pOpenInfo->abName, sizeof(szFileName) - 1 );
+      hb_strncpy(szFileName, pOpenInfo->abName, sizeof(szFileName) - 1);
    }
 
    /* Create default alias if necessary */
@@ -1854,11 +1854,11 @@ static HB_ERRCODE hb_delimRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG u
          const char * szNew = hb_itemGetCPtr(pItem);
          char * szNewVal;
 
-         szNewVal = szNew[ 0 ] == '.' && szNew[ 1 ] ? hb_strdup( szNew ) : nullptr;
+         szNewVal = szNew[ 0 ] == '.' && szNew[ 1 ] ? hb_strdup(szNew) : nullptr;
          hb_itemPutC(pItem, pData->szTableExt[ 0 ] ? pData->szTableExt : DELIM_TABLEEXT);
          if( szNewVal )
          {
-            hb_strncpy( pData->szTableExt, szNewVal, sizeof(pData->szTableExt) - 1 );
+            hb_strncpy(pData->szTableExt, szNewVal, sizeof(pData->szTableExt) - 1);
             hb_xfree(szNewVal);
          }
          break;
@@ -2020,7 +2020,7 @@ HB_FUNC_STATIC( DELIM_GETFUNCTABLE )
 
 static void hb_delimRddInit( void * cargo )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
 
    if( hb_rddRegister( "DELIM", RDT_TRANSFER ) > 1 )
    {

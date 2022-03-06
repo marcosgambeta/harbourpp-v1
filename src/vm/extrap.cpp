@@ -328,7 +328,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
                      hb_snprintf( buf, sizeof(buf), "%016" PFLL "X %016" PFLL "X %s\n", reinterpret_cast<HB_PTRUINT>( me32.modBaseAddr ), static_cast<HB_PTRUINT>( me32.modBaseSize ), me32.szExePath );
 #else
                      char szBuffer[ MAX_PATH ];
-                     hb_strncpy( szBuffer, me32.szExePath, HB_SIZEOFARRAY( szBuffer ) - 1 );
+                     hb_strncpy(szBuffer, me32.szExePath, HB_SIZEOFARRAY( szBuffer ) - 1);
                      hb_snprintf( buf, sizeof(buf), "%08lX %08lX %s\n", reinterpret_cast<HB_PTRUINT>( me32.modBaseAddr ), static_cast<HB_PTRUINT>( me32.modBaseSize ), szBuffer );
 #endif
                      hb_strncat( errmsg, buf, errmsglen );
@@ -356,7 +356,7 @@ static void hb_signalExceptionHandler( int sig, siginfo_t * si, void * ucp )
    const char * signame;
    const char * sigaddr;
 
-   HB_SYMBOL_UNUSED( ucp );
+   HB_SYMBOL_UNUSED(ucp);
 
    switch( sig )
    {
@@ -397,7 +397,7 @@ void hb_vmSetExceptionHandler( void )
 #if defined( HB_OS_WIN )
    {
       LPTOP_LEVEL_EXCEPTION_FILTER ef = SetUnhandledExceptionFilter( hb_winExceptionHandler );
-      HB_SYMBOL_UNUSED( ef );
+      HB_SYMBOL_UNUSED(ef);
    }
 #elif defined( HB_SIGNAL_EXCEPTION_HANDLER )
    {

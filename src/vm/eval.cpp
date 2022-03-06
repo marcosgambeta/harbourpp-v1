@@ -118,7 +118,7 @@ PHB_ITEM hb_evalLaunch( PHB_EVALINFO pEvalInfo )
 
       if( HB_IS_STRING(pItem) )
       {
-         PHB_DYNS pDynSym = hb_dynsymFindName( pItem->item.asString.value );
+         PHB_DYNS pDynSym = hb_dynsymFindName(pItem->item.asString.value);
 
          if( pDynSym )
          {
@@ -220,7 +220,7 @@ PHB_ITEM hb_itemDo( PHB_ITEM pItem, HB_ULONG ulPCount, ... )
 
       if( HB_IS_STRING(pItem) )
       {
-         PHB_DYNS pDynSym = hb_dynsymFindName( pItem->item.asString.value );
+         PHB_DYNS pDynSym = hb_dynsymFindName(pItem->item.asString.value);
 
          if( pDynSym )
          {
@@ -297,7 +297,7 @@ PHB_ITEM hb_itemDoC( const char * szFunc, HB_ULONG ulPCount, ... )
 
    if( szFunc )
    {
-      PHB_DYNS pDynSym = hb_dynsymFindName( szFunc );
+      PHB_DYNS pDynSym = hb_dynsymFindName(szFunc);
 
       if( pDynSym )
       {
@@ -492,7 +492,7 @@ HB_FUNC( HB_EXECFROMARRAY )
       }
       else if( HB_IS_STRING(pFunc) )
       {
-         pExecSym = hb_dynsymGet( hb_itemGetCPtr(pFunc) )->pSymbol;
+         pExecSym = hb_dynsymGet(hb_itemGetCPtr(pFunc))->pSymbol;
       }
       else if( HB_IS_BLOCK(pFunc) && ! pSelf )
       {
@@ -579,7 +579,7 @@ HB_BOOL hb_execFromArray( PHB_ITEM pParam )
       }
       else if( HB_IS_STRING(pParam) )
       {
-         pExecSym = hb_dynsymGet( hb_itemGetCPtr(pParam) )->pSymbol;
+         pExecSym = hb_dynsymGet(hb_itemGetCPtr(pParam))->pSymbol;
       }
       else if( HB_IS_BLOCK(pParam) && ! pSelf )
       {

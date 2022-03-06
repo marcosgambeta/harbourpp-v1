@@ -119,7 +119,7 @@ static HB_BOOL hb_pp_CompilerSwitch( void * cargo, const char * szSwitch, int * 
 
    iValue = *piValue;
 
-   i = static_cast<int>( strlen( szSwitch ) );
+   i = static_cast<int>( strlen(szSwitch) );
    if( i > 1 && ( static_cast<int>( szSwitch[ i - 1 ] - '0' ) ) == iValue )
    {
       --i;
@@ -450,7 +450,7 @@ static void hb_pp_fileIncluded( void * cargo, const char * szFileName )
    while( *pIncFilePtr )
    {
 #if defined( HB_OS_UNIX )
-      if( strcmp( ( *pIncFilePtr )->szFileName, szFileName ) == 0 )
+      if( strcmp(( *pIncFilePtr )->szFileName, szFileName) == 0 )
       {
          return;
       }
@@ -463,7 +463,7 @@ static void hb_pp_fileIncluded( void * cargo, const char * szFileName )
       pIncFilePtr = &( *pIncFilePtr )->pNext;
    }
 
-   iLen = static_cast<int>( strlen( szFileName ) );
+   iLen = static_cast<int>( strlen(szFileName) );
    pIncFile = static_cast<PHB_INCLST>( hb_xgrab(sizeof(HB_INCLST) + iLen) );
    pIncFile->pNext = nullptr;
    memcpy( pIncFile->szFileName, szFileName, iLen + 1 );

@@ -661,7 +661,7 @@ HB_ERRCODE hb_rddDetachArea( AREAP pArea, PHB_ITEM pCargo )
    pArea->uiArea = 0;
    if( pArea->atomAlias )
    {
-      hb_dynsymSetAreaHandle( static_cast<PHB_DYNS>( pArea->atomAlias ), 0 );
+      hb_dynsymSetAreaHandle(static_cast<PHB_DYNS>( pArea->atomAlias ), 0);
    }
 
    /* restore previous WA number */
@@ -719,7 +719,7 @@ AREAP hb_rddRequestArea( const char * szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea
 
    if( szAlias )
    {
-      pSymAlias = hb_dynsymGet( szAlias );
+      pSymAlias = hb_dynsymGet(szAlias);
 
       /* verify if the alias name is valid symbol */
       if( hb_rddVerifyAliasName( szAlias ) != HB_SUCCESS )
@@ -728,7 +728,7 @@ AREAP hb_rddRequestArea( const char * szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea
          return nullptr;
       }
       /* verify if the alias is already in use */
-      if( hb_dynsymAreaHandle( pSymAlias ) != 0 )
+      if( hb_dynsymAreaHandle(pSymAlias) != 0 )
       {
          hb_errRT_DBCMD_Ext( EG_DUPALIAS, EDBCMD_DUPALIAS, nullptr, szAlias, EF_CANDEFAULT );
          return nullptr;
@@ -800,9 +800,9 @@ AREAP hb_rddRequestArea( const char * szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea
       hb_waNodeInsert( hb_stackRDD(), pArea );
       if( pArea->atomAlias )
       {
-         if( hb_dynsymAreaHandle( static_cast<PHB_DYNS>( pArea->atomAlias ) ) == 0 )
+         if( hb_dynsymAreaHandle(static_cast<PHB_DYNS>( pArea->atomAlias )) == 0 )
          {
-            hb_dynsymSetAreaHandle( static_cast<PHB_DYNS>( pArea->atomAlias ), pArea->uiArea );
+            hb_dynsymSetAreaHandle(static_cast<PHB_DYNS>( pArea->atomAlias ), pArea->uiArea);
          }
       }
    }
@@ -830,7 +830,7 @@ PHB_ITEM hb_rddDetachedList( void )
       {
          AREAP * pDetachedArea = static_cast<AREAP*>( hb_arrayGetPtrGC( hb_arrayGetItemPtr( s_pDetachedAreas, nPos ), 1, &s_gcWAFuncs ) );
          PHB_DYNS pAlias = static_cast<PHB_DYNS>( ( *pDetachedArea )->atomAlias );
-         hb_arraySetC( pArray, nPos, hb_dynsymName( pAlias ) );
+         hb_arraySetC( pArray, nPos, hb_dynsymName(pAlias) );
       }
    }
    /* leave critical section */

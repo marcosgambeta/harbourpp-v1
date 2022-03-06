@@ -3800,8 +3800,8 @@ static void hb_cdxTagHeaderStore( LPCDXTAG pTag )
       tagHeader.ignoreCase = 1;
    }
 
-   uiKeyLen = pTag->KeyExpr == nullptr ? 0 : static_cast<HB_USHORT>( strlen( pTag->KeyExpr ) );
-   uiForLen = pTag->ForExpr == nullptr ? 0 : static_cast<HB_USHORT>( strlen( pTag->ForExpr ) );
+   uiKeyLen = pTag->KeyExpr == nullptr ? 0 : static_cast<HB_USHORT>( strlen(pTag->KeyExpr) );
+   uiForLen = pTag->ForExpr == nullptr ? 0 : static_cast<HB_USHORT>( strlen(pTag->ForExpr) );
 
    if( uiKeyLen + uiForLen > CDX_HEADEREXPLEN - 2 )
    {
@@ -4096,7 +4096,7 @@ static LPCDXTAG hb_cdxTagNew( LPCDXINDEX pIndex, const char * szTagName, HB_ULON
    pTag = static_cast<LPCDXTAG>( hb_xgrab(sizeof(CDXTAG)) );
    memset( pTag, 0, sizeof(CDXTAG) );
    hb_strncpyUpperTrim( szName, szTagName, sizeof(szName) - 1 );
-   pTag->szName = hb_strdup( szName );
+   pTag->szName = hb_strdup(szName);
    pTag->pIndex = pIndex;
    pTag->AscendKey = pTag->UsrAscend = HB_TRUE;
    pTag->UsrUnique = pTag->IgnoreCase = HB_FALSE;
@@ -5173,7 +5173,7 @@ static void hb_cdxIndexDelTag( LPCDXINDEX pIndex, const char * szTagName )
    if( *pTagPtr )
    {
       LPCDXTAG pTag = *pTagPtr;
-      LPCDXKEY pKey = hb_cdxKeyPutCL( nullptr, pTag->szName, strlen( pTag->szName ), pTag->TagBlock, pIndex->pCompound->uiLen, CDX_CMP_EXACT );
+      LPCDXKEY pKey = hb_cdxKeyPutCL( nullptr, pTag->szName, strlen(pTag->szName), pTag->TagBlock, pIndex->pCompound->uiLen, CDX_CMP_EXACT );
       if( hb_cdxTagKeyDel( pIndex->pCompound, pKey ) )
       {
          if( pTag != pIndex->TagList || pTag->pNext != nullptr )
@@ -5226,7 +5226,7 @@ static LPCDXTAG hb_cdxIndexAddTag( LPCDXINDEX pIndex, const char * szTagName,
       pTagPtr = &( *pTagPtr )->pNext;
    }
    *pTagPtr = pTag;
-   pKey = hb_cdxKeyPutCL( nullptr, szTagName, strlen( szTagName ), pTag->TagBlock, pIndex->pCompound->uiLen, CDX_CMP_EXACT );
+   pKey = hb_cdxKeyPutCL( nullptr, szTagName, strlen(szTagName), pTag->TagBlock, pIndex->pCompound->uiLen, CDX_CMP_EXACT );
    hb_cdxTagKeyAdd( pIndex->pCompound, pKey );
    hb_cdxKeyFree( pKey );
    return pTag;
@@ -5435,7 +5435,7 @@ static void hb_cdxCreateFName( CDXAREAP pArea, const char * szBagName, HB_BOOL *
    PHB_ITEM pExt = nullptr;
    HB_BOOL fName = szBagName && *szBagName;
 
-   pFileName = hb_fsFNameSplit( fName ? szBagName : pArea->dbfarea.szDataFileName );
+   pFileName = hb_fsFNameSplit(fName ? szBagName : pArea->dbfarea.szDataFileName);
 
    if( szBaseName )
    {
@@ -5473,7 +5473,7 @@ static void hb_cdxCreateFName( CDXAREAP pArea, const char * szBagName, HB_BOOL *
       }
       else
       {
-         PHB_FNAME pTableFileName = hb_fsFNameSplit( pArea->dbfarea.szDataFileName );
+         PHB_FNAME pTableFileName = hb_fsFNameSplit(pArea->dbfarea.szDataFileName);
 
          *fProd = pTableFileName->szName && hb_stricmp( pTableFileName->szName, pFileName->szName ) == 0;
          if( *fProd && pFileName->szExtension && ! pExt )
@@ -5513,8 +5513,8 @@ static void hb_cdxOrdListClear( CDXAREAP pArea, HB_BOOL fAll, LPCDXINDEX pKeepIn
       {
          /* TODO: we have to control this on open */
          PHB_FNAME pFileNameDbf, pFileNameCdx;
-         pFileNameDbf = hb_fsFNameSplit( pArea->dbfarea.szDataFileName );
-         pFileNameCdx = hb_fsFNameSplit( pArea->lpIndexes->szFileName );
+         pFileNameDbf = hb_fsFNameSplit(pArea->dbfarea.szDataFileName);
+         pFileNameCdx = hb_fsFNameSplit(pArea->lpIndexes->szFileName);
          fAll = hb_stricmp( pFileNameDbf->szName ? pFileNameDbf->szName : "", pFileNameCdx->szName ? pFileNameCdx->szName : "" ) != 0;
          if( ! fAll )
          {
@@ -5557,11 +5557,11 @@ static LPCDXINDEX hb_cdxFindBag( CDXAREAP pArea, const char * szBagName )
    LPCDXINDEX pIndex;
    PHB_FNAME pFileName;
 
-   pFileName = hb_fsFNameSplit( szBagName );
+   pFileName = hb_fsFNameSplit(szBagName);
    pIndex = pArea->lpIndexes;
    while( pIndex )
    {
-      PHB_FNAME pIndexName = hb_fsFNameSplit( pIndex->szFileName );
+      PHB_FNAME pIndexName = hb_fsFNameSplit(pIndex->szFileName);
       HB_BOOL fFound = ( pFileName->szName ? pIndexName->szName &&
            ! hb_stricmp( pIndexName->szName, pFileName->szName ) : ! pIndexName->szName ) &&
          ( ! pFileName->szPath ||
@@ -8010,7 +8010,7 @@ static HB_ERRCODE hb_cdxStructSize( CDXAREAP pArea, HB_USHORT * uiSize )
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cdxStrucSize(%p, %p)", static_cast<void*>( pArea ), static_cast<void*>( uiSize ) ) );
 #endif
-   HB_SYMBOL_UNUSED( pArea );
+   HB_SYMBOL_UNUSED(pArea);
 
    *uiSize = sizeof(CDXAREA);
    return HB_SUCCESS;
@@ -8164,7 +8164,7 @@ static HB_ERRCODE hb_cdxOrderListAdd( CDXAREAP pArea, LPDBORDERINFO pOrderInfo )
    pIndex->pFile      = pFile;
    pIndex->fShared    = pArea->dbfarea.fShared;
    pIndex->fReadonly  = pArea->dbfarea.fReadonly;
-   pIndex->szFileName = hb_strdup( szFileName );
+   pIndex->szFileName = hb_strdup(szFileName);
 
    pIndexPtr = &pArea->lpIndexes;
    while( *pIndexPtr != nullptr )
@@ -8566,7 +8566,7 @@ static HB_ERRCODE hb_cdxOrderCreate( CDXAREAP pArea, LPDBORDERCREATEINFO pOrderI
    }
    else
    {
-      hb_strncpy( szTagName, szCpndTagName, sizeof(szTagName) - 1 );
+      hb_strncpy(szTagName, szCpndTagName, sizeof(szTagName) - 1);
       fNewFile = HB_TRUE;
    }
 
@@ -8646,11 +8646,11 @@ static HB_ERRCODE hb_cdxOrderCreate( CDXAREAP pArea, LPDBORDERCREATEINFO pOrderI
          pIndex->pFile      = pFile;
          pIndex->fShared    = fShared;
          pIndex->fReadonly  = HB_FALSE;
-         pIndex->szFileName = hb_strdup( szFileName );
+         pIndex->szFileName = hb_strdup(szFileName);
          pIndex->fDelete    = fTemporary;
          if( fTemporary )
          {
-            pIndex->szRealName = hb_strdup( szTempFile );
+            pIndex->szRealName = hb_strdup(szTempFile);
          }
 
          if( ! fNewFile )
@@ -9201,7 +9201,7 @@ static HB_ERRCODE hb_cdxOrderInfo( CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
       case DBOI_BAGNAME:
          if( pTag )
          {
-            PHB_FNAME pFileName = hb_fsFNameSplit( pTag->pIndex->szFileName );
+            PHB_FNAME pFileName = hb_fsFNameSplit(pTag->pIndex->szFileName);
             pInfo->itmResult = hb_itemPutC(pInfo->itmResult, pFileName->szName);
             hb_xfree(pFileName);
          }
@@ -9786,11 +9786,11 @@ static HB_ERRCODE hb_cdxRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
          const char * szExt = hb_itemGetCPtr(pItem);
          char * szNewVal;
 
-         szNewVal = szExt[ 0 ] == '.' && szExt[ 1 ] ? hb_strdup( szExt ) : nullptr;
+         szNewVal = szExt[ 0 ] == '.' && szExt[ 1 ] ? hb_strdup(szExt) : nullptr;
          hb_itemPutC(pItem, pData->szIndexExt[ 0 ] ? pData->szIndexExt : CDX_INDEXEXT);
          if( szNewVal )
          {
-            hb_strncpy( pData->szIndexExt, szNewVal, sizeof(pData->szIndexExt) - 1 );
+            hb_strncpy(pData->szIndexExt, szNewVal, sizeof(pData->szIndexExt) - 1);
             hb_xfree(szNewVal);
          }
          break;
@@ -10042,7 +10042,7 @@ static void hb_cdxSortWritePage( LPCDXSORTINFO pSort )
       {
          hb_errInternal( 9301, "hb_cdxSortWritePage: Could not create temporary file.", nullptr, nullptr );
       }
-      pSort->szTempFileName = hb_strdup( szName );
+      pSort->szTempFileName = hb_strdup(szName);
    }
    pSort->pSwapPage[ pSort->ulCurPage ].ulKeys = pSort->ulKeys;
    pSort->pSwapPage[ pSort->ulCurPage ].nOffset = hb_fileSize( pSort->pTempFile );
@@ -11081,7 +11081,7 @@ HB_FUNC_STATIC( _GETFUNCTABLE )
 
 static void hb_cdxRddInit( void * cargo )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
 
    if( hb_rddRegister( "DBF", RDT_FULL ) <= 1 )
    {

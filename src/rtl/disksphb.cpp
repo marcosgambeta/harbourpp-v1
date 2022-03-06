@@ -253,7 +253,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
    {
       int iTODO;
 
-      HB_SYMBOL_UNUSED( uiType );
+      HB_SYMBOL_UNUSED(uiType);
    }
 #endif
 

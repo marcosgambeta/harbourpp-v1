@@ -134,8 +134,8 @@ static void hb_mlGetEOLs( PHB_MLC_INFO pMLC, int iParam )
       }
    }
 #else
-   HB_SYMBOL_UNUSED( iParam );
-   HB_SYMBOL_UNUSED( nLen );
+   HB_SYMBOL_UNUSED(iParam);
+   HB_SYMBOL_UNUSED(nLen);
 #endif
 
    if( iEOLs == 0 )
@@ -145,7 +145,7 @@ static void hb_mlGetEOLs( PHB_MLC_INFO pMLC, int iParam )
       {
          pMLC->pEOLs[ 0 ].szEOL = hb_conNewLine();
       }
-      pMLC->pEOLs[ 0 ].nLen = strlen( pMLC->pEOLs[ 0 ].szEOL );
+      pMLC->pEOLs[ 0 ].nLen = strlen(pMLC->pEOLs[ 0 ].szEOL);
       iEOLs = pMLC->pEOLs[ 0 ].nLen ? 1 : 0;
    }
 

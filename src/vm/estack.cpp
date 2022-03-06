@@ -1358,7 +1358,7 @@ void hb_stackBaseProcInfo( char * szProcName, HB_USHORT * puiProcLine )
       HB_STACK_TLS_PRELOAD
       if( hb_stack.pPos > hb_stack.pBase )
       {
-         hb_strncpy( szProcName, ( *hb_stack.pBase )->item.asSymbol.value->szName, HB_SYMBOL_NAME_LEN );
+         hb_strncpy(szProcName, ( *hb_stack.pBase )->item.asSymbol.value->szName, HB_SYMBOL_NAME_LEN);
          *puiProcLine = ( *hb_stack.pBase )->item.asSymbol.stackstate->uiLineNo;
       }
       else
@@ -1384,7 +1384,7 @@ void hb_stackDispCall( void )
 
    while( hb_procinfo( iLevel++, buffer, &uiLine, file ) )
    {
-      int l = static_cast<int>( strlen( buffer ) );
+      int l = static_cast<int>( strlen(buffer) );
       hb_snprintf( buffer + l, sizeof(buffer) - l, "(%hu)%s%s", uiLine, *file ? HB_I_( " in " ) : "", file );
 
       hb_conOutErr( "Called from ", 0 );
@@ -1404,9 +1404,9 @@ static HB_DYNS_FUNC( hb_stackMemvarScan )
 {
    PHB_ITEM pMemvar;
 
-   HB_SYMBOL_UNUSED( Cargo );
+   HB_SYMBOL_UNUSED(Cargo);
 
-   pMemvar = hb_dynsymGetMemvar( pDynSymbol );
+   pMemvar = hb_dynsymGetMemvar(pDynSymbol);
    if( pMemvar && HB_IS_GCITEM(pMemvar) )
    {
       hb_gcItemRef( pMemvar );
@@ -1446,7 +1446,7 @@ static void hb_stackIsMemvarRef( PHB_STACK pStack )
       }
    }
 #else
-   hb_dynsymEval( hb_stackMemvarScan, nullptr );
+   hb_dynsymEval(hb_stackMemvarScan, nullptr);
 #endif
 }
 
@@ -1521,9 +1521,9 @@ void hb_stackUpdateAllocator( void * pStackId, PHB_ALLOCUPDT_FUNC pFunc, int iCo
       }
    }
 #else
-   HB_SYMBOL_UNUSED( pStackId );
-   HB_SYMBOL_UNUSED( pFunc );
-   HB_SYMBOL_UNUSED( iCount );
+   HB_SYMBOL_UNUSED(pStackId);
+   HB_SYMBOL_UNUSED(pFunc);
+   HB_SYMBOL_UNUSED(iCount);
 #endif
 }
 

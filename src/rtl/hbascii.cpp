@@ -65,7 +65,7 @@ HB_FUNC( HB_ASCIIUPPER )
 
             do
             {
-               pszBuff[ u ] = HB_TOUPPER( pszBuff[ u ] );
+               pszBuff[ u ] = HB_TOUPPER(pszBuff[ u ]);
             }
             while( ++u < nLen );
             hb_retclen_buffer( pszBuff, nLen );
@@ -97,7 +97,7 @@ HB_FUNC( HB_ASCIILOWER )
 
             do
             {
-               pszBuff[ u ] = HB_TOLOWER( pszBuff[ u ] );
+               pszBuff[ u ] = HB_TOLOWER(pszBuff[ u ]);
             }
             while( ++u < nLen );
             hb_retclen_buffer( pszBuff, nLen );

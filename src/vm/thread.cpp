@@ -503,7 +503,7 @@ HB_BOOL hb_atomic_dec( volatile HB_COUNTER * pCounter )
 void hb_threadEnterCriticalSection( HB_CRITICAL_T * critical )
 {
 #if ! defined( HB_MT_VM )
-   HB_SYMBOL_UNUSED( critical );
+   HB_SYMBOL_UNUSED(critical);
 #elif defined( HB_CRITICAL_NEED_INIT )
    if( ! critical->fInit )
    {
@@ -518,7 +518,7 @@ void hb_threadEnterCriticalSection( HB_CRITICAL_T * critical )
 void hb_threadEnterCriticalSectionGC( HB_CRITICAL_T * critical )
 {
 #if ! defined( HB_MT_VM )
-   HB_SYMBOL_UNUSED( critical );
+   HB_SYMBOL_UNUSED(critical);
 #elif defined( HB_CRITICAL_NEED_INIT )
    if( ! critical->fInit )
    {
@@ -537,7 +537,7 @@ void hb_threadEnterCriticalSectionGC( HB_CRITICAL_T * critical )
 void hb_threadLeaveCriticalSection( HB_CRITICAL_T * critical )
 {
 #if ! defined( HB_MT_VM )
-   HB_SYMBOL_UNUSED( critical );
+   HB_SYMBOL_UNUSED(critical);
 #elif defined( HB_CRITICAL_NEED_INIT )
    HB_CRITICAL_UNLOCK( critical->critical.value );
 #else
@@ -549,7 +549,7 @@ HB_BOOL hb_threadCondSignal( HB_COND_T * cond )
 {
 #if ! defined( HB_MT_VM )
 
-   HB_SYMBOL_UNUSED( cond );
+   HB_SYMBOL_UNUSED(cond);
    return HB_FALSE;
 
 #elif defined( HB_TASK_THREAD )
@@ -595,7 +595,7 @@ HB_BOOL hb_threadCondBroadcast( HB_COND_T * cond )
 {
 #if ! defined( HB_MT_VM )
 
-   HB_SYMBOL_UNUSED( cond );
+   HB_SYMBOL_UNUSED(cond);
    return HB_FALSE;
 
 #elif defined( HB_TASK_THREAD )
@@ -641,8 +641,8 @@ HB_BOOL hb_threadCondWait( HB_COND_T * cond, HB_CRITICAL_T * mutex )
 {
 #if ! defined( HB_MT_VM )
 
-   HB_SYMBOL_UNUSED( cond );
-   HB_SYMBOL_UNUSED( mutex );
+   HB_SYMBOL_UNUSED(cond);
+   HB_SYMBOL_UNUSED(mutex);
    return HB_FALSE;
 
 #elif defined( HB_TASK_THREAD )
@@ -703,9 +703,9 @@ HB_BOOL hb_threadCondTimedWait( HB_COND_T * cond, HB_CRITICAL_T * mutex, HB_ULON
 {
 #if ! defined( HB_MT_VM )
 
-   HB_SYMBOL_UNUSED( cond );
-   HB_SYMBOL_UNUSED( mutex );
-   HB_SYMBOL_UNUSED( ulMilliSec );
+   HB_SYMBOL_UNUSED(cond);
+   HB_SYMBOL_UNUSED(mutex);
+   HB_SYMBOL_UNUSED(ulMilliSec);
    return HB_FALSE;
 
 #elif defined( HB_TASK_THREAD )
@@ -769,8 +769,8 @@ HB_THREAD_HANDLE hb_threadCreate( HB_THREAD_ID * th_id, PHB_THREAD_STARTFUNC sta
    HB_THREAD_HANDLE th_h;
 
 #if ! defined( HB_MT_VM )
-   HB_SYMBOL_UNUSED( start_func );
-   HB_SYMBOL_UNUSED( Cargo );
+   HB_SYMBOL_UNUSED(start_func);
+   HB_SYMBOL_UNUSED(Cargo);
    *th_id = static_cast<HB_THREAD_ID>(0);
    th_h = static_cast<HB_THREAD_HANDLE>(0);
 #elif defined( HB_TASK_THREAD )
@@ -804,7 +804,7 @@ HB_THREAD_HANDLE hb_threadCreate( HB_THREAD_ID * th_id, PHB_THREAD_STARTFUNC sta
 HB_BOOL hb_threadJoin( HB_THREAD_HANDLE th_h )
 {
 #if ! defined( HB_MT_VM )
-   HB_SYMBOL_UNUSED( th_h );
+   HB_SYMBOL_UNUSED(th_h);
    return HB_FALSE;
 #elif defined( HB_TASK_THREAD )
    return hb_taskJoin( th_h, HB_TASK_INFINITE_WAIT, nullptr ) != 0;
@@ -826,7 +826,7 @@ HB_BOOL hb_threadJoin( HB_THREAD_HANDLE th_h )
 HB_BOOL hb_threadDetach( HB_THREAD_HANDLE th_h )
 {
 #if ! defined( HB_MT_VM )
-   HB_SYMBOL_UNUSED( th_h );
+   HB_SYMBOL_UNUSED(th_h);
    return HB_FALSE;
 #elif defined( HB_TASK_THREAD )
    hb_taskDetach( th_h );
@@ -955,7 +955,7 @@ HB_CARGO_FUNC( hb_threadStartVM )
       }
       else if( HB_IS_STRING(pStart) )
       {
-         hb_vmPushDynSym( hb_dynsymGet( hb_itemGetCPtr(pStart) ) );
+         hb_vmPushDynSym( hb_dynsymGet(hb_itemGetCPtr(pStart)) );
          hb_vmPushNil();
       }
       else
@@ -1113,9 +1113,9 @@ static PHB_THREADSTATE hb_thParam( int iParam, int iPos )
 PHB_ITEM hb_threadStart( HB_ULONG ulAttr, PHB_CARGO_FUNC pFunc, void * cargo )
 {
 #if ! defined( HB_MT_VM )
-   HB_SYMBOL_UNUSED( ulAttr );
-   HB_SYMBOL_UNUSED( pFunc );
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(ulAttr);
+   HB_SYMBOL_UNUSED(pFunc);
+   HB_SYMBOL_UNUSED(cargo);
    return nullptr;
 #else
    PHB_THREADSTATE pThread;
@@ -1161,7 +1161,7 @@ HB_FUNC( HB_THREADSTART )
       {
          PHB_DYNS pDynSym;
          szFuncName = hb_itemGetCPtr(pStart);
-         pDynSym = hb_dynsymFindName( szFuncName );
+         pDynSym = hb_dynsymFindName(szFuncName);
          if( pDynSym )
          {
             pSymbol = pDynSym->pSymbol;
@@ -1190,7 +1190,7 @@ HB_FUNC( HB_THREADSTART )
    {
 #if ! defined( HB_MT_VM )
       HB_STACK_TLS_PRELOAD
-      HB_SYMBOL_UNUSED( ulAttr );
+      HB_SYMBOL_UNUSED(ulAttr);
       hb_ret();
 #else
       HB_STACK_TLS_PRELOAD
@@ -2185,7 +2185,7 @@ HB_BOOL hb_threadMutexTimedLock( PHB_ITEM pItem, HB_ULONG ulMilliSec )
    if( pMutex )
    {
 #if ! defined( HB_MT_VM )
-      HB_SYMBOL_UNUSED( ulMilliSec );
+      HB_SYMBOL_UNUSED(ulMilliSec);
       pMutex->lock_count++;
       pMutex->owner = static_cast<HB_THREAD_ID>(1);
       fResult = HB_TRUE;
@@ -2536,7 +2536,7 @@ PHB_ITEM hb_threadMutexTimedSubscribe( PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_B
    if( pMutex )
    {
 #if ! defined( HB_MT_VM )
-      HB_SYMBOL_UNUSED( ulMilliSec );
+      HB_SYMBOL_UNUSED(ulMilliSec);
 
       if( pMutex->events && hb_arrayLen( pMutex->events ) > 0 )
       {

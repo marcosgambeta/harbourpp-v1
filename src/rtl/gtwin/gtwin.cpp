@@ -783,7 +783,7 @@ static void hb_gt_win_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
       dwLen = GetEnvironmentVariable( TEXT( "OSTYPE" ), lpOsType, HB_SIZEOFARRAY( lpOsType ) - 1 );
       if( dwLen > 0 && dwLen < HB_SIZEOFARRAY( lpOsType ) - 1 )
       {
-         if( lstrcmp( lpOsType, TEXT( "msys" ) ) == 0 )
+         if( lstrcmp(lpOsType, TEXT( "msys" )) == 0 )
          {
             FreeConsole();
          }
@@ -798,7 +798,7 @@ static void hb_gt_win_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    {
 #ifdef HB_NO_ALLOC_CONSOLE
       /* allocate console only when debugger is linked */
-      if( hb_dynsymFind( "__DBGENTRY" ) )
+      if( hb_dynsymFind("__DBGENTRY") )
       {
          AllocConsole(); /* It is a Windows app without a console, so we create one */
          s_HInput = GetStdHandle( STD_INPUT_HANDLE );
@@ -1033,7 +1033,7 @@ static const char * hb_gt_win_Version( PHB_GT pGT, int iType )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Version(%p,%d)", static_cast<void*>( pGT ), iType ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    if( iType == 0 )
    {
@@ -1067,7 +1067,7 @@ static HB_BOOL hb_gt_win_Suspend( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Suspend(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    if( s_pCharInfoScreen )
    {
@@ -1252,7 +1252,7 @@ static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
 
    int iKey = 0;
 
-   HB_SYMBOL_UNUSED( iEventMask );
+   HB_SYMBOL_UNUSED(iEventMask);
 
    /* First check for Ctrl+Break, which is handled by gtwin.c */
    if( s_fBreak )
@@ -1948,7 +1948,7 @@ static void hb_gt_win_Tone( PHB_GT pGT, double dFrequency, double dDuration )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Tone(%p,%lf,%lf)", static_cast<void*>( pGT ), dFrequency, dDuration ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    hb_gt_BaseUnlock( pGT );
    hb_gt_winapi_tone( dFrequency, dDuration );
@@ -2042,7 +2042,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          DWORD dwLen;
 
          dwLen = GetConsoleTitle( buff, HB_SIZEOFARRAY( buff ) );
-         pInfo->pResult = HB_ITEMPUTSTRLEN( pInfo->pResult, buff, dwLen );
+         pInfo->pResult = HB_ITEMPUTSTRLEN(pInfo->pResult, buff, dwLen);
          if( hb_itemType(pInfo->pNewVal) & HB_IT_STRING )
          {
             void * hTitle;
@@ -2237,14 +2237,14 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
 static HB_BOOL hb_gt_win_mouse_IsPresent( PHB_GT pGT )
 {
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    return s_fMouseEnable;
 }
 
 static void hb_gt_win_mouse_GetPos( PHB_GT pGT, int * piRow, int * piCol )
 {
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    *piRow = s_mouse_row;
    *piCol = s_mouse_col;
@@ -2252,7 +2252,7 @@ static void hb_gt_win_mouse_GetPos( PHB_GT pGT, int * piRow, int * piCol )
 
 static void hb_gt_win_mouse_SetPos( PHB_GT pGT, int iRow, int iCol )
 {
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    s_mouse_row = iRow;
    s_mouse_col = iCol;
@@ -2262,7 +2262,7 @@ static HB_BOOL hb_gt_win_mouse_ButtonState( PHB_GT pGT, int iButton )
 {
    HB_BOOL fReturn = HB_FALSE;
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    if( iButton == 0 )
    {
@@ -2284,7 +2284,7 @@ static int hb_gt_win_mouse_CountButton( PHB_GT pGT )
 {
    DWORD dwCount = 0;
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    GetNumberOfConsoleMouseButtons( &dwCount );
 

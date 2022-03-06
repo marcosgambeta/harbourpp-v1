@@ -513,7 +513,7 @@ HB_FUNC( HB_VFOPEN )
 
       if( HB_ISBYREF(1) )
       {
-         hb_strncpy( szName, pszFile, sizeof(szName) - 1 );
+         hb_strncpy(szName, pszFile, sizeof(szName) - 1);
          nModeAttr |= FXO_COPYNAME;
          pszFile = szName;
       }

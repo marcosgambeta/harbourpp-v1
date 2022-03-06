@@ -286,21 +286,21 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
 
       if( i == HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID )
       {
-         pszTrans = hb_strdup( szNewId );
+         pszTrans = hb_strdup(szNewId);
       }
       else if( i == HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_CODEPAGE )
       {
-         pszTrans = hb_strdup( cdpOut->id );
+         pszTrans = hb_strdup(cdpOut->id);
       }
       else
       {
          pszTrans = hb_cdpDup( lang->pItemList[ i ], cdpIn, cdpOut );
       }
 
-      if( strcmp( pszTrans, lang->pItemList[ i ] ) != 0 )
+      if( strcmp(pszTrans, lang->pItemList[ i ]) != 0 )
       {
          trans.pItemList[ i ] = pszTrans;
-         nSize += strlen( pszTrans ) + 1;
+         nSize += strlen(pszTrans) + 1;
       }
       else
       {
@@ -314,7 +314,7 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
    {
       if( trans.pItemList[ i ] != nullptr )
       {
-         HB_SIZE nLen = strlen( trans.pItemList[ i ] ) + 1;
+         HB_SIZE nLen = strlen(trans.pItemList[ i ]) + 1;
          memcpy( ptr, trans.pItemList[ i ], nLen );
          hb_xfree(HB_UNCONST( trans.pItemList[ i ] ));
          trans.pItemList[ i ] = ptr;
@@ -469,7 +469,7 @@ char * hb_langName( const char * pszID )
    }
    else
    {
-      pszName = hb_strdup( "Harbour Language: (not installed)" );
+      pszName = hb_strdup("Harbour Language: (not installed)");
    }
 
    return pszName;

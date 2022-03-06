@@ -332,8 +332,8 @@ static int s_errorHandler( Display * dpy, XErrorEvent * e )
 {
    char errorText[ 1024 ];
 
-   hb_strncpy( errorText, "Xlib error: ", sizeof(errorText) - 1 );
-   XGetErrorText( dpy, e->error_code, errorText + strlen( errorText ), sizeof(errorText) - strlen( errorText ) );
+   hb_strncpy(errorText, "Xlib error: ", sizeof(errorText) - 1);
+   XGetErrorText( dpy, e->error_code, errorText + strlen(errorText), sizeof(errorText) - strlen(errorText) );
 
    if( ! s_fIgnoreErrors )
    {
@@ -352,7 +352,7 @@ static void hb_gt_xwc_SigHandler( int iSig )
 {
    PXWND_DEF wnd = s_wnd;
 
-   HB_SYMBOL_UNUSED( iSig );
+   HB_SYMBOL_UNUSED(iSig);
 
    if( s_updateMode == XWC_ASYNC_UPDATE && wnd && wnd->fInit )
    {
@@ -4319,7 +4319,7 @@ static void hb_gt_xwc_SetTitle( PXWND_DEF wnd, const char * szTitle )
       text.value = static_cast<unsigned char*>( pBuffer );
       text.encoding = s_atomUTF8String;
       text.format = 8;
-      text.nitems = strlen( pBuffer );
+      text.nitems = strlen(pBuffer);
       XSetWMName( wnd->dpy, wnd->window, &text );
       hb_xfree(pBuffer);
    }
@@ -4423,7 +4423,7 @@ static HB_BOOL hb_gt_xwc_SetFont( PXWND_DEF wnd, const char * fontFace, int weig
    }
    else
    {
-      hb_strncpy( fontString, fontFace, sizeof(fontString) - 1 );
+      hb_strncpy(fontString, fontFace, sizeof(fontString) - 1);
    }
 
    xfs = XLoadQueryFont( wnd->dpy, fontString );
@@ -4437,7 +4437,7 @@ static HB_BOOL hb_gt_xwc_SetFont( PXWND_DEF wnd, const char * fontFace, int weig
    {
       hb_xfree(wnd->szFontSel);
    }
-   wnd->szFontSel = hb_strdup( fontString );
+   wnd->szFontSel = hb_strdup(fontString);
 
    /* a shortcut for window height and width */
    wnd->fontHeight = xfs->max_bounds.ascent + xfs->max_bounds.descent;
@@ -4511,7 +4511,7 @@ static void hb_gt_xwc_SetSelection( PXWND_DEF wnd, const char * szData, HB_SIZE 
       {
          const char * cMsg = "Cannot set primary selection\n";
          hb_gt_xwc_ClearSelection( wnd );
-         HB_GTSELF_OUTERR( wnd->pGT, cMsg, strlen( cMsg ) );
+         HB_GTSELF_OUTERR( wnd->pGT, cMsg, strlen(cMsg) );
       }
    }
 
@@ -4595,7 +4595,7 @@ static HB_BOOL hb_gt_xwc_isUTF8( void )
 
    if( szLang )
    {
-      int i = static_cast<int>( strlen( szLang ) );
+      int i = static_cast<int>( strlen(szLang) );
 
       if( i > 5 )
       {
@@ -4640,8 +4640,8 @@ static PXWND_DEF hb_gt_xwc_CreateWndDef( PHB_GT pGT )
    wnd->fontHeight = XWC_DEFAULT_FONT_HEIGHT;
    wnd->fontWidth = XWC_DEFAULT_FONT_WIDTH;
    wnd->fontWeight = XWC_DEFAULT_FONT_WEIGHT;
-   wnd->szFontName = hb_strdup( XWC_DEFAULT_FONT_NAME );
-   wnd->szFontEncoding = hb_strdup( XWC_DEFAULT_FONT_ENCODING );
+   wnd->szFontName = hb_strdup(XWC_DEFAULT_FONT_NAME);
+   wnd->szFontEncoding = hb_strdup(XWC_DEFAULT_FONT_ENCODING);
    /* set GTXWC extension for chosen font */
    wnd->fFixMetric = XWC_DEFAULT_FONT_FIXMETRIC;
    wnd->fClearBkg = XWC_DEFAULT_FONT_CLRBKG;
@@ -5188,7 +5188,7 @@ static HB_BOOL hb_gt_xwc_GetBlink( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_xwc_GetBlink(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    return HB_FALSE;
 }
@@ -5197,7 +5197,7 @@ static HB_BOOL hb_gt_xwc_GetBlink( PHB_GT pGT )
 
 static const char * hb_gt_xwc_Version( PHB_GT pGT, int iType )
 {
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    if( iType == 0 )
    {
@@ -5218,7 +5218,7 @@ static int hb_gt_xwc_ReadKey( PHB_GT pGT, int iEventMask )
    PXWND_DEF wnd;
    int c = 0;
 
-   HB_SYMBOL_UNUSED( iEventMask );
+   HB_SYMBOL_UNUSED(iEventMask);
 
    wnd = HB_GTXWC_GET( pGT );
    hb_gt_xwc_LateRefresh( wnd );
@@ -5543,7 +5543,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             {
                hb_xfree(wnd->szFontName);
             }
-            wnd->szFontName = hb_strdup( hb_itemGetCPtr(pInfo->pNewVal) );
+            wnd->szFontName = hb_strdup(hb_itemGetCPtr(pInfo->pNewVal));
          }
          break;
 
@@ -5584,7 +5584,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_WINTITLE:
-         pInfo->pResult = wnd->szTitle ? hb_itemPutStrLenUTF8( pInfo->pResult, wnd->szTitle, strlen( wnd->szTitle ) ) : hb_itemPutC(pInfo->pResult, nullptr);
+         pInfo->pResult = wnd->szTitle ? hb_itemPutStrLenUTF8( pInfo->pResult, wnd->szTitle, strlen(wnd->szTitle) ) : hb_itemPutC(pInfo->pResult, nullptr);
          if( pInfo->pNewVal && HB_IS_STRING(pInfo->pNewVal) )
          {
             void * hString;
@@ -5595,7 +5595,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             {
                hb_xfree(wnd->szTitle);
             }
-            wnd->szTitle = nLen > 0 ? hb_strdup( pszTitle ) : nullptr;
+            wnd->szTitle = nLen > 0 ? hb_strdup(pszTitle) : nullptr;
             hb_strfree( hString );
 
             wnd->fDspTitle = HB_TRUE;

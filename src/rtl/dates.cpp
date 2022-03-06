@@ -64,13 +64,13 @@ char * hb_dateFormat( const char * szDate, char * szFormattedDate, const char * 
    /*
     * Determine the maximum size of the formatted date string
     */
-   size = static_cast<int>( strlen( szDateFormat ) );
+   size = static_cast<int>( strlen(szDateFormat) );
    if( size > 10 )
    {
       size = 10;
    }
 
-   if( szDate && strlen( szDate ) == 8 ) /* A valid date is always 8 characters */
+   if( szDate && strlen(szDate) == 8 ) /* A valid date is always 8 characters */
    {
       const char * szPtr;
       HB_BOOL used_d, used_m, used_y;
@@ -81,10 +81,10 @@ char * hb_dateFormat( const char * szDate, char * szFormattedDate, const char * 
 
       while( format_count < size )
       {
-         int digit = HB_TOUPPER( static_cast<HB_UCHAR>( *szPtr ) );
+         int digit = HB_TOUPPER(static_cast<HB_UCHAR>( *szPtr ));
          szPtr++;
          digit_count = 1;
-         while( HB_TOUPPER( static_cast<HB_UCHAR>( *szPtr ) ) == digit && format_count < size )
+         while( HB_TOUPPER(static_cast<HB_UCHAR>( *szPtr )) == digit && format_count < size )
          {
             szPtr++;
             if( format_count + digit_count < size )
@@ -232,7 +232,7 @@ char * hb_dateFormat( const char * szDate, char * szFormattedDate, const char * 
    {
       /* Not a valid date string, so return a blank date with separators */
       format_count = size; /* size is either 8 or 10 */
-      hb_strncpy( szFormattedDate, szDateFormat, size );
+      hb_strncpy(szFormattedDate, szDateFormat, size);
 
       for( digit_count = 0; digit_count < size; digit_count++ )
       {
@@ -272,7 +272,7 @@ static int hb_dateUnformatRaw( const char * szDate, const char * szDateFormat, l
       {
          szDateFormat = hb_setGetDateFormat();
       }
-      size = static_cast<int>( strlen( szDateFormat ) );
+      size = static_cast<int>( strlen(szDateFormat) );
 
       for( count = used = 0; count < size && used < 3; count++ )
       {
@@ -340,7 +340,7 @@ static int hb_dateUnformatRaw( const char * szDate, const char * szDateFormat, l
       /* If there are non-digits at the start of the date field,
          they are not to be treated as date field separators */
       non_digit = 1;
-      size = static_cast<int>( strlen( szDate ) );
+      size = static_cast<int>( strlen(szDate) );
       for( count = used = 0; count < size; count++ )
       {
          digit = szDate[ count ];
@@ -426,11 +426,11 @@ char * hb_timeFormat( char * szBuffer, const char * szTimeFormat, long lMilliSec
    hb_timeDecode( lMilliSec, &iHour, &iMinutes, &iSeconds, &iMSec );
    szTimeBuffer = szBuffer;
 
-   size = static_cast<int>( hb_strnlen( szTimeFormat, 16 ) );
+   size = static_cast<int>( hb_strnlen(szTimeFormat, 16) );
    iPM = i12 = 0;
    for( i = 0; i < size; ++i )
    {
-      if( HB_TOUPPER( szTimeFormat[ i ] ) == 'P' )
+      if( HB_TOUPPER(szTimeFormat[ i ]) == 'P' )
       {
          if( iHour >= 12 )
          {
@@ -453,9 +453,9 @@ char * hb_timeFormat( char * szBuffer, const char * szTimeFormat, long lMilliSec
    while( i < size )
    {
       int count = -i;
-      int ch = HB_TOUPPER( szTimeFormat[ i ] );
+      int ch = HB_TOUPPER(szTimeFormat[ i ]);
       ++i;
-      while( ch == HB_TOUPPER( szTimeFormat[ i ] ) && i < size )
+      while( ch == HB_TOUPPER(szTimeFormat[ i ]) && i < size )
       {
          ++i;
       }
@@ -560,7 +560,7 @@ char * hb_timeStampFormat( char * szBuffer, const char * szDateFormat, const cha
 
    hb_dateDecStr( szDate, lJulian );
    hb_dateFormat( szDate, szBuffer, szDateFormat );
-   szTimeBuffer = szBuffer + strlen( szBuffer );
+   szTimeBuffer = szBuffer + strlen(szBuffer);
    if( *szBuffer )
    {
       *szTimeBuffer++ = ' ';
@@ -589,7 +589,7 @@ long hb_timeUnformat( const char * szTime, const char * szTimeFormat )
       szTimeFormat = hb_setGetTimeFormat();
    }
 
-   size = static_cast<int>( hb_strnlen( szTime, hb_strnlen( szTimeFormat, 16 ) ) );
+   size = static_cast<int>( hb_strnlen(szTime, hb_strnlen(szTimeFormat, 16)) );
    iHour = iMinutes = iSeconds = iMSec = iPM = -1;
    prec = 0;
    for( i = count = 0; i < size && szTime[ count ]; ++i )

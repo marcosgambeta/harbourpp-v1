@@ -286,7 +286,7 @@ static HB_ERRCODE hb_waAddField( AREAP pArea, LPDBFIELDINFO pFieldInfo )
    {
       ( static_cast<LPFIELD>( pField - 1 ) )->lpfNext = pField;
    }
-   pField->sym = static_cast<void*>( hb_dynsymGetCase( szFieldName ) );
+   pField->sym = static_cast<void*>( hb_dynsymGetCase(szFieldName) );
    pField->uiType = pFieldInfo->uiType;
    pField->uiTypeExtended = pFieldInfo->uiTypeExtended;
    pField->uiLen = pFieldInfo->uiLen;
@@ -341,7 +341,7 @@ static HB_ERRCODE hb_waCreateFields( AREAP pArea, PHB_ITEM pStruct )
       uiDec = static_cast<HB_USHORT>( iData );
       dbFieldInfo.uiDec = 0;
       szType = hb_arrayGetCPtr( pFieldDesc, DBS_TYPE );
-      iData = HB_TOUPPER( *szType );
+      iData = HB_TOUPPER(*szType);
 #ifdef DBS_FLAG
       dbFieldInfo.uiFlags = hb_arrayGetNI( pFieldDesc, DBS_FLAG );
 #else
@@ -352,7 +352,7 @@ static HB_ERRCODE hb_waCreateFields( AREAP pArea, PHB_ITEM pStruct )
          {
             while( *++szType )
             {
-               switch( HB_TOUPPER( *szType ) )
+               switch( HB_TOUPPER(*szType) )
                {
                   case 'N':
                      dbFieldInfo.uiFlags |= HB_FF_NULLABLE;
@@ -596,7 +596,7 @@ static HB_ERRCODE hb_waFieldInfo( AREAP pArea, HB_USHORT uiIndex, HB_USHORT uiTy
    switch( uiType )
    {
       case DBS_NAME:
-         hb_itemPutC(pItem, hb_dynsymName( static_cast<PHB_DYNS>( pField->sym ) ));
+         hb_itemPutC(pItem, hb_dynsymName(static_cast<PHB_DYNS>( pField->sym )));
          break;
 
       case DBS_TYPE:
@@ -780,7 +780,7 @@ static HB_ERRCODE hb_waFieldName( AREAP pArea, HB_USHORT uiIndex, char * szName 
    }
 
    pField = pArea->lpFields + uiIndex - 1;
-   hb_strncpy( szName, hb_dynsymName( static_cast<PHB_DYNS>( pField->sym ) ), pArea->uiMaxFieldNameLength );
+   hb_strncpy(szName, hb_dynsymName(static_cast<PHB_DYNS>( pField->sym )), pArea->uiMaxFieldNameLength);
    return HB_SUCCESS;
 }
 
@@ -813,10 +813,10 @@ static HB_ERRCODE hb_waAlias( AREAP pArea, char * szAlias )
    HB_TRACE( HB_TR_DEBUG, ( "hb_waAlias(%p, %p)", static_cast<void*>( pArea ), static_cast<void*>( szAlias ) ) );
 #endif
 
-   hb_strncpy( szAlias,
-      pArea->atomAlias && hb_dynsymAreaHandle( static_cast<PHB_DYNS>( pArea->atomAlias ) )
-      ? hb_dynsymName( static_cast<PHB_DYNS>( pArea->atomAlias ) ) : "",
-      HB_RDD_MAX_ALIAS_LEN );
+   hb_strncpy(szAlias,
+      pArea->atomAlias && hb_dynsymAreaHandle(static_cast<PHB_DYNS>( pArea->atomAlias ))
+      ? hb_dynsymName(static_cast<PHB_DYNS>( pArea->atomAlias )) : "",
+      HB_RDD_MAX_ALIAS_LEN);
 
    return HB_SUCCESS;
 }
@@ -840,7 +840,7 @@ static HB_ERRCODE hb_waClose( AREAP pArea )
 
    if( pArea->atomAlias )
    {
-      hb_dynsymSetAreaHandle( static_cast<PHB_DYNS>( pArea->atomAlias ), 0 );
+      hb_dynsymSetAreaHandle(static_cast<PHB_DYNS>( pArea->atomAlias ), 0);
    }
 
    return HB_SUCCESS;
@@ -1019,8 +1019,8 @@ static HB_ERRCODE hb_waOrderInfo( AREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO 
    HB_TRACE( HB_TR_DEBUG, ( "hb_waOrderInfo(%p, %hu, %p)", static_cast<void*>( pArea ), uiIndex, static_cast<void*>( pInfo ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pArea );
-   HB_SYMBOL_UNUSED( uiIndex );
+   HB_SYMBOL_UNUSED(pArea);
+   HB_SYMBOL_UNUSED(uiIndex);
 
    if( pInfo->itmResult )
    {
@@ -1146,7 +1146,7 @@ static HB_ERRCODE hb_waStructSize( AREAP pArea, HB_USHORT * uiSize )
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_waStrucSize(%p, %p)", static_cast<void*>( pArea ), static_cast<void*>( uiSize ) ) );
 #endif
-   HB_SYMBOL_UNUSED( pArea );
+   HB_SYMBOL_UNUSED(pArea);
 
    *uiSize = sizeof(AREA);
    return HB_SUCCESS;
@@ -1161,7 +1161,7 @@ static HB_ERRCODE hb_waSysName( AREAP pArea, char * pBuffer )
    HB_TRACE( HB_TR_DEBUG, ( "hb_waSysName(%p, %p)", static_cast<void*>( pArea ), static_cast<void*>( pBuffer ) ) );
 #endif
 
-   hb_strncpy( pBuffer, SELF_RDDNODE( pArea )->szName, HB_RDD_MAX_DRIVERNAME_LEN );
+   hb_strncpy(pBuffer, SELF_RDDNODE( pArea )->szName, HB_RDD_MAX_DRIVERNAME_LEN);
 
    return HB_SUCCESS;
 }
@@ -1603,7 +1603,7 @@ static HB_ERRCODE hb_waChildStart( AREAP pArea, LPDBRELINFO pRelInfo )
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_waChildStart(%p, %p)", static_cast<void*>( pArea ), static_cast<void*>( pRelInfo ) ) );
 #endif
-   HB_SYMBOL_UNUSED( pRelInfo );
+   HB_SYMBOL_UNUSED(pRelInfo);
 
    pArea->uiParents++;
    return HB_SUCCESS;
@@ -2073,7 +2073,7 @@ static HB_ERRCODE hb_waError( AREAP pArea, PHB_ITEM pError )
    }
    else
    {
-      hb_strncpy( szRddName, "???DRIVER", HB_RDD_MAX_DRIVERNAME_LEN );
+      hb_strncpy(szRddName, "???DRIVER", HB_RDD_MAX_DRIVERNAME_LEN);
    }
    hb_errPutSeverity( pError, ES_ERROR );
    hb_errPutSubSystem( pError, szRddName );
@@ -2129,8 +2129,8 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
    HB_BOOL fResult;
    int iResult;
 
-   HB_SYMBOL_UNUSED( pRDD );
-   HB_SYMBOL_UNUSED( ulConnection );
+   HB_SYMBOL_UNUSED(pRDD);
+   HB_SYMBOL_UNUSED(ulConnection);
 
    switch( uiIndex )
    {
@@ -2224,7 +2224,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
       case RDDI_MEMOEXT:
       {
          const char * szExt = hb_setGetMFileExt();
-         char * szResult = szExt ? hb_strdup( szExt ) : nullptr;
+         char * szResult = szExt ? hb_strdup(szExt) : nullptr;
          if( hb_itemType(pItem) & HB_IT_STRING )
          {
             hb_setSetItem( HB_SET_MFILEEXT, pItem );
@@ -2271,81 +2271,81 @@ static HB_ERRCODE hb_waUnsupported( AREAP pArea )
 
 static HB_ERRCODE hb_waUnsupported_V( AREAP pArea, void * p1 )
 {
-   HB_SYMBOL_UNUSED( p1 );
+   HB_SYMBOL_UNUSED(p1);
 
    return hb_waUnsupported( pArea );
 }
 
 static HB_ERRCODE hb_waUnsupported_L( AREAP pArea, HB_LONG p1 )
 {
-   HB_SYMBOL_UNUSED( p1 );
+   HB_SYMBOL_UNUSED(p1);
 
    return hb_waUnsupported( pArea );
 }
 
 static HB_ERRCODE hb_waUnsupported_SL( AREAP pArea, HB_USHORT p1, HB_LONG p2 )
 {
-   HB_SYMBOL_UNUSED( p1 );
-   HB_SYMBOL_UNUSED( p2 );
+   HB_SYMBOL_UNUSED(p1);
+   HB_SYMBOL_UNUSED(p2);
 
    return hb_waUnsupported( pArea );
 }
 
 static HB_ERRCODE hb_waUnsupported_SV( AREAP pArea, HB_USHORT p1, void * p2 )
 {
-   HB_SYMBOL_UNUSED( p1 );
-   HB_SYMBOL_UNUSED( p2 );
+   HB_SYMBOL_UNUSED(p1);
+   HB_SYMBOL_UNUSED(p2);
 
    return hb_waUnsupported( pArea );
 }
 
 static HB_ERRCODE hb_waUnsupported_LV( AREAP pArea, HB_LONG p1, void * p2 )
 {
-   HB_SYMBOL_UNUSED( p1 );
-   HB_SYMBOL_UNUSED( p2 );
+   HB_SYMBOL_UNUSED(p1);
+   HB_SYMBOL_UNUSED(p2);
 
    return hb_waUnsupported( pArea );
 }
 
 static HB_ERRCODE hb_waUnsupported_VL( AREAP pArea, void * p1, HB_LONG p2 )
 {
-   HB_SYMBOL_UNUSED( p1 );
-   HB_SYMBOL_UNUSED( p2 );
+   HB_SYMBOL_UNUSED(p1);
+   HB_SYMBOL_UNUSED(p2);
 
    return hb_waUnsupported( pArea );
 }
 
 static HB_ERRCODE hb_waUnsupported_VV( AREAP pArea, void * p1, void * p2 )
 {
-   HB_SYMBOL_UNUSED( p1 );
-   HB_SYMBOL_UNUSED( p2 );
+   HB_SYMBOL_UNUSED(p1);
+   HB_SYMBOL_UNUSED(p2);
 
    return hb_waUnsupported( pArea );
 }
 
 static HB_ERRCODE hb_waUnsupported_BVB( AREAP pArea, HB_BOOL p1, void * p2, HB_BOOL p3 )
 {
-   HB_SYMBOL_UNUSED( p1 );
-   HB_SYMBOL_UNUSED( p2 );
-   HB_SYMBOL_UNUSED( p3 );
+   HB_SYMBOL_UNUSED(p1);
+   HB_SYMBOL_UNUSED(p2);
+   HB_SYMBOL_UNUSED(p3);
 
    return hb_waUnsupported( pArea );
 }
 
 static HB_ERRCODE hb_waUnsupported_SVS( AREAP pArea, HB_USHORT p1, void * p2, HB_USHORT p3 )
 {
-   HB_SYMBOL_UNUSED( p1 );
-   HB_SYMBOL_UNUSED( p2 );
-   HB_SYMBOL_UNUSED( p3 );
+   HB_SYMBOL_UNUSED(p1);
+   HB_SYMBOL_UNUSED(p2);
+   HB_SYMBOL_UNUSED(p3);
 
    return hb_waUnsupported( pArea );
 }
 
 static HB_ERRCODE hb_waUnsupported_VSV( AREAP pArea, void * p1, HB_USHORT p2, void * p3 )
 {
-   HB_SYMBOL_UNUSED( p1 );
-   HB_SYMBOL_UNUSED( p2 );
-   HB_SYMBOL_UNUSED( p3 );
+   HB_SYMBOL_UNUSED(p1);
+   HB_SYMBOL_UNUSED(p2);
+   HB_SYMBOL_UNUSED(p3);
 
    return hb_waUnsupported( pArea );
 }
@@ -2375,19 +2375,19 @@ static HB_ERRCODE hb_waRddUnsupported( LPRDDNODE pRDD )
 
 static HB_ERRCODE hb_waRddUnsupported_VVL( LPRDDNODE pRDD, void * p1, void * p2, HB_LONG p3 )
 {
-   HB_SYMBOL_UNUSED( p1 );
-   HB_SYMBOL_UNUSED( p2 );
-   HB_SYMBOL_UNUSED( p3 );
+   HB_SYMBOL_UNUSED(p1);
+   HB_SYMBOL_UNUSED(p2);
+   HB_SYMBOL_UNUSED(p3);
 
    return hb_waRddUnsupported( pRDD );
 }
 
 static HB_ERRCODE hb_waRddUnsupported_VVVL( LPRDDNODE pRDD, void * p1, void * p2, void * p3, HB_LONG p4 )
 {
-   HB_SYMBOL_UNUSED( p1 );
-   HB_SYMBOL_UNUSED( p2 );
-   HB_SYMBOL_UNUSED( p3 );
-   HB_SYMBOL_UNUSED( p4 );
+   HB_SYMBOL_UNUSED(p1);
+   HB_SYMBOL_UNUSED(p2);
+   HB_SYMBOL_UNUSED(p3);
+   HB_SYMBOL_UNUSED(p4);
 
    return hb_waRddUnsupported( pRDD );
 }
@@ -2402,7 +2402,7 @@ static HB_ERRCODE hb_waNull( AREAP pArea )
    HB_TRACE( HB_TR_DEBUG, ( "hb_waNull(%p)", static_cast<void*>( pArea ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pArea );
+   HB_SYMBOL_UNUSED(pArea);
 
    return HB_SUCCESS;
 }
@@ -2602,7 +2602,7 @@ LPRDDNODE hb_rddFindNode( const char * szDriver, HB_USHORT * uiIndex )
    for( HB_USHORT uiCount = 0; uiCount < s_uiRddCount; uiCount++ )
    {
       LPRDDNODE pNode = s_RddList[ uiCount ];
-      if( strcmp( pNode->szName, szDriver ) == 0 ) /* Matched RDD */
+      if( strcmp(pNode->szName, szDriver) == 0 ) /* Matched RDD */
       {
          if( uiIndex )
          {
@@ -2647,8 +2647,8 @@ LPRDDNODE hb_rddFindFileNode( LPRDDNODE pRddNode, const char * szFileName )
  */
 static LPRDDNODE hb_rddDummyFileAccept( LPRDDNODE pRddNode, const char * szFileName )
 {
-   HB_SYMBOL_UNUSED( pRddNode );
-   HB_SYMBOL_UNUSED( szFileName );
+   HB_SYMBOL_UNUSED(pRddNode);
+   HB_SYMBOL_UNUSED(szFileName);
 
    return nullptr;
 }
@@ -2752,7 +2752,7 @@ int hb_rddRegister( const char * szDriver, HB_USHORT uiType )
    }
 
    hb_snprintf( szGetFuncTable, sizeof(szGetFuncTable), "%s_GETFUNCTABLE", szDriver );
-   pGetFuncTable = hb_dynsymFindName( szGetFuncTable );
+   pGetFuncTable = hb_dynsymFindName(szGetFuncTable);
    if( ! pGetFuncTable )
    {
       return 2;              /* Not valid RDD */
@@ -2762,7 +2762,7 @@ int hb_rddRegister( const char * szDriver, HB_USHORT uiType )
    pRddNewNode = static_cast<LPRDDNODE>( hb_xgrabz( sizeof(RDDNODE) ) );
 
    /* Fill the new RDD node */
-   hb_strncpy( pRddNewNode->szName, szDriver, sizeof(pRddNewNode->szName) - 1 );
+   hb_strncpy(pRddNewNode->szName, szDriver, sizeof(pRddNewNode->szName) - 1);
    pRddNewNode->uiType = uiType;
    pRddNewNode->rddID = s_uiRddCount;
    pRddNewNode->rddSuperID = static_cast<HB_USHORT>(-1);

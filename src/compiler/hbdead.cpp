@@ -331,8 +331,8 @@ static HB_CODETRACE_FUNC( hb_p_switch )
 
 static HB_CODETRACE_FUNC( hb_p_endblock )
 {
-   HB_SYMBOL_UNUSED( pFunc );
-   HB_SYMBOL_UNUSED( nPCodePos );
+   HB_SYMBOL_UNUSED(pFunc);
+   HB_SYMBOL_UNUSED(nPCodePos);
 
    hb_compCodeTraceMark( cargo, nPCodePos, 1 );
    return hb_compCodeTraceNextPos( cargo, cargo->nPCodeSize );
@@ -340,8 +340,8 @@ static HB_CODETRACE_FUNC( hb_p_endblock )
 
 static HB_CODETRACE_FUNC( hb_p_endproc )
 {
-   HB_SYMBOL_UNUSED( pFunc );
-   HB_SYMBOL_UNUSED( nPCodePos );
+   HB_SYMBOL_UNUSED(pFunc);
+   HB_SYMBOL_UNUSED(nPCodePos);
 
    hb_compCodeTraceMark( cargo, nPCodePos, 1 );
    return hb_compCodeTraceNextPos( cargo, cargo->nPCodeSize );

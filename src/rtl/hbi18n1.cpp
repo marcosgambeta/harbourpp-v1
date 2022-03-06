@@ -179,7 +179,7 @@ static int hb_i18n_pluralformfind( const char * szLang )
          return s_plural_forms[ i ].iForm;
       }
    }
-   if( strlen( szLang ) > 2 )
+   if( strlen(szLang) > 2 )
    {
       for( i = 0; i < static_cast<int>( HB_PLURAL_FOMRS_COUNT ); ++i )
       {
@@ -491,7 +491,7 @@ static PHB_ITEM hb_i18n_serialize( PHB_I18N_TRANS pI18N )
       pValue = hb_hashGetItemPtr( pI18N->table, pKey, 0 );
       if( pValue )
       {
-         hb_strncpy( &pI18Nbuffer[ HB_I18N_TXT_OFFSET ], hb_itemGetCPtr(pValue), HB_I18N_TXT_SIZE );
+         hb_strncpy(&pI18Nbuffer[ HB_I18N_TXT_OFFSET ], hb_itemGetCPtr(pValue), HB_I18N_TXT_SIZE);
       }
 
       return hb_itemPutCLPtr(pKey, pI18Nbuffer, nSize + HB_I18N_HEADER_SIZE);

@@ -49,7 +49,7 @@
 
 static HB_CDP_GET_FUNC( UTF16LE_get )
 {
-   HB_SYMBOL_UNUSED( cdp );
+   HB_SYMBOL_UNUSED(cdp);
 
    if( *pnIndex + 1 < nLen )
    {
@@ -66,7 +66,7 @@ static HB_CDP_GET_FUNC( UTF16LE_get )
 
 static HB_CDP_PUT_FUNC( UTF16LE_put )
 {
-   HB_SYMBOL_UNUSED( cdp );
+   HB_SYMBOL_UNUSED(cdp);
 
    if( *pnIndex + 1 < nLen )
    {
@@ -79,8 +79,8 @@ static HB_CDP_PUT_FUNC( UTF16LE_put )
 
 static HB_CDP_LEN_FUNC( UTF16LE_len )
 {
-   HB_SYMBOL_UNUSED( cdp );
-   HB_SYMBOL_UNUSED( wc );
+   HB_SYMBOL_UNUSED(cdp);
+   HB_SYMBOL_UNUSED(wc);
 
    return 2;
 }
@@ -113,8 +113,8 @@ static void hb_cp_init( PHB_CODEPAGE cdp )
       {
          flags[ i ] |= HB_CDP_LOWER;
       }
-      upper[ i ] = static_cast<HB_UCHAR>( HB_TOUPPER( i ) );
-      lower[ i ] = static_cast<HB_UCHAR>( HB_TOLOWER( i ) );
+      upper[ i ] = static_cast<HB_UCHAR>( HB_TOUPPER(i) );
+      lower[ i ] = static_cast<HB_UCHAR>( HB_TOLOWER(i) );
    }
 }
 

@@ -61,7 +61,7 @@ static void hb_pp_ErrorMessage( void * cargo, const char * const szMsgTable[],
    HB_TRACE( HB_TR_DEBUG, ( "hb_pp_ErrorGen(%p, %p, %c, %d, %s, %s)", cargo, static_cast<const void*>( szMsgTable ), cPrefix, iCode, szParam1, szParam2 ) );
 #endif
 
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
 
    /* ignore all warning messages and errors when break or quit request */
    if( cPrefix != 'W' && hb_vmRequestQuery() == 0 )
@@ -80,18 +80,18 @@ static void hb_pp_ErrorMessage( void * cargo, const char * const szMsgTable[],
 static void hb_pp_Disp( void * cargo, const char * szMessage )
 {
    /* ignore stdout messages when PP used as library */
-   HB_SYMBOL_UNUSED( cargo );
-   HB_SYMBOL_UNUSED( szMessage );
+   HB_SYMBOL_UNUSED(cargo);
+   HB_SYMBOL_UNUSED(szMessage);
 }
 
 static HB_BOOL hb_pp_CompilerSwitch( void * cargo, const char * szSwitch,
                                      int * piValue, HB_BOOL fSet )
 {
    /* ignore all compiler switches */
-   HB_SYMBOL_UNUSED( cargo );
-   HB_SYMBOL_UNUSED( szSwitch );
-   HB_SYMBOL_UNUSED( piValue );
-   HB_SYMBOL_UNUSED( fSet );
+   HB_SYMBOL_UNUSED(cargo);
+   HB_SYMBOL_UNUSED(szSwitch);
+   HB_SYMBOL_UNUSED(piValue);
+   HB_SYMBOL_UNUSED(fSet);
 
    return HB_FALSE;
 }
@@ -123,7 +123,7 @@ static void hb_pp_StdRules( PHB_ITEM ppItem )
 
    if( s_fInit )
    {
-      s_pDynSym = hb_dynsymFind( "__PP_STDRULES" );
+      s_pDynSym = hb_dynsymFind("__PP_STDRULES");
       s_fInit = HB_FALSE;
    }
 

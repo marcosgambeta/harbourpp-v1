@@ -84,8 +84,8 @@ static int hb_gt_tpl_ReadKey( PHB_GT pGT, int iEventMask )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_tpl_ReadKey(%p,%d)", static_cast<void*>( pGT ), iEventMask ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
-   HB_SYMBOL_UNUSED( iEventMask );
+   HB_SYMBOL_UNUSED(pGT);
+   HB_SYMBOL_UNUSED(iEventMask);
 
    /* TODO: check the input queue (incoming mouse and keyboard events)
             and return the inkey code if any */
@@ -99,7 +99,7 @@ static const char * hb_gt_tpl_Version( PHB_GT pGT, int iType )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_tpl_Version(%p,%d)", static_cast<void*>( pGT ), iType ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    if( iType == 0 )
       return HB_GT_DRVNAME( HB_GT_NAME );
@@ -113,9 +113,9 @@ static HB_BOOL hb_gt_tpl_SetMode( PHB_GT pGT, int iRows, int iCols )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_tpl_SetMode(%p,%d,%d)", static_cast<void*>( pGT ), iRows, iCols ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
-   HB_SYMBOL_UNUSED( iRows );
-   HB_SYMBOL_UNUSED( iCols );
+   HB_SYMBOL_UNUSED(pGT);
+   HB_SYMBOL_UNUSED(iRows);
+   HB_SYMBOL_UNUSED(iCols);
 
    /* TODO: if possible change the size of the screen and return HB_TRUE */
 

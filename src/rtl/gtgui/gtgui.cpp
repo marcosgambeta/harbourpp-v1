@@ -102,7 +102,7 @@ static int hb_gt_gui_optionId( const char * pszOption )
       {
          pszOption++;
       }
-      nSize = strlen( pszOption );
+      nSize = strlen(pszOption);
       while( nSize > 0 && HB_ISSPACE( pszOption[ nSize - 1 ] ) )
       {
          nSize--;
@@ -250,7 +250,7 @@ static const char * hb_gt_gui_Version( PHB_GT pGT, int iType )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_gui_Version(%p,%d)", static_cast<void*>( pGT ), iType ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    if( iType == 0 )
    {

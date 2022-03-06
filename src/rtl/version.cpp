@@ -84,7 +84,7 @@ HB_FUNC( HB_VERSION )
       {
          char * pszBuildDate = hb_verBuildDate();
 
-         if( strlen( pszBuildDate ) >= 11 )
+         if( strlen(pszBuildDate) >= 11 )
          {
             static const char * s_months[] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
             char szDate[ 9 ];
@@ -118,7 +118,7 @@ HB_FUNC( HB_VERSION )
       case HB_VERSION_BUILD_TIME:
       {
          char * pszBuildDate = hb_verBuildDate();
-         hb_retc( strlen( pszBuildDate ) >= 20 ? pszBuildDate + 12 : nullptr );
+         hb_retc( strlen(pszBuildDate) >= 20 ? pszBuildDate + 12 : nullptr );
          hb_xfree(pszBuildDate);
          break;
       }

@@ -1366,13 +1366,13 @@ HB_FUNC( ORDCONDSET )
       PHB_ITEM pItem;
 
       lpdbOrdCondInfo = static_cast<LPDBORDERCONDINFO>( hb_xgrab(sizeof(DBORDERCONDINFO)) );
-      lpdbOrdCondInfo->abFor = hb_parclen(1) > 0 ? hb_strdup( hb_parc(1) ) : nullptr;
+      lpdbOrdCondInfo->abFor = hb_parclen(1) > 0 ? hb_strdup(hb_parc(1)) : nullptr;
       pItem = hb_param(2, HB_IT_BLOCK);
       lpdbOrdCondInfo->itmCobFor = pItem ? hb_itemNew(pItem) : nullptr;
 
       lpdbOrdCondInfo->fAll = hb_parldef( 3, HB_TRUE );
 
-      lpdbOrdCondInfo->abWhile = hb_parclen(17) > 0 ? hb_strdup( hb_parc(17) ) : nullptr;
+      lpdbOrdCondInfo->abWhile = hb_parclen(17) > 0 ? hb_strdup(hb_parc(17)) : nullptr;
       pItem = hb_param(4, HB_IT_BLOCK);
       lpdbOrdCondInfo->itmCobWhile = pItem ? hb_itemNew(pItem) : nullptr;
 

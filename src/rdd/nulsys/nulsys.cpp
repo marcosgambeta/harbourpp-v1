@@ -49,21 +49,21 @@
 
 HB_ERRCODE hb_rddSelectWorkAreaAlias( const char * szName )
 {
-   HB_SYMBOL_UNUSED( szName );
+   HB_SYMBOL_UNUSED(szName);
 
    return HB_FAILURE;
 }
 
 HB_ERRCODE hb_rddSelectWorkAreaNumber( int iArea )
 {
-   HB_SYMBOL_UNUSED( iArea );
+   HB_SYMBOL_UNUSED(iArea);
 
    return HB_FAILURE;
 }
 
 HB_ERRCODE hb_rddSelectWorkAreaSymbol( PHB_SYMB pSymAlias )
 {
-   HB_SYMBOL_UNUSED( pSymAlias );
+   HB_SYMBOL_UNUSED(pSymAlias);
 
    return HB_FAILURE;
 }
@@ -75,40 +75,40 @@ int hb_rddGetCurrentWorkAreaNumber( void )
 
 HB_ERRCODE hb_rddFieldGet( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
 {
-   HB_SYMBOL_UNUSED( pItem );
-   HB_SYMBOL_UNUSED( pFieldSymbol );
+   HB_SYMBOL_UNUSED(pItem);
+   HB_SYMBOL_UNUSED(pFieldSymbol);
 
    return HB_FAILURE;
 }
 
 HB_ERRCODE hb_rddFieldPut( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
 {
-   HB_SYMBOL_UNUSED( pItem );
-   HB_SYMBOL_UNUSED( pFieldSymbol );
+   HB_SYMBOL_UNUSED(pItem);
+   HB_SYMBOL_UNUSED(pFieldSymbol);
 
    return HB_FAILURE;
 }
 
 HB_ERRCODE hb_rddGetFieldValue( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
 {
-   HB_SYMBOL_UNUSED( pItem );
-   HB_SYMBOL_UNUSED( pFieldSymbol );
+   HB_SYMBOL_UNUSED(pItem);
+   HB_SYMBOL_UNUSED(pFieldSymbol);
 
    return HB_FAILURE;
 }
 
 HB_ERRCODE hb_rddPutFieldValue( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
 {
-   HB_SYMBOL_UNUSED( pItem );
-   HB_SYMBOL_UNUSED( pFieldSymbol );
+   HB_SYMBOL_UNUSED(pItem);
+   HB_SYMBOL_UNUSED(pFieldSymbol);
 
    return HB_FAILURE;
 }
 
 HB_ERRCODE hb_rddGetAliasNumber( const char * szAlias, int * iArea )
 {
-   HB_SYMBOL_UNUSED( szAlias );
-   HB_SYMBOL_UNUSED( iArea );
+   HB_SYMBOL_UNUSED(szAlias);
+   HB_SYMBOL_UNUSED(iArea);
 
    return HB_FAILURE;
 }

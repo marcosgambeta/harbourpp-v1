@@ -51,7 +51,7 @@ static void s_pp_msg( void * cargo, int iErrorFmt, int iLine,
                       const char * szText,
                       const char * szPar1, const char * szPar2 )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
 
    /* ignore all warning messages and errors when break or quit request */
    if( cPrefix != 'W' && hb_vmRequestQuery() == 0 )
@@ -60,7 +60,7 @@ static void s_pp_msg( void * cargo, int iErrorFmt, int iLine,
       PHB_ITEM pError;
 
       hb_snprintf( szMsgBuf, sizeof(szMsgBuf), szText, szPar1, szPar2 );
-      if( ! szModule || *szModule == 0 || strcmp( szModule, "{SOURCE}.prg" ) == 0 )
+      if( ! szModule || *szModule == 0 || strcmp(szModule, "{SOURCE}.prg") == 0 )
       {
          hb_snprintf( szLine, sizeof(szLine), "line:%i", iLine );
       }
@@ -80,11 +80,11 @@ static int s_pp_openFile( void * cargo, char * szFileName,
                           HB_BOOL * pfNested, FILE ** file_ptr,
                           const char ** pBufPtr, HB_SIZE * pnLen, HB_BOOL * pfFree )
 {
-   HB_SYMBOL_UNUSED( fSysFile );
-   HB_SYMBOL_UNUSED( fBinary );
-   HB_SYMBOL_UNUSED( pIncludePaths );
-   HB_SYMBOL_UNUSED( pfNested );
-   HB_SYMBOL_UNUSED( file_ptr );
+   HB_SYMBOL_UNUSED(fSysFile);
+   HB_SYMBOL_UNUSED(fBinary);
+   HB_SYMBOL_UNUSED(pIncludePaths);
+   HB_SYMBOL_UNUSED(pfNested);
+   HB_SYMBOL_UNUSED(file_ptr);
 
    if( ! fBefore )
    {

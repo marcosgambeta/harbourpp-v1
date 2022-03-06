@@ -239,7 +239,7 @@ HB_SIZE hb_xquery( int iMode )
          break;
    }
 #else
-   HB_SYMBOL_UNUSED( iMode );
+   HB_SYMBOL_UNUSED(iMode);
 #endif
    return nResult;
 }
@@ -351,7 +351,7 @@ void hb_errInternal( HB_ERRCODE errCode, const char * szText, const char * szPar
 void hb_conOutErr( const char * pStr, HB_SIZE nLen )
 {
    if( nLen == 0 )
-      nLen = strlen( pStr );
+      nLen = strlen(pStr);
 
    fprintf( stderr, "%.*s", static_cast<int>( nLen ), pStr );
 }
@@ -363,12 +363,12 @@ const char * hb_conNewLine( void )
 
 int hb_charUpper( int iChar )
 {
-   return HB_TOUPPER( iChar );
+   return HB_TOUPPER(iChar);
 }
 
 int hb_charLower( int iChar )
 {
-   return HB_TOLOWER( iChar );
+   return HB_TOLOWER(iChar);
 }
 
 PHB_CODEPAGE hb_vmCDP( void )
@@ -378,8 +378,8 @@ PHB_CODEPAGE hb_vmCDP( void )
 
 HB_SIZE hb_cdpTextPos( PHB_CODEPAGE cdp, const char * pText, HB_SIZE nSize, HB_SIZE nIndex )
 {
-   HB_SYMBOL_UNUSED( cdp );
-   HB_SYMBOL_UNUSED( pText );
+   HB_SYMBOL_UNUSED(cdp);
+   HB_SYMBOL_UNUSED(pText);
 
    return nIndex >= nSize ? nSize : nIndex;
 }
@@ -387,7 +387,7 @@ HB_SIZE hb_cdpTextPos( PHB_CODEPAGE cdp, const char * pText, HB_SIZE nSize, HB_S
 HB_BOOL hb_cdpCharEq( PHB_CODEPAGE cdp, const char * szText1, HB_SIZE nLen1, HB_SIZE * pnPos1,
                       const char * szText2, HB_SIZE nLen2, HB_SIZE * pnPos2 )
 {
-   HB_SYMBOL_UNUSED( cdp );
+   HB_SYMBOL_UNUSED(cdp);
 
    if( *pnPos1 < nLen1 && *pnPos2 < nLen2 )
       return szText1[ ( *pnPos1 )++ ] == szText2[ ( *pnPos2 )++ ];
@@ -398,13 +398,13 @@ HB_BOOL hb_cdpCharEq( PHB_CODEPAGE cdp, const char * szText1, HB_SIZE nLen1, HB_
 HB_BOOL hb_cdpCharCaseEq( PHB_CODEPAGE cdp, const char * szText1, HB_SIZE nLen1, HB_SIZE * pnPos1,
                           const char * szText2, HB_SIZE nLen2, HB_SIZE * pnPos2 )
 {
-   HB_SYMBOL_UNUSED( cdp );
+   HB_SYMBOL_UNUSED(cdp);
 
    if( *pnPos1 < nLen1 && *pnPos2 < nLen2 )
    {
       HB_UCHAR uc1 = szText1[ ( *pnPos1 )++ ],
                uc2 = szText2[ ( *pnPos2 )++ ];
-      return HB_TOUPPER( uc1 ) == HB_TOUPPER( uc2 );
+      return HB_TOUPPER(uc1) == HB_TOUPPER(uc2);
    }
    else
       return HB_FALSE;
@@ -412,36 +412,36 @@ HB_BOOL hb_cdpCharCaseEq( PHB_CODEPAGE cdp, const char * szText1, HB_SIZE nLen1,
 
 const char * hb_osEncodeCP( const char * szName, char ** pszFree, HB_SIZE * pnSize )
 {
-   HB_SYMBOL_UNUSED( pnSize );
-   HB_SYMBOL_UNUSED( pszFree );
+   HB_SYMBOL_UNUSED(pnSize);
+   HB_SYMBOL_UNUSED(pszFree);
    return szName;
 }
 
 const char * hb_osDecodeCP( const char * szName, char ** pszFree, HB_SIZE * pnSize )
 {
-   HB_SYMBOL_UNUSED( pnSize );
-   HB_SYMBOL_UNUSED( pszFree );
+   HB_SYMBOL_UNUSED(pnSize);
+   HB_SYMBOL_UNUSED(pszFree);
    return szName;
 }
 
 char * hb_osStrEncode( const char * pszName )
 {
-   return hb_strdup( pszName );
+   return hb_strdup(pszName);
 }
 
 char * hb_osStrEncodeN( const char * pszName, HB_SIZE nLen )
 {
-   return hb_strndup( pszName, nLen );
+   return hb_strndup(pszName, nLen);
 }
 
 char * hb_osStrDecode( const char * pszName )
 {
-   return hb_strdup( pszName );
+   return hb_strdup(pszName);
 }
 
 char * hb_osStrDecode2( const char * pszName, char * pszBuffer, HB_SIZE nSize )
 {
-   return hb_strncpy( pszBuffer, pszName, nSize );
+   return hb_strncpy(pszBuffer, pszName, nSize);
 }
 
 #if defined( HB_OS_WIN )
@@ -492,13 +492,13 @@ void hb_vmUnlock( void ) {}
 
 void hb_fsSetIOError( HB_BOOL fResult, HB_USHORT uiOperation )
 {
-   HB_SYMBOL_UNUSED( fResult );
-   HB_SYMBOL_UNUSED( uiOperation );
+   HB_SYMBOL_UNUSED(fResult);
+   HB_SYMBOL_UNUSED(uiOperation);
 }
 
 void  hb_fsSetError( HB_ERRCODE uiError )
 {
-   HB_SYMBOL_UNUSED( uiError );
+   HB_SYMBOL_UNUSED(uiError);
 }
 
 /* file name conversion */
@@ -517,8 +517,8 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
 
       if( pszFree )
       {
-         szFileName = *pszFree = hb_strncpy( static_cast<char*>( hb_xgrab(HB_PATH_MAX) ),
-                                             szFileName, HB_PATH_MAX - 1 );
+         szFileName = *pszFree = hb_strncpy(static_cast<char*>( hb_xgrab(HB_PATH_MAX) ),
+                                             szFileName, HB_PATH_MAX - 1);
       }
 
       if( s_cDirSep != HB_OS_PATH_DELIM_CHR )
@@ -532,7 +532,7 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
          }
       }
 
-      pFileName = hb_fsFNameSplit( szFileName );
+      pFileName = hb_fsFNameSplit(szFileName);
 
       /* strip trailing and leading spaces */
       if( s_fFnTrim )
@@ -541,7 +541,7 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
 
          if( pFileName->szName )
          {
-            nLen = strlen( pFileName->szName );
+            nLen = strlen(pFileName->szName);
             while( nLen && pFileName->szName[ nLen - 1 ] == ' ' )
             {
                --nLen;
@@ -555,7 +555,7 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
          }
          if( pFileName->szExtension )
          {
-            nLen = strlen( pFileName->szExtension );
+            nLen = strlen(pFileName->szExtension);
             while( nLen && pFileName->szExtension[ nLen - 1 ] == ' ' )
             {
                --nLen;
@@ -580,9 +580,9 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
       else if( s_iFileCase == HB_SET_CASE_UPPER )
       {
          if( pFileName->szName )
-            hb_strupr( const_cast<char*>( pFileName->szName ) );
+            hb_strupr(const_cast<char*>( pFileName->szName ));
          if( pFileName->szExtension )
-            hb_strupr( const_cast<char*>( pFileName->szExtension ) );
+            hb_strupr(const_cast<char*>( pFileName->szExtension ));
       }
 
       /* DIRCASE */
@@ -591,7 +591,7 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
          if( s_iDirCase == HB_SET_CASE_LOWER )
             hb_strlow( const_cast<char*>( pFileName->szPath ) );
          else if( s_iDirCase == HB_SET_CASE_UPPER )
-            hb_strupr( const_cast<char*>( pFileName->szPath ) );
+            hb_strupr(const_cast<char*>( pFileName->szPath ));
       }
 
       hb_fsFNameMerge( const_cast<char*>( szFileName ), pFileName );
@@ -614,8 +614,8 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
    {
       PHB_FNAME pFileName;
 
-      szFileName = pszBuffer = hb_strncpy( static_cast<char*>( hb_xgrab(HB_PATH_MAX) ),
-                                           szFileName, HB_PATH_MAX - 1 );
+      szFileName = pszBuffer = hb_strncpy(static_cast<char*>( hb_xgrab(HB_PATH_MAX) ),
+                                           szFileName, HB_PATH_MAX - 1);
 
       if( s_cDirSep != HB_OS_PATH_DELIM_CHR )
       {
@@ -628,7 +628,7 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
          }
       }
 
-      pFileName = hb_fsFNameSplit( szFileName );
+      pFileName = hb_fsFNameSplit(szFileName);
 
       /* strip trailing and leading spaces */
       if( s_fFnTrim )
@@ -637,7 +637,7 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
 
          if( pFileName->szName )
          {
-            nLen = strlen( pFileName->szName );
+            nLen = strlen(pFileName->szName);
             while( nLen && pFileName->szName[ nLen - 1 ] == ' ' )
             {
                --nLen;
@@ -651,7 +651,7 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
          }
          if( pFileName->szExtension )
          {
-            nLen = strlen( pFileName->szExtension );
+            nLen = strlen(pFileName->szExtension);
             while( nLen && pFileName->szExtension[ nLen - 1 ] == ' ' )
             {
                --nLen;
@@ -676,9 +676,9 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
       else if( s_iFileCase == HB_SET_CASE_UPPER )
       {
          if( pFileName->szName )
-            hb_strupr( const_cast<char*>( pFileName->szName ) );
+            hb_strupr(const_cast<char*>( pFileName->szName ));
          if( pFileName->szExtension )
-            hb_strupr( const_cast<char*>( pFileName->szExtension ) );
+            hb_strupr(const_cast<char*>( pFileName->szExtension ));
       }
 
       /* DIRCASE */
@@ -687,7 +687,7 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
          if( s_iDirCase == HB_SET_CASE_LOWER )
             hb_strlow( const_cast<char*>( pFileName->szPath ) );
          else if( s_iDirCase == HB_SET_CASE_UPPER )
-            hb_strupr( const_cast<char*>( pFileName->szPath ) );
+            hb_strupr(const_cast<char*>( pFileName->szPath ));
       }
 
       hb_fsFNameMerge( const_cast<char*>( szFileName ), pFileName );

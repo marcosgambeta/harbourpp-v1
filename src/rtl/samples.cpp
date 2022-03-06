@@ -81,7 +81,7 @@ static long hb_TimeStrToSec( const char * pszTime )
    HB_SIZE nLen;
    long lTime = 0;
 
-   nLen = strlen( pszTime );
+   nLen = strlen(pszTime);
 
    if( nLen >= 1 )
    {

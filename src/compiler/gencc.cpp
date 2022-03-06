@@ -693,7 +693,7 @@ static HB_GENC_FUNC( hb_p_localname )
 
    HB_GENC_LABEL();
 
-   usLen = static_cast<HB_USHORT>( strlen( reinterpret_cast<char*>( &pFunc->pCode[ nPCodePos + 3 ] ) ) );
+   usLen = static_cast<HB_USHORT>( strlen(reinterpret_cast<char*>( &pFunc->pCode[ nPCodePos + 3 ] )) );
    fprintf( cargo->yyc, "\thb_xvmLocalName( %hu, ", HB_PCODE_MKUSHORT( &pFunc->pCode[ nPCodePos + 1 ] ) );
    hb_compGenCString( cargo->yyc, &pFunc->pCode[ nPCodePos + 3 ], usLen );
    fprintf( cargo->yyc, " );\n" );
@@ -834,7 +834,7 @@ static HB_GENC_FUNC( hb_p_modulename )
 
    HB_GENC_LABEL();
 
-   usLen = static_cast<HB_USHORT>( strlen( reinterpret_cast<char*>( &pFunc->pCode[ nPCodePos + 1 ] ) ) );
+   usLen = static_cast<HB_USHORT>( strlen(reinterpret_cast<char*>( &pFunc->pCode[ nPCodePos + 1 ] )) );
    fprintf( cargo->yyc, "\thb_xvmModuleName( " );
    hb_compGenCString( cargo->yyc, &pFunc->pCode[ nPCodePos + 1 ], usLen );
    fprintf( cargo->yyc, " );\n" );
@@ -1672,7 +1672,7 @@ static HB_GENC_FUNC( hb_p_staticname )
 
    HB_GENC_LABEL();
 
-   usLen = static_cast<HB_USHORT>( strlen( reinterpret_cast<char*>( &pFunc->pCode[ nPCodePos + 4 ] ) ) );
+   usLen = static_cast<HB_USHORT>( strlen(reinterpret_cast<char*>( &pFunc->pCode[ nPCodePos + 4 ] )) );
    fprintf( cargo->yyc, "\thb_xvmStaticName( %hu, %hu, ",
             static_cast<HB_USHORT>( pFunc->pCode[ nPCodePos + 1 ] ),
             HB_PCODE_MKUSHORT( &pFunc->pCode[ nPCodePos + 2 ] ) );
@@ -1766,9 +1766,9 @@ static HB_GENC_FUNC( hb_p_noop )
 
 static HB_GENC_FUNC( hb_p_dummy )
 {
-   HB_SYMBOL_UNUSED( cargo );
-   HB_SYMBOL_UNUSED( pFunc );
-   HB_SYMBOL_UNUSED( nPCodePos );
+   HB_SYMBOL_UNUSED(cargo);
+   HB_SYMBOL_UNUSED(pFunc);
+   HB_SYMBOL_UNUSED(nPCodePos);
    return 1;
 }
 

@@ -56,8 +56,8 @@ HB_FUNC( __DEFPATH )
    if( szDefault )
    {
       /* Leave enough space to append a path delimiter */
-      hb_strncpy( buffer, szDefault, sizeof(buffer) - 1 );
-      size = static_cast<int>( strlen( buffer ) );
+      hb_strncpy(buffer, szDefault, sizeof(buffer) - 1);
+      size = static_cast<int>( strlen(buffer) );
    }
 
    HB_TRACE( HB_TR_INFO, ( "HB_DEFPATH: buffer is |%s|, size is %d, last char is |%c|", buffer, size, buffer[ size - 1 ] ) );

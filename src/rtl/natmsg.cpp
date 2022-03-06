@@ -125,7 +125,7 @@ HB_FUNC( __NATISNEGATIVE )
             break;
          }
       }
-      nStr = strlen( szYesNo );
+      nStr = strlen(szYesNo);
 
       if( nStr && nLen >= nStr )
       {

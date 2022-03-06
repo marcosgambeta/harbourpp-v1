@@ -157,7 +157,7 @@ static char * hb_hrbReadId( const char * szBody, HB_SIZE nBodySize, HB_SIZE * pn
    }
    while( szBody[ ( *pnBodyOffset )++ ] );
 
-   return hb_strdup( szIdx );
+   return hb_strdup(szIdx);
 }
 
 static HB_ULONG hb_hrbFindSymbol( const char * szName, PHB_DYNF pDynFunc, HB_ULONG ulLoaded )
@@ -168,7 +168,7 @@ static HB_ULONG hb_hrbFindSymbol( const char * szName, PHB_DYNF pDynFunc, HB_ULO
 
    for( HB_ULONG ulRet = 0; ulRet < ulLoaded; ++ulRet )
    {
-      if( ! strcmp( szName, pDynFunc[ ulRet ].szName ) )
+      if( ! strcmp(szName, pDynFunc[ ulRet ].szName) )
       {
          return ulRet;
       }
@@ -227,7 +227,7 @@ static void hb_hrbInit( PHRB_BODY pHrbBody, int iPCount, PHB_ITEM * pParams )
                /* Check INIT functions */
                if( ( pHrbBody->pSymRead[ ul ].scope.value & HB_FS_INITEXIT ) == HB_FS_INIT )
                {
-                  if( strcmp( pHrbBody->pSymRead[ ul ].szName, "CLIPINIT$" ) ? ! fClipInit : fClipInit )
+                  if( strcmp(pHrbBody->pSymRead[ ul ].szName, "CLIPINIT$") ? ! fClipInit : fClipInit )
                   {
                      hb_vmPushSymbol( pHrbBody->pSymRead + ul );
                      hb_vmPushNil();
@@ -299,7 +299,7 @@ static void hb_hrbUnLoad( PHRB_BODY pHrbBody )
       {
          if( pHrbBody->pDynFunc[ ul ].szName && pHrbBody->pDynFunc[ ul ].pcodeFunc.pCode )
          {
-            PHB_DYNS pDyn = hb_dynsymFind( pHrbBody->pDynFunc[ ul ].szName );
+            PHB_DYNS pDyn = hb_dynsymFind(pHrbBody->pDynFunc[ ul ].szName);
             if( pDyn && pDyn->pSymbol->value.pCodeFunc == &pHrbBody->pDynFunc[ ul ].pcodeFunc )
             {
                pDyn->pSymbol->value.pCodeFunc = nullptr;
@@ -494,7 +494,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
          {
             pSymRead[ ul ].value.pCodeFunc = nullptr;
 
-            pDynSym = hb_dynsymFind( pSymRead[ ul ].szName );
+            pDynSym = hb_dynsymFind(pSymRead[ ul ].szName);
 
             if( pDynSym )
             {
@@ -514,7 +514,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
                {
                   char szName[ HB_SYMBOL_NAME_LEN + 1 ];
 
-                  hb_strncpy( szName, pSymRead[ ul ].szName, sizeof(szName) - 1 );
+                  hb_strncpy(szName, pSymRead[ ul ].szName, sizeof(szName) - 1);
                   hb_xfree(pSymRead);
                   hb_hrbUnLoad( pHrbBody );
                   hb_errRT_BASE( EG_ARG, 6101, "Unknown or unregistered symbol", szName, 0 );
@@ -532,7 +532,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
             {
                if( ( pSymRead[ ul ].scope.value & ( HB_FS_LOCAL | HB_FS_STATIC ) ) == HB_FS_LOCAL )
                {
-                  pDynSym = hb_dynsymFind( pSymRead[ ul ].szName );
+                  pDynSym = hb_dynsymFind(pSymRead[ ul ].szName);
                   if( pDynSym )
                   {
                      /* convert public function to static one */

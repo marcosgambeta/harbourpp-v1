@@ -62,7 +62,7 @@ static void hb_regfree( PHB_REGEX pRegEx )
 #elif defined( HB_POSIX_REGEX )
    regfree( &pRegEx->reg );
 #else
-   HB_SYMBOL_UNUSED( pRegEx );
+   HB_SYMBOL_UNUSED(pRegEx);
 #endif
 }
 
@@ -96,8 +96,8 @@ static int hb_regcomp( PHB_REGEX pRegEx, const char * szRegEx )
                      ( ( pRegEx->iFlags & HBREG_NOTEOL ) ? REG_NOTEOL : 0 );
    return regcomp( &pRegEx->reg, szRegEx, iCFlags );
 #else
-   HB_SYMBOL_UNUSED( pRegEx );
-   HB_SYMBOL_UNUSED( szRegEx );
+   HB_SYMBOL_UNUSED(pRegEx);
+   HB_SYMBOL_UNUSED(szRegEx);
    return -1;
 #endif
 }
@@ -127,7 +127,7 @@ static int hb_regexec( PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen, in
 
    if( szString[ nLen ] != 0 )
    {
-      szBuffer = hb_strndup( szString, nLen );
+      szBuffer = hb_strndup(szString, nLen);
       szString = szBuffer;
    }
    for( i = 0; i < iMatches; i++ )
@@ -155,11 +155,11 @@ static int hb_regexec( PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen, in
    }
    return iResult;
 #else
-   HB_SYMBOL_UNUSED( pRegEx );
-   HB_SYMBOL_UNUSED( szString );
-   HB_SYMBOL_UNUSED( nLen );
-   HB_SYMBOL_UNUSED( iMatches );
-   HB_SYMBOL_UNUSED( aMatches );
+   HB_SYMBOL_UNUSED(pRegEx);
+   HB_SYMBOL_UNUSED(szString);
+   HB_SYMBOL_UNUSED(nLen);
+   HB_SYMBOL_UNUSED(iMatches);
+   HB_SYMBOL_UNUSED(aMatches);
    return -1;
 #endif
 }

@@ -1563,7 +1563,7 @@ PHB_EXPR hb_compExprCBVarAdd( PHB_EXPR pCB, const char * szVarName, HB_BYTE bTyp
       pVar = pCB->value.asCodeblock.pLocals;
       while( pVar )
       {
-         if( strcmp( szVarName, pVar->szName ) == 0 )
+         if( strcmp(szVarName, pVar->szName) == 0 )
          {
             HB_COMP_ERROR_DUPLVAR( szVarName );
          }

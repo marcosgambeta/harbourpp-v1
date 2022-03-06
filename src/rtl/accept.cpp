@@ -134,7 +134,7 @@ HB_FUNC( __ACCEPT )
    szAcceptResult[ nLen ] = '\0';
 
 #ifdef HB_CLP_UNDOC
-   hb_strncpy( hb_acceptBuffer(), szAcceptResult, ACCEPT_BUFFER_LEN - 1 );
+   hb_strncpy(hb_acceptBuffer(), szAcceptResult, ACCEPT_BUFFER_LEN - 1);
 #endif
 
    hb_retclen( szAcceptResult, nLen );

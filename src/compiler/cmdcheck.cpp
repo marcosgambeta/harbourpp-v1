@@ -63,7 +63,7 @@ static HB_SIZE hb_compChkOptionLen( const char * szSwitch, HB_BOOL fEnv )
    }
    else
    {
-      nLen = strlen( szSwitch );
+      nLen = strlen(szSwitch);
    }
 
    return nLen;
@@ -79,14 +79,14 @@ static const char * hb_compChkAddDefine( HB_COMP_DECL, const char * szSwitch, HB
       if( *szSwPtr == '=' )
       {
          nValue = szSwPtr - szSwitch;
-         szSwPtr += hb_compChkOptionLen( szSwPtr, fEnv );
+         szSwPtr += hb_compChkOptionLen(szSwPtr, fEnv);
          break;
       }
       ++szSwPtr;
    }
    if( szSwPtr > szSwitch && *szSwitch != '=' )
    {
-      char * szDefine = hb_strndup( szSwitch, szSwPtr - szSwitch );
+      char * szDefine = hb_strndup(szSwitch, szSwPtr - szSwitch);
       char * szValue = nullptr;
       PHB_PPDEFINE * pDefinePtr;
 
@@ -101,7 +101,7 @@ static const char * hb_compChkAddDefine( HB_COMP_DECL, const char * szSwitch, HB
       }
 
       pDefinePtr = &HB_COMP_PARAM->ppdefines;
-      while( *pDefinePtr != nullptr && strcmp( ( *pDefinePtr )->szName, szDefine ) != 0 )
+      while( *pDefinePtr != nullptr && strcmp(( *pDefinePtr )->szName, szDefine) != 0 )
       {
          pDefinePtr = &( *pDefinePtr )->pNext;
       }
@@ -131,16 +131,16 @@ static void hb_compChkIgnoredInfo( HB_COMP_DECL, const char * szSwitch )
 
 static char * hb_compChkOptionDup( const char * szSwitch )
 {
-   return hb_strupr( hb_strndup( szSwitch, hb_compChkOptionLen( szSwitch, HB_TRUE ) ) );
+   return hb_strupr(hb_strndup(szSwitch, hb_compChkOptionLen(szSwitch, HB_TRUE)));
 }
 
 static const char * hb_compChkOptionGet( const char * szSwitch, char ** pszResult, HB_BOOL fEnv )
 {
-   HB_SIZE nLen = hb_compChkOptionLen( szSwitch, fEnv );
+   HB_SIZE nLen = hb_compChkOptionLen(szSwitch, fEnv);
 
    if( pszResult )
    {
-      *pszResult = hb_strndup( szSwitch, nLen );
+      *pszResult = hb_strndup(szSwitch, nLen);
    }
 
    return szSwitch + nLen;
@@ -148,7 +148,7 @@ static const char * hb_compChkOptionGet( const char * szSwitch, char ** pszResul
 
 static const char * hb_compChkOptionFName( const char * szSwitch, PHB_FNAME * pResult, HB_BOOL fEnv )
 {
-   HB_SIZE nLen = hb_compChkOptionLen( szSwitch, fEnv );
+   HB_SIZE nLen = hb_compChkOptionLen(szSwitch, fEnv);
 
    if( nLen > 0 )
    {
@@ -158,13 +158,13 @@ static const char * hb_compChkOptionFName( const char * szSwitch, PHB_FNAME * pR
       }
       if( szSwitch[ nLen ] != '\0' )
       {
-         char * szVal = hb_strndup( szSwitch, nLen );
-         *pResult = hb_fsFNameSplit( szVal );
+         char * szVal = hb_strndup(szSwitch, nLen);
+         *pResult = hb_fsFNameSplit(szVal);
          hb_xfree(szVal);
       }
       else
       {
-         *pResult = hb_fsFNameSplit( szSwitch );
+         *pResult = hb_fsFNameSplit(szSwitch);
       }
    }
    return szSwitch + nLen;
@@ -172,13 +172,13 @@ static const char * hb_compChkOptionFName( const char * szSwitch, PHB_FNAME * pR
 
 static const char * hb_compChkOptionAddPath( HB_COMP_DECL, const char * szSwitch, HB_BOOL fEnv )
 {
-   HB_SIZE nLen = hb_compChkOptionLen( szSwitch, fEnv );
+   HB_SIZE nLen = hb_compChkOptionLen(szSwitch, fEnv);
 
    if( nLen > 0 )
    {
       if( szSwitch[ nLen ] != '\0' )
       {
-         char * szVal = hb_strndup( szSwitch, nLen );
+         char * szVal = hb_strndup(szSwitch, nLen);
          hb_pp_addSearchPath( HB_COMP_PARAM->pLex->pPP, szSwitch, HB_FALSE );
          hb_xfree(szVal);
       }
@@ -196,13 +196,13 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
 
    if( szSwPtr[ 0 ] == '-' && szSwPtr[ 1 ] == '-' )
    {
-      if( strncmp( szSwPtr + 2, "version", 7 ) == 0 )
+      if( strncmp(szSwPtr + 2, "version", 7) == 0 )
       {
          szSwPtr += 9;
          HB_COMP_PARAM->fLogo = HB_TRUE;
          HB_COMP_PARAM->fQuiet = HB_TRUE;
       }
-      else if( strncmp( szSwPtr + 2, "help", 4 ) == 0 )
+      else if( strncmp(szSwPtr + 2, "help", 4) == 0 )
       {
          szSwPtr += 6;
          HB_COMP_PARAM->fLogo = HB_TRUE;
@@ -213,7 +213,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
    else if( HB_ISOPTSEP( *szSwPtr ) )
    {
       ++szSwPtr;
-      switch( HB_TOUPPER( *szSwPtr ) )
+      switch( HB_TOUPPER(*szSwPtr) )
       {
          case 'A':
             ++szSwPtr;
@@ -232,7 +232,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
          {
             char *szOption = hb_compChkOptionDup( szSwPtr );
 
-            if( strcmp( szOption, "BUILD" ) == 0 )
+            if( strcmp(szOption, "BUILD") == 0 )
             {
                HB_COMP_PARAM->fBuildInfo = HB_TRUE;
                szSwPtr += 5;
@@ -256,10 +256,10 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
          {
             char *szOption = hb_compChkOptionDup( szSwPtr );
 
-            if( strlen( szOption ) >= 4 && strncmp( "CREDITS", szOption, strlen( szOption ) ) == 0 )
+            if( strlen(szOption) >= 4 && strncmp("CREDITS", szOption, strlen(szOption)) == 0 )
             {
                HB_COMP_PARAM->fCredits = HB_TRUE;
-               szSwPtr += strlen( szOption );
+               szSwPtr += strlen(szOption);
             }
             hb_xfree(szOption);
             break;
@@ -270,7 +270,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
             break;
 
          case 'E':
-            if( HB_TOUPPER( szSwPtr[ 1 ] ) == 'S' )
+            if( HB_TOUPPER(szSwPtr[ 1 ]) == 'S' )
             {
                switch( szSwPtr[ 2 ] )
                {
@@ -294,17 +294,17 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
             break;
 
          case 'F':
-            switch( HB_TOUPPER( szSwPtr[ 1 ] ) )
+            switch( HB_TOUPPER(szSwPtr[ 1 ]) )
             {
                case 'N':
                   if( szSwPtr[ 2 ] == ':' )
                   {
-                     if( HB_TOUPPER( szSwPtr[ 3 ] ) == 'U' )
+                     if( HB_TOUPPER(szSwPtr[ 3 ]) == 'U' )
                      {
                         szSwPtr += 4;
                         hb_setSetFileCase( HB_SET_CASE_UPPER );
                      }
-                     else if( HB_TOUPPER( szSwPtr[ 3 ] ) == 'L' )
+                     else if( HB_TOUPPER(szSwPtr[ 3 ]) == 'L' )
                      {
                         szSwPtr += 4;
                         hb_setSetFileCase( HB_SET_CASE_LOWER );
@@ -323,12 +323,12 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
                case 'D':
                   if( szSwPtr[ 2 ] == ':' )
                   {
-                     if( HB_TOUPPER( szSwPtr[ 3 ] ) == 'U' )
+                     if( HB_TOUPPER(szSwPtr[ 3 ]) == 'U' )
                      {
                         szSwPtr += 4;
                         hb_setSetDirCase( HB_SET_CASE_UPPER );
                      }
-                     else if( HB_TOUPPER( szSwPtr[ 3 ] ) == 'L' )
+                     else if( HB_TOUPPER(szSwPtr[ 3 ]) == 'L' )
                      {
                         szSwPtr += 4;
                         hb_setSetDirCase( HB_SET_CASE_LOWER );
@@ -378,7 +378,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
             break;
 
          case 'G':
-            switch( HB_TOUPPER( szSwPtr[ 1 ] ) )
+            switch( HB_TOUPPER(szSwPtr[ 1 ]) )
             {
                case 'C':
                   HB_COMP_PARAM->iLanguage = HB_LANG_C;
@@ -492,7 +492,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
             ++szSwPtr;
             while( *szSwPtr && ! HB_COMP_PARAM->fExit )
             {
-               int ch = HB_TOUPPER( *szSwPtr );
+               int ch = HB_TOUPPER(*szSwPtr);
 
                ++szSwPtr;
                switch( ch )
@@ -819,7 +819,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
             /* extended definitions file: -u+<file> */
             if( *szSwPtr == '+' )
             {
-               if( szSwPtr[ 1 ] && hb_compChkOptionLen( szSwPtr + 1, fEnv ) > 0 )
+               if( szSwPtr[ 1 ] && hb_compChkOptionLen(szSwPtr + 1, fEnv) > 0 )
                {
                   HB_COMP_PARAM->szStdChExt = static_cast<char**>(
                      ( HB_COMP_PARAM->iStdChExt == 0 ?

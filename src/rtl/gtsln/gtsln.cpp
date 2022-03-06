@@ -120,7 +120,7 @@ volatile HB_BOOL hb_sln_bScreen_Size_Changed = HB_FALSE;
 /* window's resize handler */
 static void sigwinch_handler( int iSig )
 {
-   HB_SYMBOL_UNUSED( iSig );
+   HB_SYMBOL_UNUSED(iSig);
 
    hb_sln_bScreen_Size_Changed = HB_TRUE;
    SLsignal( SIGWINCH, sigwinch_handler );
@@ -230,7 +230,7 @@ static void hb_sln_setACSCtrans( void )
    if( ( p = ( unsigned char * ) SLtt_Graphics_Char_Pairs ) )
    {
       SLsmg_Char_Type SLch;
-      int i, len = strlen( static_cast<char*>( p ) );
+      int i, len = strlen(static_cast<char*>( p ));
 
       memset( &SLch, 0, sizeof(SLsmg_Char_Type) );
       for( i = 0; i < len; i += 2 )
@@ -417,7 +417,7 @@ static void hb_sln_setKeyTrans( PHB_GT pGT )
    p = getenv( hb_NationCharsEnvName );
    if( p )
    {
-      int len = strlen( p ) >> 1;
+      int len = strlen(p) >> 1;
 
       /* no more than 128 National chars are allowed */
       if( len > 128 )
@@ -499,7 +499,7 @@ static int hb_sln_isUTF8( int iStdOut, int iStdIn )
    if( isatty( iStdOut ) && isatty( iStdIn ) )
    {
       const char * szBuf = "\r\303\255\033[6n\r  \r";
-      int len = strlen( szBuf );
+      int len = strlen(szBuf);
 
       if( write( iStdOut, szBuf, len ) == len )
       {
@@ -767,9 +767,9 @@ static HB_BOOL hb_gt_sln_SetMode( PHB_GT pGT, int iRows, int iCols )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_SetMode(%p,%d,%d)", static_cast<void*>( pGT ), iRows, iCols ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
-   HB_SYMBOL_UNUSED( iRows );
-   HB_SYMBOL_UNUSED( iCols );
+   HB_SYMBOL_UNUSED(pGT);
+   HB_SYMBOL_UNUSED(iRows);
+   HB_SYMBOL_UNUSED(iCols);
 
    /* TODO: How to change the size of the screen? */
    return HB_FALSE;
@@ -783,7 +783,7 @@ static HB_BOOL hb_gt_sln_IsColor( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_IsColor(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    return SLtt_Use_Ansi_Colors;
 }
@@ -856,7 +856,7 @@ static const char * hb_gt_sln_Version( PHB_GT pGT, int iType )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Version(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    if( iType == 0 )
    {
@@ -875,7 +875,7 @@ static const char * hb_gt_sln_Version( PHB_GT pGT, int iType )
 
 static HB_BOOL hb_gt_sln_Suspend( PHB_GT pGT )
 {
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    if( ! s_bSuspended )
    {
@@ -893,7 +893,7 @@ static HB_BOOL hb_gt_sln_Suspend( PHB_GT pGT )
 
 static HB_BOOL hb_gt_sln_Resume( PHB_GT pGT )
 {
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    if( s_bSuspended && SLsmg_resume_smg() != -1 && hb_sln_Init_Terminal(1) != -1 )
    {
@@ -911,7 +911,7 @@ static HB_BOOL hb_gt_sln_Resume( PHB_GT pGT )
 
 static HB_BOOL hb_gt_sln_PreExt( PHB_GT pGT )
 {
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    SLsmg_refresh();
 #if defined( HB_HAS_GPM )
@@ -924,7 +924,7 @@ static HB_BOOL hb_gt_sln_PreExt( PHB_GT pGT )
 
 static HB_BOOL hb_gt_sln_PostExt( PHB_GT pGT )
 {
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    return HB_TRUE;
 }

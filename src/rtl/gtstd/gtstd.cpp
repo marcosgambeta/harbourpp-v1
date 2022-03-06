@@ -214,8 +214,8 @@ static void hb_gt_std_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    pGTSTD->fStdoutConsole = hb_fsIsDevice( pGTSTD->hStdout );
    pGTSTD->fStderrConsole = hb_fsIsDevice( pGTSTD->hStderr );
 
-   pGTSTD->szCrLf = hb_strdup( hb_conNewLine() );
-   pGTSTD->nCrLf = strlen( pGTSTD->szCrLf );
+   pGTSTD->szCrLf = hb_strdup(hb_conNewLine());
+   pGTSTD->nCrLf = strlen(pGTSTD->szCrLf);
 
    hb_fsSetDevMode( pGTSTD->hStdout, FD_BINARY );
    HB_GTSUPER_INIT( pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr );
@@ -352,7 +352,7 @@ static int hb_gt_std_ReadKey( PHB_GT pGT, int iEventMask )
    PHB_GTSTD pGTSTD;
    int ch = 0;
 
-   HB_SYMBOL_UNUSED( iEventMask );
+   HB_SYMBOL_UNUSED(iEventMask);
 
    pGTSTD = HB_GTSTD_GET( pGT );
 
@@ -456,7 +456,7 @@ static HB_BOOL hb_gt_std_IsColor( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_IsColor(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    return HB_FALSE;
 }
@@ -484,7 +484,7 @@ static void hb_gt_std_Tone( PHB_GT pGT, double dFrequency, double dDuration )
       pGTSTD->dToneSeconds = dCurrentSeconds;
    }
 
-   HB_SYMBOL_UNUSED( dFrequency );
+   HB_SYMBOL_UNUSED(dFrequency);
 
    /* convert Clipper (DOS) timer tick units to seconds ( x / 18.2 ) */
    hb_gtSleep( pGT, dDuration / 18.2 );
@@ -505,7 +505,7 @@ static const char * hb_gt_std_Version( PHB_GT pGT, int iType )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Version(%p,%d)", static_cast<void*>( pGT ), iType ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    if( iType == 0 )
    {

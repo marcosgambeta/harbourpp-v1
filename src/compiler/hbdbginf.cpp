@@ -100,12 +100,12 @@ PHB_DEBUGINFO hb_compGetDebugInfo( HB_COMP_DECL )
                   int i;
 
                   ptr = strrchr( pszModuleName, ':' );
-                  i = ptr ? static_cast<int>( ptr - pszModuleName ) : static_cast<int>( strlen( pszModuleName ) );
+                  i = ptr ? static_cast<int>( ptr - pszModuleName ) : static_cast<int>( strlen(pszModuleName) );
 
                   pInfo = pLineInfo;
                   while( pInfo != nullptr )
                   {
-                     if( strncmp( pszModuleName, pInfo->pszModuleName, i ) == 0 &&
+                     if( strncmp(pszModuleName, pInfo->pszModuleName, i) == 0 &&
                          ( pInfo->pszModuleName[ i ] == '\0' || pInfo->pszModuleName[ i ] == ':' ) )
                      {
                         break;
@@ -115,7 +115,7 @@ PHB_DEBUGINFO hb_compGetDebugInfo( HB_COMP_DECL )
                   if( ! pInfo )
                   {
                      pInfo = static_cast<PHB_DEBUGINFO>( hb_xgrab(sizeof(HB_DEBUGINFO)) );
-                     pInfo->pszModuleName = hb_strndup( pszModuleName, i );
+                     pInfo->pszModuleName = hb_strndup(pszModuleName, i);
                      pInfo->ulFirstLine = pInfo->ulLastLine = ulLine;
                      /*
                       * allocate memory in 256 bytes chunks (for 2048 lines)

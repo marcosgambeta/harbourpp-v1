@@ -165,7 +165,7 @@ static char * set_string( PHB_ITEM pItem, char * szOldString )
          hb_xfree(szOldString);
       }
       /* Limit size of SET strings to 64 KiB, truncating if source is longer */
-      szString = hb_strndup( hb_itemGetCPtr(pItem), USHRT_MAX );
+      szString = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
    }
    else
    {
@@ -250,7 +250,7 @@ static const char * is_devicename( const char * szFileName )
             }
          }
       }
-      iLen = static_cast<int>( strlen( szFileName + iSkip ) );
+      iLen = static_cast<int>( strlen(szFileName + iSkip) );
       if( iLen >= 3 && iLen <= 4 )
       {
          int iFrom, iTo;
@@ -274,7 +274,7 @@ static const char * is_devicename( const char * szFileName )
          }
       }
 #elif defined( HB_OS_UNIX )
-      if( strncmp( szFileName, "/dev/", 5 ) == 0 )
+      if( strncmp(szFileName, "/dev/", 5) == 0 )
       {
          return szFileName;
       }
@@ -339,7 +339,7 @@ static void open_handle( PHB_SET_STRUCT pSet, const char * file_name, HB_BOOL fA
       fPipe = file_name[ 0 ] == '|';
       if( fPipe )
       {
-         szFileName = hb_strdup( file_name );
+         szFileName = hb_strdup(file_name);
       }
       else
 #endif
@@ -347,12 +347,12 @@ static void open_handle( PHB_SET_STRUCT pSet, const char * file_name, HB_BOOL fA
          szDevice = is_devicename( file_name );
          if( szDevice )
          {
-            szFileName = hb_strdup( szDevice );
+            szFileName = hb_strdup(szDevice);
             def_ext = nullptr;
          }
          else
          {
-            szFileName = hb_strdup( file_name );
+            szFileName = hb_strdup(file_name);
          }
       }
    }
@@ -490,10 +490,10 @@ HB_BOOL hb_setSetCentury( HB_BOOL new_century_setting )
       /* Convert to upper case and determine where year is */
       y_start = y_stop = -1;
       szDateFormat = pSet->HB_SET_DATEFORMAT;
-      size = static_cast<int>( strlen( szDateFormat ) );
+      size = static_cast<int>( strlen(szDateFormat) );
       for( int count = 0; count < size; count++ )
       {
-         int digit = HB_TOUPPER( static_cast<HB_UCHAR>( szDateFormat[ count ] ) );
+         int digit = HB_TOUPPER(static_cast<HB_UCHAR>( szDateFormat[ count ] ));
          if( digit == 'Y' )
          {
             if( y_start == -1 )
@@ -544,7 +544,7 @@ HB_BOOL hb_setSetCentury( HB_BOOL new_century_setting )
          {
             hb_strncat( szNewFormat, "YY", size );
          }
-         format_len = static_cast<int>( strlen( szDateFormat ) );
+         format_len = static_cast<int>( strlen(szDateFormat) );
          if( y_stop < format_len )
          {
             hb_strncat( szNewFormat, szDateFormat + y_stop, size );
@@ -588,11 +588,11 @@ HB_FUNC( SETCANCEL )
 static char * hb_set_PRINTFILE_default( void )
 {
 #if defined( HB_OS_UNIX )
-   return hb_strdup( "|lpr" );
+   return hb_strdup("|lpr");
 #elif defined( HB_OS_WIN )
-   return hb_strdup( "LPT1" );
+   return hb_strdup("LPT1");
 #else
-   return hb_strdup( "PRN" ); /* FIXME */
+   return hb_strdup("PRN"); /* FIXME */
 #endif
 }
 
@@ -785,7 +785,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pA
          {
             /* If the print file is not already open, open it in overwrite mode. */
             pSet->HB_SET_DEVICE = set_string( pArg1, pSet->HB_SET_DEVICE );
-            pSet->hb_set_prndevice = strlen( pSet->HB_SET_DEVICE ) >= 4 && hb_strnicmp( pSet->HB_SET_DEVICE, "PRIN", 4 ) == 0;
+            pSet->hb_set_prndevice = strlen(pSet->HB_SET_DEVICE) >= 4 && hb_strnicmp( pSet->HB_SET_DEVICE, "PRIN", 4 ) == 0;
          }
          break;
       case HB_SET_EOF:
@@ -1243,7 +1243,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pA
             else
             {
                /* Limit size of SET strings to 64 KiB, truncating if source is longer */
-               pSet->HB_SET_HBOUTLOG = hb_strndup( hb_itemGetCPtr(pArg1), USHRT_MAX );
+               pSet->HB_SET_HBOUTLOG = hb_strndup(hb_itemGetCPtr(pArg1), USHRT_MAX);
             }
             hb_xsetfilename( pSet->HB_SET_HBOUTLOG );
          }
@@ -1368,11 +1368,11 @@ void hb_setInitialize( PHB_SET_STRUCT pSet )
    pSet->hb_set_prndevice = HB_FALSE;
    pSet->HB_SET_COLOR = static_cast<char*>( hb_xgrab(HB_CLRSTR_LEN + 1) );
    /* NOTE: color must be synced with the one in IsDefColor() function */
-   hb_strncpy( pSet->HB_SET_COLOR, "W/N,N/W,N/N,N/N,N/W", HB_CLRSTR_LEN );
+   hb_strncpy(pSet->HB_SET_COLOR, "W/N,N/W,N/N,N/N,N/W", HB_CLRSTR_LEN);
    pSet->HB_SET_CONFIRM = HB_FALSE;
    pSet->HB_SET_CONSOLE = HB_TRUE;
-   pSet->HB_SET_DATEFORMAT = hb_strdup( "mm/dd/yy" );
-   pSet->HB_SET_TIMEFORMAT = hb_strdup( "hh:mm:ss.fff" );
+   pSet->HB_SET_DATEFORMAT = hb_strdup("mm/dd/yy");
+   pSet->HB_SET_TIMEFORMAT = hb_strdup("hh:mm:ss.fff");
    /*
     * Tests shows that Clipper has two different flags to control ALT+D
     * and AltD() behavior and on startup these flags are not synchronized.
@@ -1390,13 +1390,13 @@ void hb_setInitialize( PHB_SET_STRUCT pSet )
    #if 0
    pSet->HB_SET_DEBUG = HB_FALSE;
    #endif
-   pSet->HB_SET_DEBUG = hb_dynsymFind( "__DBGENTRY" ) ? HB_TRUE : HB_FALSE;
+   pSet->HB_SET_DEBUG = hb_dynsymFind("__DBGENTRY") ? HB_TRUE : HB_FALSE;
    pSet->HB_SET_DECIMALS = 2;
-   pSet->HB_SET_DEFAULT = hb_strdup( "" );
+   pSet->HB_SET_DEFAULT = hb_strdup("");
    pSet->HB_SET_DELETED = HB_FALSE;
-   pSet->HB_SET_DELIMCHARS = hb_strdup( "::" );
+   pSet->HB_SET_DELIMCHARS = hb_strdup("::");
    pSet->HB_SET_DELIMITERS = HB_FALSE;
-   pSet->HB_SET_DEVICE = hb_strdup( "SCREEN" );
+   pSet->HB_SET_DEVICE = hb_strdup("SCREEN");
    pSet->HB_SET_EOF = HB_TRUE;
    pSet->HB_SET_EPOCH = 1900;
    pSet->HB_SET_ESCAPE = HB_TRUE;
@@ -1417,9 +1417,9 @@ void hb_setInitialize( PHB_SET_STRUCT pSet )
    pSet->HB_SET_MBLOCKSIZE = 64;
    pSet->HB_SET_MCENTER = HB_FALSE;
    pSet->HB_SET_MESSAGE = 0;
-   pSet->HB_SET_MFILEEXT = hb_strdup( "" );
+   pSet->HB_SET_MFILEEXT = hb_strdup("");
    pSet->HB_SET_OPTIMIZE = HB_TRUE;
-   pSet->HB_SET_PATH = hb_strdup( "" );
+   pSet->HB_SET_PATH = hb_strdup("");
    pSet->hb_set_path = nullptr;
    pSet->HB_SET_PRINTER = HB_FALSE;
    pSet->HB_SET_PRINTFILE = hb_set_PRINTFILE_default();
@@ -1437,10 +1437,10 @@ void hb_setInitialize( PHB_SET_STRUCT pSet )
    pSet->HB_SET_WRAP = HB_FALSE;
    pSet->HB_SET_DBFLOCKSCHEME = 0;
    pSet->HB_SET_DEFEXTENSIONS = HB_TRUE;
-   pSet->HB_SET_EOL = hb_strdup( hb_conNewLine() );
+   pSet->HB_SET_EOL = hb_strdup(hb_conNewLine());
    pSet->HB_SET_TRIMFILENAME = HB_FALSE;
-   pSet->HB_SET_HBOUTLOG = hb_strdup( "hb_out.log" );
-   pSet->HB_SET_HBOUTLOGINFO = hb_strdup( "" );
+   pSet->HB_SET_HBOUTLOG = hb_strdup("hb_out.log");
+   pSet->HB_SET_HBOUTLOGINFO = hb_strdup("");
 
    hb_xsetfilename( pSet->HB_SET_HBOUTLOG );
    hb_xsetinfo( pSet->HB_SET_HBOUTLOGINFO );
@@ -1547,59 +1547,59 @@ PHB_SET_STRUCT hb_setClone( PHB_SET_STRUCT pSrc )
    pSet->HB_SET_TYPEAHEAD = HB_DEFAULT_INKEY_BUFSIZE;
 
    pSet->HB_SET_COLOR = static_cast<char*>( hb_xgrab(HB_CLRSTR_LEN + 1) );
-   hb_strncpy( pSet->HB_SET_COLOR, pSrc->HB_SET_COLOR, HB_CLRSTR_LEN );
+   hb_strncpy(pSet->HB_SET_COLOR, pSrc->HB_SET_COLOR, HB_CLRSTR_LEN);
 
    if( pSet->HB_SET_ALTFILE )
    {
-      pSet->HB_SET_ALTFILE      = hb_strdup( pSet->HB_SET_ALTFILE );
+      pSet->HB_SET_ALTFILE      = hb_strdup(pSet->HB_SET_ALTFILE);
    }
    if( pSet->HB_SET_DATEFORMAT )
    {
-      pSet->HB_SET_DATEFORMAT   = hb_strdup( pSet->HB_SET_DATEFORMAT );
+      pSet->HB_SET_DATEFORMAT   = hb_strdup(pSet->HB_SET_DATEFORMAT);
    }
    if( pSet->HB_SET_TIMEFORMAT )
    {
-      pSet->HB_SET_TIMEFORMAT   = hb_strdup( pSet->HB_SET_TIMEFORMAT );
+      pSet->HB_SET_TIMEFORMAT   = hb_strdup(pSet->HB_SET_TIMEFORMAT);
    }
    if( pSet->HB_SET_DEFAULT )
    {
-      pSet->HB_SET_DEFAULT      = hb_strdup( pSet->HB_SET_DEFAULT );
+      pSet->HB_SET_DEFAULT      = hb_strdup(pSet->HB_SET_DEFAULT);
    }
    if( pSet->HB_SET_DELIMCHARS )
    {
-      pSet->HB_SET_DELIMCHARS   = hb_strdup( pSet->HB_SET_DELIMCHARS );
+      pSet->HB_SET_DELIMCHARS   = hb_strdup(pSet->HB_SET_DELIMCHARS);
    }
    if( pSet->HB_SET_DEVICE )
    {
-      pSet->HB_SET_DEVICE       = hb_strdup( pSet->HB_SET_DEVICE );
+      pSet->HB_SET_DEVICE       = hb_strdup(pSet->HB_SET_DEVICE);
    }
    if( pSet->HB_SET_EXTRAFILE )
    {
-      pSet->HB_SET_EXTRAFILE    = hb_strdup( pSet->HB_SET_EXTRAFILE );
+      pSet->HB_SET_EXTRAFILE    = hb_strdup(pSet->HB_SET_EXTRAFILE);
    }
    if( pSet->HB_SET_MFILEEXT  )
    {
-      pSet->HB_SET_MFILEEXT     = hb_strdup( pSet->HB_SET_MFILEEXT );
+      pSet->HB_SET_MFILEEXT     = hb_strdup(pSet->HB_SET_MFILEEXT);
    }
    if( pSet->HB_SET_PATH )
    {
-      pSet->HB_SET_PATH         = hb_strdup( pSet->HB_SET_PATH );
+      pSet->HB_SET_PATH         = hb_strdup(pSet->HB_SET_PATH);
    }
    if( pSet->HB_SET_PRINTFILE )
    {
-      pSet->HB_SET_PRINTFILE    = hb_strdup( pSet->HB_SET_PRINTFILE );
+      pSet->HB_SET_PRINTFILE    = hb_strdup(pSet->HB_SET_PRINTFILE);
    }
    if( pSet->HB_SET_EOL )
    {
-      pSet->HB_SET_EOL          = hb_strdup( pSet->HB_SET_EOL );
+      pSet->HB_SET_EOL          = hb_strdup(pSet->HB_SET_EOL);
    }
    if( pSet->HB_SET_HBOUTLOG )
    {
-      pSet->HB_SET_HBOUTLOG     = hb_strdup( pSet->HB_SET_HBOUTLOG );
+      pSet->HB_SET_HBOUTLOG     = hb_strdup(pSet->HB_SET_HBOUTLOG);
    }
    if( pSet->HB_SET_HBOUTLOGINFO )
    {
-      pSet->HB_SET_HBOUTLOGINFO = hb_strdup( pSet->HB_SET_HBOUTLOGINFO );
+      pSet->HB_SET_HBOUTLOGINFO = hb_strdup(pSet->HB_SET_HBOUTLOGINFO);
    }
 
    hb_fsAddSearchPath( pSet->HB_SET_PATH, &pSet->hb_set_path );
@@ -2145,7 +2145,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
             {
                int iYear = 0;
 
-               szValue = hb_strndup( hb_itemGetCPtr(pItem), USHRT_MAX );
+               szValue = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
                if( pSet->HB_SET_DATEFORMAT )
                {
                   hb_xfree(pSet->HB_SET_DATEFORMAT);
@@ -2172,7 +2172,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
          case HB_SET_TIMEFORMAT:
             if( HB_IS_STRING(pItem) )
             {
-               szValue = hb_strndup( hb_itemGetCPtr(pItem), USHRT_MAX );
+               szValue = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
                if( pSet->HB_SET_TIMEFORMAT )
                {
                   hb_xfree(pSet->HB_SET_TIMEFORMAT);
@@ -2191,20 +2191,20 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
          case HB_SET_DEVICE:
             if( HB_IS_STRING(pItem) )
             {
-               szValue = hb_strndup( hb_itemGetCPtr(pItem), USHRT_MAX );
+               szValue = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
                if( pSet->HB_SET_DEVICE )
                {
                   hb_xfree(pSet->HB_SET_DEVICE);
                }
                pSet->HB_SET_DEVICE = szValue;
-               pSet->hb_set_prndevice = strlen( szValue ) >= 4 && hb_strnicmp( szValue, "PRIN", 4 ) == 0;
+               pSet->hb_set_prndevice = strlen(szValue) >= 4 && hb_strnicmp( szValue, "PRIN", 4 ) == 0;
                fResult = HB_TRUE;
             }
             break;
          case HB_SET_MFILEEXT:
             if( HB_IS_STRING(pItem) || HB_IS_NIL(pItem) )
             {
-               szValue = hb_strndup( hb_itemGetCPtr(pItem), USHRT_MAX );
+               szValue = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
                if( pSet->HB_SET_MFILEEXT )
                {
                   hb_xfree(pSet->HB_SET_MFILEEXT);
@@ -2216,7 +2216,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
          case HB_SET_DEFAULT:
             if( HB_IS_STRING(pItem) || HB_IS_NIL(pItem) )
             {
-               szValue = hb_strndup( hb_itemGetCPtr(pItem), USHRT_MAX );
+               szValue = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
                if( pSet->HB_SET_DEFAULT )
                {
                   hb_xfree(pSet->HB_SET_DEFAULT);
@@ -2228,7 +2228,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
          case HB_SET_PATH:
             if( HB_IS_STRING(pItem) || HB_IS_NIL(pItem) )
             {
-               szValue = hb_strndup( hb_itemGetCPtr(pItem), USHRT_MAX );
+               szValue = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
                if( pSet->HB_SET_PATH )
                {
                   hb_xfree(pSet->HB_SET_PATH);
@@ -2245,7 +2245,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
          case HB_SET_DELIMCHARS:
             if( HB_IS_STRING(pItem) || HB_IS_NIL(pItem) )
             {
-               szValue = hb_strndup( hb_itemGetCPtr(pItem), USHRT_MAX );
+               szValue = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
                if( pSet->HB_SET_DELIMCHARS )
                {
                   hb_xfree(pSet->HB_SET_DELIMCHARS);
@@ -2257,7 +2257,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
          case HB_SET_EOL:
             if( HB_IS_STRING(pItem) || HB_IS_NIL(pItem) )
             {
-               szValue = hb_strndup( hb_itemGetCPtr(pItem), USHRT_MAX );
+               szValue = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
                if( pSet->HB_SET_EOL )
                {
                   hb_xfree(pSet->HB_SET_EOL);
@@ -2275,7 +2275,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
                }
                else
                {
-                  szValue = hb_strndup( hb_itemGetCPtr(pItem), USHRT_MAX );
+                  szValue = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
                }
                if( pSet->HB_SET_HBOUTLOG )
                {
@@ -2289,7 +2289,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
          case HB_SET_HBOUTLOGINFO:
             if( HB_IS_STRING(pItem) || HB_IS_NIL(pItem) )
             {
-               szValue = hb_strndup( hb_itemGetCPtr(pItem), USHRT_MAX );
+               szValue = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
                if( pSet->HB_SET_HBOUTLOGINFO )
                {
                   hb_xfree(pSet->HB_SET_HBOUTLOGINFO);
@@ -3191,7 +3191,7 @@ const char * hb_osEncodeCP( const char * szName, char ** pszFree, HB_SIZE * pnSi
             if( pszFree == nullptr )
             {
                pszFree = static_cast<char**>( HB_UNCONST( &szName ) );
-               nSize = strlen( szName );
+               nSize = strlen(szName);
             }
             pszBuf = *pszFree;
             if( pnSize == nullptr )
@@ -3203,7 +3203,7 @@ const char * hb_osEncodeCP( const char * szName, char ** pszFree, HB_SIZE * pnSi
                nSize = *pnSize - 1;
             }
 
-            szName = hb_cdpnDup3( szName, strlen( szName ), pszBuf, &nSize, pszFree, pnSize, cdpHost, cdpOS );
+            szName = hb_cdpnDup3( szName, strlen(szName), pszBuf, &nSize, pszFree, pnSize, cdpHost, cdpOS );
          }
       }
    }
@@ -3228,7 +3228,7 @@ const char * hb_osDecodeCP( const char * szName, char ** pszFree, HB_SIZE * pnSi
             if( pszFree == nullptr )
             {
                pszFree = static_cast<char**>( HB_UNCONST( &szName ) );
-               nSize = strlen( szName );
+               nSize = strlen(szName);
             }
             pszBuf = *pszFree;
             if( pnSize == nullptr )
@@ -3240,7 +3240,7 @@ const char * hb_osDecodeCP( const char * szName, char ** pszFree, HB_SIZE * pnSi
                nSize = *pnSize - 1;
             }
 
-            szName = hb_cdpnDup3( szName, strlen( szName ), pszBuf, &nSize, pszFree, pnSize, cdpOS, cdpHost );
+            szName = hb_cdpnDup3( szName, strlen(szName), pszBuf, &nSize, pszFree, pnSize, cdpOS, cdpHost );
          }
       }
    }
@@ -3264,7 +3264,7 @@ char * hb_osStrEncode( const char * pszName )
       }
    }
 
-   return hb_strdup( pszName );
+   return hb_strdup(pszName);
 }
 
 char * hb_osStrEncodeN( const char * pszName, HB_SIZE nLen )
@@ -3283,7 +3283,7 @@ char * hb_osStrEncodeN( const char * pszName, HB_SIZE nLen )
       }
    }
 
-   return hb_strndup( pszName, nLen );
+   return hb_strndup(pszName, nLen);
 }
 
 char * hb_osStrDecode( const char * pszName )
@@ -3302,7 +3302,7 @@ char * hb_osStrDecode( const char * pszName )
       }
    }
 
-   return hb_strdup( pszName );
+   return hb_strdup(pszName);
 }
 
 char * hb_osStrDecode2( const char * pszName, char * pszBuffer, HB_SIZE nSize )
@@ -3317,13 +3317,13 @@ char * hb_osStrDecode2( const char * pszName, char * pszBuffer, HB_SIZE nSize )
          if( cdpHost && cdpHost != cdpOS )
          {
             pszBuffer[ nSize ] = 0;
-            hb_cdpnDup2( pszName, strlen( pszName ), pszBuffer, &nSize, cdpOS, cdpHost );
+            hb_cdpnDup2( pszName, strlen(pszName), pszBuffer, &nSize, cdpOS, cdpHost );
             return pszBuffer;
          }
       }
    }
 
-   return hb_strncpy( pszBuffer, pszName, nSize );
+   return hb_strncpy(pszBuffer, pszName, nSize);
 }
 
 #if defined( HB_OS_WIN )
@@ -3337,7 +3337,7 @@ HB_WCHAR * hb_osStrU16Encode( const char * pszName )
          HB_SIZE nLen, nSize;
          HB_WCHAR * pszBufferW;
 
-         nLen = strlen( pszName );
+         nLen = strlen(pszName);
          nSize = hb_cdpStrAsU16Len( cdp, pszName, nLen, 0 );
          pszBufferW = static_cast<HB_WCHAR*>( hb_xgrab(( nSize + 1 ) * sizeof(HB_WCHAR)) );
          hb_cdpStrToU16( cdp, HB_CDP_ENDIAN_NATIVE, pszName, nLen, pszBufferW, nSize + 1 );
@@ -3358,7 +3358,7 @@ HB_WCHAR * hb_osStrU16EncodeN( const char * pszName, HB_SIZE nLen )
          HB_SIZE nSize;
          HB_WCHAR * pszBufferW;
 
-         nLen = hb_strnlen( pszName, nLen );
+         nLen = hb_strnlen(pszName, nLen);
          nSize = hb_cdpStrAsU16Len( cdp, pszName, nLen, 0 );
          pszBufferW = static_cast<HB_WCHAR*>( hb_xgrab(( nSize + 1 ) * sizeof(HB_WCHAR)) );
          hb_cdpStrToU16( cdp, HB_CDP_ENDIAN_NATIVE, pszName, nLen, pszBufferW, nSize + 1 );
@@ -3379,8 +3379,8 @@ char * hb_osStrU16Decode( const HB_WCHAR * pszNameW )
          HB_SIZE nLen, nSize;
          char * pszBuffer;
 
-         nLen = hb_wstrlen( pszNameW );
-         nSize = hb_cdpU16AsStrLen( cdp, pszNameW, nLen, 0 );
+         nLen = hb_wstrlen(pszNameW);
+         nSize = hb_cdpU16AsStrLen(cdp, pszNameW, nLen, 0);
          pszBuffer = static_cast<char*>( hb_xgrab(nSize + 1) );
          hb_cdpU16ToStr( cdp, HB_CDP_ENDIAN_NATIVE, pszNameW, nLen, pszBuffer, nSize + 1 );
          return pszBuffer;
@@ -3397,7 +3397,7 @@ char * hb_osStrU16Decode2( const HB_WCHAR * pszNameW, char * pszBuffer, HB_SIZE 
       PHB_CODEPAGE cdp = hb_vmCDP();
       if( cdp )
       {
-         hb_cdpU16ToStr( cdp, HB_CDP_ENDIAN_NATIVE, pszNameW, hb_wstrlen( pszNameW ), pszBuffer, nSize );
+         hb_cdpU16ToStr( cdp, HB_CDP_ENDIAN_NATIVE, pszNameW, hb_wstrlen(pszNameW), pszBuffer, nSize );
          pszBuffer[ nSize ] = 0;
          return pszBuffer;
       }

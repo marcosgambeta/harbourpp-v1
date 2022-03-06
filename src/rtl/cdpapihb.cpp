@@ -318,7 +318,7 @@ HB_FUNC( HB_UTF8TOSTR )
             else
             {
                szString = hb_parc(1);
-               nDest = hb_cdpUTF8AsStrLen( cdp, szString, nLen, 0 );
+               nDest = hb_cdpUTF8AsStrLen(cdp, szString, nLen, 0);
                szDest = static_cast<char*>( hb_xgrab(nDest + 1) );
                hb_cdpUTF8ToStr( cdp, szString, nLen, szDest, nDest + 1 );
             }

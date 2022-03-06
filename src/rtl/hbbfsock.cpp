@@ -238,7 +238,7 @@ static char * s_sockexName( PHB_SOCKEX pSock )
    }
    else
    {
-      pszName = hb_strdup( pSock->pFilter->pszName );
+      pszName = hb_strdup(pSock->pFilter->pszName);
    }
 
    return pszName;

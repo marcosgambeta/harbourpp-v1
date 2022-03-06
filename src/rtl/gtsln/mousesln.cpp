@@ -331,8 +331,8 @@ int hb_gt_sln_mouse_Inkey( int iEventMask, HB_BOOL fCheckNew )
       }
    }
 #else
-   HB_SYMBOL_UNUSED( fCheckNew );
-   HB_SYMBOL_UNUSED( iEventMask );
+   HB_SYMBOL_UNUSED(fCheckNew);
+   HB_SYMBOL_UNUSED(iEventMask);
 #endif
 
    return 0;
@@ -454,7 +454,7 @@ void hb_gt_sln_mouse_Exit( void )
 
 HB_BOOL hb_gt_sln_mouse_IsPresent( PHB_GT pGT )
 {
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    return s_bMousePresent;
 }
@@ -463,7 +463,7 @@ HB_BOOL hb_gt_sln_mouse_IsPresent( PHB_GT pGT )
 
 void hb_gt_sln_mouse_Show( PHB_GT pGT )
 {
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
 #if defined( HB_HAS_GPM )
    gpm_visiblepointer = 1;
@@ -478,7 +478,7 @@ void hb_gt_sln_mouse_Show( PHB_GT pGT )
 
 void hb_gt_sln_mouse_Hide( PHB_GT pGT )
 {
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
 #if defined( HB_HAS_GPM )
    gpm_visiblepointer = 0;
@@ -489,7 +489,7 @@ void hb_gt_sln_mouse_Hide( PHB_GT pGT )
 
 void hb_gt_sln_mouse_GetPos( PHB_GT pGT, int * piRow, int * piCol )
 {
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    *piRow = s_iMouseRow;
    *piCol = s_iMouseCol;
@@ -499,7 +499,7 @@ void hb_gt_sln_mouse_GetPos( PHB_GT pGT, int * piRow, int * piCol )
 
 void hb_gt_sln_mouse_SetPos( PHB_GT pGT, int iRow, int iCol )
 {
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    /* it does really nothing */
    s_iMouseRow = iRow;
@@ -519,7 +519,7 @@ void hb_gt_sln_mouse_SetPos( PHB_GT pGT, int iRow, int iCol )
 
 HB_BOOL hb_gt_sln_mouse_ButtonState( PHB_GT pGT, int iButton )
 {
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    switch( iButton )
    {
@@ -538,7 +538,7 @@ HB_BOOL hb_gt_sln_mouse_ButtonState( PHB_GT pGT, int iButton )
 
 int hb_gt_sln_mouse_CountButton( PHB_GT pGT )
 {
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    return s_iMouseButtons;
 }

@@ -360,7 +360,7 @@ static void hb_gt_pca_AnsiSetCursorPos( int iRow, int iCol )
    {
       char buff[ 16 ];
       hb_snprintf( buff, sizeof(buff), "\x1B[%d;%dH", iRow + 1, iCol + 1 );
-      hb_gt_pca_termOut( buff, static_cast<int>( strlen( buff ) ) );
+      hb_gt_pca_termOut( buff, static_cast<int>( strlen(buff) ) );
       s_iRow = iRow;
       s_iCol = iCol;
    }
@@ -508,7 +508,7 @@ static void hb_gt_pca_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    s_fDispTrans = HB_FALSE;
 
    s_szCrLf = hb_conNewLine();
-   s_nCrLf = strlen( s_szCrLf );
+   s_nCrLf = strlen(s_szCrLf);
 
    hb_fsSetDevMode( s_hFilenoStdout, FD_BINARY );
 
@@ -639,8 +639,8 @@ static int hb_gt_pca_ReadKey( PHB_GT pGT, int iEventMask )
 
    int ch = 0;
 
-   HB_SYMBOL_UNUSED( pGT );
-   HB_SYMBOL_UNUSED( iEventMask );
+   HB_SYMBOL_UNUSED(pGT);
+   HB_SYMBOL_UNUSED(iEventMask);
 
 #if defined( HB_HAS_TERMIOS )
    if( hb_fsCanRead( s_hFilenoStdin, 0 ) > 0 )
@@ -727,7 +727,7 @@ static void hb_gt_pca_Tone( PHB_GT pGT, double dFrequency, double dDuration )
       hb_gt_pca_termFlush();
    }
 
-   HB_SYMBOL_UNUSED( dFrequency );
+   HB_SYMBOL_UNUSED(dFrequency);
 
    /* convert Clipper (DOS) timer tick units to seconds ( x / 18.2 ) */
    hb_gtSleep( pGT, dDuration / 18.2 );
@@ -739,7 +739,7 @@ static void hb_gt_pca_Bell( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_pca_Bell(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    hb_gt_pca_termOut( s_szBell, 1 );
    hb_gt_pca_termFlush();
@@ -751,7 +751,7 @@ static const char * hb_gt_pca_Version( PHB_GT pGT, int iType )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_pca_Version(%p,%d)", static_cast<void*>( pGT ), iType ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 
    if( iType == 0 )
    {
@@ -767,7 +767,7 @@ static HB_BOOL hb_gt_pca_Suspend( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_pca_Suspend(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 #if defined( HB_HAS_TERMIOS )
    if( s_fRestTTY )
    {
@@ -785,7 +785,7 @@ static HB_BOOL hb_gt_pca_Resume( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_pca_Resume(%p)", static_cast<void*>( pGT ) ) );
 #endif
 
-   HB_SYMBOL_UNUSED( pGT );
+   HB_SYMBOL_UNUSED(pGT);
 #if defined( HB_HAS_TERMIOS )
    if( s_fRestTTY )
    {

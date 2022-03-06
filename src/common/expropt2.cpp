@@ -2440,7 +2440,7 @@ HB_BOOL hb_compExprReduceUPPER( PHB_EXPR pSelf, HB_COMP_DECL )
          {
             if( pArg->nLength == 1 )
             {
-               szValue = const_cast<char*>( hb_szAscii[ HB_TOUPPER( static_cast<unsigned char>( pArg->value.asString.string[ 0 ] ) ) ] );
+               szValue = const_cast<char*>( hb_szAscii[ HB_TOUPPER(static_cast<unsigned char>( pArg->value.asString.string[ 0 ] )) ] );
                fDealloc = HB_FALSE;
             }
             else
@@ -2459,7 +2459,7 @@ HB_BOOL hb_compExprReduceUPPER( PHB_EXPR pSelf, HB_COMP_DECL )
                }
                do
                {
-                  szValue[ nLen ] = static_cast<char>( HB_TOUPPER( static_cast<unsigned char>( szValue[ nLen ] ) ) );
+                  szValue[ nLen ] = static_cast<char>( HB_TOUPPER(static_cast<unsigned char>( szValue[ nLen ] )) );
                }
                while( ++nLen < pArg->nLength );
             }

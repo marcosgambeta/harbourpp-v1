@@ -657,12 +657,12 @@ static int s_sockexCanWrite( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeou
 
 static char * s_sockexName( PHB_SOCKEX pSock )
 {
-   return hb_strdup( pSock->pFilter->pszName );
+   return hb_strdup(pSock->pFilter->pszName);
 }
 
 static const char * s_sockexErrorStr( PHB_SOCKEX pSock, int iError )
 {
-   HB_SYMBOL_UNUSED( pSock );
+   HB_SYMBOL_UNUSED(pSock);
 
    switch( HB_ZNET_SOCK_ERROR_BASE - iError )
    {

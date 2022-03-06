@@ -598,7 +598,7 @@ char * hb_verPlatform( void )
 #else
 
    {
-      hb_strncpy( pszPlatform, "(unrecognized)", PLATFORM_BUF_SIZE );
+      hb_strncpy(pszPlatform, "(unrecognized)", PLATFORM_BUF_SIZE);
    }
 
 #endif
@@ -652,10 +652,10 @@ HB_BOOL hb_iswinver( int iMajor, int iMinor, int iType, HB_BOOL fOrUpper )
       return static_cast<HB_BOOL>( s_pVerifyVersionInfo( &ver, dwTypeMask, dwlConditionMask ) );
    }
 #else
-   HB_SYMBOL_UNUSED( iMajor );
-   HB_SYMBOL_UNUSED( iMinor );
-   HB_SYMBOL_UNUSED( iType );
-   HB_SYMBOL_UNUSED( fOrUpper );
+   HB_SYMBOL_UNUSED(iMajor);
+   HB_SYMBOL_UNUSED(iMinor);
+   HB_SYMBOL_UNUSED(iType);
+   HB_SYMBOL_UNUSED(fOrUpper);
 #endif
    return HB_FALSE;
 }
@@ -677,8 +677,8 @@ HB_BOOL hb_iswinsp( int iServicePackMajor, HB_BOOL fOrUpper )
       return static_cast<HB_BOOL>( s_pVerifyVersionInfo( &ver, VER_SERVICEPACKMAJOR, dwlConditionMask ) );
    }
 #else
-   HB_SYMBOL_UNUSED( iServicePackMajor );
-   HB_SYMBOL_UNUSED( fOrUpper );
+   HB_SYMBOL_UNUSED(iServicePackMajor);
+   HB_SYMBOL_UNUSED(fOrUpper);
 #endif
    return HB_FALSE;
 }
@@ -866,7 +866,7 @@ char * hb_verCompiler( void )
    pszName = "Intel(R) C";
 
    #if defined( __cplusplus )
-      hb_strncpy( szSub, "++", sizeof(szSub) - 1 );
+      hb_strncpy(szSub, "++", sizeof(szSub) - 1);
    #endif
 
    iVerMajor = __INTEL_COMPILER / 100;
@@ -878,7 +878,7 @@ char * hb_verCompiler( void )
    pszName = "Intel(R) C";
 
    #if defined( __cplusplus )
-      hb_strncpy( szSub, "++", sizeof(szSub) - 1 );
+      hb_strncpy(szSub, "++", sizeof(szSub) - 1);
    #endif
 
    iVerMajor = __ICL / 100;
@@ -890,7 +890,7 @@ char * hb_verCompiler( void )
    pszName = "Intel(R) (ICC) C";
 
    #if defined( __cplusplus )
-      hb_strncpy( szSub, "++", sizeof(szSub) - 1 );
+      hb_strncpy(szSub, "++", sizeof(szSub) - 1);
    #endif
 
    iVerMajor = __ICC / 100;
@@ -902,7 +902,7 @@ char * hb_verCompiler( void )
    pszName = "Open64 C";
 
    #if defined( __cplusplus )
-      hb_strncpy( szSub, "++", sizeof(szSub) - 1 );
+      hb_strncpy(szSub, "++", sizeof(szSub) - 1);
    #endif
 
    iVerMajor = __OPENCC__;
@@ -920,7 +920,7 @@ char * hb_verCompiler( void )
    pszName = "LLVM/Clang C";
 
    #if defined( __cplusplus )
-      hb_strncpy( szSub, "++", sizeof(szSub) - 1 );
+      hb_strncpy(szSub, "++", sizeof(szSub) - 1);
    #endif
 
    iVerMajor = __clang_major__;
@@ -932,7 +932,7 @@ char * hb_verCompiler( void )
    pszName = "LLVM/Clang C";
 
    #if defined( __cplusplus )
-      hb_strncpy( szSub, "++", sizeof(szSub) - 1 );
+      hb_strncpy(szSub, "++", sizeof(szSub) - 1);
    #endif
 
    hb_strncat( szSub, " 1.x", sizeof(szSub) - 1 );
@@ -944,7 +944,7 @@ char * hb_verCompiler( void )
    pszName = "LLVM/GNU C";
 
    #if defined( __cplusplus )
-      hb_strncpy( szSub, "++", sizeof(szSub) - 1 );
+      hb_strncpy(szSub, "++", sizeof(szSub) - 1);
    #endif
 
    iVerMajor = __GNUC__;
@@ -964,7 +964,7 @@ char * hb_verCompiler( void )
    #endif
 
    #if defined( __cplusplus )
-      hb_strncpy( szSub, "++", sizeof(szSub) - 1 );
+      hb_strncpy(szSub, "++", sizeof(szSub) - 1);
    #endif
 
    iVerMajor = _MSC_VER / 100;
@@ -1045,7 +1045,7 @@ char * hb_verCompiler( void )
    #endif
 
    #if defined( __cplusplus )
-      hb_strncpy( szSub, "++", sizeof(szSub) - 1 );
+      hb_strncpy(szSub, "++", sizeof(szSub) - 1);
    #endif
 
    iVerMajor = __GNUC__;
@@ -1112,14 +1112,14 @@ char * hb_verCompiler( void )
    }
    else
    {
-      hb_strncpy( pszCompiler, "(unknown)", COMPILER_BUF_SIZE - 1 );
+      hb_strncpy(pszCompiler, "(unknown)", COMPILER_BUF_SIZE - 1);
    }
 
 #if defined( __clang_version__ )
-   if( strstr( __clang_version__, "(" ) )
+   if( strstr(__clang_version__, "(") )
    {
       /* "2.0 (trunk 103176)" -> "(trunk 103176)" */
-      hb_snprintf( szSub, sizeof(szSub), " %s", strstr( __clang_version__, "(" ) );
+      hb_snprintf( szSub, sizeof(szSub), " %s", strstr(__clang_version__, "(") );
    }
    else
    {

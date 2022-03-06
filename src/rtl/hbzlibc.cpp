@@ -50,35 +50,35 @@
 
 static HB_SIZE s_zlibCompressBound( HB_SIZE nLen )
 {
-   HB_SYMBOL_UNUSED( nLen );
+   HB_SYMBOL_UNUSED(nLen);
    return 0;
 }
 
 static HB_SIZE s_zlibUncompressedSize( const char * pSrc, HB_SIZE nLen, int * piResult )
 {
-   HB_SYMBOL_UNUSED( pSrc );
-   HB_SYMBOL_UNUSED( nLen );
-   HB_SYMBOL_UNUSED( piResult );
+   HB_SYMBOL_UNUSED(pSrc);
+   HB_SYMBOL_UNUSED(nLen);
+   HB_SYMBOL_UNUSED(piResult);
    return 0;
 }
 
 static int s_zlibCompress( char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_SIZE nLen, int iLevel )
 {
-   HB_SYMBOL_UNUSED( pDst );
-   HB_SYMBOL_UNUSED( pnDst );
-   HB_SYMBOL_UNUSED( pSrc );
-   HB_SYMBOL_UNUSED( nLen );
-   HB_SYMBOL_UNUSED( iLevel );
+   HB_SYMBOL_UNUSED(pDst);
+   HB_SYMBOL_UNUSED(pnDst);
+   HB_SYMBOL_UNUSED(pSrc);
+   HB_SYMBOL_UNUSED(nLen);
+   HB_SYMBOL_UNUSED(iLevel);
 
    return HB_ZLIB_RES_UNSUPPORTED;
 }
 
 static int s_zlibUncompress( char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_SIZE nLen )
 {
-   HB_SYMBOL_UNUSED( pDst );
-   HB_SYMBOL_UNUSED( pnDst );
-   HB_SYMBOL_UNUSED( pSrc );
-   HB_SYMBOL_UNUSED( nLen );
+   HB_SYMBOL_UNUSED(pDst);
+   HB_SYMBOL_UNUSED(pnDst);
+   HB_SYMBOL_UNUSED(pSrc);
+   HB_SYMBOL_UNUSED(nLen);
 
    return HB_ZLIB_RES_UNSUPPORTED;
 }
