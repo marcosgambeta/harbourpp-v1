@@ -322,7 +322,7 @@ static int chrmap_parse( FILE * fp, const char * pszTerm, int * nTransTbl, const
                }
                *s = '\0';
                s = buf;
-               i = static_cast<int>( strlen(pszTerm) );
+               i = static_cast<int>(strlen(pszTerm));
                while( isTerm == 0 && ( s = strstr(s + 1, pszTerm) ) != nullptr )
                {
                   if( *( s - 1 ) == '|' && ( s[ i ] == '|' || s[ i ] == '\0' ) )

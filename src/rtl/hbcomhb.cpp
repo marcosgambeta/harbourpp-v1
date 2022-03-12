@@ -232,12 +232,12 @@ HB_FUNC( HB_COMRECV )
       if( HB_ISNUM(3) )
       {
          long lRead = hb_parnl(3);
-         if( lRead >= 0 && lRead < static_cast<long>( nLen ) )
+         if( lRead >= 0 && lRead < static_cast<long>(nLen) )
          {
             nLen = lRead;
          }
       }
-      hb_retnl( hb_comRecv( hb_parni(1), pBuffer, static_cast<long>( nLen ), hb_parnint(4) ) );
+      hb_retnl( hb_comRecv( hb_parni(1), pBuffer, static_cast<long>(nLen), hb_parnint(4) ) );
    }
    else
    {
@@ -247,7 +247,7 @@ HB_FUNC( HB_COMRECV )
 
 HB_FUNC( HB_COMSEND )
 {
-   long  lLen = static_cast<long>( hb_parclen(2) );
+   long  lLen = static_cast<long>(hb_parclen(2));
 
    if( HB_ISNUM(3) )
    {

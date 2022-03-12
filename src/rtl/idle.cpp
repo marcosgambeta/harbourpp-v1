@@ -67,7 +67,7 @@ using PHB_IDLEDATA = HB_IDLEDATA *;
 
 static void hb_idleDataRelease( void * Cargo )
 {
-   PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>( Cargo );
+   PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>(Cargo);
 
    if( pIdleData->pIdleTasks )
    {
@@ -94,7 +94,7 @@ void hb_releaseCPU( void )
 /* performs all tasks defined for idle state */
 void hb_idleState( void )
 {
-   PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>( hb_stackGetTSD( &s_idleData ) );
+   PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
 
    if( ! pIdleData->fIamIdle )
    {
@@ -126,7 +126,7 @@ void hb_idleState( void )
 
 void hb_idleReset( void )
 {
-   PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>( hb_stackGetTSD( &s_idleData ) );
+   PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
 
    if( pIdleData->iIdleTask == pIdleData->iIdleMaxTask && ! hb_setGetIdleRepeat() )
    {
@@ -140,7 +140,7 @@ void hb_idleSleep( double dSeconds )
 {
    if( dSeconds >= 0 )
    {
-      HB_MAXINT timeout = dSeconds > 0 ? static_cast<HB_MAXINT>( dSeconds * 1000 ) : 0;
+      HB_MAXINT timeout = dSeconds > 0 ? static_cast<HB_MAXINT>(dSeconds * 1000) : 0;
       HB_MAXUINT timer = hb_timerInit( timeout );
 
       do
@@ -156,7 +156,7 @@ void hb_idleSleep( double dSeconds )
 /* signal that the user code is in idle state */
 HB_FUNC( HB_IDLESTATE )
 {
-   PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>( hb_stackGetTSD( &s_idleData ) );
+   PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
 
    pIdleData->fCollectGarbage = HB_TRUE;
    hb_idleState();
@@ -181,17 +181,17 @@ HB_FUNC( HB_IDLEADD )
 
    if( pBlock )
    {
-      PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>( hb_stackGetTSD( &s_idleData ) );
+      PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
 
       ++pIdleData->iIdleMaxTask;
 
       if( ! pIdleData->pIdleTasks )
       {
-         pIdleData->pIdleTasks = static_cast<PHB_ITEM*>( hb_xgrab(sizeof(PHB_ITEM)) );
+         pIdleData->pIdleTasks = static_cast<PHB_ITEM*>(hb_xgrab(sizeof(PHB_ITEM)));
       }
       else
       {
-         pIdleData->pIdleTasks = static_cast<PHB_ITEM*>( hb_xrealloc(pIdleData->pIdleTasks, sizeof(PHB_ITEM) * pIdleData->iIdleMaxTask) );
+         pIdleData->pIdleTasks = static_cast<PHB_ITEM*>(hb_xrealloc(pIdleData->pIdleTasks, sizeof(PHB_ITEM) * pIdleData->iIdleMaxTask));
       }
 
       /* store a copy of passed codeblock
@@ -200,14 +200,14 @@ HB_FUNC( HB_IDLEADD )
 
       /* return a pointer as a handle to this idle task
        */
-      hb_retptr( static_cast<void*>( hb_codeblockId( pBlock ) ) );    /* TODO: access to pointers from Harbour code */
+      hb_retptr( static_cast<void*>(hb_codeblockId(pBlock)) );    /* TODO: access to pointers from Harbour code */
    }
 }
 
 /* Delete a task with given handle and return a codeblock with this task */
 HB_FUNC( HB_IDLEDEL )
 {
-   PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>( hb_stackTestTSD( &s_idleData ) );
+   PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>(hb_stackTestTSD(&s_idleData));
    void * pID = hb_parptr(1);
 
    if( pID && pIdleData && pIdleData->pIdleTasks )
@@ -228,9 +228,9 @@ HB_FUNC( HB_IDLEDEL )
             {
                if( iTask != pIdleData->iIdleMaxTask )
                {
-                  memmove( &pIdleData->pIdleTasks[ iTask ], &pIdleData->pIdleTasks[ iTask + 1 ], sizeof(PHB_ITEM) * ( pIdleData->iIdleMaxTask - iTask ) );
+                  memmove(&pIdleData->pIdleTasks[ iTask ], &pIdleData->pIdleTasks[ iTask + 1 ], sizeof(PHB_ITEM) * (pIdleData->iIdleMaxTask - iTask));
                }
-               pIdleData->pIdleTasks = static_cast<PHB_ITEM*>( hb_xrealloc(pIdleData->pIdleTasks, sizeof(PHB_ITEM) * pIdleData->iIdleMaxTask) );
+               pIdleData->pIdleTasks = static_cast<PHB_ITEM*>(hb_xrealloc(pIdleData->pIdleTasks, sizeof(PHB_ITEM) * pIdleData->iIdleMaxTask));
                if( pIdleData->iIdleTask >= pIdleData->iIdleMaxTask )
                {
                   pIdleData->iIdleTask = 0;

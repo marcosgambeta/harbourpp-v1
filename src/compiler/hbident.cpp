@@ -32,8 +32,8 @@ const char * hb_compIdentifierNew( HB_COMP_DECL, const char * szName, int iType 
 {
    const char * szIdent;
 
-   szIdent = static_cast<const char*>( hb_hashTableFind( HB_COMP_PARAM->pIdentifiers,
-                                                static_cast<const void*>( szName ) ) );
+   szIdent = static_cast<const char*>(hb_hashTableFind( HB_COMP_PARAM->pIdentifiers,
+                                                static_cast<const void*>(szName) ));
    if( ! szIdent )
    {
       /*
@@ -49,11 +49,11 @@ const char * hb_compIdentifierNew( HB_COMP_DECL, const char * szName, int iType 
          szIdent = szName;
       }
 
-      hb_hashTableAdd( HB_COMP_PARAM->pIdentifiers, static_cast<const void*>( szIdent ), static_cast<const void*>( szIdent ) );
+      hb_hashTableAdd( HB_COMP_PARAM->pIdentifiers, static_cast<const void*>(szIdent), static_cast<const void*>(szIdent) );
    }
    else if( iType == HB_IDENT_FREE )
    {
-      hb_xfree(const_cast<char*>( szName ));
+      hb_xfree(const_cast<char*>(szName));
    }
 
    return szIdent;
@@ -63,7 +63,7 @@ const char * hb_compIdentifierNew( HB_COMP_DECL, const char * szName, int iType 
 static HB_HASH_FUNC( hb_comp_IdentKey )    /* HB_SIZE func (void *Value, void *Cargo) */
 {
    HB_SIZE nSum = 0;
-   const char * szName = static_cast<const char*>( Value );
+   const char * szName = static_cast<const char*>(Value);
 
    while( *szName )
    {
@@ -89,7 +89,7 @@ static HB_HASH_FUNC( hb_comp_IdentDel )
 static HB_HASH_FUNC( hb_comp_IdentComp )
 {
    HB_SYMBOL_UNUSED(HashPtr);
-   return strcmp(static_cast<const char*>( Value ), static_cast<const char*>( Cargo ));
+   return strcmp(static_cast<const char*>(Value), static_cast<const char*>(Cargo));
 }
 
 /* initialize the hash table for identifiers */

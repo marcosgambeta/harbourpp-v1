@@ -328,8 +328,8 @@ HB_FUNC( HB_HPAIRAT )
          else
          {
             PHB_ITEM pResult = hb_itemArrayNew(2);
-            hb_arraySet( pResult, 1, pKey );
-            hb_arraySet( pResult, 2, pValue );
+            hb_arraySet(pResult, 1, pKey);
+            hb_arraySet(pResult, 2, pValue);
             hb_itemReturnRelease(pResult);
          }
       }
@@ -462,7 +462,7 @@ HB_FUNC( HB_HCOPY )
          {
             ++nStart;
          }
-         nCount = HB_ISNUM(4) ? static_cast<HB_SIZE>( hb_parns(4) ) : nLen - nStart + 1;
+         nCount = HB_ISNUM(4) ? static_cast<HB_SIZE>(hb_parns(4)) : nLen - nStart + 1;
 
          while( nCount-- )
          {
@@ -554,7 +554,7 @@ HB_FUNC( HB_HEVAL )
       {
          ++nStart;
       }
-      nCount = HB_ISNUM(4) ? static_cast<HB_SIZE>( hb_parns(4) ) : nLen - nStart + 1;
+      nCount = HB_ISNUM(4) ? static_cast<HB_SIZE>(hb_parns(4)) : nLen - nStart + 1;
 
       while( nCount-- )
       {
@@ -599,7 +599,7 @@ HB_FUNC( HB_HSCAN )
       {
          ++nStart;
       }
-      nCount = HB_ISNUM(4) ? static_cast<HB_SIZE>( hb_parns(4) ) : nLen - nStart + 1;
+      nCount = HB_ISNUM(4) ? static_cast<HB_SIZE>(hb_parns(4)) : nLen - nStart + 1;
 
       if( HB_IS_EVALITEM(pValue) )
       {
@@ -659,7 +659,7 @@ HB_FUNC( HB_HSCAN )
             PHB_ITEM pItem = hb_hashGetValueAt( pHash, nStart );
             if( pItem )
             {
-               if( HB_IS_NUMERIC(pItem) && hb_itemGetNInt(pItem) == nValue && hb_itemGetND(pItem) == static_cast<double>( nValue ) )
+               if( HB_IS_NUMERIC(pItem) && hb_itemGetNInt(pItem) == nValue && hb_itemGetND(pItem) == static_cast<double>(nValue) )
                {
                   fFound = HB_TRUE;
                   break;

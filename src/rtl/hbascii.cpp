@@ -116,26 +116,26 @@ HB_FUNC( HB_ASCIIISALPHA )
 {
    const char * pszText = hb_parc(1);
 
-   hb_retl( pszText && HB_ISALPHA( static_cast<unsigned char>( *pszText ) ) );
+   hb_retl( pszText && HB_ISALPHA( static_cast<unsigned char>(*pszText) ) );
 }
 
 HB_FUNC( HB_ASCIIISUPPER )
 {
    const char * pszText = hb_parc(1);
 
-   hb_retl( pszText && HB_ISUPPER( static_cast<unsigned char>( *pszText ) ) );
+   hb_retl( pszText && HB_ISUPPER( static_cast<unsigned char>(*pszText) ) );
 }
 
 HB_FUNC( HB_ASCIIISLOWER )
 {
    const char * pszText = hb_parc(1);
 
-   hb_retl( pszText && HB_ISLOWER( static_cast<unsigned char>( *pszText ) ) );
+   hb_retl( pszText && HB_ISLOWER( static_cast<unsigned char>(*pszText) ) );
 }
 
 HB_FUNC( HB_ASCIIISDIGIT )
 {
    const char * pszText = hb_parc(1);
 
-   hb_retl( pszText && HB_ISDIGIT( static_cast<unsigned char>( *pszText ) ) );
+   hb_retl( pszText && HB_ISDIGIT( static_cast<unsigned char>(*pszText) ) );
 }

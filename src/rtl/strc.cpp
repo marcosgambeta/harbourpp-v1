@@ -61,7 +61,7 @@ HB_FUNC( HB_STRDECODESCAPE )
       HB_SIZE nLen = hb_itemGetCLen(pText);
       if( nLen > 0 )
       {
-         char * str = static_cast<char*>( hb_xgrab(nLen + 1) );
+         char * str = static_cast<char*>(hb_xgrab(nLen + 1));
          hb_xmemcpy(str, hb_itemGetCPtr(pText), nLen + 1);
          hb_strRemEscSeq( str, &nLen );
          hb_retclen_buffer( str, nLen );
@@ -95,7 +95,7 @@ HB_FUNC( HB_STRCDECODE )
       if( nLen > 0 )
       {
          const char * pszSrc = hb_itemGetCPtr(pText);
-         char * pszDst = static_cast<char*>( hb_xgrab(nLen + 1) );
+         char * pszDst = static_cast<char*>(hb_xgrab(nLen + 1));
          HB_SIZE nDst = 0, n;
 
          for( ;; )

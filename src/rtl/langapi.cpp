@@ -277,7 +277,7 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
       return HB_FALSE;
    }
 
-   memset( &trans, 0, sizeof(trans) );
+   memset(&trans, 0, sizeof(trans));
    nSize = sizeof(trans);
 
    for( i = 0; i < HB_LANG_ITEM_MAX_; ++i )
@@ -308,14 +308,14 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
       }
    }
 
-   buffer = static_cast<char*>( hb_xgrab(nSize) );
+   buffer = static_cast<char*>(hb_xgrab(nSize));
    ptr    = buffer + sizeof(trans);
    for( i = 0; i < HB_LANG_ITEM_MAX_; ++i )
    {
       if( trans.pItemList[ i ] != nullptr )
       {
          HB_SIZE nLen = strlen(trans.pItemList[ i ]) + 1;
-         memcpy( ptr, trans.pItemList[ i ], nLen );
+         memcpy(ptr, trans.pItemList[ i ], nLen);
          hb_xfree(HB_UNCONST( trans.pItemList[ i ] ));
          trans.pItemList[ i ] = ptr;
          ptr += nLen;
@@ -325,13 +325,13 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
          trans.pItemList[ i ] = lang->pItemList[ i ];
       }
    }
-   memcpy( buffer, &trans, sizeof(trans) );
+   memcpy(buffer, &trans, sizeof(trans));
 
    pBase = hb_langFindBase( szNewId );
    if( pBase && pBase->lang == nullptr )
    {
-      pBase->lang   = reinterpret_cast<PHB_LANG>( buffer );
-      pBase->buffer = static_cast<void*>( buffer );
+      pBase->lang   = reinterpret_cast<PHB_LANG>(buffer);
+      pBase->buffer = static_cast<void*>(buffer);
       return HB_TRUE;
    }
 
@@ -354,7 +354,7 @@ void hb_langReleaseAll( void )
 HB_BOOL hb_langRegister( PHB_LANG lang )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_langRegister(%p)", static_cast<const void*>( lang ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_langRegister(%p)", static_cast<const void*>(lang) ) );
 #endif
 
    if( lang )
@@ -387,7 +387,7 @@ PHB_LANG hb_langFind( const char * pszID )
 PHB_LANG hb_langSelect( PHB_LANG lang )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_langSelect(%p)", static_cast<const void*>( lang ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_langSelect(%p)", static_cast<const void*>(lang) ) );
 #endif
 
    PHB_LANG langOld;
@@ -461,11 +461,11 @@ char * hb_langName( const char * pszID )
    lang = pszID ? hb_langFind( pszID ) : hb_vmLang();
    if( lang )
    {
-      pszName = static_cast<char*>( hb_xgrab(128) );
-      hb_snprintf( pszName, 128, "Harbour Language: %s %s (%s)",
+      pszName = static_cast<char*>(hb_xgrab(128));
+      hb_snprintf(pszName, 128, "Harbour Language: %s %s (%s)",
                    hb_langGetItem( pszID, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID ),
                    hb_langGetItem( pszID, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_NAME ),
-                   hb_langGetItem( pszID, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_NAMENAT ) );
+                   hb_langGetItem( pszID, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_NAMENAT ));
    }
    else
    {

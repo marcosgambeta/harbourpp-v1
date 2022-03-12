@@ -68,19 +68,19 @@
 
 static void hb_macroFlagsInit( void * pFlags )
 {
-   *( static_cast<int*>( pFlags ) ) = HB_SM_DEFAULT;
+   *( static_cast<int*>(pFlags) ) = HB_SM_DEFAULT;
 }
 
 static HB_TSD_NEW( s_macroFlags, sizeof(int), hb_macroFlagsInit, nullptr );
 
 static int hb_macroFlags( void )
 {
-   return *( static_cast<int*>( hb_stackGetTSD( &s_macroFlags ) ) );
+   return *( static_cast<int*>(hb_stackGetTSD(&s_macroFlags)) );
 }
 
 static void hb_macroFlagsSet( int flag )
 {
-   *( static_cast<int*>( hb_stackGetTSD( &s_macroFlags ) ) ) = flag;
+   *( static_cast<int*>(hb_stackGetTSD(&s_macroFlags)) ) = flag;
 }
 
 #else
@@ -106,7 +106,7 @@ static int s_macroFlags = HB_SM_DEFAULT;
 static int hb_macroParse( PHB_MACRO pMacro )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_macroParse(%p)", static_cast<void*>( pMacro ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_macroParse(%p)", static_cast<void*>(pMacro) ) );
 #endif
 
    /* initialize the output (pcode) buffer - it will be filled by yacc */
@@ -116,7 +116,7 @@ static int hb_macroParse( PHB_MACRO pMacro )
    pMacro->pCodeInfo->fVParams   = HB_FALSE;
    pMacro->pCodeInfo->pLocals    = nullptr;
    pMacro->pCodeInfo->pPrev      = nullptr;
-   pMacro->pCodeInfo->pCode      = static_cast<HB_BYTE*>( hb_xgrab(HB_PCODE_SIZE) );
+   pMacro->pCodeInfo->pCode      = static_cast<HB_BYTE*>(hb_xgrab(HB_PCODE_SIZE));
 
    /* reset the type of compiled expression - this should be filled after
     * successfully compilation
@@ -137,7 +137,7 @@ static int hb_macroParse( PHB_MACRO pMacro )
 static void hb_macroClear( PHB_MACRO pMacro )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_macroClear(%p)", static_cast<void*>( pMacro ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_macroClear(%p)", static_cast<void*>(pMacro) ) );
 #endif
 
    hb_xfree(pMacro->pCodeInfo->pCode);
@@ -150,7 +150,7 @@ static void hb_macroClear( PHB_MACRO pMacro )
 void hb_macroDelete( PHB_MACRO pMacro )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_macroDelete(%p)", static_cast<void*>( pMacro ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_macroDelete(%p)", static_cast<void*>(pMacro) ) );
 #endif
 
    hb_macroClear( pMacro );
@@ -162,7 +162,7 @@ void hb_macroDelete( PHB_MACRO pMacro )
 static HB_BOOL hb_macroCheckParam( PHB_ITEM pItem )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_macroCheckParam(%p)", static_cast<void*>( pItem ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_macroCheckParam(%p)", static_cast<void*>(pItem) ) );
 #endif
 
    HB_BOOL bValid = HB_TRUE;
@@ -187,7 +187,7 @@ static HB_BOOL hb_macroCheckParam( PHB_ITEM pItem )
  */
 static HB_ERROR_HANDLE( hb_macroErrorType )
 {
-   PHB_MACRO pMacro = static_cast<PHB_MACRO>( ErrorInfo->Cargo );
+   PHB_MACRO pMacro = static_cast<PHB_MACRO>(ErrorInfo->Cargo);
 
    /* copy error object for later diagnostic usage */
    if( ! pMacro->pError )
@@ -211,7 +211,7 @@ static HB_ERROR_HANDLE( hb_macroErrorType )
 void hb_macroRun( PHB_MACRO pMacro )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_macroRun(%p)", static_cast<void*>( pMacro ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_macroRun(%p)", static_cast<void*>(pMacro) ) );
 #endif
 
    hb_vmExecute( pMacro->pCodeInfo->pCode, nullptr );
@@ -220,7 +220,7 @@ void hb_macroRun( PHB_MACRO pMacro )
 static void hb_macroSyntaxError( PHB_MACRO pMacro )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_macroSyntaxError(%p)", static_cast<void*>( pMacro ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_macroSyntaxError(%p)", static_cast<void*>(pMacro) ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -286,20 +286,20 @@ static char * hb_macroTextSubst( const char * szString, HB_SIZE * pnStringLen )
    char * pHead;
    char * pTail;
 
-   pHead = static_cast<char*>( const_cast<void*>( memchr( szString, '&', *pnStringLen ) ) );
+   pHead = static_cast<char*>(const_cast<void*>(memchr( szString, '&', *pnStringLen )));
    if( pHead == nullptr )
    {
-      return const_cast<char*>( szString );  /* no more processing is required */
+      return const_cast<char*>(szString);  /* no more processing is required */
    }
 
    /* initial length of the string and the result buffer (it can contain null bytes) */
    nResBufLen = nResStrLen = *pnStringLen;
    /* initial buffer for return value */
-   szResult = static_cast<char*>( hb_xgrab(nResBufLen + 1) );
+   szResult = static_cast<char*>(hb_xgrab(nResBufLen + 1));
 
    /* copy the input string with trailing zero byte
     */
-   memcpy( szResult, szString, nResStrLen + 1 );
+   memcpy(szResult, szString, nResStrLen + 1);
    /* switch the pointer so it will point into the result buffer
     */
    pHead = szResult + ( pHead - szString );
@@ -373,7 +373,7 @@ static char * hb_macroTextSubst( const char * szString, HB_SIZE * pnStringLen )
                      HB_SIZE nHead = pHead - szResult;
                      HB_SIZE nTail = pTail - szResult;
                      nResBufLen = nResStrLen;
-                     szResult = static_cast<char*>( hb_xrealloc(szResult, nResBufLen + 1) );
+                     szResult = static_cast<char*>(hb_xrealloc(szResult, nResBufLen + 1));
                      pHead = szResult + nHead;
                      pTail = szResult + nTail;
                   }
@@ -384,9 +384,9 @@ static char * hb_macroTextSubst( const char * szString, HB_SIZE * pnStringLen )
                }
 
                /* move bytes located on the right side of a variable name */
-               memmove( pTail + nValLen, pHead, nCharsLeft + 1 );
+               memmove(pTail + nValLen, pHead, nCharsLeft + 1);
                /* copy substituted value */
-               memcpy( pTail, szValPtr, nValLen );
+               memcpy(pTail, szValPtr, nValLen);
                /* restart scanning from the beginning of replaced string */
                /* NOTE: This causes that the following code:
                 *    a := '&a'
@@ -400,14 +400,14 @@ static char * hb_macroTextSubst( const char * szString, HB_SIZE * pnStringLen )
       }
       nCharsLeft = nResStrLen - ( pHead - szResult );
    }
-   while( nCharsLeft && ( pHead = static_cast<char*>( memchr( pHead, '&', nCharsLeft ) ) ) != nullptr );
+   while( nCharsLeft && ( pHead = static_cast<char*>(memchr( pHead, '&', nCharsLeft )) ) != nullptr );
 
    if( nResStrLen < nResBufLen )
    {
       /* result string is shorter then allocated buffer -
        * cut it to a required length
        */
-      szResult = static_cast<char*>( hb_xrealloc(szResult, nResStrLen + 1) );
+      szResult = static_cast<char*>(hb_xrealloc(szResult, nResStrLen + 1));
    }
    szResult[ nResStrLen ] = 0;  /* place terminating null character */
    /* return a length of result string */
@@ -434,7 +434,7 @@ static char * hb_macroTextSubst( const char * szString, HB_SIZE * pnStringLen )
 void hb_macroGetValue( PHB_ITEM pItem, int iContext, int flags )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_macroGetValue(%p)", static_cast<void*>( pItem ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_macroGetValue(%p)", static_cast<void*>(pItem) ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -530,7 +530,7 @@ void hb_macroGetValue( PHB_ITEM pItem, int iContext, int flags )
 void hb_macroSetValue( PHB_ITEM pItem, int flags )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_macroSetValue(%p)", static_cast<void*>( pItem ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_macroSetValue(%p)", static_cast<void*>(pItem) ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -577,7 +577,7 @@ void hb_macroSetValue( PHB_ITEM pItem, int flags )
 void hb_macroPushReference( PHB_ITEM pItem )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_macroPushReference(%p)", static_cast<void*>( pItem ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_macroPushReference(%p)", static_cast<void*>(pItem) ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -634,14 +634,14 @@ static void hb_macroUseAliased( PHB_ITEM pAlias, PHB_ITEM pVar, int iFlag, int i
       /* grab memory for "alias->var"
        */
       HB_SIZE nLen = pAlias->item.asString.length + pVar->item.asString.length + 2;
-      char * szString = static_cast<char*>( hb_xgrab(nLen + 1) );
+      char * szString = static_cast<char*>(hb_xgrab(nLen + 1));
       HB_MACRO struMacro;
       int iStatus;
 
-      memcpy( szString, pAlias->item.asString.value, pAlias->item.asString.length );
+      memcpy(szString, pAlias->item.asString.value, pAlias->item.asString.length);
       szString[ pAlias->item.asString.length ]     = '-';
       szString[ pAlias->item.asString.length + 1 ] = '>';
-      memcpy( szString + pAlias->item.asString.length + 2, pVar->item.asString.value, pVar->item.asString.length );
+      memcpy(szString + pAlias->item.asString.length + 2, pVar->item.asString.value, pVar->item.asString.length);
       szString[ nLen ] = '\0';
 
       struMacro.mode      = HB_MODE_MACRO;
@@ -710,7 +710,7 @@ static void hb_macroUseAliased( PHB_ITEM pAlias, PHB_ITEM pVar, int iFlag, int i
 void hb_macroPopAliasedValue( PHB_ITEM pAlias, PHB_ITEM pVar, int flags )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_macroPopAliasedValue(%p, %p)", static_cast<void*>( pAlias ), static_cast<void*>( pVar ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_macroPopAliasedValue(%p, %p)", static_cast<void*>(pAlias), static_cast<void*>(pVar) ) );
 #endif
 
    hb_macroUseAliased( pAlias, pVar, HB_MACRO_GEN_POP, flags );
@@ -724,7 +724,7 @@ void hb_macroPopAliasedValue( PHB_ITEM pAlias, PHB_ITEM pVar, int flags )
 void hb_macroPushAliasedValue( PHB_ITEM pAlias, PHB_ITEM pVar, int flags )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_macroPushAliasedValue(%p, %p)", static_cast<void*>( pAlias ), static_cast<void*>( pVar ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_macroPushAliasedValue(%p, %p)", static_cast<void*>(pAlias), static_cast<void*>(pVar) ) );
 #endif
 
    hb_macroUseAliased( pAlias, pVar, HB_MACRO_GEN_PUSH, flags );
@@ -738,7 +738,7 @@ void hb_macroPushAliasedValue( PHB_ITEM pAlias, PHB_ITEM pVar, int flags )
 char * hb_macroExpandString( const char * szString, HB_SIZE nLength, HB_BOOL * pfNewString )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_macroExpandString(%s,%" HB_PFS "u,%p)", szString, nLength, static_cast<void*>( pfNewString ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_macroExpandString(%s,%" HB_PFS "u,%p)", szString, nLength, static_cast<void*>(pfNewString) ) );
 #endif
 
    char * szResultString;
@@ -749,7 +749,7 @@ char * hb_macroExpandString( const char * szString, HB_SIZE nLength, HB_BOOL * p
    }
    else
    {
-      szResultString = const_cast<char*>( szString );
+      szResultString = const_cast<char*>(szString);
    }
    *pfNewString = ( szString != szResultString );
    return szResultString;
@@ -758,7 +758,7 @@ char * hb_macroExpandString( const char * szString, HB_SIZE nLength, HB_BOOL * p
 char * hb_macroTextSymbol( const char * szString, HB_SIZE nLength, HB_BOOL * pfNewString )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_macroTextSymbol(%s,%" HB_PFS "u,%p)", szString, nLength, static_cast<void*>( pfNewString ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_macroTextSymbol(%s,%" HB_PFS "u,%p)", szString, nLength, static_cast<void*>(pfNewString) ) );
 #endif
 
    char * szResult = nullptr;
@@ -791,8 +791,8 @@ char * hb_macroTextSymbol( const char * szString, HB_SIZE nLength, HB_BOOL * pfN
          {
             if( szResult == szString )
             {
-               szResult = static_cast<char*>( hb_xgrab(nLength + 1) );
-               memcpy( szResult, szString, nLength );
+               szResult = static_cast<char*>(hb_xgrab(nLength + 1));
+               memcpy(szResult, szString, nLength);
                szResult[ nLength ] = '\0';
             }
             szResult[ nLen ] = c - ( 'a' - 'A' );
@@ -803,7 +803,7 @@ char * hb_macroTextSymbol( const char * szString, HB_SIZE nLength, HB_BOOL * pfN
          }
          ++nLen;
       }
-      if( nLen == nLength && nLen > static_cast<HB_SIZE>( szResult[ 0 ] == '_' ? 1 : 0 ) )
+      if( nLen == nLength && nLen > static_cast<HB_SIZE>(szResult[ 0 ] == '_' ? 1 : 0) )
       {
          if( nLen > HB_SYMBOL_NAME_LEN )
          {
@@ -813,8 +813,8 @@ char * hb_macroTextSymbol( const char * szString, HB_SIZE nLength, HB_BOOL * pfN
          {
             if( szResult == szString )
             {
-               szResult = static_cast<char*>( hb_xgrab(nLen + 1) );
-               memcpy( szResult, szString, nLen );
+               szResult = static_cast<char*>(hb_xgrab(nLen + 1));
+               memcpy(szResult, szString, nLen);
             }
             szResult[ nLen ] = '\0';
          }
@@ -845,7 +845,7 @@ PHB_MACRO hb_macroCompile( const char * szString )
    PHB_MACRO pMacro;
    int iStatus;
 
-   pMacro = static_cast<PHB_MACRO>( hb_xgrab(sizeof(HB_MACRO)) );
+   pMacro = static_cast<PHB_MACRO>(hb_xgrab(sizeof(HB_MACRO)));
    pMacro->mode      = HB_MODE_MACRO;
    pMacro->supported = hb_macroFlags() | HB_SM_ISUSERCP();
    pMacro->Flags     = HB_MACRO_GEN_PUSH | HB_MACRO_GEN_LIST | HB_MACRO_GEN_PARE;
@@ -940,7 +940,7 @@ static void hb_macroSetGetBlock( PHB_DYNS pVarSym, PHB_ITEM pItem, int iWorkArea
    i += sizeof(PHB_DYNS);
    byBuf[ i++ ] = HB_P_ENDBLOCK;
 
-   byBuf[ n ] = static_cast<HB_BYTE>( i - n + 1 );
+   byBuf[ n ] = static_cast<HB_BYTE>(i - n + 1);
 
    byBuf[ i++ ] = HB_P_PUSHLOCALNEAR;
    byBuf[ i++ ] = 1;
@@ -1076,7 +1076,7 @@ HB_FUNC( FIELDWBLOCK )
 void hb_macroPushSymbol( PHB_ITEM pItem )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_macroPushSymbol(%p)", static_cast<void*>( pItem ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_macroPushSymbol(%p)", static_cast<void*>(pItem) ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -1124,7 +1124,7 @@ void hb_macroPushSymbol( PHB_ITEM pItem )
 void hb_macroTextValue( PHB_ITEM pItem )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_macroTextValue(%p)", static_cast<void*>( pItem ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_macroTextValue(%p)", static_cast<void*>(pItem) ) );
 #endif
 
    if( hb_macroCheckParam( pItem ) )
@@ -1151,7 +1151,7 @@ void hb_macroTextValue( PHB_ITEM pItem )
 const char * hb_macroGetType( PHB_ITEM pItem )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_macroGetType(%p)", static_cast<void*>( pItem ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_macroGetType(%p)", static_cast<void*>(pItem) ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -1206,7 +1206,7 @@ const char * hb_macroGetType( PHB_ITEM pItem )
              * of expression can be determined.
              */
             struErr.Func  = hb_macroErrorType;
-            struErr.Cargo = static_cast<void*>( &struMacro );
+            struErr.Cargo = static_cast<void*>(&struMacro);
             pOld = hb_errorHandler( &struErr );
             hb_macroRun( &struMacro );
             hb_errorHandler( pOld );
@@ -1368,19 +1368,19 @@ HB_SIZE hb_macroGenJump( HB_ISIZ nOffset, HB_COMP_DECL )
 {
    if( nOffset == 0 )
    {
-      hb_macroGenPCode4( HB_P_JUMPFAR, 0, 0, 0, HB_COMP_PARAM );
+      hb_macroGenPCode4(HB_P_JUMPFAR, 0, 0, 0, HB_COMP_PARAM);
    }
-   else if( HB_LIM_INT8( nOffset ) )
+   else if( HB_LIM_INT8(nOffset) )
    {
-      hb_macroGenPCode2( HB_P_JUMPNEAR, HB_LOBYTE( nOffset ), HB_COMP_PARAM );
+      hb_macroGenPCode2(HB_P_JUMPNEAR, HB_LOBYTE(nOffset), HB_COMP_PARAM);
    }
-   else if( HB_LIM_INT16( nOffset ) )
+   else if( HB_LIM_INT16(nOffset) )
    {
-      hb_macroGenPCode3( HB_P_JUMP, HB_LOBYTE( nOffset ), HB_HIBYTE( nOffset ), HB_COMP_PARAM );
+      hb_macroGenPCode3(HB_P_JUMP, HB_LOBYTE(nOffset), HB_HIBYTE(nOffset), HB_COMP_PARAM);
    }
-   else if( HB_LIM_INT24( nOffset ) )
+   else if( HB_LIM_INT24(nOffset) )
    {
-      hb_macroGenPCode4( HB_P_JUMPFAR, HB_LOBYTE( nOffset ), HB_HIBYTE( nOffset ), HB_ULBYTE( nOffset ), HB_COMP_PARAM );
+      hb_macroGenPCode4(HB_P_JUMPFAR, HB_LOBYTE(nOffset), HB_HIBYTE(nOffset), HB_ULBYTE(nOffset), HB_COMP_PARAM);
    }
    else
    {
@@ -1394,19 +1394,19 @@ HB_SIZE hb_macroGenJumpFalse( HB_ISIZ nOffset, HB_COMP_DECL )
 {
    if( nOffset == 0 )
    {
-      hb_macroGenPCode4( HB_P_JUMPFALSEFAR, 0, 0, 0, HB_COMP_PARAM );
+      hb_macroGenPCode4(HB_P_JUMPFALSEFAR, 0, 0, 0, HB_COMP_PARAM);
    }
-   else if( HB_LIM_INT8( nOffset ) )
+   else if( HB_LIM_INT8(nOffset) )
    {
-      hb_macroGenPCode2( HB_P_JUMPFALSENEAR, HB_LOBYTE( nOffset ), HB_COMP_PARAM );
+      hb_macroGenPCode2(HB_P_JUMPFALSENEAR, HB_LOBYTE(nOffset), HB_COMP_PARAM);
    }
-   else if( HB_LIM_INT16( nOffset ) )
+   else if( HB_LIM_INT16(nOffset) )
    {
-      hb_macroGenPCode3( HB_P_JUMPFALSE, HB_LOBYTE( nOffset ), HB_HIBYTE( nOffset ), HB_COMP_PARAM );
+      hb_macroGenPCode3(HB_P_JUMPFALSE, HB_LOBYTE(nOffset), HB_HIBYTE(nOffset), HB_COMP_PARAM);
    }
-   else if( HB_LIM_INT24( nOffset ) )
+   else if( HB_LIM_INT24(nOffset) )
    {
-      hb_macroGenPCode4( HB_P_JUMPFALSEFAR, HB_LOBYTE( nOffset ), HB_HIBYTE( nOffset ), HB_ULBYTE( nOffset ), HB_COMP_PARAM );
+      hb_macroGenPCode4(HB_P_JUMPFALSEFAR, HB_LOBYTE(nOffset), HB_HIBYTE(nOffset), HB_ULBYTE(nOffset), HB_COMP_PARAM);
    }
    else
    {
@@ -1420,19 +1420,19 @@ HB_SIZE hb_macroGenJumpTrue( HB_ISIZ nOffset, HB_COMP_DECL )
 {
    if( nOffset == 0 )
    {
-      hb_macroGenPCode4( HB_P_JUMPTRUEFAR, 0, 0, 0, HB_COMP_PARAM );
+      hb_macroGenPCode4(HB_P_JUMPTRUEFAR, 0, 0, 0, HB_COMP_PARAM);
    }
-   else if( HB_LIM_INT8( nOffset ) )
+   else if( HB_LIM_INT8(nOffset) )
    {
-      hb_macroGenPCode2( HB_P_JUMPTRUENEAR, HB_LOBYTE( nOffset ), HB_COMP_PARAM );
+      hb_macroGenPCode2(HB_P_JUMPTRUENEAR, HB_LOBYTE(nOffset), HB_COMP_PARAM);
    }
-   else if( HB_LIM_INT16( nOffset ) )
+   else if( HB_LIM_INT16(nOffset) )
    {
-      hb_macroGenPCode3( HB_P_JUMPTRUE, HB_LOBYTE( nOffset ), HB_HIBYTE( nOffset ), HB_COMP_PARAM );
+      hb_macroGenPCode3(HB_P_JUMPTRUE, HB_LOBYTE(nOffset), HB_HIBYTE(nOffset), HB_COMP_PARAM);
    }
-   else if( HB_LIM_INT24( nOffset ) )
+   else if( HB_LIM_INT24(nOffset) )
    {
-      hb_macroGenPCode4( HB_P_JUMPTRUEFAR, HB_LOBYTE( nOffset ), HB_HIBYTE( nOffset ), HB_ULBYTE( nOffset ), HB_COMP_PARAM );
+      hb_macroGenPCode4(HB_P_JUMPTRUEFAR, HB_LOBYTE(nOffset), HB_HIBYTE(nOffset), HB_ULBYTE(nOffset), HB_COMP_PARAM);
    }
    else
    {
@@ -1447,7 +1447,7 @@ void hb_macroGenJumpThere( HB_SIZE nFrom, HB_SIZE nTo, HB_COMP_DECL )
    HB_BYTE * pCode = HB_PCODE_DATA->pCode;
    HB_ISIZ nOffset = nTo - nFrom + 1;
 
-   if( HB_LIM_INT24( nOffset ) )
+   if( HB_LIM_INT24(nOffset) )
    {
       HB_PUT_LE_UINT24( &pCode[ nFrom ], nOffset );
    }
@@ -1491,7 +1491,7 @@ static void hb_macroMemvarGenPCode( HB_BYTE bPCode, const char * szVarName, HB_C
 
    byBuf[ 0 ] = bPCode;
    HB_PUT_PTR( &byBuf[ 1 ], pSym );
-   hb_macroGenPCodeN( byBuf, sizeof(byBuf), HB_COMP_PARAM );
+   hb_macroGenPCodeN(byBuf, sizeof(byBuf), HB_COMP_PARAM);
 }
 
 /* generates the pcode to push a symbol on the virtual machine stack */
@@ -1531,7 +1531,7 @@ void hb_macroGenPushSymbol( const char * szSymbolName, HB_BOOL bFunction, HB_COM
 
    byBuf[ 0 ] = HB_P_MPUSHSYM;
    HB_PUT_PTR( &byBuf[ 1 ], pSym );
-   hb_macroGenPCodeN( byBuf, sizeof(byBuf), HB_COMP_PARAM );
+   hb_macroGenPCodeN(byBuf, sizeof(byBuf), HB_COMP_PARAM);
 }
 
 /* generates the pcode to push a long number on the virtual machine stack */
@@ -1539,33 +1539,33 @@ void hb_macroGenPushLong( HB_MAXINT nNumber, HB_COMP_DECL )
 {
    if( nNumber == 0 )
    {
-      hb_macroGenPCode1( HB_P_ZERO, HB_COMP_PARAM );
+      hb_macroGenPCode1(HB_P_ZERO, HB_COMP_PARAM);
    }
    else if( nNumber == 1 )
    {
-      hb_macroGenPCode1( HB_P_ONE, HB_COMP_PARAM );
+      hb_macroGenPCode1(HB_P_ONE, HB_COMP_PARAM);
    }
-   else if( HB_LIM_INT8( nNumber ) )
+   else if( HB_LIM_INT8(nNumber) )
    {
-      hb_macroGenPCode2( HB_P_PUSHBYTE, static_cast<HB_BYTE>( nNumber ), HB_COMP_PARAM );
+      hb_macroGenPCode2(HB_P_PUSHBYTE, static_cast<HB_BYTE>(nNumber), HB_COMP_PARAM);
    }
-   else if( HB_LIM_INT16( nNumber ) )
+   else if( HB_LIM_INT16(nNumber) )
    {
-      hb_macroGenPCode3( HB_P_PUSHINT, HB_LOBYTE( nNumber ), HB_HIBYTE( nNumber ), HB_COMP_PARAM );
+      hb_macroGenPCode3(HB_P_PUSHINT, HB_LOBYTE(nNumber), HB_HIBYTE(nNumber), HB_COMP_PARAM);
    }
-   else if( HB_LIM_INT32( nNumber ) )
+   else if( HB_LIM_INT32(nNumber) )
    {
       HB_BYTE pBuffer[ 5 ];
       pBuffer[ 0 ] = HB_P_PUSHLONG;
       HB_PUT_LE_UINT32( pBuffer + 1, nNumber );
-      hb_macroGenPCodeN( pBuffer, sizeof(pBuffer), HB_COMP_PARAM );
+      hb_macroGenPCodeN(pBuffer, sizeof(pBuffer), HB_COMP_PARAM);
    }
    else
    {
       HB_BYTE pBuffer[ 9 ];
       pBuffer[ 0 ] = HB_P_PUSHLONGLONG;
       HB_PUT_LE_UINT64( pBuffer + 1, nNumber );
-      hb_macroGenPCodeN( pBuffer, sizeof(pBuffer), HB_COMP_PARAM );
+      hb_macroGenPCodeN(pBuffer, sizeof(pBuffer), HB_COMP_PARAM);
    }
 }
 
@@ -1576,7 +1576,7 @@ void hb_macroGenPushDate( long lDate, HB_COMP_DECL )
 
    pBuffer[ 0 ] = HB_P_PUSHDATE;
    HB_PUT_LE_UINT32( pBuffer + 1, lDate );
-   hb_macroGenPCodeN( pBuffer, sizeof(pBuffer), HB_COMP_PARAM );
+   hb_macroGenPCodeN(pBuffer, sizeof(pBuffer), HB_COMP_PARAM);
 }
 
 /* generates the pcode to push a timestamp on the virtual machine stack */
@@ -1587,7 +1587,7 @@ void hb_macroGenPushTimeStamp( long lDate, long lTime, HB_COMP_DECL )
    pBuffer[ 0 ] = HB_P_PUSHTIMESTAMP;
    HB_PUT_LE_UINT32( pBuffer + 1, lDate );
    HB_PUT_LE_UINT32( pBuffer + 5, lTime );
-   hb_macroGenPCodeN( pBuffer, sizeof(pBuffer), HB_COMP_PARAM );
+   hb_macroGenPCodeN(pBuffer, sizeof(pBuffer), HB_COMP_PARAM);
 }
 
 /* sends a message to an object */
@@ -1603,11 +1603,11 @@ void hb_macroGenMessage( const char * szMsgName, HB_BOOL bIsObject, HB_COMP_DECL
 
       byBuf[ 0 ] = HB_P_MMESSAGE;
       HB_PUT_PTR( &byBuf[ 1 ], pSym );
-      hb_macroGenPCodeN( byBuf, sizeof(byBuf), HB_COMP_PARAM );
+      hb_macroGenPCodeN(byBuf, sizeof(byBuf), HB_COMP_PARAM);
    }
    if( ! bIsObject )    /* used in full compiler only */
    {
-      hb_macroGenPCode3( HB_P_WITHOBJECTMESSAGE, 0xFF, 0xFF, HB_COMP_PARAM );
+      hb_macroGenPCode3(HB_P_WITHOBJECTMESSAGE, 0xFF, 0xFF, HB_COMP_PARAM);
    }
 }
 
@@ -1621,13 +1621,13 @@ void hb_macroGenMessageData( const char * szMsg, HB_BOOL bIsObject, HB_COMP_DECL
    char szResult[ HB_SYMBOL_NAME_LEN + 1 ];
    int iLen;
 
-   iLen = static_cast<int>( strlen(szMsg) );
+   iLen = static_cast<int>(strlen(szMsg));
    if( iLen > HB_SYMBOL_NAME_LEN - 1 )
    {
       iLen = HB_SYMBOL_NAME_LEN - 1;
    }
    szResult[ 0 ] = '_';
-   memcpy( szResult + 1, szMsg, iLen );
+   memcpy(szResult + 1, szMsg, iLen);
    szResult[ iLen + 1 ] = '\0';
    hb_macroGenMessage( szResult, bIsObject, HB_COMP_PARAM );
 }
@@ -1641,7 +1641,7 @@ void hb_macroGenPopVar( const char * szVarName, HB_COMP_DECL )
    if( iVar )
    {
       /* this is a codeblock parameter */
-      hb_macroGenPCode3( HB_P_POPLOCAL, HB_LOBYTE( iVar ), HB_HIBYTE( iVar ), HB_COMP_PARAM );
+      hb_macroGenPCode3(HB_P_POPLOCAL, HB_LOBYTE(iVar), HB_HIBYTE(iVar), HB_COMP_PARAM);
    }
    else
    {
@@ -1669,7 +1669,7 @@ void hb_macroGenPopAliasedVar( const char * szVarName, HB_BOOL bPushAliasValue, 
    {
       if( szAlias )
       {
-         int iLen = static_cast<int>( strlen(szAlias) );
+         int iLen = static_cast<int>(strlen(szAlias));
 
          if( szAlias[ 0 ] == 'M' && ( iLen == 1 || ( iLen >= 4 && iLen <= 6 && strncmp(szAlias, "MEMVAR", iLen) == 0 ) ) )
          {
@@ -1717,7 +1717,7 @@ void hb_macroGenPushVar( const char * szVarName, HB_COMP_DECL )
    if( iVar )
    {
       /* this is a codeblock parameter */
-      hb_macroGenPCode3( HB_P_PUSHLOCAL, HB_LOBYTE( iVar ), HB_HIBYTE( iVar ), HB_COMP_PARAM );
+      hb_macroGenPCode3(HB_P_PUSHLOCAL, HB_LOBYTE(iVar), HB_HIBYTE(iVar), HB_COMP_PARAM);
    }
    else
    {
@@ -1733,7 +1733,7 @@ void hb_macroGenPushVarRef( const char * szVarName, HB_COMP_DECL )
    iVar = hb_macroLocalVarGetPos( szVarName, HB_COMP_PARAM );
    if( iVar )
    {
-      hb_macroGenPCode3( HB_P_PUSHLOCALREF, HB_LOBYTE( iVar ), HB_HIBYTE( iVar ), HB_COMP_PARAM );
+      hb_macroGenPCode3(HB_P_PUSHLOCALREF, HB_LOBYTE(iVar), HB_HIBYTE(iVar), HB_COMP_PARAM);
    }
    else
    {
@@ -1764,7 +1764,7 @@ void hb_macroGenPushAliasedVar( const char * szVarName, HB_BOOL bPushAliasValue,
           * FIELD->var
           * MEMVAR->var
           */
-         int iLen = static_cast<int>( strlen(szAlias) );
+         int iLen = static_cast<int>(strlen(szAlias));
 
          if( szAlias[ 0 ] == 'M' && ( iLen == 1 || ( iLen >= 4 && iLen <= 6 && strncmp(szAlias, "MEMVAR", iLen) == 0 ) ) )
          {
@@ -1804,11 +1804,11 @@ void hb_macroGenPushLogical( int iTrueFalse, HB_COMP_DECL )
 {
    if( iTrueFalse )
    {
-      hb_macroGenPCode1( HB_P_TRUE, HB_COMP_PARAM );
+      hb_macroGenPCode1(HB_P_TRUE, HB_COMP_PARAM);
    }
    else
    {
-      hb_macroGenPCode1( HB_P_FALSE, HB_COMP_PARAM );
+      hb_macroGenPCode1(HB_P_FALSE, HB_COMP_PARAM);
    }
 }
 
@@ -1822,7 +1822,7 @@ void hb_macroGenPushDouble( double dNumber, HB_BYTE bWidth, HB_BYTE bDec, HB_COM
    pBuffer[ 1 + sizeof(double) ] = bWidth;
    pBuffer[ 1 + sizeof(double) + sizeof(HB_BYTE) ] = bDec;
 
-   hb_macroGenPCodeN( pBuffer, 1 + sizeof(double) + sizeof(HB_BYTE) + sizeof(HB_BYTE), HB_COMP_PARAM );
+   hb_macroGenPCodeN(pBuffer, 1 + sizeof(double) + sizeof(HB_BYTE) + sizeof(HB_BYTE), HB_COMP_PARAM);
 }
 
 void hb_macroGenPushFunSym( const char * szFunName, int iFlags, HB_COMP_DECL )
@@ -1837,7 +1837,7 @@ void hb_macroGenPushFunSym( const char * szFunName, int iFlags, HB_COMP_DECL )
 void hb_macroGenPushFunCall( const char * szFunName, int iFlags, HB_COMP_DECL )
 {
    hb_macroGenPushFunSym( szFunName, iFlags, HB_COMP_PARAM );
-   hb_macroGenPCode1( HB_P_PUSHNIL, HB_COMP_PARAM );
+   hb_macroGenPCode1(HB_P_PUSHNIL, HB_COMP_PARAM);
 }
 
 void hb_macroGenPushFunRef( const char * szFunName, HB_COMP_DECL )
@@ -1852,13 +1852,13 @@ void hb_macroGenPushString( const char * szText, HB_SIZE nStrLen, HB_COMP_DECL )
    {
       if( nStrLen <= USHRT_MAX )
       {
-         hb_macroGenPCode3( HB_P_MPUSHSTR, HB_LOBYTE( nStrLen ), HB_HIBYTE( nStrLen ), HB_COMP_PARAM );
+         hb_macroGenPCode3(HB_P_MPUSHSTR, HB_LOBYTE(nStrLen), HB_HIBYTE(nStrLen), HB_COMP_PARAM);
       }
       else
       {
-         hb_macroGenPCode4( HB_P_MPUSHSTRLARGE, HB_LOBYTE( nStrLen ), HB_HIBYTE( nStrLen ), HB_ULBYTE( nStrLen ), HB_COMP_PARAM );
+         hb_macroGenPCode4(HB_P_MPUSHSTRLARGE, HB_LOBYTE(nStrLen), HB_HIBYTE(nStrLen), HB_ULBYTE(nStrLen), HB_COMP_PARAM);
       }
-      hb_macroGenPCodeN( reinterpret_cast<const HB_BYTE*>( szText ), nStrLen, HB_COMP_PARAM );
+      hb_macroGenPCodeN(reinterpret_cast<const HB_BYTE*>(szText), nStrLen, HB_COMP_PARAM);
    }
    else
    {
@@ -1872,7 +1872,7 @@ void hb_macroGenPCode1( HB_BYTE byte, HB_COMP_DECL )
 
    if( ( pFunc->nPCodeSize - pFunc->nPCodePos ) < 1 )
    {
-      pFunc->pCode = static_cast<HB_BYTE*>( hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_SIZE) );
+      pFunc->pCode = static_cast<HB_BYTE*>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_SIZE));
    }
 
    pFunc->pCode[ pFunc->nPCodePos++ ] = byte;
@@ -1884,7 +1884,7 @@ void hb_macroGenPCode2( HB_BYTE byte1, HB_BYTE byte2, HB_COMP_DECL )
 
    if( ( pFunc->nPCodeSize - pFunc->nPCodePos ) < 2 )
    {
-      pFunc->pCode = static_cast<HB_BYTE*>( hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_SIZE) );
+      pFunc->pCode = static_cast<HB_BYTE*>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_SIZE));
    }
 
    pFunc->pCode[ pFunc->nPCodePos++ ] = byte1;
@@ -1897,7 +1897,7 @@ void hb_macroGenPCode3( HB_BYTE byte1, HB_BYTE byte2, HB_BYTE byte3, HB_COMP_DEC
 
    if( ( pFunc->nPCodeSize - pFunc->nPCodePos ) < 3 )
    {
-      pFunc->pCode = static_cast<HB_BYTE*>( hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_SIZE) );
+      pFunc->pCode = static_cast<HB_BYTE*>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_SIZE));
    }
 
    pFunc->pCode[ pFunc->nPCodePos++ ] = byte1;
@@ -1911,7 +1911,7 @@ void hb_macroGenPCode4( HB_BYTE byte1, HB_BYTE byte2, HB_BYTE byte3, HB_BYTE byt
 
    if( ( pFunc->nPCodeSize - pFunc->nPCodePos ) < 4 )
    {
-      pFunc->pCode = static_cast<HB_BYTE*>( hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_SIZE) );
+      pFunc->pCode = static_cast<HB_BYTE*>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_SIZE));
    }
 
    pFunc->pCode[ pFunc->nPCodePos++ ] = byte1;
@@ -1928,10 +1928,10 @@ void hb_macroGenPCodeN( const HB_BYTE * pBuffer, HB_SIZE nSize, HB_COMP_DECL )
    {
       /* not enough free space in pcode buffer - increase it */
       pFunc->nPCodeSize += ( ( ( nSize / HB_PCODE_SIZE ) + 1 ) * HB_PCODE_SIZE );
-      pFunc->pCode = static_cast<HB_BYTE*>( hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize) );
+      pFunc->pCode = static_cast<HB_BYTE*>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize));
    }
 
-   memcpy( pFunc->pCode + pFunc->nPCodePos, pBuffer, nSize );
+   memcpy(pFunc->pCode + pFunc->nPCodePos, pBuffer, nSize);
    pFunc->nPCodePos += nSize;
 }
 
@@ -1947,14 +1947,14 @@ void hb_macroError( int iError, HB_COMP_DECL )
 void hb_macroCodeBlockStart( HB_COMP_DECL )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_macroCodeBlockStart(%p)", static_cast<void*>( HB_COMP_PARAM ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_macroCodeBlockStart(%p)", static_cast<void*>(HB_COMP_PARAM) ) );
 #endif
 
    PHB_PCODE_INFO pCB;
 
-   pCB = static_cast<PHB_PCODE_INFO>( hb_xgrab(sizeof(HB_PCODE_INFO)) );
+   pCB = static_cast<PHB_PCODE_INFO>(hb_xgrab(sizeof(HB_PCODE_INFO)));
 
-   pCB->pCode = static_cast<HB_BYTE*>( hb_xgrab(HB_PCODE_SIZE) );
+   pCB->pCode = static_cast<HB_BYTE*>(hb_xgrab(HB_PCODE_SIZE));
    pCB->nPCodeSize = HB_PCODE_SIZE;
    pCB->nPCodePos  = 0;
    pCB->fVParams   = HB_FALSE;
@@ -1969,7 +1969,7 @@ void hb_macroCodeBlockStart( HB_COMP_DECL )
 void hb_macroCodeBlockEnd( HB_COMP_DECL )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_macroCodeBlockEnd(%p)", static_cast<void*>( HB_COMP_PARAM ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_macroCodeBlockEnd(%p)", static_cast<void*>(HB_COMP_PARAM) ) );
 #endif
 
    PHB_PCODE_INFO pCodeblock;   /* pointer to the current codeblock */
@@ -2008,18 +2008,18 @@ void hb_macroCodeBlockEnd( HB_COMP_DECL )
     */
    if( nSize <= USHRT_MAX )
    {
-      hb_macroGenPCode3( HB_P_MPUSHBLOCK, HB_LOBYTE( nSize ), HB_HIBYTE( nSize ), HB_COMP_PARAM );
+      hb_macroGenPCode3(HB_P_MPUSHBLOCK, HB_LOBYTE(nSize), HB_HIBYTE(nSize), HB_COMP_PARAM);
    }
    else
    {
       ++nSize;
-      hb_macroGenPCode4( HB_P_MPUSHBLOCKLARGE, HB_LOBYTE( nSize ), HB_HIBYTE( nSize ), HB_ULBYTE( nSize ), HB_COMP_PARAM );
+      hb_macroGenPCode4(HB_P_MPUSHBLOCKLARGE, HB_LOBYTE(nSize), HB_HIBYTE(nSize), HB_ULBYTE(nSize), HB_COMP_PARAM);
    }
-   hb_macroGenPCode2( HB_LOBYTE( usParms ), HB_HIBYTE( usParms ), HB_COMP_PARAM );
+   hb_macroGenPCode2(HB_LOBYTE(usParms), HB_HIBYTE(usParms), HB_COMP_PARAM);
 
    /* copy a codeblock pcode buffer */
-   hb_macroGenPCodeN( pCodeblock->pCode, pCodeblock->nPCodePos, HB_COMP_PARAM );
-   hb_macroGenPCode1( HB_P_ENDBLOCK, HB_COMP_PARAM ); /* finish the codeblock */
+   hb_macroGenPCodeN(pCodeblock->pCode, pCodeblock->nPCodePos, HB_COMP_PARAM);
+   hb_macroGenPCode1(HB_P_ENDBLOCK, HB_COMP_PARAM); /* finish the codeblock */
 
    /* free memory allocated for a codeblock */
    hb_xfree(pCodeblock->pCode);

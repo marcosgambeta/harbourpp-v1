@@ -189,30 +189,30 @@ static const char * hb_comGetNameRaw( PHB_COM pCom, char * buffer, int size )
    {
 #if defined( HB_OS_UNIX )
 #  if defined( HB_OS_SUNOS )
-      hb_snprintf( buffer, size, "/dev/tty%c", pCom->port + 'a' - 1 );
+      hb_snprintf(buffer, size, "/dev/tty%c", pCom->port + 'a' - 1);
 #  elif defined( HB_OS_HPUX )
-      hb_snprintf( buffer, size, "/dev/tty%dp0", pCom->port );
+      hb_snprintf(buffer, size, "/dev/tty%dp0", pCom->port);
 #  elif defined( HB_OS_AIX )
-      hb_snprintf( buffer, size, "/dev/tty%d", pCom->port );
+      hb_snprintf(buffer, size, "/dev/tty%d", pCom->port);
 #  elif defined( HB_OS_MINIX )
-      hb_snprintf( buffer, size, "/dev/tty%02d", pCom->port - 1 );
+      hb_snprintf(buffer, size, "/dev/tty%02d", pCom->port - 1);
 #  elif defined( HB_OS_IRIX )
-      hb_snprintf( buffer, size, "/dev/ttyf%d", pCom->port );
+      hb_snprintf(buffer, size, "/dev/ttyf%d", pCom->port);
 #  elif defined( HB_OS_DIGITAL_UNIX )
-      hb_snprintf( buffer, size, "/dev/ttyf%02d", pCom->port );
+      hb_snprintf(buffer, size, "/dev/ttyf%02d", pCom->port);
 #  elif defined( HB_OS_DARWIN )
-      hb_snprintf( buffer, size, "/dev/cuaa%d", pCom->port - 1 );
+      hb_snprintf(buffer, size, "/dev/cuaa%d", pCom->port - 1);
 #  else /* defined( HB_OS_LINUX ) || defined( HB_OS_CYGWIN ) || ... */
-      hb_snprintf( buffer, size, "/dev/ttyS%d", pCom->port - 1 );
+      hb_snprintf(buffer, size, "/dev/ttyS%d", pCom->port - 1);
 #  endif
 #else
       if( hb_iswinnt() || hb_iswince() )
       {
-         hb_snprintf( buffer, size, "\\\\.\\COM%d", pCom->port );
+         hb_snprintf(buffer, size, "\\\\.\\COM%d", pCom->port);
       }
       else
       {
-         hb_snprintf( buffer, size, "COM%d", pCom->port );
+         hb_snprintf(buffer, size, "COM%d", pCom->port);
       }
 #endif
       name = buffer;
@@ -574,7 +574,7 @@ static int hb_comCanRead( PHB_COM pCom, HB_MAXINT timeout )
 
    do
    {
-      int tout = timeout < 0 || timeout > 1000 ? 1000 : static_cast<int>( timeout );
+      int tout = timeout < 0 || timeout > 1000 ? 1000 : static_cast<int>(timeout);
       iResult = poll( &fds, 1, tout );
       hb_comSetOsError( pCom, iResult == -1 );
       if( iResult > 0 && ( fds.revents & POLLIN ) == 0 )
@@ -603,8 +603,8 @@ static int hb_comCanRead( PHB_COM pCom, HB_MAXINT timeout )
 #  if ! defined( HB_HAS_SELECT_TIMER )
    HB_MAXUINT timer = hb_timerInit( timeout );
 #  else
-   tv.tv_sec = static_cast<long>( timeout / 1000 );
-   tv.tv_usec = static_cast<long>( timeout % 1000 ) * 1000;
+   tv.tv_sec = static_cast<long>(timeout / 1000);
+   tv.tv_usec = static_cast<long>(timeout % 1000) * 1000;
 #  endif
 
    for( ;; )
@@ -617,14 +617,14 @@ static int hb_comCanRead( PHB_COM pCom, HB_MAXINT timeout )
 #  if ! defined( HB_HAS_SELECT_TIMER )
       else
       {
-         tv.tv_sec = static_cast<long>( timeout / 1000 );
-         tv.tv_usec = static_cast<long>( timeout % 1000 ) * 1000;
+         tv.tv_sec = static_cast<long>(timeout / 1000);
+         tv.tv_usec = static_cast<long>(timeout % 1000) * 1000;
       }
 #  endif
 
       FD_ZERO( &rfds );
       FD_SET( pCom->fd, &rfds );
-      iResult = select( static_cast<int>( pCom->fd + 1 ), &rfds, nullptr, nullptr, &tv );
+      iResult = select( static_cast<int>(pCom->fd + 1), &rfds, nullptr, nullptr, &tv );
       hb_comSetOsError( pCom, iResult == -1 );
       if( iResult > 0 && ! FD_ISSET( pCom->fd, &rfds ) )
       {
@@ -665,7 +665,7 @@ static int hb_comCanWrite( PHB_COM pCom, HB_MAXINT timeout )
 
    do
    {
-      int tout = timeout < 0 || timeout > 1000 ? 1000 : static_cast<int>( timeout );
+      int tout = timeout < 0 || timeout > 1000 ? 1000 : static_cast<int>(timeout);
       iResult = poll( &fds, 1, tout );
       hb_comSetOsError( pCom, iResult == -1 );
       if( iResult > 0 && ( fds.revents & POLLOUT ) == 0 )
@@ -694,8 +694,8 @@ static int hb_comCanWrite( PHB_COM pCom, HB_MAXINT timeout )
 #  if ! defined( HB_HAS_SELECT_TIMER )
    HB_MAXUINT timer = hb_timerInit( timeout );
 #  else
-   tv.tv_sec = static_cast<long>( timeout / 1000 );
-   tv.tv_usec = static_cast<long>( timeout % 1000 ) * 1000;
+   tv.tv_sec = static_cast<long>(timeout / 1000);
+   tv.tv_usec = static_cast<long>(timeout % 1000) * 1000;
 #  endif
 
    for( ;; )
@@ -708,14 +708,14 @@ static int hb_comCanWrite( PHB_COM pCom, HB_MAXINT timeout )
 #  if ! defined( HB_HAS_SELECT_TIMER )
       else
       {
-         tv.tv_sec = static_cast<long>( timeout / 1000 );
-         tv.tv_usec = static_cast<long>( timeout % 1000 ) * 1000;
+         tv.tv_sec = static_cast<long>(timeout / 1000);
+         tv.tv_usec = static_cast<long>(timeout % 1000) * 1000;
       }
 #  endif
 
       FD_ZERO( &wfds );
       FD_SET( pCom->fd, &wfds );
-      iResult = select( static_cast<int>( pCom->fd + 1 ), nullptr, &wfds, nullptr, &tv );
+      iResult = select( static_cast<int>(pCom->fd + 1), nullptr, &wfds, nullptr, &tv );
       hb_comSetOsError( pCom, iResult == -1 );
       if( iResult > 0 && ! FD_ISSET( pCom->fd, &wfds ) )
       {
@@ -1496,7 +1496,7 @@ long hb_comRecv( int iPort, void * data, long len, HB_MAXINT timeout )
       {
          do
          {
-            lReceived = read( pCom->fd, static_cast<char*>( data ), len );
+            lReceived = read( pCom->fd, static_cast<char*>(data), len );
             hb_comSetOsError( pCom, lReceived == -1 );
          }
          while( lReceived == -1 && HB_COM_IS_EINTR( pCom ) && hb_vmRequestQuery() == 0 );
@@ -2177,11 +2177,11 @@ int hb_comFlowChars( int iPort, int iXONchar, int iXOFFchar )
          {
             if( iXONchar >= 0 )
             {
-               dcb.XonChar = static_cast<char>( iXONchar );
+               dcb.XonChar = static_cast<char>(iXONchar);
             }
             if( iXOFFchar >= 0 )
             {
-               dcb.XoffChar = static_cast<char>( iXOFFchar );
+               dcb.XoffChar = static_cast<char>(iXOFFchar);
             }
             fResult = SetCommState( pCom->hComm, &dcb );
          }
@@ -2224,7 +2224,7 @@ int hb_comErrorChar( int iPort, int iChar )
          if( iChar >= 0 )
          {
             dcb.fErrorChar = TRUE;
-            dcb.ErrorChar = static_cast<char>( iChar );
+            dcb.ErrorChar = static_cast<char>(iChar);
          }
          else
          {
@@ -2318,10 +2318,10 @@ static BOOL hb_comSetTimeouts( PHB_COM pCom, HB_MAXINT rdtimeout, HB_MAXINT wrti
    {
       timeouts.ReadIntervalTimeout = MAXDWORD;
       timeouts.ReadTotalTimeoutMultiplier = MAXDWORD;
-      timeouts.ReadTotalTimeoutConstant = static_cast<DWORD>( rdtimeout );
+      timeouts.ReadTotalTimeoutConstant = static_cast<DWORD>(rdtimeout);
    }
    timeouts.WriteTotalTimeoutMultiplier = 0;
-   timeouts.WriteTotalTimeoutConstant = static_cast<DWORD>( HB_MAX( wrtimeout, 1 ) );
+   timeouts.WriteTotalTimeoutConstant = static_cast<DWORD>(HB_MAX( wrtimeout, 1 ));
 
    fResult = SetCommTimeouts( pCom->hComm, &timeouts );
    if( fResult )
@@ -2352,8 +2352,8 @@ long hb_comSend( int iPort, const void * data, long len, HB_MAXINT timeout )
          DWORD dwWritten = 0;
          BOOL fResult;
 
-         fResult = WriteFile( pCom->hComm, data, static_cast<DWORD>( len ), &dwWritten, nullptr );
-         lSent = fResult ? static_cast<long>( dwWritten ) : -1;
+         fResult = WriteFile( pCom->hComm, data, static_cast<DWORD>(len), &dwWritten, nullptr );
+         lSent = fResult ? static_cast<long>(dwWritten) : -1;
          if( lSent == 0 )
          {
             hb_comSetComError( pCom, HB_COM_ERR_TIMEOUT );
@@ -2394,8 +2394,8 @@ long hb_comRecv( int iPort, void * data, long len, HB_MAXINT timeout )
          DWORD dwRead = 0;
          BOOL fResult;
 
-         fResult = ReadFile( pCom->hComm, data, static_cast<DWORD>( len ), &dwRead, nullptr );
-         lReceived = fResult ? static_cast<long>( dwRead ) : -1;
+         fResult = ReadFile( pCom->hComm, data, static_cast<DWORD>(len), &dwRead, nullptr );
+         lReceived = fResult ? static_cast<long>(dwRead) : -1;
          if( lReceived == 0 )
          {
             hb_comSetComError( pCom, HB_COM_ERR_TIMEOUT );
@@ -2480,7 +2480,7 @@ int hb_comInit( int iPort, int iBaud, int iParity, int iSize, int iStop )
          {
             if( iBaud )
             {
-               dcb.BaudRate = static_cast<DWORD>( iBaud );
+               dcb.BaudRate = static_cast<DWORD>(iBaud);
             }
             dcb.fBinary = 1;
             dcb.fParity = 0;
@@ -2497,9 +2497,9 @@ int hb_comInit( int iPort, int iBaud, int iParity, int iSize, int iStop )
             dcb.fAbortOnError = 0;
           /*dcb.XonLim*/
           /*dcb.XoffLim*/
-            dcb.ByteSize = static_cast<BYTE>( iSize );
-            dcb.Parity = static_cast<BYTE>( iParity );
-            dcb.StopBits = static_cast<BYTE>( iStop );
+            dcb.ByteSize = static_cast<BYTE>(iSize);
+            dcb.Parity = static_cast<BYTE>(iParity);
+            dcb.StopBits = static_cast<BYTE>(iStop);
           /*dcb.XonChar*/
           /*dcb.XoffChar*/
             dcb.ErrorChar = '?';
@@ -2968,7 +2968,7 @@ long hb_comSend( int iPort, const void * data, long len, HB_MAXINT timeout )
 
    if( pCom )
    {
-      const char * buffer = static_cast<const char*>( data );
+      const char * buffer = static_cast<const char*>(data);
       HB_MAXUINT timer = hb_timerInit( timeout );
 
       hb_comSetOsError( pCom, SER_SUCCESS );
@@ -3023,7 +3023,7 @@ long hb_comRecv( int iPort, void * data, long len, HB_MAXINT timeout )
 
    if( pCom )
    {
-      char * buffer = static_cast<char*>( data );
+      char * buffer = static_cast<char*>(data);
       HB_MAXUINT timer = hb_timerInit( timeout );
 
       hb_comSetOsError( pCom, SER_SUCCESS );
@@ -3605,7 +3605,7 @@ long hb_comSend( int iPort, const void * data, long len, HB_MAXINT timeout )
 
    if( pCom )
    {
-      const char * buffer = static_cast<const char*>( data );
+      const char * buffer = static_cast<const char*>(data);
       HB_MAXUINT timer = hb_timerInit( timeout );
 
       hb_comSetOsError( pCom, 0 );
@@ -3653,7 +3653,7 @@ long hb_comRecv( int iPort, void * data, long len, HB_MAXINT timeout )
 
    if( pCom )
    {
-      char * buffer = static_cast<char*>( data );
+      char * buffer = static_cast<char*>(data);
       HB_MAXUINT timer = hb_timerInit( timeout );
 
       hb_comSetOsError( pCom, 0 );

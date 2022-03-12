@@ -392,7 +392,7 @@ static HB_FHANDLE s_fileHandle( PHB_FILE pFile )
 
    hb_fsSetError( HB_FILE_ERR_UNSUPPORTED );
 
-   return static_cast<HB_FHANDLE>( FS_ERROR );
+   return static_cast<HB_FHANDLE>(FS_ERROR);
 }
 
 static const HB_FILE_FUNCS s_fileFuncs =
@@ -448,7 +448,7 @@ HB_BOOL hb_fileRegisterPart( HB_FILE_FUNCS * pFuncs )
    pDummyFunc = &s_fileFuncs.Accept;
    pFunction = &pFuncs->Accept;
 
-   for( int iCount = 0; iCount < static_cast<int>( HB_FILE_FUNC_COUNT ); iCount++, pDummyFunc++, pFunction++ )
+   for( int iCount = 0; iCount < static_cast<int>(HB_FILE_FUNC_COUNT); iCount++, pDummyFunc++, pFunction++ )
    {
       if( * pFunction == nullptr )
       {

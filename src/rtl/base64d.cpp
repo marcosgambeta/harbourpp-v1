@@ -62,7 +62,7 @@ static signed char base64_decode_value( int value_in )
    };
 
    value_in -= 43;
-   if( value_in < 0 || value_in >= static_cast<int>( HB_SIZEOFARRAY( s_decoding ) ) )
+   if( value_in < 0 || value_in >= static_cast<int>(HB_SIZEOFARRAY( s_decoding )) )
    {
       return -1;
    }
@@ -134,7 +134,7 @@ HB_FUNC( HB_BASE64DECODE )
    if( nSrcLen > 0 )
    {
       HB_SIZE nDstLen = ( ( ( nSrcLen * 3 ) / 4 ) + 1 ) * sizeof(char);
-      char *  code    = static_cast<char*>( hb_xgrab(nDstLen) );
+      char *  code    = static_cast<char*>(hb_xgrab(nDstLen));
 
       nDstLen = base64_decode_block( hb_parcx(1), nSrcLen, code );
       hb_retclen_buffer( code, nDstLen );

@@ -63,7 +63,7 @@ static HB_U32 hb_sxInitSeed( const char * pKeyVal, HB_U16 * puiKey )
       ulSeed = ( ( ( ulSeed >> 16 ) + ( ulSeed << 16 ) ) * 17 ) + HB_GET_LE_UINT16( &pKeyVal[ i ] );
    }
    ulSeed |= 1;
-   *puiKey = static_cast<HB_U16>( ulSeed );
+   *puiKey = static_cast<HB_U16>(ulSeed);
    return ( ulSeed << 16 ) + ( ulSeed >> 16 );
 }
 
@@ -72,13 +72,13 @@ static HB_U32 hb_sxNextSeed( HB_U32 ulSeed, const char * pKeyVal, HB_U16 * puiKe
    HB_U32 ulTemp1, ulTemp2;
    HB_U16 uiSeedLo, uiSeedHi;
 
-   uiSeedLo = static_cast<HB_U16>( ulSeed );
-   ulTemp1  = static_cast<HB_U32>( rnd_mul1 ) * static_cast<HB_U32>( uiSeedLo );
-   ulTemp2  = static_cast<HB_U32>( rnd_mul2 ) * static_cast<HB_U32>( uiSeedLo ) + ( ulTemp1 >> 16 );
-   uiSeedLo = static_cast<HB_U16>( ulTemp1 );
-   ulTemp1  = static_cast<HB_U32>( rnd_mul1 ) * ( ulSeed >> 16 );
-   uiSeedHi = static_cast<HB_U16>( ulTemp1 + ulTemp2 );
-   ulSeed   = ( static_cast<HB_U32>( uiSeedHi ) << 16 ) + static_cast<HB_U32>( uiSeedLo );
+   uiSeedLo = static_cast<HB_U16>(ulSeed);
+   ulTemp1  = static_cast<HB_U32>(rnd_mul1) * static_cast<HB_U32>(uiSeedLo);
+   ulTemp2  = static_cast<HB_U32>(rnd_mul2) * static_cast<HB_U32>(uiSeedLo) + ( ulTemp1 >> 16 );
+   uiSeedLo = static_cast<HB_U16>(ulTemp1);
+   ulTemp1  = static_cast<HB_U32>(rnd_mul1) * ( ulSeed >> 16 );
+   uiSeedHi = static_cast<HB_U16>(ulTemp1 + ulTemp2);
+   ulSeed   = ( static_cast<HB_U32>(uiSeedHi) << 16 ) + static_cast<HB_U32>(uiSeedLo);
    uiSeedHi |= 1;
    *puiKey  = uiSeedHi + HB_GET_LE_UINT16( pKeyVal );
    return ulSeed;
@@ -96,8 +96,8 @@ void hb_sxEnCrypt( const char * pSrc, char * pDst, const char * pKeyVal, HB_SIZE
    {
       HB_UCHAR ucChar, ucShft;
 
-      ucChar = static_cast<HB_UCHAR>( pSrc[ nPos ] );
-      ucShft = static_cast<HB_UCHAR>( uiKey & 0x07 );
+      ucChar = static_cast<HB_UCHAR>(pSrc[ nPos ]);
+      ucShft = static_cast<HB_UCHAR>(uiKey & 0x07);
       pDst[ nPos ] = ( ( ucChar >> ucShft ) + ( ucChar << ( 8 - ucShft ) ) + ( uiKey & 0xFF ) );
       ulSeed = hb_sxNextSeed( ulSeed, &pKeyVal[ i ], &uiKey );
       if( ++i == 7 )
@@ -119,8 +119,8 @@ void hb_sxDeCrypt( const char * pSrc, char * pDst, const char * pKeyVal, HB_SIZE
    {
       HB_UCHAR ucChar, ucShft;
 
-      ucChar = static_cast<HB_UCHAR>( pSrc[ nPos ] ) - ( uiKey & 0xFF );
-      ucShft = static_cast<HB_UCHAR>( uiKey & 0x07 );
+      ucChar = static_cast<HB_UCHAR>(pSrc[ nPos ]) - ( uiKey & 0xFF );
+      ucShft = static_cast<HB_UCHAR>(uiKey & 0x07);
       pDst[ nPos ] = ( ( ucChar << ucShft ) + ( ucChar >> ( 8 - ucShft ) ) );
       ulSeed = hb_sxNextSeed( ulSeed, &pKeyVal[ i ], &uiKey );
       if( ++i == 7 )
@@ -137,7 +137,7 @@ static HB_BOOL _hb_sxGetKey( PHB_ITEM pKeyItem, char * pKeyVal )
 
    if( ! ( hb_itemType(pKeyItem) & HB_IT_STRING ) )
    {
-      AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+      AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
       if( pArea )
       {
@@ -153,11 +153,11 @@ static HB_BOOL _hb_sxGetKey( PHB_ITEM pKeyItem, char * pKeyVal )
       HB_SIZE nKey = hb_itemGetCLen(pKeyItem);
       if( nKey )
       {
-         memcpy( pKeyVal, hb_itemGetCPtr(pKeyItem), HB_MIN( nKey, 8 ) );
+         memcpy(pKeyVal, hb_itemGetCPtr(pKeyItem), HB_MIN( nKey, 8 ));
       }
       if( nKey < 8 )
       {
-         memset( pKeyVal + nKey, 0, 8 - nKey );
+         memset(pKeyVal + nKey, 0, 8 - nKey);
       }
       fResult = HB_TRUE;
    }
@@ -177,7 +177,7 @@ HB_FUNC( SX_ENCRYPT )
 
       if( nLen > 0 && _hb_sxGetKey( hb_param(2, HB_IT_ANY), keyBuf ) )
       {
-         char * pDst = static_cast<char*>( hb_xgrab(nLen + 1) );
+         char * pDst = static_cast<char*>(hb_xgrab(nLen + 1));
          hb_sxEnCrypt( hb_parc(1), pDst, keyBuf, nLen );
          pDst[ nLen ] = 0;
          hb_retclen_buffer( pDst, nLen );
@@ -198,7 +198,7 @@ HB_FUNC( SX_DECRYPT )
 
       if( nLen > 0 && _hb_sxGetKey( hb_param(2, HB_IT_ANY), keyBuf ) )
       {
-         char * pDst = static_cast<char*>( hb_xgrab(nLen + 1) );
+         char * pDst = static_cast<char*>(hb_xgrab(nLen + 1));
          hb_sxDeCrypt( hb_parc(1), pDst, keyBuf, nLen );
          pDst[ nLen ] = 0;
          hb_retclen_buffer( pDst, nLen );

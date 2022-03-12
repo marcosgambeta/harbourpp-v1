@@ -75,7 +75,7 @@ static const HB_GC_FUNCS s_gcGZFuncs =
 
 static gzFile hb_gzParam( int iParam )
 {
-   gzFile * gzHolder = static_cast<gzFile*>( hb_parptrGC( &s_gcGZFuncs, iParam ) );
+   gzFile * gzHolder = static_cast<gzFile*>(hb_parptrGC( &s_gcGZFuncs, iParam ));
 
    if( gzHolder && *gzHolder )
    {
@@ -113,7 +113,7 @@ HB_FUNC( HB_GZOPEN )
 
       if( gz )
       {
-         gzFile * gzHolder = static_cast<gzFile*>( hb_gcAllocate( sizeof(gzFile), &s_gcGZFuncs ) );
+         gzFile * gzHolder = static_cast<gzFile*>(hb_gcAllocate( sizeof(gzFile), &s_gcGZFuncs ));
          *gzHolder = gz;
          hb_retptrGC( gzHolder );
       }
@@ -143,7 +143,7 @@ HB_FUNC( HB_GZDOPEN )
 
       if( gz )
       {
-         gzFile * gzHolder = static_cast<gzFile*>( hb_gcAllocate( sizeof(gzFile), &s_gcGZFuncs ) );
+         gzFile * gzHolder = static_cast<gzFile*>(hb_gcAllocate( sizeof(gzFile), &s_gcGZFuncs ));
          *gzHolder = gz;
          hb_retptrGC( gzHolder );
       }
@@ -161,7 +161,7 @@ HB_FUNC( HB_GZDOPEN )
 HB_FUNC( HB_GZCLOSE )
 {
 #ifndef HB_NO_GZLIB
-   gzFile * gzHolder = static_cast<gzFile*>( hb_parptrGC( &s_gcGZFuncs, 1 ) );
+   gzFile * gzHolder = static_cast<gzFile*>(hb_parptrGC( &s_gcGZFuncs, 1 ));
 
    if( gzHolder )
    {
@@ -231,7 +231,7 @@ HB_FUNC( HB_GZREAD )
          }
 
          hb_vmUnlock();
-         iResult = gzread( gz, szBuffer, static_cast<unsigned>( nLen ) );
+         iResult = gzread( gz, szBuffer, static_cast<unsigned>(nLen) );
          hb_vmLock();
 
          hb_retni( iResult );
@@ -261,8 +261,8 @@ HB_FUNC( HB_GZWRITE )
 
          hb_vmUnlock();
          iResult = gzwrite( gz, szData,
-                            HB_ISNUM(3) ? static_cast<unsigned>( hb_parns(3) ) :
-                                            static_cast<unsigned>( hb_parclen(2) ) );
+                            HB_ISNUM(3) ? static_cast<unsigned>(hb_parns(3)) :
+                                            static_cast<unsigned>(hb_parclen(2)) );
          hb_vmLock();
 
          hb_retni( iResult );
@@ -288,7 +288,7 @@ HB_FUNC( HB_GZGETS )
       gzFile gz = hb_gzParam(1);
       if( gz )
       {
-         char * szBuffer = static_cast<char*>( hb_xalloc( iLen + 1 ) );
+         char * szBuffer = static_cast<char*>(hb_xalloc(iLen + 1));
 
          if( szBuffer )
          {

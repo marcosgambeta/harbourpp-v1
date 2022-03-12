@@ -65,7 +65,7 @@ static void hb_inkeySetTextKeys( const char * pszText, HB_SIZE nSize, HB_BOOL fI
       HB_WCHAR buffer[ 32 ], * keys;
       HB_SIZE n = 0;
 
-      keys = nSize <= HB_SIZEOFARRAY( buffer ) ? buffer : static_cast<HB_WCHAR*>( hb_xgrab(nSize * sizeof(HB_WCHAR)) );
+      keys = nSize <= HB_SIZEOFARRAY( buffer ) ? buffer : static_cast<HB_WCHAR*>(hb_xgrab(nSize * sizeof(HB_WCHAR)));
       while( HB_CDPCHAR_GET( cdp, pszText, nSize, &nIndex, &wc ) )
       {
          keys[ n++ ] = wc;
@@ -127,19 +127,19 @@ HB_FUNC( HB_KEYPUT )
    else if( HB_ISARRAY(1) )
    {
       PHB_ITEM pArray = hb_param(1, HB_IT_ARRAY);
-      HB_SIZE nElements = hb_arrayLen( pArray );
+      HB_SIZE nElements = hb_arrayLen(pArray);
 
       for( HB_SIZE nIndex = 1; nIndex <= nElements; ++nIndex )
       {
-         HB_TYPE type = hb_arrayGetType( pArray, nIndex );
+         HB_TYPE type = hb_arrayGetType(pArray, nIndex);
 
          if( type & HB_IT_NUMERIC )
          {
-            hb_inkeyPut( hb_arrayGetNI( pArray, nIndex ) );
+            hb_inkeyPut( hb_arrayGetNI(pArray, nIndex) );
          }
          else if( type & HB_IT_STRING )
          {
-            hb_inkeySetTextKeys( hb_arrayGetCPtr( pArray, nIndex ), hb_arrayGetCLen( pArray, nIndex ), HB_FALSE );
+            hb_inkeySetTextKeys( hb_arrayGetCPtr(pArray, nIndex), hb_arrayGetCLen(pArray, nIndex), HB_FALSE );
          }
       }
    }
@@ -158,19 +158,19 @@ HB_FUNC( HB_KEYINS )
    else if( HB_ISARRAY(1) )
    {
       PHB_ITEM pArray = hb_param(1, HB_IT_ARRAY);
-      HB_SIZE nElements = hb_arrayLen( pArray );
+      HB_SIZE nElements = hb_arrayLen(pArray);
 
       for( HB_SIZE nIndex = 1; nIndex <= nElements; ++nIndex )
       {
-         HB_TYPE type = hb_arrayGetType( pArray, nIndex );
+         HB_TYPE type = hb_arrayGetType(pArray, nIndex);
 
          if( type & HB_IT_NUMERIC )
          {
-            hb_inkeyIns( hb_arrayGetNI( pArray, nIndex ) );
+            hb_inkeyIns( hb_arrayGetNI(pArray, nIndex) );
          }
          else if( type & HB_IT_STRING )
          {
-            hb_inkeySetTextKeys( hb_arrayGetCPtr( pArray, nIndex ), hb_arrayGetCLen( pArray, nIndex ), HB_TRUE );
+            hb_inkeySetTextKeys( hb_arrayGetCPtr(pArray, nIndex), hb_arrayGetCLen(pArray, nIndex), HB_TRUE );
          }
       }
    }

@@ -64,7 +64,7 @@ HB_FUNC( HB_STRCLEAR )
       pszPtr = hb_itemGetCPtr(pItem);
       if( hb_itemGetWriteCL(pItem, &pBuffer, &nSize) )
       {
-         memset( pBuffer, '\0', nSize + 1 );
+         memset(pBuffer, '\0', nSize + 1);
          hb_retl( pszPtr == pBuffer );
       }
       else

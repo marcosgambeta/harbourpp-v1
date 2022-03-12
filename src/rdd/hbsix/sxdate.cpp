@@ -54,7 +54,7 @@
 char * hb_sxDtoP( char * pDate, long lJulian )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_sxDtoP(%p, %ld)", static_cast<void*>( pDate ), lJulian ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_sxDtoP(%p, %ld)", static_cast<void*>(pDate), lJulian ) );
 #endif
 
    int iYear, iMonth, iDay;
@@ -70,7 +70,7 @@ char * hb_sxDtoP( char * pDate, long lJulian )
 long hb_sxPtoD( const char * pDate )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_sxPtoD(%p)", static_cast<const void*>( pDate ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_sxPtoD(%p)", static_cast<const void*>(pDate) ) );
 #endif
 
    if( pDate )

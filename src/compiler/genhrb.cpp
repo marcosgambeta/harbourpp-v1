@@ -72,7 +72,7 @@ void hb_compGenBufPortObj( HB_COMP_DECL, HB_BYTE ** pBufPtr, HB_SIZE * pnSize )
 
    *pnSize = hb_compHrbSize( HB_COMP_PARAM, &ulSymbols, &ulFunctions );
    /* additional 0 byte is for passing buffer directly as string item */
-   ptr = *pBufPtr = static_cast<HB_BYTE*>( hb_xgrab(*pnSize + 1) );
+   ptr = *pBufPtr = static_cast<HB_BYTE*>(hb_xgrab(*pnSize + 1));
 
    /* signature */
    *ptr++ = 0xC0;
@@ -89,7 +89,7 @@ void hb_compGenBufPortObj( HB_COMP_DECL, HB_BYTE ** pBufPtr, HB_SIZE * pnSize )
    while( pSym )
    {
       nLen = strlen(pSym->szName) + 1;
-      memcpy( ptr, pSym->szName, nLen );
+      memcpy(ptr, pSym->szName, nLen);
       ptr += nLen;
       /* FIXME: this conversion strips upper byte from symbol scope
        *        Now we added workaround for it by using some strict
@@ -98,7 +98,7 @@ void hb_compGenBufPortObj( HB_COMP_DECL, HB_BYTE ** pBufPtr, HB_SIZE * pnSize )
        *        for .hrb files in which this field will have at least
        *        16-bit [druzus]
        */
-      *ptr++ = static_cast<HB_BYTE>( pSym->cScope );
+      *ptr++ = static_cast<HB_BYTE>(pSym->cScope);
       /* symbol type */
       if( pSym->cScope & HB_FS_LOCAL )
       {
@@ -128,11 +128,11 @@ void hb_compGenBufPortObj( HB_COMP_DECL, HB_BYTE ** pBufPtr, HB_SIZE * pnSize )
       if( ( pFunc->funFlags & HB_FUNF_FILE_DECL ) == 0 )
       {
          nLen = strlen(pFunc->szName) + 1;
-         memcpy( ptr, pFunc->szName, nLen );
+         memcpy(ptr, pFunc->szName, nLen);
          ptr += nLen;
          HB_PUT_LE_UINT32( ptr, pFunc->nPCodePos );      /* function size */
          ptr += 4;
-         memcpy( ptr, pFunc->pCode, pFunc->nPCodePos );  /* function body */
+         memcpy(ptr, pFunc->pCode, pFunc->nPCodePos);  /* function body */
          ptr += pFunc->nPCodePos;
       }
       pFunc = pFunc->pNext;
@@ -162,7 +162,7 @@ void hb_compGenPortObj( HB_COMP_DECL, PHB_FNAME pFileName )
    if( ! HB_COMP_PARAM->fQuiet )
    {
       char buffer[ 80 + HB_PATH_MAX - 1 ];
-      hb_snprintf( buffer, sizeof(buffer), "Generating Harbour Portable Object output to \'%s\'... ", szFileName );
+      hb_snprintf(buffer, sizeof(buffer), "Generating Harbour Portable Object output to \'%s\'... ", szFileName);
       hb_compOutStd( HB_COMP_PARAM, buffer );
    }
 

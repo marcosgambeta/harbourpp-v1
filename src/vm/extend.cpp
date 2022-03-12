@@ -71,13 +71,13 @@ PHB_ITEM hb_param( int iParam, long lMask )
       if( pItem->type & HB_IT_BYREF )
       {
          pItem = hb_itemUnRef(pItem);
-         if( static_cast<HB_TYPE>( lMask ) == HB_IT_BYREF )
+         if( static_cast<HB_TYPE>(lMask) == HB_IT_BYREF )
          {
             return pItem;
          }
       }
 
-      if( ( pItem->type & static_cast<HB_TYPE>( lMask ) ) || static_cast<HB_TYPE>( lMask ) == HB_IT_ANY )
+      if( ( pItem->type & static_cast<HB_TYPE>(lMask) ) || static_cast<HB_TYPE>(lMask) == HB_IT_ANY )
       {
          return pItem;
       }
@@ -111,7 +111,7 @@ HB_ULONG hb_parinfo( int iParam )
 
    if( iParam == 0 )
    {
-      return static_cast<HB_ULONG>( hb_pcount() );
+      return static_cast<HB_ULONG>(hb_pcount());
    }
    else
    {
@@ -125,7 +125,7 @@ HB_ULONG hb_parinfo( int iParam )
             uiType |= HB_ITEM_TYPE( hb_itemUnRef(pItem) );
          }
 
-         return static_cast<HB_ULONG>( uiType );
+         return static_cast<HB_ULONG>(uiType);
       }
       else
       {
@@ -148,11 +148,11 @@ HB_SIZE hb_parinfa( int iParamNum, HB_SIZE nArrayIndex )
    {
       if( nArrayIndex == 0 )
       {
-         return hb_arrayLen( pArray );
+         return hb_arrayLen(pArray);
       }
       else
       {
-         return static_cast<HB_ISIZ>( hb_arrayGetType( pArray, nArrayIndex ) );
+         return static_cast<HB_ISIZ>(hb_arrayGetType(pArray, nArrayIndex));
       }
    }
    else
@@ -397,7 +397,7 @@ const char * hb_pards( int iParam )
 char * hb_pardsbuff( char * szDate, int iParam )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_pardsbuff(%p, %d)", static_cast<void*>( szDate ), iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_pardsbuff(%p, %d)", static_cast<void*>(szDate), iParam ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -477,7 +477,7 @@ double hb_partd( int iParam )
 HB_BOOL hb_partdt( long * plJulian, long * plMilliSec, int iParam )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_partdt(%p,%p,%d)", static_cast<void*>( plJulian ), static_cast<void*>( plMilliSec ), iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_partdt(%p,%p,%d)", static_cast<void*>(plJulian), static_cast<void*>(plMilliSec), iParam ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -577,11 +577,11 @@ double  hb_parnd( int iParam )
       }
       else if( HB_IS_INTEGER(pItem) )
       {
-         return static_cast<double>( pItem->item.asInteger.value );
+         return static_cast<double>(pItem->item.asInteger.value);
       }
       else if( HB_IS_LONG(pItem) )
       {
-         return static_cast<double>( pItem->item.asLong.value );
+         return static_cast<double>(pItem->item.asLong.value);
       }
    }
 
@@ -611,7 +611,7 @@ int  hb_parni( int iParam )
       }
       else if( HB_IS_LONG(pItem) )
       {
-         return static_cast<int>( pItem->item.asLong.value );
+         return static_cast<int>(pItem->item.asLong.value);
       }
       else if( HB_IS_DOUBLE(pItem) )
       {
@@ -645,7 +645,7 @@ int  hb_parnidef( int iParam, int iDefValue )
       }
       else if( HB_IS_LONG(pItem) )
       {
-         return static_cast<int>( pItem->item.asLong.value );
+         return static_cast<int>(pItem->item.asLong.value);
       }
       else if( HB_IS_DOUBLE(pItem) )
       {
@@ -675,11 +675,11 @@ long  hb_parnl( int iParam )
 
       if( HB_IS_LONG(pItem) )
       {
-         return static_cast<long>( pItem->item.asLong.value );
+         return static_cast<long>(pItem->item.asLong.value);
       }
       else if( HB_IS_INTEGER(pItem) )
       {
-         return static_cast<long>( pItem->item.asInteger.value );
+         return static_cast<long>(pItem->item.asInteger.value);
       }
       else if( HB_IS_DOUBLE(pItem) )
       {
@@ -709,11 +709,11 @@ long  hb_parnldef( int iParam, long lDefValue )
 
       if( HB_IS_LONG(pItem) )
       {
-         return static_cast<long>( pItem->item.asLong.value );
+         return static_cast<long>(pItem->item.asLong.value);
       }
       else if( HB_IS_INTEGER(pItem) )
       {
-         return static_cast<long>( pItem->item.asInteger.value );
+         return static_cast<long>(pItem->item.asInteger.value);
       }
       else if( HB_IS_DOUBLE(pItem) )
       {
@@ -743,11 +743,11 @@ HB_ISIZ hb_parns( int iParam )
 
       if( HB_IS_LONG(pItem) )
       {
-         return static_cast<HB_ISIZ>( pItem->item.asLong.value );
+         return static_cast<HB_ISIZ>(pItem->item.asLong.value);
       }
       else if( HB_IS_INTEGER(pItem) )
       {
-         return static_cast<HB_ISIZ>( pItem->item.asInteger.value );
+         return static_cast<HB_ISIZ>(pItem->item.asInteger.value);
       }
       else if( HB_IS_DOUBLE(pItem) )
       {
@@ -777,11 +777,11 @@ HB_ISIZ hb_parnsdef( int iParam, HB_ISIZ nDefValue )
 
       if( HB_IS_LONG(pItem) )
       {
-         return static_cast<HB_ISIZ>( pItem->item.asLong.value );
+         return static_cast<HB_ISIZ>(pItem->item.asLong.value);
       }
       else if( HB_IS_INTEGER(pItem) )
       {
-         return static_cast<HB_ISIZ>( pItem->item.asInteger.value );
+         return static_cast<HB_ISIZ>(pItem->item.asInteger.value);
       }
       else if( HB_IS_DOUBLE(pItem) )
       {
@@ -812,11 +812,11 @@ HB_LONGLONG  hb_parnll( int iParam )
 
       if( HB_IS_LONG(pItem) )
       {
-         return static_cast<HB_LONGLONG>( pItem->item.asLong.value );
+         return static_cast<HB_LONGLONG>(pItem->item.asLong.value);
       }
       else if( HB_IS_INTEGER(pItem) )
       {
-         return static_cast<HB_LONGLONG>( pItem->item.asInteger.value );
+         return static_cast<HB_LONGLONG>(pItem->item.asInteger.value);
       }
       else if( HB_IS_DOUBLE(pItem) )
       {
@@ -847,11 +847,11 @@ HB_MAXINT hb_parnint( int iParam )
 
       if( HB_IS_LONG(pItem) )
       {
-         return static_cast<HB_MAXINT>( pItem->item.asLong.value );
+         return static_cast<HB_MAXINT>(pItem->item.asLong.value);
       }
       else if( HB_IS_INTEGER(pItem) )
       {
-         return static_cast<HB_MAXINT>( pItem->item.asInteger.value );
+         return static_cast<HB_MAXINT>(pItem->item.asInteger.value);
       }
       else if( HB_IS_DOUBLE(pItem) )
       {
@@ -881,11 +881,11 @@ HB_MAXINT hb_parnintdef( int iParam, HB_MAXINT nDefValue )
 
       if( HB_IS_LONG(pItem) )
       {
-         return static_cast<HB_MAXINT>( pItem->item.asLong.value );
+         return static_cast<HB_MAXINT>(pItem->item.asLong.value);
       }
       else if( HB_IS_INTEGER(pItem) )
       {
-         return static_cast<HB_MAXINT>( pItem->item.asInteger.value );
+         return static_cast<HB_MAXINT>(pItem->item.asInteger.value);
       }
       else if( HB_IS_DOUBLE(pItem) )
       {
@@ -925,7 +925,7 @@ void * hb_parptr( int iParam )
 void * hb_parptrGC( const HB_GC_FUNCS * pFuncs, int iParam )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_parptrGC(%p,%d)", static_cast<const void*>( pFuncs ), iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_parptrGC(%p,%d)", static_cast<const void*>(pFuncs), iParam ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -981,7 +981,7 @@ const char * hb_parvc( int iParam, ... )
          nArrayIndex = va_arg( va, HB_SIZE );
          va_end( va );
 
-         pItem = hb_arrayGetItemPtr( pItem, nArrayIndex );
+         pItem = hb_arrayGetItemPtr(pItem, nArrayIndex);
          return pItem && HB_IS_STRING(pItem) ? hb_itemGetCPtr(pItem) : nullptr;
       }
    }
@@ -1019,7 +1019,7 @@ const char * hb_parvcx( int iParam, ... )
          nArrayIndex = va_arg( va, HB_SIZE );
          va_end( va );
 
-         return hb_arrayGetCPtr( pItem, nArrayIndex );
+         return hb_arrayGetCPtr(pItem, nArrayIndex);
       }
    }
 
@@ -1056,7 +1056,7 @@ HB_SIZE hb_parvclen( int iParam, ... )
          nArrayIndex = va_arg( va, HB_SIZE );
          va_end( va );
 
-         return hb_arrayGetCLen( pItem, nArrayIndex );
+         return hb_arrayGetCLen(pItem, nArrayIndex);
       }
    }
 
@@ -1099,7 +1099,7 @@ HB_SIZE hb_parvcsiz( int iParam, ... )
             nArrayIndex = va_arg( va, HB_SIZE );
             va_end( va );
 
-            return hb_arrayGetCLen( pItem, nArrayIndex ) + 1;
+            return hb_arrayGetCLen(pItem, nArrayIndex) + 1;
          }
       }
    }
@@ -1140,7 +1140,7 @@ const char * hb_parvds( int iParam, ... )
          nArrayIndex = va_arg( va, HB_SIZE );
          va_end( va );
 
-         return hb_arrayGetDS( pItem, nArrayIndex, hb_stackDateBuffer() );
+         return hb_arrayGetDS(pItem, nArrayIndex, hb_stackDateBuffer());
       }
    }
 
@@ -1152,7 +1152,7 @@ const char * hb_parvds( int iParam, ... )
 char  * hb_parvdsbuff( char * szDate, int iParam, ... )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_parvdsbuff(%p, %d, ...)", static_cast<void*>( szDate ), iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_parvdsbuff(%p, %d, ...)", static_cast<void*>(szDate), iParam ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -1179,7 +1179,7 @@ char  * hb_parvdsbuff( char * szDate, int iParam, ... )
          nArrayIndex = va_arg( va, HB_SIZE );
          va_end( va );
 
-         return hb_arrayGetDS( pItem, nArrayIndex, szDate );
+         return hb_arrayGetDS(pItem, nArrayIndex, szDate);
       }
    }
 
@@ -1218,7 +1218,7 @@ long hb_parvdl( int iParam, ... )
          nArrayIndex = va_arg( va, HB_SIZE );
          va_end( va );
 
-         return hb_arrayGetDL( pItem, nArrayIndex );
+         return hb_arrayGetDL(pItem, nArrayIndex);
       }
    }
 
@@ -1255,7 +1255,7 @@ double hb_parvtd( int iParam, ... )
          nArrayIndex = va_arg( va, HB_SIZE );
          va_end( va );
 
-         return hb_arrayGetTD( pItem, nArrayIndex );
+         return hb_arrayGetTD(pItem, nArrayIndex);
       }
    }
 
@@ -1265,7 +1265,7 @@ double hb_parvtd( int iParam, ... )
 HB_BOOL hb_parvtdt( long * plJulian, long * plMilliSec, int iParam, ... )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_parvtdt(%p,%p,%d, ...)", static_cast<void*>( plJulian ), static_cast<void*>( plMilliSec ), iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_parvtdt(%p,%p,%d, ...)", static_cast<void*>(plJulian), static_cast<void*>(plMilliSec), iParam ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -1294,7 +1294,7 @@ HB_BOOL hb_parvtdt( long * plJulian, long * plMilliSec, int iParam, ... )
          nArrayIndex = va_arg( va, HB_SIZE );
          va_end( va );
 
-         return hb_arrayGetTDT( pItem, nArrayIndex, plJulian, plMilliSec );
+         return hb_arrayGetTDT(pItem, nArrayIndex, plJulian, plMilliSec);
       }
    }
 
@@ -1343,7 +1343,7 @@ int  hb_parvl( int iParam, ... )
          nArrayIndex = va_arg( va, HB_SIZE );
          va_end( va );
 
-         return hb_arrayGetL( pItem, nArrayIndex ) ? 1 : 0;
+         return hb_arrayGetL(pItem, nArrayIndex) ? 1 : 0;
       }
    }
 
@@ -1373,11 +1373,11 @@ double  hb_parvnd( int iParam, ... )
       }
       else if( HB_IS_INTEGER(pItem) )
       {
-         return static_cast<double>( pItem->item.asInteger.value );
+         return static_cast<double>(pItem->item.asInteger.value);
       }
       else if( HB_IS_LONG(pItem) )
       {
-         return static_cast<double>( pItem->item.asLong.value );
+         return static_cast<double>(pItem->item.asLong.value);
       }
       else if( HB_IS_ARRAY(pItem) )
       {
@@ -1388,7 +1388,7 @@ double  hb_parvnd( int iParam, ... )
          nArrayIndex = va_arg( va, HB_SIZE );
          va_end( va );
 
-         return hb_arrayGetND( pItem, nArrayIndex );
+         return hb_arrayGetND(pItem, nArrayIndex);
       }
    }
 
@@ -1418,7 +1418,7 @@ int  hb_parvni( int iParam, ... )
       }
       else if( HB_IS_LONG(pItem) )
       {
-         return static_cast<int>( pItem->item.asLong.value );
+         return static_cast<int>(pItem->item.asLong.value);
       }
       else if( HB_IS_DOUBLE(pItem) )
       {
@@ -1433,7 +1433,7 @@ int  hb_parvni( int iParam, ... )
          nArrayIndex = va_arg( va, HB_SIZE );
          va_end( va );
 
-         return hb_arrayGetNI( pItem, nArrayIndex );
+         return hb_arrayGetNI(pItem, nArrayIndex);
       }
    }
 
@@ -1459,11 +1459,11 @@ long  hb_parvnl( int iParam, ... )
 
       if( HB_IS_LONG(pItem) )
       {
-         return static_cast<long>( pItem->item.asLong.value );
+         return static_cast<long>(pItem->item.asLong.value);
       }
       else if( HB_IS_INTEGER(pItem) )
       {
-         return static_cast<long>( pItem->item.asInteger.value );
+         return static_cast<long>(pItem->item.asInteger.value);
       }
       else if( HB_IS_DOUBLE(pItem) )
       {
@@ -1472,7 +1472,7 @@ long  hb_parvnl( int iParam, ... )
       /* CA-Cl*pper does it */
       else if( HB_IS_DATETIME(pItem) )
       {
-         return static_cast<long>( pItem->item.asDateTime.julian );
+         return static_cast<long>(pItem->item.asDateTime.julian);
       }
       else if( HB_IS_ARRAY(pItem) )
       {
@@ -1483,7 +1483,7 @@ long  hb_parvnl( int iParam, ... )
          nArrayIndex = va_arg( va, HB_SIZE );
          va_end( va );
 
-         return hb_arrayGetNL( pItem, nArrayIndex );
+         return hb_arrayGetNL(pItem, nArrayIndex);
       }
    }
 
@@ -1509,11 +1509,11 @@ HB_ISIZ hb_parvns( int iParam, ... )
 
       if( HB_IS_LONG(pItem) )
       {
-         return static_cast<HB_ISIZ>( pItem->item.asLong.value );
+         return static_cast<HB_ISIZ>(pItem->item.asLong.value);
       }
       else if( HB_IS_INTEGER(pItem) )
       {
-         return static_cast<HB_ISIZ>( pItem->item.asInteger.value );
+         return static_cast<HB_ISIZ>(pItem->item.asInteger.value);
       }
       else if( HB_IS_DOUBLE(pItem) )
       {
@@ -1528,7 +1528,7 @@ HB_ISIZ hb_parvns( int iParam, ... )
          nArrayIndex = va_arg( va, HB_SIZE );
          va_end( va );
 
-         return hb_arrayGetNS( pItem, nArrayIndex );
+         return hb_arrayGetNS(pItem, nArrayIndex);
       }
    }
 
@@ -1555,11 +1555,11 @@ HB_LONGLONG hb_parvnll( int iParam, ... )
 
       if( HB_IS_LONG(pItem) )
       {
-         return static_cast<HB_LONGLONG>( pItem->item.asLong.value );
+         return static_cast<HB_LONGLONG>(pItem->item.asLong.value);
       }
       else if( HB_IS_INTEGER(pItem) )
       {
-         return static_cast<HB_LONGLONG>( pItem->item.asInteger.value );
+         return static_cast<HB_LONGLONG>(pItem->item.asInteger.value);
       }
       else if( HB_IS_DOUBLE(pItem) )
       {
@@ -1574,7 +1574,7 @@ HB_LONGLONG hb_parvnll( int iParam, ... )
          nArrayIndex = va_arg( va, HB_SIZE );
          va_end( va );
 
-         return hb_arrayGetNLL( pItem, nArrayIndex );
+         return hb_arrayGetNLL(pItem, nArrayIndex);
       }
    }
 
@@ -1601,11 +1601,11 @@ HB_MAXINT hb_parvnint( int iParam, ... )
 
       if( HB_IS_LONG(pItem) )
       {
-         return static_cast<HB_MAXINT>( pItem->item.asLong.value );
+         return static_cast<HB_MAXINT>(pItem->item.asLong.value);
       }
       else if( HB_IS_INTEGER(pItem) )
       {
-         return static_cast<HB_MAXINT>( pItem->item.asInteger.value );
+         return static_cast<HB_MAXINT>(pItem->item.asInteger.value);
       }
       else if( HB_IS_DOUBLE(pItem) )
       {
@@ -1620,7 +1620,7 @@ HB_MAXINT hb_parvnint( int iParam, ... )
          nArrayIndex = va_arg( va, HB_SIZE );
          va_end( va );
 
-         return hb_arrayGetNInt( pItem, nArrayIndex );
+         return hb_arrayGetNInt(pItem, nArrayIndex);
       }
    }
 
@@ -1657,7 +1657,7 @@ void * hb_parvptr( int iParam, ... )
          nArrayIndex = va_arg( va, HB_SIZE );
          va_end( va );
 
-         return hb_arrayGetPtr( pItem, nArrayIndex );
+         return hb_arrayGetPtr(pItem, nArrayIndex);
       }
    }
 
@@ -1667,7 +1667,7 @@ void * hb_parvptr( int iParam, ... )
 void * hb_parvptrGC( const HB_GC_FUNCS * pFuncs, int iParam, ... )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_parvptrGC(%p,%d, ...)", static_cast<const void*>( pFuncs ), iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_parvptrGC(%p,%d, ...)", static_cast<const void*>(pFuncs), iParam ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -1697,7 +1697,7 @@ void * hb_parvptrGC( const HB_GC_FUNCS * pFuncs, int iParam, ... )
          nArrayIndex = va_arg( va, HB_SIZE );
          va_end( va );
 
-         pItem = hb_arrayGetItemPtr( pItem, nArrayIndex );
+         pItem = hb_arrayGetItemPtr(pItem, nArrayIndex);
          if( pItem && HB_IS_POINTER(pItem) && pItem->item.asPointer.collect && hb_gcFuncs( pItem->item.asPointer.value ) == pFuncs )
          {
             return pItem->item.asPointer.value;
@@ -1729,7 +1729,7 @@ void hb_reta( HB_SIZE nLen )  /* undocumented hb_reta() */
 
    HB_STACK_TLS_PRELOAD
 
-   hb_arrayNew( hb_stackReturnItem(), nLen );
+   hb_arrayNew(hb_stackReturnItem(), nLen);
 }
 
 #undef hb_retc
@@ -1784,7 +1784,7 @@ void hb_retc_const( const char * szText )
 void hb_retclen( const char * szText, HB_SIZE nLen )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_retclen(%.*s, %" HB_PFS "u)", static_cast<int>( nLen ), szText, nLen ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_retclen(%.*s, %" HB_PFS "u)", static_cast<int>(nLen), szText, nLen ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -1796,7 +1796,7 @@ void hb_retclen( const char * szText, HB_SIZE nLen )
 void hb_retclen_buffer( char * szText, HB_SIZE nLen )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_retclen_buffer(%.*s, %" HB_PFS "u)", static_cast<int>( nLen ), szText, nLen ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_retclen_buffer(%.*s, %" HB_PFS "u)", static_cast<int>(nLen), szText, nLen ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -1808,7 +1808,7 @@ void hb_retclen_buffer( char * szText, HB_SIZE nLen )
 void hb_retclen_const( const char * szText, HB_SIZE nLen )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_retclen_const(%.*s, %" HB_PFS "u)", static_cast<int>( nLen ), szText, nLen ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_retclen_const(%.*s, %" HB_PFS "u)", static_cast<int>(nLen), szText, nLen ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -2119,7 +2119,7 @@ int hb_storc( const char * szText, int iParam )
 int hb_storclen( const char * szText, HB_SIZE nLen, int iParam )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_storclen(%.*s, %" HB_PFS "u, %d)", static_cast<int>( nLen ), szText, nLen, iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_storclen(%.*s, %" HB_PFS "u, %d)", static_cast<int>(nLen), szText, nLen, iParam ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -2146,7 +2146,7 @@ int hb_storclen( const char * szText, HB_SIZE nLen, int iParam )
 int hb_storclen_buffer( char * szText, HB_SIZE nLen, int iParam )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_storclen_buffer(%.*s, %" HB_PFS "u, %d)", static_cast<int>( nLen ), szText, nLen, iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_storclen_buffer(%.*s, %" HB_PFS "u, %d)", static_cast<int>(nLen), szText, nLen, iParam ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -2552,7 +2552,7 @@ int hb_storvc( const char * szText, int iParam, ... )
          int iRetVal;
          va_list va;
          va_start( va, iParam );
-         iRetVal = hb_arraySetC( pItem, va_arg( va, HB_SIZE ), szText ) ? 1 : 0;
+         iRetVal = hb_arraySetC(pItem, va_arg( va, HB_SIZE ), szText) ? 1 : 0;
          va_end( va );
          return iRetVal;
       }
@@ -2569,7 +2569,7 @@ int hb_storvc( const char * szText, int iParam, ... )
 int hb_storvclen( const char * szText, HB_SIZE nLen, int iParam, ... )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_storvclen(%.*s, %" HB_PFS "u, %d, ...)", static_cast<int>( nLen ), szText, nLen, iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_storvclen(%.*s, %" HB_PFS "u, %d, ...)", static_cast<int>(nLen), szText, nLen, iParam ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -2589,7 +2589,7 @@ int hb_storvclen( const char * szText, HB_SIZE nLen, int iParam, ... )
          int iRetVal;
          va_list va;
          va_start( va, iParam );
-         iRetVal = hb_arraySetCL( pItem, va_arg( va, HB_SIZE ), szText, nLen ) ? 1 : 0;
+         iRetVal = hb_arraySetCL(pItem, va_arg( va, HB_SIZE ), szText, nLen) ? 1 : 0;
          va_end( va );
          return iRetVal;
       }
@@ -2606,7 +2606,7 @@ int hb_storvclen( const char * szText, HB_SIZE nLen, int iParam, ... )
 int hb_storvclen_buffer( char * szText, HB_SIZE nLen, int iParam, ... )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_storvclen_buffer(%.*s, %" HB_PFS "u, %d, ...)", static_cast<int>( nLen ), szText, nLen, iParam ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_storvclen_buffer(%.*s, %" HB_PFS "u, %d, ...)", static_cast<int>(nLen), szText, nLen, iParam ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -2626,7 +2626,7 @@ int hb_storvclen_buffer( char * szText, HB_SIZE nLen, int iParam, ... )
          int iRetVal;
          va_list va;
          va_start( va, iParam );
-         iRetVal = hb_arraySetCLPtr( pItem, va_arg( va, HB_SIZE ), szText, nLen ) ? 1 : 0;
+         iRetVal = hb_arraySetCLPtr(pItem, va_arg( va, HB_SIZE ), szText, nLen) ? 1 : 0;
          va_end( va );
          return iRetVal;
       }
@@ -2665,7 +2665,7 @@ int hb_storvds( const char * szDate, int iParam, ... )
          int iRetVal;
          va_list va;
          va_start( va, iParam );
-         iRetVal = hb_arraySetDS( pItem, va_arg( va, HB_SIZE ), szDate ) ? 1 : 0;
+         iRetVal = hb_arraySetDS(pItem, va_arg( va, HB_SIZE ), szDate) ? 1 : 0;
          va_end( va );
          return iRetVal;
       }
@@ -2702,7 +2702,7 @@ int hb_storvdl( long lJulian, int iParam, ... )
          int iRetVal;
          va_list va;
          va_start( va, iParam );
-         iRetVal = hb_arraySetDL( pItem, va_arg( va, HB_SIZE ), lJulian ) ? 1 : 0;
+         iRetVal = hb_arraySetDL(pItem, va_arg( va, HB_SIZE ), lJulian) ? 1 : 0;
          va_end( va );
          return iRetVal;
       }
@@ -2739,7 +2739,7 @@ int hb_storvtd( double dTimeStamp, int iParam, ... )
          int iRetVal;
          va_list va;
          va_start( va, iParam );
-         iRetVal = hb_arraySetTD( pItem, va_arg( va, HB_SIZE ), dTimeStamp ) ? 1 : 0;
+         iRetVal = hb_arraySetTD(pItem, va_arg( va, HB_SIZE ), dTimeStamp) ? 1 : 0;
          va_end( va );
          return iRetVal;
       }
@@ -2776,7 +2776,7 @@ int hb_storvtdt( long lJulian, long lMilliSec, int iParam, ... )
          int iRetVal;
          va_list va;
          va_start( va, iParam );
-         iRetVal = hb_arraySetTDT( pItem, va_arg( va, HB_SIZE ), lJulian, lMilliSec ) ? 1 : 0;
+         iRetVal = hb_arraySetTDT(pItem, va_arg( va, HB_SIZE ), lJulian, lMilliSec) ? 1 : 0;
          va_end( va );
          return iRetVal;
       }
@@ -2813,7 +2813,7 @@ int hb_storvl( int iLogical, int iParam, ... )
          int iRetVal;
          va_list va;
          va_start( va, iParam );
-         iRetVal = hb_arraySetL( pItem, va_arg( va, HB_SIZE ), iLogical ? HB_TRUE : HB_FALSE ) ? 1 : 0;
+         iRetVal = hb_arraySetL(pItem, va_arg( va, HB_SIZE ), iLogical ? HB_TRUE : HB_FALSE) ? 1 : 0;
          va_end( va );
          return iRetVal;
       }
@@ -2850,7 +2850,7 @@ int hb_storvni( int iValue, int iParam, ... )
          int iRetVal;
          va_list va;
          va_start( va, iParam );
-         iRetVal = hb_arraySetNI( pItem, va_arg( va, HB_SIZE ), iValue ) ? 1 : 0;
+         iRetVal = hb_arraySetNI(pItem, va_arg( va, HB_SIZE ), iValue) ? 1 : 0;
          va_end( va );
          return iRetVal;
       }
@@ -2887,7 +2887,7 @@ int hb_storvnl( long lValue, int iParam, ... )
          int iRetVal;
          va_list va;
          va_start( va, iParam );
-         iRetVal = hb_arraySetNL( pItem, va_arg( va, HB_SIZE ), lValue ) ? 1 : 0;
+         iRetVal = hb_arraySetNL(pItem, va_arg( va, HB_SIZE ), lValue) ? 1 : 0;
          va_end( va );
          return iRetVal;
       }
@@ -2924,7 +2924,7 @@ int hb_storvns( HB_ISIZ nValue, int iParam, ... )
          int iRetVal;
          va_list va;
          va_start( va, iParam );
-         iRetVal = hb_arraySetNS( pItem, va_arg( va, HB_SIZE ), nValue ) ? 1 : 0;
+         iRetVal = hb_arraySetNS(pItem, va_arg( va, HB_SIZE ), nValue) ? 1 : 0;
          va_end( va );
          return iRetVal;
       }
@@ -2962,7 +2962,7 @@ int hb_storvnll( HB_LONGLONG llValue, int iParam, ... )
          int iRetVal;
          va_list va;
          va_start( va, iParam );
-         iRetVal = hb_arraySetNLL( pItem, va_arg( va, HB_SIZE ), llValue ) ? 1 : 0;
+         iRetVal = hb_arraySetNLL(pItem, va_arg( va, HB_SIZE ), llValue) ? 1 : 0;
          va_end( va );
          return iRetVal;
       }
@@ -3000,7 +3000,7 @@ int hb_storvnint( HB_MAXINT nValue, int iParam, ... )
          int iRetVal;
          va_list va;
          va_start( va, iParam );
-         iRetVal = hb_arraySetNInt( pItem, va_arg( va, HB_SIZE ), nValue ) ? 1 : 0;
+         iRetVal = hb_arraySetNInt(pItem, va_arg( va, HB_SIZE ), nValue) ? 1 : 0;
          va_end( va );
          return iRetVal;
       }
@@ -3037,7 +3037,7 @@ int hb_storvnd( double dNumber, int iParam, ... )
          int iRetVal;
          va_list va;
          va_start( va, iParam );
-         iRetVal = hb_arraySetND( pItem, va_arg( va, HB_SIZE ), dNumber ) ? 1 : 0;
+         iRetVal = hb_arraySetND(pItem, va_arg( va, HB_SIZE ), dNumber) ? 1 : 0;
          va_end( va );
          return iRetVal;
       }
@@ -3074,7 +3074,7 @@ int hb_storvptr( void * pointer, int iParam, ... )
          int iRetVal;
          va_list va;
          va_start( va, iParam );
-         iRetVal = hb_arraySetPtr( pItem, va_arg( va, HB_SIZE ), pointer ) ? 1 : 0;
+         iRetVal = hb_arraySetPtr(pItem, va_arg( va, HB_SIZE ), pointer) ? 1 : 0;
          va_end( va );
          return iRetVal;
       }
@@ -3111,7 +3111,7 @@ int hb_storvptrGC( void * pointer, int iParam, ... )
          int iRetVal;
          va_list va;
          va_start( va, iParam );
-         iRetVal = hb_arraySetPtrGC( pItem, va_arg( va, HB_SIZE ), pointer ) ? 1 : 0;
+         iRetVal = hb_arraySetPtrGC(pItem, va_arg( va, HB_SIZE ), pointer) ? 1 : 0;
          va_end( va );
          return iRetVal;
       }
@@ -3134,5 +3134,5 @@ int  hb_pcount( void )
 
    HB_STACK_TLS_PRELOAD
 
-   return static_cast<int>( ( hb_stackBaseItem() )->item.asSymbol.paramcnt );
+   return static_cast<int>(( hb_stackBaseItem() )->item.asSymbol.paramcnt);
 }

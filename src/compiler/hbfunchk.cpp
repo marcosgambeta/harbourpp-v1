@@ -109,7 +109,7 @@ static const HB_FUNCINFO s_stdFunc[] =
 HB_BOOL hb_compFunCallCheck( HB_COMP_DECL, const char * szFuncCall, int iArgs )
 {
    unsigned int uiFirst = 0, uiLast = HB_SIZEOFARRAY( s_stdFunc ) - 1, uiMiddle;
-   int iLen = static_cast<int>( strlen(szFuncCall) ), iCmp;
+   int iLen = static_cast<int>(strlen(szFuncCall)), iCmp;
 
    /* Respect 4 or more letters shortcuts
     * SECO() is not allowed because of Clipper function Seconds()
@@ -152,19 +152,19 @@ HB_BOOL hb_compFunCallCheck( HB_COMP_DECL, const char * szFuncCall, int iArgs )
          {
             if( pFunc->iMinParam == pFunc->iMaxParam )
             {
-               hb_snprintf( szMsg, sizeof(szMsg), "\nPassed: %i, expected: %i", iArgs, pFunc->iMinParam );
+               hb_snprintf(szMsg, sizeof(szMsg), "\nPassed: %i, expected: %i", iArgs, pFunc->iMinParam);
             }
             else if( pFunc->iMaxParam == -1 )
             {
-               hb_snprintf( szMsg, sizeof(szMsg), "\nPassed: %i, expected at least: %i", iArgs, pFunc->iMinParam );
+               hb_snprintf(szMsg, sizeof(szMsg), "\nPassed: %i, expected at least: %i", iArgs, pFunc->iMinParam);
             }
             else if( pFunc->iMinParam == -1 )
             {
-               hb_snprintf( szMsg, sizeof(szMsg), "\nPassed: %i, expected less than: %i", iArgs, pFunc->iMaxParam );
+               hb_snprintf(szMsg, sizeof(szMsg), "\nPassed: %i, expected less than: %i", iArgs, pFunc->iMaxParam);
             }
             else
             {
-               hb_snprintf( szMsg, sizeof(szMsg), "\nPassed: %i, expected from: %i to: %i", iArgs, pFunc->iMinParam, pFunc->iMaxParam );
+               hb_snprintf(szMsg, sizeof(szMsg), "\nPassed: %i, expected from: %i to: %i", iArgs, pFunc->iMinParam, pFunc->iMaxParam);
             }
          }
          else

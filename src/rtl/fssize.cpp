@@ -88,7 +88,7 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
          HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
          if( hModule )
          {
-            s_pGetFileAttributesEx = reinterpret_cast<_HB_GETFILEATTRIBUTESEX>( HB_WINAPI_GETPROCADDRESST( hModule, "GetFileAttributesEx" ) );
+            s_pGetFileAttributesEx = reinterpret_cast<_HB_GETFILEATTRIBUTESEX>(HB_WINAPI_GETPROCADDRESST( hModule, "GetFileAttributesEx" ));
          }
          else
          {
@@ -104,7 +104,7 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
          HB_BOOL fResult;
 
          lpFileName = HB_FSNAMECONV( pszFileName, &lpFree );
-         memset( &attrex, 0, sizeof(attrex) );
+         memset(&attrex, 0, sizeof(attrex));
          fResult = GetFileAttributesEx( lpFileName, GetFileExInfoStandard, &attrex ) && ( attrex.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ) == 0;
          hb_fsSetIOError( fResult, 0 );
          if( lpFree )
@@ -113,7 +113,7 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
          }
          if( fResult )
          {
-            return static_cast<HB_FOFFSET>( attrex.nFileSizeLow ) + ( static_cast<HB_FOFFSET>( attrex.nFileSizeHigh ) << 32 );
+            return static_cast<HB_FOFFSET>(attrex.nFileSizeLow) + ( static_cast<HB_FOFFSET>(attrex.nFileSizeHigh) << 32 );
          }
       }
       else
@@ -143,7 +143,7 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
       }
       if( fResult )
       {
-         return static_cast<HB_FOFFSET>( statbuf.st_size );
+         return static_cast<HB_FOFFSET>(statbuf.st_size);
       }
 #else
       char * pszFree;
@@ -152,7 +152,7 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
       pszFileName = hb_fsNameConv( pszFileName, &pszFree );
       statbuf.st_size = 0;
       hb_vmUnlock();
-      fResult = stat( static_cast<char*>( pszFileName ), &statbuf ) == 0;
+      fResult = stat( static_cast<char*>(pszFileName), &statbuf ) == 0;
       hb_fsSetIOError( fResult, 0 );
       hb_vmLock();
       if( pszFree )
@@ -161,7 +161,7 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
       }
       if( fResult )
       {
-         return static_cast<HB_FOFFSET>( statbuf.st_size );
+         return static_cast<HB_FOFFSET>(statbuf.st_size);
       }
 #endif
    }

@@ -73,7 +73,7 @@ HB_FUNC( LEN )
       }
       else if( HB_IS_ARRAY(pItem) )
       {
-         hb_retns( hb_arrayLen( pItem ) );
+         hb_retns( hb_arrayLen(pItem) );
          return;
       }
       else if( HB_IS_HASH(pItem) )

@@ -102,14 +102,14 @@ void hb_fsAddSearchPath( const char * szPath, HB_PATHNAMES ** pSearchList )
    while( ( pDelim = strchr( pPath, HB_OS_PATH_LIST_SEP_CHR ) ) != nullptr )
    {
       *pDelim = '\0';
-      *pSearchList = static_cast<HB_PATHNAMES*>( hb_xgrab(sizeof(HB_PATHNAMES)) );
+      *pSearchList = static_cast<HB_PATHNAMES*>(hb_xgrab(sizeof(HB_PATHNAMES)));
       ( *pSearchList )->szPath = pPath;
       ( *pSearchList )->fFree  = fFree;
       pSearchList = &( *pSearchList )->pNext;
       pPath = pDelim + 1;
       fFree = HB_FALSE;
    }
-   *pSearchList = static_cast<HB_PATHNAMES*>( hb_xgrab(sizeof(HB_PATHNAMES)) );
+   *pSearchList = static_cast<HB_PATHNAMES*>(hb_xgrab(sizeof(HB_PATHNAMES)));
    ( *pSearchList )->szPath = pPath;
    ( *pSearchList )->pNext  = nullptr;
    ( *pSearchList )->fFree  = fFree;
@@ -151,7 +151,7 @@ PHB_FNAME hb_fsFNameSplit( const char * pszFileName )
    PHB_FNAME pFileName;
 
    /* Grab memory, set defaults */
-   pFileName = static_cast<PHB_FNAME>( hb_xgrab(sizeof(HB_FNAME)) );
+   pFileName = static_cast<PHB_FNAME>(hb_xgrab(sizeof(HB_FNAME)));
 
    pFileName->szPath =
    pFileName->szName =
@@ -164,7 +164,7 @@ PHB_FNAME hb_fsFNameSplit( const char * pszFileName )
       HB_ISIZ iSize, iPos;
 
       iPos = iSize = hb_strnlen(pszFileName, HB_PATH_MAX - 1);
-      cDirSep = static_cast<char>( hb_setGetDirSeparator() );
+      cDirSep = static_cast<char>(hb_setGetDirSeparator());
 
       pszPos = pFileName->szBuffer;
 
@@ -245,7 +245,7 @@ PHB_FNAME hb_fsFNameSplit( const char * pszFileName )
 char * hb_fsFNameMerge( char * pszFileName, PHB_FNAME pFileName )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsFNameMerge(%p, %p)", static_cast<void*>( pszFileName ), static_cast<void*>( pFileName ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_fsFNameMerge(%p, %p)", static_cast<void*>(pszFileName), static_cast<void*>(pFileName) ) );
 #endif
 
    if( pszFileName && pFileName )
@@ -254,7 +254,7 @@ char * hb_fsFNameMerge( char * pszFileName, PHB_FNAME pFileName )
       char cDirSep;
 
       /* dir separator set by user */
-      cDirSep = static_cast<char>( hb_setGetDirSeparator() );
+      cDirSep = static_cast<char>(hb_setGetDirSeparator());
 
       /* Set the result to an empty string */
       pszFileName[ 0 ] = '\0';
@@ -276,7 +276,7 @@ char * hb_fsFNameMerge( char * pszFileName, PHB_FNAME pFileName )
          was none. */
       if( pszFileName[ 0 ] != '\0' && ( pszName || pFileName->szExtension ) )
       {
-         int iLen = static_cast<int>( strlen(pszFileName) ) - 1;
+         int iLen = static_cast<int>(strlen(pszFileName)) - 1;
 
          if( iLen < HB_PATH_MAX - 1 - 2 && pszFileName[ iLen ] != cDirSep && strchr( HB_OS_PATH_DELIM_CHR_LIST, pszFileName[ iLen ] ) == nullptr )
          {
@@ -317,7 +317,7 @@ char * hb_fsFNameMerge( char * pszFileName, PHB_FNAME pFileName )
 HB_BOOL hb_fsNameExists( const char * pszFileName )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsNameExists(%p)", static_cast<const void*>( pszFileName ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_fsNameExists(%p)", static_cast<const void*>(pszFileName) ) );
 #endif
 
    HB_BOOL fExist = HB_FALSE;
@@ -366,7 +366,7 @@ HB_BOOL hb_fsNameExists( const char * pszFileName )
 HB_BOOL hb_fsFileExists( const char * pszFileName )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsFileExists(%p)", static_cast<const void*>( pszFileName ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_fsFileExists(%p)", static_cast<const void*>(pszFileName) ) );
 #endif
 
    HB_BOOL fExist = HB_FALSE;
@@ -417,7 +417,7 @@ HB_BOOL hb_fsFileExists( const char * pszFileName )
 HB_BOOL hb_fsDirExists( const char * pszDirName )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsDirExists(%p)", static_cast<const void*>( pszDirName ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_fsDirExists(%p)", static_cast<const void*>(pszDirName) ) );
 #endif
 
    HB_BOOL fExist = HB_FALSE;

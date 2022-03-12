@@ -75,23 +75,23 @@ HB_FUNC( HB_STRREPLACE )
          nDst = hb_itemSize(HB_IS_HASH(pSrc) ? pSrc : pDst);
          if( nText > 1024 )
          {
-            ptrOpt = static_cast<HB_SIZE*>( hb_xgrabz( 256 * sizeof(HB_SIZE) ) );
+            ptrOpt = static_cast<HB_SIZE*>(hb_xgrabz(256 * sizeof(HB_SIZE)));
             for( nAt = 0; nAt < nSrc; ++nAt )
             {
                HB_UCHAR uc;
 
                if( pszSrc )
                {
-                  uc = static_cast<HB_UCHAR>( pszSrc[ nAt ] );
+                  uc = static_cast<HB_UCHAR>(pszSrc[ nAt ]);
                }
                else
                {
-                  PHB_ITEM pItem = HB_IS_HASH(pSrc) ? hb_hashGetKeyAt( pSrc, nAt + 1 ) : hb_arrayGetItemPtr( pSrc, nAt + 1 );
+                  PHB_ITEM pItem = HB_IS_HASH(pSrc) ? hb_hashGetKeyAt( pSrc, nAt + 1 ) : hb_arrayGetItemPtr(pSrc, nAt + 1);
                   if( hb_itemGetCLen(pItem) == 0 )
                   {
                      continue;
                   }
-                  uc = static_cast<HB_UCHAR>( hb_itemGetCPtr(pItem)[ 0 ] );
+                  uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pItem)[ 0 ]);
                }
                if( ptrOpt[ uc ] == 0 )
                {
@@ -109,7 +109,7 @@ HB_FUNC( HB_STRREPLACE )
          {
             if( ptrOpt )
             {
-               nAt = ptrOpt[ static_cast<HB_UCHAR>( pszText[ nPos ] ) ];
+               nAt = ptrOpt[ static_cast<HB_UCHAR>(pszText[ nPos ]) ];
                if( nAt == 0 || pszSrc )
                {
                   nSkip = 1;
@@ -126,10 +126,10 @@ HB_FUNC( HB_STRREPLACE )
                      }
                      else
                      {
-                        nSkip = hb_arrayGetCLen( pSrc, nAt );
-                        ptr = hb_arrayGetCPtr( pSrc, nAt );
+                        nSkip = hb_arrayGetCLen(pSrc, nAt);
+                        ptr = hb_arrayGetCPtr(pSrc, nAt);
                      }
-                     if( nSkip > 0 && nSkip <= nText - nPos && memcmp( pszText + nPos, ptr, nSkip ) == 0 )
+                     if( nSkip > 0 && nSkip <= nText - nPos && memcmp(pszText + nPos, ptr, nSkip) == 0 )
                      {
                         break;
                      }
@@ -147,7 +147,7 @@ HB_FUNC( HB_STRREPLACE )
             }
             else if( pszSrc )
             {
-               ptr = static_cast<const char*>( memchr( pszSrc, static_cast<HB_UCHAR>( pszText[ nPos ] ), nSrc ) );
+               ptr = static_cast<const char*>(memchr( pszSrc, static_cast<HB_UCHAR>(pszText[ nPos ]), nSrc ));
                nAt = ptr ? ptr - pszSrc + 1 : 0;
                nSkip = 1;
             }
@@ -163,10 +163,10 @@ HB_FUNC( HB_STRREPLACE )
                   }
                   else
                   {
-                     nSkip = hb_arrayGetCLen( pSrc, nAt );
-                     ptr = hb_arrayGetCPtr( pSrc, nAt );
+                     nSkip = hb_arrayGetCLen(pSrc, nAt);
+                     ptr = hb_arrayGetCPtr(pSrc, nAt);
                   }
-                  if( nSkip > 0 && nSkip <= nText - nPos && memcmp( pszText + nPos, ptr, nSkip ) == 0 )
+                  if( nSkip > 0 && nSkip <= nText - nPos && memcmp(pszText + nPos, ptr, nSkip) == 0 )
                   {
                      break;
                   }
@@ -198,10 +198,10 @@ HB_FUNC( HB_STRREPLACE )
                         }
                         else
                         {
-                           nTmp = hb_arrayGetCLen( pDst, nAt );
-                           ptr = hb_arrayGetCPtr( pDst, nAt );
+                           nTmp = hb_arrayGetCLen(pDst, nAt);
+                           ptr = hb_arrayGetCPtr(pDst, nAt);
                         }
-                        memcpy( &pszResult[ nSize ], ptr, nTmp );
+                        memcpy(&pszResult[ nSize ], ptr, nTmp);
                         nSize += nTmp;
                      }
                   }
@@ -228,7 +228,7 @@ HB_FUNC( HB_STRREPLACE )
                      }
                      else
                      {
-                        nSize += hb_arrayGetCLen( pDst, nAt );
+                        nSize += hb_arrayGetCLen(pDst, nAt);
                      }
                   }
                }
@@ -239,7 +239,7 @@ HB_FUNC( HB_STRREPLACE )
                nPos += nSkip;
                if( nPos == nText )
                {
-                  pszResult = static_cast<char*>( hb_xgrab(nSize + 1) );
+                  pszResult = static_cast<char*>(hb_xgrab(nSize + 1));
                   nSize = nPos = 0;
                }
             }

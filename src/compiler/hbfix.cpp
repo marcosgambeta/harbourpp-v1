@@ -71,8 +71,8 @@ static HB_FIX_FUNC( hb_p_pushblock )
    while( wVar-- )
    {
       HB_USHORT wLocal = HB_PCODE_MKUSHORT( pLocal ) + pFunc->wParamCount;
-      pLocal[ 0 ] = HB_LOBYTE( wLocal );
-      pLocal[ 1 ] = HB_HIBYTE( wLocal );
+      pLocal[ 0 ] = HB_LOBYTE(wLocal);
+      pLocal[ 1 ] = HB_HIBYTE(wLocal);
       pLocal += 2;
    }
 
@@ -96,8 +96,8 @@ static HB_FIX_FUNC( hb_p_pushblocklarge )
    while( wVar-- )
    {
       HB_USHORT wLocal = HB_PCODE_MKUSHORT( pLocal ) + pFunc->wParamCount;
-      pLocal[ 0 ] = HB_LOBYTE( wLocal );
-      pLocal[ 1 ] = HB_HIBYTE( wLocal );
+      pLocal[ 0 ] = HB_LOBYTE(wLocal);
+      pLocal[ 1 ] = HB_HIBYTE(wLocal);
       pLocal += 2;
    }
 
@@ -115,8 +115,8 @@ static HB_FIX_FUNC( hb_p_localfix )
    HB_SYMBOL_UNUSED(cargo);
 
    iVar += pFunc->wParamCount;
-   pVar[ 0 ] = HB_LOBYTE( iVar );
-   pVar[ 1 ] = HB_HIBYTE( iVar );
+   pVar[ 0 ] = HB_LOBYTE(iVar);
+   pVar[ 1 ] = HB_HIBYTE(iVar);
 
    return 0;
 }
@@ -334,5 +334,5 @@ void hb_compFixFuncPCode( HB_COMP_DECL, PHB_HFUNC pFunc )
 
    assert( HB_P_LAST_PCODE == sizeof(s_fixlocals_table) / sizeof(PHB_FIX_FUNC) );
 
-   hb_compPCodeEval( pFunc, reinterpret_cast<const PHB_PCODE_FUNC*>( pFuncTable ), static_cast<void*>( &fix_info ) );
+   hb_compPCodeEval( pFunc, reinterpret_cast<const PHB_PCODE_FUNC*>(pFuncTable), static_cast<void*>(&fix_info) );
 }

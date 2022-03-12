@@ -132,7 +132,7 @@ void hb_verBuildInfo( void )
    }
 
    hb_conOutErr( "Build options: ", 0 );
-   if( hb_xquery( HB_MEM_STATISTICS ) != 0 )
+   if( hb_xquery(HB_MEM_STATISTICS) != 0 )
    {
       hb_conOutErr( "(memory tracking) ", 0 );
    }

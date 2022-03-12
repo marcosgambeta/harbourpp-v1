@@ -82,7 +82,7 @@ using PHB_SET_LISTENER_LST = HB_SET_LISTENER_LST *;
 static char set_char( PHB_ITEM pItem, char oldChar )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "set_char(%p, %c)", static_cast<void*>( pItem ), oldChar ) );
+   HB_TRACE( HB_TR_DEBUG, ( "set_char(%p, %c)", static_cast<void*>(pItem), oldChar ) );
 #endif
 
    char newChar = oldChar;
@@ -106,7 +106,7 @@ static char set_char( PHB_ITEM pItem, char oldChar )
 static HB_BOOL set_logical( PHB_ITEM pItem, HB_BOOL bDefault )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "set_logical(%p)", static_cast<void*>( pItem ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "set_logical(%p)", static_cast<void*>(pItem) ) );
 #endif
 
    HB_BOOL bLogical = bDefault;
@@ -123,15 +123,15 @@ static HB_BOOL set_logical( PHB_ITEM pItem, HB_BOOL bDefault )
          HB_SIZE nLen = hb_itemGetCLen(pItem);
 
          if( nLen >= 2
-             && ( static_cast<HB_UCHAR>( szString[ 0 ] ) == 'O' || static_cast<HB_UCHAR>( szString[ 0 ] ) == 'o' )
-             && ( static_cast<HB_UCHAR>( szString[ 1 ] ) == 'N' || static_cast<HB_UCHAR>( szString[ 1 ] ) == 'n' ) )
+             && ( static_cast<HB_UCHAR>(szString[ 0 ]) == 'O' || static_cast<HB_UCHAR>(szString[ 0 ]) == 'o' )
+             && ( static_cast<HB_UCHAR>(szString[ 1 ]) == 'N' || static_cast<HB_UCHAR>(szString[ 1 ]) == 'n' ) )
          {
             bLogical = HB_TRUE;
          }
          else if( nLen >= 3
-                  && ( static_cast<HB_UCHAR>( szString[ 0 ] ) == 'O' || static_cast<HB_UCHAR>( szString[ 0 ] ) == 'o' )
-                  && ( static_cast<HB_UCHAR>( szString[ 1 ] ) == 'F' || static_cast<HB_UCHAR>( szString[ 1 ] ) == 'f' )
-                  && ( static_cast<HB_UCHAR>( szString[ 2 ] ) == 'F' || static_cast<HB_UCHAR>( szString[ 2 ] ) == 'f' ) )
+                  && ( static_cast<HB_UCHAR>(szString[ 0 ]) == 'O' || static_cast<HB_UCHAR>(szString[ 0 ]) == 'o' )
+                  && ( static_cast<HB_UCHAR>(szString[ 1 ]) == 'F' || static_cast<HB_UCHAR>(szString[ 1 ]) == 'f' )
+                  && ( static_cast<HB_UCHAR>(szString[ 2 ]) == 'F' || static_cast<HB_UCHAR>(szString[ 2 ]) == 'f' ) )
          {
             bLogical = HB_FALSE;
          }
@@ -144,7 +144,7 @@ static HB_BOOL set_logical( PHB_ITEM pItem, HB_BOOL bDefault )
 static int set_number( PHB_ITEM pItem, int iOldValue )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "set_number(%p, %d)", static_cast<void*>( pItem ), iOldValue ) );
+   HB_TRACE( HB_TR_DEBUG, ( "set_number(%p, %d)", static_cast<void*>(pItem), iOldValue ) );
 #endif
 
    return HB_IS_NUMERIC(pItem) ? hb_itemGetNI(pItem) : iOldValue;
@@ -153,7 +153,7 @@ static int set_number( PHB_ITEM pItem, int iOldValue )
 static char * set_string( PHB_ITEM pItem, char * szOldString )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "set_string(%p, %s)", static_cast<void*>( pItem ), szOldString ) );
+   HB_TRACE( HB_TR_DEBUG, ( "set_string(%p, %s)", static_cast<void*>(pItem), szOldString ) );
 #endif
 
    char * szString;
@@ -178,7 +178,7 @@ static char * set_string( PHB_ITEM pItem, char * szOldString )
 static void close_handle( PHB_SET_STRUCT pSet, HB_set_enum set_specifier )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "close_handle(%p, %d)", static_cast<void*>( pSet ), static_cast<int>( set_specifier ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "close_handle(%p, %d)", static_cast<void*>(pSet), static_cast<int>(set_specifier) ) );
 #endif
 
    PHB_FILE * handle_ptr;
@@ -250,7 +250,7 @@ static const char * is_devicename( const char * szFileName )
             }
          }
       }
-      iLen = static_cast<int>( strlen(szFileName + iSkip) );
+      iLen = static_cast<int>(strlen(szFileName + iSkip));
       if( iLen >= 3 && iLen <= 4 )
       {
          int iFrom, iTo;
@@ -297,7 +297,7 @@ static const char * is_devicename( const char * szFileName )
 static void open_handle( PHB_SET_STRUCT pSet, const char * file_name, HB_BOOL fAppend, HB_set_enum set_specifier )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "open_handle(%p, %s, %d, %d)", static_cast<void*>( pSet ), file_name, static_cast<int>( fAppend ), static_cast<int>( set_specifier ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "open_handle(%p, %s, %d, %d)", static_cast<void*>(pSet), file_name, static_cast<int>(fAppend), static_cast<int>(set_specifier) ) );
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -490,10 +490,10 @@ HB_BOOL hb_setSetCentury( HB_BOOL new_century_setting )
       /* Convert to upper case and determine where year is */
       y_start = y_stop = -1;
       szDateFormat = pSet->HB_SET_DATEFORMAT;
-      size = static_cast<int>( strlen(szDateFormat) );
+      size = static_cast<int>(strlen(szDateFormat));
       for( int count = 0; count < size; count++ )
       {
-         int digit = HB_TOUPPER(static_cast<HB_UCHAR>( szDateFormat[ count ] ));
+         int digit = HB_TOUPPER(static_cast<HB_UCHAR>(szDateFormat[ count ]));
          if( digit == 'Y' )
          {
             if( y_start == -1 )
@@ -505,7 +505,7 @@ HB_BOOL hb_setSetCentury( HB_BOOL new_century_setting )
          {
             y_stop = count;
          }
-         szDateFormat[ count ] = static_cast<char>( digit );
+         szDateFormat[ count ] = static_cast<char>(digit);
       }
       /* Determine size of year in current format */
       if( y_start < 0 )
@@ -530,13 +530,13 @@ HB_BOOL hb_setSetCentury( HB_BOOL new_century_setting )
       }
 
       /* Create the new date format */
-      szNewFormat = static_cast<char*>( hb_xgrab(size + 1) );
+      szNewFormat = static_cast<char*>(hb_xgrab(size + 1));
 
       {
          int format_len;
          if( y_start > 0 )
          {
-            memcpy( szNewFormat, szDateFormat, y_start );
+            memcpy(szNewFormat, szDateFormat, y_start);
          }
          szNewFormat[ y_start ] = '\0';
          hb_strncat( szNewFormat, "YY", size );
@@ -544,7 +544,7 @@ HB_BOOL hb_setSetCentury( HB_BOOL new_century_setting )
          {
             hb_strncat( szNewFormat, "YY", size );
          }
-         format_len = static_cast<int>( strlen(szDateFormat) );
+         format_len = static_cast<int>(strlen(szDateFormat));
          if( y_stop < format_len )
          {
             hb_strncat( szNewFormat, szDateFormat + y_stop, size );
@@ -1184,12 +1184,12 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pA
       case HB_SET_DIRSEPARATOR:
       {
          char szDirSep[ 2 ];
-         szDirSep[ 0 ] = static_cast<char>( pSet->HB_SET_DIRSEPARATOR );
+         szDirSep[ 0 ] = static_cast<char>(pSet->HB_SET_DIRSEPARATOR);
          szDirSep[ 1 ] = '\0';
          pResult = hb_itemPutC(pResult, szDirSep);
          if( pArg1 != nullptr )
          {
-            pSet->HB_SET_DIRSEPARATOR = set_char( pArg1, static_cast<char>( pSet->HB_SET_DIRSEPARATOR ) );
+            pSet->HB_SET_DIRSEPARATOR = set_char( pArg1, static_cast<char>(pSet->HB_SET_DIRSEPARATOR) );
          }
          break;
       }
@@ -1259,7 +1259,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pA
       case HB_SET_OSCODEPAGE:
          if( pSet->hb_set_oscp )
          {
-            pResult = hb_itemPutC(pResult, ( static_cast<PHB_CODEPAGE>( pSet->hb_set_oscp ) )->id);
+            pResult = hb_itemPutC(pResult, ( static_cast<PHB_CODEPAGE>(pSet->hb_set_oscp) )->id);
          }
          else if( pResult )
          {
@@ -1280,7 +1280,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pA
                PHB_CODEPAGE cdp = hb_cdpFindExt( hb_itemGetCPtr(pArg1) );
                if( cdp )
                {
-                  pSet->hb_set_oscp = static_cast<void*>( cdp );
+                  pSet->hb_set_oscp = static_cast<void*>(cdp);
                }
             }
             else
@@ -1292,7 +1292,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pA
       case HB_SET_DBCODEPAGE:
          if( pSet->hb_set_dbcp )
          {
-            pResult = hb_itemPutC(pResult, ( static_cast<PHB_CODEPAGE>( pSet->hb_set_dbcp ) )->id);
+            pResult = hb_itemPutC(pResult, ( static_cast<PHB_CODEPAGE>(pSet->hb_set_dbcp) )->id);
          }
          else if( pResult )
          {
@@ -1313,7 +1313,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pA
                PHB_CODEPAGE cdp = hb_cdpFindExt( hb_itemGetCPtr(pArg1) );
                if( cdp )
                {
-                  pSet->hb_set_dbcp = static_cast<void*>( cdp );
+                  pSet->hb_set_dbcp = static_cast<void*>(cdp);
                }
             }
             else
@@ -1353,7 +1353,7 @@ HB_FUNC( SET )
 void hb_setInitialize( PHB_SET_STRUCT pSet )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_setInitialize(%p)", static_cast<void*>( pSet ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_setInitialize(%p)", static_cast<void*>(pSet) ) );
 #endif
 
    pSet->HB_SET_ALTERNATE = HB_FALSE;
@@ -1366,7 +1366,7 @@ void hb_setInitialize( PHB_SET_STRUCT pSet )
    pSet->HB_SET_CANCEL = HB_TRUE;
    pSet->hb_set_century = HB_FALSE;
    pSet->hb_set_prndevice = HB_FALSE;
-   pSet->HB_SET_COLOR = static_cast<char*>( hb_xgrab(HB_CLRSTR_LEN + 1) );
+   pSet->HB_SET_COLOR = static_cast<char*>(hb_xgrab(HB_CLRSTR_LEN + 1));
    /* NOTE: color must be synced with the one in IsDefColor() function */
    hb_strncpy(pSet->HB_SET_COLOR, "W/N,N/W,N/N,N/N,N/W", HB_CLRSTR_LEN);
    pSet->HB_SET_CONFIRM = HB_FALSE;
@@ -1523,7 +1523,7 @@ void hb_setRelease( PHB_SET_STRUCT pSet )
    /* Free all set listeners */
    if( pSet->hb_set_listener )
    {
-      PHB_SET_LISTENER pListener = ( static_cast<PHB_SET_LISTENER_LST>( pSet->hb_set_listener ) )->first;
+      PHB_SET_LISTENER pListener = ( static_cast<PHB_SET_LISTENER_LST>(pSet->hb_set_listener) )->first;
       while( pListener )
       {
          PHB_SET_LISTENER pNext = pListener->next;
@@ -1536,9 +1536,9 @@ void hb_setRelease( PHB_SET_STRUCT pSet )
 
 PHB_SET_STRUCT hb_setClone( PHB_SET_STRUCT pSrc )
 {
-   PHB_SET_STRUCT pSet = static_cast<PHB_SET_STRUCT>( hb_xgrab(sizeof(HB_SET_STRUCT)) );
+   PHB_SET_STRUCT pSet = static_cast<PHB_SET_STRUCT>(hb_xgrab(sizeof(HB_SET_STRUCT)));
 
-   memcpy( pSet, pSrc, sizeof(HB_SET_STRUCT) );
+   memcpy(pSet, pSrc, sizeof(HB_SET_STRUCT));
 
    pSet->hb_set_althan = pSet->hb_set_extrahan = pSet->hb_set_printhan = nullptr;
    pSet->hb_set_path = nullptr;
@@ -1546,7 +1546,7 @@ PHB_SET_STRUCT hb_setClone( PHB_SET_STRUCT pSrc )
 
    pSet->HB_SET_TYPEAHEAD = HB_DEFAULT_INKEY_BUFSIZE;
 
-   pSet->HB_SET_COLOR = static_cast<char*>( hb_xgrab(HB_CLRSTR_LEN + 1) );
+   pSet->HB_SET_COLOR = static_cast<char*>(hb_xgrab(HB_CLRSTR_LEN + 1));
    hb_strncpy(pSet->HB_SET_COLOR, pSrc->HB_SET_COLOR, HB_CLRSTR_LEN);
 
    if( pSet->HB_SET_ALTFILE )
@@ -1611,15 +1611,15 @@ int hb_setListenerAdd( HB_SET_LISTENER_CALLBACK * callback )
 {
    HB_STACK_TLS_PRELOAD
    PHB_SET_STRUCT pSet = hb_stackSetStruct();
-   PHB_SET_LISTENER p_sl = static_cast<PHB_SET_LISTENER>( hb_xgrab(sizeof(HB_SET_LISTENER)) );
+   PHB_SET_LISTENER p_sl = static_cast<PHB_SET_LISTENER>(hb_xgrab(sizeof(HB_SET_LISTENER)));
    PHB_SET_LISTENER_LST pList;
 
    if( ! pSet->hb_set_listener )
    {
-      pSet->hb_set_listener = hb_xgrabz( sizeof(HB_SET_LISTENER_LST) );
+      pSet->hb_set_listener = hb_xgrabz(sizeof(HB_SET_LISTENER_LST));
    }
 
-   pList = static_cast<PHB_SET_LISTENER_LST>( pSet->hb_set_listener );
+   pList = static_cast<PHB_SET_LISTENER_LST>(pSet->hb_set_listener);
 
    p_sl->callback = callback;
    p_sl->listener = ++pList->counter;
@@ -1641,7 +1641,7 @@ int hb_setListenerAdd( HB_SET_LISTENER_CALLBACK * callback )
 void hb_setListenerNotify( HB_set_enum set, HB_set_listener_enum when )
 {
    HB_STACK_TLS_PRELOAD
-   PHB_SET_LISTENER_LST pList = static_cast<PHB_SET_LISTENER_LST>( hb_stackSetStruct()->hb_set_listener );
+   PHB_SET_LISTENER_LST pList = static_cast<PHB_SET_LISTENER_LST>(hb_stackSetStruct()->hb_set_listener);
 
    if( pList )
    {
@@ -1657,7 +1657,7 @@ void hb_setListenerNotify( HB_set_enum set, HB_set_listener_enum when )
 int hb_setListenerRemove( int listener )
 {
    HB_STACK_TLS_PRELOAD
-   PHB_SET_LISTENER_LST pList = static_cast<PHB_SET_LISTENER_LST>( hb_stackSetStruct()->hb_set_listener );
+   PHB_SET_LISTENER_LST pList = static_cast<PHB_SET_LISTENER_LST>(hb_stackSetStruct()->hb_set_listener);
 
    if( pList )
    {
@@ -2310,7 +2310,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
                PHB_CODEPAGE cdp = hb_cdpFindExt( hb_itemGetCPtr(pItem) );
                if( cdp )
                {
-                  pSet->hb_set_oscp = static_cast<void*>( cdp );
+                  pSet->hb_set_oscp = static_cast<void*>(cdp);
                   fResult = HB_TRUE;
                }
             }
@@ -2326,7 +2326,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
                PHB_CODEPAGE cdp = hb_cdpFindExt( hb_itemGetCPtr(pItem) );
                if( cdp )
                {
-                  pSet->hb_set_dbcp = static_cast<void*>( cdp );
+                  pSet->hb_set_dbcp = static_cast<void*>(cdp);
                   fResult = HB_TRUE;
                }
             }
@@ -2541,9 +2541,9 @@ const char * hb_setGetCPtr( HB_set_enum set_specifier )
       case HB_SET_HBOUTLOGINFO:
          return pSet->HB_SET_HBOUTLOGINFO;
       case HB_SET_OSCODEPAGE:
-         return pSet->hb_set_oscp ? ( static_cast<PHB_CODEPAGE>( pSet->hb_set_oscp ) )->id : nullptr;
+         return pSet->hb_set_oscp ? ( static_cast<PHB_CODEPAGE>(pSet->hb_set_oscp) )->id : nullptr;
       case HB_SET_DBCODEPAGE:
-         return pSet->hb_set_dbcp ? ( static_cast<PHB_CODEPAGE>( pSet->hb_set_dbcp ) )->id : nullptr;
+         return pSet->hb_set_dbcp ? ( static_cast<PHB_CODEPAGE>(pSet->hb_set_dbcp) )->id : nullptr;
       case HB_SET_LANGUAGE:
          return hb_langID();
       case HB_SET_CODEPAGE:
@@ -3138,7 +3138,7 @@ const char * hb_setGetOSCODEPAGE( void )
    HB_STACK_TLS_PRELOAD
    PHB_SET_STRUCT pSet = hb_stackSetStruct();
 
-   return pSet->hb_set_oscp ? ( static_cast<PHB_CODEPAGE>( pSet->hb_set_oscp ) )->id : nullptr;
+   return pSet->hb_set_oscp ? ( static_cast<PHB_CODEPAGE>(pSet->hb_set_oscp) )->id : nullptr;
 }
 
 void * hb_setGetOSCP( void )
@@ -3152,7 +3152,7 @@ const char * hb_setGetDBCODEPAGE( void )
    HB_STACK_TLS_PRELOAD
    PHB_SET_STRUCT pSet = hb_stackSetStruct();
 
-   return pSet->hb_set_dbcp ? ( static_cast<PHB_CODEPAGE>( pSet->hb_set_dbcp ) )->id : nullptr;
+   return pSet->hb_set_dbcp ? ( static_cast<PHB_CODEPAGE>(pSet->hb_set_dbcp) )->id : nullptr;
 }
 
 HB_BOOL hb_osUseCP( void )
@@ -3163,7 +3163,7 @@ HB_BOOL hb_osUseCP( void )
    if( hb_stackId() )
 #endif
    {
-      PHB_CODEPAGE cdpOS = static_cast<PHB_CODEPAGE>( hb_stackSetStruct()->hb_set_oscp );
+      PHB_CODEPAGE cdpOS = static_cast<PHB_CODEPAGE>(hb_stackSetStruct()->hb_set_oscp);
       if( cdpOS )
       {
          PHB_CODEPAGE cdpHost = hb_vmCDP();
@@ -3179,7 +3179,7 @@ const char * hb_osEncodeCP( const char * szName, char ** pszFree, HB_SIZE * pnSi
    if( hb_vmIsReady() )
    {
       HB_STACK_TLS_PRELOAD
-      PHB_CODEPAGE cdpOS = static_cast<PHB_CODEPAGE>( hb_stackSetStruct()->hb_set_oscp );
+      PHB_CODEPAGE cdpOS = static_cast<PHB_CODEPAGE>(hb_stackSetStruct()->hb_set_oscp);
       if( cdpOS )
       {
          PHB_CODEPAGE cdpHost = hb_vmCDP();
@@ -3190,7 +3190,7 @@ const char * hb_osEncodeCP( const char * szName, char ** pszFree, HB_SIZE * pnSi
 
             if( pszFree == nullptr )
             {
-               pszFree = static_cast<char**>( HB_UNCONST( &szName ) );
+               pszFree = static_cast<char**>(HB_UNCONST( &szName ));
                nSize = strlen(szName);
             }
             pszBuf = *pszFree;
@@ -3216,7 +3216,7 @@ const char * hb_osDecodeCP( const char * szName, char ** pszFree, HB_SIZE * pnSi
    if( hb_vmIsReady() )
    {
       HB_STACK_TLS_PRELOAD
-      PHB_CODEPAGE cdpOS = static_cast<PHB_CODEPAGE>( hb_stackSetStruct()->hb_set_oscp );
+      PHB_CODEPAGE cdpOS = static_cast<PHB_CODEPAGE>(hb_stackSetStruct()->hb_set_oscp);
       if( cdpOS )
       {
          PHB_CODEPAGE cdpHost = hb_vmCDP();
@@ -3227,7 +3227,7 @@ const char * hb_osDecodeCP( const char * szName, char ** pszFree, HB_SIZE * pnSi
 
             if( pszFree == nullptr )
             {
-               pszFree = static_cast<char**>( HB_UNCONST( &szName ) );
+               pszFree = static_cast<char**>(HB_UNCONST( &szName ));
                nSize = strlen(szName);
             }
             pszBuf = *pszFree;
@@ -3253,7 +3253,7 @@ char * hb_osStrEncode( const char * pszName )
    if( hb_vmIsReady() )
    {
       HB_STACK_TLS_PRELOAD
-      PHB_CODEPAGE cdpOS = static_cast<PHB_CODEPAGE>( hb_stackSetStruct()->hb_set_oscp );
+      PHB_CODEPAGE cdpOS = static_cast<PHB_CODEPAGE>(hb_stackSetStruct()->hb_set_oscp);
       if( cdpOS )
       {
          PHB_CODEPAGE cdpHost = hb_vmCDP();
@@ -3272,7 +3272,7 @@ char * hb_osStrEncodeN( const char * pszName, HB_SIZE nLen )
    if( hb_vmIsReady() )
    {
       HB_STACK_TLS_PRELOAD
-      PHB_CODEPAGE cdpOS = static_cast<PHB_CODEPAGE>( hb_stackSetStruct()->hb_set_oscp );
+      PHB_CODEPAGE cdpOS = static_cast<PHB_CODEPAGE>(hb_stackSetStruct()->hb_set_oscp);
       if( cdpOS )
       {
          PHB_CODEPAGE cdpHost = hb_vmCDP();
@@ -3291,7 +3291,7 @@ char * hb_osStrDecode( const char * pszName )
    if( hb_vmIsReady() )
    {
       HB_STACK_TLS_PRELOAD
-      PHB_CODEPAGE cdpOS = static_cast<PHB_CODEPAGE>( hb_stackSetStruct()->hb_set_oscp );
+      PHB_CODEPAGE cdpOS = static_cast<PHB_CODEPAGE>(hb_stackSetStruct()->hb_set_oscp);
       if( cdpOS )
       {
          PHB_CODEPAGE cdpHost = hb_vmCDP();
@@ -3310,7 +3310,7 @@ char * hb_osStrDecode2( const char * pszName, char * pszBuffer, HB_SIZE nSize )
    if( hb_vmIsReady() )
    {
       HB_STACK_TLS_PRELOAD
-      PHB_CODEPAGE cdpOS = static_cast<PHB_CODEPAGE>( hb_stackSetStruct()->hb_set_oscp );
+      PHB_CODEPAGE cdpOS = static_cast<PHB_CODEPAGE>(hb_stackSetStruct()->hb_set_oscp);
       if( cdpOS )
       {
          PHB_CODEPAGE cdpHost = hb_vmCDP();
@@ -3339,7 +3339,7 @@ HB_WCHAR * hb_osStrU16Encode( const char * pszName )
 
          nLen = strlen(pszName);
          nSize = hb_cdpStrAsU16Len( cdp, pszName, nLen, 0 );
-         pszBufferW = static_cast<HB_WCHAR*>( hb_xgrab(( nSize + 1 ) * sizeof(HB_WCHAR)) );
+         pszBufferW = static_cast<HB_WCHAR*>(hb_xgrab(( nSize + 1 ) * sizeof(HB_WCHAR)));
          hb_cdpStrToU16( cdp, HB_CDP_ENDIAN_NATIVE, pszName, nLen, pszBufferW, nSize + 1 );
          return pszBufferW;
       }
@@ -3360,7 +3360,7 @@ HB_WCHAR * hb_osStrU16EncodeN( const char * pszName, HB_SIZE nLen )
 
          nLen = hb_strnlen(pszName, nLen);
          nSize = hb_cdpStrAsU16Len( cdp, pszName, nLen, 0 );
-         pszBufferW = static_cast<HB_WCHAR*>( hb_xgrab(( nSize + 1 ) * sizeof(HB_WCHAR)) );
+         pszBufferW = static_cast<HB_WCHAR*>(hb_xgrab(( nSize + 1 ) * sizeof(HB_WCHAR)));
          hb_cdpStrToU16( cdp, HB_CDP_ENDIAN_NATIVE, pszName, nLen, pszBufferW, nSize + 1 );
          return pszBufferW;
       }
@@ -3381,7 +3381,7 @@ char * hb_osStrU16Decode( const HB_WCHAR * pszNameW )
 
          nLen = hb_wstrlen(pszNameW);
          nSize = hb_cdpU16AsStrLen(cdp, pszNameW, nLen, 0);
-         pszBuffer = static_cast<char*>( hb_xgrab(nSize + 1) );
+         pszBuffer = static_cast<char*>(hb_xgrab(nSize + 1));
          hb_cdpU16ToStr( cdp, HB_CDP_ENDIAN_NATIVE, pszNameW, nLen, pszBuffer, nSize + 1 );
          return pszBuffer;
       }

@@ -87,7 +87,7 @@ HB_FUNC( HB_STRTOEXP )
       if( iType == 7 || hb_parl(2) )
       {
          nRet = nLen + 3 + nQ;
-         pDst = pszResult = static_cast<char*>( hb_xgrab(nRet + 1) );
+         pDst = pszResult = static_cast<char*>(hb_xgrab(nRet + 1));
          *pDst++ = 'e';
          *pDst++ = '"';
          for( n = 0; n < nLen; ++n )
@@ -123,7 +123,7 @@ HB_FUNC( HB_STRTOEXP )
       else
       {
          nRet = nLen + 2;
-         pDst = pszResult = static_cast<char*>( hb_xgrab(nRet + 1) );
+         pDst = pszResult = static_cast<char*>(hb_xgrab(nRet + 1));
          if( ( iType & 1 ) == 0 )
          {
             *pDst++ = ch = '"';
@@ -137,7 +137,7 @@ HB_FUNC( HB_STRTOEXP )
             *pDst++ = '[';
             ch = ']';
          }
-         memcpy( pDst, pszString, nLen );
+         memcpy(pDst, pszString, nLen);
          pDst += nLen;
          *pDst++ = ch;
       }

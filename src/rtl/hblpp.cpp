@@ -53,7 +53,7 @@ PHB_LPP hb_lppCreate( HB_SOCKET sd )
 {
    PHB_LPP pSocket;
 
-   pSocket         = static_cast<PHB_LPP>( hb_xgrabz( sizeof(HB_LPP) ) );
+   pSocket         = static_cast<PHB_LPP>(hb_xgrabz(sizeof(HB_LPP)));
    pSocket->sd     = sd;
    pSocket->nLimit = 1024;
    return pSocket;
@@ -91,7 +91,7 @@ HB_BOOL hb_lppSend( PHB_LPP pSocket, const void * data, HB_SIZE len, HB_MAXINT t
 
    if( ! pSocket->pSendBuffer )
    {
-      pSocket->pSendBuffer = static_cast<char*>( hb_xgrab(len + 4) );
+      pSocket->pSendBuffer = static_cast<char*>(hb_xgrab(len + 4));
       HB_PUT_LE_UINT32( pSocket->pSendBuffer, len );
       hb_xmemcpy(pSocket->pSendBuffer + 4, data, len);
       pSocket->nSendLen = len + 4;
@@ -102,9 +102,9 @@ HB_BOOL hb_lppSend( PHB_LPP pSocket, const void * data, HB_SIZE len, HB_MAXINT t
 
    for( ;; )
    {
-      if( pSocket->nSendLen - pSocket->nSendPos < static_cast<HB_SIZE>( LONG_MAX ) )
+      if( pSocket->nSendLen - pSocket->nSendPos < static_cast<HB_SIZE>(LONG_MAX) )
       {
-         lSend = static_cast<long>( pSocket->nSendLen - pSocket->nSendPos );
+         lSend = static_cast<long>(pSocket->nSendLen - pSocket->nSendPos);
       }
       else
       {
@@ -140,7 +140,7 @@ HB_BOOL hb_lppRecv( PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT time
 
    if( ! pSocket->pRecvBuffer )
    {
-      pSocket->pRecvBuffer  = static_cast<char*>( hb_xgrab(4) );
+      pSocket->pRecvBuffer  = static_cast<char*>(hb_xgrab(4));
       pSocket->nRecvLen     = 0;
       pSocket->fRecvHasSize = HB_FALSE;
    }
@@ -151,7 +151,7 @@ HB_BOOL hb_lppRecv( PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT time
    {
       if( ! pSocket->fRecvHasSize )
       {
-         lRecv = static_cast<long>( 4 - pSocket->nRecvLen );
+         lRecv = static_cast<long>(4 - pSocket->nRecvLen);
          lRecv = hb_socketRecv( pSocket->sd, pSocket->pRecvBuffer + pSocket->nRecvLen, lRecv, 0, timeout );
          if( lRecv == -1 )
          {
@@ -187,13 +187,13 @@ HB_BOOL hb_lppRecv( PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT time
          pSocket->fRecvHasSize = HB_TRUE;
          if( pSocket->nRecvSize != 4 )
          {
-            pSocket->pRecvBuffer = static_cast<char*>( hb_xrealloc(pSocket->pRecvBuffer, pSocket->nRecvSize) );
+            pSocket->pRecvBuffer = static_cast<char*>(hb_xrealloc(pSocket->pRecvBuffer, pSocket->nRecvSize));
          }
       }
 
-      if( pSocket->nRecvSize - pSocket->nRecvLen < static_cast<HB_SIZE>( LONG_MAX ) )
+      if( pSocket->nRecvSize - pSocket->nRecvLen < static_cast<HB_SIZE>(LONG_MAX) )
       {
-         lRecv = static_cast<long>( pSocket->nRecvSize - pSocket->nRecvLen );
+         lRecv = static_cast<long>(pSocket->nRecvSize - pSocket->nRecvLen);
       }
       else
       {

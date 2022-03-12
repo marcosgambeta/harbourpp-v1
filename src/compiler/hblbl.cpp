@@ -56,7 +56,7 @@ typedef HB_LABEL_FUNC_ * PHB_LABEL_FUNC;
  */
 static HB_LABEL_FUNC( hb_p_jumpnear )
 {
-   HB_SIZE nNewPos = nPCodePos + static_cast<signed char>( pFunc->pCode[ nPCodePos + 1 ] );
+   HB_SIZE nNewPos = nPCodePos + static_cast<signed char>(pFunc->pCode[ nPCodePos + 1 ]);
 
    cargo->pnLabels[ nNewPos ]++;
    return 2;
@@ -82,7 +82,7 @@ static HB_LABEL_FUNC( hb_p_jumpfar )
 
 static HB_LABEL_FUNC( hb_p_jumpfalsenear )
 {
-   HB_SIZE nNewPos = nPCodePos + static_cast<signed char>( pFunc->pCode[ nPCodePos + 1 ] );
+   HB_SIZE nNewPos = nPCodePos + static_cast<signed char>(pFunc->pCode[ nPCodePos + 1 ]);
 
    cargo->fCondJump = HB_TRUE;
    cargo->pnLabels[ nNewPos ]++;
@@ -111,7 +111,7 @@ static HB_LABEL_FUNC( hb_p_jumpfalsefar )
 
 static HB_LABEL_FUNC( hb_p_jumptruenear )
 {
-   HB_SIZE nNewPos = nPCodePos + static_cast<signed char>( pFunc->pCode[ nPCodePos + 1 ] );
+   HB_SIZE nNewPos = nPCodePos + static_cast<signed char>(pFunc->pCode[ nPCodePos + 1 ]);
 
    cargo->fCondJump = HB_TRUE;
    cargo->pnLabels[ nNewPos ]++;
@@ -385,7 +385,7 @@ void hb_compGenLabelTable( PHB_HFUNC pFunc, PHB_LABEL_INFO label_info )
 
    assert( HB_P_LAST_PCODE == sizeof(s_GenLabelFuncTable) / sizeof(PHB_LABEL_FUNC) );
 
-   hb_compPCodeEval( pFunc, reinterpret_cast<const PHB_PCODE_FUNC*>( pFuncTable ), static_cast<void*>( label_info ) );
+   hb_compPCodeEval( pFunc, reinterpret_cast<const PHB_PCODE_FUNC*>(pFuncTable), static_cast<void*>(label_info) );
 
    for( HB_SIZE n = 0; n < pFunc->nPCodePos; ++n )
    {

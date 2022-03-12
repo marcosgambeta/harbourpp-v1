@@ -109,11 +109,11 @@ void hb_errInternalRaw( HB_ERRCODE errCode, const char * szText, const char * sz
    hb_conOutErr( hb_conNewLine(), 0 );
    if( fLang )
    {
-      hb_snprintf( buffer, sizeof(buffer), hb_langDGetItem( HB_LANG_ITEM_BASE_ERRINTR ), errCode );
+      hb_snprintf(buffer, sizeof(buffer), hb_langDGetItem( HB_LANG_ITEM_BASE_ERRINTR ), errCode);
    }
    else
    {
-      hb_snprintf( buffer, sizeof(buffer), "Unrecoverable error %d: ", errCode );
+      hb_snprintf(buffer, sizeof(buffer), "Unrecoverable error %d: ", errCode);
    }
 
    hb_conOutErr( buffer, 0 );
@@ -129,7 +129,7 @@ void hb_errInternalRaw( HB_ERRCODE errCode, const char * szText, const char * sz
 
    if( szText )
    {
-      hb_snprintf( buffer, sizeof(buffer), szText, szPar1, szPar2 );
+      hb_snprintf(buffer, sizeof(buffer), szText, szPar1, szPar2);
    }
    else
    {
@@ -150,7 +150,7 @@ void hb_errInternalRaw( HB_ERRCODE errCode, const char * szText, const char * sz
       {
          char msg[ HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 32 ];
 
-         hb_snprintf( msg, sizeof(msg), "Called from %s(%hu)%s%s\n", buffer, uiLine, *file ? " in " : "", file );
+         hb_snprintf(msg, sizeof(msg), "Called from %s(%hu)%s%s\n", buffer, uiLine, *file ? " in " : "", file);
 
          hb_conOutErr( msg, 0 );
          if( hLog )

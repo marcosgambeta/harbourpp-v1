@@ -49,15 +49,15 @@
 HB_FUNC( AMPM )
 {
    HB_SIZE nTimeLen  = hb_parclen(1);
-   char *  pszResult = static_cast<char*>( hb_xgrab(HB_MAX( nTimeLen, 2 ) + 3 + 1) );
+   char *  pszResult = static_cast<char*>(hb_xgrab(HB_MAX( nTimeLen, 2 ) + 3 + 1));
    int     iHour     = 0;
    HB_BOOL bAM;
 
    if( nTimeLen )
    {
       const char * pszTime = hb_parc(1);
-      memcpy( pszResult, pszTime, nTimeLen );
-      iHour = static_cast<int>( hb_strVal( pszTime, nTimeLen ) );
+      memcpy(pszResult, pszTime, nTimeLen);
+      iHour = static_cast<int>(hb_strVal( pszTime, nTimeLen ));
    }
 
    if( iHour == 0 || iHour == 24 )
@@ -79,8 +79,8 @@ HB_FUNC( AMPM )
       }
       
       iHour -= 12;
-      pszResult[ 0 ] = static_cast<char>( iHour / 10 ) + '0';
-      pszResult[ 1 ] = static_cast<char>( iHour % 10 ) + '0';
+      pszResult[ 0 ] = static_cast<char>(iHour / 10) + '0';
+      pszResult[ 1 ] = static_cast<char>(iHour % 10) + '0';
 
       if( pszResult[ 0 ] == '0' )
       {
@@ -94,7 +94,7 @@ HB_FUNC( AMPM )
       bAM = ( iHour != 12 );
    }
    
-   memcpy( pszResult + nTimeLen, bAM ? " am" : " pm", 4 );
+   memcpy(pszResult + nTimeLen, bAM ? " am" : " pm", 4);
 
    hb_retclen_buffer( pszResult, nTimeLen + 3 );
 }

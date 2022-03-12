@@ -53,7 +53,7 @@ HB_FUNC( HB_HMAC_SHA224 )
    unsigned char mac[ SHA224_DIGEST_SIZE ];
    hmac_sha224_ctx ctx;
 
-   hb_hmac_sha224_init( &ctx, hb_parcx(2), static_cast<unsigned int>( hb_parclen(2) ) );
+   hb_hmac_sha224_init( &ctx, hb_parcx(2), static_cast<unsigned int>(hb_parclen(2)) );
    #if HB_SIZE_MAX > UINT_MAX
    {
       const char * buffer = hb_parcx(1);
@@ -64,20 +64,20 @@ HB_FUNC( HB_HMAC_SHA224 )
       {
          unsigned int uiChunk;
 
-         if( nCount > static_cast<HB_SIZE>( UINT_MAX ) )
+         if( nCount > static_cast<HB_SIZE>(UINT_MAX) )
          {
             uiChunk = UINT_MAX;
-            nCount -= static_cast<HB_SIZE>( uiChunk );
+            nCount -= static_cast<HB_SIZE>(uiChunk);
          }
          else
          {
-            uiChunk = static_cast<unsigned int>( nCount );
+            uiChunk = static_cast<unsigned int>(nCount);
             nCount = 0;
          }
 
          hb_hmac_sha224_update( &ctx, buffer + nDone, uiChunk );
 
-         nDone += static_cast<HB_SIZE>( uiChunk );
+         nDone += static_cast<HB_SIZE>(uiChunk);
       }
    }
    #else
@@ -88,12 +88,12 @@ HB_FUNC( HB_HMAC_SHA224 )
    if( ! hb_parl(3) )
    {
       char hex[ ( sizeof(mac) * 2 ) + 1 ];
-      hb_strtohex( reinterpret_cast<char*>( mac ), sizeof(mac), hex );
+      hb_strtohex( reinterpret_cast<char*>(mac), sizeof(mac), hex );
       hb_retclen( hex, HB_SIZEOFARRAY( hex ) - 1 );
    }
    else
    {
-      hb_retclen( reinterpret_cast<char*>( mac ), sizeof(mac) );
+      hb_retclen( reinterpret_cast<char*>(mac), sizeof(mac) );
    }
 }
 
@@ -102,7 +102,7 @@ HB_FUNC( HB_HMAC_SHA256 )
    unsigned char mac[ SHA256_DIGEST_SIZE ];
    hmac_sha256_ctx ctx;
 
-   hb_hmac_sha256_init( &ctx, hb_parcx(2), static_cast<unsigned int>( hb_parclen(2) ) );
+   hb_hmac_sha256_init( &ctx, hb_parcx(2), static_cast<unsigned int>(hb_parclen(2)) );
    #if HB_SIZE_MAX > UINT_MAX
    {
       const char * buffer = hb_parcx(1);
@@ -113,20 +113,20 @@ HB_FUNC( HB_HMAC_SHA256 )
       {
          unsigned int uiChunk;
 
-         if( nCount > static_cast<HB_SIZE>( UINT_MAX ) )
+         if( nCount > static_cast<HB_SIZE>(UINT_MAX) )
          {
             uiChunk = UINT_MAX;
-            nCount -= static_cast<HB_SIZE>( uiChunk );
+            nCount -= static_cast<HB_SIZE>(uiChunk);
          }
          else
          {
-            uiChunk = static_cast<unsigned int>( nCount );
+            uiChunk = static_cast<unsigned int>(nCount);
             nCount = 0;
          }
 
          hb_hmac_sha256_update( &ctx, buffer + nDone, uiChunk );
 
-         nDone += static_cast<HB_SIZE>( uiChunk );
+         nDone += static_cast<HB_SIZE>(uiChunk);
       }
    }
    #else
@@ -137,12 +137,12 @@ HB_FUNC( HB_HMAC_SHA256 )
    if( ! hb_parl(3) )
    {
       char hex[ ( sizeof(mac) * 2 ) + 1 ];
-      hb_strtohex( reinterpret_cast<char*>( mac ), sizeof(mac), hex );
+      hb_strtohex( reinterpret_cast<char*>(mac), sizeof(mac), hex );
       hb_retclen( hex, HB_SIZEOFARRAY( hex ) - 1 );
    }
    else
    {
-      hb_retclen( reinterpret_cast<char*>( mac ), sizeof(mac) );
+      hb_retclen( reinterpret_cast<char*>(mac), sizeof(mac) );
    }   
 }
 
@@ -151,7 +151,7 @@ HB_FUNC( HB_HMAC_SHA384 )
    unsigned char mac[ SHA384_DIGEST_SIZE ];
    hmac_sha384_ctx ctx;
 
-   hb_hmac_sha384_init( &ctx, hb_parcx(2), static_cast<unsigned int>( hb_parclen(2) ) );
+   hb_hmac_sha384_init( &ctx, hb_parcx(2), static_cast<unsigned int>(hb_parclen(2)) );
    #if HB_SIZE_MAX > UINT_MAX
    {
       const char * buffer = hb_parcx(1);
@@ -162,20 +162,20 @@ HB_FUNC( HB_HMAC_SHA384 )
       {
          unsigned int uiChunk;
 
-         if( nCount > static_cast<HB_SIZE>( UINT_MAX ) )
+         if( nCount > static_cast<HB_SIZE>(UINT_MAX) )
          {
             uiChunk = UINT_MAX;
-            nCount -= static_cast<HB_SIZE>( uiChunk );
+            nCount -= static_cast<HB_SIZE>(uiChunk);
          }
          else
          {
-            uiChunk = static_cast<unsigned int>( nCount );
+            uiChunk = static_cast<unsigned int>(nCount);
             nCount = 0;
          }
 
          hb_hmac_sha384_update( &ctx, buffer + nDone, uiChunk );
 
-         nDone += static_cast<HB_SIZE>( uiChunk );
+         nDone += static_cast<HB_SIZE>(uiChunk);
       }
    }
    #else
@@ -186,12 +186,12 @@ HB_FUNC( HB_HMAC_SHA384 )
    if( ! hb_parl(3) )
    {
       char hex[ ( sizeof(mac) * 2 ) + 1 ];
-      hb_strtohex( reinterpret_cast<char*>( mac ), sizeof(mac), hex );
+      hb_strtohex( reinterpret_cast<char*>(mac), sizeof(mac), hex );
       hb_retclen( hex, HB_SIZEOFARRAY( hex ) - 1 );
    }
    else
    {
-      hb_retclen( reinterpret_cast<char*>( mac ), sizeof(mac) );
+      hb_retclen( reinterpret_cast<char*>(mac), sizeof(mac) );
    }
 }
 
@@ -200,7 +200,7 @@ HB_FUNC( HB_HMAC_SHA512 )
    unsigned char mac[ SHA512_DIGEST_SIZE ];
    hmac_sha512_ctx ctx;
 
-   hb_hmac_sha512_init( &ctx, hb_parcx(2), static_cast<unsigned int>( hb_parclen(2) ) );
+   hb_hmac_sha512_init( &ctx, hb_parcx(2), static_cast<unsigned int>(hb_parclen(2)) );
    #if HB_SIZE_MAX > UINT_MAX
    {
       const char * buffer = hb_parcx(1);
@@ -211,20 +211,20 @@ HB_FUNC( HB_HMAC_SHA512 )
       {
          unsigned int uiChunk;
 
-         if( nCount > static_cast<HB_SIZE>( UINT_MAX ) )
+         if( nCount > static_cast<HB_SIZE>(UINT_MAX) )
          {
             uiChunk = UINT_MAX;
-            nCount -= static_cast<HB_SIZE>( uiChunk );
+            nCount -= static_cast<HB_SIZE>(uiChunk);
          }
          else
          {
-            uiChunk = static_cast<unsigned int>( nCount );
+            uiChunk = static_cast<unsigned int>(nCount);
             nCount = 0;
          }
 
          hb_hmac_sha512_update( &ctx, buffer + nDone, uiChunk );
 
-         nDone += static_cast<HB_SIZE>( uiChunk ); 
+         nDone += static_cast<HB_SIZE>(uiChunk); 
       }
    }
    #else
@@ -235,11 +235,11 @@ HB_FUNC( HB_HMAC_SHA512 )
    if( ! hb_parl(3) )
    {
       char hex[ ( sizeof(mac) * 2 ) + 1 ];
-      hb_strtohex( reinterpret_cast<char*>( mac ), sizeof(mac), hex );
+      hb_strtohex( reinterpret_cast<char*>(mac), sizeof(mac), hex );
       hb_retclen( hex, HB_SIZEOFARRAY( hex ) - 1 );
    }
    else
    {
-      hb_retclen( reinterpret_cast<char*>( mac ), sizeof(mac) );
+      hb_retclen( reinterpret_cast<char*>(mac), sizeof(mac) );
    }
 }

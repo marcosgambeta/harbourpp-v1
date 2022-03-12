@@ -103,7 +103,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
             szCode = "";
       }
 
-      hb_snprintf( errmsg, errmsglen,
+      hb_snprintf(errmsg, errmsglen,
          "\n\n"
          "    Exception Code:%08X%s\n"
          "    Exception Address:%016" PFLL "X\n"
@@ -114,22 +114,22 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
          "    CS:RIP:%04X:%016" PFLL "X  SS:RSP:%04X:%016" PFLL "X\n"
          "    DS:%04X  ES:%04X  FS:%04X  GS:%04X\n"
          "    Flags:%08X\n",
-         static_cast<HB_U32>( pExceptionInfo->ExceptionRecord->ExceptionCode ), szCode,
-         reinterpret_cast<HB_PTRUINT>( pExceptionInfo->ExceptionRecord->ExceptionAddress ),
+         static_cast<HB_U32>(pExceptionInfo->ExceptionRecord->ExceptionCode), szCode,
+         reinterpret_cast<HB_PTRUINT>(pExceptionInfo->ExceptionRecord->ExceptionAddress),
          pCtx->Rax, pCtx->Rbx, pCtx->Rcx, pCtx->Rdx,
          pCtx->Rsi, pCtx->Rdi, pCtx->Rbp,
          pCtx->R8 , pCtx->R9 , pCtx->R10, pCtx->R11,
          pCtx->R12, pCtx->R13, pCtx->R14, pCtx->R15,
-         static_cast<HB_U32>( pCtx->SegCs ), pCtx->Rip, static_cast<HB_U32>( pCtx->SegSs ), pCtx->Rsp,
-         static_cast<HB_U32>( pCtx->SegDs ), static_cast<HB_U32>( pCtx->SegEs ), static_cast<HB_U32>( pCtx->SegFs ), static_cast<HB_U32>( pCtx->SegGs ),
-         static_cast<HB_U32>( pCtx->EFlags ) );
+         static_cast<HB_U32>(pCtx->SegCs), pCtx->Rip, static_cast<HB_U32>(pCtx->SegSs), pCtx->Rsp,
+         static_cast<HB_U32>(pCtx->SegDs), static_cast<HB_U32>(pCtx->SegEs), static_cast<HB_U32>(pCtx->SegFs), static_cast<HB_U32>(pCtx->SegGs),
+         static_cast<HB_U32>(pCtx->EFlags));
 
-      if( pExceptionInfo->ExceptionRecord->NumberParameters && pExceptionInfo->ExceptionRecord->NumberParameters < static_cast<DWORD>( EXCEPTION_MAXIMUM_PARAMETERS ) )
+      if( pExceptionInfo->ExceptionRecord->NumberParameters && pExceptionInfo->ExceptionRecord->NumberParameters < static_cast<DWORD>(EXCEPTION_MAXIMUM_PARAMETERS) )
       {
          hb_strncat( errmsg, "    Exception Parameters:", errmsglen );
          for( DWORD arg = 0; arg < pExceptionInfo->ExceptionRecord->NumberParameters; ++arg )
          {
-            hb_snprintf( buf, sizeof(buf), " %016" PFLL "X", static_cast<HB_U64>( pExceptionInfo->ExceptionRecord->ExceptionInformation[ arg ] ) );
+            hb_snprintf(buf, sizeof(buf), " %016" PFLL "X", static_cast<HB_U64>(pExceptionInfo->ExceptionRecord->ExceptionInformation[ arg ]));
             hb_strncat( errmsg, buf, errmsglen );
          }
          hb_strncat( errmsg, "\n", errmsglen );
@@ -143,7 +143,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
    {
       PCONTEXT pCtx = pExceptionInfo->ContextRecord;
 
-      hb_snprintf( errmsg, errmsglen,
+      hb_snprintf(errmsg, errmsglen,
          "\n\n"
          "    Exception Code:%08X\n"
          "    Exception Address:%016" PFLL "X\n"
@@ -156,7 +156,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
          "    IT20:%016" PFLL "X  IT21:%016" PFLL "X  IT22:%016" PFLL "X\n"
          "    IGp :%016" PFLL "X  IV0 :%016" PFLL "X  ISp :%016" PFLL "X  ITeb:%016" PFLL "X\n"
          "    INat:%016" PFLL "X\n",
-         static_cast<HB_U32>( pExceptionInfo->ExceptionRecord->ExceptionCode ),
+         static_cast<HB_U32>(pExceptionInfo->ExceptionRecord->ExceptionCode),
          pExceptionInfo->ExceptionRecord->ExceptionAddress,
          pCtx->IntS0 , pCtx->IntS1 , pCtx->IntS2 , pCtx->IntS3 ,
          pCtx->IntT0 , pCtx->IntT1 , pCtx->IntT2 , pCtx->IntT3 ,
@@ -166,7 +166,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
          pCtx->IntT16, pCtx->IntT17, pCtx->IntT18, pCtx->IntT19,
          pCtx->IntT20, pCtx->IntT21, pCtx->IntT22,
          pCtx->IntGp , pCtx->IntV0 , pCtx->IntSp , pCtx->IntTeb,
-         pCtx->IntNats );
+         pCtx->IntNats);
    }
 #elif defined( HB_CPU_X86 )
    {
@@ -187,7 +187,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
             szCode = "";
       }
 
-      hb_snprintf( errmsg, errmsglen,
+      hb_snprintf(errmsg, errmsglen,
          "\n\n"
          "    Exception Code:%08X%s\n"
          "    Exception Address:%08X\n"
@@ -196,20 +196,20 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
          "    CS:EIP:%04X:%08X  SS:ESP:%04X:%08X\n"
          "    DS:%04X  ES:%04X  FS:%04X  GS:%04X\n"
          "    Flags:%08X\n",
-         static_cast<HB_U32>( pExceptionInfo->ExceptionRecord->ExceptionCode ), szCode,
-         reinterpret_cast<HB_U32>( pExceptionInfo->ExceptionRecord->ExceptionAddress ),
-         static_cast<HB_U32>( pCtx->Eax ), static_cast<HB_U32>( pCtx->Ebx ), static_cast<HB_U32>( pCtx->Ecx ), static_cast<HB_U32>( pCtx->Edx ),
-         static_cast<HB_U32>( pCtx->Esi ), static_cast<HB_U32>( pCtx->Edi ), static_cast<HB_U32>( pCtx->Ebp ),
-         static_cast<HB_U32>( pCtx->SegCs ), static_cast<HB_U32>( pCtx->Eip ), static_cast<HB_U32>( pCtx->SegSs ), static_cast<HB_U32>( pCtx->Esp ),
-         static_cast<HB_U32>( pCtx->SegDs ), static_cast<HB_U32>( pCtx->SegEs ), static_cast<HB_U32>( pCtx->SegFs ), static_cast<HB_U32>( pCtx->SegGs ),
-         static_cast<HB_U32>( pCtx->EFlags ) );
+         static_cast<HB_U32>(pExceptionInfo->ExceptionRecord->ExceptionCode), szCode,
+         reinterpret_cast<HB_U32>(pExceptionInfo->ExceptionRecord->ExceptionAddress),
+         static_cast<HB_U32>(pCtx->Eax), static_cast<HB_U32>(pCtx->Ebx), static_cast<HB_U32>(pCtx->Ecx), static_cast<HB_U32>(pCtx->Edx),
+         static_cast<HB_U32>(pCtx->Esi), static_cast<HB_U32>(pCtx->Edi), static_cast<HB_U32>(pCtx->Ebp),
+         static_cast<HB_U32>(pCtx->SegCs), static_cast<HB_U32>(pCtx->Eip), static_cast<HB_U32>(pCtx->SegSs), static_cast<HB_U32>(pCtx->Esp),
+         static_cast<HB_U32>(pCtx->SegDs), static_cast<HB_U32>(pCtx->SegEs), static_cast<HB_U32>(pCtx->SegFs), static_cast<HB_U32>(pCtx->SegGs),
+         static_cast<HB_U32>(pCtx->EFlags));
 
-      if( pExceptionInfo->ExceptionRecord->NumberParameters && pExceptionInfo->ExceptionRecord->NumberParameters < static_cast<DWORD>( EXCEPTION_MAXIMUM_PARAMETERS ) )
+      if( pExceptionInfo->ExceptionRecord->NumberParameters && pExceptionInfo->ExceptionRecord->NumberParameters < static_cast<DWORD>(EXCEPTION_MAXIMUM_PARAMETERS) )
       {
          hb_strncat( errmsg, "    Exception Parameters:", errmsglen );
          for( DWORD arg = 0; arg < pExceptionInfo->ExceptionRecord->NumberParameters; ++arg )
          {
-            hb_snprintf( buf, sizeof(buf), " %08X", static_cast<HB_U32>( pExceptionInfo->ExceptionRecord->ExceptionInformation[ arg ] ) );
+            hb_snprintf(buf, sizeof(buf), " %08X", static_cast<HB_U32>(pExceptionInfo->ExceptionRecord->ExceptionInformation[ arg ]));
             hb_strncat( errmsg, buf, errmsglen );
          }
          hb_strncat( errmsg, "\n", errmsglen );
@@ -224,7 +224,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
          int             i;
 
          hb_strncat( errmsg, "    CS:EIP:", errmsglen );
-         pc = reinterpret_cast<unsigned char*>( pCtx->Eip );
+         pc = reinterpret_cast<unsigned char*>(pCtx->Eip);
          for( i = 0; i < 16; i++ )
          {
             /* FIXME: Unsafe function. */
@@ -232,11 +232,11 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
             {
                break;
             }
-            hb_snprintf( buf, sizeof(buf), " %02X", static_cast<int>( pc[ i ] ) );
+            hb_snprintf(buf, sizeof(buf), " %02X", static_cast<int>(pc[ i ]));
             hb_strncat( errmsg, buf, errmsglen );
          }
          hb_strncat( errmsg, "\n    SS:ESP:", errmsglen );
-         sc = reinterpret_cast<unsigned int*>( pCtx->Esp );
+         sc = reinterpret_cast<unsigned int*>(pCtx->Esp);
          for( i = 0; i < 16; i++ )
          {
             /* FIXME: Unsafe function. */
@@ -244,34 +244,34 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
             {
                break;
             }
-            hb_snprintf( buf, sizeof(buf), " %08X", sc[ i ] );
+            hb_snprintf(buf, sizeof(buf), " %08X", sc[ i ]);
             hb_strncat( errmsg, buf, errmsglen );
          }
          hb_strncat( errmsg, "\n\n", errmsglen );
          hb_strncat( errmsg, "    C stack:\n", errmsglen );
          hb_strncat( errmsg, "    EIP:     EBP:       Frame: OldEBP, RetAddr, Params...\n", errmsglen );
          eip = pCtx->Eip;
-         ebp = reinterpret_cast<unsigned int*>( pCtx->Ebp );
+         ebp = reinterpret_cast<unsigned int*>(pCtx->Ebp);
          /* FIXME: Unsafe function. */
          if( ! IsBadWritePtr( ebp, 8 ) )
          {
             for( i = 0; i < 20; i++ )
             {
                /* FIXME: Unsafe function. */
-               if( reinterpret_cast<unsigned int>( ebp ) % 4 != 0 || IsBadWritePtr( ebp, 40 ) || reinterpret_cast<unsigned int>( ebp ) >= ebp[ 0 ] )
+               if( reinterpret_cast<unsigned int>(ebp) % 4 != 0 || IsBadWritePtr( ebp, 40 ) || reinterpret_cast<unsigned int>(ebp) >= ebp[ 0 ] )
                {
                   break;
                }
-               hb_snprintf( buf, sizeof(buf), "    %08X %08X  ", static_cast<int>( eip ), reinterpret_cast<int>( ebp ) );
+               hb_snprintf(buf, sizeof(buf), "    %08X %08X  ", static_cast<int>(eip), reinterpret_cast<int>(ebp));
                hb_strncat( errmsg, buf, errmsglen );
-               for( j = 0; j < 10 && reinterpret_cast<unsigned int>( ebp + j ) < ebp[ 0 ]; j++ )
+               for( j = 0; j < 10 && reinterpret_cast<unsigned int>(ebp + j) < ebp[ 0 ]; j++ )
                {
-                  hb_snprintf( buf, sizeof(buf), " %08X", ebp[ j ] );
+                  hb_snprintf(buf, sizeof(buf), " %08X", ebp[ j ]);
                   hb_strncat( errmsg, buf, errmsglen );
                }
                hb_strncat( errmsg, "\n", errmsglen );
                eip = ebp[ 1 ];
-               ebp = reinterpret_cast<unsigned int*>( ebp[ 0 ] );
+               ebp = reinterpret_cast<unsigned int*>(ebp[ 0 ]);
             }
             hb_strncat( errmsg, "\n", errmsglen );
          }
@@ -298,9 +298,9 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
          typedef BOOL ( WINAPI * P_M32F )( HANDLE, LPMODULEENTRY32 ); /* Module32First() */
          typedef BOOL ( WINAPI * P_M32N )( HANDLE, LPMODULEENTRY32 ); /* Module32Next() */
 
-         P_CTH32SSH pCreateToolhelp32Snapshot = reinterpret_cast<P_CTH32SSH>( HB_WINAPI_GETPROCADDRESS( hToolhelp, "CreateToolhelp32Snapshot" ) );
-         P_M32F pModule32First = reinterpret_cast<P_M32F>( HB_WINAPI_GETPROCADDRESS( hToolhelp, "Module32First" ) );
-         P_M32N pModule32Next = reinterpret_cast<P_M32N>( HB_WINAPI_GETPROCADDRESS( hToolhelp, "Module32Next" ) );
+         P_CTH32SSH pCreateToolhelp32Snapshot = reinterpret_cast<P_CTH32SSH>(HB_WINAPI_GETPROCADDRESS( hToolhelp, "CreateToolhelp32Snapshot" ));
+         P_M32F pModule32First = reinterpret_cast<P_M32F>(HB_WINAPI_GETPROCADDRESS( hToolhelp, "Module32First" ));
+         P_M32N pModule32Next = reinterpret_cast<P_M32N>(HB_WINAPI_GETPROCADDRESS( hToolhelp, "Module32Next" ));
 
          if( pCreateToolhelp32Snapshot && pModule32First && pModule32Next )
          {
@@ -325,11 +325,11 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
                      char buf[ 256 ];
 #if defined( HB_OS_WIN_64 )
                      /* FIXME: me32.szExePath seemed trashed in some (standalone) tests. */
-                     hb_snprintf( buf, sizeof(buf), "%016" PFLL "X %016" PFLL "X %s\n", reinterpret_cast<HB_PTRUINT>( me32.modBaseAddr ), static_cast<HB_PTRUINT>( me32.modBaseSize ), me32.szExePath );
+                     hb_snprintf(buf, sizeof(buf), "%016" PFLL "X %016" PFLL "X %s\n", reinterpret_cast<HB_PTRUINT>(me32.modBaseAddr), static_cast<HB_PTRUINT>(me32.modBaseSize), me32.szExePath);
 #else
                      char szBuffer[ MAX_PATH ];
                      hb_strncpy(szBuffer, me32.szExePath, HB_SIZEOFARRAY( szBuffer ) - 1);
-                     hb_snprintf( buf, sizeof(buf), "%08lX %08lX %s\n", reinterpret_cast<HB_PTRUINT>( me32.modBaseAddr ), static_cast<HB_PTRUINT>( me32.modBaseSize ), szBuffer );
+                     hb_snprintf(buf, sizeof(buf), "%08lX %08lX %s\n", reinterpret_cast<HB_PTRUINT>(me32.modBaseAddr), static_cast<HB_PTRUINT>(me32.modBaseSize), szBuffer);
 #endif
                      hb_strncat( errmsg, buf, errmsglen );
                   }
@@ -362,26 +362,26 @@ static void hb_signalExceptionHandler( int sig, siginfo_t * si, void * ucp )
    {
       case SIGSEGV:
          signame = "SIGSEGV";
-         hb_snprintf( buffer, sizeof(buffer), "%p", si->si_addr );
+         hb_snprintf(buffer, sizeof(buffer), "%p", si->si_addr);
          sigaddr = buffer;
          break;
       case SIGILL:
          signame = "SIGILL";
-         hb_snprintf( buffer, sizeof(buffer), "%p", si->si_addr );
+         hb_snprintf(buffer, sizeof(buffer), "%p", si->si_addr);
          sigaddr = buffer;
          break;
       case SIGFPE:
          signame = "SIGFPE";
-         hb_snprintf( buffer, sizeof(buffer), "%p", si->si_addr );
+         hb_snprintf(buffer, sizeof(buffer), "%p", si->si_addr);
          sigaddr = buffer;
          break;
       case SIGBUS:
          signame = "SIGBUS";
-         hb_snprintf( buffer, sizeof(buffer), "%p", si->si_addr );
+         hb_snprintf(buffer, sizeof(buffer), "%p", si->si_addr);
          sigaddr = buffer;
          break;
       default:
-         hb_snprintf( buffer, sizeof(buffer), "sig:%d", sig );
+         hb_snprintf(buffer, sizeof(buffer), "sig:%d", sig);
          signame = buffer;
          sigaddr = "UNKNOWN";
          break;
@@ -402,7 +402,7 @@ void hb_vmSetExceptionHandler( void )
 #elif defined( HB_SIGNAL_EXCEPTION_HANDLER )
    {
       stack_t ss;
-      ss.ss_sp = static_cast<void*>( s_signal_stack );
+      ss.ss_sp = static_cast<void*>(s_signal_stack);
       ss.ss_size = SIGSTKSZ;
       ss.ss_flags = 0;
       /* set alternative stack for SIGSEGV executed on stack overflow */

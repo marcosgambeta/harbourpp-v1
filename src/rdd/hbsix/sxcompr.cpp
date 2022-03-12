@@ -148,9 +148,9 @@
 /* create compressed item from match position and length */
 #define LZSS_ITEM( o, l )    ( ( ( o ) << LENGTHBITS ) | ( ( l ) - MINLENGTH ) )
 /* create low byte of compressed item */
-#define LZSS_ITMLO( o, l )   ( static_cast<HB_UCHAR>( o ) )
+#define LZSS_ITMLO( o, l )   ( static_cast<HB_UCHAR>(o) )
 /* create high byte of compressed item */
-#define LZSS_ITMHI( o, l )   ( static_cast<HB_UCHAR>( ( ( ( o ) >> ( 8 - LENGTHBITS ) ) & ~MATCHMASK ) | ( ( l ) - MINLENGTH ) ) )
+#define LZSS_ITMHI( o, l )   ( static_cast<HB_UCHAR>(( ( ( o ) >> ( 8 - LENGTHBITS ) ) & ~MATCHMASK ) | ( ( l ) - MINLENGTH )) )
 /* maximum size of item set: byte with item type bits plus 8 items */
 #define ITEMSETSIZE    ( ( ITEMBITS << 3 ) + 1 )
 
@@ -206,7 +206,7 @@ static void hb_LZSSxExit( PHB_LZSSX_COMPR pCompr )
 
 static PHB_LZSSX_COMPR hb_LZSSxInit( PHB_FILE pInput, const HB_BYTE * pSrcBuf, HB_SIZE nSrcBuf, PHB_FILE pOutput, HB_BYTE * pDstBuf, HB_SIZE nDstBuf )
 {
-   PHB_LZSSX_COMPR pCompr = static_cast<PHB_LZSSX_COMPR>( hb_xgrab(sizeof(HB_LZSSX_COMPR)) );
+   PHB_LZSSX_COMPR pCompr = static_cast<PHB_LZSSX_COMPR>(hb_xgrab(sizeof(HB_LZSSX_COMPR)));
 
    if( pInput != nullptr && nSrcBuf == 0 )
    {
@@ -218,7 +218,7 @@ static PHB_LZSSX_COMPR hb_LZSSxInit( PHB_FILE pInput, const HB_BYTE * pSrcBuf, H
    }
 
    pCompr->pInput      = pInput;
-   pCompr->inBuffer    = const_cast<HB_BYTE*>( pSrcBuf );
+   pCompr->inBuffer    = const_cast<HB_BYTE*>(pSrcBuf);
    pCompr->inBuffSize  = nSrcBuf;
    pCompr->inBuffPos   = 0;
    pCompr->inBuffRead  = ( pInput == nullptr ) ? nSrcBuf : 0;
@@ -235,17 +235,17 @@ static PHB_LZSSX_COMPR hb_LZSSxInit( PHB_FILE pInput, const HB_BYTE * pSrcBuf, H
 
    if( pCompr->fInFree )
    {
-      pCompr->inBuffer    = static_cast<HB_BYTE*>( hb_xgrab(nDstBuf) );
+      pCompr->inBuffer    = static_cast<HB_BYTE*>(hb_xgrab(nDstBuf));
    }
    if( pCompr->fOutFree )
    {
-      pCompr->outBuffer   = static_cast<HB_BYTE*>( hb_xgrab(nDstBuf) );
+      pCompr->outBuffer   = static_cast<HB_BYTE*>(hb_xgrab(nDstBuf));
    }
 
    /* initialize the ring buffer with spaces, because SIX uses
       dynamic ring buffer then we do not have to fill last MAXLENGTH
       characters */
-   memset( pCompr->ring_buffer, ' ', RBUFLENGTH - 1 );
+   memset(pCompr->ring_buffer, ' ', RBUFLENGTH - 1);
 
    return pCompr;
 }
@@ -292,20 +292,20 @@ static int hb_LZSSxRead( PHB_LZSSX_COMPR pCompr )
 {
    if( pCompr->inBuffPos < pCompr->inBuffRead )
    {
-      return static_cast<HB_UCHAR>( pCompr->inBuffer[ pCompr->inBuffPos++ ] );
+      return static_cast<HB_UCHAR>(pCompr->inBuffer[ pCompr->inBuffPos++ ]);
    }
 
    if( pCompr->pInput != nullptr )
    {
       pCompr->inBuffRead = hb_fileRead( pCompr->pInput, pCompr->inBuffer, pCompr->inBuffSize, -1 );
-      if( pCompr->inBuffRead == static_cast<HB_SIZE>( FS_ERROR ) )
+      if( pCompr->inBuffRead == static_cast<HB_SIZE>(FS_ERROR) )
       {
          pCompr->inBuffRead = 0;
       }
       pCompr->inBuffPos = 0;
       if( pCompr->inBuffPos < pCompr->inBuffRead )
       {
-         return static_cast<HB_UCHAR>( pCompr->inBuffer[ pCompr->inBuffPos++ ] );
+         return static_cast<HB_UCHAR>(pCompr->inBuffer[ pCompr->inBuffPos++ ]);
       }
    }
    return -1;
@@ -331,7 +331,7 @@ static HB_BOOL hb_LZSSxDecode( PHB_LZSSX_COMPR pCompr )
             break;
          }
          /* simple trick to reduce number of shift operations */
-         itemMask = static_cast<HB_USHORT>( c | 0xff00 );
+         itemMask = static_cast<HB_USHORT>(c | 0xff00);
       }
       if( ( c = hb_LZSSxRead( pCompr ) ) == -1 )
       {
@@ -340,12 +340,12 @@ static HB_BOOL hb_LZSSxDecode( PHB_LZSSX_COMPR pCompr )
 
       if( itemMask & 1 ) /* Is the next character normal byte ? */
       {
-         if( ! hb_LZSSxWrite( pCompr, static_cast<HB_UCHAR>( c ) ) )
+         if( ! hb_LZSSxWrite( pCompr, static_cast<HB_UCHAR>(c) ) )
          {
             fResult = HB_FALSE;
             break;
          }
-         pCompr->ring_buffer[ rbufidx ] = static_cast<HB_UCHAR>( c );
+         pCompr->ring_buffer[ rbufidx ] = static_cast<HB_UCHAR>(c);
          rbufidx = RBUFINDEX( rbufidx + 1 );
       }
       else /* we have an item pair (ring buffer offset : match length) */
@@ -362,7 +362,7 @@ static HB_BOOL hb_LZSSxDecode( PHB_LZSSX_COMPR pCompr )
          for( h = 0; h < length; h++ )
          {
             c = pCompr->ring_buffer[ RBUFINDEX( offset + h ) ];
-            if( ! hb_LZSSxWrite( pCompr, static_cast<HB_UCHAR>( c ) ) )
+            if( ! hb_LZSSxWrite( pCompr, static_cast<HB_UCHAR>(c) ) )
             {
                fResult = HB_FALSE;
                break;
@@ -371,7 +371,7 @@ static HB_BOOL hb_LZSSxDecode( PHB_LZSSX_COMPR pCompr )
                overwrite the ring buffer - we have to make exactly
                the same or our results will be differ when
                abs( offset - rbufidx ) < length */
-            pCompr->ring_buffer[ rbufidx ] = static_cast<HB_UCHAR>( c );
+            pCompr->ring_buffer[ rbufidx ] = static_cast<HB_UCHAR>(c);
             rbufidx = RBUFINDEX( rbufidx + 1 );
          }
       }
@@ -406,8 +406,8 @@ static void hb_LZSSxNodeInsert( PHB_LZSSX_COMPR pCompr, int r )
          }
          else
          {
-            pCompr->right[ p ] = static_cast<HB_SHORT>( r );
-            pCompr->parent[ r ] = static_cast<HB_SHORT>( p );
+            pCompr->right[ p ] = static_cast<HB_SHORT>(r);
+            pCompr->parent[ r ] = static_cast<HB_SHORT>(p);
             return;
          }
       }
@@ -419,8 +419,8 @@ static void hb_LZSSxNodeInsert( PHB_LZSSX_COMPR pCompr, int r )
          }
          else
          {
-            pCompr->left[ p ] = static_cast<HB_SHORT>( r );
-            pCompr->parent[ r ] = static_cast<HB_SHORT>( p );
+            pCompr->left[ p ] = static_cast<HB_SHORT>(r);
+            pCompr->parent[ r ] = static_cast<HB_SHORT>(p);
             return;
          }
       }
@@ -433,8 +433,8 @@ static void hb_LZSSxNodeInsert( PHB_LZSSX_COMPR pCompr, int r )
       }
       if( i > pCompr->match_length )
       {
-         pCompr->match_offset = static_cast<HB_SHORT>( p );
-         pCompr->match_length = static_cast<HB_SHORT>( i );
+         pCompr->match_offset = static_cast<HB_SHORT>(p);
+         pCompr->match_length = static_cast<HB_SHORT>(i);
          if( i >= MAXLENGTH )
          {
             break;
@@ -444,15 +444,15 @@ static void hb_LZSSxNodeInsert( PHB_LZSSX_COMPR pCompr, int r )
    pCompr->parent[ r ] = pCompr->parent[ p ];
    pCompr->left[ r ]   = pCompr->left[ p ];
    pCompr->right[ r ]  = pCompr->right[ p ];
-   pCompr->parent[ pCompr->left[ p ] ]  = static_cast<HB_SHORT>( r );
-   pCompr->parent[ pCompr->right[ p ] ] = static_cast<HB_SHORT>( r );
+   pCompr->parent[ pCompr->left[ p ] ]  = static_cast<HB_SHORT>(r);
+   pCompr->parent[ pCompr->right[ p ] ] = static_cast<HB_SHORT>(r);
    if( pCompr->right[ pCompr->parent[ p ] ] == p )
    {
-      pCompr->right[ pCompr->parent[ p ] ] = static_cast<HB_SHORT>( r );
+      pCompr->right[ pCompr->parent[ p ] ] = static_cast<HB_SHORT>(r);
    }
    else
    {
-      pCompr->left[ pCompr->parent[ p ] ] = static_cast<HB_SHORT>( r );
+      pCompr->left[ pCompr->parent[ p ] ] = static_cast<HB_SHORT>(r);
    }
    pCompr->parent[ p ] = DUMMYNODE;
 }
@@ -483,19 +483,19 @@ static void hb_LZSSxNodeDelete( PHB_LZSSX_COMPR pCompr, int p )
             pCompr->right[ pCompr->parent[ q ] ] = pCompr->left[ q ];
             pCompr->parent[ pCompr->left[ q ] ] = pCompr->parent[ q ];
             pCompr->left[ q ] = pCompr->left[ p ];
-            pCompr->parent[ pCompr->left[ p ] ] = static_cast<HB_SHORT>( q );
+            pCompr->parent[ pCompr->left[ p ] ] = static_cast<HB_SHORT>(q);
          }
          pCompr->right[ q ] = pCompr->right[ p ];
-         pCompr->parent[ pCompr->right[ p ] ] = static_cast<HB_SHORT>( q );
+         pCompr->parent[ pCompr->right[ p ] ] = static_cast<HB_SHORT>(q);
       }
       pCompr->parent[ q ] = pCompr->parent[ p ];
       if( pCompr->right[ pCompr->parent[ p ] ] == p )
       {
-         pCompr->right[ pCompr->parent[ p ] ] = static_cast<HB_SHORT>( q );
+         pCompr->right[ pCompr->parent[ p ] ] = static_cast<HB_SHORT>(q);
       }
       else
       {
-         pCompr->left[ pCompr->parent[ p ] ] = static_cast<HB_SHORT>( q );
+         pCompr->left[ pCompr->parent[ p ] ] = static_cast<HB_SHORT>(q);
       }
       pCompr->parent[ p ] = DUMMYNODE;
    }
@@ -524,11 +524,11 @@ static HB_SIZE hb_LZSSxEncode( PHB_LZSSX_COMPR pCompr )
 
    for( len = 0; len < MAXLENGTH; len++ )
    {
-      if( ( c = static_cast<HB_SHORT>( hb_LZSSxRead( pCompr ) ) ) == -1 )
+      if( ( c = static_cast<HB_SHORT>(hb_LZSSxRead( pCompr )) ) == -1 )
       {
          break;
       }
-      pCompr->ring_buffer[ r + len ] = static_cast<HB_UCHAR>( c );
+      pCompr->ring_buffer[ r + len ] = static_cast<HB_UCHAR>(c);
    }
    if( len == 0 )
    {
@@ -574,23 +574,23 @@ static HB_SIZE hb_LZSSxEncode( PHB_LZSSX_COMPR pCompr )
          item = itemMask = 1;
       }
       last_match_length = pCompr->match_length;
-      for( i = 0; i < last_match_length && ( c = static_cast<HB_SHORT>( hb_LZSSxRead( pCompr ) ) ) != -1; i++ )
+      for( i = 0; i < last_match_length && ( c = static_cast<HB_SHORT>(hb_LZSSxRead( pCompr )) ) != -1; i++ )
       {
          hb_LZSSxNodeDelete( pCompr, s );
-         pCompr->ring_buffer[ s ] = static_cast<HB_UCHAR>( c );
+         pCompr->ring_buffer[ s ] = static_cast<HB_UCHAR>(c);
          if( s < MAXLENGTH - 1 )
          {
-            pCompr->ring_buffer[ s + RBUFLENGTH ] = static_cast<HB_UCHAR>( c );
+            pCompr->ring_buffer[ s + RBUFLENGTH ] = static_cast<HB_UCHAR>(c);
          }
-         s = static_cast<HB_SHORT>( RBUFINDEX( s + 1 ) );
-         r = static_cast<HB_SHORT>( RBUFINDEX( r + 1 ) );
+         s = static_cast<HB_SHORT>(RBUFINDEX( s + 1 ));
+         r = static_cast<HB_SHORT>(RBUFINDEX( r + 1 ));
          hb_LZSSxNodeInsert( pCompr, r );
       }
       while( i++ < last_match_length )
       {
          hb_LZSSxNodeDelete( pCompr, s );
-         s = static_cast<HB_SHORT>( RBUFINDEX( s + 1 ) );
-         r = static_cast<HB_SHORT>( RBUFINDEX( r + 1 ) );
+         s = static_cast<HB_SHORT>(RBUFINDEX( s + 1 ));
+         r = static_cast<HB_SHORT>(RBUFINDEX( r + 1 ));
          if( --len )
          {
             hb_LZSSxNodeInsert( pCompr, r );
@@ -625,7 +625,7 @@ HB_BOOL hb_LZSSxCompressMem( const char * pSrcBuf, HB_SIZE nSrcLen, char * pDstB
    PHB_LZSSX_COMPR pCompr;
    HB_SIZE nSize;
 
-   pCompr = hb_LZSSxInit( nullptr, reinterpret_cast<const HB_BYTE*>( pSrcBuf ), nSrcLen, nullptr, reinterpret_cast<HB_BYTE*>( pDstBuf ), nDstLen );
+   pCompr = hb_LZSSxInit( nullptr, reinterpret_cast<const HB_BYTE*>(pSrcBuf), nSrcLen, nullptr, reinterpret_cast<HB_BYTE*>(pDstBuf), nDstLen );
    nSize = hb_LZSSxEncode( pCompr );
    hb_LZSSxExit( pCompr );
    if( pnSize )
@@ -640,7 +640,7 @@ HB_BOOL hb_LZSSxDecompressMem( const char * pSrcBuf, HB_SIZE nSrcLen, char * pDs
    PHB_LZSSX_COMPR pCompr;
    HB_BOOL fResult;
 
-   pCompr = hb_LZSSxInit( nullptr, reinterpret_cast<const HB_BYTE*>( pSrcBuf ), nSrcLen, nullptr, reinterpret_cast<HB_BYTE*>( pDstBuf ), nDstLen );
+   pCompr = hb_LZSSxInit( nullptr, reinterpret_cast<const HB_BYTE*>(pSrcBuf), nSrcLen, nullptr, reinterpret_cast<HB_BYTE*>(pDstBuf), nDstLen );
    fResult = hb_LZSSxDecode( pCompr );
    hb_LZSSxExit( pCompr );
    return fResult;
@@ -688,7 +688,7 @@ HB_FUNC( SX_FCOMPRESS )
             /* store uncompressed file size in first 4 bytes of destination
              * file in little endian order - for SIX3 compatibility
              */
-            HB_SIZE nSize = static_cast<HB_SIZE>( hb_fileSize( pInput ) );
+            HB_SIZE nSize = static_cast<HB_SIZE>(hb_fileSize( pInput ));
             if( hb_fileSeek( pInput, 0, FS_SET ) == 0 )
             {
                HB_BYTE buf[ 4 ];
@@ -743,13 +743,13 @@ HB_FUNC( _SX_STRCOMPRESS )
 
       /* this is for strict SIX compatibility - in general very bad idea */
       nBuf = nLen + 257;
-      pBuf = static_cast<char*>( hb_xgrab(nBuf) );
+      pBuf = static_cast<char*>(hb_xgrab(nBuf));
       HB_PUT_LE_UINT32( pBuf, nLen );
       if( ! hb_LZSSxCompressMem( pStr, nLen, pBuf + 4, nBuf - 4, &nDst ) )
       {
          /* It's not six compatible - it's a workaround for wrongly defined SIX behavior */
          HB_PUT_LE_UINT32( pBuf, HB_SX_UNCOMPRESED );
-         memcpy( pBuf + 4, pStr, nLen );
+         memcpy(pBuf + 4, pStr, nLen);
          nDst = nLen;
       }
       hb_retclen( pBuf, nDst + 4 );
@@ -780,7 +780,7 @@ HB_FUNC( _SX_STRDECOMPRESS )
          }
          else
          {
-            char * pBuf = static_cast<char*>( hb_xalloc( nBuf + 1 ) );
+            char * pBuf = static_cast<char*>(hb_xalloc(nBuf + 1));
             if( pBuf )
             {
                fOK = hb_LZSSxDecompressMem( pStr + 4, nLen - 4, pBuf, nBuf );

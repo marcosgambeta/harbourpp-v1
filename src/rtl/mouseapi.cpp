@@ -93,7 +93,7 @@ HB_BOOL hb_mouseGetCursor( void )
 void hb_mouseSetCursor( HB_BOOL fVisible )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseSetCursor(%d)", static_cast<int>( fVisible ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseSetCursor(%d)", static_cast<int>(fVisible) ) );
 #endif
 
    PHB_GT pGT;
@@ -145,7 +145,7 @@ int hb_mouseRow( void )
 void hb_mouseGetPos( int * piRow, int * piCol )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseGetPos(%p, %p)", static_cast<void*>( piRow ), static_cast<void*>( piCol ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseGetPos(%p, %p)", static_cast<void*>(piRow), static_cast<void*>(piCol) ) );
 #endif
 
    PHB_GT pGT;
@@ -193,7 +193,7 @@ void hb_mouseSetBounds( int iTop, int iLeft, int iBottom, int iRight )
 void hb_mouseGetBounds( int * piTop, int * piLeft, int * piBottom, int * piRight )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseGetBounds(%p, %p, %p, %p)", static_cast<void*>( piTop ), static_cast<void*>( piLeft ), static_cast<void*>( piBottom ), static_cast<void*>( piRight ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseGetBounds(%p, %p, %p, %p)", static_cast<void*>(piTop), static_cast<void*>(piLeft), static_cast<void*>(piBottom), static_cast<void*>(piRight) ) );
 #endif
 
    PHB_GT pGT;
@@ -329,7 +329,7 @@ HB_BOOL hb_mouseButtonState( int iButton )
 HB_BOOL hb_mouseButtonPressed( int iButton, int * piRow, int * piCol )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseButtonPressed(%d,%p,%p)", iButton, static_cast<void*>( piRow ), static_cast<void*>( piCol ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseButtonPressed(%d,%p,%p)", iButton, static_cast<void*>(piRow), static_cast<void*>(piCol) ) );
 #endif
 
    HB_BOOL fPressed = HB_FALSE;
@@ -347,7 +347,7 @@ HB_BOOL hb_mouseButtonPressed( int iButton, int * piRow, int * piCol )
 HB_BOOL hb_mouseButtonReleased( int iButton, int * piRow, int * piCol )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseButtonReleased(%d,%p,%p)", iButton, static_cast<void*>( piRow ), static_cast<void*>( piCol ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_mouseButtonReleased(%d,%p,%p)", iButton, static_cast<void*>(piRow), static_cast<void*>(piCol) ) );
 #endif
 
    HB_BOOL fReleased = HB_FALSE;

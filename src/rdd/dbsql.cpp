@@ -83,7 +83,7 @@ static void hb_addToFBuffer( PHB_FILEBUF pFileBuf, char ch )
    {
       hb_flushFBuffer( pFileBuf );
    }
-   pFileBuf->pBuf[ pFileBuf->nPos++ ] = static_cast<HB_BYTE>( ch );
+   pFileBuf->pBuf[ pFileBuf->nPos++ ] = static_cast<HB_BYTE>(ch);
 }
 
 static void hb_addStrnToFBuffer( PHB_FILEBUF pFileBuf, const char * str, HB_SIZE nSize )
@@ -96,7 +96,7 @@ static void hb_addStrnToFBuffer( PHB_FILEBUF pFileBuf, const char * str, HB_SIZE
       {
          hb_flushFBuffer( pFileBuf );
       }
-      pFileBuf->pBuf[ pFileBuf->nPos++ ] = static_cast<HB_BYTE>( str[ nPos++ ] );
+      pFileBuf->pBuf[ pFileBuf->nPos++ ] = static_cast<HB_BYTE>(str[ nPos++ ]);
    }
 }
 
@@ -108,7 +108,7 @@ static void hb_addStrToFBuffer( PHB_FILEBUF pFileBuf, const char * szStr )
       {
          hb_flushFBuffer( pFileBuf );
       }
-      pFileBuf->pBuf[ pFileBuf->nPos++ ] = static_cast<HB_BYTE>( *szStr++ );
+      pFileBuf->pBuf[ pFileBuf->nPos++ ] = static_cast<HB_BYTE>(*szStr++);
    }
 }
 
@@ -124,10 +124,10 @@ static void hb_destroyFBuffer( PHB_FILEBUF pFileBuf )
 
 static PHB_FILEBUF hb_createFBuffer( PHB_FILE pFile, HB_SIZE nSize )
 {
-   PHB_FILEBUF pFileBuf = static_cast<PHB_FILEBUF>( hb_xgrab(sizeof(HB_FILEBUF)) );
+   PHB_FILEBUF pFileBuf = static_cast<PHB_FILEBUF>(hb_xgrab(sizeof(HB_FILEBUF)));
 
    pFileBuf->pFile = pFile;
-   pFileBuf->pBuf = static_cast<HB_BYTE*>( hb_xgrab(nSize) );
+   pFileBuf->pBuf = static_cast<HB_BYTE*>(hb_xgrab(nSize));
    pFileBuf->nSize = nSize;
    pFileBuf->nPos = 0;
    return pFileBuf;
@@ -157,7 +157,7 @@ static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const 
             {
                hb_addToFBuffer( pFileBuf, *szEsc );
             }
-            if( static_cast<HB_UCHAR>( *szVal ) >= 32 )
+            if( static_cast<HB_UCHAR>(*szVal) >= 32 )
             {
                hb_addToFBuffer( pFileBuf, *szVal );
             }
@@ -262,7 +262,7 @@ static HB_ULONG hb_db2Sql( AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
    const char * szNewLine = hb_conNewLine();
    char * szInsert = nullptr;
    HB_BOOL fEof = HB_TRUE;
-   HB_BOOL fNoFieldPassed = ( pFields == nullptr || hb_arrayLen( pFields ) == 0 );
+   HB_BOOL fNoFieldPassed = ( pFields == nullptr || hb_arrayLen(pFields) == 0 );
 
    if( SELF_FIELDCOUNT( pArea, &uiFields ) != HB_SUCCESS )
    {
@@ -317,7 +317,7 @@ static HB_ULONG hb_db2Sql( AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
             *--szVal = 0;
             do
             {
-               *--szVal = static_cast<char>( ulRec % 10 ) + '0';
+               *--szVal = static_cast<char>(ulRec % 10) + '0';
                ulRec /= 10;
             }
             while( ulRec );
@@ -388,7 +388,7 @@ static HB_ULONG hb_db2Sql( AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
             [<lRecNo>], [<cSep>], [<cDelim>], [<cEsc>] ) -> <nRecords> */
 HB_FUNC( __DBSQL )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {

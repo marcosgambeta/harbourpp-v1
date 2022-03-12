@@ -50,7 +50,7 @@
 void hb_strDescend( char * szStringTo, const char * szStringFrom, HB_SIZE nLen )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strDescend(%p, %s, %" HB_PFS "u)", static_cast<void*>( szStringTo ), szStringFrom, nLen ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_strDescend(%p, %s, %" HB_PFS "u)", static_cast<void*>(szStringTo), szStringFrom, nLen ) );
 #endif
 
    if( nLen == 1 && szStringFrom[ 0 ] == '\0' )
@@ -61,7 +61,7 @@ void hb_strDescend( char * szStringTo, const char * szStringFrom, HB_SIZE nLen )
    {
       for(; nLen--; szStringTo++, szStringFrom++ )
       {
-         *szStringTo = static_cast<char>( 256 - *szStringFrom );
+         *szStringTo = static_cast<char>(256 - *szStringFrom);
       }
    }
 }
@@ -78,7 +78,7 @@ HB_FUNC( DESCEND )
 
          if( nLen > 0 )
          {
-            char * szBuffer = static_cast<char*>( hb_xgrab(nLen + 1) );
+            char * szBuffer = static_cast<char*>(hb_xgrab(nLen + 1));
             hb_strDescend( szBuffer, hb_itemGetCPtr(pItem), nLen );
             hb_retclen_buffer( szBuffer, nLen );
          }

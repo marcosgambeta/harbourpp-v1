@@ -43,7 +43,7 @@ void hb_hmac_sha224_init(hmac_sha224_ctx *ctx, const void *keyv,
     unsigned int fill;
     unsigned int num;
 
-    const unsigned char *key = static_cast<const unsigned char*>( keyv );
+    const unsigned char *key = static_cast<const unsigned char*>(keyv);
     const unsigned char *key_used;
     unsigned char key_temp[SHA224_DIGEST_SIZE];
     unsigned int i;
@@ -130,7 +130,7 @@ void hb_hmac_sha256_init(hmac_sha256_ctx *ctx, const void *keyv,
     unsigned int fill;
     unsigned int num;
 
-    const unsigned char *key = static_cast<const unsigned char*>( keyv );
+    const unsigned char *key = static_cast<const unsigned char*>(keyv);
     const unsigned char *key_used;
     unsigned char key_temp[SHA256_DIGEST_SIZE];
     unsigned int i;
@@ -217,7 +217,7 @@ void hb_hmac_sha384_init(hmac_sha384_ctx *ctx, const void *keyv,
     unsigned int fill;
     unsigned int num;
 
-    const unsigned char *key = static_cast<const unsigned char*>( keyv );
+    const unsigned char *key = static_cast<const unsigned char*>(keyv);
     const unsigned char *key_used;
     unsigned char key_temp[SHA384_DIGEST_SIZE];
     unsigned int i;
@@ -304,7 +304,7 @@ void hb_hmac_sha512_init(hmac_sha512_ctx *ctx, const void *keyv,
     unsigned int fill;
     unsigned int num;
 
-    const unsigned char *key = static_cast<const unsigned char*>( keyv );
+    const unsigned char *key = static_cast<const unsigned char*>(keyv);
     const unsigned char *key_used;
     unsigned char key_temp[SHA512_DIGEST_SIZE];
     unsigned int i;

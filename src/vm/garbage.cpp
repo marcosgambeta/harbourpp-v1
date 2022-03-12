@@ -111,15 +111,15 @@ using PHB_GARBAGE = HB_GARBAGE *;
 #  define HB_GARBAGE_SIZE     sizeof(HB_GARBAGE)
 #endif
 
-#define HB_GC_PTR( p )        ( reinterpret_cast<PHB_GARBAGE>( reinterpret_cast<HB_BYTE*>( p ) - HB_GARBAGE_SIZE ) )
+#define HB_GC_PTR( p )        ( reinterpret_cast<PHB_GARBAGE>(reinterpret_cast<HB_BYTE*>(p) - HB_GARBAGE_SIZE) )
 
 #endif /* ! defined( HB_GC_PTR ) */
 
-#define HB_BLOCK_PTR( p )       ( static_cast<void*>( reinterpret_cast<HB_BYTE*>( p ) + HB_GARBAGE_SIZE ) )
+#define HB_BLOCK_PTR( p )       ( static_cast<void*>(reinterpret_cast<HB_BYTE*>(p) + HB_GARBAGE_SIZE) )
 
 /* we may use a cache later */
-#define HB_GARBAGE_NEW( nSize )    ( static_cast<PHB_GARBAGE>( hb_xgrab(HB_GARBAGE_SIZE + ( nSize )) ) )
-#define HB_GARBAGE_FREE( pAlloc )   hb_xfree(static_cast<void*>( pAlloc ))
+#define HB_GARBAGE_NEW( nSize )    ( static_cast<PHB_GARBAGE>(hb_xgrab(HB_GARBAGE_SIZE + (nSize))) )
+#define HB_GARBAGE_FREE( pAlloc )   hb_xfree(static_cast<void*>(pAlloc))
 
 /* status of memory block */
 /* flags stored in 'used' slot */
@@ -352,14 +352,14 @@ HB_GARBAGE_FUNC( hb_gcDummyMark )
 
 HB_GARBAGE_FUNC( hb_gcGripMark )
 {
-   hb_gcItemRef( static_cast<PHB_ITEM>( Cargo ) );
+   hb_gcItemRef( static_cast<PHB_ITEM>(Cargo) );
 }
 
 static HB_GARBAGE_FUNC( hb_gcGripRelease )
 {
-   if( HB_IS_COMPLEX(static_cast<PHB_ITEM>( Cargo )) )
+   if( HB_IS_COMPLEX(static_cast<PHB_ITEM>(Cargo)) )
    {
-      hb_itemClear(static_cast<PHB_ITEM>( Cargo ));
+      hb_itemClear(static_cast<PHB_ITEM>(Cargo));
    }
 }
 
@@ -372,7 +372,7 @@ static const HB_GC_FUNCS s_gcGripFuncs =
 PHB_ITEM hb_gcGripGet( PHB_ITEM pOrigin )
 {
    PHB_GARBAGE pAlloc = HB_GARBAGE_NEW( sizeof(HB_ITEM) );
-   PHB_ITEM pItem = static_cast<PHB_ITEM>( HB_BLOCK_PTR( pAlloc ) );
+   PHB_ITEM pItem = static_cast<PHB_ITEM>(HB_BLOCK_PTR(pAlloc));
 
    pAlloc->pFuncs = &s_gcGripFuncs;
    pAlloc->locked = 1;
@@ -766,7 +766,7 @@ void hb_gcReleaseAll( void )
       do
       {
          PHB_GARBAGE pDelete;
-         HB_TRACE( HB_TR_INFO, ( "Release %p", static_cast<void*>( s_pCurrBlock ) ) );
+         HB_TRACE( HB_TR_INFO, ( "Release %p", static_cast<void*>(s_pCurrBlock) ) );
          pDelete = s_pCurrBlock;
          hb_gcUnlink( &s_pCurrBlock, pDelete );
          HB_GC_AUTO_DEC();

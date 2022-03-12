@@ -146,15 +146,15 @@ PHB_ITEM hb_fsDirectory( const char * pszDirSpec, const char * pszAttributes, HB
       {
          char buffer[ 32 ];
 
-         hb_arrayNew    ( pSubarray, F_LEN );
-         hb_arraySetC   ( pSubarray, F_NAME, ffind->szName );
-         hb_arraySetNInt( pSubarray, F_SIZE, ffind->size );
-         hb_arraySetC   ( pSubarray, F_TIME, ffind->szTime );
-         hb_arraySetC   ( pSubarray, F_ATTR, hb_fsAttrDecode( ffind->attr, buffer ) );
+         hb_arrayNew    (pSubarray, F_LEN);
+         hb_arraySetC   (pSubarray, F_NAME, ffind->szName);
+         hb_arraySetNInt(pSubarray, F_SIZE, ffind->size);
+         hb_arraySetC   (pSubarray, F_TIME, ffind->szTime);
+         hb_arraySetC   (pSubarray, F_ATTR, hb_fsAttrDecode(ffind->attr, buffer));
 
          if( fDateTime )
          {
-            hb_arraySetTDT( pSubarray, F_DATE, ffind->lDate, ffind->lTime );
+            hb_arraySetTDT(pSubarray, F_DATE, ffind->lDate, ffind->lTime);
          }
          else
          {
@@ -162,7 +162,7 @@ PHB_ITEM hb_fsDirectory( const char * pszDirSpec, const char * pszAttributes, HB
          }
 
          /* Don't exit when array limit is reached */
-         hb_arrayAddForward( pDir, pSubarray );
+         hb_arrayAddForward(pDir, pSubarray);
       }
       while( hb_fsFindNext( ffind ) );
 

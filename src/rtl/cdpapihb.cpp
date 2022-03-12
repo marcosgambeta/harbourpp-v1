@@ -60,7 +60,7 @@ static HB_SIZE utf8pos( const char * szUTF8, HB_SIZE nLen, HB_SIZE nUTF8Pos )
 
       for( n1 = n2 = 0; n1 < nLen; )
       {
-         if( hb_cdpUTF8ToU16NextChar( static_cast<HB_UCHAR>( szUTF8[ n1 ] ), &n, &uc ) )
+         if( hb_cdpUTF8ToU16NextChar( static_cast<HB_UCHAR>(szUTF8[ n1 ]), &n, &uc ) )
          {
             ++n1;
          }
@@ -146,7 +146,7 @@ HB_FUNC( HB_CDPISCHARIDX )
 
 HB_FUNC( HB_CDPCHARMAX )
 {
-   hb_retnl( ( 1 << ( static_cast<int>( hb_cdpIsUTF8( hb_cdpFindExt( hb_parc(1) ) ) ? sizeof(HB_WCHAR) : sizeof(HB_UCHAR) ) * 8 ) ) - 1 );
+   hb_retnl( ( 1 << ( static_cast<int>(hb_cdpIsUTF8( hb_cdpFindExt( hb_parc(1) ) ) ? sizeof(HB_WCHAR) : sizeof(HB_UCHAR)) * 8 ) ) - 1 );
 }
 
 HB_FUNC( HB_CDPISUTF8 )
@@ -174,7 +174,7 @@ HB_FUNC( HB_CDPLIST )
       ++nPos;
    }
 
-   hb_xfree(static_cast<void*>( list ));
+   hb_xfree(static_cast<void*>(list));
 }
 
 /* NOTE: CA-Cl*pper 5.2e Intl. will return: "NATSORT v1.2i x14 19/Mar/93" */
@@ -218,7 +218,7 @@ HB_FUNC( HB_UTF8CHR )
       char utf8Char[ HB_MAX_CHAR_LEN ];
       int iLen;
 
-      iLen = hb_cdpU16CharToUTF8( utf8Char, static_cast<HB_WCHAR>( hb_parni(1) ) );
+      iLen = hb_cdpU16CharToUTF8( utf8Char, static_cast<HB_WCHAR>(hb_parni(1)) );
       hb_retclen( utf8Char, iLen );
    }
    else
@@ -239,7 +239,7 @@ HB_FUNC( HB_UTF8ASC )
 
       while( nLen )
       {
-         if( ! hb_cdpUTF8ToU16NextChar( static_cast<unsigned char>( *pszString ), &n, &wc ) )
+         if( ! hb_cdpUTF8ToU16NextChar( static_cast<unsigned char>(*pszString), &n, &wc ) )
          {
             break;
          }
@@ -279,7 +279,7 @@ HB_FUNC( HB_STRTOUTF8 )
          {
             const char * szString = hb_parc(1);
             nDest = hb_cdpStrAsUTF8Len( cdp, szString, nLen, 0 );
-            szDest = static_cast<char*>( hb_xgrab(nDest + 1) );
+            szDest = static_cast<char*>(hb_xgrab(nDest + 1));
             hb_cdpStrToUTF8( cdp, szString, nLen, szDest, nDest + 1 );
          }
       }
@@ -319,7 +319,7 @@ HB_FUNC( HB_UTF8TOSTR )
             {
                szString = hb_parc(1);
                nDest = hb_cdpUTF8AsStrLen(cdp, szString, nLen, 0);
-               szDest = static_cast<char*>( hb_xgrab(nDest + 1) );
+               szDest = static_cast<char*>(hb_xgrab(nDest + 1));
                hb_cdpUTF8ToStr( cdp, szString, nLen, szDest, nDest + 1 );
             }
          }
@@ -408,7 +408,7 @@ HB_FUNC( HB_UTF8SUBSTR )
       char * szDest = nullptr;
       HB_SIZE nLen = hb_parclen(1), nDest = 0;
       HB_ISIZ nFrom = hb_parns(2);
-      HB_ISIZ nCount = iPCount < 3 ? static_cast<HB_ISIZ>( nLen ) : hb_parns(3);
+      HB_ISIZ nCount = iPCount < 3 ? static_cast<HB_ISIZ>(nLen) : hb_parns(3);
 
       if( nFrom < 0 )
       {
@@ -423,7 +423,7 @@ HB_FUNC( HB_UTF8SUBSTR )
          --nFrom;
       }
 
-      if( nLen > static_cast<HB_SIZE>( nFrom ) && nCount > 0 )
+      if( nLen > static_cast<HB_SIZE>(nFrom) && nCount > 0 )
       {
          szDest = hb_cdpUTF8StringSubstr( szString, nLen, nFrom, nCount, &nDest );
       }
@@ -547,7 +547,7 @@ HB_FUNC( HB_UTF8POKE )
          int n, n2;
 
          --nPos;
-         uc = static_cast<HB_WCHAR>( hb_parni(3) );
+         uc = static_cast<HB_WCHAR>(hb_parni(3));
          n = hb_cdpUTF8CharSize( uc );
          n2 = 0;
          hb_cdpUTF8ToU16NextChar( szString[ nPos ], &n2, &uc2 );
@@ -563,11 +563,11 @@ HB_FUNC( HB_UTF8POKE )
          }
          else
          {
-            char * szResult = static_cast<char*>( hb_xgrab(nLen - n2 + n + 1) );
+            char * szResult = static_cast<char*>(hb_xgrab(nLen - n2 + n + 1));
 
-            memcpy( szResult, szString, nPos );
+            memcpy(szResult, szString, nPos);
             hb_cdpU16CharToUTF8( &szResult[ nPos ], uc );
-            memcpy( szResult + nPos + n, szString + nPos + n2, nLen - nPos - n2 );
+            memcpy(szResult + nPos + n, szString + nPos + n2, nLen - nPos - n2);
             if( HB_ISBYREF(1) )
             {
                hb_storclen( szResult, nLen - n2 + n, 1 );
@@ -633,7 +633,7 @@ HB_FUNC( HB_UTF8STUFF )
 
       if( ( nTot = nLen + nIns - nDel ) > 0 )
       {
-         char * szResult = static_cast<char*>( hb_xgrab(nTot + 1) );
+         char * szResult = static_cast<char*>(hb_xgrab(nTot + 1));
 
          hb_xmemcpy(szResult, szText, nPos);
          hb_xmemcpy(szResult + nPos, szIns, nIns);

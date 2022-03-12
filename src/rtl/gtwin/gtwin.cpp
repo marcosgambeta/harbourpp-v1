@@ -307,8 +307,8 @@ static void hb_gt_win_xSetCursorPos( void )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_xSetCursorPos()" ) );
 #endif
 
-   s_csbi.dwCursorPosition.Y = static_cast<short>( s_iCurRow );
-   s_csbi.dwCursorPosition.X = static_cast<short>( s_iCurCol );
+   s_csbi.dwCursorPosition.Y = static_cast<short>(s_iCurRow);
+   s_csbi.dwCursorPosition.X = static_cast<short>(s_iCurCol);
    SetConsoleCursorPosition( s_HOutput, s_csbi.dwCursorPosition );
 }
 
@@ -373,12 +373,12 @@ static void hb_gt_win_xScreenUpdate( void )
 
          coSize.Y     = _GetScreenHeight();
          coSize.X     = _GetScreenWidth();
-         coDest.Y     = static_cast<short>( s_iUpdtTop );
-         coDest.X     = static_cast<short>( s_iUpdtLeft );
-         srWin.Top    = static_cast<short>( s_iUpdtTop );
-         srWin.Left   = static_cast<short>( s_iUpdtLeft );
-         srWin.Bottom = static_cast<short>( s_iUpdtBottom );
-         srWin.Right  = static_cast<short>( s_iUpdtRight );
+         coDest.Y     = static_cast<short>(s_iUpdtTop);
+         coDest.X     = static_cast<short>(s_iUpdtLeft);
+         srWin.Top    = static_cast<short>(s_iUpdtTop);
+         srWin.Left   = static_cast<short>(s_iUpdtLeft);
+         srWin.Bottom = static_cast<short>(s_iUpdtBottom);
+         srWin.Right  = static_cast<short>(s_iUpdtRight);
 
          s_iUpdtTop = _GetScreenHeight();
          s_iUpdtLeft = _GetScreenWidth();
@@ -421,11 +421,11 @@ static void hb_gt_win_xUpdtSet( int iTop, int iLeft, int iBottom, int iRight )
    }
    if( iBottom > s_iUpdtBottom )
    {
-      s_iUpdtBottom = HB_MIN( iBottom, static_cast<int>( _GetScreenHeight() ) - 1 );
+      s_iUpdtBottom = HB_MIN( iBottom, static_cast<int>(_GetScreenHeight()) - 1 );
    }
    if( iRight > s_iUpdtRight )
    {
-      s_iUpdtRight = HB_MIN( iRight, static_cast<int>( _GetScreenWidth() ) - 1 );
+      s_iUpdtRight = HB_MIN( iRight, static_cast<int>(_GetScreenWidth()) - 1 );
    }
 }
 
@@ -434,7 +434,7 @@ static void hb_gt_win_xUpdtSet( int iTop, int iLeft, int iBottom, int iRight )
 static BOOL WINAPI hb_gt_win_CtrlHandler( DWORD dwCtrlType )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_CtrlHandler(%lu)", static_cast<HB_ULONG>( dwCtrlType ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_CtrlHandler(%lu)", static_cast<HB_ULONG>(dwCtrlType) ) );
 #endif
 
    BOOL bHandled;
@@ -458,7 +458,7 @@ static BOOL WINAPI hb_gt_win_CtrlHandler( DWORD dwCtrlType )
       case CTRL_SHUTDOWN_EVENT:
       default:
 #if 0
-         printf( " Event %lu ", static_cast<HB_ULONG>( dwCtrlType ) );
+         printf( " Event %lu ", static_cast<HB_ULONG>(dwCtrlType) );
 #endif
          bHandled = FALSE;
          break;
@@ -472,7 +472,7 @@ static BOOL WINAPI hb_gt_win_CtrlHandler( DWORD dwCtrlType )
 static void hb_gt_win_xGetScreenContents( PHB_GT pGT, SMALL_RECT * psrWin )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_xGetScreenContents(%p,%p)", static_cast<void*>( pGT ), static_cast<void*>( psrWin ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_xGetScreenContents(%p,%p)", static_cast<void*>(pGT), static_cast<void*>(psrWin) ) );
 #endif
 
    int iCol;
@@ -505,10 +505,10 @@ static void hb_gt_win_xGetScreenContents( PHB_GT pGT, SMALL_RECT * psrWin )
       for( iCol = psrWin->Left; iCol <= psrWin->Right; ++iCol )
       {
 #if defined( UNICODE )
-         HB_GTSELF_PUTSCRCHAR( pGT, iRow, iCol, static_cast<HB_UCHAR>( s_pCharInfoScreen[ i ].Attributes ), 0, s_pCharInfoScreen[ i ].Char.UnicodeChar );
+         HB_GTSELF_PUTSCRCHAR( pGT, iRow, iCol, static_cast<HB_UCHAR>(s_pCharInfoScreen[ i ].Attributes), 0, s_pCharInfoScreen[ i ].Char.UnicodeChar );
 #else
-         HB_USHORT usChar = hb_cdpGetU16( cdp, static_cast<HB_UCHAR>( s_pCharInfoScreen[ i ].Char.AsciiChar ) );
-         HB_GTSELF_PUTSCRCHAR( pGT, iRow, iCol, static_cast<HB_UCHAR>( s_pCharInfoScreen[ i ].Attributes ), bxAttr, usChar );
+         HB_USHORT usChar = hb_cdpGetU16( cdp, static_cast<HB_UCHAR>(s_pCharInfoScreen[ i ].Char.AsciiChar) );
+         HB_GTSELF_PUTSCRCHAR( pGT, iRow, iCol, static_cast<HB_UCHAR>(s_pCharInfoScreen[ i ].Attributes), bxAttr, usChar );
 #endif
          ++i;
       }
@@ -521,14 +521,14 @@ static void hb_gt_win_xGetScreenContents( PHB_GT pGT, SMALL_RECT * psrWin )
 static void hb_gt_win_xInitScreenParam( PHB_GT pGT )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_xInitScreenParam(%p)", static_cast<void*>( pGT ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_xInitScreenParam(%p)", static_cast<void*>(pGT) ) );
 #endif
 
    if( GetConsoleScreenBufferInfo( s_HOutput, &s_csbi ) )
    {
       COORD coDest;
       SMALL_RECT srWin;
-      HB_SIZE nSize = static_cast<HB_SIZE>( _GetScreenWidth() ) * _GetScreenHeight() * sizeof(CHAR_INFO);
+      HB_SIZE nSize = static_cast<HB_SIZE>(_GetScreenWidth()) * _GetScreenHeight() * sizeof(CHAR_INFO);
 
       HB_GTSELF_RESIZE( pGT, _GetScreenHeight(), _GetScreenWidth() );
 
@@ -539,7 +539,7 @@ static void hb_gt_win_xInitScreenParam( PHB_GT pGT )
             hb_xfree(s_pCharInfoScreen);
          }
          s_nScreenBuffSize = nSize;
-         s_pCharInfoScreen = static_cast<CHAR_INFO*>( hb_xgrab(s_nScreenBuffSize) );
+         s_pCharInfoScreen = static_cast<CHAR_INFO*>(hb_xgrab(s_nScreenBuffSize));
       }
 
       s_iCurRow = s_csbi.dwCursorPosition.Y;
@@ -607,8 +607,8 @@ static HB_BOOL hb_gt_win_SetPalette_Vista( HB_BOOL bSet, COLORREF * colors )
       HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
       if( hModule )
       {
-         s_pGetConsoleScreenBufferInfoEx = reinterpret_cast<P_GETCONSOLESCREENBUFFERINFOEX>( HB_WINAPI_GETPROCADDRESS( hModule, "GetConsoleScreenBufferInfoEx" ) );
-         s_pSetConsoleScreenBufferInfoEx = reinterpret_cast<P_SETCONSOLESCREENBUFFERINFOEX>( HB_WINAPI_GETPROCADDRESS( hModule, "SetConsoleScreenBufferInfoEx" ) );
+         s_pGetConsoleScreenBufferInfoEx = reinterpret_cast<P_GETCONSOLESCREENBUFFERINFOEX>(HB_WINAPI_GETPROCADDRESS( hModule, "GetConsoleScreenBufferInfoEx" ));
+         s_pSetConsoleScreenBufferInfoEx = reinterpret_cast<P_SETCONSOLESCREENBUFFERINFOEX>(HB_WINAPI_GETPROCADDRESS( hModule, "SetConsoleScreenBufferInfoEx" ));
       }
       s_fChecked = HB_TRUE;
    }
@@ -724,7 +724,7 @@ static HB_BOOL hb_gt_win_SetCloseButton( HB_BOOL bSet, HB_BOOL bClosable )
                HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
                if( hModule )
                {
-                  s_pSetConsoleMenuClose = reinterpret_cast<P_SETCONSOLEMENUCLOSE>( HB_WINAPI_GETPROCADDRESS( hModule, "SetConsoleMenuClose" ) );
+                  s_pSetConsoleMenuClose = reinterpret_cast<P_SETCONSOLEMENUCLOSE>(HB_WINAPI_GETPROCADDRESS( hModule, "SetConsoleMenuClose" ));
                }
                s_fChecked = HB_TRUE;
             }
@@ -747,7 +747,7 @@ static HB_BOOL hb_gt_win_SetCloseButton( HB_BOOL bSet, HB_BOOL bClosable )
 static void hb_gt_win_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Init(%p,%p,%p,%p)", static_cast<void*>( pGT ), reinterpret_cast<void*>( static_cast<HB_PTRUINT>( hFilenoStdin ) ), reinterpret_cast<void*>( static_cast<HB_PTRUINT>( hFilenoStdout ) ), reinterpret_cast<void*>( static_cast<HB_PTRUINT>( hFilenoStderr ) ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Init(%p,%p,%p,%p)", static_cast<void*>(pGT), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdin)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdout)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStderr)) ) );
 #endif
 
    s_fWin9x = hb_iswin9x();
@@ -842,7 +842,7 @@ static void hb_gt_win_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    GetConsoleScreenBufferInfo( s_HOutput, &s_csbi );
 
    /* save screen info to restore on exit */
-   memcpy( &s_origCsbi, &s_csbi, sizeof(s_csbi) );
+   memcpy(&s_origCsbi, &s_csbi, sizeof(s_csbi));
 
    s_csbi.srWindow.Top = s_csbi.srWindow.Left = 0;
    s_csbi.srWindow.Right = HB_MIN( s_csbi.srWindow.Right, _GetScreenWidth() - 1 );
@@ -878,7 +878,7 @@ static void hb_gt_win_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 static void hb_gt_win_Exit( PHB_GT pGT )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Exit(%p)", static_cast<void*>( pGT ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Exit(%p)", static_cast<void*>(pGT) ) );
 #endif
 
    HB_GTSELF_REFRESH( pGT );
@@ -919,7 +919,7 @@ static void hb_gt_win_Exit( PHB_GT pGT )
 static HB_BOOL hb_gt_win_SetMode( PHB_GT pGT, int iRows, int iCols )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_SetMode(%p,%d,%d)", static_cast<void*>( pGT ), iRows, iCols ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_SetMode(%p,%d,%d)", static_cast<void*>(pGT), iRows, iCols ) );
 #endif
 
    HB_BOOL fRet = HB_FALSE;
@@ -937,7 +937,7 @@ static HB_BOOL hb_gt_win_SetMode( PHB_GT pGT, int iRows, int iCols )
       }
       else
       {
-         coBuf.Y = static_cast<short>( iRows );
+         coBuf.Y = static_cast<short>(iRows);
       }
 
       if( iCols > coBuf.X )
@@ -946,15 +946,15 @@ static HB_BOOL hb_gt_win_SetMode( PHB_GT pGT, int iRows, int iCols )
       }
       else
       {
-         coBuf.X = static_cast<short>( iCols );
+         coBuf.X = static_cast<short>(iCols);
       }
 
       /* new console window size and scroll position */
       srWin.Top    = srWin.Left = 0;
-      srWin.Bottom = static_cast<short>( iRows - 1 );
-      srWin.Right  = static_cast<short>( iCols - 1 );
+      srWin.Bottom = static_cast<short>(iRows - 1);
+      srWin.Right  = static_cast<short>(iCols - 1);
 
-      if( static_cast<int>( _GetScreenWidth() ) >= iCols && static_cast<int>( _GetScreenHeight() ) >= iRows )
+      if( static_cast<int>(_GetScreenWidth()) >= iCols && static_cast<int>(_GetScreenHeight()) >= iRows )
       {
          /* the new dimensions do not exceed the current buffer dimensions so
           * we can safely resize the console window first, then the buffer
@@ -965,7 +965,7 @@ static HB_BOOL hb_gt_win_SetMode( PHB_GT pGT, int iRows, int iCols )
             fRet = HB_TRUE;
          }
       }
-      else if( static_cast<int>( _GetScreenWidth() ) <= iCols && static_cast<int>( _GetScreenHeight() ) <= iRows )
+      else if( static_cast<int>(_GetScreenWidth()) <= iCols && static_cast<int>(_GetScreenHeight()) <= iRows )
       {
          /* none of the current buffer dimensions is larger then the
           * new dimensions so we can safely enlarge the buffer to new
@@ -991,13 +991,13 @@ static HB_BOOL hb_gt_win_SetMode( PHB_GT pGT, int iRows, int iCols )
           * decrease the one of console window dimensions which is larger
           * then the corresponding new one.
           */
-         if( static_cast<int>( _GetScreenWidth() ) < iCols )
+         if( static_cast<int>(_GetScreenWidth()) < iCols )
          {
-            srWin.Right  = static_cast<short>( _GetScreenWidth() - 1 );
+            srWin.Right  = static_cast<short>(_GetScreenWidth() - 1);
          }
          else
          {
-            srWin.Bottom = static_cast<short>( _GetScreenHeight() - 1 );
+            srWin.Bottom = static_cast<short>(_GetScreenHeight() - 1);
          }
          if( SetConsoleWindowInfo( s_HOutput, TRUE, &srWin ) )
          {
@@ -1008,8 +1008,8 @@ static HB_BOOL hb_gt_win_SetMode( PHB_GT pGT, int iRows, int iCols )
              */
             if( SetConsoleScreenBufferSize( s_HOutput, coBuf ) )
             {
-               srWin.Bottom = static_cast<short>( iRows - 1 );
-               srWin.Right  = static_cast<short>( iCols - 1 );
+               srWin.Bottom = static_cast<short>(iRows - 1);
+               srWin.Right  = static_cast<short>(iCols - 1);
                SetConsoleWindowInfo( s_HOutput, TRUE, &srWin );
             }
             fRet = HB_TRUE;
@@ -1030,7 +1030,7 @@ static HB_BOOL hb_gt_win_SetMode( PHB_GT pGT, int iRows, int iCols )
 static const char * hb_gt_win_Version( PHB_GT pGT, int iType )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Version(%p,%d)", static_cast<void*>( pGT ), iType ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Version(%p,%d)", static_cast<void*>(pGT), iType ) );
 #endif
 
    HB_SYMBOL_UNUSED(pGT);
@@ -1048,7 +1048,7 @@ static const char * hb_gt_win_Version( PHB_GT pGT, int iType )
 static HB_BOOL hb_gt_win_PostExt( PHB_GT pGT )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_PostExt(%p)", static_cast<void*>( pGT ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_PostExt(%p)", static_cast<void*>(pGT) ) );
 #endif
 
    HB_GTSUPER_POSTEXT( pGT );
@@ -1064,7 +1064,7 @@ static HB_BOOL hb_gt_win_PostExt( PHB_GT pGT )
 static HB_BOOL hb_gt_win_Suspend( PHB_GT pGT )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Suspend(%p)", static_cast<void*>( pGT ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Suspend(%p)", static_cast<void*>(pGT) ) );
 #endif
 
    HB_SYMBOL_UNUSED(pGT);
@@ -1081,7 +1081,7 @@ static HB_BOOL hb_gt_win_Suspend( PHB_GT pGT )
 static HB_BOOL hb_gt_win_Resume( PHB_GT pGT )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Resume(%p)", static_cast<void*>( pGT ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Resume(%p)", static_cast<void*>(pGT) ) );
 #endif
 
    if( s_pCharInfoScreen )
@@ -1247,7 +1247,7 @@ static int SpecialHandling( WORD wScan, int iKey, HB_BOOL fShifted )
 static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_ReadKey(%p,%d)", static_cast<void*>( pGT ), iEventMask ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_ReadKey(%p,%d)", static_cast<void*>(pGT), iEventMask ) );
 #endif
 
    int iKey = 0;
@@ -1335,11 +1335,11 @@ static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
                           "state=0x%04x "
                           "uchar=%d "
                           "repeat=%d\n",
-                          static_cast<int>( pInRec->Event.KeyEvent.wVirtualKeyCode ),     /* VK_* key code */
-                          static_cast<int>( pInRec->Event.KeyEvent.wVirtualScanCode ),    /* scan code */
-                          static_cast<int>( pInRec->Event.KeyEvent.dwControlKeyState ),   /* state */
-                          static_cast<int>( pInRec->Event.KeyEvent.uChar.UnicodeChar ),   /* char */
-                          static_cast<int>( pInRec->Event.KeyEvent.wRepeatCount ) );      /* repeat */
+                          static_cast<int>(pInRec->Event.KeyEvent.wVirtualKeyCode),     /* VK_* key code */
+                          static_cast<int>(pInRec->Event.KeyEvent.wVirtualScanCode),    /* scan code */
+                          static_cast<int>(pInRec->Event.KeyEvent.dwControlKeyState),   /* state */
+                          static_cast<int>(pInRec->Event.KeyEvent.uChar.UnicodeChar),   /* char */
+                          static_cast<int>(pInRec->Event.KeyEvent.wRepeatCount) );      /* repeat */
                }
 #ifdef _TRACE
                else if( pInRec->EventType == MOUSE_EVENT )
@@ -1349,11 +1349,11 @@ static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
                           "eventFlags=0x%02x "
                           "ctrlKeys=0x%04x "
                           "posXY=(%d,%d)\n",
-                          static_cast<int>( pInRec->Event.MouseEvent.dwButtonState ),
-                          static_cast<int>( pInRec->Event.MouseEvent.dwEventFlags ),
-                          static_cast<int>( pInRec->Event.MouseEvent.dwControlKeyState ),
-                          static_cast<int>( pInRec->Event.MouseEvent.dwMousePosition.X ),
-                          static_cast<int>( pInRec->Event.MouseEvent.dwMousePosition.Y ) );
+                          static_cast<int>(pInRec->Event.MouseEvent.dwButtonState),
+                          static_cast<int>(pInRec->Event.MouseEvent.dwEventFlags),
+                          static_cast<int>(pInRec->Event.MouseEvent.dwControlKeyState),
+                          static_cast<int>(pInRec->Event.MouseEvent.dwMousePosition.X),
+                          static_cast<int>(pInRec->Event.MouseEvent.dwMousePosition.Y) );
                }
                else if( pInRec->EventType == WINDOW_BUFFER_SIZE_EVENT )
                {
@@ -1422,7 +1422,7 @@ static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
 #if defined( UNICODE )
             iChar = pInRec->Event.KeyEvent.uChar.UnicodeChar;
 #else
-            iChar = static_cast<HB_UCHAR>( pInRec->Event.KeyEvent.uChar.AsciiChar );
+            iChar = static_cast<HB_UCHAR>(pInRec->Event.KeyEvent.uChar.AsciiChar);
 #endif
 
             /*
@@ -1615,7 +1615,7 @@ static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
                   {
                      if( iFlags & HB_KF_CTRL )
                      {
-                        iKey = static_cast<int>( wVKey ) - VK_NUMPAD0 + '0';
+                        iKey = static_cast<int>(wVKey) - VK_NUMPAD0 + '0';
                      }
                      iFlags |= HB_KF_KEYPAD;
                   }
@@ -1810,7 +1810,7 @@ static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
 #if defined( UNICODE )
             iChar = pInRec->Event.KeyEvent.uChar.UnicodeChar;
 #else
-            iChar = static_cast<HB_UCHAR>( pInRec->Event.KeyEvent.uChar.AsciiChar );
+            iChar = static_cast<HB_UCHAR>(pInRec->Event.KeyEvent.uChar.AsciiChar);
 #endif
          }
 
@@ -1857,7 +1857,7 @@ static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
 #ifdef _TRACE
          if( iKey != 0 )
          {
-            printf( "hb_gt_ReadKey(): dwState=0x%04x, wVKey0x%04x, wScan0x%04x, iKey=%d\n", static_cast<int>( dwState ), wVKey, wScan, iKey );
+            printf( "hb_gt_ReadKey(): dwState=0x%04x, wVKey0x%04x, wScan0x%04x, iKey=%d\n", static_cast<int>(dwState), wVKey, wScan, iKey );
          }
 #endif
       }
@@ -1945,7 +1945,7 @@ static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
 static void hb_gt_win_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Tone(%p,%lf,%lf)", static_cast<void*>( pGT ), dFrequency, dDuration ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Tone(%p,%lf,%lf)", static_cast<void*>(pGT), dFrequency, dDuration ) );
 #endif
 
    HB_SYMBOL_UNUSED(pGT);
@@ -1993,7 +1993,7 @@ static HB_BOOL hb_gt_win_FullScreen( HB_BOOL bFullScreen )
 static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Info(%p,%d,%p)", static_cast<void*>( pGT ), iType, pInfo ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, pInfo ) );
 #endif
 
    switch( iType )
@@ -2121,19 +2121,19 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
             hb_gt_win_SetPalette( HB_FALSE, colors );
 
-            hb_arrayNew( pInfo->pResult, 16 );
+            hb_arrayNew(pInfo->pResult, 16);
             for( i = 0; i < 16; i++ )
             {
-               hb_arraySetNL( pInfo->pResult, i + 1, colors[ i ] );
+               hb_arraySetNL(pInfo->pResult, i + 1, colors[ i ]);
             }
 
             if( hb_itemType(pInfo->pNewVal) & HB_IT_ARRAY )
             {
-               if( hb_arrayLen( pInfo->pNewVal ) == 16 )
+               if( hb_arrayLen(pInfo->pNewVal) == 16 )
                {
                   for( i = 0; i < 16; i++ )
                   {
-                     colors[ i ] = hb_arrayGetNL( pInfo->pNewVal, i + 1 );
+                     colors[ i ] = hb_arrayGetNL(pInfo->pNewVal, i + 1);
                   }
 
                   hb_gt_win_SetPalette( HB_TRUE, colors );
@@ -2288,7 +2288,7 @@ static int hb_gt_win_mouse_CountButton( PHB_GT pGT )
 
    GetNumberOfConsoleMouseButtons( &dwCount );
 
-   return static_cast<int>( dwCount );
+   return static_cast<int>(dwCount);
 }
 
 /* *********************************************************************** */
@@ -2296,10 +2296,10 @@ static int hb_gt_win_mouse_CountButton( PHB_GT pGT )
 static void hb_gt_win_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Redraw(%p,%d,%d,%d)", static_cast<void*>( pGT ), iRow, iCol, iSize ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Redraw(%p,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iSize ) );
 #endif
 
-   if( iSize > 0 && s_pCharInfoScreen && iRow < static_cast<int>( _GetScreenHeight() ) && iCol < static_cast<int>( _GetScreenWidth() ) )
+   if( iSize > 0 && s_pCharInfoScreen && iRow < static_cast<int>(_GetScreenHeight()) && iCol < static_cast<int>(_GetScreenWidth()) )
    {
       int iColor;
       HB_BYTE bAttr;
@@ -2321,9 +2321,9 @@ static void hb_gt_win_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
          {
             break;
          }
-         s_pCharInfoScreen[ i ].Char.AsciiChar = static_cast<char>( uc );
+         s_pCharInfoScreen[ i ].Char.AsciiChar = static_cast<char>(uc);
 #endif
-         s_pCharInfoScreen[ i ].Attributes = static_cast<WORD>( iColor & 0xFF );
+         s_pCharInfoScreen[ i ].Attributes = static_cast<WORD>(iColor & 0xFF);
          ++i;
       }
 
@@ -2336,7 +2336,7 @@ static void hb_gt_win_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 static void hb_gt_win_Refresh( PHB_GT pGT )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Refresh(%p)", static_cast<void*>( pGT ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Refresh(%p)", static_cast<void*>(pGT) ) );
 #endif
 
    HB_GTSUPER_REFRESH( pGT );
@@ -2349,7 +2349,7 @@ static void hb_gt_win_Refresh( PHB_GT pGT )
       s_iCurRow = iRow;
       s_iCurCol = iCol;
 
-      if( iRow < 0 || iCol < 0 || iRow >= static_cast<int>( _GetScreenHeight() ) || iCol >= static_cast<int>( _GetScreenWidth() ) )
+      if( iRow < 0 || iCol < 0 || iRow >= static_cast<int>(_GetScreenHeight()) || iCol >= static_cast<int>(_GetScreenWidth()) )
       {
          s_iCursorStyle = SC_NONE;
       }
@@ -2367,7 +2367,7 @@ static void hb_gt_win_Refresh( PHB_GT pGT )
 static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_FuncInit(%p)", static_cast<void*>( pFuncTable ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_FuncInit(%p)", static_cast<void*>(pFuncTable) ) );
 #endif
 
    pFuncTable->Init                       = hb_gt_win_Init;

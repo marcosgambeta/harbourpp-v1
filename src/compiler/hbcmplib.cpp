@@ -59,16 +59,16 @@ static void s_pp_msg( void * cargo, int iErrorFmt, int iLine,
       char szMsgBuf[ 512 ], szLine[ 512 ];
       PHB_ITEM pError;
 
-      hb_snprintf( szMsgBuf, sizeof(szMsgBuf), szText, szPar1, szPar2 );
+      hb_snprintf(szMsgBuf, sizeof(szMsgBuf), szText, szPar1, szPar2);
       if( ! szModule || *szModule == 0 || strcmp(szModule, "{SOURCE}.prg") == 0 )
       {
-         hb_snprintf( szLine, sizeof(szLine), "line:%i", iLine );
+         hb_snprintf(szLine, sizeof(szLine), "line:%i", iLine);
       }
       else
       {
-         hb_snprintf( szLine, sizeof(szLine), iErrorFmt == HB_ERRORFMT_CLIPPER ? "%s(%i)" : "%s:%i", szModule, iLine );
+         hb_snprintf(szLine, sizeof(szLine), iErrorFmt == HB_ERRORFMT_CLIPPER ? "%s(%i)" : "%s:%i", szModule, iLine);
       }
-      pError = hb_errRT_New( ES_ERROR, "COMPILER", 1001, static_cast<HB_ERRCODE>( iValue ), szMsgBuf, szLine, 0 /*OsCode*/, EF_NONE );
+      pError = hb_errRT_New( ES_ERROR, "COMPILER", 1001, static_cast<HB_ERRCODE>(iValue), szMsgBuf, szLine, 0 /*OsCode*/, EF_NONE );
       hb_errLaunch( pError );
       hb_errRelease( pError );
    }
@@ -88,8 +88,8 @@ static int s_pp_openFile( void * cargo, char * szFileName,
 
    if( ! fBefore )
    {
-      HB_COMP_DECL = static_cast<PHB_COMP>( cargo );
-      PHB_ITEM pIncItem = static_cast<PHB_ITEM>( HB_COMP_PARAM->cargo );
+      HB_COMP_DECL = static_cast<PHB_COMP>(cargo);
+      PHB_ITEM pIncItem = static_cast<PHB_ITEM>(HB_COMP_PARAM->cargo);
 
       if( pIncItem )
       {
@@ -156,12 +156,12 @@ static void hb_compGenArgList( int iFirst, int iLast,
       {
          if( HB_IS_ARRAY(pParam) )
          {
-            HB_SIZE nPos = hb_arrayLen( pParam );
+            HB_SIZE nPos = hb_arrayLen(pParam);
             if( nPos )
             {
                do
                {
-                  if( hb_arrayGetType( pParam, nPos ) & HB_IT_STRING )
+                  if( hb_arrayGetType(pParam, nPos) & HB_IT_STRING )
                   {
                      ++argc;
                   }
@@ -176,7 +176,7 @@ static void hb_compGenArgList( int iFirst, int iLast,
       }
    }
 
-   argv = static_cast<const char**>( hb_xgrab(sizeof(char*) * ( argc + 1 )) );
+   argv = static_cast<const char**>(hb_xgrab(sizeof(char*) * ( argc + 1 )));
    argc = 0;
    for( i = iFirst; i <= iLast; ++i )
    {
@@ -185,12 +185,12 @@ static void hb_compGenArgList( int iFirst, int iLast,
       {
          if( HB_IS_ARRAY(pParam) )
          {
-            HB_SIZE nLen = hb_arrayLen( pParam );
+            HB_SIZE nLen = hb_arrayLen(pParam);
             for( HB_SIZE nPos = 1; nPos <= nLen; ++nPos )
             {
-               if( hb_arrayGetType( pParam, nPos ) & HB_IT_STRING )
+               if( hb_arrayGetType(pParam, nPos) & HB_IT_STRING )
                {
-                  argv[ argc++ ] = hb_arrayGetCPtr( pParam, nPos );
+                  argv[ argc++ ] = hb_arrayGetCPtr(pParam, nPos);
                }
             }
          }
@@ -216,7 +216,7 @@ HB_FUNC( HB_COMPILE )
 
    hb_compGenArgList( 1, hb_pcount(), &argc, &argv, &pIncItem, &pOpenFunc, &pMsgFunc );
    hb_retni( hb_compMainExt( argc, argv, nullptr, nullptr, nullptr, 0, pIncItem, pOpenFunc, pMsgFunc ) );
-   hb_xfree(static_cast<void*>( argv ));
+   hb_xfree(static_cast<void*>(argv));
 }
 
 HB_FUNC( HB_COMPILEBUF )
@@ -231,11 +231,11 @@ HB_FUNC( HB_COMPILEBUF )
 
    hb_compGenArgList( 1, hb_pcount(), &argc, &argv, &pIncItem, &pOpenFunc, &pMsgFunc );
    iResult = hb_compMainExt( argc, argv, &pBuffer, &nLen, nullptr, 0, pIncItem, pOpenFunc, pMsgFunc );
-   hb_xfree(static_cast<void*>( argv ));
+   hb_xfree(static_cast<void*>(argv));
 
    if( iResult == EXIT_SUCCESS && pBuffer )
    {
-      hb_retclen_buffer( reinterpret_cast<char*>( pBuffer ), nLen );
+      hb_retclen_buffer( reinterpret_cast<char*>(pBuffer), nLen );
    }
 }
 
@@ -255,11 +255,11 @@ HB_FUNC( HB_COMPILEFROMBUF )
 
       hb_compGenArgList( 2, hb_pcount(), &argc, &argv, &pIncItem, &pOpenFunc, &pMsgFunc );
       iResult = hb_compMainExt( argc, argv, &pBuffer, &nLen, szSource, 0, pIncItem, pOpenFunc, pMsgFunc );
-      hb_xfree(static_cast<void*>( argv ));
+      hb_xfree(static_cast<void*>(argv));
 
       if( iResult == EXIT_SUCCESS && pBuffer )
       {
-         hb_retclen_buffer( reinterpret_cast<char*>( pBuffer ), nLen );
+         hb_retclen_buffer( reinterpret_cast<char*>(pBuffer), nLen );
       }
    }
 }

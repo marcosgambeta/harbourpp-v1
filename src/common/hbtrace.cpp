@@ -279,7 +279,7 @@ static void hb_tracelog_( int level, const char * file, int line, const char * p
                there is more than 16 parameters in format string */
       if( hb_xtraced() && hb_printf_params( fmt ) > 16 )
       {
-         hb_snprintf( message, sizeof(message), "more then 16 parameters in message '%s'", fmt );
+         hb_snprintf(message, sizeof(message), "more then 16 parameters in message '%s'", fmt);
       }
       else
       {
@@ -299,15 +299,15 @@ static void hb_tracelog_( int level, const char * file, int line, const char * p
          /* We add \n at the end of the buffer to make WinDbg display look readable. */
          if( proc )
          {
-            hb_snprintf( buf.psz, sizeof(buf.psz), "%s:%d:%s() %s %s\n", file, line, proc, pszLevel, message );
+            hb_snprintf(buf.psz, sizeof(buf.psz), "%s:%d:%s() %s %s\n", file, line, proc, pszLevel, message);
          }
          else
          {
-            hb_snprintf( buf.psz, sizeof(buf.psz), "%s:%d: %s %s\n", file, line, pszLevel, message );
+            hb_snprintf(buf.psz, sizeof(buf.psz), "%s:%d: %s %s\n", file, line, pszLevel, message);
          }
 
          #if defined( UNICODE )
-         MultiByteToWideChar( CP_ACP, 0, ( LPCSTR ) memcpy( message, buf.psz, sizeof(message) ), -1, buf.lp, HB_SIZEOFARRAY( buf.lp ) );
+         MultiByteToWideChar(CP_ACP, 0, ( LPCSTR ) memcpy(message, buf.psz, sizeof(message)), -1, buf.lp, HB_SIZEOFARRAY(buf.lp));
          buf.lp[ HB_SIZEOFARRAY( buf.lp ) - 1 ] = 0;
          #endif
          OutputDebugString( buf.lp );

@@ -56,7 +56,7 @@ HB_FUNC( EMPTY )
    switch( hb_itemType(pItem) )
    {
       case HB_IT_ARRAY:
-         hb_retl( hb_arrayLen( pItem ) == 0 );
+         hb_retl( hb_arrayLen(pItem) == 0 );
          break;
 
       case HB_IT_HASH:

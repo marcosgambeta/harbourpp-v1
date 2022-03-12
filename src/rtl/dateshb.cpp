@@ -266,7 +266,7 @@ HB_FUNC( HB_DTOT )
       }
       else if( HB_ISNUM(2) )
       {
-         lTime = static_cast<long>( hb_parnd(2) * 1000 );
+         lTime = static_cast<long>(hb_parnd(2) * 1000);
          if( lTime < 0 )
          {
             lTime = 0;
@@ -305,7 +305,7 @@ HB_FUNC( HB_TTOD )
          }
          else
          {
-            hb_stornd( static_cast<double>( lTime ) / 1000, 2 );
+            hb_stornd( static_cast<double>(lTime) / 1000, 2 );
          }
       }
    }
@@ -349,7 +349,7 @@ HB_FUNC( HB_NTOMSEC )
 
    if( pNum )
    {
-      hb_retnint( static_cast<HB_MAXINT>( hb_itemGetND(pNum) * HB_MILLISECS_PER_DAY ) );
+      hb_retnint( static_cast<HB_MAXINT>(hb_itemGetND(pNum) * HB_MILLISECS_PER_DAY) );
    }
    else
    {
@@ -405,7 +405,7 @@ HB_FUNC( HB_TTOSEC )
 
    if( hb_partdt( &lDate, &lTime, 1 ) )
    {
-      hb_retnd( static_cast<double>( lDate ) * HB_SECONDS_PER_DAY + static_cast<double>( lTime ) / 1000 );
+      hb_retnd( static_cast<double>(lDate) * HB_SECONDS_PER_DAY + static_cast<double>(lTime) / 1000 );
    }
    else
    {
@@ -447,7 +447,7 @@ HB_FUNC( HB_TTOMSEC )
 
    if( hb_partdt( &lDate, &lTime, 1 ) )
    {
-      hb_retnd( static_cast<double>( lDate ) * HB_MILLISECS_PER_DAY + lTime );
+      hb_retnd( static_cast<double>(lDate) * HB_MILLISECS_PER_DAY + lTime );
    }
    else
    {
@@ -461,7 +461,7 @@ HB_FUNC( HB_TTOMIN )
 
    if( hb_partdt( &lDate, &lTime, 1 ) )
    {
-      hb_retnd( static_cast<double>( lDate ) * HB_MINUTES_PER_DAY + static_cast<double>( lTime ) / ( 60 * 1000 ) );
+      hb_retnd( static_cast<double>(lDate) * HB_MINUTES_PER_DAY + static_cast<double>(lTime) / ( 60 * 1000 ) );
    }
    else
    {
@@ -475,7 +475,7 @@ HB_FUNC( HB_TTOHOUR )
 
    if( hb_partdt( &lDate, &lTime, 1 ) )
    {
-      hb_retnd( static_cast<double>( lDate ) * 24 + static_cast<double>( lTime ) / ( 60 * 60 * 1000 ) );
+      hb_retnd( static_cast<double>(lDate) * 24 + static_cast<double>(lTime) / ( 60 * 60 * 1000 ) );
    }
    else
    {
@@ -614,7 +614,7 @@ HB_FUNC( HB_SEC )
       int iHour, iMinutes, iSeconds, iMSec;
 
       hb_timeDecode( lTime, &iHour, &iMinutes, &iSeconds, &iMSec );
-      hb_retndlen( static_cast<double>( iSeconds * 1000 + iMSec ) / 1000, 3, 3 );
+      hb_retndlen( static_cast<double>(iSeconds * 1000 + iMSec) / 1000, 3, 3 );
    }
    else
    {

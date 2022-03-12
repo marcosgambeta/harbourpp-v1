@@ -71,7 +71,7 @@ static void hb_waNodeInsert( PHB_STACKRDD pRddInfo, AREAP pArea )
 
    if( pRddInfo->uiCurrArea >= pRddInfo->uiWaNumMax )
    {
-      int iSize = ( ( static_cast<int>( pRddInfo->uiCurrArea ) + 256 ) >> 8 ) << 8;
+      int iSize = ( ( static_cast<int>(pRddInfo->uiCurrArea) + 256 ) >> 8 ) << 8;
 
       if( iSize > HB_RDD_MAX_AREA_NUM )
       {
@@ -80,21 +80,21 @@ static void hb_waNodeInsert( PHB_STACKRDD pRddInfo, AREAP pArea )
 
       if( pRddInfo->uiWaNumMax == 0 )
       {
-         pRddInfo->waNums = static_cast<HB_USHORT*>( hb_xgrab(iSize * sizeof(HB_USHORT)) );
+         pRddInfo->waNums = static_cast<HB_USHORT*>(hb_xgrab(iSize * sizeof(HB_USHORT)));
       }
       else
       {
-         pRddInfo->waNums = static_cast<HB_USHORT*>( hb_xrealloc(pRddInfo->waNums, iSize * sizeof(HB_USHORT)) );
+         pRddInfo->waNums = static_cast<HB_USHORT*>(hb_xrealloc(pRddInfo->waNums, iSize * sizeof(HB_USHORT)));
       }
 
-      memset( &pRddInfo->waNums[ pRddInfo->uiWaNumMax ], 0, ( iSize - pRddInfo->uiWaNumMax ) * sizeof(HB_USHORT) );
-      pRddInfo->uiWaNumMax = static_cast<HB_USHORT>( iSize );
+      memset(&pRddInfo->waNums[ pRddInfo->uiWaNumMax ], 0, ( iSize - pRddInfo->uiWaNumMax ) * sizeof(HB_USHORT));
+      pRddInfo->uiWaNumMax = static_cast<HB_USHORT>(iSize);
    }
 
    if( pRddInfo->uiWaSpace == 0 )
    {
       pRddInfo->uiWaSpace = 256;
-      pRddInfo->waList = static_cast<void**>( hb_xgrabz( pRddInfo->uiWaSpace * sizeof(void*) ) );
+      pRddInfo->waList = static_cast<void**>(hb_xgrabz(pRddInfo->uiWaSpace * sizeof(void*)));
       uiWaPos = 1;
       pRddInfo->uiWaMax = 2;
    }
@@ -103,25 +103,25 @@ static void hb_waNodeInsert( PHB_STACKRDD pRddInfo, AREAP pArea )
       uiWaPos = pRddInfo->uiWaMax++;
       if( pRddInfo->uiWaMax > pRddInfo->uiWaSpace )
       {
-         int iSize = ( ( static_cast<int>( pRddInfo->uiWaMax ) + 256 ) >> 8 ) << 8;
+         int iSize = ( ( static_cast<int>(pRddInfo->uiWaMax) + 256 ) >> 8 ) << 8;
 
          if( iSize > HB_RDD_MAX_AREA_NUM )
          {
             iSize = HB_RDD_MAX_AREA_NUM;
          }
 
-         pRddInfo->uiWaSpace = static_cast<HB_USHORT>( iSize );
-         pRddInfo->waList = static_cast<void**>( hb_xrealloc(pRddInfo->waList, pRddInfo->uiWaSpace * sizeof(void*)) );
-         memset( &pRddInfo->waList[ pRddInfo->uiWaMax ], 0, ( pRddInfo->uiWaSpace - pRddInfo->uiWaMax ) * sizeof(void*) );
+         pRddInfo->uiWaSpace = static_cast<HB_USHORT>(iSize);
+         pRddInfo->waList = static_cast<void**>(hb_xrealloc(pRddInfo->waList, pRddInfo->uiWaSpace * sizeof(void*)));
+         memset(&pRddInfo->waList[ pRddInfo->uiWaMax ], 0, ( pRddInfo->uiWaSpace - pRddInfo->uiWaMax ) * sizeof(void*));
       }
       while( uiWaPos > 1 )
       {
-         if( ( static_cast<AREAP>( pRddInfo->waList[ uiWaPos - 1 ] ) )->uiArea < pRddInfo->uiCurrArea )
+         if( ( static_cast<AREAP>(pRddInfo->waList[ uiWaPos - 1 ]) )->uiArea < pRddInfo->uiCurrArea )
          {
             break;
          }
          pRddInfo->waList[ uiWaPos ] = pRddInfo->waList[ uiWaPos - 1 ];
-         pRddInfo->waNums[ ( static_cast<AREAP>( pRddInfo->waList[ uiWaPos ] ) )->uiArea ] = uiWaPos;
+         pRddInfo->waNums[ ( static_cast<AREAP>(pRddInfo->waList[ uiWaPos ]) )->uiArea ] = uiWaPos;
          uiWaPos--;
       }
    }
@@ -153,21 +153,21 @@ static void hb_waNodeDelete( PHB_STACKRDD pRddInfo )
       while( uiWaPos < pRddInfo->uiWaMax )
       {
          pRddInfo->waList[ uiWaPos ] = pRddInfo->waList[ uiWaPos + 1 ];
-         pRddInfo->waNums[ ( static_cast<AREAP>( pRddInfo->waList[ uiWaPos ] ) )->uiArea ] = uiWaPos;
+         pRddInfo->waNums[ ( static_cast<AREAP>(pRddInfo->waList[ uiWaPos ]) )->uiArea ] = uiWaPos;
          uiWaPos++;
       }
       pRddInfo->waList[ pRddInfo->uiWaMax ] = nullptr;
       if( pRddInfo->uiWaSpace - pRddInfo->uiWaMax > 256 )
       {
-         int iSize = ( ( static_cast<int>( pRddInfo->uiWaMax ) + 256 ) >> 8 ) << 8;
+         int iSize = ( ( static_cast<int>(pRddInfo->uiWaMax) + 256 ) >> 8 ) << 8;
 
          if( iSize > HB_RDD_MAX_AREA_NUM )
          {
             iSize = HB_RDD_MAX_AREA_NUM;
          }
 
-         pRddInfo->uiWaSpace = static_cast<HB_USHORT>( iSize );
-         pRddInfo->waList = static_cast<void**>( hb_xrealloc(pRddInfo->waList, pRddInfo->uiWaSpace * sizeof(void*)) );
+         pRddInfo->uiWaSpace = static_cast<HB_USHORT>(iSize);
+         pRddInfo->waList = static_cast<void**>(hb_xrealloc(pRddInfo->waList, pRddInfo->uiWaSpace * sizeof(void*)));
       }
    }
    pRddInfo->pCurrArea = nullptr;
@@ -238,7 +238,7 @@ HB_USHORT hb_rddInsertAreaNode( const char * szDriver )
       }
    }
 
-   pArea = static_cast<AREAP>( hb_rddNewAreaNode( pRddNode, uiRddID ) );
+   pArea = static_cast<AREAP>(hb_rddNewAreaNode( pRddNode, uiRddID ));
    if( ! pArea )
    {
       return 0;
@@ -263,7 +263,7 @@ void hb_rddReleaseCurrentArea( void )
    AREAP pArea;
 
    pRddInfo = hb_stackRDD();
-   pArea = static_cast<AREAP>( pRddInfo->pCurrArea );
+   pArea = static_cast<AREAP>(pRddInfo->pCurrArea);
    if( ! pArea )
    {
       return;
@@ -301,7 +301,7 @@ void hb_rddCloseAll( void )
          isParents = HB_FALSE;
          for( HB_USHORT uiIndex = 1; uiIndex < pRddInfo->uiWaMax; uiIndex++ )
          {
-            pArea = static_cast<AREAP>( pRddInfo->waList[ uiIndex ] );
+            pArea = static_cast<AREAP>(pRddInfo->waList[ uiIndex ]);
             HB_SET_WA( pArea->uiArea );
             if( isFinish )
             {
@@ -337,12 +337,12 @@ void hb_rddCloseAll( void )
 void hb_rddFlushAll( void )
 {
    PHB_STACKRDD pRddInfo = hb_stackRDD();
-   HB_USHORT uiArea = static_cast<HB_AREANO>( hb_rddGetCurrentWorkAreaNumber() );
+   HB_USHORT uiArea = static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber());
 
    for( HB_USHORT uiIndex = 1; uiIndex < pRddInfo->uiWaMax; ++uiIndex )
    {
-      hb_rddSelectWorkAreaNumber( ( static_cast<AREAP>( pRddInfo->waList[ uiIndex ] ) )->uiArea );
-      SELF_FLUSH( static_cast<AREAP>( pRddInfo->pCurrArea ) );
+      hb_rddSelectWorkAreaNumber( ( static_cast<AREAP>(pRddInfo->waList[ uiIndex ]) )->uiArea );
+      SELF_FLUSH( static_cast<AREAP>(pRddInfo->pCurrArea) );
    }
    hb_rddSelectWorkAreaNumber( uiArea );
 }
@@ -350,12 +350,12 @@ void hb_rddFlushAll( void )
 void hb_rddUnLockAll( void )
 {
    PHB_STACKRDD pRddInfo = hb_stackRDD();
-   HB_USHORT uiArea = static_cast<HB_AREANO>( hb_rddGetCurrentWorkAreaNumber() );
+   HB_USHORT uiArea = static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber());
 
    for( HB_USHORT uiIndex = 1; uiIndex < pRddInfo->uiWaMax; ++uiIndex )
    {
-      hb_rddSelectWorkAreaNumber( ( static_cast<AREAP>( pRddInfo->waList[ uiIndex ] ) )->uiArea );
-      SELF_UNLOCK( static_cast<AREAP>( pRddInfo->pCurrArea ), nullptr );
+      hb_rddSelectWorkAreaNumber( ( static_cast<AREAP>(pRddInfo->waList[ uiIndex ]) )->uiArea );
+      SELF_UNLOCK( static_cast<AREAP>(pRddInfo->pCurrArea), nullptr );
    }
    hb_rddSelectWorkAreaNumber( uiArea );
 }
@@ -366,7 +366,7 @@ void hb_rddUnLockAll( void )
 HB_ERRCODE hb_rddIterateWorkAreas( WACALLBACK pCallBack, void * cargo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_rddIterateWorkAreas(%p, %p)", static_cast<void*>( pCallBack ), cargo ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_rddIterateWorkAreas(%p, %p)", static_cast<void*>(pCallBack), cargo ) );
 #endif
 
    PHB_STACKRDD pRddInfo;
@@ -375,13 +375,13 @@ HB_ERRCODE hb_rddIterateWorkAreas( WACALLBACK pCallBack, void * cargo )
    pRddInfo = hb_stackRDD();
    for( HB_USHORT uiIndex = 1; uiIndex < pRddInfo->uiWaMax; uiIndex++ )
    {
-      AREAP pArea = static_cast<AREAP>( pRddInfo->waList[ uiIndex ] );
+      AREAP pArea = static_cast<AREAP>(pRddInfo->waList[ uiIndex ]);
       errCode = pCallBack( pArea, cargo );
       if( errCode != HB_SUCCESS )
       {
          break;
       }
-      if( uiIndex >= pRddInfo->uiWaMax || pArea != static_cast<AREAP>( pRddInfo->waList[ uiIndex ] ) )
+      if( uiIndex >= pRddInfo->uiWaMax || pArea != static_cast<AREAP>(pRddInfo->waList[ uiIndex ]) )
       {
          uiIndex--;
       }
@@ -431,7 +431,7 @@ const char * hb_rddDefaultDrv( const char * szDriver )
       const char * szDrvTable[] = { "DBFNTX", "DBFCDX", "DBFFPT", "DBF" };
 
       pRddInfo->szDefaultRDD = "";
-      for( int i = 0; i < static_cast<int>( HB_SIZEOFARRAY( szDrvTable ) ); ++i )
+      for( int i = 0; i < static_cast<int>(HB_SIZEOFARRAY( szDrvTable )); ++i )
       {
          if( hb_rddFindNode( szDrvTable[ i ], nullptr ) )
          {
@@ -478,7 +478,7 @@ const char * hb_rddFindDrv( const char * szDriver, const char * szFileName )
          const char * szDrvTable[] = { "DBFNTX", "DBFCDX", "DBFFPT", "DBF" };
 
          pRddInfo->szDefaultRDD = "";
-         for( int i = 0; i < static_cast<int>( HB_SIZEOFARRAY( szDrvTable ) ); ++i )
+         for( int i = 0; i < static_cast<int>(HB_SIZEOFARRAY( szDrvTable )); ++i )
          {
             pRddNode = hb_rddFindNode( szDrvTable[ i ], nullptr );
             if( pRddNode )
@@ -510,7 +510,7 @@ void * hb_rddGetWorkAreaPointer( int iArea )
    {
       return pRddInfo->pCurrArea;
    }
-   else if( iArea >= 1 && static_cast<HB_UINT>( iArea ) < static_cast<HB_UINT>( pRddInfo->uiWaNumMax ) )
+   else if( iArea >= 1 && static_cast<HB_UINT>(iArea) < static_cast<HB_UINT>(pRddInfo->uiWaNumMax) )
    {
       return pRddInfo->waList[ pRddInfo->waNums[ iArea ] ];
    }
@@ -562,7 +562,7 @@ HB_ERRCODE hb_rddSelectWorkAreaNumber( int iArea )
    }
    else
    {
-      HB_SET_WA( static_cast<HB_AREANO>( iArea ) );
+      HB_SET_WA( static_cast<HB_AREANO>(iArea) );
    }
 
    return ( pRddInfo->pCurrArea == nullptr ) ? HB_FAILURE : HB_SUCCESS;
@@ -576,7 +576,7 @@ static PHB_ITEM s_pDetachedAreas = nullptr;
 
 static HB_GARBAGE_FUNC( hb_waHolderDestructor )
 {
-   AREAP * pHolder = static_cast<AREAP*>( Cargo );
+   AREAP * pHolder = static_cast<AREAP*>(Cargo);
 
    if( *pHolder )
    {
@@ -628,7 +628,7 @@ void hb_rddCloseDetachedAreas( void )
 HB_ERRCODE hb_rddDetachArea( AREAP pArea, PHB_ITEM pCargo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_rddDetachArea(%p, %p)", static_cast<void*>( pArea ), static_cast<void*>( pCargo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_rddDetachArea(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pCargo) ) );
 #endif
 
    AREAP * pHolder;
@@ -661,7 +661,7 @@ HB_ERRCODE hb_rddDetachArea( AREAP pArea, PHB_ITEM pCargo )
    pArea->uiArea = 0;
    if( pArea->atomAlias )
    {
-      hb_dynsymSetAreaHandle(static_cast<PHB_DYNS>( pArea->atomAlias ), 0);
+      hb_dynsymSetAreaHandle(static_cast<PHB_DYNS>(pArea->atomAlias), 0);
    }
 
    /* restore previous WA number */
@@ -676,18 +676,18 @@ HB_ERRCODE hb_rddDetachArea( AREAP pArea, PHB_ITEM pCargo )
    }
    else
    {
-      nPos = hb_arrayLen( s_pDetachedAreas ) + 1;
-      hb_arraySize( s_pDetachedAreas, nPos );
+      nPos = hb_arrayLen(s_pDetachedAreas) + 1;
+      hb_arraySize(s_pDetachedAreas, nPos);
    }
-   pDetachedArea = hb_arrayGetItemPtr( s_pDetachedAreas, nPos );
-   hb_arrayNew( pDetachedArea, 2 );
+   pDetachedArea = hb_arrayGetItemPtr(s_pDetachedAreas, nPos);
+   hb_arrayNew(pDetachedArea, 2);
    if( pCargo )
    {
-      hb_arraySet( pDetachedArea, 2, pCargo );
+      hb_arraySet(pDetachedArea, 2, pCargo);
    }
-   pHolder = static_cast<AREAP*>( hb_gcAllocate( sizeof(AREAP), &s_gcWAFuncs ) );
+   pHolder = static_cast<AREAP*>(hb_gcAllocate( sizeof(AREAP), &s_gcWAFuncs ));
    *pHolder = pArea;
-   hb_arraySetPtrGC( pDetachedArea, 1, pHolder );
+   hb_arraySetPtrGC(pDetachedArea, 1, pHolder);
    /* siagnal waiting processes that new area is available */
    hb_threadCondBroadcast( &s_waCond );
    /* leave critical section */
@@ -741,13 +741,13 @@ AREAP hb_rddRequestArea( const char * szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea
    {
       if( s_pDetachedAreas )
       {
-         HB_SIZE nLen = hb_arrayLen( s_pDetachedAreas ), nPos = 1;
+         HB_SIZE nLen = hb_arrayLen(s_pDetachedAreas), nPos = 1;
          if( pSymAlias )
          {
             for( nPos = 1; nPos <= nLen; ++nPos )
             {
-               AREAP * pDetachedArea = static_cast<AREAP*>( hb_arrayGetPtrGC( hb_arrayGetItemPtr( s_pDetachedAreas, nPos ), 1, &s_gcWAFuncs ) );
-               if( pSymAlias == static_cast<PHB_DYNS>( ( *pDetachedArea )->atomAlias ) )
+               AREAP * pDetachedArea = static_cast<AREAP*>(hb_arrayGetPtrGC(hb_arrayGetItemPtr(s_pDetachedAreas, nPos), 1, &s_gcWAFuncs));
+               if( pSymAlias == static_cast<PHB_DYNS>(( *pDetachedArea )->atomAlias) )
                {
                   break;
                }
@@ -755,17 +755,17 @@ AREAP hb_rddRequestArea( const char * szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea
          }
          if( nPos <= nLen )
          {
-            PHB_ITEM pArray = hb_arrayGetItemPtr( s_pDetachedAreas, nPos );
-            AREAP * pDetachedArea = static_cast<AREAP*>( hb_arrayGetPtrGC( pArray, 1, &s_gcWAFuncs ) );
+            PHB_ITEM pArray = hb_arrayGetItemPtr(s_pDetachedAreas, nPos);
+            AREAP * pDetachedArea = static_cast<AREAP*>(hb_arrayGetPtrGC(pArray, 1, &s_gcWAFuncs));
 
             pArea = *pDetachedArea;
             *pDetachedArea = nullptr;
             if( pCargo )
             {
-               hb_arrayGet( pArray, 2, pCargo );
+               hb_arrayGet(pArray, 2, pCargo);
             }
-            hb_arrayDel( s_pDetachedAreas, nPos );
-            hb_arraySize( s_pDetachedAreas, nLen - 1 );
+            hb_arrayDel(s_pDetachedAreas, nPos);
+            hb_arraySize(s_pDetachedAreas, nLen - 1);
          }
       }
 
@@ -800,9 +800,9 @@ AREAP hb_rddRequestArea( const char * szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea
       hb_waNodeInsert( hb_stackRDD(), pArea );
       if( pArea->atomAlias )
       {
-         if( hb_dynsymAreaHandle(static_cast<PHB_DYNS>( pArea->atomAlias )) == 0 )
+         if( hb_dynsymAreaHandle(static_cast<PHB_DYNS>(pArea->atomAlias)) == 0 )
          {
-            hb_dynsymSetAreaHandle(static_cast<PHB_DYNS>( pArea->atomAlias ), pArea->uiArea);
+            hb_dynsymSetAreaHandle(static_cast<PHB_DYNS>(pArea->atomAlias), pArea->uiArea);
          }
       }
    }
@@ -823,14 +823,14 @@ PHB_ITEM hb_rddDetachedList( void )
    hb_threadEnterCriticalSectionGC( &s_waMtx );
    if( s_pDetachedAreas )
    {
-      HB_SIZE nLen = hb_arrayLen( s_pDetachedAreas );
+      HB_SIZE nLen = hb_arrayLen(s_pDetachedAreas);
 
-      hb_arraySize( pArray, nLen );
+      hb_arraySize(pArray, nLen);
       for( HB_SIZE nPos = 1; nPos <= nLen; ++nPos )
       {
-         AREAP * pDetachedArea = static_cast<AREAP*>( hb_arrayGetPtrGC( hb_arrayGetItemPtr( s_pDetachedAreas, nPos ), 1, &s_gcWAFuncs ) );
-         PHB_DYNS pAlias = static_cast<PHB_DYNS>( ( *pDetachedArea )->atomAlias );
-         hb_arraySetC( pArray, nPos, hb_dynsymName(pAlias) );
+         AREAP * pDetachedArea = static_cast<AREAP*>(hb_arrayGetPtrGC(hb_arrayGetItemPtr(s_pDetachedAreas, nPos), 1, &s_gcWAFuncs));
+         PHB_DYNS pAlias = static_cast<PHB_DYNS>(( *pDetachedArea )->atomAlias);
+         hb_arraySetC(pArray, nPos, hb_dynsymName(pAlias));
       }
    }
    /* leave critical section */

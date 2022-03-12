@@ -76,7 +76,7 @@ using PHB_SK_DATA = HB_SK_DATA *;
 
 static void hb_setkeyRelease( void * cargo )
 {
-   PHB_SETKEY sk_list = ( static_cast<PHB_SK_DATA>( cargo ) )->sk_list;
+   PHB_SETKEY sk_list = ( static_cast<PHB_SK_DATA>(cargo) )->sk_list;
 
    while( sk_list )
    {
@@ -143,7 +143,7 @@ static void sk_add( PHB_SETKEY * sk_list_ptr, HB_BOOL bReturn, int iKeyCode, PHB
       {
          if( pAction )
          {
-            sk_list_tmp = static_cast<PHB_SETKEY>( hb_xgrab(sizeof(HB_SETKEY)) );
+            sk_list_tmp = static_cast<PHB_SETKEY>(hb_xgrab(sizeof(HB_SETKEY)));
             sk_list_tmp->next = nullptr;
             sk_list_tmp->iKeyCode = iKeyCode;
             sk_list_tmp->pAction = hb_itemNew(pAction);
@@ -208,7 +208,7 @@ HB_FUNC( SETKEY )
 
    if( iKeyCode != 0 )
    {
-      PHB_SK_DATA sk_data = static_cast<PHB_SK_DATA>( hb_stackGetTSD( &s_skData ) );
+      PHB_SK_DATA sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));
 
       if( hb_pcount() == 1 )
       {
@@ -237,7 +237,7 @@ HB_FUNC( HB_SETKEY )
 
    if( iKeyCode != 0 )
    {
-      PHB_SK_DATA sk_data = static_cast<PHB_SK_DATA>( hb_stackGetTSD( &s_skData ) );
+      PHB_SK_DATA sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));
 
       if( hb_pcount() == 1 )
       {
@@ -282,14 +282,14 @@ HB_FUNC( HB_SETKEYARRAY )
 
    if( pKeyCodeArray && pAction )
    {
-      PHB_SK_DATA sk_data = static_cast<PHB_SK_DATA>( hb_stackGetTSD( &s_skData ) );
+      PHB_SK_DATA sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));
       PHB_ITEM pIsActive = hb_param(3, HB_IT_EVALITEM);
-      HB_SIZE nLen = hb_arrayLen( pKeyCodeArray );
+      HB_SIZE nLen = hb_arrayLen(pKeyCodeArray);
       HB_SIZE nPos;
 
       for( nPos = 1; nPos <= nLen; nPos++ )
       {
-         sk_add( &sk_data->sk_list, HB_FALSE, hb_arrayGetNI( pKeyCodeArray, nPos ), pAction, pIsActive );
+         sk_add( &sk_data->sk_list, HB_FALSE, hb_arrayGetNI(pKeyCodeArray, nPos), pAction, pIsActive );
       }
    }
 }
@@ -300,7 +300,7 @@ HB_FUNC( HB_SETKEYGET )
 
    if( pKeyCode )
    {
-      PHB_SK_DATA sk_data = static_cast<PHB_SK_DATA>( hb_stackGetTSD( &s_skData ) );
+      PHB_SK_DATA sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));
       PHB_SETKEY sk_list_tmp, sk_list_end;
 
       /* sk_list_end is not used in this context */
@@ -320,7 +320,7 @@ HB_FUNC( HB_SETKEYGET )
 
 HB_FUNC( HB_SETKEYSAVE )
 {
-   PHB_SK_DATA sk_data = static_cast<PHB_SK_DATA>( hb_stackGetTSD( &s_skData ) );
+   PHB_SK_DATA sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));
    PHB_ITEM pKeys, pKeyElements, pParam;
    PHB_SETKEY sk_list_tmp;
    HB_SIZE nItemCount, nItem;
@@ -338,14 +338,14 @@ HB_FUNC( HB_SETKEYSAVE )
 
    for( nItem = 1, sk_list_tmp = sk_data->sk_list; nItem <= nItemCount; nItem++, sk_list_tmp = sk_list_tmp->next )
    {
-      hb_arrayNew( pKeyElements, 3 );
-      hb_arraySetNI( pKeyElements, 1, sk_list_tmp->iKeyCode );
-      hb_arraySet( pKeyElements, 2, sk_list_tmp->pAction );
+      hb_arrayNew(pKeyElements, 3);
+      hb_arraySetNI(pKeyElements, 1, sk_list_tmp->iKeyCode);
+      hb_arraySet(pKeyElements, 2, sk_list_tmp->pAction);
       if( sk_list_tmp->pIsActive )
       {
-         hb_arraySet( pKeyElements, 3, sk_list_tmp->pIsActive );
+         hb_arraySet(pKeyElements, 3, sk_list_tmp->pIsActive);
       }
-      hb_arraySetForward( pKeys, nItem, pKeyElements );
+      hb_arraySetForward(pKeys, nItem, pKeyElements);
    }
    hb_itemRelease(pKeyElements);
    hb_itemReturnRelease(pKeys);
@@ -357,16 +357,16 @@ HB_FUNC( HB_SETKEYSAVE )
 
       if( HB_IS_ARRAY(pParam) )
       {
-         nItemCount = hb_arrayLen( pParam );
+         nItemCount = hb_arrayLen(pParam);
 
          for( nItem = 1; nItem <= nItemCount; nItem++ )
          {
-            PHB_ITEM itmKeyElements = hb_arrayGetItemPtr( pParam, nItem );
+            PHB_ITEM itmKeyElements = hb_arrayGetItemPtr(pParam, nItem);
 
             sk_add( &sk_data->sk_list, HB_FALSE,
-                    hb_arrayGetNI( itmKeyElements, 1 ),
-                    hb_arrayGetItemPtr( itmKeyElements, 2 ),
-                    hb_arrayGetItemPtr( itmKeyElements, 3 ) );
+                    hb_arrayGetNI(itmKeyElements, 1),
+                    hb_arrayGetItemPtr(itmKeyElements, 2),
+                    hb_arrayGetItemPtr(itmKeyElements, 3) );
          }
       }
    }
@@ -379,7 +379,7 @@ HB_FUNC( HB_SETKEYCHECK )
 
    if( iKeyCode != 0 )
    {
-      PHB_SK_DATA sk_data = static_cast<PHB_SK_DATA>( hb_stackGetTSD( &s_skData ) );
+      PHB_SK_DATA sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));
       PHB_SETKEY sk_list_tmp, sk_list_end;
 
       /* sk_list_end is not used in this context */
@@ -399,7 +399,7 @@ HB_FUNC( HB_SETKEYCHECK )
       {
          if( sk_testActive( sk_list_tmp->pIsActive, iKeyCode ) )
          {
-            HB_USHORT uiPCount = static_cast<HB_USHORT>( hb_pcount() ), uiParam;
+            HB_USHORT uiPCount = static_cast<HB_USHORT>(hb_pcount()), uiParam;
 
             hb_vmPushEvalSym();
             hb_vmPush( sk_list_tmp->pAction );

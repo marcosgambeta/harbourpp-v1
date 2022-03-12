@@ -93,14 +93,14 @@ HB_FUNC( HB_VERSION )
 
             for( int iMonth = 11; iMonth >= 0; iMonth-- )
             {
-               if( memcmp( pszBuildDate, s_months[ iMonth ], 3 ) == 0 )
+               if( memcmp(pszBuildDate, s_months[ iMonth ], 3) == 0 )
                {
-                  hb_snprintf( szDate + 4, 3, "%02d", iMonth + 1 );
+                  hb_snprintf(szDate + 4, 3, "%02d", iMonth + 1);
                   break;
                }
             }
 
-            memcpy( szDate, pszBuildDate + 7, 4 );
+            memcpy(szDate, pszBuildDate + 7, 4);
             szDate[ 6 ] = pszBuildDate[ 4 ] == ' ' ? '0' : pszBuildDate[ 4 ];
             szDate[ 7 ] = pszBuildDate[ 5 ];
             szDate[ 8 ] = '\0';
@@ -127,7 +127,7 @@ HB_FUNC( HB_VERSION )
       case HB_VERSION_FLAG_C:         hb_retc_const( hb_verFlagsC() ); break;
       case HB_VERSION_FLAG_LINKER:    hb_retc_const( hb_verFlagsL() ); break;
       case HB_VERSION_OPTIONS:        hb_retc_null(); break;
-      case HB_VERSION_BITWIDTH:       hb_retni( static_cast<int>( sizeof(void*) ) * 8 ); break;
+      case HB_VERSION_BITWIDTH:       hb_retni( static_cast<int>(sizeof(void*)) * 8 ); break;
       case HB_VERSION_MT:             hb_retl( hb_vmIsMt() ); break;
 
       case HB_VERSION_SHARED:  /* FIXME: This only works when platforms has separate

@@ -65,13 +65,13 @@ static HB_BOOL hb_sxSemName( char * szFileName )
    }
    else
    {
-      AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+      AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
       if( pArea )
       {
          DBORDERINFO pOrderInfo;
 
-         memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
+         memset(&pOrderInfo, 0, sizeof(pOrderInfo));
          pOrderInfo.itmOrder = hb_param(1, HB_IT_NUMERIC);
          if( pOrderInfo.itmOrder && hb_itemGetNI(pOrderInfo.itmOrder) == 0 )
          {

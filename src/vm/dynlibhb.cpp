@@ -93,32 +93,32 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
 
    if( hb_itemGetCLen(pLibName) > 0 )
    {
-      int argc = pArgs ? static_cast<int>( hb_arrayLen( pArgs ) ) : 0;
+      int argc = pArgs ? static_cast<int>(hb_arrayLen(pArgs)) : 0;
       const char ** argv = nullptr;
 
       if( argc > 0 )
       {
-         argv = static_cast<const char**>( hb_xgrab(sizeof(char*) * argc) );
+         argv = static_cast<const char**>(hb_xgrab(sizeof(char*) * argc));
          for( int i = 0; i < argc; ++i )
          {
-            argv[ i ] = hb_arrayGetCPtr( pArgs, i + 1 );
+            argv[ i ] = hb_arrayGetCPtr(pArgs, i + 1);
          }
       }
 
       if( hb_vmLockModuleSymbols() )
       {
          /* use stack address as first level marker */
-         hb_vmBeginSymbolGroup( static_cast<void*>( hb_stackId() ), HB_TRUE );
+         hb_vmBeginSymbolGroup( static_cast<void*>(hb_stackId()), HB_TRUE );
 #if defined( HB_OS_WIN )
          {
             void * hFileName;
 
-            hDynLib = static_cast<void*>( LoadLibrary( HB_ITEMGETSTR( pLibName, &hFileName, nullptr ) ) );
+            hDynLib = static_cast<void*>(LoadLibrary( HB_ITEMGETSTR( pLibName, &hFileName, nullptr ) ));
 
             hb_strfree( hFileName );
          }
 #elif defined( HB_HAS_DLFCN )
-         hDynLib = static_cast<void*>( dlopen( hb_itemGetCPtr(pLibName), RTLD_LAZY | RTLD_GLOBAL ) );
+         hDynLib = static_cast<void*>(dlopen( hb_itemGetCPtr(pLibName), RTLD_LAZY | RTLD_GLOBAL ));
 
          if( ! hDynLib )
          {
@@ -141,13 +141,13 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
 
       if( argv )
       {
-         hb_xfree(static_cast<void*>( argv ));
+         hb_xfree(static_cast<void*>(argv));
       }
    }
 
    if( hDynLib )
    {
-      void ** pLibPtr = static_cast<void**>( hb_gcAllocate( sizeof(void*), &s_gcDynlibFuncs ) );
+      void ** pLibPtr = static_cast<void**>(hb_gcAllocate(sizeof(void*), &s_gcDynlibFuncs));
       *pLibPtr = hDynLib;
       return hb_itemPutPtrGC(nullptr, pLibPtr);
    }
@@ -158,7 +158,7 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
 HB_BOOL hb_libFree( PHB_ITEM pDynLib )
 {
    HB_BOOL fResult = HB_FALSE;
-   void ** pDynLibPtr = static_cast<void**>( hb_itemGetPtrGC(pDynLib, &s_gcDynlibFuncs) );
+   void ** pDynLibPtr = static_cast<void**>(hb_itemGetPtrGC(pDynLib, &s_gcDynlibFuncs));
 
    if( pDynLibPtr && *pDynLibPtr && hb_vmLockModuleSymbols() )
    {
@@ -168,7 +168,7 @@ HB_BOOL hb_libFree( PHB_ITEM pDynLib )
          *pDynLibPtr = nullptr;
          hb_vmExitSymbolGroup( hDynLib );
 #if defined( HB_OS_WIN )
-         fResult = FreeLibrary( static_cast<HMODULE>( hDynLib ) );
+         fResult = FreeLibrary( static_cast<HMODULE>(hDynLib) );
 #elif defined( HB_HAS_DLFCN )
          fResult = dlclose( hDynLib ) == 0;
 #elif defined( HB_CAUSEWAY_DLL )
@@ -184,7 +184,7 @@ HB_BOOL hb_libFree( PHB_ITEM pDynLib )
 
 void * hb_libHandle( PHB_ITEM pDynLib )
 {
-   void ** pDynLibPtr = static_cast<void**>( hb_itemGetPtrGC(pDynLib, &s_gcDynlibFuncs) );
+   void ** pDynLibPtr = static_cast<void**>(hb_itemGetPtrGC(pDynLib, &s_gcDynlibFuncs));
 
    return pDynLibPtr ? *pDynLibPtr : nullptr;
 }
@@ -196,7 +196,7 @@ void * hb_libSymAddr( PHB_ITEM pDynLib, const char * pszSymbol )
    if( hDynLib )
    {
 #if defined( HB_OS_WIN )
-      return reinterpret_cast<void*>( GetProcAddress( static_cast<HMODULE>( hDynLib ), pszSymbol ) );
+      return reinterpret_cast<void*>(GetProcAddress(static_cast<HMODULE>(hDynLib), pszSymbol));
 #elif defined( HB_HAS_DLFCN )
       return dlsym( hDynLib, pszSymbol );
 #elif defined( HB_CAUSEWAY_DLL )
@@ -218,7 +218,7 @@ HB_FUNC( HB_LIBLOAD )
       pArgs = hb_itemArrayNew(iPCount - 1);
       for( int i = 2; i <= iPCount; ++i )
       {
-         hb_arraySet( pArgs, i, hb_param(i, HB_IT_ANY) );
+         hb_arraySet(pArgs, i, hb_param(i, HB_IT_ANY));
       }
    }
 

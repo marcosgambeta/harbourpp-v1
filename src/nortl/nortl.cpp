@@ -100,7 +100,7 @@ void * hb_xgrab( HB_SIZE nSize )        /* allocates fixed memory, exits on fail
       hb_errInternal( HB_EI_XGRABNULLSIZE, "hb_xgrab requested to allocate zero bytes", nullptr, nullptr );
 
 #ifdef HB_FM_STATISTICS
-   pMem = malloc( nSize + HB_MEMINFO_SIZE + sizeof(HB_U32) );
+   pMem = malloc(nSize + HB_MEMINFO_SIZE + sizeof(HB_U32));
    if( pMem )
    {
       if( s_pMemBlocks )
@@ -122,7 +122,7 @@ void * hb_xgrab( HB_SIZE nSize )        /* allocates fixed memory, exits on fail
    }
    else
 #else
-   pMem = malloc( nSize );
+   pMem = malloc(nSize);
    if( ! pMem )
 #endif
       hb_errInternal( HB_EI_XGRABALLOC, "hb_xgrab can't allocate memory", nullptr, nullptr );
@@ -157,7 +157,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
 
    HB_PUT_LE_UINT32( ( ( HB_BYTE * ) pMem ) + nMemSize, 0 );
 
-   pResult = realloc( pMemBlock, nSize + HB_MEMINFO_SIZE + sizeof(HB_U32) );
+   pResult = realloc(pMemBlock, nSize + HB_MEMINFO_SIZE + sizeof(HB_U32));
    if( pResult )
    {
       if( s_pMemBlocks == pMemBlock )
@@ -177,7 +177,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
       pResult = ( HB_BYTE * ) pResult + HB_MEMINFO_SIZE;
    }
 #else
-   void * pResult = realloc( pMem, nSize );
+   void * pResult = realloc(pMem, nSize);
 #endif
 
    if( ! pResult && nSize )
@@ -254,7 +254,7 @@ static char * hb_memToStr( char * szBuffer, void * pMem, HB_SIZE nSize )
    if( nSize > HB_MEMSTR_BLOCK_MAX )
       iSize = HB_MEMSTR_BLOCK_MAX;
    else
-      iSize = static_cast<int>( nSize );
+      iSize = static_cast<int>(nSize);
 
    iPrintable = 0;
    for( i = 0; i < iSize; ++i )
@@ -299,13 +299,13 @@ void hb_xexit( void )
       hb_conOutErr( hb_conNewLine(), 0 );
       hb_conOutErr( "----------------------------------------", 0 );
       hb_conOutErr( hb_conNewLine(), 0 );
-      hb_snprintf( szBuffer, sizeof(szBuffer), "Total memory allocated: %" HB_PFS "u bytes (%" HB_PFS "u blocks)", s_nMemoryMaxConsumed, s_nMemoryMaxBlocks );
+      hb_snprintf(szBuffer, sizeof(szBuffer), "Total memory allocated: %" HB_PFS "u bytes (%" HB_PFS "u blocks)", s_nMemoryMaxConsumed, s_nMemoryMaxBlocks);
       hb_conOutErr( szBuffer, 0 );
 
       if( s_nMemoryBlocks )
       {
          hb_conOutErr( hb_conNewLine(), 0 );
-         hb_snprintf( szBuffer, sizeof(szBuffer), "WARNING! Memory allocated but not released: %" HB_PFS "u bytes (%" HB_PFS "u blocks)", s_nMemoryConsumed, s_nMemoryBlocks );
+         hb_snprintf(szBuffer, sizeof(szBuffer), "WARNING! Memory allocated but not released: %" HB_PFS "u bytes (%" HB_PFS "u blocks)", s_nMemoryConsumed, s_nMemoryBlocks);
          hb_conOutErr( szBuffer, 0 );
       }
 
@@ -313,8 +313,8 @@ void hb_xexit( void )
 
       for( i = 1, pMemBlock = s_pMemBlocks; pMemBlock; ++i, pMemBlock = pMemBlock->pNextBlock )
          HB_TRACE( HB_TR_ERROR, ( "Block %i %p (size %" HB_PFS "u) \"%s\"", i,
-                static_cast<void*>( pMemBlock ) + HB_MEMINFO_SIZE, pMemBlock->nSize,
-                hb_memToStr( szBuffer, static_cast<char*>( pMemBlock ) + HB_MEMINFO_SIZE,
+                static_cast<void*>(pMemBlock) + HB_MEMINFO_SIZE, pMemBlock->nSize,
+                hb_memToStr( szBuffer, static_cast<char*>(pMemBlock) + HB_MEMINFO_SIZE,
                              pMemBlock->nSize ) ) );
    }
 #endif
@@ -336,11 +336,11 @@ void hb_errInternal( HB_ERRCODE errCode, const char * szText, const char * szPar
    char buffer[ 1024 ];
 
    hb_conOutErr( hb_conNewLine(), 0 );
-   hb_snprintf( buffer, sizeof(buffer), "Unrecoverable error %d: ", errCode );
+   hb_snprintf(buffer, sizeof(buffer), "Unrecoverable error %d: ", errCode);
    hb_conOutErr( buffer, 0 );
    if( szText )
    {
-      hb_snprintf( buffer, sizeof(buffer), szText, szPar1, szPar2 );
+      hb_snprintf(buffer, sizeof(buffer), szText, szPar1, szPar2);
       hb_conOutErr( buffer, 0 );
    }
    hb_conOutErr( hb_conNewLine(), 0 );
@@ -353,7 +353,7 @@ void hb_conOutErr( const char * pStr, HB_SIZE nLen )
    if( nLen == 0 )
       nLen = strlen(pStr);
 
-   fprintf( stderr, "%.*s", static_cast<int>( nLen ), pStr );
+   fprintf( stderr, "%.*s", static_cast<int>(nLen), pStr );
 }
 
 const char * hb_conNewLine( void )
@@ -517,13 +517,13 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
 
       if( pszFree )
       {
-         szFileName = *pszFree = hb_strncpy(static_cast<char*>( hb_xgrab(HB_PATH_MAX) ),
+         szFileName = *pszFree = hb_strncpy(static_cast<char*>(hb_xgrab(HB_PATH_MAX)),
                                              szFileName, HB_PATH_MAX - 1);
       }
 
       if( s_cDirSep != HB_OS_PATH_DELIM_CHR )
       {
-         char * p = const_cast<char*>(  szFileName );
+         char * p = const_cast<char*>(szFileName);
          while( *p )
          {
             if( *p == s_cDirSep )
@@ -551,7 +551,7 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
                ++pFileName->szName;
                --nLen;
             }
-            ( const_cast<char*>( pFileName->szName ) )[ nLen ] = '\0';
+            ( const_cast<char*>(pFileName->szName) )[ nLen ] = '\0';
          }
          if( pFileName->szExtension )
          {
@@ -565,7 +565,7 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
                ++pFileName->szExtension;
                --nLen;
             }
-            ( const_cast<char*>( pFileName->szExtension ) )[ nLen ] = '\0';
+            ( const_cast<char*>(pFileName->szExtension) )[ nLen ] = '\0';
          }
       }
 
@@ -573,28 +573,28 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
       if( s_iFileCase == HB_SET_CASE_LOWER )
       {
          if( pFileName->szName )
-            hb_strlow( const_cast<char*>( pFileName->szName ) );
+            hb_strlow( const_cast<char*>(pFileName->szName) );
          if( pFileName->szExtension )
-            hb_strlow( const_cast<char*>( pFileName->szExtension ) );
+            hb_strlow( const_cast<char*>(pFileName->szExtension) );
       }
       else if( s_iFileCase == HB_SET_CASE_UPPER )
       {
          if( pFileName->szName )
-            hb_strupr(const_cast<char*>( pFileName->szName ));
+            hb_strupr(const_cast<char*>(pFileName->szName));
          if( pFileName->szExtension )
-            hb_strupr(const_cast<char*>( pFileName->szExtension ));
+            hb_strupr(const_cast<char*>(pFileName->szExtension));
       }
 
       /* DIRCASE */
       if( pFileName->szPath )
       {
          if( s_iDirCase == HB_SET_CASE_LOWER )
-            hb_strlow( const_cast<char*>( pFileName->szPath ) );
+            hb_strlow( const_cast<char*>(pFileName->szPath) );
          else if( s_iDirCase == HB_SET_CASE_UPPER )
-            hb_strupr(const_cast<char*>( pFileName->szPath ));
+            hb_strupr(const_cast<char*>(pFileName->szPath));
       }
 
-      hb_fsFNameMerge( const_cast<char*>( szFileName ), pFileName );
+      hb_fsFNameMerge( const_cast<char*>(szFileName), pFileName );
       hb_xfree(pFileName);
    }
    else if( pszFree )
@@ -614,12 +614,12 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
    {
       PHB_FNAME pFileName;
 
-      szFileName = pszBuffer = hb_strncpy(static_cast<char*>( hb_xgrab(HB_PATH_MAX) ),
+      szFileName = pszBuffer = hb_strncpy(static_cast<char*>(hb_xgrab(HB_PATH_MAX)),
                                            szFileName, HB_PATH_MAX - 1);
 
       if( s_cDirSep != HB_OS_PATH_DELIM_CHR )
       {
-         char * p = const_cast<char*>( szFileName );
+         char * p = const_cast<char*>(szFileName);
          while( *p )
          {
             if( *p == s_cDirSep )
@@ -647,7 +647,7 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
                ++pFileName->szName;
                --nLen;
             }
-            ( const_cast<char*>( pFileName->szName ) )[ nLen ] = '\0';
+            ( const_cast<char*>(pFileName->szName) )[ nLen ] = '\0';
          }
          if( pFileName->szExtension )
          {
@@ -661,7 +661,7 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
                ++pFileName->szExtension;
                --nLen;
             }
-            ( const_cast<char*>( pFileName->szExtension ) )[ nLen ] = '\0';
+            ( const_cast<char*>(pFileName->szExtension) )[ nLen ] = '\0';
          }
       }
 
@@ -669,28 +669,28 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
       if( s_iFileCase == HB_SET_CASE_LOWER )
       {
          if( pFileName->szName )
-            hb_strlow( const_cast<char*>( pFileName->szName ) );
+            hb_strlow( const_cast<char*>(pFileName->szName) );
          if( pFileName->szExtension )
-            hb_strlow( const_cast<char*>( pFileName->szExtension ) );
+            hb_strlow( const_cast<char*>(pFileName->szExtension) );
       }
       else if( s_iFileCase == HB_SET_CASE_UPPER )
       {
          if( pFileName->szName )
-            hb_strupr(const_cast<char*>( pFileName->szName ));
+            hb_strupr(const_cast<char*>(pFileName->szName));
          if( pFileName->szExtension )
-            hb_strupr(const_cast<char*>( pFileName->szExtension ));
+            hb_strupr(const_cast<char*>(pFileName->szExtension));
       }
 
       /* DIRCASE */
       if( pFileName->szPath )
       {
          if( s_iDirCase == HB_SET_CASE_LOWER )
-            hb_strlow( const_cast<char*>( pFileName->szPath ) );
+            hb_strlow( const_cast<char*>(pFileName->szPath) );
          else if( s_iDirCase == HB_SET_CASE_UPPER )
-            hb_strupr(const_cast<char*>( pFileName->szPath ));
+            hb_strupr(const_cast<char*>(pFileName->szPath));
       }
 
-      hb_fsFNameMerge( const_cast<char*>( szFileName ), pFileName );
+      hb_fsFNameMerge( const_cast<char*>(szFileName), pFileName );
       hb_xfree(pFileName);
    }
 
@@ -734,7 +734,7 @@ void hb_setSetDirCase( int iDirCase )
 
 void hb_setSetDirSeparator( int iSeparator )
 {
-   s_cDirSep = static_cast<char>( iSeparator );
+   s_cDirSep = static_cast<char>(iSeparator);
 }
 
 void hb_setSetTrimFileName( HB_BOOL fTrim )

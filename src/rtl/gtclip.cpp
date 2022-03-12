@@ -77,8 +77,8 @@ HB_BOOL hb_gt_setClipboard( const char * szClipData, HB_SIZE nLen )
    s_nClipboardLen = nLen;
    if( nLen )
    {
-      s_szClipboardData = static_cast<char*>( hb_xgrab(s_nClipboardLen + 1) );
-      memcpy( s_szClipboardData, szClipData, s_nClipboardLen );
+      s_szClipboardData = static_cast<char*>(hb_xgrab(s_nClipboardLen + 1));
+      memcpy(s_szClipboardData, szClipData, s_nClipboardLen);
       s_szClipboardData[ s_nClipboardLen ] = '\0';
    }
 
@@ -95,8 +95,8 @@ HB_BOOL hb_gt_getClipboard( char ** pszClipData, HB_SIZE * pnLen )
    *pnLen = s_nClipboardLen;
    if( s_nClipboardLen )
    {
-      *pszClipData = static_cast<char*>( hb_xgrab(s_nClipboardLen + 1) );
-      memcpy( *pszClipData, s_szClipboardData, s_nClipboardLen );
+      *pszClipData = static_cast<char*>(hb_xgrab(s_nClipboardLen + 1));
+      memcpy(*pszClipData, s_szClipboardData, s_nClipboardLen);
       ( *pszClipData )[ s_nClipboardLen ] = '\0';
    }
 
@@ -126,10 +126,10 @@ HB_BOOL hb_gt_winapi_setClipboardRaw( HB_UINT uFormat, void * pData, HB_SIZE nSi
 
             if( lpMem )
             {
-               memcpy( lpMem, pData, nSize );
+               memcpy(lpMem, pData, nSize);
                ( void ) GlobalUnlock( hglb );
                /* Place the handle on the clipboard. */
-               fResult = SetClipboardData( static_cast<UINT>( uFormat ), hglb ) != 0;
+               fResult = SetClipboardData( static_cast<UINT>(uFormat), hglb ) != 0;
             }
             if( ! fResult )
             {
@@ -179,15 +179,15 @@ HB_BOOL hb_gt_winapi_setClipboard( HB_UINT uFormat, PHB_ITEM pItem )
             {
                if( uFormat == CF_UNICODETEXT )
                {
-                  hb_itemCopyStrU16( pItem, HB_CDP_ENDIAN_NATIVE, static_cast<wchar_t*>( lpMem ), nSize + 1 );
+                  hb_itemCopyStrU16( pItem, HB_CDP_ENDIAN_NATIVE, static_cast<wchar_t*>(lpMem), nSize + 1 );
                }
                else
                {
-                  hb_itemCopyStr( pItem, hb_setGetOSCP(), static_cast<char*>( lpMem ), nSize + 1 );
+                  hb_itemCopyStr( pItem, hb_setGetOSCP(), static_cast<char*>(lpMem), nSize + 1 );
                }
                ( void ) GlobalUnlock( hglb );
                /* Place the handle on the clipboard. */
-               fResult = SetClipboardData( static_cast<UINT>( uFormat ), hglb ) != 0;
+               fResult = SetClipboardData( static_cast<UINT>(uFormat), hglb ) != 0;
             }
             if( ! fResult )
             {
@@ -211,31 +211,31 @@ HB_BOOL hb_gt_winapi_getClipboard( HB_UINT uFormat, PHB_ITEM pItem )
 
    if( IsClipboardFormatAvailable( uFormat ) && OpenClipboard( nullptr ) )
    {
-      HGLOBAL hglb = GetClipboardData( static_cast<UINT>( uFormat ) );
+      HGLOBAL hglb = GetClipboardData( static_cast<UINT>(uFormat) );
       if( hglb )
       {
          LPVOID lpMem = GlobalLock( hglb );
          if( lpMem )
          {
-            nSize = static_cast<HB_SIZE>( GlobalSize( hglb ) );
+            nSize = static_cast<HB_SIZE>(GlobalSize( hglb ));
 
             switch( uFormat )
             {
                case CF_UNICODETEXT:
-                  nSize = hb_wstrnlen(static_cast<const wchar_t*>( lpMem ), nSize >> 1);
+                  nSize = hb_wstrnlen(static_cast<const wchar_t*>(lpMem), nSize >> 1);
                   if( nSize )
                   {
-                     hb_itemPutStrLenU16( pItem, HB_CDP_ENDIAN_NATIVE, static_cast<const wchar_t*>( lpMem ), nSize );
+                     hb_itemPutStrLenU16( pItem, HB_CDP_ENDIAN_NATIVE, static_cast<const wchar_t*>(lpMem), nSize );
                   }
                   break;
                case CF_OEMTEXT:
                case CF_TEXT:
-                  nSize = hb_strnlen(static_cast<const char*>( lpMem ), nSize);
+                  nSize = hb_strnlen(static_cast<const char*>(lpMem), nSize);
                   /* fallthrough */
                default:
                   if( nSize )
                   {
-                     hb_itemPutStrLen(pItem, uFormat == CF_TEXT ? hb_setGetOSCP() : nullptr, static_cast<const char*>( lpMem ), nSize);
+                     hb_itemPutStrLen(pItem, uFormat == CF_TEXT ? hb_setGetOSCP() : nullptr, static_cast<const char*>(lpMem), nSize);
                   }
                   break;
             }

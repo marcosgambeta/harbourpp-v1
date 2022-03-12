@@ -90,10 +90,10 @@
 
 /* extra keysyms definitions */
 #define SL_KEY_NUM_5        SL_KEY_B2     /* this is checked explicitly */
-#define SL_KEY_MAX          ( static_cast<unsigned int>( 0x2000 ) )
+#define SL_KEY_MAX          ( static_cast<unsigned int>(0x2000) )
 #define SL_KEY_ESC          ( SL_KEY_MAX + 1 )
 #define SL_KEY_MOU          ( SL_KEY_ESC + 1 )
-#define SL_KEY_ALT( ch )  ( SL_KEY_MAX + ( static_cast<unsigned int>( ch ) ) )
+#define SL_KEY_ALT( ch )  ( SL_KEY_MAX + ( static_cast<unsigned int>(ch) ) )
 
 /* we choose Ctrl+\ as an abort key on Unixes where it is a SIGQUIT key by default */
 /* abort key is Ctrl+\ on Unix ( but Ctrl+@ on Linux console ) */
@@ -160,7 +160,7 @@ static void hb_sln_Init_KeyTranslations( void )
 
    /* on Unix systems ESC is a special key so let
       assume ESC is a double pressed ESC key */
-   SLkp_define_keysym( const_cast<char*>( "^[^[" ), SL_KEY_ESC );
+   SLkp_define_keysym( const_cast<char*>("^[^["), SL_KEY_ESC );
 
    /* try to define Shift-Fn and Ctrl-Fn keys.
       Because we assume terminal has only 10 Fkeys
@@ -216,7 +216,7 @@ static void hb_sln_Init_KeyTranslations( void )
    /* mouse events under xterm */
    if( hb_sln_UnderXterm )
    {
-      keyseq = SLtt_tgetstr( const_cast<char*>( "Km" ) );
+      keyseq = SLtt_tgetstr( const_cast<char*>("Km") );
       if( ( keyseq != nullptr ) && ( keyseq[ 0 ] != 0 ) )
       {
          #if 0
@@ -260,7 +260,7 @@ int hb_sln_Init_Terminal( int phase )
       p = ( unsigned const char * ) getenv( s_DeadKeyEnvName );
       if( p && *p )
       {
-         s_iDeadKey = static_cast<int>( *p );
+         s_iDeadKey = static_cast<int>(*p);
       }
 
       /* number of keys dealing with a Dead key */
@@ -313,7 +313,7 @@ int hb_sln_Init_Terminal( int phase )
 int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_ReadKey(%p,%d)", static_cast<void*>( pGT ), static_cast<int>( iEventMask ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_ReadKey(%p,%d)", static_cast<void*>(pGT), static_cast<int>(iEventMask) ) );
 #endif
 
    static int InDeadState = HB_FALSE;
@@ -382,7 +382,7 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
    }
 
    /* user AbortKey break */
-   if( static_cast<int>( ch ) == s_hb_sln_Abort_key )
+   if( static_cast<int>(ch) == s_hb_sln_Abort_key )
    {
       return HB_BREAK_FLAG;
    }
@@ -402,23 +402,23 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
    if( InDeadState )
    {
       InDeadState = HB_FALSE;
-      if( static_cast<int>( ch ) == s_iDeadKey ) /* double press Dead key */
+      if( static_cast<int>(ch) == s_iDeadKey ) /* double press Dead key */
       {
          return ch;
       }
       if( ch < 256 )  /* is this needed ??? */
       {
-         for( int i = 0; i < static_cast<int>( hb_sln_convKDeadKeys[ 0 ] ); i++ )
+         for( int i = 0; i < static_cast<int>(hb_sln_convKDeadKeys[ 0 ]); i++ )
          {
-            if( static_cast<int>( hb_sln_convKDeadKeys[ 2 * i + 1 ] ) == static_cast<int>( ch ) )
+            if( static_cast<int>(hb_sln_convKDeadKeys[ 2 * i + 1 ]) == static_cast<int>(ch) )
             {
-               return static_cast<int>( hb_sln_convKDeadKeys[ 2 * i + 2 ] );
+               return static_cast<int>(hb_sln_convKDeadKeys[ 2 * i + 2 ]);
             }
          }
       }
       return 0;
    }
-   else if( static_cast<int>( ch ) == s_iDeadKey )
+   else if( static_cast<int>(ch) == s_iDeadKey )
    {
       /* entering Dead key state */
       InDeadState = HB_TRUE;
@@ -462,7 +462,7 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
       HB_WCHAR wc = 0;
       int n = 0;
 
-      if( hb_cdpUTF8ToU16NextChar( static_cast<HB_UCHAR>( ch ), &n, &wc ) )
+      if( hb_cdpUTF8ToU16NextChar( static_cast<HB_UCHAR>(ch), &n, &wc ) )
       {
          unsigned int buf[ 10 ], i = 0;
 
@@ -473,7 +473,7 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
                break;
             }
             buf[ i++ ] = SLang_getkey();
-            if( ! hb_cdpUTF8ToU16NextChar( static_cast<HB_UCHAR>( buf[ i - 1 ] ), &n, &wc ) )
+            if( ! hb_cdpUTF8ToU16NextChar( static_cast<HB_UCHAR>(buf[ i - 1 ]), &n, &wc ) )
             {
                n = -1;
             }
@@ -508,7 +508,7 @@ static int hb_sln_try_get_Kbd_State( void )
       return 0;
    }
 
-   return static_cast<int>( modifiers );
+   return static_cast<int>(modifiers);
 
 #elif defined( M_UNIX )
 

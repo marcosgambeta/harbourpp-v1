@@ -105,11 +105,11 @@ static void hb_mlGetEOLs( PHB_MLC_INFO pMLC, int iParam )
    else if( HB_ISARRAY( iParam ) )
    {
       PHB_ITEM pArray = hb_param(iParam, HB_IT_ARRAY);
-      HB_SIZE nSize = hb_arrayLen( pArray ), n;
+      HB_SIZE nSize = hb_arrayLen(pArray), n;
 
       for( n = 1; n <= nSize; ++n )
       {
-         if( hb_arrayGetCLen( pArray, n ) > 0 )
+         if( hb_arrayGetCLen(pArray, n) > 0 )
          {
             ++iEOLs;
          }
@@ -118,15 +118,15 @@ static void hb_mlGetEOLs( PHB_MLC_INFO pMLC, int iParam )
       {
          if( iEOLs > HB_EOL_BUFFER_SIZE )
          {
-            pMLC->pEOLs = static_cast<PHB_EOL_INFO>( hb_xgrab(sizeof(HB_EOL_INFO) * iEOLs) );
+            pMLC->pEOLs = static_cast<PHB_EOL_INFO>(hb_xgrab(sizeof(HB_EOL_INFO) * iEOLs));
          }
          iEOLs = 0;
          for( n = 1; n <= nSize; ++n )
          {
-            nLen = hb_arrayGetCLen( pArray, n );
+            nLen = hb_arrayGetCLen(pArray, n);
             if( nLen > 0 )
             {
-               pMLC->pEOLs[ iEOLs ].szEOL = hb_arrayGetCPtr( pArray, n );
+               pMLC->pEOLs[ iEOLs ].szEOL = hb_arrayGetCPtr(pArray, n);
                pMLC->pEOLs[ iEOLs ].nLen = nLen;
                ++iEOLs;
             }
@@ -214,7 +214,7 @@ static int hb_mlEol( PHB_MLC_INFO pMLC )
       if( pszString[ 0 ] == pEOLs[ i ].szEOL[ 0 ] &&
           ( pEOLs[ i ].nLen == 1 ||
             ( nLen >= pEOLs[ i ].nLen &&
-              memcmp( pszString, pEOLs[ i ].szEOL, pEOLs[ i ].nLen ) == 0 ) ) )
+              memcmp(pszString, pEOLs[ i ].szEOL, pEOLs[ i ].nLen) == 0 ) ) )
       {
          return i;
       }
@@ -401,7 +401,7 @@ HB_FUNC( MEMOLINE )
             {
                nSize = MLC.nLineLength;
             }
-            szLine = static_cast<char*>( hb_xgrab(nSize + 1) );
+            szLine = static_cast<char*>(hb_xgrab(nSize + 1));
             nCol = 0;
             while( nIndex < MLC.nLen && nCol < MLC.nCol )
             {
@@ -445,7 +445,7 @@ HB_FUNC( MEMOLINE )
                      }
                      else
                      {
-                        szLine[ nLen++ ] = static_cast<char>( wc );
+                        szLine[ nLen++ ] = static_cast<char>(wc);
                      }
                      ++nCol;
                   }
@@ -464,7 +464,7 @@ HB_FUNC( MEMOLINE )
                }
                if( nCol > 0 )
                {
-                  memset( szLine + nLen, ' ', nCol );
+                  memset(szLine + nLen, ' ', nCol);
                   nLen += nCol;
                }
             }
@@ -679,7 +679,7 @@ HB_FUNC( HB_MLEVAL )
          nTabSize = 1;
       }
 
-      pszLine = static_cast<char*>( hb_xgrab(nLineLength + 1) );
+      pszLine = static_cast<char*>(hb_xgrab(nLineLength + 1));
 
       do
       {
@@ -775,7 +775,7 @@ HB_FUNC( HB_MLEVAL )
                }
                if( !cdp )
                {
-                  pszLine[ nDst++ ] = static_cast<char>( ch );
+                  pszLine[ nDst++ ] = static_cast<char>(ch);
                }
                else if( ! HB_CDPCHAR_PUT( cdp, pszLine, nLineLength + 1, &nDst, ch ) )
                {

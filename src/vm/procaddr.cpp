@@ -84,7 +84,7 @@ PHB_FUNC hb_vmProcAddress( const char * szFuncName )
       { "hb_parvni",           reinterpret_cast<PHB_FUNC>( hb_parvni                 ) },
       { "hb_parvnl",           reinterpret_cast<PHB_FUNC>( hb_parvnl                 ) },
       { "hb_pcount",           reinterpret_cast<PHB_FUNC>( hb_pcount                 ) },
-      { "hb_ret",              static_cast<PHB_FUNC>( hb_ret                    ) },
+      { "hb_ret",                   static_cast<PHB_FUNC>( hb_ret                    ) },
       { "hb_reta",             reinterpret_cast<PHB_FUNC>( hb_reta                   ) },
       { "hb_retc",             reinterpret_cast<PHB_FUNC>( hb_retc                   ) },
       { "hb_retclen",          reinterpret_cast<PHB_FUNC>( hb_retclen                ) },

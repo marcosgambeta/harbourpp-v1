@@ -114,7 +114,7 @@ static void _hb_jsonCtxAdd( PHB_JSON_ENCODE_CTX pCtx, const char * szString, HB_
       HB_SIZE nSize = pCtx->pHead - pCtx->pBuffer;
 
       pCtx->nAlloc += ( pCtx->nAlloc << 1 ) + nLen;
-      pCtx->pBuffer = static_cast<char*>( hb_xrealloc(pCtx->pBuffer, pCtx->nAlloc) );
+      pCtx->pBuffer = static_cast<char*>(hb_xrealloc(pCtx->pBuffer, pCtx->nAlloc));
       pCtx->pHead = pCtx->pBuffer + nSize;
    }
    if( szString )
@@ -134,7 +134,7 @@ static void _hb_jsonCtxAddIndent( PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nLevel )
          HB_SIZE nSize = pCtx->pHead - pCtx->pBuffer;
 
          pCtx->nAlloc += ( pCtx->nAlloc << 1 ) + nCount;
-         pCtx->pBuffer = static_cast<char*>( hb_xrealloc(pCtx->pBuffer, pCtx->nAlloc) );
+         pCtx->pBuffer = static_cast<char*>(hb_xrealloc(pCtx->pBuffer, pCtx->nAlloc));
          pCtx->pHead = pCtx->pBuffer + nSize;
       }
       hb_xmemset(pCtx->pHead, pCtx->iIndent > 0 ? ' ' : '\t', nCount);
@@ -147,7 +147,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
    /* Protection against recursive structures */
    if( ( HB_IS_ARRAY(pValue) || HB_IS_HASH(pValue) ) && hb_itemSize(pValue) > 0 )
    {
-      void * id = HB_IS_HASH(pValue) ? hb_hashId( pValue ) : hb_arrayId( pValue );
+      void * id = HB_IS_HASH(pValue) ? hb_hashId( pValue ) : hb_arrayId(pValue);
 
       for( HB_SIZE nIndex = 0; nIndex < nLevel; nIndex++ )
       {
@@ -164,7 +164,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
       if( nLevel >= pCtx->nAllocId )
       {
          pCtx->nAllocId += 8;
-         pCtx->pId = static_cast<void**>( hb_xrealloc(pCtx->pId, sizeof(void*) * pCtx->nAllocId) );
+         pCtx->pId = static_cast<void**>(hb_xrealloc(pCtx->pId, sizeof(void*) * pCtx->nAllocId));
       }
       pCtx->pId[ nLevel ] = id;
    }
@@ -236,7 +236,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
                _hb_jsonCtxAdd( pCtx, "\\t", 2 );
                break;
             default:
-               hb_snprintf( buf, sizeof(buf), "\\u00%02X", uch );
+               hb_snprintf(buf, sizeof(buf), "\\u00%02X", uch);
                _hb_jsonCtxAdd( pCtx, buf, 6 );
                break;
          }
@@ -273,7 +273,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
       int iDec;
       double dblValue = hb_itemGetNDDec(pValue, &iDec);
 
-      hb_snprintf( buf, sizeof(buf), "%.*f", iDec, dblValue );
+      hb_snprintf(buf, sizeof(buf), "%.*f", iDec, dblValue);
       _hb_jsonCtxAdd( pCtx, buf, strlen(buf) );
    }
    else if( HB_IS_NIL(pValue) )
@@ -325,7 +325,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
 
          for( nIndex = 1; nIndex <= nLen; nIndex++ )
          {
-            PHB_ITEM pItem = hb_arrayGetItemPtr( pValue, nIndex );
+            PHB_ITEM pItem = hb_arrayGetItemPtr(pValue, nIndex);
 
             if( nIndex > 1 )
             {
@@ -438,7 +438,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
       char * szDest, * szHead;
       HB_SIZE nAlloc = 16;
 
-      szHead = szDest = static_cast<char*>( hb_xgrab(nAlloc) );
+      szHead = szDest = static_cast<char*>(hb_xgrab(nAlloc));
       szSource++;
       while( *szSource != '\"' )
       {
@@ -446,7 +446,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
          {
             HB_SIZE nLen = szHead - szDest;
             nAlloc += nAlloc << 1;
-            szDest = static_cast<char*>( hb_xrealloc(szDest, nAlloc) );
+            szDest = static_cast<char*>(hb_xrealloc(szDest, nAlloc));
             szHead = szDest + nLen;
          }
          if( *szSource == '\\' )
@@ -513,7 +513,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
             }
             szSource++;
          }
-         else if( *reinterpret_cast<const unsigned char*>( szSource ) >= ' ' )
+         else if( *reinterpret_cast<const unsigned char*>(szSource) >= ' ' )
          {
             *szHead++ = *szSource++;
          }
@@ -558,13 +558,13 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
       {
          double mult = 1;
 
-         dblValue = static_cast<double>( nValue );
+         dblValue = static_cast<double>(nValue);
          fDbl = HB_TRUE;
          szSource++;
          while( *szSource >= '0' && *szSource <= '9' )
          {
             mult /= 10;
-            dblValue += ( static_cast<double>( *szSource - '0' ) ) * mult;
+            dblValue += ( static_cast<double>(*szSource - '0') ) * mult;
             szSource++;
             iDec++;
          }
@@ -588,7 +588,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
          }
          if( ! fDbl )
          {
-            dblValue = static_cast<double>( nValue );
+            dblValue = static_cast<double>(nValue);
             fDbl = HB_TRUE;
          }
          if( fNegExp )
@@ -625,7 +625,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
    }
    else if( *szSource == '[' )
    {
-      hb_arrayNew( pValue, 0 );
+      hb_arrayNew(pValue, 0);
       szSource = _skipws( szSource + 1 );
       if( *szSource != ']' )
       {
@@ -639,7 +639,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
                hb_itemRelease(pItem);
                return nullptr;
             }
-            hb_arrayAddForward( pValue, pItem );
+            hb_arrayAddForward(pValue, pItem);
 
             szSource = _skipws( szSource );
             if( *szSource == ',' )
@@ -717,18 +717,18 @@ char * hb_jsonEncodeCP( PHB_ITEM pValue, HB_SIZE * pnLen, int iIndent, PHB_CODEP
    char * szRet;
    HB_SIZE nLen;
 
-   pCtx = static_cast<PHB_JSON_ENCODE_CTX>( hb_xgrab(sizeof(HB_JSON_ENCODE_CTX)) );
+   pCtx = static_cast<PHB_JSON_ENCODE_CTX>(hb_xgrab(sizeof(HB_JSON_ENCODE_CTX)));
    pCtx->nAlloc = 16;
-   pCtx->pHead = pCtx->pBuffer = static_cast<char*>( hb_xgrab(pCtx->nAlloc) );
+   pCtx->pHead = pCtx->pBuffer = static_cast<char*>(hb_xgrab(pCtx->nAlloc));
    pCtx->nAllocId = 8;
-   pCtx->pId = static_cast<void**>( hb_xgrab(sizeof(void*) * pCtx->nAllocId) );
+   pCtx->pId = static_cast<void**>(hb_xgrab(sizeof(void*) * pCtx->nAllocId));
    pCtx->iIndent = iIndent;
    pCtx->szEol = hb_setGetEOL();
    if( ! pCtx->szEol || ! pCtx->szEol[ 0 ] )
    {
       pCtx->szEol = hb_conNewLine();
    }
-   pCtx->iEolLen = static_cast<int>( strlen(pCtx->szEol) );
+   pCtx->iEolLen = static_cast<int>(strlen(pCtx->szEol));
 
    _hb_jsonEncode( pValue, pCtx, 0, HB_FALSE, cdp );
    if( iIndent )
@@ -737,7 +737,7 @@ char * hb_jsonEncodeCP( PHB_ITEM pValue, HB_SIZE * pnLen, int iIndent, PHB_CODEP
    }
 
    nLen = pCtx->pHead - pCtx->pBuffer;
-   szRet = static_cast<char*>( hb_xrealloc(pCtx->pBuffer, nLen + 1) );
+   szRet = static_cast<char*>(hb_xrealloc(pCtx->pBuffer, nLen + 1));
    szRet[ nLen ] = '\0';
    hb_xfree(pCtx->pId);
    hb_xfree(pCtx);
@@ -811,7 +811,7 @@ HB_FUNC( HB_JSONDECODE )
 
    if( HB_ISBYREF(2) )
    {
-      hb_retns( static_cast<HB_ISIZ>( nSize ) );
+      hb_retns( static_cast<HB_ISIZ>(nSize) );
       hb_itemParamStoreForward(2, pItem);
       hb_itemRelease(pItem);
    }

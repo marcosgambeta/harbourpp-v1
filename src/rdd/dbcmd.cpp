@@ -57,7 +57,7 @@
 HB_FUNC( AFIELDS )
 {
    HB_USHORT uiFields, uiCount;
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    PHB_ITEM pName = hb_param(1, HB_IT_ARRAY);
    PHB_ITEM pType = hb_param(2, HB_IT_ARRAY);
    PHB_ITEM pLen = hb_param(3, HB_IT_ARRAY);
@@ -82,7 +82,7 @@ HB_FUNC( AFIELDS )
 
    if( pName )
    {
-      HB_USHORT uiArrayLen = static_cast<HB_USHORT>( hb_arrayLen( pName ) );
+      HB_USHORT uiArrayLen = static_cast<HB_USHORT>(hb_arrayLen(pName));
       if( uiArrayLen < uiFields )
       {
          uiFields = uiArrayLen;
@@ -90,7 +90,7 @@ HB_FUNC( AFIELDS )
    }
    if( pType )
    {
-      HB_USHORT uiArrayLen = static_cast<HB_USHORT>( hb_arrayLen( pType ) );
+      HB_USHORT uiArrayLen = static_cast<HB_USHORT>(hb_arrayLen(pType));
       if( uiArrayLen < uiFields )
       {
          uiFields = uiArrayLen;
@@ -98,7 +98,7 @@ HB_FUNC( AFIELDS )
    }
    if( pLen )
    {
-      HB_USHORT uiArrayLen = static_cast<HB_USHORT>( hb_arrayLen( pLen ) );
+      HB_USHORT uiArrayLen = static_cast<HB_USHORT>(hb_arrayLen(pLen));
       if( uiArrayLen < uiFields )
       {
          uiFields = uiArrayLen;
@@ -106,7 +106,7 @@ HB_FUNC( AFIELDS )
    }
    if( pDec )
    {
-      HB_USHORT uiArrayLen = static_cast<HB_USHORT>( hb_arrayLen( pDec ) );
+      HB_USHORT uiArrayLen = static_cast<HB_USHORT>(hb_arrayLen(pDec));
       if( uiArrayLen < uiFields )
       {
          uiFields = uiArrayLen;
@@ -115,7 +115,7 @@ HB_FUNC( AFIELDS )
 
    if( pFlags )
    {
-      HB_USHORT uiArrayLen = static_cast<HB_USHORT>( hb_arrayLen( pFlags ) );
+      HB_USHORT uiArrayLen = static_cast<HB_USHORT>(hb_arrayLen(pFlags));
       if( uiArrayLen < uiFields )
       {
          uiFields = uiArrayLen;
@@ -126,7 +126,7 @@ HB_FUNC( AFIELDS )
    {
       for( uiCount = 1; uiCount <= uiFields; ++uiCount )
       {
-         if( SELF_FIELDINFO( pArea, uiCount, DBS_NAME, hb_arrayGetItemPtr( pName, uiCount ) ) != HB_SUCCESS )
+         if( SELF_FIELDINFO( pArea, uiCount, DBS_NAME, hb_arrayGetItemPtr(pName, uiCount) ) != HB_SUCCESS )
          {
             return;
          }
@@ -136,7 +136,7 @@ HB_FUNC( AFIELDS )
    {
       for( uiCount = 1; uiCount <= uiFields; ++uiCount )
       {
-         if( SELF_FIELDINFO( pArea, uiCount, DBS_TYPE, hb_arrayGetItemPtr( pType, uiCount ) ) != HB_SUCCESS )
+         if( SELF_FIELDINFO( pArea, uiCount, DBS_TYPE, hb_arrayGetItemPtr(pType, uiCount) ) != HB_SUCCESS )
          {
             return;
          }
@@ -146,7 +146,7 @@ HB_FUNC( AFIELDS )
    {
       for( uiCount = 1; uiCount <= uiFields; ++uiCount )
       {
-         if( SELF_FIELDINFO( pArea, uiCount, DBS_LEN, hb_arrayGetItemPtr( pLen, uiCount ) ) != HB_SUCCESS )
+         if( SELF_FIELDINFO( pArea, uiCount, DBS_LEN, hb_arrayGetItemPtr(pLen, uiCount) ) != HB_SUCCESS )
          {
             return;
          }
@@ -156,7 +156,7 @@ HB_FUNC( AFIELDS )
    {
       for( uiCount = 1; uiCount <= uiFields; ++uiCount )
       {
-         if( SELF_FIELDINFO( pArea, uiCount, DBS_DEC, hb_arrayGetItemPtr( pDec, uiCount ) ) != HB_SUCCESS )
+         if( SELF_FIELDINFO( pArea, uiCount, DBS_DEC, hb_arrayGetItemPtr(pDec, uiCount) ) != HB_SUCCESS )
          {
             return;
          }
@@ -167,7 +167,7 @@ HB_FUNC( AFIELDS )
    {
       for( uiCount = 1; uiCount <= uiFields; ++uiCount )
       {
-         if( SELF_FIELDINFO( pArea, uiCount, DBS_FLAG, hb_arrayGetItemPtr( pFlags, uiCount ) ) != HB_SUCCESS )
+         if( SELF_FIELDINFO( pArea, uiCount, DBS_FLAG, hb_arrayGetItemPtr(pFlags, uiCount) ) != HB_SUCCESS )
          {
             return;
          }   
@@ -180,7 +180,7 @@ HB_FUNC( AFIELDS )
 
 HB_FUNC( ALIAS )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetWorkAreaPointer( static_cast<HB_AREANO>( hb_parni(1) ) ) );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer( static_cast<HB_AREANO>(hb_parni(1)) ));
 
    if( pArea )
    {
@@ -197,12 +197,12 @@ HB_FUNC( ALIAS )
 
 HB_FUNC( DBEVAL )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
       DBEVALINFO pEvalInfo;
-      memset( &pEvalInfo, 0, sizeof(pEvalInfo) );
+      memset(&pEvalInfo, 0, sizeof(pEvalInfo));
       pEvalInfo.itmBlock = hb_param(1, HB_IT_BLOCK);
       if( ! pEvalInfo.itmBlock )
       {
@@ -255,7 +255,7 @@ HB_FUNC( DBEVAL )
 
 HB_FUNC( DBF )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -273,7 +273,7 @@ HB_FUNC( DBF )
 HB_FUNC( BOF )
 {
    HB_BOOL bBof = HB_TRUE;
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -286,7 +286,7 @@ HB_FUNC( BOF )
 /* dbAppend( [<lUnLockAll>=.T.] ) --> <lSuccess> */
 HB_FUNC( DBAPPEND )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -316,7 +316,7 @@ HB_FUNC( DBCLOSEAREA )
 
 HB_FUNC( DBCOMMIT )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -375,25 +375,25 @@ HB_FUNC( DBCREATE )
     */
    if( ! pStruct ||
 #ifdef HB_CLP_STRICT
-       hb_arrayLen( pStruct ) == 0 ||
+       hb_arrayLen(pStruct) == 0 ||
 #endif
        ! szFileName )
    {
       hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
       return;
    }
-   uiLen = static_cast<HB_USHORT>( hb_arrayLen( pStruct ) );
+   uiLen = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
 
    for( HB_USHORT uiSize = 1; uiSize <= uiLen; ++uiSize )
    {
-      PHB_ITEM pFieldDesc = hb_arrayGetItemPtr( pStruct, uiSize );
+      PHB_ITEM pFieldDesc = hb_arrayGetItemPtr(pStruct, uiSize);
 
       /* Validate items types of fields */
-      if( hb_arrayLen( pFieldDesc ) < 4 ||
-          ! ( hb_arrayGetType( pFieldDesc, 1 ) & HB_IT_STRING ) ||
-          ! ( hb_arrayGetType( pFieldDesc, 2 ) & HB_IT_STRING ) ||
-          ! ( hb_arrayGetType( pFieldDesc, 3 ) & HB_IT_NUMERIC ) ||
-          ! ( hb_arrayGetType( pFieldDesc, 4 ) & HB_IT_NUMERIC ) )
+      if( hb_arrayLen(pFieldDesc) < 4 ||
+          ! ( hb_arrayGetType(pFieldDesc, 1) & HB_IT_STRING ) ||
+          ! ( hb_arrayGetType(pFieldDesc, 2) & HB_IT_STRING ) ||
+          ! ( hb_arrayGetType(pFieldDesc, 3) & HB_IT_NUMERIC ) ||
+          ! ( hb_arrayGetType(pFieldDesc, 4) & HB_IT_NUMERIC ) )
       {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
          return;
@@ -401,7 +401,7 @@ HB_FUNC( DBCREATE )
    }
 
    hb_retl( hb_rddCreateTable( szFileName, szDriver,
-                               fCurrArea ? static_cast<HB_AREANO>( hb_rddGetCurrentWorkAreaNumber() ) : 0,
+                               fCurrArea ? static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber()) : 0,
                                szAlias, fKeepOpen,
                                szCpId, ulConnection,
                                pStruct, pDelim ) == HB_SUCCESS );
@@ -432,25 +432,25 @@ HB_FUNC( HB_DBCREATETEMP )
     */
    if( ! szAlias || ! pStruct
 #ifdef HB_CLP_STRICT
-       || hb_arrayLen( pStruct ) == 0
+       || hb_arrayLen(pStruct) == 0
 #endif
        )
    {
       hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
       return;
    }
-   uiLen = static_cast<HB_USHORT>( hb_arrayLen( pStruct ) );
+   uiLen = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
 
    for( HB_USHORT uiSize = 1; uiSize <= uiLen; ++uiSize )
    {
-      PHB_ITEM pFieldDesc = hb_arrayGetItemPtr( pStruct, uiSize );
+      PHB_ITEM pFieldDesc = hb_arrayGetItemPtr(pStruct, uiSize);
 
       /* Validate items types of fields */
-      if( hb_arrayLen( pFieldDesc ) < 4 ||
-          ! ( hb_arrayGetType( pFieldDesc, 1 ) & HB_IT_STRING ) ||
-          ! ( hb_arrayGetType( pFieldDesc, 2 ) & HB_IT_STRING ) ||
-          ! ( hb_arrayGetType( pFieldDesc, 3 ) & HB_IT_NUMERIC ) ||
-          ! ( hb_arrayGetType( pFieldDesc, 4 ) & HB_IT_NUMERIC ) )
+      if( hb_arrayLen(pFieldDesc) < 4 ||
+          ! ( hb_arrayGetType(pFieldDesc, 1) & HB_IT_STRING ) ||
+          ! ( hb_arrayGetType(pFieldDesc, 2) & HB_IT_STRING ) ||
+          ! ( hb_arrayGetType(pFieldDesc, 3) & HB_IT_NUMERIC ) ||
+          ! ( hb_arrayGetType(pFieldDesc, 4) & HB_IT_NUMERIC ) )
       {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
          return;
@@ -497,23 +497,23 @@ HB_FUNC( __DBOPENSDF )
    szCpId = hb_parc(7);
    ulConnection = hb_parnl(8);
 
-   if( ! pStruct || hb_arrayLen( pStruct ) == 0 || ! szFileName || ! szFileName[ 0 ] )
+   if( ! pStruct || hb_arrayLen(pStruct) == 0 || ! szFileName || ! szFileName[ 0 ] )
    {
       hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
       return;
    }
-   uiLen = static_cast<HB_USHORT>( hb_arrayLen( pStruct ) );
+   uiLen = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
 
    for( HB_USHORT uiSize = 1; uiSize <= uiLen; ++uiSize )
    {
-      PHB_ITEM pFieldDesc = hb_arrayGetItemPtr( pStruct, uiSize );
+      PHB_ITEM pFieldDesc = hb_arrayGetItemPtr(pStruct, uiSize);
 
       /* Validate items types of fields */
-      if( hb_arrayLen( pFieldDesc ) < 4 ||
-          ! ( hb_arrayGetType( pFieldDesc, 1 ) & HB_IT_STRING ) ||
-          ! ( hb_arrayGetType( pFieldDesc, 2 ) & HB_IT_STRING ) ||
-          ! ( hb_arrayGetType( pFieldDesc, 3 ) & HB_IT_NUMERIC ) ||
-          ! ( hb_arrayGetType( pFieldDesc, 4 ) & HB_IT_NUMERIC ) )
+      if( hb_arrayLen(pFieldDesc) < 4 ||
+          ! ( hb_arrayGetType(pFieldDesc, 1) & HB_IT_STRING ) ||
+          ! ( hb_arrayGetType(pFieldDesc, 2) & HB_IT_STRING ) ||
+          ! ( hb_arrayGetType(pFieldDesc, 3) & HB_IT_NUMERIC ) ||
+          ! ( hb_arrayGetType(pFieldDesc, 4) & HB_IT_NUMERIC ) )
       {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
          return;
@@ -521,7 +521,7 @@ HB_FUNC( __DBOPENSDF )
    }
 
    errCode = hb_rddOpenTable( szFileName, szDriver,
-                              fCurrArea ? static_cast<HB_AREANO>( hb_rddGetCurrentWorkAreaNumber() ) : 0,
+                              fCurrArea ? static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber()) : 0,
                               szAlias, HB_TRUE, HB_TRUE,
                               szCpId, ulConnection,
                               pStruct, pDelim );
@@ -536,7 +536,7 @@ HB_FUNC( __DBOPENSDF )
 
 HB_FUNC( DBDELETE )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -550,7 +550,7 @@ HB_FUNC( DBDELETE )
 
 HB_FUNC( DBRECALL )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -564,7 +564,7 @@ HB_FUNC( DBRECALL )
 
 HB_FUNC( DBGOBOTTOM )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -578,7 +578,7 @@ HB_FUNC( DBGOBOTTOM )
 
 HB_FUNC( DBGOTO )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -600,7 +600,7 @@ HB_FUNC( DBGOTO )
 
 HB_FUNC( DBGOTOP )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -614,7 +614,7 @@ HB_FUNC( DBGOTOP )
 
 HB_FUNC( __DBLOCATE )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -647,7 +647,7 @@ HB_FUNC( __DBLOCATE )
 
 HB_FUNC( __DBSETLOCATE )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -655,7 +655,7 @@ HB_FUNC( __DBSETLOCATE )
       if( pLocate )
       {
          DBSCOPEINFO pScopeInfo;
-         memset( &pScopeInfo, 0, sizeof(pScopeInfo) );
+         memset(&pScopeInfo, 0, sizeof(pScopeInfo));
          pScopeInfo.itmCobFor = pLocate;
          SELF_SETLOCATE( pArea, &pScopeInfo );
       }
@@ -664,7 +664,7 @@ HB_FUNC( __DBSETLOCATE )
 
 HB_FUNC( __DBCONTINUE )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -678,7 +678,7 @@ HB_FUNC( __DBCONTINUE )
 
 HB_FUNC( __DBPACK )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -692,15 +692,15 @@ HB_FUNC( __DBPACK )
          PHB_ITEM pEvery;
          hb_itemRelease(pArea->valResult);
          pArea->valResult = hb_itemArrayNew(2);
-         hb_arraySet( pArea->valResult, 1, pBlock );
+         hb_arraySet(pArea->valResult, 1, pBlock);
          pEvery = hb_param(2, HB_IT_NUMERIC);
          if( pEvery )
          {
-            hb_arraySet( pArea->valResult, 2, pEvery );
+            hb_arraySet(pArea->valResult, 2, pEvery);
          }
          else
          {
-            hb_arraySetNI( pArea->valResult, 2, 0 );
+            hb_arraySetNI(pArea->valResult, 2, 0);
          }
       }
       else
@@ -728,7 +728,7 @@ HB_FUNC( __DBPACK )
 
 HB_FUNC( DBRLOCK )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -754,7 +754,7 @@ HB_FUNC( DBRLOCK )
 
 HB_FUNC( DBRLOCKLIST )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -770,7 +770,7 @@ HB_FUNC( DBRLOCKLIST )
 
 HB_FUNC( DBRUNLOCK )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -784,7 +784,7 @@ HB_FUNC( DBRUNLOCK )
 
 HB_FUNC( DBSEEK )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -845,7 +845,7 @@ HB_FUNC( DBSELECTAREA )
 
 HB_FUNC( __DBSETFOUND )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -859,7 +859,7 @@ HB_FUNC( __DBSETFOUND )
 
 HB_FUNC( DBSETFILTER )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -908,7 +908,7 @@ HB_FUNC( DBSETFILTER )
 
 HB_FUNC( DBCLEARFILTER )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -922,7 +922,7 @@ HB_FUNC( DBCLEARFILTER )
 
 HB_FUNC( DBFILTER )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -939,7 +939,7 @@ HB_FUNC( DBFILTER )
 /* Harbour extension to retrieve filter codeblock */
 HB_FUNC( HB_DBGETFILTER )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -953,7 +953,7 @@ HB_FUNC( HB_DBGETFILTER )
 
 HB_FUNC( DBSKIP )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -968,7 +968,7 @@ HB_FUNC( DBSKIP )
 HB_FUNC( DBSTRUCT )
 {
    PHB_ITEM pStruct = hb_itemArrayNew(0);
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -979,7 +979,7 @@ HB_FUNC( DBSTRUCT )
 
 HB_FUNC( DBTABLEEXT )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    PHB_ITEM pItem = hb_itemNew(nullptr);
    HB_ERRCODE errCode = HB_FAILURE;
 
@@ -990,7 +990,7 @@ HB_FUNC( DBTABLEEXT )
       pRddNode = hb_rddFindNode( hb_rddDefaultDrv( nullptr ), &uiRddID );
       if( pRddNode )
       {
-         pArea = static_cast<AREAP>( hb_rddNewAreaNode( pRddNode, uiRddID ) );
+         pArea = static_cast<AREAP>(hb_rddNewAreaNode( pRddNode, uiRddID ));
          if( pArea )
          {
             errCode = SELF_INFO( pArea, DBI_TABLEEXT, pItem );
@@ -1012,7 +1012,7 @@ HB_FUNC( DBTABLEEXT )
 
 HB_FUNC( DBUNLOCK )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -1035,14 +1035,14 @@ HB_FUNC( DBUNLOCKALL )
 HB_FUNC( DBUSEAREA )
 {
    hb_retl( hb_rddOpenTable( hb_parc(3), hb_parc(2),
-         hb_parl(1) ? 0 : static_cast<HB_AREANO>( hb_rddGetCurrentWorkAreaNumber() ),
+         hb_parl(1) ? 0 : static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber()),
          hb_parc(4), HB_ISLOG(5) ? hb_parl(5) : ! hb_setGetExclusive(),
          hb_parl(6), hb_parc(7), hb_parnl(8), nullptr, nullptr ) == HB_SUCCESS );
 }
 
 HB_FUNC( __DBZAP )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -1057,7 +1057,7 @@ HB_FUNC( __DBZAP )
 HB_FUNC( DELETED )
 {
    HB_BOOL bDeleted = HB_FALSE;
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -1069,7 +1069,7 @@ HB_FUNC( DELETED )
 HB_FUNC( EOF )
 {
    HB_BOOL bEof = HB_TRUE;
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -1081,7 +1081,7 @@ HB_FUNC( EOF )
 HB_FUNC( FCOUNT )
 {
    HB_USHORT uiFields = 0;
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -1093,8 +1093,8 @@ HB_FUNC( FCOUNT )
 HB_FUNC( FIELDGET )
 {
    PHB_ITEM pItem = hb_itemNew(nullptr);
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
-   HB_USHORT uiField = static_cast<HB_FIELDNO>( hb_parni(1) );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   HB_USHORT uiField = static_cast<HB_FIELDNO>(hb_parni(1));
 
    if( pArea && uiField )
    {
@@ -1106,14 +1106,14 @@ HB_FUNC( FIELDGET )
 
 HB_FUNC( FIELDNAME )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
-   HB_USHORT uiFields, uiIndex = static_cast<HB_FIELDNO>( hb_parni(1) );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   HB_USHORT uiFields, uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
 
    if( pArea && uiIndex )
    {
       if( SELF_FIELDCOUNT( pArea, &uiFields ) == HB_SUCCESS && uiIndex <= uiFields )
       {
-         char * szName = static_cast<char*>( hb_xgrab(pArea->uiMaxFieldNameLength + 1) );
+         char * szName = static_cast<char*>(hb_xgrab(pArea->uiMaxFieldNameLength + 1));
          szName[ 0 ] = '\0';
          SELF_FIELDNAME( pArea, uiIndex, szName );
          hb_retc_buffer( szName );
@@ -1129,7 +1129,7 @@ HB_FUNC( FIELDNAME )
 
 HB_FUNC( FIELDPOS )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea && hb_parclen(1) > 0 )
    {
@@ -1143,11 +1143,11 @@ HB_FUNC( FIELDPOS )
 
 HB_FUNC( FIELDPUT )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
-      HB_USHORT uiIndex = static_cast<HB_FIELDNO>( hb_parni(1) );
+      HB_USHORT uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
 
       if( uiIndex > 0 )
       {
@@ -1165,7 +1165,7 @@ HB_FUNC( FIELDPUT )
 
 HB_FUNC( FLOCK )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -1185,7 +1185,7 @@ HB_FUNC( FLOCK )
 HB_FUNC( FOUND )
 {
    HB_BOOL bFound = HB_FALSE;
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -1196,7 +1196,7 @@ HB_FUNC( FOUND )
 
 HB_FUNC( HEADER )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( ! pArea )
    {
@@ -1212,12 +1212,12 @@ HB_FUNC( HEADER )
 
 HB_FUNC( INDEXORD )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
       DBORDERINFO pInfo;
-      memset( &pInfo, 0, sizeof(pInfo) );
+      memset(&pInfo, 0, sizeof(pInfo));
       pInfo.itmResult = hb_itemPutNI(nullptr, 0);
       SELF_ORDINFO( pArea, DBOI_NUMBER, &pInfo );
       hb_retni( hb_itemGetNI(pInfo.itmResult) );
@@ -1232,7 +1232,7 @@ HB_FUNC( INDEXORD )
 HB_FUNC( LASTREC )
 {
    HB_ULONG ulRecCount = 0;
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -1244,7 +1244,7 @@ HB_FUNC( LASTREC )
 
 HB_FUNC( LOCK )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -1263,7 +1263,7 @@ HB_FUNC( LOCK )
 
 HB_FUNC( LUPDATE )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -1291,9 +1291,9 @@ HB_FUNC( NETERR )
 HB_FUNC( ORDBAGEXT )
 {
    DBORDERINFO pInfo;
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   memset( &pInfo, 0, sizeof(pInfo) );
+   memset(&pInfo, 0, sizeof(pInfo));
    pInfo.itmResult = hb_itemPutC(nullptr, nullptr);
    if( ! pArea )
    {
@@ -1302,7 +1302,7 @@ HB_FUNC( ORDBAGEXT )
       pRddNode = hb_rddFindNode( hb_rddDefaultDrv( nullptr ), &uiRddID );
       if( pRddNode )
       {
-         pArea = static_cast<AREAP>( hb_rddNewAreaNode( pRddNode, uiRddID ) );
+         pArea = static_cast<AREAP>(hb_rddNewAreaNode( pRddNode, uiRddID ));
          if( pArea )
          {
             SELF_ORDINFO( pArea, DBOI_BAGEXT, &pInfo );
@@ -1319,12 +1319,12 @@ HB_FUNC( ORDBAGEXT )
 
 HB_FUNC( ORDBAGNAME )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
+      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
 
       pOrderInfo.itmOrder = hb_param(1, HB_IT_ANY);
       if( pOrderInfo.itmOrder && ! HB_IS_STRING(pOrderInfo.itmOrder) )
@@ -1358,14 +1358,14 @@ HB_FUNC( ORDBAGNAME )
 
 HB_FUNC( ORDCONDSET )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
       LPDBORDERCONDINFO lpdbOrdCondInfo;
       PHB_ITEM pItem;
 
-      lpdbOrdCondInfo = static_cast<LPDBORDERCONDINFO>( hb_xgrab(sizeof(DBORDERCONDINFO)) );
+      lpdbOrdCondInfo = static_cast<LPDBORDERCONDINFO>(hb_xgrab(sizeof(DBORDERCONDINFO)));
       lpdbOrdCondInfo->abFor = hb_parclen(1) > 0 ? hb_strdup(hb_parc(1)) : nullptr;
       pItem = hb_param(2, HB_IT_BLOCK);
       lpdbOrdCondInfo->itmCobFor = pItem ? hb_itemNew(pItem) : nullptr;
@@ -1435,7 +1435,7 @@ HB_FUNC( ORDCONDSET )
 
 HB_FUNC( ORDCREATE )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -1480,12 +1480,12 @@ HB_FUNC( ORDCREATE )
 
 HB_FUNC( ORDBAGCLEAR )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
+      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
       pOrderInfo.atomBagName = hb_param(1, HB_IT_STRING | HB_IT_NUMERIC);
       hb_retl( SELF_ORDLSTDELETE( pArea, &pOrderInfo ) == HB_SUCCESS );
    }
@@ -1497,12 +1497,12 @@ HB_FUNC( ORDBAGCLEAR )
 
 HB_FUNC( ORDDESTROY )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
+      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
       pOrderInfo.itmOrder = hb_param(1, HB_IT_STRING | HB_IT_NUMERIC);
       pOrderInfo.atomBagName = hb_param(2, HB_IT_STRING);
       hb_retl( SELF_ORDDESTROY( pArea, &pOrderInfo ) == HB_SUCCESS );
@@ -1515,7 +1515,7 @@ HB_FUNC( ORDDESTROY )
 
 HB_FUNC( ORDFOR )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -1556,12 +1556,12 @@ HB_FUNC( ORDFOR )
 
 HB_FUNC( ORDKEY )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
+      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
       pOrderInfo.itmOrder = hb_param(1, HB_IT_ANY);
       if( pOrderInfo.itmOrder && ! HB_IS_STRING(pOrderInfo.itmOrder) )
       {
@@ -1595,7 +1595,7 @@ HB_FUNC( ORDKEY )
 
 HB_FUNC( ORDLISTADD )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -1605,7 +1605,7 @@ HB_FUNC( ORDLISTADD )
       /* Clipper clears NETERR flag when index is open */
       hb_rddSetNetErr( HB_FALSE );
 
-      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
+      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
       pOrderInfo.atomBagName = hb_param(1, HB_IT_STRING);
       pOrderInfo.itmOrder    = hb_param(2, HB_IT_STRING);
 
@@ -1641,7 +1641,7 @@ HB_FUNC( ORDLISTADD )
 
 HB_FUNC( ORDLISTCLEAR )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -1655,7 +1655,7 @@ HB_FUNC( ORDLISTCLEAR )
 
 HB_FUNC( ORDLISTREBUILD )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -1669,12 +1669,12 @@ HB_FUNC( ORDLISTREBUILD )
 
 HB_FUNC( ORDNAME )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
+      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
       pOrderInfo.itmOrder = hb_param(1, HB_IT_ANY);
       if( pOrderInfo.itmOrder )
       {
@@ -1709,12 +1709,12 @@ HB_FUNC( ORDNAME )
 
 HB_FUNC( ORDNUMBER )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
+      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
       pOrderInfo.itmOrder = hb_param(1, HB_IT_STRING);
       pOrderInfo.atomBagName = hb_param(2, HB_IT_STRING);
       if( ! ( pOrderInfo.itmOrder || HB_ISNIL(1) ) || ! ( pOrderInfo.atomBagName || HB_ISNIL(2) ) )
@@ -1734,12 +1734,12 @@ HB_FUNC( ORDNUMBER )
 
 HB_FUNC( ORDSETFOCUS )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
       DBORDERINFO pInfo;
-      memset( &pInfo, 0, sizeof(pInfo) );
+      memset(&pInfo, 0, sizeof(pInfo));
       pInfo.itmOrder = hb_param(1, HB_IT_STRING | HB_IT_NUMERIC);
       pInfo.atomBagName = hb_param(2, HB_IT_STRING);
       pInfo.itmResult = hb_itemPutC(nullptr, nullptr);
@@ -1754,12 +1754,12 @@ HB_FUNC( ORDSETFOCUS )
 
 HB_FUNC( RDDLIST )
 {
-   hb_itemReturnRelease(hb_rddList( static_cast<HB_USHORT>( hb_parni(1) ) ));
+   hb_itemReturnRelease(hb_rddList( static_cast<HB_USHORT>(hb_parni(1)) ));
 }
 
 HB_FUNC( RDDNAME )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -1776,7 +1776,7 @@ HB_FUNC( RDDNAME )
 
 HB_FUNC( RDDREGISTER )
 {
-   HB_USHORT uiLen = static_cast<HB_USHORT>( hb_parclen(1) );
+   HB_USHORT uiLen = static_cast<HB_USHORT>(hb_parclen(1));
 
    if( uiLen > 0 )
    {
@@ -1795,7 +1795,7 @@ HB_FUNC( RDDREGISTER )
        * 1: RDD already registerd
        * > 1: error
        */
-      if( hb_rddRegister( szDriver, static_cast<HB_USHORT>( hb_parni(2) ) ) > 1 )
+      if( hb_rddRegister( szDriver, static_cast<HB_USHORT>(hb_parni(2)) ) > 1 )
       {
          hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
       }
@@ -1807,7 +1807,7 @@ HB_FUNC_TRANSLATE( RECCOUNT, LASTREC )
 
 HB_FUNC( RECNO )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    PHB_ITEM pRecNo = hb_itemPutNL(nullptr, 0);
 
    if( pArea )
@@ -1819,7 +1819,7 @@ HB_FUNC( RECNO )
 
 HB_FUNC( RECSIZE )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -1835,7 +1835,7 @@ HB_FUNC( RECSIZE )
 
 HB_FUNC( RLOCK )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -1911,7 +1911,7 @@ HB_FUNC( DBSETDRIVER )
 
 HB_FUNC( ORDSCOPE )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -1919,7 +1919,7 @@ HB_FUNC( ORDSCOPE )
       HB_USHORT uiAction;
       int iScope = hb_parni(1);
 
-      memset( &pInfo, 0, sizeof(pInfo) );
+      memset(&pInfo, 0, sizeof(pInfo));
       pInfo.itmResult = hb_itemNew(nullptr);
       if( iScope == 2 )
       {
@@ -1959,12 +1959,12 @@ HB_FUNC( ORDSCOPE )
 
 HB_FUNC( DBRELATION )  /* (<nRelation>) --> cLinkExp */
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
       PHB_ITEM pRelExpr = hb_itemPutC(nullptr, nullptr);
-      HB_USHORT uiRelNo = static_cast<HB_USHORT>( hb_parni(1) );
+      HB_USHORT uiRelNo = static_cast<HB_USHORT>(hb_parni(1));
       SELF_RELTEXT( pArea, uiRelNo ? uiRelNo : 1, pRelExpr );
       hb_itemReturnRelease(pRelExpr);
    }
@@ -1976,8 +1976,8 @@ HB_FUNC( DBRELATION )  /* (<nRelation>) --> cLinkExp */
 
 HB_FUNC( DBRSELECT )  /* (<nRelation>) --> nWorkArea */
 {
-   HB_USHORT uiWorkArea = 0, uiRelation = static_cast<HB_USHORT>( hb_parni(1) );
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   HB_USHORT uiWorkArea = 0, uiRelation = static_cast<HB_USHORT>(hb_parni(1));
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
       /* undocumented CA-Cl*pper behavior:
@@ -1991,7 +1991,7 @@ HB_FUNC( DBRSELECT )  /* (<nRelation>) --> nWorkArea */
 
 HB_FUNC( DBCLEARRELATION )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -2001,7 +2001,7 @@ HB_FUNC( DBCLEARRELATION )
 
 HB_FUNC( DBSETRELATION )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -2017,7 +2017,7 @@ HB_FUNC( DBSETRELATION )
 
       if( HB_ISNUM(1) )
       {
-         uiChildArea = static_cast<HB_AREANO>( hb_parni(1) );
+         uiChildArea = static_cast<HB_AREANO>(hb_parni(1));
       }
       else
       {
@@ -2028,11 +2028,11 @@ HB_FUNC( DBSETRELATION )
          {
             return;
          }
-         uiChildArea = static_cast<HB_AREANO>( hb_rddGetCurrentWorkAreaNumber() );
+         uiChildArea = static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber());
          hb_rddSelectWorkAreaNumber( iArea );
       }
 
-      pChildArea = uiChildArea ? static_cast<AREAP>( hb_rddGetWorkAreaPointer( uiChildArea ) ) : nullptr;
+      pChildArea = uiChildArea ? static_cast<AREAP>(hb_rddGetWorkAreaPointer( uiChildArea )) : nullptr;
 
       if( ! pChildArea )
       {
@@ -2062,8 +2062,8 @@ HB_FUNC( __DBARRANGE )
    HB_ERRCODE errCode = HB_FAILURE;
    AREAP pSrcArea, pDstArea;
 
-   pSrcArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
-   pDstArea = static_cast<AREAP>( hb_rddGetWorkAreaPointer( static_cast<HB_AREANO>( hb_parni(1) ) ) );
+   pSrcArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   pDstArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer( static_cast<HB_AREANO>(hb_parni(1)) ));
 
    /* TODO: check what Clipper does when pDstArea == nullptr or pSrcArea == pDstArea */
    if( pSrcArea && pDstArea && pSrcArea != pDstArea )
@@ -2074,7 +2074,7 @@ HB_FUNC( __DBARRANGE )
       /* array with sorted fields in source WorkArea */
       PHB_ITEM pFields = hb_param(8, HB_IT_ARRAY);
 
-      memset( &dbSortInfo, 0, sizeof(dbSortInfo) );
+      memset(&dbSortInfo, 0, sizeof(dbSortInfo));
       errCode = hb_dbTransStruct( pSrcArea, pDstArea, &dbSortInfo.dbtri, nullptr, pStruct );
       if( errCode == HB_SUCCESS )
       {
@@ -2098,28 +2098,28 @@ HB_FUNC( __DBARRANGE )
          /* do not transfer record deleted flag to destination area */
          dbSortInfo.dbtri.uiFlags |= DBTF_RECALL;
 
-         dbSortInfo.uiItemCount = pFields ? static_cast<HB_USHORT>( hb_arrayLen( pFields ) ) : 0;
+         dbSortInfo.uiItemCount = pFields ? static_cast<HB_USHORT>(hb_arrayLen(pFields)) : 0;
          if( dbSortInfo.uiItemCount > 0 )
          {
             HB_USHORT uiCount, uiDest;
             char * szFieldLine;
             HB_SIZE nSize = 0;
 
-            dbSortInfo.lpdbsItem = static_cast<LPDBSORTITEM>( hb_xgrab(dbSortInfo.uiItemCount * sizeof(DBSORTITEM)) );
+            dbSortInfo.lpdbsItem = static_cast<LPDBSORTITEM>(hb_xgrab(dbSortInfo.uiItemCount * sizeof(DBSORTITEM)));
             for( uiCount = 1; uiCount <= dbSortInfo.uiItemCount; ++uiCount )
             {
-               HB_SIZE nLine = hb_arrayGetCLen( pFields, uiCount );
+               HB_SIZE nLine = hb_arrayGetCLen(pFields, uiCount);
                if( nLine > nSize )
                {
                   nSize = nLine;
                }
             }
-            szFieldLine = static_cast<char*>( hb_xgrab(nSize + 1) );
+            szFieldLine = static_cast<char*>(hb_xgrab(nSize + 1));
             for( uiDest = 0, uiCount = 1; uiCount <= dbSortInfo.uiItemCount; ++uiCount )
             {
                char * szPos;
                dbSortInfo.lpdbsItem[ uiDest ].uiFlags = 0;
-               hb_strncpyUpper( szFieldLine, hb_arrayGetCPtr( pFields, uiCount ), hb_arrayGetCLen( pFields, uiCount ) );
+               hb_strncpyUpper( szFieldLine, hb_arrayGetCPtr(pFields, uiCount), hb_arrayGetCLen(pFields, uiCount) );
                szPos = strchr( szFieldLine, '/' );
                if( szPos )
                {
@@ -2197,11 +2197,11 @@ HB_FUNC( __DBTRANS )
       HB_AREANO uiSrcArea, uiDstArea;
       AREAP pSrcArea, pDstArea;
 
-      uiSrcArea = static_cast<HB_AREANO>( hb_rddGetCurrentWorkAreaNumber() );
-      pSrcArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
-      uiDstArea = static_cast<HB_AREANO>( hb_parni(1) );
+      uiSrcArea = static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber());
+      pSrcArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+      uiDstArea = static_cast<HB_AREANO>(hb_parni(1));
       hb_rddSelectWorkAreaNumber( uiDstArea );
-      pDstArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+      pDstArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
       if( pSrcArea && pDstArea )
       {
@@ -2209,7 +2209,7 @@ HB_FUNC( __DBTRANS )
          PHB_ITEM pFields = hb_param(2, HB_IT_ARRAY);
          HB_ERRCODE errCode;
 
-         memset( &dbTransInfo, 0, sizeof(dbTransInfo) );
+         memset(&dbTransInfo, 0, sizeof(dbTransInfo));
          errCode = hb_dbTransStruct( pSrcArea, pDstArea, &dbTransInfo, nullptr, pFields );
          if( errCode == HB_SUCCESS )
          {
@@ -2277,7 +2277,7 @@ HB_FUNC( __DBTRANS )
             [<xDelimiter>] ) --> <lSuccess> */
 HB_FUNC( __DBAPP )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -2309,7 +2309,7 @@ HB_FUNC( __DBAPP )
               [<xDelimiter>] ) --> <lSuccess> */
 HB_FUNC( __DBCOPY )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -2367,7 +2367,7 @@ HB_FUNC( HB_RDDINFO )
    if( pRDDNode && pIndex )
    {
       PHB_ITEM pInfo = hb_itemParam(2);
-      SELF_RDDINFO( pRDDNode, static_cast<HB_USHORT>( hb_itemGetNI(pIndex) ), ulConnection, pInfo );
+      SELF_RDDINFO( pRDDNode, static_cast<HB_USHORT>(hb_itemGetNI(pIndex)), ulConnection, pInfo );
       hb_itemReturnRelease(pInfo);
    }
    else
@@ -2480,7 +2480,7 @@ HB_FUNC( HB_DBRENAME )
 
 HB_FUNC( HB_FIELDLEN )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -2493,7 +2493,7 @@ HB_FUNC( HB_FIELDLEN )
       }
       else
       {
-         uiIndex = static_cast<HB_FIELDNO>( hb_parni(1) );
+         uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
       }
 
       if( uiIndex > 0 )
@@ -2514,7 +2514,7 @@ HB_FUNC( HB_FIELDLEN )
 
 HB_FUNC( HB_FIELDDEC )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -2527,7 +2527,7 @@ HB_FUNC( HB_FIELDDEC )
       }
       else
       {
-         uiIndex = static_cast<HB_FIELDNO>( hb_parni(1) );
+         uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
       }
 
       if( uiIndex > 0 )
@@ -2548,7 +2548,7 @@ HB_FUNC( HB_FIELDDEC )
 
 HB_FUNC( HB_FIELDTYPE )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -2561,7 +2561,7 @@ HB_FUNC( HB_FIELDTYPE )
       }
       else
       {
-         uiIndex = static_cast<HB_FIELDNO>( hb_parni(1) );
+         uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
       }
 
       if( uiIndex > 0 )
@@ -2598,7 +2598,7 @@ HB_FUNC( HB_WAEVAL )
 
 HB_FUNC( __DBSKIPPER )
 {
-   AREAP pArea = static_cast<AREAP>( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {

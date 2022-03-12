@@ -157,7 +157,7 @@ HB_FUNC( HB_ISNULL )
       }
       else if( HB_IS_ARRAY(pItem) )
       {
-         hb_retl( hb_arrayLen( pItem ) == 0 );
+         hb_retl( hb_arrayLen(pItem) == 0 );
          return;
       }
       else if( HB_IS_HASH(pItem) )

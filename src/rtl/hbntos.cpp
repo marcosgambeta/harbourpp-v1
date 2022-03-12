@@ -67,7 +67,7 @@ HB_FUNC( HB_NTOS )
 
          if( nToTrim )
          {
-            memmove( szResult, szResult + nToTrim, strlen(szResult + nToTrim) + 1 );
+            memmove(szResult, szResult + nToTrim, strlen(szResult + nToTrim) + 1);
          }
          
          hb_retc_buffer( szResult );
@@ -99,7 +99,7 @@ HB_FUNC( HB_NTOC )
          szBuffer[ --iPos ] = '\0';
          do
          {
-            szBuffer[ --iPos ] = '0' + static_cast<char>( nNumber % 10 );
+            szBuffer[ --iPos ] = '0' + static_cast<char>(nNumber % 10);
             nNumber /= 10;
          }
          while( nNumber != 0 );

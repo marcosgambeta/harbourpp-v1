@@ -62,7 +62,7 @@ static void preBmBc( const char * needle, HB_ISIZ m, HB_ISIZ bmBc[] )
    }
    for( i = 0; i < m - 1; ++i )
    {
-      bmBc[ static_cast<HB_UCHAR>( needle[ i ] ) ] = m - i - 1;
+      bmBc[ static_cast<HB_UCHAR>(needle[ i ]) ] = m - i - 1;
    }
 }
 
@@ -98,7 +98,7 @@ static void suffixes( const char * needle, HB_ISIZ m, HB_ISIZ * suff )
 static void preBmGs( const char * needle, HB_ISIZ m, HB_ISIZ bmGs[] )
 {
    HB_ISIZ i, j;
-   HB_ISIZ * suff = static_cast<HB_ISIZ*>( hb_xgrab(m * sizeof(HB_ISIZ)) );
+   HB_ISIZ * suff = static_cast<HB_ISIZ*>(hb_xgrab(m * sizeof(HB_ISIZ)));
 
    suffixes( needle, m, suff );
 
@@ -138,7 +138,7 @@ HB_ISIZ hb_strAtTBM( const char * needle, HB_ISIZ m, const char * haystack, HB_I
    HB_ISIZ bmBc[ ASIZE ];
    HB_ISIZ * bmGs;
 
-   bmGs = static_cast<HB_ISIZ*>( hb_xgrab(m * sizeof(HB_ISIZ)) );
+   bmGs = static_cast<HB_ISIZ*>(hb_xgrab(m * sizeof(HB_ISIZ)));
 
    /* Preprocessing */
    preBmGs( needle, m, bmGs );
@@ -172,7 +172,7 @@ HB_ISIZ hb_strAtTBM( const char * needle, HB_ISIZ m, const char * haystack, HB_I
       {
          v = m - 1 - i;
          turboShift = u - v;
-         bcShift = bmBc[ static_cast<HB_UCHAR>( haystack[ i + j ] ) ] - m + 1 + i;
+         bcShift = bmBc[ static_cast<HB_UCHAR>(haystack[ i + j ]) ] - m + 1 + i;
          shift = HB_MAX( turboShift, bcShift );
          shift = HB_MAX( shift, bmGs[ i ] );
          if( shift == bmGs[ i ] )

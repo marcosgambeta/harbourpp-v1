@@ -64,7 +64,7 @@ static void hb_arrayNewRagged( PHB_ITEM pArray, int iDimension )
    nElements = hb_parns(iDimension);
 
    /* create an array */
-   hb_arrayNew( pArray, nElements );
+   hb_arrayNew(pArray, nElements);
 
    if( ++iDimension <= hb_pcount() )
    {
@@ -72,7 +72,7 @@ static void hb_arrayNewRagged( PHB_ITEM pArray, int iDimension )
        */
       while( nElements )
       {
-         hb_arrayNewRagged( hb_arrayGetItemPtr( pArray, nElements-- ), iDimension );
+         hb_arrayNewRagged( hb_arrayGetItemPtr(pArray, nElements--), iDimension );
       }
    }
 }
@@ -120,7 +120,7 @@ HB_FUNC( AADD )
    {
       PHB_ITEM pValue = hb_param(2, HB_IT_ANY);
 
-      if( pValue && hb_arrayAdd( pArray, pValue ) )
+      if( pValue && hb_arrayAdd(pArray, pValue) )
       {
          hb_itemReturn(pValue);
       }
@@ -146,7 +146,7 @@ HB_FUNC( ASIZE )
    {
       HB_ISIZ nSize = hb_parns(2);
 
-      hb_arraySize( pArray, HB_MAX( nSize, 0 ) );
+      hb_arraySize(pArray, HB_MAX( nSize, 0 ));
 
       hb_itemReturn(pArray); /* ASize() returns the array itself */
    }
@@ -168,7 +168,7 @@ HB_FUNC( ATAIL )
 
    if( pArray )
    {
-      hb_arrayLast( pArray, hb_stackReturnItem() );
+      hb_arrayLast(pArray, hb_stackReturnItem());
    }
 }
 
@@ -185,7 +185,7 @@ HB_FUNC( AINS )
          nPos = 1;
       }
 
-      hb_arrayIns( pArray, nPos );
+      hb_arrayIns(pArray, nPos);
 
       hb_itemReturn(pArray); /* AIns() returns the array itself */
    }
@@ -204,7 +204,7 @@ HB_FUNC( ADEL )
          nPos = 1;
       }
 
-      hb_arrayDel( pArray, nPos );
+      hb_arrayDel(pArray, nPos);
 
       hb_itemReturn(pArray); /* ADel() returns the array itself */
    }
@@ -253,9 +253,9 @@ HB_FUNC( AFILL )
                return;
             }
          }
-         nStart = static_cast<HB_SIZE>( lStart );
-         nCount = static_cast<HB_SIZE>( lCount );
-         hb_arrayFill( pArray, pValue, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr );
+         nStart = static_cast<HB_SIZE>(lStart);
+         nCount = static_cast<HB_SIZE>(lCount);
+         hb_arrayFill(pArray, pValue, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr);
       }
    }
    else
@@ -281,7 +281,7 @@ HB_FUNC( ASCAN )
       HB_SIZE nStart = hb_parns(3);
       HB_SIZE nCount = hb_parns(4);
 
-      hb_retns( hb_arrayScan( pArray, pValue, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr, HB_FALSE ) );
+      hb_retns( hb_arrayScan(pArray, pValue, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr, HB_FALSE) );
    }
    else
    {
@@ -300,7 +300,7 @@ HB_FUNC( HB_ASCAN )
       HB_SIZE nStart = hb_parns(3);
       HB_SIZE nCount = hb_parns(4);
 
-      hb_retns( hb_arrayScan( pArray, pValue, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr, hb_parl(5) ) );
+      hb_retns( hb_arrayScan(pArray, pValue, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr, hb_parl(5)) );
    }
    else
    {
@@ -318,7 +318,7 @@ HB_FUNC( HB_RASCAN )
       HB_SIZE nStart = hb_parns(3);
       HB_SIZE nCount = hb_parns(4);
 
-      hb_retns( hb_arrayRevScan( pArray, pValue, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr, hb_parl(5) ) );
+      hb_retns( hb_arrayRevScan(pArray, pValue, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr, hb_parl(5)) );
    }
    else
    {
@@ -341,18 +341,18 @@ HB_FUNC( HB_AINS )
 
       if( hb_parl(4) )
       {
-         HB_SIZE nLen = hb_arrayLen( pArray ) + 1;
-         if( nPos >= 1 && static_cast<HB_SIZE>( nPos ) <= nLen )
+         HB_SIZE nLen = hb_arrayLen(pArray) + 1;
+         if( nPos >= 1 && static_cast<HB_SIZE>(nPos) <= nLen )
          {
-            hb_arraySize( pArray, nLen );
+            hb_arraySize(pArray, nLen);
          }
       }
 
-      if( hb_arrayIns( pArray, nPos ) )
+      if( hb_arrayIns(pArray, nPos) )
       {
          if( ! HB_ISNIL(3) )
          {
-            hb_arraySet( pArray, nPos, hb_param(3, HB_IT_ANY) );
+            hb_arraySet(pArray, nPos, hb_param(3, HB_IT_ANY));
          }
       }
 
@@ -373,11 +373,11 @@ HB_FUNC( HB_ADEL )
          nPos = 1;
       }
 
-      if( hb_arrayDel( pArray, nPos ) )
+      if( hb_arrayDel(pArray, nPos) )
       {
          if( hb_parl(3) )
          {
-            hb_arraySize( pArray, hb_arrayLen( pArray ) - 1 );
+            hb_arraySize(pArray, hb_arrayLen(pArray) - 1);
          }
       }
 
@@ -398,7 +398,7 @@ HB_FUNC( AEVAL )
       HB_SIZE nStart = hb_parns(3);
       HB_SIZE nCount = hb_parns(4);
 
-      hb_arrayEval( pArray, pBlock, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr );
+      hb_arrayEval(pArray, pBlock, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr);
 
       hb_itemReturn(pArray); /* AEval() returns the array itself */
    }
@@ -416,13 +416,13 @@ HB_FUNC( ACOPY )
    if( pSrcArray && pDstArray )
    {
       /* CA-Cl*pper works this way. */
-      if( ! hb_arrayIsObject( pSrcArray ) && ! hb_arrayIsObject( pDstArray ) )
+      if( ! hb_arrayIsObject(pSrcArray) && ! hb_arrayIsObject(pDstArray) )
       {
          HB_SIZE nStart = hb_parns(3);
          HB_SIZE nCount = hb_parns(4);
          HB_SIZE nTarget = hb_parns(5);
 
-         hb_arrayCopy( pSrcArray, pDstArray, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr, HB_ISNUM(5) ? &nTarget : nullptr );
+         hb_arrayCopy(pSrcArray, pDstArray, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr, HB_ISNUM(5) ? &nTarget : nullptr);
       }
 
       hb_itemReturn(pDstArray); /* ACopy() returns the target array */
@@ -435,7 +435,7 @@ HB_FUNC( ACLONE )
 {
    PHB_ITEM pSrcArray = hb_param(1, HB_IT_ARRAY);
 
-   if( pSrcArray && ! hb_arrayIsObject( pSrcArray ) )
+   if( pSrcArray && ! hb_arrayIsObject(pSrcArray) )
    {
       hb_arrayCloneTo(hb_stackReturnItem(), pSrcArray); /* AClone() returns the new array */
    }
@@ -443,5 +443,5 @@ HB_FUNC( ACLONE )
 
 HB_FUNC( HB_APARAMS )
 {
-   hb_itemReturnRelease(hb_arrayFromParams( hb_parni(1) + 1 ));
+   hb_itemReturnRelease(hb_arrayFromParams(hb_parni(1) + 1));
 }

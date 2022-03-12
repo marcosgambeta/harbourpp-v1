@@ -68,7 +68,7 @@ HB_FUNC( FKLABEL )
       {
          char szName[ 4 ];
 
-         hb_snprintf( szName, sizeof(szName), "F%d", iFKey );
+         hb_snprintf(szName, sizeof(szName), "F%d", iFKey);
          hb_retc( szName );
          return;
       }

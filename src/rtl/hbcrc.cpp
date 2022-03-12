@@ -148,7 +148,7 @@ HB_U32 hb_crc32( HB_U32 crc, const void * buf, HB_SIZE len )
    crc ^= 0xffffffffL;
    if( buf && len )
    {
-      const unsigned char * ucbuf = static_cast<const unsigned char*>( buf );
+      const unsigned char * ucbuf = static_cast<const unsigned char*>(buf);
       do
       {
          crc = crc32_tab[ ( crc ^ *ucbuf++ ) & 0xFF ] ^ ( crc >> 8 );
@@ -163,7 +163,7 @@ HB_U16 hb_crc16( HB_U16 crc, const void * buf, HB_SIZE len )
    crc ^= 0xffff;
    if( buf && len )
    {
-      const unsigned char * ucbuf = static_cast<const unsigned char*>( buf );
+      const unsigned char * ucbuf = static_cast<const unsigned char*>(buf);
       do
       {
          crc = crc16_tab[ ( crc ^ *ucbuf++ ) & 0xFF ] ^ ( crc >> 8 );
@@ -177,7 +177,7 @@ HB_MAXUINT hb_crc( HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT pol
 {
    if( buf && len )
    {
-      const unsigned char * ucbuf = static_cast<const unsigned char*>( buf );
+      const unsigned char * ucbuf = static_cast<const unsigned char*>(buf);
       HB_MAXUINT mask = 1, revp = 0;
 
       while( poly > 1 )
@@ -211,7 +211,7 @@ HB_MAXUINT hb_crcct( HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT p
 {
    if( buf && len )
    {
-      const unsigned char * ucbuf = static_cast<const unsigned char*>( buf );
+      const unsigned char * ucbuf = static_cast<const unsigned char*>(buf);
       HB_MAXUINT mask, revp = poly;
       int bits = 0;
 
@@ -229,7 +229,7 @@ HB_MAXUINT hb_crcct( HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT p
          do
          {
             int i = 8;
-            crc ^= static_cast<HB_MAXUINT>( *ucbuf++ );
+            crc ^= static_cast<HB_MAXUINT>(*ucbuf++);
             do
             {
                crc = ( crc & mask ) ? poly ^ ( crc << 1 ) : crc << 1;
@@ -245,7 +245,7 @@ HB_MAXUINT hb_crcct( HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT p
          do
          {
             int i = 8;
-            crc ^= static_cast<HB_MAXUINT>( *ucbuf++ ) << bits;
+            crc ^= static_cast<HB_MAXUINT>(*ucbuf++) << bits;
             do
             {
                crc = ( crc & mask ) ? poly ^ ( crc << 1 ) : crc << 1;
@@ -265,7 +265,7 @@ HB_FUNC( HB_CRC32 )
 
    if( szString )
    {
-      hb_retnint( hb_crc32( static_cast<HB_U32>( hb_parnl(2) ), szString, hb_parclen(1) ) );
+      hb_retnint( hb_crc32( static_cast<HB_U32>(hb_parnl(2)), szString, hb_parclen(1) ) );
    }
    else
    {
@@ -279,7 +279,7 @@ HB_FUNC( HB_CRC16 )
 
    if( szString )
    {
-      hb_retnint( hb_crc16( static_cast<HB_U16>( hb_parnl(2) ), szString, hb_parclen(1) ) );
+      hb_retnint( hb_crc16( static_cast<HB_U16>(hb_parnl(2)), szString, hb_parclen(1) ) );
    }
    else
    {
@@ -293,12 +293,12 @@ HB_FUNC( HB_CRC )
 
    if( szString )
    {
-      HB_MAXUINT ulPolynomial = static_cast<HB_MAXUINT>( hb_parnint(3) );
+      HB_MAXUINT ulPolynomial = static_cast<HB_MAXUINT>(hb_parnint(3));
       if( ulPolynomial == 0 )
       {
          ulPolynomial = 0x11021;
       }
-      hb_retnint( hb_crc( static_cast<HB_MAXUINT>( hb_parnint(2) ), szString, hb_parclen(1), ulPolynomial ) );
+      hb_retnint( hb_crc( static_cast<HB_MAXUINT>(hb_parnint(2)), szString, hb_parclen(1), ulPolynomial ) );
    }
    else
    {
@@ -312,12 +312,12 @@ HB_FUNC( HB_CRCCT )
 
    if( szString )
    {
-      HB_MAXUINT ulPolynomial = static_cast<HB_MAXUINT>( hb_parnint(3) );
+      HB_MAXUINT ulPolynomial = static_cast<HB_MAXUINT>(hb_parnint(3));
       if( ulPolynomial == 0 )
       {
          ulPolynomial = 0x11021;
       }
-      hb_retnint( hb_crcct( static_cast<HB_MAXUINT>( hb_parnint(2) ), szString, hb_parclen(1), ulPolynomial ) );
+      hb_retnint( hb_crcct( static_cast<HB_MAXUINT>(hb_parnint(2)), szString, hb_parclen(1), ulPolynomial ) );
    }
    else
    {

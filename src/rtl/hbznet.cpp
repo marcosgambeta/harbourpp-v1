@@ -118,7 +118,7 @@ void hb_znetClose( PHB_ZNETSTREAM pStream )
  */
 PHB_ZNETSTREAM hb_znetOpen( int level, int strategy )
 {
-   PHB_ZNETSTREAM pStream = static_cast<PHB_ZNETSTREAM>( hb_xgrabz( sizeof(HB_ZNETSTREAM) ) );
+   PHB_ZNETSTREAM pStream = static_cast<PHB_ZNETSTREAM>(hb_xgrabz(sizeof(HB_ZNETSTREAM)));
 
    if( level != Z_DEFAULT_COMPRESSION && !( level >= Z_NO_COMPRESSION && level <= Z_BEST_COMPRESSION ) )
    {
@@ -137,10 +137,10 @@ PHB_ZNETSTREAM hb_znetOpen( int level, int strategy )
 
    if( deflateInit2( &pStream->wr, level, Z_DEFLATED, -MAX_WBITS, HB_ZNET_MEM_LEVEL, strategy ) == Z_OK )
    {
-      pStream->wr.next_out = pStream->outbuf = static_cast<Bytef*>( hb_xgrab(HB_ZNET_BUFSIZE) );
+      pStream->wr.next_out = pStream->outbuf = static_cast<Bytef*>(hb_xgrab(HB_ZNET_BUFSIZE));
       pStream->wr.avail_out = HB_ZNET_BUFSIZE;
 
-      pStream->rd.next_in = pStream->inbuf = static_cast<Bytef*>( hb_xgrab(HB_ZNET_BUFSIZE) );
+      pStream->rd.next_in = pStream->inbuf = static_cast<Bytef*>(hb_xgrab(HB_ZNET_BUFSIZE));
       if( inflateInit2( &pStream->rd, -MAX_WBITS ) == Z_OK )
       {
          return pStream;
@@ -160,7 +160,7 @@ void hb_znetEncryptKey( PHB_ZNETSTREAM pStream, const void * keydata, int keylen
       pStream->crypt = 1;
 
       /* initialize encryption key */
-      pStream->bf = static_cast<HB_BLOWFISH*>( hb_xgrab(sizeof(HB_BLOWFISH)) );
+      pStream->bf = static_cast<HB_BLOWFISH*>(hb_xgrab(sizeof(HB_BLOWFISH)));
       hb_blowfishInit( pStream->bf, keydata, keylen );
 
       /* initialize input buffer */
@@ -212,8 +212,8 @@ long hb_znetRead( PHB_ZNETSTREAM pStream, HB_SOCKET sd, void * buffer, long len,
 {
    long rec = 0;
 
-   pStream->rd.next_out = static_cast<Bytef*>( buffer );
-   pStream->rd.avail_out = static_cast<uInt>( len );
+   pStream->rd.next_out = static_cast<Bytef*>(buffer);
+   pStream->rd.avail_out = static_cast<uInt>(len);
    pStream->err = Z_OK;
 
    while( pStream->rd.avail_out )
@@ -227,13 +227,13 @@ long hb_znetRead( PHB_ZNETSTREAM pStream, HB_SOCKET sd, void * buffer, long len,
          }
          if( pStream->crypt_in && pStream->rd.next_in > pStream->inbuf )
          {
-            memmove( pStream->inbuf, pStream->rd.next_in, pStream->crypt_in );
+            memmove(pStream->inbuf, pStream->rd.next_in, pStream->crypt_in);
          }
          pStream->rd.next_in = pStream->inbuf;
 
          if( ! pStream->crypt || pStream->crypt_in < 8 )
          {
-            if( pStream->rd.avail_out != static_cast<uInt>( len ) )
+            if( pStream->rd.avail_out != static_cast<uInt>(len) )
             {
                timeout = 0;
             }
@@ -256,9 +256,9 @@ long hb_znetRead( PHB_ZNETSTREAM pStream, HB_SOCKET sd, void * buffer, long len,
                   pStream->rd.next_in += 2;
                   pStream->crypt_in -= 8;
                   rec = HB_MIN( pStream->crypt_size, 6 );
-                  pStream->crypt_size -= static_cast<uInt>( rec );
-                  pStream->rd.avail_in += static_cast<uInt>( rec );
-                  pStream->skip_in = static_cast<uInt>( 6 - rec );
+                  pStream->crypt_size -= static_cast<uInt>(rec);
+                  pStream->rd.avail_in += static_cast<uInt>(rec);
+                  pStream->skip_in = static_cast<uInt>(6 - rec);
                   rec = 0;
                }
             }
@@ -276,7 +276,7 @@ long hb_znetRead( PHB_ZNETSTREAM pStream, HB_SOCKET sd, void * buffer, long len,
                   hb_znetDecrypt( pStream, pStream->rd.next_in + pStream->rd.avail_in + l );
                }
                pStream->crypt_in -= rec;
-               if( static_cast<uInt>( rec ) > pStream->crypt_size )
+               if( static_cast<uInt>(rec) > pStream->crypt_size )
                {
                   pStream->skip_in = rec - pStream->crypt_size;
                   rec = pStream->crypt_size;
@@ -285,11 +285,11 @@ long hb_znetRead( PHB_ZNETSTREAM pStream, HB_SOCKET sd, void * buffer, long len,
             }
          }
 
-         pStream->rd.avail_in += static_cast<uInt>( rec );
+         pStream->rd.avail_in += static_cast<uInt>(rec);
          rec = 0;
          if( pStream->rd.avail_in == 0 )
          {
-            if( pStream->rd.avail_out == static_cast<uInt>( len ) )
+            if( pStream->rd.avail_out == static_cast<uInt>(len) )
             {
                continue;
             }
@@ -323,13 +323,13 @@ static long hb_znetStreamWrite( PHB_ZNETSTREAM pStream, HB_SOCKET sd, HB_MAXINT 
 
    if( pStream->crypt )
    {
-      rest = static_cast<long>( pStream->wr.next_out - pStream->crypt_out );
+      rest = static_cast<long>(pStream->wr.next_out - pStream->crypt_out);
       if( rest > 2 )
       {
-         HB_U16 uiLen = static_cast<HB_U16>( rest - 2 );
+         HB_U16 uiLen = static_cast<HB_U16>(rest - 2);
          HB_PUT_BE_UINT16( pStream->crypt_out, uiLen );
-         uiLen = static_cast<HB_U16>( ( ( rest + 0x07 ) ^ 0x07 ) & 0x07 );
-         if( static_cast<uInt>( uiLen ) <= pStream->wr.avail_out )
+         uiLen = static_cast<HB_U16>(((rest + 0x07) ^ 0x07) & 0x07);
+         if( static_cast<uInt>(uiLen) <= pStream->wr.avail_out )
          {
             while( uiLen-- )
             {
@@ -356,7 +356,7 @@ static long hb_znetStreamWrite( PHB_ZNETSTREAM pStream, HB_SOCKET sd, HB_MAXINT 
       {
          rest = 0;
       }
-      tosnd = static_cast<long>( pStream->crypt_out - pStream->outbuf );
+      tosnd = static_cast<long>(pStream->crypt_out - pStream->outbuf);
    }
    else
    {
@@ -371,9 +371,9 @@ static long hb_znetStreamWrite( PHB_ZNETSTREAM pStream, HB_SOCKET sd, HB_MAXINT 
          tosnd += rest - snd;
          if( tosnd > 0 )
          {
-            memmove( pStream->outbuf, pStream->outbuf + snd, tosnd );
+            memmove(pStream->outbuf, pStream->outbuf + snd, tosnd);
          }
-         pStream->wr.avail_out += static_cast<uInt>( snd );
+         pStream->wr.avail_out += static_cast<uInt>(snd);
          pStream->wr.next_out -= snd;
          pStream->crypt_out -= snd;
          if( pStream->skip_out )
@@ -446,8 +446,8 @@ long hb_znetWrite( PHB_ZNETSTREAM pStream, HB_SOCKET sd, const void * buffer, lo
 {
    long snd = 0;
 
-   pStream->wr.next_in = static_cast<Bytef*>( const_cast<void*>( buffer ) );
-   pStream->wr.avail_in = static_cast<uInt>( len );
+   pStream->wr.next_in = static_cast<Bytef*>(const_cast<void*>(buffer));
+   pStream->wr.avail_in = static_cast<uInt>(len);
    pStream->err = Z_OK;
 
    while( pStream->wr.avail_in )
@@ -488,7 +488,7 @@ long hb_znetWrite( PHB_ZNETSTREAM pStream, HB_SOCKET sd, const void * buffer, lo
 
 /* socket filter */
 
-#define HB_ZNET_GET( p )      ( static_cast<PHB_ZNETSTREAM>( p->cargo ) )
+#define HB_ZNET_GET( p )      ( static_cast<PHB_ZNETSTREAM>(p->cargo) )
 
 static PHB_SOCKEX s_sockexNew( HB_SOCKET sd, PHB_ITEM pParams )
 {
@@ -551,7 +551,7 @@ static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT tim
 
    if( lRead > 0 )
    {
-      memcpy( data, pSock->buffer + pSock->posbuffer, lRead );
+      memcpy(data, pSock->buffer + pSock->posbuffer, lRead);
       pSock->inbuffer -= lRead;
       if( pSock->inbuffer )
       {
@@ -566,7 +566,7 @@ static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT tim
       {
          return lRead;
       }
-      data = static_cast<HB_BYTE*>( data ) + lRead;
+      data = static_cast<HB_BYTE*>(data) + lRead;
       timeout = 0;
    }
    else if( pSock->sd == HB_NO_SOCKET )
@@ -623,7 +623,7 @@ static int s_sockexCanRead( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout
          {
             pSock->readahead = HB_ZNET_READAHEAD;
          }
-         pSock->buffer = static_cast<HB_BYTE*>( hb_xgrab(pSock->readahead) );
+         pSock->buffer = static_cast<HB_BYTE*>(hb_xgrab(pSock->readahead));
       }
       len = hb_znetRead( HB_ZNET_GET( pSock ), pSock->sd, pSock->buffer, pSock->readahead, 0 );
       if( len > 0 )
@@ -631,7 +631,7 @@ static int s_sockexCanRead( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout
          pSock->inbuffer = len;
          len = 1;
       }
-      return static_cast<int>( len );
+      return static_cast<int>(len);
    }
    return fBuffer ? 0 : hb_socketSelectRead( pSock->sd, timeout );
 }
@@ -644,7 +644,7 @@ static int s_sockexCanWrite( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeou
       return -1;
    }
    else if( fBuffer && pSock->cargo && /* HB_ZNET_GET( pSock )->wr.avail_out > 0 && */
-            static_cast<uInt>( HB_ZNET_BUFSIZE - ( HB_ZNET_GET( pSock )->crypt ? 2 : 0 ) ) <=
+            static_cast<uInt>(HB_ZNET_BUFSIZE - (HB_ZNET_GET(pSock)->crypt ? 2 : 0)) <=
             HB_ZNET_GET( pSock )->wr.avail_out )
    {
       return 1;
@@ -727,12 +727,12 @@ PHB_SOCKEX hb_sockexNewZNet( HB_SOCKET sd, const void * keydata, int keylen, int
       }
       if( sd != HB_NO_SOCKET )
       {
-         pSock = static_cast<PHB_SOCKEX>( hb_xgrabz( sizeof(HB_SOCKEX) ) );
+         pSock = static_cast<PHB_SOCKEX>(hb_xgrabz(sizeof(HB_SOCKEX)));
          pSock->sd = sd;
          pSock->fRedirAll = HB_TRUE;
          pSock->fShutDown = HB_TRUE;
          pSock->pFilter = &s_sockFilter;
-         pSock->cargo = static_cast<void*>( pStream );
+         pSock->cargo = static_cast<void*>(pStream);
       }
    }
 
@@ -757,7 +757,7 @@ HB_FUNC( HB_SOCKETNEWZNET )
       else
       {
          const char * keydata = hb_parc(2);
-         int keylen = static_cast<int>( hb_parclen(2) ),
+         int keylen = static_cast<int>(hb_parclen(2)),
              level = hb_parnidef( 3, HB_ZLIB_COMPRESSION_DEFAULT ),
              strategy = hb_parnidef( 4, HB_ZLIB_STRATEGY_DEFAULT );
 

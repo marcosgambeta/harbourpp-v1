@@ -70,7 +70,7 @@ HB_FUNC( EVAL )
          hb_vmPush( hb_stackItemFromBase(iParam) );
       }
 
-      hb_vmSend( static_cast<HB_USHORT>( iPCount - 1 ) );
+      hb_vmSend( static_cast<HB_USHORT>(iPCount - 1) );
    }
    else
    {

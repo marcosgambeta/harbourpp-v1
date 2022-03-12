@@ -1044,7 +1044,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )
          HB_DLL_MSG_NO_FUNC( "hb_xrealloc" );
    }
 
-   return s_xrealloc ? s_xrealloc( pMem, nSize ) : nullptr;
+   return s_xrealloc ? s_xrealloc(pMem, nSize) : nullptr;
 }
 
 void hb_macroTextValue( PHB_ITEM pItem )

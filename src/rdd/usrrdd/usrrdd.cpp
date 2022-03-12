@@ -57,7 +57,7 @@
 #include "hbusrrdd.ch"
 
 #define SELF_USRNODE( w )  ( s_pUsrRddNodes[ ( w )->rddID ] )
-#define SELF_USRDATA( w )  ( reinterpret_cast<LPUSRRDDDATA>( reinterpret_cast<HB_BYTE*>( w ) + SELF_USRNODE( w )->uiDataOffset ) )
+#define SELF_USRDATA( w )  ( reinterpret_cast<LPUSRRDDDATA>(reinterpret_cast<HB_BYTE*>(w) + SELF_USRNODE( w )->uiDataOffset) )
 
 #undef _SUPERTABLE
 #define _SUPERTABLE( w )   ( SELF_USRNODE( w )->pSuperTable )
@@ -88,14 +88,14 @@ static LPUSRRDDNODE * s_pUsrRddNodes = nullptr;
 
 static HB_BOOL hb_usrIsMethod( PHB_ITEM pMethods, HB_USHORT uiMethod )
 {
-   PHB_ITEM pItem = hb_arrayGetItemPtr( pMethods, uiMethod );
+   PHB_ITEM pItem = hb_arrayGetItemPtr(pMethods, uiMethod);
 
    return pItem && HB_IS_EVALITEM(pItem);
 }
 
 static HB_BOOL hb_usrPushMethod( PHB_ITEM pMethods, HB_USHORT uiMethod )
 {
-   PHB_ITEM pItem = hb_arrayGetItemPtr( pMethods, uiMethod );
+   PHB_ITEM pItem = hb_arrayGetItemPtr(pMethods, uiMethod);
 
    if( pItem )
    {
@@ -156,7 +156,7 @@ static AREAP hb_usrGetAreaPointer( int iArea )
 {
    if( iArea != 0 )
    {
-      return static_cast<AREAP>( hb_rddGetWorkAreaPointer( iArea ) );
+      return static_cast<AREAP>(hb_rddGetWorkAreaPointer( iArea ));
    }
    else
    {
@@ -170,7 +170,7 @@ static AREAP hb_usrGetAreaPointer( int iArea )
 
 static PHB_ITEM hb_usrArrayGet( PHB_ITEM pArray, HB_SIZE nPos, HB_TYPE uiType )
 {
-   PHB_ITEM pItem = hb_arrayGetItemPtr( pArray, nPos );
+   PHB_ITEM pItem = hb_arrayGetItemPtr(pArray, nPos);
 
    if( pItem && ( hb_itemType(pItem) & uiType ) != 0 )
    {
@@ -184,7 +184,7 @@ static PHB_ITEM hb_usrArrayGet( PHB_ITEM pArray, HB_SIZE nPos, HB_TYPE uiType )
 
 static const char * hb_usrArrayGetCPtr( PHB_ITEM pArray, HB_SIZE nPos )
 {
-   PHB_ITEM pItem = hb_arrayGetItemPtr( pArray, nPos );
+   PHB_ITEM pItem = hb_arrayGetItemPtr(pArray, nPos);
 
    if( pItem && HB_IS_STRING(pItem) )
    {
@@ -203,25 +203,25 @@ static PHB_ITEM hb_usrFieldInfoToItem( LPDBFIELDINFO pFieldInfo )
    pItem = hb_itemArrayNew(UR_FI_SIZE);
    if( pFieldInfo->atomName )
    {
-      hb_itemPutC(hb_arrayGetItemPtr( pItem, UR_FI_NAME ), pFieldInfo->atomName);
+      hb_itemPutC(hb_arrayGetItemPtr(pItem, UR_FI_NAME), pFieldInfo->atomName);
    }
-   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_FI_TYPE ), pFieldInfo->uiType);
-   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_FI_TYPEEXT ), pFieldInfo->uiTypeExtended);
-   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_FI_LEN ), pFieldInfo->uiLen);
-   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_FI_DEC ), pFieldInfo->uiDec);
+   hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_FI_TYPE), pFieldInfo->uiType);
+   hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_FI_TYPEEXT), pFieldInfo->uiTypeExtended);
+   hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_FI_LEN), pFieldInfo->uiLen);
+   hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_FI_DEC), pFieldInfo->uiDec);
 
    return pItem;
 }
 
 static HB_BOOL hb_usrItemToFieldInfo( PHB_ITEM pItem, LPDBFIELDINFO pFieldInfo )
 {
-   if( pItem && hb_arrayLen( pItem ) == UR_FI_SIZE )
+   if( pItem && hb_arrayLen(pItem) == UR_FI_SIZE )
    {
       pFieldInfo->atomName       = hb_usrArrayGetCPtr( pItem, UR_FI_NAME );
-      pFieldInfo->uiType         = static_cast<HB_USHORT>( hb_arrayGetNI( pItem, UR_FI_TYPE ) );
-      pFieldInfo->uiTypeExtended = static_cast<HB_USHORT>( hb_arrayGetNI( pItem, UR_FI_TYPEEXT ) );
-      pFieldInfo->uiLen          = static_cast<HB_USHORT>( hb_arrayGetNI( pItem, UR_FI_LEN ) );
-      pFieldInfo->uiDec          = static_cast<HB_USHORT>( hb_arrayGetNI( pItem, UR_FI_DEC ) );
+      pFieldInfo->uiType         = static_cast<HB_USHORT>(hb_arrayGetNI(pItem, UR_FI_TYPE));
+      pFieldInfo->uiTypeExtended = static_cast<HB_USHORT>(hb_arrayGetNI(pItem, UR_FI_TYPEEXT));
+      pFieldInfo->uiLen          = static_cast<HB_USHORT>(hb_arrayGetNI(pItem, UR_FI_LEN));
+      pFieldInfo->uiDec          = static_cast<HB_USHORT>(hb_arrayGetNI(pItem, UR_FI_DEC));
       return HB_TRUE;
    }
    return HB_FALSE;
@@ -232,25 +232,25 @@ static PHB_ITEM hb_usrOpenInfoToItem( LPDBOPENINFO pOpenInfo )
    PHB_ITEM pItem;
 
    pItem = hb_itemArrayNew(UR_OI_SIZE);
-   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_OI_AREA ), pOpenInfo->uiArea);
+   hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_OI_AREA), pOpenInfo->uiArea);
    if( pOpenInfo->abName )
    {
-      hb_itemPutC(hb_arrayGetItemPtr( pItem, UR_OI_NAME ), pOpenInfo->abName);
+      hb_itemPutC(hb_arrayGetItemPtr(pItem, UR_OI_NAME), pOpenInfo->abName);
    }
    if( pOpenInfo->atomAlias )
    {
-      hb_itemPutC(hb_arrayGetItemPtr( pItem, UR_OI_ALIAS ), pOpenInfo->atomAlias);
+      hb_itemPutC(hb_arrayGetItemPtr(pItem, UR_OI_ALIAS), pOpenInfo->atomAlias);
    }
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_OI_SHARED ), pOpenInfo->fShared);
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_OI_READONLY ), pOpenInfo->fReadonly);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_OI_SHARED), pOpenInfo->fShared);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_OI_READONLY), pOpenInfo->fReadonly);
    if( pOpenInfo->cdpId )
    {
-      hb_itemPutC(hb_arrayGetItemPtr( pItem, UR_OI_CDPID ), pOpenInfo->cdpId);
+      hb_itemPutC(hb_arrayGetItemPtr(pItem, UR_OI_CDPID), pOpenInfo->cdpId);
    }
-   hb_itemPutNL(hb_arrayGetItemPtr( pItem, UR_OI_CONNECT ), pOpenInfo->ulConnection);
+   hb_itemPutNL(hb_arrayGetItemPtr(pItem, UR_OI_CONNECT), pOpenInfo->ulConnection);
    if( pOpenInfo->lpdbHeader )
    {
-      hb_itemPutPtr(hb_arrayGetItemPtr( pItem, UR_OI_HEADER ), pOpenInfo->lpdbHeader);
+      hb_itemPutPtr(hb_arrayGetItemPtr(pItem, UR_OI_HEADER), pOpenInfo->lpdbHeader);
    }
 
    return pItem;
@@ -258,16 +258,16 @@ static PHB_ITEM hb_usrOpenInfoToItem( LPDBOPENINFO pOpenInfo )
 
 static HB_BOOL hb_usrItemToOpenInfo( PHB_ITEM pItem, LPDBOPENINFO pOpenInfo )
 {
-   if( pItem && hb_arrayLen( pItem ) == UR_OI_SIZE )
+   if( pItem && hb_arrayLen(pItem) == UR_OI_SIZE )
    {
-      pOpenInfo->uiArea       = static_cast<HB_USHORT>( hb_arrayGetNI( pItem, UR_OI_AREA ) );
+      pOpenInfo->uiArea       = static_cast<HB_USHORT>(hb_arrayGetNI(pItem, UR_OI_AREA));
       pOpenInfo->abName       = hb_usrArrayGetCPtr( pItem, UR_OI_NAME );
       pOpenInfo->atomAlias    = hb_usrArrayGetCPtr( pItem, UR_OI_ALIAS );
-      pOpenInfo->fShared      = hb_arrayGetL( pItem, UR_OI_SHARED );
-      pOpenInfo->fReadonly    = hb_arrayGetL( pItem, UR_OI_READONLY );
+      pOpenInfo->fShared      = hb_arrayGetL(pItem, UR_OI_SHARED);
+      pOpenInfo->fReadonly    = hb_arrayGetL(pItem, UR_OI_READONLY);
       pOpenInfo->cdpId        = hb_usrArrayGetCPtr( pItem, UR_OI_CDPID );
-      pOpenInfo->ulConnection = hb_arrayGetNL( pItem, UR_OI_CONNECT );
-      pOpenInfo->lpdbHeader   = hb_arrayGetPtr( pItem, UR_OI_HEADER );
+      pOpenInfo->ulConnection = hb_arrayGetNL(pItem, UR_OI_CONNECT);
+      pOpenInfo->lpdbHeader   = hb_arrayGetPtr(pItem, UR_OI_HEADER);
       return HB_TRUE;
    }
    return HB_FALSE;
@@ -280,28 +280,28 @@ static PHB_ITEM hb_usrFilterInfoToItem( LPDBFILTERINFO pFilterInfo )
    pItem = hb_itemArrayNew(UR_FRI_SIZE);
    if( pFilterInfo->itmCobExpr )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_FRI_BEXPR ), pFilterInfo->itmCobExpr);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_FRI_BEXPR), pFilterInfo->itmCobExpr);
    }
    if( pFilterInfo->abFilterText )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_FRI_CEXPR ), pFilterInfo->abFilterText);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_FRI_CEXPR), pFilterInfo->abFilterText);
    }
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_FRI_ACTIVE ), pFilterInfo->fFilter);
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_FRI_OPTIMIZED ), pFilterInfo->fOptimized);
-   hb_itemPutPtr(hb_arrayGetItemPtr( pItem, UR_FRI_CARGO ), pFilterInfo->lpvCargo);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_FRI_ACTIVE), pFilterInfo->fFilter);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_FRI_OPTIMIZED), pFilterInfo->fOptimized);
+   hb_itemPutPtr(hb_arrayGetItemPtr(pItem, UR_FRI_CARGO), pFilterInfo->lpvCargo);
 
    return pItem;
 }
 
 static HB_BOOL hb_usrItemToFilterInfo( PHB_ITEM pItem, LPDBFILTERINFO pFilterInfo )
 {
-   if( pItem && hb_arrayLen( pItem ) == UR_FRI_SIZE )
+   if( pItem && hb_arrayLen(pItem) == UR_FRI_SIZE )
    {
       pFilterInfo->itmCobExpr   = hb_usrArrayGet( pItem, UR_FRI_BEXPR, HB_IT_ANY );
       pFilterInfo->abFilterText = hb_usrArrayGet( pItem, UR_FRI_CEXPR, HB_IT_ANY );
-      pFilterInfo->fFilter      = hb_arrayGetL( pItem, UR_FRI_ACTIVE );
-      pFilterInfo->fOptimized   = hb_arrayGetL( pItem, UR_FRI_OPTIMIZED );
-      pFilterInfo->lpvCargo     = hb_arrayGetPtr( pItem, UR_FRI_CARGO );
+      pFilterInfo->fFilter      = hb_arrayGetL(pItem, UR_FRI_ACTIVE);
+      pFilterInfo->fOptimized   = hb_arrayGetL(pItem, UR_FRI_OPTIMIZED);
+      pFilterInfo->lpvCargo     = hb_arrayGetPtr(pItem, UR_FRI_CARGO);
       return HB_TRUE;
    }
    return HB_FALSE;
@@ -314,32 +314,32 @@ static PHB_ITEM hb_usrRelInfoToItem( LPDBRELINFO pRelInfo )
    pItem = hb_itemArrayNew(UR_RI_SIZE);
    if( pRelInfo->itmCobExpr )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_RI_BEXPR ), pRelInfo->itmCobExpr);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_RI_BEXPR), pRelInfo->itmCobExpr);
    }
    if( pRelInfo->abKey )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_RI_CEXPR ), pRelInfo->abKey);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_RI_CEXPR), pRelInfo->abKey);
    }
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_RI_SCOPED ), pRelInfo->isScoped);
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_RI_OPTIMIZED ), pRelInfo->isOptimized);
-   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_RI_PARENT ), pRelInfo->lpaParent ? pRelInfo->lpaParent->uiArea : 0);
-   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_RI_CHILD ), pRelInfo->lpaChild ? pRelInfo->lpaChild->uiArea : 0);
-   hb_itemPutPtr(hb_arrayGetItemPtr( pItem, UR_RI_NEXT ), pRelInfo->lpdbriNext);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_RI_SCOPED), pRelInfo->isScoped);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_RI_OPTIMIZED), pRelInfo->isOptimized);
+   hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_RI_PARENT), pRelInfo->lpaParent ? pRelInfo->lpaParent->uiArea : 0);
+   hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_RI_CHILD), pRelInfo->lpaChild ? pRelInfo->lpaChild->uiArea : 0);
+   hb_itemPutPtr(hb_arrayGetItemPtr(pItem, UR_RI_NEXT), pRelInfo->lpdbriNext);
 
    return pItem;
 }
 
 static HB_BOOL hb_usrItemToRelInfo( PHB_ITEM pItem, LPDBRELINFO pRelInfo )
 {
-   if( pItem && hb_arrayLen( pItem ) == UR_RI_SIZE )
+   if( pItem && hb_arrayLen(pItem) == UR_RI_SIZE )
    {
       pRelInfo->itmCobExpr  = hb_usrArrayGet( pItem, UR_RI_BEXPR, HB_IT_ANY );
       pRelInfo->abKey       = hb_usrArrayGet( pItem, UR_RI_CEXPR, HB_IT_ANY );
-      pRelInfo->isScoped    = hb_arrayGetL( pItem, UR_RI_SCOPED );
-      pRelInfo->isOptimized = hb_arrayGetL( pItem, UR_RI_OPTIMIZED );
-      pRelInfo->lpaParent   = hb_usrGetAreaPointer( hb_arrayGetNI( pItem, UR_RI_PARENT ) );
-      pRelInfo->lpaChild    = hb_usrGetAreaPointer( hb_arrayGetNI( pItem, UR_RI_CHILD ) );
-      pRelInfo->lpdbriNext  = ( LPDBRELINFO ) hb_arrayGetPtr( pItem, UR_RI_NEXT );
+      pRelInfo->isScoped    = hb_arrayGetL(pItem, UR_RI_SCOPED);
+      pRelInfo->isOptimized = hb_arrayGetL(pItem, UR_RI_OPTIMIZED);
+      pRelInfo->lpaParent   = hb_usrGetAreaPointer( hb_arrayGetNI(pItem, UR_RI_PARENT) );
+      pRelInfo->lpaChild    = hb_usrGetAreaPointer( hb_arrayGetNI(pItem, UR_RI_CHILD) );
+      pRelInfo->lpdbriNext  = ( LPDBRELINFO ) hb_arrayGetPtr(pItem, UR_RI_NEXT);
       return HB_TRUE;
    }
    return HB_FALSE;
@@ -352,21 +352,21 @@ static PHB_ITEM hb_usrLockInfoToItem( LPDBLOCKINFO pLockInfo )
    pItem = hb_itemArrayNew(UR_LI_SIZE);
    if( pLockInfo->itmRecID )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_LI_RECORD ), pLockInfo->itmRecID);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_LI_RECORD), pLockInfo->itmRecID);
    }
-   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_LI_METHOD ), pLockInfo->uiMethod);
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_LI_RESULT ), pLockInfo->fResult);
+   hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_LI_METHOD), pLockInfo->uiMethod);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_LI_RESULT), pLockInfo->fResult);
 
    return pItem;
 }
 
 static HB_BOOL hb_usrItemToLockInfo( PHB_ITEM pItem, LPDBLOCKINFO pLockInfo )
 {
-   if( pItem && hb_arrayLen( pItem ) == UR_LI_SIZE )
+   if( pItem && hb_arrayLen(pItem) == UR_LI_SIZE )
    {
       pLockInfo->itmRecID = hb_usrArrayGet( pItem, UR_LI_RECORD, HB_IT_ANY );
-      pLockInfo->uiMethod = static_cast<HB_USHORT>( hb_arrayGetNI( pItem, UR_LI_METHOD ) );
-      pLockInfo->fResult  = static_cast<HB_USHORT>( hb_arrayGetL( pItem, UR_LI_RESULT ) );
+      pLockInfo->uiMethod = static_cast<HB_USHORT>(hb_arrayGetNI(pItem, UR_LI_METHOD));
+      pLockInfo->fResult  = static_cast<HB_USHORT>(hb_arrayGetL(pItem, UR_LI_RESULT));
       return HB_TRUE;
    }
    return HB_FALSE;
@@ -379,43 +379,43 @@ static PHB_ITEM hb_usrScopeInfoToItem( LPDBSCOPEINFO pScopeInfo )
    pItem = hb_itemArrayNew(UR_SI_SIZE);
    if( pScopeInfo->itmCobFor )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_SI_BFOR ), pScopeInfo->itmCobFor);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_SI_BFOR), pScopeInfo->itmCobFor);
    }
    if( pScopeInfo->lpstrFor )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_SI_CFOR ), pScopeInfo->lpstrFor);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_SI_CFOR), pScopeInfo->lpstrFor);
    }
    if( pScopeInfo->itmCobWhile )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_SI_BWHILE ), pScopeInfo->itmCobWhile);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_SI_BWHILE), pScopeInfo->itmCobWhile);
    }
    if( pScopeInfo->lpstrWhile )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_SI_CWHILE ), pScopeInfo->lpstrWhile);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_SI_CWHILE), pScopeInfo->lpstrWhile);
    }
    if( pScopeInfo->lNext )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_SI_NEXT ), pScopeInfo->lNext);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_SI_NEXT), pScopeInfo->lNext);
    }
    if( pScopeInfo->itmRecID )
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_SI_RECORD ), pScopeInfo->itmRecID);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_SI_RECORD), pScopeInfo->itmRecID);
    if( pScopeInfo->fRest )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_SI_REST ), pScopeInfo->fRest);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_SI_REST), pScopeInfo->fRest);
    }
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_SI_IGNOREFILTER ), pScopeInfo->fIgnoreFilter);
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_SI_INCLUDEDELETED ), pScopeInfo->fIncludeDeleted);
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_SI_LAST ), pScopeInfo->fLast);
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_SI_IGNOREDUPS ), pScopeInfo->fIgnoreDuplicates);
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_SI_BACKWARD ), pScopeInfo->fBackward);
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_SI_OPTIMIZED ), pScopeInfo->fOptimized);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_SI_IGNOREFILTER), pScopeInfo->fIgnoreFilter);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_SI_INCLUDEDELETED), pScopeInfo->fIncludeDeleted);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_SI_LAST), pScopeInfo->fLast);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_SI_IGNOREDUPS), pScopeInfo->fIgnoreDuplicates);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_SI_BACKWARD), pScopeInfo->fBackward);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_SI_OPTIMIZED), pScopeInfo->fOptimized);
 
    return pItem;
 }
 
 static HB_BOOL hb_usrItemToScopeInfo( PHB_ITEM pItem, LPDBSCOPEINFO pScopeInfo )
 {
-   if( pItem && hb_arrayLen( pItem ) == UR_SI_SIZE )
+   if( pItem && hb_arrayLen(pItem) == UR_SI_SIZE )
    {
       pScopeInfo->itmCobFor         = hb_usrArrayGet( pItem, UR_SI_BFOR, HB_IT_ANY );
       pScopeInfo->lpstrFor          = hb_usrArrayGet( pItem, UR_SI_CFOR, HB_IT_ANY );
@@ -424,12 +424,12 @@ static HB_BOOL hb_usrItemToScopeInfo( PHB_ITEM pItem, LPDBSCOPEINFO pScopeInfo )
       pScopeInfo->lNext             = hb_usrArrayGet( pItem, UR_SI_NEXT, HB_IT_ANY );
       pScopeInfo->itmRecID          = hb_usrArrayGet( pItem, UR_SI_RECORD, HB_IT_ANY );
       pScopeInfo->fRest             = hb_usrArrayGet( pItem, UR_SI_REST, HB_IT_ANY );
-      pScopeInfo->fIgnoreFilter     = hb_arrayGetL( pItem, UR_SI_IGNOREFILTER );
-      pScopeInfo->fIncludeDeleted   = hb_arrayGetL( pItem, UR_SI_INCLUDEDELETED );
-      pScopeInfo->fLast             = hb_arrayGetL( pItem, UR_SI_LAST );
-      pScopeInfo->fIgnoreDuplicates = hb_arrayGetL( pItem, UR_SI_IGNOREDUPS );
-      pScopeInfo->fBackward         = hb_arrayGetL( pItem, UR_SI_BACKWARD );
-      pScopeInfo->fOptimized        = hb_arrayGetL( pItem, UR_SI_OPTIMIZED );
+      pScopeInfo->fIgnoreFilter     = hb_arrayGetL(pItem, UR_SI_IGNOREFILTER);
+      pScopeInfo->fIncludeDeleted   = hb_arrayGetL(pItem, UR_SI_INCLUDEDELETED);
+      pScopeInfo->fLast             = hb_arrayGetL(pItem, UR_SI_LAST);
+      pScopeInfo->fIgnoreDuplicates = hb_arrayGetL(pItem, UR_SI_IGNOREDUPS);
+      pScopeInfo->fBackward         = hb_arrayGetL(pItem, UR_SI_BACKWARD);
+      pScopeInfo->fOptimized        = hb_arrayGetL(pItem, UR_SI_OPTIMIZED);
       return HB_TRUE;
    }
    return HB_FALSE;
@@ -443,13 +443,13 @@ static PHB_ITEM hb_usrEvalInfoToItem( LPDBEVALINFO pEvalInfo )
    pItem = hb_itemArrayNew(UR_EI_SIZE);
    if( pEvalInfo->itmBlock )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_EI_BLOCK ), pEvalInfo->itmBlock);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_EI_BLOCK), pEvalInfo->itmBlock);
    }
    if( pEvalInfo->abBlock )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_EI_CEXPR ), pEvalInfo->abBlock);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_EI_CEXPR), pEvalInfo->abBlock);
    }
-   hb_itemMove(hb_arrayGetItemPtr( pItem, UR_EI_SCOPE ), pScope);
+   hb_itemMove(hb_arrayGetItemPtr(pItem, UR_EI_SCOPE), pScope);
    hb_itemRelease(pScope);
 
    return pItem;
@@ -457,11 +457,11 @@ static PHB_ITEM hb_usrEvalInfoToItem( LPDBEVALINFO pEvalInfo )
 
 static HB_BOOL hb_usrItemToEvalInfo( PHB_ITEM pItem, LPDBEVALINFO pEvalInfo )
 {
-   if( pItem && hb_arrayLen( pItem ) == UR_EI_SIZE )
+   if( pItem && hb_arrayLen(pItem) == UR_EI_SIZE )
    {
       pEvalInfo->itmBlock = hb_usrArrayGet( pItem, UR_EI_BLOCK, HB_IT_ANY );
       pEvalInfo->abBlock  = hb_usrArrayGet( pItem, UR_EI_CEXPR, HB_IT_ANY );
-      return hb_usrItemToScopeInfo( hb_arrayGetItemPtr( pItem, UR_EI_SCOPE ), &pEvalInfo->dbsci );
+      return hb_usrItemToScopeInfo( hb_arrayGetItemPtr(pItem, UR_EI_SCOPE), &pEvalInfo->dbsci );
    }
    return HB_FALSE;
 }
@@ -472,23 +472,23 @@ static PHB_ITEM hb_usrTransInfoToItem( LPDBTRANSINFO pTransInfo )
 
    pScope = hb_usrScopeInfoToItem( &pTransInfo->dbsci );
    pItem = hb_itemArrayNew(UR_TI_SIZE);
-   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_TI_SRCAREA ), pTransInfo->lpaSource->uiArea);
-   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_TI_DSTAREA ), pTransInfo->lpaDest->uiArea);
-   hb_itemMove(hb_arrayGetItemPtr( pItem, UR_TI_SCOPE ), pScope);
-   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_TI_FLAGS ), pTransInfo->uiFlags);
-   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_TI_ITEMCOUNT ), pTransInfo->uiItemCount);
+   hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_TI_SRCAREA), pTransInfo->lpaSource->uiArea);
+   hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_TI_DSTAREA), pTransInfo->lpaDest->uiArea);
+   hb_itemMove(hb_arrayGetItemPtr(pItem, UR_TI_SCOPE), pScope);
+   hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_TI_FLAGS), pTransInfo->uiFlags);
+   hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_TI_ITEMCOUNT), pTransInfo->uiItemCount);
    if( pTransInfo->uiItemCount )
    {
-      PHB_ITEM pItems = hb_arrayGetItemPtr( pItem, UR_TI_ITEMS );
+      PHB_ITEM pItems = hb_arrayGetItemPtr(pItem, UR_TI_ITEMS);
       LPDBTRANSITEM pTransItem = pTransInfo->lpTransItems;
 
-      hb_arrayNew( pItems, pTransInfo->uiItemCount );
+      hb_arrayNew(pItems, pTransInfo->uiItemCount);
       for( HB_USHORT uiCount = 1; uiCount <= pTransInfo->uiItemCount; ++uiCount, ++pTransItem )
       {
-         PHB_ITEM pItm = hb_arrayGetItemPtr( pItems, uiCount );
-         hb_arrayNew( pItm, UR_TITEM_SIZE );
-         hb_itemPutNI(hb_arrayGetItemPtr( pItm, UR_TITEM_SOURCE ), pTransItem->uiSource);
-         hb_itemPutNI(hb_arrayGetItemPtr( pItm, UR_TITEM_DESTIN ), pTransItem->uiDest);
+         PHB_ITEM pItm = hb_arrayGetItemPtr(pItems, uiCount);
+         hb_arrayNew(pItm, UR_TITEM_SIZE);
+         hb_itemPutNI(hb_arrayGetItemPtr(pItm, UR_TITEM_SOURCE), pTransItem->uiSource);
+         hb_itemPutNI(hb_arrayGetItemPtr(pItm, UR_TITEM_DESTIN), pTransItem->uiDest);
       }
    }
    hb_itemRelease(pScope);
@@ -498,30 +498,30 @@ static PHB_ITEM hb_usrTransInfoToItem( LPDBTRANSINFO pTransInfo )
 
 static HB_BOOL hb_usrItemToTransInfo( PHB_ITEM pItem, LPDBTRANSINFO pTransInfo )
 {
-   if( pItem && hb_arrayLen( pItem ) == UR_TI_SIZE )
+   if( pItem && hb_arrayLen(pItem) == UR_TI_SIZE )
    {
-      HB_USHORT uiItemCount = static_cast<HB_USHORT>( hb_arrayGetNI( pItem, UR_TI_ITEMCOUNT ) );
-      PHB_ITEM pItems = hb_arrayGetItemPtr( pItem, UR_TI_ITEMS );
+      HB_USHORT uiItemCount = static_cast<HB_USHORT>(hb_arrayGetNI(pItem, UR_TI_ITEMCOUNT));
+      PHB_ITEM pItems = hb_arrayGetItemPtr(pItem, UR_TI_ITEMS);
 
-      if( hb_arrayLen( pItems ) == static_cast<HB_SIZE>( uiItemCount ) &&
-          hb_usrItemToScopeInfo( hb_arrayGetItemPtr( pItem, UR_TI_SCOPE ),
+      if( hb_arrayLen(pItems) == static_cast<HB_SIZE>(uiItemCount) &&
+          hb_usrItemToScopeInfo( hb_arrayGetItemPtr(pItem, UR_TI_SCOPE),
                                  &pTransInfo->dbsci ) )
       {
-         pTransInfo->lpaSource   = hb_usrGetAreaPointer( hb_arrayGetNI( pItem, UR_TI_SRCAREA ) );
-         pTransInfo->lpaDest     = hb_usrGetAreaPointer( hb_arrayGetNI( pItem, UR_TI_DSTAREA ) );
-         pTransInfo->uiFlags     = static_cast<HB_USHORT>( hb_arrayGetNI( pItem, UR_TI_FLAGS ) );
+         pTransInfo->lpaSource   = hb_usrGetAreaPointer( hb_arrayGetNI(pItem, UR_TI_SRCAREA) );
+         pTransInfo->lpaDest     = hb_usrGetAreaPointer( hb_arrayGetNI(pItem, UR_TI_DSTAREA) );
+         pTransInfo->uiFlags     = static_cast<HB_USHORT>(hb_arrayGetNI(pItem, UR_TI_FLAGS));
          pTransInfo->uiItemCount = uiItemCount;
          if( uiItemCount )
          {
             LPDBTRANSITEM pTransItem;
 
-            pTransInfo->lpTransItems = pTransItem = static_cast<LPDBTRANSITEM>( hb_xgrab(uiItemCount * sizeof(DBTRANSITEM)) );
+            pTransInfo->lpTransItems = pTransItem = static_cast<LPDBTRANSITEM>(hb_xgrab(uiItemCount * sizeof(DBTRANSITEM)));
 
             for( HB_USHORT uiCount = 1; uiCount <= uiItemCount; ++uiCount, ++pTransItem )
             {
-               PHB_ITEM pItm = hb_arrayGetItemPtr( pItems, uiCount );
-               pTransItem->uiSource = static_cast<HB_USHORT>( hb_arrayGetNI( pItm, UR_TITEM_SOURCE ) );
-               pTransItem->uiDest   = static_cast<HB_USHORT>( hb_arrayGetNI( pItm, UR_TITEM_DESTIN ) );
+               PHB_ITEM pItm = hb_arrayGetItemPtr(pItems, uiCount);
+               pTransItem->uiSource = static_cast<HB_USHORT>(hb_arrayGetNI(pItm, UR_TITEM_SOURCE));
+               pTransItem->uiDest   = static_cast<HB_USHORT>(hb_arrayGetNI(pItm, UR_TITEM_DESTIN));
             }
          }
          else
@@ -548,20 +548,20 @@ static PHB_ITEM hb_usrSortInfoToItem( LPDBSORTINFO pSortInfo )
 
    pTrans = hb_usrTransInfoToItem( &pSortInfo->dbtri );
    pItem = hb_itemArrayNew(UR_SRI_SIZE);
-   hb_itemMove(hb_arrayGetItemPtr( pItem, UR_SRI_TRANSINFO ), pTrans);
-   hb_itemPutNI(hb_arrayGetItemPtr( pItem, UR_SRI_ITEMCOUNT ), pSortInfo->uiItemCount);
+   hb_itemMove(hb_arrayGetItemPtr(pItem, UR_SRI_TRANSINFO), pTrans);
+   hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_SRI_ITEMCOUNT), pSortInfo->uiItemCount);
    if( pSortInfo->uiItemCount )
    {
-      PHB_ITEM pItems = hb_arrayGetItemPtr( pItem, UR_SRI_ITEMS );
+      PHB_ITEM pItems = hb_arrayGetItemPtr(pItem, UR_SRI_ITEMS);
       LPDBSORTITEM pSortItem = pSortInfo->lpdbsItem;
 
-      hb_arrayNew( pItems, pSortInfo->uiItemCount );
+      hb_arrayNew(pItems, pSortInfo->uiItemCount);
       for( HB_USHORT uiCount = 1; uiCount <= pSortInfo->uiItemCount; ++uiCount, ++pSortItem )
       {
-         PHB_ITEM pItm = hb_arrayGetItemPtr( pItems, uiCount );
-         hb_arrayNew( pItm, UR_SITEM_SIZE );
-         hb_itemPutNI(hb_arrayGetItemPtr( pItm, UR_SITEM_FIELD ), pSortItem->uiField);
-         hb_itemPutNI(hb_arrayGetItemPtr( pItm, UR_SITEM_FLAGS ), pSortItem->uiFlags);
+         PHB_ITEM pItm = hb_arrayGetItemPtr(pItems, uiCount);
+         hb_arrayNew(pItm, UR_SITEM_SIZE);
+         hb_itemPutNI(hb_arrayGetItemPtr(pItm, UR_SITEM_FIELD), pSortItem->uiField);
+         hb_itemPutNI(hb_arrayGetItemPtr(pItm, UR_SITEM_FLAGS), pSortItem->uiFlags);
       }
    }
    hb_itemRelease(pTrans);
@@ -571,13 +571,13 @@ static PHB_ITEM hb_usrSortInfoToItem( LPDBSORTINFO pSortInfo )
 
 static HB_BOOL hb_usrItemToSortInfo( PHB_ITEM pItem, LPDBSORTINFO pSortInfo )
 {
-   if( pItem && hb_arrayLen( pItem ) == UR_SRI_SIZE )
+   if( pItem && hb_arrayLen(pItem) == UR_SRI_SIZE )
    {
-      HB_USHORT uiItemCount = static_cast<HB_USHORT>( hb_arrayGetNI( pItem, UR_SRI_ITEMCOUNT ) );
-      PHB_ITEM pItems = hb_arrayGetItemPtr( pItem, UR_SRI_ITEMS );
+      HB_USHORT uiItemCount = static_cast<HB_USHORT>(hb_arrayGetNI(pItem, UR_SRI_ITEMCOUNT));
+      PHB_ITEM pItems = hb_arrayGetItemPtr(pItem, UR_SRI_ITEMS);
 
-      if( hb_arrayLen( pItems ) == static_cast<HB_SIZE>( uiItemCount ) &&
-          hb_usrItemToTransInfo( hb_arrayGetItemPtr( pItem, UR_SRI_TRANSINFO ),
+      if( hb_arrayLen(pItems) == static_cast<HB_SIZE>(uiItemCount) &&
+          hb_usrItemToTransInfo( hb_arrayGetItemPtr(pItem, UR_SRI_TRANSINFO),
                                  &pSortInfo->dbtri ) )
       {
          pSortInfo->uiItemCount = uiItemCount;
@@ -585,13 +585,13 @@ static HB_BOOL hb_usrItemToSortInfo( PHB_ITEM pItem, LPDBSORTINFO pSortInfo )
          {
             LPDBSORTITEM pSortItem;
 
-            pSortInfo->lpdbsItem = pSortItem = static_cast<LPDBSORTITEM>( hb_xgrab(uiItemCount * sizeof(DBSORTITEM)) );
+            pSortInfo->lpdbsItem = pSortItem = static_cast<LPDBSORTITEM>(hb_xgrab(uiItemCount * sizeof(DBSORTITEM)));
 
             for( HB_USHORT uiCount = 1; uiCount <= uiItemCount; ++uiCount, ++pSortItem )
             {
-               PHB_ITEM pItm = hb_arrayGetItemPtr( pItems, uiCount );
-               pSortItem->uiField = static_cast<HB_USHORT>( hb_arrayGetNI( pItm, UR_SITEM_FIELD ) );
-               pSortItem->uiFlags = static_cast<HB_USHORT>( hb_arrayGetNI( pItm, UR_SITEM_FLAGS ) );
+               PHB_ITEM pItm = hb_arrayGetItemPtr(pItems, uiCount);
+               pSortItem->uiField = static_cast<HB_USHORT>(hb_arrayGetNI(pItm, UR_SITEM_FIELD));
+               pSortItem->uiFlags = static_cast<HB_USHORT>(hb_arrayGetNI(pItm, UR_SITEM_FLAGS));
             }
          }
          else
@@ -620,39 +620,39 @@ static PHB_ITEM hb_usrOrderInfoToItem( LPDBORDERINFO pOrderInfo )
    pItem = hb_itemArrayNew(UR_ORI_SIZE);
    if( pOrderInfo->atomBagName )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_ORI_BAG ), pOrderInfo->atomBagName);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_ORI_BAG), pOrderInfo->atomBagName);
    }
    if( pOrderInfo->itmOrder )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_ORI_TAG ), pOrderInfo->itmOrder);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_ORI_TAG), pOrderInfo->itmOrder);
    }
    if( pOrderInfo->itmCobExpr )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_ORI_BLOCK ), pOrderInfo->itmCobExpr);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_ORI_BLOCK), pOrderInfo->itmCobExpr);
    }
    if( pOrderInfo->itmResult )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_ORI_RESULT ), pOrderInfo->itmResult);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_ORI_RESULT), pOrderInfo->itmResult);
    }
    if( pOrderInfo->itmNewVal )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_ORI_NEWVAL ), pOrderInfo->itmNewVal);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_ORI_NEWVAL), pOrderInfo->itmNewVal);
    }
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORI_ALLTAGS ), pOrderInfo->fAllTags);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_ORI_ALLTAGS), pOrderInfo->fAllTags);
 
    return pItem;
 }
 
 static HB_BOOL hb_usrItemToOrderInfo( PHB_ITEM pItem, LPDBORDERINFO pOrderInfo )
 {
-   if( pItem && hb_arrayLen( pItem ) == UR_ORI_SIZE )
+   if( pItem && hb_arrayLen(pItem) == UR_ORI_SIZE )
    {
       pOrderInfo->atomBagName = hb_usrArrayGet( pItem, UR_ORI_BAG, HB_IT_ANY );
       pOrderInfo->itmOrder    = hb_usrArrayGet( pItem, UR_ORI_TAG, HB_IT_ANY );
       pOrderInfo->itmCobExpr  = hb_usrArrayGet( pItem, UR_ORI_BLOCK, HB_IT_ANY );
       pOrderInfo->itmResult   = hb_usrArrayGet( pItem, UR_ORI_RESULT, HB_IT_ANY );
       pOrderInfo->itmNewVal   = hb_usrArrayGet( pItem, UR_ORI_NEWVAL, HB_IT_ANY );
-      pOrderInfo->fAllTags    = hb_arrayGetL( pItem, UR_ORI_ALLTAGS );
+      pOrderInfo->fAllTags    = hb_arrayGetL(pItem, UR_ORI_ALLTAGS);
       return HB_TRUE;
    }
    return HB_FALSE;
@@ -663,81 +663,81 @@ static PHB_ITEM hb_usrOrderCondInfoToItem( LPDBORDERCONDINFO pOrderCondInfo )
    PHB_ITEM pItem;
 
    pItem = hb_itemArrayNew(UR_ORC_SIZE);
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_ACTIVE ), pOrderCondInfo->fActive);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_ORC_ACTIVE), pOrderCondInfo->fActive);
    if( pOrderCondInfo->abFor )
    {
-      hb_itemPutC(hb_arrayGetItemPtr( pItem, UR_ORC_CFOR ), pOrderCondInfo->abFor);
+      hb_itemPutC(hb_arrayGetItemPtr(pItem, UR_ORC_CFOR), pOrderCondInfo->abFor);
    }
    if( pOrderCondInfo->abWhile )
    {
-      hb_itemPutC(hb_arrayGetItemPtr( pItem, UR_ORC_CWHILE ), pOrderCondInfo->abWhile);
+      hb_itemPutC(hb_arrayGetItemPtr(pItem, UR_ORC_CWHILE), pOrderCondInfo->abWhile);
    }
    if( pOrderCondInfo->itmCobFor )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_ORC_BFOR ), pOrderCondInfo->itmCobFor);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_ORC_BFOR), pOrderCondInfo->itmCobFor);
    }
    if( pOrderCondInfo->itmCobWhile )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_ORC_BWHILE ), pOrderCondInfo->itmCobWhile);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_ORC_BWHILE), pOrderCondInfo->itmCobWhile);
    }
    if( pOrderCondInfo->itmCobEval )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_ORC_BEVAL ), pOrderCondInfo->itmCobEval);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_ORC_BEVAL), pOrderCondInfo->itmCobEval);
    }
-   hb_itemPutNL(hb_arrayGetItemPtr( pItem, UR_ORC_STEP ), pOrderCondInfo->lStep);
+   hb_itemPutNL(hb_arrayGetItemPtr(pItem, UR_ORC_STEP), pOrderCondInfo->lStep);
    if( pOrderCondInfo->itmStartRecID )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_ORC_STARTREC ), pOrderCondInfo->itmStartRecID);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_ORC_STARTREC), pOrderCondInfo->itmStartRecID);
    }
-   hb_itemPutNL(hb_arrayGetItemPtr( pItem, UR_ORC_NEXT ), pOrderCondInfo->lNextCount);
+   hb_itemPutNL(hb_arrayGetItemPtr(pItem, UR_ORC_NEXT), pOrderCondInfo->lNextCount);
    if( pOrderCondInfo->itmRecID )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_ORC_RECORD ), pOrderCondInfo->itmRecID);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_ORC_RECORD), pOrderCondInfo->itmRecID);
    }
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_REST ), pOrderCondInfo->fRest);
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_DESCEND ), pOrderCondInfo->fDescending);
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_SCOPED ), pOrderCondInfo->fScoped);
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_ALL ), pOrderCondInfo->fAll);
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_ADDITIVE ), pOrderCondInfo->fAdditive);
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_USECURRENT ), pOrderCondInfo->fUseCurrent);
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_CUSTOM ), pOrderCondInfo->fCustom);
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_NOOPTIMIZE ), pOrderCondInfo->fNoOptimize);
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_COMPOUND ), pOrderCondInfo->fCompound);
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_USEFILTER ), pOrderCondInfo->fUseFilter);
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_TEMPORARY ), pOrderCondInfo->fTemporary);
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORC_EXCLUSIVE ), pOrderCondInfo->fExclusive);
-   hb_itemPutPtr(hb_arrayGetItemPtr( pItem, UR_ORC_CARGO ), pOrderCondInfo->lpvCargo);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_ORC_REST), pOrderCondInfo->fRest);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_ORC_DESCEND), pOrderCondInfo->fDescending);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_ORC_SCOPED), pOrderCondInfo->fScoped);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_ORC_ALL), pOrderCondInfo->fAll);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_ORC_ADDITIVE), pOrderCondInfo->fAdditive);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_ORC_USECURRENT), pOrderCondInfo->fUseCurrent);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_ORC_CUSTOM), pOrderCondInfo->fCustom);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_ORC_NOOPTIMIZE), pOrderCondInfo->fNoOptimize);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_ORC_COMPOUND), pOrderCondInfo->fCompound);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_ORC_USEFILTER), pOrderCondInfo->fUseFilter);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_ORC_TEMPORARY), pOrderCondInfo->fTemporary);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_ORC_EXCLUSIVE), pOrderCondInfo->fExclusive);
+   hb_itemPutPtr(hb_arrayGetItemPtr(pItem, UR_ORC_CARGO), pOrderCondInfo->lpvCargo);
 
    return pItem;
 }
 
 static HB_BOOL hb_usrItemToOrderCondInfo( PHB_ITEM pItem, LPDBORDERCONDINFO pOrderCondInfo )
 {
-   if( pItem && hb_arrayLen( pItem ) == UR_ORC_SIZE )
+   if( pItem && hb_arrayLen(pItem) == UR_ORC_SIZE )
    {
-      pOrderCondInfo->fActive       = hb_arrayGetL( pItem, UR_ORC_ACTIVE );
-      pOrderCondInfo->abFor         = hb_arrayGetC( pItem, UR_ORC_CFOR );
-      pOrderCondInfo->abWhile       = hb_arrayGetC( pItem, UR_ORC_CWHILE );
+      pOrderCondInfo->fActive       = hb_arrayGetL(pItem, UR_ORC_ACTIVE);
+      pOrderCondInfo->abFor         = hb_arrayGetC(pItem, UR_ORC_CFOR);
+      pOrderCondInfo->abWhile       = hb_arrayGetC(pItem, UR_ORC_CWHILE);
       pOrderCondInfo->itmCobFor     = hb_usrArrayGet( pItem, UR_ORC_BFOR, HB_IT_ANY );
       pOrderCondInfo->itmCobWhile   = hb_usrArrayGet( pItem, UR_ORC_BWHILE, HB_IT_ANY );
       pOrderCondInfo->itmCobEval    = hb_usrArrayGet( pItem, UR_ORC_BEVAL, HB_IT_ANY );
-      pOrderCondInfo->lStep         = hb_arrayGetNL( pItem, UR_ORC_STEP );
+      pOrderCondInfo->lStep         = hb_arrayGetNL(pItem, UR_ORC_STEP);
       pOrderCondInfo->itmStartRecID = hb_usrArrayGet( pItem, UR_ORC_STARTREC, HB_IT_ANY );
-      pOrderCondInfo->lNextCount    = hb_arrayGetNL( pItem, UR_ORC_NEXT );
+      pOrderCondInfo->lNextCount    = hb_arrayGetNL(pItem, UR_ORC_NEXT);
       pOrderCondInfo->itmRecID      = hb_usrArrayGet( pItem, UR_ORC_RECORD, HB_IT_ANY );
-      pOrderCondInfo->fRest         = hb_arrayGetL( pItem, UR_ORC_REST );
-      pOrderCondInfo->fDescending   = hb_arrayGetL( pItem, UR_ORC_DESCEND );
-      pOrderCondInfo->fScoped       = hb_arrayGetL( pItem, UR_ORC_SCOPED );
-      pOrderCondInfo->fAll          = hb_arrayGetL( pItem, UR_ORC_ALL );
-      pOrderCondInfo->fAdditive     = hb_arrayGetL( pItem, UR_ORC_ADDITIVE );
-      pOrderCondInfo->fUseCurrent   = hb_arrayGetL( pItem, UR_ORC_USECURRENT );
-      pOrderCondInfo->fCustom       = hb_arrayGetL( pItem, UR_ORC_CUSTOM );
-      pOrderCondInfo->fNoOptimize   = hb_arrayGetL( pItem, UR_ORC_NOOPTIMIZE );
-      pOrderCondInfo->fCompound     = hb_arrayGetL( pItem, UR_ORC_COMPOUND );
-      pOrderCondInfo->fUseFilter    = hb_arrayGetL( pItem, UR_ORC_USEFILTER );
-      pOrderCondInfo->fTemporary    = hb_arrayGetL( pItem, UR_ORC_TEMPORARY );
-      pOrderCondInfo->fExclusive    = hb_arrayGetL( pItem, UR_ORC_EXCLUSIVE );
-      pOrderCondInfo->lpvCargo      = hb_arrayGetPtr( pItem, UR_ORC_CARGO );
+      pOrderCondInfo->fRest         = hb_arrayGetL(pItem, UR_ORC_REST);
+      pOrderCondInfo->fDescending   = hb_arrayGetL(pItem, UR_ORC_DESCEND);
+      pOrderCondInfo->fScoped       = hb_arrayGetL(pItem, UR_ORC_SCOPED);
+      pOrderCondInfo->fAll          = hb_arrayGetL(pItem, UR_ORC_ALL);
+      pOrderCondInfo->fAdditive     = hb_arrayGetL(pItem, UR_ORC_ADDITIVE);
+      pOrderCondInfo->fUseCurrent   = hb_arrayGetL(pItem, UR_ORC_USECURRENT);
+      pOrderCondInfo->fCustom       = hb_arrayGetL(pItem, UR_ORC_CUSTOM);
+      pOrderCondInfo->fNoOptimize   = hb_arrayGetL(pItem, UR_ORC_NOOPTIMIZE);
+      pOrderCondInfo->fCompound     = hb_arrayGetL(pItem, UR_ORC_COMPOUND);
+      pOrderCondInfo->fUseFilter    = hb_arrayGetL(pItem, UR_ORC_USEFILTER);
+      pOrderCondInfo->fTemporary    = hb_arrayGetL(pItem, UR_ORC_TEMPORARY);
+      pOrderCondInfo->fExclusive    = hb_arrayGetL(pItem, UR_ORC_EXCLUSIVE);
+      pOrderCondInfo->lpvCargo      = hb_arrayGetPtr(pItem, UR_ORC_CARGO);
       return HB_TRUE;
    }
    return HB_FALSE;
@@ -815,29 +815,29 @@ static PHB_ITEM hb_usrOrderCreateInfoToItem( LPDBORDERCREATEINFO pOrderCreateInf
    if( pOrderCreateInfo->lpdbOrdCondInfo )
    {
       PHB_ITEM pCond = hb_usrOrderCondInfoToItem( pOrderCreateInfo->lpdbOrdCondInfo );
-      hb_arraySet( pItem, UR_ORCR_CONDINFO, pCond );
+      hb_arraySet(pItem, UR_ORCR_CONDINFO, pCond);
       hb_itemRelease(pCond);
    }
    if( pOrderCreateInfo->abBagName )
    {
-      hb_itemPutC(hb_arrayGetItemPtr( pItem, UR_ORCR_BAGNAME ), pOrderCreateInfo->abBagName);
+      hb_itemPutC(hb_arrayGetItemPtr(pItem, UR_ORCR_BAGNAME), pOrderCreateInfo->abBagName);
    }
    if( pOrderCreateInfo->atomBagName )
    {
-      hb_itemPutC(hb_arrayGetItemPtr( pItem, UR_ORCR_TAGNAME ), pOrderCreateInfo->atomBagName);
+      hb_itemPutC(hb_arrayGetItemPtr(pItem, UR_ORCR_TAGNAME), pOrderCreateInfo->atomBagName);
    }
    if( pOrderCreateInfo->itmOrder )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_ORCR_ORDER ), pOrderCreateInfo->itmOrder);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_ORCR_ORDER), pOrderCreateInfo->itmOrder);
    }
-   hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_ORCR_UNIQUE ), pOrderCreateInfo->fUnique);
+   hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_ORCR_UNIQUE), pOrderCreateInfo->fUnique);
    if( pOrderCreateInfo->itmCobExpr )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_ORCR_BKEY ), pOrderCreateInfo->itmCobExpr);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_ORCR_BKEY), pOrderCreateInfo->itmCobExpr);
    }
    if( pOrderCreateInfo->abExpr )
    {
-      hb_itemCopy(hb_arrayGetItemPtr( pItem, UR_ORCR_CKEY ), pOrderCreateInfo->abExpr);
+      hb_itemCopy(hb_arrayGetItemPtr(pItem, UR_ORCR_CKEY), pOrderCreateInfo->abExpr);
    }
 
    return pItem;
@@ -845,14 +845,14 @@ static PHB_ITEM hb_usrOrderCreateInfoToItem( LPDBORDERCREATEINFO pOrderCreateInf
 
 static HB_BOOL hb_usrItemToOrderCreateInfo( PHB_ITEM pItem, LPDBORDERCREATEINFO pOrderCreateInfo )
 {
-   if( pItem && hb_arrayLen( pItem ) == UR_ORCR_SIZE )
+   if( pItem && hb_arrayLen(pItem) == UR_ORCR_SIZE )
    {
-      PHB_ITEM pCond = hb_arrayGetItemPtr( pItem, UR_ORCR_CONDINFO );
+      PHB_ITEM pCond = hb_arrayGetItemPtr(pItem, UR_ORCR_CONDINFO);
 
-      if( hb_arrayLen( pCond ) > 0 )
+      if( hb_arrayLen(pCond) > 0 )
       {
          LPDBORDERCONDINFO pOrderCondInfo;
-         pOrderCondInfo = static_cast<LPDBORDERCONDINFO>( hb_xgrab(sizeof(DBORDERCONDINFO)) );
+         pOrderCondInfo = static_cast<LPDBORDERCONDINFO>(hb_xgrab(sizeof(DBORDERCONDINFO)));
          if( ! hb_usrItemToOrderCondInfo( pCond, pOrderCondInfo ) )
          {
             hb_xfree(pOrderCondInfo);
@@ -868,7 +868,7 @@ static HB_BOOL hb_usrItemToOrderCreateInfo( PHB_ITEM pItem, LPDBORDERCREATEINFO 
       pOrderCreateInfo->abBagName   = hb_usrArrayGetCPtr( pItem, UR_ORCR_BAGNAME );
       pOrderCreateInfo->atomBagName = hb_usrArrayGetCPtr( pItem, UR_ORCR_TAGNAME );
       pOrderCreateInfo->itmOrder    = hb_usrArrayGet( pItem, UR_ORCR_ORDER, HB_IT_ANY );
-      pOrderCreateInfo->fUnique     = hb_arrayGetL( pItem, UR_ORCR_UNIQUE );
+      pOrderCreateInfo->fUnique     = hb_arrayGetL(pItem, UR_ORCR_UNIQUE);
       pOrderCreateInfo->itmCobExpr  = hb_usrArrayGet( pItem, UR_ORCR_BKEY, HB_IT_ANY );
       pOrderCreateInfo->abExpr      = hb_usrArrayGet( pItem, UR_ORCR_CKEY, HB_IT_ANY );
 
@@ -892,7 +892,7 @@ static void hb_usrOrderCreateFree( LPDBORDERCREATEINFO pOrderCreateInfo )
 static HB_ERRCODE hb_usrInit( LPRDDNODE pRDD )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrInit(%p)", static_cast<void*>( pRDD ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrInit(%p)", static_cast<void*>(pRDD) ) );
 #endif
 
    HB_ERRCODE errCode;
@@ -903,11 +903,11 @@ static HB_ERRCODE hb_usrInit( LPRDDNODE pRDD )
       HB_SIZE nSize = ( pRDD->rddID + 1 ) * sizeof(LPUSRRDDNODE);
       if( s_uiUsrNodes )
       {
-         s_pUsrRddNodes = static_cast<LPUSRRDDNODE*>( hb_xrealloc(s_pUsrRddNodes, nSize) );
+         s_pUsrRddNodes = static_cast<LPUSRRDDNODE*>(hb_xrealloc(s_pUsrRddNodes, nSize));
       }
       else
       {
-         s_pUsrRddNodes = static_cast<LPUSRRDDNODE*>( hb_xgrab(nSize) );
+         s_pUsrRddNodes = static_cast<LPUSRRDDNODE*>(hb_xgrab(nSize));
       }
       do
       {
@@ -916,9 +916,9 @@ static HB_ERRCODE hb_usrInit( LPRDDNODE pRDD )
       while( ++s_uiUsrNodes <= pRDD->rddID );
    }
 
-   s_pUsrRddNodes[ pRDD->rddID ] = pNode = static_cast<LPUSRRDDNODE>( hb_xgrabz( sizeof(USRRDDNODE) ) );
+   s_pUsrRddNodes[ pRDD->rddID ] = pNode = static_cast<LPUSRRDDNODE>(hb_xgrabz(sizeof(USRRDDNODE)));
    pNode->pSuperTable = &pRDD->pSuperTable;
-   pNode->pMethods = reinterpret_cast<PHB_ITEM>( pRDD->pTable.whoCares );
+   pNode->pMethods = reinterpret_cast<PHB_ITEM>(pRDD->pTable.whoCares);
    pRDD->pTable.whoCares = pRDD->pSuperTable.whoCares;
    pNode->pItem = hb_itemNew(nullptr);
 
@@ -939,7 +939,7 @@ static HB_ERRCODE hb_usrInit( LPRDDNODE pRDD )
 static HB_ERRCODE hb_usrExit( LPRDDNODE pRDD )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrExit(%p)", static_cast<void*>( pRDD ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrExit(%p)", static_cast<void*>(pRDD) ) );
 #endif
 
    HB_ERRCODE errCode;
@@ -970,7 +970,7 @@ static HB_ERRCODE hb_usrExit( LPRDDNODE pRDD )
 
       if( s_uiUsrNodes )
       {
-         s_pUsrRddNodes = static_cast<LPUSRRDDNODE*>( hb_xrealloc(s_pUsrRddNodes, s_uiUsrNodes * sizeof(LPUSRRDDNODE)) );
+         s_pUsrRddNodes = static_cast<LPUSRRDDNODE*>(hb_xrealloc(s_pUsrRddNodes, s_uiUsrNodes * sizeof(LPUSRRDDNODE)));
       }
       else
       {
@@ -994,7 +994,7 @@ static HB_ERRCODE hb_usrExit( LPRDDNODE pRDD )
 static HB_ERRCODE hb_usrStructSize( AREAP pArea, HB_USHORT * puiSize )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrStrucSize(%p, %p)", static_cast<void*>( pArea ), static_cast<void*>( puiSize ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrStrucSize(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(puiSize) ) );
 #endif
 
    HB_ERRCODE errCode;
@@ -1009,12 +1009,12 @@ static HB_ERRCODE hb_usrStructSize( AREAP pArea, HB_USHORT * puiSize )
 static HB_ERRCODE hb_usrSysName( AREAP pArea, char * szSysName )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrSysName(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( szSysName ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrSysName(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(szSysName) ) );
 #endif
 
    int nOffset;
 
-   nOffset = static_cast<int>( hb_stackTopOffset() - hb_stackBaseOffset() );
+   nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
    hb_vmPushNil();
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_SYSNAME ) )
    {
@@ -1024,7 +1024,7 @@ static HB_ERRCODE hb_usrSysName( AREAP pArea, char * szSysName )
    }
 
    hb_vmPushInteger( pArea->uiArea );
-   hb_xvmPushLocalByRef( static_cast<HB_SHORT>( nOffset ) );
+   hb_xvmPushLocalByRef( static_cast<HB_SHORT>(nOffset) );
    hb_vmDo(2);
 
    hb_strncpy(szSysName, hb_itemGetCPtr(hb_stackItemFromBase(nOffset)), HB_RDD_MAX_DRIVERNAME_LEN);
@@ -1036,7 +1036,7 @@ static HB_ERRCODE hb_usrSysName( AREAP pArea, char * szSysName )
 static HB_ERRCODE hb_usrNewArea( AREAP pArea )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrNewArea(%p)", static_cast<void*>( pArea ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrNewArea(%p)", static_cast<void*>(pArea) ) );
 #endif
 
    HB_ERRCODE errCode;
@@ -1055,7 +1055,7 @@ static HB_ERRCODE hb_usrNewArea( AREAP pArea )
 static HB_ERRCODE hb_usrRelease( AREAP pArea )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrRelease(%p)", static_cast<void*>( pArea ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrRelease(%p)", static_cast<void*>(pArea) ) );
 #endif
 
    PHB_ITEM pItem;
@@ -1082,12 +1082,12 @@ static HB_ERRCODE hb_usrRelease( AREAP pArea )
 static HB_ERRCODE hb_usrBof( AREAP pArea, HB_BOOL * pBof )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrBof(%p, %p)", static_cast<void*>( pArea ), static_cast<void*>( pBof ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrBof(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pBof) ) );
 #endif
 
    int nOffset;
 
-   nOffset = static_cast<int>( hb_stackTopOffset() - hb_stackBaseOffset() );
+   nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
    hb_vmPushLogical( pArea->fBof );
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_BOF ) )
    {
@@ -1095,7 +1095,7 @@ static HB_ERRCODE hb_usrBof( AREAP pArea, HB_BOOL * pBof )
       return SUPER_BOF( pArea, pBof );
    }
    hb_vmPushInteger( pArea->uiArea );
-   hb_xvmPushLocalByRef( static_cast<HB_SHORT>( nOffset ) );
+   hb_xvmPushLocalByRef( static_cast<HB_SHORT>(nOffset) );
    hb_vmDo(2);
 
    if( hb_xvmPopLogical( pBof ) )
@@ -1111,12 +1111,12 @@ static HB_ERRCODE hb_usrBof( AREAP pArea, HB_BOOL * pBof )
 static HB_ERRCODE hb_usrEof( AREAP pArea, HB_BOOL * pEof )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrEof(%p, %p)", static_cast<void*>( pArea ), static_cast<void*>( pEof ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrEof(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pEof) ) );
 #endif
 
    int nOffset;
 
-   nOffset = static_cast<int>( hb_stackTopOffset() - hb_stackBaseOffset() );
+   nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
    hb_vmPushLogical( pArea->fEof );
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_EOF ) )
    {
@@ -1124,7 +1124,7 @@ static HB_ERRCODE hb_usrEof( AREAP pArea, HB_BOOL * pEof )
       return SUPER_EOF( pArea, pEof );
    }
    hb_vmPushInteger( pArea->uiArea );
-   hb_xvmPushLocalByRef( static_cast<HB_SHORT>( nOffset ) );
+   hb_xvmPushLocalByRef( static_cast<HB_SHORT>(nOffset) );
    hb_vmDo(2);
 
    if( hb_xvmPopLogical( pEof ) )
@@ -1140,12 +1140,12 @@ static HB_ERRCODE hb_usrEof( AREAP pArea, HB_BOOL * pEof )
 static HB_ERRCODE hb_usrFound( AREAP pArea, HB_BOOL * pFound )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrFound(%p, %p)", static_cast<void*>( pArea ), static_cast<void*>( pFound ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrFound(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pFound) ) );
 #endif
 
    int nOffset;
 
-   nOffset = static_cast<int>( hb_stackTopOffset() - hb_stackBaseOffset() );
+   nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
    hb_vmPushLogical( pArea->fFound );
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_FOUND ) )
    {
@@ -1153,7 +1153,7 @@ static HB_ERRCODE hb_usrFound( AREAP pArea, HB_BOOL * pFound )
       return SUPER_FOUND( pArea, pFound );
    }
    hb_vmPushInteger( pArea->uiArea );
-   hb_xvmPushLocalByRef( static_cast<HB_SHORT>( nOffset ) );
+   hb_xvmPushLocalByRef( static_cast<HB_SHORT>(nOffset) );
    hb_vmDo(2);
 
    if( hb_xvmPopLogical( pFound ) )
@@ -1169,7 +1169,7 @@ static HB_ERRCODE hb_usrFound( AREAP pArea, HB_BOOL * pFound )
 static HB_ERRCODE hb_usrGoBottom( AREAP pArea )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrGoBottom(%p)", static_cast<void*>( pArea ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrGoBottom(%p)", static_cast<void*>(pArea) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_GOBOTTOM ) )
@@ -1186,7 +1186,7 @@ static HB_ERRCODE hb_usrGoBottom( AREAP pArea )
 static HB_ERRCODE hb_usrGoTop( AREAP pArea )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrGoTop(%p)", static_cast<void*>( pArea ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrGoTop(%p)", static_cast<void*>(pArea) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_GOTOP ) )
@@ -1203,7 +1203,7 @@ static HB_ERRCODE hb_usrGoTop( AREAP pArea )
 static HB_ERRCODE hb_usrGoTo( AREAP pArea, HB_ULONG ulRecNo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrGoTo(%p,%lu)", static_cast<void*>( pArea ), ulRecNo ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrGoTo(%p,%lu)", static_cast<void*>(pArea), ulRecNo ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_GOTO ) )
@@ -1221,7 +1221,7 @@ static HB_ERRCODE hb_usrGoTo( AREAP pArea, HB_ULONG ulRecNo )
 static HB_ERRCODE hb_usrGoToId( AREAP pArea, PHB_ITEM pRecNo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrGoToId(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pRecNo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrGoToId(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pRecNo) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_GOTOID ) )
@@ -1239,7 +1239,7 @@ static HB_ERRCODE hb_usrGoToId( AREAP pArea, PHB_ITEM pRecNo )
 static HB_ERRCODE hb_usrSeek( AREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pItem, HB_BOOL fFindLast )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrSeek(%p,%d,%p,%d)", static_cast<void*>( pArea ), fSoftSeek, static_cast<void*>( pItem ), fFindLast ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrSeek(%p,%d,%p,%d)", static_cast<void*>(pArea), fSoftSeek, static_cast<void*>(pItem), fFindLast ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_SEEK ) )
@@ -1259,7 +1259,7 @@ static HB_ERRCODE hb_usrSeek( AREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pItem, HB
 static HB_ERRCODE hb_usrSkip( AREAP pArea, HB_LONG lRecords )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrSkip(%p,%ld)", static_cast<void*>( pArea ), lRecords ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrSkip(%p,%ld)", static_cast<void*>(pArea), lRecords ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_SKIP ) )
@@ -1277,7 +1277,7 @@ static HB_ERRCODE hb_usrSkip( AREAP pArea, HB_LONG lRecords )
 static HB_ERRCODE hb_usrSkipFilter( AREAP pArea, HB_LONG lDirect )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrSkipFilter(%p,%ld)", static_cast<void*>( pArea ), lDirect ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrSkipFilter(%p,%ld)", static_cast<void*>(pArea), lDirect ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_SKIPFILTER ) )
@@ -1295,7 +1295,7 @@ static HB_ERRCODE hb_usrSkipFilter( AREAP pArea, HB_LONG lDirect )
 static HB_ERRCODE hb_usrSkipRaw( AREAP pArea, HB_LONG lRecords )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrSkipRaw(%p,%ld)", static_cast<void*>( pArea ), lRecords ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrSkipRaw(%p,%ld)", static_cast<void*>(pArea), lRecords ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_SKIPRAW ) )
@@ -1317,12 +1317,12 @@ static HB_ERRCODE hb_usrSkipRaw( AREAP pArea, HB_LONG lRecords )
 static HB_ERRCODE hb_usrDeleted( AREAP pArea, HB_BOOL * pDeleted )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrDeleted(%p, %p)", static_cast<void*>( pArea ), static_cast<void*>( pDeleted ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrDeleted(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pDeleted) ) );
 #endif
 
    int nOffset;
 
-   nOffset = static_cast<int>( hb_stackTopOffset() - hb_stackBaseOffset() );
+   nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
    hb_vmPushLogical( HB_FALSE );
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_DELETED ) )
    {
@@ -1330,7 +1330,7 @@ static HB_ERRCODE hb_usrDeleted( AREAP pArea, HB_BOOL * pDeleted )
       return SUPER_DELETED( pArea, pDeleted );
    }
    hb_vmPushInteger( pArea->uiArea );
-   hb_xvmPushLocalByRef( static_cast<HB_SHORT>( nOffset ) );
+   hb_xvmPushLocalByRef( static_cast<HB_SHORT>(nOffset) );
    hb_vmDo(2);
 
    if( hb_xvmPopLogical( pDeleted ) )
@@ -1345,7 +1345,7 @@ static HB_ERRCODE hb_usrDeleted( AREAP pArea, HB_BOOL * pDeleted )
 static HB_ERRCODE hb_usrAddField( AREAP pArea, LPDBFIELDINFO pFieldInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrAddField(%p, %p)", static_cast<void*>( pArea ), static_cast<void*>( pFieldInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrAddField(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pFieldInfo) ) );
 #endif
 
    PHB_ITEM pItem;
@@ -1368,7 +1368,7 @@ static HB_ERRCODE hb_usrAddField( AREAP pArea, LPDBFIELDINFO pFieldInfo )
 static HB_ERRCODE hb_usrFieldDisplay( AREAP pArea, LPDBFIELDINFO pFieldInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrFieldDisplay(%p, %p)", static_cast<void*>( pArea ), static_cast<void*>( pFieldInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrFieldDisplay(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pFieldInfo) ) );
 #endif
 
    PHB_ITEM pItem;
@@ -1391,12 +1391,12 @@ static HB_ERRCODE hb_usrFieldDisplay( AREAP pArea, LPDBFIELDINFO pFieldInfo )
 static HB_ERRCODE hb_usrFieldName( AREAP pArea, HB_USHORT uiIndex, char * szName )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrFieldName(%p,%hu,%p)", static_cast<void*>( pArea ), uiIndex, static_cast<void*>( szName ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrFieldName(%p,%hu,%p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(szName) ) );
 #endif
 
    int nOffset;
 
-   nOffset = static_cast<int>( hb_stackTopOffset() - hb_stackBaseOffset() );
+   nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
    hb_vmPushNil();
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_FIELDNAME ) )
    {
@@ -1406,7 +1406,7 @@ static HB_ERRCODE hb_usrFieldName( AREAP pArea, HB_USHORT uiIndex, char * szName
 
    hb_vmPushInteger( pArea->uiArea );
    hb_vmPushInteger( uiIndex );
-   hb_xvmPushLocalByRef( static_cast<HB_SHORT>( nOffset ) );
+   hb_xvmPushLocalByRef( static_cast<HB_SHORT>(nOffset) );
    hb_vmDo(3);
 
    hb_strncpy(szName, hb_itemGetCPtr(hb_stackItemFromBase(nOffset)), pArea->uiMaxFieldNameLength);
@@ -1418,7 +1418,7 @@ static HB_ERRCODE hb_usrFieldName( AREAP pArea, HB_USHORT uiIndex, char * szName
 static HB_ERRCODE hb_usrAppend( AREAP pArea, HB_BOOL fUnLockAll )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrAppend(%p, %d)", static_cast<void*>( pArea ), fUnLockAll ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrAppend(%p, %d)", static_cast<void*>(pArea), fUnLockAll ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_APPEND ) )
@@ -1436,7 +1436,7 @@ static HB_ERRCODE hb_usrAppend( AREAP pArea, HB_BOOL fUnLockAll )
 static HB_ERRCODE hb_usrDelete( AREAP pArea )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrDelete(%p)", static_cast<void*>( pArea ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrDelete(%p)", static_cast<void*>(pArea) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_DELETE ) )
@@ -1453,7 +1453,7 @@ static HB_ERRCODE hb_usrDelete( AREAP pArea )
 static HB_ERRCODE hb_usrRecall( AREAP pArea )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrRecall(%p)", static_cast<void*>( pArea ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrRecall(%p)", static_cast<void*>(pArea) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_RECALL ) )
@@ -1470,12 +1470,12 @@ static HB_ERRCODE hb_usrRecall( AREAP pArea )
 static HB_ERRCODE hb_usrFieldCount( AREAP pArea, HB_USHORT * puiFields )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrFieldCount(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( puiFields ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrFieldCount(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(puiFields) ) );
 #endif
 
    int nOffset;
 
-   nOffset = static_cast<int>( hb_stackTopOffset() - hb_stackBaseOffset() );
+   nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
    hb_vmPushInteger(0);
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_FIELDCOUNT ) )
    {
@@ -1484,10 +1484,10 @@ static HB_ERRCODE hb_usrFieldCount( AREAP pArea, HB_USHORT * puiFields )
    }
 
    hb_vmPushInteger( pArea->uiArea );
-   hb_xvmPushLocalByRef( static_cast<HB_SHORT>( nOffset ) );
+   hb_xvmPushLocalByRef( static_cast<HB_SHORT>(nOffset) );
    hb_vmDo(2);
 
-   *puiFields = static_cast<HB_USHORT>( hb_itemGetNI(hb_stackItemFromBase(nOffset)) );
+   *puiFields = static_cast<HB_USHORT>(hb_itemGetNI(hb_stackItemFromBase(nOffset)));
    hb_stackPop();
 
    return hb_usrReturn();
@@ -1496,7 +1496,7 @@ static HB_ERRCODE hb_usrFieldCount( AREAP pArea, HB_USHORT * puiFields )
 static HB_ERRCODE hb_usrFlush( AREAP pArea )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrFlush(%p)", static_cast<void*>( pArea ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrFlush(%p)", static_cast<void*>(pArea) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_FLUSH ) )
@@ -1513,7 +1513,7 @@ static HB_ERRCODE hb_usrFlush( AREAP pArea )
 static HB_ERRCODE hb_usrGoCold( AREAP pArea )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrGoCold(%p)", static_cast<void*>( pArea ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrGoCold(%p)", static_cast<void*>(pArea) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_GOCOLD ) )
@@ -1530,7 +1530,7 @@ static HB_ERRCODE hb_usrGoCold( AREAP pArea )
 static HB_ERRCODE hb_usrGoHot( AREAP pArea )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrGoHot(%p)", static_cast<void*>( pArea ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrGoHot(%p)", static_cast<void*>(pArea) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_GOHOT ) )
@@ -1547,7 +1547,7 @@ static HB_ERRCODE hb_usrGoHot( AREAP pArea )
 static HB_ERRCODE hb_usrPutRec( AREAP pArea, const HB_BYTE * pBuffer )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrPutRec(%p,%p)", static_cast<void*>( pArea ), static_cast<const void*>( pBuffer ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrPutRec(%p,%p)", static_cast<void*>(pArea), static_cast<const void*>(pBuffer) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_PUTREC ) )
@@ -1565,13 +1565,13 @@ static HB_ERRCODE hb_usrPutRec( AREAP pArea, const HB_BYTE * pBuffer )
 static HB_ERRCODE hb_usrGetRec( AREAP pArea, HB_BYTE ** pBuffer )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrGetRec(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pBuffer ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrGetRec(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pBuffer) ) );
 #endif
 
    PHB_ITEM pItem;
    int      nOffset;
 
-   nOffset = static_cast<int>( hb_stackTopOffset() - hb_stackBaseOffset() );
+   nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
    hb_vmPushNil();
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_GETREC ) )
    {
@@ -1580,17 +1580,17 @@ static HB_ERRCODE hb_usrGetRec( AREAP pArea, HB_BYTE ** pBuffer )
    }
 
    hb_vmPushInteger( pArea->uiArea );
-   hb_xvmPushLocalByRef( static_cast<HB_SHORT>( nOffset ) );
+   hb_xvmPushLocalByRef( static_cast<HB_SHORT>(nOffset) );
    hb_vmDo(2);
 
    pItem = hb_stackItemFromBase(nOffset);
    if( HB_IS_STRING(pItem) )
    {
-      *pBuffer = reinterpret_cast<HB_BYTE*>( const_cast<char*>( hb_itemGetCPtr(pItem) ) );
+      *pBuffer = reinterpret_cast<HB_BYTE*>(const_cast<char*>(hb_itemGetCPtr(pItem)));
    }
    else
    {
-      *pBuffer = static_cast<HB_BYTE*>( hb_itemGetPtr(pItem) );
+      *pBuffer = static_cast<HB_BYTE*>(hb_itemGetPtr(pItem));
    }
    hb_stackPop();
 
@@ -1600,7 +1600,7 @@ static HB_ERRCODE hb_usrGetRec( AREAP pArea, HB_BYTE ** pBuffer )
 static HB_ERRCODE hb_usrGetValue( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrGetValue(%p,%hu,%p)", static_cast<void*>( pArea ), uiIndex, static_cast<void*>( pItem ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrGetValue(%p,%hu,%p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_GETVALUE ) )
@@ -1619,7 +1619,7 @@ static HB_ERRCODE hb_usrGetValue( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem
 static HB_ERRCODE hb_usrPutValue( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrPutValue(%p,%hu,%p)", static_cast<void*>( pArea ), uiIndex, static_cast<void*>( pItem ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrPutValue(%p,%hu,%p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_PUTVALUE ) )
@@ -1638,12 +1638,12 @@ static HB_ERRCODE hb_usrPutValue( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem
 static HB_ERRCODE hb_usrGetVarLen( AREAP pArea, HB_USHORT uiIndex, HB_ULONG * pulLength )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrGetVarLen(%p,%hu,%p)", static_cast<void*>( pArea ), uiIndex, static_cast<void*>( pulLength ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrGetVarLen(%p,%hu,%p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pulLength) ) );
 #endif
 
    int nOffset;
 
-   nOffset = static_cast<int>( hb_stackTopOffset() - hb_stackBaseOffset() );
+   nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
    hb_vmPushInteger(0);
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_GETVARLEN ) )
    {
@@ -1653,7 +1653,7 @@ static HB_ERRCODE hb_usrGetVarLen( AREAP pArea, HB_USHORT uiIndex, HB_ULONG * pu
 
    hb_vmPushInteger( pArea->uiArea );
    hb_vmPushInteger( uiIndex );
-   hb_xvmPushLocalByRef( static_cast<HB_SHORT>( nOffset ) );
+   hb_xvmPushLocalByRef( static_cast<HB_SHORT>(nOffset) );
    hb_vmDo(3);
 
    *pulLength = hb_itemGetNL(hb_stackItemFromBase(nOffset));
@@ -1665,12 +1665,12 @@ static HB_ERRCODE hb_usrGetVarLen( AREAP pArea, HB_USHORT uiIndex, HB_ULONG * pu
 static HB_ERRCODE hb_usrRecCount( AREAP pArea, HB_ULONG * pulRecCount )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrRecCount(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pulRecCount ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrRecCount(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pulRecCount) ) );
 #endif
 
    int nOffset;
 
-   nOffset = static_cast<int>( hb_stackTopOffset() - hb_stackBaseOffset() );
+   nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
    hb_vmPushInteger(0);
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_RECCOUNT ) )
    {
@@ -1679,7 +1679,7 @@ static HB_ERRCODE hb_usrRecCount( AREAP pArea, HB_ULONG * pulRecCount )
    }
 
    hb_vmPushInteger( pArea->uiArea );
-   hb_xvmPushLocalByRef( static_cast<HB_SHORT>( nOffset ) );
+   hb_xvmPushLocalByRef( static_cast<HB_SHORT>(nOffset) );
    hb_vmDo(2);
 
    *pulRecCount = hb_itemGetNL(hb_stackItemFromBase(nOffset));
@@ -1691,7 +1691,7 @@ static HB_ERRCODE hb_usrRecCount( AREAP pArea, HB_ULONG * pulRecCount )
 static HB_ERRCODE hb_usrRecInfo( AREAP pArea, PHB_ITEM pRecID, HB_USHORT uiInfoType, PHB_ITEM pInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrRecInfo(%p,%p,%hu,%p)", static_cast<void*>( pArea ), static_cast<void*>( pRecID ), uiInfoType, static_cast<void*>( pInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrRecInfo(%p,%p,%hu,%p)", static_cast<void*>(pArea), static_cast<void*>(pRecID), uiInfoType, static_cast<void*>(pInfo) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_RECINFO ) )
@@ -1711,12 +1711,12 @@ static HB_ERRCODE hb_usrRecInfo( AREAP pArea, PHB_ITEM pRecID, HB_USHORT uiInfoT
 static HB_ERRCODE hb_usrRecNo( AREAP pArea, HB_ULONG * pulRecNo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrRecNo(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pulRecNo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrRecNo(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pulRecNo) ) );
 #endif
 
    int nOffset;
 
-   nOffset = static_cast<int>( hb_stackTopOffset() - hb_stackBaseOffset() );
+   nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
    hb_vmPushInteger(0);
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_RECNO ) )
    {
@@ -1725,7 +1725,7 @@ static HB_ERRCODE hb_usrRecNo( AREAP pArea, HB_ULONG * pulRecNo )
    }
 
    hb_vmPushInteger( pArea->uiArea );
-   hb_xvmPushLocalByRef( static_cast<HB_SHORT>( nOffset ) );
+   hb_xvmPushLocalByRef( static_cast<HB_SHORT>(nOffset) );
    hb_vmDo(2);
 
    *pulRecNo = hb_itemGetNL(hb_stackItemFromBase(nOffset));
@@ -1737,7 +1737,7 @@ static HB_ERRCODE hb_usrRecNo( AREAP pArea, HB_ULONG * pulRecNo )
 static HB_ERRCODE hb_usrRecId( AREAP pArea, PHB_ITEM pRecId )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrRecId(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pRecId ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrRecId(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pRecId) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_RECID ) )
@@ -1755,7 +1755,7 @@ static HB_ERRCODE hb_usrRecId( AREAP pArea, PHB_ITEM pRecId )
 static HB_ERRCODE hb_usrFieldInfo( AREAP pArea, HB_USHORT uiIndex, HB_USHORT uiInfoType, PHB_ITEM pInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrFieldInfo(%p,%hu,%hu,%p)", static_cast<void*>( pArea ), uiIndex, uiInfoType, static_cast<void*>( pInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrFieldInfo(%p,%hu,%hu,%p)", static_cast<void*>(pArea), uiIndex, uiInfoType, static_cast<void*>(pInfo) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_FIELDINFO ) )
@@ -1775,7 +1775,7 @@ static HB_ERRCODE hb_usrFieldInfo( AREAP pArea, HB_USHORT uiIndex, HB_USHORT uiI
 static HB_ERRCODE hb_usrCreateFields( AREAP pArea, PHB_ITEM pStruct )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrCreateFields(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pStruct ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrCreateFields(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pStruct) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_CREATEFIELDS ) )
@@ -1793,7 +1793,7 @@ static HB_ERRCODE hb_usrCreateFields( AREAP pArea, PHB_ITEM pStruct )
 static HB_ERRCODE hb_usrSetFieldExtent( AREAP pArea, HB_USHORT uiFieldExtent )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrSetFieldExtent(%p,%hu)", static_cast<void*>( pArea ), uiFieldExtent ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrSetFieldExtent(%p,%hu)", static_cast<void*>(pArea), uiFieldExtent ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_SETFIELDEXTENT ) )
@@ -1815,12 +1815,12 @@ static HB_ERRCODE hb_usrSetFieldExtent( AREAP pArea, HB_USHORT uiFieldExtent )
 static HB_ERRCODE hb_usrAlias( AREAP pArea, char * szAlias )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrAlias(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( szAlias ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrAlias(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(szAlias) ) );
 #endif
 
    int nOffset;
 
-   nOffset = static_cast<int>( hb_stackTopOffset() - hb_stackBaseOffset() );
+   nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
    hb_vmPushNil();
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_ALIAS ) )
    {
@@ -1829,7 +1829,7 @@ static HB_ERRCODE hb_usrAlias( AREAP pArea, char * szAlias )
    }
 
    hb_vmPushInteger( pArea->uiArea );
-   hb_xvmPushLocalByRef( static_cast<HB_SHORT>( nOffset ) );
+   hb_xvmPushLocalByRef( static_cast<HB_SHORT>(nOffset) );
    hb_vmDo(2);
 
    hb_strncpy(szAlias, hb_itemGetCPtr(hb_stackItemFromBase(nOffset)), HB_RDD_MAX_ALIAS_LEN);
@@ -1841,7 +1841,7 @@ static HB_ERRCODE hb_usrAlias( AREAP pArea, char * szAlias )
 static HB_ERRCODE hb_usrClose( AREAP pArea )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrClose(%p)", static_cast<void*>( pArea ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrClose(%p)", static_cast<void*>(pArea) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_CLOSE ) )
@@ -1858,7 +1858,7 @@ static HB_ERRCODE hb_usrClose( AREAP pArea )
 static HB_ERRCODE hb_usrCreate( AREAP pArea, LPDBOPENINFO pOpenInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrCreate(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pOpenInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrCreate(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pOpenInfo) ) );
 #endif
 
    PHB_ITEM pItem;
@@ -1881,7 +1881,7 @@ static HB_ERRCODE hb_usrCreate( AREAP pArea, LPDBOPENINFO pOpenInfo )
 static HB_ERRCODE hb_usrOpen( AREAP pArea, LPDBOPENINFO pOpenInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrOpen(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pOpenInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrOpen(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pOpenInfo) ) );
 #endif
 
    PHB_ITEM pItem;
@@ -1904,7 +1904,7 @@ static HB_ERRCODE hb_usrOpen( AREAP pArea, LPDBOPENINFO pOpenInfo )
 static HB_ERRCODE hb_usrInfo( AREAP pArea, HB_USHORT uiInfoType, PHB_ITEM pInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrInfo(%p,%hu,%p)", static_cast<void*>( pArea ), uiInfoType, static_cast<void*>( pInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrInfo(%p,%hu,%p)", static_cast<void*>(pArea), uiInfoType, static_cast<void*>(pInfo) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_INFO ) )
@@ -1923,7 +1923,7 @@ static HB_ERRCODE hb_usrInfo( AREAP pArea, HB_USHORT uiInfoType, PHB_ITEM pInfo 
 static HB_ERRCODE hb_usrEval( AREAP pArea, LPDBEVALINFO pEvalInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrEval(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pEvalInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrEval(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pEvalInfo) ) );
 #endif
 
    PHB_ITEM pItem;
@@ -1946,7 +1946,7 @@ static HB_ERRCODE hb_usrEval( AREAP pArea, LPDBEVALINFO pEvalInfo )
 static HB_ERRCODE hb_usrPack( AREAP pArea )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrPack(%p)", static_cast<void*>( pArea ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrPack(%p)", static_cast<void*>(pArea) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_PACK ) )
@@ -1963,12 +1963,12 @@ static HB_ERRCODE hb_usrPack( AREAP pArea )
 static HB_ERRCODE hb_usrPackRec( AREAP pArea, HB_ULONG ulRecNo, HB_BOOL * pWritten )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrPackRec(%p,%lu,%p)", static_cast<void*>( pArea ), ulRecNo, static_cast<void*>( pWritten ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrPackRec(%p,%lu,%p)", static_cast<void*>(pArea), ulRecNo, static_cast<void*>(pWritten) ) );
 #endif
 
    int nOffset;
 
-   nOffset = static_cast<int>( hb_stackTopOffset() - hb_stackBaseOffset() );
+   nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
    hb_vmPushLogical( HB_TRUE );
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_PACKREC ) )
    {
@@ -1978,7 +1978,7 @@ static HB_ERRCODE hb_usrPackRec( AREAP pArea, HB_ULONG ulRecNo, HB_BOOL * pWritt
 
    hb_vmPushInteger( pArea->uiArea );
    hb_vmPushLong( ulRecNo );
-   hb_xvmPushLocalByRef( static_cast<HB_SHORT>( nOffset ) );
+   hb_xvmPushLocalByRef( static_cast<HB_SHORT>(nOffset) );
    hb_vmDo(3);
 
    if( hb_xvmPopLogical( pWritten ) )
@@ -1993,7 +1993,7 @@ static HB_ERRCODE hb_usrPackRec( AREAP pArea, HB_ULONG ulRecNo, HB_BOOL * pWritt
 static HB_ERRCODE hb_usrSort( AREAP pArea, LPDBSORTINFO pSortInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrSort(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pSortInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrSort(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pSortInfo) ) );
 #endif
 
    PHB_ITEM pItem;
@@ -2016,7 +2016,7 @@ static HB_ERRCODE hb_usrSort( AREAP pArea, LPDBSORTINFO pSortInfo )
 static HB_ERRCODE hb_usrTrans( AREAP pArea, LPDBTRANSINFO pTransInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrTrans(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pTransInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrTrans(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pTransInfo) ) );
 #endif
 
    PHB_ITEM pItem;
@@ -2039,7 +2039,7 @@ static HB_ERRCODE hb_usrTrans( AREAP pArea, LPDBTRANSINFO pTransInfo )
 static HB_ERRCODE hb_usrTransRec( AREAP pArea, LPDBTRANSINFO pTransInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrTransRec(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pTransInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrTransRec(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pTransInfo) ) );
 #endif
 
    PHB_ITEM pItem;
@@ -2062,7 +2062,7 @@ static HB_ERRCODE hb_usrTransRec( AREAP pArea, LPDBTRANSINFO pTransInfo )
 static HB_ERRCODE hb_usrZap( AREAP pArea )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrZap(%p)", static_cast<void*>( pArea ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrZap(%p)", static_cast<void*>(pArea) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_ZAP ) )
@@ -2083,7 +2083,7 @@ static HB_ERRCODE hb_usrZap( AREAP pArea )
 static HB_ERRCODE hb_usrChildEnd( AREAP pArea, LPDBRELINFO pRelInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrChildEnd(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pRelInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrChildEnd(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pRelInfo) ) );
 #endif
 
    PHB_ITEM pItem;
@@ -2106,7 +2106,7 @@ static HB_ERRCODE hb_usrChildEnd( AREAP pArea, LPDBRELINFO pRelInfo )
 static HB_ERRCODE hb_usrChildStart( AREAP pArea, LPDBRELINFO pRelInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrChildStart(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pRelInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrChildStart(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pRelInfo) ) );
 #endif
 
    PHB_ITEM pItem;
@@ -2129,7 +2129,7 @@ static HB_ERRCODE hb_usrChildStart( AREAP pArea, LPDBRELINFO pRelInfo )
 static HB_ERRCODE hb_usrChildSync( AREAP pArea, LPDBRELINFO pRelInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrChildSync(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pRelInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrChildSync(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pRelInfo) ) );
 #endif
 
    PHB_ITEM pItem;
@@ -2152,7 +2152,7 @@ static HB_ERRCODE hb_usrChildSync( AREAP pArea, LPDBRELINFO pRelInfo )
 static HB_ERRCODE hb_usrSyncChildren( AREAP pArea )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrSyncChildren(%p)", static_cast<void*>( pArea ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrSyncChildren(%p)", static_cast<void*>(pArea) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_SYNCCHILDREN ) )
@@ -2169,7 +2169,7 @@ static HB_ERRCODE hb_usrSyncChildren( AREAP pArea )
 static HB_ERRCODE hb_usrClearRel( AREAP pArea )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrClearRel(%p)", static_cast<void*>( pArea ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrClearRel(%p)", static_cast<void*>(pArea) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_CLEARREL ) )
@@ -2186,7 +2186,7 @@ static HB_ERRCODE hb_usrClearRel( AREAP pArea )
 static HB_ERRCODE hb_usrForceRel( AREAP pArea )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrForceRel(%p)", static_cast<void*>( pArea ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrForceRel(%p)", static_cast<void*>(pArea) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_FORCEREL ) )
@@ -2203,12 +2203,12 @@ static HB_ERRCODE hb_usrForceRel( AREAP pArea )
 static HB_ERRCODE hb_usrRelArea( AREAP pArea, HB_USHORT uiRelNo, HB_USHORT * puiRelArea )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrRelArea(%p,%hu,%p)", static_cast<void*>( pArea ), uiRelNo, static_cast<void*>( puiRelArea ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrRelArea(%p,%hu,%p)", static_cast<void*>(pArea), uiRelNo, static_cast<void*>(puiRelArea) ) );
 #endif
 
    int nOffset;
 
-   nOffset = static_cast<int>( hb_stackTopOffset() - hb_stackBaseOffset() );
+   nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
    hb_vmPushInteger(0);
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_RELAREA ) )
    {
@@ -2218,10 +2218,10 @@ static HB_ERRCODE hb_usrRelArea( AREAP pArea, HB_USHORT uiRelNo, HB_USHORT * pui
 
    hb_vmPushInteger( pArea->uiArea );
    hb_vmPushInteger( uiRelNo );
-   hb_xvmPushLocalByRef( static_cast<HB_SHORT>( nOffset ) );
+   hb_xvmPushLocalByRef( static_cast<HB_SHORT>(nOffset) );
    hb_vmDo(3);
 
-   *puiRelArea = static_cast<HB_USHORT>( hb_itemGetNI(hb_stackItemFromBase(nOffset)) );
+   *puiRelArea = static_cast<HB_USHORT>(hb_itemGetNI(hb_stackItemFromBase(nOffset)));
    hb_stackPop();
 
    return hb_usrReturn();
@@ -2230,7 +2230,7 @@ static HB_ERRCODE hb_usrRelArea( AREAP pArea, HB_USHORT uiRelNo, HB_USHORT * pui
 static HB_ERRCODE hb_usrRelEval( AREAP pArea, LPDBRELINFO pRelInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrRelEval(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pRelInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrRelEval(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pRelInfo) ) );
 #endif
 
    PHB_ITEM pItem;
@@ -2253,7 +2253,7 @@ static HB_ERRCODE hb_usrRelEval( AREAP pArea, LPDBRELINFO pRelInfo )
 static HB_ERRCODE hb_usrRelText( AREAP pArea, HB_USHORT uiRelNo, PHB_ITEM pExpr )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrRelText(%p,%hu,%p)", static_cast<void*>( pArea ), uiRelNo, static_cast<void*>( pExpr ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrRelText(%p,%hu,%p)", static_cast<void*>(pArea), uiRelNo, static_cast<void*>(pExpr) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_RELTEXT ) )
@@ -2272,7 +2272,7 @@ static HB_ERRCODE hb_usrRelText( AREAP pArea, HB_USHORT uiRelNo, PHB_ITEM pExpr 
 static HB_ERRCODE hb_usrSetRel( AREAP pArea, LPDBRELINFO pRelInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrSetRel(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pRelInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrSetRel(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pRelInfo) ) );
 #endif
 
    PHB_ITEM pItem;
@@ -2299,7 +2299,7 @@ static HB_ERRCODE hb_usrSetRel( AREAP pArea, LPDBRELINFO pRelInfo )
 static HB_ERRCODE hb_usrOrderListAdd( AREAP pArea, LPDBORDERINFO pOrderInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrOrderListAdd(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pOrderInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrOrderListAdd(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pOrderInfo) ) );
 #endif
 
    PHB_ITEM pItem, pResult;
@@ -2315,7 +2315,7 @@ static HB_ERRCODE hb_usrOrderListAdd( AREAP pArea, LPDBORDERINFO pOrderInfo )
    hb_vmPush( pItem );
    hb_vmDo(2);
 
-   pResult = hb_arrayGetItemPtr( pItem, UR_ORI_RESULT );
+   pResult = hb_arrayGetItemPtr(pItem, UR_ORI_RESULT);
    if( pResult && ! HB_IS_NIL(pResult) )
    {
       if( pOrderInfo->itmResult )
@@ -2335,7 +2335,7 @@ static HB_ERRCODE hb_usrOrderListAdd( AREAP pArea, LPDBORDERINFO pOrderInfo )
 static HB_ERRCODE hb_usrOrderListClear( AREAP pArea )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrOrderListClear(%p)", static_cast<void*>( pArea ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrOrderListClear(%p)", static_cast<void*>(pArea) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_ORDLSTCLEAR ) )
@@ -2352,7 +2352,7 @@ static HB_ERRCODE hb_usrOrderListClear( AREAP pArea )
 static HB_ERRCODE hb_usrOrderListDelete( AREAP pArea, LPDBORDERINFO pOrderInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrOrderListDelete(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pOrderInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrOrderListDelete(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pOrderInfo) ) );
 #endif
 
    PHB_ITEM pItem, pResult;
@@ -2368,7 +2368,7 @@ static HB_ERRCODE hb_usrOrderListDelete( AREAP pArea, LPDBORDERINFO pOrderInfo )
    hb_vmPush( pItem );
    hb_vmDo(2);
 
-   pResult = hb_arrayGetItemPtr( pItem, UR_ORI_RESULT );
+   pResult = hb_arrayGetItemPtr(pItem, UR_ORI_RESULT);
    if( pResult && ! HB_IS_NIL(pResult) )
    {
       if( pOrderInfo->itmResult )
@@ -2388,7 +2388,7 @@ static HB_ERRCODE hb_usrOrderListDelete( AREAP pArea, LPDBORDERINFO pOrderInfo )
 static HB_ERRCODE hb_usrOrderListFocus( AREAP pArea, LPDBORDERINFO pOrderInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrOrderListFocus(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pOrderInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrOrderListFocus(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pOrderInfo) ) );
 #endif
 
    PHB_ITEM pItem, pResult;
@@ -2404,7 +2404,7 @@ static HB_ERRCODE hb_usrOrderListFocus( AREAP pArea, LPDBORDERINFO pOrderInfo )
    hb_vmPush( pItem );
    hb_vmDo(2);
 
-   pResult = hb_arrayGetItemPtr( pItem, UR_ORI_RESULT );
+   pResult = hb_arrayGetItemPtr(pItem, UR_ORI_RESULT);
    if( pResult && ! HB_IS_NIL(pResult) )
    {
       if( pOrderInfo->itmResult )
@@ -2424,7 +2424,7 @@ static HB_ERRCODE hb_usrOrderListFocus( AREAP pArea, LPDBORDERINFO pOrderInfo )
 static HB_ERRCODE hb_usrOrderListRebuild( AREAP pArea )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrOrderListRebuild(%p)", static_cast<void*>( pArea ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrOrderListRebuild(%p)", static_cast<void*>(pArea) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_ORDLSTREBUILD ) )
@@ -2441,7 +2441,7 @@ static HB_ERRCODE hb_usrOrderListRebuild( AREAP pArea )
 static HB_ERRCODE hb_usrOrderCondition( AREAP pArea, LPDBORDERCONDINFO pOrderCondInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrOrderCondition(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pOrderCondInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrOrderCondition(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pOrderCondInfo) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_ORDSETCOND ) )
@@ -2469,7 +2469,7 @@ static HB_ERRCODE hb_usrOrderCondition( AREAP pArea, LPDBORDERCONDINFO pOrderCon
 static HB_ERRCODE hb_usrOrderCreate( AREAP pArea, LPDBORDERCREATEINFO pOrderCreateInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrOrderCreate(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pOrderCreateInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrOrderCreate(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pOrderCreateInfo) ) );
 #endif
 
    PHB_ITEM pItem;
@@ -2492,7 +2492,7 @@ static HB_ERRCODE hb_usrOrderCreate( AREAP pArea, LPDBORDERCREATEINFO pOrderCrea
 static HB_ERRCODE hb_usrOrderDestroy( AREAP pArea, LPDBORDERINFO pOrderInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrOrderDestroy(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pOrderInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrOrderDestroy(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pOrderInfo) ) );
 #endif
 
    PHB_ITEM pItem, pResult;
@@ -2508,7 +2508,7 @@ static HB_ERRCODE hb_usrOrderDestroy( AREAP pArea, LPDBORDERINFO pOrderInfo )
    hb_vmPush( pItem );
    hb_vmDo(2);
 
-   pResult = hb_arrayGetItemPtr( pItem, UR_ORI_RESULT );
+   pResult = hb_arrayGetItemPtr(pItem, UR_ORI_RESULT);
    if( pResult && ! HB_IS_NIL(pResult) )
    {
       if( pOrderInfo->itmResult )
@@ -2528,7 +2528,7 @@ static HB_ERRCODE hb_usrOrderDestroy( AREAP pArea, LPDBORDERINFO pOrderInfo )
 static HB_ERRCODE hb_usrOrderInfo( AREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO pOrderInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrOrderInfo(%p,%hu,%p)", static_cast<void*>( pArea ), uiIndex, static_cast<void*>( pOrderInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrOrderInfo(%p,%hu,%p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pOrderInfo) ) );
 #endif
 
    PHB_ITEM pItem, pResult;
@@ -2545,7 +2545,7 @@ static HB_ERRCODE hb_usrOrderInfo( AREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO
    hb_vmPush( pItem );
    hb_vmDo(3);
 
-   pResult = hb_arrayGetItemPtr( pItem, UR_ORI_RESULT );
+   pResult = hb_arrayGetItemPtr(pItem, UR_ORI_RESULT);
    if( pResult && ! HB_IS_NIL(pResult) )
    {
       if( pOrderInfo->itmResult )
@@ -2569,7 +2569,7 @@ static HB_ERRCODE hb_usrOrderInfo( AREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO
 static HB_ERRCODE hb_usrClearFilter( AREAP pArea )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrClearFilter(%p)", static_cast<void*>( pArea ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrClearFilter(%p)", static_cast<void*>(pArea) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_CLEARFILTER ) )
@@ -2586,7 +2586,7 @@ static HB_ERRCODE hb_usrClearFilter( AREAP pArea )
 static HB_ERRCODE hb_usrClearLocate( AREAP pArea )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrClearLocate(%p)", static_cast<void*>( pArea ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrClearLocate(%p)", static_cast<void*>(pArea) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_CLEARLOCATE ) )
@@ -2603,7 +2603,7 @@ static HB_ERRCODE hb_usrClearLocate( AREAP pArea )
 static HB_ERRCODE hb_usrClearScope( AREAP pArea )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrClearScope(%p)", static_cast<void*>( pArea ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrClearScope(%p)", static_cast<void*>(pArea) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_CLEARSCOPE ) )
@@ -2620,7 +2620,7 @@ static HB_ERRCODE hb_usrClearScope( AREAP pArea )
 static HB_ERRCODE hb_usrFilterText( AREAP pArea, PHB_ITEM pFilter )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrFilterText(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pFilter ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrFilterText(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pFilter) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_FILTERTEXT ) )
@@ -2638,7 +2638,7 @@ static HB_ERRCODE hb_usrFilterText( AREAP pArea, PHB_ITEM pFilter )
 static HB_ERRCODE hb_usrSetFilter( AREAP pArea, LPDBFILTERINFO pFilterInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrSetFilter(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pFilterInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrSetFilter(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pFilterInfo) ) );
 #endif
 
    PHB_ITEM pItem;
@@ -2661,7 +2661,7 @@ static HB_ERRCODE hb_usrSetFilter( AREAP pArea, LPDBFILTERINFO pFilterInfo )
 static HB_ERRCODE hb_usrSetLocate( AREAP pArea, LPDBSCOPEINFO pScopeInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrSetLocate(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pScopeInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrSetLocate(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pScopeInfo) ) );
 #endif
 
    PHB_ITEM pItem;
@@ -2684,7 +2684,7 @@ static HB_ERRCODE hb_usrSetLocate( AREAP pArea, LPDBSCOPEINFO pScopeInfo )
 static HB_ERRCODE hb_usrLocate( AREAP pArea, HB_BOOL fContinue )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrLocate(%p,%d)", static_cast<void*>( pArea ), fContinue ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrLocate(%p,%d)", static_cast<void*>(pArea), fContinue ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_LOCATE ) )
@@ -2706,7 +2706,7 @@ static HB_ERRCODE hb_usrLocate( AREAP pArea, HB_BOOL fContinue )
 static HB_ERRCODE hb_usrCompile( AREAP pArea, const char * szExpr )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrCompile(%p,%p)", static_cast<void*>( pArea ), static_cast<const void*>( szExpr ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrCompile(%p,%p)", static_cast<void*>(pArea), static_cast<const void*>(szExpr) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_COMPILE ) )
@@ -2724,7 +2724,7 @@ static HB_ERRCODE hb_usrCompile( AREAP pArea, const char * szExpr )
 static HB_ERRCODE hb_usrError( AREAP pArea, PHB_ITEM pError )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrError(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pError ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrError(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pError) ) );
 #endif
 
    if( ! pArea )
@@ -2749,7 +2749,7 @@ static HB_ERRCODE hb_usrError( AREAP pArea, PHB_ITEM pError )
 static HB_ERRCODE hb_usrEvalBlock( AREAP pArea, PHB_ITEM pBlock )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrEvalBlock(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pBlock ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrEvalBlock(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pBlock) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_EVALBLOCK ) )
@@ -2771,7 +2771,7 @@ static HB_ERRCODE hb_usrEvalBlock( AREAP pArea, PHB_ITEM pBlock )
 static HB_ERRCODE hb_usrRawLock( AREAP pArea, HB_USHORT uiAction, HB_ULONG ulRecNo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrRawLock(%p,%hu,%lu)", static_cast<void*>( pArea ), uiAction, ulRecNo ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrRawLock(%p,%hu,%lu)", static_cast<void*>(pArea), uiAction, ulRecNo ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_RAWLOCK ) )
@@ -2790,7 +2790,7 @@ static HB_ERRCODE hb_usrRawLock( AREAP pArea, HB_USHORT uiAction, HB_ULONG ulRec
 static HB_ERRCODE hb_usrLock( AREAP pArea, LPDBLOCKINFO pLockInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrLock(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pLockInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrLock(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pLockInfo) ) );
 #endif
 
    PHB_ITEM pItem;
@@ -2806,7 +2806,7 @@ static HB_ERRCODE hb_usrLock( AREAP pArea, LPDBLOCKINFO pLockInfo )
    hb_vmPush( pItem );
    hb_vmDo(2);
 
-   pLockInfo->fResult = static_cast<HB_USHORT>( hb_arrayGetL( pItem, UR_LI_RESULT ) );
+   pLockInfo->fResult = static_cast<HB_USHORT>(hb_arrayGetL(pItem, UR_LI_RESULT));
    hb_itemRelease(pItem);
 
    return hb_usrReturn();
@@ -2815,7 +2815,7 @@ static HB_ERRCODE hb_usrLock( AREAP pArea, LPDBLOCKINFO pLockInfo )
 static HB_ERRCODE hb_usrUnLock( AREAP pArea, PHB_ITEM pRecNo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrUnLock(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pRecNo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrUnLock(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pRecNo) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_UNLOCK ) )
@@ -2844,7 +2844,7 @@ static HB_ERRCODE hb_usrUnLock( AREAP pArea, PHB_ITEM pRecNo )
 static HB_ERRCODE hb_usrCloseMemFile( AREAP pArea )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrCloseMemFile(%p)", static_cast<void*>( pArea ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrCloseMemFile(%p)", static_cast<void*>(pArea) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_CLOSEMEMFILE ) )
@@ -2861,7 +2861,7 @@ static HB_ERRCODE hb_usrCloseMemFile( AREAP pArea )
 static HB_ERRCODE hb_usrCreateMemFile( AREAP pArea, LPDBOPENINFO pOpenInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrCreateMemFile(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pOpenInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrCreateMemFile(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pOpenInfo) ) );
 #endif
 
    PHB_ITEM pItem;
@@ -2884,7 +2884,7 @@ static HB_ERRCODE hb_usrCreateMemFile( AREAP pArea, LPDBOPENINFO pOpenInfo )
 static HB_ERRCODE hb_usrOpenMemFile( AREAP pArea, LPDBOPENINFO pOpenInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrOpenMemFile(%p,%p)", static_cast<void*>( pArea ), static_cast<void*>( pOpenInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrOpenMemFile(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pOpenInfo) ) );
 #endif
 
    PHB_ITEM pItem;
@@ -2907,7 +2907,7 @@ static HB_ERRCODE hb_usrOpenMemFile( AREAP pArea, LPDBOPENINFO pOpenInfo )
 static HB_ERRCODE hb_usrGetValueFile( AREAP pArea, HB_USHORT uiIndex, const char * szFile, HB_USHORT uiMode )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrGetValueFile(%p,%hu,%p,%hu)", static_cast<void*>( pArea ), uiIndex, static_cast<const void*>( szFile ), uiMode ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrGetValueFile(%p,%hu,%p,%hu)", static_cast<void*>(pArea), uiIndex, static_cast<const void*>(szFile), uiMode ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_GETVALUEFILE ) )
@@ -2927,7 +2927,7 @@ static HB_ERRCODE hb_usrGetValueFile( AREAP pArea, HB_USHORT uiIndex, const char
 static HB_ERRCODE hb_usrPutValueFile( AREAP pArea, HB_USHORT uiIndex, const char * szFile, HB_USHORT uiMode )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrPutValueFile(%p,%hu,%p,%hu)", static_cast<void*>( pArea ), uiIndex, static_cast<const void*>( szFile ), uiMode ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrPutValueFile(%p,%hu,%p,%hu)", static_cast<void*>(pArea), uiIndex, static_cast<const void*>(szFile), uiMode ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_PUTVALUEFILE ) )
@@ -2951,7 +2951,7 @@ static HB_ERRCODE hb_usrPutValueFile( AREAP pArea, HB_USHORT uiIndex, const char
 static HB_ERRCODE hb_usrReadDBHeader( AREAP pArea )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrReadDBHeader(%p)", static_cast<void*>( pArea ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrReadDBHeader(%p)", static_cast<void*>(pArea) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_READDBHEADER ) )
@@ -2968,7 +2968,7 @@ static HB_ERRCODE hb_usrReadDBHeader( AREAP pArea )
 static HB_ERRCODE hb_usrWriteDBHeader( AREAP pArea )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrWriteDBHeader(%p)", static_cast<void*>( pArea ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrWriteDBHeader(%p)", static_cast<void*>(pArea) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_WRITEDBHEADER ) )
@@ -2989,7 +2989,7 @@ static HB_ERRCODE hb_usrWriteDBHeader( AREAP pArea )
 static HB_ERRCODE hb_usrDrop( LPRDDNODE pRDD, PHB_ITEM pTable, PHB_ITEM pIndex, HB_ULONG ulConnection )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrDrop(%p,%p,%p,%lu)", static_cast<void*>( pRDD ), static_cast<void*>( pTable ), static_cast<void*>( pIndex ), ulConnection ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrDrop(%p,%p,%p,%lu)", static_cast<void*>(pRDD), static_cast<void*>(pTable), static_cast<void*>(pIndex), ulConnection ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pRDD )->pMethods, UR_DROP ) )
@@ -3023,7 +3023,7 @@ static HB_ERRCODE hb_usrDrop( LPRDDNODE pRDD, PHB_ITEM pTable, PHB_ITEM pIndex, 
 static HB_ERRCODE hb_usrExists( LPRDDNODE pRDD, PHB_ITEM pTable, PHB_ITEM pIndex, HB_ULONG ulConnection )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrExists(%p,%p,%p,%lu)", static_cast<void*>( pRDD ), static_cast<void*>( pTable ), static_cast<void*>( pIndex ), ulConnection ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrExists(%p,%p,%p,%lu)", static_cast<void*>(pRDD), static_cast<void*>(pTable), static_cast<void*>(pIndex), ulConnection ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pRDD )->pMethods, UR_EXISTS ) )
@@ -3057,7 +3057,7 @@ static HB_ERRCODE hb_usrExists( LPRDDNODE pRDD, PHB_ITEM pTable, PHB_ITEM pIndex
 static HB_ERRCODE hb_usrRename( LPRDDNODE pRDD, PHB_ITEM pTable, PHB_ITEM pIndex, PHB_ITEM pNewName, HB_ULONG ulConnection )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrRename(%p,%p,%p,%p,%lu)", static_cast<void*>( pRDD ), static_cast<void*>( pTable ), static_cast<void*>( pIndex ), static_cast<void*>( pNewName ), ulConnection ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrRename(%p,%p,%p,%p,%lu)", static_cast<void*>(pRDD), static_cast<void*>(pTable), static_cast<void*>(pIndex), static_cast<void*>(pNewName), ulConnection ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pRDD )->pMethods, UR_RENAME ) )
@@ -3099,7 +3099,7 @@ static HB_ERRCODE hb_usrRename( LPRDDNODE pRDD, PHB_ITEM pTable, PHB_ITEM pIndex
 static HB_ERRCODE hb_usrRddInfo( LPRDDNODE pRDD, HB_USHORT uiInfoType, HB_ULONG ulConnection, PHB_ITEM pInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_usrRddInfo(%p,%hu,%lu,%p)", static_cast<void*>( pRDD ), uiInfoType, ulConnection, static_cast<void*>( pInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_usrRddInfo(%p,%hu,%lu,%p)", static_cast<void*>(pRDD), uiInfoType, ulConnection, static_cast<void*>(pInfo) ) );
 #endif
 
    if( ! hb_usrPushMethod( SELF_USRNODE( pRDD )->pMethods, UR_RDDINFO ) )
@@ -3388,15 +3388,15 @@ HB_FUNC( USRRDD_GETFUNCTABLE )
    const char * szSuperRDD;
    PHB_ITEM pMethods;
 
-   puiCount    = static_cast<HB_USHORT*>( hb_parptr(1) );
-   pSelfTable  = static_cast<RDDFUNCS*>( hb_parptr(2) );
-   pSuperTable = static_cast<RDDFUNCS*>( hb_parptr(3) );
+   puiCount    = static_cast<HB_USHORT*>(hb_parptr(1));
+   pSelfTable  = static_cast<RDDFUNCS*>(hb_parptr(2));
+   pSuperTable = static_cast<RDDFUNCS*>(hb_parptr(3));
 #if 0
    uiRddID = hb_parni(4);
 #endif
    szSuperRDD = hb_parc(5);
    pMethods = hb_param(6, HB_IT_ARRAY);
-   puiSuperRddId = static_cast<HB_USHORT*>( hb_parptr(7) );
+   puiSuperRddId = static_cast<HB_USHORT*>(hb_parptr(7));
 
    if( puiCount && pSelfTable && pSuperTable && pMethods )
    {
@@ -3406,7 +3406,7 @@ HB_FUNC( USRRDD_GETFUNCTABLE )
       const DBENTRYP_V * pUsrFunction, * pRddFunction;
 
       *puiCount = RDDFUNCSCOUNT;
-      uiSize = static_cast<HB_USHORT>( hb_arrayLen( pMethods ) );
+      uiSize = static_cast<HB_USHORT>(hb_arrayLen(pMethods));
 
       pUsrFunction = usrFuncTable.funcentries;
       pRddFunction = rddFuncTable.funcentries;
@@ -3426,7 +3426,7 @@ HB_FUNC( USRRDD_GETFUNCTABLE )
       uiResult = hb_rddInheritEx( pSelfTable, &funcTable.funcTable, pSuperTable, szSuperRDD, puiSuperRddId );
       if( uiResult == HB_SUCCESS )
       {
-         pSelfTable->whoCares = reinterpret_cast<DBENTRYP_SVP>( hb_itemNew(pMethods) );
+         pSelfTable->whoCares = reinterpret_cast<DBENTRYP_SVP>(hb_itemNew(pMethods));
       }
 
       hb_retni( uiResult );
@@ -3439,7 +3439,7 @@ HB_FUNC( USRRDD_GETFUNCTABLE )
 
 HB_FUNC( USRRDD_RDDDATA )
 {
-   HB_USHORT uiRddID = static_cast<HB_USHORT>( hb_parni(1) );
+   HB_USHORT uiRddID = static_cast<HB_USHORT>(hb_parni(1));
 
    if( uiRddID < s_uiUsrNodes && s_pUsrRddNodes[ uiRddID ] )
    {
@@ -3475,7 +3475,7 @@ HB_FUNC( USRRDD_ID )
       }
       else
       {
-         pArea = static_cast<AREAP>( hb_parptr(1) );
+         pArea = static_cast<AREAP>(hb_parptr(1));
       }
 
       if( pArea && pArea->rddID < s_uiUsrNodes && SELF_USRNODE( pArea ) )
@@ -3495,7 +3495,7 @@ HB_FUNC( USRRDD_AREADATA )
    }
    else
    {
-      pArea = static_cast<AREAP>( hb_parptr(1) );
+      pArea = static_cast<AREAP>(hb_parptr(1));
    }
 
    if( pArea && pArea->rddID < s_uiUsrNodes && SELF_USRNODE( pArea ) )
@@ -3520,7 +3520,7 @@ HB_FUNC( USRRDD_AREARESULT )
    }
    else
    {
-      pArea = static_cast<AREAP>( hb_parptr(1) );
+      pArea = static_cast<AREAP>(hb_parptr(1));
    }
 
    if( pArea && pArea->rddID < s_uiUsrNodes && SELF_USRNODE( pArea ) )
@@ -3550,7 +3550,7 @@ HB_FUNC( USRRDD_SETBOF )
       }
       else
       {
-         pArea = static_cast<AREAP>( hb_parptr(1) );
+         pArea = static_cast<AREAP>(hb_parptr(1));
       }
 
       if( pArea && pArea->rddID < s_uiUsrNodes && SELF_USRNODE( pArea ) )
@@ -3572,7 +3572,7 @@ HB_FUNC( USRRDD_SETEOF )
       }
       else
       {
-         pArea = static_cast<AREAP>( hb_parptr(1) );
+         pArea = static_cast<AREAP>(hb_parptr(1));
       }
 
       if( pArea && pArea->rddID < s_uiUsrNodes && SELF_USRNODE( pArea ) )
@@ -3594,7 +3594,7 @@ HB_FUNC( USRRDD_SETFOUND )
       }
       else
       {
-         pArea = static_cast<AREAP>( hb_parptr(1) );
+         pArea = static_cast<AREAP>(hb_parptr(1));
       }
 
       if( pArea && pArea->rddID < s_uiUsrNodes && SELF_USRNODE( pArea ) )
@@ -3616,7 +3616,7 @@ HB_FUNC( USRRDD_SETTOP )
       }
       else
       {
-         pArea = static_cast<AREAP>( hb_parptr(1) );
+         pArea = static_cast<AREAP>(hb_parptr(1));
       }
 
       if( pArea && pArea->rddID < s_uiUsrNodes && SELF_USRNODE( pArea ) )
@@ -3638,7 +3638,7 @@ HB_FUNC( USRRDD_SETBOTTOM )
       }
       else
       {
-         pArea = static_cast<AREAP>( hb_parptr(1) );
+         pArea = static_cast<AREAP>(hb_parptr(1));
       }
 
       if( pArea && pArea->rddID < s_uiUsrNodes && SELF_USRNODE( pArea ) )
@@ -3686,7 +3686,7 @@ static AREAP hb_usrGetAreaParam( int iParams )
       }
       else
       {
-         pArea = static_cast<AREAP>( hb_parptr(1) );
+         pArea = static_cast<AREAP>(hb_parptr(1));
       }
 
       if( pArea && pArea->rddID < s_uiUsrNodes && SELF_USRNODE( pArea ) )
@@ -3720,7 +3720,7 @@ static LPRDDNODE hb_usrGetNodeParam( int iParams )
 
    if( iParams <= hb_pcount() )
    {
-      uiNode = static_cast<HB_USHORT>( hb_parni(1) );
+      uiNode = static_cast<HB_USHORT>(hb_parni(1));
       pRDD = hb_rddGetNode( uiNode );
       if( pRDD && uiNode < s_uiUsrNodes && s_pUsrRddNodes[ uiNode ] )
       {
@@ -3926,9 +3926,9 @@ HB_FUNC_UR_SUPER( FIELDNAME )
 
    if( pArea )
    {
-      char * szName = static_cast<char*>( hb_xgrab(pArea->uiMaxFieldNameLength + 1) );
+      char * szName = static_cast<char*>(hb_xgrab(pArea->uiMaxFieldNameLength + 1));
 
-      hb_retni( SUPER_FIELDNAME( pArea, static_cast<HB_USHORT>( hb_parni(2) ), szName ) );
+      hb_retni( SUPER_FIELDNAME( pArea, static_cast<HB_USHORT>(hb_parni(2)), szName ) );
       hb_storc( szName, 3 );
       hb_xfree(szName);
    }
@@ -4015,11 +4015,11 @@ HB_FUNC_UR_SUPER( PUTREC )
    {
       if( HB_ISPOINTER(2) )
       {
-         hb_retni( SUPER_PUTREC( pArea, static_cast<const HB_BYTE*>( hb_parptr(2) ) ) );
+         hb_retni( SUPER_PUTREC( pArea, static_cast<const HB_BYTE*>(hb_parptr(2)) ) );
       }
       else if( HB_ISCHAR(2) )
       {
-         hb_retni( SUPER_PUTREC( pArea, reinterpret_cast<const HB_BYTE*>( hb_parc(2) ) ) );
+         hb_retni( SUPER_PUTREC( pArea, reinterpret_cast<const HB_BYTE*>(hb_parc(2)) ) );
       }
       else
       {
@@ -4048,7 +4048,7 @@ HB_FUNC_UR_SUPER( GETVALUE )
 
    if( pArea )
    {
-      hb_retni( SUPER_GETVALUE( pArea, static_cast<HB_USHORT>( hb_parni(2) ), hb_param(3, HB_IT_ANY) ) );
+      hb_retni( SUPER_GETVALUE( pArea, static_cast<HB_USHORT>(hb_parni(2)), hb_param(3, HB_IT_ANY) ) );
    }
 }
 
@@ -4058,7 +4058,7 @@ HB_FUNC_UR_SUPER( PUTVALUE )
 
    if( pArea )
    {
-      hb_retni( SUPER_PUTVALUE( pArea, static_cast<HB_USHORT>( hb_parni(2) ), hb_param(3, HB_IT_ANY) ) );
+      hb_retni( SUPER_PUTVALUE( pArea, static_cast<HB_USHORT>(hb_parni(2)), hb_param(3, HB_IT_ANY) ) );
    }
 }
 
@@ -4070,7 +4070,7 @@ HB_FUNC_UR_SUPER( GETVARLEN )
    {
       HB_ULONG ulLength;
 
-      hb_retni( SUPER_GETVARLEN( pArea, static_cast<HB_USHORT>( hb_parni(2) ), &ulLength ) );
+      hb_retni( SUPER_GETVARLEN( pArea, static_cast<HB_USHORT>(hb_parni(2)), &ulLength ) );
       hb_stornl( ulLength, 3 );
    }
 }
@@ -4094,7 +4094,7 @@ HB_FUNC_UR_SUPER( RECINFO )
 
    if( pArea )
    {
-      hb_retni( SUPER_RECINFO( pArea, hb_param(2, HB_IT_ANY), static_cast<HB_USHORT>( hb_parni(3) ), hb_param(4, HB_IT_ANY) ) );
+      hb_retni( SUPER_RECINFO( pArea, hb_param(2, HB_IT_ANY), static_cast<HB_USHORT>(hb_parni(3)), hb_param(4, HB_IT_ANY) ) );
    }
 }
 
@@ -4127,7 +4127,7 @@ HB_FUNC_UR_SUPER( FIELDINFO )
 
    if( pArea )
    {
-      hb_retni( SUPER_FIELDINFO( pArea, static_cast<HB_USHORT>( hb_parni(2) ), static_cast<HB_USHORT>( hb_parni(3) ), hb_param(4, HB_IT_ANY) ) );
+      hb_retni( SUPER_FIELDINFO( pArea, static_cast<HB_USHORT>(hb_parni(2)), static_cast<HB_USHORT>(hb_parni(3)), hb_param(4, HB_IT_ANY) ) );
    }
 }
 
@@ -4147,7 +4147,7 @@ HB_FUNC_UR_SUPER( SETFIELDEXTENT )
 
    if( pArea )
    {
-      hb_retni( SUPER_SETFIELDEXTENT( pArea, static_cast<HB_USHORT>( hb_parni(2) ) ) );
+      hb_retni( SUPER_SETFIELDEXTENT( pArea, static_cast<HB_USHORT>(hb_parni(2)) ) );
    }
 }
 
@@ -4220,7 +4220,7 @@ HB_FUNC_UR_SUPER( INFO )
 
    if( pArea )
    {
-      hb_retni( SUPER_INFO( pArea, static_cast<HB_USHORT>( hb_parni(2) ), hb_param(3, HB_IT_ANY) ) );
+      hb_retni( SUPER_INFO( pArea, static_cast<HB_USHORT>(hb_parni(2)), hb_param(3, HB_IT_ANY) ) );
    }
 }
 
@@ -4438,7 +4438,7 @@ HB_FUNC_UR_SUPER( RELAREA )
    {
       HB_USHORT uiRelArea;
 
-      hb_retni( SUPER_RELAREA( pArea, static_cast<HB_USHORT>( hb_parni(2) ), &uiRelArea ) );
+      hb_retni( SUPER_RELAREA( pArea, static_cast<HB_USHORT>(hb_parni(2)), &uiRelArea ) );
       hb_storni( uiRelArea, 3 );
    }
 }
@@ -4469,7 +4469,7 @@ HB_FUNC_UR_SUPER( RELTEXT )
 
    if( pArea )
    {
-      hb_retni( SUPER_RELTEXT( pArea, static_cast<HB_USHORT>( hb_parni(2) ), hb_param(3, HB_IT_ANY) ) );
+      hb_retni( SUPER_RELTEXT( pArea, static_cast<HB_USHORT>(hb_parni(2)), hb_param(3, HB_IT_ANY) ) );
    }
 }
 
@@ -4505,7 +4505,7 @@ HB_FUNC_UR_SUPER( ORDLSTADD )
       if( hb_usrItemToOrderInfo( pItem, &dbOrderInfo ) )
       {
          hb_retni( SUPER_ORDLSTADD( pArea, &dbOrderInfo ) );
-         hb_arraySet( pItem, UR_ORI_RESULT, dbOrderInfo.itmResult );
+         hb_arraySet(pItem, UR_ORI_RESULT, dbOrderInfo.itmResult);
       }
       else
       {
@@ -4537,7 +4537,7 @@ HB_FUNC_UR_SUPER( ORDLSTDELETE )
       if( hb_usrItemToOrderInfo( pItem, &dbOrderInfo ) )
       {
          hb_retni( SUPER_ORDLSTDELETE( pArea, &dbOrderInfo ) );
-         hb_arraySet( pItem, UR_ORI_RESULT, dbOrderInfo.itmResult );
+         hb_arraySet(pItem, UR_ORI_RESULT, dbOrderInfo.itmResult);
       }
       else
       {
@@ -4559,7 +4559,7 @@ HB_FUNC_UR_SUPER( ORDLSTFOCUS )
       if( hb_usrItemToOrderInfo( pItem, &dbOrderInfo ) )
       {
          hb_retni( SUPER_ORDLSTFOCUS( pArea, &dbOrderInfo ) );
-         hb_arraySet( pItem, UR_ORI_RESULT, dbOrderInfo.itmResult );
+         hb_arraySet(pItem, UR_ORI_RESULT, dbOrderInfo.itmResult);
       }
       else
       {
@@ -4593,7 +4593,7 @@ HB_FUNC_UR_SUPER( ORDSETCOND )
       }
       else
       {
-         LPDBORDERCONDINFO lpdbOrderCondInfo = static_cast<LPDBORDERCONDINFO>( hb_xgrab(sizeof(DBORDERCONDINFO)) );
+         LPDBORDERCONDINFO lpdbOrderCondInfo = static_cast<LPDBORDERCONDINFO>(hb_xgrab(sizeof(DBORDERCONDINFO)));
          if( hb_usrItemToOrderCondInfo( pItem, lpdbOrderCondInfo ) )
          {
             hb_usrOrderCondClone( lpdbOrderCondInfo );
@@ -4643,7 +4643,7 @@ HB_FUNC_UR_SUPER( ORDDESTROY )
       if( hb_usrItemToOrderInfo( pItem, &dbOrderInfo ) )
       {
          hb_retni( SUPER_ORDDESTROY( pArea, &dbOrderInfo ) );
-         hb_arraySet( pItem, UR_ORI_RESULT, dbOrderInfo.itmResult );
+         hb_arraySet(pItem, UR_ORI_RESULT, dbOrderInfo.itmResult);
       }
       else
       {
@@ -4664,8 +4664,8 @@ HB_FUNC_UR_SUPER( ORDINFO )
 
       if( hb_usrItemToOrderInfo( pItem, &dbOrderInfo ) )
       {
-         hb_retni( SUPER_ORDINFO( pArea, static_cast<HB_USHORT>( hb_parni(2) ), &dbOrderInfo ) );
-         hb_arraySet( pItem, UR_ORI_RESULT, dbOrderInfo.itmResult );
+         hb_retni( SUPER_ORDINFO( pArea, static_cast<HB_USHORT>(hb_parni(2)), &dbOrderInfo ) );
+         hb_arraySet(pItem, UR_ORI_RESULT, dbOrderInfo.itmResult);
       }
       else
       {
@@ -4831,7 +4831,7 @@ HB_FUNC_UR_SUPER( RAWLOCK )
 
    if( pArea )
    {
-      hb_retni( SUPER_RAWLOCK( pArea, static_cast<HB_USHORT>( hb_parni(2) ), hb_parnl(3) ) );
+      hb_retni( SUPER_RAWLOCK( pArea, static_cast<HB_USHORT>(hb_parni(2)), hb_parnl(3) ) );
    }
 }
 
@@ -4847,7 +4847,7 @@ HB_FUNC_UR_SUPER( LOCK )
       if( hb_usrItemToLockInfo( pItem, &dbLockInfo ) )
       {
          hb_retni( SUPER_LOCK( pArea, &dbLockInfo ) );
-         hb_itemPutL(hb_arrayGetItemPtr( pItem, UR_LI_RESULT ), dbLockInfo.fResult);
+         hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_LI_RESULT), dbLockInfo.fResult);
       }
       else
       {
@@ -4923,7 +4923,7 @@ HB_FUNC_UR_SUPER( GETVALUEFILE )
 
    if( pArea )
    {
-      hb_retni( SUPER_GETVALUEFILE( pArea, static_cast<HB_USHORT>( hb_parni(2) ), hb_parc(3), static_cast<HB_USHORT>( hb_parni(4) ) ) );
+      hb_retni( SUPER_GETVALUEFILE( pArea, static_cast<HB_USHORT>(hb_parni(2)), hb_parc(3), static_cast<HB_USHORT>(hb_parni(4)) ) );
    }
 }
 
@@ -4933,7 +4933,7 @@ HB_FUNC_UR_SUPER( PUTVALUEFILE )
 
    if( pArea )
    {
-      hb_retni( SUPER_PUTVALUEFILE( pArea, static_cast<HB_USHORT>( hb_parni(2) ), hb_parc(3), static_cast<HB_USHORT>( hb_parni(4) ) ) );
+      hb_retni( SUPER_PUTVALUEFILE( pArea, static_cast<HB_USHORT>(hb_parni(2)), hb_parc(3), static_cast<HB_USHORT>(hb_parni(4)) ) );
    }
 }
 
@@ -4993,6 +4993,6 @@ HB_FUNC_UR_SUPER( RDDINFO )
 
    if( pRDD )
    {
-      hb_retni( SUPER_RDDINFO( pRDD, static_cast<HB_USHORT>( hb_parni(2) ), hb_parnl(3), hb_param(4, HB_IT_ANY) ) );
+      hb_retni( SUPER_RDDINFO( pRDD, static_cast<HB_USHORT>(hb_parni(2)), hb_parnl(3), hb_param(4, HB_IT_ANY) ) );
    }
 }

@@ -115,7 +115,7 @@ static HB_PSIZE_FUNC( hb_p_staticname )
 static HB_PSIZE_FUNC( hb_p_threadstatics )
 {
    HB_SYMBOL_UNUSED(cargo);
-   return 3 + ( static_cast<HB_SIZE>( HB_PCODE_MKUSHORT( &pFunc->pCode[ nPCodePos + 1 ] ) ) << 1 );
+   return 3 + ( static_cast<HB_SIZE>(HB_PCODE_MKUSHORT( &pFunc->pCode[ nPCodePos + 1 ] )) << 1 );
 }
 
 const HB_BYTE hb_comp_pcode_len[] = {
@@ -552,7 +552,7 @@ void hb_compPCodeEval( PHB_HFUNC pFunc, const PHB_PCODE_FUNC * pFunctions, void 
          {
             char szOpcode[ 16 ];
             ++nPos;
-            hb_snprintf( szOpcode, sizeof(szOpcode), "%i", opcode );
+            hb_snprintf(szOpcode, sizeof(szOpcode), "%i", opcode);
             hb_errInternal( HB_EI_COMPBADOPSIZE, "Invalid (zero) opcode %s size in hb_compPCodeEval()", szOpcode, nullptr );
          }
 #if 0
@@ -564,7 +564,7 @@ void hb_compPCodeEval( PHB_HFUNC pFunc, const PHB_PCODE_FUNC * pFunctions, void 
          if( hb_comp_pcode_len[ opcode ] != 0 && hb_comp_pcode_len[ opcode ] != nSkip )
          {
             char szMsg[ 100 ];
-            hb_snprintf( szMsg, sizeof(szMsg), "Wrong PCODE (%d) size (%ld!=%d)", opcode, nSkip, hb_comp_pcode_len[ opcode ] );
+            hb_snprintf(szMsg, sizeof(szMsg), "Wrong PCODE (%d) size (%ld!=%d)", opcode, nSkip, hb_comp_pcode_len[ opcode ]);
             hb_errInternal( HB_EI_COMPBADOPSIZE, szMsg, nullptr, nullptr );
          }
 #endif
@@ -574,7 +574,7 @@ void hb_compPCodeEval( PHB_HFUNC pFunc, const PHB_PCODE_FUNC * pFunctions, void 
       {
          char szOpcode[ 16 ];
          ++nPos;
-         hb_snprintf( szOpcode, sizeof(szOpcode), "%i", opcode );
+         hb_snprintf(szOpcode, sizeof(szOpcode), "%i", opcode);
          hb_errInternal( HB_EI_COMPBADOPCODE, "Invalid opcode: %s in hb_compPCodeEval()", szOpcode, nullptr );
       }
    }
@@ -606,7 +606,7 @@ void hb_compPCodeTrace( PHB_HFUNC pFunc, const PHB_PCODE_FUNC * pFunctions, void
       {
          char szOpcode[ 16 ];
          ++nPos;
-         hb_snprintf( szOpcode, sizeof(szOpcode), "%i", opcode );
+         hb_snprintf(szOpcode, sizeof(szOpcode), "%i", opcode);
          hb_errInternal( HB_EI_COMPBADOPCODE, "Invalid opcode: %s in hb_compPCodeTrace()", szOpcode, nullptr );
       }
    }
@@ -618,13 +618,13 @@ void hb_compGenPCode1( HB_BYTE byte, HB_COMP_DECL )
 
    if( ! pFunc->pCode )                              /* has been created the memory block to hold the pcode ? */
    {
-      pFunc->pCode      = static_cast<HB_BYTE*>( hb_xgrab(HB_PCODE_CHUNK) );
+      pFunc->pCode      = static_cast<HB_BYTE*>(hb_xgrab(HB_PCODE_CHUNK));
       pFunc->nPCodeSize = HB_PCODE_CHUNK;
       pFunc->nPCodePos  = 0;
    }
    else if( ( pFunc->nPCodeSize - pFunc->nPCodePos ) < 1 )
    {
-      pFunc->pCode = static_cast<HB_BYTE*>( hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK) );
+      pFunc->pCode = static_cast<HB_BYTE*>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK));
    }
 
    pFunc->pCode[ pFunc->nPCodePos++ ] = byte;
@@ -636,13 +636,13 @@ void hb_compGenPCode2( HB_BYTE byte1, HB_BYTE byte2, HB_COMP_DECL )
 
    if( ! pFunc->pCode )                              /* has been created the memory block to hold the pcode ? */
    {
-      pFunc->pCode      = static_cast<HB_BYTE*>( hb_xgrab(HB_PCODE_CHUNK) );
+      pFunc->pCode      = static_cast<HB_BYTE*>(hb_xgrab(HB_PCODE_CHUNK));
       pFunc->nPCodeSize = HB_PCODE_CHUNK;
       pFunc->nPCodePos  = 0;
    }
    else if( ( pFunc->nPCodeSize - pFunc->nPCodePos ) < 2 )
    {
-      pFunc->pCode = static_cast<HB_BYTE*>( hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK) );
+      pFunc->pCode = static_cast<HB_BYTE*>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK));
    }
 
    pFunc->pCode[ pFunc->nPCodePos++ ] = byte1;
@@ -655,13 +655,13 @@ void hb_compGenPCode3( HB_BYTE byte1, HB_BYTE byte2, HB_BYTE byte3, HB_COMP_DECL
 
    if( ! pFunc->pCode )                              /* has been created the memory block to hold the pcode ? */
    {
-      pFunc->pCode      = static_cast<HB_BYTE*>( hb_xgrab(HB_PCODE_CHUNK) );
+      pFunc->pCode      = static_cast<HB_BYTE*>(hb_xgrab(HB_PCODE_CHUNK));
       pFunc->nPCodeSize = HB_PCODE_CHUNK;
       pFunc->nPCodePos  = 0;
    }
    else if( ( pFunc->nPCodeSize - pFunc->nPCodePos ) < 3 )
    {
-      pFunc->pCode = static_cast<HB_BYTE*>( hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK) );
+      pFunc->pCode = static_cast<HB_BYTE*>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK));
    }
 
    pFunc->pCode[ pFunc->nPCodePos++ ] = byte1;
@@ -675,13 +675,13 @@ void hb_compGenPCode4( HB_BYTE byte1, HB_BYTE byte2, HB_BYTE byte3, HB_BYTE byte
 
    if( ! pFunc->pCode )                              /* has been created the memory block to hold the pcode ? */
    {
-      pFunc->pCode      = static_cast<HB_BYTE*>( hb_xgrab(HB_PCODE_CHUNK) );
+      pFunc->pCode      = static_cast<HB_BYTE*>(hb_xgrab(HB_PCODE_CHUNK));
       pFunc->nPCodeSize = HB_PCODE_CHUNK;
       pFunc->nPCodePos  = 0;
    }
    else if( ( pFunc->nPCodeSize - pFunc->nPCodePos ) < 4 )
    {
-      pFunc->pCode = static_cast<HB_BYTE*>( hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK) );
+      pFunc->pCode = static_cast<HB_BYTE*>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK));
    }
 
    pFunc->pCode[ pFunc->nPCodePos++ ] = byte1;
@@ -697,16 +697,16 @@ void hb_compGenPCodeN( const HB_BYTE * pBuffer, HB_SIZE nSize, HB_COMP_DECL )
    if( ! pFunc->pCode )                              /* has been created the memory block to hold the pcode ? */
    {
       pFunc->nPCodeSize = ( ( nSize / HB_PCODE_CHUNK ) + 1 ) * HB_PCODE_CHUNK;
-      pFunc->pCode      = static_cast<HB_BYTE*>( hb_xgrab(pFunc->nPCodeSize) );
+      pFunc->pCode      = static_cast<HB_BYTE*>(hb_xgrab(pFunc->nPCodeSize));
       pFunc->nPCodePos  = 0;
    }
    else if( pFunc->nPCodePos + nSize > pFunc->nPCodeSize )
    {
       /* not enough free space in pcode buffer - increase it */
       pFunc->nPCodeSize += ( ( ( nSize / HB_PCODE_CHUNK ) + 1 ) * HB_PCODE_CHUNK );
-      pFunc->pCode = static_cast<HB_BYTE*>( hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize) );
+      pFunc->pCode = static_cast<HB_BYTE*>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize));
    }
 
-   memcpy( pFunc->pCode + pFunc->nPCodePos, pBuffer, nSize );
+   memcpy(pFunc->pCode + pFunc->nPCodePos, pBuffer, nSize);
    pFunc->nPCodePos += nSize;
 }

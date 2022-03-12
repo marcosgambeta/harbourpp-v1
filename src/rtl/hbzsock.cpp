@@ -67,7 +67,7 @@
 #  define HB_ZSOCK_MEM_LEVEL  MAX_MEM_LEVEL
 #endif
 
-#define HB_ZSOCK_GET( p )     ( static_cast<PHB_SOCKEX_Z>( p->cargo ) )
+#define HB_ZSOCK_GET( p )     ( static_cast<PHB_SOCKEX_Z>(p->cargo) )
 
 struct HB_SOCKEX_Z
 {
@@ -88,7 +88,7 @@ using PHB_SOCKEX_Z = HB_SOCKEX_Z *;
 static voidpf s_zsock_zalloc( voidpf opaque, uInt items, uInt size )
 {
    HB_SYMBOL_UNUSED(opaque);
-   return hb_xalloc( static_cast<HB_SIZE>( items ) * size );
+   return hb_xalloc(static_cast<HB_SIZE>(items) * size);
 }
 
 static void s_zsock_zfree( voidpf opaque, voidpf address )
@@ -130,7 +130,7 @@ static long s_zsock_write( PHB_SOCKEX_Z pZ, HB_MAXINT timeout )
    {
       if( lSent < len )
       {
-         memmove( pZ->wrbuf, pZ->wrbuf + lSent, len - lSent );
+         memmove(pZ->wrbuf, pZ->wrbuf + lSent, len - lSent);
       }
       pZ->z_write.avail_out += lSent;
       pZ->z_write.next_out -= lSent;
@@ -153,11 +153,11 @@ static int s_zsock_inbuffer( PHB_SOCKEX pSock )
          {
             pSock->readahead = HB_ZSOCK_READAHEAD;
          }
-         pSock->buffer = static_cast<HB_BYTE*>( hb_xgrab(pSock->readahead) );
+         pSock->buffer = static_cast<HB_BYTE*>(hb_xgrab(pSock->readahead));
       }
 
-      pZ->z_read.next_out  = static_cast<Bytef*>( pSock->buffer );
-      pZ->z_read.avail_out = static_cast<uInt>( pSock->readahead );
+      pZ->z_read.next_out  = static_cast<Bytef*>(pSock->buffer);
+      pZ->z_read.avail_out = static_cast<uInt>(pSock->readahead);
 
       err = inflate( &pZ->z_read, Z_SYNC_FLUSH );
       if( err != Z_OK && err != Z_BUF_ERROR )
@@ -179,7 +179,7 @@ static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT tim
    if( pSock->inbuffer > 0 && len > 0 )
    {
       lRecv = HB_MIN( pSock->inbuffer, len );
-      memcpy( data, pSock->buffer + pSock->posbuffer, lRecv );
+      memcpy(data, pSock->buffer + pSock->posbuffer, lRecv);
       if( ( pSock->inbuffer -= lRecv ) > 0 )
       {
          pSock->posbuffer += lRecv;
@@ -194,8 +194,8 @@ static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT tim
    {
       int err = Z_OK;
 
-      pZ->z_read.next_out  = static_cast<Bytef*>( data );
-      pZ->z_read.avail_out = static_cast<uInt>( len );
+      pZ->z_read.next_out  = static_cast<Bytef*>(data);
+      pZ->z_read.avail_out = static_cast<uInt>(len);
       pZ->z_read.total_out = 0;
 
       while( pZ->z_read.avail_out )
@@ -207,8 +207,8 @@ static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT tim
             {
                break;
             }
-            pZ->z_read.next_in = static_cast<Bytef*>( pZ->rdbuf );
-            pZ->z_read.avail_in = static_cast<uInt>( lRecv );
+            pZ->z_read.next_in = static_cast<Bytef*>(pZ->rdbuf);
+            pZ->z_read.avail_in = static_cast<uInt>(lRecv);
          }
          else if( err != Z_OK )
          {
@@ -221,7 +221,7 @@ static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT tim
 
       if( pZ->z_read.total_out != 0 )
       {
-         lRecv = static_cast<long>( pZ->z_read.total_out );
+         lRecv = static_cast<long>(pZ->z_read.total_out);
       }
 
       return lRecv;
@@ -240,8 +240,8 @@ static long s_sockexWrite( PHB_SOCKEX pSock, const void * data, long len, HB_MAX
    {
       long lWritten = 0;
 
-      pZ->z_write.next_in  = static_cast<Bytef*>( const_cast<void*>( data ) );
-      pZ->z_write.avail_in = static_cast<uInt>( len );
+      pZ->z_write.next_in  = static_cast<Bytef*>(const_cast<void*>(data));
+      pZ->z_write.avail_in = static_cast<uInt>(len);
 
       while( pZ->z_write.avail_in )
       {
@@ -268,7 +268,7 @@ static long s_sockexWrite( PHB_SOCKEX pSock, const void * data, long len, HB_MAX
          }
       }
 
-      return lWritten >= 0 ? static_cast<long>( len - pZ->z_write.avail_in ) : lWritten;
+      return lWritten >= 0 ? static_cast<long>(len - pZ->z_write.avail_in) : lWritten;
    }
    else
    {
@@ -515,14 +515,14 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
 
       if( level != HB_ZLIB_COMPRESSION_DISABLE && ( fDecompressIn || fCompressOut ) )
       {
-         PHB_SOCKEX_Z pZ = static_cast<PHB_SOCKEX_Z>( hb_xgrabz( sizeof(HB_SOCKEX_Z) ) );
+         PHB_SOCKEX_Z pZ = static_cast<PHB_SOCKEX_Z>(hb_xgrabz(sizeof(HB_SOCKEX_Z)));
 
-         pSockNew = static_cast<PHB_SOCKEX>( hb_xgrabz( sizeof(HB_SOCKEX) ) );
+         pSockNew = static_cast<PHB_SOCKEX>(hb_xgrabz(sizeof(HB_SOCKEX)));
          pSockNew->sd = HB_NO_SOCKET;
          pSockNew->fRedirAll = HB_TRUE;
          pSockNew->pFilter = &s_sockFilter;
 
-         pSockNew->cargo = static_cast<void*>( pZ );
+         pSockNew->cargo = static_cast<void*>(pZ);
          pZ->z_read.zalloc = s_zsock_zalloc;
          pZ->z_read.zfree  = s_zsock_zfree;
          pZ->z_read.opaque = Z_NULL;
@@ -557,7 +557,7 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
             if( inflateInit2( &pZ->z_read, windowBitsIn ) == Z_OK )
             {
                pZ->fDecompressIn = HB_TRUE;
-               pZ->rdbuf = static_cast<HB_BYTE*>( hb_xgrab(HB_ZSOCK_RDBUFSIZE) );
+               pZ->rdbuf = static_cast<HB_BYTE*>(hb_xgrab(HB_ZSOCK_RDBUFSIZE));
             }
             else
             {
@@ -573,8 +573,8 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
             if( deflateInit2( &pZ->z_write, level, Z_DEFLATED, windowBitsOut, HB_ZSOCK_MEM_LEVEL, strategy ) == Z_OK )
             {
                pZ->fCompressOut = HB_TRUE;
-               pZ->wrbuf = static_cast<HB_BYTE*>( hb_xgrab(HB_ZSOCK_WRBUFSIZE) );
-               pZ->z_write.next_out  = static_cast<Bytef*>( pZ->wrbuf );
+               pZ->wrbuf = static_cast<HB_BYTE*>(hb_xgrab(HB_ZSOCK_WRBUFSIZE));
+               pZ->z_write.next_out  = static_cast<Bytef*>(pZ->wrbuf);
                pZ->z_write.avail_out = HB_ZSOCK_WRBUFSIZE;
             }
             else

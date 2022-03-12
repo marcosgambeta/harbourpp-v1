@@ -55,12 +55,12 @@
 HB_BOOL hb_evalNew( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_evalNew(%p, %p)", static_cast<void*>( pEvalInfo ), static_cast<void*>( pItem ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_evalNew(%p, %p)", static_cast<void*>(pEvalInfo), static_cast<void*>(pItem) ) );
 #endif
 
    if( pEvalInfo )
    {
-      memset( pEvalInfo, 0, sizeof(HB_EVALINFO) );
+      memset(pEvalInfo, 0, sizeof(HB_EVALINFO));
       pEvalInfo->pItems[ 0 ] = pItem;
       pEvalInfo->paramCount = 0;
 
@@ -88,7 +88,7 @@ HB_BOOL hb_evalNew( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
 HB_BOOL hb_evalPutParam( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_evalPutParam(%p, %p)", static_cast<void*>( pEvalInfo ), static_cast<void*>( pItem ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_evalPutParam(%p, %p)", static_cast<void*>(pEvalInfo), static_cast<void*>(pItem) ) );
 #endif
 
    if( pEvalInfo && pItem && pEvalInfo->paramCount < HB_EVAL_PARAM_MAX_ )
@@ -106,7 +106,7 @@ HB_BOOL hb_evalPutParam( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
 PHB_ITEM hb_evalLaunch( PHB_EVALINFO pEvalInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_evalLaunch(%p)", static_cast<void*>( pEvalInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_evalLaunch(%p)", static_cast<void*>(pEvalInfo) ) );
 #endif
 
    PHB_ITEM pResult = nullptr;
@@ -175,7 +175,7 @@ PHB_ITEM hb_evalLaunch( PHB_EVALINFO pEvalInfo )
 HB_BOOL hb_evalRelease( PHB_EVALINFO pEvalInfo )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_evalRelease(%p)", static_cast<void*>( pEvalInfo ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_evalRelease(%p)", static_cast<void*>(pEvalInfo) ) );
 #endif
 
    if( pEvalInfo )
@@ -209,7 +209,7 @@ HB_BOOL hb_evalRelease( PHB_EVALINFO pEvalInfo )
 PHB_ITEM hb_itemDo( PHB_ITEM pItem, HB_ULONG ulPCount, ... )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_itemDo(%p, %lu, ...)", static_cast<void*>( pItem ), ulPCount ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_itemDo(%p, %lu, ...)", static_cast<void*>(pItem), ulPCount ) );
 #endif
 
    PHB_ITEM pResult = nullptr;
@@ -264,11 +264,11 @@ PHB_ITEM hb_itemDo( PHB_ITEM pItem, HB_ULONG ulPCount, ... )
             }
             if( pItem )
             {
-               hb_vmSend( static_cast<HB_USHORT>( ulPCount ) );
+               hb_vmSend( static_cast<HB_USHORT>(ulPCount) );
             }
             else
             {
-               hb_vmProc( static_cast<HB_USHORT>( ulPCount ) );
+               hb_vmProc( static_cast<HB_USHORT>(ulPCount) );
             }
 
             pResult = hb_itemNew(hb_stackReturnItem());
@@ -315,7 +315,7 @@ PHB_ITEM hb_itemDoC( const char * szFunc, HB_ULONG ulPCount, ... )
                }
                va_end( va );
             }
-            hb_vmProc( static_cast<HB_USHORT>( ulPCount ) );
+            hb_vmProc( static_cast<HB_USHORT>(ulPCount) );
             pResult = hb_itemNew(hb_stackReturnItem());
             hb_vmRequestRestore();
          }
@@ -453,11 +453,11 @@ HB_FUNC( HB_EXECFROMARRAY )
          if( HB_IS_ARRAY(pParam) && ! HB_IS_OBJECT(pParam) )
          {
             pArray = pParam;
-            pItem = hb_arrayGetItemPtr( pArray, 1 );
+            pItem = hb_arrayGetItemPtr(pArray, 1);
             if( HB_IS_OBJECT(pItem) )
             {
                pSelf = pItem;
-               pFunc = hb_arrayGetItemPtr( pArray, 2 );
+               pFunc = hb_arrayGetItemPtr(pArray, 2);
                ulParamOffset = 2;
             }
             else
@@ -523,22 +523,22 @@ HB_FUNC( HB_EXECFROMARRAY )
 
       if( pArray )
       {
-         pItem = hb_arrayGetItemPtr( pArray, ++ulParamOffset );
+         pItem = hb_arrayGetItemPtr(pArray, ++ulParamOffset);
          while( pItem && iPCount < 255 )
          {
             hb_vmPush( pItem );
             ++iPCount;
-            pItem = hb_arrayGetItemPtr( pArray, ++ulParamOffset );
+            pItem = hb_arrayGetItemPtr(pArray, ++ulParamOffset);
          }
       }
 
       if( pSelf )
       {
-         hb_vmSend( static_cast<HB_USHORT>( iPCount ) );
+         hb_vmSend( static_cast<HB_USHORT>(iPCount) );
       }
       else
       {
-         hb_vmProc( static_cast<HB_USHORT>( iPCount ) );
+         hb_vmProc( static_cast<HB_USHORT>(iPCount) );
       }
    }
    else
@@ -556,11 +556,11 @@ HB_BOOL hb_execFromArray( PHB_ITEM pParam )
    if( pParam && HB_IS_ARRAY(pParam) && ! HB_IS_OBJECT(pParam) )
    {
       pArray = pParam;
-      pParam = hb_arrayGetItemPtr( pArray, 1 );
+      pParam = hb_arrayGetItemPtr(pArray, 1);
       if( HB_IS_OBJECT(pParam) )
       {
          pSelf = pParam;
-         pParam = hb_arrayGetItemPtr( pArray, 2 );
+         pParam = hb_arrayGetItemPtr(pArray, 2);
          ulParamOffset = 2;
       }
       else
@@ -603,22 +603,22 @@ HB_BOOL hb_execFromArray( PHB_ITEM pParam )
 
          if( pArray )
          {
-            pParam = hb_arrayGetItemPtr( pArray, ++ulParamOffset );
+            pParam = hb_arrayGetItemPtr(pArray, ++ulParamOffset);
             while( pParam && iPCount < 255 )
             {
                hb_vmPush( pParam );
                ++iPCount;
-               pParam = hb_arrayGetItemPtr( pArray, ++ulParamOffset );
+               pParam = hb_arrayGetItemPtr(pArray, ++ulParamOffset);
             }
          }
 
          if( pSelf )
          {
-            hb_vmSend( static_cast<HB_USHORT>( iPCount ) );
+            hb_vmSend( static_cast<HB_USHORT>(iPCount) );
          }
          else
          {
-            hb_vmProc( static_cast<HB_USHORT>( iPCount ) );
+            hb_vmProc( static_cast<HB_USHORT>(iPCount) );
          }
 
          return HB_TRUE;
@@ -641,7 +641,7 @@ HB_FUNC( HB_EXECMSG )
    {
       PHB_ITEM pBase = hb_stackBaseItem();
       pBase->item.asSymbol.paramcnt = pBase->item.asSymbol.paramdeclcnt = 0;
-      hb_vmProc( static_cast<HB_USHORT>( iParams - 2 ) );
+      hb_vmProc( static_cast<HB_USHORT>(iParams - 2) );
    }
    else
    {

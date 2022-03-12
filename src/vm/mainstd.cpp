@@ -57,7 +57,7 @@ HB_EXTERN_END
 int main( int argc, char * argv[] )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "main(%d, %p)", argc, static_cast<void*>( argv ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "main(%d, %p)", argc, static_cast<void*>(argv) ) );
 #endif
 
    hb_cmdargInit( argc, argv );

@@ -50,7 +50,7 @@ static PHB_I18NTABLE hb_compI18nCreate( void )
 {
    PHB_I18NTABLE pI18n;
 
-   pI18n = static_cast<PHB_I18NTABLE>( hb_xgrab(sizeof(HB_I18NTABLE)) );
+   pI18n = static_cast<PHB_I18NTABLE>(hb_xgrab(sizeof(HB_I18NTABLE)));
    pI18n->pString     = nullptr;
    pI18n->uiCount     = 0;
    pI18n->uiAllocated = 0;
@@ -117,12 +117,12 @@ static PHB_I18NSTRING hb_compI18nAddSingle( HB_COMP_DECL, const char * szText, c
       if( pI18n->pString )
       {
          pI18n->uiAllocated += 32;
-         pI18n->pString      = static_cast<PHB_I18NSTRING>( hb_xrealloc(pI18n->pString, sizeof(HB_I18NSTRING)
-                                                               * pI18n->uiAllocated) );
+         pI18n->pString      = static_cast<PHB_I18NSTRING>(hb_xrealloc(pI18n->pString, sizeof(HB_I18NSTRING)
+                                                               * pI18n->uiAllocated));
       }
       else
       {
-         pI18n->pString     = static_cast<PHB_I18NSTRING>( hb_xgrab(sizeof(HB_I18NSTRING) * 32) );
+         pI18n->pString     = static_cast<PHB_I18NSTRING>(hb_xgrab(sizeof(HB_I18NSTRING) * 32));
          pI18n->uiAllocated = 32;
       }
    }
@@ -141,14 +141,14 @@ static PHB_I18NSTRING hb_compI18nAddSingle( HB_COMP_DECL, const char * szText, c
 
          if( pString->uiPosCount )
          {
-            pString->pPosLst = static_cast<PHB_I18NPOS>( hb_xrealloc(pString->pPosLst, ( pString->uiPosCount + 1 ) * sizeof(HB_I18NPOS)) );
+            pString->pPosLst = static_cast<PHB_I18NPOS>(hb_xrealloc(pString->pPosLst, ( pString->uiPosCount + 1 ) * sizeof(HB_I18NPOS)));
             pString->pPosLst[ pString->uiPosCount ].uiLine = uiLine;
             pString->pPosLst[ pString->uiPosCount ].szFile = szModule;
             pString->uiPosCount++;
          }
          else
          {
-            pString->pPosLst = static_cast<PHB_I18NPOS>( hb_xgrab(sizeof(HB_I18NPOS)) );
+            pString->pPosLst = static_cast<PHB_I18NPOS>(hb_xgrab(sizeof(HB_I18NPOS)));
             pString->pPosLst[ 0 ].uiLine = uiLine;
             pString->pPosLst[ 0 ].szFile = szModule;
             pString->uiPosCount = 1;
@@ -165,7 +165,7 @@ static PHB_I18NSTRING hb_compI18nAddSingle( HB_COMP_DECL, const char * szText, c
       }
    }
 
-   memmove( &pI18n->pString[ uiLeft + 1 ], &pI18n->pString[ uiLeft ], ( pI18n->uiCount - uiLeft ) * sizeof(HB_I18NSTRING) );
+   memmove(&pI18n->pString[ uiLeft + 1 ], &pI18n->pString[ uiLeft ], (pI18n->uiCount - uiLeft) * sizeof(HB_I18NSTRING));
 
    pString              = &pI18n->pString[ uiLeft ];
    pString->szText      = szText;
@@ -226,7 +226,7 @@ static void hb_compI18nEscapeString( FILE * file, const char * szText )
 {
    while( *szText )
    {
-      if( static_cast<HB_UCHAR>( *szText ) < ' ' )
+      if( static_cast<HB_UCHAR>(*szText) < ' ' )
       {
          if( *szText == '\t' )
          {
@@ -240,9 +240,9 @@ static void hb_compI18nEscapeString( FILE * file, const char * szText )
          {
             fprintf( file, "\\r" );
          }
-         else if( ( static_cast<HB_UCHAR>( szText[ 1 ] ) >= '0' && static_cast<HB_UCHAR>( szText[ 1 ] ) <= '9' ) ||
-                  ( static_cast<HB_UCHAR>( szText[ 1 ] ) >= 'A' && static_cast<HB_UCHAR>( szText[ 1 ] ) <= 'F' ) ||
-                  ( static_cast<HB_UCHAR>( szText[ 1 ] ) >= 'a' && static_cast<HB_UCHAR>( szText[ 1 ] ) <= 'f' ) )
+         else if( ( static_cast<HB_UCHAR>(szText[ 1 ]) >= '0' && static_cast<HB_UCHAR>(szText[ 1 ]) <= '9' ) ||
+                  ( static_cast<HB_UCHAR>(szText[ 1 ]) >= 'A' && static_cast<HB_UCHAR>(szText[ 1 ]) <= 'F' ) ||
+                  ( static_cast<HB_UCHAR>(szText[ 1 ]) >= 'a' && static_cast<HB_UCHAR>(szText[ 1 ]) <= 'f' ) )
          {
             fprintf( file, "\\%03o", *szText );
          }
