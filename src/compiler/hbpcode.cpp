@@ -31,43 +31,43 @@
 static HB_PSIZE_FUNC( hb_p_pushstrshort )
 {
    HB_SYMBOL_UNUSED(cargo);
-   return 2 + pFunc->pCode[ nPCodePos + 1 ];
+   return 2 + pFunc->pCode[nPCodePos + 1];
 }
 
 static HB_PSIZE_FUNC( hb_p_pushstr )
 {
    HB_SYMBOL_UNUSED(cargo);
-   return 3 + HB_PCODE_MKUSHORT( &pFunc->pCode[ nPCodePos + 1 ] );
+   return 3 + HB_PCODE_MKUSHORT( &pFunc->pCode[nPCodePos + 1] );
 }
 
 static HB_PSIZE_FUNC( hb_p_pushstrlarge )
 {
    HB_SYMBOL_UNUSED(cargo);
-   return 4 + HB_PCODE_MKUINT24( &pFunc->pCode[ nPCodePos + 1 ] );
+   return 4 + HB_PCODE_MKUINT24( &pFunc->pCode[nPCodePos + 1] );
 }
 
 static HB_PSIZE_FUNC( hb_p_pushstrhidden )
 {
    HB_SYMBOL_UNUSED(cargo);
-   return 4 + HB_PCODE_MKUSHORT( &pFunc->pCode[ nPCodePos + 2 ] );
+   return 4 + HB_PCODE_MKUSHORT( &pFunc->pCode[nPCodePos + 2] );
 }
 
 static HB_PSIZE_FUNC( hb_p_pushblock )
 {
    HB_SYMBOL_UNUSED(cargo);
-   return HB_PCODE_MKUSHORT( &pFunc->pCode[ nPCodePos + 1 ] );
+   return HB_PCODE_MKUSHORT( &pFunc->pCode[nPCodePos + 1] );
 }
 
 static HB_PSIZE_FUNC( hb_p_pushblockshort )
 {
    HB_SYMBOL_UNUSED(cargo);
-   return pFunc->pCode[ nPCodePos + 1 ];
+   return pFunc->pCode[nPCodePos + 1];
 }
 
 static HB_PSIZE_FUNC( hb_p_pushblocklarge )
 {
    HB_SYMBOL_UNUSED(cargo);
-   return HB_PCODE_MKUINT24( &pFunc->pCode[ nPCodePos + 1 ] );
+   return HB_PCODE_MKUINT24( &pFunc->pCode[nPCodePos + 1] );
 }
 
 static HB_PSIZE_FUNC( hb_p_localname )
@@ -76,7 +76,7 @@ static HB_PSIZE_FUNC( hb_p_localname )
 
    HB_SYMBOL_UNUSED(cargo);
    nPCodePos += 3;
-   while( pFunc->pCode[ nPCodePos++ ] )
+   while( pFunc->pCode[nPCodePos++] )
    {
       ;
    }
@@ -90,7 +90,7 @@ static HB_PSIZE_FUNC( hb_p_modulename )
 
    HB_SYMBOL_UNUSED(cargo);
    nPCodePos++;
-   while( pFunc->pCode[ nPCodePos++ ] )
+   while( pFunc->pCode[nPCodePos++] )
    {
       ;
    }
@@ -104,7 +104,7 @@ static HB_PSIZE_FUNC( hb_p_staticname )
 
    HB_SYMBOL_UNUSED(cargo);
    nPCodePos += 4;
-   while( pFunc->pCode[ nPCodePos++ ] )
+   while( pFunc->pCode[nPCodePos++] )
    {
       ;
    }
@@ -115,7 +115,7 @@ static HB_PSIZE_FUNC( hb_p_staticname )
 static HB_PSIZE_FUNC( hb_p_threadstatics )
 {
    HB_SYMBOL_UNUSED(cargo);
-   return 3 + ( static_cast<HB_SIZE>(HB_PCODE_MKUSHORT( &pFunc->pCode[ nPCodePos + 1 ] )) << 1 );
+   return 3 + ( static_cast<HB_SIZE>(HB_PCODE_MKUSHORT( &pFunc->pCode[nPCodePos + 1] )) << 1 );
 }
 
 const HB_BYTE hb_comp_pcode_len[] = {
@@ -500,15 +500,15 @@ static PHB_PCODE_FUNC s_psize_table[] =
 HB_ISIZ hb_compPCodeSize( PHB_HFUNC pFunc, HB_SIZE nOffset )
 {
    HB_ISIZ nSize = 0;
-   HB_BYTE opcode = pFunc->pCode[ nOffset ];
+   HB_BYTE opcode = pFunc->pCode[nOffset];
 
    if( opcode < HB_P_LAST_PCODE )
    {
-      nSize = hb_comp_pcode_len[ opcode ];
+      nSize = hb_comp_pcode_len[opcode];
 
       if( nSize == 0 )
       {
-         PHB_PCODE_FUNC pCall = s_psize_table[ opcode ];
+         PHB_PCODE_FUNC pCall = s_psize_table[opcode];
 
          if( pCall != nullptr )
          {
@@ -530,17 +530,17 @@ void hb_compPCodeEval( PHB_HFUNC pFunc, const PHB_PCODE_FUNC * pFunctions, void 
 
    while( nPos < pFunc->nPCodePos )
    {
-      HB_BYTE opcode = pFunc->pCode[ nPos ];
+      HB_BYTE opcode = pFunc->pCode[nPos];
       if( opcode < HB_P_LAST_PCODE )
       {
-         PHB_PCODE_FUNC pCall = pFunctions[ opcode ];
+         PHB_PCODE_FUNC pCall = pFunctions[opcode];
          nSkip = pCall ? pCall( pFunc, nPos, cargo ) : 0;
          if( nSkip == 0 )
          {
-            nSkip = hb_comp_pcode_len[ opcode ];
+            nSkip = hb_comp_pcode_len[opcode];
             if( nSkip == 0 )
             {
-               pCall = s_psize_table[ opcode ];
+               pCall = s_psize_table[opcode];
                if( pCall != nullptr )
                {
                   nSkip = pCall( pFunc, nPos, nullptr );
@@ -550,7 +550,7 @@ void hb_compPCodeEval( PHB_HFUNC pFunc, const PHB_PCODE_FUNC * pFunctions, void 
 
          if( nSkip == 0 )
          {
-            char szOpcode[ 16 ];
+            char szOpcode[16];
             ++nPos;
             hb_snprintf(szOpcode, sizeof(szOpcode), "%i", opcode);
             hb_errInternal( HB_EI_COMPBADOPSIZE, "Invalid (zero) opcode %s size in hb_compPCodeEval()", szOpcode, nullptr );
@@ -561,10 +561,10 @@ void hb_compPCodeEval( PHB_HFUNC pFunc, const PHB_PCODE_FUNC * pFunctions, void 
           * in some cases the eval functions can return intentionally differ
           * values so it's not enabled by default. [druzus]
           */
-         if( hb_comp_pcode_len[ opcode ] != 0 && hb_comp_pcode_len[ opcode ] != nSkip )
+         if( hb_comp_pcode_len[opcode] != 0 && hb_comp_pcode_len[opcode] != nSkip )
          {
-            char szMsg[ 100 ];
-            hb_snprintf(szMsg, sizeof(szMsg), "Wrong PCODE (%d) size (%ld!=%d)", opcode, nSkip, hb_comp_pcode_len[ opcode ]);
+            char szMsg[100];
+            hb_snprintf(szMsg, sizeof(szMsg), "Wrong PCODE (%d) size (%ld!=%d)", opcode, nSkip, hb_comp_pcode_len[opcode]);
             hb_errInternal( HB_EI_COMPBADOPSIZE, szMsg, nullptr, nullptr );
          }
 #endif
@@ -572,7 +572,7 @@ void hb_compPCodeEval( PHB_HFUNC pFunc, const PHB_PCODE_FUNC * pFunctions, void 
       }
       else
       {
-         char szOpcode[ 16 ];
+         char szOpcode[16];
          ++nPos;
          hb_snprintf(szOpcode, sizeof(szOpcode), "%i", opcode);
          hb_errInternal( HB_EI_COMPBADOPCODE, "Invalid opcode: %s in hb_compPCodeEval()", szOpcode, nullptr );
@@ -589,22 +589,22 @@ void hb_compPCodeTrace( PHB_HFUNC pFunc, const PHB_PCODE_FUNC * pFunctions, void
 
    while( nPos < pFunc->nPCodePos )
    {
-      HB_BYTE opcode = pFunc->pCode[ nPos ];
+      HB_BYTE opcode = pFunc->pCode[nPos];
       if( opcode < HB_P_LAST_PCODE )
       {
-         PHB_PCODE_FUNC pCall = pFunctions[ opcode ];
+         PHB_PCODE_FUNC pCall = pFunctions[opcode];
          if( pCall )
          {
             nPos = pCall( pFunc, nPos, cargo );
          }
          else
          {
-            nPos += hb_comp_pcode_len[ opcode ];
+            nPos += hb_comp_pcode_len[opcode];
          }
       }
       else
       {
-         char szOpcode[ 16 ];
+         char szOpcode[16];
          ++nPos;
          hb_snprintf(szOpcode, sizeof(szOpcode), "%i", opcode);
          hb_errInternal( HB_EI_COMPBADOPCODE, "Invalid opcode: %s in hb_compPCodeTrace()", szOpcode, nullptr );
@@ -627,7 +627,7 @@ void hb_compGenPCode1( HB_BYTE byte, HB_COMP_DECL )
       pFunc->pCode = static_cast<HB_BYTE*>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK));
    }
 
-   pFunc->pCode[ pFunc->nPCodePos++ ] = byte;
+   pFunc->pCode[pFunc->nPCodePos++] = byte;
 }
 
 void hb_compGenPCode2( HB_BYTE byte1, HB_BYTE byte2, HB_COMP_DECL )
@@ -645,8 +645,8 @@ void hb_compGenPCode2( HB_BYTE byte1, HB_BYTE byte2, HB_COMP_DECL )
       pFunc->pCode = static_cast<HB_BYTE*>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK));
    }
 
-   pFunc->pCode[ pFunc->nPCodePos++ ] = byte1;
-   pFunc->pCode[ pFunc->nPCodePos++ ] = byte2;
+   pFunc->pCode[pFunc->nPCodePos++] = byte1;
+   pFunc->pCode[pFunc->nPCodePos++] = byte2;
 }
 
 void hb_compGenPCode3( HB_BYTE byte1, HB_BYTE byte2, HB_BYTE byte3, HB_COMP_DECL )
@@ -664,9 +664,9 @@ void hb_compGenPCode3( HB_BYTE byte1, HB_BYTE byte2, HB_BYTE byte3, HB_COMP_DECL
       pFunc->pCode = static_cast<HB_BYTE*>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK));
    }
 
-   pFunc->pCode[ pFunc->nPCodePos++ ] = byte1;
-   pFunc->pCode[ pFunc->nPCodePos++ ] = byte2;
-   pFunc->pCode[ pFunc->nPCodePos++ ] = byte3;
+   pFunc->pCode[pFunc->nPCodePos++] = byte1;
+   pFunc->pCode[pFunc->nPCodePos++] = byte2;
+   pFunc->pCode[pFunc->nPCodePos++] = byte3;
 }
 
 void hb_compGenPCode4( HB_BYTE byte1, HB_BYTE byte2, HB_BYTE byte3, HB_BYTE byte4, HB_COMP_DECL )
@@ -684,10 +684,10 @@ void hb_compGenPCode4( HB_BYTE byte1, HB_BYTE byte2, HB_BYTE byte3, HB_BYTE byte
       pFunc->pCode = static_cast<HB_BYTE*>(hb_xrealloc(pFunc->pCode, pFunc->nPCodeSize += HB_PCODE_CHUNK));
    }
 
-   pFunc->pCode[ pFunc->nPCodePos++ ] = byte1;
-   pFunc->pCode[ pFunc->nPCodePos++ ] = byte2;
-   pFunc->pCode[ pFunc->nPCodePos++ ] = byte3;
-   pFunc->pCode[ pFunc->nPCodePos++ ] = byte4;
+   pFunc->pCode[pFunc->nPCodePos++] = byte1;
+   pFunc->pCode[pFunc->nPCodePos++] = byte2;
+   pFunc->pCode[pFunc->nPCodePos++] = byte3;
+   pFunc->pCode[pFunc->nPCodePos++] = byte4;
 }
 
 void hb_compGenPCodeN( const HB_BYTE * pBuffer, HB_SIZE nSize, HB_COMP_DECL )

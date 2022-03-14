@@ -60,7 +60,7 @@ HB_FUNC( HB_NTOS )
       {
          HB_SIZE nToTrim = 0;
 
-         while( szResult[ nToTrim ] == ' ' )
+         while( szResult[nToTrim] == ' ' )
          {
             ++nToTrim;
          }
@@ -84,7 +84,7 @@ HB_FUNC( HB_NTOC )
 
    if( pNumber )
    {
-      char szBuffer[ HB_MAX_DOUBLE_LENGTH ];
+      char szBuffer[HB_MAX_DOUBLE_LENGTH];
 
       if( ! HB_IS_DOUBLE(pNumber) )
       {
@@ -96,16 +96,16 @@ HB_FUNC( HB_NTOC )
          {
             nNumber = -nNumber;
          }
-         szBuffer[ --iPos ] = '\0';
+         szBuffer[--iPos] = '\0';
          do
          {
-            szBuffer[ --iPos ] = '0' + static_cast<char>(nNumber % 10);
+            szBuffer[--iPos] = '0' + static_cast<char>(nNumber % 10);
             nNumber /= 10;
          }
          while( nNumber != 0 );
          if( fNeg )
          {
-            szBuffer[ --iPos ] = '-';
+            szBuffer[--iPos] = '-';
          }
 
          hb_retc( szBuffer + iPos );

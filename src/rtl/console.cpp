@@ -78,10 +78,10 @@
 #endif
 
 #if defined( HB_OS_UNIX ) && ! defined( HB_EOL_CRLF )
-   static const char s_szCrLf[ CRLF_BUFFER_LEN ] = { HB_CHAR_LF, 0 };
+   static const char s_szCrLf[CRLF_BUFFER_LEN] = { HB_CHAR_LF, 0 };
    static const int  s_iCrLfLen = 1;
 #else
-   static const char s_szCrLf[ CRLF_BUFFER_LEN ] = { HB_CHAR_CR, HB_CHAR_LF, 0 };
+   static const char s_szCrLf[CRLF_BUFFER_LEN] = { HB_CHAR_CR, HB_CHAR_LF, 0 };
    static const int  s_iCrLfLen = 2;
 #endif
 
@@ -409,7 +409,7 @@ HB_FUNC( QOUT )
 
       if( pPrnPos->col )
       {
-         char buf[ 256 ];
+         char buf[256];
 
          if( pPrnPos->col > static_cast<int>(sizeof(buf)) )
          {
@@ -436,7 +436,7 @@ HB_FUNC( __EJECT ) /* Ejects the current page from the printer */
 
    if( ( pFile = hb_setGetPrinterHandle( HB_SET_PRN_ANY ) ) != nullptr )
    {
-      static const char s_szEop[ 4 ] = { 0x0C, 0x0D, 0x00, 0x00 }; /* Buffer is 4 bytes to make CodeGuard happy */
+      static const char s_szEop[4] = { 0x0C, 0x0D, 0x00, 0x00 }; /* Buffer is 4 bytes to make CodeGuard happy */
       hb_fileWrite( pFile, s_szEop, 2, -1 );
    }
 
@@ -473,20 +473,20 @@ static void hb_conDevPos( int iRow, int iCol )
 
       if( pPrnPos->row != iPRow || pPrnPos->col != iPCol )
       {
-         char buf[ 256 ];
+         char buf[256];
          int iPtr = 0;
 
          if( pPrnPos->row != iPRow )
          {
             if( ++pPrnPos->row > iPRow )
             {
-               memcpy(&buf[ iPtr ], "\x0C\x0D\x00\x00", 2);  /* Source buffer is 4 bytes to make CodeGuard happy */
+               memcpy(&buf[iPtr], "\x0C\x0D\x00\x00", 2);  /* Source buffer is 4 bytes to make CodeGuard happy */
                iPtr += 2;
                pPrnPos->row = 0;
             }
             else
             {
-               memcpy(&buf[ iPtr ], s_szCrLf, s_iCrLfLen);
+               memcpy(&buf[iPtr], s_szCrLf, s_iCrLfLen);
                iPtr += s_iCrLfLen;
             }
 
@@ -497,7 +497,7 @@ static void hb_conDevPos( int iRow, int iCol )
                   hb_fileWrite( pFile, buf, static_cast<HB_USHORT>(iPtr), -1 );
                   iPtr = 0;
                }
-               memcpy(&buf[ iPtr ], s_szCrLf, s_iCrLfLen);
+               memcpy(&buf[iPtr], s_szCrLf, s_iCrLfLen);
                iPtr += s_iCrLfLen;
                ++pPrnPos->row;
             }
@@ -505,7 +505,7 @@ static void hb_conDevPos( int iRow, int iCol )
          }
          else if( pPrnPos->col > iPCol )
          {
-            buf[ iPtr++ ] = '\x0D';
+            buf[iPtr++] = '\x0D';
             pPrnPos->col = 0;
          }
 
@@ -516,7 +516,7 @@ static void hb_conDevPos( int iRow, int iCol )
                hb_fileWrite( pFile, buf, static_cast<HB_USHORT>(iPtr), -1 );
                iPtr = 0;
             }
-            buf[ iPtr++ ] = ' ';
+            buf[iPtr++] = ' ';
             ++pPrnPos->col;
          }
 
@@ -566,7 +566,7 @@ HB_FUNC( DEVOUT ) /* writes a single value to the current device (screen or prin
 
    if( HB_ISCHAR(2) )
    {
-      char szOldColor[ HB_CLRSTR_LEN ];
+      char szOldColor[HB_CLRSTR_LEN];
 
       hb_gtGetColorStr( szOldColor );
       hb_gtSetColorStr( hb_parc(2) );
@@ -605,7 +605,7 @@ HB_FUNC( DISPOUT ) /* writes a single value to the screen, but is not affected b
 
    if( HB_ISCHAR(2) )
    {
-      char szOldColor[ HB_CLRSTR_LEN ];
+      char szOldColor[HB_CLRSTR_LEN];
 
       hb_gtGetColorStr( szOldColor );
       hb_gtSetColorStr( hb_parc(2) );
@@ -646,7 +646,7 @@ HB_FUNC( DISPOUTAT )  /* writes a single value to the screen at specific positio
 
    if( HB_ISCHAR(4) )
    {
-      char szOldColor[ HB_CLRSTR_LEN ];
+      char szOldColor[HB_CLRSTR_LEN];
 
       hb_gtGetColorStr( szOldColor );
       hb_gtSetColorStr( hb_parc(4) );

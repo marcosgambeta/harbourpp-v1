@@ -255,7 +255,7 @@ long hb_znetRead( PHB_ZNETSTREAM pStream, HB_SOCKET sd, void * buffer, long len,
                   pStream->crypt_size = HB_GET_BE_UINT16( pStream->rd.next_in );
                   pStream->rd.next_in += 2;
                   pStream->crypt_in -= 8;
-                  rec = HB_MIN( pStream->crypt_size, 6 );
+                  rec = HB_MIN(pStream->crypt_size, 6);
                   pStream->crypt_size -= static_cast<uInt>(rec);
                   pStream->rd.avail_in += static_cast<uInt>(rec);
                   pStream->skip_in = static_cast<uInt>(6 - rec);
@@ -534,7 +534,7 @@ static int s_sockexClose( PHB_SOCKEX pSock, HB_BOOL fClose )
    {
       if( pSock->sd != HB_NO_SOCKET )
       {
-         hb_znetFlush( HB_ZNET_GET( pSock ), pSock->sd, HB_MAX( 15000, pSock->iAutoFlush ), HB_TRUE );
+         hb_znetFlush( HB_ZNET_GET( pSock ), pSock->sd, HB_MAX(15000, pSock->iAutoFlush), HB_TRUE );
       }
       hb_znetClose( HB_ZNET_GET( pSock ) );
    }
@@ -547,7 +547,7 @@ static int s_sockexClose( PHB_SOCKEX pSock, HB_BOOL fClose )
 
 static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT timeout )
 {
-   long lRead = HB_MIN( pSock->inbuffer, len );
+   long lRead = HB_MIN(pSock->inbuffer, len);
 
    if( lRead > 0 )
    {
@@ -578,7 +578,7 @@ static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT tim
    len = pSock->cargo ? hb_znetRead( HB_ZNET_GET( pSock ), pSock->sd, data, len, timeout ) :
                         hb_socketRecv( pSock->sd, data, len, 0, timeout );
 
-   return lRead > 0 ? HB_MAX( len, 0 ) + lRead : len;
+   return lRead > 0 ? HB_MAX(len, 0) + lRead : len;
 }
 
 static long s_sockexWrite( PHB_SOCKEX pSock, const void * data, long len, HB_MAXINT timeout )

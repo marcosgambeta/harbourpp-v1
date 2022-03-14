@@ -58,7 +58,7 @@ HB_FUNC( HB_UCHAR )
 {
    if( HB_ISNUM(1) )
    {
-      char szChar[ HB_MAX_CHAR_LEN ];
+      char szChar[HB_MAX_CHAR_LEN];
       HB_SIZE nLen;
 
       nLen = hb_cdpTextPutU16( hb_vmCDP(), szChar, sizeof(szChar), static_cast<HB_WCHAR>(hb_parni(1)) );
@@ -113,7 +113,7 @@ HB_FUNC( HB_BCODE )
 
    if( szText )
    {
-      hb_retni( static_cast<HB_UCHAR>(szText[ 0 ]) );
+      hb_retni( static_cast<HB_UCHAR>(szText[0]) );
    }
    else
    {
@@ -199,7 +199,7 @@ HB_FUNC( HB_BPEEK )
    {
       HB_SIZE nPos = hb_parns(2);
 
-      hb_retni( ( nPos > 0 && nPos <= hb_itemGetCLen(pText) ) ? static_cast<HB_UCHAR>(hb_itemGetCPtr(pText)[ nPos - 1 ]) : 0 );
+      hb_retni( ( nPos > 0 && nPos <= hb_itemGetCLen(pText) ) ? static_cast<HB_UCHAR>(hb_itemGetCPtr(pText)[nPos - 1]) : 0 );
    }
    else
    {
@@ -226,7 +226,7 @@ HB_FUNC( HB_UPOKE )
          nPos = hb_cdpTextPos( cdp, szText, nLen, nPos - 1 );
          if( nPos < nLen )
          {
-            char szChar[ HB_MAX_CHAR_LEN ], * pszText;
+            char szChar[HB_MAX_CHAR_LEN], * pszText;
             HB_SIZE nChar, nOldChar;
 
             nChar = hb_cdpTextPutU16( cdp, szChar, sizeof(szChar), static_cast<HB_WCHAR>(hb_parni(3)) );
@@ -276,7 +276,7 @@ HB_FUNC( HB_BPOKE )
 
       if( nPos > 0 && hb_itemGetWriteCL(pText, &pszText, &nLen) && nPos <= nLen )
       {
-         pszText[ nPos - 1 ] = static_cast<char>(hb_parni(3) & 0xff);
+         pszText[nPos - 1] = static_cast<char>(hb_parni(3) & 0xff);
       }
       hb_itemReturn(pText);
    }
@@ -718,7 +718,7 @@ HB_FUNC( HB_BRAT )
             {
                do
                {
-                  if( pszText[ nTo ] == *pszSub && memcmp(pszSub, pszText + nTo, nSubLen) == 0 )
+                  if( pszText[nTo] == *pszSub && memcmp(pszSub, pszText + nTo, nSubLen) == 0 )
                   {
                      nPos = nTo + 1;
                      break;

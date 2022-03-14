@@ -242,10 +242,10 @@ void hb_gt_winapi_tone( double dFrequency, double dDuration )
     * resolution, but the minimum is 1 tick (for compatibility)
     */
    /* Convert from ticks to seconds */
-   dDuration = ( HB_MIN( HB_MAX( 1.0, dDuration ), ULONG_MAX ) ) / 18.2;
+   dDuration = ( HB_MIN(HB_MAX(1.0, dDuration), ULONG_MAX) ) / 18.2;
 
    /* keep the frequency in an acceptable range */
-   dFrequency = HB_MIN( HB_MAX( 0.0, dFrequency ), 32767.0 );
+   dFrequency = HB_MIN(HB_MAX(0.0, dFrequency), 32767.0);
 
 #if defined( HB_HAS_WIN9X_TONE )
    if( hb_iswin9x() )

@@ -61,7 +61,7 @@ struct _HB_SYM_HOLDER
 {
    HB_SYMB  symbol;
    struct _HB_SYM_HOLDER * pNext;
-   char     szName[ 1 ];
+   char     szName[1];
 };
 
 using HB_SYM_HOLDER = _HB_SYM_HOLDER;
@@ -119,14 +119,14 @@ static PHB_DYNS hb_dynsymInsert( PHB_SYMB pSymbol, HB_SYMCNT uiPos )
    else
    {
       s_pDynItems = static_cast<PDYNHB_ITEM>(hb_xrealloc(s_pDynItems, s_uiDynSymbols * sizeof(DYNHB_ITEM)));
-      memmove(&s_pDynItems[ uiPos + 1 ], &s_pDynItems[ uiPos ], sizeof(DYNHB_ITEM) * (s_uiDynSymbols - uiPos - 1));
+      memmove(&s_pDynItems[uiPos + 1], &s_pDynItems[uiPos], sizeof(DYNHB_ITEM) * (s_uiDynSymbols - uiPos - 1));
    }
 
    pDynSym = static_cast<PHB_DYNS>(hb_xgrabz(sizeof(HB_DYNS)));
    pDynSym->pSymbol  = pSymbol;
    pDynSym->uiSymNum = s_uiDynSymbols;
 
-   pSymbol->pDynSym = s_pDynItems[ uiPos ].pDynSym = pDynSym;
+   pSymbol->pDynSym = s_pDynItems[uiPos].pDynSym = pDynSym;
 
    return pDynSym;
 }
@@ -149,12 +149,12 @@ static PHB_DYNS hb_dynsymPos( const char * szName, HB_SYMCNT * puiPos )
 
    while( uiFirst < uiLast )
    {
-      int iCmp = strcmp(s_pDynItems[ uiMiddle ].pDynSym->pSymbol->szName, szName);
+      int iCmp = strcmp(s_pDynItems[uiMiddle].pDynSym->pSymbol->szName, szName);
 
       if( iCmp == 0 )
       {
          *puiPos = uiMiddle;
-         return s_pDynItems[ uiMiddle ].pDynSym;
+         return s_pDynItems[uiMiddle].pDynSym;
       }
       else if( iCmp < 0 )
       {
@@ -215,12 +215,12 @@ PHB_DYNS hb_dynsymFind( const char * szName )
    while( uiFirst < uiLast )
    {
       HB_SYMCNT uiMiddle = ( uiFirst + uiLast ) >> 1;
-      int iCmp = strcmp(s_pDynItems[ uiMiddle ].pDynSym->pSymbol->szName, szName);
+      int iCmp = strcmp(s_pDynItems[uiMiddle].pDynSym->pSymbol->szName, szName);
 
       if( iCmp == 0 )
       {
          HB_DYNSYM_UNLOCK();
-         return s_pDynItems[ uiMiddle ].pDynSym;
+         return s_pDynItems[uiMiddle].pDynSym;
       }
       else if( iCmp < 0 )
       {
@@ -405,7 +405,7 @@ PHB_DYNS hb_dynsymGet( const char * szName )  /* finds and creates a symbol if n
    HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymGet(%s)", szName ) );
 #endif
 
-   char szUprName[ HB_SYMBOL_NAME_LEN + 1 ];
+   char szUprName[HB_SYMBOL_NAME_LEN + 1];
 
    /* make a copy as we may get a const string, then turn it to uppercase */
    /* NOTE: This block is optimized for speed [vszakats] */
@@ -442,7 +442,7 @@ PHB_DYNS hb_dynsymFindName( const char * szName )  /* finds a symbol */
    HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymFindName(%s)", szName ) );
 #endif
 
-   char szUprName[ HB_SYMBOL_NAME_LEN + 1 ];
+   char szUprName[HB_SYMBOL_NAME_LEN + 1];
 
    /* make a copy as we may get a const string, then turn it to uppercase */
    /* NOTE: This block is optimized for speed [vszakats] */
@@ -574,7 +574,7 @@ static PHB_DYNS hb_dynsymGetByIndex( HB_LONG lIndex )
 
    if( lIndex >= 1 && static_cast<HB_ULONG>(lIndex) <= s_uiDynSymbols )
    {
-      pDynSym = s_pDynItems[ lIndex - 1 ].pDynSym;
+      pDynSym = s_pDynItems[lIndex - 1].pDynSym;
    }
 
    HB_DYNSYM_UNLOCK();
@@ -606,13 +606,13 @@ HB_SYMCNT hb_dynsymToNum( PHB_DYNS pDynSym )
    if( uiSymNum > s_uiDynIdxSize )
    {
       s_pDynIndex = static_cast<PDYNHB_ITEM>(hb_xrealloc(s_pDynIndex, uiSymNum * sizeof(DYNHB_ITEM)));
-      memset(&s_pDynIndex[ s_uiDynIdxSize ], 0, (uiSymNum - s_uiDynIdxSize) * sizeof(DYNHB_ITEM));
+      memset(&s_pDynIndex[s_uiDynIdxSize], 0, (uiSymNum - s_uiDynIdxSize) * sizeof(DYNHB_ITEM));
       s_uiDynIdxSize = uiSymNum;
    }
 
-   if( s_pDynIndex[ uiSymNum - 1 ].pDynSym == nullptr )
+   if( s_pDynIndex[uiSymNum - 1].pDynSym == nullptr )
    {
-      s_pDynIndex[ uiSymNum - 1 ].pDynSym = pDynSym;
+      s_pDynIndex[uiSymNum - 1].pDynSym = pDynSym;
    }
 
    HB_DYNSYM_UNLOCK();
@@ -630,7 +630,7 @@ PHB_DYNS hb_dynsymFromNum( HB_SYMCNT uiSymNum )
 
    HB_DYNSYM_LOCK();
 
-   pDynSym = uiSymNum > 0 && uiSymNum <= s_uiDynIdxSize ? s_pDynIndex[ uiSymNum - 1 ].pDynSym : nullptr;
+   pDynSym = uiSymNum > 0 && uiSymNum <= s_uiDynIdxSize ? s_pDynIndex[uiSymNum - 1].pDynSym : nullptr;
 
    HB_DYNSYM_UNLOCK();
 
@@ -656,7 +656,7 @@ void hb_dynsymEval( PHB_DYNS_FUNC pFunction, void * Cargo )
          /* protection against resizing dynamic symbol by
           * user function or other thread in MT mode
           */
-         while( s_pDynItems[ uiPos ].pDynSym != pDynSym )
+         while( s_pDynItems[uiPos].pDynSym != pDynSym )
          {
             if( ++uiPos >= s_uiDynSymbols )
             {
@@ -666,7 +666,7 @@ void hb_dynsymEval( PHB_DYNS_FUNC pFunction, void * Cargo )
       }
       if( ++uiPos < s_uiDynSymbols )
       {
-         pDynSym = s_pDynItems[ uiPos ].pDynSym;
+         pDynSym = s_pDynItems[uiPos].pDynSym;
       }
       else
       {
@@ -694,7 +694,7 @@ void hb_dynsymProtectEval( PHB_DYNS_FUNC pFunction, void * Cargo )
 
    while( uiPos < s_uiDynSymbols )
    {
-      if( ! ( pFunction ) ( s_pDynItems[ uiPos++ ].pDynSym, Cargo ) )
+      if( ! ( pFunction ) ( s_pDynItems[uiPos++].pDynSym, Cargo ) )
       {
          break;
       }
@@ -871,11 +871,11 @@ static int hb_dynsymVerify( void )
 
    while( iResult == 0 && uiPos < s_uiDynSymbols )
    {
-      PHB_DYNS pDynSym = s_pDynItems[ uiPos ].pDynSym;
+      PHB_DYNS pDynSym = s_pDynItems[uiPos].pDynSym;
       HB_SYMCNT uiAt;
       int iCmp;
 
-      if( uiPos > 0 && ( iCmp = strcmp(s_pDynItems[ uiPos - 1 ].pDynSym->pSymbol->szName, pDynSym->pSymbol->szName) ) <= 0 )
+      if( uiPos > 0 && ( iCmp = strcmp(s_pDynItems[uiPos - 1].pDynSym->pSymbol->szName, pDynSym->pSymbol->szName) ) <= 0 )
       {
          iResult = iCmp == 0 ? -1 : -2;
       }

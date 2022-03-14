@@ -178,7 +178,7 @@ static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT tim
 
    if( pSock->inbuffer > 0 && len > 0 )
    {
-      lRecv = HB_MIN( pSock->inbuffer, len );
+      lRecv = HB_MIN(pSock->inbuffer, len);
       memcpy(data, pSock->buffer + pSock->posbuffer, lRecv);
       if( ( pSock->inbuffer -= lRecv ) > 0 )
       {
@@ -378,7 +378,7 @@ static int s_sockexClose( PHB_SOCKEX pSock, HB_BOOL fClose )
    {
       if( pZ->sock )
       {
-         s_sockexFlush( pSock, HB_MAX( 15000, pSock->iAutoFlush ), HB_TRUE );
+         s_sockexFlush( pSock, HB_MAX(15000, pSock->iAutoFlush), HB_TRUE );
       }
 
       if( pZ->fDecompressIn )

@@ -79,7 +79,7 @@ HB_BOOL hb_gt_setClipboard( const char * szClipData, HB_SIZE nLen )
    {
       s_szClipboardData = static_cast<char*>(hb_xgrab(s_nClipboardLen + 1));
       memcpy(s_szClipboardData, szClipData, s_nClipboardLen);
-      s_szClipboardData[ s_nClipboardLen ] = '\0';
+      s_szClipboardData[s_nClipboardLen] = '\0';
    }
 
    hb_threadLeaveCriticalSection( &s_clipMtx );
@@ -97,7 +97,7 @@ HB_BOOL hb_gt_getClipboard( char ** pszClipData, HB_SIZE * pnLen )
    {
       *pszClipData = static_cast<char*>(hb_xgrab(s_nClipboardLen + 1));
       memcpy(*pszClipData, s_szClipboardData, s_nClipboardLen);
-      ( *pszClipData )[ s_nClipboardLen ] = '\0';
+      ( *pszClipData )[s_nClipboardLen] = '\0';
    }
 
    hb_threadLeaveCriticalSection( &s_clipMtx );

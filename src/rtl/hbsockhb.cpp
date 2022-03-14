@@ -119,7 +119,7 @@ static int s_sockexClose( PHB_SOCKEX pSock, HB_BOOL fClose )
    buffer first */
 static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT timeout )
 {
-   long lRead = HB_MIN( pSock->inbuffer, len );
+   long lRead = HB_MIN(pSock->inbuffer, len);
 
    if( lRead > 0 )
    {
@@ -275,25 +275,25 @@ static PHB_SOCKEX s_sockexNew( HB_SOCKET sd, PHB_ITEM pParams )
    return pSock;
 }
 
-static const HB_SOCKET_FILTER * s_socketFilters[ HB_SOCKET_FILTER_MAX ];
+static const HB_SOCKET_FILTER * s_socketFilters[HB_SOCKET_FILTER_MAX];
 static int s_iFilterCount = 0;
 
 int hb_sockexRegister( const HB_SOCKET_FILTER * pFilter )
 {
    if( s_iFilterCount == 0 )
    {
-      s_socketFilters[ s_iFilterCount++ ] = &s_sockFilter;
+      s_socketFilters[s_iFilterCount++] = &s_sockFilter;
    }
 
    if( pFilter )
    {
       for( int i = 0; i < s_iFilterCount; ++i )
       {
-         if( s_socketFilters[ i ] == pFilter )
+         if( s_socketFilters[i] == pFilter )
          {
             return 1;
          }
-         if( hb_stricmp( s_socketFilters[ i ]->pszName, pFilter->pszName ) == 0 )
+         if( hb_stricmp( s_socketFilters[i]->pszName, pFilter->pszName ) == 0 )
          {
             return 2;
          }
@@ -304,7 +304,7 @@ int hb_sockexRegister( const HB_SOCKET_FILTER * pFilter )
          return 3;
       }
 
-      s_socketFilters[ s_iFilterCount++ ] = pFilter;
+      s_socketFilters[s_iFilterCount++] = pFilter;
    }
 
    return 0;
@@ -512,7 +512,7 @@ static int s_socket_filter_find( const char * pszFilter )
 {
    for( int i = 0; i < s_iFilterCount; ++i )
    {
-      if( hb_stricmp( s_socketFilters[ i ]->pszName, pszFilter ) == 0 )
+      if( hb_stricmp( s_socketFilters[i]->pszName, pszFilter ) == 0 )
       {
          return i;
       }
@@ -526,7 +526,7 @@ static const HB_SOCKET_FILTER ** s_socket_getfilters( const char * pszFilter, co
 
    if( pszFilter == nullptr )
    {
-      pFilters[ iCount++ ] = &s_sockFilter;
+      pFilters[iCount++] = &s_sockFilter;
    }
    else
    {
@@ -534,7 +534,7 @@ static const HB_SOCKET_FILTER ** s_socket_getfilters( const char * pszFilter, co
 
       if( i >= 0 )
       {
-         pFilters[ iCount++ ] = s_socketFilters[ i ];
+         pFilters[iCount++] = s_socketFilters[i];
       }
       else if( strchr( pszFilter, '|' ) != nullptr )
       {
@@ -549,12 +549,12 @@ static const HB_SOCKET_FILTER ** s_socket_getfilters( const char * pszFilter, co
             if( *ptr == '|' )
             {
                *ptr = '\0';
-               if( ptr[ 1 ] )
+               if( ptr[1] )
                {
                   i = s_socket_filter_find( ptr + 1 );
                }
             }
-            else if( ptr == pszFilterList && ptr[ 0 ] )
+            else if( ptr == pszFilterList && ptr[0] )
             {
                i = s_socket_filter_find( ptr );
             }
@@ -570,7 +570,7 @@ static const HB_SOCKET_FILTER ** s_socket_getfilters( const char * pszFilter, co
                   iMax += 16;
                   pFilters = static_cast<const HB_SOCKET_FILTER**>(hb_xrealloc(pFilters, sizeof(*pFilters) * iMax));
                }
-               pFilters[ iCount++ ] = s_socketFilters[ i ];
+               pFilters[iCount++] = s_socketFilters[i];
             }
             else if( i == -1 )
             {
@@ -596,7 +596,7 @@ static const HB_SOCKET_FILTER ** s_socket_getfilters( const char * pszFilter, co
 
 PHB_SOCKEX hb_sockexNew( HB_SOCKET sd, const char * pszFilter, PHB_ITEM pParams )
 {
-   const HB_SOCKET_FILTER * pBuffer[ 16 ];
+   const HB_SOCKET_FILTER * pBuffer[16];
    const HB_SOCKET_FILTER ** pFilters;
    int iCount = HB_SIZEOFARRAY( pBuffer );
    PHB_SOCKEX pSock = nullptr;
@@ -606,7 +606,7 @@ PHB_SOCKEX hb_sockexNew( HB_SOCKET sd, const char * pszFilter, PHB_ITEM pParams 
    {
       for( int i = 0; i < iCount; ++i )
       {
-         PHB_SOCKEX pSockNew = pSock == nullptr ? pFilters[ i ]->New( sd, pParams ) : pFilters[ i ]->Next( pSock, pParams );
+         PHB_SOCKEX pSockNew = pSock == nullptr ? pFilters[i]->New( sd, pParams ) : pFilters[i]->Next( pSock, pParams );
          if( pSockNew == nullptr )
          {
             if( pSock )
@@ -628,7 +628,7 @@ PHB_SOCKEX hb_sockexNew( HB_SOCKET sd, const char * pszFilter, PHB_ITEM pParams 
 
 PHB_SOCKEX hb_sockexNext( PHB_SOCKEX pSock, const char * pszFilter, PHB_ITEM pParams )
 {
-   const HB_SOCKET_FILTER * pBuffer[ 16 ];
+   const HB_SOCKET_FILTER * pBuffer[16];
    const HB_SOCKET_FILTER ** pFilters;
    int iCount = HB_SIZEOFARRAY( pBuffer );
 
@@ -637,7 +637,7 @@ PHB_SOCKEX hb_sockexNext( PHB_SOCKEX pSock, const char * pszFilter, PHB_ITEM pPa
    {
       for( int i = 0; pSock && i < iCount; ++i )
       {
-         PHB_SOCKEX pSockNew = pFilters[ i ]->Next( pSock, pParams );
+         PHB_SOCKEX pSockNew = pFilters[i]->Next( pSock, pParams );
          if( pSockNew != nullptr )
          {
             pSock = pSockNew;
@@ -672,7 +672,7 @@ long hb_sockexWrite( PHB_SOCKEX pSock, const void * data, long len, HB_MAXINT ti
    {
       if( timeout >= 0 )
       {
-         timeout = HB_MAX( timeout, pSock->iAutoFlush );
+         timeout = HB_MAX(timeout, pSock->iAutoFlush);
       }
       hb_sockexFlush( pSock, timeout, HB_FALSE );
    }

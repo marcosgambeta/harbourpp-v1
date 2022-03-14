@@ -76,7 +76,7 @@ static PHB_EXPR hb_compExprReducePlusStrings( PHB_EXPR pLeft, PHB_EXPR pRight, H
       pLeft->value.asString.string = static_cast<char*>(hb_xrealloc(pLeft->value.asString.string, pLeft->nLength + pRight->nLength + 1));
       memcpy(pLeft->value.asString.string + pLeft->nLength, pRight->value.asString.string, pRight->nLength);
       pLeft->nLength += pRight->nLength;
-      pLeft->value.asString.string[ pLeft->nLength ] = '\0';
+      pLeft->value.asString.string[pLeft->nLength] = '\0';
    }
    else
    {
@@ -85,7 +85,7 @@ static PHB_EXPR hb_compExprReducePlusStrings( PHB_EXPR pLeft, PHB_EXPR pRight, H
       memcpy(szString, pLeft->value.asString.string, pLeft->nLength);
       memcpy(szString + pLeft->nLength, pRight->value.asString.string, pRight->nLength);
       pLeft->nLength += pRight->nLength;
-      szString[ pLeft->nLength ] = '\0';
+      szString[pLeft->nLength] = '\0';
       pLeft->value.asString.string = szString;
       pLeft->value.asString.dealloc = HB_TRUE;
    }
@@ -98,7 +98,7 @@ static PHB_EXPR hb_compExprReduceMinusStrings( PHB_EXPR pLeft, PHB_EXPR pRight, 
    char * szText = pLeft->value.asString.string;
    HB_SIZE nLen = pLeft->nLength;
 
-   while( nLen && szText[ nLen - 1 ] == ' ' )
+   while( nLen && szText[nLen - 1] == ' ' )
    {
       --nLen;
    }
@@ -109,7 +109,7 @@ static PHB_EXPR hb_compExprReduceMinusStrings( PHB_EXPR pLeft, PHB_EXPR pRight, 
       memcpy(pLeft->value.asString.string + nLen, pRight->value.asString.string, pRight->nLength);
       memset(pLeft->value.asString.string + nLen + pRight->nLength, ' ', pLeft->nLength - nLen);
       pLeft->nLength += pRight->nLength;
-      pLeft->value.asString.string[ pLeft->nLength ] = '\0';
+      pLeft->value.asString.string[pLeft->nLength] = '\0';
    }
    else
    {
@@ -119,7 +119,7 @@ static PHB_EXPR hb_compExprReduceMinusStrings( PHB_EXPR pLeft, PHB_EXPR pRight, 
       memcpy(szString + nLen, pRight->value.asString.string, pRight->nLength);
       memset(szString + nLen + pRight->nLength, ' ', pLeft->nLength - nLen);
       pLeft->nLength += pRight->nLength;
-      szString[ pLeft->nLength ] = '\0';
+      szString[pLeft->nLength] = '\0';
       pLeft->value.asString.string = szString;
       pLeft->value.asString.dealloc = HB_TRUE;
    }
@@ -306,7 +306,7 @@ PHB_EXPR hb_compExprReduceMult( PHB_EXPR pSelf, HB_COMP_DECL )
 
             pSelf->value.asNum.val.d   = pLeft->value.asNum.val.d * pRight->value.asNum.val.d;
             pSelf->value.asNum.bWidth  = HB_DEFAULT_WIDTH;
-            pSelf->value.asNum.bDec    = static_cast<HB_UCHAR>(HB_MIN( pLeft->value.asNum.bDec + pRight->value.asNum.bDec, HB_DEFAULT_DECIMALS ));
+            pSelf->value.asNum.bDec    = static_cast<HB_UCHAR>(HB_MIN(pLeft->value.asNum.bDec + pRight->value.asNum.bDec, HB_DEFAULT_DECIMALS));
             pSelf->value.asNum.NumType = HB_ET_DOUBLE;
             break;
 
@@ -590,7 +590,7 @@ PHB_EXPR hb_compExprReduceMinus( PHB_EXPR pSelf, HB_COMP_DECL )
          {
             char *  szText = pLeft->value.asString.string;
             HB_SIZE nLen   = pLeft->nLength;
-            while( nLen && szText[ nLen - 1 ] == ' ' )
+            while( nLen && szText[nLen - 1] == ' ' )
             {
                --nLen;
             }
@@ -2093,14 +2093,14 @@ HB_BOOL hb_compExprReduceCHR( PHB_EXPR pSelf, HB_COMP_DECL )
          }
          else
          {
-            pExpr->value.asString.string = const_cast<char*>(hb_szAscii[ static_cast<int>(pArg->value.asNum.val.l) & 0xff ]);
+            pExpr->value.asString.string = const_cast<char*>(hb_szAscii[static_cast<int>(pArg->value.asNum.val.l) & 0xff]);
             pExpr->value.asString.dealloc = HB_FALSE;
             pExpr->nLength = 1;
          }
       }
       else
       {
-         pExpr->value.asString.string = const_cast<char*>(hb_szAscii[ HB_CAST_INT( pArg->value.asNum.val.d ) & 0xff ]);
+         pExpr->value.asString.string = const_cast<char*>(hb_szAscii[HB_CAST_INT( pArg->value.asNum.val.d ) & 0xff]);
          pExpr->value.asString.dealloc = HB_FALSE;
          pExpr->nLength = 1;
       }
@@ -2126,9 +2126,9 @@ HB_BOOL hb_compExprReduceBCHAR( PHB_EXPR pSelf, HB_COMP_DECL )
 
       pExpr->ValType = HB_EV_STRING;
       pExpr->value.asString.string =
-         const_cast<char*>(hb_szAscii[ ( pArg->value.asNum.NumType == HB_ET_LONG ?
+         const_cast<char*>(hb_szAscii[( pArg->value.asNum.NumType == HB_ET_LONG ?
                                 static_cast<int>(pArg->value.asNum.val.l) :
-                                HB_CAST_INT( pArg->value.asNum.val.d ) ) & 0xff ]);
+                                HB_CAST_INT( pArg->value.asNum.val.d ) ) & 0xff]);
       pExpr->value.asString.dealloc = HB_FALSE;
       pExpr->nLength = 1;
 
@@ -2232,9 +2232,9 @@ HB_BOOL hb_compExprReduceASC( PHB_EXPR pSelf, HB_COMP_DECL )
    PHB_EXPR pParms = pSelf->value.asFunCall.pParms;
    PHB_EXPR pArg = pParms->value.asList.pExprList;
 
-   if( pArg->ExprType == HB_ET_STRING && ( ! HB_SUPPORT_USERCP || static_cast<HB_UCHAR>(pArg->value.asString.string[ 0 ]) <= 127 ) )
+   if( pArg->ExprType == HB_ET_STRING && ( ! HB_SUPPORT_USERCP || static_cast<HB_UCHAR>(pArg->value.asString.string[0]) <= 127 ) )
    {
-      PHB_EXPR pExpr = hb_compExprNewLong( static_cast<HB_UCHAR>(pArg->value.asString.string[ 0 ]), HB_COMP_PARAM );
+      PHB_EXPR pExpr = hb_compExprNewLong( static_cast<HB_UCHAR>(pArg->value.asString.string[0]), HB_COMP_PARAM );
 
       HB_COMP_EXPR_FREE( pParms );
       HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
@@ -2252,7 +2252,7 @@ HB_BOOL hb_compExprReduceBCODE( PHB_EXPR pSelf, HB_COMP_DECL )
 
    if( pArg->ExprType == HB_ET_STRING )
    {
-      PHB_EXPR pExpr = hb_compExprNewLong( static_cast<HB_UCHAR>(pArg->value.asString.string[ 0 ]), HB_COMP_PARAM );
+      PHB_EXPR pExpr = hb_compExprNewLong( static_cast<HB_UCHAR>(pArg->value.asString.string[0]), HB_COMP_PARAM );
 
       HB_COMP_EXPR_FREE( pParms );
       HB_COMP_EXPR_FREE( pSelf->value.asFunCall.pFunName );
@@ -2367,7 +2367,7 @@ HB_BOOL hb_compExprReduceDTOS( PHB_EXPR pSelf, HB_COMP_DECL )
 
    if( pArg->ExprType == HB_ET_DATE || pArg->ExprType == HB_ET_TIMESTAMP )
    {
-      char szBuffer[ 9 ], * szDate;
+      char szBuffer[9], * szDate;
       PHB_EXPR pExpr;
 
       szDate = static_cast<char*>(memcpy(hb_xgrab(9), hb_dateDecStr(szBuffer, static_cast<long>(pArg->value.asDate.lDate)), 9));
@@ -2440,7 +2440,7 @@ HB_BOOL hb_compExprReduceUPPER( PHB_EXPR pSelf, HB_COMP_DECL )
          {
             if( pArg->nLength == 1 )
             {
-               szValue = const_cast<char*>(hb_szAscii[ HB_TOUPPER(static_cast<unsigned char>(pArg->value.asString.string[ 0 ])) ]);
+               szValue = const_cast<char*>(hb_szAscii[HB_TOUPPER(static_cast<unsigned char>(pArg->value.asString.string[0]))]);
                fDealloc = HB_FALSE;
             }
             else
@@ -2459,7 +2459,7 @@ HB_BOOL hb_compExprReduceUPPER( PHB_EXPR pSelf, HB_COMP_DECL )
                }
                do
                {
-                  szValue[ nLen ] = static_cast<char>(HB_TOUPPER(static_cast<unsigned char>(szValue[ nLen ])));
+                  szValue[nLen] = static_cast<char>(HB_TOUPPER(static_cast<unsigned char>(szValue[nLen])));
                }
                while( ++nLen < pArg->nLength );
             }

@@ -120,7 +120,7 @@ PHB_FUNC hb_vmProcAddress( const char * szFuncName )
    do
    {
       uiMiddle = ( uiFirst + uiLast ) >> 1;
-      iCmp = strcmp(szFuncName, s_funcTable[ uiMiddle ].szFuncName);
+      iCmp = strcmp(szFuncName, s_funcTable[uiMiddle].szFuncName);
       if( iCmp <= 0 )
       {
          uiLast = uiMiddle;
@@ -134,8 +134,8 @@ PHB_FUNC hb_vmProcAddress( const char * szFuncName )
 
    if( uiFirst != uiMiddle )
    {
-      iCmp = strcmp(szFuncName, s_funcTable[ uiFirst ].szFuncName);
+      iCmp = strcmp(szFuncName, s_funcTable[uiFirst].szFuncName);
    }
 
-   return iCmp == 0 ? s_funcTable[ uiFirst ].pFuncAddr : nullptr;
+   return iCmp == 0 ? s_funcTable[uiFirst].pFuncAddr : nullptr;
 }

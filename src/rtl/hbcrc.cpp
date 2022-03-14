@@ -50,7 +50,7 @@
 
 /* X^32+X^26+X^23+X^22+X^16+X^12+X^11+X^10+X^8+X^7+X^5+X^4+X^2+X^1+X^0 */
 /* 0x104C11DB7 => 0xEDB88320 */
-static const HB_U32 crc32_tab[ 256 ] = {
+static const HB_U32 crc32_tab[256] = {
    0x00000000L, 0x77073096L, 0xEE0E612CL, 0x990951BAL, 0x076DC419L,
    0x706AF48FL, 0xE963A535L, 0x9E6495A3L, 0x0EDB8832L, 0x79DCB8A4L,
    0xE0D5E91EL, 0x97D2D988L, 0x09B64C2BL, 0x7EB17CBDL, 0xE7B82D07L,
@@ -151,7 +151,7 @@ HB_U32 hb_crc32( HB_U32 crc, const void * buf, HB_SIZE len )
       const unsigned char * ucbuf = static_cast<const unsigned char*>(buf);
       do
       {
-         crc = crc32_tab[ ( crc ^ *ucbuf++ ) & 0xFF ] ^ ( crc >> 8 );
+         crc = crc32_tab[( crc ^ *ucbuf++ ) & 0xFF] ^ ( crc >> 8 );
       }
       while( --len );
    }
@@ -166,7 +166,7 @@ HB_U16 hb_crc16( HB_U16 crc, const void * buf, HB_SIZE len )
       const unsigned char * ucbuf = static_cast<const unsigned char*>(buf);
       do
       {
-         crc = crc16_tab[ ( crc ^ *ucbuf++ ) & 0xFF ] ^ ( crc >> 8 );
+         crc = crc16_tab[( crc ^ *ucbuf++ ) & 0xFF] ^ ( crc >> 8 );
       }
       while( --len );
    }

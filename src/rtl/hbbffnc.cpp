@@ -105,16 +105,16 @@ HB_FUNC( HB_BLOWFISHENCRYPT )
          memset(pszData + nLen, '\0', nSize - nLen);
          if( ! fRaw )
          {
-            pszData[ nSize - 1 ] = static_cast<char>(nSize - nLen);
+            pszData[nSize - 1] = static_cast<char>(nSize - nLen);
          }
          for( nLen = 0; nLen < nSize; nLen += 8 )
          {
             HB_U32 xl, xr;
-            xl = HB_GET_BE_UINT32( &pszData[ nLen ] );
-            xr = HB_GET_BE_UINT32( &pszData[ nLen + 4 ] );
+            xl = HB_GET_BE_UINT32( &pszData[nLen] );
+            xr = HB_GET_BE_UINT32( &pszData[nLen + 4] );
             hb_blowfishEncrypt( bf, &xl, &xr );
-            HB_PUT_BE_UINT32( &pszData[ nLen ], xl );
-            HB_PUT_BE_UINT32( &pszData[ nLen + 4 ], xr );
+            HB_PUT_BE_UINT32( &pszData[nLen], xl );
+            HB_PUT_BE_UINT32( &pszData[nLen + 4], xr );
          }
          hb_retclen_buffer( pszData, nSize );
       }
@@ -152,15 +152,15 @@ HB_FUNC( HB_BLOWFISHDECRYPT )
          for( nLen = 0; nLen < nSize; nLen += 8 )
          {
             HB_U32 xl, xr;
-            xl = HB_GET_BE_UINT32( &pszSource[ nLen ] );
-            xr = HB_GET_BE_UINT32( &pszSource[ nLen + 4 ] );
+            xl = HB_GET_BE_UINT32( &pszSource[nLen] );
+            xr = HB_GET_BE_UINT32( &pszSource[nLen + 4] );
             hb_blowfishDecrypt( bf, &xl, &xr );
-            HB_PUT_BE_UINT32( &pszData[ nLen ], xl );
-            HB_PUT_BE_UINT32( &pszData[ nLen + 4 ], xr );
+            HB_PUT_BE_UINT32( &pszData[nLen], xl );
+            HB_PUT_BE_UINT32( &pszData[nLen + 4], xr );
          }
          if( ! fRaw )
          {
-            nSize = static_cast<unsigned char>(pszData[ nSize - 1 ]);
+            nSize = static_cast<unsigned char>(pszData[nSize - 1]);
             nLen -= ( ( nSize - 1 ) & ~0x07 ) == 0 ? nSize : nLen;
          }
          if( nLen )
@@ -189,10 +189,10 @@ static void hb_bf_initvect( HB_BYTE * vect )
 
    for( int i = 0; i < HB_BF_CIPHERBLOCK; ++i )
    {
-      vect[ i ] = static_cast<HB_BYTE>(i);
+      vect[i] = static_cast<HB_BYTE>(i);
       if( iLen > 0 )
       {
-         vect[ i ] ^= static_cast<HB_BYTE>(pszVect[ i % iLen ]);
+         vect[i] ^= static_cast<HB_BYTE>(pszVect[i % iLen]);
       }
    }
 }
@@ -201,11 +201,11 @@ static void hb_bf_encode( const HB_BLOWFISH * bf, HB_BYTE * vect )
 {
    HB_U32 xl, xr;
 
-   xl = HB_GET_BE_UINT32( &vect[ 0 ] );
-   xr = HB_GET_BE_UINT32( &vect[ 4 ] );
+   xl = HB_GET_BE_UINT32( &vect[0] );
+   xr = HB_GET_BE_UINT32( &vect[4] );
    hb_blowfishEncrypt( bf, &xl, &xr );
-   HB_PUT_BE_UINT32( &vect[ 0 ], xl );
-   HB_PUT_BE_UINT32( &vect[ 4 ], xr );
+   HB_PUT_BE_UINT32( &vect[0], xl );
+   HB_PUT_BE_UINT32( &vect[4], xr );
 }
 
 /* hb_blowfishEncrypt_CFB( <cBfKey>, <cText> [, <cInitSeed> ] )
@@ -226,7 +226,7 @@ HB_FUNC( HB_BLOWFISHENCRYPT_CFB )
       {
          const char * pszSource = hb_itemGetCPtr(pData);
          char * pszData = static_cast<char*>(hb_xgrab(nLen + 1));
-         HB_BYTE vect[ HB_BF_CIPHERBLOCK ];
+         HB_BYTE vect[HB_BF_CIPHERBLOCK];
 
          hb_bf_initvect( vect );
 
@@ -237,7 +237,7 @@ HB_FUNC( HB_BLOWFISHENCRYPT_CFB )
             {
                hb_bf_encode( bf, vect );
             }
-            pszData[ n ] = ( vect[ i ] ^= pszSource[ n ] );
+            pszData[n] = ( vect[i] ^= pszSource[n] );
          }
          hb_retclen_buffer( pszData, nLen );
       }
@@ -266,7 +266,7 @@ HB_FUNC( HB_BLOWFISHDECRYPT_CFB )
       {
          const char * pszSource = hb_itemGetCPtr(pData);
          char * pszData = static_cast<char*>(hb_xgrab(nLen + 1));
-         HB_BYTE vect[ HB_BF_CIPHERBLOCK ];
+         HB_BYTE vect[HB_BF_CIPHERBLOCK];
 
          hb_bf_initvect( vect );
 
@@ -277,8 +277,8 @@ HB_FUNC( HB_BLOWFISHDECRYPT_CFB )
             {
                hb_bf_encode( bf, vect );
             }
-            pszData[ n ] = ( vect[ i ] ^ pszSource[ n ] );
-            vect[ i ] = pszSource[ n ];
+            pszData[n] = ( vect[i] ^ pszSource[n] );
+            vect[i] = pszSource[n];
          }
          hb_retclen_buffer( pszData, nLen );
       }

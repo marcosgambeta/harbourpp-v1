@@ -75,12 +75,12 @@ HB_BOOL hb_fsIsDirectory( const char * pszFileName )
    int iLen;
 
    iLen = static_cast<int>(strlen(pszFileName));
-   while( iLen && strchr( HB_OS_PATH_DELIM_CHR_LIST, pszFileName[ iLen - 1 ] ) )
+   while( iLen && strchr( HB_OS_PATH_DELIM_CHR_LIST, pszFileName[iLen - 1] ) )
    {
       --iLen;
    }
 
-   if( pszFileName[ iLen ] )
+   if( pszFileName[iLen] )
    {
       pszFileName = pszFree = hb_strndup(pszFileName, iLen);
    }

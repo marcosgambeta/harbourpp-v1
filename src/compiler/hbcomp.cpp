@@ -177,7 +177,7 @@ static void hb_compOutMsg( void * cargo, int iErrorFmt, int iLine,
                            const char * szText,
                            const char * szPar1, const char * szPar2 )
 {
-   char buffer[ 512 ];
+   char buffer[512];
 
    if( szModule )
    {
@@ -382,7 +382,7 @@ void hb_comp_free( PHB_COMP pComp )
    {
       do
       {
-         hb_xfree(pComp->szStdChExt[ --pComp->iStdChExt ]);
+         hb_xfree(pComp->szStdChExt[--pComp->iStdChExt]);
       }
       while( pComp->iStdChExt != 0 );
       hb_xfree(pComp->szStdChExt);

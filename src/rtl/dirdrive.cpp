@@ -138,9 +138,9 @@ HB_FUNC( DISKCHANGE )
 HB_FUNC( DISKNAME )
 {
 #if defined( HB_OS_HAS_DRIVE_LETTER )
-   char szDrive[ 1 ];
+   char szDrive[1];
 
-   szDrive[ 0 ] = ( static_cast<char>(hb_fsCurDrv()) ) + 'A';
+   szDrive[0] = ( static_cast<char>(hb_fsCurDrv()) ) + 'A';
    hb_retclen( szDrive, 1 );
 #else
    hb_retc_null();

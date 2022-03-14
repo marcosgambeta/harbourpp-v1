@@ -56,7 +56,7 @@
 #include "rddsys.ch"
 #include "hbusrrdd.ch"
 
-#define SELF_USRNODE( w )  ( s_pUsrRddNodes[ ( w )->rddID ] )
+#define SELF_USRNODE( w )  ( s_pUsrRddNodes[( w )->rddID] )
 #define SELF_USRDATA( w )  ( reinterpret_cast<LPUSRRDDDATA>(reinterpret_cast<HB_BYTE*>(w) + SELF_USRNODE( w )->uiDataOffset) )
 
 #undef _SUPERTABLE
@@ -911,12 +911,12 @@ static HB_ERRCODE hb_usrInit( LPRDDNODE pRDD )
       }
       do
       {
-         s_pUsrRddNodes[ s_uiUsrNodes ] = nullptr;
+         s_pUsrRddNodes[s_uiUsrNodes] = nullptr;
       }
       while( ++s_uiUsrNodes <= pRDD->rddID );
    }
 
-   s_pUsrRddNodes[ pRDD->rddID ] = pNode = static_cast<LPUSRRDDNODE>(hb_xgrabz(sizeof(USRRDDNODE)));
+   s_pUsrRddNodes[pRDD->rddID] = pNode = static_cast<LPUSRRDDNODE>(hb_xgrabz(sizeof(USRRDDNODE)));
    pNode->pSuperTable = &pRDD->pSuperTable;
    pNode->pMethods = reinterpret_cast<PHB_ITEM>(pRDD->pTable.whoCares);
    pRDD->pTable.whoCares = pRDD->pSuperTable.whoCares;
@@ -945,7 +945,7 @@ static HB_ERRCODE hb_usrExit( LPRDDNODE pRDD )
    HB_ERRCODE errCode;
    LPUSRRDDNODE pNode;
 
-   pNode = s_pUsrRddNodes[ pRDD->rddID ];
+   pNode = s_pUsrRddNodes[pRDD->rddID];
    hb_usrEvalRddFunc( pNode->pMethods, UR_EXIT, pRDD->rddID );
    if( pNode->pItem )
    {
@@ -956,13 +956,13 @@ static HB_ERRCODE hb_usrExit( LPRDDNODE pRDD )
       hb_itemRelease(pNode->pMethods);
    }
    hb_xfree(pNode);
-   s_pUsrRddNodes[ pRDD->rddID ] = nullptr;
+   s_pUsrRddNodes[pRDD->rddID] = nullptr;
 
    if( pRDD->rddID == s_uiUsrNodes - 1 )
    {
       while( --s_uiUsrNodes > 0 )
       {
-         if( s_pUsrRddNodes[ s_uiUsrNodes - 1 ] != nullptr )
+         if( s_pUsrRddNodes[s_uiUsrNodes - 1] != nullptr )
          {
             break;
          }
@@ -1000,7 +1000,7 @@ static HB_ERRCODE hb_usrStructSize( AREAP pArea, HB_USHORT * puiSize )
    HB_ERRCODE errCode;
 
    errCode = SUPER_STRUCTSIZE( pArea, puiSize );
-   s_pUsrRddNodes[ pArea->rddID ]->uiDataOffset = *puiSize;
+   s_pUsrRddNodes[pArea->rddID]->uiDataOffset = *puiSize;
    *puiSize += sizeof(USRRDDDATA);
 
    return errCode;
@@ -3119,7 +3119,7 @@ static HB_ERRCODE hb_usrRddInfo( LPRDDNODE pRDD, HB_USHORT uiInfoType, HB_ULONG 
 typedef union
 {
    RDDFUNCS   funcTable;
-   DBENTRYP_V funcentries[ 1 ];
+   DBENTRYP_V funcentries[1];
 }
 HB_RDD_FUNCTABLE;
 
@@ -3441,9 +3441,9 @@ HB_FUNC( USRRDD_RDDDATA )
 {
    HB_USHORT uiRddID = static_cast<HB_USHORT>(hb_parni(1));
 
-   if( uiRddID < s_uiUsrNodes && s_pUsrRddNodes[ uiRddID ] )
+   if( uiRddID < s_uiUsrNodes && s_pUsrRddNodes[uiRddID] )
    {
-      PHB_ITEM pItem = s_pUsrRddNodes[ uiRddID ]->pItem;
+      PHB_ITEM pItem = s_pUsrRddNodes[uiRddID]->pItem;
 
       hb_itemReturn(pItem);
       if( hb_pcount() >= 2 )
@@ -3460,7 +3460,7 @@ HB_FUNC( USRRDD_ID )
       HB_USHORT uiRddId;
       LPRDDNODE pRddNode = hb_rddFindNode( hb_parc(1), &uiRddId );
 
-      if( pRddNode && uiRddId < s_uiUsrNodes && s_pUsrRddNodes[ uiRddId ] )
+      if( pRddNode && uiRddId < s_uiUsrNodes && s_pUsrRddNodes[uiRddId] )
       {
          hb_retni( uiRddId );
       }
@@ -3722,7 +3722,7 @@ static LPRDDNODE hb_usrGetNodeParam( int iParams )
    {
       uiNode = static_cast<HB_USHORT>(hb_parni(1));
       pRDD = hb_rddGetNode( uiNode );
-      if( pRDD && uiNode < s_uiUsrNodes && s_pUsrRddNodes[ uiNode ] )
+      if( pRDD && uiNode < s_uiUsrNodes && s_pUsrRddNodes[uiNode] )
       {
          return pRDD;
       }
@@ -4157,7 +4157,7 @@ HB_FUNC_UR_SUPER( ALIAS )
 
    if( pArea )
    {
-      char szAlias[ HB_RDD_MAX_ALIAS_LEN + 1 ];
+      char szAlias[HB_RDD_MAX_ALIAS_LEN + 1];
 
       hb_retni( SUPER_ALIAS( pArea, szAlias ) );
       hb_storc( szAlias, 2 );

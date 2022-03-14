@@ -83,7 +83,7 @@
           this case content will be duplicate.
           I.e.:
              xI := { 1, NIL }
-             xI[ 2 ] := xI
+             xI[2] := xI
              ? hb_jsonEncode( xI )  // [1,null]
           but:
              xI := { 1, .T. }
@@ -151,7 +151,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
 
       for( HB_SIZE nIndex = 0; nIndex < nLevel; nIndex++ )
       {
-         if( pCtx->pId[ nIndex ] == id )
+         if( pCtx->pId[nIndex] == id )
          {
             if( ! fEOL && pCtx->iIndent )
             {
@@ -166,7 +166,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
          pCtx->nAllocId += 8;
          pCtx->pId = static_cast<void**>(hb_xrealloc(pCtx->pId, sizeof(void*) * pCtx->nAllocId));
       }
-      pCtx->pId[ nLevel ] = id;
+      pCtx->pId[nLevel] = id;
    }
 
    if( fEOL )
@@ -180,7 +180,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
       HB_SIZE nPos, nLen;
       const char * szString;
       void * hString = nullptr;
-      char buf[ 8 ];
+      char buf[8];
 
       if( cdp )
       {
@@ -196,11 +196,11 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
       nPos = 0;
       while( nPos < nLen )
       {
-         unsigned char uch = szString[ nPos ];
+         unsigned char uch = szString[nPos];
          HB_SIZE nPos2 = nPos;
          while( uch >= ' ' && uch != '\\' && uch != '\"' )
          {
-            uch = szString[ ++nPos2 ];
+            uch = szString[++nPos2];
          }
          if( nPos2 > nPos )
          {
@@ -247,7 +247,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
    }
    else if( HB_IS_NUMINT(pValue) )
    {
-      char buf[ 24 ];
+      char buf[24];
       HB_MAXINT nVal = hb_itemGetNInt(pValue);
       HB_BOOL fNeg = nVal < 0;
       int i = 0;
@@ -258,18 +258,18 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
       }
       do
       {
-         buf[ sizeof(buf) - ++i ] = ( nVal % 10 ) + '0';
+         buf[sizeof(buf) - ++i] = ( nVal % 10 ) + '0';
       }
       while( ( nVal /= 10 ) != 0 );
       if( fNeg )
       {
-         buf[ sizeof(buf) - ++i ] = '-';
+         buf[sizeof(buf) - ++i] = '-';
       }
-      _hb_jsonCtxAdd( pCtx, &buf[ sizeof(buf) - i ], i );
+      _hb_jsonCtxAdd( pCtx, &buf[sizeof(buf) - i], i );
    }
    else if( HB_IS_NUMERIC(pValue) )
    {
-      char buf[ 64 ];
+      char buf[64];
       int iDec;
       double dblValue = hb_itemGetNDDec(pValue, &iDec);
 
@@ -293,19 +293,19 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
    }
    else if( HB_IS_DATE(pValue) )
    {
-      char szBuffer[ 10 ];
+      char szBuffer[10];
 
       hb_itemGetDS(pValue, szBuffer + 1);
-      szBuffer[ 0 ] = '\"';
-      szBuffer[ 9 ] = '\"';
+      szBuffer[0] = '\"';
+      szBuffer[9] = '\"';
       _hb_jsonCtxAdd( pCtx, szBuffer, 10 );
    }
    else if( HB_IS_TIMESTAMP(pValue) )
    {
-      char szBuffer[ 19 ];
+      char szBuffer[19];
       hb_itemGetTS(pValue, szBuffer + 1);
-      szBuffer[ 0 ] = '\"';
-      szBuffer[ 18 ] = '\"';
+      szBuffer[0] = '\"';
+      szBuffer[18] = '\"';
       _hb_jsonCtxAdd( pCtx, szBuffer, 19 );
    }
    else if( HB_IS_ARRAY(pValue) )
@@ -724,7 +724,7 @@ char * hb_jsonEncodeCP( PHB_ITEM pValue, HB_SIZE * pnLen, int iIndent, PHB_CODEP
    pCtx->pId = static_cast<void**>(hb_xgrab(sizeof(void*) * pCtx->nAllocId));
    pCtx->iIndent = iIndent;
    pCtx->szEol = hb_setGetEOL();
-   if( ! pCtx->szEol || ! pCtx->szEol[ 0 ] )
+   if( ! pCtx->szEol || ! pCtx->szEol[0] )
    {
       pCtx->szEol = hb_conNewLine();
    }
@@ -738,7 +738,7 @@ char * hb_jsonEncodeCP( PHB_ITEM pValue, HB_SIZE * pnLen, int iIndent, PHB_CODEP
 
    nLen = pCtx->pHead - pCtx->pBuffer;
    szRet = static_cast<char*>(hb_xrealloc(pCtx->pBuffer, nLen + 1));
-   szRet[ nLen ] = '\0';
+   szRet[nLen] = '\0';
    hb_xfree(pCtx->pId);
    hb_xfree(pCtx);
    if( pnLen )

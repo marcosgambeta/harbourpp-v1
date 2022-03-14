@@ -211,7 +211,7 @@ HB_LANG_REQUEST( HB_LANG_DEFAULT );
 
 struct HB_LANG_TRANS
 {
-   const char * pItemList[ HB_LANG_ITEM_MAX_ ];
+   const char * pItemList[HB_LANG_ITEM_MAX_];
 };
 
 using PHB_LANG_TRANS = HB_LANG_TRANS *;
@@ -224,7 +224,7 @@ struct HB_LANG_BASE
 
 using PHB_LANG_BASE = HB_LANG_BASE *;
 
-static HB_LANG_BASE s_langList[ HB_LANG_MAX_ ] = { { &s_lang_en, nullptr } };
+static HB_LANG_BASE s_langList[HB_LANG_MAX_] = { { &s_lang_en, nullptr } };
 
 static void hb_langRelease( PHB_LANG_BASE pBase )
 {
@@ -247,16 +247,16 @@ static PHB_LANG_BASE hb_langFindBase( const char * pszID )
    {
       for( int iPos = 0; iPos < HB_LANG_MAX_; iPos++ )
       {
-         if( s_langList[ iPos ].lang != nullptr )
+         if( s_langList[iPos].lang != nullptr )
          {
-            if( hb_stricmp( s_langList[ iPos ].lang->pItemList[ HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID ], pszID ) == 0 )
+            if( hb_stricmp( s_langList[iPos].lang->pItemList[HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID], pszID ) == 0 )
             {
-               return &s_langList[ iPos ];
+               return &s_langList[iPos];
             }
          }
          else if( pBase == nullptr )
          {
-            pBase = &s_langList[ iPos ];
+            pBase = &s_langList[iPos];
          }
       }
    }
@@ -294,12 +294,12 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
       }
       else
       {
-         pszTrans = hb_cdpDup( lang->pItemList[ i ], cdpIn, cdpOut );
+         pszTrans = hb_cdpDup( lang->pItemList[i], cdpIn, cdpOut );
       }
 
-      if( strcmp(pszTrans, lang->pItemList[ i ]) != 0 )
+      if( strcmp(pszTrans, lang->pItemList[i]) != 0 )
       {
-         trans.pItemList[ i ] = pszTrans;
+         trans.pItemList[i] = pszTrans;
          nSize += strlen(pszTrans) + 1;
       }
       else
@@ -312,17 +312,17 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
    ptr    = buffer + sizeof(trans);
    for( i = 0; i < HB_LANG_ITEM_MAX_; ++i )
    {
-      if( trans.pItemList[ i ] != nullptr )
+      if( trans.pItemList[i] != nullptr )
       {
-         HB_SIZE nLen = strlen(trans.pItemList[ i ]) + 1;
-         memcpy(ptr, trans.pItemList[ i ], nLen);
-         hb_xfree(HB_UNCONST( trans.pItemList[ i ] ));
-         trans.pItemList[ i ] = ptr;
+         HB_SIZE nLen = strlen(trans.pItemList[i]) + 1;
+         memcpy(ptr, trans.pItemList[i], nLen);
+         hb_xfree(HB_UNCONST( trans.pItemList[i] ));
+         trans.pItemList[i] = ptr;
          ptr += nLen;
       }
       else
       {
-         trans.pItemList[ i ] = lang->pItemList[ i ];
+         trans.pItemList[i] = lang->pItemList[i];
       }
    }
    memcpy(buffer, &trans, sizeof(trans));
@@ -347,7 +347,7 @@ void hb_langReleaseAll( void )
 
    for( int iPos = 0; iPos < HB_LANG_MAX_; iPos++ )
    {
-      hb_langRelease( &s_langList[ iPos ] );
+      hb_langRelease( &s_langList[iPos] );
    }
 }
 
@@ -359,7 +359,7 @@ HB_BOOL hb_langRegister( PHB_LANG lang )
 
    if( lang )
    {
-      PHB_LANG_BASE pBase = hb_langFindBase( lang->pItemList[ HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID ] );
+      PHB_LANG_BASE pBase = hb_langFindBase( lang->pItemList[HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID] );
 
       if( pBase && pBase->lang == nullptr )
       {
@@ -434,7 +434,7 @@ const char * hb_langGetItem( const char * pszID, int iIndex )
    lang = pszID ? hb_langFind( pszID ) : hb_vmLang();
    if( lang && iIndex >= 0 && iIndex < HB_LANG_ITEM_MAX_ )
    {
-      return lang->pItemList[ iIndex ];
+      return lang->pItemList[iIndex];
    }
    else
    {
@@ -497,7 +497,7 @@ const char * hb_langDGetItem( int iIndex )
    lang = hb_vmLang();
    if( lang && iIndex >= 0 && iIndex < HB_LANG_ITEM_MAX_ )
    {
-      return lang->pItemList[ iIndex ];
+      return lang->pItemList[iIndex];
    }
    else
    {

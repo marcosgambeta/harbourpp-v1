@@ -74,7 +74,7 @@ HB_FUNC( REPLICATE )
             szResult = szPtr = static_cast<char*>(hb_xgrab(nSize + 1));
             if( nLen == 1 )
             {
-               memset(szResult, szText[ 0 ], nSize);
+               memset(szResult, szText[0], nSize);
             }
             else
             {

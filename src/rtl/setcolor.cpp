@@ -110,10 +110,10 @@ HB_FUNC( HB_NTOCOLOR )
 {
    if( HB_ISNUM(1) )
    {
-      char szColorString[ 10 ];
-      int colors[ 1 ];
+      char szColorString[10];
+      int colors[1];
 
-      colors[ 0 ] = hb_parni(1);
+      colors[0] = hb_parni(1);
 
       hb_gtColorsToString( colors, HB_SIZEOFARRAY( colors ), szColorString, sizeof(szColorString) );
 

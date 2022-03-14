@@ -179,13 +179,13 @@ struct _HB_LZSSX_COMPR
    HB_BOOL    fResult;
    HB_BOOL    fContinue;
 
-   HB_UCHAR   ring_buffer[ RBUFLENGTH + MAXLENGTH - 1 ];
+   HB_UCHAR   ring_buffer[RBUFLENGTH + MAXLENGTH - 1];
 
    HB_SHORT   match_offset;
    HB_SHORT   match_length;
-   HB_SHORT   parent[ RBUFLENGTH + 1 ];
-   HB_SHORT   left  [ RBUFLENGTH + 1 ];
-   HB_SHORT   right [ RBUFLENGTH + 257 ];
+   HB_SHORT   parent[RBUFLENGTH + 1];
+   HB_SHORT   left  [RBUFLENGTH + 1];
+   HB_SHORT   right [RBUFLENGTH + 257];
 };
 
 using HB_LZSSX_COMPR = _HB_LZSSX_COMPR;
@@ -277,7 +277,7 @@ static HB_BOOL hb_LZSSxWrite( PHB_LZSSX_COMPR pCompr, HB_UCHAR ucVal )
       }
       if( pCompr->outBuffPos < pCompr->outBuffSize )
       {
-         pCompr->outBuffer[ pCompr->outBuffPos ] = ucVal;
+         pCompr->outBuffer[pCompr->outBuffPos] = ucVal;
       }
       else
       {
@@ -292,7 +292,7 @@ static int hb_LZSSxRead( PHB_LZSSX_COMPR pCompr )
 {
    if( pCompr->inBuffPos < pCompr->inBuffRead )
    {
-      return static_cast<HB_UCHAR>(pCompr->inBuffer[ pCompr->inBuffPos++ ]);
+      return static_cast<HB_UCHAR>(pCompr->inBuffer[pCompr->inBuffPos++]);
    }
 
    if( pCompr->pInput != nullptr )
@@ -305,7 +305,7 @@ static int hb_LZSSxRead( PHB_LZSSX_COMPR pCompr )
       pCompr->inBuffPos = 0;
       if( pCompr->inBuffPos < pCompr->inBuffRead )
       {
-         return static_cast<HB_UCHAR>(pCompr->inBuffer[ pCompr->inBuffPos++ ]);
+         return static_cast<HB_UCHAR>(pCompr->inBuffer[pCompr->inBuffPos++]);
       }
    }
    return -1;
@@ -345,7 +345,7 @@ static HB_BOOL hb_LZSSxDecode( PHB_LZSSX_COMPR pCompr )
             fResult = HB_FALSE;
             break;
          }
-         pCompr->ring_buffer[ rbufidx ] = static_cast<HB_UCHAR>(c);
+         pCompr->ring_buffer[rbufidx] = static_cast<HB_UCHAR>(c);
          rbufidx = RBUFINDEX( rbufidx + 1 );
       }
       else /* we have an item pair (ring buffer offset : match length) */
@@ -361,7 +361,7 @@ static HB_BOOL hb_LZSSxDecode( PHB_LZSSX_COMPR pCompr )
          length = LZSS_LENGTH( c, h );   /* get match length */
          for( h = 0; h < length; h++ )
          {
-            c = pCompr->ring_buffer[ RBUFINDEX( offset + h ) ];
+            c = pCompr->ring_buffer[RBUFINDEX( offset + h )];
             if( ! hb_LZSSxWrite( pCompr, static_cast<HB_UCHAR>(c) ) )
             {
                fResult = HB_FALSE;
@@ -371,7 +371,7 @@ static HB_BOOL hb_LZSSxDecode( PHB_LZSSX_COMPR pCompr )
                overwrite the ring buffer - we have to make exactly
                the same or our results will be differ when
                abs( offset - rbufidx ) < length */
-            pCompr->ring_buffer[ rbufidx ] = static_cast<HB_UCHAR>(c);
+            pCompr->ring_buffer[rbufidx] = static_cast<HB_UCHAR>(c);
             rbufidx = RBUFINDEX( rbufidx + 1 );
          }
       }
@@ -391,42 +391,42 @@ static void hb_LZSSxNodeInsert( PHB_LZSSX_COMPR pCompr, int r )
    HB_UCHAR * key;
 
    cmp = 1;
-   key = &pCompr->ring_buffer[ r ];
-   p   = RBUFLENGTH + 1 + key[ 0 ];
-   pCompr->right[ r ] = pCompr->left[ r ] = DUMMYNODE;
+   key = &pCompr->ring_buffer[r];
+   p   = RBUFLENGTH + 1 + key[0];
+   pCompr->right[r] = pCompr->left[r] = DUMMYNODE;
    pCompr->match_length = 0;
 
    for( ;; )
    {
       if( cmp >= 0 )
       {
-         if( pCompr->right[ p ] != DUMMYNODE )
+         if( pCompr->right[p] != DUMMYNODE )
          {
-            p = pCompr->right[ p ];
+            p = pCompr->right[p];
          }
          else
          {
-            pCompr->right[ p ] = static_cast<HB_SHORT>(r);
-            pCompr->parent[ r ] = static_cast<HB_SHORT>(p);
+            pCompr->right[p] = static_cast<HB_SHORT>(r);
+            pCompr->parent[r] = static_cast<HB_SHORT>(p);
             return;
          }
       }
       else
       {
-         if( pCompr->left[ p ] != DUMMYNODE )
+         if( pCompr->left[p] != DUMMYNODE )
          {
-            p = pCompr->left[ p ];
+            p = pCompr->left[p];
          }
          else
          {
-            pCompr->left[ p ] = static_cast<HB_SHORT>(r);
-            pCompr->parent[ r ] = static_cast<HB_SHORT>(p);
+            pCompr->left[p] = static_cast<HB_SHORT>(r);
+            pCompr->parent[r] = static_cast<HB_SHORT>(p);
             return;
          }
       }
       for( i = 1; i < MAXLENGTH; i++ )
       {
-         if( ( cmp = key[ i ] - pCompr->ring_buffer[ p + i ] ) != 0 )
+         if( ( cmp = key[i] - pCompr->ring_buffer[p + i] ) != 0 )
          {
             break;
          }
@@ -441,83 +441,83 @@ static void hb_LZSSxNodeInsert( PHB_LZSSX_COMPR pCompr, int r )
          }
       }
    }
-   pCompr->parent[ r ] = pCompr->parent[ p ];
-   pCompr->left[ r ]   = pCompr->left[ p ];
-   pCompr->right[ r ]  = pCompr->right[ p ];
-   pCompr->parent[ pCompr->left[ p ] ]  = static_cast<HB_SHORT>(r);
-   pCompr->parent[ pCompr->right[ p ] ] = static_cast<HB_SHORT>(r);
-   if( pCompr->right[ pCompr->parent[ p ] ] == p )
+   pCompr->parent[r] = pCompr->parent[p];
+   pCompr->left[r]   = pCompr->left[p];
+   pCompr->right[r]  = pCompr->right[p];
+   pCompr->parent[pCompr->left[p]]  = static_cast<HB_SHORT>(r);
+   pCompr->parent[pCompr->right[p]] = static_cast<HB_SHORT>(r);
+   if( pCompr->right[pCompr->parent[p]] == p )
    {
-      pCompr->right[ pCompr->parent[ p ] ] = static_cast<HB_SHORT>(r);
+      pCompr->right[pCompr->parent[p]] = static_cast<HB_SHORT>(r);
    }
    else
    {
-      pCompr->left[ pCompr->parent[ p ] ] = static_cast<HB_SHORT>(r);
+      pCompr->left[pCompr->parent[p]] = static_cast<HB_SHORT>(r);
    }
-   pCompr->parent[ p ] = DUMMYNODE;
+   pCompr->parent[p] = DUMMYNODE;
 }
 
 static void hb_LZSSxNodeDelete( PHB_LZSSX_COMPR pCompr, int p )
 {
-   if( pCompr->parent[ p ] != DUMMYNODE )
+   if( pCompr->parent[p] != DUMMYNODE )
    {
       int  q;
-      if( pCompr->right[ p ] == DUMMYNODE )
+      if( pCompr->right[p] == DUMMYNODE )
       {
-         q = pCompr->left[ p ];
+         q = pCompr->left[p];
       }
-      else if( pCompr->left[ p ] == DUMMYNODE )
+      else if( pCompr->left[p] == DUMMYNODE )
       {
-         q = pCompr->right[ p ];
+         q = pCompr->right[p];
       }
       else
       {
-         q = pCompr->left[ p ];
-         if( pCompr->right[ q ] != DUMMYNODE )
+         q = pCompr->left[p];
+         if( pCompr->right[q] != DUMMYNODE )
          {
             do
             {
-               q = pCompr->right[ q ];
+               q = pCompr->right[q];
             }
-            while( pCompr->right[ q ] != DUMMYNODE );
-            pCompr->right[ pCompr->parent[ q ] ] = pCompr->left[ q ];
-            pCompr->parent[ pCompr->left[ q ] ] = pCompr->parent[ q ];
-            pCompr->left[ q ] = pCompr->left[ p ];
-            pCompr->parent[ pCompr->left[ p ] ] = static_cast<HB_SHORT>(q);
+            while( pCompr->right[q] != DUMMYNODE );
+            pCompr->right[pCompr->parent[q]] = pCompr->left[q];
+            pCompr->parent[pCompr->left[q]] = pCompr->parent[q];
+            pCompr->left[q] = pCompr->left[p];
+            pCompr->parent[pCompr->left[p]] = static_cast<HB_SHORT>(q);
          }
-         pCompr->right[ q ] = pCompr->right[ p ];
-         pCompr->parent[ pCompr->right[ p ] ] = static_cast<HB_SHORT>(q);
+         pCompr->right[q] = pCompr->right[p];
+         pCompr->parent[pCompr->right[p]] = static_cast<HB_SHORT>(q);
       }
-      pCompr->parent[ q ] = pCompr->parent[ p ];
-      if( pCompr->right[ pCompr->parent[ p ] ] == p )
+      pCompr->parent[q] = pCompr->parent[p];
+      if( pCompr->right[pCompr->parent[p]] == p )
       {
-         pCompr->right[ pCompr->parent[ p ] ] = static_cast<HB_SHORT>(q);
+         pCompr->right[pCompr->parent[p]] = static_cast<HB_SHORT>(q);
       }
       else
       {
-         pCompr->left[ pCompr->parent[ p ] ] = static_cast<HB_SHORT>(q);
+         pCompr->left[pCompr->parent[p]] = static_cast<HB_SHORT>(q);
       }
-      pCompr->parent[ p ] = DUMMYNODE;
+      pCompr->parent[p] = DUMMYNODE;
    }
 }
 
 static HB_SIZE hb_LZSSxEncode( PHB_LZSSX_COMPR pCompr )
 {
-   HB_UCHAR itemSet[ ITEMSETSIZE ];
+   HB_UCHAR itemSet[ITEMSETSIZE];
    HB_UCHAR itemMask;
    HB_SIZE nSize = 0;
    HB_SHORT i, c, len, r, s, item;
 
    for( i = RBUFLENGTH + 1; i < RBUFLENGTH + 257; i++ )
    {
-      pCompr->right[ i ] = DUMMYNODE;
+      pCompr->right[i] = DUMMYNODE;
    }
    for( i = 0; i < RBUFLENGTH; i++ )
    {
-      pCompr->parent[ i ] = DUMMYNODE;
+      pCompr->parent[i] = DUMMYNODE;
    }
 
-   itemSet[ 0 ] = 0;
+   itemSet[0] = 0;
    item = itemMask = 1;
    s = 0;
    r = RBUFLENGTH - MAXLENGTH;
@@ -528,7 +528,7 @@ static HB_SIZE hb_LZSSxEncode( PHB_LZSSX_COMPR pCompr )
       {
          break;
       }
-      pCompr->ring_buffer[ r + len ] = static_cast<HB_UCHAR>(c);
+      pCompr->ring_buffer[r + len] = static_cast<HB_UCHAR>(c);
    }
    if( len == 0 )
    {
@@ -552,35 +552,35 @@ static HB_SIZE hb_LZSSxEncode( PHB_LZSSX_COMPR pCompr )
       if( pCompr->match_length < MINLENGTH )
       {
          pCompr->match_length = 1;
-         itemSet[ 0 ] |= itemMask;
-         itemSet[ item++ ] = pCompr->ring_buffer[ r ];
+         itemSet[0] |= itemMask;
+         itemSet[item++] = pCompr->ring_buffer[r];
       }
       else
       {
-         itemSet[ item++ ] = LZSS_ITMLO( pCompr->match_offset, pCompr->match_length );
-         itemSet[ item++ ] = LZSS_ITMHI( pCompr->match_offset, pCompr->match_length );
+         itemSet[item++] = LZSS_ITMLO( pCompr->match_offset, pCompr->match_length );
+         itemSet[item++] = LZSS_ITMHI( pCompr->match_offset, pCompr->match_length );
       }
       if( ( itemMask <<= 1 ) == 0 )
       {
          for( i = 0; i < item; i++ )
          {
-            if( ! hb_LZSSxWrite( pCompr, itemSet[ i ] ) )
+            if( ! hb_LZSSxWrite( pCompr, itemSet[i] ) )
             {
                return static_cast<HB_SIZE>(-1);
             }
          }
          nSize += item;
-         itemSet[ 0 ] = 0;
+         itemSet[0] = 0;
          item = itemMask = 1;
       }
       last_match_length = pCompr->match_length;
       for( i = 0; i < last_match_length && ( c = static_cast<HB_SHORT>(hb_LZSSxRead( pCompr )) ) != -1; i++ )
       {
          hb_LZSSxNodeDelete( pCompr, s );
-         pCompr->ring_buffer[ s ] = static_cast<HB_UCHAR>(c);
+         pCompr->ring_buffer[s] = static_cast<HB_UCHAR>(c);
          if( s < MAXLENGTH - 1 )
          {
-            pCompr->ring_buffer[ s + RBUFLENGTH ] = static_cast<HB_UCHAR>(c);
+            pCompr->ring_buffer[s + RBUFLENGTH] = static_cast<HB_UCHAR>(c);
          }
          s = static_cast<HB_SHORT>(RBUFINDEX( s + 1 ));
          r = static_cast<HB_SHORT>(RBUFINDEX( r + 1 ));
@@ -603,7 +603,7 @@ static HB_SIZE hb_LZSSxEncode( PHB_LZSSX_COMPR pCompr )
    {
       for( i = 0; i < item; i++ )
       {
-         if( ! hb_LZSSxWrite( pCompr, itemSet[ i ] ) )
+         if( ! hb_LZSSxWrite( pCompr, itemSet[i] ) )
          {
             return static_cast<HB_SIZE>(-1);
          }
@@ -691,7 +691,7 @@ HB_FUNC( SX_FCOMPRESS )
             HB_SIZE nSize = static_cast<HB_SIZE>(hb_fileSize( pInput ));
             if( hb_fileSeek( pInput, 0, FS_SET ) == 0 )
             {
-               HB_BYTE buf[ 4 ];
+               HB_BYTE buf[4];
                HB_PUT_LE_UINT32( buf, nSize );
                if( hb_fileWrite( pOutput, buf, 4, -1 ) == 4 )
                {

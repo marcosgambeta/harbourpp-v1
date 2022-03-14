@@ -101,7 +101,7 @@ struct _HB_CONSOLE_SCREEN_BUFFER_INFOEX
    COORD dwMaximumWindowSize;
    WORD wPopupAttributes;
    BOOL bFullscreenSupported;
-   COLORREF ColorTable[ 16 ];
+   COLORREF ColorTable[16];
 };
 
 using HB_CONSOLE_SCREEN_BUFFER_INFOEX = _HB_CONSOLE_SCREEN_BUFFER_INFOEX;
@@ -142,25 +142,25 @@ static HB_GT_FUNCS SuperTable;
 #define HB_GTSUPER                          ( &SuperTable )
 #define HB_GTID_PTR                         ( &s_GtId )
 
-static const COLORREF s_colorsDef[ 16 ] = { RGB( 0x00, 0x00, 0x00 ),
-                                            RGB( 0x00, 0x00, 0x80 ),
-                                            RGB( 0x00, 0x80, 0x00 ),
-                                            RGB( 0x00, 0x80, 0x80 ),
-                                            RGB( 0x80, 0x00, 0x00 ),
-                                            RGB( 0x80, 0x00, 0x80 ),
-                                            RGB( 0x80, 0x80, 0x00 ),
-                                            RGB( 0xC0, 0xC0, 0xC0 ),
-                                            RGB( 0x80, 0x80, 0x80 ),
-                                            RGB( 0x00, 0x00, 0xFF ),
-                                            RGB( 0x00, 0xFF, 0x00 ),
-                                            RGB( 0x00, 0xFF, 0xFF ),
-                                            RGB( 0xFF, 0x00, 0x00 ),
-                                            RGB( 0xFF, 0x00, 0xFF ),
-                                            RGB( 0xFF, 0xFF, 0x00 ),
-                                            RGB( 0xFF, 0xFF, 0xFF ) };
+static const COLORREF s_colorsDef[16] = { RGB( 0x00, 0x00, 0x00 ),
+                                          RGB( 0x00, 0x00, 0x80 ),
+                                          RGB( 0x00, 0x80, 0x00 ),
+                                          RGB( 0x00, 0x80, 0x80 ),
+                                          RGB( 0x80, 0x00, 0x00 ),
+                                          RGB( 0x80, 0x00, 0x80 ),
+                                          RGB( 0x80, 0x80, 0x00 ),
+                                          RGB( 0xC0, 0xC0, 0xC0 ),
+                                          RGB( 0x80, 0x80, 0x80 ),
+                                          RGB( 0x00, 0x00, 0xFF ),
+                                          RGB( 0x00, 0xFF, 0x00 ),
+                                          RGB( 0x00, 0xFF, 0xFF ),
+                                          RGB( 0xFF, 0x00, 0x00 ),
+                                          RGB( 0xFF, 0x00, 0xFF ),
+                                          RGB( 0xFF, 0xFF, 0x00 ),
+                                          RGB( 0xFF, 0xFF, 0xFF ) };
 
 static HB_BOOL     s_fWin9x;
-static COLORREF    s_colorsOld[ 16 ];
+static COLORREF    s_colorsOld[16];
 static HB_BOOL     s_fResetColors;
 static HB_BOOL     s_fOldClosable;
 static HB_BOOL     s_fClosable;
@@ -196,7 +196,7 @@ static CONSOLE_SCREEN_BUFFER_INFO s_csbi, s_origCsbi; /* active screen mode */
 
 static DWORD         s_dwNumRead;   /* Ok to use DWORD here, because this is specific... */
 static DWORD         s_dwNumIndex;  /* ...to the Windows API, which defines DWORD, etc.  */
-static INPUT_RECORD  s_irBuffer[ INPUT_BUFFER_LEN ];
+static INPUT_RECORD  s_irBuffer[INPUT_BUFFER_LEN];
 static HB_BOOL       s_fAltIsDown = HB_FALSE;
 static int           s_iAltVal = 0;
 
@@ -421,11 +421,11 @@ static void hb_gt_win_xUpdtSet( int iTop, int iLeft, int iBottom, int iRight )
    }
    if( iBottom > s_iUpdtBottom )
    {
-      s_iUpdtBottom = HB_MIN( iBottom, static_cast<int>(_GetScreenHeight()) - 1 );
+      s_iUpdtBottom = HB_MIN(iBottom, static_cast<int>(_GetScreenHeight()) - 1);
    }
    if( iRight > s_iUpdtRight )
    {
-      s_iUpdtRight = HB_MIN( iRight, static_cast<int>(_GetScreenWidth()) - 1 );
+      s_iUpdtRight = HB_MIN(iRight, static_cast<int>(_GetScreenWidth()) - 1);
    }
 }
 
@@ -505,10 +505,10 @@ static void hb_gt_win_xGetScreenContents( PHB_GT pGT, SMALL_RECT * psrWin )
       for( iCol = psrWin->Left; iCol <= psrWin->Right; ++iCol )
       {
 #if defined( UNICODE )
-         HB_GTSELF_PUTSCRCHAR( pGT, iRow, iCol, static_cast<HB_UCHAR>(s_pCharInfoScreen[ i ].Attributes), 0, s_pCharInfoScreen[ i ].Char.UnicodeChar );
+         HB_GTSELF_PUTSCRCHAR( pGT, iRow, iCol, static_cast<HB_UCHAR>(s_pCharInfoScreen[i].Attributes), 0, s_pCharInfoScreen[i].Char.UnicodeChar );
 #else
-         HB_USHORT usChar = hb_cdpGetU16( cdp, static_cast<HB_UCHAR>(s_pCharInfoScreen[ i ].Char.AsciiChar) );
-         HB_GTSELF_PUTSCRCHAR( pGT, iRow, iCol, static_cast<HB_UCHAR>(s_pCharInfoScreen[ i ].Attributes), bxAttr, usChar );
+         HB_USHORT usChar = hb_cdpGetU16( cdp, static_cast<HB_UCHAR>(s_pCharInfoScreen[i].Char.AsciiChar) );
+         HB_GTSELF_PUTSCRCHAR( pGT, iRow, iCol, static_cast<HB_UCHAR>(s_pCharInfoScreen[i].Attributes), bxAttr, usChar );
 #endif
          ++i;
       }
@@ -625,7 +625,7 @@ static HB_BOOL hb_gt_win_SetPalette_Vista( HB_BOOL bSet, COLORREF * colors )
          {
             for( tmp = 0; tmp < 16; ++tmp )
             {
-               colors[ tmp ] = info.ColorTable[ tmp ];
+               colors[tmp] = info.ColorTable[tmp];
             }
          }
          else if( s_pSetConsoleScreenBufferInfoEx )
@@ -634,13 +634,13 @@ static HB_BOOL hb_gt_win_SetPalette_Vista( HB_BOOL bSet, COLORREF * colors )
             {
                for( tmp = 0; tmp < 16; ++tmp )
                {
-                  s_colorsOld[ tmp ] = info.ColorTable[ tmp ];
+                  s_colorsOld[tmp] = info.ColorTable[tmp];
                }
                s_fResetColors = HB_TRUE;
             }
             for( tmp = 0; tmp < 16; ++tmp )
             {
-               info.ColorTable[ tmp ] = colors[ tmp ];
+               info.ColorTable[tmp] = colors[tmp];
             }
 
             /* workaround for console window size reduction when structure
@@ -662,7 +662,7 @@ static HB_BOOL hb_gt_win_SetPalette_Vista( HB_BOOL bSet, COLORREF * colors )
    {
       for( tmp = 0; tmp < 16; ++tmp )
       {
-         colors[ tmp ] = s_colorsDef[ tmp ];
+         colors[tmp] = s_colorsDef[tmp];
       }
    }
 
@@ -680,7 +680,7 @@ static HB_BOOL hb_gt_win_SetPalette( HB_BOOL bSet, COLORREF * colors )
    {
       for( int tmp = 0; tmp < 16; ++tmp )
       {
-         colors[ tmp ] = s_colorsDef[ tmp ];
+         colors[tmp] = s_colorsDef[tmp];
       }
    }
 
@@ -776,10 +776,10 @@ static void hb_gt_win_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
     * so I used this hack with checking OSTYPE environment variable. [druzus]
     */
    {
-      TCHAR lpOsType[ 16 ];
+      TCHAR lpOsType[16];
       DWORD dwLen;
 
-      lpOsType[ 0 ] = lpOsType[ HB_SIZEOFARRAY( lpOsType ) - 1 ] = TEXT( '\0' );
+      lpOsType[0] = lpOsType[HB_SIZEOFARRAY( lpOsType ) - 1] = TEXT( '\0' );
       dwLen = GetEnvironmentVariable( TEXT( "OSTYPE" ), lpOsType, HB_SIZEOFARRAY( lpOsType ) - 1 );
       if( dwLen > 0 && dwLen < HB_SIZEOFARRAY( lpOsType ) - 1 )
       {
@@ -845,8 +845,8 @@ static void hb_gt_win_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    memcpy(&s_origCsbi, &s_csbi, sizeof(s_csbi));
 
    s_csbi.srWindow.Top = s_csbi.srWindow.Left = 0;
-   s_csbi.srWindow.Right = HB_MIN( s_csbi.srWindow.Right, _GetScreenWidth() - 1 );
-   s_csbi.srWindow.Bottom = HB_MIN( s_csbi.srWindow.Bottom, _GetScreenHeight() - 1 );
+   s_csbi.srWindow.Right = HB_MIN(s_csbi.srWindow.Right, _GetScreenWidth() - 1);
+   s_csbi.srWindow.Bottom = HB_MIN(s_csbi.srWindow.Bottom, _GetScreenHeight() - 1);
 
    SetConsoleWindowInfo( s_HOutput, TRUE, &s_csbi.srWindow );
    SetConsoleScreenBufferSize( s_HOutput, s_csbi.dwSize );
@@ -1280,7 +1280,7 @@ static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
          {
             for( DWORD tmp = 0; tmp < INPUT_BUFFER_LEN; ++tmp )
             {
-               s_irBuffer[ tmp ].EventType = 0xFFFF;
+               s_irBuffer[tmp].EventType = 0xFFFF;
             }
          }
 #endif
@@ -1298,9 +1298,9 @@ static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
          {
             for( DWORD tmp = 0; tmp < s_dwNumRead; ++tmp )
             {
-               if( s_irBuffer[ tmp ].EventType == 0xFFFF )
+               if( s_irBuffer[tmp].EventType == 0xFFFF )
                {
-                  s_irBuffer[ tmp ].EventType = KEY_EVENT;
+                  s_irBuffer[tmp].EventType = KEY_EVENT;
                }
             }
          }
@@ -1310,7 +1310,7 @@ static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
          {
             for( DWORD tmp = 0; tmp < s_dwNumRead; ++tmp )
             {
-               INPUT_RECORD * pInRec = &s_irBuffer[ tmp ];
+               INPUT_RECORD * pInRec = &s_irBuffer[tmp];
                if( pInRec->EventType == KEY_EVENT )
                {
 #ifndef _TRACE
@@ -1383,7 +1383,7 @@ static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
    /* Only process one keyboard event at a time. */
    if( iKey == 0 && s_dwNumIndex < s_dwNumRead )
    {
-      INPUT_RECORD * pInRec = &s_irBuffer[ s_dwNumIndex ];
+      INPUT_RECORD * pInRec = &s_irBuffer[s_dwNumIndex];
       HB_BOOL fPop = HB_TRUE;
 
       if( pInRec->EventType == KEY_EVENT )
@@ -2038,7 +2038,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_WINTITLE:
       {
-         TCHAR buff[ 256 ];
+         TCHAR buff[256];
          DWORD dwLen;
 
          dwLen = GetConsoleTitle( buff, HB_SIZEOFARRAY( buff ) );
@@ -2097,21 +2097,21 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
             if( iIndex >= 0 && iIndex < 16 )
             {
-               COLORREF colors[ 16 ];
+               COLORREF colors[16];
                HB_BOOL fGet = hb_gt_win_SetPalette( HB_FALSE, colors );
 
-               pInfo->pResult = hb_itemPutNL(pInfo->pResult, colors[ iIndex ]);
+               pInfo->pResult = hb_itemPutNL(pInfo->pResult, colors[iIndex]);
 
                if( fGet && ( hb_itemType(pInfo->pNewVal2) & HB_IT_NUMERIC ) )
                {
-                  colors[ iIndex ] = hb_itemGetNL(pInfo->pNewVal2);
+                  colors[iIndex] = hb_itemGetNL(pInfo->pNewVal2);
                   hb_gt_win_SetPalette( HB_TRUE, colors );
                }
             }
          }
          else
          {
-            COLORREF colors[ 16 ];
+            COLORREF colors[16];
             int i;
 
             if( ! pInfo->pResult )
@@ -2124,7 +2124,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             hb_arrayNew(pInfo->pResult, 16);
             for( i = 0; i < 16; i++ )
             {
-               hb_arraySetNL(pInfo->pResult, i + 1, colors[ i ]);
+               hb_arraySetNL(pInfo->pResult, i + 1, colors[i]);
             }
 
             if( hb_itemType(pInfo->pNewVal) & HB_IT_ARRAY )
@@ -2133,7 +2133,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                {
                   for( i = 0; i < 16; i++ )
                   {
-                     colors[ i ] = hb_arrayGetNL(pInfo->pNewVal, i + 1);
+                     colors[i] = hb_arrayGetNL(pInfo->pNewVal, i + 1);
                   }
 
                   hb_gt_win_SetPalette( HB_TRUE, colors );
@@ -2314,16 +2314,16 @@ static void hb_gt_win_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
          {
             break;
          }
-         s_pCharInfoScreen[ i ].Char.UnicodeChar = hb_cdpGetU16Ctrl( usChar );
+         s_pCharInfoScreen[i].Char.UnicodeChar = hb_cdpGetU16Ctrl( usChar );
 #else
          HB_UCHAR uc;
          if( ! HB_GTSELF_GETSCRUC( pGT, iRow, iCol++, &iColor, &bAttr, &uc, HB_TRUE ) )
          {
             break;
          }
-         s_pCharInfoScreen[ i ].Char.AsciiChar = static_cast<char>(uc);
+         s_pCharInfoScreen[i].Char.AsciiChar = static_cast<char>(uc);
 #endif
-         s_pCharInfoScreen[ i ].Attributes = static_cast<WORD>(iColor & 0xFF);
+         s_pCharInfoScreen[i].Attributes = static_cast<WORD>(iColor & 0xFF);
          ++i;
       }
 

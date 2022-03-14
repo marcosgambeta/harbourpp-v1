@@ -251,7 +251,7 @@ HB_FUNC( FREADSTR )
 
          nRead = hb_fsReadLarge( fhnd, buffer, nToRead );
          uiError = hb_fsError();
-         buffer[ nRead ] = '\0';
+         buffer[nRead] = '\0';
 
          /* NOTE: Clipper will not return zero chars from this functions. */
          hb_retc_buffer( buffer );
@@ -298,7 +298,7 @@ HB_FUNC( HB_FREADLEN )
 
 HB_FUNC( CURDIR )
 {
-   char szBuffer[ HB_PATH_MAX ];
+   char szBuffer[HB_PATH_MAX];
    int iDrive = 0;
    const char * szDrive;
 
@@ -322,10 +322,10 @@ HB_FUNC( CURDIR )
 HB_FUNC( HB_CURDRIVE )
 {
 #if defined( HB_OS_HAS_DRIVE_LETTER )
-   char szCurDrive[ 1 ];
+   char szCurDrive[1];
    const char * szDrive;
 
-   szCurDrive[ 0 ] = ( static_cast<char>(hb_fsCurDrv()) ) + 'A';
+   szCurDrive[0] = ( static_cast<char>(hb_fsCurDrv()) ) + 'A';
    hb_retclen( szCurDrive, 1 );
 
    szDrive = hb_parc(1);
@@ -363,7 +363,7 @@ HB_FUNC( HB_CURDRIVE )
 
 HB_FUNC( HB_CWD )
 {
-   char szBuffer[ HB_PATH_MAX ];
+   char szBuffer[HB_PATH_MAX];
    const char * szNewWD;
 
    if( hb_fsGetCWD( szBuffer, sizeof(szBuffer) ) )
@@ -400,7 +400,7 @@ HB_FUNC( HB_PROGNAME )
 
 HB_FUNC( HB_DIRBASE )
 {
-   char szBuffer[ HB_PATH_MAX ];
+   char szBuffer[HB_PATH_MAX];
 
    hb_fsBaseDirBuff( szBuffer );
 
@@ -510,11 +510,11 @@ HB_FUNC( HB_FGETDATETIME )
    {
       if( HB_ISBYREF(3) )
       {
-         char buf[ 13 ];
+         char buf[13];
          hb_timeStr( buf, lMillisec );
          if( lMillisec % 1000 == 0 )
          {
-            buf[ 8 ] = '\0';
+            buf[8] = '\0';
          }
          hb_storc( buf, 3 );
          hb_stordl( lJulian, 2 );
@@ -668,7 +668,7 @@ HB_FUNC( HB_OSPATHSEPARATOR )
 
 HB_FUNC( HB_OSPATHLISTSEPARATOR )
 {
-   static const char s_ret[ 2 ] = { HB_OS_PATH_LIST_SEP_CHR, '\0' };
+   static const char s_ret[2] = { HB_OS_PATH_LIST_SEP_CHR, '\0' };
 
    hb_retc_const( s_ret );
 }
@@ -681,7 +681,7 @@ HB_FUNC( HB_OSPATHDELIMITERS )
 HB_FUNC( HB_OSDRIVESEPARATOR )
 {
 #ifdef HB_OS_HAS_DRIVE_LETTER
-   static const char s_ret[ 2 ] = { HB_OS_DRIVE_DELIM_CHR, '\0' };
+   static const char s_ret[2] = { HB_OS_DRIVE_DELIM_CHR, '\0' };
    hb_retc_const( s_ret );
 #else
    hb_retc_null();

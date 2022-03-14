@@ -297,7 +297,7 @@ static int     s_iWine     = 0;
       DWORD dwMinorVersion;
       DWORD dwBuildNumber;
       DWORD dwPlatformId;
-      WCHAR szCSDVersion[ 128 ];
+      WCHAR szCSDVersion[128];
       WORD  wServicePackMajor;
       WORD  wServicePackMinor;
       WORD  wSuiteMask;
@@ -446,7 +446,7 @@ char * hb_verPlatform( void )
             break;
       }
 
-      if( pszName[ 0 ] == '\0' )
+      if( pszName[0] == '\0' )
       {
          if( hb_iswinver( 11, 0, 0, HB_TRUE ) )
          {
@@ -569,7 +569,7 @@ char * hb_verPlatform( void )
          {
             if( hb_iswinsp( tmp, HB_TRUE ) )
             {
-               char szServicePack[ 8 ];
+               char szServicePack[8];
                hb_snprintf(szServicePack, sizeof(szServicePack), " SP%u", tmp);
                hb_strncat( pszPlatform, szServicePack, PLATFORM_BUF_SIZE );
                break;
@@ -830,7 +830,7 @@ char * hb_verCompiler( void )
 
    char * pszCompiler;
    const char * pszName;
-   char szSub[ 64 ];
+   char szSub[64];
    int iVerMajor;
    int iVerMinor;
    int iVerPatch;
@@ -838,7 +838,7 @@ char * hb_verCompiler( void )
    int iElements = 0;
 
    pszCompiler = static_cast<char*>(hb_xgrab(COMPILER_BUF_SIZE));
-   szSub[ 0 ] = '\0';
+   szSub[0] = '\0';
 
 #if defined( __IBMC__ ) || defined( __IBMCPP__ )
 

@@ -206,9 +206,9 @@ long hb_dateEncode( int iYear, int iMonth, int iDay )
    {
       /* Month, year, and lower day limits are simple,
          but upper day limit is dependent upon month and leap year */
-      static const int auiDayLimit[ 12 ] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+      static const int auiDayLimit[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
-      if( iDay <= auiDayLimit[ iMonth - 1 ] || ( iDay == 29 && iMonth == 2 && ( iYear & 3 ) == 0 && ( iYear % 100 != 0 || iYear % 400 == 0 ) ) )
+      if( iDay <= auiDayLimit[iMonth - 1] || ( iDay == 29 && iMonth == 2 && ( iYear & 3 ) == 0 && ( iYear % 100 != 0 || iYear % 400 == 0 ) ) )
       {
          int iFactor = ( iMonth < 3 ) ? -1 : 0;
 
@@ -261,16 +261,16 @@ void hb_dateStrPut( char * szDate, int iYear, int iMonth, int iDay )
 
    if( iYear >= 0 && iMonth > 0 && iDay > 0 )
    {
-      szDate[ 0 ] = static_cast<char>(( ( iYear / 1000 ) % 10 ) + '0');
-      szDate[ 1 ] = static_cast<char>(( ( iYear / 100 ) % 10 ) + '0');
-      szDate[ 2 ] = static_cast<char>(( ( iYear / 10 ) % 10 ) + '0');
-      szDate[ 3 ] = static_cast<char>(( iYear % 10 ) + '0');
+      szDate[0] = static_cast<char>(( ( iYear / 1000 ) % 10 ) + '0');
+      szDate[1] = static_cast<char>(( ( iYear / 100 ) % 10 ) + '0');
+      szDate[2] = static_cast<char>(( ( iYear / 10 ) % 10 ) + '0');
+      szDate[3] = static_cast<char>(( iYear % 10 ) + '0');
 
-      szDate[ 4 ] = static_cast<char>(( ( iMonth / 10 ) % 10 ) + '0');
-      szDate[ 5 ] = static_cast<char>(( iMonth % 10 ) + '0');
+      szDate[4] = static_cast<char>(( ( iMonth / 10 ) % 10 ) + '0');
+      szDate[5] = static_cast<char>(( iMonth % 10 ) + '0');
 
-      szDate[ 6 ] = static_cast<char>(( ( iDay / 10 ) % 10 ) + '0');
-      szDate[ 7 ] = static_cast<char>(( iDay % 10 ) + '0');
+      szDate[6] = static_cast<char>(( ( iDay / 10 ) % 10 ) + '0');
+      szDate[7] = static_cast<char>(( iDay % 10 ) + '0');
    }
    else
    {
@@ -288,23 +288,23 @@ void hb_dateStrGet( const char * szDate, int * piYear, int * piMonth, int * piDa
    if( szDate )
 #else
    if( szDate &&
-       szDate[ 0 ] >= '0' && szDate[ 0 ] <= '9' &&
-       szDate[ 1 ] >= '0' && szDate[ 1 ] <= '9' &&
-       szDate[ 2 ] >= '0' && szDate[ 2 ] <= '9' &&
-       szDate[ 3 ] >= '0' && szDate[ 3 ] <= '9' &&
-       szDate[ 4 ] >= '0' && szDate[ 4 ] <= '9' &&
-       szDate[ 5 ] >= '0' && szDate[ 5 ] <= '9' &&
-       szDate[ 6 ] >= '0' && szDate[ 6 ] <= '9' &&
-       szDate[ 7 ] >= '0' && szDate[ 7 ] <= '9' )
+       szDate[0] >= '0' && szDate[0] <= '9' &&
+       szDate[1] >= '0' && szDate[1] <= '9' &&
+       szDate[2] >= '0' && szDate[2] <= '9' &&
+       szDate[3] >= '0' && szDate[3] <= '9' &&
+       szDate[4] >= '0' && szDate[4] <= '9' &&
+       szDate[5] >= '0' && szDate[5] <= '9' &&
+       szDate[6] >= '0' && szDate[6] <= '9' &&
+       szDate[7] >= '0' && szDate[7] <= '9' )
 #endif
    {
       /* Date string has correct length, so attempt to convert */
-      *piYear  = ( ( static_cast<int>(szDate[ 0 ] - '0')   * 10 +
-                     static_cast<int>(szDate[ 1 ] - '0') ) * 10 +
-                     static_cast<int>(szDate[ 2 ] - '0') ) * 10 +
-                     static_cast<int>(szDate[ 3 ] - '0');
-      *piMonth = ( szDate[ 4 ] - '0' ) * 10 + ( szDate[ 5 ] - '0' );
-      *piDay   = ( szDate[ 6 ] - '0' ) * 10 + ( szDate[ 7 ] - '0' );
+      *piYear  = ( ( static_cast<int>(szDate[0] - '0')   * 10 +
+                     static_cast<int>(szDate[1] - '0') ) * 10 +
+                     static_cast<int>(szDate[2] - '0') ) * 10 +
+                     static_cast<int>(szDate[3] - '0');
+      *piMonth = ( szDate[4] - '0' ) * 10 + ( szDate[5] - '0' );
+      *piDay   = ( szDate[6] - '0' ) * 10 + ( szDate[7] - '0' );
    }
    else
    {
@@ -335,7 +335,7 @@ char * hb_dateDecStr( char * szDate, long lJulian )
       hb_dateDecode( lJulian, &iYear, &iMonth, &iDay );
       hb_dateStrPut( szDate, iYear, iMonth, iDay );
    }
-   szDate[ 8 ] = '\0';
+   szDate[8] = '\0';
 
    return szDate;
 }
@@ -543,45 +543,45 @@ HB_BOOL hb_timeStrGet( const char * szTime, int * piHour, int * piMinutes, int *
          ++szTime;
       }
 
-      if( HB_ISDIGIT( *szTime ) )
+      if( HB_ISDIGIT(*szTime) )
       {
          iHour = ( *szTime++ - '0' );
-         if( HB_ISDIGIT( *szTime ) )
+         if( HB_ISDIGIT(*szTime) )
          {
             iHour = iHour * 10 + ( *szTime++ - '0' );
          }
-         if( *szTime == ':' && HB_ISDIGIT( szTime[ 1 ] ) )
+         if( *szTime == ':' && HB_ISDIGIT(szTime[1]) )
          {
             ++iBlocks;
             ++szTime;
             iMinutes = ( *szTime++ - '0' );
-            if( HB_ISDIGIT( *szTime ) )
+            if( HB_ISDIGIT(*szTime) )
             {
                iMinutes = iMinutes * 10 + ( *szTime++ - '0' );
             }
-            if( *szTime == ':' && HB_ISDIGIT( szTime[ 1 ] ) )
+            if( *szTime == ':' && HB_ISDIGIT(szTime[1]) )
             {
                ++iBlocks;
                ++szTime;
                iSeconds = ( *szTime++ - '0' );
-               if( HB_ISDIGIT( *szTime ) )
+               if( HB_ISDIGIT(*szTime) )
                {
                   iSeconds = iSeconds * 10 + ( *szTime++ - '0' );
                }
-               if( *szTime == '.' && HB_ISDIGIT( szTime[ 1 ] ) )
+               if( *szTime == '.' && HB_ISDIGIT(szTime[1]) )
                {
                   ++iBlocks;
                   ++szTime;
                   iMSec = ( *szTime++ - '0' ) * 100;
-                  if( HB_ISDIGIT( *szTime ) )
+                  if( HB_ISDIGIT(*szTime) )
                   {
                      iMSec += ( *szTime++ - '0' ) * 10;
-                     if( HB_ISDIGIT( *szTime ) )
+                     if( HB_ISDIGIT(*szTime) )
                      {
                         iMSec += ( *szTime++ - '0' );
                      }
                   }
-                  if( HB_ISDIGIT( *szTime ) )
+                  if( HB_ISDIGIT(*szTime) )
                   {
                      ++szTime;
                   }
@@ -592,7 +592,7 @@ HB_BOOL hb_timeStrGet( const char * szTime, int * piHour, int * piMinutes, int *
          {
             ++szTime;
          }
-         if( ( szTime[ 0 ] == 'p' || szTime[ 0 ] == 'P' ) && ( szTime[ 1 ] == 'm' || szTime[ 1 ] == 'M' ) )
+         if( ( szTime[0] == 'p' || szTime[0] == 'P' ) && ( szTime[1] == 'm' || szTime[1] == 'M' ) )
          {
             ++iBlocks;
             szTime += 2;
@@ -605,7 +605,7 @@ HB_BOOL hb_timeStrGet( const char * szTime, int * piHour, int * piMinutes, int *
                iHour += 12;
             }
          }
-         else if( ( szTime[ 0 ] == 'a' || szTime[ 0 ] == 'A' ) && ( szTime[ 1 ] == 'm' || szTime[ 1 ] == 'M' ) )
+         else if( ( szTime[0] == 'a' || szTime[0] == 'A' ) && ( szTime[1] == 'm' || szTime[1] == 'M' ) )
          {
             ++iBlocks;
             szTime += 2;
@@ -665,40 +665,40 @@ void hb_timeStrRawGet( const char * szTime, int * piHour, int * piMinutes, int *
    {
       int iLen = 0;
 
-      while( iLen < 10 && HB_ISDIGIT( szTime[ iLen ] ) )
+      while( iLen < 10 && HB_ISDIGIT(szTime[iLen]) )
       {
          ++iLen;
       }
       
       if( iLen >= 2 && ( ( iLen & 1 ) == 0 || iLen == 7 || iLen == 9 ) )
       {
-         *piHour = ( szTime[ 0 ] - '0' ) * 10 + ( szTime[ 1 ] - '0' );
+         *piHour = ( szTime[0] - '0' ) * 10 + ( szTime[1] - '0' );
          szTime += 2;
          iLen -= 2;
          if( iLen >= 2 )
          {
-            *piMinutes = ( szTime[ 0 ] - '0' ) * 10 + ( szTime[ 1 ] - '0' );
+            *piMinutes = ( szTime[0] - '0' ) * 10 + ( szTime[1] - '0' );
             szTime += 2;
             iLen -= 2;
             if( iLen >= 2 )
             {
-               *piSeconds = ( szTime[ 0 ] - '0' ) * 10 + ( szTime[ 1 ] - '0' );
+               *piSeconds = ( szTime[0] - '0' ) * 10 + ( szTime[1] - '0' );
                szTime += 2;
                iLen -= 2;
                switch( iLen )
                {
                   case 4:
                   case 3:
-                     *piMSec = ( static_cast<int>(szTime[ 0 ] - '0')   * 10 +
-                                 static_cast<int>(szTime[ 1 ] - '0') ) * 10 +
-                                 static_cast<int>(szTime[ 2 ] - '0');
+                     *piMSec = ( static_cast<int>(szTime[0] - '0')   * 10 +
+                                 static_cast<int>(szTime[1] - '0') ) * 10 +
+                                 static_cast<int>(szTime[2] - '0');
                      break;
                   case 2:
-                     *piMSec = ( static_cast<int>(szTime[ 0 ] - '0')   * 10 +
-                                 static_cast<int>(szTime[ 1 ] - '0') ) * 10;
+                     *piMSec = ( static_cast<int>(szTime[0] - '0')   * 10 +
+                                 static_cast<int>(szTime[1] - '0') ) * 10;
                      break;
                   case 1:
-                     *piMSec = static_cast<int>(szTime[ 0 ] - '0') * 100;
+                     *piMSec = static_cast<int>(szTime[0] - '0') * 100;
                      break;
                }
             }
@@ -739,7 +739,7 @@ void hb_timeStampStrRawGet( const char * szDateTime, long * plJulian, long * plM
    *plJulian = *plMilliSec = 0;
 
    iLen = 0;
-   while( iLen < 10 && HB_ISDIGIT( szDateTime[ iLen ] ) )
+   while( iLen < 10 && HB_ISDIGIT(szDateTime[iLen]) )
    {
       ++iLen;
    }
@@ -774,7 +774,7 @@ char * hb_timeStampStr( char * szDateTime, long lJulian, long lMilliSec )
    hb_dateDecode( lJulian, &iYear, &iMonth, &iDay );
    hb_timeDecode( lMilliSec, &iHour, &iMinutes, &iSeconds, &iMSec );
    hb_snprintf(szDateTime, 24, "%04d-%02d-%02d %02d:%02d:%02d.%03d", iYear, iMonth, iDay, iHour, iMinutes, iSeconds, iMSec);
-   szDateTime[ 23 ] = '\0';
+   szDateTime[23] = '\0';
 
    return szDateTime;
 }
@@ -797,22 +797,22 @@ HB_BOOL hb_timeStampStrGet( const char * szDateTime, int * piYear, int * piMonth
       {
          ++szDateTime;
       }
-      if( HB_ISDIGIT( szDateTime[ 0 ] ) && HB_ISDIGIT( szDateTime[ 1 ] ) &&
-          HB_ISDIGIT( szDateTime[ 2 ] ) && HB_ISDIGIT( szDateTime[ 3 ] ) &&
-          ( szDateTime[ 4 ] == '-' || szDateTime[ 4 ] == '/' || szDateTime[ 4 ] == '.' ) )
+      if( HB_ISDIGIT(szDateTime[0]) && HB_ISDIGIT(szDateTime[1]) &&
+          HB_ISDIGIT(szDateTime[2]) && HB_ISDIGIT(szDateTime[3]) &&
+          ( szDateTime[4] == '-' || szDateTime[4] == '/' || szDateTime[4] == '.' ) )
       {
-         iYear  = ( ( static_cast<int>(szDateTime[ 0 ] - '0')   * 10 +
-                      static_cast<int>(szDateTime[ 1 ] - '0') ) * 10 +
-                      static_cast<int>(szDateTime[ 2 ] - '0') ) * 10 +
-                      static_cast<int>(szDateTime[ 3 ] - '0');
+         iYear  = ( ( static_cast<int>(szDateTime[0] - '0')   * 10 +
+                      static_cast<int>(szDateTime[1] - '0') ) * 10 +
+                      static_cast<int>(szDateTime[2] - '0') ) * 10 +
+                      static_cast<int>(szDateTime[3] - '0');
          /* ISO 8601 Calendar dates: YYYY-MM-DD */
-         if( HB_ISDIGIT( szDateTime[ 5 ] ) && HB_ISDIGIT( szDateTime[ 6 ] ) &&
-             szDateTime[ 7 ] == szDateTime[ 4 ] &&
-             HB_ISDIGIT( szDateTime[ 8 ] ) && HB_ISDIGIT( szDateTime[ 9 ] ) &&
-             ! HB_ISDIGIT( szDateTime[ 10 ] ) )
+         if( HB_ISDIGIT(szDateTime[5]) && HB_ISDIGIT(szDateTime[6]) &&
+             szDateTime[7] == szDateTime[4] &&
+             HB_ISDIGIT(szDateTime[8]) && HB_ISDIGIT(szDateTime[9]) &&
+             ! HB_ISDIGIT(szDateTime[10]) )
          {
-            iMonth = ( szDateTime[ 5 ] - '0' ) * 10 + ( szDateTime[ 6 ] - '0' );
-            iDay   = ( szDateTime[ 8 ] - '0' ) * 10 + ( szDateTime[ 9 ] - '0' );
+            iMonth = ( szDateTime[5] - '0' ) * 10 + ( szDateTime[6] - '0' );
+            iDay   = ( szDateTime[8] - '0' ) * 10 + ( szDateTime[9] - '0' );
 
             if( hb_dateEncode( iYear, iMonth, iDay ) != 0 || ( iYear == 0 && iMonth == 0 && iDay == 0 ) )
             {
@@ -821,12 +821,12 @@ HB_BOOL hb_timeStampStrGet( const char * szDateTime, int * piYear, int * piMonth
             }
          }
          /* ISO 8601 Week dates: YYYY-Www-D */
-         else if( ( szDateTime[ 5 ] == 'W' || szDateTime[ 5 ] == 'w' ) &&
-                  HB_ISDIGIT( szDateTime[ 6 ] ) && HB_ISDIGIT( szDateTime[ 7 ] ) &&
-                  szDateTime[ 8 ] == szDateTime[ 4 ] &&
-                  HB_ISDIGIT( szDateTime[ 9 ] ) && ! HB_ISDIGIT( szDateTime[ 10 ] ) )
+         else if( ( szDateTime[5] == 'W' || szDateTime[5] == 'w' ) &&
+                  HB_ISDIGIT(szDateTime[6]) && HB_ISDIGIT(szDateTime[7]) &&
+                  szDateTime[8] == szDateTime[4] &&
+                  HB_ISDIGIT(szDateTime[9]) && ! HB_ISDIGIT(szDateTime[10]) )
          {
-            long lDate = hb_dateEncWeek( iYear, ( szDateTime[ 6 ] - '0' ) * 10 + ( szDateTime[ 7 ] - '0' ), szDateTime[ 9 ] - '0' );
+            long lDate = hb_dateEncWeek( iYear, ( szDateTime[6] - '0' ) * 10 + ( szDateTime[7] - '0' ), szDateTime[9] - '0' );
             if( lDate )
             {
                hb_dateDecode( lDate, &iYear, &iMonth, &iDay );
@@ -835,13 +835,13 @@ HB_BOOL hb_timeStampStrGet( const char * szDateTime, int * piYear, int * piMonth
             }
          }
          /* ISO 8601 Ordinal dates: YYYY-DDD */
-         else if( szDateTime[ 4 ] == '-' && HB_ISDIGIT( szDateTime[ 5 ] ) &&
-                  HB_ISDIGIT( szDateTime[ 6 ] ) && HB_ISDIGIT( szDateTime[ 7 ] ) &&
-                  ! HB_ISDIGIT( szDateTime[ 8 ] ) )
+         else if( szDateTime[4] == '-' && HB_ISDIGIT(szDateTime[5]) &&
+                  HB_ISDIGIT(szDateTime[6]) && HB_ISDIGIT(szDateTime[7]) &&
+                  ! HB_ISDIGIT(szDateTime[8]) )
          {
-            iDay = ( static_cast<int>(szDateTime[ 5 ] - '0')   * 10 +
-                     static_cast<int>(szDateTime[ 6 ] - '0') ) * 10 +
-                     static_cast<int>(szDateTime[ 7 ] - '0');
+            iDay = ( static_cast<int>(szDateTime[5] - '0')   * 10 +
+                     static_cast<int>(szDateTime[6] - '0') ) * 10 +
+                     static_cast<int>(szDateTime[7] - '0');
             if( iDay > 0 && ( iDay <= 365 || ( iDay == 366 && iYear % 4 == 0 && ( iYear % 100 != 0 || iYear % 400 == 0 ) ) ) )
             {
                long lDate = hb_dateEncode( iYear, 1, 1 );
@@ -858,7 +858,7 @@ HB_BOOL hb_timeStampStrGet( const char * szDateTime, int * piYear, int * piMonth
          {
             if( *szDateTime == 'T' || *szDateTime == 't' )
             {
-               if( HB_ISDIGIT( szDateTime[ 1 ] ) )
+               if( HB_ISDIGIT(szDateTime[1]) )
                {
                   ++szDateTime;
                }
@@ -1232,7 +1232,7 @@ HB_MAXUINT hb_timerGet( void )
 
          for( i = 0; i < static_cast<int>(HB_SIZEOFARRAY( piClkId )); ++i )
          {
-            s_iClkId = piClkId[ i ];
+            s_iClkId = piClkId[i];
             if( s_iClkId == 0 || clock_getres( s_iClkId, &ts ) == 0 )
             {
                break;

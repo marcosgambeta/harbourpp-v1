@@ -169,7 +169,7 @@ void hb_regexFree( PHB_REGEX pRegEx )
 
 HB_BOOL hb_regexMatch( PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen, HB_BOOL fFull )
 {
-   HB_REGMATCH aMatches[ HB_REGMATCH_SIZE(1) ];
+   HB_REGMATCH aMatches[HB_REGMATCH_SIZE(1)];
    HB_BOOL fMatch;
 
    fMatch = ( s_reg_exec )( pRegEx, szString, nLen, 1, aMatches ) > 0;

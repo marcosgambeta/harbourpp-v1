@@ -323,7 +323,7 @@ const char * hb_socketErrorStr( int iError )
 {
    if( iError >= 0 && iError <= HB_SOCKET_ERR_OTHER )
    {
-      return s_socketErrors[ iError ];
+      return s_socketErrors[iError];
    }
    else
    {
@@ -740,7 +740,7 @@ typedef union
 #if defined( HB_HAS_SOCKADDR_STORAGE )
    struct sockaddr_storage st;
 #else
-   char st[ HB_SOCKADDR_MAX_LEN ];
+   char st[HB_SOCKADDR_MAX_LEN];
 #endif
    struct sockaddr sa;
 } HB_SOCKADDR_STORAGE;
@@ -2035,12 +2035,12 @@ char * hb_socketAddrGetName( const void * pSockAddr, unsigned len )
             const struct sockaddr_in * sa = static_cast<const struct sockaddr_in*>(pSockAddr);
             const char * szAddr;
 #  if defined( HB_HAS_INET_NTOP )
-            char buf[ INET_ADDRSTRLEN ];
+            char buf[INET_ADDRSTRLEN];
             szAddr = inet_ntop( AF_INET, HB_UNCONST( &sa->sin_addr ), buf, sizeof(buf) );
 #  elif defined( HB_IS_INET_NTOA_MT_SAFE )
             szAddr = inet_ntoa( sa->sin_addr );
 #  else
-            char buf[ INET_ADDRSTRLEN ];
+            char buf[INET_ADDRSTRLEN];
             szAddr = hb_inet_ntoa( &sa->sin_addr, buf );
 #  endif
             if( szAddr )
@@ -2057,7 +2057,7 @@ char * hb_socketAddrGetName( const void * pSockAddr, unsigned len )
             const struct sockaddr_in6 * sa = static_cast<const struct sockaddr_in6*>(pSockAddr);
             const char * szAddr;
 #  if defined( HB_HAS_INET_NTOP )
-            char buf[ INET6_ADDRSTRLEN ];
+            char buf[INET6_ADDRSTRLEN];
             szAddr = inet_ntop( AF_INET6, HB_UNCONST( &sa->sin6_addr ), buf, sizeof(buf) );
 #  else
             {
@@ -2187,12 +2187,12 @@ PHB_ITEM hb_socketAddrToItem( const void * pSockAddr, unsigned len )
             const struct sockaddr_in * sa = static_cast<const struct sockaddr_in*>(pSockAddr);
             const char * szAddr;
 #  if defined( HB_HAS_INET_NTOP )
-            char buf[ INET_ADDRSTRLEN ];
+            char buf[INET_ADDRSTRLEN];
             szAddr = inet_ntop( AF_INET, HB_UNCONST( &sa->sin_addr ), buf, sizeof(buf) );
 #  elif defined( HB_IS_INET_NTOA_MT_SAFE )
             szAddr = inet_ntoa( sa->sin_addr );
 #  else
-            char buf[ INET_ADDRSTRLEN ];
+            char buf[INET_ADDRSTRLEN];
             szAddr = hb_inet_ntoa( &sa->sin_addr, buf );
 #  endif
             if( szAddr )
@@ -2212,7 +2212,7 @@ PHB_ITEM hb_socketAddrToItem( const void * pSockAddr, unsigned len )
             const struct sockaddr_in6 * sa = static_cast<const struct sockaddr_in6*>(pSockAddr);
             const char * szAddr;
 #  if defined( HB_HAS_INET_NTOP )
-            char buf[ INET6_ADDRSTRLEN ];
+            char buf[INET6_ADDRSTRLEN];
             szAddr = inet_ntop( AF_INET6, HB_UNCONST( &sa->sin6_addr ), buf, sizeof(buf) );
 #  else
             {
@@ -3003,7 +3003,7 @@ static int s_socketPollCheck( HB_SOCKET sd, struct pollfd * pfds, nfds_t nfds )
 {
    for( nfds_t npos = 0; npos < nfds; ++npos )
    {
-      if( pfds[ npos ].fd == sd )
+      if( pfds[npos].fd == sd )
       {
          return static_cast<int>(npos);
       }
@@ -3018,9 +3018,9 @@ int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
    HB_SOCKET sd;
    HB_SIZE nLen, nPos, ul;
    int iResult, iError, tout, iPos, i;
-   PHB_ITEM pItemSets[ 3 ];
-   HB_BOOL pSet[ 3 ];
-   int pEvents[ 3 ];
+   PHB_ITEM pItemSets[3];
+   HB_BOOL pSet[3];
+   int pEvents[3];
    struct pollfd * pfds = nullptr;
    nfds_t nfds = 0, ncnt = 0;
 
@@ -3029,21 +3029,21 @@ int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
       pFunc = s_socketSelectCallback;
    }
 
-   pItemSets[ 0 ] = pArrayRD;
-   pItemSets[ 1 ] = pArrayWR;
-   pItemSets[ 2 ] = pArrayEX;
-   pSet[ 0 ] = fSetRD;
-   pSet[ 1 ] = fSetWR;
-   pSet[ 2 ] = fSetEX;
-   pEvents[ 0 ] = POLLIN;
-   pEvents[ 1 ] = POLLOUT;
-   pEvents[ 2 ] = POLLPRI;
+   pItemSets[0] = pArrayRD;
+   pItemSets[1] = pArrayWR;
+   pItemSets[2] = pArrayEX;
+   pSet[0] = fSetRD;
+   pSet[1] = fSetWR;
+   pSet[2] = fSetEX;
+   pEvents[0] = POLLIN;
+   pEvents[1] = POLLOUT;
+   pEvents[2] = POLLPRI;
 
    for( i = 0; i < 3; i++ )
    {
-      if( pItemSets[ i ] )
+      if( pItemSets[i] )
       {
-         ncnt += ( nfds_t ) hb_arrayLen(pItemSets[ i ]);
+         ncnt += ( nfds_t ) hb_arrayLen(pItemSets[i]);
       }
    }
 
@@ -3054,20 +3054,20 @@ int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
 
    for( i = 0; i < 3; i++ )
    {
-      nLen = pItemSets[ i ] ? hb_arrayLen(pItemSets[ i ]) : 0;
+      nLen = pItemSets[i] ? hb_arrayLen(pItemSets[i]) : 0;
       for( ul = 1; ul <= nLen && nfds < ncnt; ul++ )
       {
-         sd = pFunc( hb_arrayGetItemPtr(pItemSets[ i ], ul) );
+         sd = pFunc( hb_arrayGetItemPtr(pItemSets[i], ul) );
          if( sd != HB_NO_SOCKET )
          {
             iPos = s_socketPollCheck( sd, pfds, nfds );
             if( iPos < 0 )
             {
                iPos = static_cast<int>(nfds++);
-               pfds[ iPos ].fd = sd;
-               pfds[ iPos ].revents = pfds[ iPos ].events = 0;
+               pfds[iPos].fd = sd;
+               pfds[iPos].revents = pfds[iPos].events = 0;
             }
-            pfds[ iPos ].events |= pEvents[ i ];
+            pfds[iPos].events |= pEvents[i];
          }
       }
    }
@@ -3091,33 +3091,33 @@ int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
       while( iResult == 0 && ( timeout = hb_timerTest( timeout, &timer ) ) != 0 && hb_vmRequestQuery() == 0 );
       hb_vmLock();
 
-      pEvents[ 0 ] |= POLLHUP | POLLPRI;
-      pEvents[ 2 ] |= POLLHUP | POLLERR | POLLNVAL;
+      pEvents[0] |= POLLHUP | POLLPRI;
+      pEvents[2] |= POLLHUP | POLLERR | POLLNVAL;
       for( i = 0; i < 3; i++ )
       {
-         if( pItemSets[ i ] && pSet[ i ] )
+         if( pItemSets[i] && pSet[i] )
          {
             nPos = 0;
             if( iResult > 0 )
             {
-               nLen = hb_arrayLen(pItemSets[ i ]);
+               nLen = hb_arrayLen(pItemSets[i]);
                for( ul = 1; ul <= nLen; ul++ )
                {
-                  sd = pFunc( hb_arrayGetItemPtr(pItemSets[ i ], ul) );
+                  sd = pFunc( hb_arrayGetItemPtr(pItemSets[i], ul) );
                   if( sd != HB_NO_SOCKET )
                   {
                      iPos = s_socketPollCheck( sd, pfds, nfds );
-                     if( iPos >= 0 && ( pfds[ iPos ].revents & pEvents[ i ] ) != 0 )
+                     if( iPos >= 0 && ( pfds[iPos].revents & pEvents[i] ) != 0 )
                      {
                         if( ++nPos != ul )
                         {
-                           hb_itemCopy(hb_arrayGetItemPtr(pItemSets[ i ], nPos), hb_arrayGetItemPtr(pItemSets[ i ], ul));
+                           hb_itemCopy(hb_arrayGetItemPtr(pItemSets[i], nPos), hb_arrayGetItemPtr(pItemSets[i], ul));
                         }
                      }
                   }
                }
             }
-            hb_arraySize(pItemSets[ i ], nPos);
+            hb_arraySize(pItemSets[i], nPos);
          }
       }
    }
@@ -3137,9 +3137,9 @@ int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
    HB_SOCKET maxsd, sd;
    int i, ret, iError;
    HB_SIZE nLen, nPos, ul;
-   PHB_ITEM pItemSets[ 3 ];
-   HB_BOOL pSet[ 3 ];
-   fd_set fds[ 3 ], * pfds[ 3 ];
+   PHB_ITEM pItemSets[3];
+   HB_BOOL pSet[3];
+   fd_set fds[3], * pfds[3];
    struct timeval tv;
    HB_MAXUINT timer;
 
@@ -3148,12 +3148,12 @@ int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
       pFunc = s_socketSelectCallback;
    }
 
-   pItemSets[ 0 ] = pArrayRD;
-   pItemSets[ 1 ] = pArrayWR;
-   pItemSets[ 2 ] = pArrayEX;
-   pSet[ 0 ] = fSetRD;
-   pSet[ 1 ] = fSetWR;
-   pSet[ 2 ] = fSetEX;
+   pItemSets[0] = pArrayRD;
+   pItemSets[1] = pArrayWR;
+   pItemSets[2] = pArrayEX;
+   pSet[0] = fSetRD;
+   pSet[1] = fSetWR;
+   pSet[2] = fSetEX;
 
    timer = hb_timerInit( timeout );
 
@@ -3163,31 +3163,31 @@ int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
       for( i = 0; i < 3; i++ )
       {
          ret = 0;
-         nLen = pItemSets[ i ] ? hb_arrayLen(pItemSets[ i ]) : 0;
+         nLen = pItemSets[i] ? hb_arrayLen(pItemSets[i]) : 0;
          if( nLen > 0 )
          {
-            FD_ZERO( &fds[ i ] );
+            FD_ZERO( &fds[i] );
             for( ul = 1; ul <= nLen; ul++ )
             {
-               sd = pFunc( hb_arrayGetItemPtr(pItemSets[ i ], ul) );
+               sd = pFunc( hb_arrayGetItemPtr(pItemSets[i], ul) );
                if( sd != HB_NO_SOCKET )
                {
                   if( maxsd < sd )
                   {
                      maxsd = sd;
                   }
-                  FD_SET( static_cast<HB_SOCKET_T>(sd), &fds[ i ] );
+                  FD_SET( static_cast<HB_SOCKET_T>(sd), &fds[i] );
                   ret = 1;
                }
             }
          }
-         pfds[ i ] = ret ? &fds[ i ] : nullptr;
+         pfds[i] = ret ? &fds[i] : nullptr;
       }
 
       if( hb_vmRequestQuery() != 0 )
       {
          hb_socketSetError( HB_SOCKET_ERR_INVALIDHANDLE );
-         pSet[ 0 ] = pSet[ 1 ] = pSet[ 2 ] = HB_FALSE;
+         pSet[0] = pSet[1] = pSet[2] = HB_FALSE;
          ret = -1;
          break;
       }
@@ -3205,7 +3205,7 @@ int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
 
       hb_vmUnlock();
 
-      ret = select( static_cast<int>(maxsd + 1), pfds[ 0 ], pfds[ 1 ], pfds[ 2 ], &tv );
+      ret = select( static_cast<int>(maxsd + 1), pfds[0], pfds[1], pfds[2], &tv );
       iError = ret >= 0 ? 0 : HB_SOCK_GETERROR();
       hb_socketSetOsError( iError );
       if( ret == -1 && HB_SOCK_IS_EINTR( iError ) )
@@ -3219,25 +3219,25 @@ int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
 
    for( i = 0; i < 3; i++ )
    {
-      if( pfds[ i ] && pSet[ i ] )
+      if( pfds[i] && pSet[i] )
       {
          nPos = 0;
          if( ret > 0 )
          {
-            nLen = hb_arrayLen(pItemSets[ i ]);
+            nLen = hb_arrayLen(pItemSets[i]);
             for( ul = 1; ul <= nLen; ul++ )
             {
-               sd = pFunc( hb_arrayGetItemPtr(pItemSets[ i ], ul) );
-               if( sd != HB_NO_SOCKET && FD_ISSET( static_cast<HB_SOCKET_T>(sd), pfds[ i ] ) )
+               sd = pFunc( hb_arrayGetItemPtr(pItemSets[i], ul) );
+               if( sd != HB_NO_SOCKET && FD_ISSET( static_cast<HB_SOCKET_T>(sd), pfds[i] ) )
                {
                   if( ++nPos != ul )
                   {
-                     hb_itemCopy(hb_arrayGetItemPtr(pItemSets[ i ], nPos), hb_arrayGetItemPtr(pItemSets[ i ], ul));
+                     hb_itemCopy(hb_arrayGetItemPtr(pItemSets[i], nPos), hb_arrayGetItemPtr(pItemSets[i], ul));
                   }
                }
             }
          }
-         hb_arraySize(pItemSets[ i ], nPos);
+         hb_arraySize(pItemSets[i], nPos);
       }
    }
 
@@ -3302,9 +3302,9 @@ HB_BOOL hb_socketResolveInetAddr( void ** pSockAddr, unsigned * puiLen, const ch
       hb_vmUnlock();
       he = gethostbyname( szAddr );
       hb_socketSetResolveError( he == nullptr ? HB_SOCK_GETHERROR() : 0 );
-      if( he && he->h_addr_list[ 0 ] )
+      if( he && he->h_addr_list[0] )
       {
-         sa.sin_addr.s_addr = ( reinterpret_cast<struct in_addr*>(he->h_addr_list[ 0 ]) )->s_addr;
+         sa.sin_addr.s_addr = ( reinterpret_cast<struct in_addr*>(he->h_addr_list[0]) )->s_addr;
          fTrans = HB_TRUE;
       }
       hb_vmLock();
@@ -3357,9 +3357,9 @@ char * hb_socketResolveAddr( const char * szAddr, int af )
 
          hb_vmUnlock();
          he = gethostbyname( szAddr );
-         if( he && he->h_addr_list[ 0 ] )
+         if( he && he->h_addr_list[0] )
          {
-            sin.s_addr = ( reinterpret_cast<struct in_addr*>(he->h_addr_list[ 0 ]) )->s_addr;
+            sin.s_addr = ( reinterpret_cast<struct in_addr*>(he->h_addr_list[0]) )->s_addr;
             fTrans = HB_TRUE;
          }
          else
@@ -3373,12 +3373,12 @@ char * hb_socketResolveAddr( const char * szAddr, int af )
       if( fTrans )
       {
 #  if defined( HB_HAS_INET_NTOP )
-         char buf[ INET_ADDRSTRLEN ];
+         char buf[INET_ADDRSTRLEN];
          szAddr = inet_ntop( AF_INET, &sin, buf, sizeof(buf) );
 #  elif defined( HB_IS_INET_NTOA_MT_SAFE )
          szAddr = inet_ntoa( sin );
 #  else
-         char buf[ INET_ADDRSTRLEN ];
+         char buf[INET_ADDRSTRLEN];
          szAddr = hb_inet_ntoa( &sin, buf );
 #  endif
          szResult = hb_strdup(szAddr);
@@ -3393,7 +3393,7 @@ char * hb_socketResolveAddr( const char * szAddr, int af )
       if( fTrans )
       {
 #  if defined( HB_HAS_INET_NTOP )
-         char buf[ INET6_ADDRSTRLEN ];
+         char buf[INET6_ADDRSTRLEN];
          szAddr = inet_ntop( AF_INET6, &sin, buf, sizeof(buf) );
 #  else
          int iTODO;
@@ -3534,7 +3534,7 @@ PHB_ITEM hb_socketGetHosts( const char * szAddr, int af )
 
       if( he )
       {
-         while( he->h_addr_list[ iCount ] )
+         while( he->h_addr_list[iCount] )
          {
             ++iCount;
          }
@@ -3544,14 +3544,14 @@ PHB_ITEM hb_socketGetHosts( const char * szAddr, int af )
          pItem = hb_itemArrayNew(iCount);
          do
          {
-            struct in_addr * sin = reinterpret_cast<struct in_addr*>(he->h_addr_list[ iCount - 1 ]);
+            struct in_addr * sin = reinterpret_cast<struct in_addr*>(he->h_addr_list[iCount - 1]);
 #  if defined( HB_HAS_INET_NTOP )
-            char buf[ INET_ADDRSTRLEN ];
+            char buf[INET_ADDRSTRLEN];
             szAddr = inet_ntop( AF_INET, sin, buf, sizeof(buf) );
 #  elif defined( HB_IS_INET_NTOA_MT_SAFE )
             szAddr = inet_ntoa( *sin );
 #  else
-            char buf[ INET_ADDRSTRLEN ];
+            char buf[INET_ADDRSTRLEN];
             szAddr = hb_inet_ntoa( sin, buf );
 #  endif
             hb_arraySetC(pItem, iCount, szAddr);
@@ -3591,7 +3591,7 @@ char * hb_socketGetHostName( const void * pSockAddr, unsigned len )
       #if ! defined( NI_MAXHOST )
          #define NI_MAXHOST  1025
       #endif
-      char szHost[ NI_MAXHOST ];
+      char szHost[NI_MAXHOST];
       int iResult;
 
       hb_vmUnlock();
@@ -3716,9 +3716,9 @@ static char * hb_getMAC( const char * pszIfName )
          {
             struct sockaddr_dl * sdl = static_cast<struct sockaddr_dl*>(ifa->ifa_addr);
             unsigned char * data = static_cast<unsigned char*>(LLADDR( sdl ));
-            char hwaddr[ 24 ];
+            char hwaddr[24];
 
-            hb_snprintf(hwaddr, sizeof(hwaddr), "%02X:%02X:%02X:%02X:%02X:%02X", data[ 0 ], data[ 1 ], data[ 2 ], data[ 3 ], data[ 4 ], data[ 5 ]);
+            hb_snprintf(hwaddr, sizeof(hwaddr), "%02X:%02X:%02X:%02X:%02X:%02X", data[0], data[1], data[2], data[3], data[4], data[5]);
             pszMAC = hb_strdup(hwaddr);
             break;
          }
@@ -3855,7 +3855,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
 
             hb_arrayNew(pItem, HB_SOCKET_IFINFO_LEN);
 
-            pifr->ifr_name[ sizeof(pifr->ifr_name) - 1 ] = '\0';
+            pifr->ifr_name[sizeof(pifr->ifr_name) - 1] = '\0';
             hb_arraySetC(pItem, HB_SOCKET_IFINFO_NAME, pifr->ifr_name);
 
             switch( family )
@@ -3915,19 +3915,19 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
 #     endif
                if( ioctl( sd, SIOCGIFHWADDR, pifr ) != -1 )
                {
-                  char hwaddr[ 24 ];
+                  char hwaddr[24];
                   unsigned char * data;
-                  data = static_cast<unsigned char*>(&pifr->ifr_hwaddr.sa_data[ 0 ]);
-                  hb_snprintf(hwaddr, sizeof(hwaddr), "%02X:%02X:%02X:%02X:%02X:%02X", data[ 0 ], data[ 1 ], data[ 2 ], data[ 3 ], data[ 4 ], data[ 5 ]);
+                  data = static_cast<unsigned char*>(&pifr->ifr_hwaddr.sa_data[0]);
+                  hb_snprintf(hwaddr, sizeof(hwaddr), "%02X:%02X:%02X:%02X:%02X:%02X", data[0], data[1], data[2], data[3], data[4], data[5]);
                   hb_arraySetC(pItem, HB_SOCKET_IFINFO_HWADDR, hwaddr);
                }
 #  elif defined( SIOCGENADDR )
                if( ioctl( sd, SIOCGENADDR, pifr ) != -1 )
                {
-                  char hwaddr[ 24 ];
+                  char hwaddr[24];
                   unsigned char * data;
-                  data = static_cast<unsigned char*>(&pifr->ifr_enaddr[ 0 ]);
-                  hb_snprintf(hwaddr, sizeof(hwaddr), "%02X:%02X:%02X:%02X:%02X:%02X", data[ 0 ], data[ 1 ], data[ 2 ], data[ 3 ], data[ 4 ], data[ 5 ]);
+                  data = static_cast<unsigned char*>(&pifr->ifr_enaddr[0]);
+                  hb_snprintf(hwaddr, sizeof(hwaddr), "%02X:%02X:%02X:%02X:%02X:%02X", data[0], data[1], data[2], data[3], data[4], data[5]);
                   hb_arraySetC(pItem, HB_SOCKET_IFINFO_HWADDR, hwaddr);
                }
 #  elif defined( HB_OS_BSD )
@@ -4056,18 +4056,18 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
                      while( ( nPos = hb_socketArrayFindInetAddr( pIpAddress->IpAddress.String, pArray, nPos + 1 ) ) != 0 )
                      {
                         PHB_ITEM pIfItem = hb_arrayGetItemPtr(pArray, nPos);
-                        if( ! hb_arrayGetCPtr(pIfItem, HB_SOCKET_IFINFO_HWADDR)[ 0 ] )
+                        if( ! hb_arrayGetCPtr(pIfItem, HB_SOCKET_IFINFO_HWADDR)[0] )
                         {
-                           char hwaddr[ 3 * MAX_ADAPTER_ADDRESS_LENGTH ];
+                           char hwaddr[3 * MAX_ADAPTER_ADDRESS_LENGTH];
                            UINT count, size = 0;
 
                            for( count = 0; count < pAdapter->AddressLength; ++count )
                            {
                               if( count )
                               {
-                                 hwaddr[ size++ ] = ':';
+                                 hwaddr[size++] = ':';
                               }
-                              size += hb_snprintf(hwaddr + size, sizeof(hwaddr) - size, "%02X", static_cast<int>(pAdapter->Address[ count ]));
+                              size += hb_snprintf(hwaddr + size, sizeof(hwaddr) - size, "%02X", static_cast<int>(pAdapter->Address[count]));
                            }
                            hb_arraySetCL(pIfItem, HB_SOCKET_IFINFO_HWADDR, hwaddr, size);
                         }

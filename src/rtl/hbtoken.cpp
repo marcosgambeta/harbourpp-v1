@@ -63,7 +63,7 @@ static HB_SIZE hb_tokenCount( const char * szLine, HB_SIZE nLen, const char * sz
 
    while( nPos < nLen )
    {
-      char ch = szLine[ nPos ];
+      char ch = szLine[nPos];
 
       if( cQuote )
       {
@@ -82,17 +82,17 @@ static HB_SIZE hb_tokenCount( const char * szLine, HB_SIZE nLen, const char * sz
       else if( ( iFlags & _HB_TOK_EOL_DELIM ) != 0 && ( ch == '\n' || ch == '\r' ) )
       {
          ++nTokens;
-         if( nPos + 1 < nLen && szLine[ nPos + 1 ] == ( ch == '\n' ? '\r' : '\n' ) )
+         if( nPos + 1 < nLen && szLine[nPos + 1] == ( ch == '\n' ? '\r' : '\n' ) )
          {
             ++nPos;
          }
       }
-      else if( nDelim && ch == szDelim[ 0 ] && ( nDelim == 1 || ! memcmp(szLine + nPos, szDelim, nDelim) ) )
+      else if( nDelim && ch == szDelim[0] && ( nDelim == 1 || ! memcmp(szLine + nPos, szDelim, nDelim) ) )
       {
          ++nTokens;
          if( ( iFlags & _HB_TOK_ISDELIM ) == 0 )
          {
-            while( nPos + 1 < nLen && szLine[ nPos + 1 ] == szDelim[ 0 ] )
+            while( nPos + 1 < nLen && szLine[nPos + 1] == szDelim[0] )
             {
                ++nPos;
             }
@@ -112,7 +112,7 @@ static const char * hb_tokenGet( const char * szLine, HB_SIZE nLen, const char *
 
    for( nPos = nStart = 0; nPos < nLen; ++nPos )
    {
-      char ch = szLine[ nPos ];
+      char ch = szLine[nPos];
 
       if( cQuote )
       {
@@ -130,7 +130,7 @@ static const char * hb_tokenGet( const char * szLine, HB_SIZE nLen, const char *
       }
       else if( ( iFlags & _HB_TOK_EOL_DELIM ) != 0 && ( ch == '\n' || ch == '\r' ) )
       {
-         HB_SIZE nL = ( nPos + 1 < nLen && szLine[ nPos + 1 ] == ( ch == '\n' ? '\r' : '\n' ) ) ? 1 : 0;
+         HB_SIZE nL = ( nPos + 1 < nLen && szLine[nPos + 1] == ( ch == '\n' ? '\r' : '\n' ) ) ? 1 : 0;
          if( --nToken == 0 )
          {
             *pnDelim = nL + 1;
@@ -140,7 +140,7 @@ static const char * hb_tokenGet( const char * szLine, HB_SIZE nLen, const char *
          nPos += nL;
          nStart = nPos + 1;
       }
-      else if( nDelim && ch == szDelim[ 0 ] && ( nDelim == 1 || ! memcmp(szLine + nPos, szDelim, nDelim) ) )
+      else if( nDelim && ch == szDelim[0] && ( nDelim == 1 || ! memcmp(szLine + nPos, szDelim, nDelim) ) )
       {
          if( --nToken == 0 )
          {
@@ -149,7 +149,7 @@ static const char * hb_tokenGet( const char * szLine, HB_SIZE nLen, const char *
          }
          if( ( iFlags & _HB_TOK_ISDELIM ) == 0 )
          {
-            while( nPos + 1 < nLen && szLine[ nPos + 1 ] == szDelim[ 0 ] )
+            while( nPos + 1 < nLen && szLine[nPos + 1] == szDelim[0] )
             {
                ++nPos;
             }
@@ -179,7 +179,7 @@ static PHB_ITEM hb_tokenArray( const char * szLine, HB_SIZE nLen, const char * s
 
       for( nPos = nStart = nToken = 0; nPos < nLen; ++nPos )
       {
-         char ch = szLine[ nPos ];
+         char ch = szLine[nPos];
 
          if( cQuote )
          {
@@ -198,18 +198,18 @@ static PHB_ITEM hb_tokenArray( const char * szLine, HB_SIZE nLen, const char * s
          else if( ( iFlags & _HB_TOK_EOL_DELIM ) != 0 && ( ch == '\n' || ch == '\r' ) )
          {
             hb_arraySetCL(pArray, ++nToken, szLine + nStart, nPos - nStart);
-            if( nPos + 1 < nLen && szLine[ nPos + 1 ] == ( ch == '\n' ? '\r' : '\n' ) )
+            if( nPos + 1 < nLen && szLine[nPos + 1] == ( ch == '\n' ? '\r' : '\n' ) )
             {
                ++nPos;
             }
             nStart = nPos + 1;
          }
-         else if( nDelim && ch == szDelim[ 0 ] && ( nDelim == 1 || ! memcmp(szLine + nPos, szDelim, nDelim) ) )
+         else if( nDelim && ch == szDelim[0] && ( nDelim == 1 || ! memcmp(szLine + nPos, szDelim, nDelim) ) )
          {
             hb_arraySetCL(pArray, ++nToken, szLine + nStart, nPos - nStart);
             if( ( iFlags & _HB_TOK_ISDELIM ) == 0 )
             {
-               while( nPos + 1 < nLen && szLine[ nPos + 1 ] == szDelim[ 0 ] )
+               while( nPos + 1 < nLen && szLine[nPos + 1] == szDelim[0] )
                {
                   ++nPos;
                }
@@ -263,12 +263,12 @@ static HB_BOOL hb_tokenParam( int iParam, HB_SIZE nSkip, const char ** pszLine, 
 
       if( nDelim && ( iFlags & _HB_TOK_ISDELIM ) == 0 )
       {
-         while( nLen && *szLine == szDelim[ 0 ] )
+         while( nLen && *szLine == szDelim[0] )
          {
             ++szLine;
             --nLen;
          }
-         while( nLen && szLine[ nLen - 1 ] == szDelim[ 0 ] )
+         while( nLen && szLine[nLen - 1] == szDelim[0] )
          {
             --nLen;
          }

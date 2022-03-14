@@ -12,7 +12,7 @@
 #define HB_CP950_LAST    0xF9FE
 #define HB_CP950_BITS    5
 
-static const HB_USHORT s_cp950index[ 710 ] =
+static const HB_USHORT s_cp950index[710] =
 {
    0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0002, 0x0002,
    0x0006, 0x0007, 0x0002, 0x0008, 0x0009, 0x000A, 0x0002, 0x0002,
@@ -105,7 +105,7 @@ static const HB_USHORT s_cp950index[ 710 ] =
    0x01AB, 0x01AC, 0x0002, 0x01AD, 0x01AE, 0x01AF
 };
 
-static const HB_USHORT s_cp950_ucs16[ 13823 ] =
+static const HB_USHORT s_cp950_ucs16[13823] =
 {
    0x3000, 0xFF0C, 0x3001, 0x3002, 0xFF0E, 0x2027, 0xFF1B, 0xFF1A,
    0xFF1F, 0xFF01, 0xFE30, 0x2026, 0x2025, 0xFE50, 0xFE51, 0xFE52,
@@ -1842,7 +1842,7 @@ static HB_USHORT s_cp950_to_ucs16( int n )
    n -= HB_CP950_FIRST;
    if( n >= 0 && n <= ( HB_CP950_LAST - HB_CP950_FIRST ) )
    {
-      return s_cp950_ucs16[ ( s_cp950index[ n >> HB_CP950_BITS ] << HB_CP950_BITS ) + ( n & ( ( 1 << HB_CP950_BITS ) - 1 ) ) ];
+      return s_cp950_ucs16[( s_cp950index[n >> HB_CP950_BITS] << HB_CP950_BITS ) + ( n & ( ( 1 << HB_CP950_BITS ) - 1 ) )];
    }
    return 0;
 }
@@ -1851,7 +1851,7 @@ static HB_USHORT s_cp950_to_ucs16( int n )
 #define HB_U16_LAST     0xFFE5
 #define HB_U16_BITS     6
 
-static const HB_USHORT s_ucs16index[ 1022 ] =
+static const HB_USHORT s_ucs16index[1022] =
 {
    0x0000, 0x0001, 0x0002, 0x0002, 0x0002, 0x0002, 0x0002, 0x0002,
    0x0003, 0x0002, 0x0002, 0x0004, 0x0005, 0x0002, 0x0002, 0x0002,
@@ -1983,7 +1983,7 @@ static const HB_USHORT s_ucs16index[ 1022 ] =
    0x0002, 0x015D, 0x015E, 0x0002, 0x0002, 0x015F
 };
 
-static const HB_USHORT s_ucs16_cp950[ 22470 ] =
+static const HB_USHORT s_ucs16_cp950[22470] =
 {
    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xA1B1,
    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xA1C2,
@@ -4801,7 +4801,7 @@ static HB_USHORT s_ucs16_to_cp950( int n )
    n -= HB_U16_FIRST;
    if( n >= 0 && n <= ( HB_U16_LAST - HB_U16_FIRST ) )
    {
-      return s_ucs16_cp950[ ( s_ucs16index[ n >> HB_U16_BITS ] << HB_U16_BITS ) + ( n & ( ( 1 << HB_U16_BITS ) - 1 ) ) ];
+      return s_ucs16_cp950[( s_ucs16index[n >> HB_U16_BITS] << HB_U16_BITS ) + ( n & ( ( 1 << HB_U16_BITS ) - 1 ) )];
    }
    return 0;
 }

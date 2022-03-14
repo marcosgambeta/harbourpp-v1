@@ -258,15 +258,15 @@ static char * hb_memToStr( char * szBuffer, void * pMem, HB_SIZE nSize )
 
    iPrintable = 0;
    for( i = 0; i < iSize; ++i )
-      if( ( byMem[ i ] & 0x7f ) >= 0x20 )
+      if( ( byMem[i] & 0x7f ) >= 0x20 )
          iPrintable++;
 
    if( ( iPrintable * 100 ) / iSize > 70 ) /* more then 70% printable chars */
    {
       /* format as string of original chars */
       for( i = 0; i < iSize; ++i )
-         if( ( byMem[ i ] & 0x7f ) >= 0x20 )
-            *pDest++ = byMem[ i ];
+         if( ( byMem[i] & 0x7f ) >= 0x20 )
+            *pDest++ = byMem[i];
          else
             *pDest++ = '.';
    }
@@ -275,7 +275,7 @@ static char * hb_memToStr( char * szBuffer, void * pMem, HB_SIZE nSize )
       /* format as hex */
       for( i = 0; i < iSize; ++i )
       {
-         int iLo = byMem[ i ] & 0x0f, iHi = byMem[ i ] >> 4;
+         int iLo = byMem[i] & 0x0f, iHi = byMem[i] >> 4;
          *pDest++ = '\\';
          *pDest++ = iHi <= 9 ? '0' + iHi : 'A' - 10 + iHi;
          *pDest++ = iLo <= 9 ? '0' + iLo : 'A' - 10 + iLo;
@@ -292,7 +292,7 @@ void hb_xexit( void )
 #ifdef HB_FM_STATISTICS
    if( s_nMemoryBlocks /* || hb_cmdargCheck( "INFO" ) */ )
    {
-      char szBuffer[ HB_MAX( 3 * HB_MEMSTR_BLOCK_MAX + 1, 100 ) ];
+      char szBuffer[HB_MAX(3 * HB_MEMSTR_BLOCK_MAX + 1, 100)];
       PHB_MEMINFO pMemBlock;
       int i;
 
@@ -333,7 +333,7 @@ void hb_errInternal( HB_ERRCODE errCode, const char * szText, const char * szPar
    HB_TRACE( HB_TR_DEBUG, ( "hb_errInternal(%d, %s, %s, %s)", errCode, szText, szPar1, szPar2 ) );
 #endif
 
-   char buffer[ 1024 ];
+   char buffer[1024];
 
    hb_conOutErr( hb_conNewLine(), 0 );
    hb_snprintf(buffer, sizeof(buffer), "Unrecoverable error %d: ", errCode);
@@ -390,7 +390,7 @@ HB_BOOL hb_cdpCharEq( PHB_CODEPAGE cdp, const char * szText1, HB_SIZE nLen1, HB_
    HB_SYMBOL_UNUSED(cdp);
 
    if( *pnPos1 < nLen1 && *pnPos2 < nLen2 )
-      return szText1[ ( *pnPos1 )++ ] == szText2[ ( *pnPos2 )++ ];
+      return szText1[( *pnPos1 )++] == szText2[( *pnPos2 )++];
    else
       return HB_FALSE;
 }
@@ -402,8 +402,8 @@ HB_BOOL hb_cdpCharCaseEq( PHB_CODEPAGE cdp, const char * szText1, HB_SIZE nLen1,
 
    if( *pnPos1 < nLen1 && *pnPos2 < nLen2 )
    {
-      HB_UCHAR uc1 = szText1[ ( *pnPos1 )++ ],
-               uc2 = szText2[ ( *pnPos2 )++ ];
+      HB_UCHAR uc1 = szText1[( *pnPos1 )++],
+               uc2 = szText2[( *pnPos2 )++];
       return HB_TOUPPER(uc1) == HB_TOUPPER(uc2);
    }
    else
@@ -542,30 +542,30 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
          if( pFileName->szName )
          {
             nLen = strlen(pFileName->szName);
-            while( nLen && pFileName->szName[ nLen - 1 ] == ' ' )
+            while( nLen && pFileName->szName[nLen - 1] == ' ' )
             {
                --nLen;
             }
-            while( nLen && pFileName->szName[ 0 ] == ' ' )
+            while( nLen && pFileName->szName[0] == ' ' )
             {
                ++pFileName->szName;
                --nLen;
             }
-            ( const_cast<char*>(pFileName->szName) )[ nLen ] = '\0';
+            ( const_cast<char*>(pFileName->szName) )[nLen] = '\0';
          }
          if( pFileName->szExtension )
          {
             nLen = strlen(pFileName->szExtension);
-            while( nLen && pFileName->szExtension[ nLen - 1 ] == ' ' )
+            while( nLen && pFileName->szExtension[nLen - 1] == ' ' )
             {
                --nLen;
             }
-            while( nLen && pFileName->szExtension[ 0 ] == ' ' )
+            while( nLen && pFileName->szExtension[0] == ' ' )
             {
                ++pFileName->szExtension;
                --nLen;
             }
-            ( const_cast<char*>(pFileName->szExtension) )[ nLen ] = '\0';
+            ( const_cast<char*>(pFileName->szExtension) )[nLen] = '\0';
          }
       }
 
@@ -638,30 +638,30 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
          if( pFileName->szName )
          {
             nLen = strlen(pFileName->szName);
-            while( nLen && pFileName->szName[ nLen - 1 ] == ' ' )
+            while( nLen && pFileName->szName[nLen - 1] == ' ' )
             {
                --nLen;
             }
-            while( nLen && pFileName->szName[ 0 ] == ' ' )
+            while( nLen && pFileName->szName[0] == ' ' )
             {
                ++pFileName->szName;
                --nLen;
             }
-            ( const_cast<char*>(pFileName->szName) )[ nLen ] = '\0';
+            ( const_cast<char*>(pFileName->szName) )[nLen] = '\0';
          }
          if( pFileName->szExtension )
          {
             nLen = strlen(pFileName->szExtension);
-            while( nLen && pFileName->szExtension[ nLen - 1 ] == ' ' )
+            while( nLen && pFileName->szExtension[nLen - 1] == ' ' )
             {
                --nLen;
             }
-            while( nLen && pFileName->szExtension[ 0 ] == ' ' )
+            while( nLen && pFileName->szExtension[0] == ' ' )
             {
                ++pFileName->szExtension;
                --nLen;
             }
-            ( const_cast<char*>(pFileName->szExtension) )[ nLen ] = '\0';
+            ( const_cast<char*>(pFileName->szExtension) )[nLen] = '\0';
          }
       }
 

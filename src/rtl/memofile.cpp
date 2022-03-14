@@ -66,7 +66,7 @@ static void hb_memoread( HB_BOOL bHandleEOF )
          /* Don't read the file terminating EOF character */
          if( bHandleEOF && nSize > 0 )
          {
-            if( pBuffer[ nSize - 1 ] == HB_CHAR_EOF )
+            if( pBuffer[nSize - 1] == HB_CHAR_EOF )
             {
                --nSize;
             }

@@ -312,13 +312,13 @@ char * hb_fsLinkRead( const char * pszFile )
             else
             {
                DWORD size;
-               TCHAR lpLink[ HB_PATH_MAX ];
+               TCHAR lpLink[HB_PATH_MAX];
                size = s_pGetFinalPathNameByHandle( hFile, lpLink, HB_PATH_MAX, VOLUME_NAME_DOS );
                if( size < HB_PATH_MAX )
                {
                   if( size > 0 )
                   {
-                     lpLink[ size ] = TEXT( '\0' );
+                     lpLink[size] = TEXT( '\0' );
                      pszLink = HB_OSSTRDUP( lpLink );
                   }
 
@@ -357,7 +357,7 @@ char * hb_fsLinkRead( const char * pszFile )
          }
          else
          {
-            pszLink[ size ] = '\0';
+            pszLink[size] = '\0';
             /* Convert from OS codepage */
             pszLink = const_cast<char*>(hb_osDecodeCP( pszLink, nullptr, nullptr ));
          }

@@ -107,7 +107,7 @@ static const char * s_DeadKeyEnvName = "HB_GTSLN_NATIONDEADKEY";
 
 /* a table for Keys work with a Dead key. The first
    element contains a number of defined keys */
-unsigned char hb_sln_convKDeadKeys[ 257 ];  /* it should be allocated by hb_xalloc() */
+unsigned char hb_sln_convKDeadKeys[257];  /* it should be allocated by hb_xalloc() */
 
 /* contains an integer value of a DeadKey or -1 */
 static int s_iDeadKey = -1;
@@ -146,12 +146,12 @@ static void hb_sln_Init_TermType( void )
 
 static void hb_sln_Init_KeyTranslations( void )
 {
-   char ch, keyname[ SLANG_MAX_KEYMAP_KEY_SEQ + 1 ];
+   char ch, keyname[SLANG_MAX_KEYMAP_KEY_SEQ + 1];
    int  keynum, i;
    char * keyseq;
 
    /* for defining ^[<Key> sequences - this simulates Alt+Keys */
-   char AltChars[][ 2 ] =
+   char AltChars[][2] =
    {
       { '0', '9' },
       { 'A', 'Z' },
@@ -167,8 +167,8 @@ static void hb_sln_Init_KeyTranslations( void )
       so F11-F30 is generated with Shift & Ctrl.
       This is not guaranteed to work in all cases */
    keynum = 11;
-   keyname[ 0 ] = 'F';
-   keyname[ 2 ] = 0;
+   keyname[0] = 'F';
+   keyname[2] = 0;
 
    /* Shift & Ctrl FKeys definition takes place in two
       phases : from '1' to '9' and from 'A' to 'K' */
@@ -176,9 +176,9 @@ static void hb_sln_Init_KeyTranslations( void )
    {
       for( ch = ( i == 1 ? '1' : 'A' ); ch <= ( i == 1 ? '9' : 'K' ); ch++ )
       {
-         keyname[ 1 ] = ch;
+         keyname[1] = ch;
          keyseq = SLtt_tgetstr( keyname );
-         if( keyseq != nullptr && keyseq[ 0 ] != 0 )
+         if( keyseq != nullptr && keyseq[0] != 0 )
          {
             SLkp_define_keysym( keyseq, SL_KEY_F( keynum ) );
          }
@@ -190,19 +190,19 @@ static void hb_sln_Init_KeyTranslations( void )
       Also pressing Alt+Key on linux console and linux xterm gives the
       same key sequences as with Meta key so we are happy */
 
-   keyname[ 0 ] = 033;
-   keyname[ 2 ] = 0;
+   keyname[0] = 033;
+   keyname[2] = 0;
 
    /* Alt+Letter & Alt+digit definition takes place in three phases :
       from '0' to '9', from 'A' to 'Z' and from 'a' to 'z' */
    for( i = 0; i < 3; i++ )
    {
-      for( ch = AltChars[ i ][ 0 ]; ch <= AltChars[ i ][ 1 ]; ch++ )
+      for( ch = AltChars[i][0]; ch <= AltChars[i][1]; ch++ )
       {
          #if 0
          fprintf( stderr, "%d %c\n", i, ch );
          #endif
-         keyname[ 1 ] = ch;
+         keyname[1] = ch;
 
          /* QUESTION: why Slang reports error for defining Alt+O ???.
                       Have I any hidden error in key definitions ??? */
@@ -217,7 +217,7 @@ static void hb_sln_Init_KeyTranslations( void )
    if( hb_sln_UnderXterm )
    {
       keyseq = SLtt_tgetstr( const_cast<char*>("Km") );
-      if( ( keyseq != nullptr ) && ( keyseq[ 0 ] != 0 ) )
+      if( ( keyseq != nullptr ) && ( keyseq[0] != 0 ) )
       {
          #if 0
          fprintf( stderr, "%s\r\n", keyseq );
@@ -264,7 +264,7 @@ int hb_sln_Init_Terminal( int phase )
       }
 
       /* number of keys dealing with a Dead key */
-      hb_sln_convKDeadKeys[ 0 ] = 0;
+      hb_sln_convKDeadKeys[0] = 0;
    }
 
    /* Ctrl+\ to abort, no flow-control, no output processing */
@@ -273,18 +273,18 @@ int hb_sln_Init_Terminal( int phase )
       /* do missing disable of start/stop processing */
       if( tcgetattr( SLang_TT_Read_FD, &newTTY ) == 0 )
       {
-         newTTY.c_cc[ VSTOP ]  = 255;  /* disable ^S start/stop processing */
-         newTTY.c_cc[ VSTART ] = 255;  /* disable ^Q start/stop processing */
-         newTTY.c_cc[ VSUSP ]  = 255;  /* disable ^Z suspend processing */
+         newTTY.c_cc[VSTOP]  = 255;  /* disable ^S start/stop processing */
+         newTTY.c_cc[VSTART] = 255;  /* disable ^Q start/stop processing */
+         newTTY.c_cc[VSUSP]  = 255;  /* disable ^Z suspend processing */
          /* already done in Slang library */
          #if 0
-         newTTY.c_cc[ VDSUSP ] = 255;  /* disable ^Y delayed suspend processing */
+         newTTY.c_cc[VDSUSP] = 255;  /* disable ^Y delayed suspend processing */
          #endif
 
          /* workaround for bug in some Linux kernels (i.e. 3.13.0-64-generic
             Ubuntu) in which select() unconditionally accepts stdin for
-            reading if c_cc[ VMIN ] = 0 [druzus] */
-         newTTY.c_cc[ VMIN ] = 1;
+            reading if c_cc[VMIN] = 0 [druzus] */
+         newTTY.c_cc[VMIN] = 1;
 
          if( tcsetattr( SLang_TT_Read_FD, TCSADRAIN, &newTTY ) == 0 )
          {
@@ -374,7 +374,7 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
       else
       {
          /* wait hb_sln_escDelay millisec for next char and in not return ESC keycode */
-         if( 0 == SLang_input_pending( -HB_MAX( hb_sln_escDelay, 0 ) ) )
+         if( 0 == SLang_input_pending( -HB_MAX(hb_sln_escDelay, 0) ) )
          {
             return 033;
          }
@@ -408,11 +408,11 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
       }
       if( ch < 256 )  /* is this needed ??? */
       {
-         for( int i = 0; i < static_cast<int>(hb_sln_convKDeadKeys[ 0 ]); i++ )
+         for( int i = 0; i < static_cast<int>(hb_sln_convKDeadKeys[0]); i++ )
          {
-            if( static_cast<int>(hb_sln_convKDeadKeys[ 2 * i + 1 ]) == static_cast<int>(ch) )
+            if( static_cast<int>(hb_sln_convKDeadKeys[2 * i + 1]) == static_cast<int>(ch) )
             {
-               return static_cast<int>(hb_sln_convKDeadKeys[ 2 * i + 2 ]);
+               return static_cast<int>(hb_sln_convKDeadKeys[2 * i + 2]);
             }
          }
       }
@@ -451,9 +451,9 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
    if( ! hb_sln_Is_Unicode )
    {
       /* standard ASCII key */
-      if( ch && ch < 256 && hb_sln_inputTab[ ch ] )
+      if( ch && ch < 256 && hb_sln_inputTab[ch] )
       {
-         ch = hb_sln_inputTab[ ch ];
+         ch = hb_sln_inputTab[ch];
       }
    }
 #if ( defined( HB_SLN_UTF8 ) || defined( HB_SLN_UNICODE ) )
@@ -464,16 +464,16 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
 
       if( hb_cdpUTF8ToU16NextChar( static_cast<HB_UCHAR>(ch), &n, &wc ) )
       {
-         unsigned int buf[ 10 ], i = 0;
+         unsigned int buf[10], i = 0;
 
          while( n > 0 )
          {
-            if( SLang_input_pending( hb_sln_escDelay == 0 ? -100 : -HB_MAX( hb_sln_escDelay, 0 ) ) == 0 )
+            if( SLang_input_pending( hb_sln_escDelay == 0 ? -100 : -HB_MAX(hb_sln_escDelay, 0) ) == 0 )
             {
                break;
             }
-            buf[ i++ ] = SLang_getkey();
-            if( ! hb_cdpUTF8ToU16NextChar( static_cast<HB_UCHAR>(buf[ i - 1 ]), &n, &wc ) )
+            buf[i++] = SLang_getkey();
+            if( ! hb_cdpUTF8ToU16NextChar( static_cast<HB_UCHAR>(buf[i - 1]), &n, &wc ) )
             {
                n = -1;
             }
@@ -486,7 +486,7 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
          {
             while( i > 0 )
             {
-               SLang_ungetkey( buf[ --i ] );
+               SLang_ungetkey( buf[--i] );
             }
          }
       }

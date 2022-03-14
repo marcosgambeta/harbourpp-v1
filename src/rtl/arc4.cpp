@@ -95,7 +95,7 @@ struct arc4_stream
 {
    HB_U8 i;
    HB_U8 j;
-   HB_U8 s[ 256 ];
+   HB_U8 s[256];
 };
 
 #if ! defined( HB_OS_UNIX )
@@ -123,7 +123,7 @@ static _HB_INLINE_ void arc4_init( void )
 {
    for( int n = 0; n < 256; ++n )
    {
-      rs.s[ n ] = static_cast<HB_U8>(n);
+      rs.s[n] = static_cast<HB_U8>(n);
    }
 
    rs.i = rs.j = 0;
@@ -136,10 +136,10 @@ static _HB_INLINE_ void arc4_addrandom( const HB_U8 * dat, int datlen )
    {
       HB_U8 si;
       rs.i         = ( rs.i + 1 );
-      si           = rs.s[ rs.i ];
-      rs.j         = rs.j + si + dat[ n % datlen ];
-      rs.s[ rs.i ] = rs.s[ rs.j ];
-      rs.s[ rs.j ] = si;
+      si           = rs.s[rs.i];
+      rs.j         = rs.j + si + dat[n % datlen];
+      rs.s[rs.i]   = rs.s[rs.j];
+      rs.s[rs.j]   = si;
    }
    rs.j = rs.i;
 }
@@ -177,7 +177,7 @@ static int arc4_seed_win( void )
    /* This is adapted from Tor's crypto_seed_rng() */
    static int        s_provider_set = 0;
    static HCRYPTPROV s_provider;
-   unsigned char     buf[ ADD_ENTROPY ];
+   unsigned char     buf[ADD_ENTROPY];
 
    if( ! s_provider_set &&
        ! CryptAcquireContext( &s_provider, nullptr, nullptr, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT | CRYPT_SILENT ) &&
@@ -214,7 +214,7 @@ static int arc4_seed_sysctl_linux( void )
     * running in a chroot).
     */
    int          mib[] = { CTL_KERN, KERN_RANDOM, RANDOM_UUID };
-   HB_U8        buf[ ADD_ENTROPY ];
+   HB_U8        buf[ADD_ENTROPY];
    size_t       n;
    int          any_set;
 
@@ -224,7 +224,7 @@ static int arc4_seed_sysctl_linux( void )
    {
       n = sizeof(buf) - len;
 
-      if( sysctl( mib, 3, &buf[ len ], &n, nullptr, 0 ) != 0 )
+      if( sysctl( mib, 3, &buf[len], &n, nullptr, 0 ) != 0 )
       {
          return -1;
       }
@@ -233,7 +233,7 @@ static int arc4_seed_sysctl_linux( void )
    /* make sure that the buffer actually got set. */
    for( unsigned int i = 0, any_set = 0; i < sizeof(buf); ++i )
    {
-      any_set |= buf[ i ];
+      any_set |= buf[i];
    }
 
    if( ! any_set )
@@ -260,7 +260,7 @@ static int arc4_seed_sysctl_bsd( void )
     * (e.g., we're running in a chroot).
     */
    int    mib[] = { CTL_KERN, KERN_ARND };
-   HB_U8  buf[ ADD_ENTROPY ];
+   HB_U8  buf[ADD_ENTROPY];
    size_t len, n;
    int    any_set;
 
@@ -278,7 +278,7 @@ static int arc4_seed_sysctl_bsd( void )
             n = len - sizeof(buf);
          }
 
-         if( sysctl( mib, 2, &buf[ len ], &n, nullptr, 0 ) == -1 )
+         if( sysctl( mib, 2, &buf[len], &n, nullptr, 0 ) == -1 )
          {
             return -1;
          }
@@ -288,7 +288,7 @@ static int arc4_seed_sysctl_bsd( void )
    /* make sure that the buffer actually got set. */
    for( int i = any_set = 0; i < static_cast<int>(sizeof(buf)); ++i )
    {
-      any_set |= buf[ i ];
+      any_set |= buf[i];
    }
 
    if( ! any_set )
@@ -340,8 +340,8 @@ static int arc4_seed_proc_sys_kernel_random_uuid( void )
     * but not /dev/urandom.  Let's try /proc/sys/kernel/random/uuid.
     * Its format is stupid, so we need to decode it from hex.
     */
-   char  buf[ 128 ];
-   HB_U8 entropy[ 64 ];
+   char  buf[128];
+   HB_U8 entropy[64];
    int   i, nybbles;
 
    for( int bytes = 0; bytes < ADD_ENTROPY; )
@@ -365,17 +365,17 @@ static int arc4_seed_proc_sys_kernel_random_uuid( void )
       memset(entropy, 0, sizeof(entropy));
       for( i = nybbles = 0; i < n; ++i )
       {
-         if( HB_ISXDIGIT( buf[ i ] ) )
+         if( HB_ISXDIGIT( buf[i] ) )
          {
-            int nyb = hex_char_to_int( buf[ i ] );
+            int nyb = hex_char_to_int( buf[i] );
 
             if( nybbles & 1 )
             {
-               entropy[ nybbles / 2 ] |= nyb;
+               entropy[nybbles / 2] |= nyb;
             }
             else
             {
-               entropy[ nybbles / 2 ] |= nyb << 4;
+               entropy[nybbles / 2] |= nyb << 4;
             }
 
             ++nybbles;
@@ -405,12 +405,12 @@ static int arc4_seed_urandom( void )
    /* This is adapted from Tor's crypto_seed_rng() */
    static const char * filenames[] = { "/dev/srandom", "/dev/urandom", "/dev/random", nullptr };
 
-   for( int i = 0; filenames[ i ]; ++i )
+   for( int i = 0; filenames[i]; ++i )
    {
-      HB_U8 buf[ ADD_ENTROPY ];
+      HB_U8 buf[ADD_ENTROPY];
       HB_SIZE n;
 
-      int fd = open( filenames[ i ], O_RDONLY, 0 );
+      int fd = open( filenames[i], O_RDONLY, 0 );
 
       if( fd < 0 )
       {
@@ -437,13 +437,13 @@ static int arc4_seed_urandom( void )
 
 static int arc4_seed_rand( void )
 {
-   HB_U8   buf[ ADD_ENTROPY ];
+   HB_U8   buf[ADD_ENTROPY];
 
    srand( static_cast<unsigned>(hb_dateMilliSeconds()) );
 
    for( HB_SIZE i = 0; i < sizeof(buf); i++ )
    {
-      buf[ i ] = static_cast<HB_U8>(rand() % 256);  /* not biased */
+      buf[i] = static_cast<HB_U8>(rand() % 256);  /* not biased */
    }
 
    arc4_addrandom( buf, sizeof(buf) );
@@ -574,13 +574,13 @@ static _HB_INLINE_ HB_U8 arc4_getbyte( void )
    HB_U8 si, sj;
 
    rs.i         = rs.i + 1;
-   si           = rs.s[ rs.i ];
+   si           = rs.s[rs.i];
    rs.j         = rs.j + si;
-   sj           = rs.s[ rs.j ];
-   rs.s[ rs.i ] = sj;
-   rs.s[ rs.j ] = si;
+   sj           = rs.s[rs.j];
+   rs.s[rs.i] = sj;
+   rs.s[rs.j] = si;
 
-   return rs.s[ ( si + sj ) & 0xff ];
+   return rs.s[( si + sj ) & 0xff];
 }
 
 static _HB_INLINE_ HB_U32 arc4_getword( void )
@@ -659,7 +659,7 @@ void hb_arc4random_buf( void * _buf, HB_SIZE n )
          arc4_stir();
       }
 
-      buf[ n ] = arc4_getbyte();
+      buf[n] = arc4_getbyte();
    }
 
    ARC4_UNLOCK();

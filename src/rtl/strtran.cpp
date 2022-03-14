@@ -86,7 +86,7 @@ HB_FUNC( STRTRAN )
 
             while( nT < nText && nText - nT >= nSeek - nS )
             {
-               if( szText[ nT ] == szSeek[ nS ] )
+               if( szText[nT] == szSeek[nS] )
                {
                   ++nT;
                   if( ++nS == nSeek )
@@ -135,7 +135,7 @@ HB_FUNC( STRTRAN )
                   nT = nS = 0;
                   do
                   {
-                     if( nReplaced && szText[ nT ] == szSeek[ nS ] )
+                     if( nReplaced && szText[nT] == szSeek[nS] )
                      {
                         ++nT;
                         if( ++nS == nSeek )
@@ -167,7 +167,7 @@ HB_FUNC( STRTRAN )
                            nT -= nS;
                            nS = 0;
                         }
-                        *szPtr++ = szText[ nT++ ];
+                        *szPtr++ = szText[nT++];
                      }
                   }
                   while( nT < nText );

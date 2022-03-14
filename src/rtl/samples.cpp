@@ -57,17 +57,17 @@ static char * hb_SecToTimeStr( char * pszTime, long lTime )
    int iValue;
 
    iValue = static_cast<int>((lTime / 3600) % 24);
-   pszTime[ 0 ] = static_cast<char>(iValue / 10) + '0';
-   pszTime[ 1 ] = static_cast<char>(iValue % 10) + '0';
-   pszTime[ 2 ] = ':';
+   pszTime[0] = static_cast<char>(iValue / 10) + '0';
+   pszTime[1] = static_cast<char>(iValue % 10) + '0';
+   pszTime[2] = ':';
    iValue = static_cast<int>((lTime / 60) % 60);
-   pszTime[ 3 ] = static_cast<char>(iValue / 10) + '0';
-   pszTime[ 4 ] = static_cast<char>(iValue % 10) + '0';
-   pszTime[ 5 ] = ':';
+   pszTime[3] = static_cast<char>(iValue / 10) + '0';
+   pszTime[4] = static_cast<char>(iValue % 10) + '0';
+   pszTime[5] = ':';
    iValue = static_cast<int>(lTime % 60);
-   pszTime[ 6 ] = static_cast<char>(iValue / 10) + '0';
-   pszTime[ 7 ] = static_cast<char>(iValue % 10) + '0';
-   pszTime[ 8 ] = '\0';
+   pszTime[6] = static_cast<char>(iValue / 10) + '0';
+   pszTime[7] = static_cast<char>(iValue % 10) + '0';
+   pszTime[8] = '\0';
 
    return pszTime;
 }
@@ -110,7 +110,7 @@ HB_FUNC( ELAPTIME )
 {
    long lStart = hb_TimeStrToSec( hb_parcx(1) );
    long lEnd   = hb_TimeStrToSec( hb_parcx(2) );
-   char szTime[ 9 ];
+   char szTime[9];
 
    hb_retc( hb_SecToTimeStr( szTime, ( lEnd < lStart ? 86400 : 0 ) + lEnd - lStart ) );
 }
@@ -122,7 +122,7 @@ HB_FUNC( SECS )
 
 HB_FUNC( TSTRING )
 {
-   char szTime[ 9 ];
+   char szTime[9];
 
    hb_retc( hb_SecToTimeStr( szTime, hb_parnl(1) ) );
 }

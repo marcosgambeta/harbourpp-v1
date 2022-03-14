@@ -163,7 +163,7 @@ static void hb_inetCloseStream( PHB_SOCKET_STRUCT socket )
 {
    if( socket->flushFunc && socket->sd != HB_NO_SOCKET )
    {
-      socket->flushFunc( socket->stream, socket->sd, HB_MAX( socket->iTimeout, 10000 ), HB_TRUE );
+      socket->flushFunc( socket->stream, socket->sd, HB_MAX(socket->iTimeout, 10000), HB_TRUE );
    }
 
    if( socket->cleanFunc )
@@ -764,7 +764,7 @@ static long s_inetRecv( PHB_SOCKET_STRUCT socket, char * buffer, long size, HB_B
       {
          rec = hb_socketRecv( socket->sd, socket->buffer, socket->readahead, 0, timeout );
       }
-      socket->inbuffer = HB_MAX( 0, rec );
+      socket->inbuffer = HB_MAX(0, rec);
    }
    else
    {
@@ -773,7 +773,7 @@ static long s_inetRecv( PHB_SOCKET_STRUCT socket, char * buffer, long size, HB_B
 
    if( socket->inbuffer > 0 )
    {
-      rec = HB_MIN( size, socket->inbuffer );
+      rec = HB_MIN(size, socket->inbuffer);
       memcpy(buffer, socket->buffer + socket->posbuffer, rec);
       socket->posbuffer += rec;
       socket->inbuffer -= rec;
@@ -971,12 +971,12 @@ static void s_inetRecvPattern( const char * const * patterns, int * patternsizes
       }
       else if( iLen > 0 )
       {
-         buffer[ iPos++ ] = cChar;
+         buffer[iPos++] = cChar;
          for( i = 0; i < iPatternsCount; ++i )
          {
-            if( patternsizes[ i ] <= iPos && cChar == patterns[ i ][ patternsizes[ i ] - 1 ] )
+            if( patternsizes[i] <= iPos && cChar == patterns[i][patternsizes[i] - 1] )
             {
-               if( memcmp(buffer + iPos - patternsizes[ i ], patterns[ i ], patternsizes[ i ]) == 0 )
+               if( memcmp(buffer + iPos - patternsizes[i], patterns[i], patternsizes[i]) == 0 )
                {
                   iPaternFound = i + 1;
                   break;
@@ -994,7 +994,7 @@ static void s_inetRecvPattern( const char * const * patterns, int * patternsizes
       {
          hb_itemPutNI(pResult, iPos);
       }
-      hb_retclen_buffer( buffer, iPos - patternsizes[ iPaternFound - 1 ] );
+      hb_retclen_buffer( buffer, iPos - patternsizes[iPaternFound - 1] );
    }
    else
    {
@@ -1032,9 +1032,9 @@ HB_FUNC( HB_INETRECVLINE )
 HB_FUNC( HB_INETRECVENDBLOCK )
 {
    PHB_ITEM pProto = hb_param(2, HB_IT_ARRAY | HB_IT_STRING);
-   const char * patterns_buf[ HB_PATERN_BUF_SIZE ];
+   const char * patterns_buf[HB_PATERN_BUF_SIZE];
    const char ** patterns = patterns_buf;
-   int patternsizes_buf[ HB_PATERN_BUF_SIZE ];
+   int patternsizes_buf[HB_PATERN_BUF_SIZE];
    int * patternsizes = patternsizes_buf;
    int iPatternsCount = 0;
    int iLen;
@@ -1064,8 +1064,8 @@ HB_FUNC( HB_INETRECVENDBLOCK )
             iLen = static_cast<int>(hb_arrayGetCLen(pProto, i));
             if( iLen > 0 )
             {
-               patterns[ iPatternsCount ]     = hb_arrayGetCPtr(pProto, i);
-               patternsizes[ iPatternsCount ] = iLen;
+               patterns[iPatternsCount]     = hb_arrayGetCPtr(pProto, i);
+               patternsizes[iPatternsCount] = iLen;
                ++iPatternsCount;
             }
          }
@@ -1077,13 +1077,13 @@ HB_FUNC( HB_INETRECVENDBLOCK )
       iLen = static_cast<int>(hb_itemGetCLen(pProto));
       if( iLen > 0 )
       {
-         patterns[ 0 ]     = hb_itemGetCPtr(pProto);
-         patternsizes[ 0 ] = iLen;
+         patterns[0]     = hb_itemGetCPtr(pProto);
+         patternsizes[0] = iLen;
       }
       else
       {
-         patterns[ 0 ]     = s_inetCRLF;
-         patternsizes[ 0 ] = static_cast<int>(strlen(s_inetCRLF));
+         patterns[0]     = s_inetCRLF;
+         patternsizes[0] = static_cast<int>(strlen(s_inetCRLF));
       }
       iPatternsCount = 1;
    }
@@ -1124,7 +1124,7 @@ HB_FUNC( HB_INETDATAREADY )
 
          if( socket->readahead > 0 && socket->recvFunc )
          {
-            char buffer[ 1 ];
+            char buffer[1];
 
             iVal = static_cast<int>(s_inetRecv(socket, buffer, 1, HB_TRUE, timeout));
             if( iVal == 1 )
@@ -1214,7 +1214,7 @@ static void s_inetSendInternal( HB_BOOL lAll )
       {
          /* TODO: safe information about unflushed data and try to call
                   flush before entering receive wait sate */
-         socket->flushFunc( socket->stream, socket->sd, socket->iTimeout < 0 ? socket->iTimeout : HB_MAX( socket->iTimeout, 10000 ), HB_FALSE );
+         socket->flushFunc( socket->stream, socket->sd, socket->iTimeout < 0 ? socket->iTimeout : HB_MAX(socket->iTimeout, 10000), HB_FALSE );
       }
 
       hb_retni( iSent > 0 ? iSent : iLen );
@@ -1616,7 +1616,7 @@ HB_FUNC( HB_INETDGRAMSEND )
             int iMaxLen = hb_parni(5);
             if( iMaxLen < iLen )
             {
-               iLen = HB_MAX( iMaxLen, 0 );
+               iLen = HB_MAX(iMaxLen, 0);
             }
          }
          iLen = hb_socketSendTo( socket->sd, szBuffer, iLen, 0, socket->remote, socket->remotelen, socket->iTimeout );
@@ -1665,7 +1665,7 @@ HB_FUNC( HB_INETDGRAMRECV )
          iMax = hb_parni(3);
          if( iMax < iLen )
          {
-            iLen = HB_MAX( iMax, 0 );
+            iLen = HB_MAX(iMax, 0);
          }
       }
 

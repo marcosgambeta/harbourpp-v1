@@ -58,7 +58,7 @@ static void hb_md5_next_seed( char * vect, const char * pszKey, int iLen )
 {
    for( int i = 0; i < 16; ++i )
    {
-      vect[ i ] ^= pszKey[ i % iLen ];
+      vect[i] ^= pszKey[i % iLen];
    }
    hb_md5( vect, 16, vect );
 }
@@ -79,7 +79,7 @@ HB_FUNC( HB_MD5ENCRYPT )
          char * pszData = static_cast<char*>(hb_xgrab(nLen + 1));
          const char * pszKey = hb_parc(2);
          int iLen = static_cast<int>(hb_parclen(2));
-         char vect[ 16 ];
+         char vect[16];
          HB_SIZE n;
 
          hb_md5_init_seed( vect, pszKey, iLen );
@@ -91,7 +91,7 @@ HB_FUNC( HB_MD5ENCRYPT )
             {
                hb_md5_next_seed( vect, pszKey, iLen );
             }
-            pszData[ n ] = ( vect[ i ] ^= pszSource[ n ] );
+            pszData[n] = ( vect[i] ^= pszSource[n] );
          }
          hb_retclen_buffer( pszData, nLen );
       }
@@ -118,7 +118,7 @@ HB_FUNC( HB_MD5DECRYPT )
          char * pszData = static_cast<char*>(hb_xgrab(nLen + 1));
          const char * pszKey = hb_parc(2);
          int iLen = static_cast<int>(hb_parclen(2));
-         char vect[ 16 ];
+         char vect[16];
          HB_SIZE n;
 
          hb_md5_init_seed( vect, pszKey, iLen );
@@ -130,8 +130,8 @@ HB_FUNC( HB_MD5DECRYPT )
             {
                hb_md5_next_seed( vect, pszKey, iLen );
             }
-            pszData[ n ] = ( vect[ i ] ^ pszSource[ n ] );
-            vect[ i ] = pszSource[ n ];
+            pszData[n] = ( vect[i] ^ pszSource[n] );
+            vect[i] = pszSource[n];
          }
          hb_retclen_buffer( pszData, nLen );
       }

@@ -49,7 +49,7 @@
 
 HB_FUNC( __DEFPATH )
 {
-   char buffer[ HB_PATH_MAX - 1 + 2 ];
+   char buffer[HB_PATH_MAX - 1 + 2];
    const char * szDefault = hb_setGetDefault();
    int size = 0;
 
@@ -60,7 +60,7 @@ HB_FUNC( __DEFPATH )
       size = static_cast<int>(strlen(buffer));
    }
 
-   HB_TRACE( HB_TR_INFO, ( "HB_DEFPATH: buffer is |%s|, size is %d, last char is |%c|", buffer, size, buffer[ size - 1 ] ) );
+   HB_TRACE( HB_TR_INFO, ( "HB_DEFPATH: buffer is |%s|, size is %d, last char is |%c|", buffer, size, buffer[size - 1] ) );
    HB_TRACE( HB_TR_INFO, ( "HB_DEFPATH: HB_OS_PATH_DELIM_CHR is |%c| and HB_OS_PATH_LIST_SEP_CHR is |%c|", HB_OS_PATH_DELIM_CHR, HB_OS_PATH_LIST_SEP_CHR ) );
 
    /* If the path is not empty and it doesn't end with a drive or path
@@ -70,21 +70,21 @@ HB_FUNC( __DEFPATH )
       for DOS compatible operating systems while preventing it from being
       with a Unix compatible OS. */
 #ifdef HB_OS_HAS_DRIVE_LETTER
-   if( size && buffer[ size - 1 ] != HB_OS_PATH_DELIM_CHR && buffer[ size - 1 ] != HB_OS_DRIVE_DELIM_CHR )
+   if( size && buffer[size - 1] != HB_OS_PATH_DELIM_CHR && buffer[size - 1] != HB_OS_DRIVE_DELIM_CHR )
    {
       if( size == 1 )
       {
-         buffer[ size++ ] = HB_OS_DRIVE_DELIM_CHR;
+         buffer[size++] = HB_OS_DRIVE_DELIM_CHR;
       }
       else
       {
-         buffer[ size++ ] = HB_OS_PATH_DELIM_CHR;
+         buffer[size++] = HB_OS_PATH_DELIM_CHR;
       }   
    }
 #else
-   if( size && buffer[ size - 1 ] != HB_OS_PATH_DELIM_CHR )
+   if( size && buffer[size - 1] != HB_OS_PATH_DELIM_CHR )
    {
-      buffer[ size++ ] = HB_OS_PATH_DELIM_CHR;
+      buffer[size++] = HB_OS_PATH_DELIM_CHR;
    }
 #endif
 

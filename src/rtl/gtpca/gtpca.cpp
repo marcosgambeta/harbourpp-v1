@@ -253,7 +253,7 @@ static void hb_gt_pca_AnsiGetCurPos( int * iRow, int * iCol )
 
    if( s_fIsAnswer && s_bStdinConsole && s_bStdoutConsole )
    {
-      char rdbuf[ 64 ];
+      char rdbuf[64];
       int i, j, n, d, y, x;
       HB_MAXINT timeout;
       HB_MAXUINT timer;
@@ -269,30 +269,30 @@ static void hb_gt_pca_AnsiGetCurPos( int * iRow, int * iCol )
       for( ;; )
       {
          /* looking for cursor position in "\033[%d;%dR" */
-         while( j < n && rdbuf[ j ] != '\033' )
+         while( j < n && rdbuf[j] != '\033' )
          {
             ++j;
          }
          if( n - j >= 6 )
          {
             i = j + 1;
-            if( rdbuf[ i ] == '[' )
+            if( rdbuf[i] == '[' )
             {
                y = 0;
                d = ++i;
-               while( i < n && rdbuf[ i ] >= '0' && rdbuf[ i ] <= '9' )
+               while( i < n && rdbuf[i] >= '0' && rdbuf[i] <= '9' )
                {
-                  y = y * 10 + ( rdbuf[ i++ ] - '0' );
+                  y = y * 10 + ( rdbuf[i++] - '0' );
                }
-               if( i < n && i > d && rdbuf[ i ] == ';' )
+               if( i < n && i > d && rdbuf[i] == ';' )
                {
                   x = 0;
                   d = ++i;
-                  while( i < n && rdbuf[ i ] >= '0' && rdbuf[ i ] <= '9' )
+                  while( i < n && rdbuf[i] >= '0' && rdbuf[i] <= '9' )
                   {
-                     x = x * 10 + ( rdbuf[ i++ ] - '0' );
+                     x = x * 10 + ( rdbuf[i++] - '0' );
                   }
-                  if( i < n && i > d && rdbuf[ i ] == 'R' )
+                  if( i < n && i > d && rdbuf[i] == 'R' )
                   {
                      s_fIsAnswer = HB_TRUE;
                      break;
@@ -326,7 +326,7 @@ static void hb_gt_pca_AnsiGetCurPos( int * iRow, int * iCol )
             i = getc( stdin );
             if( i > 0 )
             {
-               rdbuf[ n ] = ( char ) i;
+               rdbuf[n] = ( char ) i;
                i = 1;
             }
 #endif
@@ -358,7 +358,7 @@ static void hb_gt_pca_AnsiSetCursorPos( int iRow, int iCol )
 
    if( s_iRow != iRow || s_iCol != iCol )
    {
-      char buff[ 16 ];
+      char buff[16];
       hb_snprintf(buff, sizeof(buff), "\x1B[%d;%dH", iRow + 1, iCol + 1);
       hb_gt_pca_termOut( buff, static_cast<int>(strlen(buff)) );
       s_iRow = iRow;
@@ -388,37 +388,37 @@ static void hb_gt_pca_AnsiSetAttributes( int iAttr )
    if( s_iCurrentSGR != iAttr )
    {
       int i, bg, fg, bold, blink;
-      char buff[ 16 ];
+      char buff[16];
 
       i = 2;
-      buff[ 0 ] = 0x1b;
-      buff[ 1 ] = '[';
+      buff[0] = 0x1b;
+      buff[1] = '[';
 
-      bg    = s_AnsiColors[ ( iAttr >> 4 ) & 0x07 ];
-      fg    = s_AnsiColors[ iAttr & 0x07 ];
+      bg    = s_AnsiColors[( iAttr >> 4 ) & 0x07];
+      fg    = s_AnsiColors[iAttr & 0x07];
       bold  = ( iAttr & 0x08 ) ? 1 : 0;
       blink = ( iAttr & 0x80 ) ? 1 : 0;
 
       if( s_iCurrentSGR == -1 )
       {
-         buff[ i++ ] = '0';
-         buff[ i++ ] = ';';
+         buff[i++] = '0';
+         buff[i++] = ';';
          if( bold )
          {
-            buff[ i++ ] = '1';
-            buff[ i++ ] = ';';
+            buff[i++] = '1';
+            buff[i++] = ';';
          }
          if( blink )
          {
-            buff[ i++ ] = '5';
-            buff[ i++ ] = ';';
+            buff[i++] = '5';
+            buff[i++] = ';';
          }
-         buff[ i++ ] = '3';
-         buff[ i++ ] = '0' + static_cast<char>(fg);
-         buff[ i++ ] = ';';
-         buff[ i++ ] = '4';
-         buff[ i++ ] = '0' + static_cast<char>(bg);
-         buff[ i++ ] = 'm';
+         buff[i++] = '3';
+         buff[i++] = '0' + static_cast<char>(fg);
+         buff[i++] = ';';
+         buff[i++] = '4';
+         buff[i++] = '0' + static_cast<char>(bg);
+         buff[i++] = 'm';
          s_iBold    = bold;
          s_iBlink   = blink;
          s_iFgColor = fg;
@@ -430,37 +430,37 @@ static void hb_gt_pca_AnsiSetAttributes( int iAttr )
          {
             if( ! bold )
             {
-               buff[ i++ ] = '2';
+               buff[i++] = '2';
             }
-            buff[ i++ ] = '1';
-            buff[ i++ ] = ';';
+            buff[i++] = '1';
+            buff[i++] = ';';
             s_iBold = bold;
          }
          if( s_iBlink != blink )
          {
             if( ! blink )
             {
-               buff[ i++ ] = '2';
+               buff[i++] = '2';
             }
-            buff[ i++ ] = '5';
-            buff[ i++ ] = ';';
+            buff[i++] = '5';
+            buff[i++] = ';';
             s_iBlink = blink;
          }
          if( s_iFgColor != fg )
          {
-            buff[ i++ ] = '3';
-            buff[ i++ ] = '0' + static_cast<char>(fg);
-            buff[ i++ ] = ';';
+            buff[i++] = '3';
+            buff[i++] = '0' + static_cast<char>(fg);
+            buff[i++] = ';';
             s_iFgColor = fg;
          }
          if( s_iBgColor != bg )
          {
-            buff[ i++ ] = '4';
-            buff[ i++ ] = '0' + static_cast<char>(bg);
-            buff[ i++ ] = ';';
+            buff[i++] = '4';
+            buff[i++] = '0' + static_cast<char>(bg);
+            buff[i++] = ';';
             s_iBgColor = bg;
          }
-         buff[ i - 1 ] = 'm';
+         buff[i - 1] = 'm';
       }
       s_iCurrentSGR = iAttr;
       if( i > 2 )
@@ -547,14 +547,14 @@ static void hb_gt_pca_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
       s_curr_TIO.c_lflag &= ~( ICANON | ECHO );
       s_curr_TIO.c_iflag &= ~ICRNL;
 #if 0
-      s_curr_TIO.c_cc[ VMIN ] = 0;
+      s_curr_TIO.c_cc[VMIN] = 0;
 #else
       /* workaround for bug in some Linux kernels (i.e. 3.13.0-64-generic
          *buntu) in which select() unconditionally accepts stdin for
-         reading if c_cc[ VMIN ] = 0 [druzus] */
-      s_curr_TIO.c_cc[ VMIN ] = 1;
+         reading if c_cc[VMIN] = 0 [druzus] */
+      s_curr_TIO.c_cc[VMIN] = 1;
 #endif
-      s_curr_TIO.c_cc[ VTIME ] = 0;
+      s_curr_TIO.c_cc[VTIME] = 0;
       tcsetattr( hFilenoStdin, TCSAFLUSH, &s_curr_TIO );
 
 #if defined( SIGTTOU )
@@ -859,7 +859,7 @@ static void hb_gt_pca_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
       {
          usChar = '.';
       }
-      s_sLineBuf[ iLen++ ] = static_cast<char>(usChar);
+      s_sLineBuf[iLen++] = static_cast<char>(usChar);
    }
    if( iLen )
    {

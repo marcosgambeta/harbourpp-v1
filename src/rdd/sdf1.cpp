@@ -60,7 +60,7 @@
 #define SUPERTABLE  ( &sdfSuper )
 
 static RDDFUNCS        sdfSuper;
-static const HB_USHORT s_uiNumLength[ 9 ] = { 0, 4, 6, 8, 11, 13, 16, 18, 20 };
+static const HB_USHORT s_uiNumLength[9] = { 0, 4, 6, 8, 11, 13, 16, 18, 20 };
 
 static void hb_sdfInitArea( SDFAREAP pArea, char * szFileName )
 {
@@ -71,16 +71,16 @@ static void hb_sdfInitArea( SDFAREAP pArea, char * szFileName )
 
    /* set line separator: EOL */
    szEol = hb_setGetEOL();
-   if( ! szEol || ! szEol[ 0 ] )
+   if( ! szEol || ! szEol[0] )
    {
       szEol = hb_conNewLine();
    }
    pArea->szEol = hb_strdup(szEol);
    pArea->uiEolLen = static_cast<HB_USHORT>(strlen(szEol));
-   pArea->fAnyEol = ( szEol[ 0 ] == '\n' || szEol[ 0 ] == '\r' ) &&
+   pArea->fAnyEol = ( szEol[0] == '\n' || szEol[0] == '\r' ) &&
                     ( pArea->uiEolLen == 1 ||
-                      ( pArea->uiEolLen == 2 && szEol[ 0 ] != szEol[ 1 ] &&
-                        ( szEol[ 1 ] == '\n' || szEol[ 1 ] == '\r' ) ) );
+                      ( pArea->uiEolLen == 2 && szEol[0] != szEol[1] &&
+                        ( szEol[1] == '\n' || szEol[1] == '\r' ) ) );
 
    /* allocate record buffer, one additional byte is for deleted flag */
    pArea->pRecord = static_cast<HB_BYTE*>(hb_xgrab(pArea->uiRecordLen + pArea->uiEolLen + 1));
@@ -144,14 +144,14 @@ static HB_ERRCODE hb_sdfReadRecord( SDFAREAP pArea )
          break;
       }
 
-      ch = pArea->pBuffer[ pArea->nBufferIndex++ ];
+      ch = pArea->pBuffer[pArea->nBufferIndex++];
 
       if( pArea->fAnyEol )
       {
          if( ch == '\r' || ch == '\n' )
          {
-            if( pArea->nBufferIndex < pArea->nBufferRead && pArea->pBuffer[ pArea->nBufferIndex ] != ch &&
-                ( pArea->pBuffer[ pArea->nBufferIndex ] == '\r' || pArea->pBuffer[ pArea->nBufferIndex ] == '\n' ) )
+            if( pArea->nBufferIndex < pArea->nBufferRead && pArea->pBuffer[pArea->nBufferIndex] != ch &&
+                ( pArea->pBuffer[pArea->nBufferIndex] == '\r' || pArea->pBuffer[pArea->nBufferIndex] == '\n' ) )
             {
                pArea->nBufferIndex++;
             }
@@ -159,7 +159,7 @@ static HB_ERRCODE hb_sdfReadRecord( SDFAREAP pArea )
             break;
          }
       }
-      else if( ch == pArea->szEol[ 0 ] )
+      else if( ch == pArea->szEol[0] )
       {
          if( pArea->uiEolLen == 1 ||
              ( pArea->nBufferRead - pArea->nBufferIndex >= static_cast<HB_SIZE>(pArea->uiEolLen) - 1 &&
@@ -172,7 +172,7 @@ static HB_ERRCODE hb_sdfReadRecord( SDFAREAP pArea )
       }
       if( nRead < static_cast<HB_SIZE>(pArea->uiRecordLen) && ch != '\032' )
       {
-         pArea->pRecord[ nRead++ ] = ch;
+         pArea->pRecord[nRead++] = ch;
       }
    }
 
@@ -479,17 +479,17 @@ static HB_ERRCODE hb_sdfGetValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          if( ( pField->uiFlags & HB_FF_BINARY ) == 0 )
          {
             HB_SIZE nLen = pField->uiLen;
-            char * pszVal = hb_cdpnDup( reinterpret_cast<const char*>(pArea->pRecord) + pArea->pFieldOffset[ uiIndex ], &nLen, pArea->area.cdPage, hb_vmCDP() );
+            char * pszVal = hb_cdpnDup( reinterpret_cast<const char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex], &nLen, pArea->area.cdPage, hb_vmCDP() );
             hb_itemPutCLPtr(pItem, pszVal, nLen);
          }
          else
          {
-            hb_itemPutCL(pItem, reinterpret_cast<char*>(pArea->pRecord) + pArea->pFieldOffset[ uiIndex ], pField->uiLen);
+            hb_itemPutCL(pItem, reinterpret_cast<char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex], pField->uiLen);
          }
          break;
 
       case HB_FT_LOGICAL:
-         switch( pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ] )
+         switch( pArea->pRecord[pArea->pFieldOffset[uiIndex]] )
          {
             case 'T':
             case 't':
@@ -504,18 +504,18 @@ static HB_ERRCODE hb_sdfGetValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          break;
 
       case HB_FT_DATE:
-         hb_itemPutDS(pItem, reinterpret_cast<const char*>(pArea->pRecord) + pArea->pFieldOffset[ uiIndex ]);
+         hb_itemPutDS(pItem, reinterpret_cast<const char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex]);
          break;
 
       case HB_FT_TIMESTAMP:
       {
          long lJulian, lMilliSec;
-         HB_BYTE * pFieldPtr = pArea->pRecord + pArea->pFieldOffset[ uiIndex ], bChar;
+         HB_BYTE * pFieldPtr = pArea->pRecord + pArea->pFieldOffset[uiIndex], bChar;
 
-         bChar = pFieldPtr[ pField->uiLen ];
-         pFieldPtr[ pField->uiLen ] = 0;
+         bChar = pFieldPtr[pField->uiLen];
+         pFieldPtr[pField->uiLen] = 0;
          hb_timeStampStrGetDT( reinterpret_cast<const char*>(pFieldPtr), &lJulian, &lMilliSec );
-         pFieldPtr[ pField->uiLen ] = bChar;
+         pFieldPtr[pField->uiLen] = bChar;
          hb_itemPutTDT(pItem, lJulian, lMilliSec);
          break;
       }
@@ -526,7 +526,7 @@ static HB_ERRCODE hb_sdfGetValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          double dVal;
          HB_BOOL fDbl;
 
-         fDbl = hb_strnToNum( reinterpret_cast<const char*>(pArea->pRecord) + pArea->pFieldOffset[ uiIndex ], pField->uiLen, &lVal, &dVal );
+         fDbl = hb_strnToNum( reinterpret_cast<const char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex], pField->uiLen, &lVal, &dVal );
 
          if( pField->uiDec )
          {
@@ -599,7 +599,7 @@ static HB_ERRCODE hb_sdfPutValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
    pField = pArea->area.lpFields + uiIndex;
    if( pField->uiType != HB_FT_MEMO && pField->uiType != HB_FT_NONE )
    {
-      char szBuffer[ 256 ];
+      char szBuffer[256];
 
       if( HB_IS_MEMO(pItem) || HB_IS_STRING(pItem) )
       {
@@ -609,7 +609,7 @@ static HB_ERRCODE hb_sdfPutValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             {
                nSize = pField->uiLen;
                hb_cdpnDup2( hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem),
-                            reinterpret_cast<char*>(pArea->pRecord) + pArea->pFieldOffset[ uiIndex ],
+                            reinterpret_cast<char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex],
                             &nSize, hb_vmCDP(), pArea->area.cdPage );
             }
             else
@@ -619,11 +619,11 @@ static HB_ERRCODE hb_sdfPutValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
                {
                   nSize = pField->uiLen;
                }
-               memcpy(pArea->pRecord + pArea->pFieldOffset[ uiIndex ], hb_itemGetCPtr(pItem), nSize);
+               memcpy(pArea->pRecord + pArea->pFieldOffset[uiIndex], hb_itemGetCPtr(pItem), nSize);
             }
             if( nSize < static_cast<HB_SIZE>(pField->uiLen) )
             {
-               memset(pArea->pRecord + pArea->pFieldOffset[ uiIndex ] + nSize, ' ', pField->uiLen - nSize);
+               memset(pArea->pRecord + pArea->pFieldOffset[uiIndex] + nSize, ' ', pField->uiLen - nSize);
             }
          }
          else
@@ -636,7 +636,7 @@ static HB_ERRCODE hb_sdfPutValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          if( pField->uiType == HB_FT_DATE )
          {
             hb_itemGetDS(pItem, szBuffer);
-            memcpy(pArea->pRecord + pArea->pFieldOffset[ uiIndex ], szBuffer, 8);
+            memcpy(pArea->pRecord + pArea->pFieldOffset[uiIndex], szBuffer, 8);
          }
          else if( pField->uiType == HB_FT_TIMESTAMP && ( pField->uiLen == 12 || pField->uiLen == 23 ) )
          {
@@ -650,7 +650,7 @@ static HB_ERRCODE hb_sdfPutValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             {
                hb_timeStampStr( szBuffer, lDate, lTime );
             }
-            memcpy(pArea->pRecord + pArea->pFieldOffset[ uiIndex ], szBuffer, pField->uiLen);
+            memcpy(pArea->pRecord + pArea->pFieldOffset[uiIndex], szBuffer, pField->uiLen);
          }
          else
          {
@@ -663,12 +663,12 @@ static HB_ERRCODE hb_sdfPutValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          {
             if( hb_itemStrBuf(szBuffer, pItem, pField->uiLen, pField->uiDec) )
             {
-               memcpy(pArea->pRecord + pArea->pFieldOffset[ uiIndex ], szBuffer, pField->uiLen);
+               memcpy(pArea->pRecord + pArea->pFieldOffset[uiIndex], szBuffer, pField->uiLen);
             }
             else
             {
                errCode = EDBF_DATAWIDTH;
-               memset(pArea->pRecord + pArea->pFieldOffset[ uiIndex ], '*', pField->uiLen);
+               memset(pArea->pRecord + pArea->pFieldOffset[uiIndex], '*', pField->uiLen);
             }
          }
          else
@@ -680,7 +680,7 @@ static HB_ERRCODE hb_sdfPutValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
       {
          if( pField->uiType == HB_FT_LOGICAL )
          {
-            pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ] = hb_itemGetL(pItem) ? 'T' : 'F';
+            pArea->pRecord[pArea->pFieldOffset[uiIndex]] = hb_itemGetL(pItem) ? 'T' : 'F';
          }
          else
          {
@@ -910,7 +910,7 @@ static HB_ERRCODE hb_sdfInfo( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
       case DBI_DB_VERSION:
       case DBI_RDD_VERSION:
       {
-         char szBuf[ 64 ];
+         char szBuf[64];
          int iSub = hb_itemGetNI(pItem);
 
          if( iSub == 1 )
@@ -965,7 +965,7 @@ static HB_ERRCODE hb_sdfAddField( SDFAREAP pArea, LPDBFIELDINFO pFieldInfo )
          else if( pFieldInfo->uiLen < 6 )
          {
             pFieldInfo->uiType = HB_FT_LONG;
-            pFieldInfo->uiLen = s_uiNumLength[ pFieldInfo->uiLen ];
+            pFieldInfo->uiLen = s_uiNumLength[pFieldInfo->uiLen];
          }
          else
          {
@@ -996,7 +996,7 @@ static HB_ERRCODE hb_sdfAddField( SDFAREAP pArea, LPDBFIELDINFO pFieldInfo )
       case HB_FT_ROWVER:
       case HB_FT_AUTOINC:
          pFieldInfo->uiType = HB_FT_LONG;
-         pFieldInfo->uiLen = s_uiNumLength[ pFieldInfo->uiLen ];
+         pFieldInfo->uiLen = s_uiNumLength[pFieldInfo->uiLen];
          if( pFieldInfo->uiDec )
          {
             pFieldInfo->uiLen++;
@@ -1047,7 +1047,7 @@ static HB_ERRCODE hb_sdfAddField( SDFAREAP pArea, LPDBFIELDINFO pFieldInfo )
    pFieldInfo->uiFlags &= ~HB_FF_AUTOINC;
 
    /* Update field offset */
-   pArea->pFieldOffset[ pArea->area.uiFieldCount ] = pArea->uiRecordLen;
+   pArea->pFieldOffset[pArea->area.uiFieldCount] = pArea->uiRecordLen;
    pArea->uiRecordLen += pFieldInfo->uiLen;
 
    return SUPER_ADDFIELD( &pArea->area, pFieldInfo );
@@ -1180,7 +1180,7 @@ static HB_ERRCODE hb_sdfCreate( SDFAREAP pArea, LPDBOPENINFO pCreateInfo )
    HB_ERRCODE errCode;
    HB_BOOL fRetry;
    PHB_FNAME pFileName;
-   char szFileName[ HB_PATH_MAX ];
+   char szFileName[HB_PATH_MAX];
 
    pArea->fShared = HB_FALSE;    /* pCreateInfo->fShared; */
    pArea->fReadonly = HB_FALSE;  /* pCreateInfo->fReadonly */
@@ -1283,8 +1283,8 @@ static HB_ERRCODE hb_sdfOpen( SDFAREAP pArea, LPDBOPENINFO pOpenInfo )
    HB_ERRCODE errCode;
    HB_USHORT uiFlags;
    HB_BOOL fRetry;
-   char szFileName[ HB_PATH_MAX ];
-   char szAlias[ HB_RDD_MAX_ALIAS_LEN + 1 ];
+   char szFileName[HB_PATH_MAX];
+   char szAlias[HB_RDD_MAX_ALIAS_LEN + 1];
 
    pArea->fShared = HB_TRUE;     /* pOpenInfo->fShared; */
    pArea->fReadonly = HB_TRUE;   /* pOpenInfo->fReadonly; */

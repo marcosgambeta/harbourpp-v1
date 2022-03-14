@@ -140,12 +140,12 @@ int hb_compMainExt( int argc, const char * const argv[],
       for( int i = 1; i < argc && ! HB_COMP_PARAM->fExit; i++ )
       {
 #if 0
-         HB_TRACE( HB_TR_DEBUG, ( "main LOOP(%i,%s)", i, argv[ i ] ) );
+         HB_TRACE( HB_TR_DEBUG, ( "main LOOP(%i,%s)", i, argv[i] ) );
 #endif
-         if( ! HB_ISOPTSEP( argv[ i ][ 0 ] ) )
+         if( ! HB_ISOPTSEP( argv[i][0] ) )
          {
             iFileCount++;
-            iStatus = hb_compCompile( HB_COMP_PARAM, argv[ i ], nullptr, 0 );
+            iStatus = hb_compCompile( HB_COMP_PARAM, argv[i], nullptr, 0 );
             if( iStatus != EXIT_SUCCESS )
             {
                break;
@@ -157,7 +157,7 @@ int hb_compMainExt( int argc, const char * const argv[],
    if( iFileCount == 0 && ! HB_COMP_PARAM->fQuiet && ! HB_COMP_PARAM->fExit &&
        ! HB_COMP_PARAM->fBuildInfo && ! HB_COMP_PARAM->fCredits )
    {
-      hb_compPrintUsage( HB_COMP_PARAM, argv[ 0 ] );
+      hb_compPrintUsage( HB_COMP_PARAM, argv[0] );
       iStatus = EXIT_FAILURE;
    }
    else if( HB_COMP_PARAM->iErrorCount > 0 )
@@ -195,8 +195,8 @@ int hb_compMain( int argc, const char * const argv[] )
 
 static int hb_compReadClpFile( HB_COMP_DECL, const char * szClpFile )
 {
-   char buffer[ HB_PATH_MAX + 80 ];
-   char szFile[ HB_PATH_MAX ];
+   char buffer[HB_PATH_MAX + 80];
+   char szFile[HB_PATH_MAX];
    int iStatus = EXIT_SUCCESS;
    PHB_FNAME pFileName;
    FILE *inFile;
@@ -247,7 +247,7 @@ static int hb_compReadClpFile( HB_COMP_DECL, const char * szClpFile )
             {
                if( i < ( HB_PATH_MAX - 1 ) )
                {
-                  szFile[ i++ ] = static_cast<char>(ch);
+                  szFile[i++] = static_cast<char>(ch);
                }
             }
             if( ch == '"' )
@@ -263,7 +263,7 @@ static int hb_compReadClpFile( HB_COMP_DECL, const char * szClpFile )
 
          if( ch == EOF || HB_ISSPACE( ch ) || ch == '#' )
          {
-            szFile[ i ] = '\0';
+            szFile[i] = '\0';
             if( i > 0 )
             {
                hb_compModuleAdd( HB_COMP_PARAM, hb_compIdentifierNew( HB_COMP_PARAM, szFile, HB_IDENT_COPY ), HB_TRUE );
@@ -276,7 +276,7 @@ static int hb_compReadClpFile( HB_COMP_DECL, const char * szClpFile )
          }
          else if( i < ( HB_PATH_MAX - 1 ) )
          {
-            szFile[ i++ ] = static_cast<char>(ch);
+            szFile[i++] = static_cast<char>(ch);
          }
       }
       while( ch != EOF );
@@ -410,7 +410,7 @@ void hb_compVariableAdd( HB_COMP_DECL, const char * szVarName, PHB_VARTYPE pVarT
        ( HB_COMP_PARAM->iVarScope == HB_VSCOMP_LOCAL ||
          HB_COMP_PARAM->iVarScope == ( HB_VSCOMP_PRIVATE | HB_VSCOMP_PARAMETER ) ) )
    {
-      if( HB_COMP_PARAM->iStartProc == 2 && pFunc->szName[ 0 ] && hb_compRegisterFunc( HB_COMP_PARAM, pFunc, HB_FALSE ) )
+      if( HB_COMP_PARAM->iStartProc == 2 && pFunc->szName[0] && hb_compRegisterFunc( HB_COMP_PARAM, pFunc, HB_FALSE ) )
       {
          pFunc->funFlags &= ~HB_FUNF_FILE_DECL;
       }
@@ -476,7 +476,7 @@ void hb_compVariableAdd( HB_COMP_DECL, const char * szVarName, PHB_VARTYPE pVarT
    }
    else if( HB_COMP_PARAM->iVarScope != HB_VSCOMP_PARAMETER )
    {
-      char buffer[ 80 ];
+      char buffer[80];
       hb_snprintf(buffer, sizeof(buffer),
                    "Wrong type of codeblock parameter, is: %d, should be: %d\n",
                    HB_COMP_PARAM->iVarScope, HB_VSCOMP_PARAMETER);
@@ -1005,9 +1005,9 @@ void hb_compPushMacroText( HB_COMP_DECL, const char * szText, HB_SIZE nLen, HB_B
 
    while( n < nLen )
    {
-      if( szText[ n++ ] == '&' )
+      if( szText[n++] == '&' )
       {
-         char szSymName[ HB_SYMBOL_NAME_LEN + 1 ];
+         char szSymName[HB_SYMBOL_NAME_LEN + 1];
          int iSize = 0;
 
          /* Check if macro operator is used inside a string
@@ -1021,14 +1021,14 @@ void hb_compPushMacroText( HB_COMP_DECL, const char * szText, HB_SIZE nLen, HB_B
 
          while( n < nLen && iSize < HB_SYMBOL_NAME_LEN )
          {
-            char ch = szText[ n ];
+            char ch = szText[n];
             if( ch >= 'a' && ch <= 'z' )
             {
-               szSymName[ iSize++ ] = ch - ( 'a' - 'A' );
+               szSymName[iSize++] = ch - ( 'a' - 'A' );
             }
             else if( ch == '_' || ( ch >= 'A' && ch <= 'Z' ) || ( iSize > 0 && ch >= '0' && ch <= '9' ) )
             {
-               szSymName[ iSize++ ] = ch;
+               szSymName[iSize++] = ch;
             }
             else
             {
@@ -1041,7 +1041,7 @@ void hb_compPushMacroText( HB_COMP_DECL, const char * szText, HB_SIZE nLen, HB_B
          {
             int iScope;
 
-            szSymName[ iSize ] = '\0';
+            szSymName[iSize] = '\0';
 
             /* NOTE: All variables are assumed memvars in macro compiler -
              * there is no need to check for a valid name but to be Clipper
@@ -1066,7 +1066,7 @@ void hb_compPushMacroText( HB_COMP_DECL, const char * szText, HB_SIZE nLen, HB_B
                {
                   char * pszPrefix = static_cast<char*>(hb_xgrab(nPrefix + 1));
                   memcpy(pszPrefix, szText, nPrefix);
-                  pszPrefix[ nPrefix ] = '\0';
+                  pszPrefix[nPrefix] = '\0';
                   hb_compGenPushString( pszPrefix, nPrefix + 1, HB_COMP_PARAM );
                   hb_xfree(pszPrefix);
                   if( iParts++ > 0 )
@@ -1079,7 +1079,7 @@ void hb_compPushMacroText( HB_COMP_DECL, const char * szText, HB_SIZE nLen, HB_B
                {
                   hb_compGenPCode1( HB_P_PLUS, HB_COMP_PARAM );
                }
-               if( n < nLen && szText[ n ] == '.' )
+               if( n < nLen && szText[n] == '.' )
                {
                   ++n;
                }
@@ -1411,11 +1411,11 @@ void hb_compDeclaredParameterAdd( HB_COMP_DECL, const char * szVarName, PHB_VART
             pDeclared->pParamClasses = static_cast<PHB_HCLASS*>(hb_xgrab(sizeof(PHB_HCLASS)));
          }
 
-         pDeclared->cParamTypes[ pDeclared->iParamCount - 1 ] = pVarType->cVarType;
+         pDeclared->cParamTypes[pDeclared->iParamCount - 1] = pVarType->cVarType;
 
          if( HB_TOUPPER(pVarType->cVarType) == 'S' )
          {
-            pDeclared->pParamClasses[ pDeclared->iParamCount - 1 ] = hb_compClassFind( HB_COMP_PARAM, pVarType->szFromClass );
+            pDeclared->pParamClasses[pDeclared->iParamCount - 1] = hb_compClassFind( HB_COMP_PARAM, pVarType->szFromClass );
          }
       }
    }
@@ -1438,14 +1438,14 @@ void hb_compDeclaredParameterAdd( HB_COMP_DECL, const char * szVarName, PHB_VART
          HB_COMP_PARAM->pLastMethod->pParamClasses = static_cast<PHB_HCLASS*>(hb_xgrab(sizeof(HB_HCLASS)));
       }
 
-      HB_COMP_PARAM->pLastMethod->cParamTypes[ HB_COMP_PARAM->pLastMethod->iParamCount - 1 ] = pVarType->cVarType;
+      HB_COMP_PARAM->pLastMethod->cParamTypes[HB_COMP_PARAM->pLastMethod->iParamCount - 1] = pVarType->cVarType;
 
       if( HB_TOUPPER(pVarType->cVarType) == 'S' )
       {
-         HB_COMP_PARAM->pLastMethod->pParamClasses[ HB_COMP_PARAM->pLastMethod->iParamCount - 1 ] = hb_compClassFind( HB_COMP_PARAM, pVarType->szFromClass );
+         HB_COMP_PARAM->pLastMethod->pParamClasses[HB_COMP_PARAM->pLastMethod->iParamCount - 1] = hb_compClassFind( HB_COMP_PARAM, pVarType->szFromClass );
 
          #if 0
-         printf( "\nParameter: %s FROM CLASS: %s\n", szVarName, HB_COMP_PARAM->pLastMethod->pParamClasses[ HB_COMP_PARAM->pLastMethod->iParamCount - 1 ]->szName );
+         printf( "\nParameter: %s FROM CLASS: %s\n", szVarName, HB_COMP_PARAM->pLastMethod->pParamClasses[HB_COMP_PARAM->pLastMethod->iParamCount - 1]->szName );
          #endif
       }
    }
@@ -1535,7 +1535,7 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
 
          do
          {
-            nJumpAddr = pJumps[ nJump ];
+            nJumpAddr = pJumps[nJump];
 
             /*
              * optimize existing jumps, it will be good to also join
@@ -1550,10 +1550,10 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
              *
              * I'll think about something like that later, [druzus]
              */
-            switch( pCode[ nJumpAddr ] )
+            switch( pCode[nJumpAddr] )
             {
                case HB_P_JUMPNEAR:
-                  if( static_cast<signed char>(pCode[ nJumpAddr + 1 ]) == 2 )
+                  if( static_cast<signed char>(pCode[nJumpAddr + 1]) == 2 )
                   {
                      hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr, 2, HB_FALSE, HB_FALSE );
                   }
@@ -1561,53 +1561,53 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
 
                case HB_P_JUMPFALSENEAR:
                case HB_P_JUMPTRUENEAR:
-                  if( static_cast<signed char>(pCode[ nJumpAddr + 1 ]) == 2 )
+                  if( static_cast<signed char>(pCode[nJumpAddr + 1]) == 2 )
                   {
                      hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr, 2, HB_TRUE, HB_FALSE );
                   }
                   break;
 
                case HB_P_JUMP:
-                  nOffset = HB_PCODE_MKSHORT( &pCode[ nJumpAddr + 1 ] );
+                  nOffset = HB_PCODE_MKSHORT( &pCode[nJumpAddr + 1] );
                   if( nOffset == 3 )
                   {
                      hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr, 3, HB_FALSE, HB_FALSE );
                   }
                   else if( HB_LIM_INT8(nOffset) )
                   {
-                     pCode[ nJumpAddr ] = HB_P_JUMPNEAR;
+                     pCode[nJumpAddr] = HB_P_JUMPNEAR;
                      hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr + 2, 1, HB_FALSE, HB_FALSE );
                   }
                   break;
 
                case HB_P_JUMPFALSE:
-                  nOffset = HB_PCODE_MKSHORT( &pCode[ nJumpAddr + 1 ] );
+                  nOffset = HB_PCODE_MKSHORT( &pCode[nJumpAddr + 1] );
                   if( nOffset == 3 )
                   {
                      hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr, 3, HB_TRUE, HB_FALSE );
                   }
                   else if( HB_LIM_INT8(nOffset) )
                   {
-                     pCode[ nJumpAddr ] = HB_P_JUMPFALSENEAR;
+                     pCode[nJumpAddr] = HB_P_JUMPFALSENEAR;
                      hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr + 2, 1, HB_FALSE, HB_FALSE );
                   }
                   break;
 
                case HB_P_JUMPTRUE:
-                  nOffset = HB_PCODE_MKSHORT( &pCode[ nJumpAddr + 1 ] );
+                  nOffset = HB_PCODE_MKSHORT( &pCode[nJumpAddr + 1] );
                   if( nOffset == 3 )
                   {
                      hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr, 3, HB_TRUE, HB_FALSE );
                   }
                   else if( HB_LIM_INT8(nOffset) )
                   {
-                     pCode[ nJumpAddr ] = HB_P_JUMPTRUENEAR;
+                     pCode[nJumpAddr] = HB_P_JUMPTRUENEAR;
                      hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr + 2, 1, HB_FALSE, HB_FALSE );
                   }
                   break;
 
                case HB_P_JUMPFAR:
-                  nOffset = HB_PCODE_MKINT24( &pCode[ nJumpAddr + 1 ] );
+                  nOffset = HB_PCODE_MKINT24( &pCode[nJumpAddr + 1] );
                   if( nOffset == 4 )
                   {
                      hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr, 4, HB_FALSE, HB_FALSE );
@@ -1616,19 +1616,19 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
                   {
                      if( HB_LIM_INT8(nOffset) )
                      {
-                        pCode[ nJumpAddr ] = HB_P_JUMPNEAR;
+                        pCode[nJumpAddr] = HB_P_JUMPNEAR;
                         hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr + 2, 2, HB_FALSE, HB_FALSE );
                      }
                      else
                      {
-                        pCode[ nJumpAddr ] = HB_P_JUMP;
+                        pCode[nJumpAddr] = HB_P_JUMP;
                         hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr + 3, 1, HB_FALSE, HB_FALSE );
                      }
                   }
                   break;
 
                case HB_P_JUMPFALSEFAR:
-                  nOffset = HB_PCODE_MKINT24( &pCode[ nJumpAddr + 1 ] );
+                  nOffset = HB_PCODE_MKINT24( &pCode[nJumpAddr + 1] );
                   if( nOffset == 4 )
                   {
                      hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr, 4, HB_TRUE, HB_FALSE );
@@ -1637,19 +1637,19 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
                   {
                      if( HB_LIM_INT8(nOffset) )
                      {
-                        pCode[ nJumpAddr ] = HB_P_JUMPFALSENEAR;
+                        pCode[nJumpAddr] = HB_P_JUMPFALSENEAR;
                         hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr + 2, 2, HB_FALSE, HB_FALSE );
                      }
                      else
                      {
-                        pCode[ nJumpAddr ] = HB_P_JUMPFALSE;
+                        pCode[nJumpAddr] = HB_P_JUMPFALSE;
                         hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr + 3, 1, HB_FALSE, HB_FALSE );
                      }
                   }
                   break;
 
                case HB_P_JUMPTRUEFAR:
-                  nOffset = HB_PCODE_MKINT24( &pCode[ nJumpAddr + 1 ] );
+                  nOffset = HB_PCODE_MKINT24( &pCode[nJumpAddr + 1] );
                   if( nOffset == 4 )
                   {
                      hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr, 4, HB_TRUE, HB_FALSE );
@@ -1658,12 +1658,12 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
                   {
                      if( HB_LIM_INT8(nOffset) )
                      {
-                        pCode[ nJumpAddr ] = HB_P_JUMPTRUENEAR;
+                        pCode[nJumpAddr] = HB_P_JUMPTRUENEAR;
                         hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr + 2, 2, HB_FALSE, HB_FALSE );
                      }
                      else
                      {
-                        pCode[ nJumpAddr ] = HB_P_JUMPTRUE;
+                        pCode[nJumpAddr] = HB_P_JUMPTRUE;
                         hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr + 3, 1, HB_FALSE, HB_FALSE );
                      }
                   }
@@ -1671,11 +1671,11 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
             }
 
             /* remove dummy jumps (over dead code) */
-            if( pCode[ nJumpAddr ] == HB_P_NOOP || pCode[ nJumpAddr ] == HB_P_POP )
+            if( pCode[nJumpAddr] == HB_P_NOOP || pCode[nJumpAddr] == HB_P_POP )
             {
                if( HB_COMP_PARAM->functions.pLast->nJumps > nJump + 1 )
                {
-                  memmove(&pJumps[ nJump ], &pJumps[ nJump + 1 ], (HB_COMP_PARAM->functions.pLast->nJumps - nJump - 1) * sizeof(HB_SIZE));
+                  memmove(&pJumps[nJump], &pJumps[nJump + 1], (HB_COMP_PARAM->functions.pLast->nJumps - nJump - 1) * sizeof(HB_SIZE));
                }
                HB_COMP_PARAM->functions.pLast->nJumps--;
             }
@@ -1722,7 +1722,7 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
 
          for( nJump = 0; nJump < HB_COMP_PARAM->functions.pLast->nJumps; nJump++ )
          {
-            plSizes[ nJump ] = plShifts[ nJump ] = 0;
+            plSizes[nJump] = plShifts[nJump] = 0;
          }
 
          /* First Scan NOOPS - Adjust Jump addresses. */
@@ -1732,19 +1732,19 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
                or trailing backward jumps pointing to lower address. */
             for( nJump = 0; nJump < HB_COMP_PARAM->functions.pLast->nJumps; nJump++ )
             {
-               nJumpAddr = pJumps[ nJump ];
-               switch( pCode[ nJumpAddr ] )
+               nJumpAddr = pJumps[nJump];
+               switch( pCode[nJumpAddr] )
                {
                   case HB_P_JUMPNEAR:
                   case HB_P_JUMPFALSENEAR:
                   case HB_P_JUMPTRUENEAR:
-                     nOffset = static_cast<signed char>(pCode[ nJumpAddr + 1 ]);
+                     nOffset = static_cast<signed char>(pCode[nJumpAddr + 1]);
                      break;
 
                   case HB_P_JUMP:
                   case HB_P_JUMPFALSE:
                   case HB_P_JUMPTRUE:
-                     nOffset = HB_PCODE_MKSHORT( &pCode[ nJumpAddr + 1 ] );
+                     nOffset = HB_PCODE_MKSHORT( &pCode[nJumpAddr + 1] );
                      break;
 
                   case HB_P_JUMPFAR:
@@ -1754,7 +1754,7 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
                   case HB_P_SEQALWAYS:
                   case HB_P_SEQBEGIN:
                   case HB_P_SEQEND:
-                     nOffset = HB_PCODE_MKINT24( &pCode[ nJumpAddr + 1 ] );
+                     nOffset = HB_PCODE_MKINT24( &pCode[nJumpAddr + 1] );
                      break;
 
                   default:
@@ -1766,57 +1766,57 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
                if( nOffset > 0 ) /* forward (positive) jump */
                {
                   /* Only if points to code beyond the current fix. */
-                  if( pNOOPs[ nNOOP ] > nJumpAddr && pNOOPs[ nNOOP ] < static_cast<HB_SIZE>(nJumpAddr + nOffset) )
+                  if( pNOOPs[nNOOP] > nJumpAddr && pNOOPs[nNOOP] < static_cast<HB_SIZE>(nJumpAddr + nOffset) )
                   {
-                     plSizes[ nJump ]--;
+                     plSizes[nJump]--;
                   }
                }
                else /* if( nOffset < 0 ) - backward (negative) jump */
                {
                   /* Only if points to code prior the current fix. */
-                  if( pNOOPs[ nNOOP ] < nJumpAddr && pNOOPs[ nNOOP ] >= static_cast<HB_SIZE>(nJumpAddr + nOffset) )
+                  if( pNOOPs[nNOOP] < nJumpAddr && pNOOPs[nNOOP] >= static_cast<HB_SIZE>(nJumpAddr + nOffset) )
                   {
-                     plSizes[ nJump ]++;
+                     plSizes[nJump]++;
                   }
                }
 
                /* update jump address */
-               if( pNOOPs[ nNOOP ] < nJumpAddr )
+               if( pNOOPs[nNOOP] < nJumpAddr )
                {
-                  plShifts[ nJump ]++;
+                  plShifts[nJump]++;
                }
             }
          }
 
          for( nJump = 0; nJump < HB_COMP_PARAM->functions.pLast->nJumps; nJump++ )
          {
-            nOffset = plSizes[ nJump ];
+            nOffset = plSizes[nJump];
             if( nOffset != 0 )
             {
-               nJumpAddr = pJumps[ nJump ];
-               switch( pCode[ nJumpAddr ] )
+               nJumpAddr = pJumps[nJump];
+               switch( pCode[nJumpAddr] )
                {
                   case HB_P_JUMPNEAR:
                   case HB_P_JUMPFALSENEAR:
                   case HB_P_JUMPTRUENEAR:
-                     nOffset += static_cast<signed char>(pCode[ nJumpAddr + 1 ]);
-                     pCode[ nJumpAddr + 1 ] = HB_LOBYTE(nOffset);
+                     nOffset += static_cast<signed char>(pCode[nJumpAddr + 1]);
+                     pCode[nJumpAddr + 1] = HB_LOBYTE(nOffset);
                      break;
 
                   case HB_P_JUMP:
                   case HB_P_JUMPFALSE:
                   case HB_P_JUMPTRUE:
-                     nOffset += HB_PCODE_MKSHORT( &pCode[ nJumpAddr + 1 ] );
-                     HB_PUT_LE_UINT16( &pCode[ nJumpAddr + 1 ], nOffset );
+                     nOffset += HB_PCODE_MKSHORT( &pCode[nJumpAddr + 1] );
+                     HB_PUT_LE_UINT16( &pCode[nJumpAddr + 1], nOffset );
                      break;
 
                   default:
-                     nOffset += HB_PCODE_MKINT24( &pCode[ nJumpAddr + 1 ] );
-                     HB_PUT_LE_UINT24( &pCode[ nJumpAddr + 1 ], nOffset );
+                     nOffset += HB_PCODE_MKINT24( &pCode[nJumpAddr + 1] );
+                     HB_PUT_LE_UINT24( &pCode[nJumpAddr + 1], nOffset );
                      break;
                }
             }
-            pJumps[ nJump ] -= plShifts[ nJump ];
+            pJumps[nJump] -= plShifts[nJump];
          }
          hb_xfree(plSizes);
          hb_xfree(plShifts);
@@ -1826,7 +1826,7 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
       /* Second Scan, after all adjustments been made, we can copy the optimized code. */
       for( nNOOP = 0; nNOOP < HB_COMP_PARAM->functions.pLast->nNOOPs; nNOOP++ )
       {
-         nBytes2Copy = ( pNOOPs[ nNOOP ] - nNextByte );
+         nBytes2Copy = ( pNOOPs[nNOOP] - nNextByte );
 
          memmove(pCode + nOptimized, pCode + nNextByte, nBytes2Copy);
 
@@ -1867,13 +1867,13 @@ static void hb_compOptimizeFrames( HB_COMP_DECL, PHB_HFUNC pFunc )
 
    if( pFunc == HB_COMP_PARAM->pInitFunc )
    {
-      if( pFunc->pCode[ 0 ] == HB_P_STATICS && pFunc->pCode[ 5 ] == HB_P_SFRAME )
+      if( pFunc->pCode[0] == HB_P_STATICS && pFunc->pCode[5] == HB_P_SFRAME )
       {
          hb_compSymbolFind( HB_COMP_PARAM, pFunc->szName, &w, HB_SYM_FUNCNAME );
-         pFunc->pCode[ 1 ] = HB_LOBYTE(w);
-         pFunc->pCode[ 2 ] = HB_HIBYTE(w);
-         pFunc->pCode[ 6 ] = HB_LOBYTE(w);
-         pFunc->pCode[ 7 ] = HB_HIBYTE(w);
+         pFunc->pCode[1] = HB_LOBYTE(w);
+         pFunc->pCode[2] = HB_HIBYTE(w);
+         pFunc->pCode[6] = HB_LOBYTE(w);
+         pFunc->pCode[7] = HB_HIBYTE(w);
 
          /* Remove the SFRAME pcode if there's no global static
             initialization: */
@@ -1883,7 +1883,7 @@ static void hb_compOptimizeFrames( HB_COMP_DECL, PHB_HFUNC pFunc )
          #if 0
          if( !( pFunc->funFlags & HB_FUNF_USES_STATICS ) )
          #endif
-         if( pFunc->pCode[ 8 ] == HB_P_ENDPROC )
+         if( pFunc->pCode[8] == HB_P_ENDPROC )
          {
             pFunc->nPCodePos -= 3;
             memmove(pFunc->pCode + 5, pFunc->pCode + 8, pFunc->nPCodePos - 5);
@@ -1915,7 +1915,7 @@ static void hb_compOptimizeFrames( HB_COMP_DECL, PHB_HFUNC pFunc )
          }
       }
    }
-   else if( pFunc->pCode[ 0 ] == HB_P_FRAME && pFunc->pCode[ 3 ] == HB_P_SFRAME )
+   else if( pFunc->pCode[0] == HB_P_FRAME && pFunc->pCode[3] == HB_P_SFRAME )
    {
       PHB_HVAR pLocal;
       int iLocals = 0, iOffset = 0;
@@ -1933,8 +1933,8 @@ static void hb_compOptimizeFrames( HB_COMP_DECL, PHB_HFUNC pFunc )
       if( pFunc->funFlags & HB_FUNF_USES_STATICS )
       {
          hb_compSymbolFind( HB_COMP_PARAM, HB_COMP_PARAM->pInitFunc->szName, &w, HB_SYM_FUNCNAME );
-         pFunc->pCode[ 4 ] = HB_LOBYTE(w);
-         pFunc->pCode[ 5 ] = HB_HIBYTE(w);
+         pFunc->pCode[4] = HB_LOBYTE(w);
+         pFunc->pCode[5] = HB_HIBYTE(w);
          bSkipSFRAME = HB_FALSE;
       }
       else
@@ -1959,16 +1959,16 @@ static void hb_compOptimizeFrames( HB_COMP_DECL, PHB_HFUNC pFunc )
              */
             hb_compGenPCode1( 0, HB_COMP_PARAM );
             memmove(pFunc->pCode + 4, pFunc->pCode + 3, pFunc->nPCodePos - 4);
-            pFunc->pCode[ 0 ] = HB_P_LARGEFRAME;
-            pFunc->pCode[ 1 ] = HB_LOBYTE(iLocals);
-            pFunc->pCode[ 2 ] = HB_HIBYTE(iLocals);
-            pFunc->pCode[ 3 ] = static_cast<HB_BYTE>(pFunc->wParamCount);
+            pFunc->pCode[0] = HB_P_LARGEFRAME;
+            pFunc->pCode[1] = HB_LOBYTE(iLocals);
+            pFunc->pCode[2] = HB_HIBYTE(iLocals);
+            pFunc->pCode[3] = static_cast<HB_BYTE>(pFunc->wParamCount);
             iOffset = 1;
          }
          else
          {
-            pFunc->pCode[ 1 ] = static_cast<HB_BYTE>(iLocals);
-            pFunc->pCode[ 2 ] = static_cast<HB_BYTE>(pFunc->wParamCount);
+            pFunc->pCode[1] = static_cast<HB_BYTE>(iLocals);
+            pFunc->pCode[2] = static_cast<HB_BYTE>(pFunc->wParamCount);
          }
          bSkipFRAME = HB_FALSE;
       }
@@ -1998,7 +1998,7 @@ static void hb_compOptimizeFrames( HB_COMP_DECL, PHB_HFUNC pFunc )
       {
          if( pFunc->fVParams )
          {
-            pFunc->pCode[ 0 ] = static_cast<HB_BYTE>(iOffset ? HB_P_LARGEVFRAME : HB_P_VFRAME);
+            pFunc->pCode[0] = static_cast<HB_BYTE>(iOffset ? HB_P_LARGEVFRAME : HB_P_VFRAME);
          }
 
          if( bSkipSFRAME )
@@ -2012,7 +2012,7 @@ static void hb_compOptimizeFrames( HB_COMP_DECL, PHB_HFUNC pFunc )
 
 static void hb_compWarnUnusedVar( HB_COMP_DECL, const char * szFuncName, const char * szVarName, int iDeclLine )
 {
-   char szFun[ HB_SYMBOL_NAME_LEN + 17 ];
+   char szFun[HB_SYMBOL_NAME_LEN + 17];
 
    if( HB_COMP_PARAM->iErrorFmt == HB_ERRORFMT_CLIPPER )
    {
@@ -2424,7 +2424,7 @@ void hb_compFunctionAdd( HB_COMP_DECL, const char * szFunName, HB_SYMBOLSCOPE cS
 
    if( cScope & ( HB_FS_INIT | HB_FS_EXIT ) )
    {
-      char szNewName[ HB_SYMBOL_NAME_LEN + 1 ];
+      char szNewName[HB_SYMBOL_NAME_LEN + 1];
       int iLen;
 
       iLen = static_cast<int>(strlen(szFunName));
@@ -2433,8 +2433,8 @@ void hb_compFunctionAdd( HB_COMP_DECL, const char * szFunName, HB_SYMBOLSCOPE cS
          iLen = HB_SYMBOL_NAME_LEN - 1;
       }
       memcpy(szNewName, szFunName, iLen);
-      szNewName[ iLen ] ='$';
-      szNewName[ iLen + 1 ] = '\0';
+      szNewName[iLen] ='$';
+      szNewName[iLen + 1] = '\0';
       szFunName = hb_compIdentifierNew( HB_COMP_PARAM, szNewName, HB_IDENT_COPY );
    }
 
@@ -2598,7 +2598,7 @@ static void hb_compExternGen( HB_COMP_DECL )
 
 static void hb_compNOOPadd( PHB_HFUNC pFunc, HB_SIZE nPos )
 {
-   pFunc->pCode[ nPos ] = HB_P_NOOP;
+   pFunc->pCode[nPos] = HB_P_NOOP;
 
    if( pFunc->nNOOPs )
    {
@@ -2608,7 +2608,7 @@ static void hb_compNOOPadd( PHB_HFUNC pFunc, HB_SIZE nPos )
    {
       pFunc->pNOOPs = static_cast<HB_SIZE*>(hb_xgrab(sizeof(HB_SIZE)));
    }
-   pFunc->pNOOPs[ pFunc->nNOOPs++ ] = nPos;
+   pFunc->pNOOPs[pFunc->nNOOPs++] = nPos;
 }
 
 static void hb_compPrepareJumps( HB_COMP_DECL )
@@ -2623,7 +2623,7 @@ static void hb_compPrepareJumps( HB_COMP_DECL )
    {
       pFunc->pJumps = static_cast<HB_SIZE*>(hb_xgrab(sizeof(HB_SIZE)));
    }
-   pFunc->pJumps[ pFunc->nJumps++ ] = static_cast<HB_SIZE>(pFunc->nPCodePos - 4);
+   pFunc->pJumps[pFunc->nJumps++] = static_cast<HB_SIZE>(pFunc->nPCodePos - 4);
 }
 
 HB_SIZE hb_compGenJump( HB_ISIZ nOffset, HB_COMP_DECL )
@@ -2672,7 +2672,7 @@ void hb_compGenJumpThere( HB_SIZE nFrom, HB_SIZE nTo, HB_COMP_DECL )
 
    if( HB_LIM_INT24(nOffset) )
    {
-      HB_PUT_LE_UINT24( &pCode[ nFrom ], nOffset );
+      HB_PUT_LE_UINT24( &pCode[nFrom], nOffset );
    }
    else
    {
@@ -2721,7 +2721,7 @@ void hb_compStatmentStart( HB_COMP_DECL )
 
       if( ( pFunc->funFlags & HB_FUNF_FILE_DECL ) != 0 )
       {
-         if( HB_COMP_PARAM->iStartProc == 2 && pFunc->szName[ 0 ] && hb_compRegisterFunc( HB_COMP_PARAM, pFunc, HB_FALSE ) )
+         if( HB_COMP_PARAM->iStartProc == 2 && pFunc->szName[0] && hb_compRegisterFunc( HB_COMP_PARAM, pFunc, HB_FALSE ) )
          {
             pFunc->funFlags &= ~HB_FUNF_FILE_DECL;
          }
@@ -2965,16 +2965,16 @@ void hb_compGenMessage( const char * szMsgName, HB_BOOL bIsObject, HB_COMP_DECL 
 
 void hb_compGenMessageData( const char * szMsg, HB_BOOL bIsObject, HB_COMP_DECL ) /* generates an underscore-symbol name for a data assignment */
 {
-   char szResult[ HB_SYMBOL_NAME_LEN + 1 ];
+   char szResult[HB_SYMBOL_NAME_LEN + 1];
    int iLen = static_cast<int>(strlen(szMsg));
 
    if( iLen >= HB_SYMBOL_NAME_LEN )
    {
       iLen = HB_SYMBOL_NAME_LEN - 1;
    }
-   szResult[ 0 ] = '_';
+   szResult[0] = '_';
    memcpy(szResult + 1, szMsg, iLen);
-   szResult[ iLen + 1 ] = '\0';
+   szResult[iLen + 1] = '\0';
 
    hb_compGenMessage( hb_compIdentifierNew( HB_COMP_PARAM, szResult, HB_IDENT_COPY ), bIsObject, HB_COMP_PARAM );
 }
@@ -3239,7 +3239,7 @@ void hb_compGenPopAliasedVar( const char * szVarName,
       if( szAlias )
       {
          int iLen = static_cast<int>(strlen(szAlias));
-         if( szAlias[ 0 ] == 'M' && ( iLen == 1 || ( iLen >= 4 && iLen <= 6 && memcmp(szAlias, "MEMVAR", iLen) == 0 ) ) )
+         if( szAlias[0] == 'M' && ( iLen == 1 || ( iLen >= 4 && iLen <= 6 && memcmp(szAlias, "MEMVAR", iLen) == 0 ) ) )
          {
             /* M->variable or MEMV[A[R]]->variable */
             hb_compGenVarPCode( HB_P_POPMEMVAR, szVarName, HB_COMP_PARAM );
@@ -3290,7 +3290,7 @@ void hb_compGenPushAliasedVar( const char * szVarName,
           * FIELD->var
           * MEMVAR->var
           */
-         if( szAlias[ 0 ] == 'M' && ( iLen == 1 || ( iLen >= 4 && iLen <= 6 && memcmp(szAlias, "MEMVAR", iLen) == 0 ) ) )
+         if( szAlias[0] == 'M' && ( iLen == 1 || ( iLen >= 4 && iLen <= 6 && memcmp(szAlias, "MEMVAR", iLen) == 0 ) ) )
          {
             /* M->variable or MEMV[A[R]]->variable */
             hb_compGenVarPCode( HB_P_PUSHMEMVAR, szVarName, HB_COMP_PARAM );
@@ -3336,13 +3336,13 @@ void hb_compGenPushNil( HB_COMP_DECL )
 /* generates the pcode to push a double number on the virtual machine stack */
 void hb_compGenPushDouble( double dNumber, HB_BYTE bWidth, HB_BYTE bDec, HB_COMP_DECL )
 {
-   HB_BYTE pBuffer[ sizeof(double) + sizeof(HB_BYTE) + sizeof(HB_BYTE) + 1 ];
+   HB_BYTE pBuffer[sizeof(double) + sizeof(HB_BYTE) + sizeof(HB_BYTE) + 1];
 
-   pBuffer[ 0 ] = HB_P_PUSHDOUBLE;
-   HB_PUT_LE_DOUBLE( &( pBuffer[ 1 ] ), dNumber );
+   pBuffer[0] = HB_P_PUSHDOUBLE;
+   HB_PUT_LE_DOUBLE( &( pBuffer[1] ), dNumber );
 
-   pBuffer[ 1 + sizeof(double) ] = bWidth;
-   pBuffer[ 1 + sizeof(double) + sizeof(HB_BYTE) ] = bDec;
+   pBuffer[1 + sizeof(double)] = bWidth;
+   pBuffer[1 + sizeof(double) + sizeof(HB_BYTE)] = bDec;
 
    hb_compGenPCodeN( pBuffer, sizeof(pBuffer), HB_COMP_PARAM );
 }
@@ -3426,15 +3426,15 @@ void hb_compGenPushLong( HB_MAXINT nNumber, HB_COMP_DECL )
       }
       else if( HB_LIM_INT32(nNumber) )
       {
-         HB_BYTE pBuffer[ 5 ];
-         pBuffer[ 0 ] = HB_P_PUSHLONG;
+         HB_BYTE pBuffer[5];
+         pBuffer[0] = HB_P_PUSHLONG;
          HB_PUT_LE_UINT32( pBuffer + 1, nNumber );
          hb_compGenPCodeN( pBuffer, sizeof(pBuffer), HB_COMP_PARAM );
       }
       else
       {
-         HB_BYTE pBuffer[ 9 ];
-         pBuffer[ 0 ] = HB_P_PUSHLONGLONG;
+         HB_BYTE pBuffer[9];
+         pBuffer[0] = HB_P_PUSHLONGLONG;
          HB_PUT_LE_UINT64( pBuffer + 1, nNumber );
          hb_compGenPCodeN( pBuffer, sizeof(pBuffer), HB_COMP_PARAM );
       }
@@ -3443,15 +3443,15 @@ void hb_compGenPushLong( HB_MAXINT nNumber, HB_COMP_DECL )
    {
       if( HB_LIM_INT32(nNumber) )
       {
-         HB_BYTE pBuffer[ 5 ];
-         pBuffer[ 0 ] = HB_P_PUSHLONG;
+         HB_BYTE pBuffer[5];
+         pBuffer[0] = HB_P_PUSHLONG;
          HB_PUT_LE_UINT32( pBuffer + 1, nNumber );
          hb_compGenPCodeN( pBuffer, sizeof(pBuffer), HB_COMP_PARAM );
       }
       else
       {
-         HB_BYTE pBuffer[ 9 ];
-         pBuffer[ 0 ] = HB_P_PUSHLONGLONG;
+         HB_BYTE pBuffer[9];
+         pBuffer[0] = HB_P_PUSHLONGLONG;
          HB_PUT_LE_UINT64( pBuffer + 1, nNumber );
          hb_compGenPCodeN( pBuffer, sizeof(pBuffer), HB_COMP_PARAM );
       }
@@ -3460,18 +3460,18 @@ void hb_compGenPushLong( HB_MAXINT nNumber, HB_COMP_DECL )
 
 void hb_compGenPushDate( long lDate, HB_COMP_DECL )
 {
-   HB_BYTE pBuffer[ 5 ];
+   HB_BYTE pBuffer[5];
 
-   pBuffer[ 0 ] = HB_P_PUSHDATE;
+   pBuffer[0] = HB_P_PUSHDATE;
    HB_PUT_LE_UINT32( pBuffer + 1, lDate );
    hb_compGenPCodeN( pBuffer, sizeof(pBuffer), HB_COMP_PARAM );
 }
 
 void hb_compGenPushTimeStamp( long lDate, long lTime, HB_COMP_DECL )
 {
-   HB_BYTE pBuffer[ 9 ];
+   HB_BYTE pBuffer[9];
 
-   pBuffer[ 0 ] = HB_P_PUSHTIMESTAMP;
+   pBuffer[0] = HB_P_PUSHTIMESTAMP;
    HB_PUT_LE_UINT32( pBuffer + 1, lDate );
    HB_PUT_LE_UINT32( pBuffer + 5, lTime );
    hb_compGenPCodeN( pBuffer, sizeof(pBuffer), HB_COMP_PARAM );
@@ -3528,16 +3528,16 @@ void hb_compNOOPfill( PHB_HFUNC pFunc, HB_SIZE nFrom, HB_ISIZ nCount, HB_BOOL fP
    {
       if( fPop )
       {
-         pFunc->pCode[ nFrom ] = HB_P_POP;
+         pFunc->pCode[nFrom] = HB_P_POP;
          fPop = HB_FALSE;
       }
-      else if( fCheck && pFunc->pCode[ nFrom ] == HB_P_NOOP && pFunc->nNOOPs )
+      else if( fCheck && pFunc->pCode[nFrom] == HB_P_NOOP && pFunc->nNOOPs )
       {
          HB_SIZE n;
 
          for( n = 0; n < pFunc->nNOOPs; ++n )
          {
-            if( pFunc->pNOOPs[ n ] == nFrom )
+            if( pFunc->pNOOPs[n] == nFrom )
             {
                break;
             }
@@ -3580,16 +3580,16 @@ static void hb_compRemovePCODE( HB_COMP_DECL, HB_SIZE nPos, HB_SIZE nCount, HB_B
 
       for( HB_SIZE n = pFunc->nNOOPs; n; --n )
       {
-         if( pFunc->pNOOPs[ n ] >= nPos )
+         if( pFunc->pNOOPs[n] >= nPos )
          {
-            if( pFunc->pNOOPs[ n ] < nPos + nCount )
+            if( pFunc->pNOOPs[n] < nPos + nCount )
             {
-               memmove(&pFunc->pNOOPs[ n ], &pFunc->pNOOPs[ n + 1 ], pFunc->nNOOPs - n);
+               memmove(&pFunc->pNOOPs[n], &pFunc->pNOOPs[n + 1], pFunc->nNOOPs - n);
                pFunc->nNOOPs--;
             }
             else
             {
-               pFunc->pNOOPs[ n ] -= nCount;
+               pFunc->pNOOPs[n] -= nCount;
             }
          }
       }
@@ -3600,19 +3600,19 @@ HB_BOOL hb_compHasJump( PHB_HFUNC pFunc, HB_SIZE nPos )
 {
    for( HB_SIZE nJump = 0; nJump < pFunc->nJumps; nJump++ )
    {
-      HB_SIZE nJumpAddr = pFunc->pJumps[ nJump ];
-      switch( pFunc->pCode[ nJumpAddr ] )
+      HB_SIZE nJumpAddr = pFunc->pJumps[nJump];
+      switch( pFunc->pCode[nJumpAddr] )
       {
          case HB_P_JUMPNEAR:
          case HB_P_JUMPFALSENEAR:
          case HB_P_JUMPTRUENEAR:
-            nJumpAddr += static_cast<signed char>(pFunc->pCode[ nJumpAddr + 1 ]);
+            nJumpAddr += static_cast<signed char>(pFunc->pCode[nJumpAddr + 1]);
             break;
 
          case HB_P_JUMP:
          case HB_P_JUMPFALSE:
          case HB_P_JUMPTRUE:
-            nJumpAddr += HB_PCODE_MKSHORT( &pFunc->pCode[ nJumpAddr + 1 ] );
+            nJumpAddr += HB_PCODE_MKSHORT( &pFunc->pCode[nJumpAddr + 1] );
             break;
 
          /* Jump can be replaced by series of NOOPs or POP and NOOPs
@@ -3624,7 +3624,7 @@ HB_BOOL hb_compHasJump( PHB_HFUNC pFunc, HB_SIZE nPos )
             break;
 
          default:
-            nJumpAddr += HB_PCODE_MKINT24( &pFunc->pCode[ nJumpAddr + 1 ] );
+            nJumpAddr += HB_PCODE_MKINT24( &pFunc->pCode[nJumpAddr + 1] );
             break;
       }
       if( nJumpAddr == nPos )
@@ -3743,18 +3743,18 @@ void hb_compStaticDefStart( HB_COMP_DECL )
    HB_COMP_PARAM->functions.pLast->funFlags |= HB_FUNF_USES_STATICS;
    if( ! HB_COMP_PARAM->pInitFunc )
    {
-      HB_BYTE pBuffer[ 5 ];
+      HB_BYTE pBuffer[5];
 
       HB_COMP_PARAM->pInitFunc = hb_compFunctionNew( HB_COMP_PARAM, "(_INITSTATICS)", HB_FS_INITEXIT | HB_FS_LOCAL );
       HB_COMP_PARAM->pInitFunc->pOwner = HB_COMP_PARAM->functions.pLast;
       HB_COMP_PARAM->pInitFunc->funFlags = HB_FUNF_USES_STATICS | HB_FUNF_PROCEDURE;
       HB_COMP_PARAM->functions.pLast = HB_COMP_PARAM->pInitFunc;
 
-      pBuffer[ 0 ] = HB_P_STATICS;
-      pBuffer[ 1 ] = 0;
-      pBuffer[ 2 ] = 0;
-      pBuffer[ 3 ] = 1; /* the number of static variables is unknown now */
-      pBuffer[ 4 ] = 0;
+      pBuffer[0] = HB_P_STATICS;
+      pBuffer[1] = 0;
+      pBuffer[2] = 0;
+      pBuffer[3] = 1; /* the number of static variables is unknown now */
+      pBuffer[4] = 0;
 
       hb_compGenPCodeN( pBuffer, 5, HB_COMP_PARAM );
 
@@ -3842,9 +3842,9 @@ static void hb_compStaticDefThreadSet( HB_COMP_DECL )
          HB_SIZE nSize = ( static_cast<HB_SIZE>(uiCount) << 1 ) + 3;
          HB_BYTE * pBuffer = static_cast<HB_BYTE*>(hb_xgrab(nSize)), *ptr;
          HB_USHORT uiVar = 0;
-         pBuffer[ 0 ] = HB_P_THREADSTATICS;
-         pBuffer[ 1 ] = HB_LOBYTE(uiCount);
-         pBuffer[ 2 ] = HB_HIBYTE(uiCount);
+         pBuffer[0] = HB_P_THREADSTATICS;
+         pBuffer[1] = HB_LOBYTE(uiCount);
+         pBuffer[2] = HB_HIBYTE(uiCount);
          ptr = pBuffer + 3;
          pFunc = HB_COMP_PARAM->functions.pFirst;
          while( pFunc && uiCount )
@@ -4113,7 +4113,7 @@ void hb_compCodeBlockEnd( HB_COMP_DECL )
    /* change static variables names to avoid conflicts */
    while( pVar )
    {
-      char szName[ HB_SYMBOL_NAME_LEN + 4 ];
+      char szName[HB_SYMBOL_NAME_LEN + 4];
       hb_snprintf(szName, sizeof(szName), "%s(b)", pVar->szName);
       pVar->szName = hb_compIdentifierNew( HB_COMP_PARAM, szName, HB_IDENT_COPY );
       pVar = pVar->pNext;
@@ -4423,11 +4423,11 @@ static void hb_compGenIncluded( HB_COMP_DECL )
    if( HB_COMP_PARAM->iTraceInclude > 0 && HB_COMP_PARAM->incfiles )
    {
       PHB_INCLST pIncFile = HB_COMP_PARAM->incfiles;
-      char szDestFile[ HB_PATH_MAX ];
+      char szDestFile[HB_PATH_MAX];
       HB_FNAME FileName;
 
       memcpy(&FileName, HB_COMP_PARAM->pFileName, sizeof(HB_FNAME));
-      szDestFile[ 0 ] = '\0';
+      szDestFile[0] = '\0';
 
       if( ( HB_COMP_PARAM->iTraceInclude & 0xff ) == 2 )
       {
@@ -4496,7 +4496,7 @@ static void hb_compGenIncluded( HB_COMP_DECL )
       }
       else if( ( HB_COMP_PARAM->iTraceInclude & 0xff ) == 2 )
       {
-         char szFileName[ HB_PATH_MAX ];
+         char szFileName[HB_PATH_MAX];
          FILE * file;
 
          FileName.szExtension = ".d";
@@ -4504,7 +4504,7 @@ static void hb_compGenIncluded( HB_COMP_DECL )
          file = hb_fopen( szFileName, "w" );
          if( file )
          {
-            if( szDestFile[ 0 ] )
+            if( szDestFile[0] )
             {
                fprintf( file, "%s:", szDestFile );
             }
@@ -4525,7 +4525,7 @@ static void hb_compGenIncluded( HB_COMP_DECL )
       {
          HB_BOOL fFullQuiet = HB_COMP_PARAM->fFullQuiet;
          HB_COMP_PARAM->fFullQuiet = HB_FALSE;
-         if( szDestFile[ 0 ] )
+         if( szDestFile[0] )
          {
             hb_compOutStd( HB_COMP_PARAM, szDestFile );
             hb_compOutStd( HB_COMP_PARAM, ": " );
@@ -4589,7 +4589,7 @@ static int hb_compCompile( HB_COMP_DECL, const char * szPrg, const char * szBuff
    HB_TRACE( HB_TR_DEBUG, ( "hb_compCompile(%s,%p,%d)", szPrg, static_cast<const void*>(szBuffer), iStartLine ) );
 #endif
 
-   char buffer[ HB_PATH_MAX * 2 + 80 ];
+   char buffer[HB_PATH_MAX * 2 + 80];
    HB_COMP_SWITCHES switches;
    int iStatus = EXIT_SUCCESS;
    PHB_FNAME pFileName = nullptr;
@@ -4602,7 +4602,7 @@ static int hb_compCompile( HB_COMP_DECL, const char * szPrg, const char * szBuff
 
    if( ! szBuffer )
    {
-      if( szPrg[ 0 ] == '@' )
+      if( szPrg[0] == '@' )
       {
          iStatus = hb_compReadClpFile( HB_COMP_PARAM, szPrg + 1 );
       }
@@ -4615,7 +4615,7 @@ static int hb_compCompile( HB_COMP_DECL, const char * szPrg, const char * szBuff
    pModule = HB_COMP_PARAM->modules;
    while( iStatus == EXIT_SUCCESS && ! HB_COMP_PARAM->fExit && ( pModule || szBuffer ) )
    {
-      char szFileName[ HB_PATH_MAX ];     /* filename to parse */
+      char szFileName[HB_PATH_MAX];     /* filename to parse */
       HB_BOOL fSkip = HB_FALSE;
 
       /* Clear and reinitialize preprocessor state */
@@ -4676,7 +4676,7 @@ static int hb_compCompile( HB_COMP_DECL, const char * szPrg, const char * szBuff
 
       if( ! fSkip )
       {
-         char szPpoName[ HB_PATH_MAX ];
+         char szPpoName[HB_PATH_MAX];
 
          if( HB_COMP_PARAM->fPPT )
          {
@@ -4765,7 +4765,7 @@ static int hb_compCompile( HB_COMP_DECL, const char * szPrg, const char * szBuff
             {
                hb_comp_yyparse( HB_COMP_PARAM );
             }
-            HB_COMP_PARAM->iExitLevel = HB_MAX( iExitLevel, HB_COMP_PARAM->iExitLevel );
+            HB_COMP_PARAM->iExitLevel = HB_MAX(iExitLevel, HB_COMP_PARAM->iExitLevel);
          }
       }
 
@@ -4806,13 +4806,13 @@ static int hb_compCompile( HB_COMP_DECL, const char * szPrg, const char * szBuff
 
       if( HB_COMP_PARAM->pInitFunc )
       {
-         char szNewName[ 25 ];
+         char szNewName[25];
 
          /* Mark thread static variables */
          hb_compStaticDefThreadSet( HB_COMP_PARAM );
          /* Fix the number of static variables */
-         HB_COMP_PARAM->pInitFunc->pCode[ 3 ] = HB_LOBYTE(HB_COMP_PARAM->iStaticCnt);
-         HB_COMP_PARAM->pInitFunc->pCode[ 4 ] = HB_HIBYTE(HB_COMP_PARAM->iStaticCnt);
+         HB_COMP_PARAM->pInitFunc->pCode[3] = HB_LOBYTE(HB_COMP_PARAM->iStaticCnt);
+         HB_COMP_PARAM->pInitFunc->pCode[4] = HB_HIBYTE(HB_COMP_PARAM->iStaticCnt);
          HB_COMP_PARAM->pInitFunc->iStaticsBase = HB_COMP_PARAM->iStaticCnt;
          /* Update pseudo function name */
          hb_snprintf(szNewName, sizeof(szNewName), "(_INITSTATICS%05d)", HB_COMP_PARAM->iStaticCnt);

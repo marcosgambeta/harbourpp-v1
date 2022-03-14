@@ -237,7 +237,7 @@ static void hb_memvarAddPrivate( PHB_DYNS pDynSym, PHB_ITEM pValue )
       HB_SIZE nCount = pPrivateStack->count;
       while( nCount > pPrivateStack->base )
       {
-         if( pDynSym == pPrivateStack->stack[ nCount - 1 ].pDynSym )
+         if( pDynSym == pPrivateStack->stack[nCount - 1].pDynSym )
          {
             break;
          }
@@ -270,8 +270,8 @@ static void hb_memvarAddPrivate( PHB_DYNS pDynSym, PHB_ITEM pValue )
          }
       }
 
-      pPrivateStack->stack[ pPrivateStack->count ].pDynSym = pDynSym;
-      pPrivateStack->stack[ pPrivateStack->count++ ].pPrevMemvar = hb_dynsymGetMemvar(pDynSym);
+      pPrivateStack->stack[pPrivateStack->count].pDynSym = pDynSym;
+      pPrivateStack->stack[pPrivateStack->count++].pPrevMemvar = hb_dynsymGetMemvar(pDynSym);
 
       if( pValue && HB_IS_MEMVAR(pValue) )
       {
@@ -327,13 +327,13 @@ void hb_memvarSetPrivatesBase( HB_SIZE nBase )
 
    while( pPrivateStack->count > pPrivateStack->base )
    {
-      PHB_DYNS pDynSym = pPrivateStack->stack[ --pPrivateStack->count ].pDynSym;
+      PHB_DYNS pDynSym = pPrivateStack->stack[--pPrivateStack->count].pDynSym;
 
       if( hb_dynsymGetMemvar(pDynSym) )
       {
          /* Restore previous value for variables that were overridden
           */
-         hb_memvarDetachDynSym( pDynSym, pPrivateStack->stack[ pPrivateStack->count ].pPrevMemvar );
+         hb_memvarDetachDynSym( pDynSym, pPrivateStack->stack[pPrivateStack->count].pPrevMemvar );
       }
    }
    pPrivateStack->base = nBase;
@@ -596,7 +596,7 @@ static PHB_DYNS hb_memvarFindSymbol( const char * szArg, HB_SIZE nLen )
 
    if( nLen && szArg && *szArg )
    {
-      char szUprName[ HB_SYMBOL_NAME_LEN + 1 ];
+      char szUprName[HB_SYMBOL_NAME_LEN + 1];
       int iSize = 0;
 
       do
@@ -605,7 +605,7 @@ static PHB_DYNS hb_memvarFindSymbol( const char * szArg, HB_SIZE nLen )
 
          if( cChar >= 'a' && cChar <= 'z' )
          {
-            szUprName[ iSize++ ] = cChar - ( 'a' - 'A' );
+            szUprName[iSize++] = cChar - ( 'a' - 'A' );
          }
          else if( cChar == ' ' || cChar == '\t' || cChar == '\n' )
          {
@@ -620,14 +620,14 @@ static PHB_DYNS hb_memvarFindSymbol( const char * szArg, HB_SIZE nLen )
          }
          else
          {
-            szUprName[ iSize++ ] = cChar;
+            szUprName[iSize++] = cChar;
          }
       }
       while( --nLen && iSize < HB_SYMBOL_NAME_LEN );
 
       if( iSize )
       {
-         szUprName[ iSize ] = '\0';
+         szUprName[iSize] = '\0';
          pDynSym = hb_dynsymFind(szUprName);
       }
    }
@@ -787,7 +787,7 @@ static void hb_memvarRelease( PHB_ITEM pMemvar )
           */
          while( nBase > 0 )
          {
-            if( pDynSymbol == hb_stackGetPrivateStack()->stack[ --nBase ].pDynSym )
+            if( pDynSymbol == hb_stackGetPrivateStack()->stack[--nBase].pDynSym )
             {
                /* reset current value to NIL - the overridden variables will be
                 * visible after exit from current procedure
@@ -834,7 +834,7 @@ static void hb_memvarReleaseWithMask( const char * szMask, HB_BOOL bInclude )
       PHB_DYNS pDynVar;
       PHB_ITEM pMemvar;
 
-      pDynVar = hb_stackGetPrivateStack()->stack[ nCount ].pDynSym;
+      pDynVar = hb_stackGetPrivateStack()->stack[nCount].pDynSym;
       /* reset current value to NIL - the overridden variables will be
        * visible after exit from current procedure
        */
@@ -869,7 +869,7 @@ static int hb_memvarScopeGet( PHB_DYNS pDynVar )
 
       while( nBase )
       {
-         if( pDynVar == hb_stackGetPrivateStack()->stack[ --nBase ].pDynSym )
+         if( pDynVar == hb_stackGetPrivateStack()->stack[--nBase].pDynSym )
          {
             if( nBase >= hb_stackGetPrivateStack()->base )
             {
@@ -1075,7 +1075,7 @@ static PHB_ITEM hb_memvarDebugVariable( int iScope, int iPos, const char ** pszN
          HB_STACK_TLS_PRELOAD
          if( static_cast<HB_SIZE>(iPos) < hb_stackGetPrivateStack()->count )
          {
-            PHB_DYNS pDynSym = hb_stackGetPrivateStack()->stack[ iPos ].pDynSym;
+            PHB_DYNS pDynSym = hb_stackGetPrivateStack()->stack[iPos].pDynSym;
 
             pValue = hb_dynsymGetMemvar(pDynSym);
             *pszName = pDynSym->pSymbol->szName;
@@ -1095,7 +1095,7 @@ static HB_DYNS_FUNC( hb_memvarCountVisible )
       struct mv_memvarArray_info * pMVInfo = static_cast<struct mv_memvarArray_info*>(Cargo);
       if( ! pMVInfo->iScope || ( hb_memvarScopeGet( pDynSymbol ) & pMVInfo->iScope ) != 0 )
       {
-         pMVInfo->pDyns[ pMVInfo->nCount++ ] = pDynSymbol;
+         pMVInfo->pDyns[pMVInfo->nCount++] = pDynSymbol;
       }
    }
    return HB_TRUE;
@@ -1132,7 +1132,7 @@ PHB_ITEM hb_memvarSaveInArray( int iScope, HB_BOOL fCopy )
          PHB_ITEM pItem = hb_arrayGetItemPtr(pArray, MVInfo.nCount);
          if( pItem )
          {
-            PHB_DYNS pDynSymbol = MVInfo.pDyns[ --MVInfo.nCount ];
+            PHB_DYNS pDynSymbol = MVInfo.pDyns[--MVInfo.nCount];
             PHB_ITEM pMemvar = hb_dynsymGetMemvar(pDynSymbol);
 
             hb_arrayNew(pItem, 2);
@@ -1186,7 +1186,7 @@ static const char * hb_memvarGetMask( int iParam )
 {
    const char * pszMask = hb_parc(iParam);
 
-   if( ! pszMask || pszMask[ 0 ] == '*' )
+   if( ! pszMask || pszMask[0] == '*' )
    {
       pszMask = "*";
    }
@@ -1305,7 +1305,7 @@ HB_FUNC( __MVRELEASE )
       const char * pszMask;
 
       pszMask = hb_memvarGetMask(1);
-      bIncludeVar = ( pszMask[ 0 ] == '*' && ! pszMask[ 1 ] ) || iCount < 2 || hb_parl(2);
+      bIncludeVar = ( pszMask[0] == '*' && ! pszMask[1] ) || iCount < 2 || hb_parl(2);
       hb_memvarReleaseWithMask( pszMask, bIncludeVar );
    }
 }
@@ -1543,8 +1543,8 @@ static HB_DYNS_FUNC( hb_memvarSave )
                nLen = USHRT_MAX;
                iOverFlow = 1;
             }
-            buffer[ 11 ] = 'C' + 128;
-            HB_PUT_LE_UINT16( &buffer[ 16 ], nLen );
+            buffer[11] = 'C' + 128;
+            HB_PUT_LE_UINT16( &buffer[16], nLen );
             hb_fileWrite( fhnd, buffer, HB_MEM_REC_LEN, -1 );
             hb_fileWrite( fhnd, hb_itemGetCPtr(pMemvar), nLen - iOverFlow, -1 );
             if( iOverFlow )
@@ -1560,44 +1560,44 @@ static HB_DYNS_FUNC( hb_memvarSave )
 
             dNumber = hb_itemGetND(pMemvar);
             hb_itemGetNLen(pMemvar, &iWidth, &iDec);
-            buffer[ 11 ] = 'N' + 128;
+            buffer[11] = 'N' + 128;
 #ifdef HB_CLP_STRICT
 /* NOTE: This is the buggy, but fully CA-Cl*pper compatible method. [vszakats] */
-            buffer[ 16 ] = static_cast<HB_BYTE>(iWidth) + ( HB_IS_DOUBLE(pMemvar) ? static_cast<HB_BYTE>(iDec + 1) : 0 );
+            buffer[16] = static_cast<HB_BYTE>(iWidth) + ( HB_IS_DOUBLE(pMemvar) ? static_cast<HB_BYTE>(iDec + 1) : 0 );
 #else
 /* NOTE: This would be the correct method, but Clipper is buggy here. [vszakats] */
-            buffer[ 16 ] = static_cast<HB_BYTE>(iWidth) + ( iDec == 0 ? 0 : static_cast<HB_BYTE>(iDec + 1) );
+            buffer[16] = static_cast<HB_BYTE>(iWidth) + ( iDec == 0 ? 0 : static_cast<HB_BYTE>(iDec + 1) );
 #endif
-            buffer[ 17 ] = static_cast<HB_BYTE>(iDec);
-            HB_PUT_LE_DOUBLE( &buffer[ HB_MEM_REC_LEN ], dNumber );
+            buffer[17] = static_cast<HB_BYTE>(iDec);
+            HB_PUT_LE_DOUBLE( &buffer[HB_MEM_REC_LEN], dNumber );
             hb_fileWrite( fhnd, buffer, HB_MEM_REC_LEN + HB_MEM_NUM_LEN, -1 );
          }
          else if( HB_IS_DATE(pMemvar) )
          {
             double dNumber = static_cast<double>(hb_itemGetDL(pMemvar));
 
-            buffer[ 11 ] = 'D' + 128;
-            buffer[ 16 ] = 1;
-            buffer[ 17 ] = 0;
-            HB_PUT_LE_DOUBLE( &buffer[ HB_MEM_REC_LEN ], dNumber );
+            buffer[11] = 'D' + 128;
+            buffer[16] = 1;
+            buffer[17] = 0;
+            HB_PUT_LE_DOUBLE( &buffer[HB_MEM_REC_LEN], dNumber );
             hb_fileWrite( fhnd, buffer, HB_MEM_REC_LEN + HB_MEM_NUM_LEN, -1 );
          }
          else if( HB_IS_TIMESTAMP(pMemvar) )
          {
             double dNumber = hb_itemGetTD(pMemvar);
 
-            buffer[ 11 ] = 'T' + 128;
-            buffer[ 16 ] = 1;
-            buffer[ 17 ] = 0;
-            HB_PUT_LE_DOUBLE( &buffer[ HB_MEM_REC_LEN ], dNumber );
+            buffer[11] = 'T' + 128;
+            buffer[16] = 1;
+            buffer[17] = 0;
+            HB_PUT_LE_DOUBLE( &buffer[HB_MEM_REC_LEN], dNumber );
             hb_fileWrite( fhnd, buffer, HB_MEM_REC_LEN + HB_MEM_NUM_LEN, -1 );
          }
          else if( HB_IS_LOGICAL(pMemvar) )
          {
-            buffer[ 11 ] = 'L' + 128;
-            buffer[ 16 ] = 1;
-            buffer[ 17 ] = 0;
-            buffer[ HB_MEM_REC_LEN ] = hb_itemGetL(pMemvar) ? 1 : 0;
+            buffer[11] = 'L' + 128;
+            buffer[16] = 1;
+            buffer[17] = 0;
+            buffer[HB_MEM_REC_LEN] = hb_itemGetL(pMemvar) ? 1 : 0;
             hb_fileWrite( fhnd, buffer, HB_MEM_REC_LEN + 1, -1 );
          }
       }
@@ -1637,7 +1637,7 @@ HB_FUNC( __MVSAVE )
 
       if( fhnd != nullptr )
       {
-         HB_BYTE buffer[ HB_MEM_REC_LEN + HB_MEM_NUM_LEN ];
+         HB_BYTE buffer[HB_MEM_REC_LEN + HB_MEM_NUM_LEN];
          MEMVARSAVE_CARGO msc;
 
          msc.pszMask      = hb_memvarGetMask(2);
@@ -1649,7 +1649,7 @@ HB_FUNC( __MVSAVE )
 
          hb_dynsymEval(hb_memvarSave, static_cast<void*>(&msc));
 
-         buffer[ 0 ] = '\x1A';
+         buffer[0] = '\x1A';
          hb_fileWrite( fhnd, buffer, 1, -1 );
 
          /* NOTE: Here, we're not CA-Cl*pper compatible by default settings.
@@ -1725,7 +1725,7 @@ HB_FUNC( __MVRESTORE )
       if( fhnd != nullptr )
       {
          HB_BOOL bIncludeMask;
-         HB_BYTE buffer[ HB_MEM_REC_LEN ];
+         HB_BYTE buffer[HB_MEM_REC_LEN];
          const char * pszMask;
          PHB_ITEM pItem = nullptr;
 
@@ -1744,12 +1744,12 @@ HB_FUNC( __MVRESTORE )
             /* FoxPro does not add 128 to item type: 'N', 'C', 'D', 'L'
              * CA-Cl*pper respects it and read such files so we also should.
              */
-            HB_USHORT uiType = static_cast<HB_USHORT>(buffer[ 11 ] & 0x7f);
-            HB_USHORT uiWidth = static_cast<HB_USHORT>(buffer[ 16 ]);
-            HB_USHORT uiDec = static_cast<HB_USHORT>(buffer[ 17 ]);
+            HB_USHORT uiType = static_cast<HB_USHORT>(buffer[11] & 0x7f);
+            HB_USHORT uiWidth = static_cast<HB_USHORT>(buffer[16]);
+            HB_USHORT uiDec = static_cast<HB_USHORT>(buffer[17]);
 
             /* protect against corrupted files */
-            buffer[ 10 ] = '\0';
+            buffer[10] = '\0';
             pszName = reinterpret_cast<char*>(buffer);
 
             switch( uiType )
@@ -1776,7 +1776,7 @@ HB_FUNC( __MVRESTORE )
 
                case 'N':
                {
-                  HB_BYTE pbyNumber[ HB_MEM_NUM_LEN ];
+                  HB_BYTE pbyNumber[HB_MEM_NUM_LEN];
 
                   if( hb_fileRead( fhnd, pbyNumber, HB_MEM_NUM_LEN, -1 ) == HB_MEM_NUM_LEN )
                   {
@@ -1792,7 +1792,7 @@ HB_FUNC( __MVRESTORE )
 
                case 'D':
                {
-                  HB_BYTE pbyNumber[ HB_MEM_NUM_LEN ];
+                  HB_BYTE pbyNumber[HB_MEM_NUM_LEN];
 
                   if( hb_fileRead( fhnd, pbyNumber, HB_MEM_NUM_LEN, -1 ) == HB_MEM_NUM_LEN )
                   {
@@ -1808,7 +1808,7 @@ HB_FUNC( __MVRESTORE )
 
                case 'T':
                {
-                  HB_BYTE pbyNumber[ HB_MEM_NUM_LEN ];
+                  HB_BYTE pbyNumber[HB_MEM_NUM_LEN];
 
                   if( hb_fileRead( fhnd, pbyNumber, HB_MEM_NUM_LEN, -1 ) == HB_MEM_NUM_LEN )
                   {
@@ -1824,11 +1824,11 @@ HB_FUNC( __MVRESTORE )
 
                case 'L':
                {
-                  HB_BYTE pbyLogical[ 1 ];
+                  HB_BYTE pbyLogical[1];
 
                   if( hb_fileRead( fhnd, pbyLogical, 1, -1 ) == 1 )
                   {
-                     pItem = hb_itemPutL(pItem, pbyLogical[ 0 ] != 0);
+                     pItem = hb_itemPutL(pItem, pbyLogical[0] != 0);
                   }
                   else
                   {

@@ -61,7 +61,7 @@ HB_BOOL hb_evalNew( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
    if( pEvalInfo )
    {
       memset(pEvalInfo, 0, sizeof(HB_EVALINFO));
-      pEvalInfo->pItems[ 0 ] = pItem;
+      pEvalInfo->pItems[0] = pItem;
       pEvalInfo->paramCount = 0;
 
       return HB_TRUE;
@@ -93,7 +93,7 @@ HB_BOOL hb_evalPutParam( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
 
    if( pEvalInfo && pItem && pEvalInfo->paramCount < HB_EVAL_PARAM_MAX_ )
    {
-      pEvalInfo->pItems[ ++pEvalInfo->paramCount ] = pItem;
+      pEvalInfo->pItems[++pEvalInfo->paramCount] = pItem;
 
       return HB_TRUE;
    }
@@ -113,7 +113,7 @@ PHB_ITEM hb_evalLaunch( PHB_EVALINFO pEvalInfo )
 
    if( pEvalInfo )
    {
-      PHB_ITEM pItem = pEvalInfo->pItems[ 0 ];
+      PHB_ITEM pItem = pEvalInfo->pItems[0];
       PHB_SYMB pSymbol = nullptr;
 
       if( HB_IS_STRING(pItem) )
@@ -151,7 +151,7 @@ PHB_ITEM hb_evalLaunch( PHB_EVALINFO pEvalInfo )
          }
          while( uiParam < pEvalInfo->paramCount )
          {
-            hb_vmPush( pEvalInfo->pItems[ ++uiParam ] );
+            hb_vmPush( pEvalInfo->pItems[++uiParam] );
          }
          if( pItem )
          {
@@ -182,8 +182,8 @@ HB_BOOL hb_evalRelease( PHB_EVALINFO pEvalInfo )
    {
       for( HB_USHORT uiParam = 0; uiParam <= pEvalInfo->paramCount; uiParam++ )
       {
-         hb_itemRelease(pEvalInfo->pItems[ uiParam ]);
-         pEvalInfo->pItems[ uiParam ] = nullptr;
+         hb_itemRelease(pEvalInfo->pItems[uiParam]);
+         pEvalInfo->pItems[uiParam] = nullptr;
       }
 
       pEvalInfo->paramCount = 0;

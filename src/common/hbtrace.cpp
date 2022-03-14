@@ -79,7 +79,7 @@ static const char * s_mode = "w";
 
 static FILE * s_fp = nullptr;
 
-static const char * s_slevel[ HB_TR_LAST ] =
+static const char * s_slevel[HB_TR_LAST] =
 {
    "HB_TR_ALWAYS",
    "HB_TR_FATAL",
@@ -155,7 +155,7 @@ HB_BOOL hb_tracefile( const char * szFile )
 
 int hb_traceflush( int new_flush )
 {
-   int old_flush = HB_MAX( s_flush, 0 );
+   int old_flush = HB_MAX(s_flush, 0);
 
    if( new_flush == 0 || new_flush == 1 )
    {
@@ -167,7 +167,7 @@ int hb_traceflush( int new_flush )
 
 int hb_tracesysout( int new_sysout )
 {
-   int old_sysout = HB_MAX( s_sysout, 0 );
+   int old_sysout = HB_MAX(s_sysout, 0);
 
    if( new_sysout == 0 || new_sysout == 1 )
    {
@@ -181,7 +181,7 @@ int hb_tr_level( void )
 {
    if( s_level == -1 )
    {
-      char env[ HB_PATH_MAX ];
+      char env[HB_PATH_MAX];
       int enabled = s_enabled;
 
       /* protection against recursive or concurrent calls */
@@ -191,7 +191,7 @@ int hb_tr_level( void )
 
       if( s_fp == nullptr )
       {
-         if( hb_getenv_buffer( "HB_TR_OUTPUT", env, sizeof(env) ) && env[ 0 ] != '\0' )
+         if( hb_getenv_buffer( "HB_TR_OUTPUT", env, sizeof(env) ) && env[0] != '\0' )
          {
             s_fp = hb_fopen( env, s_mode );
 
@@ -206,13 +206,13 @@ int hb_tr_level( void )
          }
       }
 
-      if( hb_getenv_buffer( "HB_TR_LEVEL", env, sizeof(env) ) && env[ 0 ] != '\0' )
+      if( hb_getenv_buffer( "HB_TR_LEVEL", env, sizeof(env) ) && env[0] != '\0' )
       {
          int i;
 
          for( i = 0; i < HB_TR_LAST; ++i )
          {
-            if( hb_stricmp( env, s_slevel[ i ] ) == 0 || hb_stricmp( env, s_slevel[ i ] + 6 ) == 0 )
+            if( hb_stricmp( env, s_slevel[i] ) == 0 || hb_stricmp( env, s_slevel[i] + 6 ) == 0 )
             {
                s_level = i;
                break;
@@ -222,12 +222,12 @@ int hb_tr_level( void )
 
       if( s_sysout < 0 )
       {
-         s_sysout = ( hb_getenv_buffer( "HB_TR_SYSOUT", env, sizeof(env) ) && env[ 0 ] != '\0' ) ? 1 : 0;
+         s_sysout = ( hb_getenv_buffer( "HB_TR_SYSOUT", env, sizeof(env) ) && env[0] != '\0' ) ? 1 : 0;
       }
 
       if( s_flush < 0 )
       {
-         s_flush = ( hb_getenv_buffer( "HB_TR_FLUSH", env, sizeof(env) ) && env[ 0 ] != '\0' ) ? 1 : 0;
+         s_flush = ( hb_getenv_buffer( "HB_TR_FLUSH", env, sizeof(env) ) && env[0] != '\0' ) ? 1 : 0;
       }
 
       s_enabled = enabled;
@@ -261,7 +261,7 @@ static void hb_tracelog_( int level, const char * file, int line, const char * p
       file = "";
    }
 
-   pszLevel = ( level >= HB_TR_ALWAYS && level <= HB_TR_LAST ) ? s_slevel[ level ] : "(\?\?\?)";
+   pszLevel = ( level >= HB_TR_ALWAYS && level <= HB_TR_LAST ) ? s_slevel[level] : "(\?\?\?)";
 
    if( s_sysout > 0 )
    {
@@ -270,7 +270,7 @@ static void hb_tracelog_( int level, const char * file, int line, const char * p
       ! defined( HB_OS_VXWORKS ) && \
       ! defined( HB_OS_QNX_BB10 ) )
 
-      char message[ 1024 ];
+      char message[1024];
 
       va_list vargs;
       va_copy( vargs, ap );
@@ -292,8 +292,8 @@ static void hb_tracelog_( int level, const char * file, int line, const char * p
       {
          union
          {
-            char  psz[ 1024 ];
-            TCHAR lp[ 1024 ];
+            char  psz[1024];
+            TCHAR lp[1024];
          } buf;
 
          /* We add \n at the end of the buffer to make WinDbg display look readable. */
@@ -308,7 +308,7 @@ static void hb_tracelog_( int level, const char * file, int line, const char * p
 
          #if defined( UNICODE )
          MultiByteToWideChar(CP_ACP, 0, ( LPCSTR ) memcpy(message, buf.psz, sizeof(message)), -1, buf.lp, HB_SIZEOFARRAY(buf.lp));
-         buf.lp[ HB_SIZEOFARRAY( buf.lp ) - 1 ] = 0;
+         buf.lp[HB_SIZEOFARRAY( buf.lp ) - 1] = 0;
          #endif
          OutputDebugString( buf.lp );
       }

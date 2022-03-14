@@ -92,8 +92,8 @@
    {
       DIR *           dir;
       struct dirent * entry;
-      char            pattern[ HB_PATH_MAX ];
-      char            path[ HB_PATH_MAX ];
+      char            pattern[HB_PATH_MAX];
+      char            path[HB_PATH_MAX];
    } HB_FFIND_INFO, * PHB_FFIND_INFO;
 
 #else
@@ -318,7 +318,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
    /* Set the default values in case some platforms don't
       support some of these, or they may fail on them. */
 
-   ffind->szName[ 0 ] = '\0';
+   ffind->szName[0] = '\0';
    ffind->size = 0;
 
    /* Do platform dependent first/next search */
@@ -334,7 +334,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
 
       if( ( ffind->attrmask & HB_FA_LABEL ) != 0 && ! info->fLabelDone )
       {
-         TCHAR lpVolName[ HB_PATH_MAX ];
+         TCHAR lpVolName[HB_PATH_MAX];
          LPTSTR lpFileMask = nullptr;
          char * mask = nullptr;
 
@@ -343,13 +343,13 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
          if( ffind->pszFileMask && *ffind->pszFileMask )
          {
             PHB_FNAME pFileName = hb_fsFNameSplit(ffind->pszFileMask);
-            if( pFileName->szName && pFileName->szName[ 0 ] )
+            if( pFileName->szName && pFileName->szName[0] )
             {
                mask = hb_strdup(pFileName->szName);
             }
-            if( pFileName->szPath && pFileName->szPath[ 0 ] &&
-                ( pFileName->szPath[ 1 ] ||
-                  pFileName->szPath[ 0 ] != HB_OS_PATH_DELIM_CHR ) )
+            if( pFileName->szPath && pFileName->szPath[0] &&
+                ( pFileName->szPath[1] ||
+                  pFileName->szPath[0] != HB_OS_PATH_DELIM_CHR ) )
             {
                lpFileMask = HB_CHARDUP( pFileName->szPath );
             }
@@ -361,7 +361,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
             HB_OSSTRDUP2( lpVolName, ffind->szName, sizeof(ffind->szName) - 1 );
             if( mask && *mask && ! hb_strMatchFile( ffind->szName, mask ) )
             {
-               ffind->szName[ 0 ] = '\0';
+               ffind->szName[0] = '\0';
                bFound = HB_FALSE;
             }
          }
@@ -448,7 +448,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
    {
       PHB_FFIND_INFO info = static_cast<PHB_FFIND_INFO>(ffind->info);
 
-      char dirname[ HB_PATH_MAX ];
+      char dirname[HB_PATH_MAX];
 
       bFound = HB_FALSE;
 
@@ -470,11 +470,11 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
          else
          {
             hb_strncpy(info->pattern, dirname, sizeof(info->pattern) - 1);
-            dirname[ 0 ] = '.';
-            dirname[ 1 ] = HB_OS_PATH_DELIM_CHR;
-            dirname[ 2 ] = '\0';
+            dirname[0] = '.';
+            dirname[1] = HB_OS_PATH_DELIM_CHR;
+            dirname[2] = '\0';
          }
-         if( info->pattern[ 0 ] == '.' )
+         if( info->pattern[0] == '.' )
          {
             ffind->attrmask |= HB_FA_HIDDEN;
          }
@@ -487,7 +487,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
          hb_strncpy(info->path, dirname, sizeof(info->path) - 1);
       }
 
-      if( info->dir && info->pattern[ 0 ] != '\0' )
+      if( info->dir && info->pattern[0] != '\0' )
       {
          while( ( info->entry = readdir( info->dir ) ) != nullptr )
          {
@@ -532,9 +532,9 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
                   nAttr |= HB_FA_LINK;
                }
 #endif
-               if( info->entry->d_name[ 0 ] == '.' )
+               if( info->entry->d_name[0] == '.' )
                {
-                  if( info->entry->d_name[ 1 ] && ( info->entry->d_name[ 1 ] != '.' || info->entry->d_name[ 2 ] ) )
+                  if( info->entry->d_name[1] && ( info->entry->d_name[1] != '.' || info->entry->d_name[2] ) )
                   {
                      nAttr |= HB_FA_HIDDEN;
                   }
@@ -611,7 +611,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
    if( bFound )
    {
       /* Do the conversions common for all platforms */
-      ffind->szName[ sizeof(ffind->szName) - 1 ] = '\0';
+      ffind->szName[sizeof(ffind->szName) - 1] = '\0';
 
 #if ! defined( HB_OS_WIN )
       /* Convert from OS codepage */
@@ -632,7 +632,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
       ffind->lDate = hb_dateEncode( iYear, iMonth, iDay );
       ffind->lTime = hb_timeEncode( iHour, iMin, iSec, iMSec );
       hb_dateStrPut( ffind->szDate, iYear, iMonth, iDay );
-      ffind->szDate[ 8 ] = '\0';
+      ffind->szDate[8] = '\0';
 
       hb_snprintf(ffind->szTime, sizeof(ffind->szTime), "%02d:%02d:%02d", iHour, iMin, iSec);
    }

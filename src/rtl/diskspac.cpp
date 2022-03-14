@@ -94,17 +94,17 @@ HB_FUNC( DISKSPACE )
          ULARGE_INTEGER i64FreeBytesToCaller, i64TotalBytes, i64FreeBytes;
          UINT uiErrMode = SetErrorMode( SEM_FAILCRITICALERRORS );
 
-         TCHAR lpPath[ 4 ];
+         TCHAR lpPath[4];
 
          if( iDrive == 0 )
          {
             iDrive = hb_fsCurDrv() + 1;
          }
 
-         lpPath[ 0 ] = static_cast<TCHAR>(iDrive + 'A' - 1);
-         lpPath[ 1 ] = TEXT( ':' );
-         lpPath[ 2 ] = TEXT( '\\' );
-         lpPath[ 3 ] = TEXT( '\0' );
+         lpPath[0] = static_cast<TCHAR>(iDrive + 'A' - 1);
+         lpPath[1] = TEXT( ':' );
+         lpPath[2] = TEXT( '\\' );
+         lpPath[3] = TEXT( '\0' );
 
          /* NOTE: We need to call this function dynamically to maintain support
                   Win95 first edition. It was introduced in Win95B (aka OSR2) [vszakats] */

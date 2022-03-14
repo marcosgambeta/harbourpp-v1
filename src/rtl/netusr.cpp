@@ -66,13 +66,13 @@ char * hb_username( void )
 #if defined( HB_OS_WIN )
 
    DWORD dwLen = 256;
-   TCHAR lpValue[ 256 ];
+   TCHAR lpValue[256];
 
-   lpValue[ 0 ] = TEXT( '\0' );
+   lpValue[0] = TEXT( '\0' );
    GetUserName( lpValue, &dwLen );
-   lpValue[ 255 ] = TEXT( '\0' );
+   lpValue[255] = TEXT( '\0' );
 
-   if( lpValue[ 0 ] )
+   if( lpValue[0] )
    {
       return HB_OSSTRDUP( lpValue );
    }

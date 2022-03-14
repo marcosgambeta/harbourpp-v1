@@ -50,7 +50,7 @@
 
 HB_FUNC( HB_SHA1 )
 {
-   sha1_byte digest[ SHA1_DIGEST_LENGTH ];
+   sha1_byte digest[SHA1_DIGEST_LENGTH];
    SHA_CTX ctx;
 
    hb_SHA1_Init( &ctx );
@@ -89,7 +89,7 @@ HB_FUNC( HB_SHA1 )
 
    if( ! hb_parl(2) )
    {
-      char hex[ ( sizeof(digest) * 2 ) + 1 ];
+      char hex[( sizeof(digest) * 2 ) + 1];
       hb_strtohex( reinterpret_cast<char*>(digest), sizeof(digest), hex );
       hb_retclen( hex, HB_SIZEOFARRAY( hex ) - 1 );
    }

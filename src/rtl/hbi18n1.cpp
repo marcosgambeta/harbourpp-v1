@@ -145,7 +145,7 @@ static const HB_PLURAL_FORMS s_plural_forms[] =
 
 #define HB_PLURAL_FOMRS_COUNT  HB_SIZEOFARRAY( s_plural_forms )
 
-static const HB_UCHAR s_signature[ 4 ] = { 193, 'H', 'B', 'L' };
+static const HB_UCHAR s_signature[4] = { 193, 'H', 'B', 'L' };
 struct _HB_I18N_TRANS
 {
    HB_COUNTER   iUsers;
@@ -174,18 +174,18 @@ static int hb_i18n_pluralformfind( const char * szLang )
 
    for( i = 0; i < static_cast<int>(HB_PLURAL_FOMRS_COUNT); ++i )
    {
-      if( hb_stricmp( szLang, s_plural_forms[ i ].szLangID ) == 0 )
+      if( hb_stricmp( szLang, s_plural_forms[i].szLangID ) == 0 )
       {
-         return s_plural_forms[ i ].iForm;
+         return s_plural_forms[i].iForm;
       }
    }
    if( strlen(szLang) > 2 )
    {
       for( i = 0; i < static_cast<int>(HB_PLURAL_FOMRS_COUNT); ++i )
       {
-         if( hb_strnicmp( szLang, s_plural_forms[ i ].szLangID, 2 ) == 0 )
+         if( hb_strnicmp( szLang, s_plural_forms[i].szLangID, 2 ) == 0 )
          {
-            return s_plural_forms[ i ].iForm;
+            return s_plural_forms[i].iForm;
          }
       }
    }
@@ -196,9 +196,9 @@ static const char * hb_i18n_pluralformid( int iForm )
 {
    for( int i = 0; i < static_cast<int>(HB_PLURAL_FOMRS_COUNT); ++i )
    {
-      if( s_plural_forms[ i ].iForm == iForm )
+      if( s_plural_forms[i].iForm == iForm )
       {
-         return s_plural_forms[ i ].szLangID;
+         return s_plural_forms[i].szLangID;
       }
    }
    return nullptr;
@@ -290,13 +290,13 @@ static PHB_ITEM hb_i18n_pluralexp_compile( PHB_ITEM pExp )
       const char * szType;
       PHB_ITEM pMacro;
 
-      szMacro[ 0 ] = '{';
-      szMacro[ 1 ] = '|';
-      szMacro[ 2 ] = 'n';
-      szMacro[ 3 ] = '|';
-      memcpy(&szMacro[ 4 ], hb_itemGetCPtr(pExp), nLen);
-      szMacro[ 4 + nLen ] = '}';
-      szMacro[ 5 + nLen ] = '\0';
+      szMacro[0] = '{';
+      szMacro[1] = '|';
+      szMacro[2] = 'n';
+      szMacro[3] = '|';
+      memcpy(&szMacro[4], hb_itemGetCPtr(pExp), nLen);
+      szMacro[4 + nLen] = '}';
+      szMacro[5 + nLen] = '\0';
       pMacro = hb_itemPutCLPtr(nullptr, szMacro, nLen);
       szType = hb_macroGetType( pMacro );
       if( *szType == 'B' )
@@ -484,14 +484,14 @@ static PHB_ITEM hb_i18n_serialize( PHB_I18N_TRANS pI18N )
       hb_xfree(pBuffer);
 
       memcpy(pI18Nbuffer, s_signature, HB_I18N_SIG_SIZE);
-      HB_PUT_LE_UINT32( &pI18Nbuffer[ HB_I18N_SIZE_OFFSET ], nSize );
-      HB_PUT_LE_UINT32( &pI18Nbuffer[ HB_I18N_CRC_OFFSET ], ulCRC );
+      HB_PUT_LE_UINT32( &pI18Nbuffer[HB_I18N_SIZE_OFFSET], nSize );
+      HB_PUT_LE_UINT32( &pI18Nbuffer[HB_I18N_CRC_OFFSET], ulCRC );
 
       pKey = hb_itemPutCConst(nullptr, "DESCRIPTION");
       pValue = hb_hashGetItemPtr( pI18N->table, pKey, 0 );
       if( pValue )
       {
-         hb_strncpy(&pI18Nbuffer[ HB_I18N_TXT_OFFSET ], hb_itemGetCPtr(pValue), HB_I18N_TXT_SIZE);
+         hb_strncpy(&pI18Nbuffer[HB_I18N_TXT_OFFSET], hb_itemGetCPtr(pValue), HB_I18N_TXT_SIZE);
       }
 
       return hb_itemPutCLPtr(pKey, pI18Nbuffer, nSize + HB_I18N_HEADER_SIZE);
@@ -510,8 +510,8 @@ static HB_BOOL hb_i18n_headercheck( const char * pBuffer, HB_SIZE nLen )
    nLen -= HB_I18N_HEADER_SIZE;
    return memcmp(pBuffer, s_signature, HB_I18N_SIG_SIZE) == 0 &&
           ( nLen == 0 ||
-            ( HB_GET_LE_UINT32( &pBuffer[ HB_I18N_SIZE_OFFSET ] ) == nLen &&
-              HB_GET_LE_UINT32( &pBuffer[ HB_I18N_CRC_OFFSET ] ) ==
+            ( HB_GET_LE_UINT32( &pBuffer[HB_I18N_SIZE_OFFSET] ) == nLen &&
+              HB_GET_LE_UINT32( &pBuffer[HB_I18N_CRC_OFFSET] ) ==
                hb_crc32( 0, pBuffer + HB_I18N_HEADER_SIZE, nLen ) ) );
 }
 

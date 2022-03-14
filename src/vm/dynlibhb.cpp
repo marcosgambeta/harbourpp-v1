@@ -101,7 +101,7 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
          argv = static_cast<const char**>(hb_xgrab(sizeof(char*) * argc));
          for( int i = 0; i < argc; ++i )
          {
-            argv[ i ] = hb_arrayGetCPtr(pArgs, i + 1);
+            argv[i] = hb_arrayGetCPtr(pArgs, i + 1);
          }
       }
 

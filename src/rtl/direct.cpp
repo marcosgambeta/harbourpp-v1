@@ -122,9 +122,9 @@ PHB_ITEM hb_fsDirectory( const char * pszDirSpec, const char * pszAttributes, HB
           */
          HB_SIZE nLen = strlen(pszDirSpec) - 1;
 #ifdef HB_OS_HAS_DRIVE_LETTER
-         if( pszDirSpec[ nLen ] == HB_OS_PATH_DELIM_CHR || pszDirSpec[ nLen ] == HB_OS_DRIVE_DELIM_CHR )
+         if( pszDirSpec[nLen] == HB_OS_PATH_DELIM_CHR || pszDirSpec[nLen] == HB_OS_DRIVE_DELIM_CHR )
 #else
-         if( pszDirSpec[ nLen ] == HB_OS_PATH_DELIM_CHR )
+         if( pszDirSpec[nLen] == HB_OS_PATH_DELIM_CHR )
 #endif
          {
             pszDirSpec = pszFree = hb_xstrcpy( nullptr, pszDirSpec, HB_OS_ALLFILE_MASK, nullptr );
@@ -144,7 +144,7 @@ PHB_ITEM hb_fsDirectory( const char * pszDirSpec, const char * pszAttributes, HB
 
       do
       {
-         char buffer[ 32 ];
+         char buffer[32];
 
          hb_arrayNew    (pSubarray, F_LEN);
          hb_arraySetC   (pSubarray, F_NAME, ffind->szName);

@@ -54,18 +54,18 @@ static HB_CDP_GET_FUNC( BIG5_get )
    *wc = 0;
    if( *pnIndex < nLen )
    {
-      HB_UCHAR uc = pSrc[ ( *pnIndex )++ ];
+      HB_UCHAR uc = pSrc[( *pnIndex )++];
 
       if( uc >= ( HB_BIG5_FIRST >> 8 ) && uc <= ( HB_BIG5_LAST >> 8 ) && *pnIndex < nLen )
       {
-         *wc = s_big5_to_ucs16( ( static_cast<int>(uc) << 8 ) | static_cast<HB_UCHAR>(pSrc[ *pnIndex ]) );
+         *wc = s_big5_to_ucs16( ( static_cast<int>(uc) << 8 ) | static_cast<HB_UCHAR>(pSrc[*pnIndex]) );
          if( *wc )
          {
             ( *pnIndex )++;
             return HB_TRUE;
          }
       }
-      *wc = cdp->uniTable->uniCodes[ uc ];
+      *wc = cdp->uniTable->uniCodes[uc];
       if( *wc == 0 )
       {
          *wc = uc;
@@ -85,7 +85,7 @@ static HB_CDP_PUT_FUNC( BIG5_put )
       {
          if( *pnIndex + 1 < nLen )
          {
-            HB_PUT_BE_UINT16( &pDst[ ( *pnIndex ) ], b5 );
+            HB_PUT_BE_UINT16( &pDst[( *pnIndex )], b5 );
             *pnIndex += 2;
             return HB_TRUE;
          }
@@ -97,13 +97,13 @@ static HB_CDP_PUT_FUNC( BIG5_put )
             hb_cdpBuildTransTable( cdp->uniTable );
          }
 
-         if( wc <= cdp->uniTable->wcMax && cdp->uniTable->uniTrans[ wc ] )
+         if( wc <= cdp->uniTable->wcMax && cdp->uniTable->uniTrans[wc] )
          {
-            pDst[ ( *pnIndex )++ ] = cdp->uniTable->uniTrans[ wc ];
+            pDst[( *pnIndex )++] = cdp->uniTable->uniTrans[wc];
          }
          else
          {
-            pDst[ ( *pnIndex )++ ] = wc >= 0x100 ? '?' : static_cast<HB_UCHAR>(wc);
+            pDst[( *pnIndex )++] = wc >= 0x100 ? '?' : static_cast<HB_UCHAR>(wc);
          }
          return HB_TRUE;
       }
@@ -131,25 +131,25 @@ static void hb_cp_init( PHB_CODEPAGE cdp )
 
    for( int i = 0; i < 0x100; ++i )
    {
-      flags[ i ] = 0;
-      if( HB_ISDIGIT( i ) )
+      flags[i] = 0;
+      if( HB_ISDIGIT(i) )
       {
-         flags[ i ] |= HB_CDP_DIGIT;
+         flags[i] |= HB_CDP_DIGIT;
       }
-      if( HB_ISALPHA( i ) )
+      if( HB_ISALPHA(i) )
       {
-         flags[ i ] |= HB_CDP_ALPHA;
+         flags[i] |= HB_CDP_ALPHA;
       }
-      if( HB_ISUPPER( i ) )
+      if( HB_ISUPPER(i) )
       {
-         flags[ i ] |= HB_CDP_UPPER;
+         flags[i] |= HB_CDP_UPPER;
       }
-      if( HB_ISLOWER( i ) )
+      if( HB_ISLOWER(i) )
       {
-         flags[ i ] |= HB_CDP_LOWER;
+         flags[i] |= HB_CDP_LOWER;
       }
-      upper[ i ] = static_cast<HB_UCHAR>(HB_TOUPPER(i));
-      lower[ i ] = static_cast<HB_UCHAR>(HB_TOLOWER(i));
+      upper[i] = static_cast<HB_UCHAR>(HB_TOUPPER(i));
+      lower[i] = static_cast<HB_UCHAR>(HB_TOLOWER(i));
    }
 
 #if 0

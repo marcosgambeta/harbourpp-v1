@@ -65,7 +65,7 @@ static HB_CDP_GET_FUNC( UTF8_get )
    *wc = 0;
    while( nIndex < nLen )
    {
-      if( hb_cdpUTF8ToU16NextChar( static_cast<HB_UCHAR>(pSrc[ nIndex ]), &n, wc ) )
+      if( hb_cdpUTF8ToU16NextChar( static_cast<HB_UCHAR>(pSrc[nIndex]), &n, wc ) )
       {
          ++nIndex;
       }
@@ -91,7 +91,7 @@ static HB_CDP_PUT_FUNC( UTF8_put )
 
    if( *pnIndex + i <= nLen )
    {
-      hb_cdpU16CharToUTF8( &pDst[ *pnIndex ], wc );
+      hb_cdpU16CharToUTF8( &pDst[*pnIndex], wc );
       *pnIndex += i;
       return HB_TRUE;
    }
@@ -159,7 +159,7 @@ static HB_CDP_CMP_FUNC( UTF8_cmp )
       }
       if( wc1 != wc2 )
       {
-         HB_USHORT us1 = s_uniSort[ wc1 ], us2 = s_uniSort[ wc2 ];
+         HB_USHORT us1 = s_uniSort[wc1], us2 = s_uniSort[wc2];
          if( us1 != us2 )
          {
             iRet = us1 < us2 ? -1 : 1;
@@ -225,7 +225,7 @@ static HB_CDP_CMP_FUNC( UTF8_cmpi )
       }
       if( wc1 != wc2 )
       {
-         HB_USHORT us1 = s_uniSort[ HB_CDPCHAR_UPPER( cdp, wc1 ) ], us2 = s_uniSort[ HB_CDPCHAR_UPPER( cdp, wc2 ) ];
+         HB_USHORT us1 = s_uniSort[HB_CDPCHAR_UPPER( cdp, wc1 )], us2 = s_uniSort[HB_CDPCHAR_UPPER( cdp, wc2 )];
          if( us1 != us2 )
          {
             iRet = us1 < us2 ? -1 : 1;
@@ -240,7 +240,7 @@ static HB_CDP_CMP_FUNC( UTF8_cmpi )
 
    while( nLen-- )
    {
-      HB_UCHAR u1 = cdp->upper[ static_cast<HB_UCHAR>(*szFirst++) ], u2 = cdp->upper[ static_cast<HB_UCHAR>(*szSecond++) ];
+      HB_UCHAR u1 = cdp->upper[static_cast<HB_UCHAR>(*szFirst++)], u2 = cdp->upper[static_cast<HB_UCHAR>(*szSecond++)];
       if( u1 != u2 )
       {
          iRet = ( u1 < u2 ) ? -1 : 1;
@@ -276,25 +276,25 @@ static void hb_cp_init( PHB_CODEPAGE cdp )
 
    for( int i = 0; i < 0x100; ++i )
    {
-      flags[ i ] = 0;
-      if( HB_ISDIGIT( i ) )
+      flags[i] = 0;
+      if( HB_ISDIGIT(i) )
       {
-         flags[ i ] |= HB_CDP_DIGIT;
+         flags[i] |= HB_CDP_DIGIT;
       }
-      if( HB_ISALPHA( i ) )
+      if( HB_ISALPHA(i) )
       {
-         flags[ i ] |= HB_CDP_ALPHA;
+         flags[i] |= HB_CDP_ALPHA;
       }
-      if( HB_ISUPPER( i ) )
+      if( HB_ISUPPER(i) )
       {
-         flags[ i ] |= HB_CDP_UPPER;
+         flags[i] |= HB_CDP_UPPER;
       }
-      if( HB_ISLOWER( i ) )
+      if( HB_ISLOWER(i) )
       {
-         flags[ i ] |= HB_CDP_LOWER;
+         flags[i] |= HB_CDP_LOWER;
       }
-      upper[ i ] = static_cast<HB_UCHAR>(HB_TOUPPER(i));
-      lower[ i ] = static_cast<HB_UCHAR>(HB_TOLOWER(i));
+      upper[i] = static_cast<HB_UCHAR>(HB_TOUPPER(i));
+      lower[i] = static_cast<HB_UCHAR>(HB_TOLOWER(i));
    }
 }
 

@@ -74,8 +74,8 @@ HB_FUNC( __ACCEPTSTR )
 HB_FUNC( __ACCEPT )
 {
    PHB_CODEPAGE cdp = hb_vmCDP();
-   char         szAcceptResult[ ACCEPT_BUFFER_LEN ];
-   char         szKey[ HB_MAX_CHAR_LEN ];
+   char         szAcceptResult[ACCEPT_BUFFER_LEN];
+   char         szKey[HB_MAX_CHAR_LEN];
    HB_SIZE      nLen  = 0, nChar;
    int          input = 0;
 
@@ -85,7 +85,7 @@ HB_FUNC( __ACCEPT )
       HB_FUNC_EXEC( QOUT );
    }
    
-   szAcceptResult[ 0 ] = '\0';
+   szAcceptResult[0] = '\0';
 
    while( input != K_ENTER && hb_vmRequestQuery() == 0 )
    {
@@ -107,7 +107,7 @@ HB_FUNC( __ACCEPT )
                   nLen = 0;
                }
 
-               szKey[ 0 ] = HB_CHAR_BS;
+               szKey[0] = HB_CHAR_BS;
 
                nChar = 1;
             }
@@ -121,7 +121,7 @@ HB_FUNC( __ACCEPT )
             nChar = hb_inkeyKeyString( input, szKey, sizeof(szKey) );
             if( nChar > 0 && nLen + nChar < ACCEPT_BUFFER_LEN )
             {
-               memcpy(&szAcceptResult[ nLen ], szKey, nChar);
+               memcpy(&szAcceptResult[nLen], szKey, nChar);
                nLen += nChar;
             }
       }
@@ -131,7 +131,7 @@ HB_FUNC( __ACCEPT )
       }   
    }
 
-   szAcceptResult[ nLen ] = '\0';
+   szAcceptResult[nLen] = '\0';
 
 #ifdef HB_CLP_UNDOC
    hb_strncpy(hb_acceptBuffer(), szAcceptResult, ACCEPT_BUFFER_LEN - 1);

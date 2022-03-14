@@ -12,7 +12,7 @@
 #define HB_BIG5_LAST    0xF9D5
 #define HB_BIG5_BITS    5
 
-static const HB_USHORT s_big5index[ 709 ] =
+static const HB_USHORT s_big5index[709] =
 {
    0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0002, 0x0002,
    0x0006, 0x0007, 0x0002, 0x0008, 0x0009, 0x000A, 0x0002, 0x0002,
@@ -105,7 +105,7 @@ static const HB_USHORT s_big5index[ 709 ] =
    0x01B2, 0x01B3, 0x0002, 0x01B4, 0x01B5
 };
 
-static const HB_USHORT s_big5_ucs16[ 14006 ] =
+static const HB_USHORT s_big5_ucs16[14006] =
 {
    0x3000, 0xFF0C, 0x3001, 0x3002, 0xFF0E, 0x2022, 0xFF1B, 0xFF1A,
    0xFF1F, 0xFF01, 0xFE30, 0x2026, 0x2025, 0xFE50, 0xFF64, 0xFE52,
@@ -1865,8 +1865,8 @@ static HB_USHORT s_big5_to_ucs16( int n )
    n -= HB_BIG5_FIRST;
    if( n >= 0 && n <= ( HB_BIG5_LAST - HB_BIG5_FIRST ) )
    {
-      return s_big5_ucs16[ ( s_big5index[ n >> HB_BIG5_BITS ] << HB_BIG5_BITS ) +
-                           ( n & ( ( 1 << HB_BIG5_BITS ) - 1 ) ) ];
+      return s_big5_ucs16[( s_big5index[n >> HB_BIG5_BITS] << HB_BIG5_BITS ) +
+                           ( n & ( ( 1 << HB_BIG5_BITS ) - 1 ) )];
    }
    return 0;
 }
@@ -1875,7 +1875,7 @@ static HB_USHORT s_big5_to_ucs16( int n )
 #define HB_U16_LAST     0xFFFD
 #define HB_U16_BITS     6
 
-static const HB_USHORT s_ucs16index[ 1022 ] =
+static const HB_USHORT s_ucs16index[1022] =
 {
    0x0000, 0x0001, 0x0002, 0x0002, 0x0002, 0x0002, 0x0002, 0x0002,
    0x0003, 0x0002, 0x0002, 0x0004, 0x0005, 0x0006, 0x0007, 0x0002,
@@ -2007,7 +2007,7 @@ static const HB_USHORT s_ucs16index[ 1022 ] =
    0x0002, 0x0161, 0x0162, 0x0163, 0x0002, 0x0164
 };
 
-static const HB_USHORT s_ucs16_big5[ 22814 ] =
+static const HB_USHORT s_ucs16_big5[22814] =
 {
    0x0000, 0x0000, 0xA246, 0xA247, 0x0000, 0xA244, 0x0000, 0xA1B1,
    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
@@ -4868,7 +4868,7 @@ static HB_USHORT s_ucs16_to_big5( int n )
    n -= HB_U16_FIRST;
    if( n >= 0 && n <= ( HB_U16_LAST - HB_U16_FIRST ) )
    {
-      return s_ucs16_big5[ ( s_ucs16index[ n >> HB_U16_BITS ] << HB_U16_BITS ) + ( n & ( ( 1 << HB_U16_BITS ) - 1 ) ) ];
+      return s_ucs16_big5[( s_ucs16index[n >> HB_U16_BITS] << HB_U16_BITS ) + ( n & ( ( 1 << HB_U16_BITS ) - 1 ) )];
    }
    return 0;
 }

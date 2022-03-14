@@ -184,7 +184,7 @@ HB_FUNC( ALIAS )
 
    if( pArea )
    {
-      char szAlias[ HB_RDD_MAX_ALIAS_LEN + 1 ];
+      char szAlias[HB_RDD_MAX_ALIAS_LEN + 1];
 
       if( SELF_ALIAS( pArea, szAlias ) == HB_SUCCESS )
       {
@@ -259,7 +259,7 @@ HB_FUNC( DBF )
 
    if( pArea )
    {
-      char szAlias[ HB_RDD_MAX_ALIAS_LEN + 1 ];
+      char szAlias[HB_RDD_MAX_ALIAS_LEN + 1];
 
       if( SELF_ALIAS( pArea, szAlias ) == HB_SUCCESS )
       {
@@ -497,7 +497,7 @@ HB_FUNC( __DBOPENSDF )
    szCpId = hb_parc(7);
    ulConnection = hb_parnl(8);
 
-   if( ! pStruct || hb_arrayLen(pStruct) == 0 || ! szFileName || ! szFileName[ 0 ] )
+   if( ! pStruct || hb_arrayLen(pStruct) == 0 || ! szFileName || ! szFileName[0] )
    {
       hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
       return;
@@ -1114,7 +1114,7 @@ HB_FUNC( FIELDNAME )
       if( SELF_FIELDCOUNT( pArea, &uiFields ) == HB_SUCCESS && uiIndex <= uiFields )
       {
          char * szName = static_cast<char*>(hb_xgrab(pArea->uiMaxFieldNameLength + 1));
-         szName[ 0 ] = '\0';
+         szName[0] = '\0';
          SELF_FIELDNAME( pArea, uiIndex, szName );
          hb_retc_buffer( szName );
          return;
@@ -1448,8 +1448,8 @@ HB_FUNC( ORDCREATE )
       dbOrderInfo.itmOrder = nullptr;
       dbOrderInfo.fUnique = HB_ISLOG(5) ? ( HB_BOOL ) hb_parl(5) : hb_setGetUnique();
       dbOrderInfo.abExpr = hb_param(3, HB_IT_STRING);
-      if( ( ( dbOrderInfo.abBagName == nullptr || dbOrderInfo.abBagName[ 0 ] == 0 ) &&
-            ( dbOrderInfo.atomBagName == nullptr || dbOrderInfo.atomBagName[ 0 ] == 0 ) ) ||
+      if( ( ( dbOrderInfo.abBagName == nullptr || dbOrderInfo.abBagName[0] == 0 ) &&
+            ( dbOrderInfo.atomBagName == nullptr || dbOrderInfo.atomBagName[0] == 0 ) ) ||
           ! dbOrderInfo.abExpr )
       {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_REL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
@@ -1763,7 +1763,7 @@ HB_FUNC( RDDNAME )
 
    if( pArea )
    {
-      char szRddName[ HB_RDD_MAX_DRIVERNAME_LEN + 1 ];
+      char szRddName[HB_RDD_MAX_DRIVERNAME_LEN + 1];
 
       SELF_SYSNAME( pArea, szRddName );
       hb_retc( szRddName );
@@ -1780,7 +1780,7 @@ HB_FUNC( RDDREGISTER )
 
    if( uiLen > 0 )
    {
-      char szDriver[ HB_RDD_MAX_DRIVERNAME_LEN + 1 ];
+      char szDriver[HB_RDD_MAX_DRIVERNAME_LEN + 1];
 
       if( uiLen > HB_RDD_MAX_DRIVERNAME_LEN )
       {
@@ -2118,7 +2118,7 @@ HB_FUNC( __DBARRANGE )
             for( uiDest = 0, uiCount = 1; uiCount <= dbSortInfo.uiItemCount; ++uiCount )
             {
                char * szPos;
-               dbSortInfo.lpdbsItem[ uiDest ].uiFlags = 0;
+               dbSortInfo.lpdbsItem[uiDest].uiFlags = 0;
                hb_strncpyUpper( szFieldLine, hb_arrayGetCPtr(pFields, uiCount), hb_arrayGetCLen(pFields, uiCount) );
                szPos = strchr( szFieldLine, '/' );
                if( szPos )
@@ -2128,28 +2128,28 @@ HB_FUNC( __DBARRANGE )
                      for /D flag and ignores any /A flags [druzus] */
                   if( strchr( szPos, 'D' ) > strchr( szPos, 'A' ) )
                   {
-                     dbSortInfo.lpdbsItem[ uiDest ].uiFlags |= SF_DESCEND;
+                     dbSortInfo.lpdbsItem[uiDest].uiFlags |= SF_DESCEND;
                   }
                   else
                   {
-                     dbSortInfo.lpdbsItem[ uiDest ].uiFlags |= SF_ASCEND;
+                     dbSortInfo.lpdbsItem[uiDest].uiFlags |= SF_ASCEND;
                   }
                   if( strchr( szPos, 'C' ) != nullptr )
                   {
-                     dbSortInfo.lpdbsItem[ uiDest ].uiFlags |= SF_CASE;
+                     dbSortInfo.lpdbsItem[uiDest].uiFlags |= SF_CASE;
                   }
                }
                else
                {
-                  dbSortInfo.lpdbsItem[ uiDest ].uiFlags |= SF_ASCEND;
+                  dbSortInfo.lpdbsItem[uiDest].uiFlags |= SF_ASCEND;
                }
 
                /* Cl*pper sorts records using field values from source
                   area only, destination area may not contain sorted
                   fields at all [druzus] */
-               dbSortInfo.lpdbsItem[ uiDest ].uiField = hb_rddFieldExpIndex( pSrcArea, szFieldLine );
+               dbSortInfo.lpdbsItem[uiDest].uiField = hb_rddFieldExpIndex( pSrcArea, szFieldLine );
                /* Field found */
-               if( dbSortInfo.lpdbsItem[ uiDest ].uiField != 0 )
+               if( dbSortInfo.lpdbsItem[uiDest].uiField != 0 )
                {
                   ++uiDest;
                }
@@ -2337,7 +2337,7 @@ HB_FUNC( __DBCOPY )
 
 HB_FUNC( HB_RDDGETTEMPALIAS )
 {
-   char szAliasTmp[ HB_RDD_MAX_ALIAS_LEN + 1 ];
+   char szAliasTmp[HB_RDD_MAX_ALIAS_LEN + 1];
 
    if( hb_rddGetTempAlias( szAliasTmp ) == HB_SUCCESS )
    {
@@ -2386,7 +2386,7 @@ HB_FUNC( HB_DBDROP )
    {
       const char * szDriver;
 
-      if( ! szName[ 0 ] )
+      if( ! szName[0] )
       {
          szName = hb_parc(2);
       }
@@ -2417,7 +2417,7 @@ HB_FUNC( HB_DBEXISTS )
    {
       const char * szDriver;
 
-      if( ! szName[ 0 ] )
+      if( ! szName[0] )
       {
          szName = hb_parc(2);
       }
@@ -2448,7 +2448,7 @@ HB_FUNC( HB_DBRENAME )
    {
       const char * szDriver;
 
-      if( ! szName[ 0 ] )
+      if( ! szName[0] )
       {
          szName = hb_parc(2);
       }

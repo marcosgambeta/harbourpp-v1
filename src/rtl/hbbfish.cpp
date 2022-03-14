@@ -232,12 +232,12 @@ static const HB_BLOWFISH s_blowFishInit =
      0xb74e6132, 0xce77e25b, 0x578fdfe3, 0x3ac372e6 }
 };
 
-#define P( n )     bf->P[ n ]
+#define P( n )     bf->P[n]
 
-#define S1( n )    bf->S1[ n ]
-#define S2( n )    bf->S2[ n ]
-#define S3( n )    bf->S3[ n ]
-#define S4( n )    bf->S4[ n ]
+#define S1( n )    bf->S1[n]
+#define S2( n )    bf->S2[n]
+#define S3( n )    bf->S3[n]
+#define S4( n )    bf->S4[n]
 
 #define a( x )     ( x >> 24 )
 #define b( x )     ( ( x >> 16 ) & 0xFF )
@@ -289,7 +289,7 @@ void hb_blowfishDecrypt( const HB_BLOWFISH * bf, HB_U32 * xl, HB_U32 * xr )
    for( i = 0; i < n; ++i ) \
    { \
       hb_blowfishEncrypt( bf, &xL, &xR ); \
-      bf->a[ i ] = xL; bf->a[ ++i ] = xR; \
+      bf->a[i] = xL; bf->a[++i] = xR; \
    }
 
 void hb_blowfishInit( HB_BLOWFISH * bf, const void * keydata, int keylen )
@@ -306,7 +306,7 @@ void hb_blowfishInit( HB_BLOWFISH * bf, const void * keydata, int keylen )
       for( l = 4; l; --l )
       {
          xL <<= 8;
-         xL |= key[ j++ ];
+         xL |= key[j++];
          if( j >= keylen )
          {
             j = 0;

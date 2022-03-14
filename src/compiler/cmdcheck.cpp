@@ -47,7 +47,7 @@
 #include "hbcomp.h"
 #include "hbset.h"
 
-static char s_szUndefineMarker[ 1 ] = "";
+static char s_szUndefineMarker[1] = "";
 
 static HB_SIZE hb_compChkOptionLen( const char * szSwitch, HB_BOOL fEnv )
 {
@@ -56,7 +56,7 @@ static HB_SIZE hb_compChkOptionLen( const char * szSwitch, HB_BOOL fEnv )
    if( fEnv )
    {
       nLen = 0;
-      while( szSwitch[ nLen ] != '\0' && szSwitch[ nLen ] != ' ' && szSwitch[ nLen ] != '-' )
+      while( szSwitch[nLen] != '\0' && szSwitch[nLen] != ' ' && szSwitch[nLen] != '-' )
       {
          ++nLen;
       }
@@ -122,7 +122,7 @@ static const char * hb_compChkAddDefine( HB_COMP_DECL, const char * szSwitch, HB
 
 static void hb_compChkIgnoredInfo( HB_COMP_DECL, const char * szSwitch )
 {
-   char buffer[ 64 ];
+   char buffer[64];
 
    hb_snprintf(buffer, sizeof(buffer),
                 "Ignored unsupported command-line option: %s\n", szSwitch);
@@ -156,7 +156,7 @@ static const char * hb_compChkOptionFName( const char * szSwitch, PHB_FNAME * pR
       {
          hb_xfree(*pResult);
       }
-      if( szSwitch[ nLen ] != '\0' )
+      if( szSwitch[nLen] != '\0' )
       {
          char * szVal = hb_strndup(szSwitch, nLen);
          *pResult = hb_fsFNameSplit(szVal);
@@ -176,7 +176,7 @@ static const char * hb_compChkOptionAddPath( HB_COMP_DECL, const char * szSwitch
 
    if( nLen > 0 )
    {
-      if( szSwitch[ nLen ] != '\0' )
+      if( szSwitch[nLen] != '\0' )
       {
          char * szVal = hb_strndup(szSwitch, nLen);
          hb_pp_addSearchPath( HB_COMP_PARAM->pLex->pPP, szSwitch, HB_FALSE );
@@ -194,7 +194,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
 {
    const char * szSwPtr = szSwitch;
 
-   if( szSwPtr[ 0 ] == '-' && szSwPtr[ 1 ] == '-' )
+   if( szSwPtr[0] == '-' && szSwPtr[1] == '-' )
    {
       if( strncmp(szSwPtr + 2, "version", 7) == 0 )
       {
@@ -237,7 +237,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
                HB_COMP_PARAM->fBuildInfo = HB_TRUE;
                szSwPtr += 5;
             }
-            else if( szSwPtr[ 1 ] == '-' )
+            else if( szSwPtr[1] == '-' )
             {
                HB_COMP_PARAM->fDebugInfo = HB_FALSE;
                szSwPtr += 2;
@@ -270,9 +270,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
             break;
 
          case 'E':
-            if( HB_TOUPPER(szSwPtr[ 1 ]) == 'S' )
+            if( HB_TOUPPER(szSwPtr[1]) == 'S' )
             {
-               switch( szSwPtr[ 2 ] )
+               switch( szSwPtr[2] )
                {
                   case '1':
                      szSwPtr += 3;
@@ -294,17 +294,17 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
             break;
 
          case 'F':
-            switch( HB_TOUPPER(szSwPtr[ 1 ]) )
+            switch( HB_TOUPPER(szSwPtr[1]) )
             {
                case 'N':
-                  if( szSwPtr[ 2 ] == ':' )
+                  if( szSwPtr[2] == ':' )
                   {
-                     if( HB_TOUPPER(szSwPtr[ 3 ]) == 'U' )
+                     if( HB_TOUPPER(szSwPtr[3]) == 'U' )
                      {
                         szSwPtr += 4;
                         hb_setSetFileCase( HB_SET_CASE_UPPER );
                      }
-                     else if( HB_TOUPPER(szSwPtr[ 3 ]) == 'L' )
+                     else if( HB_TOUPPER(szSwPtr[3]) == 'L' )
                      {
                         szSwPtr += 4;
                         hb_setSetFileCase( HB_SET_CASE_LOWER );
@@ -321,14 +321,14 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
                   }
                   break;
                case 'D':
-                  if( szSwPtr[ 2 ] == ':' )
+                  if( szSwPtr[2] == ':' )
                   {
-                     if( HB_TOUPPER(szSwPtr[ 3 ]) == 'U' )
+                     if( HB_TOUPPER(szSwPtr[3]) == 'U' )
                      {
                         szSwPtr += 4;
                         hb_setSetDirCase( HB_SET_CASE_UPPER );
                      }
-                     else if( HB_TOUPPER(szSwPtr[ 3 ]) == 'L' )
+                     else if( HB_TOUPPER(szSwPtr[3]) == 'L' )
                      {
                         szSwPtr += 4;
                         hb_setSetDirCase( HB_SET_CASE_LOWER );
@@ -348,9 +348,9 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
                   szSwPtr += 2;
                   if( *szSwPtr == ':' )
                   {
-                     if( szSwPtr[ 1 ] && szSwPtr[ 1 ] != ' ' )
+                     if( szSwPtr[1] && szSwPtr[1] != ' ' )
                      {
-                        hb_setSetDirSeparator( szSwPtr[ 1 ] );
+                        hb_setSetDirSeparator( szSwPtr[1] );
                         szSwPtr += 2;
                      }
                   }
@@ -378,7 +378,7 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
             break;
 
          case 'G':
-            switch( HB_TOUPPER(szSwPtr[ 1 ]) )
+            switch( HB_TOUPPER(szSwPtr[1]) )
             {
                case 'C':
                   HB_COMP_PARAM->iLanguage = HB_LANG_C;
@@ -750,13 +750,13 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
 
          case 'R':
             ++szSwPtr;
-            if( szSwPtr[ 0 ] == ':' )
+            if( szSwPtr[0] == ':' )
             {
-               if( HB_ISDIGIT( szSwPtr[ 1 ] ) )
+               if( HB_ISDIGIT(szSwPtr[1]) )
                {
                   int iCycles = 0;
                   ++szSwPtr;
-                  while( HB_ISDIGIT( *szSwPtr ) )
+                  while( HB_ISDIGIT(*szSwPtr) )
                   {
                      iCycles = iCycles * 10 + *szSwPtr++ - '0';
                   }
@@ -819,14 +819,14 @@ static const char * hb_compChkParseSwitch( HB_COMP_DECL, const char * szSwitch, 
             /* extended definitions file: -u+<file> */
             if( *szSwPtr == '+' )
             {
-               if( szSwPtr[ 1 ] && hb_compChkOptionLen(szSwPtr + 1, fEnv) > 0 )
+               if( szSwPtr[1] && hb_compChkOptionLen(szSwPtr + 1, fEnv) > 0 )
                {
                   HB_COMP_PARAM->szStdChExt = static_cast<char**>(
                      ( HB_COMP_PARAM->iStdChExt == 0 ?
                         hb_xgrab(sizeof(char*)) :
                         hb_xrealloc(HB_COMP_PARAM->szStdChExt, ( HB_COMP_PARAM->iStdChExt + 1 ) * sizeof(char*)) ) );
                   szSwPtr = hb_compChkOptionGet( szSwPtr + 1,
-                                                 &HB_COMP_PARAM->szStdChExt[ HB_COMP_PARAM->iStdChExt++ ],
+                                                 &HB_COMP_PARAM->szStdChExt[HB_COMP_PARAM->iStdChExt++],
                                                  fEnv );
                }
             }
@@ -908,9 +908,9 @@ void hb_compChkCommandLine( HB_COMP_DECL, int argc, const char * const argv[] )
 {
    for( int i = 1; i < argc && ! HB_COMP_PARAM->fExit; ++i )
    {
-      const char * szSwitch = argv[ i ];
+      const char * szSwitch = argv[i];
 
-      if( HB_ISOPTSEP( szSwitch[ 0 ] ) )
+      if( HB_ISOPTSEP( szSwitch[0] ) )
       {
          do
          {
@@ -927,7 +927,7 @@ void hb_compChkEnvironment( HB_COMP_DECL )
    /* NOTE: if HARBOURCMD envvar exists then it's used instead of CLIPPERCMD */
    char * szEnvCMD = hb_getenv( "HARBOURCMD" );
 
-   if( ! szEnvCMD || szEnvCMD[ 0 ] == '\0' )
+   if( ! szEnvCMD || szEnvCMD[0] == '\0' )
    {
       if( szEnvCMD )
       {
@@ -961,7 +961,7 @@ void hb_compChkAddIncPaths( HB_COMP_DECL )
 
    if( szInclude )
    {
-      if( szInclude[ 0 ] != '\0' )
+      if( szInclude[0] != '\0' )
       {
          hb_pp_addSearchPath( HB_COMP_PARAM->pLex->pPP, szInclude, HB_FALSE );
       }

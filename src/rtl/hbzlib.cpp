@@ -151,7 +151,7 @@ static int s_zlibCompress( char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_S
 
 static HB_SIZE s_zlibUncompressedSize( const char * szSrc, HB_SIZE nLen, int * piResult )
 {
-   Byte buffer[ 1024 ];
+   Byte buffer[1024];
    z_stream stream;
    HB_SIZE nDest = 0;
 

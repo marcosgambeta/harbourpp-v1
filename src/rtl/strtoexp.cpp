@@ -58,7 +58,7 @@ HB_FUNC( HB_STRTOEXP )
 
       for( n = 0; n < nLen; ++n )
       {
-         switch( pszString[ n ] )
+         switch( pszString[n] )
          {
             case '\\':
                ++nQ;
@@ -92,7 +92,7 @@ HB_FUNC( HB_STRTOEXP )
          *pDst++ = '"';
          for( n = 0; n < nLen; ++n )
          {
-            ch = pszString[ n ];
+            ch = pszString[n];
             switch( ch )
             {
                case '\r':

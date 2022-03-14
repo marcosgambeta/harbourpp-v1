@@ -56,7 +56,7 @@ static void s_pp_msg( void * cargo, int iErrorFmt, int iLine,
    /* ignore all warning messages and errors when break or quit request */
    if( cPrefix != 'W' && hb_vmRequestQuery() == 0 )
    {
-      char szMsgBuf[ 512 ], szLine[ 512 ];
+      char szMsgBuf[512], szLine[512];
       PHB_ITEM pError;
 
       hb_snprintf(szMsgBuf, sizeof(szMsgBuf), szText, szPar1, szPar2);
@@ -190,17 +190,17 @@ static void hb_compGenArgList( int iFirst, int iLast,
             {
                if( hb_arrayGetType(pParam, nPos) & HB_IT_STRING )
                {
-                  argv[ argc++ ] = hb_arrayGetCPtr(pParam, nPos);
+                  argv[argc++] = hb_arrayGetCPtr(pParam, nPos);
                }
             }
          }
          else if( HB_IS_STRING(pParam) )
          {
-            argv[ argc++ ] = hb_itemGetCPtr(pParam);
+            argv[argc++] = hb_itemGetCPtr(pParam);
          }
       }
    }
-   argv[ argc ] = nullptr;
+   argv[argc] = nullptr;
 
    *pArgC = argc;
    *pArgV = argv;

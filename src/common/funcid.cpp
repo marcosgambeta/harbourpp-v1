@@ -157,7 +157,7 @@ const char * hb_compGetFuncID( const char * szFuncName, HB_FUNC_ID * pFunID, int
    do
    {
       uiMiddle = ( uiFirst + uiLast ) >> 1;
-      i = strcmp(szFuncName, s_funcId[ uiMiddle ].szFuncName);
+      i = strcmp(szFuncName, s_funcId[uiMiddle].szFuncName);
       if( i <= 0 )
       {
          uiLast = uiMiddle;
@@ -171,24 +171,24 @@ const char * hb_compGetFuncID( const char * szFuncName, HB_FUNC_ID * pFunID, int
 
    if( uiFirst != uiMiddle )
    {
-      i = strcmp(szFuncName, s_funcId[ uiFirst ].szFuncName);
+      i = strcmp(szFuncName, s_funcId[uiFirst].szFuncName);
    }
 
-   if( i < 0 && s_funcId[ uiFirst ].iMinLen )
+   if( i < 0 && s_funcId[uiFirst].iMinLen )
    {
       int iLen = static_cast<int>(strlen(szFuncName));
 
-      if( iLen >= s_funcId[ uiFirst ].iMinLen )
+      if( iLen >= s_funcId[uiFirst].iMinLen )
       {
-         i = strncmp(szFuncName, s_funcId[ uiFirst ].szFuncName, iLen);
+         i = strncmp(szFuncName, s_funcId[uiFirst].szFuncName, iLen);
       }
    }
 
    if( i == 0 )
    {
-      *piFlags = s_funcId[ uiFirst ].flags;
-      *pFunID = s_funcId[ uiFirst ].funcID;
-      return s_funcId[ uiFirst ].szFuncName;
+      *piFlags = s_funcId[uiFirst].flags;
+      *pFunID = s_funcId[uiFirst].funcID;
+      return s_funcId[uiFirst].szFuncName;
    }
 
    *piFlags = HB_FN_UDF;

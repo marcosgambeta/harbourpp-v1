@@ -280,7 +280,7 @@ static HB_BOOL s_fUseWaitLocks = HB_TRUE;
 
 static int fs_win_get_drive( void )
 {
-   TCHAR pBuffer[ HB_PATH_MAX ];
+   TCHAR pBuffer[HB_PATH_MAX];
    LPTSTR lpBuffer = pBuffer;
    DWORD dwResult, dwSize;
    int iDrive = 0;
@@ -294,9 +294,9 @@ static int fs_win_get_drive( void )
       dwResult = GetCurrentDirectory( dwSize, lpBuffer );
    }
    hb_fsSetIOError( dwResult != 0, 0 );
-   if( dwResult >= 2 && dwResult < dwSize && lpBuffer[ 1 ] == HB_OS_DRIVE_DELIM_CHR )
+   if( dwResult >= 2 && dwResult < dwSize && lpBuffer[1] == HB_OS_DRIVE_DELIM_CHR )
    {
-      iDrive = HB_TOUPPER(lpBuffer[ 0 ]);
+      iDrive = HB_TOUPPER(lpBuffer[0]);
       if( iDrive >= 'A' && iDrive <= 'Z' )
       {
          iDrive -= 'A';
@@ -317,13 +317,13 @@ static void fs_win_set_drive( int iDrive )
 {
    if( iDrive >= 0 && iDrive <= 25 )
    {
-      TCHAR szBuffer[ 3 ];
+      TCHAR szBuffer[3];
       HB_BOOL fResult;
       UINT uiErrMode;
 
-      szBuffer[ 0 ] = static_cast<TCHAR>(iDrive + 'A');
-      szBuffer[ 1 ] = TEXT( ':' );
-      szBuffer[ 2 ] = TEXT( '\0' );
+      szBuffer[0] = static_cast<TCHAR>(iDrive + 'A');
+      szBuffer[1] = TEXT( ':' );
+      szBuffer[2] = TEXT( '\0' );
 
       uiErrMode = SetErrorMode( SEM_FAILCRITICALERRORS );
       fResult = SetCurrentDirectory( szBuffer ) != FALSE;
@@ -761,12 +761,12 @@ int hb_fsPoll( PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut )
 
 #if defined( HB_HAS_POLL )
 {
-   struct pollfd fds[ 16 ], * pfds;
+   struct pollfd fds[16], * pfds;
    static const HB_BOOL s_fSamePoll =
                   sizeof(struct pollfd) == sizeof(HB_POLLFD) &&
-                  sizeof(pPollSet->fd) == sizeof(fds[ 0 ].fd) &&
-                  sizeof(pPollSet->events) == sizeof(fds[ 0 ].events) &&
-                  sizeof(pPollSet->revents) == sizeof(fds[ 0 ].revents) &&
+                  sizeof(pPollSet->fd) == sizeof(fds[0].fd) &&
+                  sizeof(pPollSet->events) == sizeof(fds[0].events) &&
+                  sizeof(pPollSet->revents) == sizeof(fds[0].revents) &&
                   HB_POLLIN == POLLIN && HB_POLLPRI == POLLPRI &&
                   HB_POLLOUT == POLLOUT && HB_POLLERR == POLLERR &&
                   HB_POLLHUP == POLLHUP && HB_POLLNVAL == POLLNVAL;
@@ -792,14 +792,14 @@ int hb_fsPoll( PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut )
 
       for( i = 0; i < iCount; ++i )
       {
-         pfds[ i ].fd = pPollSet[ i ].fd;
-         pfds[ i ].events = ( ( pPollSet[ i ].events & HB_POLLIN   ) ? POLLIN   : 0 ) |
-                            ( ( pPollSet[ i ].events & HB_POLLPRI  ) ? POLLPRI  : 0 ) |
-                            ( ( pPollSet[ i ].events & HB_POLLOUT  ) ? POLLOUT  : 0 ) |
-                            ( ( pPollSet[ i ].events & HB_POLLERR  ) ? POLLERR  : 0 ) |
-                            ( ( pPollSet[ i ].events & HB_POLLHUP  ) ? POLLHUP  : 0 ) |
-                            ( ( pPollSet[ i ].events & HB_POLLNVAL ) ? POLLNVAL : 0 );
-         pfds[ i ].revents = 0;
+         pfds[i].fd = pPollSet[i].fd;
+         pfds[i].events = ( ( pPollSet[i].events & HB_POLLIN   ) ? POLLIN   : 0 ) |
+                          ( ( pPollSet[i].events & HB_POLLPRI  ) ? POLLPRI  : 0 ) |
+                          ( ( pPollSet[i].events & HB_POLLOUT  ) ? POLLOUT  : 0 ) |
+                          ( ( pPollSet[i].events & HB_POLLERR  ) ? POLLERR  : 0 ) |
+                          ( ( pPollSet[i].events & HB_POLLHUP  ) ? POLLHUP  : 0 ) |
+                          ( ( pPollSet[i].events & HB_POLLNVAL ) ? POLLNVAL : 0 );
+         pfds[i].revents = 0;
       }
    }
 
@@ -828,12 +828,12 @@ int hb_fsPoll( PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut )
    {
       for( i = 0; i < iCount; ++i )
       {
-         pPollSet[ i ].revents = ( ( pfds[ i ].revents & POLLIN   ) ? HB_POLLIN   : 0 ) |
-                                 ( ( pfds[ i ].revents & POLLPRI  ) ? HB_POLLPRI  : 0 ) |
-                                 ( ( pfds[ i ].revents & POLLOUT  ) ? HB_POLLOUT  : 0 ) |
-                                 ( ( pfds[ i ].revents & POLLERR  ) ? HB_POLLERR  : 0 ) |
-                                 ( ( pfds[ i ].revents & POLLHUP  ) ? HB_POLLHUP  : 0 ) |
-                                 ( ( pfds[ i ].revents & POLLNVAL ) ? HB_POLLNVAL : 0 );
+         pPollSet[i].revents = ( ( pfds[i].revents & POLLIN   ) ? HB_POLLIN   : 0 ) |
+                               ( ( pfds[i].revents & POLLPRI  ) ? HB_POLLPRI  : 0 ) |
+                               ( ( pfds[i].revents & POLLOUT  ) ? HB_POLLOUT  : 0 ) |
+                               ( ( pfds[i].revents & POLLERR  ) ? HB_POLLERR  : 0 ) |
+                               ( ( pfds[i].revents & POLLHUP  ) ? HB_POLLHUP  : 0 ) |
+                               ( ( pfds[i].revents & POLLNVAL ) ? HB_POLLNVAL : 0 );
       }
    }
 
@@ -985,7 +985,7 @@ HB_FHANDLE hb_fsPOpen( const char * pszFileName, const char * pszMode )
 
 #if defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS )
    {
-      HB_FHANDLE hPipeHandle[ 2 ];
+      HB_FHANDLE hPipeHandle[2];
       pid_t pid;
       char * pszTmp;
       HB_BOOL fRead;
@@ -998,11 +998,11 @@ HB_FHANDLE hb_fsPOpen( const char * pszFileName, const char * pszMode )
       }
       else
       {
-         if( pszFileName[ 0 ] == '|' )
+         if( pszFileName[0] == '|' )
          {
             fRead = HB_FALSE;
          }
-         else if( pszFileName[ nLen - 1 ] == '|' )
+         else if( pszFileName[nLen - 1] == '|' )
          {
             fRead = HB_TRUE;
          }
@@ -1012,15 +1012,15 @@ HB_FHANDLE hb_fsPOpen( const char * pszFileName, const char * pszMode )
          }
       }
 
-      if( pszFileName[ 0 ] == '|' )
+      if( pszFileName[0] == '|' )
       {
          ++pszFileName;
          --nLen;
       }
-      if( pszFileName[ nLen - 1 ] == '|' )
+      if( pszFileName[nLen - 1] == '|' )
       {
          pszTmp = hb_strdup(pszFileName);
-         pszTmp[ --nLen ] = 0;
+         pszTmp[--nLen] = 0;
          pszFileName        = pszTmp;
       }
       else
@@ -1043,18 +1043,18 @@ HB_FHANDLE hb_fsPOpen( const char * pszFileName, const char * pszMode )
 
                if( iResult != 0 )
                {
-                  hb_fsClose( hPipeHandle[ 0 ] );
-                  hb_fsClose( hPipeHandle[ 1 ] );
+                  hb_fsClose( hPipeHandle[0] );
+                  hb_fsClose( hPipeHandle[1] );
                }
                else if( fRead )
                {
-                  hb_fsClose( hPipeHandle[ 1 ] );
-                  hFileHandle = hPipeHandle[ 0 ];
+                  hb_fsClose( hPipeHandle[1] );
+                  hFileHandle = hPipeHandle[0];
                }
                else
                {
-                  hb_fsClose( hPipeHandle[ 0 ] );
-                  hFileHandle = hPipeHandle[ 1 ];
+                  hb_fsClose( hPipeHandle[0] );
+                  hFileHandle = hPipeHandle[1];
                }
             }
             else
@@ -1065,15 +1065,15 @@ HB_FHANDLE hb_fsPOpen( const char * pszFileName, const char * pszMode )
                HB_FAILURE_RETRY( hNullHandle, open( "/dev/null", O_RDWR ) );
                if( fRead )
                {
-                  hb_fsClose( hPipeHandle[ 0 ] );
-                  HB_FAILURE_RETRY( iResult, dup2( hPipeHandle[ 1 ], 1 ) );
+                  hb_fsClose( hPipeHandle[0] );
+                  HB_FAILURE_RETRY( iResult, dup2( hPipeHandle[1], 1 ) );
                   HB_FAILURE_RETRY( iResult, dup2( hNullHandle, 0 ) );
                   HB_FAILURE_RETRY( iResult, dup2( hNullHandle, 2 ) );
                }
                else
                {
-                  hb_fsClose( hPipeHandle[ 1 ] );
-                  HB_FAILURE_RETRY( iResult, dup2( hPipeHandle[ 0 ], 0 ) );
+                  hb_fsClose( hPipeHandle[1] );
+                  HB_FAILURE_RETRY( iResult, dup2( hPipeHandle[0], 0 ) );
                   HB_FAILURE_RETRY( iResult, dup2( hNullHandle, 1 ) );
                   HB_FAILURE_RETRY( iResult, dup2( hNullHandle, 2 ) );
                }
@@ -1090,12 +1090,12 @@ HB_FHANDLE hb_fsPOpen( const char * pszFileName, const char * pszMode )
                pid = fork();
                if( pid == 0 )
                {
-                  const char * argv[ 4 ];
+                  const char * argv[4];
 
-                  argv[ 0 ] = "sh";
-                  argv[ 1 ] = "-c";
-                  argv[ 2 ] = pszFileName;
-                  argv[ 3 ] = 0;
+                  argv[0] = "sh";
+                  argv[1] = "-c";
+                  argv[2] = pszFileName;
+                  argv[3] = 0;
 
                   if( setuid( getuid() ) == -1 ) {}
                   if( setgid( getgid() ) == -1 ) {}
@@ -1107,8 +1107,8 @@ HB_FHANDLE hb_fsPOpen( const char * pszFileName, const char * pszMode )
          else
          {
             hb_fsSetIOError( hFileHandle != FS_ERROR, 0 );
-            hb_fsCloseRaw( hPipeHandle[ 0 ] );
-            hb_fsCloseRaw( hPipeHandle[ 1 ] );
+            hb_fsCloseRaw( hPipeHandle[0] );
+            hb_fsCloseRaw( hPipeHandle[1] );
          }
       }
       else
@@ -1134,7 +1134,7 @@ HB_FHANDLE hb_fsPOpen( const char * pszFileName, const char * pszMode )
    return hFileHandle;
 }
 
-HB_BOOL hb_fsPipeCreate( HB_FHANDLE hPipe[ 2 ] )
+HB_BOOL hb_fsPipeCreate( HB_FHANDLE hPipe[2] )
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsPipeCreate(%p)", static_cast<void*>(hPipe) ) );
@@ -1154,12 +1154,12 @@ HB_BOOL hb_fsPipeCreate( HB_FHANDLE hPipe[ 2 ] )
    fResult = CreatePipe( &hPipeRd, &hPipeWr, &sa, 0 ) != 0;
    if( fResult )
    {
-      hPipe[ 0 ] = reinterpret_cast<HB_FHANDLE>(hPipeRd);
-      hPipe[ 1 ] = reinterpret_cast<HB_FHANDLE>(hPipeWr);
+      hPipe[0] = reinterpret_cast<HB_FHANDLE>(hPipeRd);
+      hPipe[1] = reinterpret_cast<HB_FHANDLE>(hPipeWr);
    }
    else
    {
-      hPipe[ 0 ] = hPipe[ 1 ] = FS_ERROR;
+      hPipe[0] = hPipe[1] = FS_ERROR;
    }
    hb_fsSetIOError( fResult, 0 );
 }
@@ -1168,7 +1168,7 @@ HB_BOOL hb_fsPipeCreate( HB_FHANDLE hPipe[ 2 ] )
    fResult = pipe( hPipe ) == 0;
    if( ! fResult )
    {
-      hPipe[ 0 ] = hPipe[ 1 ] = FS_ERROR;
+      hPipe[0] = hPipe[1] = FS_ERROR;
    }
    hb_fsSetIOError( fResult, 0 );
 }
@@ -1176,7 +1176,7 @@ HB_BOOL hb_fsPipeCreate( HB_FHANDLE hPipe[ 2 ] )
 {
    int iTODO; /* TODO: for given platform */
 
-   hPipe[ 0 ] = hPipe[ 1 ] = FS_ERROR;
+   hPipe[0] = hPipe[1] = FS_ERROR;
    hb_fsSetError( static_cast<HB_ERRCODE>(FS_ERROR) );
    fResult = HB_FALSE;
 }
@@ -1991,9 +1991,9 @@ HB_BOOL hb_fsSetFileTime( const char * pszFileName, long lJulian, long lMillisec
 
 #  if defined( HB_OS_LINUX )
          {
-            struct timeval times[ 2 ];
-            times[ 0 ].tv_sec = times[ 1 ].tv_sec = mktime( &new_value );
-            times[ 0 ].tv_usec = times[ 1 ].tv_usec = iMSec * 1000;
+            struct timeval times[2];
+            times[0].tv_sec = times[1].tv_sec = mktime( &new_value );
+            times[0].tv_usec = times[1].tv_usec = iMSec * 1000;
             fResult = utimes( pszFileName, times ) == 0;
          }
 #  else
@@ -3613,7 +3613,7 @@ HB_ERRCODE hb_fsCurDirBuff( int iDrive, char * pszBuffer, HB_SIZE nSize )
    int iCurDrv = iDrive;
    HB_ERRCODE nResult;
 
-   pszBuffer[ 0 ] = '\0';
+   pszBuffer[0] = '\0';
 
    /*
     * do not cover this code by HB_OS_HAS_DRIVE_LETTER macro
@@ -3637,9 +3637,9 @@ HB_ERRCODE hb_fsCurDirBuff( int iDrive, char * pszBuffer, HB_SIZE nSize )
    {
       DWORD dwSize = static_cast<DWORD>(nSize);
       LPTSTR lpBuffer = static_cast<LPTSTR>(hb_xgrab(dwSize * sizeof(TCHAR)));
-      lpBuffer[ 0 ] = TEXT( '\0' );
+      lpBuffer[0] = TEXT( '\0' );
       hb_fsSetIOError( ( GetCurrentDirectory( dwSize, lpBuffer ) != 0 ), 0 );
-      lpBuffer[ dwSize - 1 ] = TEXT( '\0' );
+      lpBuffer[dwSize - 1] = TEXT( '\0' );
       HB_OSSTRDUP2( lpBuffer, pszBuffer, nSize - 1 );
       hb_xfree(lpBuffer);
    }
@@ -3670,9 +3670,9 @@ HB_ERRCODE hb_fsCurDirBuff( int iDrive, char * pszBuffer, HB_SIZE nSize )
       hb_fsSetError( nResult );
    }
 
-   pszBuffer[ nSize - 1 ] = '\0';
+   pszBuffer[nSize - 1] = '\0';
 
-   if( nResult == 0 && pszBuffer[ 0 ] )
+   if( nResult == 0 && pszBuffer[0] )
    {
       char * pszStart;
       HB_SIZE nLen;
@@ -3685,20 +3685,20 @@ HB_ERRCODE hb_fsCurDirBuff( int iDrive, char * pszBuffer, HB_SIZE nSize )
       pszStart = pszBuffer;
 
 #if defined( HB_OS_HAS_DRIVE_LETTER )
-      if( pszStart[ 1 ] == HB_OS_DRIVE_DELIM_CHR )
+      if( pszStart[1] == HB_OS_DRIVE_DELIM_CHR )
       {
          pszStart += 2;
          nLen -= 2;
       }
 #endif
-      if( strchr( HB_OS_PATH_DELIM_CHR_LIST, static_cast<HB_UCHAR>(pszStart[ 0 ]) ) )
+      if( strchr( HB_OS_PATH_DELIM_CHR_LIST, static_cast<HB_UCHAR>(pszStart[0]) ) )
       {
          pszStart++;
          nLen--;
       }
 
       /* Strip the trailing (back)slash if there's one */
-      if( nLen && strchr( HB_OS_PATH_DELIM_CHR_LIST, static_cast<HB_UCHAR>(pszStart[ nLen - 1 ]) ) )
+      if( nLen && strchr( HB_OS_PATH_DELIM_CHR_LIST, static_cast<HB_UCHAR>(pszStart[nLen - 1]) ) )
       {
          nLen--;
       }
@@ -3708,7 +3708,7 @@ HB_ERRCODE hb_fsCurDirBuff( int iDrive, char * pszBuffer, HB_SIZE nSize )
          memmove(pszBuffer, pszStart, nLen);
       }
 
-      pszBuffer[ nLen ] = '\0';
+      pszBuffer[nLen] = '\0';
 
 #if ! defined( HB_OS_WIN )
       /* Convert from OS codepage */
@@ -3742,7 +3742,7 @@ HB_BOOL hb_fsGetCWD( char * pszBuffer, HB_SIZE nSize )
 
    HB_BOOL fResult;
 
-   pszBuffer[ 0 ] = '\0';
+   pszBuffer[0] = '\0';
 
    hb_vmUnlock();
 
@@ -3750,10 +3750,10 @@ HB_BOOL hb_fsGetCWD( char * pszBuffer, HB_SIZE nSize )
    {
       DWORD dwSize = static_cast<DWORD>(nSize);
       LPTSTR lpBuffer = static_cast<LPTSTR>(hb_xgrab(dwSize * sizeof(TCHAR)));
-      lpBuffer[ 0 ] = TEXT( '\0' );
+      lpBuffer[0] = TEXT( '\0' );
       fResult = GetCurrentDirectory( dwSize, lpBuffer ) != 0;
       hb_fsSetIOError( fResult, 0 );
-      lpBuffer[ dwSize - 1 ] = TEXT( '\0' );
+      lpBuffer[dwSize - 1] = TEXT( '\0' );
       HB_OSSTRDUP2( lpBuffer, pszBuffer, nSize - 1 );
       hb_xfree(lpBuffer);
    }
@@ -3766,18 +3766,18 @@ HB_BOOL hb_fsGetCWD( char * pszBuffer, HB_SIZE nSize )
 
    hb_vmLock();
 
-   pszBuffer[ nSize - 1 ] = '\0';
+   pszBuffer[nSize - 1] = '\0';
 
-   if( fResult && pszBuffer[ 0 ] )
+   if( fResult && pszBuffer[0] )
    {
       HB_SIZE nLen;
       nLen = strlen(pszBuffer);
 
       /* add the trailing (back)slash if there's no one */
-      if( nLen + 1 < nSize && strchr( HB_OS_PATH_DELIM_CHR_LIST, static_cast<HB_UCHAR>(pszBuffer[ nLen - 1 ]) ) == 0 )
+      if( nLen + 1 < nSize && strchr( HB_OS_PATH_DELIM_CHR_LIST, static_cast<HB_UCHAR>(pszBuffer[nLen - 1]) ) == 0 )
       {
-         pszBuffer[ nLen++ ] = HB_OS_PATH_DELIM_CHR;
-         pszBuffer[ nLen ] = '\0';
+         pszBuffer[nLen++] = HB_OS_PATH_DELIM_CHR;
+         pszBuffer[nLen] = '\0';
       }
 
 #if ! defined( HB_OS_WIN )
@@ -3846,9 +3846,9 @@ HB_BOOL hb_fsSetCWD( const char * pszDirName )
       hb_fsSetIOError( fResult, 0 );
 
 #if defined( HB_OS_HAS_DRIVE_LETTER )
-      if( fResult && pszDirName[ 0 ] != 0 && pszDirName[ 1 ] == HB_OS_DRIVE_DELIM_CHR )
+      if( fResult && pszDirName[0] != 0 && pszDirName[1] == HB_OS_DRIVE_DELIM_CHR )
       {
-         int iDrive = pszDirName[ 0 ];
+         int iDrive = pszDirName[0];
 
          if( iDrive >= 'A' && iDrive <= 'Z' )
          {
@@ -4367,14 +4367,14 @@ const char * hb_fsNameConv( const char * pszFileName, char ** pszFree )
             nLen = strlen(pFileName->szName);
             nLen = hb_strRTrimLen( pFileName->szName, nLen, HB_FALSE );
             pFileName->szName = hb_strLTrim( pFileName->szName, &nLen );
-            ( const_cast<char*>(pFileName->szName) )[ nLen ] = '\0';
+            ( const_cast<char*>(pFileName->szName) )[nLen] = '\0';
          }
          if( pFileName->szExtension )
          {
             nLen = strlen(pFileName->szExtension);
             nLen = hb_strRTrimLen( pFileName->szExtension, nLen, HB_FALSE );
             pFileName->szExtension = hb_strLTrim( pFileName->szExtension, &nLen );
-            ( const_cast<char*>(pFileName->szExtension) )[ nLen ] = '\0';
+            ( const_cast<char*>(pFileName->szExtension) )[nLen] = '\0';
          }
       }
 
@@ -4526,14 +4526,14 @@ HB_WCHAR * hb_fsNameConvU16( const char * pszFileName )
             nLen = strlen(pFileName->szName);
             nLen = hb_strRTrimLen( pFileName->szName, nLen, HB_FALSE );
             pFileName->szName = hb_strLTrim( pFileName->szName, &nLen );
-            ( const_cast<char*>(pFileName->szName) )[ nLen ] = '\0';
+            ( const_cast<char*>(pFileName->szName) )[nLen] = '\0';
          }
          if( pFileName->szExtension )
          {
             nLen = strlen(pFileName->szExtension);
             nLen = hb_strRTrimLen( pFileName->szExtension, nLen, HB_FALSE );
             pFileName->szExtension = hb_strLTrim( pFileName->szExtension, &nLen );
-            ( const_cast<char*>(pFileName->szExtension) )[ nLen ] = '\0';
+            ( const_cast<char*>(pFileName->szExtension) )[nLen] = '\0';
          }
       }
 
@@ -4616,7 +4616,7 @@ void hb_fsBaseDirBuff( char * pszBuffer )
    }
    else
    {
-      pszBuffer[ 0 ] = '\0';
+      pszBuffer[0] = '\0';
    }
 }
 

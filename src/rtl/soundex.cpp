@@ -52,13 +52,13 @@
 HB_FUNC( SOUNDEX )
 {
    PHB_ITEM pString = hb_param(1, HB_IT_STRING);
-   char szResult[ SOUNDEX_LEN_MAX + 1 ];
+   char szResult[SOUNDEX_LEN_MAX + 1];
 
    /* NOTE: The result will always be a zero terminated string without any
             embedded zeros and special characters. [vszakats] */
 
    memset(szResult, '0', SOUNDEX_LEN_MAX);
-   szResult[ SOUNDEX_LEN_MAX ] = '\0';
+   szResult[SOUNDEX_LEN_MAX] = '\0';
 
    if( pString )
    {
@@ -70,7 +70,7 @@ HB_FUNC( SOUNDEX )
 
       while( nPos < nLen && nResultPos < SOUNDEX_LEN_MAX )
       {
-         char cChar = pszString[ nPos ];
+         char cChar = pszString[nPos];
 
          /* NOTE: Intentionally not using toupper()/IsAlpha() to be 100%
                   Clipper compatible here, these ANSI C functions may behave
@@ -88,15 +88,15 @@ HB_FUNC( SOUNDEX )
          {
             static const char s_szTable[] = "01230120022455012623010202"; /* NOTE: SoundEx result codes for letters from "A" to "Z" */
                                          /* "ABCDEFGHIJKLMNOPQRSTUVWXYZ" */
-            char cCharConverted = ( ( cChar - 'A' ) > ( static_cast<int>(sizeof(s_szTable)) - 1 ) ) ? '9' : s_szTable[ cChar - 'A' ];
+            char cCharConverted = ( ( cChar - 'A' ) > ( static_cast<int>(sizeof(s_szTable)) - 1 ) ) ? '9' : s_szTable[cChar - 'A'];
 
             if( nResultPos == 0 )
             {
-               szResult[ nResultPos++ ] = cChar;
+               szResult[nResultPos++] = cChar;
             }
             else if( cCharConverted != '0' && cCharConverted != cCharPrev )
             {
-               szResult[ nResultPos++ ] = cCharConverted;
+               szResult[nResultPos++] = cCharConverted;
             }
 
             cCharPrev = cCharConverted;

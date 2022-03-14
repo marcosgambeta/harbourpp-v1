@@ -55,9 +55,9 @@ HB_FUNC( HB_COLORINDEX )
       int          iColorIndex = hb_parni(2);
 
       /* Skip the given number of commas */
-      for( nColorPos = 0; pszColor[ nColorPos ] != '\0' && iColorIndex > 0; nColorPos++ )
+      for( nColorPos = 0; pszColor[nColorPos] != '\0' && iColorIndex > 0; nColorPos++ )
       {
-         if( pszColor[ nColorPos ] == ',' )
+         if( pszColor[nColorPos] == ',' )
          {
             iColorIndex--;
          }
@@ -69,20 +69,20 @@ HB_FUNC( HB_COLORINDEX )
          HB_SIZE nColorLen;
 
          /* Skip the spaces after the comma */
-         while( pszColor[ nColorPos ] == ' ' )
+         while( pszColor[nColorPos] == ' ' )
          {
             nColorPos++;
          }
          
          /* Search for next comma or end of string */
          nColorLen = 0;
-         while( pszColor[ nColorPos + nColorLen ] != '\0' && pszColor[ nColorPos + nColorLen ] != ',' )
+         while( pszColor[nColorPos + nColorLen] != '\0' && pszColor[nColorPos + nColorLen] != ',' )
          {
             nColorLen++;
          }
          
          /* Skip the trailing spaces */
-         while( nColorLen > 0 && pszColor[ nColorPos + nColorLen - 1 ] == ' ' )
+         while( nColorLen > 0 && pszColor[nColorPos + nColorLen - 1] == ' ' )
          {
             nColorLen--;
          }

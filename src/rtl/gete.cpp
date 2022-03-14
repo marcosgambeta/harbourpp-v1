@@ -61,7 +61,7 @@ HB_FUNC( GETENV )
 #endif
       char * pszValue = nullptr;
 
-      if( pszName[ 0 ] != '\0' )
+      if( pszName[0] != '\0' )
       {
          pszValue = hb_getenv( pszName );
       }
@@ -108,7 +108,7 @@ HB_FUNC( HB_GETENV )
 #endif
       char * pszValue = nullptr;
 
-      if( pszName[ 0 ] != '\0' )
+      if( pszName[0] != '\0' )
       {
          pszValue = hb_getenv( pszName );
       }

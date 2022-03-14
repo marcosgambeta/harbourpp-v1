@@ -85,18 +85,18 @@ static const char * s_colorNames[] =
 
 /* to convert Clipper colors into Slang ones */
 #ifdef HB_SLN_UTF8
-static SLsmg_Color_Type s_colorTab[ 256 ];
+static SLsmg_Color_Type s_colorTab[256];
 #else
-static SLsmg_Char_Type s_colorTab[ 256 ];
+static SLsmg_Char_Type s_colorTab[256];
 #endif
 /* to convert displayed characters */
-static SLsmg_Char_Type s_outputTab[ 256 ];
+static SLsmg_Char_Type s_outputTab[256];
 
 /* to convert box displayed characters */
-static SLsmg_Char_Type s_outboxTab[ 256 ];
+static SLsmg_Char_Type s_outboxTab[256];
 
 /* to convert input characters */
-unsigned char hb_sln_inputTab[ 256 ];
+unsigned char hb_sln_inputTab[256];
 
 static HB_BOOL s_fActive = HB_FALSE;
 
@@ -153,11 +153,11 @@ static void hb_sln_colorTrans( void )
        * the same.
        */
       clr = ( bg << 4 ) | ( fg ^ 0x07 );
-      SLtt_set_color( clr, nullptr, const_cast<char*>(s_colorNames[ fg ]), const_cast<char*>(s_colorNames[ bg ]) );
+      SLtt_set_color( clr, nullptr, const_cast<char*>(s_colorNames[fg]), const_cast<char*>(s_colorNames[bg]) );
 #ifdef HB_SLN_UTF8
-      s_colorTab[ i ] = clr;
+      s_colorTab[i] = clr;
 #else
-      HB_SLN_BUILD_RAWCHAR( s_colorTab[ i ], 0, clr );
+      HB_SLN_BUILD_RAWCHAR( s_colorTab[i], 0, clr );
 #endif
    }
 }
@@ -167,44 +167,44 @@ static void hb_sln_colorTrans( void )
 static void hb_sln_setSingleBox( void )
 {
    /* convert all box chars into Clipper _B_SINBLE */
-   s_outputTab[ 186 ] = s_outputTab[ 179 ];
-   s_outputTab[ 205 ] = s_outputTab[ 196 ];
+   s_outputTab[186] = s_outputTab[179];
+   s_outputTab[205] = s_outputTab[196];
 
-   s_outputTab[ 181 ] = s_outputTab[ 180 ];
-   s_outputTab[ 182 ] = s_outputTab[ 180 ];
-   s_outputTab[ 185 ] = s_outputTab[ 180 ];
+   s_outputTab[181] = s_outputTab[180];
+   s_outputTab[182] = s_outputTab[180];
+   s_outputTab[185] = s_outputTab[180];
 
-   s_outputTab[ 183 ] = s_outputTab[ 191 ];
-   s_outputTab[ 184 ] = s_outputTab[ 191 ];
-   s_outputTab[ 187 ] = s_outputTab[ 191 ];
+   s_outputTab[183] = s_outputTab[191];
+   s_outputTab[184] = s_outputTab[191];
+   s_outputTab[187] = s_outputTab[191];
 
-   s_outputTab[ 200 ] = s_outputTab[ 192 ];
-   s_outputTab[ 211 ] = s_outputTab[ 192 ];
-   s_outputTab[ 212 ] = s_outputTab[ 192 ];
+   s_outputTab[200] = s_outputTab[192];
+   s_outputTab[211] = s_outputTab[192];
+   s_outputTab[212] = s_outputTab[192];
 
-   s_outputTab[ 202 ] = s_outputTab[ 193 ];
-   s_outputTab[ 207 ] = s_outputTab[ 193 ];
-   s_outputTab[ 208 ] = s_outputTab[ 193 ];
+   s_outputTab[202] = s_outputTab[193];
+   s_outputTab[207] = s_outputTab[193];
+   s_outputTab[208] = s_outputTab[193];
 
-   s_outputTab[ 203 ] = s_outputTab[ 194 ];
-   s_outputTab[ 209 ] = s_outputTab[ 194 ];
-   s_outputTab[ 210 ] = s_outputTab[ 194 ];
+   s_outputTab[203] = s_outputTab[194];
+   s_outputTab[209] = s_outputTab[194];
+   s_outputTab[210] = s_outputTab[194];
 
-   s_outputTab[ 198 ] = s_outputTab[ 195 ];
-   s_outputTab[ 199 ] = s_outputTab[ 195 ];
-   s_outputTab[ 204 ] = s_outputTab[ 195 ];
+   s_outputTab[198] = s_outputTab[195];
+   s_outputTab[199] = s_outputTab[195];
+   s_outputTab[204] = s_outputTab[195];
 
-   s_outputTab[ 206 ] = s_outputTab[ 197 ];
-   s_outputTab[ 215 ] = s_outputTab[ 197 ];
-   s_outputTab[ 216 ] = s_outputTab[ 197 ];
+   s_outputTab[206] = s_outputTab[197];
+   s_outputTab[215] = s_outputTab[197];
+   s_outputTab[216] = s_outputTab[197];
 
-   s_outputTab[ 188 ] = s_outputTab[ 217 ];
-   s_outputTab[ 189 ] = s_outputTab[ 217 ];
-   s_outputTab[ 190 ] = s_outputTab[ 217 ];
+   s_outputTab[188] = s_outputTab[217];
+   s_outputTab[189] = s_outputTab[217];
+   s_outputTab[190] = s_outputTab[217];
 
-   s_outputTab[ 201 ] = s_outputTab[ 218 ];
-   s_outputTab[ 213 ] = s_outputTab[ 218 ];
-   s_outputTab[ 214 ] = s_outputTab[ 218 ];
+   s_outputTab[201] = s_outputTab[218];
+   s_outputTab[213] = s_outputTab[218];
+   s_outputTab[214] = s_outputTab[218];
 }
 
 /* *********************************************************************** */
@@ -212,19 +212,19 @@ static void hb_sln_setSingleBox( void )
 static void hb_sln_setACSCtrans( void )
 {
    unsigned char * p;
-   SLsmg_Char_Type chBoard[ 3 ], chArrow[ 4 ];
+   SLsmg_Char_Type chBoard[3], chArrow[4];
 
    memset(&chArrow, 0, sizeof(chArrow));
    memset(&chBoard, 0, sizeof(chBoard));
 
-   HB_SLN_BUILD_RAWCHAR( chBoard[ 0 ], 0, 0 );
-   HB_SLN_BUILD_RAWCHAR( chBoard[ 1 ], 0, 0 );
-   HB_SLN_BUILD_RAWCHAR( chBoard[ 2 ], 0, 0 );
+   HB_SLN_BUILD_RAWCHAR( chBoard[0], 0, 0 );
+   HB_SLN_BUILD_RAWCHAR( chBoard[1], 0, 0 );
+   HB_SLN_BUILD_RAWCHAR( chBoard[2], 0, 0 );
 
-   HB_SLN_BUILD_RAWCHAR( chArrow[ 0 ], '<', 0 );
-   HB_SLN_BUILD_RAWCHAR( chArrow[ 1 ], '>', 0 );
-   HB_SLN_BUILD_RAWCHAR( chArrow[ 2 ], 'v', 0 );
-   HB_SLN_BUILD_RAWCHAR( chArrow[ 3 ], '^', 0 );
+   HB_SLN_BUILD_RAWCHAR( chArrow[0], '<', 0 );
+   HB_SLN_BUILD_RAWCHAR( chArrow[1], '>', 0 );
+   HB_SLN_BUILD_RAWCHAR( chArrow[2], 'v', 0 );
+   HB_SLN_BUILD_RAWCHAR( chArrow[3], '^', 0 );
 
    /* init an alternate chars table */
    if( ( p = ( unsigned char * ) SLtt_Graphics_Char_Pairs ) )
@@ -241,55 +241,55 @@ static void hb_sln_setACSCtrans( void )
          switch( ch )
          {
 #ifdef HB_SLN_UNICODE
-            case SLSMG_HLINE_CHAR_TERM   :   s_outputTab[ 196 ] = SLch; break;
-            case SLSMG_VLINE_CHAR_TERM   :   s_outputTab[ 179 ] = SLch; break;
-            case SLSMG_ULCORN_CHAR_TERM  :   s_outputTab[ 218 ] = SLch; break;
-            case SLSMG_URCORN_CHAR_TERM  :   s_outputTab[ 191 ] = SLch; break;
-            case SLSMG_LLCORN_CHAR_TERM  :   s_outputTab[ 192 ] = SLch; break;
-            case SLSMG_LRCORN_CHAR_TERM  :   s_outputTab[ 217 ] = SLch; break;
-            case SLSMG_RTEE_CHAR_TERM    :   s_outputTab[ 180 ] = SLch; break;
-            case SLSMG_LTEE_CHAR_TERM    :   s_outputTab[ 195 ] = SLch; break;
-            case SLSMG_UTEE_CHAR_TERM    :   s_outputTab[ 194 ] = SLch; break;
-            case SLSMG_DTEE_CHAR_TERM    :   s_outputTab[ 193 ] = SLch; break;
-            case SLSMG_PLUS_CHAR_TERM    :   s_outputTab[ 197 ] = SLch; break;
+            case SLSMG_HLINE_CHAR_TERM   :   s_outputTab[196] = SLch; break;
+            case SLSMG_VLINE_CHAR_TERM   :   s_outputTab[179] = SLch; break;
+            case SLSMG_ULCORN_CHAR_TERM  :   s_outputTab[218] = SLch; break;
+            case SLSMG_URCORN_CHAR_TERM  :   s_outputTab[191] = SLch; break;
+            case SLSMG_LLCORN_CHAR_TERM  :   s_outputTab[192] = SLch; break;
+            case SLSMG_LRCORN_CHAR_TERM  :   s_outputTab[217] = SLch; break;
+            case SLSMG_RTEE_CHAR_TERM    :   s_outputTab[180] = SLch; break;
+            case SLSMG_LTEE_CHAR_TERM    :   s_outputTab[195] = SLch; break;
+            case SLSMG_UTEE_CHAR_TERM    :   s_outputTab[194] = SLch; break;
+            case SLSMG_DTEE_CHAR_TERM    :   s_outputTab[193] = SLch; break;
+            case SLSMG_PLUS_CHAR_TERM    :   s_outputTab[197] = SLch; break;
 /*
-            case SLSMG_DEGREE_CHAR_TERM  :   s_outputTab[    ] = SLch; break;
-            case SLSMG_PLMINUS_CHAR_TERM :   s_outputTab[    ] = SLch; break;
-            case SLSMG_BULLET_CHAR_TERM  :   s_outputTab[    ] = SLch; break;
+            case SLSMG_DEGREE_CHAR_TERM  :   s_outputTab[   ] = SLch; break;
+            case SLSMG_PLMINUS_CHAR_TERM :   s_outputTab[   ] = SLch; break;
+            case SLSMG_BULLET_CHAR_TERM  :   s_outputTab[   ] = SLch; break;
 */
-            case SLSMG_DIAMOND_CHAR_TERM :   s_outputTab[ 04 ] = SLch; break;
-            case SLSMG_LARROW_CHAR_TERM  :   chArrow[ 0 ] = SLch; break;
-            case SLSMG_RARROW_CHAR_TERM  :   chArrow[ 1 ] = SLch; break;
-            case SLSMG_DARROW_CHAR_TERM  :   chArrow[ 2 ] = SLch; break;
-            case SLSMG_UARROW_CHAR_TERM  :   chArrow[ 3 ] = SLch; break;
-            case SLSMG_BOARD_CHAR_TERM   :   chBoard[ 0 ] = SLch; break;
-            case SLSMG_CKBRD_CHAR_TERM   :   chBoard[ 1 ] = SLch; break;
-            case SLSMG_BLOCK_CHAR_TERM   :   chBoard[ 2 ] = SLch; break;
+            case SLSMG_DIAMOND_CHAR_TERM :   s_outputTab[04] = SLch; break;
+            case SLSMG_LARROW_CHAR_TERM  :   chArrow[0] = SLch; break;
+            case SLSMG_RARROW_CHAR_TERM  :   chArrow[1] = SLch; break;
+            case SLSMG_DARROW_CHAR_TERM  :   chArrow[2] = SLch; break;
+            case SLSMG_UARROW_CHAR_TERM  :   chArrow[3] = SLch; break;
+            case SLSMG_BOARD_CHAR_TERM   :   chBoard[0] = SLch; break;
+            case SLSMG_CKBRD_CHAR_TERM   :   chBoard[1] = SLch; break;
+            case SLSMG_BLOCK_CHAR_TERM   :   chBoard[2] = SLch; break;
 #else
-            case SLSMG_HLINE_CHAR   :   s_outputTab[ 196 ] = SLch; break;
-            case SLSMG_VLINE_CHAR   :   s_outputTab[ 179 ] = SLch; break;
-            case SLSMG_ULCORN_CHAR  :   s_outputTab[ 218 ] = SLch; break;
-            case SLSMG_URCORN_CHAR  :   s_outputTab[ 191 ] = SLch; break;
-            case SLSMG_LLCORN_CHAR  :   s_outputTab[ 192 ] = SLch; break;
-            case SLSMG_LRCORN_CHAR  :   s_outputTab[ 217 ] = SLch; break;
-            case SLSMG_RTEE_CHAR    :   s_outputTab[ 180 ] = SLch; break;
-            case SLSMG_LTEE_CHAR    :   s_outputTab[ 195 ] = SLch; break;
-            case SLSMG_UTEE_CHAR    :   s_outputTab[ 194 ] = SLch; break;
-            case SLSMG_DTEE_CHAR    :   s_outputTab[ 193 ] = SLch; break;
-            case SLSMG_PLUS_CHAR    :   s_outputTab[ 197 ] = SLch; break;
+            case SLSMG_HLINE_CHAR   :   s_outputTab[196] = SLch; break;
+            case SLSMG_VLINE_CHAR   :   s_outputTab[179] = SLch; break;
+            case SLSMG_ULCORN_CHAR  :   s_outputTab[218] = SLch; break;
+            case SLSMG_URCORN_CHAR  :   s_outputTab[191] = SLch; break;
+            case SLSMG_LLCORN_CHAR  :   s_outputTab[192] = SLch; break;
+            case SLSMG_LRCORN_CHAR  :   s_outputTab[217] = SLch; break;
+            case SLSMG_RTEE_CHAR    :   s_outputTab[180] = SLch; break;
+            case SLSMG_LTEE_CHAR    :   s_outputTab[195] = SLch; break;
+            case SLSMG_UTEE_CHAR    :   s_outputTab[194] = SLch; break;
+            case SLSMG_DTEE_CHAR    :   s_outputTab[193] = SLch; break;
+            case SLSMG_PLUS_CHAR    :   s_outputTab[197] = SLch; break;
 /*
-            case SLSMG_DEGREE_CHAR; :   s_outputTab[    ] = SLch; break;
-            case SLSMG_PLMINUS_CHAR :   s_outputTab[    ] = SLch; break;
-            case SLSMG_BULLET_CHAR  :   s_outputTab[    ] = SLch; break;
+            case SLSMG_DEGREE_CHAR; :   s_outputTab[   ] = SLch; break;
+            case SLSMG_PLMINUS_CHAR :   s_outputTab[   ] = SLch; break;
+            case SLSMG_BULLET_CHAR  :   s_outputTab[   ] = SLch; break;
 */
-            case SLSMG_DIAMOND_CHAR :   s_outputTab[ 04 ] = SLch; break;
-            case SLSMG_LARROW_CHAR  :   chArrow[ 0 ] = SLch; break;
-            case SLSMG_RARROW_CHAR  :   chArrow[ 1 ] = SLch; break;
-            case SLSMG_DARROW_CHAR  :   chArrow[ 2 ] = SLch; break;
-            case SLSMG_UARROW_CHAR  :   chArrow[ 3 ] = SLch; break;
-            case SLSMG_BOARD_CHAR   :   chBoard[ 0 ] = SLch; break;
-            case SLSMG_CKBRD_CHAR   :   chBoard[ 1 ] = SLch; break;
-            case SLSMG_BLOCK_CHAR   :   chBoard[ 2 ] = SLch; break;
+            case SLSMG_DIAMOND_CHAR :   s_outputTab[04] = SLch; break;
+            case SLSMG_LARROW_CHAR  :   chArrow[0] = SLch; break;
+            case SLSMG_RARROW_CHAR  :   chArrow[1] = SLch; break;
+            case SLSMG_DARROW_CHAR  :   chArrow[2] = SLch; break;
+            case SLSMG_UARROW_CHAR  :   chArrow[3] = SLch; break;
+            case SLSMG_BOARD_CHAR   :   chBoard[0] = SLch; break;
+            case SLSMG_CKBRD_CHAR   :   chBoard[1] = SLch; break;
+            case SLSMG_BLOCK_CHAR   :   chBoard[2] = SLch; break;
 #endif
          }
       }
@@ -297,7 +297,7 @@ static void hb_sln_setACSCtrans( void )
       HB_SLN_BUILD_RAWCHAR( SLch, 0, 0 );
       for( i = 0; i < 3 && ! HB_SLN_IS_CHAR( SLch ); i++ )
       {
-         SLch = chBoard[ i ];
+         SLch = chBoard[i];
       }
       if( ! HB_SLN_IS_CHAR( SLch ) )
       {
@@ -305,20 +305,20 @@ static void hb_sln_setACSCtrans( void )
       }
       for( i = 0; i < 3; i++ )
       {
-         if( ! HB_SLN_IS_CHAR( chBoard[ i ] ) )
+         if( ! HB_SLN_IS_CHAR( chBoard[i] ) )
          {
-            chBoard[ i ] = SLch;
+            chBoard[i] = SLch;
          }
       }
-      s_outputTab[ 176 ] = chBoard[ 0 ];
-      s_outputTab[ 177 ] = chBoard[ 1 ];
-      s_outputTab[ 178 ] = chBoard[ 2 ];
-      s_outputTab[ 219 ] = chBoard[ 2 ];
+      s_outputTab[176] = chBoard[0];
+      s_outputTab[177] = chBoard[1];
+      s_outputTab[178] = chBoard[2];
+      s_outputTab[219] = chBoard[2];
 
-      s_outputTab[ 17 ] = s_outputTab[ 27 ] = chArrow[ 0 ];
-      s_outputTab[ 16 ] = s_outputTab[ 26 ] = chArrow[ 1 ];
-      s_outputTab[ 25 ] = s_outputTab[ 31 ] = chArrow[ 2 ];
-      s_outputTab[ 24 ] = s_outputTab[ 30 ] = chArrow[ 3 ];
+      s_outputTab[17] = s_outputTab[27] = chArrow[0];
+      s_outputTab[16] = s_outputTab[26] = chArrow[1];
+      s_outputTab[25] = s_outputTab[31] = chArrow[2];
+      s_outputTab[24] = s_outputTab[30] = chArrow[3];
 
 #ifdef HB_SLN_UNICODE
       /*
@@ -332,9 +332,9 @@ static void hb_sln_setACSCtrans( void )
        */
       if( SLSMG_UTEE_CHAR_TERM == 'v' )
       {
-         SLch = s_outputTab[ 193 ];
-         s_outputTab[ 193 ] = s_outputTab[ 194 ];
-         s_outputTab[ 194 ] = SLch;
+         SLch = s_outputTab[193];
+         s_outputTab[193] = s_outputTab[194];
+         s_outputTab[194] = SLch;
       }
 #endif
    }
@@ -356,16 +356,16 @@ static void hb_sln_setCharTrans( PHB_GT pGT, HB_BOOL fBox )
       if( i < 32 )
       {
          /* under Unix control-chars are not visible in a general meaning */
-         HB_SLN_BUILD_RAWCHAR( s_outputTab[ i ], '.', 0 );
+         HB_SLN_BUILD_RAWCHAR( s_outputTab[i], '.', 0 );
       }
       else if( i >= 128 )
       {
-         HB_SLN_BUILD_RAWCHAR( s_outputTab[ i ], i, 0 );
-         HB_SLN_SET_ACSC( s_outputTab[ i ] );
+         HB_SLN_BUILD_RAWCHAR( s_outputTab[i], i, 0 );
+         HB_SLN_SET_ACSC( s_outputTab[i] );
       }
       else
       {
-         HB_SLN_BUILD_RAWCHAR( s_outputTab[ i ], i, 0 );
+         HB_SLN_BUILD_RAWCHAR( s_outputTab[i], i, 0 );
       }
    }
 
@@ -391,10 +391,10 @@ static void hb_sln_setCharTrans( PHB_GT pGT, HB_BOOL fBox )
 #else
             int iDst = hb_cdpTranslateDispChar( i, cdpHost, cdpTerm );
 #endif
-            HB_SLN_BUILD_RAWCHAR( s_outputTab[ i ], iDst, 0 );
+            HB_SLN_BUILD_RAWCHAR( s_outputTab[i], iDst, 0 );
             if( fBox )
             {
-               s_outboxTab[ i ] = s_outputTab[ i ];
+               s_outboxTab[i] = s_outputTab[i];
             }
          }
       }
@@ -410,7 +410,7 @@ static void hb_sln_setKeyTrans( PHB_GT pGT )
 
    for( i = 0; i < 256; i++ )
    {
-      hb_sln_inputTab[ i ] = static_cast<unsigned char>(hb_cdpTranslateChar( i, cdpTerm, cdpHost ));
+      hb_sln_inputTab[i] = static_cast<unsigned char>(hb_cdpTranslateChar( i, cdpTerm, cdpHost ));
    }
 
    /* init national chars */
@@ -426,15 +426,15 @@ static void hb_sln_setKeyTrans( PHB_GT pGT )
       }
 
       /* the first element contains a number of Dead keys defined in an ENVAR */
-      hb_sln_convKDeadKeys[ 0 ] = static_cast<unsigned char>(len);
+      hb_sln_convKDeadKeys[0] = static_cast<unsigned char>(len);
 
       len <<= 1;
       for( i = 0; i < len; i += 2 )
       {
-         int ch = static_cast<unsigned char>(p[ i + 1 ]);
-         hb_sln_convKDeadKeys[ i + 1 ] = static_cast<unsigned char>(p[ i ]);
-         hb_sln_convKDeadKeys[ i + 2 ] = ch;
-         hb_sln_inputTab[ static_cast<unsigned char>(p[ i ]) ] = ch;
+         int ch = static_cast<unsigned char>(p[i + 1]);
+         hb_sln_convKDeadKeys[i + 1] = static_cast<unsigned char>(p[i]);
+         hb_sln_convKDeadKeys[i + 2] = ch;
+         hb_sln_inputTab[static_cast<unsigned char>(p[i])] = ch;
       }
    }
 }
@@ -465,25 +465,25 @@ static void hb_sln_SetCursorStyle( int iStyle )
          switch( iStyle )
          {
             case SC_NONE:
-               cursDefseq[ 3 ] = '1';
+               cursDefseq[3] = '1';
                break;
 
             case SC_NORMAL:
-               cursDefseq[ 3 ] = '2';
+               cursDefseq[3] = '2';
                break;
 
             case SC_INSERT:
-               cursDefseq[ 3 ] = '4';
+               cursDefseq[3] = '4';
                break;
 
             case SC_SPECIAL1:
-               cursDefseq[ 3 ] = '8';
+               cursDefseq[3] = '8';
                break;
 
             case SC_SPECIAL2:
                /* TODO: find a proper sequence to set a cursor
                   to SC_SPECIAL2 under Linux console  */
-               cursDefseq[ 3 ] = '4';
+               cursDefseq[3] = '4';
                break;
          }
          SLtt_write_string( cursDefseq );
@@ -503,7 +503,7 @@ static int hb_sln_isUTF8( int iStdOut, int iStdIn )
 
       if( write( iStdOut, szBuf, len ) == len )
       {
-         char rdbuf[ 64 ];
+         char rdbuf[64];
          int i, j, n, d, y, x;
          HB_MAXINT timeout;
          HB_MAXUINT timer;
@@ -515,30 +515,30 @@ static int hb_sln_isUTF8( int iStdOut, int iStdIn )
          for( ;; )
          {
             /* looking for cursor position in "\033[%d;%dR" */
-            while( j < n && rdbuf[ j ] != '\033' )
+            while( j < n && rdbuf[j] != '\033' )
             {
                ++j;
             }
             if( n - j >= 6 )
             {
                i = j + 1;
-               if( rdbuf[ i ] == '[' )
+               if( rdbuf[i] == '[' )
                {
                   y = 0;
                   d = ++i;
-                  while( i < n && rdbuf[ i ] >= '0' && rdbuf[ i ] <= '9' )
+                  while( i < n && rdbuf[i] >= '0' && rdbuf[i] <= '9' )
                   {
-                     y = y * 10 + ( rdbuf[ i++ ] - '0' );
+                     y = y * 10 + ( rdbuf[i++] - '0' );
                   }
-                  if( i < n && i > d && rdbuf[ i ] == ';' )
+                  if( i < n && i > d && rdbuf[i] == ';' )
                   {
                      x = 0;
                      d = ++i;
-                     while( i < n && rdbuf[ i ] >= '0' && rdbuf[ i ] <= '9' )
+                     while( i < n && rdbuf[i] >= '0' && rdbuf[i] <= '9' )
                      {
-                        x = x * 10 + ( rdbuf[ i++ ] - '0' );
+                        x = x * 10 + ( rdbuf[i++] - '0' );
                      }
-                     if( i < n && i > d && rdbuf[ i ] == 'R' )
+                     if( i < n && i > d && rdbuf[i] == 'R' )
                      {
                         return x == 2 ? 1 : 0;
                      }
@@ -825,9 +825,9 @@ static void hb_gt_sln_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 
    if( hb_sln_UnderLinuxConsole )
    {
-      char escstr[ 64 ];
+      char escstr[64];
 
-      dFrequency = HB_MIN( HB_MAX( 0.0, dFrequency ), 32767.0 );
+      dFrequency = HB_MIN(HB_MAX(0.0, dFrequency), 32767.0);
       hb_snprintf(escstr, 63, "\033[10;%d]", static_cast<int>(dFrequency));
       SLtt_write_string( escstr );
       hb_snprintf(escstr, 63, "\033[11;%d]", static_cast<int>(dDuration * 1000.0 / 18.2));
@@ -1018,11 +1018,11 @@ static void hb_gt_sln_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
             SLsmg_gotorc( iRow, iCol );
             usChar = hb_cdpGetU16Ctrl( usChar );
 #ifdef HB_SLN_UTF8
-            SLchar.color = s_colorTab[ static_cast<HB_UCHAR>(iColor) ];
+            SLchar.color = s_colorTab[static_cast<HB_UCHAR>(iColor)];
             SLchar.nchars = 1;
-            SLchar.wchars[ 0 ] = usChar;
+            SLchar.wchars[0] = usChar;
 #else
-            SLchar = s_colorTab[ static_cast<HB_UCHAR>(iColor) ] | SLSMG_BUILD_CHAR( usChar, 0 );
+            SLchar = s_colorTab[static_cast<HB_UCHAR>(iColor)] | SLSMG_BUILD_CHAR( usChar, 0 );
 #endif
             SLsmg_write_raw( &SLchar, 1 );
             ++iCol;

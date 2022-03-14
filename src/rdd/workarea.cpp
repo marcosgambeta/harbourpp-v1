@@ -266,7 +266,7 @@ static HB_ERRCODE hb_waAddField( AREAP pArea, LPDBFIELDINFO pFieldInfo )
 #endif
 
    LPFIELD pField;
-   char szFieldName[ HB_SYMBOL_NAME_LEN + 1 ];
+   char szFieldName[HB_SYMBOL_NAME_LEN + 1];
    const char *szPtr;
 
    /* Validate the name of field */
@@ -275,8 +275,8 @@ static HB_ERRCODE hb_waAddField( AREAP pArea, LPDBFIELDINFO pFieldInfo )
    {
       ++szPtr;
    }
-   hb_strncpyUpperTrim( szFieldName, szPtr, HB_MIN( HB_SYMBOL_NAME_LEN, pArea->uiMaxFieldNameLength ) );
-   if( szFieldName[ 0 ] == 0 )
+   hb_strncpyUpperTrim( szFieldName, szPtr, HB_MIN(HB_SYMBOL_NAME_LEN, pArea->uiMaxFieldNameLength) );
+   if( szFieldName[0] == 0 )
    {
       return HB_FAILURE;
    }
@@ -602,7 +602,7 @@ static HB_ERRCODE hb_waFieldInfo( AREAP pArea, HB_USHORT uiIndex, HB_USHORT uiTy
       case DBS_TYPE:
       {
          HB_USHORT uiFlags = 0;
-         char szType[ 8 ];
+         char szType[8];
          char cType;
          int iLen = 0;
 
@@ -707,35 +707,35 @@ static HB_ERRCODE hb_waFieldInfo( AREAP pArea, HB_USHORT uiIndex, HB_USHORT uiTy
                cType = 'U';
                break;
          }
-         szType[ iLen++ ] = cType;
+         szType[iLen++] = cType;
          uiFlags &= pField->uiFlags;
          if( uiFlags != 0 )
          {
 #ifndef DBS_FLAG
-            szType[ iLen++ ] = ':';
+            szType[iLen++] = ':';
             if( uiFlags & HB_FF_NULLABLE )
             {
-               szType[ iLen++ ] = 'N';
+               szType[iLen++] = 'N';
             }
             if( uiFlags & HB_FF_BINARY )
             {
-               szType[ iLen++ ] = 'B';
+               szType[iLen++] = 'B';
             }
             if( uiFlags & HB_FF_AUTOINC )
             {
-               szType[ iLen++ ] = '+';
+               szType[iLen++] = '+';
             }
             if( uiFlags & HB_FF_COMPRESSED )
             {
-               szType[ iLen++ ] = 'Z';
+               szType[iLen++] = 'Z';
             }
             if( uiFlags & HB_FF_ENCRYPTED )
             {
-               szType[ iLen++ ] = 'E';
+               szType[iLen++] = 'E';
             }
             if( uiFlags & HB_FF_UNICODE )
             {
-               szType[ iLen++ ] = 'U';
+               szType[iLen++] = 'U';
             }
 #endif
          }
@@ -930,7 +930,7 @@ static HB_ERRCODE hb_waInfo( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
 
       case DBI_ALIAS:
       {
-         char szAlias[ HB_RDD_MAX_ALIAS_LEN + 1 ];
+         char szAlias[HB_RDD_MAX_ALIAS_LEN + 1];
          if( SELF_ALIAS( pArea, szAlias ) != HB_SUCCESS )
          {
             return HB_FAILURE;
@@ -1060,7 +1060,7 @@ static HB_ERRCODE hb_waNewArea( AREAP pArea )
  */
 static HB_ERRCODE hb_waOpen( AREAP pArea, LPDBOPENINFO pInfo )
 {
-   if( ! pArea->atomAlias && pInfo->atomAlias && pInfo->atomAlias[ 0 ] )
+   if( ! pArea->atomAlias && pInfo->atomAlias && pInfo->atomAlias[0] )
    {
       pArea->atomAlias = hb_rddAllocWorkAreaAlias( pInfo->atomAlias, static_cast<int>(pInfo->uiArea) );
       if( ! pArea->atomAlias )
@@ -2065,7 +2065,7 @@ static HB_ERRCODE hb_waError( AREAP pArea, PHB_ITEM pError )
    HB_TRACE( HB_TR_DEBUG, ( "hb_waError(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pError) ) );
 #endif
 
-   char szRddName[ HB_RDD_MAX_DRIVERNAME_LEN + 1 ];
+   char szRddName[HB_RDD_MAX_DRIVERNAME_LEN + 1];
 
    if( pArea && pArea->lprfsHost->sysName )
    {
@@ -2559,7 +2559,7 @@ LPRDDNODE hb_rddGetNode( HB_USHORT uiNode )
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddGetNode(%hu)", uiNode ) );
 #endif
 
-   return uiNode < s_uiRddCount ? s_RddList[ uiNode ] : nullptr;
+   return uiNode < s_uiRddCount ? s_RddList[uiNode] : nullptr;
 }
 
 PHB_ITEM hb_rddList( HB_USHORT uiType )
@@ -2573,7 +2573,7 @@ PHB_ITEM hb_rddList( HB_USHORT uiType )
 
    for( uiCount = uiRdds = 0; uiCount < s_uiRddCount; ++uiCount )
    {
-      if( uiType == 0 || s_RddList[ uiCount ]->uiType == uiType )
+      if( uiType == 0 || s_RddList[uiCount]->uiType == uiType )
       {
          ++uiRdds;
       }
@@ -2581,7 +2581,7 @@ PHB_ITEM hb_rddList( HB_USHORT uiType )
    pRddArray = hb_itemArrayNew(uiRdds);
    for( uiCount = uiIndex = 0; uiCount < s_uiRddCount && uiIndex < uiRdds; ++uiCount )
    {
-      LPRDDNODE pNode = s_RddList[ uiCount ];
+      LPRDDNODE pNode = s_RddList[uiCount];
       if( uiType == 0 || pNode->uiType == uiType )
       {
          hb_arraySetC(pRddArray, ++uiIndex, pNode->szName);
@@ -2601,7 +2601,7 @@ LPRDDNODE hb_rddFindNode( const char * szDriver, HB_USHORT * uiIndex )
 
    for( HB_USHORT uiCount = 0; uiCount < s_uiRddCount; uiCount++ )
    {
-      LPRDDNODE pNode = s_RddList[ uiCount ];
+      LPRDDNODE pNode = s_RddList[uiCount];
       if( strcmp(pNode->szName, szDriver) == 0 ) /* Matched RDD */
       {
          if( uiIndex )
@@ -2627,11 +2627,11 @@ LPRDDNODE hb_rddFindFileNode( LPRDDNODE pRddNode, const char * szFileName )
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddFindFileNode(%p, %s)", static_cast<void*>(pRddNode), szFileName ) );
 #endif
 
-   if( szFileName && szFileName[ 0 ] && s_uiRddRedirCount )
+   if( szFileName && szFileName[0] && s_uiRddRedirCount )
    {
       for( HB_USHORT uiCount = 0; uiCount < s_uiRddRedirCount; uiCount++ )
       {
-         LPRDDNODE pNode = s_rddRedirAccept[ uiCount ]( pRddNode, szFileName );
+         LPRDDNODE pNode = s_rddRedirAccept[uiCount]( pRddNode, szFileName );
          if( pNode )
          {
             return pNode;
@@ -2668,22 +2668,22 @@ void hb_rddSetFileRedirector( HB_RDDACCEPT funcAccept, HB_BOOL fEnable )
    uiFree = s_uiRddRedirCount + 1;
    for( HB_USHORT uiCount = 0; uiCount < s_uiRddRedirCount; uiCount++ )
    {
-      if( s_rddRedirAccept[ uiCount ] == funcAccept )
+      if( s_rddRedirAccept[uiCount] == funcAccept )
       {
          if( ! fEnable )
          {
-            s_rddRedirAccept[ uiCount ] = hb_rddDummyFileAccept;
+            s_rddRedirAccept[uiCount] = hb_rddDummyFileAccept;
          }
          return;
       }
-      else if( s_rddRedirAccept[ uiCount ] == hb_rddDummyFileAccept )
+      else if( s_rddRedirAccept[uiCount] == hb_rddDummyFileAccept )
       {
          uiFree = uiCount;
       }
    }
    if( uiFree < s_uiRddRedirCount )
    {
-      s_rddRedirAccept[ uiFree ] = funcAccept;
+      s_rddRedirAccept[uiFree] = funcAccept;
    }
    else
    {
@@ -2692,7 +2692,7 @@ void hb_rddSetFileRedirector( HB_RDDACCEPT funcAccept, HB_BOOL fEnable )
          s_uiRddRedirMax += HB_RDD_POOL_ALLOCSIZE;
          s_rddRedirAccept = static_cast<HB_RDDACCEPT*>(hb_xrealloc(s_rddRedirAccept, sizeof(HB_RDDACCEPT) * s_uiRddRedirMax));
       }
-      s_rddRedirAccept[ s_uiRddRedirCount ] = funcAccept;
+      s_rddRedirAccept[s_uiRddRedirCount] = funcAccept;
       s_uiRddRedirCount++;
    }
    hb_threadLeaveCriticalSection( &s_rddMtx );
@@ -2713,11 +2713,11 @@ void hb_rddShutDown( void )
    {
       for( HB_USHORT uiCount = 0; uiCount < s_uiRddCount; uiCount++ )
       {
-         if( s_RddList[ uiCount ]->pTable.exit != nullptr )
+         if( s_RddList[uiCount]->pTable.exit != nullptr )
          {
-            SELF_EXIT( s_RddList[ uiCount ] );
+            SELF_EXIT( s_RddList[uiCount] );
          }
-         hb_xfree(s_RddList[ uiCount ]);
+         hb_xfree(s_RddList[uiCount]);
       }
       hb_xfree(s_RddList);
       s_RddList = nullptr;
@@ -2742,7 +2742,7 @@ int hb_rddRegister( const char * szDriver, HB_USHORT uiType )
 
    LPRDDNODE pRddNewNode;
    PHB_DYNS pGetFuncTable;
-   char szGetFuncTable[ HB_RDD_MAX_DRIVERNAME_LEN + 14 ];
+   char szGetFuncTable[HB_RDD_MAX_DRIVERNAME_LEN + 14];
    HB_USHORT uiFunctions = 0;
    int iResult;
 
@@ -2793,7 +2793,7 @@ int hb_rddRegister( const char * szDriver, HB_USHORT uiType )
             s_uiRddMax += HB_RDD_POOL_ALLOCSIZE;
             s_RddList = static_cast<LPRDDNODE*>(hb_xrealloc(s_RddList, sizeof(LPRDDNODE) * s_uiRddMax));
          }
-         s_RddList[ s_uiRddCount ] = pRddNewNode;   /* Add the new RDD node */
+         s_RddList[s_uiRddCount] = pRddNewNode;   /* Add the new RDD node */
          s_uiRddCount++;
          iResult = 0;
       }
@@ -2852,7 +2852,7 @@ HB_ERRCODE hb_rddInheritEx( RDDFUNCS * pTable, const RDDFUNCS * pSubTable,
    }
    else
    {
-      char szSuperName[ HB_RDD_MAX_DRIVERNAME_LEN + 1 ];
+      char szSuperName[HB_RDD_MAX_DRIVERNAME_LEN + 1];
       hb_strncpyUpper( szSuperName, szDrvName, sizeof(szSuperName) - 1 );
       pRddNode = hb_rddFindNode( szSuperName, nullptr );
 
@@ -2902,7 +2902,7 @@ HB_BOOL hb_rddIsDerivedFrom( HB_USHORT uiRddID, HB_USHORT uiSuperRddID )
 
    while( uiRddID < s_uiRddCount )
    {
-      uiRddID = s_RddList[ uiRddID ]->rddSuperID;
+      uiRddID = s_RddList[uiRddID]->rddSuperID;
       if( uiRddID == uiSuperRddID )
       {
          return HB_TRUE;

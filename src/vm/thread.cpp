@@ -1367,7 +1367,7 @@ static int hb_threadWait( PHB_THREADSTATE * pThreads, int iThreads, HB_BOOL fAll
    {
       for( int i = iFinished = 0; i < iThreads; ++i )
       {
-         if( pThreads[ i ]->fFinished )
+         if( pThreads[i]->fFinished )
          {
             iFinished++;
             if( ! fAll )
@@ -1521,7 +1521,7 @@ HB_FUNC( HB_THREADWAIT )
 #  define HB_THREAD_WAIT_ALLOC  16
    HB_STACK_TLS_PRELOAD
    HB_ULONG ulMilliSec = HB_THREAD_INFINITE_WAIT;
-   PHB_THREADSTATE * pThreads, pAlloc[ HB_THREAD_WAIT_ALLOC ];
+   PHB_THREADSTATE * pThreads, pAlloc[HB_THREAD_WAIT_ALLOC];
    int iThreads = -1;
 
    pThreads = pAlloc;
@@ -1543,13 +1543,13 @@ HB_FUNC( HB_THREADWAIT )
             pThreads = static_cast<PHB_THREADSTATE*>(hb_xgrab(sizeof(PHB_THREADSTATE) * iLen));
             memcpy(pThreads, pAlloc, sizeof(pAlloc));
          }
-         pThreads[ iThreads++ ] = pThread;
+         pThreads[iThreads++] = pThread;
       }
    }
    else
    {
-      pThreads[ 0 ] = hb_thParam( 1, 0 );
-      if( pThreads[ 0 ] )
+      pThreads[0] = hb_thParam( 1, 0 );
+      if( pThreads[0] )
       {
          iThreads = 1;
       }

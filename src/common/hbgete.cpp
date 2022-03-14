@@ -123,7 +123,7 @@ HB_BOOL hb_getenv_buffer( const char * szName, char * szBuffer, int nSize )
       {
          if( fRetVal )
          {
-            lpBuffer[ nSize - 1 ] = TEXT( '\0' );
+            lpBuffer[nSize - 1] = TEXT( '\0' );
             HB_OSSTRDUP2( lpBuffer, szBuffer, nSize - 1 );
          }
          hb_xfree(lpBuffer);
@@ -158,7 +158,7 @@ HB_BOOL hb_getenv_buffer( const char * szName, char * szBuffer, int nSize )
 
    if( ! fRetVal && szBuffer != nullptr && nSize != 0 )
    {
-      szBuffer[ 0 ] = '\0';
+      szBuffer[0] = '\0';
    }
 
    return fRetVal;

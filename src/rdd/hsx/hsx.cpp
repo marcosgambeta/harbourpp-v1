@@ -287,13 +287,13 @@
 
 struct _HSXHEADER
 {
-   HB_BYTE recCount[ 4 ];      /* number of records in HSX index file */
-   HB_BYTE recSize[ 4 ];       /* in bytes 16, 32, 64 */
-   HB_BYTE recSizeBits[ 4 ];   /* 4, 5 or 6 */
-   HB_BYTE ignoreCase[ 2 ];    /* 1=> index is not case sensitive */
-   HB_BYTE filterType[ 2 ];    /* 1=> all characters, 2=> chars in range 33..126 */
-   HB_BYTE hashLetters[ 4 ];   /* 1=> use hash function for letters */
-   HB_BYTE keyExpression[ 1 ]; /* xHarbour extension: key expression for automatic update */
+   HB_BYTE recCount[4];      /* number of records in HSX index file */
+   HB_BYTE recSize[4];       /* in bytes 16, 32, 64 */
+   HB_BYTE recSizeBits[4];   /* 4, 5 or 6 */
+   HB_BYTE ignoreCase[2];    /* 1=> index is not case sensitive */
+   HB_BYTE filterType[2];    /* 1=> all characters, 2=> chars in range 33..126 */
+   HB_BYTE hashLetters[4];   /* 1=> use hash function for letters */
+   HB_BYTE keyExpression[1]; /* xHarbour extension: key expression for automatic update */
 };
 
 using HSXHEADER = _HSXHEADER;
@@ -301,7 +301,7 @@ using LPHSXHEADER = HSXHEADER *;
 
 typedef union
 {
-   HB_BYTE   data[ HSXHEADER_LEN ];
+   HB_BYTE   data[HSXHEADER_LEN];
    HSXHEADER header;
 } HSXHEADERBUF;
 
@@ -366,7 +366,7 @@ static void hb_hsxTableRelease( void * Cargo )
 
    for( iHandle = 0; iHandle < pTable->iHandleSize; ++iHandle )
    {
-      if( pTable->handleArray[ iHandle ] )
+      if( pTable->handleArray[iHandle] )
       {
          hb_hsxDestroy( iHandle );
       }
@@ -430,8 +430,8 @@ static int hb_hsxHashVal( int c1, int c2, int iKeyBits, HB_BOOL fNoCase, int iFi
       if( iFilter == 3 )
       {
          PHB_CODEPAGE cdp = hb_vmCDP();
-         c1 = static_cast<HB_UCHAR>(cdp->upper[ c1 ]);
-         c2 = static_cast<HB_UCHAR>(cdp->upper[ c2 ]);
+         c1 = static_cast<HB_UCHAR>(cdp->upper[c1]);
+         c2 = static_cast<HB_UCHAR>(cdp->upper[c2]);
       }
       else
       {
@@ -465,7 +465,7 @@ static int hb_hsxHashVal( int c1, int c2, int iKeyBits, HB_BOOL fNoCase, int iFi
    }
    else if( fUseHash && c1 >= 'A' && c1 <= 'Z' && c2 >= 'A' && c2 <= 'Z' )
    {
-      iBitNum = hb_hsxHashArray[ ( c1 - 'A' ) * 26 + ( c2 - 'A' ) ] + 1;
+      iBitNum = hb_hsxHashArray[( c1 - 'A' ) * 26 + ( c2 - 'A' )] + 1;
    }
    else
    {
@@ -503,7 +503,7 @@ static void hb_hsxHashStr( const char * pStr, HB_SIZE nLen, HB_BYTE * pKey, int 
          int iBitNum = hb_hsxHashVal( c1, c2, iKeyBits, fNoCase, iFilter, fUseHash );
          if( iBitNum-- )
          {
-            pKey[ iBitNum >> 3 ] |= 0x80 >> ( iBitNum & 7 );
+            pKey[iBitNum >> 3] |= 0x80 >> ( iBitNum & 7 );
          }
          c1 = c2;
       }
@@ -526,15 +526,15 @@ static int hb_hsxStrCmp( const char * pSub, HB_SIZE nSub, const char * pStr, HB_
       fResult = HB_TRUE;
       for( nPos = 0; fResult && nPos < nSub; nPos++ )
       {
-         c1 = static_cast<HB_UCHAR>(pSub[ nPos ]);
-         c2 = static_cast<HB_UCHAR>(pStr[ nPos ]);
+         c1 = static_cast<HB_UCHAR>(pSub[nPos]);
+         c2 = static_cast<HB_UCHAR>(pStr[nPos]);
          if( fNoCase )
          {
             if( iFilter == 3 )
             {
                PHB_CODEPAGE cdp = hb_vmCDP();
-               c1 = static_cast<HB_UCHAR>(cdp->upper[ c1 ]);
-               c2 = static_cast<HB_UCHAR>(cdp->upper[ c2 ]);
+               c1 = static_cast<HB_UCHAR>(cdp->upper[c1]);
+               c2 = static_cast<HB_UCHAR>(cdp->upper[c2]);
             }
             else
             {
@@ -583,7 +583,7 @@ static LPHSXINFO hb_hsxGetPointer( int iHandle )
       LPHSXTABLE pTable = hb_hsxTable();
       if( iHandle >= 0 && iHandle < pTable->iHandleSize )
       {
-         pHSX = pTable->handleArray[ iHandle ];
+         pHSX = pTable->handleArray[iHandle];
       }
    }
    HB_HSX_UNLOCK();
@@ -811,9 +811,9 @@ static int hb_hsxHdrRead( int iHandle )
    pHSX->iFilterType = HB_GET_LE_UINT16( buffer.header.filterType );
    pHSX->fUseHash = HB_GET_LE_UINT32( buffer.header.hashLetters ) != 0;
 
-   if( buffer.header.keyExpression[ 0 ] >= ' ' )
+   if( buffer.header.keyExpression[0] >= ' ' )
    {
-      buffer.data[ HSXHEADER_LEN - 1 ] = '\0';
+      buffer.data[HSXHEADER_LEN - 1] = '\0';
       pHSX->szKeyExpr = hb_strdup(reinterpret_cast<char*>(buffer.header.keyExpression));
       iResult = hb_hsxCompile( pHSX->szKeyExpr, &pHSX->pKeyItem );
    }
@@ -874,7 +874,7 @@ static int hb_hsxRead( int iHandle, HB_ULONG ulRecord, HB_BYTE ** pRecPtr )
          {
             hb_hsxGetRecCount( pHSX );
          }
-         pHSX->ulBufRec = HB_MIN( pHSX->ulBufSize, pHSX->ulRecCount - ulFirst + 1 );
+         pHSX->ulBufRec = HB_MIN(pHSX->ulBufSize, pHSX->ulRecCount - ulFirst + 1);
       }
 
       fOffset = static_cast<HB_FOFFSET>(HSXHEADER_LEN) +
@@ -1317,7 +1317,7 @@ static int hb_hsxSeekSet( int iHandle, const char * pStr, HB_SIZE nLen )
          }
          pHSX->pSearchVal = static_cast<char*>(hb_xgrab(nLen + 1));
          memcpy(pHSX->pSearchVal, pStr, nLen);
-         pHSX->pSearchVal[ nLen ] = '\0';
+         pHSX->pSearchVal[nLen] = '\0';
          pHSX->nSearch = nLen;
          if( ! pHSX->pSearchKey )
          {
@@ -1360,7 +1360,7 @@ static int hb_hsxNext( int iHandle, HB_ULONG * pulRecNo )
          {
             for( i = 0; i < pHSX->uiRecordSize; i++ )
             {
-               if( ( pRecPtr[ i ] & pHSX->pSearchKey[ i ] ) != pHSX->pSearchKey[ i ] )
+               if( ( pRecPtr[i] & pHSX->pSearchKey[i] ) != pHSX->pSearchKey[i] )
                {
                   break;
                }
@@ -1400,7 +1400,7 @@ static LPHSXINFO hb_hsxNew( void )
    {
       while( iHandle < pTable->iHandleSize )
       {
-         if( pTable->handleArray[ iHandle ] == nullptr )
+         if( pTable->handleArray[iHandle] == nullptr )
          {
             break;
          }
@@ -1410,10 +1410,10 @@ static LPHSXINFO hb_hsxNew( void )
       {
          pTable->iHandleSize += HSX_HALLOC;
          pTable->handleArray = static_cast<LPHSXINFO*>(hb_xrealloc(pTable->handleArray, sizeof(LPHSXINFO) * pTable->iHandleSize));
-         memset(&pTable->handleArray[ iHandle ], 0, sizeof(LPHSXINFO) * HSX_HALLOC);
+         memset(&pTable->handleArray[iHandle], 0, sizeof(LPHSXINFO) * HSX_HALLOC);
       }
    }
-   pTable->handleArray[ iHandle ] = pHSX = static_cast<LPHSXINFO>(hb_xgrabz(sizeof(HSXINFO)));
+   pTable->handleArray[iHandle] = pHSX = static_cast<LPHSXINFO>(hb_xgrabz(sizeof(HSXINFO)));
    pTable->iHandleCount++;
    pHSX->iHandle = iHandle;
    pHSX->pFile = nullptr;
@@ -1467,16 +1467,16 @@ static int hb_hsxVerify( int iHandle, const char * szText, HB_SIZE nLen, const c
             iResult = HSX_SUCCESS;
             for( nPos1 = 0; nPos1 < nSub && iResult == HSX_SUCCESS; nPos1++ )
             {
-               while( szSub[ nPos1 ] == ' ' && nPos1 < nSub )
+               while( szSub[nPos1] == ' ' && nPos1 < nSub )
                {
                   ++nPos1;
                }
                nPos2 = nPos1;
-               while( szSub[ nPos2 ] != ' ' && nPos2 < nSub )
+               while( szSub[nPos2] != ' ' && nPos2 < nSub )
                {
                   ++nPos2;
                }
-               iResult = hb_hsxStrCmp(&szSub[ nPos1 ], nPos2 - nPos1, szText, nLen, pHSX->fIgnoreCase, pHSX->iFilterType);
+               iResult = hb_hsxStrCmp(&szSub[nPos1], nPos2 - nPos1, szText, nLen, pHSX->fIgnoreCase, pHSX->iFilterType);
                nPos1 = nPos2;
             }
             break;
@@ -1485,16 +1485,16 @@ static int hb_hsxVerify( int iHandle, const char * szText, HB_SIZE nLen, const c
             iResult = HSX_SUCCESSFALSE;
             for( nPos1 = 0; nPos1 < nSub && iResult == HSX_SUCCESSFALSE; nPos1++ )
             {
-               while( szSub[ nPos1 ] == ' ' && nPos1 < nSub )
+               while( szSub[nPos1] == ' ' && nPos1 < nSub )
                {
                   ++nPos1;
                }
                nPos2 = nPos1;
-               while( szSub[ nPos2 ] != ' ' && nPos2 < nSub )
+               while( szSub[nPos2] != ' ' && nPos2 < nSub )
                {
                   ++nPos2;
                }
-               iResult = hb_hsxStrCmp(&szSub[ nPos1 ], nPos2 - nPos1, szText, nLen, pHSX->fIgnoreCase, pHSX->iFilterType);
+               iResult = hb_hsxStrCmp(&szSub[nPos1], nPos2 - nPos1, szText, nLen, pHSX->fIgnoreCase, pHSX->iFilterType);
                nPos1 = nPos2;
             }
             break;
@@ -1517,10 +1517,10 @@ static int hb_hsxDestroy( int iHandle )
    HB_HSX_LOCK();
    {
       LPHSXTABLE pTable = hb_hsxTable();
-      if( iHandle >= 0 && iHandle < pTable->iHandleSize && pTable->handleArray[ iHandle ] != nullptr )
+      if( iHandle >= 0 && iHandle < pTable->iHandleSize && pTable->handleArray[iHandle] != nullptr )
       {
-         pHSX = pTable->handleArray[ iHandle ];
-         pTable->handleArray[ iHandle ] = nullptr;
+         pHSX = pTable->handleArray[iHandle];
+         pTable->handleArray[iHandle] = nullptr;
          if( --pTable->iHandleCount == 0 )
          {
             hb_xfree(pTable->handleArray);
@@ -1568,7 +1568,7 @@ static int hb_hsxDestroy( int iHandle )
 
 static int hb_hsxCreate( const char * szFile, int iBufSize, int iKeySize, HB_BOOL fIgnoreCase, int iFilter, PHB_ITEM pExpr )
 {
-   char szFileName[ HB_PATH_MAX ];
+   char szFileName[HB_PATH_MAX];
    const char * szExpr = nullptr;
    PHB_ITEM pKeyExpr = nullptr;
    HB_ULONG ulBufSize;
@@ -1680,7 +1680,7 @@ static int hb_hsxCreate( const char * szFile, int iBufSize, int iKeySize, HB_BOO
 
 static int hb_hsxOpen( const char * szFile, int iBufSize, int iMode )
 {
-   char szFileName[ HB_PATH_MAX ];
+   char szFileName[HB_PATH_MAX];
    HB_BOOL fShared, fReadonly;
    PHB_FILE pFile;
    HB_ULONG ulBufSize;
@@ -2153,7 +2153,7 @@ HB_FUNC( HS_FILTER )
             {
                pBuff = static_cast<char*>(hb_xgrab(nLen + 1));
                memcpy(pBuff, pHSX->pSearchVal, nLen);
-               pBuff[ nLen ] = '\0';
+               pBuff[nLen] = '\0';
                szText = pBuff;
                fToken = HB_FALSE;
             }
@@ -2185,16 +2185,16 @@ HB_FUNC( HS_FILTER )
             iResult = HSX_SUCCESS;
             for( nPos1 = 0; nPos1 < nLen && iResult == HSX_SUCCESS; nPos1++ )
             {
-               while( szText[ nPos1 ] == ' ' && nPos1 < nLen )
+               while( szText[nPos1] == ' ' && nPos1 < nLen )
                {
                   ++nPos1;
                }
                nPos2 = nPos1;
-               while( szText[ nPos2 ] != ' ' && nPos2 < nLen )
+               while( szText[nPos2] != ' ' && nPos2 < nLen )
                {
                   ++nPos2;
                }
-               iResult = hb_hsxFilter( iHandle, &szText[ nPos1 ], nPos2 - nPos1, hb_param(3, HB_IT_ANY), HSX_VERIFY_PHRASE );
+               iResult = hb_hsxFilter( iHandle, &szText[nPos1], nPos2 - nPos1, hb_param(3, HB_IT_ANY), HSX_VERIFY_PHRASE );
                nPos1 = nPos2;
             }
          }

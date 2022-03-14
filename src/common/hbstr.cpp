@@ -48,7 +48,7 @@
 #include "hbapi.h"
 #include "hbmath.h"
 
-const char * const hb_szAscii[ 256 ] = {
+const char * const hb_szAscii[256] = {
    "\x00", "\x01", "\x02", "\x03", "\x04", "\x05", "\x06", "\x07", "\x08", "\x09", "\x0A", "\x0B", "\x0C", "\x0D", "\x0E", "\x0F",
    "\x10", "\x11", "\x12", "\x13", "\x14", "\x15", "\x16", "\x17", "\x18", "\x19", "\x1A", "\x1B", "\x1C", "\x1D", "\x1E", "\x1F",
    "\x20", "\x21", "\x22", "\x23", "\x24", "\x25", "\x26", "\x27", "\x28", "\x29", "\x2A", "\x2B", "\x2C", "\x2D", "\x2E", "\x2F",
@@ -79,7 +79,7 @@ HB_SIZE hb_strAt( const char * szSub, HB_SIZE nSubLen, const char * szText, HB_S
       nLen -= nSubLen;
       do
       {
-         if( szText[ nPos ] == *szSub )
+         if( szText[nPos] == *szSub )
          {
             HB_SIZE nSubPos = nSubLen;
             do
@@ -89,7 +89,7 @@ HB_SIZE hb_strAt( const char * szSub, HB_SIZE nSubLen, const char * szText, HB_S
                   return nPos + 1;
                }
             }
-            while( szText[ nPos + nSubPos ] == szSub[ nSubPos ] );
+            while( szText[nPos + nSubPos] == szSub[nSubPos] );
          }
       }
       while( nPos++ < nLen );
@@ -110,7 +110,7 @@ HB_SIZE hb_strAtI( const char * szSub, HB_SIZE nSubLen, const char * szText, HB_
       nLen -= nSubLen;
       do
       {
-         if( HB_TOUPPER(szText[ nPos ]) == HB_TOUPPER(*szSub) )
+         if( HB_TOUPPER(szText[nPos]) == HB_TOUPPER(*szSub) )
          {
             HB_SIZE nSubPos = nSubLen;
             do
@@ -120,7 +120,7 @@ HB_SIZE hb_strAtI( const char * szSub, HB_SIZE nSubLen, const char * szText, HB_
                   return nPos + 1;
                }
             }
-            while( HB_TOUPPER(szText[ nPos + nSubPos ]) == HB_TOUPPER(szSub[ nSubPos ]) );
+            while( HB_TOUPPER(szText[nPos + nSubPos]) == HB_TOUPPER(szSub[nSubPos]) );
          }
       }
       while( nPos++ < nLen );
@@ -137,7 +137,7 @@ HB_BOOL hb_strEmpty( const char * szText, HB_SIZE nLen )
 
    while( nLen-- )
    {
-      char c = szText[ nLen ];
+      char c = szText[nLen];
 
       if( ! HB_ISSPACE( c ) )
       {
@@ -207,14 +207,14 @@ char * hb_strndup( const char * pszText, HB_SIZE nLen )
    HB_SIZE nPos;
 
    nPos = 0;
-   while( nLen-- && pszText[ nPos ] )
+   while( nLen-- && pszText[nPos] )
    {
       ++nPos;
    }
 
    pszDup = static_cast<char*>(hb_xgrab(nPos + 1));
    memcpy(pszDup, pszText, nPos);
-   pszDup[ nPos ] = '\0';
+   pszDup[nPos] = '\0';
 
    return pszDup;
 }
@@ -244,20 +244,20 @@ char * hb_strduptrim( const char * pszText )
    char * pszDup;
    HB_SIZE nLen;
 
-   while( pszText[ 0 ] == ' ' )
+   while( pszText[0] == ' ' )
    {
       ++pszText;
    }
 
    nLen = strlen(pszText);
-   while( nLen && pszText[ nLen - 1 ] == ' ' )
+   while( nLen && pszText[nLen - 1] == ' ' )
    {
       --nLen;
    }
 
    pszDup = static_cast<char*>(hb_xgrab(nLen + 1));
    memcpy(pszDup, pszText, nLen);
-   pszDup[ nLen ] = '\0';
+   pszDup[nLen] = '\0';
 
    return pszDup;
 }
@@ -270,17 +270,17 @@ HB_SIZE hb_strlentrim( const char * pszText )
 
    HB_SIZE nPos = 0;
 
-   while( pszText[ 0 ] == ' ' )
+   while( pszText[0] == ' ' )
    {
       ++pszText;
    }
 
-   while( pszText[ nPos ] )
+   while( pszText[nPos] )
    {
       ++nPos;
    }
 
-   while( nPos && pszText[ nPos - 1 ] == ' ' )
+   while( nPos && pszText[nPos - 1] == ' ' )
    {
       --nPos;
    }
@@ -329,8 +329,8 @@ int hb_strnicmp( const char * s1, const char * s2, HB_SIZE count )
 
    for( nCount = 0; nCount < count; nCount++ )
    {
-      unsigned char c1 = static_cast<char>(HB_TOUPPER(static_cast<unsigned char>(s1[ nCount ])));
-      unsigned char c2 = static_cast<char>(HB_TOUPPER(static_cast<unsigned char>(s2[ nCount ])));
+      unsigned char c1 = static_cast<char>(HB_TOUPPER(static_cast<unsigned char>(s1[nCount])));
+      unsigned char c2 = static_cast<char>(HB_TOUPPER(static_cast<unsigned char>(s2[nCount])));
 
       if( c1 != c2 )
       {
@@ -431,32 +431,32 @@ char * hb_xstrcpy( char * szDest, const char * szSrc, ... )
 
 static double hb_numPow10( int nPrecision )
 {
-   static const double s_dPow10[ 16 ] = { 1.0,                  /* 0 */
-                                          10.0,                 /* 1 */
-                                          100.0,                /* 2 */
-                                          1000.0,               /* 3 */
-                                          10000.0,              /* 4 */
-                                          100000.0,             /* 5 */
-                                          1000000.0,            /* 6 */
-                                          10000000.0,           /* 7 */
-                                          100000000.0,          /* 8 */
-                                          1000000000.0,         /* 9 */
-                                          10000000000.0,        /* 10 */
-                                          100000000000.0,       /* 11 */
-                                          1000000000000.0,      /* 12 */
-                                          10000000000000.0,     /* 13 */
-                                          100000000000000.0,    /* 14 */
-                                          1000000000000000.0 }; /* 15 */
+   static const double s_dPow10[16] = { 1.0,                  /* 0 */
+                                        10.0,                 /* 1 */
+                                        100.0,                /* 2 */
+                                        1000.0,               /* 3 */
+                                        10000.0,              /* 4 */
+                                        100000.0,             /* 5 */
+                                        1000000.0,            /* 6 */
+                                        10000000.0,           /* 7 */
+                                        100000000.0,          /* 8 */
+                                        1000000000.0,         /* 9 */
+                                        10000000000.0,        /* 10 */
+                                        100000000000.0,       /* 11 */
+                                        1000000000000.0,      /* 12 */
+                                        10000000000000.0,     /* 13 */
+                                        100000000000000.0,    /* 14 */
+                                        1000000000000000.0 }; /* 15 */
 
    if( nPrecision < 16 )
    {
       if( nPrecision >= 0 )
       {
-         return s_dPow10[ nPrecision ];
+         return s_dPow10[nPrecision];
       }
       else if( nPrecision > -16 )
       {
-         return 1.0 / s_dPow10[ static_cast<unsigned int>(-nPrecision) ];
+         return 1.0 / s_dPow10[static_cast<unsigned int>(-nPrecision)];
       }
    }
 
@@ -653,7 +653,7 @@ static HB_BOOL hb_str2number( HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, 
 
    iLen = static_cast<int>(nLen);
 
-   while( iPos < iLen && HB_ISSPACE( szNum[ iPos ] ) )
+   while( iPos < iLen && HB_ISSPACE( szNum[iPos] ) )
    {
       iPos++;
    }
@@ -662,7 +662,7 @@ static HB_BOOL hb_str2number( HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, 
    {
       fNeg = HB_FALSE;
    }
-   else if( szNum[ iPos ] == '-' )
+   else if( szNum[iPos] == '-' )
    {
       fNeg = HB_TRUE;
       iPos++;
@@ -670,7 +670,7 @@ static HB_BOOL hb_str2number( HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, 
    else
    {
       fNeg = HB_FALSE;
-      if( szNum[ iPos ] == '+' )
+      if( szNum[iPos] == '+' )
       {
          iPos++;
       }
@@ -680,14 +680,14 @@ static HB_BOOL hb_str2number( HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, 
    *lVal = 0;
 
    /* Hex Number */
-   if( fPCode && iPos + 1 < iLen && szNum[ iPos ] == '0' && ( szNum[ iPos + 1 ] == 'X' || szNum[ iPos + 1 ] == 'x' ) )
+   if( fPCode && iPos + 1 < iLen && szNum[iPos] == '0' && ( szNum[iPos + 1] == 'X' || szNum[iPos + 1] == 'x' ) )
    {
       iPos += 2;
       iWidth = HB_DEFAULT_WIDTH;
       fHex = HB_TRUE;
       for( ; iPos < iLen; iPos++ )
       {
-         c = szNum[ iPos ];
+         c = szNum[iPos];
          if( c >= '0' && c <= '9' )
          {
             c -= '0';
@@ -719,7 +719,7 @@ static HB_BOOL hb_str2number( HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, 
 
       for( ; iPos < iLen; iPos++ )
       {
-         c = szNum[ iPos ];
+         c = szNum[iPos];
          if( c >= '0' && c <= '9' )
          {
             if( fDbl )
@@ -752,7 +752,7 @@ static HB_BOOL hb_str2number( HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, 
          {
             while( ! fDec && iPos < iLen )
             {
-               if( szNum[ iPos++ ] == '.' )
+               if( szNum[iPos++] == '.' )
                {
                   fDec = HB_TRUE;
                }
@@ -923,7 +923,7 @@ char * hb_numToStr( char * szBuf, HB_SIZE nSize, HB_MAXINT lNumber )
    int iPos = static_cast<int>(nSize);
    HB_BOOL fNeg = HB_FALSE;
 
-   szBuf[ --iPos ] = '\0';
+   szBuf[--iPos] = '\0';
    if( lNumber < 0 )
    {
       fNeg = HB_TRUE;
@@ -932,7 +932,7 @@ char * hb_numToStr( char * szBuf, HB_SIZE nSize, HB_MAXINT lNumber )
 
    while( --iPos >= 0 )
    {
-      szBuf[ iPos ] = '0' + static_cast<char>(lNumber % 10);
+      szBuf[iPos] = '0' + static_cast<char>(lNumber % 10);
       lNumber /= 10;
       if( lNumber == 0 )
       {
@@ -941,7 +941,7 @@ char * hb_numToStr( char * szBuf, HB_SIZE nSize, HB_MAXINT lNumber )
    }
    if( fNeg && --iPos >= 0 )
    {
-      szBuf[ iPos ] = '-';
+      szBuf[iPos] = '-';
    }
 
    if( iPos > 0 )
@@ -954,7 +954,7 @@ char * hb_numToStr( char * szBuf, HB_SIZE nSize, HB_MAXINT lNumber )
       iPos = 0;
    }
 
-   return &szBuf[ iPos ];
+   return &szBuf[iPos];
 }
 
 /* if you want to be sure that size of buffer is enough to hold each
@@ -990,8 +990,8 @@ char * hb_dblToStr( char * szBuf, HB_SIZE nSize, double dNumber, int iMaxDec )
       {
          if( dInt < 1 && dFract < 0.5 )
          {
-            szBuf[ 0 ] = '0';
-            szBuf[ 1 ] = '\0';
+            szBuf[0] = '0';
+            szBuf[1] = '\0';
             return szBuf;
          }
          return nullptr;
@@ -1011,21 +1011,21 @@ char * hb_dblToStr( char * szBuf, HB_SIZE nSize, double dNumber, int iMaxDec )
          return nullptr;
       }
       dDig = modf( dInt / doBase + 0.01, &dInt ) * doBase;
-      szBuf[ --iPos ] = '0' + static_cast<char>(dDig + 0.01);
+      szBuf[--iPos] = '0' + static_cast<char>(dDig + 0.01);
    }
    while( dInt >= 1 );
    if( iPos > 0 )
    {
-      memmove(szBuf, szBuf + iPos, HB_MIN( iLen - iPos, iPrec + 1 ));
+      memmove(szBuf, szBuf + iPos, HB_MIN(iLen - iPos, iPrec + 1));
    }
    iPos = iLen - iPos;
 
-   fFirst = iPos > 1 || szBuf[ 0 ] != '0';
+   fFirst = iPos > 1 || szBuf[0] != '0';
    if( fFirst )
    {
       if( iPos >= iPrec )
       {
-         fFirst = iPos == iPrec ? dFract >= 0.5 : szBuf[ iPrec ] >= '5';
+         fFirst = iPos == iPrec ? dFract >= 0.5 : szBuf[iPrec] >= '5';
          if( iPrec < iPos )
          {
             memset(szBuf + iPrec , '0', iPos - iPrec);
@@ -1045,12 +1045,12 @@ char * hb_dblToStr( char * szBuf, HB_SIZE nSize, double dNumber, int iMaxDec )
                   ++iPos;
                   break;
                }
-               if( szBuf[ iPrec ] != '9' )
+               if( szBuf[iPrec] != '9' )
                {
-                  ++szBuf[ iPrec ];
+                  ++szBuf[iPrec];
                   break;
                }
-               szBuf[ iPrec ] = '0';
+               szBuf[iPrec] = '0';
             }
          }
          iPrec = 0;
@@ -1065,12 +1065,12 @@ char * hb_dblToStr( char * szBuf, HB_SIZE nSize, double dNumber, int iMaxDec )
    {
       int iDec = iPos;
 
-      szBuf[ iPos ] = '.';
+      szBuf[iPos] = '.';
       while( ++iPos < iLen && iPrec > 0 && iMaxDec-- != 0 )
       {
          dFract = modf( dFract * doBase, &dDig );
-         szBuf[ iPos ] = '0' + static_cast<char>(dDig + 0.01);
-         if( szBuf[ iPos ] != '0' )
+         szBuf[iPos] = '0' + static_cast<char>(dDig + 0.01);
+         if( szBuf[iPos] != '0' )
          {
             fFirst = HB_TRUE;
          }
@@ -1099,25 +1099,25 @@ char * hb_dblToStr( char * szBuf, HB_SIZE nSize, double dNumber, int iMaxDec )
             {
                --iPrec;
             }
-            if( szBuf[ iPrec ] != '9' )
+            if( szBuf[iPrec] != '9' )
             {
-               ++szBuf[ iPrec ];
+               ++szBuf[iPrec];
                break;
             }
-            szBuf[ iPrec ] = '0';
+            szBuf[iPrec] = '0';
          }
       }
-      while( iPos > iDec && szBuf[ iPos - 1 ] == '0' )
+      while( iPos > iDec && szBuf[iPos - 1] == '0' )
       {
          --iPos;
       }
-      if( szBuf[ iPos - 1 ] == '.' )
+      if( szBuf[iPos - 1] == '.' )
       {
          --iPos;
       }
    }
 
-   szBuf[ iPos ] = '\0';
+   szBuf[iPos] = '\0';
    return iPos == 1 && *szResult == '-' && *szBuf == '0' ? szBuf : szResult;
 }
 
@@ -1133,7 +1133,7 @@ char * hb_strncpy( char * pDest, const char * pSource, HB_SIZE nLen )
 
    char * pBuf = pDest;
 
-   pDest[ nLen ] = '\0';
+   pDest[nLen] = '\0';
 
    while( nLen && ( *pDest++ = *pSource++ ) != '\0' )
    {
@@ -1155,7 +1155,7 @@ char * hb_strncat( char * pDest, const char * pSource, HB_SIZE nLen )
 
    char * pBuf = pDest;
 
-   pDest[ nLen ] = '\0';
+   pDest[nLen] = '\0';
 
    while( nLen && *pDest )
    {
@@ -1184,7 +1184,7 @@ char * hb_strncpyLower( char * pDest, const char * pSource, HB_SIZE nLen )
 
    char * pBuf = pDest;
 
-   pDest[ nLen ] = '\0';
+   pDest[nLen] = '\0';
 
    while( nLen && ( *pDest++ = static_cast<char>(HB_TOLOWER(static_cast<HB_UCHAR>(*pSource))) ) != '\0' )
    {
@@ -1208,7 +1208,7 @@ char * hb_strncpyUpper( char * pDest, const char * pSource, HB_SIZE nLen )
 
    char * pBuf = pDest;
 
-   pDest[ nLen ] = '\0';
+   pDest[nLen] = '\0';
 
    while( nLen && ( *pDest++ = static_cast<char>(HB_TOUPPER(static_cast<HB_UCHAR>(*pSource))) ) != '\0' )
    {
@@ -1234,12 +1234,12 @@ char * hb_strncpyUpperTrim( char * pDest, const char * pSource, HB_SIZE nLen )
    HB_SIZE nSLen;
 
    nSLen = 0;
-   while( nSLen < nLen && pSource[ nSLen ] )
+   while( nSLen < nLen && pSource[nSLen] )
    {
       nSLen++;
    }
 
-   while( nSLen && pSource[ nSLen - 1 ] == ' ' )
+   while( nSLen && pSource[nSLen - 1] == ' ' )
    {
       nSLen--;
    }
@@ -1271,12 +1271,12 @@ char * hb_strncpyTrim( char * pDest, const char * pSource, HB_SIZE nLen )
    HB_SIZE nSLen;
 
    nSLen = 0;
-   while( nSLen < nLen && pSource[ nSLen ] )
+   while( nSLen < nLen && pSource[nSLen] )
    {
       nSLen++;
    }
 
-   while( nSLen && pSource[ nSLen - 1 ] == ' ' )
+   while( nSLen && pSource[nSLen - 1] == ' ' )
    {
       nSLen--;
    }
@@ -1413,13 +1413,13 @@ char * hb_compEncodeString( int iMethod, const char * szText, HB_SIZE * pnLen )
    char * pBuffer = static_cast<char*>(hb_xgrab(*pnLen + 1));
 
    memcpy(pBuffer, szText, *pnLen);
-   pBuffer[ *pnLen ] = '\0';
+   pBuffer[*pnLen] = '\0';
    if( iMethod == 1 )
    {
       HB_SIZE nPos;
       for( nPos = 0; nPos < *pnLen; nPos++ )
       {
-         pBuffer[ nPos ] ^= 0xF3;
+         pBuffer[nPos] ^= 0xF3;
       }
    }
    return pBuffer;
@@ -1430,13 +1430,13 @@ char * hb_compDecodeString( int iMethod, const char * szText, HB_SIZE * pnLen )
    char * pBuffer = static_cast<char*>(hb_xgrab(*pnLen + 1));
 
    memcpy(pBuffer, szText, *pnLen);
-   pBuffer[ *pnLen ] = '\0';
+   pBuffer[*pnLen] = '\0';
    if( iMethod == 1 )
    {
       HB_SIZE nPos;
       for( nPos = 0; nPos < *pnLen; nPos++ )
       {
-         pBuffer[ nPos ] ^= 0xF3;
+         pBuffer[nPos] ^= 0xF3;
       }
    }
    return pBuffer;
@@ -1450,9 +1450,9 @@ void hb_strtohex( const char * pSource, HB_SIZE size, char * pDest )
    for( i = 0; i < size; i++ )
    {
       int b;
-      b = ( static_cast<HB_UCHAR>(pSource[ i ]) >> 4 ) & 0x0F;
+      b = ( static_cast<HB_UCHAR>(pSource[i]) >> 4 ) & 0x0F;
       *pDest++ = static_cast<char>(b + ( b > 9 ? 'a' - 10 : '0' ));
-      b = static_cast<HB_UCHAR>(pSource[ i ]) & 0x0F;
+      b = static_cast<HB_UCHAR>(pSource[i]) & 0x0F;
       *pDest++ = static_cast<char>(b + ( b > 9 ? 'a' - 10 : '0' ));
    }
 }

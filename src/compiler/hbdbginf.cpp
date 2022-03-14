@@ -64,14 +64,14 @@ PHB_DEBUGINFO hb_compGetDebugInfo( HB_COMP_DECL )
          while( nPos < pFunc->nPCodePos )
          {
             nSkip = 0;
-            switch( pFunc->pCode[ nPos ] )
+            switch( pFunc->pCode[nPos] )
             {
                case HB_P_LINE:
-                  ulLine = HB_PCODE_MKUSHORT( &pFunc->pCode[ nPos + 1 ] );
+                  ulLine = HB_PCODE_MKUSHORT( &pFunc->pCode[nPos + 1] );
                   break;
 
                case HB_P_MODULENAME:
-                  pszModuleName = reinterpret_cast<const char*>(&pFunc->pCode[ nPos + 1 ]);
+                  pszModuleName = reinterpret_cast<const char*>(&pFunc->pCode[nPos + 1]);
                   pInfo = nullptr;
                   break;
 
@@ -81,11 +81,11 @@ PHB_DEBUGINFO hb_compGetDebugInfo( HB_COMP_DECL )
                 * code below. [druzus]
                 */
                case HB_P_PUSHBLOCKLARGE:
-                  nSkip = 8 + HB_PCODE_MKUSHORT( &pFunc->pCode[ nPos + 6 ] ) * 2;
+                  nSkip = 8 + HB_PCODE_MKUSHORT( &pFunc->pCode[nPos + 6] ) * 2;
                   break;
 
                case HB_P_PUSHBLOCK:
-                  nSkip = 7 + HB_PCODE_MKUSHORT( &pFunc->pCode[ nPos + 5 ] ) * 2;
+                  nSkip = 7 + HB_PCODE_MKUSHORT( &pFunc->pCode[nPos + 5] ) * 2;
                   break;
 
                case HB_P_PUSHBLOCKSHORT:
@@ -106,7 +106,7 @@ PHB_DEBUGINFO hb_compGetDebugInfo( HB_COMP_DECL )
                   while( pInfo != nullptr )
                   {
                      if( strncmp(pszModuleName, pInfo->pszModuleName, i) == 0 &&
-                         ( pInfo->pszModuleName[ i ] == '\0' || pInfo->pszModuleName[ i ] == ':' ) )
+                         ( pInfo->pszModuleName[i] == '\0' || pInfo->pszModuleName[i] == ':' ) )
                      {
                         break;
                      }
@@ -137,7 +137,7 @@ PHB_DEBUGINFO hb_compGetDebugInfo( HB_COMP_DECL )
                   memset(pInfo->pLineMap + pInfo->ulAllocated, 0, ulNewSize - pInfo->ulAllocated + 1);
                   pInfo->ulAllocated = ulNewSize;
                }
-               pInfo->pLineMap[ nOffset ] |= 1 << ( ulLine & 0x7 );
+               pInfo->pLineMap[nOffset] |= 1 << ( ulLine & 0x7 );
                /*
                 * It's possible the the line number will be ascending
                 * if some external file is included more then once. [druzus]

@@ -84,7 +84,7 @@ static void hb_pp_PragmaDump( void * cargo, char * pBuffer, HB_SIZE nSize, int i
    pInline = hb_compInlineAdd( static_cast<PHB_COMP>(cargo), nullptr, iLine );
    pInline->pCode = static_cast<HB_BYTE*>(hb_xgrab(nSize + 1));
    memcpy(pInline->pCode, pBuffer, nSize);
-   pInline->pCode[ nSize ] = '\0';
+   pInline->pCode[nSize] = '\0';
    pInline->nPCodeSize = nSize;
 }
 
@@ -106,7 +106,7 @@ static void hb_pp_hb_inLine( void * cargo, char * szFunc, char * pBuffer, HB_SIZ
          hb_compIdentifierNew( HB_COMP_PARAM, szFunc, HB_IDENT_COPY ), iLine );
       pInline->pCode = static_cast<HB_BYTE*>(hb_xgrab(nSize + 1));
       memcpy(pInline->pCode, pBuffer, nSize);
-      pInline->pCode[ nSize ] = '\0';
+      pInline->pCode[nSize] = '\0';
       pInline->nPCodeSize = nSize;
    }
 }
@@ -120,14 +120,14 @@ static HB_BOOL hb_pp_CompilerSwitch( void * cargo, const char * szSwitch, int * 
    iValue = *piValue;
 
    i = static_cast<int>(strlen(szSwitch));
-   if( i > 1 && ( static_cast<int>(szSwitch[ i - 1 ] - '0') ) == iValue )
+   if( i > 1 && ( static_cast<int>(szSwitch[i - 1] - '0') ) == iValue )
    {
       --i;
    }
 
    if( i == 1 )
    {
-      switch( szSwitch[ 0 ] )
+      switch( szSwitch[0] )
       {
          case 'a':
          case 'A':
@@ -269,11 +269,11 @@ static HB_BOOL hb_pp_CompilerSwitch( void * cargo, const char * szSwitch, int * 
    }
    else if( i == 2 )
    {
-      if( szSwitch[ 0 ] == 'k' || szSwitch[ 0 ] == 'K' )
+      if( szSwitch[0] == 'k' || szSwitch[0] == 'K' )
       {
          int iFlag = 0;
          /* -k? parameters are case sensitive */
-         switch( szSwitch[ 1 ] )
+         switch( szSwitch[1] )
          {
             case '?':
                if( fSet )
@@ -495,7 +495,7 @@ void hb_compInitPP( HB_COMP_DECL, PHB_PP_OPEN_FUNC pOpenFunc )
       {
          hb_pp_setStdRules( HB_COMP_PARAM->pLex->pPP );
       }
-      else if( HB_COMP_PARAM->szStdCh[ 0 ] > ' ' )
+      else if( HB_COMP_PARAM->szStdCh[0] > ' ' )
       {
          hb_pp_readRules( HB_COMP_PARAM->pLex->pPP, HB_COMP_PARAM->szStdCh );
       }
@@ -516,7 +516,7 @@ void hb_compInitPP( HB_COMP_DECL, PHB_PP_OPEN_FUNC pOpenFunc )
 
          while( i < HB_COMP_PARAM->iStdChExt )
          {
-            hb_pp_readRules( HB_COMP_PARAM->pLex->pPP, HB_COMP_PARAM->szStdChExt[ i++ ] );
+            hb_pp_readRules( HB_COMP_PARAM->pLex->pPP, HB_COMP_PARAM->szStdChExt[i++] );
          }
       }
 

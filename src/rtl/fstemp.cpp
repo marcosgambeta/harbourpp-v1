@@ -150,16 +150,16 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
 
    do
    {
-      pszName[ 0 ] = '\0';
+      pszName[0] = '\0';
 
-      if( pszDir && pszDir[ 0 ] != '\0' )
+      if( pszDir && pszDir[0] != '\0' )
       {
          hb_strncpy(pszName, pszDir, HB_PATH_MAX - 1);
          iLen = static_cast<int>(strlen(pszName));
-         if( pszName[ iLen - 1 ] != HB_OS_PATH_DELIM_CHR && iLen < HB_PATH_MAX - 1 )
+         if( pszName[iLen - 1] != HB_OS_PATH_DELIM_CHR && iLen < HB_PATH_MAX - 1 )
          {
-            pszName[ iLen ] = HB_OS_PATH_DELIM_CHR;
-            pszName[ iLen + 1 ] = '\0';
+            pszName[iLen] = HB_OS_PATH_DELIM_CHR;
+            pszName[iLen + 1] = '\0';
          }
       }
       else
@@ -222,9 +222,9 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
             d = d * 36;
             n = static_cast<int>(d);
             d = modf( d, &x );
-            pszName[ iLen++ ] = static_cast<char>(n + ( n > 9 ? 'a' - 10 : '0' ));
+            pszName[iLen++] = static_cast<char>(n + ( n > 9 ? 'a' - 10 : '0' ));
          }
-         pszName[ iLen ] = '\0';
+         pszName[iLen] = '\0';
          if( pszExt )
          {
             hb_strncat( pszName, pszExt, HB_PATH_MAX - 1 );
@@ -249,7 +249,7 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
 {
    HB_BOOL fResult;
 
-   pszBuffer[ 0 ] = '\0';
+   pszBuffer[0] = '\0';
 
    hb_vmUnlock();
 
@@ -258,12 +258,12 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
       LPCTSTR lpPrefix, lpDir;
       LPTSTR lpPrefixFree = nullptr, lpDirFree = nullptr;
 
-      TCHAR lpBuffer[ HB_PATH_MAX ];
-      TCHAR lpTempDir[ HB_PATH_MAX ];
+      TCHAR lpBuffer[HB_PATH_MAX];
+      TCHAR lpTempDir[HB_PATH_MAX];
 
       lpPrefix = pszPrefix ? HB_FSNAMECONV( pszPrefix, &lpPrefixFree ) : nullptr;
 
-      if( pszDir && pszDir[ 0 ] != '\0' )
+      if( pszDir && pszDir[0] != '\0' )
       {
          lpDir = HB_FSNAMECONV( pszDir, &lpDirFree );
       }
@@ -274,7 +274,7 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
             hb_fsSetIOError( HB_FALSE, 0 );
             return HB_FALSE;
          }
-         lpTempDir[ HB_PATH_MAX - 1 ] = TEXT( '\0' );
+         lpTempDir[HB_PATH_MAX - 1] = TEXT( '\0' );
          lpDir = lpTempDir;
       }
 
@@ -302,9 +302,9 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
       HB_SYMBOL_UNUSED(pszDir);
       HB_SYMBOL_UNUSED(pszPrefix);
 
-      pTmpBuffer[ 0 ] = '\0';
+      pTmpBuffer[0] = '\0';
       fResult = ( tmpnam( pTmpBuffer ) != nullptr );
-      pTmpBuffer[ L_tmpnam ] = '\0';
+      pTmpBuffer[L_tmpnam] = '\0';
 
       if( fResult )
       {
@@ -372,7 +372,7 @@ HB_ERRCODE hb_fsTempDir( char * pszTempDir )
 {
    HB_ERRCODE nResult = static_cast<HB_ERRCODE>(FS_ERROR);
 
-   pszTempDir[ 0 ] = '\0';
+   pszTempDir[0] = '\0';
 
 #if defined( HB_OS_UNIX )
    {
@@ -400,12 +400,12 @@ HB_ERRCODE hb_fsTempDir( char * pszTempDir )
    }
 #elif defined( HB_OS_WIN )
    {
-      TCHAR lpDir[ HB_PATH_MAX ];
+      TCHAR lpDir[HB_PATH_MAX];
 
       if( GetTempPath( HB_PATH_MAX, lpDir ) )
       {
          nResult = 0;
-         lpDir[ HB_PATH_MAX - 1 ] = TEXT( '\0' );
+         lpDir[HB_PATH_MAX - 1] = TEXT( '\0' );
          HB_OSSTRDUP2( lpDir, pszTempDir, HB_PATH_MAX - 1 );
       }
    }
@@ -431,20 +431,20 @@ HB_ERRCODE hb_fsTempDir( char * pszTempDir )
    }
 #endif
 
-   if( nResult == 0 && pszTempDir[ 0 ] != '\0' )
+   if( nResult == 0 && pszTempDir[0] != '\0' )
    {
       int len = static_cast<int>(strlen(pszTempDir));
-      if( pszTempDir[ len - 1 ] != HB_OS_PATH_DELIM_CHR && len < HB_PATH_MAX - 1 )
+      if( pszTempDir[len - 1] != HB_OS_PATH_DELIM_CHR && len < HB_PATH_MAX - 1 )
       {
-         pszTempDir[ len ] = HB_OS_PATH_DELIM_CHR;
-         pszTempDir[ len + 1 ] = '\0';
+         pszTempDir[len] = HB_OS_PATH_DELIM_CHR;
+         pszTempDir[len + 1] = '\0';
       }
    }
    else
    {
-      pszTempDir[ 0 ] = '.';
-      pszTempDir[ 1 ] = HB_OS_PATH_DELIM_CHR;
-      pszTempDir[ 2 ] = '\0';
+      pszTempDir[0] = '.';
+      pszTempDir[1] = HB_OS_PATH_DELIM_CHR;
+      pszTempDir[2] = '\0';
    }
 
    return nResult;
@@ -452,7 +452,7 @@ HB_ERRCODE hb_fsTempDir( char * pszTempDir )
 
 HB_FUNC( HB_FTEMPCREATE )
 {
-   char szName[ HB_PATH_MAX ];
+   char szName[HB_PATH_MAX];
 
    hb_retnint( static_cast<HB_NHANDLE>(hb_fsCreateTemp( hb_parc(1), hb_parc(2), static_cast<HB_FATTR>(hb_parnldef( 3, FC_NORMAL )), szName )) );
 
@@ -461,7 +461,7 @@ HB_FUNC( HB_FTEMPCREATE )
 
 HB_FUNC( HB_FTEMPCREATEEX )
 {
-   char szName[ HB_PATH_MAX ];
+   char szName[HB_PATH_MAX];
 
    hb_retnint( static_cast<HB_NHANDLE>(hb_fsCreateTempEx( szName, hb_parc(2), hb_parc(3), hb_parc(4), static_cast<HB_FATTR>(hb_parnldef( 5, FC_NORMAL )) )) );
 
@@ -470,7 +470,7 @@ HB_FUNC( HB_FTEMPCREATEEX )
 
 HB_FUNC( HB_DIRTEMP )
 {
-   char szTempDir[ HB_PATH_MAX ];
+   char szTempDir[HB_PATH_MAX];
 
    if( hb_fsTempDir( szTempDir ) != static_cast<HB_ERRCODE>(FS_ERROR) )
    {

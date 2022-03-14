@@ -267,7 +267,7 @@ HB_FUNC( __DBGVMLOCALLIST )
 
          nPrevOffset = hb_stackItem( nBaseOffset - 1 )->item.asSymbol.stackstate->nBaseItem;
          pSymItm = hb_stackItem( nPrevOffset );
-         nPrevOffset += HB_MAX( pSymItm->item.asSymbol.paramdeclcnt, pSymItm->item.asSymbol.paramcnt ) + 1;
+         nPrevOffset += HB_MAX(pSymItm->item.asSymbol.paramdeclcnt, pSymItm->item.asSymbol.paramcnt) + 1;
          nLen = nBaseOffset - nPrevOffset - 2;
       }
       else

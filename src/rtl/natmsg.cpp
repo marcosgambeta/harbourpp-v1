@@ -87,7 +87,7 @@ HB_FUNC( __NATISAFFIRM )
       const char * szYesNo = hb_langDGetItem( HB_LANG_ITEM_BASE_NATMSG + _LF_YN - 1 );
       HB_SIZE nStr = 0;
 
-      while( szYesNo[ nStr ] && szYesNo[ nStr ] != '/' )
+      while( szYesNo[nStr] && szYesNo[nStr] != '/' )
       {
          ++nStr;
       }

@@ -60,23 +60,23 @@ static HB_SIZE hb_strMemotran( char * pszResult, const char * pszString, HB_SIZE
 
    while( nStringPos < nStringLen )
    {
-      if( pszString[ nStringPos ] == HB_CHAR_HARD1 && pszString[ nStringPos + 1 ] == HB_CHAR_HARD2 )
+      if( pszString[nStringPos] == HB_CHAR_HARD1 && pszString[nStringPos + 1] == HB_CHAR_HARD2 )
       {
-         pszResult[ nResultPos++ ] = cHardCR;
+         pszResult[nResultPos++] = cHardCR;
          nStringPos += 2;
       }
-      else if( pszString[ nStringPos ] == HB_CHAR_SOFT1 && pszString[ nStringPos + 1 ] == HB_CHAR_SOFT2 )
+      else if( pszString[nStringPos] == HB_CHAR_SOFT1 && pszString[nStringPos + 1] == HB_CHAR_SOFT2 )
       {
-         pszResult[ nResultPos++ ] = cSoftCR;
+         pszResult[nResultPos++] = cSoftCR;
          nStringPos += 2;
       }
       else
       {
-         pszResult[ nResultPos++ ] = pszString[ nStringPos++ ];
+         pszResult[nResultPos++] = pszString[nStringPos++];
       }
    }
 
-   pszResult[ nResultPos ] = '\0';
+   pszResult[nResultPos] = '\0';
 
    return nResultPos;
 }

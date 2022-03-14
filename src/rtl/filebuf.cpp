@@ -126,7 +126,7 @@ void hb_fileDsp( PHB_FILE pFile, const char * szMsg )
    fprintf( stderr, "\r\n[%s][", szMsg );
    while( uiPos < pFile->uiLocks )
    {
-      PHB_FLOCK pLock = &pFile->pLocks[ uiPos ];
+      PHB_FLOCK pLock = &pFile->pLocks[uiPos];
       fprintf( stderr, "%lld:%lld ", pLock->start, pLock->len );
       ++uiPos;
    }
@@ -198,7 +198,7 @@ static HB_UINT hb_fileFindOffset( PHB_FILE pFile, HB_FOFFSET nOffset )
 
    while( uiFirst < uiLast )
    {
-      HB_FOFFSET nEnd = pFile->pLocks[ uiMiddle ].start + pFile->pLocks[ uiMiddle ].len;
+      HB_FOFFSET nEnd = pFile->pLocks[uiMiddle].start + pFile->pLocks[uiMiddle].len;
       if( nEnd > 0 && nEnd <= nOffset )
       {
          uiFirst = uiMiddle + 1;
@@ -219,18 +219,18 @@ static void hb_fileInsertLock( PHB_FILE pFile, HB_UINT uiPos, HB_FOFFSET nStart,
    {
       pFile->uiSize += HB_FLOCK_RESIZE;
       pFile->pLocks = static_cast<PHB_FLOCK>(hb_xrealloc(pFile->pLocks, sizeof(HB_FLOCK) * pFile->uiSize));
-      memset(&pFile->pLocks[ pFile->uiLocks ], 0, sizeof(HB_FLOCK) * HB_FLOCK_RESIZE);
+      memset(&pFile->pLocks[pFile->uiLocks], 0, sizeof(HB_FLOCK) * HB_FLOCK_RESIZE);
    }
-   memmove(&pFile->pLocks[ uiPos + 1 ], &pFile->pLocks[ uiPos ], (pFile->uiLocks - uiPos) * sizeof(HB_FLOCK));
-   pFile->pLocks[ uiPos ].start = nStart;
-   pFile->pLocks[ uiPos ].len   = nLen;
+   memmove(&pFile->pLocks[uiPos + 1], &pFile->pLocks[uiPos], (pFile->uiLocks - uiPos) * sizeof(HB_FLOCK));
+   pFile->pLocks[uiPos].start = nStart;
+   pFile->pLocks[uiPos].len   = nLen;
    pFile->uiLocks++;
 }
 
 static void hb_fileDeleteLock( PHB_FILE pFile, HB_UINT uiPos )
 {
    pFile->uiLocks--;
-   memmove(&pFile->pLocks[ uiPos ], &pFile->pLocks[ uiPos + 1 ], (pFile->uiLocks - uiPos) * sizeof(HB_FLOCK));
+   memmove(&pFile->pLocks[uiPos], &pFile->pLocks[uiPos + 1], (pFile->uiLocks - uiPos) * sizeof(HB_FLOCK));
    if( pFile->uiSize - pFile->uiLocks >= ( HB_FLOCK_RESIZE << 1 ) )
    {
       pFile->uiSize -= HB_FLOCK_RESIZE;
@@ -247,7 +247,7 @@ static HB_BOOL hb_fileSetLock( PHB_FILE pFile, HB_BOOL * pfLockFS, HB_FOFFSET nS
    fLJoin = fRJoin = HB_FALSE;
    if( uiPos < pFile->uiLocks )
    {
-      PHB_FLOCK pLock = &pFile->pLocks[ uiPos ];
+      PHB_FLOCK pLock = &pFile->pLocks[uiPos];
       HB_FOFFSET nEnd = nStart + nLen;
       if( nEnd <= 0 || nEnd > pLock->start )
       {
@@ -260,7 +260,7 @@ static HB_BOOL hb_fileSetLock( PHB_FILE pFile, HB_BOOL * pfLockFS, HB_FOFFSET nS
    }
    if( uiPos > 0 )
    {
-      PHB_FLOCK pLock = &pFile->pLocks[ uiPos - 1 ];
+      PHB_FLOCK pLock = &pFile->pLocks[uiPos - 1];
       if( pLock->start + pLock->len == nStart )
       {
          fLJoin = HB_TRUE;
@@ -270,18 +270,18 @@ static HB_BOOL hb_fileSetLock( PHB_FILE pFile, HB_BOOL * pfLockFS, HB_FOFFSET nS
    {
       if( fRJoin )
       {
-         pFile->pLocks[ uiPos - 1 ].len += nLen + pFile->pLocks[ uiPos ].len;
+         pFile->pLocks[uiPos - 1].len += nLen + pFile->pLocks[uiPos].len;
          hb_fileDeleteLock( pFile, uiPos );
       }
       else
       {
-         pFile->pLocks[ uiPos - 1 ].len += nLen;
+         pFile->pLocks[uiPos - 1].len += nLen;
       }
    }
    else if( fRJoin )
    {
-      pFile->pLocks[ uiPos ].start -= nLen;
-      pFile->pLocks[ uiPos ].len   += nLen;
+      pFile->pLocks[uiPos].start -= nLen;
+      pFile->pLocks[uiPos].len   += nLen;
    }
    else
    {
@@ -303,7 +303,7 @@ static HB_BOOL hb_fileUnlock( PHB_FILE pFile, HB_BOOL * pfLockFS, HB_FOFFSET nSt
    uiPos = hb_fileFindOffset( pFile, nStart );
    if( uiPos < pFile->uiLocks )
    {
-      PHB_FLOCK pLock = &pFile->pLocks[ uiPos ];
+      PHB_FLOCK pLock = &pFile->pLocks[uiPos];
       if( nStart >= pLock->start && pLock->len >= nLen && nStart - pLock->start <= pLock->len - nLen )
       {
          if( pfLockFS && pFile->shared )
@@ -329,7 +329,7 @@ static HB_BOOL hb_fileUnlock( PHB_FILE pFile, HB_BOOL * pfLockFS, HB_FOFFSET nSt
          else
          {
             hb_fileInsertLock( pFile, uiPos + 1, nStart + nLen, pLock->start + pLock->len - nStart - nLen );
-            pLock = &pFile->pLocks[ uiPos ];
+            pLock = &pFile->pLocks[uiPos];
             pLock->len = nStart - pLock->start;
          }
          fResult = HB_TRUE;
@@ -345,7 +345,7 @@ static HB_BOOL hb_fileTestLock( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nL
    uiPos = hb_fileFindOffset( pFile, nStart );
    if( uiPos < pFile->uiLocks )
    {
-      PHB_FLOCK pLock = &pFile->pLocks[ uiPos ];
+      PHB_FLOCK pLock = &pFile->pLocks[uiPos];
       HB_FOFFSET nEnd = nStart + nLen;
       if( nEnd <= 0 || nEnd > pLock->start )
       {
@@ -1132,7 +1132,7 @@ static PHB_FILE hb_fileposNew( PHB_FILE pFile )
 
 #endif /* HB_OS_UNIX */
 
-static const HB_FILE_FUNCS * s_pFileTypes[ HB_FILE_TYPE_MAX ];
+static const HB_FILE_FUNCS * s_pFileTypes[HB_FILE_TYPE_MAX];
 static int s_iFileTypes = 0;
 
 static int s_fileFindDrv( const char * pszFileName )
@@ -1145,7 +1145,7 @@ static int s_fileFindDrv( const char * pszFileName )
 
       while( --i >= 0 )
       {
-         if( s_pFileTypes[ i ]->Accept( s_pFileTypes[ i ], pszFileName ) )
+         if( s_pFileTypes[i]->Accept( s_pFileTypes[i], pszFileName ) )
          {
             break;
          }
@@ -1168,7 +1168,7 @@ HB_BOOL hb_fileRegisterFull( const HB_FILE_FUNCS * pFuncs )
 
    if( s_iFileTypes < HB_FILE_TYPE_MAX )
    {
-      s_pFileTypes[ s_iFileTypes ] = pFuncs;
+      s_pFileTypes[s_iFileTypes] = pFuncs;
       s_iFileTypes++;
       fResult = HB_TRUE;
    }
@@ -1185,7 +1185,7 @@ HB_BOOL hb_fileExists( const char * pszFileName, char * pRetPath )
 
    if( i >= 0 )
    {
-      return s_pFileTypes[ i ]->Exists( s_pFileTypes[ i ], pszFileName, pRetPath );
+      return s_pFileTypes[i]->Exists( s_pFileTypes[i], pszFileName, pRetPath );
    }
 
    return pRetPath ? hb_spFileExists( pszFileName, pRetPath ) : hb_fsFileExists( pszFileName );
@@ -1197,7 +1197,7 @@ HB_BOOL hb_fileDelete( const char * pszFileName )
 
    if( i >= 0 )
    {
-      return s_pFileTypes[ i ]->Delete( s_pFileTypes[ i ], pszFileName );
+      return s_pFileTypes[i]->Delete( s_pFileTypes[i], pszFileName );
    }
 
    return hb_fsDelete( pszFileName );
@@ -1209,7 +1209,7 @@ HB_BOOL hb_fileRename( const char * pszFileName, const char * pszNewName )
 
    if( i >= 0 )
    {
-      return s_pFileTypes[ i ]->Rename( s_pFileTypes[ i ], pszFileName, pszNewName );
+      return s_pFileTypes[i]->Rename( s_pFileTypes[i], pszFileName, pszNewName );
    }
 
    return hb_fsRename( pszFileName, pszNewName );
@@ -1221,7 +1221,7 @@ HB_BOOL hb_fileCopy( const char * pszSrcFile, const char * pszDstFile )
 
    if( i >= 0 )
    {
-      return s_pFileTypes[ i ]->Copy( s_pFileTypes[ i ], pszSrcFile, pszDstFile );
+      return s_pFileTypes[i]->Copy( s_pFileTypes[i], pszSrcFile, pszDstFile );
    }
 
    return hb_fsCopy( pszSrcFile, pszDstFile );
@@ -1235,7 +1235,7 @@ HB_BOOL hb_fileMove( const char * pszSrcFile, const char * pszDstFile )
    if( iS == iD )
    {
       if( iS >= 0 ?
-          s_pFileTypes[ iS ]->Rename( s_pFileTypes[ iS ], pszSrcFile, pszDstFile ) :
+          s_pFileTypes[iS]->Rename( s_pFileTypes[iS], pszSrcFile, pszDstFile ) :
           hb_fsRename( pszSrcFile, pszDstFile ) )
       {
          return HB_TRUE;
@@ -1251,7 +1251,7 @@ HB_BOOL hb_fileDirExists( const char * pszDirName )
 
    if( i >= 0 )
    {
-      return s_pFileTypes[ i ]->DirExists( s_pFileTypes[ i ], pszDirName );
+      return s_pFileTypes[i]->DirExists( s_pFileTypes[i], pszDirName );
    }
 
    return hb_fsDirExists( pszDirName );
@@ -1263,7 +1263,7 @@ HB_BOOL hb_fileDirMake( const char * pszDirName )
 
    if( i >= 0 )
    {
-      return s_pFileTypes[ i ]->DirMake( s_pFileTypes[ i ], pszDirName );
+      return s_pFileTypes[i]->DirMake( s_pFileTypes[i], pszDirName );
    }
 
    return hb_fsMkDir( pszDirName );
@@ -1275,7 +1275,7 @@ HB_BOOL hb_fileDirRemove( const char * pszDirName )
 
    if( i >= 0 )
    {
-      return s_pFileTypes[ i ]->DirRemove( s_pFileTypes[ i ], pszDirName );
+      return s_pFileTypes[i]->DirRemove( s_pFileTypes[i], pszDirName );
    }
 
    return hb_fsRmDir( pszDirName );
@@ -1287,7 +1287,7 @@ double hb_fileDirSpace( const char * pszDirName, HB_USHORT uiType )
 
    if( i >= 0 )
    {
-      return s_pFileTypes[ i ]->DirSpace( s_pFileTypes[ i ], pszDirName, uiType );
+      return s_pFileTypes[i]->DirSpace( s_pFileTypes[i], pszDirName, uiType );
    }
 
    return hb_fsDiskSpace( pszDirName, uiType );
@@ -1299,7 +1299,7 @@ PHB_ITEM hb_fileDirectory( const char * pszDirSpec, const char * pszAttr )
 
    if( i >= 0 )
    {
-      return s_pFileTypes[ i ]->Directory( s_pFileTypes[ i ], pszDirSpec, pszAttr );
+      return s_pFileTypes[i]->Directory( s_pFileTypes[i], pszDirSpec, pszAttr );
    }
 
    return hb_fsDirectory( pszDirSpec, pszAttr, HB_TRUE );
@@ -1311,7 +1311,7 @@ HB_BOOL hb_fileTimeGet( const char * pszFileName, long * plJulian, long * plMill
 
    if( i >= 0 )
    {
-      return s_pFileTypes[ i ]->TimeGet( s_pFileTypes[ i ], pszFileName, plJulian, plMillisec );
+      return s_pFileTypes[i]->TimeGet( s_pFileTypes[i], pszFileName, plJulian, plMillisec );
    }
 
    return hb_fsGetFileTime( pszFileName, plJulian, plMillisec );
@@ -1323,7 +1323,7 @@ HB_BOOL hb_fileTimeSet( const char * pszFileName, long lJulian, long lMillisec )
 
    if( i >= 0 )
    {
-      return s_pFileTypes[ i ]->TimeSet( s_pFileTypes[ i ], pszFileName, lJulian, lMillisec );
+      return s_pFileTypes[i]->TimeSet( s_pFileTypes[i], pszFileName, lJulian, lMillisec );
    }
 
    return hb_fsSetFileTime( pszFileName, lJulian, lMillisec );
@@ -1376,7 +1376,7 @@ HB_BOOL hb_fileAttrGet( const char * pszFileName, HB_FATTR * pulAttr )
    int i = s_fileFindDrv( pszFileName );
 
    if( i >= 0 )
-      return s_pFileTypes[ i ]->AttrGet( s_pFileTypes[ i ], pszFileName, pulAttr );
+      return s_pFileTypes[i]->AttrGet( s_pFileTypes[i], pszFileName, pulAttr );
 
    return hb_fsGetAttr( pszFileName, pulAttr );
 }
@@ -1387,7 +1387,7 @@ HB_BOOL hb_fileAttrSet( const char * pszFileName, HB_FATTR ulAttr )
 
    if( i >= 0 )
    {
-      return s_pFileTypes[ i ]->AttrSet( s_pFileTypes[ i ], pszFileName, ulAttr );
+      return s_pFileTypes[i]->AttrSet( s_pFileTypes[i], pszFileName, ulAttr );
    }
 
    return hb_fsSetAttr( pszFileName, ulAttr );
@@ -1399,7 +1399,7 @@ HB_BOOL hb_fileLink( const char * pszExisting, const char * pszNewName )
 
    if( i >= 0 )
    {
-      return s_pFileTypes[ i ]->Link( s_pFileTypes[ i ], pszExisting, pszNewName );
+      return s_pFileTypes[i]->Link( s_pFileTypes[i], pszExisting, pszNewName );
    }
 
    return hb_fsLink( pszExisting, pszNewName );
@@ -1411,7 +1411,7 @@ HB_BOOL hb_fileLinkSym( const char * pszTarget, const char * pszNewName )
 
    if( i >= 0 )
    {
-      return s_pFileTypes[ i ]->LinkSym( s_pFileTypes[ i ], pszTarget, pszNewName );
+      return s_pFileTypes[i]->LinkSym( s_pFileTypes[i], pszTarget, pszNewName );
    }
 
    return hb_fsLinkSym( pszTarget, pszNewName );
@@ -1423,7 +1423,7 @@ char * hb_fileLinkRead( const char * pszFileName )
 
    if( i >= 0 )
    {
-      return s_pFileTypes[ i ]->LinkRead( s_pFileTypes[ i ], pszFileName );
+      return s_pFileTypes[i]->LinkRead( s_pFileTypes[i], pszFileName );
    }
 
    return hb_fsLinkRead( pszFileName );
@@ -1435,7 +1435,7 @@ PHB_FILE hb_fileExtOpen( const char * pszFileName, const char * pDefExt, HB_FATT
 
    if( i >= 0 )
    {
-      return s_pFileTypes[ i ]->Open( s_pFileTypes[ i ], pszFileName, pDefExt, nExFlags, pPaths, pError );
+      return s_pFileTypes[i]->Open( s_pFileTypes[i], pszFileName, pDefExt, nExFlags, pPaths, pError );
    }
 
    return s_fileExtOpen( nullptr, pszFileName, pDefExt, nExFlags, pPaths, pError );
@@ -1674,7 +1674,7 @@ HB_BYTE * hb_fileLoadData( PHB_FILE pFile, HB_SIZE nMaxSize, HB_SIZE * pnSize )
    if( nSize > 0 )
    {
       pFileBuf = static_cast<HB_BYTE*>(hb_xrealloc(pFileBuf, nSize + 1));
-      pFileBuf[ nSize ] = '\0';
+      pFileBuf[nSize] = '\0';
    }
    else if( pFileBuf )
    {

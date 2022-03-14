@@ -87,13 +87,13 @@ HB_FUNC( HB_VERSION )
          if( strlen(pszBuildDate) >= 11 )
          {
             static const char * s_months[] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
-            char szDate[ 9 ];
+            char szDate[9];
 
-            szDate[ 4 ] = szDate[ 5 ] = '0';
+            szDate[4] = szDate[5] = '0';
 
             for( int iMonth = 11; iMonth >= 0; iMonth-- )
             {
-               if( memcmp(pszBuildDate, s_months[ iMonth ], 3) == 0 )
+               if( memcmp(pszBuildDate, s_months[iMonth], 3) == 0 )
                {
                   hb_snprintf(szDate + 4, 3, "%02d", iMonth + 1);
                   break;
@@ -101,9 +101,9 @@ HB_FUNC( HB_VERSION )
             }
 
             memcpy(szDate, pszBuildDate + 7, 4);
-            szDate[ 6 ] = pszBuildDate[ 4 ] == ' ' ? '0' : pszBuildDate[ 4 ];
-            szDate[ 7 ] = pszBuildDate[ 5 ];
-            szDate[ 8 ] = '\0';
+            szDate[6] = pszBuildDate[4] == ' ' ? '0' : pszBuildDate[4];
+            szDate[7] = pszBuildDate[5];
+            szDate[8] = '\0';
 
             hb_retds( szDate );
          }

@@ -68,11 +68,11 @@ HB_FUNC( HB_USERLANG )
    {
       HB_ISIZ tmp;
 
-      for( tmp = 0; ietf[ tmp ] && ietf[ tmp ] != '.'; tmp++ )
+      for( tmp = 0; ietf[tmp] && ietf[tmp] != '.'; tmp++ )
       {
-         if( ietf[ tmp ] == '_' )
+         if( ietf[tmp] == '_' )
          {
-            ietf[ tmp ] = '-';
+            ietf[tmp] = '-';
          }   
       }
 

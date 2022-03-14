@@ -122,16 +122,16 @@ HB_FUNC( HB_STRCDECODE )
             n = 0;
             while( n < nLen )
             {
-               char c = pszSrc[ n ];
+               char c = pszSrc[n];
                if( c == '"' )
                {
                   fCont = HB_FALSE;
                   break;
                }
-               pszDst[ nDst + n ] = c;
+               pszDst[nDst + n] = c;
                if( ++n < nLen && c == '\\' )
                {
-                  pszDst[ nDst + n ] = pszSrc[ n ];
+                  pszDst[nDst + n] = pszSrc[n];
                   ++n;
                }
             }

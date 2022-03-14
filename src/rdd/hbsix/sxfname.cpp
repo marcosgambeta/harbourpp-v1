@@ -55,7 +55,7 @@ HB_FUNC( SX_FNAMEPARSER )
 
    if( szFileName )
    {
-      char szPathBuf[ HB_PATH_MAX ];
+      char szPathBuf[HB_PATH_MAX];
       PHB_FNAME pFileName;
       HB_SIZE nLen;
       char * pszFree;
@@ -83,14 +83,14 @@ HB_FUNC( SX_FNAMEPARSER )
             nLen = strlen(pFileName->szName);
             nLen = hb_strRTrimLen( pFileName->szName, nLen, HB_FALSE );
             pFileName->szName = hb_strLTrim( pFileName->szName, &nLen );
-            ( const_cast<char*>(pFileName->szName) )[ nLen ] = '\0';
+            ( const_cast<char*>(pFileName->szName) )[nLen] = '\0';
          }
          if( pFileName->szExtension )
          {
             nLen = strlen(pFileName->szExtension);
             nLen = hb_strRTrimLen( pFileName->szExtension, nLen, HB_FALSE );
             pFileName->szExtension = hb_strLTrim( pFileName->szExtension, &nLen );
-            ( const_cast<char*>(pFileName->szExtension) )[ nLen ] = '\0';
+            ( const_cast<char*>(pFileName->szExtension) )[nLen] = '\0';
          }
       }
 

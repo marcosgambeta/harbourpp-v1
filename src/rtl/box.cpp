@@ -80,7 +80,7 @@ HB_FUNC( DISPBOX )
       }
       else
       {
-         char szOldColor[ HB_CLRSTR_LEN ];
+         char szOldColor[HB_CLRSTR_LEN];
 
          if( pszColor )
          {

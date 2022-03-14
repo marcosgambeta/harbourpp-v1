@@ -55,7 +55,7 @@ static void hb_trace_message( char * buffer, HB_SIZE nSize, int iParam, int iCou
 {
    int iFirst = iParam;
 
-   buffer[ 0 ] = '\0';
+   buffer[0] = '\0';
 
    while( iParam <= iCount && nSize > 1 )
    {
@@ -126,9 +126,9 @@ HB_FUNC( HB_TRACELOGLEVEL )
 
 HB_FUNC( HB_TRACELOG )
 {
-   char message[ 1024 ];
-   char procname[ HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5 ];
-   char file[ HB_PATH_MAX ];
+   char message[1024];
+   char procname[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
+   char file[HB_PATH_MAX];
    HB_USHORT line;
 
    hb_trace_message( message, sizeof(message) - 1, 1, hb_pcount() );
@@ -144,9 +144,9 @@ HB_FUNC( HB_TRACELOGAT )
 
       if( iLevel <= hb_tr_level() )
       {
-         char message[ 1024 ];
-         char procname[ HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5 ];
-         char file[ HB_PATH_MAX ];
+         char message[1024];
+         char procname[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
+         char file[HB_PATH_MAX];
          HB_USHORT line;
 
          hb_trace_message( message, sizeof(message) - 1, 2, hb_pcount() );
@@ -162,7 +162,7 @@ HB_FUNC( HB_TRACESTRING )
 
    if( iPCount > 0 )
    {
-      char message[ 1024 ];
+      char message[1024];
 
       hb_trace_message( message, sizeof(message) - 1, 1, iPCount );
 

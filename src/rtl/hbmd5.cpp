@@ -80,8 +80,8 @@
 /* MD5 buffer */
 struct MD5_BUF
 {
-   HB_U32  accum[ 4 ];
-   HB_BYTE buf[ 64 ];
+   HB_U32  accum[4];
+   HB_BYTE buf[64];
 };
 
 /*
@@ -112,7 +112,7 @@ struct MD5_BUF
 #define OPAD      0x5C
 
 /* Static data */
-static const HB_U32 T[ 64 ] = {
+static const HB_U32 T[64] = {
    0xD76AA478, 0xE8C7B756, 0x242070DB, 0xC1BDCEEE,
    0xF57C0FAF, 0x4787C62A, 0xA8304613, 0xFD469501,
    0x698098D8, 0x8B44F7AF, 0xFFFF5BB1, 0x895CD7BE,
@@ -133,7 +133,7 @@ static const HB_U32 T[ 64 ] = {
 
 static void hb_md5go( MD5_BUF * md5 )
 {
-   HB_U32 X[ 16 ], A[ 4 ];
+   HB_U32 X[16], A[4];
    HB_BYTE * ptr;
    int i;
 
@@ -143,7 +143,7 @@ static void hb_md5go( MD5_BUF * md5 )
    /* fill buffer */
    for( i = 0, ptr = md5->buf; i < 16; i++, ptr += 4 )
    {
-      X[ i ] = HB_GET_LE_UINT32( ptr );
+      X[i] = HB_GET_LE_UINT32( ptr );
    }
 
    /* process buffer */
@@ -213,19 +213,19 @@ static void hb_md5go( MD5_BUF * md5 )
    PF4( 1, 2, 3, 0,  9, 21, 63 );
 
    /* Update accumulators */
-   md5->accum[ 0 ] += A[ 0 ];
-   md5->accum[ 1 ] += A[ 1 ];
-   md5->accum[ 2 ] += A[ 2 ];
-   md5->accum[ 3 ] += A[ 3 ];
+   md5->accum[0] += A[0];
+   md5->accum[1] += A[1];
+   md5->accum[2] += A[2];
+   md5->accum[3] += A[3];
 }
 
 static void hb_md5accinit( HB_U32 accum[] )
 {
    /* fill initial accumulator state */
-   accum[ 0 ] = 0x67452301;
-   accum[ 1 ] = 0xEFCDAB89;
-   accum[ 2 ] = 0x98BADCFE;
-   accum[ 3 ] = 0x10325476;
+   accum[0] = 0x67452301;
+   accum[1] = 0xEFCDAB89;
+   accum[2] = 0x98BADCFE;
+   accum[3] = 0x10325476;
 }
 
 static void hb_md5val( HB_U32 accum[], char * md5val )
@@ -236,7 +236,7 @@ static void hb_md5val( HB_U32 accum[], char * md5val )
    {
       for( n = 0; n < 4; n++ )
       {
-         *md5val++ = static_cast<char>((accum[ i ] >> (n << 3)) & 0xFF);
+         *md5val++ = static_cast<char>((accum[i] >> (n << 3)) & 0xFF);
       }
    }
 }
@@ -244,7 +244,7 @@ static void hb_md5val( HB_U32 accum[], char * md5val )
 static void hb_md5_count( const void * data, HB_SIZE nLen, char * digest, const void * init_block )
 {
    const unsigned char * ucdata = static_cast<const unsigned char*>(data);
-   HB_UCHAR buf[ 128 ];
+   HB_UCHAR buf[128];
    MD5_BUF md5;
    HB_ISIZ i, n;
 
@@ -274,7 +274,7 @@ static void hb_md5_count( const void * data, HB_SIZE nLen, char * digest, const 
    {
       memcpy(buf, ucdata, n);
    }
-   buf[ n ] = 0x80;
+   buf[n] = 0x80;
    /* count bits length */
    i = 56;
    if( n >= 56 )
@@ -283,11 +283,11 @@ static void hb_md5_count( const void * data, HB_SIZE nLen, char * digest, const 
       memcpy(md5.buf, buf, 64);
       hb_md5go( &md5 );
    }
-   buf[ i++ ] = static_cast<HB_UCHAR>((nLen << 3) & 0xF8);
+   buf[i++] = static_cast<HB_UCHAR>((nLen << 3) & 0xF8);
    nLen >>= 5;
    for( n = 7; n; --n )
    {
-      buf[ i++ ] = static_cast<HB_UCHAR>(nLen & 0xFF);
+      buf[i++] = static_cast<HB_UCHAR>(nLen & 0xFF);
       nLen >>= 8;
    }
    memcpy(md5.buf, buf + i - 64, 64);
@@ -310,7 +310,7 @@ void hb_md5( const void * data, HB_SIZE nLen, char * digest )
 
 void hb_hmac_md5( const void * key, HB_SIZE nKeyLen, const void * message, HB_SIZE nMsgLen, char * digest )
 {
-   char init_block[ 64 ];
+   char init_block[64];
    int i;
 
    memset(init_block, 0, sizeof(init_block));
@@ -325,14 +325,14 @@ void hb_hmac_md5( const void * key, HB_SIZE nKeyLen, const void * message, HB_SI
 
    for( i = 0; i < static_cast<int>(sizeof(init_block)); ++i )
    {
-      init_block[ i ] ^= IPAD;
+      init_block[i] ^= IPAD;
    }
 
    hb_md5_count( message, nMsgLen, digest, init_block );
 
    for( i = 0; i < static_cast<int>(sizeof(init_block)); ++i )
    {
-      init_block[ i ] ^= IPAD ^ OPAD;
+      init_block[i] ^= IPAD ^ OPAD;
    }
 
    hb_md5_count( digest, 16, digest, init_block );
@@ -353,7 +353,7 @@ HB_BOOL hb_md5file( const char * pszFileName, char * digest )
       HB_SIZE n;
       int i;
       HB_FOFFSET flen = 0;
-      HB_UCHAR buf[ 128 ];
+      HB_UCHAR buf[128];
       HB_BYTE * readbuf = static_cast<HB_BYTE*>(hb_xgrab(MAX_FBUF));
 
       hb_md5accinit( md5.accum );
@@ -391,7 +391,7 @@ HB_BOOL hb_md5file( const char * pszFileName, char * digest )
       {
          memcpy(buf, readbuf + i, n);
       }
-      buf[ n ] = 0x80;
+      buf[n] = 0x80;
       i = 56;
       if( n >= 56 )
       {
@@ -399,11 +399,11 @@ HB_BOOL hb_md5file( const char * pszFileName, char * digest )
          memcpy(md5.buf, buf, 64);
          hb_md5go( &md5 );
       }
-      buf[ i++ ] = static_cast<HB_UCHAR>((flen << 3) & 0xF8);
+      buf[i++] = static_cast<HB_UCHAR>((flen << 3) & 0xF8);
       flen >>= 5;
       for( n = 7; n; --n )
       {
-         buf[ i++ ] = static_cast<HB_UCHAR>(flen & 0xFF);
+         buf[i++] = static_cast<HB_UCHAR>(flen & 0xFF);
          flen >>= 8;
       }
       memcpy(md5.buf, buf + i - 64, 64);
@@ -423,13 +423,13 @@ HB_FUNC( HB_MD5 )  /* Considered insecure. Use SHA256 or higher instead. */
    if( pszStr )
    {
       HB_SIZE nLen = hb_parclen(1);
-      char dststr[ 16 ];
+      char dststr[16];
 
       hb_md5( pszStr, nLen, dststr );
 
       if( ! hb_parl(2) )
       {
-         char digest[ ( sizeof(dststr) * 2 ) + 1 ];
+         char digest[( sizeof(dststr) * 2 ) + 1];
          hb_strtohex( dststr, sizeof(dststr), digest );
          hb_retclen( digest, HB_SIZEOFARRAY( digest ) - 1 );
       }
@@ -439,7 +439,7 @@ HB_FUNC( HB_MD5 )  /* Considered insecure. Use SHA256 or higher instead. */
       }
       if( ! hb_parl(2) )
       {
-         char digest[ ( sizeof(dststr) * 2 ) + 1 ];
+         char digest[( sizeof(dststr) * 2 ) + 1];
          hb_strtohex( dststr, sizeof(dststr), digest );
          hb_retclen( digest, HB_SIZEOFARRAY( digest ) - 1 );
       }
@@ -457,13 +457,13 @@ HB_FUNC( HB_MD5 )  /* Considered insecure. Use SHA256 or higher instead. */
 HB_FUNC( HB_MD5FILE )  /* Considered insecure. Use SHA256 or higher instead. */
 {
    const char * pszFileName = hb_parc(1);
-   char dststr[ 16 ];
+   char dststr[16];
 
    if( pszFileName && hb_md5file( pszFileName, dststr ) )
    {
       if( ! hb_parl(2) )
       {
-         char digest[ ( sizeof(dststr) * 2 ) + 1 ];
+         char digest[( sizeof(dststr) * 2 ) + 1];
          hb_strtohex( dststr, sizeof(dststr), digest );
          hb_retclen( digest, HB_SIZEOFARRAY( digest ) - 1 );
       }
@@ -480,13 +480,13 @@ HB_FUNC( HB_MD5FILE )  /* Considered insecure. Use SHA256 or higher instead. */
 
 HB_FUNC( HB_HMAC_MD5 )
 {
-   char dststr[ 16 ];
+   char dststr[16];
 
    hb_hmac_md5( hb_parcx(2), hb_parclen(2), hb_parcx(1), hb_parclen(1), dststr );
 
    if( ! hb_parl(3) )
    {
-      char digest[ ( sizeof(dststr) * 2 ) + 1 ];
+      char digest[( sizeof(dststr) * 2 ) + 1];
       hb_strtohex( dststr, sizeof(dststr), digest );
       hb_retclen( digest, HB_SIZEOFARRAY( digest ) - 1 );
    }

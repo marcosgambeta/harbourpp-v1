@@ -52,7 +52,7 @@
 #include "hbmacro.h"
 #include "hbcomp.h"
 
-static const char * s_OperTable[ HB_EXPR_COUNT ] = {
+static const char * s_OperTable[HB_EXPR_COUNT] = {
    "",
    "NIL",
    "Numeric",
@@ -118,7 +118,7 @@ static const char * s_OperTable[ HB_EXPR_COUNT ] = {
  *    HB_ET_NIL is used for an ordinary values and post- operators
  *    HB_ET_NONE is used for invalid syntax, e.g. var := var1 += 2
  */
-static const HB_BYTE s_PrecedTable[ HB_EXPR_COUNT ] = {
+static const HB_BYTE s_PrecedTable[HB_EXPR_COUNT] = {
    HB_ET_NIL,                 /* HB_ET_NONE = 0,    */
    HB_ET_NIL,                 /* HB_ET_NIL,         */
    HB_ET_NIL,                 /* HB_ET_NUMERIC,     */
@@ -185,11 +185,11 @@ const char * hb_compExprDescription( PHB_EXPR pExpr )
 {
    if( pExpr )
    {
-      return s_OperTable[ pExpr->ExprType ];
+      return s_OperTable[pExpr->ExprType];
    }
    else
    {
-      return s_OperTable[ 0 ];
+      return s_OperTable[0];
    }
 }
 
@@ -1298,7 +1298,7 @@ PHB_EXPR hb_compExprSetOperand( PHB_EXPR pExpr, PHB_EXPR pItem, HB_COMP_DECL )
 {
    HB_BYTE ucRight;
 
-   ucRight = s_PrecedTable[ pItem->ExprType ];
+   ucRight = s_PrecedTable[pItem->ExprType];
 
    if( ucRight == HB_ET_NIL )
    {
@@ -1331,7 +1331,7 @@ PHB_EXPR hb_compExprSetOperand( PHB_EXPR pExpr, PHB_EXPR pItem, HB_COMP_DECL )
        *   We have to set the proper order of evaluation using
        * precedence rules
        */
-      HB_BYTE ucLeft = s_PrecedTable[ pExpr->ExprType ];
+      HB_BYTE ucLeft = s_PrecedTable[pExpr->ExprType];
       if( ucLeft < ucRight || ( ucLeft == ucRight && HB_COMP_ISSUPPORTED( HB_COMPFLAG_SHORTCUTS ) && ( ucLeft == HB_EO_OR || ucLeft == HB_EO_AND ) ) )
       {
          /* Left operator has a lower precedence then the right one

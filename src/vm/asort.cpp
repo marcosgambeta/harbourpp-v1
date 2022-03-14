@@ -229,7 +229,7 @@ static HB_ISIZ hb_arraySortQuickPartition( PHB_BASEARRAY pBaseArray, HB_ISIZ lb,
       i++;
    }
 
-   /* pivot belongs in pBaseArray->pItems[ j ] */
+   /* pivot belongs in pBaseArray->pItems[j] */
    if( j > lb && pBaseArray->nLen > static_cast<HB_SIZE>(j) )
    {
       hb_itemRawSwap(pBaseArray->pItems + lb, pBaseArray->pItems + j);
@@ -288,11 +288,11 @@ static HB_BOOL hb_arraySortDO( PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZ
 
       nCnt1 = nCount >> 1;
       nCnt2 = nCount - nCnt1;
-      pPtr1 = &pSrc[ 0 ];
-      pPtr2 = &pSrc[ nCnt1 ];
+      pPtr1 = &pSrc[0];
+      pPtr2 = &pSrc[nCnt1];
 
-      fBuf1 = hb_arraySortDO( pBaseArray, pBlock, pPtr1, &pBuf[ 0 ], nCnt1 );
-      fBuf2 = hb_arraySortDO( pBaseArray, pBlock, pPtr2, &pBuf[ nCnt1 ], nCnt2 );
+      fBuf1 = hb_arraySortDO( pBaseArray, pBlock, pPtr1, &pBuf[0], nCnt1 );
+      fBuf2 = hb_arraySortDO( pBaseArray, pBlock, pPtr2, &pBuf[nCnt1], nCnt2 );
       if( fBuf1 )
       {
          pDst = pBuf;
@@ -300,11 +300,11 @@ static HB_BOOL hb_arraySortDO( PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZ
       else
       {
          pDst = pSrc;
-         pPtr1 = &pBuf[ 0 ];
+         pPtr1 = &pBuf[0];
       }
       if( ! fBuf2 )
       {
-         pPtr2 = &pBuf[ nCnt1 ];
+         pPtr2 = &pBuf[nCnt1];
       }
 
       while( nCnt1 > 0 && nCnt2 > 0 )
@@ -348,10 +348,10 @@ static void hb_arraySortStart( PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZ
    pBuffer = static_cast<HB_SIZE*>(hb_xgrab(sizeof(HB_SIZE) * 2 * nCount));
    for( nPos = 0; nPos < nCount; ++nPos )
    {
-      pBuffer[ nPos ] = nStart + nPos;
+      pBuffer[nPos] = nStart + nPos;
    }
 
-   if( hb_arraySortDO( pBaseArray, pBlock, pBuffer, &pBuffer[ nCount ], nCount ) )
+   if( hb_arraySortDO( pBaseArray, pBlock, pBuffer, &pBuffer[nCount], nCount ) )
    {
       pPos = ( pDest = pBuffer ) + nCount;
    }
@@ -367,9 +367,9 @@ static void hb_arraySortStart( PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZ
       {
          for( nPos = nTo = 0; nPos < nCount; ++nPos )
          {
-            if( pDest[ nPos ] < pBaseArray->nLen )
+            if( pDest[nPos] < pBaseArray->nLen )
             {
-               pDest[ nTo++ ] = pDest[ nPos ];
+               pDest[nTo++] = pDest[nPos];
             }
          }
          nCount = nTo;
@@ -382,16 +382,16 @@ static void hb_arraySortStart( PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZ
 
    for( nPos = 0; nPos < nCount; ++nPos )
    {
-      pPos[ pDest[ nPos ] - nStart ] = nPos;
+      pPos[pDest[nPos] - nStart] = nPos;
    }
 
    for( nPos = 0; nPos < nCount; ++nPos )
    {
-      if( nPos + nStart != pDest[ nPos ] )
+      if( nPos + nStart != pDest[nPos] )
       {
-         hb_itemRawSwap(pBaseArray->pItems + nPos + nStart, pBaseArray->pItems + pDest[ nPos ]);
-         pDest[ pPos[ nPos ] ] = pDest[ nPos ];
-         pPos[ pDest[ nPos ] - nStart ] = pPos[ nPos ];
+         hb_itemRawSwap(pBaseArray->pItems + nPos + nStart, pBaseArray->pItems + pDest[nPos]);
+         pDest[pPos[nPos]] = pDest[nPos];
+         pPos[pDest[nPos] - nStart] = pPos[nPos];
       }
    }
 

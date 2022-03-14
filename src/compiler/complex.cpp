@@ -231,7 +231,7 @@ static int hb_comp_asType( PHB_PP_TOKEN pToken, HB_BOOL fArray )
          if( pKey->minlen <= pToken->len && pToken->len <= pKey->maxlen &&
              memcmp(pKey->value, pToken->value, pToken->len) == 0 )
          {
-            return ( fArray ? s_asArrayTypes : s_asTypes )[ pKey->type ];
+            return ( fArray ? s_asArrayTypes : s_asTypes )[pKey->type];
          }
          ++pKey;
       }
@@ -366,7 +366,7 @@ static HB_BOOL hb_comp_timeDecode( PHB_PP_TOKEN pTime, long * plTime )
    if( HB_PP_TOKEN_TYPE( pTime->type ) == HB_PP_TOKEN_KEYWORD && lHour > 0 && lHour <= 12 )
    {
       if( ( pTime->len == 1 &&
-            ( pTime->value[ 0 ] == 'A' || pTime->value[ 0 ] == 'a' ) ) ||
+            ( pTime->value[0] == 'A' || pTime->value[0] == 'a' ) ) ||
           ( pTime->len == 2 && hb_stricmp( pTime->value, "AM" ) == 0 ) )
       {
          if( lHour == 12 )
@@ -376,7 +376,7 @@ static HB_BOOL hb_comp_timeDecode( PHB_PP_TOKEN pTime, long * plTime )
          pTime = pTime->pNext;
       }
       else if( ( pTime->len == 1 &&
-                 ( pTime->value[ 0 ] == 'P' || pTime->value[ 0 ] == 'p' ) ) ||
+                 ( pTime->value[0] == 'P' || pTime->value[0] == 'p' ) ) ||
                ( pTime->len == 2 && hb_stricmp( pTime->value, "PM" ) == 0 ) )
       {
          if( lHour < 12 )
@@ -620,7 +620,7 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
          int iYear, iMonth, iDay;
 
          pLex->iState = LITERAL;
-         if( pToken->value[ 0 ] == '0' && ( pToken->value[ 1 ] == 'D' || pToken->value[ 1 ] == 'd' ) )
+         if( pToken->value[0] == '0' && ( pToken->value[1] == 'D' || pToken->value[1] == 'd' ) )
          {
             if( pToken->len == 10 )
             {
@@ -629,7 +629,7 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
             else
             {
                iYear = iMonth = iDay = 0;
-               if( pToken->len != 3 || pToken->value[ 2 ] != '0' )
+               if( pToken->len != 3 || pToken->value[2] != '0' )
                {
                   iYear = -1;
                }
@@ -661,7 +661,7 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
 
       case HB_PP_TOKEN_LOGICAL:
          pLex->iState = LITERAL;
-         return pToken->value[ 1 ] == 'T' ? TRUEVALUE : FALSEVALUE;
+         return pToken->value[1] == 'T' ? TRUEVALUE : FALSEVALUE;
 
       case HB_PP_TOKEN_MACROVAR:
          pLex->iState = MACROVAR;
@@ -839,7 +839,7 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
             return IDENTIFIER;
          }
          pLex->iState = OPERATOR;
-         return static_cast<HB_UCHAR>(pToken->value[ 0 ]);
+         return static_cast<HB_UCHAR>(pToken->value[0]);
 
       case HB_PP_TOKEN_EQ:
          if( HB_SUPPORT_HARBOUR && pToken->pNext && pToken->pNext->spaces == 0 &&
@@ -864,14 +864,14 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
       case HB_PP_TOKEN_GT:
       case HB_PP_TOKEN_REFERENCE:
          pLex->iState = OPERATOR;
-         return static_cast<HB_UCHAR>(pToken->value[ 0 ]);
+         return static_cast<HB_UCHAR>(pToken->value[0]);
 
       case HB_PP_TOKEN_EOL:
          pLex->fEol = HB_TRUE;
          /* fallthrough */
       case HB_PP_TOKEN_EOC:
          pLex->iState = LOOKUP;
-         return static_cast<HB_UCHAR>(pToken->value[ 0 ]);
+         return static_cast<HB_UCHAR>(pToken->value[0]);
 
       case HB_PP_TOKEN_KEYWORD:
       {
@@ -906,7 +906,7 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
                                   pToken->pNext->len ) == 0 ) )
                {
                   pLex->iScope = iType == INIT ? HB_FS_INIT : ( iType == EXIT ? HB_FS_EXIT : HB_FS_STATIC );
-                  pLex->iState = HB_TOUPPER(pToken->pNext->value[ 0 ]) == 'F' ? FUNCTION : PROCEDURE;
+                  pLex->iState = HB_TOUPPER(pToken->pNext->value[0]) == 'F' ? FUNCTION : PROCEDURE;
                   hb_pp_tokenGet( pLex->pPP );
                   return hb_comp_funcStart( HB_COMP_PARAM, yylval_ptr );
                }
@@ -1416,7 +1416,7 @@ int hb_comp_yylex( YYSTYPE * yylval_ptr, HB_COMP_DECL )
          return iType;
       }
       default:
-         return static_cast<HB_UCHAR>(pToken->value[ 0 ]);
+         return static_cast<HB_UCHAR>(pToken->value[0]);
    }
 }
 

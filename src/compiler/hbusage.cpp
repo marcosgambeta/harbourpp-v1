@@ -101,14 +101,14 @@ void hb_compPrintUsage( HB_COMP_DECL, const char * szSelf )
       "\n          @<file>          compile list of modules in <file>",
       "\n"
    };
-   char buffer[ 256 ];
+   char buffer[256];
 
    hb_snprintf(buffer, sizeof(buffer), "\nSyntax:  %s <file[s][.prg]|@file> [options]\n", szSelf);
    hb_compOutStd( HB_COMP_PARAM, buffer );
 
    for( int iLine = 0; iLine < static_cast<int>(HB_SIZEOFARRAY( s_szOptions )); iLine++ )
    {
-      hb_compOutStd( HB_COMP_PARAM, s_szOptions[ iLine ] );
+      hb_compOutStd( HB_COMP_PARAM, s_szOptions[iLine] );
    }
 }
 
@@ -151,10 +151,10 @@ void hb_compPrintModes( HB_COMP_DECL )
 
    for( int iLine = 0; iLine < static_cast<int>(HB_SIZEOFARRAY( s_szOptions )); iLine++ )
    {
-      hb_compOutStd( HB_COMP_PARAM, s_szOptions[ iLine ] );
+      hb_compOutStd( HB_COMP_PARAM, s_szOptions[iLine] );
       if( iLine < static_cast<int>(HB_SIZEOFARRAY( s_flags )) &&
-          ( s_flags[ iLine ] < 0 ? HB_COMP_ISSUPPORTED( ~s_flags[ iLine ] ) == 0 :
-                                   HB_COMP_ISSUPPORTED( s_flags[ iLine ] ) != 0 ) )
+          ( s_flags[iLine] < 0 ? HB_COMP_ISSUPPORTED( ~s_flags[iLine] ) == 0 :
+                                   HB_COMP_ISSUPPORTED( s_flags[iLine] ) != 0 ) )
       {
          hb_compOutStd( HB_COMP_PARAM, " (default)" );
       }

@@ -123,7 +123,7 @@ static void hb_pp_writeTokenList( FILE * fout, PHB_PP_TOKEN pTokenLst, const cha
 
 static int hb_pp_writeRules( FILE * fout, PHB_PP_RULE pFirst, const char * szName )
 {
-   char szMatch[ 16 ], szResult[ 16 ];
+   char szMatch[16], szResult[16];
    HB_ULONG ulRepeatBits, ulBit;
    PHB_PP_RULE pRule;
    int iRule;
@@ -136,13 +136,13 @@ static int hb_pp_writeRules( FILE * fout, PHB_PP_RULE pFirst, const char * szNam
       ++iRule;
       if( pRule->pMatch )
       {
-         hb_snprintf(szMatch, sizeof(szMatch), "s_%cm%03d", szName[ 0 ], iRule);
+         hb_snprintf(szMatch, sizeof(szMatch), "s_%cm%03d", szName[0], iRule);
          hb_pp_writeTokenList( fout, pRule->pMatch, szMatch );
       }
 
       if( pRule->pResult )
       {
-         hb_snprintf(szResult, sizeof(szResult), "s_%cr%03d", szName[ 0 ], iRule);
+         hb_snprintf(szResult, sizeof(szResult), "s_%cr%03d", szName[0], iRule);
          hb_pp_writeTokenList( fout, pRule->pResult, szResult );
       }
       pRule = pRule->pPrev;
@@ -157,18 +157,18 @@ static int hb_pp_writeRules( FILE * fout, PHB_PP_RULE pFirst, const char * szNam
    {
       ++iRule;
       if( pRule->pMatch )
-         hb_snprintf(szMatch, sizeof(szMatch), "s_%cm%03d", szName[ 0 ], iRule);
+         hb_snprintf(szMatch, sizeof(szMatch), "s_%cm%03d", szName[0], iRule);
       else
          hb_strncpy(szMatch, "NULL   ", sizeof(szMatch) - 1);
       if( pRule->pResult )
-         hb_snprintf(szResult, sizeof(szResult), "s_%cr%03d", szName[ 0 ], iRule);
+         hb_snprintf(szResult, sizeof(szResult), "s_%cr%03d", szName[0], iRule);
       else
          hb_strncpy(szResult, "NULL   ", sizeof(szResult) - 1);
 
       ulRepeatBits = 0;
       for( u = 0, ulBit = 1; u < pRule->markers; ++u, ulBit <<= 1 )
       {
-         if( pRule->pMarkers[ u ].canrepeat )
+         if( pRule->pMarkers[u].canrepeat )
             ulRepeatBits |= ulBit;
       }
       fprintf( fout, "   { %s, %s, %d,%2u, 0x%04lx }%s\n",
@@ -236,8 +236,8 @@ static void hb_pp_undefCompilerRules( PHB_PP_STATE pState )
                               "__PDP_ENDIAN__",
                               nullptr };
 
-   for( i = 0; szRules[ i ]; ++i )
-      hb_pp_delDefine( pState, szRules[ i ] );
+   for( i = 0; szRules[i]; ++i )
+      hb_pp_delDefine( pState, szRules[i] );
 
    pRulePtr = &pState->pDefinitions;
    while( *pRulePtr )
@@ -312,8 +312,8 @@ static char * hb_pp_escapeString( char * szString )
    {
       ch = *szString++;
       if( ch == '"' || ch == '\\' || ch == '?' )
-         szResult[ iLen++ ] = '\\';
-      szResult[ iLen++ ] = ch;
+         szResult[iLen++] = '\\';
+      szResult[iLen++] = ch;
    }
    while( ch );
 
@@ -421,7 +421,7 @@ static char * hb_fsFileFind( const char * pszFileMask )
 
    if( ( ffind = hb_fsFindFirst( pszFileMask, HB_FA_ALL ) ) != nullptr )
    {
-      char pszFileName[ HB_PATH_MAX ];
+      char pszFileName[HB_PATH_MAX];
       PHB_FNAME pFileName = hb_fsFNameSplit(pszFileMask);
       pFileName->szName = ffind->szName;
       pFileName->szExtension = nullptr;
@@ -441,7 +441,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
    int iResult = 0;
    FILE * file_in;
 
-   char szToCheck[ HB_PATH_MAX ];
+   char szToCheck[HB_PATH_MAX];
    PHB_FNAME pFileName = hb_fsFNameSplit(pszFileName);
 
    if( ! pFileName->szName )
@@ -456,7 +456,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
       if( ! pFileName->szPath )
          pFileName->szPath = "../../../../..";
 
-      pszFileName = s_szNames[ i++ ];
+      pszFileName = s_szNames[i++];
       while( pszFileName )
       {
          pFileName->szName = pszFileName;
@@ -478,11 +478,11 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
             }
          }
 
-         pszFileName = s_szNames[ i++ ];
+         pszFileName = s_szNames[i++];
       }
 
       if( ! pszFileName )
-         pszFileName = s_szNames[ 0 ];
+         pszFileName = s_szNames[0];
    }
 
    hb_xfree(pFileName);
@@ -498,9 +498,9 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
    }
    else
    {
-      char szLine[ 256 ];
-      char szId[ 128 ];
-      char szLog[ 128 ];
+      char szLine[256];
+      char szId[128];
+      char szLog[128];
       char * szFrom, * szTo;
       int iLen;
 
@@ -529,10 +529,10 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
                      /* we do not have revision number :-( */
                      hb_strncpy(szId, "unknown -1 (source tarball without keyword expanding)", sizeof(szId) - 1);
                   }
-                  else if( szTo - szFrom > 3 && szTo[ -1 ] == ' ' &&
-                           szFrom[ 0 ] == ':' && szFrom[ 1 ] == ' ' )
+                  else if( szTo - szFrom > 3 && szTo[-1] == ' ' &&
+                           szFrom[0] == ':' && szFrom[1] == ' ' )
                   {
-                     szTo[ -1 ] = '\0';
+                     szTo[-1] = '\0';
                      hb_strncpy(szId, szFrom + 2, sizeof(szId) - 1);
                   }
                }
@@ -540,14 +540,14 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
          }
          else if( ! *szLog )
          {
-            if( szLine[ 4 ] == '-' && szLine[ 7 ] == '-' &&
-                szLine[ 10 ] == ' ' && szLine[ 13 ] == ':' )
+            if( szLine[4] == '-' && szLine[7] == '-' &&
+                szLine[10] == ' ' && szLine[13] == ':' )
             {
                hb_strncpy(szLog, szLine, sizeof(szLog) - 1);
                iLen = static_cast<int>(strlen(szLog));
-               while( iLen-- && HB_ISSPACE( szLog[ iLen ] ) )
+               while( iLen-- && HB_ISSPACE( szLog[iLen] ) )
                {
-                  szLog[ iLen ] = '\0';
+                  szLog[iLen] = '\0';
                }   
             }
          }
@@ -564,20 +564,20 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
       }
       else
       {
-         char szRevID[ 18 ];
+         char szRevID[18];
 
          *szLine = '"';
          hb_strncpy(szLine + 1, szLog, sizeof(szLine) - 3);
          iLen = static_cast<int>(strlen(szLine));
-         szLine[ iLen ] = '"';
-         szLine[ ++iLen ] = '\0';
+         szLine[iLen] = '"';
+         szLine[++iLen] = '\0';
          hb_pp_addDefine( pState, "HB_VER_LENTRY", szLine );
          *pszLastEntry = hb_strdup(szLog);
 
          hb_strncpy(szLine + 1, szId, sizeof(szLine) - 3);
          iLen = static_cast<int>(strlen(szLine));
-         szLine[ iLen ] = '"';
-         szLine[ ++iLen ] = '\0';
+         szLine[iLen] = '"';
+         szLine[++iLen] = '\0';
          hb_pp_addDefine( pState, "HB_VER_CHLID", szLine );
          *pszChangeLogID = hb_strdup(szId);
 
@@ -586,18 +586,18 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
             long lJulian = 0, lMilliSec = 0;
             int iUTC = 0;
 
-            if( strlen(szLog) >= 25 && szLog[ 17 ] == 'U' &&
-                szLog[ 18 ] == 'T' && szLog[ 19 ] == 'C' &&
-                ( szLog[ 20 ] == '+' || szLog[ 20 ] == '-' ) &&
-                HB_ISDIGIT( szLog[ 21 ] ) && HB_ISDIGIT( szLog[ 22 ] ) &&
-                HB_ISDIGIT( szLog[ 23 ] ) && HB_ISDIGIT( szLog[ 24 ] ) )
+            if( strlen(szLog) >= 25 && szLog[17] == 'U' &&
+                szLog[18] == 'T' && szLog[19] == 'C' &&
+                ( szLog[20] == '+' || szLog[20] == '-' ) &&
+                HB_ISDIGIT(szLog[21]) && HB_ISDIGIT(szLog[22]) &&
+                HB_ISDIGIT(szLog[23]) && HB_ISDIGIT(szLog[24]) )
             {
-               iUTC = ( static_cast<int>(szLog[ 21 ] - '0') * 10 +
-                        static_cast<int>(szLog[ 22 ] - '0') ) * 60 +
-                        static_cast<int>(szLog[ 23 ] - '0') * 10 +
-                        static_cast<int>(szLog[ 24 ] - '0');
+               iUTC = ( static_cast<int>(szLog[21] - '0') * 10 +
+                        static_cast<int>(szLog[22] - '0') ) * 60 +
+                        static_cast<int>(szLog[23] - '0') * 10 +
+                        static_cast<int>(szLog[24] - '0');
             }
-            szLog[ 16 ] = '\0';
+            szLog[16] = '\0';
             if( iUTC != 0 && hb_timeStampStrGetDT( szLog, &lJulian, &lMilliSec ) )
             {
                hb_timeStampUnpackDT( hb_timeStampPackDT( lJulian, lMilliSec ) -
@@ -611,22 +611,22 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
             }
             else
             {
-               szRevID[ 0 ] = szLog[ 2 ];
-               szRevID[ 1 ] = szLog[ 3 ];
-               szRevID[ 2 ] = szLog[ 5 ];
-               szRevID[ 3 ] = szLog[ 6 ];
-               szRevID[ 4 ] = szLog[ 8 ];
-               szRevID[ 5 ] = szLog[ 9 ];
-               szRevID[ 6 ] = szLog[ 11 ];
-               szRevID[ 7 ] = szLog[ 12 ];
-               szRevID[ 8 ] = szLog[ 14 ];
-               szRevID[ 9 ] = szLog[ 15 ];
+               szRevID[0] = szLog[2];
+               szRevID[1] = szLog[3];
+               szRevID[2] = szLog[5];
+               szRevID[3] = szLog[6];
+               szRevID[4] = szLog[8];
+               szRevID[5] = szLog[9];
+               szRevID[6] = szLog[11];
+               szRevID[7] = szLog[12];
+               szRevID[8] = szLog[14];
+               szRevID[9] = szLog[15];
             }
-            szRevID[ 10 ] = '\0';
+            szRevID[10] = '\0';
 
          }
          else
-            szRevID[ 0 ] = '\0';
+            szRevID[0] = '\0';
 
          *piRevID = static_cast<int>(hb_strValInt( szRevID, &iLen ));
 
@@ -677,34 +677,34 @@ int main( int argc, char * argv[] )
 
    if( argc >= 2 )
    {
-      szFile = argv[ 1 ];
+      szFile = argv[1];
       for( i = 2; szFile && i < argc; i++ )
       {
-         if( ! HB_ISOPTSEP( argv[ i ][ 0 ] ) )
+         if( ! HB_ISOPTSEP( argv[i][0] ) )
             szFile = nullptr;
          else
          {
-            switch( argv[ i ][ 1 ] )
+            switch( argv[i][1] )
             {
                case 'q':
                case 'Q':
-                  if( ! argv[ i ][ 2 ] )
+                  if( ! argv[i][2] )
                      iQuiet = 1;
-                  else if( argv[ i ][ 2 ] == '-' && ! argv[ i ][ 3 ] )
+                  else if( argv[i][2] == '-' && ! argv[i][3] )
                      iQuiet = 0;
-                  else if( argv[ i ][ 2 ] >= '0' && argv[ i ][ 2 ] <= '2' && ! argv[ i ][ 3 ] )
-                     iQuiet = argv[ i ][ 2 ] - '0';
+                  else if( argv[i][2] >= '0' && argv[i][2] <= '2' && ! argv[i][3] )
+                     iQuiet = argv[i][2] - '0';
                   else
                      szFile = nullptr;
                   break;
 
                case 'd':
                case 'D':
-                  if( ! argv[ i ][ 2 ] )
+                  if( ! argv[i][2] )
                      szFile = nullptr;
                   else
                   {
-                     char * szDefText = hb_strdup(argv[ i ] + 2), * szAssign;
+                     char * szDefText = hb_strdup(argv[i] + 2), * szAssign;
 
                      szAssign = strchr( szDefText, '=' );
                      if( szAssign )
@@ -716,15 +716,15 @@ int main( int argc, char * argv[] )
 
                case 'e':
                case 'E':
-                  if( argv[ i ][ 2 ] )
-                     szPPRuleFuncName = argv[ i ] + 2;
+                  if( argv[i][2] )
+                     szPPRuleFuncName = argv[i] + 2;
                   else
                      szPPRuleFuncName = nullptr;
                   break;
 
                case 'w':
                case 'W':
-                  if( argv[ i ][ 2 ] )
+                  if( argv[i][2] )
                      szFile = nullptr;
                   else
                      fWrite = HB_TRUE;
@@ -733,38 +733,38 @@ int main( int argc, char * argv[] )
                case 'c':
                case 'C':
                   fChgLog = HB_TRUE;
-                  if( argv[ i ][ 2 ] )
-                     szLogFile = argv[ i ] + 2;
+                  if( argv[i][2] )
+                     szLogFile = argv[i] + 2;
                   break;
 
                case 'i':
                case 'I':
-                  if( argv[ i ][ 2 ] )
-                     hb_pp_addSearchPath( pState, argv[ i ] + 2, HB_FALSE );
+                  if( argv[i][2] )
+                     hb_pp_addSearchPath( pState, argv[i] + 2, HB_FALSE );
                   else
                      szFile = nullptr;
                   break;
 
                case 'o':
                case 'O':
-                  if( argv[ i ][ 2 ] )
-                     szRuleFile = argv[ i ] + 2;
+                  if( argv[i][2] )
+                     szRuleFile = argv[i] + 2;
                   else
                      szFile = nullptr;
                   break;
 
                case 'v':
                case 'V':
-                  if( argv[ i ][ 2 ] )
-                     szVerFile = argv[ i ] + 2;
+                  if( argv[i][2] )
+                     szVerFile = argv[i] + 2;
                   else
                      szFile = nullptr;
                   break;
 
                case 'u':
                case 'U':
-                  if( argv[ i ][ 2 ] )
-                     szStdCh = argv[ i ] + 2;
+                  if( argv[i][2] )
+                     szStdCh = argv[i] + 2;
                   else
                      szStdCh = nullptr;
                   break;
@@ -794,7 +794,7 @@ int main( int argc, char * argv[] )
       szInclude = hb_getenv( "INCLUDE" );
       if( szInclude )
       {
-         if( szInclude[ 0 ] )
+         if( szInclude[0] )
             hb_pp_addSearchPath( pState, szInclude, HB_FALSE );
          hb_xfree(szInclude);
       }
@@ -806,7 +806,7 @@ int main( int argc, char * argv[] )
       {
          if( fWrite )
          {
-            char szFileName[ HB_PATH_MAX ];
+            char szFileName[HB_PATH_MAX];
             PHB_FNAME pFileName;
 
             pFileName = hb_fsFNameSplit(szFile);
@@ -835,7 +835,7 @@ int main( int argc, char * argv[] )
    }
    else
    {
-      hb_pp_usage( argv[ 0 ] );
+      hb_pp_usage( argv[0] );
       iResult = 1;
    }
 

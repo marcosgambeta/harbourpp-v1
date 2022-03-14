@@ -103,7 +103,7 @@ static int hb_gt_gui_optionId( const char * pszOption )
          pszOption++;
       }
       nSize = strlen(pszOption);
-      while( nSize > 0 && HB_ISSPACE( pszOption[ nSize - 1 ] ) )
+      while( nSize > 0 && HB_ISSPACE( pszOption[nSize - 1] ) )
       {
          nSize--;
       }
@@ -112,9 +112,9 @@ static int hb_gt_gui_optionId( const char * pszOption )
       {
          for( int i = 0; i < static_cast<int>(_HB_BUTTON_COUNT); ++i )
          {
-            if( nSize == s_buttons[ i ].len && hb_strnicmp( s_buttons[ i ].name, pszOption, nSize ) == 0 )
+            if( nSize == s_buttons[i].len && hb_strnicmp( s_buttons[i].name, pszOption, nSize ) == 0 )
             {
-               return s_buttons[ i ].id;
+               return s_buttons[i].id;
             }
          }
       }

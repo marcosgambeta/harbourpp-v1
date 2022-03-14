@@ -162,7 +162,7 @@ HB_ERRCODE hb_rddGetTempAlias( char * szAliasTmp )
          return HB_SUCCESS;
       }
    }
-   szAliasTmp[ 0 ] = '\0';
+   szAliasTmp[0] = '\0';
    return HB_FAILURE;
 }
 
@@ -220,20 +220,20 @@ HB_USHORT hb_rddFieldIndex( AREAP pArea, const char * szName )
    {
       HB_SIZE nLen = strlen(szName);
 
-      while( HB_ISSPACE( szName[ nLen - 1 ] ) )
+      while( HB_ISSPACE( szName[nLen - 1] ) )
       {
          --nLen;
       }
 
       if( nLen <= HB_SYMBOL_NAME_LEN )
       {
-         char szFieldName[ HB_SYMBOL_NAME_LEN + 1 ];
+         char szFieldName[HB_SYMBOL_NAME_LEN + 1];
          PHB_DYNS pDynSym;
 
-         szFieldName[ nLen ] = '\0';
+         szFieldName[nLen] = '\0';
          while( nLen-- )
          {
-            szFieldName[ nLen ] = HB_TOUPPER(szName[ nLen ]);
+            szFieldName[nLen] = HB_TOUPPER(szName[nLen]);
          }
 
          pDynSym = hb_dynsymFind(szFieldName);
@@ -270,7 +270,7 @@ HB_USHORT hb_rddFieldExpIndex( AREAP pArea, const char * szField )
 
    if( strchr( szField, '>' ) != nullptr )
    {
-      char szAlias[ HB_RDD_MAX_ALIAS_LEN + 1 ];
+      char szAlias[HB_RDD_MAX_ALIAS_LEN + 1];
       int j, l, n;
 
       n = 0;
@@ -292,17 +292,17 @@ HB_USHORT hb_rddFieldExpIndex( AREAP pArea, const char * szField )
          int i;
          j = n;
          i = 0;
-         if( HB_ISFIRSTIDCHAR( szField[ n ] ) )
+         if( HB_ISFIRSTIDCHAR( szField[n] ) )
          {
             ++i;
-            while( HB_ISNEXTIDCHAR( szField[ n + i ] ) )
+            while( HB_ISNEXTIDCHAR( szField[n + i] ) )
             {
                ++i;
             }
 
-            if( ! ( ( i == l && hb_strnicmp( &szField[ n ], szAlias, l ) == 0 ) ) &&
-                ! ( i >= 4 && i <= 5 && hb_strnicmp( &szField[ n ], "FIELD", i ) == 0 ) &&
-                ! ( i >= 4 && i <= 6 && hb_strnicmp( &szField[ n ], "_FIELD", i ) == 0 ) )
+            if( ! ( ( i == l && hb_strnicmp( &szField[n], szAlias, l ) == 0 ) ) &&
+                ! ( i >= 4 && i <= 5 && hb_strnicmp( &szField[n], "FIELD", i ) == 0 ) &&
+                ! ( i >= 4 && i <= 6 && hb_strnicmp( &szField[n], "_FIELD", i ) == 0 ) )
             {
                i = 0;
             }
@@ -311,14 +311,14 @@ HB_USHORT hb_rddFieldExpIndex( AREAP pArea, const char * szField )
          if( i > 0 )
          {
             i += n;
-            while( HB_ISSPACE( szField[ i ] ) )
+            while( HB_ISSPACE( szField[i] ) )
             {
                i++;
             }
-            if( szField[ i ] == '-' && szField[ i + 1 ] == '>' )
+            if( szField[i] == '-' && szField[i + 1] == '>' )
             {
                n = i + 2;
-               while( szField[ n ] == ' ' )
+               while( szField[n] == ' ' )
                {
                   n++;
                }
@@ -326,7 +326,7 @@ HB_USHORT hb_rddFieldExpIndex( AREAP pArea, const char * szField )
          }
       }
       while( n != j );
-      szField = &szField[ n ];
+      szField = &szField[n];
    }
    return hb_rddFieldIndex( pArea, szField );
 }
@@ -348,13 +348,13 @@ HB_ERRCODE hb_rddGetAliasNumber( const char * szAlias, int * iArea )
       szAlias++;
    }
 
-   c = szAlias[ 0 ];
+   c = szAlias[0];
    if( c >= 'a' && c <= 'z' )
    {
       c -= 'a' - 'A';
    }
 
-   fOneLetter = c && ( szAlias[ 1 ] == 0 || szAlias[ 1 ] == ' ' );
+   fOneLetter = c && ( szAlias[1] == 0 || szAlias[1] == ' ' );
 
    if( c >= '0' && c <= '9' )
    {
@@ -405,19 +405,19 @@ HB_ERRCODE hb_rddSelectWorkAreaSymbol( PHB_SYMB pSymAlias )
 
    szName = hb_dynsymName(pSymAlias->pDynSym);
 
-   if( szName[ 0 ] && ! szName[ 1 ] )
+   if( szName[0] && ! szName[1] )
    {
-      if( szName[ 0 ] >= 'A' && szName[ 0 ] <= 'K' )
+      if( szName[0] >= 'A' && szName[0] <= 'K' )
       {
-         hb_rddSelectWorkAreaNumber( szName[ 0 ] - 'A' + 1 );
+         hb_rddSelectWorkAreaNumber( szName[0] - 'A' + 1 );
          return HB_SUCCESS;
       }
-      else if( szName[ 0 ] >= 'a' && szName[ 0 ] <= 'k' )
+      else if( szName[0] >= 'a' && szName[0] <= 'k' )
       {
-         hb_rddSelectWorkAreaNumber( szName[ 0 ] - 'a' + 1 );
+         hb_rddSelectWorkAreaNumber( szName[0] - 'a' + 1 );
          return HB_SUCCESS;
       }
-      else if( szName[ 0 ] == 'M' || szName[ 0 ] == 'm' )
+      else if( szName[0] == 'M' || szName[0] == 'm' )
       {
          hb_rddSelectWorkAreaNumber( HB_RDD_MAX_AREA_NUM );
          return HB_SUCCESS;
@@ -805,7 +805,7 @@ HB_ERRCODE hb_rddCreateTable( const char * szFileName, const char * szDriver,
 
 HB_ERRCODE hb_rddCreateTableTemp( const char * szDriver, const char * szAlias, const char * szCpId, HB_ULONG ulConnection, PHB_ITEM pStruct )
 {
-   char szDriverBuffer[ HB_RDD_MAX_DRIVERNAME_LEN + 1 ];
+   char szDriverBuffer[HB_RDD_MAX_DRIVERNAME_LEN + 1];
    DBOPENINFO pInfo;
    PHB_ITEM pItem;
    HB_ERRCODE errCode;
@@ -817,7 +817,7 @@ HB_ERRCODE hb_rddCreateTableTemp( const char * szDriver, const char * szAlias, c
    /* 0 means chose first available in hb_rddInsertAreaNode() */
    hb_rddSelectWorkAreaNumber(0);
 
-   if( szDriver && szDriver[ 0 ] )
+   if( szDriver && szDriver[0] )
    {
       hb_strncpyUpper( szDriverBuffer, szDriver, sizeof(szDriverBuffer) - 1 );
       szDriver = szDriverBuffer;
@@ -884,7 +884,7 @@ static void hb_fldStructure( AREAP pArea, HB_USHORT uiField, HB_USHORT uiSize, P
    hb_arrayNew(pField, uiSize);
    for( HB_USHORT uiCount = 0; uiCount < uiSize; ++uiCount )
    {
-      SELF_FIELDINFO( pArea, uiField, s_uiActions[ uiCount ], hb_arrayGetItemPtr(pField, uiCount + 1) );
+      SELF_FIELDINFO( pArea, uiField, s_uiActions[uiCount], hb_arrayGetItemPtr(pField, uiCount + 1) );
    }
 }
 
@@ -960,7 +960,7 @@ HB_ERRCODE hb_dbTransCounters( LPDBTRANSINFO lpdbTransInfo )
 
    for( HB_USHORT uiCount = 0; uiCount < lpdbTransInfo->uiItemCount; ++uiCount )
    {
-      LPDBTRANSITEM lpdbTransItem = &lpdbTransInfo->lpTransItems[ uiCount ];
+      LPDBTRANSITEM lpdbTransItem = &lpdbTransInfo->lpTransItems[uiCount];
 
       if( SELF_FIELDINFO( lpdbTransInfo->lpaSource, lpdbTransItem->uiSource, DBS_COUNTER, pItem ) == HB_SUCCESS &&
           SELF_FIELDINFO( lpdbTransInfo->lpaDest, lpdbTransItem->uiDest, DBS_COUNTER, pItem ) == HB_SUCCESS )
@@ -998,7 +998,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
       {
          return errCode;
       }
-      uiSize = HB_MIN( uiSizeDst, uiSizeSrc );
+      uiSize = HB_MIN(uiSizeDst, uiSizeSrc);
    }
    else
    {
@@ -1060,15 +1060,15 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
                /* check for replicated field names in source area */
                for( ui = 0; ui < uiSize; ++ui )
                {
-                  if( lpdbTransInfo->lpTransItems[ ui ].uiDest == uiPosDst )
+                  if( lpdbTransInfo->lpTransItems[ui].uiDest == uiPosDst )
                   {
                      break;
                   }
                }
                if( ui == uiSize )
                {
-                  lpdbTransInfo->lpTransItems[ uiSize ].uiSource = uiCount;
-                  lpdbTransInfo->lpTransItems[ uiSize++ ].uiDest = uiPosDst;
+                  lpdbTransInfo->lpTransItems[uiSize].uiSource = uiCount;
+                  lpdbTransInfo->lpTransItems[uiSize++].uiDest = uiPosDst;
                }
             }
          }
@@ -1080,8 +1080,8 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
          uiSize = static_cast<HB_USHORT>(hb_arrayLen(*pStruct));
          for( uiCount = 0; uiCount < uiSize; ++uiCount )
          {
-            lpdbTransInfo->lpTransItems[ uiCount ].uiSource =
-            lpdbTransInfo->lpTransItems[ uiCount ].uiDest = uiCount + 1;
+            lpdbTransInfo->lpTransItems[uiCount].uiSource =
+            lpdbTransInfo->lpTransItems[uiCount].uiDest = uiCount + 1;
          }
       }
    }
@@ -1112,8 +1112,8 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
                {
                   fAll = HB_FALSE;
                }
-               lpdbTransInfo->lpTransItems[ uiSize ].uiSource = uiPosSrc;
-               lpdbTransInfo->lpTransItems[ uiSize++ ].uiDest = uiPosDst;
+               lpdbTransInfo->lpTransItems[uiSize].uiSource = uiPosSrc;
+               lpdbTransInfo->lpTransItems[uiSize++].uiDest = uiPosDst;
                if( ! lpaDest )
                {
                   hb_arraySize(*pStruct, uiSize);
@@ -1249,9 +1249,9 @@ HB_ERRCODE hb_rddTransRecords( AREAP pArea,
          dbTransInfo.lpaDest = dbTransInfo.lpaSource;
          for( HB_USHORT uiCount = 0; uiCount < dbTransInfo.uiItemCount; ++uiCount )
          {
-            HB_USHORT uiSwap = dbTransInfo.lpTransItems[ uiCount ].uiSource;
-            dbTransInfo.lpTransItems[ uiCount ].uiSource = dbTransInfo.lpTransItems[ uiCount ].uiDest;
-            dbTransInfo.lpTransItems[ uiCount ].uiDest = uiSwap;
+            HB_USHORT uiSwap = dbTransInfo.lpTransItems[uiCount].uiSource;
+            dbTransInfo.lpTransItems[uiCount].uiSource = dbTransInfo.lpTransItems[uiCount].uiDest;
+            dbTransInfo.lpTransItems[uiCount].uiDest = uiSwap;
          }
 
          if( errCode == HB_SUCCESS )

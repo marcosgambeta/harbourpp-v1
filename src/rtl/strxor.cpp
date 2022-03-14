@@ -75,7 +75,7 @@ HB_FUNC( HB_STRXOR )
             n2 = 0;
             for( n = 0; n < nLen1; n++ )
             {
-               pRet[ n ] ^= pStr2[ n2 ];
+               pRet[n] ^= pStr2[n2];
                if( ++n2 == nLen2 )
                {
                   n2 = 0;
@@ -100,7 +100,7 @@ HB_FUNC( HB_STRXOR )
             memcpy(pRet, pStr1, nLen1 + 1);
             for( n = 0; n < nLen1; n++ )
             {
-               pRet[ n ] ^= bChar;
+               pRet[n] ^= bChar;
             }
 
             hb_retclen_buffer( pRet, nLen1 );

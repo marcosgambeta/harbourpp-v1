@@ -123,15 +123,15 @@ static HB_BOOL set_logical( PHB_ITEM pItem, HB_BOOL bDefault )
          HB_SIZE nLen = hb_itemGetCLen(pItem);
 
          if( nLen >= 2
-             && ( static_cast<HB_UCHAR>(szString[ 0 ]) == 'O' || static_cast<HB_UCHAR>(szString[ 0 ]) == 'o' )
-             && ( static_cast<HB_UCHAR>(szString[ 1 ]) == 'N' || static_cast<HB_UCHAR>(szString[ 1 ]) == 'n' ) )
+             && ( static_cast<HB_UCHAR>(szString[0]) == 'O' || static_cast<HB_UCHAR>(szString[0]) == 'o' )
+             && ( static_cast<HB_UCHAR>(szString[1]) == 'N' || static_cast<HB_UCHAR>(szString[1]) == 'n' ) )
          {
             bLogical = HB_TRUE;
          }
          else if( nLen >= 3
-                  && ( static_cast<HB_UCHAR>(szString[ 0 ]) == 'O' || static_cast<HB_UCHAR>(szString[ 0 ]) == 'o' )
-                  && ( static_cast<HB_UCHAR>(szString[ 1 ]) == 'F' || static_cast<HB_UCHAR>(szString[ 1 ]) == 'f' )
-                  && ( static_cast<HB_UCHAR>(szString[ 2 ]) == 'F' || static_cast<HB_UCHAR>(szString[ 2 ]) == 'f' ) )
+                  && ( static_cast<HB_UCHAR>(szString[0]) == 'O' || static_cast<HB_UCHAR>(szString[0]) == 'o' )
+                  && ( static_cast<HB_UCHAR>(szString[1]) == 'F' || static_cast<HB_UCHAR>(szString[1]) == 'f' )
+                  && ( static_cast<HB_UCHAR>(szString[2]) == 'F' || static_cast<HB_UCHAR>(szString[2]) == 'f' ) )
          {
             bLogical = HB_FALSE;
          }
@@ -221,22 +221,22 @@ static const char * is_devicename( const char * szFileName )
               "COM6", "COM7", "COM8", "COM9" };
       int iSkip = 0, iLen;
 
-      if( ( szFileName[ 0 ] == '\\' || szFileName[ 0 ] == '/' ) && ( szFileName[ 1 ] == '\\' || szFileName[ 1 ] == '/' ) )
+      if( ( szFileName[0] == '\\' || szFileName[0] == '/' ) && ( szFileName[1] == '\\' || szFileName[1] == '/' ) )
       {
-         if( szFileName[ 2 ] == '.' && ( szFileName[ 3 ] == '\\' || szFileName[ 3 ] == '/' ) )
+         if( szFileName[2] == '.' && ( szFileName[3] == '\\' || szFileName[3] == '/' ) )
          {
             iSkip = 4;
-            if( hb_strnicmp( szFileName + 4, "PIPE", 4 ) == 0 && ( szFileName[ 8 ] == '\\' || szFileName[ 8 ] == '/' ) )
+            if( hb_strnicmp( szFileName + 4, "PIPE", 4 ) == 0 && ( szFileName[8] == '\\' || szFileName[8] == '/' ) )
             {
                return szFileName;
             }
          }
-         if( szFileName[ 2 ] != '\\' && szFileName[ 2 ] != '/' )
+         if( szFileName[2] != '\\' && szFileName[2] != '/' )
          {
             int iFrom, iTo;
-            for( iFrom = 2, iTo = 0; szFileName[ iFrom ]; ++iFrom )
+            for( iFrom = 2, iTo = 0; szFileName[iFrom]; ++iFrom )
             {
-               if( szFileName[ iFrom ] == '\\' || szFileName[ iFrom ] == '/' )
+               if( szFileName[iFrom] == '\\' || szFileName[iFrom] == '/' )
                {
                   if( iTo++ )
                   {
@@ -267,9 +267,9 @@ static const char * is_devicename( const char * szFileName )
          }
          for( ; iFrom < iTo; ++iFrom )
          {
-            if( hb_stricmp( szFileName + iSkip, szDevices[ iFrom ] ) == 0 )
+            if( hb_stricmp( szFileName + iSkip, szDevices[iFrom] ) == 0 )
             {
-               return iSkip ? szFileName : szDevices[ iFrom ];
+               return iSkip ? szFileName : szDevices[iFrom];
             }
          }
       }
@@ -333,10 +333,10 @@ static void open_handle( PHB_SET_STRUCT pSet, const char * file_name, HB_BOOL fA
          return;
    }
 
-   if( file_name && file_name[ 0 ] != '\0' )
+   if( file_name && file_name[0] != '\0' )
    {
 #if defined( HB_OS_UNIX )
-      fPipe = file_name[ 0 ] == '|';
+      fPipe = file_name[0] == '|';
       if( fPipe )
       {
          szFileName = hb_strdup(file_name);
@@ -493,7 +493,7 @@ HB_BOOL hb_setSetCentury( HB_BOOL new_century_setting )
       size = static_cast<int>(strlen(szDateFormat));
       for( int count = 0; count < size; count++ )
       {
-         int digit = HB_TOUPPER(static_cast<HB_UCHAR>(szDateFormat[ count ]));
+         int digit = HB_TOUPPER(static_cast<HB_UCHAR>(szDateFormat[count]));
          if( digit == 'Y' )
          {
             if( y_start == -1 )
@@ -505,7 +505,7 @@ HB_BOOL hb_setSetCentury( HB_BOOL new_century_setting )
          {
             y_stop = count;
          }
-         szDateFormat[ count ] = static_cast<char>(digit);
+         szDateFormat[count] = static_cast<char>(digit);
       }
       /* Determine size of year in current format */
       if( y_start < 0 )
@@ -538,7 +538,7 @@ HB_BOOL hb_setSetCentury( HB_BOOL new_century_setting )
          {
             memcpy(szNewFormat, szDateFormat, y_start);
          }
-         szNewFormat[ y_start ] = '\0';
+         szNewFormat[y_start] = '\0';
          hb_strncat( szNewFormat, "YY", size );
          if( new_century_setting )
          {
@@ -1183,9 +1183,9 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pA
          break;
       case HB_SET_DIRSEPARATOR:
       {
-         char szDirSep[ 2 ];
-         szDirSep[ 0 ] = static_cast<char>(pSet->HB_SET_DIRSEPARATOR);
-         szDirSep[ 1 ] = '\0';
+         char szDirSep[2];
+         szDirSep[0] = static_cast<char>(pSet->HB_SET_DIRSEPARATOR);
+         szDirSep[1] = '\0';
          pResult = hb_itemPutC(pResult, szDirSep);
          if( pArg1 != nullptr )
          {
@@ -2184,7 +2184,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
          case HB_SET_DIRSEPARATOR:
             if( hb_itemGetCLen(pItem) > 0 )
             {
-               pSet->HB_SET_DIRSEPARATOR = hb_itemGetCPtr(pItem)[ 0 ];
+               pSet->HB_SET_DIRSEPARATOR = hb_itemGetCPtr(pItem)[0];
                fResult = HB_TRUE;
             }
             break;
@@ -3316,7 +3316,7 @@ char * hb_osStrDecode2( const char * pszName, char * pszBuffer, HB_SIZE nSize )
          PHB_CODEPAGE cdpHost = hb_vmCDP();
          if( cdpHost && cdpHost != cdpOS )
          {
-            pszBuffer[ nSize ] = 0;
+            pszBuffer[nSize] = 0;
             hb_cdpnDup2( pszName, strlen(pszName), pszBuffer, &nSize, cdpOS, cdpHost );
             return pszBuffer;
          }
@@ -3398,7 +3398,7 @@ char * hb_osStrU16Decode2( const HB_WCHAR * pszNameW, char * pszBuffer, HB_SIZE 
       if( cdp )
       {
          hb_cdpU16ToStr( cdp, HB_CDP_ENDIAN_NATIVE, pszNameW, hb_wstrlen(pszNameW), pszBuffer, nSize );
-         pszBuffer[ nSize ] = 0;
+         pszBuffer[nSize] = 0;
          return pszBuffer;
       }
    }

@@ -57,10 +57,10 @@ static HB_BOOL hb_sxSemName( char * szFileName )
    const char * szName = hb_parc(1);
    HB_BOOL fResult = HB_FALSE;
 
-   if( szName && szName[ 0 ] )
+   if( szName && szName[0] )
    {
       hb_cdpnDup2Lower( hb_vmCDP(), szName, strlen(szName), szFileName, HB_PATH_MAX );
-      szFileName[ HB_PATH_MAX - 1 ] = '\0';
+      szFileName[HB_PATH_MAX - 1] = '\0';
       fResult = HB_TRUE;
    }
    else
@@ -80,10 +80,10 @@ static HB_BOOL hb_sxSemName( char * szFileName )
          pOrderInfo.itmResult = hb_itemPutC(nullptr, nullptr);
          SELF_ORDINFO( pArea, DBOI_NAME, &pOrderInfo );
          szName = hb_itemGetCPtr(pOrderInfo.itmResult);
-         if( szName && szName[ 0 ] )
+         if( szName && szName[0] )
          {
             hb_cdpnDup2Lower( hb_vmCDP(), szName, strlen(szName), szFileName, HB_PATH_MAX );
-            szFileName[ HB_PATH_MAX - 1 ] = '\0';
+            szFileName[HB_PATH_MAX - 1] = '\0';
             fResult = HB_TRUE;
          }
          hb_itemRelease(pOrderInfo.itmResult);
@@ -137,7 +137,7 @@ static PHB_FILE hb_sxSemOpen( char * szFileName, HB_BOOL * pfNewFile )
 
 HB_FUNC( SX_MAKESEM )
 {
-   char szFileName[ HB_PATH_MAX ];
+   char szFileName[HB_PATH_MAX];
    int iUsers = -1;
    HB_BOOL fError = HB_FALSE, fNewFile = HB_FALSE;
 
@@ -147,7 +147,7 @@ HB_FUNC( SX_MAKESEM )
 
       if( pFile != nullptr )
       {
-         HB_BYTE buffer[ 2 ];
+         HB_BYTE buffer[2];
 
          if( fNewFile )
          {
@@ -184,7 +184,7 @@ HB_FUNC( SX_MAKESEM )
 
 HB_FUNC( SX_KILLSEM )
 {
-   char szFileName[ HB_PATH_MAX ];
+   char szFileName[HB_PATH_MAX];
    int iUsers = -1;
 
    if( hb_sxSemName( szFileName ) )
@@ -193,7 +193,7 @@ HB_FUNC( SX_KILLSEM )
 
       if( pFile != nullptr )
       {
-         HB_BYTE buffer[ 2 ];
+         HB_BYTE buffer[2];
          if( hb_fileReadAt( pFile, buffer, 2, 0 ) == 2 )
          {
             iUsers = HB_GET_LE_INT16( buffer ) - 1;
@@ -212,7 +212,7 @@ HB_FUNC( SX_KILLSEM )
 
 HB_FUNC( SX_ISSEM )
 {
-   char szFileName[ HB_PATH_MAX ];
+   char szFileName[HB_PATH_MAX];
    PHB_FILE pFile = nullptr;
 
    if( hb_sxSemName( szFileName ) )

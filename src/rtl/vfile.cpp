@@ -149,9 +149,9 @@ HB_FUNC( HB_VFEXISTS )
    {
       if( HB_ISBYREF(2) )
       {
-         char szName[ HB_PATH_MAX ];
+         char szName[HB_PATH_MAX];
 
-         szName[ 0 ] = '\0';
+         szName[0] = '\0';
          fResult = hb_fileExists( pszFileName, szName );
          hb_storc( szName, 2 );
       }
@@ -351,11 +351,11 @@ HB_FUNC( HB_VFTIMEGET )
    {
       if( HB_ISBYREF(3) )
       {
-         char buf[ 13 ];
+         char buf[13];
          hb_timeStr( buf, lMillisec );
          if( lMillisec % 1000 == 0 )
          {
-            buf[ 8 ] = '\0';
+            buf[8] = '\0';
          }
          hb_storc( buf, 3 );
          hb_stordl( lJulian, 2 );
@@ -476,7 +476,7 @@ HB_FUNC( HB_VFOPEN )
 
    if( pszFile )
    {
-      char szName[ HB_PATH_MAX ];
+      char szName[HB_PATH_MAX];
       HB_FATTR nModeAttr = 0;
       PHB_FILE pFile;
       int iMode;
@@ -945,7 +945,7 @@ HB_FUNC( HB_VFHANDLE )
 /* hb_vfTempFile( @<cFileName>, [ <cDir> ], [ <cPrefix> ], [ <cExt> ], [ <nAttr> ] ) --> <pHandle> | NIL */
 HB_FUNC( HB_VFTEMPFILE )
 {
-   char szName[ HB_PATH_MAX ];
+   char szName[HB_PATH_MAX];
 
    hb_fileReturn( hb_fileCreateTempEx( szName,
                                        hb_parc(2), /* pszDir */

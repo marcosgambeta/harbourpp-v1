@@ -60,7 +60,7 @@ static HB_SIZE utf8pos( const char * szUTF8, HB_SIZE nLen, HB_SIZE nUTF8Pos )
 
       for( n1 = n2 = 0; n1 < nLen; )
       {
-         if( hb_cdpUTF8ToU16NextChar( static_cast<HB_UCHAR>(szUTF8[ n1 ]), &n, &uc ) )
+         if( hb_cdpUTF8ToU16NextChar( static_cast<HB_UCHAR>(szUTF8[n1]), &n, &uc ) )
          {
             ++n1;
          }
@@ -160,7 +160,7 @@ HB_FUNC( HB_CDPLIST )
    HB_ISIZ nPos;
 
    nPos = 0;
-   while( list[ nPos ] )
+   while( list[nPos] )
    {
       ++nPos;
    }
@@ -168,9 +168,9 @@ HB_FUNC( HB_CDPLIST )
    hb_reta( nPos );
 
    nPos = 0;
-   while( list[ nPos ] )
+   while( list[nPos] )
    {
-      hb_storvc( list[ nPos ], -1, nPos + 1 );
+      hb_storvc( list[nPos], -1, nPos + 1 );
       ++nPos;
    }
 
@@ -215,7 +215,7 @@ HB_FUNC( HB_UTF8CHR )
 {
    if( HB_ISNUM(1) )
    {
-      char utf8Char[ HB_MAX_CHAR_LEN ];
+      char utf8Char[HB_MAX_CHAR_LEN];
       int iLen;
 
       iLen = hb_cdpU16CharToUTF8( utf8Char, static_cast<HB_WCHAR>(hb_parni(1)) );
@@ -550,14 +550,14 @@ HB_FUNC( HB_UTF8POKE )
          uc = static_cast<HB_WCHAR>(hb_parni(3));
          n = hb_cdpUTF8CharSize( uc );
          n2 = 0;
-         hb_cdpUTF8ToU16NextChar( szString[ nPos ], &n2, &uc2 );
+         hb_cdpUTF8ToU16NextChar( szString[nPos], &n2, &uc2 );
          ++n2;
          if( n == n2 )
          {
             char * szText;
             if( hb_itemGetWriteCL(pText, &szText, &nLen) && nPos + n <= nLen )
             {
-               hb_cdpU16CharToUTF8( &szText[ nPos ], uc );
+               hb_cdpU16CharToUTF8( &szText[nPos], uc );
             }
             hb_itemReturn(pText);
          }
@@ -566,7 +566,7 @@ HB_FUNC( HB_UTF8POKE )
             char * szResult = static_cast<char*>(hb_xgrab(nLen - n2 + n + 1));
 
             memcpy(szResult, szString, nPos);
-            hb_cdpU16CharToUTF8( &szResult[ nPos ], uc );
+            hb_cdpU16CharToUTF8( &szResult[nPos], uc );
             memcpy(szResult + nPos + n, szString + nPos + n2, nLen - nPos - n2);
             if( HB_ISBYREF(1) )
             {

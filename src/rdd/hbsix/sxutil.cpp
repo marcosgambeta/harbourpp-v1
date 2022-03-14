@@ -76,12 +76,12 @@ HB_FUNC( SX_SLIMFAST )
             {
                cQuote = c;
             }
-            else if( c == ' ' && nDst && szDst[ nDst - 1 ] == ' ' )
+            else if( c == ' ' && nDst && szDst[nDst - 1] == ' ' )
             {
                continue;
             }
          }
-         szDst[ nDst++ ] = c;
+         szDst[nDst++] = c;
       }
 
       hb_retclen_buffer( szDst, nDst );
@@ -97,7 +97,7 @@ HB_FUNC( SX_WILDMATCH )
    const char * szPattern = hb_parc(1), * szValue = hb_parc(2);
    HB_BOOL fMatch = HB_FALSE;
 
-   if( szPattern && szPattern[ 0 ] && szValue )
+   if( szPattern && szPattern[0] && szValue )
    {
       fMatch = hb_strMatchWild( szValue, szPattern );
    }

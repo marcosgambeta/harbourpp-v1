@@ -141,7 +141,7 @@ void hb_compGenBufPortObj( HB_COMP_DECL, HB_BYTE ** pBufPtr, HB_SIZE * pnSize )
 
 void hb_compGenPortObj( HB_COMP_DECL, PHB_FNAME pFileName )
 {
-   char szFileName[ HB_PATH_MAX ];
+   char szFileName[HB_PATH_MAX];
    HB_SIZE nSize;
    HB_BYTE * pHrbBody;
    FILE * yyc;
@@ -161,7 +161,7 @@ void hb_compGenPortObj( HB_COMP_DECL, PHB_FNAME pFileName )
 
    if( ! HB_COMP_PARAM->fQuiet )
    {
-      char buffer[ 80 + HB_PATH_MAX - 1 ];
+      char buffer[80 + HB_PATH_MAX - 1];
       hb_snprintf(buffer, sizeof(buffer), "Generating Harbour Portable Object output to \'%s\'... ", szFileName);
       hb_compOutStd( HB_COMP_PARAM, buffer );
    }

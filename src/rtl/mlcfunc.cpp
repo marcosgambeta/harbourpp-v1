@@ -76,7 +76,7 @@ struct HB_MLC_INFO
    HB_SIZE        nMaxPos;
    HB_SIZE        nCol;
 
-   HB_EOL_INFO    EOL_buffer[ HB_EOL_BUFFER_SIZE ];
+   HB_EOL_INFO    EOL_buffer[HB_EOL_BUFFER_SIZE];
 };
 
 using PHB_MLC_INFO = HB_MLC_INFO *;
@@ -98,8 +98,8 @@ static void hb_mlGetEOLs( PHB_MLC_INFO pMLC, int iParam )
    nLen = hb_parclen(iParam);
    if( nLen )
    {
-      pMLC->pEOLs[ 0 ].szEOL = hb_parc(iParam);
-      pMLC->pEOLs[ 0 ].nLen = nLen;
+      pMLC->pEOLs[0].szEOL = hb_parc(iParam);
+      pMLC->pEOLs[0].nLen = nLen;
       iEOLs = 1;
    }
    else if( HB_ISARRAY( iParam ) )
@@ -126,8 +126,8 @@ static void hb_mlGetEOLs( PHB_MLC_INFO pMLC, int iParam )
             nLen = hb_arrayGetCLen(pArray, n);
             if( nLen > 0 )
             {
-               pMLC->pEOLs[ iEOLs ].szEOL = hb_arrayGetCPtr(pArray, n);
-               pMLC->pEOLs[ iEOLs ].nLen = nLen;
+               pMLC->pEOLs[iEOLs].szEOL = hb_arrayGetCPtr(pArray, n);
+               pMLC->pEOLs[iEOLs].nLen = nLen;
                ++iEOLs;
             }
          }
@@ -140,13 +140,13 @@ static void hb_mlGetEOLs( PHB_MLC_INFO pMLC, int iParam )
 
    if( iEOLs == 0 )
    {
-      pMLC->pEOLs[ 0 ].szEOL = hb_setGetEOL();
-      if( ! pMLC->pEOLs[ 0 ].szEOL || ! pMLC->pEOLs[ 0 ].szEOL[ 0 ] )
+      pMLC->pEOLs[0].szEOL = hb_setGetEOL();
+      if( ! pMLC->pEOLs[0].szEOL || ! pMLC->pEOLs[0].szEOL[0] )
       {
-         pMLC->pEOLs[ 0 ].szEOL = hb_conNewLine();
+         pMLC->pEOLs[0].szEOL = hb_conNewLine();
       }
-      pMLC->pEOLs[ 0 ].nLen = strlen(pMLC->pEOLs[ 0 ].szEOL);
-      iEOLs = pMLC->pEOLs[ 0 ].nLen ? 1 : 0;
+      pMLC->pEOLs[0].nLen = strlen(pMLC->pEOLs[0].szEOL);
+      iEOLs = pMLC->pEOLs[0].nLen ? 1 : 0;
    }
 
    pMLC->iEOLs = iEOLs;
@@ -211,10 +211,10 @@ static int hb_mlEol( PHB_MLC_INFO pMLC )
 
    for( int i = 0; i < pMLC->iEOLs; ++i )
    {
-      if( pszString[ 0 ] == pEOLs[ i ].szEOL[ 0 ] &&
-          ( pEOLs[ i ].nLen == 1 ||
-            ( nLen >= pEOLs[ i ].nLen &&
-              memcmp(pszString, pEOLs[ i ].szEOL, pEOLs[ i ].nLen) == 0 ) ) )
+      if( pszString[0] == pEOLs[i].szEOL[0] &&
+          ( pEOLs[i].nLen == 1 ||
+            ( nLen >= pEOLs[i].nLen &&
+              memcmp(pszString, pEOLs[i].szEOL, pEOLs[i].nLen) == 0 ) ) )
       {
          return i;
       }
@@ -238,7 +238,7 @@ static HB_SIZE hb_mlGetLine( PHB_MLC_INFO pMLC )
    {
       HB_WCHAR ch;
 
-      if( pMLC->pszString[ pMLC->nOffset ] == HB_CHAR_SOFT1 && pMLC->pszString[ pMLC->nOffset + 1 ] == HB_CHAR_SOFT2 )
+      if( pMLC->pszString[pMLC->nOffset] == HB_CHAR_SOFT1 && pMLC->pszString[pMLC->nOffset + 1] == HB_CHAR_SOFT2 )
       {
          if( pMLC->nMaxCol && pMLC->nCol )
          {
@@ -269,7 +269,7 @@ static HB_SIZE hb_mlGetLine( PHB_MLC_INFO pMLC )
          }
          if( pMLC->nMaxCol == 0 )
          {
-            pMLC->nOffset += pMLC->pEOLs[ i ].nLen;
+            pMLC->nOffset += pMLC->pEOLs[i].nLen;
          }
          break;
       }
@@ -288,7 +288,7 @@ static HB_SIZE hb_mlGetLine( PHB_MLC_INFO pMLC )
       }
       else
       {
-         ch = pMLC->pszString[ pMLC->nOffset++ ];
+         ch = pMLC->pszString[pMLC->nOffset++];
       }
 
       if( pMLC->nOffset <= pMLC->nMaxPos )
@@ -405,7 +405,7 @@ HB_FUNC( MEMOLINE )
             nCol = 0;
             while( nIndex < MLC.nLen && nCol < MLC.nCol )
             {
-               if( MLC.pszString[ nIndex ] == HB_CHAR_SOFT1 && MLC.pszString[ nIndex + 1 ] == HB_CHAR_SOFT2 )
+               if( MLC.pszString[nIndex] == HB_CHAR_SOFT1 && MLC.pszString[nIndex + 1] == HB_CHAR_SOFT2 )
                {
                   nIndex += 2 ;
                }
@@ -422,7 +422,7 @@ HB_FUNC( MEMOLINE )
                   }
                   else
                   {
-                     wc = MLC.pszString[ nIndex++ ];
+                     wc = MLC.pszString[nIndex++];
                   }
 
                   if( wc == HB_CHAR_HT )
@@ -430,7 +430,7 @@ HB_FUNC( MEMOLINE )
                      HB_SIZE n = MLC.nTabSize - ( nLen % MLC.nTabSize );
                      do
                      {
-                        szLine[ nLen++ ] = ' ';
+                        szLine[nLen++] = ' ';
                      }
                      while( ++nCol < MLC.nCol && --n );
                   }
@@ -445,7 +445,7 @@ HB_FUNC( MEMOLINE )
                      }
                      else
                      {
-                        szLine[ nLen++ ] = static_cast<char>(wc);
+                        szLine[nLen++] = static_cast<char>(wc);
                      }
                      ++nCol;
                   }
@@ -460,7 +460,7 @@ HB_FUNC( MEMOLINE )
                }
                if( ! fPad && nCol > 0 )
                {
-                  nCol = nIndex < MLC.nLen && ( MLC.pszString[ nIndex ] == ' ' || MLC.pszString[ nIndex ] == HB_CHAR_HT ) ? 1 : 0;
+                  nCol = nIndex < MLC.nLen && ( MLC.pszString[nIndex] == ' ' || MLC.pszString[nIndex] == HB_CHAR_HT ) ? 1 : 0;
                }
                if( nCol > 0 )
                {
@@ -692,7 +692,7 @@ HB_FUNC( HB_MLEVAL )
             HB_SIZE nRepl;
             HB_WCHAR ch;
 
-            if( pszString[ nOffset ] == HB_CHAR_SOFT1 && pszString[ nOffset + 1 ] == HB_CHAR_SOFT2 )
+            if( pszString[nOffset] == HB_CHAR_SOFT1 && pszString[nOffset + 1] == HB_CHAR_SOFT2 )
             {
                nOffset += 2;
                if( fWordWrap )
@@ -701,20 +701,20 @@ HB_FUNC( HB_MLEVAL )
                }
                break;
             }
-            else if( pszString[ nOffset ] == HB_CHAR_CR )
+            else if( pszString[nOffset] == HB_CHAR_CR )
             {
                ++nOffset;
-               if( pszString[ nOffset ] == HB_CHAR_LF )
+               if( pszString[nOffset] == HB_CHAR_LF )
                {
                   ++nOffset;
                }
                fEOL = HB_TRUE;
                break;
             }
-            else if( pszString[ nOffset ] == HB_CHAR_LF )
+            else if( pszString[nOffset] == HB_CHAR_LF )
             {
                ++nOffset;
-               if( pszString[ nOffset ] == HB_CHAR_CR )
+               if( pszString[nOffset] == HB_CHAR_CR )
                {
                   ++nOffset;
                }
@@ -735,7 +735,7 @@ HB_FUNC( HB_MLEVAL )
             }
             else
             {
-               ch = pszLine[ nDst++ ] = pszString[ nOffset++ ];
+               ch = pszLine[nDst++] = pszString[nOffset++];
             }
 
             if( nRowPos == 0 && nOffset > nPos )
@@ -775,7 +775,7 @@ HB_FUNC( HB_MLEVAL )
                }
                if( !cdp )
                {
-                  pszLine[ nDst++ ] = static_cast<char>(ch);
+                  pszLine[nDst++] = static_cast<char>(ch);
                }
                else if( ! HB_CDPCHAR_PUT( cdp, pszLine, nLineLength + 1, &nDst, ch ) )
                {

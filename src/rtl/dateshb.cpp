@@ -87,8 +87,8 @@ HB_FUNC( DTOC )
 {
    if( HB_ISDATETIME(1) )
    {
-      char szDate[ 9 ];
-      char szFormatted[ 11 ];
+      char szDate[9];
+      char szFormatted[11];
 
       hb_retc( hb_dateFormat( hb_pardsbuff( szDate, 1 ), szFormatted, hb_setGetDateFormat() ) );
    }
@@ -102,8 +102,8 @@ HB_FUNC( HB_DTOC )
 {
    if( HB_ISDATETIME(1) )
    {
-      char szDate[ 9 ];
-      char szFormatted[ 11 ];
+      char szDate[9];
+      char szFormatted[11];
       const char * szFormat = hb_parc(2);
 
       if( ! szFormat )
@@ -122,7 +122,7 @@ HB_FUNC( DTOS )
 {
    if( HB_ISDATETIME(1) )
    {
-      char szDate[ 9 ];
+      char szDate[9];
 
       hb_retc( hb_pardsbuff( szDate, 1 ) );
    }
@@ -211,7 +211,7 @@ HB_FUNC( DOW )
 
 HB_FUNC( TIME )
 {
-   char szResult[ 9 ];
+   char szResult[9];
 
    hb_dateTimeStr( szResult );
    hb_retclen( szResult, 8 );
@@ -296,7 +296,7 @@ HB_FUNC( HB_TTOD )
          const char * szTimeFormat = hb_parc(3);
          if( szTimeFormat )
          {
-            char szBuffer[ 27 ];
+            char szBuffer[27];
             if( *szTimeFormat == '\0' )
             {
                szTimeFormat = hb_setGetTimeFormat();
@@ -491,7 +491,7 @@ HB_FUNC( HB_TTOC )
    {
       const char * szDateFormat = hb_parc(2);
       const char * szTimeFormat = hb_parc(3);
-      char szBuffer[ 27 ];
+      char szBuffer[27];
 
       if( ! szDateFormat )
       {
@@ -544,7 +544,7 @@ HB_FUNC( HB_TTOS )
 
    if( hb_partdt( &lDate, &lTime, 1 ) )
    {
-      char szBuffer[ 18 ];
+      char szBuffer[18];
 
       hb_retc( hb_timeStampStrRawPut( szBuffer, lDate, lTime ) );
    }
@@ -628,7 +628,7 @@ HB_FUNC( HB_TSTOSTR )
 
    if( hb_partdt( &lDate, &lTime, 1 ) )
    {
-      char szBuffer[ 24 ];
+      char szBuffer[24];
 
       hb_timeStampStr( szBuffer, lDate, lTime );
       if( hb_parl(2) )
@@ -647,14 +647,14 @@ HB_FUNC( HB_TSTOSTR )
          else
          {
             int i = 23;
-            while( szBuffer[ i - 1 ] == '0' )
+            while( szBuffer[i - 1] == '0' )
             {
                --i;
             }
-            if( szBuffer[ i - 1 ] == '.' )
+            if( szBuffer[i - 1] == '.' )
             {
                --i;
-               if( szBuffer[ i - 1 ] == '0' && szBuffer[ i - 2 ] == '0' )
+               if( szBuffer[i - 1] == '0' && szBuffer[i - 2] == '0' )
                {
                   i -= 3;
                }

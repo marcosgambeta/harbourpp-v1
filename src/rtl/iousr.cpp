@@ -57,14 +57,14 @@
 
 #include "hbiousr.ch"
 
-#define HB_FILE_ERR_UNSUPPORTED  ( static_cast<HB_ERRCODE>(FS_ERROR) )
+#define HB_FILE_ERR_UNSUPPORTED  ( static_cast<HB_ERRCODE>( FS_ERROR ) )
 
 struct _HB_IOUSR
 {
    HB_FILE_FUNCS  funcs;
    char *         prefix;
    int            prefix_len;
-   PHB_SYMB       prg_funcs[ IOUSR_METHODCOUNT ];
+   PHB_SYMB       prg_funcs[IOUSR_METHODCOUNT];
 };
 
 using HB_IOUSR = _HB_IOUSR;
@@ -83,7 +83,7 @@ static HB_CRITICAL_NEW( s_iousrMtx );
 #define HB_IOUSR_UNLOCK()     hb_threadLeaveCriticalSection( &s_iousrMtx ); } while(0)
 
 static int s_iCount = 0;
-static PHB_IOUSR s_ioUsrs[ HB_FILE_TYPE_MAX ];
+static PHB_IOUSR s_ioUsrs[HB_FILE_TYPE_MAX];
 
 static void s_errRT_IOUSR( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char * szDescription )
 {
@@ -106,7 +106,7 @@ static void s_iousrFreeAll( void * cargo )
 
    while( s_iCount > 0 )
    {
-      PHB_IOUSR pIO = s_ioUsrs[ --s_iCount ];
+      PHB_IOUSR pIO = s_ioUsrs[--s_iCount];
 
       hb_xfree(pIO->prefix);
       hb_xfree(pIO);
@@ -133,7 +133,7 @@ static PHB_IOUSR s_iousrAddNew( const char * pszPrefix )
    iCount = s_iCount;
    while( --iCount >= 0 )
    {
-      if( hb_stricmp( pszPrefix, s_ioUsrs[ iCount ]->prefix ) == 0 )
+      if( hb_stricmp( pszPrefix, s_ioUsrs[iCount]->prefix ) == 0 )
       {
          break;
       }
@@ -147,7 +147,7 @@ static PHB_IOUSR s_iousrAddNew( const char * pszPrefix )
       pIO = static_cast<PHB_IOUSR>(hb_xgrabz(sizeof(HB_IOUSR)));
       pIO->prefix = hb_strdup(pszPrefix);
       pIO->prefix_len = static_cast<int>(strlen(pszPrefix));
-      s_ioUsrs[ s_iCount++ ] = pIO;
+      s_ioUsrs[s_iCount++] = pIO;
    }
 
    HB_IOUSR_UNLOCK();
@@ -155,13 +155,13 @@ static PHB_IOUSR s_iousrAddNew( const char * pszPrefix )
    return pIO;
 }
 
-#define s_hasMethod( pIO, iMethod ) ( ( pIO )->prg_funcs[ ( iMethod ) - 1 ] != nullptr )
+#define s_hasMethod( pIO, iMethod ) ( ( pIO )->prg_funcs[( iMethod ) - 1] != nullptr )
 
 #define s_getUsrIO( p )       ( static_cast<PHB_IOUSR>(HB_UNCONST(p)) )
 
 static void s_pushMethod( PHB_IOUSR pIO, int iMethod )
 {
-   hb_vmPushSymbol( pIO->prg_funcs[ iMethod - 1 ] );
+   hb_vmPushSymbol( pIO->prg_funcs[iMethod - 1] );
    hb_vmPushNil();
 }
 
@@ -729,9 +729,9 @@ HB_FUNC( IOUSR_REGISTER )
    {
       HB_SIZE nMethods = hb_arrayLen(pMthItm), nAt;
 
-      if( nMethods > HB_MIN( IOUSR_METHODCOUNT, HB_FILE_FUNC_COUNT ) )
+      if( nMethods > HB_MIN(IOUSR_METHODCOUNT, HB_FILE_FUNC_COUNT) )
       {
-         nMethods = HB_MIN( IOUSR_METHODCOUNT, HB_FILE_FUNC_COUNT );
+         nMethods = HB_MIN(IOUSR_METHODCOUNT, HB_FILE_FUNC_COUNT);
       }
 
       for( nAt = 1; nAt <= nMethods; ++nAt )
@@ -757,8 +757,8 @@ HB_FUNC( IOUSR_REGISTER )
             pFunction = &pIO->funcs.Accept;
             for( nAt = 1; nAt <= nMethods; ++nAt, pDummyFunc++, pFunction++ )
             {
-               pIO->prg_funcs[ nAt - 1 ] = hb_arrayGetSymbol(pMthItm, nAt);
-               if( nAt == 1 || pIO->prg_funcs[ nAt - 1 ] != nullptr )
+               pIO->prg_funcs[nAt - 1] = hb_arrayGetSymbol(pMthItm, nAt);
+               if( nAt == 1 || pIO->prg_funcs[nAt - 1] != nullptr )
                {
                   * pFunction = * pDummyFunc;
                }

@@ -65,7 +65,7 @@ HB_FUNC( RAT )
 
          do
          {
-            if( pszText[ nTo ] == *pszSub && memcmp(pszSub, pszText + nTo, nSubLen) == 0 )
+            if( pszText[nTo] == *pszSub && memcmp(pszSub, pszText + nTo, nSubLen) == 0 )
             {
                if( HB_CDP_ISCHARIDX( cdp ) )
                {
@@ -136,7 +136,7 @@ HB_FUNC( HB_RAT )
             {
                do
                {
-                  if( pszText[ nTo ] == *pszSub && memcmp(pszSub, pszText + nTo, nSubLen) == 0 )
+                  if( pszText[nTo] == *pszSub && memcmp(pszSub, pszText + nTo, nSubLen) == 0 )
                   {
                      if( HB_CDP_ISCHARIDX( cdp ) )
                      {

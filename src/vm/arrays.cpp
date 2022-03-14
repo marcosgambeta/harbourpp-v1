@@ -1872,8 +1872,8 @@ void hb_nestedCloneInit( PHB_NESTED_CLONED pClonedList, void * pValue, PHB_ITEM 
    pClonedList->nSize  = 16;
    pClonedList->nCount = 1;
    pClonedList->pRefs  = static_cast<PHB_NESTED_REF>(hb_xgrab(pClonedList->nSize * sizeof(HB_NESTED_REF)));
-   pClonedList->pRefs[ 0 ].value = pValue;
-   pClonedList->pRefs[ 0 ].pDest = pDest;
+   pClonedList->pRefs[0].value = pValue;
+   pClonedList->pRefs[0].pDest = pDest;
 }
 
 void hb_nestedCloneFree( PHB_NESTED_CLONED pClonedList )
@@ -1893,17 +1893,17 @@ static HB_BOOL hb_nestedCloneFind( PHB_NESTED_CLONED pClonedList, void * pValue,
 
    while( nFirst < nLast )
    {
-      if( reinterpret_cast<HB_PTRUINT>(pRef[ nMiddle ].value) < reinterpret_cast<HB_PTRUINT>(pValue) )
+      if( reinterpret_cast<HB_PTRUINT>(pRef[nMiddle].value) < reinterpret_cast<HB_PTRUINT>(pValue) )
       {
          nFirst = nMiddle + 1;
       }
-      else if( reinterpret_cast<HB_PTRUINT>(pRef[ nMiddle ].value) > reinterpret_cast<HB_PTRUINT>(pValue) )
+      else if( reinterpret_cast<HB_PTRUINT>(pRef[nMiddle].value) > reinterpret_cast<HB_PTRUINT>(pValue) )
       {
          nLast = nMiddle;
       }
       else
       {
-         hb_itemCopy(pDest, pRef[ nMiddle ].pDest);
+         hb_itemCopy(pDest, pRef[nMiddle].pDest);
          return HB_TRUE;
       }
       nMiddle = ( nFirst + nLast ) >> 1;
@@ -1915,7 +1915,7 @@ static HB_BOOL hb_nestedCloneFind( PHB_NESTED_CLONED pClonedList, void * pValue,
       pClonedList->pRefs = static_cast<PHB_NESTED_REF>(hb_xrealloc(pClonedList->pRefs, pClonedList->nSize * sizeof(HB_NESTED_REF)));
    }
 
-   pRef = &pClonedList->pRefs[ nMiddle ];
+   pRef = &pClonedList->pRefs[nMiddle];
    if( nMiddle < pClonedList->nCount )
    {
       memmove(pRef + 1, pRef, (pClonedList->nCount - nMiddle) * sizeof(HB_NESTED_REF));

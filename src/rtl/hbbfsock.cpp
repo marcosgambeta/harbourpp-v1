@@ -63,11 +63,11 @@ struct HB_SOCKEX_BF
    PHB_SOCKEX     sock;
 
    HB_BLOWFISH    bf;
-   HB_BYTE        encryptkey[ HB_BF_CIPHERBLOCK ];
-   HB_BYTE        decryptkey[ HB_BF_CIPHERBLOCK ];
-   HB_BYTE        encounter[ HB_BF_CIPHERBLOCK ];
-   HB_BYTE        decounter[ HB_BF_CIPHERBLOCK ];
-   HB_BYTE        buffer[ HB_BFSOCK_WRBUFSIZE ];
+   HB_BYTE        encryptkey[HB_BF_CIPHERBLOCK];
+   HB_BYTE        decryptkey[HB_BF_CIPHERBLOCK];
+   HB_BYTE        encounter[HB_BF_CIPHERBLOCK];
+   HB_BYTE        decounter[HB_BF_CIPHERBLOCK];
+   HB_BYTE        buffer[HB_BFSOCK_WRBUFSIZE];
    long           inbuffer;
    int            encoded;
    int            decoded;
@@ -79,18 +79,18 @@ static void s_bf_hash( const HB_BLOWFISH * bf, HB_BYTE * vect, HB_BYTE * counter
 {
    HB_U32 xl, xr, cl, cr;
 
-   cl = xl = HB_GET_BE_UINT32( &counter[ 0 ] );
-   cr = xr = HB_GET_BE_UINT32( &counter[ 4 ] );
+   cl = xl = HB_GET_BE_UINT32( &counter[0] );
+   cr = xr = HB_GET_BE_UINT32( &counter[4] );
    ++cr;
-   HB_PUT_BE_UINT32( &counter[ 4 ], cr );
+   HB_PUT_BE_UINT32( &counter[4], cr );
    if( cr == 0 )
    {
       ++cl;
-      HB_PUT_BE_UINT32( &counter[ 0 ], cl );
+      HB_PUT_BE_UINT32( &counter[0], cl );
    }
    hb_blowfishEncrypt( bf, &xl, &xr );
-   HB_PUT_BE_UINT32( &vect[ 0 ], xl );
-   HB_PUT_BE_UINT32( &vect[ 4 ], xr );
+   HB_PUT_BE_UINT32( &vect[0], xl );
+   HB_PUT_BE_UINT32( &vect[4], xr );
 }
 
 static long s_bf_send( PHB_SOCKEX_BF pBF, HB_MAXINT timeout )
@@ -142,7 +142,7 @@ static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT tim
 
    if( pSock->inbuffer > 0 && len > 0 )
    {
-      lRecv = HB_MIN( pSock->inbuffer, len );
+      lRecv = HB_MIN(pSock->inbuffer, len);
       memcpy(data, pSock->buffer + pSock->posbuffer, lRecv);
       if( ( pSock->inbuffer -= lRecv ) > 0 )
       {
@@ -167,7 +167,7 @@ static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT tim
                s_bf_hash( &pBF->bf, pBF->decryptkey, pBF->decounter );
                pBF->decoded = 0;
             }
-            pData[ l ] ^= pBF->decryptkey[ pBF->decoded++ ];
+            pData[l] ^= pBF->decryptkey[pBF->decoded++];
          }
       }
    }
@@ -196,7 +196,7 @@ static long s_sockexWrite( PHB_SOCKEX pSock, const void * data, long len, HB_MAX
          s_bf_hash( &pBF->bf, pBF->encryptkey, pBF->encounter );
          pBF->encoded = 0;
       }
-      pBF->buffer[ pBF->inbuffer++ ] = pData[ lDone ] ^ pBF->encryptkey[ pBF->encoded++ ];
+      pBF->buffer[pBF->inbuffer++] = pData[lDone] ^ pBF->encryptkey[pBF->encoded++];
    }
 
    return lWritten >= 0 ? lDone : lWritten;
@@ -258,7 +258,7 @@ static int s_sockexClose( PHB_SOCKEX pSock, HB_BOOL fClose )
    {
       if( pBF->sock )
       {
-         s_sockexFlush( pSock, HB_MAX( 15000, pSock->iAutoFlush ), HB_TRUE );
+         s_sockexFlush( pSock, HB_MAX(15000, pSock->iAutoFlush), HB_TRUE );
       }
 
       if( pBF->sock )
@@ -339,11 +339,11 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
          {
             if( pVect && ivlen > 0 )
             {
-               pBF->encounter[ i ] = pBF->decounter[ i ] = pVect[ i % ivlen ];
+               pBF->encounter[i] = pBF->decounter[i] = pVect[i % ivlen];
             }
             else
             {
-               pBF->encounter[ i ] = pBF->decounter[ i ] = static_cast<HB_BYTE>(i);
+               pBF->encounter[i] = pBF->decounter[i] = static_cast<HB_BYTE>(i);
             }
          }
 

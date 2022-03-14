@@ -62,7 +62,7 @@ HB_FUNC( HB_FNAMESPLIT )
 HB_FUNC( HB_FNAMEMERGE )
 {
    HB_FNAME pFileName;
-   char szFileName[ HB_PATH_MAX ];
+   char szFileName[HB_PATH_MAX];
 
    pFileName.szPath = hb_parc(1);
    pFileName.szName = hb_parc(2);

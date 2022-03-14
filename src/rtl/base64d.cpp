@@ -67,7 +67,7 @@ static signed char base64_decode_value( int value_in )
       return -1;
    }
    
-   return s_decoding[ value_in ];
+   return s_decoding[value_in];
 }
 
 static HB_SIZE base64_decode_block( const char * code_in, const HB_SIZE length_in, char * pszPlainttextOut )

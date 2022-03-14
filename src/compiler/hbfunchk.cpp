@@ -122,7 +122,7 @@ HB_BOOL hb_compFunCallCheck( HB_COMP_DECL, const char * szFuncCall, int iArgs )
    do
    {
       uiMiddle = ( uiFirst + uiLast ) >> 1;
-      iCmp = strncmp(szFuncCall, s_stdFunc[ uiMiddle ].cFuncName, iLen);
+      iCmp = strncmp(szFuncCall, s_stdFunc[uiMiddle].cFuncName, iLen);
       if( iCmp <= 0 )
       {
          uiLast = uiMiddle;
@@ -136,17 +136,17 @@ HB_BOOL hb_compFunCallCheck( HB_COMP_DECL, const char * szFuncCall, int iArgs )
 
    if( uiFirst != uiMiddle )
    {
-      iCmp = strncmp(szFuncCall, s_stdFunc[ uiFirst ].cFuncName, iLen);
+      iCmp = strncmp(szFuncCall, s_stdFunc[uiFirst].cFuncName, iLen);
    }
 
    if( iCmp == 0 )
    {
-      const HB_FUNCINFO * pFunc = &s_stdFunc[ uiFirst ];
+      const HB_FUNCINFO * pFunc = &s_stdFunc[uiFirst];
 
       if( ( pFunc->iMinParam != -1 && iArgs < pFunc->iMinParam ) ||
           ( pFunc->iMaxParam != -1 && iArgs > pFunc->iMaxParam ) )
       {
-         char szMsg[ 64 ];
+         char szMsg[64];
 
          if( HB_COMP_ISSUPPORTED( HB_COMPFLAG_HARBOUR ) )
          {
@@ -169,7 +169,7 @@ HB_BOOL hb_compFunCallCheck( HB_COMP_DECL, const char * szFuncCall, int iArgs )
          }
          else
          {
-            szMsg[ 0 ] = '\0';
+            szMsg[0] = '\0';
          }
 
          hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_CHECKING_ARGS, szFuncCall, szMsg );

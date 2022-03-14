@@ -81,7 +81,7 @@ struct HRB_BODY
 
 using PHRB_BODY = HRB_BODY *;
 
-static const char s_szHead[ 4 ] = { '\xC0', 'H', 'R', 'B' };
+static const char s_szHead[4] = { '\xC0', 'H', 'R', 'B' };
 
 #define SYM_NOLINK     0            /* symbol does not have to be linked */
 #define SYM_FUNC       1            /* function defined in this module */
@@ -146,7 +146,7 @@ static char * hb_hrbReadId( const char * szBody, HB_SIZE nBodySize, HB_SIZE * pn
 
    const char * szIdx;
 
-   szIdx = &szBody[ *pnBodyOffset ];
+   szIdx = &szBody[*pnBodyOffset];
 
    do
    {
@@ -155,7 +155,7 @@ static char * hb_hrbReadId( const char * szBody, HB_SIZE nBodySize, HB_SIZE * pn
          return nullptr;
       }
    }
-   while( szBody[ ( *pnBodyOffset )++ ] );
+   while( szBody[( *pnBodyOffset )++] );
 
    return hb_strdup(szIdx);
 }
@@ -168,7 +168,7 @@ static HB_ULONG hb_hrbFindSymbol( const char * szName, PHB_DYNF pDynFunc, HB_ULO
 
    for( HB_ULONG ulRet = 0; ulRet < ulLoaded; ++ulRet )
    {
-      if( ! strcmp(szName, pDynFunc[ ulRet ].szName) )
+      if( ! strcmp(szName, pDynFunc[ulRet].szName) )
       {
          return ulRet;
       }
@@ -185,7 +185,7 @@ static void hb_hrbInitStatic( PHRB_BODY pHrbBody )
       /* Initialize static variables first */
       for( HB_ULONG ul = 0; ul < pHrbBody->ulSymbols; ul++ )    /* Check _INITSTATICS functions */
       {
-         if( ( pHrbBody->pSymRead[ ul ].scope.value & HB_FS_INITEXIT ) == HB_FS_INITEXIT )
+         if( ( pHrbBody->pSymRead[ul].scope.value & HB_FS_INITEXIT ) == HB_FS_INITEXIT )
          {
             /* call (_INITSTATICS) function. This function assigns
              * literal values to static variables only. There is no need
@@ -194,11 +194,11 @@ static void hb_hrbInitStatic( PHRB_BODY pHrbBody )
              */
 
             /* changed to call VM execution instead of direct function address call
-             * pHrbBody->pSymRead[ ul ].value.pFunPtr();
+             * pHrbBody->pSymRead[ul].value.pFunPtr();
              * [MLombardo]
              */
 
-            hb_vmPushSymbol( &( pHrbBody->pSymRead[ ul ] ) );
+            hb_vmPushSymbol( &( pHrbBody->pSymRead[ul] ) );
             hb_vmPushNil();
             hb_vmProc(0);
          }
@@ -225,15 +225,15 @@ static void hb_hrbInit( PHRB_BODY pHrbBody, int iPCount, PHB_ITEM * pParams )
             while( ul-- )
             {
                /* Check INIT functions */
-               if( ( pHrbBody->pSymRead[ ul ].scope.value & HB_FS_INITEXIT ) == HB_FS_INIT )
+               if( ( pHrbBody->pSymRead[ul].scope.value & HB_FS_INITEXIT ) == HB_FS_INIT )
                {
-                  if( strcmp(pHrbBody->pSymRead[ ul ].szName, "CLIPINIT$") ? ! fClipInit : fClipInit )
+                  if( strcmp(pHrbBody->pSymRead[ul].szName, "CLIPINIT$") ? ! fClipInit : fClipInit )
                   {
                      hb_vmPushSymbol( pHrbBody->pSymRead + ul );
                      hb_vmPushNil();
                      for( int i = 0; i < iPCount; i++ )
                      {
-                        hb_vmPush( pParams[ i ] );
+                        hb_vmPush( pParams[i] );
                      }
                      hb_vmProc( static_cast<HB_USHORT>(iPCount) );
                      if( hb_vmRequestQuery() != 0 )
@@ -267,7 +267,7 @@ static void hb_hrbExit( PHRB_BODY pHrbBody )
 
          for( HB_ULONG ul = 0; ul < pHrbBody->ulSymbols; ul++ )
          {
-            if( ( pHrbBody->pSymRead[ ul ].scope.value & HB_FS_INITEXIT ) == HB_FS_EXIT )
+            if( ( pHrbBody->pSymRead[ul].scope.value & HB_FS_INITEXIT ) == HB_FS_EXIT )
             {
                hb_vmPushSymbol( pHrbBody->pSymRead + ul );
                hb_vmPushNil();
@@ -297,21 +297,21 @@ static void hb_hrbUnLoad( PHRB_BODY pHrbBody )
    {
       for( HB_ULONG ul = 0; ul < pHrbBody->ulFuncs; ul++ )
       {
-         if( pHrbBody->pDynFunc[ ul ].szName && pHrbBody->pDynFunc[ ul ].pcodeFunc.pCode )
+         if( pHrbBody->pDynFunc[ul].szName && pHrbBody->pDynFunc[ul].pcodeFunc.pCode )
          {
-            PHB_DYNS pDyn = hb_dynsymFind(pHrbBody->pDynFunc[ ul ].szName);
-            if( pDyn && pDyn->pSymbol->value.pCodeFunc == &pHrbBody->pDynFunc[ ul ].pcodeFunc )
+            PHB_DYNS pDyn = hb_dynsymFind(pHrbBody->pDynFunc[ul].szName);
+            if( pDyn && pDyn->pSymbol->value.pCodeFunc == &pHrbBody->pDynFunc[ul].pcodeFunc )
             {
                pDyn->pSymbol->value.pCodeFunc = nullptr;
             }
          }
-         if( pHrbBody->pDynFunc[ ul ].pCode )
+         if( pHrbBody->pDynFunc[ul].pCode )
          {
-            hb_xfree(pHrbBody->pDynFunc[ ul ].pCode);
+            hb_xfree(pHrbBody->pDynFunc[ul].pCode);
          }
-         if( pHrbBody->pDynFunc[ ul ].szName )
+         if( pHrbBody->pDynFunc[ul].szName )
          {
-            hb_xfree(pHrbBody->pDynFunc[ ul ].szName);
+            hb_xfree(pHrbBody->pDynFunc[ul].szName);
          }
       }
 
@@ -371,7 +371,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
          while( nBodyOffset < nBodySize )
          {
             ++nSize;
-            if( szHrbBody[ nBodyOffset++ ] == 0 )
+            if( szHrbBody[nBodyOffset++] == 0 )
             {
                break;
             }
@@ -392,17 +392,17 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
 
       for( ul = 0; ul < pHrbBody->ulSymbols; ul++ )  /* Read symbols in .hrb */
       {
-         pSymRead[ ul ].szName = buffer;
+         pSymRead[ul].szName = buffer;
          do
          {
-            ch = *buffer++ = szHrbBody[ nBodyOffset++ ];
+            ch = *buffer++ = szHrbBody[nBodyOffset++];
          }
          while( ch );
-         pSymRead[ ul ].scope.value = static_cast<HB_BYTE>(szHrbBody[ nBodyOffset++ ]);
-         pSymRead[ ul ].value.pCodeFunc = reinterpret_cast<PHB_PCODEFUNC>(static_cast<HB_PTRUINT>(szHrbBody[ nBodyOffset++ ]));
-         pSymRead[ ul ].pDynSym = nullptr;
+         pSymRead[ul].scope.value = static_cast<HB_BYTE>(szHrbBody[nBodyOffset++]);
+         pSymRead[ul].value.pCodeFunc = reinterpret_cast<PHB_PCODEFUNC>(static_cast<HB_PTRUINT>(szHrbBody[nBodyOffset++]));
+         pSymRead[ul].pDynSym = nullptr;
 
-         if( pHrbBody->lSymStart == -1 && ( pSymRead[ ul ].scope.value & HB_FS_FIRST ) != 0 && ( pSymRead[ ul ].scope.value & HB_FS_INITEXIT ) == 0 )
+         if( pHrbBody->lSymStart == -1 && ( pSymRead[ul].scope.value & HB_FS_FIRST ) != 0 && ( pSymRead[ul].scope.value & HB_FS_INITEXIT ) == 0 )
          {
             pHrbBody->lSymStart = ul;
          }
@@ -429,8 +429,8 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
             HB_ULONG ulValue;
 
             /* Read name of function */
-            pDynFunc[ ul ].szName = hb_hrbReadId( szHrbBody, nBodySize, &nBodyOffset );
-            if( pDynFunc[ ul ].szName == nullptr )
+            pDynFunc[ul].szName = hb_hrbReadId( szHrbBody, nBodySize, &nBodyOffset );
+            if( pDynFunc[ul].szName == nullptr )
             {
                break;
             }
@@ -449,12 +449,12 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
             }
 
             /* Copy function body */
-            pDynFunc[ ul ].pCode = static_cast<HB_BYTE*>(hb_xgrab(nSize));
-            memcpy(reinterpret_cast<char*>(pDynFunc[ ul ].pCode), szHrbBody + nBodyOffset, nSize);
+            pDynFunc[ul].pCode = static_cast<HB_BYTE*>(hb_xgrab(nSize));
+            memcpy(reinterpret_cast<char*>(pDynFunc[ul].pCode), szHrbBody + nBodyOffset, nSize);
             nBodyOffset += nSize;
 
-            pDynFunc[ ul ].pcodeFunc.pCode    = pDynFunc[ ul ].pCode;
-            pDynFunc[ ul ].pcodeFunc.pSymbols = pSymRead;
+            pDynFunc[ul].pcodeFunc.pCode    = pDynFunc[ul].pCode;
+            pDynFunc[ul].pcodeFunc.pSymbols = pSymRead;
          }
 
          if( ul < pHrbBody->ulFuncs )
@@ -469,52 +469,52 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
       /* End of PCODE loading, now linking */
       for( ul = 0; ul < pHrbBody->ulSymbols; ul++ )
       {
-         if( pSymRead[ ul ].value.pCodeFunc == reinterpret_cast<PHB_PCODEFUNC>(SYM_FUNC) )
+         if( pSymRead[ul].value.pCodeFunc == reinterpret_cast<PHB_PCODEFUNC>(SYM_FUNC) )
          {
-            nPos = hb_hrbFindSymbol( pSymRead[ ul ].szName, pHrbBody->pDynFunc, pHrbBody->ulFuncs );
+            nPos = hb_hrbFindSymbol( pSymRead[ul].szName, pHrbBody->pDynFunc, pHrbBody->ulFuncs );
 
             if( nPos == SYM_NOT_FOUND )
             {
-               pSymRead[ ul ].value.pCodeFunc = reinterpret_cast<PHB_PCODEFUNC>(SYM_EXTERN);
+               pSymRead[ul].value.pCodeFunc = reinterpret_cast<PHB_PCODEFUNC>(SYM_EXTERN);
             }
             else
             {
-               pSymRead[ ul ].value.pCodeFunc = &pHrbBody->pDynFunc[ nPos ].pcodeFunc;
-               pSymRead[ ul ].scope.value |= HB_FS_PCODEFUNC | HB_FS_LOCAL | ( usBind == HB_HRB_BIND_FORCELOCAL ? HB_FS_STATIC : 0 );
+               pSymRead[ul].value.pCodeFunc = &pHrbBody->pDynFunc[nPos].pcodeFunc;
+               pSymRead[ul].scope.value |= HB_FS_PCODEFUNC | HB_FS_LOCAL | ( usBind == HB_HRB_BIND_FORCELOCAL ? HB_FS_STATIC : 0 );
             }
          }
-         else if( pSymRead[ ul ].value.pCodeFunc == reinterpret_cast<PHB_PCODEFUNC>(SYM_DEFERRED) )
+         else if( pSymRead[ul].value.pCodeFunc == reinterpret_cast<PHB_PCODEFUNC>(SYM_DEFERRED) )
          {
-            pSymRead[ ul ].value.pCodeFunc = reinterpret_cast<PHB_PCODEFUNC>(SYM_EXTERN);
-            pSymRead[ ul ].scope.value |= HB_FS_DEFERRED;
+            pSymRead[ul].value.pCodeFunc = reinterpret_cast<PHB_PCODEFUNC>(SYM_EXTERN);
+            pSymRead[ul].scope.value |= HB_FS_DEFERRED;
          }
 
          /* External function */
-         if( pSymRead[ ul ].value.pCodeFunc == reinterpret_cast<PHB_PCODEFUNC>(SYM_EXTERN) )
+         if( pSymRead[ul].value.pCodeFunc == reinterpret_cast<PHB_PCODEFUNC>(SYM_EXTERN) )
          {
-            pSymRead[ ul ].value.pCodeFunc = nullptr;
+            pSymRead[ul].value.pCodeFunc = nullptr;
 
-            pDynSym = hb_dynsymFind(pSymRead[ ul ].szName);
+            pDynSym = hb_dynsymFind(pSymRead[ul].szName);
 
             if( pDynSym )
             {
-               pSymRead[ ul ].value.pFunPtr = pDynSym->pSymbol->value.pFunPtr;
+               pSymRead[ul].value.pFunPtr = pDynSym->pSymbol->value.pFunPtr;
                if( pDynSym->pSymbol->scope.value & HB_FS_PCODEFUNC )
                {
-                  pSymRead[ ul ].scope.value |= HB_FS_PCODEFUNC;
+                  pSymRead[ul].scope.value |= HB_FS_PCODEFUNC;
                }
             }
-            else if( ( pSymRead[ ul ].scope.value & HB_FS_DEFERRED ) == 0 )
+            else if( ( pSymRead[ul].scope.value & HB_FS_DEFERRED ) == 0 )
             {
                if( ( usMode & HB_HRB_BIND_LAZY ) != 0 )
                {
-                  pSymRead[ ul ].scope.value |= HB_FS_DEFERRED;
+                  pSymRead[ul].scope.value |= HB_FS_DEFERRED;
                }
                else
                {
-                  char szName[ HB_SYMBOL_NAME_LEN + 1 ];
+                  char szName[HB_SYMBOL_NAME_LEN + 1];
 
-                  hb_strncpy(szName, pSymRead[ ul ].szName, sizeof(szName) - 1);
+                  hb_strncpy(szName, pSymRead[ul].szName, sizeof(szName) - 1);
                   hb_xfree(pSymRead);
                   hb_hrbUnLoad( pHrbBody );
                   hb_errRT_BASE( EG_ARG, 6101, "Unknown or unregistered symbol", szName, 0 );
@@ -530,13 +530,13 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
          {
             for( ul = 0; ul < pHrbBody->ulSymbols; ul++ )
             {
-               if( ( pSymRead[ ul ].scope.value & ( HB_FS_LOCAL | HB_FS_STATIC ) ) == HB_FS_LOCAL )
+               if( ( pSymRead[ul].scope.value & ( HB_FS_LOCAL | HB_FS_STATIC ) ) == HB_FS_LOCAL )
                {
-                  pDynSym = hb_dynsymFind(pSymRead[ ul ].szName);
+                  pDynSym = hb_dynsymFind(pSymRead[ul].szName);
                   if( pDynSym )
                   {
                      /* convert public function to static one */
-                     pSymRead[ ul ].scope.value |= HB_FS_STATIC;
+                     pSymRead[ul].scope.value |= HB_FS_STATIC;
                   }
                }
             }
@@ -638,12 +638,12 @@ static void hb_hrbDo( PHRB_BODY pHrbBody, int iPCount, PHB_ITEM * pParams )
    /* May not have a startup symbol, if first symbol was an INIT Symbol (was executed already). */
    if( pHrbBody->lSymStart >= 0 && hb_vmRequestQuery() == 0 )
    {
-      hb_vmPushSymbol( &pHrbBody->pSymRead[ pHrbBody->lSymStart ] );
+      hb_vmPushSymbol( &pHrbBody->pSymRead[pHrbBody->lSymStart] );
       hb_vmPushNil();
 
       for( int i = 0; i < iPCount; i++ )
       {
-         hb_vmPush( pParams[ i ] );
+         hb_vmPush( pParams[i] );
       }
 
       hb_vmProc( static_cast<HB_USHORT>(iPCount) );
@@ -738,7 +738,7 @@ HB_FUNC( HB_HRBRUN )
             pParams = static_cast<PHB_ITEM*>(hb_xgrab(sizeof(PHB_ITEM) * iPCount));
             for( int i = 0; i < iPCount; i++ )
             {
-               pParams[ i ] = hb_stackItemFromBase(i + 1 + nParam);
+               pParams[i] = hb_stackItemFromBase(i + 1 + nParam);
             }
          }
 
@@ -798,7 +798,7 @@ HB_FUNC( HB_HRBLOAD )
             pParams = static_cast<PHB_ITEM*>(hb_xgrab(sizeof(PHB_ITEM) * iPCount));
             for( int i = 0; i < iPCount; i++ )
             {
-               pParams[ i ] = hb_stackItemFromBase(i + 1 + nParam);
+               pParams[i] = hb_stackItemFromBase(i + 1 + nParam);
             }
          }
 
@@ -831,7 +831,7 @@ HB_FUNC( HB_HRBDO )
          pParams = static_cast<PHB_ITEM*>(hb_xgrab(sizeof(PHB_ITEM) * iPCount));
          for( int i = 0; i < iPCount; i++ )
          {
-            pParams[ i ] = hb_stackItemFromBase(i + 2);
+            pParams[i] = hb_stackItemFromBase(i + 2);
          }
       }
 

@@ -197,7 +197,7 @@ HB_FHANDLE hb_spOpen( const char * pszFileName, HB_USHORT uiFlags )
    HB_TRACE( HB_TR_DEBUG, ( "hb_spOpen(%p, %hu)", static_cast<const void*>(pszFileName), uiFlags ) );
 #endif
 
-   char szPath[ HB_PATH_MAX ];
+   char szPath[HB_PATH_MAX];
 
    if( hb_spFile( pszFileName, szPath ) )
    {
@@ -215,7 +215,7 @@ HB_FHANDLE hb_spCreate( const char * pszFileName, HB_FATTR ulAttr )
    HB_TRACE( HB_TR_DEBUG, ( "hb_spCreate(%p, %u)", static_cast<const void*>(pszFileName), ulAttr ) );
 #endif
 
-   char szPath[ HB_PATH_MAX ];
+   char szPath[HB_PATH_MAX];
    PHB_FNAME pFilepath;
 
    pFilepath = hb_fsFNameSplit(pszFileName);
@@ -236,7 +236,7 @@ HB_FHANDLE hb_spCreateEx( const char * pszFileName, HB_FATTR ulAttr, HB_USHORT u
    HB_TRACE( HB_TR_DEBUG, ( "hb_spCreateEx(%p, %u, %hu)", static_cast<const void*>(pszFileName), ulAttr, uiFlags ) );
 #endif
 
-   char szPath[ HB_PATH_MAX ];
+   char szPath[HB_PATH_MAX];
    PHB_FNAME pFilepath;
 
    pFilepath = hb_fsFNameSplit(pszFileName);

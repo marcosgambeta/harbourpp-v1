@@ -83,7 +83,7 @@ static void hb_addToFBuffer( PHB_FILEBUF pFileBuf, char ch )
    {
       hb_flushFBuffer( pFileBuf );
    }
-   pFileBuf->pBuf[ pFileBuf->nPos++ ] = static_cast<HB_BYTE>(ch);
+   pFileBuf->pBuf[pFileBuf->nPos++] = static_cast<HB_BYTE>(ch);
 }
 
 static void hb_addStrnToFBuffer( PHB_FILEBUF pFileBuf, const char * str, HB_SIZE nSize )
@@ -96,7 +96,7 @@ static void hb_addStrnToFBuffer( PHB_FILEBUF pFileBuf, const char * str, HB_SIZE
       {
          hb_flushFBuffer( pFileBuf );
       }
-      pFileBuf->pBuf[ pFileBuf->nPos++ ] = static_cast<HB_BYTE>(str[ nPos++ ]);
+      pFileBuf->pBuf[pFileBuf->nPos++] = static_cast<HB_BYTE>(str[nPos++]);
    }
 }
 
@@ -108,7 +108,7 @@ static void hb_addStrToFBuffer( PHB_FILEBUF pFileBuf, const char * szStr )
       {
          hb_flushFBuffer( pFileBuf );
       }
-      pFileBuf->pBuf[ pFileBuf->nPos++ ] = static_cast<HB_BYTE>(*szStr++);
+      pFileBuf->pBuf[pFileBuf->nPos++] = static_cast<HB_BYTE>(*szStr++);
    }
 }
 
@@ -146,7 +146,7 @@ static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const 
          const char *szVal = hb_itemGetCPtr(pValue);
 
          hb_addStrToFBuffer( pFileBuf, szDelim );
-         while( nLen && HB_ISSPACE( szVal[ nLen - 1 ] ) )
+         while( nLen && HB_ISSPACE( szVal[nLen - 1] ) )
          {
             nLen--;
          }
@@ -175,21 +175,21 @@ static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const 
 
       case HB_IT_DATE:
       {
-         char szDate[ 9 ];
+         char szDate[9];
 
          hb_addStrToFBuffer( pFileBuf, szDelim );
          hb_itemGetDS(pValue, szDate);
-         if( szDate[ 0 ] == ' ' )
+         if( szDate[0] == ' ' )
          {
             hb_addStrToFBuffer( pFileBuf, "0100-01-01" );
          }
          else
          {
-            hb_addStrnToFBuffer( pFileBuf, &szDate[ 0 ], 4 );
+            hb_addStrnToFBuffer( pFileBuf, &szDate[0], 4 );
             hb_addToFBuffer( pFileBuf, '-' );
-            hb_addStrnToFBuffer( pFileBuf, &szDate[ 4 ], 2 );
+            hb_addStrnToFBuffer( pFileBuf, &szDate[4], 2 );
             hb_addToFBuffer( pFileBuf, '-' );
-            hb_addStrnToFBuffer( pFileBuf, &szDate[ 6 ], 2 );
+            hb_addStrnToFBuffer( pFileBuf, &szDate[6], 2 );
          }
          hb_addStrToFBuffer( pFileBuf, szDelim );
          break;
@@ -198,7 +198,7 @@ static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const 
       case HB_IT_TIMESTAMP:
       {
          long lDate, lTime;
-         char szDateTime[ 24 ];
+         char szDateTime[24];
 
          hb_itemGetTDT(pValue, &lDate, &lTime);
          hb_timeStampStr( szDateTime, lDate, lTime );
@@ -218,7 +218,7 @@ static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const 
       case HB_IT_LONG:
       case HB_IT_DOUBLE:
       {
-         char szResult[ HB_MAX_DOUBLE_LENGTH ];
+         char szResult[HB_MAX_DOUBLE_LENGTH];
          int iSize, iWidth, iDec;
 
          hb_itemGetNLen(pValue, &iWidth, &iDec);
@@ -226,12 +226,12 @@ static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const 
          if( hb_itemStrBuf(szResult, pValue, iSize, iDec) )
          {
             int iPos = 0;
-            while( iSize && HB_ISSPACE( szResult[ iPos ] ) )
+            while( iSize && HB_ISSPACE( szResult[iPos] ) )
             {
                iPos++;
                iSize--;
             }
-            hb_addStrnToFBuffer( pFileBuf, &szResult[ iPos ], iSize );
+            hb_addStrnToFBuffer( pFileBuf, &szResult[iPos], iSize );
          }
          else
          {
@@ -311,7 +311,7 @@ static HB_ULONG hb_db2Sql( AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
          if( fRecno )
          {
             HB_ULONG ulRec = ulRecords;
-            char szRecno[ 13 ], * szVal;
+            char szRecno[13], * szVal;
 
             szVal = szRecno + sizeof(szRecno);
             *--szVal = 0;

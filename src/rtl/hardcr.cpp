@@ -65,9 +65,9 @@ static char * hb_strHardCR( char * pszString, HB_SIZE nStringLen )
       nStringPos = 0;
       while( nStringPos < nStringLen )
       {
-         if( pszString[ nStringPos ] == HB_CHAR_SOFT1 && pszString[ nStringPos + 1 ] == HB_CHAR_SOFT2 )
+         if( pszString[nStringPos] == HB_CHAR_SOFT1 && pszString[nStringPos + 1] == HB_CHAR_SOFT2 )
          {
-            pszString[ nStringPos ] = HB_CHAR_HARD1;
+            pszString[nStringPos] = HB_CHAR_HARD1;
             nStringPos += 2;
          }
          else if( ! HB_CDPCHAR_GET( cdp, pszString, nStringLen, &nStringPos, &wc ) )
@@ -80,9 +80,9 @@ static char * hb_strHardCR( char * pszString, HB_SIZE nStringLen )
    {
       for( nStringPos = 0; nStringPos < nStringLen; nStringPos++ )
       {
-         if( pszString[ nStringPos ] == HB_CHAR_SOFT1 && pszString[ nStringPos + 1 ] == HB_CHAR_SOFT2 )
+         if( pszString[nStringPos] == HB_CHAR_SOFT1 && pszString[nStringPos + 1] == HB_CHAR_SOFT2 )
          {
-            pszString[ nStringPos++ ] = HB_CHAR_HARD1;
+            pszString[nStringPos++] = HB_CHAR_HARD1;
          }
       }
    }

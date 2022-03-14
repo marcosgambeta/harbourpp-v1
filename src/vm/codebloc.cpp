@@ -55,7 +55,7 @@
 /* Dummy returning NIL for buggy code which may store references
    to freed by GC codeblock in .prg destructors and then (after
    catching RT EG_DESTRUCTOR error) try to execute them */
-static const HB_BYTE s_pCode[ 2 ] = { HB_P_PUSHNIL, HB_P_ENDBLOCK };
+static const HB_BYTE s_pCode[2] = { HB_P_PUSHNIL, HB_P_ENDBLOCK };
 
 /* Release all allocated memory when called from the garbage collector */
 static HB_GARBAGE_FUNC( hb_codeblockGarbageDelete )
@@ -81,7 +81,7 @@ static HB_GARBAGE_FUNC( hb_codeblockGarbageDelete )
       {
          while( pCBlock->uiLocals )
          {
-            hb_memvarValueDecRef( pCBlock->pLocals[ pCBlock->uiLocals-- ].item.asMemvar.value );
+            hb_memvarValueDecRef( pCBlock->pLocals[pCBlock->uiLocals--].item.asMemvar.value );
          }
          hb_xfree(pCBlock->pLocals);
       }
@@ -105,7 +105,7 @@ static HB_GARBAGE_FUNC( hb_codeblockGarbageMark )
 
       do
       {
-         hb_gcItemRef( &pLocals[ uiLocals ] );
+         hb_gcItemRef( &pLocals[uiLocals] );
       }
       while( --uiLocals );
    }
@@ -175,7 +175,7 @@ PHB_CODEBLOCK hb_codeblockNew( const HB_BYTE * pBuffer, HB_USHORT uiLocals, cons
        * evaluation of this codeblock
        */
       pLocals = static_cast<PHB_ITEM>(hb_xgrab((uiLocals + 1) * sizeof(HB_ITEM)));
-      pLocals[ 0 ].type = HB_IT_NIL;
+      pLocals[0].type = HB_IT_NIL;
 
       do
       {

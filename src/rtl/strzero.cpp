@@ -83,33 +83,33 @@ HB_FUNC( STRZERO )
          {
             HB_SIZE nPos = 0;
 
-            while( szResult[ nPos ] != '\0' && szResult[ nPos ] != '-' )
+            while( szResult[nPos] != '\0' && szResult[nPos] != '-' )
             {
                nPos++;
             }
 
-            if( szResult[ nPos ] == '-' )
+            if( szResult[nPos] == '-' )
             {
                /* NOTE: Negative sign found, put it to the first position */
 
-               szResult[ nPos ] = ' ';
+               szResult[nPos] = ' ';
 
                nPos = 0;
-               while( szResult[ nPos ] != '\0' && szResult[ nPos ] == ' ' )
+               while( szResult[nPos] != '\0' && szResult[nPos] == ' ' )
                {
-                  szResult[ nPos++ ] = '0';
+                  szResult[nPos++] = '0';
                }
 
-               szResult[ 0 ] = '-';
+               szResult[0] = '-';
             }
             else
             {
                /* Negative sign not found */
 
                nPos = 0;
-               while( szResult[ nPos ] != '\0' && szResult[ nPos ] == ' ' )
+               while( szResult[nPos] != '\0' && szResult[nPos] == ' ' )
                {
-                  szResult[ nPos++ ] = '0';
+                  szResult[nPos++] = '0';
                }   
             }
 

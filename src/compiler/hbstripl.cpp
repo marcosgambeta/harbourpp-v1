@@ -60,7 +60,7 @@ HB_EXTERN_END
 
 static HB_STRIP_FUNC( hb_p_line )
 {
-   switch( pFunc->pCode[ nPCodePos + 3 ] )
+   switch( pFunc->pCode[nPCodePos + 3] )
    {
       case HB_P_LINE:
       case HB_P_MODULENAME:
@@ -70,19 +70,19 @@ static HB_STRIP_FUNC( hb_p_line )
          if( ! ( static_cast<PHB_COMP>(cargo) )->fDebugInfo )
          {
             HB_SIZE nNewPos = nPCodePos;
-            switch( pFunc->pCode[ nPCodePos + 3 ] )
+            switch( pFunc->pCode[nPCodePos + 3] )
             {
                case HB_P_JUMPNEAR:
-                  nNewPos += 3 + static_cast<signed char>(pFunc->pCode[ nPCodePos + 4 ]);
+                  nNewPos += 3 + static_cast<signed char>(pFunc->pCode[nPCodePos + 4]);
                   break;
                case HB_P_JUMP:
-                  nNewPos += 3 + HB_PCODE_MKSHORT( &pFunc->pCode[ nPCodePos + 4 ] );
+                  nNewPos += 3 + HB_PCODE_MKSHORT( &pFunc->pCode[nPCodePos + 4] );
                   break;
                case HB_P_JUMPFAR:
-                  nNewPos += 3 + HB_PCODE_MKINT24( &pFunc->pCode[ nPCodePos + 4 ] );
+                  nNewPos += 3 + HB_PCODE_MKINT24( &pFunc->pCode[nPCodePos + 4] );
                   break;
             }
-            if( nNewPos != nPCodePos && pFunc->pCode[ nNewPos ] == HB_P_LINE )
+            if( nNewPos != nPCodePos && pFunc->pCode[nNewPos] == HB_P_LINE )
             {
                hb_compNOOPfill( pFunc, nPCodePos, 3, HB_FALSE, HB_FALSE );
             }

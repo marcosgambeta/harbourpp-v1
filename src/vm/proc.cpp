@@ -58,14 +58,14 @@
 
 HB_FUNC( HB_METHODNAME )
 {
-   char szName[ HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5 ];
+   char szName[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
 
    hb_retc( hb_procname( hb_parni(1) + 1, szName, HB_TRUE ) );
 }
 
 HB_FUNC( PROCNAME )
 {
-   char szName[ HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5 ];
+   char szName[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
 
    hb_retc( hb_procname( hb_parni(1) + 1, szName, HB_FALSE ) );
 }
@@ -150,7 +150,7 @@ char * hb_procname( int iLevel, char * szName, HB_BOOL fMethodName )
 {
    HB_ISIZ nOffset = hb_stackBaseProcOffset( iLevel );
 
-   szName[ 0 ] = '\0';
+   szName[0] = '\0';
    if( nOffset > 0 )
    {
       PHB_ITEM pBase, pSelf;
@@ -231,7 +231,7 @@ HB_BOOL hb_procinfo( int iLevel, char * szName, HB_USHORT * puiLine, char * szFi
 
       if( szName )
       {
-         szName[ 0 ] = '\0';
+         szName[0] = '\0';
          if( pSym == &hb_symEval || pSym->pDynSym == hb_symEval.pDynSym )
          {
             hb_strncat( szName, "(b)", HB_PROCBUF_LEN );
@@ -282,7 +282,7 @@ HB_BOOL hb_procinfo( int iLevel, char * szName, HB_USHORT * puiLine, char * szFi
          }
          else
          {
-            szFile[ 0 ] = '\0';
+            szFile[0] = '\0';
          }
       }
 
@@ -291,7 +291,7 @@ HB_BOOL hb_procinfo( int iLevel, char * szName, HB_USHORT * puiLine, char * szFi
 
    if( szName )
    {
-      szName[ 0 ] = '\0';
+      szName[0] = '\0';
    }
    if( puiLine )
    {
@@ -299,7 +299,7 @@ HB_BOOL hb_procinfo( int iLevel, char * szName, HB_USHORT * puiLine, char * szFi
    }
    if( szFile )
    {
-      szFile[ 0 ] = '\0';
+      szFile[0] = '\0';
    }
 
    return HB_FALSE;

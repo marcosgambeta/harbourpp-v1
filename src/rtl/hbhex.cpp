@@ -95,7 +95,7 @@ HB_FUNC( HB_NUMTOHEX )
    HB_MAXUINT nNum;
    int        iLen;
    HB_BOOL    fDefaultLen;
-   char       ret[ 33 ];
+   char       ret[33];
 
    if( HB_ISNUM(2) )
    {
@@ -123,16 +123,16 @@ HB_FUNC( HB_NUMTOHEX )
       return;
    }
 
-   ret[ iLen ] = '\0';
+   ret[iLen] = '\0';
    do
    {
       int iDigit = static_cast<int>(nNum & 0x0F);
-      ret[ --iLen ] = static_cast<char>(iDigit + ( iDigit < 10 ? '0' : 'A' - 10 ));
+      ret[--iLen] = static_cast<char>(iDigit + ( iDigit < 10 ? '0' : 'A' - 10 ));
       nNum >>= 4;
    }
    while( fDefaultLen ? nNum != 0 : iLen != 0 );
 
-   hb_retc( &ret[ iLen ] );
+   hb_retc( &ret[iLen] );
 }
 
 HB_FUNC( HB_STRTOHEX )
@@ -241,7 +241,7 @@ HB_FUNC( HB_HEXTOSTR )
 
             if( iVal & 0x100 )
             {
-               szDest[ ul++ ] = static_cast<char>(iVal) & 0xff;
+               szDest[ul++] = static_cast<char>(iVal) & 0xff;
                iVal = 0x1;
             }
             iVal <<= 4;

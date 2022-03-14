@@ -86,18 +86,18 @@ HB_FUNC( HB_COMCLOSE )
 
 HB_FUNC( HB_COMDISCARDCHAR )
 {
-   hb_retl( hb_comDiscardChar( hb_parni(1), HB_ISCHAR(2) ? hb_parc(2)[ 0 ] : hb_parni(2) ) == 0 );
+   hb_retl( hb_comDiscardChar( hb_parni(1), HB_ISCHAR(2) ? hb_parc(2)[0] : hb_parni(2) ) == 0 );
 }
 
 HB_FUNC( HB_COMERRORCHAR )
 {
-   hb_retl( hb_comErrorChar( hb_parni(1), HB_ISCHAR(2) ? hb_parc(2)[ 0 ] : hb_parni(2) ) == 0 );
+   hb_retl( hb_comErrorChar( hb_parni(1), HB_ISCHAR(2) ? hb_parc(2)[0] : hb_parni(2) ) == 0 );
 }
 
 HB_FUNC( HB_COMFLOWCHARS )
 {
-   hb_retl( hb_comFlowChars( hb_parni(1), HB_ISCHAR(2) ? hb_parc(2)[ 0 ] : hb_parni(2),
-                             HB_ISCHAR(3) ? hb_parc(3)[ 0 ] : hb_parni(3) ) == 0 );
+   hb_retl( hb_comFlowChars( hb_parni(1), HB_ISCHAR(2) ? hb_parc(2)[0] : hb_parni(2),
+                             HB_ISCHAR(3) ? hb_parc(3)[0] : hb_parni(3) ) == 0 );
 }
 
 HB_FUNC( HB_COMFLOWCONTROL )
@@ -120,7 +120,7 @@ HB_FUNC( HB_COMFLUSH )
 
 HB_FUNC( HB_COMGETDEVICE )
 {
-   char buffer[ HB_COM_DEV_NAME_MAX ];
+   char buffer[HB_COM_DEV_NAME_MAX];
    const char * name = hb_comGetDevice( hb_parni(1), buffer, sizeof(buffer) );
 
    hb_retc( name );
@@ -148,7 +148,7 @@ HB_FUNC( HB_COMFINDPORT )
 
 HB_FUNC( HB_COMINIT )
 {
-   hb_retl( hb_comInit( hb_parni(1), hb_parni(2), HB_ISCHAR(3) ? hb_parc(3)[ 0 ] : 0, hb_parni(4), hb_parni(5) ) == 0 );
+   hb_retl( hb_comInit( hb_parni(1), hb_parni(2), HB_ISCHAR(3) ? hb_parc(3)[0] : 0, hb_parni(4), hb_parni(5) ) == 0 );
 }
 
 HB_FUNC( HB_COMINPUTCOUNT )

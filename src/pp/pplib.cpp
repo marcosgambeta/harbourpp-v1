@@ -66,9 +66,9 @@ static void hb_pp_ErrorMessage( void * cargo, const char * const szMsgTable[],
    /* ignore all warning messages and errors when break or quit request */
    if( cPrefix != 'W' && hb_vmRequestQuery() == 0 )
    {
-      char szMsgBuf[ 1024 ];
+      char szMsgBuf[1024];
       PHB_ITEM pError;
-      hb_snprintf(szMsgBuf, sizeof(szMsgBuf), szMsgTable[ iCode - 1 ],
+      hb_snprintf(szMsgBuf, sizeof(szMsgBuf), szMsgTable[iCode - 1],
                    szParam1, szParam2);
       pError = hb_errRT_New( ES_ERROR, "PP", 1001, static_cast<HB_ERRCODE>(iCode), szMsgBuf,
                              nullptr, 0, EF_NONE | EF_CANDEFAULT );
@@ -229,14 +229,14 @@ HB_FUNC( __PP_ADDRULE )
 
       if( szText )
       {
-         while( nLen && ( szText[ 0 ] == ' ' || szText[ 0 ] == '\t' ) )
+         while( nLen && ( szText[0] == ' ' || szText[0] == '\t' ) )
          {
             ++szText;
             --nLen;
          }
       }
 
-      if( szText && nLen && szText[ 0 ] == '#' )
+      if( szText && nLen && szText[0] == '#' )
       {
          hb_pp_parseLine( pState, szText, &nLen );
 

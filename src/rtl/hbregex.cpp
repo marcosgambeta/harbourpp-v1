@@ -125,7 +125,7 @@ static int hb_regexec( PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen, in
    char * szBuffer = nullptr;
    int iResult, i;
 
-   if( szString[ nLen ] != 0 )
+   if( szString[nLen] != 0 )
    {
       szBuffer = hb_strndup(szString, nLen);
       szString = szBuffer;
@@ -217,7 +217,7 @@ HB_FUNC( HB_ATX )
          if( nLen && nStart <= nLen && nStart <= nEnd )
          {
             const char * pszString = hb_itemGetCPtr(pString);
-            HB_REGMATCH aMatches[ HB_REGMATCH_SIZE(1) ];
+            HB_REGMATCH aMatches[HB_REGMATCH_SIZE(1)];
 
             if( nEnd < nLen )
             {
@@ -264,7 +264,7 @@ HB_FUNC( HB_ATX )
 
 static HB_BOOL hb_regex( int iRequest )
 {
-   HB_REGMATCH aMatches[ HB_REGMATCH_SIZE( REGEX_MAX_GROUPS ) ];
+   HB_REGMATCH aMatches[HB_REGMATCH_SIZE( REGEX_MAX_GROUPS )];
    PHB_ITEM pRetArray, pMatch, pString;
    int i, iMatches, iMaxMatch;
    HB_BOOL fResult = HB_FALSE;

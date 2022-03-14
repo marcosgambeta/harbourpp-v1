@@ -61,15 +61,15 @@ HB_FUNC( CHR )
 
       /* Believe it or not, Cl*pper does this! */
 #ifdef HB_CLP_STRICT
-      char szChar[ 2 ];
-      szChar[ 0 ] = hb_parnl(1) % 256;
-      szChar[ 1 ] = '\0';
+      char szChar[2];
+      szChar[0] = hb_parnl(1) % 256;
+      szChar[1] = '\0';
       hb_retclen( szChar, 1 );
 #else
       PHB_CODEPAGE cdp = hb_vmCDP();
       if( HB_CDP_ISCHARUNI( cdp ) )
       {
-         char szChar[ HB_MAX_CHAR_LEN ];
+         char szChar[HB_MAX_CHAR_LEN];
          HB_SIZE nLen;
 
          nLen = hb_cdpTextPutU16( hb_vmCDP(), szChar, sizeof(szChar), static_cast<HB_WCHAR>(hb_parni(1)) );
@@ -77,7 +77,7 @@ HB_FUNC( CHR )
       }
       else
       {
-         hb_retclen( hb_szAscii[ hb_parni(1) & 0xFF ], 1 );
+         hb_retclen( hb_szAscii[hb_parni(1) & 0xFF], 1 );
       }
 #endif
    }
@@ -102,7 +102,7 @@ HB_FUNC( ASC )
       }
       else
       {
-         iChar = static_cast<HB_UCHAR>(szValue[ 0 ]);
+         iChar = static_cast<HB_UCHAR>(szValue[0]);
       }
 
       hb_retni( iChar );

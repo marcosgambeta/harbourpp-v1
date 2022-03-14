@@ -59,64 +59,64 @@ typedef HB_FIX_FUNC_ * PHB_FIX_FUNC;
 
 static HB_FIX_FUNC( hb_p_pushblock )
 {
-   HB_BYTE * pLocal = &pFunc->pCode[ nPCodePos + 7 ];
+   HB_BYTE * pLocal = &pFunc->pCode[nPCodePos + 7];
    HB_USHORT wVar;
 
    HB_SYMBOL_UNUSED(cargo);
 
    /* opcode + codeblock size + number of parameters + number of local variables */
-   wVar = HB_PCODE_MKUSHORT( &pFunc->pCode[ nPCodePos + 5 ] );
+   wVar = HB_PCODE_MKUSHORT( &pFunc->pCode[nPCodePos + 5] );
 
    /* fix local variable's reference */
    while( wVar-- )
    {
       HB_USHORT wLocal = HB_PCODE_MKUSHORT( pLocal ) + pFunc->wParamCount;
-      pLocal[ 0 ] = HB_LOBYTE(wLocal);
-      pLocal[ 1 ] = HB_HIBYTE(wLocal);
+      pLocal[0] = HB_LOBYTE(wLocal);
+      pLocal[1] = HB_HIBYTE(wLocal);
       pLocal += 2;
    }
 
    /* only local variables used outside of a codeblock need fixing
     * skip the codeblock body
     */
-   return HB_PCODE_MKUSHORT( &pFunc->pCode[ nPCodePos + 1 ] );
+   return HB_PCODE_MKUSHORT( &pFunc->pCode[nPCodePos + 1] );
 }
 
 static HB_FIX_FUNC( hb_p_pushblocklarge )
 {
-   HB_BYTE * pLocal = &pFunc->pCode[ nPCodePos + 8 ];
+   HB_BYTE * pLocal = &pFunc->pCode[nPCodePos + 8];
    HB_USHORT wVar;
 
    HB_SYMBOL_UNUSED(cargo);
 
    /* opcode + codeblock size + number of parameters + number of local variables */
-   wVar = HB_PCODE_MKUSHORT( &pFunc->pCode[ nPCodePos + 6 ] );
+   wVar = HB_PCODE_MKUSHORT( &pFunc->pCode[nPCodePos + 6] );
 
    /* fix local variable's reference */
    while( wVar-- )
    {
       HB_USHORT wLocal = HB_PCODE_MKUSHORT( pLocal ) + pFunc->wParamCount;
-      pLocal[ 0 ] = HB_LOBYTE(wLocal);
-      pLocal[ 1 ] = HB_HIBYTE(wLocal);
+      pLocal[0] = HB_LOBYTE(wLocal);
+      pLocal[1] = HB_HIBYTE(wLocal);
       pLocal += 2;
    }
 
    /* only local variables used outside of a codeblock need fixing
     * skip the codeblock body
     */
-   return HB_PCODE_MKUINT24( &pFunc->pCode[ nPCodePos + 1 ] );
+   return HB_PCODE_MKUINT24( &pFunc->pCode[nPCodePos + 1] );
 }
 
 static HB_FIX_FUNC( hb_p_localfix )
 {
-   HB_BYTE * pVar = &pFunc->pCode[ nPCodePos + 1 ];
+   HB_BYTE * pVar = &pFunc->pCode[nPCodePos + 1];
    HB_SHORT iVar = HB_PCODE_MKSHORT( pVar );
 
    HB_SYMBOL_UNUSED(cargo);
 
    iVar += pFunc->wParamCount;
-   pVar[ 0 ] = HB_LOBYTE(iVar);
-   pVar[ 1 ] = HB_HIBYTE(iVar);
+   pVar[0] = HB_LOBYTE(iVar);
+   pVar[1] = HB_HIBYTE(iVar);
 
    return 0;
 }

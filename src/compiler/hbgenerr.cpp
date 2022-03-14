@@ -166,7 +166,7 @@ void hb_compGenError( HB_COMP_DECL, const char * const szErrors[],
    {
       PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
 
-      hb_compDispMessage( HB_COMP_PARAM, cPrefix, iError, szErrors[ iError - 1 ], szError1, szError2 );
+      hb_compDispMessage( HB_COMP_PARAM, cPrefix, iError, szErrors[iError - 1], szError1, szError2 );
 
       HB_COMP_PARAM->iErrorCount++;
       HB_COMP_PARAM->fError = HB_TRUE;
@@ -187,9 +187,9 @@ void hb_compGenWarning( HB_COMP_DECL, const char * const szWarnings[],
                         char cPrefix, int iWarning,
                         const char * szWarning1, const char * szWarning2 )
 {
-   const char * szText = szWarnings[ iWarning - 1 ];
+   const char * szText = szWarnings[iWarning - 1];
 
-   if( ! HB_COMP_PARAM->fExit && ( static_cast<int>(szText[ 0 ] - '0') <= HB_COMP_PARAM->iWarnings ) )
+   if( ! HB_COMP_PARAM->fExit && ( static_cast<int>(szText[0] - '0') <= HB_COMP_PARAM->iWarnings ) )
    {
       hb_compDispMessage( HB_COMP_PARAM, cPrefix, iWarning, szText + 1, szWarning1, szWarning2 );
 

@@ -236,17 +236,17 @@ double hb_get_rev_double( const HB_BYTE * ptr )
       union
       {
          double  dbl;
-         HB_BYTE buffer[ 8 ];
+         HB_BYTE buffer[8];
       } u;
 
-      u.buffer[ 0 ] = ptr[ 7 ];
-      u.buffer[ 1 ] = ptr[ 6 ];
-      u.buffer[ 2 ] = ptr[ 5 ];
-      u.buffer[ 3 ] = ptr[ 4 ];
-      u.buffer[ 4 ] = ptr[ 3 ];
-      u.buffer[ 5 ] = ptr[ 2 ];
-      u.buffer[ 6 ] = ptr[ 1 ];
-      u.buffer[ 7 ] = ptr[ 0 ];
+      u.buffer[0] = ptr[7];
+      u.buffer[1] = ptr[6];
+      u.buffer[2] = ptr[5];
+      u.buffer[3] = ptr[4];
+      u.buffer[4] = ptr[3];
+      u.buffer[5] = ptr[2];
+      u.buffer[6] = ptr[1];
+      u.buffer[7] = ptr[0];
 
       return u.dbl;
 #endif
@@ -266,17 +266,17 @@ double hb_get_std_double( const HB_BYTE * ptr )
       union
       {
          double  dbl;
-         HB_BYTE buffer[ 8 ];
+         HB_BYTE buffer[8];
       } u;
 
-      u.buffer[ 0 ] = ptr[ 0 ];
-      u.buffer[ 1 ] = ptr[ 1 ];
-      u.buffer[ 2 ] = ptr[ 2 ];
-      u.buffer[ 3 ] = ptr[ 3 ];
-      u.buffer[ 4 ] = ptr[ 4 ];
-      u.buffer[ 5 ] = ptr[ 5 ];
-      u.buffer[ 6 ] = ptr[ 6 ];
-      u.buffer[ 7 ] = ptr[ 7 ];
+      u.buffer[0] = ptr[0];
+      u.buffer[1] = ptr[1];
+      u.buffer[2] = ptr[2];
+      u.buffer[3] = ptr[3];
+      u.buffer[4] = ptr[4];
+      u.buffer[5] = ptr[5];
+      u.buffer[6] = ptr[6];
+      u.buffer[7] = ptr[7];
 
       return u.dbl;
 #endif

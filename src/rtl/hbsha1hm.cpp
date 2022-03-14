@@ -50,7 +50,7 @@
 
 HB_FUNC( HB_HMAC_SHA1 )
 {
-   unsigned char mac[ HMAC_SHA1_DIGEST_LENGTH ];
+   unsigned char mac[HMAC_SHA1_DIGEST_LENGTH];
    HMAC_SHA1_CTX ctx;
 
    hb_HMAC_SHA1_Init( &ctx );
@@ -120,7 +120,7 @@ HB_FUNC( HB_HMAC_SHA1 )
 
    if( ! hb_parl(3) )
    {
-      char hex[ ( sizeof(mac) * 2 ) + 1 ];
+      char hex[( sizeof(mac) * 2 ) + 1];
       hb_strtohex( reinterpret_cast<char*>(mac), sizeof(mac), hex );
       hb_retclen( hex, HB_SIZEOFARRAY( hex ) - 1 );
    }

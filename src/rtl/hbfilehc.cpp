@@ -73,7 +73,7 @@ HB_FUNC( HB_FNAMEEXT )
 
 HB_FUNC( HB_FNAMENAMEEXT )
 {
-   char szPath[ HB_PATH_MAX ];
+   char szPath[HB_PATH_MAX];
    PHB_FNAME pFilepath = hb_fsFNameSplit(hb_parcx(1));
 
    pFilepath->szPath = nullptr;
@@ -83,7 +83,7 @@ HB_FUNC( HB_FNAMENAMEEXT )
 
 HB_FUNC( HB_FNAMEEXTSET )
 {
-   char szPath[ HB_PATH_MAX ];
+   char szPath[HB_PATH_MAX];
    PHB_FNAME pFilepath = hb_fsFNameSplit(hb_parcx(1));
 
    pFilepath->szExtension = hb_parc(2);
@@ -93,7 +93,7 @@ HB_FUNC( HB_FNAMEEXTSET )
 
 HB_FUNC( HB_FNAMEEXTSETDEF )
 {
-   char szPath[ HB_PATH_MAX ];
+   char szPath[HB_PATH_MAX];
    PHB_FNAME pFilepath = hb_fsFNameSplit(hb_parcx(1));
 
    if( ! pFilepath->szExtension )

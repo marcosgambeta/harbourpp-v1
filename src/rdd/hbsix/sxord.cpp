@@ -273,7 +273,7 @@ HB_FUNC( SX_THERMOMETER )
             for( i = 0; i < 3; ++i, --iTemperature )
             {
                hb_itemClear(Info.itmResult);
-               if( SELF_ORDINFO( pArea, s_iStates[ i ], &Info ) == HB_SUCCESS && HB_IS_LOGICAL(Info.itmResult) && hb_itemGetL(Info.itmResult) )
+               if( SELF_ORDINFO( pArea, s_iStates[i], &Info ) == HB_SUCCESS && HB_IS_LOGICAL(Info.itmResult) && hb_itemGetL(Info.itmResult) )
                {
                   break;
                }
@@ -708,7 +708,7 @@ HB_FUNC( SX_WILDSEEK )
       memset(&Info, 0, sizeof(Info));
       Info.itmResult = hb_itemNew(nullptr);
 
-      if( szPattern && szPattern[ 0 ] )
+      if( szPattern && szPattern[0] )
       {
          if( SELF_ORDINFO( pArea, DBOI_NUMBER, &Info ) == HB_SUCCESS )
          {

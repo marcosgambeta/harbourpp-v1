@@ -77,23 +77,23 @@ char * hb_netname( void )
 #if defined( HB_OS_WIN )
 
    DWORD dwLen = MAX_COMPUTERNAME_LENGTH + 1;
-   TCHAR lpValue[ MAX_COMPUTERNAME_LENGTH + 1 ];
+   TCHAR lpValue[MAX_COMPUTERNAME_LENGTH + 1];
 
-   lpValue[ 0 ] = TEXT( '\0' );
+   lpValue[0] = TEXT( '\0' );
    GetComputerName( lpValue, &dwLen );
-   lpValue[ MAX_COMPUTERNAME_LENGTH ] = TEXT( '\0' );
+   lpValue[MAX_COMPUTERNAME_LENGTH] = TEXT( '\0' );
 
-   if( lpValue[ 0 ] )
+   if( lpValue[0] )
    {
       return HB_OSSTRDUP( lpValue );
    }
 
 #elif ( defined( HB_OS_UNIX ) )
 
-   char szValue[ MAXGETHOSTNAME + 1 ];
-   szValue[ 0 ] = szValue[ MAXGETHOSTNAME ] = '\0';
+   char szValue[MAXGETHOSTNAME + 1];
+   szValue[0] = szValue[MAXGETHOSTNAME] = '\0';
    gethostname( szValue, MAXGETHOSTNAME );
-   if( szValue[ 0 ] )
+   if( szValue[0] )
    {
       return hb_osStrDecode( szValue );
    }

@@ -58,7 +58,7 @@ typedef struct _HB_MACRO_LEX
    HB_SIZE      nLen;
    HB_SIZE      nSrc;
    HB_BOOL      quote;
-   char         pBuffer[ 2 ];
+   char         pBuffer[2];
 }
 HB_MACRO_LEX, * PHB_MACRO_LEX;
 
@@ -96,7 +96,7 @@ void hb_macroLexDelete( PHB_MACRO pMacro )
 
 static void hb_lexSkipBlank( PHB_MACRO_LEX pLex )
 {
-   while( pLex->nSrc < pLex->nLen && ( pLex->pString[ pLex->nSrc ] == ' ' || pLex->pString[ pLex->nSrc ] == '\t' ) )
+   while( pLex->nSrc < pLex->nLen && ( pLex->pString[pLex->nSrc] == ' ' || pLex->pString[pLex->nSrc] == '\t' ) )
    {
       pLex->nSrc++;
    }
@@ -106,7 +106,7 @@ static void hb_lexIdentCopy( PHB_MACRO_LEX pLex )
 {
    while( pLex->nSrc < pLex->nLen )
    {
-      char ch = pLex->pString[ pLex->nSrc ];
+      char ch = pLex->pString[pLex->nSrc];
       if( ch >= 'a' && ch <= 'z' )
       {
          *pLex->pDst++ = ch - ( 'a' - 'A' );
@@ -131,7 +131,7 @@ static int hb_lexTimestampGet( YYSTYPE * yylval_ptr, PHB_MACRO pMacro, PHB_MACRO
    pLex->quote = HB_FALSE;
    while( pLex->nSrc < pLex->nLen )
    {
-      char ch = pLex->pString[ pLex->nSrc++ ];
+      char ch = pLex->pString[pLex->nSrc++];
       if( ch == '"' )
       {
          fOK = HB_TRUE;
@@ -160,7 +160,7 @@ static int hb_lexDateGet( YYSTYPE * yylval_ptr, PHB_MACRO pMacro, PHB_MACRO_LEX 
    pLex->quote = HB_FALSE;
    while( pLex->nSrc < pLex->nLen )
    {
-      char ch = pLex->pString[ pLex->nSrc++ ];
+      char ch = pLex->pString[pLex->nSrc++];
       if( ch == '"' )
       {
          fOK = HB_TRUE;
@@ -188,7 +188,7 @@ static int hb_lexStringCopy( YYSTYPE * yylval_ptr, PHB_MACRO pMacro, PHB_MACRO_L
    yylval_ptr->valChar.string = pLex->pDst;
    while( pLex->nSrc < pLex->nLen )
    {
-      char ch = pLex->pString[ pLex->nSrc++ ];
+      char ch = pLex->pString[pLex->nSrc++];
       if( ch == cDelim )
       {
          yylval_ptr->valChar.length = pLex->pDst - yylval_ptr->valChar.string;
@@ -212,13 +212,13 @@ static int hb_lexStringExtCopy( YYSTYPE * yylval_ptr, PHB_MACRO pMacro, PHB_MACR
    string = pLex->pDst;
    while( pLex->nSrc < pLex->nLen )
    {
-      char ch = pLex->pString[ pLex->nSrc++ ];
+      char ch = pLex->pString[pLex->nSrc++];
       if( ch == '\\' )
       {
          if( pLex->nSrc < pLex->nLen )
          {
             *pLex->pDst++ = ch;
-            ch = pLex->pString[ pLex->nSrc++ ];
+            ch = pLex->pString[pLex->nSrc++];
          }
       }
       else if( ch == '"' )
@@ -272,7 +272,7 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
 
    while( pLex->nSrc < pLex->nLen )
    {
-      unsigned char ch = static_cast<unsigned char>(pLex->pString[ pLex->nSrc++ ]);
+      unsigned char ch = static_cast<unsigned char>(pLex->pString[pLex->nSrc++]);
       switch( ch )
       {
          case ' ':
@@ -300,7 +300,7 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
 
          case '!':
             pLex->quote = HB_TRUE;
-            if( pLex->pString[ pLex->nSrc ] == '=' )
+            if( pLex->pString[pLex->nSrc] == '=' )
             {
                pLex->nSrc++;
                return NE2;
@@ -309,12 +309,12 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
 
          case '<':
             pLex->quote = HB_TRUE;
-            if( pLex->pString[ pLex->nSrc ] == '>' )
+            if( pLex->pString[pLex->nSrc] == '>' )
             {
                pLex->nSrc++;
                return NE2;
             }
-            else if( pLex->pString[ pLex->nSrc ] == '=' )
+            else if( pLex->pString[pLex->nSrc] == '=' )
             {
                pLex->nSrc++;
                return LE;
@@ -323,7 +323,7 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
 
          case '>':
             pLex->quote = HB_TRUE;
-            if( pLex->pString[ pLex->nSrc ] == '=' )
+            if( pLex->pString[pLex->nSrc] == '=' )
             {
                pLex->nSrc++;
                return GE;
@@ -332,12 +332,12 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
 
          case '=':
             pLex->quote = HB_TRUE;
-            if( pLex->pString[ pLex->nSrc ] == '=' )
+            if( pLex->pString[pLex->nSrc] == '=' )
             {
                pLex->nSrc++;
                return EQ;
             }
-            else if( pLex->pString[ pLex->nSrc ] == '>' )
+            else if( pLex->pString[pLex->nSrc] == '>' )
             {
                pLex->nSrc++;
                return HASHOP;
@@ -346,12 +346,12 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
 
          case '+':
             pLex->quote = HB_TRUE;
-            if( pLex->pString[ pLex->nSrc ] == '+' )
+            if( pLex->pString[pLex->nSrc] == '+' )
             {
                pLex->nSrc++;
                return INC;
             }
-            else if( pLex->pString[ pLex->nSrc ] == '=' )
+            else if( pLex->pString[pLex->nSrc] == '=' )
             {
                pLex->nSrc++;
                return PLUSEQ;
@@ -360,17 +360,17 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
 
          case '-':
             pLex->quote = HB_TRUE;
-            if( pLex->pString[ pLex->nSrc ] == '-' )
+            if( pLex->pString[pLex->nSrc] == '-' )
             {
                pLex->nSrc++;
                return DEC;
             }
-            else if( pLex->pString[ pLex->nSrc ] == '=' )
+            else if( pLex->pString[pLex->nSrc] == '=' )
             {
                pLex->nSrc++;
                return MINUSEQ;
             }
-            else if( pLex->pString[ pLex->nSrc ] == '>' )
+            else if( pLex->pString[pLex->nSrc] == '>' )
             {
                pLex->nSrc++;
                return ALIASOP;
@@ -379,17 +379,17 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
 
          case '*':
             pLex->quote = HB_TRUE;
-            if( pLex->pString[ pLex->nSrc ] == '*' )
+            if( pLex->pString[pLex->nSrc] == '*' )
             {
                pLex->nSrc++;
-               if( pLex->pString[ pLex->nSrc ] == '=' )
+               if( pLex->pString[pLex->nSrc] == '=' )
                {
                   pLex->nSrc++;
                   return EXPEQ;
                }
                return POWER;
             }
-            else if( pLex->pString[ pLex->nSrc ] == '=' )
+            else if( pLex->pString[pLex->nSrc] == '=' )
             {
                pLex->nSrc++;
                return MULTEQ;
@@ -398,7 +398,7 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
 
          case '/':
             pLex->quote = HB_TRUE;
-            if( pLex->pString[ pLex->nSrc ] == '=' )
+            if( pLex->pString[pLex->nSrc] == '=' )
             {
                pLex->nSrc++;
                return DIVEQ;
@@ -407,7 +407,7 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
 
          case '%':
             pLex->quote = HB_TRUE;
-            if( pLex->pString[ pLex->nSrc ] == '=' )
+            if( pLex->pString[pLex->nSrc] == '=' )
             {
                pLex->nSrc++;
                return MODEQ;
@@ -416,7 +416,7 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
 
          case '^':
             pLex->quote = HB_TRUE;
-            if( pLex->pString[ pLex->nSrc ] == '=' )
+            if( pLex->pString[pLex->nSrc] == '=' )
             {
                pLex->nSrc++;
                return EXPEQ;
@@ -425,12 +425,12 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
 
          case ':':
             pLex->quote = HB_TRUE;
-            if( pLex->pString[ pLex->nSrc ] == '=' )
+            if( pLex->pString[pLex->nSrc] == '=' )
             {
                pLex->nSrc++;
                return INASSIGN;
             }
-            else if( pLex->pString[ pLex->nSrc ] == ':' )
+            else if( pLex->pString[pLex->nSrc] == ':' )
             {
                yylval_ptr->string = "SELF";
                return IDENTIFIER;
@@ -439,55 +439,55 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
 
          case '.':
             pLex->quote = HB_TRUE;
-            if( pLex->nSrc < pLex->nLen && HB_ISDIGIT( pLex->pString[ pLex->nSrc ] ) )
+            if( pLex->nSrc < pLex->nLen && HB_ISDIGIT(pLex->pString[pLex->nSrc]) )
             {
                HB_SIZE nPos = pLex->nSrc;
-               while( ++nPos < pLex->nLen && HB_ISDIGIT( pLex->pString[ nPos ] ) )
+               while( ++nPos < pLex->nLen && HB_ISDIGIT(pLex->pString[nPos]) )
                {
                };
                nPos -= --pLex->nSrc;
                return hb_lexNumConv( yylval_ptr, pLex, nPos );
             }
-            if( pLex->nLen - pLex->nSrc >= 4 && pLex->pString[ pLex->nSrc + 3 ] == '.' )
+            if( pLex->nLen - pLex->nSrc >= 4 && pLex->pString[pLex->nSrc + 3] == '.' )
             {
-               if( ( pLex->pString[ pLex->nSrc + 0 ] | ( 'a' - 'A' ) ) == 'a' &&
-                   ( pLex->pString[ pLex->nSrc + 1 ] | ( 'a' - 'A' ) ) == 'n' &&
-                   ( pLex->pString[ pLex->nSrc + 2 ] | ( 'a' - 'A' ) ) == 'd' )
+               if( ( pLex->pString[pLex->nSrc + 0] | ( 'a' - 'A' ) ) == 'a' &&
+                   ( pLex->pString[pLex->nSrc + 1] | ( 'a' - 'A' ) ) == 'n' &&
+                   ( pLex->pString[pLex->nSrc + 2] | ( 'a' - 'A' ) ) == 'd' )
                {
                   pLex->nSrc += 4;
                   return AND;
                }
-               if( ( pLex->pString[ pLex->nSrc + 0 ] | ( 'a' - 'A' ) ) == 'n' &&
-                   ( pLex->pString[ pLex->nSrc + 1 ] | ( 'a' - 'A' ) ) == 'o' &&
-                   ( pLex->pString[ pLex->nSrc + 2 ] | ( 'a' - 'A' ) ) == 't' )
+               if( ( pLex->pString[pLex->nSrc + 0] | ( 'a' - 'A' ) ) == 'n' &&
+                   ( pLex->pString[pLex->nSrc + 1] | ( 'a' - 'A' ) ) == 'o' &&
+                   ( pLex->pString[pLex->nSrc + 2] | ( 'a' - 'A' ) ) == 't' )
                {
                   pLex->nSrc += 4;
                   return NOT;
                }
             }
-            if( pLex->nLen - pLex->nSrc >= 3 && pLex->pString[ pLex->nSrc + 2 ] == '.' )
+            if( pLex->nLen - pLex->nSrc >= 3 && pLex->pString[pLex->nSrc + 2] == '.' )
             {
-               if( ( pLex->pString[ pLex->nSrc + 0 ] | ( 'a' - 'A' ) ) == 'o' && ( pLex->pString[ pLex->nSrc + 1 ] | ( 'a' - 'A' ) ) == 'r' )
+               if( ( pLex->pString[pLex->nSrc + 0] | ( 'a' - 'A' ) ) == 'o' && ( pLex->pString[pLex->nSrc + 1] | ( 'a' - 'A' ) ) == 'r' )
                {
                   pLex->nSrc += 3;
                   return OR;
                }
             }
-            if( pLex->nLen - pLex->nSrc >= 2 && pLex->pString[ pLex->nSrc + 1 ] == '.' )
+            if( pLex->nLen - pLex->nSrc >= 2 && pLex->pString[pLex->nSrc + 1] == '.' )
             {
-               if( ( pLex->pString[ pLex->nSrc ] | ( 'a' - 'A' ) ) == 't' || ( pLex->pString[ pLex->nSrc ] | ( 'a' - 'A' ) ) == 'y' )
+               if( ( pLex->pString[pLex->nSrc] | ( 'a' - 'A' ) ) == 't' || ( pLex->pString[pLex->nSrc] | ( 'a' - 'A' ) ) == 'y' )
                {
                   pLex->quote = HB_FALSE;
                   pLex->nSrc += 2;
                   return TRUEVALUE;
                }
-               if( ( pLex->pString[ pLex->nSrc ] | ( 'a' - 'A' ) ) == 'f' || ( pLex->pString[ pLex->nSrc ] | ( 'a' - 'A' ) ) == 'n' )
+               if( ( pLex->pString[pLex->nSrc] | ( 'a' - 'A' ) ) == 'f' || ( pLex->pString[pLex->nSrc] | ( 'a' - 'A' ) ) == 'n' )
                {
                   pLex->quote = HB_FALSE;
                   pLex->nSrc += 2;
                   return FALSEVALUE;
                }
-               if( pLex->pString[ pLex->nSrc ] == '.' )
+               if( pLex->pString[pLex->nSrc] == '.' )
                {
                   pLex->nSrc += 2;
                   return EPSILON;
@@ -513,7 +513,7 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
          case '&':
             if( pLex->nSrc < pLex->nLen )
             {
-               if( HB_ISFIRSTIDCHAR( pLex->pString[ pLex->nSrc ] ) )
+               if( HB_ISFIRSTIDCHAR( pLex->pString[pLex->nSrc] ) )
                {
                   /* [&<keyword>[.[<nextidchars>]]]+ */
                   int iParts = 0;
@@ -526,7 +526,7 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
                      *pLex->pDst++ = '&';
                      pLex->nSrc++;
                      hb_lexIdentCopy( pLex );
-                     if( pLex->pString[ pLex->nSrc ] == '.' )
+                     if( pLex->pString[pLex->nSrc] == '.' )
                      {
                         ++iParts;
                         *pLex->pDst++ = '.';
@@ -534,7 +534,7 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
                         hb_lexIdentCopy( pLex );
                      }
                   }
-                  while( pLex->nLen - pLex->nSrc > 1 && pLex->pString[ pLex->nSrc ] == '&' && HB_ISFIRSTIDCHAR( pLex->pString[ pLex->nSrc + 1 ] ) );
+                  while( pLex->nLen - pLex->nSrc > 1 && pLex->pString[pLex->nSrc] == '&' && HB_ISFIRSTIDCHAR( pLex->pString[pLex->nSrc + 1] ) );
                   if( iParts == 2 && *( pLex->pDst - 1 ) == '.' )
                   {
                      pLex->pDst--;
@@ -546,13 +546,13 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
                      yylval_ptr->string++;
                      if( pLex->pDst - yylval_ptr->string > HB_SYMBOL_NAME_LEN + 1 )
                      {
-                        ( static_cast<char*>(HB_UNCONST( yylval_ptr->string )) )[ HB_SYMBOL_NAME_LEN ] = '\0';
+                        ( static_cast<char*>(HB_UNCONST( yylval_ptr->string )) )[HB_SYMBOL_NAME_LEN] = '\0';
                      }
                      return MACROVAR;
                   }
                   return MACROTEXT;
                }
-               else if( pLex->pString[ pLex->nSrc ] == '\'' || pLex->pString[ pLex->nSrc ] == '"' || pLex->pString[ pLex->nSrc ] == '[' )
+               else if( pLex->pString[pLex->nSrc] == '\'' || pLex->pString[pLex->nSrc] == '"' || pLex->pString[pLex->nSrc] == '[' )
                {
                   hb_macroError( EG_SYNTAX, pMacro );
                }
@@ -561,16 +561,16 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
             return '&';
 
          default:
-            if( HB_ISDIGIT( ch ) )
+            if( HB_ISDIGIT(ch) )
             {
                HB_SIZE n = pLex->nSrc;
 
                pLex->quote = HB_FALSE;
                if( ch == '0' && n < pLex->nLen )
                {
-                  if( pLex->pString[ n ] == 'd' || pLex->pString[ n ] == 'D' )
+                  if( pLex->pString[n] == 'd' || pLex->pString[n] == 'D' )
                   {
-                     while( ++n < pLex->nLen && HB_ISDIGIT( pLex->pString[ n ] ) )
+                     while( ++n < pLex->nLen && HB_ISDIGIT(pLex->pString[n]) )
                      {
                      };
                      if( n - pLex->nSrc == 9 )
@@ -585,16 +585,16 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
                         }
                         return NUM_DATE;
                      }
-                     else if( n - pLex->nSrc == 2 && pLex->pString[ pLex->nSrc + 1 ] == '0' )
+                     else if( n - pLex->nSrc == 2 && pLex->pString[pLex->nSrc + 1] == '0' )
                      {
                         yylval_ptr->valLong.lNumber = 0;
                         return NUM_DATE;
                      }
                      n = pLex->nSrc;
                   }
-                  else if( pLex->pString[ n ] == 'x' || pLex->pString[ n ] == 'X' )
+                  else if( pLex->pString[n] == 'x' || pLex->pString[n] == 'X' )
                   {
-                     while( ++n < pLex->nLen && HB_ISXDIGIT( pLex->pString[ n ] ) )
+                     while( ++n < pLex->nLen && HB_ISXDIGIT( pLex->pString[n] ) )
                      {
                      };
                      if( n == pLex->nSrc + 1 )
@@ -604,13 +604,13 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
                   }
                   else
                   {
-                     while( n < pLex->nLen && HB_ISDIGIT( pLex->pString[ n ] ) )
+                     while( n < pLex->nLen && HB_ISDIGIT(pLex->pString[n]) )
                      {
                         ++n;
                      }
-                     if( pLex->nLen - n > 1 && pLex->pString[ n ] == '.' && HB_ISDIGIT( pLex->pString[ n + 1 ] ) )
+                     if( pLex->nLen - n > 1 && pLex->pString[n] == '.' && HB_ISDIGIT(pLex->pString[n + 1]) )
                      {
-                        while( ++n < pLex->nLen && HB_ISDIGIT( pLex->pString[ n ] ) )
+                        while( ++n < pLex->nLen && HB_ISDIGIT(pLex->pString[n]) )
                         {
                         };
                      }
@@ -618,13 +618,13 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
                }
                else
                {
-                  while( n < pLex->nLen && HB_ISDIGIT( pLex->pString[ n ] ) )
+                  while( n < pLex->nLen && HB_ISDIGIT(pLex->pString[n]) )
                   {
                      ++n;
                   }
-                  if( pLex->nLen - n > 1 && pLex->pString[ n ] == '.' && HB_ISDIGIT( pLex->pString[ n + 1 ] ) )
+                  if( pLex->nLen - n > 1 && pLex->pString[n] == '.' && HB_ISDIGIT(pLex->pString[n + 1]) )
                   {
-                     while( ++n < pLex->nLen && HB_ISDIGIT( pLex->pString[ n ] ) )
+                     while( ++n < pLex->nLen && HB_ISDIGIT(pLex->pString[n]) )
                      {
                      };
                   }
@@ -639,7 +639,7 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
                yylval_ptr->string = pLex->pDst;
                *pLex->pDst++ = ch - ( ( ch >= 'a' && ch <= 'z' ) ? 'a' - 'A' : 0 );
                hb_lexIdentCopy( pLex );
-               if( pLex->nLen - pLex->nSrc > 1 && pLex->pString[ pLex->nSrc ] == '&' && HB_ISFIRSTIDCHAR( pLex->pString[ pLex->nSrc + 1 ] ) )
+               if( pLex->nLen - pLex->nSrc > 1 && pLex->pString[pLex->nSrc] == '&' && HB_ISFIRSTIDCHAR( pLex->pString[pLex->nSrc + 1] ) )
                {
                   /* [<keyword>][&<keyword>[.[<nextidchars>]]]+ */
                   do
@@ -647,14 +647,14 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
                      *pLex->pDst++ = '&';
                      pLex->nSrc++;
                      hb_lexIdentCopy( pLex );
-                     if( pLex->pString[ pLex->nSrc ] == '.' )
+                     if( pLex->pString[pLex->nSrc] == '.' )
                      {
                         *pLex->pDst++ = '.';
                         pLex->nSrc++;
                         hb_lexIdentCopy( pLex );
                      }
                   }
-                  while( pLex->nLen - pLex->nSrc > 1 && pLex->pString[ pLex->nSrc ] == '&' && HB_ISFIRSTIDCHAR( pLex->pString[ pLex->nSrc + 1 ] ) );
+                  while( pLex->nLen - pLex->nSrc > 1 && pLex->pString[pLex->nSrc] == '&' && HB_ISFIRSTIDCHAR( pLex->pString[pLex->nSrc + 1] ) );
                   *pLex->pDst++ = '\0';
                   return MACROTEXT;
                }
@@ -662,9 +662,9 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
                *pLex->pDst++ = '\0';
                if( nLen == 1 )
                {
-                  if( pLex->nLen > pLex->nSrc && pLex->pString[ pLex->nSrc ] == '"' )
+                  if( pLex->nLen > pLex->nSrc && pLex->pString[pLex->nSrc] == '"' )
                   {
-                     switch( yylval_ptr->string[ 0 ] )
+                     switch( yylval_ptr->string[0] )
                      {
                         case 'E':
                            pLex->nSrc++;
@@ -680,10 +680,10 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
                }
                else if( nLen == 2 )
                {
-                  if( yylval_ptr->string[ 0 ] == 'I' && yylval_ptr->string[ 1 ] == 'F' )
+                  if( yylval_ptr->string[0] == 'I' && yylval_ptr->string[1] == 'F' )
                   {
                      hb_lexSkipBlank( pLex );
-                     if( pLex->nSrc < pLex->nLen && pLex->pString[ pLex->nSrc ] == '(' )
+                     if( pLex->nSrc < pLex->nLen && pLex->pString[pLex->nSrc] == '(' )
                      {
                         return IIF;
                      }
@@ -691,28 +691,28 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
                }
                else if( nLen == 3 )
                {
-                  if( yylval_ptr->string[ 0 ] == 'I' && yylval_ptr->string[ 1 ] == 'I' && yylval_ptr->string[ 2 ] == 'F' )
+                  if( yylval_ptr->string[0] == 'I' && yylval_ptr->string[1] == 'I' && yylval_ptr->string[2] == 'F' )
                   {
                      hb_lexSkipBlank( pLex );
-                     if( pLex->nSrc < pLex->nLen && pLex->pString[ pLex->nSrc ] == '(' )
+                     if( pLex->nSrc < pLex->nLen && pLex->pString[pLex->nSrc] == '(' )
                      {
                         return IIF;
                      }
                   }
-                  else if( yylval_ptr->string[ 0 ] == 'N' && yylval_ptr->string[ 1 ] == 'I' && yylval_ptr->string[ 2 ] == 'L' )
+                  else if( yylval_ptr->string[0] == 'N' && yylval_ptr->string[1] == 'I' && yylval_ptr->string[2] == 'L' )
                   {
                      return NIL;
                   }
                }
                else /* nLen >= 4 */
                {
-                  switch( yylval_ptr->string[ 0 ] )
+                  switch( yylval_ptr->string[0] )
                   {
                      case '_':
                         if( nLen <= 6 && memcmp("FIELD", yylval_ptr->string + 1, nLen - 1) == 0 )
                         {
                            hb_lexSkipBlank( pLex );
-                           if( pLex->nSrc + 1 < pLex->nLen && pLex->pString[ pLex->nSrc ] == '-' && pLex->pString[ pLex->nSrc + 1 ] == '>' )
+                           if( pLex->nSrc + 1 < pLex->nLen && pLex->pString[pLex->nSrc] == '-' && pLex->pString[pLex->nSrc + 1] == '>' )
                            {
                               return FIELD;
                            }
@@ -722,7 +722,7 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
                         if( nLen <= 5 && memcmp("IELD", yylval_ptr->string + 1, nLen - 1) == 0 )
                         {
                            hb_lexSkipBlank( pLex );
-                           if( pLex->nSrc + 1 < pLex->nLen && pLex->pString[ pLex->nSrc ] == '-' && pLex->pString[ pLex->nSrc + 1 ] == '>' )
+                           if( pLex->nSrc + 1 < pLex->nLen && pLex->pString[pLex->nSrc] == '-' && pLex->pString[pLex->nSrc + 1] == '>' )
                            {
                               return FIELD;
                            }
@@ -732,17 +732,17 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
                         if( nLen == 5 && memcmp("SELF", yylval_ptr->string + 1, 4) == 0 )
                         {
                            hb_lexSkipBlank( pLex );
-                           if( pLex->nSrc < pLex->nLen && pLex->pString[ pLex->nSrc ] == '(' )
+                           if( pLex->nSrc < pLex->nLen && pLex->pString[pLex->nSrc] == '(' )
                            {
                               HB_SIZE n = pLex->nSrc;
                               while( ++n < pLex->nLen )
                               {
-                                 if( pLex->pString[ n ] == ')' )
+                                 if( pLex->pString[n] == ')' )
                                  {
                                     pLex->nSrc = n + 1;
                                     return SELF;
                                  }
-                                 else if( pLex->pString[ n ] != ' ' && pLex->pString[ n ] != '\t' )
+                                 else if( pLex->pString[n] != ' ' && pLex->pString[n] != '\t' )
                                  {
                                     break;
                                  }
@@ -753,7 +753,7 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
                   }
                   if( pLex->pDst - yylval_ptr->string > HB_SYMBOL_NAME_LEN + 1 )
                   {
-                     ( static_cast<char*>(HB_UNCONST( yylval_ptr->string )) )[ HB_SYMBOL_NAME_LEN ] = '\0';
+                     ( static_cast<char*>(HB_UNCONST( yylval_ptr->string )) )[HB_SYMBOL_NAME_LEN] = '\0';
                   }
                }
                return IDENTIFIER;

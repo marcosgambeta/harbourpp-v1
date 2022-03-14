@@ -12,7 +12,7 @@
 #define HB_UCUP_LAST    0xFF5A
 #define HB_UCUP_BITS    7
 
-static const HB_USHORT s_up_idx[ 511 ] =
+static const HB_USHORT s_up_idx[511] =
 {
    0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0006, 0x0007,
    0x0008, 0x0009, 0x000A, 0x0005, 0x0005, 0x0005, 0x0005, 0x0005,
@@ -80,7 +80,7 @@ static const HB_USHORT s_up_idx[ 511 ] =
    0x0005, 0x0005, 0x0005, 0x0005, 0x0005, 0x0005, 0x0017
 };
 
-static const HB_USHORT s_up_val[ 2987 ] =
+static const HB_USHORT s_up_val[2987] =
 {
    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
@@ -463,7 +463,7 @@ static HB_USHORT s_uc_upper( int n )
    n -= HB_UCUP_FIRST;
    if( n >= 0 && n <= ( HB_UCUP_LAST - HB_UCUP_FIRST ) )
    {
-      return s_up_val[ ( s_up_idx[ n >> HB_UCUP_BITS ] << HB_UCUP_BITS ) + ( n & ( ( 1 << HB_UCUP_BITS ) - 1 ) ) ];
+      return s_up_val[( s_up_idx[n >> HB_UCUP_BITS] << HB_UCUP_BITS ) + ( n & ( ( 1 << HB_UCUP_BITS ) - 1 ) )];
    }
    return 0;
 }
@@ -472,7 +472,7 @@ static HB_USHORT s_uc_upper( int n )
 #define HB_UCLO_LAST    0xFF3A
 #define HB_UCLO_BITS    6
 
-static const HB_USHORT s_lo_idx[ 1021 ] =
+static const HB_USHORT s_lo_idx[1021] =
 {
    0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0006, 0x0007,
    0x0008, 0x0001, 0x0001, 0x0001, 0x0001, 0x0009, 0x000A, 0x000B,
@@ -604,7 +604,7 @@ static const HB_USHORT s_lo_idx[ 1021 ] =
    0x0001, 0x0001, 0x0001, 0x0001, 0x0027
 };
 
-static const HB_USHORT s_lo_val[ 2523 ] =
+static const HB_USHORT s_lo_val[2523] =
 {
    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
@@ -929,7 +929,7 @@ static HB_USHORT s_uc_lower( int n )
    n -= HB_UCLO_FIRST;
    if( n >= 0 && n <= ( HB_UCLO_LAST - HB_UCLO_FIRST ) )
    {
-      return s_lo_val[ ( s_lo_idx[ n >> HB_UCLO_BITS ] << HB_UCLO_BITS ) + ( n & ( ( 1 << HB_UCLO_BITS ) - 1 ) ) ];
+      return s_lo_val[( s_lo_idx[n >> HB_UCLO_BITS] << HB_UCLO_BITS ) + ( n & ( ( 1 << HB_UCLO_BITS ) - 1 ) )];
    }
    return 0;
 }
@@ -938,7 +938,7 @@ static HB_USHORT s_uc_lower( int n )
 #define HB_UCFL_LAST    0xFF5A
 #define HB_UCFL_BITS    8
 
-static const HB_BYTE s_ch_idx[ 256 ] =
+static const HB_BYTE s_ch_idx[256] =
 {
    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x06, 0x06, 0x06, 0x06, 0x06,
    0x06, 0x06, 0x06, 0x06, 0x07, 0x06, 0x06, 0x06, 0x06, 0x06, 0x06, 0x06,
@@ -964,7 +964,7 @@ static const HB_BYTE s_ch_idx[ 256 ] =
    0x06, 0x06, 0x06, 0x11
 };
 
-static const HB_BYTE s_ch_val[ 2222 ] =
+static const HB_BYTE s_ch_val[2222] =
 {
    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -1160,7 +1160,7 @@ static int s_uc_flags( int n )
    if( n >= 0 && n <= ( HB_UCFL_LAST - HB_UCFL_FIRST ) )
    {
       HB_BYTE v;
-      v = s_ch_val[ ( s_ch_idx[ n >> HB_UCFL_BITS ] << ( HB_UCFL_BITS - 1 ) ) + ( ( n & ( ( 1 << HB_UCFL_BITS ) - 1 ) ) >> 1 ) ];
+      v = s_ch_val[( s_ch_idx[n >> HB_UCFL_BITS] << ( HB_UCFL_BITS - 1 ) ) + ( ( n & ( ( 1 << HB_UCFL_BITS ) - 1 ) ) >> 1 )];
       return n & 1 ? v >> 4 : v & 0x0F;
    }
    return 0;

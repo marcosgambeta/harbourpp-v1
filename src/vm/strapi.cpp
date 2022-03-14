@@ -49,7 +49,7 @@
 #include "hbapiitm.h"
 #include "hbstack.h"
 
-static const HB_WCHAR s_szConstStr[ 1 ] = { 0 };
+static const HB_WCHAR s_szConstStr[1] = { 0 };
 
 HB_SIZE hb_wstrlen( const HB_WCHAR * szText )
 {
@@ -61,7 +61,7 @@ HB_SIZE hb_wstrlen( const HB_WCHAR * szText )
 
    if( szText )
    {
-      while( szText[ nLen ] )
+      while( szText[nLen] )
       {
          ++nLen;
       }
@@ -80,7 +80,7 @@ HB_SIZE hb_wstrnlen( const HB_WCHAR * szText, HB_SIZE nCount )
 
    if( szText )
    {
-      while( nCount-- && szText[ nLen ] )
+      while( nCount-- && szText[nLen] )
       {
          ++nLen;
       }
@@ -151,7 +151,7 @@ HB_WCHAR * hb_wstrncpy( HB_WCHAR * pDest, const HB_WCHAR * pSource, HB_SIZE nLen
 
    HB_WCHAR * pBuf = pDest;
 
-   pDest[ nLen ] = '\0';
+   pDest[nLen] = '\0';
 
    while( nLen && ( *pDest++ = *pSource++ ) != '\0' )
    {
@@ -169,7 +169,7 @@ HB_WCHAR * hb_wstrncat( HB_WCHAR * pDest, const HB_WCHAR * pSource, HB_SIZE nLen
 
    HB_WCHAR * pBuf = pDest;
 
-   pDest[ nLen ] = '\0';
+   pDest[nLen] = '\0';
 
    while( nLen && *pDest )
    {
@@ -219,7 +219,7 @@ HB_WCHAR * hb_wstrndup( const HB_WCHAR * szText, HB_SIZE nLen )
    nSize = nLen * sizeof(HB_WCHAR);
    pszDest = static_cast<HB_WCHAR*>(hb_xgrab(nSize + sizeof(HB_WCHAR)));
    memcpy(pszDest, szText, nSize);
-   pszDest[ nLen ] = 0;
+   pszDest[nLen] = 0;
 
    return pszDest;
 }
@@ -239,7 +239,7 @@ HB_WCHAR * hb_wstrunshare( void ** phStr, const HB_WCHAR * pStr, HB_SIZE nLen )
    {
       HB_WCHAR * pszDest = static_cast<HB_WCHAR*>(hb_xgrab(( nLen + 1 ) * sizeof(HB_WCHAR)));
       memcpy(pszDest, pStr, nLen * sizeof(HB_WCHAR));
-      pszDest[ nLen ] = 0;
+      pszDest[nLen] = 0;
       if( *phStr != static_cast<const void*>(s_szConstStr) )
       {
          hb_xRefDec( *phStr );
@@ -267,7 +267,7 @@ char * hb_strunshare( void ** phStr, const char * pStr, HB_SIZE nLen )
    {
       char * pszDest = static_cast<char*>(hb_xgrab(( nLen + 1 ) * sizeof(char)));
       memcpy(pszDest, pStr, nLen * sizeof(char));
-      pszDest[ nLen ] = 0;
+      pszDest[nLen] = 0;
       if( *phStr != static_cast<const void*>(s_szConstStr) )
       {
          hb_xRefDec( *phStr );
@@ -457,7 +457,7 @@ HB_SIZE hb_itemCopyStr( PHB_ITEM pItem, void * cdp, char * pStrBuffer, HB_SIZE n
    }
    else if( pStrBuffer && nSize )
    {
-      pStrBuffer[ 0 ] = '\0';
+      pStrBuffer[0] = '\0';
    }
 
    return 0;
@@ -488,7 +488,7 @@ HB_SIZE hb_itemCopyStrUTF8( PHB_ITEM pItem, char * pStrBuffer, HB_SIZE nSize )
    }
    else if( pStrBuffer && nSize )
    {
-      pStrBuffer[ 0 ] = '\0';
+      pStrBuffer[0] = '\0';
    }
 
    return 0;
@@ -519,7 +519,7 @@ HB_SIZE hb_itemCopyStrU16( PHB_ITEM pItem, int iEndian, HB_WCHAR * pStrBuffer, H
    }
    else if( pStrBuffer && nSize )
    {
-      pStrBuffer[ 0 ] = '\0';
+      pStrBuffer[0] = '\0';
    }
 
    return 0;

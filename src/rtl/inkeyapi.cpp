@@ -398,7 +398,7 @@ static int s_inkeyTransChar( int iKey, int iFlags, const HB_KEY_VALUE * pKeyVal 
          case '9':
             if( iFlags & HB_KF_CTRL )
             {
-               return s_keyPadCtrl[ iKey - '0' ];
+               return s_keyPadCtrl[iKey - '0'];
             }
             break;
       }
@@ -448,11 +448,11 @@ HB_SIZE hb_inkeyKeyString( int iKey, char * buffer, HB_SIZE nSize )
 
          if( iKey > 0 && iKey <= static_cast<int>(HB_SIZEOFARRAY( s_transKeyFun )) )
          {
-            iKey = s_inkeyTransChar( iKey, iFlags, &s_transKeyFun[ iKey - 1 ] );
+            iKey = s_inkeyTransChar( iKey, iFlags, &s_transKeyFun[iKey - 1] );
          }
          else if( iKey >= 32 && iKey <= 127 )
          {
-            iKey = s_inkeyTransChar( iKey, iFlags, &s_transKeyStd[ iKey - 32 ] );
+            iKey = s_inkeyTransChar( iKey, iFlags, &s_transKeyStd[iKey - 32] );
          }
       }
       if( iKey >= 32 && iKey <= 255 && iKey != 127 )
@@ -484,11 +484,11 @@ int hb_inkeyKeyStd( int iKey )
 
          if( iKey > 0 && iKey <= static_cast<int>(HB_SIZEOFARRAY( s_transKeyFun )) )
          {
-            iKey = s_inkeyTransChar( iKey, iFlags, &s_transKeyFun[ iKey - 1 ] );
+            iKey = s_inkeyTransChar( iKey, iFlags, &s_transKeyFun[iKey - 1] );
          }
          else if( iKey >= 32 && iKey <= 127 )
          {
-            iKey = s_inkeyTransChar( iKey, iFlags, &s_transKeyStd[ iKey - 32 ] );
+            iKey = s_inkeyTransChar( iKey, iFlags, &s_transKeyStd[iKey - 32] );
          }
       }
       else if( HB_INKEY_ISCHAR( iKey ) || HB_INKEY_ISUNICODE( iKey ) )
@@ -497,7 +497,7 @@ int hb_inkeyKeyStd( int iKey )
 
          if( iVal >= 32 && iVal <= 127 && ( iFlags & ( HB_KF_ALT | HB_KF_CTRL ) ) != 0 )
          {
-            iKey = s_inkeyTransChar( iVal, iFlags, &s_transKeyStd[ iVal - 32 ] );
+            iKey = s_inkeyTransChar( iVal, iFlags, &s_transKeyStd[iVal - 32] );
          }
          else if( HB_INKEY_ISUNICODE( iKey ) )
          {

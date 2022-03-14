@@ -204,7 +204,7 @@ static HB_U64 hb_u64par( PHB_ITEM pParam, PHB_DYNARG pArg )
          pArg->hString = hb_xgrab(nLen + sizeof(char));
          pArg->bRawBuffer = HB_TRUE;
          memcpy(static_cast<char*>(pArg->hString), hb_itemGetCPtr(pParam), nLen);
-         ( static_cast<char*>(pArg->hString) )[ nLen ] = '\0';
+         ( static_cast<char*>(pArg->hString) )[nLen] = '\0';
          r = reinterpret_cast<HB_PTRUINT>(pArg->hString);
          pArg->value.t.n64 = r;
          break;
@@ -240,7 +240,7 @@ static HB_U64 hb_u64par( PHB_ITEM pParam, PHB_DYNARG pArg )
                pArg->hString = hb_xgrab(nLen + sizeof(char));
                pArg->bRawBuffer = HB_TRUE;
                memcpy(static_cast<char*>(pArg->hString), hb_itemGetCPtr(pParam), nLen);
-               ( static_cast<char*>(pArg->hString) )[ nLen ] = '\0';
+               ( static_cast<char*>(pArg->hString) )[nLen] = '\0';
                r = reinterpret_cast<HB_PTRUINT>(pArg->hString);
                break;
             }
@@ -444,21 +444,21 @@ static PHB_ITEM hb_u64ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
       switch( pcount ) \
       { \
          case  0: ret.t._ret_ = ( ( _type_##P00 ) * pFunction )( ); break; \
-         case  1: ret.t._ret_ = ( ( _type_##P01 ) * pFunction )( rawpar[ 0 ] ); break; \
-         case  2: ret.t._ret_ = ( ( _type_##P02 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ] ); break; \
-         case  3: ret.t._ret_ = ( ( _type_##P03 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ] ); break; \
-         case  4: ret.t._ret_ = ( ( _type_##P04 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ] ); break; \
-         case  5: ret.t._ret_ = ( ( _type_##P05 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ] ); break; \
-         case  6: ret.t._ret_ = ( ( _type_##P06 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ] ); break; \
-         case  7: ret.t._ret_ = ( ( _type_##P07 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ] ); break; \
-         case  8: ret.t._ret_ = ( ( _type_##P08 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ] ); break; \
-         case  9: ret.t._ret_ = ( ( _type_##P09 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ] ); break; \
-         case 10: ret.t._ret_ = ( ( _type_##P10 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ] ); break; \
-         case 11: ret.t._ret_ = ( ( _type_##P11 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ] ); break; \
-         case 12: ret.t._ret_ = ( ( _type_##P12 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ], rawpar[ 11 ] ); break; \
-         case 13: ret.t._ret_ = ( ( _type_##P13 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ], rawpar[ 11 ], rawpar[ 12 ] ); break; \
-         case 14: ret.t._ret_ = ( ( _type_##P14 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ], rawpar[ 11 ], rawpar[ 12 ], rawpar[ 13 ] ); break; \
-         case 15: ret.t._ret_ = ( ( _type_##P15 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ], rawpar[ 11 ], rawpar[ 12 ], rawpar[ 13 ], rawpar[ 14 ] ); break; \
+         case  1: ret.t._ret_ = ( ( _type_##P01 ) * pFunction )( rawpar[0] ); break; \
+         case  2: ret.t._ret_ = ( ( _type_##P02 ) * pFunction )( rawpar[0], rawpar[1] ); break; \
+         case  3: ret.t._ret_ = ( ( _type_##P03 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2] ); break; \
+         case  4: ret.t._ret_ = ( ( _type_##P04 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3] ); break; \
+         case  5: ret.t._ret_ = ( ( _type_##P05 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4] ); break; \
+         case  6: ret.t._ret_ = ( ( _type_##P06 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5] ); break; \
+         case  7: ret.t._ret_ = ( ( _type_##P07 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6] ); break; \
+         case  8: ret.t._ret_ = ( ( _type_##P08 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7] ); break; \
+         case  9: ret.t._ret_ = ( ( _type_##P09 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8] ); break; \
+         case 10: ret.t._ret_ = ( ( _type_##P10 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9] ); break; \
+         case 11: ret.t._ret_ = ( ( _type_##P11 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10] ); break; \
+         case 12: ret.t._ret_ = ( ( _type_##P12 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11] ); break; \
+         case 13: ret.t._ret_ = ( ( _type_##P13 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12] ); break; \
+         case 14: ret.t._ret_ = ( ( _type_##P14 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13] ); break; \
+         case 15: ret.t._ret_ = ( ( _type_##P15 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14] ); break; \
       } \
    } \
    while(0)
@@ -612,7 +612,7 @@ static void hb_u32par( PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r
          pArg->hString = hb_xgrab(nLen + sizeof(char));
          pArg->bRawBuffer = HB_TRUE;
          memcpy(static_cast<char*>(pArg->hString), hb_itemGetCPtr(pParam), nLen);
-         ( static_cast<char*>(pArg->hString) )[ nLen ] = '\0';
+         ( static_cast<char*>(pArg->hString) )[nLen] = '\0';
          *r1 = reinterpret_cast<HB_PTRUINT>(pArg->hString);
          pArg->value.t.n32 = *r1;
          break;
@@ -648,7 +648,7 @@ static void hb_u32par( PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r
                pArg->hString = hb_xgrab(nLen + sizeof(char));
                pArg->bRawBuffer = HB_TRUE;
                memcpy(static_cast<char*>(pArg->hString), hb_itemGetCPtr(pParam), nLen);
-               ( static_cast<char*>(pArg->hString) )[ nLen ] = '\0';
+               ( static_cast<char*>(pArg->hString) )[nLen] = '\0';
                *r1 = reinterpret_cast<HB_PTRUINT>(pArg->hString);
                break;
             }
@@ -870,36 +870,36 @@ static PHB_ITEM hb_u32ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
       switch( pcount ) \
       { \
          case  0: ret.t._ret_ = ( ( _type_##P00 ) * pFunction )( ); break; \
-         case  1: ret.t._ret_ = ( ( _type_##P01 ) * pFunction )( rawpar[ 0 ] ); break; \
-         case  2: ret.t._ret_ = ( ( _type_##P02 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ] ); break; \
-         case  3: ret.t._ret_ = ( ( _type_##P03 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ] ); break; \
-         case  4: ret.t._ret_ = ( ( _type_##P04 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ] ); break; \
-         case  5: ret.t._ret_ = ( ( _type_##P05 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ] ); break; \
-         case  6: ret.t._ret_ = ( ( _type_##P06 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ] ); break; \
-         case  7: ret.t._ret_ = ( ( _type_##P07 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ] ); break; \
-         case  8: ret.t._ret_ = ( ( _type_##P08 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ] ); break; \
-         case  9: ret.t._ret_ = ( ( _type_##P09 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ] ); break; \
-         case 10: ret.t._ret_ = ( ( _type_##P10 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ] ); break; \
-         case 11: ret.t._ret_ = ( ( _type_##P11 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ] ); break; \
-         case 12: ret.t._ret_ = ( ( _type_##P12 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ], rawpar[ 11 ] ); break; \
-         case 13: ret.t._ret_ = ( ( _type_##P13 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ], rawpar[ 11 ], rawpar[ 12 ] ); break; \
-         case 14: ret.t._ret_ = ( ( _type_##P14 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ], rawpar[ 11 ], rawpar[ 12 ], rawpar[ 13 ] ); break; \
-         case 15: ret.t._ret_ = ( ( _type_##P15 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ], rawpar[ 11 ], rawpar[ 12 ], rawpar[ 13 ], rawpar[ 14 ] ); break; \
-         case 16: ret.t._ret_ = ( ( _type_##P16 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ], rawpar[ 11 ], rawpar[ 12 ], rawpar[ 13 ], rawpar[ 14 ], rawpar[ 15 ] ); break; \
-         case 17: ret.t._ret_ = ( ( _type_##P17 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ], rawpar[ 11 ], rawpar[ 12 ], rawpar[ 13 ], rawpar[ 14 ], rawpar[ 15 ], rawpar[ 16 ] ); break; \
-         case 18: ret.t._ret_ = ( ( _type_##P18 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ], rawpar[ 11 ], rawpar[ 12 ], rawpar[ 13 ], rawpar[ 14 ], rawpar[ 15 ], rawpar[ 16 ], rawpar[ 17 ] ); break; \
-         case 19: ret.t._ret_ = ( ( _type_##P19 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ], rawpar[ 11 ], rawpar[ 12 ], rawpar[ 13 ], rawpar[ 14 ], rawpar[ 15 ], rawpar[ 16 ], rawpar[ 17 ], rawpar[ 18 ] ); break; \
-         case 20: ret.t._ret_ = ( ( _type_##P20 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ], rawpar[ 11 ], rawpar[ 12 ], rawpar[ 13 ], rawpar[ 14 ], rawpar[ 15 ], rawpar[ 16 ], rawpar[ 17 ], rawpar[ 18 ], rawpar[ 19 ] ); break; \
-         case 21: ret.t._ret_ = ( ( _type_##P21 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ], rawpar[ 11 ], rawpar[ 12 ], rawpar[ 13 ], rawpar[ 14 ], rawpar[ 15 ], rawpar[ 16 ], rawpar[ 17 ], rawpar[ 18 ], rawpar[ 19 ], rawpar[ 20 ] ); break; \
-         case 22: ret.t._ret_ = ( ( _type_##P22 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ], rawpar[ 11 ], rawpar[ 12 ], rawpar[ 13 ], rawpar[ 14 ], rawpar[ 15 ], rawpar[ 16 ], rawpar[ 17 ], rawpar[ 18 ], rawpar[ 19 ], rawpar[ 20 ], rawpar[ 21 ] ); break; \
-         case 23: ret.t._ret_ = ( ( _type_##P23 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ], rawpar[ 11 ], rawpar[ 12 ], rawpar[ 13 ], rawpar[ 14 ], rawpar[ 15 ], rawpar[ 16 ], rawpar[ 17 ], rawpar[ 18 ], rawpar[ 19 ], rawpar[ 20 ], rawpar[ 21 ], rawpar[ 22 ] ); break; \
-         case 24: ret.t._ret_ = ( ( _type_##P24 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ], rawpar[ 11 ], rawpar[ 12 ], rawpar[ 13 ], rawpar[ 14 ], rawpar[ 15 ], rawpar[ 16 ], rawpar[ 17 ], rawpar[ 18 ], rawpar[ 19 ], rawpar[ 20 ], rawpar[ 21 ], rawpar[ 22 ], rawpar[ 23 ] ); break; \
-         case 25: ret.t._ret_ = ( ( _type_##P25 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ], rawpar[ 11 ], rawpar[ 12 ], rawpar[ 13 ], rawpar[ 14 ], rawpar[ 15 ], rawpar[ 16 ], rawpar[ 17 ], rawpar[ 18 ], rawpar[ 19 ], rawpar[ 20 ], rawpar[ 21 ], rawpar[ 22 ], rawpar[ 23 ], rawpar[ 24 ] ); break; \
-         case 26: ret.t._ret_ = ( ( _type_##P26 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ], rawpar[ 11 ], rawpar[ 12 ], rawpar[ 13 ], rawpar[ 14 ], rawpar[ 15 ], rawpar[ 16 ], rawpar[ 17 ], rawpar[ 18 ], rawpar[ 19 ], rawpar[ 20 ], rawpar[ 21 ], rawpar[ 22 ], rawpar[ 23 ], rawpar[ 24 ], rawpar[ 25 ] ); break; \
-         case 27: ret.t._ret_ = ( ( _type_##P27 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ], rawpar[ 11 ], rawpar[ 12 ], rawpar[ 13 ], rawpar[ 14 ], rawpar[ 15 ], rawpar[ 16 ], rawpar[ 17 ], rawpar[ 18 ], rawpar[ 19 ], rawpar[ 20 ], rawpar[ 21 ], rawpar[ 22 ], rawpar[ 23 ], rawpar[ 24 ], rawpar[ 25 ], rawpar[ 26 ] ); break; \
-         case 28: ret.t._ret_ = ( ( _type_##P28 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ], rawpar[ 11 ], rawpar[ 12 ], rawpar[ 13 ], rawpar[ 14 ], rawpar[ 15 ], rawpar[ 16 ], rawpar[ 17 ], rawpar[ 18 ], rawpar[ 19 ], rawpar[ 20 ], rawpar[ 21 ], rawpar[ 22 ], rawpar[ 23 ], rawpar[ 24 ], rawpar[ 25 ], rawpar[ 26 ], rawpar[ 27 ] ); break; \
-         case 29: ret.t._ret_ = ( ( _type_##P29 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ], rawpar[ 11 ], rawpar[ 12 ], rawpar[ 13 ], rawpar[ 14 ], rawpar[ 15 ], rawpar[ 16 ], rawpar[ 17 ], rawpar[ 18 ], rawpar[ 19 ], rawpar[ 20 ], rawpar[ 21 ], rawpar[ 22 ], rawpar[ 23 ], rawpar[ 24 ], rawpar[ 25 ], rawpar[ 26 ], rawpar[ 27 ], rawpar[ 28 ] ); break; \
-         case 30: ret.t._ret_ = ( ( _type_##P30 ) * pFunction )( rawpar[ 0 ], rawpar[ 1 ], rawpar[ 2 ], rawpar[ 3 ], rawpar[ 4 ], rawpar[ 5 ], rawpar[ 6 ], rawpar[ 7 ], rawpar[ 8 ], rawpar[ 9 ], rawpar[ 10 ], rawpar[ 11 ], rawpar[ 12 ], rawpar[ 13 ], rawpar[ 14 ], rawpar[ 15 ], rawpar[ 16 ], rawpar[ 17 ], rawpar[ 18 ], rawpar[ 19 ], rawpar[ 20 ], rawpar[ 21 ], rawpar[ 22 ], rawpar[ 23 ], rawpar[ 24 ], rawpar[ 25 ], rawpar[ 26 ], rawpar[ 27 ], rawpar[ 28 ], rawpar[ 29 ] ); break; \
+         case  1: ret.t._ret_ = ( ( _type_##P01 ) * pFunction )( rawpar[0] ); break; \
+         case  2: ret.t._ret_ = ( ( _type_##P02 ) * pFunction )( rawpar[0], rawpar[1] ); break; \
+         case  3: ret.t._ret_ = ( ( _type_##P03 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2] ); break; \
+         case  4: ret.t._ret_ = ( ( _type_##P04 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3] ); break; \
+         case  5: ret.t._ret_ = ( ( _type_##P05 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4] ); break; \
+         case  6: ret.t._ret_ = ( ( _type_##P06 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5] ); break; \
+         case  7: ret.t._ret_ = ( ( _type_##P07 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6] ); break; \
+         case  8: ret.t._ret_ = ( ( _type_##P08 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7] ); break; \
+         case  9: ret.t._ret_ = ( ( _type_##P09 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8] ); break; \
+         case 10: ret.t._ret_ = ( ( _type_##P10 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9] ); break; \
+         case 11: ret.t._ret_ = ( ( _type_##P11 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10] ); break; \
+         case 12: ret.t._ret_ = ( ( _type_##P12 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11] ); break; \
+         case 13: ret.t._ret_ = ( ( _type_##P13 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12] ); break; \
+         case 14: ret.t._ret_ = ( ( _type_##P14 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13] ); break; \
+         case 15: ret.t._ret_ = ( ( _type_##P15 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14] ); break; \
+         case 16: ret.t._ret_ = ( ( _type_##P16 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15] ); break; \
+         case 17: ret.t._ret_ = ( ( _type_##P17 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16] ); break; \
+         case 18: ret.t._ret_ = ( ( _type_##P18 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17] ); break; \
+         case 19: ret.t._ret_ = ( ( _type_##P19 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18] ); break; \
+         case 20: ret.t._ret_ = ( ( _type_##P20 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19] ); break; \
+         case 21: ret.t._ret_ = ( ( _type_##P21 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20] ); break; \
+         case 22: ret.t._ret_ = ( ( _type_##P22 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21] ); break; \
+         case 23: ret.t._ret_ = ( ( _type_##P23 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22] ); break; \
+         case 24: ret.t._ret_ = ( ( _type_##P24 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22], rawpar[23] ); break; \
+         case 25: ret.t._ret_ = ( ( _type_##P25 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22], rawpar[23], rawpar[24] ); break; \
+         case 26: ret.t._ret_ = ( ( _type_##P26 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22], rawpar[23], rawpar[24], rawpar[25] ); break; \
+         case 27: ret.t._ret_ = ( ( _type_##P27 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22], rawpar[23], rawpar[24], rawpar[25], rawpar[26] ); break; \
+         case 28: ret.t._ret_ = ( ( _type_##P28 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22], rawpar[23], rawpar[24], rawpar[25], rawpar[26], rawpar[27] ); break; \
+         case 29: ret.t._ret_ = ( ( _type_##P29 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22], rawpar[23], rawpar[24], rawpar[25], rawpar[26], rawpar[27], rawpar[28] ); break; \
+         case 30: ret.t._ret_ = ( ( _type_##P30 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22], rawpar[23], rawpar[24], rawpar[25], rawpar[26], rawpar[27], rawpar[28], rawpar[29] ); break; \
       } \
    } while(0)
 
@@ -952,7 +952,7 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
          HB_DYNARG * pArg;
          int tmp;
 
-         HB_U64 rawpar[ _DYNEXEC_MAXPARAM ];
+         HB_U64 rawpar[_DYNEXEC_MAXPARAM];
 
          ret.t.n64 = 0;
 
@@ -984,25 +984,25 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
 
             if( piArgFlags )
             {
-               pArg[ tmp ].iType     = piArgFlags[ tmp ] & _MASK_CTYPE;
-               pArg[ tmp ].iEncoding = piArgFlags[ tmp ] & _MASK_ENCODING;
-               pArg[ tmp ].iOptions  = piArgFlags[ tmp ] & _MASK_OPTIONS;
+               pArg[tmp].iType     = piArgFlags[tmp] & _MASK_CTYPE;
+               pArg[tmp].iEncoding = piArgFlags[tmp] & _MASK_ENCODING;
+               pArg[tmp].iOptions  = piArgFlags[tmp] & _MASK_OPTIONS;
             }
             else
             {
-               pArg[ tmp ].iType     = HB_DYN_CTYPE_DEFAULT;
-               pArg[ tmp ].iEncoding = iEncoding;
-               pArg[ tmp ].iOptions  = iOptions;
+               pArg[tmp].iType     = HB_DYN_CTYPE_DEFAULT;
+               pArg[tmp].iEncoding = iEncoding;
+               pArg[tmp].iOptions  = iOptions;
             }
 
-            if( pArg[ tmp ].iType == HB_DYN_CTYPE_DEFAULT )
+            if( pArg[tmp].iType == HB_DYN_CTYPE_DEFAULT )
             {
-               pArg[ tmp ].iType = hb_hbtoctype( HB_ITEM_TYPE( pParam ) );
+               pArg[tmp].iType = hb_hbtoctype( HB_ITEM_TYPE( pParam ) );
             }
 
-            pArg[ tmp ].bByRef = HB_ISBYREF( iFirst + tmp );
+            pArg[tmp].bByRef = HB_ISBYREF( iFirst + tmp );
 
-            rawpar[ tmp ] = hb_u64par( pParam, &pArg[ tmp ] );
+            rawpar[tmp] = hb_u64par( pParam, &pArg[tmp] );
          }
 
          switch( iRetTypeRaw )
@@ -1022,24 +1022,24 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
 
          for( tmp = 0; tmp < iParams; ++tmp )
          {
-            if( pArg[ tmp ].bByRef )
+            if( pArg[tmp].bByRef )
             {
                PHB_ITEM pItem = hb_itemNew(nullptr);
 
                hb_itemParamStoreForward(static_cast<HB_USHORT>(iFirst + tmp),
-                  hb_u64ret( pItem, pArg[ tmp ].iType, pArg[ tmp ].iEncoding, pArg[ tmp ].value,
-                     ( pArg[ tmp ].iOptions & HB_DYC_OPT_NULLTERM ) != 0 ? -1 : static_cast<HB_ISIZ>(hb_parclen(iFirst + tmp)) ));
+                  hb_u64ret( pItem, pArg[tmp].iType, pArg[tmp].iEncoding, pArg[tmp].value,
+                     ( pArg[tmp].iOptions & HB_DYC_OPT_NULLTERM ) != 0 ? -1 : static_cast<HB_ISIZ>(hb_parclen(iFirst + tmp)) ));
 
                hb_itemRelease(pItem);
             }
 
-            if( pArg[ tmp ].bRawBuffer )
+            if( pArg[tmp].bRawBuffer )
             {
-               hb_xfree(pArg[ tmp ].hString);
+               hb_xfree(pArg[tmp].hString);
             }
             else
             {
-               hb_strfree( pArg[ tmp ].hString );
+               hb_strfree( pArg[tmp].hString );
             }
          }
 
@@ -1070,7 +1070,7 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
          int tmp;
 
          int iParamsRaw = 0;
-         HB_U32 rawpar[ _DYNEXEC_MAXPARAM * 2 ];
+         HB_U32 rawpar[_DYNEXEC_MAXPARAM * 2];
 
 #if ! defined( HB_LONG_LONG_OFF )
          ret.t.n64 = 0;
@@ -1114,30 +1114,30 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
 
             if( piArgFlags )
             {
-               pArg[ tmp ].iType     = piArgFlags[ tmp ] & _MASK_CTYPE;
-               pArg[ tmp ].iEncoding = piArgFlags[ tmp ] & _MASK_ENCODING;
-               pArg[ tmp ].iOptions  = piArgFlags[ tmp ] & _MASK_OPTIONS;
+               pArg[tmp].iType     = piArgFlags[tmp] & _MASK_CTYPE;
+               pArg[tmp].iEncoding = piArgFlags[tmp] & _MASK_ENCODING;
+               pArg[tmp].iOptions  = piArgFlags[tmp] & _MASK_OPTIONS;
             }
             else
             {
-               pArg[ tmp ].iType     = HB_DYN_CTYPE_DEFAULT;
-               pArg[ tmp ].iEncoding = iEncoding;
-               pArg[ tmp ].iOptions  = iOptions;
+               pArg[tmp].iType     = HB_DYN_CTYPE_DEFAULT;
+               pArg[tmp].iEncoding = iEncoding;
+               pArg[tmp].iOptions  = iOptions;
             }
 
-            if( pArg[ tmp ].iType == HB_DYN_CTYPE_DEFAULT )
+            if( pArg[tmp].iType == HB_DYN_CTYPE_DEFAULT )
             {
-               pArg[ tmp ].iType = hb_hbtoctype( HB_ITEM_TYPE( pParam ) );
+               pArg[tmp].iType = hb_hbtoctype( HB_ITEM_TYPE( pParam ) );
             }
 
-            pArg[ tmp ].bByRef = HB_ISBYREF( iFirst + tmp );
+            pArg[tmp].bByRef = HB_ISBYREF( iFirst + tmp );
 
-            hb_u32par( pParam, &pArg[ tmp ], &r1, &r2, &b64 );
+            hb_u32par( pParam, &pArg[tmp], &r1, &r2, &b64 );
 
-            rawpar[ iParamsRaw++ ] = r1;
+            rawpar[iParamsRaw++] = r1;
             if( b64 )
             {
-               rawpar[ iParamsRaw++ ] = r2;
+               rawpar[iParamsRaw++] = r2;
             }
          }
 
@@ -1187,24 +1187,24 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
 
          for( tmp = 0; tmp < iParams; ++tmp )
          {
-            if( pArg[ tmp ].bByRef )
+            if( pArg[tmp].bByRef )
             {
                PHB_ITEM pItem = hb_itemNew(nullptr);
 
                hb_itemParamStoreForward(static_cast<HB_USHORT>(iFirst + tmp),
-                  hb_u32ret( pItem, pArg[ tmp ].iType, pArg[ tmp ].iEncoding, pArg[ tmp ].value,
-                     ( pArg[ tmp ].iOptions & HB_DYC_OPT_NULLTERM ) != 0 ? -1 : static_cast<HB_ISIZ>(hb_parclen(iFirst + tmp)) ));
+                  hb_u32ret( pItem, pArg[tmp].iType, pArg[tmp].iEncoding, pArg[tmp].value,
+                     ( pArg[tmp].iOptions & HB_DYC_OPT_NULLTERM ) != 0 ? -1 : static_cast<HB_ISIZ>(hb_parclen(iFirst + tmp)) ));
 
                hb_itemRelease(pItem);
             }
 
-            if( pArg[ tmp ].bRawBuffer )
+            if( pArg[tmp].bRawBuffer )
             {
-               hb_xfree(pArg[ tmp ].hString);
+               hb_xfree(pArg[tmp].hString);
             }
             else
             {
-               hb_strfree( pArg[ tmp ].hString );
+               hb_strfree( pArg[tmp].hString );
             }
          }
 

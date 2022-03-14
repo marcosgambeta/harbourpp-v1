@@ -302,7 +302,7 @@ void hb_dbfTransCheckCounters( LPDBTRANSINFO lpdbTransInfo )
       /* check if counters can be copied for all fields */
       for( uiCount = 0; uiCount < lpdbTransInfo->uiItemCount; ++uiCount )
       {
-         HB_USHORT uiField = lpdbTransInfo->lpTransItems[ uiCount ].uiDest;
+         HB_USHORT uiField = lpdbTransInfo->lpTransItems[uiCount].uiDest;
          LPFIELD pField = lpdbTransInfo->lpaDest->lpFields + uiField - 1;
 
          if( hb_dbfIsAutoIncField( pField ) != HB_AUTOINC_NONE )
@@ -311,7 +311,7 @@ void hb_dbfTransCheckCounters( LPDBTRANSINFO lpdbTransInfo )
             {
                pItem = hb_itemNew(nullptr);
             }
-            if( SELF_FIELDINFO( lpdbTransInfo->lpaSource, lpdbTransInfo->lpTransItems[ uiCount ].uiSource, DBS_COUNTER, pItem ) != HB_SUCCESS )
+            if( SELF_FIELDINFO( lpdbTransInfo->lpaSource, lpdbTransInfo->lpTransItems[uiCount].uiSource, DBS_COUNTER, pItem ) != HB_SUCCESS )
             {
                fCopyCtr = HB_FALSE;
                break;
@@ -332,17 +332,17 @@ void hb_dbfTransCheckCounters( LPDBTRANSINFO lpdbTransInfo )
    {
       for( uiCount = uiDest = 0; uiCount < lpdbTransInfo->uiItemCount; ++uiCount )
       {
-         HB_USHORT uiField = lpdbTransInfo->lpTransItems[ uiCount ].uiDest;
+         HB_USHORT uiField = lpdbTransInfo->lpTransItems[uiCount].uiDest;
          LPFIELD pField = lpdbTransInfo->lpaDest->lpFields + uiField - 1;
 
          if( hb_dbfIsAutoIncField( pField ) == HB_AUTOINC_NONE && pField->uiType != HB_FT_MODTIME )
          {
             if( uiDest != uiCount )
             {
-               lpdbTransInfo->lpTransItems[ uiDest ].uiSource =
-               lpdbTransInfo->lpTransItems[ uiCount ].uiSource;
-               lpdbTransInfo->lpTransItems[ uiDest ].uiDest =
-               lpdbTransInfo->lpTransItems[ uiCount ].uiDest;
+               lpdbTransInfo->lpTransItems[uiDest].uiSource =
+               lpdbTransInfo->lpTransItems[uiCount].uiSource;
+               lpdbTransInfo->lpTransItems[uiDest].uiDest =
+               lpdbTransInfo->lpTransItems[uiCount].uiDest;
             }
             ++uiDest;
          }
@@ -368,7 +368,7 @@ static void hb_dbfUpdateStampFields( DBFAREAP pArea )
       {
          case HB_FT_MODTIME:
          {
-            HB_BYTE * pPtr = pArea->pRecord + pArea->pFieldOffset[ uiCount ];
+            HB_BYTE * pPtr = pArea->pRecord + pArea->pFieldOffset[uiCount];
             if( !pArea->fTransRec || HB_GET_LE_UINT64( pPtr ) == 0 )
             {
                if( lJulian == 0 )
@@ -383,7 +383,7 @@ static void hb_dbfUpdateStampFields( DBFAREAP pArea )
          }
          case HB_FT_ROWVER:
          {
-            HB_BYTE * pPtr = pArea->pRecord + pArea->pFieldOffset[ uiCount ];
+            HB_BYTE * pPtr = pArea->pRecord + pArea->pFieldOffset[uiCount];
             if( !pArea->fTransRec || HB_GET_LE_UINT64( pPtr ) == 0 )
             {
                if( nRowVer == 0 )
@@ -556,13 +556,13 @@ static void hb_dbfSetBlankRecord( DBFAREAP pArea, int iType )
                HB_USHORT ui = uiLen;
                do
                {
-                  pPtr[ --ui ] = static_cast<HB_BYTE>(nValue) % 10 + '0';
+                  pPtr[--ui] = static_cast<HB_BYTE>(nValue) % 10 + '0';
                   nValue /= 10;
                }
                while( ui && nValue > 0 );
                while( ui )
                {
-                  pPtr[ --ui ] = ' ';
+                  pPtr[--ui] = ' ';
                }
             }
             pPtr += uiLen;
@@ -589,7 +589,7 @@ static void hb_dbfSetBlankRecord( DBFAREAP pArea, int iType )
       uiCount = pArea->uiNullCount & 0x07;
       if( uiCount )
       {
-         pArea->pRecord[ pArea->uiNullOffset + ( pArea->uiNullCount >> 3 ) ] = ( 1 << uiCount ) - 1;
+         pArea->pRecord[pArea->uiNullOffset + ( pArea->uiNullCount >> 3 )] = ( 1 << uiCount ) - 1;
       }
    }
 }
@@ -603,27 +603,27 @@ static void hb_dbfAllocNullFlag( DBFAREAP pArea, HB_USHORT uiField, HB_BOOL fLen
    }
    if( fLength )
    {
-      pArea->pFieldBits[ uiField ].uiLengthBit = pArea->uiNullCount++;
+      pArea->pFieldBits[uiField].uiLengthBit = pArea->uiNullCount++;
    }
    else
    {
-      pArea->pFieldBits[ uiField ].uiNullBit = pArea->uiNullCount++;
+      pArea->pFieldBits[uiField].uiNullBit = pArea->uiNullCount++;
    }
 }
 
 static HB_BOOL hb_dbfGetNullFlag( DBFAREAP pArea, HB_USHORT uiBit )
 {
-   return ( pArea->pRecord[ pArea->uiNullOffset + ( uiBit >> 3 ) ] & ( 1 << ( uiBit & 0x07 ) ) ) != 0;
+   return ( pArea->pRecord[pArea->uiNullOffset + ( uiBit >> 3 )] & ( 1 << ( uiBit & 0x07 ) ) ) != 0;
 }
 
 static void hb_dbfSetNullFlag( HB_BYTE * pRecord, HB_USHORT uiNullOffset, HB_USHORT uiBit )
 {
-   pRecord[ uiNullOffset + ( uiBit >> 3 ) ] |= 1 << ( uiBit & 0x07 );
+   pRecord[uiNullOffset + ( uiBit >> 3 )] |= 1 << ( uiBit & 0x07 );
 }
 
 static void hb_dbfClearNullFlag( HB_BYTE * pRecord, HB_USHORT uiNullOffset, HB_USHORT uiBit )
 {
-   pRecord[ uiNullOffset + ( uiBit >> 3 ) ] &= ~( 1 << ( uiBit & 0x07 ) );
+   pRecord[uiNullOffset + ( uiBit >> 3 )] &= ~( 1 << ( uiBit & 0x07 ) );
 }
 
 /*
@@ -766,7 +766,7 @@ static HB_BOOL hb_dbfReadRecord( DBFAREAP pArea )
 
    /* Set flags */
    pArea->fValidBuffer = pArea->fPositioned = HB_TRUE;
-   pArea->fDeleted = pArea->pRecord[ 0 ] == '*';
+   pArea->fDeleted = pArea->pRecord[0] == '*';
    return HB_TRUE;
 }
 
@@ -798,7 +798,7 @@ static HB_BOOL hb_dbfPasswordSet( DBFAREAP pArea, PHB_ITEM pPasswd, HB_BOOL fRaw
    HB_TRACE( HB_TR_DEBUG, ( "hb_dbfPasswordSet(%p,%p,%d)", static_cast<void*>(pArea), static_cast<void*>(pPasswd), fRaw ) );
 #endif
 
-   char pKeyBuffer[ 8 ];
+   char pKeyBuffer[8];
    HB_SIZE nLen;
    HB_BOOL fKeySet = HB_FALSE, fSet;
 
@@ -973,7 +973,7 @@ static HB_ERRCODE hb_dbfUnlockAllRecords( DBFAREAP pArea )
       errCode = SELF_GOCOLD( &pArea->area );
       for( HB_ULONG ulCount = 0; ulCount < pArea->ulNumLocksPos; ulCount++ )
       {
-         SELF_RAWLOCK( &pArea->area, REC_UNLOCK, pArea->pLocksPos[ ulCount ] );
+         SELF_RAWLOCK( &pArea->area, REC_UNLOCK, pArea->pLocksPos[ulCount] );
       }
       hb_xfree(pArea->pLocksPos);
       pArea->pLocksPos = nullptr;
@@ -995,7 +995,7 @@ static HB_ERRCODE hb_dbfUnlockRecord( DBFAREAP pArea, HB_ULONG ulRecNo )
    HB_ULONG ulCount;
 
    /* Search the locked record */
-   for( ulCount = 0; ulCount < pArea->ulNumLocksPos && pArea->pLocksPos[ ulCount ] != ulRecNo; ulCount++ )
+   for( ulCount = 0; ulCount < pArea->ulNumLocksPos && pArea->pLocksPos[ulCount] != ulRecNo; ulCount++ )
    {
    }
 
@@ -1056,7 +1056,7 @@ static HB_ERRCODE hb_dbfLockRecord( DBFAREAP pArea, HB_ULONG ulRecNo, HB_USHORT 
    {
       for( HB_ULONG ul = 0; ul < pArea->ulNumLocksPos; ul++ )
       {
-         if( pArea->pLocksPos[ ul ] == ulRecNo )
+         if( pArea->pLocksPos[ul] == ulRecNo )
          {
             *pResult = HB_TRUE;
             return HB_SUCCESS;
@@ -1074,7 +1074,7 @@ static HB_ERRCODE hb_dbfLockRecord( DBFAREAP pArea, HB_ULONG ulRecNo, HB_USHORT 
       {
          pArea->pLocksPos = static_cast<HB_ULONG*>(hb_xrealloc(pArea->pLocksPos, ( pArea->ulNumLocksPos + 1 ) * sizeof(HB_ULONG)));
       }
-      pArea->pLocksPos[ pArea->ulNumLocksPos++ ] = ulRecNo;
+      pArea->pLocksPos[pArea->ulNumLocksPos++] = ulRecNo;
       *pResult = HB_TRUE;
       if( ulRecNo == pArea->ulRecNo )
       {
@@ -1177,7 +1177,7 @@ static HB_BOOL hb_dbfIsLocked( DBFAREAP pArea, HB_ULONG ulRecNo )
    ulCount = pArea->ulNumLocksPos;
    while( ulCount > 0 )
    {
-      if( pArea->pLocksPos[ ulCount - 1 ] == ulRecNo )
+      if( pArea->pLocksPos[ulCount - 1] == ulRecNo )
       {
          return HB_TRUE;
       }
@@ -1199,7 +1199,7 @@ static void hb_dbfGetLockArray( DBFAREAP pArea, PHB_ITEM pItem )
    hb_arrayNew(pItem, pArea->ulNumLocksPos);
    for( HB_ULONG ulCount = 0; ulCount < pArea->ulNumLocksPos; ulCount++ )
    {
-      hb_arraySetNInt(pItem, ulCount + 1, pArea->pLocksPos[ ulCount ]);
+      hb_arraySetNInt(pItem, ulCount + 1, pArea->pLocksPos[ulCount]);
    }
 }
 
@@ -1276,15 +1276,15 @@ HB_ULONG hb_dbfGetMemoBlock( DBFAREAP pArea, HB_USHORT uiIndex )
 
    HB_ULONG ulBlock = 0;
 
-   if( pArea->area.lpFields[ uiIndex ].uiLen == 4 )
+   if( pArea->area.lpFields[uiIndex].uiLen == 4 )
    {
-      ulBlock = HB_GET_LE_UINT32( &pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ] );
+      ulBlock = HB_GET_LE_UINT32( &pArea->pRecord[pArea->pFieldOffset[uiIndex]] );
    }
    else
    {
       for( HB_USHORT uiCount = 0; uiCount < 10; uiCount++ )
       {
-         HB_BYTE bByte = pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] + uiCount ];
+         HB_BYTE bByte = pArea->pRecord[pArea->pFieldOffset[uiIndex] + uiCount];
          if( bByte >= '0' && bByte <= '9' )
          {
             ulBlock = ulBlock * 10 + ( bByte - '0' );
@@ -1306,9 +1306,9 @@ void hb_dbfPutMemoBlock( DBFAREAP pArea, HB_USHORT uiIndex, HB_ULONG ulBlock )
    HB_TRACE( HB_TR_DEBUG, ( "hb_dbfPutMemoBlock(%p, %hu, %lu)", static_cast<void*>(pArea), uiIndex, ulBlock ) );
 #endif
 
-   if( pArea->area.lpFields[ uiIndex ].uiLen == 4 )
+   if( pArea->area.lpFields[uiIndex].uiLen == 4 )
    {
-      HB_PUT_LE_UINT32( &pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ], ulBlock );
+      HB_PUT_LE_UINT32( &pArea->pRecord[pArea->pFieldOffset[uiIndex]], ulBlock );
    }
    else
    {
@@ -1316,12 +1316,12 @@ void hb_dbfPutMemoBlock( DBFAREAP pArea, HB_USHORT uiIndex, HB_ULONG ulBlock )
       {
          if( ulBlock > 0 )
          {
-            pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] + iCount ] = static_cast<HB_BYTE>(ulBlock % 10) + '0';
+            pArea->pRecord[pArea->pFieldOffset[uiIndex] + iCount] = static_cast<HB_BYTE>(ulBlock % 10) + '0';
             ulBlock /= 10;
          }
          else
          {
-            pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] + iCount ] = ' ';
+            pArea->pRecord[pArea->pFieldOffset[uiIndex] + iCount] = ' ';
          }
       }
    }
@@ -1341,26 +1341,26 @@ HB_ERRCODE hb_dbfGetMemoData( DBFAREAP pArea, HB_USHORT uiIndex, HB_ULONG * pulB
    *pulBlock = *pulSize = *pulType = 0;
 
    if( uiIndex >= pArea->area.uiFieldCount ||
-       ( pArea->area.lpFields[ uiIndex ].uiType != HB_FT_MEMO &&
-         pArea->area.lpFields[ uiIndex ].uiType != HB_FT_IMAGE &&
-         pArea->area.lpFields[ uiIndex ].uiType != HB_FT_BLOB &&
-         pArea->area.lpFields[ uiIndex ].uiType != HB_FT_OLE ) )
+       ( pArea->area.lpFields[uiIndex].uiType != HB_FT_MEMO &&
+         pArea->area.lpFields[uiIndex].uiType != HB_FT_IMAGE &&
+         pArea->area.lpFields[uiIndex].uiType != HB_FT_BLOB &&
+         pArea->area.lpFields[uiIndex].uiType != HB_FT_OLE ) )
    {
       return HB_FAILURE;
    }
 
-   if( pArea->area.lpFields[ uiIndex ].uiLen == 4 )
+   if( pArea->area.lpFields[uiIndex].uiLen == 4 )
    {
-      *pulBlock = HB_GET_LE_UINT32( &pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ] );
+      *pulBlock = HB_GET_LE_UINT32( &pArea->pRecord[pArea->pFieldOffset[uiIndex]] );
       return HB_SUCCESS;
    }
-   else if( pArea->area.lpFields[ uiIndex ].uiLen == 10 )
+   else if( pArea->area.lpFields[uiIndex].uiLen == 10 )
    {
       HB_ULONG ulValue;
 
       if( pArea->bMemoType == DB_MEMO_SMT )
       {
-         LPSMTFIELD pSMTFiled = reinterpret_cast<LPSMTFIELD>(&pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ]);
+         LPSMTFIELD pSMTFiled = reinterpret_cast<LPSMTFIELD>(&pArea->pRecord[pArea->pFieldOffset[uiIndex]]);
 
          ulValue = HB_GET_LE_UINT16( pSMTFiled->type );
          if( ulValue != 0x2020 )
@@ -1374,12 +1374,12 @@ HB_ERRCODE hb_dbfGetMemoData( DBFAREAP pArea, HB_USHORT uiIndex, HB_ULONG * pulB
        * check for NULL fields created by Access, they have Chr(0) set
        * in the whole memo block address, [druzus]
        */
-      else if( pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ] != 0 )
+      else if( pArea->pRecord[pArea->pFieldOffset[uiIndex]] != 0 )
       {
          ulValue = 0;
          for( HB_USHORT uiCount = 0; uiCount < 10; uiCount++ )
          {
-            HB_BYTE bByte = pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] + uiCount ];
+            HB_BYTE bByte = pArea->pRecord[pArea->pFieldOffset[uiIndex] + uiCount];
             if( bByte >= '0' && bByte <= '9' )
             {
                ulValue = ulValue * 10 + ( bByte - '0' );
@@ -1409,24 +1409,24 @@ HB_ERRCODE hb_dbfSetMemoData( DBFAREAP pArea, HB_USHORT uiIndex, HB_ULONG ulBloc
 #endif
 
    if( uiIndex >= pArea->area.uiFieldCount ||
-       ( pArea->area.lpFields[ uiIndex ].uiType != HB_FT_MEMO &&
-         pArea->area.lpFields[ uiIndex ].uiType != HB_FT_IMAGE &&
-         pArea->area.lpFields[ uiIndex ].uiType != HB_FT_BLOB &&
-         pArea->area.lpFields[ uiIndex ].uiType != HB_FT_OLE ) )
+       ( pArea->area.lpFields[uiIndex].uiType != HB_FT_MEMO &&
+         pArea->area.lpFields[uiIndex].uiType != HB_FT_IMAGE &&
+         pArea->area.lpFields[uiIndex].uiType != HB_FT_BLOB &&
+         pArea->area.lpFields[uiIndex].uiType != HB_FT_OLE ) )
    {
       return HB_FAILURE;
    }
 
-   if( pArea->area.lpFields[ uiIndex ].uiLen == 4 )
+   if( pArea->area.lpFields[uiIndex].uiLen == 4 )
    {
-      HB_PUT_LE_UINT32( &pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ], ulBlock );
+      HB_PUT_LE_UINT32( &pArea->pRecord[pArea->pFieldOffset[uiIndex]], ulBlock );
       return HB_SUCCESS;
    }
-   else if( pArea->area.lpFields[ uiIndex ].uiLen == 10 )
+   else if( pArea->area.lpFields[uiIndex].uiLen == 10 )
    {
       if( pArea->bMemoType == DB_MEMO_SMT )
       {
-         LPSMTFIELD pSMTFiled = reinterpret_cast<LPSMTFIELD>(&pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ]);
+         LPSMTFIELD pSMTFiled = reinterpret_cast<LPSMTFIELD>(&pArea->pRecord[pArea->pFieldOffset[uiIndex]]);
 
          HB_PUT_LE_UINT16( pSMTFiled->type,   ulType );
          HB_PUT_LE_UINT32( pSMTFiled->length, ulSize );
@@ -1438,12 +1438,12 @@ HB_ERRCODE hb_dbfSetMemoData( DBFAREAP pArea, HB_USHORT uiIndex, HB_ULONG ulBloc
          {
             if( ulBlock > 0 )
             {
-               pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] + iCount ] = static_cast<HB_BYTE>(ulBlock % 10) + '0';
+               pArea->pRecord[pArea->pFieldOffset[uiIndex] + iCount] = static_cast<HB_BYTE>(ulBlock % 10) + '0';
                ulBlock /= 10;
             }
             else
             {
-               pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] + iCount ] = ' ';
+               pArea->pRecord[pArea->pFieldOffset[uiIndex] + iCount] = ' ';
             }
          }
       }
@@ -2086,7 +2086,7 @@ static HB_ERRCODE hb_dbfAddField( DBFAREAP pArea, LPDBFIELDINFO pFieldInfo )
    }
 
    /* Update field offset */
-   pArea->pFieldOffset[ pArea->area.uiFieldCount ] = pArea->uiRecordLen;
+   pArea->pFieldOffset[pArea->area.uiFieldCount] = pArea->uiRecordLen;
    pArea->uiRecordLen += pFieldInfo->uiLen;
    if( ( pFieldInfo->uiFlags & HB_FF_UNICODE ) != 0 )
    {
@@ -2099,7 +2099,7 @@ static HB_ERRCODE hb_dbfAddField( DBFAREAP pArea, LPDBFIELDINFO pFieldInfo )
          pArea->uiRecordLen += pFieldInfo->uiLen + 2;
       }
    }
-   if( pArea->pFieldOffset[ pArea->area.uiFieldCount ] > pArea->uiRecordLen )
+   if( pArea->pFieldOffset[pArea->area.uiFieldCount] > pArea->uiRecordLen )
    {
       return HB_FAILURE;
    }
@@ -2249,7 +2249,7 @@ static HB_ERRCODE hb_dbfDeleteRec( DBFAREAP pArea )
       return HB_FAILURE;
    }
 
-   pArea->pRecord[ 0 ] = '*';
+   pArea->pRecord[0] = '*';
    pArea->fDeleted = HB_TRUE;
    return HB_SUCCESS;
 }
@@ -2343,10 +2343,10 @@ static HB_ERRCODE hb_dbfGetRec( DBFAREAP pArea, HB_BYTE ** pBuffer )
    }
    else
    {
-      if( pArea->pRecord[ 0 ] == 'D' || pArea->pRecord[ 0 ] == 'E' )
+      if( pArea->pRecord[0] == 'D' || pArea->pRecord[0] == 'E' )
       {
          pArea->fEncrypted = HB_TRUE;
-         pArea->pRecord[ 0 ] = pArea->pRecord[ 0 ] == 'D' ? '*' : ' ';
+         pArea->pRecord[0] = pArea->pRecord[0] == 'D' ? '*' : ' ';
          if( pArea->pCryptKey && pArea->bCryptType == DB_CRYPT_SIX )
          {
             hb_sxDeCrypt( reinterpret_cast<const char*>(pArea->pRecord) + 1, reinterpret_cast<char*>(pArea->pRecord) + 1, pArea->pCryptKey, pArea->uiRecordLen - 1 );
@@ -2403,17 +2403,17 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          if( ( pField->uiFlags & HB_FF_UNICODE ) != 0 )
          {
             hb_itemPutStrLenU16( pItem, HB_CDP_ENDIAN_LITTLE,
-                                 reinterpret_cast<const HB_WCHAR*>(&pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ]),
+                                 reinterpret_cast<const HB_WCHAR*>(&pArea->pRecord[pArea->pFieldOffset[uiIndex]]),
                                  nLen );
          }
          else if( ( pField->uiFlags & HB_FF_BINARY ) == 0 )
          {
-            pszVal = hb_cdpnDup( reinterpret_cast<const char*>(pArea->pRecord) + pArea->pFieldOffset[ uiIndex ], &nLen, pArea->area.cdPage, hb_vmCDP() );
+            pszVal = hb_cdpnDup( reinterpret_cast<const char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex], &nLen, pArea->area.cdPage, hb_vmCDP() );
             hb_itemPutCLPtr(pItem, pszVal, nLen);
          }
          else
          {
-            pszVal = reinterpret_cast<char*>(pArea->pRecord) + pArea->pFieldOffset[ uiIndex ];
+            pszVal = reinterpret_cast<char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex];
             hb_itemPutCL(pItem, pszVal, nLen);
          }
          break;
@@ -2422,18 +2422,18 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          nLen = pField->uiLen;
          if( ( pField->uiFlags & HB_FF_UNICODE ) != 0 )
          {
-            nLen = HB_GET_LE_UINT16( &pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] + ( nLen << 1 ) ] );
+            nLen = HB_GET_LE_UINT16( &pArea->pRecord[pArea->pFieldOffset[uiIndex] + ( nLen << 1 )] );
             if( nLen == 0xFFFF || nLen > static_cast<HB_SIZE>(pField->uiLen) ) /* protection against corrupted files */
             {
                nLen = 0;
             }
-            hb_itemPutStrLenU16( pItem, HB_CDP_ENDIAN_LITTLE, reinterpret_cast<const HB_WCHAR*>(&pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ]), nLen );
+            hb_itemPutStrLenU16( pItem, HB_CDP_ENDIAN_LITTLE, reinterpret_cast<const HB_WCHAR*>(&pArea->pRecord[pArea->pFieldOffset[uiIndex]]), nLen );
          }
          else
          {
-            if( hb_dbfGetNullFlag( pArea, pArea->pFieldBits[ uiIndex ].uiLengthBit ) )
+            if( hb_dbfGetNullFlag( pArea, pArea->pFieldBits[uiIndex].uiLengthBit ) )
             {
-               nLen = static_cast<HB_UCHAR>(pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] + nLen - 1 ]);
+               nLen = static_cast<HB_UCHAR>(pArea->pRecord[pArea->pFieldOffset[uiIndex] + nLen - 1]);
                /* protection against corrupted files */
                if( nLen > static_cast<HB_SIZE>(pField->uiLen) )
                {
@@ -2442,11 +2442,11 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             }
             if( ( pField->uiFlags & HB_FF_BINARY ) == 0 )
             {
-               pszVal = hb_cdpnDup( reinterpret_cast<const char*>(pArea->pRecord) + pArea->pFieldOffset[ uiIndex ], &nLen, pArea->area.cdPage, hb_vmCDP() );
+               pszVal = hb_cdpnDup( reinterpret_cast<const char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex], &nLen, pArea->area.cdPage, hb_vmCDP() );
             }
             else
             {
-               pszVal = reinterpret_cast<char*>(pArea->pRecord) + pArea->pFieldOffset[ uiIndex ];
+               pszVal = reinterpret_cast<char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex];
             }
 
             hb_itemPutCLPtr(pItem, pszVal, nLen);
@@ -2454,39 +2454,39 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          break;
 
       case HB_FT_LOGICAL:
-         hb_itemPutL(pItem, pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ] == 'T' ||
-                     pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ] == 't' ||
-                     pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ] == 'Y' ||
-                     pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ] == 'y');
+         hb_itemPutL(pItem, pArea->pRecord[pArea->pFieldOffset[uiIndex]] == 'T' ||
+                     pArea->pRecord[pArea->pFieldOffset[uiIndex]] == 't' ||
+                     pArea->pRecord[pArea->pFieldOffset[uiIndex]] == 'Y' ||
+                     pArea->pRecord[pArea->pFieldOffset[uiIndex]] == 'y');
          break;
 
       case HB_FT_DATE:
          if( pField->uiLen == 3 )
          {
-            hb_itemPutDL(pItem, HB_GET_LE_UINT24( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ));
+            hb_itemPutDL(pItem, HB_GET_LE_UINT24( pArea->pRecord + pArea->pFieldOffset[uiIndex] ));
          }
          else if( pField->uiLen == 4 )
          {
-            hb_itemPutDL(pItem, HB_GET_LE_UINT32( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ));
+            hb_itemPutDL(pItem, HB_GET_LE_UINT32( pArea->pRecord + pArea->pFieldOffset[uiIndex] ));
          }
          else
          {
-            hb_itemPutDS(pItem, reinterpret_cast<char*>(pArea->pRecord) + pArea->pFieldOffset[ uiIndex ]);
+            hb_itemPutDS(pItem, reinterpret_cast<char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex]);
          }
          break;
 
       case HB_FT_TIME:
          if( pField->uiLen == 4 )
          {
-            hb_itemPutTDT(pItem, 0, HB_GET_LE_INT32( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ));
+            hb_itemPutTDT(pItem, 0, HB_GET_LE_INT32( pArea->pRecord + pArea->pFieldOffset[uiIndex] ));
             break;
          }
          /* fallthrough */
 
       case HB_FT_MODTIME:
       case HB_FT_TIMESTAMP:
-         hb_itemPutTDT(pItem, HB_GET_LE_INT32( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ),
-                               HB_GET_LE_INT32( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] + 4 ));
+         hb_itemPutTDT(pItem, HB_GET_LE_INT32( pArea->pRecord + pArea->pFieldOffset[uiIndex] ),
+                               HB_GET_LE_INT32( pArea->pRecord + pArea->pFieldOffset[uiIndex] + 4 ));
          break;
 
       case HB_FT_INTEGER:
@@ -2500,23 +2500,23 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             switch( pField->uiLen )
             {
                case 1:
-                  dVal = ( HB_SCHAR ) pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ];
+                  dVal = ( HB_SCHAR ) pArea->pRecord[pArea->pFieldOffset[uiIndex]];
                   iLen = 4;
                   break;
                case 2:
-                  dVal = HB_GET_LE_INT16( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] );
+                  dVal = HB_GET_LE_INT16( pArea->pRecord + pArea->pFieldOffset[uiIndex] );
                   iLen = 6;
                   break;
                case 3:
-                  dVal = HB_GET_LE_INT24( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] );
+                  dVal = HB_GET_LE_INT24( pArea->pRecord + pArea->pFieldOffset[uiIndex] );
                   iLen = 10;
                   break;
                case 4:
-                  dVal = HB_GET_LE_INT32( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] );
+                  dVal = HB_GET_LE_INT32( pArea->pRecord + pArea->pFieldOffset[uiIndex] );
                   iLen = 10;
                   break;
                case 8:
-                  dVal = static_cast<double>(HB_GET_LE_INT64( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ));
+                  dVal = static_cast<double>(HB_GET_LE_INT64( pArea->pRecord + pArea->pFieldOffset[uiIndex] ));
                   iLen = 20;
                   break;
                default:
@@ -2532,22 +2532,22 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             switch( pField->uiLen )
             {
                case 1:
-                  hb_itemPutNILen(pItem, static_cast<HB_SCHAR>(pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ]), 4);
+                  hb_itemPutNILen(pItem, static_cast<HB_SCHAR>(pArea->pRecord[pArea->pFieldOffset[uiIndex]]), 4);
                   break;
                case 2:
-                  hb_itemPutNILen(pItem, static_cast<int>(HB_GET_LE_INT16( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] )), 6);
+                  hb_itemPutNILen(pItem, static_cast<int>(HB_GET_LE_INT16( pArea->pRecord + pArea->pFieldOffset[uiIndex] )), 6);
                   break;
                case 3:
-                  hb_itemPutNIntLen(pItem, static_cast<HB_MAXINT>(HB_GET_LE_INT24( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] )), 10);
+                  hb_itemPutNIntLen(pItem, static_cast<HB_MAXINT>(HB_GET_LE_INT24( pArea->pRecord + pArea->pFieldOffset[uiIndex] )), 10);
                   break;
                case 4:
-                  hb_itemPutNIntLen(pItem, static_cast<HB_MAXINT>(HB_GET_LE_INT32( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] )), 10);
+                  hb_itemPutNIntLen(pItem, static_cast<HB_MAXINT>(HB_GET_LE_INT32( pArea->pRecord + pArea->pFieldOffset[uiIndex] )), 10);
                   break;
                case 8:
 #ifndef HB_LONG_LONG_OFF
-                  hb_itemPutNIntLen(pItem, static_cast<HB_MAXINT>(HB_GET_LE_INT64( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] )), 20);
+                  hb_itemPutNIntLen(pItem, static_cast<HB_MAXINT>(HB_GET_LE_INT64( pArea->pRecord + pArea->pFieldOffset[uiIndex] )), 20);
 #else
-                  hb_itemPutNLen(pItem, static_cast<double>(HB_GET_LE_INT64( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] )), 20, 0);
+                  hb_itemPutNLen(pItem, static_cast<double>(HB_GET_LE_INT64( pArea->pRecord + pArea->pFieldOffset[uiIndex] )), 20, 0);
 #endif
                   break;
                default:
@@ -2559,7 +2559,7 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
 
       case HB_FT_DOUBLE:
       case HB_FT_CURDOUBLE:
-         hb_itemPutNDLen(pItem, HB_GET_LE_DOUBLE( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] ),
+         hb_itemPutNDLen(pItem, HB_GET_LE_DOUBLE( pArea->pRecord + pArea->pFieldOffset[uiIndex] ),
                           20 - ( pField->uiDec > 0 ? ( pField->uiDec + 1 ) : 0 ),
                           static_cast<int>(pField->uiDec));
          break;
@@ -2580,7 +2580,7 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             break;
          }
 #endif
-         fDbl = hb_strnToNum( reinterpret_cast<const char*>(pArea->pRecord) + pArea->pFieldOffset[ uiIndex ], pField->uiLen, &lVal, &dVal );
+         fDbl = hb_strnToNum( reinterpret_cast<const char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex], pField->uiLen, &lVal, &dVal );
 
          if( pField->uiDec )
          {
@@ -2599,23 +2599,23 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          break;
       }
       case HB_FT_FLOAT:
-         pszVal = reinterpret_cast<char*>(pArea->pRecord) + pArea->pFieldOffset[ uiIndex ];
+         pszVal = reinterpret_cast<char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex];
          dVal = hb_strVal( pszVal, pField->uiLen );
          nLen = pField->uiLen;
-         while( --nLen && HB_ISDIGIT( pszVal[ nLen ] ) )
+         while( --nLen && HB_ISDIGIT(pszVal[nLen]) )
          {
             ;
          }
-         if( nLen && ( pszVal[ nLen ] == '+' || pszVal[ nLen ] == '-' ) && ( pszVal[ nLen - 1 ] == 'e' || pszVal[ nLen - 1 ] == 'E' ) )
+         if( nLen && ( pszVal[nLen] == '+' || pszVal[nLen] == '-' ) && ( pszVal[nLen - 1] == 'e' || pszVal[nLen - 1] == 'E' ) )
          {
             HB_USHORT uiLen = static_cast<HB_USHORT>(nLen);
             int iExp = 0;
 
             while( ++uiLen < pField->uiLen )
             {
-               iExp = iExp * 10 + ( pszVal[ uiLen ] - '0' );
+               iExp = iExp * 10 + ( pszVal[uiLen] - '0' );
             }
-            if( pszVal[ nLen ] == '-' )
+            if( pszVal[nLen] == '-' )
             {
                iExp = -iExp;
             }
@@ -2627,11 +2627,11 @@ static HB_ERRCODE hb_dbfGetValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
       case HB_FT_ANY:
          if( pField->uiLen == 3 )
          {
-            hb_itemPutDL(pItem, hb_sxPtoD( reinterpret_cast<char*>(pArea->pRecord) + pArea->pFieldOffset[ uiIndex ] ));
+            hb_itemPutDL(pItem, hb_sxPtoD( reinterpret_cast<char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex] ));
          }
          else if( pField->uiLen == 4 )
          {
-            hb_itemPutNIntLen(pItem, static_cast<HB_MAXINT>(HB_GET_LE_INT32( pArea->pRecord + pArea->pFieldOffset[ uiIndex ] )), 10);
+            hb_itemPutNIntLen(pItem, static_cast<HB_MAXINT>(HB_GET_LE_INT32( pArea->pRecord + pArea->pFieldOffset[uiIndex] )), 10);
          }
          else
          {
@@ -2678,7 +2678,7 @@ static HB_ERRCODE hb_dbfGetVarLen( DBFAREAP pArea, HB_USHORT uiIndex, HB_SIZE * 
    HB_TRACE( HB_TR_DEBUG, ( "hb_dbfGetVarLen(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pLength) ) );
 #endif
 
-   *pLength = pArea->area.lpFields[ uiIndex - 1 ].uiLen;
+   *pLength = pArea->area.lpFields[uiIndex - 1].uiLen;
 
    return HB_SUCCESS;
 }
@@ -2794,18 +2794,18 @@ static HB_ERRCODE hb_dbfPutRec( DBFAREAP pArea, const HB_BYTE * pBuffer )
       /*
        * TODO: such operation should be forbidden
        * maybe it will be good to return HB_FAILURE when
-       *    pArea->pRecord[ 0 ] != '*' && pArea->pRecord[ 0 ] != ' '
+       *    pArea->pRecord[0] != '*' && pArea->pRecord[0] != ' '
        */
-      if( pArea->pRecord[ 0 ] == 'D' || pArea->pRecord[ 0 ] == 'E' )
+      if( pArea->pRecord[0] == 'D' || pArea->pRecord[0] == 'E' )
       {
          if( ! pArea->fHasMemo )
          {
             pArea->fEncrypted = HB_TRUE;
          }
-         pArea->pRecord[ 0 ] = pArea->pRecord[ 0 ] == 'D' ? '*' : ' ';
+         pArea->pRecord[0] = pArea->pRecord[0] == 'D' ? '*' : ' ';
       }
 
-      pArea->fDeleted = pArea->pRecord[ 0 ] == '*';
+      pArea->fDeleted = pArea->pRecord[0] == '*';
    }
    else /* if( pArea->fRecordChanged ) */
    {
@@ -2823,7 +2823,7 @@ static HB_ERRCODE hb_dbfPutRec( DBFAREAP pArea, const HB_BYTE * pBuffer )
          if( pArea->bCryptType == DB_CRYPT_SIX && pArea->fEncrypted )
          {
             pRecord = static_cast<HB_BYTE*>(hb_xgrab(pArea->uiRecordLen));
-            pRecord[ 0 ] = pArea->fDeleted ? 'D' : 'E';
+            pRecord[0] = pArea->fDeleted ? 'D' : 'E';
             hb_sxEnCrypt( reinterpret_cast<const char*>(pArea->pRecord) + 1, reinterpret_cast<char*>(pRecord) + 1, pArea->pCryptKey, pArea->uiRecordLen - 1 );
          }
       }
@@ -2862,7 +2862,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
     * but Clipper allows to create longer fields so I removed this
     * limit [druzus]
     */
-   char szBuffer[ 256 ];
+   char szBuffer[256];
    const char * pszPtr;
    HB_SIZE nSize, nLen;
    HB_BYTE * ptr;
@@ -2924,11 +2924,11 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          {
             if( ( pField->uiFlags & HB_FF_UNICODE ) != 0 )
             {
-               HB_WCHAR * pwBuffer = reinterpret_cast<HB_WCHAR*>(&pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ]);
+               HB_WCHAR * pwBuffer = reinterpret_cast<HB_WCHAR*>(&pArea->pRecord[pArea->pFieldOffset[uiIndex]]);
                nLen = hb_itemCopyStrU16( pItem, HB_CDP_ENDIAN_LITTLE, pwBuffer, nLen );
                while( nLen < static_cast<HB_SIZE>(pField->uiLen) )
                {
-                  HB_PUT_LE_UINT16( &pwBuffer[ nLen ], ' ' );
+                  HB_PUT_LE_UINT16( &pwBuffer[nLen], ' ' );
                   ++nLen;
                }
             }
@@ -2939,7 +2939,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
                if( ( pField->uiFlags & HB_FF_BINARY ) == 0 )
                {
                   hb_cdpnDup2( pszPtr, nSize,
-                               reinterpret_cast<char*>(pArea->pRecord) + pArea->pFieldOffset[ uiIndex ],
+                               reinterpret_cast<char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex],
                                &nLen, hb_vmCDP(), pArea->area.cdPage );
                }
                else
@@ -2948,11 +2948,11 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
                   {
                      nLen = nSize;
                   }
-                  memcpy(pArea->pRecord + pArea->pFieldOffset[ uiIndex ], hb_itemGetCPtr(pItem), nLen);
+                  memcpy(pArea->pRecord + pArea->pFieldOffset[uiIndex], hb_itemGetCPtr(pItem), nLen);
                }
                if( nLen < static_cast<HB_SIZE>(pField->uiLen) )
                {
-                  memset(pArea->pRecord + pArea->pFieldOffset[ uiIndex ] + nLen, ' ', pField->uiLen - nLen);
+                  memset(pArea->pRecord + pArea->pFieldOffset[uiIndex] + nLen, ' ', pField->uiLen - nLen);
                }
             }
          }
@@ -2960,9 +2960,9 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          {
             if( ( pField->uiFlags & HB_FF_UNICODE ) != 0 )
             {
-               HB_WCHAR * pwBuffer = reinterpret_cast<HB_WCHAR*>(&pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ]);
+               HB_WCHAR * pwBuffer = reinterpret_cast<HB_WCHAR*>(&pArea->pRecord[pArea->pFieldOffset[uiIndex]]);
                nLen = hb_itemCopyStrU16( pItem, HB_CDP_ENDIAN_LITTLE, pwBuffer, nLen );
-               HB_PUT_LE_UINT16( &pwBuffer[ pField->uiLen ], nLen );
+               HB_PUT_LE_UINT16( &pwBuffer[pField->uiLen], nLen );
             }
             else
             {
@@ -2983,16 +2983,16 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
                      nLen = nSize;
                   }
                }
-               memcpy(pArea->pRecord + pArea->pFieldOffset[ uiIndex ], pszPtr, nLen);
+               memcpy(pArea->pRecord + pArea->pFieldOffset[uiIndex], pszPtr, nLen);
 
                if( nLen < static_cast<HB_SIZE>(pField->uiLen) )
                {
-                  pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] + pField->uiLen - 1 ] = static_cast<HB_BYTE>(nLen);
-                  hb_dbfSetNullFlag( pArea->pRecord, pArea->uiNullOffset, pArea->pFieldBits[ uiIndex ].uiLengthBit );
+                  pArea->pRecord[pArea->pFieldOffset[uiIndex] + pField->uiLen - 1] = static_cast<HB_BYTE>(nLen);
+                  hb_dbfSetNullFlag( pArea->pRecord, pArea->uiNullOffset, pArea->pFieldBits[uiIndex].uiLengthBit );
                }
                else
                {
-                  hb_dbfClearNullFlag( pArea->pRecord, pArea->uiNullOffset, pArea->pFieldBits[ uiIndex ].uiLengthBit );
+                  hb_dbfClearNullFlag( pArea->pRecord, pArea->uiNullOffset, pArea->pFieldBits[uiIndex].uiLengthBit );
                }
             }
          }
@@ -3007,16 +3007,16 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          {
             if( pField->uiLen == 3 )
             {
-               HB_PUT_LE_UINT24( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], hb_itemGetDL(pItem) );
+               HB_PUT_LE_UINT24( pArea->pRecord + pArea->pFieldOffset[uiIndex], hb_itemGetDL(pItem) );
             }
             else if( pField->uiLen == 4 )
             {
-               HB_PUT_LE_UINT32( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], hb_itemGetDL(pItem) );
+               HB_PUT_LE_UINT32( pArea->pRecord + pArea->pFieldOffset[uiIndex], hb_itemGetDL(pItem) );
             }
             else
             {
                hb_itemGetDS(pItem, szBuffer);
-               memcpy(pArea->pRecord + pArea->pFieldOffset[ uiIndex ], szBuffer, 8);
+               memcpy(pArea->pRecord + pArea->pFieldOffset[uiIndex], szBuffer, 8);
             }
          }
          else if( pField->uiType == HB_FT_TIMESTAMP ||
@@ -3026,7 +3026,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             long lDate, lTime;
 
             hb_itemGetTDT(pItem, &lDate, &lTime);
-            ptr = pArea->pRecord + pArea->pFieldOffset[ uiIndex ];
+            ptr = pArea->pRecord + pArea->pFieldOffset[uiIndex];
             if( pField->uiType != HB_FT_TIME )
             {
                HB_PUT_LE_UINT32( ptr, lDate );
@@ -3036,7 +3036,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          }
          else if( pField->uiType == HB_FT_ANY && pField->uiLen == 3 )
          {
-            hb_sxDtoP( reinterpret_cast<char*>(pArea->pRecord) + pArea->pFieldOffset[ uiIndex ], hb_itemGetDL(pItem) );
+            hb_sxDtoP( reinterpret_cast<char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex], hb_itemGetDL(pItem) );
          }
          else
          {
@@ -3049,12 +3049,12 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          {
             if( hb_itemStrBuf(szBuffer, pItem, pField->uiLen, pField->uiDec) )
             {
-               memcpy(pArea->pRecord + pArea->pFieldOffset[ uiIndex ], szBuffer, pField->uiLen);
+               memcpy(pArea->pRecord + pArea->pFieldOffset[uiIndex], szBuffer, pField->uiLen);
             }
             else
             {
                errCode = EDBF_DATAWIDTH;
-               memset(pArea->pRecord + pArea->pFieldOffset[ uiIndex ], '*', pField->uiLen);
+               memset(pArea->pRecord + pArea->pFieldOffset[uiIndex], '*', pField->uiLen);
             }
          }
          else if( pField->uiType == HB_FT_INTEGER || ( pArea->fTransRec && ( pField->uiType == HB_FT_AUTOINC || pField->uiType == HB_FT_ROWVER ) ) )
@@ -3113,22 +3113,22 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
                switch( pField->uiLen )
                {
                   case 1:
-                     pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ] = static_cast<signed char>(lVal);
+                     pArea->pRecord[pArea->pFieldOffset[uiIndex]] = static_cast<signed char>(lVal);
                      break;
                   case 2:
-                     HB_PUT_LE_UINT16( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], static_cast<HB_U16>(lVal) );
+                     HB_PUT_LE_UINT16( pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U16>(lVal) );
                      break;
                   case 3:
-                     HB_PUT_LE_UINT24( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], static_cast<HB_U32>(lVal) );
+                     HB_PUT_LE_UINT24( pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U32>(lVal) );
                      break;
                   case 4:
-                     HB_PUT_LE_UINT32( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], static_cast<HB_U32>(lVal) );
+                     HB_PUT_LE_UINT32( pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U32>(lVal) );
                      break;
                   case 8:
 #ifndef HB_LONG_LONG_OFF
-                     HB_PUT_LE_UINT64( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], static_cast<HB_U64>(lVal) );
+                     HB_PUT_LE_UINT64( pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U64>(lVal) );
 #else
-                     HB_PUT_LE_UINT64( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], dVal );
+                     HB_PUT_LE_UINT64( pArea->pRecord + pArea->pFieldOffset[uiIndex], dVal );
 #endif
                      break;
                   default:
@@ -3139,14 +3139,14 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          }
          else if( pField->uiType == HB_FT_DOUBLE )
          {
-            HB_PUT_LE_DOUBLE( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], hb_itemGetND(pItem) );
+            HB_PUT_LE_DOUBLE( pArea->pRecord + pArea->pFieldOffset[uiIndex], hb_itemGetND(pItem) );
          }
          else if( pField->uiType == HB_FT_ANY && pField->uiLen == 4 )
          {
             HB_MAXINT lVal = hb_itemGetNInt(pItem);
             if( HB_IS_DOUBLE(pItem) ? HB_DBL_LIM_INT32( hb_itemGetND(pItem) ) : HB_LIM_INT32(lVal) )
             {
-               HB_PUT_LE_UINT32( pArea->pRecord + pArea->pFieldOffset[ uiIndex ], static_cast<HB_U32>(lVal) );
+               HB_PUT_LE_UINT32( pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U32>(lVal) );
             }
             else
             {
@@ -3162,7 +3162,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
       {
          if( pField->uiType == HB_FT_LOGICAL )
          {
-            pArea->pRecord[ pArea->pFieldOffset[ uiIndex ] ] = hb_itemGetL(pItem) ? 'T' : 'F';
+            pArea->pRecord[pArea->pFieldOffset[uiIndex]] = hb_itemGetL(pItem) ? 'T' : 'F';
          }
          else
          {
@@ -3191,7 +3191,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
    }
    else if( ( pField->uiFlags & HB_FF_NULLABLE ) != 0 )
    {
-      hb_dbfClearNullFlag( pArea->pRecord, pArea->uiNullOffset, pArea->pFieldBits[ uiIndex ].uiNullBit );
+      hb_dbfClearNullFlag( pArea->pRecord, pArea->uiNullOffset, pArea->pFieldBits[uiIndex].uiNullBit );
    }
 
    return HB_SUCCESS;
@@ -3239,7 +3239,7 @@ static HB_ERRCODE hb_dbfRecall( DBFAREAP pArea )
       return HB_FAILURE;
    }
 
-   pArea->pRecord[ 0 ] = ' ';
+   pArea->pRecord[0] = ' ';
    pArea->fDeleted = HB_FALSE;
    return HB_SUCCESS;
 }
@@ -3478,7 +3478,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
    HB_BYTE * pBuffer;
    PHB_FNAME pFileName;
    PHB_ITEM pItem = nullptr, pError;
-   char szFileName[ HB_PATH_MAX ];
+   char szFileName[HB_PATH_MAX];
 
    pArea->lpdbOpenInfo = pCreateInfo;
 
@@ -3606,7 +3606,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
    {
       LPFIELD pField = pArea->area.lpFields + uiCount;
       hb_strncpy(reinterpret_cast<char*>(pThisField->bName), hb_dynsymName(static_cast<PHB_DYNS>(pField->sym)), sizeof(pThisField->bName) - 1);
-      pArea->pFieldOffset[ uiCount ] = pArea->uiRecordLen;
+      pArea->pFieldOffset[uiCount] = pArea->uiRecordLen;
       /* field offset */
       if( pArea->bTableType == DB_DBF_VFP )
       {
@@ -3865,7 +3865,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
             errSubCode = EDBF_DATATYPE;
       }
 
-      if( pArea->pFieldOffset[ uiCount ] > pArea->uiRecordLen )
+      if( pArea->pFieldOffset[uiCount] > pArea->uiRecordLen )
       {
          errSubCode = EDBF_DATAWIDTH;
       }
@@ -3911,7 +3911,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
    }
 
    /* set end of fields marker */
-   pThisField->bName[ 0 ] = '\r';
+   pThisField->bName[0] = '\r';
 
    pArea->fShared = HB_FALSE;    /* pCreateInfo->fShared */
    pArea->fReadonly = HB_FALSE;  /* pCreateInfo->fReadonly */
@@ -3974,7 +3974,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
       }
 
       /* Write fields and eof mark */
-      pBuffer[ nSize ] = '\032';
+      pBuffer[nSize] = '\032';
       if( hb_fileWriteAt( pArea->pDataFile, pBuffer, nSize + 1, sizeof(DBFHEADER) ) != nSize + 1 )
       {
          hb_xfree(pBuffer);
@@ -4291,7 +4291,7 @@ static HB_ERRCODE hb_dbfInfo( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
       case DBI_DB_VERSION:
       case DBI_RDD_VERSION:
       {
-         char szBuf[ 64 ];
+         char szBuf[64];
          int iSub = hb_itemGetNI(pItem);
 
          if( iSub == 1 )
@@ -4339,7 +4339,7 @@ static HB_ERRCODE hb_dbfFieldInfo( DBFAREAP pArea, HB_USHORT uiIndex, HB_USHORT 
    {
       case DBS_ISNULL:
          pField = pArea->area.lpFields + uiIndex - 1;
-         hb_itemPutL(pItem, ( pField->uiFlags & HB_FF_NULLABLE ) != 0 && hb_dbfGetNullFlag( pArea, pArea->pFieldBits[ uiIndex - 1 ].uiNullBit ));
+         hb_itemPutL(pItem, ( pField->uiFlags & HB_FF_NULLABLE ) != 0 && hb_dbfGetNullFlag( pArea, pArea->pFieldBits[uiIndex - 1].uiNullBit ));
          return HB_SUCCESS;
       case DBS_COUNTER:
          if( hb_dbfIsAutoIncField( pArea->area.lpFields + uiIndex - 1 ) != HB_AUTOINC_NONE )
@@ -4522,10 +4522,10 @@ static HB_ERRCODE hb_dbfRecInfo( DBFAREAP pArea, PHB_ITEM pRecID, HB_USHORT uiIn
          {
             for( HB_USHORT uiFields = 0; uiFields < pArea->area.uiFieldCount; uiFields++ )
             {
-               if( pArea->area.lpFields[ uiFields ].uiType == HB_FT_MEMO ||
-                   pArea->area.lpFields[ uiFields ].uiType == HB_FT_IMAGE ||
-                   pArea->area.lpFields[ uiFields ].uiType == HB_FT_BLOB ||
-                   pArea->area.lpFields[ uiFields ].uiType == HB_FT_OLE )
+               if( pArea->area.lpFields[uiFields].uiType == HB_FT_MEMO ||
+                   pArea->area.lpFields[uiFields].uiType == HB_FT_IMAGE ||
+                   pArea->area.lpFields[uiFields].uiType == HB_FT_BLOB ||
+                   pArea->area.lpFields[uiFields].uiType == HB_FT_OLE )
                {
                   HB_SIZE nLen;
                   errResult = SELF_GETVALUE( &pArea->area, uiFields + 1, pInfo );
@@ -4620,8 +4620,8 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
    HB_BYTE * pBuffer;
    LPDBFFIELD pField;
    DBFIELDINFO dbFieldInfo;
-   char szFileName[ HB_PATH_MAX ];
-   char szAlias[ HB_RDD_MAX_ALIAS_LEN + 1 ];
+   char szFileName[HB_PATH_MAX];
+   char szAlias[HB_RDD_MAX_ALIAS_LEN + 1];
 
    pArea->lpdbOpenInfo = pOpenInfo;
 
@@ -4881,7 +4881,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
                          ( pField->bLen - ( pField->bDec ? pField->bDec + 1 : 0 ) > 9 ?
                            HB_GET_LE_UINT32( pField->bCounter ) != 0 :
                            ( ( uiCount > 0 && HB_GET_LE_UINT32( pField->bReserved2 ) != 0 ) ||
-                             HB_GET_LE_UINT32( &pField->bReserved2[ 4 ] ) != 0 ) ) )
+                             HB_GET_LE_UINT32( &pField->bReserved2[4] ) != 0 ) ) )
                      {
                         uiFlags = 0;
                      }
@@ -4893,7 +4893,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
                case 'V':
                   if( HB_GET_LE_UINT32( pField->bReserved1 ) != 0 ||
                       ( uiCount > 0 && HB_GET_LE_UINT32( pField->bReserved2 ) != 0 ) ||
-                      HB_GET_LE_UINT32( &pField->bReserved2[ 4 ] ) != 0 ||
+                      HB_GET_LE_UINT32( &pField->bReserved2[4] ) != 0 ||
                       HB_GET_LE_UINT32( pField->bCounter ) != 0 ||
                       pField->bStep != 0 ||
                       ( pField->bFieldFlags & ~( HB_FF_NULLABLE | HB_FF_BINARY ) ) != 0 )
@@ -4906,7 +4906,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
             }
          }
 
-         if( pField->bName[ 0 ] == 0x0d )
+         if( pField->bName[0] == 0x0d )
          {
             uiFields = uiCount;
             break;
@@ -4947,7 +4947,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
    for( uiCount = 0; uiCount < uiFields + uiSkip; uiCount++ )
    {
       pField = reinterpret_cast<LPDBFFIELD>(pBuffer + uiCount * sizeof(DBFFIELD));
-      pField->bName[ 10 ] = '\0';
+      pField->bName[10] = '\0';
       #if 0
       hb_strupp( static_cast<char*>(pField->bName) );
       #endif
@@ -5578,14 +5578,14 @@ static HB_ERRCODE hb_dbfSortInit( LPDBSORTREC pSortRec, LPDBSORTINFO pSortInfo )
 
    for( uiCount = uiDest = 0; uiCount < pSortInfo->uiItemCount; ++uiCount )
    {
-      LPFIELD pField = pSortInfo->dbtri.lpaSource->lpFields + pSortInfo->lpdbsItem[ uiCount ].uiField - 1;
+      LPFIELD pField = pSortInfo->dbtri.lpaSource->lpFields + pSortInfo->lpdbsItem[uiCount].uiField - 1;
 
       switch( pField->uiType )
       {
          case HB_FT_ANY:
             if( pField->uiLen == 4 )
             {
-               pSortInfo->lpdbsItem[ uiCount ].uiFlags |= SF_LONG;
+               pSortInfo->lpdbsItem[uiCount].uiFlags |= SF_LONG;
                break;
             }
             if( pField->uiLen == 3 )
@@ -5597,26 +5597,26 @@ static HB_ERRCODE hb_dbfSortInit( LPDBSORTREC pSortRec, LPDBSORTINFO pSortInfo )
          case HB_FT_IMAGE:
          case HB_FT_BLOB:
          case HB_FT_OLE:
-            pSortInfo->lpdbsItem[ uiCount ].uiField = 0;
+            pSortInfo->lpdbsItem[uiCount].uiField = 0;
             break;
 
          case HB_FT_INTEGER:
          case HB_FT_CURRENCY:
          case HB_FT_AUTOINC:
          case HB_FT_ROWVER:
-            pSortInfo->lpdbsItem[ uiCount ].uiFlags |= pField->uiDec == 0 ? SF_LONG : SF_DOUBLE;
+            pSortInfo->lpdbsItem[uiCount].uiFlags |= pField->uiDec == 0 ? SF_LONG : SF_DOUBLE;
             break;
          case HB_FT_LONG:
             if( pField->uiDec == 0 && pField->uiLen < 19 )
             {
-               pSortInfo->lpdbsItem[ uiCount ].uiFlags |= SF_LONG;
+               pSortInfo->lpdbsItem[uiCount].uiFlags |= SF_LONG;
                break;
             }
             /* fallthrough */
          case HB_FT_FLOAT:
          case HB_FT_DOUBLE:
          case HB_FT_CURDOUBLE:
-            pSortInfo->lpdbsItem[ uiCount ].uiFlags |= SF_DOUBLE;
+            pSortInfo->lpdbsItem[uiCount].uiFlags |= SF_DOUBLE;
             break;
 
          case HB_FT_STRING:
@@ -5631,7 +5631,7 @@ static HB_ERRCODE hb_dbfSortInit( LPDBSORTREC pSortRec, LPDBSORTINFO pSortInfo )
             break;
 
          default:
-            pSortInfo->lpdbsItem[ uiCount ].uiField = 0;
+            pSortInfo->lpdbsItem[uiCount].uiField = 0;
             break;
       }
       switch( pField->uiType )
@@ -5640,14 +5640,14 @@ static HB_ERRCODE hb_dbfSortInit( LPDBSORTREC pSortRec, LPDBSORTINFO pSortInfo )
          case HB_FT_VARLENGTH:
             break;
          default:
-            pSortInfo->lpdbsItem[ uiCount ].uiFlags &= ~SF_CASE;
+            pSortInfo->lpdbsItem[uiCount].uiFlags &= ~SF_CASE;
       }
-      if( pSortInfo->lpdbsItem[ uiCount ].uiField != 0 )
+      if( pSortInfo->lpdbsItem[uiCount].uiField != 0 )
       {
          if( uiCount != uiDest )
          {
-            pSortInfo->lpdbsItem[ uiDest ].uiField = pSortInfo->lpdbsItem[ uiCount ].uiField;
-            pSortInfo->lpdbsItem[ uiDest ].uiFlags = pSortInfo->lpdbsItem[ uiCount ].uiFlags;
+            pSortInfo->lpdbsItem[uiDest].uiField = pSortInfo->lpdbsItem[uiCount].uiField;
+            pSortInfo->lpdbsItem[uiDest].uiFlags = pSortInfo->lpdbsItem[uiCount].uiFlags;
          }
          ++uiDest;
       }
@@ -5699,7 +5699,7 @@ static int hb_dbfSortCmp( LPDBSORTREC pSortRec, PHB_ITEM pValue1, PHB_ITEM pValu
 {
    for( HB_USHORT uiCount = 0; uiCount < pSortRec->pSortInfo->uiItemCount; ++uiCount )
    {
-      HB_USHORT uiFlags = pSortRec->pSortInfo->lpdbsItem[ uiCount ].uiFlags;
+      HB_USHORT uiFlags = pSortRec->pSortInfo->lpdbsItem[uiCount].uiFlags;
       PHB_ITEM pItem1 = hb_arrayGetItemPtr(pValue1, uiCount + 1);
       PHB_ITEM pItem2 = hb_arrayGetItemPtr(pValue2, uiCount + 1);
       int i = 0;
@@ -5765,11 +5765,11 @@ static HB_BOOL hb_dbfSortQSort( LPDBSORTREC pSortRec, HB_SORTIDX * pSrc, HB_SORT
 
       n1 = nKeys >> 1;
       n2 = nKeys - n1;
-      pPtr1 = &pSrc[ 0 ];
-      pPtr2 = &pSrc[ n1 ];
+      pPtr1 = &pSrc[0];
+      pPtr2 = &pSrc[n1];
 
-      f1 = hb_dbfSortQSort( pSortRec, pPtr1, &pBuf[ 0 ], n1 );
-      f2 = hb_dbfSortQSort( pSortRec, pPtr2, &pBuf[ n1 ], n2 );
+      f1 = hb_dbfSortQSort( pSortRec, pPtr1, &pBuf[0], n1 );
+      f2 = hb_dbfSortQSort( pSortRec, pPtr2, &pBuf[n1], n2 );
       if( f1 )
       {
          pDst = pBuf;
@@ -5777,11 +5777,11 @@ static HB_BOOL hb_dbfSortQSort( LPDBSORTREC pSortRec, HB_SORTIDX * pSrc, HB_SORT
       else
       {
          pDst = pSrc;
-         pPtr1 = &pBuf[ 0 ];
+         pPtr1 = &pBuf[0];
       }
       if( ! f2 )
       {
-         pPtr2 = &pBuf[ n1 ];
+         pPtr2 = &pBuf[n1];
       }
       while( n1 > 0 && n2 > 0 )
       {
@@ -5820,11 +5820,11 @@ static HB_DBRECNO * hb_dbfSortSort( LPDBSORTREC pSortRec )
    }
    for( nCount = 0; nCount < pSortRec->nCount; ++nCount )
    {
-      pSortRec->pnIndex[ nCount ] = static_cast<HB_SORTIDX>(nCount);
+      pSortRec->pnIndex[nCount] = static_cast<HB_SORTIDX>(nCount);
    }
 
    pOrder = pSortRec->pnIndex;
-   if( ! hb_dbfSortQSort( pSortRec, pOrder, &pSortRec->pnIndex[ pSortRec->nCount ], pSortRec->nCount ) )
+   if( ! hb_dbfSortQSort( pSortRec, pOrder, &pSortRec->pnIndex[pSortRec->nCount], pSortRec->nCount ) )
    {
       pOrder += pSortRec->nCount;
    }
@@ -5835,7 +5835,7 @@ static HB_DBRECNO * hb_dbfSortSort( LPDBSORTREC pSortRec )
    }
    for( nCount = 0; nCount < pSortRec->nCount; ++nCount )
    {
-      pSortRec->pnOrder[ nCount ] = pSortRec->pnRecords[ pOrder[ nCount ] ];
+      pSortRec->pnOrder[nCount] = pSortRec->pnRecords[pOrder[nCount]];
    }
 
    return pSortRec->pnOrder;
@@ -5846,7 +5846,7 @@ static void hb_dbfSortInsPage( LPDBSORTREC pSortRec, HB_SORTIDX * pIndex, HB_SOR
    while( nFirst < nLast )
    {
       HB_SORTIDX nMiddle = ( nFirst + nLast ) >> 1;
-      int i = hb_dbfSortCompare( pSortRec, pIndex[ nAt ], pIndex[ nMiddle ] );
+      int i = hb_dbfSortCompare( pSortRec, pIndex[nAt], pIndex[nMiddle] );
 
       if( i < 0 )
       {
@@ -5861,16 +5861,16 @@ static void hb_dbfSortInsPage( LPDBSORTREC pSortRec, HB_SORTIDX * pIndex, HB_SOR
    {
       if( nFirst > 1 )
       {
-         nLast = pIndex[ 0 ];
-         memmove(pIndex, &pIndex[ 1 ], (nFirst - 1) * sizeof(HB_SORTIDX));
-         pIndex[ nFirst - 1 ] = nLast;
+         nLast = pIndex[0];
+         memmove(pIndex, &pIndex[1], (nFirst - 1) * sizeof(HB_SORTIDX));
+         pIndex[nFirst - 1] = nLast;
       }
    }
    else if( nFirst != nAt )
    {
-      nLast = pIndex[ nAt ];
-      memmove(&pIndex[ nFirst + 1 ], &pIndex[ nFirst ], (nAt - nFirst) * sizeof(HB_SORTIDX));
-      pIndex[ nFirst ] = nLast;
+      nLast = pIndex[nAt];
+      memmove(&pIndex[nFirst + 1], &pIndex[nFirst], (nAt - nFirst) * sizeof(HB_SORTIDX));
+      pIndex[nFirst] = nLast;
    }
 }
 
@@ -5882,7 +5882,7 @@ static HB_ERRCODE hb_dbfSortWritePage( LPDBSORTREC pSortRec )
 
    if( pSortRec->pTempFile == nullptr )
    {
-      char szName[ HB_PATH_MAX ];
+      char szName[HB_PATH_MAX];
       pSortRec->pTempFile = hb_fileCreateTemp( nullptr, nullptr, FC_NORMAL, szName );
       if( pSortRec->pTempFile == nullptr )
       {
@@ -5897,11 +5897,11 @@ static HB_ERRCODE hb_dbfSortWritePage( LPDBSORTREC pSortRec )
       pSortRec->nMaxPage += 8;
       pSortRec->pSwapPages = static_cast<PHB_DBSORTPAGE>(hb_xrealloc(pSortRec->pSwapPages, pSortRec->nMaxPage * sizeof(HB_DBSORTPAGE)));
    }
-   memset(&pSortRec->pSwapPages[ pSortRec->nPages ], 0, sizeof(HB_DBSORTPAGE));
-   pSortRec->pSwapPages[ pSortRec->nPages ].nCount = pSortRec->nCount;
-   pSortRec->pSwapPages[ pSortRec->nPages ].nOffset = hb_fileSize( pSortRec->pTempFile );
+   memset(&pSortRec->pSwapPages[pSortRec->nPages], 0, sizeof(HB_DBSORTPAGE));
+   pSortRec->pSwapPages[pSortRec->nPages].nCount = pSortRec->nCount;
+   pSortRec->pSwapPages[pSortRec->nPages].nOffset = hb_fileSize( pSortRec->pTempFile );
 
-   if( hb_fileWriteAt( pSortRec->pTempFile, pData, nSize, pSortRec->pSwapPages[ pSortRec->nPages ].nOffset ) != nSize )
+   if( hb_fileWriteAt( pSortRec->pTempFile, pData, nSize, pSortRec->pSwapPages[pSortRec->nPages].nOffset ) != nSize )
    {
       hb_dbfErrorRT( reinterpret_cast<DBFAREAP>(pArea), EG_WRITE, EDBF_WRITE_TEMP, pSortRec->szTempFileName, hb_fsError(), 0, nullptr );
       return HB_FAILURE;
@@ -5928,7 +5928,7 @@ static HB_ERRCODE hb_dbfSortReadRec( LPDBSORTREC pSortRec, PHB_ITEM pValue )
    for( HB_SHORT uiCount = 0; uiCount < pSortRec->pSortInfo->uiItemCount; uiCount++ )
    {
       PHB_ITEM pItem = hb_arrayGetItemPtr(pValue, uiCount + 1);
-      HB_USHORT uiField = pSortRec->pSortInfo->lpdbsItem[ uiCount ].uiField;
+      HB_USHORT uiField = pSortRec->pSortInfo->lpdbsItem[uiCount].uiField;
       if( SELF_GETVALUE( pArea, uiField, pItem ) != HB_SUCCESS )
       {
          return HB_FAILURE;
@@ -5941,7 +5941,7 @@ static HB_ERRCODE hb_dbfSortReadRec( LPDBSORTREC pSortRec, PHB_ITEM pValue )
 static HB_ERRCODE hb_dbfSortReadPage( LPDBSORTREC pSortRec, PHB_DBSORTPAGE pPage )
 {
    AREAP pArea = pSortRec->pSortInfo->dbtri.lpaSource;
-   HB_DBRECNO nCount = HB_MIN( pSortRec->nMaxRec, pPage->nCount );
+   HB_DBRECNO nCount = HB_MIN(pSortRec->nMaxRec, pPage->nCount);
    HB_SIZE nSize = static_cast<HB_SIZE>(nCount) * sizeof(HB_DBRECNO);
 
    if( hb_fileReadAt( pSortRec->pTempFile, pPage->pnRecords, nSize, pPage->nOffset ) != nSize )
@@ -5958,15 +5958,15 @@ static HB_ERRCODE hb_dbfSortReadPage( LPDBSORTREC pSortRec, PHB_DBSORTPAGE pPage
 
 static HB_ERRCODE hb_dbfSortGetRec( LPDBSORTREC pSortRec, HB_DBRECNO * pnRecNo )
 {
-   HB_SORTIDX nPage = pSortRec->pnIndex[ 0 ];
-   PHB_DBSORTPAGE pPage = &pSortRec->pSwapPages[ nPage ];
+   HB_SORTIDX nPage = pSortRec->pnIndex[0];
+   PHB_DBSORTPAGE pPage = &pSortRec->pSwapPages[nPage];
 
-   *pnRecNo = pPage->pnRecords[ pPage->nCurrent++ ];
+   *pnRecNo = pPage->pnRecords[pPage->nCurrent++];
    if( --pPage->nCount == 0 )
    {
       if( --pSortRec->nPages > 0 )
       {
-         memmove(pSortRec->pnIndex, &pSortRec->pnIndex[ 1 ], pSortRec->nPages * sizeof(HB_SORTIDX));
+         memmove(pSortRec->pnIndex, &pSortRec->pnIndex[1], pSortRec->nPages * sizeof(HB_SORTIDX));
       }
    }
    else
@@ -5981,7 +5981,7 @@ static HB_ERRCODE hb_dbfSortGetRec( LPDBSORTREC pSortRec, HB_DBRECNO * pnRecNo )
       if( pSortRec->nPages > 1 )
       {
          AREAP pArea = pSortRec->pSortInfo->dbtri.lpaSource;
-         if( SELF_GOTO( pArea, pPage->pnRecords[ pPage->nCurrent ] ) != HB_SUCCESS ||
+         if( SELF_GOTO( pArea, pPage->pnRecords[pPage->nCurrent] ) != HB_SUCCESS ||
              hb_dbfSortReadRec( pSortRec, hb_arrayGetItemPtr(pSortRec->pSortArray,
                                                               nPage + 1) ) != HB_SUCCESS )
          {
@@ -6034,7 +6034,7 @@ static HB_ERRCODE hb_dbfSortFinish( LPDBSORTREC pSortRec )
          {
             pSortRec->nMaxRec = pSortRec->nMaxRec * HB_SORTREC_MINRECBUF / pSortRec->nPages;
          }
-         nCount = pSortRec->pSwapPages[ pSortRec->nPages - 1 ].nCount;
+         nCount = pSortRec->pSwapPages[pSortRec->nPages - 1].nCount;
          if( nCount < pSortRec->nMaxRec )
          {
             nCount = pSortRec->nMaxRec - nCount;
@@ -6051,16 +6051,16 @@ static HB_ERRCODE hb_dbfSortFinish( LPDBSORTREC pSortRec )
          pSortRec->pnOrder = pnOrder = static_cast<HB_DBRECNO*>(hb_xgrab(nCount * sizeof(HB_DBRECNO)));
          for( HB_SORTIDX nPage = 0; nPage < pSortRec->nPages; ++nPage, pnOrder += pSortRec->nMaxRec )
          {
-            pSortRec->pSwapPages[ nPage ].pnRecords = pnOrder;
-            if( hb_dbfSortReadPage( pSortRec, &pSortRec->pSwapPages[ nPage ] ) != HB_SUCCESS ||
-                SELF_GOTO( pArea, pnOrder[ 0 ] ) != HB_SUCCESS ||
+            pSortRec->pSwapPages[nPage].pnRecords = pnOrder;
+            if( hb_dbfSortReadPage( pSortRec, &pSortRec->pSwapPages[nPage] ) != HB_SUCCESS ||
+                SELF_GOTO( pArea, pnOrder[0] ) != HB_SUCCESS ||
                 hb_dbfSortReadRec( pSortRec, hb_arrayGetItemPtr(pSortRec->pSortArray,
                                                                  nPage + 1) ) != HB_SUCCESS )
             {
                return HB_FAILURE;
             }
 
-            pSortRec->pnIndex[ nPage ] = nPage;
+            pSortRec->pnIndex[nPage] = nPage;
             if( nPage > 0 )
             {
                hb_dbfSortInsPage( pSortRec, pSortRec->pnIndex, 0, nPage, nPage );
@@ -6070,12 +6070,12 @@ static HB_ERRCODE hb_dbfSortFinish( LPDBSORTREC pSortRec )
       else
       {
          pSortRec->pSwapPages = static_cast<PHB_DBSORTPAGE>(hb_xgrabz(sizeof(HB_DBSORTPAGE)));
-         pSortRec->pSwapPages[ 0 ].nCount =
-         pSortRec->pSwapPages[ 0 ].nInBuf = pSortRec->nCount;
-         pSortRec->pSwapPages[ 0 ].pnRecords = hb_dbfSortSort( pSortRec );
+         pSortRec->pSwapPages[0].nCount =
+         pSortRec->pSwapPages[0].nInBuf = pSortRec->nCount;
+         pSortRec->pSwapPages[0].pnRecords = hb_dbfSortSort( pSortRec );
          pSortRec->nPages = 1;
          pSortRec->pnIndex = static_cast<HB_SORTIDX*>(hb_xrealloc(pSortRec->pnIndex, sizeof(HB_SORTIDX)));
-         pSortRec->pnIndex[ 0 ] = 0;
+         pSortRec->pnIndex[0] = 0;
          if( pSortRec->pSortArray )
          {
             hb_itemRelease(pSortRec->pSortArray);
@@ -6157,7 +6157,7 @@ static HB_ERRCODE hb_dbfSortAdd( LPDBSORTREC pSortRec )
    {
       return HB_FAILURE;
    }
-   pSortRec->pnRecords[ pSortRec->nCount++ ] = static_cast<HB_DBRECNO>(ulRecNo);
+   pSortRec->pnRecords[pSortRec->nCount++] = static_cast<HB_DBRECNO>(ulRecNo);
 
    return HB_SUCCESS;
 }
@@ -6333,11 +6333,11 @@ static HB_ERRCODE hb_dbfZap( DBFAREAP pArea )
    /* reset auto-increment and row version fields */
    for( HB_USHORT uiField = 0; uiField < pArea->area.uiFieldCount; uiField++ )
    {
-      if( pArea->area.lpFields[ uiField ].uiType == HB_FT_ROWVER )
+      if( pArea->area.lpFields[uiField].uiType == HB_FT_ROWVER )
       {
          hb_dbfRowVerSet( pArea, uiField, 0 );
       }
-      else if( hb_dbfIsAutoIncField( &pArea->area.lpFields[ uiField ] ) != HB_AUTOINC_NONE )
+      else if( hb_dbfIsAutoIncField( &pArea->area.lpFields[uiField] ) != HB_AUTOINC_NONE )
       {
          hb_dbfNextValueSet( pArea, uiField, 1 );
       }
@@ -6825,7 +6825,7 @@ static HB_ERRCODE hb_dbfGetValueFile( DBFAREAP pArea, HB_USHORT uiIndex, const c
       }
       else
       {
-         if( hb_fileWriteAt( pFile, pArea->pRecord + pArea->pFieldOffset[ uiIndex ], pField->uiLen, hb_fileSize( pFile ) ) != static_cast<HB_SIZE>(pField->uiLen) )
+         if( hb_fileWriteAt( pFile, pArea->pRecord + pArea->pFieldOffset[uiIndex], pField->uiLen, hb_fileSize( pFile ) ) != static_cast<HB_SIZE>(pField->uiLen) )
          {
             errCode = EDBF_WRITE;
          }
@@ -6921,10 +6921,10 @@ static HB_ERRCODE hb_dbfPutValueFile( DBFAREAP pArea, HB_USHORT uiIndex, const c
       }
       else
       {
-         HB_SIZE nRead = hb_fileReadAt( pFile, pArea->pRecord + pArea->pFieldOffset[ uiIndex ], pField->uiLen, 0 );
+         HB_SIZE nRead = hb_fileReadAt( pFile, pArea->pRecord + pArea->pFieldOffset[uiIndex], pField->uiLen, 0 );
          if( nRead != static_cast<HB_SIZE>(FS_ERROR) && nRead < static_cast<HB_SIZE>(pField->uiLen) )
          {
-            memset(pArea->pRecord + pArea->pFieldOffset[ uiIndex ] + nRead, ' ', pField->uiLen - nRead);
+            memset(pArea->pRecord + pArea->pFieldOffset[uiIndex] + nRead, ' ', pField->uiLen - nRead);
          }
          hb_fileClose( pFile );
       }
@@ -7190,18 +7190,18 @@ static HB_ERRCODE hb_dbfDrop( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIte
    HB_TRACE( HB_TR_DEBUG, ( "hb_dbfDrop(%p,%p,%p,%lu)", static_cast<void*>(pRDD), static_cast<void*>(pItemTable), static_cast<void*>(pItemIndex), ulConnect ) );
 #endif
 
-   char szFileName[ HB_PATH_MAX ];
+   char szFileName[HB_PATH_MAX];
    const char * szFile, * szExt;
    PHB_ITEM pFileExt = nullptr;
    PHB_FNAME pFileName;
    HB_BOOL fTable = HB_FALSE, fResult = HB_FALSE;
 
    szFile = hb_itemGetCPtr(pItemIndex);
-   if( ! szFile[ 0 ] )
+   if( ! szFile[0] )
    {
       /* Try to delete index file */
       szFile = hb_itemGetCPtr(pItemTable);
-      if( ! szFile[ 0 ] )
+      if( ! szFile[0] )
       {
          return HB_FAILURE;
       }
@@ -7240,7 +7240,7 @@ static HB_ERRCODE hb_dbfDrop( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIte
          if( SELF_RDDINFO( pRDD, RDDI_MEMOEXT, ulConnect, pFileExt ) == HB_SUCCESS )
          {
             szExt = hb_itemGetCPtr(pFileExt);
-            if( szExt[ 0 ] )
+            if( szExt[0] )
             {
                pFileName->szExtension = szExt;
                hb_fsFNameMerge( szFileName, pFileName );
@@ -7255,7 +7255,7 @@ static HB_ERRCODE hb_dbfDrop( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIte
          if( SELF_RDDINFO( pRDD, RDDI_ORDSTRUCTEXT, ulConnect, pFileExt ) == HB_SUCCESS )
          {
             szExt = hb_itemGetCPtr(pFileExt);
-            if( szExt[ 0 ] )
+            if( szExt[0] )
             {
                pFileName->szExtension = szExt;
                hb_fsFNameMerge( szFileName, pFileName );
@@ -7280,17 +7280,17 @@ static HB_ERRCODE hb_dbfExists( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pI
    HB_TRACE( HB_TR_DEBUG, ( "hb_dbfExists(%p,%p,%p,%lu)", static_cast<void*>(pRDD), static_cast<void*>(pItemTable), static_cast<void*>(pItemIndex), ulConnect ) );
 #endif
 
-   char szFileName[ HB_PATH_MAX ];
+   char szFileName[HB_PATH_MAX];
    const char * szFile;
    PHB_ITEM pFileExt = nullptr;
    PHB_FNAME pFileName;
    HB_BOOL fTable = HB_FALSE;
 
    szFile = hb_itemGetCPtr(pItemIndex);
-   if( ! szFile[ 0 ] )
+   if( ! szFile[0] )
    {
       szFile = hb_itemGetCPtr(pItemTable);
-      if( ! szFile[ 0 ] )
+      if( ! szFile[0] )
       {
          return HB_FAILURE;
       }
@@ -7324,18 +7324,18 @@ static HB_ERRCODE hb_dbfRename( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pI
    HB_TRACE( HB_TR_DEBUG, ( "hb_dbfRename(%p,%p,%p,%p,%lu)", static_cast<void*>(pRDD), static_cast<void*>(pItemTable), static_cast<void*>(pItemIndex), static_cast<void*>(pItemNew), ulConnect ) );
 #endif
 
-   char szFileName[ HB_PATH_MAX ];
+   char szFileName[HB_PATH_MAX];
    const char * szFile, * szExt;
    PHB_ITEM pFileExt = nullptr;
    PHB_FNAME pFileName;
    HB_BOOL fTable = HB_FALSE, fResult = HB_FALSE;
 
    szFile = hb_itemGetCPtr(pItemIndex);
-   if( ! szFile[ 0 ] )
+   if( ! szFile[0] )
    {
       /* Try to delete index file */
       szFile = hb_itemGetCPtr(pItemTable);
-      if( ! szFile[ 0 ] )
+      if( ! szFile[0] )
       {
          return HB_FAILURE;
       }
@@ -7358,9 +7358,9 @@ static HB_ERRCODE hb_dbfRename( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pI
 
    szFile = hb_itemGetCPtr(pItemNew);
    /* Use hb_fileExists() first to locate table which can be in different path */
-   if( szFile[ 0 ] && hb_fileExists( szFileName, szFileName ) )
+   if( szFile[0] && hb_fileExists( szFileName, szFileName ) )
    {
-      char szFileNew[ HB_PATH_MAX ];
+      char szFileNew[HB_PATH_MAX];
       PHB_FNAME pFileNameNew;
 
       /* hb_fsFNameSplit() repeated intentionally to respect
@@ -7396,7 +7396,7 @@ static HB_ERRCODE hb_dbfRename( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pI
          if( SELF_RDDINFO( pRDD, RDDI_MEMOEXT, ulConnect, pFileExt ) == HB_SUCCESS )
          {
             szExt = hb_itemGetCPtr(pFileExt);
-            if( szExt[ 0 ] )
+            if( szExt[0] )
             {
                pFileName->szExtension = szExt;
                pFileNameNew->szExtension = szExt;
@@ -7413,7 +7413,7 @@ static HB_ERRCODE hb_dbfRename( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pI
          if( SELF_RDDINFO( pRDD, RDDI_ORDSTRUCTEXT, ulConnect, pFileExt ) == HB_SUCCESS )
          {
             szExt = hb_itemGetCPtr(pFileExt);
-            if( szExt[ 0 ] )
+            if( szExt[0] )
             {
                pFileName->szExtension = szExt;
                pFileNameNew->szExtension = szExt;
@@ -7544,8 +7544,8 @@ static HB_ERRCODE hb_dbfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
          const char * szNew = hb_itemGetCPtr(pItem);
          char * szNewVal;
 
-         szNewVal = szNew[ 0 ] == '.' && szNew[ 1 ] ? hb_strdup(szNew) : nullptr;
-         hb_itemPutC(pItem, pData->szTableExt[ 0 ] ? pData->szTableExt : DBF_TABLEEXT);
+         szNewVal = szNew[0] == '.' && szNew[1] ? hb_strdup(szNew) : nullptr;
+         hb_itemPutC(pItem, pData->szTableExt[0] ? pData->szTableExt : DBF_TABLEEXT);
          if( szNewVal )
          {
             hb_strncpy(pData->szTableExt, szNewVal, sizeof(pData->szTableExt) - 1);
