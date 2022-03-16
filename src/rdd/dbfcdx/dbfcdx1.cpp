@@ -5471,7 +5471,7 @@ static void hb_cdxCreateFName( CDXAREAP pArea, const char * szBagName, HB_BOOL *
          pFileName->szExtension = hb_itemGetCPtr(pExt);
       }
    }
-   hb_fsFNameMerge( szFileName, pFileName );
+   hb_fsFNameMerge(szFileName, pFileName);
 
    if( fProd )
    {

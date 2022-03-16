@@ -60,7 +60,7 @@ HB_FUNC( SX_FNAMEPARSER )
       HB_SIZE nLen;
       char * pszFree;
 
-      szFileName = hb_fsNameConv( szFileName, &pszFree );
+      szFileName = hb_fsNameConv(szFileName, &pszFree);
       pFileName = hb_fsFNameSplit(szFileName);
       if( pszFree )
       {
@@ -94,7 +94,7 @@ HB_FUNC( SX_FNAMEPARSER )
          }
       }
 
-      hb_retc( hb_fsFNameMerge( szPathBuf, pFileName ) );
+      hb_retc( hb_fsFNameMerge(szPathBuf, pFileName) );
       hb_xfree(pFileName);
    }
    else

@@ -103,7 +103,7 @@ HB_BOOL hb_fsCopy( const char * pszSource, const char * pszDest )
             hb_fileAttrSet( pszDest, ulAttr );
          }   
       }
-      hb_fsSetError( errCode );
+      hb_fsSetError(errCode);
    }
 
    return fResult;
@@ -117,14 +117,14 @@ HB_FUNC( HB_FCOPY )
 
    if( pszSource && pszDest )
    {
-      fResult = hb_fsCopy( pszSource, pszDest );
+      fResult = hb_fsCopy(pszSource, pszDest);
       errCode = hb_fsError();
    }
    else
    {
-      hb_fsSetFError( 2 /* file not found */ );
+      hb_fsSetFError(2); /* file not found */
       hb_retni( F_ERROR );
    }
-   hb_fsSetFError( errCode );
+   hb_fsSetFError(errCode);
    hb_retni( fResult ? 0 : F_ERROR );
 }

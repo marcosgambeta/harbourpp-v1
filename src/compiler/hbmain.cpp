@@ -205,7 +205,7 @@ static int hb_compReadClpFile( HB_COMP_DECL, const char * szClpFile )
    if( ! pFileName->szExtension )
    {
       pFileName->szExtension = ".clp";
-      hb_fsFNameMerge( szFile, pFileName );
+      hb_fsFNameMerge(szFile, pFileName);
       szClpFile = szFile;
    }
 
@@ -4261,7 +4261,7 @@ static void hb_compPpoFile( HB_COMP_DECL, const char * szPrg, const char * szExt
          pFilePpo->szExtension = HB_COMP_PARAM->pPpoPath->szExtension;
       }
    }
-   hb_fsFNameMerge( szPpoName, pFilePpo );
+   hb_fsFNameMerge(szPpoName, pFilePpo);
    hb_xfree(pFilePpo);
 }
 
@@ -4448,7 +4448,7 @@ static void hb_compGenIncluded( HB_COMP_DECL )
                   FileName.szExtension = ".c";
             }
          }
-         hb_fsFNameMerge( szDestFile, &FileName );
+         hb_fsFNameMerge(szDestFile, &FileName);
       }
 
       if( ( HB_COMP_PARAM->iTraceInclude & 0x100 ) != 0 )
@@ -4500,7 +4500,7 @@ static void hb_compGenIncluded( HB_COMP_DECL )
          FILE * file;
 
          FileName.szExtension = ".d";
-         hb_fsFNameMerge( szFileName, &FileName );
+         hb_fsFNameMerge(szFileName, &FileName);
          file = hb_fopen(szFileName, "w");
          if( file )
          {
@@ -4651,7 +4651,7 @@ static int hb_compCompile( HB_COMP_DECL, const char * szPrg, const char * szBuff
       {
          pFileName->szExtension = ".prg";
       }
-      hb_fsFNameMerge( szFileName, pFileName );
+      hb_fsFNameMerge(szFileName, pFileName);
 
       if( szBuffer )
       {

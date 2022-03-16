@@ -4617,7 +4617,7 @@ static void hb_gt_xwc_RequestSelection( PXWND_DEF wnd )
             {
                HB_ULONG ulTime = hb_gt_xwc_CurrentTime() - ulCurrentTime;
 
-               if( ulTime > 3000 || hb_fsCanRead( iConnFD, 3000 - ulTime ) <= 0 )
+               if( ulTime > 3000 || hb_fsCanRead(iConnFD, 3000 - ulTime) <= 0 )
                {
                   break;
                }

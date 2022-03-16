@@ -86,7 +86,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
       LPCTSTR lpPath;
       LPTSTR lpFree;
 
-      lpPath = HB_FSNAMECONV( pszPath, &lpFree );
+      lpPath = HB_FSNAMECONV(pszPath, &lpFree);
 
       {
          UINT uiErrMode = SetErrorMode( SEM_FAILCRITICALERRORS );
@@ -121,7 +121,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
                                         &dwBytesPerSector,
                                         &dwNumberOfFreeClusters,
                                         &dwTotalNumberOfClusters ) ? HB_TRUE : HB_FALSE;
-            hb_fsSetIOError( fResult, 0 );
+            hb_fsSetIOError(fResult, 0);
 
             if( fResult )
             {
@@ -171,7 +171,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
                                           static_cast<PULARGE_INTEGER>(&i64TotalBytes),
                                           static_cast<PULARGE_INTEGER>(&i64FreeBytes) );
 #endif
-            hb_fsSetIOError( fResult, 0 );
+            hb_fsSetIOError(fResult, 0);
 
             if( fResult )
             {
@@ -211,7 +211,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
 #endif
       char * pszFree;
 
-      pszPath = hb_fsNameConv( pszPath, &pszFree );
+      pszPath = hb_fsNameConv(pszPath, &pszFree);
 
 #if defined( HB_OS_DARWIN ) || defined( HB_OS_ANDROID ) || defined( HB_OS_VXWORKS )
       if( statfs( pszPath, &sf ) == 0 )
@@ -237,11 +237,11 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
                dSpace = static_cast<double>(sf.f_blocks) * static_cast<double>(sf.f_bsize);
                break;
          }
-         hb_fsSetIOError( HB_TRUE, 0 );
+         hb_fsSetIOError(HB_TRUE, 0);
       }
       else
       {
-         hb_fsSetIOError( HB_FALSE, 0 );
+         hb_fsSetIOError(HB_FALSE, 0);
       }
 
       if( pszFree )
@@ -283,5 +283,5 @@ HB_FUNC( HB_DISKSPACE )
    }
 #endif
 
-   hb_retnlen( hb_fsDiskSpace( pszPath, uiType ), -1, 0 );
+   hb_retnlen( hb_fsDiskSpace(pszPath, uiType), -1, 0 );
 }

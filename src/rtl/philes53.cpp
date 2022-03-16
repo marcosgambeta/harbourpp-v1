@@ -57,12 +57,12 @@ HB_FUNC( FSETDEVMOD )
 
    if( HB_ISNUM(1) )
    {
-      iRet = hb_fsSetDevMode( hb_numToHandle( hb_parnint(1) ), hb_parni(2) );
+      iRet = hb_fsSetDevMode(hb_numToHandle(hb_parnint(1)), hb_parni(2));
       if( iRet != FD_TEXT )
       {
          iRet = FD_BINARY;
       }
-      hb_fsSetFError( hb_fsError() );
+      hb_fsSetFError(hb_fsError());
    }
    else
    {

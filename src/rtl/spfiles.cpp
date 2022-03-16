@@ -70,8 +70,8 @@ HB_BOOL hb_spFile( const char * pszFileName, char * pszRetPath )
 
    if( pFilepath->szPath )
    {
-      hb_fsFNameMerge( pszPath, pFilepath );
-      bIsFile = hb_fsFile( pszPath );
+      hb_fsFNameMerge(pszPath, pFilepath);
+      bIsFile = hb_fsFile(pszPath);
    }
    else
    {
@@ -79,8 +79,8 @@ HB_BOOL hb_spFile( const char * pszFileName, char * pszRetPath )
       if( szDefault )
       {
          pFilepath->szPath = szDefault;
-         hb_fsFNameMerge( pszPath, pFilepath );
-         bIsFile = hb_fsFile( pszPath );
+         hb_fsFNameMerge(pszPath, pFilepath);
+         bIsFile = hb_fsFile(pszPath);
       }
 
       if( ! bIsFile && hb_setGetPath() )
@@ -90,8 +90,8 @@ HB_BOOL hb_spFile( const char * pszFileName, char * pszRetPath )
          while( bIsFile == HB_FALSE && pNextPath )
          {
             pFilepath->szPath = pNextPath->szPath;
-            hb_fsFNameMerge( pszPath, pFilepath );
-            bIsFile = hb_fsFile( pszPath );
+            hb_fsFNameMerge(pszPath, pFilepath);
+            bIsFile = hb_fsFile(pszPath);
             pNextPath = pNextPath->pNext;
          }
       }
@@ -105,7 +105,7 @@ HB_BOOL hb_spFile( const char * pszFileName, char * pszRetPath )
       if( ! bIsFile )
       {
          pFilepath->szPath = szDefault ? szDefault : ".";
-         hb_fsFNameMerge( pszPath, pFilepath );
+         hb_fsFNameMerge(pszPath, pFilepath);
       }
    }
 
@@ -142,8 +142,8 @@ HB_BOOL hb_spFileExists( const char * pszFileName, char * pszRetPath )
 
    if( pFilepath->szPath )
    {
-      hb_fsFNameMerge( pszPath, pFilepath );
-      bIsFile = hb_fsFileExists( pszPath );
+      hb_fsFNameMerge(pszPath, pFilepath);
+      bIsFile = hb_fsFileExists(pszPath);
    }
    else
    {
@@ -151,8 +151,8 @@ HB_BOOL hb_spFileExists( const char * pszFileName, char * pszRetPath )
       if( szDefault )
       {
          pFilepath->szPath = szDefault;
-         hb_fsFNameMerge( pszPath, pFilepath );
-         bIsFile = hb_fsFileExists( pszPath );
+         hb_fsFNameMerge(pszPath, pFilepath);
+         bIsFile = hb_fsFileExists(pszPath);
       }
 
       if( ! bIsFile && hb_setGetPath() )
@@ -162,8 +162,8 @@ HB_BOOL hb_spFileExists( const char * pszFileName, char * pszRetPath )
          while( bIsFile == HB_FALSE && pNextPath )
          {
             pFilepath->szPath = pNextPath->szPath;
-            hb_fsFNameMerge( pszPath, pFilepath );
-            bIsFile = hb_fsFileExists( pszPath );
+            hb_fsFNameMerge(pszPath, pFilepath);
+            bIsFile = hb_fsFileExists(pszPath);
             pNextPath = pNextPath->pNext;
          }
       }
@@ -177,7 +177,7 @@ HB_BOOL hb_spFileExists( const char * pszFileName, char * pszRetPath )
       if( ! bIsFile )
       {
          pFilepath->szPath = szDefault ? szDefault : ".";
-         hb_fsFNameMerge( pszPath, pFilepath );
+         hb_fsFNameMerge(pszPath, pFilepath);
       }
    }
 
@@ -201,11 +201,11 @@ HB_FHANDLE hb_spOpen( const char * pszFileName, HB_USHORT uiFlags )
 
    if( hb_spFile( pszFileName, szPath ) )
    {
-      return hb_fsOpen( szPath, uiFlags );
+      return hb_fsOpen(szPath, uiFlags);
    }
    else
    {
-      return hb_fsOpen( pszFileName, uiFlags );
+      return hb_fsOpen(pszFileName, uiFlags);
    }
 }
 
@@ -224,10 +224,10 @@ HB_FHANDLE hb_spCreate( const char * pszFileName, HB_FATTR ulAttr )
       pFilepath->szPath = hb_setGetDefault();
    }
 
-   hb_fsFNameMerge( szPath, pFilepath );
+   hb_fsFNameMerge(szPath, pFilepath);
    hb_xfree(pFilepath);
 
-   return hb_fsCreate( szPath, ulAttr );
+   return hb_fsCreate(szPath, ulAttr);
 }
 
 HB_FHANDLE hb_spCreateEx( const char * pszFileName, HB_FATTR ulAttr, HB_USHORT uiFlags )
@@ -245,8 +245,8 @@ HB_FHANDLE hb_spCreateEx( const char * pszFileName, HB_FATTR ulAttr, HB_USHORT u
       pFilepath->szPath = hb_setGetDefault();
    }
 
-   hb_fsFNameMerge( szPath, pFilepath );
+   hb_fsFNameMerge(szPath, pFilepath);
    hb_xfree(pFilepath);
 
-   return hb_fsCreateEx( szPath, ulAttr, uiFlags );
+   return hb_fsCreateEx(szPath, ulAttr, uiFlags);
 }

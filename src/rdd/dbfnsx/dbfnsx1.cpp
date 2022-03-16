@@ -4182,7 +4182,7 @@ static void hb_nsxCreateFName( NSXAREAP pArea, const char * szBagName, HB_BOOL *
          pFileName->szExtension = hb_itemGetCPtr(pExt);
       }
    }
-   hb_fsFNameMerge( szFileName, pFileName );
+   hb_fsFNameMerge(szFileName, pFileName);
 
    if( fProd )
    {

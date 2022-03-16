@@ -74,8 +74,8 @@ HB_FUNC( HB_PROCESSOPEN )
       phStdOut = pStdOut ? &hStdOut : nullptr;
       phStdErr = pStdErr ? ( pStdOut == pStdErr ? phStdOut : &hStdErr ) : nullptr;
 
-      hProcess = hb_fsProcessOpen( szName, phStdIn, phStdOut, phStdErr, fDetach, &ulPID );
-      hb_fsSetFError( hb_fsError() );
+      hProcess = hb_fsProcessOpen(szName, phStdIn, phStdOut, phStdErr, fDetach, &ulPID);
+      hb_fsSetFError(hb_fsError());
       if( hProcess != FS_ERROR )
       {
          if( phStdIn )
@@ -106,8 +106,8 @@ HB_FUNC( HB_PROCESSVALUE )
 
    if( hProcess != 0 && hProcess != FS_ERROR && ( hb_pcount() < 2 || HB_ISLOG(2) ) )
    {
-      int iResult = hb_fsProcessValue( hProcess, hb_pcount() < 2 || hb_parl(2) );
-      hb_fsSetFError( hb_fsError() );
+      int iResult = hb_fsProcessValue(hProcess, hb_pcount() < 2 || hb_parl(2));
+      hb_fsSetFError(hb_fsError());
       hb_retni( iResult );
    }
    else
@@ -122,8 +122,8 @@ HB_FUNC( HB_PROCESSCLOSE )
 
    if( hProcess != 0 && hProcess != FS_ERROR && ( hb_pcount() < 2 || HB_ISLOG(2) ) )
    {
-      HB_BOOL fResult = hb_fsProcessClose( hProcess, hb_pcount() < 2 || hb_parl(2) );
-      hb_fsSetFError( hb_fsError() );
+      HB_BOOL fResult = hb_fsProcessClose(hProcess, hb_pcount() < 2 || hb_parl(2));
+      hb_fsSetFError(hb_fsError());
       hb_retl( fResult );
    }
    else
@@ -158,8 +158,8 @@ HB_FUNC( HB_PROCESSRUN )
       pStdOutPtr = pStdOut ? &pStdOutBuf : nullptr;
       pStdErrPtr = pStdErr ? ( pStdOut == pStdErr ? pStdOutPtr : &pStdErrBuf ) : nullptr;
 
-      iResult = hb_fsProcessRun( szName, szStdIn, hb_parclen(2), pStdOutPtr, &nStdOut, pStdErrPtr, &nStdErr, fDetach );
-      hb_fsSetFError( hb_fsError() );
+      iResult = hb_fsProcessRun(szName, szStdIn, hb_parclen(2), pStdOutPtr, &nStdOut, pStdErrPtr, &nStdErr, fDetach);
+      hb_fsSetFError(hb_fsError());
 
       if( pStdOutBuf )
       {

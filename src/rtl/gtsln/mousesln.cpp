@@ -78,7 +78,7 @@ static HB_BOOL GetGpmEvent( Gpm_Event * Evt )
 {
    if( s_bMousePresent && gpm_fd >= 0 )
    {
-      if( hb_fsCanRead( gpm_fd, 0 ) > 0 )
+      if( hb_fsCanRead(gpm_fd, 0) > 0 )
       {
          return Gpm_GetEvent( Evt ) > 0;
       }

@@ -68,5 +68,5 @@ HB_FUNC( HB_FNAMEMERGE )
    pFileName.szName = hb_parc(2);
    pFileName.szExtension = hb_parc(3);
 
-   hb_retc( hb_fsFNameMerge( szFileName, &pFileName ) );
+   hb_retc( hb_fsFNameMerge(szFileName, &pFileName) );
 }

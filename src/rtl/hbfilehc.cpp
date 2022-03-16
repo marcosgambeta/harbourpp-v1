@@ -77,7 +77,7 @@ HB_FUNC( HB_FNAMENAMEEXT )
    PHB_FNAME pFilepath = hb_fsFNameSplit(hb_parcx(1));
 
    pFilepath->szPath = nullptr;
-   hb_retc( hb_fsFNameMerge( szPath, pFilepath ) );
+   hb_retc( hb_fsFNameMerge(szPath, pFilepath) );
    hb_xfree(pFilepath);
 }
 
@@ -87,7 +87,7 @@ HB_FUNC( HB_FNAMEEXTSET )
    PHB_FNAME pFilepath = hb_fsFNameSplit(hb_parcx(1));
 
    pFilepath->szExtension = hb_parc(2);
-   hb_retc( hb_fsFNameMerge( szPath, pFilepath ) );
+   hb_retc( hb_fsFNameMerge(szPath, pFilepath) );
    hb_xfree(pFilepath);
 }
 
@@ -100,6 +100,6 @@ HB_FUNC( HB_FNAMEEXTSETDEF )
    {
       pFilepath->szExtension = hb_parc(2);
    }
-   hb_retc( hb_fsFNameMerge( szPath, pFilepath ) );
+   hb_retc( hb_fsFNameMerge(szPath, pFilepath) );
    hb_xfree(pFilepath);
 }

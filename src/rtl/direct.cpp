@@ -110,7 +110,7 @@ PHB_ITEM hb_fsDirectory( const char * pszDirSpec, const char * pszAttributes, HB
 
    if( pszAttributes && *pszAttributes )
    {
-      ulMask |= hb_fsAttrEncode( pszAttributes );
+      ulMask |= hb_fsAttrEncode(pszAttributes);
    }
 
    if( pszDirSpec && *pszDirSpec )
@@ -138,7 +138,7 @@ PHB_ITEM hb_fsDirectory( const char * pszDirSpec, const char * pszAttributes, HB
 
    /* Get the file list */
 
-   if( ( ffind = hb_fsFindFirst( pszDirSpec, ulMask ) ) != nullptr )
+   if( (ffind = hb_fsFindFirst(pszDirSpec, ulMask)) != nullptr )
    {
       PHB_ITEM pSubarray = hb_itemNew(nullptr);
 
@@ -164,11 +164,11 @@ PHB_ITEM hb_fsDirectory( const char * pszDirSpec, const char * pszAttributes, HB
          /* Don't exit when array limit is reached */
          hb_arrayAddForward(pDir, pSubarray);
       }
-      while( hb_fsFindNext( ffind ) );
+      while( hb_fsFindNext(ffind) );
 
       hb_itemRelease(pSubarray);
 
-      hb_fsFindClose( ffind );
+      hb_fsFindClose(ffind);
    }
 
    if( pszFree )
@@ -181,10 +181,10 @@ PHB_ITEM hb_fsDirectory( const char * pszDirSpec, const char * pszAttributes, HB
 
 HB_FUNC( DIRECTORY )
 {
-   hb_itemReturnRelease(hb_fsDirectory( hb_parc(1), hb_parc(2), HB_FALSE ));
+   hb_itemReturnRelease(hb_fsDirectory(hb_parc(1), hb_parc(2), HB_FALSE));
 }
 
 HB_FUNC( HB_DIRECTORY )
 {
-   hb_itemReturnRelease(hb_fsDirectory( hb_parc(1), hb_parc(2), HB_TRUE ));
+   hb_itemReturnRelease(hb_fsDirectory(hb_parc(1), hb_parc(2), HB_TRUE));
 }

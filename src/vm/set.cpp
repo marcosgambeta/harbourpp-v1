@@ -976,9 +976,9 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pA
          if( pArg1 != nullptr )
          {
             pSet->HB_SET_PATH = set_string( pArg1, pSet->HB_SET_PATH );
-            hb_fsFreeSearchPath( pSet->hb_set_path );
+            hb_fsFreeSearchPath(pSet->hb_set_path);
             pSet->hb_set_path = nullptr;
-            hb_fsAddSearchPath( pSet->HB_SET_PATH, &pSet->hb_set_path );
+            hb_fsAddSearchPath(pSet->HB_SET_PATH, &pSet->hb_set_path);
          }
          break;
       case HB_SET_PRINTER:
@@ -1518,7 +1518,7 @@ void hb_setRelease( PHB_SET_STRUCT pSet )
       hb_xfree(pSet->HB_SET_HBOUTLOGINFO);
    }
 
-   hb_fsFreeSearchPath( pSet->hb_set_path );
+   hb_fsFreeSearchPath(pSet->hb_set_path);
 
    /* Free all set listeners */
    if( pSet->hb_set_listener )
@@ -1602,7 +1602,7 @@ PHB_SET_STRUCT hb_setClone( PHB_SET_STRUCT pSrc )
       pSet->HB_SET_HBOUTLOGINFO = hb_strdup(pSet->HB_SET_HBOUTLOGINFO);
    }
 
-   hb_fsAddSearchPath( pSet->HB_SET_PATH, &pSet->hb_set_path );
+   hb_fsAddSearchPath(pSet->HB_SET_PATH, &pSet->hb_set_path);
 
    return pSet;
 }
@@ -2235,9 +2235,9 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
                }
                pSet->HB_SET_PATH = szValue;
 
-               hb_fsFreeSearchPath( pSet->hb_set_path );
+               hb_fsFreeSearchPath(pSet->hb_set_path);
                pSet->hb_set_path = nullptr;
-               hb_fsAddSearchPath( pSet->HB_SET_PATH, &pSet->hb_set_path );
+               hb_fsAddSearchPath(pSet->HB_SET_PATH, &pSet->hb_set_path);
 
                fResult = HB_TRUE;
             }

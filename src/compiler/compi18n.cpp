@@ -355,7 +355,7 @@ HB_BOOL hb_compI18nSave( HB_COMP_DECL, HB_BOOL fFinal )
       FileName.szExtension = ".pot";
    }
 
-   hb_fsFNameMerge( szFileName, &FileName );
+   hb_fsFNameMerge(szFileName, &FileName);
 
    file = hb_fopen(szFileName, "w");
 

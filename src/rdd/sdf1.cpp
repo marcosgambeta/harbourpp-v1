@@ -1205,7 +1205,7 @@ static HB_ERRCODE hb_sdfCreate( SDFAREAP pArea, LPDBOPENINFO pCreateInfo )
       if( SELF_INFO( &pArea->area, DBI_TABLEEXT, pItem ) == HB_SUCCESS )
       {
          pFileName->szExtension = hb_itemGetCPtr(pItem);
-         hb_fsFNameMerge( szFileName, pFileName );
+         hb_fsFNameMerge(szFileName, pFileName);
       }
       hb_itemRelease(pItem);
    }
@@ -1312,7 +1312,7 @@ static HB_ERRCODE hb_sdfOpen( SDFAREAP pArea, LPDBOPENINFO pOpenInfo )
       if( SELF_INFO( &pArea->area, DBI_TABLEEXT, pFileExt ) == HB_SUCCESS )
       {
          pFileName->szExtension = hb_itemGetCPtr(pFileExt);
-         hb_fsFNameMerge( szFileName, pFileName );
+         hb_fsFNameMerge(szFileName, pFileName);
       }
       hb_itemRelease(pFileExt);
    }

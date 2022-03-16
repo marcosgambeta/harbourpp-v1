@@ -188,7 +188,7 @@ static void sig_handler( int iSigNo )
 
 static void hb_gt_std_termOut( PHB_GTSTD pGTSTD, const char * szStr, HB_SIZE nLen )
 {
-   hb_fsWriteLarge( pGTSTD->hStdout, szStr, nLen );
+   hb_fsWriteLarge(pGTSTD->hStdout, szStr, nLen);
 }
 
 static void hb_gt_std_newLine( PHB_GTSTD pGTSTD )
@@ -210,14 +210,14 @@ static void hb_gt_std_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    pGTSTD->hStdout = hFilenoStdout;
    pGTSTD->hStderr = hFilenoStderr;
 
-   pGTSTD->fStdinConsole  = hb_fsIsDevice( pGTSTD->hStdin );
-   pGTSTD->fStdoutConsole = hb_fsIsDevice( pGTSTD->hStdout );
-   pGTSTD->fStderrConsole = hb_fsIsDevice( pGTSTD->hStderr );
+   pGTSTD->fStdinConsole  = hb_fsIsDevice(pGTSTD->hStdin);
+   pGTSTD->fStdoutConsole = hb_fsIsDevice(pGTSTD->hStdout);
+   pGTSTD->fStderrConsole = hb_fsIsDevice(pGTSTD->hStderr);
 
    pGTSTD->szCrLf = hb_strdup(hb_conNewLine());
    pGTSTD->nCrLf = strlen(pGTSTD->szCrLf);
 
-   hb_fsSetDevMode( pGTSTD->hStdout, FD_BINARY );
+   hb_fsSetDevMode(pGTSTD->hStdout, FD_BINARY);
    HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
 
 /* SA_NOCLDSTOP in #if is a hack to detect POSIX compatible environment */
@@ -284,7 +284,7 @@ static void hb_gt_std_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 #elif defined( HB_OS_WIN )
    if( pGTSTD->fStdinConsole )
    {
-      SetConsoleMode( ( HANDLE ) hb_fsGetOsHandle( pGTSTD->hStdin ), 0x0000 );
+      SetConsoleMode( ( HANDLE ) hb_fsGetOsHandle(pGTSTD->hStdin), 0x0000 );
    }
 #endif
    HB_GTSELF_SETFLAG(pGT, HB_GTI_STDOUTCON, pGTSTD->fStdoutConsole);
@@ -357,10 +357,10 @@ static int hb_gt_std_ReadKey( PHB_GT pGT, int iEventMask )
    pGTSTD = HB_GTSTD_GET(pGT);
 
 #if defined( HB_HAS_TERMIOS )
-   if( hb_fsCanRead( pGTSTD->hStdin, 0 ) > 0 )
+   if( hb_fsCanRead(pGTSTD->hStdin, 0) > 0 )
    {
       HB_BYTE bChar;
-      if( hb_fsRead( pGTSTD->hStdin, &bChar, 1 ) == 1 )
+      if( hb_fsRead(pGTSTD->hStdin, &bChar, 1) == 1 )
       {
          ch = bChar;
       }
@@ -396,28 +396,28 @@ static int hb_gt_std_ReadKey( PHB_GT pGT, int iEventMask )
    if( ! pGTSTD->fStdinConsole )
    {
       HB_BYTE bChar;
-      if( hb_fsRead( pGTSTD->hStdin, &bChar, 1 ) == 1 )
+      if( hb_fsRead(pGTSTD->hStdin, &bChar, 1) == 1 )
       {
          ch = bChar;
       }
    }
-   else if( WaitForSingleObject( ( HANDLE ) hb_fsGetOsHandle( pGTSTD->hStdin ), 0 ) == WAIT_OBJECT_0 )
+   else if( WaitForSingleObject( ( HANDLE ) hb_fsGetOsHandle(pGTSTD->hStdin), 0 ) == WAIT_OBJECT_0 )
    {
       INPUT_RECORD  ir;
       DWORD         dwEvents;
-      while( PeekConsoleInput( ( HANDLE ) hb_fsGetOsHandle( pGTSTD->hStdin ), &ir, 1, &dwEvents ) && dwEvents == 1 )
+      while( PeekConsoleInput( ( HANDLE ) hb_fsGetOsHandle(pGTSTD->hStdin), &ir, 1, &dwEvents ) && dwEvents == 1 )
       {
          if( ir.EventType == KEY_EVENT && ir.Event.KeyEvent.bKeyDown )
          {
             HB_BYTE bChar;
-            if( hb_fsRead( pGTSTD->hStdin, &bChar, 1 ) == 1 )
+            if( hb_fsRead(pGTSTD->hStdin, &bChar, 1) == 1 )
             {
                ch = bChar;
             }
          }
          else /* Remove from the input queue */
          {
-            ReadConsoleInput( ( HANDLE ) hb_fsGetOsHandle( pGTSTD->hStdin ), &ir, 1, &dwEvents );
+            ReadConsoleInput( ( HANDLE ) hb_fsGetOsHandle(pGTSTD->hStdin), &ir, 1, &dwEvents );
          }
       }
    }
@@ -426,7 +426,7 @@ static int hb_gt_std_ReadKey( PHB_GT pGT, int iEventMask )
       if( ! pGTSTD->fStdinConsole )
       {
          HB_BYTE bChar;
-         if( hb_fsRead( pGTSTD->hStdin, &bChar, 1 ) == 1 )
+         if( hb_fsRead(pGTSTD->hStdin, &bChar, 1) == 1 )
          {
             ch = bChar;
          }

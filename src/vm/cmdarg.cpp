@@ -386,14 +386,14 @@ void hb_cmdargUpdate( void )
             if( pszPATH && *pszPATH )
             {
                HB_PATHNAMES * pSearchPath = nullptr, * pNextPath;
-               hb_fsAddSearchPath( pszPATH, &pSearchPath );
+               hb_fsAddSearchPath(pszPATH, &pSearchPath);
                pNextPath = pSearchPath;
 
                while( pNextPath )
                {
                   pFName->szPath = pNextPath->szPath;
-                  hb_fsFNameMerge( s_szAppName, pFName );
-                  if( hb_fsFileExists( s_szAppName ) )
+                  hb_fsFNameMerge(s_szAppName, pFName);
+                  if( hb_fsFileExists(s_szAppName) )
                   {
                      /* even if the file is located using PATH then it does
                       * not mean we will have absolute path here. It's not
@@ -408,7 +408,7 @@ void hb_cmdargUpdate( void )
                   }
                   pNextPath = pNextPath->pNext;
                }
-               hb_fsFreeSearchPath( pSearchPath );
+               hb_fsFreeSearchPath(pSearchPath);
                if( ! fInPath )
                {
                   pFName->szPath = nullptr;
@@ -432,13 +432,13 @@ void hb_cmdargUpdate( void )
                   pFName->szPath += 2;
                }
                s_szAppName[0] = HB_OS_PATH_DELIM_CHR;
-               hb_fsCurDirBuff( 0, s_szAppName + 1, HB_PATH_MAX - 1 );
+               hb_fsCurDirBuff(0, s_szAppName + 1, HB_PATH_MAX - 1);
                if( s_szAppName[1] != 0 )
                {
                   hb_strncat(s_szAppName, HB_OS_PATH_DELIM_CHR_STRING, HB_PATH_MAX - 1);
                   hb_strncat(s_szAppName, pFName->szPath, HB_PATH_MAX - 1);
                   pFName->szPath = hb_strdup(s_szAppName);
-                  hb_fsFNameMerge( s_szAppName, pFName );
+                  hb_fsFNameMerge(s_szAppName, pFName);
                   hb_xfree(HB_UNCONST(pFName->szPath));
                   s_argv[0] = s_szAppName;
                }

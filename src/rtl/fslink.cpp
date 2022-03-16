@@ -86,11 +86,11 @@ HB_BOOL hb_fsLink( const char * pszExisting, const char * pszNewFile )
             LPCTSTR lpFileName, lpExistingFileName;
             LPTSTR lpFileNameFree, lpExistingFileNameFree;
 
-            lpFileName = HB_FSNAMECONV( pszNewFile, &lpFileNameFree );
-            lpExistingFileName = HB_FSNAMECONV( pszExisting, &lpExistingFileNameFree );
+            lpFileName = HB_FSNAMECONV(pszNewFile, &lpFileNameFree);
+            lpExistingFileName = HB_FSNAMECONV(pszExisting, &lpExistingFileNameFree);
 
             fResult = s_pCreateHardLink( lpFileName, lpExistingFileName, nullptr ) != 0;
-            hb_fsSetIOError( fResult, 0 );
+            hb_fsSetIOError(fResult, 0);
 
             if( lpFileNameFree )
             {
@@ -112,11 +112,11 @@ HB_BOOL hb_fsLink( const char * pszExisting, const char * pszNewFile )
          char * pszExistingFree;
          char * pszNewFileFree;
 
-         pszExisting = hb_fsNameConv( pszExisting, &pszExistingFree );
-         pszNewFile = hb_fsNameConv( pszNewFile, &pszNewFileFree );
+         pszExisting = hb_fsNameConv(pszExisting, &pszExistingFree);
+         pszNewFile = hb_fsNameConv(pszNewFile, &pszNewFileFree);
 
          fResult = ( link( pszExisting, pszNewFile ) == 0 );
-         hb_fsSetIOError( fResult, 0 );
+         hb_fsSetIOError(fResult, 0);
 
          if( pszExistingFree )
          {
@@ -179,14 +179,14 @@ HB_BOOL hb_fsLinkSym( const char * pszTarget, const char * pszNewFile )
             DWORD dwAttr;
             HB_BOOL fDir;
 
-            lpSymlinkFileName = HB_FSNAMECONV( pszNewFile, &lpSymlinkFileNameFree );
-            lpTargetFileName = HB_FSNAMECONV( pszTarget, &lpTargetFileNameFree );
+            lpSymlinkFileName = HB_FSNAMECONV(pszNewFile, &lpSymlinkFileNameFree);
+            lpTargetFileName = HB_FSNAMECONV(pszTarget, &lpTargetFileNameFree);
 
             dwAttr = GetFileAttributes( lpTargetFileName );
             fDir = ( dwAttr != INVALID_FILE_ATTRIBUTES ) && ( dwAttr & FILE_ATTRIBUTE_DIRECTORY );
 
             fResult = s_pCreateSymbolicLink( lpSymlinkFileName, lpTargetFileName, fDir ? SYMBOLIC_LINK_FLAG_DIRECTORY : 0 ) != 0;
-            hb_fsSetIOError( fResult, 0 );
+            hb_fsSetIOError(fResult, 0);
 
             if( lpSymlinkFileNameFree )
             {
@@ -208,11 +208,11 @@ HB_BOOL hb_fsLinkSym( const char * pszTarget, const char * pszNewFile )
          char * pszTargetFree;
          char * pszNewFileFree;
 
-         pszTarget = hb_fsNameConv( pszTarget, &pszTargetFree );
-         pszNewFile = hb_fsNameConv( pszNewFile, &pszNewFileFree );
+         pszTarget = hb_fsNameConv(pszTarget, &pszTargetFree);
+         pszNewFile = hb_fsNameConv(pszNewFile, &pszNewFileFree);
 
          fResult = ( symlink( pszTarget, pszNewFile ) == 0 );
-         hb_fsSetIOError( fResult, 0 );
+         hb_fsSetIOError(fResult, 0);
 
          if( pszTargetFree )
          {
@@ -292,7 +292,7 @@ char * hb_fsLinkRead( const char * pszFile )
             DWORD dwAttr;
             HB_BOOL fDir;
 
-            lpFileName = HB_FSNAMECONV( pszFile, &lpFileNameFree );
+            lpFileName = HB_FSNAMECONV(pszFile, &lpFileNameFree);
 
             dwAttr = GetFileAttributes( lpFileName );
             fDir = ( dwAttr != INVALID_FILE_ATTRIBUTES ) && ( dwAttr & FILE_ATTRIBUTE_DIRECTORY );
@@ -307,7 +307,7 @@ char * hb_fsLinkRead( const char * pszFile )
 
             if( hFile == INVALID_HANDLE_VALUE )
             {
-               hb_fsSetIOError( HB_FALSE, 0 );
+               hb_fsSetIOError(HB_FALSE, 0);
             }
             else
             {
@@ -322,7 +322,7 @@ char * hb_fsLinkRead( const char * pszFile )
                      pszLink = HB_OSSTRDUP( lpLink );
                   }
 
-                  hb_fsSetIOError( HB_TRUE, 0 );
+                  hb_fsSetIOError(HB_TRUE, 0);
                }
                else
                {
@@ -345,11 +345,11 @@ char * hb_fsLinkRead( const char * pszFile )
          char * pszFileFree;
          size_t size;
 
-         pszFile = hb_fsNameConv( pszFile, &pszFileFree );
+         pszFile = hb_fsNameConv(pszFile, &pszFileFree);
 
          pszLink = static_cast<char*>(hb_xgrab(HB_PATH_MAX + 1));
          size = readlink( pszFile, pszLink, HB_PATH_MAX );
-         hb_fsSetIOError( size != static_cast<size_t>(-1), 0 );
+         hb_fsSetIOError(size != static_cast<size_t>(-1), 0);
          if( size == static_cast<size_t>(-1) )
          {
             hb_xfree(pszLink);
@@ -391,11 +391,11 @@ HB_FUNC( HB_FLINK )
 
    if( pszExisting && pszNewFile )
    {
-      fResult = hb_fsLink( pszExisting, pszNewFile );
+      fResult = hb_fsLink(pszExisting, pszNewFile);
       uiError = hb_fsError();
    }
    hb_retni( fResult ? 0 : F_ERROR );
-   hb_fsSetFError( uiError );
+   hb_fsSetFError(uiError);
 }
 
 HB_FUNC( HB_FLINKSYM )
@@ -406,11 +406,11 @@ HB_FUNC( HB_FLINKSYM )
 
    if( pszTarget && pszNewFile )
    {
-      fResult = hb_fsLinkSym( pszTarget, pszNewFile );
+      fResult = hb_fsLinkSym(pszTarget, pszNewFile);
       uiError = hb_fsError();
    }
    hb_retni( fResult ? 0 : F_ERROR );
-   hb_fsSetFError( uiError );
+   hb_fsSetFError(uiError);
 }
 
 HB_FUNC( HB_FLINKREAD )
@@ -421,9 +421,9 @@ HB_FUNC( HB_FLINKREAD )
 
    if( pszFile )
    {
-      pszResult = hb_fsLinkRead( pszFile );
+      pszResult = hb_fsLinkRead(pszFile);
       uiError = hb_fsError();
    }
    hb_retc_buffer( pszResult );
-   hb_fsSetFError( uiError );
+   hb_fsSetFError(uiError);
 }

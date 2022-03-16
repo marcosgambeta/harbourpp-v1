@@ -103,10 +103,10 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
          WIN32_FILE_ATTRIBUTE_DATA attrex;
          HB_BOOL fResult;
 
-         lpFileName = HB_FSNAMECONV( pszFileName, &lpFree );
+         lpFileName = HB_FSNAMECONV(pszFileName, &lpFree);
          memset(&attrex, 0, sizeof(attrex));
          fResult = GetFileAttributesEx( lpFileName, GetFileExInfoStandard, &attrex ) && ( attrex.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ) == 0;
-         hb_fsSetIOError( fResult, 0 );
+         hb_fsSetIOError(fResult, 0);
          if( lpFree )
          {
             hb_xfree(lpFree);
@@ -118,12 +118,12 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
       }
       else
       {
-         PHB_FFIND ffind = hb_fsFindFirst( pszFileName, HB_FA_ALL );
-         hb_fsSetIOError( ffind != nullptr, 0 );
+         PHB_FFIND ffind = hb_fsFindFirst(pszFileName, HB_FA_ALL);
+         hb_fsSetIOError(ffind != nullptr, 0);
          if( ffind )
          {
             HB_FOFFSET size = ffind->size;
-            hb_fsFindClose( ffind );
+            hb_fsFindClose(ffind);
             return size;
          }
       }
@@ -131,11 +131,11 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
       char * pszFree;
       HB_BOOL fResult;
       struct stat64 statbuf;
-      pszFileName = hb_fsNameConv( pszFileName, &pszFree );
+      pszFileName = hb_fsNameConv(pszFileName, &pszFree);
       statbuf.st_size = 0;
       hb_vmUnlock();
       fResult = stat64( pszFileName, &statbuf ) == 0;
-      hb_fsSetIOError( fResult, 0 );
+      hb_fsSetIOError(fResult, 0);
       hb_vmLock();
       if( pszFree )
       {
@@ -149,11 +149,11 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
       char * pszFree;
       HB_BOOL fResult;
       struct stat statbuf;
-      pszFileName = hb_fsNameConv( pszFileName, &pszFree );
+      pszFileName = hb_fsNameConv(pszFileName, &pszFree);
       statbuf.st_size = 0;
       hb_vmUnlock();
       fResult = stat( static_cast<char*>(pszFileName), &statbuf ) == 0;
-      hb_fsSetIOError( fResult, 0 );
+      hb_fsSetIOError(fResult, 0);
       hb_vmLock();
       if( pszFree )
       {
@@ -167,12 +167,12 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
    }
    else
    {
-      HB_FHANDLE hFileHandle = hb_fsOpen( pszFileName, FO_READ | FO_COMPAT );
+      HB_FHANDLE hFileHandle = hb_fsOpen(pszFileName, FO_READ | FO_COMPAT);
 
       if( hFileHandle != FS_ERROR )
       {
-         HB_FOFFSET nPos = hb_fsSeekLarge( hFileHandle, 0, FS_END );
-         hb_fsClose( hFileHandle );
+         HB_FOFFSET nPos = hb_fsSeekLarge(hFileHandle, 0, FS_END);
+         hb_fsClose(hFileHandle);
          return nPos;
       }
    }
@@ -184,5 +184,5 @@ HB_FUNC( HB_FSIZE )
 {
    const char * pszFile = hb_parc(1);
 
-   hb_retnint( pszFile ? hb_fsFSize( pszFile, hb_parldef( 2, HB_TRUE ) ) : 0 );
+   hb_retnint( pszFile ? hb_fsFSize(pszFile, hb_parldef( 2, HB_TRUE )) : 0 );
 }

@@ -1156,7 +1156,7 @@ HB_ERRCODE hb_gtOutStd( const char * szStr, HB_SIZE nLen )
    }
    else
    {
-      hb_fsWriteLarge( static_cast<HB_FHANDLE>(HB_STDOUT_HANDLE), szStr, nLen );
+      hb_fsWriteLarge(static_cast<HB_FHANDLE>(HB_STDOUT_HANDLE), szStr, nLen);
    }
 
    return HB_SUCCESS;
@@ -1178,7 +1178,7 @@ HB_ERRCODE hb_gtOutErr( const char * szStr, HB_SIZE nLen )
    }
    else
    {
-      hb_fsWriteLarge( static_cast<HB_FHANDLE>(HB_STDERR_HANDLE), szStr, nLen );
+      hb_fsWriteLarge(static_cast<HB_FHANDLE>(HB_STDERR_HANDLE), szStr, nLen);
    }
 
    return HB_SUCCESS;

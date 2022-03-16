@@ -95,7 +95,7 @@ using PHB_GTCGI = HB_GTCGI *;
 
 static void hb_gt_cgi_termOut( PHB_GTCGI pGTCGI, const char * szStr, HB_SIZE nLen )
 {
-   hb_fsWriteLarge( pGTCGI->hStdout, szStr, nLen );
+   hb_fsWriteLarge(pGTCGI->hStdout, szStr, nLen);
 }
 
 static void hb_gt_cgi_newLine( PHB_GTCGI pGTCGI )
@@ -118,7 +118,7 @@ static void hb_gt_cgi_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    pGTCGI->szCrLf = hb_strdup(hb_conNewLine());
    pGTCGI->nCrLf = strlen(pGTCGI->szCrLf);
 
-   hb_fsSetDevMode( pGTCGI->hStdout, FD_BINARY );
+   hb_fsSetDevMode(pGTCGI->hStdout, FD_BINARY);
 
    HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
    HB_GTSELF_SETFLAG(pGT, HB_GTI_STDOUTCON, HB_TRUE);

@@ -3497,7 +3497,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
             return HB_FAILURE;
          }
          pFileName->szExtension = hb_itemGetCPtr(pItem);
-         hb_fsFNameMerge( szFileName, pFileName );
+         hb_fsFNameMerge(szFileName, pFileName);
       }
       else
       {
@@ -3992,7 +3992,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
    {
       pFileName = hb_fsFNameSplit(szFileName);
       pFileName->szExtension = nullptr;
-      hb_fsFNameMerge( szFileName, pFileName );
+      hb_fsFNameMerge(szFileName, pFileName);
       hb_xfree(pFileName);
       pCreateInfo->abName = szFileName;
       errCode = SELF_CREATEMEMFILE( &pArea->area, pCreateInfo );
@@ -4719,7 +4719,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
          return HB_FAILURE;
       }
       pFileName->szExtension = hb_itemGetCPtr(pItem);
-      hb_fsFNameMerge( szFileName, pFileName );
+      hb_fsFNameMerge(szFileName, pFileName);
    }
 
    /* Create default alias if necessary */
@@ -5246,7 +5246,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
    {
       pFileName = hb_fsFNameSplit(szFileName);
       pFileName->szExtension = nullptr;
-      hb_fsFNameMerge( szFileName, pFileName );
+      hb_fsFNameMerge(szFileName, pFileName);
       hb_xfree(pFileName);
       pOpenInfo->abName = szFileName;
       errCode = SELF_OPENMEMFILE( &pArea->area, pOpenInfo );
@@ -7219,7 +7219,7 @@ static HB_ERRCODE hb_dbfDrop( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIte
          pFileName->szExtension = hb_itemGetCPtr(pFileExt);
       }
    }
-   hb_fsFNameMerge( szFileName, pFileName );
+   hb_fsFNameMerge(szFileName, pFileName);
    hb_xfree(pFileName);
 
    /* Use hb_fileExists() first to locate table which can be in different path */
@@ -7243,7 +7243,7 @@ static HB_ERRCODE hb_dbfDrop( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIte
             if( szExt[0] )
             {
                pFileName->szExtension = szExt;
-               hb_fsFNameMerge( szFileName, pFileName );
+               hb_fsFNameMerge(szFileName, pFileName);
                hb_fileDelete( szFileName );
             }
          }
@@ -7258,7 +7258,7 @@ static HB_ERRCODE hb_dbfDrop( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIte
             if( szExt[0] )
             {
                pFileName->szExtension = szExt;
-               hb_fsFNameMerge( szFileName, pFileName );
+               hb_fsFNameMerge(szFileName, pFileName);
                hb_fileDelete( szFileName );
             }
          }
@@ -7307,7 +7307,7 @@ static HB_ERRCODE hb_dbfExists( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pI
          pFileName->szExtension = hb_itemGetCPtr(pFileExt);
       }
    }
-   hb_fsFNameMerge( szFileName, pFileName );
+   hb_fsFNameMerge(szFileName, pFileName);
    hb_xfree(pFileName);
 
    if( pFileExt )
@@ -7353,7 +7353,7 @@ static HB_ERRCODE hb_dbfRename( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pI
          pFileName->szExtension = hb_itemGetCPtr(pFileExt);
       }
    }
-   hb_fsFNameMerge( szFileName, pFileName );
+   hb_fsFNameMerge(szFileName, pFileName);
    hb_xfree(pFileName);
 
    szFile = hb_itemGetCPtr(pItemNew);
@@ -7382,7 +7382,7 @@ static HB_ERRCODE hb_dbfRename( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pI
       {
          pFileNameNew->szPath = pFileName->szPath;
       }
-      hb_fsFNameMerge( szFileNew, pFileNameNew );
+      hb_fsFNameMerge(szFileNew, pFileNameNew);
 
       fResult = hb_fileRename( szFileName, szFileNew );
       if( fResult && fTable )
@@ -7400,8 +7400,8 @@ static HB_ERRCODE hb_dbfRename( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pI
             {
                pFileName->szExtension = szExt;
                pFileNameNew->szExtension = szExt;
-               hb_fsFNameMerge( szFileName, pFileName );
-               hb_fsFNameMerge( szFileNew, pFileNameNew );
+               hb_fsFNameMerge(szFileName, pFileName);
+               hb_fsFNameMerge(szFileNew, pFileNameNew);
                hb_fileRename( szFileName, szFileNew );
             }
          }
@@ -7417,8 +7417,8 @@ static HB_ERRCODE hb_dbfRename( LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pI
             {
                pFileName->szExtension = szExt;
                pFileNameNew->szExtension = szExt;
-               hb_fsFNameMerge( szFileName, pFileName );
-               hb_fsFNameMerge( szFileNew, pFileNameNew );
+               hb_fsFNameMerge(szFileName, pFileName);
+               hb_fsFNameMerge(szFileNew, pFileNameNew);
                hb_fileRename( szFileName, szFileNew );
             }
          }

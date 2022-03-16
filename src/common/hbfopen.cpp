@@ -74,8 +74,8 @@ FILE * hb_fopen( const char * path, const char * mode )
    LPCTSTR lpPath, lpMode;
    LPTSTR lpFreeP, lpFreeM;
 
-   lpPath = HB_FSNAMECONV( path, &lpFreeP );
-   lpMode = HB_FSNAMECONV( mode, &lpFreeM );
+   lpPath = HB_FSNAMECONV(path, &lpFreeP);
+   lpMode = HB_FSNAMECONV(mode, &lpFreeM);
 
    hb_vmUnlock();
    #if defined( HB_USE_FSOPEN )
@@ -101,7 +101,7 @@ FILE * hb_fopen( const char * path, const char * mode )
 #else
    char * pszFree = nullptr;
 
-   path = hb_fsNameConv( path, &pszFree );
+   path = hb_fsNameConv(path, &pszFree);
 
    hb_vmUnlock();
    #if defined( HB_USE_FSOPEN )

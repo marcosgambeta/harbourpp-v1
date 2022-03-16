@@ -4233,7 +4233,7 @@ static HB_ERRCODE hb_fptCreateMemFile( FPTAREAP pArea, LPDBOPENINFO pCreateInfo 
             if( SELF_INFO( &pArea->area, DBI_MEMOEXT, pItem ) == HB_SUCCESS )
             {
                pFileName->szExtension = hb_itemGetCPtr(pItem);
-               hb_fsFNameMerge( szFileName, pFileName );
+               hb_fsFNameMerge(szFileName, pFileName);
             }
          }
          else
@@ -4448,7 +4448,7 @@ static HB_ERRCODE hb_fptOpenMemFile( FPTAREAP pArea, LPDBOPENINFO pOpenInfo )
       if( SELF_INFO( &pArea->area, DBI_MEMOEXT, pItem ) == HB_SUCCESS )
       {
          pFileName->szExtension = hb_itemGetCPtr(pItem);
-         hb_fsFNameMerge( szFileName, pFileName );
+         hb_fsFNameMerge(szFileName, pFileName);
       }
       hb_itemRelease(pItem);
    }

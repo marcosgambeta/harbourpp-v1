@@ -326,7 +326,7 @@ HB_BOOL hb_fsNameExists( const char * pszFileName )
    {
 #if defined( HB_OS_WIN )
       LPTSTR lpFree;
-      LPCTSTR lpFileName = HB_FSNAMECONV( pszFileName, &lpFree );
+      LPCTSTR lpFileName = HB_FSNAMECONV(pszFileName, &lpFree);
 
       fExist = ( GetFileAttributes( lpFileName ) != INVALID_FILE_ATTRIBUTES );
 
@@ -337,7 +337,7 @@ HB_BOOL hb_fsNameExists( const char * pszFileName )
 #else
       char * pszFree = nullptr;
 
-      pszFileName = hb_fsNameConv( pszFileName, &pszFree );
+      pszFileName = hb_fsNameConv(pszFileName, &pszFree);
 
       {
 #  if defined( HB_OS_UNIX )
@@ -375,7 +375,7 @@ HB_BOOL hb_fsFileExists( const char * pszFileName )
    {
 #if defined( HB_OS_WIN )
       LPTSTR lpFree;
-      LPCTSTR lpFileName = HB_FSNAMECONV( pszFileName, &lpFree );
+      LPCTSTR lpFileName = HB_FSNAMECONV(pszFileName, &lpFree);
       DWORD dwAttr;
 
       dwAttr = GetFileAttributes( lpFileName );
@@ -388,7 +388,7 @@ HB_BOOL hb_fsFileExists( const char * pszFileName )
 #else
       char * pszFree = nullptr;
 
-      pszFileName = hb_fsNameConv( pszFileName, &pszFree );
+      pszFileName = hb_fsNameConv(pszFileName, &pszFree);
 
       {
 #  if defined( HB_OS_UNIX )
@@ -426,7 +426,7 @@ HB_BOOL hb_fsDirExists( const char * pszDirName )
    {
 #if defined( HB_OS_WIN )
       LPTSTR lpFree;
-      LPCTSTR lpDirName = HB_FSNAMECONV( pszDirName, &lpFree );
+      LPCTSTR lpDirName = HB_FSNAMECONV(pszDirName, &lpFree);
       DWORD dwAttr;
 
       dwAttr = GetFileAttributes( lpDirName );
@@ -439,7 +439,7 @@ HB_BOOL hb_fsDirExists( const char * pszDirName )
 #else
       char * pszFree = nullptr;
 
-      pszDirName = hb_fsNameConv( pszDirName, &pszFree );
+      pszDirName = hb_fsNameConv(pszDirName, &pszFree);
 
       {
 #  if defined( HB_OS_UNIX )

@@ -77,7 +77,7 @@
    do \
    { \
       ( ret ) = ( exp ); \
-      hb_fsSetIOError( ( ret ) != -1, 0 ); \
+      hb_fsSetIOError(( ret ) != -1, 0); \
    } \
    while( ( ret ) == -1 && hb_fsOsError() == static_cast<HB_ERRCODE>(EINTR) && hb_vmRequestQuery() == 0 )
 #else
@@ -85,7 +85,7 @@
    do \
    { \
       ( ret ) = ( exp ); \
-      hb_fsSetIOError( ( ret ) != -1, 0 ); \
+      hb_fsSetIOError(( ret ) != -1, 0); \
    } \
    while(0)
 #endif
@@ -272,7 +272,7 @@ static int hb_fsProcessExec( const char * pszFileName, HB_FHANDLE hStdin, HB_FHA
             }
             for( int i = 3; i < iMaxFD; ++i )
             {
-               hb_fsClose( i );
+               hb_fsClose(i);
             }
          }
          /* reset extended process attributes */
@@ -306,7 +306,7 @@ static int hb_fsProcessExec( const char * pszFileName, HB_FHANDLE hStdin, HB_FHA
       }
       else
       {
-         hb_fsSetIOError( HB_FALSE, 0 );
+         hb_fsSetIOError(HB_FALSE, 0);
       }
    }
 #else
@@ -317,23 +317,23 @@ static int hb_fsProcessExec( const char * pszFileName, HB_FHANDLE hStdin, HB_FHA
 #  else
       iResult = spawnvp( P_WAIT, argv[0], static_cast<char* const*>(argv) );
 #  endif
-   hb_fsSetIOError( iResult >= 0, 0 );
+   hb_fsSetIOError(iResult >= 0, 0);
 #endif
 
    if( iStdIn != FS_ERROR )
    {
       dup2( iStdIn,  0 );
-      hb_fsCloseRaw( iStdIn );
+      hb_fsCloseRaw(iStdIn);
    }
    if( iStdOut != FS_ERROR )
    {
       dup2( iStdOut, 1 );
-      hb_fsCloseRaw( iStdOut );
+      hb_fsCloseRaw(iStdOut);
    }
    if( iStdErr != FS_ERROR )
    {
       dup2( iStdErr, 2 );
-      hb_fsCloseRaw( iStdErr );
+      hb_fsCloseRaw(iStdErr);
    }
 
    hb_vmLock();
@@ -348,7 +348,7 @@ static int hb_fsProcessExec( const char * pszFileName, HB_FHANDLE hStdin, HB_FHA
    HB_SYMBOL_UNUSED(hStdout);
    HB_SYMBOL_UNUSED(hStderr);
 
-   hb_fsSetError( static_cast<HB_ERRCODE>(FS_ERROR) );
+   hb_fsSetError(static_cast<HB_ERRCODE>(FS_ERROR));
 }
 #endif
 
@@ -370,11 +370,11 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
 
    if( phStdin != nullptr )
    {
-      fError = ! hb_fsPipeCreate( hPipeIn );
+      fError = ! hb_fsPipeCreate(hPipeIn);
    }
    if( ! fError && phStdout != nullptr )
    {
-      fError = ! hb_fsPipeCreate( hPipeOut );
+      fError = ! hb_fsPipeCreate(hPipeOut);
    }
    if( ! fError && phStderr != nullptr )
    {
@@ -385,7 +385,7 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
       }
       else
       {
-         fError = ! hb_fsPipeCreate( hPipeErr );
+         fError = ! hb_fsPipeCreate(hPipeErr);
       }
    }
 
@@ -400,15 +400,15 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
 
       if( phStdin != nullptr )
       {
-         SetHandleInformation( reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hPipeIn [1])), HANDLE_FLAG_INHERIT, 0 );
+         SetHandleInformation(reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hPipeIn[1])), HANDLE_FLAG_INHERIT, 0);
       }
       if( phStdout != nullptr )
       {
-         SetHandleInformation( reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hPipeOut[0])), HANDLE_FLAG_INHERIT, 0 );
+         SetHandleInformation(reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hPipeOut[0])), HANDLE_FLAG_INHERIT, 0);
       }
       if( phStderr != nullptr && phStdout != phStderr )
       {
-         SetHandleInformation( reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hPipeErr[0])), HANDLE_FLAG_INHERIT, 0 );
+         SetHandleInformation(reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hPipeErr[0])), HANDLE_FLAG_INHERIT, 0);
       }
 
       memset(&pi, 0, sizeof(pi));
@@ -423,7 +423,7 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
          si.dwFlags |= STARTF_USESHOWWINDOW;
 #  endif
          si.wShowWindow = SW_HIDE;
-         si.hStdInput  = reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hPipeIn [0]));
+         si.hStdInput  = reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hPipeIn[0]));
          si.hStdOutput = reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hPipeOut[1]));
          si.hStdError  = reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hPipeErr[1]));
 #  ifdef DETACHED_PROCESS
@@ -432,9 +432,9 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
       }
       else
       {
-         si.hStdInput  = phStdin  ? reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hPipeIn [0])) : GetStdHandle( STD_INPUT_HANDLE );
-         si.hStdOutput = phStdout ? reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hPipeOut[1])) : GetStdHandle( STD_OUTPUT_HANDLE );
-         si.hStdError  = phStderr ? reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hPipeErr[1])) : GetStdHandle( STD_ERROR_HANDLE );
+         si.hStdInput  = phStdin  ? reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hPipeIn[0])) : GetStdHandle(STD_INPUT_HANDLE);
+         si.hStdOutput = phStdout ? reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hPipeOut[1])) : GetStdHandle(STD_OUTPUT_HANDLE);
+         si.hStdError  = phStderr ? reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hPipeErr[1])) : GetStdHandle(STD_ERROR_HANDLE);
       }
       fError = ! CreateProcess( nullptr,           /* lpAppName */
                                 lpCommand,
@@ -446,7 +446,7 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
                                 nullptr,           /* lpCurrentDirectory */
                                 &si,
                                 &pi );
-      hb_fsSetIOError( ! fError, 0 );
+      hb_fsSetIOError(! fError, 0);
       hb_xfree(lpCommand);
       if( ! fError )
       {
@@ -526,26 +526,26 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
 
             if( hNull != FS_ERROR )
             {
-               hb_fsClose( hNull );
+               hb_fsClose(hNull);
             }
          }
 
          if( phStdin != nullptr )
          {
             dup2( hPipeIn[0], 0 );
-            hb_fsClose( hPipeIn[1] );
+            hb_fsClose(hPipeIn[1]);
          }
          if( phStdout != nullptr )
          {
             dup2( hPipeOut[1], 1 );
-            hb_fsClose( hPipeOut[0] );
+            hb_fsClose(hPipeOut[0]);
          }
          if( phStderr != nullptr )
          {
             dup2( hPipeErr[1], 2 );
             if( phStdout != phStderr )
             {
-               hb_fsClose( hPipeErr[0] );
+               hb_fsClose(hPipeErr[0]);
             }
          }
 
@@ -559,7 +559,7 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
             }
             for( int i = 3; i < iMaxFD; ++i )
             {
-               hb_fsClose( i );
+               hb_fsClose(i);
             }
          }
 
@@ -577,7 +577,7 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
             _exit( EXIT_FAILURE );
          }
       }
-      hb_fsSetIOError( ! fError, 0 );
+      hb_fsSetIOError(! fError, 0);
 
       hb_freeArgs( argv );
 
@@ -675,7 +675,7 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
          hResult = static_cast<HB_FHANDLE>(pid);
       }
 
-      hb_fsSetIOError( ! fError, 0 );
+      hb_fsSetIOError(! fError, 0);
 
 #else
       int iTODO; /* TODO: for given platform */
@@ -684,35 +684,35 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
       HB_SYMBOL_UNUSED(fDetach);
       HB_SYMBOL_UNUSED(pulPID);
 
-      hb_fsSetError( static_cast<HB_ERRCODE>(FS_ERROR) );
+      hb_fsSetError(static_cast<HB_ERRCODE>(FS_ERROR));
 #endif
    }
 
    if( hPipeIn[0] != FS_ERROR )
    {
-      hb_fsCloseRaw( hPipeIn[0] );
+      hb_fsCloseRaw(hPipeIn[0]);
    }
    if( hPipeIn[1] != FS_ERROR )
    {
-      hb_fsCloseRaw( hPipeIn[1] );
+      hb_fsCloseRaw(hPipeIn[1]);
    }
    if( hPipeOut[0] != FS_ERROR )
    {
-      hb_fsCloseRaw( hPipeOut[0] );
+      hb_fsCloseRaw(hPipeOut[0]);
    }
    if( hPipeOut[1] != FS_ERROR )
    {
-      hb_fsCloseRaw( hPipeOut[1] );
+      hb_fsCloseRaw(hPipeOut[1]);
    }
    if( phStdout != phStderr )
    {
       if( hPipeErr[0] != FS_ERROR )
       {
-         hb_fsCloseRaw( hPipeErr[0] );
+         hb_fsCloseRaw(hPipeErr[0]);
       }
       if( hPipeErr[1] != FS_ERROR )
       {
-         hb_fsCloseRaw( hPipeErr[1] );
+         hb_fsCloseRaw(hPipeErr[1]);
       }
    }
 
@@ -742,7 +742,7 @@ int hb_fsProcessValue( HB_FHANDLE hProcess, HB_BOOL fWait )
          fError = ! GetExitCodeProcess( hProc, &dwResult );
          iRetStatus = ! fError ? static_cast<int>(dwResult) : -2;
       }
-      hb_fsSetIOError( ! fError, 0 );
+      hb_fsSetIOError(! fError, 0);
       if( ! fError )
       {
          CloseHandle( hProc );
@@ -751,7 +751,7 @@ int hb_fsProcessValue( HB_FHANDLE hProcess, HB_BOOL fWait )
    }
    else
    {
-      hb_fsSetError( static_cast<HB_ERRCODE>(FS_ERROR) );
+      hb_fsSetError(static_cast<HB_ERRCODE>(FS_ERROR));
    }
 }
 #elif defined( HB_OS_UNIX )
@@ -783,7 +783,7 @@ int hb_fsProcessValue( HB_FHANDLE hProcess, HB_BOOL fWait )
    }
    else
    {
-      hb_fsSetError( static_cast<HB_ERRCODE>(FS_ERROR) );
+      hb_fsSetError(static_cast<HB_ERRCODE>(FS_ERROR));
    }
 }
 #else
@@ -792,7 +792,7 @@ int hb_fsProcessValue( HB_FHANDLE hProcess, HB_BOOL fWait )
 
    HB_SYMBOL_UNUSED(hProcess);
    HB_SYMBOL_UNUSED(fWait);
-   hb_fsSetError( static_cast<HB_ERRCODE>(FS_ERROR) );
+   hb_fsSetError(static_cast<HB_ERRCODE>(FS_ERROR));
 }
 #endif
    return iRetStatus;
@@ -816,7 +816,7 @@ HB_BOOL hb_fsProcessClose( HB_FHANDLE hProcess, HB_BOOL fGentle )
    if( hProc )
    {
       fResult = TerminateProcess( hProc, fGentle ? 0 : 1 ) != 0;
-      hb_fsSetIOError( fResult, 0 );
+      hb_fsSetIOError(fResult, 0);
       /* hProc has to be closed by hb_fsProcessValue() */
       #if 0
       CloseHandle( hProc );
@@ -824,7 +824,7 @@ HB_BOOL hb_fsProcessClose( HB_FHANDLE hProcess, HB_BOOL fGentle )
    }
    else
    {
-      hb_fsSetError( static_cast<HB_ERRCODE>(FS_ERROR) );
+      hb_fsSetError(static_cast<HB_ERRCODE>(FS_ERROR));
    }
 }
 #elif defined( HB_OS_UNIX )
@@ -833,11 +833,11 @@ HB_BOOL hb_fsProcessClose( HB_FHANDLE hProcess, HB_BOOL fGentle )
    if( pid > 0 )
    {
       fResult = kill( pid, fGentle ? SIGTERM : SIGKILL ) == 0;
-      hb_fsSetIOError( fResult, 0 );
+      hb_fsSetIOError(fResult, 0);
    }
    else
    {
-      hb_fsSetError( static_cast<HB_ERRCODE>(FS_ERROR) );
+      hb_fsSetError(static_cast<HB_ERRCODE>(FS_ERROR));
    }
 }
 #else
@@ -846,7 +846,7 @@ HB_BOOL hb_fsProcessClose( HB_FHANDLE hProcess, HB_BOOL fGentle )
 
    HB_SYMBOL_UNUSED(hProcess);
    HB_SYMBOL_UNUSED(fGentle);
-   hb_fsSetError( static_cast<HB_ERRCODE>(FS_ERROR) );
+   hb_fsSetError(static_cast<HB_ERRCODE>(FS_ERROR));
 }
 #endif
    return fResult;
@@ -895,11 +895,11 @@ int hb_fsProcessRun( const char * pszFileName,
    sTmpIn[0] = sTmpOut[0] = sTmpErr[0] = '\0';
    if( pStdInBuf )
    {
-      hStdin = hb_fsCreateTempEx( sTmpIn, nullptr, nullptr, nullptr, FC_NORMAL );
+      hStdin = hb_fsCreateTempEx(sTmpIn, nullptr, nullptr, nullptr, FC_NORMAL);
       if( nStdInLen )
       {
-         hb_fsWriteLarge( hStdin, pStdInBuf, nStdInLen );
-         hb_fsSeek( hStdin, 0, FS_SET );
+         hb_fsWriteLarge(hStdin, pStdInBuf, nStdInLen);
+         hb_fsSeek(hStdin, 0, FS_SET);
       }
    }
    else if( fDetach )
@@ -909,7 +909,7 @@ int hb_fsProcessRun( const char * pszFileName,
 
    if( pStdOutPtr && pulStdOut )
    {
-      hStdout = hb_fsCreateTempEx( sTmpOut, nullptr, nullptr, nullptr, FC_NORMAL );
+      hStdout = hb_fsCreateTempEx(sTmpOut, nullptr, nullptr, nullptr, FC_NORMAL);
    }
    else if( fDetach )
    {
@@ -924,7 +924,7 @@ int hb_fsProcessRun( const char * pszFileName,
       }
       else
       {
-         hStderr = hb_fsCreateTempEx( sTmpErr, nullptr, nullptr, nullptr, FC_NORMAL );
+         hStderr = hb_fsCreateTempEx(sTmpErr, nullptr, nullptr, nullptr, FC_NORMAL);
       }
    }
    else if( fDetach )
@@ -932,50 +932,50 @@ int hb_fsProcessRun( const char * pszFileName,
       hStderr = _HB_NULLHANDLE();
    }
 
-   iResult = hb_fsProcessExec( pszFileName, hStdin, hStdout, hStderr );
+   iResult = hb_fsProcessExec(pszFileName, hStdin, hStdout, hStderr);
 
    if( hStdin != FS_ERROR )
    {
-      hb_fsClose( hStdin );
+      hb_fsClose(hStdin);
       if( sTmpIn[0] )
       {
-         hb_fsDelete( sTmpIn );
+         hb_fsDelete(sTmpIn);
       }
    }
    if( hStdout != FS_ERROR )
    {
       if( pStdOutPtr && pulStdOut )
       {
-         nOutBuf = hb_fsSeek( hStdout, 0, FS_END );
+         nOutBuf = hb_fsSeek(hStdout, 0, FS_END);
          if( nOutBuf )
          {
             pOutBuf = static_cast<char*>(hb_xgrab(nOutBuf + 1));
-            hb_fsSeek( hStdout, 0, FS_SET );
-            nOutBuf = hb_fsReadLarge( hStdout, pOutBuf, nOutBuf );
+            hb_fsSeek(hStdout, 0, FS_SET);
+            nOutBuf = hb_fsReadLarge(hStdout, pOutBuf, nOutBuf);
          }
       }
-      hb_fsClose( hStdout );
+      hb_fsClose(hStdout);
       if( sTmpOut[0] )
       {
-         hb_fsDelete( sTmpOut );
+         hb_fsDelete(sTmpOut);
       }
    }
    if( hStderr != FS_ERROR && hStderr != hStdout )
    {
       if( pStdErrPtr && pulStdErr )
       {
-         nErrBuf = hb_fsSeek( hStderr, 0, FS_END );
+         nErrBuf = hb_fsSeek(hStderr, 0, FS_END);
          if( nErrBuf )
          {
             pErrBuf = static_cast<char*>(hb_xgrab(nErrBuf + 1));
-            hb_fsSeek( hStderr, 0, FS_SET );
-            nErrBuf = hb_fsReadLarge( hStderr, pErrBuf, nErrBuf );
+            hb_fsSeek(hStderr, 0, FS_SET);
+            nErrBuf = hb_fsReadLarge(hStderr, pErrBuf, nErrBuf);
          }
       }
-      hb_fsClose( hStderr );
+      hb_fsClose(hStderr);
       if( sTmpErr[0] )
       {
-         hb_fsDelete( sTmpErr );
+         hb_fsDelete(sTmpErr);
       }
    }
 }
@@ -987,7 +987,7 @@ int hb_fsProcessRun( const char * pszFileName,
    hb_vmUnlock();
 
    iResult = -1;
-   hProcess = hb_fsProcessOpen( pszFileName, phStdin, phStdout, phStderr, fDetach, nullptr );
+   hProcess = hb_fsProcessOpen(pszFileName, phStdin, phStdout, phStderr, fDetach, nullptr);
    if( hProcess != FS_ERROR )
    {
 #if defined( HB_OS_WIN )
@@ -997,7 +997,7 @@ int hb_fsProcessRun( const char * pszFileName,
 
       if( nStdInLen == 0 && hStdin != FS_ERROR )
       {
-         hb_fsClose( hStdin );
+         hb_fsClose(hStdin);
          hStdin = FS_ERROR;
       }
       if( hStdout == hStderr )
@@ -1023,15 +1023,15 @@ int hb_fsProcessRun( const char * pszFileName,
       {
          if( hStdin != FS_ERROR )
          {
-            hb_fsPipeUnblock( hStdin );
+            hb_fsPipeUnblock(hStdin);
          }
          if( hStdout != FS_ERROR )
          {
-            hb_fsPipeUnblock( hStdout );
+            hb_fsPipeUnblock(hStdout);
          }
          if( hStderr != FS_ERROR )
          {
-            hb_fsPipeUnblock( hStderr );
+            hb_fsPipeUnblock(hStderr);
          }
       }
 
@@ -1056,14 +1056,14 @@ int hb_fsProcessRun( const char * pszFileName,
                }
                pOutBuf = static_cast<char*>(hb_xrealloc(pOutBuf, nOutSize + 1));
             }
-            nLen = hb_fsReadLarge( hStdout, pOutBuf + nOutBuf, nOutSize - nOutBuf );
+            nLen = hb_fsReadLarge(hStdout, pOutBuf + nOutBuf, nOutSize - nOutBuf);
             if( nLen > 0 )
             {
                nOutBuf += nLen;
             }
             else if( fBlocked )
             {
-               hb_fsClose( hStdout );
+               hb_fsClose(hStdout);
                hStdout = FS_ERROR;
                --iPipeCount;
             }
@@ -1084,14 +1084,14 @@ int hb_fsProcessRun( const char * pszFileName,
                }
                pErrBuf = static_cast<char*>(hb_xrealloc(pErrBuf, nErrSize + 1));
             }
-            nLen = hb_fsReadLarge( hStderr, pErrBuf + nErrBuf, nErrSize - nErrBuf );
+            nLen = hb_fsReadLarge(hStderr, pErrBuf + nErrBuf, nErrSize - nErrBuf);
             if( nLen > 0 )
             {
                nErrBuf += nLen;
             }
             else if( fBlocked )
             {
-               hb_fsClose( hStderr );
+               hb_fsClose(hStderr);
                hStderr = FS_ERROR;
                --iPipeCount;
             }
@@ -1111,12 +1111,12 @@ int hb_fsProcessRun( const char * pszFileName,
          else if( hStdin != FS_ERROR )
          {
             nLen = ! fBlocked && nStdInLen > 4096 ? 4096 : nStdInLen;
-            nLen = hb_fsWriteLarge( hStdin, pStdInBuf, nLen );
+            nLen = hb_fsWriteLarge(hStdin, pStdInBuf, nLen);
             pStdInBuf += nLen;
             nStdInLen -= nLen;
             if( nStdInLen == 0 || ( fBlocked && nLen == 0 ) )
             {
-               hb_fsClose( hStdin );
+               hb_fsClose(hStdin);
                hStdin = FS_ERROR;
                --iPipeCount;
             }
@@ -1130,10 +1130,10 @@ int hb_fsProcessRun( const char * pszFileName,
          {
             dwWait = INFINITE;
          }
-         dwResult = WaitForSingleObject( reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hProcess)), dwWait );
+         dwResult = WaitForSingleObject(reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hProcess)), dwWait);
          if( dwResult == WAIT_OBJECT_0 )
          {
-            if( GetExitCodeProcess( reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hProcess)), &dwResult ) )
+            if( GetExitCodeProcess(reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hProcess)), &dwResult) )
             {
                iResult = static_cast<int>(dwResult);
             }
@@ -1147,18 +1147,18 @@ int hb_fsProcessRun( const char * pszFileName,
 
       if( hStdin != FS_ERROR )
       {
-         hb_fsClose( hStdin );
+         hb_fsClose(hStdin);
       }
       if( hStdout != FS_ERROR )
       {
-         hb_fsClose( hStdout );
+         hb_fsClose(hStdout);
       }
       if( hStderr != FS_ERROR )
       {
-         hb_fsClose( hStderr );
+         hb_fsClose(hStderr);
       }
 
-      CloseHandle( reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hProcess)) );
+      CloseHandle(reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hProcess)));
 
 #elif defined( HB_OS_WIN )
 
@@ -1167,7 +1167,7 @@ int hb_fsProcessRun( const char * pszFileName,
 
       if( nStdInLen == 0 && hStdin != FS_ERROR )
       {
-         hb_fsClose( hStdin );
+         hb_fsClose(hStdin);
          hStdin = FS_ERROR;
       }
       if( hStdout == hStderr )
@@ -1197,11 +1197,11 @@ int hb_fsProcessRun( const char * pszFileName,
          {
             if( iPipeCount == 1 )
             {
-               nLen = hb_fsWriteLarge( hStdin, pStdInBuf, nStdInLen );
+               nLen = hb_fsWriteLarge(hStdin, pStdInBuf, nStdInLen);
             }
             else
             {
-               nLen = hb_fsPipeWrite( hStdin, pStdInBuf, nStdInLen, nTimeOut );
+               nLen = hb_fsPipeWrite(hStdin, pStdInBuf, nStdInLen, nTimeOut);
             }
             if( nLen == static_cast<HB_SIZE>(iPipeCount == 1 ? 0 : FS_ERROR) )
             {
@@ -1215,7 +1215,7 @@ int hb_fsProcessRun( const char * pszFileName,
             }
             if( nStdInLen == 0 )
             {
-               hb_fsClose( hStdin );
+               hb_fsClose(hStdin);
                hStdin = FS_ERROR;
                --iPipeCount;
             }
@@ -1237,15 +1237,15 @@ int hb_fsProcessRun( const char * pszFileName,
             }
             if( iPipeCount == 1 )
             {
-               nLen = hb_fsReadLarge( hStdout, pOutBuf + nOutBuf, nOutSize - nOutBuf );
+               nLen = hb_fsReadLarge(hStdout, pOutBuf + nOutBuf, nOutSize - nOutBuf);
             }
             else
             {
-               nLen = hb_fsPipeRead( hStdout, pOutBuf + nOutBuf, nOutSize - nOutBuf, nTimeOut );
+               nLen = hb_fsPipeRead(hStdout, pOutBuf + nOutBuf, nOutSize - nOutBuf, nTimeOut);
             }
             if( nLen == static_cast<HB_SIZE>(iPipeCount == 1 ? 0 : FS_ERROR) )
             {
-               hb_fsClose( hStdout );
+               hb_fsClose(hStdout);
                hStdout = FS_ERROR;
                --iPipeCount;
             }
@@ -1272,15 +1272,15 @@ int hb_fsProcessRun( const char * pszFileName,
             }
             if( iPipeCount == 1 )
             {
-               nLen = hb_fsReadLarge( hStderr, pErrBuf + nErrBuf, nErrSize - nErrBuf );
+               nLen = hb_fsReadLarge(hStderr, pErrBuf + nErrBuf, nErrSize - nErrBuf);
             }
             else
             {
-               nLen = hb_fsPipeRead( hStderr, pErrBuf + nErrBuf, nErrSize - nErrBuf, nTimeOut );
+               nLen = hb_fsPipeRead(hStderr, pErrBuf + nErrBuf, nErrSize - nErrBuf, nTimeOut);
             }
             if( nLen == static_cast<HB_SIZE>(iPipeCount == 1 ? 0 : FS_ERROR) )
             {
-               hb_fsClose( hStderr );
+               hb_fsClose(hStderr);
                hStderr = FS_ERROR;
                --iPipeCount;
             }
@@ -1296,24 +1296,24 @@ int hb_fsProcessRun( const char * pszFileName,
 
       if( hStdin != FS_ERROR )
       {
-         hb_fsClose( hStdin );
+         hb_fsClose(hStdin);
       }
       if( hStdout != FS_ERROR )
       {
-         hb_fsClose( hStdout );
+         hb_fsClose(hStdout);
       }
       if( hStderr != FS_ERROR )
       {
-         hb_fsClose( hStderr );
+         hb_fsClose(hStderr);
       }
 
-      iResult = hb_fsProcessValue( hProcess, HB_TRUE );
+      iResult = hb_fsProcessValue(hProcess, HB_TRUE);
 
 #elif defined( HB_OS_UNIX )
 
       if( nStdInLen == 0 && hStdin != FS_ERROR )
       {
-         hb_fsClose( hStdin );
+         hb_fsClose(hStdin);
          hStdin = FS_ERROR;
       }
       if( hStdout == hStderr )
@@ -1323,15 +1323,15 @@ int hb_fsProcessRun( const char * pszFileName,
 
       if( hStdin != FS_ERROR )
       {
-         hb_fsPipeUnblock( hStdin );
+         hb_fsPipeUnblock(hStdin);
       }
       if( hStdout != FS_ERROR )
       {
-         hb_fsPipeUnblock( hStdout );
+         hb_fsPipeUnblock(hStdout);
       }
       if( hStderr != FS_ERROR )
       {
-         hb_fsPipeUnblock( hStderr );
+         hb_fsPipeUnblock(hStderr);
       }
 
       for( ;; )
@@ -1368,7 +1368,7 @@ int hb_fsProcessRun( const char * pszFileName,
             }
 
             iResult = poll( fds, nfds, -1 );
-            hb_fsSetIOError( iResult >= 0, 0 );
+            hb_fsSetIOError(iResult >= 0, 0);
             if( iResult == -1 && hb_fsOsError() == static_cast<HB_ERRCODE>(EINTR) && hb_vmRequestQuery() == 0 )
             {
                continue;
@@ -1388,7 +1388,7 @@ int hb_fsProcessRun( const char * pszFileName,
                }
                else if( ( fds[nfds].revents & ( POLLHUP | POLLNVAL | POLLERR ) ) != 0 )
                {
-                  hb_fsClose( hStdout );
+                  hb_fsClose(hStdout);
                   hStdout = FS_ERROR;
                }
                nfds++;
@@ -1401,7 +1401,7 @@ int hb_fsProcessRun( const char * pszFileName,
                }
                else if( ( fds[nfds].revents & ( POLLHUP | POLLNVAL | POLLERR ) ) != 0 )
                {
-                  hb_fsClose( hStderr );
+                  hb_fsClose(hStderr);
                   hStderr = FS_ERROR;
                }
                nfds++;
@@ -1414,7 +1414,7 @@ int hb_fsProcessRun( const char * pszFileName,
                }
                else if( ( fds[nfds].revents & ( POLLHUP | POLLNVAL | POLLERR ) ) != 0 )
                {
-                  hb_fsClose( hStdin );
+                  hb_fsClose(hStdin);
                   hStderr = FS_ERROR;
                }
             }
@@ -1463,7 +1463,7 @@ int hb_fsProcessRun( const char * pszFileName,
             }
 
             iResult = select( fdMax + 1, prfds, pwfds, nullptr, nullptr );
-            hb_fsSetIOError( iResult >= 0, 0 );
+            hb_fsSetIOError(iResult >= 0, 0);
             if( iResult == -1 && hb_fsOsError() != static_cast<HB_ERRCODE>(EINTR) && hb_vmRequestQuery() == 0 )
             {
                continue;
@@ -1492,13 +1492,13 @@ int hb_fsProcessRun( const char * pszFileName,
                }
                pOutBuf = static_cast<char*>(hb_xrealloc(pOutBuf, nOutSize + 1));
             }
-            nLen = hb_fsReadLarge( hStdout, pOutBuf + nOutBuf, nOutSize - nOutBuf );
+            nLen = hb_fsReadLarge(hStdout, pOutBuf + nOutBuf, nOutSize - nOutBuf);
             if( nLen == 0 )
             {
                /* zero bytes read after positive Select()
                 * - writing process closed the pipe
                 */
-               hb_fsClose( hStdout );
+               hb_fsClose(hStdout);
                hStdout = FS_ERROR;
             }
             else
@@ -1521,13 +1521,13 @@ int hb_fsProcessRun( const char * pszFileName,
                }
                pErrBuf = static_cast<char*>(hb_xrealloc(pErrBuf, nErrSize + 1));
             }
-            nLen = hb_fsReadLarge( hStderr, pErrBuf + nErrBuf, nErrSize - nErrBuf );
+            nLen = hb_fsReadLarge(hStderr, pErrBuf + nErrBuf, nErrSize - nErrBuf);
             if( nLen == 0 )
             {
                /* zero bytes read after positive Select()
                 * - writing process closed the pipe
                 */
-               hb_fsClose( hStderr );
+               hb_fsClose(hStderr);
                hStderr = FS_ERROR;
             }
             else
@@ -1538,12 +1538,12 @@ int hb_fsProcessRun( const char * pszFileName,
 
          if( fStdin )
          {
-            nLen = hb_fsWriteLarge( hStdin, pStdInBuf, nStdInLen );
+            nLen = hb_fsWriteLarge(hStdin, pStdInBuf, nStdInLen);
             pStdInBuf += nLen;
             nStdInLen -= nLen;
             if( nStdInLen == 0 )
             {
-               hb_fsClose( hStdin );
+               hb_fsClose(hStdin);
                hStdin = FS_ERROR;
             }
          }
@@ -1551,18 +1551,18 @@ int hb_fsProcessRun( const char * pszFileName,
 
       if( hStdin != FS_ERROR )
       {
-         hb_fsClose( hStdin );
+         hb_fsClose(hStdin);
       }
       if( hStdout != FS_ERROR )
       {
-         hb_fsClose( hStdout );
+         hb_fsClose(hStdout);
       }
       if( hStderr != FS_ERROR )
       {
-         hb_fsClose( hStderr );
+         hb_fsClose(hStderr);
       }
 
-      iResult = hb_fsProcessValue( hProcess, HB_TRUE );
+      iResult = hb_fsProcessValue(hProcess, HB_TRUE);
 
 #else
 

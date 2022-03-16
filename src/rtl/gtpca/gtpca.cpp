@@ -188,7 +188,7 @@ static void hb_gt_pca_termFlush( void )
 {
    if( s_iOutBufIndex > 0 )
    {
-      hb_fsWriteLarge( s_hFilenoStdout, s_sOutBuf, s_iOutBufIndex );
+      hb_fsWriteLarge(s_hFilenoStdout, s_sOutBuf, s_iOutBufIndex);
       s_iOutBufIndex = 0;
    }
 }
@@ -317,7 +317,7 @@ static void hb_gt_pca_AnsiGetCurPos( int * iRow, int * iCol )
          else
          {
 #if defined( HB_HAS_TERMIOS )
-            if( hb_fsCanRead( s_hFilenoStdin, timeout ) <= 0 )
+            if( hb_fsCanRead(s_hFilenoStdin, timeout) <= 0 )
             {
                break;
             }
@@ -500,9 +500,9 @@ static void hb_gt_pca_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    s_hFilenoStdout = hFilenoStdout;
    s_hFilenoStderr = hFilenoStderr;
 
-   s_bStdinConsole  = hb_fsIsDevice( s_hFilenoStdin );
-   s_bStdoutConsole = hb_fsIsDevice( s_hFilenoStdout );
-   s_bStderrConsole = hb_fsIsDevice( s_hFilenoStderr );
+   s_bStdinConsole  = hb_fsIsDevice(s_hFilenoStdin);
+   s_bStdoutConsole = hb_fsIsDevice(s_hFilenoStdout);
+   s_bStderrConsole = hb_fsIsDevice(s_hFilenoStderr);
 
    s_cdpTerm = s_cdpHost = nullptr;
    s_fDispTrans = HB_FALSE;
@@ -510,7 +510,7 @@ static void hb_gt_pca_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    s_szCrLf = hb_conNewLine();
    s_nCrLf = strlen(s_szCrLf);
 
-   hb_fsSetDevMode( s_hFilenoStdout, FD_BINARY );
+   hb_fsSetDevMode(s_hFilenoStdout, FD_BINARY);
 
    HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
 
@@ -643,10 +643,10 @@ static int hb_gt_pca_ReadKey( PHB_GT pGT, int iEventMask )
    HB_SYMBOL_UNUSED(iEventMask);
 
 #if defined( HB_HAS_TERMIOS )
-   if( hb_fsCanRead( s_hFilenoStdin, 0 ) > 0 )
+   if( hb_fsCanRead(s_hFilenoStdin, 0) > 0 )
    {
       HB_BYTE bChar;
-      if( hb_fsRead( s_hFilenoStdin, &bChar, 1 ) == 1 )
+      if( hb_fsRead(s_hFilenoStdin, &bChar, 1) == 1 )
       {
          ch = bChar;
       }
@@ -679,10 +679,10 @@ static int hb_gt_pca_ReadKey( PHB_GT pGT, int iEventMask )
       }
    }
 #elif defined( HB_OS_WIN )
-   if( ! s_bStdinConsole || WaitForSingleObject( reinterpret_cast<HANDLE>(hb_fsGetOsHandle( s_hFilenoStdin )), 0 ) == 0x0000 )
+   if( ! s_bStdinConsole || WaitForSingleObject(reinterpret_cast<HANDLE>(hb_fsGetOsHandle(s_hFilenoStdin)), 0) == 0x0000 )
    {
       HB_BYTE bChar;
-      if( hb_fsRead( s_hFilenoStdin, &bChar, 1 ) == 1 )
+      if( hb_fsRead(s_hFilenoStdin, &bChar, 1) == 1 )
       {
          ch = bChar;
       }

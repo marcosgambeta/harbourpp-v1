@@ -2567,7 +2567,7 @@ int hb_comOpen( int iPort )
          LPCTSTR lpName;
          LPTSTR lpFree;
 
-         lpName = HB_FSNAMECONV( szName, &lpFree );
+         lpName = HB_FSNAMECONV(szName, &lpFree);
 
          hb_vmUnlock();
 

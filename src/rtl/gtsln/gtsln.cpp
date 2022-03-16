@@ -561,7 +561,7 @@ static int hb_sln_isUTF8( int iStdOut, int iStdIn )
             }
             else
             {
-               if( hb_fsCanRead( iStdIn, timeout ) <= 0 )
+               if( hb_fsCanRead(iStdIn, timeout) <= 0 )
                {
                   break;
                }

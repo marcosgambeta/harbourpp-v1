@@ -190,12 +190,12 @@ void hb_compGenCCode( HB_COMP_DECL, PHB_FNAME pFileName )       /* generates the
    FILE *      yyc; /* file handle for C++ output */
    HB_BOOL     fHasHbInline = HB_FALSE;
 
-   hb_fsFNameMerge( szFileName, pFileName );
+   hb_fsFNameMerge(szFileName, pFileName);
    if( ! pFileName->szExtension )
    {
       pFileName->szExtension = ".cpp";
    }
-   hb_fsFNameMerge( szFileName, pFileName );
+   hb_fsFNameMerge(szFileName, pFileName);
 
    yyc = hb_fopen(szFileName, "w");
    if( ! yyc )

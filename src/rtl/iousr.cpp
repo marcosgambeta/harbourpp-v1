@@ -796,7 +796,7 @@ HB_FUNC( IOUSR_SETERROR )
       {
          errCodeNew += static_cast<HB_ERRCODE>(hb_parni(2));
       }
-      hb_fsSetError( errCodeNew );
+      hb_fsSetError(errCodeNew);
    }
 
    hb_retni( errCodePrev );

@@ -2016,7 +2016,7 @@ static PHB_PP_FILE hb_pp_FileNew( PHB_PP_STATE pState, const char * szFileName,
                {
                   PHB_FNAME pFirstFName = hb_fsFNameSplit(szFirstFName);
                   pFileName->szPath = pFirstFName->szPath;
-                  hb_fsFNameMerge( szFileNameBuf, pFileName );
+                  hb_fsFNameMerge(szFileNameBuf, pFileName);
                   hb_xfree(pFirstFName);
                   szFileName = szFileNameBuf;
                }
@@ -2042,7 +2042,7 @@ static PHB_PP_FILE hb_pp_FileNew( PHB_PP_STATE pState, const char * szFileName,
                do
                {
                   pFileName->szPath = pPath->szPath;
-                  hb_fsFNameMerge( szFileNameBuf, pFileName );
+                  hb_fsFNameMerge(szFileNameBuf, pFileName);
                   file_in = hb_fopen(szFileNameBuf, fBinary ? "rb" : "r");
                   if( file_in != nullptr )
                   {
@@ -2183,7 +2183,7 @@ static void hb_pp_stateFree( PHB_PP_STATE pState )
    hb_pp_TraceFileFree( pState );
 
    if( pState->pIncludePath )
-      hb_fsFreeSearchPath( pState->pIncludePath );
+      hb_fsFreeSearchPath(pState->pIncludePath);
 
    if( pState->iOperators > 0 )
       hb_pp_operatorsFree( pState->pOperators, pState->iOperators );
@@ -5668,13 +5668,13 @@ void hb_pp_addSearchPath( PHB_PP_STATE pState, const char * szPath, HB_BOOL fRep
 {
    if( fReplace && pState->pIncludePath )
    {
-      hb_fsFreeSearchPath( pState->pIncludePath );
+      hb_fsFreeSearchPath(pState->pIncludePath);
       pState->pIncludePath = nullptr;
    }
 
    if( szPath && *szPath )
    {
-      hb_fsAddSearchPath( szPath, &pState->pIncludePath );
+      hb_fsAddSearchPath(szPath, &pState->pIncludePath);
    }
 }
 
@@ -5791,7 +5791,7 @@ void hb_pp_readRules( PHB_PP_STATE pState, const char * szRulesFile )
    pFileName = hb_fsFNameSplit(szRulesFile);
    if( ! pFileName->szExtension )
       pFileName->szExtension = ".ch";
-   hb_fsFNameMerge( szFileName, pFileName );
+   hb_fsFNameMerge(szFileName, pFileName);
    hb_xfree(pFileName);
 
    pState->pFile = hb_pp_FileNew( pState, szFileName, HB_FALSE, nullptr, nullptr,

@@ -594,7 +594,7 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
             hb_strupr(const_cast<char*>(pFileName->szPath));
       }
 
-      hb_fsFNameMerge( const_cast<char*>(szFileName), pFileName );
+      hb_fsFNameMerge(const_cast<char*>(szFileName), pFileName);
       hb_xfree(pFileName);
    }
    else if( pszFree )
@@ -690,7 +690,7 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
             hb_strupr(const_cast<char*>(pFileName->szPath));
       }
 
-      hb_fsFNameMerge( const_cast<char*>(szFileName), pFileName );
+      hb_fsFNameMerge(const_cast<char*>(szFileName), pFileName);
       hb_xfree(pFileName);
    }
 

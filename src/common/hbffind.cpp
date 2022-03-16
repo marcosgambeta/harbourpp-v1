@@ -381,7 +381,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
          {
             LPTSTR lpFileMask = HB_CHARDUP( ffind->pszFileMask );
             ffind->bFirst = HB_FALSE;
-            info->dwAttr    = static_cast<DWORD>(hb_fsAttrToRaw( ffind->attrmask ));
+            info->dwAttr    = static_cast<DWORD>(hb_fsAttrToRaw(ffind->attrmask));
             info->hFindFile = FindFirstFile( lpFileMask, &info->pFindFileData );
             hb_xfree(lpFileMask);
 
@@ -440,7 +440,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
             }
          }
       }
-      hb_fsSetIOError( bFound, 0 );
+      hb_fsSetIOError(bFound, 0);
    }
 
 #elif defined( HB_OS_UNIX )
@@ -578,7 +578,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
             }
          }
       }
-      hb_fsSetIOError( bFound, 0 );
+      hb_fsSetIOError(bFound, 0);
    }
 
 #else
@@ -601,7 +601,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
 
       bFound = HB_FALSE;
 
-      hb_fsSetIOError( bFound, 0 );
+      hb_fsSetIOError(bFound, 0);
    }
 
 #endif
@@ -627,7 +627,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
          }
       }
 #endif
-      ffind->attr = hb_fsAttrFromRaw( raw_attr ) | nAttr;
+      ffind->attr = hb_fsAttrFromRaw(raw_attr) | nAttr;
 
       ffind->lDate = hb_dateEncode( iYear, iMonth, iDay );
       ffind->lTime = hb_timeEncode( iHour, iMin, iSec, iMSec );
@@ -653,21 +653,21 @@ PHB_FFIND hb_fsFindFirst( const char * pszFileMask, HB_FATTR attrmask )
    ffind->pszFileMask = pszFileMask;
 #else
    /* Convert to OS codepage */
-   ffind->pszFileMask = hb_fsNameConv( pszFileMask, &ffind->pszFree );
+   ffind->pszFileMask = hb_fsNameConv(pszFileMask, &ffind->pszFree);
 #endif
    ffind->attrmask = attrmask;
    ffind->bFirst = HB_TRUE;
 
    /* Find first/next matching file */
 
-   if( hb_fsFindNext( ffind ) )
+   if( hb_fsFindNext(ffind) )
    {
       return ffind;
    }
 
    /* If no file found at all, free stuff allocated so far and return nullptr. */
 
-   hb_fsFindClose( ffind );
+   hb_fsFindClose(ffind);
 
    return nullptr;
 }
@@ -677,7 +677,7 @@ PHB_FFIND hb_fsFindFirst( const char * pszFileMask, HB_FATTR attrmask )
 
 HB_BOOL hb_fsFindNext( PHB_FFIND ffind )
 {
-   while( hb_fsFindNextLow( ffind ) )
+   while( hb_fsFindNextLow(ffind) )
    {
       /* Filter the result to stay MS-DOS and CA-Cl*pper compatible. */
 

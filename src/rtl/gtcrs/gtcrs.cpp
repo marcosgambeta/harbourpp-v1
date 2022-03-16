@@ -692,7 +692,7 @@ static void flush_gpmevt( mouseEvent * mEvt )
 {
    if( gpm_fd >= 0 )
    {
-      while( hb_fsCanRead( gpm_fd, 0 ) > 0 )
+      while( hb_fsCanRead(gpm_fd, 0) > 0 )
       {
          set_gpmevt( gpm_fd, O_RDONLY, static_cast<void*>(mEvt) );
       }
@@ -846,7 +846,7 @@ static int get_inch( InOutBase * ioBase, HB_MAXINT timeout )
       }
 
       counter = ioBase->key_counter;
-      if( hb_fsPoll( ioBase->pPollSet, n, timeout ) > 0 )
+      if( hb_fsPoll(ioBase->pPollSet, n, timeout) > 0 )
       {
          for( i = 0; i < ioBase->efds_no; i++ )
          {

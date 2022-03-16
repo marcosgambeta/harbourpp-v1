@@ -820,12 +820,12 @@ static void hb_gt_def_OutStd( PHB_GT pGT, const char * szStr, HB_SIZE nLen )
          if( pGT->fDispTrans )
          {
             char * szStrBuff = hb_cdpnDup( szStr, &nLen, pGT->cdpHost, pGT->cdpTerm );
-            hb_fsWriteLarge( pGT->hStdOut, szStrBuff, nLen );
+            hb_fsWriteLarge(pGT->hStdOut, szStrBuff, nLen);
             hb_xfree(szStrBuff);
          }
          else
          {
-            hb_fsWriteLarge( pGT->hStdOut, szStr, nLen );
+            hb_fsWriteLarge(pGT->hStdOut, szStr, nLen);
          }
          HB_GTSELF_POSTEXT(pGT);
       }
@@ -846,12 +846,12 @@ static void hb_gt_def_OutErr( PHB_GT pGT, const char * szStr, HB_SIZE nLen )
          if( pGT->fDispTrans )
          {
             char * szStrBuff = hb_cdpnDup( szStr, &nLen, pGT->cdpHost, pGT->cdpTerm );
-            hb_fsWriteLarge( pGT->hStdErr, szStrBuff, nLen );
+            hb_fsWriteLarge(pGT->hStdErr, szStrBuff, nLen);
             hb_xfree(szStrBuff);
          }
          else
          {
-            hb_fsWriteLarge( pGT->hStdErr, szStr, nLen );
+            hb_fsWriteLarge(pGT->hStdErr, szStr, nLen);
          }
          HB_GTSELF_POSTEXT(pGT);
       }

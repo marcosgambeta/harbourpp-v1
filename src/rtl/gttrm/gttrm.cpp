@@ -597,7 +597,7 @@ static void hb_gt_trm_termFlush( PHB_GTTRM pTerm )
 {
    if( pTerm->iOutBufIndex > 0 )
    {
-      hb_fsWriteLarge( pTerm->hFileno, pTerm->pOutBuf, pTerm->iOutBufIndex );
+      hb_fsWriteLarge(pTerm->hFileno, pTerm->pOutBuf, pTerm->iOutBufIndex);
       pTerm->iOutBufIndex = 0;
    }
 }
@@ -1053,7 +1053,7 @@ static void flush_gpmevt( PHB_GTTRM pTerm )
 {
    if( gpm_fd >= 0 )
    {
-      while( hb_fsCanRead( gpm_fd, 0 ) > 0 )
+      while( hb_fsCanRead(gpm_fd, 0) > 0 )
       {
          set_gpmevt( gpm_fd, O_RDONLY, static_cast<void*>(pTerm) );
       }
@@ -1154,7 +1154,7 @@ static int read_bufch( PHB_GTTRM pTerm, int fd )
 #if defined( HB_OS_UNIX )
       n = read( fd, buf, STDIN_BUFLEN - pTerm->stdin_inbuf );
 #else
-      n = hb_fsRead( fd, buf, STDIN_BUFLEN - pTerm->stdin_inbuf );
+      n = hb_fsRead(fd, buf, STDIN_BUFLEN - pTerm->stdin_inbuf);
 #endif
 
       for( int i = 0; i < n; i++ )
@@ -1211,7 +1211,7 @@ static int get_inch( PHB_GTTRM pTerm, HB_MAXINT timeout )
       }
 
       counter = pTerm->key_counter;
-      if( hb_fsPoll( pTerm->pPollSet, n, timeout ) > 0 )
+      if( hb_fsPoll(pTerm->pPollSet, n, timeout) > 0 )
       {
          for( i = 0; i < pTerm->efds_no; i++ )
          {
@@ -2248,7 +2248,7 @@ static HB_BOOL hb_gt_trm_AnsiGetCursorPos( PHB_GTTRM pTerm, int * iRow, int * iC
          else
          {
 #if defined( HB_OS_UNIX )
-            if( hb_fsCanRead( pTerm->hFilenoStdin, timeout ) <= 0 )
+            if( hb_fsCanRead(pTerm->hFilenoStdin, timeout) <= 0 )
             {
                break;
             }
@@ -3605,9 +3605,9 @@ static void hb_gt_trm_SetTerm( PHB_GTTRM pTerm )
    {
       pTerm->iExtColor = HB_GTTRM_CLRSTD;
    }
-   pTerm->fStdinTTY      = hb_fsIsDevice( pTerm->hFilenoStdin );
-   pTerm->fStdoutTTY     = hb_fsIsDevice( pTerm->hFilenoStdout );
-   pTerm->fStderrTTY     = hb_fsIsDevice( pTerm->hFilenoStderr );
+   pTerm->fStdinTTY      = hb_fsIsDevice(pTerm->hFilenoStdin);
+   pTerm->fStdoutTTY     = hb_fsIsDevice(pTerm->hFilenoStdout);
+   pTerm->fStderrTTY     = hb_fsIsDevice(pTerm->hFilenoStderr);
    pTerm->hFileno        = pTerm->hFilenoStdout;
    pTerm->fOutTTY        = pTerm->fStdoutTTY;
    if( ! pTerm->fOutTTY && pTerm->fStdinTTY )
@@ -3618,7 +3618,7 @@ static void hb_gt_trm_SetTerm( PHB_GTTRM pTerm )
    pTerm->fPosAnswer     = pTerm->fOutTTY && ! hb_trm_Param( "NOPOS", nullptr ) && pTerm->terminal_type != TERM_CYGWIN;
    pTerm->fUTF8          = HB_FALSE;
 
-   hb_fsSetDevMode( pTerm->hFileno, FD_BINARY );
+   hb_fsSetDevMode(pTerm->hFileno, FD_BINARY);
 
    hb_gt_chrmapinit( pTerm->charmap, szTerm, pTerm->terminal_type == TERM_XTERM );
 

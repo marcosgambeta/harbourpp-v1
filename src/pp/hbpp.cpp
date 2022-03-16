@@ -419,14 +419,14 @@ static char * hb_fsFileFind( const char * pszFileMask )
 {
    PHB_FFIND ffind;
 
-   if( ( ffind = hb_fsFindFirst( pszFileMask, HB_FA_ALL ) ) != nullptr )
+   if( (ffind = hb_fsFindFirst(pszFileMask, HB_FA_ALL)) != nullptr )
    {
       char pszFileName[HB_PATH_MAX];
       PHB_FNAME pFileName = hb_fsFNameSplit(pszFileMask);
       pFileName->szName = ffind->szName;
       pFileName->szExtension = nullptr;
-      hb_fsFNameMerge( pszFileName, pFileName );
-      hb_fsFindClose( ffind );
+      hb_fsFNameMerge(pszFileName, pFileName);
+      hb_fsFindClose(ffind);
       hb_xfree(pFileName);
       return hb_strdup(pszFileName);
    }
@@ -460,9 +460,9 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
       while( pszFileName )
       {
          pFileName->szName = pszFileName;
-         hb_fsFNameMerge( szToCheck, pFileName );
+         hb_fsFNameMerge(szToCheck, pFileName);
 
-         if( hb_fsFileExists( szToCheck ) )
+         if( hb_fsFileExists(szToCheck) )
          {
             pszFileName = szToCheck;
             break;
@@ -470,7 +470,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
 
          if( strchr( szToCheck, '?' ) != nullptr )
          {
-            pszFree = hb_fsFileFind( szToCheck );
+            pszFree = hb_fsFileFind(szToCheck);
             if( pszFree )
             {
                pszFileName = pszFree;
@@ -811,7 +811,7 @@ int main( int argc, char * argv[] )
 
             pFileName = hb_fsFNameSplit(szFile);
             pFileName->szExtension = ".ppo";
-            hb_fsFNameMerge( szFileName, pFileName );
+            hb_fsFNameMerge(szFileName, pFileName);
             hb_xfree(pFileName);
 
             hb_pp_outFile( pState, szFileName, nullptr );

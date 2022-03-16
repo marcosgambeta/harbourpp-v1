@@ -55,9 +55,9 @@ HB_BOOL hb_fsFile( const char * pszFileName )
 
    PHB_FFIND ffind;
 
-   if( ( ffind = hb_fsFindFirst( pszFileName, HB_FA_ALL ) ) != nullptr )
+   if( (ffind = hb_fsFindFirst(pszFileName, HB_FA_ALL)) != nullptr )
    {
-      hb_fsFindClose( ffind );
+      hb_fsFindClose(ffind);
       return HB_TRUE;
    }
 
@@ -88,7 +88,7 @@ HB_BOOL hb_fsIsDirectory( const char * pszFileName )
    if( iLen && iLen <= ( HB_PATH_MAX - 1 ) )
    {
       PHB_FFIND ffind;
-      if( ( ffind = hb_fsFindFirst( pszFileName, HB_FA_DIRECTORY ) ) != nullptr )
+      if( (ffind = hb_fsFindFirst(pszFileName, HB_FA_DIRECTORY)) != nullptr )
       {
          do
          {
@@ -98,8 +98,8 @@ HB_BOOL hb_fsIsDirectory( const char * pszFileName )
                break;
             }
          }
-         while( hb_fsFindNext( ffind ) );
-         hb_fsFindClose( ffind );
+         while( hb_fsFindNext(ffind) );
+         hb_fsFindClose(ffind);
       }
    }
 

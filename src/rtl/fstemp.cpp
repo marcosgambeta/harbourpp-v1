@@ -132,7 +132,7 @@ static HB_BOOL fsGetTempDirByCase( char * pszName, const char * pszTempDir, HB_B
 
    if( fOK )
    {
-      if( ! hb_fsDirExists( pszTempDir ) )
+      if( ! hb_fsDirExists(pszTempDir) )
       {
          fOK = HB_FALSE;
       }
@@ -164,7 +164,7 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
       }
       else
       {
-         hb_fsTempDir( pszName );
+         hb_fsTempDir(pszName);
       }
 
       if( pszPrefix )
@@ -208,7 +208,7 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
 #else
             fd = static_cast<HB_FHANDLE>(mkstemp( pszName ));
 #endif
-         hb_fsSetIOError( fd != static_cast<HB_FHANDLE>(-1), 0 );
+         hb_fsSetIOError(fd != static_cast<HB_FHANDLE>(-1), 0);
          hb_vmLock();
       }
       else
@@ -229,7 +229,7 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
          {
             hb_strncat(pszName, pszExt, HB_PATH_MAX - 1);
          }
-         fd = hb_fsCreateEx( pszName, ulAttr, FO_EXCLUSIVE | FO_EXCL );
+         fd = hb_fsCreateEx(pszName, ulAttr, FO_EXCLUSIVE | FO_EXCL);
       }
 
       if( fd != static_cast<HB_FHANDLE>(FS_ERROR) )
@@ -261,17 +261,17 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
       TCHAR lpBuffer[HB_PATH_MAX];
       TCHAR lpTempDir[HB_PATH_MAX];
 
-      lpPrefix = pszPrefix ? HB_FSNAMECONV( pszPrefix, &lpPrefixFree ) : nullptr;
+      lpPrefix = pszPrefix ? HB_FSNAMECONV(pszPrefix, &lpPrefixFree) : nullptr;
 
       if( pszDir && pszDir[0] != '\0' )
       {
-         lpDir = HB_FSNAMECONV( pszDir, &lpDirFree );
+         lpDir = HB_FSNAMECONV(pszDir, &lpDirFree);
       }
       else
       {
          if( ! GetTempPath( HB_PATH_MAX, lpTempDir ) )
          {
-            hb_fsSetIOError( HB_FALSE, 0 );
+            hb_fsSetIOError(HB_FALSE, 0);
             return HB_FALSE;
          }
          lpTempDir[HB_PATH_MAX - 1] = TEXT( '\0' );
@@ -314,7 +314,7 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
    }
 #endif
 
-   hb_fsSetIOError( fResult, 0 );
+   hb_fsSetIOError(fResult, 0);
    hb_vmLock();
 
    return fResult;
@@ -327,7 +327,7 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
 HB_FHANDLE hb_fsCreateTemp( const char * pszDir, const char * pszPrefix, HB_FATTR ulAttr, char * pszName )
 {
 #if defined( HB_OS_UNIX )
-   return hb_fsCreateTempEx( pszName, pszDir, pszPrefix, nullptr, ulAttr );
+   return hb_fsCreateTempEx(pszName, pszDir, pszPrefix, nullptr, ulAttr);
 #else
    /* If there was no special extension requested, we're using
       native temp file generation functions on systems where such
@@ -336,15 +336,15 @@ HB_FHANDLE hb_fsCreateTemp( const char * pszDir, const char * pszPrefix, HB_FATT
 
    while( --iAttemptLeft )
    {
-      if( hb_fsTempName( pszName, pszDir, pszPrefix ) )
+      if( hb_fsTempName(pszName, pszDir, pszPrefix) )
       {
 
 #if defined( HB_OS_WIN )
          /* Using FO_TRUNC on win platforms as hb_fsTempName() uses GetTempFileName(),
             which creates the file, so FO_EXCL would fail at this point. [vszakats] */
-         HB_FHANDLE fhnd = hb_fsCreateEx( pszName, ulAttr, FO_EXCLUSIVE | FO_TRUNC );
+         HB_FHANDLE fhnd = hb_fsCreateEx(pszName, ulAttr, FO_EXCLUSIVE | FO_TRUNC);
 #else
-         HB_FHANDLE fhnd = hb_fsCreateEx( pszName, ulAttr, FO_EXCLUSIVE | FO_EXCL );
+         HB_FHANDLE fhnd = hb_fsCreateEx(pszName, ulAttr, FO_EXCLUSIVE | FO_EXCL);
 #endif
 
          /* This function may fail, if the generated filename got
@@ -454,7 +454,7 @@ HB_FUNC( HB_FTEMPCREATE )
 {
    char szName[HB_PATH_MAX];
 
-   hb_retnint( static_cast<HB_NHANDLE>(hb_fsCreateTemp( hb_parc(1), hb_parc(2), static_cast<HB_FATTR>(hb_parnldef( 3, FC_NORMAL )), szName )) );
+   hb_retnint( static_cast<HB_NHANDLE>(hb_fsCreateTemp(hb_parc(1), hb_parc(2), static_cast<HB_FATTR>(hb_parnldef(3, FC_NORMAL)), szName)) );
 
    hb_storc( szName, 4 );
 }
@@ -463,7 +463,7 @@ HB_FUNC( HB_FTEMPCREATEEX )
 {
    char szName[HB_PATH_MAX];
 
-   hb_retnint( static_cast<HB_NHANDLE>(hb_fsCreateTempEx( szName, hb_parc(2), hb_parc(3), hb_parc(4), static_cast<HB_FATTR>(hb_parnldef( 5, FC_NORMAL )) )) );
+   hb_retnint( static_cast<HB_NHANDLE>(hb_fsCreateTempEx(szName, hb_parc(2), hb_parc(3), hb_parc(4), static_cast<HB_FATTR>(hb_parnldef(5, FC_NORMAL)))) );
 
    hb_storc( szName, 1 );
 }
@@ -472,7 +472,7 @@ HB_FUNC( HB_DIRTEMP )
 {
    char szTempDir[HB_PATH_MAX];
 
-   if( hb_fsTempDir( szTempDir ) != static_cast<HB_ERRCODE>(FS_ERROR) )
+   if( hb_fsTempDir(szTempDir) != static_cast<HB_ERRCODE>(FS_ERROR) )
    {
       hb_retc( szTempDir );
    }

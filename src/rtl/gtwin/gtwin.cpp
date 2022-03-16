@@ -863,11 +863,11 @@ static void hb_gt_win_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
    HB_GTSELF_SETFLAG(pGT, HB_GTI_REDRAWMAX, 4);
 
-   if( hb_fsIsDevice( hFilenoStdout ) )
+   if( hb_fsIsDevice(hFilenoStdout) )
    {
       HB_GTSELF_SETFLAG(pGT, HB_GTI_STDOUTCON, HB_TRUE);
    }
-   if( hb_fsIsDevice( hFilenoStderr ) )
+   if( hb_fsIsDevice(hFilenoStderr) )
    {
       HB_GTSELF_SETFLAG(pGT, HB_GTI_STDERRCON, HB_TRUE);
    }

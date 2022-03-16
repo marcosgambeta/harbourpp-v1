@@ -167,7 +167,7 @@ HB_FUNC( DISKSPACE )
       }
       else
       {
-         szName = hb_fsNameConv( szName, &pszFree );
+         szName = hb_fsNameConv(szName, &pszFree);
       }
 
       {
