@@ -102,8 +102,8 @@ static HB_BOOL sk_testActive( PHB_ITEM pIsActive, int iKeyCode )
    if( pIsActive )
    {
       hb_vmPushEvalSym();
-      hb_vmPush( pIsActive );
-      hb_vmPushInteger( iKeyCode );
+      hb_vmPush(pIsActive);
+      hb_vmPushInteger(iKeyCode);
       hb_vmSend(1);
       return hb_parldef( -1, HB_TRUE );
    }
@@ -402,13 +402,13 @@ HB_FUNC( HB_SETKEYCHECK )
             HB_USHORT uiPCount = static_cast<HB_USHORT>(hb_pcount()), uiParam;
 
             hb_vmPushEvalSym();
-            hb_vmPush( sk_list_tmp->pAction );
+            hb_vmPush(sk_list_tmp->pAction);
             for( uiParam = 2; uiParam <= uiPCount; ++uiParam )
             {
-               hb_vmPush( hb_stackItemFromBase(uiParam) );
+               hb_vmPush(hb_stackItemFromBase(uiParam));
             }
-            hb_vmPushInteger( iKeyCode );
-            hb_vmSend( uiPCount );
+            hb_vmPushInteger(iKeyCode);
+            hb_vmSend(uiPCount);
 
             bIsKeySet = HB_TRUE;
          }

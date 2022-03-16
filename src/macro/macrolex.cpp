@@ -546,7 +546,7 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
                      yylval_ptr->string++;
                      if( pLex->pDst - yylval_ptr->string > HB_SYMBOL_NAME_LEN + 1 )
                      {
-                        ( static_cast<char*>(HB_UNCONST( yylval_ptr->string )) )[HB_SYMBOL_NAME_LEN] = '\0';
+                        ( static_cast<char*>(HB_UNCONST(yylval_ptr->string)) )[HB_SYMBOL_NAME_LEN] = '\0';
                      }
                      return MACROVAR;
                   }
@@ -753,7 +753,7 @@ int hb_macro_yylex( YYSTYPE * yylval_ptr, PHB_MACRO pMacro )
                   }
                   if( pLex->pDst - yylval_ptr->string > HB_SYMBOL_NAME_LEN + 1 )
                   {
-                     ( static_cast<char*>(HB_UNCONST( yylval_ptr->string )) )[HB_SYMBOL_NAME_LEN] = '\0';
+                     ( static_cast<char*>(HB_UNCONST(yylval_ptr->string)) )[HB_SYMBOL_NAME_LEN] = '\0';
                   }
                }
                return IDENTIFIER;

@@ -169,7 +169,7 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
 
       if( pszPrefix )
       {
-         hb_strncat( pszName, pszPrefix, HB_PATH_MAX - 1 );
+         hb_strncat(pszName, pszPrefix, HB_PATH_MAX - 1);
       }
 
       iLen = static_cast<int>(strlen(pszName));
@@ -190,11 +190,11 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
         )
       {
          hb_vmUnlock();
-         hb_strncat( pszName, "XXXXXX", HB_PATH_MAX - 1 );
+         hb_strncat(pszName, "XXXXXX", HB_PATH_MAX - 1);
 #if defined( HB_HAS_MKSTEMPS )
          if( pszExt && *pszExt )
          {
-            hb_strncat( pszName, pszExt, HB_PATH_MAX - 1 );
+            hb_strncat(pszName, pszExt, HB_PATH_MAX - 1);
 #if defined( HB_USE_LARGEFILE64 )
             fd = static_cast<HB_FHANDLE>(mkstemps64( pszName, static_cast<int>(strlen(pszExt)) ));
 #else
@@ -227,7 +227,7 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
          pszName[iLen] = '\0';
          if( pszExt )
          {
-            hb_strncat( pszName, pszExt, HB_PATH_MAX - 1 );
+            hb_strncat(pszName, pszExt, HB_PATH_MAX - 1);
          }
          fd = hb_fsCreateEx( pszName, ulAttr, FO_EXCLUSIVE | FO_EXCL );
       }

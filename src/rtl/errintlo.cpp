@@ -86,7 +86,7 @@ void hb_errInternalRaw( HB_ERRCODE errCode, const char * szText, const char * sz
       szFile = "hb_out.log";
    }
 
-   hLog = hb_fopen( szFile, "a+" );
+   hLog = hb_fopen(szFile, "a+");
    if( hLog )
    {
       const char * szInfo;
@@ -97,16 +97,16 @@ void hb_errInternalRaw( HB_ERRCODE errCode, const char * szText, const char * sz
       hb_dateToday( &iYear, &iMonth, &iDay );
       hb_dateTimeStr( szTime );
 
-      fprintf( hLog, "Application Internal Error - %s\n", hb_cmdargARGVN(0) );
-      fprintf( hLog, "Terminated at: %04d-%02d-%02d %s\n", iYear, iMonth, iDay, szTime );
+      fprintf(hLog, "Application Internal Error - %s\n", hb_cmdargARGVN(0));
+      fprintf(hLog, "Terminated at: %04d-%02d-%02d %s\n", iYear, iMonth, iDay, szTime);
       szInfo = fStack ? hb_setGetCPtr( HB_SET_HBOUTLOGINFO ) : nullptr;
       if( szInfo && *szInfo )
       {
-         fprintf( hLog, "Info: %s\n", szInfo );
+         fprintf(hLog, "Info: %s\n", szInfo);
       }
    }
 
-   hb_conOutErr( hb_conNewLine(), 0 );
+   hb_conOutErr(hb_conNewLine(), 0);
    if( fLang )
    {
       hb_snprintf(buffer, sizeof(buffer), hb_langDGetItem( HB_LANG_ITEM_BASE_ERRINTR ), errCode);
@@ -116,10 +116,10 @@ void hb_errInternalRaw( HB_ERRCODE errCode, const char * szText, const char * sz
       hb_snprintf(buffer, sizeof(buffer), "Unrecoverable error %d: ", errCode);
    }
 
-   hb_conOutErr( buffer, 0 );
+   hb_conOutErr(buffer, 0);
    if( hLog )
    {
-      fprintf( hLog, "%s", buffer );
+      fprintf(hLog, "%s", buffer);
    }
 
    if( ! szText && fLang )
@@ -136,11 +136,11 @@ void hb_errInternalRaw( HB_ERRCODE errCode, const char * szText, const char * sz
       buffer[0] = '\0';
    }
 
-   hb_conOutErr( buffer, 0 );
-   hb_conOutErr( hb_conNewLine(), 0 );
+   hb_conOutErr(buffer, 0);
+   hb_conOutErr(hb_conNewLine(), 0);
    if( hLog )
    {
-      fprintf( hLog, "%s\n", buffer );
+      fprintf(hLog, "%s\n", buffer);
    }
 
    if( fStack && hb_stackTotalItems() )
@@ -152,17 +152,17 @@ void hb_errInternalRaw( HB_ERRCODE errCode, const char * szText, const char * sz
 
          hb_snprintf(msg, sizeof(msg), "Called from %s(%hu)%s%s\n", buffer, uiLine, *file ? " in " : "", file);
 
-         hb_conOutErr( msg, 0 );
+         hb_conOutErr(msg, 0);
          if( hLog )
          {
-            fprintf( hLog, "%s", msg );
+            fprintf(hLog, "%s", msg);
          }
       }
    }
 
    if( hLog )
    {
-      fprintf( hLog, "------------------------------------------------------------------------\n" );
-      fclose( hLog );
+      fprintf(hLog, "------------------------------------------------------------------------\n");
+      fclose(hLog);
    }
 }

@@ -200,7 +200,7 @@ static void hb_sln_Init_KeyTranslations( void )
       for( ch = AltChars[i][0]; ch <= AltChars[i][1]; ch++ )
       {
          #if 0
-         fprintf( stderr, "%d %c\n", i, ch );
+         fprintf(stderr, "%d %c\n", i, ch);
          #endif
          keyname[1] = ch;
 
@@ -220,7 +220,7 @@ static void hb_sln_Init_KeyTranslations( void )
       if( ( keyseq != nullptr ) && ( keyseq[0] != 0 ) )
       {
          #if 0
-         fprintf( stderr, "%s\r\n", keyseq );
+         fprintf(stderr, "%s\r\n", keyseq);
          #endif
          SLkp_define_keysym( keyseq, SL_KEY_MOU );
       }
@@ -340,7 +340,7 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
       #if 0
       SLsmg_refresh();
       #endif
-      HB_GTSELF_RESIZE( pGT, SLtt_Screen_Rows, SLtt_Screen_Cols );
+      HB_GTSELF_RESIZE(pGT, SLtt_Screen_Rows, SLtt_Screen_Cols);
       return HB_K_RESIZE;
    }
 

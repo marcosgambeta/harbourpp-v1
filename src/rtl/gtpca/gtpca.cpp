@@ -512,7 +512,7 @@ static void hb_gt_pca_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
    hb_fsSetDevMode( s_hFilenoStdout, FD_BINARY );
 
-   HB_GTSUPER_INIT( pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr );
+   HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
 
 /* SA_NOCLDSTOP in #if is a hack to detect POSIX compatible environment */
 #if defined( HB_HAS_TERMIOS ) && defined( SA_NOCLDSTOP )
@@ -584,9 +584,9 @@ static void hb_gt_pca_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
       s_sOutBuf = static_cast<char*>(hb_xgrab(s_iOutBufSize));
    }
 
-   HB_GTSELF_RESIZE( pGT, iRows, iCols );
-   HB_GTSELF_SETFLAG( pGT, HB_GTI_STDOUTCON, s_bStdoutConsole );
-   HB_GTSELF_SETFLAG( pGT, HB_GTI_STDERRCON, s_bStderrConsole && s_bStdoutConsole );
+   HB_GTSELF_RESIZE(pGT, iRows, iCols);
+   HB_GTSELF_SETFLAG(pGT, HB_GTI_STDOUTCON, s_bStdoutConsole);
+   HB_GTSELF_SETFLAG(pGT, HB_GTI_STDERRCON, s_bStderrConsole && s_bStdoutConsole);
 
    hb_gt_pca_AnsiInit();
    hb_gt_pca_AnsiGetCurPos( &s_iRow, &s_iCol );
@@ -598,14 +598,14 @@ static void hb_gt_pca_Exit( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_pca_Exit(%p)", static_cast<void*>(pGT) ) );
 #endif
 
-   HB_GTSELF_REFRESH( pGT );
+   HB_GTSELF_REFRESH(pGT);
    /* set default color */
    hb_gt_pca_AnsiSetAttributes( 0x07 );
    hb_gt_pca_AnsiSetCursorStyle( SC_NORMAL );
    hb_gt_pca_AnsiSetAutoMargin(1);
    hb_gt_pca_termFlush();
 
-   HB_GTSUPER_EXIT( pGT );
+   HB_GTSUPER_EXIT(pGT);
 
 #if defined( HB_HAS_TERMIOS )
    if( s_fRestTTY )
@@ -667,7 +667,7 @@ static int hb_gt_pca_ReadKey( PHB_GT pGT, int iEventMask )
                ch += 256;
             }
          }
-         ch = hb_gt_dos_keyCodeTranslate( ch, 0, HB_GTSELF_CPIN( pGT ) );
+         ch = hb_gt_dos_keyCodeTranslate( ch, 0, HB_GTSELF_CPIN(pGT) );
       }
    }
    else if( ! _eof( static_cast<int>(s_hFilenoStdin) ) )
@@ -695,7 +695,7 @@ static int hb_gt_pca_ReadKey( PHB_GT pGT, int iEventMask )
 
    if( ch )
    {
-      int u = HB_GTSELF_KEYTRANS( pGT, ch );
+      int u = HB_GTSELF_KEYTRANS(pGT, ch);
       if( u )
       {
          ch = HB_INKEY_NEW_UNICODE( u );
@@ -730,7 +730,7 @@ static void hb_gt_pca_Tone( PHB_GT pGT, double dFrequency, double dDuration )
    HB_SYMBOL_UNUSED(dFrequency);
 
    /* convert Clipper (DOS) timer tick units to seconds ( x / 18.2 ) */
-   hb_gtSleep( pGT, dDuration / 18.2 );
+   hb_gtSleep(pGT, dDuration / 18.2);
 }
 
 static void hb_gt_pca_Bell( PHB_GT pGT )
@@ -803,10 +803,10 @@ static HB_BOOL hb_gt_pca_SetDispCP( PHB_GT pGT, const char * pszTermCDP, const c
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_pca_SetDispCP(%p,%s,%s,%d)", static_cast<void*>(pGT), pszTermCDP, pszHostCDP, static_cast<int>(fBox) ) );
 #endif
 
-   if( HB_GTSUPER_SETDISPCP( pGT, pszTermCDP, pszHostCDP, fBox ) )
+   if( HB_GTSUPER_SETDISPCP(pGT, pszTermCDP, pszHostCDP, fBox) )
    {
-      s_cdpTerm = HB_GTSELF_TERMCP( pGT );
-      s_cdpHost = HB_GTSELF_HOSTCP( pGT );
+      s_cdpTerm = HB_GTSELF_TERMCP(pGT);
+      s_cdpHost = HB_GTSELF_HOSTCP(pGT);
       s_fDispTrans = s_cdpTerm && s_cdpHost && s_cdpTerm != s_cdpHost;
    }
 
@@ -826,7 +826,7 @@ static void hb_gt_pca_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 
    while( iSize-- )
    {
-      if( ! HB_GTSELF_GETSCRCHAR( pGT, iRow, iCol + iLen, &iColor, &bAttr, &usChar ) )
+      if( ! HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol + iLen, &iColor, &bAttr, &usChar) )
       {
          break;
       }
@@ -887,7 +887,7 @@ static void hb_gt_pca_Refresh( PHB_GT pGT )
 
    int iWidth, iHeight, iRow, iCol, iStyle;
 
-   HB_GTSELF_GETSIZE( pGT, &iHeight, &iWidth );
+   HB_GTSELF_GETSIZE(pGT, &iHeight, &iWidth);
 
    if( s_iLineBufSize == 0 )
    {
@@ -900,9 +900,9 @@ static void hb_gt_pca_Refresh( PHB_GT pGT )
       s_iLineBufSize = iWidth;
    }
 
-   HB_GTSUPER_REFRESH( pGT );
+   HB_GTSUPER_REFRESH(pGT);
 
-   HB_GTSELF_GETSCRCURSOR( pGT, &iRow, &iCol, &iStyle );
+   HB_GTSELF_GETSCRCURSOR(pGT, &iRow, &iCol, &iStyle);
    if( iStyle != SC_NONE )
    {
       if( iRow >= 0 && iCol >= 0 && iRow < iHeight && iCol < iWidth )
@@ -932,7 +932,7 @@ static HB_BOOL hb_gt_pca_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       default:
-         return HB_GTSUPER_INFO( pGT, iType, pInfo );
+         return HB_GTSUPER_INFO(pGT, iType, pInfo);
    }
 
    return HB_TRUE;

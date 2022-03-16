@@ -271,7 +271,7 @@ static HB_ERRCODE hb_waAddField( AREAP pArea, LPDBFIELDINFO pFieldInfo )
 
    /* Validate the name of field */
    szPtr = pFieldInfo->atomName;
-   while( HB_ISSPACE( *szPtr ) )
+   while( HB_ISSPACE(*szPtr) )
    {
       ++szPtr;
    }
@@ -2768,13 +2768,13 @@ int hb_rddRegister( const char * szDriver, HB_USHORT uiType )
    pRddNewNode->rddSuperID = static_cast<HB_USHORT>(-1);
 
    /* Call <szDriver>_GETFUNCTABLE() */
-   hb_vmPushDynSym( pGetFuncTable );
+   hb_vmPushDynSym(pGetFuncTable);
    hb_vmPushNil();
-   hb_vmPushPointer( static_cast<void*>(&uiFunctions) );
-   hb_vmPushPointer( static_cast<void*>(&pRddNewNode->pTable) );
-   hb_vmPushPointer( static_cast<void*>(&pRddNewNode->pSuperTable) );
-   hb_vmPushInteger( s_uiRddCount );
-   hb_vmPushPointer( static_cast<void*>(&pRddNewNode->rddSuperID) );
+   hb_vmPushPointer(static_cast<void*>(&uiFunctions));
+   hb_vmPushPointer(static_cast<void*>(&pRddNewNode->pTable));
+   hb_vmPushPointer(static_cast<void*>(&pRddNewNode->pSuperTable));
+   hb_vmPushInteger(s_uiRddCount);
+   hb_vmPushPointer(static_cast<void*>(&pRddNewNode->rddSuperID));
    hb_vmProc(5);
    if( hb_parnidef( -1, HB_FAILURE ) != HB_SUCCESS )
    {

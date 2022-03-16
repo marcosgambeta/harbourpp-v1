@@ -66,8 +66,8 @@ HB_BOOL hb_mouseIsPresent( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      fPresent = HB_GTSELF_MOUSEISPRESENT( pGT );
-      hb_gt_BaseFree( pGT );
+      fPresent = HB_GTSELF_MOUSEISPRESENT(pGT);
+      hb_gt_BaseFree(pGT);
    }
    return fPresent;
 }
@@ -84,8 +84,8 @@ HB_BOOL hb_mouseGetCursor( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      fVisible = HB_GTSELF_MOUSEGETCURSOR( pGT );
-      hb_gt_BaseFree( pGT );
+      fVisible = HB_GTSELF_MOUSEGETCURSOR(pGT);
+      hb_gt_BaseFree(pGT);
    }
    return fVisible;
 }
@@ -101,8 +101,8 @@ void hb_mouseSetCursor( HB_BOOL fVisible )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_MOUSESETCURSOR( pGT, fVisible );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_MOUSESETCURSOR(pGT, fVisible);
+      hb_gt_BaseFree(pGT);
    }
 }
 
@@ -118,8 +118,8 @@ int hb_mouseCol( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      iCol = HB_GTSELF_MOUSECOL( pGT );
-      hb_gt_BaseFree( pGT );
+      iCol = HB_GTSELF_MOUSECOL(pGT);
+      hb_gt_BaseFree(pGT);
    }
    return iCol;
 }
@@ -136,8 +136,8 @@ int hb_mouseRow( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      iRow = HB_GTSELF_MOUSEROW( pGT );
-      hb_gt_BaseFree( pGT );
+      iRow = HB_GTSELF_MOUSEROW(pGT);
+      hb_gt_BaseFree(pGT);
    }
    return iRow;
 }
@@ -153,8 +153,8 @@ void hb_mouseGetPos( int * piRow, int * piCol )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_MOUSEGETPOS( pGT, piRow, piCol );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_MOUSEGETPOS(pGT, piRow, piCol);
+      hb_gt_BaseFree(pGT);
    }
 }
 
@@ -169,8 +169,8 @@ void hb_mouseSetPos( int iRow, int iCol )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_MOUSESETPOS( pGT, iRow, iCol );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_MOUSESETPOS(pGT, iRow, iCol);
+      hb_gt_BaseFree(pGT);
    }
 }
 
@@ -185,8 +185,8 @@ void hb_mouseSetBounds( int iTop, int iLeft, int iBottom, int iRight )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_MOUSESETBOUNDS( pGT, iTop, iLeft, iBottom, iRight );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_MOUSESETBOUNDS(pGT, iTop, iLeft, iBottom, iRight);
+      hb_gt_BaseFree(pGT);
    }
 }
 
@@ -201,8 +201,8 @@ void hb_mouseGetBounds( int * piTop, int * piLeft, int * piBottom, int * piRight
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_MOUSEGETBOUNDS( pGT, piTop, piLeft, piBottom, piRight );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_MOUSEGETBOUNDS(pGT, piTop, piLeft, piBottom, piRight);
+      hb_gt_BaseFree(pGT);
    }
 }
 
@@ -218,8 +218,8 @@ int hb_mouseStorageSize( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      iSize = HB_GTSELF_MOUSESTORAGESIZE( pGT );
-      hb_gt_BaseFree( pGT );
+      iSize = HB_GTSELF_MOUSESTORAGESIZE(pGT);
+      hb_gt_BaseFree(pGT);
    }
    return iSize;
 }
@@ -235,8 +235,8 @@ void hb_mouseSaveState( void * pBuffer )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_MOUSESAVESTATE( pGT, pBuffer );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_MOUSESAVESTATE(pGT, pBuffer);
+      hb_gt_BaseFree(pGT);
    }
 }
 
@@ -251,8 +251,8 @@ void hb_mouseRestoreState( const void * pBuffer )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_MOUSERESTORESTATE( pGT, pBuffer );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_MOUSERESTORESTATE(pGT, pBuffer);
+      hb_gt_BaseFree(pGT);
    }
 }
 
@@ -268,8 +268,8 @@ int hb_mouseGetDoubleClickSpeed( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      iSpeed = HB_GTSELF_MOUSEGETDOUBLECLICKSPEED( pGT );
-      hb_gt_BaseFree( pGT );
+      iSpeed = HB_GTSELF_MOUSEGETDOUBLECLICKSPEED(pGT);
+      hb_gt_BaseFree(pGT);
    }
    return iSpeed;
 }
@@ -285,8 +285,8 @@ void hb_mouseSetDoubleClickSpeed( int iSpeed )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_MOUSESETDOUBLECLICKSPEED( pGT, iSpeed );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_MOUSESETDOUBLECLICKSPEED(pGT, iSpeed);
+      hb_gt_BaseFree(pGT);
    }
 }
 
@@ -302,8 +302,8 @@ int hb_mouseCountButton( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      iButtons = HB_GTSELF_MOUSECOUNTBUTTON( pGT );
-      hb_gt_BaseFree( pGT );
+      iButtons = HB_GTSELF_MOUSECOUNTBUTTON(pGT);
+      hb_gt_BaseFree(pGT);
    }
    return iButtons;
 }
@@ -320,8 +320,8 @@ HB_BOOL hb_mouseButtonState( int iButton )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      fPressed = HB_GTSELF_MOUSEBUTTONSTATE( pGT, iButton );
-      hb_gt_BaseFree( pGT );
+      fPressed = HB_GTSELF_MOUSEBUTTONSTATE(pGT, iButton);
+      hb_gt_BaseFree(pGT);
    }
    return fPressed;
 }
@@ -338,8 +338,8 @@ HB_BOOL hb_mouseButtonPressed( int iButton, int * piRow, int * piCol )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      fPressed = HB_GTSELF_MOUSEBUTTONPRESSED( pGT, iButton, piRow, piCol );
-      hb_gt_BaseFree( pGT );
+      fPressed = HB_GTSELF_MOUSEBUTTONPRESSED(pGT, iButton, piRow, piCol);
+      hb_gt_BaseFree(pGT);
    }
    return fPressed;
 }
@@ -356,8 +356,8 @@ HB_BOOL hb_mouseButtonReleased( int iButton, int * piRow, int * piCol )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      fReleased = HB_GTSELF_MOUSEBUTTONRELEASED( pGT, iButton, piRow, piCol );
-      hb_gt_BaseFree( pGT );
+      fReleased = HB_GTSELF_MOUSEBUTTONRELEASED(pGT, iButton, piRow, piCol);
+      hb_gt_BaseFree(pGT);
    }
    return fReleased;
 }
@@ -374,8 +374,8 @@ int hb_mouseReadKey( int iEventMask )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      iKey = HB_GTSELF_MOUSEREADKEY( pGT, iEventMask );
-      hb_gt_BaseFree( pGT );
+      iKey = HB_GTSELF_MOUSEREADKEY(pGT, iEventMask);
+      hb_gt_BaseFree(pGT);
    }
    return iKey;
 }

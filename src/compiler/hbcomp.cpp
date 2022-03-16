@@ -222,7 +222,8 @@ void hb_compOutStd( HB_COMP_DECL, const char * szMessage )
       }
       else
       {
-         fprintf( stdout, "%s", szMessage ); fflush( stdout );
+         fprintf(stdout, "%s", szMessage);
+         fflush(stdout);
       }
    }
 }
@@ -237,7 +238,8 @@ void hb_compOutErr( HB_COMP_DECL, const char * szMessage )
       }
       else
       {
-         fprintf( stderr, "%s", szMessage ); fflush( stderr );
+         fprintf(stderr, "%s", szMessage);
+         fflush(stderr);
       }
    }
 }

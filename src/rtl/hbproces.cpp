@@ -102,7 +102,7 @@ static char ** hb_buildArgs( const char *pszFileName )
    char ** argv, * dst, cQuote = 0, * pszFree = nullptr;
    int argc = 0;
 
-   while( HB_ISSPACE( *pszFileName ) )
+   while( HB_ISSPACE(*pszFileName) )
    {
       ++pszFileName;
    }
@@ -137,9 +137,9 @@ static char ** hb_buildArgs( const char *pszFileName )
          {
             cQuote = *src;
          }
-         else if( HB_ISSPACE( *src ) )
+         else if( HB_ISSPACE(*src) )
          {
-            while( HB_ISSPACE( src[1] ) )
+            while( HB_ISSPACE(src[1]) )
             {
                ++src;
             }
@@ -190,10 +190,10 @@ static char ** hb_buildArgs( const char *pszFileName )
          {
             cQuote = *src;
          }
-         else if( HB_ISSPACE( *src ) )
+         else if( HB_ISSPACE(*src) )
          {
             *dst++ = '\0';
-            while( HB_ISSPACE( src[1] ) )
+            while( HB_ISSPACE(src[1]) )
             {
                ++src;
             }

@@ -3229,7 +3229,8 @@ static PHB_CODEPAGE hb_buildCodePage( const char * id, const char * info,
    if( fError || nACSort > HB_CDP_ACSORT_INTERLEAVED || nCaseSort > HB_CDP_CSSORT_IGNORE )
    {
 #ifdef __HB_IGNORE_CP_ERRORS
-      fprintf( stderr, "Harbour CP (%s) initialization failure (1)\n", id ); fflush( stderr );
+      fprintf(stderr, "Harbour CP (%s) initialization failure (1)\n", id);
+      fflush(stderr);
       return nullptr;
 #else
       hb_errInternal( 9994, "Harbour CP (%s) initialization failure", id, nullptr );
@@ -3482,7 +3483,8 @@ static PHB_CODEPAGE hb_buildCodePage( const char * id, const char * info,
          if( iMulti > ucUp2 || iMulti > ucLo2 )
          {
 #ifdef __HB_IGNORE_CP_ERRORS
-            fprintf( stderr, "Harbour CP (%s) initialization failure (2)\n", id ); fflush( stderr );
+            fprintf(stderr, "Harbour CP (%s) initialization failure (2)\n", id);
+            fflush(stderr);
             hb_xfree(buffer);
             return nullptr;
 #else

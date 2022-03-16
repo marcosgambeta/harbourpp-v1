@@ -641,21 +641,21 @@ static HB_BOOL hb_dbfTriggerDo( DBFAREAP pArea, int iEvent, int iField, PHB_ITEM
    {
       if( hb_vmRequestReenter() )
       {
-         hb_vmPushDynSym( pArea->pTriggerSym );
+         hb_vmPushDynSym(pArea->pTriggerSym);
          hb_vmPushNil();
          /* nEvent */
-         hb_vmPushInteger( iEvent );
+         hb_vmPushInteger(iEvent);
          /* nArea */
-         hb_vmPushInteger( pArea->area.uiArea );
+         hb_vmPushInteger(pArea->area.uiArea);
          /* nFieldPos (GET/PUT) */
-         hb_vmPushInteger( iField );
+         hb_vmPushInteger(iField);
          /* xTrigVal (PREUSE/GET/PUT) */
          if( pItem )
          {
 #ifdef HB_TRIGVAR_BYREF
-            hb_vmPushItemRef( pItem );
+            hb_vmPushItemRef(pItem);
 #else
-            hb_vmPush( pItem );
+            hb_vmPush(pItem);
 #endif
             hb_vmProc(4);
          }

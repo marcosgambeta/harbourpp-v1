@@ -571,7 +571,7 @@ char * hb_verPlatform( void )
             {
                char szServicePack[8];
                hb_snprintf(szServicePack, sizeof(szServicePack), " SP%u", tmp);
-               hb_strncat( pszPlatform, szServicePack, PLATFORM_BUF_SIZE );
+               hb_strncat(pszPlatform, szServicePack, PLATFORM_BUF_SIZE);
                break;
             }
          }
@@ -935,7 +935,7 @@ char * hb_verCompiler( void )
       hb_strncpy(szSub, "++", sizeof(szSub) - 1);
    #endif
 
-   hb_strncat( szSub, " 1.x", sizeof(szSub) - 1 );
+   hb_strncat(szSub, " 1.x", sizeof(szSub) - 1);
 
    iVerMajor = iVerMinor = iVerPatch = 0;
 
@@ -1125,15 +1125,15 @@ char * hb_verCompiler( void )
    {
       hb_snprintf(szSub, sizeof(szSub), " (%s)", __clang_version__);
    }
-   hb_strncat( pszCompiler, szSub, COMPILER_BUF_SIZE - 1 );
+   hb_strncat(pszCompiler, szSub, COMPILER_BUF_SIZE - 1);
 #endif
 
    #if defined( HB_ARCH_16BIT )
-      hb_strncat( pszCompiler, " (16-bit)", COMPILER_BUF_SIZE - 1 );
+      hb_strncat(pszCompiler, " (16-bit)", COMPILER_BUF_SIZE - 1);
    #elif defined( HB_ARCH_32BIT )
-      hb_strncat( pszCompiler, " (32-bit)", COMPILER_BUF_SIZE - 1 );
+      hb_strncat(pszCompiler, " (32-bit)", COMPILER_BUF_SIZE - 1);
    #elif defined( HB_ARCH_64BIT )
-      hb_strncat( pszCompiler, " (64-bit)", COMPILER_BUF_SIZE - 1 );
+      hb_strncat(pszCompiler, " (64-bit)", COMPILER_BUF_SIZE - 1);
    #endif
 
    return pszCompiler;

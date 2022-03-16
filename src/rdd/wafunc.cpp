@@ -211,7 +211,7 @@ HB_USHORT hb_rddFieldIndex( AREAP pArea, const char * szName )
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddFieldIndex(%p, %s)", static_cast<void*>(pArea), szName ) );
 #endif
 
-   while( HB_ISSPACE( *szName ) )
+   while( HB_ISSPACE(*szName) )
    {
       ++szName;
    }
@@ -220,7 +220,7 @@ HB_USHORT hb_rddFieldIndex( AREAP pArea, const char * szName )
    {
       HB_SIZE nLen = strlen(szName);
 
-      while( HB_ISSPACE( szName[nLen - 1] ) )
+      while( HB_ISSPACE(szName[nLen - 1]) )
       {
          --nLen;
       }
@@ -263,7 +263,7 @@ HB_USHORT hb_rddFieldIndex( AREAP pArea, const char * szName )
  */
 HB_USHORT hb_rddFieldExpIndex( AREAP pArea, const char * szField )
 {
-   while( HB_ISSPACE( *szField ) )
+   while( HB_ISSPACE(*szField) )
    {
       ++szField;
    }
@@ -311,7 +311,7 @@ HB_USHORT hb_rddFieldExpIndex( AREAP pArea, const char * szField )
          if( i > 0 )
          {
             i += n;
-            while( HB_ISSPACE( szField[i] ) )
+            while( HB_ISSPACE(szField[i]) )
             {
                i++;
             }

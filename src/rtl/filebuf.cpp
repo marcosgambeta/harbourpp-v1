@@ -123,14 +123,14 @@ void hb_fileDsp( PHB_FILE pFile, const char * szMsg )
 {
    HB_UINT uiPos = 0;
 
-   fprintf( stderr, "\r\n[%s][", szMsg );
+   fprintf(stderr, "\r\n[%s][", szMsg);
    while( uiPos < pFile->uiLocks )
    {
       PHB_FLOCK pLock = &pFile->pLocks[uiPos];
-      fprintf( stderr, "%lld:%lld ", pLock->start, pLock->len );
+      fprintf(stderr, "%lld:%lld ", pLock->start, pLock->len);
       ++uiPos;
    }
-   fprintf( stderr, "]" );
+   fprintf(stderr, "]");
    fflush(stderr);
 }
 #endif

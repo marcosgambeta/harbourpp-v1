@@ -176,7 +176,7 @@ static HB_BOOL hb_macroCheckParam( PHB_ITEM pItem )
       {
          HB_STACK_TLS_PRELOAD
          hb_stackPop();
-         hb_vmPush( pResult );
+         hb_vmPush(pResult);
          hb_itemRelease(pResult);
       }
    }
@@ -244,7 +244,7 @@ static void hb_macroSyntaxError( PHB_MACRO pMacro )
       if( pResult )
       {
          hb_stackPop();    /* remove compiled string */
-         hb_vmPush( pResult );
+         hb_vmPush(pResult);
          hb_itemRelease(pResult);
       }
    }
@@ -501,7 +501,7 @@ void hb_macroGetValue( PHB_ITEM pItem, int iContext, int flags )
 
          if( iContext == HB_P_MACROPUSHLIST )
          {
-            hb_vmPushLong( struMacro.uiListElements + 1 );
+            hb_vmPushLong(struMacro.uiListElements + 1);
          }
       }
       else
@@ -663,7 +663,7 @@ static void hb_macroUseAliased( PHB_ITEM pAlias, PHB_ITEM pVar, int iFlag, int i
       }
       else
       {
-         hb_vmPushString( szString, nLen );
+         hb_vmPushString(szString, nLen);
          hb_macroSyntaxError( &struMacro );
       }
 
@@ -977,7 +977,7 @@ HB_FUNC( MEMVARBLOCK )
    {
       char szVarName[HB_SYMBOL_NAME_LEN + 1];
 
-      while( HB_ISSPACE( *szName ) )
+      while( HB_ISSPACE(*szName) )
       {
          ++szName;
       }
@@ -1008,7 +1008,7 @@ HB_FUNC( FIELDBLOCK )
        * ADDFIELD() workarea method so exactly the same set of
        * symbols is accepted. [druzus]
        */
-      while( HB_ISSPACE( *szName ) )
+      while( HB_ISSPACE(*szName) )
       {
          ++szName;
       }
@@ -1048,7 +1048,7 @@ HB_FUNC( FIELDWBLOCK )
    {
       char szFieldName[HB_SYMBOL_NAME_LEN + 1];
 
-      while( HB_ISSPACE( *szName ) )
+      while( HB_ISSPACE(*szName) )
       {
          ++szName;
       }
@@ -1100,7 +1100,7 @@ void hb_macroPushSymbol( PHB_ITEM pItem )
          /* NOTE: checking for valid function name (valid pointer) is done
           * in hb_vmDo()
           */
-         hb_vmPushSymbol( pDynSym->pSymbol );  /* push compiled symbol instead of a string */
+         hb_vmPushSymbol(pDynSym->pSymbol);  /* push compiled symbol instead of a string */
          return;
       }
       else
@@ -1112,7 +1112,7 @@ void hb_macroPushSymbol( PHB_ITEM pItem )
    if( ! HB_IS_SYMBOL(hb_stackItemFromTop(-1)) && hb_vmRequestQuery() == 0 )
    {
       hb_stackPop();    /* remove compiled string */
-      hb_vmPushDynSym( hb_dynsymGetCase("") );  /* push compiled symbol instead of a string */
+      hb_vmPushDynSym(hb_dynsymGetCase(""));  /* push compiled symbol instead of a string */
    }
 }
 

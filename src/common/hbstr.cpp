@@ -139,7 +139,7 @@ HB_BOOL hb_strEmpty( const char * szText, HB_SIZE nLen )
    {
       char c = szText[nLen];
 
-      if( ! HB_ISSPACE( c ) )
+      if( ! HB_ISSPACE(c) )
       {
          return HB_FALSE;
       }
@@ -653,7 +653,7 @@ static HB_BOOL hb_str2number( HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, 
 
    iLen = static_cast<int>(nLen);
 
-   while( iPos < iLen && HB_ISSPACE( szNum[iPos] ) )
+   while( iPos < iLen && HB_ISSPACE(szNum[iPos]) )
    {
       iPos++;
    }

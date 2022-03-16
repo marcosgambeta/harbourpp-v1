@@ -71,9 +71,9 @@ static HB_BOOL hb_itemIsLess( PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE
       }
 
       hb_vmPushEvalSym();
-      hb_vmPush( pBlock );
-      hb_vmPush( pItem1 );
-      hb_vmPush( pItem2 );
+      hb_vmPush(pBlock);
+      hb_vmPush(pItem1);
+      hb_vmPush(pItem2);
       hb_vmSend(2);
 
       pRet = hb_param(-1, HB_IT_ANY);

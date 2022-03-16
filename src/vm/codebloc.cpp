@@ -70,7 +70,7 @@ static HB_GARBAGE_FUNC( hb_codeblockGarbageDelete )
    if( pCBlock->pCode && pCBlock->dynBuffer )
    {
       pCBlock->dynBuffer = HB_FALSE;
-      hb_xfree(HB_UNCONST( pCBlock->pCode ));
+      hb_xfree(HB_UNCONST(pCBlock->pCode));
    }
    pCBlock->pCode = s_pCode;
 
@@ -182,7 +182,7 @@ PHB_CODEBLOCK hb_codeblockNew( const HB_BYTE * pBuffer, HB_USHORT uiLocals, cons
          /* Swap the current value of local variable with the reference to this
           * value.
           */
-         int iLocal = HB_PCODE_MKUSHORT( pLocalPosTable );
+         int iLocal = HB_PCODE_MKUSHORT(pLocalPosTable);
          pLocal = hb_stackLocalVariable( iLocal );
          pLocalPosTable += 2;
 

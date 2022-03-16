@@ -137,13 +137,13 @@ HB_BOOL hb_tracefile( const char * szFile )
 {
    if( szFile && *szFile )
    {
-      FILE * fp = hb_fopen( szFile, s_mode );
+      FILE * fp = hb_fopen(szFile, s_mode);
 
       if( fp )
       {
          if( s_fp != nullptr && s_fp != stderr )
          {
-            fclose( s_fp );
+            fclose(s_fp);
          }
          s_fp = fp;
          return HB_TRUE;
@@ -193,7 +193,7 @@ int hb_tr_level( void )
       {
          if( hb_getenv_buffer( "HB_TR_OUTPUT", env, sizeof(env) ) && env[0] != '\0' )
          {
-            s_fp = hb_fopen( env, s_mode );
+            s_fp = hb_fopen(env, s_mode);
 
             if( s_fp == nullptr )
             {
@@ -283,7 +283,7 @@ static void hb_tracelog_( int level, const char * file, int line, const char * p
       }
       else
       {
-         hb_vsnprintf( message, sizeof(message), fmt, vargs );
+         hb_vsnprintf(message, sizeof(message), fmt, vargs);
       }
 
       va_end( vargs );
@@ -345,26 +345,26 @@ static void hb_tracelog_( int level, const char * file, int line, const char * p
     */
    if( proc )
    {
-      fprintf( s_fp, "%s:%d:%s(): %s ", file, line, proc, pszLevel );
+      fprintf(s_fp, "%s:%d:%s(): %s ", file, line, proc, pszLevel);
    }
    else
    {
-      fprintf( s_fp, "%s:%d: %s ", file, line, pszLevel );
+      fprintf(s_fp, "%s:%d: %s ", file, line, pszLevel);
    }
 
    /*
     * Print the name and arguments for the function.
     */
-   vfprintf( s_fp, fmt, ap );
+   vfprintf(s_fp, fmt, ap);
 
    /*
     * Print a new-line.
     */
-   fprintf( s_fp, "\n" );
+   fprintf(s_fp, "\n");
 
    if( s_flush > 0 )
    {
-      fflush( s_fp );
+      fflush(s_fp);
    }
 }
 

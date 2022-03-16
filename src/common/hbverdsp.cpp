@@ -49,55 +49,55 @@
 
 void hb_verBuildInfo( void )
 {
-   hb_conOutErr( "Harbour++ Build Info", 0 );
-   hb_conOutErr( hb_conNewLine(), 0 );
-   hb_conOutErr( "---------------------------", 0 );
-   hb_conOutErr( hb_conNewLine(), 0 );
+   hb_conOutErr("Harbour++ Build Info", 0);
+   hb_conOutErr(hb_conNewLine(), 0);
+   hb_conOutErr("---------------------------", 0);
+   hb_conOutErr(hb_conNewLine(), 0);
 
    {
       char * pszVersion = hb_verHarbour();
-      hb_conOutErr( "Version: ", 0 );
-      hb_conOutErr( pszVersion, 0 );
-      hb_conOutErr( hb_conNewLine(), 0 );
+      hb_conOutErr("Version: ", 0);
+      hb_conOutErr(pszVersion, 0);
+      hb_conOutErr(hb_conNewLine(), 0);
       hb_xfree(pszVersion);
    }
 
    {
       char * pszVersion = hb_verCompiler();
-      hb_conOutErr( "Compiler: ", 0 );
-      hb_conOutErr( pszVersion, 0 );
-      hb_conOutErr( hb_conNewLine(), 0 );
+      hb_conOutErr("Compiler: ", 0);
+      hb_conOutErr(pszVersion, 0);
+      hb_conOutErr(hb_conNewLine(), 0);
       hb_xfree(pszVersion);
    }
 
    {
       char * pszVersion = hb_verPlatform();
-      hb_conOutErr( "Platform: ", 0 );
-      hb_conOutErr( pszVersion, 0 );
-      hb_conOutErr( hb_conNewLine(), 0 );
+      hb_conOutErr("Platform: ", 0);
+      hb_conOutErr(pszVersion, 0);
+      hb_conOutErr(hb_conNewLine(), 0);
       hb_xfree(pszVersion);
    }
 
    {
       char * pszPCode = hb_verPCode();
-      hb_conOutErr( pszPCode, 0 );
-      hb_conOutErr( hb_conNewLine(), 0 );
+      hb_conOutErr(pszPCode, 0);
+      hb_conOutErr(hb_conNewLine(), 0);
       hb_xfree(pszPCode);
    }
 
-   hb_conOutErr( "ChangeLog last entry: ", 0 );
-   hb_conOutErr( hb_verChangeLogLastEntry(), 0 );
-   hb_conOutErr( hb_conNewLine(), 0 );
+   hb_conOutErr("ChangeLog last entry: ", 0);
+   hb_conOutErr(hb_verChangeLogLastEntry(), 0);
+   hb_conOutErr(hb_conNewLine(), 0);
 
-   hb_conOutErr( "ChangeLog ID: ", 0 );
-   hb_conOutErr( hb_verChangeLogID(), 0 );
-   hb_conOutErr( hb_conNewLine(), 0 );
+   hb_conOutErr("ChangeLog ID: ", 0);
+   hb_conOutErr(hb_verChangeLogID(), 0);
+   hb_conOutErr(hb_conNewLine(), 0);
 
    {
       char * pszBuildDate = hb_verBuildDate();
-      hb_conOutErr( "Built on: ", 0 );
-      hb_conOutErr( pszBuildDate, 0 );
-      hb_conOutErr( hb_conNewLine(), 0 );
+      hb_conOutErr("Built on: ", 0);
+      hb_conOutErr(pszBuildDate, 0);
+      hb_conOutErr(hb_conNewLine(), 0);
       hb_xfree(pszBuildDate);
    }
 
@@ -105,9 +105,9 @@ void hb_verBuildInfo( void )
       const char * pszFlags = hb_verFlagsPRG();
       if( pszFlags && *pszFlags )
       {
-         hb_conOutErr( "Extra Harbour compiler options: ", 0 );
-         hb_conOutErr( pszFlags, 0 );
-         hb_conOutErr( hb_conNewLine(), 0 );
+         hb_conOutErr("Extra Harbour compiler options: ", 0);
+         hb_conOutErr(pszFlags, 0);
+         hb_conOutErr(hb_conNewLine(), 0);
       }
    }
 
@@ -115,9 +115,9 @@ void hb_verBuildInfo( void )
       const char * pszFlags = hb_verFlagsC();
       if( pszFlags && *pszFlags )
       {
-         hb_conOutErr( "Extra C++ compiler options: ", 0 );
-         hb_conOutErr( pszFlags, 0 );
-         hb_conOutErr( hb_conNewLine(), 0 );
+         hb_conOutErr("Extra C++ compiler options: ", 0);
+         hb_conOutErr(pszFlags, 0);
+         hb_conOutErr(hb_conNewLine(), 0);
       }
    }
 
@@ -125,37 +125,37 @@ void hb_verBuildInfo( void )
       const char * pszFlags = hb_verFlagsL();
       if( pszFlags && *pszFlags )
       {
-         hb_conOutErr( "Extra linker options: ", 0 );
-         hb_conOutErr( pszFlags, 0 );
-         hb_conOutErr( hb_conNewLine(), 0 );
+         hb_conOutErr("Extra linker options: ", 0);
+         hb_conOutErr(pszFlags, 0);
+         hb_conOutErr(hb_conNewLine(), 0);
       }
    }
 
-   hb_conOutErr( "Build options: ", 0 );
+   hb_conOutErr("Build options: ", 0);
    if( hb_xquery(HB_MEM_STATISTICS) != 0 )
    {
-      hb_conOutErr( "(memory tracking) ", 0 );
+      hb_conOutErr("(memory tracking) ", 0);
    }
 #if defined( HB_TR_INFO ) && ( HB_TR_LEVEL == HB_TR_INFO || HB_TR_LEVEL == HB_TR_DEBUG )
-   hb_conOutErr( "(tracing) ", 0 );
+   hb_conOutErr("(tracing) ", 0);
 #endif
 #if ! defined( HB_NO_PROFILER )
-   hb_conOutErr( "(profiler) ", 0 );
+   hb_conOutErr("(profiler) ", 0);
 #endif
 #if defined( __cplusplus )
-   hb_conOutErr( "(C++ mode) ", 0 );
+   hb_conOutErr("(C++ mode) ", 0);
 #endif
 #if defined( HB_COMPAT_C53 )
-   hb_conOutErr( "(Clipper 5.3b) ", 0 );
+   hb_conOutErr("(Clipper 5.3b) ", 0);
 #endif
 #if defined( HB_CLP_UNDOC )
-   hb_conOutErr( "(Clipper 5.x undoc) ", 0 );
+   hb_conOutErr("(Clipper 5.x undoc) ", 0);
 #endif
 #if defined( HB_CLP_STRICT )
-   hb_conOutErr( "(Clipper 5.x strict) ", 0 );
+   hb_conOutErr("(Clipper 5.x strict) ", 0);
 #endif
-   hb_conOutErr( hb_conNewLine(), 0 );
+   hb_conOutErr(hb_conNewLine(), 0);
 
-   hb_conOutErr( "---------------------------", 0 );
-   hb_conOutErr( hb_conNewLine(), 0 );
+   hb_conOutErr("---------------------------", 0);
+   hb_conOutErr(hb_conNewLine(), 0);
 }

@@ -269,7 +269,7 @@ char * hb_fsFNameMerge( char * pszFileName, PHB_FNAME pFileName )
       /* Add path if specified */
       if( pFileName->szPath )
       {
-         hb_strncat( pszFileName, pFileName->szPath, HB_PATH_MAX - 1 - 1 );
+         hb_strncat(pszFileName, pFileName->szPath, HB_PATH_MAX - 1 - 1);
       }
 
       /* If we have a path, append a path separator to the path if there
@@ -288,7 +288,7 @@ char * hb_fsFNameMerge( char * pszFileName, PHB_FNAME pFileName )
       /* Add filename (without extension) if specified */
       if( pszName )
       {
-         hb_strncat( pszFileName, pszName, HB_PATH_MAX - 1 - 1 );
+         hb_strncat(pszFileName, pszName, HB_PATH_MAX - 1 - 1);
       }
 
       /* Add extension if specified */
@@ -297,10 +297,10 @@ char * hb_fsFNameMerge( char * pszFileName, PHB_FNAME pFileName )
          /* Add a dot if the extension doesn't have it */
          if( pFileName->szExtension[0] != '\0' && pFileName->szExtension[0] != '.' )
          {
-            hb_strncat( pszFileName, ".", HB_PATH_MAX - 1 - 1 );
+            hb_strncat(pszFileName, ".", HB_PATH_MAX - 1 - 1);
          }
 
-         hb_strncat( pszFileName, pFileName->szExtension, HB_PATH_MAX - 1 - 1 );
+         hb_strncat(pszFileName, pFileName->szExtension, HB_PATH_MAX - 1 - 1);
       }
 
 #if 0

@@ -81,22 +81,22 @@ static void hb_pp_writeToken( FILE * fout, PHB_PP_TOKEN pToken,
 
       i = static_cast<int>(strlen(szName));
       if( pToken->pNext )
-         fprintf( fout, "   { %s +%2d", szName, iToken + iOptional + 1 );
+         fprintf(fout, "   { %s +%2d", szName, iToken + iOptional + 1);
       else
-         fprintf( fout, "   { NULL%*s", i, "" );
+         fprintf(fout, "   { NULL%*s", i, "");
       if( iOptional )
-         fprintf( fout, ", %s +%2d", szName, iToken + 1 );
+         fprintf(fout, ", %s +%2d", szName, iToken + 1);
       else
-         fprintf( fout, ", NULL%*s", i, "" );
+         fprintf(fout, ", NULL%*s", i, "");
 
       i = 16 - static_cast<int>(strlen(pToken->value));
-      fprintf( fout, ", \"%s\", %*s %2d,%2d, 0x%04x, %u }%s\n",
+      fprintf(fout, ", \"%s\", %*s %2d,%2d, 0x%04x, %u }%s\n",
                pToken->value,
                i < 0 ? 0 : i, "",
                static_cast<int>(pToken->len), static_cast<int>(pToken->spaces),
                pToken->type | HB_PP_TOKEN_STATIC | HB_PP_TOKEN_PREDEFINED,
                pToken->index,
-               fLast && ! pToken->pNext && iOptional == 0 ? "" : "," );
+               fLast && ! pToken->pNext && iOptional == 0 ? "" : ",");
 
       if( iOptional )
          hb_pp_writeToken( fout, pToken->pMTokens, szName, iToken + 1,
@@ -114,10 +114,10 @@ static void hb_pp_writeTokenList( FILE * fout, PHB_PP_TOKEN pTokenLst, const cha
    iTokens = hb_pp_writeTokenCount( pTokenLst );
    if( iTokens )
    {
-      fprintf( fout, "static HB_PP_TOKEN %s[ %d ] = {\n",
-               szName, iTokens );
+      fprintf(fout, "static HB_PP_TOKEN %s[ %d ] = {\n",
+               szName, iTokens);
       hb_pp_writeToken( fout, pTokenLst, szName, 0, HB_TRUE );
-      fprintf( fout, "};\n" );
+      fprintf(fout, "};\n");
    }
 }
 
@@ -148,8 +148,8 @@ static int hb_pp_writeRules( FILE * fout, PHB_PP_RULE pFirst, const char * szNam
       pRule = pRule->pPrev;
    }
 
-   fprintf( fout, "static const HB_PP_DEFRULE s_%s[ %d ] = {\n",
-            szName, iRule );
+   fprintf(fout, "static const HB_PP_DEFRULE s_%s[ %d ] = {\n",
+            szName, iRule);
 
    iRule = 0;
    pRule = pFirst;
@@ -171,38 +171,38 @@ static int hb_pp_writeRules( FILE * fout, PHB_PP_RULE pFirst, const char * szNam
          if( pRule->pMarkers[u].canrepeat )
             ulRepeatBits |= ulBit;
       }
-      fprintf( fout, "   { %s, %s, %d,%2u, 0x%04lx }%s\n",
-               szMatch, szResult, HB_PP_CMP_MODE( pRule->mode ),
-               pRule->markers, ulRepeatBits, pRule->pPrev ? "," : "" );
+      fprintf(fout, "   { %s, %s, %d,%2u, 0x%04lx }%s\n",
+               szMatch, szResult, HB_PP_CMP_MODE(pRule->mode),
+               pRule->markers, ulRepeatBits, pRule->pPrev ? "," : "");
       pRule = pRule->pPrev;
    }
-   fprintf( fout, "};\n\n" );
+   fprintf(fout, "};\n\n");
    return iRule;
 }
 
 static void hb_pp_generateInitFunc( FILE * fout, int iRules,
                                     const char * szVar, const char * szRule )
 {
-   fprintf( fout, "   hb_pp_initRules( &pState->p%s, &pState->i%s, ",
-            szVar, szVar );
+   fprintf(fout, "   hb_pp_initRules( &pState->p%s, &pState->i%s, ",
+            szVar, szVar);
    if( iRules )
-      fprintf( fout, "s_%s, %d );\n", szRule, iRules );
+      fprintf(fout, "s_%s, %d );\n", szRule, iRules);
    else
-      fprintf( fout, "NULL, 0 );\n" );
+      fprintf(fout, "NULL, 0 );\n");
 }
 
 static void hb_pp_generateRules( FILE * fout, PHB_PP_STATE pState, const char * szPPRuleFuncName )
 {
    int iDefs = 0, iTrans = 0, iCmds = 0;
 
-   fprintf( fout, "/*\n"
+   fprintf(fout, "/*\n"
             " * Built-in preprocessor rules.\n"
             " *\n"
             " * Copyright 2006-present Przemyslaw Czerpak <druzus / at / priv.onet.pl>\n"
             " *\n"
             " * This file is generated automatically by Harbour preprocessor\n"
             " * and is covered by the same license as Harbour PP\n"
-            " */\n\n#define _HB_PP_INTERNAL\n#include \"hbpp.h\"\n\n" );
+            " */\n\n#define _HB_PP_INTERNAL\n#include \"hbpp.h\"\n\n");
 
    if( pState->pDefinitions )
       iDefs = hb_pp_writeRules( fout, pState->pDefinitions, "def" );
@@ -211,11 +211,11 @@ static void hb_pp_generateRules( FILE * fout, PHB_PP_STATE pState, const char * 
    if( pState->pCommands )
       iCmds = hb_pp_writeRules( fout, pState->pCommands, "cmd" );
 
-   fprintf( fout, "\nvoid %s( PHB_PP_STATE pState )\n{\n", szPPRuleFuncName ? szPPRuleFuncName : "hb_pp_setStdRules" );
+   fprintf(fout, "\nvoid %s( PHB_PP_STATE pState )\n{\n", szPPRuleFuncName ? szPPRuleFuncName : "hb_pp_setStdRules");
    hb_pp_generateInitFunc( fout, iDefs,  "Definitions",  "def" );
    hb_pp_generateInitFunc( fout, iTrans, "Translations", "trs" );
    hb_pp_generateInitFunc( fout, iCmds,  "Commands",     "cmd" );
-   fprintf( fout, "}\n" );
+   fprintf(fout, "}\n");
 }
 
 static void hb_pp_undefCompilerRules( PHB_PP_STATE pState )
@@ -269,7 +269,7 @@ static int hb_pp_preprocesfile( PHB_PP_STATE pState, const char * szRuleFile, co
    {
       FILE * foutr;
 
-      foutr = hb_fopen( szRuleFile, "w" );
+      foutr = hb_fopen(szRuleFile, "w");
       if( ! foutr )
       {
          perror( szRuleFile );
@@ -279,7 +279,7 @@ static int hb_pp_preprocesfile( PHB_PP_STATE pState, const char * szRuleFile, co
       {
          hb_pp_undefCompilerRules( pState );
          hb_pp_generateRules( foutr, pState, szPPRuleFuncName );
-         fclose( foutr );
+         fclose(foutr);
       }
    }
 
@@ -328,7 +328,7 @@ static int hb_pp_generateVerInfo( char * szVerFile,
    int iResult = 0;
    FILE * fout;
 
-   fout = hb_fopen( szVerFile, "w" );
+   fout = hb_fopen(szVerFile, "w");
    if( ! fout )
    {
       perror( szVerFile );
@@ -339,28 +339,28 @@ static int hb_pp_generateVerInfo( char * szVerFile,
       char * pszEnv;
       char * pszEscaped;
 
-      fprintf( fout, "/*\n"
+      fprintf(fout, "/*\n"
                " * Version information and build time switches.\n"
                " *\n"
                " * Copyright 2008-present Przemyslaw Czerpak <druzus / at / priv.onet.pl>\n"
                " *\n"
                " * This file is generated automatically by Harbour preprocessor\n"
                " * and is covered by the same license as Harbour PP\n"
-               " */\n\n" );
+               " */\n\n");
 
-      fprintf( fout, "#define HB_VER_REVID             %d\n", iRevID );
+      fprintf(fout, "#define HB_VER_REVID             %d\n", iRevID);
 
       if( szChangeLogID )
       {
          pszEscaped = hb_pp_escapeString( szChangeLogID );
-         fprintf( fout, "#define HB_VER_CHLID             \"%s\"\n", pszEscaped );
+         fprintf(fout, "#define HB_VER_CHLID             \"%s\"\n", pszEscaped);
          hb_xfree(pszEscaped);
       }
 
       if( szLastEntry )
       {
          pszEscaped = hb_pp_escapeString( szLastEntry );
-         fprintf( fout, "#define HB_VER_LENTRY            \"%s\"\n", pszEscaped );
+         fprintf(fout, "#define HB_VER_LENTRY            \"%s\"\n", pszEscaped);
          hb_xfree(pszEscaped);
       }
 
@@ -368,7 +368,7 @@ static int hb_pp_generateVerInfo( char * szVerFile,
       if( pszEnv )
       {
          pszEscaped = hb_pp_escapeString( pszEnv );
-         fprintf( fout, "#define HB_VER_HB_USER_CFLAGS    \"%s\"\n", pszEscaped );
+         fprintf(fout, "#define HB_VER_HB_USER_CFLAGS    \"%s\"\n", pszEscaped);
          hb_xfree(pszEscaped);
          hb_xfree(pszEnv);
       }
@@ -377,7 +377,7 @@ static int hb_pp_generateVerInfo( char * szVerFile,
       if( pszEnv )
       {
          pszEscaped = hb_pp_escapeString( pszEnv );
-         fprintf( fout, "#define HB_VER_HB_USER_LDFLAGS   \"%s\"\n", pszEscaped );
+         fprintf(fout, "#define HB_VER_HB_USER_LDFLAGS   \"%s\"\n", pszEscaped);
          hb_xfree(pszEscaped);
          hb_xfree(pszEnv);
       }
@@ -386,7 +386,7 @@ static int hb_pp_generateVerInfo( char * szVerFile,
       if( pszEnv )
       {
          pszEscaped = hb_pp_escapeString( pszEnv );
-         fprintf( fout, "#define HB_VER_HB_USER_PRGFLAGS  \"%s\"\n", pszEscaped );
+         fprintf(fout, "#define HB_VER_HB_USER_PRGFLAGS  \"%s\"\n", pszEscaped);
          hb_xfree(pszEscaped);
          hb_xfree(pszEnv);
       }
@@ -395,7 +395,7 @@ static int hb_pp_generateVerInfo( char * szVerFile,
       if( pszEnv )
       {
          pszEscaped = hb_pp_escapeString( pszEnv );
-         fprintf( fout, "#define HB_PLATFORM              \"%s\"\n", pszEscaped );
+         fprintf(fout, "#define HB_PLATFORM              \"%s\"\n", pszEscaped);
          hb_xfree(pszEscaped);
          hb_xfree(pszEnv);
       }
@@ -404,12 +404,12 @@ static int hb_pp_generateVerInfo( char * szVerFile,
       if( pszEnv )
       {
          pszEscaped = hb_pp_escapeString( pszEnv );
-         fprintf( fout, "#define HB_COMPILER              \"%s\"\n", pszEscaped );
+         fprintf(fout, "#define HB_COMPILER              \"%s\"\n", pszEscaped);
          hb_xfree(pszEscaped);
          hb_xfree(pszEnv);
       }
 
-      fclose( fout );
+      fclose(fout);
    }
 
    return iResult;
@@ -487,7 +487,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
 
    hb_xfree(pFileName);
 
-   file_in = hb_fopen( pszFileName, "r" );
+   file_in = hb_fopen(pszFileName, "r");
    if( ! file_in )
    {
       if( iQuiet < 2 )
@@ -505,7 +505,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
       int iLen;
 
       if( iQuiet == 0 )
-         fprintf( stdout, "Reading ChangeLog file: %s\n", pszFileName );
+         fprintf(stdout, "Reading ChangeLog file: %s\n", pszFileName);
 
       *szId = *szLog = '\0';
 
@@ -545,7 +545,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
             {
                hb_strncpy(szLog, szLine, sizeof(szLog) - 1);
                iLen = static_cast<int>(strlen(szLog));
-               while( iLen-- && HB_ISSPACE( szLog[iLen] ) )
+               while( iLen-- && HB_ISSPACE(szLog[iLen]) )
                {
                   szLog[iLen] = '\0';
                }   
@@ -554,12 +554,12 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
       }
       while( ! *szLog );
 
-      fclose( file_in );
+      fclose(file_in);
 
       if( ! *szLog )
       {
          if( iQuiet < 2 )
-            fprintf( stderr, "Cannot find valid $" "Id entry in the %s file.\n", pszFileName );
+            fprintf(stderr, "Cannot find valid $" "Id entry in the %s file.\n", pszFileName);
          iResult = 1;
       }
       else
@@ -648,9 +648,9 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
  */
 static void hb_pp_usage( char * szName )
 {
-   printf( "\n" );
-   printf( "Syntax:  %s <file[.prg]> [options]\n\n", szName );
-   printf( "Options:  -d<id>[=<val>]\t#define <id>\n"
+   printf("\n");
+   printf("Syntax:  %s <file[.prg]> [options]\n\n", szName);
+   printf("Options:  -d<id>[=<val>]\t#define <id>\n"
            "          -e[<func>]    \tuse <func> as entry function in generated .c\n"
            "          -i<path>      \tadd #include file search path\n"
            "          -u[<file>]    \tuse command def set in <file> (or none)\n"
@@ -658,9 +658,9 @@ static void hb_pp_usage( char * szName )
            "          -o<file>      \tcreates .c file with PP rules\n"
            "          -v<file>      \tcreates .h file with version information\n"
            "          -w            \twrite preprocessed (.ppo) file\n"
-           "          -q[012]       \tdisable information messages\n" );
-   printf( "\n"
-           "Note:  if neither -o nor -v is specified then -w is default action\n\n" );
+           "          -q[012]       \tdisable information messages\n");
+   printf("\n"
+           "Note:  if neither -o nor -v is specified then -w is default action\n\n");
 }
 
 int main( int argc, char * argv[] )
@@ -779,9 +779,9 @@ int main( int argc, char * argv[] )
 
    if( iQuiet < 2 )
    {
-      printf( "Harbour++ Preprocessor %d.%d.%d%s\n",
-              HB_VER_MAJOR, HB_VER_MINOR, HB_VER_RELEASE, HB_VER_STATUS );
-      printf( "Copyright (c) 1999-present, %s\n", _DEFAULT_ORIGIN_URL );
+      printf("Harbour++ Preprocessor %d.%d.%d%s\n",
+              HB_VER_MAJOR, HB_VER_MINOR, HB_VER_RELEASE, HB_VER_STATUS);
+      printf("Copyright (c) 1999-present, %s\n", _DEFAULT_ORIGIN_URL);
    }
 
    if( szFile )

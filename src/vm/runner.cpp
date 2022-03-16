@@ -113,7 +113,7 @@ static int hb_hrbReadHead( const char * szBody, HB_SIZE nBodySize, HB_SIZE * pnB
    pVersion = szBody + nSigSize;
    *pnBodyOffset += nSigSize + 2;
 
-   return HB_PCODE_MKSHORT( pVersion );
+   return HB_PCODE_MKSHORT(pVersion);
 }
 
 static HB_BOOL hb_hrbReadValue( const char * szBody, HB_SIZE nBodySize, HB_SIZE * pnBodyOffset, HB_ULONG * pulValue )
@@ -124,7 +124,7 @@ static HB_BOOL hb_hrbReadValue( const char * szBody, HB_SIZE nBodySize, HB_SIZE 
 
    if( *pnBodyOffset + 4 < nBodySize )
    {
-      *pulValue = HB_PCODE_MKLONG( szBody + *pnBodyOffset );
+      *pulValue = HB_PCODE_MKLONG(szBody + *pnBodyOffset);
       *pnBodyOffset += 4;
 
       if( *pulValue <= 0x00FFFFFFUL )
@@ -198,7 +198,7 @@ static void hb_hrbInitStatic( PHRB_BODY pHrbBody )
              * [MLombardo]
              */
 
-            hb_vmPushSymbol( &( pHrbBody->pSymRead[ul] ) );
+            hb_vmPushSymbol(&(pHrbBody->pSymRead[ul]));
             hb_vmPushNil();
             hb_vmProc(0);
          }
@@ -229,13 +229,13 @@ static void hb_hrbInit( PHRB_BODY pHrbBody, int iPCount, PHB_ITEM * pParams )
                {
                   if( strcmp(pHrbBody->pSymRead[ul].szName, "CLIPINIT$") ? ! fClipInit : fClipInit )
                   {
-                     hb_vmPushSymbol( pHrbBody->pSymRead + ul );
+                     hb_vmPushSymbol(pHrbBody->pSymRead + ul);
                      hb_vmPushNil();
                      for( int i = 0; i < iPCount; i++ )
                      {
-                        hb_vmPush( pParams[i] );
+                        hb_vmPush(pParams[i]);
                      }
-                     hb_vmProc( static_cast<HB_USHORT>(iPCount) );
+                     hb_vmProc(static_cast<HB_USHORT>(iPCount));
                      if( hb_vmRequestQuery() != 0 )
                      {
                         break;
@@ -269,7 +269,7 @@ static void hb_hrbExit( PHRB_BODY pHrbBody )
          {
             if( ( pHrbBody->pSymRead[ul].scope.value & HB_FS_INITEXIT ) == HB_FS_EXIT )
             {
-               hb_vmPushSymbol( pHrbBody->pSymRead + ul );
+               hb_vmPushSymbol(pHrbBody->pSymRead + ul);
                hb_vmPushNil();
                hb_vmProc(0);
                if( hb_vmRequestQuery() != 0 )
@@ -638,15 +638,15 @@ static void hb_hrbDo( PHRB_BODY pHrbBody, int iPCount, PHB_ITEM * pParams )
    /* May not have a startup symbol, if first symbol was an INIT Symbol (was executed already). */
    if( pHrbBody->lSymStart >= 0 && hb_vmRequestQuery() == 0 )
    {
-      hb_vmPushSymbol( &pHrbBody->pSymRead[pHrbBody->lSymStart] );
+      hb_vmPushSymbol(&pHrbBody->pSymRead[pHrbBody->lSymStart]);
       hb_vmPushNil();
 
       for( int i = 0; i < iPCount; i++ )
       {
-         hb_vmPush( pParams[i] );
+         hb_vmPush(pParams[i]);
       }
 
-      hb_vmProc( static_cast<HB_USHORT>(iPCount) );
+      hb_vmProc(static_cast<HB_USHORT>(iPCount));
 
       pRetVal = hb_itemNew(nullptr);
       hb_itemMove(pRetVal, hb_stackReturnItem());

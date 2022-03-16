@@ -86,7 +86,7 @@ FILE * hb_fopen( const char * path, const char * mode )
          file = nullptr;
       }
    #else
-      file = _wfopen( lpPath, lpMode );
+      file = _wfopen(lpPath, lpMode);
    #endif
    hb_vmLock();
 
@@ -112,7 +112,7 @@ FILE * hb_fopen( const char * path, const char * mode )
          file = nullptr;
       }
    #else
-      file = fopen( path, mode );
+      file = fopen(path, mode);
    #endif
    hb_vmLock();
 

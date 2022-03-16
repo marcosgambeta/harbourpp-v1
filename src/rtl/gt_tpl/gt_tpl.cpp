@@ -63,7 +63,7 @@ static void hb_gt_tpl_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
    /* TODO: */
 
-   HB_GTSUPER_INIT( pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr );
+   HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
 }
 
 static void hb_gt_tpl_Exit( PHB_GT pGT )
@@ -72,7 +72,7 @@ static void hb_gt_tpl_Exit( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_tpl_Exit(%p)", static_cast<void*>(pGT) ) );
 #endif
 
-   HB_GTSUPER_EXIT( pGT );
+   HB_GTSUPER_EXIT(pGT);
 
    /* TODO: */
 }
@@ -134,7 +134,7 @@ static void hb_gt_tpl_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 
    while( iSize-- )
    {
-      if( ! HB_GTSELF_GETSCRCHAR( pGT, iRow, iCol, &iColor, &bAttr, &usChar ) )
+      if( ! HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol, &iColor, &bAttr, &usChar) )
          break;
       /* TODO: display usChar at iRow, iCol position with color bColor */
       ++iCol;
@@ -149,8 +149,8 @@ static void hb_gt_tpl_Refresh( PHB_GT pGT )
 
    int iRow, iCol, iStyle;
 
-   HB_GTSUPER_REFRESH( pGT );
-   HB_GTSELF_GETSCRCURSOR( pGT, &iRow, &iCol, &iStyle );
+   HB_GTSUPER_REFRESH(pGT);
+   HB_GTSELF_GETSCRCURSOR(pGT, &iRow, &iCol, &iStyle);
 
    /* TODO: set cursor position and shape */
 }

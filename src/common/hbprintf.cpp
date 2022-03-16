@@ -1577,10 +1577,10 @@ int hb_vsnprintf( char * buffer, size_t nSize, const char * format, va_list argl
 #if defined( _MSC_VER ) && _MSC_VER >= 1400
    result = _vsnprintf_s( buffer, nSize, _TRUNCATE, format, arglist );
 #elif defined( _MSC_VER )
-   result = _vsnprintf( buffer, nSize, format, arglist );
+   result = _vsnprintf(buffer, nSize, format, arglist);
    #define _HB_SNPRINTF_ADD_EOS
 #else
-   result = vsnprintf( buffer, nSize, format, arglist );
+   result = vsnprintf(buffer, nSize, format, arglist);
 #endif
 
 #ifdef _HB_SNPRINTF_ADD_EOS
@@ -1601,7 +1601,7 @@ int hb_snprintf( char * buffer, size_t bufsize, const char * format, ... )
    int iResult;
 
    va_start( ap, format );
-   iResult = hb_vsnprintf( buffer, bufsize, format, ap );
+   iResult = hb_vsnprintf(buffer, bufsize, format, ap);
    va_end( ap );
 
    return iResult;

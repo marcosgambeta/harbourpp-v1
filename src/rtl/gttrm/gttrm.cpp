@@ -974,7 +974,7 @@ static void set_tmevt( PHB_GTTRM pTerm, unsigned char * cMBuf, mouseEvent * mEvt
    }
    chk_mevtdblck( pTerm );
    #if 0
-   printf( "\r\nmouse event: %02x, %02x, %02x\r\n", cMBuf[0], cMBuf[1], cMBuf[2] );
+   printf("\r\nmouse event: %02x, %02x, %02x\r\n", cMBuf[0], cMBuf[1], cMBuf[2]);
    #endif
 }
 
@@ -3641,7 +3641,7 @@ static void hb_gt_trm_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    int iRows = 24, iCols = 80;
    PHB_GTTRM pTerm;
 
-   HB_GTLOCAL( pGT ) = pTerm = static_cast<PHB_GTTRM>(hb_xgrabz(sizeof(HB_GTTRM)));
+   HB_GTLOCAL(pGT) = pTerm = static_cast<PHB_GTTRM>(hb_xgrabz(sizeof(HB_GTTRM)));
 
    pTerm->pGT = pGT;
    pTerm->hFilenoStdin  = hFilenoStdin;
@@ -3710,25 +3710,25 @@ static void hb_gt_trm_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    }
 #endif
 
-   HB_GTSUPER_INIT( pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr );
-   HB_GTSELF_RESIZE( pGT, iRows, iCols );
-   HB_GTSELF_SETFLAG( pGT, HB_GTI_COMPATBUFFER, HB_FALSE );
-   HB_GTSELF_SETFLAG( pGT, HB_GTI_REDRAWMAX, 8 );
-   HB_GTSELF_SETFLAG( pGT, HB_GTI_STDOUTCON, pTerm->fStdoutTTY );
-   HB_GTSELF_SETFLAG( pGT, HB_GTI_STDERRCON, pTerm->fStderrTTY && pTerm->fOutTTY );
+   HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
+   HB_GTSELF_RESIZE(pGT, iRows, iCols);
+   HB_GTSELF_SETFLAG(pGT, HB_GTI_COMPATBUFFER, HB_FALSE);
+   HB_GTSELF_SETFLAG(pGT, HB_GTI_REDRAWMAX, 8);
+   HB_GTSELF_SETFLAG(pGT, HB_GTI_STDOUTCON, pTerm->fStdoutTTY);
+   HB_GTSELF_SETFLAG(pGT, HB_GTI_STDERRCON, pTerm->fStderrTTY && pTerm->fOutTTY);
    pTerm->Init( pTerm );
    pTerm->SetTermMode( pTerm, 0 );
 #ifdef HB_GTTRM_CHK_EXACT_POS
    if( pTerm->GetCursorPos( pTerm, &pTerm->iRow, &pTerm->iCol, nullptr ) )
    {
-      HB_GTSELF_SETPOS( pGT, pTerm->iRow, pTerm->iCol );
+      HB_GTSELF_SETPOS(pGT, pTerm->iRow, pTerm->iCol);
    }
    pTerm->fUTF8 = hb_trm_isUTF8( pTerm );
 #else
    pTerm->fUTF8 = hb_trm_isUTF8( pTerm );
    if( pTerm->fPosAnswer )
    {
-      HB_GTSELF_SETPOS( pGT, pTerm->iRow, pTerm->iCol );
+      HB_GTSELF_SETPOS(pGT, pTerm->iRow, pTerm->iCol);
    }
 #endif
    if( ! pTerm->fUTF8 )
@@ -3738,10 +3738,10 @@ static void hb_gt_trm_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 #endif
       hb_gt_trm_SetDispTrans( pTerm, 0 );
    }
-   HB_GTSELF_SETBLINK( pGT, HB_TRUE );
+   HB_GTSELF_SETBLINK(pGT, HB_TRUE);
    if( pTerm->fOutTTY )
    {
-      HB_GTSELF_SEMICOLD( pGT );
+      HB_GTSELF_SEMICOLD(pGT);
    }
 }
 
@@ -3753,9 +3753,9 @@ static void hb_gt_trm_Exit( PHB_GT pGT )
 
    PHB_GTTRM pTerm;
 
-   HB_GTSELF_REFRESH( pGT );
+   HB_GTSELF_REFRESH(pGT);
 
-   pTerm = HB_GTTRM_GET( pGT );
+   pTerm = HB_GTTRM_GET(pGT);
    if( pTerm )
    {
       mouse_exit( pTerm );
@@ -3774,7 +3774,7 @@ static void hb_gt_trm_Exit( PHB_GT pGT )
       hb_gt_trm_termFlush( pTerm );
    }
 
-   HB_GTSUPER_EXIT( pGT );
+   HB_GTSUPER_EXIT(pGT);
 
    if( pTerm )
    {
@@ -3802,7 +3802,7 @@ static HB_BOOL hb_gt_trm_mouse_IsPresent( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_trm_mouse_IsPresent(%p)", static_cast<void*>(pGT) ) );
 #endif
 
-   return HB_GTTRM_GET( pGT )->mouse_type != MOUSE_NONE;
+   return HB_GTTRM_GET(pGT)->mouse_type != MOUSE_NONE;
 }
 
 static void hb_gt_trm_mouse_Show( PHB_GT pGT )
@@ -3813,7 +3813,7 @@ static void hb_gt_trm_mouse_Show( PHB_GT pGT )
 
    PHB_GTTRM pTerm;
 
-   pTerm = HB_GTTRM_GET( pGT );
+   pTerm = HB_GTTRM_GET(pGT);
 #if defined( HB_HAS_GPM )
    if( pTerm->mouse_type & MOUSE_GPM )
    {
@@ -3830,7 +3830,7 @@ static void hb_gt_trm_mouse_Hide( PHB_GT pGT )
 #endif
 
 #if defined( HB_HAS_GPM )
-   if( HB_GTTRM_GET( pGT )->mouse_type & MOUSE_GPM )
+   if( HB_GTTRM_GET(pGT)->mouse_type & MOUSE_GPM )
    {
       gpm_visiblepointer = 0;
    }
@@ -3847,7 +3847,7 @@ static void hb_gt_trm_mouse_GetPos( PHB_GT pGT, int * piRow, int * piCol )
 
    PHB_GTTRM pTerm;
 
-   pTerm = HB_GTTRM_GET( pGT );
+   pTerm = HB_GTTRM_GET(pGT);
    *piRow = pTerm->mLastEvt.row;
    *piCol = pTerm->mLastEvt.col;
 }
@@ -3860,7 +3860,7 @@ static void hb_gt_trm_mouse_SetPos( PHB_GT pGT, int iRow, int iCol )
 
    PHB_GTTRM pTerm;
 
-   pTerm = HB_GTTRM_GET( pGT );
+   pTerm = HB_GTTRM_GET(pGT);
    /* it does really nothing */
    pTerm->mLastEvt.col = iCol;
    pTerm->mLastEvt.row = iRow;
@@ -3876,7 +3876,7 @@ static HB_BOOL hb_gt_trm_mouse_ButtonState( PHB_GT pGT, int iButton )
    PHB_GTTRM pTerm;
    HB_BOOL ret = HB_FALSE;
 
-   pTerm = HB_GTTRM_GET( pGT );
+   pTerm = HB_GTTRM_GET(pGT);
    if( pTerm->mouse_type != MOUSE_NONE )
    {
       int mask;
@@ -3910,7 +3910,7 @@ static int hb_gt_trm_mouse_CountButton( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_trm_mouse_CountButton(%p)", static_cast<void*>(pGT) ) );
 #endif
 
-   return HB_GTTRM_GET( pGT )->mButtons;
+   return HB_GTTRM_GET(pGT)->mButtons;
 }
 
 static int hb_gt_trm_ReadKey( PHB_GT pGT, int iEventMask )
@@ -3923,15 +3923,15 @@ static int hb_gt_trm_ReadKey( PHB_GT pGT, int iEventMask )
 
    HB_SYMBOL_UNUSED(iEventMask);
 
-   iKey = wait_key( HB_GTTRM_GET( pGT ), 0 );
+   iKey = wait_key( HB_GTTRM_GET(pGT), 0 );
 
    if( iKey == K_RESIZE )
    {
       int iRows, iCols;
 
-      if( hb_gt_trm_getSize( HB_GTTRM_GET( pGT ), &iRows, &iCols ) )
+      if( hb_gt_trm_getSize( HB_GTTRM_GET(pGT), &iRows, &iCols ) )
       {
-         HB_GTSELF_RESIZE( pGT, iRows, iCols );
+         HB_GTSELF_RESIZE(pGT, iRows, iCols);
          iKey = HB_INKEY_NEW_EVENT( HB_K_RESIZE );
       }
       else
@@ -3951,7 +3951,7 @@ static void hb_gt_trm_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 
    PHB_GTTRM pTerm;
 
-   pTerm = HB_GTTRM_GET( pGT );
+   pTerm = HB_GTTRM_GET(pGT);
    pTerm->Tone( pTerm, dFrequency, dDuration );
 }
 
@@ -3963,7 +3963,7 @@ static void hb_gt_trm_Bell( PHB_GT pGT )
 
    PHB_GTTRM pTerm;
 
-   pTerm = HB_GTTRM_GET( pGT );
+   pTerm = HB_GTTRM_GET(pGT);
    pTerm->Bell( pTerm );
 }
 
@@ -3991,7 +3991,7 @@ static HB_BOOL hb_gt_trm_Suspend( PHB_GT pGT )
 
    PHB_GTTRM pTerm;
 
-   pTerm = HB_GTTRM_GET( pGT );
+   pTerm = HB_GTTRM_GET(pGT);
    if( pTerm->mouse_type & MOUSE_XTERM )
    {
       hb_gt_trm_termOut( pTerm, s_szMouseOff, strlen(s_szMouseOff) );
@@ -4016,7 +4016,7 @@ static HB_BOOL hb_gt_trm_Resume( PHB_GT pGT )
    PHB_GTTRM pTerm;
    int iHeight, iWidth;
 
-   pTerm = HB_GTTRM_GET( pGT );
+   pTerm = HB_GTTRM_GET(pGT);
 #if defined( HB_OS_UNIX )
    if( pTerm->fRestTTY )
    {
@@ -4030,10 +4030,10 @@ static HB_BOOL hb_gt_trm_Resume( PHB_GT pGT )
 
    pTerm->Init( pTerm );
 
-   HB_GTSELF_GETSIZE( pGT, &iHeight, &iWidth );
-   HB_GTSELF_EXPOSEAREA( pGT, 0, 0, iHeight, iWidth );
+   HB_GTSELF_GETSIZE(pGT, &iHeight, &iWidth);
+   HB_GTSELF_EXPOSEAREA(pGT, 0, 0, iHeight, iWidth);
 
-   HB_GTSELF_REFRESH( pGT );
+   HB_GTSELF_REFRESH(pGT);
 
    return HB_TRUE;
 }
@@ -4047,14 +4047,14 @@ static void hb_gt_trm_Scroll( PHB_GT pGT, int iTop, int iLeft, int iBottom, int 
    /* Provide some basic scroll support for full screen */
    if( iCols == 0 && iRows > 0 && iTop == 0 && iLeft == 0 )
    {
-      PHB_GTTRM pTerm = HB_GTTRM_GET( pGT );
+      PHB_GTTRM pTerm = HB_GTTRM_GET(pGT);
       int iHeight, iWidth;
 
-      HB_GTSELF_GETSIZE( pGT, &iHeight, &iWidth );
+      HB_GTSELF_GETSIZE(pGT, &iHeight, &iWidth);
       if( iBottom >= iHeight - 1 && iRight >= iWidth - 1 && pTerm->iRow == iHeight - 1 )
       {
          /* scroll up the internal screen buffer */
-         HB_GTSELF_SCROLLUP( pGT, iRows, iColor, usChar );
+         HB_GTSELF_SCROLLUP(pGT, iRows, iColor, usChar);
          /* set default color for terminals which use it to erase
           * scrolled area */
          pTerm->SetAttributes( pTerm, iColor & pTerm->iAttrMask );
@@ -4069,7 +4069,7 @@ static void hb_gt_trm_Scroll( PHB_GT pGT, int iTop, int iLeft, int iBottom, int 
       }
    }
 
-   HB_GTSUPER_SCROLL( pGT, iTop, iLeft, iBottom, iRight, iColor, usChar, iRows, iCols );
+   HB_GTSUPER_SCROLL(pGT, iTop, iLeft, iBottom, iRight, iColor, usChar, iRows, iCols);
 }
 
 static HB_BOOL hb_gt_trm_SetMode( PHB_GT pGT, int iRows, int iCols )
@@ -4080,10 +4080,10 @@ static HB_BOOL hb_gt_trm_SetMode( PHB_GT pGT, int iRows, int iCols )
 
    if( iRows > 0 && iCols > 0 )
    {
-      PHB_GTTRM pTerm = HB_GTTRM_GET( pGT );
+      PHB_GTTRM pTerm = HB_GTTRM_GET(pGT);
       if( pTerm->SetMode( pTerm, &iRows, &iCols ) )
       {
-         HB_GTSELF_RESIZE( pGT, iRows, iCols );
+         HB_GTSELF_RESIZE(pGT, iRows, iCols);
          return HB_TRUE;
       }
    }
@@ -4098,7 +4098,7 @@ static void hb_gt_trm_SetBlink( PHB_GT pGT, HB_BOOL fBlink )
 
    PHB_GTTRM pTerm;
 
-   pTerm = HB_GTTRM_GET( pGT );
+   pTerm = HB_GTTRM_GET(pGT);
 
 #if 0
    /* This is not portable extension - temporary disabled */
@@ -4126,7 +4126,7 @@ static void hb_gt_trm_SetBlink( PHB_GT pGT, HB_BOOL fBlink )
       }
    }
 
-   HB_GTSUPER_SETBLINK( pGT, fBlink );
+   HB_GTSUPER_SETBLINK(pGT, fBlink);
 }
 
 static HB_BOOL hb_gt_trm_SetDispCP( PHB_GT pGT, const char * pszTermCDP, const char * pszHostCDP, HB_BOOL fBox )
@@ -4135,11 +4135,11 @@ static HB_BOOL hb_gt_trm_SetDispCP( PHB_GT pGT, const char * pszTermCDP, const c
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_trm_SetDispCP(%p,%s,%s,%d)", static_cast<void*>(pGT), pszTermCDP, pszHostCDP, static_cast<int>(fBox) ) );
 #endif
 
-   if( HB_GTSUPER_SETDISPCP( pGT, pszTermCDP, pszHostCDP, fBox ) )
+   if( HB_GTSUPER_SETDISPCP(pGT, pszTermCDP, pszHostCDP, fBox) )
    {
-      if( ! HB_GTTRM_GET( pGT )->fUTF8 )
+      if( ! HB_GTTRM_GET(pGT)->fUTF8 )
       {
-         hb_gt_trm_SetDispTrans( HB_GTTRM_GET( pGT ), fBox ? 1 : 0 );
+         hb_gt_trm_SetDispTrans( HB_GTTRM_GET(pGT), fBox ? 1 : 0 );
       }
       return HB_TRUE;
    }
@@ -4153,11 +4153,11 @@ static HB_BOOL hb_gt_trm_SetKeyCP( PHB_GT pGT, const char * pszTermCDP, const ch
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_trm_SetKeyCP(%p,%s,%s)", static_cast<void*>(pGT), pszTermCDP, pszHostCDP ) );
 #endif
 
-   if( HB_GTSUPER_SETKEYCP( pGT, pszTermCDP, pszHostCDP ) )
+   if( HB_GTSUPER_SETKEYCP(pGT, pszTermCDP, pszHostCDP) )
    {
-      if( ! HB_GTTRM_GET( pGT )->fUTF8 )
+      if( ! HB_GTTRM_GET(pGT)->fUTF8 )
       {
-         hb_gt_trm_SetKeyTrans( HB_GTTRM_GET( pGT ) );
+         hb_gt_trm_SetKeyTrans( HB_GTTRM_GET(pGT) );
       }
       return HB_TRUE;
    }
@@ -4177,7 +4177,7 @@ static void hb_gt_trm_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
    int iLen, iChars, iAttribute, iColor;
 
    iLen = iChars = iAttribute = 0;
-   pTerm = HB_GTTRM_GET( pGT );
+   pTerm = HB_GTTRM_GET(pGT);
    pTerm->SetTermMode( pTerm, 0 );
    if( iRow < pTerm->iRow )
    {
@@ -4192,7 +4192,7 @@ static void hb_gt_trm_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 #ifdef HB_GT_UNICODE_BUF
       if( pTerm->fUTF8 )
       {
-         if( ! HB_GTSELF_GETSCRCHAR( pGT, iRow, iCol + iChars, &iColor, &bAttr, &usChar ) )
+         if( ! HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol + iChars, &iColor, &bAttr, &usChar) )
          {
             break;
          }
@@ -4205,7 +4205,7 @@ static void hb_gt_trm_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
       else
       {
          HB_UCHAR uc;
-         if( ! HB_GTSELF_GETSCRUC( pGT, iRow, iCol + iChars, &iColor, &bAttr, &uc, HB_FALSE ) )
+         if( ! HB_GTSELF_GETSCRUC(pGT, iRow, iCol + iChars, &iColor, &bAttr, &uc, HB_FALSE) )
          {
             break;
          }
@@ -4242,7 +4242,7 @@ static void hb_gt_trm_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
       }
       ++iChars;
 #else
-      if( ! HB_GTSELF_GETSCRCHAR( pGT, iRow, iCol + iChars, &iColor, &bAttr, &usChar ) )
+      if( ! HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol + iChars, &iColor, &bAttr, &usChar) )
       {
          break;
       }
@@ -4298,9 +4298,9 @@ static void hb_gt_trm_Refresh( PHB_GT pGT )
    HB_SIZE nLineBufSize;
    PHB_GTTRM pTerm;
 
-   pTerm = HB_GTTRM_GET( pGT );
+   pTerm = HB_GTTRM_GET(pGT);
 
-   HB_GTSELF_GETSIZE( pGT, &pTerm->iHeight, &pTerm->iWidth );
+   HB_GTSELF_GETSIZE(pGT, &pTerm->iHeight, &pTerm->iWidth);
 
 #ifdef HB_GT_UNICODE_BUF
    nLineBufSize = pTerm->iWidth * ( pTerm->fUTF8 ? 3 : 1 );
@@ -4313,9 +4313,9 @@ static void hb_gt_trm_Refresh( PHB_GT pGT )
       pTerm->nLineBufSize = nLineBufSize;
    }
 
-   HB_GTSUPER_REFRESH( pGT );
+   HB_GTSUPER_REFRESH(pGT);
 
-   HB_GTSELF_GETSCRCURSOR( pGT, &iRow, &iCol, &iStyle );
+   HB_GTSELF_GETSCRCURSOR(pGT, &iRow, &iCol, &iStyle);
    if( iStyle != SC_NONE )
    {
       if( iRow >= 0 && iCol >= 0 && iRow < pTerm->iHeight && iCol < pTerm->iWidth )
@@ -4343,7 +4343,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
    void * hVal;
    int iVal;
 
-   pTerm = HB_GTTRM_GET( pGT );
+   pTerm = HB_GTTRM_GET(pGT);
    switch( iType )
    {
       case HB_GTI_ISSCREENPOS:
@@ -4409,9 +4409,9 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          }
          else
 #ifdef HB_GT_UNICODE_BUF
-            pInfo->pResult = hb_itemPutStr( pInfo->pResult, HB_GTSELF_TERMCP( pGT ), pTerm->szTitle );
+            pInfo->pResult = hb_itemPutStr(pInfo->pResult, HB_GTSELF_TERMCP(pGT), pTerm->szTitle);
 #else
-            pInfo->pResult = hb_itemPutStr( pInfo->pResult, pTerm->cdpTerm, pTerm->szTitle );
+            pInfo->pResult = hb_itemPutStr(pInfo->pResult, pTerm->cdpTerm, pTerm->szTitle);
 #endif
          if( hb_itemType(pInfo->pNewVal) & HB_IT_STRING )
          {
@@ -4421,7 +4421,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             }
             else
 #ifdef HB_GT_UNICODE_BUF
-               szVal = hb_itemGetStr( pInfo->pNewVal, HB_GTSELF_TERMCP( pGT ), &hVal, nullptr );
+               szVal = hb_itemGetStr( pInfo->pNewVal, HB_GTSELF_TERMCP(pGT), &hVal, nullptr );
 #else
                szVal = hb_itemGetStr( pInfo->pNewVal, pTerm->cdpTerm, &hVal, nullptr );
 #endif
@@ -4433,7 +4433,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             pTerm->szTitle = ( szVal && *szVal ) ? hb_strdup(szVal) : nullptr;
             hb_gt_trm_SetTitle( pTerm, pTerm->szTitle );
             hb_gt_trm_termFlush( pTerm );
-            hb_strfree( hVal );
+            hb_strfree(hVal);
          }
          break;
 
@@ -4499,7 +4499,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       default:
-         return HB_GTSUPER_INFO( pGT, iType, pInfo );
+         return HB_GTSUPER_INFO(pGT, iType, pInfo);
    }
 
    return HB_TRUE;

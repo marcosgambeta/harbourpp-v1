@@ -341,7 +341,7 @@ static int s_errorHandler( Display * dpy, XErrorEvent * e )
       hb_errInternal( 10001, errorText, nullptr, nullptr );
    }
 
-   fprintf( stderr, "%s\n", errorText );
+   fprintf(stderr, "%s\n", errorText);
 
    return 1;
 }
@@ -2769,14 +2769,16 @@ static void hb_gt_xwc_ProcessKey( PXWND_DEF wnd, XKeyEvent * evt )
    {
       i = Xutf8LookupString( wnd->ic, evt, buf, static_cast<int>(sizeof(buf)), &outISO, &status_return );
       buf[HB_MAX(i, 0)] = '\0';
-      printf( "UTF-8: KeySym=%lx, keySymISO=%lx, keystr[%d]='%s'\n", out, outISO, i, buf ); fflush( stdout );
+      printf("UTF-8: KeySym=%lx, keySymISO=%lx, keystr[%d]='%s'\n", out, outISO, i, buf);
+      fflush(stdout);
    }
    else
 #  endif
    {
       i = XLookupString( evt, buf, static_cast<int>(sizeof(buf)), &outISO, nullptr );
       buf[HB_MAX(i, 0)] = '\0';
-      printf( "KeySym=%lx, keySymISO=%lx, keystr[%d]='%s'\n", out, outISO, i, buf ); fflush( stdout );
+      printf("KeySym=%lx, keySymISO=%lx, keystr[%d]='%s'\n", out, outISO, i, buf);
+      fflush(stdout);
    }
 #endif
 
@@ -3053,7 +3055,8 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
 #ifdef XWC_DEBUG
    if( wnd->window != evt->xany.window )
    {
-      printf( "Event: #%d window=%ld (wnd->window=%ld)\n", evt->type, evt->xany.window, wnd->window ); fflush( stdout );
+      printf("Event: #%d window=%ld (wnd->window=%ld)\n", evt->type, evt->xany.window, wnd->window);
+      fflush(stdout);
    }
 #endif
 
@@ -3061,20 +3064,23 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
    {
       case Expose:
 #ifdef XWC_DEBUG
-         printf( "Event: Expose\n" ); fflush( stdout );
+         printf("Event: Expose\n");
+         fflush(stdout);
 #endif
          hb_gt_xwc_InvalidatePts( wnd, evt->xexpose.x, evt->xexpose.y, evt->xexpose.x + evt->xexpose.width, evt->xexpose.y + evt->xexpose.height );
          break;
 
       case NoExpose:
 #ifdef XWC_DEBUG
-         printf( "Event: NoExpose\n" ); fflush( stdout );
+         printf("Event: NoExpose\n");
+         fflush(stdout);
 #endif
          break;
 
       case KeyPress:
 #ifdef XWC_DEBUG
-         printf( "Event: KeyPress\n" ); fflush( stdout );
+         printf("Event: KeyPress\n");
+         fflush(stdout);
 #endif
          if( evt->xkey.time != CurrentTime )
          {
@@ -3085,7 +3091,8 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
 
       case KeyRelease:
 #ifdef XWC_DEBUG
-         printf( "Event: KeyRelease\n" ); fflush( stdout );
+         printf("Event: KeyRelease\n");
+         fflush(stdout);
 #endif
          if( evt->xkey.time != CurrentTime )
          {
@@ -3118,7 +3125,8 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
 
       case MotionNotify:
 #ifdef XWC_DEBUG
-         printf( "Event: MotionNotify\n" ); fflush( stdout );
+         printf("Event: MotionNotify\n");
+         fflush(stdout);
 #endif
          if( evt->xmotion.time != CurrentTime )
          {
@@ -3166,7 +3174,8 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
          int button = evt->xbutton.button - 1;
 
 #ifdef XWC_DEBUG
-         printf( "Event: %s, button=%d\n", evt->type == ButtonPress ? "ButtonPress" : "ButtonRelease", button ); fflush( stdout );
+         printf("Event: %s, button=%d\n", evt->type == ButtonPress ? "ButtonPress" : "ButtonRelease", button);
+         fflush(stdout);
 #endif
          if( evt->xbutton.time != CurrentTime )
          {
@@ -3264,7 +3273,8 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
 
       case CreateNotify:
 #ifdef XWC_DEBUG
-         printf( "Event: CreateNotify\n" ); fflush( stdout );
+         printf("Event: CreateNotify\n");
+         fflush(stdout);
 #endif
          wnd->iNewPosX = evt->xcreatewindow.x;
          wnd->iNewPosY = evt->xcreatewindow.y;
@@ -3272,14 +3282,16 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
 
       case MappingNotify:
 #ifdef XWC_DEBUG
-         printf( "Event: MappingNotify\n" ); fflush( stdout );
+         printf("Event: MappingNotify\n");
+         fflush(stdout);
 #endif
          XRefreshKeyboardMapping( &evt->xmapping );
          break;
 
       case FocusIn:
 #ifdef XWC_DEBUG
-         printf( "Event: FocusIn\n" ); fflush( stdout );
+         printf("Event: FocusIn\n");
+         fflush(stdout);
 #endif
          XRefreshKeyboardMapping( &evt->xmapping );
          wnd->keyModifiers.bCtrl  =
@@ -3291,17 +3303,19 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
 
       case FocusOut:
 #ifdef XWC_DEBUG
-         printf( "Event: FocusOut\n" ); fflush( stdout );
+         printf("Event: FocusOut\n");
+         fflush(stdout);
 #endif
          hb_gt_xwc_AddCharToInputQueue( wnd, HB_K_LOSTFOCUS );
          break;
 
       case ConfigureNotify:
 #ifdef XWC_DEBUG
-         printf( "Event: ConfigureNotify (x=%d, y=%d, w=%d, h=%d, or=%d)\n",
-                 evt->xconfigure.x, evt->xconfigure.y,
-                 evt->xconfigure.width, evt->xconfigure.height,
-                 evt->xconfigure.override_redirect ); fflush( stdout );
+         printf("Event: ConfigureNotify (x=%d, y=%d, w=%d, h=%d, or=%d)\n",
+                evt->xconfigure.x, evt->xconfigure.y,
+                evt->xconfigure.width, evt->xconfigure.height,
+                evt->xconfigure.override_redirect);
+         fflush(stdout);
 #endif
          wnd->iNewPosX   = evt->xconfigure.x;
          wnd->iNewPosY   = evt->xconfigure.y;
@@ -3312,7 +3326,8 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
 
       case ClientMessage:
 #ifdef XWC_DEBUG
-         printf( "Event: ClientMessage:%ld (%s)\n", evt->xclient.data.l[0], XGetAtomName( wnd->dpy, ( Atom ) evt->xclient.data.l[0] ) ); fflush( stdout );
+         printf("Event: ClientMessage:%ld (%s)\n", evt->xclient.data.l[0], XGetAtomName(wnd->dpy, (Atom) evt->xclient.data.l[0]));
+         fflush(stdout);
 #endif
          if( ( Atom ) evt->xclient.data.l[0] == s_atomDelWin )
          {
@@ -3331,7 +3346,7 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
       {
          Atom aNextRequest = None;
 #ifdef XWC_DEBUG
-         printf( "Event: SelectionNotify: selection=%ld (%s), property=%ld (%s), target=%ld (%s) => %ld (%s)\n",
+         printf("Event: SelectionNotify: selection=%ld (%s), property=%ld (%s), target=%ld (%s) => %ld (%s)\n",
                      evt->xselection.selection,
                      evt->xselection.selection == None ? "None" : XGetAtomName(wnd->dpy, evt->xselection.selection),
                      evt->xselection.property,
@@ -3339,7 +3354,8 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
                      evt->xselection.target,
                      evt->xselection.target == None ? "None" : XGetAtomName(wnd->dpy, evt->xselection.target),
                      wnd->ClipboardRequest,
-                     wnd->ClipboardRequest == None ? "None" : XGetAtomName(wnd->dpy, wnd->ClipboardRequest) ); fflush(stdout);
+                     wnd->ClipboardRequest == None ? "None" : XGetAtomName(wnd->dpy, wnd->ClipboardRequest));
+                     fflush(stdout);
 #endif
          if( evt->xselection.property != None )
          {
@@ -3348,15 +3364,17 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
             if( XGetTextProperty( wnd->dpy, wnd->window, &text, evt->xselection.property ) != 0 )
             {
 #ifdef XWC_DEBUG
-               printf( "xselection.target.target=%ld (%s), TextProperty.format='%d'\n",
-                       evt->xselection.target,
-                       evt->xselection.target == None ? "None" : XGetAtomName( wnd->dpy, evt->xselection.target ),
-                       text.format ); fflush( stdout );
+               printf("xselection.target.target=%ld (%s), TextProperty.format='%d'\n",
+                      evt->xselection.target,
+                      evt->xselection.target == None ? "None" : XGetAtomName(wnd->dpy, evt->xselection.target),
+                      text.format);
+               fflush(stdout);
 #endif
                if( evt->xselection.target == s_atomUTF8String && text.format == 8 )
                {
 #ifdef XWC_DEBUG
-                  printf( "UTF8String='%s'\n", text.value ); fflush( stdout );
+                  printf("UTF8String='%s'\n", text.value);
+                  fflush(stdout);
 #endif
                   if( wnd->ClipboardData != nullptr )
                   {
@@ -3372,7 +3390,8 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
                else if( evt->xselection.target == s_atomString && text.format == 8 )
                {
 #ifdef XWC_DEBUG
-                  printf( "String='%s'\n", text.value ); fflush( stdout );
+                  printf("String='%s'\n", text.value);
+                  fflush(stdout);
 #endif
                   if( wnd->ClipboardData != nullptr )
                   {
@@ -3388,7 +3407,8 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
                {
                   Atom aValue;
 #ifdef XWC_DEBUG
-                  printf( "text.nitems=%lu, text.format=%d\n", text.nitems, text.format ); fflush( stdout );
+                  printf("text.nitems=%lu, text.format=%d\n", text.nitems, text.format);
+                  fflush(stdout);
 #endif
                   for( unsigned long nItem = 0; nItem < text.nitems; ++nItem )
                   {
@@ -3408,13 +3428,13 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
 #ifdef XWC_DEBUG
                      if( aValue )
                      {
-                        printf( "%lu, %8lx (%s)\n", nItem, aValue, XGetAtomName( wnd->dpy, aValue ) );
+                        printf("%lu, %8lx (%s)\n", nItem, aValue, XGetAtomName(wnd->dpy, aValue) );
                      }
                      else
                      {
-                        printf( "%lu, %8lx (NULL)\n", nItem, aValue );
+                        printf("%lu, %8lx (NULL)\n", nItem, aValue);
                      }
-                     fflush( stdout );
+                     fflush(stdout);
 #endif
                   }
                }
@@ -3442,7 +3462,8 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
          XEvent respond;
 
 #ifdef XWC_DEBUG
-         printf( "Event: SelectionRequest: %ld (%s)\n", req->target, XGetAtomName( wnd->dpy, req->target ) ); fflush( stdout );
+         printf("Event: SelectionRequest: %ld (%s)\n", req->target, XGetAtomName(wnd->dpy, req->target));
+         fflush(stdout);
 #endif
          respond.xselection.property = req->property;
 
@@ -3496,14 +3517,16 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
 
       case SelectionClear:
 #ifdef XWC_DEBUG
-         printf( "Event: SelectionClear\n" ); fflush( stdout );
+         printf("Event: SelectionClear\n");
+         fflush(stdout);
 #endif
          wnd->ClipboardOwner = HB_FALSE;
          break;
 
       case PropertyNotify:
 #ifdef XWC_DEBUG
-         printf( "Event: PropertyNotify\n" ); fflush( stdout );
+         printf("Event: PropertyNotify\n");
+         fflush(stdout);
 #endif
          if( evt->xproperty.time != CurrentTime )
          {
@@ -3513,81 +3536,99 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
 
       case VisibilityNotify:
 #ifdef XWC_DEBUG
-         printf( "Event: VisibilityNotify\n" ); fflush( stdout );
+         printf("Event: VisibilityNotify\n");
+         fflush(stdout);
 #endif
          wnd->fCordsInited = HB_FALSE;
          break;
 
       case GraphicsExpose:
 #ifdef XWC_DEBUG
-         printf( "Event: GraphicsExpose\n" ); fflush( stdout );
+         printf("Event: GraphicsExpose\n");
+         fflush(stdout);
 #endif
          wnd->fCordsInited = HB_FALSE;
          break;
 
 #ifdef XWC_DEBUG
       case GravityNotify:
-         printf( "Event: GravityNotify (%d, %d)\n", evt->xgravity.x, evt->xgravity.y ); fflush( stdout );
+         printf("Event: GravityNotify (%d, %d)\n", evt->xgravity.x, evt->xgravity.y);
+         fflush(stdout);
          break;
 
       case ResizeRequest:
-         printf( "Event: ResizeRequest\n" ); fflush( stdout );
+         printf("Event: ResizeRequest\n");
+         fflush(stdout);
          break;
 
       case KeymapNotify:
-         printf( "Event: KeymapNotify\n" ); fflush( stdout );
+         printf("Event: KeymapNotify\n");
+         fflush(stdout);
          break;
 
       case EnterNotify:
-         printf( "Event: EnterNotify\n" ); fflush( stdout );
+         printf("Event: EnterNotify\n");
+         fflush(stdout);
          break;
 
       case LeaveNotify:
-         printf( "Event: LeaveNotify\n" ); fflush( stdout );
+         printf("Event: LeaveNotify\n");
+         fflush(stdout);
          break;
 
       case DestroyNotify:
-         printf( "Event: DestroyNotify\n" ); fflush( stdout );
+         printf("Event: DestroyNotify\n");
+         fflush(stdout);
          break;
 
       case UnmapNotify:
-         printf( "Event: UnmapNotify\n" ); fflush( stdout );
+         printf("Event: UnmapNotify\n");
+         fflush(stdout);
          break;
 
       case MapNotify:
-         printf( "Event: MapNotify\n" ); fflush( stdout );
+         printf("Event: MapNotify\n");
+         fflush(stdout);
          break;
 
       case MapRequest:
-         printf( "Event: MapRequest\n" ); fflush( stdout );
+         printf("Event: MapRequest\n");
+         fflush(stdout);
          break;
 
       case ReparentNotify:
-         printf( "Event: ReparentNotify\n" ); fflush( stdout );
+         printf("Event: ReparentNotify\n");
+         fflush(stdout);
          break;
 
       case ConfigureRequest:
-         printf( "Event: ConfigureRequest\n" ); fflush( stdout );
+         printf("Event: ConfigureRequest\n");
+         fflush(stdout);
          break;
 
       case CirculateNotify:
-         printf( "Event: CirculateNotify\n" ); fflush( stdout );
+         printf("Event: CirculateNotify\n");
+         fflush(stdout);
          break;
 
       case CirculateRequest:
-         printf( "Event: CirculateRequest\n" ); fflush( stdout );
+         printf("Event: CirculateRequest\n");
+         fflush(stdout);
          break;
 
       case ColormapNotify:
-         printf( "Event: ColormapNotify\n" ); fflush( stdout );
+         printf("Event: ColormapNotify\n");
+         fflush(stdout);
          break;
 
       case GenericEvent:
-         printf( "Event: GenericEvent\n" ); fflush( stdout );
+         printf("Event: GenericEvent\n");
+         fflush(stdout);
          break;
 
       default:
-         printf( "Event: #%d\n", evt->type ); fflush( stdout );
+         printf("Event: #%d\n", evt->type);
+         fflush(stdout);
          break;
 #endif
    }
@@ -3739,7 +3780,8 @@ static HB_BOOL hb_gt_xwc_setPalette( PXWND_DEF wnd )
             {
                wnd->colors[i].pixel = color.pixel;
 #ifdef XWC_DEBUG
-               printf( "hb_gt_xwc_AllocColor[%d]='%x/%x/%x'\n", i, color.red, color.green, color.blue ); fflush( stdout );
+               printf("hb_gt_xwc_AllocColor[%d]='%x/%x/%x'\n", i, color.red, color.green, color.blue);
+               fflush(stdout);
 #endif
             }
          }
@@ -3787,7 +3829,8 @@ static void hb_gt_xwc_RepaintChar( PXWND_DEF wnd, int colStart, int rowStart, in
    XWC_CharTrans * chTrans;
 
 #ifdef XWC_DEBUG
-   printf( "Repaint(%d,%d,%d,%d)[%dx%d]\n", rowStart, colStart, rowStop, colStop, wnd->fontHeight, wnd->fontWidth ); fflush( stdout );
+   printf("Repaint(%d,%d,%d,%d)[%dx%d]\n", rowStart, colStart, rowStop, colStop, wnd->fontHeight, wnd->fontWidth);
+   fflush(stdout);
 #endif
 
    if( rowStop >= wnd->rows )
@@ -4276,7 +4319,8 @@ static void hb_gt_xwc_UpdateSize( PXWND_DEF wnd )
       }
 
 #ifdef XWC_DEBUG
-      printf( "hb_gt_xwc_UpdateSize() %dx%d => %dx%d\n", wnd->rows, wnd->cols, rows, cols ); fflush( stdout );
+      printf("hb_gt_xwc_UpdateSize() %dx%d => %dx%d\n", wnd->rows, wnd->cols, rows, cols);
+      fflush(stdout);
 #endif
 
       if( hb_gt_xwc_SetScrBuff( wnd, cols, rows ) )
@@ -4550,7 +4594,8 @@ static void hb_gt_xwc_RequestSelection( PXWND_DEF wnd )
             HB_XWC_XLIB_LOCK( wnd->dpy );
 
 #ifdef XWC_DEBUG
-            printf( "XConvertSelection: %ld (%s)\n", aRequest, XGetAtomName( wnd->dpy, aRequest ) ); fflush( stdout );
+            printf("XConvertSelection: %ld (%s)\n", aRequest, XGetAtomName(wnd->dpy, aRequest));
+            fflush(stdout);
 #endif
             XConvertSelection( wnd->dpy, s_atomPrimary, aRequest, s_atomCutBuffer0, wnd->window, wnd->lastEventTime );
 
@@ -4961,12 +5006,14 @@ static void hb_gt_xwc_CreateWindow( PXWND_DEF wnd )
       }
    }
 #ifdef XWC_DEBUG
-   printf( "\nXIC=%p, XIC=%p\n", wnd->im, wnd->ic ); fflush( stdout );
+   printf("\nXIC=%p, XIC=%p\n", wnd->im, wnd->ic);
+   fflush(stdout);
 #endif
 #endif
 
 #ifdef XWC_DEBUG
-   printf( "Window created\n" ); fflush( stdout );
+   printf("Window created\n");
+   fflush(stdout);
 #endif
 
    HB_XWC_XLIB_UNLOCK( wnd->dpy );
@@ -5037,8 +5084,8 @@ static void hb_gt_xwc_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    setlocale( LC_CTYPE, "" );
 #endif
 
-   HB_GTSUPER_INIT( pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr );
-   HB_GTSELF_SETFLAG( pGT, HB_GTI_COMPATBUFFER, HB_FALSE );
+   HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
+   HB_GTSELF_SETFLAG(pGT, HB_GTI_COMPATBUFFER, HB_FALSE);
 
 #if !defined( HB_XWC_XLIB_NEEDLOCKS ) && ! defined( HB_XWC_XLOCK_OFF )
    if( hb_vmIsMt() )
@@ -5050,8 +5097,8 @@ static void hb_gt_xwc_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    }
 #endif
 
-   wnd = hb_gt_xwc_CreateWndDef( pGT );
-   HB_GTLOCAL( pGT ) = wnd;
+   wnd = hb_gt_xwc_CreateWndDef(pGT);
+   HB_GTLOCAL(pGT) = wnd;
 
    /* for signal handler */
    s_wnd = wnd;
@@ -5060,8 +5107,8 @@ static void hb_gt_xwc_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    wnd->cursorBlinkRate = 700;
    wnd->cursorStateTime = 0;
 
-   HB_GTSELF_RESIZE( pGT, wnd->rows, wnd->cols );
-   HB_GTSELF_SEMICOLD( pGT );
+   HB_GTSELF_RESIZE(pGT, wnd->rows, wnd->cols);
+   HB_GTSELF_SEMICOLD(pGT);
 
    /* For immediate connection to XSarver and screen Window show */
    #if 0
@@ -5084,10 +5131,10 @@ static void hb_gt_xwc_Exit( PHB_GT pGT )
 
    PXWND_DEF wnd;
 
-   wnd = HB_GTXWC_GET( pGT );
+   wnd = HB_GTXWC_GET(pGT);
 
    hb_gt_xwc_Disable();
-   HB_GTSUPER_EXIT( pGT );
+   HB_GTSUPER_EXIT(pGT);
 
    if( wnd )
    {
@@ -5107,20 +5154,20 @@ static HB_BOOL hb_gt_xwc_SetMode( PHB_GT pGT, int iRow, int iCol )
 
    if( iCol >= XWC_MIN_COLS && iRow >= XWC_MIN_ROWS && iCol <= XWC_MAX_COLS && iRow <= XWC_MAX_ROWS )
    {
-      PXWND_DEF wnd = HB_GTXWC_GET( pGT );
+      PXWND_DEF wnd = HB_GTXWC_GET(pGT);
 
       if( iCol == wnd->cols && iRow == wnd->rows )
       {
-         fResult = HB_GTSELF_RESIZE( pGT, wnd->rows, wnd->cols );
+         fResult = HB_GTSELF_RESIZE(pGT, wnd->rows, wnd->cols);
          if( ! wnd->fInit )
          {
-            HB_GTSELF_SEMICOLD( pGT );
+            HB_GTSELF_SEMICOLD(pGT);
          }
       }
       else if( ! wnd->fInit )
       {
          hb_gt_xwc_SetScrBuff( wnd, iCol, iRow );
-         HB_GTSELF_SEMICOLD( pGT );
+         HB_GTSELF_SEMICOLD(pGT);
          fResult = HB_TRUE;
       }
       else
@@ -5130,7 +5177,8 @@ static HB_BOOL hb_gt_xwc_SetMode( PHB_GT pGT, int iRow, int iCol )
          HB_MAXUINT timer;
 
 #ifdef XWC_DEBUG
-         printf( "SetMode(%d,%d) begin\n", iRow, iCol ); fflush( stdout );
+         printf("SetMode(%d,%d) begin\n", iRow, iCol);
+         fflush(stdout);
 #endif
 
          HB_XWC_XLIB_LOCK( wnd->dpy );
@@ -5172,7 +5220,8 @@ static HB_BOOL hb_gt_xwc_SetMode( PHB_GT pGT, int iRow, int iCol )
          }
 
 #ifdef XWC_DEBUG
-         printf( "SetMode(%d,%d) => %d\n", iRow, iCol, fResult ); fflush( stdout );
+         printf("SetMode(%d,%d) => %d\n", iRow, iCol, fResult);
+         fflush(stdout);
 #endif
       }
    }
@@ -5220,7 +5269,7 @@ static int hb_gt_xwc_ReadKey( PHB_GT pGT, int iEventMask )
 
    HB_SYMBOL_UNUSED(iEventMask);
 
-   wnd = HB_GTXWC_GET( pGT );
+   wnd = HB_GTXWC_GET(pGT);
    hb_gt_xwc_LateRefresh( wnd );
    #if 0
    hb_gt_xwc_RealRefresh( wnd, HB_FALSE );
@@ -5250,7 +5299,7 @@ static void hb_gt_xwc_Tone( PHB_GT pGT, double dFrequency, double dDuration )
       milliseconds is * 1000.0 / 18.2. */
    dDuration /= 18.2;
 
-   wnd = HB_GTXWC_GET( pGT );
+   wnd = HB_GTXWC_GET(pGT);
    if( wnd->dpy != nullptr )
    {
       XKeyboardControl XkbCtrl;
@@ -5264,7 +5313,7 @@ static void hb_gt_xwc_Tone( PHB_GT pGT, double dFrequency, double dDuration )
       XSync( wnd->dpy, False );
       HB_XWC_XLIB_UNLOCK( wnd->dpy );
    }
-   hb_gtSleep( pGT, dDuration );
+   hb_gtSleep(pGT, dDuration);
 }
 
 /* *********************************************************************** */
@@ -5277,7 +5326,7 @@ static HB_BOOL hb_gt_xwc_mouse_IsPresent( PHB_GT pGT )
 
    PXWND_DEF wnd;
 
-   wnd = HB_GTXWC_GET( pGT );
+   wnd = HB_GTXWC_GET(pGT);
    hb_gt_xwc_ConnectX( wnd, HB_TRUE );
    return wnd->mouseNumButtons > 0;
 }
@@ -5292,7 +5341,7 @@ static void hb_gt_xwc_mouse_GetPos( PHB_GT pGT, int * piRow, int * piCol )
 
    PXWND_DEF wnd;
 
-   wnd = HB_GTXWC_GET( pGT );
+   wnd = HB_GTXWC_GET(pGT);
    if( wnd )
    {
       hb_gt_xwc_LateRefresh( wnd );
@@ -5311,7 +5360,7 @@ static void hb_gt_xwc_mouse_SetPos( PHB_GT pGT, int iRow, int iCol )
 
    PXWND_DEF wnd;
 
-   wnd = HB_GTXWC_GET( pGT );
+   wnd = HB_GTXWC_GET(pGT);
    wnd->mouseGotoRow = iRow;
    wnd->mouseGotoCol = iCol;
    hb_gt_xwc_LateRefresh( wnd );
@@ -5327,7 +5376,7 @@ static HB_BOOL hb_gt_xwc_mouse_ButtonState( PHB_GT pGT, int iButton )
 
    PXWND_DEF wnd;
 
-   wnd = HB_GTXWC_GET( pGT );
+   wnd = HB_GTXWC_GET(pGT);
    hb_gt_xwc_ConnectX( wnd, HB_TRUE );
    if( iButton >= 0 && iButton < wnd->mouseNumButtons )
    {
@@ -5349,7 +5398,7 @@ static int hb_gt_xwc_mouse_CountButton( PHB_GT pGT )
 
    PXWND_DEF wnd;
 
-   wnd = HB_GTXWC_GET( pGT );
+   wnd = HB_GTXWC_GET(pGT);
    hb_gt_xwc_ConnectX( wnd, HB_TRUE );
 
    return wnd->mouseNumButtons;
@@ -5386,7 +5435,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
    PXWND_DEF wnd;
    int iVal;
 
-   wnd = HB_GTXWC_GET( pGT );
+   wnd = HB_GTXWC_GET(pGT);
    if( ! wnd->dpy )
    {
       switch( iType )
@@ -5596,7 +5645,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                hb_xfree(wnd->szTitle);
             }
             wnd->szTitle = nLen > 0 ? hb_strdup(pszTitle) : nullptr;
-            hb_strfree( hString );
+            hb_strfree(hString);
 
             wnd->fDspTitle = HB_TRUE;
             if( wnd->window )
@@ -5617,7 +5666,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             hb_gt_xwc_RealRefresh( wnd, HB_FALSE );
             hb_gt_xwc_SetSelection( wnd, pszClipboardData, nLen, HB_TRUE );
             hb_gt_xwc_RealRefresh( wnd, HB_FALSE );
-            hb_strfree( hString );
+            hb_strfree(hString);
          }
          else
          {
@@ -6044,7 +6093,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
             if( rx.left >= 0 && rx.top >= 0 && rx.left <= rx.right && rx.top <= rx.bottom )
             {
-               HB_GTSELF_REFRESH( pGT );
+               HB_GTSELF_REFRESH(pGT);
                if( xImage )
                {
                   HB_XWC_XLIB_LOCK( wnd->dpy );
@@ -6056,7 +6105,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                {
                   hb_gt_xwc_InvalidatePart( wnd, rx.left / wnd->fontWidth, rx.top / wnd->fontHeight, rx.right / wnd->fontWidth, rx.bottom / wnd->fontHeight );
                }
-               if( HB_GTSELF_DISPCOUNT( pGT ) == 0 )
+               if( HB_GTSELF_DISPCOUNT(pGT) == 0 )
                {
                   hb_gt_xwc_RealRefresh( wnd, HB_FALSE );
                }
@@ -6077,7 +6126,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       default:
-         return HB_GTSUPER_INFO( pGT, iType, pInfo );
+         return HB_GTSUPER_INFO(pGT, iType, pInfo);
    }
 
    return HB_TRUE;
@@ -6100,12 +6149,12 @@ static int hb_gt_xwc_gfx_Primitive( PHB_GT pGT, int iType, int iTop, int iLeft, 
    XColor color;
    XImage * image;
 
-   wnd = HB_GTXWC_GET( pGT );
+   wnd = HB_GTXWC_GET(pGT);
    if( ! wnd->fInit )
    {
       hb_gt_xwc_RealRefresh( wnd, HB_TRUE );
    }
-   HB_GTSELF_REFRESH( pGT );
+   HB_GTSELF_REFRESH(pGT);
 
    switch( iType )
    {
@@ -6262,10 +6311,10 @@ static int hb_gt_xwc_gfx_Primitive( PHB_GT pGT, int iType, int iTop, int iLeft, 
          break;
 
       default:
-         return HB_GTSUPER_GFXPRIMITIVE( pGT, iType, iTop, iLeft, iBottom, iRight, iColor );
+         return HB_GTSUPER_GFXPRIMITIVE(pGT, iType, iTop, iLeft, iBottom, iRight, iColor);
    }
 
-   if( HB_GTSELF_DISPCOUNT( pGT ) == 0 )
+   if( HB_GTSELF_DISPCOUNT(pGT) == 0 )
    {
       hb_gt_xwc_RealRefresh( wnd, HB_FALSE );
    }
@@ -6283,7 +6332,7 @@ static void hb_gt_xwc_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 
    PXWND_DEF wnd;
 
-   wnd = HB_GTXWC_GET( pGT );
+   wnd = HB_GTXWC_GET(pGT);
    if( wnd && ! s_fNoXServer )
    {
       if( wnd->fInit )
@@ -6300,14 +6349,14 @@ static void hb_gt_xwc_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 #if 0
       else if( ! wnd->fData )
       {
-         int iDefColor = HB_GTSELF_GETCOLOR( pGT );
+         int iDefColor = HB_GTSELF_GETCOLOR(pGT);
          int iColor;
          HB_BYTE bAttr;
          HB_USHORT usChar;
 
          while( iSize-- )
          {
-            if( ! HB_GTSELF_GETSCRCHAR( pGT, iRow, iCol++, &iColor, &bAttr, &usChar ) )
+            if( ! HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol++, &iColor, &bAttr, &usChar) )
             {
                break;
             }
@@ -6337,12 +6386,12 @@ static void hb_gt_xwc_Refresh( PHB_GT pGT )
 
    PXWND_DEF wnd;
 
-   wnd = HB_GTXWC_GET( pGT );
-   HB_GTSUPER_REFRESH( pGT );
+   wnd = HB_GTXWC_GET(pGT);
+   HB_GTSUPER_REFRESH(pGT);
 
    if( wnd && ! s_fNoXServer )
    {
-      HB_GTSELF_GETSCRCURSOR( pGT, &wnd->row, &wnd->col, &wnd->cursorType );
+      HB_GTSELF_GETSCRCURSOR(pGT, &wnd->row, &wnd->col, &wnd->cursorType);
 
       if( wnd->fInit || wnd->fData )
       {

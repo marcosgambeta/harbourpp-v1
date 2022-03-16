@@ -538,7 +538,7 @@ HB_BOOL hb_timeStrGet( const char * szTime, int * piHour, int * piMinutes, int *
 
    if( szTime )
    {
-      while( HB_ISSPACE( *szTime ) )
+      while( HB_ISSPACE(*szTime) )
       {
          ++szTime;
       }
@@ -588,7 +588,7 @@ HB_BOOL hb_timeStrGet( const char * szTime, int * piHour, int * piMinutes, int *
                }
             }
          }
-         while( HB_ISSPACE( *szTime ) )
+         while( HB_ISSPACE(*szTime) )
          {
             ++szTime;
          }
@@ -618,7 +618,7 @@ HB_BOOL hb_timeStrGet( const char * szTime, int * piHour, int * piMinutes, int *
                iHour = 0;
             }
          }
-         while( HB_ISSPACE( *szTime ) )
+         while( HB_ISSPACE(*szTime) )
          {
             ++szTime;
          }
@@ -793,7 +793,7 @@ HB_BOOL hb_timeStampStrGet( const char * szDateTime, int * piYear, int * piMonth
 
    if( szDateTime )
    {
-      while( HB_ISSPACE( *szDateTime ) )
+      while( HB_ISSPACE(*szDateTime) )
       {
          ++szDateTime;
       }
@@ -870,7 +870,7 @@ HB_BOOL hb_timeStampStrGet( const char * szDateTime, int * piYear, int * piMonth
                {
                   ++szDateTime;
                }
-               while( HB_ISSPACE( *szDateTime ) )
+               while( HB_ISSPACE(*szDateTime) )
                {
                   ++szDateTime;
                }

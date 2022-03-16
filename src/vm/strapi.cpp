@@ -332,7 +332,7 @@ const char * hb_itemGetStr( PHB_ITEM pItem, void * cdp, void ** phString, HB_SIZ
       }
       else if( pItem->item.asString.allocated == 0 )
       {
-         *phString = HB_UNCONST( s_szConstStr );
+         *phString = HB_UNCONST(s_szConstStr);
       }
       else
       {
@@ -381,7 +381,7 @@ const char * hb_itemGetStrUTF8( PHB_ITEM pItem, void ** phString, HB_SIZE * pnLe
       }
       else
       {
-         *phString = HB_UNCONST( s_szConstStr );
+         *phString = HB_UNCONST(s_szConstStr);
       }
       return pItem->item.asString.value;
    }
@@ -413,7 +413,7 @@ const HB_WCHAR * hb_itemGetStrU16( PHB_ITEM pItem, int iEndian, void ** phString
 
       if( nLen == 0 )
       {
-         *phString = HB_UNCONST( s_szConstStr );
+         *phString = HB_UNCONST(s_szConstStr);
          return s_szConstStr;
       }
 
@@ -584,7 +584,7 @@ PHB_ITEM hb_itemPutStrLenU16( PHB_ITEM pItem, int iEndian, const HB_WCHAR * pStr
    cdp = hb_vmCDP();
    nDest = hb_cdpU16AsStrLen(cdp, pStr, nLen, 0);
    pszDest = static_cast<char*>(hb_xgrab(nDest + 1));
-   hb_cdpU16ToStr( cdp, iEndian, pStr, nLen, pszDest, nDest + 1 );
+   hb_cdpU16ToStr(cdp, iEndian, pStr, nLen, pszDest, nDest + 1);
 
    return hb_itemPutCLPtr(pItem, pszDest, nDest);
 }
@@ -652,7 +652,7 @@ PHB_ITEM hb_itemPutStrU16( PHB_ITEM pItem, int iEndian, const HB_WCHAR * pStr )
    nLen = hb_wstrlen(pStr);
    nDest = hb_cdpU16AsStrLen(cdp, pStr, nLen, 0);
    pszDest = static_cast<char*>(hb_xgrab(nDest + 1));
-   hb_cdpU16ToStr( cdp, iEndian, pStr, nLen, pszDest, nDest + 1 );
+   hb_cdpU16ToStr(cdp, iEndian, pStr, nLen, pszDest, nDest + 1);
 
    return hb_itemPutCLPtr(pItem, pszDest, nDest);
 }
@@ -773,7 +773,7 @@ HB_BOOL hb_arraySetStr( PHB_ITEM pArray, HB_SIZE nIndex, void * cdp, const char 
 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
-      hb_itemPutStr( pArray->item.asArray.value->pItems + nIndex - 1, cdp, pStr );
+      hb_itemPutStr(pArray->item.asArray.value->pItems + nIndex - 1, cdp, pStr);
       return HB_TRUE;
    }
    else

@@ -296,20 +296,20 @@ void hb_xexit( void )
       PHB_MEMINFO pMemBlock;
       int i;
 
-      hb_conOutErr( hb_conNewLine(), 0 );
-      hb_conOutErr( "----------------------------------------", 0 );
-      hb_conOutErr( hb_conNewLine(), 0 );
+      hb_conOutErr(hb_conNewLine(), 0);
+      hb_conOutErr("----------------------------------------", 0);
+      hb_conOutErr(hb_conNewLine(), 0);
       hb_snprintf(szBuffer, sizeof(szBuffer), "Total memory allocated: %" HB_PFS "u bytes (%" HB_PFS "u blocks)", s_nMemoryMaxConsumed, s_nMemoryMaxBlocks);
-      hb_conOutErr( szBuffer, 0 );
+      hb_conOutErr(szBuffer, 0);
 
       if( s_nMemoryBlocks )
       {
-         hb_conOutErr( hb_conNewLine(), 0 );
+         hb_conOutErr(hb_conNewLine(), 0);
          hb_snprintf(szBuffer, sizeof(szBuffer), "WARNING! Memory allocated but not released: %" HB_PFS "u bytes (%" HB_PFS "u blocks)", s_nMemoryConsumed, s_nMemoryBlocks);
-         hb_conOutErr( szBuffer, 0 );
+         hb_conOutErr(szBuffer, 0);
       }
 
-      hb_conOutErr( hb_conNewLine(), 0 );
+      hb_conOutErr(hb_conNewLine(), 0);
 
       for( i = 1, pMemBlock = s_pMemBlocks; pMemBlock; ++i, pMemBlock = pMemBlock->pNextBlock )
          HB_TRACE( HB_TR_ERROR, ( "Block %i %p (size %" HB_PFS "u) \"%s\"", i,
@@ -335,15 +335,15 @@ void hb_errInternal( HB_ERRCODE errCode, const char * szText, const char * szPar
 
    char buffer[1024];
 
-   hb_conOutErr( hb_conNewLine(), 0 );
+   hb_conOutErr(hb_conNewLine(), 0);
    hb_snprintf(buffer, sizeof(buffer), "Unrecoverable error %d: ", errCode);
-   hb_conOutErr( buffer, 0 );
+   hb_conOutErr(buffer, 0);
    if( szText )
    {
       hb_snprintf(buffer, sizeof(buffer), szText, szPar1, szPar2);
-      hb_conOutErr( buffer, 0 );
+      hb_conOutErr(buffer, 0);
    }
-   hb_conOutErr( hb_conNewLine(), 0 );
+   hb_conOutErr(hb_conNewLine(), 0);
    exit( EXIT_FAILURE );
 }
 
@@ -353,7 +353,7 @@ void hb_conOutErr( const char * pStr, HB_SIZE nLen )
    if( nLen == 0 )
       nLen = strlen(pStr);
 
-   fprintf( stderr, "%.*s", static_cast<int>(nLen), pStr );
+   fprintf(stderr, "%.*s", static_cast<int>(nLen), pStr);
 }
 
 const char * hb_conNewLine( void )

@@ -219,8 +219,8 @@ int hb_inkey( HB_BOOL fWait, double dSeconds, int iEventMask )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      iKey = HB_GTSELF_INKEYGET( pGT, fWait, dSeconds, iEventMask );
-      hb_gt_BaseFree( pGT );
+      iKey = HB_GTSELF_INKEYGET(pGT, fWait, dSeconds, iEventMask);
+      hb_gt_BaseFree(pGT);
    }
    return iKey;
 }
@@ -236,8 +236,8 @@ void hb_inkeyPut( int iKey )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_INKEYPUT( pGT, iKey );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_INKEYPUT(pGT, iKey);
+      hb_gt_BaseFree(pGT);
    }
 }
 
@@ -252,8 +252,8 @@ void hb_inkeyIns( int iKey )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_INKEYINS( pGT, iKey );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_INKEYINS(pGT, iKey);
+      hb_gt_BaseFree(pGT);
    }
 }
 
@@ -269,8 +269,8 @@ int hb_inkeyLast( int iEventMask )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      iKey = HB_GTSELF_INKEYLAST( pGT, iEventMask );
-      hb_gt_BaseFree( pGT );
+      iKey = HB_GTSELF_INKEYLAST(pGT, iEventMask);
+      hb_gt_BaseFree(pGT);
    }
    return iKey;
 }
@@ -287,8 +287,8 @@ int hb_inkeyNext( int iEventMask )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      iKey = HB_GTSELF_INKEYNEXT( pGT, iEventMask );
-      hb_gt_BaseFree( pGT );
+      iKey = HB_GTSELF_INKEYNEXT(pGT, iEventMask);
+      hb_gt_BaseFree(pGT);
    }
    return iKey;
 }
@@ -304,8 +304,8 @@ void hb_inkeyPoll( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_INKEYPOLL( pGT );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_INKEYPOLL(pGT);
+      hb_gt_BaseFree(pGT);
    }
 }
 
@@ -321,8 +321,8 @@ int hb_inkeySetLast( int iKey )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      iLast = HB_GTSELF_INKEYSETLAST( pGT, iKey );
-      hb_gt_BaseFree( pGT );
+      iLast = HB_GTSELF_INKEYSETLAST(pGT, iKey);
+      hb_gt_BaseFree(pGT);
    }
    return iLast;
 }
@@ -338,8 +338,8 @@ void hb_inkeySetText( const char * szText, HB_SIZE nLen, HB_BOOL fEol )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_INKEYSETTEXT( pGT, szText, nLen, fEol );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_INKEYSETTEXT(pGT, szText, nLen, fEol);
+      hb_gt_BaseFree(pGT);
    }
 }
 
@@ -354,8 +354,8 @@ void hb_inkeyReset( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_INKEYRESET( pGT );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_INKEYRESET(pGT);
+      hb_gt_BaseFree(pGT);
    }
 }
 

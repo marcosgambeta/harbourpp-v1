@@ -779,17 +779,17 @@ static void hb_stackDispLocal( void )
    HB_STACK_TLS_PRELOAD
    PHB_ITEM * pBase;
 
-   hb_conOutErr( hb_conNewLine(), 0 );
+   hb_conOutErr(hb_conNewLine(), 0);
    hb_snprintf(buffer, sizeof(buffer), HB_I_( "Virtual Machine Stack Dump at %s(%i):" ),
                 ( *hb_stack.pBase )->item.asSymbol.value->szName,
                 ( *hb_stack.pBase )->item.asSymbol.stackstate->uiLineNo);
-   hb_conOutErr( buffer, 0 );
-   hb_conOutErr( hb_conNewLine(), 0 );
-   hb_conOutErr( "--------------------------", 0 );
+   hb_conOutErr(buffer, 0);
+   hb_conOutErr(hb_conNewLine(), 0);
+   hb_conOutErr("--------------------------", 0);
 
    for( pBase = hb_stack.pBase; pBase <= hb_stack.pPos; pBase++ ) /* TODO: for scope */
    {
-      hb_conOutErr( hb_conNewLine(), 0 );
+      hb_conOutErr(hb_conNewLine(), 0);
 
       switch( hb_itemType(*pBase) )
       {
@@ -862,7 +862,7 @@ static void hb_stackDispLocal( void )
             break;
       }
 
-      hb_conOutErr( buffer, 0 );
+      hb_conOutErr(buffer, 0);
    }
 }
 
@@ -1386,9 +1386,9 @@ void hb_stackDispCall( void )
       int l = static_cast<int>(strlen(buffer));
       hb_snprintf(buffer + l, sizeof(buffer) - l, "(%hu)%s%s", uiLine, *file ? HB_I_( " in " ) : "", file);
 
-      hb_conOutErr( "Called from ", 0 );
-      hb_conOutErr( buffer, 0 );
-      hb_conOutErr( hb_conNewLine(), 0 );
+      hb_conOutErr("Called from ", 0);
+      hb_conOutErr(buffer, 0);
+      hb_conOutErr(hb_conNewLine(), 0);
    }
 }
 

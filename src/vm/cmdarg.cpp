@@ -140,7 +140,7 @@ void hb_winmainArgVBuild( void )
             }
             fQuoted = ! fQuoted;
          }
-         else if( fQuoted || ! HB_ISSPACE( *lpSrc ) )
+         else if( fQuoted || ! HB_ISSPACE(*lpSrc) )
          {
             if( lpArg == nullptr )
             {
@@ -435,11 +435,11 @@ void hb_cmdargUpdate( void )
                hb_fsCurDirBuff( 0, s_szAppName + 1, HB_PATH_MAX - 1 );
                if( s_szAppName[1] != 0 )
                {
-                  hb_strncat( s_szAppName, HB_OS_PATH_DELIM_CHR_STRING, HB_PATH_MAX - 1 );
-                  hb_strncat( s_szAppName, pFName->szPath, HB_PATH_MAX - 1 );
+                  hb_strncat(s_szAppName, HB_OS_PATH_DELIM_CHR_STRING, HB_PATH_MAX - 1);
+                  hb_strncat(s_szAppName, pFName->szPath, HB_PATH_MAX - 1);
                   pFName->szPath = hb_strdup(s_szAppName);
                   hb_fsFNameMerge( s_szAppName, pFName );
-                  hb_xfree(HB_UNCONST( pFName->szPath ));
+                  hb_xfree(HB_UNCONST(pFName->szPath));
                   s_argv[0] = s_szAppName;
                }
             }
@@ -468,12 +468,12 @@ int hb_cmdargPushArgs( void )
 #if defined( HB_OS_WIN )
          if( s_lpArgV )
          {
-            HB_ITEMPUTSTR( hb_stackAllocItem(), s_lpArgV[i] );
+            HB_ITEMPUTSTR(hb_stackAllocItem(), s_lpArgV[i]);
          }
          else
 #endif
          {
-            hb_vmPushString( s_argv[i], strlen(s_argv[i]) );
+            hb_vmPushString(s_argv[i], strlen(s_argv[i]));
          }
          iArgCount++;
       }
@@ -897,15 +897,15 @@ void hb_cmdargProcess( void )
    {
       {
          char * pszVersion = hb_verHarbour();
-         hb_conOutErr( pszVersion, 0 );
-         hb_conOutErr( hb_conNewLine(), 0 );
+         hb_conOutErr(pszVersion, 0);
+         hb_conOutErr(hb_conNewLine(), 0);
          hb_xfree(pszVersion);
       }
 
       {
          char * pszVersion = hb_verPlatform();
-         hb_conOutErr( pszVersion, 0 );
-         hb_conOutErr( hb_conNewLine(), 0 );
+         hb_conOutErr(pszVersion, 0);
+         hb_conOutErr(hb_conNewLine(), 0);
          hb_xfree(pszVersion);
       }
 
@@ -916,8 +916,8 @@ void hb_cmdargProcess( void )
 #else
          hb_snprintf(buffer, sizeof(buffer), "DS avail=%" HB_PFS "uKB  OS avail=%" HB_PFS "uKB  EMM avail=%" HB_PFS "uKB  MemStat:%s  MT:%s", hb_xquery(HB_MEM_BLOCK), hb_xquery(HB_MEM_VM), hb_xquery(HB_MEM_EMS), hb_xquery(HB_MEM_STATISTICS) ? "On" : "Off", hb_vmIsMt() ? "On" : "Off");
 #endif
-         hb_conOutErr( buffer, 0 );
-         hb_conOutErr( hb_conNewLine(), 0 );
+         hb_conOutErr(buffer, 0);
+         hb_conOutErr(hb_conNewLine(), 0);
       }
    }
 

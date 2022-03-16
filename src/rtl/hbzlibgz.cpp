@@ -104,7 +104,7 @@ HB_FUNC( HB_GZOPEN )
       {
          void * hFile;
          gz = gzopen_w( hb_parstr_u16( 1, HB_CDP_ENDIAN_NATIVE, &hFile, nullptr ), cMode );
-         hb_strfree( hFile );
+         hb_strfree(hFile);
       }
       #else
          gz = gzopen( cFile, cMode );

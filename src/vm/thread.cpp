@@ -945,17 +945,17 @@ HB_CARGO_FUNC( hb_threadStartVM )
       if( HB_IS_BLOCK(pStart) )
       {
          hb_vmPushEvalSym();
-         hb_vmPush( pStart );
+         hb_vmPush(pStart);
          fSend = HB_TRUE;
       }
       else if( HB_IS_SYMBOL(pStart) )
       {
-         hb_vmPush( pStart );
+         hb_vmPush(pStart);
          hb_vmPushNil();
       }
       else if( HB_IS_STRING(pStart) )
       {
-         hb_vmPushDynSym( hb_dynsymGet(hb_itemGetCPtr(pStart)) );
+         hb_vmPushDynSym(hb_dynsymGet(hb_itemGetCPtr(pStart)));
          hb_vmPushNil();
       }
       else
@@ -968,7 +968,7 @@ HB_CARGO_FUNC( hb_threadStartVM )
    {
       for( HB_ULONG ulParam = 2; ulParam <= ulPCount; ++ulParam )
       {
-         hb_vmPush( hb_arrayGetItemPtr(pThread->pParams, ulParam) );
+         hb_vmPush(hb_arrayGetItemPtr(pThread->pParams, ulParam));
       }
 
       hb_itemRelease(pThread->pParams);
@@ -976,11 +976,11 @@ HB_CARGO_FUNC( hb_threadStartVM )
 
       if( fSend )
       {
-         hb_vmSend( static_cast<HB_USHORT>(ulPCount - 1) );
+         hb_vmSend(static_cast<HB_USHORT>(ulPCount - 1));
       }
       else
       {
-         hb_vmProc( static_cast<HB_USHORT>(ulPCount - 1) );
+         hb_vmProc(static_cast<HB_USHORT>(ulPCount - 1));
       }
    }
    else
@@ -2823,12 +2823,12 @@ HB_FUNC( HB_MUTEXEVAL )
          if( hb_threadMutexLock( pItem ) )
          {
             hb_vmPushEvalSym();
-            hb_vmPush( pEval );
+            hb_vmPush(pEval);
             for( int iParam = 3; iParam <= iPCount; iParam++ )
             {
-               hb_vmPush( hb_stackItemFromBase(iParam) );
+               hb_vmPush(hb_stackItemFromBase(iParam));
             }
-            hb_vmSend( static_cast<HB_USHORT>(iPCount - 2) );
+            hb_vmSend(static_cast<HB_USHORT>(iPCount - 2));
             hb_threadMutexUnlock( pItem );
          }
       }

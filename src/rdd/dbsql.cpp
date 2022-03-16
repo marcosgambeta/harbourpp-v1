@@ -146,7 +146,7 @@ static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const 
          const char *szVal = hb_itemGetCPtr(pValue);
 
          hb_addStrToFBuffer( pFileBuf, szDelim );
-         while( nLen && HB_ISSPACE( szVal[nLen - 1] ) )
+         while( nLen && HB_ISSPACE(szVal[nLen - 1]) )
          {
             nLen--;
          }
@@ -164,7 +164,7 @@ static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const 
             else
             {
 #if 0
-               printf( "%d %c", *szVal, *szVal );
+               printf("%d %c", *szVal, *szVal);
 #endif
             }
             szVal++;
@@ -226,7 +226,7 @@ static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const 
          if( hb_itemStrBuf(szResult, pValue, iSize, iDec) )
          {
             int iPos = 0;
-            while( iSize && HB_ISSPACE( szResult[iPos] ) )
+            while( iSize && HB_ISSPACE(szResult[iPos]) )
             {
                iPos++;
                iSize--;

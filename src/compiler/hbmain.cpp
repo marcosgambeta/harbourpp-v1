@@ -219,7 +219,7 @@ static int hb_compReadClpFile( HB_COMP_DECL, const char * szClpFile )
       hb_xfree(pFileName);
    }
 
-   inFile = hb_fopen( szClpFile, "r" );
+   inFile = hb_fopen(szClpFile, "r");
    if( ! inFile )
    {
       /* TODO: Clipper compatible error */
@@ -256,12 +256,12 @@ static int hb_compReadClpFile( HB_COMP_DECL, const char * szClpFile )
             }
          }
 
-         while( i == 0 && HB_ISSPACE( ch ) )
+         while( i == 0 && HB_ISSPACE(ch) )
          {
             ch = fgetc( inFile );
          }
 
-         if( ch == EOF || HB_ISSPACE( ch ) || ch == '#' )
+         if( ch == EOF || HB_ISSPACE(ch) || ch == '#' )
          {
             szFile[i] = '\0';
             if( i > 0 )
@@ -281,7 +281,7 @@ static int hb_compReadClpFile( HB_COMP_DECL, const char * szClpFile )
       }
       while( ch != EOF );
 
-      fclose( inFile );
+      fclose(inFile);
    }
 
    return iStatus;
@@ -499,7 +499,7 @@ void hb_compVariableAdd( HB_COMP_DECL, const char * szVarName, PHB_VARTYPE pVarT
    if( HB_TOUPPER(pVarType->cVarType) == 'S' )
    {
       #if 0
-      printf( "\nVariable %s is of Class: %s\n", szVarName, pVarType->szFromClass );
+      printf("\nVariable %s is of Class: %s\n", szVarName, pVarType->szFromClass);
       #endif
       pVar->pClass = hb_compClassFind( HB_COMP_PARAM, pVarType->szFromClass );
       if( ! pVar->pClass )
@@ -1189,7 +1189,7 @@ PHB_HCLASS hb_compClassAdd( HB_COMP_DECL, const char * szClassName, const char *
    PHB_HDECLARED pDeclared;
 
    #if 0
-   printf( "Declaring Class: %s\n", szClassName );
+   printf("Declaring Class: %s\n", szClassName);
    #endif
 
    if( HB_COMP_PARAM->iWarnings < 3 )
@@ -1252,7 +1252,7 @@ PHB_HDECLARED hb_compMethodAdd( HB_COMP_DECL, PHB_HCLASS pClass, const char * sz
    PHB_HDECLARED pMethod;
 
    #if 0
-   printf( "\nDeclaring Method: %s of Class: %s Pointer: %li\n", szMethodName, pClass->szName, pClass );
+   printf("\nDeclaring Method: %s of Class: %s Pointer: %li\n", szMethodName, pClass->szName, pClass);
    #endif
 
    if( HB_COMP_PARAM->iWarnings < 3 )
@@ -1334,7 +1334,7 @@ PHB_HDECLARED hb_compDeclaredAdd( HB_COMP_DECL, const char * szDeclaredName )
    }
 
    #if 0
-   printf( "\nDeclaring Function: %s\n", szDeclaredName, nullptr );
+   printf("\nDeclaring Function: %s\n", szDeclaredName, nullptr);
    #endif
 
    if( ( pDeclared = hb_compDeclaredFind( HB_COMP_PARAM, szDeclaredName ) ) != nullptr )
@@ -1422,7 +1422,7 @@ void hb_compDeclaredParameterAdd( HB_COMP_DECL, const char * szVarName, PHB_VART
    else /* Declared Method Parameter */
    {
       #if 0
-      printf( "\nAdding parameter: %s Type: %c In Method: %s Class: %s FROM CLASS: %s\n", szVarName, pVarType->cVarType, HB_COMP_PARAM->pLastMethod->szName, HB_COMP_PARAM->pLastClass->szName, pVarType->szFromClass );
+      printf("\nAdding parameter: %s Type: %c In Method: %s Class: %s FROM CLASS: %s\n", szVarName, pVarType->cVarType, HB_COMP_PARAM->pLastMethod->szName, HB_COMP_PARAM->pLastClass->szName, pVarType->szFromClass);
       #endif
 
       HB_COMP_PARAM->pLastMethod->iParamCount++;
@@ -1445,7 +1445,7 @@ void hb_compDeclaredParameterAdd( HB_COMP_DECL, const char * szVarName, PHB_VART
          HB_COMP_PARAM->pLastMethod->pParamClasses[HB_COMP_PARAM->pLastMethod->iParamCount - 1] = hb_compClassFind( HB_COMP_PARAM, pVarType->szFromClass );
 
          #if 0
-         printf( "\nParameter: %s FROM CLASS: %s\n", szVarName, HB_COMP_PARAM->pLastMethod->pParamClasses[HB_COMP_PARAM->pLastMethod->iParamCount - 1]->szName );
+         printf("\nParameter: %s FROM CLASS: %s\n", szVarName, HB_COMP_PARAM->pLastMethod->pParamClasses[HB_COMP_PARAM->pLastMethod->iParamCount - 1]->szName);
          #endif
       }
    }
@@ -1568,7 +1568,7 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
                   break;
 
                case HB_P_JUMP:
-                  nOffset = HB_PCODE_MKSHORT( &pCode[nJumpAddr + 1] );
+                  nOffset = HB_PCODE_MKSHORT(&pCode[nJumpAddr + 1]);
                   if( nOffset == 3 )
                   {
                      hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr, 3, HB_FALSE, HB_FALSE );
@@ -1581,7 +1581,7 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
                   break;
 
                case HB_P_JUMPFALSE:
-                  nOffset = HB_PCODE_MKSHORT( &pCode[nJumpAddr + 1] );
+                  nOffset = HB_PCODE_MKSHORT(&pCode[nJumpAddr + 1]);
                   if( nOffset == 3 )
                   {
                      hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr, 3, HB_TRUE, HB_FALSE );
@@ -1594,7 +1594,7 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
                   break;
 
                case HB_P_JUMPTRUE:
-                  nOffset = HB_PCODE_MKSHORT( &pCode[nJumpAddr + 1] );
+                  nOffset = HB_PCODE_MKSHORT(&pCode[nJumpAddr + 1]);
                   if( nOffset == 3 )
                   {
                      hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr, 3, HB_TRUE, HB_FALSE );
@@ -1607,7 +1607,7 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
                   break;
 
                case HB_P_JUMPFAR:
-                  nOffset = HB_PCODE_MKINT24( &pCode[nJumpAddr + 1] );
+                  nOffset = HB_PCODE_MKINT24(&pCode[nJumpAddr + 1]);
                   if( nOffset == 4 )
                   {
                      hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr, 4, HB_FALSE, HB_FALSE );
@@ -1628,7 +1628,7 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
                   break;
 
                case HB_P_JUMPFALSEFAR:
-                  nOffset = HB_PCODE_MKINT24( &pCode[nJumpAddr + 1] );
+                  nOffset = HB_PCODE_MKINT24(&pCode[nJumpAddr + 1]);
                   if( nOffset == 4 )
                   {
                      hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr, 4, HB_TRUE, HB_FALSE );
@@ -1649,7 +1649,7 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
                   break;
 
                case HB_P_JUMPTRUEFAR:
-                  nOffset = HB_PCODE_MKINT24( &pCode[nJumpAddr + 1] );
+                  nOffset = HB_PCODE_MKINT24(&pCode[nJumpAddr + 1]);
                   if( nOffset == 4 )
                   {
                      hb_compNOOPfill( HB_COMP_PARAM->functions.pLast, nJumpAddr, 4, HB_TRUE, HB_FALSE );
@@ -1744,7 +1744,7 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
                   case HB_P_JUMP:
                   case HB_P_JUMPFALSE:
                   case HB_P_JUMPTRUE:
-                     nOffset = HB_PCODE_MKSHORT( &pCode[nJumpAddr + 1] );
+                     nOffset = HB_PCODE_MKSHORT(&pCode[nJumpAddr + 1]);
                      break;
 
                   case HB_P_JUMPFAR:
@@ -1754,7 +1754,7 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
                   case HB_P_SEQALWAYS:
                   case HB_P_SEQBEGIN:
                   case HB_P_SEQEND:
-                     nOffset = HB_PCODE_MKINT24( &pCode[nJumpAddr + 1] );
+                     nOffset = HB_PCODE_MKINT24(&pCode[nJumpAddr + 1]);
                      break;
 
                   default:
@@ -1806,12 +1806,12 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
                   case HB_P_JUMP:
                   case HB_P_JUMPFALSE:
                   case HB_P_JUMPTRUE:
-                     nOffset += HB_PCODE_MKSHORT( &pCode[nJumpAddr + 1] );
+                     nOffset += HB_PCODE_MKSHORT(&pCode[nJumpAddr + 1]);
                      HB_PUT_LE_UINT16( &pCode[nJumpAddr + 1], nOffset );
                      break;
 
                   default:
-                     nOffset += HB_PCODE_MKINT24( &pCode[nJumpAddr + 1] );
+                     nOffset += HB_PCODE_MKINT24(&pCode[nJumpAddr + 1]);
                      HB_PUT_LE_UINT24( &pCode[nJumpAddr + 1], nOffset );
                      break;
                }
@@ -1898,7 +1898,7 @@ static void hb_compOptimizeFrames( HB_COMP_DECL, PHB_HFUNC pFunc )
             while( pVar )
             {
                #if 0
-               printf( "\nChecking: %s Used: %i\n", pVar->szName, pVar->iUsed );
+               printf("\nChecking: %s Used: %i\n", pVar->szName, pVar->iUsed);
                #endif
 
                if( ! ( pVar->iUsed & HB_VU_USED ) && ( pVar->iUsed & HB_VU_INITIALIZED ) )
@@ -3612,7 +3612,7 @@ HB_BOOL hb_compHasJump( PHB_HFUNC pFunc, HB_SIZE nPos )
          case HB_P_JUMP:
          case HB_P_JUMPFALSE:
          case HB_P_JUMPTRUE:
-            nJumpAddr += HB_PCODE_MKSHORT( &pFunc->pCode[nJumpAddr + 1] );
+            nJumpAddr += HB_PCODE_MKSHORT(&pFunc->pCode[nJumpAddr + 1]);
             break;
 
          /* Jump can be replaced by series of NOOPs or POP and NOOPs
@@ -3624,7 +3624,7 @@ HB_BOOL hb_compHasJump( PHB_HFUNC pFunc, HB_SIZE nPos )
             break;
 
          default:
-            nJumpAddr += HB_PCODE_MKINT24( &pFunc->pCode[nJumpAddr + 1] );
+            nJumpAddr += HB_PCODE_MKINT24(&pFunc->pCode[nJumpAddr + 1]);
             break;
       }
       if( nJumpAddr == nPos )
@@ -4501,20 +4501,20 @@ static void hb_compGenIncluded( HB_COMP_DECL )
 
          FileName.szExtension = ".d";
          hb_fsFNameMerge( szFileName, &FileName );
-         file = hb_fopen( szFileName, "w" );
+         file = hb_fopen(szFileName, "w");
          if( file )
          {
             if( szDestFile[0] )
             {
-               fprintf( file, "%s:", szDestFile );
+               fprintf(file, "%s:", szDestFile);
             }
             while( pIncFile )
             {
-               fprintf( file, " %s", pIncFile->szFileName );
+               fprintf(file, " %s", pIncFile->szFileName);
                pIncFile = pIncFile->pNext;
             }
-            fprintf( file, "\n" );
-            fclose( file );
+            fprintf(file, "\n");
+            fclose(file);
          }
          else
          {

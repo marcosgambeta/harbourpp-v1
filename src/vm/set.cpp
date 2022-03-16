@@ -539,15 +539,15 @@ HB_BOOL hb_setSetCentury( HB_BOOL new_century_setting )
             memcpy(szNewFormat, szDateFormat, y_start);
          }
          szNewFormat[y_start] = '\0';
-         hb_strncat( szNewFormat, "YY", size );
+         hb_strncat(szNewFormat, "YY", size);
          if( new_century_setting )
          {
-            hb_strncat( szNewFormat, "YY", size );
+            hb_strncat(szNewFormat, "YY", size);
          }
          format_len = static_cast<int>(strlen(szDateFormat));
          if( y_stop < format_len )
          {
-            hb_strncat( szNewFormat, szDateFormat + y_stop, size );
+            hb_strncat(szNewFormat, szDateFormat + y_stop, size);
          }
          /* DATE FORMAT is under direct control of SET, so notify when it
             it is changed indirectly via __SetCentury() */
@@ -3190,7 +3190,7 @@ const char * hb_osEncodeCP( const char * szName, char ** pszFree, HB_SIZE * pnSi
 
             if( pszFree == nullptr )
             {
-               pszFree = static_cast<char**>(HB_UNCONST( &szName ));
+               pszFree = static_cast<char**>(HB_UNCONST(&szName));
                nSize = strlen(szName);
             }
             pszBuf = *pszFree;
@@ -3227,7 +3227,7 @@ const char * hb_osDecodeCP( const char * szName, char ** pszFree, HB_SIZE * pnSi
 
             if( pszFree == nullptr )
             {
-               pszFree = static_cast<char**>(HB_UNCONST( &szName ));
+               pszFree = static_cast<char**>(HB_UNCONST(&szName));
                nSize = strlen(szName);
             }
             pszBuf = *pszFree;
@@ -3382,7 +3382,7 @@ char * hb_osStrU16Decode( const HB_WCHAR * pszNameW )
          nLen = hb_wstrlen(pszNameW);
          nSize = hb_cdpU16AsStrLen(cdp, pszNameW, nLen, 0);
          pszBuffer = static_cast<char*>(hb_xgrab(nSize + 1));
-         hb_cdpU16ToStr( cdp, HB_CDP_ENDIAN_NATIVE, pszNameW, nLen, pszBuffer, nSize + 1 );
+         hb_cdpU16ToStr(cdp, HB_CDP_ENDIAN_NATIVE, pszNameW, nLen, pszBuffer, nSize + 1);
          return pszBuffer;
       }
    }
@@ -3397,7 +3397,7 @@ char * hb_osStrU16Decode2( const HB_WCHAR * pszNameW, char * pszBuffer, HB_SIZE 
       PHB_CODEPAGE cdp = hb_vmCDP();
       if( cdp )
       {
-         hb_cdpU16ToStr( cdp, HB_CDP_ENDIAN_NATIVE, pszNameW, hb_wstrlen(pszNameW), pszBuffer, nSize );
+         hb_cdpU16ToStr(cdp, HB_CDP_ENDIAN_NATIVE, pszNameW, hb_wstrlen(pszNameW), pszBuffer, nSize);
          pszBuffer[nSize] = 0;
          return pszBuffer;
       }

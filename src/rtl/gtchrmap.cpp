@@ -344,7 +344,7 @@ static int chrmap_parse( FILE * fp, const char * pszTerm, int * nTransTbl, const
          else if( n == 1 )
          {
             #if 0
-            printf( "line: %3d\tfrom=%d, to=%d, op='%c', val=%d, mod=%d\n", line, from, to, op, val, mod );
+            printf("line: %3d\tfrom=%d, to=%d, op='%c', val=%d, mod=%d\n", line, from, to, op, val, mod);
             #endif
             for( i = from; i <= to; ++i )
             {
@@ -379,7 +379,7 @@ static int chrmap_parse( FILE * fp, const char * pszTerm, int * nTransTbl, const
          }
          else if( n == -1 )
          {
-            fprintf( stderr, "file: %s, parse error at line: %d\n", pszFile, line );
+            fprintf(stderr, "file: %s, parse error at line: %d\n", pszFile, line);
          }
       }
    }
@@ -392,7 +392,7 @@ static int chrmap_parse( FILE * fp, const char * pszTerm, int * nTransTbl, const
 static int hb_gt_chrmapread( const char * pszFile, const char * pszTerm, int * nTransTbl )
 {
    int isTerm = -1;
-   FILE * fp = hb_fopen( pszFile, "r" );
+   FILE * fp = hb_fopen(pszFile, "r");
 
    if( fp != nullptr )
    {
@@ -418,7 +418,7 @@ static int hb_gt_chrmapread( const char * pszFile, const char * pszTerm, int * n
 
          pTerm = ptr;
       }
-      fclose( fp );
+      fclose(fp);
    }
    return isTerm;
 }
@@ -462,7 +462,7 @@ int hb_gt_chrmapinit( int * piTransTbl, const char * pszTerm, HB_BOOL fSetACSC )
          if( pszFile != nullptr && sizeof(szFile) > strlen(pszFile) + strlen(hb_gt_szCharMapFileDefault) )
          {
             hb_strncpy(szFile, pszFile, sizeof(szFile) - 1);
-            hb_strncat( szFile, hb_gt_szCharMapFileDefault, sizeof(szFile) - 1 );
+            hb_strncat(szFile, hb_gt_szCharMapFileDefault, sizeof(szFile) - 1);
             nRet = hb_gt_chrmapread( szFile, pszTerm, piTransTbl );
          }
       }
@@ -504,13 +504,13 @@ int main( int argc, char ** argv )
 
    if( hb_gt_chrmapinit( piTransTbl, nullptr ) == -1 )
    {
-      printf( "cannot init charmap.\n" );
+      printf("cannot init charmap.\n");
       return 1;
    }
 
    for( int i = 0; i < 256; ++i )
    {
-      printf( "%3d -> %3d : %d\n", i, piTransTbl[i] & 0xff, piTransTbl[i] >> 16 );
+      printf("%3d -> %3d : %d\n", i, piTransTbl[i] & 0xff, piTransTbl[i] >> 16);
    }
 
    return 0;

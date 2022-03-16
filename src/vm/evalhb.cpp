@@ -60,17 +60,17 @@ HB_FUNC( EVAL )
       int iPCount = hb_pcount();
 
       hb_vmPushEvalSym();
-      hb_vmPush( pItem );
+      hb_vmPush(pItem);
       /* NOTE: hb_param() function cannot be used for parameter access
        * because we need to pass the references too.
        * hb_param() is dereferencing the passed parameters
        */
       for( int iParam = 2; iParam <= iPCount; iParam++ )
       {
-         hb_vmPush( hb_stackItemFromBase(iParam) );
+         hb_vmPush(hb_stackItemFromBase(iParam));
       }
 
-      hb_vmSend( static_cast<HB_USHORT>(iPCount - 1) );
+      hb_vmSend(static_cast<HB_USHORT>(iPCount - 1));
    }
    else
    {

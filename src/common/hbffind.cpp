@@ -503,7 +503,7 @@ static HB_BOOL hb_fsFindNextLow( PHB_FFIND ffind )
       if( bFound )
       {
          hb_strncpy(dirname, info->path, sizeof(dirname) - 1);
-         hb_strncat( dirname, info->entry->d_name, sizeof(dirname) - 1 );
+         hb_strncat(dirname, info->entry->d_name, sizeof(dirname) - 1);
          {
             time_t ftime;
             struct tm lt;

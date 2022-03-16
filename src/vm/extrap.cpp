@@ -126,13 +126,13 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
 
       if( pExceptionInfo->ExceptionRecord->NumberParameters && pExceptionInfo->ExceptionRecord->NumberParameters < static_cast<DWORD>(EXCEPTION_MAXIMUM_PARAMETERS) )
       {
-         hb_strncat( errmsg, "    Exception Parameters:", errmsglen );
+         hb_strncat(errmsg, "    Exception Parameters:", errmsglen);
          for( DWORD arg = 0; arg < pExceptionInfo->ExceptionRecord->NumberParameters; ++arg )
          {
             hb_snprintf(buf, sizeof(buf), " %016" PFLL "X", static_cast<HB_U64>(pExceptionInfo->ExceptionRecord->ExceptionInformation[arg]));
-            hb_strncat( errmsg, buf, errmsglen );
+            hb_strncat(errmsg, buf, errmsglen);
          }
-         hb_strncat( errmsg, "\n", errmsglen );
+         hb_strncat(errmsg, "\n", errmsglen);
       }
 
       /* TODO: 64-bit stack trace.
@@ -206,13 +206,13 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
 
       if( pExceptionInfo->ExceptionRecord->NumberParameters && pExceptionInfo->ExceptionRecord->NumberParameters < static_cast<DWORD>(EXCEPTION_MAXIMUM_PARAMETERS) )
       {
-         hb_strncat( errmsg, "    Exception Parameters:", errmsglen );
+         hb_strncat(errmsg, "    Exception Parameters:", errmsglen);
          for( DWORD arg = 0; arg < pExceptionInfo->ExceptionRecord->NumberParameters; ++arg )
          {
             hb_snprintf(buf, sizeof(buf), " %08X", static_cast<HB_U32>(pExceptionInfo->ExceptionRecord->ExceptionInformation[arg]));
-            hb_strncat( errmsg, buf, errmsglen );
+            hb_strncat(errmsg, buf, errmsglen);
          }
-         hb_strncat( errmsg, "\n", errmsglen );
+         hb_strncat(errmsg, "\n", errmsglen);
       }
 
       {
@@ -223,7 +223,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
          unsigned int    j;
          int             i;
 
-         hb_strncat( errmsg, "    CS:EIP:", errmsglen );
+         hb_strncat(errmsg, "    CS:EIP:", errmsglen);
          pc = reinterpret_cast<unsigned char*>(pCtx->Eip);
          for( i = 0; i < 16; i++ )
          {
@@ -233,9 +233,9 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
                break;
             }
             hb_snprintf(buf, sizeof(buf), " %02X", static_cast<int>(pc[i]));
-            hb_strncat( errmsg, buf, errmsglen );
+            hb_strncat(errmsg, buf, errmsglen);
          }
-         hb_strncat( errmsg, "\n    SS:ESP:", errmsglen );
+         hb_strncat(errmsg, "\n    SS:ESP:", errmsglen);
          sc = reinterpret_cast<unsigned int*>(pCtx->Esp);
          for( i = 0; i < 16; i++ )
          {
@@ -245,11 +245,11 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
                break;
             }
             hb_snprintf(buf, sizeof(buf), " %08X", sc[i]);
-            hb_strncat( errmsg, buf, errmsglen );
+            hb_strncat(errmsg, buf, errmsglen);
          }
-         hb_strncat( errmsg, "\n\n", errmsglen );
-         hb_strncat( errmsg, "    C stack:\n", errmsglen );
-         hb_strncat( errmsg, "    EIP:     EBP:       Frame: OldEBP, RetAddr, Params...\n", errmsglen );
+         hb_strncat(errmsg, "\n\n", errmsglen);
+         hb_strncat(errmsg, "    C stack:\n", errmsglen);
+         hb_strncat(errmsg, "    EIP:     EBP:       Frame: OldEBP, RetAddr, Params...\n", errmsglen);
          eip = pCtx->Eip;
          ebp = reinterpret_cast<unsigned int*>(pCtx->Ebp);
          /* FIXME: Unsafe function. */
@@ -263,17 +263,17 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
                   break;
                }
                hb_snprintf(buf, sizeof(buf), "    %08X %08X  ", static_cast<int>(eip), reinterpret_cast<int>(ebp));
-               hb_strncat( errmsg, buf, errmsglen );
+               hb_strncat(errmsg, buf, errmsglen);
                for( j = 0; j < 10 && reinterpret_cast<unsigned int>(ebp + j) < ebp[0]; j++ )
                {
                   hb_snprintf(buf, sizeof(buf), " %08X", ebp[j]);
-                  hb_strncat( errmsg, buf, errmsglen );
+                  hb_strncat(errmsg, buf, errmsglen);
                }
-               hb_strncat( errmsg, "\n", errmsglen );
+               hb_strncat(errmsg, "\n", errmsglen);
                eip = ebp[1];
                ebp = reinterpret_cast<unsigned int*>(ebp[0]);
             }
-            hb_strncat( errmsg, "\n", errmsglen );
+            hb_strncat(errmsg, "\n", errmsglen);
          }
       }
    }
@@ -317,7 +317,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
                /* Retrieve information about the first module, and exit if unsuccessful */
                if( pModule32First( hModuleSnap, &me32 ) )
                {
-                  hb_strncat( errmsg, "\nModules:\n", errmsglen );
+                  hb_strncat(errmsg, "\nModules:\n", errmsglen);
 
                   /* Now walk the module list of the process, and display information about each module */
                   do
@@ -331,7 +331,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
                      hb_strncpy(szBuffer, me32.szExePath, HB_SIZEOFARRAY( szBuffer ) - 1);
                      hb_snprintf(buf, sizeof(buf), "%08lX %08lX %s\n", reinterpret_cast<HB_PTRUINT>(me32.modBaseAddr), static_cast<HB_PTRUINT>(me32.modBaseSize), szBuffer);
 #endif
-                     hb_strncat( errmsg, buf, errmsglen );
+                     hb_strncat(errmsg, buf, errmsglen);
                   }
                   while( pModule32Next( hModuleSnap, &me32 ) );
                }

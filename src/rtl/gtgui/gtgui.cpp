@@ -98,12 +98,12 @@ static int hb_gt_gui_optionId( const char * pszOption )
    {
       HB_SIZE nSize;
 
-      while( HB_ISSPACE( *pszOption ) )
+      while( HB_ISSPACE(*pszOption) )
       {
          pszOption++;
       }
       nSize = strlen(pszOption);
-      while( nSize > 0 && HB_ISSPACE( pszOption[nSize - 1] ) )
+      while( nSize > 0 && HB_ISSPACE(pszOption[nSize - 1]) )
       {
          nSize--;
       }
@@ -232,10 +232,10 @@ static int hb_gt_gui_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, in
    }
    else
    {
-      iRet = HB_GTSUPER_ALERT( pGT, pMessage, pOptions, iClrNorm, iClrHigh, dDelay );
+      iRet = HB_GTSUPER_ALERT(pGT, pMessage, pOptions, iClrNorm, iClrHigh, dDelay);
    }
 
-   hb_strfree( hText );
+   hb_strfree(hText);
 
    return iRet;
 }
@@ -269,11 +269,11 @@ static void hb_gt_gui_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 #endif
 
 #if defined( HB_OS_WIN )
-   hb_gt_BaseUnlock( pGT );
+   hb_gt_BaseUnlock(pGT);
    hb_gt_winapi_tone( dFrequency, dDuration );
-   hb_gt_BaseLock( pGT );
+   hb_gt_BaseLock(pGT);
 #else
-   HB_GTSUPER_TONE( pGT, dFrequency, dDuration );
+   HB_GTSUPER_TONE(pGT, dFrequency, dDuration);
 #endif
 }
 
@@ -320,7 +320,7 @@ static HB_BOOL hb_gt_gui_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 #endif
       default:
-         return HB_GTSUPER_INFO( pGT, iType, pInfo );
+         return HB_GTSUPER_INFO(pGT, iType, pInfo);
    }
 
    return HB_TRUE;

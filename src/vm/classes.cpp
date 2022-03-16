@@ -1202,7 +1202,7 @@ void hb_clsDoInit( void )
       {
          PHB_ITEM pReturn = hb_stackReturnItem();
          hb_itemSetNil(pReturn);
-         hb_vmPushDynSym( pFuncSym );
+         hb_vmPushDynSym(pFuncSym);
          hb_vmPushNil();
          hb_vmProc(0);
          if( HB_IS_OBJECT(pReturn) )
@@ -2534,7 +2534,7 @@ static void hb_objSuperDestructorCall( PHB_ITEM pObject, PCLASS pClass )
          {
             if( pcClasses[pDestructor->uiSprClass] == 1 )
             {
-               hb_vmPushSymbol( &s___msgDestructor );
+               hb_vmPushSymbol(&s___msgDestructor);
                hb_clsMakeSuperObject( hb_stackAllocItem(), pObject, uiClass );
                hb_vmSend(0);
                if( hb_vmRequestQuery() != 0 )
@@ -2567,7 +2567,7 @@ static void hb_objSuperDestructorCall( PHB_ITEM pObject, PCLASS pClass )
             PMETHOD pDestructor = hb_clsFindMsg( s_pClasses[uiParentCls], s___msgDestructor.pDynSym );
             if( pDestructor && pDestructor->uiSprClass == uiParentCls )
             {
-               hb_vmPushSymbol( &s___msgDestructor );
+               hb_vmPushSymbol(&s___msgDestructor);
                hb_clsMakeSuperObject( hb_stackAllocItem(), pObject, uiParentCls );
                hb_vmSend(0);
                if( hb_vmRequestQuery() != 0 )
@@ -2592,8 +2592,8 @@ void hb_objDestructorCall( PHB_ITEM pObject )
       {
          if( hb_vmRequestReenter() )
          {
-            hb_vmPushSymbol( &s___msgDestructor );
-            hb_vmPush( pObject );
+            hb_vmPushSymbol(&s___msgDestructor);
+            hb_vmPush(pObject);
             hb_vmSend(0);
             if( hb_vmRequestQuery() == 0 )
             {
@@ -2636,15 +2636,15 @@ HB_BOOL hb_objOperatorCall( HB_USHORT uiOperator, PHB_ITEM pResult, PHB_ITEM pOb
    if( hb_objHasOperator( pObject, uiOperator ) )
    {
       HB_STACK_TLS_PRELOAD
-      hb_vmPushSymbol( s_opSymbols + uiOperator );
-      hb_vmPush( pObject );
+      hb_vmPushSymbol(s_opSymbols + uiOperator);
+      hb_vmPush(pObject);
       hb_itemSetNil(hb_stackReturnItem());
       if( pMsgArg1 )
       {
-         hb_vmPush( pMsgArg1 );
+         hb_vmPush(pMsgArg1);
          if( pMsgArg2 )
          {
-            hb_vmPush( pMsgArg2 );
+            hb_vmPush(pMsgArg2);
             hb_vmSend(2);
          }
          else
@@ -2699,8 +2699,8 @@ PHB_ITEM hb_objSendMessage( PHB_ITEM pObject, PHB_DYNS pMsgSym, HB_ULONG ulArg, 
 {
    if( pObject && pMsgSym )
    {
-      hb_vmPushSymbol( pMsgSym->pSymbol );
-      hb_vmPush( pObject );
+      hb_vmPushSymbol(pMsgSym->pSymbol);
+      hb_vmPush(pObject);
 
       if( ulArg )
       {
@@ -2709,11 +2709,11 @@ PHB_ITEM hb_objSendMessage( PHB_ITEM pObject, PHB_DYNS pMsgSym, HB_ULONG ulArg, 
          va_start( ap, ulArg );
          for( HB_ULONG i = 0; i < ulArg; i++ )
          {
-            hb_vmPush( va_arg( ap, PHB_ITEM ) );
+            hb_vmPush(va_arg( ap, PHB_ITEM ));
          }
          va_end( ap );
       }
-      hb_vmSend( static_cast<HB_USHORT>(ulArg) );
+      hb_vmSend(static_cast<HB_USHORT>(ulArg));
    }
    else
    {
@@ -2728,8 +2728,8 @@ PHB_ITEM hb_objSendMessage( PHB_ITEM pObject, PHB_DYNS pMsgSym, HB_ULONG ulArg, 
 
 PHB_ITEM hb_objSendMsg( PHB_ITEM pObject, const char * szMsg, HB_ULONG ulArg, ... )
 {
-   hb_vmPushSymbol( hb_dynsymGet(szMsg )->pSymbol);
-   hb_vmPush( pObject );
+   hb_vmPushSymbol(hb_dynsymGet(szMsg )->pSymbol);
+   hb_vmPush(pObject);
    if( ulArg )
    {
       va_list ap;
@@ -2737,11 +2737,11 @@ PHB_ITEM hb_objSendMsg( PHB_ITEM pObject, const char * szMsg, HB_ULONG ulArg, ..
       va_start( ap, ulArg );
       for( HB_ULONG i = 0; i < ulArg; i++ )
       {
-         hb_vmPush( va_arg( ap, PHB_ITEM ) );
+         hb_vmPush(va_arg( ap, PHB_ITEM ));
       }
       va_end( ap );
    }
-   hb_vmSend( static_cast<HB_USHORT>(ulArg) );
+   hb_vmSend(static_cast<HB_USHORT>(ulArg));
 
    {
       HB_STACK_TLS_PRELOAD
@@ -2912,8 +2912,8 @@ void hb_dbg_objSendMessage( int iProcLevel, PHB_ITEM pObject, PHB_ITEM pMessage,
          }
       }
 
-      hb_vmPushSymbol( pMsgSym->pSymbol );
-      hb_vmPush( pObject );
+      hb_vmPushSymbol(pMsgSym->pSymbol);
+      hb_vmPush(pObject);
 
       if( iParamOffset > 0 )
       {
@@ -2921,12 +2921,12 @@ void hb_dbg_objSendMessage( int iProcLevel, PHB_ITEM pObject, PHB_ITEM pMessage,
 
          while( iParamOffset <= iPCount )
          {
-            hb_vmPush( hb_stackItemFromBase(iParamOffset) );
+            hb_vmPush(hb_stackItemFromBase(iParamOffset));
             ++uiParams;
             ++iParamOffset;
          }
       }
-      hb_vmSend( uiParams );
+      hb_vmSend(uiParams);
    }
    else
    {
@@ -4287,15 +4287,15 @@ HB_FUNC( __OBJSENDMSG )
       HB_STACK_TLS_PRELOAD
       HB_USHORT uiPCount = hb_pcount();
 
-      hb_vmPushSymbol( pMessage->pSymbol );     /* Push message symbol */
-      hb_vmPush( hb_param(1, HB_IT_ANY) );    /* Push object */
+      hb_vmPushSymbol(pMessage->pSymbol);     /* Push message symbol */
+      hb_vmPush(hb_param(1, HB_IT_ANY));    /* Push object */
 
       for( HB_USHORT uiParam = 3; uiParam <= uiPCount; ++uiParam )    /* Push arguments on stack */
       {
-         hb_vmPush( hb_stackItemFromBase(uiParam) );
+         hb_vmPush(hb_stackItemFromBase(uiParam));
       }
 
-      hb_vmSend( static_cast<HB_USHORT>(uiPCount - 2) );             /* Execute message */
+      hb_vmSend(static_cast<HB_USHORT>(uiPCount - 2));             /* Execute message */
    }
    else
    {
@@ -4356,7 +4356,7 @@ HB_FUNC( __CLSINSTSUPER )
       uiClassH = hb_clsFindClassByFunc( pClassFuncSym );
       if( uiClassH == 0 )
       {
-         hb_vmPushSymbol( pClassFuncSym );
+         hb_vmPushSymbol(pClassFuncSym);
          hb_vmPushNil();
          hb_vmProc(0); /* Execute super class */
 
@@ -4378,8 +4378,8 @@ HB_FUNC( __CLSINSTSUPER )
                   /* still not found, try to send NEW() message */
                   if( uiClassH == 0 )
                   {
-                     hb_vmPushSymbol( &s___msgNew );
-                     hb_vmPush( pObject );
+                     hb_vmPushSymbol(&s___msgNew);
+                     hb_vmPush(pObject);
                      hb_vmSend(0);
 
                      pObject = hb_stackReturnItem();
@@ -4970,16 +4970,16 @@ HB_FUNC_STATIC( msgEvalInline )
 
    hb_vmPushEvalSym();
 
-   hb_vmPush( hb_arrayGetItemPtr(s_pClasses[pMethod->uiSprClass]->pInlines, pMethod->uiData) );
+   hb_vmPush(hb_arrayGetItemPtr(s_pClasses[pMethod->uiSprClass]->pInlines, pMethod->uiData));
    pBlock = hb_stackItemFromTop(-1);    /* Push block */
    pBlock->item.asBlock.hclass = pStack->uiClass;
    pBlock->item.asBlock.method = pStack->uiMethod;
 
-   hb_vmPush( hb_stackSelfItem() );       /* Push self as first argument */
+   hb_vmPush(hb_stackSelfItem());       /* Push self as first argument */
 
    for( HB_USHORT uiParam = 1; uiParam <= uiPCount; uiParam++ )
    {
-      hb_vmPush( hb_stackItemFromBase(uiParam) );
+      hb_vmPush(hb_stackItemFromBase(uiParam));
    }
 
    hb_vmEval( static_cast<HB_USHORT>(uiPCount + 1) );
@@ -5012,14 +5012,14 @@ HB_FUNC_STATIC( msgPerform )
 
       if( pSym )
       {
-         hb_vmPushSymbol( pSym );
-         hb_vmPush( hb_stackSelfItem() );
+         hb_vmPushSymbol(pSym);
+         hb_vmPush(hb_stackSelfItem());
 
          for( HB_USHORT uiParam = 2; uiParam <= uiPCount; uiParam++ )
          {
-            hb_vmPush( hb_stackItemFromBase(uiParam) );
+            hb_vmPush(hb_stackItemFromBase(uiParam));
          }
-         hb_vmSend( static_cast<HB_USHORT>(uiPCount - 1) );
+         hb_vmSend(static_cast<HB_USHORT>(uiPCount - 1));
       }
    }
 }

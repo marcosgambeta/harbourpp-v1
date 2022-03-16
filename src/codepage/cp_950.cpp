@@ -160,7 +160,7 @@ static void hb_cp_init( PHB_CODEPAGE cdp )
       {
          if( i != s_ucs16_to_cp950( wc ) )
          {
-            printf( "irreversible translation: (CP950)%04X -> U+%04X -> (CP950)%04X\r\n", i, wc, s_ucs16_to_cp950( wc ) );
+            printf("irreversible translation: (CP950)%04X -> U+%04X -> (CP950)%04X\r\n", i, wc, s_ucs16_to_cp950(wc));
             fflush(stdout);
          }
       }

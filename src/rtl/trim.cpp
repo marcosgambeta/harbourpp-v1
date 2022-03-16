@@ -56,7 +56,7 @@ const char * hb_strLTrim( const char * szText, HB_SIZE * nLen )
    HB_TRACE( HB_TR_DEBUG, ( "hb_strLTrim(%s, %p)", szText, static_cast<void*>(nLen) ) );
 #endif
 
-   while( *nLen && HB_ISSPACE( *szText ) )
+   while( *nLen && HB_ISSPACE(*szText) )
    {
       szText++;
       ( *nLen )--;
@@ -74,7 +74,7 @@ HB_SIZE hb_strRTrimLen( const char * szText, HB_SIZE nLen, HB_BOOL bAnySpace )
 
    if( bAnySpace )
    {
-      while( nLen && HB_ISSPACE( szText[nLen - 1] ) )
+      while( nLen && HB_ISSPACE(szText[nLen - 1]) )
       {
          nLen--;
       }

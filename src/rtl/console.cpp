@@ -159,8 +159,8 @@ void hb_conInit( void )
 
    if( hb_cmdargCheck( "INFO" ) )
    {
-      hb_conOutErr( hb_gtVersion(1), 0 );
-      hb_conOutErr( hb_conNewLine(), 0 );
+      hb_conOutErr(hb_gtVersion(1), 0);
+      hb_conOutErr(hb_conNewLine(), 0);
    }
 }
 
@@ -354,12 +354,12 @@ HB_FUNC( OUTERR ) /* writes a list of values to the standard error device */
 
       if( iParam > 1 )
       {
-         hb_conOutErr( " ", 1 );
+         hb_conOutErr(" ", 1);
       }
       pszString = hb_itemString(hb_param(iParam, HB_IT_ANY), &nLen, &fFree);
       if( nLen )
       {
-         hb_conOutErr( pszString, nLen );
+         hb_conOutErr(pszString, nLen);
       }
       if( fFree )
       {

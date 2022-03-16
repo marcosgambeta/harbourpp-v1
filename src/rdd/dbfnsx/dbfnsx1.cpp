@@ -1261,9 +1261,9 @@ static void hb_nsxPageCheckKeys( LPPAGEINFO pPage, LPTAGINFO pTag, int iPos, int
 
          if( i > 0 )
          {
-            printf( "\r\nuiKeys=%d(%d/%d), (%d)[%.*s]<%ld>>(%d)[%.*s]<%ld>", pPage->uiKeys, iPos, iType,
-                    u - 1, pTag->KeyLength, pKeyPrev, ulPrevRec, u, pTag->KeyLength, pKeyVal, ulRecNo );
-            fflush( stdout );
+            printf("\r\nuiKeys=%d(%d/%d), (%d)[%.*s]<%ld>>(%d)[%.*s]<%ld>", pPage->uiKeys, iPos, iType,
+                    u - 1, pTag->KeyLength, pKeyPrev, ulPrevRec, u, pTag->KeyLength, pKeyVal, ulRecNo);
+            fflush(stdout);
             hb_errInternal( 9999, "hb_nsxPageCheckKeys: keys sorted wrong.", nullptr, nullptr );
          }
       }
@@ -1280,18 +1280,18 @@ static void hb_nsxPageCheckKeys( LPPAGEINFO pPage, LPTAGINFO pTag, int iPos, int
          }
          if( i > 0 )
          {
-            printf( "\r\nuiKeys=%d(%d/%d), (%d)[%.*s]>(%d)[%.*s]", pPage->uiKeys, iPos, iType,
-                    u - 1, pTag->KeyLength, hb_nsxGetKeyVal( pPage, pTag->KeyLength, u - 1 ),
-                    u, pTag->KeyLength, hb_nsxGetKeyVal( pPage, pTag->KeyLength, u ) );
-            fflush( stdout );
+            printf("\r\nuiKeys=%d(%d/%d), (%d)[%.*s]>(%d)[%.*s]", pPage->uiKeys, iPos, iType,
+                    u - 1, pTag->KeyLength, hb_nsxGetKeyVal(pPage, pTag->KeyLength, u - 1),
+                    u, pTag->KeyLength, hb_nsxGetKeyVal(pPage, pTag->KeyLength, u));
+            fflush(stdout);
             hb_errInternal( 9999, "hb_nsxPageCheckKeys: keys sorted wrong.", nullptr, nullptr );
          }
       }
    }
    if( hb_nsxIsLeaf( pPage ) && pPage->uiOffset != uiOffset )
    {
-      printf( "\r\npPage->uiOffset=%d, uiOffset=%d\r\n", pPage->uiOffset, uiOffset );
-      fflush( stdout );
+      printf("\r\npPage->uiOffset=%d, uiOffset=%d\r\n", pPage->uiOffset, uiOffset);
+      fflush(stdout);
       hb_errInternal( 9999, "hb_nsxPageCheckKeys: wrong free offset in leaf page.", nullptr, nullptr );
    }
 }
@@ -6207,8 +6207,9 @@ static void hb_nsxSortOut( LPNSXSORTINFO pSort )
          }
          if( i > 0 )
          {
-            printf( "\r\nulKey=%ld, pKeyVal=[%s][%ld], pKeyLast=[%s][%ld]\r\n",
-                    ulKey, pKeyVal, ulRec, pSort->pLastKey, pSort->ulLastRec ); fflush( stdout );
+            printf("\r\nulKey=%ld, pKeyVal=[%s][%ld], pKeyLast=[%s][%ld]\r\n",
+                    ulKey, pKeyVal, ulRec, pSort->pLastKey, pSort->ulLastRec);
+            fflush(stdout);
             if( hb_vmRequestQuery() != 0 )
             {
                return;

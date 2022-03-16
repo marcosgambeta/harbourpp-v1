@@ -301,7 +301,7 @@ static PHB_ITEM hb_i18n_pluralexp_compile( PHB_ITEM pExp )
       szType = hb_macroGetType( pMacro );
       if( *szType == 'B' )
       {
-         hb_vmPush( pMacro );
+         hb_vmPush(pMacro);
          hb_macroGetValue( hb_stackItemFromTop(-1), 0, 0 );
          if( hb_vmRequestQuery() == 0 )
          {

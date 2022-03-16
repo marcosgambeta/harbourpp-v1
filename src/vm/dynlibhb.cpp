@@ -115,7 +115,7 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
 
             hDynLib = static_cast<void*>(LoadLibrary( HB_ITEMGETSTR( pLibName, &hFileName, nullptr ) ));
 
-            hb_strfree( hFileName );
+            hb_strfree(hFileName);
          }
 #elif defined( HB_HAS_DLFCN )
          hDynLib = static_cast<void*>(dlopen( hb_itemGetCPtr(pLibName), RTLD_LAZY | RTLD_GLOBAL ));

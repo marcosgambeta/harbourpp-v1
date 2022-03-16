@@ -1288,14 +1288,14 @@ void hb_xexit( void ) /* Deinitialize fixed memory subsystem */
 
       if( s_nMemoryBlocks )
       {
-         hLog = hb_fopen( s_szFileName[0] ? s_szFileName : "hb_out.log", "a+" );
+         hLog = hb_fopen(s_szFileName[0] ? s_szFileName : "hb_out.log", "a+");
       }
 
-      hb_conOutErr( hb_conNewLine(), 0 );
-      hb_conOutErr( "----------------------------------------", 0 );
-      hb_conOutErr( hb_conNewLine(), 0 );
+      hb_conOutErr(hb_conNewLine(), 0);
+      hb_conOutErr("----------------------------------------", 0);
+      hb_conOutErr(hb_conNewLine(), 0);
       hb_snprintf(buffer, sizeof(buffer), HB_I_( "Total memory allocated: %" HB_PFS "i bytes (%" HB_PFS "i block(s))" ), s_nMemoryMaxConsumed, s_nMemoryMaxBlocks);
-      hb_conOutErr( buffer, 0 );
+      hb_conOutErr(buffer, 0);
 
       if( s_nMemoryBlocks )
       {
@@ -1307,31 +1307,31 @@ void hb_xexit( void ) /* Deinitialize fixed memory subsystem */
             hb_dateToday( &iYear, &iMonth, &iDay );
             hb_dateTimeStr( szTime );
 
-            fprintf( hLog, HB_I_( "Application Memory Allocation Report - %s\n" ), hb_cmdargARGVN(0) );
-            fprintf( hLog, HB_I_( "Terminated at: %04d-%02d-%02d %s\n" ), iYear, iMonth, iDay, szTime );
+            fprintf(hLog, HB_I_("Application Memory Allocation Report - %s\n"), hb_cmdargARGVN(0));
+            fprintf(hLog, HB_I_("Terminated at: %04d-%02d-%02d %s\n"), iYear, iMonth, iDay, szTime);
             if( s_szInfo[0] )
             {
-               fprintf( hLog, HB_I_( "Info: %s\n" ), s_szInfo );
+               fprintf(hLog, HB_I_("Info: %s\n"), s_szInfo);
             }
-            fprintf( hLog, "%s\n", buffer );
+            fprintf(hLog, "%s\n", buffer);
          }
 
-         hb_conOutErr( hb_conNewLine(), 0 );
+         hb_conOutErr(hb_conNewLine(), 0);
          hb_snprintf(buffer, sizeof(buffer), HB_I_( "Warning, memory allocated but not released: %" HB_PFS "i bytes (%" HB_PFS "i block(s))" ), s_nMemoryConsumed, s_nMemoryBlocks);
-         hb_conOutErr( buffer, 0 );
+         hb_conOutErr(buffer, 0);
 
          if( hLog )
          {
-            fprintf( hLog, "%s\n", buffer );
+            fprintf(hLog, "%s\n", buffer);
          }
       }
       else
       {
-         hb_conOutErr( hb_conNewLine(), 0 );
-         hb_conOutErr( HB_I_( "Memory allocated but not released: none" ), 0 );
+         hb_conOutErr(hb_conNewLine(), 0);
+         hb_conOutErr(HB_I_( "Memory allocated but not released: none" ), 0);
       }
 
-      hb_conOutErr( hb_conNewLine(), 0 );
+      hb_conOutErr(hb_conNewLine(), 0);
 
       for( ui = 1, pMemBlock = s_pFirstBlock; pMemBlock; pMemBlock = pMemBlock->pNextBlock, ++ui )
       {
@@ -1342,18 +1342,18 @@ void hb_xexit( void ) /* Deinitialize fixed memory subsystem */
 
          if( hLog )
          {
-            fprintf( hLog, HB_I_( "Block %i %p (size %" HB_PFS "u) %s(%i), \"%s\"\n" ), ui,
-                     static_cast<char*>(HB_MEM_PTR(pMemBlock)),
-                     pMemBlock->nSize, pMemBlock->szProcName, pMemBlock->uiProcLine,
-                     hb_mem2str( membuffer, static_cast<char*>(HB_MEM_PTR(pMemBlock)),
-                                 HB_MIN(pMemBlock->nSize, HB_MAX_MEM2STR_BLOCK) ) );
+            fprintf(hLog, HB_I_("Block %i %p (size %" HB_PFS "u) %s(%i), \"%s\"\n"), ui,
+                    static_cast<char*>(HB_MEM_PTR(pMemBlock)),
+                    pMemBlock->nSize, pMemBlock->szProcName, pMemBlock->uiProcLine,
+                    hb_mem2str(membuffer, static_cast<char*>(HB_MEM_PTR(pMemBlock)),
+                                 HB_MIN(pMemBlock->nSize, HB_MAX_MEM2STR_BLOCK)));
          }
       }
 
       if( hLog )
       {
-         fprintf( hLog, "------------------------------------------------------------------------\n" );
-         fclose( hLog );
+         fprintf(hLog, "------------------------------------------------------------------------\n");
+         fclose(hLog);
       }
    }
 

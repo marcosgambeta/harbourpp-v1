@@ -350,7 +350,7 @@ static PHB_ITEM hb_u64ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
             case HB_DYN_ENC_ASCII:
                if( nLen == -1 )
                {
-                  hb_itemPutStr( pItem, hb_setGetOSCP(), reinterpret_cast<const char*>(value.t.n64) );
+                  hb_itemPutStr(pItem, hb_setGetOSCP(), reinterpret_cast<const char*>(value.t.n64));
                }
                else
                {
@@ -761,7 +761,7 @@ static PHB_ITEM hb_u32ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
             case HB_DYN_ENC_ASCII:
                if( nLen == -1 )
                {
-                  hb_itemPutStr( pItem, hb_setGetOSCP(), reinterpret_cast<const char*>(value.t.n32) );
+                  hb_itemPutStr(pItem, hb_setGetOSCP(), reinterpret_cast<const char*>(value.t.n32));
                }
                else
                {
@@ -1039,7 +1039,7 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
             }
             else
             {
-               hb_strfree( pArg[tmp].hString );
+               hb_strfree(pArg[tmp].hString);
             }
          }
 
@@ -1204,7 +1204,7 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
             }
             else
             {
-               hb_strfree( pArg[tmp].hString );
+               hb_strfree(pArg[tmp].hString);
             }
          }
 

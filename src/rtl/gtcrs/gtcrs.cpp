@@ -326,8 +326,8 @@ static void sig_handler( int signo )
          break;
    }
 
-   printf( "\nreceived signal: %d -> %s\n", signo, pszSig );
-   fflush( stdout );
+   printf("\nreceived signal: %d -> %s\n", signo, pszSig);
+   fflush(stdout);
 
    errno = e;
 }
@@ -371,7 +371,7 @@ static HB_BOOL write_ttyseq( InOutBase * ioBase, const char * seq )
    {
       size_t seqlen = strlen(seq);
       success = ( fwrite( seq, seqlen, 1, ioBase->baseout ) == seqlen );
-      fflush( ioBase->baseout );
+      fflush(ioBase->baseout);
    }
    else
    {
@@ -633,7 +633,7 @@ static void set_tmevt( unsigned char * cMBuf, mouseEvent * mEvt )
    }
    chk_mevtdblck( mEvt );
    #if 0
-   printf( "\n\rmouse event: %02x, %02x, %02x\n\r", cMBuf[0], cMBuf[1], cMBuf[2] );
+   printf("\n\rmouse event: %02x, %02x, %02x\n\r", cMBuf[0], cMBuf[1], cMBuf[2]);
    #endif
 }
 
@@ -2083,9 +2083,9 @@ static void destroy_ioBase( InOutBase * ioBase )
    if( ioBase->basescr != nullptr )
       delscreen( ioBase->basescr );
    if( ioBase->basein != nullptr && ioBase->basein != stdin )
-      fclose( ioBase->basein );
+      fclose(ioBase->basein);
    if( ioBase->baseout != nullptr && ioBase->baseout != stdout )
-      fclose( ioBase->baseout );
+      fclose(ioBase->baseout);
 
    /* free allocated memory */
    if( ioBase->charmap != nullptr )
@@ -2378,10 +2378,10 @@ static void hb_gt_crs_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
       if( ioBase )
       {
          add_new_ioBase( ioBase );
-         HB_GTSUPER_INIT( pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr );
-         HB_GTSELF_RESIZE( pGT, s_ioBase->maxrow, s_ioBase->maxcol );
-         HB_GTSELF_SETFLAG( pGT, HB_GTI_COMPATBUFFER, HB_FALSE );
-         HB_GTSELF_SETBLINK( pGT, HB_TRUE );
+         HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
+         HB_GTSELF_RESIZE(pGT, s_ioBase->maxrow, s_ioBase->maxcol);
+         HB_GTSELF_SETFLAG(pGT, HB_GTI_COMPATBUFFER, HB_FALSE);
+         HB_GTSELF_SETBLINK(pGT, HB_TRUE);
       }
    }
 
@@ -2397,7 +2397,7 @@ static void hb_gt_crs_Exit( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_Exit(%p)", static_cast<void*>(pGT) ) );
 #endif
 
-   HB_GTSUPER_EXIT( pGT );
+   HB_GTSUPER_EXIT(pGT);
 
    del_all_ioBase();
 }
@@ -2425,7 +2425,7 @@ static HB_BOOL hb_gt_crs_SetMode( PHB_GT pGT, int iRows, int iCols )
 
    if( gt_setsize( s_ioBase, iRows, iCols ) == 0 )
    {
-      HB_GTSELF_RESIZE( pGT, iRows, iCols );
+      HB_GTSELF_RESIZE(pGT, iRows, iCols);
       return HB_TRUE;
    }
 
@@ -2445,7 +2445,7 @@ static void hb_gt_crs_SetBlink( PHB_GT pGT, HB_BOOL fBlink )
    else
       s_ioBase->attr_mask &= ~A_BLINK;
 
-   HB_GTSUPER_SETBLINK( pGT, fBlink );
+   HB_GTSUPER_SETBLINK(pGT, fBlink);
 }
 
 /* *********************************************************************** */
@@ -2460,7 +2460,7 @@ static void hb_gt_crs_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 
    if( s_ioBase->terminal_type == TERM_LINUX )
       /* convert Clipper (DOS) timer tick units to seconds ( x / 18.2 ) */
-      hb_gtSleep( pGT, dDuration / 18.2 );
+      hb_gtSleep(pGT, dDuration / 18.2);
 }
 
 /* *********************************************************************** */
@@ -2490,12 +2490,12 @@ static void hb_gt_crs_OutStd( PHB_GT pGT, const char * szStr, HB_SIZE nLen )
    if( s_ioBase )
    {
       if( s_ioBase->stdoutfd == -1 )
-         HB_GTSELF_WRITECON( pGT, szStr, nLen );
+         HB_GTSELF_WRITECON(pGT, szStr, nLen);
       else
          gt_outstd( s_ioBase, szStr, nLen );
    }
    else
-      HB_GTSUPER_OUTSTD( pGT, szStr, nLen );
+      HB_GTSUPER_OUTSTD(pGT, szStr, nLen);
 }
 
 /* *********************************************************************** */
@@ -2508,12 +2508,12 @@ static void hb_gt_crs_OutErr( PHB_GT pGT, const char * szStr, HB_SIZE nLen )
    if( s_ioBase )
    {
       if( s_ioBase->stderrfd == -1 )
-         HB_GTSELF_WRITECON( pGT, szStr, nLen );
+         HB_GTSELF_WRITECON(pGT, szStr, nLen);
       else
          gt_outerr( s_ioBase, szStr, nLen );
    }
    else
-      HB_GTSUPER_OUTERR( pGT, szStr, nLen );
+      HB_GTSUPER_OUTERR(pGT, szStr, nLen);
 }
 
 /* *********************************************************************** */
@@ -2715,7 +2715,7 @@ static void hb_gt_crs_mouse_SetDoubleClickSpeed( PHB_GT pGT, int iSpeed )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_mouse_SetDoubleClickSpeed(%p,%d)", static_cast<void*>(pGT), iSpeed ) );
 #endif
 
-   HB_GTSUPER_MOUSESETDOUBLECLICKSPEED( pGT, iSpeed );
+   HB_GTSUPER_MOUSESETDOUBLECLICKSPEED(pGT, iSpeed);
    s_ioBase->mLastEvt.click_delay = iSpeed;
 }
 
@@ -2736,7 +2736,7 @@ static int hb_gt_crs_ReadKey( PHB_GT pGT, int iEventMask )
    if( iKey == K_RESIZE )
    {
       gt_resize( s_ioBase );
-      HB_GTSELF_RESIZE( pGT, s_ioBase->maxrow, s_ioBase->maxcol );
+      HB_GTSELF_RESIZE(pGT, s_ioBase->maxrow, s_ioBase->maxcol);
       iKey = HB_K_RESIZE;
    }
 
@@ -2751,10 +2751,10 @@ static HB_BOOL hb_gt_crs_SetDispCP( PHB_GT pGT, const char * pszTermCDP, const c
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_SetDispCP(%p,%s,%s,%d)", static_cast<void*>(pGT), pszTermCDP, pszHostCDP, static_cast<int>(fBox) ) );
 #endif
 
-   if( HB_GTSUPER_SETDISPCP( pGT, pszTermCDP, pszHostCDP, fBox ) )
+   if( HB_GTSUPER_SETDISPCP(pGT, pszTermCDP, pszHostCDP, fBox) )
    {
-      setDispTrans( s_ioBase, HB_GTSELF_HOSTCP( pGT ),
-                              HB_GTSELF_TERMCP( pGT ), fBox ? 1 : 0 );
+      setDispTrans( s_ioBase, HB_GTSELF_HOSTCP(pGT),
+                              HB_GTSELF_TERMCP(pGT), fBox ? 1 : 0 );
       return HB_TRUE;
    }
    return HB_FALSE;
@@ -2768,9 +2768,9 @@ static HB_BOOL hb_gt_crs_SetKeyCP( PHB_GT pGT, const char * pszTermCDP, const ch
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_SetKeyCP(%p,%s,%s)", static_cast<void*>(pGT), pszTermCDP, pszHostCDP ) );
 #endif
 
-   if( HB_GTSUPER_SETKEYCP( pGT, pszTermCDP, pszHostCDP ) )
+   if( HB_GTSUPER_SETKEYCP(pGT, pszTermCDP, pszHostCDP) )
    {
-      setKeyTrans( s_ioBase, HB_GTSELF_INCP( pGT ), HB_GTSELF_HOSTCP( pGT ) );
+      setKeyTrans( s_ioBase, HB_GTSELF_INCP(pGT), HB_GTSELF_HOSTCP(pGT) );
       return HB_TRUE;
    }
    return HB_FALSE;
@@ -2800,7 +2800,7 @@ static HB_BOOL hb_gt_crs_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             break;
 
          default:
-            return HB_GTSUPER_INFO( pGT, iType, pInfo );
+            return HB_GTSUPER_INFO(pGT, iType, pInfo);
       }
    }
 
@@ -2826,7 +2826,7 @@ static void hb_gt_crs_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
       wmove( s_ioBase->hb_stdscr, iRow, iCol );
       while( iSize-- > 0 )
       {
-         if( ! HB_GTSELF_GETSCRUC( pGT, iRow, iCol++, &iColor, &bAttr, &uc, HB_FALSE ) )
+         if( ! HB_GTSELF_GETSCRUC(pGT, iRow, iCol++, &iColor, &bAttr, &uc, HB_FALSE) )
             break;
          ch = ( s_ioBase->attr_map[iColor] & s_ioBase->attr_mask ) |
               ( ( bAttr & HB_GT_ATTR_BOX ) ? s_ioBase->box_chmap[uc] :
@@ -2844,12 +2844,12 @@ static void hb_gt_crs_Refresh( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_Refresh(%p)", static_cast<void*>(pGT) ) );
 #endif
 
-   HB_GTSUPER_REFRESH( pGT );
+   HB_GTSUPER_REFRESH(pGT);
    if( s_ioBase )
    {
       int iRow, iCol, iShape;
 
-      HB_GTSELF_GETSCRCURSOR( pGT, &iRow, &iCol, &iShape );
+      HB_GTSELF_GETSCRCURSOR(pGT, &iRow, &iCol, &iShape);
       s_ioBase->row = iRow;
       s_ioBase->col = iCol;
       set_cursor( s_ioBase, iShape );

@@ -208,18 +208,19 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
 #if 0
 static void hb_itemSerialRefListShow( PHB_REF_LIST pRefList )
 {
-   printf( "\n================================\n" );
-   printf( "pRefList->nSize=%ld, pRefList->nCount=%ld\n", pRefList->nSize, pRefList->nCount );
+   printf("\n================================\n");
+   printf("pRefList->nSize=%ld, pRefList->nCount=%ld\n", pRefList->nSize, pRefList->nCount);
 
    for( HB_SIZE nPos = 0; nPos < pRefList->nCount; ++nPos )
    {
-      printf( "\t%ld] value=0x%p, nOffset=%ld, iRefs=%d, iType=%d\n", nPos,
-              pRefList->pRefs[nPos].value,
-              pRefList->pRefs[nPos].nOffset,
-              pRefList->pRefs[nPos].iRefs,
-              pRefList->pRefs[nPos].iType );
+      printf("\t%ld] value=0x%p, nOffset=%ld, iRefs=%d, iType=%d\n", nPos,
+             pRefList->pRefs[nPos].value,
+             pRefList->pRefs[nPos].nOffset,
+             pRefList->pRefs[nPos].iRefs,
+             pRefList->pRefs[nPos].iType);
    }
-   printf( "================================\n" ); fflush( stdout );
+   printf("================================\n");
+   fflush(stdout);
 }
 #endif
 
@@ -1822,10 +1823,10 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
          if( uiClass && hb_vmRequestReenter() )
          {
             hb_clsAssociate( uiClass );
-            hb_vmPushDynSym( hb_dynsymGetCase("LOADFROMTEXT") );
-            hb_vmPush( hb_stackReturnItem() );
-            hb_vmPush( pItem );
-            hb_vmPushLogical( HB_TRUE );
+            hb_vmPushDynSym(hb_dynsymGetCase("LOADFROMTEXT"));
+            hb_vmPush(hb_stackReturnItem());
+            hb_vmPush(pItem);
+            hb_vmPushLogical(HB_TRUE);
             hb_itemMove(pItem, hb_stackReturnItem());
             hb_vmSend(2);
             hb_vmRequestRestore();

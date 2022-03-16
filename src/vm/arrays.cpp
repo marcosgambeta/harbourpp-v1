@@ -1327,9 +1327,9 @@ HB_SIZE hb_arrayScan( PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE * pnStart, HB_SI
                do
                {
                   hb_vmPushEvalSym();
-                  hb_vmPush( pValue );
-                  hb_vmPush( pBaseArray->pItems + nStart );
-                  hb_vmPushSize( ++nStart );
+                  hb_vmPush(pValue);
+                  hb_vmPush(pBaseArray->pItems + nStart);
+                  hb_vmPushSize(++nStart);
                   hb_vmEval(2);
 
                   if( HB_IS_LOGICAL(hb_stackReturnItem()) && hb_stackReturnItem()->item.asLogical.value )
@@ -1529,16 +1529,16 @@ HB_SIZE hb_arrayRevScan( PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE * pnStart, HB
                do
                {
                   hb_vmPushEvalSym();
-                  hb_vmPush( pValue );
+                  hb_vmPush(pValue);
                   if( nStart < pBaseArray->nLen )
                   {
-                     hb_vmPush( pBaseArray->pItems + nStart );
+                     hb_vmPush(pBaseArray->pItems + nStart);
                   }
                   else
                   {
                      hb_vmPushNil();
                   }
-                  hb_vmPushSize( nStart + 1 );
+                  hb_vmPushSize(nStart + 1);
                   hb_vmEval(2);
 
                   if( HB_IS_LOGICAL(hb_stackReturnItem()) && hb_stackReturnItem()->item.asLogical.value )
@@ -1732,9 +1732,9 @@ HB_BOOL hb_arrayEval( PHB_ITEM pArray, PHB_ITEM bBlock, HB_SIZE * pnStart, HB_SI
             do
             {
                hb_vmPushEvalSym();
-               hb_vmPush( bBlock );
-               hb_vmPush( pBaseArray->pItems + nStart );
-               hb_vmPushSize( nStart + 1 );
+               hb_vmPush(bBlock);
+               hb_vmPush(pBaseArray->pItems + nStart);
+               hb_vmPushSize(nStart + 1);
                hb_vmEval(2);
             }
             while( --nCount > 0 && ++nStart < pBaseArray->nLen );

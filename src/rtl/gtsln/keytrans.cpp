@@ -416,7 +416,7 @@ static void hb_sln_SortKeyTranslationTable( void )
 #if 0
    for( i = 0; i < KeyTranslationTableSize; i++ )
    {
-      fprintf( stderr, "%02x %8x %8x\n", i, KeyTranslationTable[i][0], KeyTranslationTable[i][1] );
+      fprintf(stderr, "%02x %8x %8x\n", i, KeyTranslationTable[i][0], KeyTranslationTable[i][1]);
    }
 #endif
 }
@@ -435,7 +435,7 @@ static int hb_sln_FindKeyTranslation( int SlangKey )
          int CurPos = ( Start + Stop ) / 2;
 
          #if 0
-         fprintf( stderr, "%d %d %d\n", i, KeyTranslationTable[i][0], KeyTranslationTable[i][1] );
+         fprintf(stderr, "%d %d %d\n", i, KeyTranslationTable[i][0], KeyTranslationTable[i][1]);
          #endif
 
          if( SlangKey == KeyTranslationTable[CurPos][0] )

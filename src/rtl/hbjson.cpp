@@ -243,7 +243,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
          nPos++;
       }
       _hb_jsonCtxAdd( pCtx, "\"", 1 );
-      hb_strfree( hString );
+      hb_strfree(hString);
    }
    else if( HB_IS_NUMINT(pValue) )
    {
@@ -504,7 +504,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
                         return nullptr;
                      }
                   }
-                  szHead += hb_cdpU16ToStr( cdp ? cdp : hb_vmCDP(), HB_CDP_ENDIAN_NATIVE, &wc, 1, szHead, szDest + nAlloc - szHead );
+                  szHead += hb_cdpU16ToStr(cdp ? cdp : hb_vmCDP(), HB_CDP_ENDIAN_NATIVE, &wc, 1, szHead, szDest + nAlloc - szHead);
                   break;
                }
                default:

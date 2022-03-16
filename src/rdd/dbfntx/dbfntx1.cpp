@@ -1025,10 +1025,10 @@ static void hb_ntxPageCheckKeys( LPPAGEINFO pPage, LPTAGINFO pTag, int iPos, int
       }
       if( i > 0 )
       {
-         printf( "\r\nuiKeys=%d(%d/%d), (%d)[%.*s]>(%d)[%.*s]", pPage->uiKeys, iPos, iType,
-                 u - 1, pTag->KeyLength, hb_ntxGetKeyVal( pPage, u - 1 ),
-                 u, pTag->KeyLength, hb_ntxGetKeyVal( pPage, u ) );
-         fflush( stdout );
+         printf("\r\nuiKeys=%d(%d/%d), (%d)[%.*s]>(%d)[%.*s]", pPage->uiKeys, iPos, iType,
+                 u - 1, pTag->KeyLength, hb_ntxGetKeyVal(pPage, u - 1),
+                 u, pTag->KeyLength, hb_ntxGetKeyVal(pPage, u));
+         fflush(stdout);
          hb_errInternal( 9304, "hb_ntxPageCheckKeys: keys sorted wrong.", nullptr, nullptr );
       }
    }
@@ -5773,7 +5773,8 @@ static void hb_ntxSortOut( LPNTXSORTINFO pSort )
       pSort->pSwapPage[0].pKeyPool = pSort->pStartKey;
    }
    #if 0
-   printf( "pSort->ulPages=%ld, pSort->ulPgKeys=%ld", pSort->ulPages, pSort->ulPgKeys ); fflush( stdout );
+   printf("pSort->ulPages=%ld, pSort->ulPgKeys=%ld", pSort->ulPages, pSort->ulPgKeys);
+   fflush(stdout);
    #endif
 
    hb_ntxSortOrderPages( pSort );
@@ -5820,8 +5821,9 @@ static void hb_ntxSortOut( LPNTXSORTINFO pSort )
          }
          if( i > 0 )
          {
-            printf( "\r\nulKey=%ld, pKeyVal=[%s][%ld], pKeyLast=[%s][%ld]\r\n",
-                    ulKey, pKeyVal, ulRec, pSort->pLastKey, pSort->ulLastRec ); fflush( stdout );
+            printf("\r\nulKey=%ld, pKeyVal=[%s][%ld], pKeyLast=[%s][%ld]\r\n",
+                    ulKey, pKeyVal, ulRec, pSort->pLastKey, pSort->ulLastRec);
+            fflush(stdout);
             if( hb_vmRequestQuery() != 0 )
             {
                return;
@@ -6860,7 +6862,8 @@ static HB_ERRCODE hb_ntxClose( NTXAREAP pArea )
       }
 
 #ifdef HB_NTX_DEBUG_DISP
-      printf( "\r\n#reads=%ld, #writes=%ld\r\n", s_rdNO, s_wrNO ); fflush( stdout );
+      printf("\r\n#reads=%ld, #writes=%ld\r\n", s_rdNO, s_wrNO);
+      fflush(stdout);
 #endif
    }
 

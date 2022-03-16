@@ -1099,7 +1099,7 @@ HB_FHANDLE hb_fsPOpen( const char * pszFileName, const char * pszMode )
 
                   if( setuid( getuid() ) == -1 ) {}
                   if( setgid( getgid() ) == -1 ) {}
-                  HB_FAILURE_RETRY( iResult, execv( "/bin/sh", static_cast<char**>(HB_UNCONST( argv )) ) );
+                  HB_FAILURE_RETRY( iResult, execv( "/bin/sh", static_cast<char**>(HB_UNCONST(argv)) ) );
                }
                _exit( pid > 0 ? EXIT_SUCCESS : EXIT_FAILURE );
             }
@@ -4438,7 +4438,7 @@ const char * hb_fsNameConv( const char * pszFileName, char ** pszFree )
          if( pszFree == nullptr && pszFileName != pszPrev )
          {
             hb_strncpy(const_cast<char*>(pszPrev), pszFileName, HB_PATH_MAX - 1);
-            hb_xfree(HB_UNCONST( pszFileName ));
+            hb_xfree(HB_UNCONST(pszFileName));
             pszFileName = pszPrev;
          }
       }

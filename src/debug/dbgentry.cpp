@@ -461,14 +461,14 @@ static void hb_dbgActivate( HB_DEBUGINFO * info )
       aModules = hb_dbgActivateModuleArray();
       aBreak = hb_dbgActivateBreakArray( info );
 
-      hb_vmPushDynSym( info->pDbgEntry );
+      hb_vmPushDynSym(info->pDbgEntry);
       hb_vmPushNil();
-      hb_vmPushLong( HB_DBG_ACTIVATE );
-      hb_vmPushPointer( info );
-      hb_vmPushLong( info->nProcLevel );
-      hb_vmPush( aCallStack );
-      hb_vmPush( aModules );
-      hb_vmPush( aBreak );
+      hb_vmPushLong(HB_DBG_ACTIVATE);
+      hb_vmPushPointer(info);
+      hb_vmPushLong(info->nProcLevel);
+      hb_vmPush(aCallStack);
+      hb_vmPush(aModules);
+      hb_vmPush(aBreak);
 
       hb_itemRelease(aCallStack);
       hb_itemRelease(aModules);
@@ -1251,7 +1251,7 @@ static PHB_ITEM hb_dbgEvalMacro( const char * szExpr, PHB_ITEM pItem )
       return nullptr;
    }
 
-   hb_vmPushString( szExpr, strlen(szExpr) );
+   hb_vmPushString(szExpr, strlen(szExpr));
    hb_macroGetValue( hb_stackItemFromTop(-1), 0, HB_SM_RT_MACRO );
    hb_itemMove(pItem, hb_stackItemFromTop(-1));
    hb_stackPop();
@@ -1457,8 +1457,8 @@ static PHB_ITEM hb_dbgEvalMakeBlock( HB_WATCHPOINT * watch )
 
    szBlock = static_cast<char*>(hb_xgrab(buffsize + 1));
    hb_strncpy(szBlock, "{|__dbg|", buffsize);
-   hb_strncat( szBlock, watch->szExpr, buffsize );
-   hb_strncat( szBlock, "}", buffsize );
+   hb_strncat(szBlock, watch->szExpr, buffsize);
+   hb_strncat(szBlock, "}", buffsize);
    pBlock = hb_itemNew(nullptr);
 
    if( ! hb_dbgEvalMacro( szBlock, pBlock ) )

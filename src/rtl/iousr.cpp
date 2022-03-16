@@ -161,7 +161,7 @@ static PHB_IOUSR s_iousrAddNew( const char * pszPrefix )
 
 static void s_pushMethod( PHB_IOUSR pIO, int iMethod )
 {
-   hb_vmPushSymbol( pIO->prg_funcs[iMethod - 1] );
+   hb_vmPushSymbol(pIO->prg_funcs[iMethod - 1]);
    hb_vmPushNil();
 }
 
@@ -175,7 +175,7 @@ static HB_BOOL s_fileAccept( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
       if( s_hasMethod( pIO, IOUSR_ACCEPT ) )
       {
          s_pushMethod( pIO, IOUSR_ACCEPT );
-         hb_vmPushString( pszFileName, strlen(pszFileName) );
+         hb_vmPushString(pszFileName, strlen(pszFileName));
          hb_vmDo(1);
          fResult = hb_parl(-1);
       }
@@ -195,7 +195,7 @@ static HB_BOOL s_fileExists( PHB_FILE_FUNCS pFuncs, const char * pszFileName, ch
    HB_SYMBOL_UNUSED(pRetPath);
 
    s_pushMethod( pIO, IOUSR_EXISTS );
-   hb_vmPushString( pszFileName, strlen(pszFileName) );
+   hb_vmPushString(pszFileName, strlen(pszFileName));
    hb_vmDo(1);
 
    return hb_parl(-1);
@@ -206,7 +206,7 @@ static HB_BOOL s_fileDelete( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
    s_pushMethod( pIO, IOUSR_DELETE );
-   hb_vmPushString( pszFileName, strlen(pszFileName) );
+   hb_vmPushString(pszFileName, strlen(pszFileName));
    hb_vmDo(1);
 
    return hb_parl(-1);
@@ -217,8 +217,8 @@ static HB_BOOL s_fileRename( PHB_FILE_FUNCS pFuncs, const char * pszName, const 
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
    s_pushMethod( pIO, IOUSR_RENAME );
-   hb_vmPushString( pszName, strlen(pszName) );
-   hb_vmPushString( pszNewName, strlen(pszNewName) );
+   hb_vmPushString(pszName, strlen(pszName));
+   hb_vmPushString(pszNewName, strlen(pszNewName));
    hb_vmDo(2);
 
    return hb_parl(-1);
@@ -229,8 +229,8 @@ static HB_BOOL s_fileCopy( PHB_FILE_FUNCS pFuncs, const char * pszSrcFile, const
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
    s_pushMethod( pIO, IOUSR_COPY );
-   hb_vmPushString( pszSrcFile, strlen(pszSrcFile) );
-   hb_vmPushString( pszDstFile, strlen(pszDstFile) );
+   hb_vmPushString(pszSrcFile, strlen(pszSrcFile));
+   hb_vmPushString(pszDstFile, strlen(pszDstFile));
    hb_vmDo(2);
 
    return hb_parl(-1);
@@ -241,7 +241,7 @@ static HB_BOOL s_fileDirExists( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
    s_pushMethod( pIO, IOUSR_DIREXISTS );
-   hb_vmPushString( pszDirName, strlen(pszDirName) );
+   hb_vmPushString(pszDirName, strlen(pszDirName));
    hb_vmDo(1);
 
    return hb_parl(-1);
@@ -252,7 +252,7 @@ static HB_BOOL s_fileDirMake( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
    s_pushMethod( pIO, IOUSR_DIRMAKE );
-   hb_vmPushString( pszDirName, strlen(pszDirName) );
+   hb_vmPushString(pszDirName, strlen(pszDirName));
    hb_vmDo(1);
 
    return hb_parl(-1);
@@ -263,7 +263,7 @@ static HB_BOOL s_fileDirRemove( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
    s_pushMethod( pIO, IOUSR_DIRREMOVE );
-   hb_vmPushString( pszDirName, strlen(pszDirName) );
+   hb_vmPushString(pszDirName, strlen(pszDirName));
    hb_vmDo(1);
 
    return hb_parl(-1);
@@ -274,8 +274,8 @@ static double s_fileDirSpace( PHB_FILE_FUNCS pFuncs, const char * pszDirName, HB
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
    s_pushMethod( pIO, IOUSR_DIRSPACE );
-   hb_vmPushString( pszDirName, strlen(pszDirName) );
-   hb_vmPushInteger( uiType );
+   hb_vmPushString(pszDirName, strlen(pszDirName));
+   hb_vmPushInteger(uiType);
    hb_vmDo(2);
 
    return hb_parnd(-1);
@@ -286,8 +286,8 @@ static PHB_ITEM s_fileDirectory( PHB_FILE_FUNCS pFuncs, const char * pszDirSpec,
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
    s_pushMethod( pIO, IOUSR_DIRECTORY );
-   hb_vmPushString( pszDirSpec, strlen(pszDirSpec) );
-   hb_vmPushString( pszAttr, strlen(pszAttr) );
+   hb_vmPushString(pszDirSpec, strlen(pszDirSpec));
+   hb_vmPushString(pszAttr, strlen(pszAttr));
    hb_vmDo(2);
 
    return hb_itemNew(hb_stackReturnItem());
@@ -304,7 +304,7 @@ static HB_BOOL s_fileTimeGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, l
    hb_vmPushNil();
 
    s_pushMethod( pIO, IOUSR_TIMEGET );
-   hb_vmPushString( pszFileName, strlen(pszFileName) );
+   hb_vmPushString(pszFileName, strlen(pszFileName));
    hb_xvmPushLocalByRef( static_cast<HB_SHORT>(iOffset) );
    hb_xvmPushLocalByRef( static_cast<HB_SHORT>(iOffset + 1) );
    hb_vmDo(3);
@@ -326,9 +326,9 @@ static HB_BOOL s_fileTimeSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, l
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
    s_pushMethod( pIO, IOUSR_TIMESET );
-   hb_vmPushString( pszFileName, strlen(pszFileName) );
-   hb_vmPushLong( lJulian );
-   hb_vmPushLong( lMillisec );
+   hb_vmPushString(pszFileName, strlen(pszFileName));
+   hb_vmPushLong(lJulian);
+   hb_vmPushLong(lMillisec);
    hb_vmDo(3);
 
    return hb_parl(-1);
@@ -344,7 +344,7 @@ static HB_BOOL s_fileAttrGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, H
    hb_vmPushNil();
 
    s_pushMethod( pIO, IOUSR_ATTRGET );
-   hb_vmPushString( pszFileName, strlen(pszFileName) );
+   hb_vmPushString(pszFileName, strlen(pszFileName));
    hb_xvmPushLocalByRef( static_cast<HB_SHORT>(iOffset) );
    hb_vmDo(2);
 
@@ -363,8 +363,8 @@ static HB_BOOL s_fileAttrSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, H
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
    s_pushMethod( pIO, IOUSR_ATTRSET );
-   hb_vmPushString( pszFileName, strlen(pszFileName) );
-   hb_vmPushLong( nAttr );
+   hb_vmPushString(pszFileName, strlen(pszFileName));
+   hb_vmPushLong(nAttr);
    hb_vmDo(2);
 
    return hb_parl(-1);
@@ -375,8 +375,8 @@ static HB_BOOL s_fileLink( PHB_FILE_FUNCS pFuncs, const char * pszExisting, cons
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
    s_pushMethod( pIO, IOUSR_LINK );
-   hb_vmPushString( pszExisting, strlen(pszExisting) );
-   hb_vmPushString( pszNewName, strlen(pszNewName) );
+   hb_vmPushString(pszExisting, strlen(pszExisting));
+   hb_vmPushString(pszNewName, strlen(pszNewName));
    hb_vmDo(2);
 
    return hb_parl(-1);
@@ -387,8 +387,8 @@ static HB_BOOL s_fileLinkSym( PHB_FILE_FUNCS pFuncs, const char * pszTarget, con
    PHB_IOUSR pIO = s_getUsrIO( pFuncs );
 
    s_pushMethod( pIO, IOUSR_LINKSYM );
-   hb_vmPushString( pszTarget, strlen(pszTarget) );
-   hb_vmPushString( pszNewName, strlen(pszNewName) );
+   hb_vmPushString(pszTarget, strlen(pszTarget));
+   hb_vmPushString(pszNewName, strlen(pszNewName));
    hb_vmDo(2);
 
    return hb_parl(-1);
@@ -400,7 +400,7 @@ static char * s_fileLinkRead( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
    const char * pszLink;
 
    s_pushMethod( pIO, IOUSR_LINKREAD );
-   hb_vmPushString( pszFileName, strlen(pszFileName) );
+   hb_vmPushString(pszFileName, strlen(pszFileName));
    hb_vmDo(1);
 
    pszLink = hb_parc(-1);
@@ -414,19 +414,19 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName, const c
    PHB_ITEM pFileItm;
 
    s_pushMethod( pIO, IOUSR_OPEN );
-   hb_vmPushString( pszName, strlen(pszName) );
+   hb_vmPushString(pszName, strlen(pszName));
    if( pszDefExt )
    {
-      hb_vmPushString( pszDefExt, strlen(pszDefExt) );
+      hb_vmPushString(pszDefExt, strlen(pszDefExt));
    }
    else
    {
       hb_vmPushNil();
    }
-   hb_vmPushInteger( nExFlags );
+   hb_vmPushInteger(nExFlags);
    if( pPaths )
    {
-      hb_vmPushString( pPaths, strlen(pPaths) );
+      hb_vmPushString(pPaths, strlen(pPaths));
    }
    else
    {
@@ -434,7 +434,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName, const c
    }
    if( pError )
    {
-      hb_vmPush( pError );
+      hb_vmPush(pError);
    }
    else
    {
@@ -457,7 +457,7 @@ static void s_fileClose( PHB_FILE pFile )
    PHB_IOUSR pIO = s_getUsrIO( pFile->pFuncs );
 
    s_pushMethod( pIO, IOUSR_CLOSE );
-   hb_vmPush( pFile->pFileItm );
+   hb_vmPush(pFile->pFileItm);
    hb_vmDo(1);
 }
 
@@ -466,10 +466,10 @@ static HB_BOOL s_fileLock( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, i
    PHB_IOUSR pIO = s_getUsrIO( pFile->pFuncs );
 
    s_pushMethod( pIO, IOUSR_LOCK );
-   hb_vmPush( pFile->pFileItm );
-   hb_vmPushNumInt( static_cast<HB_MAXINT>(nStart) );
-   hb_vmPushNumInt( static_cast<HB_MAXINT>(nLen) );
-   hb_vmPushInteger( iType );
+   hb_vmPush(pFile->pFileItm);
+   hb_vmPushNumInt(static_cast<HB_MAXINT>(nStart));
+   hb_vmPushNumInt(static_cast<HB_MAXINT>(nLen));
+   hb_vmPushInteger(iType);
    hb_vmDo(4);
 
    return hb_parl(-1);
@@ -480,10 +480,10 @@ static int s_fileLockTest( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, i
    PHB_IOUSR pIO = s_getUsrIO( pFile->pFuncs );
 
    s_pushMethod( pIO, IOUSR_LOCKTEST );
-   hb_vmPush( pFile->pFileItm );
-   hb_vmPushNumInt( static_cast<HB_MAXINT>(nStart) );
-   hb_vmPushNumInt( static_cast<HB_MAXINT>(nLen) );
-   hb_vmPushInteger( iType );
+   hb_vmPush(pFile->pFileItm);
+   hb_vmPushNumInt(static_cast<HB_MAXINT>(nStart));
+   hb_vmPushNumInt(static_cast<HB_MAXINT>(nLen));
+   hb_vmPushInteger(iType);
    hb_vmDo(4);
 
    return hb_parni(-1);
@@ -497,13 +497,13 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * data, HB_SIZE nSize, HB_MAXINT
 
    iOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
    memset(data, 0, nSize);
-   hb_vmPushString( static_cast<const char*>(data), nSize );
+   hb_vmPushString(static_cast<const char*>(data), nSize);
 
    s_pushMethod( pIO, IOUSR_READ );
-   hb_vmPush( pFile->pFileItm );
+   hb_vmPush(pFile->pFileItm);
    hb_xvmPushLocalByRef( static_cast<HB_SHORT>(iOffset) );
-   hb_vmPushSize( nSize );
-   hb_vmPushNumInt( timeout );
+   hb_vmPushSize(nSize);
+   hb_vmPushNumInt(timeout);
    hb_vmDo(4);
 
    nResult = hb_parns(-1);
@@ -526,10 +526,10 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * data, HB_SIZE nSize, HB
    PHB_IOUSR pIO = s_getUsrIO( pFile->pFuncs );
 
    s_pushMethod( pIO, IOUSR_WRITE );
-   hb_vmPush( pFile->pFileItm );
-   hb_vmPushString( static_cast<const char*>(data), nSize );
-   hb_vmPushSize( nSize );
-   hb_vmPushNumInt( timeout );
+   hb_vmPush(pFile->pFileItm);
+   hb_vmPushString(static_cast<const char*>(data), nSize);
+   hb_vmPushSize(nSize);
+   hb_vmPushNumInt(timeout);
    hb_vmDo(4);
 
    return hb_parns(-1);
@@ -543,13 +543,13 @@ static HB_SIZE s_fileReadAt( PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_FO
 
    iOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
    memset(buffer, 0, nSize);
-   hb_vmPushString( static_cast<const char*>(buffer), nSize );
+   hb_vmPushString(static_cast<const char*>(buffer), nSize);
 
    s_pushMethod( pIO, IOUSR_READAT );
-   hb_vmPush( pFile->pFileItm );
+   hb_vmPush(pFile->pFileItm);
    hb_xvmPushLocalByRef( static_cast<HB_SHORT>(iOffset) );
-   hb_vmPushSize( nSize );
-   hb_vmPushNumInt( static_cast<HB_MAXINT>(nOffset) );
+   hb_vmPushSize(nSize);
+   hb_vmPushNumInt(static_cast<HB_MAXINT>(nOffset));
    hb_vmDo(4);
 
    nResult = hb_parns(-1);
@@ -572,10 +572,10 @@ static HB_SIZE s_fileWriteAt( PHB_FILE pFile, const void * buffer, HB_SIZE nSize
    PHB_IOUSR pIO = s_getUsrIO( pFile->pFuncs );
 
    s_pushMethod( pIO, IOUSR_WRITEAT );
-   hb_vmPush( pFile->pFileItm );
-   hb_vmPushString( static_cast<const char*>(buffer), nSize );
-   hb_vmPushSize( nSize );
-   hb_vmPushNumInt( static_cast<HB_MAXINT>(nOffset) );
+   hb_vmPush(pFile->pFileItm);
+   hb_vmPushString(static_cast<const char*>(buffer), nSize);
+   hb_vmPushSize(nSize);
+   hb_vmPushNumInt(static_cast<HB_MAXINT>(nOffset));
    hb_vmDo(4);
 
    return hb_parns(-1);
@@ -586,8 +586,8 @@ static HB_BOOL s_fileTruncAt( PHB_FILE pFile, HB_FOFFSET nOffset )
    PHB_IOUSR pIO = s_getUsrIO( pFile->pFuncs );
 
    s_pushMethod( pIO, IOUSR_TRUNCAT );
-   hb_vmPush( pFile->pFileItm );
-   hb_vmPushNumInt( static_cast<HB_MAXINT>(nOffset) );
+   hb_vmPush(pFile->pFileItm);
+   hb_vmPushNumInt(static_cast<HB_MAXINT>(nOffset));
    hb_vmDo(2);
 
    return hb_parl(-1);
@@ -598,9 +598,9 @@ static HB_FOFFSET s_fileSeek( PHB_FILE pFile, HB_FOFFSET nOffset, HB_USHORT uiFl
    PHB_IOUSR pIO = s_getUsrIO( pFile->pFuncs );
 
    s_pushMethod( pIO, IOUSR_SEEK );
-   hb_vmPush( pFile->pFileItm );
-   hb_vmPushNumInt( static_cast<HB_MAXINT>(nOffset) );
-   hb_vmPushInteger( uiFlags );
+   hb_vmPush(pFile->pFileItm);
+   hb_vmPushNumInt(static_cast<HB_MAXINT>(nOffset));
+   hb_vmPushInteger(uiFlags);
    hb_vmDo(3);
 
    return static_cast<HB_FOFFSET>(hb_parnint(-1));
@@ -611,7 +611,7 @@ static HB_FOFFSET s_fileSize( PHB_FILE pFile )
    PHB_IOUSR pIO = s_getUsrIO( pFile->pFuncs );
 
    s_pushMethod( pIO, IOUSR_SIZE );
-   hb_vmPush( pFile->pFileItm );
+   hb_vmPush(pFile->pFileItm);
    hb_vmDo(1);
 
    return static_cast<HB_FOFFSET>(hb_parnint(-1));
@@ -622,7 +622,7 @@ static HB_BOOL s_fileEof( PHB_FILE pFile )
    PHB_IOUSR pIO = s_getUsrIO( pFile->pFuncs );
 
    s_pushMethod( pIO, IOUSR_EOF );
-   hb_vmPush( pFile->pFileItm );
+   hb_vmPush(pFile->pFileItm);
    hb_vmDo(1);
 
    return hb_parl(-1);
@@ -633,8 +633,8 @@ static void s_fileFlush( PHB_FILE pFile, HB_BOOL fDirty )
    PHB_IOUSR pIO = s_getUsrIO( pFile->pFuncs );
 
    s_pushMethod( pIO, IOUSR_FLUSH );
-   hb_vmPush( pFile->pFileItm );
-   hb_vmPushLogical( fDirty );
+   hb_vmPush(pFile->pFileItm);
+   hb_vmPushLogical(fDirty);
    hb_vmDo(2);
 }
 
@@ -643,7 +643,7 @@ static void s_fileCommit( PHB_FILE pFile )
    PHB_IOUSR pIO = s_getUsrIO( pFile->pFuncs );
 
    s_pushMethod( pIO, IOUSR_COMMIT );
-   hb_vmPush( pFile->pFileItm );
+   hb_vmPush(pFile->pFileItm);
    hb_vmDo(1);
 }
 
@@ -652,11 +652,11 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
    PHB_IOUSR pIO = s_getUsrIO( pFile->pFuncs );
 
    s_pushMethod( pIO, IOUSR_CONFIGURE );
-   hb_vmPush( pFile->pFileItm );
-   hb_vmPushInteger( iIndex );
+   hb_vmPush(pFile->pFileItm);
+   hb_vmPushInteger(iIndex);
    if( pValue != nullptr )
    {
-      hb_vmPush( pValue );
+      hb_vmPush(pValue);
    }
    hb_vmDo( pValue != nullptr ? 3 : 2 );
 
@@ -668,7 +668,7 @@ static HB_FHANDLE s_fileHandle( PHB_FILE pFile )
    PHB_IOUSR pIO = s_getUsrIO( pFile->pFuncs );
 
    s_pushMethod( pIO, IOUSR_HANDLE );
-   hb_vmPush( pFile->pFileItm );
+   hb_vmPush(pFile->pFileItm);
    hb_vmDo(1);
 
    return static_cast<HB_FHANDLE>(hb_parns(-1));

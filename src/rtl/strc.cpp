@@ -102,7 +102,7 @@ HB_FUNC( HB_STRCDECODE )
          {
             if( ! fCont )
             {
-               while( nLen && HB_ISSPACE( *pszSrc ) )
+               while( nLen && HB_ISSPACE(*pszSrc) )
                {
                   ++pszSrc;
                   --nLen;

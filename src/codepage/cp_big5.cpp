@@ -160,7 +160,7 @@ static void hb_cp_init( PHB_CODEPAGE cdp )
       {
          if( i != s_ucs16_to_big5( wc ) )
          {
-            printf( "irreversible translation: (BIG5)%04X -> U+%04X -> (BIG5)%04X\r\n", i, wc, s_ucs16_to_big5( wc ) );
+            printf("irreversible translation: (BIG5)%04X -> U+%04X -> (BIG5)%04X\r\n", i, wc, s_ucs16_to_big5(wc));
             fflush(stdout);
          }
       }

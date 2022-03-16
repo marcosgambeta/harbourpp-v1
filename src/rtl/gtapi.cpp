@@ -76,11 +76,11 @@ HB_ERRCODE hb_gtInit( HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHAN
       return HB_FAILURE;
    }
 
-   HB_GTSELF_INIT( pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr );
-   HB_GTSELF_SETCOLORSTR( pGT, hb_setGetColor() );
-   HB_GTSELF_SETCURSORSTYLE( pGT, SC_NORMAL );
-   HB_GTSELF_FLUSH( pGT );
-   hb_gt_BaseFree( pGT );
+   HB_GTSELF_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
+   HB_GTSELF_SETCOLORSTR(pGT, hb_setGetColor());
+   HB_GTSELF_SETCURSORSTYLE(pGT, SC_NORMAL);
+   HB_GTSELF_FLUSH(pGT);
+   hb_gt_BaseFree(pGT);
 
    return HB_SUCCESS;
 }
@@ -111,11 +111,11 @@ HB_ERRCODE hb_gtLock( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      if( HB_GTSELF_LOCK( pGT ) )
+      if( HB_GTSELF_LOCK(pGT) )
       {
          errCode = HB_SUCCESS;
       }
-      hb_gt_BaseFree( pGT );
+      hb_gt_BaseFree(pGT);
    }
    return errCode;
 }
@@ -132,9 +132,9 @@ HB_ERRCODE hb_gtUnlock( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_UNLOCK( pGT );
+      HB_GTSELF_UNLOCK(pGT);
       errCode = HB_SUCCESS;
-      hb_gt_BaseFree( pGT );
+      hb_gt_BaseFree(pGT);
    }
    return errCode;
 }
@@ -151,8 +151,8 @@ int hb_gtReadKey( int iEventMask )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      iKey = HB_GTSELF_READKEY( pGT, iEventMask );
-      hb_gt_BaseFree( pGT );
+      iKey = HB_GTSELF_READKEY(pGT, iEventMask);
+      hb_gt_BaseFree(pGT);
    }
    return iKey;
 }
@@ -168,10 +168,10 @@ HB_ERRCODE hb_gtBox( int iTop, int iLeft, int iBottom, int iRight, const char * 
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_BOX( pGT, iTop, iLeft, iBottom, iRight, szFrame, HB_GTSELF_GETCOLOR( pGT ) );
-      HB_GTSELF_SETPOS( pGT, iTop + 1, iLeft + 1 );
-      HB_GTSELF_FLUSH( pGT );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_BOX(pGT, iTop, iLeft, iBottom, iRight, szFrame, HB_GTSELF_GETCOLOR(pGT));
+      HB_GTSELF_SETPOS(pGT, iTop + 1, iLeft + 1);
+      HB_GTSELF_FLUSH(pGT);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -190,12 +190,12 @@ HB_ERRCODE hb_gtBoxEx( int iTop, int iLeft, int iBottom, int iRight, const char 
    {
       if( iColor == -1 )
       {
-         iColor = HB_GTSELF_GETCOLOR( pGT );
+         iColor = HB_GTSELF_GETCOLOR(pGT);
       }
-      HB_GTSELF_BOX( pGT, iTop, iLeft, iBottom, iRight, szFrame, iColor );
-      HB_GTSELF_SETPOS( pGT, iTop + 1, iLeft + 1 );
-      HB_GTSELF_FLUSH( pGT );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_BOX(pGT, iTop, iLeft, iBottom, iRight, szFrame, iColor);
+      HB_GTSELF_SETPOS(pGT, iTop + 1, iLeft + 1);
+      HB_GTSELF_FLUSH(pGT);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -212,10 +212,10 @@ HB_ERRCODE hb_gtBoxD( int iTop, int iLeft, int iBottom, int iRight )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_BOXD( pGT, iTop, iLeft, iBottom, iRight, nullptr, HB_GTSELF_GETCOLOR( pGT ) );
-      HB_GTSELF_SETPOS( pGT, iTop + 1, iLeft + 1 );
-      HB_GTSELF_FLUSH( pGT );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_BOXD(pGT, iTop, iLeft, iBottom, iRight, nullptr, HB_GTSELF_GETCOLOR(pGT));
+      HB_GTSELF_SETPOS(pGT, iTop + 1, iLeft + 1);
+      HB_GTSELF_FLUSH(pGT);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -232,10 +232,10 @@ HB_ERRCODE hb_gtBoxS( int iTop, int iLeft, int iBottom, int iRight )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_BOXS( pGT, iTop, iLeft, iBottom, iRight, nullptr, HB_GTSELF_GETCOLOR( pGT ) );
-      HB_GTSELF_SETPOS( pGT, iTop + 1, iLeft + 1 );
-      HB_GTSELF_FLUSH( pGT );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_BOXS(pGT, iTop, iLeft, iBottom, iRight, nullptr, HB_GTSELF_GETCOLOR(pGT));
+      HB_GTSELF_SETPOS(pGT, iTop + 1, iLeft + 1);
+      HB_GTSELF_FLUSH(pGT);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -254,12 +254,12 @@ HB_ERRCODE hb_gtDrawBox( int iTop, int iLeft, int iBottom, int iRight, const cha
    {
       if( iColor == -1 )
       {
-         iColor = HB_GTSELF_GETCOLOR( pGT );
+         iColor = HB_GTSELF_GETCOLOR(pGT);
       }
 
-      HB_GTSELF_BOX( pGT, iTop, iLeft, iBottom, iRight, szFrame, iColor );
-      HB_GTSELF_FLUSH( pGT );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_BOX(pGT, iTop, iLeft, iBottom, iRight, szFrame, iColor);
+      HB_GTSELF_FLUSH(pGT);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -276,8 +276,8 @@ HB_ERRCODE hb_gtColorSelect( int iColorIndex )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_COLORSELECT( pGT, iColorIndex );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_COLORSELECT(pGT, iColorIndex);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -294,8 +294,8 @@ HB_ERRCODE hb_gtDispBegin( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_DISPBEGIN( pGT );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_DISPBEGIN(pGT);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -313,8 +313,8 @@ int hb_gtDispCount( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      iCount = HB_GTSELF_DISPCOUNT( pGT );
-      hb_gt_BaseFree( pGT );
+      iCount = HB_GTSELF_DISPCOUNT(pGT);
+      hb_gt_BaseFree(pGT);
    }
    return iCount;
 }
@@ -330,9 +330,9 @@ HB_ERRCODE hb_gtDispEnd( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_DISPEND( pGT );
-      HB_GTSELF_FLUSH( pGT );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_DISPEND(pGT);
+      HB_GTSELF_FLUSH(pGT);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -350,11 +350,11 @@ HB_ERRCODE hb_gtPreExt( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      if( HB_GTSELF_PREEXT( pGT ) )
+      if( HB_GTSELF_PREEXT(pGT) )
       {
          errCode = HB_SUCCESS;
       }
-      hb_gt_BaseFree( pGT );
+      hb_gt_BaseFree(pGT);
    }
    return errCode;
 }
@@ -371,11 +371,11 @@ HB_ERRCODE hb_gtPostExt( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      if( HB_GTSELF_POSTEXT( pGT ) )
+      if( HB_GTSELF_POSTEXT(pGT) )
       {
          errCode = HB_SUCCESS;
       }
-      hb_gt_BaseFree( pGT );
+      hb_gt_BaseFree(pGT);
    }
    return errCode;
 }
@@ -396,8 +396,8 @@ HB_ERRCODE hb_gtGetColorStr( char * pszColorString )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_GETCOLORSTR( pGT, pszColorString );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_GETCOLORSTR(pGT, pszColorString);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    pszColorString[0] = '\0';
@@ -416,8 +416,8 @@ int hb_gtColorToN( const char * szColorString )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      iColor = HB_GTSELF_COLORNUM( pGT, szColorString );
-      hb_gt_BaseFree( pGT );
+      iColor = HB_GTSELF_COLORNUM(pGT, szColorString);
+      hb_gt_BaseFree(pGT);
    }
    return iColor;
 }
@@ -433,8 +433,8 @@ HB_ERRCODE hb_gtColorsToString( int * pColors, int iColorCount, char * pszColorS
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_COLORSTOSTRING( pGT, pColors, iColorCount, pszColorString, iBufSize );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_COLORSTOSTRING(pGT, pColors, iColorCount, pszColorString, iBufSize);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    pszColorString[0] = '\0';
@@ -452,8 +452,8 @@ HB_ERRCODE hb_gtSetColorStr( const char * szColorString )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_SETCOLORSTR( pGT, szColorString );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_SETCOLORSTR(pGT, szColorString);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -470,8 +470,8 @@ HB_ERRCODE hb_gtGetCursor( int * piCursorStyle )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      *piCursorStyle = HB_GTSELF_GETCURSORSTYLE( pGT );
-      hb_gt_BaseFree( pGT );
+      *piCursorStyle = HB_GTSELF_GETCURSORSTYLE(pGT);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    *piCursorStyle = SC_NONE;
@@ -489,9 +489,9 @@ HB_ERRCODE hb_gtSetCursor( int iCursorStyle )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_SETCURSORSTYLE( pGT, iCursorStyle );
-      HB_GTSELF_FLUSH( pGT );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_SETCURSORSTYLE(pGT, iCursorStyle);
+      HB_GTSELF_FLUSH(pGT);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -508,8 +508,8 @@ HB_ERRCODE hb_gtGetPos( int * piRow, int * piCol )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_GETPOS( pGT, piRow, piCol );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_GETPOS(pGT, piRow, piCol);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    *piRow = *piCol = 0;
@@ -527,8 +527,8 @@ HB_ERRCODE hb_gtGetPosEx( int * piRow, int * piCol )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_GETPOS( pGT, piRow, piCol );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_GETPOS(pGT, piRow, piCol);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    *piRow = *piCol = 0;
@@ -549,9 +549,9 @@ HB_ERRCODE hb_gtSetPos( int iRow, int iCol )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_SETPOS( pGT, iRow, iCol );
-      HB_GTSELF_FLUSH( pGT );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_SETPOS(pGT, iRow, iCol);
+      HB_GTSELF_FLUSH(pGT);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -569,8 +569,8 @@ int hb_gtMaxCol( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      iMaxCol = HB_GTSELF_MAXCOL( pGT );
-      hb_gt_BaseFree( pGT );
+      iMaxCol = HB_GTSELF_MAXCOL(pGT);
+      hb_gt_BaseFree(pGT);
    }
    else
    {
@@ -592,8 +592,8 @@ int hb_gtMaxRow( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      iMaxRow = HB_GTSELF_MAXROW( pGT );
-      hb_gt_BaseFree( pGT );
+      iMaxRow = HB_GTSELF_MAXROW(pGT);
+      hb_gt_BaseFree(pGT);
    }
    else
    {
@@ -614,8 +614,8 @@ HB_ERRCODE hb_gtScrDim( int * piHeight, int * piWidth )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_GETSIZE( pGT, piHeight, piWidth );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_GETSIZE(pGT, piHeight, piWidth);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    *piHeight = *piWidth = 0;
@@ -633,8 +633,8 @@ HB_ERRCODE hb_gtSetSnowFlag( HB_BOOL fNoSnow )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_SETSNOWFLAG( pGT, fNoSnow );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_SETSNOWFLAG(pGT, fNoSnow);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -651,8 +651,8 @@ HB_ERRCODE hb_gtRectSize( int iTop, int iLeft, int iBottom, int iRight, HB_SIZE 
    pGT = hb_gt_Base();
    if( pGT )
    {
-      *pulBuffSize = HB_GTSELF_RECTSIZE( pGT, iTop, iLeft, iBottom, iRight );
-      hb_gt_BaseFree( pGT );
+      *pulBuffSize = HB_GTSELF_RECTSIZE(pGT, iTop, iLeft, iBottom, iRight);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    *pulBuffSize = 0;
@@ -671,8 +671,8 @@ HB_BOOL hb_gtIsColor( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      fColor = HB_GTSELF_ISCOLOR( pGT );
-      hb_gt_BaseFree( pGT );
+      fColor = HB_GTSELF_ISCOLOR(pGT);
+      hb_gt_BaseFree(pGT);
    }
    return fColor;
 }
@@ -688,9 +688,9 @@ HB_ERRCODE hb_gtRepChar( int iRow, int iCol, HB_USHORT usChar, HB_SIZE nCount )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_REPLICATE( pGT, iRow, iCol, HB_GTSELF_GETCOLOR( pGT ), 0, usChar, nCount );
-      HB_GTSELF_FLUSH( pGT );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_REPLICATE(pGT, iRow, iCol, HB_GTSELF_GETCOLOR(pGT), 0, usChar, nCount);
+      HB_GTSELF_FLUSH(pGT);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -707,8 +707,8 @@ HB_ERRCODE hb_gtSave( int iTop, int iLeft, int iBottom, int iRight, void * pScrB
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_SAVE( pGT, iTop, iLeft, iBottom, iRight, pScrBuff );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_SAVE(pGT, iTop, iLeft, iBottom, iRight, pScrBuff);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -725,9 +725,9 @@ HB_ERRCODE hb_gtRest( int iTop, int iLeft, int iBottom, int iRight, const void *
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_REST( pGT, iTop, iLeft, iBottom, iRight, pScrBuff );
-      HB_GTSELF_FLUSH( pGT );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_REST(pGT, iTop, iLeft, iBottom, iRight, pScrBuff);
+      HB_GTSELF_FLUSH(pGT);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -745,11 +745,11 @@ HB_ERRCODE hb_gtGetChar( int iRow, int iCol, int * piColor, HB_BYTE * pbAttr, HB
    pGT = hb_gt_Base();
    if( pGT )
    {
-      if( HB_GTSELF_GETCHAR( pGT, iRow, iCol, piColor, pbAttr, pusChar ) )
+      if( HB_GTSELF_GETCHAR(pGT, iRow, iCol, piColor, pbAttr, pusChar) )
       {
          errCode = HB_SUCCESS;
       }
-      hb_gt_BaseFree( pGT );
+      hb_gt_BaseFree(pGT);
    }
    return errCode;
 }
@@ -766,11 +766,11 @@ HB_ERRCODE hb_gtPutChar( int iRow, int iCol, int iColor, HB_BYTE bAttr, HB_USHOR
    pGT = hb_gt_Base();
    if( pGT )
    {
-      if( HB_GTSELF_PUTCHAR( pGT, iRow, iCol, iColor, bAttr, usChar ) )
+      if( HB_GTSELF_PUTCHAR(pGT, iRow, iCol, iColor, bAttr, usChar) )
       {
          errCode = HB_SUCCESS;
       }
-      hb_gt_BaseFree( pGT );
+      hb_gt_BaseFree(pGT);
    }
    return errCode;
 }
@@ -787,11 +787,11 @@ HB_ERRCODE hb_gtBeginWrite( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      if( HB_GTSELF_LOCK( pGT ) )
+      if( HB_GTSELF_LOCK(pGT) )
       {
          errCode = HB_SUCCESS;
       }
-      hb_gt_BaseFree( pGT );
+      hb_gt_BaseFree(pGT);
    }
 
    return errCode;
@@ -808,9 +808,9 @@ HB_ERRCODE hb_gtEndWrite( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_FLUSH( pGT );
-      HB_GTSELF_UNLOCK( pGT );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_FLUSH(pGT);
+      HB_GTSELF_UNLOCK(pGT);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -827,8 +827,8 @@ HB_ERRCODE hb_gtGetBlink( HB_BOOL * bpBlink )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      *bpBlink = HB_GTSELF_GETBLINK( pGT );
-      hb_gt_BaseFree( pGT );
+      *bpBlink = HB_GTSELF_GETBLINK(pGT);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    *bpBlink = 0;
@@ -846,8 +846,8 @@ HB_ERRCODE hb_gtSetBlink( HB_BOOL fBlink )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_SETBLINK( pGT, fBlink );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_SETBLINK(pGT, fBlink);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -865,11 +865,11 @@ HB_ERRCODE hb_gtSetMode( int iRows, int iCols )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      if( HB_GTSELF_SETMODE( pGT, iRows, iCols ) )
+      if( HB_GTSELF_SETMODE(pGT, iRows, iCols) )
       {
          errCode = HB_SUCCESS;
       }
-      hb_gt_BaseFree( pGT );
+      hb_gt_BaseFree(pGT);
    }
    return errCode;
 }
@@ -887,13 +887,13 @@ HB_ERRCODE hb_gtPutText( int iRow, int iCol, const char * szStr, HB_SIZE nLength
    {
       if( iColor == -1 )
       {
-         iColor = HB_GTSELF_GETCOLOR( pGT );
+         iColor = HB_GTSELF_GETCOLOR(pGT);
       }
 
-      HB_GTSELF_PUTTEXT( pGT, iRow, iCol, iColor, szStr, nLength );
-      HB_GTSELF_FLUSH( pGT );
+      HB_GTSELF_PUTTEXT(pGT, iRow, iCol, iColor, szStr, nLength);
+      HB_GTSELF_FLUSH(pGT);
 
-      hb_gt_BaseFree( pGT );
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -910,9 +910,9 @@ HB_ERRCODE hb_gtWriteAt( int iRow, int iCol, const char * szStr, HB_SIZE nLength
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_WRITEAT( pGT, iRow, iCol, szStr, nLength );
-      HB_GTSELF_FLUSH( pGT );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_WRITEAT(pGT, iRow, iCol, szStr, nLength);
+      HB_GTSELF_FLUSH(pGT);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -929,9 +929,9 @@ HB_ERRCODE hb_gtWrite( const char * szStr, HB_SIZE nLength )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_WRITE( pGT, szStr, nLength );
-      HB_GTSELF_FLUSH( pGT );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_WRITE(pGT, szStr, nLength);
+      HB_GTSELF_FLUSH(pGT);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -948,9 +948,9 @@ HB_ERRCODE hb_gtWriteCon( const char * szStr, HB_SIZE nLength )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_WRITECON( pGT, szStr, nLength );
-      HB_GTSELF_FLUSH( pGT );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_WRITECON(pGT, szStr, nLength);
+      HB_GTSELF_FLUSH(pGT);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -967,9 +967,9 @@ HB_ERRCODE hb_gtScroll( int iTop, int iLeft, int iBottom, int iRight, int iRows,
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_SCROLL( pGT, iTop, iLeft, iBottom, iRight, HB_GTSELF_GETCOLOR( pGT ), ' ', iRows, iCols );
-      HB_GTSELF_FLUSH( pGT );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_SCROLL(pGT, iTop, iLeft, iBottom, iRight, HB_GTSELF_GETCOLOR(pGT), ' ', iRows, iCols);
+      HB_GTSELF_FLUSH(pGT);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -988,15 +988,15 @@ HB_ERRCODE hb_gtScrollEx( int iTop, int iLeft, int iBottom, int iRight, int iCol
    {
       if( iColor == -1 )
       {
-         iColor = HB_GTSELF_GETCOLOR( pGT );
+         iColor = HB_GTSELF_GETCOLOR(pGT);
       }
       if( iChar < 0 )
       {
-         iChar = HB_GTSELF_GETCLEARCHAR( pGT );
+         iChar = HB_GTSELF_GETCLEARCHAR(pGT);
       }
-      HB_GTSELF_SCROLL( pGT, iTop, iLeft, iBottom, iRight, iColor, static_cast<HB_USHORT>(iChar), iRows, iCols );
-      HB_GTSELF_FLUSH( pGT );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_SCROLL(pGT, iTop, iLeft, iBottom, iRight, iColor, static_cast<HB_USHORT>(iChar), iRows, iCols);
+      HB_GTSELF_FLUSH(pGT);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
 
@@ -1014,9 +1014,9 @@ HB_ERRCODE hb_gtScrollUp( int iRows )
       PHB_GT pGT = hb_gt_Base();
       if( pGT )
       {
-         HB_GTSELF_SCROLLUP( pGT, iRows, HB_GTSELF_GETCOLOR( pGT ), ' ' );
-         HB_GTSELF_FLUSH( pGT );
-         hb_gt_BaseFree( pGT );
+         HB_GTSELF_SCROLLUP(pGT, iRows, HB_GTSELF_GETCOLOR(pGT), ' ');
+         HB_GTSELF_FLUSH(pGT);
+         hb_gt_BaseFree(pGT);
          return HB_SUCCESS;
       }
    }
@@ -1034,9 +1034,9 @@ HB_ERRCODE hb_gtDrawShadow( int iTop, int iLeft, int iBottom, int iRight, int iC
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_DRAWSHADOW( pGT, iTop, iLeft, iBottom, iRight, iColor );
-      HB_GTSELF_FLUSH( pGT );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_DRAWSHADOW(pGT, iTop, iLeft, iBottom, iRight, iColor);
+      HB_GTSELF_FLUSH(pGT);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -1053,8 +1053,8 @@ HB_ERRCODE hb_gtTone( double dFrequency, double dDuration )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_TONE( pGT, dFrequency, dDuration );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_TONE(pGT, dFrequency, dDuration);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -1072,8 +1072,8 @@ const char * hb_gtVersion( int iType )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      szVersion = HB_GTSELF_VERSION( pGT, iType );
-      hb_gt_BaseFree( pGT );
+      szVersion = HB_GTSELF_VERSION(pGT, iType);
+      hb_gt_BaseFree(pGT);
    }
    return szVersion;
 }
@@ -1089,9 +1089,9 @@ HB_ERRCODE hb_gtSetAttribute( int iTop, int iLeft, int iBottom, int iRight, int 
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_SETATTRIBUTE( pGT, iTop, iLeft, iBottom, iRight, iColor );
-      HB_GTSELF_FLUSH( pGT );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_SETATTRIBUTE(pGT, iTop, iLeft, iBottom, iRight, iColor);
+      HB_GTSELF_FLUSH(pGT);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -1110,11 +1110,11 @@ HB_ERRCODE hb_gtSuspend( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      if( HB_GTSELF_SUSPEND( pGT ) )
+      if( HB_GTSELF_SUSPEND(pGT) )
       {
          errCode = HB_SUCCESS;
       }
-      hb_gt_BaseFree( pGT );
+      hb_gt_BaseFree(pGT);
    }
    return errCode;
 }
@@ -1131,11 +1131,11 @@ HB_ERRCODE hb_gtResume( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      if( HB_GTSELF_RESUME( pGT ) )
+      if( HB_GTSELF_RESUME(pGT) )
       {
          errCode = HB_SUCCESS;
       }
-      hb_gt_BaseFree( pGT );
+      hb_gt_BaseFree(pGT);
    }
    return errCode;
 }
@@ -1151,8 +1151,8 @@ HB_ERRCODE hb_gtOutStd( const char * szStr, HB_SIZE nLen )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_OUTSTD( pGT, szStr, nLen );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_OUTSTD(pGT, szStr, nLen);
+      hb_gt_BaseFree(pGT);
    }
    else
    {
@@ -1173,8 +1173,8 @@ HB_ERRCODE hb_gtOutErr( const char * szStr, HB_SIZE nLen )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_OUTERR( pGT, szStr, nLen );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_OUTERR(pGT, szStr, nLen);
+      hb_gt_BaseFree(pGT);
    }
    else
    {
@@ -1196,11 +1196,11 @@ HB_ERRCODE hb_gtSetDispCP( const char * pszTermCDP, const char * pszHostCDP, HB_
    pGT = hb_gt_Base();
    if( pGT )
    {
-      if( HB_GTSELF_SETDISPCP( pGT, pszTermCDP, pszHostCDP, fBox ) )
+      if( HB_GTSELF_SETDISPCP(pGT, pszTermCDP, pszHostCDP, fBox) )
       {
          errCode = HB_SUCCESS;
       }
-      hb_gt_BaseFree( pGT );
+      hb_gt_BaseFree(pGT);
    }
    return errCode;
 }
@@ -1217,11 +1217,11 @@ HB_ERRCODE hb_gtSetKeyCP( const char * pszTermCDP, const char * pszHostCDP )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      if( HB_GTSELF_SETKEYCP( pGT, pszTermCDP, pszHostCDP ) )
+      if( HB_GTSELF_SETKEYCP(pGT, pszTermCDP, pszHostCDP) )
       {
          errCode = HB_SUCCESS;
       }
-      hb_gt_BaseFree( pGT );
+      hb_gt_BaseFree(pGT);
    }
    return errCode;
 }
@@ -1238,8 +1238,8 @@ PHB_CODEPAGE hb_gtHostCP( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      cdp = HB_GTSELF_HOSTCP( pGT );
-      hb_gt_BaseFree( pGT );
+      cdp = HB_GTSELF_HOSTCP(pGT);
+      hb_gt_BaseFree(pGT);
    }
    return cdp;
 }
@@ -1256,8 +1256,8 @@ PHB_CODEPAGE hb_gtBoxCP( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      cdp = HB_GTSELF_BOXCP( pGT );
-      hb_gt_BaseFree( pGT );
+      cdp = HB_GTSELF_BOXCP(pGT);
+      hb_gt_BaseFree(pGT);
    }
    return cdp;
 }
@@ -1274,11 +1274,11 @@ HB_ERRCODE hb_gtInfo( int iType, PHB_GT_INFO pInfo )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      if( HB_GTSELF_INFO( pGT, iType, pInfo ) )
+      if( HB_GTSELF_INFO(pGT, iType, pInfo) )
       {
          errCode = HB_SUCCESS;
       }
-      hb_gt_BaseFree( pGT );
+      hb_gt_BaseFree(pGT);
    }
    return errCode;
 }
@@ -1295,8 +1295,8 @@ int hb_gtAlert( PHB_ITEM pMessage, PHB_ITEM pOptions, int iClrNorm, int iClrHigh
    pGT = hb_gt_Base();
    if( pGT )
    {
-      iResult = HB_GTSELF_ALERT( pGT, pMessage, pOptions, iClrNorm, iClrHigh, dDelay );
-      hb_gt_BaseFree( pGT );
+      iResult = HB_GTSELF_ALERT(pGT, pMessage, pOptions, iClrNorm, iClrHigh, dDelay);
+      hb_gt_BaseFree(pGT);
    }
    return iResult;
 }
@@ -1313,8 +1313,8 @@ int hb_gtSetFlag( int iType, int iNewValue )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      iFlag = HB_GTSELF_SETFLAG( pGT, iType, iNewValue );
-      hb_gt_BaseFree( pGT );
+      iFlag = HB_GTSELF_SETFLAG(pGT, iType, iNewValue);
+      hb_gt_BaseFree(pGT);
    }
    return iFlag;
 }
@@ -1331,8 +1331,8 @@ int hb_gtGetCurrColor( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      iColor = HB_GTSELF_GETCOLOR( pGT );
-      hb_gt_BaseFree( pGT );
+      iColor = HB_GTSELF_GETCOLOR(pGT);
+      hb_gt_BaseFree(pGT);
    }
    else
    {
@@ -1354,8 +1354,8 @@ int hb_gtGetClearColor( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      iColor = HB_GTSELF_GETCLEARCOLOR( pGT );
-      hb_gt_BaseFree( pGT );
+      iColor = HB_GTSELF_GETCLEARCOLOR(pGT);
+      hb_gt_BaseFree(pGT);
    }
    else
    {
@@ -1376,8 +1376,8 @@ HB_ERRCODE hb_gtSetClearColor( int iColor )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_SETCLEARCOLOR( pGT, iColor );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_SETCLEARCOLOR(pGT, iColor);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -1395,8 +1395,8 @@ HB_USHORT hb_gtGetClearChar( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      usChar = HB_GTSELF_GETCLEARCHAR( pGT );
-      hb_gt_BaseFree( pGT );
+      usChar = HB_GTSELF_GETCLEARCHAR(pGT);
+      hb_gt_BaseFree(pGT);
    }
    else
    {
@@ -1417,8 +1417,8 @@ HB_ERRCODE hb_gtSetClearChar( HB_USHORT usChar )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_SETCLEARCHAR( pGT, usChar );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_SETCLEARCHAR(pGT, usChar);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -1436,11 +1436,11 @@ HB_ERRCODE hb_gtGetScrChar( int iRow, int iCol, int * piColor, HB_BYTE * pbAttr,
    pGT = hb_gt_Base();
    if( pGT )
    {
-      if( HB_GTSELF_GETSCRCHAR( pGT, iRow, iCol, piColor, pbAttr, pusChar ) )
+      if( HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol, piColor, pbAttr, pusChar) )
       {
          errCode = HB_SUCCESS;
       }
-      hb_gt_BaseFree( pGT );
+      hb_gt_BaseFree(pGT);
    }
    return errCode;
 }
@@ -1457,11 +1457,11 @@ HB_ERRCODE hb_gtPutScrChar( int iRow, int iCol, int iColor, HB_BYTE bAttr, HB_US
    pGT = hb_gt_Base();
    if( pGT )
    {
-      if( HB_GTSELF_PUTSCRCHAR( pGT, iRow, iCol, iColor, bAttr, usChar ) )
+      if( HB_GTSELF_PUTSCRCHAR(pGT, iRow, iCol, iColor, bAttr, usChar) )
       {
          errCode = HB_SUCCESS;
       }
-      hb_gt_BaseFree( pGT );
+      hb_gt_BaseFree(pGT);
    }
    return errCode;
 }
@@ -1477,8 +1477,8 @@ HB_ERRCODE hb_gtFlush( void )
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_FLUSH( pGT );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_FLUSH(pGT);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;
@@ -1496,9 +1496,9 @@ int hb_gtGfxPrimitive( int iType, int iTop, int iLeft, int iBottom, int iRight, 
    pGT = hb_gt_Base();
    if( pGT )
    {
-      iResult = HB_GTSELF_GFXPRIMITIVE( pGT, iType, iTop, iLeft, iBottom, iRight, iColor );
-      HB_GTSELF_FLUSH( pGT );
-      hb_gt_BaseFree( pGT );
+      iResult = HB_GTSELF_GFXPRIMITIVE(pGT, iType, iTop, iLeft, iBottom, iRight, iColor);
+      HB_GTSELF_FLUSH(pGT);
+      hb_gt_BaseFree(pGT);
    }
    return iResult;
 }
@@ -1514,9 +1514,9 @@ HB_ERRCODE hb_gtGfxText( int iTop, int iLeft, const char * cBuf, int iColor, int
    pGT = hb_gt_Base();
    if( pGT )
    {
-      HB_GTSELF_GFXTEXT( pGT, iTop, iLeft, cBuf, iColor, iSize, iWidth );
-      HB_GTSELF_FLUSH( pGT );
-      hb_gt_BaseFree( pGT );
+      HB_GTSELF_GFXTEXT(pGT, iTop, iLeft, cBuf, iColor, iSize, iWidth);
+      HB_GTSELF_FLUSH(pGT);
+      hb_gt_BaseFree(pGT);
       return HB_SUCCESS;
    }
    return HB_FAILURE;

@@ -345,9 +345,9 @@ static void hb_sln_setACSCtrans( void )
 static void hb_sln_setCharTrans( PHB_GT pGT, HB_BOOL fBox )
 {
 #if ! defined( HB_SLN_UNICODE )
-   PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP( pGT );
+   PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP(pGT);
 #endif
-   PHB_CODEPAGE cdpHost = HB_GTSELF_HOSTCP( pGT );
+   PHB_CODEPAGE cdpHost = HB_GTSELF_HOSTCP(pGT);
    int i;
 
    /* build a conversion chars table */
@@ -404,7 +404,7 @@ static void hb_sln_setCharTrans( PHB_GT pGT, HB_BOOL fBox )
 /* *********************************************************************** */
 static void hb_sln_setKeyTrans( PHB_GT pGT )
 {
-   PHB_CODEPAGE cdpTerm = HB_GTSELF_INCP( pGT ), cdpHost = HB_GTSELF_HOSTCP( pGT );
+   PHB_CODEPAGE cdpTerm = HB_GTSELF_INCP(pGT), cdpHost = HB_GTSELF_HOSTCP(pGT);
    const char * p;
    int i;
 
@@ -687,8 +687,8 @@ static void hb_gt_sln_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
             hb_sln_colorTrans();
             if( ! hb_sln_Is_Unicode )
             {
-               hb_sln_setCharTrans( pGT, HB_TRUE );
-               hb_sln_setKeyTrans( pGT );
+               hb_sln_setCharTrans(pGT, HB_TRUE);
+               hb_sln_setKeyTrans(pGT);
             }
 
             /* ensure we are in a normal chars set */
@@ -719,14 +719,14 @@ static void hb_gt_sln_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
    s_fActive = HB_TRUE;
    hb_gt_sln_mouse_Init();
-   HB_GTSUPER_INIT( pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr );
-   HB_GTSELF_RESIZE( pGT, SLtt_Screen_Rows, SLtt_Screen_Cols );
-   HB_GTSELF_SETFLAG( pGT, HB_GTI_COMPATBUFFER, HB_FALSE );
-   HB_GTSELF_SETFLAG( pGT, HB_GTI_STDOUTCON, s_fStdOutTTY );
-   HB_GTSELF_SETFLAG( pGT, HB_GTI_STDERRCON, s_fStdErrTTY && ( s_fStdOutTTY || s_fStdInTTY ) );
+   HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
+   HB_GTSELF_RESIZE(pGT, SLtt_Screen_Rows, SLtt_Screen_Cols);
+   HB_GTSELF_SETFLAG(pGT, HB_GTI_COMPATBUFFER, HB_FALSE);
+   HB_GTSELF_SETFLAG(pGT, HB_GTI_STDOUTCON, s_fStdOutTTY);
+   HB_GTSELF_SETFLAG(pGT, HB_GTI_STDERRCON, s_fStdErrTTY && (s_fStdOutTTY || s_fStdInTTY));
 
-   HB_GTSELF_SETBLINK( pGT, HB_TRUE );
-   HB_GTSELF_SETPOS( pGT, SLsmg_get_row(), SLsmg_get_column() );
+   HB_GTSELF_SETBLINK(pGT, HB_TRUE);
+   HB_GTSELF_SETPOS(pGT, SLsmg_get_row(), SLsmg_get_column());
 }
 
 /* *********************************************************************** */
@@ -745,7 +745,7 @@ static void hb_gt_sln_Exit( PHB_GT pGT )
       SLtt_flush_output();
    }
 
-   HB_GTSELF_REFRESH( pGT );
+   HB_GTSELF_REFRESH(pGT);
    hb_gt_sln_mouse_Exit();
    /* NOTE: This is incompatible with Clipper - on exit leave a cursor visible */
    hb_sln_SetCursorStyle( SC_NORMAL );
@@ -756,7 +756,7 @@ static void hb_gt_sln_Exit( PHB_GT pGT )
 
    s_fStdInTTY = s_fStdOutTTY = s_fStdErrTTY = s_fActive = HB_FALSE;
 
-   HB_GTSUPER_EXIT( pGT );
+   HB_GTSUPER_EXIT(pGT);
 }
 
 /* *********************************************************************** */
@@ -810,7 +810,7 @@ static void hb_gt_sln_SetBlink( PHB_GT pGT, HB_BOOL fBlink )
     */
 
    SLtt_Blink_Mode = fBlink ? 1 : 0;
-   HB_GTSUPER_SETBLINK( pGT, fBlink );
+   HB_GTSUPER_SETBLINK(pGT, fBlink);
 }
 
 /* *********************************************************************** */
@@ -844,7 +844,7 @@ static void hb_gt_sln_Tone( PHB_GT pGT, double dFrequency, double dDuration )
       /* The conversion from Clipper (DOS) timer tick units to
          milliseconds is * 1000.0 / 18.2. */
       dDuration /= 18.2;
-      hb_gtSleep( pGT, dDuration / 18.2 );
+      hb_gtSleep(pGT, dDuration / 18.2);
    }
 }
 
@@ -955,7 +955,7 @@ static HB_BOOL hb_gt_sln_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       default:
-         return HB_GTSUPER_INFO( pGT, iType, pInfo );
+         return HB_GTSUPER_INFO(pGT, iType, pInfo);
    }
 
    return HB_TRUE;
@@ -966,11 +966,11 @@ static HB_BOOL hb_gt_sln_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
 static HB_BOOL hb_gt_sln_SetDispCP( PHB_GT pGT, const char * pszTermCDP, const char * pszHostCDP, HB_BOOL fBox )
 {
-   if( HB_GTSUPER_SETDISPCP( pGT, pszTermCDP, pszHostCDP, fBox ) )
+   if( HB_GTSUPER_SETDISPCP(pGT, pszTermCDP, pszHostCDP, fBox) )
    {
       if( ! hb_sln_Is_Unicode )
       {
-         hb_sln_setCharTrans( pGT, fBox );
+         hb_sln_setCharTrans(pGT, fBox);
       }
       return HB_TRUE;
    }
@@ -981,11 +981,11 @@ static HB_BOOL hb_gt_sln_SetDispCP( PHB_GT pGT, const char * pszTermCDP, const c
 
 static HB_BOOL hb_gt_sln_SetKeyCP( PHB_GT pGT, const char * pszTermCDP, const char * pszHostCDP )
 {
-   if( HB_GTSUPER_SETKEYCP( pGT, pszTermCDP, pszHostCDP ) )
+   if( HB_GTSUPER_SETKEYCP(pGT, pszTermCDP, pszHostCDP) )
    {
       if( ! hb_sln_Is_Unicode )
       {
-         hb_sln_setKeyTrans( pGT );
+         hb_sln_setKeyTrans(pGT);
       }
       return HB_TRUE;
    }
@@ -1011,7 +1011,7 @@ static void hb_gt_sln_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
          HB_USHORT usChar;
          while( iSize-- > 0 )
          {
-            if( ! HB_GTSELF_GETSCRCHAR( pGT, iRow, iCol, &iColor, &bAttr, &usChar ) )
+            if( ! HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol, &iColor, &bAttr, &usChar) )
             {
                break;
             }
@@ -1033,7 +1033,7 @@ static void hb_gt_sln_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
          HB_UCHAR uc;
          while( iSize-- > 0 )
          {
-            if( ! HB_GTSELF_GETSCRUC( pGT, iRow, iCol, &iColor, &bAttr, &uc, HB_FALSE ) )
+            if( ! HB_GTSELF_GETSCRUC(pGT, iRow, iCol, &iColor, &bAttr, &uc, HB_FALSE) )
             {
                break;
             }
@@ -1054,12 +1054,12 @@ static void hb_gt_sln_Refresh( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Refresh(%p)", static_cast<void*>(pGT) ) );
 #endif
 
-   HB_GTSUPER_REFRESH( pGT );
+   HB_GTSUPER_REFRESH(pGT);
    if( s_fActive )
    {
       int iRow, iCol, iStyle;
 
-      HB_GTSELF_GETSCRCURSOR( pGT, &iRow, &iCol, &iStyle );
+      HB_GTSELF_GETSCRCURSOR(pGT, &iRow, &iCol, &iStyle);
       if( iStyle != SC_NONE && ( iRow < 0 || iCol < 0 || iRow >= SLtt_Screen_Rows || iCol >= SLtt_Screen_Cols ) )
       {
          iStyle = SC_NONE;

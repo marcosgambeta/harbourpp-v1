@@ -138,7 +138,7 @@ static HB_CODETRACE_FUNC( hb_p_jumpnear )
 static HB_CODETRACE_FUNC( hb_p_jump )
 {
    HB_BYTE * pAddr = &pFunc->pCode[nPCodePos + 1];
-   HB_SIZE nNewPos = nPCodePos + HB_PCODE_MKSHORT( pAddr );
+   HB_SIZE nNewPos = nPCodePos + HB_PCODE_MKSHORT(pAddr);
 
    hb_compCodeTraceMark( cargo, nPCodePos, 3 );
    return hb_compCodeTraceNextPos( cargo, nNewPos );
@@ -147,7 +147,7 @@ static HB_CODETRACE_FUNC( hb_p_jump )
 static HB_CODETRACE_FUNC( hb_p_jumpfar )
 {
    HB_BYTE * pAddr = &pFunc->pCode[nPCodePos + 1];
-   HB_SIZE nNewPos = nPCodePos + HB_PCODE_MKINT24( pAddr );
+   HB_SIZE nNewPos = nPCodePos + HB_PCODE_MKINT24(pAddr);
 
    hb_compCodeTraceMark( cargo, nPCodePos, 4 );
    return hb_compCodeTraceNextPos( cargo, nNewPos );
@@ -166,7 +166,7 @@ static HB_CODETRACE_FUNC( hb_p_jumpfalsenear )
 static HB_CODETRACE_FUNC( hb_p_jumpfalse )
 {
    HB_BYTE * pAddr = &pFunc->pCode[nPCodePos + 1];
-   HB_SIZE nNewPos = nPCodePos + HB_PCODE_MKSHORT( pAddr );
+   HB_SIZE nNewPos = nPCodePos + HB_PCODE_MKSHORT(pAddr);
 
    hb_compCodeTraceMark( cargo, nPCodePos, 3 );
    hb_compCodeTraceAddJump( cargo, nNewPos );
@@ -177,7 +177,7 @@ static HB_CODETRACE_FUNC( hb_p_jumpfalse )
 static HB_CODETRACE_FUNC( hb_p_jumpfalsefar )
 {
    HB_BYTE * pAddr = &pFunc->pCode[nPCodePos + 1];
-   HB_SIZE nNewPos = nPCodePos + HB_PCODE_MKINT24( pAddr );
+   HB_SIZE nNewPos = nPCodePos + HB_PCODE_MKINT24(pAddr);
 
    hb_compCodeTraceMark( cargo, nPCodePos, 4 );
    hb_compCodeTraceAddJump( cargo, nNewPos );
@@ -198,7 +198,7 @@ static HB_CODETRACE_FUNC( hb_p_jumptruenear )
 static HB_CODETRACE_FUNC( hb_p_jumptrue )
 {
    HB_BYTE * pAddr = &pFunc->pCode[nPCodePos + 1];
-   HB_SIZE nNewPos = nPCodePos + HB_PCODE_MKSHORT( pAddr );
+   HB_SIZE nNewPos = nPCodePos + HB_PCODE_MKSHORT(pAddr);
 
    hb_compCodeTraceMark( cargo, nPCodePos, 3 );
    hb_compCodeTraceAddJump( cargo, nNewPos );
@@ -209,7 +209,7 @@ static HB_CODETRACE_FUNC( hb_p_jumptrue )
 static HB_CODETRACE_FUNC( hb_p_jumptruefar )
 {
    HB_BYTE * pAddr = &pFunc->pCode[nPCodePos + 1];
-   HB_SIZE nNewPos = nPCodePos + HB_PCODE_MKINT24( pAddr );
+   HB_SIZE nNewPos = nPCodePos + HB_PCODE_MKINT24(pAddr);
 
    hb_compCodeTraceMark( cargo, nPCodePos, 4 );
    hb_compCodeTraceAddJump( cargo, nNewPos );
@@ -220,7 +220,7 @@ static HB_CODETRACE_FUNC( hb_p_jumptruefar )
 static HB_CODETRACE_FUNC( hb_p_seqalways )
 {
    HB_BYTE * pAddr = &pFunc->pCode[nPCodePos + 1];
-   HB_SIZE nAlwaysPos = nPCodePos + HB_PCODE_MKINT24( pAddr );
+   HB_SIZE nAlwaysPos = nPCodePos + HB_PCODE_MKINT24(pAddr);
 
    hb_compCodeTraceMark( cargo, nPCodePos, 4 );
    hb_compCodeTraceAddJump( cargo, nAlwaysPos );
@@ -231,7 +231,7 @@ static HB_CODETRACE_FUNC( hb_p_seqalways )
 static HB_CODETRACE_FUNC( hb_p_alwaysbegin )
 {
    HB_BYTE * pAddr = &pFunc->pCode[nPCodePos + 1];
-   HB_SIZE nAlwaysEndPos = nPCodePos + HB_PCODE_MKINT24( pAddr );
+   HB_SIZE nAlwaysEndPos = nPCodePos + HB_PCODE_MKINT24(pAddr);
 
    hb_compCodeTraceMark( cargo, nPCodePos, 4 );
    hb_compCodeTraceAddJump( cargo, nAlwaysEndPos );
@@ -242,7 +242,7 @@ static HB_CODETRACE_FUNC( hb_p_alwaysbegin )
 static HB_CODETRACE_FUNC( hb_p_seqbegin )
 {
    HB_BYTE * pAddr = &pFunc->pCode[nPCodePos + 1];
-   HB_SIZE nRecoverPos = nPCodePos + HB_PCODE_MKINT24( pAddr );
+   HB_SIZE nRecoverPos = nPCodePos + HB_PCODE_MKINT24(pAddr);
 
    /* this is a hack for -gc3 output - it's not really necessary
     * for pure PCODE evaluation
@@ -261,7 +261,7 @@ static HB_CODETRACE_FUNC( hb_p_seqbegin )
 static HB_CODETRACE_FUNC( hb_p_seqend )
 {
    HB_BYTE * pAddr = &pFunc->pCode[nPCodePos + 1];
-   HB_SIZE nNewPos = nPCodePos + HB_PCODE_MKINT24( pAddr );
+   HB_SIZE nNewPos = nPCodePos + HB_PCODE_MKINT24(pAddr);
 
    hb_compCodeTraceMark( cargo, nPCodePos, 4 );
 
@@ -270,7 +270,7 @@ static HB_CODETRACE_FUNC( hb_p_seqend )
 
 static HB_CODETRACE_FUNC( hb_p_switch )
 {
-   HB_USHORT usCases = HB_PCODE_MKUSHORT( &pFunc->pCode[nPCodePos + 1] ), us;
+   HB_USHORT usCases = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]), us;
    HB_SIZE nStart = nPCodePos, nNewPos;
 
    nPCodePos += 3;
@@ -295,10 +295,10 @@ static HB_CODETRACE_FUNC( hb_p_switch )
             nPCodePos += 2 + pFunc->pCode[nPCodePos + 1];
             break;
          case HB_P_PUSHSTR:
-            nPCodePos += 3 + HB_PCODE_MKUSHORT( &pFunc->pCode[nPCodePos + 1] );
+            nPCodePos += 3 + HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]);
             break;
          case HB_P_PUSHSTRLARGE:
-            nPCodePos += 4 + HB_PCODE_MKUINT24( &pFunc->pCode[nPCodePos + 1] );
+            nPCodePos += 4 + HB_PCODE_MKUINT24(&pFunc->pCode[nPCodePos + 1]);
             break;
          case HB_P_PUSHNIL:
             /* default clause */
@@ -313,12 +313,12 @@ static HB_CODETRACE_FUNC( hb_p_switch )
             nPCodePos += 2;
             break;
          case HB_P_JUMP:
-            nNewPos = nPCodePos + HB_PCODE_MKSHORT( &pFunc->pCode[nPCodePos + 1] );
+            nNewPos = nPCodePos + HB_PCODE_MKSHORT(&pFunc->pCode[nPCodePos + 1]);
             nPCodePos += 3;
             break;
          /*case HB_P_JUMPFAR:*/
          default:
-            nNewPos = nPCodePos + HB_PCODE_MKINT24( &pFunc->pCode[nPCodePos + 1] );
+            nNewPos = nPCodePos + HB_PCODE_MKINT24(&pFunc->pCode[nPCodePos + 1]);
             nPCodePos += 4;
             break;
       }

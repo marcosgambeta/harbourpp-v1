@@ -63,17 +63,17 @@ HB_FUNC( __XHELP )
 
       int iPCount = hb_pcount();
 
-      hb_vmPushDynSym( s_pDynSym );
+      hb_vmPushDynSym(s_pDynSym);
       hb_vmPushNil();
       /* CA-Cl*pper respects references so hb_stackItemFromBase() is
        * used instead of hb_param() [druzus]
        */
       for( int iParam = 1; iParam <= iPCount; iParam++ )
       {
-         hb_vmPush( hb_stackItemFromBase(iParam) );
+         hb_vmPush(hb_stackItemFromBase(iParam));
       }
 
-      hb_vmProc( static_cast<HB_USHORT>(iPCount) );
+      hb_vmProc(static_cast<HB_USHORT>(iPCount));
       /* NOTE: Leave the return value as it is. */
    }
 }
