@@ -569,7 +569,7 @@ void * hb_xalloc( HB_SIZE nSize )         /* allocates fixed memory, returns nul
 
    if( nSize == 0 )
    {
-      hb_errInternal( HB_EI_XALLOCNULLSIZE, nullptr, nullptr, nullptr );
+      hb_errInternal(HB_EI_XALLOCNULLSIZE, nullptr, nullptr, nullptr);
    }
 
 #ifdef HB_FM_NEED_INIT
@@ -676,7 +676,7 @@ void * hb_xgrab( HB_SIZE nSize )         /* allocates fixed memory, exits on fai
 
    if( nSize == 0 )
    {
-      hb_errInternal( HB_EI_XGRABNULLSIZE, nullptr, nullptr, nullptr );
+      hb_errInternal(HB_EI_XGRABNULLSIZE, nullptr, nullptr, nullptr);
    }
 
 #ifdef HB_FM_NEED_INIT
@@ -690,7 +690,7 @@ void * hb_xgrab( HB_SIZE nSize )         /* allocates fixed memory, exits on fai
 
    if( ! pMem )
    {
-      hb_errInternal( HB_EI_XGRABALLOC, nullptr, nullptr, nullptr );
+      hb_errInternal(HB_EI_XGRABALLOC, nullptr, nullptr, nullptr);
    }
 
 #ifdef HB_FM_STATISTICS
@@ -757,7 +757,7 @@ void * hb_xgrab( HB_SIZE nSize )         /* allocates fixed memory, exits on fai
       if( s_nMemoryLimConsumed > 0 && s_nMemoryConsumed > s_nMemoryLimConsumed )
       {
          s_nMemoryLimConsumed = 0;
-         hb_errInternal( HB_EI_XGRABALLOC, nullptr, nullptr, nullptr );
+         hb_errInternal(HB_EI_XGRABALLOC, nullptr, nullptr, nullptr);
       }
 
 #ifdef HB_PARANOID_MEM_CHECK
@@ -782,12 +782,12 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
    /* disabled to make hb_xrealloc() ANSI-C realloc() compatible */
    if( ! pMem )
    {
-      hb_errInternal( HB_EI_XREALLOCNULL, nullptr, nullptr, nullptr );
+      hb_errInternal(HB_EI_XREALLOCNULL, nullptr, nullptr, nullptr);
    }
 
    if( nSize == 0 )
    {
-      hb_errInternal( HB_EI_XREALLOCNULLSIZE, nullptr, nullptr, nullptr );
+      hb_errInternal(HB_EI_XREALLOCNULLSIZE, nullptr, nullptr, nullptr);
    }
 #endif
 
@@ -796,7 +796,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
    {
       if( nSize == 0 )
       {
-         hb_errInternal( HB_EI_XREALLOCNULLSIZE, nullptr, nullptr, nullptr );
+         hb_errInternal(HB_EI_XREALLOCNULLSIZE, nullptr, nullptr, nullptr);
       }
       return hb_xgrab(nSize);
    }
@@ -814,14 +814,14 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
 
       if( pMemBlock->u32Signature != HB_MEMINFO_SIGNATURE )
       {
-         hb_errInternal( HB_EI_XREALLOCINV, nullptr, nullptr, nullptr );
+         hb_errInternal(HB_EI_XREALLOCINV, nullptr, nullptr, nullptr);
       }
 
       nMemSize = pMemBlock->nSize;
 
       if( HB_FM_GETSIG( pMem, nMemSize ) != HB_MEMINFO_SIGNATURE )
       {
-         hb_errInternal( HB_EI_XMEMOVERFLOW, nullptr, nullptr, nullptr );
+         hb_errInternal(HB_EI_XMEMOVERFLOW, nullptr, nullptr, nullptr);
       }
 
       pMemBlock->u32Signature = 0;
@@ -877,7 +877,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
       if( s_nMemoryLimConsumed > 0 && s_nMemoryConsumed > s_nMemoryLimConsumed )
       {
          s_nMemoryLimConsumed = 0;
-         hb_errInternal( HB_EI_XREALLOC, nullptr, nullptr, nullptr );
+         hb_errInternal(HB_EI_XREALLOC, nullptr, nullptr, nullptr);
       }
 
 #if defined( HB_PARANOID_MEM_CHECK ) || defined( HB_FM_FORCE_REALLOC )
@@ -898,7 +898,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
 
    if( ! pMem )
    {
-      hb_errInternal( HB_EI_XREALLOC, nullptr, nullptr, nullptr );
+      hb_errInternal(HB_EI_XREALLOC, nullptr, nullptr, nullptr);
    }
 
 #else
@@ -907,7 +907,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
    {
       if( nSize == 0 )
       {
-         hb_errInternal( HB_EI_XREALLOCNULLSIZE, nullptr, nullptr, nullptr );
+         hb_errInternal(HB_EI_XREALLOCNULLSIZE, nullptr, nullptr, nullptr);
       }
       pMem = malloc(HB_ALLOC_SIZE(nSize));
       if( pMem )
@@ -940,7 +940,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
 
    if( ! pMem )
    {
-      hb_errInternal( HB_EI_XREALLOC, nullptr, nullptr, nullptr );
+      hb_errInternal(HB_EI_XREALLOC, nullptr, nullptr, nullptr);
    }
 
 #endif
@@ -964,12 +964,12 @@ void hb_xfree( void * pMem )            /* frees fixed memory */
       {
          if( pMemBlock->u32Signature != HB_MEMINFO_SIGNATURE )
          {
-            hb_errInternal( HB_EI_XFREEINV, nullptr, nullptr, nullptr );
+            hb_errInternal(HB_EI_XFREEINV, nullptr, nullptr, nullptr);
          }
 
          if( HB_FM_GETSIG( pMem, pMemBlock->nSize ) != HB_MEMINFO_SIGNATURE )
          {
-            hb_errInternal( HB_EI_XMEMOVERFLOW, nullptr, nullptr, nullptr );
+            hb_errInternal(HB_EI_XMEMOVERFLOW, nullptr, nullptr, nullptr);
          }
 
          HB_FM_LOCK();
@@ -1014,7 +1014,7 @@ void hb_xfree( void * pMem )            /* frees fixed memory */
    }
    else
    {
-      hb_errInternal( HB_EI_XFREENULL, nullptr, nullptr, nullptr );
+      hb_errInternal(HB_EI_XFREENULL, nullptr, nullptr, nullptr);
    }
 }
 
@@ -1040,7 +1040,7 @@ void hb_xRefFree( void * pMem )
 
    if( s_fStatistic && HB_FM_PTR( pMem )->u32Signature != HB_MEMINFO_SIGNATURE )
    {
-      hb_errInternal( HB_EI_XFREEINV, nullptr, nullptr, nullptr );
+      hb_errInternal(HB_EI_XFREEINV, nullptr, nullptr, nullptr);
    }
 
    if( HB_ATOM_DEC( HB_COUNTER_PTR( pMem ) ) == 0 )
@@ -1123,7 +1123,7 @@ void * hb_xRefResize( void * pMem, HB_SIZE nSave, HB_SIZE nSize, HB_SIZE * pnAll
       }
    }
 
-   hb_errInternal( HB_EI_XREALLOC, nullptr, nullptr, nullptr );
+   hb_errInternal(HB_EI_XREALLOC, nullptr, nullptr, nullptr);
    return nullptr;
 #endif
 }
@@ -1588,7 +1588,7 @@ HB_FUNC( __FM_ALLOCLIMIT )
    HB_STACK_TLS_PRELOAD;
    hb_xclean();
 #if defined( HB_FM_DLMT_ALLOC )
-   hb_retns( mspace_footprint_limit( hb_mspace() ) );
+   hb_retns(mspace_footprint_limit(hb_mspace()));
    if( HB_ISNUM(1) )
    {
       HB_ISIZ nLimit = hb_parns(1);
@@ -1600,7 +1600,7 @@ HB_FUNC( __FM_ALLOCLIMIT )
       mspace_set_footprint_limit( hb_mspace(), nLimit );
    }
 #elif defined( HB_FM_DL_ALLOC )
-   hb_retns( dlmalloc_footprint_limit() );
+   hb_retns(dlmalloc_footprint_limit());
    if( HB_ISNUM(1) )
    {
       HB_ISIZ nLimit = hb_parns(1);
@@ -1612,7 +1612,7 @@ HB_FUNC( __FM_ALLOCLIMIT )
       dlmalloc_set_footprint_limit( ( size_t ) nLimit );
    }
 #elif defined( HB_FM_STATISTICS )
-   hb_retns( s_nMemoryLimConsumed ? s_nMemoryLimConsumed : -1 );
+   hb_retns(s_nMemoryLimConsumed ? s_nMemoryLimConsumed : -1);
    if( HB_ISNUM(1) )
    {
       HB_ISIZ nLimit = hb_parns(1);

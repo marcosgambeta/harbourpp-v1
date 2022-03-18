@@ -118,7 +118,7 @@ HB_ULONG hb_parinfo( int iParam )
       if( iParam >= -1 && iParam <= hb_pcount() )
       {
          PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-         HB_TYPE uiType = HB_ITEM_TYPE( pItem );
+         HB_TYPE uiType = HB_ITEM_TYPE(pItem);
 
          if( uiType & HB_IT_BYREF )
          {
@@ -217,7 +217,7 @@ HB_BOOL hb_extIsArray( int iParam )
       pItem = hb_itemUnRef(pItem);
    }
 
-   return HB_IS_ARRAY(pItem) && ! HB_ARRAY_OBJ( pItem );
+   return HB_IS_ARRAY(pItem) && ! HB_ARRAY_OBJ(pItem);
 }
 
 /* function to be called from pcode DLLs to detect if the extend system

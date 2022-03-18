@@ -89,7 +89,7 @@ HB_FUNC( HB_DBDETACH )
 
    if( pArea )
    {
-      hb_retl( hb_rddDetachArea( pArea, pCargo ) == HB_SUCCESS );
+      hb_retl(hb_rddDetachArea(pArea, pCargo) == HB_SUCCESS);
    }
    else
    {
@@ -133,7 +133,7 @@ HB_FUNC( HB_DBREQUEST )
          hb_itemRelease(pCargo);
       }
 
-      hb_retl( pArea != nullptr );
+      hb_retl(pArea != nullptr);
    }
    else
    {

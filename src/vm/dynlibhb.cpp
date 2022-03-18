@@ -232,13 +232,13 @@ HB_FUNC( HB_LIBLOAD )
 
 HB_FUNC( HB_LIBFREE )
 {
-   hb_retl( hb_libFree( hb_param(1, HB_IT_ANY) ) );
+   hb_retl(hb_libFree(hb_param(1, HB_IT_ANY)));
 }
 
 HB_FUNC( HB_LIBERROR )
 {
 #if defined( HB_HAS_DLFCN )
-   hb_retc( dlerror() );
+   hb_retc(dlerror());
 #else
    hb_retc_null();
 #endif

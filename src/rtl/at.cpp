@@ -125,7 +125,7 @@ HB_FUNC( HB_AT )
             }
          }
       }
-      hb_retns( nPos );
+      hb_retns(nPos);
    }
    else
    {
@@ -149,7 +149,7 @@ HB_FUNC( AT )
             nPos = hb_cdpTextLen( cdp, hb_itemGetCPtr(pText), nPos - 1 ) + 1;
          }
       }
-      hb_retns( nPos );
+      hb_retns(nPos);
    }
    else
    {

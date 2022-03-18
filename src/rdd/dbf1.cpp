@@ -146,7 +146,7 @@ static HB_MAXINT hb_dbfRowVerGet( DBFAREAP pArea, HB_USHORT uiField, HB_MAXINT *
    if( hb_fileReadAt( pArea->pDataFile, &dbField, sizeof(dbField), sizeof(DBFHEADER) + uiField * sizeof(DBFFIELD) ) == sizeof(dbField) )
    {
       *pValue = HB_GET_LE_UINT64( dbField.bReserved2 ) + 1;
-      HB_PUT_LE_UINT64( dbField.bReserved2, *pValue );
+      HB_PUT_LE_UINT64(dbField.bReserved2, *pValue);
       hb_fileWriteAt( pArea->pDataFile, &dbField, sizeof(dbField), sizeof(DBFHEADER) + uiField * sizeof(DBFFIELD) );
    }
 
@@ -167,7 +167,7 @@ static void hb_dbfRowVerSet( DBFAREAP pArea, HB_USHORT uiField, HB_MAXINT nValue
 
    if( hb_fileReadAt( pArea->pDataFile, &dbField, sizeof(dbField), sizeof(DBFHEADER) + uiField * sizeof(DBFFIELD) ) == sizeof(dbField) )
    {
-      HB_PUT_LE_UINT64( dbField.bReserved2, nValue );
+      HB_PUT_LE_UINT64(dbField.bReserved2, nValue);
       hb_fileWriteAt( pArea->pDataFile, &dbField, sizeof(dbField), sizeof(DBFHEADER) + uiField * sizeof(DBFFIELD) );
    }
 }
@@ -202,11 +202,11 @@ static void hb_dbfNextValueInit( LPDBFFIELD pDbField, LPFIELD pField )
 {
    if( hb_dbfIsAutoIncField( pField ) == HB_AUTOINC_LONG )
    {
-      HB_PUT_LE_UINT64( pDbField->bReserved2, 1 );
+      HB_PUT_LE_UINT64(pDbField->bReserved2, 1);
    }
    else
    {
-      HB_PUT_LE_UINT32( pDbField->bCounter, 1 );
+      HB_PUT_LE_UINT32(pDbField->bCounter, 1);
    }
    pDbField->bStep = 1;
 }
@@ -232,11 +232,11 @@ static HB_MAXINT hb_dbfNextValueGet( DBFAREAP pArea, HB_USHORT uiField, HB_BOOL 
       {
          if( iType == HB_AUTOINC_LONG )
          {
-            HB_PUT_LE_UINT64( dbField.bReserved2, nValue + dbField.bStep );
+            HB_PUT_LE_UINT64(dbField.bReserved2, nValue + dbField.bStep);
          }
          else
          {
-            HB_PUT_LE_UINT32( dbField.bCounter, nValue + dbField.bStep );
+            HB_PUT_LE_UINT32(dbField.bCounter, nValue + dbField.bStep);
          }
          hb_fileWriteAt( pArea->pDataFile, &dbField, sizeof(dbField), sizeof(DBFHEADER) + uiField * sizeof(DBFFIELD) );
       }
@@ -255,12 +255,12 @@ static HB_MAXINT hb_dbfNextValueSet( DBFAREAP pArea, HB_USHORT uiField, HB_MAXIN
       if( hb_dbfIsAutoIncField( pArea->area.lpFields + uiField ) == HB_AUTOINC_LONG )
       {
          nPrevValue = HB_GET_LE_UINT64( dbField.bReserved2 );
-         HB_PUT_LE_UINT64( dbField.bReserved2, nValue );
+         HB_PUT_LE_UINT64(dbField.bReserved2, nValue);
       }
       else
       {
          nPrevValue = HB_GET_LE_UINT32( dbField.bCounter );
-         HB_PUT_LE_UINT32( dbField.bCounter, nValue );
+         HB_PUT_LE_UINT32(dbField.bCounter, nValue);
       }
       hb_fileWriteAt( pArea->pDataFile, &dbField, sizeof(dbField), sizeof(DBFHEADER) + uiField * sizeof(DBFFIELD) );
    }
@@ -375,9 +375,9 @@ static void hb_dbfUpdateStampFields( DBFAREAP pArea )
                {
                   hb_timeStampGet( &lJulian, &lMilliSec );
                }
-               HB_PUT_LE_UINT32( pPtr, lJulian );
+               HB_PUT_LE_UINT32(pPtr, lJulian);
                pPtr += 4;
-               HB_PUT_LE_UINT32( pPtr, lMilliSec );
+               HB_PUT_LE_UINT32(pPtr, lMilliSec);
             }
             break;
          }
@@ -390,7 +390,7 @@ static void hb_dbfUpdateStampFields( DBFAREAP pArea )
                {
                   hb_dbfRowVerGet( pArea, uiCount, &nRowVer );
                }
-               HB_PUT_LE_UINT64( pPtr, nRowVer );
+               HB_PUT_LE_UINT64(pPtr, nRowVer);
             }
             break;
          }
@@ -513,7 +513,7 @@ static void hb_dbfSetBlankRecord( DBFAREAP pArea, int iType )
          {
             while( uiLen-- )
             {
-               HB_PUT_LE_UINT16( pPtr, 0x0020 );
+               HB_PUT_LE_UINT16(pPtr, 0x0020);
                pPtr += 2;
             }
          }
@@ -532,19 +532,19 @@ static void hb_dbfSetBlankRecord( DBFAREAP pArea, int iType )
                }
                else if( uiLen == 2 )
                {
-                  HB_PUT_LE_UINT16( pPtr, nValue );
+                  HB_PUT_LE_UINT16(pPtr, nValue);
                }
                else if( uiLen == 3 )
                {
-                  HB_PUT_LE_UINT24( pPtr, nValue );
+                  HB_PUT_LE_UINT24(pPtr, nValue);
                }
                else if( uiLen == 4 )
                {
-                  HB_PUT_LE_UINT32( pPtr, nValue );
+                  HB_PUT_LE_UINT32(pPtr, nValue);
                }
                else if( uiLen == 8 )
                {
-                  HB_PUT_LE_UINT64( pPtr, nValue );
+                  HB_PUT_LE_UINT64(pPtr, nValue);
                }
             }
             else if( pField->uiType == HB_FT_DOUBLE )
@@ -1308,7 +1308,7 @@ void hb_dbfPutMemoBlock( DBFAREAP pArea, HB_USHORT uiIndex, HB_ULONG ulBlock )
 
    if( pArea->area.lpFields[uiIndex].uiLen == 4 )
    {
-      HB_PUT_LE_UINT32( &pArea->pRecord[pArea->pFieldOffset[uiIndex]], ulBlock );
+      HB_PUT_LE_UINT32(&pArea->pRecord[pArea->pFieldOffset[uiIndex]], ulBlock);
    }
    else
    {
@@ -1419,7 +1419,7 @@ HB_ERRCODE hb_dbfSetMemoData( DBFAREAP pArea, HB_USHORT uiIndex, HB_ULONG ulBloc
 
    if( pArea->area.lpFields[uiIndex].uiLen == 4 )
    {
-      HB_PUT_LE_UINT32( &pArea->pRecord[pArea->pFieldOffset[uiIndex]], ulBlock );
+      HB_PUT_LE_UINT32(&pArea->pRecord[pArea->pFieldOffset[uiIndex]], ulBlock);
       return HB_SUCCESS;
    }
    else if( pArea->area.lpFields[uiIndex].uiLen == 10 )
@@ -1428,9 +1428,9 @@ HB_ERRCODE hb_dbfSetMemoData( DBFAREAP pArea, HB_USHORT uiIndex, HB_ULONG ulBloc
       {
          LPSMTFIELD pSMTFiled = reinterpret_cast<LPSMTFIELD>(&pArea->pRecord[pArea->pFieldOffset[uiIndex]]);
 
-         HB_PUT_LE_UINT16( pSMTFiled->type,   ulType );
-         HB_PUT_LE_UINT32( pSMTFiled->length, ulSize );
-         HB_PUT_LE_UINT32( pSMTFiled->block,  ulBlock );
+         HB_PUT_LE_UINT16(pSMTFiled->type,   ulType);
+         HB_PUT_LE_UINT32(pSMTFiled->length, ulSize);
+         HB_PUT_LE_UINT32(pSMTFiled->block,  ulBlock);
       }
       else
       {
@@ -2928,7 +2928,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
                nLen = hb_itemCopyStrU16( pItem, HB_CDP_ENDIAN_LITTLE, pwBuffer, nLen );
                while( nLen < static_cast<HB_SIZE>(pField->uiLen) )
                {
-                  HB_PUT_LE_UINT16( &pwBuffer[nLen], ' ' );
+                  HB_PUT_LE_UINT16(&pwBuffer[nLen], ' ');
                   ++nLen;
                }
             }
@@ -2962,7 +2962,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             {
                HB_WCHAR * pwBuffer = reinterpret_cast<HB_WCHAR*>(&pArea->pRecord[pArea->pFieldOffset[uiIndex]]);
                nLen = hb_itemCopyStrU16( pItem, HB_CDP_ENDIAN_LITTLE, pwBuffer, nLen );
-               HB_PUT_LE_UINT16( &pwBuffer[pField->uiLen], nLen );
+               HB_PUT_LE_UINT16(&pwBuffer[pField->uiLen], nLen);
             }
             else
             {
@@ -3007,11 +3007,11 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          {
             if( pField->uiLen == 3 )
             {
-               HB_PUT_LE_UINT24( pArea->pRecord + pArea->pFieldOffset[uiIndex], hb_itemGetDL(pItem) );
+               HB_PUT_LE_UINT24(pArea->pRecord + pArea->pFieldOffset[uiIndex], hb_itemGetDL(pItem));
             }
             else if( pField->uiLen == 4 )
             {
-               HB_PUT_LE_UINT32( pArea->pRecord + pArea->pFieldOffset[uiIndex], hb_itemGetDL(pItem) );
+               HB_PUT_LE_UINT32(pArea->pRecord + pArea->pFieldOffset[uiIndex], hb_itemGetDL(pItem));
             }
             else
             {
@@ -3029,10 +3029,10 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             ptr = pArea->pRecord + pArea->pFieldOffset[uiIndex];
             if( pField->uiType != HB_FT_TIME )
             {
-               HB_PUT_LE_UINT32( ptr, lDate );
+               HB_PUT_LE_UINT32(ptr, lDate);
                ptr += 4;
             }
-            HB_PUT_LE_UINT32( ptr, lTime );
+            HB_PUT_LE_UINT32(ptr, lTime);
          }
          else if( pField->uiType == HB_FT_ANY && pField->uiLen == 3 )
          {
@@ -3116,19 +3116,19 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
                      pArea->pRecord[pArea->pFieldOffset[uiIndex]] = static_cast<signed char>(lVal);
                      break;
                   case 2:
-                     HB_PUT_LE_UINT16( pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U16>(lVal) );
+                     HB_PUT_LE_UINT16(pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U16>(lVal));
                      break;
                   case 3:
-                     HB_PUT_LE_UINT24( pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U32>(lVal) );
+                     HB_PUT_LE_UINT24(pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U32>(lVal));
                      break;
                   case 4:
-                     HB_PUT_LE_UINT32( pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U32>(lVal) );
+                     HB_PUT_LE_UINT32(pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U32>(lVal));
                      break;
                   case 8:
 #ifndef HB_LONG_LONG_OFF
-                     HB_PUT_LE_UINT64( pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U64>(lVal) );
+                     HB_PUT_LE_UINT64(pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U64>(lVal));
 #else
-                     HB_PUT_LE_UINT64( pArea->pRecord + pArea->pFieldOffset[uiIndex], dVal );
+                     HB_PUT_LE_UINT64(pArea->pRecord + pArea->pFieldOffset[uiIndex], dVal);
 #endif
                      break;
                   default:
@@ -3146,7 +3146,7 @@ static HB_ERRCODE hb_dbfPutValue( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             HB_MAXINT lVal = hb_itemGetNInt(pItem);
             if( HB_IS_DOUBLE(pItem) ? HB_DBL_LIM_INT32( hb_itemGetND(pItem) ) : HB_LIM_INT32(lVal) )
             {
-               HB_PUT_LE_UINT32( pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U32>(lVal) );
+               HB_PUT_LE_UINT32(pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U32>(lVal));
             }
             else
             {
@@ -3610,7 +3610,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
       /* field offset */
       if( pArea->bTableType == DB_DBF_VFP )
       {
-         HB_PUT_LE_UINT16( pThisField->bReserved1, pArea->uiRecordLen );
+         HB_PUT_LE_UINT16(pThisField->bReserved1, pArea->uiRecordLen);
       }
       pThisField->bFieldFlags = static_cast<HB_BYTE>(pField->uiFlags) & ( HB_FF_HIDDEN | HB_FF_NULLABLE | HB_FF_BINARY | HB_FF_AUTOINC );
       switch( pField->uiType )
@@ -3845,7 +3845,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
             pThisField->bLen = static_cast<HB_BYTE>(pField->uiLen);
             pThisField->bFieldFlags |= HB_FF_BINARY;
             #if 0
-            HB_PUT_LE_UINT64( pThisField->bReserved2, 0 );
+            HB_PUT_LE_UINT64(pThisField->bReserved2, 0);
             #endif
             pArea->uiRecordLen += pField->uiLen;
             pArea->fModStamp = HB_TRUE;
@@ -3885,7 +3885,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
    if( errSubCode == 0 && pArea->uiNullCount )
    {
       hb_strncpy(reinterpret_cast<char*>(pThisField->bName), "_NullFlags", sizeof(pThisField->bName) - 1);
-      HB_PUT_LE_UINT16( pThisField->bReserved1, pArea->uiRecordLen );
+      HB_PUT_LE_UINT16(pThisField->bReserved1, pArea->uiRecordLen);
       pThisField->bType = '0';
       pThisField->bFieldFlags = HB_FF_HIDDEN;
       uiCount = ( pArea->uiNullCount + 7 ) >> 3;
@@ -4099,7 +4099,7 @@ static HB_ERRCODE hb_dbfInfo( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
          }
          else if( HB_IS_POINTER(pItem) )
          {
-            LPDBTRANSINFO lpdbTransInfo = hb_dbTransInfoGet( pItem );
+            LPDBTRANSINFO lpdbTransInfo = hb_dbTransInfoGet(pItem);
 
             if( lpdbTransInfo )
             {
@@ -7139,9 +7139,9 @@ static HB_ERRCODE hb_dbfWriteDBHeader( DBFAREAP pArea )
       pArea->ulRecCount = hb_dbfCalcRecCount( pArea );
    }
 
-   HB_PUT_LE_UINT32( pArea->dbfHeader.ulRecCount,  pArea->ulRecCount );
-   HB_PUT_LE_UINT16( pArea->dbfHeader.uiHeaderLen, pArea->uiHeaderLen );
-   HB_PUT_LE_UINT16( pArea->dbfHeader.uiRecordLen, pArea->uiRecordLen );
+   HB_PUT_LE_UINT32(pArea->dbfHeader.ulRecCount,  pArea->ulRecCount);
+   HB_PUT_LE_UINT16(pArea->dbfHeader.uiHeaderLen, pArea->uiHeaderLen);
+   HB_PUT_LE_UINT16(pArea->dbfHeader.uiRecordLen, pArea->uiRecordLen);
    if( hb_fileWriteAt( pArea->pDataFile, &pArea->dbfHeader, sizeof(DBFHEADER), 0 ) == sizeof(DBFHEADER) )
    {
       errCode = HB_SUCCESS;
@@ -7874,7 +7874,7 @@ HB_FUNC_STATIC( DBF_GETFUNCTABLE )
          *puiCount = RDDFUNCSCOUNT;
       }
       errCode = hb_rddInheritEx( pTable, &dbfTable, &dbfSuper, nullptr, nullptr );
-      hb_retni( errCode );
+      hb_retni(errCode);
       if( errCode == HB_SUCCESS )
       {
          /*
@@ -7886,7 +7886,7 @@ HB_FUNC_STATIC( DBF_GETFUNCTABLE )
    }
    else
    {
-      hb_retni( HB_FAILURE );
+      hb_retni(HB_FAILURE);
    }
 }
 
@@ -7896,7 +7896,7 @@ static void hb_dbfRddInit( void * cargo )
 
    if( hb_rddRegister( "DBF", RDT_FULL ) > 1 )
    {
-      hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
+      hb_errInternal(HB_EI_RDDINVALID, nullptr, nullptr, nullptr);
    }
 }
 

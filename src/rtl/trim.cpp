@@ -110,7 +110,7 @@ HB_FUNC( LTRIM )
       }
       else
       {
-         hb_retclen( szText, nLen );
+         hb_retclen(szText, nLen);
       }
    }
    else
@@ -141,7 +141,7 @@ HB_FUNC( RTRIM )
       }
       else
       {
-         hb_retclen( szText, nLen );
+         hb_retclen(szText, nLen);
       }
    }
    else
@@ -177,7 +177,7 @@ HB_FUNC( ALLTRIM )
       }
       else
       {
-         hb_retclen( szText, nLen );
+         hb_retclen(szText, nLen);
       }
    }
    else

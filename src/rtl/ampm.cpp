@@ -96,5 +96,5 @@ HB_FUNC( AMPM )
    
    memcpy(pszResult + nTimeLen, bAM ? " am" : " pm", 4);
 
-   hb_retclen_buffer( pszResult, nTimeLen + 3 );
+   hb_retclen_buffer(pszResult, nTimeLen + 3);
 }

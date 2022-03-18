@@ -1321,11 +1321,11 @@ void hb_vmInit( HB_BOOL bStartMainProc )
          {
             if( pszMain )
             {
-               hb_errInternal( HB_EI_VMBADSTARTUP, nullptr, pszMain, nullptr );
+               hb_errInternal(HB_EI_VMBADSTARTUP, nullptr, pszMain, nullptr);
             }
             else
             {
-               hb_errInternal( HB_EI_VMNOSTARTUP, nullptr, nullptr, nullptr );
+               hb_errInternal(HB_EI_VMNOSTARTUP, nullptr, nullptr, nullptr);
             }
          }
 #endif
@@ -2127,7 +2127,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 #if defined( _HB_RECOVER_DEBUG )
             if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
             {
-               hb_errInternal( HB_EI_ERRUNRECOV, "HB_P_ALWAYSBEGIN", nullptr, nullptr );
+               hb_errInternal(HB_EI_ERRUNRECOV, "HB_P_ALWAYSBEGIN", nullptr, nullptr);
             }
 #endif
             /* change the recover address to ALWAYSEND opcode */
@@ -2150,7 +2150,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 #if defined( _HB_RECOVER_DEBUG )
             if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
             {
-               hb_errInternal( HB_EI_ERRUNRECOV, "HB_P_ALWAYSEND", nullptr, nullptr );
+               hb_errInternal(HB_EI_ERRUNRECOV, "HB_P_ALWAYSEND", nullptr, nullptr);
             }
 #endif
             uiPrevAction = hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.flags;
@@ -2246,7 +2246,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 #if defined( _HB_RECOVER_DEBUG )
             if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
             {
-               hb_errInternal( HB_EI_ERRUNRECOV, "HB_P_SEQEND", nullptr, nullptr );
+               hb_errInternal(HB_EI_ERRUNRECOV, "HB_P_SEQEND", nullptr, nullptr);
             }
 #endif
             /*
@@ -2274,7 +2274,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 #if defined( _HB_RECOVER_DEBUG )
             if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
             {
-               hb_errInternal( HB_EI_ERRUNRECOV, "HB_P_SEQRECOVER", nullptr, nullptr );
+               hb_errInternal(HB_EI_ERRUNRECOV, "HB_P_SEQRECOVER", nullptr, nullptr);
             }
 #endif
             /*
@@ -3208,7 +3208,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 
          default:
             /* TODO: Include to failing pcode in the error message */
-            hb_errInternal( HB_EI_VMBADOPCODE, nullptr, nullptr, nullptr );
+            hb_errInternal(HB_EI_VMBADOPCODE, nullptr, nullptr, nullptr);
             break;
       }
 
@@ -3231,7 +3231,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 #if defined( _HB_RECOVER_DEBUG )
                   if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
                   {
-                     hb_errInternal( HB_EI_ERRUNRECOV, "ENDPROC", nullptr, nullptr );
+                     hb_errInternal(HB_EI_ERRUNRECOV, "ENDPROC", nullptr, nullptr);
                   }
 #endif
                   if( hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.flags & HB_SEQ_DOALWAYS )
@@ -3250,7 +3250,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 #if defined( _HB_RECOVER_DEBUG )
                   if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
                   {
-                     hb_errInternal( HB_EI_ERRUNRECOV, "ENDPROC ALWAYS", nullptr, nullptr );
+                     hb_errInternal(HB_EI_ERRUNRECOV, "ENDPROC ALWAYS", nullptr, nullptr);
                   }
 #endif
                   /* reload the address of ALWAYS code */
@@ -3282,7 +3282,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 #if defined( _HB_RECOVER_DEBUG )
                if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
                {
-                  hb_errInternal( HB_EI_ERRUNRECOV, "BREAK", nullptr, nullptr );
+                  hb_errInternal(HB_EI_ERRUNRECOV, "BREAK", nullptr, nullptr);
                }
 #endif
                pCode = hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.recover;
@@ -3310,7 +3310,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 #if defined( _HB_RECOVER_DEBUG )
                   if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
                   {
-                     hb_errInternal( HB_EI_ERRUNRECOV, "QUIT", nullptr, nullptr );
+                     hb_errInternal(HB_EI_ERRUNRECOV, "QUIT", nullptr, nullptr);
                   }
 #endif
                   if( hb_stackItemFromTop(HB_RECOVER_STATE)->item.asRecover.flags & HB_SEQ_DOALWAYS )
@@ -3330,7 +3330,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 #if defined( _HB_RECOVER_DEBUG )
                   if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
                   {
-                     hb_errInternal( HB_EI_ERRUNRECOV, "QUIT ALWAYS", nullptr, nullptr );
+                     hb_errInternal(HB_EI_ERRUNRECOV, "QUIT ALWAYS", nullptr, nullptr);
                   }
 #endif
                   /* reload the address of ALWAYS code */
@@ -4143,7 +4143,7 @@ static void hb_vmFuncPtr( void )  /* pushes a function address pointer. Removes 
    }
    else
    {
-      hb_errInternal( HB_EI_VMNOTSYMBOL, nullptr, "hb_vmFuncPtr()", nullptr );
+      hb_errInternal(HB_EI_VMNOTSYMBOL, nullptr, "hb_vmFuncPtr()", nullptr);
    }
 }
 
@@ -6749,7 +6749,7 @@ static HARBOUR hb_vmDoBlock( void )
    pBlock = hb_stackSelfItem();
    if( ! HB_IS_BLOCK(pBlock) )
    {
-      hb_errInternal( HB_EI_VMNOTCBLOCK, nullptr, "hb_vmDoBlock()", nullptr );
+      hb_errInternal(HB_EI_VMNOTCBLOCK, nullptr, "hb_vmDoBlock()", nullptr);
    }
 
    pBase = hb_stackBaseItem();
@@ -7223,7 +7223,7 @@ static void hb_vmTSVRefMark( void * value )
    pItem = static_cast<PHB_ITEM>(hb_stackTestTSD( &( static_cast<PHB_TSVREF>( value ) )->threadData ));
    if( pItem && HB_IS_GCITEM(pItem) )
    {
-      hb_gcItemRef( pItem );
+      hb_gcItemRef(pItem);
    }
 }
 
@@ -8932,9 +8932,9 @@ static void hb_vmVerifyPCodeVersion( const char * szModuleName, HB_USHORT uiPCod
          char szPCode[10];
          hb_snprintf(szPCode, sizeof(szPCode), "%i.%i", uiPCodeVer >> 8, uiPCodeVer & 0xff);
 
-         hb_errInternal( HB_EI_ERRUNRECOV, "Module '%s'\n"
+         hb_errInternal(HB_EI_ERRUNRECOV, "Module '%s'\n"
                          "was compiled with unsupported PCODE version %s.\n"
-                         "Please recompile.", szModuleName, szPCode );
+                         "Please recompile.", szModuleName, szPCode);
       }
    }
 }
@@ -9169,7 +9169,7 @@ static void hb_vmItemRefClear( void * value )
        ! HB_IS_EXTREF(pItmRef->value) ||
        pItmRef->value->item.asExtRef.func != &s_ItmExtRawRef )
    {
-      hb_errInternal( HB_EI_ERRUNRECOV, "hb_vmItemRefClear()", nullptr, nullptr );
+      hb_errInternal(HB_EI_ERRUNRECOV, "hb_vmItemRefClear()", nullptr, nullptr);
    }
 #endif
 
@@ -9628,7 +9628,7 @@ void hb_vmRequestBreak( PHB_ITEM pItem )
 #if defined( _HB_RECOVER_DEBUG )
       if( hb_stackItem( nRecoverBase + HB_RECOVER_STATE )->type != HB_IT_RECOVER )
       {
-         hb_errInternal( HB_EI_ERRUNRECOV, "hb_vmRequestBreak", nullptr, nullptr );
+         hb_errInternal(HB_EI_ERRUNRECOV, "hb_vmRequestBreak", nullptr, nullptr);
       }
 #endif
       nRecoverBase = hb_stackItem( nRecoverBase + HB_RECOVER_STATE )->item.asRecover.base;
@@ -9639,7 +9639,7 @@ void hb_vmRequestBreak( PHB_ITEM pItem )
 #if defined( _HB_RECOVER_DEBUG )
       if( hb_stackItem( nRecoverBase + HB_RECOVER_STATE )->type != HB_IT_RECOVER )
       {
-         hb_errInternal( HB_EI_ERRUNRECOV, "hb_vmRequestBreak2", nullptr, nullptr );
+         hb_errInternal(HB_EI_ERRUNRECOV, "hb_vmRequestBreak2", nullptr, nullptr);
       }
 #endif
       if( pItem )
@@ -9786,7 +9786,7 @@ void hb_vmRequestRestore( void )
 
    if( pItem->type != HB_IT_RECOVER )
    {
-      hb_errInternal( HB_EI_ERRUNRECOV, "hb_vmRequestRestore", nullptr, nullptr );
+      hb_errInternal(HB_EI_ERRUNRECOV, "hb_vmRequestRestore", nullptr, nullptr);
    }
 
    uiAction = pItem->item.asRecover.request | hb_stackGetActionRequest();
@@ -10155,7 +10155,7 @@ HB_BOOL hb_xvmSeqEnd( void )
 #if defined( _HB_RECOVER_DEBUG )
    if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
    {
-      hb_errInternal( HB_EI_ERRUNRECOV, "hb_xvmSeqEnd", nullptr, nullptr );
+      hb_errInternal(HB_EI_ERRUNRECOV, "hb_xvmSeqEnd", nullptr, nullptr);
    }
 #endif
    /*
@@ -10209,7 +10209,7 @@ HB_BOOL hb_xvmSeqEndTest( void )
 #if defined( _HB_RECOVER_DEBUG )
    if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
    {
-      hb_errInternal( HB_EI_ERRUNRECOV, "hb_xvmSeqEndTest", nullptr, nullptr );
+      hb_errInternal(HB_EI_ERRUNRECOV, "hb_xvmSeqEndTest", nullptr, nullptr);
    }
 #endif
    /*
@@ -10241,7 +10241,7 @@ HB_BOOL hb_xvmSeqRecover( void )
 #if defined( _HB_RECOVER_DEBUG )
    if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
    {
-      hb_errInternal( HB_EI_ERRUNRECOV, "hb_xvmSeqRecover", nullptr, nullptr );
+      hb_errInternal(HB_EI_ERRUNRECOV, "hb_xvmSeqRecover", nullptr, nullptr);
    }
 #endif
    /* 2) Restore previous recovery base address */
@@ -10309,7 +10309,7 @@ HB_BOOL hb_xvmAlwaysBegin( void )
 #if defined( _HB_RECOVER_DEBUG )
    if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
    {
-      hb_errInternal( HB_EI_ERRUNRECOV, "hb_xvmAlwaysBegin", nullptr, nullptr );
+      hb_errInternal(HB_EI_ERRUNRECOV, "hb_xvmAlwaysBegin", nullptr, nullptr);
    }
 #endif
    /* store and reset action */
@@ -10339,7 +10339,7 @@ HB_BOOL hb_xvmAlwaysEnd( void )
 #if defined( _HB_RECOVER_DEBUG )
    if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
    {
-      hb_errInternal( HB_EI_ERRUNRECOV, "hb_xvmAlwaysEnd", nullptr, nullptr );
+      hb_errInternal(HB_EI_ERRUNRECOV, "hb_xvmAlwaysEnd", nullptr, nullptr);
    }
 #endif
    /* restore previous recovery base address */
@@ -13313,7 +13313,7 @@ HB_FUNC( __DBGINVOKEDEBUG )
 #ifndef HB_NO_DEBUG
       HB_BOOL * pfRequest = hb_stackDebugRequest();
 
-      hb_retl( *pfRequest );
+      hb_retl(*pfRequest);
       *pfRequest = hb_parl(1);
 #else
       hb_retl(false);
@@ -13350,7 +13350,7 @@ HB_FUNC( __DBGVMVARSLEN )
 
    if( hb_vmInternalsEnabled() )
    {
-      hb_retnint( hb_vmStaticsCount() );
+      hb_retnint(hb_vmStaticsCount());
    }
    else
    {
@@ -13392,7 +13392,7 @@ HB_FUNC( __DBGPROCLEVEL )
    if( hb_vmInternalsEnabled() )
    {
       HB_STACK_TLS_PRELOAD
-      hb_retnl( hb_dbg_ProcLevel() - 1 );   /* Don't count self */
+      hb_retnl(hb_dbg_ProcLevel() - 1);   /* Don't count self */
    }
 }
 
@@ -13547,7 +13547,7 @@ HB_FUNC( __SETPROFILER )
 #ifdef HB_NO_PROFILER
    hb_retl(false);
 #else
-   hb_retl( hb_bProfiler );
+   hb_retl(hb_bProfiler);
    if( HB_ISLOG(1) )
    {
       hb_bProfiler = hb_parl(1);
@@ -13558,7 +13558,7 @@ HB_FUNC( __SETPROFILER )
 HB_FUNC( __OPCOUNT ) /* it returns the total amount of opcodes */
 {
    HB_STACK_TLS_PRELOAD
-   hb_retnl( HB_P_LAST_PCODE - 1 );
+   hb_retnl(HB_P_LAST_PCODE - 1);
 }
 
 HB_FUNC( __OPGETPRF ) /* profiler: It returns an array with an opcode called and
@@ -13572,16 +13572,16 @@ HB_FUNC( __OPGETPRF ) /* profiler: It returns an array with an opcode called and
    hb_reta(2);
    if( ulOpcode < HB_P_LAST_PCODE )
    {
-      hb_storvnl( hb_ulOpcodesCalls[ulOpcode], -1, 1 );
-      hb_storvnl( hb_ulOpcodesTime[ulOpcode], -1, 2 );
+      hb_storvnl(hb_ulOpcodesCalls[ulOpcode], -1, 1);
+      hb_storvnl(hb_ulOpcodesTime[ulOpcode], -1, 2);
    }
    else
 #else
    hb_reta(2);
 #endif
    {
-      hb_storvnl( 0, -1, 1 );
-      hb_storvnl( 0, -1, 2 );
+      hb_storvnl(0, -1, 1);
+      hb_storvnl(0, -1, 2);
    }
 }
 
@@ -13593,7 +13593,7 @@ HB_FUNC( __TRACEPRGCALLS )
 {
    HB_STACK_TLS_PRELOAD
 #if defined( HB_PRG_TRACE )
-   hb_retl( hb_bTracePrgCalls );
+   hb_retl(hb_bTracePrgCalls);
    if( HB_ISLOG(1) )
    {
       hb_bTracePrgCalls = hb_parl(1);
@@ -13620,7 +13620,7 @@ HB_FUNC( __QUITCANCEL )
 #if defined( _HB_RECOVER_DEBUG )
          if( pRecover->type != HB_IT_RECOVER )
          {
-            hb_errInternal( HB_EI_ERRUNRECOV, "hb_vmRequestBreak", nullptr, nullptr );
+            hb_errInternal(HB_EI_ERRUNRECOV, "hb_vmRequestBreak", nullptr, nullptr);
          }
 #endif
          if( pRecover->item.asRecover.flags & HB_SEQ_DOALWAYS )
@@ -13647,19 +13647,19 @@ HB_FUNC( __VMITEMID )
    {
       if( HB_IS_ARRAY(pItem) )
       {
-         hb_retptr( hb_arrayId(pItem) );
+         hb_retptr(hb_arrayId(pItem));
       }
       else if( HB_IS_HASH(pItem) )
       {
-         hb_retptr( hb_hashId( pItem ) );
+         hb_retptr(hb_hashId(pItem));
       }
       else if( HB_IS_BLOCK(pItem) )
       {
-         hb_retptr( hb_codeblockId( pItem ) );
+         hb_retptr(hb_codeblockId(pItem));
       }
       else if( HB_IS_SYMBOL(pItem) )
       {
-         hb_retptr( pItem->item.asSymbol.value );
+         hb_retptr(pItem->item.asSymbol.value);
       }
    }
 }
@@ -13674,23 +13674,23 @@ HB_FUNC( __VMITEMREFS )
    {
       if( HB_IS_ARRAY(pItem) )
       {
-         hb_retnint( hb_arrayRefs(pItem) );
+         hb_retnint(hb_arrayRefs(pItem));
       }
       else if( HB_IS_HASH(pItem) )
       {
-         hb_retnint( hb_hashRefs( pItem ) );
+         hb_retnint(hb_hashRefs(pItem));
       }
       else if( HB_IS_BLOCK(pItem) )
       {
-         hb_retnint( hb_codeblockRefs( pItem ) );
+         hb_retnint(hb_codeblockRefs(pItem));
       }
       else if( HB_IS_POINTER(pItem) )
       {
-         hb_retnint( hb_gcRefCount( pItem->item.asPointer.value ) );
+         hb_retnint(hb_gcRefCount(pItem->item.asPointer.value));
       }
       else if( HB_IS_STRING(pItem) )
       {
-         hb_retnint( hb_xRefCount( pItem->item.asString.value ) );
+         hb_retnint(hb_xRefCount(pItem->item.asString.value));
       }
    }
 }
@@ -13719,10 +13719,10 @@ HB_FUNC( __VMCOUNTTHREADS )
    iStacks = iThreads = 0;
 #endif
 
-   hb_storni( iStacks, 1 );
-   hb_storni( iThreads, 2 );
+   hb_storni(iStacks, 1);
+   hb_storni(iThreads, 2);
 
-   hb_retni( iThreads );
+   hb_retni(iThreads);
 }
 
 HB_FUNC( __BREAKBLOCK )
@@ -13765,7 +13765,7 @@ HB_FUNC( ERRORLEVEL )
 {
    HB_STACK_TLS_PRELOAD
 
-   hb_retni( s_nErrorLevel );
+   hb_retni(s_nErrorLevel);
 
    /* NOTE: This should be HB_ISNUM(1), but it's sort of a Clipper bug that it
             accepts other types also and considers them zero. [vszakats] */

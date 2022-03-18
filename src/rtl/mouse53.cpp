@@ -52,7 +52,7 @@
 
 HB_FUNC( MPRESENT )
 {
-   hb_retl( hb_mouseIsPresent() );
+   hb_retl(hb_mouseIsPresent());
 }
 
 HB_FUNC( MHIDE )
@@ -67,7 +67,7 @@ HB_FUNC( MSHOW )
 
 HB_FUNC( MSETCURSOR )
 {
-   hb_retl( hb_mouseGetCursor() );
+   hb_retl(hb_mouseGetCursor());
 
    if( HB_ISLOG(1) )
    {
@@ -82,11 +82,11 @@ HB_FUNC( MROW )
       int iRow, iCol;
 
       hb_mouseGetPos( &iRow, &iCol );
-      hb_retni( iRow );
+      hb_retni(iRow);
    }
    else
    {
-      hb_retni( hb_mouseRow() );
+      hb_retni(hb_mouseRow());
    }
 }
 
@@ -97,11 +97,11 @@ HB_FUNC( MCOL )
       int iRow, iCol;
 
       hb_mouseGetPos( &iRow, &iCol );
-      hb_retni( iCol );
+      hb_retni(iCol);
    }
    else
    {
-      hb_retni( hb_mouseCol() );
+      hb_retni(hb_mouseCol());
    }   
 }
 
@@ -115,17 +115,17 @@ HB_FUNC( MSETPOS )
 
 HB_FUNC( MLEFTDOWN )
 {
-   hb_retl( hb_mouseButtonState( HB_MBUTTON_LEFT ) );
+   hb_retl(hb_mouseButtonState(HB_MBUTTON_LEFT));
 }
 
 HB_FUNC( MRIGHTDOWN )
 {
-   hb_retl( hb_mouseButtonState( HB_MBUTTON_RIGHT ) );
+   hb_retl(hb_mouseButtonState(HB_MBUTTON_RIGHT));
 }
 
 HB_FUNC( MDBLCLK )
 {
-   hb_retni( hb_mouseGetDoubleClickSpeed() );
+   hb_retni(hb_mouseGetDoubleClickSpeed());
 
    if( HB_ISNUM(1) )
    {
@@ -142,7 +142,7 @@ HB_FUNC( MSAVESTATE )
       void * pBuffer = hb_xgrab(iLen + 1);
 
       hb_mouseSaveState( pBuffer );
-      hb_retclen_buffer( static_cast<char*>(pBuffer), iLen );
+      hb_retclen_buffer(static_cast<char*>(pBuffer), iLen);
    }
    else
    {
@@ -174,13 +174,13 @@ HB_FUNC( HB_MGETBOUNDS )
 
    hb_mouseGetBounds( &iTop, &iLeft, &iBottom, &iRight );
 
-   hb_storni( iTop, 1 );
-   hb_storni( iLeft, 2 );
-   hb_storni( iBottom, 3 );
-   hb_storni( iRight, 4 );
+   hb_storni(iTop, 1);
+   hb_storni(iLeft, 2);
+   hb_storni(iBottom, 3);
+   hb_storni(iRight, 4);
 }
 
 HB_FUNC( HB_MMIDDLEDOWN )
 {
-   hb_retl( hb_mouseButtonState( HB_MBUTTON_MIDDLE ) );
+   hb_retl(hb_mouseButtonState(HB_MBUTTON_MIDDLE));
 }

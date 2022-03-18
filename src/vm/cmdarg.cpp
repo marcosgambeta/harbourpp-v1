@@ -713,7 +713,7 @@ char * hb_cmdargBaseProgName( void )
 
 HB_FUNC( HB_ARGCHECK )
 {
-   hb_retl( HB_ISCHAR(1) ? hb_cmdargCheck( hb_parc(1) ) : HB_FALSE );
+   hb_retl(HB_ISCHAR(1) ? hb_cmdargCheck(hb_parc(1)) : HB_FALSE);
 }
 
 /* Returns the value of an internal switch */
@@ -728,7 +728,7 @@ HB_FUNC( HB_ARGSTRING )
 
       if( pszValue )
       {
-         hb_retc_buffer( pszValue );
+         hb_retc_buffer(pszValue);
          return;
       }
    }
@@ -741,7 +741,7 @@ HB_FUNC( HB_ARGSTRING )
 
 HB_FUNC( HB_ARGC )
 {
-   hb_retni( s_argc - 1 );
+   hb_retni(s_argc - 1);
 }
 
 /* Returns a command-line argument passed to the application. Calling it with
@@ -754,7 +754,7 @@ HB_FUNC( HB_ARGV )
 
    if( pszArg )
    {
-      hb_retc_buffer( pszArg );
+      hb_retc_buffer(pszArg);
    }
    else
    {
@@ -853,7 +853,7 @@ HB_FUNC( HB_CMDLINE )
          HB_RETSTR( lpBuffer );
          hb_xfree(lpBuffer);
 #else
-         hb_retc_buffer( static_cast<char*>(hb_osDecodeCP(lpBuffer, nullptr, nullptr)) );
+         hb_retc_buffer(static_cast<char*>(hb_osDecodeCP(lpBuffer, nullptr, nullptr)));
 #endif
       }
       else
@@ -877,7 +877,7 @@ HB_FUNC( HB_CMDLINE )
          *--ptr = '\0';
 
          /* Convert from OS codepage */
-         hb_retc_buffer( const_cast<char*>(hb_osDecodeCP(pszBuffer, nullptr, nullptr)) );
+         hb_retc_buffer(const_cast<char*>(hb_osDecodeCP(pszBuffer, nullptr, nullptr)));
       }
    }
    else

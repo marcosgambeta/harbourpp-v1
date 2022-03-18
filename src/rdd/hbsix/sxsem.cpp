@@ -166,7 +166,7 @@ HB_FUNC( SX_MAKESEM )
          }
          if( ! fError )
          {
-            HB_PUT_LE_UINT16( buffer, iUsers );
+            HB_PUT_LE_UINT16(buffer, iUsers);
             if( hb_fileWriteAt( pFile, buffer, 2, 0 ) != 2 )
             {
                fError = HB_TRUE;
@@ -179,7 +179,7 @@ HB_FUNC( SX_MAKESEM )
    {
       iUsers = -1;
    }
-   hb_retni( iUsers );
+   hb_retni(iUsers);
 }
 
 HB_FUNC( SX_KILLSEM )
@@ -197,7 +197,7 @@ HB_FUNC( SX_KILLSEM )
          if( hb_fileReadAt( pFile, buffer, 2, 0 ) == 2 )
          {
             iUsers = HB_GET_LE_INT16( buffer ) - 1;
-            HB_PUT_LE_UINT16( buffer, iUsers );
+            HB_PUT_LE_UINT16(buffer, iUsers);
             hb_fileWriteAt( pFile, buffer, 2, 0 );
          }
          hb_fileClose( pFile );
@@ -207,7 +207,7 @@ HB_FUNC( SX_KILLSEM )
          }
       }
    }
-   hb_retni( iUsers );
+   hb_retni(iUsers);
 }
 
 HB_FUNC( SX_ISSEM )
@@ -224,5 +224,5 @@ HB_FUNC( SX_ISSEM )
       }
    }
 
-   hb_retl( pFile != nullptr );
+   hb_retl(pFile != nullptr);
 }

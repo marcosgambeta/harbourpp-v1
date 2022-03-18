@@ -70,7 +70,7 @@ static HB_CDP_PUT_FUNC( UTF16LE_put )
 
    if( *pnIndex + 1 < nLen )
    {
-      HB_PUT_LE_UINT16( &pDst[*pnIndex], wc );
+      HB_PUT_LE_UINT16(&pDst[*pnIndex], wc);
       *pnIndex += 2;
       return HB_TRUE;
    }

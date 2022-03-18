@@ -88,5 +88,5 @@ HB_FUNC( __DEFPATH )
    }
 #endif
 
-   hb_retclen( buffer, size );
+   hb_retclen(buffer, size);
 }

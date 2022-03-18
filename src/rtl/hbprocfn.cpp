@@ -80,19 +80,19 @@ HB_FUNC( HB_PROCESSOPEN )
       {
          if( phStdIn )
          {
-            hb_stornint( static_cast<HB_NHANDLE>(*phStdIn), 2 );
+            hb_stornint(static_cast<HB_NHANDLE>(*phStdIn), 2);
          }
          if( phStdOut )
          {
-            hb_stornint( static_cast<HB_NHANDLE>(*phStdOut), 3 );
+            hb_stornint(static_cast<HB_NHANDLE>(*phStdOut), 3);
          }
          if( phStdErr && phStdOut != phStdErr )
          {
-            hb_stornint( static_cast<HB_NHANDLE>(*phStdErr), 4 );
+            hb_stornint(static_cast<HB_NHANDLE>(*phStdErr), 4);
          }
-         hb_stornint( ulPID, 6 );
+         hb_stornint(ulPID, 6);
       }
-      hb_retnint( static_cast<HB_NHANDLE>(hProcess) );
+      hb_retnint(static_cast<HB_NHANDLE>(hProcess));
    }
    else
    {
@@ -108,7 +108,7 @@ HB_FUNC( HB_PROCESSVALUE )
    {
       int iResult = hb_fsProcessValue(hProcess, hb_pcount() < 2 || hb_parl(2));
       hb_fsSetFError(hb_fsError());
-      hb_retni( iResult );
+      hb_retni(iResult);
    }
    else
    {
@@ -124,7 +124,7 @@ HB_FUNC( HB_PROCESSCLOSE )
    {
       HB_BOOL fResult = hb_fsProcessClose(hProcess, hb_pcount() < 2 || hb_parl(2));
       hb_fsSetFError(hb_fsError());
-      hb_retl( fResult );
+      hb_retl(fResult);
    }
    else
    {
@@ -163,29 +163,29 @@ HB_FUNC( HB_PROCESSRUN )
 
       if( pStdOutBuf )
       {
-         if( ! hb_storclen_buffer( pStdOutBuf, nStdOut, 3 ) )
+         if( ! hb_storclen_buffer(pStdOutBuf, nStdOut, 3) )
          {
             hb_xfree(pStdOutBuf);
          }
       }
       else if( pStdOut )
       {
-         hb_storc( nullptr, 3 );
+         hb_storc(nullptr, 3);
       }
 
       if( pStdErrBuf )
       {
-         if( ! hb_storclen_buffer( pStdErrBuf, nStdErr, 4 ) )
+         if( ! hb_storclen_buffer(pStdErrBuf, nStdErr, 4) )
          {
             hb_xfree(pStdErrBuf);
          }
       }
       else if( pStdErr && pStdOut != pStdErr )
       {
-         hb_storc( nullptr, 4 );
+         hb_storc(nullptr, 4);
       }
 
-      hb_retni( iResult );
+      hb_retni(iResult);
    }
    else
    {

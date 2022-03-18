@@ -488,7 +488,7 @@ HB_FUNC( __DBSQL )
 
             if( errCode == HB_SUCCESS )
             {
-               hb_retnint( hb_db2Sql( pArea, pFields, llNext, pWhile, pFor, szDelim, szSep, szEsc, szTable, pFile, fInsert, fRecno ) );
+               hb_retnint(hb_db2Sql(pArea, pFields, llNext, pWhile, pFor, szDelim, szSep, szEsc, szTable, pFile, fInsert, fRecno));
             }
             hb_fileClose( pFile );
          }

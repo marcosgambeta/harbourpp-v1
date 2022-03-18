@@ -154,7 +154,7 @@ static void hb_mlGetEOLs( PHB_MLC_INFO pMLC, int iParam )
 
 static HB_BOOL hb_mlInit( PHB_MLC_INFO pMLC, int iParAdd )
 {
-   HB_ISIZ nSize = hb_parnsdef( 2, 79 );
+   HB_ISIZ nSize = hb_parnsdef(2, 79);
 
    pMLC->pszString = hb_parc(1);
    if( pMLC->pszString && nSize > 0 )
@@ -164,8 +164,8 @@ static HB_BOOL hb_mlInit( PHB_MLC_INFO pMLC, int iParAdd )
       pMLC->nLineLength = nSize;
       pMLC->nLen = hb_parclen(1);
 
-      pMLC->nTabSize = hb_parnsdef( 3 + iParAdd, 4 );
-      pMLC->fWordWrap = hb_parldef( 4 + iParAdd, HB_TRUE );
+      pMLC->nTabSize = hb_parnsdef(3 + iParAdd, 4);
+      pMLC->fWordWrap = hb_parldef(4 + iParAdd, HB_TRUE);
 
 #ifdef HB_CLP_STRICT
       if( pMLC->nLineLength > 254 )
@@ -359,7 +359,7 @@ static HB_SIZE hb_mlGetLine( PHB_MLC_INFO pMLC )
  */
 HB_FUNC( MEMOLINE )
 {
-   HB_ISIZ nLine = hb_parnsdef( 3, 1 );
+   HB_ISIZ nLine = hb_parnsdef(3, 1);
    char * szLine = nullptr;
    HB_SIZE nLen = 0;
 
@@ -379,7 +379,7 @@ HB_FUNC( MEMOLINE )
 
          if( nLine == 0 )
          {
-            HB_BOOL fPad = hb_parldef( 7, HB_TRUE );
+            HB_BOOL fPad = hb_parldef(7, HB_TRUE);
             HB_SIZE nIndex, nSize, nCol;
 
             nIndex = MLC.nOffset;
@@ -478,7 +478,7 @@ HB_FUNC( MEMOLINE )
    }
    else
    {
-      hb_retclen_buffer( szLine, nLen );
+      hb_retclen_buffer(szLine, nLen);
    }
 }
 
@@ -499,7 +499,7 @@ HB_FUNC( MLCOUNT )
       }
       hb_mlExit( &MLC );
    }
-   hb_retns( nLines );
+   hb_retns(nLines);
 }
 
 /* MLPos( <cString>, [ <nLineLength>=79 ],
@@ -510,7 +510,7 @@ HB_FUNC( MLCOUNT )
 HB_FUNC( MLPOS )
 {
    HB_MLC_INFO MLC;
-   HB_ISIZ nLine = hb_parnsdef( 3, 1 );
+   HB_ISIZ nLine = hb_parnsdef(3, 1);
    HB_SIZE nOffset = 0;
 
    if( nLine >= 1 )
@@ -539,7 +539,7 @@ HB_FUNC( MLPOS )
          hb_mlExit( &MLC );
       }
    }
-   hb_retns( nOffset );
+   hb_retns(nOffset);
 }
 
 /* MLCToPos( <cString>, [ <nLineLength>=79 ],
@@ -582,7 +582,7 @@ HB_FUNC( MLCTOPOS )
          hb_mlExit( &MLC );
       }
    }
-   hb_retns( nOffset + 1 );
+   hb_retns(nOffset + 1);
 }
 
 /* MPosToLC( <cString>, [ <nLineLength>=79 ],
@@ -626,8 +626,8 @@ HB_FUNC( MPOSTOLC )
       }
    }
    hb_reta(2);
-   hb_storvns( nLine, -1, 1 );
-   hb_storvns( nCol, -1, 2 );
+   hb_storvns(nLine, -1, 1);
+   hb_storvns(nCol, -1, 2);
 }
 
 /* hb_MLEval( <cString>, <bCode>, [ <nLineLength>=79 ],
@@ -638,7 +638,7 @@ HB_FUNC( HB_MLEVAL )
 {
    const char * pszString = hb_parc(1);
    PHB_ITEM pBlock = hb_param(2, HB_IT_EVALITEM);
-   HB_ISIZ nSize = hb_parnsdef( 3, 79 );
+   HB_ISIZ nSize = hb_parnsdef(3, 79);
    HB_SIZE nRowPos = 0, nColPos = 0, nLines = 0;
 
    if( pszString && pBlock && nSize > 0 )
@@ -646,9 +646,9 @@ HB_FUNC( HB_MLEVAL )
       HB_SIZE nOffset = 0;
       HB_SIZE nLineLength = nSize;
       HB_SIZE nLen = hb_parclen(1);
-      HB_SIZE nTabSize = hb_parnsdef( 4, 4 );
+      HB_SIZE nTabSize = hb_parnsdef(4, 4);
       HB_SIZE nPos = hb_parns(6) - 1;
-      HB_BOOL fWordWrap = hb_parldef( 5, HB_TRUE );
+      HB_BOOL fWordWrap = hb_parldef(5, HB_TRUE);
       PHB_CODEPAGE cdp = hb_vmCDP();
       PHB_ITEM pLineItem = nullptr, pSoftItem = nullptr;
       HB_BOOL fSoftCR, fEOL;
@@ -817,8 +817,8 @@ HB_FUNC( HB_MLEVAL )
 
    if( hb_vmRequestQuery() == 0 )
    {
-      hb_storns( nRowPos, 7 );
-      hb_storns( nColPos, 8 );
-      hb_retns( nLines );
+      hb_storns(nRowPos, 7);
+      hb_storns(nColPos, 8);
+      hb_retns(nLines);
    }
 }

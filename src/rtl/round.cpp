@@ -65,7 +65,7 @@ HB_FUNC( INT )
          int iWidth;
 
          hb_itemGetNLen(pNumber, &iWidth, nullptr);
-         hb_retnlen( hb_numInt( hb_itemGetND(pNumber) ), iWidth, 0 );
+         hb_retnlen(hb_numInt(hb_itemGetND(pNumber)), iWidth, 0);
       }
    }
    else
@@ -91,11 +91,11 @@ HB_FUNC( ROUND )
 #else
       if( iDec == 0 && HB_IS_NUMINT(pNumber) )
       {
-         hb_retnint( hb_itemGetNInt(pNumber) );
+         hb_retnint(hb_itemGetNInt(pNumber));
       }
       else
       {
-         hb_retnlen( hb_numRound( hb_itemGetND(pNumber), iDec ), 0, HB_MAX(iDec, 0) );
+         hb_retnlen(hb_numRound(hb_itemGetND(pNumber), iDec), 0, HB_MAX(iDec, 0));
       }
 #endif
    }

@@ -96,7 +96,7 @@ HB_FUNC( HB_USERNAME )
 
    if( buffer )
    {
-      hb_retc_buffer( buffer );
+      hb_retc_buffer(buffer);
    }
    else
    {

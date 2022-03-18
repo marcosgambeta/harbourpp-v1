@@ -692,7 +692,7 @@ HB_FUNC( SX_FCOMPRESS )
             if( hb_fileSeek( pInput, 0, FS_SET ) == 0 )
             {
                HB_BYTE buf[4];
-               HB_PUT_LE_UINT32( buf, nSize );
+               HB_PUT_LE_UINT32(buf, nSize);
                if( hb_fileWrite( pOutput, buf, 4, -1 ) == 4 )
                {
                   fRet = hb_LZSSxCompressFile( pInput, pOutput, nullptr );
@@ -703,7 +703,7 @@ HB_FUNC( SX_FCOMPRESS )
          hb_fileClose( pInput );
       }
    }
-   hb_retl( fRet );
+   hb_retl(fRet);
 }
 
 HB_FUNC( SX_FDECOMPRESS )
@@ -729,7 +729,7 @@ HB_FUNC( SX_FDECOMPRESS )
          hb_fileClose( pInput );
       }
    }
-   hb_retl( fRet );
+   hb_retl(fRet);
 }
 
 HB_FUNC( _SX_STRCOMPRESS )
@@ -744,15 +744,15 @@ HB_FUNC( _SX_STRCOMPRESS )
       /* this is for strict SIX compatibility - in general very bad idea */
       nBuf = nLen + 257;
       pBuf = static_cast<char*>(hb_xgrab(nBuf));
-      HB_PUT_LE_UINT32( pBuf, nLen );
+      HB_PUT_LE_UINT32(pBuf, nLen);
       if( ! hb_LZSSxCompressMem( pStr, nLen, pBuf + 4, nBuf - 4, &nDst ) )
       {
          /* It's not six compatible - it's a workaround for wrongly defined SIX behavior */
-         HB_PUT_LE_UINT32( pBuf, HB_SX_UNCOMPRESED );
+         HB_PUT_LE_UINT32(pBuf, HB_SX_UNCOMPRESED);
          memcpy(pBuf + 4, pStr, nLen);
          nDst = nLen;
       }
-      hb_retclen( pBuf, nDst + 4 );
+      hb_retclen(pBuf, nDst + 4);
       hb_xfree(pBuf);
    }
    else
@@ -775,7 +775,7 @@ HB_FUNC( _SX_STRDECOMPRESS )
          nBuf = HB_GET_LE_UINT32( pStr );
          if( nBuf == HB_SX_UNCOMPRESED )
          {
-            hb_retclen( pStr + 4, nLen - 4 );
+            hb_retclen(pStr + 4, nLen - 4);
             fOK = HB_TRUE;
          }
          else
@@ -786,7 +786,7 @@ HB_FUNC( _SX_STRDECOMPRESS )
                fOK = hb_LZSSxDecompressMem( pStr + 4, nLen - 4, pBuf, nBuf );
                if( fOK )
                {
-                  hb_retclen_buffer( pBuf, nBuf );
+                  hb_retclen_buffer(pBuf, nBuf);
                }
                else
                {

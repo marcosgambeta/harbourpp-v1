@@ -92,7 +92,7 @@ HB_BOOL hb_lppSend( PHB_LPP pSocket, const void * data, HB_SIZE len, HB_MAXINT t
    if( ! pSocket->pSendBuffer )
    {
       pSocket->pSendBuffer = static_cast<char*>(hb_xgrab(len + 4));
-      HB_PUT_LE_UINT32( pSocket->pSendBuffer, len );
+      HB_PUT_LE_UINT32(pSocket->pSendBuffer, len);
       hb_xmemcpy(pSocket->pSendBuffer + 4, data, len);
       pSocket->nSendLen = len + 4;
       pSocket->nSendPos = 0;

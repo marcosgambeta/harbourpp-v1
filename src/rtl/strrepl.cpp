@@ -248,7 +248,7 @@ HB_FUNC( HB_STRREPLACE )
          {
             hb_xfree(ptrOpt);
          }
-         hb_retclen_buffer( pszResult, nSize );
+         hb_retclen_buffer(pszResult, nSize);
       }
       else
       {

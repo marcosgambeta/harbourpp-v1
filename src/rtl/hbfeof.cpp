@@ -53,7 +53,7 @@ HB_FUNC( HB_FEOF )
 
    if( HB_ISNUM(1) )
    {
-      hb_retl( hb_fsEof(hb_numToHandle(hb_parnint(1))) );
+      hb_retl(hb_fsEof(hb_numToHandle(hb_parnint(1))));
       uiError = hb_fsError();
    }
    else

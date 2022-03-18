@@ -153,7 +153,7 @@ HB_FUNC( HB_VFEXISTS )
 
          szName[0] = '\0';
          fResult = hb_fileExists( pszFileName, szName );
-         hb_storc( szName, 2 );
+         hb_storc(szName, 2);
       }
       else
       {
@@ -164,7 +164,7 @@ HB_FUNC( HB_VFEXISTS )
    }
 
    hb_fsSetFError(uiError);
-   hb_retl( fResult );
+   hb_retl(fResult);
 }
 
 /* hb_vfErase( <cFileName> ) --> <nResult> */
@@ -184,7 +184,7 @@ HB_FUNC( HB_VFERASE )
    }
 
    hb_fsSetFError(uiError);
-   hb_retni( iResult );
+   hb_retni(iResult);
 }
 
 /* hb_vfRename( <cFileSrc>, <cFileDst> ) --> <nResult> */
@@ -204,7 +204,7 @@ HB_FUNC( HB_VFRENAME )
    }
 
    hb_fsSetFError(uiError);
-   hb_retni( iResult );
+   hb_retni(iResult);
 }
 
 /* hb_vfCopyFile( <cFileSrc>, <cFileDst> ) --> <nResult> */
@@ -224,7 +224,7 @@ HB_FUNC( HB_VFCOPYFILE )
    }
 
    hb_fsSetFError(uiError);
-   hb_retni( iResult );
+   hb_retni(iResult);
 }
 
 /* hb_vfMoveFile( <cFileSrc>, <cFileDst> ) --> <nResult> */
@@ -244,7 +244,7 @@ HB_FUNC( HB_VFMOVEFILE )
    }
 
    hb_fsSetFError(uiError);
-   hb_retni( iResult );
+   hb_retni(iResult);
 }
 
 /* hb_vfDirExists( <cDirName> ) --> <lExists> */
@@ -261,7 +261,7 @@ HB_FUNC( HB_VFDIREXISTS )
    }
 
    hb_fsSetFError(uiError);
-   hb_retl( fResult );
+   hb_retl(fResult);
 }
 
 /* hb_vfDirMake( <cDirName> ) --> <nSuccess> */
@@ -281,7 +281,7 @@ HB_FUNC( HB_VFDIRMAKE )
    }
 
    hb_fsSetFError(uiError);
-   hb_retni( iResult );
+   hb_retni(iResult);
 }
 
 /* hb_vfDirRemove( <cDirName> ) --> <nSuccess> */
@@ -301,7 +301,7 @@ HB_FUNC( HB_VFDIRREMOVE )
    }
 
    hb_fsSetFError(uiError);
-   hb_retni( iResult );
+   hb_retni(iResult);
 }
 
 /* hb_vfDirectory( [ <cDirSpec> ], [ <cAttr> ] ) --> <aDirectory> */
@@ -314,9 +314,9 @@ HB_FUNC( HB_VFDIRECTORY )
 /* hb_vfDirSpace( <cDirName>, [ <nInfoType> ] ) --> <nFreeSpace> */
 HB_FUNC( HB_VFDIRSPACE )
 {
-   HB_USHORT uiType = static_cast<HB_USHORT>(hb_parnidef( 2, HB_DISK_AVAIL ));
+   HB_USHORT uiType = static_cast<HB_USHORT>(hb_parnidef(2, HB_DISK_AVAIL));
 
-   hb_retnlen( hb_fileDirSpace( hb_parc(1), uiType ), -1, 0 );
+   hb_retnlen(hb_fileDirSpace(hb_parc(1), uiType), -1, 0);
    hb_fsSetFError(hb_fsError());
 }
 
@@ -325,16 +325,16 @@ HB_FUNC( HB_VFATTRGET )
 {
    HB_FATTR nAttr = 0;
 
-   hb_retl( hb_fileAttrGet( hb_parcx(1), &nAttr ) );
+   hb_retl(hb_fileAttrGet(hb_parcx(1), &nAttr));
    hb_fsSetFError(hb_fsError());
 
-   hb_stornl( nAttr, 2 );
+   hb_stornl(nAttr, 2);
 }
 
 /* hb_vfAttrSet( <cFileName>, <nAttr> ) --> <lOK> */
 HB_FUNC( HB_VFATTRSET )
 {
-   hb_retl( hb_fileAttrSet( hb_parcx(1), static_cast<HB_FATTR>(hb_parnl(2)) ) );
+   hb_retl(hb_fileAttrSet(hb_parcx(1), static_cast<HB_FATTR>(hb_parnl(2))));
    hb_fsSetFError(hb_fsError());
 }
 
@@ -357,12 +357,12 @@ HB_FUNC( HB_VFTIMEGET )
          {
             buf[8] = '\0';
          }
-         hb_storc( buf, 3 );
-         hb_stordl( lJulian, 2 );
+         hb_storc(buf, 3);
+         hb_stordl(lJulian, 2);
       }
       else
       {
-         hb_stortdt( lJulian, lMillisec, 2 );
+         hb_stortdt(lJulian, lMillisec, 2);
       }
 
       hb_retl(true);
@@ -371,12 +371,12 @@ HB_FUNC( HB_VFTIMEGET )
    {
       if( HB_ISBYREF(3) )
       {
-         hb_storc( nullptr, 3 );
-         hb_stordl( 0, 2 );
+         hb_storc(nullptr, 3);
+         hb_stordl(0, 2);
       }
       else
       {
-         hb_stortdt( 0, 0, 2 );
+         hb_stortdt(0, 0, 2);
       }
 
       hb_retl(false);
@@ -408,7 +408,7 @@ HB_FUNC( HB_VFTIMESET )
       }
    }
 
-   hb_retl( hb_fileTimeSet( hb_parcx(1), lDate, lTime ) );
+   hb_retl(hb_fileTimeSet(hb_parcx(1), lDate, lTime));
    hb_fsSetFError(hb_fsError());
 }
 
@@ -429,7 +429,7 @@ HB_FUNC( HB_VFLINK )
    }
 
    hb_fsSetFError(uiError);
-   hb_retni( iResult );
+   hb_retni(iResult);
 }
 
 /* hb_vfLinkSym( <cTargetFileName>, <cNewFileName> ) --> <nSuccess> */
@@ -449,7 +449,7 @@ HB_FUNC( HB_VFLINKSYM )
    }
 
    hb_fsSetFError(uiError);
-   hb_retni( iResult );
+   hb_retni(iResult);
 }
 
 /* hb_vfLinkRead( <cFileName> ) --> <cDestFileName> | "" */
@@ -466,7 +466,7 @@ HB_FUNC( HB_VFLINKREAD )
    }
 
    hb_fsSetFError(uiError);
-   hb_retc_buffer( pszResult );
+   hb_retc_buffer(pszResult);
 }
 
 /* hb_vfOpen( [@]<cFileName>, [ <nModeAttr> ] ) --> <pHandle> | NIL */
@@ -481,7 +481,7 @@ HB_FUNC( HB_VFOPEN )
       PHB_FILE pFile;
       int iMode;
 
-      iMode = hb_parnidef( 2, FO_READWRITE | FO_DENYNONE | FO_PRIVATE ) & ( 0xFF | FO_CREAT | FO_TRUNC | FO_EXCL | FO_DEFAULTS );
+      iMode = hb_parnidef(2, FO_READWRITE | FO_DENYNONE | FO_PRIVATE) & (0xFF | FO_CREAT | FO_TRUNC | FO_EXCL | FO_DEFAULTS);
 
       if( iMode & FO_CREAT )
       {
@@ -526,7 +526,7 @@ HB_FUNC( HB_VFOPEN )
 
       if( pszFile == szName )
       {
-         hb_storc( szName, 1 );
+         hb_storc(szName, 1);
       }
 
       hb_fsSetFError(hb_fsError());
@@ -573,7 +573,7 @@ HB_FUNC( HB_VFLOCK )
          uiError = hb_fsError();
       }
       hb_fsSetFError(uiError);
-      hb_retl( fResult );
+      hb_retl(fResult);
    }
 }
 
@@ -596,7 +596,7 @@ HB_FUNC( HB_VFUNLOCK )
          uiError = hb_fsError();
       }
       hb_fsSetFError(uiError);
-      hb_retl( fResult );
+      hb_retl(fResult);
    }
 }
 
@@ -619,7 +619,7 @@ HB_FUNC( HB_VFLOCKTEST )
          uiError = hb_fsError();
       }
       hb_fsSetFError(uiError);
-      hb_retni( iResult );
+      hb_retni(iResult);
    }
 }
 
@@ -647,17 +647,17 @@ HB_FUNC( HB_VFREAD )
                nSize = nRead;
             }
          }
-         nRead = hb_fileRead( pFile, buffer, nSize, hb_parnintdef( 4, -1 ) );
+         nRead = hb_fileRead( pFile, buffer, nSize, hb_parnintdef(4, -1) );
          uiError = hb_fsError();
       }
 
       if( nRead == static_cast<HB_SIZE>(FS_ERROR) )
       {
-         hb_retni( FS_ERROR );
+         hb_retni(FS_ERROR);
       }
       else
       {
-         hb_retns( nRead );
+         hb_retns(nRead);
       }
       hb_fsSetFError(uiError);
    }
@@ -678,14 +678,14 @@ HB_FUNC( HB_VFREADLEN )
          char * buffer = static_cast<char*>(hb_xgrab(nToRead + 1));
          HB_SIZE nRead;
 
-         nRead = hb_fileRead( pFile, buffer, nToRead, hb_parnintdef( 3, -1 ) );
+         nRead = hb_fileRead( pFile, buffer, nToRead, hb_parnintdef(3, -1) );
          uiError = hb_fsError();
 
          if( nRead == static_cast<HB_SIZE>(FS_ERROR) )
          {
             nRead = 0;
          }
-         hb_retclen_buffer( buffer, nRead );
+         hb_retclen_buffer(buffer, nRead);
       }
       else
       {
@@ -718,14 +718,14 @@ HB_FUNC( HB_VFWRITE )
             }
          }
 
-         nLen = hb_fileWrite( pFile, hb_parc(2), nLen, hb_parnintdef( 4, -1 ) );
+         nLen = hb_fileWrite( pFile, hb_parc(2), nLen, hb_parnintdef(4, -1) );
          if( nLen == static_cast<HB_SIZE>(FS_ERROR) )
          {
-            hb_retni( FS_ERROR );
+            hb_retni(FS_ERROR);
          }
          else
          {
-            hb_retns( nLen );
+            hb_retns(nLen);
          }
          uiError = hb_fsError();
       }
@@ -761,17 +761,17 @@ HB_FUNC( HB_VFREADAT )
                nSize = nRead;
             }
          }
-         nRead = hb_fileReadAt( pFile, buffer, nSize, static_cast<HB_FOFFSET>(hb_parnintdef( 4, -1 )) );
+         nRead = hb_fileReadAt( pFile, buffer, nSize, static_cast<HB_FOFFSET>(hb_parnintdef(4, -1)) );
          uiError = hb_fsError();
       }
 
       if( nRead == static_cast<HB_SIZE>(FS_ERROR) )
       {
-         hb_retni( FS_ERROR );
+         hb_retni(FS_ERROR);
       }
       else
       {
-         hb_retns( nRead );
+         hb_retns(nRead);
       }
       hb_fsSetFError(uiError);
    }
@@ -800,14 +800,14 @@ HB_FUNC( HB_VFWRITEAT )
             }
          }
 
-         nLen = hb_fileWriteAt( pFile, pszData, nLen, static_cast<HB_FOFFSET>(hb_parnintdef( 4, -1 )) );
+         nLen = hb_fileWriteAt( pFile, pszData, nLen, static_cast<HB_FOFFSET>(hb_parnintdef(4, -1)) );
          if( nLen == static_cast<HB_SIZE>(FS_ERROR) )
          {
-            hb_retni( FS_ERROR );
+            hb_retni(FS_ERROR);
          }
          else
          {
-            hb_retns( nLen );
+            hb_retns(nLen);
          }
          uiError = hb_fsError();
       }
@@ -831,7 +831,7 @@ HB_FUNC( HB_VFSEEK )
 
       if( HB_ISNUM(2) )
       {
-         hb_retnint( hb_fileSeek( pFile, static_cast<HB_FOFFSET>(hb_parnint(2)), static_cast<HB_USHORT>(hb_parnidef( 3, FS_SET )) ) );
+         hb_retnint(hb_fileSeek(pFile, static_cast<HB_FOFFSET>(hb_parnint(2)), static_cast<HB_USHORT>(hb_parnidef(3, FS_SET))));
          uiError = hb_fsError();
       }
       else
@@ -850,7 +850,7 @@ HB_FUNC( HB_VFTRUNC )
 
    if( pFile )
    {
-      hb_retl( hb_fileTruncAt( pFile, static_cast<HB_FOFFSET>(hb_parnint(2)) ) );
+      hb_retl(hb_fileTruncAt(pFile, static_cast<HB_FOFFSET>(hb_parnint(2))));
       hb_fsSetFError(hb_fsError());
    }
 }
@@ -862,7 +862,7 @@ HB_FUNC( HB_VFSIZE )
 
    if( pszFile )
    {
-      hb_retnint( hb_fileSizeGet( pszFile, hb_parldef( 2, HB_TRUE ) ) );
+      hb_retnint(hb_fileSizeGet(pszFile, hb_parldef(2, HB_TRUE)));
       hb_fsSetFError(hb_fsError());
    }
    else
@@ -870,7 +870,7 @@ HB_FUNC( HB_VFSIZE )
       PHB_FILE pFile = hb_fileParam(1);
       if( pFile )
       {
-         hb_retnint( hb_fileSize( pFile ) );
+         hb_retnint(hb_fileSize(pFile));
          hb_fsSetFError(hb_fsError());
       }
    }
@@ -883,7 +883,7 @@ HB_FUNC( HB_VFEOF )
 
    if( pFile )
    {
-      hb_retl( hb_fileEof( pFile ) );
+      hb_retl(hb_fileEof(pFile));
       hb_fsSetFError(hb_fsError());
    }
 }
@@ -939,7 +939,7 @@ HB_FUNC( HB_VFHANDLE )
 {
    PHB_FILE pFile = hb_fileParam(1);
 
-   hb_retnint( static_cast<HB_NHANDLE>(pFile ? hb_fileHandle( pFile ) : FS_ERROR) );
+   hb_retnint(static_cast<HB_NHANDLE>(pFile ? hb_fileHandle(pFile) : FS_ERROR));
 }
 
 /* hb_vfTempFile( @<cFileName>, [ <cDir> ], [ <cPrefix> ], [ <cExt> ], [ <nAttr> ] ) --> <pHandle> | NIL */
@@ -951,9 +951,9 @@ HB_FUNC( HB_VFTEMPFILE )
                                        hb_parc(2), /* pszDir */
                                        hb_parc(3), /* pszPrefix */
                                        hb_parc(4), /* pszExt */
-                                       static_cast<HB_FATTR>(hb_parnldef( 5, FC_NORMAL )) ) );
+                                       static_cast<HB_FATTR>(hb_parnldef(5, FC_NORMAL)) ) );
    hb_fsSetFError(hb_fsError());
-   hb_storc( szName, 1 );
+   hb_storc(szName, 1);
 }
 
 /* hb_vfLoad( <cFileName>, [ <nMaxSize> ] ) --> <cFileBody> | NIL */
@@ -967,7 +967,7 @@ HB_FUNC( HB_VFLOAD )
       char * pBuffer = reinterpret_cast<char*>(hb_fileLoad( pszFileName, hb_parns(2), &nSize ));
       if( pBuffer )
       {
-         hb_retclen_buffer( pBuffer, nSize );
+         hb_retclen_buffer(pBuffer, nSize);
       }
    }
    else

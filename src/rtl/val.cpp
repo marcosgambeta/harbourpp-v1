@@ -65,7 +65,7 @@ static void hb_val( HB_BOOL fExt )
 
       if( fExt )
       {
-         iLen = hb_parnidef( 2, iLen );
+         iLen = hb_parnidef(2, iLen);
 
          if( fDbl && iDec > 0 )
          {

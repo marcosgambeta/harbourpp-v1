@@ -194,7 +194,7 @@ HB_BOOL hb_itemRelease( PHB_ITEM pItem )
 
    if( pItem )
    {
-      hb_gcGripDrop( pItem );
+      hb_gcGripDrop(pItem);
       return HB_TRUE;
    }
    else
@@ -415,7 +415,7 @@ PHB_ITEM hb_itemPutCLConst( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
    }
    else
    {
-      hb_errInternal( 6003, "Internal error: hb_itemPutCLConst() missing termination character", nullptr, nullptr );
+      hb_errInternal(6003, "Internal error: hb_itemPutCLConst() missing termination character", nullptr, nullptr);
    }
 
    return pItem;
@@ -1885,7 +1885,7 @@ HB_SIZE hb_itemSize( PHB_ITEM pItem )
       }
       else if( HB_IS_HASH(pItem) )
       {
-         return hb_hashLen( pItem );
+         return hb_hashLen(pItem);
       }
    }
 
@@ -1900,7 +1900,7 @@ HB_TYPE hb_itemType( PHB_ITEM pItem )
 
    if( pItem )
    {
-      return ( HB_TYPE ) HB_ITEM_TYPE( pItem );
+      return ( HB_TYPE ) HB_ITEM_TYPE(pItem);
    }
    else
    {
@@ -1916,7 +1916,7 @@ const char * hb_itemTypeStr( PHB_ITEM pItem )
 
    if( pItem )
    {
-      switch( HB_ITEM_TYPE( pItem ) )
+      switch( HB_ITEM_TYPE(pItem) )
       {
          case HB_IT_ARRAY:
             return hb_arrayIsObject(pItem) ? "O" : "A";
@@ -1975,7 +1975,7 @@ enum HB_IT_BASIC
 
 static HB_IT_BASIC s_hb_itemTypeBasic( PHB_ITEM pItem )
 {
-   switch( HB_ITEM_TYPE( pItem ) )
+   switch( HB_ITEM_TYPE(pItem) )
    {
       case HB_IT_ARRAY:
          return hb_arrayIsObject(pItem) ? HB_IT_O : HB_IT_A;
@@ -2043,7 +2043,7 @@ void hb_itemClear( PHB_ITEM pItem )
 
    HB_TYPE type;
 
-   type = HB_ITEM_TYPERAW( pItem );
+   type = HB_ITEM_TYPERAW(pItem);
    pItem->type = HB_IT_NIL;
 
    /* GCLOCK enter */
@@ -2105,7 +2105,7 @@ void hb_itemCopy( PHB_ITEM pDest, PHB_ITEM pSource )
 
    if( pDest == pSource )
    {
-      hb_errInternal( HB_EI_ITEMBADCOPY, nullptr, "hb_itemCopy()", nullptr );
+      hb_errInternal(HB_EI_ITEMBADCOPY, nullptr, "hb_itemCopy()", nullptr);
    }
 
    if( HB_IS_COMPLEX(pDest) )
@@ -2248,7 +2248,7 @@ void hb_itemMove( PHB_ITEM pDest, PHB_ITEM pSource )
 
    if( pDest == pSource )
    {
-      hb_errInternal( HB_EI_ITEMBADCOPY, nullptr, "hb_itemMove()", nullptr );
+      hb_errInternal(HB_EI_ITEMBADCOPY, nullptr, "hb_itemMove()", nullptr);
    }
 
    if( HB_IS_COMPLEX(pDest) )
@@ -2459,7 +2459,7 @@ PHB_ITEM hb_itemUnRefOnce( PHB_ITEM pItem )
       }
       else if( HB_IS_EXTREF(pItem) )
       {
-         pItem = pItem->item.asExtRef.func->read( pItem );
+         pItem = pItem->item.asExtRef.func->read(pItem);
       }
       else
       {
@@ -2721,7 +2721,7 @@ PHB_ITEM hb_itemClone( PHB_ITEM pItem )
    }
    else if( HB_IS_HASH(pItem) )
    {
-      return hb_hashClone( pItem );
+      return hb_hashClone(pItem);
    }
    else
    {
@@ -3452,7 +3452,7 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
 
    char * buffer;
 
-   switch( HB_ITEM_TYPE( pItem ) )
+   switch( HB_ITEM_TYPE(pItem) )
    {
       case HB_IT_STRING:
       case HB_IT_MEMO:
@@ -3585,7 +3585,7 @@ char * hb_itemPadConv( PHB_ITEM pItem, HB_SIZE * pnSize, HB_BOOL * bFreeReq )
 
    if( pItem )
    {
-      switch( HB_ITEM_TYPE( pItem ) )
+      switch( HB_ITEM_TYPE(pItem) )
       {
          case HB_IT_STRING:
          case HB_IT_MEMO:

@@ -155,7 +155,7 @@ static void hb_gt_wvt_RegisterClass( HINSTANCE hInstance )
    {
       if( GetLastError() != ERROR_CLASS_ALREADY_EXISTS )
       {
-         hb_errInternal( 10001, "Failed to register WVT window class", nullptr, nullptr );
+         hb_errInternal(10001, "Failed to register WVT window class", nullptr, nullptr);
       }
    }
 }
@@ -2959,7 +2959,7 @@ static HB_BOOL hb_gt_wvt_KeyEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, 
 #if defined( UNICODE )
                if( iKey >= 127 )
                {
-                  iKey = HB_INKEY_NEW_UNICODEF( iKey, iFlags );
+                  iKey = HB_INKEY_NEW_UNICODEF(iKey, iFlags);
                }
                else if( iFlags & ( HB_KF_CTRL | HB_KF_ALT ) )
                {
@@ -2974,7 +2974,7 @@ static HB_BOOL hb_gt_wvt_KeyEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, 
                   int u = HB_GTSELF_KEYTRANS( pWVT->pGT, iKey );
                   if( u )
                   {
-                     iKey = HB_INKEY_NEW_UNICODEF( u, iFlags );
+                     iKey = HB_INKEY_NEW_UNICODEF(u, iFlags);
                   }
                   else if( iKey < 127 && ( iFlags & ( HB_KF_CTRL | HB_KF_ALT ) ) )
                   {
@@ -3490,7 +3490,7 @@ static HB_BOOL hb_gt_wvt_CreateConsoleWindow( PHB_GTWVT pWVT )
       }
       else
       {
-         hb_errInternal( 10001, "Failed to create WVT window", nullptr, nullptr );
+         hb_errInternal(10001, "Failed to create WVT window", nullptr, nullptr);
       }
    }
 
@@ -3650,7 +3650,7 @@ static void hb_gt_wvt_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    }
    else
    {
-      hb_errInternal( 10001, "Maximum number of WVT windows reached, cannot create another one", nullptr, nullptr );
+      hb_errInternal(10001, "Maximum number of WVT windows reached, cannot create another one", nullptr, nullptr);
    }
 }
 

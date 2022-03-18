@@ -64,7 +64,7 @@ HB_FUNC( HB_STRDECODESCAPE )
          char * str = static_cast<char*>(hb_xgrab(nLen + 1));
          hb_xmemcpy(str, hb_itemGetCPtr(pText), nLen + 1);
          hb_strRemEscSeq( str, &nLen );
-         hb_retclen_buffer( str, nLen );
+         hb_retclen_buffer(str, nLen);
       }
       else
       {
@@ -150,8 +150,8 @@ HB_FUNC( HB_STRCDECODE )
          }
          if( nLen == 0 && ( ! fCont || HB_ISBYREF(2) ) )
          {
-            hb_retclen_buffer( pszDst, nDst );
-            hb_storl( fCont, 2 );
+            hb_retclen_buffer(pszDst, nDst);
+            hb_storl(fCont, 2);
          }
          else
          {

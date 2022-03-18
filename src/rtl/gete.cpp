@@ -68,7 +68,7 @@ HB_FUNC( GETENV )
 
       if( pszValue )
       {
-         hb_retc_buffer( pszValue );
+         hb_retc_buffer(pszValue);
       }
       else
       {
@@ -115,11 +115,11 @@ HB_FUNC( HB_GETENV )
 
       if( pszValue )
       {
-         hb_retc_buffer( pszValue );
+         hb_retc_buffer(pszValue);
       }
       else
       {
-         hb_retc( hb_parc(2) );
+         hb_retc(hb_parc(2));
       }
 
 #ifdef _HB_GETENV_REQUIRES_UPPERCASE
@@ -128,7 +128,7 @@ HB_FUNC( HB_GETENV )
    }
    else
    {
-      hb_retc( hb_parc(2) );
+      hb_retc(hb_parc(2));
    }
 }
 
@@ -142,5 +142,5 @@ HB_FUNC( HB_SETENV )
       fResult = hb_setenv( pszName, hb_parc(2) );
    }
 
-   hb_retl( fResult );
+   hb_retl(fResult);
 }

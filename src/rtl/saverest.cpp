@@ -55,13 +55,13 @@ static void hb_getScreenRange( int * piMin, int * piMax, HB_BOOL fNoCheck, HB_BO
    {
       iMax  = hb_gtMaxRow();
       iFrom = hb_parni(1);
-      iTo   = hb_parnidef( 3, iMax );
+      iTo   = hb_parnidef(3, iMax);
    }
    else
    {
       iMax  = hb_gtMaxCol();
       iFrom = hb_parni(2);
-      iTo   = hb_parnidef( 4, iMax );
+      iTo   = hb_parnidef(4, iMax);
    }
 
    if( iFrom < 0 )
@@ -108,7 +108,7 @@ HB_FUNC( SAVESCREEN )
    pBuffer = hb_xgrab(nSize + 1);
 
    hb_gtSave( iTop, iLeft, iBottom, iRight, pBuffer );
-   hb_retclen_buffer( static_cast<char*>(pBuffer), nSize );
+   hb_retclen_buffer(static_cast<char*>(pBuffer), nSize);
 }
 
 HB_FUNC( RESTSCREEN )

@@ -2043,7 +2043,7 @@ HB_SIZE hb_cdpStrToU16( PHB_CODEPAGE cdp, int iEndian, const char * pSrc, HB_SIZ
 #else
             if( iEndian == HB_CDP_ENDIAN_LITTLE )
             {
-               HB_PUT_LE_UINT16( &pDst[nPosD], wc );
+               HB_PUT_LE_UINT16(&pDst[nPosD], wc);
             }
             else if( iEndian == HB_CDP_ENDIAN_BIG )
             {
@@ -2073,7 +2073,7 @@ HB_SIZE hb_cdpStrToU16( PHB_CODEPAGE cdp, int iEndian, const char * pSrc, HB_SIZ
 #else
          if( iEndian == HB_CDP_ENDIAN_LITTLE )
          {
-            HB_PUT_LE_UINT16( &pDst[nPosD], wc );
+            HB_PUT_LE_UINT16(&pDst[nPosD], wc);
          }
          else if( iEndian == HB_CDP_ENDIAN_BIG )
          {
@@ -2108,7 +2108,7 @@ HB_SIZE hb_cdpStrToU16( PHB_CODEPAGE cdp, int iEndian, const char * pSrc, HB_SIZ
 #else
          if( iEndian == HB_CDP_ENDIAN_LITTLE )
          {
-            HB_PUT_LE_UINT16( &pDst[nPosD], wc );
+            HB_PUT_LE_UINT16(&pDst[nPosD], wc);
          }
          else if( iEndian == HB_CDP_ENDIAN_BIG )
          {
@@ -3233,7 +3233,7 @@ static PHB_CODEPAGE hb_buildCodePage( const char * id, const char * info,
       fflush(stderr);
       return nullptr;
 #else
-      hb_errInternal( 9994, "Harbour CP (%s) initialization failure", id, nullptr );
+      hb_errInternal(9994, "Harbour CP (%s) initialization failure", id, nullptr);
 #endif
    }
 
@@ -3488,7 +3488,7 @@ static PHB_CODEPAGE hb_buildCodePage( const char * id, const char * info,
             hb_xfree(buffer);
             return nullptr;
 #else
-            hb_errInternal( 9994, "Harbour CP (%s) initialization failure", id, nullptr );
+            hb_errInternal(9994, "Harbour CP (%s) initialization failure", id, nullptr);
 #endif
          }
 

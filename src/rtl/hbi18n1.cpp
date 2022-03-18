@@ -484,8 +484,8 @@ static PHB_ITEM hb_i18n_serialize( PHB_I18N_TRANS pI18N )
       hb_xfree(pBuffer);
 
       memcpy(pI18Nbuffer, s_signature, HB_I18N_SIG_SIZE);
-      HB_PUT_LE_UINT32( &pI18Nbuffer[HB_I18N_SIZE_OFFSET], nSize );
-      HB_PUT_LE_UINT32( &pI18Nbuffer[HB_I18N_CRC_OFFSET], ulCRC );
+      HB_PUT_LE_UINT32(&pI18Nbuffer[HB_I18N_SIZE_OFFSET], nSize);
+      HB_PUT_LE_UINT32(&pI18Nbuffer[HB_I18N_CRC_OFFSET], ulCRC);
 
       pKey = hb_itemPutCConst(nullptr, "DESCRIPTION");
       pValue = hb_hashGetItemPtr( pI18N->table, pKey, 0 );
@@ -1043,7 +1043,7 @@ HB_FUNC( HB_I18N_CODEPAGE )
 
    if( pI18N )
    {
-      hb_retc( hb_i18n_setcodepage( pI18N, hb_parc(iParam), hb_parl(iParam + 1), hb_parl(iParam + 2) ) );
+      hb_retc(hb_i18n_setcodepage(pI18N, hb_parc(iParam), hb_parl(iParam + 1), hb_parl(iParam + 2)));
    }
    else
    {
@@ -1089,7 +1089,7 @@ HB_FUNC( HB_I18N_DESCRIPTION )
    {
       PHB_ITEM pNewDescript = hb_param(iParam, HB_IT_STRING);
 
-      hb_retc( hb_i18n_description( pI18N, nullptr ) );
+      hb_retc(hb_i18n_description(pI18N, nullptr));
       if( pNewDescript )
       {
          hb_i18n_description( pI18N, pNewDescript );
@@ -1169,7 +1169,7 @@ HB_FUNC( HB_I18N_SET )
          }
       }
    }
-   hb_retl( hb_i18n_table() != nullptr );
+   hb_retl(hb_i18n_table() != nullptr);
 }
 
 HB_FUNC( HB_I18N_SAVETABLE )
@@ -1190,7 +1190,7 @@ HB_FUNC( HB_I18N_RESTORETABLE )
 
    if( pItem )
    {
-      PHB_I18N_TRANS pI18N = hb_i18n_deserialize( pItem );
+      PHB_I18N_TRANS pI18N = hb_i18n_deserialize(pItem);
       if( pI18N )
       {
          hb_itemReturnRelease(hb_i18n_newitem( pI18N ));
@@ -1200,12 +1200,12 @@ HB_FUNC( HB_I18N_RESTORETABLE )
 
 HB_FUNC( HB_I18N_HEADERSIZE )
 {
-   hb_retni( HB_I18N_HEADER_SIZE );
+   hb_retni(HB_I18N_HEADER_SIZE);
 }
 
 HB_FUNC( HB_I18N_CHECK )
 {
-   hb_retl( hb_i18n_headercheck( hb_parc(1), hb_parclen(1) ) );
+   hb_retl(hb_i18n_headercheck(hb_parc(1), hb_parclen(1)));
 }
 
 /* unofficial function to access internal hash table used by i18n set */

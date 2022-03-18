@@ -52,12 +52,12 @@
 
 HB_FUNC( OS )
 {
-   hb_retc_buffer( hb_verPlatform() );
+   hb_retc_buffer(hb_verPlatform());
 }
 
 HB_FUNC( VERSION )
 {
-   hb_retc_buffer( hb_verHarbour() );
+   hb_retc_buffer(hb_verHarbour());
 }
 
 HB_FUNC( HB_VERSION )
@@ -66,20 +66,20 @@ HB_FUNC( HB_VERSION )
    {
       case HB_VERSION_URL_BASE:       hb_retc_const( "https://github.com/harbour/core/" ); break;
       case HB_VERSION_URL_SOURCE:     hb_retc_null(); break;
-      case HB_VERSION_HARBOUR:        hb_retc_buffer( hb_verHarbour() ); break;
-      case HB_VERSION_COMPILER:       hb_retc_buffer( hb_verCompiler() ); break;
-      case HB_VERSION_MAJOR:          hb_retni( HB_VER_MAJOR ); break;
-      case HB_VERSION_MINOR:          hb_retni( HB_VER_MINOR ); break;
-      case HB_VERSION_RELEASE:        hb_retni( HB_VER_RELEASE ); break;
+      case HB_VERSION_HARBOUR:        hb_retc_buffer(hb_verHarbour()); break;
+      case HB_VERSION_COMPILER:       hb_retc_buffer(hb_verCompiler()); break;
+      case HB_VERSION_MAJOR:          hb_retni(HB_VER_MAJOR); break;
+      case HB_VERSION_MINOR:          hb_retni(HB_VER_MINOR); break;
+      case HB_VERSION_RELEASE:        hb_retni(HB_VER_RELEASE); break;
       case HB_VERSION_STATUS:         hb_retc_const( HB_VER_STATUS ); break;
-      case HB_VERSION_REVISION:       hb_retni( hb_verRevision() ); break;
+      case HB_VERSION_REVISION:       hb_retni(hb_verRevision()); break;
       case HB_VERSION_CHANGELOG_LAST: hb_retc_const( hb_verChangeLogLastEntry() ); break;
       case HB_VERSION_CHANGELOG_ID:   hb_retc_const( hb_verChangeLogID() ); break;
-      case HB_VERSION_PCODE_VER:      hb_retni( HB_PCODE_VER ); break;
-      case HB_VERSION_PCODE_VER_STR:  hb_retc_buffer( hb_verPCode() ); break;
+      case HB_VERSION_PCODE_VER:      hb_retni(HB_PCODE_VER); break;
+      case HB_VERSION_PCODE_VER_STR:  hb_retc_buffer(hb_verPCode()); break;
       case HB_VERSION_BUILD_PLAT:     hb_retc_const( hb_verHB_PLAT() ); break;
       case HB_VERSION_BUILD_COMP:     hb_retc_const( hb_verHB_COMP() ); break;
-      case HB_VERSION_BUILD_DATE_STR: hb_retc_buffer( hb_verBuildDate() ); break;
+      case HB_VERSION_BUILD_DATE_STR: hb_retc_buffer(hb_verBuildDate()); break;
       case HB_VERSION_BUILD_DATE:
       {
          char * pszBuildDate = hb_verBuildDate();
@@ -105,11 +105,11 @@ HB_FUNC( HB_VERSION )
             szDate[7] = pszBuildDate[5];
             szDate[8] = '\0';
 
-            hb_retds( szDate );
+            hb_retds(szDate);
          }
          else
          {
-            hb_retds( nullptr );
+            hb_retds(nullptr);
          }
 
          hb_xfree(pszBuildDate);
@@ -118,7 +118,7 @@ HB_FUNC( HB_VERSION )
       case HB_VERSION_BUILD_TIME:
       {
          char * pszBuildDate = hb_verBuildDate();
-         hb_retc( strlen(pszBuildDate) >= 20 ? pszBuildDate + 12 : nullptr );
+         hb_retc(strlen(pszBuildDate) >= 20 ? pszBuildDate + 12 : nullptr);
          hb_xfree(pszBuildDate);
          break;
       }
@@ -127,8 +127,8 @@ HB_FUNC( HB_VERSION )
       case HB_VERSION_FLAG_C:         hb_retc_const( hb_verFlagsC() ); break;
       case HB_VERSION_FLAG_LINKER:    hb_retc_const( hb_verFlagsL() ); break;
       case HB_VERSION_OPTIONS:        hb_retc_null(); break;
-      case HB_VERSION_BITWIDTH:       hb_retni( static_cast<int>(sizeof(void*)) * 8 ); break;
-      case HB_VERSION_MT:             hb_retl( hb_vmIsMt() ); break;
+      case HB_VERSION_BITWIDTH:       hb_retni(static_cast<int>(sizeof(void*)) * 8); break;
+      case HB_VERSION_MT:             hb_retl(hb_vmIsMt()); break;
 
       case HB_VERSION_SHARED:  /* FIXME: This only works when platforms has separate
                                          compilation pass for harbour dynlib build -
@@ -171,11 +171,11 @@ HB_FUNC( HB_VERSION )
 
       case HB_VERSION_ENDIANNESS:
       #if defined( HB_LITTLE_ENDIAN )
-         hb_retni( HB_VERSION_ENDIAN_LITTLE );
+         hb_retni(HB_VERSION_ENDIAN_LITTLE);
       #elif defined( HB_BIG_ENDIAN )
-         hb_retni( HB_VERSION_ENDIAN_BIG );
+         hb_retni(HB_VERSION_ENDIAN_BIG);
       #elif defined( HB_PDP_ENDIAN )
-         hb_retni( HB_VERSION_ENDIAN_PDP );
+         hb_retni(HB_VERSION_ENDIAN_PDP);
       #else
          hb_retni(0);
       #endif
@@ -190,71 +190,71 @@ HB_FUNC( HB_OSCPU )
 
 HB_FUNC( HB_OSIS64BIT )
 {
-   hb_retl( hb_verHostBitWidth() >= 64 );
+   hb_retl(hb_verHostBitWidth() >= 64);
 }
 
 HB_FUNC( HB_OSISWIN9X )
 {
-   hb_retl( hb_iswin9x() );
+   hb_retl(hb_iswin9x());
 }
 
 HB_FUNC( HB_OSISWINNT )
 {
-   hb_retl( hb_iswinnt() );
+   hb_retl(hb_iswinnt());
 }
 
 HB_FUNC( HB_OSISWIN2K )
 {
-   hb_retl( hb_iswin2k() );
+   hb_retl(hb_iswin2k());
 }
 
 HB_FUNC( HB_OSISWINVISTA )
 {
-   hb_retl( hb_iswinvista() );
+   hb_retl(hb_iswinvista());
 }
 
 HB_FUNC( HB_OSISWIN7 )
 {
-   hb_retl( hb_iswin7() );
+   hb_retl(hb_iswin7());
 }
 
 HB_FUNC( HB_OSISWIN8 )
 {
-   hb_retl( hb_iswin8() );
+   hb_retl(hb_iswin8());
 }
 
 HB_FUNC( HB_OSISWIN81 )
 {
-   hb_retl( hb_iswin81() );
+   hb_retl(hb_iswin81());
 }
 
 HB_FUNC( HB_OSISWIN10 )
 {
-   hb_retl( hb_iswin10() );
+   hb_retl(hb_iswin10());
 }
 
 HB_FUNC( HB_OSISWINCE )
 {
-   hb_retl( hb_iswince() );
+   hb_retl(hb_iswince());
 }
 
 /* Legacy functions */
 
 HB_FUNC( HB_COMPILER )
 {
-   hb_retc_buffer( hb_verCompiler() );
+   hb_retc_buffer(hb_verCompiler());
 }
 
 #if defined( HB_LEGACY_LEVEL4 )
 
 HB_FUNC( HB_PCODEVER )
 {
-   hb_retc_buffer( hb_verPCode() );
+   hb_retc_buffer(hb_verPCode());
 }
 
 HB_FUNC( HB_BUILDDATE )
 {
-   hb_retc_buffer( hb_verBuildDate() );
+   hb_retc_buffer(hb_verBuildDate());
 }
 
 #endif

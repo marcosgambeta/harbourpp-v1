@@ -89,8 +89,8 @@ HB_FUNC( HB_HHASKEY )
    if( pHash && pKey )
    {
       HB_SIZE nPos;
-      hb_retl( hb_hashScanSoft( pHash, pKey, &nPos ) );
-      hb_storns( nPos, 3 );
+      hb_retl(hb_hashScanSoft(pHash, pKey, &nPos));
+      hb_storns(nPos, 3);
    }
    else
    {
@@ -107,7 +107,7 @@ HB_FUNC( HB_HPOS )
    {
       HB_SIZE nPos;
       hb_hashScan( pHash, pKey, &nPos );
-      hb_retns( nPos );
+      hb_retns(nPos);
    }
    else
    {
@@ -211,7 +211,7 @@ HB_FUNC( HB_HGETREF )
    {
       PHB_ITEM pDest = hb_hashGetItemPtr( pHash, pKey, HB_HASH_AUTOADD_ACCESS );
       hb_itemParamStore(3, pDest);
-      hb_retl( pDest != nullptr );
+      hb_retl(pDest != nullptr);
    }
    else
    {
@@ -819,7 +819,7 @@ HB_FUNC( HB_HSCAN )
          }
       }
 
-      hb_retns( fFound ? nStart : 0 );
+      hb_retns(fFound ? nStart : 0);
    }
    else
    {
@@ -851,7 +851,7 @@ HB_FUNC( HB_HCASEMATCH )
       PHB_ITEM pValue = hb_param(2, HB_IT_LOGICAL);
       int iFlags = hb_hashGetFlags( pHash );
 
-      hb_retl( ( iFlags & HB_HASH_IGNORECASE ) == 0 );
+      hb_retl((iFlags & HB_HASH_IGNORECASE) == 0);
 
       if( pValue )
       {
@@ -885,7 +885,7 @@ HB_FUNC( HB_HBINARY )
       PHB_ITEM pValue = hb_param(2, HB_IT_LOGICAL);
       int iFlags = hb_hashGetFlags( pHash );
 
-      hb_retl( ( iFlags & HB_HASH_BINARY ) != 0 );
+      hb_retl((iFlags & HB_HASH_BINARY) != 0);
 
       if( pValue )
       {
@@ -919,7 +919,7 @@ HB_FUNC( HB_HAUTOADD )
       PHB_ITEM pValue = hb_param(2, HB_IT_LOGICAL | HB_IT_NUMERIC);
       int iOldFlags = hb_hashGetFlags( pHash ) & HB_HASH_AUTOADD_MASK;
 
-      hb_retni( iOldFlags );
+      hb_retni(iOldFlags);
 
       if( hb_pcount() >= 3 )
       {
@@ -968,7 +968,7 @@ HB_FUNC( HB_HKEEPORDER )
       PHB_ITEM pValue = hb_param(2, HB_IT_LOGICAL);
       int iFlags = hb_hashGetFlags( pHash );
 
-      hb_retl( ( iFlags & HB_HASH_KEEPORDER ) != 0 );
+      hb_retl((iFlags & HB_HASH_KEEPORDER) != 0);
 
       if( pValue )
       {

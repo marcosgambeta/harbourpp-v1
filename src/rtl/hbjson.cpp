@@ -800,7 +800,7 @@ HB_FUNC( HB_JSONENCODE )
       HB_SIZE nLen;
       int iIndent = hb_parl(2) ? INDENT_SIZE : hb_parni(2);
       char * szRet = hb_jsonEncodeCP( pItem, &nLen, iIndent, _hb_jsonCdpPar(3) );
-      hb_retclen_buffer( szRet, nLen );
+      hb_retclen_buffer(szRet, nLen);
    }
 }
 
@@ -811,7 +811,7 @@ HB_FUNC( HB_JSONDECODE )
 
    if( HB_ISBYREF(2) )
    {
-      hb_retns( static_cast<HB_ISIZ>(nSize) );
+      hb_retns(static_cast<HB_ISIZ>(nSize));
       hb_itemParamStoreForward(2, pItem);
       hb_itemRelease(pItem);
    }

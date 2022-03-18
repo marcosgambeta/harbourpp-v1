@@ -162,7 +162,7 @@ HB_FUNC( ORDSKIPRAW )
 
    if( pArea )
    {
-      SELF_SKIPRAW( pArea, hb_parnldef( 1, 1 ) );
+      SELF_SKIPRAW( pArea, hb_parnldef(1, 1) );
    }
    else
    {
@@ -457,7 +457,7 @@ HB_FUNC( DBFILEGET )
       pMode = hb_param(3, HB_IT_NUMERIC);
       if( uiIndex > 0 && pMode && hb_parclen(2) > 0 && SELF_FIELDCOUNT( pArea, &uiFields ) == HB_SUCCESS && uiIndex <= uiFields )
       {
-         hb_retl( SELF_GETVALUEFILE( pArea, uiIndex, hb_parc(2), static_cast<HB_USHORT>(hb_itemGetNI(pMode)) ) == HB_SUCCESS );
+         hb_retl(SELF_GETVALUEFILE(pArea, uiIndex, hb_parc(2), static_cast<HB_USHORT>(hb_itemGetNI(pMode))) == HB_SUCCESS);
       }
       else
       {
@@ -492,7 +492,7 @@ HB_FUNC( DBFILEPUT )
       }
       if( uiIndex > 0 && hb_parclen(2) > 0 && SELF_FIELDCOUNT( pArea, &uiFields ) == HB_SUCCESS && uiIndex <= uiFields )
       {
-         hb_retl( SELF_PUTVALUEFILE( pArea, uiIndex, hb_parc(2), static_cast<HB_USHORT>(hb_parni(3)) ) == HB_SUCCESS );
+         hb_retl(SELF_PUTVALUEFILE(pArea, uiIndex, hb_parc(2), static_cast<HB_USHORT>(hb_parni(3))) == HB_SUCCESS);
       }
       else
       {

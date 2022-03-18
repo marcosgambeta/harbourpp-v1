@@ -1059,7 +1059,7 @@ void hb_macroTextValue( PHB_ITEM pItem )
    }
 
    if( s_macroTextValue )
-      s_macroTextValue( pItem );
+      s_macroTextValue(pItem);
 }
 
 #endif /* HB_OS_WIN */

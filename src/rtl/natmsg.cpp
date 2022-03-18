@@ -105,7 +105,7 @@ HB_FUNC( __NATISAFFIRM )
          }   
       }
    }
-   hb_retl( fIS );
+   hb_retl(fIS);
 }
 
 HB_FUNC( __NATISNEGATIVE )
@@ -140,7 +140,7 @@ HB_FUNC( __NATISNEGATIVE )
          }   
       }
    }
-   hb_retl( fIS );
+   hb_retl(fIS);
 }
 
 HB_FUNC( __NATMSG )

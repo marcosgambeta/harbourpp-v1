@@ -92,7 +92,7 @@ HB_FUNC( SX_ISFLOCKED )
       hb_itemRelease(pItem);
    }
 
-   hb_retl( fLocked );
+   hb_retl(fLocked);
 }
 
 HB_FUNC( SX_ISREADONLY )
@@ -108,7 +108,7 @@ HB_FUNC( SX_ISREADONLY )
       hb_itemRelease(pItem);
    }
 
-   hb_retl( fReadOnly );
+   hb_retl(fReadOnly);
 }
 
 HB_FUNC( SX_ISSHARED )
@@ -124,7 +124,7 @@ HB_FUNC( SX_ISSHARED )
       hb_itemRelease(pItem);
    }
 
-   hb_retl( fShared );
+   hb_retl(fShared);
 }
 
 HB_FUNC( SX_IDTYPE )
@@ -142,7 +142,7 @@ HB_FUNC( SX_IDTYPE )
       hb_itemRelease(pItem);
    }
 
-   hb_retni( iType );
+   hb_retni(iType);
 }
 
 HB_FUNC( SX_TABLETYPE )
@@ -160,7 +160,7 @@ HB_FUNC( SX_TABLETYPE )
       hb_itemRelease(pItem);
    }
 
-   hb_retni( iType );
+   hb_retni(iType);
 }
 
 HB_FUNC( SX_TABLENAME )
@@ -226,7 +226,7 @@ HB_FUNC( SX_ROLLBACK )
       hb_itemRelease(pItem);
    }
 
-   hb_retl( fResult );
+   hb_retl(fResult);
 }
 
 HB_FUNC( SX_RLOCK )
@@ -266,7 +266,7 @@ HB_FUNC( SX_RLOCK )
    }
    else
    {
-      hb_retl( fResult );
+      hb_retl(fResult);
    }
 }
 
@@ -376,7 +376,7 @@ HB_FUNC( SX_SETPASS )
       }
    }
 
-   hb_retl( fResult );
+   hb_retl(fResult);
 }
 
 HB_FUNC( SX_DBFENCRYPT )
@@ -394,7 +394,7 @@ HB_FUNC( SX_DBFENCRYPT )
       }
       hb_itemRelease(pItem);
    }
-   hb_retl( fResult );
+   hb_retl(fResult);
 }
 
 HB_FUNC( SX_DBFDECRYPT )
@@ -411,7 +411,7 @@ HB_FUNC( SX_DBFDECRYPT )
       }
       hb_itemRelease(pItem);
    }
-   hb_retl( fResult );
+   hb_retl(fResult);
 }
 
 HB_FUNC( SX_MEMOPACK )
@@ -430,7 +430,7 @@ HB_FUNC( SX_MEMOPACK )
       fResult = SELF_INFO( pArea, DBI_MEMOPACK, pItem ) == HB_SUCCESS;
       hb_itemRelease(pItem);
    }
-   hb_retl( fResult );
+   hb_retl(fResult);
 }
 
 HB_FUNC( SX_TURBOAREA )

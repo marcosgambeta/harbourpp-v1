@@ -215,7 +215,7 @@ HB_FUNC( HB_COMPILE )
    PHB_PP_MSG_FUNC pMsgFunc;
 
    hb_compGenArgList( 1, hb_pcount(), &argc, &argv, &pIncItem, &pOpenFunc, &pMsgFunc );
-   hb_retni( hb_compMainExt( argc, argv, nullptr, nullptr, nullptr, 0, pIncItem, pOpenFunc, pMsgFunc ) );
+   hb_retni(hb_compMainExt(argc, argv, nullptr, nullptr, nullptr, 0, pIncItem, pOpenFunc, pMsgFunc));
    hb_xfree(static_cast<void*>(argv));
 }
 
@@ -235,7 +235,7 @@ HB_FUNC( HB_COMPILEBUF )
 
    if( iResult == EXIT_SUCCESS && pBuffer )
    {
-      hb_retclen_buffer( reinterpret_cast<char*>(pBuffer), nLen );
+      hb_retclen_buffer(reinterpret_cast<char*>(pBuffer), nLen);
    }
 }
 
@@ -259,7 +259,7 @@ HB_FUNC( HB_COMPILEFROMBUF )
 
       if( iResult == EXIT_SUCCESS && pBuffer )
       {
-         hb_retclen_buffer( reinterpret_cast<char*>(pBuffer), nLen );
+         hb_retclen_buffer(reinterpret_cast<char*>(pBuffer), nLen);
       }
    }
 }

@@ -1428,7 +1428,7 @@ static void hb_gt_def_Save( PHB_GT pGT, int iTop, int iLeft, int iBottom, int iR
          }
          else
          {
-            HB_PUT_LE_UINT16( pbyBuffer, usChar );
+            HB_PUT_LE_UINT16(pbyBuffer, usChar);
             pbyBuffer += 2;
             *pbyBuffer++ = static_cast<HB_BYTE>(iColor);
             *pbyBuffer++ = bAttr;
@@ -4144,7 +4144,7 @@ PHB_GT hb_gtLoad( const char * szGtName, PHB_GT pGT, PHB_GT_FUNCS pSuperTable )
       {
          if( pGT || pSuperTable )
          {
-            hb_errInternal( 9996, "Harbour terminal (GT) initialization failure", nullptr, nullptr );
+            hb_errInternal(9996, "Harbour terminal (GT) initialization failure", nullptr, nullptr);
          }
 
          pGT = static_cast<PHB_GT_BASE>(hb_xgrabz(sizeof(HB_GT_BASE)));
@@ -4361,7 +4361,7 @@ void hb_gtStartupInit( void )
       }
    }
 
-   hb_errInternal( 9998, "Harbour terminal (GT) initialization failure", nullptr, nullptr );
+   hb_errInternal(9998, "Harbour terminal (GT) initialization failure", nullptr, nullptr);
 
    /* not executed, only to force linking hb_GTSYS() */
    HB_FUNC_EXEC( HB_GTSYS );
@@ -4426,10 +4426,10 @@ PHB_GT hb_gt_ItemBase( PHB_ITEM pItemGT )
 
 HB_FUNC( HB_GTRELOAD )
 {
-   hb_retl( hb_gtReload(hb_parc(1),
-            HB_ISNUM(2) ? hb_numToHandle(hb_parnint(1)) : HB_STDIN_HANDLE,
-            HB_ISNUM(3) ? hb_numToHandle(hb_parnint(2)) : HB_STDOUT_HANDLE,
-            HB_ISNUM(4) ? hb_numToHandle(hb_parnint(3)) : HB_STDERR_HANDLE ));
+   hb_retl(hb_gtReload(hb_parc(1),
+           HB_ISNUM(2) ? hb_numToHandle(hb_parnint(1)) : HB_STDIN_HANDLE,
+           HB_ISNUM(3) ? hb_numToHandle(hb_parnint(2)) : HB_STDOUT_HANDLE,
+           HB_ISNUM(4) ? hb_numToHandle(hb_parnint(3)) : HB_STDERR_HANDLE));
 }
 
 HB_FUNC( HB_GTCREATE )

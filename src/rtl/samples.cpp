@@ -103,7 +103,7 @@ static long hb_TimeStrToSec( const char * pszTime )
 
 HB_FUNC( DAYS )
 {
-   hb_retnl( hb_parnl(1) / 86400 );
+   hb_retnl(hb_parnl(1) / 86400);
 }
 
 HB_FUNC( ELAPTIME )
@@ -112,17 +112,17 @@ HB_FUNC( ELAPTIME )
    long lEnd   = hb_TimeStrToSec( hb_parcx(2) );
    char szTime[9];
 
-   hb_retc( hb_SecToTimeStr( szTime, ( lEnd < lStart ? 86400 : 0 ) + lEnd - lStart ) );
+   hb_retc(hb_SecToTimeStr(szTime, (lEnd < lStart ? 86400 : 0) + lEnd - lStart));
 }
 
 HB_FUNC( SECS )
 {
-   hb_retnl( hb_TimeStrToSec( hb_parcx(1) ) );
+   hb_retnl(hb_TimeStrToSec(hb_parcx(1)));
 }
 
 HB_FUNC( TSTRING )
 {
    char szTime[9];
 
-   hb_retc( hb_SecToTimeStr( szTime, hb_parnl(1) ) );
+   hb_retc(hb_SecToTimeStr(szTime, hb_parnl(1)));
 }

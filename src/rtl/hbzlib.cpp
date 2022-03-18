@@ -233,7 +233,7 @@ HB_FUNC( HB_ZLIBVERSION )
       /* NOTE: Hack to avoid "undefined reference to 'zlibVersion' when linking hbrun on QNX 6.2.1. */
       hb_retc_null();
 #else
-      hb_retc( zlibVersion() );
+      hb_retc(zlibVersion());
 #endif
 }
 
@@ -244,11 +244,11 @@ HB_FUNC( HB_ZCOMPRESSBOUND )
 {
    if( HB_ISCHAR(1) )
    {
-      hb_retnint( s_zlibCompressBound( hb_parclen(1) ) );
+      hb_retnint(s_zlibCompressBound(hb_parclen(1)));
    }
    else if( HB_ISNUM(1) )
    {
-      hb_retnint( s_zlibCompressBound( hb_parns(1) ) );
+      hb_retnint(s_zlibCompressBound(hb_parns(1)));
    }
    else
    {
@@ -276,14 +276,14 @@ HB_FUNC( HB_ZUNCOMPRESSLEN )
 
       if( iResult == Z_OK )
       {
-         hb_retnint( nLen );
+         hb_retnint(nLen);
       }
       else
       {
          hb_retni(-1);
       }
 
-      hb_storni( iResult, 2 );
+      hb_storni(iResult, 2);
    }
    else
    {
@@ -335,12 +335,12 @@ HB_FUNC( HB_ZCOMPRESS )
 
          if( pDest || fAlloc )
          {
-            iResult = s_zlibCompress2( &pDest, &nDstLen, szData, nLen, HB_FALSE, hb_parnidef( 4, Z_DEFAULT_COMPRESSION ) );
+            iResult = s_zlibCompress2( &pDest, &nDstLen, szData, nLen, HB_FALSE, hb_parnidef(4, Z_DEFAULT_COMPRESSION) );
             if( ! pBuffer )
             {
                if( iResult == Z_OK )
                {
-                  hb_retclen_buffer( pDest, nDstLen );
+                  hb_retclen_buffer(pDest, nDstLen);
                }
                else if( pDest )
                {
@@ -349,7 +349,7 @@ HB_FUNC( HB_ZCOMPRESS )
             }
             else if( iResult == Z_OK )
             {
-               hb_retclen( pDest, nDstLen );
+               hb_retclen(pDest, nDstLen);
             }
          }
          else
@@ -357,12 +357,12 @@ HB_FUNC( HB_ZCOMPRESS )
             iResult = Z_MEM_ERROR;
          }
 
-         hb_storni( iResult, 3 );
+         hb_storni(iResult, 3);
       }
       else
       {
          hb_retc_null();
-         hb_storni( Z_OK, 3 );
+         hb_storni(Z_OK, 3);
       }
    }
    else
@@ -418,7 +418,7 @@ HB_FUNC( HB_ZUNCOMPRESS )
             {
                if( iResult == Z_OK )
                {
-                  hb_retclen_buffer( pDest, nDstLen );
+                  hb_retclen_buffer(pDest, nDstLen);
                }
                else
                {
@@ -427,15 +427,15 @@ HB_FUNC( HB_ZUNCOMPRESS )
             }
             else if( iResult == Z_OK )
             {
-               hb_retclen( pDest, nDstLen );
+               hb_retclen(pDest, nDstLen);
             }
          }
-         hb_storni( iResult, 3 );
+         hb_storni(iResult, 3);
       }
       else
       {
          hb_retc_null();
-         hb_storni( Z_OK, 3 );
+         hb_storni(Z_OK, 3);
       }
    }
    else
@@ -451,11 +451,11 @@ HB_FUNC( HB_GZCOMPRESSBOUND )
 {
    if( HB_ISCHAR(1) )
    {
-      hb_retnint( s_zlibCompressBound( static_cast<uLong>(hb_parclen(1)) ) + 12 );
+      hb_retnint(s_zlibCompressBound(static_cast<uLong>(hb_parclen(1))) + 12);
    }
    else if( HB_ISNUM(1) )
    {
-      hb_retnint( s_zlibCompressBound( static_cast<uLong>(hb_parns(1)) ) + 12 );
+      hb_retnint(s_zlibCompressBound(static_cast<uLong>(hb_parns(1))) + 12);
    }
    else
    {
@@ -510,12 +510,12 @@ HB_FUNC( HB_GZCOMPRESS )
 
          if( pDest || fAlloc )
          {
-            iResult = s_zlibCompress2( &pDest, &nDstLen, szData, nLen, HB_TRUE, hb_parnidef( 4, Z_DEFAULT_COMPRESSION ) );
+            iResult = s_zlibCompress2( &pDest, &nDstLen, szData, nLen, HB_TRUE, hb_parnidef(4, Z_DEFAULT_COMPRESSION) );
             if( ! pBuffer )
             {
                if( iResult == Z_OK )
                {
-                  hb_retclen_buffer( pDest, nDstLen );
+                  hb_retclen_buffer(pDest, nDstLen);
                }
                else if( pDest )
                {
@@ -524,7 +524,7 @@ HB_FUNC( HB_GZCOMPRESS )
             }
             else if( iResult == Z_OK )
             {
-               hb_retclen( pDest, nDstLen );
+               hb_retclen(pDest, nDstLen);
             }
          }
          else
@@ -532,12 +532,12 @@ HB_FUNC( HB_GZCOMPRESS )
             iResult = Z_MEM_ERROR;
          }
 
-         hb_storni( iResult, 3 );
+         hb_storni(iResult, 3);
       }
       else
       {
          hb_retc_null();
-         hb_storni( Z_OK, 3 );
+         hb_storni(Z_OK, 3);
       }
    }
    else
@@ -555,7 +555,7 @@ HB_FUNC( HB_ZERROR )
    /* NOTE: Hack to avoid "undefined reference to 'zlibVersion' when linking hbrun on QNX 6.2.1. */
    hb_retc_null();
 #else
-   hb_retc( zError( hb_parni(1) ) );
+   hb_retc(zError(hb_parni(1)));
 #endif
 }
 

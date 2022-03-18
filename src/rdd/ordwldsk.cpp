@@ -102,7 +102,7 @@ HB_FUNC( ORDWILDSEEK )
             }
          }
          hb_itemRelease(OrderInfo.itmResult);
-         hb_retl( fFound );
+         hb_retl(fFound);
       }
       else
       {

@@ -200,7 +200,7 @@ HB_FUNC( HB_IDLEADD )
 
       /* return a pointer as a handle to this idle task
        */
-      hb_retptr( static_cast<void*>(hb_codeblockId(pBlock)) );    /* TODO: access to pointers from Harbour code */
+      hb_retptr(static_cast<void*>(hb_codeblockId(pBlock)));    /* TODO: access to pointers from Harbour code */
    }
 }
 
@@ -218,7 +218,7 @@ HB_FUNC( HB_IDLEDEL )
       {
          PHB_ITEM pItem = pIdleData->pIdleTasks[iTask];
 
-         if( pID == hb_codeblockId( pItem ) )
+         if( pID == hb_codeblockId(pItem) )
          {
             hb_itemClear(hb_itemReturn(pItem));  /* return a codeblock */
             hb_itemRelease(pItem);

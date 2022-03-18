@@ -51,11 +51,11 @@ HB_FUNC( HB_DIRCREATE )
 {
    if( HB_ISCHAR(1) )
    {
-      hb_retni( hb_fsMkDir(hb_parc(1)) ? 0 : hb_fsError() );
+      hb_retni(hb_fsMkDir(hb_parc(1)) ? 0 : hb_fsError());
    }
    else
    {
-      hb_retni( F_ERROR );
+      hb_retni(F_ERROR);
    }   
 }
 
@@ -63,11 +63,11 @@ HB_FUNC( HB_DIRDELETE )
 {
    if( HB_ISCHAR(1) )
    {
-      hb_retni( hb_fsRmDir(hb_parc(1)) ? 0 : hb_fsError() );
+      hb_retni(hb_fsRmDir(hb_parc(1)) ? 0 : hb_fsError());
    }
    else
    {
-      hb_retni( F_ERROR );
+      hb_retni(F_ERROR);
    }   
 }
 
@@ -79,11 +79,11 @@ HB_FUNC( DIRCHANGE )
 {
    if( HB_ISCHAR(1) )
    {
-      hb_retni( hb_fsChDir(hb_parc(1)) ? 0 : hb_fsError() );
+      hb_retni(hb_fsChDir(hb_parc(1)) ? 0 : hb_fsError());
    }
    else
    {
-      hb_retni( F_ERROR );
+      hb_retni(F_ERROR);
    }   
 }
 
@@ -113,7 +113,7 @@ HB_FUNC( ISDISK )
          fResult = hb_fsIsDrv(*szDrive - 'a') == 0;
       }
    }
-   hb_retl( fResult );
+   hb_retl(fResult);
 }
 
 HB_FUNC( DISKCHANGE )
@@ -132,7 +132,7 @@ HB_FUNC( DISKCHANGE )
          fResult = hb_fsChDrv(*szDrive - 'a') == 0;
       }
    }
-   hb_retl( fResult );
+   hb_retl(fResult);
 }
 
 HB_FUNC( DISKNAME )
@@ -141,7 +141,7 @@ HB_FUNC( DISKNAME )
    char szDrive[1];
 
    szDrive[0] = ( static_cast<char>(hb_fsCurDrv()) ) + 'A';
-   hb_retclen( szDrive, 1 );
+   hb_retclen(szDrive, 1);
 #else
    hb_retc_null();
 #endif

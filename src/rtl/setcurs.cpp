@@ -71,7 +71,7 @@ HB_FUNC( SETCURSOR )
 
    hb_gtGetCursor( &iCursor );
 
-   hb_retni( iCursor );
+   hb_retni(iCursor);
 
    if( HB_ISNUM(1) )
    {

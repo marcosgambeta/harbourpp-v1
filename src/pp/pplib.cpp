@@ -161,7 +161,7 @@ HB_FUNC( __PP_INIT )
    {
       PHB_PP_STATE * pStatePtr;
       const char * szPath = hb_parc(1), * szStdCh = hb_parc(2);
-      HB_BOOL fArchDefs = hb_parldef( 3, HB_TRUE );
+      HB_BOOL fArchDefs = hb_parldef(3, HB_TRUE);
       PHB_ITEM ppItem;
 
       pStatePtr = ( PHB_PP_STATE * ) hb_gcAllocate( sizeof(PHB_PP_STATE),
@@ -271,7 +271,7 @@ HB_FUNC( __PP_PROCESS )
       if( nLen )
       {
          char * szText = hb_pp_parseLine( pState, hb_parc(2), &nLen );
-         hb_retclen( szText, nLen );
+         hb_retclen(szText, nLen);
          return;
       }
    }

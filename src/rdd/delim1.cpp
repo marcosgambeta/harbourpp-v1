@@ -2010,11 +2010,11 @@ HB_FUNC_STATIC( DELIM_GETFUNCTABLE )
       {
          *puiCount = RDDFUNCSCOUNT;
       }
-      hb_retni( hb_rddInheritEx( pTable, &delimTable, &delimSuper, nullptr, nullptr ) );
+      hb_retni(hb_rddInheritEx(pTable, &delimTable, &delimSuper, nullptr, nullptr));
    }
    else
    {
-      hb_retni( HB_FAILURE );
+      hb_retni(HB_FAILURE);
    }
 }
 
@@ -2024,7 +2024,7 @@ static void hb_delimRddInit( void * cargo )
 
    if( hb_rddRegister( "DELIM", RDT_TRANSFER ) > 1 )
    {
-      hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
+      hb_errInternal(HB_EI_RDDINVALID, nullptr, nullptr, nullptr);
    }
 }
 

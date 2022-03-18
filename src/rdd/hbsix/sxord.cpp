@@ -123,7 +123,7 @@ HB_FUNC( SX_TAGORDER )
       }
    }
 
-   hb_retni( iOrder );
+   hb_retni(iOrder);
 }
 
 /*
@@ -169,7 +169,7 @@ HB_FUNC( SX_TAGNO )
       }
    }
 
-   hb_retni( iBagOrder );
+   hb_retni(iBagOrder);
 }
 
 HB_FUNC( SX_FREEZE )
@@ -191,7 +191,7 @@ HB_FUNC( SX_FREEZE )
          }
          hb_itemRelease(Info.itmNewVal);
          hb_itemRelease(Info.itmResult);
-         hb_retl( fResult );
+         hb_retl(fResult);
       }
    }
 }
@@ -215,7 +215,7 @@ HB_FUNC( SX_WARM )
          }
          hb_itemRelease(Info.itmNewVal);
          hb_itemRelease(Info.itmResult);
-         hb_retl( fResult );
+         hb_retl(fResult);
       }
    }
 }
@@ -239,7 +239,7 @@ HB_FUNC( SX_CHILL )
          }
          hb_itemRelease(Info.itmNewVal);
          hb_itemRelease(Info.itmResult);
-         hb_retl( fResult );
+         hb_retl(fResult);
       }
    }
 }
@@ -283,7 +283,7 @@ HB_FUNC( SX_THERMOMETER )
       }
    }
 
-   hb_retni( iTemperature );
+   hb_retni(iTemperature);
 }
 
 HB_FUNC( SX_CLRSCOPE )
@@ -296,7 +296,7 @@ HB_FUNC( SX_CLRSCOPE )
 
       if( hb_sxOrdParam( &Info ) )
       {
-         int iScope = hb_parnidef( 1, 2 );
+         int iScope = hb_parnidef(1, 2);
          Info.itmResult = hb_itemNew(nullptr);
          if( iScope )
          {
@@ -348,7 +348,7 @@ HB_FUNC( SX_ISREINDEX )
       hb_itemRelease(Info.itmResult);
    }
 
-   hb_retl( fReindex );
+   hb_retl(fReindex);
 }
 
 HB_FUNC( SX_STEP )
@@ -366,7 +366,7 @@ HB_FUNC( SX_STEP )
       hb_itemRelease(Info.itmResult);
    }
 
-   hb_retnint( lStep );
+   hb_retnint(lStep);
 }
 
 HB_FUNC( SX_KEYSINCLUDED )
@@ -384,7 +384,7 @@ HB_FUNC( SX_KEYSINCLUDED )
       hb_itemRelease(Info.itmResult);
    }
 
-   hb_retnint( ulKeys );
+   hb_retnint(ulKeys);
 }
 
 HB_FUNC( SX_I_INDEXNAME )
@@ -436,7 +436,7 @@ HB_FUNC( SX_INDEXCOUNT )
       hb_itemRelease(Info.itmResult);
    }
 
-   hb_retni( iCount );
+   hb_retni(iCount);
 }
 
 HB_FUNC( SX_INDEXNAME )
@@ -482,7 +482,7 @@ HB_FUNC( SX_INDEXTYPE )
          hb_itemRelease(Info.itmResult);
       }
    }
-   hb_retni( iType );
+   hb_retni(iType);
 }
 
 HB_FUNC( SX_DESCEND )
@@ -523,7 +523,7 @@ HB_FUNC( SX_KEYADD )
          hb_itemRelease(Info.itmResult);
       }
    }
-   hb_retl( fResult );
+   hb_retl(fResult);
 }
 
 HB_FUNC( SX_KEYDROP )
@@ -543,7 +543,7 @@ HB_FUNC( SX_KEYDROP )
          hb_itemRelease(Info.itmResult);
       }
    }
-   hb_retl( fResult );
+   hb_retl(fResult);
 }
 
 HB_FUNC( SX_KEYDATA )
@@ -569,7 +569,7 @@ HB_FUNC( SX_KEYSKIP )
 
    if( pArea )
    {
-      if( SELF_SKIPRAW( pArea, hb_parnldef( 1, 1 ) ) == HB_SUCCESS )
+      if( SELF_SKIPRAW( pArea, hb_parnldef(1, 1) ) == HB_SUCCESS )
       {
          if( SELF_EOF( pArea, &fBEof ) == HB_SUCCESS && ! fBEof )
          {
@@ -577,7 +577,7 @@ HB_FUNC( SX_KEYSKIP )
          }
       }
    }
-   hb_retl( fResult );
+   hb_retl(fResult);
 }
 
 HB_FUNC( SX_KEYCOUNT )
@@ -597,7 +597,7 @@ HB_FUNC( SX_KEYCOUNT )
       }
    }
 
-   hb_retnint( ulKeys );
+   hb_retnint(ulKeys);
 }
 
 HB_FUNC( SX_KEYNO )
@@ -617,7 +617,7 @@ HB_FUNC( SX_KEYNO )
       }
    }
 
-   hb_retnint( ulKeyNo );
+   hb_retnint(ulKeyNo);
 }
 
 HB_FUNC( SX_KEYGOTO )
@@ -638,7 +638,7 @@ HB_FUNC( SX_KEYGOTO )
       }
    }
 
-   hb_retl( fResult );
+   hb_retl(fResult);
 }
 
 HB_FUNC( SX_SKIPUNIQUE )
@@ -674,7 +674,7 @@ HB_FUNC( SX_SEEKLAST )
          }
       }
    }
-   hb_retl( fFound );
+   hb_retl(fFound);
 }
 
 HB_FUNC( SX_TAGUNIQUE )
@@ -747,7 +747,7 @@ HB_FUNC( SX_WILDSEEK )
       hb_itemReturnRelease(Info.itmResult);
    }
 
-   hb_retl( fFound );
+   hb_retl(fFound);
 }
 
 HB_FUNC( SX_ROXLOCK )
@@ -770,7 +770,7 @@ HB_FUNC( SX_ROXLOCK )
          hb_itemRelease(Info.itmResult);
       }
    }
-   hb_retl( fLocked );
+   hb_retl(fLocked);
 }
 
 HB_FUNC( SX_ROXUNLOCK )
@@ -809,7 +809,7 @@ HB_FUNC( SX_ISMYROX )
          hb_itemRelease(Info.itmResult);
       }
    }
-   hb_retl( fLocked );
+   hb_retl(fLocked);
 }
 
 HB_FUNC( SX_ISROXLOCK )
@@ -844,7 +844,7 @@ HB_FUNC( SX_ISROXLOCK )
          hb_itemRelease(Info.itmResult);
       }
    }
-   hb_retl( fLocked );
+   hb_retl(fLocked);
 }
 
 HB_FUNC( SX_SORTOPTION )
@@ -866,5 +866,5 @@ HB_FUNC( SX_SORTOPTION )
          hb_itemRelease(Info.itmResult);
       }
    }
-   hb_retl( fUseCurrent );
+   hb_retl(fUseCurrent);
 }

@@ -1290,7 +1290,7 @@ HB_FUNC( HB_THREADID )
       pThread = hb_thParam( 1, 0 );
       if( pThread )
       {
-         hb_retnint( pThread->th_no );
+         hb_retnint(pThread->th_no);
       }
    }
    else
@@ -1298,7 +1298,7 @@ HB_FUNC( HB_THREADID )
       pThread = static_cast<PHB_THREADSTATE>(hb_vmThreadState());
       if( pThread )
       {
-         hb_retnint( pThread->th_no );
+         hb_retnint(pThread->th_no);
       }
       else
       {
@@ -1320,12 +1320,12 @@ HB_FUNC( HB_THREADISMAIN )
       PHB_THREADSTATE pThread = hb_thParam( 1, 0 );
       if( pThread )
       {
-         hb_retl( hb_vmThreadIsMain( pThread ) );
+         hb_retl(hb_vmThreadIsMain(pThread));
       }
    }
    else
    {
-      hb_retl( hb_vmThreadIsMain( nullptr ) );
+      hb_retl(hb_vmThreadIsMain(nullptr));
    }
 #else
    hb_retl(true);
@@ -1473,7 +1473,7 @@ HB_FUNC( HB_THREADJOIN )
             pThread->pResult = nullptr;
          }
       }
-      hb_retl( fResult );
+      hb_retl(fResult);
    }
 }
 
@@ -1491,7 +1491,7 @@ HB_FUNC( HB_THREADDETACH )
          pThread->th_h = 0;
          fResult = HB_TRUE;
       }
-      hb_retl( fResult );
+      hb_retl(fResult);
    }
 }
 
@@ -1511,7 +1511,7 @@ HB_FUNC( HB_THREADQUITREQUEST )
          fResult = HB_TRUE;
       }
 #endif
-      hb_retl( fResult );
+      hb_retl(fResult);
    }
 }
 
@@ -1567,7 +1567,7 @@ HB_FUNC( HB_THREADWAIT )
 
       fAll = hb_parl(3);
 
-      hb_retni( hb_threadWait( pThreads, iThreads, fAll, ulMilliSec ) );
+      hb_retni(hb_threadWait(pThreads, iThreads, fAll, ulMilliSec));
    }
    else if( iThreads == 0 )
    {
@@ -1641,16 +1641,16 @@ HB_FUNC( HB_THREADONCE )
             {
                if( pAction )
                {
-                  hb_storl( HB_FALSE, 1 );
+                  hb_storl(HB_FALSE, 1);
                   hb_vmEvalBlock( pAction );
                }
-               hb_storl( HB_TRUE, 1 );
+               hb_storl(HB_TRUE, 1);
                fFirstCall = HB_TRUE;
             }
             hb_threadMutexUnlock( s_pOnceMutex );
          }
 #else
-         hb_storl( HB_TRUE, 1 );
+         hb_storl(HB_TRUE, 1);
          fFirstCall = HB_TRUE;
          if( pAction )
          {
@@ -1658,7 +1658,7 @@ HB_FUNC( HB_THREADONCE )
          }
 #endif
       }
-      hb_retl( fFirstCall );
+      hb_retl(fFirstCall);
    }
    else
    {
@@ -1701,7 +1701,7 @@ HB_FUNC( HB_THREADONCEINIT )
          fInitialized = HB_TRUE;
 #endif
       }
-      hb_retl( fInitialized );
+      hb_retl(fInitialized);
    }
    else
    {
@@ -2080,7 +2080,7 @@ HB_BOOL hb_threadMutexSyncWait( PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, PHB_ITEM
 
 HB_BOOL hb_threadMutexUnlock( PHB_ITEM pItem )
 {
-   PHB_MUTEX pMutex = hb_mutexPtr( pItem );
+   PHB_MUTEX pMutex = hb_mutexPtr(pItem);
    HB_BOOL fResult = HB_FALSE;
 
    if( pMutex )
@@ -2118,7 +2118,7 @@ HB_BOOL hb_threadMutexUnlock( PHB_ITEM pItem )
 
 HB_BOOL hb_threadMutexLock( PHB_ITEM pItem )
 {
-   PHB_MUTEX pMutex = hb_mutexPtr( pItem );
+   PHB_MUTEX pMutex = hb_mutexPtr(pItem);
    HB_BOOL fResult = HB_FALSE;
 
    if( pMutex )
@@ -2179,7 +2179,7 @@ HB_BOOL hb_threadMutexLock( PHB_ITEM pItem )
 
 HB_BOOL hb_threadMutexTimedLock( PHB_ITEM pItem, HB_ULONG ulMilliSec )
 {
-   PHB_MUTEX pMutex = hb_mutexPtr( pItem );
+   PHB_MUTEX pMutex = hb_mutexPtr(pItem);
    HB_BOOL fResult = HB_FALSE;
 
    if( pMutex )
@@ -2288,7 +2288,7 @@ static void hb_thredMutexEventInit( PHB_MUTEX pMutex )
 
 void hb_threadMutexNotify( PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting )
 {
-   PHB_MUTEX pMutex = hb_mutexPtr( pItem );
+   PHB_MUTEX pMutex = hb_mutexPtr(pItem);
 
    if( pMutex )
    {
@@ -2412,7 +2412,7 @@ void hb_threadMutexNotify( PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting 
 
 PHB_ITEM hb_threadMutexSubscribe( PHB_ITEM pItem, HB_BOOL fClear )
 {
-   PHB_MUTEX pMutex = hb_mutexPtr( pItem );
+   PHB_MUTEX pMutex = hb_mutexPtr(pItem);
    PHB_ITEM pResult = nullptr;
 
    if( pMutex )
@@ -2530,7 +2530,7 @@ PHB_ITEM hb_threadMutexSubscribe( PHB_ITEM pItem, HB_BOOL fClear )
 
 PHB_ITEM hb_threadMutexTimedSubscribe( PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_BOOL fClear )
 {
-   PHB_MUTEX pMutex = hb_mutexPtr( pItem );
+   PHB_MUTEX pMutex = hb_mutexPtr(pItem);
    PHB_ITEM pResult = nullptr;
 
    if( pMutex )
@@ -2670,7 +2670,7 @@ PHB_ITEM hb_threadMutexTimedSubscribe( PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_B
 HB_FUNC( HB_MUTEXEXISTS )
 {
    HB_STACK_TLS_PRELOAD
-   hb_retl( hb_itemGetPtrGC(hb_param(1, HB_IT_POINTER), &s_gcMutexFuncs) != nullptr );
+   hb_retl(hb_itemGetPtrGC(hb_param(1, HB_IT_POINTER), &s_gcMutexFuncs) != nullptr);
 }
 
 HB_FUNC( HB_MUTEXCREATE )
@@ -2693,11 +2693,11 @@ HB_FUNC( HB_MUTEXLOCK )
          {
             ulMilliSec = static_cast<HB_ULONG>(dTimeOut * 1000);
          }
-         hb_retl( hb_threadMutexTimedLock( pItem, ulMilliSec ) );
+         hb_retl(hb_threadMutexTimedLock(pItem, ulMilliSec));
       }
       else
       {
-         hb_retl( hb_threadMutexLock( pItem ) );
+         hb_retl(hb_threadMutexLock(pItem));
       }
    }
 }
@@ -2709,7 +2709,7 @@ HB_FUNC( HB_MUTEXUNLOCK )
    if( pItem )
    {
       HB_STACK_TLS_PRELOAD
-      hb_retl( hb_threadMutexUnlock( pItem ) );
+      hb_retl(hb_threadMutexUnlock(pItem));
    }
 }
 
@@ -2820,7 +2820,7 @@ HB_FUNC( HB_MUTEXEVAL )
          HB_STACK_TLS_PRELOAD
          int iPCount = hb_pcount();
 
-         if( hb_threadMutexLock( pItem ) )
+         if( hb_threadMutexLock(pItem) )
          {
             hb_vmPushEvalSym();
             hb_vmPush(pEval);
@@ -2829,7 +2829,7 @@ HB_FUNC( HB_MUTEXEVAL )
                hb_vmPush(hb_stackItemFromBase(iParam));
             }
             hb_vmSend(static_cast<HB_USHORT>(iPCount - 2));
-            hb_threadMutexUnlock( pItem );
+            hb_threadMutexUnlock(pItem);
          }
       }
       else
@@ -2845,13 +2845,13 @@ HB_FUNC( HB_MUTEXQUEUEINFO )
 
    if( pItem )
    {
-      PHB_MUTEX pMutex = hb_mutexPtr( pItem );
+      PHB_MUTEX pMutex = hb_mutexPtr(pItem);
 
       if( pMutex )
       {
          HB_STACK_TLS_PRELOAD
-         hb_storni( pMutex->waiters, 2 );
-         hb_storns( pMutex->events ? hb_arrayLen(pMutex->events) : 0, 3 );
+         hb_storni(pMutex->waiters, 2);
+         hb_storns(pMutex->events ? hb_arrayLen(pMutex->events) : 0, 3);
          hb_retl(true);
       }
    }

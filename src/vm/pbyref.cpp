@@ -59,5 +59,5 @@ HB_FUNC( HB_PISBYREF )
       pItem = hb_stackItem( nOffset + 1 + uiParam );
    }
 
-   hb_retl( pItem && HB_IS_BYREF(pItem) );
+   hb_retl(pItem && HB_IS_BYREF(pItem));
 }

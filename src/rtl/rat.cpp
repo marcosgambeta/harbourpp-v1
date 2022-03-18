@@ -82,7 +82,7 @@ HB_FUNC( RAT )
       }
    }
    /* This function never seems to raise an error */
-   hb_retns( nPos );
+   hb_retns(nPos);
 }
 
 HB_FUNC( HB_RAT )
@@ -155,5 +155,5 @@ HB_FUNC( HB_RAT )
       }
    }
 
-   hb_retns( nPos );
+   hb_retns(nPos);
 }

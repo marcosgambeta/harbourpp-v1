@@ -54,7 +54,7 @@ HB_FUNC( HB_STRSHRINK )
 
    if( pText )
    {
-      HB_ISIZ nShrinkBy = hb_parnldef( 2, 1 );
+      HB_ISIZ nShrinkBy = hb_parnldef(2, 1);
 
       if( nShrinkBy > 0 )
       {
@@ -88,7 +88,7 @@ HB_FUNC( HB_STRSHRINK )
             nLen = 0;
          }
 
-         hb_retclen( pszText, nLen );
+         hb_retclen(pszText, nLen);
       }
       else
       {

@@ -64,8 +64,8 @@ HB_FUNC( STRTRAN )
    {
       HB_SIZE nStart, nCount;
 
-      nStart = hb_parnsdef( 4, 1 );
-      nCount = hb_parnsdef( 5, -1 );
+      nStart = hb_parnsdef(4, 1);
+      nCount = hb_parnsdef(5, -1);
 
       if( nStart && nCount )
       {
@@ -172,7 +172,7 @@ HB_FUNC( STRTRAN )
                   }
                   while( nT < nText );
 
-                  hb_retclen_buffer( szResult, nLength );
+                  hb_retclen_buffer(szResult, nLength);
                }
                else
                {

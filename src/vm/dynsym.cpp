@@ -110,7 +110,7 @@ static PHB_DYNS hb_dynsymInsert( PHB_SYMB pSymbol, HB_SYMCNT uiPos )
    if( ++s_uiDynSymbols == 0 )
    {
       --s_uiDynSymbols;
-      hb_errInternal( 6004, "Internal error: size of dynamic symbol table exceed", nullptr, nullptr );
+      hb_errInternal(6004, "Internal error: size of dynamic symbol table exceed", nullptr, nullptr);
    }
    else if( s_uiDynSymbols == 1 )
    {
@@ -742,7 +742,7 @@ void hb_dynsymRelease( void )
 HB_FUNC( __DYNSCOUNT ) /* How much symbols do we have: dsCount = __dynsymCount() */
 {
    HB_STACK_TLS_PRELOAD
-   hb_retnint( s_uiDynSymbols );
+   hb_retnint(s_uiDynSymbols);
 }
 
 HB_FUNC( __DYNSGETNAME ) /* Get name of symbol: cSymbol = __dynsymGetName( dsIndex ) */
@@ -750,7 +750,7 @@ HB_FUNC( __DYNSGETNAME ) /* Get name of symbol: cSymbol = __dynsymGetName( dsInd
    HB_STACK_TLS_PRELOAD
    PHB_DYNS pDynSym = hb_dynsymGetByIndex(hb_parnl(1));
 
-   hb_retc( pDynSym ? pDynSym->pSymbol->szName : nullptr );
+   hb_retc(pDynSym ? pDynSym->pSymbol->szName : nullptr);
 }
 
 HB_FUNC( __DYNSGETINDEX ) /* Gimme index number of symbol: dsIndex = __dynsymGetIndex( cSymbol ) */
@@ -777,7 +777,7 @@ HB_FUNC( __DYNSGETINDEX ) /* Gimme index number of symbol: dsIndex = __dynsymGet
       }
    }
 
-   hb_retnint( uiPos );
+   hb_retnint(uiPos);
 }
 
 HB_FUNC( HB_ISFUNCTION ) /* returns .T. if a symbol has a function/procedure pointer, given its name */
@@ -795,7 +795,7 @@ HB_FUNC( HB_ISFUNCTION ) /* returns .T. if a symbol has a function/procedure poi
       }
    }
 
-   hb_retl( fResult );
+   hb_retl(fResult);
 }
 
 HB_FUNC( __DYNSISFUN ) /* returns .T. if a symbol has a function/procedure pointer, given its symbol index or name */
@@ -804,7 +804,7 @@ HB_FUNC( __DYNSISFUN ) /* returns .T. if a symbol has a function/procedure point
    const char * szName = hb_parc(1);
    PHB_DYNS pDynSym = szName ? hb_dynsymFindName(szName) : hb_dynsymGetByIndex(hb_parnl(1));
 
-   hb_retl( pDynSym && hb_dynsymIsFunction(pDynSym) );
+   hb_retl(pDynSym && hb_dynsymIsFunction(pDynSym));
 }
 
 HB_FUNC( __DYNSGETPRF ) /* profiler: It returns an array with a function or procedure called and consumed times { nTimes, nTime }, given the dynamic symbol index */
@@ -815,16 +815,16 @@ HB_FUNC( __DYNSGETPRF ) /* profiler: It returns an array with a function or proc
 #endif
 
    hb_reta(2);
-   hb_storvnl( 0, -1, 1 );
-   hb_storvnl( 0, -1, 2 );
+   hb_storvnl(0, -1, 1);
+   hb_storvnl(0, -1, 2);
 
 #ifndef HB_NO_PROFILER
    if( pDynSym )
    {
       if( hb_dynsymIsFunction(pDynSym) ) /* it is a function or procedure */
       {
-         hb_storvnl( pDynSym->ulCalls, -1, 1 );
-         hb_storvnl( pDynSym->ulTime,  -1, 2 );
+         hb_storvnl(pDynSym->ulCalls, -1, 1);
+         hb_storvnl(pDynSym->ulTime,  -1, 2);
       }
    }
 #endif
@@ -835,7 +835,7 @@ HB_FUNC( __DYNSN2PTR )
    HB_STACK_TLS_PRELOAD
    const char * szName = hb_parc(1);
 
-   hb_retptr( szName ? hb_dynsymGet(szName) : nullptr );
+   hb_retptr(szName ? hb_dynsymGet(szName) : nullptr);
 }
 
 HB_FUNC( __DYNSN2SYM )
@@ -854,7 +854,7 @@ HB_FUNC( __DYNSP2NAME )
    HB_STACK_TLS_PRELOAD
    PHB_DYNS pDynSym = static_cast<PHB_DYNS>(hb_parptr(1));
 
-   hb_retc( pDynSym != nullptr ? pDynSym->pSymbol->szName : nullptr );
+   hb_retc(pDynSym != nullptr ? pDynSym->pSymbol->szName : nullptr);
 }
 
 /* internal function used to debug dynamic symbol integrity */
@@ -902,5 +902,5 @@ HB_FUNC( __DYNSVERIFY )
 {
    HB_STACK_TLS_PRELOAD
 
-   hb_retni( hb_dynsymVerify() );
+   hb_retni(hb_dynsymVerify());
 }

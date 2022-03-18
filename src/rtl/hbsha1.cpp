@@ -91,10 +91,10 @@ HB_FUNC( HB_SHA1 )
    {
       char hex[( sizeof(digest) * 2 ) + 1];
       hb_strtohex( reinterpret_cast<char*>(digest), sizeof(digest), hex );
-      hb_retclen( hex, HB_SIZEOFARRAY( hex ) - 1 );
+      hb_retclen(hex, HB_SIZEOFARRAY(hex) - 1);
    }
    else
    {
-      hb_retclen( reinterpret_cast<char*>(digest), sizeof(digest) );
+      hb_retclen(reinterpret_cast<char*>(digest), sizeof(digest));
    }   
 }

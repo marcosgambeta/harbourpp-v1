@@ -51,7 +51,7 @@
 
 HB_FUNC( FKMAX )
 {
-   hb_retni( 40 ); /* IBM specific */
+   hb_retni(40); /* IBM specific */
 }
 
 /* Dumb function to maintain dBase III+ and CA-Cl*pper compatibility */
@@ -69,7 +69,7 @@ HB_FUNC( FKLABEL )
          char szName[4];
 
          hb_snprintf(szName, sizeof(szName), "F%d", iFKey);
-         hb_retc( szName );
+         hb_retc(szName);
          return;
       }
    }

@@ -1807,12 +1807,12 @@ static void hb_compOptimizeJumps( HB_COMP_DECL )
                   case HB_P_JUMPFALSE:
                   case HB_P_JUMPTRUE:
                      nOffset += HB_PCODE_MKSHORT(&pCode[nJumpAddr + 1]);
-                     HB_PUT_LE_UINT16( &pCode[nJumpAddr + 1], nOffset );
+                     HB_PUT_LE_UINT16(&pCode[nJumpAddr + 1], nOffset);
                      break;
 
                   default:
                      nOffset += HB_PCODE_MKINT24(&pCode[nJumpAddr + 1]);
-                     HB_PUT_LE_UINT24( &pCode[nJumpAddr + 1], nOffset );
+                     HB_PUT_LE_UINT24(&pCode[nJumpAddr + 1], nOffset);
                      break;
                }
             }
@@ -2672,7 +2672,7 @@ void hb_compGenJumpThere( HB_SIZE nFrom, HB_SIZE nTo, HB_COMP_DECL )
 
    if( HB_LIM_INT24(nOffset) )
    {
-      HB_PUT_LE_UINT24( &pCode[nFrom], nOffset );
+      HB_PUT_LE_UINT24(&pCode[nFrom], nOffset);
    }
    else
    {
@@ -3428,14 +3428,14 @@ void hb_compGenPushLong( HB_MAXINT nNumber, HB_COMP_DECL )
       {
          HB_BYTE pBuffer[5];
          pBuffer[0] = HB_P_PUSHLONG;
-         HB_PUT_LE_UINT32( pBuffer + 1, nNumber );
+         HB_PUT_LE_UINT32(pBuffer + 1, nNumber);
          hb_compGenPCodeN( pBuffer, sizeof(pBuffer), HB_COMP_PARAM );
       }
       else
       {
          HB_BYTE pBuffer[9];
          pBuffer[0] = HB_P_PUSHLONGLONG;
-         HB_PUT_LE_UINT64( pBuffer + 1, nNumber );
+         HB_PUT_LE_UINT64(pBuffer + 1, nNumber);
          hb_compGenPCodeN( pBuffer, sizeof(pBuffer), HB_COMP_PARAM );
       }
    }
@@ -3445,14 +3445,14 @@ void hb_compGenPushLong( HB_MAXINT nNumber, HB_COMP_DECL )
       {
          HB_BYTE pBuffer[5];
          pBuffer[0] = HB_P_PUSHLONG;
-         HB_PUT_LE_UINT32( pBuffer + 1, nNumber );
+         HB_PUT_LE_UINT32(pBuffer + 1, nNumber);
          hb_compGenPCodeN( pBuffer, sizeof(pBuffer), HB_COMP_PARAM );
       }
       else
       {
          HB_BYTE pBuffer[9];
          pBuffer[0] = HB_P_PUSHLONGLONG;
-         HB_PUT_LE_UINT64( pBuffer + 1, nNumber );
+         HB_PUT_LE_UINT64(pBuffer + 1, nNumber);
          hb_compGenPCodeN( pBuffer, sizeof(pBuffer), HB_COMP_PARAM );
       }
    }
@@ -3463,7 +3463,7 @@ void hb_compGenPushDate( long lDate, HB_COMP_DECL )
    HB_BYTE pBuffer[5];
 
    pBuffer[0] = HB_P_PUSHDATE;
-   HB_PUT_LE_UINT32( pBuffer + 1, lDate );
+   HB_PUT_LE_UINT32(pBuffer + 1, lDate);
    hb_compGenPCodeN( pBuffer, sizeof(pBuffer), HB_COMP_PARAM );
 }
 
@@ -3472,8 +3472,8 @@ void hb_compGenPushTimeStamp( long lDate, long lTime, HB_COMP_DECL )
    HB_BYTE pBuffer[9];
 
    pBuffer[0] = HB_P_PUSHTIMESTAMP;
-   HB_PUT_LE_UINT32( pBuffer + 1, lDate );
-   HB_PUT_LE_UINT32( pBuffer + 5, lTime );
+   HB_PUT_LE_UINT32(pBuffer + 1, lDate);
+   HB_PUT_LE_UINT32(pBuffer + 5, lTime);
    hb_compGenPCodeN( pBuffer, sizeof(pBuffer), HB_COMP_PARAM );
 }
 
@@ -3855,7 +3855,7 @@ static void hb_compStaticDefThreadSet( HB_COMP_DECL )
                ++uiVar;
                if( pVar->uiFlags & HB_VSCOMP_THREAD )
                {
-                  HB_PUT_LE_UINT16( ptr, uiVar );
+                  HB_PUT_LE_UINT16(ptr, uiVar);
                   ptr += 2;
                   --uiCount;
                }

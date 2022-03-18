@@ -565,7 +565,7 @@ static void hb_hashDelPair( PHB_BASEHASH pBaseHash, HB_SIZE nPos )
             }
             if( pnPos-- == pBaseHash->pnPos )
             {
-               hb_errInternal( HB_EI_ERRUNRECOV, "HB_HDEL(): corrupted hash index", nullptr, nullptr );
+               hb_errInternal(HB_EI_ERRUNRECOV, "HB_HDEL(): corrupted hash index", nullptr, nullptr);
             }
          }
          *pnLast = *pnDel;

@@ -439,7 +439,7 @@ void hb_macroGetValue( PHB_ITEM pItem, int iContext, int flags )
 
    HB_STACK_TLS_PRELOAD
 
-   if( hb_macroCheckParam( pItem ) )
+   if( hb_macroCheckParam(pItem) )
    {
       HB_MACRO struMacro;
       int iStatus;
@@ -535,7 +535,7 @@ void hb_macroSetValue( PHB_ITEM pItem, int flags )
 
    HB_STACK_TLS_PRELOAD
 
-   if( hb_macroCheckParam( pItem ) )
+   if( hb_macroCheckParam(pItem) )
    {
       HB_MACRO struMacro;
       int iStatus;
@@ -582,7 +582,7 @@ void hb_macroPushReference( PHB_ITEM pItem )
 
    HB_STACK_TLS_PRELOAD
 
-   if( hb_macroCheckParam( pItem ) )
+   if( hb_macroCheckParam(pItem) )
    {
       HB_MACRO struMacro;
       int iStatus;
@@ -932,7 +932,7 @@ static void hb_macroSetGetBlock( PHB_DYNS pVarSym, PHB_ITEM pItem, int iWorkArea
    if( iWorkArea != 0 )
    {
       byBuf[i++] = HB_P_PUSHLONG;
-      HB_PUT_LE_UINT32( &byBuf[i], iWorkArea );
+      HB_PUT_LE_UINT32(&byBuf[i], iWorkArea);
       i += 4;
    }
    byBuf[i++] = bPushPcode;
@@ -949,7 +949,7 @@ static void hb_macroSetGetBlock( PHB_DYNS pVarSym, PHB_ITEM pItem, int iWorkArea
    if( iWorkArea != 0 )
    {
       byBuf[i++] = HB_P_PUSHLONG;
-      HB_PUT_LE_UINT32( &byBuf[i], iWorkArea );
+      HB_PUT_LE_UINT32(&byBuf[i], iWorkArea);
       i += 4;
    }
    byBuf[i++] = bPopPcode;
@@ -1081,7 +1081,7 @@ void hb_macroPushSymbol( PHB_ITEM pItem )
 
    HB_STACK_TLS_PRELOAD
 
-   if( hb_macroCheckParam( pItem ) )
+   if( hb_macroCheckParam(pItem) )
    {
       char * szString;
       HB_BOOL fNewBuffer;
@@ -1127,7 +1127,7 @@ void hb_macroTextValue( PHB_ITEM pItem )
    HB_TRACE( HB_TR_DEBUG, ( "hb_macroTextValue(%p)", static_cast<void*>(pItem) ) );
 #endif
 
-   if( hb_macroCheckParam( pItem ) )
+   if( hb_macroCheckParam(pItem) )
    {
       char * szString;
       HB_SIZE nLength = pItem->item.asString.length;
@@ -1157,7 +1157,7 @@ const char * hb_macroGetType( PHB_ITEM pItem )
    HB_STACK_TLS_PRELOAD
    const char * szType;
 
-   if( hb_macroCheckParam( pItem ) )
+   if( hb_macroCheckParam(pItem) )
    {
       HB_MACRO struMacro;
       int iStatus;
@@ -1306,7 +1306,7 @@ HB_FUNC( HB_SETMACRO )
          /* enable/disable processing of strings as an array of bytes */
          case HB_SM_SHORTCUTS:
             /* enable/disable support for shortcut logical operators */
-            hb_retl( hb_macroFlags() & flags );
+            hb_retl(hb_macroFlags() & flags);
             pValue = hb_param(2, HB_IT_LOGICAL);
             if( pValue )
             {
@@ -1449,7 +1449,7 @@ void hb_macroGenJumpThere( HB_SIZE nFrom, HB_SIZE nTo, HB_COMP_DECL )
 
    if( HB_LIM_INT24(nOffset) )
    {
-      HB_PUT_LE_UINT24( &pCode[nFrom], nOffset );
+      HB_PUT_LE_UINT24(&pCode[nFrom], nOffset);
    }
    else
    {
@@ -1557,14 +1557,14 @@ void hb_macroGenPushLong( HB_MAXINT nNumber, HB_COMP_DECL )
    {
       HB_BYTE pBuffer[5];
       pBuffer[0] = HB_P_PUSHLONG;
-      HB_PUT_LE_UINT32( pBuffer + 1, nNumber );
+      HB_PUT_LE_UINT32(pBuffer + 1, nNumber);
       hb_macroGenPCodeN(pBuffer, sizeof(pBuffer), HB_COMP_PARAM);
    }
    else
    {
       HB_BYTE pBuffer[9];
       pBuffer[0] = HB_P_PUSHLONGLONG;
-      HB_PUT_LE_UINT64( pBuffer + 1, nNumber );
+      HB_PUT_LE_UINT64(pBuffer + 1, nNumber);
       hb_macroGenPCodeN(pBuffer, sizeof(pBuffer), HB_COMP_PARAM);
    }
 }
@@ -1575,7 +1575,7 @@ void hb_macroGenPushDate( long lDate, HB_COMP_DECL )
    HB_BYTE pBuffer[5];
 
    pBuffer[0] = HB_P_PUSHDATE;
-   HB_PUT_LE_UINT32( pBuffer + 1, lDate );
+   HB_PUT_LE_UINT32(pBuffer + 1, lDate);
    hb_macroGenPCodeN(pBuffer, sizeof(pBuffer), HB_COMP_PARAM);
 }
 
@@ -1585,8 +1585,8 @@ void hb_macroGenPushTimeStamp( long lDate, long lTime, HB_COMP_DECL )
    HB_BYTE pBuffer[9];
 
    pBuffer[0] = HB_P_PUSHTIMESTAMP;
-   HB_PUT_LE_UINT32( pBuffer + 1, lDate );
-   HB_PUT_LE_UINT32( pBuffer + 5, lTime );
+   HB_PUT_LE_UINT32(pBuffer + 1, lDate);
+   HB_PUT_LE_UINT32(pBuffer + 5, lTime);
    hb_macroGenPCodeN(pBuffer, sizeof(pBuffer), HB_COMP_PARAM);
 }
 

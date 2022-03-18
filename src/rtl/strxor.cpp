@@ -81,7 +81,7 @@ HB_FUNC( HB_STRXOR )
                   n2 = 0;
                }
             }
-            hb_retclen_buffer( pRet, nLen1 );
+            hb_retclen_buffer(pRet, nLen1);
          }
          else
          {
@@ -103,7 +103,7 @@ HB_FUNC( HB_STRXOR )
                pRet[n] ^= bChar;
             }
 
-            hb_retclen_buffer( pRet, nLen1 );
+            hb_retclen_buffer(pRet, nLen1);
          }
          else
          {

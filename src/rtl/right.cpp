@@ -88,7 +88,7 @@ HB_FUNC( RIGHT )
          }
          else
          {
-            hb_retclen( hb_itemGetCPtr(pText) + nText - nLen, nLen );
+            hb_retclen(hb_itemGetCPtr(pText) + nText - nLen, nLen);
          }
       }
    }

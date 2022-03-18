@@ -380,7 +380,7 @@ static void hb_pp_tokenFree( PHB_PP_TOKEN pToken )
 
 static void hb_pp_tokenListFree( PHB_PP_TOKEN * pTokenPtr )
 {
-   if( *pTokenPtr && ! HB_PP_TOKEN_ISPREDEF( *pTokenPtr ) )
+   if( *pTokenPtr && ! HB_PP_TOKEN_ISPREDEF(*pTokenPtr) )
    {
       do
       {

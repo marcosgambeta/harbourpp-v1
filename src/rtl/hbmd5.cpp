@@ -431,21 +431,21 @@ HB_FUNC( HB_MD5 )  /* Considered insecure. Use SHA256 or higher instead. */
       {
          char digest[( sizeof(dststr) * 2 ) + 1];
          hb_strtohex( dststr, sizeof(dststr), digest );
-         hb_retclen( digest, HB_SIZEOFARRAY( digest ) - 1 );
+         hb_retclen(digest, HB_SIZEOFARRAY(digest) - 1);
       }
       else
       {
-         hb_retclen( dststr, HB_SIZEOFARRAY( dststr ) );
+         hb_retclen(dststr, HB_SIZEOFARRAY(dststr));
       }
       if( ! hb_parl(2) )
       {
          char digest[( sizeof(dststr) * 2 ) + 1];
          hb_strtohex( dststr, sizeof(dststr), digest );
-         hb_retclen( digest, HB_SIZEOFARRAY( digest ) - 1 );
+         hb_retclen(digest, HB_SIZEOFARRAY(digest) - 1);
       }
       else
       {
-         hb_retclen( dststr, HB_SIZEOFARRAY( dststr ) );
+         hb_retclen(dststr, HB_SIZEOFARRAY(dststr));
       }
    }
    else
@@ -465,11 +465,11 @@ HB_FUNC( HB_MD5FILE )  /* Considered insecure. Use SHA256 or higher instead. */
       {
          char digest[( sizeof(dststr) * 2 ) + 1];
          hb_strtohex( dststr, sizeof(dststr), digest );
-         hb_retclen( digest, HB_SIZEOFARRAY( digest ) - 1 );
+         hb_retclen(digest, HB_SIZEOFARRAY(digest) - 1);
       }
       else
       {
-         hb_retclen( dststr, HB_SIZEOFARRAY( dststr ) );
+         hb_retclen(dststr, HB_SIZEOFARRAY(dststr));
       }
    }
    else
@@ -488,10 +488,10 @@ HB_FUNC( HB_HMAC_MD5 )
    {
       char digest[( sizeof(dststr) * 2 ) + 1];
       hb_strtohex( dststr, sizeof(dststr), digest );
-      hb_retclen( digest, HB_SIZEOFARRAY( digest ) - 1 );
+      hb_retclen(digest, HB_SIZEOFARRAY(digest) - 1);
    }
    else
    {
-      hb_retclen( dststr, HB_SIZEOFARRAY( dststr ) );
+      hb_retclen(dststr, HB_SIZEOFARRAY(dststr));
    }
 }

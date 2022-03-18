@@ -93,7 +93,7 @@ HB_FUNC( HB_MD5ENCRYPT )
             }
             pszData[n] = ( vect[i] ^= pszSource[n] );
          }
-         hb_retclen_buffer( pszData, nLen );
+         hb_retclen_buffer(pszData, nLen);
       }
       else
       {
@@ -133,7 +133,7 @@ HB_FUNC( HB_MD5DECRYPT )
             pszData[n] = ( vect[i] ^ pszSource[n] );
             vect[i] = pszSource[n];
          }
-         hb_retclen_buffer( pszData, nLen );
+         hb_retclen_buffer(pszData, nLen);
       }
       else
       {

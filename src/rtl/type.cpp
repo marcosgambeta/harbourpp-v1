@@ -53,7 +53,7 @@ HB_FUNC( TYPE )
 
    if( pItem )
    {
-      hb_retc( hb_macroGetType( pItem ) );
+      hb_retc(hb_macroGetType(pItem));
       hb_memvarUpdatePrivatesBase();
    }
    else

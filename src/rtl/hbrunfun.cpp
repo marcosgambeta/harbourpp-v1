@@ -82,7 +82,7 @@ HB_FUNC( HB_RUN )
 
          hb_gtResume();
       }
-      hb_retni( iResult );
+      hb_retni(iResult);
    }
    else
    {

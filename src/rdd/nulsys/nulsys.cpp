@@ -326,7 +326,7 @@ HB_FUNC( HEADER )
 
 HB_FUNC( LUPDATE )
 {
-   hb_retds( NULL );
+   hb_retds(NULL);
 }
 
 HB_FUNC( INDEXORD )

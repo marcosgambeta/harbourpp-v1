@@ -381,13 +381,13 @@ static HB_OPT_FUNC( hb_p_duplicate )
                   nOffset += HB_PCODE_MKINT24(&pFunc->pCode[nNewPos + 1]);
                }
 
-               HB_PUT_LE_UINT24( pAddr, nOffset );
+               HB_PUT_LE_UINT24(pAddr, nOffset);
                hb_compNOOPfill( pFunc, nPCodePos, 1, HB_FALSE, HB_FALSE );
                hb_compNOOPfill( pFunc, nPCodePos + 5, 1, HB_FALSE, HB_FALSE );
             }
             else if( nLastOffset )
             {
-               HB_PUT_LE_UINT24( pAddr, nLastOffset );
+               HB_PUT_LE_UINT24(pAddr, nLastOffset);
             }
          }
          break;
@@ -457,7 +457,7 @@ static HB_OPT_FUNC( hb_p_not )
                if( pFunc->pCode[nPCodePos + 1] == HB_P_DUPLICATE )
                {
                   ++nOffset;
-                  HB_PUT_LE_UINT24( pAddr, nOffset );
+                  HB_PUT_LE_UINT24(pAddr, nOffset);
                }
             }
          }
@@ -512,7 +512,7 @@ static HB_OPT_FUNC( hb_p_jumpfar )
             nOffset += HB_PCODE_MKINT24(&pFunc->pCode[nNewPos + 1]);
             if( ! fLine || pFunc->pCode[nPCodePos + nOffset] == HB_P_LINE )
             {
-               HB_PUT_LE_UINT24( pAddr, nOffset );
+               HB_PUT_LE_UINT24(pAddr, nOffset);
             }
             break;
 
@@ -523,7 +523,7 @@ static HB_OPT_FUNC( hb_p_jumpfar )
                   pFunc->pCode[nPCodePos + nOffset + 4] == HB_P_LINE ) ) )
             {
                pFunc->pCode[nPCodePos] = HB_P_JUMPTRUEFAR;
-               HB_PUT_LE_UINT24( pAddr, nOffset + 4 );
+               HB_PUT_LE_UINT24(pAddr, nOffset + 4);
             }
             break;
 
@@ -534,7 +534,7 @@ static HB_OPT_FUNC( hb_p_jumpfar )
                   pFunc->pCode[nPCodePos + nOffset + 4] == HB_P_LINE ) ) )
             {
                pFunc->pCode[nPCodePos] = HB_P_JUMPFALSEFAR;
-               HB_PUT_LE_UINT24( pAddr, nOffset + 4 );
+               HB_PUT_LE_UINT24(pAddr, nOffset + 4);
             }
             break;
       }
@@ -580,7 +580,7 @@ static HB_OPT_FUNC( hb_p_jumpfalsefar )
          nOffset += HB_PCODE_MKINT24(&pFunc->pCode[nNewPos + 1]);
          if( ! fLine || pFunc->pCode[nPCodePos + nOffset] == HB_P_LINE )
          {
-            HB_PUT_LE_UINT24( pAddr, nOffset );
+            HB_PUT_LE_UINT24(pAddr, nOffset);
          }
       }
    }
@@ -625,7 +625,7 @@ static HB_OPT_FUNC( hb_p_jumptruefar )
          nOffset += HB_PCODE_MKINT24(&pFunc->pCode[nNewPos + 1]);
          if( ! fLine || pFunc->pCode[nPCodePos + nOffset] == HB_P_LINE )
          {
-            HB_PUT_LE_UINT24( pAddr, nOffset );
+            HB_PUT_LE_UINT24(pAddr, nOffset);
          }
       }
    }

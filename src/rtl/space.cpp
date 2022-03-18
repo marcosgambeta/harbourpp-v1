@@ -70,7 +70,7 @@ HB_FUNC( SPACE )
          #endif
 
          hb_xmemset(szResult, ' ', nLen);
-         hb_retclen_buffer( szResult, nLen );
+         hb_retclen_buffer(szResult, nLen);
       }
       else
       {

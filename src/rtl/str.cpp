@@ -78,7 +78,7 @@ HB_FUNC( STR )
 
       if( szResult )
       {
-         hb_retc_buffer( szResult );
+         hb_retc_buffer(szResult);
       }
       else
       {

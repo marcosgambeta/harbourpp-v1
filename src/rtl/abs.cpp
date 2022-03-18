@@ -71,7 +71,7 @@ HB_FUNC( ABS )
          else if( iNumber < -INT_MAX )
          {
 #if HB_VMLONG_MAX > HB_VMINT_MAX
-            hb_retnint( -static_cast<HB_MAXINT>(iNumber) );
+            hb_retnint(-static_cast<HB_MAXINT>(iNumber));
 #else
             hb_retndlen( -static_cast<double>(iNumber), 0, iDec );
 #endif
@@ -79,7 +79,7 @@ HB_FUNC( ABS )
 #endif
          else
          {
-            hb_retni( -iNumber );
+            hb_retni(-iNumber);
          }   
       }
       else if( HB_IS_LONG(pNumber) )
@@ -98,7 +98,7 @@ HB_FUNC( ABS )
 #endif
          else
          {
-            hb_retnint( -lNumber );
+            hb_retnint(-lNumber);
          }
       }
       else

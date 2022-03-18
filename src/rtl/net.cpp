@@ -109,7 +109,7 @@ HB_FUNC( NETNAME )
 
    if( buffer )
    {
-      hb_retc_buffer( buffer );
+      hb_retc_buffer(buffer);
    }
    else
    {

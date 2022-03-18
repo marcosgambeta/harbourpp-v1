@@ -394,7 +394,7 @@ HB_FUNC( HB_FLINK )
       fResult = hb_fsLink(pszExisting, pszNewFile);
       uiError = hb_fsError();
    }
-   hb_retni( fResult ? 0 : F_ERROR );
+   hb_retni(fResult ? 0 : F_ERROR);
    hb_fsSetFError(uiError);
 }
 
@@ -409,7 +409,7 @@ HB_FUNC( HB_FLINKSYM )
       fResult = hb_fsLinkSym(pszTarget, pszNewFile);
       uiError = hb_fsError();
    }
-   hb_retni( fResult ? 0 : F_ERROR );
+   hb_retni(fResult ? 0 : F_ERROR);
    hb_fsSetFError(uiError);
 }
 
@@ -424,6 +424,6 @@ HB_FUNC( HB_FLINKREAD )
       pszResult = hb_fsLinkRead(pszFile);
       uiError = hb_fsError();
    }
-   hb_retc_buffer( pszResult );
+   hb_retc_buffer(pszResult);
    hb_fsSetFError(uiError);
 }

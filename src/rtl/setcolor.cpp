@@ -69,7 +69,7 @@ const char * hb_conSetColor( const char * szColor )
 
 HB_FUNC( SETCOLOR )
 {
-   hb_retc( hb_conSetColor( hb_parc(1) ) );
+   hb_retc(hb_conSetColor(hb_parc(1)));
 }
 
 HB_FUNC( COLORSELECT )
@@ -91,14 +91,14 @@ HB_FUNC( SETBLINK )
       hb_gtSetBlink( hb_parl(1) );
    }
 
-   hb_retl( bPreviousBlink );
+   hb_retl(bPreviousBlink);
 }
 
 HB_FUNC( HB_COLORTON )
 {
    if( HB_ISCHAR(1) )
    {
-      hb_retni( hb_gtColorToN( hb_parc(1) ) );
+      hb_retni(hb_gtColorToN(hb_parc(1)));
    }
    else
    {
@@ -117,7 +117,7 @@ HB_FUNC( HB_NTOCOLOR )
 
       hb_gtColorsToString( colors, HB_SIZEOFARRAY( colors ), szColorString, sizeof(szColorString) );
 
-      hb_retc( szColorString );
+      hb_retc(szColorString);
    }
    else
    {

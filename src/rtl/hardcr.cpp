@@ -98,7 +98,7 @@ HB_FUNC( HARDCR )
       char * pszBuffer = hb_itemGetC(pString);
       HB_SIZE nStringLen = hb_itemGetCLen(pString);
 
-      hb_retclen_buffer( hb_strHardCR( pszBuffer, nStringLen ), nStringLen );
+      hb_retclen_buffer(hb_strHardCR(pszBuffer, nStringLen), nStringLen);
    }
    else
    {

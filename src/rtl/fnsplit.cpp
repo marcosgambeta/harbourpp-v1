@@ -51,10 +51,10 @@ HB_FUNC( HB_FNAMESPLIT )
 {
    PHB_FNAME pFileName = hb_fsFNameSplit(hb_parcx(1));
 
-   hb_storc( pFileName->szPath, 2 );
-   hb_storc( pFileName->szName, 3 );
-   hb_storc( pFileName->szExtension, 4 );
-   hb_storc( pFileName->szDrive, 5 );
+   hb_storc(pFileName->szPath, 2);
+   hb_storc(pFileName->szName, 3);
+   hb_storc(pFileName->szExtension, 4);
+   hb_storc(pFileName->szDrive, 5);
 
    hb_xfree(pFileName);
 }
@@ -68,5 +68,5 @@ HB_FUNC( HB_FNAMEMERGE )
    pFileName.szName = hb_parc(2);
    pFileName.szExtension = hb_parc(3);
 
-   hb_retc( hb_fsFNameMerge(szFileName, &pFileName) );
+   hb_retc(hb_fsFNameMerge(szFileName, &pFileName));
 }

@@ -431,7 +431,7 @@ static HB_BOOL hb_clsDictRealloc( PCLASS pClass )
       nNewHashKey <<= 1;
       if( nNewHashKey > HASH_KEYMAX )
       {
-         hb_errInternal( 6002, "Could not realloc class message in __clsDictRealloc()", nullptr, nullptr );
+         hb_errInternal(6002, "Could not realloc class message in __clsDictRealloc()", nullptr, nullptr);
       }
 
 #ifdef HB_MSG_POOL
@@ -632,7 +632,7 @@ static PMETHOD hb_clsAllocMsg( PCLASS pClass, PHB_DYNS pMsg )
    }
    while( hb_clsDictRealloc(pClass) );
 
-   hb_errInternal( 6001, "Could not allocate new message", nullptr, nullptr );
+   hb_errInternal(6001, "Could not allocate new message", nullptr, nullptr);
 
    return nullptr;
 }
@@ -3555,7 +3555,7 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage, HB_USHOR
 
          default:
 
-            hb_errInternal( HB_EI_CLSINVMETHOD, nullptr, "__clsAddMsg()", nullptr );
+            hb_errInternal(HB_EI_CLSINVMETHOD, nullptr, "__clsAddMsg()", nullptr);
       }
 
       pClass->nOpFlags |= nOpFlags;
@@ -3834,7 +3834,7 @@ static HB_USHORT hb_clsNew( const char * szClassName, HB_USHORT uiDatas, PHB_ITE
                         {
                            if( pMethod->uiData > nLenClsDatas )
                            {
-                              hb_errInternal( HB_EI_CLSINVMETHOD, nullptr, "__clsNew()", nullptr );
+                              hb_errInternal(HB_EI_CLSINVMETHOD, nullptr, "__clsNew()", nullptr);
                            }
 
                            if( puiClassData[pMethod->uiData - 1] == 0 )
@@ -3965,7 +3965,7 @@ HB_FUNC( __CLSNEW )
       HB_STACK_TLS_PRELOAD
       HB_USHORT uiClass;
       uiClass = hb_clsNew( szClassName, static_cast<HB_USHORT>(hb_itemGetNI(pDatas)), pSuperArray, hb_itemGetSymbol(pClassFunc), hb_itemGetL(pModFriend) );
-      hb_retni( uiClass );
+      hb_retni(uiClass);
    }
    else
    {
@@ -4232,7 +4232,7 @@ HB_FUNC( __OBJGETCLSNAME )
       uiClass = static_cast<HB_USHORT>(hb_parni(1));
    }
 
-   hb_retc( hb_clsName( uiClass ) );
+   hb_retc(hb_clsName(uiClass));
 }
 
 /* __objHasMsg( <oObj>, <cMsgName> | <sMsgName> ) --> <lRet>
@@ -4246,7 +4246,7 @@ HB_FUNC( __OBJHASMSG )
    if( pMessage )
    {
       HB_STACK_TLS_PRELOAD
-      hb_retl( hb_objHasMessage( hb_param(1, HB_IT_ANY), pMessage ) );
+      hb_retl(hb_objHasMessage(hb_param(1, HB_IT_ANY), pMessage) );
    }
    else
    {
@@ -4266,7 +4266,7 @@ HB_FUNC( __OBJHASMSGASSIGNED )
    {
       HB_STACK_TLS_PRELOAD
       PHB_SYMB pExecSym = hb_objGetMethod( hb_param(1, HB_IT_ANY), pMessage->pSymbol, nullptr );
-      hb_retl( pExecSym && pExecSym != &s___msgVirtual );
+      hb_retl(pExecSym && pExecSym != &s___msgVirtual);
    }
    else
    {
@@ -4425,7 +4425,7 @@ HB_FUNC( __CLSINSTSUPER )
       hb_errRT_BASE( EG_ARG, 3003, szDesc, HB_ERR_FUNCNAME, 0 );
    }
 
-   hb_retni( uiClassH );
+   hb_retni(uiClassH);
 }
 
 /* __clsAssocType( <hClass>, <cType> ) --> <lOK>
@@ -4491,7 +4491,7 @@ HB_FUNC( __CLSASSOCTYPE )
       }
    }
 
-   hb_retl( fResult );
+   hb_retl(fResult);
 }
 
 /* __clsCntClasses() --> <nCount>
@@ -4501,7 +4501,7 @@ HB_FUNC( __CLSASSOCTYPE )
 HB_FUNC( __CLSCNTCLASSES )
 {
    HB_STACK_TLS_PRELOAD
-   hb_retni( static_cast<int>(s_uiClasses) );
+   hb_retni(static_cast<int>(s_uiClasses));
 }
 
 /* __cls_CntClsData( <hClass> ) --> <nCount>
@@ -4513,7 +4513,7 @@ HB_FUNC( __CLS_CNTCLSDATA )
    HB_STACK_TLS_PRELOAD
    HB_USHORT uiClass = static_cast<HB_USHORT>(hb_parni(1));
 
-   hb_retni( uiClass && uiClass <= s_uiClasses ? static_cast<HB_USHORT>(hb_arrayLen(s_pClasses[uiClass]->pClassDatas)) : 0 );
+   hb_retni(uiClass && uiClass <= s_uiClasses ? static_cast<HB_USHORT>(hb_arrayLen(s_pClasses[uiClass]->pClassDatas)) : 0);
 }
 
 /* __cls_CntShrData( <hClass> ) --> <nCount>
@@ -4525,7 +4525,7 @@ HB_FUNC( __CLS_CNTSHRDATA )
    HB_STACK_TLS_PRELOAD
    HB_USHORT uiClass = static_cast<HB_USHORT>(hb_parni(1));
 
-   hb_retni( uiClass && uiClass <= s_uiClasses ? static_cast<HB_USHORT>(hb_arrayLen(s_pClasses[uiClass]->pSharedDatas)) : 0 );
+   hb_retni(uiClass && uiClass <= s_uiClasses ? static_cast<HB_USHORT>(hb_arrayLen(s_pClasses[uiClass]->pSharedDatas)) : 0);
 }
 
 /* __cls_CntData( <hClass> ) --> <nCount>
@@ -4537,7 +4537,7 @@ HB_FUNC( __CLS_CNTDATA )
    HB_STACK_TLS_PRELOAD
    HB_USHORT uiClass = static_cast<HB_USHORT>(hb_parni(1));
 
-   hb_retni( uiClass && uiClass <= s_uiClasses ? s_pClasses[uiClass]->uiDatas : 0 );
+   hb_retni(uiClass && uiClass <= s_uiClasses ? s_pClasses[uiClass]->uiDatas : 0);
 }
 
 /* __cls_DecData( <hClass> ) --> <nCount>
@@ -4555,7 +4555,7 @@ HB_FUNC( __CLS_DECDATA )
       {
          s_pClasses[uiClass]->uiDatas--;
       }
-      hb_retni( s_pClasses[uiClass]->uiDatas - s_pClasses[uiClass]->uiDataFirst );
+      hb_retni(s_pClasses[uiClass]->uiDatas - s_pClasses[uiClass]->uiDataFirst);
    }
    else
    {
@@ -4578,7 +4578,7 @@ HB_FUNC( __CLS_INCDATA )
       {
          s_pClasses[uiClass]->uiDatas++;
       }
-      hb_retni( s_pClasses[uiClass]->uiDatas - s_pClasses[uiClass]->uiDataFirst );
+      hb_retni(s_pClasses[uiClass]->uiDatas - s_pClasses[uiClass]->uiDataFirst);
    }
    else
    {
@@ -4604,7 +4604,7 @@ HB_FUNC_TRANSLATE( __CLASSADD, __CLSADDMSG )
 HB_FUNC( __CLASSNAME )
 {
    HB_STACK_TLS_PRELOAD
-   hb_retc( hb_clsName( static_cast<HB_USHORT>(hb_parni(1)) ) );
+   hb_retc(hb_clsName(static_cast<HB_USHORT>(hb_parni(1))));
 }
 
 /* NOTE: Undocumented Clipper function */
@@ -4645,7 +4645,7 @@ HB_FUNC( __CLASSSEL )
 HB_FUNC( __GETMESSAGE )
 {
    HB_STACK_TLS_PRELOAD
-   hb_retc( hb_stackItem ( hb_stackBaseItem()->item.asSymbol.stackstate->nBaseItem )->item.asSymbol.value->szName );
+   hb_retc(hb_stackItem(hb_stackBaseItem()->item.asSymbol.stackstate->nBaseItem)->item.asSymbol.value->szName);
 }
 
 /* __clsParent( <hClass>, <cParentClass> ) --> <lIsParent>
@@ -4656,7 +4656,7 @@ HB_FUNC( __CLSPARENT )
    HB_STACK_TLS_PRELOAD
    const char * szParentName = hb_parc(2);
 
-   hb_retl( szParentName && hb_clsIsParent( static_cast<HB_USHORT>(hb_parni(1)), szParentName ) );
+   hb_retl(szParentName && hb_clsIsParent(static_cast<HB_USHORT>(hb_parni(1)), szParentName));
 }
 
 /* __Sender() --> <obj> | NIL
@@ -4742,7 +4742,7 @@ HB_FUNC( __CLSSYNCWAIT )
       }
    }
 
-   hb_retl( hb_threadMutexSyncWait( hb_param(1, HB_IT_ANY), ulMilliSec, pMutex ) );
+   hb_retl(hb_threadMutexSyncWait(hb_param(1, HB_IT_ANY), ulMilliSec, pMutex));
 #endif /* HB_MT_VM */
 }
 
@@ -4755,7 +4755,7 @@ HB_FUNC( __CLASSH )
    HB_STACK_TLS_PRELOAD
    PHB_ITEM pObject = hb_param(1, HB_IT_ANY);
 
-   hb_retni( pObject ? hb_objGetClassH( pObject ) : 0 );
+   hb_retni(pObject ? hb_objGetClassH(pObject) : 0);
 }
 
 /* --- */
@@ -4767,7 +4767,7 @@ HB_FUNC( __CLASSH )
 HB_FUNC_STATIC( msgClassH )
 {
    HB_STACK_TLS_PRELOAD
-   hb_retni( hb_stackBaseItem()->item.asSymbol.stackstate->uiClass );
+   hb_retni(hb_stackBaseItem()->item.asSymbol.stackstate->uiClass);
 }
 
 /* <cClassName> := <obj>:ClassName()
@@ -4781,11 +4781,11 @@ HB_FUNC_STATIC( msgClassName )
 
    if( uiClass )
    {
-      hb_retc( s_pClasses[uiClass]->szName );
+      hb_retc(s_pClasses[uiClass]->szName);
    }
    else
    {
-      hb_retc( hb_objGetClsName( hb_stackSelfItem() ) );
+      hb_retc(hb_objGetClsName(hb_stackSelfItem()));
    }
 }
 
@@ -4865,7 +4865,7 @@ HB_FUNC_STATIC( msgClassSel )
       HB_USHORT nParam, nScope;
       HB_BOOL lFull;
 
-      nParam = static_cast<HB_USHORT>(hb_parnidef( 1, HB_MSGLISTALL ));
+      nParam = static_cast<HB_USHORT>(hb_parnidef(1, HB_MSGLISTALL));
       nScope = static_cast<HB_USHORT>(hb_parni(2));
       lFull = hb_parl(3);
       pReturn = hb_itemArrayNew(pClass->uiMethods);
@@ -4950,7 +4950,7 @@ HB_FUNC_STATIC( msgClassParent )
       }
    }
 
-   hb_retl( fHasParent );
+   hb_retl(fHasParent);
 }
 
 #endif
@@ -5461,8 +5461,8 @@ HB_FUNC( __GETMSGPRF ) /* profiler: returns a method called and consumed times *
 
          if( pMethod )
          {
-            hb_storvnl( pMethod->ulCalls, -1, 1 );
-            hb_storvnl( pMethod->ulTime, -1, 2 );
+            hb_storvnl(pMethod->ulCalls, -1, 1);
+            hb_storvnl(pMethod->ulTime, -1, 2);
             return;
          }
       }
@@ -5470,8 +5470,8 @@ HB_FUNC( __GETMSGPRF ) /* profiler: returns a method called and consumed times *
 #else
    hb_reta(2);
 #endif
-   hb_storvnl( 0, -1, 1 );
-   hb_storvnl( 0, -1, 2 );
+   hb_storvnl(0, -1, 1);
+   hb_storvnl(0, -1, 2);
 }
 
 struct HB_IVARINFO
@@ -5556,7 +5556,7 @@ static PHB_ITEM hb_objGetIVars( PHB_ITEM pObject, HB_USHORT uiScope, HB_BOOL fCh
             nIndex = ( uiClass == pClass->uiClass ? static_cast<HB_SIZE>(pMethod->uiOffset) : nOffset ) + pMethod->uiData;
             if( nIndex == 0 || nIndex > nLen )
             {
-               hb_errInternal( HB_EI_CLSINVMETHOD, nullptr, "__objGetIVars()", nullptr );
+               hb_errInternal(HB_EI_CLSINVMETHOD, nullptr, "__objGetIVars()", nullptr);
             }
 
             pInfo = &pIndex[nIndex - 1];
@@ -5690,7 +5690,7 @@ HB_FUNC( __OBJGETIVARS )
 {
    PHB_ITEM pObject = hb_param(1, HB_IT_OBJECT);
    HB_USHORT uiScope = static_cast<HB_USHORT>(hb_parni(2));
-   HB_BOOL fChanged = hb_parldef( 3, HB_TRUE );
+   HB_BOOL fChanged = hb_parldef(3, HB_TRUE);
 
    hb_itemReturnRelease(hb_objGetIVars( pObject, uiScope, fChanged ));
 }
@@ -5902,7 +5902,7 @@ HB_FUNC( __CLSMSGTYPE )
          pMethod = hb_clsFindMsg( s_pClasses[uiClass], pMessage );
       }
 
-      hb_retni( pMethod ? hb_methodType( pMethod ) : -1 );
+      hb_retni(pMethod ? hb_methodType(pMethod) : -1);
    }
    else
    {
@@ -5937,7 +5937,7 @@ HB_FUNC( __CLSPREALLOCATE )
 
    HB_CLASS_UNLOCK();
 
-   hb_retnl( s_uiClsSize );
+   hb_retnl(s_uiClsSize);
 }
 
 /* __clsLockDef( <clsItem> ) --> <lLocked> */
@@ -5961,7 +5961,7 @@ HB_FUNC( __CLSLOCKDEF )
          }
       }
    }
-   hb_retl( fLocked );
+   hb_retl(fLocked);
 }
 
 /* __clsUnlockDef( @<clsItem>, <clsDef> ) */
@@ -6026,7 +6026,7 @@ HB_FUNC( __OBJSETCLASSHANDLE )
       }
    }
 
-   hb_retnl( uiPrevClassHandle );
+   hb_retnl(uiPrevClassHandle);
 }
 
 #if defined( HB_LEGACY_LEVEL5 )

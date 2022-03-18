@@ -52,7 +52,7 @@ HB_FUNC( ISALPHA )
 {
    const char * szString = hb_parc(1);
 
-   hb_retl( szString && hb_strIsAlpha( szString ) );
+   hb_retl(szString && hb_strIsAlpha(szString));
 }
 
 /* determines if first char of string is digit */
@@ -61,7 +61,7 @@ HB_FUNC( ISDIGIT )
 {
    const char * szString = hb_parc(1);
 
-   hb_retl( szString && hb_strIsDigit( szString ) );
+   hb_retl(szString && hb_strIsDigit(szString));
 }
 
 /* determines if first char of string is upper-case */
@@ -70,7 +70,7 @@ HB_FUNC( ISUPPER )
 {
    const char * szString = hb_parc(1);
 
-   hb_retl( szString && hb_strIsUpper( szString ) );
+   hb_retl(szString && hb_strIsUpper(szString));
 }
 
 /* determines if first char of string is lower-case */
@@ -79,5 +79,5 @@ HB_FUNC( ISLOWER )
 {
    const char * szString = hb_parc(1);
 
-   hb_retl( szString && hb_strIsLower( szString ) );
+   hb_retl(szString && hb_strIsLower(szString));
 }

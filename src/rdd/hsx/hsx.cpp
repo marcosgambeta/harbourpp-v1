@@ -722,12 +722,12 @@ static int hb_hsxHdrFlush( int iHandle )
          uiBits++;
       }
 
-      HB_PUT_LE_UINT32( buffer.header.recCount,    pHSX->ulRecCount );
-      HB_PUT_LE_UINT32( buffer.header.recSize,     static_cast<HB_U32>(pHSX->uiRecordSize) );
-      HB_PUT_LE_UINT32( buffer.header.recSizeBits, static_cast<HB_U32>(uiBits) );
-      HB_PUT_LE_UINT16( buffer.header.ignoreCase,  pHSX->fIgnoreCase ? 1 : 0 );
-      HB_PUT_LE_UINT16( buffer.header.filterType,  pHSX->iFilterType );
-      HB_PUT_LE_UINT32( buffer.header.hashLetters, pHSX->fUseHash ? 1 : 0 );
+      HB_PUT_LE_UINT32(buffer.header.recCount,    pHSX->ulRecCount);
+      HB_PUT_LE_UINT32(buffer.header.recSize,     static_cast<HB_U32>(pHSX->uiRecordSize));
+      HB_PUT_LE_UINT32(buffer.header.recSizeBits, static_cast<HB_U32>(uiBits));
+      HB_PUT_LE_UINT16(buffer.header.ignoreCase,  pHSX->fIgnoreCase ? 1 : 0);
+      HB_PUT_LE_UINT16(buffer.header.filterType,  pHSX->iFilterType);
+      HB_PUT_LE_UINT32(buffer.header.hashLetters, pHSX->fUseHash ? 1 : 0);
 
       memset(buffer.header.keyExpression, 0, HSXKEYEXP_LEN + 1);
       if( pHSX->szKeyExpr )
@@ -1425,7 +1425,7 @@ static LPHSXINFO hb_hsxNew( void )
 
 static void hb_hsxExpDestroy( PHB_ITEM pItem )
 {
-   hb_vmDestroyBlockOrMacro( pItem );
+   hb_vmDestroyBlockOrMacro(pItem);
 }
 
 static int hb_hsxVerify( int iHandle, const char * szText, HB_SIZE nLen, const char * szSub, HB_SIZE nSub, int iType )
@@ -1946,9 +1946,9 @@ static int hb_hsxFilter( int iHandle, const char * pSeek, HB_SIZE nSeek, PHB_ITE
    Creates a new, empty HiPer-SEEK index file */
 HB_FUNC( HS_CREATE )
 {
-   hb_retni( hb_hsxCreate( hb_parc(1), hb_parni(2), hb_parni(3),
-                           hb_param(4, HB_IT_LOGICAL) == nullptr || hb_parl(4),
-                           hb_parni(5), hb_param(6, HB_IT_ANY) ) );
+   hb_retni(hb_hsxCreate(hb_parc(1), hb_parni(2), hb_parni(3),
+                         hb_param(4, HB_IT_LOGICAL) == nullptr || hb_parl(4),
+                         hb_parni(5), hb_param(6, HB_IT_ANY)));
 }
 
 /* hs_Open( <cFile>, <nBufSize>, <nOpenMode> )
@@ -1956,7 +1956,7 @@ HB_FUNC( HS_CREATE )
    Opens an existing HiPer-SEEK index file */
 HB_FUNC( HS_OPEN )
 {
-   hb_retni( hb_hsxOpen( hb_parc(1), hb_parni(2), hb_param(3, HB_IT_NUMERIC) ? hb_parni(3) : HSXDEFOPENMODE ) );
+   hb_retni(hb_hsxOpen(hb_parc(1), hb_parni(2), hb_param(3, HB_IT_NUMERIC) ? hb_parni(3) : HSXDEFOPENMODE));
 }
 
 /* hs_Close( <hIndex> ) --> nVal = 1 (OK), nVal < 0 (ERROR CODE)
@@ -1965,11 +1965,11 @@ HB_FUNC( HS_CLOSE )
 {
    if( hb_param(1, HB_IT_NUMERIC) )
    {
-      hb_retni( hb_hsxDestroy( hb_parni(1) ) );
+      hb_retni(hb_hsxDestroy(hb_parni(1)));
    }
    else
    {
-      hb_retni( HSX_BADPARMS );
+      hb_retni(HSX_BADPARMS);
    }
 }
 
@@ -1978,11 +1978,11 @@ HB_FUNC( HS_CLOSE )
    Creates and populates a new HiPer-SEEK index */
 HB_FUNC( HS_INDEX )
 {
-   hb_retni( hb_hsxIndex( hb_parc(1), hb_param(2, HB_IT_ANY), hb_parni(3),
-                          hb_param(4, HB_IT_NUMERIC) ? hb_parni(4) : HSXDEFOPENMODE,
-                          hb_parni(5),
-                          hb_param(6, HB_IT_LOGICAL) == nullptr || hb_parl(6),
-                          hb_parni(7) ) );
+   hb_retni(hb_hsxIndex(hb_parc(1), hb_param(2, HB_IT_ANY), hb_parni(3),
+                        hb_param(4, HB_IT_NUMERIC) ? hb_parni(4) : HSXDEFOPENMODE,
+                        hb_parni(5),
+                        hb_param(6, HB_IT_LOGICAL) == nullptr || hb_parl(6),
+                        hb_parni(7)));
 }
 
 /* hs_Add( <hIndex>, [<xExpr>], [lDel] ) --> nVal >= 1 (RECNO), nVal < 0 (ERROR CODE)
@@ -1998,16 +1998,16 @@ HB_FUNC( HS_ADD )
 
       if( iRetVal == HSX_SUCCESS )
       {
-         hb_retnint( ulRecNo );
+         hb_retnint(ulRecNo);
       }
       else
       {
-         hb_retni( iRetVal );
+         hb_retni(iRetVal);
       }
    }
    else
    {
-      hb_retni( HSX_BADPARMS );
+      hb_retni(HSX_BADPARMS);
    }
 }
 
@@ -2017,11 +2017,11 @@ HB_FUNC( HS_REPLACE )
 {
    if( hb_param(1, HB_IT_NUMERIC) && hb_param(3, HB_IT_NUMERIC) )
    {
-      hb_retni( hb_hsxReplace( hb_parni(1), hb_parnl(3), hb_param(2, HB_IT_BLOCK | HB_IT_STRING), hb_parl(4) ) );
+      hb_retni(hb_hsxReplace(hb_parni(1), hb_parnl(3), hb_param(2, HB_IT_BLOCK | HB_IT_STRING), hb_parl(4)));
    }
    else
    {
-      hb_retni( HSX_BADPARMS );
+      hb_retni(HSX_BADPARMS);
    }
 }
 
@@ -2031,11 +2031,11 @@ HB_FUNC( HS_IFDEL )
 {
    if( hb_param(1, HB_IT_NUMERIC) && hb_param(2, HB_IT_NUMERIC) )
    {
-      hb_retni( hb_hsxIfDel( hb_parni(1), hb_parnl(2) ) );
+      hb_retni(hb_hsxIfDel(hb_parni(1), hb_parnl(2)));
    }
    else
    {
-      hb_retni( HSX_BADPARMS );
+      hb_retni(HSX_BADPARMS);
    }
 }
 
@@ -2045,11 +2045,11 @@ HB_FUNC( HS_DELETE )
 {
    if( hb_param(1, HB_IT_NUMERIC) && hb_param(2, HB_IT_NUMERIC) )
    {
-      hb_retni( hb_hsxDelete( hb_parni(1), hb_parnl(2) ) );
+      hb_retni(hb_hsxDelete(hb_parni(1), hb_parnl(2)));
    }
    else
    {
-      hb_retni( HSX_BADPARMS );
+      hb_retni(HSX_BADPARMS);
    }
 }
 
@@ -2059,11 +2059,11 @@ HB_FUNC( HS_UNDELETE )
 {
    if( hb_param(1, HB_IT_NUMERIC) && hb_param(2, HB_IT_NUMERIC) )
    {
-      hb_retni( hb_hsxUnDelete( hb_parni(1), hb_parnl(2) ) );
+      hb_retni(hb_hsxUnDelete(hb_parni(1), hb_parnl(2)));
    }
    else
    {
-      hb_retni( HSX_BADPARMS );
+      hb_retni(HSX_BADPARMS);
    }
 }
 
@@ -2082,16 +2082,16 @@ HB_FUNC( HS_KEYCOUNT )
             hb_hsxGetRecCount( pHSX );
          }
 
-         hb_retnint( pHSX->ulRecCount );
+         hb_retnint(pHSX->ulRecCount);
       }
       else
       {
-         hb_retni( HSX_BADHANDLE );
+         hb_retni(HSX_BADHANDLE);
       }
    }
    else
    {
-      hb_retni( HSX_BADPARMS );
+      hb_retni(HSX_BADPARMS);
    }
 }
 
@@ -2106,7 +2106,7 @@ HB_FUNC( HS_SET )
    {
       iRetVal = hb_hsxSeekSet( hb_parni(1), pStr, hb_parclen(2) );
    }
-   hb_retni( iRetVal );
+   hb_retni(iRetVal);
 }
 
 /* hs_Filter( <cIndex>, <cVal>, [xRealExp], [nBufSize], [nOpenMode] ) --> nRecMatch
@@ -2229,11 +2229,11 @@ HB_FUNC( HS_FILTER )
 
    if( iResult != HSX_SUCCESS )
    {
-      hb_retni( iResult );
+      hb_retni(iResult);
    }
    else
    {
-      hb_retnint( ulRecords );
+      hb_retnint(ulRecords);
    }
 }
 
@@ -2251,11 +2251,11 @@ HB_FUNC( HS_NEXT )
 
    if( iRetVal == HSX_SUCCESS )
    {
-      hb_retnint( ulRecNo );
+      hb_retnint(ulRecNo);
    }
    else
    {
-      hb_retni( iRetVal );
+      hb_retni(iRetVal);
    }
 }
 
@@ -2276,7 +2276,7 @@ HB_FUNC( HS_VERIFY )
       pHSX = hb_hsxGetPointer( iHandle );
       if( ! pHSX )
       {
-         hb_retni( HSX_BADHANDLE );
+         hb_retni(HSX_BADHANDLE);
          return;
       }
       if( pExpr )
@@ -2297,7 +2297,7 @@ HB_FUNC( HS_VERIFY )
          nLen = hb_itemGetCLen(pExpr);
       }
 
-      hb_retni( hb_hsxVerify( hb_parni(1), szText, nLen, hb_parc(3), hb_parclen(3), hb_parni(4) ) );
+      hb_retni(hb_hsxVerify(hb_parni(1), szText, nLen, hb_parc(3), hb_parclen(3), hb_parni(4)));
    }
    else
    {
@@ -2316,7 +2316,7 @@ HB_FUNC( HS_VERIFY )
             nLen = hb_itemGetCLen(pExpr);
          }
       }
-      hb_retl( nLen && nSub && hb_hsxStrCmp(szSub, nSub, szText, nLen, fIgnoreCase, 3) );
+      hb_retl(nLen && nSub && hb_hsxStrCmp(szSub, nSub, szText, nLen, fIgnoreCase, 3));
    }
 }
 
@@ -2328,6 +2328,6 @@ HB_FUNC( HS_VERSION )
    char * pszHBVersion = hb_verHarbour();
    char * pszVersion = hb_xstrcpy( nullptr, sc_szVer, ": ", pszHBVersion, nullptr );
 
-   hb_retclen_buffer( pszVersion, strlen(pszVersion) );
+   hb_retclen_buffer(pszVersion, strlen(pszVersion));
    hb_xfree(pszHBVersion);
 }

@@ -174,7 +174,7 @@ HB_FUNC( HB_GZCLOSE )
       iResult = gzclose( gz );
       hb_vmLock();
 
-      hb_retni( iResult );
+      hb_retni(iResult);
    }
    else
    {
@@ -194,7 +194,7 @@ HB_FUNC( HB_GZSETPARAMS )
       gzFile gz = hb_gzParam(1);
       if( gz )
       {
-         hb_retni( gzsetparams( gz, hb_parni(2), hb_parni(3) ) );
+         hb_retni(gzsetparams(gz, hb_parni(2), hb_parni(3)));
       }
    }
    else
@@ -234,7 +234,7 @@ HB_FUNC( HB_GZREAD )
          iResult = gzread( gz, szBuffer, static_cast<unsigned>(nLen) );
          hb_vmLock();
 
-         hb_retni( iResult );
+         hb_retni(iResult);
       }
    }
    else
@@ -265,7 +265,7 @@ HB_FUNC( HB_GZWRITE )
                                             static_cast<unsigned>(hb_parclen(2)) );
          hb_vmLock();
 
-         hb_retni( iResult );
+         hb_retni(iResult);
       }
    }
    else
@@ -300,7 +300,7 @@ HB_FUNC( HB_GZGETS )
 
             if( szBuff != Z_NULL )
             {
-               hb_retc_buffer( szBuffer );
+               hb_retc_buffer(szBuffer);
             }
             else
             {
@@ -335,7 +335,7 @@ HB_FUNC( HB_GZPUTS )
          iResult = gzputs( gz, szData );
          hb_vmLock();
 
-         hb_retni( iResult );
+         hb_retni(iResult);
       }
    }
    else
@@ -362,7 +362,7 @@ HB_FUNC( HB_GZPUTC )
          iResult = gzputc( gz, hb_parni(2) );
          hb_vmLock();
 
-         hb_retni( iResult );
+         hb_retni(iResult);
       }
    }
    else
@@ -388,7 +388,7 @@ HB_FUNC( HB_GZGETC )
       iResult = gzgetc( gz );
       hb_vmLock();
 
-      hb_retni( iResult );
+      hb_retni(iResult);
    }
 #endif
 }
@@ -411,7 +411,7 @@ HB_FUNC( HB_GZUNGETC )
          iResult = gzungetc( hb_parni(1), gz );
          hb_vmLock();
 
-         hb_retni( iResult );
+         hb_retni(iResult);
       }
 #endif
    }
@@ -435,10 +435,10 @@ HB_FUNC( HB_GZFLUSH )
       int iResult;
 
       hb_vmUnlock();
-      iResult = gzflush( gz, hb_parnidef( 2, Z_SYNC_FLUSH ) );
+      iResult = gzflush( gz, hb_parnidef(2, Z_SYNC_FLUSH) );
       hb_vmLock();
 
-      hb_retni( iResult );
+      hb_retni(iResult);
    }
 #endif
 }
@@ -457,10 +457,10 @@ HB_FUNC( HB_GZSEEK )
          HB_MAXINT nResult;
 
          hb_vmUnlock();
-         nResult = gzseek( gz, ( z_off_t ) hb_parnint(2), hb_parnidef( 3, SEEK_SET ) );
+         nResult = gzseek( gz, ( z_off_t ) hb_parnint(2), hb_parnidef(3, SEEK_SET) );
          hb_vmLock();
 
-         hb_retnint( nResult );
+         hb_retnint(nResult);
       }
    }
    else
@@ -486,7 +486,7 @@ HB_FUNC( HB_GZREWIND )
       iResult = gzrewind( gz );
       hb_vmLock();
 
-      hb_retni( iResult );
+      hb_retni(iResult);
    }
 #endif
 }
@@ -507,7 +507,7 @@ HB_FUNC( HB_GZTELL )
       nResult = gztell( gz );
       hb_vmLock();
 
-      hb_retnint( nResult );
+      hb_retnint(nResult);
    }
 #endif
 }
@@ -528,7 +528,7 @@ HB_FUNC( HB_GZEOF )
       iResult = gzeof( gz );
       hb_vmLock();
 
-      hb_retl( iResult != 0 );
+      hb_retl(iResult != 0);
    }
 #endif
 }
@@ -549,7 +549,7 @@ HB_FUNC( HB_GZDIRECT )
       iResult = gzdirect( gz );
       hb_vmLock();
 
-      hb_retl( iResult != 0 );
+      hb_retl(iResult != 0);
    }
 #endif
 #endif
@@ -567,8 +567,8 @@ HB_FUNC( HB_GZERROR )
    {
       int iErrNum = 0;
 
-      hb_retc( gzerror( gz, &iErrNum ) );
-      hb_storni( iErrNum, 2 );
+      hb_retc(gzerror(gz, &iErrNum));
+      hb_storni(iErrNum, 2);
    }
 #endif
 }

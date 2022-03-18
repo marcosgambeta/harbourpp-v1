@@ -71,7 +71,7 @@ HB_FUNC( ROW )  /* Return the current screen row position (zero origin) */
 
    hb_gtGetPos( &iRow, &iCol );
 
-   hb_retni( iRow );
+   hb_retni(iRow);
 }
 
 HB_FUNC( COL )  /* Return the current screen column position (zero origin) */
@@ -81,5 +81,5 @@ HB_FUNC( COL )  /* Return the current screen column position (zero origin) */
 
    hb_gtGetPos( &iRow, &iCol );
 
-   hb_retni( iCol );
+   hb_retni(iCol);
 }

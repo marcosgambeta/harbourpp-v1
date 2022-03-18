@@ -116,7 +116,7 @@ HB_FUNC( HB_DISPBOX )
    {
       const char * pszBox   = hb_parc(5);
       const char * pszColor = hb_parc(6);
-      int          iColor   = pszColor ? hb_gtColorToN( pszColor ) : hb_parnidef( 6, -1 );
+      int          iColor   = pszColor ? hb_gtColorToN( pszColor ) : hb_parnidef(6, -1);
 
       hb_gtDrawBox( hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight), pszBox, iColor );
    }

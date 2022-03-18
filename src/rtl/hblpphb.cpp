@@ -167,7 +167,7 @@ HB_FUNC( HB_LPPCREATE )
    PHB_ITEM pItem;
 
    pItem = hb_param(1, HB_IT_POINTER);
-   if( ! pItem || ( sd = hb_socketItemGet( pItem ) ) == HB_NO_SOCKET )
+   if( ! pItem || ( sd = hb_socketItemGet(pItem) ) == HB_NO_SOCKET )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
@@ -206,7 +206,7 @@ HB_FUNC( HB_LPPERROR )
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
    }
-   hb_retni( hb_lppError( pGC->pSocket ) );
+   hb_retni(hb_lppError(pGC->pSocket));
 }
 
 HB_FUNC( HB_LPPSETLIMIT )
@@ -235,7 +235,7 @@ HB_FUNC( HB_LPPSEND )
    }
 
    pData = hb_param(2, HB_IT_STRING);
-   hb_retl( hb_lppSend( pGC->pSocket, pData ? hb_itemGetCPtr(pData) : "", hb_itemGetCLen(pData), hb_parnintdef( 3, -1 ) ) );
+   hb_retl(hb_lppSend(pGC->pSocket, pData ? hb_itemGetCPtr(pData) : "", hb_itemGetCLen(pData), hb_parnintdef(3, -1)));
 }
 
 HB_FUNC( HB_LPPRECV )
@@ -252,16 +252,16 @@ HB_FUNC( HB_LPPRECV )
       return;
    }
 
-   bRet = hb_lppRecv( pGC->pSocket, &data, &len, hb_parnintdef( 3, -1 ) );
+   bRet = hb_lppRecv( pGC->pSocket, &data, &len, hb_parnintdef(3, -1) );
    if( bRet )
    {
       if( HB_ISBYREF(2) )
       {
-         hb_storclen( static_cast<char*>(data), len, 2 );
+         hb_storclen(static_cast<char*>(data), len, 2);
       }
       hb_xfree(data);
    }
-   hb_retl( bRet );
+   hb_retl(bRet);
 }
 
 HB_FUNC( HB_LPPSENDLEN )
@@ -274,7 +274,7 @@ HB_FUNC( HB_LPPSENDLEN )
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
    }
-   hb_retns( hb_lppSendLen( pGC->pSocket ) );
+   hb_retns(hb_lppSendLen(pGC->pSocket));
 }
 
 HB_FUNC( HB_LPPRECVLEN )
@@ -287,5 +287,5 @@ HB_FUNC( HB_LPPRECVLEN )
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
    }
-   hb_retns( hb_lppRecvLen( pGC->pSocket ) );
+   hb_retns(hb_lppRecvLen(pGC->pSocket));
 }

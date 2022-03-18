@@ -112,7 +112,7 @@ HB_FUNC( MEMOTRAN )
       }
 
       nLen = hb_strMemotran( pszResult, hb_itemGetCPtr(pString), nLen, cHardCR, cSoftCR );
-      hb_retclen_buffer( pszResult, nLen );
+      hb_retclen_buffer(pszResult, nLen);
    }
    else
    {

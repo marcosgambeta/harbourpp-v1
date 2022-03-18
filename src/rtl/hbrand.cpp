@@ -60,7 +60,7 @@ double hb_random_num_secure( void )
 
 HB_FUNC( HB_RAND32 ) /* returns an integer between 0 and 0xFFFFFFFF (inclusive) */
 {
-   hb_retnint( hb_arc4random() );
+   hb_retnint(hb_arc4random());
 }
 
 HB_FUNC( HB_RANDSTR )
@@ -71,7 +71,7 @@ HB_FUNC( HB_RANDSTR )
    {
       void * data = hb_xgrab(len + 1);
       hb_random_block( data, len );
-      hb_retclen_buffer( static_cast<char*>(data), len );
+      hb_retclen_buffer(static_cast<char*>(data), len);
    }
    else
    {

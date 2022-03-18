@@ -80,7 +80,7 @@ HB_FUNC( DESCEND )
          {
             char * szBuffer = static_cast<char*>(hb_xgrab(nLen + 1));
             hb_strDescend( szBuffer, hb_itemGetCPtr(pItem), nLen );
-            hb_retclen_buffer( szBuffer, nLen );
+            hb_retclen_buffer(szBuffer, nLen);
          }
          else
          {
@@ -89,15 +89,15 @@ HB_FUNC( DESCEND )
       }
       else if( HB_IS_DATE(pItem) )
       {
-         hb_retnl( 5231808 - hb_itemGetDL(pItem) );
+         hb_retnl(5231808 - hb_itemGetDL(pItem));
       }
       else if( HB_IS_NUMERIC(pItem) )
       {
-         hb_retnd( -1 * hb_itemGetND(pItem) );
+         hb_retnd(-1 * hb_itemGetND(pItem));
       }
       else if( HB_IS_LOGICAL(pItem) )
       {
-         hb_retl( ! hb_itemGetL(pItem) );
+         hb_retl(! hb_itemGetL(pItem));
       }
    }
 }

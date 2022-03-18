@@ -633,7 +633,7 @@ int hb_gt_dos_keyCodeTranslate( int iKey, int iFlags, PHB_CODEPAGE cdp )
                int uc = hb_cdpGetWC( cdp, static_cast<HB_UCHAR>(iKey), 0 );
                if( uc )
                {
-                  return HB_INKEY_NEW_UNICODEF( uc, iFlags );
+                  return HB_INKEY_NEW_UNICODEF(uc, iFlags);
                }
             }
             return HB_INKEY_NEW_CHARF( iKey, iFlags );

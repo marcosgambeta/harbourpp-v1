@@ -408,7 +408,7 @@ void hb_memvarSetValue( PHB_SYMB pMemvarSymb, PHB_ITEM pItem )
    }
    else
    {
-      hb_errInternal( HB_EI_MVBADSYMBOL, nullptr, pMemvarSymb->szName, nullptr );
+      hb_errInternal(HB_EI_MVBADSYMBOL, nullptr, pMemvarSymb->szName, nullptr);
    }
 }
 
@@ -447,7 +447,7 @@ HB_ERRCODE hb_memvarGet( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
    }
    else
    {
-      hb_errInternal( HB_EI_MVBADSYMBOL, nullptr, pMemvarSymb->szName, nullptr );
+      hb_errInternal(HB_EI_MVBADSYMBOL, nullptr, pMemvarSymb->szName, nullptr);
    }
 
    return errCode;
@@ -546,7 +546,7 @@ void hb_memvarGetRefer( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
    }
    else
    {
-      hb_errInternal( HB_EI_MVBADSYMBOL, nullptr, pMemvarSymb->szName, nullptr );
+      hb_errInternal(HB_EI_MVBADSYMBOL, nullptr, pMemvarSymb->szName, nullptr);
    }
 }
 
@@ -1141,7 +1141,7 @@ PHB_ITEM hb_memvarSaveInArray( int iScope, HB_BOOL fCopy )
             if( fCopy )
             {
                hb_itemCopy(pItem, pMemvar);
-               hb_memvarDetachLocal( pItem );
+               hb_memvarDetachLocal(pItem);
             }
             else
             {
@@ -1325,7 +1325,7 @@ HB_FUNC( __MVSCOPE )
       }
    }
 
-   hb_retni( iMemvar );
+   hb_retni(iMemvar);
 }
 
 HB_FUNC( __MVCLEAR )
@@ -1340,7 +1340,7 @@ HB_FUNC( __MVDBGINFO )
 
    if( iCount == 1 || iCount == 2 )          /* request for a number of variables */
    {
-      hb_retns( hb_memvarCount( hb_parni(1), hb_parni(2) ) );
+      hb_retns(hb_memvarCount(hb_parni(1), hb_parni(2)));
    }
 
    else if( iCount > 2 )     /* request for a value of variable */
@@ -1352,13 +1352,13 @@ HB_FUNC( __MVDBGINFO )
 
       if( pValue )   /* the requested variable was found */
       {
-         hb_storc( szName, 3 );
+         hb_storc(szName, 3);
          hb_itemCopyFromRef(hb_stackReturnItem(), pValue);
       }
       else
       {
          hb_ret(); /* return NIL value */
-         hb_storc( "?", 3 );
+         hb_storc("?", 3);
       }
    }
 }
@@ -1369,7 +1369,7 @@ HB_FUNC( __MVEXIST )
    PHB_DYNS pDyn;
 
    pDyn = hb_memvarFindSymbol( hb_parc(1), hb_parclen(1) );
-   hb_retl( pDyn && hb_dynsymGetMemvar(pDyn) );
+   hb_retl(pDyn && hb_dynsymGetMemvar(pDyn));
 }
 
 HB_FUNC( __MVGET )
@@ -1544,7 +1544,7 @@ static HB_DYNS_FUNC( hb_memvarSave )
                iOverFlow = 1;
             }
             buffer[11] = 'C' + 128;
-            HB_PUT_LE_UINT16( &buffer[16], nLen );
+            HB_PUT_LE_UINT16(&buffer[16], nLen);
             hb_fileWrite( fhnd, buffer, HB_MEM_REC_LEN, -1 );
             hb_fileWrite( fhnd, hb_itemGetCPtr(pMemvar), nLen - iOverFlow, -1 );
             if( iOverFlow )
@@ -1734,7 +1734,7 @@ HB_FUNC( __MVRESTORE )
          bIncludeMask = HB_TRUE;
 #else
          pszMask = hb_memvarGetMask(3);
-         bIncludeMask = hb_parldef( 4, HB_TRUE );
+         bIncludeMask = hb_parldef(4, HB_TRUE);
 #endif
 
          while( hb_fileRead( fhnd, buffer, HB_MEM_REC_LEN, -1 ) == HB_MEM_REC_LEN )

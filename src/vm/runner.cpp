@@ -934,5 +934,5 @@ HB_FUNC( HB_HRBGETFUNLIST )
 
 HB_FUNC( HB_HRBSIGNATURE )
 {
-   hb_retclen( s_szHead, sizeof(s_szHead) );
+   hb_retclen(s_szHead, sizeof(s_szHead));
 }

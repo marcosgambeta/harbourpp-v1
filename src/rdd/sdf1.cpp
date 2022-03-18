@@ -1538,11 +1538,11 @@ HB_FUNC_STATIC( SDF_GETFUNCTABLE )
       {
          *puiCount = RDDFUNCSCOUNT;
       }
-      hb_retni( hb_rddInheritEx( pTable, &sdfTable, &sdfSuper, nullptr, nullptr ) );
+      hb_retni(hb_rddInheritEx(pTable, &sdfTable, &sdfSuper, nullptr, nullptr));
    }
    else
    {
-      hb_retni( HB_FAILURE );
+      hb_retni(HB_FAILURE);
    }
 }
 
@@ -1552,7 +1552,7 @@ static void hb_sdfRddInit( void * cargo )
 
    if( hb_rddRegister( "SDF", RDT_TRANSFER ) > 1 )
    {
-      hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
+      hb_errInternal(HB_EI_RDDINVALID, nullptr, nullptr, nullptr);
    }
 }
 

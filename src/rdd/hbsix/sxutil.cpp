@@ -84,7 +84,7 @@ HB_FUNC( SX_SLIMFAST )
          szDst[nDst++] = c;
       }
 
-      hb_retclen_buffer( szDst, nDst );
+      hb_retclen_buffer(szDst, nDst);
    }
    else
    {
@@ -102,7 +102,7 @@ HB_FUNC( SX_WILDMATCH )
       fMatch = hb_strMatchWild( szValue, szPattern );
    }
 
-   hb_retl( fMatch );
+   hb_retl(fMatch);
 }
 
 #define HB_SX_VER   "1.00.00"
@@ -115,16 +115,16 @@ HB_FUNC( SX_VERSION )
    switch( hb_parni(1) )
    {
       case 1:
-         hb_retds( HB_SX_DAY );
+         hb_retds(HB_SX_DAY);
          break;
       case 2:
-         hb_retc( HB_SX_TIME );
+         hb_retc(HB_SX_TIME);
          break;
       case 3:
-         hb_retc( HB_SX_FULL );
+         hb_retc(HB_SX_FULL);
          break;
       default:
-         hb_retc( HB_SX_VER );
+         hb_retc(HB_SX_VER);
          break;
    }
 }

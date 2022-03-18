@@ -387,7 +387,7 @@ static void hb_signalExceptionHandler( int sig, siginfo_t * si, void * ucp )
          break;
    }
 
-   hb_errInternal( 6005, "Exception %s at address %s", signame, sigaddr );
+   hb_errInternal(6005, "Exception %s at address %s", signame, sigaddr);
 }
 
 #endif

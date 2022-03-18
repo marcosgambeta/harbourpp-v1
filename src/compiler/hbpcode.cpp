@@ -553,7 +553,7 @@ void hb_compPCodeEval( PHB_HFUNC pFunc, const PHB_PCODE_FUNC * pFunctions, void 
             char szOpcode[16];
             ++nPos;
             hb_snprintf(szOpcode, sizeof(szOpcode), "%i", opcode);
-            hb_errInternal( HB_EI_COMPBADOPSIZE, "Invalid (zero) opcode %s size in hb_compPCodeEval()", szOpcode, nullptr );
+            hb_errInternal(HB_EI_COMPBADOPSIZE, "Invalid (zero) opcode %s size in hb_compPCodeEval()", szOpcode, nullptr);
          }
 #if 0
          /*
@@ -565,7 +565,7 @@ void hb_compPCodeEval( PHB_HFUNC pFunc, const PHB_PCODE_FUNC * pFunctions, void 
          {
             char szMsg[100];
             hb_snprintf(szMsg, sizeof(szMsg), "Wrong PCODE (%d) size (%ld!=%d)", opcode, nSkip, hb_comp_pcode_len[opcode]);
-            hb_errInternal( HB_EI_COMPBADOPSIZE, szMsg, nullptr, nullptr );
+            hb_errInternal(HB_EI_COMPBADOPSIZE, szMsg, nullptr, nullptr);
          }
 #endif
          nPos += nSkip;
@@ -575,7 +575,7 @@ void hb_compPCodeEval( PHB_HFUNC pFunc, const PHB_PCODE_FUNC * pFunctions, void 
          char szOpcode[16];
          ++nPos;
          hb_snprintf(szOpcode, sizeof(szOpcode), "%i", opcode);
-         hb_errInternal( HB_EI_COMPBADOPCODE, "Invalid opcode: %s in hb_compPCodeEval()", szOpcode, nullptr );
+         hb_errInternal(HB_EI_COMPBADOPCODE, "Invalid opcode: %s in hb_compPCodeEval()", szOpcode, nullptr);
       }
    }
 }
@@ -607,7 +607,7 @@ void hb_compPCodeTrace( PHB_HFUNC pFunc, const PHB_PCODE_FUNC * pFunctions, void
          char szOpcode[16];
          ++nPos;
          hb_snprintf(szOpcode, sizeof(szOpcode), "%i", opcode);
-         hb_errInternal( HB_EI_COMPBADOPCODE, "Invalid opcode: %s in hb_compPCodeTrace()", szOpcode, nullptr );
+         hb_errInternal(HB_EI_COMPBADOPCODE, "Invalid opcode: %s in hb_compPCodeTrace()", szOpcode, nullptr);
       }
    }
 }

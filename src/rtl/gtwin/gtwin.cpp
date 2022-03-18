@@ -806,7 +806,7 @@ static void hb_gt_win_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 #endif
       if( s_HInput == INVALID_HANDLE_VALUE )
       {
-         hb_errInternal( 10001, "Could not allocate console", nullptr, nullptr );
+         hb_errInternal(10001, "Could not allocate console", nullptr, nullptr);
       }
    }
 
@@ -824,7 +824,7 @@ static void hb_gt_win_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
    if( s_HOutput == INVALID_HANDLE_VALUE )
    {
-      hb_errInternal( 10001, "Could not allocate console (output)", nullptr, nullptr );
+      hb_errInternal(10001, "Could not allocate console (output)", nullptr, nullptr);
    }
 
    s_HInput = CreateFile( TEXT( "CONIN$" ),                 /* filename    */
@@ -836,7 +836,7 @@ static void hb_gt_win_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
    if( s_HInput == INVALID_HANDLE_VALUE )
    {
-      hb_errInternal( 10001, "Could not allocate console (input)", nullptr, nullptr );
+      hb_errInternal(10001, "Could not allocate console (input)", nullptr, nullptr);
    }
 
    GetConsoleScreenBufferInfo( s_HOutput, &s_csbi );
@@ -1828,13 +1828,13 @@ static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
 #if defined( UNICODE )
             if( iChar >= 127 )
             {
-               iKey = HB_INKEY_NEW_UNICODEF( iChar, iFlags );
+               iKey = HB_INKEY_NEW_UNICODEF(iChar, iFlags);
             }
 #else
             int u = HB_GTSELF_KEYTRANS(pGT, iChar);
             if( u )
             {
-               iKey = HB_INKEY_NEW_UNICODEF( u, iFlags );
+               iKey = HB_INKEY_NEW_UNICODEF(u, iFlags);
             }
 #endif
             else if( iChar < 127 && ( iFlags & ( HB_KF_CTRL | HB_KF_ALT ) ) )

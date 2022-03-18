@@ -65,7 +65,7 @@ HB_FUNC( HB_STRCLEAR )
       if( hb_itemGetWriteCL(pItem, &pBuffer, &nSize) )
       {
          memset(pBuffer, '\0', nSize + 1);
-         hb_retl( pszPtr == pBuffer );
+         hb_retl(pszPtr == pBuffer);
       }
       else
       {

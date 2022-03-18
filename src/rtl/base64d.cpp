@@ -137,7 +137,7 @@ HB_FUNC( HB_BASE64DECODE )
       char *  code    = static_cast<char*>(hb_xgrab(nDstLen));
 
       nDstLen = base64_decode_block( hb_parcx(1), nSrcLen, code );
-      hb_retclen_buffer( code, nDstLen );
+      hb_retclen_buffer(code, nDstLen);
    }
    else
    {

@@ -90,7 +90,7 @@ HB_FUNC( DTOC )
       char szDate[9];
       char szFormatted[11];
 
-      hb_retc( hb_dateFormat( hb_pardsbuff( szDate, 1 ), szFormatted, hb_setGetDateFormat() ) );
+      hb_retc(hb_dateFormat(hb_pardsbuff(szDate, 1), szFormatted, hb_setGetDateFormat()));
    }
    else
    {
@@ -110,7 +110,7 @@ HB_FUNC( HB_DTOC )
       {
          szFormat = hb_setGetDateFormat();
       }
-      hb_retc( hb_dateFormat( hb_pardsbuff( szDate, 1 ), szFormatted, szFormat ) );
+      hb_retc(hb_dateFormat(hb_pardsbuff(szDate, 1), szFormatted, szFormat));
    }
    else
    {
@@ -124,7 +124,7 @@ HB_FUNC( DTOS )
    {
       char szDate[9];
 
-      hb_retc( hb_pardsbuff( szDate, 1 ) );
+      hb_retc(hb_pardsbuff(szDate, 1));
    }
    else
    {
@@ -138,7 +138,7 @@ HB_FUNC( HB_STOD )
 {
    PHB_ITEM pDateString = hb_param(1, HB_IT_STRING);
 
-   hb_retds( hb_itemGetCLen(pDateString) >= 7 ? hb_itemGetCPtr(pDateString) : nullptr );
+   hb_retds(hb_itemGetCLen(pDateString) >= 7 ? hb_itemGetCPtr(pDateString) : nullptr);
 }
 
 HB_FUNC( YEAR )
@@ -214,7 +214,7 @@ HB_FUNC( TIME )
    char szResult[9];
 
    hb_dateTimeStr( szResult );
-   hb_retclen( szResult, 8 );
+   hb_retclen(szResult, 8);
 }
 
 HB_FUNC( DATE )
@@ -301,11 +301,11 @@ HB_FUNC( HB_TTOD )
             {
                szTimeFormat = hb_setGetTimeFormat();
             }
-            hb_storc( hb_timeFormat( szBuffer, szTimeFormat, lTime ), 2 );
+            hb_storc(hb_timeFormat(szBuffer, szTimeFormat, lTime), 2);
          }
          else
          {
-            hb_stornd( static_cast<double>(lTime) / 1000, 2 );
+            hb_stornd(static_cast<double>(lTime) / 1000, 2);
          }
       }
    }
@@ -321,7 +321,7 @@ HB_FUNC( HB_TTON )
 
    if( pTime )
    {
-      hb_retnd( hb_itemGetTD(pTime) );
+      hb_retnd(hb_itemGetTD(pTime));
    }
    else
    {
@@ -349,7 +349,7 @@ HB_FUNC( HB_NTOMSEC )
 
    if( pNum )
    {
-      hb_retnint( static_cast<HB_MAXINT>(hb_itemGetND(pNum) * HB_MILLISECS_PER_DAY) );
+      hb_retnint(static_cast<HB_MAXINT>(hb_itemGetND(pNum) * HB_MILLISECS_PER_DAY));
    }
    else
    {
@@ -363,7 +363,7 @@ HB_FUNC( HB_NTOSEC )
 
    if( pNum )
    {
-      hb_retnd( hb_itemGetND(pNum) * HB_SECONDS_PER_DAY );
+      hb_retnd(hb_itemGetND(pNum) * HB_SECONDS_PER_DAY);
    }
    else
    {
@@ -377,7 +377,7 @@ HB_FUNC( HB_NTOMIN )
 
    if( pNum )
    {
-      hb_retnd( hb_itemGetND(pNum) * HB_MINUTES_PER_DAY );
+      hb_retnd(hb_itemGetND(pNum) * HB_MINUTES_PER_DAY);
    }
    else
    {
@@ -391,7 +391,7 @@ HB_FUNC( HB_NTOHOUR )
 
    if( pNum )
    {
-      hb_retnd( hb_itemGetND(pNum) * 24 );
+      hb_retnd(hb_itemGetND(pNum) * 24);
    }
    else
    {
@@ -405,7 +405,7 @@ HB_FUNC( HB_TTOSEC )
 
    if( hb_partdt( &lDate, &lTime, 1 ) )
    {
-      hb_retnd( static_cast<double>(lDate) * HB_SECONDS_PER_DAY + static_cast<double>(lTime) / 1000 );
+      hb_retnd(static_cast<double>(lDate) * HB_SECONDS_PER_DAY + static_cast<double>(lTime) / 1000);
    }
    else
    {
@@ -447,7 +447,7 @@ HB_FUNC( HB_TTOMSEC )
 
    if( hb_partdt( &lDate, &lTime, 1 ) )
    {
-      hb_retnd( static_cast<double>(lDate) * HB_MILLISECS_PER_DAY + lTime );
+      hb_retnd(static_cast<double>(lDate) * HB_MILLISECS_PER_DAY + lTime);
    }
    else
    {
@@ -461,7 +461,7 @@ HB_FUNC( HB_TTOMIN )
 
    if( hb_partdt( &lDate, &lTime, 1 ) )
    {
-      hb_retnd( static_cast<double>(lDate) * HB_MINUTES_PER_DAY + static_cast<double>(lTime) / ( 60 * 1000 ) );
+      hb_retnd(static_cast<double>(lDate) * HB_MINUTES_PER_DAY + static_cast<double>(lTime) / (60 * 1000));
    }
    else
    {
@@ -475,7 +475,7 @@ HB_FUNC( HB_TTOHOUR )
 
    if( hb_partdt( &lDate, &lTime, 1 ) )
    {
-      hb_retnd( static_cast<double>(lDate) * 24 + static_cast<double>(lTime) / ( 60 * 60 * 1000 ) );
+      hb_retnd(static_cast<double>(lDate) * 24 + static_cast<double>(lTime) / (60 * 60 * 1000));
    }
    else
    {
@@ -502,7 +502,7 @@ HB_FUNC( HB_TTOC )
          szTimeFormat = hb_setGetTimeFormat();
       }
 
-      hb_retc( hb_timeStampFormat( szBuffer, szDateFormat, szTimeFormat, lDate, lTime ) );
+      hb_retc(hb_timeStampFormat(szBuffer, szDateFormat, szTimeFormat, lDate, lTime));
    }
    else
    {
@@ -546,7 +546,7 @@ HB_FUNC( HB_TTOS )
    {
       char szBuffer[18];
 
-      hb_retc( hb_timeStampStrRawPut( szBuffer, lDate, lTime ) );
+      hb_retc(hb_timeStampStrRawPut(szBuffer, lDate, lTime));
    }
    else
    {
@@ -641,7 +641,7 @@ HB_FUNC( HB_TSTOSTR )
             }
             else
             {
-               hb_retclen( szBuffer, 10 );
+               hb_retclen(szBuffer, 10);
             }
          }
          else
@@ -661,17 +661,17 @@ HB_FUNC( HB_TSTOSTR )
             }
             if( lDate == 0 )
             {
-               hb_retclen( szBuffer + 11, i - 11 );
+               hb_retclen(szBuffer + 11, i - 11);
             }
             else
             {
-               hb_retclen( szBuffer, i );
+               hb_retclen(szBuffer, i);
             }
          }
       }
       else
       {
-         hb_retclen( szBuffer, 23 );
+         hb_retclen(szBuffer, 23);
       }
    }
    else
@@ -708,9 +708,9 @@ HB_FUNC( HB_WEEK )
       int iYear, iWeek, iDay;
 
       hb_dateDecWeek( hb_itemGetDL(pDate), &iYear, &iWeek, &iDay );
-      hb_storni( iYear, 2 );
-      hb_storni( iDay, 3 );
-      hb_retni( iWeek );
+      hb_storni(iYear, 2);
+      hb_storni(iDay, 3);
+      hb_retni(iWeek);
    }
    else
    {
@@ -725,11 +725,11 @@ HB_FUNC( HB_UTCOFFSET )
       int iYear, iMonth, iDay, iHour, iMinute, iSecond, iMSec;
 
       hb_timeStampUnpack( hb_partd(1), &iYear, &iMonth, &iDay, &iHour, &iMinute, &iSecond, &iMSec );
-      hb_retnl( hb_timeStampUTCOffset( iYear, iMonth, iDay, iHour, iMinute, iSecond ) );
+      hb_retnl(hb_timeStampUTCOffset(iYear, iMonth, iDay, iHour, iMinute, iSecond));
    }
    else
    {
-      hb_retnl( hb_timeUTCOffset() );
+      hb_retnl(hb_timeUTCOffset());
    }
 }
 

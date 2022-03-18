@@ -93,5 +93,5 @@ HB_FUNC( HB_STRISUTF8 )
       }
    }
 
-   hb_retl( fUtf8 );
+   hb_retl(fUtf8);
 }

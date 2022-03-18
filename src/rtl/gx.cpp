@@ -50,7 +50,7 @@
 
 HB_FUNC( ISCOLOR )
 {
-   hb_retl( hb_gtIsColor() );
+   hb_retl(hb_gtIsColor());
 }
 
 HB_FUNC( NOSNOW )
@@ -75,5 +75,5 @@ HB_FUNC( SETMODE )
       iCols = hb_parni(2);
    }
 
-   hb_retl( hb_gtSetMode( iRows, iCols ) == HB_SUCCESS );
+   hb_retl(hb_gtSetMode(iRows, iCols) == HB_SUCCESS);
 }

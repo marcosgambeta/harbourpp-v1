@@ -150,7 +150,7 @@ HB_FUNC( HB_ATI )
             }
          }
       }
-      hb_retns( nPos );
+      hb_retns(nPos);
    }
    else
    {

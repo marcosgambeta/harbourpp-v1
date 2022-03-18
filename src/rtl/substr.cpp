@@ -115,7 +115,7 @@ HB_FUNC( SUBSTR )
          }
          else
          {
-            hb_retclen( pszText, nCount );
+            hb_retclen(pszText, nCount);
          }
       }
       else

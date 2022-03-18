@@ -60,14 +60,14 @@ HB_FUNC( HB_METHODNAME )
 {
    char szName[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
 
-   hb_retc( hb_procname( hb_parni(1) + 1, szName, HB_TRUE ) );
+   hb_retc(hb_procname(hb_parni(1) + 1, szName, HB_TRUE));
 }
 
 HB_FUNC( PROCNAME )
 {
    char szName[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
 
-   hb_retc( hb_procname( hb_parni(1) + 1, szName, HB_FALSE ) );
+   hb_retc(hb_procname(hb_parni(1) + 1, szName, HB_FALSE));
 }
 
 HB_FUNC( PROCLINE )
@@ -76,7 +76,7 @@ HB_FUNC( PROCLINE )
 
    if( nOffset > 0 )
    {
-      hb_retni( hb_stackItem( nOffset )->item.asSymbol.stackstate->uiLineNo );
+      hb_retni(hb_stackItem(nOffset)->item.asSymbol.stackstate->uiLineNo);
    }
    else
    {
@@ -135,7 +135,7 @@ HB_FUNC( PROCFILE )
          }
       }
    }
-   hb_retc( hb_vmFindModuleSymbolName( hb_vmGetRealFuncSym( pSym ) ) );
+   hb_retc(hb_vmFindModuleSymbolName(hb_vmGetRealFuncSym(pSym)));
 #else
    hb_retc_null();
 #endif

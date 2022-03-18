@@ -1320,7 +1320,7 @@ PHB_EXPR hb_compExprSetOperand( PHB_EXPR pExpr, PHB_EXPR pItem, HB_COMP_DECL )
       }
       else
       {
-         HB_COMP_ERROR_SYNTAX( pItem );
+         HB_COMP_ERROR_SYNTAX(pItem);
       }
       pExpr->value.asOperator.pRight = pItem; /* set it anyway */
    }

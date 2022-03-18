@@ -60,11 +60,11 @@ HB_FUNC( HB_VALTOSTR )
 
       if( bFreeReq )
       {
-         hb_retclen_buffer( buffer, nLen );
+         hb_retclen_buffer(buffer, nLen);
       }
       else
       {
-         hb_retclen( buffer, nLen );
+         hb_retclen(buffer, nLen);
       }
    }
    else

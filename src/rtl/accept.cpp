@@ -66,7 +66,7 @@ static char * hb_acceptBuffer( void )
 
 HB_FUNC( __ACCEPTSTR )
 {
-   hb_retc( hb_acceptBuffer() );
+   hb_retc(hb_acceptBuffer());
 }
 
 #endif
@@ -137,5 +137,5 @@ HB_FUNC( __ACCEPT )
    hb_strncpy(hb_acceptBuffer(), szAcceptResult, ACCEPT_BUFFER_LEN - 1);
 #endif
 
-   hb_retclen( szAcceptResult, nLen );
+   hb_retclen(szAcceptResult, nLen);
 }

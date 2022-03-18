@@ -263,7 +263,7 @@ void hb_gcFree( void * pBlock )
    }
    else
    {
-      hb_errInternal( HB_EI_XFREENULL, nullptr, nullptr, nullptr );
+      hb_errInternal(HB_EI_XFREENULL, nullptr, nullptr, nullptr);
    }
 }
 
@@ -329,7 +329,7 @@ void hb_gcRefFree( void * pBlock )
    }
    else
    {
-      hb_errInternal( HB_EI_XFREENULL, nullptr, nullptr, nullptr );
+      hb_errInternal(HB_EI_XFREENULL, nullptr, nullptr, nullptr);
    }
 }
 
@@ -394,7 +394,7 @@ PHB_ITEM hb_gcGripGet( PHB_ITEM pOrigin )
 
 void hb_gcGripDrop( PHB_ITEM pItem )
 {
-   hb_gcRefFree( pItem );
+   hb_gcRefFree(pItem);
 }
 
 /* Lock a memory pointer so it will not be released if stored
@@ -803,7 +803,7 @@ HB_FUNC( HB_GCALL )
     */
    hb_ret();
 
-   hb_gcCollectAll( hb_parldef( 1, HB_TRUE ) );
+   hb_gcCollectAll( hb_parldef(1, HB_TRUE) );
 }
 
 #ifdef HB_GC_AUTO
@@ -836,6 +836,6 @@ HB_FUNC( HB_GCSETAUTO )
    }
    HB_GC_UNLOCK();
 
-   hb_retnint( nPrevBlocks / 1000 );
+   hb_retnint(nPrevBlocks / 1000);
 }
 #endif

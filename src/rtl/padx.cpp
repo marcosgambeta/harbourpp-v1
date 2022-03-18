@@ -184,7 +184,7 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
                      }
                      break;
                }
-               hb_retclen_buffer( szResult, static_cast<HB_SIZE>(nLen) );
+               hb_retclen_buffer(szResult, static_cast<HB_SIZE>(nLen));
                if( bFreeReq )
                {
                   hb_xfree(szText);
@@ -194,11 +194,11 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
             {
                if( bFreeReq )
                {
-                  hb_retclen_buffer( szText, static_cast<HB_SIZE>(nLen) );
+                  hb_retclen_buffer(szText, static_cast<HB_SIZE>(nLen));
                }
                else
                {
-                  hb_retclen( szText, nLen );
+                  hb_retclen(szText, nLen);
                }
             }
          }

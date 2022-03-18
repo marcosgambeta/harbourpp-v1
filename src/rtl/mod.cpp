@@ -77,7 +77,7 @@ HB_FUNC( MOD )
          {
             dResult += dBase;
          }
-         hb_retnd( dResult );
+         hb_retnd(dResult);
       }
       else
       {

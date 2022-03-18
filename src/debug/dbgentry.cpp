@@ -2037,12 +2037,12 @@ HB_FUNC( __DBGGETEXPRVALUE )
 
       if( pItem )
       {
-         hb_storl( HB_TRUE, 3 );
+         hb_storl(HB_TRUE, 3);
          hb_itemReturnRelease(pItem);
       }
       else
       {
-         hb_storl( HB_FALSE, 3 );
+         hb_storl(HB_FALSE, 3);
       }
    }
 }
@@ -2063,7 +2063,7 @@ HB_FUNC( __DBGISVALIDSTOPLINE )
 
    if( ptr )
    {
-      hb_retl( hb_dbgIsValidStopLine( ptr, hb_parc(2), hb_parni(3) ) );
+      hb_retl(hb_dbgIsValidStopLine(ptr, hb_parc(2), hb_parni(3)));
    }
 }
 
@@ -2094,7 +2094,7 @@ HB_FUNC( __DBGISBREAK )
 
    if( ptr && szModule )
    {
-      hb_retni( hb_dbgIsBreakPoint( static_cast<HB_DEBUGINFO*>(ptr), hb_dbgStripModuleName( szModule ), hb_parni(3) ) );
+      hb_retni(hb_dbgIsBreakPoint(static_cast<HB_DEBUGINFO*>(ptr), hb_dbgStripModuleName(szModule), hb_parni(3)));
    }
 }
 
@@ -2144,7 +2144,7 @@ HB_FUNC( __DBGCNTWATCH )
 
    if( ptr )
    {
-      hb_retni( hb_dbgCountWatch( ptr ) );
+      hb_retni(hb_dbgCountWatch(ptr));
    }
 }
 
@@ -2169,7 +2169,7 @@ HB_FUNC( __DBGGETMODULENAME )
 
    if( ptr )
    {
-      hb_retc( hb_dbgGetModuleName( ptr, hb_parc(2) ) );
+      hb_retc(hb_dbgGetModuleName(ptr, hb_parc(2)));
    }
 }
 
@@ -2181,7 +2181,7 @@ HB_FUNC( __DBGMODULEMATCH )
    {
       const char * szModule1 = hb_parc(2), * szModule2 = hb_parc(3);
 
-      hb_retl( szModule1 && szModule2 && FILENAME_EQUAL( hb_dbgStripModuleName( szModule1 ), hb_dbgStripModuleName( szModule2 ) ) );
+      hb_retl(szModule1 && szModule2 && FILENAME_EQUAL(hb_dbgStripModuleName(szModule1), hb_dbgStripModuleName(szModule2)));
    }
 }
 

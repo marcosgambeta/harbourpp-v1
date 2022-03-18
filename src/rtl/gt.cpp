@@ -59,5 +59,5 @@ HB_FUNC( DISPEND )
 
 HB_FUNC( DISPCOUNT )
 {
-   hb_retni( hb_gtDispCount() );
+   hb_retni(hb_gtDispCount());
 }

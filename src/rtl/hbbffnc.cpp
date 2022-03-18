@@ -71,7 +71,7 @@ HB_FUNC( HB_BLOWFISHKEY )
       HB_BLOWFISH bf;
 
       hb_blowfishInit( &bf, hb_parc(1), iLen );
-      hb_retclen( reinterpret_cast<const char*>(&bf), sizeof(HB_BLOWFISH) );
+      hb_retclen(reinterpret_cast<const char*>(&bf), sizeof(HB_BLOWFISH));
    }
 }
 
@@ -113,10 +113,10 @@ HB_FUNC( HB_BLOWFISHENCRYPT )
             xl = HB_GET_BE_UINT32( &pszData[nLen] );
             xr = HB_GET_BE_UINT32( &pszData[nLen + 4] );
             hb_blowfishEncrypt( bf, &xl, &xr );
-            HB_PUT_BE_UINT32( &pszData[nLen], xl );
-            HB_PUT_BE_UINT32( &pszData[nLen + 4], xr );
+            HB_PUT_BE_UINT32(&pszData[nLen], xl);
+            HB_PUT_BE_UINT32(&pszData[nLen + 4], xr);
          }
-         hb_retclen_buffer( pszData, nSize );
+         hb_retclen_buffer(pszData, nSize);
       }
       else
       {
@@ -155,8 +155,8 @@ HB_FUNC( HB_BLOWFISHDECRYPT )
             xl = HB_GET_BE_UINT32( &pszSource[nLen] );
             xr = HB_GET_BE_UINT32( &pszSource[nLen + 4] );
             hb_blowfishDecrypt( bf, &xl, &xr );
-            HB_PUT_BE_UINT32( &pszData[nLen], xl );
-            HB_PUT_BE_UINT32( &pszData[nLen + 4], xr );
+            HB_PUT_BE_UINT32(&pszData[nLen], xl);
+            HB_PUT_BE_UINT32(&pszData[nLen + 4], xr);
          }
          if( ! fRaw )
          {
@@ -165,7 +165,7 @@ HB_FUNC( HB_BLOWFISHDECRYPT )
          }
          if( nLen )
          {
-            hb_retclen_buffer( pszData, nLen );
+            hb_retclen_buffer(pszData, nLen);
          }
          else
          {
@@ -201,11 +201,11 @@ static void hb_bf_encode( const HB_BLOWFISH * bf, HB_BYTE * vect )
 {
    HB_U32 xl, xr;
 
-   xl = HB_GET_BE_UINT32( &vect[0] );
-   xr = HB_GET_BE_UINT32( &vect[4] );
-   hb_blowfishEncrypt( bf, &xl, &xr );
-   HB_PUT_BE_UINT32( &vect[0], xl );
-   HB_PUT_BE_UINT32( &vect[4], xr );
+   xl = HB_GET_BE_UINT32(&vect[0]);
+   xr = HB_GET_BE_UINT32(&vect[4]);
+   hb_blowfishEncrypt(bf, &xl, &xr);
+   HB_PUT_BE_UINT32(&vect[0], xl);
+   HB_PUT_BE_UINT32(&vect[4], xr);
 }
 
 /* hb_blowfishEncrypt_CFB( <cBfKey>, <cText> [, <cInitSeed> ] )
@@ -239,7 +239,7 @@ HB_FUNC( HB_BLOWFISHENCRYPT_CFB )
             }
             pszData[n] = ( vect[i] ^= pszSource[n] );
          }
-         hb_retclen_buffer( pszData, nLen );
+         hb_retclen_buffer(pszData, nLen);
       }
       else
       {
@@ -280,7 +280,7 @@ HB_FUNC( HB_BLOWFISHDECRYPT_CFB )
             pszData[n] = ( vect[i] ^ pszSource[n] );
             vect[i] = pszSource[n];
          }
-         hb_retclen_buffer( pszData, nLen );
+         hb_retclen_buffer(pszData, nLen);
       }
       else
       {

@@ -84,7 +84,7 @@ HB_FUNC( REPLICATE )
                   szPtr += nLen;
                }
             }
-            hb_retclen_buffer( szResult, nSize );
+            hb_retclen_buffer(szResult, nSize);
          }
          else
          {

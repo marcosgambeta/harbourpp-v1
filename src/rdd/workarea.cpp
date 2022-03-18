@@ -2776,7 +2776,7 @@ int hb_rddRegister( const char * szDriver, HB_USHORT uiType )
    hb_vmPushInteger(s_uiRddCount);
    hb_vmPushPointer(static_cast<void*>(&pRddNewNode->rddSuperID));
    hb_vmProc(5);
-   if( hb_parnidef( -1, HB_FAILURE ) != HB_SUCCESS )
+   if( hb_parnidef(-1, HB_FAILURE) != HB_SUCCESS )
    {
       iResult = 3;                        /* Invalid FUNCTABLE */
    }
@@ -2930,7 +2930,7 @@ HB_FUNC( __RDDPREALLOCATE )
       s_RddList = static_cast<LPRDDNODE*>(hb_xrealloc(s_RddList, sizeof(LPRDDNODE) * s_uiRddMax));
    }
 
-   hb_retnl( s_uiRddMax );
+   hb_retnl(s_uiRddMax);
 }
 
 HB_FUNC_EXTERN( RDDSYS );

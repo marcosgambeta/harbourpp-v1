@@ -154,7 +154,7 @@ void hb_conInit( void )
 
    if( hb_gtInit( s_hFilenoStdin, s_hFilenoStdout, s_hFilenoStderr ) != HB_SUCCESS )
    {
-      hb_errInternal( 9995, "Harbour terminal (GT) initialization failure", nullptr, nullptr );
+      hb_errInternal(9995, "Harbour terminal (GT) initialization failure", nullptr, nullptr);
    }
 
    if( hb_cmdargCheck( "INFO" ) )
@@ -446,12 +446,12 @@ HB_FUNC( __EJECT ) /* Ejects the current page from the printer */
 
 HB_FUNC( PROW ) /* Returns the current printer row position */
 {
-   hb_retni( static_cast<int>(hb_prnPos()->row) );
+   hb_retni(static_cast<int>(hb_prnPos()->row));
 }
 
 HB_FUNC( PCOL ) /* Returns the current printer row position */
 {
-   hb_retni( static_cast<int>(hb_prnPos()->col) );
+   hb_retni(static_cast<int>(hb_prnPos()->col));
 }
 
 static void hb_conDevPos( int iRow, int iCol )
@@ -752,15 +752,15 @@ HB_FUNC( HB_DISPOUTATBOX )
 
 HB_FUNC( HB_GETSTDIN ) /* Return handle for STDIN */
 {
-   hb_retnint( static_cast<HB_NHANDLE>(s_hFilenoStdin) );
+   hb_retnint(static_cast<HB_NHANDLE>(s_hFilenoStdin));
 }
 
 HB_FUNC( HB_GETSTDOUT ) /* Return handle for STDOUT */
 {
-   hb_retnint( static_cast<HB_NHANDLE>(s_hFilenoStdout) );
+   hb_retnint(static_cast<HB_NHANDLE>(s_hFilenoStdout));
 }
 
 HB_FUNC( HB_GETSTDERR ) /* Return handle for STDERR */
 {
-   hb_retnint( static_cast<HB_NHANDLE>(s_hFilenoStderr) );
+   hb_retnint(static_cast<HB_NHANDLE>(s_hFilenoStderr));
 }

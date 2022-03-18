@@ -68,17 +68,17 @@ HB_FUNC( LEN )
          {
             nLen = hb_cdpTextLen( cdp, hb_itemGetCPtr(pItem), nLen );
          }
-         hb_retns( nLen );
+         hb_retns(nLen);
          return;
       }
       else if( HB_IS_ARRAY(pItem) )
       {
-         hb_retns( hb_arrayLen(pItem) );
+         hb_retns(hb_arrayLen(pItem));
          return;
       }
       else if( HB_IS_HASH(pItem) )
       {
-         hb_retns( hb_hashLen( pItem ) );
+         hb_retns(hb_hashLen(pItem));
          return;
       }
    }

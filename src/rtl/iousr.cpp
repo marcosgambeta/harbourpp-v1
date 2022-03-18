@@ -799,5 +799,5 @@ HB_FUNC( IOUSR_SETERROR )
       hb_fsSetError(errCodeNew);
    }
 
-   hb_retni( errCodePrev );
+   hb_retni(errCodePrev);
 }

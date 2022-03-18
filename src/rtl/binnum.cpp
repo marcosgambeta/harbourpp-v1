@@ -62,7 +62,7 @@ HB_FUNC( BIN2W )
          uiResult = HB_GET_LE_INT16( pszString );
       }
    }
-   hb_retnint( uiResult );
+   hb_retnint(uiResult);
 }
 
 HB_FUNC( BIN2I )
@@ -79,7 +79,7 @@ HB_FUNC( BIN2I )
          iResult = HB_GET_LE_UINT16( pszString );
       }
    }
-   hb_retnint( iResult );
+   hb_retnint(iResult);
 }
 
 HB_FUNC( BIN2L )
@@ -103,7 +103,7 @@ HB_FUNC( BIN2L )
          }
       }
    }
-   hb_retnint( iResult );
+   hb_retnint(iResult);
 }
 
 HB_FUNC( I2BIN )
@@ -111,8 +111,8 @@ HB_FUNC( I2BIN )
    char szResult[2];
    HB_I16 iValue = static_cast<HB_I16>(hb_parni(1));
 
-   HB_PUT_LE_UINT16( szResult, iValue );
-   hb_retclen( szResult, 2 );
+   HB_PUT_LE_UINT16(szResult, iValue);
+   hb_retclen(szResult, 2);
 }
 
 HB_FUNC( L2BIN )
@@ -120,6 +120,6 @@ HB_FUNC( L2BIN )
    char szResult[4];
    HB_I32 iValue = static_cast<HB_I32>(hb_parnl(1));
 
-   HB_PUT_LE_UINT32( szResult, iValue );
-   hb_retclen( szResult, 4 );
+   HB_PUT_LE_UINT32(szResult, iValue);
+   hb_retclen(szResult, 4);
 }

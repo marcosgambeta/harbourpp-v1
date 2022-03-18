@@ -79,10 +79,10 @@ void hb_compGenBufPortObj( HB_COMP_DECL, HB_BYTE ** pBufPtr, HB_SIZE * pnSize )
    *ptr++ = 'H';
    *ptr++ = 'R';
    *ptr++ = 'B';
-   HB_PUT_LE_UINT16( ptr, 2 );   /* version number */
+   HB_PUT_LE_UINT16(ptr, 2);   /* version number */
    ptr += 2;
 
-   HB_PUT_LE_UINT32( ptr, ulSymbols ); /* number of symbols */
+   HB_PUT_LE_UINT32(ptr, ulSymbols); /* number of symbols */
    ptr += 4;
    /* generate the symbol table */
    pSym = HB_COMP_PARAM->symbols.pFirst;
@@ -119,7 +119,7 @@ void hb_compGenBufPortObj( HB_COMP_DECL, HB_BYTE ** pBufPtr, HB_SIZE * pnSize )
       pSym = pSym->pNext;
    }
 
-   HB_PUT_LE_UINT32( ptr, ulFunctions );  /* number of functions */
+   HB_PUT_LE_UINT32(ptr, ulFunctions);  /* number of functions */
    ptr += 4;
    /* generate functions data */
    pFunc = HB_COMP_PARAM->functions.pFirst;
@@ -130,7 +130,7 @@ void hb_compGenBufPortObj( HB_COMP_DECL, HB_BYTE ** pBufPtr, HB_SIZE * pnSize )
          nLen = strlen(pFunc->szName) + 1;
          memcpy(ptr, pFunc->szName, nLen);
          ptr += nLen;
-         HB_PUT_LE_UINT32( ptr, pFunc->nPCodePos );      /* function size */
+         HB_PUT_LE_UINT32(ptr, pFunc->nPCodePos);      /* function size */
          ptr += 4;
          memcpy(ptr, pFunc->pCode, pFunc->nPCodePos);  /* function body */
          ptr += pFunc->nPCodePos;

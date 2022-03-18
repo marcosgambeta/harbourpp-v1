@@ -113,7 +113,7 @@ HB_FUNC( STRZERO )
                }   
             }
 
-            hb_retc_buffer( szResult );
+            hb_retc_buffer(szResult);
          }
          else
          {

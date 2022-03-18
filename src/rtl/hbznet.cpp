@@ -191,8 +191,8 @@ static void hb_znetDecrypt( PHB_ZNETSTREAM pStream, Bytef * data )
    xl = HB_GET_BE_UINT32( data );
    xr = HB_GET_BE_UINT32( data + 4 );
    hb_blowfishDecrypt( pStream->bf, &xl, &xr );
-   HB_PUT_BE_UINT32( data, xl );
-   HB_PUT_BE_UINT32( data + 4, xr );
+   HB_PUT_BE_UINT32(data, xl);
+   HB_PUT_BE_UINT32(data + 4, xr);
 }
 
 static void hb_znetEncrypt( PHB_ZNETSTREAM pStream, Bytef * data )
@@ -202,8 +202,8 @@ static void hb_znetEncrypt( PHB_ZNETSTREAM pStream, Bytef * data )
    xl = HB_GET_BE_UINT32( data );
    xr = HB_GET_BE_UINT32( data + 4 );
    hb_blowfishEncrypt( pStream->bf, &xl, &xr );
-   HB_PUT_BE_UINT32( data, xl );
-   HB_PUT_BE_UINT32( data + 4, xr );
+   HB_PUT_BE_UINT32(data, xl);
+   HB_PUT_BE_UINT32(data + 4, xr);
 }
 
 /* read data using stream structure
@@ -758,8 +758,8 @@ HB_FUNC( HB_SOCKETNEWZNET )
       {
          const char * keydata = hb_parc(2);
          int keylen = static_cast<int>(hb_parclen(2)),
-             level = hb_parnidef( 3, HB_ZLIB_COMPRESSION_DEFAULT ),
-             strategy = hb_parnidef( 4, HB_ZLIB_STRATEGY_DEFAULT );
+             level = hb_parnidef(3, HB_ZLIB_COMPRESSION_DEFAULT),
+             strategy = hb_parnidef(4, HB_ZLIB_STRATEGY_DEFAULT);
 
          pSock = hb_sockexNewZNet( sd, keydata, keylen, level, strategy );
       }

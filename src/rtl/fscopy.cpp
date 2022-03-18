@@ -123,8 +123,8 @@ HB_FUNC( HB_FCOPY )
    else
    {
       hb_fsSetFError(2); /* file not found */
-      hb_retni( F_ERROR );
+      hb_retni(F_ERROR);
    }
    hb_fsSetFError(errCode);
-   hb_retni( fResult ? 0 : F_ERROR );
+   hb_retni(fResult ? 0 : F_ERROR);
 }

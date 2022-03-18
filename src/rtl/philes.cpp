@@ -59,7 +59,7 @@ HB_FUNC( FOPEN )
 
    if( szFile )
    {
-      hb_retnint( static_cast<HB_NHANDLE>(hb_fsOpen(szFile, static_cast<HB_USHORT>(hb_parnidef(2, FO_READ | FO_COMPAT)))) );
+      hb_retnint(static_cast<HB_NHANDLE>(hb_fsOpen(szFile, static_cast<HB_USHORT>(hb_parnidef(2, FO_READ | FO_COMPAT)))));
       hb_fsSetFError(hb_fsError());
    }
    else
@@ -76,12 +76,12 @@ HB_FUNC( FCREATE )
 
    if( szFile )
    {
-      hb_retnint( static_cast<HB_NHANDLE>(hb_fsCreate(szFile, hb_parnidef(2, FC_NORMAL))) );
+      hb_retnint(static_cast<HB_NHANDLE>(hb_fsCreate(szFile, hb_parnidef(2, FC_NORMAL))));
       hb_fsSetFError(hb_fsError());
    }
    else
    {
-      hb_retni( F_ERROR );
+      hb_retni(F_ERROR);
       hb_fsSetFError(0);
    }
 }
@@ -92,12 +92,12 @@ HB_FUNC( HB_FCREATE )
 
    if( szFile )
    {
-      hb_retnint( static_cast<HB_NHANDLE>(hb_fsCreateEx(szFile, hb_parnidef(2, FC_NORMAL), static_cast<HB_USHORT>(hb_parnidef(3, FO_COMPAT)))) );
+      hb_retnint(static_cast<HB_NHANDLE>(hb_fsCreateEx(szFile, hb_parnidef(2, FC_NORMAL), static_cast<HB_USHORT>(hb_parnidef(3, FO_COMPAT)))));
       hb_fsSetFError(hb_fsError());
    }
    else
    {
-      hb_retni( F_ERROR );
+      hb_retni(F_ERROR);
       hb_fsSetFError(0);
    }
 }
@@ -131,7 +131,7 @@ HB_FUNC( FREAD )
       }
    }
 
-   hb_retns( nRead );
+   hb_retns(nRead);
    hb_fsSetFError(uiError);
 }
 
@@ -152,7 +152,7 @@ HB_FUNC( FWRITE )
          }
       }
 
-      hb_retns( hb_fsWriteLarge(hb_numToHandle(hb_parnint(1) ), hb_parc(2), nLen) );
+      hb_retns(hb_fsWriteLarge(hb_numToHandle(hb_parnint(1) ), hb_parc(2), nLen));
       uiError = hb_fsError();
    }
    else
@@ -164,7 +164,7 @@ HB_FUNC( FWRITE )
 
 HB_FUNC( FERROR )
 {
-   hb_retni( hb_fsGetFError() );
+   hb_retni(hb_fsGetFError());
 }
 
 HB_FUNC( FCLOSE )
@@ -175,7 +175,7 @@ HB_FUNC( FCLOSE )
    {
       hb_fsClose(hb_numToHandle(hb_parnint(1)));
       uiError = hb_fsError();
-      hb_retl( uiError == 0 );
+      hb_retl(uiError == 0);
    }
    else
    {
@@ -191,12 +191,12 @@ HB_FUNC( FERASE )
 
    if( szFile )
    {
-      hb_retni( hb_fsDelete(szFile) ? 0 : F_ERROR );
+      hb_retni(hb_fsDelete(szFile) ? 0 : F_ERROR);
       uiError = hb_fsError();
    }
    else
    {
-      hb_retni( F_ERROR );
+      hb_retni(F_ERROR);
    }
    hb_fsSetFError(uiError);
 }
@@ -208,12 +208,12 @@ HB_FUNC( FRENAME )
 
    if( szFileOld && szFileNew )
    {
-      hb_retni( hb_fsRename(szFileOld, szFileNew) ? 0 : F_ERROR );
+      hb_retni(hb_fsRename(szFileOld, szFileNew) ? 0 : F_ERROR);
       uiError = hb_fsError();
    }
    else
    {
-      hb_retni( F_ERROR );
+      hb_retni(F_ERROR);
    }
    hb_fsSetFError(uiError);
 }
@@ -224,7 +224,7 @@ HB_FUNC( FSEEK )
 
    if( HB_ISNUM(1) && HB_ISNUM(2) )
    {
-      hb_retnint( hb_fsSeekLarge(hb_numToHandle(hb_parnint(1)), hb_parnint(2), static_cast<HB_USHORT>(hb_parnidef(3, FS_SET))) );
+      hb_retnint(hb_fsSeekLarge(hb_numToHandle(hb_parnint(1)), hb_parnint(2), static_cast<HB_USHORT>(hb_parnidef(3, FS_SET))));
       uiError = hb_fsError();
    }
    else
@@ -254,7 +254,7 @@ HB_FUNC( FREADSTR )
          buffer[nRead] = '\0';
 
          /* NOTE: Clipper will not return zero chars from this functions. */
-         hb_retc_buffer( buffer );
+         hb_retc_buffer(buffer);
       }
       else
       {
@@ -282,7 +282,7 @@ HB_FUNC( HB_FREADLEN )
       nRead = hb_fsReadLarge(fhnd, buffer, nToRead);
       uiError = hb_fsError();
 
-      hb_retclen_buffer( buffer, nRead );
+      hb_retclen_buffer(buffer, nRead);
    }
    else
    {
@@ -316,7 +316,7 @@ HB_FUNC( CURDIR )
    }
    hb_fsCurDirBuff(iDrive, szBuffer, sizeof(szBuffer));
 
-   hb_retc( szBuffer );
+   hb_retc(szBuffer);
 }
 
 HB_FUNC( HB_CURDRIVE )
@@ -326,7 +326,7 @@ HB_FUNC( HB_CURDRIVE )
    const char * szDrive;
 
    szCurDrive[0] = (static_cast<char>(hb_fsCurDrv())) + 'A';
-   hb_retclen( szCurDrive, 1 );
+   hb_retclen(szCurDrive, 1);
 
    szDrive = hb_parc(1);
    if( szDrive )
@@ -368,7 +368,7 @@ HB_FUNC( HB_CWD )
 
    if( hb_fsGetCWD(szBuffer, sizeof(szBuffer)) )
    {
-      hb_retc( szBuffer );
+      hb_retc(szBuffer);
    }
    else
    {
@@ -390,7 +390,7 @@ HB_FUNC( HB_PROGNAME )
 
    if( pszBaseName )
    {
-      hb_retc_buffer( pszBaseName );
+      hb_retc_buffer(pszBaseName);
    }
    else
    {
@@ -404,7 +404,7 @@ HB_FUNC( HB_DIRBASE )
 
    hb_fsBaseDirBuff(szBuffer);
 
-   hb_retc( szBuffer );
+   hb_retc(szBuffer);
 }
 
 HB_FUNC( HB_FCOMMIT )
@@ -434,7 +434,7 @@ HB_FUNC( HB_FLOCK )
       uiError = hb_fsError();
    }
    hb_fsSetFError(uiError);
-   hb_retl( fResult );
+   hb_retl(fResult);
 }
 
 HB_FUNC( HB_FUNLOCK )
@@ -451,22 +451,22 @@ HB_FUNC( HB_FUNLOCK )
       uiError = hb_fsError();
    }
    hb_fsSetFError(uiError);
-   hb_retl( fResult );
+   hb_retl(fResult);
 }
 
 HB_FUNC( HB_FGETATTR )
 {
    HB_FATTR nAttr;
 
-   hb_retl( hb_fsGetAttr(hb_parcx(1), &nAttr) );
+   hb_retl(hb_fsGetAttr(hb_parcx(1), &nAttr));
    hb_fsSetFError(hb_fsError());
 
-   hb_stornl( nAttr, 2 );
+   hb_stornl(nAttr, 2);
 }
 
 HB_FUNC( HB_FSETATTR )
 {
-   hb_retl( hb_fsSetAttr(hb_parcx(1), hb_parnl(2)) );
+   hb_retl(hb_fsSetAttr(hb_parcx(1), hb_parnl(2)));
    hb_fsSetFError(hb_fsError());
 }
 
@@ -494,7 +494,7 @@ HB_FUNC( HB_FSETDATETIME )
       }
    }
 
-   hb_retl( hb_fsSetFileTime(hb_parcx(1), lDate, lTime) );
+   hb_retl(hb_fsSetFileTime(hb_parcx(1), lDate, lTime));
    hb_fsSetFError(hb_fsError());
 }
 
@@ -516,12 +516,12 @@ HB_FUNC( HB_FGETDATETIME )
          {
             buf[8] = '\0';
          }
-         hb_storc( buf, 3 );
-         hb_stordl( lJulian, 2 );
+         hb_storc(buf, 3);
+         hb_stordl(lJulian, 2);
       }
       else
       {
-         hb_stortdt( lJulian, lMillisec, 2 );
+         hb_stortdt(lJulian, lMillisec, 2);
       }
 
       hb_retl(true);
@@ -530,12 +530,12 @@ HB_FUNC( HB_FGETDATETIME )
    {
       if( HB_ISBYREF(3) )
       {
-         hb_storc( nullptr, 3 );
-         hb_stordl( 0, 2 );
+         hb_storc(nullptr, 3);
+         hb_stordl(0, 2);
       }
       else
       {
-         hb_stortdt( 0, 0, 2 );
+         hb_stortdt(0, 0, 2);
       }
 
       hb_retl(false);
@@ -556,12 +556,12 @@ HB_FUNC( HB_FSETDEVMODE )
       hb_fsSetFError(6);  /* ERROR_INVALID_HANDLE */
    }
 
-   hb_retni( iRet );
+   hb_retni(iRet);
 }
 
 HB_FUNC( HB_FISDEVICE )
 {
-   hb_retl( hb_fsIsDevice(hb_numToHandle(hb_parnint(1))) );
+   hb_retl(hb_fsIsDevice(hb_numToHandle(hb_parnint(1))));
    hb_fsSetFError(hb_fsError());
 }
 
@@ -569,7 +569,7 @@ HB_FUNC( HB_FISDEVICE )
       --> <nBytesRead> */
 HB_FUNC( HB_PREAD )
 {
-   HB_FHANDLE hPipe = hb_numToHandle( hb_parnintdef( 1, FS_ERROR ) );
+   HB_FHANDLE hPipe = hb_numToHandle( hb_parnintdef(1, FS_ERROR) );
    PHB_ITEM pBuffer = hb_param(2, HB_IT_STRING);
    char * buffer;
    HB_SIZE nSize;
@@ -596,11 +596,11 @@ HB_FUNC( HB_PREAD )
 
       if( nSize == static_cast<HB_SIZE>(FS_ERROR) )
       {
-         hb_retni( FS_ERROR );
+         hb_retni(FS_ERROR);
       }
       else
       {
-         hb_retns( nSize );
+         hb_retns(nSize);
       }
       hb_fsSetFError(uiError);
    }
@@ -614,7 +614,7 @@ HB_FUNC( HB_PREAD )
       --> <nBytesWritten> */
 HB_FUNC( HB_PWRITE )
 {
-   HB_FHANDLE hPipe = hb_numToHandle( hb_parnintdef( 1, FS_ERROR ) );
+   HB_FHANDLE hPipe = hb_numToHandle( hb_parnintdef(1, FS_ERROR) );
    const char * data = hb_parc(2);
 
    if( hPipe != FS_ERROR && data != nullptr )
@@ -633,11 +633,11 @@ HB_FUNC( HB_PWRITE )
       hb_fsSetFError(hb_fsError());
       if( nLen == static_cast<HB_SIZE>(FS_ERROR) )
       {
-         hb_retni( FS_ERROR );
+         hb_retni(FS_ERROR);
       }
       else
       {
-         hb_retns( nLen );
+         hb_retns(nLen);
       }
    }
    else
@@ -648,7 +648,7 @@ HB_FUNC( HB_PWRITE )
 
 HB_FUNC( HB_OSERROR )
 {
-   hb_retni( hb_fsOsError() );
+   hb_retni(hb_fsOsError());
 }
 
 HB_FUNC( HB_PS )

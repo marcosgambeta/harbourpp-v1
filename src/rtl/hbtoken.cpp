@@ -304,7 +304,7 @@ HB_FUNC( HB_TOKENCOUNT )
 
    if( hb_tokenParam( 2, 0, &szLine, &nLen, &szDelim, &nDelim, &iFlags ) )
    {
-      hb_retns( hb_tokenCount( szLine, nLen, szDelim, nDelim, iFlags ) );
+      hb_retns(hb_tokenCount(szLine, nLen, szDelim, nDelim, iFlags));
    }
    else
    {
@@ -321,7 +321,7 @@ HB_FUNC( HB_TOKENGET )
    if( hb_tokenParam( 3, 0, &szLine, &nLen, &szDelim, &nDelim, &iFlags ) )
    {
       szLine = hb_tokenGet( szLine, nLen, szDelim, &nDelim, iFlags, hb_parns(2), &nLen );
-      hb_retclen( szLine, nLen );
+      hb_retclen(szLine, nLen);
    }
    else
    {
@@ -355,13 +355,13 @@ HB_FUNC( HB_TOKENPTR )
       }
 
       /* return position to start next search from */
-      hb_storns( nSkip, 2 );
+      hb_storns(nSkip, 2);
       /* return token */
-      hb_retclen( szToken, nToken );
+      hb_retclen(szToken, nToken);
    }
    else
    {
-      hb_storns( 0, 2 );
+      hb_storns(0, 2);
       hb_retc_null();
    }
 }

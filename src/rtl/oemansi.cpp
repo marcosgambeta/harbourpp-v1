@@ -79,7 +79,7 @@ HB_FUNC( HB_ANSITOOEM )
       WideCharToMultiByte( CP_OEMCP, 0, pszWide, nWideLen, pszDst, nLen, nullptr, nullptr );
 
       hb_xfree(pszWide);
-      hb_retclen_buffer( pszDst, nLen );
+      hb_retclen_buffer(pszDst, nLen);
    }
 #else
       hb_itemReturn(pString);
@@ -113,7 +113,7 @@ HB_FUNC( HB_OEMTOANSI )
       WideCharToMultiByte( CP_ACP, 0, pszWide, nWideLen, pszDst, nLen, nullptr, nullptr );
 
       hb_xfree(pszWide);
-      hb_retclen_buffer( pszDst, nLen );
+      hb_retclen_buffer(pszDst, nLen);
    }
 #else
       hb_itemReturn(pString);

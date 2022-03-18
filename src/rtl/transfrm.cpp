@@ -1012,7 +1012,7 @@ HB_FUNC( TRANSFORM )
             }
          }
 
-         hb_retclen_buffer( szResult, ( nParamS && nResultPos > nParamS ) ? nParamS : nResultPos );
+         hb_retclen_buffer(szResult, (nParamS && nResultPos > nParamS) ? nParamS : nResultPos);
       }
    }
    else if( pPic || HB_ISNIL(2) )  /* Picture is an empty string or NIL */
@@ -1032,7 +1032,7 @@ HB_FUNC( TRANSFORM )
             iWidth += 2 + ( hb_setGetDecimals() << 1 );
             szStr = static_cast<char*>(hb_xgrab(iWidth + 1));
             hb_itemStrBuf(szStr, pValue, iWidth, iDec);
-            hb_retclen_buffer( szStr, iWidth );
+            hb_retclen_buffer(szStr, iWidth);
          }
          else
          {
@@ -1042,11 +1042,11 @@ HB_FUNC( TRANSFORM )
             szStr = hb_itemString(pValue, &nLen, &bFreeReq);
             if( bFreeReq )
             {
-               hb_retclen_buffer( szStr, nLen );
+               hb_retclen_buffer(szStr, nLen);
             }
             else
             {
-               hb_retclen( szStr, nLen );
+               hb_retclen(szStr, nLen);
             }
          }
       }
@@ -1055,7 +1055,7 @@ HB_FUNC( TRANSFORM )
          char szDate[9];
          char szResult[11];
 
-         hb_retc( hb_dateFormat( hb_itemGetDS(pValue, szDate), szResult, hb_setGetDateFormat() ) );
+         hb_retc(hb_dateFormat(hb_itemGetDS(pValue, szDate), szResult, hb_setGetDateFormat()));
       }
       else if( HB_IS_TIMESTAMP(pValue) )
       {
@@ -1063,7 +1063,7 @@ HB_FUNC( TRANSFORM )
          long lDate, lTime;
 
          hb_itemGetTDT(pValue, &lDate, &lTime);
-         hb_retc( hb_timeStampFormat( szResult, hb_setGetDateFormat(), hb_setGetTimeFormat(), lDate, lTime ) );
+         hb_retc(hb_timeStampFormat(szResult, hb_setGetDateFormat(), hb_setGetTimeFormat(), lDate, lTime));
       }
       else if( HB_IS_LOGICAL(pValue) )
       {

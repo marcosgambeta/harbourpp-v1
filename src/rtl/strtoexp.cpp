@@ -142,6 +142,6 @@ HB_FUNC( HB_STRTOEXP )
          *pDst++ = ch;
       }
       *pDst = '\0';
-      hb_retclen_buffer( pszResult, nRet );
+      hb_retclen_buffer(pszResult, nRet);
    }
 }

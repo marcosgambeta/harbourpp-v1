@@ -89,11 +89,11 @@ HB_FUNC( HB_HMAC_SHA224 )
    {
       char hex[( sizeof(mac) * 2 ) + 1];
       hb_strtohex( reinterpret_cast<char*>(mac), sizeof(mac), hex );
-      hb_retclen( hex, HB_SIZEOFARRAY( hex ) - 1 );
+      hb_retclen(hex, HB_SIZEOFARRAY(hex) - 1);
    }
    else
    {
-      hb_retclen( reinterpret_cast<char*>(mac), sizeof(mac) );
+      hb_retclen(reinterpret_cast<char*>(mac), sizeof(mac));
    }
 }
 
@@ -138,11 +138,11 @@ HB_FUNC( HB_HMAC_SHA256 )
    {
       char hex[( sizeof(mac) * 2 ) + 1];
       hb_strtohex( reinterpret_cast<char*>(mac), sizeof(mac), hex );
-      hb_retclen( hex, HB_SIZEOFARRAY( hex ) - 1 );
+      hb_retclen(hex, HB_SIZEOFARRAY(hex) - 1);
    }
    else
    {
-      hb_retclen( reinterpret_cast<char*>(mac), sizeof(mac) );
+      hb_retclen(reinterpret_cast<char*>(mac), sizeof(mac));
    }   
 }
 
@@ -187,11 +187,11 @@ HB_FUNC( HB_HMAC_SHA384 )
    {
       char hex[( sizeof(mac) * 2 ) + 1];
       hb_strtohex( reinterpret_cast<char*>(mac), sizeof(mac), hex );
-      hb_retclen( hex, HB_SIZEOFARRAY( hex ) - 1 );
+      hb_retclen(hex, HB_SIZEOFARRAY(hex) - 1);
    }
    else
    {
-      hb_retclen( reinterpret_cast<char*>(mac), sizeof(mac) );
+      hb_retclen(reinterpret_cast<char*>(mac), sizeof(mac));
    }
 }
 
@@ -236,10 +236,10 @@ HB_FUNC( HB_HMAC_SHA512 )
    {
       char hex[( sizeof(mac) * 2 ) + 1];
       hb_strtohex( reinterpret_cast<char*>(mac), sizeof(mac), hex );
-      hb_retclen( hex, HB_SIZEOFARRAY( hex ) - 1 );
+      hb_retclen(hex, HB_SIZEOFARRAY(hex) - 1);
    }
    else
    {
-      hb_retclen( reinterpret_cast<char*>(mac), sizeof(mac) );
+      hb_retclen(reinterpret_cast<char*>(mac), sizeof(mac));
    }
 }

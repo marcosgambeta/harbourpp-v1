@@ -2386,7 +2386,7 @@ static void hb_gt_crs_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    }
 
    if( ! s_ioBase )
-      hb_errInternal( 9997, "Internal error: screen driver initialization failure", nullptr, nullptr );
+      hb_errInternal(9997, "Internal error: screen driver initialization failure", nullptr, nullptr);
 }
 
 /* *********************************************************************** */

@@ -64,5 +64,5 @@ HB_FUNC( LENNUM )
       }
    }
 
-   hb_retns( nLen );
+   hb_retns(nLen);
 }

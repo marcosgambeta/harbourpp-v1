@@ -439,7 +439,7 @@ int hb_mathGetErrMode( void )
 /* Harbour equivalent to mathSet/GetErrMode */
 HB_FUNC( HB_MATHERMODE )        /* ([<nNewMode>]) --> <nOldMode> */
 {
-   hb_retni( hb_mathGetErrMode() );
+   hb_retni(hb_mathGetErrMode());
 
    /* set new mode */
    if( HB_ISNUM(1) )
@@ -670,13 +670,13 @@ HB_FUNC( EXP )
             }
             else
             {
-               hb_retnd( 0.0 );
+               hb_retnd(0.0);
             }
          }
       }
       else
       {
-         hb_retnd( dResult );
+         hb_retnd(dResult);
       }
    }
    else
@@ -719,14 +719,14 @@ HB_FUNC( LOG )
                      break;
 
                   default:
-                     hb_retnd( 0.0 );
+                     hb_retnd(0.0);
                      break;
                }
             }
          }
          else
          {
-            hb_retnd( dResult );
+            hb_retnd(dResult);
          }
       }
    }
@@ -745,7 +745,7 @@ HB_FUNC( SQRT )
 
       if( dArg <= 0 )
       {
-         hb_retnd( 0.0 );
+         hb_retnd(0.0);
       }
       else
       {
@@ -762,12 +762,12 @@ HB_FUNC( SQRT )
             {
                /* math exception is up to the Harbour function, so do this as
                   Clipper compatible as possible */
-               hb_retnd( 0.0 );  /* return 0.0 on all errors (all (?) of type DOMAIN) */
+               hb_retnd(0.0);  /* return 0.0 on all errors (all (?) of type DOMAIN) */
             }
          }
          else
          {
-            hb_retnd( dResult );
+            hb_retnd(dResult);
          }
       }
    }

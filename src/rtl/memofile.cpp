@@ -71,7 +71,7 @@ static void hb_memoread( HB_BOOL bHandleEOF )
                --nSize;
             }
          }
-         hb_retclen_buffer( pBuffer, nSize );
+         hb_retclen_buffer(pBuffer, nSize);
       }
       else
       {
@@ -141,10 +141,10 @@ static HB_BOOL hb_memowrit( HB_BOOL bHandleEOF )
 
 HB_FUNC( HB_MEMOWRIT )
 {
-   hb_retl( hb_memowrit( HB_FALSE ) );
+   hb_retl(hb_memowrit(HB_FALSE));
 }
 
 HB_FUNC( MEMOWRIT )
 {
-   hb_retl( hb_memowrit( HB_TRUE ) );
+   hb_retl(hb_memowrit(HB_TRUE));
 }

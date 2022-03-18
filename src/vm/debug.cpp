@@ -133,7 +133,7 @@ HB_FUNC( __DBGVMSTKGCOUNT )
 {
    if( hb_vmInternalsEnabled() )
    {
-      hb_retns( hb_stackTopOffset() );
+      hb_retns(hb_stackTopOffset());
    }
    else
    {
@@ -203,7 +203,7 @@ HB_FUNC( __DBGVMSTKLCOUNT )
 {
    if( hb_vmInternalsEnabled() )
    {
-      hb_retns( hb_stackLen( hb_parni(1) + 1 ) );
+      hb_retns(hb_stackLen(hb_parni(1) + 1));
    }
    else
    {

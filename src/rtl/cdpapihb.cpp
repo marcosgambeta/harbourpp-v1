@@ -82,7 +82,7 @@ HB_FUNC( HB_CDPSELECT )
 {
    const char * id = hb_parc(1);
 
-   hb_retc( hb_cdpID() );
+   hb_retc(hb_cdpID());
 
    if( id )
    {
@@ -96,7 +96,7 @@ HB_FUNC( HB_CDPEXISTS )
 
    if( id )
    {
-      hb_retl( hb_cdpFind( id ) != nullptr );
+      hb_retl(hb_cdpFind(id) != nullptr);
    }
    else
    {
@@ -109,7 +109,7 @@ HB_FUNC( HB_CDPUNIID )
    const char * id = hb_parc(1);
    PHB_CODEPAGE cdp = id ? hb_cdpFindExt( id ) : hb_vmCDP();
 
-   hb_retc( cdp ? cdp->uniTable->uniID : nullptr );
+   hb_retc(cdp ? cdp->uniTable->uniID : nullptr);
 }
 
 HB_FUNC( HB_CDPINFO )
@@ -117,7 +117,7 @@ HB_FUNC( HB_CDPINFO )
    const char * id = hb_parc(1);
    PHB_CODEPAGE cdp = id ? hb_cdpFindExt( id ) : hb_vmCDP();
 
-   hb_retc( cdp ? cdp->info : nullptr );
+   hb_retc(cdp ? cdp->info : nullptr);
 }
 
 HB_FUNC( HB_CDPISCHARIDX )
@@ -141,17 +141,17 @@ HB_FUNC( HB_CDPISCHARIDX )
          }
       }
    }
-   hb_retl( fResult );
+   hb_retl(fResult);
 }
 
 HB_FUNC( HB_CDPCHARMAX )
 {
-   hb_retnl( ( 1 << ( static_cast<int>(hb_cdpIsUTF8( hb_cdpFindExt( hb_parc(1) ) ) ? sizeof(HB_WCHAR) : sizeof(HB_UCHAR)) * 8 ) ) - 1 );
+   hb_retnl((1 << (static_cast<int>(hb_cdpIsUTF8(hb_cdpFindExt(hb_parc(1))) ? sizeof(HB_WCHAR) : sizeof(HB_UCHAR)) * 8)) - 1);
 }
 
 HB_FUNC( HB_CDPISUTF8 )
 {
-   hb_retl( hb_cdpIsUTF8( hb_cdpFindExt( hb_parc(1) ) ) );
+   hb_retl(hb_cdpIsUTF8(hb_cdpFindExt(hb_parc(1))));
 }
 
 HB_FUNC( HB_CDPLIST )
@@ -170,7 +170,7 @@ HB_FUNC( HB_CDPLIST )
    nPos = 0;
    while( list[nPos] )
    {
-      hb_storvc( list[nPos], -1, nPos + 1 );
+      hb_storvc(list[nPos], -1, nPos + 1);
       ++nPos;
    }
 
@@ -198,7 +198,7 @@ HB_FUNC( HB_TRANSLATE )
       if( cdpIn && cdpOut && cdpIn != cdpOut && ( cdpIn->uniTable != cdpOut->uniTable || HB_CDP_ISCUSTOM( cdpIn ) || HB_CDP_ISCUSTOM( cdpOut ) ) )
       {
          char * szResult = hb_cdpnDup( hb_parc(1), &nLen, cdpIn, cdpOut );
-         hb_retclen_buffer( szResult, nLen );
+         hb_retclen_buffer(szResult, nLen);
       }
       else
       {
@@ -219,7 +219,7 @@ HB_FUNC( HB_UTF8CHR )
       int iLen;
 
       iLen = hb_cdpU16CharToUTF8( utf8Char, static_cast<HB_WCHAR>(hb_parni(1)) );
-      hb_retclen( utf8Char, iLen );
+      hb_retclen(utf8Char, iLen);
    }
    else
    {
@@ -250,7 +250,7 @@ HB_FUNC( HB_UTF8ASC )
          pszString++;
          nLen--;
       }
-      hb_retnint( wc );
+      hb_retnint(wc);
    }
    else
    {
@@ -286,7 +286,7 @@ HB_FUNC( HB_STRTOUTF8 )
    }
    if( szDest )
    {
-      hb_retclen_buffer( szDest, nDest );
+      hb_retclen_buffer(szDest, nDest);
    }
    else
    {
@@ -327,7 +327,7 @@ HB_FUNC( HB_UTF8TOSTR )
 
       if( szDest )
       {
-         hb_retclen_buffer( szDest, nDest );
+         hb_retclen_buffer(szDest, nDest);
       }
       else
       {
@@ -348,8 +348,8 @@ HB_FUNC( HB_UTF8AT )
    if( pText && pSub )
    {
       HB_SIZE nTextLength = hb_itemGetCLen(pText);
-      HB_SIZE nStart = hb_parnsdef( 3, 1 );
-      HB_SIZE nEnd = hb_parnsdef( 4, nTextLength ); /* nTextLength can be > UTF8 len. No problem.*/
+      HB_SIZE nStart = hb_parnsdef(3, 1);
+      HB_SIZE nEnd = hb_parnsdef(4, nTextLength); /* nTextLength can be > UTF8 len. No problem.*/
 
       if( nEnd < nStart )
       {
@@ -357,7 +357,7 @@ HB_FUNC( HB_UTF8AT )
       }
       else
       {
-         hb_retns( hb_cdpUTF8StringAt( hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), hb_itemGetCPtr(pText), nTextLength, nStart, nEnd, HB_FALSE ) );
+         hb_retns(hb_cdpUTF8StringAt(hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), hb_itemGetCPtr(pText), nTextLength, nStart, nEnd, HB_FALSE));
       }
    }
    else
@@ -380,8 +380,8 @@ HB_FUNC( HB_UTF8RAT )
    if( pText && pSub )
    {
       HB_SIZE nTextLength = hb_itemGetCLen(pText);
-      HB_SIZE nStart = hb_parnsdef( 3, 1 );
-      HB_SIZE nEnd = hb_parnsdef( 4, nTextLength ); /* nTextLength can be > UTF8 len. No problem.*/
+      HB_SIZE nStart = hb_parnsdef(3, 1);
+      HB_SIZE nEnd = hb_parnsdef(4, nTextLength); /* nTextLength can be > UTF8 len. No problem.*/
 
       if( nEnd < nStart )
       {
@@ -389,7 +389,7 @@ HB_FUNC( HB_UTF8RAT )
       }
       else
       {
-         hb_retns( hb_cdpUTF8StringAt( hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), hb_itemGetCPtr(pText), nTextLength, nStart, nEnd, HB_TRUE ) );
+         hb_retns(hb_cdpUTF8StringAt(hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), hb_itemGetCPtr(pText), nTextLength, nStart, nEnd, HB_TRUE));
       }
    }
    else
@@ -429,7 +429,7 @@ HB_FUNC( HB_UTF8SUBSTR )
       }
       if( szDest )
       {
-         hb_retclen_buffer( szDest, nDest );
+         hb_retclen_buffer(szDest, nDest);
       }
       else
       {
@@ -459,7 +459,7 @@ HB_FUNC( HB_UTF8LEFT )
 
       if( szDest )
       {
-         hb_retclen_buffer( szDest, nDest );
+         hb_retclen_buffer(szDest, nDest);
       }
       else
       {
@@ -494,7 +494,7 @@ HB_FUNC( HB_UTF8RIGHT )
 
       if( szDest )
       {
-         hb_retclen_buffer( szDest, nDest );
+         hb_retclen_buffer(szDest, nDest);
       }
       else
       {
@@ -518,7 +518,7 @@ HB_FUNC( HB_UTF8PEEK )
 
       if( nPos > 0 && nPos <= nLen )
       {
-         hb_retnint( hb_cdpUTF8StringPeek( szString, nLen, nPos - 1 ) );
+         hb_retnint(hb_cdpUTF8StringPeek(szString, nLen, nPos - 1));
       }
       else
       {
@@ -570,9 +570,9 @@ HB_FUNC( HB_UTF8POKE )
             memcpy(szResult + nPos + n, szString + nPos + n2, nLen - nPos - n2);
             if( HB_ISBYREF(1) )
             {
-               hb_storclen( szResult, nLen - n2 + n, 1 );
+               hb_storclen(szResult, nLen - n2 + n, 1);
             }
-            hb_retclen_buffer( szResult, nLen - n2 + n );
+            hb_retclen_buffer(szResult, nLen - n2 + n);
          }
       }
       else
@@ -638,7 +638,7 @@ HB_FUNC( HB_UTF8STUFF )
          hb_xmemcpy(szResult, szText, nPos);
          hb_xmemcpy(szResult + nPos, szIns, nIns);
          hb_xmemcpy(szResult + nPos + nIns, szText + nPos + nDel, nLen - ( nPos + nDel ));
-         hb_retclen_buffer( szResult, nTot );
+         hb_retclen_buffer(szResult, nTot);
       }
       else
       {
@@ -657,7 +657,7 @@ HB_FUNC( HB_UTF8LEN )
 
    if( szText )
    {
-      hb_retnint( hb_cdpUTF8StringLength( szText, hb_parclen(1) ) );
+      hb_retnint(hb_cdpUTF8StringLength(szText, hb_parclen(1)));
    }
    else
    {

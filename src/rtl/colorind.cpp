@@ -88,7 +88,7 @@ HB_FUNC( HB_COLORINDEX )
          }
 
          /* Return the string */
-         hb_retclen( pszColor + nColorPos, nColorLen );
+         hb_retclen(pszColor + nColorPos, nColorLen);
       }
       else
       {

@@ -94,7 +94,7 @@ HB_FUNC( SX_FNAMEPARSER )
          }
       }
 
-      hb_retc( hb_fsFNameMerge(szPathBuf, pFileName) );
+      hb_retc(hb_fsFNameMerge(szPathBuf, pFileName));
       hb_xfree(pFileName);
    }
    else

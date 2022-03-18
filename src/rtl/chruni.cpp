@@ -62,7 +62,7 @@ HB_FUNC( HB_UCHAR )
       HB_SIZE nLen;
 
       nLen = hb_cdpTextPutU16( hb_vmCDP(), szChar, sizeof(szChar), static_cast<HB_WCHAR>(hb_parni(1)) );
-      hb_retclen( szChar, nLen );
+      hb_retclen(szChar, nLen);
    }
    else
    {
@@ -79,7 +79,7 @@ HB_FUNC( HB_BCHAR )
    {
       char c = static_cast<char>(hb_parni(1));
 
-      hb_retclen( &c, 1 );
+      hb_retclen(&c, 1);
    }
    else
    {
@@ -96,7 +96,7 @@ HB_FUNC( HB_UCODE )
 
    if( pText )
    {
-      hb_retni( hb_cdpTextGetU16( hb_vmCDP(), hb_itemGetCPtr(pText), hb_itemGetCLen(pText) ) );
+      hb_retni(hb_cdpTextGetU16(hb_vmCDP(), hb_itemGetCPtr(pText), hb_itemGetCLen(pText)));
    }
    else
    {
@@ -113,7 +113,7 @@ HB_FUNC( HB_BCODE )
 
    if( szText )
    {
-      hb_retni( static_cast<HB_UCHAR>(szText[0]) );
+      hb_retni(static_cast<HB_UCHAR>(szText[0]));
    }
    else
    {
@@ -130,7 +130,7 @@ HB_FUNC( HB_ULEN )
 
    if( pText )
    {
-      hb_retns( hb_cdpTextLen( hb_vmCDP(), hb_itemGetCPtr(pText), hb_itemGetCLen(pText) ) );
+      hb_retns(hb_cdpTextLen(hb_vmCDP(), hb_itemGetCPtr(pText), hb_itemGetCLen(pText)));
    }
    else
    {
@@ -147,7 +147,7 @@ HB_FUNC( HB_BLEN )
 
    if( pText )
    {
-      hb_retns( hb_itemGetCLen(pText) );
+      hb_retns(hb_itemGetCLen(pText));
    }
    else
    {
@@ -180,7 +180,7 @@ HB_FUNC( HB_UPEEK )
          }
       }
 
-      hb_retni( wc );
+      hb_retni(wc);
    }
    else
    {
@@ -199,7 +199,7 @@ HB_FUNC( HB_BPEEK )
    {
       HB_SIZE nPos = hb_parns(2);
 
-      hb_retni( ( nPos > 0 && nPos <= hb_itemGetCLen(pText) ) ? static_cast<HB_UCHAR>(hb_itemGetCPtr(pText)[nPos - 1]) : 0 );
+      hb_retni((nPos > 0 && nPos <= hb_itemGetCLen(pText)) ? static_cast<HB_UCHAR>(hb_itemGetCPtr(pText)[nPos - 1]) : 0);
    }
    else
    {
@@ -247,9 +247,9 @@ HB_FUNC( HB_UPOKE )
                memcpy(pszText + nPos + nChar, szText + nPos + nOldChar, nLen - nPos - nOldChar);
                if( HB_ISBYREF(1) )
                {
-                  hb_storclen( pszText, nLen - nOldChar + nChar, 1 );
+                  hb_storclen(pszText, nLen - nOldChar + nChar, 1);
                }
-               hb_retclen_buffer( pszText, nLen - nOldChar + nChar );
+               hb_retclen_buffer(pszText, nLen - nOldChar + nChar);
                return;
             }
          }
@@ -332,7 +332,7 @@ HB_FUNC( HB_USUBSTR )
          }
          else
          {
-            hb_retclen( pszText, nCount );
+            hb_retclen(pszText, nCount);
          }
       }
       else
@@ -392,7 +392,7 @@ HB_FUNC( HB_BSUBSTR )
          }
          else
          {
-            hb_retclen( pszText, nCount );
+            hb_retclen(pszText, nCount);
          }
       }
       else
@@ -432,7 +432,7 @@ HB_FUNC( HB_ULEFT )
          }
          else
          {
-            hb_retclen( hb_itemGetCPtr(pText), nLen );
+            hb_retclen(hb_itemGetCPtr(pText), nLen);
          }
       }
    }
@@ -464,7 +464,7 @@ HB_FUNC( HB_BLEFT )
          }
          else
          {
-            hb_retclen( hb_itemGetCPtr(pText), nLen );
+            hb_retclen(hb_itemGetCPtr(pText), nLen);
          }
       }
    }
@@ -503,7 +503,7 @@ HB_FUNC( HB_URIGHT )
       }
       else
       {
-         hb_retclen( hb_itemGetCPtr(pText) + nText - nLen, nLen );
+         hb_retclen(hb_itemGetCPtr(pText) + nText - nLen, nLen);
       }
    }
    else
@@ -528,7 +528,7 @@ HB_FUNC( HB_BRIGHT )
       }
       else
       {
-         hb_retclen( hb_itemGetCPtr(pText) + nText - nLen, nLen );
+         hb_retclen(hb_itemGetCPtr(pText) + nText - nLen, nLen);
       }
    }
    else
@@ -599,7 +599,7 @@ HB_FUNC( HB_UAT )
             }
          }
       }
-      hb_retns( nPos );
+      hb_retns(nPos);
    }
    else
    {
@@ -666,7 +666,7 @@ HB_FUNC( HB_BAT )
             }
          }
       }
-      hb_retns( nPos );
+      hb_retns(nPos);
    }
    else
    {
@@ -730,7 +730,7 @@ HB_FUNC( HB_BRAT )
       }
    }
 
-   hb_retns( nPos );
+   hb_retns(nPos);
 }
 
 /* hb_BStuff( <cString>, <nAt>, <nDel>, <cIns> ) --> <cResult>
@@ -774,7 +774,7 @@ HB_FUNC( HB_BSTUFF )
          hb_xmemcpy(szResult, szText, nPos);
          hb_xmemcpy(szResult + nPos, szIns, nIns);
          hb_xmemcpy(szResult + nPos + nIns, szText + nPos + nDel, nLen - ( nPos + nDel ));
-         hb_retclen_buffer( szResult, nTot );
+         hb_retclen_buffer(szResult, nTot);
       }
       else
       {
@@ -830,7 +830,7 @@ HB_FUNC( HB_USTUFF )
          hb_xmemcpy(szResult, szText, nPos);
          hb_xmemcpy(szResult + nPos, szIns, nIns);
          hb_xmemcpy(szResult + nPos + nIns, szText + nPos + nDel, nLen - ( nPos + nDel ));
-         hb_retclen_buffer( szResult, nTot );
+         hb_retclen_buffer(szResult, nTot);
       }
       else
       {

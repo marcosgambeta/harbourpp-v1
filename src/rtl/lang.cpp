@@ -76,7 +76,7 @@ HB_FUNC( HB_USERLANG )
          }   
       }
 
-      hb_retclen_buffer( ietf, tmp );
+      hb_retclen_buffer(ietf, tmp);
    }
    else
    {

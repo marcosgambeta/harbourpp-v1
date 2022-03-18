@@ -114,7 +114,7 @@ HB_FUNC( HB_BASE64ENCODE )
          }
          *p = '\0';
 
-         hb_retclen_buffer( t, p - t );
+         hb_retclen_buffer(t, p - t);
       }
       else
       {

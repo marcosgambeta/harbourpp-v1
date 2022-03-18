@@ -105,7 +105,7 @@ static HB_BOOL sk_testActive( PHB_ITEM pIsActive, int iKeyCode )
       hb_vmPush(pIsActive);
       hb_vmPushInteger(iKeyCode);
       hb_vmSend(1);
-      return hb_parldef( -1, HB_TRUE );
+      return hb_parldef(-1, HB_TRUE);
    }
    return HB_TRUE;
 }
@@ -415,5 +415,5 @@ HB_FUNC( HB_SETKEYCHECK )
       }
    }
 
-   hb_retl( bIsKeySet );
+   hb_retl(bIsKeySet);
 }

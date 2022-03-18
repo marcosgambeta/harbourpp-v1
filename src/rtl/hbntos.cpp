@@ -70,7 +70,7 @@ HB_FUNC( HB_NTOS )
             memmove(szResult, szResult + nToTrim, strlen(szResult + nToTrim) + 1);
          }
          
-         hb_retc_buffer( szResult );
+         hb_retc_buffer(szResult);
          return;
       }
    }
@@ -108,11 +108,11 @@ HB_FUNC( HB_NTOC )
             szBuffer[--iPos] = '-';
          }
 
-         hb_retc( szBuffer + iPos );
+         hb_retc(szBuffer + iPos);
       }
       else
       {
-         hb_retc( hb_dblToStr( szBuffer, sizeof(szBuffer), hb_itemGetND(pNumber), hb_parnidef( 2, -1 ) ) );
+         hb_retc(hb_dblToStr(szBuffer, sizeof(szBuffer), hb_itemGetND(pNumber), hb_parnidef(2, -1)));
       }
    }
    else

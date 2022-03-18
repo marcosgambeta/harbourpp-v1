@@ -83,7 +83,7 @@ HB_FUNC( HB_UTF8TOSTRBOX )
 
       if( szDest )
       {
-         hb_retclen_buffer( szDest, nDest );
+         hb_retclen_buffer(szDest, nDest);
       }
       else
       {

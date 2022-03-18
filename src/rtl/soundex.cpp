@@ -106,5 +106,5 @@ HB_FUNC( SOUNDEX )
       }
    }
 
-   hb_retc( szResult );
+   hb_retc(szResult);
 }

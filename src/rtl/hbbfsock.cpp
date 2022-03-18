@@ -82,15 +82,15 @@ static void s_bf_hash( const HB_BLOWFISH * bf, HB_BYTE * vect, HB_BYTE * counter
    cl = xl = HB_GET_BE_UINT32( &counter[0] );
    cr = xr = HB_GET_BE_UINT32( &counter[4] );
    ++cr;
-   HB_PUT_BE_UINT32( &counter[4], cr );
+   HB_PUT_BE_UINT32(&counter[4], cr);
    if( cr == 0 )
    {
       ++cl;
-      HB_PUT_BE_UINT32( &counter[0], cl );
+      HB_PUT_BE_UINT32(&counter[0], cl);
    }
    hb_blowfishEncrypt( bf, &xl, &xr );
-   HB_PUT_BE_UINT32( &vect[0], xl );
-   HB_PUT_BE_UINT32( &vect[4], xr );
+   HB_PUT_BE_UINT32(&vect[0], xl);
+   HB_PUT_BE_UINT32(&vect[4], xr);
 }
 
 static long s_bf_send( PHB_SOCKEX_BF pBF, HB_MAXINT timeout )

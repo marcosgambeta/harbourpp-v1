@@ -82,7 +82,7 @@ HB_FUNC( HB_HEXTONUM )
          }
          nNum = ( nNum << 4 ) + iDigit;
       }
-      hb_retnint( nNum );
+      hb_retnint(nNum);
    }
    else
    {
@@ -132,7 +132,7 @@ HB_FUNC( HB_NUMTOHEX )
    }
    while( fDefaultLen ? nNum != 0 : iLen != 0 );
 
-   hb_retc( &ret[iLen] );
+   hb_retc(&ret[iLen]);
 }
 
 HB_FUNC( HB_STRTOHEX )
@@ -173,7 +173,7 @@ HB_FUNC( HB_STRTOHEX )
          }
       }
       while( nStr );
-      hb_retclen_buffer( szDest, nDest );
+      hb_retclen_buffer(szDest, nDest);
    }
    else
    {
@@ -248,7 +248,7 @@ HB_FUNC( HB_HEXTOSTR )
          }
          while( --nStr );
 
-         hb_retclen_buffer( szDest, nDest );
+         hb_retclen_buffer(szDest, nDest);
          return;
       }
    }
